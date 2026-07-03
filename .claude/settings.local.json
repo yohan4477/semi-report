@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "mcp__claude_ai_Google_Drive__search_files",
-      "mcp__claude_ai_Google_Drive__read_file_content"
+      "mcp__claude_ai_Google_Drive__read_file_content",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd comprehensive transformation rules documentation\n\n- Documented all evolved rules from v1.0 to v6.0\n- Target audience: business executives, not tech experts\n- File naming: Korean with dates\n- Structure: TOC, 핵심, diagrams with purpose, plain language\n- Examples of good vs bad practices\n- Checklist for each section\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(findstr:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nRemove diagram purpose headers and fix formatting\n\n- Removed \"🎯 이 다이어그램이 설명하는 것:\" headers\n- Fixed \"📌 핵심:\" logical gap in intro \\(added Meta 10kW context\\)\n- Removed traffic light emojis from TOC numbered list\n- Fixed bullet point spacing issues\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }
