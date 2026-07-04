@@ -19,9 +19,11 @@ You'll be told either a Google Drive fileId, a raw markdown file already saved o
 
 The raw source is typically an Obsidian-clipper export: markdown punctuation is backslash-escaped (`\#\#`, `\*\*`, `\[\]\(\)`, `\_`) — treat these as normal markdown. Ignore embedded `substackcdn.com` image URLs (you cannot reproduce images) — narrate or tabulate the data trend each image/caption describes instead, or build a `flowchart TD` mermaid diagram if the relationship is genuinely complex (per the rules' diagram-usage guidance).
 
-## 2. Determine the output filename
+## 2. Determine the output filename and categories
 
-Format: `[YYYY-MM-DD] 한글 제목.md` using the article's `published` date from its frontmatter (not `created`). Pick a natural Korean rendering of the English title. Output goes in `원본 해석/`.
+Format: `[YYMMDD] 한글 제목.md` (2-digit year, per TRANSFORMATION_RULES.md v13.0) using the article's `published` date from its frontmatter (not `created`). Pick a natural Korean rendering of the English title. Output goes in `원본 해석/`.
+
+Also read `C:\Users\y\semianalysis\CATEGORIES.md` and pick every category the article substantively covers (a doc can have more than one) from its valid-category list. Do not invent a new category on the fly — if nothing fits, update CATEGORIES.md first (add the category + definition + a version-history line), then use it. Add the result as YAML frontmatter at the very top of the file: `---\ncategories: [ai-infra/power]\n---` (see TRANSFORMATION_RULES.md's header section rule).
 
 ## 3. Write incrementally — 3 sections per batch, commit after each batch
 
@@ -33,13 +35,16 @@ Instead:
 3. After each batch is written, run a git commit for just that batch (`git add` the one file, commit with a short imperative message describing what was added, e.g. "Add sections 4-6 of US Grid Constraints translation"), then `git push`. Commit+push after every batch, not just at the end — this keeps the remote in sync incrementally and means a mid-run failure doesn't lose committed work.
 4. Continue batch by batch until every section from the source is covered. On the final batch, set the footer to 100% and commit+push with a message like "Complete all N sections of [제목]".
 
-## 4. Content requirements (from TRANSFORMATION_RULES.md — read it for the full detail)
+## 4. Content requirements (from TRANSFORMATION_RULES.md — read it for the full detail, this is just a summary and may drift out of date)
 
 - Cover every section of the source; don't skip content for brevity.
+- **No difficulty emoji (🟢🟡🔴) anywhere** — not in TOC, not in section headers. Plain text titles only.
+- **Diagram-first, tables as rare exception**: push explanations, comparisons, spec tradeoffs, and causal chains into `flowchart TD` mermaid diagrams, not prose paragraphs or tables. Tables are only for pure category × attribute matrices with no comparison/tradeoff relationship (Part 1's one surviving table is the template for what's still allowed). When in doubt, diagram it.
+- **Diagram width limit**: max 3 direct children per node. If 3 children's combined grandchildren reach 4+ nodes at one level, redesign from the parent — split into a separate `\`\`\`mermaid` block, convert to a sequential chain if the relationship is genuinely ordinal, or merge multiple items into one node's own text (bullet lines via `<br/>`) rather than separate child nodes. Note: mermaid lays out by rank/depth, so wrapping items in an intermediate "group" node does NOT fix width if the group's own children are still numerous — merging into the group node's text is the real fix.
+- Numeric ranges use escaped tildes (`12\~24개월`), never bare `~`, in prose/tables/glossary — prevents markdown strikethrough misrendering. Mermaid node text keeps `~` unescaped (markdown isn't parsed inside code fences).
 - Apply plain-language substitution rules in "📌 핵심:" blocks specifically (Capex→초기 투자, Redundancy→백업 장비, Hyperscale→초대형 시설, etc.); technical terms are fine in detailed body text with "📌 용어 풀이:" treatment.
-- Every number needs an explicit comparison baseline and, where useful, a concrete everyday analogy (가정 X채 분량 등).
-- Mermaid diagrams: `flowchart TD` / `graph TD` only, never `LR`. Bilingual Korean+English node labels with plain-language glosses. Use the specified color-coding. Only for genuinely complex relationships — simple lists/company listings stay as lists or tables.
-- Glossary (right after TOC, before body) must cover every technical term appearing in any TOC entry or section heading, as a one-line "what is this" concept explanation — not a spec dump (specs/numbers go in the body's "📌 용어 풀이:" blocks instead).
+- Every number needs an explicit comparison baseline and, where useful, a concrete everyday analogy (가정 X채 분량 등) — verify the underlying conversion factor is realistic (e.g. actual EIA average household consumption), don't invent a round number.
+- Glossary (right after TOC, before body): scope to terms that actually appear in TOC section/subsection titles only, NOT every body "📌 용어 풀이:" term — cap at 8 entries max, and only pad up to 8 with extra body terms if the TOC-derived set is 4 or fewer.
 - Section headers use `## N. 제목` numbering matching the TOC.
 
 ## 5. When done
