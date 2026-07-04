@@ -40,7 +40,7 @@
 |---|---|
 | ai-infra/power | 5 |
 | ai-infra/cooling | 1 |
-| ai-infra/compute | 0 |
+| ai-infra/compute | 1 |
 | ai-infra/memory | 0 |
 | ai-models | 0 |
 | robotics | 0 |
