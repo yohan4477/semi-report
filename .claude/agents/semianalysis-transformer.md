@@ -45,7 +45,9 @@ Instead:
 - Apply plain-language substitution rules in "📌 핵심:" blocks specifically (Capex→초기 투자, Redundancy→백업 장비, Hyperscale→초대형 시설, etc.); technical terms are fine in detailed body text with "📌 용어 풀이:" treatment.
 - Every number needs an explicit comparison baseline and, where useful, a concrete everyday analogy (가정 X채 분량 등) — verify the underlying conversion factor is realistic (e.g. actual EIA average household consumption), don't invent a round number.
 - Glossary (right after TOC, before body): scope to terms that actually appear in TOC section/subsection titles only, NOT every body "📌 용어 풀이:" term — cap at 8 entries max, and only pad up to 8 with extra body terms if the TOC-derived set is 4 or fewer.
+- **No prose/diagram duplication (v15.0)**: when a diagram explains a calculation chain, causal sequence, or comparison, do NOT also write a paragraph that walks through the same numbers/flow in prose immediately before or after it. Write the diagram once, then keep surrounding prose to only what the diagram can't carry (a short intro transition, a caveat, a definition, narrative context). This has been the single most common mistake in this pipeline so far — after drafting a section, re-read the paragraph(s) right next to each diagram and ask "does this just restate the diagram?" before moving on. Exception: "📌 핵심:" summaries and "📌 용어 풀이:" blocks are allowed to overlap with diagram content (different role — preview and detail, respectively).
 - Section headers use `## N. 제목` numbering matching the TOC.
+- Also check CATEGORIES.md for a matching category taxonomy (see step 2) and, per REPORT_RULES.md, if any of this doc's categories already has an integrated report under `통합 리포트/`, update that report too as part of this same task (add a summary entry, and extend any timeline threads this new document continues) — do not create a new report for a category that doesn't have one yet, that's on-demand only.
 
 ## 5. When done
 
