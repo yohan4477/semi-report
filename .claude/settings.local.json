@@ -8,7 +8,22 @@
       "Bash(git push:*)",
       "Bash(findstr:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nRemove diagram purpose headers and fix formatting\n\n- Removed \"🎯 이 다이어그램이 설명하는 것:\" headers\n- Fixed \"📌 핵심:\" logical gap in intro \\(added Meta 10kW context\\)\n- Removed traffic light emojis from TOC numbered list\n- Fixed bullet point spacing issues\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(python *)",
+      "Bash(grep -c '```mermaid' \"원본 해석/[2024-10-14] 데이터센터 해부학 Part 1 - 전기 시스템.md\")",
+      "Bash(grep -c '```mermaid' \"원본 해석/[2025-02-14] 데이터센터 해부학 Part 2 - 냉각 시스템.md\")",
+      "Bash(grep -c '```mermaid' \"원본 해석/[2024-03-14] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md\")",
+      "Bash(grep -c '```mermaid' \"원본 해석/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md\")",
+      "Bash(grep -c '```mermaid' \"원본 해석/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md\")",
+      "Bash(grep -c '\\\\\\\\~' \"원본 해석/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md\")",
+      "Bash(grep -v '\\\\\\\\\\\\\\\\~')",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -c '```mermaid' \"통합 리포트/[260704] 전력 통합 리포트.md\")",
+      "Bash(grep -c '```mermaid' \"통합 리포트/[260704] 냉각 통합 리포트.md\")",
+      "Bash(grep -c '```mermaid' \"C:\\\\Users\\\\y\\\\semianalysis\\\\원본 해석\\\\[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md\")",
+      "Bash(grep -c '```mermaid' \"C:\\\\Users\\\\y\\\\semianalysis\\\\원본 해석\\\\[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md\")",
+      "Bash(sort -k6,7)",
+      "Bash(git *)"
     ]
   }
 }
