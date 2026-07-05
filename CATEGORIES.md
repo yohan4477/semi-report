@@ -40,10 +40,12 @@
 |---|---|
 | ai-infra/power | 5 |
 | ai-infra/cooling | 1 |
-| ai-infra/compute | 1 |
-| ai-infra/memory | 4 |
+| ai-infra/compute | 4 |
+| ai-infra/memory | 7 |
 | ai-models | 0 |
 | robotics | 0 |
+
+<!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준 (병렬 변환 커밋 레이스로 어긋났던 수치 교정, [260114] CFET 부분 완성본 포함) -->
 
 ## 버전 히스토리
 
