@@ -4,9 +4,10 @@ SemiAnalysis LinkedIn 게시물(https://www.linkedin.com/company/semianalysis/po
 
 ## 1. 수집 방식
 
-- LinkedIn은 로그인 벽으로 자동 수집 불가 — 사용자가 로그인된 브라우저에서 게시물 피드를 스크롤 후 `Ctrl+S`(전체 웹페이지)로 저장한 HTML을 `input/`에 넣으면 처리 시작
-- 대안: 게시물 텍스트를 채팅에 직접 붙여넣기
+- **기본 방식 (CDP 자동 수집)**: 디버그 포트(9223)를 연 크롬을 띄우고 사용자가 로그인 → 게시물 페이지에서 **최신순 정렬** → 수집 스크립트가 로그인·피드를 자동 감지해 스크롤 후 HTML을 `input/linkedin_feed_raw.html`로 저장 (스크립트: 세션 scratchpad의 collect_linkedin.py, 크롬 실행 시 `--remote-debugging-port=9223 --user-data-dir=<임시 프로필>`, websocket은 `suppress_origin=True` 필수)
+- 대안: 사용자가 직접 `Ctrl+S` 저장한 HTML을 `input/`에 넣거나, 게시물 텍스트를 채팅에 붙여넣기
 - 파싱: HTML에서 게시물별 날짜·본문·(가능하면) 반응 수 추출. 날짜가 상대 표기("2w")면 저장 시점 기준으로 절대 날짜로 환산해 기록
+- **증분 처리 (중요)**: 게시물 대장에 이미 기록된 게시물(URN 또는 날짜+본문 첫 줄로 식별)은 건너뛰고 **새 게시물만** 파싱 — 재수집 시 전체를 다시 처리하지 않음
 
 ## 2. 필터 (쓸모없는 게시물 제외)
 
@@ -36,6 +37,12 @@ SemiAnalysis LinkedIn 게시물(https://www.linkedin.com/company/semianalysis/po
   `- YYMMDD: 신호 내용 한 줄 (관련 관찰 포인트 명시)`
 - 최신이 위로 오게 역순 정렬, 12개 초과 시 오래된 것부터 삭제
 - 게시물 배치 처리와 같은 작업 안에서 수행 (두 번 읽지 않기 원칙)
+
+## 5.5 대시보드 연동
+
+- 배치 처리 후 **파이프라인 현황 Artifact**에 "최근 신호 TOP 5" 카드를 갱신 (게시물 날짜 + 한 줄 헤드라인) — 사용자가 모바일에서 브리핑 요약까지 한 페이지로 확인
+- 주간 브리핑 전문은 별도 Artifact로 발행 가능 (요청 시)
+- 전력 대시보드 등 기존 대시보드에는 해당 카테고리 신호만 선별 반영
 
 ## 6. 처리 파이프라인
 
