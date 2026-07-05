@@ -42,10 +42,10 @@ categories: [ai-infra/memory]
 
 ```mermaid
 flowchart TD
-    A[중국 반도체 자립 목표 <br/> (미국 규제 대응 독자망 구축)] --> B[5년간 2,000억 달러 투자 <br/> (약 270조 원 정부 보조금)]
-    B --> C[HBM 메모리 국산화 <br/> (DRAM 생산 및 자립)]
-    B --> D[첨단 패키징 구축 <br/> (화웨이-SJSemi 협력)]
-    B --> E[비미국계 장비 확보 <br/> (도쿄 일렉트론 장비 등)]
+    A["중국 반도체 자립 목표 <br/> (미국 규제 대응 독자망 구축)"] --> B["5년간 2,000억 달러 투자 <br/> (약 270조 원 정부 보조금)"]
+    B --> C["HBM 메모리 국산화 <br/> (DRAM 생산 및 자립)"]
+    B --> D["첨단 패키징 구축 <br/> (화웨이-SJSemi 협력)"]
+    B --> E["비미국계 장비 확보 <br/> (도쿄 일렉트론 장비 등)"]
 
     classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
     classDef highlight fill:#fff7ed,stroke:#ea580c,stroke-width:2px;
@@ -72,9 +72,9 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[CXMT HBM 자립 전략 <br/> (미국 제재 극복 DRAM 기반 생산)] --> B[HBM2 8단 적층 <br/> (2025년 상반기 대량 양산)]
-    A --> C[월 1만 장 TSV 확보 <br/> (2025년 말 마이크론 수준 목표)]
-    A --> D[화웨이 가속기 탑재 <br/> (Ascend 910B/910C 메모리 공급)]
+    A["CXMT HBM 자립 전략 <br/> (미국 제재 극복 DRAM 기반 생산)"] --> B["HBM2 8단 적층 <br/> (2025년 상반기 대량 양산)"]
+    A --> C["월 1만 장 TSV 확보 <br/> (2025년 말 마이크론 수준 목표)"]
+    A --> D["화웨이 가속기 탑재 <br/> (Ascend 910B/910C 메모리 공급)"]
 
     classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
     classDef success fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
@@ -105,10 +105,10 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[XMC <br/> (중국 DRAM 웨이퍼 공급)] --> B[SJSemi <br/> (범핑/TSV 공정 및 적층 패키징)]
-    B --> C[화웨이 Ascend 가속기 <br/> (중국 국산 AI 반도체 완성)]
+    A["XMC <br/> (중국 DRAM 웨이퍼 공급)"] --> B["SJSemi <br/> (범핑/TSV 공정 및 적층 패키징)"]
+    B --> C["화웨이 Ascend 가속기 <br/> (중국 국산 AI 반도체 완성)"]
     
-    D[미국 수출 제재 <br/> (SJSemi/XMC 블랙리스트 등재)] -.->|장비 조달 차단| B
+    D["미국 수출 제재 <br/> (SJSemi/XMC 블랙리스트 등재)"] -.->|장비 조달 차단| B
     D -.->|장비 조달 차단| A
 
     classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
@@ -140,10 +140,10 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[고종횡비 식각 장비 경쟁 <br/> (HBM TSV 및 3D 낸드 핵심 공정)] --> B[미국 램리서치 <br/> (기존 독점적 지위 및 표준 식각)]
-    A --> C[일본 도쿄 일렉트론 <br/> (초저온 식각 Cryo Etch 장비)]
-    C --> D[영하 80도 이하 공정 <br/> (빠른 속도와 높은 균일성 확보)]
-    C --> E[주요 3사 수주 확대 <br/> (삼성/SK하이닉스/마이크론 도입)]
+    A["고종횡비 식각 장비 경쟁 <br/> (HBM TSV 및 3D 낸드 핵심 공정)"] --> B["미국 램리서치 <br/> (기존 독점적 지위 및 표준 식각)"]
+    A --> C["일본 도쿄 일렉트론 <br/> (초저온 식각 Cryo Etch 장비)"]
+    C --> D["영하 80도 이하 공정 <br/> (빠른 속도와 높은 균일성 확보)"]
+    C --> E["주요 3사 수주 확대 <br/> (삼성/SK하이닉스/마이크론 도입)"]
 
     classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
     classDef highlight fill:#fff7ed,stroke:#ea580c,stroke-width:2px;
@@ -174,11 +174,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[중국 반도체 보조금 집행 <br/> (빅펀드 3기 및 지방정부 재원)] --> B[장비 국산화 지원 <br/> (자국산 및 비미국계 장비 구매)]
-    A --> C[핵심 R&D 지원 <br/> (첨단 패키징 및 노광 기술 연구)]
-    A --> D[생산 기지 확충 <br/> (신규 반도체 공장 건설 재정 지원)]
+    A["중국 반도체 보조금 집행 <br/> (빅펀드 3기 및 지방정부 재원)"] --> B["장비 국산화 지원 <br/> (자국산 및 비미국계 장비 구매)"]
+    A --> C["핵심 R&D 지원 <br/> (첨단 패키징 및 노광 기술 연구)"]
+    A --> D["생산 기지 확충 <br/> (신규 반도체 공장 건설 재정 지원)"]
     
-    B --> E[중국 반도체 공급망 확장 <br/> (비용 상승 및 속도 저하에도 지속)]
+    B --> E["중국 반도체 공급망 확장 <br/> (비용 상승 및 속도 저하에도 지속)"]
     C --> E
     D --> E
 
