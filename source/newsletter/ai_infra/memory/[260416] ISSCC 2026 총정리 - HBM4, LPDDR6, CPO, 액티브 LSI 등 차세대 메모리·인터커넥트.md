@@ -610,5 +610,124 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 80% 완료 (1~15장 작성)*
-*업데이트: TSMC 액티브 LSI, 마이크로소프트 D2D, 미디어텍 디멘시티 9500 섹션 작성*
+## 16. 인텔 18A-on-인텔3 하이브리드 본딩 (Paper 10.6)
+
+**📌 핵심:**
+- 인텔은 첫 하이브리드 본딩 칩 **M3DProc**를 공개 — 인텔3 공정 하단 다이와 18A 공정 상단 다이를 **9마이크로미터 간격의 Foveros Direct** 방식으로 접합, 각 다이에 메시 타일 56개(코어·DNN 가속기 타일)를 배치
+- 3D 메시 구조(14×4×2)가 지연시간을 줄이고 처리량을 거의 **40% 향상**시켰으며, 다이 간 데이터 전송 시 하이브리드 본딩 인터커넥트(HBI)로 인한 효율 손실은 무시할 수준
+- 3D 대역폭은 **875GB/s**로, 같은 패키징 계열인 클리어워터 포레스트(CWF, L2·L3 캐시만 분리한 구조)의 컴퓨트 다이당 210GB/s보다 훨씬 높음 — M3DProc는 56개 수직 연결로 이를 분산해 연결당 15.6GB/s를 훨씬 작은 면적으로 구현
+- 결론: M3DProc는 클리어워터 포레스트보다 더 넓은 범위(코어+가속기 타일 전체)를 수직으로 통합해, 하이브리드 본딩이 캐시 분리를 넘어 연산 코어 자체의 3차원 적층으로 확장될 수 있음을 실증
+
+---
+
+인텔이 공개한 M3DProc는 인텔의 첫 하이브리드 본딩(범프 없이 구리 면끼리 직접 접합) 칩입니다. 인텔3 공정으로 만든 하단 다이와 18A 공정으로 만든 상단 다이를 9마이크로미터 간격의 Foveros Direct 방식으로 접합했으며, 각 다이에는 코어·DNN 가속기 타일을 포함해 메시 타일 56개가 배치됩니다.
+
+```mermaid
+flowchart TD
+    M3D["M3DProc<br/>(인텔 첫 하이브리드 본딩 칩)"] --> Bottom["하단 다이: 인텔3 공정<br/>메시 타일 56개"]
+    M3D --> Top["상단 다이: 18A 공정<br/>메시 타일 56개"]
+    Top --> Bond["9㎛ 간격<br/>Foveros Direct 접합<br/>(SRAM 양쪽 다이 공유)"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+```
+
+타일들은 14×4×2 형태의 3D 메시로 배치되며, 이 구조 덕분에 지연시간이 줄고 처리량이 거의 40% 늘었습니다. 인텔은 2D(하단 다이 내부 56개 타일 간 이동)와 3D(양쪽 다이에 걸친 인접 타일 28개 간 이동)의 에너지 효율도 비교했는데, 하이브리드 본딩 인터커넥트(HBI)로 인한 효율 손실은 무시할 수 있는 수준이었습니다.
+
+```mermaid
+flowchart TD
+    Compare["3D 대역폭 비교"] --> M3DP["M3DProc: 875GB/s<br/>(56개 수직 연결, 연결당 15.6GB/s)"]
+    Compare --> CWF["클리어워터 포레스트(CWF)<br/>컴퓨트 다이당 210GB/s<br/>(L2/L3 캐시만 분리, 6클러스터×35GB/s)"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+    classDef success fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
+    class M3DP success;
+```
+
+패키징 방식은 클리어워터 포레스트(CWF)와 유사합니다. CWF는 인텔3 베이스 다이 위에 18A 컴퓨트 다이를 9㎛ Foveros Direct로 접합하지만, CPU 코어 클러스터의 L2 캐시만 L3에서 분리하는 데 그칩니다. 반면 M3DProc는 코어·가속기 타일 전체를 수직으로 통합해, 하이브리드 본딩이 캐시 분리를 넘어 연산 코어 자체의 3차원 적층으로 확장될 수 있음을 보여줍니다.
+
+---
+
+## 17. AMD MI355X (Paper 2.1)
+
+**📌 핵심:**
+- AMD는 MI300X 대비 MI355X에서 CU(연산 유닛)당 행렬 연산 처리량을 **2배**로 늘리면서도 전체 면적과 CU 개수는 거의 그대로 유지 — 핵심은 N5에서 **N3P 공정**으로 전환한 것과 자체 설계 표준 셀 적용
+- N3P가 제공하는 금속배선층 2개 추가로 배선·셀 활용도가 개선됐고, EPYC 베르가모(Zen 4c)에 썼던 것과 같은 조밀 배치 알고리즘도 적용
+- FP16·FP8·MXFP4 등 다양한 데이터 형식을 계산할 때 회로를 공유(저비용·저최적화)할지 형식별로 별도 회로(고성능·고면적)를 둘지의 트레이드오프에서 절충안을 최적화하는 데 공을 들임
+- 결론: IO 다이를 4개에서 **2개로 통합**해 다이간 배선 면적을 절약하고 지연시간을 줄였으며, 절약한 전력을 연산 다이에 재배분 — 배선 자체도 새로 설계해 인터커넥트 전력을 약 **20% 절감**
+
+---
+
+AMD는 CU(연산 유닛)당 행렬 연산 처리량을 MI300X 대비 2배로 늘리면서도, 전체 면적과 CU 개수는 거의 그대로 유지했습니다. 핵심 동력은 N5에서 N3P로의 공정 전환과 AMD 자체 설계 표준 셀입니다.
+
+```mermaid
+flowchart TD
+    MI355["MI355X vs MI300X<br/>CU당 행렬 연산 2배"] --> Node["N5 → N3P 공정 전환<br/>(금속배선층 2개 추가)"]
+    MI355 --> Cell["AMD 자체 표준 셀 설계<br/>+ 조밀 배치 알고리즘<br/>(EPYC 베르가모 Zen 4c와 동일 기법)"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+    classDef success fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
+    class Node success;
+```
+
+FP16·FP8·MXFP4 등 다양한 데이터 형식을 계산할 때는 모든 형식이 같은 회로를 공유하게 하면 형식별 최적화가 부족해 전력 손해를 보고, 반대로 형식마다 완전히 별도 회로를 두면 면적이 크게 늘어나는 트레이드오프가 있습니다. AMD는 이 중간 지점을 찾는 데 공을 들였고, N3P 공정 자체의 성능 향상 외에도 순수 설계 개선만으로 동일 전력 기준 주파수를 5% 높였습니다.
+
+MI300X는 IO 다이 4개로 구성됐지만, MI355X는 이를 2개로 통합했습니다.
+
+```mermaid
+flowchart TD
+    IOD["IO 다이 통합"] --> Old["MI300X: IO 다이 4개"]
+    IOD --> New["MI355X: IO 다이 2개"]
+    New --> Benefit["다이간 배선 면적 절약<br/>+ 지연시간 감소<br/>+ HBM 인터커넥트 폭 확대로 효율 개선"]
+    Benefit --> Realloc["절약한 전력을<br/>연산 다이 성능으로 재배분"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+    classDef success fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
+    class Realloc success;
+```
+
+큰 단일 다이 안에서는 어느 두 지점을 연결하든 다양한 배선 경로가 존재하는데, AMD는 배선 자체를 새로 설계해 인터커넥트 전력 소모를 약 20% 줄였습니다.
+
+---
+
+## 18. 리벨리온스 Rebel100 (Paper 2.2)
+
+**📌 핵심:**
+- 한국 스타트업 리벨리온스는 AI 가속기 **Rebel100**의 아키텍처를 최초 공개 — 대부분의 경쟁사가 TSMC를 쓰는 것과 달리 **삼성 파운드리 SF4X 공정**을 선택, 엔비디아·AMD·브로드컴 등이 TSMC 물량을 대거 선점한 상황에서 유연성을 확보
+- 첨단 패키징은 삼성의 **I-CubeS 인터포저** 기술을 사용(Hot Chips 2025 자료에는 TSMC CoWoS-S로 잘못 표기됐던 것을 이번에 정정) — I-CubeS는 지금까지 주요 AI 가속기에 채택된 적 없는 기술로, 삼성이 HBM 공급과 묶어 채택을 유도했을 가능성 존재
+- 연산 다이 4개 + HBM3E 스택 4개 구성, 각 다이는 UCIe-A 인터페이스 3개 중 2개만 16Gb/s로 사용 중이며 나머지 1개는 향후 이더넷 기반 스케일업용 IO·메모리 칩렛 확장에 쓰일 예정(IO 칩렛은 2026년 1분기 테이프아웃 예정)
+- 결론: I-CubeS 채택 사례가 eSilicon·바이두·엔비디아(2023년 H200 일부 물량)·리벨리온스·Preferred Networks(예정) 등 총 5곳에 불과했던 만큼, 리벨리온스의 채택은 삼성이 이 기술로 시장에 진입하려는 시도로도 해석 가능
+
+---
+
+리벨리온스는 한국의 AI 가속기 스타트업으로, 이번 학회에서 신제품 Rebel100의 아키텍처를 처음 공개했습니다. 대부분의 AI 가속기가 TSMC에서 생산되는 것과 달리, 리벨리온스는 삼성 파운드리의 SF4X 공정을 선택했습니다. 엔비디아·AMD·브로드컴 등이 TSMC 첨단 공정 물량 대부분을 가져가는 상황에서, 삼성 파운드리는 상대적으로 유연한 공급 옵션을 제공합니다.
+
+```mermaid
+flowchart TD
+    Rebel["리벨리온스 Rebel100"] --> Foundry["삼성 파운드리 SF4X 공정<br/>(TSMC 물량 경쟁 회피)"]
+    Rebel --> Pack["삼성 I-CubeS 인터포저<br/>(Hot Chips 2025의 CoWoS-S 표기는 오류)"]
+    Pack --> Rare["I-CubeS 채택 사례<br/>총 5곳뿐<br/>(eSilicon·바이두·엔비디아 일부·<br/>리벨리온스·Preferred Networks 예정)"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+    classDef highlight fill:#fff7ed,stroke:#ea580c,stroke-width:2px;
+    class Rare highlight;
+```
+
+삼성이 SF4X 파운드리 공정에 I-CubeS 패키징까지 묶어 파격적인 할인을 제공했거나, HBM 공급 조건으로 I-CubeS 채택을 유도했을 가능성이 있습니다. I-CubeS는 지금까지 어떤 주요 AI 가속기에도 채택된 적이 없어, 이번 채택이 삼성의 시장 진입 시도로도 해석됩니다.
+
+Rebel100은 연산 다이 4개와 HBM3E 스택 4개로 구성됩니다. 각 다이는 UCIe-A 인터페이스 3개를 갖지만 실제로는 2개만 16Gb/s로 가동 중이며, 나머지 1개는 이더넷 기반 스케일업 확장용 IO·메모리 칩렛을 위해 남겨뒀습니다.
+
+```mermaid
+flowchart TD
+    Config["Rebel100 구성"] --> Compute["연산 다이 4개<br/>+ HBM3E 스택 4개"]
+    Config --> UCIe["UCIe-A 인터페이스<br/>다이당 3개 중 2개만 가동(16Gb/s)"]
+    UCIe --> Future["나머지 1개는<br/>향후 IO·메모리 칩렛 확장용<br/>(IO 칩렛 2026년 1분기 테이프아웃 예정)"]
+
+    classDef default fill:#eff6ff,stroke:#3b82f6,stroke-width:1px;
+```
+
+전력 품질을 높이기 위해 각 HBM3E 스택 옆에 실리콘 커패시터를 추가로 통합했습니다.
+
+---
+
+*작성 진행률: 약 90% 완료 (1~18장 작성)*
+*업데이트: 인텔 18A 하이브리드 본딩, AMD MI355X, 리벨리온스 Rebel100 섹션 작성*
