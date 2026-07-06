@@ -41,11 +41,11 @@
 | ai-infra/power | 5 |
 | ai-infra/cooling | 1 |
 | ai-infra/compute | 4 |
-| ai-infra/memory | 7 |
+| ai-infra/memory | 6 |
 | ai-models | 0 |
 | robotics | 0 |
 
-<!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준 (병렬 변환 커밋 레이스로 어긋났던 수치 교정, [260114] CFET 부분 완성본 포함) -->
+<!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준. [260214] 보조금 전쟁 축약본은 원문이 Drive에 없어 사용자 지시로 전체 삭제(대장·리포트 파생분 포함) — 원문 확보 시 신규 변환으로 재작성 -->
 
 ## 버전 히스토리
 
