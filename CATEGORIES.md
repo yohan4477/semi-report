@@ -43,9 +43,12 @@
 | ai-infra/compute | 4 |
 | ai-infra/memory | 6 |
 | ai-models | 0 |
+| ai-models/agents | 2 |
+| ai-models/rl | 2 |
 | robotics | 0 |
 
 <!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준. [260214] 보조금 전쟁 축약본은 원문이 Drive에 없어 사용자 지시로 전체 삭제(대장·리포트 파생분 포함) — 원문 확보 시 신규 변환으로 재작성 -->
+<!-- 2026-07-10: ai-models 하위 카테고리 행 신설 — agents 2편([260206], [260425]), rl 2편([250609], [260107]). 상위 ai-models 행은 하위 미분류 문서용으로 유지 -->
 
 ## 버전 히스토리
 
