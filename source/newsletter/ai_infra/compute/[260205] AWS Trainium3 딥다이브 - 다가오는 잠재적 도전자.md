@@ -416,5 +416,190 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 38% 완료*
-*업데이트: 4\~6장(실리콘·패키징, Trainium4 로드맵, 레거시 토러스에서 스위치드로) 작성 완료*
+## 7. NL32x2 Switched 상세 - 랙과 JBOG 트레이 구조
+
+**📌 핵심:**
+- 랙 구조는 기존 NL32x2 3D 토러스와 거의 동일 — JBOG(가속기 전용 트레이) 16개 + 호스트 CPU 트레이 2개, JBOG 하나당 칩 2개로 랙당 32칩, 전체 스케일업 월드는 랙 2개(64칩)로 구성
+- 핵심 차이는 랙 중앙에 추가된 **NeuronLink 스위치 트레이**(4개, 무중단 교체용 스페어 포함 시 5개) — Nvidia GB200/300 NVL72·VR NVL144는 스위치 트레이 교체 전 워크로드를 전부 빼내야 하는 반면, AWS는 예비 회선 설계 덕에 **무중단 핫스왑**이 가능 — AWS는 현장 서비스성·신뢰성을 최우선하는 반면 Nvidia는 판매 상품 특성상 성능을 최우선하는 철학 차이가 드러남
+- JBOG는 PCIe 6.0으로 업그레이드(Trn2는 PCIe 5.0)되면서 PCB 소재도 M8에서 M8.5 등급으로 상향 — 케이블 없는(케이블리스) 설계라 신호가 전부 PCB를 타고 흐르는데, PCB 손실이 커 PCIe 6.0 x16 리타이머 4개로 신호를 보강
+- 결론: EFAv4 백엔드 네트워크는 칩당 200Gbps(JBOG당 NIC 1개, 물량 대다수)와 400Gbps(NIC 2개) 두 옵션 중 200Gbps가 주력 — 대형 추론 모델의 프리필-디코드 간 KV캐시 전송에도 충분하고, 훈련은 AWS 철학상 소수 정예 개발자가 파이프라인 병렬화(PP)로 네트워크 부담을 줄이는 방식을 전제로 함
+
+---
+
+```mermaid
+flowchart TD
+    Layout["NL32x2 Switched<br/>랙 구성"] --> JBOG["JBOG 16개 + 호스트<br/>CPU 트레이 2개/랙"]
+    JBOG --> PerJBOG["JBOG 1개당 칩 2개<br/>→ 랙당 32칩"]
+    PerJBOG --> World["전체 스케일업 월드<br/>= 랙 2개(칩 64개)"]
+
+    style JBOG fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style World fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Switch["NeuronLink 스위치<br/>트레이 배치"] --> Mid["랙 중앙 배치<br/>(SerDes 최장 도달거리<br/>최소화, Nvidia와 동일 이유)"]
+    Mid --> Move["CPU·전원·BBU·ToR<br/>스위치도 상하단으로<br/>재배치해 거리 단축"]
+    Switch --> HotSwap["예비 스위치 트레이<br/>1개 추가(총 5개) →<br/>무중단 핫스왑 가능"]
+    HotSwap --> VsNvidia["Nvidia GB200/300<br/>NVL72·VR NVL144는<br/>교체 전 워크로드<br/>전부 배출 필요"]
+
+    style HotSwap fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style VsNvidia fill:#fef2f2,stroke:#dc2626
+```
+
+**📌 용어 풀이: AWS와 Nvidia의 철학 차이**
+> - AWS는 직접 데이터센터를 운영하는 입장이라 "현장에서 고장 나도 서비스 중단 없이 고칠 수 있는가"를 최우선 — 그래서 예비 회선·핫스왑 설계에 투자
+> - Nvidia는 시스템을 판매하는 입장이라 "최고 성능"이 곧 상품 가치 — 서비스성보다 성능 극대화를 우선하는 설계 철학
+
+```mermaid
+flowchart TD
+    PCB["JBOG PCB 업그레이드"] --> Gen["PCIe 5.0(Trn2)<br/>→ PCIe 6.0(Trn3)"]
+    Gen --> CCL["PCB 소재도<br/>M8 → M8.5 등급 CCL로<br/>상향(저손실 유리섬유+<br/>구리박 개선)"]
+    PCB --> Cableless["케이블리스 설계:<br/>신호는 전부 PCB로 전송"]
+    Cableless --> Loss["PCB 손실이 플라이오버<br/>케이블보다 훨씬 큼"]
+    Loss --> Retimer["→ PCIe 6.0 x16<br/>리타이머 4개로<br/>신호 보강"]
+
+    style Gen fill:#eff6ff,stroke:#3b82f6
+    style Retimer fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    NIC["EFAv4 백엔드 NIC<br/>구성 옵션(JBOG당 칩 2개 기준)"] --> Opt1["옵션1: Nitro-v6 NIC 1개<br/>→ 칩당 200Gbps<br/>(물량 대다수)"]
+    NIC --> Opt2["옵션2: Nitro-v6 NIC 2개<br/>→ 칩당 400Gbps"]
+    Opt1 --> Enough["AWS 판단: 최대 규모<br/>추론 모델도 200Gbps면<br/>프리필→디코드 KV캐시<br/>전송을 충분히 오버랩"]
+    Opt1 --> Train["훈련은 Anthropic 같은<br/>소수 정예 개발자가<br/>PP(파이프라인 병렬화)로<br/>네트워크 부담 자체를 감축"]
+
+    style Opt1 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Train fill:#fff7ed,stroke:#ea580c
+```
+
+ENA(전방 네트워크)는 CPU 트레이 안에 전용 Nitro-v6 400Gbps NIC 모듈을 따로 두고, JBOG 트레이와 CPU 트레이는 서버 전면을 따라 이어지는 PCIe 6.0 x16 DAC 케이블(128GB/s 단방향)로 연결합니다(Trn2 NL16 2D 토러스와 동일 방식).
+
+```mermaid
+flowchart TD
+    AirCool["NL32x2 Switched는<br/>공랭 랙"] --> Density["전력밀도는 낮게 유지<br/>(NL32x2 3D 토러스와<br/>동일 프로필,<br/>스위치 트레이만 추가)"]
+    AirCool --> TTM["시장 출시 속도 이점:<br/>액체 냉각 준비된<br/>데이터센터가 아직도<br/>배치의 핵심 병목"]
+    TTM --> Sidecar["액체 냉각 랙을 공랭 DC에<br/>억지로 넣으려면 비효율적인<br/>Liquid-to-Air 사이드카 필요"]
+    TTM --> Majority["결과: 2026년 배치되는<br/>Trainium3 칩 대다수는<br/>NL32x2 Switched"]
+
+    style TTM fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Majority fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 8. NL72x2 Switched 상세 - 컴퓨트 트레이와 스케일아웃 네트워킹
+
+**📌 핵심:**
+- NL72x2 Switched는 Nvidia GB200 NVL72(Oberon)와 가장 유사한 구조 — 둘 다 수랭이며, CPU(Graviton4)를 GPU와 같은 컴퓨트 트레이에 통합(NL32x2 Switched는 CPU가 분리된 노드)한다는 점도 같음. 다만 Oberon과 달리 **랙 간 연결로 스케일업 월드사이즈를 2개 랙에 걸쳐 확장**하는 것이 결정적 차이
+- 랙 2개로 총 144 XPU 월드사이즈 구성 — 랙마다 컴퓨트 트레이 18개(각 트레이에 Trainium3 4개+Graviton4 1개)와 NeuronLink 스위치 트레이 10개가 들어가 랙당 72칩+18 CPU, 전체 144칩+36 CPU
+- 컴퓨트 트레이 안에서도 냉각 방식이 갈림: **수랭**은 Trainium3 모듈·NeuronLinkv4 32레인 PCIe 6.0 스위치·Graviton4 CPU, **공랭(팬)**은 리타이머·NIC·AEC 케이지·DIMM·로컬 NVMe 드라이브
+- 결론: 스케일아웃도 NL32x2 Switched와 동일하게 칩당 200Gbps(주력)·400Gbps 옵션 중 200Gbps가 대다수 — NL72x2 Switched는 Nvidia Oberon에 대한 AWS의 정면 대응이지만, 전력밀도가 높고 액체 냉각 데이터센터가 필요해 실제 배치 물량은 여전히 NL32x2 Switched가 다수를 차지할 전망
+
+---
+
+```mermaid
+flowchart TD
+    Compare["NL72x2 Switched<br/>vs Nvidia Oberon"] --> Same1["공통점: 수랭 냉각"]
+    Compare --> Same2["공통점: CPU를 컴퓨트<br/>트레이에 통합<br/>(NL32x2 Switched는<br/>CPU 분리형)"]
+    Compare --> Diff["차이점: 랙 간(cross-rack)<br/>연결로 스케일업 월드사이즈를<br/>2개 랙에 걸쳐 확장<br/>(Oberon은 랙 1개 안에 고정)"]
+
+    style Diff fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Rack2["랙 2개 구성<br/>(총 144 XPU 월드)"] --> PerRack["랙당: 컴퓨트 트레이 18개<br/>+ NeuronLink 스위치<br/>트레이 10개"]
+    PerRack --> PerTray["트레이 1개당:<br/>Trainium3 4개 +<br/>Graviton4 CPU 1개"]
+    PerTray --> Total["전체: Trainium3 144개<br/>+ Graviton4 36개<br/>(busbar로 전력 공급)"]
+
+    style PerTray fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Total fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Cooling["컴퓨트 트레이<br/>냉각 방식 분리"] --> Liquid["수랭: Trainium3 모듈,<br/>NeuronLinkv4 32레인<br/>PCIe 6.0 스위치,<br/>Graviton4 CPU"]
+    Cooling --> Air2["공랭(팬): 리타이머,<br/>Nitro-v6 NIC, AEC 케이지,<br/>DIMM, 로컬 NVMe 2x8TB"]
+
+    style Liquid fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Air2 fill:#eff6ff,stroke:#3b82f6
+```
+
+컴퓨트 트레이 연결은 대부분 PCIe 6.0 기반(NL32x2 Switched와 같은 PCB 소재)이며, 칩 간·전면 I/O 포트 간 신호 도달거리를 늘리기 위해 PCIe 6.0 x16 리타이머 6개를 사용합니다(NL32x2 Switched의 4개보다 많음). 케이블리스 설계로 제조 속도를 높이는 대신, 시장 출시 초기에는 리스크를 낮추려 저가 리타이머를 다소 여유 있게 배치했고, 초기 양산이 안정되면 일부를 제거해 최적화할 계획입니다.
+
+호스트 CPU는 출시 시점에 Graviton4만 지원하며(추후 세대 업그레이드 가능), 이론상 x86도 PCIe로 연결 가능하지만 x86 SKU는 NL32x2 Switched 쪽에만 낼 계획입니다. Trainium3(PCIe 6.0)와 Graviton4(PCIe 5.0)의 세대 차이를 메우기 위해 CPU 옆에 PCIe 기어박스 2개를 배치합니다. CPU 메모리는 DDR5 DIMM 슬롯 12개(64GB·128GB 모듈), 로컬 저장은 트레이당 8TB NVMe 드라이브 2개를 사용합니다.
+
+```mermaid
+flowchart TD
+    ScaleOut2["NL72x2 Switched<br/>스케일아웃(JBOG당 칩 4개 기준)"] --> Opt1_["옵션1: Nitro-V6 NIC 2개<br/>→ 칩당 200Gbps<br/>(물량 대다수, NL32x2와 동일)"]
+    ScaleOut2 --> Opt2_["옵션2: Nitro-V6 NIC 4개<br/>→ 칩당 400Gbps"]
+    ScaleOut2 --> CPUNic["호스트 CPU도 이제<br/>컴퓨트 트레이 안에 위치,<br/>전용 NIC로 외부 통신"]
+
+    style Opt1_ fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+NL72x2 Switched는 Nvidia Oberon 랙 아키텍처에 대한 AWS의 정면 대응이며 전세대보다 전력밀도가 훨씬 높습니다. 다만 액체 냉각 준비가 된 데이터센터가 필요하다는 제약 때문에, 일부 물량은 NL72x2 Switched로 가더라도 대다수는 여전히 NL32x2 Switched로 배치될 전망입니다.
+
+---
+
+## 9. 스케일업 네트워크 대역폭 구성 - 백플레인, PCB, 크로스랙
+
+**📌 핵심:**
+- 토러스에서 스위치로 전환한 이유: 조밀한 모델(dense model)은 all-to-all 통신을 많이 쓰지 않아 스위치 방식이 이득이 없는 반면(TCO만 높아짐), 최신 MoE(전문가 혼합) 모델은 all-to-all 집단통신이 필수라 토러스 방식이 배치 크기(메시지 크기 16KB→1MB)가 커질수록 회선 과다사용(오버서브스크립션)으로 대역폭 병목에 부딪힘 — Trainium3의 스위치 방식은 1세대(멀티 티어 구조)에서도 이 병목이 발생하지 않음
+- 프리필은 연산 집약적이라 랙 크기(72 vs 32칩)가 커도 큰 이득이 없지만, **디코드 단계에서 넓은 전문가 병렬화(EP)**가 필요할 때는 랙 크기가 중요 — MoE 총 파라미터 2\~3조 규모는 NL32x2 Switched로 충분하고, 4조 파라미터를 넘으면 NL72x2 Switched의 더 큰 스케일업 월드가 의미 있는 이득을 줌
+- 칩 1개당 NeuronLinkv4 회선(레인) 총 160개를 세 경로로 분배: **백플레인 80개**(활성 64+예비 16), **PCB 64개**(이웃 칩 직결), **크로스랙 16개**(OSFP-XD 케이지 경유 인접 랙 연결)
+- 결론: 예비 16개 회선을 추가 대역폭으로 안 쓰는 이유는 두 가지 — 디코드처럼 지연시간이 중요한 워크로드는 회선을 늘려도 체감 속도가 안 변하고(파이프가 굵어져도 물 한 방울의 이동 속도는 그대로), 훈련처럼 통신량이 많은 워크로드도 낙오자 효과(straggler effect) 때문에 랙 하나만 회선 고장이 나도 전체 작업이 가장 느린 랙에 맞춰지기 때문
+
+---
+
+```mermaid
+flowchart TD
+    Why["토러스→스위치<br/>전환 이유"] --> Dense["조밀 모델: all-to-all<br/>거의 안 씀 →<br/>스위치 이득 없이<br/>TCO만 상승"]
+    Why --> MoE["최신 MoE 모델: all-to-all<br/>집단통신 필수 →<br/>토러스는 배치 크기↑시<br/>회선 과다사용으로<br/>대역폭 병목 발생"]
+    MoE --> Solve["Trainium3 스위치 방식:<br/>1세대(멀티 티어)에서도<br/>이 병목 미발생"]
+
+    style MoE fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Solve fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Phase["프리필 vs 디코드,<br/>랙 크기 중요도"] --> Prefill["프리필: 연산 집약적 →<br/>랙 크기(72 vs 32칩)<br/>영향 미미"]
+    Phase --> Decode["디코드: 넓은 전문가<br/>병렬화(EP) 필요"]
+    Decode --> Small["MoE 2\~3조 파라미터:<br/>NL32x2 Switched로 충분"]
+    Decode --> Big["MoE 4조 파라미터 초과:<br/>NL72x2 Switched의<br/>더 큰 월드사이즈 필요"]
+
+    style Small fill:#eff6ff,stroke:#3b82f6
+    style Big fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Lane["칩 1개당<br/>NeuronLinkv4 160레인 분배"] --> BP["백플레인 80개<br/>(활성 64 + 예비 16)"]
+    Lane --> PCB2["PCB 64개<br/>(이웃 칩 직결)"]
+    Lane --> Cross["크로스랙 16개<br/>(OSFP-XD 케이지 경유<br/>인접 랙 연결)"]
+
+    style BP fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style PCB2 fill:#f0fdf4,stroke:#16a34a
+    style Cross fill:#fff7ed,stroke:#ea580c
+```
+
+백플레인 회선은 Strada Whisper 백플레인 커넥터 1개(칩당 160개 차동쌍, 80Tx+80Rx)로 연결되며, 예비 16개는 백플레인 케이블·스위치 트레이·포트 트레이 단위 장애에 대비한 이중화입니다.
+
+```mermaid
+flowchart TD
+    Redundant["예비 16레인을<br/>추가 대역폭으로<br/>안 쓰는 이유"] --> R1["지연시간 중심 워크로드<br/>(디코드): 회선 늘려도<br/>체감 속도 불변<br/>(파이프 굵기 ≠ 물방울 속도)"]
+    Redundant --> R2["통신 집약 워크로드<br/>(훈련): 낙오자 효과 —<br/>랙 1개만 회선 고장 나도<br/>전체가 가장 느린 랙에 맞춰짐"]
+
+    style R1 fill:#eff6ff,stroke:#3b82f6
+    style R2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+PCB 경로는 NL32x2 Switched의 경우 이웃 칩에 직결되지만, NL72x2 Switched는 8개의 32레인(또는 4개의 64레인, 2개의 128레인) PCIe 6.0 스위치를 거칩니다 — 제조 시점에 레인당 비용이 가장 낮은 옵션을 AWS가 자유롭게 고를 수 있는 구조입니다. PCB 경로는 백플레인보다 장애율이 훨씬 낮아 예비 회선이 필요 없습니다.
+
+---
+
+*작성 진행률: 약 56% 완료*
+*업데이트: 7\~9장(NL32x2 Switched 상세, NL72x2 Switched 상세, 스케일업 네트워크 대역폭 구성) 작성 완료*
