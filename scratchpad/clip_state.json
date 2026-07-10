@@ -1,0 +1,374 @@
+{
+ "the-future-of-meta-superintelligence": {
+  "ok": true,
+  "file": "input/clippings\\The Future of Meta Superintelligence A 1 Year Progress Update.md",
+  "chars": 23815,
+  "flag": "OK"
+ },
+ "anthropic-3q26-profit-over-1b-the": {
+  "ok": true,
+  "file": "input/clippings\\Anthropic 3Q26 Profit Over $1B The Anthropic IPO Financials Sneak Peak.md",
+  "chars": 32984,
+  "flag": "OK"
+ },
+ "nvidia-gpu-debt-backstop-unleashes": {
+  "ok": true,
+  "file": "input/clippings\\Nvidia GPU Debt Backstop Unleashes the AI Project Trinity Capital, Offtake and Datacenters.md",
+  "chars": 37379,
+  "flag": "OK"
+ },
+ "meta-compute-everyone-wants-to-be": {
+  "ok": true,
+  "file": "input/clippings\\Meta Compute Everyone Wants To Be A Neocloud.md",
+  "chars": 16487,
+  "flag": "OK"
+ },
+ "ectc2026": {
+  "ok": true,
+  "file": "input/clippings\\EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md",
+  "chars": 43841,
+  "flag": "OK"
+ },
+ "tokenbudgeting-our-conversations": {
+  "ok": true,
+  "file": "input/clippings\\TokenBudgeting Our Conversations with Enterprises on Token Spend.md",
+  "chars": 15723,
+  "flag": "OK"
+ },
+ "rl-systems-mind-the-gap-matching": {
+  "ok": true,
+  "file": "input/clippings\\RL Systems Mind the Gap Matching Trainer and Generator Throughput.md",
+  "chars": 37018,
+  "flag": "OK"
+ },
+ "steel-smic-n3-teardown": {
+  "ok": true,
+  "file": "input/clippings\\Is SMIC N+3’s Metal Pitch Smaller than Intel 18A’s.md",
+  "chars": 56880,
+  "flag": "OK"
+ },
+ "intel-should-raise-capital": {
+  "ok": true,
+  "file": "input/clippings\\Intel Should Raise Capital.md",
+  "chars": 10627,
+  "flag": "OK"
+ },
+ "deepseekv4-16t-day-0-to-day-43-performance": {
+  "ok": true,
+  "file": "input/clippings\\DeepSeekV4 1.6T Day 0 to Day 43 Performance Over Time - Huawei, GB300 NVL72, MI355X, B200.md",
+  "chars": 39891,
+  "flag": "OK"
+ },
+ "chinas-unitree-will-dominate-global": {
+  "ok": true,
+  "file": "input/clippings\\Unitree's Impossible Trajectory Is Still Overlooked.md",
+  "chars": 39341,
+  "flag": "OK"
+ },
+ "to-boldly-go-the-case-for-space-datacenters": {
+  "ok": true,
+  "file": "input/clippings\\To Boldly Go The Case for Space Datacenters.md",
+  "chars": 122272,
+  "flag": "OK"
+ },
+ "ai-dark-output-the-visible-cost-of": {
+  "ok": true,
+  "file": "input/clippings\\AI Dark Output The Visible Cost of Invisible Output.md",
+  "chars": 26900,
+  "flag": "OK"
+ },
+ "finding-miscompiles-for-fun-not-profit": {
+  "ok": true,
+  "file": "input/clippings\\Finding Miscompiles for Fun, Not Profit.md",
+  "chars": 9406,
+  "flag": "OK"
+ },
+ "eda-market-primer": {
+  "ok": true,
+  "file": "input/clippings\\EDA Market Primer - Market Dynamics, Cadence, Synopsys, Siemens, China EDA Rise.md",
+  "chars": 94072,
+  "flag": "OK"
+ },
+ "cerebras-faster-tokens-please": {
+  "ok": true,
+  "file": "input/clippings\\Cerebras — Faster Tokens Please.md",
+  "chars": 62029,
+  "flag": "OK"
+ },
+ "the-eda-primer-from-rtl-to-silicon": {
+  "ok": true,
+  "file": "input/clippings\\The EDA Primer From RTL to Silicon.md",
+  "chars": 72441,
+  "flag": "OK"
+ },
+ "ai-value-capture-the-shift-to-model": {
+  "ok": true,
+  "file": "input/clippings\\AI Value Capture - The Shift To Model Labs.md",
+  "chars": 38977,
+  "flag": "OK"
+ },
+ "how-much-do-gpu-clusters-really-cost": {
+  "ok": true,
+  "file": "input/clippings\\How Much Do GPU Clusters Really Cost.md",
+  "chars": 54006,
+  "flag": "OK"
+ },
+ "the-great-gpu-shortage-rental-capacity": {
+  "ok": true,
+  "file": "input/clippings\\The Great GPU Shortage – Rental Capacity – Launching our H100 1 Year Rental Price Index.md",
+  "chars": 23477,
+  "flag": "OK"
+ },
+ "are-ai-datacenters-increasing-electric": {
+  "ok": true,
+  "file": "input/clippings\\Are AI Datacenters Increasing Electric Bills for American Households.md",
+  "chars": 36558,
+  "flag": "OK"
+ },
+ "inferencex-v2-nvidia-blackwell-vs": {
+  "ok": true,
+  "file": "input/clippings\\InferenceX v2 NVIDIA Blackwell Vs AMD vs Hopper - Formerly InferenceMAX.md",
+  "chars": 76245,
+  "flag": "OK"
+ },
+ "cpus-are-back-the-datacenter-cpu": {
+  "ok": true,
+  "file": "input/clippings\\CPUs are Back The Datacenter CPU Landscape in 2026.md",
+  "chars": 78123,
+  "flag": "OK"
+ },
+ "from-tokens-to-burgers-a-water-footprint": {
+  "ok": true,
+  "file": "input/clippings\\From Tokens to Burgers A Water Footprint Face-Off.md",
+  "chars": 13716,
+  "flag": "OK"
+ },
+ "apple-tsmc-the-partnership-that-built": {
+  "ok": true,
+  "file": "input/clippings\\Apple-TSMC The Partnership That Built Modern Semiconductors.md",
+  "chars": 68805,
+  "flag": "OK"
+ },
+ "co-packaged-optics-cpo-book-scaling": {
+  "ok": true,
+  "file": "input/clippings\\Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md",
+  "chars": 158689,
+  "flag": "OK"
+ },
+ "aws-trainium3-deep-dive-a-potential": {
+  "ok": true,
+  "file": "input/clippings\\AWS Trainium3 Deep Dive  A Potential Challenger Approaching.md",
+  "chars": 101318,
+  "flag": "OK"
+ },
+ "tsmc-overseas-fabs-a-success": {
+  "ok": true,
+  "file": "input/clippings\\TSMC Overseas Fabs – A Success.md",
+  "chars": 27283,
+  "flag": "OK"
+ },
+ "tpuv7-google-takes-a-swing-at-the": {
+  "ok": true,
+  "file": "input/clippings\\TPUv7 Google Takes a Swing at the King.md",
+  "chars": 63981,
+  "flag": "OK"
+ },
+ "microsofts-ai-strategy-deconstructed": {
+  "ok": true,
+  "file": "input/clippings\\Microsoft's AI Strategy Deconstructed - From Energy to Tokens.md",
+  "chars": 55671,
+  "flag": "OK"
+ },
+ "clustermax-20-the-industry-standard": {
+  "ok": true,
+  "file": "input/clippings\\ClusterMAX™ 2.0 The Industry Standard GPU Cloud Rating System.md",
+  "chars": 287726,
+  "flag": "OK"
+ },
+ "how-to-kill-2-monopolies-with-1-tool": {
+  "ok": true,
+  "file": "input/clippings\\How to Kill 2 Monopolies with 1 Tool.md",
+  "chars": 21430,
+  "flag": "OK"
+ },
+ "nanoimprint-lithography-stop-saying": {
+  "ok": true,
+  "file": "input/clippings\\Nanoimprint Lithography Stop Saying It Will Replace EUV.md",
+  "chars": 20517,
+  "flag": "OK"
+ },
+ "quadruped-state-of-the-market-unitree": {
+  "ok": true,
+  "file": "input/clippings\\Quadruped State of The Market - Unitree, Boston Dynamics, ANYbotics, DEEP Robotics, and The Rising Application Ecosystem.md",
+  "chars": 36063,
+  "flag": "OK"
+ },
+ "inferencemax-open-source-inference": {
+  "ok": true,
+  "file": "input/clippings\\InferenceMAX™ Open Source Inference Benchmarking.md",
+  "chars": 63806,
+  "flag": "OK"
+ },
+ "xais-colossus-2-first-gigawatt-datacenter": {
+  "ok": true,
+  "file": "input/clippings\\xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md",
+  "chars": 17606,
+  "flag": "OK"
+ },
+ "another-giant-leap-the-rubin-cpx-specialized-accelerator-rack": {
+  "ok": true,
+  "file": "input/clippings\\Another Giant Leap The Rubin CPX Specialized Accelerator & Rack.md",
+  "chars": 38265,
+  "flag": "OK"
+ },
+ "huawei-ascend-production-ramp": {
+  "ok": true,
+  "file": "input/clippings\\Huawei Ascend Production Ramp Die Banks, TSMC Continued Production, HBM is The Bottleneck.md",
+  "chars": 37378,
+  "flag": "OK"
+ },
+ "amazons-ai-resurgence-aws-anthropics-multi-gigawatt-trainium-expansion": {
+  "ok": true,
+  "file": "input/clippings\\Amazon’s AI Resurgence AWS & Anthropic's Multi-Gigawatt Trainium Expansion.md",
+  "chars": 25038,
+  "flag": "OK"
+ },
+ "gpt-5-ad-monetization-and-the-superapp": {
+  "ok": true,
+  "file": "input/clippings\\GPT-5 Set the Stage for Ad Monetization and the SuperApp.md",
+  "chars": 17031,
+  "flag": "OK"
+ },
+ "robotics-levels-of-autonomy": {
+  "ok": true,
+  "file": "input/clippings\\Robotics Levels of Autonomy.md",
+  "chars": 72861,
+  "flag": "OK"
+ },
+ "vlsi2025": {
+  "ok": true,
+  "file": "input/clippings\\Intel 18A Details & Cost, Future of DRAM 4F2 vs 3D, Backside Power Adoption (or Not), China's FlipFET, Digital Twins from Atoms to Fabs, and More.md",
+  "chars": 24216,
+  "flag": "OK"
+ },
+ "meta-superintelligence-leadership-compute-talent-and-data": {
+  "ok": true,
+  "file": "input/clippings\\Meta Superintelligence - Leadership Compute, Talent, and Data.md",
+  "chars": 23178,
+  "flag": "OK"
+ },
+ "deepseek-debrief-128-days-later": {
+  "ok": true,
+  "file": "input/clippings\\DeepSeek Debrief 128 Days Later.md",
+  "chars": 15342,
+  "flag": "OK"
+ },
+ "how-oracle-is-winning-the-ai-compute-market": {
+  "ok": true,
+  "file": "input/clippings\\How Oracle Is Winning the AI Compute Market.md",
+  "chars": 25648,
+  "flag": "OK"
+ },
+ "ai-training-load-fluctuations-at-gigawatt-scale-risk-of-power-grid-blackout": {
+  "ok": true,
+  "file": "input/clippings\\AI Training Load Fluctuations at Gigawatt-scale - Risk of Power Grid Blackout.md",
+  "chars": 40841,
+  "flag": "OK"
+ },
+ "amd-advancing-ai-mi350x-and-mi400-ualoe72-mi500-ual256": {
+  "ok": true,
+  "file": "input/clippings\\AMD Advancing AI MI350X and MI400 UALoE72, MI500 UAL256.md",
+  "chars": 54777,
+  "flag": "OK"
+ },
+ "the-new-ai-networks-ultra-ethernet-uec-ualink-vs-broadcom-scale-up-ethernet-sue": {
+  "ok": true,
+  "file": "input/clippings\\The New AI Networks  Ultra Ethernet UEC  UALink vs Broadcom Scale Up Ethernet SUE.md",
+  "chars": 23124,
+  "flag": "OK"
+ },
+ "amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens": {
+  "ok": true,
+  "file": "input/clippings\\AMD vs NVIDIA Inference Benchmark Who Wins - Performance &amp; Cost Per Million Tokens.md",
+  "chars": 50232,
+  "flag": "OK"
+ },
+ "ai-arrives-in-the-middle-east-us-strikes-a-deal-with-uae-and-ksa": {
+  "ok": true,
+  "file": "input/clippings\\AI Arrives In The Middle East US Strikes A Deal with UAE and KSA.md",
+  "chars": 20186,
+  "flag": "OK"
+ },
+ "nvidia-gtc-2025-built-for-reasoning-vera-rubin-kyber-cpo-dynamo-inference-jensen-math-feynman": {
+  "ok": true,
+  "file": "input/clippings\\NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md",
+  "chars": 31281,
+  "flag": "OK"
+ },
+ "amd-2-0-new-sense-of-urgency-mi450x-chance-to-beat-nvidia-nvidias-new-moat": {
+  "ok": true,
+  "file": "input/clippings\\AMD 2.0 - New Sense of Urgency  MI450X Chance to Beat Nvidia  Nvidia's New Moat.md",
+  "chars": 74933,
+  "flag": "OK"
+ },
+ "huawei-ai-cloudmatrix-384-chinas-answer-to-nvidia-gb200-nvl72": {
+  "ok": true,
+  "file": "input/clippings\\Huawei AI CloudMatrix 384 – China's Answer to Nvidia GB200 NVL72.md",
+  "chars": 13971,
+  "flag": "OK"
+ },
+ "the-gpu-cloud-clustermax-rating-system-how-to-rent-gpus": {
+  "ok": true,
+  "file": "input/clippings\\The GPU Cloud ClusterMAX™ Rating System  How to Rent GPUs.md",
+  "chars": 133655,
+  "flag": "OK"
+ },
+ "deepseek-debates": {
+  "ok": true,
+  "file": "input/clippings\\DeepSeek Debates Chinese Leadership On Cost, True Training Cost, Closed Model Margin Impacts.md",
+  "chars": 25791,
+  "flag": "OK"
+ },
+ "iedm2024": {
+  "ok": true,
+  "file": "input/clippings\\TSMC N2 + Next-Gen SoIC, Intel EMIB-T, Meta 3D Stacked Memory, CFET, 2D Materials, and More.md",
+  "chars": 23160,
+  "flag": "OK"
+ },
+ "spie2025": {
+  "ok": true,
+  "file": "input/clippings\\High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md",
+  "chars": 36720,
+  "flag": "OK"
+ },
+ "tariff-armageddon-gpu-loopholes": {
+  "ok": true,
+  "file": "input/clippings\\Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md",
+  "chars": 51347,
+  "flag": "OK"
+ },
+ "microsofts-datacenter-freeze": {
+  "ok": true,
+  "file": "input/clippings\\Microsoft's Datacenter Freeze - 1.5GW Self-Build Slowdown & Lease Cancellation Misconceptions.md",
+  "chars": 15822,
+  "flag": "OK"
+ },
+ "openai-stargate-joint-venture-demystified": {
+  "ok": true,
+  "file": "input/clippings\\OpenAI Stargate Joint Venture Demystified  Microsoft Sore Loser, Does Softbank Have The Capital, Texas GigaCampus, Winners & Losers.md",
+  "chars": 11378,
+  "flag": "OK"
+ },
+ "2025-ai-diffusion-export-controls-microsoft-regulatory-capture-oracle-tears": {
+  "ok": true,
+  "file": "input/clippings\\2025 AI Diffusion Export Controls - Microsoft Regulatory Capture, Oracle Tears, Impacts Quantified, Model Restrictions.md",
+  "chars": 50510,
+  "flag": "OK"
+ },
+ "america-is-missing-the-new-labor-economy-robotics-part-1": {
+  "ok": true,
+  "file": "input/clippings\\America Is Missing The New Labor Economy - Robotics Part 1.md",
+  "chars": 62501,
+  "flag": "OK"
+ }
+}
