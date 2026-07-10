@@ -221,6 +221,140 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 25% 완료 (1\~3장 작성)*
-*업데이트: 개요, MI350X/MI355X 스펙, MI355X vs HGX B200 TCO 섹션 작성 완료*
+## 4. 엔비디아 DGX Lepton과 뉴클라우드의 반발
+
+**📌 핵심:**
+- Nvidia는 GTC Paris에서 DGX Lepton 마켓플레이스 전략을 공개 — 사용자가 여러 클라우드 사이에서 같은 사용자 경험으로 추론 워크로드를 자동으로 옮길 수 있게 하는 서비스로, AI 컴퓨트를 세계적으로 표준화·상품화하는 게 목표
+- Uber·Lyft가 운전기사를 저마진 플랫폼 노동자로 묶어낸 것처럼, DGX Lepton이 성공하면 뉴클라우드들이 표준화된 가격 경쟁(바닥으로의 경쟁)에 내몰려 마진이 초저가 상품 수준으로 떨어질 위험
+- 소비자 입장에선 오히려 이득 — 중간 마진이 줄어 성능당비용이 좋아지는데도 Nvidia 자체 마진은 그대로 유지됨
+- 결론: 여러 뉴클라우드가 불만이지만 Nvidia와의 관계 유지를 위해 참여를 강제로 느끼는 분위기 — 이 불만이 뉴클라우드들의 "단일 벤더 의존 재검토"로 이어지며 AMD에게 뉴클라우드 확보 기회의 창이 열림
+
+---
+
+```mermaid
+flowchart TD
+    Lepton["DGX Lepton<br/>마켓플레이스 전략"] --> Goal["목표: 여러 클라우드 GPU를<br/>표준 창구 하나로 통합,<br/>AI 컴퓨트 세계적 상품화"]
+    Lepton --> Target["주 타깃: 추론·소규모 학습<br/>(대규모 학습은 대상 아님)"]
+
+    style Lepton fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Analogy["Uber/Lyft 비유"] --> Driver["Uber/Lyft: 운전기사를<br/>저마진 긱 이코노미<br/>노동자로 종속"]
+    Analogy --> Neocloud["DGX Lepton: 뉴클라우드를<br/>같은 방식으로 종속시킬<br/>가능성"]
+    Neocloud --> Race["결과: 표준화된 사용자 경험<br/>→ 가격 경쟁만 남아<br/>마진 초저가 상품 수준으로 하락"]
+
+    style Race fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Winners["이해관계자별 영향"] --> Consumer["소비자: 중간 마진 감소로<br/>성능당비용 개선<br/>(Nvidia 마진엔 영향 없음)"]
+    Winners --> Neocloud2["뉴클라우드: 불만이지만<br/>Nvidia와의 관계 유지 위해<br/>참여 압박 느낌"]
+    Neocloud2 --> Reconsider["결과: 단일 벤더 의존<br/>재검토 시작 → AMD엔<br/>뉴클라우드 확보 기회"]
+
+    style Consumer fill:#f0fdf4,stroke:#16a34a
+    style Reconsider fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+한 가지 대안으로, Jensen이 Lepton의 소프트웨어 플랫폼을 완전히 오픈소스화해 참여 뉴클라우드가 마켓플레이스 참여와 별개로 자체 호스팅까지 무료로 할 수 있게 하는 방법이 있습니다. 이렇게 하면 뉴클라우드가 Nvidia 마켓플레이스와 무관한 별도 판매 채널을 가지면서도 소비자에게는 여전히 좋은 성능과 경험을 제공할 수 있습니다.
+
+---
+
+## 5. MI355X는 랙 스케일 솔루션이 아니다 - 마케팅 과장 논란
+
+**📌 핵심:**
+- AMD가 "128 GPU 랙"이라 부르는 MI355X 구성은 실은 MI355X UBB8 서버 16대를 그냥 한 랙에 넣은 것 — 랙 전체를 아우르는 하나의 스케일업 도메인이 없음
+- 같은 랙 안에서도 서버 A의 GPU가 서버 B의 GPU와 통신하려면 이더넷으로 400Gbit/s밖에 못 내는 반면, GB200 NVL72는 서로 다른 컴퓨트 트레이 간에도 900GByte/s로 통신(약 18배 차이)
+- 이 기준이면 xAI의 H100 64개짜리 랙도 "랙 스케일"이라 불러야 하는데 아무도 그렇게 부르지 않음 — MI355X 랙과 마찬가지로 HGX H100 NVL8 서버 8대를 한 랙에 모은 것뿐이기 때문
+- 결론: 토큰을 전문가에게 배분하는 all-to-all 집단연산에서 MI355X는 GB200 NVL72보다 18배 느리고 HGX B300 NVL8보다도 2배 느림 — 2D+ 병렬화 학습의 all-reduce 연산에서도 GB200 NVL72 대비 18배 느려, MI355X는 랙 스케일이 아니라는 결론이 명확함
+
+---
+
+```mermaid
+flowchart TD
+    Claim["AMD의 주장:<br/>'MI355X 128 GPU 랙<br/>= 랙 스케일 솔루션'"] --> Reality["실제: MI355X UBB8<br/>서버 16대를 그냥<br/>한 랙에 모은 것"]
+    Reality --> NoDomain["랙 전체를 아우르는<br/>하나의 스케일업<br/>도메인이 없음"]
+
+    style Claim fill:#eff6ff,stroke:#3b82f6
+    style NoDomain fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    BW2["랙 내부 통신 대역폭 비교"] --> AMDbw["MI355X: 서버 간<br/>이더넷 400Gbit/s"]
+    BW2 --> NVbw["GB200 NVL72: 컴퓨트<br/>트레이 간 900GByte/s"]
+    NVbw --> Gap2["격차: 약 18배<br/>(단위 환산 기준)"]
+
+    style AMDbw fill:#fef2f2,stroke:#dc2626
+    style Gap2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Absurd["'랙 스케일' 기준을<br/>그대로 적용하면"] --> XAI["xAI의 H100 64개/랙도<br/>'랙 스케일'이어야 함"]
+    XAI --> Same["실제로는 HGX H100 NVL8<br/>서버 8대를 모은 것뿐<br/>(MI355X와 같은 구조)"]
+    Same --> Nobody["그런데 아무도 xAI 랙을<br/>'랙 스케일'이라 부르지 않음"]
+
+    style Nobody fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Collective["집단연산(Collective)<br/>성능 비교"] --> AllToAll["all-to-all(MoE 토큰 배분):<br/>MI355X가 GB200 NVL72보다<br/>18배 느림, B300 NVL8보다 2배 느림"]
+    Collective --> AllReduce["all-reduce(2D+ 병렬화 학습):<br/>MI355X가 GB200 NVL72보다<br/>18배 느림"]
+
+    style AllToAll fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style AllReduce fill:#fef2f2,stroke:#dc2626
+```
+
+---
+
+## 6. 하이퍼스케일러·AI 랩의 AMD 신제품 채택 현황
+
+**📌 핵심:**
+- AWS는 AMD 행사의 타이틀 스폰서로 나서며 AMD GPU를 대규모로 구매·임대하는 첫 본격 행보 시작, Meta는 기존 추론 위주에서 학습까지 AMD로 확대(72-GPU 랙의 핵심 요구자, PyTorch 엔지니어들도 AMD Torch 개발 참여)
+- OpenAI(Sam Altman 무대 등장)·x.AI(프로덕션 추론 확대)도 AMD 신제품에 호의적, Oracle은 MI355X 3만 개 배치 계획으로 뉴클라우드 신속 배치의 선두주자 역할 이어감
+- Microsoft만 유일하게 관망 — MI355는 소량 주문에 그치지만 MI400에는 긍정적 태도
+- 결론: 많은 하이퍼스케일러가 레거시 데이터센터 설계상 공랭 시설을 이미 보유해 공랭형 MI355X 도입에 적극적 — 대부분 MI355 배치 후 MI400까지 이어질 전망
+
+---
+
+```mermaid
+flowchart TD
+    Adopters["하이퍼스케일러·AI 랩별<br/>AMD 채택 현황"] --> Strong["적극적: AWS·Meta·<br/>OpenAI·x.AI·Oracle"]
+    Adopters --> Weak["소극적: Microsoft<br/>(MI355 소량, MI400엔 긍정적)"]
+    Adopters --> Talk["논의 중: GCP<br/>(오랫동안 협의만 지속)"]
+
+    style Strong fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Weak fill:#fef2f2,stroke:#dc2626
+```
+
+```mermaid
+flowchart TD
+    Detail["주요 고객별 세부 동향"] --> AWS2["AWS: 행사 타이틀 스폰서,<br/>대규모 구매·임대 첫 본격화"]
+    Detail --> Meta2["Meta: 추론→학습까지 확대,<br/>72-GPU 랙 핵심 요구자,<br/>PyTorch 엔지니어도 AMD Torch 참여"]
+    Detail --> Others["OpenAI(Altman 등판)·<br/>x.AI(프로덕션 추론 확대)·<br/>Oracle(MI355X 3만개 배치)"]
+
+    style AWS2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Meta2 fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    WhyAircooled["왜 하이퍼스케일러가<br/>MI355X에 적극적인가"] --> Legacy["레거시 데이터센터<br/>설계상 공랭 시설<br/>이미 보유"]
+    Legacy --> Fit["MI355X는 공랭 지원<br/>+ 매력적인 성능당비용"]
+    Fit --> Expect["전망: 대부분 MI355<br/>배치 후 MI400까지<br/>이어서 배치"]
+
+    style Fit fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Expect fill:#fff7ed,stroke:#ea580c
+```
+
+저자는 AMD가 GCP에도 다른 핵심 뉴클라우드에 제공한 것과 같은 조건(AMD 내부 R\&D용으로 컴퓨트를 재임대해주는 방식)을 제시해 GCP의 결단을 앞당겨야 한다고 제안합니다.
+
+---
+
+*작성 진행률: 약 50% 완료 (1\~6장 작성)*
+*업데이트: DGX Lepton, MI355X 랙 스케일 논란, 하이퍼스케일러 채택 현황 섹션 작성 완료*
 
