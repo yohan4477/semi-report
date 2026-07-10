@@ -566,6 +566,157 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 65% 완료 (1\~9장 작성)*
-*업데이트: 뉴클라우드 렌탈 시장 약점, 생태계 육성 전략, ROCm 소프트웨어·엔지니어링 이슈 섹션 작성 완료*
+## 10. MI355X 제조 - 칩렛 아키텍처 리파인
+
+**📌 핵심:**
+- MI300 출시 이후 2년간 칩렛(Chiplet) 배치를 다듬어, 기존 4분면으로 나뉘어 있던 베이스 다이(AID)를 레티클 크기 절반짜리 2개로 통합 — 칩 경계를 넘나드는 통신 횟수를 줄여 전력·면적을 절감
+- 이 재배치로 반대편 모서리 분면끼리 두 번 건너뛰어야 했던 "2홉 통신" 문제도 사라졌지만, 대신 3D 스태킹(TSMC SoIC 하이브리드 본딩) 수율 리스크는 커짐 — 베이스 다이 하나당 붙여야 할 XCD(연산 칩렛) 개수가 2배로 늘었기 때문
+- 다이-투-다이 링크 대역폭은 4.8TB/s에서 5.5TB/s로, 스케일업용 Infinity Fabric 속도는 20% 향상 — 연산 다이(XCD)는 N5에서 TSMC N3P 공정으로 이동, CDNA4 아키텍처 적용
+- 결론: 신규 칩은 트랜지스터 1,850억 개로 MI300 대비 21% 증가 — N5→N3P 공정 전환으로 트랜지스터 예산이 약 30% 늘어난 결과
+
+---
+
+```mermaid
+flowchart TD
+    Chiplet2["칩렛 배치 재설계<br/>(MI300→MI350/355)"] --> Merge["베이스 다이(AID):<br/>4분면 → 레티클 크기<br/>절반짜리 2개로 통합"]
+    Merge --> Benefit2["효과: 칩 경계 넘는<br/>통신 횟수 감소<br/>(전력·면적 절감)"]
+
+    style Merge fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Tradeoff2["재설계의 대가"] --> Fix["해결: 반대편 모서리<br/>분면 간 '2홉 통신'<br/>문제 해소"]
+    Tradeoff2 --> Risk["대가: 3D 스태킹(SoIC)<br/>수율 리스크 증가<br/>(베이스 다이당 XCD 2배 부착)"]
+
+    style Fix fill:#f0fdf4,stroke:#16a34a
+    style Risk fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+📌 용어 풀이: AID·XCD·SoIC
+> - AID(Active Interposer Die): 여러 연산 칩렛(XCD)과 HBM을 이어주는 베이스 다이
+> - XCD(Accelerator Complex Die): 실제 연산을 수행하는 칩렛 — 이 문서에서 "연산 다이"로도 표기
+> - SoIC(하이브리드 본딩): TSMC의 칩 적층(3D 스태킹) 기술 — AMD가 5년 넘게 TSMC와 협력해온 공정
+
+```mermaid
+flowchart TD
+    Speed["베이스 다이 속도 향상<br/>(TSMC N6 유지)"] --> D2D["다이-투-다이 링크:<br/>4.8TB/s → 5.5TB/s"]
+    Speed --> IF["Infinity Fabric<br/>스케일업 속도 20%↑"]
+    Speed --> HBM3E["메모리 컨트롤러:<br/>더 빠른 HBM3E 지원 가능"]
+
+    style D2D fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    XCDmove["연산 다이(XCD)<br/>공정 전환"] --> Node["N5 → TSMC N3P"]
+    Node --> CU2["CU 활성화: 36개 중<br/>32개만 사용<br/>(MI300은 40개 중 38개)"]
+    Node --> Transistor["트랜지스터 총합:<br/>1,850억 개(MI300 대비 21%↑,<br/>N5→N3P 전환으로 약 30% 예산 증가)"]
+
+    style Transistor fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+XCD가 AID 위에 놓이는 방향도 바뀌어, 데이터 본드 패드가 AID 중앙부에 위치하게 됐습니다. 데이터는 이제 256MB 용량의 MALL(Memory Attached Last Level) 캐시를 거쳐 바깥쪽으로 나간 뒤 HBM에 도달합니다.
+
+---
+
+## 11. CDNA4 마이크로아키텍처(UArch) 상세
+
+**📌 핵심:**
+- CDNA4는 전통적인 HPC(고성능컴퓨팅) 중심 설계에서 AI 워크로드 중심으로 계속 이동 중 — 다만 여전히 FP64 행렬 코어에 상당한 면적을 할애해 완전히 AI 전용은 아님
+- CU(컴퓨트 유닛)는 CDNA3 대비 16% 줄어든 256개인 반면, 로컬 데이터 공유 메모리(LDS)는 1.5배, 행렬 코어 처리량은 2배로 늘어남 — CU 하나가 더 큰 행렬을 계산하는 AI 워크로드 특성에 맞춘 트레이드오프(HPC는 CU 개수가 많을수록 유리, AI는 CU 하나가 강할수록 유리해 서로 전력·면적 예산을 두고 경쟁)
+- FP8은 FP16 대비 2배, FP4는 4배 처리량 — FP6은 FP4와 회로를 공유해 이론상 FP4와 동일 처리량이지만 실전에선 전력 제약으로 FP4보다 약간 낮음(Nvidia Blackwell은 FP6을 FP8과 동일하게 취급해 방식이 다름)
+- 결론: CDNA4는 Nvidia Blackwell의 비동기 데이터 전송 가속(TMA), TMA 멀티캐스팅, 전용 메모리(TMEM) 같은 기능이 없어 지능 단위당 전력 효율(피코줄/단위)에서 열세 — 다음 세대(CDNA-NEXT)에서 이 격차를 메울 대대적 아키텍처 변화가 예상됨
+
+---
+
+```mermaid
+flowchart TD
+    CDNA4["CDNA4 스펙<br/>(CDNA3 대비)"] --> CU3["CU: 256개<br/>(16% 감소)"]
+    CDNA4 --> LDS["LDS(로컬 데이터 공유):<br/>1.5배 증가"]
+    CDNA4 --> Matrix["행렬 코어 처리량:<br/>2배 증가"]
+
+    style CU3 fill:#eff6ff,stroke:#3b82f6
+    style Matrix fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+📌 용어 풀이: CU와 LDS
+> - CU(컴퓨트 유닛): AMD GPU 내부의 연산 처리 단위(Nvidia SM에 대응)
+> - LDS(로컬 데이터 공유, Local Data Share): CU 내부에서 연산 코어에 데이터를 빠르게 공급하는 버퍼 — Nvidia의 SMEM(공유 메모리)에 대응
+> - LDS 용량이 늘었다는 건 행렬 코어가 매우 빨라져서, 코어에 데이터를 제때 먹여주려면 버퍼도 함께 키워야 했다는 뜻
+
+```mermaid
+flowchart TD
+    Why2["CU 감소·LDS 증가의 의미"] --> HPC2["HPC 워크로드:<br/>CU 개수 많을수록 유리"]
+    Why2 --> AIwork["AI 워크로드:<br/>CU 하나가 큰 행렬<br/>계산할수록 유리"]
+    AIwork --> Compete["둘은 같은 전력·면적<br/>예산을 두고 경쟁 →<br/>CDNA4는 AI 쪽으로 무게중심 이동"]
+
+    style AIwork fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Compete fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Precision2["정밀도별 처리량<br/>(FP16 기준 배수)"] --> FP8_["FP8: 2배"]
+    Precision2 --> FP4_["FP4: 4배"]
+    FP4_ --> FP6_["FP6: 이론상 FP4와 동일<br/>(회로 공유, 실전에선<br/>전력 제약으로 FP4보다 소폭 낮음)"]
+
+    style FP4_ fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    VsBlackwell["Nvidia Blackwell 대비<br/>CDNA4의 공백"] --> Missing["비동기 데이터 전송(TMA),<br/>TMA 멀티캐스팅,<br/>전용 메모리(TMEM) 부재"]
+    Missing --> Efficiency["결과: 지능 단위당<br/>전력 효율(피코줄/단위)에서<br/>Nvidia SM100 대비 열세"]
+    Efficiency --> Future2["전망: CDNA-NEXT에서<br/>대대적 아키텍처 변화 예상"]
+
+    style Missing fill:#fef2f2,stroke:#dc2626
+    style Future2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+CDNA4의 명령어 세트(ISA) 세부 내용은 아직 공개되지 않아, MFMA 연산에 Nvidia의 WGMMA에 대응하는 기능이 추가됐는지는 이 리포트 작성 시점에 확인되지 않았습니다.
+
+---
+
+## 12. AMD AI 엔지니어 보상 현실화 움직임
+
+**📌 핵심:**
+- 업계에 잘 알려진 사실로, 대부분의 AMD AI 엔지니어는 시장가 대비 낮은 보상을 받아왔음 — 예외는 최근 신규 채용자와 인수(M\&A)를 통해 합류한 소수 인력뿐(2년 전 인수한 NodAI 출신 엔지니어들은 경력·역량을 동일하게 맞춰도 기존 AMD 엔지니어보다 훨씬 높은 보상을 받는 중)
+- AMD 인사(HR) 부서는 이미 몇 분기 전부터 이 보상 격차 문제를 인지하고 내부적으로 문제 제기했으나, 경영진은 최근까지 우선순위를 낮게 뒀음
+- 저자가 공개적으로 AMD의 낮은 AI 엔지니어 보상을 지적한 이후, AMD 인사총괄이 이 사안을 최우선 과제로 즉시 격상 — 다만 실제 이행은 아직 진행 중
+- 결론: AMD는 현금 보유고가 수십억 달러에 달해 보상 격차 해소 여력은 충분 — 핵심 기여자에게 AMD의 성과와 연동된 경쟁력 있는 총보상을 지급할지가 관건
+
+---
+
+```mermaid
+flowchart TD
+    PayIssue["AMD AI 엔지니어<br/>보상 문제"] --> Gap["대부분 시장가 대비<br/>낮은 보상(예외: 최근<br/>신규채용·M&A 인력)"]
+    Gap --> NodAI["예시: NodAI 출신<br/>엔지니어가 기존 AMD<br/>엔지니어보다 훨씬 높은 보상"]
+
+    style Gap fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Timeline2["문제 인지→대응 타임라인"] --> HRflag["AMD HR: 몇 분기 전부터<br/>격차 인지·내부 제기"]
+    HRflag --> LowPriority["경영진: 최근까지<br/>낮은 우선순위로 방치"]
+    LowPriority --> PublicPush["저자의 공개 지적 이후:<br/>HR총괄이 최우선 과제로<br/>즉시 격상(이행은 진행 중)"]
+
+    style LowPriority fill:#fef2f2,stroke:#dc2626
+    style PublicPush fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Capacity["AMD의 대응 여력"] --> Cash["현금 보유고<br/>수십억 달러 규모"]
+    Cash --> Ask["관건: 핵심 기여자에게<br/>AMD 성과와 연동된<br/>경쟁력 있는 총보상 지급 여부"]
+
+    style Cash fill:#f0fdf4,stroke:#16a34a
+    style Ask fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+*작성 진행률: 약 80% 완료 (1\~12장 작성)*
+*업데이트: MI355X 제조·칩렛 아키텍처, CDNA4 마이크로아키텍처, AMD AI 엔지니어 보상 이슈 섹션 작성 완료*
 
