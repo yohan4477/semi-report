@@ -480,5 +480,134 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 75% 완료*
-*업데이트: 7\~9장(비동기 복사 vs TMA 비교·멀티캐스트, DSMEM vs SMEM, MMA 처리량 분석) 작성 완료*
+---
+
+## 10. MMA 지연시간과 In-flight 명령어 수에 따른 처리량
+
+**📌 핵심:**
+- MMA 명령어 1개의 지연시간은 N=64에서 128까지 선형적으로 증가하고, N=256에서 한 번 더 튀어 오름(128→256으로 처리 단위가 커지는 구간) — 1SM MMA는 M=64·M=128 지연시간이 N 크기별로 비슷하지만, 2SM MMA는 M=256 지연시간이 M=128보다 더 빠르게 늘어남(이론적 예측과 일치)
+- 데이터 타입별 지연시간 순서는 정수(S8)가 가장 빠르고, BF16·E4M3·F4가 그다음, 마이크로스케일링 포맷(MXF8·MXF4)이 가장 느림 — 정수 연산이 전력 효율이 높아 더 빠르고, 스케일 팩터 계산이 추가되는 마이크로스케일링 포맷은 근소한 오버헤드가 붙기 때문
+- 실전 커널은 보통 동시 실행 중인(in-flight) MMA 명령어가 1\~4개뿐인데, 이 조건에서 처리량이 이론상 최대(Speed-of-Light, SoL)의 몇 %에 도달하는지 별도로 측정 — 가장 큰 N에서만 90% SoL에 도달하고, 가장 작은 N은 70%에 그침
+- 결론: 같은 조건에서 1SM MMA가 2SM MMA보다 SoL 도달률이 약 5%p 더 높으며, 실전에서 흔한 "4개 동시 실행" 조건에서는 SoL의 78\~80%가 사실상의 현실적 상한선
+
+---
+
+```mermaid
+flowchart TD
+    Latency["MMA 단일 명령어 지연시간"] --> L1["N=64→128: 선형 증가"]
+    Latency --> L2["N=256: 한 번 더 급증<br/>(128→256 처리 단위 확대 구간)"]
+    L2 --> L3["2SM MMA(M=256)가<br/>1SM(M=128)보다<br/>더 가파르게 증가(이론과 일치)"]
+
+    style Latency fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style L3 fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    DTypeOrder["데이터 타입별<br/>지연시간 순서(빠른→느린)"] --> Order["S8(정수) < BF16=E4M3=F4<br/>< MXF8=MXF4(마이크로스케일링)"]
+    Order --> Why2["이유: 정수 연산이<br/>전력 효율 높아 가장 빠르고,<br/>스케일 팩터 계산이<br/>마이크로스케일링에 오버헤드 추가"]
+
+    style Order fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+이론상 최대 처리량 측정에는 명령어 256\~1,024개를 동시에 실행시켜 명령어 발행·완료 대기 오버헤드를 희석하지만, 실전 커널은 보통 MMA 명령어 1\~4개만 동시 실행합니다. 이 현실적인 조건에서 처리량이 이론상 최대(SoL)의 몇 %인지 별도로 측정했습니다.
+
+```mermaid
+flowchart TD
+    Real["실전 조건 실측<br/>(동시 실행 1\~10개)"] --> R1["최대 N: SoL 90% 도달"]
+    Real --> R2["최소 N: SoL 70%에 그침"]
+    Real --> R3["1SM이 2SM보다<br/>SoL 도달률 약 5%p 높음"]
+
+    style Real fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style R3 fill:#fff7ed,stroke:#ea580c
+```
+
+실전에서 흔한 "동시 실행 4개" 조건에서는 SoL의 78\~80%가 현실적인 상한선으로 나타났습니다. 이는 커널을 설계할 때 이론 스펙(100% SoL)이 아니라 이 78\~80%를 실질적인 목표치로 잡아야 함을 뜻합니다.
+
+**📌 용어 풀이: Speed-of-Light(SoL)와 In-flight 명령어**
+> - SoL(이론상 최대 속도)은 하드웨어 스펙만으로 계산한 처리량 상한선 — 실제 커널은 명령어 발행·완료 대기 같은 부가 비용 때문에 이 상한선에 완전히 도달하지 못함
+> - In-flight 명령어 개수는 "완료를 기다리지 않고 동시에 실행 파이프라인에 들어가 있는 명령어 수" — 이 개수가 많을수록 부가 비용이 여러 명령어에 걸쳐 희석돼 SoL에 더 가까워지지만, 실전 커널은 레지스터·SMEM 제약으로 보통 몇 개만 동시 실행 가능
+
+---
+
+## 11. 실전 사례: CUTLASS GEMM 커널 벤치마크
+
+**📌 핵심:**
+- 실제 GEMM(행렬곱) 커널의 핵심 패턴은 K축(내적 차원)을 따라 타일을 계속 불러와 출력 타일 하나를 누적 계산하는 것 — CUTLASS로 CTA 1개가 출력 타일 1개를 전담하는 지속형 커널을 만들어 로드 스테이지(파이프라인 단계) 수를 바꿔가며 실측
+- 스테이지 수가 늘수록 SMEM(공유메모리) 사용량은 커지지만 지연시간을 더 잘 숨길 수 있음 — 파이프라인 깊이가 N이면 한 스테이지가 연산 중일 때 최대 N-1개 스테이지의 데이터를 미리 준비해둘 수 있어, 스테이지가 늘수록 숨길 수 있는 지연시간도 늘어남
+- 다만 GEMM의 후처리(에필로그) 단계가 SMEM을 쓰면 메인 루프에 남는 SMEM이 줄어 스테이지 수를 낮춰야 함 — 이번 벤치마크는 후처리가 SMEM을 전혀 안 쓰는 조건으로 측정해, SM당 최대 SMEM 용량에 도달할 때까지 스테이지를 늘릴 수 있었음
+- 결론: 클러스터 크기를 키워 TMA 멀티캐스트를 함께 쓰면(128×128 CTA 타일 기준 클러스터 N차원을 1→2 또는 2→4로 확대) 처리량이 뚜렷이 개선되는데, 이는 그보다 작은 타일 크기가 메모리 서브시스템·L2 대역폭에 발목 잡혀 있었다는 뜻
+
+---
+
+```mermaid
+flowchart TD
+    Pattern["GEMM 커널 핵심 패턴"] --> P1["K축(내적 차원)을 따라<br/>타일을 계속 불러옴"]
+    P1 --> P2["출력 타일 1개를<br/>누적 계산(CTA 1개가 전담)"]
+
+    style Pattern fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Stage["로드 스테이지 수 확대 효과"] --> S1["SMEM 사용량↑"]
+    Stage --> S2["지연시간 은폐 능력↑<br/>(파이프라인 깊이 N이면<br/>최대 N-1 스테이지 선행 준비)"]
+    S1 --> Limit2["제약: 에필로그(후처리)가<br/>SMEM을 쓰면 메인 루프 몫이 줄어<br/>스테이지 수 낮춰야 함"]
+
+    style Stage fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Limit2 fill:#fef2f2,stroke:#dc2626
+```
+
+이번 벤치마크는 에필로그가 SMEM을 전혀 쓰지 않는 조건으로 측정해, 스테이지별 SMEM 사용량이 SM당 최대 용량에 도달할 때까지 스테이지를 계속 늘릴 수 있었습니다. 스테이지·SMEM 사용량은 입력 행렬 A·B 타일, 배리어(동기화) 저장 공간, 에필로그 SMEM 사용량 세 가지로 결정됩니다.
+
+### 처리량과 멀티캐스트
+
+단일 CTA 벤치마크를 클러스터 크기 1×1보다 큰 형태로 확장하고, M차원이 짝수인 클러스터 형태에는 2SM MMA를 함께 적용해 처리량 변화를 측정했습니다.
+
+```mermaid
+flowchart TD
+    ClusterScale["클러스터 크기 확대 실험<br/>(128×128 CTA 타일 기준)"] --> Grow["N차원 1→2(2SM) 또는<br/>2→4(1SM)로 확대"]
+    Grow --> Result2["결과: TMA 멀티캐스트 효과로<br/>처리량 뚜렷이 개선"]
+    Result2 --> Conclusion2["시사점: 이보다 작은 타일은<br/>메모리 서브시스템·<br/>L2 대역폭에 발목 잡혀 있었음"]
+
+    style ClusterScale fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Result2 fill:#f0fdf4,stroke:#16a34a
+```
+
+---
+
+## 12. 칩 플로어플랜과 향후 계획
+
+**📌 핵심:**
+- Blackwell(B200)은 Blackwell Ultra와 거의 같은 물리적 배치(플로어플랜)를 공유 — 3장에서 실측으로 확인한 GPC 8개, L2 캐시 구역, 다이-투-다이 연결 구간이 실제 칩 사진에서도 그대로 확인됨
+- SemiAnalysis는 다이 사진(die shot)을 추가로 확보해 기능 블록별 면적, PHY(물리 인터페이스) 대역폭 밀도, GPC·SM 상세 배치 등 더 깊은 실리콘 정보를 계속 조사할 예정
+- 이번 리포트는 저지연 명령어·커널 분석 시리즈의 첫 편으로, 다음 편에서는 Blackwell·Blackwell Ultra의 추가 PTX 명령어(EXP2, TensorMap 갱신 지연시간 등)를 다룰 예정이며, TPU Pallas 커널·Trainium NKI 커널·AMD CDNA4 어셈블리까지 같은 방식으로 확장할 계획
+- 결론: AMD CDNA4는 명령어 문서가 이미 잘 공개돼 있어 근시일 내 벤치마킹이 가능할 것으로 예상 — SemiAnalysis는 저수준 벤치마킹·추론 시뮬레이터 등 관련 분야 엔지니어 채용도 함께 진행 중
+
+---
+
+```mermaid
+flowchart TD
+    Floorplan["Blackwell(B200) 플로어플랜"] --> Shared["Blackwell Ultra와<br/>거의 동일한 물리 배치 공유"]
+    Shared --> Confirm["3장 실측 결과와 일치:<br/>GPC 8개·L2 캐시 구역·<br/>다이-투-다이 연결 구간"]
+
+    style Floorplan fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Confirm fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    Series["저지연 명령어·커널<br/>분석 시리즈(이번 리포트가 1편)"] --> Next1["다음 편: Blackwell·Ultra<br/>추가 PTX 명령어<br/>(EXP2, TensorMap 갱신 지연 등)"]
+    Series --> Next2["확장 계획: TPU Pallas 커널,<br/>Trainium NKI 커널,<br/>AMD CDNA4 어셈블리"]
+    Next2 --> CDNA["AMD CDNA4는 명령어 문서<br/>이미 잘 공개돼 근시일 내<br/>벤치마킹 가능 예상"]
+
+    style Series fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style CDNA fill:#f0fdf4,stroke:#16a34a
+```
+
+SemiAnalysis는 다이 사진(die shot)을 추가로 확보해 기능 블록별 면적, PHY 대역폭 밀도, GPC 1개와 SM 1개의 상세 배치 등 더 깊은 실리콘 정보를 계속 조사할 예정이며, 저수준 벤치마킹·ClusterMAX·추론 시뮬레이터 등 관련 분야 엔지니어 채용도 함께 진행하고 있습니다.
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 10\~12장(MMA 지연시간·In-flight 처리량, CUTLASS GEMM 실전 사례, 칩 플로어플랜·향후 계획) 작성 완료 — 전체 12개 섹션 번역 완료*
