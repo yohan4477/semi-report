@@ -300,5 +300,185 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 50% 완료*
-*업데이트: 4\~6장(논리적·물리적 GPC 배치, 메모리 서브시스템·비동기 복사, TMA) 작성 완료*
+---
+
+## 7. 비동기 복사 vs TMA 비교와 TMA 멀티캐스트
+
+**📌 핵심:**
+- 두 방식은 성격이 다름 — TMA는 규칙적인 패턴의 큰 덩어리 전송에 강하지만 지연시간이 높고, 비동기 복사(LDGSTS)는 불규칙한 접근 패턴을 다룰 수 있지만 전송 크기에 제한이 있음
+- 실측 결과 32바이트 미만 전송에서는 비동기 복사가 근소하게 앞서지만, 그 이상에서는 TMA가 따라잡아 128KiB까지 계속 확장됨 — 지연시간은 12KiB 이전에는 비동기 복사가 낮지만, 그 이상에서 TMA 지연시간이 크게 증가
+- 실제 Blackwell 커널에서도 이 역할 분담이 그대로 나타남 — MLA(멀티잠재어텐션)는 동적 페이지 로딩에 비동기 복사를, MHA(멀티헤드어텐션)는 TMA만 사용
+- 결론: TMA는 "멀티캐스트"(한 번의 로드로 여러 SM에 동시 전달) 기능까지 지원해 GEMM 계열 패턴(예: SwiGLU의 듀얼-GEMM)에서 HBM 접근과 L2 트래픽을 크게 줄이는데, 명시적 멀티캐스트뿐 아니라 하드웨어가 암묵적으로도 유사한 효과를 냄
+
+---
+
+```mermaid
+flowchart TD
+    Compare["비동기 복사 vs TMA<br/>성격 비교"] --> Async_["비동기 복사(LDGSTS)<br/>불규칙 접근 패턴에 강함<br/>전송 크기 제한 있음"]
+    Compare --> TMA_2["TMA<br/>규칙적인 큰 덩어리에 강함<br/>지연시간이 더 높음"]
+
+    style Async_ fill:#eff6ff,stroke:#3b82f6
+    style TMA_2 fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Thresh["전송량 기준 처리량 역전"] --> T1["32바이트 미만<br/>비동기 복사가 근소 우위"]
+    Thresh --> T2["32바이트 이상<br/>TMA가 역전 후<br/>128KiB까지 계속 확장"]
+
+    style T1 fill:#eff6ff,stroke:#3b82f6
+    style T2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    LatThresh["전송량 기준 지연시간 역전"] --> L1["12KiB 미만<br/>비동기 복사 지연시간이 더 낮음"]
+    LatThresh --> L2["12KiB 이상<br/>TMA 지연시간이<br/>크게 증가"]
+
+    style L2 fill:#fef2f2,stroke:#dc2626
+```
+
+실제 Blackwell 커널도 이 역할 분담을 그대로 따릅니다. MLA 커널은 동적 페이지 로딩에 비동기 복사를 쓰고, MHA 커널은 TMA만 사용합니다(대부분 TRT-LLM이 기여한 FlashInfer 커널).
+
+Hopper 세대와 유사하게 4차원 TMA로 페이지 인덱스를 마지막 차원에 두고, 필요할 때 `TensorMap` 객체를 인덱싱하는 방식으로 추정됩니다.
+
+```mermaid
+flowchart TD
+    Kernel["실제 Blackwell 커널의<br/>역할 분담"] --> MLA_["MLA(멀티잠재어텐션)<br/>동적 페이지 로딩<br/>→ 비동기 복사 사용"]
+    Kernel --> MHA_["MHA(멀티헤드어텐션)<br/>→ TMA만 사용<br/>(대부분 TRT-LLM 기여)"]
+
+    style Kernel fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+### TMA 멀티캐스트
+
+TMA는 한 번의 로드로 CTA 마스크에 지정된 여러 SM의 공유 메모리에 동시에 데이터를 전달하는 "멀티캐스트" 모드를 지원합니다. 서로 다른 출력 타일을 계산하는 SM들이 같은 입력 타일을 공유하는 GEMM(행렬곱) 패턴에서 자주 쓰이며, 예를 들어 입력 행렬 하나를 공유하는 듀얼-GEMM 구조인 SwiGLU(활성화 함수) 커널에 유용합니다.
+
+```mermaid
+flowchart TD
+    Multicast["TMA 멀티캐스트<br/>(1회 로드→여러 SM 동시 전달)"] --> Use["활용 사례: GEMM 패턴<br/>(예: SwiGLU 듀얼-GEMM,<br/>입력 행렬 1개를 여러 SM이 공유)"]
+    Multicast --> Benefit["효과: HBM 접근↓<br/>+ L2 트래픽↓<br/>(공유 데이터 요청을 하나로 병합)"]
+
+    style Multicast fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Benefit fill:#f0fdf4,stroke:#16a34a
+```
+
+멀티캐스트 요청을 실제로 처리하는 하드웨어 유닛은 L2 요청 병합기(L2 Request Coalescer, LRC)입니다. 이 유닛이 명시적 멀티캐스트 요청뿐 아니라, 여러 CTA가 각자 독립적으로 같은 데이터를 요청하는 경우까지도 일부 자동으로 병합해줍니다.
+
+```mermaid
+flowchart TD
+    Test["멀티캐스트 효과 검증<br/>(3가지 경우 비교)"] --> Case1["기준: SM마다<br/>서로 다른 데이터 로드"]
+    Test --> Case2["명시적 멀티캐스트<br/>CTA 1개가 클러스터 전체에<br/>멀티캐스트 로드 발행"]
+    Test --> Case3["암묵적 멀티캐스트<br/>모든 CTA가 각자<br/>같은 데이터에 TMA 로드 발행"]
+
+    style Case2 fill:#f0fdf4,stroke:#16a34a
+    style Case3 fill:#fff7ed,stroke:#ea580c
+```
+
+명시적 멀티캐스트는 L2 트래픽을 이론적 이상치("1/클러스터 크기" 만큼의 L2 바이트/SMEM 바이트)까지 완벽히 줄입니다. 암묵적 멀티캐스트도 SMEM 채움 처리량 자체는 명시적 방식과 거의 동일하지만, L2 요청 병합기가 완벽하지는 않아 전송량이 늘어날수록(특히 64바이트 전송 이상부터) L2 트래픽이 명시적 방식보다 조금씩 더 많아집니다.
+
+**📌 용어 풀이: L2 요청 병합기(LRC)가 하는 일**
+> - L2 요청 병합기는 L2 캐시로 들어오는 요청들을 미리 살펴보고, 같은 데이터를 요청하는 것들을 하나로 합쳐서 L2에 전달하는 하드웨어 유닛
+> - 프로그래머가 명시적으로 멀티캐스트를 요청하지 않아도, 여러 CTA가 우연히 같은 데이터를 각자 요청하면 이 유닛이 어느 정도 자동으로 중복을 줄여줌 — 다만 완벽하지 않아 전송량이 클수록 명시적 멀티캐스트 대비 효율이 떨어짐
+
+---
+
+## 8. DSMEM vs SMEM
+
+**📌 핵심:**
+- DSMEM(분산 공유 메모리)은 Hopper부터 지원하는 기능으로, 클러스터 안의 CTA들이 서로의 공유 메모리(SMEM)에 접근할 수 있게 해줌 — CTA 간 리덕션(값 합산 등) 연산에 유용
+- 실측 결과 DSMEM으로 다른 CTA의 메모리를 읽는 처리량은 SM 로컬 SMEM의 128바이트/사이클보다 뚜렷이 낮음 — DSMEM 로드는 전역 메모리 로드처럼 패킷 단위로 처리되어, 로컬 SMEM의 뱅크 충돌 회피 패턴이 아니라 GMEM(전역 메모리)에 가까운 연속 접근 패턴을 써야 함
+- 실측 중 발견한 함정: 로컬 SMEM에서 128바이트/사이클 최대 처리량을 내려면 `ld.shared`를 `::cluster` 옵션 없이 써야 함 — `ld.shared::cluster`를 쓰면 컴파일러가 일반 `LD` 명령어를 내보내 로컬 SMEM 최대 처리량에 도달하지 못함
+- 결론: DSMEM에서 더 높은 처리량을 내려면 `ld.shared::cluster` 대신 한 번에 더 많은 데이터를 옮기는 `cp.async.bulk`(PTX)/`UBLKCP`(SASS) 명령어로 전환해야 함
+
+---
+
+```mermaid
+flowchart TD
+    DSMEM["DSMEM(분산 공유 메모리)<br/>Hopper부터 지원"] --> D1["클러스터 내 CTA들이<br/>서로의 SMEM에 접근 가능"]
+    D1 --> D2["활용: CTA 간 리덕션<br/>(값 합산 등)"]
+    DSMEM --> D3["처리량: 로컬 SMEM의<br/>128바이트/사이클보다<br/>뚜렷이 낮음"]
+
+    style DSMEM fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style D3 fill:#fef2f2,stroke:#dc2626
+```
+
+```mermaid
+flowchart TD
+    AccessPattern["접근 패턴 차이"] --> Local["로컬 SMEM: 뱅크 충돌을<br/>피하는 인터리브 접근 패턴"]
+    AccessPattern --> Remote["DSMEM(원격): 전역 메모리처럼<br/>패킷 단위, 연속 접근 패턴 필요"]
+
+    style Local fill:#eff6ff,stroke:#3b82f6
+    style Remote fill:#fff7ed,stroke:#ea580c
+```
+
+**📌 용어 풀이: 실측 중 발견한 `ld.shared::cluster` 함정**
+> - 로컬 SMEM에서 최대 128바이트/사이클을 내려면 `ld.shared` 명령어를 `::cluster` 옵션 없이 써야 함 — 이 옵션을 붙이면 컴파일러가 특화된 `LDS` 대신 일반적인 `LD` 명령어를 내보내, 로컬 SMEM 최대 처리량에 도달하지 못함
+> - `ld.shared::cluster`로 원격(DSMEM) 접근 처리량을 더 끌어올리려 시도했지만 한계가 있었고, 결국 한 번에 더 큰 데이터를 옮기는 `cp.async.bulk`(PTX)/`UBLKCP`(SASS)로 전환해서야 DSMEM에서 조금 더 높은 처리량을 얻을 수 있었음
+> - 이 사례는 PTX 문법이 비슷해 보여도 실제 컴파일 결과(SASS 명령어)가 달라 성능이 크게 갈릴 수 있음을 보여주는 실증 사례
+
+---
+
+## 9. 5세대 텐서 코어 MMA: 처리량 분석
+
+**📌 핵심:**
+- MMA(행렬곱+누적)는 텐서 코어의 핵심 연산 명령어로, Hopper에서 Blackwell으로 갈수록 성능이 행렬 모양(shape)에 점점 더 민감해짐 — Blackwell 신규 2SM MMA(`cta_group::2`)는 CTA 쌍이 SM 2개에 걸쳐 하나의 MMA를 협력 수행(입력 A는 복제, B·D는 절반씩 분담)해 더 큰 행렬 연산을 가능케 함
+- 실측 결과 UMMA(Blackwell 5세대 MMA 명령어)는 거의 모든 데이터 포맷·SM 구성에서 이론상 최대치에 가까운 처리량을 냄 — 1SM MMA는 M=64일 때 이론치의 최대 50%(연산 경로 절반만 활용), M=128일 때는 거의 100%
+- 2SM MMA는 M=128·N=64에서 90%, 다른 N 크기에서는 거의 100%에 도달하며, M=256(SM당 M=128과 동일해 연산 경로 전체 활용)은 모든 설정에서 거의 100% 유지 — 데이터 타입 비트 폭이 같으면 포맷이 달라도 처리량이 동일하고, 마이크로스케일링 포맷의 오버헤드도 사실상 없음
+- 결론: 입력 행렬을 SMEM(공유메모리)·TMEM(텐서전용메모리)에 어떻게 배치하는지(SS vs TS 레이아웃)에 따라 작은 N 크기에서 처리량 격차가 발생 — N이 128 미만이면 SS 레이아웃은 SMEM 대역폭에 발목 잡혀 TS 레이아웃보다 처리량이 낮음
+
+---
+
+```mermaid
+flowchart TD
+    MMA_["MMA(행렬곱+누적)<br/>텐서 코어 핵심 명령어"] --> Shape["Hopper→Blackwell<br/>성능이 행렬 모양(shape)에<br/>점점 더 민감해짐"]
+    Shape --> TwoSM["Blackwell 2SM MMA<br/>(cta_group::2)<br/>CTA 쌍이 SM 2개로 협력 수행"]
+
+    style MMA_ fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style TwoSM fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Peak["UMMA 실측 처리량<br/>(이론상 최대치 대비)"] --> P1["1SM MMA, M=64<br/>최대 50%(연산 경로 절반만 활용)"]
+    Peak --> P2["1SM MMA, M=128<br/>거의 100%"]
+    Peak --> P3["2SM MMA, M=256<br/>모든 설정에서 거의 100%<br/>(SM당 M=128, 경로 전체 활용)"]
+
+    style P1 fill:#fef2f2,stroke:#dc2626
+    style P3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+2SM MMA는 M=128일 때 N=64에서 90% 피크, 그 밖의 N 크기에서는 거의 100%에 도달합니다. M128N64는 TMEM·L2·SMEM 등 다른 하드웨어 유닛에 발목 잡힌 것으로 추정됩니다. 데이터 타입 비트 폭이 같으면 포맷이 달라도 처리량은 동일했고, 마이크로스케일링 포맷의 오버헤드도 사실상 없었습니다.
+
+```mermaid
+flowchart TD
+    Layout["MMA 입력 레이아웃 2종"] --> SS["SS: A·B 모두 SMEM에 저장"]
+    Layout --> TS["TS: A는 TMEM, B는 SMEM에 저장"]
+    SS --> Compare2["M=128 기준 비교:<br/>TS는 거의 피크 도달<br/>SS는 작은 N에서 저조,<br/>N=128에서 따라잡음"]
+
+    style SS fill:#fff7ed,stroke:#ea580c
+    style TS fill:#eff6ff,stroke:#3b82f6
+```
+
+**📌 용어 풀이: SS 레이아웃이 작은 N에서 느린 이유(SMEM 대역폭 병목)**
+> - FP16 기준 M=128, N=64, K=16 예시로 계산하면, A행렬 4,096바이트+B행렬 2,048바이트를 옮기는 데 SMEM 대역폭(128바이트/사이클)으로는 48사이클이 걸리지만, 실제 연산(26만 2,144 FLOPs)은 32사이클이면 끝남
+> - 즉 데이터를 옮기는 시간(48사이클)이 계산하는 시간(32사이클)보다 길어 "메모리 대역폭이 병목"인 상태 — N이 128에 도달해야 비로소 계산 시간이 옮기는 시간을 넘어서 "연산이 병목"인 상태로 전환됨
+> - 같은 원리가 다른 데이터 타입에도 적용되며, FP8 1SM MMA 전체 형태의 처리량-연산량 그래프(루프라인)를 그려보면 N<256 구간은 명확히 메모리 병목 영역(기울기 약 128바이트/사이클=SMEM 대역폭)으로 나타남
+
+2SM MMA는 1SM 대비 연산 자원 2배를 쓸 때 정확히 2배의 처리량을 내는 "완벽한 약한 스케일링"을 모든 포맷·형태에서 달성합니다.
+
+특히 SS 레이아웃의 작은 형태에서는 2배를 넘는 속도 향상까지 나타나는데, SS가 N<128에서 SMEM 대역폭에 발목 잡힌 상태였던 것을 2SM 구조가 B행렬을 두 SM에 나눠 분담해 완화하기 때문입니다.
+
+```mermaid
+flowchart TD
+    Scaling["2SM MMA 스케일링 효과"] --> Perfect["일반: 연산자원 2배→<br/>처리량 정확히 2배<br/>(완벽한 약한 스케일링)"]
+    Scaling --> Over["SS 레이아웃 소형 N:<br/>2배 초과 속도 향상<br/>(SMEM 병목을 2SM이 분담해 완화)"]
+
+    style Perfect fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Over fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+*작성 진행률: 약 75% 완료*
+*업데이트: 7\~9장(비동기 복사 vs TMA 비교·멀티캐스트, DSMEM vs SMEM, MMA 처리량 분석) 작성 완료*
