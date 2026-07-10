@@ -242,5 +242,179 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 19% 완료*
-*업데이트: 헤더·목차·용어 정리, 1\~3장(개요, 스펙 업그레이드, 랙 아키텍처 2종 개관) 작성 완료*
+## 4. 실리콘과 패키징 - N3P 공정과 CoWoS-R, 이중 테이프아웃
+
+**📌 핵심:**
+- Trainium3는 Trn2의 N5 공정에서 **TSMC N3P**로 이전 — Vera Rubin, AMD MI450X의 AID(Active Interposer Die)와 함께 N3P 최초 채택 사례 중 하나이며, N3P 특유의 누설전류 이슈로 일정이 밀릴 가능성도 있음
+- N3P는 N3E 대비 완전히 새로운 설계 규칙 없이 **같은 누설전류 기준 속도 5% 향상, 또는 같은 클럭 기준 전력 5\~10% 절감**, 밀집 로직·SRAM·아날로그 혼합 설계에서 밀도 4% 향상 정도의 점진적 개선("HPC 다이얼") — 거대 AI ASIC이 원하는 딱 그 수준의 저마찰 개선
+- 패키징은 실리콘 인터포저 1장이 아니라 **CoWoS-R 어셈블리 2개**로 구성 — 저비용 유기 인터포저 기반이라 실리콘 인터포저 대비 기계적 유연성도 좋음
+- 결론: 설계는 Annapurna(프론트엔드)+Alchip(백엔드) 분담 체제, 마스크셋도 Alchip 소유("Anita")와 Annapurna 소유("Mariana") 이중 테이프아웃으로 나뉘며 물량 대다수는 Mariana — 이 과정에서 전세대 설계사였던 Marvell은 소켓 자체를 잃음
+
+---
+
+```mermaid
+flowchart TD
+    N3P["N3P = 3나노<br/>플랫폼의 'HPC 다이얼'"] --> Opt1["같은 누설전류 기준<br/>속도 약 5% 향상"]
+    N3P --> Opt2["또는 같은 클럭 기준<br/>전력 5\~10% 절감"]
+    N3P --> Opt3["혼합 설계(로직+SRAM+<br/>아날로그) 밀도 약 4%↑"]
+    Opt3 --> Fit["거대 AI ASIC이 원하는<br/>딱 그 수준의<br/>점진적·저마찰 개선"]
+
+    style N3P fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Fit fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+N3P는 단일 돌파구가 아니라 여러 DTCO(설계-공정 공동 최적화) 미세 조정이 쌓인 결과입니다. N3 세대 FinFlex 라이브러리로 블록 안에서 넓은 핀·좁은 핀을 섞어 구동력과 면적·누설전류를 미세 조정하고, 하위 금속층의 라이너·배리어 공정을 개선해 배선·비아 저항을 낮췄습니다. 이 개선분이 모여 긴 글로벌 배선에서 더 높은 클럭이나 더 낮은 최소 동작전압(Vmin)을 지원할 여유를 만들어냅니다.
+
+```mermaid
+flowchart TD
+    Challenge["N3P의 대가"] --> Pitch["최소 금속 피치가<br/>20나노 초반대까지 축소,<br/>고종횡비 비아·타이트한<br/>광학 축소"]
+    Pitch --> Variability["배선 하부 공정(BEOL)<br/>변동성·저항 증가 →<br/>비아 형상·언더에치·<br/>유전체 손상이 1차 문제화"]
+    Variability --> Yield["결과: 결함밀도 개선이<br/>예상보다 느림 →<br/>수율 위해 재설계하거나<br/>공정 개선 대기열에서 대기"]
+
+    style Pitch fill:#fef2f2,stroke:#dc2626
+    style Yield fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Package["Trainium3 패키지 구조"] --> NoMono["실리콘 인터포저 1장이<br/>아니라 CoWoS-R<br/>어셈블리 2개로 구성"]
+    NoMono --> Sub["두 컴퓨트 다이는<br/>서로 기판(substrate)을<br/>통해 통신"]
+    Package --> Organic["유기 박막 인터포저:<br/>폴리머 위 구리 RDL 6층,<br/>레티클급 면적, 실리콘<br/>인터포저 대비 저비용+<br/>기계적 유연성 우수"]
+    Organic --> IPD["단, 32Gbps 이상 레인이<br/>많아지면 유기 인터포저만으론<br/>배선 공간 부족 → IPD(집적<br/>수동소자) 수천 개로 보완"]
+    IPD --> Detail["IPD 덕에 서브마이크론<br/>배선 밀도, 미세 마이크로범프<br/>피치, HBM PHY 등 잡음<br/>구간의 강력한 디커플링 확보"]
+
+    style NoMono fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style IPD fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Detail fill:#f0fdf4,stroke:#16a34a
+```
+
+칩 하단에는 20층 빌드업의 고층 ABF 기판이 자리해, 전력과 XSR 신호를 모듈 경계의 130\~150마이크로미터 C4 범프까지 팬아웃한 뒤 보드와 연결합니다.
+
+```mermaid
+flowchart TD
+    Design["설계·제조 분담 체제"] --> Front["프론트엔드: Annapurna<br/>(PCIe SerDes는<br/>시높시스에서 라이선스)"]
+    Design --> Back["백엔드 물리설계+<br/>패키지 설계: Alchip"]
+    Design --> Tape["이중 테이프아웃"]
+    Tape --> Anita["Anita(Alchip 소유<br/>마스크셋): Alchip이<br/>TSMC서 직접 부품 조달"]
+    Tape --> Mariana["Mariana(Annapurna 소유<br/>마스크셋): Annapurna가<br/>직접 부품 조달,<br/>물량 대다수 차지"]
+
+    style Front fill:#eff6ff,stroke:#3b82f6
+    style Mariana fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+Amazon·Annapurna는 원가에 극도로 민감해 공급업체를 강하게 압박합니다. Broadcom의 ASIC 거래와 비교하면 Trainium 프로젝트는 설계 파트너(Alchip·Marvell)에게 돌아가는 이익 풀 자체가 훨씬 작으며, Perf per TCO 관점에서도 Annapurna는 TCO(분모)를 낮추는 쪽에 훨씬 무게를 둡니다.
+
+```mermaid
+flowchart TD
+    Marvell["Marvell의 몰락"] --> Was["Trainium2는<br/>Marvell이 설계"]
+    Was --> Lost["이번 세대(Trn3) 설계<br/>경쟁에서 Alchip에 패배"]
+    Lost --> Why1["실행 부진: 개발 일정이<br/>지나치게 길어짐"]
+    Lost --> Why2["RDL 인터포저 설계<br/>난항 → Alchip이 개입해<br/>수습해야 했음"]
+    Lost --> Chiplet["Marvell 안(案)은 I/O를<br/>별도 칩렛으로 분리한<br/>설계였으나, 실제 채택된<br/>Trn3는 모놀리식 다이 유지"]
+
+    style Marvell fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Lost fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+## 5. Trainium4 로드맵 - UALink와 NVLink 이중 트랙
+
+**📌 핵심:**
+- Trainium4는 스케일업 프로토콜이 다른 **두 트랙**으로 복수 설계사가 참여 — 1트랙은 UALink 224G, 2트랙은 Nvidia NVLink 448G BiDi 프로토콜 채택(양쪽 모두 백엔드 설계는 Alchip이 주도)
+- Nvidia의 VR NVL144와 NVLink Fusion 제품(Trainium4 포함) 사이에는 상당한 출시 시차가 예상 — NVLink Fusion 트랙은 퓨전 칩렛이 요구하는 추가 통합·검증 작업 때문에 더 밀릴 수 있고, Nvidia의 혼합신호 엔지니어 대다수가 우선 자사 VR NVL144 신제품 출시에 매달려 있기 때문
+- Trainium4의 NVLink Fusion 출시가 늦더라도 AWS는 Nvidia의 통상 총마진(약 75%)보다 유리한 조건을 확보했을 가능성이 큼 — Nvidia 입장에서도 AWS와의 상호운용성 허용이 시스템 차원의 록인(lock-in) 유지에 도움이 되므로 가격을 더 매력적으로 제시할 유인이 있음
+- 결론: VR NVL144가 72패키지 고정 NVLink 도메인에 묶인 것과 달리, Trainium4는 랙 간 AEC로 NVLink 스케일업을 확장해 **144개 이상**의 일관성(coherent) 도메인을 구성 가능 — NVLink 6는 400G 양방향(BiDi) SerDes로 같은 선에서 200G 송신·200G 수신을 동시에 수행하며 이미 구리 배선의 실용적 한계에 근접, 일부 벤더는 600G BiDi로의 절반 세대 도약도 시도할 전망
+
+---
+
+```mermaid
+flowchart TD
+    Trn4["Trainium4<br/>스케일업 프로토콜 2트랙"] --> T1["1트랙: UALink 224G"]
+    Trn4 --> T2["2트랙: Nvidia NVLink<br/>448G BiDi"]
+    T1 --> Backend["양쪽 모두 백엔드 설계는<br/>Alchip이 주도"]
+    T2 --> Backend
+
+    style Trn4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Backend fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    Timing["출시 시차 리스크"] --> Gap["Nvidia VR NVL144 vs<br/>NVLink Fusion(Trainium4 등)<br/>사이 상당한 시차 예상"]
+    Gap --> Reason1["퓨전 칩렛은 추가 통합·<br/>검증 요구사항 있음"]
+    Gap --> Reason2["Nvidia 혼합신호<br/>엔지니어 대다수가<br/>VR NVL144 신제품 출시에<br/>우선 투입됨"]
+
+    style Gap fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Deal["상업 조건 전망"] --> Margin["Nvidia 통상 총마진<br/>약 75%보다 AWS는<br/>유리한 조건 확보 추정"]
+    Margin --> Incentive["Nvidia도 AWS와의<br/>상호운용 허용이<br/>자사 시스템 록인 유지에<br/>도움되므로 가격 유인 존재"]
+
+    style Margin fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Scale["스케일업 도메인 크기 비교"] --> VR["Nvidia VR NVL144:<br/>72패키지 고정<br/>NVLink 도메인"]
+    Scale --> T4["Trainium4: 랙 간 AEC로<br/>확장 → 144개 이상<br/>일관성 도메인 구성 가능"]
+    T4 --> Signal["NVLink 6: 400G BiDi<br/>SerDes(같은 선에서<br/>200G 송신+200G 수신<br/>동시), 구리 실용 한계 근접"]
+
+    style VR fill:#eff6ff,stroke:#3b82f6
+    style T4 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+## 6. 레거시 토러스에서 스위치드로 - 전환 이유
+
+**📌 핵심:**
+- Trn2는 NL16 2D 토러스(반 랙, 4x4 메시로 칩 16개 스케일업 월드)와 NL32x2 3D 토러스(NL16 반 랙 4개를 AEC로 연결, 랙 2개·칩 64개 4x4x4 구조) 2종만 존재 — 스위치 방식은 아예 없었음
+- Trn2 물량 대다수는 NL64 3D 토러스로 쏠렸는데, 이는 Anthropic의 Project Rainier가 최대 수요처였고 그 추론 모델이 더 큰 스케일업 토폴로지를 요구했기 때문
+- Nvidia가 GB200 NVL72(Oberon 아키텍처, all-to-all 스위치·72칩 월드사이즈)를 선보이자 업계 전체가 로드맵을 이 방식으로 전환 — AMD가 Oberon 유사 설계(MI400 Helios)를 가장 먼저 "발표"했지만, 실제로 이런 all-to-all 스위치 스케일업을 Nvidia 밖에서 처음 "출하"하는 곳은 Trainium3를 앞세운 AWS(AMD MI450X UALoE72는 1년 늦게, 연말 목표; Meta도 AMD보다 먼저 스위치드 아키텍처 출하 예정)
+- 결론: re:Invent에서 공개된 "Trainium3 UltraServer"는 NL72x2 Switched를 가리키며, 스위치드 SKU는 이것과 공랭·저전력밀도인 NL32x2 Switched 2종으로 나뉨(7·8장에서 각각 상세 구조를 다룸)
+
+---
+
+```mermaid
+flowchart TD
+    Trn2Topo["Trn2 토폴로지 2종<br/>(스위치 방식 없음)"] --> NL16["NL16 2D 토러스:<br/>반 랙, 4x4 메시,<br/>칩 16개 스케일업 월드"]
+    Trn2Topo --> NL32["NL32x2 3D 토러스:<br/>NL16 반 랙 4개를 AEC 연결,<br/>랙 2개·칩 64개(4x4x4)"]
+
+    style NL16 fill:#eff6ff,stroke:#3b82f6
+    style NL32 fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Demand["Trn2 물량이<br/>NL64 3D 토러스로 쏠린 이유"] --> Anthropic["Anthropic Project Rainier가<br/>최대 수요처"]
+    Anthropic --> Need["Anthropic 추론 모델은<br/>더 큰 스케일업<br/>토폴로지가 필요"]
+
+    style Anthropic fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Pivot["업계 전체의<br/>스위치 방식 전환"] --> Nvidia_["Nvidia GB200 NVL72<br/>(Oberon, all-to-all,<br/>72칩 월드사이즈) 선도"]
+    Nvidia_ --> AMDann["AMD: MI400 Helios로<br/>Oberon 유사 설계<br/>가장 먼저 '발표'"]
+    Nvidia_ --> AWSship["AWS: Trainium3로<br/>Nvidia 외 최초 실제<br/>'출하'(AMD보다 1년 빠름)"]
+    AWSship --> AMDlate["AMD MI450X UALoE72:<br/>1년 늦게, 연말 목표<br/>(Meta도 AMD보다 먼저 출하)"]
+
+    style AWSship fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style AMDlate fill:#fef2f2,stroke:#dc2626
+```
+
+```mermaid
+flowchart TD
+    Ultra["re:Invent 공개<br/>'Trainium3 UltraServer'"] --> Is["= NL72x2 Switched"]
+    Is --> Other["다른 스위치드 SKU:<br/>NL32x2 Switched<br/>(공랭, 저전력밀도)"]
+
+    style Is fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 38% 완료*
+*업데이트: 4\~6장(실리콘·패키징, Trainium4 로드맵, 레거시 토러스에서 스위치드로) 작성 완료*
