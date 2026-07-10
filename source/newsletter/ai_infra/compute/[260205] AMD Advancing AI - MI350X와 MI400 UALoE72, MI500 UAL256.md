@@ -355,6 +355,217 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 50% 완료 (1\~6장 작성)*
-*업데이트: DGX Lepton, MI355X 랙 스케일 논란, 하이퍼스케일러 채택 현황 섹션 작성 완료*
+## 7. AMD 뉴클라우드 렌탈 시장의 구조적 약점
+
+**📌 핵심:**
+- Nvidia 전문 뉴클라우드는 100곳 넘게 있는데 AMD 전문 뉴클라우드는 극소수 — 공급 부족과 선택지 부족이 AMD GPU 임대 가격을 인위적으로 높여 원가 경쟁력을 갉아먹음
+- 2025년 2분기 기준 H200의 1개월 계약 임대가는 시간당 약 $2.50인데, MI325X는 1개월 계약 자체가 존재하지 않고 MI300X는 $2.50/시간으로 책정돼 H200 대비 경쟁력이 없음
+- 추론 성능당비용으로 H200과 경쟁하려면 MI300X는 시간당 $2.10\~2.40 미만, MI325X는 $2.75\~3.00 수준이어야 하는데, 이 가격대를 제공하는 AMD 뉴클라우드는 사실상 없음(대규모 협상 없이는)
+- 결론: 이 가격 비효율 때문에 현재는 Nvidia가 임대 성능당비용에서 사실상 승리 — AMD의 하드웨어 경쟁력이 시장 가격에 제대로 반영되지 못하는 구조적 문제
+
+---
+
+```mermaid
+flowchart TD
+    Supply["뉴클라우드 공급 구조"] --> NvNeo["Nvidia 전문 뉴클라우드:<br/>100곳 이상"]
+    Supply --> AmdNeo["AMD 전문 뉴클라우드:<br/>극소수"]
+    AmdNeo --> HighPrice["결과: 공급 부족 →<br/>AMD GPU 임대가<br/>인위적으로 높게 형성"]
+
+    style AmdNeo fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style HighPrice fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Rental["2025년 2분기<br/>1개월 계약 임대가"] --> H200p["H200: 약 $2.50/시간<br/>(품질 낮은 클라우드는 더 저렴)"]
+    Rental --> M325["MI325X: 1개월 계약<br/>자체가 존재하지 않음"]
+    Rental --> M300["MI300X: $2.50/시간<br/>(H200과 동일가, 경쟁력 없음)"]
+
+    style H200p fill:#eff6ff,stroke:#3b82f6
+    style M300 fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Needed["H200과 경쟁하려면<br/>필요한 실제 가격"] --> N1["MI300X: 시간당<br/>$2.10~2.40 미만 필요"]
+    Needed --> N2["MI325X: 시간당<br/>$2.75~3.00 필요<br/>(상호작용성에 따라 상이)"]
+    N2 --> N3["현실: 이 가격대를<br/>협상 없이 제공하는<br/>AMD 뉴클라우드는 없음"]
+
+    style N3 fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 8. AMD의 뉴클라우드 생태계 육성 전략
+
+**📌 핵심:**
+- 몇 달 전까지 AMD는 뉴클라우드 생태계 확대에 소극적이었으나, 최근 리더십이 건강한 뉴클라우드 생태계가 개발자 채택과 렌탈 가격 안정화에 핵심적이라 인식하고 전략을 전환
+- AWS·OCI·Digital Ocean·Vultr·Tensorwave·Crusoe 등에 파격적 인센티브 제공 — 고객이 AMD GPU를 더 많이 구매하는 대가로, AMD가 그 물량의 상당 부분을 장기 계약으로 재임대해 내부 소프트웨어 개발에 사용(Nvidia가 GCP·OCI·AWS·Azure·CoreWeave에서 이미 하는 방식과 동일)
+- 일부 뉴클라우드에는 완전 리스크 제거 옵션까지 제공 — 만약 뉴클라우드가 용량을 다 못 팔면 AMD가 백스톱(최종 안전판)으로 직접 임대해줌
+- 결론: AMD Developer Cloud 출시로 MI300X 온디맨드 가격을 시간당 $1.99로 대폭 인하(기존 AMD 뉴클라우드 시장가 $3.00 대비) — 시장 전체의 렌탈 가격을 끌어내리는 효과 예상
+
+---
+
+```mermaid
+flowchart TD
+    Strategy2["AMD 뉴클라우드<br/>전략 전환"] --> Before2["과거: 뉴클라우드에<br/>AMD 호스팅 인센티브 부족"]
+    Strategy2 --> After2["현재: 건강한 생태계가<br/>개발자 채택·가격 안정화의<br/>핵심임을 인식"]
+
+    style After2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Deal2["재임대 인센티브 구조"] --> Buy["뉴클라우드가<br/>AMD GPU 더 많이 구매"]
+    Buy --> Rentback["대가로 AMD가 상당 물량을<br/>장기 계약으로 재임대<br/>(내부 소프트웨어 개발용)"]
+    Rentback --> Backstop["일부는 완전 리스크 제거:<br/>미판매 용량은 AMD가<br/>백스톱으로 직접 임대"]
+
+    style Rentback fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Backstop fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    DevCloud["AMD Developer Cloud"] --> Price["MI300X 온디맨드<br/>$1.99/시간(GPU당)"]
+    Price --> Compare2["기존 AMD 뉴클라우드<br/>시장가 $3.00/시간 대비<br/>대폭 인하"]
+    Compare2 --> MarketEffect["예상 효과: 기존<br/>AMD 뉴클라우드도<br/>$2/시간 수준으로 인하 압박"]
+
+    style Price fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style MarketEffect fill:#fff7ed,stroke:#ea580c
+```
+
+이 인센티브 구조 덕에 AMD와 협력하는 뉴클라우드는 Nvidia 클러스터만 단기로 임대해 가격·가동률 리스크를 온전히 떠안는 경쟁사보다 상대적으로 덜 위험한 사업 모델을 짤 수 있습니다.
+다만 저자가 실제 테스트해본 결과, 신규 사용자 기본 할당량이 GPU 0개로 설정돼 있어 할당량 증량이 까다로웠습니다 — AMD가 신규 사용자 기본 할당량을 최소 MI300X 16개로 조정할 것을 권고합니다.
+
+---
+
+## 9. ROCm 소프트웨어 개선과 엔지니어링 우선순위 이슈
+
+**📌 핵심:**
+- ROCm 7은 추론 성능에 집중 — 추론 처리량이 ROCm 6 대비 평균 3.5배, DeepSeek R1 서빙 시 Nvidia B200 대비 1.3배 향상됐다고 AMD는 주장(저자는 검증 예정)
+- PyTorch CI(자동 검증) 착수는 긍정적이나 아직 병합된 MI355 PR은 없음, MLPerf 학습 제출은 단일 노드 수준까지만 진행 — 반면 MIG 파티셔닝(GPU 8분할) 프로젝트는 고객 누구도 요청하지 않은 곳에 자원을 낭비 중이라는 비판
+- RCCL(집단연산 라이브러리)은 여전히 Nvidia NCCL의 포크 수준에 머물러 AMD 다중 노드 성능의 핵심 병목 — 완전히 새로 작성해야 한다는 게 저자의 반복된 권고
+- 결론: 소프트웨어 개선 속도는 빨라지고 있지만 우선순위 설정(불필요한 MIG 대신 다중 노드 지원 강화)과 통신 라이브러리 재작성이라는 근본 과제는 아직 남아있음
+
+---
+
+### ROCm 7과 추론 소프트웨어
+
+```mermaid
+flowchart TD
+    ROCm7["ROCm 7 개선사항"] --> Claim2["AMD 주장: 추론 처리량<br/>ROCm 6 대비 평균 3.5배,<br/>DeepSeek R1 서빙 시 B200 대비 1.3배"]
+    ROCm7 --> Framework2["vLLM·SGLang 지원 +<br/>llm-d(Nvidia Dynamo 대항마)로<br/>분리형 서빙(PD) 지원"]
+
+    style Claim2 fill:#eff6ff,stroke:#3b82f6
+    style Framework2 fill:#f0fdf4,stroke:#16a34a
+```
+
+llm-d 스택은 Nvidia Dynamo의 KVCache 관리자와 동등한 기능을 아직 갖추지 못했습니다. KVCache 관리자는 추론 워크로드의 처리량을 몇 배씩 끌어올릴 수 있어 TCO에 큰 영향을 주는 핵심 요소입니다.
+
+```mermaid
+flowchart TD
+    Triton["Triton(커널 작성 라이브러리)<br/>지원 현황"] --> Func["작년: 기능적 지원 확보"]
+    Triton --> Perf2["ROCm 7: 성능 개선에 집중"]
+    Perf2 --> Wish["저자 바람: FlexAttention 등<br/>고급 기능까지 확장"]
+
+    style Func fill:#eff6ff,stroke:#3b82f6
+```
+
+ByteDance Seed가 만든 Triton Distributed(연산·GPU 통신 오버랩 지원)에 AMD가 관심을 보이고 있지만, Triton 관리자인 OpenAI가 이 기여를 원본 라이브러리에 받아들일지는 불확실합니다.
+중국向 반도체 수출 규제를 감안하면 ByteDance가 서방 GPU용 오픈소스 기여에서 발을 뺄 가능성도 있습니다. 다만 ByteDance는 AMD에 상당한 투자를 이어가며 임대 물량도 늘릴 전망이지만, 컴퓨트 확장의 대부분은 여전히 Nvidia 임대에 의존할 것으로 예상됩니다.
+
+AMD는 데이터 전송 인터페이스 Mooncake Transfer Engine과 전문가 병렬 통신 라이브러리 DeepEP를 통합 중이라고 밝혔지만, 이 리포트 작성 시점까지 오픈소스 ROCm 저장소에서 실제 구현은 확인되지 않았습니다.
+한편 AMD Developer Cloud와 함께 공개한 Python 패키지 "rocm"은 ROCm PyTorch·HipBLAS 등을 손쉽게 설치하게 해주며, 전체 코드는 GitHub 저장소 ROCm/TheRock에 오픈소스로 공개됐습니다.
+
+### PyTorch CI 경쟁 - AMD vs Nvidia
+
+```mermaid
+flowchart TD
+    CI["오픈소스 PyTorch CI<br/>착수 현황"] --> AMDci["AMD: MI355 CI 착수,<br/>PR 병합은 아직 없음<br/>(Day 1부터 준비하는 자세는 긍정적)"]
+    CI --> NVci["Nvidia: Blackwell 양산<br/>6개월째인데도 오픈소스<br/>PyTorch CI 미착수(내부 CI만)"]
+
+    style AMDci fill:#f0fdf4,stroke:#16a34a
+    style NVci fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Fund["PyTorch CI 비용 부담"] --> Meta3["Meta: 월 100만 달러 이상<br/>부담(PyTorch CI 비용 대부분)"]
+    Fund --> AMDpay["AMD: 자사 오픈소스<br/>PyTorch CI 비용 직접 부담"]
+    Fund --> NVpledge["Nvidia: B200 48개를<br/>PyTorch Foundation에<br/>기부 예정(계획 단계)"]
+
+    style Meta3 fill:#eff6ff,stroke:#3b82f6
+    style NVpledge fill:#fff7ed,stroke:#ea580c
+```
+
+저자는 6개월 늦었더라도 없는 것보다는 낫다고 평가하면서도, Nvidia가 PyTorch CI에 더 적극 투자하고 소비자용 GPU까지 CI에 포함시켜야 한다고 권고합니다 — 현재 Nvidia 소비자 GPU는 CI 부족으로 일부 프레임워크에서 불안정성을 겪고 있습니다.
+
+### MLPerf 훈련 제출 - 첫 걸음
+
+```mermaid
+flowchart TD
+    MLPerf["ROCm 첫 MLPerf<br/>Training 제출"] --> Scope["범위: 단일 노드<br/>Llama2 70B LoRA 파인튜닝 +<br/>BERT 학습"]
+    Scope --> Meaning["의미: 단일 AMD 노드에서<br/>학습이 작동함을 입증"]
+    Meaning --> Next2["다음 과제: MLPerf<br/>Llama 405B 다중 노드<br/>벤치마크 참여 필요"]
+
+    style Meaning fill:#f0fdf4,stroke:#16a34a
+    style Next2 fill:#fff7ed,stroke:#ea580c
+```
+
+AMD의 MLPerf 제출은 따라 하기 쉬운 재현 가능 안내서를 함께 제공하는 점이 돋보이며, 이는 재현이 어려운 것으로 정평이 난 Nvidia의 MLPerf 제출 방식과 대비됩니다.
+
+### MIG 파티셔닝 비판 - 누구도 요청하지 않은 기능
+
+```mermaid
+flowchart TD
+    MIG["MIG 파티셔닝<br/>(GPU 1개→8개 분할)"] --> NoAsk["Meta·OpenAI·x.AI<br/>누구도 요청 안 함<br/>(온라인 추론은 최소 GPU 1개 필요)"]
+    MIG --> Waste2["평가: 대용량 HBM을<br/>가진 최첨단 칩을 만들어놓고<br/>8분할하려는 건 비논리적"]
+
+    style Waste2 fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    RealNeed["실제 고객이 원하는 것"] --> Opposite["MIG의 정반대:<br/>DeepEP·분리형 프리필로<br/>다중 노드(최소 GPU 16개)<br/>추론 지원 강화"]
+
+    style Opposite fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+### 개발자 세션 트랙의 아쉬움과 RCCL 통신 라이브러리
+
+AMD Advancing AI의 개발자 세션은 ROCm 블로그의 개선 폭에 비해 아쉬웠습니다 — RCCL·Composable Kernels·rocSHMEM·aiter 등 주요 라이브러리 관련 발표가 전무했습니다. 저자는 이후 더 집중된 별도 컨퍼런스에서 발표 폭을 넓히길 희망합니다.
+
+```mermaid
+flowchart TD
+    NIC["AMD 신규 400G NIC"] --> UEC["Ultra Ethernet(UEC) 대응 +<br/>기존 RoCEv2 프로토콜도 지원"]
+    NIC --> Placement["UEC 모드: 패킷 스프레잉과<br/>순서 무관 직접 배치 지원<br/>(NIC 재정렬 버퍼 불필요,<br/>Bluefield-3와 차별화)"]
+
+    style UEC fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    Adoption2["AMD 자체 NIC<br/>채택 현황"] --> Yes2["Oracle·Tensorwave:<br/>AMD NIC 채택 확정"]
+    Adoption2 --> No2["Meta: 초기 테스트 미흡으로<br/>보류, MI355X 클러스터엔<br/>ConnectX-7 사용"]
+
+    style Yes2 fill:#f0fdf4,stroke:#16a34a
+    style No2 fill:#fef2f2,stroke:#dc2626
+```
+
+AMD의 신규 NIC는 RING·PAT 알고리즘의 all-gather 집단연산 오프로드도 지원하며, CPU 프록시 스레드까지 NIC로 오프로드한다고 주장하지만 IBGDA 방식인지 다른 방식인지는 불명확합니다.
+
+```mermaid
+flowchart TD
+    RCCL2["ROCm 7.0 RCCL<br/>(집단연산 라이브러리)"] --> Copy["평가: 여전히 Nvidia<br/>NCCL의 포크 수준"]
+    Copy --> Bottleneck["결과: AMD 다중 노드<br/>성능의 핵심 병목으로<br/>계속 작용"]
+    Bottleneck --> Recommend["저자 권고(반복):<br/>포크 대신 완전히<br/>새로 작성 필요"]
+
+    style Copy fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Recommend fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 65% 완료 (1\~9장 작성)*
+*업데이트: 뉴클라우드 렌탈 시장 약점, 생태계 육성 전략, ROCm 소프트웨어·엔지니어링 이슈 섹션 작성 완료*
 
