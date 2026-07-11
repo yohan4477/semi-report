@@ -51,7 +51,8 @@
       "mcp__fetch__fetch",
       "PushNotification",
       "Bash(node *)",
-      "Skill(dataviz)"
+      "Skill(dataviz)",
+      "Bash(cd *)"
     ]
   }
 }
