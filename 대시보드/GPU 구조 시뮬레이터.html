@@ -1,0 +1,251 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPU 구조 시뮬레이터 — 세대별 아키텍처</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6577; --line:#e3e7ee;
+    --accent:#2563eb; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-bg:#e8f6ec;
+    --warn:#d97706; --warn-bg:#fdf1df;
+    --risk:#dc2626; --risk-bg:#fdeaea;
+    --die:#eef1f6; --hbm:#dbe4f2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151c; --card:#1a1f2a; --ink:#e8ecf4; --sub:#9aa5b8; --line:#2a3140;
+      --accent:#7aa5f8; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-bg:#173323;
+      --warn:#f0a44e; --warn-bg:#3a2c17;
+      --risk:#f87171; --risk-bg:#3a1a1a;
+      --die:#212836; --hbm:#28324a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151c; --card:#1a1f2a; --ink:#e8ecf4; --sub:#9aa5b8; --line:#2a3140;
+    --accent:#7aa5f8; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-bg:#173323;
+    --warn:#f0a44e; --warn-bg:#3a2c17;
+    --risk:#f87171; --risk-bg:#3a1a1a;
+    --die:#212836; --hbm:#28324a;
+  }
+  :root[data-theme="light"]{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6577; --line:#e3e7ee;
+    --accent:#2563eb; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-bg:#e8f6ec;
+    --warn:#d97706; --warn-bg:#fdf1df;
+    --risk:#dc2626; --risk-bg:#fdeaea;
+    --die:#eef1f6; --hbm:#dbe4f2;
+  }
+  body{background:var(--bg); color:var(--ink); margin:0; padding:16px; font-size:15px; line-height:1.55;
+    font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;}
+  main{max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:16px;}
+  h1{font-size:1.25rem; margin:6px 0 0; letter-spacing:-.01em; text-wrap:balance;}
+  .stamp{color:var(--sub); font-size:.8rem; margin-top:3px;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+  section h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; color:var(--sub); margin:0 0 12px; font-weight:700;}
+  a{color:var(--accent); text-decoration:none;}
+  .tabs{display:flex; gap:6px; flex-wrap:wrap;}
+  .tab{border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:999px;
+    padding:5px 14px; font-size:.82rem; font-weight:600; cursor:pointer; font-family:inherit;}
+  .tab.on{background:var(--accent-soft); color:var(--accent); border-color:var(--accent);}
+  .tab:focus-visible,.play:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .genhead{display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
+  .genhead .n{font-weight:700; font-size:1.05rem;}
+  .genhead .y{color:var(--sub); font-size:.78rem; font-variant-numeric:tabular-nums;}
+  .badge{font-size:.68rem; font-weight:700; border-radius:6px; padding:1px 7px; margin-left:6px; vertical-align:middle;}
+  .badge.fc{background:var(--warn-bg); color:var(--warn);}
+
+  /* 패키지 도식 */
+  .pkg{display:flex; gap:8px; align-items:stretch; justify-content:center;}
+  .hbmcol{display:flex; flex-direction:column; gap:6px; justify-content:center;}
+  .stack{width:34px; min-height:34px; flex:1; max-height:52px; background:var(--hbm); border:1px solid var(--line);
+    border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-size:.58rem; font-weight:700; color:var(--sub); writing-mode:vertical-rl; letter-spacing:.06em;}
+  .dies{flex:1; max-width:440px; display:flex; gap:0; align-items:stretch;}
+  .die{flex:1; background:var(--die); border:1.5px solid var(--line); border-radius:8px; padding:8px; display:flex; flex-direction:column; gap:6px; min-width:0;}
+  .die .l2{background:var(--accent-soft); color:var(--accent); border-radius:4px; text-align:center;
+    font-size:.62rem; font-weight:700; padding:2px 0;}
+  .smgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(11px, 1fr)); gap:2px; align-content:start; flex:1; min-height:96px;}
+  .sm{aspect-ratio:1; background:var(--accent); opacity:.72; border-radius:2px;}
+  .now .sm{background:var(--good);}
+  .fcst .sm{background:var(--warn); opacity:.5; border-radius:2px;}
+  .fcst .sm.q{background:transparent; border:1px dashed var(--warn); opacity:.7;}
+  .bridge{width:26px; display:flex; align-items:center; justify-content:center; background:var(--warn-bg);
+    border-top:1.5px solid var(--line); border-bottom:1.5px solid var(--line);
+    font-size:.56rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl; letter-spacing:.05em;}
+  .iocol{display:flex; flex-direction:column; gap:6px; justify-content:center;}
+  .io{width:30px; flex:1; max-height:60px; background:var(--warn-bg); border:1px dashed var(--warn); border-radius:5px;
+    display:flex; align-items:center; justify-content:center; font-size:.56rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl;}
+  .nvl{margin:8px auto 0; max-width:440px; background:var(--card); border:1px dashed var(--line); border-radius:6px;
+    text-align:center; font-size:.7rem; color:var(--sub); font-weight:600; padding:3px 8px;}
+  .caption{color:var(--sub); font-size:.75rem; margin-top:10px; text-align:center;}
+
+  /* 스펙 칩 */
+  .facts{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px;}
+  @media (max-width:560px){ .facts{grid-template-columns:repeat(2,1fr);} }
+  .fact{border:1px solid var(--line); border-radius:8px; padding:7px 10px;}
+  .fact .k{color:var(--sub); font-size:.68rem; font-weight:700;}
+  .fact .v{font-size:.85rem; font-weight:700; font-variant-numeric:tabular-nums; margin-top:1px;}
+
+  /* 데이터 경로 */
+  .chain{display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:4px;}
+  .st{border:1.5px solid var(--line); border-radius:8px; padding:6px 10px; font-size:.78rem; font-weight:600; position:relative; background:var(--card);}
+  .st .tag{display:block; font-size:.62rem; font-weight:700; color:var(--good); margin-top:1px;}
+  .st.new{border-color:var(--good); background:var(--good-bg);}
+  .st.dim{opacity:.45; border-style:dashed;}
+  .st.dim .tag{color:var(--risk);}
+  .st.hot{border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 3px var(--accent-soft);}
+  .arrow{color:var(--sub); font-size:.8rem;}
+  .play{border:none; background:var(--accent); color:#fff; border-radius:8px; padding:6px 16px;
+    font-size:.84rem; font-weight:700; cursor:pointer; font-family:inherit; margin-bottom:10px;}
+  @media (prefers-color-scheme: dark){ .play{color:#0d1420;} }
+  :root[data-theme="dark"] .play{color:#0d1420;}
+  :root[data-theme="light"] .play{color:#fff;}
+  .pathnote{color:var(--sub); font-size:.78rem; margin-top:10px;}
+
+  /* SM 내부 */
+  .smin{display:flex; gap:6px; flex-wrap:wrap;}
+  .blk{border:1.5px solid var(--line); border-radius:8px; padding:8px 12px; font-size:.78rem; font-weight:600; background:var(--die);}
+  .blk .d{display:block; color:var(--sub); font-size:.65rem; font-weight:400; margin-top:1px;}
+  .blk.new{border-color:var(--good); background:var(--good-bg);}
+  .blk.tc{border-color:var(--accent); background:var(--accent-soft);}
+  .q{color:var(--sub); font-size:.75rem; margin-top:8px;}
+  .foot{color:var(--sub); font-size:.78rem; text-align:center; padding:4px 0 14px; line-height:1.7;}
+</style>
+<main>
+  <div>
+    <h1>GPU 구조 시뮬레이터 — 칩 안에서 무엇이 바뀌었나</h1>
+    <div class="stamp">Volta(2017) → Rubin(2026 전망) · 패키지 도식 + SM 내부 + 데이터 경로 · SemiAnalysis 코퍼스 연동</div>
+  </div>
+
+  <section>
+    <h2>세대 선택</h2>
+    <div class="tabs" role="tablist" id="tabs"></div>
+  </section>
+
+  <section>
+    <div class="genhead"><span class="n" id="gname"></span><span class="y" id="gyear"></span></div>
+    <h2>패키지 도식 — 다이 · HBM 스택 · 인터커넥트</h2>
+    <div class="pkg" id="pkg"></div>
+    <div class="nvl" id="nvl"></div>
+    <div class="caption" id="pkgcap"></div>
+    <div class="facts" id="facts"></div>
+  </section>
+
+  <section>
+    <h2>데이터 경로 — 피연산자가 텐서 코어에 닿는 길</h2>
+    <button class="play" id="play">▶ 데이터 흐름 재생</button>
+    <div class="chain" id="chain"></div>
+    <div class="pathnote" id="pathnote"></div>
+  </section>
+
+  <section>
+    <h2>SM 내부 — 이 세대에 추가된 블록</h2>
+    <div class="smin" id="smin"></div>
+    <div class="q">초록 테두리 = 이 세대에서 새로 생긴 블록 · 파란 블록 = 텐서 코어. 2017년 이후 진화의 방향은 하나 — "저정밀 연산을 넓히고, 데이터 이동을 연산과 분리해 비동기로".</div>
+  </section>
+
+  <div class="foot">
+    출처: <a href="https://newsletter.semianalysis.com/p/nvidia-tensor-core-evolution-from-volta-to-blackwell">텐서 코어 진화 [250623]</a> ·
+    <a href="https://newsletter.semianalysis.com/p/dissecting-nvidia-blackwell-tensor">Blackwell 해부 [260401]</a> ·
+    <a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution">Vera Rubin [260226]</a><br>
+    <a href="https://claude.ai/code/artifact/5b28fa3c-85d6-4c5a-ba97-8b44debc2faf">🏁 세대 레이스 시뮬레이터</a> ·
+    <a href="https://claude.ai/code/artifact/7b4ce9f2-6fe1-43ec-b1eb-1722bd24dadb">🧭 인텔리전스 대시보드</a>
+  </div>
+</main>
+<script>
+  const GENS = [
+    {id:'volta', n:'Volta · V100', y:'2017 · 1세대 텐서 코어', cls:'past', dies:1, sm:80, hbm:4, hbmT:'HBM2',
+     cap:'단일 다이 80 SM + HBM2 4스택 — 텐서 코어가 처음 실린 세대 (TPU 충격에 긴급 탑재)',
+     facts:[['공정','TSMC 12nm'],['트랜지스터','21.1B'],['SM 수','80'],['HBM','4× HBM2 · 0.9 TB/s'],['NVLink','2세대 · 300 GB/s'],['텐서 코어','1세대 · FP16']],
+     nvl:'NVLink 2 — 300 GB/s',
+     chain:[{n:'HBM'},{n:'L2'},{n:'레지스터 파일'},{n:'텐서 코어'}],
+     note:'모든 피연산자가 레지스터 파일을 거친다 — 행렬이 커질수록 레지스터 대역폭이 병목이 되고, 이후 모든 세대가 이 길을 걷어내는 방향으로 진화한다.',
+     smin:[{n:'레지스터 파일',d:'256KB/SM'},{n:'공유 메모리',d:'96KB'},{n:'텐서 코어 1세대',d:'FP16 4×4×4',c:'tc'}]},
+    {id:'ampere', n:'Ampere · A100', y:'2020 · 비동기의 시작', cls:'past', dies:1, sm:108, hbm:6, hbmT:'HBM2e',
+     cap:'SM당 연산 2배 + cp.async — HBM에서 공유 메모리로 "레지스터를 안 거치고" 직행하는 첫 경로',
+     facts:[['공정','TSMC 7nm'],['트랜지스터','54.2B'],['SM 수','108'],['HBM','5활성/6 · 2.0 TB/s'],['NVLink','3세대 · 600 GB/s'],['텐서 코어','3세대 · TF32/BF16']],
+     nvl:'NVLink 3 — 600 GB/s',
+     chain:[{n:'HBM'},{n:'L2'},{n:'공유 메모리',tag:'cp.async 직행 — 신설'},{n:'레지스터 파일',dim:1,tag:'부분 우회'},{n:'텐서 코어'}],
+     note:'cp.async: 데이터 적재가 연산 파이프라인과 분리되기 시작 — "데이터 이동의 비동기화"라는 방향이 여기서 열린다.',
+     smin:[{n:'레지스터 파일',d:'256KB/SM'},{n:'공유 메모리',d:'164KB로 확대'},{n:'cp.async 엔진',d:'비동기 적재',c:'new'},{n:'텐서 코어 3세대',d:'TF32·BF16·희소성',c:'tc'}]},
+    {id:'hopper', n:'Hopper · H100', y:'2022 · TMA와 클러스터', cls:'past', dies:1, sm:132, hbm:6, hbmT:'HBM3',
+     cap:'전용 DMA 엔진(TMA)이 주소 계산까지 대신하고, SM 여러 개가 공유 메모리를 서로 읽는 클러스터 구조 등장',
+     facts:[['공정','TSMC 4N'],['트랜지스터','80B'],['SM 수','132'],['HBM','5활성/6 · 3.35 TB/s'],['NVLink','4세대 · 900 GB/s'],['텐서 코어','4세대 · FP8']],
+     nvl:'NVLink 4 — 900 GB/s',
+     chain:[{n:'HBM'},{n:'L2'},{n:'TMA',tag:'전용 DMA — 신설'},{n:'공유 메모리',tag:'DSMEM 클러스터 공유'},{n:'레지스터 파일',dim:1,tag:'우회 확대'},{n:'텐서 코어'}],
+     note:'TMA가 텐서 조각의 주소 계산·이동을 통째로 대신한다. FP8 트랜스포머 엔진과 함께 "추론 저정밀 + 이동 비동기화" 두 축이 완성 단계로.',
+     smin:[{n:'레지스터 파일',d:'256KB/SM'},{n:'공유 메모리',d:'228KB · DSMEM',c:'new'},{n:'TMA 엔진',d:'텐서 전용 DMA',c:'new'},{n:'텐서 코어 4세대',d:'FP8 트랜스포머 엔진',c:'tc'}]},
+    {id:'blackwell', n:'Blackwell · B200', y:'2024 · 듀얼 다이 + 텐서 메모리 · 현재 주력', cls:'now', dies:2, sm:144, hbm:8, hbmT:'HBM3e',
+     cap:'레티클 한계로 다이 2개를 NV-HBI(10 TB/s)로 접합 — 소프트웨어에는 한 개의 GPU로 보임. 텐서 코어 옆에 전용 메모리(TMEM) 신설',
+     facts:[['공정','TSMC 4NP × 2다이'],['트랜지스터','208B (104B×2)'],['SM 수','144 (72×2)'],['HBM','8× HBM3e · 8 TB/s'],['NVLink','5세대 · 1.8 TB/s'],['텐서 코어','5세대 · FP4']],
+     nvl:'NVLink 5 — 1.8 TB/s · NV-HBI 다이 간 10 TB/s',
+     chain:[{n:'HBM'},{n:'L2'},{n:'TMA'},{n:'TMEM',tag:'텐서 전용 메모리 — 신설'},{n:'레지스터 파일',dim:1,tag:'행렬 경로에서 완전 우회'},{n:'텐서 코어'}],
+     note:'TMEM(SM당 256KB)이 행렬 피연산자를 텐서 코어 바로 옆에 상주시킨다 — Volta에서 시작된 "레지스터 파일 걷어내기"의 종착점.',
+     smin:[{n:'레지스터 파일',d:'일반 연산 전용으로'},{n:'공유 메모리',d:'228KB'},{n:'TMA 엔진',d:'텐서 DMA'},{n:'TMEM',d:'256KB 텐서 전용',c:'new'},{n:'텐서 코어 5세대',d:'FP4·FP6',c:'tc'}]},
+    {id:'rubin', n:'Rubin · R200', y:'2026 전망 · I/O 분리와 폭 확장', cls:'fcst', fc:1, dies:2, io:2, sm:0, hbm:8, hbmT:'HBM4',
+     cap:'컴퓨트 다이 2개 + I/O 기능 분리(칩렛화) 전망 — 구조는 Blackwell 계승, FP4·FP8 연산 폭만 2배로 집중 확장 (BF16은 1.6배)',
+     facts:[['공정','TSMC N3 계열 *'],['트랜지스터','미공개'],['SM 수','미공개'],['HBM','8× HBM4 · 22 TB/s *'],['NVLink','6세대 · 3.6 TB/s *'],['텐서 코어','6세대 · FP4 35 PF *']],
+     nvl:'NVLink 6 — 3.6 TB/s (전망)',
+     chain:[{n:'HBM4',tag:'대역폭 2.75배'},{n:'L2'},{n:'TMA'},{n:'TMEM'},{n:'텐서 코어',tag:'FP4·FP8 폭 2배'}],
+     note:'경로 구조는 Blackwell 그대로 두고 각 구간의 "폭"을 늘리는 세대 — 새 블록보다 저정밀 처리량과 메모리 대역폭 확장에 실리콘을 쓴다. (* 전망치)',
+     smin:[{n:'레지스터 파일',d:'일반 연산'},{n:'공유 메모리',d:'—'},{n:'TMA 엔진',d:'계승'},{n:'TMEM',d:'계승·확장 추정'},{n:'텐서 코어 6세대',d:'FP4 폭 2배 (전망)',c:'tc'}]}
+  ];
+  let cur = GENS[3], timer = null;
+  const $ = id => document.getElementById(id);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const tabsEl = $('tabs');
+  GENS.forEach(g => {
+    const b = document.createElement('button');
+    b.className = 'tab' + (g === cur ? ' on' : '');
+    b.textContent = g.n.split(' · ')[0] + (g.fc ? ' *' : '');
+    b.addEventListener('click', () => { cur = g;
+      tabsEl.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); render(); });
+    tabsEl.appendChild(b);
+  });
+
+  function smCells(count, fcst){
+    let h = '';
+    const n = count || 64;
+    for (let i = 0; i < n; i++) h += '<div class="sm' + (fcst ? ' q' : '') + '"></div>';
+    return '<div class="smgrid">' + h + '</div>';
+  }
+  function render(){
+    clearTimeout(timer);
+    $('gname').innerHTML = cur.n + (cur.fc ? ' <span class="badge fc">전망</span>' : '');
+    $('gyear').textContent = cur.y;
+    const half = cur.hbm / 2;
+    const col = n => '<div class="hbmcol">' + Array.from({length:n}, () => '<div class="stack">' + cur.hbmT + '</div>').join('') + '</div>';
+    let dies = '';
+    for (let d = 0; d < cur.dies; d++){
+      dies += '<div class="die ' + cur.cls + (cur.fc ? ' fcst' : '') + '"><div class="l2">L2 캐시</div>' + smCells(cur.sm ? cur.sm / cur.dies : 0, cur.fc) + '</div>';
+      if (cur.dies === 2 && d === 0) dies += '<div class="bridge">' + (cur.fc ? '다이 간 접합' : 'NV-HBI 10TB/s') + '</div>';
+    }
+    if (cur.io) dies += '<div class="iocol">' + Array.from({length:cur.io}, () => '<div class="io">I/O 칩렛</div>').join('') + '</div>';
+    $('pkg').innerHTML = col(Math.ceil(half)) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half));
+    $('nvl').textContent = cur.nvl;
+    $('pkgcap').textContent = cur.cap;
+    $('facts').innerHTML = cur.facts.map(f => '<div class="fact"><div class="k">' + f[0] + '</div><div class="v">' + f[1] + '</div></div>').join('');
+    $('chain').innerHTML = cur.chain.map((s,i) =>
+      (i ? '<span class="arrow">→</span>' : '') +
+      '<span class="st' + (s.dim ? ' dim' : '') + (s.tag && !s.dim ? ' new' : '') + '" data-i="' + i + '">' + s.n +
+      (s.tag ? '<span class="tag">' + s.tag + '</span>' : '') + '</span>').join('');
+    $('pathnote').textContent = cur.note;
+    $('smin').innerHTML = cur.smin.map(b => '<span class="blk' + (b.c ? ' ' + b.c : '') + '">' + b.n + '<span class="d">' + b.d + '</span></span>').join('');
+  }
+  $('play').addEventListener('click', () => {
+    clearTimeout(timer);
+    const sts = Array.from($('chain').querySelectorAll('.st')).filter(s => !s.classList.contains('dim'));
+    sts.forEach(s => s.classList.remove('hot'));
+    if (reduced){ sts.forEach(s => s.classList.add('hot')); return; }
+    let i = 0;
+    (function step(){
+      if (i > 0) sts[i-1].classList.remove('hot');
+      if (i >= sts.length){ sts.forEach(s => s.classList.add('hot')); timer = setTimeout(() => sts.forEach(s => s.classList.remove('hot')), 1200); return; }
+      sts[i].classList.add('hot'); i++; timer = setTimeout(step, 550);
+    })();
+  });
+  render();
+</script>
