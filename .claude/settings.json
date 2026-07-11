@@ -49,7 +49,9 @@
       "mcp__claude_ai_Google_Drive__list_recent_files",
       "mcp__claude_ai_Google_Drive__create_file",
       "mcp__fetch__fetch",
-      "PushNotification"
+      "PushNotification",
+      "Bash(node *)",
+      "Skill(dataviz)"
     ]
   }
 }
