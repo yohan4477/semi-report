@@ -1,0 +1,271 @@
+<title>GPU 세대 레이스 시뮬레이터</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6577; --line:#e3e7ee;
+    --accent:#2563eb; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-bg:#e8f6ec;
+    --warn:#d97706; --warn-bg:#fdf1df;
+    --risk:#dc2626; --risk-bg:#fdeaea;
+    --track:#edf0f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151c; --card:#1a1f2a; --ink:#e8ecf4; --sub:#9aa5b8; --line:#2a3140;
+      --accent:#7aa5f8; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-bg:#173323;
+      --warn:#f0a44e; --warn-bg:#3a2c17;
+      --risk:#f87171; --risk-bg:#3a1a1a;
+      --track:#232938;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151c; --card:#1a1f2a; --ink:#e8ecf4; --sub:#9aa5b8; --line:#2a3140;
+    --accent:#7aa5f8; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-bg:#173323;
+    --warn:#f0a44e; --warn-bg:#3a2c17;
+    --risk:#f87171; --risk-bg:#3a1a1a;
+    --track:#232938;
+  }
+  :root[data-theme="light"]{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6577; --line:#e3e7ee;
+    --accent:#2563eb; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-bg:#e8f6ec;
+    --warn:#d97706; --warn-bg:#fdf1df;
+    --risk:#dc2626; --risk-bg:#fdeaea;
+    --track:#edf0f5;
+  }
+  body{background:var(--bg); color:var(--ink); margin:0; padding:16px; font-size:15px; line-height:1.55;
+    font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;}
+  main{max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:16px;}
+  h1{font-size:1.25rem; margin:6px 0 0; letter-spacing:-.01em; text-wrap:balance;}
+  .stamp{color:var(--sub); font-size:.8rem; margin-top:3px;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+  section h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; color:var(--sub); margin:0 0 12px; font-weight:700;}
+  a{color:var(--accent); text-decoration:none;}
+
+  .controls{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center;}
+  .grp{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+  .grp .lab{color:var(--sub); font-size:.75rem; font-weight:700;}
+  .pill{border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:999px;
+    padding:4px 12px; font-size:.82rem; font-weight:600; cursor:pointer; font-family:inherit;}
+  .pill.on{background:var(--accent-soft); color:var(--accent); border-color:var(--accent);}
+  .pill:focus-visible, .go:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .go{border:none; background:var(--accent); color:#fff; border-radius:8px; padding:7px 18px;
+    font-size:.88rem; font-weight:700; cursor:pointer; font-family:inherit; margin-left:auto;}
+  :root[data-theme="dark"] .go{color:#0d1420;}
+  @media (prefers-color-scheme: dark){ .go{color:#0d1420;} }
+  :root[data-theme="light"] .go{color:#fff;}
+
+  .clock{display:flex; gap:14px; align-items:baseline; margin:2px 0 12px; font-variant-numeric:tabular-nums;}
+  .clock .t{font-size:1.3rem; font-weight:700;}
+  .clock .acc{font-size:.75rem; color:var(--warn); font-weight:700;}
+  .clock .hint{font-size:.75rem; color:var(--sub);}
+
+  .lane{display:grid; grid-template-columns:118px 1fr; gap:4px 12px; padding:10px 0; border-top:1px solid var(--line); align-items:center;}
+  .lane:first-of-type{border-top:none; padding-top:0;}
+  .lane .who .g{font-weight:700; font-size:.9rem;}
+  .lane .who .c{color:var(--sub); font-size:.72rem; font-variant-numeric:tabular-nums;}
+  .track{position:relative; height:22px; background:var(--track); border-radius:6px; overflow:hidden;}
+  .fill{position:absolute; inset:0 auto 0 0; width:0%; border-radius:6px; background:var(--accent);}
+  .lane.now .fill{background:var(--good);}
+  .lane.fcst .fill{background:var(--warn);}
+  .track .pct{position:absolute; right:8px; top:0; line-height:22px; font-size:.72rem; font-weight:700;
+    color:var(--sub); font-variant-numeric:tabular-nums;}
+  .lane .sub{grid-column:2; display:flex; justify-content:space-between; gap:10px; font-size:.74rem; color:var(--sub); font-variant-numeric:tabular-nums; flex-wrap:wrap;}
+  .lane .sub .done{color:var(--good); font-weight:700;}
+  .lane.fcst .sub .done{color:var(--warn);}
+  .lane .sub .x{font-weight:700;}
+  .lane.na{opacity:.55;}
+  .lane.na .track{background:repeating-linear-gradient(45deg, var(--track), var(--track) 8px, var(--card) 8px, var(--card) 16px);}
+  .badge{font-size:.68rem; font-weight:700; border-radius:6px; padding:1px 7px; margin-left:6px; vertical-align:middle;}
+  .badge.fc{background:var(--warn-bg); color:var(--warn);}
+  .badge.na{background:var(--risk-bg); color:var(--risk);}
+  .badge.pr{background:var(--accent-soft); color:var(--accent);}
+
+  table{border-collapse:collapse; width:100%; font-size:.82rem;}
+  th,td{text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{color:var(--sub); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em;}
+  td.num{font-variant-numeric:tabular-nums; white-space:nowrap; text-align:right;}
+  th.num{text-align:right;}
+  .scroll{overflow-x:auto;}
+  .q{color:var(--sub); font-size:.75rem; margin-top:8px;}
+  .foot{color:var(--sub); font-size:.78rem; text-align:center; padding:4px 0 14px; line-height:1.7;}
+</style>
+<main>
+  <div>
+    <h1>GPU 세대 레이스 — 같은 연산, 다른 시대</h1>
+    <div class="stamp">Volta(2017) → Rubin(2026 전망) · 이론 피크 PFLOPS 기준 시뮬레이션 · SemiAnalysis 코퍼스 연동</div>
+  </div>
+
+  <section>
+    <h2>워크로드 · 정밀도 설정</h2>
+    <div class="controls">
+      <div class="grp" role="group" aria-label="워크로드">
+        <span class="lab">연산량</span>
+        <button class="pill w on" data-ef="1">추론 버스트 · 1 EF</button>
+        <button class="pill w" data-ef="100">파인튜닝 잡 · 100 EF</button>
+        <button class="pill w" data-ef="10000">사전학습 조각 · 10,000 EF</button>
+      </div>
+      <div class="grp" role="group" aria-label="정밀도">
+        <span class="lab">정밀도</span>
+        <button class="pill p on" data-p="auto">세대별 최적</button>
+        <button class="pill p" data-p="fp16">FP16</button>
+        <button class="pill p" data-p="fp8">FP8</button>
+        <button class="pill p" data-p="fp4">FP4</button>
+      </div>
+      <button class="go" id="go">▶ 레이스 시작</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>레이스 트랙 — GPU 1개가 워크로드를 끝내는 데 걸리는 시간</h2>
+    <div class="clock">
+      <span class="t" id="clock">00:00:00</span>
+      <span class="acc" id="acc" hidden>시간 가속 ×1</span>
+      <span class="hint">선두가 들어오면 시계가 빨라집니다 — 격차가 곧 세대 차이</span>
+    </div>
+    <div id="lanes"></div>
+    <div class="q">막대 색 = 대시보드 공통 범례: <b style="color:var(--accent)">파랑 과거</b> · <b style="color:var(--good)">초록 현재 주력</b> · <b style="color:var(--warn)">호박 전망</b>. "세대별 최적"은 각 세대가 지원하는 가장 낮은 정밀도로 달립니다 — 저정밀 지원 자체가 세대 경쟁력.</div>
+  </section>
+
+  <section>
+    <h2>스펙 시트 — 시뮬레이션에 쓴 숫자</h2>
+    <div class="scroll"><table>
+      <tr><th>세대 · 칩</th><th>연도</th><th class="num">FP16</th><th class="num">FP8</th><th class="num">FP4</th><th class="num">HBM 대역폭</th><th>세대 특징</th></tr>
+      <tr><td>Volta · V100</td><td>2017</td><td class="num">0.125 PF</td><td class="num">—</td><td class="num">—</td><td class="num">0.9 TB/s</td><td>1세대 텐서 코어 (TPU 충격에 긴급 탑재)</td></tr>
+      <tr><td>Ampere · A100</td><td>2020</td><td class="num">0.31 PF</td><td class="num">—</td><td class="num">—</td><td class="num">2.0 TB/s</td><td>SM당 연산 2배 · 비동기 데이터 복사</td></tr>
+      <tr><td>Hopper · H100</td><td>2022</td><td class="num">0.99 PF</td><td class="num">1.98 PF</td><td class="num">—</td><td class="num">3.35 TB/s</td><td>TMA · FP8 트랜스포머 엔진</td></tr>
+      <tr><td>Blackwell · B200</td><td>2024</td><td class="num">2.25 PF</td><td class="num">4.5 PF</td><td class="num">9 PF</td><td class="num">8 TB/s</td><td>텐서 전용 메모리 · FP4 도입 · 현재 주력</td></tr>
+      <tr><td>Rubin · R200 *</td><td>2026</td><td class="num">≈3.6 PF</td><td class="num">≈9 PF</td><td class="num">35 PF</td><td class="num">22 TB/s</td><td>FP4·FP8 연산 폭만 집중 확장 (BF16은 1.6배)</td></tr>
+    </table></div>
+    <div class="q">* Rubin은 전망치. 밀집(dense) 이론 피크 기준이며 실효 처리량은 이보다 낮음 — 실측 사례로 GB200 NVL72가 H100 대비 2.5배(랙 단위, <a href="https://newsletter.semianalysis.com/p/h100-vs-gb200-nvl72-training-benchmarks">[250820]</a>). Turing(2018)은 추론 특화 세대라 레이스에서 제외.</div>
+  </section>
+
+  <div class="foot">
+    숫자 출처: <a href="https://newsletter.semianalysis.com/p/nvidia-tensor-core-evolution-from-volta-to-blackwell">텐서 코어 진화 [250623]</a> ·
+    <a href="https://newsletter.semianalysis.com/p/dissecting-nvidia-blackwell-tensor">Blackwell 해부 [260401]</a> ·
+    <a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution">Vera Rubin [260226]</a><br>
+    <a href="https://claude.ai/code/artifact/7b4ce9f2-6fe1-43ec-b1eb-1722bd24dadb">← 인텔리전스 대시보드</a>
+  </div>
+</main>
+<script>
+  const GENS = [
+    {g:'Volta', c:'V100', y:2017, cls:'past', fp16:0.125, fp8:null, fp4:null},
+    {g:'Ampere', c:'A100', y:2020, cls:'past', fp16:0.31, fp8:null, fp4:null},
+    {g:'Hopper', c:'H100', y:2022, cls:'past', fp16:0.99, fp8:1.98, fp4:null},
+    {g:'Blackwell', c:'B200', y:2024, cls:'now', fp16:2.25, fp8:4.5, fp4:9},
+    {g:'Rubin', c:'R200', y:2026, cls:'fcst', fp16:3.6, fp8:9, fp4:35}
+  ];
+  let ef = 1, prec = 'auto', raf = null;
+  const lanesEl = document.getElementById('lanes');
+  const clockEl = document.getElementById('clock');
+  const accEl = document.getElementById('acc');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function pick(gen){
+    if (prec === 'auto'){
+      if (gen.fp4) return {p:'FP4', v:gen.fp4};
+      if (gen.fp8) return {p:'FP8', v:gen.fp8};
+      return {p:'FP16', v:gen.fp16};
+    }
+    const v = gen[prec];
+    return v ? {p:prec.toUpperCase(), v} : null;
+  }
+  function fmt(sec){
+    if (sec < 90) return sec.toFixed(sec < 10 ? 1 : 0) + '초';
+    if (sec < 5400) return Math.floor(sec/60) + '분 ' + Math.round(sec%60) + '초';
+    if (sec < 172800) return Math.floor(sec/3600) + '시간 ' + Math.round(sec%3600/60) + '분';
+    return (sec/86400).toFixed(1) + '일';
+  }
+  function hms(sec){
+    const h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = Math.floor(sec%60);
+    const pad = n => String(n).padStart(2,'0');
+    return h > 99 ? Math.floor(sec/3600).toLocaleString() + ':' + pad(m) + ':' + pad(s) : pad(h) + ':' + pad(m) + ':' + pad(s);
+  }
+
+  function build(){
+    cancelAnimationFrame(raf);
+    clockEl.textContent = '00:00:00';
+    accEl.hidden = true;
+    lanesEl.innerHTML = '';
+    const runs = GENS.map(gen => {
+      const sel = pick(gen);
+      const lane = document.createElement('div');
+      lane.className = 'lane ' + gen.cls + (sel ? '' : ' na');
+      const fcTag = gen.cls === 'fcst' ? ' <span class="badge fc">전망</span>' : '';
+      const pTag = sel ? ' <span class="badge pr">' + sel.p + ' ' + sel.v + ' PF</span>' : ' <span class="badge na">미지원</span>';
+      lane.innerHTML =
+        '<div class="who"><div class="g">' + gen.g + fcTag + '</div><div class="c">' + gen.c + ' · ' + gen.y + '</div></div>' +
+        '<div class="track"><div class="fill"></div><div class="pct">' + (sel ? '0%' : '이 정밀도 없음') + '</div></div>' +
+        '<div class="sub">' + (sel ? '<span class="eta">예상 소요 ' + fmt(ef*1000/sel.v) + '</span><span class="x"></span>' : '<span>FP8/FP4 지원 자체가 이후 세대의 무기</span>') + '</div>';
+      lanesEl.appendChild(lane);
+      return sel ? {T: ef*1000/sel.v, v: sel.v, lane} : null;
+    }).filter(Boolean);
+    return runs;
+  }
+
+  function race(){
+    const runs = build();
+    if (!runs.length) return;
+    const vMin = Math.min(...runs.map(q => q.v));
+    runs.forEach(r => { r.x = r.v / vMin; });
+    const finishes = runs.map(r => r.T).sort((a,b) => a-b);
+    // 실시간→시뮬레이션 시간 매핑: 첫 완주까지 2.4초, 이후 완주마다 1.2초씩
+    const segs = [];
+    let prevT = 0, prevR = 0;
+    finishes.forEach((T,i) => {
+      if (T <= prevT) return;
+      const dur = i === 0 ? 2.4 : 1.2;
+      segs.push({r0:prevR, r1:prevR+dur, t0:prevT, t1:T});
+      prevR += dur; prevT = T;
+    });
+    const total = prevR + 0.4;
+    const baseRate = segs[0] ? (segs[0].t1 - segs[0].t0) / (segs[0].r1 - segs[0].r0) : 1;
+
+    function simAt(real){
+      for (const s of segs){
+        if (real <= s.r1) return {t: s.t0 + (s.t1-s.t0) * (real-s.r0)/(s.r1-s.r0), rate:(s.t1-s.t0)/(s.r1-s.r0)};
+      }
+      return {t: prevT, rate: baseRate};
+    }
+    function paint(simT){
+      clockEl.textContent = hms(simT);
+      runs.forEach(r => {
+        const pr = Math.min(1, simT / r.T);
+        r.lane.querySelector('.fill').style.width = (pr*100).toFixed(2) + '%';
+        const pct = r.lane.querySelector('.pct');
+        const x = r.lane.querySelector('.x');
+        if (pr >= 1){
+          pct.textContent = '완주';
+          r.lane.querySelector('.eta').innerHTML = '<span class="done">🏁 ' + fmt(r.T) + ' 완주</span>';
+          x.textContent = r.x > 1.05 ? '최하위 대비 ' + (r.x >= 30 ? Math.round(r.x) : r.x.toFixed(1)) + '배' : '기준(1배)';
+        } else {
+          pct.textContent = (pr*100).toFixed(pr < 0.01 ? 2 : 1) + '%';
+        }
+      });
+    }
+    if (reduced){ paint(prevT); accEl.hidden = true; return; }
+    const start = performance.now();
+    function step(now){
+      const real = (now - start) / 1000;
+      const {t, rate} = simAt(real);
+      paint(t);
+      const acc = rate / baseRate;
+      accEl.hidden = acc < 1.5;
+      accEl.textContent = '시간 가속 ×' + (acc >= 100 ? Math.round(acc).toLocaleString() : acc.toFixed(1));
+      if (real < total) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  document.querySelectorAll('.pill.w').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.pill.w').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); ef = +b.dataset.ef; build();
+  }));
+  document.querySelectorAll('.pill.p').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.pill.p').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); prec = b.dataset.p; build();
+  }));
+  document.getElementById('go').addEventListener('click', race);
+  build();
+</script>
