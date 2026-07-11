@@ -62,6 +62,10 @@
   .ghead{display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px;}
   .ghead .n{font-weight:700; font-size:.98rem;}
   .ghead .y{color:var(--sub); font-size:.75rem; font-variant-numeric:tabular-nums;}
+  .ghead .right{display:flex; gap:8px; align-items:center; margin-left:auto;}
+  .gplay{border:1px solid var(--accent); background:var(--accent-soft); color:var(--accent); border-radius:999px;
+    padding:2px 12px; font-size:.74rem; font-weight:700; cursor:pointer; font-family:inherit;}
+  .gplay:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
   /* 패키지 도식 — 데이터 이동 무대 */
   .pkg{position:relative; display:flex; gap:8px; align-items:stretch;}
@@ -198,7 +202,8 @@
     }
     if (g.io) dies += '<div class="iocol">' + Array.from({length:g.io}, () => '<div class="io">I/O</div>').join('') + '</div>';
     return '<div class="gen ' + g.cls + '">' +
-      '<div class="ghead"><span class="n">' + g.n + (g.fc ? ' <span class="badge fc">전망</span>' : '') + '</span><span class="y">' + g.y + '</span></div>' +
+      '<div class="ghead"><span class="n">' + g.n + (g.fc ? ' <span class="badge fc">전망</span>' : '') + '</span>' +
+      '<span class="right"><span class="y">' + g.y + '</span><button class="gplay">▶ 재생</button></span></div>' +
       '<div class="pkg">' + col(Math.ceil(half), true) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half), false) +
       '<div class="dot"></div></div>' +
       '<div class="nvlbar">' + g.nvl + '</div>' +
@@ -253,5 +258,7 @@
   }
   function runAll(){ document.querySelectorAll('.pkg').forEach(run); }
   document.getElementById('play').addEventListener('click', runAll);
+  document.querySelectorAll('.gplay').forEach(b =>
+    b.addEventListener('click', () => run(b.closest('.gen').querySelector('.pkg'))));
   setTimeout(runAll, 700);
 </script>
