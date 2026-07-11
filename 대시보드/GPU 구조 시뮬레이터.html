@@ -100,7 +100,7 @@
   .iocol{display:flex; flex-direction:column; gap:4px; justify-content:center; margin-left:4px;}
   .io{width:24px; flex:1; max-height:46px; background:var(--warn-bg); border:1px dashed var(--warn); border-radius:4px;
     display:flex; align-items:center; justify-content:center; font-size:.5rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl;}
-  .dot{position:absolute; left:0; top:0; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%;
+  .dot{position:absolute; left:0; top:0; width:15px; height:15px; margin:-7.5px 0 0 -7.5px; border-radius:3px;
     background:var(--accent); border:2.5px solid #fff; box-sizing:border-box;
     box-shadow:0 0 10px var(--accent), 0 0 3px rgba(0,0,0,.35); opacity:0; pointer-events:none; z-index:3;}
   .gen.fcst .dot{background:var(--warn); box-shadow:0 0 10px var(--warn), 0 0 3px rgba(0,0,0,.35);}
@@ -235,7 +235,7 @@
     const r = el.getBoundingClientRect(), b = ref.getBoundingClientRect();
     return {x: r.left + r.width/2 - b.left, y: r.top + r.height/2 - b.top};
   }
-  function run(pkg){
+  function run(pkg, force){
     if (pkg.dataset.running) return;
     const pts = Array.from(pkg.querySelectorAll('[data-wp]')).sort((a,b) => a.dataset.wp - b.dataset.wp);
     if (pts.length < 2) return;
@@ -261,7 +261,7 @@
         delete pkg.dataset.running;
       }, delay);
     }
-    if (reduced){ pts.forEach(p => p.classList.add('lit')); finish(2200); return; }
+    if (reduced && !force){ pts.forEach(p => p.classList.add('lit')); finish(2200); return; }
     const dots = Array.from(pkg.querySelectorAll('.dot'));
     const segMs = 700, lag = 0.33, n = cs.length - 1;
     const endP = n + lag * (dots.length - 1);
@@ -288,9 +288,9 @@
     }
     requestAnimationFrame(frame);
   }
-  function runAll(){ document.querySelectorAll('.pkg').forEach(run); }
-  document.getElementById('play').addEventListener('click', runAll);
+  function runAll(force){ document.querySelectorAll('.pkg').forEach(p => run(p, force)); }
+  document.getElementById('play').addEventListener('click', () => runAll(true));
   document.querySelectorAll('.gplay').forEach(b =>
-    b.addEventListener('click', () => run(b.closest('.gen').querySelector('.pkg'))));
-  setTimeout(runAll, 700);
+    b.addEventListener('click', () => run(b.closest('.gen').querySelector('.pkg'), true)));
+  setTimeout(() => runAll(false), 700);
 </script>
