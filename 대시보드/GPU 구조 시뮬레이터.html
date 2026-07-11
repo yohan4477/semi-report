@@ -104,9 +104,7 @@
     background:var(--accent); border:2.5px solid #fff; box-sizing:border-box;
     box-shadow:0 0 10px var(--accent), 0 0 3px rgba(0,0,0,.35); opacity:0; pointer-events:none; z-index:3;}
   .gen.fcst .dot{background:var(--warn); box-shadow:0 0 10px var(--warn), 0 0 3px rgba(0,0,0,.35);}
-  .trail{position:absolute; left:0; top:0; pointer-events:none; z-index:2; opacity:0;}
-  .trail polyline{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-dasharray:6 5; opacity:.6;}
-  .gen.fcst .trail polyline{stroke:var(--warn);}
+  .smgrid.lit{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px;}
   .nvlbar{margin-top:6px; border:1px dashed var(--line); border-radius:5px;
     text-align:center; font-size:.66rem; color:var(--sub); font-weight:600; padding:2px 8px;}
   @media (max-width:600px){
@@ -138,7 +136,7 @@
   <section>
     <div class="toolbar">
       <button class="play" id="play">▶ 전 세대 데이터 이동 재생</button>
-      <span class="legend">점이 HBM → L2 → SM 내부 → 텐서 코어로 실제 도식 위를 이동 · 점선 블록 = 우회(건너뜀) · <b style="color:var(--good)">초록</b> = 그 세대 신설</span>
+      <span class="legend">데이터 패킷이 HBM → L2 → SM 내부 → 텐서 코어로 도식 위를 이동 (다이 2개 세대는 양쪽 HBM에서 동시에) · 점선 블록 = 우회(건너뜀) · <b style="color:var(--good)">초록</b> = 그 세대 신설</span>
     </div>
   </section>
 
@@ -201,8 +199,9 @@
   const gensEl = document.getElementById('gens');
   gensEl.innerHTML = GENS.map(g => {
     const half = g.hbm / 2;
-    const col = (k, src) => '<div class="hbmcol">' + Array.from({length:k}, (_, i) =>
-      '<div class="stack"' + (src && i === Math.floor(k/2) ? ' data-wp="0"' : '') + '>' + g.hbmT + '</div>').join('') + '</div>';
+    const col = (k, src, alt) => '<div class="hbmcol">' + Array.from({length:k}, (_, i) =>
+      '<div class="stack"' + (src && i === Math.floor(k/2) ? ' data-wp="0"' : '') +
+      (alt && i === Math.floor(k/2) ? ' data-wp2="0"' : '') + '>' + g.hbmT + '</div>').join('') + '</div>';
     let wp = 2;
     const cutHtml = '<div class="smcut"><div class="cutlab">SM 1개 확대</div>' + g.cut.map(b =>
       '<div class="blk' + (b.nw ? ' new' : '') + (b.dim ? ' dim' : '') + (b.tc ? ' tc' : '') + '"' +
@@ -211,24 +210,25 @@
       smGrid(g.sm ? g.sm / g.dies : 0) + cutHtml + '</div></div>';
     if (g.dies === 2){
       dies += '<div class="bridge">' + (g.fc ? '다이 접합' : 'NV-HBI') + '</div>' +
-        '<div class="die mini"><div class="l2">L2</div><div class="dbody">' + smGrid(g.sm ? g.sm / g.dies : 0) + '</div></div>';
+        '<div class="die mini"><div class="l2" data-wp2="1">L2</div><div class="dbody">' + smGrid(g.sm ? g.sm / g.dies : 0, ' data-wp2="2"') + '</div></div>';
     }
     if (g.io) dies += '<div class="iocol">' + Array.from({length:g.io}, () => '<div class="io">I/O</div>').join('') + '</div>';
     return '<div class="gen ' + g.cls + '">' +
       '<div class="ghead"><span class="n">' + g.n + (g.fc ? ' <span class="badge fc">전망</span>' : '') + '</span>' +
       '<span class="right"><span class="y">' + g.y + '</span><button class="gplay">▶ 재생</button></span></div>' +
-      '<div class="pkg">' + col(Math.ceil(half), true) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half), false) +
-      '<div class="dot"></div><div class="dot"></div><div class="dot"></div></div>' +
+      '<div class="pkg">' + col(Math.ceil(half), true, false) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half), false, g.dies === 2) +
+      '<div class="dot"></div><div class="dot"></div><div class="dot"></div>' +
+      (g.dies === 2 ? '<div class="dot b"></div><div class="dot b"></div><div class="dot b"></div>' : '') + '</div>' +
       '<div class="nvlbar">' + g.nvl + '</div>' +
       '<div class="caption">' + g.cap + '</div>' +
       '</div>';
   }).join('');
 
-  function smGrid(n){
+  function smGrid(n, attr){
     let h = '';
     const k = n || 56;
     for (let i = 0; i < k; i++) h += '<div class="sm"></div>';
-    return '<div class="smgrid">' + h + '</div>';
+    return '<div class="smgrid"' + (attr || '') + '>' + h + '</div>';
   }
 
   function center(el, ref){
@@ -237,52 +237,51 @@
   }
   function run(pkg, force){
     if (pkg.dataset.running) return;
-    const pts = Array.from(pkg.querySelectorAll('[data-wp]')).sort((a,b) => a.dataset.wp - b.dataset.wp);
-    if (pts.length < 2) return;
+    const mk = (attr, dotSel) => {
+      const pts = Array.from(pkg.querySelectorAll('[' + attr + ']'))
+        .sort((a,b) => a.getAttribute(attr) - b.getAttribute(attr));
+      const dots = Array.from(pkg.querySelectorAll(dotSel));
+      return (pts.length >= 2 && dots.length) ? {pts, dots, cs: pts.map(p => center(p, pkg))} : null;
+    };
+    const paths = [mk('data-wp', '.dot:not(.b)'), mk('data-wp2', '.dot.b')].filter(Boolean);
+    if (!paths.length) return;
     pkg.dataset.running = '1';
-    pts.forEach(p => p.classList.remove('lit'));
-    const cs = pts.map(p => center(p, pkg));
-    let svg = pkg.querySelector('.trail');
-    if (!svg){
-      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('class', 'trail');
-      pkg.appendChild(svg);
-    }
-    const W = pkg.clientWidth, H = pkg.clientHeight;
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = W + 'px'; svg.style.height = H + 'px';
-    svg.innerHTML = '<polyline points="' + cs.map(c => c.x + ',' + c.y).join(' ') + '"/>';
-    svg.style.opacity = 1;
+    paths.forEach(P => P.pts.forEach(p => p.classList.remove('lit')));
     function finish(delay){
       setTimeout(() => {
         pkg.querySelectorAll('.dot').forEach(d => d.style.opacity = 0);
-        pts.forEach(p => p.classList.remove('lit'));
-        svg.style.opacity = 0;
+        paths.forEach(P => P.pts.forEach(p => p.classList.remove('lit')));
         delete pkg.dataset.running;
       }, delay);
     }
-    if (reduced && !force){ pts.forEach(p => p.classList.add('lit')); finish(2200); return; }
-    const dots = Array.from(pkg.querySelectorAll('.dot'));
-    const segMs = 700, lag = 0.33, n = cs.length - 1;
-    const endP = n + lag * (dots.length - 1);
-    const pos = p => {
-      p = Math.max(0, Math.min(n, p));
-      const k = Math.min(n - 1, Math.floor(p)), u = p - k;
-      return {x: cs[k].x + (cs[k+1].x - cs[k].x) * u, y: cs[k].y + (cs[k+1].y - cs[k].y) * u};
-    };
-    dots.forEach(d => d.style.opacity = 1);
-    pts[0].classList.add('lit');
-    let start = null, lit = 0;
+    if (reduced && !force){
+      paths.forEach(P => P.pts.forEach(p => p.classList.add('lit')));
+      finish(2200);
+      return;
+    }
+    const segMs = 700, lag = 0.33;
+    paths.forEach(P => {
+      P.n = P.cs.length - 1;
+      P.lit = 0;
+      P.dots.forEach(d => d.style.opacity = 1);
+      P.pts[0].classList.add('lit');
+    });
+    const endP = Math.max(...paths.map(P => P.n)) + lag * 2;
+    let start = null;
     function frame(ts){
       if (start === null) start = ts;
       const head = (ts - start) / segMs;
-      dots.forEach((d, i) => {
-        const c = pos(head - i * lag);
-        d.style.transform = 'translate(' + c.x + 'px,' + c.y + 'px)';
+      paths.forEach(P => {
+        P.dots.forEach((d, i) => {
+          let p = Math.max(0, Math.min(P.n, head - i * lag));
+          const k = Math.min(P.n - 1, Math.floor(p)), u = p - k;
+          d.style.transform = 'translate(' + (P.cs[k].x + (P.cs[k+1].x - P.cs[k].x) * u) + 'px,' +
+            (P.cs[k].y + (P.cs[k+1].y - P.cs[k].y) * u) + 'px)';
+        });
+        const reach = Math.min(P.n, Math.floor(head));
+        for (let k = P.lit + 1; k <= reach; k++) P.pts[k].classList.add('lit');
+        P.lit = Math.max(P.lit, reach);
       });
-      const reach = Math.min(n, Math.floor(head));
-      for (let k = lit + 1; k <= reach; k++) pts[k].classList.add('lit');
-      lit = Math.max(lit, reach);
       if (head < endP + 0.3) requestAnimationFrame(frame);
       else finish(1300);
     }
