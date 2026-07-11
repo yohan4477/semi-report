@@ -105,6 +105,15 @@
   .gen.fcst .dot{background:var(--warn); box-shadow:0 0 8px var(--warn);}
   .nvlbar{margin-top:6px; border:1px dashed var(--line); border-radius:5px;
     text-align:center; font-size:.66rem; color:var(--sub); font-weight:600; padding:2px 8px;}
+  @media (max-width:600px){
+    .dies{flex-direction:column; gap:0;}
+    .die.mini{flex:none;}
+    .bridge{width:auto; padding:2px 0; writing-mode:horizontal-tb; border:none;
+      border-top:1.5px solid var(--line); border-bottom:1.5px solid var(--line); text-align:center;}
+    .iocol{flex-direction:row; margin-left:0; margin-top:4px;}
+    .io{width:auto; flex:1; height:22px; max-height:none; writing-mode:horizontal-tb;}
+    .smcut{width:52%;}
+  }
   .caption{color:var(--sub); font-size:.75rem; margin-top:7px;}
 
   table{border-collapse:collapse; width:100%; font-size:.8rem;}
