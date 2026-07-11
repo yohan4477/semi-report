@@ -42,220 +42,339 @@
   section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
   section h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; color:var(--sub); margin:0 0 12px; font-weight:700;}
   section h3{font-size:.95rem; margin:16px 0 8px;}
+  a{color:var(--accent); text-decoration:none;}
   .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
   @media (max-width:560px){ .kpis{grid-template-columns:repeat(2,1fr);} }
   .kpi{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px;}
   .kpi .n{font-size:1.5rem; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.02em;}
   .kpi .l{color:var(--sub); font-size:.75rem; margin-top:2px;}
   .kpi .d{font-size:.72rem; margin-top:2px; color:var(--sub);}
-  ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
-  li{display:flex; gap:10px; align-items:flex-start;}
-  .pill{flex:none; font-size:.68rem; font-weight:700; border-radius:999px; padding:2px 9px; margin-top:2px;}
-  .pill.good{background:var(--good-bg); color:var(--good);}
-  .pill.warn{background:var(--warn-bg); color:var(--warn);}
-  .pill.risk{background:var(--risk-bg); color:var(--risk);}
-  .pill.wait{background:var(--wait-bg); color:var(--wait);}
-  .t{font-weight:600;}
-  .d{color:var(--sub); font-size:.82rem;}
-  .bar{display:flex; height:10px; border-radius:999px; overflow:hidden; margin:6px 0 4px; background:var(--wait-bg);}
-  .bar .seg-good{background:var(--good);}
-  .bar .seg-warn{background:var(--warn);}
-  .bar .seg-wait{background:var(--wait); opacity:.45;}
-  .legend{display:flex; flex-wrap:wrap; gap:12px; color:var(--sub); font-size:.75rem;}
-  .legend b{color:var(--ink); font-variant-numeric:tabular-nums;}
-  .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; vertical-align:baseline;}
+  .tabs{display:flex; gap:6px; flex-wrap:wrap; position:sticky; top:0; background:var(--bg); padding:6px 0; z-index:5;}
+  .tab{border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:999px;
+    padding:5px 14px; font-size:.82rem; font-weight:600; cursor:pointer; font-family:inherit;}
+  .tab.on{background:var(--accent-soft); color:var(--accent); border-color:var(--accent);}
+  .tab:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  @media (prefers-reduced-motion: no-preference){ .tab{transition:background .15s, color .15s;} }
+  .sig{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-top:1px solid var(--line);}
+  .sig:first-of-type{border-top:none; padding-top:0;}
+  .sig .when{flex:none; width:52px; color:var(--sub); font-size:.75rem; font-variant-numeric:tabular-nums; margin-top:2px;}
+  .sig .t{font-weight:600; font-size:.9rem;}
+  .sig .d{color:var(--sub); font-size:.8rem;}
+  .delta{font-size:.72rem; font-weight:700; border-radius:6px; padding:1px 7px; margin-left:6px; vertical-align:middle;}
+  .delta.up{background:var(--good-bg); color:var(--good);}
+  .delta.dn{background:var(--risk-bg); color:var(--risk);}
+  .delta.new{background:var(--accent-soft); color:var(--accent);}
+  .delta.hold{background:var(--warn-bg); color:var(--warn);}
+  .rep{border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-top:10px;}
+  .rep:first-of-type{margin-top:0;}
+  .rep .head{display:flex; justify-content:space-between; gap:8px; align-items:baseline; flex-wrap:wrap;}
+  .rep .name{font-weight:700; font-size:.92rem;}
+  .rep .meta{color:var(--sub); font-size:.72rem; font-variant-numeric:tabular-nums;}
+  .rep .verdict{font-size:.84rem; margin-top:6px;}
+  .conf{display:flex; flex-wrap:wrap; gap:5px; margin-top:8px;}
+  .cf{font-size:.7rem; font-weight:700; border-radius:6px; padding:1px 7px;}
+  .cf.h{background:var(--good-bg); color:var(--good);}
+  .cf.m{background:var(--warn-bg); color:var(--warn);}
+  .cf.l{background:var(--risk-bg); color:var(--risk);}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){ .grid2{grid-template-columns:1fr;} }
+  .metric{border:1px solid var(--line); border-radius:10px; padding:10px 12px;}
+  .metric .name{font-size:.8rem; font-weight:600;}
+  .metric .val{font-size:1.25rem; font-weight:700; font-variant-numeric:tabular-nums; margin-top:2px;}
+  .metric .src{color:var(--sub); font-size:.7rem; margin-top:2px;}
+  .metric svg{display:block; width:100%; height:36px; margin-top:6px;}
+  .spark-line{fill:none; stroke:var(--accent); stroke-width:2;}
+  .spark-fill{fill:var(--accent-soft); stroke:none; opacity:.7;}
+  .spark-dot{fill:var(--good);}
+  .spark-dot-f{fill:var(--warn);}
   .tl{border-top:1px solid var(--line); padding-top:12px; margin-top:12px;}
   .tl:first-of-type{border-top:none; padding-top:0; margin-top:0;}
   .tl .name{font-weight:600; font-size:.9rem;}
-  .tl .why{color:var(--sub); font-size:.78rem; margin-top:2px;}
+  .tl .why{color:var(--sub); font-size:.78rem; margin-top:6px;}
   .steps{display:flex; align-items:flex-end; gap:0; margin-top:10px; overflow-x:auto;}
-  .step{flex:1; min-width:86px; position:relative; padding:0 6px 0 0;}
-  .step .v{font-weight:700; font-variant-numeric:tabular-nums; font-size:.95rem;}
+  .step{flex:1; min-width:96px; position:relative; padding:0 6px 0 0;}
+  .step .v{font-weight:700; font-variant-numeric:tabular-nums; font-size:.92rem;}
   .step .w{color:var(--sub); font-size:.7rem; margin-top:1px;}
   .step::before{content:""; display:block; height:3px; border-radius:2px; background:var(--line); margin-bottom:7px;}
   .step.past::before{background:var(--accent);}
   .step.now::before{background:var(--good);}
   .step.fcst::before{background:var(--warn);}
   .step.fcst .v::after{content:" *"; color:var(--warn); font-weight:400;}
-  .chips{display:flex; flex-wrap:wrap; gap:6px;}
-  .chip{border-radius:8px; padding:3px 9px; font-size:.8rem; font-weight:600; border:1px solid var(--line);}
-  .chip.good{background:var(--good-bg); color:var(--good);}
-  .chip.warn{background:var(--warn-bg); color:var(--warn);}
-  .chip.risk{background:var(--risk-bg); color:var(--risk);}
-  .chip .c{font-weight:400; opacity:.75; font-size:.72rem;}
+  .mx{display:grid; grid-template-columns:64px 1fr 1fr 1fr; gap:4px; font-size:.78rem;}
+  .mx .h{color:var(--sub); font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; padding:4px;}
+  .mx .cell{border-radius:8px; min-height:44px; padding:6px 8px; display:flex; flex-wrap:wrap; gap:4px; align-content:flex-start;}
+  .mx .rowlab{color:var(--sub); font-size:.72rem; display:flex; align-items:center;}
+  .mx .cell.g{background:var(--good-bg);} .mx .cell.w{background:var(--warn-bg);} .mx .cell.r{background:var(--risk-bg);}
+  .co{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:1px 7px; font-size:.75rem; font-weight:600;}
   .vs{display:flex; flex-direction:column; gap:6px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-top:8px;}
+  .vs:first-of-type{margin-top:0;}
   .vs .row{display:flex; justify-content:space-between; gap:10px; font-size:.85rem;}
   .vs .row b{font-variant-numeric:tabular-nums;}
   .vs .q{color:var(--sub); font-size:.75rem;}
-  .foot{color:var(--sub); font-size:.78rem; text-align:center; padding:4px 0 14px; line-height:1.7;}
-  .foot a{color:var(--accent); text-decoration:none;}
-  .note{color:var(--sub); font-size:.75rem; margin-top:10px;}
   table{border-collapse:collapse; width:100%; font-size:.82rem;}
   th,td{text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
   th{color:var(--sub); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em;}
   td.num{font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .q{color:var(--sub); font-size:.75rem; margin-top:8px;}
+  .note{color:var(--sub); font-size:.75rem; margin-top:10px;}
   .scroll{overflow-x:auto;}
+  .foot{color:var(--sub); font-size:.78rem; text-align:center; padding:4px 0 14px; line-height:1.7;}
 </style>
 <main>
   <div>
     <h1>SemiAnalysis 인텔리전스</h1>
-    <div class="stamp">2026-07-11 기준 · 변환 코퍼스 26편 전수 반영 · 전망 캘린더 / 충돌 워치 / 지표 타임라인 / 기업 익스포저</div>
+    <div class="stamp">2026-07-11 기준 · 변환 26편 + 부분 2편 · 통합 리포트 7건 집약 · 뉴스레터 + LinkedIn + YouTube</div>
   </div>
 
   <div class="kpis">
-    <div class="kpi"><div class="n">26</div><div class="l">변환 문서</div><div class="d">전력·냉각 7 · 메모리 7 · 컴퓨트 9 · AI모델 4 · 기타 2*</div></div>
+    <div class="kpi"><div class="n">28</div><div class="l">변환 문서</div><div class="d">완료 26 · 부분 2 (Trainium3·AMD)</div></div>
+    <div class="kpi"><div class="n">7</div><div class="l">통합 리포트</div><div class="d">카테고리 5 · 익스포저 2</div></div>
     <div class="kpi"><div class="n">273</div><div class="l">핵심 지표</div><div class="d">문서 교차 추적</div></div>
     <div class="kpi"><div class="n">23</div><div class="l">기업 익스포저</div><div class="d">반도체 12 · 전력·냉각 11</div></div>
-    <div class="kpi"><div class="n">5</div><div class="l">리포트</div><div class="d">통합 3 · 익스포저 2</div></div>
   </div>
 
-  <section>
-    <h2>① 다가오는 전망 캘린더 — 무엇을 언제 지켜볼 것인가</h2>
-    <div class="scroll"><table>
-      <tr><th>전망</th><th>시점</th><th>출처</th></tr>
-      <tr><td>앤트로픽 2Q26 영업이익 흑자(주식보상 제외)</td><td class="num">2Q26 실적</td><td class="num"><a href="https://newsletter.semianalysis.com/p/anthropic-growth-and-bedrock-mix" style="color:var(--accent);text-decoration:none">[260528]</a></td></tr>
-      <tr><td>TSMC N3 실효 가동률 100% 초과</td><td class="num">2H26</td><td class="num"><a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage" style="color:var(--accent);text-decoration:none">[260313]</a></td></tr>
-      <tr><td>Meta, 1.6T AEC를 NIC-to-TOR에 채택</td><td class="num">2H26</td><td class="num"><a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution" style="color:var(--accent);text-decoration:none">[260226]</a></td></tr>
-      <tr><td>GTC 전시 LPX 랙, 설계 변경 후 출하</td><td class="num">3Q26</td><td class="num"><a href="https://newsletter.semianalysis.com/p/nvidia-the-inference-kingdom-expands" style="color:var(--accent);text-decoration:none">[260324]</a></td></tr>
-      <tr><td>DRAM 가격, 2026년 중 추가 2배 상승</td><td class="num">4Q26</td><td class="num"><a href="https://newsletter.semianalysis.com/p/memory-mania-how-a-once-in-four-decades" style="color:var(--accent);text-decoration:none">[260207]</a><a href="https://newsletter.semianalysis.com/p/chinas-cxmt-is-set-to-challenge-dram" style="color:var(--accent);text-decoration:none">[260623]</a></td></tr>
-      <tr><td>앤트로픽 ARR 1,000억 달러 상회</td><td class="num">2026 연말</td><td class="num"><a href="https://newsletter.semianalysis.com/p/anthropic-growth-and-bedrock-mix" style="color:var(--accent);text-decoration:none">[260528]</a></td></tr>
-      <tr><td>Claude Code, GitHub 일일 커밋 20%+</td><td class="num">2026 연말</td><td class="num"><a href="https://newsletter.semianalysis.com/p/claude-code-is-the-inflection-point" style="color:var(--accent);text-decoration:none">[260206]</a></td></tr>
-      <tr><td>2026년 미국 신규 가동 약 24GW</td><td class="num">2026 연말</td><td class="num"><a href="https://newsletter.semianalysis.com/p/stop-saying-half-of-2026-us-datacenter" style="color:var(--accent);text-decoration:none">[260619]</a></td></tr>
-      <tr><td>메타·OpenAI·SSI·xAI 추가 TPU 계약 포착 (구글 RPO 확대)</td><td class="num">2026 내</td><td class="num"><a href="https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the" style="color:var(--accent);text-decoration:none">[260205]</a></td></tr>
-      <tr><td>TPU v8(Sunfish·Zebrafish) 출시 · 구글 224G SerDes 전환</td><td class="num">2027</td><td class="num"><a href="https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the" style="color:var(--accent);text-decoration:none">[260205]</a></td></tr>
-      <tr><td>MI400 실효 FP4 vs VR200 — AMD 랙 스케일 추격 판정</td><td class="num">2027</td><td class="num"><a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" style="color:var(--accent);text-decoration:none">[260205]</a></td></tr>
-      <tr><td>2027년 N3 웨이퍼 AI 비중 86% · HBM 부족률 9% · DDR-HBM 마진 역전 심화</td><td class="num">2027</td><td class="num"><a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage" style="color:var(--accent);text-decoration:none">[260313]</a><a href="https://newsletter.semianalysis.com/p/memory-mania-how-a-once-in-four-decades" style="color:var(--accent);text-decoration:none">[260207]</a></td></tr>
-    </table></div>
+  <div class="tabs" role="tablist" aria-label="클러스터 필터">
+    <button class="tab on" data-c="all">전체</button>
+    <button class="tab" data-c="compute">컴퓨트</button>
+    <button class="tab" data-c="memory">메모리</button>
+    <button class="tab" data-c="power">전력·냉각</button>
+    <button class="tab" data-c="model">AI 모델·비즈니스</button>
+    <button class="tab" data-c="robot">로보틱스</button>
+  </div>
+
+  <section data-c="all compute memory power model">
+    <h2>① 클러스터 종합 판단 — 통합 리포트 7건 요약</h2>
+
+    <div class="rep" data-c="compute">
+      <div class="head"><span class="name">컴퓨트</span><span class="meta">[260711] 신규 · 14편 종합</span></div>
+      <div class="verdict">엔비디아 주도 통합형 코디자인이 칩→랙으로 심화. 경쟁자 추격이 반복돼도 새 특화 축(프리필·디코드 칩)으로 재도약하는 패턴이 굳어짐 — 물리적 병목(TSMC 웨이퍼·구리 대역폭)이 경쟁 구도보다 근본적인 변수로 부상.</div>
+      <div class="conf"><span class="cf h">코디자인 확장 높음</span><span class="cf h">추론 랙 분화 높음</span><span class="cf h">구리 장기 집권 높음</span><span class="cf m">커스텀 실리콘 추격 중간</span><span class="cf m">실리콘 병목 이동 중간</span></div>
+    </div>
+
+    <div class="rep" data-c="model">
+      <div class="head"><span class="name">AI 모델</span><span class="meta">[260711] 신규 · agents + rl 4편</span></div>
+      <div class="verdict">에이전트 인프라(과업 지평선 배증 가속·RL 환경 산업화·멀티 에이전트 오케스트레이션)는 반복·가속 확인으로 확신도 높음. "자동화냐 증강이냐"와 "앤트로픽 vs OpenAI 최종 승자"는 아직 열린 변수.</div>
+      <div class="conf"><span class="cf h">과업 지평선 가속 높음</span><span class="cf h">RL 산업화 높음</span><span class="cf h">토큰 효율 우위 높음</span><span class="cf h">연산력 제약 성장 높음</span><span class="cf l">자동화 vs 증강 낮음</span></div>
+    </div>
+
+    <div class="rep" data-c="memory">
+      <div class="head"><span class="name">메모리</span><span class="meta">[260706] · 7편 종합</span></div>
+      <div class="verdict">HBM 수요가 커먼디티 DRAM 여력까지 잠식하는 구조적 공급 부족 국면 — SK하이닉스 HBM 우위가 가장 확실하고, 삼성 기술 추격·중국 진입은 관찰 변수. NAND는 밀도 선두가 샌디스크·키오시아로 교체.</div>
+      <div class="conf"><span class="cf h">공급 부족 심화 높음</span><span class="cf h">HBM4 물량 격차 높음</span><span class="cf h">NAND 선두 교체 높음</span><span class="cf m">3사+중국 증설 중간</span><span class="cf l">중국 HBM 자립 낮음</span></div>
+    </div>
+
+    <div class="rep" data-c="power">
+      <div class="head"><span class="name">전력</span><span class="meta">[260704] · 6편 종합</span></div>
+      <div class="verdict">전력 "확보"(BTM 자가발전)와 "배전"(800VDC) 양쪽에서 그레이 스페이스 장비에서 화이트 스페이스 벤더(Delta·Vertiv·Panasonic)로 가치 이동 방향에 확신도 누적. "용량 절반 취소" 헤드라인은 파이프라인 실체와 괴리.</div>
+      <div class="conf"><span class="cf h">수요 가속 높음</span><span class="cf h">그리드 공급 부족 높음</span><span class="cf h">BTM 주류화 높음</span><span class="cf m">800VDC 전환 중간</span><span class="cf m">취소설 반박 중간</span></div>
+    </div>
+
+    <div class="rep" data-c="power">
+      <div class="head"><span class="name">냉각</span><span class="meta">[260704] · 단일 문서 — 시계열 대기</span></div>
+      <div class="verdict">액체냉각 전환 방향은 확인됐으나 문서 1편뿐이라 종합 판단 보류 — 후속 문서 유입 시 시계열 섹션 신설.</div>
+      <div class="conf"><span class="cf m">시계열 대기</span></div>
+    </div>
+
+    <div class="rep" data-c="compute memory power">
+      <div class="head"><span class="name">기업 익스포저 2건</span><span class="meta">[260705] 전력·냉각 11곳 · [260706] 반도체·메모리 12곳</span></div>
+      <div class="verdict">기업 축 종합은 아래 ⑥ 매트릭스로 — 방향은 세대 전환(HBM4·400단+ NAND·800VDC)마다 재판정.</div>
+    </div>
   </section>
 
-  <section>
-    <h2>② 전망 충돌 워치 — 같은 지표, 다른 전망</h2>
-    <div class="vs">
+  <section data-c="all compute model">
+    <h2>② 이번 주 신호 — 새 문서가 기존 그림을 바꾼 지점</h2>
+    <div class="sig"><div class="when">07-11</div><div><div class="t">컴퓨트·AI 모델 통합 리포트 신규 발행 <span class="delta new">신규</span></div><div class="d">시계열 주제 11개 신설 — "실리콘이 전력을 제치고 최대 병목"(컴퓨트 §1.4), "자동화 vs 증강 방향 미정"(AI 모델 §1.6) 등</div></div></div>
+    <div class="sig"><div class="when">07-11</div><div><div class="t">Trainium3·AMD Advancing AI 부분 변환 (9/16·12/16장) <span class="delta hold">진행 중단</span></div><div class="d">커스텀 실리콘 랙스케일 추격 축(컴퓨트 §1.2)의 핵심 소스 — 잔여 섹션은 재개 대기</div></div></div>
+    <div class="sig"><div class="when">07-10</div><div><div class="t">TPUv7, 추론 TCO로 엔비디아에 도전 <span class="delta up">전망 상향</span></div><div class="d">메타·OpenAI·SSI·xAI의 TPU 계약 여부가 2026년 관찰 포인트로 — [260205] TPUv7</div></div></div>
+    <div class="sig"><div class="when">07-10</div><div><div class="t">Rubin CPX: 프리필 전용 랙의 등장 <span class="delta new">신규 축</span></div><div class="d">추론 서빙이 프리필/디코드 전용 하드웨어로 분화(컴퓨트 §1.3) — 3주 만에 독립 랙으로 설계 확정</div></div></div>
+  </section>
+
+  <section data-c="all compute memory power model robot">
+    <h2>③ 소셜·영상 신호 — LinkedIn·YouTube (뉴스레터 밖 흐름)</h2>
+    <div class="sig"><div class="when">07-04</div><div><div class="t">JEDEC, SPHBM4 표준(JESD330-4) 발표 <span class="delta new">신규 축</span></div><div class="d">HBM4 스택을 표준 패키징에 탑재해 어드밴스드 패키징 병목 우회 — 메모리 §1.1·컴퓨트 §1.4 병목 완화 변수 (LinkedIn)</div></div></div>
+    <div class="sig"><div class="when">07-04</div><div><div class="t">"메모리가 하이퍼스케일러 CapEx의 30%" 자체 전망 방어 <span class="delta up">궤도 유지</span></div><div class="d">마이크론 실적 후 시장 반발에도 2월 전망 유지 — 메모리 §1.1 공급 부족 심화와 같은 방향 (LinkedIn)</div></div></div>
+    <div class="sig"><div class="when">07-03</div><div><div class="t">태양광·ESS 연 20GW+ 증설에도 피크 확보 용량은 제자리 <span class="delta up">궤도 유지</span></div><div class="d">BTM 자가발전 주류화(전력 §1.3)의 배경 논리 재확인 (LinkedIn)</div></div></div>
+    <div class="sig"><div class="when">07-03</div><div><div class="t">Meta Compute: "모두가 뉴클라우드가 되고 싶다" <span class="delta hold">변환 대기</span></div><div class="d">신규 뉴스레터 — 클리핑 확보됨, 비즈니스 클러스터 변환 큐 (LinkedIn + 뉴스레터)</div></div></div>
+    <div class="sig"><div class="when">영상</div><div><div class="t">YouTube 미커버 주제 2건: DeepSeek V4·Ascend NPU (Ep.017) / Unitree 로보틱스 (Ep.016)</div><div class="d">뉴스레터 변환 대기 클러스터와 일치 — 변환 시 영상 해설을 보충 소스로 병기 (본채널 18편 목록화)</div></div></div>
+  </section>
+
+  <section data-c="all compute memory model">
+    <h2>④ 지표 타임라인 — 문서를 가로지르는 궤적</h2>
+    <div class="grid2">
+      <div class="metric" data-c="model">
+        <div class="name">METR 자율 작업 배증 주기</div>
+        <div class="val">\~4개월 <span class="delta up">가속</span></div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="7개월에서 4개월로 단축">
+          <path class="spark-fill" d="M0,38 L0,10 C60,12 120,20 190,30 L190,38 Z"/>
+          <path class="spark-line" d="M0,10 C60,12 120,20 190,30"/>
+          <circle class="spark-dot" cx="190" cy="30" r="3.5"/>
+        </svg>
+        <div class="src">7개월(25-06) → 4\~7개월(26-02) <a href="https://newsletter.semianalysis.com/p/scaling-reinforcement-learning-environments-reward-hacking-agents-scaling-data">[250609]</a> <a href="https://newsletter.semianalysis.com/p/claude-code-is-the-inflection-point">[260206]</a></div>
+      </div>
+      <div class="metric" data-c="compute">
+        <div class="name">GB200 vs H100 처리량 배율</div>
+        <div class="val">2.5× <span class="delta up">→ 4.7× 전망</span></div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="1.3배에서 2.5배 실측, 4.7배 전망">
+          <path class="spark-fill" d="M0,38 L0,34 C40,32 70,26 100,20 C130,14 160,10 190,5 L190,38 Z"/>
+          <path class="spark-line" d="M0,34 C40,32 70,26 100,20 C130,14 160,10 190,5"/>
+          <circle class="spark-dot" cx="100" cy="20" r="3.5"/><circle class="spark-dot-f" cx="190" cy="5" r="3.5"/>
+        </svg>
+        <div class="src">1.3×(5월) → 2.5×(7월) → 4.7×(12월 전망) <a href="https://newsletter.semianalysis.com/p/h100-vs-gb200-nvl72-training-benchmarks">[250820]</a></div>
+      </div>
+      <div class="metric" data-c="model">
+        <div class="name">앤트로픽 추론 매출총이익률</div>
+        <div class="val">60%대 중반 <span class="delta up">+</span></div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="-94%에서 60%대로 상승">
+          <path class="spark-fill" d="M0,38 L0,37 C50,36 90,24 130,12 C155,7 175,6 190,6 L190,38 Z"/>
+          <path class="spark-line" d="M0,37 C50,36 90,24 130,12 C155,7 175,6 190,6"/>
+          <circle class="spark-dot" cx="190" cy="6" r="3.5"/>
+        </svg>
+        <div class="src">-94%(24) → 38%(25) → 60%대(26) <a href="https://newsletter.semianalysis.com/p/anthropic-growth-and-bedrock-mix">[260528]</a></div>
+      </div>
+      <div class="metric" data-c="memory">
+        <div class="name">HBM 공급 부족률</div>
+        <div class="val">6% <span class="delta dn">→ 9% 전망</span></div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="5%에서 9%로 부족 심화 전망">
+          <path class="spark-fill" d="M0,38 L0,28 C60,26 120,22 190,8 L190,38 Z"/>
+          <path class="spark-line" d="M0,28 C60,26 120,22 190,8"/>
+          <circle class="spark-dot" cx="100" cy="23" r="3.5"/><circle class="spark-dot-f" cx="190" cy="8" r="3.5"/>
+        </svg>
+        <div class="src">5%(25) → 6%(26) → 9%(27 전망) <a href="https://newsletter.semianalysis.com/p/memory-mania-how-a-once-in-four-decades">[260207]</a></div>
+      </div>
+    </div>
+    <div class="q">초록 점 = 최신 확인값 · 주황 점 = 전망치. 좌표는 숫자 대장의 시점별 값 기준.</div>
+  </section>
+
+  <section data-c="all compute">
+    <h2>⑤ GPU 변천사 — 엔비디아 세대 진화와 랙 스케일 확장</h2>
+    <div class="tl">
+      <div class="name">칩: 텐서 코어 아키텍처 세대</div>
+      <div class="steps">
+        <div class="step past"><div class="v">Volta</div><div class="w">2017 · 1세대 텐서 코어<br>TPU 충격에 긴급 탑재</div></div>
+        <div class="step past"><div class="v">Turing</div><div class="w">2018 · INT8/INT4<br>추론 특화 시작</div></div>
+        <div class="step past"><div class="v">Ampere</div><div class="w">2020 · SM당 연산 2배<br>비동기 데이터 복사</div></div>
+        <div class="step past"><div class="v">Hopper</div><div class="w">2022 · TMA<br>스레드블록 클러스터</div></div>
+        <div class="step now"><div class="v">Blackwell</div><div class="w">2024 · 텐서 전용 메모리<br>현재 주력 배치</div></div>
+        <div class="step fcst"><div class="v">Rubin</div><div class="w">2026 · FP4 35 PFLOPS<br>(3.5배) · HBM4 22TB/s</div></div>
+        <div class="step fcst"><div class="v">Kyber·Feynman</div><div class="w">2027+ · 차세대 랙<br>세대 예고</div></div>
+      </div>
+      <div class="why">2017년 이후 "저정밀 연산 확대 + 데이터 이동 비동기화" 한 방향으로 일관 진화 — Rubin은 FP4·FP8 폭만 2배 확장(BF16은 1.6배)해 이 방향을 굳힘 <a href="https://newsletter.semianalysis.com/p/nvidia-tensor-core-evolution-from-volta-to-blackwell">[250623]</a> <a href="https://newsletter.semianalysis.com/p/dissecting-nvidia-blackwell-tensor">[260401]</a> <a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution">[260226]</a></div>
+    </div>
+    <div class="tl">
+      <div class="name">시스템: 노드에서 랙으로, 랙에서 멀티랙으로</div>
+      <div class="steps">
+        <div class="step past"><div class="v">HGX 8-GPU</div><div class="w">\~2023 · 서버 노드 단위<br>(Volta\~Hopper)</div></div>
+        <div class="step now"><div class="v">GB200 NVL72</div><div class="w">2025 · Oberon 랙 스케일업<br>H100 대비 2.5배 실측</div></div>
+        <div class="step fcst"><div class="v">VR NVL72 + CPX</div><div class="w">2026 · 프리필/디코드<br>전용 랙 분화</div></div>
+        <div class="step fcst"><div class="v">Kyber NVL144+</div><div class="w">2027+ · NVL288→576→1152<br>랙간 CPO 결합</div></div>
+      </div>
+      <div class="why">스케일업 단위가 노드→랙→멀티랙으로 확장 중이고, 추론 특화 랙(CPX·LPX)으로 랙 자체가 분화 <a href="https://newsletter.semianalysis.com/p/h100-vs-gb200-nvl72-training-benchmarks">[250820]</a> <a href="https://newsletter.semianalysis.com/p/nvidia-the-inference-kingdom-expands">[260324]</a></div>
+    </div>
+  </section>
+
+  <section data-c="all compute memory power">
+    <h2>⑥ 기업 익스포저 매트릭스 — 방향 × 확신도 (23곳)</h2>
+    <div class="mx">
+      <div class="h"></div><div class="h">확신도 높음</div><div class="h">중간</div><div class="h">낮음·상충</div>
+      <div class="rowlab">수혜</div>
+      <div class="cell g"><span class="co">SK하이닉스</span><span class="co">Delta</span><span class="co">Vertiv</span></div>
+      <div class="cell g"><span class="co">TSMC</span><span class="co">TEL</span><span class="co">키옥시아</span><span class="co">ASML</span><span class="co">Panasonic</span><span class="co">Musashi</span><span class="co">Bloom</span><span class="co">나우라·AMEC</span></div>
+      <div class="cell g"></div>
+      <div class="rowlab">혼재</div>
+      <div class="cell w"></div>
+      <div class="cell w"><span class="co">삼성전자</span><span class="co">마이크론</span><span class="co">CXMT</span><span class="co">Schneider</span><span class="co">Eaton</span><span class="co">ABB</span><span class="co">Lite-On</span></div>
+      <div class="cell w"><span class="co">램리서치</span><span class="co">한미반도체</span><span class="co">GEV·Siemens E</span></div>
+      <div class="rowlab">리스크</div>
+      <div class="cell r"><span class="co">Legrand</span></div>
+      <div class="cell r"></div>
+      <div class="cell r"><span class="co">화웨이</span></div>
+    </div>
+    <div class="q">오른쪽 아래로 갈수록 "판단이 흔들리는 구간" — 후속 문서 유입 시 칩이 좌우로 이동. 근거: 익스포저 리포트 2건 ([260705] 전력·냉각, [260706] 반도체·메모리).</div>
+  </section>
+
+  <section data-c="all compute power model">
+    <h2>⑦ 전망 충돌 워치 — 같은 지표, 다른 관점</h2>
+    <div class="vs" data-c="power">
       <div class="row"><span>2026년 미국 데이터센터 신규 가동</span></div>
       <div class="row"><span>SemiAnalysis (실착공 집계)</span><b style="color:var(--good)">약 24GW</b></div>
       <div class="row"><span>Bloomberg/Sightline</span><b style="color:var(--risk)">약 12GW</b></div>
-      <div class="q">2배 차이의 정면충돌 — 연말 실적이 나오면 어느 관점이 현실에 가까웠는지 확인 <a href="https://newsletter.semianalysis.com/p/stop-saying-half-of-2026-us-datacenter" style="color:var(--accent);text-decoration:none">[260619]</a></div>
+      <div class="q">2배 차이의 정면충돌 — 연말 실적으로 판정 <a href="https://newsletter.semianalysis.com/p/stop-saying-half-of-2026-us-datacenter">[260619]</a></div>
     </div>
-    <div class="vs">
+    <div class="vs" data-c="model">
+      <div class="row"><span>에이전트는 사람을 대체하나, 보조하나</span></div>
+      <div class="row"><span>[260107] RL 환경과 과학</span><b style="color:var(--warn)">증강 — GDPval 반증 사례</b></div>
+      <div class="row"><span>[260206] Claude Code 변곡점</span><b style="color:var(--warn)">자동화 — 15조 달러 정보노동의 교두보</b></div>
+      <div class="q">한 달 간격 문서의 방향 엇갈림 — AI 모델 리포트 §1.6, 확신도 낮음으로 분류</div>
+    </div>
+    <div class="vs" data-c="compute">
       <div class="row"><span>NVSwitch 7 대역폭 (Kyber NVL144)</span></div>
       <div class="row"><span>SemiAnalysis 자체 추정</span><b style="color:var(--good)">NVSwitch 6의 2배</b></div>
       <div class="row"><span>공급망 증거</span><b style="color:var(--risk)">동일 대역폭 시사</b></div>
-      <div class="q">저자 스스로 "비논리적으로 보임"을 인정한 추정 — 양산 스펙 공개 시 판정 <a href="https://newsletter.semianalysis.com/p/nvidia-the-inference-kingdom-expands" style="color:var(--accent);text-decoration:none">[260324]</a></div>
+      <div class="q">저자 스스로 "비논리적으로 보임"을 인정한 추정 — 양산 스펙 공개 시 판정 <a href="https://newsletter.semianalysis.com/p/nvidia-the-inference-kingdom-expands">[260324]</a></div>
     </div>
-    <div class="vs">
+    <div class="vs" data-c="compute">
       <div class="row"><span>VR NVL144 CPX 통합 트레이 SKU</span></div>
-      <div class="row"><span>02-05 발표 시점</span><b style="color:var(--good)">트레이당 R200 4 + CPX 8 통합형 실존</b></div>
+      <div class="row"><span>02-05 발표 시점</span><b style="color:var(--good)">R200 4 + CPX 8 통합형 실존</b></div>
       <div class="row"><span>02-26 시점</span><b style="color:var(--risk)">독립 랙 전용으로 방향 확정</b></div>
-      <div class="q">3주 사이의 설계 확정 변화 — 양산 SKU 최종 공개 시 판정 <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" style="color:var(--accent);text-decoration:none">[260205]</a><a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution" style="color:var(--accent);text-decoration:none">[260226]</a></div>
+      <div class="q">3주 사이의 설계 확정 변화 <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack">[260205]</a> <a href="https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution">[260226]</a></div>
     </div>
-    <div class="vs">
+    <div class="vs" data-c="compute memory power">
       <div class="row"><span>판단 축이 문서마다 상충하는 기업</span></div>
-      <div class="row"><span>램리서치</span><b style="color:var(--warn)">NAND 식각 잠식당함 vs 슈퍼사이클 수혜</b></div>
+      <div class="row"><span>램리서치</span><b style="color:var(--warn)">NAND 식각 잠식 vs 슈퍼사이클 수혜</b></div>
       <div class="row"><span>GE Vernova·Siemens Energy</span><b style="color:var(--warn)">터빈 수주 호조 vs 장기 축 상충</b></div>
-      <div class="q">단일 방향 정리가 불가능해 사람 검토 지정된 항목 — 후속 문서 유입 시 재판정</div>
+      <div class="q">단일 방향 정리가 불가능해 사람 검토 지정 — 후속 문서 유입 시 재판정</div>
     </div>
   </section>
 
-  <section>
-    <h2>③ 지표 타임라인 — 문서를 가로지르는 궤적</h2>
-
-    <div class="tl">
-      <div class="name">METR 자율 작업 배증 주기 <span class="d">(짧을수록 가속)</span></div>
-      <div class="steps">
-        <div class="step past"><div class="v">7개월</div><div class="w">2025-06 · 코딩 한정 <a href="https://newsletter.semianalysis.com/p/scaling-reinforcement-learning-environments-reward-hacking-agents-scaling-data" style="color:var(--accent);text-decoration:none">[250609]</a></div></div>
-        <div class="step now"><div class="v">4~7개월</div><div class="w">2026-02 · 가속 시 ~4개월 <a href="https://newsletter.semianalysis.com/p/claude-code-is-the-inflection-point" style="color:var(--accent);text-decoration:none">[260206]</a></div></div>
-      </div>
-      <div class="why">에이전트가 실패 없이 일하는 시간이 2배 되는 주기 — 1년도 안 돼 실측 가속 확인</div>
-    </div>
-
-    <div class="tl">
-      <div class="name">GB200 NVL72 vs H100 처리량 배율 <span class="d">(DeepSeek 670B 학습)</span></div>
-      <div class="steps">
-        <div class="step past"><div class="v">1.3×</div><div class="w">2025-05 실측</div></div>
-        <div class="step now"><div class="v">2.5×</div><div class="w">2025-07 실측</div></div>
-        <div class="step fcst"><div class="v">4.7×</div><div class="w">2025-12 · Nvidia 전망</div></div>
-      </div>
-      <div class="why">소프트웨어 성숙만으로 하드웨어 가치가 배가되는 궤적 <a href="https://newsletter.semianalysis.com/p/h100-vs-gb200-nvl72-training-benchmarks" style="color:var(--accent);text-decoration:none">[250820]</a></div>
-    </div>
-
-    <div class="tl">
-      <div class="name">앤트로픽 추론 매출총이익률</div>
-      <div class="steps">
-        <div class="step past"><div class="v">-94%</div><div class="w">2024년</div></div>
-        <div class="step past"><div class="v">38%</div><div class="w">2025년</div></div>
-        <div class="step now"><div class="v">60%대 중반</div><div class="w">2026 현재 <a href="https://newsletter.semianalysis.com/p/anthropic-growth-and-bedrock-mix" style="color:var(--accent);text-decoration:none">[260528]</a></div></div>
-      </div>
-      <div class="why">적자 판매 → SaaS급 마진 구조 전환. ARR은 300억(1Q26) → 1,000억+ 전망(연말)</div>
-    </div>
-
-    <div class="tl">
-      <div class="name">HBM 공급 부족률 <span class="d">(수요 대비)</span></div>
-      <div class="steps">
-        <div class="step past"><div class="v">5%</div><div class="w">2025년</div></div>
-        <div class="step now"><div class="v">6%</div><div class="w">2026년</div></div>
-        <div class="step fcst"><div class="v">9%</div><div class="w">2027년 전망</div></div>
-      </div>
-      <div class="why">HBM 웨이퍼 배분 확대가 커먼디티 DRAM을 잠식하며 부족 심화 <a href="https://newsletter.semianalysis.com/p/memory-mania-how-a-once-in-four-decades" style="color:var(--accent);text-decoration:none">[260207]</a></div>
-    </div>
-    <div class="note">* 주황 = 전망치(미실현). 파랑 = 과거 실측, 초록 = 최신 확인값.</div>
-  </section>
-
-  <section>
-    <h2>④ 기업 익스포저 맵 — 23개 기업, 코퍼스 종합 방향</h2>
-    <div class="legend" style="margin-bottom:10px">
-      <span><span class="dot" style="background:var(--good)"></span>수혜</span>
-      <span><span class="dot" style="background:var(--warn)"></span>혼재</span>
-      <span><span class="dot" style="background:var(--risk)"></span>리스크</span>
-      <span>괄호 = 확신도</span>
-    </div>
-    <h3>반도체·메모리 (12)</h3>
-    <div class="chips">
-      <span class="chip good">SK하이닉스 <span class="c">(높음·6편 전부)</span></span>
-      <span class="chip good">TSMC <span class="c">(중간)</span></span>
-      <span class="chip good">도쿄일렉트론 <span class="c">(중간)</span></span>
-      <span class="chip good">키옥시아·샌디스크 <span class="c">(중간)</span></span>
-      <span class="chip good">ASML <span class="c">(중간)</span></span>
-      <span class="chip good">나우라·AMEC <span class="c">(중국 국산화 관점)</span></span>
-      <span class="chip warn">삼성전자 <span class="c">(중간)</span></span>
-      <span class="chip warn">마이크론 <span class="c">(중간)</span></span>
-      <span class="chip warn">CXMT <span class="c">(중간)</span></span>
-      <span class="chip warn">램리서치 <span class="c">(낮음·판단축 상충)</span></span>
-      <span class="chip warn">한미반도체 <span class="c">(낮음)</span></span>
-      <span class="chip risk">화웨이 <span class="c">(제약)</span></span>
-    </div>
-    <h3>AI 인프라 전력·냉각 (11)</h3>
-    <div class="chips">
-      <span class="chip good">Delta Electronics <span class="c">(높음)</span></span>
-      <span class="chip good">Vertiv <span class="c">(높음·주로 수혜)</span></span>
-      <span class="chip good">Bloom Energy <span class="c">(3편)</span></span>
-      <span class="chip good">Panasonic <span class="c">(중간·BBU 80%)</span></span>
-      <span class="chip good">Musashi Seimitsu <span class="c">(중간·사실상 독점)</span></span>
-      <span class="chip warn">Schneider Electric <span class="c">(중간)</span></span>
-      <span class="chip warn">Eaton <span class="c">(중간)</span></span>
-      <span class="chip warn">ABB <span class="c">(중간·2028 이후)</span></span>
-      <span class="chip warn">Lite-On <span class="c">(중간)</span></span>
-      <span class="chip warn">GE Vernova·Siemens Energy <span class="c">(낮음·축 상충)</span></span>
-      <span class="chip risk">Legrand <span class="c">(높음·매출 55% 위험 구간)</span></span>
-    </div>
-    <div class="note">근거: 익스포저 리포트 2건 ([260705] 전력·냉각, [260706] 반도체·메모리 — 리포 내부 문서, 원문 6~7편씩 종합). 방향은 세대 전환(HBM4, 400단+ NAND, 800VDC)마다 재판정 대상.</div>
-  </section>
-
-  <section>
-    <h2>⑤ 코퍼스 커버리지</h2>
+  <section data-c="all compute memory power model">
+    <h2>⑧ 전망 캘린더 — 분기별로 지켜볼 것</h2>
     <div class="scroll"><table>
-      <tr><th>클러스터</th><th>문서</th><th>상태</th></tr>
-      <tr><td>메모리</td><td class="num">7</td><td>완료</td></tr>
-      <tr><td>컴퓨트</td><td class="num">9*</td><td>완료 (TPUv7·루빈 CPX 07-11 추가)</td></tr>
-      <tr><td>AI 모델</td><td class="num">4</td><td>완료</td></tr>
-      <tr><td>비즈니스·전력·냉각</td><td class="num">8</td><td>완료 (초기 6편은 지표 소급 추출 대기)</td></tr>
-      <tr><td>신규 클리핑</td><td class="num">62</td><td style="color:var(--warn)">2편 변환 완료 · 60편 대기 — 컴퓨트 우선 진행 중</td></tr>
+      <tr><th>분기</th><th>지켜볼 것</th></tr>
+      <tr><td class="num">3Q26</td><td>앤트로픽 2Q 실적(흑자 여부) · LPX 랙 설계변경 출하 · TSMC N3 가동률 100%+ · 장비 리드타임 OEM 코멘트리 · UALink 실물 스위치(AMD 랙 실증)</td></tr>
+      <tr><td class="num">4Q26</td><td>DRAM 가격 2배 도달 여부 · 신규 가동 24GW vs 12GW 판가름 · Claude Code 커밋 20% · 앤트로픽 ARR 1,000억 · 메타 등 추가 TPU 계약</td></tr>
+      <tr><td class="num">2027</td><td>N3 AI 비중 86% · HBM 부족률 9% · DDR-HBM 마진 역전 · TPU v8(Sunfish·Zebrafish) · MI400 실효 FP4 vs VR200 판정 · Kyber NVL144 실배치</td></tr>
+      <tr><td class="num">2028+</td><td>NVL576·1152 랙간 CPO 실증 · Oracle 뉴멕시코 첫 전력 · CFET 상업화 경로 · Feynman 세대</td></tr>
     </table></div>
-    <div class="note">* CFET/IEDM은 컴퓨트·메모리 겸용, <a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage" style="color:var(--accent);text-decoration:none">[260313]</a>은 컴퓨트·메모리 복수 분류.</div>
+    <div class="q">원문에 실제 언급된 이벤트만 수록 — 각 통합 리포트 "다음 확인 포인트" 종합.</div>
+  </section>
+
+  <section data-c="all robot">
+    <h2>⑨ 로보틱스 — 변환 대기 클러스터</h2>
+    <div class="sig"><div class="when">대기</div><div><div class="t">Unitree 2편 · 자율성 레벨</div><div class="d">클리핑 확보 완료 — 변환되면 이 탭에 종합 판단·익스포저가 채워짐. YouTube Ep.016이 선행 해설 소스</div></div></div>
+  </section>
+
+  <section data-c="all compute memory power model robot">
+    <h2>⑩ 코퍼스 커버리지</h2>
+    <div class="scroll"><table>
+      <tr><th>클러스터</th><th>문서</th><th>리포트</th><th>상태</th></tr>
+      <tr><td>컴퓨트</td><td class="num">11+3*</td><td class="num">1</td><td>통합 리포트 07-11 신규 · 부분 2편 재개 대기</td></tr>
+      <tr><td>메모리</td><td class="num">7</td><td class="num">1</td><td>완료</td></tr>
+      <tr><td>전력·냉각·비즈니스</td><td class="num">8</td><td class="num">2+2**</td><td>완료 · 전력 07-10 증보</td></tr>
+      <tr><td>AI 모델</td><td class="num">4</td><td class="num">1</td><td>통합 리포트 07-11 신규</td></tr>
+      <tr><td>신규 클리핑</td><td class="num">62</td><td class="num">—</td><td style="color:var(--warn)">4편 변환(부분 2 포함) · 58편 대기 — 컴퓨트 우선</td></tr>
+    </table></div>
+    <div class="note">* 교차 카테고리 3편(HBM 로드맵·ISSCC·800VDC)의 컴퓨트 섹션 반영 · ** 익스포저 리포트 2건은 클러스터 공용</div>
   </section>
 
   <div class="foot">
-    데이터 원천: 대장/예측 대장.md · 대장/숫자 대장.md · 통합 리포트 3건 · 익스포저 리포트 2건<br>
+    원천: 뉴스레터 변환 코퍼스 · 통합 리포트 7건 · 대장(예측·숫자) ·
+    <a href="https://www.linkedin.com/company/semianalysis/posts/">LinkedIn</a> ·
+    <a href="https://www.youtube.com/@SemiAnalysis">YouTube 본채널</a> ·
+    <a href="https://www.youtube.com/@SemiAnalysisWeekly">Weekly</a><br>
     <a href="https://claude.ai/code/artifact/466aa167-13e1-48a1-b770-da931d916f94">파이프라인 현황·히스토리</a> ·
     <a href="https://claude.ai/code/artifact/ea171b7c-3785-405f-aa17-0713ee4694c7">전력 인프라 대시보드</a>
   </div>
 </main>
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const items = document.querySelectorAll('[data-c]');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    const c = t.dataset.c;
+    items.forEach(el => {
+      if (el.classList.contains('tab')) return;
+      el.style.display = (c === 'all' || el.dataset.c.split(' ').includes(c)) ? '' : 'none';
+    });
+  }));
+</script>

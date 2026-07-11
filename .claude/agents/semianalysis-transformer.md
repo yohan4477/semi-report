@@ -43,6 +43,6 @@ All content/formatting rules (diagram-first, width limits, tilde escaping, gloss
 
 1. Run the "완료 후 검증" checks from TRANSFORMATION_RULES.md (grep for difficulty emoji, LR diagrams, unescaped tildes outside mermaid; manual width + duplication + TOC passes). Fix anything found.
 2. Update the document-count table in `CATEGORIES.md` for **every** category in this doc's frontmatter (not just the first one — a past run updated only one of two categories).
-3. For each of this doc's categories that already has a report under `통합 리포트/`, update that report per REPORT_RULES.md trigger 2 (add a per-document summary entry; extend any timeline threads this document continues; bump "최종 갱신일"). Never create a brand-new report here — that is on-demand only.
+3. For each of this doc's categories that already has a report under `통합 리포트/카테고리별 통합 리포트/`, update that report per REPORT_RULES.md trigger 2 (add a per-document summary entry; extend any timeline threads this document continues; bump "최종 갱신일"). Never create a brand-new report here — that is on-demand only.
 4. Set the progress footer to 100%, make the final commit, and push.
 5. Report back: output file path, final commit hashes, a one-paragraph summary of coverage, and any judgment calls a human reviewer should double-check (ambiguous term translations, places where you narrated a chart instead of diagramming it, etc.).
