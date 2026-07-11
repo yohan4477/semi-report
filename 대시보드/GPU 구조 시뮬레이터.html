@@ -63,40 +63,45 @@
   .ghead .n{font-weight:700; font-size:.98rem;}
   .ghead .y{color:var(--sub); font-size:.75rem; font-variant-numeric:tabular-nums;}
 
-  /* 패키지 도식 — 전 세대 동일 축척 */
-  .pkg{display:flex; gap:6px; align-items:stretch;}
+  /* 패키지 도식 — 데이터 이동 무대 */
+  .pkg{position:relative; display:flex; gap:8px; align-items:stretch;}
   .hbmcol{display:flex; flex-direction:column; gap:4px; justify-content:center;}
-  .stack{width:26px; flex:1; min-height:22px; max-height:36px; background:var(--hbm); border:1px solid var(--line);
+  .stack{width:30px; flex:1; min-height:24px; max-height:40px; background:var(--hbm); border:1px solid var(--line);
     border-radius:4px; display:flex; align-items:center; justify-content:center;
-    font-size:.52rem; font-weight:700; color:var(--sub); writing-mode:vertical-rl; letter-spacing:.05em;}
+    font-size:.54rem; font-weight:700; color:var(--sub); writing-mode:vertical-rl; letter-spacing:.05em;}
   .dies{flex:1; display:flex; align-items:stretch; min-width:0;}
-  .die{background:var(--die); border:1.5px solid var(--line); border-radius:8px; padding:6px; display:flex; flex-direction:column; gap:5px;}
-  .die .l2{background:var(--accent-soft); color:var(--accent); border-radius:4px; text-align:center;
-    font-size:.58rem; font-weight:700; padding:1px 0;}
-  .smgrid{display:grid; grid-template-columns:repeat(auto-fill, 9px); gap:2px; align-content:start; justify-content:start; flex:1;}
-  .sm{width:9px; height:9px; background:var(--accent); opacity:.72; border-radius:2px;}
+  .die{flex:1; background:var(--die); border:1.5px solid var(--line); border-radius:8px; padding:7px; display:flex; flex-direction:column; gap:6px; min-width:0;}
+  .die.mini{flex:.55;}
+  .l2{background:var(--accent-soft); color:var(--accent); border-radius:4px; text-align:center;
+    font-size:.6rem; font-weight:700; padding:2px 0;}
+  .dbody{display:flex; gap:7px; flex:1; min-height:0;}
+  .smgrid{display:grid; grid-template-columns:repeat(auto-fill, 8px); gap:2px; align-content:start; justify-content:start; flex:1; min-width:0;}
+  .sm{width:8px; height:8px; background:var(--accent); opacity:.6; border-radius:2px;}
   .gen.now .sm{background:var(--good);}
-  .gen.fcst .sm{background:transparent; border:1px dashed var(--warn); opacity:.7; width:7px; height:7px;}
-  .bridge{width:22px; display:flex; align-items:center; justify-content:center; background:var(--warn-bg);
+  .gen.fcst .sm{background:transparent; border:1px dashed var(--warn); opacity:.7; width:6px; height:6px;}
+  .smcut{flex:none; width:47%; border:1.5px dashed var(--sub); border-radius:7px; padding:5px; display:flex; flex-direction:column; gap:4px;}
+  .smcut .cutlab{font-size:.58rem; font-weight:700; color:var(--sub); letter-spacing:.05em; text-align:center;}
+  .blk{border:1.5px solid var(--line); border-radius:6px; padding:3px 7px; font-size:.7rem; font-weight:600; background:var(--card); position:relative;}
+  .blk .d{display:block; color:var(--sub); font-size:.56rem; font-weight:400;}
+  .blk.new{border-color:var(--good); background:var(--good-bg);}
+  .blk.new .d{color:var(--good); font-weight:700;}
+  .blk.dim{opacity:.42; border-style:dashed;}
+  .blk.dim .d{color:var(--risk); font-weight:700;}
+  .blk.tc{border-color:var(--accent); background:var(--accent-soft);}
+  .lit{box-shadow:0 0 0 3px var(--accent-soft); border-color:var(--accent) !important;}
+  .stack.lit, .l2.lit{outline:2px solid var(--accent); outline-offset:1px; box-shadow:none;}
+  .bridge{width:24px; display:flex; align-items:center; justify-content:center; background:var(--warn-bg);
     border-top:1.5px solid var(--line); border-bottom:1.5px solid var(--line);
-    font-size:.52rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl; letter-spacing:.04em;}
+    font-size:.54rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl; letter-spacing:.04em;}
   .iocol{display:flex; flex-direction:column; gap:4px; justify-content:center; margin-left:4px;}
-  .io{width:24px; flex:1; max-height:44px; background:var(--warn-bg); border:1px dashed var(--warn); border-radius:4px;
+  .io{width:24px; flex:1; max-height:46px; background:var(--warn-bg); border:1px dashed var(--warn); border-radius:4px;
     display:flex; align-items:center; justify-content:center; font-size:.5rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl;}
+  .dot{position:absolute; left:0; top:0; width:11px; height:11px; margin:-5.5px 0 0 -5.5px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 8px var(--accent); opacity:0; pointer-events:none; z-index:3;}
+  .gen.fcst .dot{background:var(--warn); box-shadow:0 0 8px var(--warn);}
   .nvlbar{margin-top:6px; border:1px dashed var(--line); border-radius:5px;
     text-align:center; font-size:.66rem; color:var(--sub); font-weight:600; padding:2px 8px;}
   .caption{color:var(--sub); font-size:.75rem; margin-top:7px;}
-
-  /* 데이터 경로 체인 */
-  .chain{display:flex; gap:4px; align-items:center; flex-wrap:wrap; margin-top:9px;}
-  .chain .lab{flex:none; width:72px; color:var(--sub); font-size:.68rem; font-weight:700;}
-  .st{border:1.5px solid var(--line); border-radius:7px; padding:3px 8px; font-size:.72rem; font-weight:600; background:var(--card);}
-  .st .tag{display:block; font-size:.58rem; font-weight:700; color:var(--good);}
-  .st.new{border-color:var(--good); background:var(--good-bg);}
-  .st.dim{opacity:.42; border-style:dashed;}
-  .st.dim .tag{color:var(--risk);}
-  .st.hot{border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 3px var(--accent-soft);}
-  .arrow{color:var(--sub); font-size:.72rem;}
 
   table{border-collapse:collapse; width:100%; font-size:.8rem;}
   th,td{text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top; min-width:96px;}
@@ -109,21 +114,21 @@
 </style>
 <main>
   <div>
-    <h1>GPU 구조 비교 — 다섯 세대를 한 화면에</h1>
-    <div class="stamp">Volta(2017) → Rubin(2026 전망) · 동일 축척 패키지 도식 + 데이터 경로 진화 · SemiAnalysis 코퍼스 연동</div>
+    <h1>GPU 구조 비교 — 도식 위를 달리는 데이터</h1>
+    <div class="stamp">Volta(2017) → Rubin(2026 전망) · 동일 축척 · 데이터가 구조 안에서 직접 이동 · SemiAnalysis 코퍼스 연동</div>
   </div>
 
   <section>
     <div class="toolbar">
-      <button class="play" id="play">▶ 전 세대 데이터 흐름 동시 재생</button>
-      <span class="legend">SM 1칸 = 실제 SM 1개(동일 축척) · <b style="color:var(--good)">초록 상자</b> = 그 세대 신설 · 점선 = 우회·전망</span>
+      <button class="play" id="play">▶ 전 세대 데이터 이동 재생</button>
+      <span class="legend">점이 HBM → L2 → SM 내부 → 텐서 코어로 실제 도식 위를 이동 · 점선 블록 = 우회(건너뜀) · <b style="color:var(--good)">초록</b> = 그 세대 신설</span>
     </div>
   </section>
 
   <section>
-    <h2>패키지 · 데이터 경로 — 위에서 아래로 9년의 진화</h2>
+    <h2>패키지 도식 — SM 1개를 확대해 내부 경로까지</h2>
     <div id="gens"></div>
-    <div class="q">경로를 세로로 훑으면 진화의 서사가 보입니다: 레지스터 파일 경유(Volta) → cp.async 부분 우회(Ampere) → TMA 전용 DMA(Hopper) → TMEM으로 완전 우회(Blackwell) → 구조 유지 + 폭 2배(Rubin). 다이·HBM 스택도 같은 축척이라 실리콘 규모 차이가 그대로 비교됩니다.</div>
+    <div class="q">오른쪽 점선 상자가 SM 1개의 확대도입니다. 세로로 훑으면: Volta는 점이 레지스터 파일을 반드시 지나가고, Ampere부터 점이 레지스터를 비켜가기 시작해(cp.async), Hopper는 TMA가 길을 새로 내고, Blackwell은 텐서 코어 옆 TMEM으로 직행합니다. SM 1칸 = 실제 SM 1개(동일 축척, Rubin은 SM 수 미공개라 점선 칸은 자리표시).</div>
   </section>
 
   <section>
@@ -155,71 +160,98 @@
   const GENS = [
     {n:'Volta · V100', y:'2017 · 텐서 코어 원년', cls:'past', dies:1, sm:80, hbm:4, hbmT:'HBM2',
      nvl:'NVLink 2 — 300 GB/s',
-     cap:'단일 다이 80 SM + HBM2 4스택 — TPU 충격에 긴급 탑재된 첫 행렬 엔진',
-     chain:[{n:'HBM'},{n:'L2'},{n:'레지스터 파일'},{n:'텐서 코어'}]},
+     cap:'모든 데이터가 레지스터 파일을 지나 텐서 코어에 닿는다 — 이후 모든 세대가 걷어낼 병목',
+     cut:[{n:'레지스터 파일',d:'전량 경유 — 병목',path:1},{n:'텐서 코어 1세대',d:'FP16 4×4×4',tc:1,path:1}]},
     {n:'Ampere · A100', y:'2020 · 비동기의 시작', cls:'past', dies:1, sm:108, hbm:6, hbmT:'HBM2e',
      nvl:'NVLink 3 — 600 GB/s',
-     cap:'SM당 연산 2배 + cp.async — 레지스터를 안 거치는 첫 경로가 열림',
-     chain:[{n:'HBM'},{n:'L2'},{n:'공유 메모리',tag:'cp.async 직행'},{n:'레지스터 파일',dim:1,tag:'부분 우회'},{n:'텐서 코어'}]},
+     cap:'cp.async가 HBM→공유 메모리 직행로를 뚫는다 — 점이 레지스터를 비켜가기 시작',
+     cut:[{n:'공유 메모리',d:'cp.async 직행 — 신설',nw:1,path:1},{n:'레지스터 파일',d:'부분 우회',dim:1},{n:'텐서 코어 3세대',d:'TF32·BF16',tc:1,path:1}]},
     {n:'Hopper · H100', y:'2022 · TMA와 클러스터', cls:'past', dies:1, sm:132, hbm:6, hbmT:'HBM3',
      nvl:'NVLink 4 — 900 GB/s',
-     cap:'전용 DMA(TMA)가 주소 계산까지 대신 — FP8 트랜스포머 엔진 탑재',
-     chain:[{n:'HBM'},{n:'L2'},{n:'TMA',tag:'전용 DMA'},{n:'공유 메모리',tag:'DSMEM 공유'},{n:'레지스터 파일',dim:1,tag:'우회 확대'},{n:'텐서 코어'}]},
+     cap:'전용 DMA(TMA)가 주소 계산까지 대신하고, 공유 메모리는 SM끼리 나눠 쓴다(DSMEM)',
+     cut:[{n:'TMA 엔진',d:'텐서 전용 DMA — 신설',nw:1,path:1},{n:'공유 메모리',d:'DSMEM 클러스터 — 신설',nw:1,path:1},{n:'레지스터 파일',d:'우회 확대',dim:1},{n:'텐서 코어 4세대',d:'FP8 트랜스포머 엔진',tc:1,path:1}]},
     {n:'Blackwell · B200', y:'2024 · 듀얼 다이 + TMEM · 현재 주력', cls:'now', dies:2, sm:144, hbm:8, hbmT:'HBM3e',
      nvl:'NVLink 5 — 1.8 TB/s · 다이 간 NV-HBI 10 TB/s',
-     cap:'레티클 한계로 다이 2개 접합(소프트웨어엔 GPU 1개) — 텐서 코어 옆 전용 메모리(TMEM) 신설',
-     chain:[{n:'HBM'},{n:'L2'},{n:'TMA'},{n:'TMEM',tag:'텐서 전용 메모리'},{n:'레지스터 파일',dim:1,tag:'완전 우회'},{n:'텐서 코어'}]},
+     cap:'다이 2개를 NV-HBI로 접합(소프트웨어엔 GPU 1개) — 점이 텐서 코어 옆 TMEM으로 직행, 레지스터는 완전 우회',
+     cut:[{n:'TMA 엔진',d:'텐서 DMA',path:1},{n:'TMEM',d:'256KB 텐서 전용 — 신설',nw:1,path:1},{n:'레지스터 파일',d:'완전 우회',dim:1},{n:'텐서 코어 5세대',d:'FP4·FP6',tc:1,path:1}]},
     {n:'Rubin · R200', y:'2026 전망 · 구조 계승 + 폭 확장', cls:'fcst', fc:1, dies:2, io:2, sm:0, hbm:8, hbmT:'HBM4',
      nvl:'NVLink 6 — 3.6 TB/s (전망)',
-     cap:'컴퓨트 다이 2개 + I/O 칩렛 분리 전망 — 새 블록 대신 FP4·FP8 연산 폭 2배, HBM 대역폭 2.75배',
-     chain:[{n:'HBM4',tag:'대역폭 2.75배'},{n:'L2'},{n:'TMA'},{n:'TMEM'},{n:'텐서 코어',tag:'FP4 폭 2배'}]}
+     cap:'경로는 Blackwell 그대로, 각 구간의 폭만 확장 — HBM 대역폭 2.75배, FP4·FP8 연산 폭 2배',
+     cut:[{n:'TMA 엔진',d:'계승',path:1},{n:'TMEM',d:'계승·확장 추정',path:1},{n:'레지스터 파일',d:'계승 우회',dim:1},{n:'텐서 코어 6세대',d:'FP4 폭 2배 — 35 PF 전망',tc:1,path:1}]}
   ];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let timers = [];
 
-  function smCells(count, fcst){
-    const n = count || 64;
-    let h = '';
-    for (let i = 0; i < n; i++) h += '<div class="sm"></div>';
-    return '<div class="smgrid">' + h + '</div>';
-  }
   const gensEl = document.getElementById('gens');
   gensEl.innerHTML = GENS.map(g => {
     const half = g.hbm / 2;
-    const col = k => '<div class="hbmcol">' + Array.from({length:k}, () => '<div class="stack">' + g.hbmT + '</div>').join('') + '</div>';
-    let dies = '';
-    for (let d = 0; d < g.dies; d++){
-      const share = g.sm ? g.sm / g.dies : 0;
-      dies += '<div class="die" style="flex:' + (g.sm ? share : 64) + '"><div class="l2">L2</div>' + smCells(share, g.fc) + '</div>';
-      if (g.dies === 2 && d === 0) dies += '<div class="bridge">' + (g.fc ? '다이 접합' : 'NV-HBI') + '</div>';
+    const col = (k, src) => '<div class="hbmcol">' + Array.from({length:k}, (_, i) =>
+      '<div class="stack"' + (src && i === Math.floor(k/2) ? ' data-wp="0"' : '') + '>' + g.hbmT + '</div>').join('') + '</div>';
+    let wp = 2;
+    const cutHtml = '<div class="smcut"><div class="cutlab">SM 1개 확대</div>' + g.cut.map(b =>
+      '<div class="blk' + (b.nw ? ' new' : '') + (b.dim ? ' dim' : '') + (b.tc ? ' tc' : '') + '"' +
+      (b.path ? ' data-wp="' + (wp++) + '"' : '') + '>' + b.n + '<span class="d">' + b.d + '</span></div>').join('') + '</div>';
+    let dies = '<div class="die"><div class="l2" data-wp="1">L2 캐시</div><div class="dbody">' +
+      smGrid(g.sm ? g.sm / g.dies : 0) + cutHtml + '</div></div>';
+    if (g.dies === 2){
+      dies += '<div class="bridge">' + (g.fc ? '다이 접합' : 'NV-HBI') + '</div>' +
+        '<div class="die mini"><div class="l2">L2</div><div class="dbody">' + smGrid(g.sm ? g.sm / g.dies : 0) + '</div></div>';
     }
     if (g.io) dies += '<div class="iocol">' + Array.from({length:g.io}, () => '<div class="io">I/O</div>').join('') + '</div>';
     return '<div class="gen ' + g.cls + '">' +
       '<div class="ghead"><span class="n">' + g.n + (g.fc ? ' <span class="badge fc">전망</span>' : '') + '</span><span class="y">' + g.y + '</span></div>' +
-      '<div class="pkg">' + col(Math.ceil(half)) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half)) + '</div>' +
+      '<div class="pkg">' + col(Math.ceil(half), true) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half), false) +
+      '<div class="dot"></div></div>' +
       '<div class="nvlbar">' + g.nvl + '</div>' +
       '<div class="caption">' + g.cap + '</div>' +
-      '<div class="chain"><span class="lab">데이터 경로</span>' + g.chain.map((s,i) =>
-        (i ? '<span class="arrow">→</span>' : '') +
-        '<span class="st' + (s.dim ? ' dim' : '') + (s.tag && !s.dim ? ' new' : '') + '">' + s.n +
-        (s.tag ? '<span class="tag">' + s.tag + '</span>' : '') + '</span>').join('') + '</div>' +
       '</div>';
   }).join('');
 
-  document.getElementById('play').addEventListener('click', () => {
-    timers.forEach(clearTimeout); timers = [];
-    document.querySelectorAll('.gen .chain').forEach(chain => {
-      const sts = Array.from(chain.querySelectorAll('.st')).filter(s => !s.classList.contains('dim'));
-      sts.forEach(s => s.classList.remove('hot'));
-      if (reduced){ sts.forEach(s => s.classList.add('hot')); return; }
-      sts.forEach((s, i) => {
-        timers.push(setTimeout(() => {
-          if (i > 0) sts[i-1].classList.remove('hot');
-          s.classList.add('hot');
-          if (i === sts.length - 1) timers.push(setTimeout(() => sts.forEach(x => x.classList.add('hot')), 550));
-        }, 550 * i));
-      });
-    });
-    if (!reduced) timers.push(setTimeout(() => document.querySelectorAll('.st.hot').forEach(s => s.classList.remove('hot')), 550 * 8));
-  });
+  function smGrid(n){
+    let h = '';
+    const k = n || 56;
+    for (let i = 0; i < k; i++) h += '<div class="sm"></div>';
+    return '<div class="smgrid">' + h + '</div>';
+  }
+
+  function center(el, ref){
+    const r = el.getBoundingClientRect(), b = ref.getBoundingClientRect();
+    return {x: r.left + r.width/2 - b.left, y: r.top + r.height/2 - b.top};
+  }
+  function run(pkg){
+    if (pkg.dataset.running) return;
+    const pts = Array.from(pkg.querySelectorAll('[data-wp]')).sort((a,b) => a.dataset.wp - b.dataset.wp);
+    if (pts.length < 2) return;
+    pkg.dataset.running = '1';
+    pts.forEach(p => p.classList.remove('lit'));
+    if (reduced){
+      pts.forEach(p => p.classList.add('lit'));
+      setTimeout(() => { pts.forEach(p => p.classList.remove('lit')); delete pkg.dataset.running; }, 2000);
+      return;
+    }
+    const dot = pkg.querySelector('.dot');
+    const cs = pts.map(p => center(p, pkg));
+    let seg = 0, t0 = null;
+    dot.style.opacity = 1;
+    dot.style.transform = 'translate(' + cs[0].x + 'px,' + cs[0].y + 'px)';
+    pts[0].classList.add('lit');
+    function frame(ts){
+      if (t0 === null) t0 = ts;
+      const u = Math.min(1, (ts - t0) / 560);
+      const a = cs[seg], b = cs[seg+1];
+      dot.style.transform = 'translate(' + (a.x + (b.x-a.x)*u) + 'px,' + (a.y + (b.y-a.y)*u) + 'px)';
+      if (u >= 1){
+        pts[seg+1].classList.add('lit');
+        seg++; t0 = null;
+        if (seg >= cs.length - 1){
+          setTimeout(() => { dot.style.opacity = 0; pts.forEach(p => p.classList.remove('lit')); delete pkg.dataset.running; }, 1300);
+          return;
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function runAll(){ document.querySelectorAll('.pkg').forEach(run); }
+  document.getElementById('play').addEventListener('click', runAll);
+  setTimeout(runAll, 700);
 </script>
