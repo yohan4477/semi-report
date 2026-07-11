@@ -100,9 +100,13 @@
   .iocol{display:flex; flex-direction:column; gap:4px; justify-content:center; margin-left:4px;}
   .io{width:24px; flex:1; max-height:46px; background:var(--warn-bg); border:1px dashed var(--warn); border-radius:4px;
     display:flex; align-items:center; justify-content:center; font-size:.5rem; font-weight:700; color:var(--warn); writing-mode:vertical-rl;}
-  .dot{position:absolute; left:0; top:0; width:11px; height:11px; margin:-5.5px 0 0 -5.5px; border-radius:50%;
-    background:var(--accent); box-shadow:0 0 8px var(--accent); opacity:0; pointer-events:none; z-index:3;}
-  .gen.fcst .dot{background:var(--warn); box-shadow:0 0 8px var(--warn);}
+  .dot{position:absolute; left:0; top:0; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%;
+    background:var(--accent); border:2.5px solid #fff; box-sizing:border-box;
+    box-shadow:0 0 10px var(--accent), 0 0 3px rgba(0,0,0,.35); opacity:0; pointer-events:none; z-index:3;}
+  .gen.fcst .dot{background:var(--warn); box-shadow:0 0 10px var(--warn), 0 0 3px rgba(0,0,0,.35);}
+  .trail{position:absolute; left:0; top:0; pointer-events:none; z-index:2; opacity:0;}
+  .trail polyline{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-dasharray:6 5; opacity:.6;}
+  .gen.fcst .trail polyline{stroke:var(--warn);}
   .nvlbar{margin-top:6px; border:1px dashed var(--line); border-radius:5px;
     text-align:center; font-size:.66rem; color:var(--sub); font-weight:600; padding:2px 8px;}
   @media (max-width:600px){
@@ -214,7 +218,7 @@
       '<div class="ghead"><span class="n">' + g.n + (g.fc ? ' <span class="badge fc">전망</span>' : '') + '</span>' +
       '<span class="right"><span class="y">' + g.y + '</span><button class="gplay">▶ 재생</button></span></div>' +
       '<div class="pkg">' + col(Math.ceil(half), true) + '<div class="dies">' + dies + '</div>' + col(Math.floor(half), false) +
-      '<div class="dot"></div></div>' +
+      '<div class="dot"></div><div class="dot"></div><div class="dot"></div></div>' +
       '<div class="nvlbar">' + g.nvl + '</div>' +
       '<div class="caption">' + g.cap + '</div>' +
       '</div>';
@@ -237,31 +241,50 @@
     if (pts.length < 2) return;
     pkg.dataset.running = '1';
     pts.forEach(p => p.classList.remove('lit'));
-    if (reduced){
-      pts.forEach(p => p.classList.add('lit'));
-      setTimeout(() => { pts.forEach(p => p.classList.remove('lit')); delete pkg.dataset.running; }, 2000);
-      return;
-    }
-    const dot = pkg.querySelector('.dot');
     const cs = pts.map(p => center(p, pkg));
-    let seg = 0, t0 = null;
-    dot.style.opacity = 1;
-    dot.style.transform = 'translate(' + cs[0].x + 'px,' + cs[0].y + 'px)';
+    let svg = pkg.querySelector('.trail');
+    if (!svg){
+      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'trail');
+      pkg.appendChild(svg);
+    }
+    const W = pkg.clientWidth, H = pkg.clientHeight;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.style.width = W + 'px'; svg.style.height = H + 'px';
+    svg.innerHTML = '<polyline points="' + cs.map(c => c.x + ',' + c.y).join(' ') + '"/>';
+    svg.style.opacity = 1;
+    function finish(delay){
+      setTimeout(() => {
+        pkg.querySelectorAll('.dot').forEach(d => d.style.opacity = 0);
+        pts.forEach(p => p.classList.remove('lit'));
+        svg.style.opacity = 0;
+        delete pkg.dataset.running;
+      }, delay);
+    }
+    if (reduced){ pts.forEach(p => p.classList.add('lit')); finish(2200); return; }
+    const dots = Array.from(pkg.querySelectorAll('.dot'));
+    const segMs = 700, lag = 0.33, n = cs.length - 1;
+    const endP = n + lag * (dots.length - 1);
+    const pos = p => {
+      p = Math.max(0, Math.min(n, p));
+      const k = Math.min(n - 1, Math.floor(p)), u = p - k;
+      return {x: cs[k].x + (cs[k+1].x - cs[k].x) * u, y: cs[k].y + (cs[k+1].y - cs[k].y) * u};
+    };
+    dots.forEach(d => d.style.opacity = 1);
     pts[0].classList.add('lit');
+    let start = null, lit = 0;
     function frame(ts){
-      if (t0 === null) t0 = ts;
-      const u = Math.min(1, (ts - t0) / 560);
-      const a = cs[seg], b = cs[seg+1];
-      dot.style.transform = 'translate(' + (a.x + (b.x-a.x)*u) + 'px,' + (a.y + (b.y-a.y)*u) + 'px)';
-      if (u >= 1){
-        pts[seg+1].classList.add('lit');
-        seg++; t0 = null;
-        if (seg >= cs.length - 1){
-          setTimeout(() => { dot.style.opacity = 0; pts.forEach(p => p.classList.remove('lit')); delete pkg.dataset.running; }, 1300);
-          return;
-        }
-      }
-      requestAnimationFrame(frame);
+      if (start === null) start = ts;
+      const head = (ts - start) / segMs;
+      dots.forEach((d, i) => {
+        const c = pos(head - i * lag);
+        d.style.transform = 'translate(' + c.x + 'px,' + c.y + 'px)';
+      });
+      const reach = Math.min(n, Math.floor(head));
+      for (let k = lit + 1; k <= reach; k++) pts[k].classList.add('lit');
+      lit = Math.max(lit, reach);
+      if (head < endP + 0.3) requestAnimationFrame(frame);
+      else finish(1300);
     }
     requestAnimationFrame(frame);
   }
