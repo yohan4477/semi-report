@@ -70,6 +70,25 @@
   .srcb{display:inline-flex; align-items:center; gap:4px; font-size:.68rem; font-weight:700; color:var(--sub);
     border:1px solid var(--line); border-radius:6px; padding:1px 6px 1px 4px; margin-left:6px; vertical-align:middle; white-space:nowrap;}
   .srcb svg{width:12px; height:12px; display:block;}
+  .h2-toggle{display:flex; align-items:center; justify-content:space-between; gap:8px; cursor:pointer; user-select:none;}
+  .h2-toggle:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;}
+  .h2-toggle .cnt{color:var(--sub); font-weight:600; white-space:nowrap;}
+  .h2-toggle .chev-icon{display:inline-block; margin-right:4px;}
+  @media (prefers-reduced-motion: no-preference){ .h2-toggle .chev-icon{transition:transform .25s ease;} }
+  .h2-toggle[aria-expanded="true"] .chev-icon{transform:rotate(90deg);}
+  .sig-list{max-height:0; overflow:hidden;}
+  @media (prefers-reduced-motion: no-preference){ .sig-list{transition:max-height .45s ease;} }
+  .sig-list.open{max-height:2400px;}
+  .sig-list .sig{opacity:0; transform:translateY(-6px);}
+  @media (prefers-reduced-motion: no-preference){ .sig-list .sig{transition:opacity .35s ease, transform .35s ease;} }
+  .sig-list.open .sig{opacity:1; transform:translateY(0);}
+  .sig-list.open .sig:nth-child(1){transition-delay:.03s;}
+  .sig-list.open .sig:nth-child(2){transition-delay:.08s;}
+  .sig-list.open .sig:nth-child(3){transition-delay:.13s;}
+  .sig-list.open .sig:nth-child(4){transition-delay:.18s;}
+  .sig-list.open .sig:nth-child(5){transition-delay:.23s;}
+  .sig-list.open .sig:nth-child(6){transition-delay:.28s;}
+  .sig-list.open .sig:nth-child(7){transition-delay:.33s;}
   .rep{border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-top:10px;}
   .rep:first-of-type{margin-top:0;}
   .rep .head{display:flex; justify-content:space-between; gap:8px; align-items:baseline; flex-wrap:wrap;}
@@ -147,8 +166,24 @@
     <button class="tab" data-c="robot">로보틱스</button>
   </div>
 
+  <section data-c="all compute memory power model robot">
+    <h2 class="h2-toggle" id="sig-social-h" role="button" tabindex="0" aria-expanded="false" aria-controls="sig-social">
+      <span>① 소셜·영상 신호 — LinkedIn·YouTube (뉴스레터 밖 흐름)</span>
+      <span class="cnt"><span class="chev-icon">▸</span>7건</span>
+    </h2>
+    <div class="sig-list" id="sig-social">
+      <div class="sig"><div class="when">07-10</div><div><div class="t">JEDEC, SPHBM4 표준(JESD330-4) 발표 <span class="delta new">신규 축</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">HBM4 스택을 표준 패키징에 탑재해 어드밴스드 패키징 병목 우회 — 메모리 §1.1·컴퓨트 §1.4 병목 완화 변수</div></div></div>
+      <div class="sig"><div class="when">07-10</div><div><div class="t">"메모리가 하이퍼스케일러 CapEx의 30%" 자체 전망 방어 <span class="delta up">궤도 유지</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">마이크론 실적 후 시장 반발에도 2월 전망 유지 — 메모리 §1.1 공급 부족 심화와 같은 방향</div></div></div>
+      <div class="sig"><div class="when">07-09</div><div><div class="t">태양광·ESS 연 20GW+ 증설에도 피크 확보 용량은 제자리 <span class="delta up">궤도 유지</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">BTM 자가발전 주류화(전력 §1.3)의 배경 논리 재확인</div></div></div>
+      <div class="sig"><div class="when">07-06</div><div><div class="t">Rubin Ultra 원판 4다이 설계 취소 — 절반 규모로 재설계 <span class="delta dn">축소</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">GTC 2026 발표 3개월 만에 제조 실행 문제로 축소 — Trainium·TPU·AMD 점유 잠식과 맞물려 컴퓨트 §1.2(커스텀 실리콘 추격) 확신도 상향 압력</div></div></div>
+      <div class="sig"><div class="when">07-04</div><div><div class="t">네오클라우드 경영진 "엔비디아 보복 우려" 증언 <span class="delta new">신규 축</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">비-엔비디아 네트워킹·AMD GPU·TPU 제공 시 조기 할당 배제 등 압박 체감 — 커스텀 실리콘 확산(컴퓨트 §1.2)의 마찰 변수</div></div></div>
+      <div class="sig"><div class="when">미상</div><div><div class="t">Ep.017 — DeepSeek V4·Huawei Ascend NPU 성능 <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4" fill="#f00"/><path d="M10 9.2l5 2.8-5 2.8z" fill="#fff"/></svg>YouTube</span></div><div class="d">뉴스레터 미커버 주제 — 발행일 미확인(채널 페이지에서 확인 필요)</div></div></div>
+      <div class="sig"><div class="when">미상</div><div><div class="t">Ep.016 — Unitree의 진화가 로보틱스에 갖는 의미 <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4" fill="#f00"/><path d="M10 9.2l5 2.8-5 2.8z" fill="#fff"/></svg>YouTube</span></div><div class="d">뉴스레터 미커버 주제 — 발행일 미확인(채널 페이지에서 확인 필요)</div></div></div>
+    </div>
+  </section>
+
   <section data-c="all compute memory power model">
-    <h2>① 클러스터 종합 판단 — 통합 리포트 7건 요약</h2>
+    <h2>② 클러스터 종합 판단 — 통합 리포트 7건 요약</h2>
 
     <div class="rep" data-c="compute">
       <div class="head"><span class="name">컴퓨트</span><span class="meta">[260711] 신규 · 14편 종합</span></div>
@@ -186,24 +221,8 @@
     </div>
   </section>
 
-  <section data-c="all compute model">
-    <h2>② 이번 주 신호 — 새 문서가 기존 그림을 바꾼 지점</h2>
-    <div class="sig"><div class="when">07-09</div><div><div class="t">Meta Compute: "모두가 뉴클라우드가 되고 싶다" <span class="delta new">신규</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3" fill="#64748b"/><path d="M4 7l8 5.5L20 7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>뉴스레터</span></div><div class="d">저커버그의 "플랜 B" — 메타의 컴퓨트 외부 판매(뉴클라우드 전환) 가능성, RecSys 10배 확장 · ClusterMAX 랭킹 예고</div></div></div>
-    <div class="sig"><div class="when">07-09</div><div><div class="t">ECTC 2026 라운드업: EMIB-T·커스텀 HBM·마이크로플루이딕 냉각 <span class="delta new">신규</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3" fill="#64748b"/><path d="M4 7l8 5.5L20 7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>뉴스레터</span></div><div class="d">HBM4 패키징 난제·포토닉 인터커넥트 등 — 메모리 §1.1(HBM4)과 냉각 클러스터(시계열 대기)의 후속 소스</div></div></div>
-  </section>
-
-  <section data-c="all compute memory power model robot">
-    <h2>③ 소셜·영상 신호 — LinkedIn·YouTube (뉴스레터 밖 흐름)</h2>
-    <div class="sig"><div class="when">07-10</div><div><div class="t">JEDEC, SPHBM4 표준(JESD330-4) 발표 <span class="delta new">신규 축</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">HBM4 스택을 표준 패키징에 탑재해 어드밴스드 패키징 병목 우회 — 메모리 §1.1·컴퓨트 §1.4 병목 완화 변수</div></div></div>
-    <div class="sig"><div class="when">07-10</div><div><div class="t">"메모리가 하이퍼스케일러 CapEx의 30%" 자체 전망 방어 <span class="delta up">궤도 유지</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">마이크론 실적 후 시장 반발에도 2월 전망 유지 — 메모리 §1.1 공급 부족 심화와 같은 방향</div></div></div>
-    <div class="sig"><div class="when">07-09</div><div><div class="t">태양광·ESS 연 20GW+ 증설에도 피크 확보 용량은 제자리 <span class="delta up">궤도 유지</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">BTM 자가발전 주류화(전력 §1.3)의 배경 논리 재확인</div></div></div>
-    <div class="sig"><div class="when">07-06</div><div><div class="t">Rubin Ultra 원판 4다이 설계 취소 — 절반 규모로 재설계 <span class="delta dn">축소</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">GTC 2026 발표 3개월 만에 제조 실행 문제로 축소 — Trainium·TPU·AMD 점유 잠식과 맞물려 컴퓨트 §1.2(커스텀 실리콘 추격) 확신도 상향 압력</div></div></div>
-    <div class="sig"><div class="when">07-04</div><div><div class="t">네오클라우드 경영진 "엔비디아 보복 우려" 증언 <span class="delta new">신규 축</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>LinkedIn</span></div><div class="d">비-엔비디아 네트워킹·AMD GPU·TPU 제공 시 조기 할당 배제 등 압박 체감 — 커스텀 실리콘 확산(컴퓨트 §1.2)의 마찰 변수</div></div></div>
-    <div class="sig"><div class="when">영상</div><div><div class="t">YouTube 미커버 주제 2건: DeepSeek V4·Ascend NPU (Ep.017) / Unitree 로보틱스 (Ep.016) <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4" fill="#f00"/><path d="M10 9.2l5 2.8-5 2.8z" fill="#fff"/></svg>YouTube</span></div><div class="d">뉴스레터가 아직 다루지 않은 주제의 영상 해설 — 리포트 커버리지 밖 흐름 신호</div></div></div>
-  </section>
-
   <section data-c="all compute memory model">
-    <h2>④ 지표 타임라인 — 문서를 가로지르는 궤적</h2>
+    <h2>③ 지표 타임라인 — 문서를 가로지르는 궤적</h2>
     <div class="grid2">
       <div class="metric" data-c="model">
         <div class="name">METR 자율 작업 배증 주기</div>
@@ -250,7 +269,7 @@
   </section>
 
   <section data-c="all compute">
-    <h2>⑤ GPU 변천사 — 엔비디아 세대 진화와 랙 스케일 확장</h2>
+    <h2>④ GPU 변천사 — 엔비디아 세대 진화와 랙 스케일 확장</h2>
     <div class="tl">
       <div class="name">칩: 텐서 코어 아키텍처 세대</div>
       <div class="steps">
@@ -277,7 +296,7 @@
   </section>
 
   <section data-c="all compute memory power">
-    <h2>⑥ 기업 익스포저 매트릭스 — 방향 × 확신도 (23곳)</h2>
+    <h2>⑤ 기업 익스포저 매트릭스 — 방향 × 확신도 (23곳)</h2>
     <div class="mx">
       <div class="h"></div><div class="h">확신도 높음</div><div class="h">중간</div><div class="h">낮음·상충</div>
       <div class="rowlab">수혜</div>
@@ -297,7 +316,7 @@
   </section>
 
   <section data-c="all compute power model">
-    <h2>⑦ 전망 충돌 워치 — 같은 지표, 다른 관점</h2>
+    <h2>⑥ 전망 충돌 워치 — 같은 지표, 다른 관점</h2>
     <div class="vs" data-c="power">
       <div class="row"><span>2026년 미국 데이터센터 신규 가동</span></div>
       <div class="row"><span>SemiAnalysis (실착공 집계)</span><b style="color:var(--good)">약 24GW</b></div>
@@ -331,7 +350,7 @@
   </section>
 
   <section data-c="all compute memory power model">
-    <h2>⑧ 전망 캘린더 — 분기별로 지켜볼 것</h2>
+    <h2>⑦ 전망 캘린더 — 분기별로 지켜볼 것</h2>
     <div class="scroll"><table>
       <tr><th>분기</th><th>지켜볼 것</th></tr>
       <tr><td class="num">3Q26</td><td>앤트로픽 2Q 실적(흑자 여부) · LPX 랙 설계변경 출하 · TSMC N3 가동률 100%+ · 장비 리드타임 OEM 코멘트리 · UALink 실물 스위치(AMD 랙 실증)</td></tr>
@@ -343,12 +362,12 @@
   </section>
 
   <section data-c="all robot">
-    <h2>⑨ 로보틱스 — 변환 대기 클러스터</h2>
+    <h2>⑧ 로보틱스 — 변환 대기 클러스터</h2>
     <div class="sig"><div class="when">대기</div><div><div class="t">Unitree 2편 · 자율성 레벨 <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3" fill="#64748b"/><path d="M4 7l8 5.5L20 7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>뉴스레터</span> <span class="srcb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4" fill="#f00"/><path d="M10 9.2l5 2.8-5 2.8z" fill="#fff"/></svg>YouTube</span></div><div class="d">클리핑 확보 완료 — 변환되면 이 탭에 종합 판단·익스포저가 채워짐. YouTube Ep.016이 선행 해설 소스</div></div></div>
   </section>
 
   <section data-c="all compute memory power model robot">
-    <h2>⑩ 코퍼스 커버리지</h2>
+    <h2>⑨ 코퍼스 커버리지</h2>
     <div class="scroll"><table>
       <tr><th>클러스터</th><th>문서</th><th>리포트</th><th>상태</th></tr>
       <tr><td>컴퓨트</td><td class="num">11+3*</td><td class="num">1</td><td>통합 리포트 07-11 신규 · 부분 2편 재개 대기</td></tr>
@@ -370,6 +389,17 @@
   </div>
 </main>
 <script>
+  const socialH = document.getElementById('sig-social-h');
+  const socialList = document.getElementById('sig-social');
+  function setSocialOpen(open){
+    socialH.setAttribute('aria-expanded', String(open));
+    socialList.classList.toggle('open', open);
+  }
+  socialH.addEventListener('click', () => setSocialOpen(socialH.getAttribute('aria-expanded') !== 'true'));
+  socialH.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); socialH.click(); }
+  });
+
   const tabs = document.querySelectorAll('.tab');
   const items = document.querySelectorAll('[data-c]');
   tabs.forEach(t => t.addEventListener('click', () => {
