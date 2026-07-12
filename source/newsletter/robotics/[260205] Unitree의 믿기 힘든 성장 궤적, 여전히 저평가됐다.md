@@ -451,4 +451,98 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 80% 완료 (1\~9장)*
+## 10. 로봇 손과 핸드메이커 경쟁
+
+**📌 핵심:**
+- 로봇 손은 더 많은 작업을 열어줄 핵심 부품이지만 설계 방식이 두 갈래 — ① 관절구동(각 관절마다 액추에이터, 정밀하지만 비싸고 부피가 크며 페이로드가 부족할 수 있음) ② 건(腱)구동(팔뚝의 액추에이터가 힘줄을 당겨 손가락을 구동, 가볍고 "정교"하다는 평이 많지만 지속 장력에 과열되고 굽힘 피로로 마모·파손되기 쉬움)
+- 어느 방식이 이길지는 아직 불확실 — 중국에서는 Inspire·Sharpa·Robotera·텐센트 스핀오프 Dexcel 등이 경쟁 중이며, 가장 정교한 손은 대당 약 5만 달러에 달함(Sharpa 기준). 미국에서는 Proception·Origami Robotics·Kyber Labs 등이 부상 중이고, 1X는 다이니마(Dyneema) 소재와 시스템 통합으로 옵티머스보다 훨씬 많은 사용 사이클을 견디는 건구동 손을 만든 것으로 알려짐
+- 결론: Sharpa는 Unitree가 학계 로봇 시장을 장악한 방식을 그대로 벤치마킹 — 학술·산업 연구실에 손을 저렴하게(또는 무상으로) 빌려주고 주간 프로젝트 회의에까지 참여하며, 향후 몇 년간의 손 연구가 자사 하드웨어 기반으로 이뤄지도록 유도하고 있음(엔비디아 GEAR 랩 등이 이미 주요 사용자)
+
+---
+
+### 로봇 손 설계 두 갈래 - 관절구동 vs 건구동
+
+```mermaid
+flowchart TD
+    Hand["로봇 손 설계 방식"] --> Joint["관절구동<br/>각 관절에 액추에이터<br/>(정밀하나 비싸고 부피 큼)"]
+    Hand --> Tendon["건구동<br/>팔뚝 액추에이터가<br/>힘줄로 손가락 구동<br/>(가볍지만 과열·마모 취약)"]
+    style Joint fill:#eff6ff,stroke:#3b82f6
+    style Tendon fill:#fff7ed,stroke:#ea580c
+```
+
+### 손 제조사 경쟁 구도 - 중국 vs 미국
+
+```mermaid
+flowchart TD
+    China2["중국: Inspire·Sharpa·<br/>Robotera·텐센트 스핀오프<br/>Dexcel"] --> Price["최고급 손<br/>대당 약 5만 달러<br/>(Sharpa 기준)"]
+    US2["미국: Proception·<br/>Origami Robotics·<br/>Kyber Labs·1X"] --> Cycle["1X: 건구동 손,<br/>다이니마 소재로<br/>옵티머스 대비 긴 수명"]
+    style Price fill:#eff6ff,stroke:#3b82f6
+    style Cycle fill:#f0fdf4,stroke:#16a34a
+```
+
+### Sharpa의 벤치마킹 전략 - Unitree 방식을 손 시장에 적용
+
+```mermaid
+flowchart TD
+    Strategy["Sharpa 전략"] --> Lend["학술·산업 연구실에<br/>손을 저렴하게(또는 무상)<br/>대여"]
+    Lend --> Meeting["주간 프로젝트 회의<br/>직접 참여"]
+    Meeting --> Lockin["향후 손 연구가<br/>Sharpa 하드웨어 기반으로<br/>이뤄지도록 유도"]
+    Lockin --> Users["엔비디아 GEAR 랩 등<br/>이미 주요 사용자로 확인"]
+    style Strategy fill:#eff6ff,stroke:#3b82f6
+    style Users fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+📌 용어 풀이: 왜 손 시장에서도 "연구실 장악"이 중요한가
+> - Unitree가 G1을 저렴하게 풀어 학계 연구자들의 표준 플랫폼이 됐던 것처럼, 로봇 손도 연구자들이 어떤 하드웨어로 논문·모델을 만드느냐가 향후 업계 표준을 좌우함
+> - Sharpa가 손을 거의 공짜로 빌려주는 것은 단기 매출보다 장기 표준 선점을 노리는 전략
+
+---
+
+## 11. Unitree 공급망 재편 - 누가 밀려나고 누가 득을 보나
+
+**📌 핵심:**
+- Unitree가 규모를 키우면서 모듈·부품을 내재화해 마진을 흡수하되, 그 밑단의 실리콘(반도체) 공급사는 그대로 두는 패턴을 보일 것으로 저자들은 전망
+- 타격이 예상되는 곳: ① Livox(DJI의 LiDAR 자회사) — 초기 G1은 Livox MID360(약 550달러 이상, 전체 BOM의 약 9.2%로 단일 최고가 부품)을 썼으나 자체 LiDAR로 250\~300달러까지 절감했고, H2는 아예 LiDAR·뎁스카메라를 뺀 것으로 알려짐 ② Orbbec·RealSense(뎁스카메라 공급사) — Unitree가 자체 뎁스카메라 생산을 시작하며 비슷한 압박에 직면
+- 반대로 안전한 곳은 실리콘(반도체) 벤더 — Unitree가 LiDAR 모듈을 사 오든 직접 만들든 그 안의 소니 센서·중국산 ASIC은 똑같이 필요하기 때문(로보센스가 써온 소니 센서사업부 직접 조달 모델과 유사)
+- 결론: 이 흐름의 수혜자는 록칩(RK3588S, G1 베이스 탑재)·LONGSYS(64GB 스토리지)·BIWIN(8GB 메모리)·엔비디아(G1 EDU에 탑재되는 100 TOPS급 Jetson Orin NX, 베이징 Plink AI Technology 경유 조달)·CMSEMICON(모터 구동보드 MCU) 등 — 다만 엔비디아 몫은 중국산 엣지 가속기가 더 발전하면 바뀔 수 있음
+
+---
+
+### 내재화로 밀려나는 공급사 vs 안전한 실리콘 벤더
+
+```mermaid
+flowchart TD
+    Vertical["Unitree의<br/>부품 내재화 확대"] --> Hurt["타격 예상<br/>Livox(LiDAR)·<br/>Orbbec·RealSense(뎁스카메라)"]
+    Vertical --> Safe["안전:<br/>실리콘(반도체) 벤더<br/>(모듈은 바뀌어도<br/>내부 칩은 그대로 필요)"]
+    style Hurt fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Safe fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+### Livox LiDAR 내재화 - 원가 550달러+ → 250\~300달러
+
+```mermaid
+flowchart TD
+    Old["기존: Livox MID360<br/>약 550달러+<br/>(전체 BOM의 약 9.2%,<br/>단일 최고가 부품)"] --> New["Unitree 자체 LiDAR<br/>250~300달러로 절감"]
+    New --> H2["H2 모델:<br/>LiDAR·뎁스카메라<br/>아예 미탑재"]
+    style Old fill:#fef2f2,stroke:#dc2626
+    style New fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+### 실리콘 공급망 수혜자 지도
+
+```mermaid
+flowchart TD
+    Chip["Unitree 반도체<br/>공급망 수혜자"] --> Rockchip["록칩: RK3588S<br/>(G1 베이스)"]
+    Chip --> Storage["LONGSYS 64GB 스토리지·<br/>BIWIN 8GB 메모리"]
+    Chip --> Nvidia2["엔비디아: Jetson Orin NX<br/>100 TOPS(G1 EDU,<br/>베이징 Plink AI 경유 조달)"]
+    style Chip fill:#eff6ff,stroke:#3b82f6
+    style Nvidia2 fill:#fff7ed,stroke:#ea580c
+```
+
+CMSEMICON은 모터 구동보드 MCU와 게이트 드라이버 SiP(추정 CMS32M5733Q048)를 공급하는 것으로 리버스엔지니어링 커뮤니티가 확인했습니다 — Unitree가 부품 표면의 제품 각인을 레이저로 지워 역설계를 막으려 했음에도 밝혀진 사실입니다.
+엔비디아의 Jetson Orin NX 몫은 현재로선 안정적이지만, 중국산 엣지 가속기의 성능이 계속 개선되면 Unitree가 온보드 컴퓨트까지 자국산으로 전환할 가능성도 열려 있습니다.
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 원문 전체 섹션(서론\~공급망 재편)을 모두 변환 완료*
