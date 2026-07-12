@@ -38,7 +38,7 @@
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra | 2 |
+| ai-infra | 3 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 1 |
 | ai-infra/compute | 13 |
