@@ -78,7 +78,8 @@ DeepSeek V3/R1이 나왔던 작년에는 Day 0에 정상 동작한 스택이 Nvi
 
 GB200 NVL72로 분산 프리필 재현 실험을 하던 중 SemiAnalysis 자체 GB300 클러스터가 하필 다운됐는데, CoreWeave가 예비 GB300 NVL72 랙 2대를 긴급 지원해 이번 GB300 측정치를 확보할 수 있었습니다. 이 결과는 이후 개선 작업에도 24시간 내내 활용되고 있습니다.
 
-또한 Nvidia의 자체 추론 엔진 TensorRT-LLM은 DeepSeek V4에서 제대로 작동하지 않아, SemiAnalysis가 직접 오픈소스 mHC 커널 실행 코드를 고쳐 패치를 제출했고, Nvidia 엔지니어들이 이를 리베이스·병합해줬습니다. 반면 ROCm은 초기 며칠간 거의 작동하지 않았으나, HaiShaw가 이끄는 AMD SGLang 엔지니어링 팀이 첫 한 달 만에 100배 이상 성능을 끌어올렸습니다 — 이 과정은 곧 발행될 별도의 "State of AMD 2026" 종합 리포트에서 더 자세히 다룰 예정입니다.
+또한 Nvidia의 자체 추론 엔진 TensorRT-LLM은 DeepSeek V4에서 제대로 작동하지 않아, SemiAnalysis가 직접 오픈소스 mHC 커널 실행 코드를 고쳐 패치를 제출했고, Nvidia 엔지니어들이 이를 리베이스·병합해줬습니다.
+반면 ROCm은 초기 며칠간 거의 작동하지 않았으나, HaiShaw가 이끄는 AMD SGLang 엔지니어링 팀이 첫 한 달 만에 100배 이상 성능을 끌어올렸습니다 — 이 과정은 곧 발행될 별도의 "State of AMD 2026" 종합 리포트에서 더 자세히 다룰 예정입니다.
 
 ---
 
@@ -168,7 +169,9 @@ flowchart TD
     style KV fill:#fff7ed,stroke:#ea580c
 ```
 
-ATOM은 반응성 지표에서는 다소 나았지만, 동시 처리 1건을 넘어서면 성능이 급격히 떨어졌습니다. `kv_cache[:1,...]`로 하드코딩된 부분 때문에 KV 캐시가 단일 시퀀스 슬롯에 고정돼, 두 번째 동시 요청이 들어와도 저장할 공간 자체가 없었습니다. 이는 배칭(여러 요청을 묶어 처리)을 가능하게 하는 인프라가 아직 갖춰지지 않았기 때문으로, 배치 크기 1(사용자 1명)만 실행할 수 있었습니다.
+ATOM은 반응성 지표에서는 다소 나았지만, 동시 처리 1건을 넘어서면 성능이 급격히 떨어졌습니다.
+`kv_cache[:1,...]`로 하드코딩된 부분 때문에 KV 캐시가 단일 시퀀스 슬롯에 고정돼, 두 번째 동시 요청이 들어와도 저장할 공간 자체가 없었습니다.
+이는 배칭(여러 요청을 묶어 처리)을 가능하게 하는 인프라가 아직 갖춰지지 않았기 때문으로, 배치 크기 1(사용자 1명)만 실행할 수 있었습니다.
 
 ---
 
@@ -238,11 +241,15 @@ flowchart TD
     style AtomExp fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
 ```
 
-이 밖에도 SWA(윈도우드 어텐션) 준비 단계인 SWA-prepare를 Triton으로 구현해 추가 개선을 이끌어냈고, 5월 19일에는 남은 폴백 경로를 마저 정리(FlashMLA를 TileLang에서 Triton으로 이전, AITER FlyDSL FP4 MoE 커널 적용)하면서 동시 처리 규모를 1,024까지 늘려 기존에 없던 고처리량·저반응성 구간의 프론티어를 새로 그려냈습니다.
+이 밖에도 SWA(윈도우드 어텐션) 준비 단계인 SWA-prepare를 Triton으로 구현해 추가 개선을 이끌어냈습니다.
+5월 19일에는 남은 폴백 경로를 마저 정리(FlashMLA를 TileLang에서 Triton으로 이전, AITER FlyDSL FP4 MoE 커널 적용)했습니다.
+이때 동시 처리 규모를 1,024까지 늘려 기존에 없던 고처리량·저반응성 구간의 프론티어를 새로 그려냈습니다.
 
 ### MI355X MTP
 
-4주차에는 AMD 전 프레임워크에서 MTP(다중 토큰 예측)가 작동하기 시작해 반응성이 여러 배 개선됐습니다. 다만 한 가지 특징이 확인됐는데, MTP는 처리량이 높은(대형 배치) 구간에서는 오히려 결과가 나빠지는 경향을 보입니다 — MTP는 메모리 대역폭이 남는 소규모 배치 디코드의 여유 연산력을 활용하는 기법이라, 연산력 자체가 부족한 대형 배치 디코드에서는 초안 토큰의 이득보다 MTP 자체의 비용이 더 커지기 때문입니다.
+4주차에는 AMD 전 프레임워크에서 MTP(다중 토큰 예측)가 작동하기 시작해 반응성이 여러 배 개선됐습니다.
+다만 한 가지 특징이 확인됐는데, MTP는 처리량이 높은(대형 배치) 구간에서는 오히려 결과가 나빠지는 경향을 보입니다.
+MTP는 메모리 대역폭이 남는 소규모 배치 디코드의 여유 연산력을 활용하는 기법이라, 연산력 자체가 부족한 대형 배치 디코드에서는 초안 토큰의 이득보다 MTP 자체의 비용이 더 커지기 때문입니다.
 
 ---
 
@@ -265,10 +272,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    GB300["GB300 NVL72<br/>6/2 W4A4(MXFP4) MegaMoE"] --> Cause["개선 원인: 커널·정밀도가 아닌<br/>디코드 토폴로지 재설계"]
-    Cause --> C1["EP=8 → EP=16로 확장"]
-    Cause --> C2["프리필 워커<br/>디코드당 1~2개 → 4~12개"]
-    Cause --> C3["동시 처리<br/>16,384 → 21,504"]
+    GB300["GB300 NVL72<br/>6/2 W4A4(MXFP4) MegaMoE"] --> Cause["개선 원인: 커널·정밀도가 아닌<br/>디코드 토폴로지 재설계<br/>· EP=8 → EP=16로 확장<br/>· 프리필 워커 1~2개 → 4~12개<br/>· 동시 처리 16,384 → 21,504"]
     Cause --> WideEP["결론: 광역 전문가 병렬화가<br/>GB300 압도적 성능의 핵심 레버<br/>(가중치 로딩을 더 많은<br/>GPU로 상각)"]
 
     style GB300 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
@@ -322,7 +326,9 @@ flowchart TD
     style R3 fill:#fff7ed,stroke:#ea580c
 ```
 
-랙스케일 우위는 근본적으로 **스케일업 도메인**(같은 랙 안에서 초고속으로 직접 연결된 GPU 묶음) 크기의 문제입니다. NVL72는 GPU 72개를 하나의 NVLink 도메인에 묶어, DeepSeek V4의 MoE 디스패치·컴바인 all-to-all 통신을 전부 NVLink 안에서 처리하고 느린 스케일아웃(랙 간) 통신망으로 새어나가지 않게 하면서, 전문가 가중치 로딩 비용을 훨씬 많은 랭크에 상각할 수 있습니다.
+랙스케일 우위는 근본적으로 **스케일업 도메인**(같은 랙 안에서 초고속으로 직접 연결된 GPU 묶음) 크기의 문제입니다.
+NVL72는 GPU 72개를 하나의 NVLink 도메인에 묶어, DeepSeek V4의 MoE 디스패치·컴바인 all-to-all 통신을 전부 NVLink 안에서 처리하고 느린 스케일아웃(랙 간) 통신망으로 새어나가지 않게 합니다.
+그 결과 전문가 가중치 로딩 비용을 훨씬 많은 랭크에 상각할 수 있습니다.
 
 ### ROCm vLLM DeepSeek v4 Pro 부진
 
@@ -334,7 +340,9 @@ flowchart TD
     style Neglect fill:#fff7ed,stroke:#ea580c
 ```
 
-한 가지 긍정적 신호는, DeepSeek V4가 아닌 다른 모델을 대상으로는 오픈소스 upstream AMD vLLM에서 분산 추론 기능 활성화가 최근 마침내 이뤄졌다는 점입니다. 다만 여기까지 오는 데 수개월이 걸렸고, AMD vLLM 팀이 커버해야 할 영역은 여전히 많이 남아있습니다. 이 주제는 곧 발행될 "State of AMD 2026" 리포트(AMD 추론의 좋은 점·나쁜 점·아쉬운 점을 다룸)에서 더 상세히 다룰 예정입니다.
+한 가지 긍정적 신호는, DeepSeek V4가 아닌 다른 모델을 대상으로는 오픈소스 upstream AMD vLLM에서 분산 추론 기능 활성화가 최근 마침내 이뤄졌다는 점입니다.
+다만 여기까지 오는 데 수개월이 걸렸고, AMD vLLM 팀이 커버해야 할 영역은 여전히 많이 남아있습니다.
+이 주제는 곧 발행될 "State of AMD 2026" 리포트(AMD 추론의 좋은 점·나쁜 점·아쉬운 점을 다룸)에서 더 상세히 다룰 예정입니다.
 
 ---
 
@@ -366,7 +374,8 @@ flowchart TD
     style SGLangPlan fill:#fff7ed,stroke:#ea580c,stroke-width:2px
 ```
 
-vLLM 쪽에서는 FP4 인덱서와 초기 MegaMoE 지원이 이미 구현됐고 Hopper 지원도 완료됐습니다. SGLang 쪽은 mHC(GEMM 커널 융합), HCA(fc_qa+fc_kv 수평 융합, CUDA 그래프 호환), CSA(인덱서·압축기 직접 캐시 읽기), MoE(라우팅 경로 커널 통합) 등 컴포넌트별로 세분화된 체크리스트를 이미 상당 부분 진행 중입니다.
+vLLM 쪽에서는 FP4 인덱서와 초기 MegaMoE 지원이 이미 구현됐고 Hopper 지원도 완료됐습니다.
+SGLang 쪽은 mHC(GEMM 커널 융합), HCA(fc_qa+fc_kv 수평 융합, CUDA 그래프 호환), CSA(인덱서·압축기 직접 캐시 읽기), MoE(라우팅 경로 커널 통합) 등 컴포넌트별로 세분화된 체크리스트를 이미 상당 부분 진행 중입니다.
 
 ---
 
@@ -431,17 +440,120 @@ flowchart TD
 
 ### 950DT 디코드 스텝 프로파일 - 스트림 분리와 MC²
 
-DeepSeek Flash V4를 950DT에서 16랭크 DP/EP(데이터·전문가 병렬화) 구성으로 프로파일링한 결과, 16랭크가 동시에 참여하고 MoE 디스패치·컴바인 트래픽이 활발한 것으로 나타났습니다. CANN은 큐브(AIC)·벡터(AIV) 코어 배분을 조절해 자원 경합을 피하는 방식으로, 독립된 연산·통신 오퍼레이터를 여러 스트림에서 동시 실행합니다. Prolog·Compressor·LightningIndexer 오퍼레이터는 서로 겹쳐 실행할 수 있고, C4A Compressor는 완전히 숨길 수 있으며, 공유 전문가(shared expert) 연산은 라우팅 전문가(routed expert) 실행 성능을 깎지 않고 그 밑에 숨길 수 있습니다.
+DeepSeek Flash V4를 950DT에서 16랭크 DP/EP(데이터·전문가 병렬화) 구성으로 프로파일링한 결과, 16랭크가 동시에 참여하고 MoE 디스패치·컴바인 트래픽이 활발한 것으로 나타났습니다.
+CANN은 큐브(AIC)·벡터(AIV) 코어 배분을 조절해 자원 경합을 피하는 방식으로, 독립된 연산·통신 오퍼레이터를 여러 스트림에서 동시 실행합니다.
+Prolog·Compressor·LightningIndexer 오퍼레이터는 서로 겹쳐 실행할 수 있고, C4A Compressor는 완전히 숨길 수 있으며, 공유 전문가(shared expert) 연산은 라우팅 전문가(routed expert) 실행 성능을 깎지 않고 그 밑에 숨길 수 있습니다.
 
 디코드 스텝을 세부적으로 들여다보면, 메타데이터 스트림(스트림 145\~148)이 디코드 패스당 한 번씩 실행되며 이후 커널이 재사용할 값 의존적 스케줄러·타일링 메타데이터를 미리 계산합니다. 이 오퍼레이터들은 디코드 스텝에서 유일하게 AI CPU에서 실행되는 연산이며, 전체 시간에서 차지하는 비중은 극히 작고 AI Core 연산과 완전히 겹쳐 실행됩니다.
 
-DeepSeek V4에서 화웨이는 희소 어텐션과 LightningIndexer의 값 의존적 스케줄러 단계를 호스트로 되돌리지 않고 **AI CPU로 옮겼습니다**. 이 메타데이터 오퍼레이터들은 런타임 시퀀스 길이·마스크·페이지드 KV 정보로부터 재사용 가능한 코어별 파티셔닝 텐서를 만들고, `SparseAttnSharedkv`와 `QuantLightningIndexer`가 이를 활용해 각 큐브 코어가 처리할 배치/헤드/Q블록/K블록 작업을 결정합니다. 이는 개념적으로 FlashInfer가 호스트에서 수행하는 페이지드 어텐션 계획(planning) 단계와 비슷하지만, 화웨이는 같은 계획 작업을 호스트 대신 기기 내 AI CPU에서 처리한다는 차이가 있습니다.
+DeepSeek V4에서 화웨이는 희소 어텐션과 LightningIndexer의 값 의존적 스케줄러 단계를 호스트로 되돌리지 않고 **AI CPU로 옮겼습니다**.
+이 메타데이터 오퍼레이터들은 런타임 시퀀스 길이·마스크·페이지드 KV 정보로부터 재사용 가능한 코어별 파티셔닝 텐서를 만듭니다.
+`SparseAttnSharedkv`와 `QuantLightningIndexer`가 이를 활용해 각 큐브 코어가 처리할 배치/헤드/Q블록/K블록 작업을 결정합니다.
+이는 개념적으로 FlashInfer가 호스트에서 수행하는 페이지드 어텐션 계획(planning) 단계와 비슷하지만, 화웨이는 같은 계획 작업을 호스트 대신 기기 내 AI CPU에서 처리한다는 차이가 있습니다.
 
 또한 CANN은 2024년부터 **MC²(병합 연산-통신)**라는 오퍼레이터 클래스를 도입했습니다 — 일반 커널도 HCCL 집단통신도 아닌, 통신과 연산을 하나의 커널에 결합한 방식입니다. DeepSeek V4 디코드에서는 `MoeDistributeDispatchV2`, `MoeDistributeCombineV2`라는 MC² EP 오퍼레이터가 사용됩니다.
 
-핵심은 화웨이 Ascend가 DeepSeek V4에 대해 Day 0부터 실제로 작동하는 최적화된 추론 인프라를 제공했다는 점입니다. 다만 성경 속 다윗과 골리앗 이야기의 결말은 거인이 쓰러지는 것이지만, 그 골리앗은 가만히 서서 돌팔매를 맞아준 반면, 엔비디아라는 골리앗은 해마다 새로운 아키텍처를 내놓으며 끊임없이 움직입니다. 화웨이가 Day 0에 돌팔매를 던질 수 있다는 것은 증명했지만, 움직이는 거인을 실제로 쓰러뜨릴 수 있을지는 아직 지켜봐야 합니다.
+핵심은 화웨이 Ascend가 DeepSeek V4에 대해 Day 0부터 실제로 작동하는 최적화된 추론 인프라를 제공했다는 점입니다.
+다만 성경 속 다윗과 골리앗 이야기의 결말은 거인이 쓰러지는 것이지만, 그 골리앗은 가만히 서서 돌팔매를 맞아준 반면, 엔비디아라는 골리앗은 해마다 새로운 아키텍처를 내놓으며 끊임없이 움직입니다.
+화웨이가 Day 0에 돌팔매를 던질 수 있다는 것은 증명했지만, 움직이는 거인을 실제로 쓰러뜨릴 수 있을지는 아직 지켜봐야 합니다.
 
 ---
 
-*작성 진행률: 약 85% 완료*
-*업데이트: 9\~11장(현재 성능·ROCm vLLM 부진, vLLM·SGLang 로드맵, 화웨이 Ascend 950·CANN 스택) 작성 완료*
+## 12. DeepSeek V4 아키텍처 딥다이브 - CSA·HCA와 MegaMoE
+
+**📌 핵심:**
+- DeepSeek V4는 기존의 **MLA(다중헤드 잠재 어텐션)를 버리고 CSA·HCA**라는 새 압축 어텐션 방식을 도입 — 목적은 오직 하나, **KV 캐시(대화 기억 저장 공간) 크기 축소**
+- **HCA**는 KV 임베딩의 슬라이딩 윈도우와, 128개 토큰(m′=128)마다 키/값을 하나로 압축한 압축 KV 항목 집합으로 구성. **CSA**는 압축률이 더 낮고(m=4) 라이트닝 인덱서로 주목할 토큰을 선별하는 희소 어텐션까지 결합 — 두 방식을 교차 배치해 **1M 컨텍스트 길이에서 KV 캐시를 50배 축소**
+- 새로 도입한 **MegaMoE** 융합 커널은 전문가를 여러 웨이브로 나눠 각각 별도로 스케줄링, 통신·연산 겹침을 더 세밀하게 만들어 **이론상 naive 커널 대비 1.92배 속도 향상**(다시 말해 naive 커널은 시간의 거의 절반을 디스패치·컴바인 통신에 소모한다는 뜻)
+- 결론: DeepSeek V4는 훈련 안정성을 위한 **결정론적 연산**(배치 크기와 무관하게 항상 같은 리덕션 순서를 강제하는 커스텀 커널)까지 도입 — 성능 손실을 감수하면서도 재현 가능한 RL 훈련·장애 복구를 우선한 설계 철학을 보여줌
+
+---
+
+```mermaid
+flowchart TD
+    Attn["DeepSeek V4<br/>어텐션 방식 전환"] --> Old["기존: MLA<br/>(다중헤드 잠재 어텐션)"]
+    Attn --> New["신규: CSA + HCA<br/>(KV 캐시 크기 축소 목적)"]
+    New --> Result["1M 컨텍스트 길이에서<br/>KV 캐시 50배 축소"]
+
+    style New fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Result fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Compress["압축 방식 비교"] --> HCA["HCA: 슬라이딩 윈도우 +<br/>128토큰(m'=128)마다<br/>키/값 1개로 압축"]
+    Compress --> CSA["CSA: 압축률 더 낮음(m=4) +<br/>라이트닝 인덱서로<br/>희소 어텐션 결합"]
+
+    style HCA fill:#eff6ff,stroke:#3b82f6
+    style CSA fill:#eff6ff,stroke:#3b82f6
+```
+
+다만 CSA·HCA의 새로운 방식은 서빙 프레임워크에 KV 캐시 관리 난제도 함께 안겨줍니다.
+예를 들어 vLLM의 KV 캐시 메모리 할당기는 CSA·HCA 두 압축률을 모두 나눠떨어지게 하는 논리적 블록 크기 설정이 필요합니다.
+또한 KV 캐시·압축기 상태·인덱서 KV처럼 항목별로 크기가 제각각인 데이터를 저장할 때 메모리 파편화를 막는 페이지 크기 버킷 전략 등 복잡한 대응도 요구됩니다.
+
+### 결정론적 연산 - RL 훈련 안정성을 위한 설계
+
+```mermaid
+flowchart TD
+    Determinism["결정론적 연산<br/>(RL 훈련 안정성 목적)"] --> Kernel["배치 불변(batch-invariant)<br/>커스텀 커널<br/>(배치 크기 무관 동일 리덕션 순서)"]
+    Kernel --> Cost["성능 손실 발생<br/>(많은 알고리즘 기법 사용 불가)"]
+    Kernel --> Mitigate["완화책: 워크로드 맞춤<br/>커널 특화(행렬 형태별)"]
+    Determinism --> Rollout["롤아웃 인프라:<br/>토큰 단위 write-ahead 로그<br/>→ 중단된 요청도<br/>재계산 없이 재개 가능"]
+
+    style Kernel fill:#fff7ed,stroke:#ea580c
+    style Rollout fill:#f0fdf4,stroke:#16a34a
+```
+
+### MegaMoE - 통신을 숨기는 융합 커널
+
+```mermaid
+flowchart TD
+    MoEBase["기존 MoE 실행 구조<br/>(디스패치→L1→활성화→L2→컴바인)"] --> Issue["문제: 디스패치+L1,<br/>컴바인+L2는 겹치지만<br/>연산 경계마다 전체 동기화 필요"]
+    Issue --> MegaMoE["MegaMoE 해법:<br/>전문가를 웨이브로 분할<br/>웨이브별 개별 스케줄링"]
+    MegaMoE --> Gain["결과: naive 커널 대비<br/>이론상 1.92배 속도 향상<br/>(naive는 통신에 시간 절반 소모)"]
+
+    style Issue fill:#fef2f2,stroke:#dc2626
+    style Gain fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+MegaMoE는 연산 커널과 그에 딸린 통신 커널을 잘게 쪼개 파이프라인처럼 겹쳐 실행함으로써 통신 지연시간을 숨기는 분산 GEMM 같은 컴퓨트-통신 융합 기법과 같은 계열입니다.
+
+---
+
+## 13. GB200 vs H200 비용 비교와 결론
+
+**📌 핵심:**
+- 일반적인 DeepSeek V4 Pro 서빙 구간인 사용자당 초당 **40\~60토큰** 반응성 기준, **GB200 NVL72가 H200 대비 백만 토큰당 비용이 10배 이상 저렴**
+- 그 이유는 NVL72의 백플레인이 **72개 GPU를 B200의 InfiniBand 대비 18배 빠른 속도**로 연결하기 때문 — 이 대역폭 우위 덕분에 광역 전문가 병렬화(Wide EP) 같은 최적화 기법을 쓸 수 있게 됨
+- 랙 하나에 GPU를 더 많이, 더 빠르게 묶을수록 전문가 가중치 로딩 비용을 더 넓게 상각할 수 있다는 원리가, 6\~9장에서 확인한 GB300의 압도적 성능·비용 우위로 그대로 이어짐
+- 결론: DeepSeek V4의 43일 성능 진화는 "어떤 칩이 스펙상 가장 빠른가"보다 "어떤 생태계가 신모델 출시 직후 가장 빠르게 소프트웨어를 성숙시키는가"가 실제 배포 가능 성능을 좌우한다는 것을 보여줌 — Nvidia CUDA·화웨이 CANN이 Day 0부터 앞서갔고, AMD ROCm은 43일 만에 그 격차를 상당 부분 좁혔지만 여전히 추격 중
+
+---
+
+```mermaid
+flowchart TD
+    Cost["백만 토큰당 비용<br/>(40~60 tok/s/user 구간)"] --> H200["H200: 기준"]
+    Cost --> GB200["GB200 NVL72:<br/>10배 이상 저렴"]
+    GB200 --> Reason["이유: NVL 백플레인이<br/>InfiniBand 대비 18배 빠름<br/>→ 광역 전문가 병렬화 가능"]
+
+    style GB200 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Reason fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Summary["DeepSeek V4 43일<br/>성능 진화 종합"] --> Take1["Day 0 승자:<br/>Nvidia CUDA + 화웨이 CANN"]
+    Summary --> Take2["43일간 최대 반전:<br/>AMD MI355X 100배 개선"]
+    Summary --> Take3["최종 결론: 배포 가능 성능은<br/>스펙이 아니라<br/>SW 성숙 속도가 좌우"]
+
+    style Take2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Take3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+랙 스케일 우위를 실제 배치 가능한 서빙 용량으로 바꾸는 데는 별도의 질문이 하나 더 남습니다 — 결국 각 SKU가 실제로 얼마나 많이 온라인 상태로 배치돼 있는지(분기별 SKU별 출하량·평균판매가격, 고객사별 설치 기반과 실효 FLOPS)이며, 이는 SemiAnalysis의 Accelerator & HBM 모델에서 별도로 추적하는 영역입니다.
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 12\~13장(DeepSeek V4 아키텍처 딥다이브 - CSA·HCA·MegaMoE·결정론적 연산, GB200 vs H200 비용 비교와 결론) 작성 완료 — 전체 13개 섹션 작성 마무리*

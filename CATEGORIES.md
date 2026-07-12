@@ -41,9 +41,9 @@
 | ai-infra | 3 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 1 |
-| ai-infra/compute | 13 |
+| ai-infra/compute | 14 |
 | ai-infra/memory | 8 |
-| ai-models | 0 |
+| ai-models | 1 |
 | ai-models/agents | 2 |
 | ai-models/rl | 2 |
 | robotics | 1 |
