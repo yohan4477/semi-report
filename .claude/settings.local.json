@@ -89,7 +89,29 @@
       "Bash(ls \"통합 리포트/\")",
       "Bash(find . -iname \"*통합*\" -maxdepth 2)",
       "Bash(ls \"링크드인\")",
-      "Bash(ls \"링크드인/브리핑\")"
+      "Bash(ls \"링크드인/브리핑\")",
+      "Bash(sed -n \"/## 📌 현재 종합 판단/,/## 📑/p\" \"통합 리포트/[260711] 컴퓨트 통합 리포트.md\")",
+      "Bash(sed -n \"/## 📌 현재 종합 판단/,/## 📑/p\" \"통합 리포트/[260711] AI 모델 통합 리포트.md\")",
+      "Bash(yt-dlp --version)",
+      "Bash(yt-dlp --write-auto-sub --sub-lang en --skip-download --print \"%\\(upload_date\\)s\" \"https://www.youtube.com/watch?v=xqq5_7daYWc\" -o \"xqq5_7daYWc.%\\(ext\\)s\")",
+      "Bash(yt-dlp --write-auto-sub --sub-lang en --skip-download --extractor-args \"youtube:player_client=android\" --print \"%\\(upload_date\\)s\" \"https://www.youtube.com/watch?v=xqq5_7daYWc\" -o \"xqq5_7daYWc.%\\(ext\\)s\")",
+      "PowerShell(\\(Get-Item \"C:\\\\Users\\\\y\\\\semianalysis\\\\대시보드\\\\인텔리전스 대시보드.html\"\\).Length; \\(Get-Content \"C:\\\\Users\\\\y\\\\semianalysis\\\\대시보드\\\\인텔리전스 대시보드.html\" | Measure-Object -Line\\).Lines)",
+      "Bash([ -f \"$CHROME\" ])",
+      "Read(//c/Program Files \\\\\\(x86\\\\\\)/Google/Chrome/**)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --virtual-time-budget=3000 --window-size=760,2600 --screenshot=sim_shot.png \"file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --virtual-time-budget=3000 --window-size=760,2600 --screenshot=\"C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_shot.png\" \"file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --virtual-time-budget=1700 --window-size=760,700 --screenshot=\"C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_mid.png\" \"file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --virtual-time-budget=3000 --window-size=390,1400 --screenshot=\"C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_mobile.png\" \"file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html\")",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --virtual-time-budget=4000 --window-size=390,900 --dump-dom file:////c/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_dbg.html)",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --virtual-time-budget=4000 --window-size=390,900 --dump-dom file:///C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_dbg.html)",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --force-device-scale-factor=2 --virtual-time-budget=4000 --window-size=780,1800 --dump-dom file:///C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_dbg.html)",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --virtual-time-budget=5000 --window-size=600,2900 --screenshot=C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_390.png file:///C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_dbg4.html)",
+      "Bash(awk '/<script>/{f=1;next}/<\\\\/script>/{f=0}f' \"/c/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html\")",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --virtual-time-budget=2400 --window-size=760,1300 --screenshot=C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_dots.png 'file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html')",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --force-device-scale-factor=2 --virtual-time-budget=2200 --window-size=760,480 --screenshot=C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_sq2.png 'file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html')",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(tasklist)",
+      "Bash(*)"
     ]
   }
 }
