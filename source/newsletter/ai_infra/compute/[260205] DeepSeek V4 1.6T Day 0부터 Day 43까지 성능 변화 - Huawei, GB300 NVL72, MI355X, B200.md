@@ -300,5 +300,148 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 65% 완료*
-*업데이트: 6\~8장(MI355X 43일 100배 개선, B300·B200·GB300 성능 진화, MW당 토큰 처리량) 작성 완료*
+## 9. 2026년 6월 6일 기준 현재 성능과 ROCm vLLM 부진
+
+**📌 핵심:**
+- SGLang 기준으로 **GB300이 다른 모든 추론 시스템을 압도** — 랙 전체를 하나의 통신망으로 묶는 NVL72의 광역 스케일 장점을 그대로 보여줌
+- MTP까지 적용하면 GB300은 측정된 모든 반응성 구간에서 최고 성능 — 사용자당 초당 50토큰 기준, 입력 8천·출력 1천 토큰 가정 시 **백만 출력 토큰당 비용 $0.156**까지 하락
+- 반면 **ROCm vLLM은 네이티브 SGLang보다 훨씬 느리게 개선** — AMD가 실제 프로덕션 고객이 0곳인 ATOM 엔진에 재집중하면서, 정작 주요 고객사들이 쓰는 네이티브 vLLM 지원이 상대적으로 뒤처짐(비-DeepSeek V4 모델 대상 분산 추론은 최근에야 오픈소스 upstream 지원이 활성화)
+- 결론: 최고 성능은 GB300 NVL72의 스케일업 도메인 크기(72GPU)에서 나오고, B200·B300(8GPU 아일랜드)은 그보다 일찍 한계에 부딪히며, MI355X는 스케일업 규모와 집단통신 스택 성숙도 모두에서 더 뒤처져 있음
+
+---
+
+```mermaid
+flowchart TD
+    Ranking["6/6 기준<br/>SGLang+MTP 성능 순위"] --> R1["1위: GB300 NVL72<br/>(전 구간 최고 성능)"]
+    R1 --> Cost["$0.156/백만 출력토큰<br/>(50 tok/s/user, 입력8k/출력1k)"]
+    Ranking --> R2["B300·B200:<br/>8GPU 아일랜드,<br/>더 이른 한계"]
+    Ranking --> R3["MI355X:<br/>스케일업 규모+<br/>집단통신 스택 모두 뒤처짐"]
+
+    style R1 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Cost fill:#f0fdf4,stroke:#16a34a
+    style R3 fill:#fff7ed,stroke:#ea580c
+```
+
+랙스케일 우위는 근본적으로 **스케일업 도메인**(같은 랙 안에서 초고속으로 직접 연결된 GPU 묶음) 크기의 문제입니다. NVL72는 GPU 72개를 하나의 NVLink 도메인에 묶어, DeepSeek V4의 MoE 디스패치·컴바인 all-to-all 통신을 전부 NVLink 안에서 처리하고 느린 스케일아웃(랙 간) 통신망으로 새어나가지 않게 하면서, 전문가 가중치 로딩 비용을 훨씬 많은 랭크에 상각할 수 있습니다.
+
+### ROCm vLLM DeepSeek v4 Pro 부진
+
+```mermaid
+flowchart TD
+    RocmIssue["ROCm vLLM 부진 원인"] --> Focus["AMD가 ATOM<br/>(프로덕션 고객 0곳)에<br/>재집중"] --> Neglect["주요 고객이 실제 쓰는<br/>네이티브 vLLM 지원이<br/>상대적으로 뒤처짐"]
+
+    style Focus fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Neglect fill:#fff7ed,stroke:#ea580c
+```
+
+한 가지 긍정적 신호는, DeepSeek V4가 아닌 다른 모델을 대상으로는 오픈소스 upstream AMD vLLM에서 분산 추론 기능 활성화가 최근 마침내 이뤄졌다는 점입니다. 다만 여기까지 오는 데 수개월이 걸렸고, AMD vLLM 팀이 커버해야 할 영역은 여전히 많이 남아있습니다. 이 주제는 곧 발행될 "State of AMD 2026" 리포트(AMD 추론의 좋은 점·나쁜 점·아쉬운 점을 다룸)에서 더 상세히 다룰 예정입니다.
+
+---
+
+## 10. vLLM과 SGLang의 다음 로드맵
+
+**📌 핵심:**
+- **vLLM 로드맵**(이슈 #40902)은 5개 영역으로 구성: ①핵심 모델 지원(MegaMoE 지속 작업, NVFP4), ②런타임·병렬화(Model Runner V2, MTP 최적화, 프리필/디코드 최적화, 파이프라인 병렬화), ③커널 통합(페이지드 프리필, 고속 top-k, DeepEP V2), ④KV 캐시 오프로딩, ⑤하드웨어 지원 확대(Hopper는 완료, SM120·AMD는 남은 과제)
+- **SGLang 로드맵**(이슈 #23666)은 3대 목표로 요약: 디코드용 CUDA 그래프 지원, 프리필용 조각별(piecewise) CUDA 그래프 지원, 런타임 중 가중치 재처리 제거 — mHC·HCA·CSA(인덱서 포함)·MoE 4개 구성요소별 세부 융합 작업 목록도 포함
+- SemiAnalysis의 공개 **EcosystemX** 대시보드가 향후 Nvidia·AMD·TPU·Trainium·화웨이 등 모든 주요 AI 칩에 걸친 소프트웨어 진화·CI 커버리지·큐 대기시간을 시각화할 예정
+- 결론: 두 엔진 모두 "커널을 더 잘게 쪼개 통신·연산을 최대한 겹치고, 가중치 준비는 스텝마다가 아니라 한 번만 하자"는 같은 방향으로 수렴 — DeepSeek V4의 mHC·CSA·HCA 같은 신규 아키텍처 요소가 여전히 최적화 여지를 많이 남기고 있음을 보여줌
+
+---
+
+```mermaid
+flowchart TD
+    VLLMPlan["vLLM DeepSeek V4<br/>로드맵(#40902) 5대 영역"] --> V1["핵심 모델:<br/>MegaMoE 지속·NVFP4"]
+    VLLMPlan --> V2["런타임·병렬화:<br/>Model Runner V2·MTP·<br/>PD·파이프라인 병렬화"]
+    VLLMPlan --> V3["커널·KV캐시·하드웨어:<br/>페이지드 프리필·오프로딩·<br/>SM120+AMD 지원"]
+
+    style VLLMPlan fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    SGLangPlan["SGLang 로드맵(#23666)<br/>3대 목표"] --> G1["디코드용<br/>CUDA 그래프 지원"]
+    SGLangPlan --> G2["프리필용<br/>조각별 CUDA 그래프"]
+    SGLangPlan --> G3["런타임 중<br/>가중치 재처리 제거"]
+
+    style SGLangPlan fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+vLLM 쪽에서는 FP4 인덱서와 초기 MegaMoE 지원이 이미 구현됐고 Hopper 지원도 완료됐습니다. SGLang 쪽은 mHC(GEMM 커널 융합), HCA(fc_qa+fc_kv 수평 융합, CUDA 그래프 호환), CSA(인덱서·압축기 직접 캐시 읽기), MoE(라우팅 경로 커널 통합) 등 컴포넌트별로 세분화된 체크리스트를 이미 상당 부분 진행 중입니다.
+
+---
+
+## 11. Huawei Ascend 950 - CANN 스택의 Day 0 지원
+
+**📌 핵심:**
+- DeepSeek V4는 **화웨이 Ascend에서 Day 0급 지원을 받은 최초의 주요 오픈모델** — DeepSeek 공식 API 일부도 출시 당일부터 Ascend에서 서빙됨. 작년 DeepSeek V3/R1 때는 Nvidia CUDA만 유일하게 Day 0에 작동했던 것과 대조적
+- **CANN**은 2025년 8월부터 오픈소스로 전환된 화웨이의 Ascend용 AI 연산 소프트웨어 스택 — 미국 정부의 CUDA 칩 대중국 수출 규제 속에서 중국 내 개발자 생태계를 확보하려는 전략
+- 화웨이는 MTP 벤치마크 특유의 함정(초안 토큰 수락률이 벤치마크와 실사용 조건에서 다르게 나타나는 문제)을 우회하기 위해, 토큰당 시간 대신 **디코드 스텝당 시간**을 측정하고 사용자가 자신의 수락 길이(AL)를 곱해 환산하도록 하는 방식을 채택
+- 결론: Ascend 950(내부 코드명 "David")은 Day 0에 최적화된 추론 인프라를 실제로 선보이며 "다윗과 골리앗" 서사를 자처하지만, 엔비디아라는 골리앗은 가만히 서 있지 않고 매년 새 아키텍처를 내놓으며 계속 움직인다는 점이 진짜 관건
+
+---
+
+```mermaid
+flowchart TD
+    Compare["Day 0 지원 스택 수<br/>비교(작년 vs 올해)"] --> Last["작년(DSv3/R1):<br/>Nvidia CUDA 1곳만"]
+    Compare --> Now["올해(DSv4):<br/>Nvidia CUDA +<br/>화웨이 CANN 2곳"]
+
+    style Last fill:#eff6ff,stroke:#3b82f6
+    style Now fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    CANN["CANN(화웨이 Ascend<br/>AI 연산 소프트웨어)"] --> OpenSrc["2025년 8월<br/>오픈소스 전환"] --> Goal["목표: 중국 개발자 생태계 확보<br/>(미국 CUDA 수출규제 대응)"]
+
+    style OpenSrc fill:#eff6ff,stroke:#3b82f6
+    style Goal fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+### AIC·AIV·AI CPU·CCU — Ascend 950의 칩 내부 구조
+
+Ascend 950 칩 내부에는 역할이 분리된 4가지 연산 유닛이 있습니다.
+
+```mermaid
+flowchart TD
+    Chip["Ascend 950 AI Core<br/>내부 구조"] --> AIC["AIC(AI Cube):<br/>행렬·텐서 연산<br/>(GEMM, matmul, 어텐션 투영)"]
+    Chip --> AIV["AIV(AI Vector):<br/>원소별·벡터 연산<br/>(활성화함수, 정규화, 리덕션)"]
+    Chip --> Other["AI CPU + CCU:<br/>제어 로직 + 통신 전담"]
+
+    style AIC fill:#eff6ff,stroke:#3b82f6
+    style AIV fill:#eff6ff,stroke:#3b82f6
+    style Other fill:#f0fdf4,stroke:#16a34a
+```
+
+AIC와 AIV는 TPU의 MXU와 유사한 개념이지만, 화웨이는 이 둘을 완전히 분리된 독립 코어로 노출합니다. 각각 자체 코드를 로드할 수 있는 "듀얼 마스터 모드"를 지원해, AIV가 AIC를 메시지로 일일이 구동하는 대신 AIC·AIV가 각자 독립적으로 코드를 실행할 수 있습니다.
+
+**AI CPU**는 기기 메모리에 직접 접근 가능한 ARM64 실행 유닛으로, 분기가 많은 제어 로직·스칼라 연산·동적 셰이프 처리처럼 SIMD/SIMT 코어에 잘 맞지 않는 작업을 처리합니다. 이 작업을 호스트 CPU로 왕복시키지 않고 기기 내부에서 처리할 수 있어, 지연시간과 파이프라인 버블(대기 공백)의 주요 원인을 줄입니다.
+
+**CCU(통신 전담 엔진)**는 TPU·Trainium처럼 Ascend 950에도 탑재된 전용 집단통신 엔진으로, 원격 읽기+리듀스+로컬 쓰기, 로컬 읽기+원격 쓰기 같은 작업을 연산 코어의 계산 능력을 소모하지 않고 처리합니다. 통신 지연시간 감소, HBM 트래픽 감소, 사용자 버퍼 복사 감소, 연산 코어의 통신 오케스트레이션 부담 해소라는 효과가 있습니다.
+
+### 950PR vs 950DT — 프리필용과 디코드용 두 변형
+
+```mermaid
+flowchart TD
+    Ascend950["Ascend 950<br/>(동일 다이 기반<br/>듀얼다이 UMA 아키텍처)"] --> PR["950PR<br/>(Prefill/Recommendation)<br/>저비용·높은 비용대비성능"]
+    Ascend950 --> DT["950DT<br/>(Decode/Training)<br/>고대역폭·고성능,<br/>다른 메모리 패키징"]
+
+    style PR fill:#eff6ff,stroke:#3b82f6
+    style DT fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+### 950DT 디코드 스텝 프로파일 - 스트림 분리와 MC²
+
+DeepSeek Flash V4를 950DT에서 16랭크 DP/EP(데이터·전문가 병렬화) 구성으로 프로파일링한 결과, 16랭크가 동시에 참여하고 MoE 디스패치·컴바인 트래픽이 활발한 것으로 나타났습니다. CANN은 큐브(AIC)·벡터(AIV) 코어 배분을 조절해 자원 경합을 피하는 방식으로, 독립된 연산·통신 오퍼레이터를 여러 스트림에서 동시 실행합니다. Prolog·Compressor·LightningIndexer 오퍼레이터는 서로 겹쳐 실행할 수 있고, C4A Compressor는 완전히 숨길 수 있으며, 공유 전문가(shared expert) 연산은 라우팅 전문가(routed expert) 실행 성능을 깎지 않고 그 밑에 숨길 수 있습니다.
+
+디코드 스텝을 세부적으로 들여다보면, 메타데이터 스트림(스트림 145\~148)이 디코드 패스당 한 번씩 실행되며 이후 커널이 재사용할 값 의존적 스케줄러·타일링 메타데이터를 미리 계산합니다. 이 오퍼레이터들은 디코드 스텝에서 유일하게 AI CPU에서 실행되는 연산이며, 전체 시간에서 차지하는 비중은 극히 작고 AI Core 연산과 완전히 겹쳐 실행됩니다.
+
+DeepSeek V4에서 화웨이는 희소 어텐션과 LightningIndexer의 값 의존적 스케줄러 단계를 호스트로 되돌리지 않고 **AI CPU로 옮겼습니다**. 이 메타데이터 오퍼레이터들은 런타임 시퀀스 길이·마스크·페이지드 KV 정보로부터 재사용 가능한 코어별 파티셔닝 텐서를 만들고, `SparseAttnSharedkv`와 `QuantLightningIndexer`가 이를 활용해 각 큐브 코어가 처리할 배치/헤드/Q블록/K블록 작업을 결정합니다. 이는 개념적으로 FlashInfer가 호스트에서 수행하는 페이지드 어텐션 계획(planning) 단계와 비슷하지만, 화웨이는 같은 계획 작업을 호스트 대신 기기 내 AI CPU에서 처리한다는 차이가 있습니다.
+
+또한 CANN은 2024년부터 **MC²(병합 연산-통신)**라는 오퍼레이터 클래스를 도입했습니다 — 일반 커널도 HCCL 집단통신도 아닌, 통신과 연산을 하나의 커널에 결합한 방식입니다. DeepSeek V4 디코드에서는 `MoeDistributeDispatchV2`, `MoeDistributeCombineV2`라는 MC² EP 오퍼레이터가 사용됩니다.
+
+핵심은 화웨이 Ascend가 DeepSeek V4에 대해 Day 0부터 실제로 작동하는 최적화된 추론 인프라를 제공했다는 점입니다. 다만 성경 속 다윗과 골리앗 이야기의 결말은 거인이 쓰러지는 것이지만, 그 골리앗은 가만히 서서 돌팔매를 맞아준 반면, 엔비디아라는 골리앗은 해마다 새로운 아키텍처를 내놓으며 끊임없이 움직입니다. 화웨이가 Day 0에 돌팔매를 던질 수 있다는 것은 증명했지만, 움직이는 거인을 실제로 쓰러뜨릴 수 있을지는 아직 지켜봐야 합니다.
+
+---
+
+*작성 진행률: 약 85% 완료*
+*업데이트: 9\~11장(현재 성능·ROCm vLLM 부진, vLLM·SGLang 로드맵, 화웨이 Ascend 950·CANN 스택) 작성 완료*
