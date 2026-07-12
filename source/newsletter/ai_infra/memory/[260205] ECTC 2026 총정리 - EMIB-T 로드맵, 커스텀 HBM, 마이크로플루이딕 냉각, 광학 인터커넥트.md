@@ -261,5 +261,184 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 21% 완료*
-*업데이트: 헤더·목차·용어 정리 및 1\~3장(개요, 인텔 EMIB-T, 마벨 커스텀 HBM) 작성 완료*
+## 4. 삼성 HBM 인터포저 - 배선 복잡도와 커패시터 배치
+
+**📌 핵심:**
+- HBM4E는 데이터 속도를 12Gb/s 이상으로 높이고 입출력 핀 수도 2배로 늘려 인터포저 배선 복잡도가 급증 — HBM3E 대비 인터포저 층수가 **2배**, HBM2 대비로는 **5배**까지 필요할 수 있고, 전력 소비도 HBM3E 대비 **86%**, HBM2 대비 **5.6배** 늘어날 전망
+- 삼성은 **8층 실리콘 인터포저**를 제안해 예상 필요 층수보다 **20% 줄였음** — 신호 2개·접지 1개를 반복 배치해 고속 신호를 차폐하는 구조로, 전체 층의 75%를 신호 배선에 할당
+- 인터포저의 핵심 요소인 **초고밀도 커패시터(UHC)**는 신호 배선도 몰려있는 M1층에만 배치 가능해 공간이 부족 — 배선이 한쪽으로 쏠리면 커패시터도 한쪽에 몰려 전력분배망(PDN)이 좌우 불균형해짐
+- 결론: 삼성은 M1과 다른 층에 배선을 재분배해 UHC를 인터페이스 전체에 고르게 배치, PDN 임피던스와 전압 노이즈를 줄이면서 배선 밀도도 관리 가능한 수준으로 유지
+
+---
+
+### HBM 세대별 인터포저 부담 증가
+
+```mermaid
+flowchart TD
+    Gen["HBM 세대별<br/>인터포저 요구사항"] --> Layer["층수: HBM2 대비 5배,<br/>HBM3E 대비 2배 필요 가능"]
+    Gen --> Power["전력: HBM2 대비 5.6배,<br/>HBM3E 대비 86% 증가 전망"]
+
+    style Layer fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Power fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+### 삼성의 대응 - 8층 인터포저와 신호 차폐
+
+```mermaid
+flowchart TD
+    Samsung8["삼성 8층 실리콘 인터포저<br/>(예상 필요 층수보다 20% 절감)"] --> Shield["2신호·1접지 반복 배치<br/>고속 신호 차폐"]
+    Shield --> Ratio["전체 층의 75%를<br/>신호 배선에 할당"]
+
+    style Samsung8 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Ratio fill:#f0fdf4,stroke:#16a34a
+```
+
+### 초고밀도 커패시터(UHC) 배치 문제
+
+인터포저의 또 다른 핵심은 초고밀도 커패시터(UHC)입니다. 삼성은 정확한 구조를 밝히지 않았지만, 인텔 EMIB-T의 MIM 커패시터나 TSMC CoWoS의 DTC와 비슷한 개념으로 추정됩니다. 문제는 UHC를 배치할 수 있는 곳이 신호 배선도 몰려있는 M1층뿐이라는 점입니다.
+
+```mermaid
+flowchart TD
+    Unbalanced["배선이 한쪽으로 쏠리면"] --> Push["커패시터도<br/>한쪽으로 쏠림"]
+    Push --> Uneven["로직측·HBM측 사이<br/>PDN이 좌우 불균형"]
+    Uneven --> Fix["삼성 해법: M1+다른 층으로<br/>배선 재분배<br/>→ UHC를 전체에 고르게 배치"]
+
+    style Uneven fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Fix fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+이 재배치로 PDN 임피던스와 전압 노이즈를 줄이면서도 배선 밀도는 관리 가능한 수준으로 유지할 수 있었습니다.
+
+---
+
+## 5. 삼성 HBM 하이브리드 본딩 열특성
+
+**📌 핵심:**
+- HBM 스택이 더 빠르고 높아지고 그 밑의 로직 다이도 더 많은 전력을 쓰면서, 16단(16-hi) HBM까지는 열저항이 괜찮지만 앞으로 **20단·24단** 스택에는 새로운 냉각 접근이 필요
+- 삼성은 열압착본딩(TCB)과 하이브리드 구리본딩(HCB)을 비교(엔비디아 Blackwell과 유사한 GPU 다이 2개+HBM 8스택 구성) — HCB로 HBM 내부 열저항이 **공랭 12.2%·수랭 12.9%** 감소했지만, 시스템 전체 열저항 개선폭은 **공랭 3.5%·수랭 7.7%**로 더 작음
+- 이유는 HCB가 열전달 경로의 일부만 개선하기 때문 — 내부저항·GPU-HBM 간섭은 각각 약 12.5%·9.8% 줄었지만, 열계면소재(TIM)·냉각까지 포함한 시스템 레벨 저항은 오히려 약 2.3% 늘어남
+- 결론: HCB로 전환하면 동일 전력에서 흡기 온도를 1\~2°C 더 높이거나, 동일 온도에서 패키지 전력을 약 4% 더 올릴 수 있고 냉각 전력은 약 7% 절감 — 스택 레벨만 따로 보면 HCB의 열저항 개선폭은 기본 약 19%, 접합점 밀도를 2배·4배로 늘리면 각각 22.3%·29.1%까지 확대
+
+---
+
+### HBM 적층이 높아질수록 커지는 열 문제
+
+```mermaid
+flowchart TD
+    Trend["HBM 스택 고도화 추세"] --> H16["16단(16-hi)<br/>현재까지는 열저항 수용 가능"]
+    Trend --> H20["20단·24단 스택<br/>(차세대)<br/>새로운 냉각 접근 필요"]
+
+    style H20 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+### TCB vs HCB - 실측 개선폭
+
+```mermaid
+flowchart TD
+    Compare["TCB(열압착본딩) vs<br/>HCB(하이브리드 구리본딩)<br/>(GPU 2다이+HBM 8스택)"] --> Internal["HBM 내부 열저항<br/>공랭 -12.2% / 수랭 -12.9%"]
+    Compare --> Total["시스템 전체 열저항<br/>공랭 -3.5% / 수랭 -7.7%"]
+
+    style Internal fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Total fill:#fff7ed,stroke:#ea580c
+```
+
+### 개선이 고르지 않은 이유 - 열전달 경로 3분해
+
+```mermaid
+flowchart TD
+    Path["열전달 경로 3분해"] --> P1["내부저항: 약 -12.5%"]
+    Path --> P2["GPU-HBM 간섭: 약 -9.8%"]
+    Path --> P3["시스템 레벨(TIM+냉각):<br/>오히려 약 +2.3%"]
+
+    style P1 fill:#f0fdf4,stroke:#16a34a
+    style P2 fill:#f0fdf4,stroke:#16a34a
+    style P3 fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+메모리 위주 워크로드처럼 베이스 다이로 전력이 더 이동할수록 병목 지점도 이동합니다. 이는 메모리 컨트롤러와 로직이 베이스 다이로 옮겨가는 커스텀 HBM(3장)에 특히 중요한데, GPU-HBM 간 간섭이 전체 열저항에서 차지하는 비중이 베이스 다이 전력 1배 기준 13%에서 3배 기준 5%로 줄어듭니다.
+
+### HCB 전환 효과와 스택 레벨 개선폭
+
+```mermaid
+flowchart TD
+    HCBSwitch["HCB 전환 시 효과<br/>(삼성 추정)"] --> Temp["흡기온도 +1~2°C<br/>(동일 패키지 전력 기준)"]
+    HCBSwitch --> PkgPower["또는 패키지 전력<br/>약 +4% (동일 온도 기준)"]
+    HCBSwitch --> CoolPower["냉각 전력<br/>약 -7%"]
+
+    style HCBSwitch fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style CoolPower fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    Stack["스택 레벨 HCB 개선폭<br/>(TCB 대비)"] --> Base["기본 접합점 밀도: 약 -19%"]
+    Stack --> D2["접합점 밀도 2배: -22.3%"]
+    Stack --> D4["접합점 밀도 4배: -29.1%"]
+
+    style Base fill:#f0fdf4,stroke:#16a34a
+    style D4 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 6. 마이크로플루이딕 냉각 - TSMC와 마이크로소프트
+
+**📌 핵심:**
+- TSMC는 CoWoS-R(유기 인터포저, 휨 내성과 공정 호환성 우수) 기반 GPU 시험차량에 **실리콘 표면에 미세기둥(마이크로필러)을 직접 형성**해 냉각수를 칩 배면 바로 옆까지 접근시키는 방식을 시연 — 기존 뚜껑형 냉각판(1.9\~2.3kW)·무뚜껑 냉각판(2.5\~3.0kW)이 4LPM 이상에서 포화되는 반면, 마이크로필러는 8LPM에서 **5.3kW**까지 늘어나며 시험차량 전체 균일 방열 5kW 이상을 달성
+- 마이크로소프트는 실제 엔비디아 GH200 GPU 실리콘에 **직선형 미세채널을 식각**해 접합부-흡기 열저항을 **51\~60% 감소**시켰고(HBM은 27\~37%, 여전히 냉각판+TIM 경유), 패키지 전체로는 **50% 열저항 감소**
+- 마이크로소프트는 6개월간 약 4,370회 관측 중 잠재적 막힘 사례 단 9건, 6개월 후에도 실리콘 부식 없음이라는 신뢰성 데이터도 공개 — GH200 노드는 3주 반복 벤치마크 + 1주 연속 가동을 안정적 전력으로 완주
+- 결론: 두 접근 모두 냉각수를 열원에 물리적으로 훨씬 가깝게 붙여 kW급 열을 처리하지만, 새 실링(밀봉) 소재·조립 공정이 필요해 아직 상용화 초기 단계 — TSMC는 이 기술 하나를 포함해 ECTC 발표가 3건에 그쳐 인텔(12건)·삼성(11건)보다 훨씬 적었음
+
+---
+
+### TSMC 마이크로필러 - 냉각 방식 3종 비교
+
+```mermaid
+flowchart TD
+    Types["TSMC 냉각 방식 3종<br/>(CoWoS-R, 4 SoC + 8 HBM)"] --> Lid["뚜껑형 냉각판<br/>1.9~2.3kW (1~2LPM, 40℃수)"]
+    Types --> NoLid["무뚜껑 냉각판<br/>2.5~3.0kW"]
+    Types --> Pillar["마이크로필러<br/>(실리콘 배면 직접 형성)"]
+
+    style Pillar fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Flow["유량에 따른 방열량"] --> F2["2LPM: 무뚜껑 냉각판과 동률"]
+    Flow --> F4["4LPM: 마이크로필러 4kW<br/>(뚜껑·무뚜껑은 여기서 포화<br/>— TIM이 병목)"]
+    Flow --> F8["8LPM: 마이크로필러 5.3kW<br/>(전체 균일 방열 5kW 이상)"]
+
+    style F8 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+마이크로필러는 CoW(칩온웨이퍼) 공정 이후 CoWoS-R 구조를 손상시키지 않고 형성해야 했고, 휨과 열팽창 불일치 속에서도 냉각수를 가두는 새 실링 소재가 필요했습니다. 시험차량은 MSL4(방습 등급) 테스트를 헬륨 누출·실링 박리 없이 통과했습니다.
+
+### 마이크로소프트 - 실제 GH200 GPU에 미세채널 식각
+
+TSMC가 미세기둥을 썼다면, 마이크로소프트는 GPU 실리콘에 직선형 미세채널을 직접 식각하는 방식을 택했습니다. 시험용 열더미가 아니라 실제 엔비디아 GH200 GPU로 HPCG·HPL 등 다양한 워크로드를 테스트해 실제 열분포·핫스팟을 더 정확히 포착할 수 있었습니다.
+
+```mermaid
+flowchart TD
+    MS["마이크로소프트<br/>GH200 미세채널 냉각<br/>(1LPM 유량)"] --> GPU["GPU 접합부-흡기 열저항<br/>51~60% 감소"]
+    MS --> HBM2["HBM 열저항<br/>27~37% 감소<br/>(여전히 냉각판+TIM 경유)"]
+    GPU --> Total2["패키지 전체<br/>열저항 50% 감소"]
+
+    style Total2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+### 6개월 신뢰성 데이터
+
+```mermaid
+flowchart TD
+    Reliability["6개월 신뢰성 관측<br/>(약 4,370회 관측)"] --> Clog["잠재적 막힘 사례<br/>단 9건 (초기 이후 감소 추세)"]
+    Reliability --> Erosion["6개월 후에도<br/>실리콘 부식 없음"]
+    Reliability --> Node["GH200 노드: 3주 반복 벤치마크<br/>+ 1주 연속 가동 완주<br/>(클러스터 레벨 MTBF는 검증 중)"]
+
+    style Clog fill:#f0fdf4,stroke:#16a34a
+    style Erosion fill:#f0fdf4,stroke:#16a34a
+```
+
+---
+
+*작성 진행률: 약 43% 완료*
+*업데이트: 4\~6장(삼성 HBM 인터포저, 하이브리드 본딩 열특성, 마이크로플루이딕 냉각) 작성 완료*
