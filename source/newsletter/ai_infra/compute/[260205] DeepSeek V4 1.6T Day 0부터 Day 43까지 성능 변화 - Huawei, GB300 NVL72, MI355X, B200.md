@@ -208,5 +208,97 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 40% 완료*
-*업데이트: 1\~5장(개요, Day 0 처리량-반응성 곡선, GB200 분산 프리필·MTP, AMD MI355X·ATOM 참사, TensorRT-LLM 버그) 작성 완료*
+## 6. 43일간의 성능 진화 - MI355X 100배 개선
+
+**📌 핵심:**
+- MI355X는 Day 0엔 겨우 작동만 하는 수준이었지만, HaiShaw가 이끄는 AMD 팀이 **1개월 이내 처리량 100배 이상 개선**을 달성 — Day 0(4월 25일 FP8 빌드)과 5월 27일(FP4 빌드)을 비교한 결과
+- 개선의 대부분은 **PyTorch 폴백 경로를 실제 AITER·Triton·TileLang·FlyDSL 커널로 교체**하면서 발생 — 이 중 두 단계가 가장 큰 비중을 차지: ①Day 0 직후 첫 커밋에서 손쉬운 개선(low-hanging fruit) 다수 정리, ②FP4 가중치 MoE 작동 성공으로 전문가 가중치를 FP8에서 네이티브 FP4(MXFP4)로 전환해 대역폭 개선
+- 이후 AITER mHC 커널 도입으로 **MI355X가 처음으로 낮은 반응성 구간에서 H200 성능을 추월**, ATOM 엔진도 동시 처리 1건짜리 점 하나에서 전체 프론티어로 확장(일부 구간은 H200 능가)
+- 결론: 소프트웨어 성숙도가 하드웨어 잠재력을 좌우한다는 것을 보여주는 극단적 사례 — 같은 실리콘이 43일 만에 "사용 불가능"에서 "H200을 능가"하는 수준까지 도달
+
+---
+
+```mermaid
+flowchart TD
+    Improve["MI355X 43일 개선 경로<br/>(Day 0 FP8 → 5/27 FP4)"] --> S1["1단계: PyTorch 폴백을<br/>AITER·Triton·TileLang·<br/>FlyDSL 커널로 교체"]
+    S1 --> S2["2단계: 첫 커밋에서<br/>손쉬운 개선(low-hanging fruit)<br/>다수 정리 — 최대 개선폭"]
+    S1 --> S3["3단계: FP4 가중치 MoE 작동<br/>→ 전문가 가중치<br/>FP8→네이티브 FP4(MXFP4)"]
+
+    style Improve fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style S3 fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    mHC["AITER mHC 커널 도입"] --> Cross["MI355X가 처음으로<br/>낮은 반응성 구간에서<br/>H200 성능 추월"]
+    Atom2["ATOM 엔진 개선"] --> AtomFix["AITER fix #2916:<br/>디바이스 할당 버그 수정<br/>→ mHC 크래시 해결"]
+    AtomFix --> AtomExp["동시 처리 1건→1~512건<br/>배칭 지원 구현<br/>일부 구간 H200 능가"]
+
+    style Cross fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style AtomExp fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+이 밖에도 SWA(윈도우드 어텐션) 준비 단계인 SWA-prepare를 Triton으로 구현해 추가 개선을 이끌어냈고, 5월 19일에는 남은 폴백 경로를 마저 정리(FlashMLA를 TileLang에서 Triton으로 이전, AITER FlyDSL FP4 MoE 커널 적용)하면서 동시 처리 규모를 1,024까지 늘려 기존에 없던 고처리량·저반응성 구간의 프론티어를 새로 그려냈습니다.
+
+### MI355X MTP
+
+4주차에는 AMD 전 프레임워크에서 MTP(다중 토큰 예측)가 작동하기 시작해 반응성이 여러 배 개선됐습니다. 다만 한 가지 특징이 확인됐는데, MTP는 처리량이 높은(대형 배치) 구간에서는 오히려 결과가 나빠지는 경향을 보입니다 — MTP는 메모리 대역폭이 남는 소규모 배치 디코드의 여유 연산력을 활용하는 기법이라, 연산력 자체가 부족한 대형 배치 디코드에서는 초안 토큰의 이득보다 MTP 자체의 비용이 더 커지기 때문입니다.
+
+---
+
+## 7. B300·B200·GB300 NVL72의 성능 진화
+
+**📌 핵심:**
+- **B300(SGLang)**: DeepGEMM MegaMoE 도입으로 1주일 이내 **3배 성능 개선** — 전문가를 한 번에 몰아 처리하는(mega-dispatch) 그룹형 FP4 MoE GEMM과, EP8 대신 EP4로 튜닝을 바꾼 효과
+- **B200**: B300과 유사한 성능대이며 낮은 반응성 구간에선 TRT가 우위 — 다만 TRT-LLM은 별도 설정 없이는 즉시 작동하지 않는 반면, CUDA vLLM·SGLang vLLM은 바로 작동
+- **GB300 NVL72**: 6월 2일 **W4A4(MXFP4) MegaMoE** 적용으로 가장 극적인 개선 — 5월 7일 대비 개선은 커널·정밀도 변경이 아니라 **디코드 토폴로지 재설계**에서 나옴(EP=8→EP=16으로 확장, 프리필 워커를 디코드 워커당 4\~12개로 확대, 동시 처리 16,384→21,504로 확장)
+- 결론: 랙 하나에 GPU 72개를 하나의 통신망으로 묶는 **광역 전문가 병렬화(Wide EP)**가 GB300의 압도적 성능을 만드는 핵심 레버 — GPU가 많을수록 전문가 가중치 로딩 비용을 더 많은 랭크에 분산(상각)할 수 있기 때문
+
+---
+
+```mermaid
+flowchart TD
+    B300["B300(SGLang)<br/>DeepGEMM MegaMoE"] --> B300R["1주일 내 3배 개선<br/>(그룹형 FP4 MoE GEMM +<br/>EP8→EP4 튜닝)"]
+
+    style B300R fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    GB300["GB300 NVL72<br/>6/2 W4A4(MXFP4) MegaMoE"] --> Cause["개선 원인: 커널·정밀도가 아닌<br/>디코드 토폴로지 재설계"]
+    Cause --> C1["EP=8 → EP=16로 확장"]
+    Cause --> C2["프리필 워커<br/>디코드당 1~2개 → 4~12개"]
+    Cause --> C3["동시 처리<br/>16,384 → 21,504"]
+    Cause --> WideEP["결론: 광역 전문가 병렬화가<br/>GB300 압도적 성능의 핵심 레버<br/>(가중치 로딩을 더 많은<br/>GPU로 상각)"]
+
+    style GB300 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style WideEP fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 8. MW당 토큰 처리량 - 전력 효율의 진짜 척도
+
+**📌 핵심:**
+- B200(vLLM) 기준 **MW(메가와트)당 초당 토큰 처리량**이 Day 0의 약 30만 tok/s/MW에서 6월 5일 약 50만 tok/s/MW로 **약 1.7배 개선** — 사용자당 반응성 50토큰/초 기준
+- B200의 유틸리티 전력 소비(all-in)는 GPU당 **2.17kW로 고정**돼 있어, 이 개선은 하드웨어가 아닌 **순수 소프트웨어 개선분**임을 의미
+- MW당 토큰 처리량은 전력이 고정된 자원인 사업자에게 "투자 회수율(ROI)"을 계산하는 가장 좋은 지표 — GPU 1개당 처리량보다 더 많은 정보를 담음(전력사용효율 PUE와 데이터센터 오버헤드까지 반영)
+- 결론: 처리량 프론티어를 밀어올린 것과 같은 최적화(그룹형 FP4 MoE GEMM, 넓은 EP, FP4 가중치 경로, 스케줄러 튜닝)가 유틸리티 전력이 고정된 조건에서 그대로 전력 효율 개선으로 직결됨
+
+---
+
+```mermaid
+flowchart TD
+    Metric["MW당 토큰 처리량<br/>(B200, vLLM, 50 tok/s/user)"] --> D0["Day 0(4/28):<br/>약 30만 tok/s/MW"]
+    D0 -->|"약 1.7배 개선<br/>(전력은 고정, 순수 SW 효과)"| D1["6/5: 약 50만 tok/s/MW"]
+
+    style D0 fill:#eff6ff,stroke:#3b82f6
+    style D1 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+많은 조직이 추론 인프라를 "희소한 유틸리티 전력을 얼마나 많은 청구 가능 토큰으로 바꿀 수 있는가"의 관점에서 접근합니다. 이 관점에서 MW당 매출, MW당 전체 유틸리티 전력당 토큰, MW당 초기 투자(CapEx) 같은 지표가 함께 활용되며, SemiAnalysis의 Tokenomics 모델이 바로 이런 사업적 판단을 다루기 위해 설계됐습니다.
+
+---
+
+*작성 진행률: 약 65% 완료*
+*업데이트: 6\~8장(MI355X 43일 100배 개선, B300·B200·GB300 성능 진화, MW당 토큰 처리량) 작성 완료*
