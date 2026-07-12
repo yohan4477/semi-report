@@ -495,7 +495,7 @@ flowchart TD
     Transient["XPU 전력상태 변화 후<br/>약 30ms 내 온도 변화 속도"] --> Sub2["기판: 초당 약 10°C"]
     Transient --> Bridge2["브릿지: 초당 약 100°C"]
     Transient --> Interp2["인터포저: 초당 약 120°C"]
-    Transient --> Resp["EAM은 전기적 바이어스로<br/>이 속도를 따라잡을 수 있음<br/>(링 변조기는 히터+피드백 루프라 더 느림)"]
+    Interp2 --> Resp["EAM은 전기적 바이어스로<br/>이 속도를 따라잡을 수 있음<br/>(링 변조기는 히터+피드백 루프라 더 느림)"]
 
     style Resp fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
 ```
@@ -714,5 +714,92 @@ Amkor·STATS ChipPAC은 얇은 유리코어로 유기기판 대비 기판 레벨
 
 ---
 
-*작성 진행률: 약 86% 완료*
-*업데이트: 10\~12장(인터포저 대안, 열계면 소재, 유리 기판) 작성 완료*
+## 13. RDL 스케일링 - 서브마이크론 시대로
+
+**📌 핵심:**
+- RDL 배선폭/간격(L/S)은 패키지가 커지는 와중에도 계속 줄어드는 중 — 주된 동력은 **UCIe 3.0**(향후 ASIC-ASIC·ASIC-HBM 링크에 최대 64GT/s 지원)로, 이 고속 다이간 인터커넥트가 유기 인터포저가 커지고 촘촘해질수록 신호 품질 요구를 더 조여옴
+- 로드맵은 2015년경 10/10µm에서 현재 **2/2µm**까지 왔고 다음 목표는 **1/1µm** — 서브마이크론 시대에 진입하려면 반가산 도금 대신 다마신 공정으로 전환해야 하며, CMP 평탄화와 저수축 유전체가 핵심 관문 기술로 부상
+- Resonac은 320×320mm 유리패널에 폴리머 다마신+패널 CMP로 2/2µm 배선을, imec·Fujifilm은 300mm 웨이퍼에서 1/1µm 다마신을, Ushio는 510×515mm 전체 패널을 이음매 없이 16회 노광으로 1.5/1.5µm를 달성
+- 결론: TSMC(가장 앞선 RDL 제조사)는 GUC와 함께 CoWoS-R의 근시일 한계로 꼽히는 8층 RDL에서 64비트 UCIe-A 인터페이스(TSMC N3)를 시연 — 45µm 범프 피치·6층 2/2µm 배선으로 32GT/s에서 실측 아이 폭 0.77UI를 달성해 유기 인터포저가 이종 칩렛 시스템의 신호·전력 무결성 요구를 충족할 수 있음을 보여줌
+
+---
+
+### RDL 배선폭 로드맵 - 10µm에서 1µm 이하로
+
+```mermaid
+flowchart TD
+    R2015["2015년경<br/>10/10µm L/S"] --> R2now["현재<br/>2/2µm L/S"]
+    R2now --> R2next["다음 목표<br/>1/1µm L/S"]
+    R2next --> Shift2["반가산 도금 →<br/>다마신 공정 전환<br/>(CMP 평탄화·저수축<br/>유전체가 관건)"]
+
+    style R2now fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Shift2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+이 미세화를 이끄는 것은 UCIe 3.0으로, 향후 ASIC-ASIC·ASIC-HBM 링크에 최대 64GT/s를 지원합니다. 이런 고속 다이간 인터커넥트는 유기 인터포저가 커지고 촘촘해질수록 신호 품질 요구조건을 더 까다롭게 만듭니다.
+
+### 각 사의 서브마이크론 도전
+
+```mermaid
+flowchart TD
+    Attempts["서브마이크론 L/S 도전"] --> Resonac2["Resonac: 320×320mm<br/>유리패널, 2/2µm<br/>(폴리머 다마신+패널CMP)"]
+    Attempts --> Imec["imec+Fujifilm: 300mm 웨이퍼<br/>1/1µm 다마신"]
+    Attempts --> Ushio["Ushio: 510×515mm 전체패널<br/>16회 노광, 이음매 없이<br/>1.5/1.5µm"]
+
+    style Imec fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+Sumitomo Bakelite·Georgia Tech는 200°C의 비교적 낮은 온도에서 경화수축률 4%에 불과한 완전 이미드화 액상 유전체로 2/2µm L/S를 구현하기도 했습니다.
+
+### TSMC+GUC - CoWoS-R 8층의 근시일 한계 실증
+
+```mermaid
+flowchart TD
+    TSMCGUC["TSMC+GUC<br/>8층 CoWoS-R RDL<br/>(CoWoS-R 근시일 한계)"] --> Spec["64비트 UCIe-A(TSMC N3)<br/>45µm 범프 피치<br/>6층 2/2µm 배선+7층째 전력"]
+    Spec --> Eye["실측 아이 폭<br/>32GT/s에서 0.77UI<br/>(시뮬레이션 36GT/s는 0.74UI)"]
+
+    style Eye fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+STCO(시스템-기술 공동최적화) 프레임워크는 접지-신호-접지 교차배치 전송선으로 크로스토크·스큐를 억제하고, C4측 IPD(집적수동소자)로 칩렛 마이크로범프의 전압 변동을 줄입니다. 이 결과는 유기 인터포저가 이종 칩렛 시스템의 신호·전력 무결성 요구를 충족할 수 있음을 보여줍니다.
+
+---
+
+## 14. 적층 메모리 - 삼성의 TSV 없는 VCS 구조
+
+**📌 핵심:**
+- 삼성은 TSV(관통전극)를 아예 쓰지 않는 D램 적층 방식 **VCS(수직 구리기둥 스택)**를 공개 — 실리콘에 비아를 뚫는 대신, 몰딩 컴파운드에 심은 56µm 미만 피치·30µm 미만 폭의 고종횡비 구리기둥으로 D램 다이 4개를 연결하고 패키지 기판도 RDL로 대체
+- 배선이 짧아지며 전력 소비가 동일 속도 기준 0.646W→0.384W로 **41% 감소**했고, 신호 품질도 개선돼 전력은 8%만 더 들이고 최대 데이터 속도가 8.6Gb/s→**11.8Gb/s**로 상승
+- 폼팩터도 크게 개선 — 패키지 높이·풋프린트가 각각 **40% 감소**하면서 대역폭은 **2.6배**, 입출력 수는 **6배** 증가
+- 결론: 삼성의 초점은 모바일이지만, SemiAnalysis는 VCS 같은 접근이 향후 AI 가속기가 더 낮은 전력·더 작은 풋프린트로 더 높은 대역폭에 도달하는 데 도움이 되고, 서버 CPU용 SOCAMM 같은 고밀도 메모리 모듈에도 쓰일 수 있다고 전망
+
+---
+
+### VCS 구조 - TSV 대신 구리기둥
+
+```mermaid
+flowchart TD
+    VCS["VCS(수직 구리기둥 스택)<br/>D램 다이 4개 적층"] --> Post["<56µm 피치·<30µm 폭<br/>고종횡비 구리기둥<br/>(몰딩 컴파운드에 매립)"]
+    Post --> NoTSV["실리콘 관통비아(TSV)<br/>완전히 생략<br/>+ 기판도 RDL로 대체"]
+
+    style NoTSV fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+### 전력·성능·폼팩터 개선 실측치
+
+```mermaid
+flowchart TD
+    Result3["VCS vs 기존 와이어본드 스택"] --> Power2["전력: 0.646W→0.384W<br/>(동일 속도 기준 -41%)"]
+    Result3 --> Speed2["속도: 8.6Gb/s→11.8Gb/s<br/>(전력은 8%만 증가)"]
+    Result3 --> Form["폼팩터: 높이·풋프린트<br/>각각 -40%,<br/>대역폭 2.6배·입출력 6배"]
+
+    style Power2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Form fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+삼성의 현재 초점은 스마트폰 등 모바일 온디바이스 AI 메모리지만, 이 방식은 고전력 워크로드에도 유망합니다. SemiAnalysis는 VCS 및 유사 접근이 향후 AI 가속기가 더 낮은 전력·더 작은 풋프린트로 더 높은 대역폭에 도달하도록 돕고, 서버 CPU용 SOCAMM 같은 고밀도 메모리 모듈 구현에도 기여할 수 있다고 봅니다.
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 13\~14장(RDL 스케일링, 적층 메모리) 작성 완료 — 원문 전체 14개 섹션(개요·EMIB-T·커스텀 HBM·삼성 인터포저·HBM 열특성·마이크로플루이딕 냉각·마벨 광학·Lightmatter·하이브리드 본딩·인터포저 대안·TIM·유리기판·RDL 스케일링·적층메모리) 변환 완료*
