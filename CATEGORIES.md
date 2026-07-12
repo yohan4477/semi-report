@@ -38,11 +38,11 @@
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra | 1 |
+| ai-infra | 2 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 1 |
-| ai-infra/compute | 12 |
-| ai-infra/memory | 7 |
+| ai-infra/compute | 13 |
+| ai-infra/memory | 8 |
 | ai-models | 0 |
 | ai-models/agents | 2 |
 | ai-models/rl | 2 |
