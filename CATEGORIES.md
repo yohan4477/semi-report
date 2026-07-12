@@ -40,9 +40,9 @@
 |---|---|
 | ai-infra | 3 |
 | ai-infra/power | 6 |
-| ai-infra/cooling | 1 |
-| ai-infra/compute | 14 |
-| ai-infra/memory | 8 |
+| ai-infra/cooling | 2 |
+| ai-infra/compute | 15 |
+| ai-infra/memory | 9 |
 | ai-models | 1 |
 | ai-models/agents | 2 |
 | ai-models/rl | 2 |
@@ -50,6 +50,7 @@
 
 <!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준. [260214] 보조금 전쟁 축약본은 원문이 Drive에 없어 사용자 지시로 전체 삭제(대장·리포트 파생분 포함) — 원문 확보 시 신규 변환으로 재작성 -->
 <!-- 2026-07-10: ai-models 하위 카테고리 행 신설 — agents 2편([260206], [260425]), rl 2편([250609], [260107]). 상위 ai-models 행은 하위 미분류 문서용으로 유지 -->
+<!-- 2026-07-12: [260205] ECTC 2026 총정리 추가 — ai-infra/memory, ai-infra/compute, ai-infra/cooling 각 +1 -->
 
 ## 버전 히스토리
 
