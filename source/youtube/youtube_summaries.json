@@ -117,6 +117,15 @@
     "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
   },
   {
+    "video_id": "ukzACWrk0W0",
+    "title": "How Makora Generates CUDA Kernels That Beat Hand-Tuned Code",
+    "channel": "SemiAnalysis & Makora",
+    "published": "2026-05-27",
+    "url": "https://www.youtube.com/watch?v=ukzACWrk0W0",
+    "summary_ko": "이 영상은 Makora의 공동 창립자이자 최고 과학 책임자(CSO)인 Mohamed Abdelfattah가 출연하여, AI 성능 엔지니어링을 자동화하는 Makora의 기술과 연구 성과에 대해 다루는 인터뷰입니다.\n\n주요 내용 요약:\n\n자동화된 GPU 커널 생성: Makora는 수동으로 수행하던 고성능 GPU 커널 최적화 작업을 자동화합니다. 초기에는 코드 생성 에이전트에 집중했으나, 현재는 시스템 수준의 성능 최적화로 범위를 확장하고 있습니다 (1:18 - 2:12).\n순차적 몬테카를로(SMC) 추론: Makora가 개발한 새로운 추론 알고리즘입니다. 기존의 추측적 디코딩(Speculative Decoding)에서 발생하는 토큰 리와인드(되감기) 문제를 해결하기 위해, 여러 개의 드래프트 토큰을 병렬로 처리하여 더 높은 성능을 달성합니다. SGLang 대비 약 5배, 실험적 오버랩 스케줄러 대비 2배 빠른 속도를 보여줍니다 (2:40 - 5:25).\n성능 중심의 접근: 단순한 컴파일러 판매가 아닌, 특정 인프라에서 최상의 성능을 보장하는 엔드투엔드 솔루션을 제공하는 것을 비즈니스 모델로 삼고 있습니다 (13:12 - 14:00).\n정밀도 최적화 연구: FP4의 정확도를 높이기 위해 FP6를 활용하거나 리매핑 기술을 적용하는 등 하드웨어 특성에 맞는 최적화 연구를 지속하고 있습니다 (14:08 - 16:04).\n향후 계획: Makora는 인프라 수준을 넘어 더 높은 계층의 추론 엔진을 구축하고, 자동화된 하드웨어 추상화를 통해 누구나 쉽게 고성능 AI 모델을 운영할 수 있는 환경을 만드는 것을 목표로 합니다 (24:29 - 25:56).",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
     "video_id": "R1uek1xj6Ck",
     "title": "Cerebras' Vertical Power Delivery & Cooling Innovation",
     "channel": "SemiAnalysis Weekly",
@@ -132,6 +141,15 @@
     "published": "2026-05-18",
     "url": "https://www.youtube.com/watch?v=ymw_F1mgvdk",
     "summary_ko": "이 영상은 Cerebras 시스템을 사용하여 DeepSeek V4 모델을 구동하는 데 필요한 막대한 비용과 인프라 투자에 대해 다루고 있습니다.\n\n주요 내용:\n\n시스템 구축 비용: Cerebras 시스템(WSC) 한 대의 자본 지출(CAPEX)을 약 100만 달러로 가정할 때, 이를 구축하는 데 드는 비용은 웨이퍼 자체 가격보다 훨씬 높습니다(0:00-0:17).\nDeepSeek V4 구동 요건: 4비트 가중치 양자화 및 16비트 KV 캐시를 사용하여 256명의 사용자를 동시에 지원하려면 총 24대의 시스템(약 2,400만 달러)이 필요합니다. 이는 데이터 센터 내 Cerebras 랙 8개 분량에 해당합니다(0:19-0:52).\n투자 규모: 단순히 모델 한 복사본을 실행하는 것을 넘어, 실질적으로 이 기술을 도입하려는 기업은 최소 1억 달러 규모의 투자를 고려해야 합니다(0:55-1:13).\n비교: 1억 달러의 예산이라면 GB300 랙을 다수 확보하여 훨씬 더 많은 메모리와 KV 캐시, 그리고 다수의 모델 복사본을 운용하는 환경을 구축할 수 있습니다(1:15-1:32).",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "LcQz4fiZjfY",
+    "title": "Why Anthropic is renting Colossus 1 from SpaceX",
+    "channel": "SemiAnalysis",
+    "published": "2026-05-18",
+    "url": "https://www.youtube.com/watch?v=LcQz4fiZjfY",
+    "summary_ko": "이 영상은 Anthropic이 왜 SpaceX의 Colossus 1 데이터 센터 컴퓨팅 자원을 임대하게 되었는지, 그리고 이 거래가 Anthropic과 Elon Musk의 xAI에 어떤 의미를 갖는지 분석합니다.\n\n주요 내용 요약:\n\n배경: Colossus 1 데이터 센터는 테네시주 멤피스의 옛 가전제품 공장을 개조하여 만들어졌습니다(0:00-0:45).\nAnthropic의 필요성: AI 업계 전반의 심각한 컴퓨팅 자원 부족 현상으로 인해 Anthropic은 Claude Code와 같은 자사 최신 모델의 성능과 접근성을 유지하기 위해 추가적인 컴퓨팅 파워가 절실했습니다(1:02-1:46).\n거래의 규모: Colossus 1에는 약 20만 개의 Nvidia Hopper GPU와 3만 개의 Blackwell GB200 GPU가 탑재되어 있으며, 약 300MW의 전력을 소비합니다(2:08-2:24).\nxAI의 전략적 변화: xAI가 자사 데이터 센터 자원을 임대해 주는 것은 xAI의 주요 초점이 바로 근처에 위치한 더 큰 규모의 Colossus 2로 이동했음을 의미합니다(3:47-4:19).\n결론: 이번 거래는 Anthropic에게는 즉각적인 컴퓨팅 확장 기회를 제공하며, xAI에게는 수익 창출과 함께 Colossus 2에 집중할 수 있는 환경을 제공합니다. 다만, 이는 xAI가 당분간 다른 기업과 경쟁할 만한 '프런티어 모델'을 출시할 계획이 없음을 시사하기도 합니다(4:43-5:28).",
     "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
   },
   {
@@ -171,6 +189,15 @@
     "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
   },
   {
+    "video_id": "d7eG04Ueb7k",
+    "title": "Analog's Mechatronics Engineer: Hardware Powering AI Inference",
+    "channel": "SemiAnalysis & Makora",
+    "published": "2026-05-13",
+    "url": "https://www.youtube.com/watch?v=d7eG04Ueb7k",
+    "summary_ko": "이 영상은 NVIDIA GTC 2026에서 진행된 인터뷰로, **Analog Devices(ADI)**의 Mechatronics 엔지니어인 Mishek Musa가 로봇 공학의 최신 기술과 데이터 센터 자동화 솔루션에 대해 설명합니다.\n\n주요 내용:\n\n촉각 센싱 솔루션 (1:03 - 2:20): 로봇이 데이터 센터의 광섬유 케이블을 연결하거나 유지보수하는 등 섬세한 작업을 수행할 수 있도록 돕는 다중 모드(힘 피드백, 압력, 가속도, 진동 감지) 촉각 센서를 개발하고 있습니다.\n로봇 오픈 소스 벤치마크 (2:34 - 3:28): 케이블 하네스 조립, 기어박스 조립 등 복잡한 작업을 자동화하기 위한 물리적 벤치마크 플랫폼을 오픈 소스로 공개하여 로봇 커뮤니티가 기술을 공유하고 발전시킬 수 있도록 돕습니다.\n시뮬레이션과 현실의 격차 해소 (3:36 - 5:17): 고충실도 시뮬레이션 자산을 제공하여 로봇이 실제 환경에서 작동하기 전 가상 환경에서 정책을 학습할 수 있게 하여 'Sim-to-Real(시뮬레이션에서 현실로)' 격차를 최소화합니다.\n엣지 컴퓨팅과 AI 추론 (6:47 - 8:15): 로봇이 대규모 AI 모델을 엣지 환경에서 효율적으로 실행할 수 있도록 모델을 경량화하고, 전력 효율이 높은 폼 팩터로 통합하는 기술을 연구하고 있습니다.\n\n결론적으로 ADI는 로봇 제조사가 아닌, 로봇 공학자들이 정밀한 조작과 자동화를 구현할 수 있도록 돕는 핵심 신호 처리 및 센서 기술 공급자로서의 역할을 강조하고 있습니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
     "video_id": "o53INOExQYk",
     "title": "Don't Accuse Me Of Reading The Code",
     "channel": "SemiAnalysis Weekly",
@@ -186,6 +213,33 @@
     "published": "2026-05-06",
     "url": "https://www.youtube.com/watch?v=BhVf3hEGnuA",
     "summary_ko": "이 영상은 SemiAnalysis 팀이 최신 인공지능 모델 전쟁과 시장 동향을 분석하는 내용을 담고 있습니다. 주요 내용은 다음과 같습니다.\n\n주요 요약:\n\nOpenAI의 부활: 2026년 초 Anthropic의 Claude Opus 4.5가 코딩 및 에이전트 능력에서 압도적인 성능을 보이며 OpenAI의 매출을 위협했으나, GPT 5.5의 출시로 OpenAI가 다시 경쟁 대열에 합류했습니다 (0:00 - 4:05).\n모델 성능 및 비용: 최신 모델들의 성능 차이가 점차 미미해지면서 사용자들은 모델의 절대적 성능보다는 비용 효율성과 '빠른 모드(Fast Mode)'의 실질적인 속도 및 가용성을 중요하게 여기고 있습니다 (4:05 - 13:11).\n벤치마크의 한계: 현재의 벤치마크들은 실제 개발 환경에서의 복잡한 작업이나 에이전트 성능을 제대로 대변하지 못하며, 단순히 '비교용' 지표로 전락했다는 분석입니다 (13:11 - 18:42).\nClaude 4.7 및 토크나이저: Claude 4.7은 새로운 토크나이저 도입 등으로 인해 비용 구조가 변경되었으며, 개발자들은 모델 자체보다 'Claude Code'와 같은 도구(Harness)와의 결합이 더 중요하다고 평가합니다 (18:42 - 25:29).\nDeepSeek 및 중국의 AI: DeepSeek V4 출시를 통해 중국의 AI 역량을 분석했습니다. 컴퓨팅 제약 속에서도 인프라 최적화에 강점을 보이나, 미국 모델과의 격차는 다시 벌어지고 있는 것으로 보입니다 (25:29 - 28:20).\nUI/UX 논쟁: CLI(명령줄 인터페이스) 환경에서 AI를 사용하는 것과 전용 앱을 사용하는 것 사이의 논쟁이 다뤄졌습니다. 출연진들은 업무 흐름에 따라 CLI가 더 효율적이라는 의견과 앱 환경의 가능성을 지지하는 의견으로 나뉩니다 (30:47 - 36:33).\n\n이 영상은 전반적으로 기술적 성능 경쟁에서 비즈니스 가치와 효율성으로 옮겨가고 있는 AI 시장의 흐름을 날카롭게 짚어내고 있습니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "mgrQWLERync",
+    "title": "AWS Trainium: How Amazon Built Their Own AI Chips",
+    "channel": "SemiAnalysis & Makora",
+    "published": "2026-04-30",
+    "url": "https://www.youtube.com/watch?v=mgrQWLERync",
+    "summary_ko": "이 영상은 AWS(아마존 웹 서비스)의 AI 인프라 전략과 엔비디아와의 파트너십, 그리고 자체 제작 AI 칩인 '트레이니엄(Trainium)'의 역할을 다루고 있습니다.\n\n주요 요약 내용:\n\n엔비디아와의 협력 및 GPU 확장 (0:47-1:57): AWS는 지난 15년간 엔비디아와 긴밀히 협력해 왔으며, 현재 클라우드상에서 약 200만 개의 GPU를 제공하고 있습니다. 올해 안에 추가로 100만 개의 GPU를 도입할 예정입니다.\nAI 인프라의 도전 과제 (2:13-3:14): 단순히 GPU 인스턴스를 배치하는 것을 넘어, 데이터 파이프라인, 비용 관리, 보안 및 규정 준수 등 실무적인 생산 환경 구축이 고객들에게 큰 도전 과제이며 AWS가 이를 지원합니다.\n자체 AI 칩, 트레이니엄(Trainium) (3:17-5:45): AWS는 고객에게 더 넓은 선택지를 제공하고 비용을 절감하기 위해 자체 실리콘인 트레이니엄 칩을 개발했습니다. 최신 '트레이니엄 3'는 이전 세대보다 2~3배 뛰어난 성능을 제공하며, 기존 가속기 대비 30~40% 더 나은 가격 대비 성능을 목표로 합니다.\n생태계 확장 및 전략적 파트너십 (5:45-7:00): OpenAI 및 Anthropic과 같은 주요 고객들이 대규모 학습 및 추론에 트레이니엄을 사용하고 있습니다. 또한, Cerebras와의 파트너십을 통해 추론 비용을 절감하고 더 효율적인 AI 서비스를 제공하고자 합니다.\n\n결론적으로 AWS는 범용 GPU 인프라와 자체 제작한 AI 칩을 동시에 활용하여, 고객들이 더 효율적이고 경제적으로 AI 모델을 개발 및 운영할 수 있도록 지원하는 데 집중하고 있습니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "B8O3pLcX2w4",
+    "title": "Why Positron AI is Choosing LPDDR over HBM for Next-Gen LLM",
+    "channel": "SemiAnalysis & Makora",
+    "published": "2026-04-16",
+    "url": "https://www.youtube.com/watch?v=B8O3pLcX2w4",
+    "summary_ko": "이 영상은 Positron AI의 공동 창업자이자 CTO인 Thomas Sohmers와 함께 차세대 LLM 추론 인프라에 대해 다룹니다. 주요 내용은 다음과 같습니다.\n\n핵심 요약:\n\nPositron AI의 목표: 추론 시 토큰 비용을 절감하면서도 고성능과 빠른 응답 속도를 유지하는 것입니다(02:36).\n아키텍처 혁신: NVIDIA GPU와 달리 Matrix-Vector 연산을 1:1 비율로 처리하여 어텐션 메커니즘의 메모리 병목 현상을 해결했습니다(06:05-07:10).\nLPDDR 전략: HBM 공급망 제약을 피하기 위해 LPDDR 메모리를 채택하여, 칩당 2.3TB라는 압도적인 메모리 용량을 확보했습니다(08:08).\nTitan 서버: 4개의 Asimov 칩을 탑재한 Titan 서버는 단일 박스에서 16조 개의 파라미터 모델을 구동할 수 있도록 설계되었습니다(09:05).\n공급망 우위: 복잡한 고급 패키징(CoWoS 등) 대신 범용 유기 기판을 사용하여 경쟁사와의 공급망 전쟁에서 벗어나 효율적인 확장을 꾀하고 있습니다(10:00).\n\nPositron AI는 이러한 아키텍처적 접근을 통해 대규모 LLM 추론을 위한 더 접근 가능하고 고성능인 인프라를 구축하고 있습니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "uCvYU0UdXj4",
+    "title": "Claude Code Psychosis: How SemiAnalysis Is Token Mogging Meta | Ep. 008",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-04-10",
+    "url": "https://www.youtube.com/watch?v=uCvYU0UdXj4",
+    "summary_ko": "이 영상은 SemiAnalysis 팀이 Claude Code를 활용하여 어떻게 연구 및 업무 효율성을 극대화하고 있는지에 대해 다룹니다. 주요 내용은 다음과 같습니다.\n\n주요 요약:\nAI 에이전트 활용의 변화 (0:24 - 9:09): 단순한 보조 도구를 넘어, 이제는 인턴이 AI 에이전트들을 관리하고 주도하는 방식으로 업무 흐름이 바뀌었습니다. 팀은 방대한 양의 산업 데이터를 처리하기 위해 'Wags'와 같은 에이전트 스웜(agent swarm)을 구축하여 리서치 효율을 높이고 있습니다.\n업무 자동화 및 확장 (9:10 - 15:57): 컨퍼런스 자료 요약, 재무 모델링, 뉴스 모니터링 등 개별적인 업무들을 에이전트화하여, 분석가들이 단순 데이터 입력보다는 전략적인 사고와 인사이트 도출에 집중할 수 있도록 했습니다.\n신뢰성과 도구의 중요성 (15:58 - 21:12): AI 모델의 출력물을 신뢰하고 검증하는 체계가 중요해졌습니다. 특히 재무 제표의 정확성 등을 위해 에이전트의 감독 기능을 강화하고 있으며, 이제는 AI 활용 능력이 업무 성과와 직결되는 핵심 역량이 되었습니다.\n시장 영향과 미래 전망 (27:04 - 34:46): AI 모델의 성능 개선뿐만 아니라, 이를 다루는 '인터페이스'와 '에이전트 체계' 구축이 경쟁의 핵심(moat)이 될 것으로 보입니다. 출연진들은 AI가 사이버 보안 등 다양한 분야에서 활용될 가능성을 언급하며, 향후 AI 생태계의 확장성에 주목합니다.\n\n이 영상은 단순히 기술을 소개하는 것을 넘어, 효율적인 AI 워크플로우를 실제 비즈니스에 어떻게 적용할지에 대한 실무적인 통찰을 제공합니다.",
     "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
   }
 ]
