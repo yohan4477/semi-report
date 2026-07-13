@@ -1,0 +1,56 @@
+[
+  {
+    "video_id": "kfihRzSU3Og",
+    "title": "DeepSeek V4 ships with two variants allowing it to hit 1M Context.",
+    "channel": "SemiAnalysis",
+    "published": "2026-07-07",
+    "url": "https://www.youtube.com/watch?v=kfihRzSU3Og",
+    "summary_ko": "제공된 영상에서는 DeepSeek V4 모델이 이전 버전(V3 및 R1) 대비 주요 차별점으로 100만 토큰의 컨텍스트 길이를 지원한다는 점을 강조하고 있습니다. 이 기술적 성과를 달성하기 위한 두 가지 핵심 혁신은 다음과 같습니다.\n\n주의 기법(Attention Mechanism) 개선: 기존의 표준 주의 기법 대신 두 가지 형태의 희소 주의(Sparse Attention) 기법을 도입했습니다.\n\n**압축 희소 주의(Compressed Sparse Attention, CSA)\n**강력 압축 주의(Heavily Compressed Attention, HCA) 이를 통해 100만 토큰이라는 방대한 컨텍스트를 처리할 때 요구되는 KV 캐시 메모리 사용량을 획기적으로 줄였습니다.\n\nMega MOE(Mixture-of-Experts) 아키텍처: 연산 속도를 가속화하기 위해 전문가(Expert) FFN(Feed-Forward Network) 계산을 효율적으로 처리하는 'Mega MOE' 구조를 적용하여 전반적인 연산 성능을 최적화했습니다.\n\n결론적으로, DeepSeek V4는 이러한 구조적 혁신을 통해 긴 컨텍스트를 처리하면서도 연산 비용과 메모리 부담을 크게 낮춘 모델입니다.\n\nvllm.ai\n<b>DeepSeek V4</b> — Next-Gen AI Model with <b>1M Context</b> Window\ndeepseek4.hk\narxiv.org",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "L2Mh-Z6Lt58",
+    "title": "Deepseek v4 hits InferenceX: Megakernel + Huawei ascend NPU tests",
+    "channel": "SemiAnalysis",
+    "published": "2026-07-01",
+    "url": "https://www.youtube.com/watch?v=L2Mh-Z6Lt58",
+    "summary_ko": "이 영상은 InferenceX 팀이 DeepSeek V4 모델을 자사 플랫폼에 적용하며 겪은 과정과 기술적 내용을 다루고 있습니다. (0:00-0:28)\n\n주요 논의 주제:\n\nDeepSeek V4 모델: 모델의 아키텍처 변경 사항 및 구현 방식 (0:11-0:14)\n기술 및 성능: MegaKernel의 개념과 다양한 가속기(Huawei Ascend NPU 포함)에서의 초기 성능 테스트 결과 (0:12-0:16)\n업계 이슈: 최근 트위터 등에서 화제가 된 VLM 대 SGLAN 관련 논쟁 (0:16-0:19)\n벤치마크: 팀에서 작업 중인 Genic 벤치마크에 대한 소개 (0:19-0:23)",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "whvik_QgN30",
+    "title": "The true cost of a GPU cluster",
+    "channel": "SemiAnalysis",
+    "published": "2026-06-26",
+    "url": "https://www.youtube.com/watch?v=whvik_QgN30",
+    "summary_ko": "이 영상은 AI GPU 클러스터의 실제 비용을 결정하는 요소들을 심층적으로 분석하며, 단순히 시간당 GPU 가격만 따지는 것이 왜 부족한지를 설명합니다.\n\n핵심 요약:\nAI 인프라의 경제성을 평가할 때 'GPU 시간당 단가'보다 중요한 것은 **'굿풋(Goodput, 유용한 작업 처리량)'**입니다. 클러스터가 겉보기 스펙은 같더라도 시스템 환경에 따라 실제 성능과 비용 효율은 크게 달라질 수 있습니다.\n\nGPU 클러스터의 8가지 주요 비용 요소 (3:34-6:28):\n\nGPU: 기본 대여 비용\n스토리지: 데이터 처리 및 체크포인트 성능\n네트워킹: 노드 간 통신 속도 및 클라우드 네트워크 비용\n제어 평면(Control Plane): 오케스트레이션 및 관리 소프트웨어\n지원(Support): 엔지니어링 지원 서비스\n굿풋(Goodput): 실제 성공적으로 완료된 작업량 (가장 중요한 숨겨진 비용)\n설정(Setup): 클러스터 구성 및 튜닝 시간\n디버깅: 장애 대응 및 유지보수 엔지니어링 시간\n\n장애 대응 전략 (8:26-10:45):\n대규모 클러스터일수록 장애는 피할 수 없는 '일상'입니다. 장애 발생 시 대응 방식에 따라 손실이 결정됩니다.\n\n콜드 스페어(Cold Spares): 장애 발생 후 노드 교체 및 체크포인트 재시작 (시간 소요가 큼)\n핫 스페어(Hot Spares): 예비 노드가 즉시 투입되어 복구 시간 단축\n내결함성(Fault Tolerance): 작업 중단 없이 시스템이 자체적으로 복구 (기술적 난이도가 높음)\n\n결론:\n기업이 클러스터를 빌릴 때는 단순히 시간당 가격만 묻지 말고, 클러스터 수준의 장애 평균 시간(MTBF), 노드 교체 속도, 굿풋 보장 수준 등을 꼼꼼히 확인해야 합니다. SemiAnalysis에서 제공하는 ClusterMAX는 이러한 종합적인 TCO(총 소유 비용) 관점에서 클라우드 제공업체를 비교 분석하는 지표를 제공합니다 (10:58-11:50).",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "OpL-Q0YAKJU",
+    "title": "The GPU Power-Performance Curve Most Clusters Ignore | Researcher Conversations at GTC",
+    "channel": "SemiAnalysis",
+    "published": "2026-06-25",
+    "url": "https://www.youtube.com/watch?v=OpL-Q0YAKJU",
+    "summary_ko": "이 영상은 NVIDIA GTC 2026에서 Pebble의 AI 리서치 리드인 Keval Shah가 데이터 센터의 GPU 에너지 효율을 최적화하고 '와트당 토큰 생산량(Tokens per Watt)'을 높이는 기술에 대해 설명하는 내용을 담고 있습니다.\n\n주요 내용 요약:\n\nGPU 전력과 성능의 비선형성 (01:30): 많은 GPU 클러스터가 전력 소비 대비 성능이 비례하지 않는 구간에 머물러 있습니다. 전력을 무조건 높인다고 해서 토큰 생산량이 비례해서 늘어나지 않으며, 특정 지점을 지나면 효율이 급격히 떨어집니다.\n메모리 제약 문제 (02:03): 추론(Inference) 작업 시 모델 가중치를 읽는 과정에서 전력이 많이 소모되는데, 프리필(prefill) 단계가 디코드(decode) 단계를 기다리는 동안 전력이 낭비되는 비효율이 발생합니다.\nPebble의 솔루션 (03:06 - 05:34): Pebble은 Kubernetes 클러스터에 Helm 차트로 설치되어 GPU별로 전력 제한(Power Cap)과 클럭 주파수를 동적으로 조절합니다. vLLM, SLURM, NVIDIA 관련 텔레메트리 데이터를 분석하여 성능 저하 없이 최적의 효율 지점을 찾아냅니다.\n작동 방식 (07:04): 시스템 설치 후 약 며칠간 작업 부하의 특성을 학습한 뒤, 서비스 수준 협약(SLA)을 준수하면서 주간/야간 부하 변화에 맞춰 실시간으로 전력을 최적화합니다.\n그리드 대응형 데이터 센터 (08:02): 장기적으로는 전력망(Grid)의 수요에 따라 데이터 센터가 유연하게 전력 소비를 줄일 수 있도록 하여, 전력망의 안정성에 기여하고 비용 효율을 높이는 기술을 개발 중입니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "uzl5tUHIFXA",
+    "title": "Speed mogging a Unitree, colleagues out on dates with bots, the humanoid era is BOOMING!",
+    "channel": "SemiAnalysis",
+    "published": "2026-06-25",
+    "url": "https://www.youtube.com/watch?v=uzl5tUHIFXA",
+    "summary_ko": "이 영상은 최근 급성장하고 있는 휴머노이드 로봇 시대에 대한 내용을 담고 있습니다. 주요 내용은 다음과 같습니다.\n\n로봇과의 공존: 길거리에서 사람들과 어울리며 대화하고 춤을 추는 등, 인간처럼 행동하는 로봇들에 대한 호의적인 반응을 보여줍니다(0:05-0:38).\n일상 속의 로봇: 이제 로봇이 단순히 기술적 도구를 넘어, 사람들과 데이트를 하는 등 일상적인 상호작용의 대상이 되고 있음을 언급합니다(0:40-0:52).\n\n영상은 이러한 현상들을 통해 인간이 휴머노이드 로봇과 함께하는 시대에 성큼 다가섰음을 강조합니다.",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "KOMfsCUwoQM",
+    "title": "The five stages of Claude, Jeremie is currently at stage 1...",
+    "channel": "SemiAnalysis Weekly",
+    "published": "2026-06-03",
+    "url": "https://www.youtube.com/watch?v=KOMfsCUwoQM",
+    "summary_ko": "이 영상은 Jeremy가 최근 지출한 금액에 대해 대화하는 짧은 클립입니다.\n\n주요 내용:\n\n지출 규모: Jeremy는 최근 하루 동안 15,000달러(0:02-0:06)에서 30,000달러(0:06-0:09)에 달하는 큰 금액을 사용했습니다.\n확인 방법: 대화 참여자들은 5일 전 차트를 확인하면 해당 지출 내역을 볼 수 있다고 언급합니다(0:11-0:16).\n결과: 해당 지출에 대한 투자 수익률(ROI)은 좋지 않았다고 언급하며 대화가 마무리됩니다(0:16-0:18).",
+    "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  }
+]
