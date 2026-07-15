@@ -241,5 +241,68 @@
     "url": "https://www.youtube.com/watch?v=uCvYU0UdXj4",
     "summary_ko": "이 영상은 SemiAnalysis 팀이 Claude Code를 활용하여 어떻게 연구 및 업무 효율성을 극대화하고 있는지에 대해 다룹니다. 주요 내용은 다음과 같습니다.\n\n주요 요약:\nAI 에이전트 활용의 변화 (0:24 - 9:09): 단순한 보조 도구를 넘어, 이제는 인턴이 AI 에이전트들을 관리하고 주도하는 방식으로 업무 흐름이 바뀌었습니다. 팀은 방대한 양의 산업 데이터를 처리하기 위해 'Wags'와 같은 에이전트 스웜(agent swarm)을 구축하여 리서치 효율을 높이고 있습니다.\n업무 자동화 및 확장 (9:10 - 15:57): 컨퍼런스 자료 요약, 재무 모델링, 뉴스 모니터링 등 개별적인 업무들을 에이전트화하여, 분석가들이 단순 데이터 입력보다는 전략적인 사고와 인사이트 도출에 집중할 수 있도록 했습니다.\n신뢰성과 도구의 중요성 (15:58 - 21:12): AI 모델의 출력물을 신뢰하고 검증하는 체계가 중요해졌습니다. 특히 재무 제표의 정확성 등을 위해 에이전트의 감독 기능을 강화하고 있으며, 이제는 AI 활용 능력이 업무 성과와 직결되는 핵심 역량이 되었습니다.\n시장 영향과 미래 전망 (27:04 - 34:46): AI 모델의 성능 개선뿐만 아니라, 이를 다루는 '인터페이스'와 '에이전트 체계' 구축이 경쟁의 핵심(moat)이 될 것으로 보입니다. 출연진들은 AI가 사이버 보안 등 다양한 분야에서 활용될 가능성을 언급하며, 향후 AI 생태계의 확장성에 주목합니다.\n\n이 영상은 단순히 기술을 소개하는 것을 넘어, 효율적인 AI 워크플로우를 실제 비즈니스에 어떻게 적용할지에 대한 실무적인 통찰을 제공합니다.",
     "summary_source": "YouTube AI chat (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "F8nO8ldG1rg",
+    "title": "Supermicro CBO on Building AI at Scale",
+    "channel": "SemiAnalysis",
+    "published": "2026-07-14",
+    "url": "https://www.youtube.com/watch?v=F8nO8ldG1rg",
+    "summary_ko": "이 영상은 SemiAnalysis의 Dylan Patel이 Supermicro의 최고 비즈니스 책임자(CBO) Vik Malyala와 함께 Computex에서 진행한 인터뷰를 담고 있습니다.\n\n주요 내용:\n\nAMD Helios: Supermicro는 AMD Helios의 출시 파트너로서 시장에 가장 먼저 제품을 선보이고자 하는 의지를 보였습니다(0:09-0:14).\n혁신적인 폼 팩터: 영상에서는 Supermicro 서버의 폼 팩터가 일반적인 표준을 넘어 두 배 더 넓은 구조를 취하고 있다는 점이 강조됩니다(0:17-0:21).\n시장 경쟁력: Vik Malyala는 Supermicro가 전 세계적인 공급망을 갖춘 유일한 티어 1 OEM 업체이며, 단순히 규격화된 방식이 아닌, 효율적인 운영 환경을 위한 독특하고 비표준적인 서버 아키텍처를 제공한다고 설명합니다(0:26-0:43).\n\n이 인터뷰는 대규모 AI 인프라 구축을 위한 Supermicro의 전략과 유연한 엔지니어링 접근 방식을 잘 보여줍니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "UqWqsRQHpbA",
+    "title": "If vLLM vs SGLang can compute to one conclusion, it's gotta be that competition is beneficial.",
+    "channel": "SemiAnalysis",
+    "published": "2026-07-08",
+    "url": "https://www.youtube.com/watch?v=UqWqsRQHpbA",
+    "summary_ko": "이 영상은 Cameron Quilici가 출연하여 오픈 소스 추론 엔진 간의 경쟁이 혁신에 미치는 영향에 대해 설명합니다.\n\n주요 내용은 다음과 같습니다:\n\n경쟁의 긍정적인 효과 (0:00-0:22): 다양한 오픈 소스 엔진 및 벤더 라이브러리 간의 경쟁은 각 업체가 앞서 나가기 위해 더 빠르게 혁신하도록 강제하며, 전반적인 기술 발전을 가속화합니다.\nInferenceX의 접근 방식 (0:24-0:40): InferenceX는 vLLM과 SGLang을 직접적으로 경쟁시키기보다는, 각 기술의 특징을 **독립적으로 보여주는 것(isolation)**을 선호합니다.\n경쟁의 양면성 (0:40-1:04): 경쟁은 양측 모두를 더 발전시키는 원동력이 되지만, 컴퓨팅 자원이 한정된 상황에서 모델 제출량이 늘어나는 등 운영상의 어려움을 야기하기도 합니다. 그럼에도 불구하고, vLLM과 SGLang 모두 상당한 성능 향상을 이루어냈다는 점을 강조합니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "xqq5_7daYWc",
+    "title": "Ep. 018 - Stop Saying Half of 2026 US Datacenter Capacity Is Canceled (Datacenter, Energy)",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-07-09",
+    "url": "https://www.youtube.com/watch?v=xqq5_7daYWc",
+    "summary_ko": "이 영상은 최근 언론에서 보도된 '2026년 미국 데이터센터 용량의 절반이 취소되었다'는 주장이 사실과 다르다는 점을 데이터센터, 에너지 및 산업 분석 팀이 반박하고, 실제 시장 상황을 설명하는 내용입니다.\n\n주요 요약:\n\n데이터 오류 수정 (00:51 - 04:43): 뉴스 보도의 근거가 된 보고서의 분모(전체 계획량 대비 실제 건설량) 산정에 심각한 오류가 있습니다. Amazon이 2025년에 4GW를 건설하고 2026년에 5GW 이상을 추가하는 등, 실제 대형 하이퍼스케일러들의 건설은 활발히 진행 중입니다.\n\n지연의 원인 분석 (04:43 - 13:47): 데이터센터 건설 지연은 크게 세 가지 유형으로 나뉩니다.\n\n경험이 부족한 신규 개발자의 비현실적인 공격적 발표 (Cloud-coded 프로젝트).\n낙관적인 건설 일정으로 인한 지연.\n인허가 문제 및 지역 반대 (예: Oracle의 뉴멕시코 프로젝트, 08:40).\n\n비하인드 더 미터(BTM) 전력 공급 (13:47 - 33:31): 그리드 연결이 어려운 상황에서 2028년까지 40GW 이상의 전력을 자체 발전(비하인드 더 미터)으로 해결하려는 움직임이 뚜렷합니다. 이는 그리드 의존도를 낮추고 데이터센터 개발자가 전력 공급 통제권을 확보하기 위한 전략입니다.\n\n공급망 및 미래 전망 (33:31 - 46:13): 가스 터빈 및 발전 설비 공급망은 AI 수요에 맞춰 빠르게 확장되고 있으며, 자동차 산업 등 다른 분야의 제조 역량도 데이터센터 전력 솔루션으로 유입되고 있습니다. 태양광, 배터리, 원자력 등도 고려되고 있으나, 2020년대 후반까지는 가스 발전이 주도적인 역할을 할 것으로 예측됩니다.\n\n결론: 시장은 위축된 것이 아니라, 초기의 거품 섞인 프로젝트들이 걸러지고 실질적인 대규모 인프라 건설이 빠르게 진행되는 성숙 단계로 진입하고 있습니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "y2vz0REr5sQ",
+    "title": "Ep. 017 - DeepSeek V4 and Huawei Ascend NPU Performance (InferenceX)",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-07-01",
+    "url": "https://www.youtube.com/watch?v=y2vz0REr5sQ",
+    "summary_ko": "이 영상은 SemiAnalysis 팀이 DeepSeek V4 모델의 등장과 그에 따른 추론 최적화 과정(InferenceX)을 분석한 내용입니다. 주요 내용은 다음과 같습니다.\n\n1. DeepSeek V4의 핵심 변화 (0:00 - 3:00)\n\n1M 컨텍스트 길이: 압축된 희소 어텐션(compressed sparse attention)과 임베딩 압축 기술을 통해 표준 MoE 모델 대비 KV 캐시 사용량을 약 100배 줄였습니다.\n아키텍처 변화: V3와 달리 총 파라미터 수와 활성 파라미터 수, MHC 차원 등이 변경되어 Day 0 초기 지원 시 NVIDIA 환경에서 일시적인 문제가 발생하기도 했습니다.\n\n2. Mega MoE와 커널 최적화 (5:34 - 10:25)\n\nMega MoE: 연산과 통신을 하나의 커널로 통합하여 대기 시간을 줄이고 성능을 극대화하는 기술입니다. 커널 경계를 허물어 레지스터 효율을 높이고 데이터 이동을 최소화합니다.\n\n3. Day 0에서 Day 43까지의 성능 진화 (11:17 - 15:14)\n\n모델 출시 초기에는 특정 플랫폼만 지원되지만, 약 한 달간의 집중적인 최적화 작업을 통해 성능이 비약적으로 향상됩니다.\nAMD 하드웨어의 경우 FP4 지원 및 PyTorch 폴백(fallback)을 Triton/etc 커널로 교체하는 등의 작업을 통해 성능 개선이 이루어졌습니다.\n\n4. 오픈 소스 생태계 및 경쟁 (17:59 - 21:06)\n\nvLLM과 SGLang의 치열한 경쟁이 오히려 빠른 기술 혁신을 이끌고 있습니다.\nHuawei Ascend NPU와 같은 대안 하드웨어에서도 자체적인 오픈 소스 도구(Ken 등)를 통해 DeepSeek V4와 같은 고성능 모델을 성공적으로 서빙하고 있습니다.\n\n5. 향후 계획 (32:28 - 34:00)\n\n단순히 고정 시퀀스 길이 테스트를 넘어, 실제 클라우드 코드 트레이스를 활용한 Agentic 벤치마크를 준비 중이며, 더 많은 하드웨어 지원이 예정되어 있습니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "MD5zKs7j0mk",
+    "title": "Ep. 016 - What Unitree's Evolution Means For Robotics (Robotics)",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-06-23",
+    "url": "https://www.youtube.com/watch?v=MD5zKs7j0mk",
+    "summary_ko": "이 영상은 중국의 로봇 기업인 **유니트리(Unitree)**가 어떻게 빠르게 성장하며 휴머노이드 로봇 시장을 주도하고 있는지, 그리고 그들이 가진 경쟁력을 분석합니다.\n\n주요 내용:\n\n시장 전략 및 경쟁력: 유니트리는 저렴한 가격, 빠른 제품 반복(iteration), 그리고 '충분히 좋은(good enough)' 하드웨어를 통해 연구 및 취미 시장을 장악하고 있습니다. 이는 과거 DJI나 BYD가 보여준 성공 방식과 유사하며, 규모의 경제를 통해 강력한 진입장벽을 구축하고 있습니다(05:48 - 07:42).\n하드웨어 및 공급망: 선전(Shenzhen)을 중심으로 한 강력한 전자부품 공급망을 활용하여 비용을 획기적으로 낮췄습니다. 기존 4족 보행 로봇에서 축적한 기술력을 휴머노이드 로봇으로 전이시키며, 생산 규모를 기하급수적으로 확대하고 있습니다(26:39 - 31:39, 45:10 - 46:25).\n배포 현실과 미래: 휴머노이드 로봇이 제조 현장을 완전히 대체하기에는 아직 초기 단계(baby days)이지만, 로봇을 활용한 데이터 센터 관리, 조리 작업 등 특정 업무에서 경제적 가치를 창출할 기회가 많아지고 있습니다(00:21 - 01:22, 23:31 - 26:11).\n미국과의 경쟁: 현재 중국의 제조 인프라와 비용 효율성이 압도적인 것은 사실이나, AI 발전과 함께 미국도 공급망 내재화와 투자를 강화하며 로봇 시장의 본격적인 경쟁이 시작될 것으로 전망됩니다(42:17 - 44:04).\n\n요약: 유니트리는 기술적 완벽함보다는 '실용적인 하드웨어'를 '압도적인 가격과 속도'로 생산하여 로봇 시장의 첫 주도권을 쥐고 있으며, 앞으로 이들이 만들어낼 수요 충격과 산업 변화가 주목받고 있습니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "fnb6iCh9z7c",
+    "title": "Ep. 014 - Finding Miscompiles For Fun, Not Profit | Justin Lebar & Jordan Nanos",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-06-04",
+    "url": "https://www.youtube.com/watch?v=fnb6iCh9z7c",
+    "summary_ko": "이 영상은 Justin Lebar가 NVIDIA의 PTXAS 및 LLVM(AMD GPU, x86 백엔드) 컴파일러에서 버그를 찾아낸 프로젝트를 다룹니다. 그는 전통적인 퍼징(Fuzzing) 기법과 LLM 에이전트를 활용한 코드 분석 방식을 결합하여 효율적으로 결함을 발견했습니다.\n\n주요 내용:\n\n프로젝트 동기: ML 및 GPU 컴파일러는 CPU 컴파일러에 비해 상대적으로 테스트가 덜 되어 있어 버그를 찾기 쉽고, 그 영향력도 클 수 있다는 점에서 착안했습니다 (2:48-3:35).\n연구 방법:\n퍼징: LLM을 활용해 임의의 프로그램을 생성하고 컴파일러 출력의 무결성을 검증하는 퍼저를 작성했습니다 (5:38-7:06).\nLLM 코드 분석: Claude의 UltraCode 모드 등을 활용해 직접 컴파일러 소스 코드를 읽고 버그를 식별했습니다. 이를 통해 수동 검토가 불가능한 복잡한 버그들을 찾아낼 수 있었습니다 (10:19-11:57).\n성과: x86 백엔드에서 원자적 연산이 비원자적 연산으로 분리되는 등 치명적인 버그들을 발견했으며, LLM을 활용해 수정안까지 도출했습니다 (4:13-5:21, 15:46-16:03).\n결론: LLM은 컴파일러 버그 탐지 및 코드 품질 개선에 매우 효과적인 도구이며, 비용 대비 효율이 높아 향후 소프트웨어 개발 인프라 검증에 큰 역할을 할 것으로 기대됩니다 (15:03-16:17, 18:06-19:59).",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
+  },
+  {
+    "video_id": "3zGmZfZnChs",
+    "title": "Ep. 013 - AWS Margins Jump 10% While Azure and GCP Flatline (Tokenomics)",
+    "channel": "SemiAnalysis & SemiAnalysis Weekly",
+    "published": "2026-06-01",
+    "url": "https://www.youtube.com/watch?v=3zGmZfZnChs",
+    "summary_ko": "이 영상은 AWS의 운영 마진이 10% 상승한 이유와 Anthropic의 Claude 모델 사용량이 Bedrock(AWS의 토큰 서비스 플랫폼)을 통해 급증한 현상을 분석합니다. 주요 내용은 다음과 같습니다.\n\n핵심 요약:\n\nBedrock과 마진: 기존의 GPU 인프라 대여 방식(IaaS)보다 '토큰 서비스(Token-as-a-Service)' 모델이 클라우드 제공업체에게 훨씬 더 높은 마진을 제공합니다. AWS는 이를 성공적으로 활용하여 대규모 확장 중에도 마진을 개선했습니다(0:56-2:47, 6:32-8:58).\n시장 경쟁 및 차별화: Azure나 GCP 등 경쟁사들은 인프라 모델에 집중하며 마진이 정체된 반면, AWS는 Anthropic과의 강력한 파트너십을 통해 차별화된 업무 믹스(workload mix)를 구축했습니다(3:33-5:47, 9:54-12:41).\nAnthropic의 성장: Claude Opus 4.8 출시 및 최근의 대규모 자금 조달($650억), SpaceX와의 협력 등을 통해 Anthropic이 시장의 선두주자로 자리매김하고 있음을 강조합니다(12:41-17:49).\n향후 전망: AI 인프라 시장은 소수의 승자가 독식하는 구조가 될 것이며, 실리콘 기술보다는 플랫폼 통합과 파트너십을 가진 업체들이 장기적인 우위를 점할 것으로 예측합니다(35:50-42:20).\n\n결론적으로, 단순히 GPU를 대여해 주는 것이 아니라 특정 AI 모델의 토큰을 효율적으로 서비스하는 것이 클라우드 기업의 핵심 수익원이 되고 있으며, AWS가 현재 이 분야에서 가장 앞서 나가고 있다고 분석합니다.",
+    "summary_source": "YouTube AI 챗 요약 (질문하기 > 동영상을 요약해 줘)"
   }
 ]
