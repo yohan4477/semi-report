@@ -717,5 +717,175 @@ flowchart TD
 
 ---
 
-*부분 변환본 — 사용자 지시로 12장(약 80%)에서 중단 (2026-07-11). 13\~16장(MI400 Flexible I/O·UALoE72, Helios 랙 아키텍처, MI500 UAL256, MI350X/MI355X/MI400 BOM·TCO 비교)은 미작성*
+## 13. MI400 시리즈 Flexible I/O와 UALoE72 - 진짜 UALink는 아니다
+
+**📌 핵심:**
+- MI400은 MI300X의 Infinity Fabric이 NVLink보다 크게 뒤처졌던 실패를 교훈 삼아, **144레인의 유연한 I/O(Flexible I/O)**로 전환 — PCIe 6.0, Infinity Fabric 64G, UALink 128G, xGMI4 128G(UALink 상위호환), Infinity Fabric over Ethernet 212G 등 여러 규격을 같은 물리 레인으로 지원해 용도별 배선을 나눌 필요를 없앰
+- 다만 MI400의 스케일업 네트워크는 **진짜 UALink가 아님** — UALink 전용 스위치(Astera Labs·Marvell)는 2027년에나 출시되고 브로드컴이 UALink 진영에서 이탈해 자체 규격(Scale Up Ethernet)을 개발 중이라, AMD는 브로드컴을 다시 설득해 **UALink 프로토콜을 이더넷 위에서 터널링하는 "UALoE(UALink over Ethernet)"**로 스펙 자체를 변경(Lisa Su: "표준 이더넷 위로 터널링된 UALink")
+- 브로드컴 Tomahawk 6(102.4T) 이더넷 스위치를 사용하는 이 방식은 마케팅상 이름만 다를 뿐 실질적으로는 예전에 예고했던 "Infinity Fabric over Ethernet"과 동일한 접근
+- 결론: 이름과 달리 실제 스펙은 경쟁력 있음 — MI400은 Nvidia VR200 NVL144와 **스케일업 단방향 대역폭(칩당 1.8TB/s)·스케일업 월드 크기(논리 GPU 72개)가 동일**해, "진짜 UALink냐 아니냐"와 별개로 성능 자체는 견줄 만한 수준
+
+---
+
+```mermaid
+flowchart TD
+    FlexIO["Flexible I/O<br/>144레인 유연 설계"] --> Why["배경: MI300X의<br/>Infinity Fabric이 NVLink보다<br/>크게 뒤처졌던 실패 교훈"]
+    FlexIO --> Support["지원 규격: PCIe 6.0,<br/>Infinity Fabric 64G,<br/>UALink 128G, xGMI4 128G,<br/>IFoE 212G(같은 물리 레인 공유)"]
+
+    style Support fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    UALoE["UALoE(UALink over<br/>Ethernet) 탄생 배경"] --> NoSwitch["UALink 전용 스위치<br/>(Astera Labs·Marvell)<br/>2027년에나 출시"]
+    UALoE --> Broadcom["브로드컴, UALink 진영<br/>이탈 → 자체 규격<br/>(Scale Up Ethernet) 개발 중"]
+    Broadcom --> Beg["AMD가 브로드컴을<br/>재설득 → UALink 프로토콜을<br/>이더넷 위에서 터널링하도록<br/>스펙 변경(UALoE)"]
+
+    style Broadcom fill:#fef2f2,stroke:#dc2626
+    style Beg fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Compare2["MI400 vs VR200 NVL144<br/>스케일업 스펙 비교"] --> BW3["칩당 단방향 대역폭:<br/>1.8TB/s로 동일"]
+    Compare2 --> World["스케일업 월드 크기:<br/>논리 GPU 72개로 동일"]
+
+    style BW3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style World fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 14. MI400 Helios 랙 아키텍처 상세
+
+**📌 핵심:**
+- Helios 랙은 표준 ORV3 랙 폭의 약 2배(GPU 양옆에 LPDDR5가 붙어 폭이 넓어짐) — **컴퓨트 트레이 18개**(상단 9개+하단 9개, 트레이당 MI400 4개)와 그 사이 **UALoE 스위치 트레이 6개**(트레이당 Tomahawk 6 102.4T 스위치 2개, 레인당 200G)로 구성돼 스케일업 월드 72 GPU를 완성(그래서 이름이 UALoE72 — 애초 예상했던 IFoE64보다 8개 늘어난 것은 고객들이 72 GPU 월드사이즈를 선호했기 때문)
+- 메모리는 4단 계층 — ① 온패키지 HBM(288\~432GB, 18TB/s) ② GPU 직결 커스텀 LPDDR5X(819GB/s, Rubin Ultra와 유사 구조) ③ GPU-SSD PCIe 직결(Nvidia HGX의 로컬 NVMe GPUDirect Storage와 유사) ④ CPU MRDIMM DDR5(64G Infinity Fabric 16레인 경유) — HBM을 제외한 나머지는 고객 요청에 맞춰 용량 조정 가능
+- 스위치 트레이 비효율: 레인당 200G 기준 스위치 하나가 512포트를 내지만 실제 연결에 쓰는 레인은 트레이당 864개뿐이라 **160포트(스위치당 80포트)가 낭비** — 브로드컴 기성 스위치가 51.2T 배수(64 GPU 랙에 최적)로만 나와 57.6T 배수(72 GPU 랙에 최적)와 맞지 않기 때문(반면 GB200 NVL72는 28.8T NVSwitch 18개로 낭비 없이 정확히 맞아떨어짐 — AMD의 수직계열화 열세를 보여주는 사례)
+- 결론: 스위치 트레이가 6개뿐(Nvidia Oberon은 9개)이라 신호 이동 거리가 더 짧고, 스위치 트레이 상하로 컴퓨트 트레이가 균등 배치돼 신호가 양방향으로 균등한 거리를 이동
+
+---
+
+```mermaid
+flowchart TD
+    Helios["Helios 랙 구성"] --> Tray1["컴퓨트 트레이 18개<br/>(상9+하9, 트레이당<br/>MI400 4개)"]
+    Helios --> Tray2["UALoE 스위치 트레이 6개<br/>(트레이당 TH6 102.4T<br/>스위치 2개)"]
+    Tray2 --> World72["스케일업 월드 72 GPU<br/>완성(UALoE72 명명 유래)"]
+
+    style World72 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Mem4["MI400 메모리 4단 계층"] --> M1["① 온패키지 HBM<br/>288~432GB, 18TB/s"]
+    Mem4 --> M2["② GPU 직결 커스텀<br/>LPDDR5X, 819GB/s"]
+    Mem4 --> M3["③ GPU-SSD PCIe 직결<br/>④ CPU MRDIMM DDR5<br/>(64G IF 16레인)"]
+
+    style M1 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Waste3["스위치 트레이<br/>포트 낭비 문제"] --> Cap["스위치 1개 512포트<br/>(200G/레인) → 트레이<br/>총 1,024포트"]
+    Cap --> Used["실사용 레인:<br/>트레이당 864개뿐"]
+    Used --> Lost["낭비: 160포트<br/>(스위치당 80포트)"]
+    Lost --> Reason["원인: 브로드컴 기성<br/>스위치가 51.2T 배수(64GPU용)만<br/>제공, 57.6T(72GPU용) 없음"]
+
+    style Lost fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    VsNV["AMD vs Nvidia<br/>수직계열화 격차"] --> AMDcase["AMD: 기성 브로드컴<br/>스위치 사용 → 포트 낭비<br/>발생(위 문제)"]
+    VsNV --> NVcase["Nvidia: 자체 설계<br/>NVSwitch 28.8T×18개 →<br/>72 GPU에 낭비 없이 정확히 매칭"]
+
+    style NVcase fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style AMDcase fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+## 15. MI500 UAL256 - 2027년 차세대 랙 컨셉
+
+**📌 핵심:**
+- 2027년 말 출시 예정인 **MI500 Scale Up Mega Pod**는 랙 3개(양옆 컴퓨트 랙 각 32트레이+중앙 스위치 랙 18트레이, 합계 컴퓨트 트레이 64개)에 걸쳐 **물리/논리 GPU 256개**를 하나의 스케일업 도메인으로 묶는 컨셉 — Nvidia VR300 NVL576(144개)의 약 1.8배 규모
+- 실행에 성공하면 VR300 NVL576(Kyber 랙)을 압도할 잠재력이 있지만, 이 정도 규모의 엔지니어링·제품 램프업은 결코 쉽지 않은 도전
+- 리스크를 낮춘 대안으로 **MI500 UAL128**(GPU 128개)도 검토 중 — VR300 NVL576과 경쟁은 가능하지만 압도적 우위까지는 만들지 못할 규모
+- 결론: MI500 세대는 AMD가 처음으로 "랙 2개를 넘어 3개 랙급 초대형 스케일업 도메인"을 시도하는 세대로, Nvidia 대비 스케일업 월드 크기에서 처음으로 수적 우위를 노리는 전략
+
+---
+
+```mermaid
+flowchart TD
+    MI500["MI500 UAL256<br/>Mega Pod(2027년 말)"] --> Struct["랙 3개: 양옆 컴퓨트 랙<br/>(각 32트레이)+중앙<br/>스위치 랙(18트레이)"]
+    Struct --> Scale2["물리/논리 GPU 256개<br/>(VR300 NVL576의 144개 대비<br/>약 1.8배)"]
+
+    style Scale2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Risk2["실행 리스크와 대안"] --> Full["풀스케일 UAL256:<br/>성공 시 VR300 NVL576 압도<br/>가능하나 엔지니어링 난이도 최고"]
+    Risk2 --> Safe["대안 UAL128(128개):<br/>경쟁은 가능하나<br/>압도적 우위는 어려움"]
+
+    style Full fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Safe fill:#eff6ff,stroke:#3b82f6
+```
+
+---
+
+## 16. MI350X·MI355X·MI400 BOM과 TCO 비교
+
+**📌 핵심:**
+- Helios 랙(72 GPU) BOM은 약 **420만 달러** — 컴퓨트 트레이 18개(트레이당 21만 달러, GPU 4개+Venice CPU 1개+800G Vulcano NIC 12개)와 스위치 트레이 6개(트레이당 3.1만 달러) 합산 — 스위치 트레이 마진은 Nvidia식 40\~50% 가산이 아니라 ODM을 통한 낮은 통합 마진만 반영(저자 판단)
+- **MI355 vs B200 HGX**: 칩당 총자본비용 약 45% 저렴, TCO는 약 30% 낮음(시간당 GPU당 $1.38 vs $1.97) — TCO/PFLOPS 기준으로는 FP4 약 60%, FP8 약 50%, FP6는 무려 75%나 낮음(경쟁사 대비), 다만 TFLOPS/W는 B200보다 22% 낮아 전력 효율 자체는 열세
+- **MI400 vs VR200 NVL144**: 총자본비용은 (Arista 네트워킹 vs InfiniBand 네트워킹 비교 기준) GPU당 약 12% 저렴하지만, **서버당 소비전력이 240kW로 VR200(187kW)보다 훨씬 높아** 운영비가 시간당 GPU당 $0.85 vs $0.67로 역전 — 그 결과 최종 TCO는 동일 네트워킹(Arista\~Arista) 비교 시 MI400이 오히려 1.7% 더 높음(WhiteBox 비교는 1% 높음, InfiniBand와 교차비교하면 4.5% 낮음)
+- 결론: TCO 총액은 엇비슷하지만, **TCO당 성능(메모리 대역폭·FP4/FP6/FP8 PFLOPS)에서는 MI400이 VR200 NVL144보다 전반적으로 우위** — 다만 전력 소모가 큰 만큼 와트당 처리량(TFLOPS/W)은 VR200이 근소하게 앞섬
+
+---
+
+```mermaid
+flowchart TD
+    BOM["Helios 랙(72GPU)<br/>BOM 구성"] --> CT["컴퓨트 트레이 18개×<br/>21만 달러"]
+    BOM --> ST["스위치 트레이 6개×<br/>3.1만 달러"]
+    CT --> Total2["합계 약 420만 달러"]
+    ST --> Total2
+
+    style Total2 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    MI355TCO["MI355 vs B200 HGX<br/>TCO 비교"] --> Cap2["칩당 총자본비용<br/>약 45% 저렴"]
+    MI355TCO --> TCO2["시간당 GPU당 TCO:<br/>$1.38 vs $1.97(약 30%↓)"]
+    TCO2 --> PerfTCO["TCO/PFLOPS: FP4 60%,<br/>FP8 50%, FP6 75% 낮음<br/>(단, TFLOPS/W는 22% 열세)"]
+
+    style TCO2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style PerfTCO fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    MI400TCO["MI400 vs VR200 NVL144<br/>TCO 역전 구조"] --> CapLow["초기 자본비용:<br/>GPU당 약 12% 저렴<br/>(Arista vs InfiniBand)"]
+    CapLow --> PowerHigh["서버 소비전력:<br/>240kW vs 187kW<br/>(MI400이 훨씬 높음)"]
+    PowerHigh --> OpexHigh["운영비 역전:<br/>$0.85/hr vs $0.67/hr<br/>(GPU당)"]
+    OpexHigh --> FinalTCO["최종 TCO: 동일 네트워킹<br/>비교 시 MI400이 오히려<br/>1.7% 더 높음"]
+
+    style PowerHigh fill:#fef2f2,stroke:#dc2626
+    style FinalTCO fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    PerfPerTCO["최종 판단:<br/>TCO당 성능 vs 와트당 성능"] --> Win["MI400 우위: 메모리 대역폭,<br/>FP4·FP6·FP8 PFLOPS<br/>TCO당 성능 전반"]
+    PerfPerTCO --> Lose["VR200 우위: TFLOPS/W<br/>(전력 소모가 낮아<br/>와트당 처리량 근소 우위)"]
+
+    style Win fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Lose fill:#eff6ff,stroke:#3b82f6
+```
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 전체 16개 섹션(개요, MI350X·MI355X 스펙, TCO 경쟁력, DGX Lepton·뉴클라우드 반발, 랙 스케일 마케팅 과장 논란, 하이퍼스케일러 채택 현황, 뉴클라우드 렌탈 시장 약점, 뉴클라우드 생태계 육성 전략, ROCm 소프트웨어, 칩렛 제조, CDNA4 마이크로아키텍처, AI 엔지니어 보상, MI400 Flexible I/O·UALoE72, Helios 랙 아키텍처, MI500 UAL256, BOM·TCO 비교) 작성 완료*
 
