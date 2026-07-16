@@ -1,5 +1,5 @@
 ---
-categories: [ai-infra/compute]
+categories: [ai-infra/compute, ai-infra/networking]
 ---
 
 # AWS Trainium3 Deep Dive: A Potential Challenger Approaching

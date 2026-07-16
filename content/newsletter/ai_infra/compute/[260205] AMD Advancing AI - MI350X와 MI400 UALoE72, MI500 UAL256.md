@@ -1,5 +1,5 @@
 ---
-categories: [ai-infra/compute]
+categories: [ai-infra/compute, ai-infra/networking]
 ---
 
 # AMD Advancing AI: MI350X and MI400 UALoE72, MI500 UAL256

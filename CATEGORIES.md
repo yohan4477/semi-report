@@ -28,6 +28,8 @@
 - **`ai-infra/cooling`** — 냉각 시스템 (공랭·수랭, DLC, 냉각탑, CDU)
 - **`ai-infra/compute`** — 연산 (가속기 칩, GPU/TPU/ASIC, 서버 설계)
 - **`ai-infra/memory`** — 메모리 (HBM, DRAM, 메모리 대역폭·용량 트렌드)
+- **`ai-infra/networking`** — 네트워킹 (NVLink·InfiniBand·이더넷 등 스케일업/스케일아웃 인터커넥트, CPO, 스위치·랙 간 연결 아키텍처) — 컴퓨트 문서에 흔히 곁들여지지만 네트워킹 자체가 문서 상당 분량을 차지하면 이 태그를 `ai-infra/compute`와 함께 이중 부여
+- **`ai-infra/business`** — 인프라·컴퓨트를 둘러싼 사업 구조·재무 (조달 전략, 마진, 토큰 지출, 클라우드 파트너십 등 — 하드웨어 스펙보다 비즈니스 축이 중심인 문서)
 
 ### `robotics` — 로봇
 로봇 하드웨어, 자율주행, 물리 AI 등
@@ -41,14 +43,15 @@
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra | 7 |
-| ai-infra/power | 6 |
-| ai-infra/cooling | 2 |
 | ai-infra/compute | 19 |
 | ai-infra/memory | 9 |
-| ai-models | 1 |
-| ai-models/agents | 2 |
+| ai-infra/networking | 7 |
+| ai-infra/business | 7 |
+| ai-infra/power | 6 |
+| ai-infra/cooling | 2 |
 | ai-models/rl | 3 |
+| ai-models/agents | 2 |
+| ai-models | 1 |
 | robotics | 1 |
 | semiconductors | 1 |
 
@@ -59,6 +62,7 @@
 <!-- 2026-07-12: [260205] 메타 컴퓨트(모두가 네오클라우드가 되고 싶어한다) 추가 — ai-infra +1. 메타의 데이터센터·컴퓨트 조달 전략, 스페이스X식 컴퓨트 판매, 베드락형 제휴, RecSys·MSL 컴퓨트 배분을 다루는 비즈니스/인프라 경제학 문서로, AWS 마진 문서와 동일하게 하드웨어 스펙보다 사업 구조 중심이라 일반 ai-infra 상위 태그로만 분류 -->
 <!-- 2026-07-13: [260205] 메타 슈퍼인텔리전스의 미래(1주년 성과 점검) 추가 — ai-infra +1, ai-models/rl +1. 메타의 데이터·인재·컴퓨트 3요소 진단, 5대 타이탄 클러스터·AI-Backbone 네트워킹은 ai-infra(메타 컴퓨트 문서와 자매 관계), RL 환경 스타트업 생태계·3,000명 규모 애플리케이션 AI 엔지니어링 조직 신설은 AI 모델 통합 리포트의 RL 환경 산업화 시계열(§1.2, 머서·서지·핸드셰이크 재등장)과 직접 연결돼 ai-models/rl로 이중 분류 -->
 <!-- 2026-07-13: [260205] 토큰 버짓팅(기업들과 나눈 토큰 지출 실태) 추가 — ai-infra +1. 기업 AI 토큰 지출·예산 관리 관행(하드 캡·소프트 리밋), 퍼센타일 고객 매출 집중 구조, 코딩 vertical ARR 비중을 다루는 비즈니스/토큰 경제학 문서로, AWS 마진·메타 컴퓨트 문서와 동일하게 하드웨어 스펙보다 기업 지출·사업 구조 중심이라 일반 ai-infra 상위 태그로만 분류 -->
+<!-- 2026-07-16: ai-infra/networking 신규 카테고리 신설(사용자 지시) — 그동안 ai-infra/compute 문서에 네트워킹 내용(NVLink·CPO·InfiniBand·스케일업 아키텍처)이 상당 분량 섞여 있었는데 독립 카테고리가 없었음. 네트워킹 관련어 밀도 기준으로 7편(AWS Trainium3 딥다이브, 베라 루빈, GTC 2026, AMD Advancing AI, 루빈 CPX, InferenceX v2, TPUv7)에 ai-infra/networking 이중 태그 부여, ai-infra/compute 태그는 유지. 이 문서에 ai-infra/business 정의도 함께 보강(기존에 폴더·frontmatter는 있었으나 정의 섹션 누락) -->
 <!-- 2026-07-13: 카테고리 문서 수 재검산 — ai-infra 8편(신규 1편 반영). ai-models, memory, compute, cooling, agents, rl, robotics 행은 이번 문서와 무관해 변경 없음 -->
 <!-- 2026-07-13: `semiconductors` 신규 대분류 카테고리 신설 (사용자 지시) — [260205] EDA 시장 개관 문서를 ai-infra에서 semiconductors로 재분류·재배치(ai-infra 8→7, semiconductors 0→1). 폴더도 `source/newsletter/ai_infra/`에서 `source/newsletter/semiconductors/`로 이동 -->
 <!-- 2026-07-16: [260205] AWS Trainium3 딥다이브 10~16장 완료(9장에서 중단된 상태 재개) — ai-infra/compute 15→16. 스위치 세대 진화·구리케이블/전력/BOM·EFA스케일아웃·마이크로아키텍처·PyTorch 소프트웨어 전환·LNC/Megacore·데이터센터 램프업/TCO까지 전체 16개 섹션 완료 -->

@@ -1,5 +1,5 @@
 ---
-categories: [ai-infra/compute]
+categories: [ai-infra/compute, ai-infra/networking]
 ---
 
 # InferenceX v2: NVIDIA Blackwell Vs AMD vs Hopper - Formerly InferenceMAX
