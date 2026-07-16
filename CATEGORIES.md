@@ -44,7 +44,7 @@
 | ai-infra | 7 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 2 |
-| ai-infra/compute | 15 |
+| ai-infra/compute | 16 |
 | ai-infra/memory | 9 |
 | ai-models | 1 |
 | ai-models/agents | 2 |
@@ -61,6 +61,9 @@
 <!-- 2026-07-13: [260205] 토큰 버짓팅(기업들과 나눈 토큰 지출 실태) 추가 — ai-infra +1. 기업 AI 토큰 지출·예산 관리 관행(하드 캡·소프트 리밋), 퍼센타일 고객 매출 집중 구조, 코딩 vertical ARR 비중을 다루는 비즈니스/토큰 경제학 문서로, AWS 마진·메타 컴퓨트 문서와 동일하게 하드웨어 스펙보다 기업 지출·사업 구조 중심이라 일반 ai-infra 상위 태그로만 분류 -->
 <!-- 2026-07-13: 카테고리 문서 수 재검산 — ai-infra 8편(신규 1편 반영). ai-models, memory, compute, cooling, agents, rl, robotics 행은 이번 문서와 무관해 변경 없음 -->
 <!-- 2026-07-13: `semiconductors` 신규 대분류 카테고리 신설 (사용자 지시) — [260205] EDA 시장 개관 문서를 ai-infra에서 semiconductors로 재분류·재배치(ai-infra 8→7, semiconductors 0→1). 폴더도 `source/newsletter/ai_infra/`에서 `source/newsletter/semiconductors/`로 이동 -->
+<!-- 2026-07-16: [260205] AWS Trainium3 딥다이브 10~16장 완료(9장에서 중단된 상태 재개) — ai-infra/compute 15→16. 스위치 세대 진화·구리케이블/전력/BOM·EFA스케일아웃·마이크로아키텍처·PyTorch 소프트웨어 전환·LNC/Megacore·데이터센터 램프업/TCO까지 전체 16개 섹션 완료 -->
+
+
 
 
 ## 버전 히스토리
