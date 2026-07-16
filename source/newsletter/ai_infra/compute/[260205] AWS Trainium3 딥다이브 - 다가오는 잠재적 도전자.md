@@ -601,4 +601,160 @@ PCB 경로는 NL32x2 Switched의 경우 이웃 칩에 직결되지만, NL72x2 Sw
 
 ---
 
-*부분 변환본 — 사용자 지시로 9장(약 56%)에서 중단 (2026-07-11). 10\~16장(스위치 세대 진화, 구리 케이블·BOM, 스케일아웃 네트워킹, 마이크로아키텍처, 소프트웨어 전략, LNC/Megacore, TCO 비교)은 미작성*
+## 10. 스위치 세대 진화 - Gen1에서 Gen3(UALink)까지
+
+**📌 핵심:**
+- Trainium3 수명 주기 동안 스케일업 스위치는 3세대로 진화 — **Gen1(160레인·20포트, 빠른 출시용)** → **Gen2(320레인·40포트)** → **Gen3(72+포트 UALink, 최고 성능)** — 뒤로 갈수록 홉 수가 줄어 지연시간이 개선됨
+- Gen1은 포트 수 제약 때문에 NL32x2 Switched도 최대 3홉, NL72x2 Switched는 최대 4홉이 필요 — Gen2에서 NL32x2는 전 칩 1홉(all-to-all) 완성, NL72x2도 스위치 평면이 4개→2개로 축소
+- Gen3(UALink)에서는 NL72x2 Switched까지 랙 내 완전 all-to-all(모든 칩이 모든 스위치와 직결) 달성 — 컴퓨트 트레이 내 32레인 PCIe 스위치는 이제 여유 대역폭 역할로 격하
+- 결론: AWS는 PCIe 스위치·리타이머 공급사 **Astera Labs**와 지분 워런트 계약(행사가 $20.34)을 맺어 구매량 목표 달성 시 자사주를 받는 구조 — 2025년 9월 25일 기준 벡터화된 워런트 가치로 환산하면 실질 약 **23% 할인** 효과, OpenAI·Anthropic·Nvidia 간 지분 연계 파트너십과 같은 패턴
+
+---
+
+```mermaid
+flowchart TD
+    Gen["스케일업 스위치 3세대"] --> G1["Gen1: 160레인·20포트<br/>Scorpio X PCIe 6.0<br/>(빠른 시장 출시 우선)"]
+    Gen --> G2["Gen2: 320레인·40포트<br/>Scorpio X PCIe 6.0"]
+    Gen --> G3["Gen3: 72+포트 UALink<br/>(최저 지연시간·최고 성능)"]
+
+    style G1 fill:#eff6ff,stroke:#3b82f6
+    style G3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Gen1["Gen1 홉 수 제약<br/>(포트 부족 → 다단 경유)"] --> NL32g1["NL32x2 Switched:<br/>랙당 2개 평면×8스위치,<br/>같은 평면 내 1홉,<br/>랙 간 최대 3홉"]
+    Gen1 --> NL72g1["NL72x2 Switched:<br/>랙당 4평면×10스위치(40개)<br/>+ 트레이당 32레인 스위치8개×18<br/>=144개 → 랙당 총 184개<br/>스위치, 최대 4홉"]
+
+    style NL72g1 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+Gen1이 부족할 경우를 대비해 AWS는 브로드컴 PEX90144(144레인, 최대 72포트)를 백업 옵션으로 준비했습니다. 포트당 레인 수를 8레인(36포트) 또는 4레인(18포트)으로 나눠 쓸 수 있어, 극단적 저지연이 필요하면 포트당 2레인으로 세분화하지 않는 방식을 택합니다.
+
+```mermaid
+flowchart TD
+    Gen2["Gen2(320레인·40포트)<br/>업그레이드 효과"] --> NL32g2["NL32x2 Switched:<br/>랙당 스위치 8개로 충분<br/>→ 전 칩 1홉 all-to-all 완성"]
+    Gen2 --> NL72g2["NL72x2 Switched:<br/>스위치 평면 4개→2개로 축소<br/>(트레이 내 인접 칩은<br/>여전히 로컬 스위치 경유)"]
+
+    style NL32g2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Gen3["Gen3(72+포트 UALink)<br/>최종 목표 구조"] --> NL72g3["NL72x2 Switched:<br/>스위치 1개가 랙 내 모든 칩과<br/>직결 → 완전 all-to-all 달성"]
+    NL72g3 --> Surplus["컴퓨트 트레이 내<br/>32레인 PCIe 스위치는<br/>여유 대역폭 역할로 격하"]
+
+    style NL72g3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Astera["Astera Labs 지분<br/>연계 리베이트 구조"] --> Deal["구매량 목표 달성 시<br/>ALAB 주식 워런트 지급<br/>(행사가 $20.34)"]
+    Deal --> Effect["2025-09-25 기준<br/>벡터화 가치 환산 시<br/>실질 약 23% 할인 효과"]
+    Effect --> Pattern["OpenAI·Anthropic·Nvidia<br/>지분 연계 파트너십과<br/>같은 패턴(구매량↑ → 절감폭↑)"]
+
+    style Effect fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 11. 구리 케이블, 전력 예산, BOM과 수익화 속도 전략
+
+**📌 핵심:**
+- 구리 케이블 사용량은 스케일업 토폴로지와 레인 수에 비례 — Trn2 NL32x2 3D 토러스(백플레인 4개, 케이블 약 6,100개) 대비 **Trainium3 NL32x2 Switched는 비슷한 백플레인 구성에 케이블 약 5,100개**, 스케일업 월드가 144칩으로 커지는 **NL72x2 Switched는 케이블 11,520개**로 급증
+- 전력: 칩당 전력(TDP)이 랙 전체 전력의 최대 변수 — 랙당 칩 수는 NL72x2(64칩/랙)가 NL32x2(32칩/랙)의 2배라 랙 전력밀도는 NL72x2가 훨씬 높지만, **칩 1개당 전력으로 정규화하면 두 SKU가 거의 동일**(칩 TDP가 지배적 요인이기 때문)
+- 수익화 속도 전략: **케이블리스(PCB 신호 전송) 설계**로 조립 속도를 높이고, 백플레인 예비 레인 16개로 무중단 핫스왑을 가능케 해 GB200 사례처럼 배선 결함으로 인한 배치 지연을 원천 차단 — 액체 냉각 미준비 데이터센터엔 공랭 NL32x2 Switched로 즉시 배치해 특정 시설 지연이 전체 매출 지연으로 번지지 않게 함(CoreWeave Denton 사례와 대비)
+- 결론: AWS는 팹 출고에서 랙 출하까지 걸리는 시간을 1년 전보다 크게 단축(현재 분기 이내 수준)했고, 계속 단축 중 — Nvidia는 GB200 NVL72·Vera Rubin Kyber로 갈수록 칩 출고~고객 매출 발생까지의 시차가 오히려 길어지는 추세라 OEM·클라우드의 운전자본 부담과 TCO가 상대적으로 불리해지는 구도
+
+---
+
+```mermaid
+flowchart TD
+    Cable["구리 케이블<br/>사용량 비교"] --> Trn2c["Trn2 NL32x2 3D 토러스:<br/>백플레인 4개, 약 6,100개"]
+    Cable --> NL32c["Trainium3 NL32x2 Switched:<br/>비슷한 백플레인,<br/>약 5,100개(오히려 감소)"]
+    Cable --> NL72c["Trainium3 NL72x2 Switched:<br/>월드 144칩으로 확장 →<br/>11,520개(약 2.3배)"]
+
+    style NL72c fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Power["전력밀도 vs<br/>칩당 전력 구분"] --> RackDense["랙 전력밀도:<br/>NL72x2(64칩/랙)가<br/>NL32x2(32칩/랙)보다 훨씬 높음"]
+    Power --> PerChip["칩당 전력(정규화):<br/>두 SKU 거의 동일<br/>(칩 TDP가 지배 변수)"]
+
+    style PerChip fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TTM["수익화 속도<br/>전략 3가지"] --> Cableless["케이블리스 PCB 설계:<br/>조립 결함 리스크 최소화<br/>(GB200은 내부 배선<br/>결함으로 조립 지연 경험)"]
+    TTM --> HotSwap2["백플레인 예비 레인 16개:<br/>워크로드 중단 없이<br/>스위치 트레이 교체"]
+    TTM --> Flex2["공랭 SKU 병행 배치:<br/>액체 냉각 미준비 시설도<br/>즉시 가동(단일 시설 지연이<br/>전체 매출 지연으로 안 번짐)"]
+
+    style Cableless fill:#f0fdf4,stroke:#16a34a
+    style Flex2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Timeline["팹→랙 출하<br/>소요 시간 추세"] --> AWS_["AWS: 1년 전 대비<br/>대폭 단축, 현재 분기 이내<br/>수준까지 압축·계속 개선 중"]
+    Timeline --> Nvidia2["Nvidia: GB200 NVL72→<br/>Vera Rubin Kyber로 갈수록<br/>출고~매출 시차 오히려 증가"]
+    Nvidia2 --> Capital["결과: OEM·클라우드의<br/>운전자본 부담·TCO 악화"]
+
+    style AWS_ fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Capital fill:#fef2f2,stroke:#dc2626
+```
+
+---
+
+## 12. 스케일아웃 네트워킹 - EFA, ENA와 고radix 전략
+
+**📌 핵심:**
+- **EFA(Elastic Fabric Adapter, AI 훈련·추론용 후방 네트워크)**는 SRD(Scalable Reliable Datagram)라는 AWS 자체 전송 계층으로 지연시간·혼잡 제어·부하분산을 처리 — RoCEv2·InfiniBand의 대안이며 VPC 보안·AES-256 종단간 암호화가 기본 내장, **ENA(전방 네트워크)**는 일반 클라우드 서비스(스토리지·인터넷 연결 등)를 담당
+- Nvidia GPU 기반 AWS 인스턴스에서는 EFA가 Spectrum-X·InfiniBand 대비 뚜렷한 성능 우위를 보이지 못했지만, **Trainium에서는 AWS가 스택 전체를 통제**할 수 있어 사용 경험이 훨씬 낫다는 평가
+- 고radix(포트를 잘게 쪼개는) 전략: 업계 표준은 스위치 논리 포트를 400G/800G로 크게 잡지만, AWS는 처음부터 **100G 논리 포트를 기본값**으로 사용 — 2계층 네트워크 기준 12.8T 스위치만으로도 최대 GPU 연결 수가 512개(400G 포트)에서 8,192개(100G 포트)로 16배 증가, 25.6T·51.2T 스위치를 섞으면 3계층에서 최대 524,288개까지 확장 가능(오늘날 최대급 멀티빌딩 클러스터 규모)
+- 결론: 100G 포트는 배선 복잡도가 급증하는 단점이 있어 AWS는 전용 광케이블 설비(ViaPhoton)로 이를 상쇄 — 스케일아웃은 건물 간(FR 광학, 수km \~ ZR 광학, 수백km)까지 딥버퍼 스위치 없이 스파인 계층을 직접 연결해 확장, OpenAI의 AWS 클러스터는 예외적으로 EFA 대신 자체 프로토콜(MRC)을 쓰는 GB300 기반이라는 점도 업계 혼선의 원인
+
+---
+
+```mermaid
+flowchart TD
+    Net["AWS 네트워크<br/>2계층 구분"] --> ENA["ENA(전방/north-south):<br/>스토리지·인터넷 연결 등<br/>일반 클라우드 서비스"]
+    Net --> EFA["EFA(후방/east-west):<br/>AI 훈련·추론 전용,<br/>SRD 전송계층 사용"]
+
+    style EFA fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    EFAFeat["EFA 핵심 기능 3가지"] --> Sec["보안: VPC 제어면 상속,<br/>AES-256 종단간 암호화"]
+    EFAFeat --> Scale2["확장성: 다중 경로 혼잡 회피<br/>(대형 버퍼 스위치 불필요,<br/>Nvidia Spectrum-XGS와 유사)"]
+    EFAFeat --> Univ["범용성: Libfabric API로<br/>NCCL 등과 연동<br/>(다만 실제 범용성은 제한적)"]
+
+    style Sec fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    Radix["논리 포트 크기 전략"] --> Default["업계 표준: NIC 대역폭에<br/>맞춘 400G/800G 논리 포트"]
+    Radix --> AWSway["AWS: 100G 논리 포트<br/>기본값(고radix)"]
+    AWSway --> Result1["12.8T 스위치만으로<br/>2계층 최대 GPU 수<br/>512개→8,192개(16배)"]
+    AWSway --> Result2["25.6T·51.2T 혼용 시<br/>3계층 최대 524,288개<br/>(최대급 멀티빌딩 클러스터급)"]
+
+    style AWSway fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style Result2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Tradeoff["100G 포트의<br/>대가와 해법"] --> Con["단점: 배선 복잡도 급증<br/>(패치패널·문어케이블 필요)"]
+    Con --> Sol["해법: 전용 광케이블<br/>설비 ViaPhoton으로<br/>복잡도 상쇄"]
+    Radix2["스케일아웃 범위"] --> Building["건물 간: FR광학(수km)~<br/>ZR광학(수백km),<br/>딥버퍼 스위치 없이<br/>스파인 직접 연결"]
+
+    style Sol fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 69% 완료 (16개 섹션 중 12개 완료)*
+*업데이트: 10\~12장(스위치 세대 진화, 구리 케이블·전력·BOM·수익화 속도, EFA·ENA 스케일아웃) 작성 완료*
