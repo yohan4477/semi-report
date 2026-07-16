@@ -150,7 +150,8 @@
   .mx .cell{border-radius:8px; min-height:44px; padding:6px 8px; display:flex; flex-wrap:wrap; gap:4px; align-content:flex-start;}
   .mx .rowlab{color:var(--sub); font-size:.72rem; display:flex; align-items:center;}
   .mx .cell.g{background:var(--good-bg);} .mx .cell.w{background:var(--warn-bg);} .mx .cell.r{background:var(--risk-bg);}
-  .co{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:1px 7px; font-size:.75rem; font-weight:600; position:relative; cursor:pointer;}
+  .co{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:1px 7px; font-size:.75rem; font-weight:600; position:relative; cursor:pointer;
+    text-decoration:underline; text-decoration-style:dotted; text-decoration-color:var(--sub); text-underline-offset:3px;}
   .co:hover, .co:focus-visible{border-color:var(--accent); color:var(--accent);}
   .co:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   .co-modal{position:fixed; inset:0; z-index:100; display:none; align-items:flex-start; justify-content:center;
@@ -313,6 +314,7 @@
 
   <section data-c="all compute memory power model robot">
     <h2>④ 기업 익스포저 매트릭스 — 방향 × 확신도 (38곳)</h2>
+    <div class="note" style="margin-top:2px;">기업명을 누르면 뉴스레터·LinkedIn·YouTube 전체 언급을 모아 볼 수 있습니다</div>
     <div class="mx">
       <div class="h"></div><div class="h">확신도 높음</div><div class="h">중간</div><div class="h">낮음·상충</div>
       <div class="rowlab">수혜</div>
