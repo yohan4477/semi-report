@@ -756,5 +756,111 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 69% 완료 (16개 섹션 중 12개 완료)*
-*업데이트: 10\~12장(스위치 세대 진화, 구리 케이블·전력·BOM·수익화 속도, EFA·ENA 스케일아웃) 작성 완료*
+## 13. 마이크로아키텍처 - 4대 엔진과 숫자 포맷
+
+**📌 핵심:**
+- Trainium3는 Trn2·Google TPU처럼 **적은 수의 큰 코어** 방식(패키지당 NeuronCore 8개, 코어마다 텐서·벡터·스칼라·GPSIMD 엔진 4종)을 씀 — Nvidia·AMD GPU의 "작은 코어 다수" 방식보다 제어 오버헤드가 적어 생성형 AI 워크로드에 유리
+- 텐서 엔진(전체 연산·전력의 80% 이상 차지)의 **MXFP8 처리량은 전세대 대비 2배**(512x128 시스톨릭 배열, BF16은 128x128로 전세대와 동일 유지) — 새 공정·맞춤 셀 라이브러리·업그레이드된 수직 전력 공급으로 면적·전력 증가 없이 달성했지만, 그 대가로 **BF16 성능은 전혀 개선되지 않음**(일반 ML 훈련자 다수가 BF16만 쓰기 때문에 실질적 아쉬움)
+- 숫자 포맷 격차: **NVFP4(블록크기 16, E4M3)는 미지원**, OCP MXFP4(블록크기 32, E8M0)만 하드웨어 지원 — E8M0는 스케일값을 2의 거듭제곱으로 반올림해 양자화 오차가 더 큼 → 향후 4비트 순방향 훈련이 확산되면 Trainium3가 불리해질 수 있는 리스크 요인
+- 결론: 메모리 병목 워크로드(추론 디코드)는 **W4A8**(가중치는 4비트로 저장, 연산은 MXFP8) 기법으로 HBM 전송 속도를 사실상 2배로 끌어올려 포맷 격차를 상당 부분 상쇄 — 텐서 엔진 외에 벡터(소프트맥스·정규화)·스칼라(1:1 원소 연산)·GPSIMD(임의 C++ 코드 실행) 엔진이 병렬로 돌며, 벡터 엔진 클럭 1.25배·지수함수 처리량 4배(Trn2 대비)로 어텐션의 소프트맥스 병목을 제거(Blackwell도 같은 병목을 겪어 Blackwell Ultra에서 지수 유닛 성능을 2배로 올린 바 있음)
+
+---
+
+```mermaid
+flowchart TD
+    Core["패키지 구조:<br/>큰 코어 소수 방식"] --> NC["NeuronCore 8개/패키지<br/>(TPU와 동일 철학,<br/>GPU의 '작은 코어 다수'와 대조)"]
+    NC --> Eng["코어당 4대 엔진:<br/>텐서·벡터·스칼라·GPSIMD"]
+
+    style NC fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Tensor["텐서 엔진<br/>(연산·전력의 80%↑ 차지)"] --> BF16["BF16: 128x128 시스톨릭<br/>배열(Trn2와 동일)"]
+    Tensor --> FP8["MXFP8/MXFP4: 512x128<br/>시스톨릭 배열(2배 확대)<br/>→ 처리량 2배"]
+    FP8 --> Cost["대가: BF16 성능은<br/>전혀 개선 안 됨<br/>(일반 ML 훈련자는 BF16만 사용)"]
+
+    style FP8 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Cost fill:#fef2f2,stroke:#dc2626
+```
+
+**📌 용어 풀이: NVFP4 vs OCP MXFP4**
+> - 둘 다 4비트로 숫자를 압축하는 포맷이지만, 압축 단위(블록 크기)와 스케일값 표현 방식이 다름
+> - NVFP4(Nvidia, 블록 16·E4M3)는 스케일을 더 세밀하게 표현해 양자화 오차가 작고, OCP MXFP4(블록 32·E8M0)는 스케일을 2의 거듭제곱으로만 표현해 오차가 더 큼
+> - Trainium3는 OCP MXFP4만 하드웨어 지원 → NVFP4가 필요하면 소프트웨어로 우회 변환해야 해 비효율적
+
+```mermaid
+flowchart TD
+    Format["4비트 포맷 격차<br/>리스크"] --> No["Trainium3: OCP MXFP4만<br/>지원(NVFP4 미지원)"]
+    No --> Risk["4비트 순방향 훈련이<br/>업계 표준화되면<br/>Trainium3 경쟁력 약화 우려"]
+    Risk --> Fix["완화책: W4A8<br/>(가중치 4비트 저장 +<br/>MXFP8 연산) → 추론 디코드<br/>HBM 전송 속도 사실상 2배"]
+
+    style Risk fill:#fef2f2,stroke:#dc2626
+    style Fix fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Attn["어텐션 가속:<br/>소프트맥스 병목 해소"] --> Clock["벡터 엔진 클럭<br/>1.25배(Trn2 대비)"]
+    Attn --> Exp["지수함수 처리량<br/>4배(Trn2 대비)"]
+    Exp --> Compare["Blackwell도 동일 병목 →<br/>Blackwell Ultra에서<br/>지수 유닛 성능 2배 개선"]
+
+    style Exp fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+이 밖에도 Trainium3는 다섯 가지 신규 하드웨어 기능을 추가했습니다. ① **통신 전용 코어**: 수십 개의 집단통신 전용 코어가 연산 코어와 완전히 분리돼 있어, GPU처럼 `NCCL_MIN_CTA` 같은 환경변수로 연산·통신 SM 비율을 수동 조정할 필요가 없습니다. ② **근접 메모리 연산과 자동 포워딩**: HBM을 거치지 않고 SBUF(온칩 SRAM)끼리 직접 전송할 수 있어 소·중간 크기 메시지의 지연시간이 줄고, 144패키지 스케일업 도메인 전체에 걸쳐 메시지 자동 중계가 가능해 프로그래머가 중간 경유 칩을 직접 지정할 필요가 없습니다. ③ **제로 코스트 전치(Transpose)**: 하드웨어 가속으로 배경에서 비용 없이 처리됩니다. ④ **온칩 트래픽 QoS**: 텐서·전문가 병렬화처럼 지연시간에 민감한 트래픽을 백그라운드 프리페치보다 우선 처리(Day 0에는 사용자 설정 불가, 추후 NKI로 조정 가능 — Graviton은 이미 여러 세대 전부터 유사 기능을 지원). ⑤ **사전 셔플 없는 동적 MoE 그룹 GEMM**: "텐서 역참조" 기능으로 전문가별 토큰이 메모리상 인접하지 않아도 동적으로 인덱싱 가능해, 컴파일 시점이 아닌 실행 시점에 라우팅을 결정하는 최신 MoE 모델을 하드웨어 차원에서 네이티브 지원합니다.
+
+---
+
+## 14. 소프트웨어 대전환 - PyTorch 네이티브, NKI, MFU
+
+**📌 핵심:**
+- AWS는 자체 전용 스택(내부 Bedrock·Anthropic 맞춤)에서 벗어나 **PyTorch 네이티브 백엔드를 오픈소스로 전환** — "PrivateUse1" TorchDispatch 키로 즉시 실행(eager) 모드를 지원하고 `torch.distributed`·`DTensor`·`FSDP1/2`·`SimpleFSDP` 등 네이티브 API를 전부 지원(과거엔 PyTorch/XLA의 비표준 API에 의존해 사용성이 떨어졌음) — MoE 디스패치·컴바인 네이티브 연산까지 Day 0 지원(AMD도 아직 없는 수준), 다만 `torch.compile`은 Day 0에 SimpleFSDP만 지원되고 데이터 의존 조건문·while 루프는 미지원(그래프 중단 발생)
+- 실측 MFU(모델 연산 활용률): Day 0 PyTorch 네이티브 + torch.compile 기준 Qwen Dense **43% BF16 MFU**, Qwen MoE **20\~30% BF16 MFU** — 손으로 짠 NKI(AWS 커널 작성 언어) 커널을 쓰면 조밀 모델 **약 60% BF16 MFU**, DeepSeek 670B급 희소 MoE(256개 전문가 중 8개 활성)도 **40% 이상**까지 상승, torch.compile 성능은 시간이 지나며 NKI 수준에 점차 수렴할 전망
+- 오픈소스 로드맵: 1단계(PyTorch 스택 + NKI 통신·GEMM·어텐션·커널 라이브러리) 공개, 2단계(XLA 그래프 컴파일러 + JAX 스택) 공개 — 신규 스택은 GitHub 우선 아웃오브트리 코드베이스로 시작해, 성숙하고 **Meta(PyTorch 사실상 관리자)의 승인**을 받으면 인트리로 편입(AWS는 이미 PyTorch CPU·Nvidia GPU용 오픈소스 CI 인프라 대다수를 무상 제공해온 우호 관계 보유) — PyTorch Foundation의 "Compute Platform Quality Levels"(Stable/Unstable/Engineering 3단계) 심사 기준을 2026년 1분기까지 아웃오브트리로 통과하고, 인트리 편입은 2026년 말 예상
+- 결론: SemiAnalysis는 AMD ROCm에서 누락된 600개 이상의 단위·통합·정확도 테스트를 추적해온 것처럼("PyTorch CI 잔소리꾼" 역할, 2025년 6월 Nvidia로부터 B200 48대의 CI 기여를 이끌어낸 전례), Trainium 스택 오픈소스화 이후에도 같은 감시 역할을 맡을 계획 — 추론 쪽은 Day 0부터 네이티브 vLLM v1을 지원(기존 XLA 짜깁기 방식보다 훨씬 깔끔, TPU가 vLLM 코드를 JAX로 통째로 변환해야 하는 것과 대조)하며, Nvidia의 **NIXL KV 캐시 전송 라이브러리**를 표준 채택해 같은 네트워크상의 Trn2·Trainium3·H100·H200·B300 간 프리필-디코드 인스턴스를 자유롭게 섞어 쓸 수 있게 함(단, Nvidia는 AWS의 Nvidia GPU용 EFA PR은 NIXL 업스트림에 반영했지만 Trainium용 코드는 아직 AWS 엔지니어 포크에 머물러 병합 대기 중)
+
+---
+
+```mermaid
+flowchart TD
+    SW["PyTorch 네이티브<br/>전환 핵심 내용"] --> Eager["즉시 실행(eager) 모드:<br/>PrivateUse1 TorchDispatch 키"]
+    SW --> API["네이티브 API 전면 지원:<br/>torch.distributed, DTensor,<br/>FSDP1/2, SimpleFSDP"]
+    SW --> MoEOp["MoE 디스패치·컴바인<br/>네이티브 연산 Day 0<br/>(AMD도 아직 없음)"]
+
+    style API fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    MFU["실측 MFU(모델 연산 활용률)<br/>비교"] --> Native["Day0 PyTorch 네이티브+<br/>torch.compile: Qwen Dense 43%,<br/>Qwen MoE 20~30%(BF16)"]
+    MFU --> NKI2["손으로 짠 NKI 커널:<br/>조밀 모델 약 60%,<br/>DeepSeek 670B급 MoE 40%+"]
+    NKI2 --> Converge["전망: torch.compile 성능이<br/>시간이 갈수록 NKI 수준에 수렴"]
+
+    style Native fill:#eff6ff,stroke:#3b82f6
+    style NKI2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    OSS["오픈소스 로드맵<br/>2단계"] --> P1["1단계: PyTorch 스택 +<br/>NKI 통신·GEMM·어텐션·<br/>커널 라이브러리"]
+    OSS --> P2["2단계: XLA 그래프<br/>컴파일러 + JAX 스택"]
+    P1 --> Gate["인트리 편입 조건:<br/>Meta 승인 + PyTorch<br/>Quality Level 심사 통과"]
+    Gate --> Timeline2["아웃오브트리 기준<br/>2026년 1분기 통과,<br/>인트리는 2026년 말 예상"]
+
+    style Gate fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    NIXL["NIXL KV 캐시<br/>전송 표준화"] --> Mix["같은 네트워크상<br/>Trn2·Trainium3·H100·H200·<br/>B300 간 프리필-디코드<br/>자유 조합 가능"]
+    Mix --> Status["진행 상태: Nvidia GPU용<br/>AWS EFA PR은 업스트림 반영,<br/>Trainium용 코드는<br/>AWS 포크에서 병합 대기"]
+
+    style Mix fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Status fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+*작성 진행률: 약 88% 완료 (16개 섹션 중 14개 완료)*
+*업데이트: 13\~14장(마이크로아키텍처 4대 엔진·숫자 포맷, PyTorch 네이티브 소프트웨어 전환) 작성 완료*
