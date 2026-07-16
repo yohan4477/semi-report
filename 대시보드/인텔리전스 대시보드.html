@@ -75,6 +75,10 @@
   .delta.dn{background:var(--risk-bg); color:var(--risk);}
   .delta.new{background:var(--accent-soft); color:var(--accent);}
   .delta.hold{background:var(--warn-bg); color:var(--warn);}
+  .ctag{display:inline-block; font-size:.68rem; font-weight:700; color:var(--sub); background:var(--card);
+    border:1px solid var(--line); border-radius:5px; padding:0 6px; margin-right:5px; vertical-align:1px; white-space:nowrap;}
+  a.repl{font-size:.74rem; font-weight:700; color:var(--accent); text-decoration:none;}
+  a.repl:hover{text-decoration:underline;}
   .srcb{display:inline-flex; align-items:center; gap:4px; font-size:.68rem; font-weight:700; color:var(--sub);
     border:1px solid var(--line); border-radius:6px; padding:1px 6px 1px 4px; margin-right:6px; vertical-align:middle; white-space:nowrap;}
   .srcb svg{width:12px; height:12px; display:block;}
@@ -181,96 +185,78 @@
     <button class="tab" data-c="robot">로보틱스</button>
   </div>
 
-  <section data-c="all compute memory power model robot">
-    <div class="sec-head">
-      <h2>① 소셜·영상 신호 — LinkedIn·YouTube (뉴스레터 밖 흐름)</h2>
-      <a class="more" href="https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html" target="_blank" rel="noopener">전체 보기 ↗</a>
-    </div>
-    <div class="day">
-      <h3>07-15</h3>
-      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">아마존, 팻트리 대신 무작위 그래프 기반 RNG 네트워크 토폴로지 공개 <span class="delta new">신규</span></div><div class="d">자체 라우팅 프로토콜 Spraypoint로 오버서브스크립션 대비 최대 45% 비용 절감 — 무작위 그래프 기반 대규모 상용 배포 최초 사례 (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482902074763173890/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">딜런 패텔 x 슈퍼마이크로 CBO, AI 인프라 스케일 인터뷰 <span class="delta new">신규</span></div><div class="d">AMD 헬리오스 초기 고객 반응·베라 루빈용 비표준 더블와이드 랙·액체냉각 필수화. 다들 놓치는 대목은 스토리지(PCIe Gen6, E1.S/E3.S, KV 캐시 오프로드) (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482836282017157120/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-    </div>
-    <div class="day">
-      <h3>07-14</h3>
-      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4" fill="#f00"/><path d="M10 9.2l5 2.8-5 2.8z" fill="#fff"/></svg></span><div><div class="t">딜런 패텔 x 슈퍼마이크로 CBO, Computex 인터뷰 영상</div><div class="d">AMD 헬리오스 출시 파트너십, 표준 대비 2배 폭 비표준 폼팩터, 완전한 글로벌 공급망을 갖춘 유일한 티어1 OEM이라는 차별화 강조 (<a href="https://www.youtube.com/watch?v=F8nO8ldG1rg" target="_blank" rel="noopener">원문</a>)</div></div></div>
-      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">AI 가치 포착 리포트 홍보 — 인프라 트레이드에서 모델랩 트레이드로 <span class="delta hold">리포트 홍보</span></div><div class="d">앤트로픽 ARR $9B→$44B+, 추론 총마진 38%→70%대(소프트웨어 처리량 개선 주도) — B300 기준 1,000→14,000 tok/s/GPU 14배 압축 (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482796821765918722/" target="_blank" rel="noopener">원문</a> · <a class="art" href="https://newsletter.semianalysis.com/p/ai-value-capture-the-shift-to-model" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg>리포트 원문</a> <a class="art tr" href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/%5B260205%5D%20AI%20%EA%B0%80%EC%B9%98%20%ED%8F%AC%EC%B0%A9%20-%20%EB%AA%A8%EB%8D%B8%20%EB%9E%A9%EC%9C%BC%EB%A1%9C%EC%9D%98%20%EC%9D%B4%EB%8F%99.md" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#16a34a"/><path fill="#fff" d="M9.5 16.2 6 12.7l1.4-1.4 2.1 2.1 6.1-6.1 1.4 1.4z"/></svg>한글 해석본</a>)</div></div></div>
-      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">AI 모델 현황 인포그래픽 공개</div><div class="d">이미지 위주 게시물, 텍스트 설명 없음 (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482621001030311936/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">메타 뮤즈 스파크 오픈소스 여부 도발성 질문</div><div class="d">저커버그가 오픈소스 노선을 접는 것 아니냐는 코멘트 (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482599961512214528/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-      <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">OSINT로 메모리 사이클 반전 조기 포착 사례 <span class="delta new">신규</span></div><div class="d">대만 범용 D램 재고 첫 순차 감소, 비HBM 국가(대만·중국) 메모리 수출이 한국보다 먼저 빠르게 증가 — 12개월 뒤에야 다들 따라옴 (ChipBook 소개) (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482539595583311872/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t">vLLM 벤치마크서 엔비디아 우위 재확인 <span class="delta up">궤도 유지</span></div><div class="d">AMD는 특정 모델에서 여전히 추격 필요하다는 코멘트 (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7482479466053578753/" target="_blank" rel="noopener">원문</a>)</div></div></div>
-    </div>
-    <div class="note" data-c="compute memory power model">최근 2일(07-14~07-15) 전체 표시 — 소셜 신호 히스토리와 항목 수 동일. 그 이전은 위 "전체 보기"에서 확인</div>
-  </section>
-
   <section class="nl" data-c="all compute memory power model robot">
     <div class="sec-head">
-      <h2>② 뉴스레터 — 발행일순 (최신 5편)</h2>
+      <h2>① 뉴스레터 — 최근 추가순 (카테고리별 최근 1~2편)</h2>
     </div>
     <div class="day">
-      <h3>2026-06-26</h3>
-      <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><a href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/power/%5B260626%5D%20%EB%AF%B8%EA%B5%AD%20%EC%A0%84%EB%A0%A5%EB%A7%9D%20%EC%A0%9C%EC%95%BD%20-%202028%EB%85%84%EA%B9%8C%EC%A7%80%2040GW%2B%20%EC%9E%90%EA%B0%80%EB%B0%9C%EC%A0%84%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%EB%A1%9C%20%EA%B0%80%EB%8A%94%20%EA%B8%B8.md" target="_blank" rel="noopener">미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길</a></div></div></div>
+      <h3>2026-07-13</h3>
+      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">AI 모델</span> <a href="https://newsletter.semianalysis.com/p/tokenbudgeting-our-conversations" target="_blank" rel="noopener">토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태</a></div></div></div>
+      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">AI 모델</span> <a href="https://newsletter.semianalysis.com/p/the-future-of-meta-superintelligence" target="_blank" rel="noopener">메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검</a></div></div></div>
     </div>
     <div class="day">
-      <h3>2026-06-23</h3>
-      <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><a href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/memory/%5B260623%5D%20%EC%A4%91%EA%B5%AD%20CXMT%2C%20DRAM%20%EA%B0%95%EC%9E%90%EB%93%A4%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">중국 CXMT, DRAM 강자들에 도전장을 내밀다</a></div></div></div>
+      <h3>2026-07-12</h3>
+      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">컴퓨트</span> <a href="https://newsletter.semianalysis.com/p/deepseekv4-16t-day-0-to-day-43-performance" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화</a></div></div></div>
+      <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">컴퓨트</span> <a href="https://newsletter.semianalysis.com/p/eda-market-primer" target="_blank" rel="noopener">EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상</a></div></div></div>
+      <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">메모리</span> <a href="https://newsletter.semianalysis.com/p/ectc2026" target="_blank" rel="noopener">ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a></div></div></div>
+      <div class="sig" data-c="robot"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">로보틱스</span> <a href="https://newsletter.semianalysis.com/p/chinas-unitree-will-dominate-global" target="_blank" rel="noopener">Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다</a></div></div></div>
     </div>
     <div class="day">
-      <h3>2026-06-19</h3>
-      <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><a href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/power/%5B260619%5D%202026%EB%85%84%20%EB%AF%B8%EA%B5%AD%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%9A%A9%EB%9F%89%20%EC%A0%88%EB%B0%98%20%EC%B7%A8%EC%86%8C%EC%84%A4%EC%9D%80%20%ED%8B%80%EB%A0%B8%EB%8B%A4.md" target="_blank" rel="noopener">2026년 미국 데이터센터 용량 절반 취소설은 틀렸다</a></div></div></div>
+      <h3>2026-07-10</h3>
+      <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">전력</span> <a href="https://newsletter.semianalysis.com/p/stop-saying-half-of-2026-us-datacenter" target="_blank" rel="noopener">2026년 미국 데이터센터 용량 절반 취소설은 틀렸다</a></div></div></div>
     </div>
     <div class="day">
-      <h3>2026-05-28</h3>
-      <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><a href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/%5B260528%5D%20%EC%95%A4%ED%8A%B8%EB%A1%9C%ED%94%BD%20%EC%84%B1%EC%9E%A5%EA%B3%BC%20%EB%B2%A0%EB%93%9C%EB%9D%BD%20%EB%AF%B9%EC%8A%A4%EB%A1%9C%20%EB%82%98%20%ED%99%80%EB%A1%9C%20%EC%95%9E%EC%84%9C%EA%B0%80%EB%8A%94%20AWS%20%EB%A7%88%EC%A7%84.md" target="_blank" rel="noopener">앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진</a></div></div></div>
+      <h3>2026-07-06</h3>
+      <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">메모리</span> <a href="https://newsletter.semianalysis.com/p/isscc-2026-nvidia-and-broadcom-cpo" target="_blank" rel="noopener">ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트</a></div></div></div>
     </div>
     <div class="day">
-      <h3>2026-05-26</h3>
-      <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><a href="https://github.com/yohan4477/semi-report/blob/main/source/newsletter/ai_infra/power/%5B260526%5D%20800VDC%20%ED%98%81%EB%AA%85%20Part%201%20-%20%EC%A0%84%EB%A0%A5%20%EB%B0%B0%EC%A0%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98%20%EB%8C%80%EC%A0%84%ED%99%98.md" target="_blank" rel="noopener">800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환</a></div></div></div>
+      <h3>2026-07-05</h3>
+      <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg></span><div><div class="t"><span class="ctag">전력</span> <a href="https://newsletter.semianalysis.com/p/inside-the-800vdc-revolution-part" target="_blank" rel="noopener">800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환</a></div></div></div>
     </div>
-    <div class="note">최신 5편만 표시 — 전체 38편은 <a href="https://github.com/yohan4477/semi-report/tree/main/source/newsletter" target="_blank" rel="noopener">GitHub 저장소</a>에서 확인</div>
+    <div class="note">번역·변환 코퍼스에 추가된 시점 기준(발행일 아님) — 원문 발행일이 오래됐어도 최근에 신규 변환된 문서가 우선 노출됩니다. 전체 38편은 <a href="https://github.com/yohan4477/semi-report/tree/main/source/newsletter" target="_blank" rel="noopener">GitHub 저장소</a>에서 확인</div>
   </section>
 
   <section data-c="all compute memory power model robot">
-    <h2>③ 클러스터 종합 판단 — 통합 리포트 7건 요약</h2>
+    <h2>② 클러스터 종합 판단 — 통합 리포트 7건 요약</h2>
 
     <div class="rep" data-c="compute">
-      <div class="head"><span class="name">컴퓨트</span><span class="meta">[260711] · 17편 종합</span></div>
+      <div class="head"><span class="name">컴퓨트</span><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260711%5D%20%EC%BB%B4%ED%93%A8%ED%8A%B8%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8.md" target="_blank" rel="noopener">리포트 보기 ↗</a><span class="meta">[260711] · 17편 종합</span></div>
       <div class="verdict">엔비디아 주도 통합형 코디자인이 칩→랙으로 심화. 경쟁자 추격이 반복돼도 새 특화 축(프리필·디코드 칩)으로 재도약하는 패턴이 굳어짐 — 물리적 병목(TSMC 웨이퍼·구리 대역폭)이 경쟁 구도보다 근본적인 변수로 부상.</div>
       <div class="conf"><span class="cf h">코디자인 확장 높음</span><span class="cf h">추론 랙 분화 높음</span><span class="cf h">구리 장기 집권 높음</span><span class="cf m">커스텀 실리콘 추격 중간</span><span class="cf m">실리콘 병목 이동 중간</span></div>
     </div>
 
     <div class="rep" data-c="model">
-      <div class="head"><span class="name">AI 모델</span><span class="meta">[260711] · agents 2 + rl 3편</span></div>
+      <div class="head"><span class="name">AI 모델</span><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260711%5D%20AI%20%EB%AA%A8%EB%8D%B8%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8.md" target="_blank" rel="noopener">리포트 보기 ↗</a><span class="meta">[260711] · agents 2 + rl 3편</span></div>
       <div class="verdict">에이전트 인프라(과업 지평선 배증 가속·RL 환경 산업화·멀티 에이전트 오케스트레이션)는 반복·가속 확인으로 확신도 높음. "자동화냐 증강이냐"와 "앤트로픽 vs OpenAI 최종 승자"는 아직 열린 변수.</div>
       <div class="conf"><span class="cf h">과업 지평선 가속 높음</span><span class="cf h">RL 산업화 높음</span><span class="cf h">토큰 효율 우위 높음</span><span class="cf h">연산력 제약 성장 높음</span><span class="cf l">자동화 vs 증강 낮음</span></div>
     </div>
 
     <div class="rep" data-c="memory">
-      <div class="head"><span class="name">메모리</span><span class="meta">[260706] · 9편 종합</span></div>
+      <div class="head"><span class="name">메모리</span><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260706%5D%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8.md" target="_blank" rel="noopener">리포트 보기 ↗</a><span class="meta">[260706] · 9편 종합</span></div>
       <div class="verdict">HBM 수요가 커먼디티 DRAM 여력까지 잠식하는 구조적 공급 부족 국면 — SK하이닉스 HBM 우위가 가장 확실하고, 삼성 기술 추격·중국 진입은 관찰 변수. NAND는 밀도 선두가 샌디스크·키오시아로 교체.</div>
       <div class="conf"><span class="cf h">공급 부족 심화 높음</span><span class="cf h">HBM4 물량 격차 높음</span><span class="cf h">NAND 선두 교체 높음</span><span class="cf m">3사+중국 증설 중간</span><span class="cf l">중국 HBM 자립 낮음</span></div>
     </div>
 
     <div class="rep" data-c="power">
-      <div class="head"><span class="name">전력</span><span class="meta">[260704] · 6편 종합</span></div>
+      <div class="head"><span class="name">전력</span><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260704%5D%20%EC%A0%84%EB%A0%A5%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8.md" target="_blank" rel="noopener">리포트 보기 ↗</a><span class="meta">[260704] · 6편 종합</span></div>
       <div class="verdict">전력 "확보"(BTM 자가발전)와 "배전"(800VDC) 양쪽에서 그레이 스페이스 장비에서 화이트 스페이스 벤더(Delta·Vertiv·Panasonic)로 가치 이동 방향에 확신도 누적. "용량 절반 취소" 헤드라인은 파이프라인 실체와 괴리.</div>
       <div class="conf"><span class="cf h">수요 가속 높음</span><span class="cf h">그리드 공급 부족 높음</span><span class="cf h">BTM 주류화 높음</span><span class="cf m">800VDC 전환 중간</span><span class="cf m">취소설 반박 중간</span></div>
     </div>
 
     <div class="rep" data-c="power">
-      <div class="head"><span class="name">냉각</span><span class="meta">[260704] · 2편 종합</span></div>
+      <div class="head"><span class="name">냉각</span><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260704%5D%20%EB%83%89%EA%B0%81%20%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8.md" target="_blank" rel="noopener">리포트 보기 ↗</a><span class="meta">[260704] · 2편 종합</span></div>
       <div class="verdict">냉각판 밀착(DLC)에서 칩 내장형 마이크로플루이딕 냉각(TSMC·마이크로소프트 시제품)으로 진화 방향 확인 — "물을 열원에 더 가깝게"라는 흐름은 일관되나, 아직 시제품 단계라 확신도는 중간.</div>
       <div class="conf"><span class="cf m">마이크로플루이딕 전환 중간</span></div>
     </div>
 
     <div class="rep" data-c="compute memory power">
-      <div class="head"><span class="name">기업 익스포저 2건</span><span class="meta">[260705] 전력·냉각 11곳 · [260706] 반도체·메모리 12곳</span></div>
-      <div class="verdict">기업 축 종합은 아래 ⑥ 매트릭스로 — 방향은 세대 전환(HBM4·400단+ NAND·800VDC)마다 재판정.</div>
+      <div class="head"><span class="name">기업 익스포저 2건</span><span class="meta"><a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EA%B8%B0%EC%97%85%EB%B3%84%20%EC%9D%B5%EC%8A%A4%ED%8F%AC%EC%A0%80%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260705%5D%20%EA%B8%B0%EC%97%85%EB%B3%84%20%EC%9D%B5%EC%8A%A4%ED%8F%AC%EC%A0%80%20%EB%A6%AC%ED%8F%AC%ED%8A%B8%20-%20AI%20%EC%9D%B8%ED%94%84%EB%9D%BC%20%EC%A0%84%EB%A0%A5%C2%B7%EB%83%89%EA%B0%81.md" target="_blank" rel="noopener">[260705] 전력·냉각 11곳 ↗</a> · <a class="repl" href="https://github.com/yohan4477/semi-report/blob/main/%ED%86%B5%ED%95%A9%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%EA%B8%B0%EC%97%85%EB%B3%84%20%EC%9D%B5%EC%8A%A4%ED%8F%AC%EC%A0%80%20%EB%A6%AC%ED%8F%AC%ED%8A%B8/%5B260706%5D%20%EA%B8%B0%EC%97%85%EB%B3%84%20%EC%9D%B5%EC%8A%A4%ED%8F%AC%EC%A0%80%20%EB%A6%AC%ED%8F%AC%ED%8A%B8%20-%20%EB%B0%98%EB%8F%84%EC%B2%B4%C2%B7%EB%A9%94%EB%AA%A8%EB%A6%AC.md" target="_blank" rel="noopener">[260706] 반도체·메모리 12곳 ↗</a></span></div>
+      <div class="verdict">기업 축 종합은 아래 ③ 매트릭스로 — 방향은 세대 전환(HBM4·400단+ NAND·800VDC)마다 재판정.</div>
     </div>
   </section>
 
   <section data-c="all compute memory power model robot">
-    <h2>④ 기업 익스포저 매트릭스 — 방향 × 확신도 (34곳)</h2>
+    <h2>③ 기업 익스포저 매트릭스 — 방향 × 확신도 (34곳)</h2>
     <div class="mx">
       <div class="h"></div><div class="h">확신도 높음</div><div class="h">중간</div><div class="h">낮음·상충</div>
       <div class="rowlab">수혜</div>
