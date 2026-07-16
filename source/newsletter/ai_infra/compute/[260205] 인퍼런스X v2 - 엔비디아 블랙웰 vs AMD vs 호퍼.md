@@ -182,5 +182,141 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 20% 완료 (15개 섹션 중 3개 완료)*
-*업데이트: 1\~3장(개요, 핵심 관찰 결과 요약, 핵심 개념 정리) 작성 완료*
+## 4. 시간 경과에 따른 소프트웨어 개선 추적
+
+**📌 핵심:**
+- InferenceX의 핵심 목적 중 하나는 **소프트웨어 개선 속도를 시각화**하는 것 — 칩은 연 단위로 출시되지만 소프트웨어는 주 단위로 갱신되므로, 최신 레시피를 지속 반영해 재벤치마크
+- **AMD의 개선 속도가 가장 극적** — SGLang 기반 DeepSeek R1 FP4는 동일 상호작용성 기준 2개월도 안 되는 기간(2025년 12월\~2026년 1월)에 처리량이 거의 2배로 향상, 이는 AMD가 포크한 SGLang 이미지의 개선 사항을 공식 SGLang 이미지로 업스트림하도록 SemiAnalysis가 압박한 결과이기도 함
+- **Nvidia는 상대적으로 안정적** — B200 SGLang은 같은 기간 소폭 개선에 그쳤고, H200 TRT-LLM 단일노드는 4개월간(10월 이후) 성능 변화가 거의 없었는데, 이는 Hopper 지원이 출시 첫날부터 우수해 이미 이론적 피크치에 근접했기 때문(개선 여지가 원래 적음)
+- 결론: **GB200 Dynamo TRT-LLM 분리형 서빙**은 한 달 조금 넘는 기간 동안 최대 처리량이 20% 증가(중간 상호작용성 구간의 개선은 Wide EP 커널이 성숙해진 결과로 추정) — **MI355X는 AMD의 신규 통신 라이브러리 MoRI 도입**으로 20\~45 tok/s/user 구간에서 GPU당 처리량이 한 달여 만에 20% 이상 향상
+
+---
+
+```mermaid
+flowchart TD
+    Goal2["InferenceX의<br/>핵심 목적"] --> Yearly["칩: 연 단위 출시"]
+    Goal2 --> Weekly["소프트웨어: 주 단위 갱신"]
+    Weekly --> Track["→ 지속적 재벤치마크로<br/>개선 속도 시각화"]
+
+    style Track fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    AMDSpeed["AMD 개선 속도<br/>(가장 극적)"] --> R1FP4["SGLang DeepSeek R1 FP4:<br/>2개월 내 처리량 약 2배<br/>(2025-12~2026-01)"]
+    R1FP4 --> Upstream["AMD 포크 SGLang<br/>개선사항 → 공식<br/>SGLang 이미지로 업스트림"]
+
+    style R1FP4 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    NVSpeed["Nvidia 개선 속도<br/>(상대적으로 안정적)"] --> B200s["B200 SGLang:<br/>같은 기간 소폭 개선"]
+    NVSpeed --> H200s["H200 TRT-LLM 단일노드:<br/>4개월간 거의 변화 없음<br/>(출시 첫날부터 이론 피크 근접)"]
+
+    style H200s fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    RecentGain["최근 1개월여<br/>단위 개선 사례"] --> GB200g["GB200 Dynamo TRT-LLM:<br/>최대 처리량 20%↑<br/>(WideEP 커널 성숙)"]
+    RecentGain --> MI355g["MI355X(신규 MoRI<br/>라이브러리): 20~45tok/s/user<br/>구간 GPU당 처리량 20%+↑"]
+
+    style GB200g fill:#f0fdf4,stroke:#16a34a
+    style MI355g fill:#f0fdf4,stroke:#16a34a
+```
+
+---
+
+## 5. 분리형 서빙 프레임워크와 DeepSeek Disagg+WideEP 심층분석
+
+**📌 핵심:**
+- **Nvidia는 Dynamo**를 분리형 추론 프레임워크로 사용 — 다중노드 분산 추론에 특화된 엔진 독립적(agnostic) 프레임워크로, 프리필-디코드 분리·요청 라우팅·KV캐시 오프로딩을 지원하며 SGLang·TRT-LLM을 백엔드로 자유롭게 조합
+- **AMD는 SGLang 기반에 두 가지 KV캐시 전송 프레임워크**를 사용 — **MoRI**(AMD의 RDMA·GPU 통합 특화 고성능 통신 인터페이스, 중국 기반 엔지니어링 팀이 처음부터 새로 설계, 기존처럼 Nvidia NCCL을 포크한 RCCL과 다른 접근)와 최근 PyTorch 생태계에 합류한 **Mooncake**(프리필-디코드 분리와 장애 허용 다중노드 기능 지원)
+- 거의 모든 상호작용성 구간에서 **분리형 추론이 집계형(단일노드) 추론보다 GPU당 총 토큰 처리량이 높음** — 다만 **MI355X는 저상호작용성·고배치 구간에서만 분리형이 집계형을 능가**(FP4 전반에 걸쳐 나타나는 패턴으로, ROCm 커널 최적화 부족이 원인으로 추정)
+- 결론: FP4에서 분리형+WideEP를 결합하면 **이론상 MI355X가 단일노드보다 훨씬 나아야 하지만, 실제로는 고상호작용성 구간에서 오히려 더 나쁜 성능**을 보임 — 여러 최신 최적화를 동시에 조합했을 때 ROCm 소프트웨어 스택의 커널·집단통신 최적화가 따라가지 못하는 조합성 문제의 구체적 사례
+
+---
+
+```mermaid
+flowchart TD
+    Framework2["분리형 서빙<br/>프레임워크 비교"] --> Dynamo2["Nvidia: Dynamo<br/>(엔진 독립적, SGLang·<br/>TRT-LLM 백엔드 조합)"]
+    Framework2 --> AMDFw["AMD: SGLang +<br/>MoRI 또는 Mooncake<br/>(KV캐시 전송)"]
+
+    style Dynamo2 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    MoRI2["MoRI 접근 방식"] --> Old["기존 방식: Nvidia NCCL을<br/>포크한 RCCL"]
+    MoRI2 --> New["MoRI: RDMA·GPU 통합<br/>특화, 처음부터<br/>새로 설계(첫 원칙)"]
+
+    style New fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    DisaggVsAgg["분리형 vs 집계형<br/>(단일노드) 처리량"] --> Most["대부분 구간:<br/>분리형이 GPU당 처리량 우위"]
+    DisaggVsAgg --> MI355Case["MI355X 예외: 저상호작용성·<br/>고배치 구간에서만<br/>분리형이 집계형 능가"]
+
+    style MI355Case fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Theory["FP4+분리형+WideEP<br/>이론 vs 실제"] --> TheoryOK["이론: MI355X가<br/>단일노드보다 훨씬 우수해야 함"]
+    TheoryOK --> RealBad["실제: 고상호작용성<br/>구간에서 오히려 더 나쁨"]
+    RealBad --> Root["원인: ROCm 커널·<br/>집단통신 최적화가<br/>다중 기법 결합을 못 따라감"]
+
+    style RealBad fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 6. Nvidia TensorRT-LLM과 NVL72의 압도적 성능
+
+**📌 핵심:**
+- **TensorRT-LLM은 이미 TogetherAI 등 프로바이더에서 시간당 수십억 토큰**을 서빙하는 검증된 엔진 — GB200·GB300 NVL72에서 특히 강점을 발휘해 고처리량 구간에서 **2배 이상의 성능**을 이끌어내고, MTP를 켜면 칩의 잠재력을 한층 더 끌어냄
+- NVL72의 넓은 스케일업 월드사이즈(72 GPU)가 주는 이점은 상호작용성이 낮을 때(고배치) 가장 크게 나타남 — 상호작용성 60 tok/s/user 고정 시 **GB200 NVL72의 GPU당 토큰생성 속도가 B200(8 GPU 스케일업)의 거의 3배**
+- 다만 이 격차는 상호작용성이 높아질수록(배치가 작아질수록) 줄어듦 — **130 tok/s/user에서는 GB200 NVL72의 이점이 거의 사라지고, 오히려 백만토큰당 비용은 B200보다 비싸짐**(워크로드가 작아지면 단일 HGX 노드(8 GPU)의 NVLink 도메인 안에 다 들어가버려 NVL72의 대규모 스케일업 이점이 무의미해지기 때문)
+- 결론: 랙스케일 아키텍처의 이점은 **모든 상호작용성 구간에서 균일하지 않고, 저상호작용성·고배치 워크로드에서 가장 강력** — 고상호작용성 워크로드에서는 오히려 소형 노드가 비용 효율적일 수 있어, "무조건 큰 랙이 유리하다"는 통념과 다른 결론
+
+---
+
+```mermaid
+flowchart TD
+    TRT2["TensorRT-LLM 실전 검증"] --> Volume["TogetherAI 등에서<br/>시간당 수십억 토큰 서빙"]
+    Volume --> NVL72Boost["GB200·GB300 NVL72에서<br/>고처리량 구간 2배 이상<br/>성능(+MTP로 추가 향상)"]
+
+    style NVL72Boost fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    WorldSize["NVL72 스케일업<br/>이점의 상호작용성별 변화"] --> Low2["60tok/s/user(저상호작용성,<br/>고배치): GB200이<br/>B200 대비 거의 3배"]
+    WorldSize --> High2["130tok/s/user(고상호작용성):<br/>이점 거의 소멸,<br/>오히려 GB200이 더 비쌈"]
+
+    style Low2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style High2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    WhyShrink["격차가 줄어드는 이유"] --> SmallBatch2["고상호작용성 = 소배치<br/>→ 워크로드가 단일<br/>HGX 노드(8GPU) 안에 다 들어감"]
+    SmallBatch2 --> Irrelevant["NVL72의 72GPU<br/>스케일업 이점이<br/>무의미해짐"]
+
+    style Irrelevant fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Lesson2["랙스케일 이점의<br/>비균일성"] --> LowBest["저상호작용성·고배치:<br/>랙스케일이 압도적 유리"]
+    Lesson2 --> HighBest["고상호작용성·소배치:<br/>소형 노드가 오히려<br/>비용 효율적일 수 있음"]
+
+    style HighBest fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 40% 완료 (15개 섹션 중 6개 완료)*
+*업데이트: 4\~6장(시간 경과에 따른 소프트웨어 개선 추적, 분리형 서빙 프레임워크·DeepSeek 심층분석, TensorRT-LLM·NVL72 압도적 성능) 작성 완료*
