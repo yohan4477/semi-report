@@ -1,6 +1,6 @@
 # [260205] 루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약 — 대장 반영용 노트
 
-문서 경로: `source/newsletter/ai_infra/compute/[260205] 루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약.md`
+문서 경로: `content/newsletter/ai_infra/compute/[260205] 루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약.md`
 
 병렬 작업 중 공유 파일(`대장/예측 대장.md`, `대장/숫자 대장.md`, `CATEGORIES.md`) 직접 수정을 피하기 위해 이 노트에 추출 내용을 기록. 이후 병합 작업자가 아래 내용을 각 대장 파일에 append하면 됨.
 

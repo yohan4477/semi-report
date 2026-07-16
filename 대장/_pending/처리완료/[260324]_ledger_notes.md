@@ -4,7 +4,7 @@
 
 - **원문**: GTC 2026 – The Inference Kingdom Expands (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-03-24
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

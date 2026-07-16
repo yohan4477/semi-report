@@ -4,7 +4,7 @@
 
 - **원문**: H100 vs GB200 NVL72 Training Benchmarks - Power, TCO, and Reliability Analysis, Software Improvement Over Time (SemiAnalysis, Dylan Patel)
 - **발행일**: 2025-08-20
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md`
 - **카테고리**: `ai-infra/compute` (기존 카운트 4 → +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

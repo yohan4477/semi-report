@@ -4,7 +4,7 @@
 
 - **원문**: Stop Saying Half of 2026 US Datacenter Capacity Is Canceled (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-06-19
-- **변환 문서 경로**: `source/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md`
 - **카테고리**: `ai-infra/power` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

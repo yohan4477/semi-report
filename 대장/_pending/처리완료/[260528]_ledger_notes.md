@@ -4,7 +4,7 @@
 
 - **원문**: Anthropic Growth and Bedrock Mix Drive AWS Margins Higher While Peers Lag (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-05-28
-- **변환 문서 경로**: `source/newsletter/ai_infra/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md`
 - **카테고리**: `ai-infra` (frontmatter 그대로, 정확히 맞는 하위 카테고리 없어 상위 사용 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

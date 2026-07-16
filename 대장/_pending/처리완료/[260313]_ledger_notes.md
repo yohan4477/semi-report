@@ -4,7 +4,7 @@
 
 - **원문**: The Great AI Silicon Shortage (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-03-13
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, 카운트 +1 필요), `ai-infra/memory` (기존 카테고리, 카운트 +1 필요) — **두 카테고리 모두 갱신 필요**
 
 ## CATEGORIES.md 갱신 필요사항

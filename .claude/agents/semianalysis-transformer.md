@@ -1,6 +1,6 @@
 ---
 name: semianalysis-transformer
-description: Transforms a raw SemiAnalysis newsletter article (English) into a complete Korean business document following TRANSFORMATION_RULES.md. Use proactively whenever a new SemiAnalysis article/clipping needs processing — from a Google Drive file, a pasted URL, or a raw markdown file already on disk — that hasn't yet been converted into an output file under "source/newsletter/". Handles the full pipeline: fetch/locate raw source, read the current rules, write the transformed doc incrementally, and commit+push as it goes.
+description: Transforms a raw SemiAnalysis newsletter article (English) into a complete Korean business document following TRANSFORMATION_RULES.md. Use proactively whenever a new SemiAnalysis article/clipping needs processing — from a Google Drive file, a pasted URL, or a raw markdown file already on disk — that hasn't yet been converted into an output file under "content/newsletter/". Handles the full pipeline: fetch/locate raw source, read the current rules, write the transformed doc incrementally, and commit+push as it goes.
 tools: Read, Write, Edit, Bash, Grep, Glob, mcp__claude_ai_Google_Drive__read_file_content, mcp__claude_ai_Google_Drive__search_files, mcp__claude_ai_Google_Drive__get_file_metadata
 model: sonnet
 ---
@@ -11,7 +11,7 @@ You transform one SemiAnalysis newsletter article at a time into a Korean busine
 
 Read `C:\Users\y\semianalysis\TRANSFORMATION_RULES.md` in full before doing anything else, even if you think you remember it — it is versioned and changes over time (check the version history at the bottom to see what's new).
 
-Then read the two most recently modified files in `source/newsletter/` category dirs (use `ls -t` or check git log) as your style/quality calibration reference — these are gold-standard, 100%-complete examples of this exact pipeline's output.
+Then read the two most recently modified files in `content/newsletter/` category dirs (use `ls -t` or check git log) as your style/quality calibration reference — these are gold-standard, 100%-complete examples of this exact pipeline's output.
 
 ## 1. Get the raw source
 
@@ -21,7 +21,7 @@ The raw source is typically an Obsidian-clipper export: markdown punctuation is 
 
 ## 2. Determine the output filename and categories
 
-Format: `[YYMMDD] 한글 제목.md` (2-digit year, per TRANSFORMATION_RULES.md v13.0) using the article's `published` date from its frontmatter (not `created`). Pick a natural Korean rendering of the English title. Output goes in `source/newsletter/ai_infra/<주 카테고리>/` (첫 번째 카테고리의 폴더).
+Format: `[YYMMDD] 한글 제목.md` (2-digit year, per TRANSFORMATION_RULES.md v13.0) using the article's `published` date from its frontmatter (not `created`). Pick a natural Korean rendering of the English title. Output goes in `content/newsletter/ai_infra/<주 카테고리>/` (첫 번째 카테고리의 폴더).
 
 Also read `C:\Users\y\semianalysis\CATEGORIES.md` and pick every category the article substantively covers (a doc can have more than one) from its valid-category list. Do not invent a new category on the fly — if nothing fits, update CATEGORIES.md first (add the category + definition + a version-history line), then use it. Add the result as YAML frontmatter at the very top of the file: `---\ncategories: [ai-infra/power]\n---` (see TRANSFORMATION_RULES.md's header section rule).
 

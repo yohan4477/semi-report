@@ -4,7 +4,7 @@
 
 - **원문**: Claude Code is the Inflection Point (SemiAnalysis, Doug O'Laughlin)
 - **발행일**: 2026-02-06
-- **변환 문서 경로**: `source/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md`
+- **변환 문서 경로**: `content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md`
 - **카테고리**: `ai-models/agents` (신규 카운트 +1 필요 — 현재 CATEGORIES.md에 `ai-models` 하위 합계가 0으로 표기돼 있어, 표에 `ai-models/agents` 행 자체를 신설하거나 기존 `ai-models` 행을 세분화하는 판단이 필요함)
 
 ## CATEGORIES.md 갱신 필요사항

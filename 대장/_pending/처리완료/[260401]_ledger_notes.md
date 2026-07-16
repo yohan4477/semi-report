@@ -4,7 +4,7 @@
 
 - **원문**: Dissecting Nvidia Blackwell - Tensor Cores, PTX Instructions, SASS, Floorsweep, Yield (SemiAnalysis, Kimbo Chen)
 - **발행일**: 2026-04-01
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

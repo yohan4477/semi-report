@@ -4,7 +4,7 @@
 
 - **원문**: Vera Rubin – Extreme Co-Design: An Evolution from Grace Blackwell Oberon (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-02-26
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요, 4 → 5)
 
 ## CATEGORIES.md 갱신 필요사항

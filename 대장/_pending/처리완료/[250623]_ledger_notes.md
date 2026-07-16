@@ -4,7 +4,7 @@
 
 - **원문**: NVIDIA Tensor Core Evolution: From Volta To Blackwell (SemiAnalysis, Dylan Patel)
 - **발행일**: 2025-06-23
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[250623] NVIDIA 텐서 코어 진화 - Volta에서 Blackwell까지.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[250623] NVIDIA 텐서 코어 진화 - Volta에서 Blackwell까지.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

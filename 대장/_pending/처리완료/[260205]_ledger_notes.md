@@ -4,7 +4,7 @@
 
 - **원문**: TPUv7: Google Takes a Swing at the King (SemiAnalysis, Dylan Patel / Myron Xie / Daniel Nishball)
 - **발행일**: 2026-02-05
-- **변환 문서 경로**: `source/newsletter/ai_infra/compute/[260205] TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다.md`
+- **변환 문서 경로**: `content/newsletter/ai_infra/compute/[260205] TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다.md`
 - **카테고리**: `ai-infra/compute` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

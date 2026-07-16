@@ -4,7 +4,7 @@
 
 - **원문**: The Coding Assistant Breakdown: More Tokens Please (SemiAnalysis, Dylan Patel)
 - **발행일**: 2026-04-25
-- **변환 문서 경로**: `source/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md`
+- **변환 문서 경로**: `content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md`
 - **카테고리**: `ai-models/agents` (기존 카테고리, CATEGORIES.md에 이미 존재 — 카운트 +1 필요)
 
 ## CATEGORIES.md 갱신 필요사항

@@ -4,7 +4,7 @@
 
 - **원문**: Scaling Reinforcement Learning: Environments, Reward Hacking, Agents, Scaling Data (SemiAnalysis, Dylan Patel)
 - **발행일**: 2025-06-09
-- **변환 문서 경로**: `source/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md`
+- **변환 문서 경로**: `content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md`
 - **카테고리**: `ai-models/rl` (CATEGORIES.md에 이미 유효 카테고리로 존재 — 카운트 신규 반영 필요)
 
 ## CATEGORIES.md 갱신 필요사항
