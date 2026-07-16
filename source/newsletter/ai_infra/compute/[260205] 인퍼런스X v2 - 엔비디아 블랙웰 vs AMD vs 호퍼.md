@@ -590,5 +590,142 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 80% 완료 (15개 섹션 중 12개 완료)*
-*업데이트: 10\~12장(AMD 조합성 문제·ATOM 엔진 비판, MTP·Anthropic Fast Mode 경제학, Wide EP·분리형 프리필 심화 원리) 작성 완료*
+## 13. 단일노드 벤치마크 결과 - DeepSeek R1과 GPT-OSS 120B
+
+**📌 핵심:**
+- **DeepSeek R1 FP8 단일노드**에서는 MI355X가 B200과 견줄 만하고, 저상호작용성 구간에서는 오히려 **MI355X(SGLang)가 B200(SGLang)의 처리량을 앞서며**, 성능당비용 기준으로는 대부분의 경우 B200(TRT·SGLang 모두)을 능가 — 문제는 2026년 현재 대다수 프론티어랩·추론 프로바이더가 FP8이나 단일노드로 서빙하지 않는다는 점("소프트웨어가 곧 해자")
+- FP4로 전환하면 이 우위가 사라지고 **MI355X가 B200에 크게 뒤처짐**(12장에서 다룬 조합성 문제의 단일노드판) — H200(SGLang) vs MI325X(SGLang) 비교는 지난 InferenceMAX v1(작년 10월) 이후 큰 변화가 없고, **MI325X는 상호작용성 범위 자체가 13\~35 tok/s/user로 H200(30\~90 tok/s/user)보다 훨씬 좁아** 다양한 반응속도를 요구하는 서비스에는 불리
+- **GPT-OSS 120B 단일노드**에서는 MI300X·MI325X·H200·H100이 처리량-상호작용성 그래프 좌하단에 몰려 비슷한 트레이드오프를 보이는 가운데 Nvidia가 근소 우위, MI355X는 이 그룹 대비 GPU당 처리량이 2배 이상 — 다만 B200·GB200이 MI355X보다 한 단계 더 위에 있고, **GB200이 B200보다 더 나은 처리량-상호작용성 곡선**을 그리는 이유는 (같은 Blackwell 다이를 쓰지만) 플랫폼·서빙 스택이 상호연결·토폴로지·CPU-GPU 결합·런타임 스케줄링 등 비연산 병목을 줄여주기 때문
+- 결론: 비용까지 고려하면 **MI355X는 고처리량 구간에서 B200을 앞서는 등 경쟁력이 살아나지만, GB200이 여전히 가장 저렴** — 100 tok/s/user 부근에서는 GB200 NVL72의 넓은 스케일업 도메인 덕에 GPU당 출력 토큰처리량이 2배 이상으로 벌어짐
+
+---
+
+```mermaid
+flowchart TD
+    R1FP8["DeepSeek R1 FP8<br/>단일노드"] --> Compete3["MI355X vs B200:<br/>대등, 저상호작용성은<br/>MI355X가 우위"]
+    Compete3 --> ButNot["문제: 2026년 현재<br/>대다수는 FP8·단일노드로<br/>서빙 안 함"]
+
+    style Compete3 fill:#f0fdf4,stroke:#16a34a
+    style ButNot fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    R1FP4b["DeepSeek R1 FP4<br/>단일노드"] --> Gap3["MI355X가 B200에<br/>크게 뒤처짐<br/>(조합성 문제의 단일노드판)"]
+    R1FP4b --> Range["MI325X 상호작용성 범위:<br/>13~35tok/s/user<br/>(H200 30~90보다 훨씬 좁음)"]
+
+    style Gap3 fill:#fef2f2,stroke:#dc2626
+```
+
+```mermaid
+flowchart TD
+    GPTOSS2["GPT-OSS 120B<br/>단일노드 계층 구조"] --> Group1["1군(좌하단): MI300X·<br/>MI325X·H200·H100<br/>(Nvidia 근소 우위)"]
+    GPTOSS2 --> Group2["2군: MI355X<br/>(1군 대비 처리량 2배+)"]
+    GPTOSS2 --> Group3["3군(최상위): B200·GB200<br/>(GB200이 더 우수, 플랫폼·<br/>스케줄링 최적화 덕분)"]
+
+    style Group3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    CostView["비용 반영 시<br/>순위 변화"] --> MI355Up["MI355X: 고처리량<br/>구간에서 B200 앞섬"]
+    CostView --> GB200Win["GB200: 여전히<br/>가장 저렴(100tok/s/user<br/>부근 출력처리량 2배+)"]
+
+    style GB200Win fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 14. InferenceX 인프라 변화와 향후 계획
+
+**📌 핵심:**
+- v1 시절에는 매일 밤 모든 설정을 전수 스윕했지만, 칩·기법이 늘면서 비효율이 커져 **체인지로그 기반 트리거 방식**으로 전환 — 개발자가 성능에 영향을 주는 변경을 만들면 저장소 루트의 체인지로그에 항목을 추가하고, 이 PR이 머지되면 워크플로가 해당 설정만 골라 마스터 설정 YAML에서 스윕을 끌어와 GitHub Actions 잡으로 분배(불필요한 야간 전수 재실행을 없앰)
+- **Claude Code를 개발에 深이 통합** — PR 리뷰뿐 아니라 클러스터에서 직접 스윕을 실행·결과 확인·반복하는 권한까지 부여해 GitHub 앱을 통한 신속한 수정 배포가 가능해졌고, 신규 vLLM·SGLang 이미지가 나올 때마다 필요한 레시피 변경사항(환경변수·엔진 인자 등)을 이미지 체인지로그에서 자동으로 찾아내는 용도로도 활용(연간 약 300만 달러 규모의 Claude 사용량에 해당하는 일일 약 6,000달러 지출)
+- **GitHub Actions 자체의 안정성 문제**가 지속적 걸림돌 — Microsoft/GitHub도 최근 90일 가동률이 97.36%(가용성 "9" 하나에 불과)에 그친다고 인정할 정도로, 수백 개 GPU에 걸쳐 수천 개 잡을 띄우는 용도로는 애초에 설계되지 않은 도구라는 한계를 노출(다만 GitHub Actions 엔지니어들과 협업해 워크플로 페이지 지연 로딩 등 일부 개선은 확보)
+- 결론: 향후 계획은 ① 완전 무작위 데이터 대신 **WildChat 같은 실제 다중턴 대화 데이터셋으로 전환**(프리픽스 캐싱·KV캐시 CPU 오프로딩 등 실사용 패턴 반영 — MI355X는 HBM 288GB로 B200 192GB보다 넉넉해 고동시성 다중턴에 유리할 전망, 반대로 CPU 오프로딩이 걸리면 GB 계열이 CPU-GPU 대역폭(900GB/s)에서 유리할 전망) ② **에이전틱 코딩 벤치마크** 신설(Claude Code·Codex·Kimi 등 장문맥+툴사용 시나리오) ③ **DeepSeek V3.2·V4(출시 당일)·Kimi K2.5·Qwen3·GLM5** 등 신규 모델과 **TPU·Trainium** 추가
+
+---
+
+```mermaid
+flowchart TD
+    Trigger2["벤치마크 트리거<br/>방식 전환"] --> Before2["v1: 매일 밤<br/>전 설정 전수 스윕<br/>(칩·기법 증가로 비효율)"]
+    Trigger2 --> After3["v2: 체인지로그 기반<br/>트리거(변경된 설정만<br/>선별 재실행)"]
+
+    style After3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ClaudeUse["Claude Code<br/>심화 통합"] --> Review["PR 리뷰"] 
+    ClaudeUse --> Sweep2["클러스터 스윕 직접<br/>실행·결과 확인·반복"]
+    ClaudeUse --> Recipe["신규 이미지 레시피<br/>변경사항 자동 탐색"]
+
+    style Sweep2 fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    GHIssue["GitHub Actions<br/>안정성 한계"] --> Uptime["최근 90일 가동률<br/>97.36%(가용성 '9' 1개뿐)"]
+    Uptime --> Scale4["수백 GPU·수천 잡<br/>규모용으로는<br/>애초에 미설계"]
+
+    style Uptime fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Future2["향후 로드맵 3가지"] --> Real2["① 실제 다중턴<br/>데이터셋(WildChat)<br/>전환 + KV캐시 CPU 오프로딩"]
+    Future2 --> Agentic["② 에이전틱 코딩<br/>벤치마크 신설"]
+    Future2 --> Models2["③ DeepSeek V4 등<br/>신규 모델 + TPU·<br/>Trainium 추가"]
+
+    style Real2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+## 15. 세대별 TCO 비교 - 자본비용과 운영비용
+
+**📌 핵심:**
+- 동일 세대 비교에서 **Nvidia 시스템의 자본비용이 AMD보다 대체로 높음** — 근본 원인은 컴퓨트 트레이 원가의 핵심인 GPU 단가 자체가 Nvidia가 더 높기 때문(재무제표상으로도 Nvidia의 GPU 마진이 타 벤더보다 높다는 사실이 잘 알려져 있음)
+- 구체적으로 **MI300X 컴퓨트 트레이 원가는 약 $138K인데 H100 SXM은 약 $170K**, 세대가 갈수록 격차 확대 — **MI355X는 약 $197K, B200은 약 $264K, B300은 약 $344K**로 실리콘 원가 상승분이 그대로 서버 원가·클러스터 총자본비용(CapEx) 상승으로 이어짐
+- 운영비용은 세대 내에서는 벤더 간 비교적 비슷한 수준 — **칩 TDP가 운영비의 지배적 변수**이며, H100에서 GB300으로 갈수록 칩 TDP가 대략 2배로 늘어 시간당 GPU당 운영비도 함께 상승
+- 결론: 총소유비용 관점에서 AMD는 낮은 자본비용, Nvidia는 랙스케일 아키텍처가 주는 처리량·대역폭 우위로 각각 다른 축에서 경쟁력을 갖는 구도 — 다만 앞선 장들에서 실측으로 확인했듯, **온페이퍼 자본비용 우위만으로는 실제 워크로드(FP4+분리형+WideEP 동시 적용)에서의 최종 성능당비용을 담보하지 못함**
+
+---
+
+```mermaid
+flowchart TD
+    CapexCompare["세대별 컴퓨트<br/>트레이 원가"] --> Hopper3["Hopper세대: MI300X<br/>약$138K vs H100 SXM 약$170K"]
+    CapexCompare --> Blackwell3["Blackwell세대: MI355X<br/>약$197K vs B200 약$264K<br/>vs B300 약$344K"]
+
+    style Blackwell3 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    WhyGap2["원가 격차의 근본 원인"] --> GPUPrice["Nvidia GPU 단가가<br/>구조적으로 더 높음<br/>(마진 우위, 재무제표 확인)"]
+    GPUPrice --> Flow["→ 서버 원가↑ →<br/>클러스터 CapEx↑"]
+
+    style GPUPrice fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Opex2["운영비 결정 변수"] --> TDP2["칩 TDP가 지배적 변수<br/>(세대 내 벤더 간<br/>큰 차이 없음)"]
+    TDP2 --> Trend["H100→GB300:<br/>TDP 약 2배 증가<br/>→ 운영비도 동반 상승"]
+
+    style TDP2 fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    FinalTCO2["TCO 최종 구도"] --> AMDAxis["AMD: 낮은 자본비용<br/>축에서 경쟁력"]
+    FinalTCO2 --> NVAxis["Nvidia: 랙스케일<br/>처리량·대역폭 우위<br/>축에서 경쟁력"]
+    NVAxis --> Caveat3["단, 온페이퍼 자본비용<br/>우위가 실제 워크로드<br/>성능당비용을 담보 못함<br/>(조합성 문제 실측 확인)"]
+
+    style Caveat3 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 전체 15개 섹션(개요, 핵심 관찰 결과 요약, 핵심 개념 정리, 시간 경과 소프트웨어 개선 추적, 분리형 서빙 프레임워크·DeepSeek 심층분석, TensorRT-LLM·NVL72, Nvidia vs AMD Disagg Prefill, 추론 제공업체 단위경제, Jensen 과소약속·과잉이행, AMD 조합성·ATOM 비판, MTP·Fast Mode 경제학, Wide EP·분리형 심화 원리, 단일노드 벤치마크, 인프라 변화·향후 계획, 세대별 TCO 비교) 작성 완료*
