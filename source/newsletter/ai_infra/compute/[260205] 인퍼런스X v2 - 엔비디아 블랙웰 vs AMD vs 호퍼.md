@@ -452,5 +452,143 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 60% 완료 (15개 섹션 중 9개 완료)*
-*업데이트: 7\~9장(Nvidia vs AMD Disagg Prefill 비교, 추론 제공업체 단위경제 분석, Jensen의 과소약속·과잉이행) 작성 완료*
+## 10. AMD 조합성(Composability) 문제와 ATOM 엔진 비판
+
+**📌 핵심:**
+- 프론티어 AI랩들은 이미 **FP4 + 분리형 서빙 + Wide EP를 동시에** 적용해 운영 중인데, AMD의 오픈소스 추론 스택은 이 세 가지를 함께 적용했을 때 이론적 성능(속도의 빛, speed of light 모델링)에도 못 미침 — SemiAnalysis·AMD 양쪽의 이론 모델링 모두 "FP4+분리형+WideEP는 단일노드 MI355X보다 나아야 한다"고 예측하지만 실측은 정반대
+- AMD가 자체 개발한 신규 추론 엔진 **ATOM**은 단일노드 성능은 다소 개선되지만, NVMe·CPU KV캐시 오프로딩·툴 파싱·Wide EP·분리형 서빙을 전혀 지원하지 않아 **실제 프로덕션에서 채택한 고객이 전무** — 반면 Nvidia TRT-LLM은 TogetherAI 등에서 이미 시간당 수십억 토큰을 생성하며 툴 파싱 등 기능도 충실히 지원
+- vLLM 등 오픈소스 메인테이너들은 AMD의 컴퓨트·코드 기여 부족에 실망 — vLLM 리드 메인테이너는 "vLLM CI에 추가할 수 있는 작동하는 MI355X가 아직 없다"고 공개 언급했고, 실제로 vLLM에는 MI355X 테스트가 0건(B200은 다수), MI300 계열도 CUDA와 동등한 사용성을 갖추려면 최소 20대씩(MI300·MI325·MI355) 추가 CI 머신이 필요한 상황(SemiAnalysis가 개입해 최근 몇 주 사이 MI355X 머신 일부 확보에는 성공)
+- 결론: SemiAnalysis는 AMD가 아무도 쓰지 않는 ATOM 같은 단일노드 프로젝트에서 인력을 빼내 **vLLM·SGLang 같은 실사용 프레임워크의 조합성 문제 해결에 재배치**할 것을 강력 권고 — 이 시간차가 Nvidia가 75% 총마진(원가의 4배 마진)을 유지할 수 있는 여지를 계속 벌어주고 있다고 지적
+
+---
+
+```mermaid
+flowchart TD
+    RealUse["프론티어랩 실제<br/>사용 조건"] --> Triple["FP4 + 분리형 서빙 +<br/>Wide EP 동시 적용"]
+    Triple --> AMDFail["AMD 실측: 이론<br/>모델링에도 못 미침<br/>(양측 모델링 모두 이론상<br/>더 나아야 한다고 예측)"]
+
+    style AMDFail fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ATOM["AMD 신규 엔진<br/>ATOM 평가"] --> Better["단일노드 성능:<br/>다소 개선"]
+    ATOM --> Missing["미지원: NVMe·CPU<br/>KV캐시 오프로딩,<br/>툴 파싱, WideEP, 분리형 서빙"]
+    Missing --> Zero["결과: 프로덕션<br/>채택 고객 전무"]
+
+    style Zero fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    OSSGap["오픈소스 생태계<br/>기여 격차"] --> vLLMCI["vLLM CI: MI355X<br/>테스트 0건(B200은 다수)"]
+    vLLMCI --> Need2["MI300·MI325·MI355<br/>각 20대씩 추가 CI<br/>머신 필요(CUDA 동등 사용성)"]
+    Need2 --> Partial["SemiAnalysis 개입으로<br/>최근 MI355X 머신<br/>일부 확보"]
+
+    style Need2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Recommend3["권고와 결과"] --> Realloc["ATOM 등 미사용<br/>프로젝트에서 인력 재배치<br/>→ vLLM·SGLang<br/>조합성 문제 해결"]
+    Realloc --> Margin2["현재 시간차가<br/>Nvidia 75% 총마진<br/>유지 여지를 벌어줌"]
+
+    style Margin2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+## 11. MTP(멀티토큰예측)와 Anthropic Fast Mode 경제학
+
+**📌 핵심:**
+- **추측 디코딩(Speculative Decoding)**은 작고 저렴한 초안 모델로 여러 토큰을 미리 제안하고, 큰 본 모델이 프리필과 비슷한 방식으로 한 번에 검증하는 기법 — **MTP(멀티토큰예측)**는 별도 초안 모델 없이 본 모델 자체에 예측 헤드를 추가해 같은 효과를 냄(제안이 검증 모델과 같은 분포에서 나와 정합성이 높고, 별도 모델 운영의 복잡성도 없음)
+- 밀집 모델에서 효과가 가장 크고(배치 검증 시 같은 가중치 스트림을 여러 위치에 재사용 가능), MoE 모델은 토큰마다 다른 전문가로 라우팅될 수 있어 검증 시 활성화되는 전문가 수가 늘어 메모리 트래픽이 증가하는 부작용 존재 — 그럼에도 DeepSeek R1 실측에서는 전 SKU에 걸쳐 MTP가 성능을 개선(대량 배치에서는 개선폭이 상대적으로 작음)
+- 비용 임팩트가 극적 — FP4 Dynamo TRT-LLM 기준 DeepSeek R1은 MTP 없이 백만 토큰당 $0.251인데 **MTP를 켜면 $0.057로 급감**(약 4.4배 절감), 150 tok/s/user 구간에서는 GB300 Dynamo TRT 기준 $2.35→$0.11로 **약 21배 급감**하는 사례도 확인
+- 결론: **Anthropic의 "Fast Mode"**(Opus 4.6과 함께 출시, 동일 품질에 약 2.5배 속도·약 6\~12배 가격)는 신규 하드웨어가 필요한 게 아니라 처리량-지연시간의 근본 트레이드오프를 그대로 반영한 가격 정책 — 예컨대 GB200 NVL72 랙(약 330만 달러) 기준으로, Fast Mode를 안 쓰고 2.5배 느리게 서빙하면 같은 처리량을 내기 위해 랙이 2.5배 더 필요해 약 500만 달러의 추가 지출이 발생하므로, 오히려 Fast Mode가 TCO 관점에서는 더 저렴할 수 있음
+
+---
+
+```mermaid
+flowchart TD
+    SpecDecode["추측 디코딩 vs MTP"] --> Spec2["추측 디코딩: 별도<br/>초안 모델로 제안,<br/>본 모델이 검증"]
+    SpecDecode --> MTPDef["MTP: 본 모델 자체에<br/>예측 헤드 추가<br/>(별도 모델 불필요)"]
+
+    style MTPDef fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ModelType["모델 구조별<br/>MTP 효과 차이"] --> Dense2["밀집 모델: 효과 최대<br/>(가중치 스트림 재사용)"]
+    ModelType --> MoE2["MoE 모델: 토큰별<br/>다른 전문가 라우팅 →<br/>검증 시 메모리 트래픽 증가"]
+    MoE2 --> StillGood["그럼에도 DeepSeek R1<br/>실측: 전 SKU 성능 개선"]
+
+    style StillGood fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    CostImpact["MTP 비용 절감 사례"] --> Case1["FP4 Dynamo TRT-LLM:<br/>$0.251→$0.057/백만토큰<br/>(약 4.4배)"]
+    CostImpact --> Case2["150tok/s/user, GB300:<br/>$2.35→$0.11<br/>(약 21배)"]
+
+    style Case2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    FastMode["Anthropic Fast Mode<br/>경제학"] --> Spec3["동일 품질, 약 2.5배<br/>속도, 약 6~12배 가격"]
+    Spec3 --> NotHW["신규 하드웨어 불필요<br/>(처리량-지연시간<br/>트레이드오프 반영일 뿐)"]
+    NotHW --> TCOCase["예: GB200 NVL72 랙<br/>(약 330만달러) 기준<br/>Fast Mode 미사용 시<br/>랙 2.5배 필요→약 500만달러 추가"]
+
+    style TCOCase fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+## 12. Wide EP와 분리형 프리필 - 심화 원리와 최적 전략 선택
+
+**📌 핵심:**
+- DeepSeek R1(총 6,710억 파라미터 중 활성 파라미터 370억, 전문가 256개 중 토큰마다 8개 활성)을 8-GPU 서버 하나로 서빙할 때 **TP(텐서병렬)는 희소성을 활용하지 못해** 매 계층 all-reduce가 필요하고 산술강도도 낮음 — **EP(전문가병렬)는 전문가를 GPU별로 나눠 담아** 비전문가 가중치(약 300억 개 미만)만 복제하면 되므로 메모리 절감폭이 큼
+- **Wide EP**는 이 EP를 노드 여러 개로 확장 — 64-GPU 클러스터(DP64/EP64)에서는 GPU당 담당 전문가가 4개로 줄어 ① KV캐시용 HBM 여유 확보 ② 전문가당 토큰 수 증가로 산술강도 향상 ③ 64개 칩의 HBM 대역폭을 동시 활용해 메모리 병목 완화라는 3중 효과를 얻음 — 다만 GPU 수가 늘수록 비전문가 가중치 중복 복제가 낭비이므로, TP를 그룹 안에 넣어(예: EP64/DP8/TP8) 이 복제를 추가로 줄이는 하이브리드 구성도 사용
+- 최적 병렬화 전략은 **배치 크기(=상호작용성)에 따라 파레토 프론티어 위에서 이동** — 초고상호작용성(배치 1\~16, 전문가 활성 희박)에서는 순수 TP가 최선, 배치 32 근방(전문가 약 50\~60% 활성)부터는 TP(어텐션)+EP(MoE)를 섞은 TEP, 최고처리량·최저상호작용성(배치 128+)에서는 완전 DEP(어텐션 전체 복제+EP)로 전환
+- 결론: 분리형 서빙에서도 같은 원리가 적용 — 프리필이 병목인 고처리량 구간(8k/1k 워크로드)에서는 프리필 노드를 더 많이 배정(예: 4P1D)하고 각 프리필 노드는 DEP로 여러 장문 요청을 동시 처리, 저상호작용성(고반응성) 구간에서는 디코드 노드를 더 배정(예: 1P4D)하고 각 디코드 노드는 저배치 TEP로 지연시간을 최소화
+
+---
+
+```mermaid
+flowchart TD
+    TPvsEP["단일노드 서빙:<br/>TP vs EP"] --> TP3["TP: 희소성 미활용,<br/>매 계층 all-reduce,<br/>산술강도 낮음"]
+    TPvsEP --> EP3["EP: 전문가별 GPU 배정,<br/>비전문가 가중치만 복제<br/>→ 메모리 절감 大"]
+
+    style EP3 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    WideEP3["Wide EP(64GPU,<br/>DP64/EP64) 3중 효과"] --> E1["① GPU당 전문가 4개로<br/>축소 → KV캐시 여유"]
+    WideEP3 --> E2["② 전문가당 토큰 수↑<br/>→ 산술강도 향상"]
+    WideEP3 --> E3["③ 64칩 HBM 대역폭<br/>동시 활용 → 메모리<br/>병목 완화"]
+
+    style E1 fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    ParetoShift["배치 크기별<br/>최적 전략 전환"] --> Batch16["배치 1~16(초고<br/>상호작용성): 순수 TP"]
+    ParetoShift --> Batch32["배치 32 근방(전문가<br/>50~60% 활성): TEP<br/>(TP+EP 혼합)"]
+    ParetoShift --> Batch128["배치 128+(최고처리량):<br/>완전 DEP"]
+
+    style Batch32 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    DisaggStrategy["분리형 서빙<br/>노드 배정 전략"] --> HighTput["고처리량(8k/1k<br/>프리필 병목): 프리필<br/>노드↑(예 4P1D), DEP 사용"]
+    DisaggStrategy --> LowLat2["저상호작용성 우선:<br/>디코드 노드↑(예 1P4D),<br/>저배치 TEP 사용"]
+
+    style HighTput fill:#eff6ff,stroke:#3b82f6
+```
+
+---
+
+*작성 진행률: 약 80% 완료 (15개 섹션 중 12개 완료)*
+*업데이트: 10\~12장(AMD 조합성 문제·ATOM 엔진 비판, MTP·Anthropic Fast Mode 경제학, Wide EP·분리형 프리필 심화 원리) 작성 완료*
