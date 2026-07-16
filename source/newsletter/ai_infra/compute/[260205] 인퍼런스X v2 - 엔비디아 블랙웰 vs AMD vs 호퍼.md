@@ -318,5 +318,139 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 40% 완료 (15개 섹션 중 6개 완료)*
-*업데이트: 4\~6장(시간 경과에 따른 소프트웨어 개선 추적, 분리형 서빙 프레임워크·DeepSeek 심층분석, TensorRT-LLM·NVL72 압도적 성능) 작성 완료*
+## 7. Nvidia vs AMD Disagg Prefill 성능 비교
+
+**📌 핵심:**
+- **FP8 분리형 프리필**에서는 MI355X(MoRI SGLang)가 B200(Dynamo SGLang)과 상당히 경쟁력 있는 성능 — 두 구성 모두 Wide EP는 안 쓰고 최대 EP8까지만 사용, 곡선 양 끝단에서는 B200이 살짝 앞서지만 중간 구간 일부에서는 MI355X가 오히려 근소 우위, 양쪽 모두 MTP를 켜면 비슷한 폭의 성능 향상을 얻음
+- 다만 **출력(디코드) 토큰 처리량만 따로 보면 저상호작용성 구간에서 B200이 MI355X보다 훨씬 빠름** — 디코드 GPU 수 기준으로 정규화한 결과이며, 실제 배정된 GPU 수 차이가 있을 수 있지만 결론적으로 어떤 구성이든 B200이 디코드를 더 빨리 처리
+- **FP4로 넘어가면 격차가 극적으로 벌어짐** — AMD 단일노드 FP4는 준수하지만 분리형 프리필로 가면 Nvidia에 크게 못 미쳐, 1k1k 시나리오에서는 MTP를 켠 MI355X(MoRI SGLang)가 MTP를 끈 B200(Dynamo SGLang)을 겨우 넘어서는 수준
+- 결론: **Dynamo TRT-LLM까지 가세하면 격차가 더 벌어져**, MTP를 켠 MI355X조차 MTP를 켠 B200(Dynamo TRT-LLM)을 이기지 못함 — MI355X가 (MTP 없는) B200을 따라잡는 구간은 상호작용성 약 60\~120 tok/s/user의 좁은 범위뿐이며, TRT-LLM의 성숙한 분리형 프리필 구현이 AMD SGLang·MoRI 조합보다 한 수 위라는 결론
+
+---
+
+```mermaid
+flowchart TD
+    FP8Disagg["FP8 분리형 프리필<br/>(EP8까지만, WideEP 미사용)"] --> Compete2["MI355X(MoRI SGLang) vs<br/>B200(Dynamo SGLang):<br/>상당히 경쟁력 있음"]
+    Compete2 --> Middle2["중간 구간 일부는<br/>MI355X가 근소 우위,<br/>양 끝단은 B200 우위"]
+
+    style Compete2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    DecodeOnly["디코드 전용 처리량<br/>(저상호작용성 구간)"] --> B200Fast["B200이 MI355X보다<br/>훨씬 빠름(디코드 GPU<br/>수 기준 정규화)"]
+
+    style B200Fast fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    FP4Gap["FP4 분리형 프리필<br/>격차 확대"] --> Single["AMD 단일노드 FP4:<br/>준수한 성능"]
+    Single --> DisaggBad["AMD 분리형 FP4:<br/>Nvidia에 크게 열세"]
+    DisaggBad --> Barely["1k1k 시나리오: MTP<br/>MI355X가 MTP 없는<br/>B200을 겨우 상회"]
+
+    style DisaggBad fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TRTGap["Dynamo TRT-LLM<br/>합류 시 격차"] --> Wider["MTP MI355X도<br/>MTP B200(TRT-LLM)을<br/>못 이김"]
+    Wider --> Narrow["MI355X가 (MTP 없는)<br/>B200 추월 구간:<br/>약 60~120tok/s/user뿐"]
+
+    style Wider fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 8. 추론 제공업체 단위경제 분석
+
+**📌 핵심:**
+- OpenRouter에 등록된 DeepSeek R1 0528 FP8 제공업체들의 실제 서빙 가격과 상호작용성 데이터를 InferenceX 실측치와 대조해 **실제 원가·마진을 역산**할 수 있음 — 예를 들어 Crusoe가 36 tok/s/user·백만 입력토큰당 $1.35·백만 출력토큰당 $5.40에 서빙한다면, H200급 SOTA 기법(MTP·분리형·WideEP) 기준으로 원가는 입력토큰 $0.226·출력토큰 $2.955를 넘지 않아 **입력토큰 총마진 최대 83%, 출력토큰 총마진 최대 45%**로 추정
+- Nebius AI Studio(Fast)처럼 상호작용성 167 tok/s/user급 고속 서빙은 추측 디코딩(MTP) 없이는 경제성을 맞추기 어려운 구간 — 다행히 MTP는 모델 정확도에 미치는 영향이 적으면서 처리량을 크게 늘려주는 기법
+- 상호작용성 35 tok/s/user(OpenRouter 중간값)를 고정하면, **B200에 MTP를 켠 구성이 성능당비용 최적** — 대규모 스케일업 도메인을 가진 GB300·GB200 NVL72는 총처리량(GPU당) 자체에서는 여전히 압도적
+- 결론: 125 tok/s/user 같은 저지연 워크로드에서도 MTP를 켠 구성이 경제성을 결정적으로 좌우 — 다만 이 모든 분석은 InferenceX가 무작위 데이터·프리픽스 캐싱 비활성 조건에서 측정한 **최소 기준선(하한)**이라는 점에 유의(실제로는 이보다 더 좋은 성능/비용이 나올 수 있음)
+
+---
+
+```mermaid
+flowchart TD
+    Reverse["단위경제 역산 방법"] --> Data["OpenRouter 실제 가격·<br/>상호작용성 데이터"]
+    Data --> Compare3["InferenceX 실측치와<br/>대조 → 원가·마진 추정"]
+    Compare3 --> Example["예: Crusoe 36tok/s/user<br/>→ 입력토큰 마진 최대 83%,<br/>출력토큰 마진 최대 45%"]
+
+    style Example fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    HighInt["고속 서빙(167tok/s/user급)<br/>경제성"] --> Need["MTP(추측 디코딩)<br/>없이는 경제성 확보 어려움"]
+    Need --> Safe["MTP는 정확도 영향 적으면서<br/>처리량 대폭 향상"]
+
+    style Need fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Fixed35["상호작용성<br/>35tok/s/user 고정 비교"] --> Best["B200+MTP:<br/>성능당비용 최적"]
+    Fixed35 --> Total["GB300·GB200 NVL72:<br/>GPU당 총처리량 자체는<br/>여전히 압도적"]
+
+    style Best fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Caveat2["분석의 한계"] --> Baseline["InferenceX는 무작위<br/>데이터·프리픽스 캐싱<br/>비활성 조건"]
+    Baseline --> Floor["→ 실측치는 최소<br/>기준선(하한),<br/>실제는 더 좋을 수 있음"]
+
+    style Floor fill:#eff6ff,stroke:#3b82f6
+```
+
+---
+
+## 9. Jensen의 과소약속·과잉이행 - Hopper vs Blackwell vs 랙스케일 NVL72
+
+**📌 핵심:**
+- 2024년 GTC에서 Jensen Huang이 "H100 대비 GB200 NVL72가 최대 30배 성능"이라 발표했을 때 업계는 전형적인 과장 마케팅으로 치부(이른바 "Jensen Math" 농담의 소재가 됨) — 그러나 약 2년 뒤 실측 결과, **실제로는 오히려 과소약속이었음**이 드러남
+- 강력한 H100 분리형+WideEP+FP8 기준선과 비교해도, **116 tok/s/user 기준 GB200 NVL72 FP4는 최대 98배, GB300 NVL72 FP4는 최대 100배**의 성능 우위를 기록 — Blackwell·Blackwell Ultra 세대에서 총소유비용 상승분을 반영해도 **토큰당 비용 기준 Hopper 대비 9.7배(40 tok/s/user)\~65배(116 tok/s/user)** 개선
+- **Blackwell vs Blackwell Ultra** 비교에서는 스펙상 메모리 대역폭 동일·FP8 성능 동일·FP4만 1.5배인데, 실측에서는 **FP8 성능이 오히려 최대 1.5배 더 좋고 FP4는 1.1배**에 그침(Blackwell Ultra가 신제품이라 소프트웨어 최적화가 아직 완전하지 않은 탓으로 추정)
+- 결론: B300(스케일업 8 GPU 한계)은 8 GPU를 넘는 구성에서 InfiniBand XDR(GPU당 800Gbit/s)로 폴백해야 하는 반면, **GB300 NVL72는 72 GPU를 NVLink(GPU당 900GB/s)로 묶어 대역폭이 9배 이상 높음** — TCO를 반영해도 대역폭당비용 우위는 8배로 여전히 압도적이며, 오늘날 랙스케일 시스템을 실제 배치한 AI 칩 벤더는 Google TPU·AWS Trainium·Nvidia 3곳뿐(AMD 첫 랙스케일 MI455X UALoE72는 2026년 하반기 엔지니어링 샘플, 양산 토큰은 2027년 2분기에나 나올 전망)
+
+---
+
+```mermaid
+flowchart TD
+    Promise["2024 GTC:<br/>'H100 대비 최대 30배'"] --> Doubt["당시 반응: 전형적<br/>과장 마케팅으로 치부"]
+    Doubt --> Reveal["2년 뒤 실측:<br/>오히려 과소약속이었음"]
+
+    style Reveal fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ActualGap["실제 성능 격차<br/>(116tok/s/user 기준)"] --> GB200_2["GB200 NVL72 FP4:<br/>H100 대비 최대 98배"]
+    ActualGap --> GB300_2["GB300 NVL72 FP4:<br/>H100 대비 최대 100배"]
+    GB300_2 --> CostGain["TCO 반영 토큰당비용:<br/>9.7배(40tok/s/user)~<br/>65배(116tok/s/user) 개선"]
+
+    style CostGain fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    UltraCompare["Blackwell vs<br/>Blackwell Ultra 실측"] --> Spec["스펙: 대역폭 동일,<br/>FP8 동일, FP4만 1.5배"]
+    Spec --> Real2["실측: FP8 최대 1.5배<br/>더 좋음, FP4는 1.1배<br/>(신제품 SW 미성숙 추정)"]
+
+    style Real2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    RackOnly["랙스케일 실제<br/>배치 현황(오늘 기준)"] --> Three["Google TPU·AWS Trainium·<br/>Nvidia 3곳만 실배치"]
+    Three --> AMDLate["AMD MI455X UALoE72:<br/>엔지니어링 샘플<br/>2026년 하반기,<br/>양산 토큰은 2027년 2분기"]
+
+    style AMDLate fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 60% 완료 (15개 섹션 중 9개 완료)*
+*업데이트: 7\~9장(Nvidia vs AMD Disagg Prefill 비교, 추론 제공업체 단위경제 분석, Jensen의 과소약속·과잉이행) 작성 완료*
