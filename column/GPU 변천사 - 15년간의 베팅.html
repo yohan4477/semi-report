@@ -1,0 +1,185 @@
+<title>GPU 변천사 — 15년간의 베팅</title>
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#f1f0ea; --paper:#faf9f5; --ink:#1b1b17; --sub:#5c5b52; --muted:#8c8a7d; --line:#dedcd0;
+    --accent:#28406e; --accent-soft:#e4e9f2; --accent-2:#8a6a2f;
+    --rule: rgba(27,27,23,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])){
+      color-scheme: dark;
+      --bg:#131310; --paper:#191914; --ink:#ece9df; --sub:#b8b5a8; --muted:#83806f; --line:#302f27;
+      --accent:#8fa6d6; --accent-soft:#212a3d; --accent-2:#cdaa5e;
+      --rule: rgba(236,233,223,0.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#131310; --paper:#191914; --ink:#ece9df; --sub:#b8b5a8; --muted:#83806f; --line:#302f27;
+    --accent:#8fa6d6; --accent-soft:#212a3d; --accent-2:#cdaa5e;
+    --rule: rgba(236,233,223,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:Georgia,"Noto Serif KR","Nanum Myeongjo",serif;}
+
+  .page{max-width:760px; margin:0 auto; padding:64px 24px 100px;}
+
+  .kicker{display:flex; align-items:center; gap:10px; font-size:.72rem; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent-2); margin-bottom:22px;}
+  .kicker::after{content:""; flex:1; height:1px; background:var(--rule);}
+
+  h1.title{
+    font-family:Georgia,"Noto Serif KR","Nanum Myeongjo",serif;
+    font-size:2.35rem; line-height:1.28; font-weight:700; letter-spacing:-.01em;
+    margin:0 0 18px; text-wrap:balance;
+  }
+  .dek{font-size:1.08rem; line-height:1.7; color:var(--sub); margin:0 0 34px; max-width:56ch;}
+  .byline{display:flex; gap:14px; align-items:center; font-size:.78rem; color:var(--muted); margin-bottom:48px;
+    padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .byline b{color:var(--sub); font-weight:600;}
+
+  /* ---- four-layer moat diagram ---- */
+  .diagram{margin:8px 0 52px; background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:30px 26px 22px;}
+  .diagram-cap{font-size:.72rem; color:var(--muted); text-align:center; margin-top:18px; letter-spacing:.02em;}
+  .moat{position:relative;}
+  .moat-row{position:relative; display:grid; grid-template-columns:34px 1fr; column-gap:16px; padding:16px 0;}
+  .moat-row:not(:last-child){border-bottom:1px solid var(--rule);}
+  .moat-badge{position:relative; width:34px; height:34px; border-radius:50%; border:2px solid var(--accent);
+    display:flex; align-items:center; justify-content:center; font-family:Georgia,"Noto Serif KR",serif;
+    font-weight:700; font-size:1rem; color:var(--accent); background:var(--paper);}
+  .moat-badge::after{content:""; position:absolute; top:100%; left:50%; width:1px; height:16px;
+    background:var(--rule); transform:translateX(-50%);}
+  .moat-row:last-child .moat-badge::after{display:none;}
+  .moat-name{font-weight:700; font-size:1.02rem; color:var(--ink); margin-bottom:4px;}
+  .moat-desc{font-size:.9rem; line-height:1.65; color:var(--sub); margin-bottom:6px;}
+  .moat-status{font-size:.8rem; line-height:1.5; color:var(--accent-2);}
+  .moat-status b{font-weight:600;}
+
+  article{font-size:1.06rem; line-height:1.92;}
+  article h2{
+    font-family:Georgia,"Noto Serif KR","Nanum Myeongjo",serif;
+    font-size:1.32rem; font-weight:700; margin:52px 0 18px; letter-spacing:-.005em;
+  }
+  article p{margin:0 0 22px;}
+  article h2:first-of-type + p{
+    font-size:1.14rem; line-height:1.85;
+  }
+  article p b{color:var(--ink); font-weight:700;}
+
+  .gentable-wrap{overflow-x:auto; margin:8px 0 30px; border:1px solid var(--line); border-radius:4px;}
+  table.gentable{width:100%; border-collapse:collapse; font-size:.84rem; min-width:560px;}
+  table.gentable th{
+    text-align:left; font-weight:600; font-size:.72rem; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--line); background:var(--accent-soft);
+  }
+  table.gentable td{padding:11px 14px; border-bottom:1px solid var(--rule); color:var(--sub); vertical-align:top; line-height:1.55;}
+  table.gentable tr:last-child td{border-bottom:none;}
+  table.gentable td.gen{font-weight:700; color:var(--ink); white-space:nowrap;}
+  table.gentable td.num{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink);}
+
+  blockquote{
+    margin:36px 0; padding:4px 0 4px 24px; border-left:3px solid var(--accent-2);
+    font-family:Georgia,"Noto Serif KR",serif; font-size:1.2rem; line-height:1.6; font-style:italic; color:var(--ink);
+  }
+
+  .teaser{
+    margin-top:56px; padding:22px 24px; background:var(--accent-soft); border-radius:6px;
+    font-size:.92rem; line-height:1.7; color:var(--ink);
+  }
+  .teaser b{font-family:Georgia,"Noto Serif KR",serif; font-style:italic; color:var(--accent);}
+
+  .foot{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); font-size:.76rem; color:var(--muted); text-align:center;}
+
+  @media (max-width:520px){
+    h1.title{font-size:1.7rem;}
+    .page{padding:40px 18px 72px;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
+</style>
+
+<div class="page">
+  <div class="kicker">Column · Yomianalysis</div>
+  <h1 class="title">GPU 변천사 — 엔비디아의 해자는 칩 하나가 아니라 네 겹이다</h1>
+  <p class="dek">구글도, 아마존도, AMD도 "이번엔 따라잡았다"고 발표했다. 실측 벤치마크를 돌릴 때마다 격차는 다른 곳에서 다시 벌어져 있었다 — 그 이유를 네 개의 층으로 나눠본다.</p>
+  <div class="byline"><span><b>Yomianalysis</b> 칼럼</span><span>·</span><span>2026-07-16</span></div>
+
+  <div class="diagram">
+    <div class="moat" id="moat"></div>
+    <div class="diagram-cap">엔비디아의 네 겹 해자 — 도전자가 한 겹을 넘으면 승부의 축이 이미 다음 겹으로 옮겨가 있다</div>
+  </div>
+
+  <article id="article-body"></article>
+
+  <div class="teaser">다음 칼럼 예고 — <b>"승부의 축은 다음에 어디로 옮겨갈까: 전력과 웨이퍼가 진짜 마지막 병목인 이유"</b></div>
+
+  <div class="foot">Yomianalysis · SemiAnalysis 코퍼스 기반 오리지널 칼럼</div>
+</div>
+
+<script>
+// ---- render essay body from markdown-ish source ----
+const BODY_HTML = `
+<p>구글도 아마존도 AMD도 "이번엔 따라잡았다"고 발표했다. 그런데 실측할 때마다 격차는 다른 곳에서 다시 벌어져 있었다. 이유는 하나가 아니라 네 개다 — 아키텍처, 시스템, 조달력, 자본.</p>
+
+<h2>1층 — 아키텍처: 8년간 쌓인 설계</h2>
+<p>텐서 코어(딥러닝 전용 연산 회로)는 2017년 Volta부터 2024년 Blackwell까지 5세대를 거쳤다. 세대마다 다른 걸 바꾼 게 아니라, "데이터 이동이 연산보다 비싸다"는 원칙 하나를 계속 밀어붙였다. 핵심 변화만 꼽으면:</p>
+
+<div class="gentable-wrap">
+<table class="gentable">
+<thead><tr><th>세대</th><th>연도</th><th>무엇이 새로 생겼나</th></tr></thead>
+<tbody>
+<tr><td class="gen">Volta<br>1세대</td><td class="num">2017</td><td>텐서 코어 최초 탑재</td></tr>
+<tr><td class="gen">Turing<br>2세대</td><td class="num">2018</td><td>저정밀 정수 연산(INT8) 추가</td></tr>
+<tr><td class="gen">Ampere<br>3세대</td><td class="num">2020</td><td>데이터를 미리 옮겨두는 비동기 처리 시작</td></tr>
+<tr><td class="gen">Hopper<br>4세대</td><td class="num">2022</td><td>대용량 데이터 자동 이동(TMA), FP8 지원</td></tr>
+<tr><td class="gen">Blackwell<br>5세대</td><td class="num">2024</td><td>전용 메모리(TMEM) 신설, FP4까지 저정밀화</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>방향은 한결같다. 데이터를 더 미리, 더 빨리, 더 적은 비트로 옮기는 쪽으로 매 세대 최적화했다. SemiAnalysis는 Blackwell 실물을 직접 뜯어 측정했는데, 이론상 최대 성능의 90~100%가 실제로 나왔다. 마케팅이 아니라 실측이 증명한 것이다. 8년치 설계를 경쟁사가 한 세대 만에 복제할 수 없는 이유다.</p>
+
+<h2>2층 — 시스템: 칩에서 랙 전체로</h2>
+<p>엔비디아는 GPU만 만들지 않는다. CPU, 스위치, 네트워크 카드까지 실리콘 6종을 전부 자체 설계해 랙 72장을 하나의 가속기처럼 묶는다. 이걸 다 갖춘 곳은 엔비디아뿐이다.</p>
+<p>그런데 여기도 따라붙었다. 2025년 8월엔 경쟁자가 없었는데, 6개월 뒤 구글 TPUv7·AWS Trainium3·AMD MI400이 동시에 랙스케일급 제품을 내놨다.</p>
+
+<h2>3층 — 승부처가 계속 움직인다</h2>
+<p>경쟁사가 한 지점을 따라잡으면 승부처가 다른 곳으로 옮겨간다. "학습을 완주할 수 있는가"에서 "랙 전체를 묶을 수 있는가"로, 다시 "칩을 얼마나 확보했는가"로 3번 이동했다.</p>
+<p>소프트웨어도 마찬가지다. AMD MI355X는 개별 최적화 기법 하나씩은 엔비디아와 견줄 만하다. 그런데 프론티어 랩들이 실제로 쓰는 세 가지 기법(FP4·분산 서빙·전문가 병렬화)을 동시에 조합하면 성능이 급락한다. 여러 기술을 한꺼번에 조합하는 능력에서 소프트웨어가 못 따라가는 것이다. 그 결과 최신 Blackwell은 이전 세대 Hopper 대비 최대 100배 격차를 냈다 — 2년 전 "과장"이라 조롱받던 젠슨 황의 발표가 오히려 축소 발표였던 셈이다.</p>
+
+<h2>4층 — 보이지 않는 층: 자본</h2>
+<p>칩과 시스템을 다 갖춰도 클러스터를 지을 돈이 없으면 소용없다. 엔비디아는 여기에도 손을 댔다 — 네오클라우드(GPU 임대업체)의 매출을 직접 보증해주는 방식으로, 이 사업에서 나오는 매출만 2029년 139억 달러 규모로 커질 전망이다. AMD도 비슷한 걸 시작했지만 지원하는 업체 수 자체가 적다.</p>
+
+<h2>경영자를 위한 한 줄</h2>
+<p>경쟁사들은 실제로 잘하고 있다. 구글은 최고 모델을 TPU로 학습시켰고, AWS는 제품을 실제로 출하했다. 문제는 넷 중 하나만 따라잡아서는 안 된다는 것이다. 한 층을 넘으면 승부는 이미 다음 층으로 옮겨가 있다.</p>
+`;
+document.getElementById('article-body').innerHTML = BODY_HTML;
+
+// ---- build the four-layer moat diagram ----
+const LAYERS = [
+  {n:'1', name:'아키텍처', desc:'텐서 코어 5세대, 8년치 설계. 실측 성능이 이론치의 90~100%.', status:'TPUv7이 스펙은 근접 — 실측 소프트웨어 효율은 아직 격차'},
+  {n:'2', name:'시스템', desc:'GPU·CPU·스위치·NIC 6종을 전부 자체 설계해 랙 72장을 하나로 통합.', status:'TPUv7·Trainium3·MI400이 6개월 만에 동시에 따라붙음'},
+  {n:'3', name:'조달력', desc:'승부처가 학습 완주 → 랙 통합 → 칩 확보로 계속 이동.', status:'AMD는 최적화 기법을 동시에 조합하면 오히려 성능 급락'},
+  {n:'4', name:'자본', desc:'GPU 임대업체 매출까지 직접 보증해주는 "AI의 중앙은행" 역할.', status:'AMD도 시작했지만 지원 업체 수에서 열세'},
+];
+const wrap = document.getElementById('moat');
+LAYERS.forEach(l => {
+  const row = document.createElement('div');
+  row.className = 'moat-row';
+  row.innerHTML = `
+    <div class="moat-badge">${l.n}</div>
+    <div class="moat-body">
+      <div class="moat-name">${l.name}</div>
+      <div class="moat-desc">${l.desc}</div>
+      <div class="moat-status"><b>도전자:</b> ${l.status}</div>
+    </div>
+  `;
+  wrap.appendChild(row);
+});
+</script>
