@@ -44,7 +44,7 @@
 | ai-infra | 7 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 2 |
-| ai-infra/compute | 17 |
+| ai-infra/compute | 18 |
 | ai-infra/memory | 9 |
 | ai-models | 1 |
 | ai-models/agents | 2 |
@@ -63,6 +63,7 @@
 <!-- 2026-07-13: `semiconductors` 신규 대분류 카테고리 신설 (사용자 지시) — [260205] EDA 시장 개관 문서를 ai-infra에서 semiconductors로 재분류·재배치(ai-infra 8→7, semiconductors 0→1). 폴더도 `source/newsletter/ai_infra/`에서 `source/newsletter/semiconductors/`로 이동 -->
 <!-- 2026-07-16: [260205] AWS Trainium3 딥다이브 10~16장 완료(9장에서 중단된 상태 재개) — ai-infra/compute 15→16. 스위치 세대 진화·구리케이블/전력/BOM·EFA스케일아웃·마이크로아키텍처·PyTorch 소프트웨어 전환·LNC/Megacore·데이터센터 램프업/TCO까지 전체 16개 섹션 완료 -->
 <!-- 2026-07-16: [260205] AMD Advancing AI 13~16장 완료(12장에서 중단된 상태 재개) — ai-infra/compute 16→17. MI400 Flexible I/O·UALoE72, Helios 랙 아키텍처, MI500 UAL256, MI350X/MI355X/MI400 BOM·TCO 비교까지 전체 16개 섹션 완료 -->
+<!-- 2026-07-16: [260205] InferenceMAX™(오픈소스 추론 벤치마킹) 신규 변환 완료 — ai-infra/compute 17→18. AMD·Nvidia 7종 칩 대상 처리량·TCO·MW당 토큰처리량 3차원 실측 벤치마크, DeepSeek R1 서빙 전략·CI/CD 인프라·트러블슈팅까지 전체 11개 섹션 완료 -->
 
 
 
