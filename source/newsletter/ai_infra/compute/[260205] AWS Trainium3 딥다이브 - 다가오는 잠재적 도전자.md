@@ -664,7 +664,7 @@ flowchart TD
 - 구리 케이블 사용량은 스케일업 토폴로지와 레인 수에 비례 — Trn2 NL32x2 3D 토러스(백플레인 4개, 케이블 약 6,100개) 대비 **Trainium3 NL32x2 Switched는 비슷한 백플레인 구성에 케이블 약 5,100개**, 스케일업 월드가 144칩으로 커지는 **NL72x2 Switched는 케이블 11,520개**로 급증
 - 전력: 칩당 전력(TDP)이 랙 전체 전력의 최대 변수 — 랙당 칩 수는 NL72x2(64칩/랙)가 NL32x2(32칩/랙)의 2배라 랙 전력밀도는 NL72x2가 훨씬 높지만, **칩 1개당 전력으로 정규화하면 두 SKU가 거의 동일**(칩 TDP가 지배적 요인이기 때문)
 - 수익화 속도 전략: **케이블리스(PCB 신호 전송) 설계**로 조립 속도를 높이고, 백플레인 예비 레인 16개로 무중단 핫스왑을 가능케 해 GB200 사례처럼 배선 결함으로 인한 배치 지연을 원천 차단 — 액체 냉각 미준비 데이터센터엔 공랭 NL32x2 Switched로 즉시 배치해 특정 시설 지연이 전체 매출 지연으로 번지지 않게 함(CoreWeave Denton 사례와 대비)
-- 결론: AWS는 팹 출고에서 랙 출하까지 걸리는 시간을 1년 전보다 크게 단축(현재 분기 이내 수준)했고, 계속 단축 중 — Nvidia는 GB200 NVL72·Vera Rubin Kyber로 갈수록 칩 출고~고객 매출 발생까지의 시차가 오히려 길어지는 추세라 OEM·클라우드의 운전자본 부담과 TCO가 상대적으로 불리해지는 구도
+- 결론: AWS는 팹 출고에서 랙 출하까지 걸리는 시간을 1년 전보다 크게 단축(현재 분기 이내 수준)했고, 계속 단축 중 — Nvidia는 GB200 NVL72·Vera Rubin Kyber로 갈수록 칩 출고\~고객 매출 발생까지의 시차가 오히려 길어지는 추세라 OEM·클라우드의 운전자본 부담과 TCO가 상대적으로 불리해지는 구도
 
 ---
 
@@ -808,7 +808,24 @@ flowchart TD
     style Exp fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
 ```
 
-이 밖에도 Trainium3는 다섯 가지 신규 하드웨어 기능을 추가했습니다. ① **통신 전용 코어**: 수십 개의 집단통신 전용 코어가 연산 코어와 완전히 분리돼 있어, GPU처럼 `NCCL_MIN_CTA` 같은 환경변수로 연산·통신 SM 비율을 수동 조정할 필요가 없습니다. ② **근접 메모리 연산과 자동 포워딩**: HBM을 거치지 않고 SBUF(온칩 SRAM)끼리 직접 전송할 수 있어 소·중간 크기 메시지의 지연시간이 줄고, 144패키지 스케일업 도메인 전체에 걸쳐 메시지 자동 중계가 가능해 프로그래머가 중간 경유 칩을 직접 지정할 필요가 없습니다. ③ **제로 코스트 전치(Transpose)**: 하드웨어 가속으로 배경에서 비용 없이 처리됩니다. ④ **온칩 트래픽 QoS**: 텐서·전문가 병렬화처럼 지연시간에 민감한 트래픽을 백그라운드 프리페치보다 우선 처리(Day 0에는 사용자 설정 불가, 추후 NKI로 조정 가능 — Graviton은 이미 여러 세대 전부터 유사 기능을 지원). ⑤ **사전 셔플 없는 동적 MoE 그룹 GEMM**: "텐서 역참조" 기능으로 전문가별 토큰이 메모리상 인접하지 않아도 동적으로 인덱싱 가능해, 컴파일 시점이 아닌 실행 시점에 라우팅을 결정하는 최신 MoE 모델을 하드웨어 차원에서 네이티브 지원합니다.
+이 밖에도 Trainium3는 신규 하드웨어 기능을 다수 추가했습니다.
+
+```mermaid
+flowchart TD
+    New1["신규 기능 (1/2)"] --> Comm2["통신 전용 코어:<br/>집단통신 코어가 연산 코어와<br/>분리 → GPU식 NCCL_MIN_CTA<br/>수동 조정 불필요"]
+    New1 --> NearMem2["근접 메모리 연산+자동 포워딩:<br/>HBM 안 거치고 SBUF끼리<br/>직접 전송, 144패키지 도메인<br/>전체 자동 중계"]
+    New1 --> Trans2["제로 코스트 전치:<br/>하드웨어 가속으로<br/>배경에서 비용 없이 처리"]
+
+    style Comm2 fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    New2["신규 기능 (2/2)"] --> QoS2["온칩 트래픽 QoS:<br/>TP·EP처럼 지연시간 민감한<br/>트래픽을 백그라운드 프리페치<br/>보다 우선 처리(Day 0엔<br/>비활성, Graviton은 이미 지원)"]
+    New2 --> MoEDyn["사전 셔플 없는 동적 MoE<br/>그룹 GEMM: '텐서 역참조'로<br/>전문가별 토큰이 메모리상<br/>비연속이어도 실행 시점에<br/>동적 인덱싱·라우팅 가능"]
+
+    style MoEDyn fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
 
 ---
 
@@ -862,5 +879,116 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 88% 완료 (16개 섹션 중 14개 완료)*
-*업데이트: 13\~14장(마이크로아키텍처 4대 엔진·숫자 포맷, PyTorch 네이티브 소프트웨어 전환) 작성 완료*
+## 15. LNC(논리적 뉴런코어)와 Megacore, 성능 프로파일링 툴
+
+**📌 핵심:**
+- Day 0에는 논리 장치 하나가 물리 뉴런코어 1개(LNC=1) 또는 2개(LNC=2)에만 매핑 가능 — 패키지당 논리 장치 4개, **논리 장치 하나가 보는 메모리는 144GB 중 36GB뿐**(전체 8개 코어를 논리 장치 1개로 묶는 LNC=8은 2026년 중반까지 미지원)
+- LNC=1/2는 Anthropic 같은 최상급 커널 엔지니어에게 최적(HBM 접근·8개 코어 간 데이터 이동을 직접 세밀 제어 가능, 항상 LNC=8보다 성능 우수) — 반면 일반 연구자는 H100(80GB, Trainium3 대비 2.2배)·GB300(288GB, 8배)보다 훨씬 작은 메모리로 병렬화를 고민해야 해 진입장벽이 됨
+- 구글 TPU도 초기엔 LNC=1만 지원하다 2022년 초 TPUv4부터 전체 패키지를 논리 장치 하나로 묶는 컴파일러 "**Megacore**"를 지원(TPUv7e는 성능을 위해 다시 LNC=1로 회귀) — AWS도 같은 경로를 따라 최우선 고객(Anthropic)의 선호에 맞춰 LNC=1/2로 먼저 출시하고 LNC=8은 나중으로 미룸
+- 결론: 저수준 프로파일러 **Neuron Explorer**(웹앱 + VSCode 통합)는 산술강도·MFU/HFU·DMA/HBM 지표·엔진별 가동률·집단통신 지연 분포까지 한눈에 보여주고 Nsight Compute처럼 자동 최적화 권고까지 제공 — Anthropic 성능 총괄이 공개적으로 "Nvidia보다 낫다"고 평가할 정도로 AWS 소프트웨어 스택 중 가장 앞서 있다는 평가
+
+---
+
+```mermaid
+flowchart TD
+    LNC["LNC(논리적 뉴런코어)<br/>Day 0 옵션"] --> L1["LNC=1 또는 2:<br/>논리장치 1개당<br/>물리코어 1~2개, 36GB만 노출"]
+    LNC --> L8["LNC=8(전체 패키지 묶음):<br/>2026년 중반까지 미지원"]
+
+    style L1 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style L8 fill:#fef2f2,stroke:#dc2626
+```
+
+```mermaid
+flowchart TD
+    Tradeoff2["LNC 선택의 트레이드오프"] --> Elite["LNC=1/2: 최상급 엔지니어용<br/>(HBM·코어 간 데이터 이동<br/>직접 제어, 항상 더 빠름)"]
+    Tradeoff2 --> Avg["일반 연구자: 36GB로<br/>병렬화 고민 필요<br/>(H100 80GB의 절반 이하,<br/>GB300 288GB의 1/8)"]
+
+    style Elite fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Avg fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    History["Megacore 선례:<br/>구글 TPU 경로"] --> TPU13["TPUv1~v3: LNC=1만 지원"]
+    History --> TPU4["TPUv4(2022년 초)부터<br/>Megacore 컴파일러로<br/>전체 패키지=논리장치 1개 지원"]
+    History --> TPU7["TPUv7e: 성능 위해<br/>다시 LNC=1로 회귀"]
+    TPU4 --> Same["AWS도 동일 경로:<br/>최우선 고객(Anthropic) 선호<br/>따라 LNC=1/2 먼저,<br/>LNC=8은 나중"]
+
+    style TPU4 fill:#f0fdf4,stroke:#16a34a
+    style Same fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Explorer["Neuron Explorer<br/>프로파일러 기능"] --> Metric["산술강도·MFU/HFU·<br/>DMA/HBM 지표,<br/>엔진별 가동률"]
+    Explorer --> Collective["집단통신(allreduce 등)<br/>지연시간 분포 시각화"]
+    Explorer --> Reco["Nsight Compute처럼<br/>자동 최적화 권고 제공"]
+    Reco --> Praise["Anthropic 성능 총괄:<br/>'Nvidia보다 분석 도구가 낫다'<br/>공개 평가"]
+
+    style Praise fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 16. 데이터센터 램프업과 공랭 베팅, TCO 비교
+
+**📌 핵심:**
+- AWS·Anthropic의 **Project Rainier**는 이미 2025년 3분기 실적으로 성장 가속을 입증(SemiAnalysis의 사전 예측 적중) — 현재 가동 중인 시설은 최종 완공 규모의 초기 단계일 뿐, 인디애나 등 기존 부지 확장에 더해 최종 1GW급 신규 캠퍼스(인접 1GW 부지와 연계)도 착공한 상태
+- AWS는 실리콘부터 데이터센터까지 **물 냉각을 거의 도입하지 않는 공랭 중심 전략**을 고수 — 2021년 버지니아 캠퍼스와 최신 Project Rainier 인디애나 캠퍼스의 건물 설계가 거의 동일할 정도로 표준화를 유지(Meta가 최근 물 냉각으로 전면 설계 전환한 것과 대조적), 위성사진으로도 액체 냉각 배관이 보이지 않을 정도
+- 공랭 vs 액체 냉각 트레이드오프: 업계 다수가 채택 중인 "냉수 배관 1개로 공랭·액체 냉각을 겸용"하는 방식은 하절기 냉각기(칠러)가 필수(입구 수온 25\~30도 유지 위해)라 **초기 투자 증가 + IT 전력 비중 감소(PUE 약 1.2배→1.5배) + 운영비 상승**의 삼중고 — 반면 AWS식 증발 냉각 공랭 전용 설비는 냉각기 없이 연중 가동 가능해 이 세 가지 부담을 모두 피함
+- 결론: 두 세대 모두 Nvidia 대비 마케팅 FP8/FP4 FLOPS는 낮지만, **AWS가 마진 스태킹(Nvidia 서버에 쌓이는 여러 단계 마진)을 피해 실리콘·네트워킹·시스템 원가를 낮춰 성능 손실을 상쇄** — Trn2 칩당 약 500W, Trainium3 약 1,000W(GB200 약 1,200W, GB300 약 1,400W)로 **칩 TDP 격차가 운영 TCO 차이의 대부분을 설명**, 다만 네이티브 FP4 미지원 탓에 FP4 기준 TCO당 성능은 Nvidia보다 오히려 불리 — 결국 절대 성능이 아니라 "TCO당 실질 성능"이 관건이며, Trainium3는 훈련·범용 워크로드에서 강점을, FP4 추론에서는 약점을 동시에 지닌 균형점에 있음
+
+---
+
+```mermaid
+flowchart TD
+    Rainier["Project Rainier<br/>데이터센터 램프업"] --> Proof["2025년 3분기 실적으로<br/>SemiAnalysis 사전 예측<br/>(성장 가속) 적중"]
+    Proof --> Now["현재 가동분은<br/>최종 규모의 초기 단계일 뿐"]
+    Now --> New["신규: 최종 1GW급<br/>캠퍼스 착공(인접 1GW<br/>부지와 연계 확장)"]
+
+    style New fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Cool["AWS 공랭 전략<br/>vs 업계 트렌드"] --> AWS2["AWS: 2021년 버지니아~<br/>Project Rainier 인디애나까지<br/>건물 설계 거의 동일(표준화 유지)"]
+    Cool --> Meta_["Meta: 물 냉각 도입으로<br/>전면 설계 전환(대조 사례)"]
+
+    style AWS2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Meta_ fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    Hybrid["냉수 배관 겸용<br/>(공랭+액체) 방식의 대가"] --> Chiller["하절기 칠러 필수<br/>(입구 수온 25~30도 유지)"]
+    Chiller --> Cost1["초기 투자 증가"]
+    Chiller --> Cost2["IT 전력 비중 감소<br/>(PUE 1.2배→1.5배)"]
+    Chiller --> Cost3["운영비 상승"]
+
+    style Chiller fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TDP["칩 TDP 비교<br/>(운영 TCO 격차의 주범)"] --> Trn2t["Trn2: 약 500W"]
+    TDP --> Trn3t["Trainium3: 약 1,000W"]
+    TDP --> GB200t["Nvidia GB200: 약 1,200W"]
+    TDP --> GB300t["Nvidia GB300: 약 1,400W"]
+
+    style Trn3t fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style GB300t fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    TCO["Trainium3 vs Nvidia<br/>TCO당 성능 균형점"] --> Adv["강점: 마진 스태킹 회피로<br/>낮은 원가 → 훈련·범용<br/>워크로드 TCO당 성능 우수"]
+    TCO --> Weak["약점: 네이티브 FP4<br/>미지원 → FP4 추론 기준<br/>TCO당 성능은 Nvidia에 열세"]
+
+    style Adv fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Weak fill:#fef2f2,stroke:#dc2626
+```
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 전체 16개 섹션(개요·전략, 스펙 업그레이드, 랙 아키텍처 개관, 실리콘·패키징, Trainium4 로드맵, 토러스→스위치드 전환, NL32x2/NL72x2 상세, 스케일업 대역폭 구성, 스위치 세대 진화, 구리 케이블·전력·BOM·수익화 속도, EFA·ENA 스케일아웃, 마이크로아키텍처, PyTorch 소프트웨어 전환, LNC·Megacore·프로파일링 툴, 데이터센터 램프업·공랭·TCO) 작성 완료*
