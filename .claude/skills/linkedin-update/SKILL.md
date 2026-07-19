@@ -27,6 +27,26 @@ ws = websocket.create_connection(li_tab['webSocketDebuggerUrl'], timeout=20)
 ```
 Use `Runtime.enable` then `Runtime.evaluate` (with `returnByValue: True`) as the JSON-RPC pattern for everything below — see any `scratchpad/li_*.py` from prior sessions for the full send/recv boilerplate.
 
+## 1.5. Force the feed to "최근" (recent) sort — DO THIS BEFORE SCROLLING
+
+The company `/posts/` page defaults to **"인기순" (Top/popularity) sort**, which interleaves old high-engagement posts and can starve the scroll of the genuinely newest items. Switch it to **"최근"** first. Verify current state via the sort toggle button (text `정렬 기준: 인기순` vs `정렬 기준: 최근`).
+
+Gotchas learned 2026-07-19:
+- The recent option's visible label is **`최근`**, NOT `최신순`. Match exact text `최근`.
+- The sort control is a toggle: each click of the `정렬 기준…` button flips `aria-expanded`. Only search for options when `aria-expanded==='true'`; a blind double-click just closes it again.
+- Options render as `[role=option]` buttons (`인기순`, `최근`). A generic `button`/`menuitem` scan also catches the video.js speed menu (`vjs-menu-item`, `0.5x`…) — scope to `[role=option]`.
+
+```python
+def ev(js): return send('Runtime.evaluate',{'expression':js,'returnByValue':True})['result']['result']['value']
+# open dropdown iff not already open
+ev("(function(){var b=[].slice.call(document.querySelectorAll('button,[role=button]')).find(x=>/정렬 기준/.test(x.innerText||'')); if(b&&b.getAttribute('aria-expanded')!=='true')b.click(); return 1;})()")
+time.sleep(1.2)
+ev("(function(){var o=[].slice.call(document.querySelectorAll('[role=option]')).find(x=>(x.innerText||'').trim()==='최근'); if(o)o.click(); return 1;})()")
+time.sleep(2.5)
+# verify -> button text should now read '정렬 기준: 최근'
+```
+Full working script: `scratchpad/li_sort5.py`.
+
 ## 2. Extract posts (text)
 
 ```js
