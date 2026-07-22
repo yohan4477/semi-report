@@ -66,6 +66,9 @@ body.sub #back{display:block}
 .lg{border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--hair);flex:none}
 .lgf{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;
   background:#e5e8eb;color:#4e5968;font-weight:800;flex:none}
+.lge{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;
+  background:#eef1f4;flex:none;line-height:1}
+.pill .lg,.pill .lge,.pill .lgf{vertical-align:-2px;margin-right:3px}
 .spark i.up{background:var(--up)} .spark i.dn{background:var(--dn)} .spark i.fl{background:#c8cdd4}
 .net{font-size:15px;font-weight:800;min-width:44px;text-align:right}
 
@@ -206,23 +209,25 @@ const TICKERS={NVIDIA:'NVDA',AMD:'AMD',Intel:'INTC',TSMC:'TSM',Micron:'MU',Broad
  'Axcelis·Veeco':'ACLS',TechInsights:'',Cisco:'CSCO',HPE:'HPE',Arm:'ARM',Vertiv:'VRT',
  'OSAT(Amkor·ASE)':'AMKR','기존 발전사(Vistra·Constellation)':'VST','발전·전력기기(GE Vernova 등)':'GEV'};
 const KRCODES={'SK하이닉스':'000660','삼성전자':'005930'};
+/* 섹터·일반명(티커 없음)은 도메인 이모지 아이콘 */
+const GEMO={'칩·컴퓨트':'💠','메모리':'🧠','AI 랩·모델':'🤖','클라우드·DC':'☁️','네트워킹·서버·부품':'🔌','전력':'⚡','파운드리·장비·소재':'🏭'};
+function domIco(t,sz){
+  const e=GEMO[groupOf[t]]||'🏢';
+  return `<span class="lge" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.54)}px">${e}</span>`;
+}
 function logo(t,sz){
-  const init=esc(t.replace(/[^A-Za-z가-힣0-9]/g,'').slice(0,2)||'·');
-  const fb=`<span class="lgf" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.38)}px">${init}</span>`;
-  if(KRCODES[t])return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://static.toss.im/png-icons/securities/icn-sec-fill-${KRCODES[t]}.png" onerror="lgErr(this)" data-fb="1" alt="">`;
+  if(KRCODES[t])return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://static.toss.im/png-icons/securities/icn-sec-fill-${KRCODES[t]}.png" onerror="lgErr(this)" data-t="${esc(t)}" data-fb="1" alt="">`;
   const tk=TICKERS[t];
-  if(tk)return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://assets.parqet.com/logos/symbol/${tk}?format=png" data-next="https://financialmodelingprep.com/image-stock/${tk}.png" onerror="lgErr(this)" alt="">`;
-  return fb;
+  if(tk)return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://assets.parqet.com/logos/symbol/${tk}?format=png" data-next="https://financialmodelingprep.com/image-stock/${tk}.png" onerror="lgErr(this)" data-t="${esc(t)}" alt="">`;
+  return domIco(t,sz);
 }
 window.lgErr=function(img){
   const next=img.dataset.next;
   if(next){img.removeAttribute('data-next');img.src=next;return;}
   const sz=parseInt(img.style.width)||24;
-  const t=img.closest('[data-ent]')?.dataset.ent||img.dataset.t||'·';
-  const init=(t.replace(/[^A-Za-z가-힣0-9]/g,'').slice(0,2)||'·');
-  const s=document.createElement('span');s.className='lgf';
-  s.style.cssText=`width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.38)}px`;
-  s.textContent=init;img.replaceWith(s);
+  const t=img.dataset.t||img.closest('[data-ent]')?.dataset.ent||'·';
+  const tmp=document.createElement('span');tmp.innerHTML=domIco(t,sz);
+  img.replaceWith(tmp.firstChild);
 };
 const cls=d=>d==='+'?'up':d==='-'?'dn':'fl';
 const sym=d=>d==='+'?'▲':d==='-'?'▼':'◆';
@@ -294,8 +299,8 @@ function secTheses(){
   THESES.forEach(t=>{
     h+=`<div class="th" data-th="${t.id}"><div class="t">${esc(t.title)}</div>
       <div class="m"><span class="pill conf">확신 ${t.conf} · 증거 ${t.ev.length}건</span>
-      ${t.win.map(w=>`<span class="pill w">▲ ${esc(w)}</span>`).join('')}
-      ${t.lose.map(l=>`<span class="pill l">▼ ${esc(l)}</span>`).join('')}</div></div>`;});
+      ${t.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">${logo(w,15)}▲ ${esc(w)}</span>`).join('')}
+      ${t.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">${logo(l,15)}▼ ${esc(l)}</span>`).join('')}</div></div>`;});
   return h+'</div>';
 }
 function secEnts(){
@@ -378,8 +383,8 @@ function entPage(t){
 function thPage(th){
   let h=`<div class="sec tpage"><div class="t">${esc(th.title)}</div>
     <div class="m"><span class="pill conf">확신 ${th.conf} · 증거 ${th.ev.length}건</span>
-    ${th.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">▲ ${esc(w)}</span>`).join('')}
-    ${th.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">▼ ${esc(l)}</span>`).join('')}</div>
+    ${th.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">${logo(w,15)}▲ ${esc(w)}</span>`).join('')}
+    ${th.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">${logo(l,15)}▼ ${esc(l)}</span>`).join('')}</div>
     <div id="branch"><svg id="bsvg"></svg><div id="bfeed">`;
   const evs=th.ev.map(x=>({...x,e:byId[x.idx]})).filter(x=>x.e).sort((a,b)=>a.e.date<b.e.date?-1:1);
   let prev=null;
