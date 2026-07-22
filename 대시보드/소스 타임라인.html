@@ -235,7 +235,7 @@ const GROUPS=[
 ];
 const G_ETC='기타';
 const groupOf={};GROUPS.forEach(([g,list])=>list.forEach(t=>groupOf[t]=g));
-const gCollapsed=new Set([G_ETC]);
+const gCollapsed=new Set([...GROUPS.map(g=>g[0]),G_ETC]); // 기본 전부 접힘 — 눌러야 엔티티 노출
 function entRow(t){
   const a=ents[t];const net=a.reduce((s,x)=>s+(x.d==='+'?1:x.d==='-'?-1:0),0);
   const nc=net>0?'up':net<0?'dn':'fl';
@@ -249,7 +249,10 @@ function renderEnts(){
     const members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
     if(!members.length)return;
     const closed=gCollapsed.has(g);
-    h+=`<div class="ghead${closed?' closed':''}" data-g="${esc(g)}"><span class="tri">${closed?'▸':'▾'}</span>${esc(g)}<span class="gn">${members.length}</span></div>`;
+    const gnet=members.reduce((s,t)=>s+ents[t].reduce((v,x)=>v+(x.d==='+'?1:x.d==='-'?-1:0),0),0);
+    const gc=gnet>0?'up':gnet<0?'dn':'fl';
+    h+=`<div class="ghead${closed?' closed':''}" data-g="${esc(g)}"><span class="tri">${closed?'▸':'▾'}</span>${esc(g)}
+      <span class="gn"><span class="net ${gc}" style="font-size:11px">${gnet>0?'+':''}${gnet}</span> · ${members.length}</span></div>`;
     if(!closed)h+=members.map(entRow).join('');
   });
   document.getElementById('ents').innerHTML=h;
