@@ -20,7 +20,13 @@ body{margin:0;background:var(--bg);color:var(--ink);
 #app{max-width:680px;margin:0 auto;padding:0 0 80px}
 
 /* 헤더 */
-#top{position:sticky;top:0;z-index:20;background:var(--bg);padding:16px 20px 10px;display:flex;align-items:center;gap:10px}
+#head{position:sticky;top:0;z-index:20;background:var(--bg)}
+#top{background:var(--bg);padding:16px 20px 8px;display:flex;align-items:center;gap:10px}
+.lens{display:flex;gap:6px;padding:2px 12px 10px}
+.lens button{flex:1;border:none;background:var(--panel);color:var(--sub);font-family:inherit;
+  font-size:13.5px;font-weight:700;padding:9px 0;border-radius:12px;cursor:pointer;letter-spacing:-.2px}
+.lens button.on{background:var(--ink);color:#fff}
+body.sub .lens{display:none}
 #top h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.4px;flex:1}
 #top .stamp{font-size:11px;color:var(--faint)}
 #hub{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
@@ -164,9 +170,15 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
 </head>
 <body>
 <div id="app">
-  <div id="top"><button id="back">‹</button><h1 id="title">임팩트 타임라인</h1>
-    <a id="hub" href="https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html">Yomianalysis ↗</a>
-    <span class="stamp" id="stamp"></span></div>
+  <div id="head">
+    <div id="top"><button id="back">‹</button><h1 id="title">Yomianalysis</h1>
+      <span class="stamp" id="stamp"></span></div>
+    <div class="lens" id="lens">
+      <button data-lens="brief">브리핑</button>
+      <button data-lens="ent">종목</button>
+      <button data-lens="thesis">논제</button>
+    </div>
+  </div>
   <div id="views"></div>
 </div>
 <script>
@@ -279,7 +291,7 @@ const G_ETC='기타';
 const groupOf={};GROUPS.forEach(([g,l])=>l.forEach(t=>groupOf[t]=g));
 const gOpen=new Set([...GROUPS.map(g=>g[0]),G_ETC]);
 
-const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',chainSel:null,
+const state={view:'home',lens:'brief',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',chainSel:null,
   recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),
   moreG:new Set(),openG:gOpen};
 const views=document.getElementById('views');
@@ -497,8 +509,11 @@ function drawBranch(){
 function render(){
   document.body.classList.toggle('sub',state.view!=='home');
   const title=document.getElementById('title');
-  if(state.view==='home'){title.textContent='임팩트 타임라인';
-    views.innerHTML=secEnts()+secSignals()+secTheses()+secFeed();}
+  if(state.view==='home'){title.textContent='Yomianalysis';
+    if(state.lens==='brief')views.innerHTML=secSignals()+secFeed();
+    else if(state.lens==='ent')views.innerHTML=secEnts();
+    else views.innerHTML=secTheses();
+    syncLens();}
   else if(state.view==='ent'){title.textContent=state.ent;views.innerHTML=entPage(state.ent);}
   else {const th=THESES.find(x=>x.id===state.th);title.textContent='논제';views.innerHTML=thPage(th);
     requestAnimationFrame(drawBranch);}
@@ -531,6 +546,10 @@ function bind(){
 function bindPartial(root){
   root.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();openEnt(el.dataset.ent);});
 }
+function syncLens(){document.querySelectorAll('#lens button').forEach(b=>
+  b.classList.toggle('on',b.dataset.lens===state.lens));}
+document.querySelectorAll('#lens button').forEach(b=>b.onclick=()=>{
+  state.lens=b.dataset.lens;state.view='home';state.ent=null;state.th=null;render();scrollTo(0,0);});
 document.getElementById('back').onclick=()=>{state.view='home';state.ent=null;state.th=null;render();};
 document.getElementById('stamp').textContent=`${maxDate.slice(0,10)} 기준`;
 render();
