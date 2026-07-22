@@ -131,7 +131,7 @@ body.detail #backTop{display:inline-block}
 <div id="brief"></div>
 <div class="controls">
   <div class="seg" id="dirseg">
-    <span class="on" data-d="+">호재</span><span class="on" data-d="-">악재</span><span data-d="0">중립</span>
+    <span class="on up" data-d="+">호재</span><span class="on dn" data-d="-">악재</span><span class="on fl" data-d="0">중립</span>
   </div>
   <div class="seg"><span id="majorOnly">주요만</span></div>
   <input id="q" placeholder="검색 — 키워드, 회사">
@@ -171,7 +171,7 @@ const entOrder=Object.keys(ents).sort((a,b)=>{
   return rb-ra||ents[b].length-ents[a].length;
 });
 
-const state={sel:null,dir:new Set(['+','-']),major:false,q:''};
+const state={sel:null,dir:new Set(['+','-','0']),major:false,q:''};
 document.querySelectorAll('#dirseg span').forEach(el=>{
   el.onclick=()=>{const d=el.dataset.d;state.dir.has(d)?state.dir.delete(d):state.dir.add(d);el.classList.toggle('on');render();};
 });
