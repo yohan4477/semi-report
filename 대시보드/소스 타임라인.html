@@ -60,6 +60,9 @@ body.sub #back{display:block}
 .ent .nm{font-size:15px;font-weight:650;letter-spacing:-.3px;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .spark{display:flex;gap:3.5px}
 .spark i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.lg{border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--hair);flex:none}
+.lgf{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;
+  background:#e5e8eb;color:#4e5968;font-weight:800;flex:none}
 .spark i.up{background:var(--up)} .spark i.dn{background:var(--dn)} .spark i.fl{background:#c8cdd4}
 .net{font-size:15px;font-weight:800;min-width:44px;text-align:right}
 
@@ -190,6 +193,32 @@ const ICO={
  nv:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#76b900"/><text x="12" y="16" font-size="9.5" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial">NV</text></svg>'
 };
 const SRC={li:ICO.in+ICO.sa, yt:ICO.yt+ICO.sa, nv:ICO.in+ICO.nv};
+/* 회사 로고 — 미국: parqet→FMP→이니셜, 국내: Toss 정적 CDN */
+const TICKERS={NVIDIA:'NVDA',AMD:'AMD',Intel:'INTC',TSMC:'TSM',Micron:'MU',Broadcom:'AVGO',
+ Google:'GOOGL',Amazon:'AMZN',Microsoft:'MSFT',Meta:'META',Apple:'AAPL',Oracle:'ORCL',
+ CoreWeave:'CRWV',Dell:'DELL',Supermicro:'SMCI',Arista:'ANET',Marvell:'MRVL',Amphenol:'APH',
+ 'Bloom Energy':'BE','Analog Devices':'ADI',Teradyne:'TER',Alibaba:'BABA',IBM:'IBM',
+ 'Axcelis·Veeco':'ACLS',TechInsights:'',Cisco:'CSCO',HPE:'HPE',Arm:'ARM',Vertiv:'VRT',
+ 'OSAT(Amkor·ASE)':'AMKR','기존 발전사(Vistra·Constellation)':'VST','발전·전력기기(GE Vernova 등)':'GEV'};
+const KRCODES={'SK하이닉스':'000660','삼성전자':'005930'};
+function logo(t,sz){
+  const init=esc(t.replace(/[^A-Za-z가-힣0-9]/g,'').slice(0,2)||'·');
+  const fb=`<span class="lgf" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.38)}px">${init}</span>`;
+  if(KRCODES[t])return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://static.toss.im/png-icons/securities/icn-sec-fill-${KRCODES[t]}.png" onerror="lgErr(this)" data-fb="1" alt="">`;
+  const tk=TICKERS[t];
+  if(tk)return `<img class="lg" style="width:${sz}px;height:${sz}px" src="https://assets.parqet.com/logos/symbol/${tk}?format=png" data-next="https://financialmodelingprep.com/image-stock/${tk}.png" onerror="lgErr(this)" alt="">`;
+  return fb;
+}
+window.lgErr=function(img){
+  const next=img.dataset.next;
+  if(next){img.removeAttribute('data-next');img.src=next;return;}
+  const sz=parseInt(img.style.width)||24;
+  const t=img.closest('[data-ent]')?.dataset.ent||img.dataset.t||'·';
+  const init=(t.replace(/[^A-Za-z가-힣0-9]/g,'').slice(0,2)||'·');
+  const s=document.createElement('span');s.className='lgf';
+  s.style.cssText=`width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.38)}px`;
+  s.textContent=init;img.replaceWith(s);
+};
 const cls=d=>d==='+'?'up':d==='-'?'dn':'fl';
 const sym=d=>d==='+'?'▲':d==='-'?'▼':'◆';
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -248,10 +277,10 @@ function secSignals(){
   let h='<div class="sec"><div class="cap">오늘의 시그널 <span class="aib">AI가 정리했어요</span></div>';
   items.slice(0,4).forEach(({e,b})=>{
     const cont=ents[b.t].filter(x=>byId[x.idx].date>=recentK&&x.d===b.d).length>1;
-    h+=`<div class="sig" data-ent="${esc(b.t)}"><div class="h">${sent(b.t,b.d,cont)}</div>
+    h+=`<div class="sig" data-ent="${esc(b.t)}"><div class="h" style="display:flex;align-items:center;gap:8px">${logo(b.t,22)}<span>${sent(b.t,b.d,cont)}</span></div>
       <div class="s">${esc(b.w)}</div><div class="d">${e.date.slice(5,10)} · ${esc(e.label.slice(0,56))}…</div></div>`;});
   flips.slice(0,2).forEach(({t,last})=>{
-    h+=`<div class="sig" data-ent="${esc(t)}"><div class="h">${esc(t)}, 방향이 <span class="${cls(last.d)}">${last.d==='+'?'호재':'악재'}</span>로 바뀌었어요</div>
+    h+=`<div class="sig" data-ent="${esc(t)}"><div class="h" style="display:flex;align-items:center;gap:8px">${logo(t,22)}<span>${esc(t)}, 방향이 <span class="${cls(last.d)}">${last.d==='+'?'호재':'악재'}</span>로 바뀌었어요</span></div>
       <div class="s">${esc(last.w)}</div></div>`;});
   return h+'</div>';
 }
@@ -275,7 +304,7 @@ function secEnts(){
       <span class="gnet ${gnet>0?'up':gnet<0?'dn':'fl'}">${gnet>0?'+':''}${gnet}</span></div>`;
     if(open)members.forEach(t=>{
       const a=ents[t],net=netOf(a);
-      h+=`<div class="ent" data-ent="${esc(t)}"><span class="nm">${esc(t)}</span>
+      h+=`<div class="ent" data-ent="${esc(t)}">${logo(t,26)}<span class="nm">${esc(t)}</span>
         <span class="spark">${a.slice(-5).map(x=>`<i class="${cls(x.d)}"></i>`).join('')}</span>
         <span class="net ${net>0?'up':net<0?'dn':'fl'}">${net>0?'+':''}${net}</span></div>`;});
   });
@@ -324,7 +353,7 @@ function entPage(t){
   const rel=THESES.filter(th=>th.win.includes(t)||th.lose.includes(t));
   const shown=[...new Set(a.filter(x=>state.dir.has(x.d)&&(!state.major||x.m>=3)).map(x=>x.idx))]
     .map(i=>byId[i]).filter(evMatch).sort((x,y)=>x.date<y.date?1:-1);
-  let h=`<div class="sec hero"><div class="nm">${esc(t)}</div>
+  let h=`<div class="sec hero"><div class="nm" style="display:flex;align-items:center;gap:9px">${logo(t,34)}${esc(t)}</div>
     <div class="big ${net>0?'up':net<0?'dn':''}">${net>0?'+':''}${net}</div>
     <div class="line">${line}</div>
     <div class="sub2"><span>호재 <b class="up">${u}</b></span><span>악재 <b class="dn">${d}</b></span><span>이벤트 ${a.length}건</span></div></div>`;
