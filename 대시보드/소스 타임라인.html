@@ -299,8 +299,8 @@ function secTheses(){
   THESES.forEach(t=>{
     h+=`<div class="th" data-th="${t.id}"><div class="t">${esc(t.title)}</div>
       <div class="m"><span class="pill conf">확신 ${t.conf} · 증거 ${t.ev.length}건</span>
-      ${t.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">${logo(w,15)}▲ ${esc(w)}</span>`).join('')}
-      ${t.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">${logo(l,15)}▼ ${esc(l)}</span>`).join('')}</div></div>`;});
+      ${t.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">▲ ${logo(w,15)}${esc(w)}</span>`).join('')}
+      ${t.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">▼ ${logo(l,15)}${esc(l)}</span>`).join('')}</div></div>`;});
   return h+'</div>';
 }
 function secEnts(){
@@ -383,8 +383,8 @@ function entPage(t){
 function thPage(th){
   let h=`<div class="sec tpage"><div class="t">${esc(th.title)}</div>
     <div class="m"><span class="pill conf">확신 ${th.conf} · 증거 ${th.ev.length}건</span>
-    ${th.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">${logo(w,15)}▲ ${esc(w)}</span>`).join('')}
-    ${th.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">${logo(l,15)}▼ ${esc(l)}</span>`).join('')}</div>
+    ${th.win.map(w=>`<span class="pill w" data-ent="${esc(w)}">▲ ${logo(w,15)}${esc(w)}</span>`).join('')}
+    ${th.lose.map(l=>`<span class="pill l" data-ent="${esc(l)}">▼ ${logo(l,15)}${esc(l)}</span>`).join('')}</div>
     <div id="branch"><svg id="bsvg"></svg><div id="bfeed">`;
   const evs=th.ev.map(x=>({...x,e:byId[x.idx]})).filter(x=>x.e).sort((a,b)=>a.e.date<b.e.date?-1:1);
   let prev=null;
