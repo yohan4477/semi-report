@@ -501,7 +501,7 @@ function drawBranch(){
     if(el.classList.contains('bev')){lastEv=i;return;}
     const a=pos[lastEv],b=pos[i];
     const col=el.classList.contains('up')?'var(--up)':el.classList.contains('dn')?'var(--dn)':'var(--fl)';
-    branches+=`<path d="M${a.x} ${a.y} C ${a.x} ${b.y-8}, ${a.x+13} ${b.y}, ${b.x-4} ${b.y}" stroke="${col}" stroke-width="2" fill="none" opacity=".5"/>`;});
+    branches+=`<path d="M${a.x} ${b.y} H${b.x-4}" stroke="${col}" stroke-width="2" fill="none" opacity=".55"/>`;});
   svg.innerHTML=`<path d="${trunk}" stroke="#c8cdd4" stroke-width="2.5" fill="none"/>`+branches;
 }
 
