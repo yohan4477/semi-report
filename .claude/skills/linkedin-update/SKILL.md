@@ -78,16 +78,24 @@ dt_utc = datetime.datetime.utcfromtimestamp(ts_ms / 1000)
 ```
 Verified accurate against two independently-known dates (matched to the day) on 2026-07-16 — trust this over the visible label for any post older than ~a week.
 
-## 4. Check the actual image before writing a summary
+## 4. Check images + reshared-post text for EVERY new post (user requirement, 2026-07-22)
 
-Text-only extraction misses meme/chart/screenshot posts entirely (a post can show as empty or near-empty text while the real content is an image). Before summarizing a post with short/no text, screenshot it:
+Text-only extraction misses meme/chart/screenshot posts, cuts long text at the feed-card boundary, and drops the embedded original when a post is a reshare. For **each new post** (not just short/empty ones), open its permalink, click 더보기, and capture both structured info and a screenshot:
 ```python
+send('Emulation.setDeviceMetricsOverride', {'width':1000,'height':2200,'deviceScaleFactor':1,'mobile':False})  # tall viewport so one shot covers the whole post
 send('Page.navigate', {'url': f'https://www.linkedin.com/feed/update/urn:li:activity:{activity_id}/'})
-time.sleep(4)
+time.sleep(6)
+# click 더보기 (see-more) first, then extract:
+#  - main text: '.feed-shared-update-v2__description, .update-components-text'
+#  - reshare embed: '.update-components-mini-update-v2, .feed-shared-mini-update-v2, [class*="mini-update"]'
+#    (inside it: actor title + '.update-components-text' = the ORIGINAL post's author and text — include in summary)
+#  - media flags: video ('.feed-shared-update-v2 video'), images ('.update-components-image img'), document carousel ('iframe[src*="native-document"]')
 shot = send('Page.captureScreenshot', {'format': 'png'})
 # base64-decode shot['result']['data'] to PNG, then Read the file to look at it
 ```
-This has caught real content (a "two-buttons" meme, an official partner-deprecation notice with exact dates) that the text alone didn't capture or got slightly garbled (e.g. OCR-ish text mangling model names).
+Then **Read every screenshot** and fold what the image shows (chart numbers, package diagrams, YAML captures, memes) into the Korean summary. Full working script: `scratchpad/li_deep_0722.py`.
+
+Real catches: a "two-buttons" meme; a partner-deprecation notice with exact dates; the 2026-07-21 AMD SGLang post whose feed-card text cut off before the key claim (vLLM gating regressed because AMD leadership pulled clusters). Videos still can't be watched — note the video's existence and summarize from caption + first frame. Scope guidance: user asked for this depth on roughly the trailing week of posts per run, not the whole history.
 
 ## 5. Update the dashboards
 
