@@ -159,6 +159,7 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
   padding:6px 11px;white-space:nowrap;cursor:pointer;user-select:none}
 .cf.on{background:var(--ink);color:#fff}
 .cfsep{flex:none;width:1px;height:14px;background:var(--line);margin:0 3px}
+.morerow{font-size:12.5px;font-weight:700;color:var(--accent);padding:12px 0 4px;cursor:pointer;user-select:none}
 </style>
 </head>
 <body>
@@ -279,7 +280,8 @@ const groupOf={};GROUPS.forEach(([g,l])=>l.forEach(t=>groupOf[t]=g));
 const gOpen=new Set([...GROUPS.map(g=>g[0]),G_ETC]);
 
 const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',chainSel:null,
-  recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),openG:gOpen};
+  recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),
+  moreG:new Set(),openG:gOpen};
 const views=document.getElementById('views');
 
 function netOf(a){return a.reduce((s,x)=>s+(x.d==='+'?1:x.d==='-'?-1:0),0);}
@@ -340,11 +342,15 @@ function secEnts(){
     const open=q||state.chainSel!=null?true:state.openG.has(g);
     h+=`<div class="ghead" data-g="${esc(g)}"><span class="tri">${open?'▾':'▸'}</span>${esc(g)}
       <span class="gnet ${gnet>0?'up':gnet<0?'dn':'fl'}">${gnet>0?'+':''}${gnet}</span></div>`;
-    if(open)members.forEach(t=>{
-      const a=ents[t],net=netOf(a);
-      h+=`<div class="ent" data-ent="${esc(t)}">${logo(t,26)}<span class="nm">${esc(t)}</span>
-        <span class="spark">${a.slice(-5).map(x=>`<i class="${cls(x.d)}"></i>`).join('')}</span>
-        <span class="net ${net>0?'up':net<0?'dn':'fl'}">${net>0?'+':''}${net}</span></div>`;});
+    if(open){
+      const cap=(q||state.moreG.has(g))?members.length:6;
+      members.slice(0,cap).forEach(t=>{
+        const a=ents[t],net=netOf(a);
+        h+=`<div class="ent" data-ent="${esc(t)}">${logo(t,26)}<span class="nm">${esc(t)}</span>
+          <span class="spark">${a.slice(-5).map(x=>`<i class="${cls(x.d)}"></i>`).join('')}</span>
+          <span class="net ${net>0?'up':net<0?'dn':'fl'}">${net>0?'+':''}${net}</span></div>`;});
+      if(members.length>cap)h+=`<div class="morerow" data-more="${esc(g)}">활동 적은 종목 ${members.length-cap}개 더보기 ▾</div>`;
+    }
   });
   return h+'</div>';
 }
@@ -509,7 +515,8 @@ function bind(){
     state.dir.has(d)?state.dir.delete(d):state.dir.add(d);render();});
   const mj=document.getElementById('mj');if(mj)mj.onclick=()=>{state.major=!state.major;render();};
   views.querySelectorAll('.cf[data-cs]').forEach(el=>el.onclick=()=>{const v=el.dataset.cs;
-    state.chainSel=v===''?null:v;render();});
+    state.chainSel=v===''?null:v;state.moreG.clear();render();});
+  views.querySelectorAll('.morerow[data-more]').forEach(el=>el.onclick=()=>{state.moreG.add(el.dataset.more);render();});
   const eq=document.getElementById('eq');if(eq)eq.oninput=e=>{state.eq=e.target.value.trim().toLowerCase();
     render();const n=document.getElementById('eq');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
   const q=document.getElementById('q');if(q){q.oninput=e=>{state.q=e.target.value.trim().toLowerCase();
