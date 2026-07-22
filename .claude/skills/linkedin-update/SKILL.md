@@ -95,7 +95,12 @@ shot = send('Page.captureScreenshot', {'format': 'png'})
 ```
 Then **Read every screenshot** and fold what the image shows (chart numbers, package diagrams, YAML captures, memes) into the Korean summary. Full working script: `scratchpad/li_deep_0722.py`.
 
-Real catches: a "two-buttons" meme; a partner-deprecation notice with exact dates; the 2026-07-21 AMD SGLang post whose feed-card text cut off before the key claim (vLLM gating regressed because AMD leadership pulled clusters). Videos still can't be watched — note the video's existence and summarize from caption + first frame. Scope guidance: user asked for this depth on roughly the trailing week of posts per run, not the whole history.
+Real catches: a "two-buttons" meme; a partner-deprecation notice with exact dates; the 2026-07-21 AMD SGLang post whose feed-card text cut off before the key claim (vLLM gating regressed because AMD leadership pulled clusters). Scope guidance: user asked for this depth on roughly the trailing week of posts per run, not the whole history.
+
+**Video posts (user requirement, 2026-07-22):** SemiAnalysis usually drops the full video's YouTube link **as a first-party comment** on the post. Scroll the permalink page down (`window.scrollBy(0,1500)`), then grab `a[href*="youtube"], a[href*="youtu.be"]` hrefs. With that video ID:
+1. Check `raw/youtube/youtube_summaries.json` — the summary may already exist (also watch for duplicate re-uploads of the same interview under a different ID; dedupe via title, mark `제외(중복)` in `유튜브/영상 목록.md`).
+2. If missing, pull the transcript (`yt-dlp --extractor-args "youtube:player_client=android" --skip-download --write-auto-sub --sub-lang en --sub-format vtt`; NOTE `--print` implies simulate mode and silently skips the subtitle write — run it separately) and write a transcript-based Korean summary into `raw/youtube/youtube_summaries.json` + a ledger row in `유튜브/영상 목록.md`. Transcript-based is mandatory per standing feedback; if the video has no captions at all, the YouTube player's 질문하기→영상요약하기 feature is an accepted fallback.
+3. Use the summary to enrich the LinkedIn signal's Korean summary instead of relying on the caption alone.
 
 ## 5. Update the dashboards
 
