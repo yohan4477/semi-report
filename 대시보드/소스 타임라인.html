@@ -79,8 +79,13 @@ body.sub #back{display:block}
 .chip.on.dn{background:var(--dn-bg);color:var(--dn)}
 .chip.on.fl{background:#eceef0;color:var(--sub)}
 .chip.on.mj{background:var(--ink);color:#fff}
-input#q{border:none;background:var(--hair);border-radius:16px;padding:6px 13px;font-size:12.5px;outline:none;
+input#q,input#eq{border:none;background:var(--hair);border-radius:16px;padding:6px 13px;font-size:12.5px;outline:none;
   font-family:inherit;width:150px}
+input#eq{width:100%;padding:9px 14px;font-size:13.5px}
+.recent{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 4px}
+.rchip{display:inline-flex;align-items:center;gap:5px;background:var(--hair);border-radius:14px;
+  padding:5px 11px 5px 8px;font-size:12.5px;font-weight:650;cursor:pointer}
+.rchip img,.rchip .lge,.rchip .lgf{flex:none}
 .dh{font-size:12px;font-weight:700;color:var(--faint);padding:14px 0 2px}
 .ev{padding:11px 0;border-top:1px solid var(--hair)}
 .ev .top{display:flex;gap:10px;cursor:pointer;align-items:flex-start}
@@ -258,9 +263,10 @@ const GROUPS=[
 ];
 const G_ETC='기타';
 const groupOf={};GROUPS.forEach(([g,l])=>l.forEach(t=>groupOf[t]=g));
-const gOpen=new Set();
+const gOpen=new Set([...GROUPS.map(g=>g[0]),G_ETC]);
 
-const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',openG:gOpen};
+const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',
+  recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),openG:gOpen};
 const views=document.getElementById('views');
 
 function netOf(a){return a.reduce((s,x)=>s+(x.d==='+'?1:x.d==='-'?-1:0),0);}
@@ -305,12 +311,18 @@ function secTheses(){
   return h+'</div>';
 }
 function secEnts(){
-  let h='<div class="sec"><div class="cap">종목·섹터별</div>';
+  let h='<div class="sec"><div class="cap">종목·섹터별 <span style="float:right;color:var(--faint);font-weight:600">지금 상황</span></div>';
+  h+=`<input id="eq" placeholder="종목 검색" value="${esc(state.eq)}">`;
+  const rec=state.recent.filter(t=>ents[t]);
+  if(rec.length&&!state.eq){
+    h+='<div class="recent">'+rec.map(t=>`<span class="rchip" data-ent="${esc(t)}">${logo(t,16)}${esc(t)}</span>`).join('')+'</div>';}
+  const q=state.eq;
   [...GROUPS.map(g=>g[0]),G_ETC].forEach(g=>{
-    const members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
+    let members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
+    if(q)members=members.filter(t=>t.toLowerCase().includes(q));
     if(!members.length)return;
     const gnet=members.reduce((s,t)=>s+netOf(ents[t]),0);
-    const open=state.openG.has(g);
+    const open=q?true:state.openG.has(g);
     h+=`<div class="ghead" data-g="${esc(g)}"><span class="tri">${open?'▾':'▸'}</span>${esc(g)}
       <span class="gnet ${gnet>0?'up':gnet<0?'dn':'fl'}">${gnet>0?'+':''}${gnet}</span></div>`;
     if(open)members.forEach(t=>{
@@ -433,15 +445,18 @@ function render(){
   document.body.classList.toggle('sub',state.view!=='home');
   const title=document.getElementById('title');
   if(state.view==='home'){title.textContent='임팩트 타임라인';
-    views.innerHTML=secSignals()+secTheses()+secEnts()+secFeed();}
+    views.innerHTML=secEnts()+secSignals()+secTheses()+secFeed();}
   else if(state.view==='ent'){title.textContent=state.ent;views.innerHTML=entPage(state.ent);}
   else {const th=THESES.find(x=>x.id===state.th);title.textContent='논제';views.innerHTML=thPage(th);
     requestAnimationFrame(drawBranch);}
   bind();
 }
+function openEnt(t){
+  state.recent=[t,...state.recent.filter(x=>x!==t)].slice(0,6);
+  try{localStorage.setItem('tl_recent',JSON.stringify(state.recent))}catch(e){}
+  state.view='ent';state.ent=t;render();scrollTo(0,0);}
 function bind(){
-  views.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
-    state.view='ent';state.ent=el.dataset.ent;render();scrollTo(0,0);});
+  views.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();openEnt(el.dataset.ent);});
   views.querySelectorAll('[data-th]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
     state.view='th';state.th=el.dataset.th;render();scrollTo(0,0);});
   views.querySelectorAll('.ghead').forEach(el=>el.onclick=()=>{const g=el.dataset.g;
@@ -449,6 +464,8 @@ function bind(){
   views.querySelectorAll('.chip[data-d]').forEach(el=>el.onclick=()=>{const d=el.dataset.d;
     state.dir.has(d)?state.dir.delete(d):state.dir.add(d);render();});
   const mj=document.getElementById('mj');if(mj)mj.onclick=()=>{state.major=!state.major;render();};
+  const eq=document.getElementById('eq');if(eq)eq.oninput=e=>{state.eq=e.target.value.trim().toLowerCase();
+    render();const n=document.getElementById('eq');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
   const q=document.getElementById('q');if(q){q.oninput=e=>{state.q=e.target.value.trim().toLowerCase();
     const sec=q.closest('.sec');const feed=EVENTS.filter(e2=>(IMPACTS[e2.idx]||[]).some(brShow)&&evMatch(e2)).sort((a,b)=>a.date<b.date?1:-1);
     /* 재렌더 시 포커스 유지 위해 피드 부분만 교체 */
@@ -456,8 +473,7 @@ function bind(){
     sec.insertAdjacentHTML('beforeend',html);bindPartial(sec);};}
 }
 function bindPartial(root){
-  root.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
-    state.view='ent';state.ent=el.dataset.ent;render();scrollTo(0,0);});
+  root.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();openEnt(el.dataset.ent);});
 }
 document.getElementById('back').onclick=()=>{state.view='home';state.ent=null;state.th=null;render();};
 document.getElementById('stamp').textContent=`${maxDate.slice(0,10)} 기준`;
