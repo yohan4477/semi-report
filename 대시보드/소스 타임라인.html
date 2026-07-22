@@ -153,6 +153,12 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
 .cnode.on{background:var(--ink);color:#fff}
 .carr{flex:none;color:var(--faint);font-size:11px}
 .cnote{font-size:12px;color:var(--faint);margin-top:10px;line-height:1.55}
+/* 홈 밸류체인 필터 */
+.cfilter{display:flex;gap:5px;align-items:center;overflow-x:auto;padding-bottom:4px;margin:12px 0 6px;-webkit-overflow-scrolling:touch}
+.cf{flex:none;font-size:12px;font-weight:700;color:var(--sub);background:var(--hair);border-radius:9px;
+  padding:6px 11px;white-space:nowrap;cursor:pointer;user-select:none}
+.cf.on{background:var(--ink);color:#fff}
+.cfsep{flex:none;width:1px;height:14px;background:var(--line);margin:0 3px}
 </style>
 </head>
 <body>
@@ -272,7 +278,7 @@ const G_ETC='기타';
 const groupOf={};GROUPS.forEach(([g,l])=>l.forEach(t=>groupOf[t]=g));
 const gOpen=new Set([...GROUPS.map(g=>g[0]),G_ETC]);
 
-const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',
+const state={view:'home',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',chainSel:null,
   recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),openG:gOpen};
 const views=document.getElementById('views');
 
@@ -320,16 +326,18 @@ function secTheses(){
 function secEnts(){
   let h='<div class="sec"><div class="cap">종목·섹터별 <span style="float:right;color:var(--faint);font-weight:600">지금 상황</span></div>';
   h+=`<input id="eq" placeholder="종목 검색" value="${esc(state.eq)}">`;
+  h+=chainFilter();
   const rec=state.recent.filter(t=>ents[t]);
-  if(rec.length&&!state.eq){
+  if(rec.length&&!state.eq&&state.chainSel==null){
     h+='<div class="recent">'+rec.map(t=>`<span class="rchip" data-ent="${esc(t)}">${logo(t,16)}${esc(t)}</span>`).join('')+'</div>';}
   const q=state.eq;
   [...GROUPS.map(g=>g[0]),G_ETC].forEach(g=>{
+    if(state.chainSel!=null&&g!==state.chainSel)return;
     let members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
     if(q)members=members.filter(t=>t.toLowerCase().includes(q));
     if(!members.length)return;
     const gnet=members.reduce((s,t)=>s+netOf(ents[t]),0);
-    const open=q?true:state.openG.has(g);
+    const open=q||state.chainSel!=null?true:state.openG.has(g);
     h+=`<div class="ghead" data-g="${esc(g)}"><span class="tri">${open?'▾':'▸'}</span>${esc(g)}
       <span class="gnet ${gnet>0?'up':gnet<0?'dn':'fl'}">${gnet>0?'+':''}${gnet}</span></div>`;
     if(open)members.forEach(t=>{
@@ -378,6 +386,15 @@ function secFeed(){
 const CHAIN=['파운드리·장비·소재','메모리','칩·컴퓨트','네트워킹·서버·부품','클라우드·DC','AI 랩·모델'];
 const CHAIN_SHORT={'파운드리·장비·소재':'제조','메모리':'메모리','칩·컴퓨트':'가속기','네트워킹·서버·부품':'서버','클라우드·DC':'인프라','AI 랩·모델':'수요'};
 const CHAIN_ROLE={'파운드리·장비·소재':'제조 기반','메모리':'HBM·메모리','칩·컴퓨트':'가속기·컴퓨트','네트워킹·서버·부품':'서버·네트워킹','클라우드·DC':'인프라 운영','AI 랩·모델':'최종 수요','전력':'전력 공급'};
+function chainFilter(){
+  let h='<div class="cfilter"><span class="cf'+(state.chainSel==null?' on':'')+'" data-cs="">전체</span><span class="cfsep"></span>';
+  CHAIN.forEach((g,j)=>{
+    if(j) h+='<span class="carr">→</span>';
+    h+=`<span class="cf${state.chainSel===g?' on':''}" data-cs="${esc(g)}">${CHAIN_SHORT[g]}</span>`;});
+  h+='<span class="cfsep"></span>';
+  ['전력',G_ETC].forEach(g=>{h+=`<span class="cf${state.chainSel===g?' on':''}" data-cs="${esc(g)}">${g}</span>`;});
+  return h+'</div>';
+}
 function chainStrip(t){
   const g=groupOf[t];
   if(g==='전력'){
@@ -491,6 +508,8 @@ function bind(){
   views.querySelectorAll('.chip[data-d]').forEach(el=>el.onclick=()=>{const d=el.dataset.d;
     state.dir.has(d)?state.dir.delete(d):state.dir.add(d);render();});
   const mj=document.getElementById('mj');if(mj)mj.onclick=()=>{state.major=!state.major;render();};
+  views.querySelectorAll('.cf[data-cs]').forEach(el=>el.onclick=()=>{const v=el.dataset.cs;
+    state.chainSel=v===''?null:v;render();});
   const eq=document.getElementById('eq');if(eq)eq.oninput=e=>{state.eq=e.target.value.trim().toLowerCase();
     render();const n=document.getElementById('eq');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
   const q=document.getElementById('q');if(q){q.oninput=e=>{state.q=e.target.value.trim().toLowerCase();
