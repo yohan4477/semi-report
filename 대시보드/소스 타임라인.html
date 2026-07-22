@@ -146,6 +146,13 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
 .diag{font-size:14px;line-height:1.7;letter-spacing:-.25px;margin-top:10px}
 .diag b.up{color:var(--up)} .diag b.dn{color:var(--dn)}
 .diagnote{font-size:11px;color:var(--faint);margin-top:10px}
+/* 밸류체인 스트립 */
+.ccap{font-size:13px;font-weight:700;color:var(--faint);margin-bottom:12px;letter-spacing:-.2px}
+.cflow{display:flex;gap:5px;align-items:center;overflow-x:auto;padding-bottom:3px;-webkit-overflow-scrolling:touch}
+.cnode{flex:none;font-size:12px;font-weight:700;color:var(--sub);background:var(--hair);border-radius:9px;padding:5px 11px;white-space:nowrap}
+.cnode.on{background:var(--ink);color:#fff}
+.carr{flex:none;color:var(--faint);font-size:11px}
+.cnote{font-size:12px;color:var(--faint);margin-top:10px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -367,6 +374,25 @@ function secFeed(){
     </div>${feedList(feed,null)}</div>`;
 }
 
+/* ---------- 밸류체인 위치 (섹터=사슬 티어) ---------- */
+const CHAIN=['파운드리·장비·소재','메모리','칩·컴퓨트','네트워킹·서버·부품','클라우드·DC','AI 랩·모델'];
+const CHAIN_SHORT={'파운드리·장비·소재':'제조','메모리':'메모리','칩·컴퓨트':'가속기','네트워킹·서버·부품':'서버','클라우드·DC':'인프라','AI 랩·모델':'수요'};
+const CHAIN_ROLE={'파운드리·장비·소재':'제조 기반','메모리':'HBM·메모리','칩·컴퓨트':'가속기·컴퓨트','네트워킹·서버·부품':'서버·네트워킹','클라우드·DC':'인프라 운영','AI 랩·모델':'최종 수요','전력':'전력 공급'};
+function chainStrip(t){
+  const g=groupOf[t];
+  if(g==='전력'){
+    return `<div class="sec"><div class="ccap">밸류체인 위치 <span class="aib">사슬 추정</span></div>
+      <div class="cflow"><span class="cnode on">전력 공급</span><span class="carr">→</span><span class="cnode">인프라</span></div>
+      <div class="cnote">데이터센터 전력 공급 — AI CapEx 확대의 상류 병목이에요.</div></div>`;}
+  const i=CHAIN.indexOf(g);
+  if(i<0) return '';
+  const nodes=CHAIN.map((c,j)=>`<span class="cnode${j===i?' on':''}">${CHAIN_SHORT[c]}</span>`).join('<span class="carr">→</span>');
+  const up=i>0?CHAIN_ROLE[CHAIN[i-1]]:null, dn=i<CHAIN.length-1?CHAIN_ROLE[CHAIN[i+1]]:null;
+  const note=`${CHAIN_ROLE[g]} 단계`+(up?` · 상류 ${up}`:' · 사슬 최상류')+(dn?` · 하류 ${dn}`:' · 사슬 최하류')+'예요.';
+  return `<div class="sec"><div class="ccap">밸류체인 위치 <span class="aib">사슬 추정</span></div>
+    <div class="cflow">${nodes}</div><div class="cnote">${note}</div></div>`;
+}
+
 /* ---------- 엔티티 페이지 ---------- */
 function entPage(t){
   const a=ents[t],net=netOf(a);
@@ -380,6 +406,7 @@ function entPage(t){
     <div class="big ${net>0?'up':net<0?'dn':''}">${net>0?'+':''}${net}</div>
     <div class="line">${line}</div>
     <div class="sub2"><span>호재 <b class="up">${u}</b></span><span>악재 <b class="dn">${d}</b></span><span>이벤트 ${a.length}건</span></div></div>`;
+  h+=chainStrip(t);
   if(AIDIAG[t]){h+=`<div class="sec"><div class="cap">AI 진단 <span class="aib">모델 평가 · 근거 ${a.length}건</span></div>
     <div class="diag">${esc(AIDIAG[t])}</div>
     <div class="diagnote">판단은 모델 평가예요 — 근거 원문은 아래 히스토리에서 확인하세요.</div></div>`;}
