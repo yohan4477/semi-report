@@ -111,7 +111,8 @@
       "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --force-device-scale-factor=2 --virtual-time-budget=2200 --window-size=760,480 --screenshot=C:/Users/y/AppData/Local/Temp/claude/C--Users-y-semianalysis/dc69277c-1f3e-4f4a-8f17-30986c5d2577/scratchpad/sim_sq2.png 'file:///C:/Users/y/semianalysis/대시보드/GPU 구조 시뮬레이터.html')",
       "WebFetch(domain:www.youtube.com)",
       "Bash(tasklist)",
-      "Bash(*)"
+      "Bash(*)",
+      "Skill(loop)"
     ]
   }
 }
