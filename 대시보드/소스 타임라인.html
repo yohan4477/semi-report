@@ -58,6 +58,11 @@ input#q::placeholder{color:var(--faint)}
 .ent:hover{background:var(--hair2)}
 .ent.sel{border-left-color:var(--ink);background:var(--hair2)}
 .ent b{font-size:13px;font-weight:650;letter-spacing:-.2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ghead{display:flex;gap:6px;align-items:baseline;padding:14px 18px 5px;font-size:10px;font-weight:800;color:var(--faint);
+  letter-spacing:.12em;text-transform:uppercase;cursor:pointer;user-select:none;border-bottom:1px solid var(--hair2)}
+.ghead:hover{color:var(--sub)}
+.ghead .tri{font-size:9px;width:10px}
+.ghead .gn{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
 .spark{display:flex;gap:3px;align-items:center}
 .spark i{width:6px;height:6px;border-radius:50%;background:var(--hair)}
 .spark i.up{background:var(--up)} .spark i.dn{background:var(--dn)} .spark i.fl{background:#c3c9d3}
@@ -216,16 +221,39 @@ function brief(){
 function sparkHtml(a){
   return '<span class="spark">'+a.slice(-5).map(x=>`<i class="${cls(x.d)}"></i>`).join('')+'</span>';
 }
+/* 엔티티 → 도메인 그룹 */
+const GROUPS=[
+ ['칩·컴퓨트',['NVIDIA','AMD','Intel','Cerebras','Broadcom','Arm','GUC','Huawei','AI 칩 스타트업','엣지 AI 하드웨어']],
+ ['메모리',['SK하이닉스','삼성전자','Micron','HBM 공급사','중국 메모리 업체']],
+ ['AI 랩·모델',['Anthropic','OpenAI','DeepSeek','Moonshot','MiniMax','xAI','Alibaba','Perplexity','Makora','AI 모델랩','중국 오픈소스 랩']],
+ ['클라우드·DC',['Google','Amazon','Microsoft','Meta','Oracle','CoreWeave','네오클라우드','CPU 클라우드(Hetzner·OVH)','데이터센터 사업자','중국 AI 인프라']],
+ ['네트워킹·서버·부품',['Supermicro','Dell','Arista','Marvell','DSP 업체(Marvell 등)','Innolight','InP 레이저 업체(Lumentum·Coherent)','광모듈 업체','CPO 공급망(TSMC·광엔진)','네트워킹 스위치 업체','Amphenol','King Slide','MLCC 업체(무라타·삼성전기)','냉각·부품 공급사','서버 OEM','Analog Devices','Pebble']],
+ ['전력',['가스엔진 OEM','Bloom Energy','전력 유틸리티','발전·전력기기(GE Vernova 등)','기존 발전사(Vistra·Constellation)','전력변환·SST 업체','기존 AC 배전 업체','태양광·ESS','전력 인프라·발전']],
+ ['파운드리·장비·소재',['TSMC','SMIC','Naura','AMAT·TEL','Axcelis·Veeco','Advantest','Teradyne','반도체 장비 업체','웨이퍼 업체(SUMCO·실트로닉)','포토레지스트·소재 업체','OSAT(Amkor·ASE)','OSAT·패키징','ABF 서브스트레이트 업체','TechInsights']],
+];
+const G_ETC='기타';
+const groupOf={};GROUPS.forEach(([g,list])=>list.forEach(t=>groupOf[t]=g));
+const gCollapsed=new Set([G_ETC]);
+function entRow(t){
+  const a=ents[t];const net=a.reduce((s,x)=>s+(x.d==='+'?1:x.d==='-'?-1:0),0);
+  const nc=net>0?'up':net<0?'dn':'fl';
+  return `<div class="ent${t===state.sel?' sel':''}" data-e="${esc(t)}"><b>${esc(t)}</b>${sparkHtml(a)}
+    <span class="net ${nc}">${net>0?'+':''}${net}</span></div>`;
+}
 function renderEnts(){
   let h='<div class="ehead"><span>엔티티</span><span>최근</span><span style="text-align:right">순방향</span></div>';
-  h+=entOrder.map(t=>{
-    const a=ents[t];const net=a.reduce((s,x)=>s+(x.d==='+'?1:x.d==='-'?-1:0),0);
-    const nc=net>0?'up':net<0?'dn':'fl';
-    return `<div class="ent${t===state.sel?' sel':''}" data-e="${esc(t)}"><b>${esc(t)}</b>${sparkHtml(a)}
-      <span class="net ${nc}">${net>0?'+':''}${net}</span></div>`;
-  }).join('');
+  const names=[...GROUPS.map(g=>g[0]),G_ETC];
+  names.forEach(g=>{
+    const members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
+    if(!members.length)return;
+    const closed=gCollapsed.has(g);
+    h+=`<div class="ghead${closed?' closed':''}" data-g="${esc(g)}"><span class="tri">${closed?'▸':'▾'}</span>${esc(g)}<span class="gn">${members.length}</span></div>`;
+    if(!closed)h+=members.map(entRow).join('');
+  });
   document.getElementById('ents').innerHTML=h;
   document.querySelectorAll('.ent').forEach(el=>el.onclick=()=>selectEnt(el.dataset.e));
+  document.querySelectorAll('.ghead').forEach(el=>el.onclick=()=>{
+    const g=el.dataset.g;gCollapsed.has(g)?gCollapsed.delete(g):gCollapsed.add(g);renderEnts();});
 }
 function selectEnt(t){state.sel=t;document.body.classList.add('detail');render();document.getElementById('view').scrollTop=0;}
 
