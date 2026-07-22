@@ -128,7 +128,8 @@ input#q{border:none;background:var(--hair);border-radius:16px;padding:6px 13px;f
 .brow.bim.up .dot{background:var(--up);box-shadow:0 0 0 1.5px var(--up)}
 .brow.bim.dn .dot{background:var(--dn);box-shadow:0 0 0 1.5px var(--dn)}
 .brow.bim.fl .dot{background:var(--fl);box-shadow:0 0 0 1.5px var(--fl)}
-.verdict{margin-top:20px;background:var(--hair);border-radius:14px;padding:13px 15px;font-size:13.5px;line-height:1.65;letter-spacing:-.2px}
+.vcap{font-size:13px;font-weight:700;color:var(--faint);margin-top:20px;margin-bottom:2px;letter-spacing:-.2px}
+.verdict{margin-top:8px;background:var(--hair);border-radius:14px;padding:13px 15px;font-size:13.5px;line-height:1.65;letter-spacing:-.2px}
 .verdict b.up{color:var(--up)} .verdict b.dn{color:var(--dn)}
 .riskband{display:inline-block;margin-top:2px;padding:1px 8px;font-size:10px;font-weight:800;color:var(--risk);background:var(--risk-bg);border-radius:6px}
 
@@ -399,7 +400,10 @@ function thPage(th){
         <span class="txt"><span class="tag" data-ent="${esc(b.t)}">${sym(b.d)} ${esc(b.t)}</span><span class="why">${esc(b.w)}</span></span></div>`;
       (b.k||[]).forEach(f);});
   });
-  h+=`</div></div><div class="verdict">∴ ${esc(th.verdict)}</div></div>`;
+  h+=`</div></div>
+    <div class="vcap">AI 종합 판단 <span class="aib">모델 평가 · 증거 ${th.ev.length}건</span></div>
+    <div class="verdict">∴ ${esc(th.verdict)}</div>
+    <div class="diagnote">위 타임라인은 원문 사실, 이 판단은 모델 평가예요 — 근거는 각 이벤트에서 확인하세요.</div></div>`;
   return h;
 }
 function drawBranch(){
