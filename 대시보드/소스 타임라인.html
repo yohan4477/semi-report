@@ -268,8 +268,7 @@ function nodeHtml(b,hit){
 function rowHtml(e,hit,forceOpen){
   const bs=(IMPACTS[e.idx]||[]).filter(brShow);
   const glyphs=bs.map(b=>`<span class="dirg ${cls(b.d)}">${sym(b.d)}</span>`).slice(0,4).join('');
-  const hasMajor=JSON.stringify(IMPACTS[e.idx]||[]).includes('"m":3');
-  const open=forceOpen||hasMajor?' open':'';
+  const open=' open'; // 영향은 클릭 없이 항상 표시 (행 클릭으로 접기 가능)
   const tree=bs.map(b=>`<div class="br">${nodeHtml(b,hit)}</div>`).join('');
   return `<div class="erow${open}" data-i="${e.idx}">
     <div class="top"><span class="src ${e.src}">${SRC[e.src]}</span>
