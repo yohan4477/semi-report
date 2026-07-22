@@ -333,6 +333,9 @@ function secEnts(){
   if(rec.length&&!state.eq&&state.chainSel==null){
     h+='<div class="recent">'+rec.map(t=>`<span class="rchip" data-ent="${esc(t)}">${logo(t,16)}${esc(t)}</span>`).join('')+'</div>';}
   const q=state.eq;
+  if(state.chainSel==null&&!q){
+    h+='<div class="empty" style="padding:22px 8px">밸류체인 단계를 선택하면<br>해당 종목이 나와요</div>';
+    return h+'</div>';}
   [...GROUPS.map(g=>g[0]),G_ETC].forEach(g=>{
     if(state.chainSel!=null&&g!==state.chainSel)return;
     let members=entOrder.filter(t=>(groupOf[t]||G_ETC)===g);
