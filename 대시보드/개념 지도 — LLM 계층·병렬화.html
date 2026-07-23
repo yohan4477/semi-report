@@ -104,6 +104,25 @@
   <h1>Transformer Layer 1개 안에서 "어느 블록을, 어떤 단위로 나누느냐"가 GQA·TP·MoE·EP를 가른다</h1>
   <p class="lede">한 레이어는 Attention(토큰 간 맥락)과 MLP(토큰 내부 가공)로 나뉘고, 이 둘을 어떻게 쪼개느냐가 메모리를 아끼는 구조적 기법(GQA·MoE)과 GPU에 흩뿌리는 병렬 기법(TP·EP)을 가른다. 여기에 실행 단계(학습·Prefill·Decode)와 시스템 축(정밀도·스케일업/아웃)을 얹으면 "어느 기법이 언제 왜 중요한가"가 한 장에 들어온다.</p>
 
+  <section style="border-color:var(--accent);">
+    <h2 style="color:var(--accent);">★ 한 장 통합 지도 — 모든 기법 × 4개 축</h2>
+    <p class="note" style="margin-bottom:12px;">4개 축이 직교한다 — <b>어느 블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>핵심 단계</b>(학습/Prefill/Decode) · <b>어느 네트워크</b>(스케일업/아웃). 아래 표 한 장이 나머지 전 섹션을 요약한다.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>기법</th><th>블록·대상</th><th>유형</th><th>핵심 단계</th><th>물리</th><th>목적 한 줄</th></tr></thead>
+      <tbody>
+        <tr><td><b>GQA·MLA·선형</b></td><td>Attention K/V</td><td><span class="tag s">구조적</span></td><td>Decode</td><td>노드 무관</td><td>KV Cache↓ = 대역폭 절감</td></tr>
+        <tr><td><b>MoE</b></td><td>MLP 전체</td><td><span class="tag s">구조적</span></td><td>전 단계</td><td>—</td><td>FLOPs 고정, 모델 용량↑</td></tr>
+        <tr><td><b>양자화</b></td><td>가중치·활성 비트폭</td><td><span class="tag s">구조적</span></td><td>Decode</td><td>—</td><td>메모리·대역폭↓, 처리량↑</td></tr>
+        <tr><td><b>TP</b></td><td>Attn·MLP 가중치</td><td><span class="tag p">병렬</span></td><td>학습·Prefill</td><td>스케일업</td><td>큰 연산을 GPU에 분산</td></tr>
+        <tr><td><b>EP</b></td><td>MoE Expert</td><td><span class="tag p">병렬</span></td><td>학습·추론</td><td>업+아웃</td><td>Expert를 GPU에 분산</td></tr>
+        <tr><td><b>DP</b></td><td>배치 (모델 복제)</td><td><span class="tag p">병렬</span></td><td>학습</td><td>스케일아웃</td><td>데이터 병렬 처리</td></tr>
+        <tr><td><b>PP</b></td><td>레이어 깊이</td><td><span class="tag p">병렬</span></td><td>학습</td><td>스케일아웃</td><td>레이어 깊이 분할</td></tr>
+        <tr><td><b>SP</b></td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>장문</td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin-top:11px;">읽는 법: <b>구조적</b> 기법은 "무엇을 덜 쓸까"(메모리·FLOPs), <b>병렬</b> 기법은 "어디에 흩뿌릴까"(GPU·네트워크). 단계가 병목을 정하고(Prefill=연산, Decode=대역폭), 물리 축이 그 병렬을 어느 링크에 태울지 정한다. ↓ 아래는 각 축의 상세.</p>
+  </section>
+
   <section>
     <h2>1 · 모델의 기본 계층 구조</h2>
     <div class="tree">
@@ -256,22 +275,7 @@
   </section>
 
   <section>
-    <h2>9 · 핵심 기법 한 줄 요약</h2>
-    <div class="scroll"><table>
-      <thead><tr><th>기술</th><th>나누는 대상</th><th>최소 단위</th><th>주요 목적</th></tr></thead>
-      <tbody>
-        <tr><td><b>GQA</b> <span class="tag s">구조적</span></td><td>Attention의 Key/Value</td><td>KV Head Group</td><td>KV Cache 메모리 사용량 절감</td></tr>
-        <tr><td><b>TP</b> <span class="tag p">병렬</span></td><td>Attention &amp; MLP 가중치</td><td>Head · Matrix Chunk</td><td>거대한 연산/메모리를 여러 GPU에 분산</td></tr>
-        <tr><td><b>MoE</b> <span class="tag s">구조적</span></td><td>MLP/FFN 전체</td><td>Expert (독립 MLP)</td><td>FLOPs 증가 없이 전체 모델 용량 극대화</td></tr>
-        <tr><td><b>EP</b> <span class="tag p">병렬</span></td><td>MoE의 Expert들</td><td>Expert</td><td>Expert를 GPU별로 분산 배치</td></tr>
-        <tr><td><b>DP·PP·SP</b> <span class="tag p">병렬</span></td><td>배치 · 레이어깊이 · 시퀀스</td><td>샘플 · 레이어 · 토큰축</td><td>학습·장문을 클러스터 규모로 확장</td></tr>
-        <tr><td><b>양자화</b> <span class="tag s">구조적</span></td><td>가중치·활성값 비트폭</td><td>FP8 / FP4</td><td>메모리·대역폭↓, 처리량↑ (Decode 특효)</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section>
-    <h2>10 · 실제 신호에서 — 이 개념이 뉴스에 나타나는 곳</h2>
+    <h2>9 · 실제 신호에서 — 이 개념이 뉴스에 나타나는 곳</h2>
     <div class="ir"><span class="c">MoE</span><div><span class="wh">MI500X TDM MoE 디스크립터 공유 방식</span> <span class="wy">— AMD가 전 Expert 공유 descriptor 도입. NVIDIA Rubin이 Blackwell(Expert당 1개) → Rubin(전체 공유)으로 바꾼 방식과 동일. MoE의 Expert 구조가 실제 HW ISA에 직접 반영.</span> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485391967086854144/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-22</span></div></div>
     <div class="ir"><span class="c">MoE · 5D</span><div><span class="wh">MoE 사전학습 세계기록</span> <span class="wy">— GB300 NVL72로 프론티어 MoE 학습 실증. Expert 분할·EP + DP·TP·PP가 대규모 스케일업에서 겹쳐 작동함을 보인 사례.</span> <a href="https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-21</span></div></div>
     <div class="ir"><span class="c">Prefill 전용</span><div><span class="wh">루빈 CPX 특화 가속기·랙</span> <span class="wy">— NVIDIA가 추론을 Prefill/Decode로 분리하고, 컨텍스트 처리(Prefill) 전담 칩 CPX를 별도 출시. 단계 분리가 하드웨어 제품으로 실현된 사례.</span> <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" target="_blank" rel="noopener">뉴스레터 ↗</a> <span class="date">25-09-10</span></div></div>
