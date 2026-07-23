@@ -6,7 +6,7 @@ categories: [ai-infra/compute, ai-models]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/deepseekv4-16t-day-0-to-day-43-performance)
 > **저자**: Bryan Shan, Cam Quilici, Kimbo Chen
-> **발행일**: 2026-02-05
+> **발행일**: 2026-06-09
 
 ---
 

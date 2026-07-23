@@ -6,7 +6,7 @@ categories: [robotics]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/chinas-unitree-will-dominate-global)
 > **저자**: Reyk Knuhtsen, Niko Ciminelli, Jacob Rintamaki
-> **발행일**: 2026-02-05
+> **발행일**: 2026-06-08
 
 ---
 

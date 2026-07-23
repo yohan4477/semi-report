@@ -6,7 +6,7 @@ categories: [ai-infra/compute, ai-infra/networking]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential)
 > **저자**: Dylan Patel, Daniel Nishball, Wega Chu
-> **발행일**: 2026-02-05
+> **발행일**: 2025-12-04
 
 ---
 

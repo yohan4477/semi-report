@@ -6,7 +6,7 @@ categories: [ai-infra/compute, ai-infra/networking]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/inferencex-v2-nvidia-blackwell-vs)
 > **저자**: Dylan Patel, Cam Quilici, Bryan Shan
-> **발행일**: 2026-02-05
+> **발행일**: 2026-02-16
 
 ---
 

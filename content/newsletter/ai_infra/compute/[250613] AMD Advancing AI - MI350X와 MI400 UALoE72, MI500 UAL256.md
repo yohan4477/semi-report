@@ -6,7 +6,7 @@ categories: [ai-infra/compute, ai-infra/networking]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/amd-advancing-ai-mi350x-and-mi400-ualoe72-mi500-ual256)
 > **저자**: Kimbo Chen, Dylan Patel, Daniel Nishball
-> **발행일**: 2026-02-05
+> **발행일**: 2025-06-13
 
 ---
 

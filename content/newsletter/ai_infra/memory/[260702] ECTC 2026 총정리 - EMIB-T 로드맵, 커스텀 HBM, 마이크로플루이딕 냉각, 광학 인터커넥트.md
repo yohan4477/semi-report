@@ -6,7 +6,7 @@ categories: [ai-infra/memory, ai-infra/compute, ai-infra/cooling]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/ectc2026)
 > **저자**: Afzal Ahmad, DC, Gerald Wong, Dylan Patel
-> **발행일**: 2026-02-05
+> **발행일**: 2026-07-02
 
 ---
 

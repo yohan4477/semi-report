@@ -6,7 +6,7 @@ categories: [ai-infra/compute]
 
 > **출처**: [SemiAnalysis Newsletter](https://newsletter.semianalysis.com/p/inferencemax-open-source-inference)
 > **저자**: Kimbo Chen, Dylan Patel, Daniel Nishball
-> **발행일**: 2026-02-05
+> **발행일**: 2025-10-09
 
 ---
 
