@@ -216,6 +216,11 @@
   @media (prefers-color-scheme:dark){ .ybadge{background:#3a1a1a; color:#f87171;} .nbadge{background:#2b3a1a; color:#b3e05a;} }
   :root[data-theme="dark"] .ybadge{background:#3a1a1a; color:#f87171;}
   :root[data-theme="dark"] .nbadge{background:#2b3a1a; color:#b3e05a;}
+  .moreb{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:9px 0 2px;cursor:pointer;font-family:inherit;}
+  .moreb .car{font-size:.6rem;}
+  .moreb[aria-expanded="true"] .car{transform:rotate(180deg);}
+  .moredays{display:none;}
+  .moredays.open{display:block;}
 </style>
 <main>
   <div>
@@ -256,6 +261,8 @@
       <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#76b900"/><text x="12" y="15.5" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif">NV</text></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7485709351870107649/" target="_blank" rel="noopener">CoreWeave, Vera Rubin NVL72 배치</a></div><div class="d">랙당 1.64Pb/s Spectrum-X 결합, Rubin 첫 대규모 클라우드 배치 (nvidia-ai-infra)</div><button class="relb" aria-expanded="false"><span class="car">▸</span> 관련 2</button><div class="rell"><a href="기술 브리핑 — NVIDIA Rubin.html"><span class="rk">Rubin</span>Vera Rubin NVL72 스펙→임원 브리핑</a><a href="https://newsletter.semianalysis.com/p/vera-rubin-nvl72-vs-gb200-nvl72-inference" target="_blank" rel="noopener"><span class="rk">검증</span>SemiAnalysis가 이 벤치 재검증(뉴스레터)</a></div></div></div>
       <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#76b900"/><text x="12" y="15.5" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif">NV</text></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7485496316068802560/" target="_blank" rel="noopener">Wistron 포트워스 신공장</a></div><div class="d">GB300·Vera Rubin 미국 생산, AI 서버 공급망 이전 (nvidia-ai-infra)</div></div></div>
     </div>
+    <button class="moreb" aria-expanded="false" data-n="28"><span class="car">▾</span> <span class="mtxt">더 보기 · 나머지 28개 신호</span></button>
+    <div class="moredays">
     <div class="day">
       <h3>07-21</h3>
       <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7485325411837440000/" target="_blank" rel="noopener">데이터센터, 왕복엔진(recip)을 비상 대기용에서 상시 프라임파워로 전환 중</a></div><div class="d">OEM(캐터필러·INNIO·커민스) 올해 ~1GW·2027·2028 각 4GW+ BTM 계약 추정. 미국 그리드 여력 2027/28 소진, 140GW BTM 전환 전망으로 recip이 대부분 차지</div></div></div>
@@ -307,6 +314,7 @@
       <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7482599961512214528/" target="_blank" rel="noopener">메타 뮤즈 스파크 오픈소스 공개 여부에 대한 도발성 질문 (저커버그가 오픈소스 노선을 접는 것 아니냐는 코멘트)</a></div></div></div>
       <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7482539595583311872/" target="_blank" rel="noopener">OSINT 방법론으로 메모리 사이클 반전을 조기 포착한 사례</a></div><div class="d">대만 범용 D램 재고 첫 순차 감소, 비HBM 국가(대만·중국) 메모리 수출이 한국보다 먼저 빠르게 증가, 12개월 뒤에야 다들 따라옴 (ChipBook 소개)</div></div></div>
       <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7482479466053578753/" target="_blank" rel="noopener">vLLM 벤치마크서 엔비디아 우위 재확인</a></div><div class="d">AMD는 특정 모델에서 여전히 추격 필요하다는 코멘트</div></div></div>
+    </div>
     </div>
     <div class="note" data-c="compute memory power model">히스토리 미러(최근 10일) · LinkedIn·YouTube·뉴스레터 + NVIDIA 1차 — 전체는 위 "전체 보기"</div>
   </section>
@@ -555,4 +563,6 @@ coModal.addEventListener('click', (e) => { if (e.target === coModal) closeCoModa
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCoModal(); });
 
 document.querySelectorAll('.relb').forEach(function(b){b.addEventListener('click',function(){var list=b.parentElement.querySelector('.rell');var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(list)list.classList.toggle('open',!open);});});
+
+document.querySelectorAll('.moreb').forEach(function(b){var m=b.nextElementSibling,n=b.dataset.n,t=b.querySelector('.mtxt');b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(m)m.classList.toggle('open',!open);if(t)t.textContent=open?('더 보기 · 나머지 '+n+'개 신호'):'접기';});});
 </script>

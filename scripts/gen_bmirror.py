@@ -91,11 +91,23 @@ def render_row(r):
             '<div><div class="t"><a href="' + href + '"' + at + ">" + title + "</a>" + brief_badge + "</div>" + dline + artb + relb + "</div></div>")
 
 days = all_days()[:DAYS_WINDOW]
-out = ""
+VISIBLE_ROWS = 6  # 이 행수를 채우는 날짜까지만 기본 노출, 나머지는 "더 보기"로 접음
+def day_html(d, rows):
+    return '    <div class="day">\n      <h3>' + d[5:] + '</h3>\n      ' + "\n      ".join(render_row(r) for r in rows) + "\n    </div>\n"
+visible, hidden, shown = "", "", 0
+hidden_rows = 0
 for d in days:
     rows = extract(d) + NVROWS.get(d, [])
     if not rows: continue
-    out += '    <div class="day">\n      <h3>' + d[5:] + '</h3>\n      ' + "\n      ".join(render_row(r) for r in rows) + "\n    </div>\n"
+    if shown < VISIBLE_ROWS:
+        visible += day_html(d, rows); shown += len(rows)
+    else:
+        hidden += day_html(d, rows); hidden_rows += len(rows)
+out = visible
+if hidden:
+    out += ('    <button class="moreb" aria-expanded="false" data-n="' + str(hidden_rows)
+            + '"><span class="car">▾</span> <span class="mtxt">더 보기 · 나머지 ' + str(hidden_rows)
+            + '개 신호</span></button>\n    <div class="moredays">\n' + hidden + '    </div>\n')
 
 ds = open(DASH, encoding="utf-8").read()
 start = ds.find('    <div class="day">\n      <h3>')
