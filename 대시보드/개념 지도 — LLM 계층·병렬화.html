@@ -226,8 +226,16 @@
   </section>
 
   <section>
-    <h2>7 · 물리 매핑 — 스케일업 vs 스케일아웃</h2>
-    <p class="note" style="margin-bottom:11px;">병렬 기법은 결국 <b>어떤 네트워크 위에 올리느냐</b>로 갈린다. 통신이 잦을수록 노드 내부(스케일업)에 몰아야 한다.</p>
+    <h2>7 · 물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h2>
+    <p class="note" style="margin-bottom:11px;">병렬 기법은 결국 <b>어떤 하드웨어 계층 위에 올리느냐</b>로 갈린다. GPU가 트레이·랙·클러스터로 쌓이는데, <b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃이다.</p>
+    <div class="tree" style="margin-bottom:13px;">
+      <div class="node"><span class="k">AI 팩토리 (데이터센터)</span> <span class="d">— Pod 여러 개</span></div>
+      <div class="node lvl1"><span class="arrowlbl"><span class="tag p" style="font-size:.6rem;padding:1px 6px;">스케일아웃</span></span><span class="k">Pod / 클러스터</span> <span class="d">— 랙 여러 개, Ethernet·InfiniBand 연결</span></div>
+      <div class="node lvl2" style="border-color:var(--accent); background:var(--accent-soft);"><span class="arrowlbl"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">스케일업 도메인</span></span><span class="k">Rack = NVL72</span> <span class="d">— 72 Rubin GPU + 36 Vera CPU, NVLink로 한 덩어리</span></div>
+      <div class="sub">└ Compute Tray — Vera CPU 1 + Rubin GPU 2 (NVLink-C2C, 액냉)</div>
+      <div class="sub" style="margin-left:64px;">└ GPU (Rubin) — HBM4 288GB · 듀얼다이 1패키지 · NVLink 6 (3.6TB/s)</div>
+    </div>
+    <p class="note" style="margin-bottom:11px;">이 <b>경계선(NVLink 랙 안 vs 밖)</b>이 곧 병렬 기법이 갈리는 선 — 통신 잦은 TP·EP는 랙 안(스케일업), 덜한 DP·PP는 랙 밖(스케일아웃). GPU 자체 내부 구조는 <a href="GPU 구조 시뮬레이터.html" style="color:var(--accent);text-decoration:none;">GPU 구조 시뮬레이터 ↗</a>.</p>
     <div class="split">
       <div class="col up">
         <h3>스케일업 (Scale-up)</h3>
