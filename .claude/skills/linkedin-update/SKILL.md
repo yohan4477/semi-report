@@ -104,14 +104,17 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
 
 ## 5. Update the dashboards
 
-Two files need the new entries, both using the exact KST date from step 3 as the day-group header (`<h3>YYYY-MM-DD</h3>` or `<h3>MM-DD</h3>` depending on file):
+**`대시보드/소셜 신호 히스토리.html` is the single source of truth** — edit it by hand; the intelligence dashboard ① is then AUTO-GENERATED from it (do NOT hand-edit ① rows anymore — see below).
 
-- **`대시보드/소셜 신호 히스토리.html`**: full history, newest day-group first, right after the `.tabbar` div. Row pattern: `<div class="row"><a class="rowmain" href="https://www.linkedin.com/feed/update/urn:li:activity:{ID}/" target="_blank" rel="noopener"><span class="src">{LI SVG}</span><span class="sn">{한글 요약}</span></a></div>`. Update the `.stamp` line's date and LinkedIn count.
-- **`대시보드/인텔리전스 대시보드.html`** section ① (`<h2>① 소셜·영상 신호 — LinkedIn·YouTube</h2>`): keeps only the 5 most recent items total (per user preference set 2026-07-16) — drop the oldest row(s) to stay at 5 when adding new ones. Row pattern: `<div class="sig" data-c="{category}"><span class="srci">{LI SVG}</span><div><div class="t"><a href="...">{제목}</a> <span class="delta new">신규</span></div><div class="d">{설명}</div></div></div>`. Update the `.stamp` date too.
+1. **`대시보드/소셜 신호 히스토리.html`** (hand-edit): full history, newest day-group first, right after the `.tabbar` div, using the exact KST date from step 3 as the day-group header (`<h3>YYYY-MM-DD</h3>`). Row pattern: `<div class="row"><a class="rowmain" href="https://www.linkedin.com/feed/update/urn:li:activity:{ID}/" target="_blank" rel="noopener"><span class="src">{LI SVG}</span><span class="sn">{한글 요약}</span></a></div>`. If the post directly references a newsletter/YouTube, append `<a class="art" href="{url}" ...>` after the `</a>` so the mirror can surface it as a direct-link badge. Update the `.stamp` line's date and LinkedIn count. Copy the LI `<svg>` from any existing row.
 
-Both files share the same LinkedIn `<svg>` icon markup — copy it from any existing row rather than retyping.
+2. **`대시보드/인텔리전스 대시보드.html` section ① — regenerate, do not hand-edit** (B안 / history mirror, set 2026-07-23). ① mirrors the most recent N day-groups of the history file. After editing the history, run:
+   ```bash
+   python scripts/gen_bmirror.py 10
+   ```
+   This re-splices ①'s day-groups from the history's most recent 10 day-groups (3-source LI/YouTube/newsletter, direct-link badges, NVIDIA-first-party interleave, cluster "관련" expanders). The generator carries a small `NVROWS`/`REL` overlay for NVIDIA blog + nvidia-ai-infra rows and thematic cross-links — add new NVIDIA-first-party items or relations there, not in the HTML. Adjust the window number if the feed gets too long/short.
 
-After editing, sanity-check tag balance (`<div>` open/close counts must match) and re-render with headless Chrome `--dump-dom` to confirm no JS console errors before committing.
+After both, sanity-check tag balance (`<div>` open/close counts must match — the generator prints them) before committing. Commit the history edit and the regenerated dashboard together.
 
 ## 6. Impact assessment → 대시보드/소스 타임라인.html
 
