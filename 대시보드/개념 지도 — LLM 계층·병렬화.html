@@ -267,21 +267,6 @@
     </table></div>
   </section>
 
-  <section style="border-color:var(--warn);">
-    <h2 style="color:var(--warn);">참고 — AI 팩토리 아래 전력·에너지 계층 <span style="font-weight:600;font-size:.62rem;letter-spacing:0;color:var(--sub);text-transform:none;">· 비-코퍼스 외부신호</span></h2>
-    <p class="note" style="margin-bottom:12px;">이 지도는 <b>모델·컴퓨트 구조</b>(레이어→병렬화→GPU 랙)를 다룬다. 그 <b>아래를 떠받치는 전력·에너지 계층</b>은 별도 축 — 아래는 외부 해설(언더스탠딩, 권효재 대표) 기준 요약이다.</p>
-    <div class="scroll"><table>
-      <thead><tr><th>개념</th><th>정의</th><th>왜 필요</th></tr></thead>
-      <tbody>
-        <tr><td><b>부하 변동성</b></td><td>훈련 시작 시 0.1초 만에 200MW→1.9GW 급변("혈당 스파이크")</td><td>GW급 부하를 그리드에 직접 못 붙이는 근본 원인</td></tr>
-        <tr><td><b>에너지 캠퍼스</b></td><td>데이터센터 옆에 가스발전소를 직접 짓고 계통 연계는 나중에</td><td>텍사스 계통 연결 ~5년 대기 우회 (예: MS 킬비 프로젝트)</td></tr>
-        <tr><td><b>오케스트레이터</b></td><td>DC 부하·재생·가스발전·그리드 4변수를 AI가 1분 단위 최적화</td><td>사람의 5분 단위로는 불가 — 줄런트 Across-the-Meter</td></tr>
-        <tr><td><b>토큰 팩토리</b></td><td>AI 데이터센터를 "IT 설비"가 아닌 "토큰 찍는 공장"으로 재정의</td><td>절반이 에너지 설비 — 최적지는 미 중서부로 이동 전망</td></tr>
-      </tbody>
-    </table></div>
-    <div class="box-caption">출처: 언더스탠딩 유튜브 「미국 데이터센터 전력난 이걸로 뚫었다」(권효재 COR에너지인사이트 대표, 2026-07-24 자막요약). SemiAnalysis 코퍼스 외부 참고신호.</div>
-  </section>
-
   <div class="legend">
     <span><span class="dot" style="background:var(--accent)"></span>구조적 (모델 · 메모리·FLOPs 절감)</span>
     <span><span class="dot" style="background:var(--warn)"></span>병렬 (인프라 · GPU 분산)</span>
