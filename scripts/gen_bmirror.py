@@ -3,10 +3,12 @@
 # 히스토리 최근 N일 day-group을 자동 파싱 → ① 재생성(LI/YT/뉴스레터 3소스 + NVIDIA 1차 인터리브 + 클러스터 관련 펼침).
 # 사용: python scripts/gen_bmirror.py [일수(기본 14)]
 # linkedin-update로 히스토리 갱신 후 이 스크립트를 돌리면 ①이 자동 동기됨.
-import io, sys, re
+import io, sys, re, os, glob, urllib.parse
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 HIST = r"대시보드\소셜 신호 히스토리.html"
 DASH = r"대시보드\인텔리전스 대시보드.html"
+NLDIR = r"content/newsletter"          # ② 뉴스레터 코퍼스
+NL_RECENT = 5                          # ② "최근 N편"
 DAYS_WINDOW = int(sys.argv[1]) if len(sys.argv) > 1 else 14
 
 hs = open(HIST, encoding="utf-8").read()
@@ -69,7 +71,10 @@ def cat_for(sn):
 
 def render_row(r):
     sn = r["sn"]
-    if " — " in sn: title, desc = sn.split(" — ", 1)
+    # 제목/설명 분리: 첫 문장(마침표) 우선, 없으면 대시, 그것도 없으면 전체가 제목
+    msent = re.match(r'(.+?[.!?])\s+(.+)', sn, re.S)
+    if msent: title, desc = msent.group(1), msent.group(2)
+    elif " — " in sn: title, desc = sn.split(" — ", 1)
     elif "—" in sn: title, desc = sn.split("—", 1)
     else: title, desc = sn, ""
     title, desc = title.strip(), desc.strip()
@@ -116,5 +121,64 @@ assert start != -1 and note_i != -1, (start, note_i)
 note_end = ds.find("</div>", note_i) + len("</div>")
 newnote = '    <div class="note" data-c="compute memory power model">히스토리 미러(최근 ' + str(len(days)) + '일) · LinkedIn·YouTube·뉴스레터 + NVIDIA 1차 — 전체는 위 "전체 보기"</div>'
 ds = ds[:start] + out + newnote + ds[note_end:]
+
+# ================= ② 뉴스레터 — 파일명 발행일 [YYMMDD] 기준 최근 N편 자동 =================
+SA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg>'
+CHK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#16a34a"/><path fill="#fff" d="M9.5 16.2 6 12.7l1.4-1.4 2.1 2.1 6.1-6.1 1.4 1.4z"/></svg>'
+
+def nl_cat(cats):
+    s = cats.lower()
+    if "power" in s: return ("전력", "power")
+    if "memory" in s: return ("메모리", "memory")
+    if "robot" in s: return ("로보틱스", "robot")
+    if "business" in s or "ai-models" in s or "/rl" in s or "agent" in s: return ("AI 모델", "model")
+    if "networking" in s: return ("네트워킹", "compute")
+    if "semiconduct" in s: return ("반도체", "compute")
+    return ("컴퓨트", "compute")
+
+def nl_scan():
+    items = []
+    for path in glob.glob(NLDIR + "/**/*.md", recursive=True):
+        fname = os.path.basename(path)
+        m = re.match(r"\[(\d{6})\]\s+(.+)\.md$", fname)
+        if not m: continue
+        yy, mm, dd = m.group(1)[0:2], m.group(1)[2:4], m.group(1)[4:6]
+        date = "20" + yy + "-" + mm + "-" + dd
+        title = m.group(2)
+        rel = path.replace("\\", "/")                     # content/newsletter/…/….md
+        txt = open(path, encoding="utf-8").read(3000)
+        um = re.search(r"\*\*출처\*\*[^\(]*\(([^)]+)\)", txt)
+        cm = re.search(r"categories:\s*\[([^\]]+)\]", txt)
+        url = um.group(1) if um else "#"
+        ctag, dc = nl_cat(cm.group(1) if cm else "")
+        items.append({"date": date, "sort": m.group(1), "title": title, "rel": rel, "url": url, "ctag": ctag, "dc": dc})
+    items.sort(key=lambda x: x["sort"], reverse=True)
+    return items[:NL_RECENT]
+
+def nl_render(it):
+    relkey = "nl:/yohan4477/semi-report/blob/main/" + it["rel"]
+    blob = "https://github.com/yohan4477/semi-report/blob/main/" + urllib.parse.quote(it["rel"])
+    return ('<div class="sig" data-c="' + it["dc"] + '" data-relkey="' + relkey + '"><span class="srci">' + SA_SVG + "</span>"
+            '<div><div class="t"><a href="' + it["url"] + '" target="_blank" rel="noopener">' + it["title"] + "</a> "
+            '<span class="ctag">' + it["ctag"] + "</span> "
+            '<a class="art tr" href="' + blob + '" target="_blank" rel="noopener">' + CHK_SVG + "한글 해석본</a></div></div></div>")
+
+nlitems = nl_scan()
+groups = []  # [(date, [items…])] — 같은 날짜는 한 day 그룹으로
+for it in nlitems:
+    if groups and groups[-1][0] == it["date"]: groups[-1][1].append(it)
+    else: groups.append((it["date"], [it]))
+newnl = "".join('    <div class="day">\n      <h3>' + d + "</h3>\n      "
+                + "\n      ".join(nl_render(i) for i in its) + "\n    </div>\n" for d, its in groups).rstrip("\n")
+nl_anchor = ds.find("<h2>② 뉴스레터")
+sh_end = ds.find("</div>", nl_anchor)
+nl_start = ds.find('    <div class="day">', sh_end)
+nl_end = ds.find("\n\n  </section>", nl_start)
+assert nl_anchor != -1 and nl_start != -1 and nl_end != -1, (nl_anchor, nl_start, nl_end)
+ds = ds[:nl_start] + newnl + ds[nl_end:]
+ds = re.sub(r"(② 뉴스레터 — 발행일순 \(최근 )\d+(편\))", r"\g<1>" + str(len(nlitems)) + r"\2", ds)
+
 open(DASH, "w", encoding="utf-8").write(ds)
-print("days:", len(days), "| sig rows:", out.count('class="sig"'), "| div", ds.count("<div"), ds.count("</div>"), "| newsletter badges:", out.count("nbadge"))
+print("① days:", len(days), "| sig rows:", out.count('class="sig"'),
+      "| ② newsletters:", len(nlitems), "(" + ", ".join(i["date"] for i in nlitems) + ")",
+      "| div", ds.count("<div"), ds.count("</div>"))
