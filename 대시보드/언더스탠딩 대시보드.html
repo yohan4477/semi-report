@@ -1,0 +1,348 @@
+<title>언더스탠딩 인사이트</title>
+<style>
+  :root {
+    --bg: #F5F6F4;
+    --surface: #FFFFFF;
+    --ink: #1C2430;
+    --ink-2: #46536B;
+    --ink-3: #7D8AA0;
+    --line: #E2E6EC;
+    --accent: #2563EB;
+    --accent-ink: #1D4ED8;
+    --accent-soft: #EFF4FE;
+    --good: #15803D;
+    --good-soft: #EDF9F0;
+    --good-line: #BBE5C8;
+    --warn: #B45309;
+    --warn-soft: #FDF3E7;
+    --warn-line: #F0D9B8;
+    --risk: #B91C1C;
+    --risk-soft: #FDF0F0;
+    --risk-line: #F2CACA;
+    --shadow: 0 1px 2px rgba(28,36,48,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10151D;
+      --surface: #19202C;
+      --ink: #E9EDF3;
+      --ink-2: #ABB6C6;
+      --ink-3: #71809A;
+      --line: #2A3446;
+      --accent: #7CACF8;
+      --accent-ink: #A5C6FA;
+      --accent-soft: #1C2942;
+      --good: #5BD08A;
+      --good-soft: #16281E;
+      --good-line: #2C4A38;
+      --warn: #E8A752;
+      --warn-soft: #2B2214;
+      --warn-line: #4D3D22;
+      --risk: #F08787;
+      --risk-soft: #2C1919;
+      --risk-line: #4E2B2B;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F6F4;
+    --surface: #FFFFFF;
+    --ink: #1C2430;
+    --ink-2: #46536B;
+    --ink-3: #7D8AA0;
+    --line: #E2E6EC;
+    --accent: #2563EB;
+    --accent-ink: #1D4ED8;
+    --accent-soft: #EFF4FE;
+    --good: #15803D;
+    --good-soft: #EDF9F0;
+    --good-line: #BBE5C8;
+    --warn: #B45309;
+    --warn-soft: #FDF3E7;
+    --warn-line: #F0D9B8;
+    --risk: #B91C1C;
+    --risk-soft: #FDF0F0;
+    --risk-line: #F2CACA;
+    --shadow: 0 1px 2px rgba(28,36,48,.05);
+  }
+  :root[data-theme="dark"] {
+    --bg: #10151D;
+    --surface: #19202C;
+    --ink: #E9EDF3;
+    --ink-2: #ABB6C6;
+    --ink-3: #71809A;
+    --line: #2A3446;
+    --accent: #7CACF8;
+    --accent-ink: #A5C6FA;
+    --accent-soft: #1C2942;
+    --good: #5BD08A;
+    --good-soft: #16281E;
+    --good-line: #2C4A38;
+    --warn: #E8A752;
+    --warn-soft: #2B2214;
+    --warn-line: #4D3D22;
+    --risk: #F08787;
+    --risk-soft: #2C1919;
+    --risk-line: #4E2B2B;
+    --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", system-ui, sans-serif;
+    line-height: 1.62;
+    margin: 0;
+    padding: 0 20px 72px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  /* ── header ── */
+  header { padding: 44px 0 8px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: .08em;
+    color: var(--accent-ink); margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(24px, 4.6vw, 33px); font-weight: 800;
+    letter-spacing: -.02em; line-height: 1.25; margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .lede { color: var(--ink-2); font-size: 15px; margin: 0; max-width: 62ch; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .meta-row b { color: var(--ink-2); font-weight: 600; }
+
+  /* ── non-corpus badge banner ── */
+  .noncorpus {
+    margin: 18px 0 0; padding: 13px 16px;
+    background: var(--warn-soft); border: 1px solid var(--warn-line);
+    border-radius: 10px; font-size: 13px; color: var(--ink-2); line-height: 1.6;
+  }
+  .noncorpus .nc-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11.5px; font-weight: 700; color: var(--warn);
+    letter-spacing: .03em; margin-bottom: 5px;
+  }
+  .noncorpus .nc-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .noncorpus b { color: var(--ink); font-weight: 700; }
+
+  /* ── sections ── */
+  section { margin-top: 44px; }
+  .sec-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .sec-num {
+    font-size: 12px; font-weight: 700; color: var(--ink-3);
+    font-variant-numeric: tabular-nums; letter-spacing: .06em;
+  }
+  h2.sec-title { font-size: 19px; font-weight: 750; letter-spacing: -.01em; margin: 0; }
+  .sec-sub { color: var(--ink-3); font-size: 13.5px; margin: 0 0 18px; }
+
+  /* ── episode cards ── */
+  .ucard {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px 22px 20px; margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .uc-topic {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11.5px; font-weight: 650; white-space: nowrap;
+    border-radius: 99px; padding: 2px 9px; border: 1px solid;
+    margin-bottom: 10px;
+  }
+  .uc-topic::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .uc-topic.infra { color: var(--accent-ink); background: var(--accent-soft); border-color: var(--accent); }
+  .uc-topic.market { color: var(--warn); background: var(--warn-soft); border-color: var(--warn-line); }
+
+  .ucard h2 {
+    font-size: 20px; font-weight: 800; letter-spacing: -.015em;
+    line-height: 1.35; margin: 0 0 8px; text-wrap: balance;
+  }
+  .uc-meta {
+    display: flex; flex-wrap: wrap; gap: 4px 10px;
+    font-size: 12.5px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  }
+  .uc-meta b { color: var(--ink-2); font-weight: 600; }
+
+  .uc-oneliner {
+    font-size: 15px; color: var(--ink); font-weight: 700;
+    line-height: 1.55; margin: 0 0 16px;
+  }
+
+  .uc-points { margin: 0 0 18px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .uc-points li {
+    position: relative; padding-left: 17px; font-size: 13.5px; color: var(--ink-2);
+  }
+  .uc-points li::before {
+    content: ""; position: absolute; left: 2px; top: 7px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3);
+  }
+  .uc-points li b { color: var(--ink); font-weight: 650; }
+
+  .uc-label {
+    font-size: 11px; font-weight: 700; color: var(--ink-3);
+    letter-spacing: .05em; margin: 0 0 8px;
+  }
+
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+  @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .stat .s-val {
+    font-size: 14.5px; font-weight: 750; color: var(--accent-ink);
+    font-variant-numeric: tabular-nums; line-height: 1.35;
+  }
+  .stat .s-label { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+
+  .uc-quote {
+    font-size: 13px; color: var(--ink-2); font-style: italic;
+    border-left: 2px solid var(--line); padding: 2px 0 2px 12px; margin: 0 0 18px;
+  }
+
+  .uc-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .uc-links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 650; text-decoration: none;
+    color: var(--accent-ink); background: var(--accent-soft);
+    border: 1px solid var(--accent); border-radius: 8px; padding: 7px 13px;
+  }
+  .uc-links a.secondary {
+    color: var(--ink-2); background: var(--surface); border-color: var(--line);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition: opacity .15s ease; }
+    .uc-links a:hover { opacity: .78; }
+  }
+
+  /* ── disclaimer note ── */
+  .side-note {
+    margin-top: 0; font-size: 13px; color: var(--ink-3);
+    border: 1px dashed var(--line); border-radius: 10px; padding: 12px 16px;
+  }
+
+  footer {
+    margin-top: 52px; padding-top: 16px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-3);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition: border-color .15s ease; }
+    .ucard:hover { border-color: var(--ink-3); }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">언더스탠딩 : 세상의 모든 지식 · 유튜브 자막 기반 요약</p>
+    <h1>언더스탠딩 인사이트</h1>
+    <p class="lede">SemiAnalysis 코퍼스 밖 제3자 한국어 해설 — 전문가 인터뷰를 자막 기반으로 요약해 정리합니다. 원문 창작 없이 발언 내용만 재구성했습니다.</p>
+    <div class="meta-row">
+      <span>정리일 <b>2026-07-24</b></span>
+      <span>수록 영상 <b>2개</b></span>
+      <span>채널 <b>언더스탠딩</b></span>
+    </div>
+    <div class="noncorpus">
+      <span class="nc-tag">비-코퍼스 · 제3자 소스</span>
+      <b>SemiAnalysis 코퍼스와 별개</b>입니다. 이 페이지는 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드(전력·인텔리전스·개념 지도)와 교차 검증되지 않았습니다. 참고용 제3자 시각으로만 활용하세요.
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">권효재 — 미국은 전력난을 어떻게 뚫었나</h2></div>
+    <p class="sec-sub">COR에너지인사이트 대표 · AI 데이터센터 전력 인프라</p>
+
+    <div class="ucard">
+      <span class="uc-topic infra">전력 · 인프라</span>
+      <h2>미국 데이터센터 전력난 이걸로 뚫었다</h2>
+      <div class="uc-meta">
+        <span>권효재 <b>COR에너지인사이트 대표</b></span>
+        <span>2026-07-24</span>
+        <span>71분</span>
+        <span>언더스탠딩</span>
+      </div>
+      <p class="uc-oneliner">대규모 AI 데이터센터는 부하 변동이 극심해 기존 전력망에 그냥 못 붙인다. 미국은 발전소를 옆에 직접 짓고(에너지 캠퍼스), 그 사이를 AI가 실시간 조율(오케스트레이터)하는 모델로 전력난을 뚫었다.</p>
+
+      <p class="uc-label">핵심 포인트</p>
+      <ul class="uc-points">
+        <li><b>AI 데이터센터는 기존 데이터센터와 다른 물건.</b> 이름만 같고 전력·투자·부하 성격이 전혀 다르다.</li>
+        <li><b>부하가 0.1초 만에 200MW → 1.9GW로 튄다.</b> "혈당 스파이크" — 기존 전력망 기술로는 감당 불가.</li>
+        <li><b>해법은 에너지 캠퍼스.</b> 데이터센터 옆에 가스발전소를 직접 짓고, 계통 연계는 나중에 한다.</li>
+        <li><b>핵심 사업 모델은 오케스트레이터.</b> 데이터센터·가스·재생·그리드 4개 변수를 AI가 1분 단위로 최적화한다.</li>
+        <li><b>버리던 가스가 연료로.</b> 텍사스 와하 허브의 남는(마이너스 가격) 가스로 발전해 데이터센터를 돌린다 — 1석 3조.</li>
+        <li><b>한국은 회색지대.</b> 전력 규제가 엄격하고 전력망 데이터가 비공개라 줄런트 같은 회사가 나오기 어렵다. SK·GS가 유력 주자.</li>
+      </ul>
+
+      <p class="uc-label">주요 숫자</p>
+      <div class="stat-grid">
+        <div class="stat"><div class="s-val">500MW → 150조 원</div><div class="s-label">AI 데이터센터 시작 규모(GPU 30만 개+) · 건설비 1,000억 달러</div></div>
+        <div class="stat"><div class="s-val">200MW → 1.9GW, 0.1초</div><div class="s-label">훈련 시작 시 부하 급변폭</div></div>
+        <div class="stat"><div class="s-val">17.5억 달러 · 지분 35%</div><div class="s-label">내셔널그리드 → 줄런트 투자(밸류 50억 달러)</div></div>
+        <div class="stat"><div class="s-val">-19.5달러</div><div class="s-label">와하 허브 가스 최저가(4/15, 버리는 데 돈을 냄)</div></div>
+      </div>
+
+      <p class="uc-quote">"혈당 스파이크" — AI 데이터센터의 순간 부하 급변을 표현한 비유. "토큰 팩토리(공장)" — AI 데이터센터의 미래 명칭.</p>
+
+      <div class="uc-links">
+        <a href="https://youtu.be/3Oy4I0TeR1o" target="_blank" rel="noopener">▶ 유튜브 원본</a>
+        <a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EB%AF%B8%EA%B5%AD%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%A0%84%EB%A0%A5%EB%82%9C%20%EC%9D%B4%EA%B1%B8%EB%A1%9C%20%EB%9A%AB%EC%97%88%EB%8B%A4.md" target="_blank" rel="noopener">📄 요약 전문</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">이선엽 — 반도체 룰이 바뀐 이유</h2></div>
+    <p class="sec-sub">AFW파트너스 대표(신한투자증권 이사 출신) · 반도체·메모리 리레이팅</p>
+
+    <div class="ucard">
+      <span class="uc-topic market">반도체 · 시장 해설</span>
+      <h2>반도체 룰이 바뀌었다 주가 재평가 시작됐다</h2>
+      <div class="uc-meta">
+        <span>이선엽 <b>AFW파트너스 대표</b></span>
+        <span>업로드 2026-06-26</span>
+        <span>81분(1:21:04)</span>
+        <span>언더스탠딩</span>
+      </div>
+      <p class="uc-oneliner">마이크론이 이번 분기 물량·가격을 5년 이상 못 박는 전략적 고객 협약(SCA)을 대거 체결하면서, 메모리 반도체는 급등락하는 사이클 산업에서 안정적 이익을 내는 산업으로 게임의 룰이 바뀌고 있다.</p>
+
+      <p class="uc-label">핵심 포인트</p>
+      <ul class="uc-points">
+        <li><b>마이크론이 16건의 SCA(5년 이상 장기계약)로 220억 달러 공급계약을 체결.</b> 판매 방식 자체가 바뀌는 중.</li>
+        <li>메모리는 "호황 → 증설 → 공급과잉 → 가격폭락"의 사이클 산업에서 <b>이익 안정성이 담보되는 산업으로 리레이팅</b>되는 중.</li>
+        <li>빅테크는 <b>돈이 없어서가 아니라 성능(메모리 확보량)이 처져서 망하는</b> 승자독식 경쟁을 벌이고 있다.</li>
+        <li>오픈AI·앤트로픽의 잇단 IPO는 시장 과열이 아니라 <b>반도체 살 돈을 당겨오기 위한 자금 조달 수단.</b></li>
+        <li>오픈AI CFO: <b>"AI 시대 병목은 수요가 아니라 컴퓨팅 공급."</b> 2028년, 심지어 2030~2032년 물량까지 지금부터 걱정 중.</li>
+        <li>금리인상 공포는 과장 — 1970년대 오일쇼크와 달리 지금은 유가가 오히려 급락 중이며, 정책은 점진적 동결·인하로 향할 가능성.</li>
+      </ul>
+
+      <p class="uc-label">주요 숫자</p>
+      <div class="stat-grid">
+        <div class="stat"><div class="s-val">355.9억 → 약 410억 달러</div><div class="s-label">마이크론 매출 시장 예상 vs 실제</div></div>
+        <div class="stat"><div class="s-val">16건 · 220억 달러</div><div class="s-label">이번 분기 SCA 체결 규모(5년 이상 구속력 계약)</div></div>
+        <div class="stat"><div class="s-val">PER 7.9배 vs 15배</div><div class="s-label">SK하이닉스 현재 PER vs 시장 거론 적정 수준</div></div>
+        <div class="stat"><div class="s-val">약 50%</div><div class="s-label">AI 기업의 요청 물량 대비 실제 메모리 확보율</div></div>
+      </div>
+
+      <p class="uc-quote">"쿠팡 작전" — 손해를 감수하고 점유율부터 확보하는 오픈AI식 전략. "여기서 여기까지만 봐라" — 중간 변동에 대응하지 말라는 투자 원칙.</p>
+
+      <div class="side-note">모든 시장 발언에 "개인적 생각이며 투자 추천이 아니다"라는 단서가 반복적으로 붙습니다. 이 카드도 같은 전제로 읽어 주세요.</div>
+
+      <div class="uc-links" style="margin-top:16px;">
+        <a href="https://youtu.be/ZlOPeRpgjlQ" target="_blank" rel="noopener">▶ 유튜브 원본</a>
+        <a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%9D%B4%EC%84%A0%EC%97%BD%20%EB%8C%80%ED%91%9C/%EB%B0%98%EB%8F%84%EC%B2%B4%20%EB%A3%B0%EC%9D%B4%20%EB%B0%94%EB%80%8C%EC%97%88%EB%8B%A4%20%EC%A3%BC%EA%B0%80%20%EC%9E%AC%ED%8F%89%EA%B0%80%20%EC%8B%9C%EC%9E%91%EB%90%90%EB%8B%A4.md" target="_blank" rel="noopener">📄 요약 전문</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    출처: 언더스탠딩(유튜브 채널) 자막 기반 요약. SemiAnalysis 뉴스레터 코퍼스와는 별개의 제3자 한국어 해설이며, 확신도 산정·시계열 재확인 대상이 아닙니다. 투자 판단의 근거로 사용하지 마세요 — 원 화자도 본인 발언이 투자 추천이 아님을 반복해서 밝힙니다.
+  </footer>
+</div>
