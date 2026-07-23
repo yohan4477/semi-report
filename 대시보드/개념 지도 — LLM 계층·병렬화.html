@@ -253,16 +253,16 @@
     <h2 style="color:var(--accent);">★ 종합 한 장 — AI 모델 × 인프라</h2>
     <p class="note" style="margin-bottom:12px;">4개 축이 직교 — <b>블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>단계</b>(학습/Prefill/Decode) · <b>네트워크</b>(스케일업/아웃).</p>
     <div class="scroll"><table>
-      <thead><tr><th>기법</th><th>블록·대상</th><th>유형</th><th>핵심 단계</th><th>물리</th><th>목적 한 줄</th></tr></thead>
+      <thead><tr><th>핵심 단계</th><th>기법</th><th>블록·대상</th><th>유형</th><th>물리</th><th>목적 한 줄</th></tr></thead>
       <tbody>
-        <tr><td><b>GQA·MLA·선형</b></td><td>Attention K/V</td><td><span class="tag s">구조적</span></td><td>Decode</td><td>노드 무관</td><td>KV Cache↓ = 대역폭 절감</td></tr>
-        <tr><td><b>MoE</b></td><td>MLP 전체</td><td><span class="tag s">구조적</span></td><td>전 단계</td><td>—</td><td>FLOPs 고정, 모델 용량↑</td></tr>
-        <tr><td><b>양자화</b></td><td>가중치·활성 비트폭</td><td><span class="tag s">구조적</span></td><td>Decode</td><td>—</td><td>메모리·대역폭↓, 처리량↑</td></tr>
-        <tr><td><b>TP</b></td><td>Attn·MLP 가중치</td><td><span class="tag p">병렬</span></td><td>학습·Prefill</td><td>스케일업</td><td>큰 연산을 GPU에 분산</td></tr>
-        <tr><td><b>EP</b></td><td>MoE Expert</td><td><span class="tag p">병렬</span></td><td>학습·추론</td><td>업+아웃</td><td>Expert를 GPU에 분산</td></tr>
-        <tr><td><b>DP</b></td><td>배치 (모델 복제)</td><td><span class="tag p">병렬</span></td><td>학습</td><td>스케일아웃</td><td>데이터 병렬 처리</td></tr>
-        <tr><td><b>PP</b></td><td>레이어 깊이</td><td><span class="tag p">병렬</span></td><td>학습</td><td>스케일아웃</td><td>레이어 깊이 분할</td></tr>
-        <tr><td><b>SP</b></td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>장문</td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
+        <tr><td><b>학습</b></td><td>DP</td><td>배치 (모델 복제)</td><td><span class="tag p">병렬</span></td><td>스케일아웃</td><td>데이터 병렬 처리</td></tr>
+        <tr><td><b>학습</b></td><td>PP</td><td>레이어 깊이</td><td><span class="tag p">병렬</span></td><td>스케일아웃</td><td>레이어 깊이 분할</td></tr>
+        <tr><td><b>학습·Prefill</b></td><td>TP</td><td>Attn·MLP 가중치</td><td><span class="tag p">병렬</span></td><td>스케일업</td><td>큰 연산을 GPU에 분산</td></tr>
+        <tr><td><b>학습·추론</b></td><td>EP</td><td>MoE Expert</td><td><span class="tag p">병렬</span></td><td>업+아웃</td><td>Expert를 GPU에 분산</td></tr>
+        <tr><td><b>전 단계</b></td><td>MoE</td><td>MLP 전체</td><td><span class="tag s">구조적</span></td><td>—</td><td>FLOPs 고정, 모델 용량↑</td></tr>
+        <tr><td><b>Decode</b></td><td>GQA·MLA·선형</td><td>Attention K/V</td><td><span class="tag s">구조적</span></td><td>노드 무관</td><td>KV Cache↓ = 대역폭 절감</td></tr>
+        <tr><td><b>Decode</b></td><td>양자화</td><td>가중치·활성 비트폭</td><td><span class="tag s">구조적</span></td><td>—</td><td>메모리·대역폭↓, 처리량↑</td></tr>
+        <tr><td><b>장문</b></td><td>SP</td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
       </tbody>
     </table></div>
   </section>
