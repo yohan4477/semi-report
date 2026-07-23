@@ -42,15 +42,9 @@
   section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:15px 17px; margin-bottom:14px;}
   section h2{font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--sub); margin:0 0 13px; font-weight:700;}
   p.note{font-size:.85rem; color:var(--sub); margin:2px 0 0;}
-  /* part banner */
-  .pbanner{margin:24px 2px 12px; padding-left:12px; border-left:4px solid var(--accent);}
-  .pbanner .pt{font-size:1.02rem; font-weight:800; color:var(--ink);}
-  .pbanner .pd{font-size:.78rem; color:var(--sub); margin-top:2px;}
-  .pbanner.infra{border-left-color:var(--warn);}
-  .frame{border-color:var(--accent);}
-  /* hierarchy tree */
+  /* tree */
   .tree{font-size:.86rem;}
-  .node{position:relative; padding:7px 11px; border-radius:8px; margin:5px 0; border:1px solid var(--line); background:var(--bg);}
+  .node{position:relative; padding:7px 11px; border-radius:8px; margin:5px 0; border:1px solid var(--line); background:var(--bg); display:flex; align-items:center; flex-wrap:wrap; gap:2px;}
   .node .k{font-weight:800;} .node .d{color:var(--sub); font-size:.82rem;}
   .lvl1{margin-left:16px;} .lvl2{margin-left:32px;}
   .node.att{border-color:var(--att); background:var(--att-bg);}
@@ -59,12 +53,11 @@
   .techrow{display:flex; gap:5px; align-items:center; flex-wrap:wrap; margin:3px 0 7px 48px;}
   .techrow .tl{font-size:.68rem; color:var(--sub); margin-right:1px;}
   .techrow .tag{font-size:.64rem; padding:2px 7px;}
-  .arrowlbl{float:right; font-size:.7rem; font-weight:700; color:var(--sub);}
-  /* two-column split */
+  .arrowlbl{margin-left:auto; font-size:.7rem; font-weight:700; color:var(--sub);}
+  /* split */
   .split{display:grid; grid-template-columns:1fr 1fr; gap:11px;}
   @media(max-width:560px){.split{grid-template-columns:1fr;}}
   .col{border:1px solid var(--line); border-radius:10px; padding:12px 13px; background:var(--bg);}
-  .col.att{border-top:3px solid var(--att);} .col.mlp{border-top:3px solid var(--mlp);}
   .col.up{border-top:3px solid var(--accent);} .col.out{border-top:3px solid var(--warn);}
   .col h3{margin:0 0 3px; font-size:.92rem;} .col .role{font-size:.76rem; color:var(--sub); margin:0 0 10px;}
   .tech{margin:9px 0; padding-left:10px; border-left:2px solid var(--line);}
@@ -73,16 +66,36 @@
   .tag{font-size:.6rem; font-weight:800; border-radius:5px; padding:1px 6px; white-space:nowrap; letter-spacing:.02em;}
   .tag.s{background:var(--accent-soft); color:var(--accent);}
   .tag.p{background:var(--warn-bg); color:var(--warn);}
-  /* evolution chain */
-  .chain{display:flex; gap:7px; flex-wrap:wrap; align-items:center; font-size:.82rem; margin:0 0 11px;}
+  /* chain */
+  .chain{display:flex; gap:7px; flex-wrap:wrap; align-items:center; font-size:.82rem; margin:0;}
   .chain .st{border:1px solid var(--line); border-radius:7px; padding:4px 10px; background:var(--bg); font-weight:800;}
   .chain .st .sd{font-weight:400; color:var(--sub); font-size:.72rem;}
   .chain .ar{color:var(--sub); font-weight:700;}
-  /* one-frame master map */
+  /* master map */
   .flow{text-align:center; font-size:.72rem; font-weight:700; color:var(--sub); margin:8px 0 4px;}
   .rail{display:flex; gap:8px; flex-wrap:wrap; align-items:center; font-size:.78rem; color:var(--sub);
     background:var(--bg); border:1px dashed var(--line); border-radius:8px; padding:7px 11px; margin:7px 0;}
   .rail b{color:var(--ink); font-weight:800;}
+  /* interactive modules */
+  .mod{cursor:pointer;}
+  .mod:hover{border-color:var(--accent);}
+  .mod:hover .modhint{opacity:1;}
+  .mod.active{box-shadow:0 0 0 2px var(--accent); border-color:var(--accent);}
+  .modhint{opacity:.5; font-size:.62rem; font-weight:800; color:var(--accent); margin-left:auto; white-space:nowrap;}
+  .box-caption{font-size:.74rem; color:var(--sub); text-align:center; margin:11px 0 2px;}
+  /* detail drawer */
+  #detail{scroll-margin-top:8px;}
+  #dhint{color:var(--sub); font-size:.86rem; text-align:center; padding:14px 8px;}
+  .dpanel{display:none;}
+  .dpanel.on{display:block; animation:fade .18s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+  .dpanel h3.dh{margin:0 0 10px; font-size:1rem; color:var(--accent);}
+  .relbox{margin-top:13px; padding-top:11px; border-top:1px solid var(--line);}
+  .relbox .rl{font-size:.7rem; font-weight:800; color:var(--sub); text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px;}
+  .relbox .docs a, .relbox .sigs a{color:var(--accent); text-decoration:none; font-size:.83rem;}
+  .relbox .docs a:hover, .relbox .sigs a:hover{text-decoration:underline;}
+  .relbox .sigs{margin-top:8px; font-size:.83rem; color:var(--sub);}
+  .relbox .empty{font-size:.8rem; color:var(--sub);}
   /* tables */
   .scroll{overflow-x:auto;}
   table{border-collapse:collapse; width:100%; font-size:.83rem; min-width:480px;}
@@ -90,13 +103,6 @@
   th{color:var(--sub); font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; font-weight:700;}
   tbody tr:last-child td{border-bottom:none;}
   td b{font-weight:800;}
-  /* bridge rows */
-  .ir{display:flex; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:.87rem;}
-  .ir:first-of-type{border-top:none; padding-top:1px;}
-  .ir .c{flex:none; font-size:.62rem; font-weight:800; padding:2px 8px; border-radius:6px; height:fit-content; margin-top:1px; white-space:nowrap; background:var(--accent-soft); color:var(--accent);}
-  .ir .wh{font-weight:700;} .ir .wy{color:var(--sub);}
-  .ir a{color:var(--accent); text-decoration:none;} .ir a:hover{text-decoration:underline;}
-  .date{font-variant-numeric:tabular-nums; color:var(--sub); font-size:.78rem;}
   .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:.72rem; color:var(--sub); margin-top:4px; padding:0 2px;}
   .legend span{display:inline-flex; align-items:center; gap:5px;}
   .dot{width:9px; height:9px; border-radius:3px;}
@@ -109,209 +115,143 @@
 
   <div class="eyebrow">
     <span class="chip arch">개념</span>
-    <span class="chip src">레퍼런스</span>
+    <span class="chip src">인터랙티브</span>
     <span>AI 모델 → 인프라 구조 · 2026-07-24 정리</span>
   </div>
   <h1>AI와 그 인프라 구조 — 학습·추론에서 계층·병렬화, GPU 랙까지 한 장에</h1>
-  <p class="lede">출발점은 두 국면 — <b>학습(Training)</b>과 <b>추론(Inference, 다시 Prefill·Decode)</b>. 국면마다 병목이 다르고, 그걸 푸는 게 <b>1부: AI 모델</b>을 나누는 기법(GQA·MoE·어텐션 계보)과 <b>2부: 인프라</b>에 태우는 방식(병렬·스케일업/아웃·GPU 랙)이다.</p>
+  <p class="lede">아래 <b>한 장 지도</b>에서 모듈을 누르면 그 부분의 <b>상세 + 관련 문서(뉴스레터 변환본) + 관련 신호</b>가 바로 아래 열린다.</p>
 
   <section class="frame" style="border-color:var(--accent);">
-    <h2 style="color:var(--accent);">★ 전체 구조 한 칸에 — AI 모델 → 병렬 → GPU 랙</h2>
-    <div class="rail"><b>국면</b><span class="tag s">학습</span><span class="tag s">추론</span><span class="ar">▸</span><span>Prefill = 연산 병목 · Decode = 대역폭 병목</span></div>
+    <h2 style="color:var(--accent);">★ 전체 구조 한 칸에 — 모듈을 눌러보세요</h2>
+    <div class="rail mod" data-d="jang"><b>국면</b><span class="tag s">학습</span><span class="tag s">추론</span><span class="ar">▸</span><span>Prefill = 연산 병목 · Decode = 대역폭 병목</span><span class="modhint">클릭 ▾</span></div>
     <div class="tree" style="margin-top:6px;">
       <div class="node"><span class="k">AI 모델 (LLM)</span></div>
       <div class="node lvl1"><span class="k">Layer N</span> <span class="d">— Transformer Block × 수십</span></div>
-      <div class="node lvl2 att"><span class="k">① Attention</span> <span class="d">— 토큰 간(가로)</span></div>
+      <div class="node lvl2 att mod" data-d="attn"><span class="k">① Attention</span> <span class="d">— 토큰 간(가로)</span><span class="modhint">클릭 ▾</span></div>
       <div class="techrow"><span class="tag s">MHA·GQA</span><span class="tag p">TP</span><span class="tl">Head 단위 · 계보 MHA→MQA→GQA→MLA→선형</span></div>
-      <div class="node lvl2 mlp"><span class="k">② MLP / FFN</span> <span class="d">— 토큰 내부(세로)</span></div>
+      <div class="node lvl2 mlp mod" data-d="mlp"><span class="k">② MLP / FFN</span> <span class="d">— 토큰 내부(세로)</span><span class="modhint">클릭 ▾</span></div>
       <div class="techrow"><span class="tag" style="background:var(--line);color:var(--sub);">Dense</span><span class="tag s">MoE</span><span class="tag p">EP</span><span class="tl">Expert 단위</span></div>
     </div>
     <div class="flow">↓ 이 분할을 여러 GPU에 태움 (병렬) ↓</div>
-    <div class="rail"><b>5D 병렬</b><span>DP · TP · PP · EP · SP</span></div>
+    <div class="rail mod" data-d="par"><b>5D 병렬</b><span>DP · TP · PP · EP · SP</span><span class="modhint">클릭 ▾</span></div>
     <div class="flow">↓ 물리 하드웨어에 얹음 ↓</div>
-    <div class="chain">
-      <span class="st">GPU <span class="sd">Rubin·HBM4</span></span><span class="ar">→</span>
-      <span class="st">Tray <span class="sd">+Vera CPU</span></span><span class="ar">→</span>
-      <span class="st" style="border-color:var(--accent);"><span style="color:var(--accent);">Rack NVL72</span> <span class="sd">스케일업·NVLink</span></span><span class="ar">→</span>
-      <span class="st" style="border-color:var(--warn);"><span style="color:var(--warn);">Pod/클러스터</span> <span class="sd">스케일아웃·Ethernet</span></span><span class="ar">→</span>
-      <span class="st">AI 팩토리</span>
-    </div>
-    <div class="rail"><b>정밀도 · 전 구간 가로지름</b><span>FP32 → BF16 → FP8 → FP4</span></div>
-    <p class="note" style="margin-top:10px;">독법: <b>모델을 나누고</b>(1부 — 구조적 GQA·MoE + 병렬 TP·EP) → <b>GPU·네트워크에 태운다</b>(2부 — 5D 병렬 + 스케일업/아웃 랙). ↓ 아래는 각 부분 상세.</p>
+    <div class="rail mod" data-d="phys"><div class="chain" style="pointer-events:none;">
+      <span class="st">GPU <span class="sd">Rubin·HBM4</span></span><span class="ar" style="margin:0;">→</span>
+      <span class="st">Tray <span class="sd">+Vera</span></span><span class="ar" style="margin:0;">→</span>
+      <span class="st" style="border-color:var(--accent);"><span style="color:var(--accent);">Rack NVL72</span> <span class="sd">스케일업</span></span><span class="ar" style="margin:0;">→</span>
+      <span class="st" style="border-color:var(--warn);"><span style="color:var(--warn);">Pod</span> <span class="sd">스케일아웃</span></span><span class="ar" style="margin:0;">→</span>
+      <span class="st">팩토리</span>
+    </div><span class="modhint">클릭 ▾</span></div>
+    <div class="rail mod" data-d="prec"><b>정밀도 · 전 구간</b><span>FP32 → BF16 → FP8 → FP4</span><span class="modhint">클릭 ▾</span></div>
+    <div class="box-caption">파란=구조적(모델 효율화) · 주황=병렬(인프라 분산) — 모듈 클릭 시 아래에 상세·문서·신호</div>
   </section>
 
-  <section class="frame">
-    <h2 style="color:var(--accent);">큰 그림 — 학습 vs 추론, Prefill vs Decode</h2>
-    <p class="note" style="margin-bottom:11px;">AI 모델을 쓰는 방식은 두 국면. 추론은 다시 두 단계로 쪼개진다. <b>어느 국면·단계냐</b>가 병목과 핵심 기법을 정한다 — 아래 모든 내용의 출발점.</p>
-    <div class="tree">
-      <div class="node"><span class="k">AI 모델 사용</span></div>
-      <div class="node lvl1"><span class="arrowlbl">compute-bound</span><span class="k">학습 (Training)</span> <span class="d">— 순전파+역전파, 모든 토큰 병렬</span></div>
-      <div class="node lvl1"><span class="k">추론 (Inference)</span> <span class="d">— 두 단계로 쪼개짐</span></div>
-      <div class="node lvl2 att"><span class="arrowlbl">compute-bound</span><span class="k">Prefill</span> <span class="d">— 프롬프트 전체 한 번에, KV Cache 채움</span></div>
-      <div class="node lvl2 mlp"><span class="arrowlbl">bandwidth-bound</span><span class="k">Decode</span> <span class="d">— 토큰 1개씩 자기회귀, KV Cache 읽음</span></div>
-    </div>
-    <div class="scroll" style="margin-top:13px;"><table>
-      <thead><tr><th>국면·단계</th><th>연산 방식</th><th>병목</th><th>핵심 기법</th></tr></thead>
-      <tbody>
-        <tr><td><b>학습</b></td><td>순전파+역전파, 대배치</td><td>FLOPs (compute)</td><td>TP·EP·PP·DP 병렬 + MoE(FLOPs↓)</td></tr>
-        <tr><td><b>Prefill</b></td><td>입력 토큰 동시 처리 (GEMM)</td><td>FLOPs (compute)</td><td>TP·MoE · 전용칩(Rubin CPX)</td></tr>
-        <tr><td><b>Decode</b></td><td>토큰 1개씩 순차 생성</td><td>메모리 대역폭 (KV·가중치)</td><td>GQA·선형어텐션(KV↓) · NVL72 스케일업</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note" style="margin-top:10px;">Prefill은 GPU를 꽉 채우는 연산, Decode는 대역폭에 굶주리는 순차 연산 → KV 절감(GQA)·스케일업(NVL72)·Prefill 전용칩(CPX)이 갈린다. 그래서 추론을 Prefill/Decode로 분리(disaggregation)해 서로 다른 하드웨어에 태운다.</p>
-  </section>
+  <section id="detail">
+    <div id="dhint">▲ 위 지도에서 <b>모듈을 클릭</b>하면 여기에 상세·관련 문서·신호가 열립니다.</div>
 
-  <div class="pbanner">
-    <div class="pt">1부 · AI 모델 — 무엇을, 어떻게 계산하나</div>
-    <div class="pd">레이어 구조와 그 안을 나누는 알고리즘 (구조적 효율화)</div>
-  </div>
-
-  <section>
-    <h2>1 · 모델의 기본 계층 구조</h2>
-    <div class="tree">
-      <div class="node"><span class="k">Model</span> <span class="d">— 전체 AI 모델(LLM)</span></div>
-      <div class="node lvl1"><span class="k">Layer N</span> <span class="d">— Transformer Block ×수십 개 중 1개</span></div>
-      <div class="node lvl2 att"><span class="arrowlbl">가로 방향 연산</span><span class="k">① Attention Block</span> <span class="d">— 토큰 간 관계 파악</span></div>
-      <div class="sub">└ Head 1, Head 2, …</div>
-      <div class="techrow"><span class="tl">나누기 →</span><span class="tag s">MHA·GQA</span><span class="tag p">TP</span><span class="tl">Head 단위</span></div>
-      <div class="node lvl2 mlp"><span class="arrowlbl">세로 방향 연산</span><span class="k">② MLP / FFN Block</span> <span class="d">— 개별 토큰 의미 가공</span></div>
-      <div class="sub">└ Weight Matrices (또는 Experts)</div>
-      <div class="techrow"><span class="tl">나누기 →</span><span class="tag" style="background:var(--line);color:var(--sub);">Dense</span><span class="tag s">MoE</span><span class="tag p">EP</span><span class="tl">Expert 단위</span></div>
-    </div>
-    <p class="note" style="margin-top:9px;"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">구조적</span> 메모리·FLOPs 절감 · <span class="tag p" style="font-size:.6rem;padding:1px 6px;">병렬</span> 여러 GPU 분산(→ 2부) — 상세는 아래 3번</p>
-  </section>
-
-  <section>
-    <h2>2 · 두 핵심 블록의 역할 분담</h2>
-    <div class="scroll"><table>
-      <thead><tr><th>구분</th><th>① Attention Block</th><th>② MLP / FFN Block</th></tr></thead>
-      <tbody>
-        <tr><td>핵심 역할</td><td><b>Inter-token</b> 정보 교환</td><td><b>Intra-token</b> 특징 변환</td></tr>
-        <tr><td>작동 개념</td><td>문장 내 다른 단어와의 맥락(Context) 파악</td><td>수집된 맥락으로 지식·의미를 깊게 가공</td></tr>
-        <tr><td>데이터 흐름</td><td>다른 모든 토큰을 함께 둘러봄 (Cross-token)</td><td>각 토큰이 독립적으로 개별 연산</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section>
-    <h2>3 · 블록별 나누기 기법 — 병렬 배치 비교</h2>
-    <p class="note" style="margin-bottom:11px;">1개 레이어 안에서 <b>어느 블록을 어떤 단위로 나누는가</b>. <span class="tag s">구조적</span> = 메모리·연산 절감(모델 레벨), <span class="tag p">병렬</span> = 여러 GPU 분산(인프라 레벨, 2부에서 상술).</p>
-    <div class="split">
-      <div class="col att">
-        <h3>① Attention Block</h3>
-        <p class="role">Head 묶음 방식으로 나눔</p>
-        <div class="tech">
-          <div class="tt">MHA / GQA <span class="tag s">구조적</span></div>
-          <div class="td"><b>MHA</b>: Query·Key·Value Head를 1:1:1 보유. <b>GQA</b>: 여러 Query Head가 1개 K/V Head 그룹을 공유 → KV Cache 메모리 절감.</div>
-        </div>
-        <div class="tech">
-          <div class="tt">TP · Tensor Parallel <span class="tag p">병렬</span></div>
-          <div class="td">하나의 연산을 쪼개 여러 GPU가 동시 수행. Attention은 <b>Head 단위</b>로 분배 (예: 32 Head → 4 GPU가 8개씩).</div>
-        </div>
-      </div>
-      <div class="col mlp">
-        <h3>② MLP / FFN Block</h3>
-        <p class="role">Expert 분할 방식으로 나눔</p>
-        <div class="tech">
-          <div class="tt">Dense <span class="tag" style="background:var(--line);color:var(--sub);">기존</span></div>
-          <div class="td">모든 토큰이 단 하나의 거대한 MLP 가중치를 통과.</div>
-        </div>
-        <div class="tech">
-          <div class="tt">MoE · Mixture of Experts <span class="tag s">구조적</span></div>
-          <div class="td">MLP를 통째로 여러 개 복사해 독립 <b>Expert</b>로 분할. Router가 토큰별 1~2개만 선택 → 파라미터 용량↑, 실제 FLOPs는 절감.</div>
-        </div>
-        <div class="tech">
-          <div class="tt">EP · Expert Parallel <span class="tag p">병렬</span></div>
-          <div class="td">MoE의 각 Expert를 서로 다른 GPU에 분산 배치하는 병렬 기법.</div>
-        </div>
+    <div class="dpanel" id="d-jang">
+      <h3 class="dh">국면 — 학습 vs 추론, Prefill vs Decode</h3>
+      <p class="note" style="margin-bottom:11px;">AI 모델을 쓰는 방식은 두 국면. 추론은 다시 두 단계로 쪼개진다. <b>어느 국면·단계냐</b>가 병목과 핵심 기법을 정한다.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>국면·단계</th><th>연산 방식</th><th>병목</th><th>핵심 기법</th></tr></thead>
+        <tbody>
+          <tr><td><b>학습</b></td><td>순전파+역전파, 대배치</td><td>FLOPs (compute)</td><td>TP·EP·PP·DP 병렬 + MoE</td></tr>
+          <tr><td><b>Prefill</b></td><td>입력 토큰 동시 처리 (GEMM)</td><td>FLOPs (compute)</td><td>TP·MoE · 전용칩(Rubin CPX)</td></tr>
+          <tr><td><b>Decode</b></td><td>토큰 1개씩 순차 생성</td><td>메모리 대역폭 (KV·가중치)</td><td>GQA·선형어텐션 · NVL72 스케일업</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:10px;">Prefill=연산, Decode=대역폭 → 그래서 추론을 Prefill/Decode로 분리(disaggregation)해 서로 다른 하드웨어에 태운다.</p>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:jang--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/business/%5B260709%5D%20%EB%A9%94%ED%83%80%20%EC%8A%88%ED%8D%BC%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%EC%9D%98%20%EB%AF%B8%EB%9E%98%20-%20%EC%B6%9C%EB%B2%94%201%EC%A3%BC%EB%85%84%20%EC%84%B1%EA%B3%BC%20%EC%A0%90%EA%B2%80.md" target="_blank" rel="noopener">메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/business/%5B260630%5D%20%ED%86%A0%ED%81%B0%20%EB%B2%84%EC%A7%93%ED%8C%85%20-%20%EA%B8%B0%EC%97%85%EB%93%A4%EA%B3%BC%20%EB%82%98%EB%88%88%20%ED%86%A0%ED%81%B0%20%EC%A7%80%EC%B6%9C%20%EC%8B%A4%ED%83%9C.md" target="_blank" rel="noopener">토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/agents/%5B260425%5D%20%EC%BD%94%EB%94%A9%20%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8%20%ED%95%B4%EB%B6%80%20-%20%ED%86%A0%ED%81%B0%EC%9D%84%20%EB%8D%94%20%EC%A3%BC%EC%84%B8%EC%9A%94.md" target="_blank" rel="noopener">코딩 어시스턴트 해부 - 토큰을 더 주세요</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260324%5D%20GTC%202026%20-%20%EC%B6%94%EB%A1%A0%20%EC%99%95%EA%B5%AD%EC%9D%98%20%ED%99%95%EC%9E%A5.md" target="_blank" rel="noopener">GTC 2026 - 추론 왕국의 확장</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a><!--/DOCS:jang--></div>
+        <div class="sigs">관련 신호: <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" target="_blank" rel="noopener">루빈 CPX = Prefill 전용칩 ↗</a> · <a href="https://www.linkedin.com/feed/update/urn:li:activity:7483732333850935296/" target="_blank" rel="noopener">2.8T 추론엔 NVL72 ↗</a></div>
       </div>
     </div>
-  </section>
 
-  <section>
-    <h2>4 · ① Attention 심화 — 어텐션 계보 (MHA → 선형)</h2>
-    <p class="note" style="margin-bottom:11px;">어텐션 변종은 하나같이 <b>KV Cache를 줄이는 방향</b>으로 진화한다. 위 큰 그림의 Decode 단계 대역폭 병목이 진화 동력.</p>
-    <div class="chain">
-      <span class="st">MHA</span><span class="ar">→</span>
-      <span class="st">MQA</span><span class="ar">→</span>
-      <span class="st">GQA</span><span class="ar">→</span>
-      <span class="st">MLA</span><span class="ar">→</span>
-      <span class="st">선형/SSM <span class="sd">KDA·Mamba</span></span>
-    </div>
-    <div class="scroll"><table>
-      <thead><tr><th>변종</th><th>K/V 처리 방식</th><th>KV Cache</th><th>대표</th></tr></thead>
-      <tbody>
-        <tr><td><b>MHA</b></td><td>Query·Key·Value Head 1:1:1</td><td>최대</td><td>초기 GPT</td></tr>
-        <tr><td><b>MQA</b></td><td>모든 Query가 K/V Head 1개 공유</td><td>최소 (품질 손실)</td><td>PaLM</td></tr>
-        <tr><td><b>GQA</b></td><td>그룹별 K/V 공유 (MHA·MQA 절충)</td><td>중간</td><td>Llama 2/3 등 표준</td></tr>
-        <tr><td><b>MLA</b></td><td>K/V를 저차원 latent로 압축·복원</td><td>대폭↓ + 품질 유지</td><td>DeepSeek V2~V4</td></tr>
-        <tr><td><b>선형/SSM</b></td><td>어텐션을 선형복잡도 상태로 압축</td><td>상태 고정 (대역폭 10배↓)</td><td>Kimi K3 KDA, Mamba</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <div class="pbanner infra">
-    <div class="pt">2부 · 인프라 — 어디서, 어떻게 돌리나</div>
-    <div class="pd">모델을 GPU·네트워크·랙에 태우는 방식 (병렬 처리·물리 계층)</div>
-  </div>
-
-  <section>
-    <h2>5 · 병렬화 완전체 — 5D 병렬</h2>
-    <p class="note" style="margin-bottom:11px;">3번의 TP·EP는 병렬의 일부일 뿐. 학습과 대규모 추론은 아래 <b>5개 축을 겹쳐서</b> 쓴다.</p>
-    <div class="scroll"><table>
-      <thead><tr><th>병렬</th><th>나누는 축</th><th>통신 패턴</th><th>주 무대</th></tr></thead>
-      <tbody>
-        <tr><td><b>DP</b> Data</td><td>배치 (모델 복제)</td><td>gradient all-reduce</td><td>스케일아웃</td></tr>
-        <tr><td><b>TP</b> Tensor <span class="tag p">병렬</span></td><td>레이어 가중치 (Head·Matrix)</td><td>activation all-reduce (매 레이어)</td><td>스케일업</td></tr>
-        <tr><td><b>PP</b> Pipeline</td><td>레이어 (깊이)</td><td>activation P2P</td><td>스케일아웃</td></tr>
-        <tr><td><b>EP</b> Expert <span class="tag p">병렬</span></td><td>MoE Expert</td><td>all-to-all</td><td>스케일업/아웃 혼합</td></tr>
-        <tr><td><b>SP</b> Sequence</td><td>시퀀스 (토큰 축)</td><td>ring / all-gather</td><td>초장문 컨텍스트</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note" style="margin-top:10px;">프론티어 학습은 이 5D를 동시에 겹쳐 씀 — 예: MoE 세계기록(GB300 NVL72)엔 DP·TP·PP·EP가 한꺼번에 들어간다.</p>
-  </section>
-
-  <section>
-    <h2>6 · 물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h2>
-    <p class="note" style="margin-bottom:11px;">병렬 기법은 결국 <b>어떤 하드웨어 계층 위에 올리느냐</b>로 갈린다. <b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃이다.</p>
-    <div class="tree" style="margin-bottom:13px;">
-      <div class="node"><span class="k">AI 팩토리 (데이터센터)</span> <span class="d">— Pod 여러 개</span></div>
-      <div class="node lvl1"><span class="arrowlbl"><span class="tag p" style="font-size:.6rem;padding:1px 6px;">스케일아웃</span></span><span class="k">Pod / 클러스터</span> <span class="d">— 랙 여러 개, Ethernet·InfiniBand 연결</span></div>
-      <div class="node lvl2" style="border-color:var(--accent); background:var(--accent-soft);"><span class="arrowlbl"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">스케일업 도메인</span></span><span class="k">Rack = NVL72</span> <span class="d">— 72 Rubin GPU + 36 Vera CPU, NVLink로 한 덩어리</span></div>
-      <div class="sub">└ Compute Tray — Vera CPU 1 + Rubin GPU 2 (NVLink-C2C, 액냉)</div>
-      <div class="sub" style="margin-left:64px;">└ GPU (Rubin) — HBM4 288GB · 듀얼다이 1패키지 · NVLink 6 (3.6TB/s)</div>
-    </div>
-    <p class="note" style="margin-bottom:11px;">이 <b>경계선(NVLink 랙 안 vs 밖)</b>이 곧 병렬 기법이 갈리는 선 — 통신 잦은 TP·EP는 랙 안(스케일업), 덜한 DP·PP는 랙 밖(스케일아웃). GPU 자체 내부 구조는 <a href="GPU 구조 시뮬레이터.html" style="color:var(--accent);text-decoration:none;">GPU 구조 시뮬레이터 ↗</a>.</p>
-    <div class="split">
-      <div class="col up">
-        <h3>스케일업 (Scale-up)</h3>
-        <p class="role">노드 내부 · 초고대역 링크로 GPU를 한 덩어리로</p>
-        <div class="tech"><div class="tt">NVLink / NVSwitch · NVL72</div><div class="td">Rubin NVLink 6 = 3.6TB/s. 통신 잦은 <b>TP·EP</b>가 여기. "대역폭 벽"을 노드 안에서 해결.</div></div>
-      </div>
-      <div class="col out">
-        <h3>스케일아웃 (Scale-out)</h3>
-        <p class="role">노드 간 · 이더넷/InfiniBand로 대수를 늘림</p>
-        <div class="tech"><div class="tt">Spectrum-X · InfiniBand · RNG</div><div class="td">통신 덜한 <b>DP·PP</b>가 여기. 클러스터 규모로 확장. 아마존 RNG 토폴로지처럼 오버서브스크립션·비용이 관건.</div></div>
+    <div class="dpanel" id="d-attn">
+      <h3 class="dh">① Attention — 토큰 간 맥락, KV를 줄이는 진화</h3>
+      <p class="note" style="margin-bottom:11px;"><b>Inter-token</b> 정보 교환 — 문장 내 다른 모든 토큰을 둘러봐 맥락을 잡는다. 나누는 단위는 <b>Head</b>.</p>
+      <div class="tech"><div class="tt">MHA / GQA <span class="tag s">구조적</span></div><div class="td"><b>MHA</b>: Q·K·V Head 1:1:1. <b>GQA</b>: 여러 Query Head가 1개 K/V Head 그룹 공유 → KV Cache 메모리 절감.</div></div>
+      <div class="tech"><div class="tt">TP · Tensor Parallel <span class="tag p">병렬</span></div><div class="td">연산을 <b>Head 단위</b>로 쪼개 여러 GPU가 동시 수행 (예: 32 Head → 4 GPU가 8개씩).</div></div>
+      <p class="note" style="margin:12px 0 8px;">어텐션 변종은 <b>KV Cache를 줄이는 방향</b>으로 진화 — Decode 대역폭 병목이 동력.</p>
+      <div class="chain" style="margin-bottom:11px;"><span class="st">MHA</span><span class="ar">→</span><span class="st">MQA</span><span class="ar">→</span><span class="st">GQA</span><span class="ar">→</span><span class="st">MLA</span><span class="ar">→</span><span class="st">선형/SSM <span class="sd">KDA·Mamba</span></span></div>
+      <div class="scroll"><table>
+        <thead><tr><th>변종</th><th>K/V 처리</th><th>KV Cache</th><th>대표</th></tr></thead>
+        <tbody>
+          <tr><td><b>MHA</b></td><td>Q·K·V Head 1:1:1</td><td>최대</td><td>초기 GPT</td></tr>
+          <tr><td><b>MQA</b></td><td>모든 Query가 K/V 1개 공유</td><td>최소 (품질 손실)</td><td>PaLM</td></tr>
+          <tr><td><b>GQA</b></td><td>그룹별 K/V 공유 (절충)</td><td>중간</td><td>Llama 2/3</td></tr>
+          <tr><td><b>MLA</b></td><td>K/V를 저차원 latent로 압축</td><td>대폭↓ + 품질 유지</td><td>DeepSeek V2~V4</td></tr>
+          <tr><td><b>선형/SSM</b></td><td>선형복잡도 상태로 압축</td><td>상태 고정 (대역폭 10배↓)</td><td>Kimi K3 KDA, Mamba</td></tr>
+        </tbody>
+      </table></div>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:attn--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a><!--/DOCS:attn--></div>
+        <div class="sigs">관련 신호: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7484360227891380225/" target="_blank" rel="noopener">Kimi K3 KDA 선형 어텐션 KV 10배↓ ↗</a></div>
       </div>
     </div>
-    <p class="note" style="margin-top:10px;">매핑: TP → 스케일업 · EP → 스케일업 우선 · DP·PP → 스케일아웃 · SP → 둘 다.</p>
-  </section>
 
-  <section>
-    <h2>7 · 정밀도·양자화 — FP16 → FP4</h2>
-    <p class="note" style="margin-bottom:11px;">비트를 줄일수록 메모리·대역폭·용량↓, 처리량↑. <b>Decode</b>(대역폭 병목)에 특히 효과. 학습은 BF16/FP8 혼합, 추론은 FP8/FP4 양자화가 표준.</p>
-    <div class="chain">
-      <span class="st">FP32 <span class="sd">기준</span></span><span class="ar">→</span>
-      <span class="st">BF16 <span class="sd">학습 표준</span></span><span class="ar">→</span>
-      <span class="st">FP8 <span class="sd">Hopper~</span></span><span class="ar">→</span>
-      <span class="st">FP4 <span class="sd">NVFP4·MXFP · Blackwell·Rubin</span></span>
+    <div class="dpanel" id="d-mlp">
+      <h3 class="dh">② MLP / FFN — 토큰 내부 가공, Dense에서 MoE로</h3>
+      <p class="note" style="margin-bottom:11px;"><b>Intra-token</b> 특징 변환 — 각 토큰이 독립적으로 지식·의미를 깊게 가공. 나누는 단위는 <b>Expert</b>.</p>
+      <div class="tech"><div class="tt">Dense <span class="tag" style="background:var(--line);color:var(--sub);">기존</span></div><div class="td">모든 토큰이 단 하나의 거대한 MLP 가중치를 통과.</div></div>
+      <div class="tech"><div class="tt">MoE · Mixture of Experts <span class="tag s">구조적</span></div><div class="td">MLP를 통째로 여러 개 복사해 독립 <b>Expert</b>로 분할. Router가 토큰별 1~2개만 선택 → 파라미터 용량↑, 실제 FLOPs는 절감.</div></div>
+      <div class="tech"><div class="tt">EP · Expert Parallel <span class="tag p">병렬</span></div><div class="td">MoE의 각 Expert를 서로 다른 GPU에 분산 배치.</div></div>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:mlp--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250613%5D%20AMD%20Advancing%20AI%20-%20MI350X%EC%99%80%20MI400%20UALoE72%2C%20MI500%20UAL256.md" target="_blank" rel="noopener">AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256</a><!--/DOCS:mlp--></div>
+        <div class="sigs">관련 신호: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485391967086854144/" target="_blank" rel="noopener">MI500X TDM MoE 디스크립터 ↗</a> · <a href="https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/" target="_blank" rel="noopener">MoE 사전학습 세계기록 ↗</a></div>
+      </div>
     </div>
-    <p class="note">품질 손실은 <b>블록 스케일링</b>(MXFP)·LUT 압축으로 방어. 단 비트를 줄여도 파라미터 <b>용량</b>은 남는다 — Kimi K3 2.8T는 FP4로 눌러도 단일 B200에 안 들어가 NVL72급이 필요하다. Rubin은 NVFP4로 50PFLOPS, LUT-B 압축까지 얹었다.</p>
+
+    <div class="dpanel" id="d-par">
+      <h3 class="dh">병렬화 완전체 — 5D 병렬</h3>
+      <p class="note" style="margin-bottom:11px;">TP·EP는 병렬의 일부. 학습·대규모 추론은 아래 <b>5개 축을 겹쳐서</b> 쓴다.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>병렬</th><th>나누는 축</th><th>통신 패턴</th><th>주 무대</th></tr></thead>
+        <tbody>
+          <tr><td><b>DP</b> Data</td><td>배치 (모델 복제)</td><td>gradient all-reduce</td><td>스케일아웃</td></tr>
+          <tr><td><b>TP</b> Tensor <span class="tag p">병렬</span></td><td>레이어 가중치 (Head·Matrix)</td><td>activation all-reduce</td><td>스케일업</td></tr>
+          <tr><td><b>PP</b> Pipeline</td><td>레이어 (깊이)</td><td>activation P2P</td><td>스케일아웃</td></tr>
+          <tr><td><b>EP</b> Expert <span class="tag p">병렬</span></td><td>MoE Expert</td><td>all-to-all</td><td>스케일업/아웃 혼합</td></tr>
+          <tr><td><b>SP</b> Sequence</td><td>시퀀스 (토큰 축)</td><td>ring / all-gather</td><td>초장문 컨텍스트</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:10px;">프론티어 학습은 5D를 동시에 겹침 — 예: MoE 세계기록(GB300 NVL72).</p>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:par--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250820%5D%20H100%20vs%20GB200%20NVL72%20%ED%95%99%EC%8A%B5%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC%20-%20%EC%A0%84%EB%A0%A5%2C%20TCO%2C%20%EC%8B%A0%EB%A2%B0%EC%84%B1%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석</a><!--/DOCS:par--></div>
+        <div class="sigs">관련 신호: <a href="https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/" target="_blank" rel="noopener">MoE 세계기록(5D 병렬) ↗</a> · <a href="https://newsletter.semianalysis.com/p/vera-rubin-nvl72-vs-gb200-nvl72-inference" target="_blank" rel="noopener">베라루빈 NVL72 추론 ↗</a></div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="d-phys">
+      <h3 class="dh">물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h3>
+      <p class="note" style="margin-bottom:11px;"><b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃. 이 경계가 병렬 기법이 갈리는 선.</p>
+      <div class="tree" style="margin-bottom:13px;">
+        <div class="node"><span class="k">AI 팩토리 (데이터센터)</span> <span class="d">— Pod 여러 개</span></div>
+        <div class="node lvl1"><span class="k">Pod / 클러스터</span> <span class="d">— Ethernet·InfiniBand</span><span class="arrowlbl"><span class="tag p" style="font-size:.6rem;padding:1px 6px;">스케일아웃</span></span></div>
+        <div class="node lvl2" style="border-color:var(--accent); background:var(--accent-soft);"><span class="k">Rack = NVL72</span> <span class="d">— 72 Rubin GPU + 36 Vera CPU, NVLink</span><span class="arrowlbl"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">스케일업</span></span></div>
+        <div class="sub">└ Compute Tray — Vera CPU 1 + Rubin GPU 2 (NVLink-C2C, 액냉)</div>
+        <div class="sub" style="margin-left:64px;">└ GPU (Rubin) — HBM4 288GB · NVLink 6 (3.6TB/s)</div>
+      </div>
+      <div class="split">
+        <div class="col up"><h3>스케일업</h3><p class="role">노드 내부 · 초고대역</p><div class="tech"><div class="tt">NVLink · NVL72</div><div class="td">통신 잦은 <b>TP·EP</b>. 대역폭 벽을 노드 안에서 해결.</div></div></div>
+        <div class="col out"><h3>스케일아웃</h3><p class="role">노드 간 · 대수 확장</p><div class="tech"><div class="tt">Spectrum-X · IB · RNG</div><div class="td">통신 덜한 <b>DP·PP</b>. 클러스터 규모로.</div></div></div>
+      </div>
+      <p class="note" style="margin-top:10px;">GPU 자체 내부 구조는 <a href="GPU 구조 시뮬레이터.html" style="color:var(--accent);text-decoration:none;">GPU 구조 시뮬레이터 ↗</a>.</p>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:phys--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260626%5D%20%EB%AF%B8%EA%B5%AD%20%EC%A0%84%EB%A0%A5%EB%A7%9D%20%EC%A0%9C%EC%95%BD%20-%202028%EB%85%84%EA%B9%8C%EC%A7%80%2040GW%2B%20%EC%9E%90%EA%B0%80%EB%B0%9C%EC%A0%84%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%EB%A1%9C%20%EA%B0%80%EB%8A%94%20%EA%B8%B8.md" target="_blank" rel="noopener">미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260623%5D%20%EC%A4%91%EA%B5%AD%20CXMT%2C%20DRAM%20%EA%B0%95%EC%9E%90%EB%93%A4%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">중국 CXMT, DRAM 강자들에 도전장을 내밀다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260619%5D%202026%EB%85%84%20%EB%AF%B8%EA%B5%AD%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%9A%A9%EB%9F%89%20%EC%A0%88%EB%B0%98%20%EC%B7%A8%EC%86%8C%EC%84%A4%EC%9D%80%20%ED%8B%80%EB%A0%B8%EB%8B%A4.md" target="_blank" rel="noopener">2026년 미국 데이터센터 용량 절반 취소설은 틀렸다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260526%5D%20800VDC%20%ED%98%81%EB%AA%85%20Part%201%20-%20%EC%A0%84%EB%A0%A5%20%EB%B0%B0%EC%A0%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98%20%EB%8C%80%EC%A0%84%ED%99%98.md" target="_blank" rel="noopener">800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환</a><!--/DOCS:phys--></div>
+        <div class="sigs">관련 신호: <a href="https://developer.nvidia.com/blog/nvidia-nvlink-the-scale-up-network-for-ai-factories/" target="_blank" rel="noopener">NVLink = 스케일업 네트워크 ↗</a></div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="d-prec">
+      <h3 class="dh">정밀도·양자화 — FP16 → FP4</h3>
+      <p class="note" style="margin-bottom:11px;">비트↓ = 메모리·대역폭·용량↓, 처리량↑. <b>Decode</b>(대역폭 병목)에 특효. 학습 BF16/FP8, 추론 FP8/FP4.</p>
+      <div class="chain" style="margin-bottom:11px;"><span class="st">FP32 <span class="sd">기준</span></span><span class="ar">→</span><span class="st">BF16 <span class="sd">학습 표준</span></span><span class="ar">→</span><span class="st">FP8 <span class="sd">Hopper~</span></span><span class="ar">→</span><span class="st">FP4 <span class="sd">NVFP4·MXFP · Blackwell·Rubin</span></span></div>
+      <p class="note">품질 손실은 <b>블록 스케일링</b>(MXFP)·LUT로 방어. 단 비트를 줄여도 <b>용량</b>은 남는다 — Kimi K3 2.8T는 FP4로 눌러도 단일 B200에 안 들어가 NVL72급 필요. Rubin은 NVFP4 50PFLOPS.</p>
+      <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:prec--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260401%5D%20Nvidia%20Blackwell%20%ED%95%B4%EB%B6%80%20-%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%2C%20PTX%20%EB%AA%85%EB%A0%B9%EC%96%B4%2C%20SASS%2C%20%ED%94%8C%EB%A1%9C%EC%96%B4%EC%8A%A4%EC%9C%84%ED%94%84%2C%20%EC%88%98%EC%9C%A8.md" target="_blank" rel="noopener">Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251128%5D%20TPUv7%20-%20%EA%B5%AC%EA%B8%80%2C%20AI%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%EC%99%95%EC%A2%8C%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251009%5D%20InferenceMAX%20-%20%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4%20%EC%B6%94%EB%A1%A0%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%82%B9.md" target="_blank" rel="noopener">InferenceMAX - 오픈소스 추론 벤치마킹</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250910%5D%20%EB%A3%A8%EB%B9%88%20CPX%20%ED%8A%B9%ED%99%94%20%EA%B0%80%EC%86%8D%EA%B8%B0%EC%99%80%20%EB%9E%99%20-%20%EB%98%90%20%ED%95%98%EB%82%98%EC%9D%98%20%EA%B1%B0%EB%8C%80%ED%95%9C%20%EB%8F%84%EC%95%BD.md" target="_blank" rel="noopener">루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약</a><!--/DOCS:prec--></div>
+        <div class="sigs">관련 신호: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7483732333850935296/" target="_blank" rel="noopener">2.8T FP4로도 단일 B200 불가 ↗</a></div>
+      </div>
+    </div>
   </section>
 
   <section style="border-color:var(--accent);">
     <h2 style="color:var(--accent);">★ 종합 한 장 — AI 모델 × 인프라</h2>
-    <p class="note" style="margin-bottom:12px;">1부·2부가 이 표 한 장으로 수렴한다. 4개 축이 직교 — <b>어느 블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>핵심 단계</b>(학습/Prefill/Decode) · <b>어느 네트워크</b>(스케일업/아웃).</p>
+    <p class="note" style="margin-bottom:12px;">4개 축이 직교 — <b>블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>단계</b>(학습/Prefill/Decode) · <b>네트워크</b>(스케일업/아웃).</p>
     <div class="scroll"><table>
       <thead><tr><th>기법</th><th>블록·대상</th><th>유형</th><th>핵심 단계</th><th>물리</th><th>목적 한 줄</th></tr></thead>
       <tbody>
@@ -325,43 +265,31 @@
         <tr><td><b>SP</b></td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>장문</td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
       </tbody>
     </table></div>
-    <p class="note" style="margin-top:11px;">읽는 법: <b>구조적</b>(1부) = "무엇을 덜 쓸까"(메모리·FLOPs), <b>병렬</b>(2부) = "어디에 흩뿌릴까"(GPU·네트워크). 단계가 병목을 정하고, 물리 축이 그 병렬을 어느 링크에 태울지 정한다.</p>
-  </section>
-
-  <section>
-    <h2>개념별 관련 문서 — 코퍼스 인덱스 (자동)</h2>
-    <p class="note" style="margin-bottom:8px;">각 개념을 다룬 뉴스레터 변환본(한글 해석본). content/newsletter의 categories·제목 기반 자동 생성 — 새 글 변환 시 <code>gen_conceptmap_docs.py</code> 재실행으로 갱신.</p>
-    <!--CONCEPTDOCS_START-->
-    <div class="ir"><span class="c">학습 · RL</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/business/%5B260709%5D%20%EB%A9%94%ED%83%80%20%EC%8A%88%ED%8D%BC%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%EC%9D%98%20%EB%AF%B8%EB%9E%98%20-%20%EC%B6%9C%EB%B2%94%201%EC%A3%BC%EB%85%84%20%EC%84%B1%EA%B3%BC%20%EC%A0%90%EA%B2%80.md" target="_blank" rel="noopener">메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/rl/%5B260107%5D%20RL%20%ED%99%98%EA%B2%BD%EA%B3%BC%20%EA%B3%BC%ED%95%99%EC%9D%84%20%EC%9C%84%ED%95%9C%20RL%20-%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%8C%8C%EC%9A%B4%EB%93%9C%EB%A6%AC%EC%99%80%20%EB%A9%80%ED%8B%B0%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md" target="_blank" rel="noopener">RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251204%5D%20AWS%20Trainium3%20%EB%94%A5%EB%8B%A4%EC%9D%B4%EB%B8%8C%20-%20%EB%8B%A4%EA%B0%80%EC%98%A4%EB%8A%94%20%EC%9E%A0%EC%9E%AC%EC%A0%81%20%EB%8F%84%EC%A0%84%EC%9E%90.md" target="_blank" rel="noopener">AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250820%5D%20H100%20vs%20GB200%20NVL72%20%ED%95%99%EC%8A%B5%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC%20-%20%EC%A0%84%EB%A0%A5%2C%20TCO%2C%20%EC%8B%A0%EB%A2%B0%EC%84%B1%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/rl/%5B250609%5D%20%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5%28RL%29%20%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81%20-%20%ED%99%98%EA%B2%BD%2C%20%EB%B3%B4%EC%83%81%20%ED%95%B4%ED%82%B9%2C%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%2C%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81.md" target="_blank" rel="noopener">강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링</a> <span class="date">5편</span></div></div>
-    <div class="ir"><span class="c">추론 · Prefill/Decode</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/business/%5B260630%5D%20%ED%86%A0%ED%81%B0%20%EB%B2%84%EC%A7%93%ED%8C%85%20-%20%EA%B8%B0%EC%97%85%EB%93%A4%EA%B3%BC%20%EB%82%98%EB%88%88%20%ED%86%A0%ED%81%B0%20%EC%A7%80%EC%B6%9C%20%EC%8B%A4%ED%83%9C.md" target="_blank" rel="noopener">토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/agents/%5B260425%5D%20%EC%BD%94%EB%94%A9%20%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8%20%ED%95%B4%EB%B6%80%20-%20%ED%86%A0%ED%81%B0%EC%9D%84%20%EB%8D%94%20%EC%A3%BC%EC%84%B8%EC%9A%94.md" target="_blank" rel="noopener">코딩 어시스턴트 해부 - 토큰을 더 주세요</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260324%5D%20GTC%202026%20-%20%EC%B6%94%EB%A1%A0%20%EC%99%95%EA%B5%AD%EC%9D%98%20%ED%99%95%EC%9E%A5.md" target="_blank" rel="noopener">GTC 2026 - 추론 왕국의 확장</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/agents/%5B260206%5D%20Claude%20Code%2C%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%20%EC%8B%9C%EB%8C%80%EC%9D%98%20%EB%B3%80%EA%B3%A1%EC%A0%90.md" target="_blank" rel="noopener">Claude Code, 에이전트 시대의 변곡점</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251009%5D%20InferenceMAX%20-%20%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4%20%EC%B6%94%EB%A1%A0%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%82%B9.md" target="_blank" rel="noopener">InferenceMAX - 오픈소스 추론 벤치마킹</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250910%5D%20%EB%A3%A8%EB%B9%88%20CPX%20%ED%8A%B9%ED%99%94%20%EA%B0%80%EC%86%8D%EA%B8%B0%EC%99%80%20%EB%9E%99%20-%20%EB%98%90%20%ED%95%98%EB%82%98%EC%9D%98%20%EA%B1%B0%EB%8C%80%ED%95%9C%20%EB%8F%84%EC%95%BD.md" target="_blank" rel="noopener">루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약</a> <span class="date">8편</span></div></div>
-    <div class="ir"><span class="c">어텐션 · MoE</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250613%5D%20AMD%20Advancing%20AI%20-%20MI350X%EC%99%80%20MI400%20UALoE72%2C%20MI500%20UAL256.md" target="_blank" rel="noopener">AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256</a> <span class="date">2편</span></div></div>
-    <div class="ir"><span class="c">병렬 · NVL72 · 벤치</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener">DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250820%5D%20H100%20vs%20GB200%20NVL72%20%ED%95%99%EC%8A%B5%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC%20-%20%EC%A0%84%EB%A0%A5%2C%20TCO%2C%20%EC%8B%A0%EB%A2%B0%EC%84%B1%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석</a> <span class="date">4편</span></div></div>
-    <div class="ir"><span class="c">GPU 구조 · 정밀도</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260401%5D%20Nvidia%20Blackwell%20%ED%95%B4%EB%B6%80%20-%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%2C%20PTX%20%EB%AA%85%EB%A0%B9%EC%96%B4%2C%20SASS%2C%20%ED%94%8C%EB%A1%9C%EC%96%B4%EC%8A%A4%EC%9C%84%ED%94%84%2C%20%EC%88%98%EC%9C%A8.md" target="_blank" rel="noopener">Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251128%5D%20TPUv7%20-%20%EA%B5%AC%EA%B8%80%2C%20AI%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%EC%99%95%EC%A2%8C%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251009%5D%20InferenceMAX%20-%20%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4%20%EC%B6%94%EB%A1%A0%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%82%B9.md" target="_blank" rel="noopener">InferenceMAX - 오픈소스 추론 벤치마킹</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250623%5D%20NVIDIA%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%20%EC%A7%84%ED%99%94%20-%20Volta%EC%97%90%EC%84%9C%20Blackwell%EA%B9%8C%EC%A7%80.md" target="_blank" rel="noopener">NVIDIA 텐서 코어 진화 - Volta에서 Blackwell까지</a> <span class="date">6편</span></div></div>
-    <div class="ir"><span class="c">네트워크 · 스케일업/아웃</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260526%5D%20800VDC%20%ED%98%81%EB%AA%85%20Part%201%20-%20%EC%A0%84%EB%A0%A5%20%EB%B0%B0%EC%A0%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98%20%EB%8C%80%EC%A0%84%ED%99%98.md" target="_blank" rel="noopener">800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260416%5D%20ISSCC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20HBM4%2C%20LPDDR6%2C%20CPO%2C%20%EC%95%A1%ED%8B%B0%EB%B8%8C%20LSI%20%EB%93%B1%20%EC%B0%A8%EC%84%B8%EB%8C%80%20%EB%A9%94%EB%AA%A8%EB%A6%AC%C2%B7%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260324%5D%20GTC%202026%20-%20%EC%B6%94%EB%A1%A0%20%EC%99%95%EA%B5%AD%EC%9D%98%20%ED%99%95%EC%9E%A5.md" target="_blank" rel="noopener">GTC 2026 - 추론 왕국의 확장</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251204%5D%20AWS%20Trainium3%20%EB%94%A5%EB%8B%A4%EC%9D%B4%EB%B8%8C%20-%20%EB%8B%A4%EA%B0%80%EC%98%A4%EB%8A%94%20%EC%9E%A0%EC%9E%AC%EC%A0%81%20%EB%8F%84%EC%A0%84%EC%9E%90.md" target="_blank" rel="noopener">AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자</a> <span class="date">8편</span></div></div>
-    <div class="ir"><span class="c">물리 · 랙 · 전력 · 냉각</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260626%5D%20%EB%AF%B8%EA%B5%AD%20%EC%A0%84%EB%A0%A5%EB%A7%9D%20%EC%A0%9C%EC%95%BD%20-%202028%EB%85%84%EA%B9%8C%EC%A7%80%2040GW%2B%20%EC%9E%90%EA%B0%80%EB%B0%9C%EC%A0%84%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%EB%A1%9C%20%EA%B0%80%EB%8A%94%20%EA%B8%B8.md" target="_blank" rel="noopener">미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260619%5D%202026%EB%85%84%20%EB%AF%B8%EA%B5%AD%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%9A%A9%EB%9F%89%20%EC%A0%88%EB%B0%98%20%EC%B7%A8%EC%86%8C%EC%84%A4%EC%9D%80%20%ED%8B%80%EB%A0%B8%EB%8B%A4.md" target="_blank" rel="noopener">2026년 미국 데이터센터 용량 절반 취소설은 틀렸다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B260526%5D%20800VDC%20%ED%98%81%EB%AA%85%20Part%201%20-%20%EC%A0%84%EB%A0%A5%20%EB%B0%B0%EC%A0%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98%20%EB%8C%80%EC%A0%84%ED%99%98.md" target="_blank" rel="noopener">800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B251231%5D%20AI%20%EB%9E%A9%EB%93%A4%EC%9D%80%20%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%A0%84%EB%A0%A5%EB%82%9C%EC%9D%84%20%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94%EA%B0%80%20-%20%EC%98%A8%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EA%B0%80%EC%8A%A4%20%EB%94%A5%EB%8B%A4%EC%9D%B4%EB%B8%8C.md" target="_blank" rel="noopener">AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250820%5D%20H100%20vs%20GB200%20NVL72%20%ED%95%99%EC%8A%B5%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC%20-%20%EC%A0%84%EB%A0%A5%2C%20TCO%2C%20%EC%8B%A0%EB%A2%B0%EC%84%B1%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener">H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/cooling/%5B250214%5D%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%ED%95%B4%EB%B6%80%ED%95%99%20Part%202%20-%20%EB%83%89%EA%B0%81%20%EC%8B%9C%EC%8A%A4%ED%85%9C.md" target="_blank" rel="noopener">데이터센터 해부학 Part 2 - 냉각 시스템</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/power/%5B241014%5D%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%ED%95%B4%EB%B6%80%ED%95%99%20Part%201%20-%20%EC%A0%84%EA%B8%B0%20%EC%8B%9C%EC%8A%A4%ED%85%9C.md" target="_blank" rel="noopener">데이터센터 해부학 Part 1 - 전기 시스템</a> <span class="date">8편</span></div></div>
-    <div class="ir"><span class="c">메모리 · HBM</span><div><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260623%5D%20%EC%A4%91%EA%B5%AD%20CXMT%2C%20DRAM%20%EA%B0%95%EC%9E%90%EB%93%A4%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">중국 CXMT, DRAM 강자들에 도전장을 내밀다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/business/%5B260501%5D%20AI%20%EA%B0%80%EC%B9%98%20%ED%8F%AC%EC%B0%A9%20-%20%EB%AA%A8%EB%8D%B8%20%EB%9E%A9%EC%9C%BC%EB%A1%9C%EC%9D%98%20%EC%9D%B4%EB%8F%99.md" target="_blank" rel="noopener">AI 가치 포착 - 모델 랩으로의 이동</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260416%5D%20ISSCC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20HBM4%2C%20LPDDR6%2C%20CPO%2C%20%EC%95%A1%ED%8B%B0%EB%B8%8C%20LSI%20%EB%93%B1%20%EC%B0%A8%EC%84%B8%EB%8C%80%20%EB%A9%94%EB%AA%A8%EB%A6%AC%C2%B7%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener">ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260313%5D%20AI%20%EC%8B%A4%EB%A6%AC%EC%BD%98%20%EB%8C%80%EB%9E%80%20-%20TSMC%20N3%EB%B6%80%ED%84%B0%20%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B9%8C%EC%A7%80.md" target="_blank" rel="noopener">AI 실리콘 대란 - TSMC N3부터 메모리까지</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260207%5D%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%A7%88%EB%8B%88%EC%95%84%20-%2040%EB%85%84%20%EB%A7%8C%EC%9D%98%20%EA%B3%B5%EA%B8%89%20%EB%B6%80%EC%A1%B1%EC%9D%B4%20%EB%B6%80%EB%A5%B4%EB%8A%94%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%B6%90.md" target="_blank" rel="noopener">메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260114%5D%20CFET%201%2C000%EA%B0%9C%EC%99%80%20SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4%20%EC%B0%A8%EC%84%B8%EB%8C%80%20%EB%82%B8%EB%93%9C%20-%20IEDM%202025%20%EC%B4%9D%EC%A0%95%EB%A6%AC.md" target="_blank" rel="noopener">CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B250812%5D%20HBM%20%EB%A1%9C%EB%93%9C%EB%A7%B5%20-%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%B2%BD%EC%9D%84%20%EB%84%98%EB%8A%94%20HBM%EC%9D%98%20%EB%B6%80%EC%83%81%EA%B3%BC%20%EB%AF%B8%EB%9E%98.md" target="_blank" rel="noopener">HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래</a> <span class="date">8편</span></div></div>
-    <!--CONCEPTDOCS_END-->
-  </section>
-
-  <section>
-    <h2>실제 신호에서 — 이 개념이 뉴스에 나타나는 곳</h2>
-    <div class="ir"><span class="c">MoE</span><div><span class="wh">MI500X TDM MoE 디스크립터 공유 방식</span> <span class="wy">— AMD가 전 Expert 공유 descriptor 도입. NVIDIA Rubin이 Blackwell(Expert당 1개) → Rubin(전체 공유)으로 바꾼 방식과 동일. MoE의 Expert 구조가 실제 HW ISA에 직접 반영.</span> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485391967086854144/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-22</span></div></div>
-    <div class="ir"><span class="c">MoE · 5D</span><div><span class="wh">MoE 사전학습 세계기록</span> <span class="wy">— GB300 NVL72로 프론티어 MoE 학습 실증. Expert 분할·EP + DP·TP·PP가 대규모 스케일업에서 겹쳐 작동함을 보인 사례.</span> <a href="https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-21</span></div></div>
-    <div class="ir"><span class="c">Prefill 전용</span><div><span class="wh">루빈 CPX 특화 가속기·랙</span> <span class="wy">— NVIDIA가 추론을 Prefill/Decode로 분리하고, 컨텍스트 처리(Prefill) 전담 칩 CPX를 별도 출시. 단계 분리가 하드웨어 제품으로 실현된 사례.</span> <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" target="_blank" rel="noopener">뉴스레터 ↗</a> <span class="date">25-09-10</span></div></div>
-    <div class="ir"><span class="c">Decode · GQA</span><div><span class="wh">Kimi K3 KDA 선형 어텐션</span> <span class="wy">— KV 전송 대역폭을 최대 10배 절감. Decode가 KV Cache 읽기에 대역폭을 잡아먹는 문제를, GQA 계보를 선형 어텐션으로 더 밀어붙여 완화.</span> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7484360227891380225/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-19</span></div></div>
-    <div class="ir"><span class="c">Decode · 양자화</span><div><span class="wh">2.8T 대형 모델 추론엔 NVL72</span> <span class="wy">— Kimi K3 2.8T는 FP4로 눌러도 단일 B200 불가, 노드 간 대역폭이 관건. 양자화로도 안 줄는 용량 = TP·EP로 여러 GPU에 흩뿌려야만 서빙 가능한 규모.</span> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7483732333850935296/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-17</span></div></div>
-    <div class="ir"><span class="c">Scale-up</span><div><span class="wh">NVLink = 스케일업 네트워크</span> <span class="wy">— NVIDIA가 NVLink를 AI 팩토리용 스케일업 패브릭으로 정의(Rubin NVLink 6, 3.6TB/s). TP·EP 통신을 노드 안에서 감당하는 물리 기반.</span> <a href="https://developer.nvidia.com/blog/nvidia-nvlink-the-scale-up-network-for-ai-factories/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-20</span></div></div>
-    <div class="ir"><span class="c">Prefill+Decode</span><div><span class="wh">베라 루빈 NVL72 vs GB200 추론 분석</span> <span class="wy">— 스케일업 도메인이 커질수록 TP·EP·MoE·양자화 효율이 perf/MW(전력당 성능)로 직결. 개념이 실제 TCO 숫자로 환산되는 지점.</span> <a href="https://newsletter.semianalysis.com/p/vera-rubin-nvl72-vs-gb200-nvl72-inference" target="_blank" rel="noopener">뉴스레터 ↗</a> <span class="date">07-23</span></div></div>
   </section>
 
   <div class="legend">
-    <span><span class="dot" style="background:var(--accent)"></span>1부 구조적 (모델 · 메모리·FLOPs 절감)</span>
-    <span><span class="dot" style="background:var(--warn)"></span>2부 병렬 (인프라 · GPU 분산)</span>
+    <span><span class="dot" style="background:var(--accent)"></span>구조적 (모델 · 메모리·FLOPs 절감)</span>
+    <span><span class="dot" style="background:var(--warn)"></span>병렬 (인프라 · GPU 분산)</span>
     <span><span class="dot" style="background:var(--att)"></span>Attention · Prefill</span>
     <span><span class="dot" style="background:var(--mlp)"></span>MLP · Decode</span>
   </div>
-  <div class="foot">큰 그림(학습·추론) → 1부 AI 모델(계층·기법) → 2부 인프라(병렬·랙·정밀도) → 종합 한 장. "실제 신호" = 우리 ① 소셜 피드 링크. 블로그·기술 노트·세미나 자료로 바로 재사용 가능.</div>
+  <div class="foot">한 장 지도에서 모듈 클릭 → 상세·관련 문서(뉴스레터 변환본)·신호. 코퍼스 문서는 <code>gen_conceptmap_docs.py</code>로 자동 갱신. 블로그·세미나 자료로 재사용 가능.</div>
 </main>
-<script>try{var t=localStorage.getItem('theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script>
+try{var t=localStorage.getItem('theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
+(function(){
+  var mods=document.querySelectorAll('.mod'), panels=document.querySelectorAll('.dpanel'), hint=document.getElementById('dhint');
+  mods.forEach(function(m){ m.addEventListener('click', function(){
+    var id='d-'+m.dataset.d, active=m.classList.contains('active');
+    mods.forEach(function(x){x.classList.remove('active');});
+    panels.forEach(function(p){p.classList.remove('on');});
+    if(active){ hint.style.display=''; return; }
+    m.classList.add('active');
+    var p=document.getElementById(id); if(p){p.classList.add('on');}
+    hint.style.display='none';
+    document.getElementById('detail').scrollIntoView({behavior:'smooth', block:'start'});
+  }); });
+})();
+</script>
 </body>
 </html>
