@@ -78,6 +78,11 @@
   .chain .st{border:1px solid var(--line); border-radius:7px; padding:4px 10px; background:var(--bg); font-weight:800;}
   .chain .st .sd{font-weight:400; color:var(--sub); font-size:.72rem;}
   .chain .ar{color:var(--sub); font-weight:700;}
+  /* one-frame master map */
+  .flow{text-align:center; font-size:.72rem; font-weight:700; color:var(--sub); margin:8px 0 4px;}
+  .rail{display:flex; gap:8px; flex-wrap:wrap; align-items:center; font-size:.78rem; color:var(--sub);
+    background:var(--bg); border:1px dashed var(--line); border-radius:8px; padding:7px 11px; margin:7px 0;}
+  .rail b{color:var(--ink); font-weight:800;}
   /* tables */
   .scroll{overflow-x:auto;}
   table{border-collapse:collapse; width:100%; font-size:.83rem; min-width:480px;}
@@ -109,6 +114,31 @@
   </div>
   <h1>AI와 그 인프라 구조 — 학습·추론에서 계층·병렬화, GPU 랙까지 한 장에</h1>
   <p class="lede">출발점은 두 국면 — <b>학습(Training)</b>과 <b>추론(Inference, 다시 Prefill·Decode)</b>. 국면마다 병목이 다르고, 그걸 푸는 게 <b>1부: AI 모델</b>을 나누는 기법(GQA·MoE·어텐션 계보)과 <b>2부: 인프라</b>에 태우는 방식(병렬·스케일업/아웃·GPU 랙)이다.</p>
+
+  <section class="frame" style="border-color:var(--accent);">
+    <h2 style="color:var(--accent);">★ 전체 구조 한 칸에 — AI 모델 → 병렬 → GPU 랙</h2>
+    <div class="rail"><b>국면</b><span class="tag s">학습</span><span class="tag s">추론</span><span class="ar">▸</span><span>Prefill = 연산 병목 · Decode = 대역폭 병목</span></div>
+    <div class="tree" style="margin-top:6px;">
+      <div class="node"><span class="k">AI 모델 (LLM)</span></div>
+      <div class="node lvl1"><span class="k">Layer N</span> <span class="d">— Transformer Block × 수십</span></div>
+      <div class="node lvl2 att"><span class="k">① Attention</span> <span class="d">— 토큰 간(가로)</span></div>
+      <div class="techrow"><span class="tag s">MHA·GQA</span><span class="tag p">TP</span><span class="tl">Head 단위 · 계보 MHA→MQA→GQA→MLA→선형</span></div>
+      <div class="node lvl2 mlp"><span class="k">② MLP / FFN</span> <span class="d">— 토큰 내부(세로)</span></div>
+      <div class="techrow"><span class="tag" style="background:var(--line);color:var(--sub);">Dense</span><span class="tag s">MoE</span><span class="tag p">EP</span><span class="tl">Expert 단위</span></div>
+    </div>
+    <div class="flow">↓ 이 분할을 여러 GPU에 태움 (병렬) ↓</div>
+    <div class="rail"><b>5D 병렬</b><span>DP · TP · PP · EP · SP</span></div>
+    <div class="flow">↓ 물리 하드웨어에 얹음 ↓</div>
+    <div class="chain">
+      <span class="st">GPU <span class="sd">Rubin·HBM4</span></span><span class="ar">→</span>
+      <span class="st">Tray <span class="sd">+Vera CPU</span></span><span class="ar">→</span>
+      <span class="st" style="border-color:var(--accent);"><span style="color:var(--accent);">Rack NVL72</span> <span class="sd">스케일업·NVLink</span></span><span class="ar">→</span>
+      <span class="st" style="border-color:var(--warn);"><span style="color:var(--warn);">Pod/클러스터</span> <span class="sd">스케일아웃·Ethernet</span></span><span class="ar">→</span>
+      <span class="st">AI 팩토리</span>
+    </div>
+    <div class="rail"><b>정밀도 · 전 구간 가로지름</b><span>FP32 → BF16 → FP8 → FP4</span></div>
+    <p class="note" style="margin-top:10px;">독법: <b>모델을 나누고</b>(1부 — 구조적 GQA·MoE + 병렬 TP·EP) → <b>GPU·네트워크에 태운다</b>(2부 — 5D 병렬 + 스케일업/아웃 랙). ↓ 아래는 각 부분 상세.</p>
+  </section>
 
   <section class="frame">
     <h2 style="color:var(--accent);">큰 그림 — 학습 vs 추론, Prefill vs Decode</h2>
