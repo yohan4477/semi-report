@@ -42,6 +42,12 @@
   section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:15px 17px; margin-bottom:14px;}
   section h2{font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--sub); margin:0 0 13px; font-weight:700;}
   p.note{font-size:.85rem; color:var(--sub); margin:2px 0 0;}
+  /* part banner */
+  .pbanner{margin:24px 2px 12px; padding-left:12px; border-left:4px solid var(--accent);}
+  .pbanner .pt{font-size:1.02rem; font-weight:800; color:var(--ink);}
+  .pbanner .pd{font-size:.78rem; color:var(--sub); margin-top:2px;}
+  .pbanner.infra{border-left-color:var(--warn);}
+  .frame{border-color:var(--accent);}
   /* hierarchy tree */
   .tree{font-size:.86rem;}
   .node{position:relative; padding:7px 11px; border-radius:8px; margin:5px 0; border:1px solid var(--line); background:var(--bg);}
@@ -102,11 +108,11 @@
     <span>AI 모델 → 인프라 구조 · 2026-07-24 정리</span>
   </div>
   <h1>AI와 그 인프라 구조 — 학습·추론에서 계층·병렬화, GPU 랙까지 한 장에</h1>
-  <p class="lede">출발점은 두 국면 — <b>학습(Training)</b>과 <b>추론(Inference, 다시 Prefill·Decode)</b>. 국면마다 병목이 다르고, 그 병목을 푸는 게 모델을 나누는 기법들(구조적 GQA·MoE, 병렬 TP·EP)이다. 아래는 위에서 아래로 — 큰 국면 → 계층 구조 → 나누는 기법 → 물리·정밀도 → 한 장 통합.</p>
+  <p class="lede">출발점은 두 국면 — <b>학습(Training)</b>과 <b>추론(Inference, 다시 Prefill·Decode)</b>. 국면마다 병목이 다르고, 그걸 푸는 게 <b>1부: AI 모델</b>을 나누는 기법(GQA·MoE·어텐션 계보)과 <b>2부: 인프라</b>에 태우는 방식(병렬·스케일업/아웃·GPU 랙)이다.</p>
 
-  <section>
-    <h2>1 · 큰 그림 — 학습 vs 추론, Prefill vs Decode</h2>
-    <p class="note" style="margin-bottom:11px;">AI 모델을 쓰는 방식은 두 국면. 추론은 다시 두 단계로 쪼개진다. <b>어느 국면·단계냐</b>에 따라 병목과 핵심 기법이 완전히 달라진다.</p>
+  <section class="frame">
+    <h2 style="color:var(--accent);">큰 그림 — 학습 vs 추론, Prefill vs Decode</h2>
+    <p class="note" style="margin-bottom:11px;">AI 모델을 쓰는 방식은 두 국면. 추론은 다시 두 단계로 쪼개진다. <b>어느 국면·단계냐</b>가 병목과 핵심 기법을 정한다 — 아래 모든 내용의 출발점.</p>
     <div class="tree">
       <div class="node"><span class="k">AI 모델 사용</span></div>
       <div class="node lvl1"><span class="arrowlbl">compute-bound</span><span class="k">학습 (Training)</span> <span class="d">— 순전파+역전파, 모든 토큰 병렬</span></div>
@@ -115,18 +121,23 @@
       <div class="node lvl2 mlp"><span class="arrowlbl">bandwidth-bound</span><span class="k">Decode</span> <span class="d">— 토큰 1개씩 자기회귀, KV Cache 읽음</span></div>
     </div>
     <div class="scroll" style="margin-top:13px;"><table>
-      <thead><tr><th>국면·단계</th><th>연산 방식</th><th>병목</th><th>이 단계의 핵심 기법</th></tr></thead>
+      <thead><tr><th>국면·단계</th><th>연산 방식</th><th>병목</th><th>핵심 기법</th></tr></thead>
       <tbody>
         <tr><td><b>학습</b></td><td>순전파+역전파, 대배치</td><td>FLOPs (compute)</td><td>TP·EP·PP·DP 병렬 + MoE(FLOPs↓)</td></tr>
         <tr><td><b>Prefill</b></td><td>입력 토큰 동시 처리 (GEMM)</td><td>FLOPs (compute)</td><td>TP·MoE · 전용칩(Rubin CPX)</td></tr>
-        <tr><td><b>Decode</b></td><td>토큰 1개씩 순차 생성</td><td>메모리 대역폭 (KV·가중치 읽기)</td><td>GQA·선형어텐션(KV↓) · NVL72 스케일업</td></tr>
+        <tr><td><b>Decode</b></td><td>토큰 1개씩 순차 생성</td><td>메모리 대역폭 (KV·가중치)</td><td>GQA·선형어텐션(KV↓) · NVL72 스케일업</td></tr>
       </tbody>
     </table></div>
-    <p class="note" style="margin-top:10px;">Prefill은 GPU를 꽉 채우는 연산, Decode는 대역폭에 굶주리는 순차 연산 → 그래서 KV 절감(GQA)·스케일업(NVL72)·Prefill 전용 가속기(CPX)가 갈린다. 이래서 요즘 추론을 Prefill/Decode로 분리(disaggregation)해 서로 다른 하드웨어에 태운다.</p>
+    <p class="note" style="margin-top:10px;">Prefill은 GPU를 꽉 채우는 연산, Decode는 대역폭에 굶주리는 순차 연산 → KV 절감(GQA)·스케일업(NVL72)·Prefill 전용칩(CPX)이 갈린다. 그래서 추론을 Prefill/Decode로 분리(disaggregation)해 서로 다른 하드웨어에 태운다.</p>
   </section>
 
+  <div class="pbanner">
+    <div class="pt">1부 · AI 모델 — 무엇을, 어떻게 계산하나</div>
+    <div class="pd">레이어 구조와 그 안을 나누는 알고리즘 (구조적 효율화)</div>
+  </div>
+
   <section>
-    <h2>2 · 그 국면이 도는 단위 — 모델의 기본 계층 구조</h2>
+    <h2>1 · 모델의 기본 계층 구조</h2>
     <div class="tree">
       <div class="node"><span class="k">Model</span> <span class="d">— 전체 AI 모델(LLM)</span></div>
       <div class="node lvl1"><span class="k">Layer N</span> <span class="d">— Transformer Block ×수십 개 중 1개</span></div>
@@ -137,11 +148,11 @@
       <div class="sub">└ Weight Matrices (또는 Experts)</div>
       <div class="techrow"><span class="tl">나누기 →</span><span class="tag" style="background:var(--line);color:var(--sub);">Dense</span><span class="tag s">MoE</span><span class="tag p">EP</span><span class="tl">Expert 단위</span></div>
     </div>
-    <p class="note" style="margin-top:9px;"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">구조적</span> 메모리·FLOPs 절감 · <span class="tag p" style="font-size:.6rem;padding:1px 6px;">병렬</span> 여러 GPU 분산 — 상세는 아래 4번</p>
+    <p class="note" style="margin-top:9px;"><span class="tag s" style="font-size:.6rem;padding:1px 6px;">구조적</span> 메모리·FLOPs 절감 · <span class="tag p" style="font-size:.6rem;padding:1px 6px;">병렬</span> 여러 GPU 분산(→ 2부) — 상세는 아래 3번</p>
   </section>
 
   <section>
-    <h2>3 · 두 핵심 블록의 역할 분담</h2>
+    <h2>2 · 두 핵심 블록의 역할 분담</h2>
     <div class="scroll"><table>
       <thead><tr><th>구분</th><th>① Attention Block</th><th>② MLP / FFN Block</th></tr></thead>
       <tbody>
@@ -153,8 +164,8 @@
   </section>
 
   <section>
-    <h2>4 · 블록별 나누기 기법 — 병렬 배치 비교</h2>
-    <p class="note" style="margin-bottom:11px;">1개 레이어 안에서 <b>어느 블록을 어떤 단위로 나누는가</b>에 따라 기술이 갈린다. <span class="tag s">구조적</span> = 메모리·연산 절감, <span class="tag p">병렬</span> = 여러 GPU 분산.</p>
+    <h2>3 · 블록별 나누기 기법 — 병렬 배치 비교</h2>
+    <p class="note" style="margin-bottom:11px;">1개 레이어 안에서 <b>어느 블록을 어떤 단위로 나누는가</b>. <span class="tag s">구조적</span> = 메모리·연산 절감(모델 레벨), <span class="tag p">병렬</span> = 여러 GPU 분산(인프라 레벨, 2부에서 상술).</p>
     <div class="split">
       <div class="col att">
         <h3>① Attention Block</h3>
@@ -188,8 +199,8 @@
   </section>
 
   <section>
-    <h2>5 · ① Attention 심화 — 어텐션 계보 (MHA → 선형)</h2>
-    <p class="note" style="margin-bottom:11px;">어텐션 변종은 하나같이 <b>KV Cache를 줄이는 방향</b>으로 진화한다. Decode 단계(위 1번)의 대역폭 병목이 진화 동력.</p>
+    <h2>4 · ① Attention 심화 — 어텐션 계보 (MHA → 선형)</h2>
+    <p class="note" style="margin-bottom:11px;">어텐션 변종은 하나같이 <b>KV Cache를 줄이는 방향</b>으로 진화한다. 위 큰 그림의 Decode 단계 대역폭 병목이 진화 동력.</p>
     <div class="chain">
       <span class="st">MHA</span><span class="ar">→</span>
       <span class="st">MQA</span><span class="ar">→</span>
@@ -209,9 +220,14 @@
     </table></div>
   </section>
 
+  <div class="pbanner infra">
+    <div class="pt">2부 · 인프라 — 어디서, 어떻게 돌리나</div>
+    <div class="pd">모델을 GPU·네트워크·랙에 태우는 방식 (병렬 처리·물리 계층)</div>
+  </div>
+
   <section>
-    <h2>6 · 병렬화 완전체 — 5D 병렬</h2>
-    <p class="note" style="margin-bottom:11px;">4번의 TP·EP는 병렬의 일부일 뿐. 학습과 대규모 추론은 아래 <b>5개 축을 겹쳐서</b> 쓴다.</p>
+    <h2>5 · 병렬화 완전체 — 5D 병렬</h2>
+    <p class="note" style="margin-bottom:11px;">3번의 TP·EP는 병렬의 일부일 뿐. 학습과 대규모 추론은 아래 <b>5개 축을 겹쳐서</b> 쓴다.</p>
     <div class="scroll"><table>
       <thead><tr><th>병렬</th><th>나누는 축</th><th>통신 패턴</th><th>주 무대</th></tr></thead>
       <tbody>
@@ -226,8 +242,8 @@
   </section>
 
   <section>
-    <h2>7 · 물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h2>
-    <p class="note" style="margin-bottom:11px;">병렬 기법은 결국 <b>어떤 하드웨어 계층 위에 올리느냐</b>로 갈린다. GPU가 트레이·랙·클러스터로 쌓이는데, <b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃이다.</p>
+    <h2>6 · 물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h2>
+    <p class="note" style="margin-bottom:11px;">병렬 기법은 결국 <b>어떤 하드웨어 계층 위에 올리느냐</b>로 갈린다. <b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃이다.</p>
     <div class="tree" style="margin-bottom:13px;">
       <div class="node"><span class="k">AI 팩토리 (데이터센터)</span> <span class="d">— Pod 여러 개</span></div>
       <div class="node lvl1"><span class="arrowlbl"><span class="tag p" style="font-size:.6rem;padding:1px 6px;">스케일아웃</span></span><span class="k">Pod / 클러스터</span> <span class="d">— 랙 여러 개, Ethernet·InfiniBand 연결</span></div>
@@ -240,19 +256,19 @@
       <div class="col up">
         <h3>스케일업 (Scale-up)</h3>
         <p class="role">노드 내부 · 초고대역 링크로 GPU를 한 덩어리로</p>
-        <div class="tech"><div class="tt">NVLink / NVSwitch · NVL72</div><div class="td">Rubin NVLink 6 = 3.6TB/s. 통신 잦은 <b>TP·EP</b>가 여기. "대역폭 벽"을 노드 안에서 해결. NVL72가 이 도메인을 72 GPU로 키운 게 대형 추론의 열쇠.</div></div>
+        <div class="tech"><div class="tt">NVLink / NVSwitch · NVL72</div><div class="td">Rubin NVLink 6 = 3.6TB/s. 통신 잦은 <b>TP·EP</b>가 여기. "대역폭 벽"을 노드 안에서 해결.</div></div>
       </div>
       <div class="col out">
         <h3>스케일아웃 (Scale-out)</h3>
         <p class="role">노드 간 · 이더넷/InfiniBand로 대수를 늘림</p>
-        <div class="tech"><div class="tt">Spectrum-X · InfiniBand · RNG</div><div class="td">통신 덜한 <b>DP·PP</b>가 여기. 클러스터 규모로 확장. 아마존 RNG 랜덤그래프 토폴로지처럼 오버서브스크립션·비용이 관건.</div></div>
+        <div class="tech"><div class="tt">Spectrum-X · InfiniBand · RNG</div><div class="td">통신 덜한 <b>DP·PP</b>가 여기. 클러스터 규모로 확장. 아마존 RNG 토폴로지처럼 오버서브스크립션·비용이 관건.</div></div>
       </div>
     </div>
     <p class="note" style="margin-top:10px;">매핑: TP → 스케일업 · EP → 스케일업 우선 · DP·PP → 스케일아웃 · SP → 둘 다.</p>
   </section>
 
   <section>
-    <h2>8 · 정밀도·양자화 — FP16 → FP4</h2>
+    <h2>7 · 정밀도·양자화 — FP16 → FP4</h2>
     <p class="note" style="margin-bottom:11px;">비트를 줄일수록 메모리·대역폭·용량↓, 처리량↑. <b>Decode</b>(대역폭 병목)에 특히 효과. 학습은 BF16/FP8 혼합, 추론은 FP8/FP4 양자화가 표준.</p>
     <div class="chain">
       <span class="st">FP32 <span class="sd">기준</span></span><span class="ar">→</span>
@@ -264,8 +280,8 @@
   </section>
 
   <section style="border-color:var(--accent);">
-    <h2 style="color:var(--accent);">★ 종합 한 장 — 모든 기법 × 4개 축</h2>
-    <p class="note" style="margin-bottom:12px;">위 전 섹션이 이 표 한 장으로 수렴한다. 4개 축이 직교 — <b>어느 블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>핵심 단계</b>(학습/Prefill/Decode) · <b>어느 네트워크</b>(스케일업/아웃).</p>
+    <h2 style="color:var(--accent);">★ 종합 한 장 — AI 모델 × 인프라</h2>
+    <p class="note" style="margin-bottom:12px;">1부·2부가 이 표 한 장으로 수렴한다. 4개 축이 직교 — <b>어느 블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>핵심 단계</b>(학습/Prefill/Decode) · <b>어느 네트워크</b>(스케일업/아웃).</p>
     <div class="scroll"><table>
       <thead><tr><th>기법</th><th>블록·대상</th><th>유형</th><th>핵심 단계</th><th>물리</th><th>목적 한 줄</th></tr></thead>
       <tbody>
@@ -279,11 +295,11 @@
         <tr><td><b>SP</b></td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>장문</td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
       </tbody>
     </table></div>
-    <p class="note" style="margin-top:11px;">읽는 법: <b>구조적</b> 기법은 "무엇을 덜 쓸까"(메모리·FLOPs), <b>병렬</b> 기법은 "어디에 흩뿌릴까"(GPU·네트워크). 단계가 병목을 정하고(Prefill=연산, Decode=대역폭), 물리 축이 그 병렬을 어느 링크에 태울지 정한다.</p>
+    <p class="note" style="margin-top:11px;">읽는 법: <b>구조적</b>(1부) = "무엇을 덜 쓸까"(메모리·FLOPs), <b>병렬</b>(2부) = "어디에 흩뿌릴까"(GPU·네트워크). 단계가 병목을 정하고, 물리 축이 그 병렬을 어느 링크에 태울지 정한다.</p>
   </section>
 
   <section>
-    <h2>9 · 실제 신호에서 — 이 개념이 뉴스에 나타나는 곳</h2>
+    <h2>실제 신호에서 — 이 개념이 뉴스에 나타나는 곳</h2>
     <div class="ir"><span class="c">MoE</span><div><span class="wh">MI500X TDM MoE 디스크립터 공유 방식</span> <span class="wy">— AMD가 전 Expert 공유 descriptor 도입. NVIDIA Rubin이 Blackwell(Expert당 1개) → Rubin(전체 공유)으로 바꾼 방식과 동일. MoE의 Expert 구조가 실제 HW ISA에 직접 반영.</span> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7485391967086854144/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-22</span></div></div>
     <div class="ir"><span class="c">MoE · 5D</span><div><span class="wh">MoE 사전학습 세계기록</span> <span class="wy">— GB300 NVL72로 프론티어 MoE 학습 실증. Expert 분할·EP + DP·TP·PP가 대규모 스케일업에서 겹쳐 작동함을 보인 사례.</span> <a href="https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/" target="_blank" rel="noopener">신호 ↗</a> <span class="date">07-21</span></div></div>
     <div class="ir"><span class="c">Prefill 전용</span><div><span class="wh">루빈 CPX 특화 가속기·랙</span> <span class="wy">— NVIDIA가 추론을 Prefill/Decode로 분리하고, 컨텍스트 처리(Prefill) 전담 칩 CPX를 별도 출시. 단계 분리가 하드웨어 제품으로 실현된 사례.</span> <a href="https://newsletter.semianalysis.com/p/another-giant-leap-the-rubin-cpx-specialized-accelerator-rack" target="_blank" rel="noopener">뉴스레터 ↗</a> <span class="date">25-09-10</span></div></div>
@@ -294,12 +310,12 @@
   </section>
 
   <div class="legend">
-    <span><span class="dot" style="background:var(--accent)"></span>구조적 효율화 (메모리·FLOPs 절감)</span>
-    <span><span class="dot" style="background:var(--warn)"></span>병렬 처리 (여러 GPU 분산)</span>
-    <span><span class="dot" style="background:var(--att)"></span>Attention 블록 · Prefill</span>
-    <span><span class="dot" style="background:var(--mlp)"></span>MLP 블록 · Decode</span>
+    <span><span class="dot" style="background:var(--accent)"></span>1부 구조적 (모델 · 메모리·FLOPs 절감)</span>
+    <span><span class="dot" style="background:var(--warn)"></span>2부 병렬 (인프라 · GPU 분산)</span>
+    <span><span class="dot" style="background:var(--att)"></span>Attention · Prefill</span>
+    <span><span class="dot" style="background:var(--mlp)"></span>MLP · Decode</span>
   </div>
-  <div class="foot">국면(학습·추론) → 계층 → 분할·계보·병렬 → 물리·정밀도 → 종합 한 장. "실제 신호" = 우리 ① 소셜 피드 링크. 블로그·기술 노트·세미나 자료로 바로 재사용 가능.</div>
+  <div class="foot">큰 그림(학습·추론) → 1부 AI 모델(계층·기법) → 2부 인프라(병렬·랙·정밀도) → 종합 한 장. "실제 신호" = 우리 ① 소셜 피드 링크. 블로그·기술 노트·세미나 자료로 바로 재사용 가능.</div>
 </main>
 <script>try{var t=localStorage.getItem('theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </body>
