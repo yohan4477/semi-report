@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>개념 지도 — AI 학습·추론과 계층·병렬화</title>
+<title>개념 지도 — AI와 그 인프라 구조</title>
 <style>
   :root{
     --bg:#f7f8fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6577; --line:#e3e7ee;
@@ -99,9 +99,9 @@
   <div class="eyebrow">
     <span class="chip arch">개념</span>
     <span class="chip src">레퍼런스</span>
-    <span>AI 학습·추론 → 계층 → 병렬화 · 2026-07-24 정리</span>
+    <span>AI 모델 → 인프라 구조 · 2026-07-24 정리</span>
   </div>
-  <h1>AI 모델은 학습과 추론으로 나뉜다 — 그 안에서 무엇을, 어떤 단위로 나누느냐가 GQA·TP·MoE·EP를 가른다</h1>
+  <h1>AI와 그 인프라 구조 — 학습·추론에서 계층·병렬화, GPU 랙까지 한 장에</h1>
   <p class="lede">출발점은 두 국면 — <b>학습(Training)</b>과 <b>추론(Inference, 다시 Prefill·Decode)</b>. 국면마다 병목이 다르고, 그 병목을 푸는 게 모델을 나누는 기법들(구조적 GQA·MoE, 병렬 TP·EP)이다. 아래는 위에서 아래로 — 큰 국면 → 계층 구조 → 나누는 기법 → 물리·정밀도 → 한 장 통합.</p>
 
   <section>
