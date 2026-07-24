@@ -66,7 +66,11 @@
   .sig .srci{flex:none; width:17px; height:17px; margin-top:3px; border-radius:5px; overflow:hidden;}
   .sig .srci svg{width:17px; height:17px; display:block;}
   .sig .t{font-weight:600; font-size:.9rem;}
-  .sig .d{color:var(--sub); font-size:.8rem;}
+  .sig .d{color:var(--sub); font-size:.8rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .sig .d.clamped{cursor:pointer;}
+  .sig .d.clamped::after{content:"⋯ 더보기"; display:block; color:var(--accent); font-size:.72rem; font-weight:600; margin-top:1px;}
+  .sig .d.exp{-webkit-line-clamp:unset; overflow:visible;}
+  .sig .d.exp.clamped::after{content:"접기"; color:var(--sub);}
   .nl .day{margin-top:4px;}
   .nl .day h3{margin:0; padding-bottom:0; border-bottom:none;}
   .nl .sig{padding:5px 0;}
@@ -571,4 +575,19 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCoMod
 document.querySelectorAll('.relb').forEach(function(b){b.addEventListener('click',function(){var list=b.parentElement.querySelector('.rell');var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(list)list.classList.toggle('open',!open);});});
 
 document.querySelectorAll('.moreb').forEach(function(b){var m=b.nextElementSibling,n=b.dataset.n,t=b.querySelector('.mtxt');b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(m)m.classList.toggle('open',!open);if(t)t.textContent=open?('더 보기 · 나머지 '+n+'개 신호'):'접기';});});
+
+(function(){
+  function mark(){
+    document.querySelectorAll('.sig .d:not(.exp):not(.clamped)').forEach(function(d){
+      if(d.offsetParent && d.scrollHeight - d.clientHeight > 2) d.classList.add('clamped');
+    });
+  }
+  document.addEventListener('click', function(e){
+    var d=e.target.closest && e.target.closest('.sig .d');
+    if(d && d.classList.contains('clamped')){ d.classList.toggle('exp'); e.stopPropagation(); }
+    setTimeout(mark,0);
+  });
+  if(document.readyState==="loading") document.addEventListener('DOMContentLoaded',mark); else mark();
+  window.addEventListener('load',mark);
+})();
 </script>
