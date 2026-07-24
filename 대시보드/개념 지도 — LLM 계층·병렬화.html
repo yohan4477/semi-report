@@ -142,6 +142,7 @@
       <span class="st" style="border-color:var(--warn);"><span style="color:var(--warn);">Pod</span> <span class="sd">스케일아웃</span></span><span class="ar" style="margin:0;">→</span>
       <span class="st">팩토리</span>
     </div><span class="modhint">클릭 ▾</span></div>
+    <div class="rail mod" data-d="mem"><b>메모리 소비 · 전 구간</b><span>가중치(정적) · KV 캐시(동적 — 컨텍스트×배치)</span><span class="modhint">클릭 ▾</span></div>
     <div class="rail mod" data-d="prec"><b>정밀도 · 전 구간</b><span>FP32 → BF16 → FP8 → FP4</span><span class="modhint">클릭 ▾</span></div>
     <div class="box-caption">파란=구조적(모델 효율화) · 주황=병렬(인프라 분산) — 모듈 클릭 시 아래에 상세·문서·신호</div>
   </section>
@@ -246,6 +247,20 @@
       <div class="relbox"><div class="rl">📄 관련 문서</div><div class="docs"><!--DOCS:prec--><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260401%5D%20Nvidia%20Blackwell%20%ED%95%B4%EB%B6%80%20-%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%2C%20PTX%20%EB%AA%85%EB%A0%B9%EC%96%B4%2C%20SASS%2C%20%ED%94%8C%EB%A1%9C%EC%96%B4%EC%8A%A4%EC%9C%84%ED%94%84%2C%20%EC%88%98%EC%9C%A8.md" target="_blank" rel="noopener">Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener">베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener">InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251128%5D%20TPUv7%20-%20%EA%B5%AC%EA%B8%80%2C%20AI%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%EC%99%95%EC%A2%8C%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener">TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251009%5D%20InferenceMAX%20-%20%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4%20%EC%B6%94%EB%A1%A0%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%82%B9.md" target="_blank" rel="noopener">InferenceMAX - 오픈소스 추론 벤치마킹</a> · <a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250910%5D%20%EB%A3%A8%EB%B9%88%20CPX%20%ED%8A%B9%ED%99%94%20%EA%B0%80%EC%86%8D%EA%B8%B0%EC%99%80%20%EB%9E%99%20-%20%EB%98%90%20%ED%95%98%EB%82%98%EC%9D%98%20%EA%B1%B0%EB%8C%80%ED%95%9C%20%EB%8F%84%EC%95%BD.md" target="_blank" rel="noopener">루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약</a><!--/DOCS:prec--></div>
         <div class="sigs">관련 신호: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7483732333850935296/" target="_blank" rel="noopener">2.8T FP4로도 단일 B200 불가 ↗</a></div>
       </div>
+    </div>
+
+    <div class="dpanel" id="d-mem">
+      <h3 class="dh">메모리 소비 — 가중치(정적) vs KV 캐시(동적)</h3>
+      <p class="note" style="margin-bottom:11px;">추론 중 GPU HBM을 채우는 건 크게 <b>둘</b>. 이 둘의 합이 배치 크기·컨텍스트 한계와 <b>Decode 대역폭 병목</b>을 정한다.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>구성</th><th>성격</th><th>크기 결정</th><th>줄이는 법</th></tr></thead>
+        <tbody>
+          <tr><td><b>Model Weight</b><br>가중치</td><td>정적 — 요청과 무관, 항상 상주 (<span class="tag s">고정비</span>)</td><td>파라미터 수 × 비트폭<br>(예: 1.6T FP4 ≈ 800GB)</td><td>양자화(FP8·FP4) · MoE(활성 파라미터↓)</td></tr>
+          <tr><td><b>KV Cache</b></td><td>동적 — 토큰마다 누적, 요청별 (<span class="tag p">변동비</span>)</td><td>레이어 × 2 × K/V차원 × <b>컨텍스트 × 배치</b> × 비트폭</td><td>GQA·MLA(K/V 압축) · 선형/SSM(상태 고정) · 양자화</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:10px;">가중치는 한 번 올리면 끝인 <b>고정비</b>, KV 캐시는 긴 컨텍스트·큰 배치일수록 폭증하는 <b>변동비</b>. 그래서 어텐션 계보(MHA→MLA→선형)와 양자화는 모두 <b>가중치·KV를 HBM 대역폭 안에 욱여넣는</b> 싸움이다. 용량이 한 GPU를 넘으면 <span class="tag p">TP</span>·스케일업(NVL72)으로 분산.</p>
+      <p class="note">연결 — <b>가중치</b>: <span class="tag p">TP</span>(레이어 가중치 분할)·MoE로 다룸(② MLP). <b>KV 캐시</b>: 어텐션 변종·<span class="tag p">SP</span>(시퀀스 분할)로 다룸(① Attention). 정밀도(FP4)는 둘 다에 작용.</p>
     </div>
   </section>
 
