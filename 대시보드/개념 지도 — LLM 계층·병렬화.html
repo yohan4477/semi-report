@@ -90,6 +90,12 @@
   .dpanel.on{display:block; animation:fade .18s ease; background:var(--card); border:1px solid var(--accent); border-radius:10px; padding:13px 15px; margin:6px 0 12px;}
   @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
   .dpanel h3.dh{margin:0 0 10px; font-size:1rem; color:var(--accent);}
+  details.cheat{background:var(--card); border:1px dashed var(--line); border-radius:12px; padding:0 17px; margin-bottom:14px;}
+  details.cheat>summary{cursor:pointer; list-style:none; padding:14px 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); font-weight:700;}
+  details.cheat>summary::-webkit-details-marker{display:none;}
+  details.cheat>summary::before{content:"▸ ";}
+  details.cheat[open]>summary::before{content:"▾ ";}
+  details.cheat[open]{padding-bottom:15px; border-style:solid;}
   .relbox{margin-top:13px; padding-top:11px; border-top:1px solid var(--line);}
   .relbox .rl{font-size:.7rem; font-weight:800; color:var(--sub); text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px;}
   .relbox .docs a, .relbox .sigs a{color:var(--accent); text-decoration:none; font-size:.83rem;}
@@ -264,8 +270,8 @@
     </div>
   </div>
 
-  <section style="border-color:var(--accent);">
-    <h2 style="color:var(--accent);">★ 종합 한 장 — AI 모델 × 인프라</h2>
+  <details class="cheat">
+    <summary>★ 종합 치트시트 — AI 모델 × 인프라 한 장 (펼치기)</summary>
     <p class="note" style="margin-bottom:12px;">4개 축이 직교 — <b>블록</b>(Attn/MLP) · <b>유형</b>(<span class="tag s">구조적</span>/<span class="tag p">병렬</span>) · <b>단계</b>(학습/Prefill/Decode) · <b>네트워크</b>(스케일업/아웃).</p>
     <div class="scroll"><table>
       <thead><tr><th>핵심 단계</th><th>기법</th><th>블록·대상</th><th>유형</th><th>물리</th><th>목적 한 줄</th></tr></thead>
@@ -280,7 +286,7 @@
         <tr><td><b>장문</b></td><td>SP</td><td>시퀀스 (토큰축)</td><td><span class="tag p">병렬</span></td><td>업+아웃</td><td>컨텍스트 길이 확장</td></tr>
       </tbody>
     </table></div>
-  </section>
+  </details>
 
   <div class="legend">
     <span><span class="dot" style="background:var(--accent)"></span>구조적 (모델 · 메모리·FLOPs 절감)</span>
