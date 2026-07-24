@@ -223,7 +223,9 @@
     text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
   }
   .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
   .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
   section[id] { scroll-margin-top:58px; }
   @media (max-width:560px) {
     .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
@@ -831,5 +833,22 @@
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{rootMargin:'0px 0px -6% 0px', threshold:0.06});
   document.querySelectorAll('.ucard').forEach(function(c){ io.observe(c); });
+})();
+/* 섹션 점프 내비 현재위치 표시(scrollspy) */
+(function(){
+  var links={};
+  document.querySelectorAll('.sec-nav a').forEach(function(a){ links[a.getAttribute('href').slice(1)]=a; });
+  var secs=[].slice.call(document.querySelectorAll('section[id]'));
+  if(!secs.length) return;
+  function setActive(id){ for(var k in links) links[k].classList.toggle('active', k===id); }
+  var spy=new IntersectionObserver(function(es){
+    var vis=es.filter(function(e){ return e.isIntersecting; });
+    if(vis.length){
+      vis.sort(function(a,b){ return a.boundingClientRect.top-b.boundingClientRect.top; });
+      setActive(vis[0].target.id);
+    }
+  },{rootMargin:'-58px 0px -75% 0px', threshold:0});
+  secs.forEach(function(s){ spy.observe(s); });
+  setActive(secs[0].id);
 })();
 </script>
