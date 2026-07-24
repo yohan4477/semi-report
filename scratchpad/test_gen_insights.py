@@ -14,3 +14,21 @@ def test_md_to_html_headings_bullets_bold():
     html = g.md_to_html('## 공통 진단\n- 첫째 **강조**\n- 둘째\n')
     assert '<h4>공통 진단</h4>' in html
     assert '<li>첫째 <b>강조</b></li>' in html
+
+CARD = '<div class="ucard"><h2>이란 전쟁 <span>(1부)</span></h2></div>'
+
+def test_inject_card_ids_adds_anchor_and_map():
+    out, m = g.inject_card_ids(CARD)
+    assert 'id="card-이란-전쟁-1부"' in out
+    assert m['이란 전쟁 (1부)'] == '#card-이란-전쟁-1부'
+
+def test_inject_card_ids_idempotent():
+    out1, _ = g.inject_card_ids(CARD)
+    out2, _ = g.inject_card_ids(out1)
+    assert out1 == out2
+
+def test_resolve_sources_matches_and_warns():
+    _, m = g.inject_card_ids(CARD)
+    ok, miss = g.resolve_sources(['이란 전쟁 (1부)', '없는 카드'], m)
+    assert ok == [('이란 전쟁 (1부)', '#card-이란-전쟁-1부')]
+    assert miss == ['없는 카드']

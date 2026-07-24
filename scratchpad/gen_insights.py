@@ -44,3 +44,40 @@ def md_to_html(body):
             out.append('<p>%s</p>' % _inline(line.strip()))
     if in_ul: out.append('</ul>')
     return '\n'.join(out)
+
+def _text_of(h2_inner):
+    return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', h2_inner)).strip()
+
+def card_titles(html):
+    return [_text_of(m) for m in re.findall(r'<h2>(.*?)</h2>', html, re.DOTALL)]
+
+def inject_card_ids(html):
+    id_map = {}
+    seen = {}
+    def repl(m):
+        inner = m.group(1)
+        title = _text_of(inner)
+        if title in id_map:
+            return m.group(0)
+        base = 'card-' + slugify(title)
+        sid = base
+        n = seen.get(base, 0)
+        if n: sid = '%s-%d' % (base, n + 1)
+        seen[base] = n + 1
+        id_map[title] = '#' + sid
+        return '<h2 id="%s">%s</h2>' % (sid, inner)
+    def keep(m):
+        sid, inner = m.group(1), m.group(2)
+        id_map[_text_of(inner)] = '#' + sid
+        return m.group(0)
+    html = re.sub(r'<h2 id="([^"]+)">(.*?)</h2>', keep, html, flags=re.DOTALL)
+    html = re.sub(r'<h2>(.*?)</h2>', repl, html, flags=re.DOTALL)
+    return html, id_map
+
+def resolve_sources(titles, id_map):
+    ok, miss = [], []
+    for t in titles:
+        key = re.sub(r'\s+', ' ', t).strip()
+        if key in id_map: ok.append((t, id_map[key]))
+        else: miss.append(t)
+    return ok, miss
