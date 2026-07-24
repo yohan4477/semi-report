@@ -112,7 +112,16 @@
       "WebFetch(domain:www.youtube.com)",
       "Bash(tasklist)",
       "Bash(*)",
-      "Skill(loop)"
+      "Skill(loop)",
+      "Skill(claude-in-chrome)",
+      "PowerShell(Invoke-Item *)",
+      "WebFetch(domain:developer.nvidia.com)",
+      "WebFetch(domain:nvdam.widen.net)",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:youtu.be)",
+      "PowerShell($f=\"대시보드\\\\소스 타임라인.html\"; $lines=Get-Content $f -TotalCount 186; $ev=$lines[184]; Write-Output \\(\"LEN=\"+$ev.Length\\); Write-Output $ev.Substring\\(0,900\\))",
+      "WebSearch"
     ]
   }
 }
