@@ -89,7 +89,8 @@
   .dpanel{display:none;}
   .dpanel.on{display:block; animation:fade .18s ease; background:var(--card); border:1px solid var(--accent); border-radius:10px; padding:13px 15px; margin:6px 0 12px;}
   @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
-  .dpanel h3.dh{margin:0 0 10px; font-size:1rem; color:var(--accent);}
+  .dpanel h3.dh{margin:0 0 8px; font-size:1rem; color:var(--accent);}
+  .dpanel .def{font-size:.92rem; font-weight:700; color:var(--ink); border-left:3px solid var(--accent); padding-left:10px; margin:0 0 12px; line-height:1.5;}
   details.cheat{background:var(--card); border:1px dashed var(--line); border-radius:12px; padding:0 17px; margin-bottom:14px;}
   details.cheat>summary{cursor:pointer; list-style:none; padding:14px 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); font-weight:700;}
   details.cheat>summary::-webkit-details-marker{display:none;}
@@ -173,6 +174,7 @@
 
     <div class="dpanel" id="d-jang">
       <h3 class="dh">국면 — 학습 vs 추론, Prefill vs Decode</h3>
+      <p class="def">어느 국면·단계냐가 병목을 정한다 — 학습·Prefill은 연산(FLOPs), Decode는 메모리 대역폭.</p>
       <p class="note" style="margin-bottom:11px;">AI 모델을 쓰는 방식은 두 국면. 추론은 다시 두 단계로 쪼개진다. <b>어느 국면·단계냐</b>가 병목과 핵심 기법을 정한다.</p>
       <div class="scroll"><table>
         <thead><tr><th>국면·단계</th><th>연산 방식</th><th>병목</th><th>핵심 기법</th></tr></thead>
@@ -190,6 +192,7 @@
 
     <div class="dpanel" id="d-attn">
       <h3 class="dh">① Attention — 토큰 간 맥락, KV를 줄이는 진화</h3>
+      <p class="def">토큰 간(가로) 맥락 연산. 계보 전체가 KV 캐시를 줄이는 방향 — MHA→MQA→GQA→MLA→선형.</p>
       <p class="note" style="margin-bottom:11px;"><b>Inter-token</b> 정보 교환 — 문장 내 다른 모든 토큰을 둘러봐 맥락을 잡는다. 나누는 단위는 <b>Head</b>.</p>
       <div class="tech"><div class="tt">MHA / GQA <span class="tag s">구조적</span></div><div class="td"><b>MHA</b>: Q·K·V Head 1:1:1. <b>GQA</b>: 여러 Query Head가 1개 K/V Head 그룹 공유 → KV Cache 메모리 절감.</div></div>
       <div class="tech"><div class="tt">TP · Tensor Parallel <span class="tag p">병렬</span></div><div class="td">연산을 <b>Head 단위</b>로 쪼개 여러 GPU가 동시 수행 (예: 32 Head → 4 GPU가 8개씩).</div></div>
@@ -212,6 +215,7 @@
 
     <div class="dpanel" id="d-mlp">
       <h3 class="dh">② MLP / FFN — 토큰 내부 가공, Dense에서 MoE로</h3>
+      <p class="def">토큰 내부(세로) 특징 가공. Dense→MoE로 파라미터 용량은 키우되 실제 FLOPs는 라우팅으로 절감.</p>
       <p class="note" style="margin-bottom:11px;"><b>Intra-token</b> 특징 변환 — 각 토큰이 독립적으로 지식·의미를 깊게 가공. 나누는 단위는 <b>Expert</b>.</p>
       <div class="tech"><div class="tt">Dense <span class="tag" style="background:var(--line);color:var(--sub);">기존</span></div><div class="td">모든 토큰이 단 하나의 거대한 MLP 가중치를 통과.</div></div>
       <div class="tech"><div class="tt">MoE · Mixture of Experts <span class="tag s">구조적</span></div><div class="td">MLP를 통째로 여러 개 복사해 독립 <b>Expert</b>로 분할. Router가 토큰별 1~2개만 선택 → 파라미터 용량↑, 실제 FLOPs는 절감.</div></div>
@@ -223,6 +227,7 @@
 
     <div class="dpanel" id="d-par">
       <h3 class="dh">병렬화 완전체 — 5D 병렬</h3>
+      <p class="def">학습·대규모 추론은 DP·TP·PP·EP·SP 5개 축을 겹쳐 쓴다 — 각기 다른 축·통신·무대.</p>
       <p class="note" style="margin-bottom:11px;">TP·EP는 병렬의 일부. 학습·대규모 추론은 아래 <b>5개 축을 겹쳐서</b> 쓴다.</p>
       <div class="scroll"><table>
         <thead><tr><th>병렬</th><th>나누는 축</th><th>통신 패턴</th><th>주 무대</th></tr></thead>
@@ -242,6 +247,7 @@
 
     <div class="dpanel" id="d-phys">
       <h3 class="dh">물리 계층 — GPU → 랙 → 클러스터, 스케일업 vs 스케일아웃</h3>
+      <p class="def">NVLink로 묶인 랙(NVL72) 안은 스케일업, 랙 밖은 스케일아웃 — 이 경계가 병렬 기법을 가른다.</p>
       <p class="note" style="margin-bottom:11px;"><b>NVLink로 묶인 랙(NVL72) 안</b>은 스케일업, <b>랙과 랙 사이</b>는 스케일아웃. 이 경계가 병렬 기법이 갈리는 선.</p>
       <div class="tree" style="margin-bottom:13px;">
         <div class="node"><span class="k">AI 팩토리 (데이터센터)</span> <span class="d">— Pod 여러 개</span></div>
@@ -262,6 +268,7 @@
 
     <div class="dpanel" id="d-prec">
       <h3 class="dh">정밀도·양자화 — FP16 → FP4</h3>
+      <p class="def">비트를 줄여 메모리·대역폭·용량을 산다 — FP32→BF16→FP8→FP4, Decode 대역폭 병목에 특효.</p>
       <p class="note" style="margin-bottom:11px;">비트↓ = 메모리·대역폭·용량↓, 처리량↑. <b>Decode</b>(대역폭 병목)에 특효. 학습 BF16/FP8, 추론 FP8/FP4.</p>
       <div class="chain" style="margin-bottom:11px;"><span class="st">FP32 <span class="sd">기준</span></span><span class="ar">→</span><span class="st">BF16 <span class="sd">학습 표준</span></span><span class="ar">→</span><span class="st">FP8 <span class="sd">Hopper~</span></span><span class="ar">→</span><span class="st">FP4 <span class="sd">NVFP4·MXFP · Blackwell·Rubin</span></span></div>
       <p class="note">품질 손실은 <b>블록 스케일링</b>(MXFP)·LUT로 방어. 단 비트를 줄여도 <b>용량</b>은 남는다 — Kimi K3 2.8T는 FP4로 눌러도 단일 B200에 안 들어가 NVL72급 필요. Rubin은 NVFP4 50PFLOPS.</p>
@@ -272,6 +279,7 @@
 
     <div class="dpanel" id="d-mem">
       <h3 class="dh">메모리 소비 — 가중치(정적) vs KV 캐시(동적)</h3>
+      <p class="def">추론 메모리 = 가중치(정적·고정비) + KV 캐시(동적·변동비). 이 둘이 배치·컨텍스트 한계를 정한다.</p>
       <p class="note" style="margin-bottom:11px;">추론 중 GPU HBM을 채우는 건 크게 <b>둘</b>. 이 둘의 합이 배치 크기·컨텍스트 한계와 <b>Decode 대역폭 병목</b>을 정한다.</p>
       <div class="scroll"><table>
         <thead><tr><th>구성</th><th>성격</th><th>크기 결정</th><th>줄이는 법</th></tr></thead>
