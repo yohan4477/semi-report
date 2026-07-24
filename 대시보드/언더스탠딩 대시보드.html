@@ -183,8 +183,23 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .ucard { transition:border-color .15s ease, box-shadow .15s ease; }
-    .ucard:hover { border-color:var(--ink-3); box-shadow:0 4px 18px rgba(25,21,18,.07); }
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(25,21,18,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
   }
 
 </style>
@@ -487,3 +502,14 @@
     </div>
   </footer>
 </div>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.body.classList.add('anim');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -6% 0px', threshold:0.06});
+  document.querySelectorAll('.ucard').forEach(function(c){ io.observe(c); });
+})();
+</script>
