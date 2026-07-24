@@ -87,7 +87,7 @@
   #detail{scroll-margin-top:8px;}
   #dhint{color:var(--sub); font-size:.86rem; text-align:center; padding:14px 8px;}
   .dpanel{display:none;}
-  .dpanel.on{display:block; animation:fade .18s ease;}
+  .dpanel.on{display:block; animation:fade .18s ease; background:var(--card); border:1px solid var(--accent); border-radius:10px; padding:13px 15px; margin:6px 0 12px;}
   @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
   .dpanel h3.dh{margin:0 0 10px; font-size:1rem; color:var(--accent);}
   .relbox{margin-top:13px; padding-top:11px; border-top:1px solid var(--line);}
@@ -147,8 +147,7 @@
     <div class="box-caption">파란=구조적(모델 효율화) · 주황=병렬(인프라 분산) — 모듈 클릭 시 아래에 상세·문서·신호</div>
   </section>
 
-  <section id="detail">
-    <div id="dhint">▲ 위 지도에서 <b>모듈을 클릭</b>하면 여기에 상세·관련 문서·신호가 열립니다.</div>
+  <div id="detail" style="display:contents">
 
     <div class="dpanel" id="d-jang">
       <h3 class="dh">국면 — 학습 vs 추론, Prefill vs Decode</h3>
@@ -262,7 +261,7 @@
       <p class="note" style="margin-top:10px;">가중치는 한 번 올리면 끝인 <b>고정비</b>, KV 캐시는 긴 컨텍스트·큰 배치일수록 폭증하는 <b>변동비</b>. 그래서 어텐션 계보(MHA→MLA→선형)와 양자화는 모두 <b>가중치·KV를 HBM 대역폭 안에 욱여넣는</b> 싸움이다. 용량이 한 GPU를 넘으면 <span class="tag p">TP</span>·스케일업(NVL72)으로 분산.</p>
       <p class="note">연결 — <b>가중치</b>: <span class="tag p">TP</span>(레이어 가중치 분할)·MoE로 다룸(② MLP). <b>KV 캐시</b>: 어텐션 변종·<span class="tag p">SP</span>(시퀀스 분할)로 다룸(① Attention). 정밀도(FP4)는 둘 다에 작용.</p>
     </div>
-  </section>
+  </div>
 
   <section style="border-color:var(--accent);">
     <h2 style="color:var(--accent);">★ 종합 한 장 — AI 모델 × 인프라</h2>
@@ -293,16 +292,15 @@
 <script>
 try{var t=localStorage.getItem('theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
 (function(){
-  var mods=document.querySelectorAll('.mod'), panels=document.querySelectorAll('.dpanel'), hint=document.getElementById('dhint');
+  var mods=document.querySelectorAll('.mod'), panels=document.querySelectorAll('.dpanel');
   mods.forEach(function(m){ m.addEventListener('click', function(){
     var id='d-'+m.dataset.d, active=m.classList.contains('active');
     mods.forEach(function(x){x.classList.remove('active');});
     panels.forEach(function(p){p.classList.remove('on');});
-    if(active){ hint.style.display=''; return; }
+    if(active){ return; }
     m.classList.add('active');
-    var p=document.getElementById(id); if(p){p.classList.add('on');}
-    hint.style.display='none';
-    document.getElementById('detail').scrollIntoView({behavior:'smooth', block:'start'});
+    var p=document.getElementById(id);
+    if(p){ m.insertAdjacentElement('afterend', p); p.classList.add('on'); }
   }); });
 })();
 </script>
