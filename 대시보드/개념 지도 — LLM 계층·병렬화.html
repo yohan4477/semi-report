@@ -96,6 +96,11 @@
   details.cheat>summary::before{content:"▸ ";}
   details.cheat[open]>summary::before{content:"▾ ";}
   details.cheat[open]{padding-bottom:15px; border-style:solid;}
+  .qfind{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:14px 0 6px; padding:9px 12px; background:var(--card); border:1px solid var(--line); border-radius:10px; position:sticky; top:6px; z-index:5;}
+  .qf-lbl{font-size:.66rem; font-weight:800; color:var(--sub); text-transform:uppercase; letter-spacing:.06em; margin-right:2px;}
+  .qf{cursor:pointer; font-family:inherit; font-size:.74rem; font-weight:600; color:var(--accent); background:var(--accent-soft); border:1px solid var(--line); border-radius:99px; padding:4px 11px;}
+  .qf:hover{border-color:var(--accent);}
+  .qf.on{background:var(--accent); color:#fff; border-color:var(--accent);}
   .relbox{margin-top:13px; padding-top:11px; border-top:1px solid var(--line);}
   .relbox .rl{font-size:.7rem; font-weight:800; color:var(--sub); text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px;}
   .relbox .docs a, .relbox .sigs a{color:var(--accent); text-decoration:none; font-size:.83rem;}
@@ -126,6 +131,17 @@
   </div>
   <h1>AI와 그 인프라 구조 — 학습·추론에서 계층·병렬화, GPU 랙까지 한 장에</h1>
   <p class="lede">아래 <b>한 장 지도</b>에서 모듈을 누르면 그 부분의 <b>상세 + 관련 문서(뉴스레터 변환본) + 관련 신호</b>가 바로 아래 열린다.</p>
+
+  <div class="qfind">
+    <span class="qf-lbl">빠른 찾기</span>
+    <button class="qf" data-jump="jang">국면</button>
+    <button class="qf" data-jump="attn">Attention</button>
+    <button class="qf" data-jump="mlp">MLP·MoE</button>
+    <button class="qf" data-jump="par">병렬 5D</button>
+    <button class="qf" data-jump="phys">물리 계층</button>
+    <button class="qf" data-jump="mem">메모리</button>
+    <button class="qf" data-jump="prec">정밀도</button>
+  </div>
 
   <section class="frame" style="border-color:var(--accent);">
     <h2 style="color:var(--accent);">★ 전체 구조 한 칸에 — 모듈을 눌러보세요</h2>
@@ -299,15 +315,22 @@
 <script>
 try{var t=localStorage.getItem('theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
 (function(){
-  var mods=document.querySelectorAll('.mod'), panels=document.querySelectorAll('.dpanel');
+  var mods=document.querySelectorAll('.mod'), panels=document.querySelectorAll('.dpanel'), qfs=document.querySelectorAll('.qf');
+  function syncQf(){ qfs.forEach(function(q){ var m=document.querySelector('.mod.active[data-d="'+q.dataset.jump+'"]'); q.classList.toggle('on', !!m); }); }
   mods.forEach(function(m){ m.addEventListener('click', function(){
     var id='d-'+m.dataset.d, active=m.classList.contains('active');
     mods.forEach(function(x){x.classList.remove('active');});
     panels.forEach(function(p){p.classList.remove('on');});
-    if(active){ return; }
+    if(active){ syncQf(); return; }
     m.classList.add('active');
     var p=document.getElementById(id);
     if(p){ m.insertAdjacentElement('afterend', p); p.classList.add('on'); }
+    syncQf();
+  }); });
+  qfs.forEach(function(q){ q.addEventListener('click', function(){
+    var m=document.querySelector('.mod[data-d="'+q.dataset.jump+'"]'); if(!m) return;
+    if(!m.classList.contains('active')) m.click();
+    m.scrollIntoView({behavior:'smooth', block:'center'});
   }); });
 })();
 </script>
