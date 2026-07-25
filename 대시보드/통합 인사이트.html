@@ -45,8 +45,61 @@
     <p class="eyebrow">크로스-문서 합성 · 발행일 기준</p>
     <h1>통합 인사이트</h1>
     <p class="lede">여러 문서가 합쳐서 말하는 것 — 주제 클러스터별로 통합 논지·공통 진단·연결·인과·상충·이견·함의를 합성하고, 근거 소스를 발행일순으로 연결합니다. 제목을 클릭해 펼치세요.</p>
-    <div class="meta"><span>클러스터 <b>5</b></span><span>소스 = 근거 provenance</span><span>as_of = 최신 근거 발행일</span></div>
+    <div class="meta"><span>클러스터 <b>9</b></span><span>소스 = 근거 provenance</span><span>as_of = 최신 근거 발행일</span></div>
   </header>
+    <details class="ins">
+      <summary>
+        <span class="cid">컴퓨트</span>
+        <span class="badge scope-semi">SemiAnalysis 코퍼스</span>
+        <span class="asof">최신 근거 2026-07-25 · 근거 16건</span>
+        <h2>컴퓨트 — 코디자인 심화와 병목의 이동</h2>
+        <p class="sub">엔비디아 칩→랙 통합, 추론 하드웨어 분화, 물리적 병목(웨이퍼·구리)이 진짜 변수</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>엔비디아 주도의 통합형 코디자인이 칩에서 랙 전체로 심화되고, 경쟁자 추격이 반복돼도 새 특화 축(프리필·디코드 전용 칩)으로 재도약하는 패턴이 굳어졌다 — 이제 경쟁 구도보다 <b>물리적 병목(TSMC 웨이퍼·구리 대역폭)</b>이 더 근본적인 변수다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>코디자인 확장(높음).</b> 텐서코어→PTX/SASS→랙(NVL72·오베론)까지 하드웨어·소프트웨어를 함께 설계하는 범위가 계속 넓어짐.</li>
+<li><b>추론 랙 분화(높음).</b> 프리필·범용디코드·초고속디코드로 서빙 하드웨어가 갈라지고(루빈 CPX 등), 추론 벤치마크(InferenceMAX/X)가 표준화됨.</li>
+<li><b>구리 장기 집권(높음).</b> 스케일업 네트워크는 구리 우선, 광학(CPO)은 점진·표준화 전환.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>코디자인이 칩→랙으로 확장 → 경쟁자(AMD MI·AWS Trainium·구글 TPU)가 랙스케일 추격에 성공 → 그러나 경쟁의 축이 '범용'에서 '특화(추론 프리필/디코드)'로 이동 → 엔비디아는 특화 칩으로 재도약.</li>
+<li>수요·성능 경쟁이 극한으로 → 병목이 전력에서 <b>실리콘 제조(TSMC 웨이퍼)·구리 대역폭</b>으로 이동 → 경쟁 승패보다 물리 한계가 로드맵을 규정.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>커스텀 실리콘 추격(중간).</b> AMD·Trainium·TPU가 랙스케일은 따라잡았으나 소프트웨어(CUDA 모트)·특화 축에서 격차 지속 여부는 열림.</li>
+<li><b>실리콘 병목 이동(중간).</b> 전력→제조로의 병목 이동은 방향은 뚜렷하나 정량 확인은 진행형.</li>
+</ul>
+<h4>함의·다음 확인 포인트</h4>
+<ul>
+<li>근본 수혜/제약 = <b>TSMC 웨이퍼·CoWoS·구리 대역폭</b> 공급망. 특화 추론 칩(프리필/디코드) 채택 속도.</li>
+<li>지켜볼 것: ① CUDA 모트가 커스텀 실리콘 추격을 얼마나 오래 막나 ② CPO(광학) 전환 시점 ③ 웨이퍼·패키징 병목이 세대 로드맵을 늦추는지.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260725%5D%20AMD%EB%8A%94%20CUDA%20%EB%AA%A8%ED%8A%B8%EB%A5%BC%20%EA%B9%B0%20%EC%88%98%20%EC%9E%88%EB%8A%94%EA%B0%80%20-%20AMD%20Advancing%20AI%202026.md" target="_blank" rel="noopener"><span class="sd">2026-07-25</span>AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260723%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20NVL72%20vs%20GB200%20NVL72%20-%20%EC%B6%94%EB%A1%A0%20TCO%C2%B7%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener"><span class="sd">2026-07-23</span>베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260609%5D%20DeepSeek%20V4%201.6T%20Day%200%EB%B6%80%ED%84%B0%20Day%2043%EA%B9%8C%EC%A7%80%20%EC%84%B1%EB%8A%A5%20%EB%B3%80%ED%99%94%20-%20Huawei%2C%20GB300%20NVL72%2C%20MI355X%2C%20B200.md" target="_blank" rel="noopener"><span class="sd">2026-06-09</span>DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260401%5D%20Nvidia%20Blackwell%20%ED%95%B4%EB%B6%80%20-%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%2C%20PTX%20%EB%AA%85%EB%A0%B9%EC%96%B4%2C%20SASS%2C%20%ED%94%8C%EB%A1%9C%EC%96%B4%EC%8A%A4%EC%9C%84%ED%94%84%2C%20%EC%88%98%EC%9C%A8.md" target="_blank" rel="noopener"><span class="sd">2026-04-01</span>Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260324%5D%20GTC%202026%20-%20%EC%B6%94%EB%A1%A0%20%EC%99%95%EA%B5%AD%EC%9D%98%20%ED%99%95%EC%9E%A5.md" target="_blank" rel="noopener"><span class="sd">2026-03-24</span>GTC 2026 - 추론 왕국의 확장</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260313%5D%20AI%20%EC%8B%A4%EB%A6%AC%EC%BD%98%20%EB%8C%80%EB%9E%80%20-%20TSMC%20N3%EB%B6%80%ED%84%B0%20%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B9%8C%EC%A7%80.md" target="_blank" rel="noopener"><span class="sd">2026-03-13</span>AI 실리콘 대란 - TSMC N3부터 메모리까지</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md" target="_blank" rel="noopener"><span class="sd">2026-02-26</span>베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260216%5D%20InferenceX%20v2%20-%20Nvidia%20Blackwell%20vs%20AMD%20vs%20Hopper.md" target="_blank" rel="noopener"><span class="sd">2026-02-16</span>InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260114%5D%20CFET%201%2C000%EA%B0%9C%EC%99%80%20SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4%20%EC%B0%A8%EC%84%B8%EB%8C%80%20%EB%82%B8%EB%93%9C%20-%20IEDM%202025%20%EC%B4%9D%EC%A0%95%EB%A6%AC.md" target="_blank" rel="noopener"><span class="sd">2026-01-14</span>CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251204%5D%20AWS%20Trainium3%20%EB%94%A5%EB%8B%A4%EC%9D%B4%EB%B8%8C%20-%20%EB%8B%A4%EA%B0%80%EC%98%A4%EB%8A%94%20%EC%9E%A0%EC%9E%AC%EC%A0%81%20%EB%8F%84%EC%A0%84%EC%9E%90.md" target="_blank" rel="noopener"><span class="sd">2025-12-04</span>AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251128%5D%20TPUv7%20-%20%EA%B5%AC%EA%B8%80%2C%20AI%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%EC%99%95%EC%A2%8C%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2025-11-28</span>TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B251009%5D%20InferenceMAX%20-%20%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4%20%EC%B6%94%EB%A1%A0%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%82%B9.md" target="_blank" rel="noopener"><span class="sd">2025-10-09</span>InferenceMAX - 오픈소스 추론 벤치마킹</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250910%5D%20%EB%A3%A8%EB%B9%88%20CPX%20%ED%8A%B9%ED%99%94%20%EA%B0%80%EC%86%8D%EA%B8%B0%EC%99%80%20%EB%9E%99%20-%20%EB%98%90%20%ED%95%98%EB%82%98%EC%9D%98%20%EA%B1%B0%EB%8C%80%ED%95%9C%20%EB%8F%84%EC%95%BD.md" target="_blank" rel="noopener"><span class="sd">2025-09-10</span>루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250820%5D%20H100%20vs%20GB200%20NVL72%20%ED%95%99%EC%8A%B5%20%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC%20-%20%EC%A0%84%EB%A0%A5%2C%20TCO%2C%20%EC%8B%A0%EB%A2%B0%EC%84%B1%20%EB%B6%84%EC%84%9D.md" target="_blank" rel="noopener"><span class="sd">2025-08-20</span>H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250623%5D%20NVIDIA%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%20%EC%A7%84%ED%99%94%20-%20Volta%EC%97%90%EC%84%9C%20Blackwell%EA%B9%8C%EC%A7%80.md" target="_blank" rel="noopener"><span class="sd">2025-06-23</span>NVIDIA 텐서 코어 진화 - Volta에서 Blackwell까지</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250613%5D%20AMD%20Advancing%20AI%20-%20MI350X%EC%99%80%20MI400%20UALoE72%2C%20MI500%20UAL256.md" target="_blank" rel="noopener"><span class="sd">2025-06-13</span>AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256</a>
+      </div>
+    </details>
     <details class="ins">
       <summary>
         <span class="cid">D-AI전력</span>
@@ -137,6 +190,86 @@
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%ED%98%B8%EB%A5%B4%EB%AC%B4%EC%A6%88%20%EB%A7%89%ED%9E%88%EC%9E%90%2010%EC%A1%B0%20%EB%8F%88%EB%B2%BC%EB%9D%BD%20%EB%A7%9E%EC%9D%80%20%ED%95%9C%EA%B5%AD%EC%84%A0%EC%82%AC%20%282%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-03-18</span>호르무즈 막히자 10조 돈벼락 맞은 한국선사 (2부)</a>
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EB%8C%80%EB%A7%8C%20LNG%20%EC%B4%88%EB%B9%84%EC%83%81%2C%20%ED%95%9C%EA%B5%AD%EB%A7%8C%20%EC%97%AC%EC%9C%A0%EB%A1%9C%EC%9A%B4%20%EC%9D%B4%EC%9C%A0%20%281%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-03-17</span>대만 LNG 초비상, 한국만 여유로운 이유 (1부)</a>
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%AF%B8%EA%B5%B0%EC%9D%80%20%EC%9D%B4%EB%9E%80%20%EB%AF%B8%EC%82%AC%EC%9D%BC%20%EC%A7%80%EC%98%A5%EC%97%90%20%EB%B9%A0%EC%A1%8C%EB%82%98.md" target="_blank" rel="noopener"><span class="sd">2026-03-06</span>미군은 이란 미사일 지옥에 빠졌나</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">냉각</span>
+        <span class="badge scope-semi">SemiAnalysis 코퍼스</span>
+        <span class="asof">최신 근거 2026-07-02 · 근거 2건</span>
+        <h2>냉각 — 물을 열원에 더 가깝게</h2>
+        <p class="sub">냉각판 밀착(DLC)에서 칩 내장형 마이크로플루이딕으로 진화(아직 시제품)</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>냉각은 냉각판 밀착(DLC, Direct-to-Chip)에서 <b>칩 내장형 마이크로플루이딕 냉각</b>(TSMC·마이크로소프트 시제품)으로 진화하고 있다 — "물을 열원에 더 가깝게"라는 흐름은 일관되나 아직 시제품 단계라 확신도는 중간이다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>DLC 주류화.</b> 랙 레벨 액체냉각(Vertiv·Schneider 등)이 표준으로 자리 잡음(데이터센터 해부학 Part 2의 출발점).</li>
+<li><b>열원 근접화 방향.</b> 냉각판 밀착 → 패키지/칩 배면 미세채널로 물을 더 가깝게.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>전력 밀도·발열 상승(루빈 세대) → 공랭·냉각판 한계 → <b>칩 내장형 마이크로플루이딕</b>으로 이동: TSMC가 CoWoS-R 배면에 마이크로필러로 8LPM 5.3kW 방열, MS가 GH200에 미세채널 식각해 열저항 50%↓(6개월 신뢰성 데이터 공개).</li>
+<li>열계면 소재(갈륨 액체금속 TIM·나노결정 다이아몬드)도 함께 진화.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>마이크로플루이딕 전환(중간).</b> 방향은 일관되나 아직 시제품 — 양산 신뢰성·수율·비용은 미확인.</li>
+</ul>
+<h4>함의·다음 확인 포인트</h4>
+<ul>
+<li>수혜 = DLC 공급망(Vertiv·Schneider)과, 성숙 시 마이크로플루이딕·첨단 TIM 소재.</li>
+<li>지켜볼 것: ① 마이크로플루이딕 시제품→양산 전환 시점 ② 신뢰성(막힘·누수) 데이터 축적 ③ 열계면 소재 상용화.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener"><span class="sd">2026-07-02</span>ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/cooling/%5B250214%5D%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%ED%95%B4%EB%B6%80%ED%95%99%20Part%202%20-%20%EB%83%89%EA%B0%81%20%EC%8B%9C%EC%8A%A4%ED%85%9C.md" target="_blank" rel="noopener"><span class="sd">2025-02-14</span>데이터센터 해부학 Part 2 - 냉각 시스템</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">메모리</span>
+        <span class="badge scope-semi">SemiAnalysis 코퍼스</span>
+        <span class="asof">최신 근거 2026-07-02 · 근거 6건</span>
+        <h2>메모리 — HBM이 부른 구조적 공급 부족</h2>
+        <p class="sub">HBM 수요가 커먼디티 DRAM 여력까지 잠식, SK하이닉스 우위·NAND 선두 교체</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>HBM 수요가 커먼디티 DRAM 생산 여력까지 잠식하는 <b>구조적 공급 부족</b> 국면 — SK하이닉스의 HBM 우위가 가장 확실하고, NAND는 밀도 선두가 샌디스크·키오시아로 교체되는 중이다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>공급 부족 심화(높음).</b> 40년 만의 메모리 붐 — HBM 물량이 늘수록 범용 DRAM 캐파가 줄어 전체가 타이트.</li>
+<li><b>HBM4 물량 격차(높음).</b> SK하이닉스가 HBM4 물량·수율에서 선두, 격차가 세대에서 벌어짐.</li>
+<li><b>NAND 선두 교체(높음).</b> 밀도 경쟁에서 샌디스크·키오시아가 앞서고, 장비 축(도쿄일렉트론 vs 램리서치)도 재편.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>AI 컴퓨트 수요 폭증 → HBM 수요 급증 → HBM에 웨이퍼·패키징 캐파 배분 → <b>커먼디티 DRAM 여력까지 잠식</b> → 전 메모리 가격·부족 심화.</li>
+<li>세대 전환(HBM4·400단+ NAND) → 물량·수율 선두가 재판정 → SK하이닉스 우위 굳고, NAND 선두 교체.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>3사+중국 증설(중간).</b> 삼성 기술 추격·증설 속도는 관찰 변수.</li>
+<li><b>중국 HBM 자립(낮음).</b> CXMT의 DRAM 도전은 진행형이나 HBM 자립까진 거리.</li>
+</ul>
+<h4>함의·다음 확인 포인트</h4>
+<ul>
+<li>수혜 = <b>SK하이닉스(HBM4)</b>, 샌디스크·키오시아(NAND 밀도), 커스텀 HBM·EMIB-T 패키징.</li>
+<li>지켜볼 것: ① 삼성 HBM4 추격 성패 ② CXMT의 실제 진입 규모 ③ 공급 부족이 세트 업체(애플 등) 조달 압박으로 번지는 강도.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260702%5D%20ECTC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20EMIB-T%20%EB%A1%9C%EB%93%9C%EB%A7%B5%2C%20%EC%BB%A4%EC%8A%A4%ED%85%80%20HBM%2C%20%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%ED%94%8C%EB%A3%A8%EC%9D%B4%EB%94%95%20%EB%83%89%EA%B0%81%2C%20%EA%B4%91%ED%95%99%20%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener"><span class="sd">2026-07-02</span>ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260623%5D%20%EC%A4%91%EA%B5%AD%20CXMT%2C%20DRAM%20%EA%B0%95%EC%9E%90%EB%93%A4%EC%97%90%20%EB%8F%84%EC%A0%84%EC%9E%A5%EC%9D%84%20%EB%82%B4%EB%B0%80%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-06-23</span>중국 CXMT, DRAM 강자들에 도전장을 내밀다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260416%5D%20ISSCC%202026%20%EC%B4%9D%EC%A0%95%EB%A6%AC%20-%20HBM4%2C%20LPDDR6%2C%20CPO%2C%20%EC%95%A1%ED%8B%B0%EB%B8%8C%20LSI%20%EB%93%B1%20%EC%B0%A8%EC%84%B8%EB%8C%80%20%EB%A9%94%EB%AA%A8%EB%A6%AC%C2%B7%EC%9D%B8%ED%84%B0%EC%BB%A4%EB%84%A5%ED%8A%B8.md" target="_blank" rel="noopener"><span class="sd">2026-04-16</span>ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B260207%5D%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%A7%88%EB%8B%88%EC%95%84%20-%2040%EB%85%84%20%EB%A7%8C%EC%9D%98%20%EA%B3%B5%EA%B8%89%20%EB%B6%80%EC%A1%B1%EC%9D%B4%20%EB%B6%80%EB%A5%B4%EB%8A%94%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%B6%90.md" target="_blank" rel="noopener"><span class="sd">2026-02-07</span>메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B250812%5D%20HBM%20%EB%A1%9C%EB%93%9C%EB%A7%B5%20-%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EB%B2%BD%EC%9D%84%20%EB%84%98%EB%8A%94%20HBM%EC%9D%98%20%EB%B6%80%EC%83%81%EA%B3%BC%20%EB%AF%B8%EB%9E%98.md" target="_blank" rel="noopener"><span class="sd">2025-08-12</span>HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/memory/%5B230717%5D%20%EB%82%B8%EB%93%9C%ED%94%8C%EB%9E%98%EC%8B%9C%20%EB%8F%85%EC%A0%90%20%EA%B7%A0%EC%97%B4%20-%20%EB%8F%84%EC%BF%84%EC%9D%BC%EB%A0%89%ED%8A%B8%EB%A1%A0%20vs%20%EB%9E%A8%EB%A6%AC%EC%84%9C%EC%B9%98.md" target="_blank" rel="noopener"><span class="sd">2023-07-17</span>낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치</a>
       </div>
     </details>
     <details class="ins">
@@ -272,6 +405,47 @@
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EC%A4%91%EB%8F%99%EC%82%B0%20%EA%B8%B0%EB%A6%84%2C%20%EB%AF%B8%EA%B5%AD%EC%82%B0%EC%9C%BC%EB%A1%9C%20%EB%8C%80%EC%B2%B4%EA%B0%80%20%EC%96%B4%EB%A0%A4%EC%9A%B4%20%EC%9D%B4%EC%9C%A0.md" target="_blank" rel="noopener"><span class="sd">2026-04-22</span>중동산 기름, 미국산으로 대체가 어려운 이유</a>
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%A0%84%EC%9F%81%20%EB%81%9D%EB%82%98%EB%8F%84%20%EA%B3%84%EC%86%8D%20%EA%B0%84%EB%8B%A4%2C%20%EA%B0%80%EA%B2%A9%EB%B3%B4%EB%8B%A4%20%EC%A4%91%EC%9A%94%ED%95%9C%20%EC%97%90%EB%84%88%EC%A7%80%20%EB%AF%B9%EC%8A%A4%EC%99%80%20%EC%9E%90%EC%9B%90%20%ED%99%95%EB%B3%B4%20%EC%A0%84%EC%9F%81.md" target="_blank" rel="noopener"><span class="sd">2026-03-15</span>전쟁 끝나도 계속 간다, 가격보다 중요한 에너지 믹스와 자원 확보 전쟁</a>
         <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%AF%B8%EA%B5%AD%EC%9D%B4%20%EB%B2%A0%EB%84%A4%EC%88%98%EC%97%98%EB%9D%BC%EB%A5%BC%20%EC%B9%9C%20%EA%B1%B4%2C%20%EC%BA%90%EB%82%98%EB%8B%A4%20%EB%95%8C%EB%AC%B8%EC%9D%B4%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-01-07</span>미국이 베네수엘라를 친 건, 캐나다 때문이다</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">AI모델</span>
+        <span class="badge scope-semi">SemiAnalysis 코퍼스</span>
+        <span class="asof">최신 근거 2026-04-25 · 근거 4건</span>
+        <h2>AI 모델 — 에이전트 인프라의 산업화</h2>
+        <p class="sub">과업 지평선 배증·RL 환경 산업화·멀티에이전트, 승자와 자동화 범위는 열린 변수</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>에이전트 인프라(과업 지평선 배증 가속·RL 환경 산업화·멀티에이전트 오케스트레이션)는 반복·가속이 확인되며 방향에 확신도가 높다 — 다만 "자동화냐 증강이냐"와 "앤트로픽 vs OpenAI 최종 승자"는 아직 열린 변수다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>과업 지평선 가속(높음).</b> 에이전트가 다룰 수 있는 과업 길이가 배증 속도로 늘어남(Claude Code 변곡점).</li>
+<li><b>RL 산업화(높음).</b> RL 환경·데이터 파운드리가 공정화되고, 보상 해킹 대응이 표준 과제로.</li>
+<li><b>토큰 효율·연산 제약 성장(높음).</b> 코딩 어시스턴트가 토큰을 더 쓰는 방향, 성장은 연산 공급이 좌우.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>에이전트 유효성 상승(과업 지평선) → 토큰 소비·연산 수요 급증 → 인프라(NVL72급)에 호재 → RL 환경 산업화가 데이터·컴퓨트를 다시 끌어올림.</li>
+<li>멀티에이전트 오케스트레이션 확산 → RL 데이터 파운드리·보상 설계가 경쟁 축으로.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>자동화 vs 증강(낮음).</b> 에이전트가 사람을 대체하냐 보강하냐는 아직 미결.</li>
+<li><b>최종 승자(열림).</b> 앤트로픽 vs OpenAI의 구도는 반복되나 승부는 안 남.</li>
+</ul>
+<h4>함의·다음 확인 포인트</h4>
+<ul>
+<li>수혜 = 에이전트/RL 인프라·컴퓨트 공급(연산 제약이 성장의 상한).</li>
+<li>지켜볼 것: ① 과업 지평선 배증이 지속되는지 ② RL 환경 산업화가 실측 성능으로 이어지는지 ③ 자동화 범위의 실제 확장 폭.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/agents/%5B260425%5D%20%EC%BD%94%EB%94%A9%20%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8%20%ED%95%B4%EB%B6%80%20-%20%ED%86%A0%ED%81%B0%EC%9D%84%20%EB%8D%94%20%EC%A3%BC%EC%84%B8%EC%9A%94.md" target="_blank" rel="noopener"><span class="sd">2026-04-25</span>코딩 어시스턴트 해부 - 토큰을 더 주세요</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/agents/%5B260206%5D%20Claude%20Code%2C%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%20%EC%8B%9C%EB%8C%80%EC%9D%98%20%EB%B3%80%EA%B3%A1%EC%A0%90.md" target="_blank" rel="noopener"><span class="sd">2026-02-06</span>Claude Code, 에이전트 시대의 변곡점</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/rl/%5B260107%5D%20RL%20%ED%99%98%EA%B2%BD%EA%B3%BC%20%EA%B3%BC%ED%95%99%EC%9D%84%20%EC%9C%84%ED%95%9C%20RL%20-%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%8C%8C%EC%9A%B4%EB%93%9C%EB%A6%AC%EC%99%80%20%EB%A9%80%ED%8B%B0%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md" target="_blank" rel="noopener"><span class="sd">2026-01-07</span>RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_models/rl/%5B250609%5D%20%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5%28RL%29%20%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81%20-%20%ED%99%98%EA%B2%BD%2C%20%EB%B3%B4%EC%83%81%20%ED%95%B4%ED%82%B9%2C%20%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%2C%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81.md" target="_blank" rel="noopener"><span class="sd">2025-06-09</span>강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링</a>
       </div>
     </details>
   <footer>인사이트 아키텍처(insights/) 산출물 — manifest(소스·발행일)+clusters(provenance)에서 생성. 클러스터 확신도·시계열은 근거 소스로 검증하세요.</footer>
