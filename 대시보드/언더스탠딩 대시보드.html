@@ -208,6 +208,24 @@
     .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
   }
 
+  /* ── 통합 인사이트 ── */
+  #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
+  .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; padding:20px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+  .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
+  .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
+  .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
+  .ins-body h4 { font-size:12.5px; font-weight:800; color:var(--accent-ink); margin:14px 0 6px;
+    text-transform:uppercase; letter-spacing:.04em; }
+  .ins-body p { font-size:14.5px; color:var(--ink); line-height:1.6; margin:0 0 8px; }
+  .ins-body ul { margin:0 0 8px; padding-left:18px; }
+  .ins-body li { font-size:13.5px; color:var(--ink-2); line-height:1.58; margin-bottom:4px; }
+  .ins-src-label { font-size:10.5px; font-weight:800; color:var(--ink-3); margin:14px 0 6px; }
+  .ins-srcs { display:flex; flex-wrap:wrap; gap:6px; }
+  .ins-srcs a { font-size:11.5px; padding:5px 10px; border-radius:999px; background:var(--sunk);
+    border:1px solid var(--line); color:var(--ink-2); text-decoration:none; }
+  .ins-srcs a:hover { border-color:var(--accent); color:var(--accent); }
+
   /* ── 섹션 점프 내비 ── */
   .sec-nav {
     position:sticky; top:0; z-index:20;
