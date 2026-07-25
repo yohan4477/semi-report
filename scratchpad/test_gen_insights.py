@@ -32,3 +32,15 @@ def test_resolve_sources_matches_and_warns():
     ok, miss = g.resolve_sources(['이란 전쟁 (1부)', '없는 카드'], m)
     assert ok == [('이란 전쟁 (1부)', '#card-이란-전쟁-1부')]
     assert miss == ['없는 카드']
+
+def test_render_block_has_thesis_and_source_chip():
+    fm = {'cluster_id': 'A', 'title': '이란 전쟁', 'subtitle': '부제', 'sources': ['이란 전쟁 (1부)']}
+    _, m = g.inject_card_ids(CARD)
+    html, miss = g.render_block(fm, '## 통합 논지\n한 줄.\n', m)
+    assert '이란 전쟁' in html and '한 줄.' in html
+    assert 'href="#card-이란-전쟁-1부"' in html
+    assert miss == []
+
+def test_strip_section_idempotent():
+    wrapped = 'A<!-- INSIGHTS:START -->x<!-- INSIGHTS:END -->B'
+    assert g.strip_section(wrapped) == 'AB'

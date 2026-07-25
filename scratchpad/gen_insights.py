@@ -81,3 +81,63 @@ def resolve_sources(titles, id_map):
         if key in id_map: ok.append((t, id_map[key]))
         else: miss.append(t)
     return ok, miss
+
+def render_block(fm, body, id_map):
+    ok, miss = resolve_sources(fm.get('sources', []), id_map)
+    chips = '\n'.join(
+        '        <a class="ins-src" href="%s">%s</a>' % (href, re.sub(r'\s*\(.*?\)\s*$', '', t))
+        for t, href in ok)
+    return (
+        '    <article class="ins-card" id="ins-%s">\n'
+        '      <span class="ins-id">%s</span>\n'
+        '      <h3>%s</h3>\n'
+        '      <p class="ins-sub">%s</p>\n'
+        '      <div class="ins-body">\n%s\n      </div>\n'
+        '      <p class="ins-src-label">근거 카드</p>\n'
+        '      <div class="ins-srcs">\n%s\n      </div>\n'
+        '    </article>' % (
+            fm.get('cluster_id', ''), fm.get('cluster_id', ''),
+            fm.get('title', ''), fm.get('subtitle', ''),
+            md_to_html(body), chips)
+    ), miss
+
+def build_section(mds, id_map):
+    blocks, misses = [], []
+    for fm, body in sorted(mds, key=lambda x: x[0].get('cluster_id', '')):
+        h, miss = render_block(fm, body, id_map)
+        blocks.append(h); misses += miss
+    sec = (
+        '<!-- INSIGHTS:START -->\n'
+        '  <section id="sec-insights">\n'
+        '    <div class="sec-head"><span class="sec-num">🧭</span>'
+        '<h2 class="sec-title">통합 인사이트</h2></div>\n'
+        '    <p class="sec-sub">여러 문서가 합쳐서 말하는 것 — 주제별 크로스-문서 합성</p>\n'
+        + '\n'.join(blocks) + '\n  </section>\n'
+        '<!-- INSIGHTS:END -->\n\n')
+    return sec, misses
+
+def strip_section(html):
+    return re.sub(r'<!-- INSIGHTS:START -->.*?<!-- INSIGHTS:END -->(?:\n\n)?', '', html, flags=re.DOTALL)
+
+def main():
+    html = io.open(DASH, encoding='utf-8').read()
+    html = strip_section(html)
+    html, id_map = inject_card_ids(html)
+    mds = []
+    for p in sorted(glob.glob(os.path.join(INS_DIR, '*.md'))):
+        raw = io.open(p, encoding='utf-8').read()
+        m = re.match(r'^---\n(.*?)\n---\n(.*)$', raw, re.DOTALL)
+        mds.append((parse_front_matter(m.group(1)), m.group(2)))
+    if not mds:
+        io.open(DASH, 'w', encoding='utf-8').write(html)
+        print('통합 md 없음 — 섹션 스킵'); return
+    sec, misses = build_section(mds, id_map)
+    chip = '    <a href="#sec-insights">🧭 통합인사이트 <b>%d</b></a>\n' % len(mds)
+    html = re.sub(r'(<nav class="sec-nav">\n)', r'\1' + chip, html, count=1)
+    html = re.sub(r'(  <nav class="sec-nav">)', sec + r'\1', html, count=1)
+    io.open(DASH, 'w', encoding='utf-8').write(html)
+    print('OK: 클러스터 %d개' % len(mds))
+    if misses: print('경고 미매칭 sources:', misses)
+
+if __name__ == '__main__':
+    main()
