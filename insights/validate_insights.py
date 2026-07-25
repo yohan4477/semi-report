@@ -1,5 +1,6 @@
 # provenance 무결성 검사
 import os, io, json, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # repo root 실행 대응
 import coverage as cov
 
 ROOT = r"C:\Users\y\semianalysis"
