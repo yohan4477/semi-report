@@ -42,3 +42,46 @@ def test_scan_ids_and_excludes_통합(tmp_path):
     cool = next(s for s in out if s['id'] == 'semi:cooling:냉각')
     assert cool['corpus'] == 'semianalysis' and cool['date'] == '2025-02-14'
     assert cool['path'] == 'content/newsletter/ai_infra/cooling/[250214] 냉각.md'
+
+import coverage as cov
+import validate_insights as vi
+
+MAN = {'sources': [
+    {'id': 'und:oil:밥엘만데브', 'category': 'oil', 'hash': 'h1'},
+    {'id': 'und:oil:하르그섬', 'category': 'oil', 'hash': 'h2'},
+    {'id': 'semi:robotics:unitree', 'category': 'robotics', 'hash': 'h3'},
+]}
+
+def test_parse_cluster_frontmatter():
+    md = '---\ncluster_id: A\ncategories: [oil]\nsources: ["und:oil:밥엘만데브"]\nsource_hashes: {"und:oil:밥엘만데브":"h1"}\n---\n본문'
+    c = cov.parse_cluster(md)
+    assert c['cluster_id'] == 'A' and c['categories'] == ['oil']
+    assert c['sources'] == ['und:oil:밥엘만데브']
+    assert c['source_hashes']['und:oil:밥엘만데브'] == 'h1'
+
+def test_classify_stale_new_category_source():
+    A = {'cluster_id': 'A', 'categories': ['oil'], 'sources': ['und:oil:밥엘만데브'],
+         'source_hashes': {'und:oil:밥엘만데브': 'h1'}}
+    r = cov.classify(MAN, [A])
+    assert 'A' in r['stale']
+    assert 'semi:robotics:unitree' in r['uncovered']
+
+def test_classify_stale_changed_hash():
+    A = {'cluster_id': 'A', 'categories': ['oil'],
+         'sources': ['und:oil:밥엘만데브', 'und:oil:하르그섬'],
+         'source_hashes': {'und:oil:밥엘만데브': 'OLD', 'und:oil:하르그섬': 'h2'}}
+    r = cov.classify(MAN, [A])
+    assert 'A' in r['stale']
+
+def test_classify_ok():
+    A = {'cluster_id': 'A', 'categories': ['oil'],
+         'sources': ['und:oil:밥엘만데브', 'und:oil:하르그섬'],
+         'source_hashes': {'und:oil:밥엘만데브': 'h1', 'und:oil:하르그섬': 'h2'}}
+    r = cov.classify(MAN, [A])
+    assert r['stale'] == {} and 'A' in r['ok']
+
+def test_validate_flags_missing_source():
+    A = {'cluster_id': 'A', 'categories': ['oil'], 'sources': ['und:oil:없는것'],
+         'source_hashes': {}}
+    errs = vi.validate(MAN, [A])
+    assert any('없는것' in e for e in errs)
