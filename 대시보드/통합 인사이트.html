@@ -1,0 +1,235 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통합 인사이트</title>
+<style>
+  :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05)}
+  @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#7e8798;--line:#2a3140;--accent:#7aa5f8;--accent2:#9ab8fa;--soft:#1e2a44;--sunk:#242b38;--shadow:none}}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.64;margin:0;padding:0 20px 80px}
+  .wrap{max-width:860px;margin:0 auto}
+  header{padding:52px 0 6px}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h1{font-size:clamp(28px,6vw,44px);font-weight:850;letter-spacing:-.035em;margin:0}
+  h1::after{content:"";display:block;width:52px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
+  .lede{color:var(--sub);font-size:15px;margin:16px 0 0;max-width:62ch}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
+  .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:18px 22px;margin-top:14px;box-shadow:var(--shadow)}
+  .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:28px}
+  .ins>summary::-webkit-details-marker{display:none}
+  .ins>summary::after{content:"⌄";position:absolute;right:2px;top:-2px;font-size:22px;color:var(--faint);transition:transform .2s}
+  .ins[open]>summary::after{transform:rotate(180deg)}
+  .ins[open]>summary{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:8px}
+  .cid{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.04em;padding:2px 8px;border-radius:999px;margin-left:8px}
+  .scope-und{background:var(--soft);color:var(--accent2)}
+  .scope-semi{background:#e8f6ec;color:#1d6e45}
+  .scope-both{background:#f6ecda;color:#9a5b12}
+  @media (prefers-color-scheme:dark){.scope-semi{background:#173323;color:#63c08c}.scope-both{background:#2a2113;color:#d79a4e}}
+  .asof{float:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums;margin-top:2px}
+  .ins h2{font-size:21px;font-weight:850;letter-spacing:-.02em;margin:6px 0 2px}
+  .ins .sub{font-size:13.5px;color:var(--faint);margin:0}
+  .body h4{font-size:12.5px;font-weight:800;color:var(--accent2);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+  .body p{font-size:14.5px;line-height:1.62;margin:0 0 8px}
+  .body ul{margin:0 0 8px;padding-left:18px}
+  .body li{font-size:13.5px;color:var(--sub);line-height:1.58;margin-bottom:4px}
+  .body b{color:var(--ink)}
+  .srclabel{font-size:10.5px;font-weight:800;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 7px}
+  .srcs{display:flex;flex-wrap:wrap;gap:6px}
+  .src{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;padding:5px 11px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);color:var(--sub);text-decoration:none;max-width:100%}
+  .src:hover{border-color:var(--accent);color:var(--accent)}
+  .src .sd{font-size:10px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  footer{margin-top:44px;padding-top:16px;border-top:2px solid var(--ink);font-size:12px;color:var(--faint);line-height:1.7}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">크로스-문서 합성 · 발행일 기준</p>
+    <h1>통합 인사이트</h1>
+    <p class="lede">여러 문서가 합쳐서 말하는 것 — 주제 클러스터별로 통합 논지·공통 진단·연결·인과·상충·이견·함의를 합성하고, 근거 소스를 발행일순으로 연결합니다. 제목을 클릭해 펼치세요.</p>
+    <div class="meta"><span>클러스터 <b>4</b></span><span>소스 = 근거 provenance</span><span>as_of = 최신 근거 발행일</span></div>
+  </header>
+    <details class="ins">
+      <summary>
+        <span class="cid">D-AI전력</span>
+        <span class="badge scope-und">제3자 해설</span>
+        <span class="asof">최신 근거 2026-07-24 · 근거 4건</span>
+        <h2>AI·반도체가 부른 전력 수요</h2>
+        <p class="sub">메모리 슈퍼사이클이 전력 병목을 만들고, 호남 반도체 산단이 그 시험대</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>AI는 반도체 수요를, 반도체는 전력 수요를 폭증시킨다. 이 사슬이 미국에선 '에너지 캠퍼스'를, 한국에선 '호남 반도체 산단'을 낳았다 — 그리고 두 곳 모두 <b>진짜 병목은 실리콘이 아니라 전력·용수·송전망</b>이라는 같은 결론에 도달한다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>AI 데이터센터·반도체 펩은 기존과 다른 전력 부하.</b> 0.1초에 200MW→1.9GW로 튀는 '혈당 스파이크', 24시간 균질 수요 — 기존 전력망 기술로 감당 불가.</li>
+<li><b>메모리가 사이클 산업에서 안정 이익 산업으로 리레이팅.</b> 마이크론 SCA 장기계약·영업이익률 70~80%, 시장 2,000억→8,000억 달러(2030) → 증설 경쟁이 곧 전력 수요.</li>
+<li><b>병목은 전력.</b> 미국도 한국도 실리콘보다 전기·용수·송전망을 못 대서 막힌다.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>메모리 슈퍼사이클(반도체룰) → 삼성·하이닉스 증설 가속 + 정부의 호남 제2 거점(호남 펩) → 6.3GW 전력을 어떻게 대나가 핵심.</li>
+<li>미국은 발전소를 옆에 직접 짓고 AI가 실시간 조율(에너지 캠퍼스·오케스트레이터)로 뚫음(미국DC) → 한국 호남은 재생+BESS냐 한빛 원전 증설이냐로 갈림.</li>
+<li>4년 완공 공약(호남 4년완공) → 부지·용수는 몰라도 6.3GW를 재생으로 4년 내 받치는 건 비현실적 → 그래서 '원전이 구세주'(호남 원전)라는 결론.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>호남 전력 해법</b>: 태양광+BESS(정부) vs 한빛 원전 2기 증설(현실론) — 후자가 송전망·요금 부담이 덜하나 신규 원전은 4년 내 불가.</li>
+<li><b>4년 완공 가능성</b>: 정부 "할 수 있다" vs 대다수 "불가능"(TSMC 가오슝도 실제 6년, 규모는 호남의 1/5).</li>
+<li><b>AI 거품 논쟁</b>: 수요는 진짜(오픈AI CFO "병목은 컴퓨팅 공급")라는 시각 vs 롤러코스터 리스크.</li>
+</ul>
+<h4>한국 함의</h4>
+<ul>
+<li>반도체 경쟁력은 이제 <b>전력 인프라 경쟁력</b> — 값싸고 안정적인 전기를 못 대면 산단은 껍데기.</li>
+<li>호남 산단은 한국 에너지믹스(원전+재생+송전망+ESS) 전체의 시험대이자, [[C-재생전환-진짜비용]]의 딜레마가 현실로 부딪히는 현장.</li>
+<li>미국식 '에너지 캠퍼스+AI 오케스트레이터' 모델은 규제·전력망 비공개 탓에 한국에선 아직 회색지대 — SK·GS가 유력 주자.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EB%AF%B8%EA%B5%AD%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%A0%84%EB%A0%A5%EB%82%9C%20%EC%9D%B4%EA%B1%B8%EB%A1%9C%20%EB%9A%AB%EC%97%88%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-07-24</span>미국 데이터센터 전력난 이걸로 뚫었다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%ED%98%B8%EB%82%A8%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%EC%82%B0%EB%8B%A8%2C%204%EB%85%84%20%EB%A7%8C%EC%97%90%20%EC%99%84%EA%B3%B5%20%EA%B0%80%EB%8A%A5%ED%95%A0%EA%B9%8C.md" target="_blank" rel="noopener"><span class="sd">2026-07-08</span>호남 반도체 산단, 4년 만에 완공 가능할까</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%ED%98%B8%EB%82%A8%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%ED%8E%A9%2C%20%EC%9B%90%EC%A0%84%EC%9D%B4%20%EA%B5%AC%EC%84%B8%EC%A3%BC%EC%9E%85%EB%8B%88%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-07-01</span>호남 반도체 펩, 원전이 구세주입니다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%9D%B4%EC%84%A0%EC%97%BD%20%EB%8C%80%ED%91%9C/%EB%B0%98%EB%8F%84%EC%B2%B4%20%EB%A3%B0%EC%9D%B4%20%EB%B0%94%EB%80%8C%EC%97%88%EB%8B%A4%20%EC%A3%BC%EA%B0%80%20%EC%9E%AC%ED%8F%89%EA%B0%80%20%EC%8B%9C%EC%9E%91%EB%90%90%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-06-26</span>반도체 룰이 바뀌었다 주가 재평가 시작됐다</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">A-이란전쟁</span>
+        <span class="badge scope-und">제3자 해설</span>
+        <span class="asof">최신 근거 2026-07-22 · 근거 8건</span>
+        <h2>이란 전쟁과 원유 수급 충격</h2>
+        <p class="sub">해협 하나가 막히자 유가·해운·LNG·방산까지 번진 연쇄</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>이란 전쟁은 '유가 이벤트'가 아니라 <b>물리적 병목의 연쇄</b>다. 호르무즈 한 곳이 선택적으로 막히자 충격은 유가→해운운임→LNG→요격미사일 재고→아시아 식량까지 옆으로 번졌고, 봉쇄를 풀거나 뚫는 것보다 <b>시설 파괴·재고 소진 같은 비가역 손상</b>이 진짜 위험으로 드러났다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>가격보다 물량 단절이 본질.</b> 유가 급등은 표면이고, 실제 타격은 특정 항로·시설로 나가던 물량이 통째로 사라지는 데서 온다(호르무즈 2,000만 배럴/일, 하르그 이란 수출 90%).</li>
+<li><b>봉쇄는 되돌릴 수 있어도 파괴는 못 되돌린다.</b> 해협은 뚫리면 끝이지만, 카타르 라스라판·이란 하르그·유전 셧인은 수년간 공급을 지운다.</li>
+<li><b>재고·요격미사일 같은 '버퍼'가 승부처.</b> 사우디 PAC-3 2,800→400발, 카타르 요격 재고 나흘치처럼, 전쟁의 향방은 물량이 아니라 <b>비축 소진 속도</b>가 가른다.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>호르무즈 봉쇄 → 사우디가 홍해 얀부로 700만 배럴 우회 → 그래서 밥 엘-만데브(홍해 입구)까지 막히면 <b>우회로 자체가 소멸</b>(A의 여러 문서가 한 사슬).</li>
+<li>이란은 호르무즈를 '선택 봉쇄'해 중국엔 계속 팔며 전쟁자금(예산 35%)을 댐 → 미국이 그 돈줄 하르그를 때림 → 이란은 2만 달러 드론으로 400만 달러 요격미사일을 소모시키는 <b>가성비 소모전</b>으로 응수.</li>
+<li>유조선 운임 5배 폭등 → 위기 직전 VLCC를 사둔 한국 선사가 반사이익(호르무즈선사) — 같은 충격이 누구에겐 재난, 누구엔 돈벼락.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>이란 셧인이 치명적이냐</b>에 이견: 노후 유전 영구감소 20~30% 주장 vs 압력 회복으로 오히려 잘 나올 수 있다는 반론.</li>
+<li><b>미국의 득실</b>: 하르그 물량은 세계 소비 1.3%라 때려도 손해 적다는 계산 vs 유가·물가 역풍.</li>
+<li>한국의 실제 원유수입은 -7.9%로 선방했지만(대만 LNG·호르무즈선사), 사우디 비중 32%가 남아 밥 엘-만데브까지 막히면 서방 진영만 기름줄이 끊긴다.</li>
+</ul>
+<h4>한국 함의</h4>
+<ul>
+<li>위기는 '가격'이 아니라 '경로'에서 온다 — 호르무즈·홍해·수에즈 <b>다중 경로 리스크</b>를 함께 봐야 한다.</li>
+<li>정부의 "9월까진 문제없다"는 재고 기준일 뿐, 시설 파괴·장기 봉쇄 시 버퍼가 빠르게 마른다.</li>
+<li>대만은 저장률 8%·중동 의존 최악으로 반도체 생산까지 위협 — 동아시아 공급망 전체의 병목이 곧 우리 문제.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%ED%98%B8%EB%A5%B4%EB%AC%B4%EC%A6%88%20%EB%A7%89%ED%9E%88%EB%8A%94%20%EA%B2%83%EB%B3%B4%EB%8B%A4%2C%20%EB%8D%94%20%ED%81%B0%EC%9D%BC%EC%9D%B4%20%EC%83%9D%EA%B8%B4%EB%8B%A4%EA%B3%A0.md" target="_blank" rel="noopener"><span class="sd">2026-07-22</span>호르무즈 막히는 것보다, 더 큰일이 생긴다고</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%9D%B4%EB%9E%80%20%EC%A0%84%EC%9F%81%20%EC%98%A4%EB%8A%98%20%EB%81%9D%EB%82%98%EB%8F%84%20%EC%9C%A0%EA%B0%80%209%EC%9B%94%EA%B9%8C%EC%A7%80%20%EB%9B%B4%EB%8B%A4%20%281%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-06-02</span>이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부)</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%AF%B8%EA%B5%AD%EC%9D%98%20%EC%84%9D%EC%9C%A0%20%EC%B9%98%ED%82%A8%EA%B2%8C%EC%9E%84...%EC%9D%B4%EB%9E%80%EC%9D%B4%20%EB%B6%88%EB%A6%AC%ED%95%9C%20%EC%9D%B4%EC%9C%A0.md" target="_blank" rel="noopener"><span class="sd">2026-05-06</span>미국의 석유 치킨게임...이란이 불리한 이유</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/15%EC%96%B5%20%EC%9D%B8%EA%B5%AC%20%EB%B0%A5%20%EB%AA%BB%20%EC%A7%93%EB%8A%94%EB%8B%A4%2C%20%EC%9D%B8%EB%8F%84%20%EB%8D%AE%EC%B9%9C%20%EB%B9%84%EC%83%81%EC%82%AC%ED%83%9C%20%283%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-03-19</span>15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부)</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%ED%98%B8%EB%A5%B4%EB%AC%B4%EC%A6%88%20%ED%95%B4%ED%98%91%20%EB%B4%89%EC%87%84%20%EB%A7%9E%EB%B6%88...%20%ED%95%98%EB%A5%B4%EA%B7%B8%EC%84%AC%20%EB%AD%90%EA%B8%B8%EB%9E%98.md" target="_blank" rel="noopener"><span class="sd">2026-03-18</span>호르무즈 해협 봉쇄 맞불... 하르그섬 뭐길래</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%ED%98%B8%EB%A5%B4%EB%AC%B4%EC%A6%88%20%EB%A7%89%ED%9E%88%EC%9E%90%2010%EC%A1%B0%20%EB%8F%88%EB%B2%BC%EB%9D%BD%20%EB%A7%9E%EC%9D%80%20%ED%95%9C%EA%B5%AD%EC%84%A0%EC%82%AC%20%282%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-03-18</span>호르무즈 막히자 10조 돈벼락 맞은 한국선사 (2부)</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EB%8C%80%EB%A7%8C%20LNG%20%EC%B4%88%EB%B9%84%EC%83%81%2C%20%ED%95%9C%EA%B5%AD%EB%A7%8C%20%EC%97%AC%EC%9C%A0%EB%A1%9C%EC%9A%B4%20%EC%9D%B4%EC%9C%A0%20%281%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-03-17</span>대만 LNG 초비상, 한국만 여유로운 이유 (1부)</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%AF%B8%EA%B5%B0%EC%9D%80%20%EC%9D%B4%EB%9E%80%20%EB%AF%B8%EC%82%AC%EC%9D%BC%20%EC%A7%80%EC%98%A5%EC%97%90%20%EB%B9%A0%EC%A1%8C%EB%82%98.md" target="_blank" rel="noopener"><span class="sd">2026-03-06</span>미군은 이란 미사일 지옥에 빠졌나</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">C-재생비용</span>
+        <span class="badge scope-und">제3자 해설</span>
+        <span class="asof">최신 근거 2026-06-22 · 근거 7건</span>
+        <h2>재생 전환의 진짜 비용</h2>
+        <p class="sub">발전단가는 쌌지만 요금은 오른다 — 간헐성·유연성·송전망의 청구서</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>"태양광이 원전만큼 싸졌다"는 말은 <b>도매가만 본 착시</b>다. 재생 시대에 요금을 결정하는 건 발전단가가 아니라 <b>간헐성을 메우는 비용</b>(ESS)과 <b>생산지-소비지 불일치</b>(송전망), 그리고 그 시간대 가장 비싼 LNG가 정하는 SMP다. 재생 확대는 곧 요금 상승이며, 그걸 완충하는 유일한 검증된 짝이 <b>탄력운전 원전</b>이다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>가격 지표를 구분해야 한다.</b> 도매가(태양광 121원, 싸다) ≠ 생산원가 LCOE(122원) ≠ 시스템 비용 얹은 소매가(비싸다). 싸다·비싸다는 어느 층을 보느냐의 문제.</li>
+<li><b>요금은 '가장 비싼 발전기'가 정한다(SMP).</b> 원전·태양광을 아무리 돌려도, 부족분을 메우는 LNG 가격이 오르면 전기요금은 오른다.</li>
+<li><b>간헐성엔 유연성 자원이 필수.</b> LNG는 우크라이나·이란 전쟁으로 실격, 석탄은 퇴출, 원전은 탄력운전 전엔 못 받침 → 남은 건 ESS와 탄력 원전.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>태양광 3배(37→100GW) → 정오 과잉·야간 부족 심화 → ESS 없으면 못 굴림(태양광세배) → 그런데 요금 결정은 LNG(SMP)라 원전 풀가동도 소용없음(원전만으로는).</li>
+<li>독일 재생 60%는 이웃(프랑스 원전 탄력운전·노르웨이 수력)이 간헐성을 받쳐 성립(독일북유럽) → 그 부작용이 북유럽 요금 폭등·EU 탈퇴론 → <b>한국엔 받쳐줄 이웃이 없어</b> 탄력 원전이 답(프랑스·독일).</li>
+<li>생산지(호남·스코틀랜드)와 소비지(수도권·런던) 불일치 → 송전망 병목 → 지역 차등요금으로 풀려다 정치 반대로 영국 실패 → 결국 송전망 확충(서울-지방).</li>
+<li>태양광 확대 자체가 은 수요를 밀어올려 원가를 다시 압박(은 가격) — 재생 전환은 소재값까지 건드린다.</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>"태양광은 싸다" vs "결국 비싸다"</b>: 도매가 근거 vs 시스템 비용(ESS·송전) 근거. 정부는 전자, 현장 분석은 후자.</li>
+<li><b>BESS 짝꿍</b>: 세계 표준은 태양광+BESS vs 한국형은 원전+BESS(원전이 최저단가라)라는 발상 전환.</li>
+<li><b>차등요금</b>: 지산지소의 핵심 툴 vs 영국도 정치벽에 막혀 철회 — 제조업 한국은 유인 여지 있으나 수도권 표심이 관건.</li>
+</ul>
+<h4>한국 함의</h4>
+<ul>
+<li>재생을 늘리되 <b>"요금이 오른다"는 걸 국민에게 솔직히</b> 말해야 이념 대립을 피한다.</li>
+<li>값싼 유연성(탄력 원전) 확보가 재생 확대의 전제 — 신규 원전 탄력운전 의무화가 그래서 의미심장.</li>
+<li>ESS는 한국이 세계 최후발(양수 4.7GW+BESS 0.5GW) — 배터리 3사 산업정책과 맞물려 국가가 속도를 내야 한다.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%82%BC%EC%84%B1%EA%B9%8C%EC%A7%80%20%EB%9B%B0%EC%96%B4%EB%93%A4%EC%97%88%EB%8B%A4%204%EB%85%84%EB%A7%8C%EC%97%90%203%EB%B0%B0%20%EA%B8%89%EC%A6%9D%ED%95%A0%20%EC%97%90%EB%84%88%EC%A7%80%20%EC%8B%9C%EC%9E%A5.md" target="_blank" rel="noopener"><span class="sd">2026-06-22</span>삼성까지 뛰어들었다 4년만에 3배 급증할 에너지 시장</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%8B%BC%20%EC%A0%84%EA%B8%B0%20%EC%8B%9C%EB%8C%80%20%EB%81%9D%EB%82%AC%EB%8B%A4%2C%20%ED%94%84%EB%9E%91%EC%8A%A4%C2%B7%EB%8F%85%EC%9D%BC%EC%9D%98%20%EB%AF%B8%EC%B9%9C%20%EA%B2%B0%EC%A0%95%20%282%EB%B6%80%29.md" target="_blank" rel="noopener"><span class="sd">2026-06-03</span>싼 전기 시대 끝났다, 프랑스·독일의 미친 결정 (2부)</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%ED%83%9C%EC%96%91%EA%B4%91%20%EC%84%B8%EB%B0%B0%EB%A1%9C%20%EC%A0%84%EA%B8%B0%EC%9A%94%EA%B8%88%20%EC%98%A4%EB%A5%B8%EB%8B%A8%20%EC%96%98%EA%B8%B0%EC%9E%85%EB%8B%88%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-05-28</span>태양광 세배로 전기요금 오른단 얘기입니다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EC%9B%90%EC%A0%84%EB%A7%8C%EC%9C%BC%EB%A1%9C%EB%8A%94%2C%20%EC%A0%84%EA%B8%B0%EC%9A%94%EA%B8%88%20%EC%98%A4%EB%A5%B4%EB%8A%94%20%EA%B1%B0%20%EB%AA%BB%20%EB%A7%89%EC%8A%B5%EB%8B%88%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-03-25</span>원전만으로는, 전기요금 오르는 거 못 막습니다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EC%84%9C%EC%9A%B8-%EC%A7%80%EB%B0%A9%20%EB%94%B0%EB%A1%9C%20%EC%A0%84%EA%B8%B0%EC%9A%94%EA%B8%88...%20%EC%98%81%EA%B5%AD%EC%9D%80%20%EC%99%9C%20%EC%8B%A4%ED%8C%A8%ED%96%88%EC%9D%84%EA%B9%8C.md" target="_blank" rel="noopener"><span class="sd">2026-02-04</span>서울-지방 따로 전기요금... 영국은 왜 실패했을까</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EC%9D%80%20%EA%B0%80%EA%B2%A9%20%EA%B8%89%EB%93%B1%EC%9D%B4%20%ED%83%9C%EC%96%91%EA%B4%91%20%EB%95%8C%EB%AC%B8%EC%9D%B4%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-01-02</span>은 가격 급등이 태양광 때문이다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%8F%85%EC%9D%BC%20%EC%8B%A0%EC%9E%AC%EC%83%9D%20%EC%A0%84%EA%B8%B0%20%EB%95%8C%EB%AC%B8%EC%97%90%20%EB%B6%81%EC%9C%A0%EB%9F%BD%EC%9D%B4%20%EB%B9%A1%EC%B9%9C%20%EC%9D%B4%EC%9C%A0.md" target="_blank" rel="noopener"><span class="sd">2025-12-26</span>독일 신재생 전기 때문에 북유럽이 빡친 이유</a>
+      </div>
+    </details>
+    <details class="ins">
+      <summary>
+        <span class="cid">B-원유의존</span>
+        <span class="badge scope-und">제3자 해설</span>
+        <span class="asof">최신 근거 2026-05-03 · 근거 4건</span>
+        <h2>원유 의존 구조와 다변화의 벽</h2>
+        <p class="sub">왜 위기를 겪고도 중동산을 못 버리나 — 설비·지리·금융의 록인</p>
+      </summary>
+      <div class="body">
+<h4>통합 논지</h4>
+<p>원유 수급 위기의 해법으로 늘 '다변화'가 나오지만, 실제로는 <b>정제설비·지리·금융이 만든 록인(lock-in)</b> 때문에 아무도 쉽게 못 바꾼다. 한국은 중질유용 고도화 설비에, 미국은 중질유 공급을 캐나다에, 산유국은 유가에 묶여 있다 — 다변화는 구호가 아니라 수십조 원짜리 구조 문제다.</p>
+<h4>공통 진단</h4>
+<ul>
+<li><b>원유는 '기름'이 아니라 '유종'이다.</b> 경질유·중질유가 갈리고, 설비가 특정 유종에 맞춰져 있으면 다른 걸 넣는 순간 수율이 무너진다(한국 34조 고도화 설비, 미국 정제 70%가 중질유용).</li>
+<li><b>가격은 금융이 흔든다.</b> 실물보다 훨씬 큰 선물·옵션 자금(증거금 5%)이 유가를 좌우 — 미국 실물 1억 vs 금융 25억 배럴.</li>
+<li><b>자원은 이제 안보 자산.</b> 미국은 베네수엘라를 무력으로 장악해 중질유·서반구 자원을 확보('돈로 독트린'), 곧 자원 확보 경쟁이 지정학의 본판.</li>
+</ul>
+<h4>연결·인과</h4>
+<ul>
+<li>한국이 중동산 70%에 묶인 이유(싸다+가깝다) → 그 유종에 맞춰 고도화 설비 투자 → 미국산 경질유를 넣으면 설비가 논다 → <b>위기에도 중동산을 못 버림</b>(중동산대체).</li>
+<li>미국도 같은 함정 → 셰일=초경질유라 중질유는 캐나다 WCS에 전적 의존 → 미-캐 관계 악화·캐나다의 아시아 판로 개척 → <b>베네수엘라 중질유를 무력으로라도 확보</b>(베네수엘라).</li>
+<li>유가 급등락의 뿌리는 전쟁이 아니라 2013년 이후 화석연료 투자 감소(자원전쟁) → 그래서 "전쟁 끝나도 계속 간다".</li>
+</ul>
+<h4>상충·이견</h4>
+<ul>
+<li><b>다변화 가능성</b>: 유럽은 러시아→미국산 전환을 해냈다 vs 그 대가로 독일 석유제품 생산 -8.9%. 즉 '가능하지만 비싸다'.</li>
+<li><b>투자 대상</b>: 커머디티 직접투자는 비추(선물이 실물의 20~50배) vs 인프라·기술·회사에 투자하라(에너지투자100년) — 같은 화자도 '실물 말고 구조에 태워라'.</li>
+<li>캐나다·베네수엘라 대체 후보는 물량·거리·인프라 붕괴로 당장은 역부족.</li>
+</ul>
+<h4>한국 함의</h4>
+<ul>
+<li>다변화는 '어디서 사오나'가 아니라 <b>'우리 설비가 뭘 소화하나'</b> 문제 — 설비를 바꾸지 않는 한 중동 의존은 구조적으로 지속된다.</li>
+<li>90%+ 수입국인데 위기의식이 없다는 반복된 경고 — 해외 자원개발·비축·원가 연동이 3대 숙제.</li>
+<li>서반구 자원을 미국이 틀어쥐면 중국 공급망뿐 아니라 한국의 조달선택지도 좁아진다.</li>
+</ul>
+      </div>
+      <p class="srclabel">근거 소스 (발행일순)</p>
+      <div class="srcs">
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%A7%80%EA%B8%88%20%EC%97%90%EB%84%88%EC%A7%80%20%ED%88%AC%EC%9E%90%20%EB%86%93%EC%B9%98%EB%A9%B4%20100%EB%85%84%20%EC%9E%90%EC%82%B0%20%EB%B2%84%EB%A6%AC%EB%8A%94%20%EA%B2%81%EB%8B%88%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-05-03</span>지금 에너지 투자 놓치면 100년 자산 버리는 겁니다</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EC%A4%91%EB%8F%99%EC%82%B0%20%EA%B8%B0%EB%A6%84%2C%20%EB%AF%B8%EA%B5%AD%EC%82%B0%EC%9C%BC%EB%A1%9C%20%EB%8C%80%EC%B2%B4%EA%B0%80%20%EC%96%B4%EB%A0%A4%EC%9A%B4%20%EC%9D%B4%EC%9C%A0.md" target="_blank" rel="noopener"><span class="sd">2026-04-22</span>중동산 기름, 미국산으로 대체가 어려운 이유</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EA%B6%8C%ED%9A%A8%EC%9E%AC%20%EB%8C%80%ED%91%9C/%EC%A0%84%EC%9F%81%20%EB%81%9D%EB%82%98%EB%8F%84%20%EA%B3%84%EC%86%8D%20%EA%B0%84%EB%8B%A4%2C%20%EA%B0%80%EA%B2%A9%EB%B3%B4%EB%8B%A4%20%EC%A4%91%EC%9A%94%ED%95%9C%20%EC%97%90%EB%84%88%EC%A7%80%20%EB%AF%B9%EC%8A%A4%EC%99%80%20%EC%9E%90%EC%9B%90%20%ED%99%95%EB%B3%B4%20%EC%A0%84%EC%9F%81.md" target="_blank" rel="noopener"><span class="sd">2026-03-15</span>전쟁 끝나도 계속 간다, 가격보다 중요한 에너지 믹스와 자원 확보 전쟁</a>
+        <a class="src" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B0%B1%EB%B8%8C%EB%A6%AC%ED%95%91/%EB%AF%B8%EA%B5%AD%EC%9D%B4%20%EB%B2%A0%EB%84%A4%EC%88%98%EC%97%98%EB%9D%BC%EB%A5%BC%20%EC%B9%9C%20%EA%B1%B4%2C%20%EC%BA%90%EB%82%98%EB%8B%A4%20%EB%95%8C%EB%AC%B8%EC%9D%B4%EB%8B%A4.md" target="_blank" rel="noopener"><span class="sd">2026-01-07</span>미국이 베네수엘라를 친 건, 캐나다 때문이다</a>
+      </div>
+    </details>
+  <footer>인사이트 아키텍처(insights/) 산출물 — manifest(소스·발행일)+clusters(provenance)에서 생성. 클러스터 확신도·시계열은 근거 소스로 검증하세요.</footer>
+</div>
