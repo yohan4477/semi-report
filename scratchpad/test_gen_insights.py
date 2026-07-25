@@ -40,6 +40,7 @@ def test_render_block_has_thesis_and_source_chip():
     assert '이란 전쟁' in html and '한 줄.' in html
     assert 'href="#card-이란-전쟁-1부"' in html
     assert miss == []
+    assert '<details class="ins-card"' in html and '<summary>' in html  # 접이식
 
 def test_strip_section_idempotent():
     wrapped = 'A<!-- INSIGHTS:START -->x<!-- INSIGHTS:END -->B'

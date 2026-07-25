@@ -211,7 +211,14 @@
   /* ── 통합 인사이트 ── */
   #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
   .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
-    border-radius:12px; padding:20px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+    border-radius:12px; padding:18px 22px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ins-card > summary { list-style:none; cursor:pointer; display:block; position:relative; padding-right:26px; }
+  .ins-card > summary::-webkit-details-marker { display:none; }
+  .ins-card > summary::after { content:"⌄"; position:absolute; right:2px; top:-4px; font-size:20px; line-height:1; color:var(--ink-3); transition:transform .2s; }
+  .ins-card[open] > summary::after { transform:rotate(180deg); }
+  .ins-card[open] > summary { margin-bottom:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .ins-card > summary .ins-sub { margin-bottom:0; }
+  .ins-card > summary:hover h3 { color:var(--accent); }
   .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
   .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
   .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
@@ -298,11 +305,13 @@
 <!-- INSIGHTS:START -->
   <section id="sec-insights">
     <div class="sec-head"><span class="sec-num">🧭</span><h2 class="sec-title">통합 인사이트</h2></div>
-    <p class="sec-sub">여러 문서가 합쳐서 말하는 것 — 주제별 크로스-문서 합성</p>
-    <article class="ins-card" id="ins-A">
-      <span class="ins-id">A</span>
-      <h3>이란 전쟁과 원유 수급 충격</h3>
-      <p class="ins-sub">해협 하나가 막히자 유가·해운·LNG·방산까지 번진 연쇄</p>
+    <p class="sec-sub">여러 문서가 합쳐서 말하는 것 — 주제별 합성 4편 · 제목을 클릭해 펼치기</p>
+    <details class="ins-card" id="ins-A">
+      <summary>
+        <span class="ins-id">A</span>
+        <h3>이란 전쟁과 원유 수급 충격</h3>
+        <p class="ins-sub">해협 하나가 막히자 유가·해운·LNG·방산까지 번진 연쇄</p>
+      </summary>
       <div class="ins-body">
 <h4>통합 논지</h4>
 <p>이란 전쟁은 '유가 이벤트'가 아니라 <b>물리적 병목의 연쇄</b>다. 호르무즈 한 곳이 선택적으로 막히자 충격은 유가→해운운임→LNG→요격미사일 재고→아시아 식량까지 옆으로 번졌고, 봉쇄를 풀거나 뚫는 것보다 <b>시설 파괴·재고 소진 같은 비가역 손상</b>이 진짜 위험으로 드러났다.</p>
@@ -342,11 +351,13 @@
         <a class="ins-src" href="#card-대만-LNG-초비상-한국만-여유로운-이유-에너지-3부작-1부">대만 LNG 초비상, 한국만 여유로운 이유</a>
         <a class="ins-src" href="#card-15억-인구-밥-못-짓는다-인도-덮친-비상사태-에너지-3부작-3부">15억 인구 밥 못 짓는다, 인도 덮친 비상사태</a>
       </div>
-    </article>
-    <article class="ins-card" id="ins-B">
-      <span class="ins-id">B</span>
-      <h3>원유 의존 구조와 다변화의 벽</h3>
-      <p class="ins-sub">왜 위기를 겪고도 중동산을 못 버리나 — 설비·지리·금융의 록인</p>
+    </details>
+    <details class="ins-card" id="ins-B">
+      <summary>
+        <span class="ins-id">B</span>
+        <h3>원유 의존 구조와 다변화의 벽</h3>
+        <p class="ins-sub">왜 위기를 겪고도 중동산을 못 버리나 — 설비·지리·금융의 록인</p>
+      </summary>
       <div class="ins-body">
 <h4>통합 논지</h4>
 <p>원유 수급 위기의 해법으로 늘 '다변화'가 나오지만, 실제로는 <b>정제설비·지리·금융이 만든 록인(lock-in)</b> 때문에 아무도 쉽게 못 바꾼다. 한국은 중질유용 고도화 설비에, 미국은 중질유 공급을 캐나다에, 산유국은 유가에 묶여 있다 — 다변화는 구호가 아니라 수십조 원짜리 구조 문제다.</p>
@@ -382,11 +393,13 @@
         <a class="ins-src" href="#card-전쟁-끝나도-계속-간다-가격보다-에너지-믹스-자원-확보-전쟁">전쟁 끝나도 계속 간다 — 가격보다 에너지 믹스·자원 확보 전쟁</a>
         <a class="ins-src" href="#card-지금-에너지-투자-놓치면-100년-자산-버린다">지금 에너지 투자 놓치면 100년 자산 버린다</a>
       </div>
-    </article>
-    <article class="ins-card" id="ins-C">
-      <span class="ins-id">C</span>
-      <h3>재생 전환의 진짜 비용</h3>
-      <p class="ins-sub">발전단가는 쌌지만 요금은 오른다 — 간헐성·유연성·송전망의 청구서</p>
+    </details>
+    <details class="ins-card" id="ins-C">
+      <summary>
+        <span class="ins-id">C</span>
+        <h3>재생 전환의 진짜 비용</h3>
+        <p class="ins-sub">발전단가는 쌌지만 요금은 오른다 — 간헐성·유연성·송전망의 청구서</p>
+      </summary>
       <div class="ins-body">
 <h4>통합 논지</h4>
 <p>"태양광이 원전만큼 싸졌다"는 말은 <b>도매가만 본 착시</b>다. 재생 시대에 요금을 결정하는 건 발전단가가 아니라 <b>간헐성을 메우는 비용</b>(ESS)과 <b>생산지-소비지 불일치</b>(송전망), 그리고 그 시간대 가장 비싼 LNG가 정하는 SMP다. 재생 확대는 곧 요금 상승이며, 그걸 완충하는 유일한 검증된 짝이 <b>탄력운전 원전</b>이다.</p>
@@ -426,11 +439,13 @@
         <a class="ins-src" href="#card-삼성까지-뛰어들었다-4년만에-3배-급증할-에너지-시장">삼성까지 뛰어들었다 — 4년만에 3배 급증할 에너지 시장</a>
         <a class="ins-src" href="#card-은-가격-급등이-태양광-때문이다-백브리핑-텍스트">은 가격 급등이 태양광 때문이다?</a>
       </div>
-    </article>
-    <article class="ins-card" id="ins-D">
-      <span class="ins-id">D</span>
-      <h3>AI·반도체가 부른 전력 수요</h3>
-      <p class="ins-sub">메모리 슈퍼사이클이 전력 병목을 만들고, 호남 반도체 산단이 그 시험대</p>
+    </details>
+    <details class="ins-card" id="ins-D">
+      <summary>
+        <span class="ins-id">D</span>
+        <h3>AI·반도체가 부른 전력 수요</h3>
+        <p class="ins-sub">메모리 슈퍼사이클이 전력 병목을 만들고, 호남 반도체 산단이 그 시험대</p>
+      </summary>
       <div class="ins-body">
 <h4>통합 논지</h4>
 <p>AI는 반도체 수요를, 반도체는 전력 수요를 폭증시킨다. 이 사슬이 미국에선 '에너지 캠퍼스'를, 한국에선 '호남 반도체 산단'을 낳았다 — 그리고 두 곳 모두 <b>진짜 병목은 실리콘이 아니라 전력·용수·송전망</b>이라는 같은 결론에 도달한다.</p>
@@ -466,7 +481,7 @@
         <a class="ins-src" href="#card-호남-반도체-펩-원전이-구세주입니다-호남-반도체-연작">호남 반도체 펩, 원전이 구세주입니다</a>
         <a class="ins-src" href="#card-반도체-룰이-바뀌었다-주가-재평가-시작됐다">반도체 룰이 바뀌었다 주가 재평가 시작됐다</a>
       </div>
-    </article>
+    </details>
   </section>
 <!-- INSIGHTS:END -->
 
@@ -1323,6 +1338,7 @@
       </div>
     </div>
   </section>
+
 
 
 

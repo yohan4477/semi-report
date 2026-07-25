@@ -88,14 +88,16 @@ def render_block(fm, body, id_map):
         '        <a class="ins-src" href="%s">%s</a>' % (href, re.sub(r'\s*\(.*?\)\s*$', '', t))
         for t, href in ok)
     return (
-        '    <article class="ins-card" id="ins-%s">\n'
-        '      <span class="ins-id">%s</span>\n'
-        '      <h3>%s</h3>\n'
-        '      <p class="ins-sub">%s</p>\n'
+        '    <details class="ins-card" id="ins-%s">\n'
+        '      <summary>\n'
+        '        <span class="ins-id">%s</span>\n'
+        '        <h3>%s</h3>\n'
+        '        <p class="ins-sub">%s</p>\n'
+        '      </summary>\n'
         '      <div class="ins-body">\n%s\n      </div>\n'
         '      <p class="ins-src-label">근거 카드</p>\n'
         '      <div class="ins-srcs">\n%s\n      </div>\n'
-        '    </article>' % (
+        '    </details>' % (
             fm.get('cluster_id', ''), fm.get('cluster_id', ''),
             fm.get('title', ''), fm.get('subtitle', ''),
             md_to_html(body), chips)
@@ -106,14 +108,13 @@ def build_section(mds, id_map):
     for fm, body in sorted(mds, key=lambda x: x[0].get('cluster_id', '')):
         h, miss = render_block(fm, body, id_map)
         blocks.append(h); misses += miss
-    sec = (
+    head = (
         '<!-- INSIGHTS:START -->\n'
         '  <section id="sec-insights">\n'
         '    <div class="sec-head"><span class="sec-num">🧭</span>'
         '<h2 class="sec-title">통합 인사이트</h2></div>\n'
-        '    <p class="sec-sub">여러 문서가 합쳐서 말하는 것 — 주제별 크로스-문서 합성</p>\n'
-        + '\n'.join(blocks) + '\n  </section>\n'
-        '<!-- INSIGHTS:END -->\n\n')
+        '    <p class="sec-sub">여러 문서가 합쳐서 말하는 것 — 주제별 합성 %d편 · 제목을 클릭해 펼치기</p>\n' % len(mds))
+    sec = head + '\n'.join(blocks) + '\n  </section>\n<!-- INSIGHTS:END -->\n\n'
     return sec, misses
 
 def strip_section(html):
