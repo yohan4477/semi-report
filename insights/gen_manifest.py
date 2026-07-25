@@ -26,3 +26,33 @@ def body_hash(text):
 def source_id(corpus, category, filename):
     abbr = "semi" if corpus == "semianalysis" else "und"
     return "%s:%s:%s" % (abbr, category, slug(filename))
+
+def scan(bases, root=ROOT):
+    out = []
+    for base, corpus, _ in bases:
+        for p in glob.glob(os.path.join(base, '**', '*.md'), recursive=True):
+            rel = os.path.relpath(p, base).replace('\\', '/')
+            parts = rel.split('/')
+            if any(d in EXCLUDE_DIRS for d in parts[:-1]):   # 통합 등 제외
+                continue
+            category = parts[-2] if len(parts) >= 2 else 'root'
+            name = parts[-1]
+            body = io.open(p, encoding='utf-8').read()
+            out.append({
+                'id': source_id(corpus, category, name),
+                'corpus': corpus, 'category': category,
+                'date': parse_date(name, body),
+                'path': os.path.relpath(p, root).replace('\\', '/'),
+                'hash': body_hash(body),
+            })
+    return sorted(out, key=lambda s: s['id'])
+
+def main():
+    import datetime
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    data = {'generated': datetime.date.today().isoformat(), 'sources': scan(BASES)}
+    io.open(OUT, 'w', encoding='utf-8').write(json.dumps(data, ensure_ascii=False, indent=1))
+    print('OK: %d sources -> %s' % (len(data['sources']), OUT))
+
+if __name__ == '__main__':
+    main()
