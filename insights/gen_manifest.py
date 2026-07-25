@@ -15,10 +15,17 @@ def slug(filename):
     return re.sub(r'-+', '-', s).strip('-')[:60]
 
 def parse_date(filename, body):
+    # 원본 발행일 전용 — 정리일(변환일)·created·updated는 절대 사용 안 함.
+    # 1) 명시 발행일: '발행일 … YYYY-MM-DD' 또는 YAML 'published: YYYY-MM-DD'
+    m = re.search(r'(?:발행일|published)[^\n]{0,8}?(\d{4}-\d{2}-\d{2})', body)
+    if m: return m.group(1)
+    # 2) 파일명 [YYMMDD] (뉴스레터 = 발행일)
     m = re.search(r'\[(\d{2})(\d{2})(\d{2})\]', filename)
     if m: return "20%s-%s-%s" % (m.group(1), m.group(2), m.group(3))
-    m = re.search(r'^(?:published|updated):\s*(\d{4}-\d{2}-\d{2})', body, re.M)
-    return m.group(1) if m else None
+    # 3) 백브리핑 출처 줄의 날짜: '출처: … , YYYY-MM-DD'
+    m = re.search(r'출처[^\n]*?(\d{4}-\d{2}-\d{2})', body)
+    if m: return m.group(1)
+    return None
 
 def body_hash(text):
     return hashlib.sha1(text.encode('utf-8')).hexdigest()[:12]

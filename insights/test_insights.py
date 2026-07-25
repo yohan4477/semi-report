@@ -85,3 +85,13 @@ def test_validate_flags_missing_source():
          'source_hashes': {}}
     errs = vi.validate(MAN, [A])
     assert any('없는것' in e for e in errs)
+
+def test_parse_date_발행일_not_정리일():
+    body = '> **정리일** 2026-07-24 · 자막 기반 요약\n> **발행일**: 2026-05-01\n'
+    assert gm.parse_date('제목.md', body) == '2026-05-01'   # 발행일, 정리일 아님
+
+def test_parse_date_정리일만있으면_None():
+    assert gm.parse_date('제목.md', '> **정리일** 2026-07-24 · 자막 기반 요약\n') is None
+
+def test_parse_date_출처줄_날짜():
+    assert gm.parse_date('제목.md', '> 출처: 언더스탠딩 김상훈 기자(…), 2026-07-22. 요약임\n') == '2026-07-22'
