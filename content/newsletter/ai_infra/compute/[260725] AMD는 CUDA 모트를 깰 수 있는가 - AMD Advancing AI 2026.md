@@ -283,5 +283,129 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 40% 완료*
-*업데이트: 4~6장(Meta 커스텀 MI455X, Helios 네트워킹 개요, Helios 랙 아키텍처 재점검) 작성 완료*
+## 7. Helios 스케일업·스케일아웃 토폴로지와 Vulcano NIC 지능형 라우팅
+
+**📌 핵심:**
+- **스케일업(랙 내부) 연결**: 컴퓨트 트레이 18개 각각의 MI455X 4개가 UALoE 링크 36개씩(200G 이더넷 2레인 묶음)을 뻗어 GPU당 총 14.4Tbit/s 단방향 대역폭 확보 — 12개 스위치 ASIC이 GPU 72개와 전부 연결되는 1계층 평면(flat) 구조, 구리 백플레인으로 GPU당 144쌍의 차동 신호선(랙 전체로는 10,368쌍)이 필요
+- **스케일아웃(랙 밖 연결)**: GPU당 최대 3개의 AMD Pensando Vulcano 800 NIC(신경망 전용 네트워크 카드)를 연결해 2.4Tbit/s까지 확보 가능(실제 주력 구성은 NIC 2개, 1.6Tbit/s로 예상) — 13만 1천개 MI455X급 대형 클러스터에서는 8-플레인(독립 평면) 구조로 리프-스파인 스위치 6,144개가 필요, GPU당 네트워킹 부품 원가는 약 $8,000
+- **Vulcano NIC의 3대 지능형 라우팅 기법**: ① 지능형 패킷 스프레이(같은 흐름의 패킷을 여러 경로에 분산해 특정 경로 정체를 방지) ② 경로 인식 혼잡 제어(각 경로의 실시간 혼잡도를 추적해 정체 전 미리 트래픽을 이동) ③ 순서 무관 패킷 처리(경로가 여러 개라 도착 순서가 뒤섞여도 GPU 메모리에 바로 기록, 유실분만 재전송) — Nvidia ConnectX NIC + Spectrum-X 적응형 라우팅과 같은 문제를 해결하지만, AMD는 개방형 UEC(Ultra Ethernet Consortium) 표준과 다중 벤더 패브릭을 채택한다는 점이 차이
+- 결론: AI 학습 클러스터의 3대 고질병(장시간·대용량 흐름이 특정 경로를 막는 "코끼리 흐름", 흐름 종류가 적어 일부 경로만 붐비는 "저엔트로피", 그 결과로 생기는 대역폭 활용 불균형)을 네트워크 패브릭이 아니라 NIC 레벨에서 해결하는 접근 — 운영자가 이미 가진 패브릭·워크로드에 맞춰 스위치 기반/NIC 기반/소스 라우팅 중 원하는 방식을 고를 수 있어 유연성이 높음
+
+---
+
+```mermaid
+flowchart TD
+    ScaleUp["스케일업(랙 내부)"] --> Lane["GPU당 UALoE 36링크<br/>= 14.4Tbit/s 단방향"]
+    ScaleUp --> Copper["구리 백플레인:<br/>GPU당 144쌍 차동선<br/>(랙 전체 10,368쌍)"]
+
+    style Lane fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ScaleOut["스케일아웃(랙 밖)"] --> NIC["GPU당 Vulcano NIC<br/>최대 3개(2.4Tbit/s)"]
+    NIC --> Main["주력 구성: NIC 2개<br/>= 1.6Tbit/s"]
+    Main --> LargeCluster["13.1만 GPU급 클러스터:<br/>8플레인, 리프스파인<br/>스위치 6,144개"]
+
+    style Main fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Vulcano["Vulcano NIC<br/>3대 지능형 라우팅"] --> Spray["① 지능형 패킷 스프레이:<br/>같은 흐름을 여러 경로<br/>분산 전송"]
+    Vulcano --> Congestion["② 경로 인식<br/>혼잡 제어"]
+    Vulcano --> OOO["③ 순서 무관 처리:<br/>도착 즉시 GPU 메모리<br/>기록, 유실분만 재전송"]
+
+    style Spray fill:#eff6ff,stroke:#3b82f6
+    style OOO fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+**📌 용어 풀이: 코끼리 흐름·저엔트로피**
+> - **코끼리 흐름(Elephant Flow)**: AI 학습은 소수의 초대형·장시간 데이터 흐름으로 이뤄지는데, 이런 흐름이 특정 네트워크 경로를 오래 독점해 혼잡을 유발
+> - **저엔트로피(Low Entropy)**: 흐름의 가짓수 자체가 적어서, 기존 방식(해시로 흐름을 경로 하나에 고정)으로는 일부 경로만 붐비고 나머지는 노는 현상 발생
+
+---
+
+## 8. CDNA5 마이크로아키텍처 - Nvidia 설계에 수렴
+
+**📌 핵심:**
+- CDNA5(MI455X의 연산 회로 세대명)는 여러 면에서 **Nvidia Hopper(SM90) 아키텍처에 수렴** — 웨이브(동시 실행 스레드 묶음)당 스레드 수를 32개로 줄여 Nvidia의 워프(warp)와 맞췄고, 기존 CDNA3/4의 Infinity Cache+소형 L2 캐시 구조를 FCD(Fabric and Cache Die)당 96MB 단일 L2 캐시로 통합 — "글로벌 메모리→L2 캐시→공유메모리"라는 Nvidia식 메모리 계층에 근접, AMD 커널 개발자들의 오랜 골칫거리였던 계층 간 지연시간 관리 부담이 줄어들 전망
+- **스테이징 메모리는 오히려 Nvidia보다 큼**: LDS(SMEM 대응) 320KB, VGPR(스레드 레지스터 대응) 32KB로 스레드당 레지스터 1,024개 확보 — 다만 MMA(행렬곱) 처리 단위는 여전히 16x16xK로 커지지 않아, 웨이브 수 증가에 대응하려 레지스터를 늘린 것으로 해석(Nvidia처럼 MMA 범위를 워프그룹 단위로 확장하지 않음)
+- **TDM(텐서 데이터 이동기)**은 Nvidia TMA(텐서 메모리 가속기)와 거의 동일한 기능 — HBM에서 LDS로 레지스터 경유 없이 데이터를 옮기며 5차원 타일링·경계 검사·멀티캐스트까지 지원, 다만 디스크립터(전송 명세)를 SGPR에서 불러온다는 점이 Nvidia와 다름(Rubin은 최근 인라인 디스크립터 갱신 기능을 선보임)
+- 결론: **CDNA4→5 전환은 연산 유닛 확장보다는 보수적** — Nvidia는 매 세대 행렬곱 크기를 공격적으로 키워 Blackwell에서는 SM 2개가 협업해야 하는 크기까지 확장했지만, CDNA5는 MMA 크기를 거의 키우지 않아 이런 확장이나 Rubin의 3비트 룩업테이블 같은 데이터 압축 혁신은 아직 보이지 않음. 다만 gfx1250은 NVFP4(Nvidia의 4비트 포맷)를 네이티브로 지원하고, UE5M3라는 독자 스케일 포맷도 새로 지원해 정확도 손실을 줄일 잠재력이 있음
+
+---
+
+```mermaid
+flowchart TD
+    Converge["CDNA5의<br/>Nvidia 수렴 설계"] --> Wave["웨이브 스레드 수<br/>32개(Nvidia 워프와 일치)"]
+    Converge --> Cache["96MB 단일 L2 캐시<br/>(FCD당, 계층 단순화)"]
+    Cache --> Benefit2["글로벌메모리→L2→<br/>공유메모리 계층에 근접<br/>→ 커널 개발 난도↓"]
+
+    style Cache fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Benefit2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Conservative["CDNA5 확장 방식:<br/>보수적"] --> NoMMA["MMA 크기 그대로<br/>(16x16xK, 확장 없음)"]
+    NoMMA --> Reg["대신 스레드당<br/>레지스터 4배 확보<br/>(웨이브 수 증가 대응)"]
+    Conservative --> NvComp["Nvidia: 매 세대<br/>MMA 크기 공격적 확장<br/>(Blackwell은 SM 2개 협업)"]
+
+    style NoMMA fill:#fff7ed,stroke:#ea580c
+    style NvComp fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    FP4["4비트 포맷 지원 현황"] --> Native["gfx1250: NVFP4<br/>네이티브 지원"]
+    FP4 --> UE5["CDNA5 독자: UE5M3<br/>스케일 포맷 추가 지원<br/>(정확도 손실 감소 잠재력)"]
+    FP4 --> Missing["미지원: Rubin식<br/>3비트 룩업테이블<br/>데이터 압축"]
+
+    style Native fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Missing fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+## 9. AMD 소프트웨어 - CUDA 모트는 옮겨갔다
+
+**📌 핵심:**
+- AMD 소프트웨어의 문제는 더 이상 "ROCm이 고장 났다"가 아니라 **"ROCm은 빠르게 좋아지고 있지만, 경쟁의 최전선(모트) 자체가 더 빨리 옮겨갔다"** — 2025년 4월 "AMD 2.0" 리포트에서 "올바른 방향"이라 평가했고, 이후 "소프트웨어 품질이 대폭 개선됐다"고 재확인한 흐름의 연장선
+- **CI(자동 검증)는 개선 중이나 미완**: 2026년 1월 vLLM 정식 배포에 안정적 ROCm 지원이 들어갔고 이후 나이틀리(매일 자동 빌드) 테스트도 추가 — 6월엔 8개 주요 테스트 그룹에 AMD 미러·게이트 추가, 7월엔 불안정 테스트 정리까지 마쳤지만 회귀 대시보드·AITER 정확도 게이트·엔드투엔드 분산 테스트·자동 성능 게이팅은 아직 로드맵 단계. 쿠버네티스 배포의 핵심인 llm-d(오픈소스 분산 추론 오케스트레이션)에서 Pollara NIC CI 매칭률은 여전히 0%
+- **단일 노드 성능·재현성은 실질적 성과**: 3월 Kimi K2.5 1T 모델에서 30일 만에 최대 18배 인터랙티비티(상호작용성) 개선을 AITER/vLLM 수정으로 달성, AMD 자체 2026년 2월 기술 문서는 AITER 기반 최적화로 기준 대비 약 1.08~1.2배 처리량 향상을 주장 — MiniMax M3 성능도 ATOM 스택 최적화로 B200을 따라잡음. ROCm 추론 문서·레시피 계층도 1년 전보다 훨씬 두꺼워짐(vLLM·SGLang·분산 MoRI·Mooncake 전 구간 커버)
+- 결론: 개발자 우선 자세, 업스트림 정렬, Day 0 모델 지원, 빠른 릴리스 주기 등 "방향성"은 옳다는 것이 저자들의 평가 — vLLM 공식 블로그도 "그냥 포팅하던 시대는 끝났다"며 최신 AMD/vLLM 연동에서 1.2~4.4배 처리량 향상을 확인. 다만 게이팅 매칭·안정적 CI 클러스터 확보가 방향성을 뒷받침하지 못하고 있다는 것이 핵심 병목
+
+---
+
+```mermaid
+flowchart TD
+    MoatShift["CUDA 모트 재정의"] --> Old4["기존 프레임:<br/>'ROCm이 고장났다'"]
+    MoatShift --> New4["현재 프레임:<br/>'ROCm은 개선 중이나<br/>경쟁 전선이 더 빨리 이동'"]
+
+    style New4 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    CIProgress["CI 진행 상황"] --> Done["완료: vLLM 안정 지원,<br/>나이틀리 테스트,<br/>8개 그룹 게이트"]
+    CIProgress --> Todo["미완: 회귀 대시보드,<br/>AITER 정확도 게이트,<br/>llm-d Pollara CI 0%"]
+
+    style Done fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Todo fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    SingleNode["단일 노드 성과"] --> Kimi["Kimi K2.5 1T:<br/>30일 내 최대 18배<br/>인터랙티비티 개선"]
+    SingleNode --> AITER["AMD 자체 발표:<br/>AITER 기반 1.08~1.2배<br/>처리량 향상"]
+    SingleNode --> MiniMax["MiniMax M3:<br/>ATOM 스택으로<br/>B200 성능 따라잡음"]
+
+    style Kimi fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style MiniMax fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 60% 완료*
+*업데이트: 7~9장(Vulcano NIC·스케일업/아웃 토폴로지, CDNA5 마이크로아키텍처, AMD 소프트웨어 현황) 작성 완료*
