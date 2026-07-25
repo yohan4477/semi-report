@@ -95,3 +95,28 @@ def test_parse_date_정리일만있으면_None():
 
 def test_parse_date_출처줄_날짜():
     assert gm.parse_date('제목.md', '> 출처: 언더스탠딩 김상훈 기자(…), 2026-07-22. 요약임\n') == '2026-07-22'
+
+def test_body_hash_ignores_frontmatter():
+    a = gm.body_hash('---\ncategories: [x]\n---\n본문')
+    b = gm.body_hash('---\ncategories: [x, y]\n---\n본문')   # 태그만 다름
+    assert a == b   # 본문 같으면 hash 같다
+
+def test_read_categories_priority():
+    ov = {'sid1': ['oil']}
+    assert gm.read_categories('categories: [compute, memory]\n', 'compute', 'sid1', ov) == ['compute', 'memory']  # frontmatter 우선
+    assert gm.read_categories('본문', 'folderX', 'sid1', ov) == ['oil']   # 오버레이
+    assert gm.read_categories('본문', 'folderX', 'sid2', ov) == ['folderX']  # 폴더 fallback
+
+def test_expand_taxonomy_descendants():
+    import coverage as cov
+    tax = {'oil': ['oil-geopolitics', 'oil-supplychain']}
+    assert cov.expand(['oil'], tax) == {'oil', 'oil-geopolitics', 'oil-supplychain'}
+    assert cov.expand(['oil-geopolitics'], tax) == {'oil-geopolitics'}   # 자식은 부모로 안 올라감
+
+def test_classify_hierarchy_routing():
+    import coverage as cov
+    man = {'sources': [{'id': 'semi:compute:new', 'categories': ['oil-geopolitics'], 'hash': 'h'}]}
+    A = {'cluster_id': 'A', 'categories': ['oil'], 'sources': [], 'source_hashes': {}}
+    r = cov.classify(man, [A], tax={'oil': ['oil-geopolitics']})
+    assert 'A' in r['stale']            # oil 클러스터가 oil-geopolitics 소스를 흡수(계층)
+    assert r['uncovered'] == []

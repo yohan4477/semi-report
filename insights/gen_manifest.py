@@ -27,14 +27,31 @@ def parse_date(filename, body):
     if m: return m.group(1)
     return None
 
-def body_hash(text):
-    return hashlib.sha1(text.encode('utf-8')).hexdigest()[:12]
+OVERLAY = os.path.join(ROOT, "insights", "source_categories.json")
 
-def source_id(corpus, category, filename):
+def strip_fm(text):
+    # 앞머리 YAML frontmatter(---...---) 제거 → 본문만(태그·메타 편집이 hash 안 건드림)
+    m = re.match(r'^---\n.*?\n---\n', text, re.DOTALL)
+    return text[m.end():] if m else text
+
+def body_hash(text):
+    return hashlib.sha1(strip_fm(text).encode('utf-8')).hexdigest()[:12]
+
+def source_id(corpus, folder, filename):
     abbr = "semi" if corpus == "semianalysis" else "und"
-    return "%s:%s:%s" % (abbr, category, slug(filename))
+    return "%s:%s:%s" % (abbr, folder, slug(filename))
+
+def read_categories(text, folder, sid, overlay):
+    # ① frontmatter categories 다값 ② 오버레이 ③ 폴더 fallback
+    m = re.search(r'^categories:\s*\[(.*?)\]', text, re.M)
+    if m:
+        cats = [c.strip().strip('"').strip("'") for c in m.group(1).split(',') if c.strip()]
+        if cats: return cats
+    if sid in overlay: return list(overlay[sid])
+    return [folder]
 
 def scan(bases, root=ROOT):
+    overlay = json.load(io.open(OVERLAY, encoding='utf-8')) if os.path.exists(OVERLAY) else {}
     out = []
     for base, corpus, _ in bases:
         for p in glob.glob(os.path.join(base, '**', '*.md'), recursive=True):
@@ -42,15 +59,16 @@ def scan(bases, root=ROOT):
             parts = rel.split('/')
             if any(d in EXCLUDE_DIRS for d in parts[:-1]):   # 통합 등 제외
                 continue
-            category = parts[-2] if len(parts) >= 2 else 'root'
+            folder = parts[-2] if len(parts) >= 2 else 'root'
             name = parts[-1]
-            body = io.open(p, encoding='utf-8').read()
+            text = io.open(p, encoding='utf-8').read()
+            sid = source_id(corpus, folder, name)
             out.append({
-                'id': source_id(corpus, category, name),
-                'corpus': corpus, 'category': category,
-                'date': parse_date(name, body),
+                'id': sid, 'corpus': corpus, 'folder': folder,
+                'categories': read_categories(text, folder, sid, overlay),
+                'date': parse_date(name, text),
                 'path': os.path.relpath(p, root).replace('\\', '/'),
-                'hash': body_hash(body),
+                'hash': body_hash(text),
             })
     return sorted(out, key=lambda s: s['id'])
 

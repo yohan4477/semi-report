@@ -4,343 +4,493 @@
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
    "corpus": "semianalysis",
-   "category": "agents",
+   "folder": "agents",
+   "categories": [
+    "ai-models/agents"
+   ],
    "date": "2026-02-06",
    "path": "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md",
-   "hash": "1deb1316887f"
+   "hash": "0d3e2dea98ab"
   },
   {
    "id": "semi:agents:코딩-어시스턴트-해부-토큰을-더-주세요",
    "corpus": "semianalysis",
-   "category": "agents",
+   "folder": "agents",
+   "categories": [
+    "ai-models/agents"
+   ],
    "date": "2026-04-25",
    "path": "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md",
-   "hash": "5117e610f36f"
+   "hash": "50fce79475a2"
   },
   {
    "id": "semi:business:AI-가치-포착-모델-랩으로의-이동",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/compute",
+    "ai-infra/memory"
+   ],
    "date": "2026-05-01",
    "path": "content/newsletter/ai_infra/business/[260501] AI 가치 포착 - 모델 랩으로의 이동.md",
-   "hash": "443ffe3f3b29"
+   "hash": "f2d8fb9f9424"
   },
   {
    "id": "semi:business:메타-슈퍼인텔리전스의-미래-출범-1주년-성과-점검",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-models/rl"
+   ],
    "date": "2026-07-09",
    "path": "content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md",
-   "hash": "bace73b37238"
+   "hash": "3f4dc7408c90"
   },
   {
    "id": "semi:business:메타-컴퓨트-모두가-네오클라우드가-되고-싶어한다",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
    "date": "2026-07-02",
    "path": "content/newsletter/ai_infra/business/[260702] 메타 컴퓨트 - 모두가 네오클라우드가 되고 싶어한다.md",
-   "hash": "1c8ace5f0dd8"
+   "hash": "3be64e35b63c"
   },
   {
    "id": "semi:business:앤트로픽-3분기-10억-달러-흑자-IPO-재무제표-미리보기",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
    "date": "2026-07-08",
    "path": "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md",
-   "hash": "29aeb91dd7ec"
+   "hash": "640d71eb7b20"
   },
   {
    "id": "semi:business:앤트로픽-성장과-베드락-믹스로-나-홀로-앞서가는-AWS-마진",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
    "date": "2026-05-28",
    "path": "content/newsletter/ai_infra/business/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md",
-   "hash": "693e391ba84f"
+   "hash": "c0b34fa91dbf"
   },
   {
    "id": "semi:business:엔비디아-GPU-부채-백스톱이-여는-AI-프로젝트-트리니티-자본-오프테이크-데이터센터",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
    "date": "2026-07-06",
    "path": "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md",
-   "hash": "12d81cde4bec"
+   "hash": "2acaf6100cd9"
   },
   {
    "id": "semi:business:토큰-버짓팅-기업들과-나눈-토큰-지출-실태",
    "corpus": "semianalysis",
-   "category": "business",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
    "date": "2026-06-30",
    "path": "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md",
-   "hash": "d0cfff253fce"
+   "hash": "c8a41a224bec"
   },
   {
    "id": "semi:compute:AI-실리콘-대란-TSMC-N3부터-메모리까지",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/memory"
+   ],
    "date": "2026-03-13",
    "path": "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md",
-   "hash": "e91db649ca1f"
+   "hash": "d295657b60f5"
   },
   {
    "id": "semi:compute:AMD-Advancing-AI-MI350X와-MI400-UALoE72-MI500-UAL256",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2025-06-13",
    "path": "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md",
-   "hash": "944c6b8d4104"
+   "hash": "920552d03187"
   },
   {
    "id": "semi:compute:AMD는-CUDA-모트를-깰-수-있는가-AMD-Advancing-AI-2026",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking",
+    "ai-infra/business"
+   ],
    "date": "2026-07-25",
    "path": "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md",
-   "hash": "ad671e6d37d5"
+   "hash": "7857c0a22153"
   },
   {
    "id": "semi:compute:AWS-Trainium3-딥다이브-다가오는-잠재적-도전자",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2025-12-04",
    "path": "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md",
-   "hash": "a106037bab51"
+   "hash": "dc2574593d87"
   },
   {
    "id": "semi:compute:CFET-1000개와-SK하이닉스-차세대-낸드-IEDM-2025-총정리",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/memory"
+   ],
    "date": "2026-01-14",
    "path": "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md",
-   "hash": "eada0324f23e"
+   "hash": "8f3c628fb220"
   },
   {
    "id": "semi:compute:DeepSeek-V4-16T-Day-0부터-Day-43까지-성능-변화-Huawei-GB300-NVL72-MI",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-models"
+   ],
    "date": "2026-06-09",
    "path": "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md",
-   "hash": "774317980ff2"
+   "hash": "a82cf5d6d2b7"
   },
   {
    "id": "semi:compute:GTC-2026-추론-왕국의-확장",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2026-03-24",
    "path": "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md",
-   "hash": "c0425d4e0545"
+   "hash": "0bb3c4fcbf06"
   },
   {
    "id": "semi:compute:H100-vs-GB200-NVL72-학습-벤치마크-전력-TCO-신뢰성-분석",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
    "date": "2025-08-20",
    "path": "content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md",
-   "hash": "d51f3a533112"
+   "hash": "5932093f7d84"
   },
   {
    "id": "semi:compute:InferenceMAX-오픈소스-추론-벤치마킹",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
    "date": "2025-10-09",
    "path": "content/newsletter/ai_infra/compute/[251009] InferenceMAX - 오픈소스 추론 벤치마킹.md",
-   "hash": "d6065d47192c"
+   "hash": "15746e227b64"
   },
   {
    "id": "semi:compute:InferenceX-v2-Nvidia-Blackwell-vs-AMD-vs-Hopper",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2026-02-16",
    "path": "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md",
-   "hash": "bce9a46b7a60"
+   "hash": "f4dea861cad9"
   },
   {
    "id": "semi:compute:NVIDIA-텐서-코어-진화-Volta에서-Blackwell까지",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
    "date": "2025-06-23",
    "path": "content/newsletter/ai_infra/compute/[250623] NVIDIA 텐서 코어 진화 - Volta에서 Blackwell까지.md",
-   "hash": "5528bd019cbc"
+   "hash": "56f4562f0907"
   },
   {
    "id": "semi:compute:Nvidia-Blackwell-해부-텐서-코어-PTX-명령어-SASS-플로어스위프-수율",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
    "date": "2026-04-01",
    "path": "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md",
-   "hash": "38a4636b544e"
+   "hash": "3f3ba9c496d1"
   },
   {
    "id": "semi:compute:TPUv7-구글-AI-반도체-왕좌에-도전장을-내밀다",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2025-11-28",
    "path": "content/newsletter/ai_infra/compute/[251128] TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다.md",
-   "hash": "1f9e2ae2b3d3"
+   "hash": "1b9e3f8c76b8"
   },
   {
    "id": "semi:compute:루빈-CPX-특화-가속기와-랙-또-하나의-거대한-도약",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2025-09-10",
    "path": "content/newsletter/ai_infra/compute/[250910] 루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약.md",
-   "hash": "d560a26189ee"
+   "hash": "8fd5bea2de35"
   },
   {
    "id": "semi:compute:베라-루빈-NVL72-vs-GB200-NVL72-추론-TCO아키텍처-분석",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2026-07-23",
    "path": "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md",
-   "hash": "39b473c3ad7e"
+   "hash": "b49769e9d255"
   },
   {
    "id": "semi:compute:베라-루빈-익스트림-코디자인-그레이스-블랙웰-오베론에서의-진화",
    "corpus": "semianalysis",
-   "category": "compute",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
    "date": "2026-02-26",
    "path": "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md",
-   "hash": "d2cbfaa02730"
+   "hash": "8e015539f256"
   },
   {
    "id": "semi:cooling:데이터센터-해부학-Part-2-냉각-시스템",
    "corpus": "semianalysis",
-   "category": "cooling",
+   "folder": "cooling",
+   "categories": [
+    "ai-infra/cooling"
+   ],
    "date": "2025-02-14",
    "path": "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md",
-   "hash": "986b0f7a2efa"
+   "hash": "e91150c7d095"
   },
   {
    "id": "semi:memory:ECTC-2026-총정리-EMIB-T-로드맵-커스텀-HBM-마이크로플루이딕-냉각-광학-인터커넥트",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute",
+    "ai-infra/cooling"
+   ],
    "date": "2026-07-02",
    "path": "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md",
-   "hash": "e798ec398609"
+   "hash": "9ca7408f1846"
   },
   {
    "id": "semi:memory:HBM-로드맵-메모리-벽을-넘는-HBM의-부상과-미래",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute"
+   ],
    "date": "2025-08-12",
    "path": "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md",
-   "hash": "fa4bca908da6"
+   "hash": "361fd9d7c255"
   },
   {
    "id": "semi:memory:ISSCC-2026-총정리-HBM4-LPDDR6-CPO-액티브-LSI-등-차세대-메모리인터커넥트",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute"
+   ],
    "date": "2026-04-16",
    "path": "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md",
-   "hash": "9d94b019dd8f"
+   "hash": "c16d9b4e9afb"
   },
   {
    "id": "semi:memory:낸드플래시-독점-균열-도쿄일렉트론-vs-램리서치",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory"
+   ],
    "date": "2023-07-17",
    "path": "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md",
-   "hash": "126bbc944ba4"
+   "hash": "7c1177a4bd69"
   },
   {
    "id": "semi:memory:메모리-마니아-40년-만의-공급-부족이-부르는-메모리-붐",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory"
+   ],
    "date": "2026-02-07",
    "path": "content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md",
-   "hash": "9910dc6517d5"
+   "hash": "5a520a2d977e"
   },
   {
    "id": "semi:memory:중국-CXMT-DRAM-강자들에-도전장을-내밀다",
    "corpus": "semianalysis",
-   "category": "memory",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory"
+   ],
    "date": "2026-06-23",
    "path": "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md",
-   "hash": "80ec98a8439c"
+   "hash": "49ee54d76851"
   },
   {
    "id": "semi:power:2026년-미국-데이터센터-용량-절반-취소설은-틀렸다",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
    "date": "2026-06-19",
    "path": "content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md",
-   "hash": "61898212b00f"
+   "hash": "c3f450847b1f"
   },
   {
    "id": "semi:power:800VDC-혁명-Part-1-전력-배전-아키텍처의-대전환",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power",
+    "ai-infra/compute"
+   ],
    "date": "2026-05-26",
    "path": "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md",
-   "hash": "e13cad5ad391"
+   "hash": "28ab4c56148f"
   },
   {
    "id": "semi:power:AI-데이터센터-에너지-딜레마-AI-데이터센터-공간-확보-경쟁",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
    "date": "2024-03-14",
    "path": "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md",
-   "hash": "9cb813dd02c4"
+   "hash": "84c83861fc39"
   },
   {
    "id": "semi:power:AI-랩들은-어떻게-전력난을-해결하는가-온사이트-가스-딥다이브",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
    "date": "2025-12-31",
    "path": "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md",
-   "hash": "8bfa1daf71da"
+   "hash": "ddd256cf8a10"
   },
   {
    "id": "semi:power:데이터센터-해부학-Part-1-전기-시스템",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
    "date": "2024-10-14",
    "path": "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md",
-   "hash": "180059ebe917"
+   "hash": "6506785bc629"
   },
   {
    "id": "semi:power:미국-전력망-제약-2028년까지-40GW-자가발전-데이터센터로-가는-길",
    "corpus": "semianalysis",
-   "category": "power",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
    "date": "2026-06-26",
    "path": "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md",
-   "hash": "6d425fd9ccf6"
+   "hash": "f21ee56a5448"
   },
   {
    "id": "semi:rl:RL-환경과-과학을-위한-RL-데이터-파운드리와-멀티-에이전트-아키텍처",
    "corpus": "semianalysis",
-   "category": "rl",
+   "folder": "rl",
+   "categories": [
+    "ai-models/rl"
+   ],
    "date": "2026-01-07",
    "path": "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md",
-   "hash": "d7eec8a96e74"
+   "hash": "accd32144496"
   },
   {
    "id": "semi:rl:강화학습RL-스케일링-환경-보상-해킹-에이전트-데이터-스케일링",
    "corpus": "semianalysis",
-   "category": "rl",
+   "folder": "rl",
+   "categories": [
+    "ai-models/rl"
+   ],
    "date": "2025-06-09",
    "path": "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md",
-   "hash": "337f6a17b777"
+   "hash": "09d09947a9f4"
   },
   {
    "id": "semi:robotics:Unitree의-믿기-힘든-성장-궤적-여전히-저평가됐다",
    "corpus": "semianalysis",
-   "category": "robotics",
+   "folder": "robotics",
+   "categories": [
+    "robotics"
+   ],
    "date": "2026-06-08",
    "path": "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md",
-   "hash": "513945083bc8"
+   "hash": "6ab738197abb"
   },
   {
    "id": "semi:semiconductors:EDA-시장-개관-시장-역학-케이던스시놉시스지멘스-중국-EDA의-부상",
    "corpus": "semianalysis",
-   "category": "semiconductors",
+   "folder": "semiconductors",
+   "categories": [
+    "semiconductors"
+   ],
    "date": "2026-05-21",
    "path": "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md",
-   "hash": "0b0c43c44c54"
+   "hash": "9f7a13773108"
   },
   {
    "id": "und:권효재 대표:15억-인구-밥-못-짓는다-인도-덮친-비상사태-3부",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-03-19",
    "path": "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md",
    "hash": "2c38cf2cf755"
@@ -348,7 +498,10 @@
   {
    "id": "und:권효재 대표:대만-LNG-초비상-한국만-여유로운-이유-1부",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-03-17",
    "path": "content/understanding/권효재 대표/대만 LNG 초비상, 한국만 여유로운 이유 (1부).md",
    "hash": "a7fd56a9e223"
@@ -356,7 +509,10 @@
   {
    "id": "und:권효재 대표:미국-데이터센터-전력난-이걸로-뚫었다",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "semiconductor"
+   ],
    "date": "2026-07-24",
    "path": "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md",
    "hash": "c616f83b685b"
@@ -364,7 +520,10 @@
   {
    "id": "und:권효재 대표:삼성까지-뛰어들었다-4년만에-3배-급증할-에너지-시장",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "power"
+   ],
    "date": "2026-06-22",
    "path": "content/understanding/권효재 대표/삼성까지 뛰어들었다 4년만에 3배 급증할 에너지 시장.md",
    "hash": "7601ed0ca9f8"
@@ -372,7 +531,10 @@
   {
    "id": "und:권효재 대표:싼-전기-시대-끝났다-프랑스독일의-미친-결정-2부",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "power"
+   ],
    "date": "2026-06-03",
    "path": "content/understanding/권효재 대표/싼 전기 시대 끝났다, 프랑스·독일의 미친 결정 (2부).md",
    "hash": "3b578c523f03"
@@ -380,7 +542,10 @@
   {
    "id": "und:권효재 대표:이란-전쟁-오늘-끝나도-유가-9월까지-뛴다-1부",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-06-02",
    "path": "content/understanding/권효재 대표/이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부).md",
    "hash": "e67ca9c08d65"
@@ -388,7 +553,10 @@
   {
    "id": "und:권효재 대표:전쟁-끝나도-계속-간다-가격보다-중요한-에너지-믹스와-자원-확보-전쟁",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-supplychain"
+   ],
    "date": "2026-03-15",
    "path": "content/understanding/권효재 대표/전쟁 끝나도 계속 간다, 가격보다 중요한 에너지 믹스와 자원 확보 전쟁.md",
    "hash": "0dc5fdff3f2c"
@@ -396,7 +564,10 @@
   {
    "id": "und:권효재 대표:지금-에너지-투자-놓치면-100년-자산-버리는-겁니다",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-supplychain"
+   ],
    "date": "2026-05-03",
    "path": "content/understanding/권효재 대표/지금 에너지 투자 놓치면 100년 자산 버리는 겁니다.md",
    "hash": "1ee58f459b65"
@@ -404,7 +575,10 @@
   {
    "id": "und:권효재 대표:호르무즈-막히자-10조-돈벼락-맞은-한국선사-2부",
    "corpus": "understanding",
-   "category": "권효재 대표",
+   "folder": "권효재 대표",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-03-18",
    "path": "content/understanding/권효재 대표/호르무즈 막히자 10조 돈벼락 맞은 한국선사 (2부).md",
    "hash": "58e3f9f709c0"
@@ -412,7 +586,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:독일-신재생-전기-때문에-북유럽이-빡친-이유",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "power"
+   ],
    "date": "2025-12-26",
    "path": "content/understanding/언더스탠딩 백브리핑/독일 신재생 전기 때문에 북유럽이 빡친 이유.md",
    "hash": "64e5194402eb"
@@ -420,7 +597,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:미국의-석유-치킨게임이란이-불리한-이유",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-05-06",
    "path": "content/understanding/언더스탠딩 백브리핑/미국의 석유 치킨게임...이란이 불리한 이유.md",
    "hash": "cfbfa777b648"
@@ -428,7 +608,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:미국이-베네수엘라를-친-건-캐나다-때문이다",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-supplychain"
+   ],
    "date": "2026-01-07",
    "path": "content/understanding/언더스탠딩 백브리핑/미국이 베네수엘라를 친 건, 캐나다 때문이다.md",
    "hash": "62ab5fae3852"
@@ -436,7 +619,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:미군은-이란-미사일-지옥에-빠졌나",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-03-06",
    "path": "content/understanding/언더스탠딩 백브리핑/미군은 이란 미사일 지옥에 빠졌나.md",
    "hash": "ff72357cff62"
@@ -444,7 +630,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:서울-지방-따로-전기요금-영국은-왜-실패했을까",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "power"
+   ],
    "date": "2026-02-04",
    "path": "content/understanding/언더스탠딩 백브리핑/서울-지방 따로 전기요금... 영국은 왜 실패했을까.md",
    "hash": "48540aef7044"
@@ -452,7 +641,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:원전만으로는-전기요금-오르는-거-못-막습니다",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "power"
+   ],
    "date": "2026-03-25",
    "path": "content/understanding/언더스탠딩 백브리핑/원전만으로는, 전기요금 오르는 거 못 막습니다.md",
    "hash": "3c92d2ba677c"
@@ -460,7 +652,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:은-가격-급등이-태양광-때문이다",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "power"
+   ],
    "date": "2026-01-02",
    "path": "content/understanding/언더스탠딩 백브리핑/은 가격 급등이 태양광 때문이다.md",
    "hash": "82d617c8b1f6"
@@ -468,7 +663,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:중동산-기름-미국산으로-대체가-어려운-이유",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-supplychain"
+   ],
    "date": "2026-04-22",
    "path": "content/understanding/언더스탠딩 백브리핑/중동산 기름, 미국산으로 대체가 어려운 이유.md",
    "hash": "b8f6113a7e84"
@@ -476,7 +674,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:태양광-세배로-전기요금-오른단-얘기입니다",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "power"
+   ],
    "date": "2026-05-28",
    "path": "content/understanding/언더스탠딩 백브리핑/태양광 세배로 전기요금 오른단 얘기입니다.md",
    "hash": "a37287c8494a"
@@ -484,7 +685,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:호남-반도체-산단-4년-만에-완공-가능할까",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "semiconductor"
+   ],
    "date": "2026-07-08",
    "path": "content/understanding/언더스탠딩 백브리핑/호남 반도체 산단, 4년 만에 완공 가능할까.md",
    "hash": "2749390620e2"
@@ -492,7 +696,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:호남-반도체-펩-원전이-구세주입니다",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "semiconductor"
+   ],
    "date": "2026-07-01",
    "path": "content/understanding/언더스탠딩 백브리핑/호남 반도체 펩, 원전이 구세주입니다.md",
    "hash": "bb15a247edf1"
@@ -500,7 +707,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:호르무즈-막히는-것보다-더-큰일이-생긴다고",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-07-22",
    "path": "content/understanding/언더스탠딩 백브리핑/호르무즈 막히는 것보다, 더 큰일이 생긴다고.md",
    "hash": "cdcbf37e8ed2"
@@ -508,7 +718,10 @@
   {
    "id": "und:언더스탠딩 백브리핑:호르무즈-해협-봉쇄-맞불-하르그섬-뭐길래",
    "corpus": "understanding",
-   "category": "언더스탠딩 백브리핑",
+   "folder": "언더스탠딩 백브리핑",
+   "categories": [
+    "oil-geopolitics"
+   ],
    "date": "2026-03-18",
    "path": "content/understanding/언더스탠딩 백브리핑/호르무즈 해협 봉쇄 맞불... 하르그섬 뭐길래.md",
    "hash": "1dee04b3e753"
@@ -516,7 +729,10 @@
   {
    "id": "und:이선엽 대표:반도체-룰이-바뀌었다-주가-재평가-시작됐다",
    "corpus": "understanding",
-   "category": "이선엽 대표",
+   "folder": "이선엽 대표",
+   "categories": [
+    "semiconductor"
+   ],
    "date": "2026-06-26",
    "path": "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md",
    "hash": "f398c80c85d7"

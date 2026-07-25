@@ -1,0 +1,24 @@
+{
+ "ai-infra": [
+  "compute",
+  "memory",
+  "cooling",
+  "power",
+  "business",
+  "networking"
+ ],
+ "ai-models": [
+  "agents",
+  "rl",
+  "models"
+ ],
+ "oil": [
+  "oil-geopolitics",
+  "oil-supplychain"
+ ],
+ "power": [
+  "power-market",
+  "power-renewable",
+  "power-nuclear"
+ ]
+}

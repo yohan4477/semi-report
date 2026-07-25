@@ -30,24 +30,43 @@ def load_clusters():
         out.append(parse_cluster(io.open(p, encoding='utf-8').read()))
     return out
 
-def classify(manifest, clusters, full=False):
+def load_taxonomy():
+    p = os.path.join(ROOT, "insights", "taxonomy.json")
+    return json.load(io.open(p, encoding='utf-8')) if os.path.exists(p) else {}
+
+def expand(cats, tax):
+    # 카테고리 집합을 자손까지 확장(계층 매칭). tax = {parent:[children]}
+    out, stack = set(), list(cats)
+    while stack:
+        c = stack.pop()
+        if c in out: continue
+        out.add(c)
+        stack += tax.get(c, [])
+    return out
+
+def _cats(s):
+    return s.get('categories') or ([s['category']] if s.get('category') else [])
+
+def classify(manifest, clusters, full=False, tax=None):
+    tax = tax if tax is not None else load_taxonomy()
     by_id = {s['id']: s for s in manifest['sources']}
     covered = set()
     stale = {}
     for c in clusters:
         covered |= set(c['sources'])
+        routed = expand(c['categories'], tax)   # 이 클러스터가 흡수하는 카테고리(자손 포함)
         reasons = []
         for sid in c['sources']:
             if sid not in by_id: reasons.append('삭제:%s' % sid)
             elif c['source_hashes'].get(sid) != by_id[sid]['hash']: reasons.append('변경:%s' % sid)
         for s in manifest['sources']:
-            if s['category'] in c['categories'] and s['id'] not in c['sources']:
+            if (set(_cats(s)) & routed) and s['id'] not in c['sources']:
                 reasons.append('신규:%s' % s['id'])
         if reasons: stale[c['cluster_id']] = reasons
-    cat_covered = set()
-    for c in clusters: cat_covered |= set(c['categories'])
+    all_routed = set()
+    for c in clusters: all_routed |= expand(c['categories'], tax)
     uncovered = [s['id'] for s in manifest['sources']
-                 if s['id'] not in covered and s['category'] not in cat_covered]
+                 if s['id'] not in covered and not (set(_cats(s)) & all_routed)]
     ok = [c['cluster_id'] for c in clusters if c['cluster_id'] not in stale]
     if full:
         stale = {c['cluster_id']: ['--full'] for c in clusters}
