@@ -44,3 +44,12 @@ def test_render_block_has_thesis_and_source_chip():
 def test_strip_section_idempotent():
     wrapped = 'A<!-- INSIGHTS:START -->x<!-- INSIGHTS:END -->B'
     assert g.strip_section(wrapped) == 'AB'
+
+def test_strip_section_removes_nav_chip():
+    html = '  <nav class="sec-nav">\n    <a href="#sec-insights">🧭 통합인사이트 <b>4</b></a>\n    <a href="#sec-ai">AI</a>\n'
+    out = g.strip_section(html)
+    assert '#sec-insights' not in out
+    assert '#sec-ai' in out          # 다른 칩은 보존
+
+def test_slugify_no_trailing_hyphen_after_truncate():
+    assert not g.slugify('가'*59 + ' 나').endswith('-')

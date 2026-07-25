@@ -8,7 +8,7 @@ def slugify(title):
     s = re.sub(r'<[^>]+>', '', title)                 # 태그 제거
     s = re.sub(r'[\s,·—…()\[\]?]+', '-', s.strip())    # 공백·기호 → 하이픈
     s = re.sub(r'[^0-9A-Za-z가-힣\-]', '', s)
-    return re.sub(r'-+', '-', s).strip('-')[:60]
+    return re.sub(r'-+', '-', s)[:60].strip('-')
 
 def parse_front_matter(raw):
     fm = {}
@@ -117,7 +117,9 @@ def build_section(mds, id_map):
     return sec, misses
 
 def strip_section(html):
-    return re.sub(r'<!-- INSIGHTS:START -->.*?<!-- INSIGHTS:END -->(?:\n\n)?', '', html, flags=re.DOTALL)
+    html = re.sub(r'<!-- INSIGHTS:START -->.*?<!-- INSIGHTS:END -->(?:\n\n)?', '', html, flags=re.DOTALL)
+    html = re.sub(r'[ \t]*<a href="#sec-insights">.*?</a>\n', '', html)
+    return html
 
 def main():
     html = io.open(DASH, encoding='utf-8').read()
@@ -133,11 +135,19 @@ def main():
         print('통합 md 없음 — 섹션 스킵'); return
     sec, misses = build_section(mds, id_map)
     chip = '    <a href="#sec-insights">🧭 통합인사이트 <b>%d</b></a>\n' % len(mds)
+    before = html
     html = re.sub(r'(<nav class="sec-nav">\n)', r'\1' + chip, html, count=1)
+    if html == before:
+        raise SystemExit('nav 앵커 미발견 — 삽입 실패')
+    before = html
     html = re.sub(r'(  <nav class="sec-nav">)', sec + r'\1', html, count=1)
+    if html == before:
+        raise SystemExit('nav 앵커 미발견 — 삽입 실패')
     io.open(DASH, 'w', encoding='utf-8').write(html)
     print('OK: 클러스터 %d개' % len(mds))
-    if misses: print('경고 미매칭 sources:', misses)
+    if misses:
+        print('경고 미매칭 sources:', misses)
+        raise SystemExit(1)
 
 if __name__ == '__main__':
     main()
