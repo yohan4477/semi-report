@@ -407,5 +407,129 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 60% 완료*
-*업데이트: 7~9장(Vulcano NIC·스케일업/아웃 토폴로지, CDNA5 마이크로아키텍처, AMD 소프트웨어 현황) 작성 완료*
+## 10. InferenceX로 본 개발 속도와 에이전트 기반 Day 0 지원
+
+**📌 핵심:**
+- SemiAnalysis는 자체 벤치마크 플랫폼 **InferenceX**로 신규 모델이 나왔을 때 AMD가 얼마나 빨리 최적 성능에 도달하는지("개발 속도")를 추적 — DeepSeek V4 출시 후 첫 47일간 MI355X SGLang 단일 노드 성능이 빠르게 개선됐고, MiniMax M3에서도 비슷하게 신속한 반복 개선이 확인됨. 분산(disaggregated) 추론에서도 6개월 전 몇 달씩 뒤처지던 것과 달리 이제는 상당히 따라잡은 모습(MoRI 백엔드 개선과 Mooncake 최적화 덕분)
+- **에이전트가 Day 0(모델 출시 당일) 지원을 가능케 함**: DeepSeek V4·MiniMax M3의 Day 0 지원을 SemiAnalysis 팀이 직접 구현 — 특정 설정(예: MiniMax M3 vLLM MI355X FP8)에 대해 Claude Code/Codex 에이전트를 띄워 인터넷에서 Day 0 레시피를 가져오고, InferenceX에 필요한 배관 작업을 만들고, 스윕(반복 실험)을 실행하는 흐름이 정착 — 엔진 오류가 나면 에이전트가 원인을 스스로 진단해 자동 재시도하거나 사람에게 알림, 여러 설정을 동시 병렬 처리 가능. 이런 신속한 반복은 3~6개월 전 2.5명 규모 팀으로는 불가능했던 일
+- 저자들은 이를 **"테스트·소프트웨어 작성은 더 이상 작년만큼의 모트가 아니다"**로 해석 — AI 에이전트가 예전엔 사람 엔지니어만 하던 일을 대신하면서 CUDA 모트의 상대적 중요성이 낮아지고, AMD가 Nvidia 대비 엔지니어 머릿수 열세를 만회하는 데 도움이 됨. AMD도 이 흐름에 적극 편승 — Advancing AI 2026에서 **ROCm.ai**(에이전트로 커널·성능 튜닝을 반복하도록 돕는 스킬·프레임워크 모음)를 발표, 핵심은 GEAK(커널을 쓰고 튜닝하는 에이전트)·Hyperloom(서빙 워크로드를 프로파일링해 병목 커널에 에이전트를 투입하는 오케스트레이터)·AgentKernelArena(Claude Code·Codex·Cursor·GEAK를 같은 커널 과제로 맞대결시키는 평가 하네스) 등
+- 결론: 저자들은 새 벤치마크 시나리오 **AgentX**도 소개 — 기존 InferenceX의 단일턴 시나리오(8k입력/1k출력 등)는 라우터·KV 캐시 전송·스케줄러 같은 시스템 전체를 평가하지 못한다는 한계를 보완하기 위해, 실제 SemiAnalysis Claude Code·Codex 사용 기록(약 3개월치, 중간값 입력 14만 토큰·출력 396토큰·캐시 적중률 99.2%)을 재생하는 방식 — WEKA·Inferact·RadixArk·LMCache·Mooncake·Nvidia·AMD 등과 공동 개발 중이며 결과는 InferenceX에 순차 공개 예정
+
+---
+
+```mermaid
+flowchart TD
+    Velocity["InferenceX로 측정한<br/>AMD 개발 속도"] --> DSV4["DeepSeek V4:<br/>출시 47일간 빠른 개선"]
+    Velocity --> MiniMax2["MiniMax M3:<br/>신속한 반복 개선"]
+    Velocity --> Disagg2["분산 추론: 6개월 전<br/>수개월 뒤처짐→<br/>현재 상당히 추격"]
+
+    style Disagg2 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    AgentLoop["에이전트 기반<br/>Day 0 지원 흐름"] --> Pull["레시피 수집→<br/>InferenceX 배관 작업→<br/>스윕 실행"]
+    Pull --> Debug["엔진 오류 시<br/>자동 진단·재시도<br/>또는 사람에게 알림"]
+    Debug --> Parallel["여러 설정<br/>동시 병렬 처리"]
+
+    style Parallel fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ROCmAI["ROCm.ai<br/>(Advancing AI 2026 발표)"] --> GEAK["GEAK: 커널 작성·<br/>튜닝 에이전트"]
+    ROCmAI --> Hyperloom["Hyperloom: 병목 커널에<br/>에이전트 투입하는<br/>오케스트레이터"]
+    ROCmAI --> Arena["AgentKernelArena:<br/>Claude Code·Codex·GEAK<br/>맞대결 평가"]
+
+    style GEAK fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+**📌 용어 풀이: AgentX 벤치마크**
+> - 기존 InferenceX 시나리오는 입력 8천·출력 1천 토큰 같은 단일턴 무작위 요청만 다뤄, 라우터·KV 캐시 전송·스케줄러 등 시스템 전체 성능은 평가하지 못함
+> - AgentX는 실제 코딩 에이전트 사용 기록을 재생해 훨씬 긴 입력(중간값 14만 토큰)과 짧은 출력(중간값 396토큰), 매우 높은 캐시 적중률(99.2%)이라는 현실적 트래픽 패턴으로 평가 — KV 캐시 오프로딩 기법의 실효성까지 검증 가능
+
+---
+
+## 11. 단일 노드는 끝, 분산 추론이 새 전장 - WideEP와 분리형 서빙
+
+**📌 핵심:**
+- 경쟁의 최전선이 **단일 노드 집약형에서 다중 노드 분산형 추론으로 이동** — SemiAnalysis의 InferenceX v2 리포트에서 지적한 AMD의 "소프트웨어 조합성 문제"(개별 최적화는 되는데 여러 개를 합치면 스택이 깨지는 문제)가 핵심 쟁점. GTC 2026 리뷰에서는 Nvidia의 다음 모트를 분리형 추론 시스템(어텐션/피드포워드 분리 포함)으로 규정 — 어텐션은 상태 유지·KV 의존적, FFN(피드포워드)은 무상태·배치 확장 가능이라는 성격 차이 때문에 두 단계를 분리해 최적 하드웨어에 배치할 수 있고, 이러면 추론 경쟁력이 "커널 하나의 문제"가 아니라 "분산 시스템 문제"로 바뀜
+- **오픈 CUDA 생태계는 2024년 초부터 분리형 서빙+WideEP를 이미 배포**해온 반면, AMD의 첫 공개 PD 분리형+WideEP 레시피는 2026년 1월에야 InferenceX를 통해 등장 — 활성 전문가 수는 4~10개로 작기만, 전체 전문가 수는 128·256·384·512개로 계속 커지는 MoE(전문가 혼합) 모델 트렌드가 조합성 문제를 더 시급하게 만듦(KV 캐시도 MLA식 저랭크 설계로 헤드 1~2개 수준까지 압축되는 추세)
+- **WideEP 효과**: DeepSeek-R1(전문가 256개) 기준 8-GPU 단일 노드(EP8)에서 64-GPU(EP64)로 넓히면 GPU당 담당 전문가가 32개→4개로 줄어 HBM 여유가 생기고 동시 배치 크기가 커짐 — Nvidia는 WideEP로 GPU당 처리량 최대 2.28배 향상을 보고. **분리형 서빙 효과**: DeepSeek-R1에서 동일 인터랙티비티 기준 MoRI SGL 분리형 구성이 단일 노드 대비 처리량 2~3배
+- 결론: 다만 정확도 문제가 여전 — 2026년 3월 이전에는 DP-attention을 쓴 분리형 구성이 GSM8K(정확도 평가) 거의 0점을 기록했고(이후 수정됨), SGLang MoRI 백엔드는 동시성 64에서 GSM8K 정확도가 기준 94%에서 80%로 떨어지는 문제가 여전히 미해결(AMD는 우선순위를 낮게 책정) — 여러 최적화를 조합해도 항상 작동한다고 장담할 수 없는 상태이며, "분산 추론은 특정 전담팀만의 일이 아니라 ROCm 전체·CI·레시피·성능 엔지니어링 모두의 일"이 돼야 한다는 것이 저자들의 결론
+
+---
+
+```mermaid
+flowchart TD
+    Frontier["경쟁 전선 이동"] --> From["단일 노드<br/>집약형 추론"]
+    Frontier --> To["다중 노드<br/>분산형 추론"]
+    To --> Timeline3["CUDA 생태계:<br/>2024년 초부터 배포<br/>vs AMD: 2026년 1월<br/>첫 공개 레시피"]
+
+    style To fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Timeline3 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    WideEPEffect["WideEP 효과<br/>(DeepSeek-R1, 전문가 256개)"] --> EP8["EP8(8GPU):<br/>GPU당 전문가 32개"]
+    EP8 --> EP64["EP64(64GPU):<br/>GPU당 전문가 4개"]
+    EP64 --> Result["HBM 여유↑, 배치↑<br/>Nvidia 기준 처리량<br/>최대 2.28배"]
+
+    style Result fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Accuracy["정확도 이슈<br/>(SGLang MoRI 백엔드)"] --> Before["2026년 3월 이전:<br/>DP-attention 분리형<br/>GSM8K 거의 0점(수정됨)"]
+    Accuracy --> Open["미해결: 동시성 64에서<br/>GSM8K 94%→80% 하락<br/>(AMD 우선순위 낮음)"]
+
+    style Before fill:#fef2f2,stroke:#dc2626
+    style Open fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 12. AMD 분산 추론 스택 현황 - MoRI, Helios(gfx1250) 격차, NIXL 업스트림, 오버랩 스택 지연
+
+**📌 핵심:**
+- **MoRI는 진짜 성과**: 전문가 데이터 교환을 담당하는 MoRI-EP와 KV 캐시 전송을 담당하는 MoRI-IO로 구성된 모듈형 RDMA 프레임워크로, 중국 상하이 기반 팀이 처음부터 설계 — ROCm이 MI355X 클러스터용 공식 MoRI 기반 분산 SGLang 문서까지 발간했지만, 로드맵의 방대한 항목(계층형 분산 KV 캐시, SHMEM v2, EP v2 커널 등)을 단 5~6명의 엔지니어가 전담하고 있어 확장성 리스크가 큼
+- **최신 실리콘일수록 격차가 뚜렷**: Helios(gfx1250/MI455X) 스택을 층별로 보면 "모델 하나 지원·KV 전송 배관은 빠르게 진행되지만 WideEP·검증·고성능 커널은 아직"이라는 패턴이 반복 — PyTorch의 gfx1250 지원은 7월 중순 병합됐지만 미출시 ROCm 7.14+ 뒤에 잠들어 있어 실제 배포 휠에서는 작동 안 함, SGLang의 gfx1250 나이틀리는 빌드만 되고 테스트·정확도 게이트가 없으며 MoRI 빌드도 구버전에 고정돼 WideEP가 실제로 동작하지 않음, vLLM은 단일 노드 FP4까지만 확보(MoRI는 아예 빌드에서 제외), AMD 자체 엔진 ATOM도 KV 전송은 만들었지만 EP 디스패치·MoRI-EP·WideEP는 전무
+- **NIXL(Nvidia의 KV 캐시 전송 라이브러리) 업스트림 성사**: SemiAnalysis가 2025년 GTC에서 Nvidia에 "AMD 통신 라이브러리를 지원할 것인가" 질문했을 때는 거절당했으나, 2026년 GTC에서 "Trainium(AWS) 포크를 받아들였으니 AMD RIXL 포크도 받아들이겠다"는 공개 답변을 확보 — SemiAnalysis가 직접 AMD와 Nvidia 사이를 중개했고, 결과적으로 AMD의 Andy Luo가 올린 PR이 6월 4일 병합, 후속 PR은 AMD 자체 NIC로 MI355X 2노드 간 341Gb/s 크로스노드 RDMA를 달성(Mellanox NIC 없이)
+- 결론: **투배치 오버랩(TBO, 늦었지만 중요한 최적화)도 뒤늦게 도착** — SGLang은 2025년 상반기 로드맵에 이미 올렸던 기능인데, AMD의 MoRI EP 지원은 2026년 2월 20일에야 병합됐고 며칠 뒤 CI를 깨뜨려 롤백되는 등 여전히 "재료는 있지만 자주 늦고, 병합돼도 취약해서 한 번 더 다듬어야 신뢰할 수 있는" ROCm 추론 스토리의 축소판
+
+---
+
+```mermaid
+flowchart TD
+    MoRI2["MoRI 프레임워크"] --> EP2["MoRI-EP:<br/>전문가 데이터 교환"]
+    MoRI2 --> IO2["MoRI-IO: KV 캐시 전송"]
+    MoRI2 --> Risk2["로드맵 전체를<br/>5~6명이 전담<br/>→ 확장성 리스크"]
+
+    style Risk2 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    HeliosStack["Helios(gfx1250) 스택<br/>레이어별 현황"] --> Fast["빠름: 모델 개별 지원,<br/>KV 전송 배관"]
+    HeliosStack --> Slow["느림: WideEP, 검증,<br/>고성능 커널"]
+    Slow --> Result2["PyTorch/SGLang/vLLM/ATOM<br/>모두 동일 패턴 반복"]
+
+    style Fast fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Slow fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    NIXL2["NIXL 업스트림 타임라인"] --> Y2025["2025 GTC:<br/>Nvidia, AMD 지원 거절"]
+    Y2025 --> Y2026["2026 GTC:<br/>SemiAnalysis 질문에<br/>'받아들이겠다' 공개 답변"]
+    Y2026 --> Merge["6월 4일 PR 병합,<br/>341Gb/s 크로스노드<br/>RDMA 검증"]
+
+    style Y2025 fill:#fef2f2,stroke:#dc2626
+    style Merge fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 85% 완료*
+*업데이트: 10~12장(InferenceX 개발 속도·에이전트 Day 0, WideEP·분리형 서빙, 분산 추론 스택 현황·NIXL·오버랩 스택) 작성 완료*
