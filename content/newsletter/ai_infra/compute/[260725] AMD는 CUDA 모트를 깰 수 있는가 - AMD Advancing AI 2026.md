@@ -171,5 +171,117 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 20% 완료*
-*업데이트: 1~3장(개요, 리더십 권고, MI455X 실리콘) 작성 완료*
+## 4. Meta 커스텀 MI455X - 절반 스펙의 딜레마
+
+**📌 핵심:**
+- AMD의 최대 GPU 고객사 중 하나인 Meta가 정작 AMD의 강점(칩 하나에 실리콘·메모리를 최대한 욱여넣는 집적도)을 활용하지 않기로 결정 — **Meta가 주문한 MI455X 대부분은 연산 다이 8개→4개, HBM 12스택→6스택으로 절반 깎은 맞춤형(Recsys 특화) 사양**, HBM4 적층 단수도 표준 12-Hi에서 8-Hi로 낮춤
+- 연산·메모리를 절반으로 줄이면 CPU 대비 GPU 연산 비율이 높아지는 결과가 나오는데, 이는 Nvidia GB200 NVL72의 Meta 특화 버전 "Ariel"과 같은 패턴 — 이 결정은 **Meta 내 LLM 전담 조직(TBD Lab)이 출범하기도 전에 Recsys(추천시스템) 인프라팀 단독으로 내린 것**이라, 정작 이 절반 사양은 TBD Lab의 관심을 전혀 끌지 못하고 외부 고객에게도 매력이 없음
+- 결론: 이 결정은 Meta 내 AMD 물량 자체를 갉아먹을 위험이 큼 — TBD Lab은 (스케일업 영역에서 Rubin 대비 연산·HBM이 크게 부족한) 절반 사양 MI455X 대신 Rubin을 압도적으로 선호할 것으로 SemiAnalysis는 전망, AMD가 직접 나서 TBD Lab에 표준 사양 MI455X를 공급하도록 조율해야 한다고 권고(마크 저커버그가 이미 인프라 전략·조직문화 개편에 착수한 것은 긍정적 신호)
+
+---
+
+```mermaid
+flowchart TD
+    MetaCustom["Meta 주문 MI455X<br/>커스텀 스펙"] --> Compute["연산 다이: 8개→4개<br/>(절반)"]
+    MetaCustom --> HBM["HBM: 12스택→6스택,<br/>8-Hi로 적층 단수도 축소"]
+    Compute --> Ratio["CPU 대비 GPU 연산비율↑<br/>(Nvidia 'Ariel' 패턴과 유사)"]
+
+    style Compute fill:#fef2f2,stroke:#dc2626
+    style Ratio fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Decision["의사결정 주체 문제"] --> Recsys["Recsys 인프라팀 단독 결정<br/>(TBD Lab 출범 전)"]
+    Recsys --> NoInterest["TBD Lab: 절반 사양에<br/>관심 없음, 외부 고객도<br/>매력 못 느낌"]
+    NoInterest --> Risk["TBD Lab은 Rubin을<br/>압도적으로 선호할 전망<br/>→ AMD Meta 물량 잠식 위험"]
+
+    style NoInterest fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Risk fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 5. Helios 랙 네트워킹 개요 - 스위치드 스케일업 전환
+
+**📌 핵심:**
+- MI455X는 **AMD 최초로 "스위치드(switched) 스케일업" 방식을 도입한 GPU** — MI300X~MI355X까지 써온 GPU 8개 점대점(point-to-point) 메시 연결에서, 랙 전체(72개 GPU)를 하나의 고속망으로 묶는 방식으로 대전환
+- Helios 랙은 **MI455X GPU 72개를 브로드컴 Tomahawk6 스위치 12개(스위치당 102.4Tbit/s)로 단일 계층 전결합(all-to-all) 연결** — GPU 1개당 200G UALoE(Ultra Accelerator Link over Ethernet) 레인 72개, 단방향 대역폭 1.8TB/s를 확보. 스케일아웃(랙 밖 연결)은 400G Pollara에서 800G Vulcano로 병행 전환하며 GPU당 1.6Tbit/s
+- 결론: AMD가 자체 스위치 대신 브로드컴의 범용(merchant) 스위치를 쓰다 보니 스위치의 512개 레인 중 432개만 활용(과잉 프로비저닝) — Nvidia는 28.8T NVSwitch를 애초에 72-GPU 랙에 딱 맞춰 설계해 낭비 없이 400Gbit/s씩 균등 배분하는 것과 대조적. MI500 세대에서는 스케일업 도메인을 3개 랙·256개 GPU까지 확장할 계획
+
+---
+
+```mermaid
+flowchart TD
+    Switch["스케일업 방식 전환"] --> Old3["MI300X~MI355X:<br/>GPU 8개 점대점 메시"]
+    Switch --> New3["MI455X(Helios):<br/>72GPU 스위치드 전결합"]
+    New3 --> Spec["Tomahawk6 스위치 12개,<br/>GPU당 1.8TB/s 단방향"]
+
+    style New3 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style Spec fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Waste["스위치 대역폭 활용<br/>(AMD vs Nvidia)"] --> AMDUse["AMD: 스위치 512레인 중<br/>432개만 사용(과잉 설계)"]
+    Waste --> NvUse["Nvidia: 28.8T NVSwitch를<br/>72GPU에 맞춰 설계,<br/>400Gbit/s씩 균등 배분"]
+    AMDUse --> Why2["브로드컴 범용 스위치<br/>사용에 따른 제약<br/>(자체 스위치 없음)"]
+
+    style AMDUse fill:#fff7ed,stroke:#ea580c
+    style NvUse fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+## 6. Helios 랙 아키텍처 재점검 - 트레이 구조·부분 코디자인·메모리 디스펙
+
+**📌 핵심:**
+- Helios 랙은 **컴퓨트 트레이 18개(각 4×MI455X GPU + Venice CPU 1개) + 스케일업 스위치 트레이 6개**로 구성(총 72GPU·18CPU·스위치 ASIC 12개) — 다만 AMD는 스케일업 스위치 자체를 만들지 못해 브로드컴에 의존하는 "부분 코디자인"에 그침(Nvidia는 스위치까지 자체 설계해 랙 전체를 완전히 통합 설계)
+- 눈에 띄는 후퇴 하나는 **메모리 디스펙(사양 축소)** — 이전 로드맵에서는 GPU당 최대 1TB의 LPDDR5X를 2차 메모리로 직접 붙일 계획이었으나 이번 최종 사양에서 완전히 사라짐(메모리 공급 타이트화의 결과로 추정)
+- **백플레인 리타이밍 문제**: Nvidia의 Oberon 백플레인은 완전 수동형인데 반해, AMD는 200G SerDes(고속 신호 회로) 품질이 약해 배선 손실을 보정하려 리타이머(신호 재증폭 칩)를 추가로 넣어야 함 — Meta 배포분 기준 스케일업 링크의 약 85%에 브로드컴 리타이머가 필요, 이는 추가 비용·전력 부담이자 랙 조립 시 일일이 튜닝해야 하는 번거로운 작업
+- 결론: **케이블 방식(flyover cable)도 발목** — AMD는 Nvidia GB200/GB300이 겪었던 것과 같은 케이블 조립 난이도 문제를 그대로 물려받음(Nvidia는 이 경험으로 Vera Rubin NVL72에서 케이블 없는 설계로 전환했지만, Helios 설계 확정 시점엔 이미 늦어 반영 못 함) — 랙당 백플레인+컴퓨트 트레이 비용만 $68,928(백플레인 $44,352 + 플라이오버 케이블 $24,576)
+
+---
+
+```mermaid
+flowchart TD
+    Rack["Helios 랙 구성"] --> Compute3["컴퓨트 트레이 18개<br/>(4GPU+1CPU씩)"]
+    Rack --> SwitchTray["스케일업 스위치 트레이 6개<br/>(브로드컴 Tomahawk6)"]
+    SwitchTray --> Partial["AMD 자체 스위치 없음<br/>→ 부분 코디자인에 그침"]
+
+    style Partial fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Despec["메모리 디스펙"] --> Plan["이전 로드맵: GPU당<br/>최대 1TB LPDDR5X"]
+    Plan --> Final["최종 사양: 완전히 삭제"]
+    Final --> Cause["메모리 공급 타이트화<br/>결과로 추정"]
+
+    style Final fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Retimer["백플레인 리타이밍 문제"] --> SerDes["AMD 200G SerDes<br/>품질 약함 → 배선 손실↑"]
+    SerDes --> Need["Meta 배포분 기준<br/>링크의 약 85%에<br/>리타이머 필요"]
+    Need --> Cost["추가 비용·전력 부담<br/>+ 랙 조립 시 튜닝 번거로움"]
+
+    style SerDes fill:#fef2f2,stroke:#dc2626
+    style Cost fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Cable["플라이오버 케이블 문제"] --> Legacy["Nvidia GB200/GB300과<br/>동일한 조립 난이도 문제 계승"]
+    Legacy --> TooLate["Nvidia는 Vera Rubin에서<br/>케이블 없는 설계로 전환,<br/>Helios는 설계확정 시점이<br/>이미 늦어 반영 못함"]
+    TooLate --> CostBD["랙당 배선 비용<br/>$68,928(백플레인 $44,352<br/>+ 케이블 $24,576)"]
+
+    style TooLate fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style CostBD fill:#fff7ed,stroke:#ea580c
+```
+
+---
+
+*작성 진행률: 약 40% 완료*
+*업데이트: 4~6장(Meta 커스텀 MI455X, Helios 네트워킹 개요, Helios 랙 아키텍처 재점검) 작성 완료*
