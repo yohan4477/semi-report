@@ -5,6 +5,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 ## 대시보드 (GitHub Pages)
 
 ### 메인
+- 🧭 [통합 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%86%B5%ED%95%A9%20%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8.html) — 주제 클러스터별 크로스-문서 합성(통합 논지·공통 진단·연결·인과·상충·이견·함의)+근거 소스 발행일순. SemiAnalysis 코퍼스 + 제3자 해설 통합, `insights/` 아키텍처(매니페스트·provenance·커버리지) 산출물
 - 🧭 [인텔리전스 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
 - 📊 [임팩트 타임라인 (Yomianalysis)](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
 - 🗂️ [소셜 신호 히스토리](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html) — LinkedIn·YouTube 신호 전체 아카이브
@@ -30,6 +31,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - `content/understanding/` — 언더스탠딩 유튜브 제3자 해설 자막요약 (출연자별: `권효재 대표/`, `이선엽 대표/`)
 - `raw/linkedin/` — LinkedIn 게시물 원본 덤프
 - `통합 리포트/` — 카테고리별·기업별 익스포저 종합 리포트
+- `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`
 - `대장/` — 예측 검증 대장, 크로스 도메인 숫자 대장
 - `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙)
 - `input/clippings/` — 변환 대기 원문 클리핑
