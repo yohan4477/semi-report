@@ -7,6 +7,7 @@ ATOMS = os.path.join(ROOT, "insights", "atoms")
 SYNTH = os.path.join(ROOT, "insights", "synth")
 MAN = os.path.join(ROOT, "insights", "manifest.json")
 ACTORS = os.path.join(ROOT, "insights", "views", "actors.json")
+PROCESS = os.path.join(ROOT, "insights", "views", "process.json")
 
 STACK = ['전자·공정', '칩', '메모리', '열', '랙', '데이터센터', '전력망', '연료·지정학']
 # 스택 의존 그래프 — 인사이트는 여기서 서로 이어진 노드들만 묶을 수 있다(아무 데나 잇는 것을 막는다)
@@ -116,23 +117,54 @@ def check_atoms(atoms, man_ids, actor_names):
                 add('WARN', where, 'C5', 'actors.json에 없는 주체: %s' % name)
 
 
-def check_synth(atoms):
+def check_process(atoms, by_id):
+    """C13 — 단계 사전 자체의 무결성. 배정은 process.json에만 있고 원자 파일에는 없다."""
+    if not os.path.exists(PROCESS):
+        return None
+    pr = json.load(io.open(PROCESS, encoding='utf-8'))
+    stages, assign = pr.get('stages') or [], pr.get('assign') or {}
+    where = 'views/process.json'
+    if len(set(stages)) != len(stages):
+        add('FAIL', where, 'C13', '중복된 단계 이름')
+    for aid, st in sorted(assign.items()):
+        if aid not in by_id:
+            add('FAIL', where, 'C13', '존재하지 않는 원자에 단계 배정: %s' % aid)
+        if st not in stages:
+            add('FAIL', where, 'C13', '%s의 단계가 사전에 없음: %s' % (aid, st))
+    return pr
+
+
+def check_synth(atoms, pr):
     by_id = {a['id']: a for a in atoms}
+    stages = (pr or {}).get('stages') or []
+    assign = (pr or {}).get('assign') or {}
     for p in sorted(glob.glob(os.path.join(SYNTH, '*.md'))):
         where = os.path.basename(p)
         meta, body = parse_synth(io.open(p, encoding='utf-8').read())
         if not meta:
             add('FAIL', where, 'C6', 'frontmatter 없음')
             continue
+        view = meta.get('view') or 'stack'
         nodes = meta.get('nodes') or ([meta['node']] if meta.get('node') else [])
+        used_stages = meta.get('stages') or []
         cited = meta.get('atoms') or []
         sec = sections(body)
 
-        bad = [n for n in nodes if n not in STACK]
-        if bad:
-            add('FAIL', where, 'C4', '스택 노드 아님: %s' % ', '.join(bad))
-        elif not connected(nodes):
-            add('FAIL', where, 'C6', '서로 이어지지 않은 노드를 묶음: %s' % ', '.join(nodes))
+        if view == 'process':
+            # C14 — 단계를 가로질러야 프로세스 뷰다. 한 단계에 머물면 스택 뷰와 다를 게 없다
+            bad = [s for s in used_stages if s not in stages]
+            if bad:
+                add('FAIL', where, 'C14', '사전에 없는 단계: %s' % ', '.join(bad))
+            else:
+                order = [stages.index(s) for s in used_stages]
+                if order != sorted(order):
+                    add('FAIL', where, 'C14', 'stages가 사전 순서를 역행함: %s' % ' → '.join(used_stages))
+        else:
+            bad = [n for n in nodes if n not in STACK]
+            if bad:
+                add('FAIL', where, 'C4', '스택 노드 아님: %s' % ', '.join(bad))
+            elif not connected(nodes):
+                add('FAIL', where, 'C6', '서로 이어지지 않은 노드를 묶음: %s' % ', '.join(nodes))
 
         cited_atoms = []
         for aid in cited:
@@ -140,9 +172,23 @@ def check_synth(atoms):
             if not a:
                 add('FAIL', where, 'C6', '존재하지 않는 원자: %s' % aid)
                 continue
-            if a['view']['stack'] not in nodes:
+            if view == 'process':
+                st = assign.get(aid)
+                if not st:
+                    add('FAIL', where, 'C14', '%s에 단계 배정이 없음 (process.json)' % aid)
+                elif st not in used_stages:
+                    add('FAIL', where, 'C14', '%s는 단계 "%s" 소속인데 %s에서 인용' % (aid, st, '·'.join(used_stages)))
+            elif a['view']['stack'] not in nodes:
                 add('FAIL', where, 'C6', '%s는 노드 %s 소속인데 %s에서 인용' % (aid, a['view']['stack'], '·'.join(nodes)))
             cited_atoms.append(a)
+
+        if view == 'process':
+            spread = {assign.get(a['id']) for a in cited_atoms} - {None}
+            if len(spread) < 2:
+                add('FAIL', where, 'C14', '인용 원자가 단계 %d개에만 걸림 (2개 이상 필요)' % len(spread))
+            # C15 — 프로세스 뷰의 산출물은 "어디를 지나면 앞 결정을 못 고치나"다
+            if not sec.get('되돌릴 수 없는 지점'):
+                add('FAIL', where, 'C15', '"되돌릴 수 없는 지점" 절이 없거나 비어 있음')
 
         if len(cited_atoms) < 3:
             add('FAIL', where, 'C7', '원자 %d개 (3개 이상 필요)' % len(cited_atoms))
@@ -179,15 +225,20 @@ def check_synth(atoms):
                 if not a:
                     add('FAIL', where, 'C12', '존재하지 않는 원자를 무관 처리: %s' % aid)
                     continue
-                if a['view']['stack'] not in nodes:
-                    add('FAIL', where, 'C12', '%s는 이 인사이트 노드 소속이 아니라 무관 처리 대상이 아님' % aid)
+                scoped = (assign.get(aid) in used_stages) if view == 'process' else (a['view']['stack'] in nodes)
+                if not scoped:
+                    add('FAIL', where, 'C12', '%s는 이 인사이트 범위 소속이 아니라 무관 처리 대상이 아님' % aid)
                 if aid not in reasons:
                     add('FAIL', where, 'C12', '%s를 무관 처리했으나 "검토 후 무관" 절에 사유가 없음' % aid)
 
         as_of = meta.get('as_of') or ''
         skip = set(cited) | set(dismissed)
+
+        def in_scope(a):
+            return assign.get(a['id']) in used_stages if view == 'process' else a['view']['stack'] in nodes
+
         newer = [a['id'] for a in atoms
-                 if a['view']['stack'] in nodes and a['id'] not in skip and a['view']['time'] > as_of]
+                 if in_scope(a) and a['id'] not in skip and a['view']['time'] > as_of]
         if newer:
             add('WARN', where, 'C11', 'as_of(%s) 이후 원자 %d개 미반영: %s'
                 % (as_of, len(newer), ', '.join(newer[:6])))
@@ -198,7 +249,8 @@ def main():
     actor_names = set(json.load(io.open(ACTORS, encoding='utf-8')))
     atoms = load_atoms()
     check_atoms(atoms, man_ids, actor_names)
-    check_synth(atoms)
+    pr = check_process(atoms, {a['id']: a for a in atoms})
+    check_synth(atoms, pr)
 
     for level, where, rule, msg in findings:
         print('%s %s [%s] %s' % (level, where, rule, msg))
@@ -210,6 +262,14 @@ def main():
     print('요약: 원자 %d개 / 문서 %d편 / FAIL %d / WARN %d'
           % (len(atoms), len({a['_source_id'] for a in atoms}), fails, warns))
     print('노드별: ' + ', '.join('%s %d' % kv for kv in sorted(nodes.items(), key=lambda x: -x[1])))
+    if pr:
+        assign = pr.get('assign') or {}
+        cnt = {s: 0 for s in pr['stages']}
+        for aid in assign:
+            if assign[aid] in cnt:
+                cnt[assign[aid]] += 1
+        print('단계별: ' + ' → '.join('%s %d' % (s, cnt[s]) for s in pr['stages'])
+              + ' / 미배정 %d' % len([a for a in atoms if a['id'] not in assign]))
     sys.exit(1 if fails else 0)
 
 
