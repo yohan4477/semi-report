@@ -1,5 +1,5 @@
 # 원자·인사이트 검사기 — 설계: docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md
-# C1~C11. FAIL이 하나라도 있으면 종료코드 1.
+# C1~C12. FAIL이 하나라도 있으면 종료코드 1.
 import os, io, re, json, glob, sys
 
 ROOT = r"C:\Users\y\semianalysis"
@@ -170,9 +170,24 @@ def check_synth(atoms):
         if TIMEWORD.search(body) and len({a['view']['time'] for a in cited_atoms}) < 2:
             add('WARN', where, 'C10', '판단 변화 표현이 있으나 인용 원자의 시점이 1종뿐')
 
+        # C12 — 검토했으나 이 주장과 무관하다고 판정한 원자. 근거를 본문에 남겨야 도피구가 안 된다
+        dismissed = meta.get('dismissed') or []
+        if dismissed:
+            reasons = ' '.join(sec.get('검토 후 무관') or [])
+            for aid in dismissed:
+                a = by_id.get(aid)
+                if not a:
+                    add('FAIL', where, 'C12', '존재하지 않는 원자를 무관 처리: %s' % aid)
+                    continue
+                if a['view']['stack'] not in nodes:
+                    add('FAIL', where, 'C12', '%s는 이 인사이트 노드 소속이 아니라 무관 처리 대상이 아님' % aid)
+                if aid not in reasons:
+                    add('FAIL', where, 'C12', '%s를 무관 처리했으나 "검토 후 무관" 절에 사유가 없음' % aid)
+
         as_of = meta.get('as_of') or ''
+        skip = set(cited) | set(dismissed)
         newer = [a['id'] for a in atoms
-                 if a['view']['stack'] in nodes and a['id'] not in cited and a['view']['time'] > as_of]
+                 if a['view']['stack'] in nodes and a['id'] not in skip and a['view']['time'] > as_of]
         if newer:
             add('WARN', where, 'C11', 'as_of(%s) 이후 원자 %d개 미반영: %s'
                 % (as_of, len(newer), ', '.join(newer[:6])))
