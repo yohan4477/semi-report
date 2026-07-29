@@ -121,7 +121,11 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:youtu.be)",
       "PowerShell($f=\"대시보드\\\\소스 타임라인.html\"; $lines=Get-Content $f -TotalCount 186; $ev=$lines[184]; Write-Output \\(\"LEN=\"+$ev.Length\\); Write-Output $ev.Substring\\(0,900\\))",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "PowerShell(cd \"C:\\\\Users\\\\y\\\\semianalysis\\\\scratchpad\"; $env:PYTHONUTF8=1; py -m pytest test_gen_insights.py -q)",
+      "PowerShell(cd \"C:\\\\Users\\\\y\\\\semianalysis\\\\insights\"; $env:PYTHONUTF8=1; py -m pytest test_insights.py -q 2>&1)",
+      "PowerShell(cd \"C:\\\\Users\\\\y\\\\semianalysis\\\\insights\"; $env:PYTHONUTF8=1; py -m pytest test_insights.py -v 2>&1)"
     ]
   }
 }
