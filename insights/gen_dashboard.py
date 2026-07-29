@@ -3,6 +3,7 @@ import os, re, io, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import coverage as cov
 import ledger as led
+import facts as fct
 
 ROOT = r"C:\Users\y\semianalysis"
 MAN = os.path.join(ROOT, "insights", "manifest.json")
@@ -51,11 +52,23 @@ def ledger_html(sources, man, nums, preds, scope):
     for sid in sources:
         s = man.get(sid)
         if s:
-            docs.append((s.get('date') or '', led.stem(s['path']), src_title(s['path'])))
+            docs.append((s.get('date') or '', led.stem(s['path']), src_title(s['path']), s['path']))
     docs.sort(reverse=True)
 
+    # ① 코퍼스 원문에서 뽑은 사실 — 근거 문서 전편을 커버(대장 등재 여부와 무관)
+    f_blocks, f_n, f_docs = [], 0, 0
+    for date, st, title, path in docs:
+        rs = fct.rows(path)
+        if not rs: continue
+        f_docs += 1; f_n += len(rs)
+        f_blocks.append(
+            '<details class="doc"><summary><span class="sd">%s</span>%s <em>%d</em></summary><ul>%s</ul></details>'
+            % (esc(date[2:]), esc(title), len(rs),
+               ''.join('<li>%s%s</li>' % (('<span class="secx">%s</span>' % esc(sec)) if sec else '', inline(f))
+                       for f, sec in rs)))
+
     n_rows, p_rows, n_docs, p_docs = [], [], 0, 0
-    for date, st, title in docs:
+    for date, st, title, path in docs:
         rs = nums.get(st) or []
         if rs: n_docs += 1
         for r in rs:
@@ -73,23 +86,24 @@ def ledger_html(sources, man, nums, preds, scope):
                           % (inline(r[0]), inline(r[2]), inline(r[3]), cls, esc(lab), esc(date[2:])))
 
     out = []
+    if f_blocks:
+        out.append(
+            '<details class="lg"><summary><b>핵심 사실 %d개</b> — 근거 문서 %d/%d편의 원문에서 추출</summary>'
+            '<div class="docs">%s</div></details>' % (f_n, f_docs, len(docs), ''.join(f_blocks)))
     if n_rows:
         out.append(
-            '<details class="lg"><summary><b>숫자 %d개</b> — 근거 문서 %d/%d편이 숫자 대장에 등재</summary>'
+            '<details class="lg"><summary><b>숫자 대장 %d행</b> — 표준화된 지표로 정리된 %d/%d편</summary>'
             '<div class="tw"><table class="nt"><thead><tr><th>지표</th><th>값</th><th>맥락</th>'
             '<th>시점</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
             % (len(n_rows), n_docs, len(docs), ''.join(n_rows)))
     if p_rows:
         out.append(
-            '<details class="lg"><summary><b>시점 박힌 예측 %d개</b> — 근거 문서 %d/%d편이 예측 대장에 등재</summary>'
+            '<details class="lg"><summary><b>시점 박힌 예측 %d개</b> — 검증 대상으로 등록된 %d/%d편</summary>'
             '<div class="tw"><table class="nt"><thead><tr><th>예측</th><th>목표 시점</th><th>근거</th>'
             '<th>검증</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
             % (len(p_rows), p_docs, len(docs), ''.join(p_rows)))
     if not out:
-        return ('<p class="lgnone">%s</p>' %
-                ('제3자 해설 코퍼스라 숫자·예측 대장 대상이 아닙니다 — 수치는 본문에 인용된 것이 전부입니다.'
-                 if scope == 'und' else
-                 '근거 문서가 아직 대장에 백필되지 않았습니다(전력·냉각 6편 미백필).'))
+        return '<p class="lgnone">근거 문서에서 추출 가능한 정량 사실이 없습니다.</p>'
     return '\n'.join(out)
 
 
@@ -132,7 +146,7 @@ def main():
             '        <p class="sub">%s</p>\n'
             '      </summary>\n'
             '      <div class="body">\n%s\n      </div>\n'
-            '      <p class="srclabel">대장 — 원문에서 뽑은 수치·예측</p>\n'
+            '      <p class="srclabel">근거 — 원문에서 뽑은 사실·수치·예측</p>\n'
             '      %s\n'
             '      <p class="srclabel">근거 소스 (발행일순)</p>\n'
             '      <div class="srcs">\n%s\n      </div>\n'
@@ -191,6 +205,17 @@ TMPL = r'''<meta charset="utf-8">
   .lg>summary::before{content:"▸ ";color:var(--faint)}
   .lg[open]>summary::before{content:"▾ "}
   .lg>summary b{color:var(--ink)}
+  .docs{border-top:1px solid var(--line);padding:6px 10px 10px}
+  .doc{border-bottom:1px solid var(--line)}
+  .doc:last-child{border-bottom:0}
+  .doc>summary{cursor:pointer;padding:8px 2px;font-size:12.5px;color:var(--ink);list-style:none;display:flex;gap:8px;align-items:baseline}
+  .doc>summary::-webkit-details-marker{display:none}
+  .doc>summary .sd{font-size:10px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;flex:0 0 auto}
+  .doc>summary em{margin-left:auto;font-style:normal;font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .doc ul{margin:0 0 10px;padding:0 0 0 2px;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .doc li{font-size:12.5px;color:var(--sub);line-height:1.55;padding-left:11px;border-left:2px solid var(--line)}
+  .doc li b{color:var(--ink);font-weight:750}
+  .secx{display:block;font-size:10px;font-weight:800;letter-spacing:.05em;color:var(--faint);margin-bottom:2px}
   .tw{overflow-x:auto;border-top:1px solid var(--line)}
   .nt{width:100%;border-collapse:collapse;font-size:12px}
   .nt thead th{position:sticky;top:0;background:var(--sunk);text-align:left;font-size:10px;font-weight:800;
