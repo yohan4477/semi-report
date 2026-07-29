@@ -1,106 +1,193 @@
 {
   "source_id": "semi:compute:AWS-Trainium3-딥다이브-다가오는-잠재적-도전자",
   "path": "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md",
+  "source_hash": "dc2574593d87",
   "date": "2025-12-04",
   "atoms": [
     {
       "id": "A-251204-01",
       "line": 134,
+      "line_text": "- 연산 성능: OCP MXFP8 처리량이 전세대 대비 **2배**로 늘고 신규 지원되는 MXFP4는 MXFP8과 동일한 성능 — 반면 FP16·FP32 같은 고정밀 포맷 성능은 전세대(Trn2)와 동일하게 유지(13장에서 트레이드오프 상세)",
       "claim": "커스텀 칩도 저정밀 연산에만 성능을 몰아주고 고정밀은 그대로 뒀다",
       "value": "OCP MXFP8 처리량 2배, MXFP4는 MXFP8과 동일, FP16·FP32는 전세대와 같음",
       "condition": "Trn2 대비",
       "attributed_to": "저자 분석",
-      "view": { "stack": "칩", "actor": ["AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "칩",
+        "actor": [
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-02",
       "line": 135,
+      "line_text": "- 메모리: HBM3E를 12층으로 쌓아 칩당 용량 144GB 확보, 스택 수는 4개로 그대로인데도 핀 속도를 5.7Gbps(Trn2)에서 9.6Gbps(Trn3, 업계 최고 수준)로 올려 **대역폭 70% 증가** — 공급사를 삼성에서 SK하이닉스·마이크론으로 전환한 덕분(Trn2의 5.7Gbps는 사실상 HBM3급 속도였음)",
       "claim": "스택 수를 늘리지 않고 메모리 공급사를 바꿔 대역폭을 끌어올렸다",
       "value": "HBM3E 12층 144GB, 핀 속도 5.7→9.6Gbps로 대역폭 70% 증가",
       "condition": "스택 수 4개 유지, 공급사를 삼성에서 SK하이닉스·마이크론으로 전환",
       "attributed_to": "저자 분석",
-      "view": { "stack": "메모리", "actor": ["AWS", "삼성", "SK하이닉스", "마이크론"], "time": "2025-12-04" }
+      "view": {
+        "stack": "메모리",
+        "actor": [
+          "AWS",
+          "삼성",
+          "SK하이닉스",
+          "마이크론"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-03",
       "line": 137,
+      "line_text": "- 결론: Trainium4는 HBM4 8스택 채택으로 Trainium3 대비 **대역폭 4배, 용량 2배**를 예고 — HBM 세대 전환이 이 아키텍처의 다음 성장축임을 시사",
       "claim": "다음 세대의 성장축은 연산이 아니라 메모리 세대 전환이다",
       "value": "Trainium4는 HBM4 8스택으로 대역폭 4배·용량 2배 예고",
       "condition": "Trainium3 대비",
       "attributed_to": "업체 로드맵",
-      "view": { "stack": "메모리", "actor": ["AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "메모리",
+        "actor": [
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-04",
       "line": 249,
+      "line_text": "- N3P는 N3E 대비 완전히 새로운 설계 규칙 없이 **같은 누설전류 기준 속도 5% 향상, 또는 같은 클럭 기준 전력 5\\~10% 절감**, 밀집 로직·SRAM·아날로그 혼합 설계에서 밀도 4% 향상 정도의 점진적 개선(\"HPC 다이얼\") — 거대 AI ASIC이 원하는 딱 그 수준의 저마찰 개선",
       "claim": "커스텀 대형 칩이 원한 것은 큰 도약이 아니라 설계 규칙을 안 바꾸는 점진적 개선이었다",
       "value": "N3P는 같은 누설전류에서 속도 약 5% 향상 또는 같은 클럭에서 전력 5~10% 절감, 밀도 약 4% 향상",
       "condition": "N3E 대비, 새 설계 규칙 없이",
       "attributed_to": "저자 분석",
-      "view": { "stack": "전자·공정", "actor": ["TSMC", "AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "전자·공정",
+        "actor": [
+          "TSMC",
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-05",
       "line": 250,
+      "line_text": "- 패키징은 실리콘 인터포저 1장이 아니라 **CoWoS-R 어셈블리 2개**로 구성 — 저비용 유기 인터포저 기반이라 실리콘 인터포저 대비 기계적 유연성도 좋음",
       "claim": "패키징도 값비싼 실리콘 인터포저 대신 유기 기반 두 조각으로 갔다",
       "value": "CoWoS-R 어셈블리 2개",
       "condition": "실리콘 인터포저 1장 대비 저비용·기계적 유연성 우위",
       "attributed_to": "저자 분석",
-      "view": { "stack": "칩", "actor": ["AWS", "TSMC"], "time": "2025-12-04" }
+      "view": {
+        "stack": "칩",
+        "actor": [
+          "AWS",
+          "TSMC"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-06",
       "line": 402,
+      "line_text": "Nvidia_ --> AWSship[\"AWS: Trainium3로<br/>Nvidia 외 최초 실제<br/>'출하'(AMD보다 1년 빠름)\"]",
       "claim": "엔비디아 밖에서 랙 전체를 스위치로 묶는 방식을 실제로 먼저 출하한 것은 AWS다",
       "value": "AMD보다 1년 빠름",
       "condition": "all-to-all 스위치 스케일업 실제 출하 기준, 발표는 AMD가 먼저",
       "attributed_to": "저자 분석",
-      "view": { "stack": "랙", "actor": ["AWS", "AMD", "엔비디아"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS",
+          "AMD",
+          "엔비디아"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-07",
       "line": 423,
+      "line_text": "- 핵심 차이는 랙 중앙에 추가된 **NeuronLink 스위치 트레이**(4개, 무중단 교체용 스페어 포함 시 5개) — Nvidia GB200/300 NVL72·VR NVL144는 스위치 트레이 교체 전 워크로드를 전부 빼내야 하는 반면, AWS는 예비 회선 설계 덕에 **무중단 핫스왑**이 가능 — AWS는 현장 서비스성·신뢰성을 최우선하는 반면 Nvidia는 판매 상품 특성상 성능을 최우선하는 철학 차이가 드러남",
       "claim": "운영 편의에서는 커스텀 랙이 앞선다 — 스위치를 워크로드 중단 없이 갈아끼울 수 있다",
       "value": "NeuronLink 스위치 트레이 4개(스페어 포함 5개)",
       "condition": "엔비디아 GB200/300 NVL72는 스위치 트레이 교체 전 워크로드를 모두 빼야 함",
       "attributed_to": "저자 분석",
-      "view": { "stack": "랙", "actor": ["AWS", "엔비디아"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS",
+          "엔비디아"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-08",
       "line": 424,
+      "line_text": "- JBOG는 PCIe 6.0으로 업그레이드(Trn2는 PCIe 5.0)되면서 PCB 소재도 M8에서 M8.5 등급으로 상향 — 케이블 없는(케이블리스) 설계라 신호가 전부 PCB를 타고 흐르는데, PCB 손실이 커 PCIe 6.0 x16 리타이머 4개로 신호를 보강",
       "claim": "케이블을 없애면 신호 손실을 기판 등급과 리타이머로 메워야 한다",
       "value": "PCIe 5.0→6.0 전환에 PCB 소재 M8→M8.5, PCIe 6.0 x16 리타이머 4개",
       "condition": "케이블리스 설계라 신호가 전부 PCB를 통과",
       "attributed_to": "저자 분석",
-      "view": { "stack": "랙", "actor": ["AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-09",
       "line": 200,
+      "line_text": "- Trn2는 NL16 2D 토러스·NL32x2 3D 토러스 2종만 존재했지만, **Trainium3는 4종 SKU를 모두 지원** — 다만 2026년 생산 물량 대다수는 공랭 NL32x2 Switched에 집중될 전망",
       "claim": "구성은 네 가지를 지원하지만 실제 물량은 공랭 구성에 몰린다",
       "value": "Trainium3 4종 SKU 지원, 2026년 물량 대다수는 공랭 NL32x2 Switched",
       "condition": "Trn2는 토러스 2종만 존재",
       "attributed_to": "저자 전망",
-      "view": { "stack": "랙", "actor": ["AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-10",
       "line": 422,
+      "line_text": "- 랙 구조는 기존 NL32x2 3D 토러스와 거의 동일 — JBOG(가속기 전용 트레이) 16개 + 호스트 CPU 트레이 2개, JBOG 하나당 칩 2개로 랙당 32칩, 전체 스케일업 월드는 랙 2개(64칩)로 구성",
       "claim": "커스텀 랙의 스케일업 단위는 엔비디아보다 작게 잡혀 있다",
       "value": "랙당 32칩, 스케일업 월드는 랙 2개(64칩)",
       "condition": "JBOG 16개 + 호스트 CPU 트레이 2개 구성",
       "attributed_to": "저자 분석",
-      "view": { "stack": "랙", "actor": ["AWS"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS"
+        ],
+        "time": "2025-12-04"
+      }
     },
     {
       "id": "A-251204-11",
       "line": 326,
+      "line_text": "- Trainium4의 NVLink Fusion 출시가 늦더라도 AWS는 Nvidia의 통상 총마진(약 75%)보다 유리한 조건을 확보했을 가능성이 큼 — Nvidia 입장에서도 AWS와의 상호운용성 허용이 시스템 차원의 록인(lock-in) 유지에 도움이 되므로 가격을 더 매력적으로 제시할 유인이 있음",
       "claim": "상호운용을 허용하는 쪽이 마진을 양보하더라도 록인을 지키는 게 낫다는 계산이 깔려 있다",
       "value": "엔비디아 통상 총마진 약 75%",
       "condition": "AWS가 그보다 유리한 조건을 확보했을 가능성이라는 추정",
       "attributed_to": "저자 추정",
-      "view": { "stack": "랙", "actor": ["AWS", "엔비디아"], "time": "2025-12-04" }
+      "view": {
+        "stack": "랙",
+        "actor": [
+          "AWS",
+          "엔비디아"
+        ],
+        "time": "2025-12-04"
+      }
     }
   ]
 }

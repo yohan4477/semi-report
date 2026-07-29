@@ -1,5 +1,5 @@
 # 원자·인사이트 검사기 — 설계: docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md
-# C1~C12. FAIL이 하나라도 있으면 종료코드 1.
+# C1~C16. FAIL이 하나라도 있으면 종료코드 1.
 import os, io, re, json, glob, sys
 
 ROOT = r"C:\Users\y\semianalysis"
@@ -57,6 +57,7 @@ def load_atoms():
             a['_file'] = os.path.basename(p)
             a['_source_id'] = d['source_id']
             a['_path'] = d['path']
+            a['_source_hash'] = d.get('source_hash')
             out.append(a)
     return out
 
@@ -89,13 +90,24 @@ def sections(body):
     return out
 
 
-def check_atoms(atoms, man_ids, actor_names):
+def check_atoms(atoms, man_hashes, actor_names):
     lines_cache = {}
+    seen_files = set()
     for a in atoms:
         where = '%s %s' % (a['_file'], a['id'])
-        if a['_source_id'] not in man_ids:
+        if a['_source_id'] not in man_hashes:
             add('FAIL', where, 'C1', 'manifest에 없는 source_id: %s' % a['_source_id'])
             continue
+        # C16 — 원문이 바뀌면 줄 번호가 밀린다. 그 줄에 우연히 같은 숫자가 있으면 C2가 통과하므로
+        # 본문 hash를 직접 대조해 원문 변경 자체를 잡는다. 파일당 한 번만 본다
+        if a['_file'] not in seen_files:
+            seen_files.add(a['_file'])
+            fh, mh = a.get('_source_hash'), man_hashes[a['_source_id']]
+            if not fh:
+                add('FAIL', a['_file'], 'C16', 'source_hash 필드 없음 (manifest: %s)' % mh)
+            elif fh != mh:
+                add('FAIL', a['_file'], 'C16',
+                    '원문이 바뀌었다 — 원자 추출 시 %s, 현재 %s. 이 문서의 원자를 재추출할 것' % (fh, mh))
         p = os.path.join(ROOT, a['_path'])
         if p not in lines_cache:
             lines_cache[p] = io.open(p, encoding='utf-8').read().splitlines() if os.path.exists(p) else []
@@ -103,11 +115,19 @@ def check_atoms(atoms, man_ids, actor_names):
         n = a.get('line')
         if not isinstance(n, int) or n < 1 or n > len(lines):
             add('FAIL', where, 'C2', 'line %s이 문서 범위(1~%d) 밖' % (n, len(lines)))
-        elif a.get('value'):
-            hay = norm(lines[n - 1])
-            missing = [t for t in NUMTOK.findall(a['value']) if t not in hay]
-            if missing:
-                add('FAIL', where, 'C2', '%d행에 없는 수치 %s' % (n, ','.join(missing)))
+        else:
+            if a.get('value'):
+                hay = norm(lines[n - 1])
+                missing = [t for t in NUMTOK.findall(a['value']) if t not in hay]
+                if missing:
+                    add('FAIL', where, 'C2', '%d행에 없는 수치 %s' % (n, ','.join(missing)))
+            # C17 — 그 줄의 원문을 원자 옆에 그대로 둔다. C2는 숫자의 소재지만 보므로
+            # claim이 원문과 어긋나도 통과한다. 원문을 붙여 두면 대조가 눈으로 끝난다
+            lt = a.get('line_text')
+            if lt is None:
+                add('FAIL', where, 'C17', 'line_text 없음')
+            elif norm(lt) != norm(lines[n - 1]):
+                add('FAIL', where, 'C17', 'line_text가 %d행 원문과 다름 (원문 변경 또는 줄 밀림)' % n)
         if not (a.get('condition') or '').strip():
             add('FAIL', where, 'C3', 'condition 비어 있음')
         if a.get('view', {}).get('stack') not in STACK:
@@ -245,10 +265,10 @@ def check_synth(atoms, pr):
 
 
 def main():
-    man_ids = {s['id'] for s in json.load(io.open(MAN, encoding='utf-8'))['sources']}
+    man_hashes = {s['id']: s['hash'] for s in json.load(io.open(MAN, encoding='utf-8'))['sources']}
     actor_names = set(json.load(io.open(ACTORS, encoding='utf-8')))
     atoms = load_atoms()
-    check_atoms(atoms, man_ids, actor_names)
+    check_atoms(atoms, man_hashes, actor_names)
     pr = check_process(atoms, {a['id']: a for a in atoms})
     check_synth(atoms, pr)
 
