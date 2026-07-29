@@ -43,10 +43,10 @@
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 20 |
+| ai-infra/compute | 21 |
 | ai-infra/memory | 9 |
-| ai-infra/networking | 8 |
-| ai-infra/business | 7 |
+| ai-infra/networking | 9 |
+| ai-infra/business | 8 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 2 |
 | ai-models/rl | 3 |

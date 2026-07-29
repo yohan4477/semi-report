@@ -370,5 +370,11 @@
   "file": "input/clippings\\America Is Missing The New Labor Economy - Robotics Part 1.md",
   "chars": 62501,
   "flag": "OK"
+ },
+ "can-amd-break-the-cuda-moat-amd-advancing": {
+  "ok": true,
+  "file": "input/clippings\\Can AMD break the CUDA Moat AMD Advancing AI 2026.md",
+  "chars": 82749,
+  "flag": "OK"
  }
 }
