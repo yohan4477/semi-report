@@ -2,7 +2,6 @@
 import os, re, io, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import coverage as cov
-import ledger as led
 import facts as fct
 
 ROOT = r"C:\Users\y\semianalysis"
@@ -46,70 +45,36 @@ def src_title(path):
 SCOPE = {'und': ('제3자 해설', 'scope-und'), 'semi': ('SemiAnalysis 코퍼스', 'scope-semi'),
          'both': ('통합(코퍼스+제3자)', 'scope-both')}
 
-def ledger_html(sources, man, nums, preds, scope):
-    """클러스터 근거 문서에 붙은 숫자·예측 대장 행을 표로. 인사이트의 구체성은 여기서 나온다."""
+def evidence_html(sources, man, scope):
+    """근거 문서 원문에서 뽑은 사실을 문서별로. 대장은 쓰지 않는다 — 코퍼스가 기준."""
     docs = []
     for sid in sources:
         s = man.get(sid)
         if s:
-            docs.append((s.get('date') or '', led.stem(s['path']), src_title(s['path']), s['path']))
+            docs.append((s.get('date') or '', src_title(s['path']), s['path']))
     docs.sort(reverse=True)
 
-    # ① 코퍼스 원문에서 뽑은 사실 — 근거 문서 전편을 커버(대장 등재 여부와 무관)
-    f_blocks, f_n, f_docs = [], 0, 0
-    for date, st, title, path in docs:
+    blocks, n, covered = [], 0, 0
+    for date, title, path in docs:
         rs = fct.rows(path)
-        if not rs: continue
-        f_docs += 1; f_n += len(rs)
-        f_blocks.append(
+        if not rs:
+            continue
+        covered += 1
+        n += len(rs)
+        blocks.append(
             '<details class="doc"><summary><span class="sd">%s</span>%s <em>%d</em></summary><ul>%s</ul></details>'
             % (esc(date[2:]), esc(title), len(rs),
                ''.join('<li>%s%s</li>' % (('<span class="secx">%s</span>' % esc(sec)) if sec else '', inline(f))
                        for f, sec in rs)))
 
-    n_rows, p_rows, n_docs, p_docs = [], [], 0, 0
-    for date, st, title, path in docs:
-        rs = nums.get(st) or []
-        if rs: n_docs += 1
-        for r in rs:
-            if len(r) < 4: continue
-            n_rows.append('<tr><th>%s</th><td class="v">%s</td><td>%s</td><td class="w">%s</td>'
-                          '<td class="d">%s</td></tr>'
-                          % (inline(r[0]), inline(r[1]), inline(r[2]), inline(r[3]), esc(date[2:])))
-        rs = preds.get(st) or []
-        if rs: p_docs += 1
-        for r in rs:
-            if len(r) < 5: continue
-            cls, lab = led.status_of(r[4])
-            p_rows.append('<tr><th>%s</th><td class="w">%s</td><td>%s</td>'
-                          '<td><span class="st %s">%s</span></td><td class="d">%s</td></tr>'
-                          % (inline(r[0]), inline(r[2]), inline(r[3]), cls, esc(lab), esc(date[2:])))
-
-    out = []
-    if f_blocks:
-        out.append(
-            '<details class="lg"><summary><b>핵심 사실 %d개</b> — 근거 문서 %d/%d편의 원문에서 추출</summary>'
-            '<div class="docs">%s</div></details>' % (f_n, f_docs, len(docs), ''.join(f_blocks)))
-    if n_rows:
-        out.append(
-            '<details class="lg"><summary><b>숫자 대장 %d행</b> — 표준화된 지표로 정리된 %d/%d편</summary>'
-            '<div class="tw"><table class="nt"><thead><tr><th>지표</th><th>값</th><th>맥락</th>'
-            '<th>시점</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
-            % (len(n_rows), n_docs, len(docs), ''.join(n_rows)))
-    if p_rows:
-        out.append(
-            '<details class="lg"><summary><b>시점 박힌 예측 %d개</b> — 검증 대상으로 등록된 %d/%d편</summary>'
-            '<div class="tw"><table class="nt"><thead><tr><th>예측</th><th>목표 시점</th><th>근거</th>'
-            '<th>검증</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
-            % (len(p_rows), p_docs, len(docs), ''.join(p_rows)))
-    if not out:
+    if not blocks:
         return '<p class="lgnone">근거 문서에서 추출 가능한 정량 사실이 없습니다.</p>'
-    return '\n'.join(out)
+    return ('<details class="lg"><summary><b>핵심 사실 %d개</b> — 근거 문서 %d/%d편의 원문에서 추출</summary>'
+            '<div class="docs">%s</div></details>' % (n, covered, len(docs), ''.join(blocks)))
 
 
 def main():
     man = {s['id']: s for s in json.load(io.open(MAN, encoding='utf-8'))['sources']}
-    nums, preds = led.load()
     clusters = []
     for p in sorted(glob.glob(os.path.join(ROOT, 'insights', 'clusters', '*.md'))):
         t = io.open(p, encoding='utf-8').read()
@@ -146,14 +111,14 @@ def main():
             '        <p class="sub">%s</p>\n'
             '      </summary>\n'
             '      <div class="body">\n%s\n      </div>\n'
-            '      <p class="srclabel">근거 — 원문에서 뽑은 사실·수치·예측</p>\n'
+            '      <p class="srclabel">근거 — 원문에서 뽑은 사실</p>\n'
             '      %s\n'
             '      <p class="srclabel">근거 소스 (발행일순)</p>\n'
             '      <div class="srcs">\n%s\n      </div>\n'
             '    </details>' % (esc(c['id']), scls, esc(label), esc(c['as_of']),
                                len(chips), esc(c['title']), esc(c['subtitle']),
                                md_body(c['body']),
-                               ledger_html(c['sources'], man, nums, preds, c['scope']), chip_html))
+                               evidence_html(c['sources'], man, c['scope']), chip_html))
 
     html = (TMPL.replace('__COUNT__', str(len(clusters)))
                 .replace('__MAP_URL__', MAP_URL)
