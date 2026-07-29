@@ -15,8 +15,8 @@ def project(lon, lat):
 def esc(t): return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
 PALETTE = ['#2563eb', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#0891b2', '#db2777', '#65a30d', '#ea580c']
-LBL_CH, LBL_H = 8.0, 11.0          # 화면 px 기준 글자폭·줄높이(라벨 폰트 8.5px)
-LBL_DY = [-7.0, 15.0, -20.0, 28.0]  # 마커 기준 후보 오프셋(위·아래 교대)
+LBL_CH, LBL_H = 10.5, 14.0           # 화면 px 기준 글자폭·줄높이(라벨 폰트 11px)
+LBL_DY = [-9.0, 19.0, -25.0, 35.0]   # 마커 기준 후보 오프셋(위·아래 교대)
 
 def world_path():
     t = io.open(MOCKUP, encoding='utf-8').read()
@@ -43,7 +43,7 @@ def main():
     clusters.sort(key=lambda x: x['as_of'], reverse=True)
 
     # 마커 + 라벨 + 스텝 카메라
-    markers, labels, steps = [], [], []
+    markers, labels, steps, chips = [], [], [], []
     for i, c in enumerate(clusters):
         color = PALETTE[i % len(PALETTE)]
         pts = [project(pl['lon'], pl['lat']) for pl in c['places']]
@@ -71,21 +71,27 @@ def main():
             '<li><b>%s</b> <span>%s</span></li>' % (esc(pl['place']), esc(pl.get('note', '')))
             for pl in c['places'])
         badge = {'semi': ('코퍼스', 'b-semi'), 'und': ('제3자', 'b-und'), 'both': ('통합', 'b-both')}.get(c['scope'], (c['scope'], 'b-und'))
+        chips.append(
+            '    <button class="chip" role="tab" id="tab-%d" aria-controls="panel-%d" aria-selected="%s"'
+            ' data-i="%d" data-cam="%.2f %.2f %.3f" style="--c:%s">'
+            '<span class="cid">%s</span><span class="ct">%s</span></button>' % (
+                i, i, 'true' if i == 0 else 'false', i, tx, ty, s, color,
+                esc(c['id']), esc(c['title'].split(' — ')[0])))
         steps.append(
-            '  <section class="step" data-i="%d" data-cam="%.2f %.2f %.3f" style="--c:%s">\n'
-            '    <div class="card">\n'
-            '      <div class="chd"><span class="cid">%s</span><span class="bdg %s">%s</span>'
-            '<span class="ao">최신 %s</span></div>\n'
-            '      <h2>%s</h2>\n<p class="th">%s</p>\n'
-            '      <ul class="pl">%s</ul>\n'
-            '      <a class="more" href="%s" target="_blank" rel="noopener">통합 인사이트에서 전체 보기 ↗</a>\n'
-            '    </div>\n  </section>' % (
-                i, tx, ty, s, color, esc(c['id']), badge[1], badge[0], esc(c['as_of']),
-                esc(c['title']), esc(c['thesis']), place_html, INS_URL))
+            '  <section class="panel" id="panel-%d" role="tabpanel" aria-labelledby="tab-%d"%s style="--c:%s">\n'
+            '    <div class="chd"><span class="bdg %s">%s</span><span class="ao">최신 근거 %s</span>'
+            '<span class="ao">장소 %d곳</span></div>\n'
+            '    <h2>%s</h2>\n    <p class="th">%s</p>\n'
+            '    <ul class="pl">%s</ul>\n'
+            '    <a class="more" href="%s" target="_blank" rel="noopener">통합 인사이트에서 전체 보기 ↗</a>\n'
+            '  </section>' % (
+                i, i, '' if i == 0 else ' hidden', color, badge[1], badge[0], esc(c['as_of']),
+                len(c['places']), esc(c['title']), esc(c['thesis']), place_html, INS_URL))
 
     html = (TMPL.replace('__WORLD__', world_path())
                 .replace('__MARKERS__', '\n'.join(markers))
                 .replace('__LABELS__', '\n'.join(labels))
+                .replace('__CHIPS__', '\n'.join(chips))
                 .replace('__STEPS__', '\n'.join(steps))
                 .replace('__COUNT__', str(len(clusters))))
     io.open(OUT, 'w', encoding='utf-8').write(html)
@@ -100,45 +106,53 @@ TMPL = r'''<meta charset="utf-8">
   :root{--bg:#0b0f17;--panel:#111826;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#6b7688;--line:#222c3d;--accent:#7aa5f8;--sea:#0e1622;--land:#1c2636;--landln:#2b3a52}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.6}
-  .intro{max-width:820px;margin:0 auto;padding:64px 22px 20px}
-  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
-  h1{font-size:clamp(28px,6vw,46px);font-weight:850;letter-spacing:-.035em;margin:0}
-  .lede{color:var(--sub);font-size:15px;margin:14px 0 0;max-width:60ch}
-  .hint{color:var(--faint);font-size:12.5px;margin-top:18px}
-  .scrolly{position:relative;max-width:1200px;margin:0 auto;padding:0 22px}
-  .mapwrap{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;z-index:1}
-  svg#map{width:100%;height:78vh;background:var(--sea);border:1px solid var(--line);border-radius:14px}
-  #cam{transition:transform 1.1s cubic-bezier(.65,0,.35,1)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+  header{padding:40px 0 18px}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+  h1{font-size:clamp(26px,5.2vw,40px);font-weight:850;letter-spacing:-.035em;margin:0;text-wrap:balance}
+  .lede{color:var(--sub);font-size:14.5px;margin:12px 0 0;max-width:62ch}
+  .mapwrap{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--sea);overflow:hidden}
+  svg#map{display:block;width:100%;height:auto;aspect-ratio:2/1;max-height:66dvh}
+  #cam{transition:transform 1s cubic-bezier(.65,0,.35,1)}
   .land{fill:var(--land);stroke:var(--landln);stroke-width:.4}
-  .mk{opacity:.28;transition:opacity .5s, r .5s;stroke:#0b0f17;stroke-width:1.4;vector-effect:non-scaling-stroke}
+  .mk{opacity:.22;transition:opacity .5s, r .5s;stroke:#0b0f17;stroke-width:1.4;vector-effect:non-scaling-stroke}
   .mk.on{opacity:1}
-  .lbl{fill:var(--ink);font-size:8px;font-weight:700;paint-order:stroke;stroke:#0b0f17;stroke-width:2.6px;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .5s}
+  .lbl{fill:var(--ink);font-size:8px;font-weight:700;paint-order:stroke;stroke:#0b0f17;stroke-width:2.6px;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .5s;pointer-events:none}
   .lbl.on{opacity:1}
-  .steps{position:relative;z-index:2;margin-top:-100vh;pointer-events:none}
-  .step{min-height:100vh;display:flex;align-items:center;max-width:430px}
-  .card{pointer-events:auto;background:rgba(17,24,38,.92);backdrop-filter:blur(8px);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:14px;padding:20px 22px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
-  .chd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-  .cid{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--c)}
+  .nav{position:absolute;right:10px;bottom:10px;display:flex;gap:6px}
+  .nav button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:rgba(11,15,23,.82);color:var(--ink);font-size:15px;cursor:pointer;line-height:1}
+  .nav button:hover{border-color:var(--accent);color:var(--accent)}
+  .rail{display:flex;gap:8px;overflow-x:auto;padding:14px 2px 4px;scrollbar-width:thin}
+  .chip{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;cursor:pointer;
+        background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:11px;padding:9px 13px;color:var(--sub);font:inherit}
+  .chip .cid{font-size:10px;font-weight:800;letter-spacing:.1em;color:var(--c)}
+  .chip .ct{font-size:13px;font-weight:750;color:var(--ink);white-space:nowrap}
+  .chip[aria-selected="true"]{background:#16203200;box-shadow:inset 0 0 0 1px var(--c);border-color:var(--c)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:14px;padding:20px 22px;margin-top:10px}
+  .chd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
   .bdg{font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px}
   .b-semi{background:#15251b;color:#63c08c}.b-und{background:#1e2a44;color:#9ab8fa}.b-both{background:#2a2113;color:#d79a4e}
-  .ao{margin-left:auto;font-size:11px;color:var(--faint)}
-  .card h2{font-size:20px;font-weight:850;letter-spacing:-.02em;margin:2px 0 8px}
-  .th{font-size:14px;color:var(--sub);margin:0 0 12px}
-  .pl{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:7px}
-  .pl li{font-size:12.5px;padding-left:14px;position:relative}
+  .ao{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .ao:nth-of-type(2){margin-left:auto}
+  .panel h2{font-size:21px;font-weight:850;letter-spacing:-.02em;margin:4px 0 8px;text-wrap:balance}
+  .th{font-size:14.5px;color:var(--sub);margin:0 0 14px}
+  .pl{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 20px}
+  .pl li{font-size:13px;padding-left:14px;position:relative}
   .pl li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--c)}
   .pl li b{color:var(--ink)}.pl li span{color:var(--faint)}
-  .more{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none}
-  footer{max-width:820px;margin:0 auto;padding:40px 22px 80px;color:var(--faint);font-size:12px;border-top:1px solid var(--line)}
-  @media(max-width:720px){.step{max-width:100%}.mapwrap{height:56vh;position:sticky}svg#map{height:52vh}.steps{margin-top:-56vh}.step{min-height:88vh}}
+  .more{font-size:12.5px;font-weight:700;color:var(--accent);text-decoration:none}
+  .more:hover{text-decoration:underline}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px}
+  @media(prefers-reduced-motion:reduce){#cam{transition:none}.mk,.lbl{transition:none}}
+  @media(max-width:640px){svg#map{aspect-ratio:3/2}.pl{grid-template-columns:1fr}}
 </style>
-<div class="intro">
-  <p class="eyebrow">인사이트 지도 · 스크롤리텔링</p>
-  <h1>인사이트가 벌어지는 곳</h1>
-  <p class="lede">통합 인사이트 __COUNT__개 클러스터의 핵심 장소를 지도 위에서 따라갑니다 — 스크롤하면 지도가 해당 지역으로 이동하고, 그 인사이트의 논지와 장소가 나타납니다.</p>
-  <p class="hint">↓ 스크롤해서 시작</p>
-</div>
-<div class="scrolly">
+<div class="wrap">
+  <header>
+    <p class="eyebrow">통합 인사이트 · 장소로 보기</p>
+    <h1>인사이트가 벌어지는 곳</h1>
+    <p class="lede">__COUNT__개 클러스터의 핵심 장소를 지도 위에 놓았습니다. 클러스터를 고르면 지도가 그 지역으로 이동하고, 논지와 장소가 아래에 펼쳐집니다.</p>
+  </header>
   <div class="mapwrap">
     <svg id="map" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="인사이트 세계 지도">
       <g id="cam">
@@ -147,39 +161,59 @@ TMPL = r'''<meta charset="utf-8">
         __LABELS__
       </g>
     </svg>
+    <div class="nav"><button id="prev" aria-label="이전 클러스터">‹</button><button id="next" aria-label="다음 클러스터">›</button></div>
   </div>
-  <div class="steps">
+  <div class="rail" role="tablist" aria-label="인사이트 클러스터">
+__CHIPS__
+  </div>
 __STEPS__
-  </div>
+  <footer>자기완결 SVG(Natural Earth 110m) · 외부 로드 없음. 좌표·장소는 편집 주석이며 정밀 GIS 아님. insights/cluster_geo.json + gen_map.py 산출물.</footer>
 </div>
-<footer>자기완결 SVG(Natural Earth 110m) · 외부 로드 없음. 좌표·장소는 편집 주석이며 정밀 GIS 아님. insights/cluster_geo.json + gen_map.py 산출물.</footer>
 <script>
 (function(){
   var cam=document.getElementById('cam');
-  var steps=[].slice.call(document.querySelectorAll('.step'));
-  var scale=1;
-  // 라벨은 카메라 그룹 안이라 확대되면 같이 커짐 → 활성 시 1/scale로 역보정
-  function setCam(tx,ty,s){ scale=s; cam.setAttribute('transform','translate('+tx+','+ty+') scale('+s+')'); }
-  function activate(i){
-    document.querySelectorAll('.mk').forEach(function(m){ m.classList.remove('on'); m.setAttribute('r',(4/scale).toFixed(2)); });
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var panels=[].slice.call(document.querySelectorAll('.panel'));
+  var svg=document.getElementById('map');
+  var scale=1, cur=0;
+  // 화면 px → SVG 사용자 단위 환산. viewBox 1000 폭이 실제 몇 px로 그려지는지(unit)와
+  // 카메라 확대율(scale)을 함께 되돌려야 라벨·마커가 어느 스텝에서나 같은 크기로 보인다.
+  function k(){ var w=svg.getBoundingClientRect().width||1000; return 1/(scale*(w/1000)); }
+  function paint(i){
+    var u=k();
+    document.querySelectorAll('.mk').forEach(function(m){ m.classList.remove('on'); m.setAttribute('r',(4*u).toFixed(2)); });
     document.querySelectorAll('.lbl').forEach(function(l){ l.classList.remove('on'); });
-    document.querySelectorAll('.mk-'+i).forEach(function(m){ m.classList.add('on'); m.setAttribute('r',(6/scale).toFixed(2)); });
+    document.querySelectorAll('.mk-'+i).forEach(function(m){ m.classList.add('on'); m.setAttribute('r',(6*u).toFixed(2)); });
     document.querySelectorAll('.lbl-'+i).forEach(function(l){
       l.classList.add('on');
-      l.style.fontSize=(8.5/scale).toFixed(2)+'px';
-      l.setAttribute('y',(+l.getAttribute('data-y')+ (+l.getAttribute('data-dy'))/scale).toFixed(2));
+      l.style.fontSize=(11*u).toFixed(2)+'px';
+      l.setAttribute('y',(+l.getAttribute('data-y')+(+l.getAttribute('data-dy'))*u).toFixed(2));
     });
   }
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(e.isIntersecting){
-        var s=e.target, cm=s.getAttribute('data-cam').split(' ');
-        setCam(+cm[0],+cm[1],+cm[2]); activate(+s.getAttribute('data-i'));
-      }
+  function select(i,focus){
+    if(i<0) i=chips.length-1; if(i>=chips.length) i=0;
+    cur=i;
+    var cm=chips[i].getAttribute('data-cam').split(' ');
+    scale=+cm[2];
+    cam.setAttribute('transform','translate('+cm[0]+','+cm[1]+') scale('+cm[2]+')');
+    chips.forEach(function(c,j){ c.setAttribute('aria-selected', j===i?'true':'false'); });
+    panels.forEach(function(p,j){ p.hidden = j!==i; });
+    chips[i].scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});
+    if(focus) chips[i].focus();
+    paint(i);
+  }
+  chips.forEach(function(c,i){
+    c.addEventListener('click',function(){ select(i); });
+    c.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'){e.preventDefault();select(i+1,true);}
+      if(e.key==='ArrowLeft'){e.preventDefault();select(i-1,true);}
     });
-  },{rootMargin:'-45% 0px -45% 0px', threshold:0});
-  steps.forEach(function(s){ io.observe(s); });
-  if(steps[0]){ var c=steps[0].getAttribute('data-cam').split(' '); setCam(+c[0],+c[1],+c[2]); activate(0); }
+  });
+  document.getElementById('prev').addEventListener('click',function(){ select(cur-1); });
+  document.getElementById('next').addEventListener('click',function(){ select(cur+1); });
+  select(0);
+  var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ paint(cur); },150); });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ paint(cur); });
 })();
 </script>
 '''
