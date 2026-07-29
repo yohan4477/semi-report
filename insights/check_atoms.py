@@ -1,5 +1,5 @@
 # 원자·인사이트 검사기 — 설계: docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md
-# C1~C16. FAIL이 하나라도 있으면 종료코드 1.
+# C1~C18. FAIL이 하나라도 있으면 종료코드 1.
 import os, io, re, json, glob, sys
 
 ROOT = r"C:\Users\y\semianalysis"
@@ -47,6 +47,11 @@ def add(level, where, rule, msg):
 
 def norm(s):
     return (s or '').replace(',', '').replace(' ', '')
+
+
+def corpus_of(source_id):
+    """source_id 접두어가 코퍼스다 — semi(SemiAnalysis) / und(언더스탠딩·제3자)."""
+    return (source_id or '').split(':')[0]
 
 
 def load_atoms():
@@ -214,6 +219,12 @@ def check_synth(atoms, pr):
             add('FAIL', where, 'C7', '원자 %d개 (3개 이상 필요)' % len(cited_atoms))
         if len({a['_source_id'] for a in cited_atoms}) < 2:
             add('FAIL', where, 'C7', '출처 문서 %d편 (2편 이상 필요)' % len({a['_source_id'] for a in cited_atoms}))
+
+        # C18 — 제3자(und) 근거가 SemiAnalysis(semi) 판단에 섞이면 근거 무게가 뒤섞이고
+        # 어느 주장이 1차 리포트에서 나왔는지 추적이 끊긴다. 인사이트 단위로 코퍼스를 가른다
+        corpora = {corpus_of(a['_source_id']) for a in cited_atoms}
+        if len(corpora) > 1:
+            add('FAIL', where, 'C18', '한 인사이트에 코퍼스가 섞였다: %s' % ', '.join(sorted(corpora)))
 
         for name in ('그래서 무엇이 달라지나', '아직 모르는 것'):
             if not sec.get(name):
