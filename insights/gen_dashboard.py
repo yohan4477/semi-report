@@ -2,6 +2,7 @@
 import os, re, io, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import coverage as cov
+import ledger as led
 
 ROOT = r"C:\Users\y\semianalysis"
 MAN = os.path.join(ROOT, "insights", "manifest.json")
@@ -44,8 +45,57 @@ def src_title(path):
 SCOPE = {'und': ('제3자 해설', 'scope-und'), 'semi': ('SemiAnalysis 코퍼스', 'scope-semi'),
          'both': ('통합(코퍼스+제3자)', 'scope-both')}
 
+def ledger_html(sources, man, nums, preds, scope):
+    """클러스터 근거 문서에 붙은 숫자·예측 대장 행을 표로. 인사이트의 구체성은 여기서 나온다."""
+    docs = []
+    for sid in sources:
+        s = man.get(sid)
+        if s:
+            docs.append((s.get('date') or '', led.stem(s['path']), src_title(s['path'])))
+    docs.sort(reverse=True)
+
+    n_rows, p_rows, n_docs, p_docs = [], [], 0, 0
+    for date, st, title in docs:
+        rs = nums.get(st) or []
+        if rs: n_docs += 1
+        for r in rs:
+            if len(r) < 4: continue
+            n_rows.append('<tr><th>%s</th><td class="v">%s</td><td>%s</td><td class="w">%s</td>'
+                          '<td class="d">%s</td></tr>'
+                          % (inline(r[0]), inline(r[1]), inline(r[2]), inline(r[3]), esc(date[2:])))
+        rs = preds.get(st) or []
+        if rs: p_docs += 1
+        for r in rs:
+            if len(r) < 5: continue
+            cls, lab = led.status_of(r[4])
+            p_rows.append('<tr><th>%s</th><td class="w">%s</td><td>%s</td>'
+                          '<td><span class="st %s">%s</span></td><td class="d">%s</td></tr>'
+                          % (inline(r[0]), inline(r[2]), inline(r[3]), cls, esc(lab), esc(date[2:])))
+
+    out = []
+    if n_rows:
+        out.append(
+            '<details class="lg"><summary><b>숫자 %d개</b> — 근거 문서 %d/%d편이 숫자 대장에 등재</summary>'
+            '<div class="tw"><table class="nt"><thead><tr><th>지표</th><th>값</th><th>맥락</th>'
+            '<th>시점</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
+            % (len(n_rows), n_docs, len(docs), ''.join(n_rows)))
+    if p_rows:
+        out.append(
+            '<details class="lg"><summary><b>시점 박힌 예측 %d개</b> — 근거 문서 %d/%d편이 예측 대장에 등재</summary>'
+            '<div class="tw"><table class="nt"><thead><tr><th>예측</th><th>목표 시점</th><th>근거</th>'
+            '<th>검증</th><th>문서</th></tr></thead><tbody>%s</tbody></table></div></details>'
+            % (len(p_rows), p_docs, len(docs), ''.join(p_rows)))
+    if not out:
+        return ('<p class="lgnone">%s</p>' %
+                ('제3자 해설 코퍼스라 숫자·예측 대장 대상이 아닙니다 — 수치는 본문에 인용된 것이 전부입니다.'
+                 if scope == 'und' else
+                 '근거 문서가 아직 대장에 백필되지 않았습니다(전력·냉각 6편 미백필).'))
+    return '\n'.join(out)
+
+
 def main():
     man = {s['id']: s for s in json.load(io.open(MAN, encoding='utf-8'))['sources']}
+    nums, preds = led.load()
     clusters = []
     for p in sorted(glob.glob(os.path.join(ROOT, 'insights', 'clusters', '*.md'))):
         t = io.open(p, encoding='utf-8').read()
@@ -82,11 +132,14 @@ def main():
             '        <p class="sub">%s</p>\n'
             '      </summary>\n'
             '      <div class="body">\n%s\n      </div>\n'
+            '      <p class="srclabel">대장 — 원문에서 뽑은 수치·예측</p>\n'
+            '      %s\n'
             '      <p class="srclabel">근거 소스 (발행일순)</p>\n'
             '      <div class="srcs">\n%s\n      </div>\n'
             '    </details>' % (esc(c['id']), scls, esc(label), esc(c['as_of']),
                                len(chips), esc(c['title']), esc(c['subtitle']),
-                               md_body(c['body']), chip_html))
+                               md_body(c['body']),
+                               ledger_html(c['sources'], man, nums, preds, c['scope']), chip_html))
 
     html = (TMPL.replace('__COUNT__', str(len(clusters)))
                 .replace('__MAP_URL__', MAP_URL)
@@ -132,6 +185,28 @@ TMPL = r'''<meta charset="utf-8">
   .body ul{margin:0 0 8px;padding-left:18px}
   .body li{font-size:13.5px;color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
+  .lg{border:1px solid var(--line);border-radius:10px;background:var(--sunk);margin-bottom:8px}
+  .lg>summary{cursor:pointer;padding:9px 13px;font-size:12.5px;color:var(--sub);list-style:none}
+  .lg>summary::-webkit-details-marker{display:none}
+  .lg>summary::before{content:"▸ ";color:var(--faint)}
+  .lg[open]>summary::before{content:"▾ "}
+  .lg>summary b{color:var(--ink)}
+  .tw{overflow-x:auto;border-top:1px solid var(--line)}
+  .nt{width:100%;border-collapse:collapse;font-size:12px}
+  .nt thead th{position:sticky;top:0;background:var(--sunk);text-align:left;font-size:10px;font-weight:800;
+               letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:7px 10px;white-space:nowrap}
+  .nt tbody th{text-align:left;font-weight:750;color:var(--ink);padding:7px 10px;vertical-align:top;min-width:150px}
+  .nt td{padding:7px 10px;color:var(--sub);vertical-align:top}
+  .nt tbody tr+tr{border-top:1px solid var(--line)}
+  .nt .v{color:var(--ink);font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .nt .w,.nt .d{color:var(--faint);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .st{font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .st.wait{background:var(--soft);color:var(--accent2)}
+  .st.hit{background:#e8f6ec;color:#1d6e45}
+  .st.part{background:#f6ecda;color:#9a5b12}
+  .st.miss{background:#fbe9e9;color:#a32626}
+  @media (prefers-color-scheme:dark){.st.hit{background:#173323;color:#63c08c}.st.part{background:#2a2113;color:#d79a4e}.st.miss{background:#2e1a1a;color:#e08a8a}}
+  .lgnone{font-size:12px;color:var(--faint);margin:0 0 8px}
   .srclabel{font-size:10.5px;font-weight:800;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 7px}
   .srcs{display:flex;flex-wrap:wrap;gap:6px}
   .src{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;padding:5px 11px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);color:var(--sub);text-decoration:none;max-width:100%}
