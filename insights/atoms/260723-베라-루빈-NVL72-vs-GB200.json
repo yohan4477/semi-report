@@ -1,0 +1,79 @@
+{
+  "source_id": "semi:compute:베라-루빈-NVL72-vs-GB200-NVL72-추론-TCO아키텍처-분석",
+  "path": "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md",
+  "date": "2026-07-23",
+  "atoms": [
+    {
+      "id": "A-260723-01",
+      "line": 46,
+      "claim": "요약 층위에서는 루빈이 이전 세대 대비 전력당 성능이 5배 넘게 좋다고 제시된다",
+      "value": "GB200 NVL72 대비 메가와트당 성능 5.4배, 달러당 5배",
+      "condition": "DeepSeek R1, 엔지니어링 샘플 단계, CoreWeave 측정",
+      "attributed_to": "CoreWeave 측정",
+      "view": { "stack": "랙", "actor": ["엔비디아", "CoreWeave"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-02",
+      "line": 256,
+      "claim": "본문에서는 그 배수의 비교 대상이 다르다 — 5.4배는 GB300 대비이며 GB200은 그 측정 구간에 도달조차 못 한다",
+      "value": "100 tok/s/user까지 약 2배, 200 부근 약 4배, 300에서 5.4배",
+      "condition": "2026년 7월 GB300 NVL72 기준선, 상호작용성 구간별",
+      "attributed_to": "저자 분석",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-03",
+      "line": 257,
+      "claim": "2025년 GB200 기준선과 비교하면 배수가 곡선 중간에서 가장 크게 벌어졌다가 다시 좁아진다",
+      "value": "저속 3배 미만, 150 tok/s/user에서 약 10배, 200에서 6배",
+      "condition": "1년 전 소프트웨어 스택 기준이라 현재의 GB200과 다름",
+      "attributed_to": "저자 분석",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-04",
+      "line": 258,
+      "claim": "극한 구간에서는 배수가 아니라 가능 여부가 갈린다 — 이전 세대는 곡선이 끊기고 루빈만 이어진다",
+      "value": "300 tok/s/user에서 96,446 tok/s/MW, 350에서 70,703 tok/s/MW",
+      "condition": "전체 GPU 기준 MW당 출력토큰, 350 구간에서 GB200·GB300 서빙 불가",
+      "attributed_to": "저자 분석",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-05",
+      "line": 306,
+      "claim": "전력당 우위만큼 비용 우위가 크지는 않다 — 루빈의 시간당 소유비용 자체가 더 비싸기 때문",
+      "value": "GPU 시간당 TCO 루빈 $3.57, GB200 $1.84, GB300 $2.36",
+      "condition": "자체 소유·운영 시나리오 기준, 임대료 아님",
+      "attributed_to": "저자 모델",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-06",
+      "line": 417,
+      "claim": "비용 우위는 응답 속도를 올릴수록 커진다",
+      "value": "100 tok/s/user까지 1.5배, 200~250 구간 약 3배, 300에서 5배",
+      "condition": "2026년 7월 GB200·GB300 대비 백만 출력토큰당 비용",
+      "attributed_to": "저자 분석",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-07",
+      "line": 414,
+      "claim": "랙 한 대가 먹는 전력이 이미 200kW에 근접한다",
+      "value": "VR NVL72 서버 단위 약 185kW (네트워킹 제외)",
+      "condition": "Max-Q 구성, TDP 1,800W, 최신 SOCAMM 메모리",
+      "attributed_to": "저자 모델",
+      "view": { "stack": "랙", "actor": ["엔비디아"], "time": "2026-07-23" }
+    },
+    {
+      "id": "A-260723-08",
+      "line": 416,
+      "claim": "칩 단위 스펙 도약이 랙 임대료 상한을 끌어올린다",
+      "value": "밀집 FP8 5,000 TFLOPs → 1,800W 약 16,625, 2,300W 약 17,500 (2.3~2.5배)",
+      "condition": "GB300 NVL72에서 관측된 스펙 기준",
+      "attributed_to": "저자 분석",
+      "view": { "stack": "칩", "actor": ["엔비디아"], "time": "2026-07-23" }
+    }
+  ]
+}
