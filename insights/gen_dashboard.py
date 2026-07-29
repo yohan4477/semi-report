@@ -6,6 +6,7 @@ import coverage as cov
 ROOT = r"C:\Users\y\semianalysis"
 MAN = os.path.join(ROOT, "insights", "manifest.json")
 OUT = os.path.join(ROOT, "대시보드", "통합 인사이트.html")
+MAP_URL = "https://claude.ai/code/artifact/a2742433-8236-4907-8a8a-96e070452455"
 GH = "https://github.com/yohan4477/semi-report/blob/main/"
 
 import urllib.parse
@@ -87,7 +88,9 @@ def main():
                                len(chips), esc(c['title']), esc(c['subtitle']),
                                md_body(c['body']), chip_html))
 
-    html = TMPL.replace('__COUNT__', str(len(clusters))).replace('__BLOCKS__', '\n'.join(blocks))
+    html = (TMPL.replace('__COUNT__', str(len(clusters)))
+                .replace('__MAP_URL__', MAP_URL)
+                .replace('__BLOCKS__', '\n'.join(blocks)))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('OK: %d clusters -> %s' % (len(clusters), OUT))
@@ -107,6 +110,8 @@ TMPL = r'''<meta charset="utf-8">
   h1::after{content:"";display:block;width:52px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
   .lede{color:var(--sub);font-size:15px;margin:16px 0 0;max-width:62ch}
   .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
+  .maplink{color:var(--accent);font-weight:700;text-decoration:none}
+  .maplink:hover{text-decoration:underline}
   .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:18px 22px;margin-top:14px;box-shadow:var(--shadow)}
   .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:28px}
   .ins>summary::-webkit-details-marker{display:none}
@@ -139,7 +144,7 @@ TMPL = r'''<meta charset="utf-8">
     <p class="eyebrow">크로스-문서 합성 · 발행일 기준</p>
     <h1>통합 인사이트</h1>
     <p class="lede">여러 문서가 합쳐서 말하는 것 — 주제 클러스터별로 통합 논지·공통 진단·연결·인과·상충·이견·함의를 합성하고, 근거 소스를 발행일순으로 연결합니다. 제목을 클릭해 펼치세요.</p>
-    <div class="meta"><span>클러스터 <b>__COUNT__</b></span><span>소스 = 근거 provenance</span><span>as_of = 최신 근거 발행일</span></div>
+    <div class="meta"><span>클러스터 <b>__COUNT__</b></span><span>소스 = 근거 provenance</span><span>as_of = 최신 근거 발행일</span><span><a class="maplink" href="__MAP_URL__" target="_blank" rel="noopener">인사이트 지도에서 장소로 보기 ↗</a></span></div>
   </header>
 __BLOCKS__
   <footer>인사이트 아키텍처(insights/) 산출물 — manifest(소스·발행일)+clusters(provenance)에서 생성. 클러스터 확신도·시계열은 근거 소스로 검증하세요.</footer>
