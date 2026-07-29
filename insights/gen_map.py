@@ -15,6 +15,8 @@ def project(lon, lat):
 def esc(t): return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
 PALETTE = ['#2563eb', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#0891b2', '#db2777', '#65a30d', '#ea580c']
+LBL_CH, LBL_H = 8.0, 11.0          # 화면 px 기준 글자폭·줄높이(라벨 폰트 8.5px)
+LBL_DY = [-7.0, 15.0, -20.0, 28.0]  # 마커 기준 후보 오프셋(위·아래 교대)
 
 def world_path():
     t = io.open(MOCKUP, encoding='utf-8').read()
@@ -44,17 +46,27 @@ def main():
     markers, labels, steps = [], [], []
     for i, c in enumerate(clusters):
         color = PALETTE[i % len(PALETTE)]
-        xs, ys = [], []
-        for pl in c['places']:
-            x, y = project(pl['lon'], pl['lat']); xs.append(x); ys.append(y)
-            markers.append('<circle class="mk mk-%d" cx="%.1f" cy="%.1f" r="4" fill="%s"/>' % (i, x, y, color))
-            labels.append('<text class="lbl lbl-%d" x="%.1f" y="%.1f" data-y="%.1f" text-anchor="middle">%s</text>'
-                          % (i, x, y - 7, y, esc(pl['place'])))
+        pts = [project(pl['lon'], pl['lat']) for pl in c['places']]
+        xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
         x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
         cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
         bw, bh = max(x1 - x0, 40), max(y1 - y0, 40)
         s = min(W / (bw * 2.2), H / (bh * 2.2)); s = max(1.4, min(s, 7))
         tx, ty = W / 2 - s * cx, H / 2 - s * cy
+        # 라벨 겹침 해소: 이 스텝의 확대율(s) 기준 화면 좌표에서 상/하 스태거
+        placed = []
+        for (x, y), pl in zip(pts, c['places']):
+            markers.append('<circle class="mk mk-%d" cx="%.1f" cy="%.1f" r="4" fill="%s"/>' % (i, x, y, color))
+            sx, sy = x * s, y * s
+            half = len(pl['place']) * LBL_CH / 2
+            dy = LBL_DY[0]
+            for cand in LBL_DY:
+                box = (sx - half, sy + cand - LBL_H, sx + half, sy + cand)
+                if not any(box[0] < b[2] and b[0] < box[2] and box[1] < b[3] and b[1] < box[3] for b in placed):
+                    dy = cand; break
+            placed.append((sx - half, sy + dy - LBL_H, sx + half, sy + dy))
+            labels.append('<text class="lbl lbl-%d" x="%.1f" y="%.1f" data-y="%.1f" data-dy="%d" text-anchor="middle">%s</text>'
+                          % (i, x, y + dy / s, y, dy, esc(pl['place'])))
         place_html = ''.join(
             '<li><b>%s</b> <span>%s</span></li>' % (esc(pl['place']), esc(pl.get('note', '')))
             for pl in c['places'])
@@ -155,7 +167,7 @@ __STEPS__
     document.querySelectorAll('.lbl-'+i).forEach(function(l){
       l.classList.add('on');
       l.style.fontSize=(8.5/scale).toFixed(2)+'px';
-      l.setAttribute('y',(+l.getAttribute('data-y')-7/scale).toFixed(2));
+      l.setAttribute('y',(+l.getAttribute('data-y')+ (+l.getAttribute('data-dy'))/scale).toFixed(2));
     });
   }
   var io=new IntersectionObserver(function(es){
