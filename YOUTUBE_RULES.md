@@ -15,6 +15,14 @@ SemiAnalysis의 YouTube 두 채널을 자료원으로 처리하는 규칙. 영�
 
 1. `yt-dlp`로 채널별 영상 목록 + 메타데이터(제목·날짜·길이·설명) 추출: `yt-dlp --flat-playlist --print "%(id)s|%(upload_date)s|%(title)s" <채널URL>/videos`
 2. 영상 다운로드 없이 **자막만** 추출: `yt-dlp --write-auto-sub --skip-download` (수동 자막 있으면 우선)
+
+   **환경 주의 (2026-07-30 실측)**: `PATH`의 `yt-dlp`는 Anaconda Python 3.9에 붙어 있어 2025.10.14에 고정돼 있고, 지금 유튜브에서 `ERROR: The page needs to be reloaded`로 실패한다. 3.9는 최신 yt-dlp가 지원하지 않아 업그레이드도 안 된다. Python 3.13으로 쓸 것:
+   ```bash
+   py -3.13 -m pip install -U yt-dlp     # 최초 1회
+   py -3.13 -m yt_dlp --skip-download --write-auto-subs --sub-langs ko \
+       --sub-format json3 -o "sub_%(id)s.%(ext)s" <URL>
+   ```
+   워치 페이지 HTML에서 `captionTracks`의 `baseUrl`을 긁어 직접 요청하는 우회는 **막혔다** — HTTP 200에 본문 0바이트로 돌아온다(PO 토큰 필요). 제목·채널명은 콘솔이 cp949라 깨지므로 `-J`로 JSON을 받아 utf-8 파일로 쓴 뒤 읽어라.
 3. 두 채널 목록을 합쳐 영상 ID로 중복 제거 → `유튜브/영상 목록.md` 대장화 (ID | 날짜 | 제목 | 채널 | 처리 상태)
 4. 증분 원칙: 대장에 있는 ID는 건너뜀 (LinkedIn과 동일)
 
