@@ -14,6 +14,17 @@ def project(lon, lat):
 
 def esc(t): return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
+def inline(t):
+    """클러스터 본문의 **굵게**·[[링크]]를 HTML로. 인사이트의 수치·고유명을 살리는 용도."""
+    t = re.sub(r'\[\[([^\]]+)\]\]', r'\1', t)
+    return re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(t))
+
+def section(body, name):
+    """## 섹션의 불릿을 리스트로."""
+    m = re.search(r'## %s\s*\n(.*?)(?=\n## |\Z)' % re.escape(name), body, re.DOTALL)
+    if not m: return []
+    return [inline(x.strip()) for x in re.findall(r'^- (.+)$', m.group(1), re.M)]
+
 PALETTE = ['#2563eb', '#dc2626', '#16a34a', '#d97706', '#7c3aed', '#0891b2', '#db2777', '#65a30d', '#ea580c']
 LBL_CH, LBL_H = 10.5, 14.0           # 화면 px 기준 글자폭·줄높이(라벨 폰트 11px)
 LBL_DY = [-9.0, 19.0, -25.0, 35.0]   # 마커 기준 후보 오프셋(위·아래 교대)
@@ -39,7 +50,11 @@ def main():
         cid = c['cluster_id']
         if cid in geo and geo[cid]:
             clusters.append({'id': cid, 'title': sc('title'), 'scope': sc('corpus_scope'),
-                             'as_of': sc('as_of'), 'thesis': thesis, 'places': geo[cid]})
+                             'as_of': sc('as_of'), 'thesis': inline(thesis), 'places': geo[cid],
+                             'sub': sc('subtitle'), 'n_src': len(c.get('sources') or []),
+                             'dx': section(body, '공통 진단'),
+                             'gap': section(body, '상충·이견'),
+                             'watch': section(body, '함의·다음 확인 포인트')})
     clusters.sort(key=lambda x: x['as_of'], reverse=True)
 
     # 마커 + 라벨 + 스텝 카메라
@@ -68,8 +83,15 @@ def main():
             labels.append('<text class="lbl lbl-%d" x="%.1f" y="%.1f" data-y="%.1f" data-dy="%d" text-anchor="middle">%s</text>'
                           % (i, x, y + dy / s, y, dy, esc(pl['place'])))
         place_html = ''.join(
-            '<li><b>%s</b> <span>%s</span></li>' % (esc(pl['place']), esc(pl.get('note', '')))
+            '<li><b>%s</b> <span>%s</span></li>' % (esc(pl['place']), inline(pl.get('note', '')))
             for pl in c['places'])
+        def block(cls, head, items, limit):
+            if not items: return ''
+            return ('<div class="blk %s"><h3>%s</h3><ul>%s</ul></div>'
+                    % (cls, head, ''.join('<li>%s</li>' % x for x in items[:limit])))
+        detail = (block('dx', '핵심 진단', c['dx'], 3)
+                  + block('gap', '이견·미검증', c['gap'], 3)
+                  + block('watch', '지켜볼 것', c['watch'], 2))
         badge = {'semi': ('코퍼스', 'b-semi'), 'und': ('제3자', 'b-und'), 'both': ('통합', 'b-both')}.get(c['scope'], (c['scope'], 'b-und'))
         chips.append(
             '    <button class="chip" role="tab" id="tab-%d" aria-controls="panel-%d" aria-selected="%s"'
@@ -79,14 +101,15 @@ def main():
                 esc(c['id']), esc(c['title'].split(' — ')[0])))
         steps.append(
             '  <section class="panel" id="panel-%d" role="tabpanel" aria-labelledby="tab-%d"%s style="--c:%s">\n'
-            '    <div class="chd"><span class="bdg %s">%s</span><span class="ao">최신 근거 %s</span>'
+            '    <div class="chd"><span class="bdg %s">%s</span><span class="ao">근거 %d건 · 최신 %s</span>'
             '<span class="ao">장소 %d곳</span></div>\n'
             '    <h2>%s</h2>\n    <p class="th">%s</p>\n'
-            '    <ul class="pl">%s</ul>\n'
+            '    <h3 class="plh">지도 위 장소</h3>\n    <ul class="pl">%s</ul>\n'
+            '    <div class="blks">%s</div>\n'
             '    <a class="more" href="%s" target="_blank" rel="noopener">통합 인사이트에서 전체 보기 ↗</a>\n'
             '  </section>' % (
-                i, i, '' if i == 0 else ' hidden', color, badge[1], badge[0], esc(c['as_of']),
-                len(c['places']), esc(c['title']), esc(c['thesis']), place_html, INS_URL))
+                i, i, '' if i == 0 else ' hidden', color, badge[1], badge[0], c['n_src'], esc(c['as_of']),
+                len(c['places']), esc(c['title']), c['thesis'], place_html, detail, INS_URL))
 
     html = (TMPL.replace('__WORLD__', world_path())
                 .replace('__MARKERS__', '\n'.join(markers))
@@ -137,10 +160,20 @@ TMPL = r'''<meta charset="utf-8">
   .ao:nth-of-type(2){margin-left:auto}
   .panel h2{font-size:21px;font-weight:850;letter-spacing:-.02em;margin:4px 0 8px;text-wrap:balance}
   .th{font-size:14.5px;color:var(--sub);margin:0 0 14px}
-  .pl{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 20px}
+  .plh{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+  .pl{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 20px}
   .pl li{font-size:13px;padding-left:14px;position:relative}
   .pl li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--c)}
   .pl li b{color:var(--ink)}.pl li span{color:var(--faint)}
+  .blks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:0 0 16px;padding-top:16px;border-top:1px solid var(--line)}
+  .blk h3{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px;
+          display:inline-block;padding:2px 8px;border-radius:5px}
+  .blk.dx h3{background:#132133;color:#7aa5f8}
+  .blk.gap h3{background:#2a1b18;color:#e08a6a}
+  .blk.watch h3{background:#15251b;color:#63c08c}
+  .blk ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .blk li{font-size:12.5px;color:var(--sub);line-height:1.55;padding-left:11px;border-left:2px solid var(--line)}
+  .blk li b{color:var(--ink);font-weight:750}
   .more{font-size:12.5px;font-weight:700;color:var(--accent);text-decoration:none}
   .more:hover{text-decoration:underline}
   footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px}
