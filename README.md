@@ -9,7 +9,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - 🧭 [인텔리전스 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
 - 📊 [임팩트 타임라인 (Yomianalysis)](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
 - 🗂️ [소셜 신호 히스토리](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html) — LinkedIn·YouTube 신호 전체 아카이브
-- ⚛️ [원자 뷰 — 근거의 좌표](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9B%90%EC%9E%90%20%EB%B7%B0.html) — 문서 원문 한 줄에서 뽑은 원자를 스택 8노드·프로세스 7단계 두 축에 매단 뷰. 칸을 누르면 그 칸의 원자가 **원문 그 줄**과 함께 펼쳐지고, 원자 0인 노드는 감추지 않고 근거 공백으로 드러냅니다
+- ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html) — 원자 기반 인사이트를 먼저 읽고, 「근거 원자」를 펼치면 인용 원자가 **문서 원문의 그 줄**과 함께 나옵니다. 아래쪽 근거 지도는 스택 8노드·프로세스 7단계에 근거가 어디 몰렸고 어디가 비었는지 보여줍니다
 
 ### 도메인·도구
 - ⚡ [전력 인프라 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%A0%84%EB%A0%A5%20%EC%9D%B8%ED%94%84%EB%9D%BC%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 데이터센터 전력·발전 밸류체인
@@ -54,7 +54,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 **새 문서 넣기** — `insight-atomize` 스킬(`.claude/skills/`)이 절차를 지휘하고 `insight-atomizer` 에이전트(`.claude/agents/`)가 추출만 합니다. manifest 갱신 → 추출 → 단계 배정 → 검사기 FAIL 0 → `py insights/crosscheck.py`로 기존 인사이트와 대조(STALE·충돌 후보) → 커밋. 인사이트 본문은 기계가 고치지 않고 목록만 보고합니다.
 
-**보는 곳** — ⚛️ [원자 뷰](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9B%90%EC%9E%90%20%EB%B7%B0.html). `py insights/gen_atomview.py`로 재생성합니다(원자·인사이트가 늘면 다시 돌리세요).
+**보는 곳** — ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html). `py insights/gen_atomview.py`로 재생성합니다(원자·인사이트가 늘면 다시 돌리세요).
 
 설계 문서는 `docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md`(체계)와 `2026-07-30-원자화-스킬-design.md`(절차)입니다.
 

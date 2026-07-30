@@ -1,12 +1,13 @@
-# 원자 뷰 페이지 생성 — atoms + synth + views/process.json → 자기완결 HTML
-# 스택 8노드와 프로세스 7단계를 한 화면에 두고, 칸을 누르면 그 칸의 인사이트와 원자를
-# line_text와 함께 펼친다. 원자가 0인 노드는 감추지 않고 "근거 없음"으로 드러낸다.
+# 인사이트와 근거 페이지 생성 — atoms + synth + views/process.json → 자기완결 HTML
+# 판단이 주인이고 원자는 근거다. 인사이트를 먼저 놓고 각 인사이트 안에서 인용 원자를
+# line_text(원문 그 줄)와 함께 펼친다. 두 축 다이어그램은 그 아래 "근거 지도"로 —
+# 어느 칸이 두텁고 어디가 비었나, 각 원자가 제 칸에 들어갔나를 보는 검토면이다.
 import os, io, re, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import check_atoms as ca
 
 ROOT = ca.ROOT
-OUT = os.path.join(ROOT, '대시보드', '원자 뷰.html')
+OUT = os.path.join(ROOT, '대시보드', '인사이트와 근거.html')
 
 STACK = ca.STACK
 STACK_ROWS = [['전자·공정', '칩'], ['메모리', '열'], ['랙', '데이터센터'], ['전력망', '연료·지정학']]
@@ -97,6 +98,22 @@ def build():
                     % ('' if c else ' empty', esc(s), i + 1, esc(s), c))
     band_html = '<div class="band">%s</div>' % ''.join(band)
 
+    by_id = {a['id']: a for a in adata}
+
+    def atom_card(a, other_axis):
+        h = ['<div class="atom"><span class="aid">%s</span>' % esc(a['id'])]
+        h.append('<span class="atag">%s</span>' % esc(a[other_axis] or '미배정'))
+        h.append('<span class="atag">%s</span>' % esc(a['corpus']))
+        h.append('<p class="aclaim">%s</p>' % esc(a['claim']))
+        if a['value']:
+            h.append('<p class="kv"><span>값</span> %s</p>' % esc(a['value']))
+        h.append('<p class="kv"><span>조건</span> %s</p>' % esc(a['cond']))
+        h.append('<p class="kv"><span>귀속</span> %s · <span>출처</span> %s %s행 · %s</p>'
+                 % (esc(a['attr']), esc(a['doc']), esc(a['line']), esc(a['time'])))
+        h.append('<div class="src">%s</div></div>' % esc(a['text']))
+        return ''.join(h)
+
+    # 인사이트가 주인이고 원자는 그 밑을 받치는 근거다 — 인사이트 안에서 원문까지 내려간다
     ins_html = []
     for ins in insights:
         coord = ('노드 ' + ' · '.join(ins['nodes'])) if ins['view'] == 'stack' else ('단계 ' + ' → '.join(ins['stages']))
@@ -104,16 +121,25 @@ def build():
         for name, lines in ins['sections']:
             items = ''.join('<li>%s</li>' % md_inline(re.sub(r'^-\s*', '', l)) for l in lines)
             secs.append('<h4>%s</h4><ul>%s</ul>' % (esc(name), items))
+        oax = 'stage' if ins['view'] == 'stack' else 'stack'
+        cards = [atom_card(by_id[aid], oax) for aid in ins['atoms'] if aid in by_id]
+        dis = [atom_card(by_id[aid], oax) for aid in ins['dismissed'] if aid in by_id]
+        ev = ('<details class="ev"><summary>근거 원자 <b>%d개</b> — 각 원자의 원문 줄까지</summary>%s</details>'
+              % (len(cards), ''.join(cards)))
+        if dis:
+            ev += ('<details class="ev"><summary>검토 후 무관 <b>%d개</b> — 같은 칸이지만 이 주장과 안 맞물린다</summary>%s</details>'
+                   % (len(dis), ''.join(dis)))
         ins_html.append(
-            '<details class="ins" data-view="%s" data-coord="%s" data-atoms="%s">'
+            '<details class="ins" id="%s" open>'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
             '<h2>%s</h2><p class="sub">%s · 원자 %d개%s</p></summary>'
-            '<div class="body">%s</div></details>'
-            % (esc(ins['view']), esc(coord), esc(','.join(ins['atoms'])),
-               esc(ins['view'].upper()), esc(ins['as_of']), md_inline(ins['claim']),
+            '<div class="body">%s%s</div></details>'
+            % (esc(ins['file']),
+               '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
+               esc(ins['as_of']), md_inline(ins['claim']),
                esc(coord), len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
-               ''.join(secs)))
+               ''.join(secs), ev))
 
     payload = json.dumps({'atoms': adata, 'insights': [
         {'file': i['file'], 'view': i['view'], 'nodes': i['nodes'], 'stages': i['stages'],
@@ -137,7 +163,7 @@ def build():
 
 TMPL = r'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>원자 뷰 — 근거의 좌표</title>
+<title>인사이트와 그 근거</title>
 <style>
   :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05)}
   @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#7e8798;--line:#2a3140;--accent:#7aa5f8;--accent2:#9ab8fa;--soft:#1e2a44;--sunk:#242b38;--shadow:none}}
@@ -150,7 +176,15 @@ TMPL = r'''<meta charset="utf-8">
   h1::after{content:"";display:block;width:52px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
   .lede{color:var(--sub);font-size:15px;margin:16px 0 0;max-width:64ch}
   .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
-  h3.sec{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:38px 0 4px}
+  h3.sec{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  h4.sub2{font-size:13px;font-weight:800;color:var(--sub);margin:22px 0 8px}
+  .ev{border:1px solid var(--line);border-radius:10px;background:var(--sunk);margin:14px 0 0}
+  .ev>summary{cursor:pointer;padding:9px 13px;font-size:12.5px;color:var(--sub);list-style:none}
+  .ev>summary::-webkit-details-marker{display:none}
+  .ev>summary::before{content:"▸ ";color:var(--faint)}
+  .ev[open]>summary::before{content:"▾ "}
+  .ev>summary b{color:var(--ink)}
+  .ev .atom{padding:11px 13px;border-top:1px solid var(--line)}
   .axnote{font-size:13px;color:var(--sub);margin:0 0 14px;max-width:64ch}
   .chain .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;position:relative}
   .band{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
@@ -199,34 +233,35 @@ TMPL = r'''<meta charset="utf-8">
 </style>
 <div class="wrap">
 <header>
-  <p class="eyebrow">Atoms &amp; Views</p>
-  <h1>원자 뷰 — 근거의 좌표</h1>
-  <p class="lede">문서 원문의 <b>한 줄</b>에서 조건이 붙은 사실 하나(원자)를 뽑고, 두 축의 좌표에 매답니다.
-     칸을 누르면 그 칸의 인사이트와 원자가 <b>원문 그 줄</b>과 함께 펼쳐집니다 — 주장이 원문과 어긋나는지 여기서 바로 보입니다.</p>
+  <p class="eyebrow">Insights &amp; Evidence</p>
+  <h1>인사이트와 그 근거</h1>
+  <p class="lede">판단이 주인이고, 원자는 그 밑을 받치는 근거입니다. 각 인사이트의 「근거 원자」를 펼치면
+     인용한 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다 — 주장이 원문과 어긋나는지 여기서 바로 확인됩니다.</p>
   <div class="meta">
-    <span>원자 __NA__개</span><span>문서 __ND__편</span><span>인사이트 __NI__건</span>
+    <span>인사이트 __NI__건</span><span>원자 __NA__개</span><span>문서 __ND__편</span>
     <span>미배정 __NU__개</span><span>빈 노드: __EMPTY__</span>
   </div>
 </header>
 
-<h3 class="sec">스택 뷰 — 물리 의존</h3>
-<p class="axnote">위가 상류입니다. 원자가 0인 노드는 감추지 않았습니다 — 사슬이 어디서 끊겼는지가 그 자체로 정보입니다.</p>
+__INSIGHTS__
+
+<h3 class="sec">근거 지도 — 어디에 근거가 있고 어디가 비었나</h3>
+<p class="axnote">원자는 두 축의 좌표에 매달립니다. 아래는 인사이트를 읽는 화면이 아니라 <b>근거의 분포를 보는 화면</b>입니다 —
+   어느 칸이 두텁고 어느 칸이 비었는지, 그리고 각 원자가 제 칸에 제대로 들어갔는지를 봅니다.</p>
+
+<h4 class="sub2">스택 — 물리 의존 (위가 상류)</h4>
 __CHAIN__
 <p class="flow">전자·공정 → 칩 → 메모리 / 열 → 랙 → 데이터센터 → 전력망 → 연료·지정학</p>
 
-<h3 class="sec">프로세스 뷰 — 결정 순서</h3>
-<p class="axnote">같은 층 이름을 쓰지만 다른 축입니다. 어느 결정이 어느 결정보다 먼저 고정되는가 — 스택이 "무엇이 상류인가"를 말하고 이쪽이 "그래서 무엇이 밀리나"를 말합니다.</p>
+<h4 class="sub2">프로세스 — 결정 순서 (어느 결정이 먼저 고정되나)</h4>
 __BAND__
 
 <div class="panel" id="panel">
   <p class="ph">선택한 칸</p>
   <h2 id="ptitle">칸을 누르세요</h2>
-  <p class="hint">스택 노드 또는 프로세스 단계를 누르면 그 칸에 속한 원자와, 그 칸을 근거로 쓴 인사이트가 나옵니다.</p>
+  <p class="hint">스택 노드 또는 프로세스 단계를 누르면 그 칸의 원자와, 그 칸을 근거로 쓴 인사이트가 나옵니다.
+     원자가 0인 칸은 감추지 않았습니다 — 사슬이 어디서 끊겼는지가 그 자체로 정보입니다.</p>
 </div>
-
-<h3 class="sec">인사이트</h3>
-<p class="axnote">원자 3개 이상·문서 2편 이상이어야 쓸 수 있습니다. 조건이 다른 같은 단위의 수치를 나란히 쓰면 검사기가 「조건 충돌」 절을 강제합니다.</p>
-__INSIGHTS__
 
 <footer>insights/ 산출물 — atoms(원자)·synth(인사이트)·views/process.json(단계 배정)에서 <code>gen_atomview.py</code>로 생성.
 검사기 <code>check_atoms.py</code>가 줄 번호·수치·원문 hash·원문 병치를 대조합니다. 주장의 진위는 기계가 판정하지 않습니다 — 원문을 옆에 두는 것이 그 대비입니다.</footer>
@@ -272,9 +307,6 @@ function render(axis, key){
 }
 document.querySelectorAll('.cell').forEach(function(b){
   b.addEventListener('click', function(){ render(b.dataset.axis, b.dataset.key); });
-});
-document.querySelectorAll('.ins').forEach(function(d, i){
-  const t = d.querySelector('h2'); if(t) d.id = D.insights[i] ? D.insights[i].file : ('ins'+i);
 });
 </script>
 '''
