@@ -29,6 +29,24 @@ def _atom_min(aid, sid, stack='랙', time='2026-01-01'):
             'view': {'stack': stack, 'actor': [], 'time': time}}
 
 
+def test_c19_duplicate_id_across_files_fails():
+    # 같은 발행일의 서로 다른 문서가 순번을 이어 같은 id를 만든 경우 —
+    # by_id = {a['id']: a for a in atoms}가 조용히 뒤 파일을 채택하지 않도록 여기서 잡는다
+    man_hashes = {'semi:compute:x': 'h', 'semi:compute:y': 'h'}
+    atoms = [_atom_min('A-1', 'semi:compute:x'), _atom_min('A-1', 'semi:compute:y')]
+    ca.findings.clear()
+    ca.check_atoms(atoms, man_hashes, set())
+    assert 'C19' in [f[2] for f in ca.findings]
+
+
+def test_c19_unique_ids_passes():
+    man_hashes = {'semi:compute:x': 'h', 'semi:compute:y': 'h'}
+    atoms = [_atom_min('A-1', 'semi:compute:x'), _atom_min('A-2', 'semi:compute:y')]
+    ca.findings.clear()
+    ca.check_atoms(atoms, man_hashes, set())
+    assert 'C19' not in [f[2] for f in ca.findings]
+
+
 def test_c18_mixed_corpora_fails(tmp_path, monkeypatch):
     p = tmp_path / 'mixed.md'
     _io.open(str(p), 'w', encoding='utf-8').write(

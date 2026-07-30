@@ -1,5 +1,5 @@
 # 원자·인사이트 검사기 — 설계: docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md
-# C1~C18. FAIL이 하나라도 있으면 종료코드 1.
+# C1~C19. FAIL이 하나라도 있으면 종료코드 1.
 import os, io, re, json, glob, sys
 
 ROOT = r"C:\Users\y\semianalysis"
@@ -98,6 +98,16 @@ def sections(body):
 def check_atoms(atoms, man_hashes, actor_names):
     lines_cache = {}
     seen_files = set()
+    # C19 — id 중복. 순번이 문서 내 일련이라 같은 날 발행된 다른 문서가 같은 id를
+    # 만들 수 있다. by_id = {a['id']: a for a in atoms}가 파일명 정렬 순서로 뒤 파일을
+    # 조용히 채택하므로, 기존 인사이트가 인용하는 id가 다른 문서의 원자를 가리키게 되고도
+    # FAIL 하나 없이 통과한다 — 여기서 잡는다
+    id_files = {}
+    for a in atoms:
+        id_files.setdefault(a['id'], []).append(a['_file'])
+    for aid, files in sorted(id_files.items()):
+        if len(files) > 1:
+            add('FAIL', aid, 'C19', 'id 중복 — 파일 %s' % ', '.join(sorted(set(files))))
     for a in atoms:
         where = '%s %s' % (a['_file'], a['id'])
         if a['_source_id'] not in man_hashes:
