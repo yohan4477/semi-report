@@ -63,7 +63,7 @@
 <main>
   <div>
     <h1>SemiAnalysis 변환 파이프라인</h1>
-    <div class="stamp">2026-07-11 오후 갱신 · <b>통합 리포트 7건 완비 · 대시보드 개편·이전 · YouTube 트랙 착수</b></div>
+    <div class="stamp">2026-07-31 갱신 · 원자·뷰 인사이트 체계 가동 — 문서 9편 / 원자 140개 / 인사이트 5건</div>
   </div>
 
   <div class="gate">✓ 리포트 체계 완성 — 카테고리 5 + 익스포저 2. YouTube 자막 요약 백그라운드 진행 중</div>
@@ -71,6 +71,12 @@
   <section>
     <h2>진행 중</h2>
     <ul>
+        <li><span class="pill run">진행</span>
+          <div><div class="t">원자·뷰 인사이트 — 문서 9편 / 원자 140개</div>
+          <div class="d">전력망 노드 0 해소(800VDC 29개). 남은 빈 노드: 연료·지정학. 검사기 C1~C19 + 문체 게이트 P1~P6 FAIL 0</div></div></li>
+        <li><span class="pill wait">대기</span>
+          <div><div class="t">온사이트 가스(251231) 원자화</div>
+          <div class="d">전력망 노드가 5개뿐이라 얇다 — 채워지면 전력망을 쓰는 인사이트를 쓸 수 있다</div></div></li>
       <li><span class="pill run">진행</span>
         <div><div class="t">YouTube 자막 추출·요약 (34편 대상)</div><div class="d">변환 문서 매핑 영상 우선 — 리포트에 없는 단독 디테일 위주로 축적, 문서에 관련 영상 링크 병기</div></div></li>
       <li><span class="pill wait">보류</span>
@@ -95,6 +101,17 @@
   <section>
     <h2>히스토리</h2>
     <ul class="tl">
+        <li>
+          <div class="date">07-30~31 · 원자·뷰 인사이트 체계 구축 + 스킬 분할</div>
+          <div class="ev"><b>원자 140개 / 문서 9편</b> — 문서 원문 한 줄에서 조건이 붙은 사실을 뽑아 스택 8노드·프로세스 7단계 좌표에 매담. 800VDC로 전력망 노드 0 해소 (e9be908)</div>
+          <div class="ev"><b>인사이트 5건</b> — 스택 3(냉각 사슬·전자공정 사슬·벤더 분기) + 프로세스 2(관문 이동·착공 후 헤지 불가). 각 인사이트가 인용 원자를 원문 줄까지 펼침</div>
+          <div class="ev"><b>검사기 C1~C19</b> — 줄·수치 대조, 원문 hash, 원문 병치, 조건 충돌 강제(C9), 코퍼스 혼합 금지(C18), 원자 id 중복(C19). 5.4배 사고(요약과 본문의 비교군이 다름)를 잡으려고 만든 체계 (1511897, 612155f)</div>
+          <div class="ev"><b>문체 게이트 P1~P6</b> — 금지어·용어 첫 등장 풀이는 FAIL, 문장 길이·번역투·중복·절 순서는 WARN. 실제로 P2 위반 13건을 잡아 고침 (7771a28, afe91a5)</div>
+          <div class="ev"><b>스킬 2개 + 에이전트 1개</b> — insight-atomize(문서 1편) / insight-review(여러 문서)로 주기 분할, insight-atomizer가 원자·구조·문서유형을 한 번에 (860ba13)</div>
+          <div class="ev"><b>구조 40개 · 묶음 3</b> — 문서가 자기 본문에 갖고 있는 계층·순서를 기록. 라벨로는 0쌍이라 의미로 묶음. "열이 빠져나가는 경로"가 승격 후보 (2094f3c)</div>
+          <div class="ev"><b>⚛️ 인사이트와 근거</b> 신규 대시보드 — 인사이트 우선, 근거 원자는 원문 줄까지, 아래에 근거 지도(빈 노드 노출)와 문서 구조 (496507f, 902934a)</div>
+          <div class="ev"><b>🎧 언더스탠딩</b> — 류상철 전 한국은행 국장 2편(금리·환율) 추가, 거시·금리·환율 섹션 신설해 카드 25장 (9c2982c)</div>
+        </li>
       <li>
         <div class="date">07-11 오후 · 통합 리포트 7건 완비 + 대시보드 개편 + YouTube 착수</div>
         <div class="ev"><b>[260711] 컴퓨트 통합 리포트</b> 신규 — 14편 종합(부분 2 포함), 시계열 5주제, 다이어그램 5, 글자비율 12% (3c533b2)</div>
