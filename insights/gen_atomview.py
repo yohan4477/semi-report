@@ -148,6 +148,45 @@ def build():
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
                ''.join(secs), ev))
 
+    # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
+    STRUCT = os.path.join(ROOT, 'insights', 'views', 'structures.json')
+    GROUPS = os.path.join(ROOT, 'insights', 'views', 'structure_groups.json')
+    st_html, n_struct, n_group = '', 0, 0
+    if os.path.exists(STRUCT):
+        sdata = json.load(io.open(STRUCT, encoding='utf-8'))
+        gdata = json.load(io.open(GROUPS, encoding='utf-8')) if os.path.exists(GROUPS) else {'groups': []}
+        n_struct = sum(len(d['structures']) for d in sdata['docs'])
+        n_group = len(gdata['groups'])
+        rows = []
+        for g in gdata['groups']:
+            mem = ''.join('<li>%s <span class="gd">%s</span></li>'
+                          % (esc(m['name']), esc(m['source_id'].split(':')[-1][:34]))
+                          for m in g['members'])
+            flag = ('<span class="gp yes">승격 후보</span>' if g.get('promote')
+                    else '<span class="gp no">보류</span>')
+            rows.append(
+                '<div class="grp"><p class="gh">%s %s <span class="gk">%s · 문서 %d편</span></p>'
+                '<p class="gn">%s</p><ul class="gm">%s</ul>'
+                '<p class="gn2">%s</p></div>'
+                % (esc(g['name']), flag, esc(g['kind']), g.get('docs', len(g['members'])),
+                   esc(g['note']), mem, esc(g.get('promote_note', ''))))
+        docs = []
+        for d in sorted(sdata['docs'], key=lambda x: -len(x['structures'])):
+            if not d['structures']:
+                docs.append('<li><b>%s</b> — 구조 없음%s</li>'
+                            % (esc(d['source_id'].split(':')[-1][:40]),
+                               ' · 논증 문서' if d.get('kind_of_doc') == 'argument' else ''))
+                continue
+            items = ''.join('<li><b>%s</b> <span class="gd">%s</span> %s</li>'
+                            % (esc(s['name']), esc(s['kind']),
+                               esc(' → '.join(s.get('steps') or s.get('levels'))))
+                            for s in d['structures'])
+            docs.append('<li><b>%s</b> (%d)<ul class="gm">%s</ul></li>'
+                        % (esc(d['source_id'].split(':')[-1][:40]), len(d['structures']), items))
+        st_html = (''.join(rows) +
+                   '<details class="ev"><summary>문서별 구조 <b>%d개</b> — 묶이지 않은 것 포함</summary>'
+                   '<ul class="gm">%s</ul></details>' % (n_struct, ''.join(docs)))
+
     payload = json.dumps({'atoms': adata, 'insights': [
         {'file': i['file'], 'view': i['view'], 'nodes': i['nodes'], 'stages': i['stages'],
          'atoms': i['atoms'], 'claim': i['claim'], 'as_of': i['as_of']} for i in insights]},
@@ -158,6 +197,9 @@ def build():
             .replace('__CHAIN__', chain_html)
             .replace('__BAND__', band_html)
             .replace('__INSIGHTS__', ''.join(ins_html))
+            .replace('__STRUCT__', st_html)
+            .replace('__NS__', str(n_struct))
+            .replace('__NG__', str(n_group))
             .replace('__DATA__', payload)
             .replace('__NA__', str(len(adata)))
             .replace('__ND__', str(docs))
@@ -232,6 +274,20 @@ TMPL = r'''<meta charset="utf-8">
   .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.02em;margin:6px 0 2px}
   .ins .sub{font-size:12.5px;color:var(--faint);margin:0}
   .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+  .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:11px;padding:14px 17px;margin-bottom:10px;box-shadow:var(--shadow)}
+  .gh{font-size:15px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+  .gk{font-size:11px;font-weight:700;color:var(--faint);margin-left:6px}
+  .gp{font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px}
+  .gp.yes{background:#e8f6ec;color:#1d6e45}
+  .gp.no{background:var(--sunk);color:var(--faint)}
+  @media (prefers-color-scheme:dark){.gp.yes{background:#173323;color:#63c08c}}
+  .gn{font-size:12.5px;color:var(--sub);margin:0 0 7px;line-height:1.55}
+  .gn2{font-size:11.5px;color:var(--faint);margin:7px 0 0;line-height:1.5}
+  .gm{margin:0;padding-left:16px;list-style:none}
+  .gm li{font-size:12.5px;color:var(--sub);line-height:1.55;margin-bottom:3px;position:relative}
+  .gm li::before{content:"";position:absolute;left:-12px;top:9px;width:6px;height:1.5px;background:var(--accent)}
+  .gm li b{color:var(--ink)}
+  .gd{font-size:10.5px;color:var(--faint)}
   .body h4.payoff{color:var(--accent);margin-top:4px}
   .body ul.payoff{background:var(--soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
                   margin:0 0 14px;padding:11px 16px 11px 30px}
@@ -250,7 +306,7 @@ TMPL = r'''<meta charset="utf-8">
      인용한 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다 — 주장이 원문과 어긋나는지 여기서 바로 확인됩니다.</p>
   <div class="meta">
     <span>인사이트 __NI__건</span><span>원자 __NA__개</span><span>문서 __ND__편</span>
-    <span>미배정 __NU__개</span><span>빈 노드: __EMPTY__</span>
+    <span>미배정 __NU__개</span><span>구조 __NS__개 · 묶음 __NG__</span><span>빈 노드: __EMPTY__</span>
   </div>
 </header>
 
@@ -266,6 +322,12 @@ __CHAIN__
 
 <h4 class="sub2">프로세스 — 결정 순서 (어느 결정이 먼저 고정되나)</h4>
 __BAND__
+
+<h3 class="sec">문서가 가진 구조 — 좌표가 못 담는 층</h3>
+<p class="axnote">전역 좌표(스택 8노드·프로세스 7단계)는 문서 고유의 계층·순서를 담지 못해 한 칸으로 접힌다.
+   그래서 문서마다 있는 그대로 기록하고, <b>2편 이상이 같은 것을 말할 때만</b> 좌표 승격 후보로 올린다.
+   라벨만으로는 하나도 안 겹쳤다(겹침 0쌍) — 리포트마다 자기 어휘로 틀을 만들기 때문이다.</p>
+__STRUCT__
 
 <div class="panel" id="panel">
   <p class="ph">선택한 칸</p>
