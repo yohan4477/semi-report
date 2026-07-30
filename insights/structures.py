@@ -27,7 +27,10 @@ def norm_label(s):
     return s.strip().lower()
 
 
-def validate(data, man_ids=None):
+KINDS_OF_DOC = ('quantitative', 'argument')
+
+
+def validate(data, man_ids=None, atom_counts=None):
     """구조 기록 자체의 무결성. 반환: (오류 목록)"""
     errs = []
     seen = set()
@@ -41,6 +44,25 @@ def validate(data, man_ids=None):
         seen.add(sid)
         if man_ids is not None and sid not in man_ids:
             errs.append('%s: manifest에 없는 source_id' % sid)
+        kod = d.get('kind_of_doc', 'quantitative')
+        if kod not in KINDS_OF_DOC:
+            errs.append('%s: kind_of_doc이 %s 중 하나여야 함 (%s)'
+                        % (sid, '|'.join(KINDS_OF_DOC), kod))
+        if kod == 'argument':
+            th = d.get('thesis') or {}
+            if not th:
+                errs.append('%s: argument 문서는 thesis가 있어야 한다' % sid)
+            else:
+                if not isinstance(th.get('line'), int):
+                    errs.append('%s: thesis에 line(원문 줄 번호)이 없다' % sid)
+                if not (th.get('claim') or '').strip():
+                    errs.append('%s: thesis에 claim이 없다' % sid)
+                if not (th.get('line_text') or '').strip():
+                    errs.append('%s: thesis에 line_text(그 줄 원문)가 없다' % sid)
+            # thesis가 원자의 우회로가 되지 않게 — 소급분(legacy_atoms)만 예외
+            if (atom_counts or {}).get(sid) and not d.get('legacy_atoms'):
+                errs.append('%s: argument 문서인데 원자가 %d개 있다 — 둘 중 하나만 둔다'
+                            % (sid, atom_counts[sid]))
         for st in d.get('structures', []):
             where = '%s / %s' % (sid, st.get('name', '?'))
             if st.get('kind') not in KINDS:
@@ -99,7 +121,10 @@ def main():
         pass
     data = load()
     man_ids = {s['id'] for s in json.load(io.open(ca.MAN, encoding='utf-8'))['sources']}
-    errs = validate(data, man_ids)
+    counts = {}
+    for a in ca.load_atoms():
+        counts[a['_source_id']] = counts.get(a['_source_id'], 0) + 1
+    errs = validate(data, man_ids, counts)
     flat, pairs = dedupe(data)
 
     print('구조 기록: 문서 %d편 / 구조 %d개 (계층 %d · 프로세스 %d)'

@@ -1,318 +1,488 @@
 {
-  "note": "문서가 본문에 스스로 제시한 계층·순서. 전역 좌표(스택·프로세스)와 별개다. 2편 이상이 공유하는 구조만 승격 후보가 된다 — insights/structures.py",
-  "docs": [
+ "note": "문서가 본문에 스스로 제시한 계층·순서. 전역 좌표(스택·프로세스)와 별개다. 2편 이상이 공유하는 구조만 승격 후보가 된다 — insights/structures.py",
+ "docs": [
+  {
+   "source_id": "semi:cooling:데이터센터-해부학-Part-2-냉각-시스템",
+   "path": "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md",
+   "structures": [
     {
-      "source_id": "semi:cooling:데이터센터-해부학-Part-2-냉각-시스템",
-      "path": "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md",
-      "structures": [
-        {
-          "kind": "process",
-          "name": "냉각 열 흐름 4단계",
-          "line": 107,
-          "steps": ["서버 팬", "실내 냉각 장치", "칠러", "냉각탑"],
-          "note": "공랭식 데이터센터에서 열이 바깥으로 빠져나가는 경로"
-        },
-        {
-          "kind": "process",
-          "name": "냉각 시스템 미래 3단계",
-          "line": 365,
-          "steps": ["L2A(액체-공기 열교환)", "하이브리드", "전용 DLC 설계"],
-          "note": "GB200 도입 이후 냉각 방식이 진화하는 순서"
-        }
-      ]
+     "kind": "process",
+     "name": "냉각 열 흐름 4단계",
+     "line": 107,
+     "steps": [
+      "서버 팬",
+      "실내 냉각 장치",
+      "칠러",
+      "냉각탑"
+     ],
+     "note": "공랭식 데이터센터에서 열이 바깥으로 빠져나가는 경로"
     },
     {
-      "source_id": "semi:compute:H100-vs-GB200-NVL72-학습-벤치마크-전력-TCO-신뢰성-분석",
-      "path": "content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "Nvidia에게 제안하는 세 가지 개선점",
-          "line": 136,
-          "levels": ["벤치마크 투명성 확대", "Native PyTorch 지원 강화", "백플레인 진단 도구 가속"],
-          "note": "저자들이 Nvidia에 요구하는 3대 개선 영역"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "스케일링 두 가지 개념",
-          "line": 203,
-          "levels": ["강한 스케일링", "약한 스케일링"],
-          "note": "GPU를 늘릴 때 모델·배치 크기를 고정할지 함께 키울지의 구분"
-        },
-        {
-          "kind": "process",
-          "name": "장애 부품 교체 단계",
-          "line": 389,
-          "steps": ["연산 트레이 교체", "스위치 트레이 교체", "백플레인 교체"],
-          "note": "GB200 NVL72 장애 시 부품별 교체에 걸리는 시간이 늘어나는 순서"
-        }
-      ]
-    },
-    {
-      "source_id": "semi:compute:AWS-Trainium3-딥다이브-다가오는-잠재적-도전자",
-      "path": "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "스위치드 랙 2종",
-          "line": 196,
-          "levels": ["NL32x2 Switched", "NL72x2 Switched"],
-          "note": "냉각 방식과 스케일업 월드사이즈로 가른 두 스위치드 랙 SKU"
-        },
-        {
-          "kind": "process",
-          "name": "스케일업 스위치 세대 진화",
-          "line": 604,
-          "steps": ["Gen1", "Gen2", "Gen3(UALink)"],
-          "note": "Trainium3 수명주기 동안 홉 수가 줄며 지연시간이 개선되는 스위치 세대 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "마이크로아키텍처 4대 엔진",
-          "line": 759,
-          "levels": ["텐서 엔진", "벡터 엔진", "스칼라 엔진", "GPSIMD 엔진"],
-          "note": "NeuronCore 하나를 구성하는 4종 연산 엔진"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "수익화 속도 전략 3가지",
-          "line": 661,
-          "levels": ["케이블리스 PCB 설계", "백플레인 예비 레인 핫스왑", "공랭 SKU 병행 배치"],
-          "note": "팹 출고에서 랙 출하까지 시간을 단축하기 위한 AWS의 3대 전략"
-        },
-        {
-          "kind": "process",
-          "name": "오픈소스 로드맵 2단계",
-          "line": 837,
-          "steps": ["PyTorch 스택 + NKI 커널 라이브러리 공개", "XLA 그래프 컴파일러 + JAX 스택 공개"],
-          "note": "AWS Trainium 소프트웨어 스택을 오픈소스로 전환하는 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "NeuronLinkv4 160레인 3경로 분배",
-          "line": 547,
-          "levels": ["백플레인 80개", "PCB 64개", "크로스랙 16개"],
-          "note": "칩 1개당 스케일업 회선을 물리적으로 나누는 세 경로"
-        }
-      ]
-    },
-    {
-      "source_id": "semi:compute:베라-루빈-익스트림-코디자인-그레이스-블랙웰-오베론에서의-진화",
-      "path": "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "6개 실리콘 제품",
-          "line": 88,
-          "levels": ["Rubin", "Vera", "NVLink 6", "ConnectX-9", "BlueField-4", "Spectrum-6"],
-          "note": "VR NVL72 세대를 구성하는 6종 실리콘 제품 분류"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "컴퓨트 트레이 6개 모듈 구조",
-          "line": 217,
-          "levels": ["Strata", "Orchid", "미드플레인", "전력 공급 모듈", "BlueField-4 모듈", "시스템 관리 모듈"],
-          "note": "케이블 없는 컴퓨트 트레이를 구성하는 6개 모듈"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "KV 캐시 저장 계층",
-          "line": 252,
-          "levels": ["GPU HBM", "호스트 D램", "ICMS/CMX 신설 계층"],
-          "note": "장문맥 추론 중간 데이터(KV 캐시)를 담는 속도·용량별 저장 계층"
-        },
-        {
-          "kind": "process",
-          "name": "Strata 보드 전압 강하 3단계",
-          "line": 411,
-          "steps": ["50VDC", "12VDC", "1VDC"],
-          "note": "버스바에서 GPU·CPU까지 전력이 낮아지는 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "전면 섀시 3분할",
-          "line": 437,
-          "levels": ["좌측 Orchid 모듈", "중앙 BlueField-4+전력+관리 모듈", "우측 Orchid 모듈"],
-          "note": "컴퓨트 트레이 전면 기계 구조의 좌우 배치"
-        },
-        {
-          "kind": "process",
-          "name": "조립 자동화 3계층",
-          "line": 704,
-          "steps": ["L6 보드 단위 조립(PCBA)", "L10 컴퓨트 트레이 조립", "L11 트레이를 랙에 최종 조립"],
-          "note": "실리콘에서 완성 랙까지 이어지는 조립 단계와 각 단계를 감당할 수 있는 업체 수"
-        }
-      ]
-    },
-    {
-      "source_id": "semi:compute:AI-실리콘-대란-TSMC-N3부터-메모리까지",
-      "path": "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md",
-      "structures": []
-    },
-    {
-      "source_id": "semi:memory:ECTC-2026-총정리-EMIB-T-로드맵-커스텀-HBM-마이크로플루이딕-냉각-광학-인터커넥트",
-      "path": "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "열전달 경로 3분해",
-          "line": 345,
-          "levels": ["내부저항", "GPU-HBM 간섭", "시스템 레벨(TIM+냉각)"],
-          "note": "HCB 전환 효과가 고르지 않은 이유를 설명하는 열전달 경로 3구간"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "TSMC 냉각 방식 3종 비교",
-          "line": 394,
-          "levels": ["뚜껑형 냉각판", "무뚜껑 냉각판", "마이크로필러"],
-          "note": "CoWoS-R GPU 시험차량에서 비교한 3가지 냉각 방식"
-        },
-        {
-          "kind": "process",
-          "name": "EMIB-T 범프 피치 축소 로드맵",
-          "line": 101,
-          "steps": ["Granite Rapids 45µm", "EMIB-T 36/35µm(2배 레티클)", "4.5배 레티클 검증 확장", "25µm 피치(다음 단계)"],
-          "note": "인텔 EMIB-T 브릿지의 범프 피치가 좁아지는 검증 순서"
-        },
-        {
-          "kind": "process",
-          "name": "EMIB 향후 로드맵 3단계",
-          "line": 188,
-          "steps": ["고밀도 온브릿지 MIM + 대형 고종횡비 브릿지", "서브 25µm 피치 + 능동 브릿지", "브릿지 내장 전압조정기 + 기판 매립 DTC"],
-          "note": "인텔이 제시한 EMIB 차세대 발전 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "저온 본딩 2대 소재 접근",
-          "line": 564,
-          "levels": ["유기 유전체", "미세결정립 구리"],
-          "note": "하이브리드 구리본딩(HCB) 저온화를 위한 두 소재 접근"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "인터포저 없는 통합 방식 4가지",
-          "line": 603,
-          "levels": ["FO-EB(인텔·SPIL)", "패널스케일 유기 인터포저(Resonac·ASE)", "DBrM 실리콘 브릿지(IBM)", "단순 실리콘 브릿지 직결(Unimicron)"],
-          "note": "원형 웨이퍼 인터포저의 크기 한계를 우회하는 4가지 대안"
-        },
-        {
-          "kind": "process",
-          "name": "RDL 배선폭 로드맵",
-          "line": 727,
-          "steps": ["10/10µm(2015년경)", "2/2µm(현재)", "1/1µm(다음 목표)"],
-          "note": "RDL 배선폭/간격이 서브마이크론으로 좁아지는 로드맵"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "PIC 실장 방식별 온도 특성 3종",
-          "line": 479,
-          "levels": ["기판", "실리콘 브릿지", "실리콘 인터포저"],
-          "note": "포토닉 집적회로(PIC)를 어디에 실장하느냐에 따른 온도 상승폭 비교"
-        }
-      ]
-    },
-    {
-      "source_id": "semi:compute:베라-루빈-NVL72-vs-GB200-NVL72-추론-TCO아키텍처-분석",
-      "path": "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "CoreWeave 벤치마크 숨은 전제",
-          "line": 202,
-          "levels": ["측정 조건(단일턴 8k/1k·전력정의·기법조합)", "비교 기준 시점(2025년 GB200)", "모델 선택(구형 DeepSeek R1)", "시나리오·환경 한계(단일턴만·Dell 샘플랙)"],
-          "note": "제목은 '5가지'라 하나 핵심 요약에는 4개 항목으로 열거됨 — CoreWeave의 10배 수치에 붙은 조건들"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "원차트 프레임워크",
-          "line": 411,
-          "levels": ["하한(원가 기반 최저 임대가)", "상한(가치 기반 임대가)"],
-          "note": "SemiAnalysis가 GPU 임대료의 적정 범위를 표시하는 가격분석 틀"
-        }
-      ]
-    },
-    {
-      "source_id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
-      "path": "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md",
-      "structures": [
-        {
-          "kind": "hierarchy",
-          "name": "모듈러 3층 구조",
-          "line": 90,
-          "levels": ["부지", "셸", "시스템"],
-          "note": "프리팹과 모듈러를 가르는 기준으로 제시된 3층"
-        },
-        {
-          "kind": "process",
-          "name": "셸 모듈화 3단계 진화",
-          "line": 122,
-          "steps": ["프리캐스트", "건물 자체 단순화", "목적 특화 초경량 구조"],
-          "note": "공장에서 현장까지의 셸(외피) 모듈화 진화 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "폼팩터 5단계 사다리",
-          "line": 176,
-          "levels": ["컴포넌트", "스킷", "모듈", "컨테이너", "프리팹 데이터센터 블록"],
-          "note": "장비·서브시스템이 얼마나 큰 완결 단위로 배송되는지의 5단계 분류"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "전체 시설 모듈화 2가지 형태",
-          "line": 256,
-          "levels": ["컨테이너형", "올인원 프리팹 블록"],
-          "note": "완결형 데이터센터 블록을 배송하는 두 형태"
-        },
-        {
-          "kind": "process",
-          "name": "Nvidia DSX 진화 타임라인",
-          "line": 278,
-          "steps": ["2025.10 Omniverse 디지털 트윈 청사진 공개", "2026.3 Vera Rubin DSX 레퍼런스 설계로 공식화", "전체 DSX 플랫폼으로 확장"],
-          "note": "Nvidia DSX 레퍼런스 설계가 발표된 시간 순서"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "DSX 두 축",
-          "line": 287,
-          "levels": ["DSX Max-Q", "DSX Flex"],
-          "note": "고정 전력예산 최적화와 전력망 연계 대응이라는 DSX의 두 운영 축"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "벤더 지형도 통합주체 3가지 모델",
-          "line": 310,
-          "levels": ["Operator-led", "EPC-led", "OEM-led"],
-          "note": "누가 모듈화를 실제로 담당하는지에 따른 3가지 시장 구조"
-        },
-        {
-          "kind": "process",
-          "name": "모듈화 사이클 5단계",
-          "line": 361,
-          "steps": ["설계·시뮬레이션", "문서화(IFF/IFC)", "조립·공장시험(FAT)", "운송·설치", "현장 커미셔닝"],
-          "note": "공장에서 현장까지의 순서"
-        },
-        {
-          "kind": "process",
-          "name": "현장 커미셔닝 5단계 사다리",
-          "line": 368,
-          "steps": ["L1 공장검수(레드태그)", "L2 인도·설치확인", "L3 사전기능·기동(그린태그)", "L4 기능성능시험(블루태그)", "L5 통합시스템시험(화이트태그)"],
-          "note": "L2부터는 현장에서만 가능한 커미셔닝 검증 단계"
-        },
-        {
-          "kind": "hierarchy",
-          "name": "모듈러 가치제안 3가지 주장",
-          "line": 440,
-          "levels": ["시장 진입 속도", "시공 품질·안전성", "총소유비용(TCO)"],
-          "note": "모듈러 건설 마케팅이 내세우는 3대 가치 주장"
-        },
-        {
-          "kind": "process",
-          "name": "관행적 건설기간 4블록",
-          "line": 459,
-          "steps": ["그라운드워크", "구조·셸", "MEP 핏아웃", "커미셔닝~IT-ready"],
-          "note": "50MW 기준 시설의 관행적 스틱빌드 공정을 나눈 4단계"
-        }
-      ]
+     "kind": "process",
+     "name": "냉각 시스템 미래 3단계",
+     "line": 365,
+     "steps": [
+      "L2A(액체-공기 열교환)",
+      "하이브리드",
+      "전용 DLC 설계"
+     ],
+     "note": "GB200 도입 이후 냉각 방식이 진화하는 순서"
     }
-  ]
+   ]
+  },
+  {
+   "source_id": "semi:compute:H100-vs-GB200-NVL72-학습-벤치마크-전력-TCO-신뢰성-분석",
+   "path": "content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "Nvidia에게 제안하는 세 가지 개선점",
+     "line": 136,
+     "levels": [
+      "벤치마크 투명성 확대",
+      "Native PyTorch 지원 강화",
+      "백플레인 진단 도구 가속"
+     ],
+     "note": "저자들이 Nvidia에 요구하는 3대 개선 영역"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "스케일링 두 가지 개념",
+     "line": 203,
+     "levels": [
+      "강한 스케일링",
+      "약한 스케일링"
+     ],
+     "note": "GPU를 늘릴 때 모델·배치 크기를 고정할지 함께 키울지의 구분"
+    },
+    {
+     "kind": "process",
+     "name": "장애 부품 교체 단계",
+     "line": 389,
+     "steps": [
+      "연산 트레이 교체",
+      "스위치 트레이 교체",
+      "백플레인 교체"
+     ],
+     "note": "GB200 NVL72 장애 시 부품별 교체에 걸리는 시간이 늘어나는 순서"
+    }
+   ]
+  },
+  {
+   "source_id": "semi:compute:AWS-Trainium3-딥다이브-다가오는-잠재적-도전자",
+   "path": "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "스위치드 랙 2종",
+     "line": 196,
+     "levels": [
+      "NL32x2 Switched",
+      "NL72x2 Switched"
+     ],
+     "note": "냉각 방식과 스케일업 월드사이즈로 가른 두 스위치드 랙 SKU"
+    },
+    {
+     "kind": "process",
+     "name": "스케일업 스위치 세대 진화",
+     "line": 604,
+     "steps": [
+      "Gen1",
+      "Gen2",
+      "Gen3(UALink)"
+     ],
+     "note": "Trainium3 수명주기 동안 홉 수가 줄며 지연시간이 개선되는 스위치 세대 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "마이크로아키텍처 4대 엔진",
+     "line": 759,
+     "levels": [
+      "텐서 엔진",
+      "벡터 엔진",
+      "스칼라 엔진",
+      "GPSIMD 엔진"
+     ],
+     "note": "NeuronCore 하나를 구성하는 4종 연산 엔진"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "수익화 속도 전략 3가지",
+     "line": 661,
+     "levels": [
+      "케이블리스 PCB 설계",
+      "백플레인 예비 레인 핫스왑",
+      "공랭 SKU 병행 배치"
+     ],
+     "note": "팹 출고에서 랙 출하까지 시간을 단축하기 위한 AWS의 3대 전략"
+    },
+    {
+     "kind": "process",
+     "name": "오픈소스 로드맵 2단계",
+     "line": 837,
+     "steps": [
+      "PyTorch 스택 + NKI 커널 라이브러리 공개",
+      "XLA 그래프 컴파일러 + JAX 스택 공개"
+     ],
+     "note": "AWS Trainium 소프트웨어 스택을 오픈소스로 전환하는 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "NeuronLinkv4 160레인 3경로 분배",
+     "line": 547,
+     "levels": [
+      "백플레인 80개",
+      "PCB 64개",
+      "크로스랙 16개"
+     ],
+     "note": "칩 1개당 스케일업 회선을 물리적으로 나누는 세 경로"
+    }
+   ]
+  },
+  {
+   "source_id": "semi:compute:베라-루빈-익스트림-코디자인-그레이스-블랙웰-오베론에서의-진화",
+   "path": "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "6개 실리콘 제품",
+     "line": 88,
+     "levels": [
+      "Rubin",
+      "Vera",
+      "NVLink 6",
+      "ConnectX-9",
+      "BlueField-4",
+      "Spectrum-6"
+     ],
+     "note": "VR NVL72 세대를 구성하는 6종 실리콘 제품 분류"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "컴퓨트 트레이 6개 모듈 구조",
+     "line": 217,
+     "levels": [
+      "Strata",
+      "Orchid",
+      "미드플레인",
+      "전력 공급 모듈",
+      "BlueField-4 모듈",
+      "시스템 관리 모듈"
+     ],
+     "note": "케이블 없는 컴퓨트 트레이를 구성하는 6개 모듈"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "KV 캐시 저장 계층",
+     "line": 252,
+     "levels": [
+      "GPU HBM",
+      "호스트 D램",
+      "ICMS/CMX 신설 계층"
+     ],
+     "note": "장문맥 추론 중간 데이터(KV 캐시)를 담는 속도·용량별 저장 계층"
+    },
+    {
+     "kind": "process",
+     "name": "Strata 보드 전압 강하 3단계",
+     "line": 411,
+     "steps": [
+      "50VDC",
+      "12VDC",
+      "1VDC"
+     ],
+     "note": "버스바에서 GPU·CPU까지 전력이 낮아지는 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "전면 섀시 3분할",
+     "line": 437,
+     "levels": [
+      "좌측 Orchid 모듈",
+      "중앙 BlueField-4+전력+관리 모듈",
+      "우측 Orchid 모듈"
+     ],
+     "note": "컴퓨트 트레이 전면 기계 구조의 좌우 배치"
+    },
+    {
+     "kind": "process",
+     "name": "조립 자동화 3계층",
+     "line": 704,
+     "steps": [
+      "L6 보드 단위 조립(PCBA)",
+      "L10 컴퓨트 트레이 조립",
+      "L11 트레이를 랙에 최종 조립"
+     ],
+     "note": "실리콘에서 완성 랙까지 이어지는 조립 단계와 각 단계를 감당할 수 있는 업체 수"
+    }
+   ]
+  },
+  {
+   "source_id": "semi:compute:AI-실리콘-대란-TSMC-N3부터-메모리까지",
+   "path": "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md",
+   "structures": [],
+   "kind_of_doc": "argument",
+   "legacy_atoms": true,
+   "thesis": {
+    "line": 349,
+    "claim": "관문이 데이터센터 건설·전력 확보에서 칩 생산으로 넘어갔다 — 전력이 아니라 가속기 실리콘 공급이 병목이다",
+    "line_text": "- 결과적으로 더 이상 전력이 결정적 병목이 아니라 가속기 실리콘(칩) 공급 자체가 병목 — AI 사이클 초반엔 데이터센터 건설·전력 확보가 핵심 관문이었다면, 이제는 그 관문이 완전히 칩 생산 쪽으로 넘어간 구조적 전환"
+   }
+  },
+  {
+   "source_id": "semi:memory:ECTC-2026-총정리-EMIB-T-로드맵-커스텀-HBM-마이크로플루이딕-냉각-광학-인터커넥트",
+   "path": "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "열전달 경로 3분해",
+     "line": 345,
+     "levels": [
+      "내부저항",
+      "GPU-HBM 간섭",
+      "시스템 레벨(TIM+냉각)"
+     ],
+     "note": "HCB 전환 효과가 고르지 않은 이유를 설명하는 열전달 경로 3구간"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "TSMC 냉각 방식 3종 비교",
+     "line": 394,
+     "levels": [
+      "뚜껑형 냉각판",
+      "무뚜껑 냉각판",
+      "마이크로필러"
+     ],
+     "note": "CoWoS-R GPU 시험차량에서 비교한 3가지 냉각 방식"
+    },
+    {
+     "kind": "process",
+     "name": "EMIB-T 범프 피치 축소 로드맵",
+     "line": 101,
+     "steps": [
+      "Granite Rapids 45µm",
+      "EMIB-T 36/35µm(2배 레티클)",
+      "4.5배 레티클 검증 확장",
+      "25µm 피치(다음 단계)"
+     ],
+     "note": "인텔 EMIB-T 브릿지의 범프 피치가 좁아지는 검증 순서"
+    },
+    {
+     "kind": "process",
+     "name": "EMIB 향후 로드맵 3단계",
+     "line": 188,
+     "steps": [
+      "고밀도 온브릿지 MIM + 대형 고종횡비 브릿지",
+      "서브 25µm 피치 + 능동 브릿지",
+      "브릿지 내장 전압조정기 + 기판 매립 DTC"
+     ],
+     "note": "인텔이 제시한 EMIB 차세대 발전 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "저온 본딩 2대 소재 접근",
+     "line": 564,
+     "levels": [
+      "유기 유전체",
+      "미세결정립 구리"
+     ],
+     "note": "하이브리드 구리본딩(HCB) 저온화를 위한 두 소재 접근"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "인터포저 없는 통합 방식 4가지",
+     "line": 603,
+     "levels": [
+      "FO-EB(인텔·SPIL)",
+      "패널스케일 유기 인터포저(Resonac·ASE)",
+      "DBrM 실리콘 브릿지(IBM)",
+      "단순 실리콘 브릿지 직결(Unimicron)"
+     ],
+     "note": "원형 웨이퍼 인터포저의 크기 한계를 우회하는 4가지 대안"
+    },
+    {
+     "kind": "process",
+     "name": "RDL 배선폭 로드맵",
+     "line": 727,
+     "steps": [
+      "10/10µm(2015년경)",
+      "2/2µm(현재)",
+      "1/1µm(다음 목표)"
+     ],
+     "note": "RDL 배선폭/간격이 서브마이크론으로 좁아지는 로드맵"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "PIC 실장 방식별 온도 특성 3종",
+     "line": 479,
+     "levels": [
+      "기판",
+      "실리콘 브릿지",
+      "실리콘 인터포저"
+     ],
+     "note": "포토닉 집적회로(PIC)를 어디에 실장하느냐에 따른 온도 상승폭 비교"
+    }
+   ]
+  },
+  {
+   "source_id": "semi:compute:베라-루빈-NVL72-vs-GB200-NVL72-추론-TCO아키텍처-분석",
+   "path": "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "CoreWeave 벤치마크 숨은 전제",
+     "line": 202,
+     "levels": [
+      "측정 조건(단일턴 8k/1k·전력정의·기법조합)",
+      "비교 기준 시점(2025년 GB200)",
+      "모델 선택(구형 DeepSeek R1)",
+      "시나리오·환경 한계(단일턴만·Dell 샘플랙)"
+     ],
+     "note": "제목은 '5가지'라 하나 핵심 요약에는 4개 항목으로 열거됨 — CoreWeave의 10배 수치에 붙은 조건들"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "원차트 프레임워크",
+     "line": 411,
+     "levels": [
+      "하한(원가 기반 최저 임대가)",
+      "상한(가치 기반 임대가)"
+     ],
+     "note": "SemiAnalysis가 GPU 임대료의 적정 범위를 표시하는 가격분석 틀"
+    }
+   ]
+  },
+  {
+   "source_id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
+   "path": "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md",
+   "structures": [
+    {
+     "kind": "hierarchy",
+     "name": "모듈러 3층 구조",
+     "line": 90,
+     "levels": [
+      "부지",
+      "셸",
+      "시스템"
+     ],
+     "note": "프리팹과 모듈러를 가르는 기준으로 제시된 3층"
+    },
+    {
+     "kind": "process",
+     "name": "셸 모듈화 3단계 진화",
+     "line": 122,
+     "steps": [
+      "프리캐스트",
+      "건물 자체 단순화",
+      "목적 특화 초경량 구조"
+     ],
+     "note": "공장에서 현장까지의 셸(외피) 모듈화 진화 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "폼팩터 5단계 사다리",
+     "line": 176,
+     "levels": [
+      "컴포넌트",
+      "스킷",
+      "모듈",
+      "컨테이너",
+      "프리팹 데이터센터 블록"
+     ],
+     "note": "장비·서브시스템이 얼마나 큰 완결 단위로 배송되는지의 5단계 분류"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "전체 시설 모듈화 2가지 형태",
+     "line": 256,
+     "levels": [
+      "컨테이너형",
+      "올인원 프리팹 블록"
+     ],
+     "note": "완결형 데이터센터 블록을 배송하는 두 형태"
+    },
+    {
+     "kind": "process",
+     "name": "Nvidia DSX 진화 타임라인",
+     "line": 278,
+     "steps": [
+      "2025.10 Omniverse 디지털 트윈 청사진 공개",
+      "2026.3 Vera Rubin DSX 레퍼런스 설계로 공식화",
+      "전체 DSX 플랫폼으로 확장"
+     ],
+     "note": "Nvidia DSX 레퍼런스 설계가 발표된 시간 순서"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "DSX 두 축",
+     "line": 287,
+     "levels": [
+      "DSX Max-Q",
+      "DSX Flex"
+     ],
+     "note": "고정 전력예산 최적화와 전력망 연계 대응이라는 DSX의 두 운영 축"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "벤더 지형도 통합주체 3가지 모델",
+     "line": 310,
+     "levels": [
+      "Operator-led",
+      "EPC-led",
+      "OEM-led"
+     ],
+     "note": "누가 모듈화를 실제로 담당하는지에 따른 3가지 시장 구조"
+    },
+    {
+     "kind": "process",
+     "name": "모듈화 사이클 5단계",
+     "line": 361,
+     "steps": [
+      "설계·시뮬레이션",
+      "문서화(IFF/IFC)",
+      "조립·공장시험(FAT)",
+      "운송·설치",
+      "현장 커미셔닝"
+     ],
+     "note": "공장에서 현장까지의 순서"
+    },
+    {
+     "kind": "process",
+     "name": "현장 커미셔닝 5단계 사다리",
+     "line": 368,
+     "steps": [
+      "L1 공장검수(레드태그)",
+      "L2 인도·설치확인",
+      "L3 사전기능·기동(그린태그)",
+      "L4 기능성능시험(블루태그)",
+      "L5 통합시스템시험(화이트태그)"
+     ],
+     "note": "L2부터는 현장에서만 가능한 커미셔닝 검증 단계"
+    },
+    {
+     "kind": "hierarchy",
+     "name": "모듈러 가치제안 3가지 주장",
+     "line": 440,
+     "levels": [
+      "시장 진입 속도",
+      "시공 품질·안전성",
+      "총소유비용(TCO)"
+     ],
+     "note": "모듈러 건설 마케팅이 내세우는 3대 가치 주장"
+    },
+    {
+     "kind": "process",
+     "name": "관행적 건설기간 4블록",
+     "line": 459,
+     "steps": [
+      "그라운드워크",
+      "구조·셸",
+      "MEP 핏아웃",
+      "커미셔닝~IT-ready"
+     ],
+     "note": "50MW 기준 시설의 관행적 스틱빌드 공정을 나눈 4단계"
+    }
+   ]
+  }
+ ]
 }
