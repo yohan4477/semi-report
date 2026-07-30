@@ -129,3 +129,62 @@ def test_glossary_blocks_loose_reverse_paren():
     out = _run(cp.check_glossary, '이 방식은 흔히 쓰인다(공랭).',
                {'공랭': '공기로 식히는 방식'})
     assert ('FAIL', 'P2') in out
+
+
+def test_long_sentence_warns():
+    out = _run(cp.check_length, '가' * 170 + '.')
+    assert ('WARN', 'P3') in out
+
+
+def test_two_em_dashes_warn():
+    out = _run(cp.check_length, '앞이다 — 가운데다 — 뒤다.')
+    assert ('WARN', 'P3') in out
+
+
+def test_one_em_dash_short_sentence_passes():
+    out = _run(cp.check_length, '앞이다 — 뒤다.')
+    assert out == []
+
+
+def test_translationese_warns():
+    out = _run(cp.check_translationese, '냉각에 대한 논의가 되어진다.')
+    assert ('WARN', 'P4') in out
+
+
+def test_plain_korean_passes_translationese():
+    out = _run(cp.check_translationese, '냉각을 어디서 하느냐가 갈린다.')
+    assert out == []
+
+
+def test_shingles_overlap_detects_duplicate():
+    a = cp.shingles('확보 발표를 컴퓨트 증설 신호로 읽으면 안 된다')
+    b = cp.shingles('확보 발표를 컴퓨트 증설 신호로 읽으면 안 된다')
+    assert len(a & b) == len(a)
+
+
+def test_dup_claim_warns():
+    sec = {'주장': ['**확보 발표를 컴퓨트 증설 신호로 읽으면 안 된다.**'],
+           '그래서 무엇이 달라지나': ['- 확보 발표를 컴퓨트 증설 신호로 읽으면 안 된다.']}
+    cp.findings.clear()
+    cp.check_dup_claim(sec, 'x.md')
+    assert ('WARN', 'P5') in [(f[0], f[2]) for f in cp.findings]
+
+
+def test_dup_claim_passes_when_different_angle():
+    sec = {'주장': ['**확보 발표를 컴퓨트 증설 신호로 읽으면 안 된다.**'],
+           '그래서 무엇이 달라지나': ['- 읽을 것은 웨이퍼·패키징·메모리 확보 계약이다.']}
+    cp.findings.clear()
+    cp.check_dup_claim(sec, 'x.md')
+    assert cp.findings == []
+
+
+def test_order_warns_when_evidence_before_payoff():
+    cp.findings.clear()
+    cp.check_order(['주장', '근거', '그래서 무엇이 달라지나'], 'x.md')
+    assert ('WARN', 'P6') in [(f[0], f[2]) for f in cp.findings]
+
+
+def test_order_passes_on_규정_순서():
+    cp.findings.clear()
+    cp.check_order(['주장', '그래서 무엇이 달라지나', '근거', '조건 충돌', '아직 모르는 것'], 'x.md')
+    assert cp.findings == []

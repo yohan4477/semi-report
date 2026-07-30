@@ -64,3 +64,93 @@ def check_glossary(text, where, gloss):
             add('FAIL', where, 'P2',
                 '"%s" 첫 등장에 설명이 없다 — %s(%s) 형태로 풀거나 "%s"를 함께 쓴다'
                 % (term, term, plain, plain))
+
+
+TRANSLATIONESE = ['에 대한', '되어진', '로 인해', '에 있어서', '라고 할 수 있다']
+SECTION_ORDER = ['주장', '그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거',
+                 '조건 충돌', '아직 모르는 것', '검토 후 무관']
+MAXLEN = 160
+
+
+def check_length(text, where):
+    """긴 문장과 em dash로 절을 여러 개 이은 문장 — 읽는 사람이 숨 쉴 곳이 없다."""
+    for s in sentences(text):
+        if len(s) > MAXLEN:
+            add('WARN', where, 'P3', '문장이 %d자 — 끊는다: %s…' % (len(s), s[:40]))
+        if s.count('—') >= 2:
+            add('WARN', where, 'P3', 'em dash가 2개 이상 — 문장을 끊는다: %s…' % s[:40])
+
+
+def check_translationese(text, where):
+    for pat in TRANSLATIONESE:
+        if pat in text:
+            add('WARN', where, 'P4', '번역투 "%s"' % pat)
+
+
+def shingles(s):
+    """정규화 2-gram — 조사·부호 차이를 무시하고 문장이 겹치는지 본다."""
+    s = re.sub(r'[^0-9A-Za-z가-힣]', '', s or '')
+    return {s[i:i + 2] for i in range(len(s) - 1)}
+
+
+def check_dup_claim(sec, where):
+    """주장이 「그래서」 항목 하나를 그대로 옮겨 쓴 경우는 중복이다."""
+    claim = ' '.join(sec.get('주장') or [])
+    a = shingles(claim)
+    if not a:
+        return
+    for line in sec.get('그래서 무엇이 달라지나') or []:
+        b = shingles(re.sub(r'^-\s*', '', line))
+        if not b:
+            continue
+        overlap = len(a & b) / float(min(len(a), len(b)))
+        if overlap >= 0.6:
+            add('WARN', where, 'P5',
+                '주장과 「그래서」 항목이 %.0f%% 겹친다 — 항목을 다른 각도로 쓰거나 지운다: %s…'
+                % (overlap * 100, line[:40]))
+
+
+def check_order(names, where):
+    idx = [SECTION_ORDER.index(n) for n in names if n in SECTION_ORDER]
+    if idx != sorted(idx):
+        add('WARN', where, 'P6', '절 순서가 규정과 다르다: %s' % ' → '.join(names))
+
+
+def main():
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+    gloss = load_glossary()
+    files = sorted(glob.glob(os.path.join(ca.SYNTH, '*.md')))
+    for p in files:
+        where = os.path.basename(p)
+        raw = io.open(p, encoding='utf-8').read()
+        body = strip_refs(raw)
+        meta, mdbody = ca.parse_synth(raw)
+        sec = ca.sections(strip_refs(raw)) if meta else ca.sections(body)
+        names = [n for n in sec.keys()]
+        check_banned(body, where)
+        check_glossary(body, where, gloss)
+        check_length(body, where)
+        check_translationese(body, where)
+        check_dup_claim(sec, where)
+        check_order(names, where)
+
+    for level, where, rule, msg in findings:
+        print('%s %s [%s] %s' % (level, where, rule, msg))
+    fails = sum(1 for f in findings if f[0] == 'FAIL')
+    warns = len(findings) - fails
+    per = {}
+    for f in findings:
+        per[f[1]] = per.get(f[1], 0) + (0 if f[0] == 'FAIL' else 1)
+    print('요약: 인사이트 %d건 / FAIL %d / WARN %d' % (len(files), fails, warns))
+    heavy = [k for k, v in per.items() if v > 5]
+    if heavy:
+        print('WARN 5건 초과: %s — 이 파일은 humanize-korean 스킬을 부를 계기다'
+              % ', '.join(heavy))
+    return 1 if fails else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
