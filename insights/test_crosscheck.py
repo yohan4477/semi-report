@@ -215,3 +215,34 @@ def test_main_reconfigures_stdout_to_utf8(monkeypatch):
     monkeypatch.setattr(cc, 'pick_target', lambda argv: None)
     assert cc.main() == 1
     assert calls and calls[0].get('encoding') == 'utf-8'
+
+def _la(aid, stack, doc, stage=None):
+    a = _atom(aid, stack, None, 'c')
+    a['_file'] = doc
+    return a
+
+
+def test_lump_blocked_when_one_doc_dominates():
+    # 한 문서가 그 칸을 독점하면 그 구조는 아직 그 문서의 목차다 — 좌표를 쪼개지 않는다
+    atoms = [_la('A-%02d' % i, '데이터센터', 'lego.json') for i in range(9)]
+    atoms += [_la('B-1', '데이터센터', 'other.json')]
+    out = cc.find_lumps(atoms, {}, threshold=10)
+    assert len(out) == 1
+    assert out[0]['key'] == '데이터센터'
+    assert out[0]['top_doc'] == 'lego.json'
+    assert out[0]['promotable'] is False
+
+
+def test_lump_promotable_when_spread_across_docs():
+    atoms = []
+    for d in range(5):
+        atoms += [_la('C-%d-%d' % (d, i), '랙', 'doc%d.json' % d) for i in range(2)]
+    out = cc.find_lumps(atoms, {}, threshold=10)
+    assert len(out) == 1
+    assert out[0]['docs'] == 5
+    assert out[0]['promotable'] is True
+
+
+def test_lump_ignores_cells_below_threshold():
+    atoms = [_la('D-%d' % i, '메모리', 'doc%d.json' % i) for i in range(3)]
+    assert cc.find_lumps(atoms, {}, threshold=10) == []

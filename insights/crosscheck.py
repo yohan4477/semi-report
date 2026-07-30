@@ -67,6 +67,35 @@ def find_stale(new_atoms, all_atoms, assign, synth_dir=None):
     return out
 
 
+def find_lumps(all_atoms, assign, threshold=10, dominance=0.6):
+    """한 칸에 원자가 몰린 곳. 좌표를 쪼갤지 판단하는 근거다.
+
+    문서 수만 세면 거의 모든 칸이 2편을 넘어 아무것도 걸러지지 않는다. 실제 신호는
+    **한 문서가 그 칸을 독점하는가**다. 최다 문서 비중이 60%를 넘으면 그 구조는 아직
+    한 문서의 목차이므로 쪼개지 않는다 — 좌표는 문서를 가로질러 비교하는 자리다.
+    비중이 흩어져 있으면 하위 단계 후보로 올린다. 다만 여러 문서가 같은 순서를
+    말하는지는 기계가 못 본다 — 후보까지만 낸다."""
+    groups = {}
+    for a in all_atoms:
+        for axis, key in (('노드', a['view']['stack']), ('단계', assign.get(a['id']))):
+            if not key:
+                continue
+            g = groups.setdefault((axis, key), {'n': 0, 'docs': {}})
+            g['n'] += 1
+            g['docs'][a['_file']] = g['docs'].get(a['_file'], 0) + 1
+    out = []
+    for (axis, key), g in groups.items():
+        if g['n'] < threshold:
+            continue
+        top_doc, top_n = max(g['docs'].items(), key=lambda kv: kv[1])
+        share = top_n / float(g['n'])
+        out.append({'axis': axis, 'key': key, 'n': g['n'], 'docs': len(g['docs']),
+                    'top_doc': top_doc, 'top_n': top_n, 'share': share,
+                    'promotable': share < dominance})
+    out.sort(key=lambda x: -x['n'])
+    return out
+
+
 def pick_target(argv):
     """인수가 있으면 그 파일. 없으면 미커밋 원자 파일 → mtime 최신 순."""
     if argv:
@@ -105,7 +134,8 @@ def main():
         return 1
     old = [a for a in atoms if a['_file'] != target]
 
-    stale = find_stale(new, atoms, load_assign())
+    assign = load_assign()
+    stale = find_stale(new, atoms, assign)
     clashes = find_clashes(new, old)
     # 문서 내부 충돌 — 이 체계를 만든 5.4배 사고 자체가 [260723] 한 문서 안에서 났다
     # (요약 46행 vs 본문 256·258행). find_clashes(new, new)는 같은 쌍을 양방향으로 두 번
@@ -120,7 +150,18 @@ def main():
         seen_pairs.add(key)
         internal.append(c)
 
+    lumps = find_lumps(atoms, assign)
+
     print('대상: %s (원자 %d개)' % (target, len(new)))
+    print('')
+    print('뭉침 %d칸  (원자 10개 이상 — 좌표를 쪼갤지 판단하는 자리)' % len(lumps))
+    for l in lumps:
+        mark = ('하위 단계 후보' if l['promotable']
+                else '쪼개지 말 것 — %s 한 편이 %d%%' % (l['top_doc'][:22], round(l['share'] * 100)))
+        print('  %s %-16s 원자 %3d · 문서 %d편 · 최다 %d%%  → %s'
+              % (l['axis'], l['key'], l['n'], l['docs'], round(l['share'] * 100), mark))
+    if lumps:
+        print('  한 문서가 60%를 넘으면 그 구조는 그 문서의 목차다. 스킬은 사전을 늘리지 않는다')
     print('')
     print('STALE %d건' % len(stale))
     for s in stale:
