@@ -64,10 +64,12 @@ PYTHONIOENCODING=utf-8 py insights/crosscheck.py
 
 ## 6. 커밋·보고
 
-원자 파일과 `process.json`을 한 커밋으로. 메시지에 원자 수·노드 분포·미배정 수를 적는다.
+원자 파일과 `process.json`을 한 커밋으로. 메시지에 원자 수·노드 분포·미배정 수를 적는다. 커밋 메시지의 원자 수·노드 분포는 `check_atoms.py` 출력에서 그대로 복사한다(눈으로 세지 말 것 — 실제 수치와 어긋난 사례가 이미 여러 번 났다).
+
+1단계가 `manifest.json`을 갱신하고, 원자 추출 과정에서 `actors.json`에 주체를 추가했을 수 있으므로 둘 다 같이 커밋한다:
 
 ```bash
-git add insights/atoms/<파일> insights/views/process.json
+git add insights/atoms/<파일> insights/views/process.json insights/views/actors.json insights/manifest.json
 git commit -F - <<'EOF'
 feat(insights): <문서 제목> 원자화 — 원자 N개
 
