@@ -117,10 +117,17 @@ def build():
     ins_html = []
     for ins in insights:
         coord = ('노드 ' + ' · '.join(ins['nodes'])) if ins['view'] == 'stack' else ('단계 ' + ' → '.join(ins['stages']))
+        # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
+        # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
+        ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
+                 '아직 모르는 것', '검토 후 무관']
+        def rank(name):
+            return ORDER.index(name) if name in ORDER else len(ORDER)
         secs = []
-        for name, lines in ins['sections']:
+        for name, lines in sorted(ins['sections'], key=lambda kv: rank(kv[0])):
             items = ''.join('<li>%s</li>' % md_inline(re.sub(r'^-\s*', '', l)) for l in lines)
-            secs.append('<h4>%s</h4><ul>%s</ul>' % (esc(name), items))
+            cls = ' class="payoff"' if name == '그래서 무엇이 달라지나' else ''
+            secs.append('<h4%s>%s</h4><ul%s>%s</ul>' % (cls, esc(name), cls, items))
         oax = 'stage' if ins['view'] == 'stack' else 'stack'
         cards = [atom_card(by_id[aid], oax) for aid in ins['atoms'] if aid in by_id]
         dis = [atom_card(by_id[aid], oax) for aid in ins['dismissed'] if aid in by_id]
@@ -225,6 +232,10 @@ TMPL = r'''<meta charset="utf-8">
   .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.02em;margin:6px 0 2px}
   .ins .sub{font-size:12.5px;color:var(--faint);margin:0}
   .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+  .body h4.payoff{color:var(--accent);margin-top:4px}
+  .body ul.payoff{background:var(--soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+                  margin:0 0 14px;padding:11px 16px 11px 30px}
+  .body ul.payoff li{color:var(--ink);font-size:13.5px}
   .body ul{margin:0 0 6px;padding-left:17px}
   .body li{font-size:13px;color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
