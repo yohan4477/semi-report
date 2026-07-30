@@ -62,3 +62,46 @@ def test_glossary_checks_first_occurrence_only():
     t = '공랭(공기로 식히는 방식)은 막힌다. 공랭 물량은 남아 있다.'
     out = _run(cp.check_glossary, t, {'공랭': '공기로 식히는 방식'})
     assert out == []
+
+
+def test_sentences_splits_markdown():
+    # 마크다운 형태 - **소제목.** 본문 같은 경우도 문장으로 쪼개져야 한다
+    s = cp.sentences('- **칠러가 있다.** 그런데 칠러는 비싸다.')
+    assert len(s) == 2
+    assert '칠러가 있다' in s[0]
+    assert '칠러는 비싸다' in s[1]
+
+
+def test_glossary_term_with_reverse_paren_passes():
+    # 역순 괄호 형태: 설명(용어) 형태도 통과해야 한다
+    # 실제 코퍼스: 열교환기(RDHx) 형태는 사전의 "랙 뒤에 붙이는 열교환기"와
+    # 정확히 안 맞아도 개념이 전달되면 통과
+    out = _run(cp.check_glossary, '뒤에 열교환기(RDHx)를 붙여...', {'RDHx': '랙 뒤에 붙이는 열교환기'})
+    assert ('FAIL', 'P2') not in out
+
+
+def test_load_glossary_excludes_underscore_keys(tmp_path, monkeypatch):
+    # _로 시작하는 키는 제외된다
+    gloss_file = tmp_path / 'test_glossary.json'
+    gloss_file.write_text('{"_note": "metadata", "공랭": "공기로"}', encoding='utf-8')
+    monkeypatch.setattr(cp, 'GLOSSARY', str(gloss_file))
+    g = cp.load_glossary()
+    assert '_note' not in g
+    assert g == {'공랭': '공기로'}
+
+
+def test_load_glossary_returns_empty_when_file_missing(monkeypatch):
+    # 파일이 없으면 빈 사전을 돌려준다
+    monkeypatch.setattr(cp, 'GLOSSARY', '/nonexistent/glossary.json')
+    g = cp.load_glossary()
+    assert g == {}
+
+
+def test_strip_then_glossary_pipeline():
+    # 원자 인용 괄호는 제거되고, 용어 설명 괄호는 살아있어 P2 통과해야 한다
+    t = '공랭(공기로 식히는 방식)은 41kW에서 막힌다(A-250214-07).'
+    stripped = cp.strip_refs(t)
+    out = _run(cp.check_glossary, stripped, {'공랭': '공기로 식히는 방식'})
+    assert out == []
+    assert 'A-250214-07' not in stripped
+    assert '공랭(공기로 식히는 방식)' in stripped

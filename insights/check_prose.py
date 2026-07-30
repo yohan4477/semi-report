@@ -28,7 +28,7 @@ def strip_refs(text):
 
 
 def sentences(text):
-    parts = re.split(r'(?<=[.!?])\s+|\n+', text or '')
+    parts = re.split(r'(?<=[.!?])\**\s+|\n+', text or '')
     return [p.strip() for p in parts if p.strip()]
 
 
@@ -55,7 +55,9 @@ def check_glossary(text, where, gloss):
                 break
         if first is None:
             continue
-        glossed = re.search(re.escape(term) + r'\s*\(', first) or (plain in first)
+        glossed = (re.search(re.escape(term) + r'\s*\(', first)
+                   or re.search(r'\S+\s*\([^)]*' + re.escape(term) + r'[^)]*\)', first)
+                   or (plain in first))
         if not glossed:
             add('FAIL', where, 'P2',
                 '"%s" 첫 등장에 설명이 없다 — %s(%s) 형태로 풀거나 "%s"를 함께 쓴다'
