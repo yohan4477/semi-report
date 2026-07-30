@@ -28,5 +28,19 @@
   "Infineon": ["Infineon", "인피니언"],
   "Danfoss": ["Danfoss", "단포스"],
   "Aran Industries": ["Aran Industries", "아란 인더스트리즈"],
-  "Musashi Seimitsu": ["Musashi Seimitsu", "무사시 세이미츠", "Musashi Energy Solutions", "MES"]
+  "Musashi Seimitsu": ["Musashi Seimitsu", "무사시 세이미츠", "Musashi Energy Solutions", "MES"],
+  "xAI": ["xAI"],
+  "OpenAI": ["OpenAI"],
+  "Oracle": ["Oracle"],
+  "AEP Ohio": ["AEP Ohio", "AEP"],
+  "Bloom Energy": ["Bloom Energy", "Bloom"],
+  "GE Vernova": ["GE Vernova", "GE"],
+  "Siemens Energy": ["Siemens Energy", "Siemens"],
+  "두산에너빌리티": ["두산에너빌리티", "Doosan Enerbility", "두산"],
+  "Mitsubishi Power": ["Mitsubishi Power", "MHI", "Mitsubishi Heavy Industries"],
+  "VoltaGrid": ["VoltaGrid"],
+  "Argan": ["Argan", "AGX"],
+  "Energy Transfer": ["Energy Transfer", "ET"],
+  "Williams": ["Williams", "WMB"],
+  "Targa Resources": ["Targa Resources", "TRGP"]
 }
