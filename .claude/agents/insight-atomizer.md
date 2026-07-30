@@ -24,6 +24,29 @@ PYTHONIOENCODING=utf-8 py -c "import io,json;[print(s['id'],'|',s['hash'],'|',s[
 
 manifest에 없으면 여기서 멈추고 그 사실을 보고한다. `gen_manifest.py`를 직접 돌리지 않는다 — 스킬이 이미 돌렸어야 한다.
 
+## 먼저 판정: 이 문서가 원자화 대상인가
+
+문서를 훑고 유형을 정한다. 판정을 보고에 반드시 적는다.
+
+- **정량 문서(`quantitative`)** — 수치와 측정 조건이 본문에 반복해서 나온다. 원자화한다
+- **논증 문서(`argument`)** — 하나의 주장을 여러 절로 밀고 나가며 수치는 예시로만 나온다. **원자를 만들지 않는다.** 대신 구조와 핵심 주장 한 줄만 기록한다
+
+**기계 지표**: 원자를 뽑다가 `value`가 없는 비율이 **40%를 넘으면** 거기서 멈추고 논증 문서로 판정해 보고한다. 억지로 수치를 붙이지 않는다.
+
+실측 사례: `[260313] AI 실리콘 대란`은 무수치 54%였고 구조도 0개였다. "관문이 전력에서 실리콘으로 넘어갔다"는 하나의 논증이라 13조각으로 부수면 논증이 사라진다.
+
+논증 문서면 원자 파일을 만들지 말고 `insights/views/structures.json`에만 기록한다:
+
+```json
+{
+  "source_id": "<manifest의 id>",
+  "path": "<manifest의 path>",
+  "kind_of_doc": "argument",
+  "thesis": { "line": 349, "claim": "한 문장", "line_text": "<그 줄 원문>" },
+  "structures": []
+}
+```
+
 ## 산출물
 
 `insights/atoms/<YYMMDD>-<짧은슬러그>.json`
@@ -71,6 +94,31 @@ manifest에 없으면 여기서 멈추고 그 사실을 보고한다. `gen_manif
 - 수치가 없는 구조적 주장도 원자가 된다(`value: null`)
 - 목표 원자 수 10~30개
 
+## 구조 추출 — 문서가 자기 본문에 갖고 있는 계층·순서
+
+원자와 함께 낸다. 문서를 두 번 읽지 않는다. `insights/views/structures.json`의 `docs` 배열에 이 문서 항목 하나를 추가한다(기존 항목은 건드리지 않는다).
+
+```json
+{
+  "source_id": "<manifest의 id>",
+  "path": "<manifest의 path>",
+  "kind_of_doc": "quantitative",
+  "structures": [
+    { "kind": "hierarchy", "name": "모듈러 3층 구조", "line": 90,
+      "levels": ["부지", "셸", "시스템"], "note": "프리팹과 모듈러를 가르는 기준" },
+    { "kind": "process", "name": "모듈화 사이클 5단계", "line": 361,
+      "steps": ["설계", "문서화", "조립", "운송", "현장 커미셔닝"], "note": "공장에서 현장까지" }
+  ]
+}
+```
+
+- `kind`는 `hierarchy`(순서 없는 분류·층) 또는 `process`(시간·공정 순서). **헷갈리면 hierarchy**
+- 항목이 2개 미만이면 구조가 아니다 — 기록하지 않는다
+- `line`은 그 구조가 제시된 줄 번호(절 제목 줄이면 그 줄)
+- **문서가 실제로 열거한 것만.** 그럴듯한 구조를 만들어 넣지 않는다. 열거가 없으면 `"structures": []`
+- 라벨은 문서 표현을 그대로 짧게. 의역·영문 번역 금지
+- 찾는 방법: `grep -nE "^#{1,3} " <파일>`로 절 제목을 훑어 "N단계·3층·분류체계·사다리·사이클·N가지·N모델" 같은 표현이 있는 절만 부분 읽기
+
 ## 완료 조건
 
 ```bash
@@ -86,6 +134,16 @@ PYTHONIOENCODING=utf-8 py C:\Users\y\semianalysis\insights\check_atoms.py
 - 기존 원자 파일·인사이트 파일 수정
 - 이모지로 난이도·중요도 표시
 
+또 구조를 기록했으면 이것도 오류 0건이어야 한다:
+
+```bash
+PYTHONIOENCODING=utf-8 py C:\Users\y\semianalysis\insights\structures.py
+```
+
 ## 보고
 
-원자 수, 노드별 분포, `조건 명시 없음` 비율, 판독 불가로 생략한 대목, 검사기 요약 줄.
+- **문서 유형 판정**(`quantitative`/`argument`)과 근거 — 무수치 비율, 수치가 예시로만 쓰인 대목
+- 원자 수, 노드별 분포, `조건 명시 없음` 비율
+- 기록한 구조 개수(계층/프로세스)와 이름. 0개면 그 이유
+- 판독 불가로 생략한 대목
+- `check_atoms.py`·`structures.py` 요약 줄
