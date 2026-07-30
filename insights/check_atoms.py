@@ -286,6 +286,12 @@ def check_synth(atoms, pr):
 
 
 def main():
+    # cp949 콘솔에서 C16 등의 em dash·한글 메시지가 UnicodeEncodeError로 죽으면 그 뒤에 남은
+    # FAIL 목록과 요약이 통째로 사라진다 — crosscheck.py와 같은 방식으로 막는다
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
     man_hashes = {s['id']: s['hash'] for s in json.load(io.open(MAN, encoding='utf-8'))['sources']}
     actor_names = set(json.load(io.open(ACTORS, encoding='utf-8')))
     atoms = load_atoms()

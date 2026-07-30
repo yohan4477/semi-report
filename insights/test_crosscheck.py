@@ -170,6 +170,10 @@ def test_pick_target_from_basename():
 
 
 def test_pick_target_none_returns_none_when_no_files(tmp_path, monkeypatch):
+    # subprocess를 막지 않으면 실제 git status가 돌아 insights/atoms/에 미커밋 파일이
+    # 있는 정상 상태(스킬 절차 5가 도는 시점)에서 이 테스트가 작업트리 상태에 따라 실패한다
+    import subprocess
+    monkeypatch.setattr(subprocess, 'run', lambda *a, **k: _FakeRun(''))
     monkeypatch.setattr(cc.ca, 'ATOMS', str(tmp_path))
     assert cc.pick_target([]) is None
 

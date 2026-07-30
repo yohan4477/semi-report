@@ -107,6 +107,18 @@ def main():
 
     stale = find_stale(new, atoms, load_assign())
     clashes = find_clashes(new, old)
+    # 문서 내부 충돌 — 이 체계를 만든 5.4배 사고 자체가 [260723] 한 문서 안에서 났다
+    # (요약 46행 vs 본문 256·258행). find_clashes(new, new)는 같은 쌍을 양방향으로 두 번
+    # 내고 자기 자신과의 쌍도 섞으므로 여기서 걸러낸다
+    raw_internal = [c for c in find_clashes(new, new) if c['new']['id'] != c['old']['id']]
+    seen_pairs = set()
+    internal = []
+    for c in raw_internal:
+        key = (c['unit'],) + tuple(sorted((c['new']['id'], c['old']['id'])))
+        if key in seen_pairs:
+            continue
+        seen_pairs.add(key)
+        internal.append(c)
 
     print('대상: %s (원자 %d개)' % (target, len(new)))
     print('')
@@ -117,6 +129,15 @@ def main():
     if stale:
         print('  처리 4갈래: 뒷받침(atoms에 id 추가) / 조건 다름(조건 충돌 절) /')
         print('             뒤집음(주장 재작성, 이전 판단 보존) / 무관(dismissed + 검토 후 무관 절)')
+    print('')
+    print('문서 내부 충돌 %d쌍  (같은 단위 · 다른 조건 — 5.4배 사고와 같은 유형)' % len(internal))
+    for c in internal:
+        print('  %-4s %s "%s" [%s]' % (c['unit'], c['new']['id'],
+                                       (c['new'].get('value') or '')[:40],
+                                       (c['new'].get('condition') or '')[:40]))
+        print('       %s "%s" [%s]' % (c['old']['id'],
+                                       (c['old'].get('value') or '')[:40],
+                                       (c['old'].get('condition') or '')[:40]))
     print('')
     print('충돌 후보 %d쌍  (같은 단위 · 다른 조건 — 함께 인용하면 C9가 FAIL)' % len(clashes))
     for c in clashes:
