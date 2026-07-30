@@ -55,9 +55,11 @@ def check_glossary(text, where, gloss):
                 break
         if first is None:
             continue
+        plain_tail = (plain or '').split()[-1] if (plain or '').strip() else ''
         glossed = (re.search(re.escape(term) + r'\s*\(', first)
-                   or re.search(r'\S+\s*\([^)]*' + re.escape(term) + r'[^)]*\)', first)
-                   or (plain in first))
+                   or (plain in first)
+                   or (plain_tail and re.search(
+                       re.escape(plain_tail) + r'\s*\([^)]*' + re.escape(term) + r'[^)]*\)', first)))
         if not glossed:
             add('FAIL', where, 'P2',
                 '"%s" 첫 등장에 설명이 없다 — %s(%s) 형태로 풀거나 "%s"를 함께 쓴다'

@@ -105,3 +105,27 @@ def test_strip_then_glossary_pipeline():
     assert out == []
     assert 'A-250214-07' not in stripped
     assert '공랭(공기로 식히는 방식)' in stripped
+
+
+def test_glossary_reverse_paren_with_tail_matching():
+    # 역순 괄호에서 사전값의 마지막 어절이 괄호 바로 앞에 있을 때 통과
+    # 예: "열교환기(RDHx)" - 사전값 "랙 뒤에 붙이는 열교환기"의 마지막 어절 "열교환기"
+    out = _run(cp.check_glossary, '랙 뒤에 열교환기(RDHx)를 붙여 상한을 올린다.',
+               {'RDHx': '랙 뒤에 붙이는 열교환기'})
+    assert ('FAIL', 'P2') not in out
+
+
+def test_glossary_description_reverse_paren():
+    # "설명(용어)" 형태도 마지막 어절 매칭으로 통과
+    # 예: "공기로 식히는 방식(공랭)" - 사전값 "공기로 식히는 방식"의 마지막 어절 "방식"
+    out = _run(cp.check_glossary, '공기로 식히는 방식(공랭)이다.',
+               {'공랭': '공기로 식히는 방식'})
+    assert ('FAIL', 'P2') not in out
+
+
+def test_glossary_blocks_loose_reverse_paren():
+    # 마지막 어절이 괄호 바로 앞에 없으면 FAIL
+    # 예: "이 방식은 흔히 쓰인다(공랭)" - "방식"이 괄호 바로 앞에 없음
+    out = _run(cp.check_glossary, '이 방식은 흔히 쓰인다(공랭).',
+               {'공랭': '공기로 식히는 방식'})
+    assert ('FAIL', 'P2') in out
