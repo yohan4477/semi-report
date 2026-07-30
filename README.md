@@ -28,12 +28,31 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 ## 폴더 구조
 
 - `content/newsletter/` — SemiAnalysis 뉴스레터 한글 변환본 (카테고리별 하위 폴더: `ai_infra/`, `ai_models/`, `robotics/`, `semiconductors/`)
-- `content/understanding/` — 언더스탠딩 유튜브 제3자 해설 자막요약 (출연자별: `권효재 대표/`, `이선엽 대표/`)
+- `content/understanding/` — 언더스탠딩 유튜브 제3자 해설 자막요약 (출연자별: `권효재 대표/`, `이선엽 대표/`, `류상철 국장/`)
 - `raw/linkedin/` — LinkedIn 게시물 원본 덤프
 - `통합 리포트/` — 카테고리별·기업별 익스포저 종합 리포트
 - `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`
+  - 원자·뷰 계통(아래 절 참조): `atoms/`(문서별 원자 JSON), `synth/`(원자 기반 인사이트 md), `views/`(주체 사전·프로세스 단계 배정), `check_atoms.py`(검사기 C1~C19), `crosscheck.py`(신규 원자 대조 리포트), `figures/`
 - `대장/` — 예측 검증 대장, 크로스 도메인 숫자 대장
 - `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙)
 - `input/clippings/` — 변환 대기 원문 클리핑
+
+## 원자·뷰 기반 인사이트 (2026-07-30 도입)
+
+주제 클러스터 9개로 문서 65편을 요약하던 방식은 요약의 요약이 되어 숫자와 조건이 먼저 떨어졌습니다. 그래서 문서 **원문의 한 줄**에서 조건이 붙은 최소 사실 단위(**원자**)를 뽑고, 그 원자를 좌표에 매달아 같은 칸에서 인사이트를 씁니다. 기존 클러스터 체계는 그대로 두고 옆에 새로 만든 계통입니다.
+
+**원자** — `insights/atoms/<YYMMDD>-<슬러그>.json`. 문서 하나당 파일 하나. 원자마다 `line`(원문 줄 번호)·`line_text`(그 줄 원문)·`value`·`condition`(측정 조건·비교군)·`attributed_to`를 담습니다. 조건을 떼면 사실이 뒤집히는 사례가 실제로 있었기 때문에 `condition`은 비워둘 수 없습니다.
+
+**뷰(좌표)** — 원자는 두 축에 걸립니다.
+- **스택 뷰** (물리 의존, 8노드 고정): 전자·공정 → 칩 → 메모리/열 → 랙 → 데이터센터 → 전력망 → 연료·지정학
+- **프로세스 뷰** (결정 순서, 7단계 고정): 웨이퍼 배정 → 칩·랙 설계 확정 → 부지·전력 계약 → 냉각 방식 확정 → 건물 착공 → 랙 발주·인수 → 가동. 스택이 "무엇이 상류인가"를 말하고, 프로세스가 "그래서 무엇이 밀리나"를 말합니다
+
+**인사이트** — `insights/synth/<view>-<좌표>-<번호>.md`. 원자 3개 이상·문서 2편 이상이어야 쓸 수 있고, 주장·근거·조건 충돌·그래서 무엇이 달라지나·아직 모르는 것으로 구성됩니다. 프로세스 뷰에는 **되돌릴 수 없는 지점**이 하나 더 붙습니다.
+
+**검사기** — `py insights/check_atoms.py` (C1~C19). 줄 번호와 수치 대조(C2), 원문 hash 대조(C16), 원문 병치 검증(C17), 같은 단위·다른 조건 수치를 조건 표기 없이 이어 붙이는 것 차단(C9), 코퍼스 혼합 금지(C18), 원자 id 중복(C19) 등. 진위 판정은 기계가 못 하므로 원문을 원자 옆에 붙여 검토 비용을 낮추는 쪽으로 설계했습니다.
+
+**새 문서 넣기** — `insight-atomize` 스킬(`.claude/skills/`)이 절차를 지휘하고 `insight-atomizer` 에이전트(`.claude/agents/`)가 추출만 합니다. manifest 갱신 → 추출 → 단계 배정 → 검사기 FAIL 0 → `py insights/crosscheck.py`로 기존 인사이트와 대조(STALE·충돌 후보) → 커밋. 인사이트 본문은 기계가 고치지 않고 목록만 보고합니다.
+
+설계 문서는 `docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md`(체계)와 `2026-07-30-원자화-스킬-design.md`(절차)입니다.
 
 이 저장소는 public입니다 — 뉴스레터 클리핑 원문 등도 함께 노출됩니다.
