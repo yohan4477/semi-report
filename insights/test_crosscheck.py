@@ -154,3 +154,42 @@ def test_pick_target_from_basename():
 def test_pick_target_none_returns_none_when_no_files(tmp_path, monkeypatch):
     monkeypatch.setattr(cc.ca, 'ATOMS', str(tmp_path))
     assert cc.pick_target([]) is None
+
+
+class _FakeRun(object):
+    """subprocess.run 대역 — git status --porcelain 출력만 흉내낸다."""
+    def __init__(self, stdout):
+        self.stdout = stdout
+
+
+def test_pick_target_handles_quoted_korean_path(monkeypatch):
+    # git은 공백·비ASCII 경로를 따옴표로 감싼다. core.quotepath=false를 줘야 8진 이스케이프가
+    # 아닌 실제 한글이 나오고, 그 따옴표를 벗겨야 파일명이 맞는다
+    import subprocess
+    monkeypatch.setattr(subprocess, 'run',
+                        lambda *a, **k: _FakeRun(' M "insights/atoms/260723-베라-루빈-NVL72-vs-GB200.json"\n'))
+    assert cc.pick_target([]) == '260723-베라-루빈-NVL72-vs-GB200.json'
+
+
+def test_pick_target_passes_quotepath_false_to_git(monkeypatch):
+    seen = {}
+
+    def fake_run(cmd, **kwargs):
+        seen['cmd'] = cmd
+        return _FakeRun('')
+
+    import subprocess
+    monkeypatch.setattr(subprocess, 'run', fake_run)
+    cc.pick_target([])
+    assert 'core.quotepath=false' in seen['cmd']
+
+
+def test_main_reconfigures_stdout_to_utf8(monkeypatch):
+    # cp949 콘솔에서 한글·em dash 출력이 죽지 않아야 한다. 환경변수에 의존할 수 없다
+    calls = []
+    monkeypatch.setattr(cc.sys.stdout, 'reconfigure',
+                        lambda **kw: calls.append(kw), raising=False)
+    monkeypatch.setattr(cc.ca, 'load_atoms', lambda: [])
+    monkeypatch.setattr(cc, 'pick_target', lambda argv: None)
+    assert cc.main() == 1
+    assert calls and calls[0].get('encoding') == 'utf-8'

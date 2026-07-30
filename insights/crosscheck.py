@@ -73,7 +73,7 @@ def pick_target(argv):
         return os.path.basename(argv[0])
     try:
         import subprocess
-        r = subprocess.run(['git', '-C', ROOT, 'status', '--porcelain',
+        r = subprocess.run(['git', '-c', 'core.quotepath=false', '-C', ROOT, 'status', '--porcelain',
                             'insights/atoms'], capture_output=True, text=True)
         for line in r.stdout.splitlines():
             name = line[3:].strip().strip('"')
@@ -88,6 +88,12 @@ def pick_target(argv):
 
 
 def main():
+    # cp949 콘솔에서 한글·em dash 출력이 UnicodeEncodeError로 죽지 않게. 스킬은 이 스크립트를
+    # `py insights/crosscheck.py [대상]`으로만 부르므로 환경변수에 의존할 수 없다
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
     atoms = ca.load_atoms()
     target = pick_target(sys.argv[1:])
     if not target:
