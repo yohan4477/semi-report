@@ -21,7 +21,7 @@ before = re.sub(r'  <nav class="sec-nav">.*?</nav>\n\n', '', before, flags=re.DO
 
 # 카드 추출: <div class="ucard"> ~ 4-space </div>
 cards = re.findall(r'    <div class="ucard">.*?\n    </div>', region, re.DOTALL)
-assert len(cards) == 23, f"카드 수 이상: {len(cards)}"
+assert len(cards) == 25, f"카드 수 이상: {len(cards)}"
 
 def date_of(card):
     return re.search(r'(\d{4}-\d{2}-\d{2})', card).group(1)
@@ -36,6 +36,7 @@ BUCKETS = [
     ("pmarket",  ["태양광 세배", "원전만으로는", "서울-지방"]),
     ("semi",     ["반도체 룰이 바뀌었다", "호남 반도체"]),
     ("war",      ["이란 전쟁 오늘", "석유 치킨게임", "하르그섬", "미군은 이란", "베네수엘라"]),
+    ("macro",    ["경제 교과서 틀렸다", "환율 오른다고"]),
     ("oilsupply",["호르무즈 막히는 것보다", "중동산 기름", "대만 LNG", "15억 인구", "호르무즈 막히자 10조", "전쟁 끝나도 계속 간다"]),
 ]
 def bucket(card):
@@ -57,6 +58,7 @@ SECTIONS = [
     ("04", "원유 수급 · 정유", "호르무즈·홍해 항로 · 원유 다변화 · LNG·자원 확보", "oilsupply", "원유수급"),
     ("05", "중동 전쟁 · 지정학", "이란 전쟁 · 셧인·하르그 · 미사일 소모전 · 베네수엘라", "war", "중동전쟁"),
     ("06", "반도체 · 메모리", "메모리 리레이팅 · 호남 반도체 산단 전력 해법 — 이선엽", "semi", "반도체"),
+    ("07", "거시 · 금리 · 환율", "국채·물가가 지배하는 금리 · 달러가 끌고 가는 환율 — 류상철", "macro", "거시·금리"),
 ]
 
 # 섹션 점프 내비
