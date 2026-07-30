@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-25",
+ "generated": "2026-07-30",
  "sources": [
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
@@ -293,6 +293,18 @@
    "hash": "8e015539f256"
   },
   {
+   "id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
+   "corpus": "semianalysis",
+   "folder": "construction",
+   "categories": [
+    "ai-infra/construction",
+    "ai-infra/business"
+   ],
+   "date": "2026-07-29",
+   "path": "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md",
+   "hash": "56902cf7313a"
+  },
+  {
    "id": "semi:cooling:데이터센터-해부학-Part-2-냉각-시스템",
    "corpus": "semianalysis",
    "folder": "cooling",
@@ -582,6 +594,17 @@
    "date": "2026-03-18",
    "path": "content/understanding/권효재 대표/호르무즈 막히자 10조 돈벼락 맞은 한국선사 (2부).md",
    "hash": "58e3f9f709c0"
+  },
+  {
+   "id": "und:류상철 국장:경제-교과서-틀렸다-물가-때문에-금리-인상해도-주가-오른다",
+   "corpus": "understanding",
+   "folder": "류상철 국장",
+   "categories": [
+    "류상철 국장"
+   ],
+   "date": "2026-06-17",
+   "path": "content/understanding/류상철 국장/경제 교과서 틀렸다 - 물가 때문에 금리 인상해도 주가 오른다.md",
+   "hash": "6abe790b92f8"
   },
   {
    "id": "und:언더스탠딩 백브리핑:독일-신재생-전기-때문에-북유럽이-빡친-이유",
