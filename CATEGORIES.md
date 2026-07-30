@@ -30,6 +30,7 @@
 - **`ai-infra/memory`** — 메모리 (HBM, DRAM, 메모리 대역폭·용량 트렌드)
 - **`ai-infra/networking`** — 네트워킹 (NVLink·InfiniBand·이더넷 등 스케일업/스케일아웃 인터커넥트, CPO, 스위치·랙 간 연결 아키텍처) — 컴퓨트 문서에 흔히 곁들여지지만 네트워킹 자체가 문서 상당 분량을 차지하면 이 태그를 `ai-infra/compute`와 함께 이중 부여
 - **`ai-infra/business`** — 인프라·컴퓨트를 둘러싼 사업 구조·재무 (조달 전략, 마진, 토큰 지출, 클라우드 파트너십 등 — 하드웨어 스펙보다 비즈니스 축이 중심인 문서)
+- **`ai-infra/construction`** — 데이터센터의 물리적 건설 방법론 (부지·셸(외피)·시스템 3층 구조, 모듈러·프리팹 건설, 공사 인력·노동력 병목, 조립·시운전(커미셔닝) 공정, EPC·통합업체·OEM 벤더 생태계) — `ai-infra/power`·`ai-infra/cooling`이 완성된 설비 자체(변압기·UPS·CDU 등)를 다루는 것과 달리, 이 카테고리는 그 설비가 실제로 어떻게 시공·조립되어 건물이 되는지의 공정·인력·벤더 축을 다룸
 
 ### `robotics` — 로봇
 로봇 하드웨어, 자율주행, 물리 AI 등
@@ -46,9 +47,10 @@
 | ai-infra/compute | 21 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 9 |
-| ai-infra/business | 8 |
+| ai-infra/business | 9 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 2 |
+| ai-infra/construction | 1 |
 | ai-models/rl | 3 |
 | ai-models/agents | 2 |
 | ai-models | 1 |
@@ -70,6 +72,7 @@
 <!-- 2026-07-16: [260205] InferenceMAX™(오픈소스 추론 벤치마킹) 신규 변환 완료 — ai-infra/compute 17→18. AMD·Nvidia 7종 칩 대상 처리량·TCO·MW당 토큰처리량 3차원 실측 벤치마크, DeepSeek R1 서빙 전략·CI/CD 인프라·트러블슈팅까지 전체 11개 섹션 완료 -->
 <!-- 2026-07-16: [260205] InferenceX v2(엔비디아 블랙웰 vs AMD vs 호퍼, 구 InferenceMAX 후속) 신규 변환 완료 — ai-infra/compute 18→19. 거의 1,000개 GPU 대상 GB300/B300 Blackwell Ultra 최초 벤치마크, AMD 조합성(Composability) 문제 심층분석, MTP·Wide EP·분리형 서빙 원리, 세대별 TCO까지 전체 15개 섹션 완료 -->
 <!-- 2026-07-23: [260723] 베라 루빈 NVL72 vs GB200 NVL72(추론 TCO·아키텍처 분석) 신규 변환 완료 — ai-infra/compute 19→20, ai-infra/networking 7→8. Rubin 칩 마이크로아키텍처(SMEM·TMEM 확장, 2:4 스파시티, HBM4 2.8배 대역폭), LUT B 3비트 룩업테이블 가중치 압축(Kimi K3 사례), Feynman(SM_140) 미리보기, CoreWeave 벤치마크 방법론 비판, Rubin vs GB200/GB300 성능/MW·성능/TCO 파레토 분석, MI355X 비교, 소프트웨어 생태계, 전력예산·BOM까지 전체 10개 섹션 완료 -->
+<!-- 2026-07-30: `ai-infra/construction` 신규 카테고리 신설 — [260729] LEGO 데이터센터(모듈러 건설) 문서가 계기. 기존 ai-infra/power·cooling은 완성된 설비 스펙을 다루는데, 이 문서는 부지·셸·시스템 3층 구조와 모듈러·프리팹 조립 공정, 공사 인력 병목, EPC·통합업체·OEM 벤더 생태계라는 "어떻게 짓는가" 축이 중심이라 기존 카테고리 어디에도 맞지 않아 신설. 문서 후반부(벤더별 승자·패자, 백로그·마진·콘텐츠당 MW 경제성)는 ai-infra/business와도 겹쳐 이중 태그 부여 — ai-infra/construction 0→1, ai-infra/business 8→9 -->
 
 
 
