@@ -141,3 +141,16 @@ def test_not_stale_when_new_atom_older_than_as_of(tmp_path):
     new = [_atom('A-260725-01', '랙', '132kW', 'Max-P', time='2026-07-25')]
     allx = new + [_atom('A-250214-07', '랙', '41kW', '2025-02', time='2025-02-14')]
     assert cc.find_stale(new, allx, {}, d) == []
+
+
+def test_pick_target_from_path():
+    assert cc.pick_target(['insights/atoms/251128-TPUv7.json']) == '251128-TPUv7.json'
+
+
+def test_pick_target_from_basename():
+    assert cc.pick_target(['251128-TPUv7.json']) == '251128-TPUv7.json'
+
+
+def test_pick_target_none_returns_none_when_no_files(tmp_path, monkeypatch):
+    monkeypatch.setattr(cc.ca, 'ATOMS', str(tmp_path))
+    assert cc.pick_target([]) is None

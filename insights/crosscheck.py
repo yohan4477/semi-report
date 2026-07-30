@@ -65,3 +65,63 @@ def find_stale(new_atoms, all_atoms, assign, synth_dir=None):
             out.append({'file': os.path.basename(p), 'as_of': as_of,
                         'scope': scope, 'uncited': sorted(hit)})
     return out
+
+
+def pick_target(argv):
+    """인수가 있으면 그 파일. 없으면 미커밋 원자 파일 → mtime 최신 순."""
+    if argv:
+        return os.path.basename(argv[0])
+    try:
+        import subprocess
+        r = subprocess.run(['git', '-C', ROOT, 'status', '--porcelain',
+                            'insights/atoms'], capture_output=True, text=True)
+        for line in r.stdout.splitlines():
+            name = line[3:].strip().strip('"')
+            if name.endswith('.json'):
+                return os.path.basename(name)
+    except Exception:
+        pass
+    files = glob.glob(os.path.join(ca.ATOMS, '*.json'))
+    if not files:
+        return None
+    return os.path.basename(max(files, key=os.path.getmtime))
+
+
+def main():
+    atoms = ca.load_atoms()
+    target = pick_target(sys.argv[1:])
+    if not target:
+        print('대상 원자 파일을 찾지 못했다')
+        return 1
+    new = [a for a in atoms if a['_file'] == target]
+    if not new:
+        print('원자가 없다: %s' % target)
+        return 1
+    old = [a for a in atoms if a['_file'] != target]
+
+    stale = find_stale(new, atoms, load_assign())
+    clashes = find_clashes(new, old)
+
+    print('대상: %s (원자 %d개)' % (target, len(new)))
+    print('')
+    print('STALE %d건' % len(stale))
+    for s in stale:
+        print('  %s  as_of %s  [%s]' % (s['file'], s['as_of'], s['scope']))
+        print('    미인용 신규 원자: %s' % ', '.join(s['uncited']))
+    if stale:
+        print('  처리 4갈래: 뒷받침(atoms에 id 추가) / 조건 다름(조건 충돌 절) /')
+        print('             뒤집음(주장 재작성, 이전 판단 보존) / 무관(dismissed + 검토 후 무관 절)')
+    print('')
+    print('충돌 후보 %d쌍  (같은 단위 · 다른 조건 — 함께 인용하면 C9가 FAIL)' % len(clashes))
+    for c in clashes:
+        print('  %-4s %s "%s" [%s]' % (c['unit'], c['new']['id'],
+                                       (c['new'].get('value') or '')[:40],
+                                       (c['new'].get('condition') or '')[:40]))
+        print('       %s "%s" [%s]' % (c['old']['id'],
+                                       (c['old'].get('value') or '')[:40],
+                                       (c['old'].get('condition') or '')[:40]))
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
