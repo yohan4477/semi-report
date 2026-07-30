@@ -21,5 +21,12 @@
   "Schneider Electric": ["Schneider Electric", "Schneider", "슈나이더", "슈나이더 일렉트릭"],
   "Comfort Systems": ["Comfort Systems", "Comfort Systems USA"],
   "Cupertino Electric": ["Cupertino Electric"],
-  "Aligned": ["Aligned", "Aligned Data Centers"]
+  "Aligned": ["Aligned", "Aligned Data Centers"],
+  "Delta Electronics": ["Delta Electronics", "Delta", "델타", "델타 일렉트로닉스"],
+  "ABB": ["ABB"],
+  "Applied Digital": ["Applied Digital"],
+  "Infineon": ["Infineon", "인피니언"],
+  "Danfoss": ["Danfoss", "단포스"],
+  "Aran Industries": ["Aran Industries", "아란 인더스트리즈"],
+  "Musashi Seimitsu": ["Musashi Seimitsu", "무사시 세이미츠", "Musashi Energy Solutions", "MES"]
 }

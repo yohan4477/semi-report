@@ -483,6 +483,36 @@
      "note": "50MW 기준 시설의 관행적 스틱빌드 공정을 나눈 4단계"
     }
    ]
+  },
+  {
+   "source_id": "semi:power:800VDC-혁명-Part-1-전력-배전-아키텍처의-대전환",
+   "path": "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md",
+   "kind_of_doc": "quantitative",
+   "structures": [
+    {
+     "kind": "process",
+     "name": "HVDC 전환 4단계 로드맵",
+     "line": 133,
+     "steps": [
+      "Phase 1 화이트스페이스 레트로핏",
+      "Phase 2 800VDC 네이티브 컴퓨트",
+      "Phase 3 MV-800VDC 직접 변환",
+      "Phase 4 전 구간 HVDC"
+     ],
+     "note": "사이드카로 끼워 넣는 단계에서 시설 전체가 직류로 가는 단계까지의 도입 순서"
+    },
+    {
+     "kind": "process",
+     "name": "전력 랙 규격의 진화",
+     "line": 221,
+     "steps": [
+      "ORv3 HPR V3(50V 사이드카)",
+      "ORv3 HPR V4(±400VDC 사이드카)",
+      "Diablo 400 표준화"
+     ],
+     "note": "분리형 전력 랙 규격이 저전압에서 HVDC 표준으로 굳어지는 순서"
+    }
+   ]
   }
  ]
 }
