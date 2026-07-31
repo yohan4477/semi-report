@@ -125,7 +125,15 @@ def build():
     ins_html = []
     prev_view = None
     for ins in insights:
-        coord = ('노드 ' + ' · '.join(ins['nodes'])) if ins['view'] == 'stack' else ('단계 ' + ' → '.join(ins['stages']))
+        if ins['view'] == 'stack':
+            path = sorted([n for n in ins['nodes'] if n in STACK], key=STACK.index)
+            kind_label = '스택'
+        else:
+            path = [s for s in ins['stages'] if s in stages]
+            kind_label = '프로세스'
+        coord = ' · '.join(path)
+        chips = ('<span class="ckind">%s</span>' % kind_label) + '<i>→</i>'.join(
+            '<span class="cch">%s</span>' % esc(x) for x in path)
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
         # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
         ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
@@ -155,12 +163,12 @@ def build():
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<h2>%s</h2><p class="sub">%s · 원자 %d개%s</p></summary>'
+            '<h2>%s</h2><p class="coord">%s<span class="cnt">원자 %d개%s</span></p></summary>'
             '<div class="body">%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
                esc(ins['as_of']), md_inline(ins['claim']),
-               esc(coord), len(ins['atoms']),
+               chips, len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
                ''.join(secs), ev))
 
@@ -293,6 +301,12 @@ TMPL = r'''<meta charset="utf-8">
   .cid{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
   .asof{float:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
   .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.02em;margin:6px 0 2px}
+  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:8px 0 0}
+  .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
+  .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
+              border-radius:999px;padding:2px 9px;white-space:nowrap}
+  .coord i{font-style:normal;color:var(--faint);font-size:11px}
+  .coord .cnt{font-size:11.5px;color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
   .ins .sub{font-size:12.5px;color:var(--faint);margin:0}
   .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
   .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:11px;padding:14px 17px;margin-bottom:10px;box-shadow:var(--shadow)}
