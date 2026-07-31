@@ -139,24 +139,14 @@ def build():
             full, on = stages, set(ins['stages'])
             kind_label = '프로세스'
         path = [x for x in full if x in on]
-        coord = ' · '.join(path)
-        SHORT = {'연료·지정학': '연료', '전자·공정': '공정', '데이터센터': 'DC',
-                 '웨이퍼 배정': '웨이퍼', '칩·랙 설계 확정': '설계', '부지·전력 계약': '부지·전력',
-                 '냉각 방식 확정': '냉각', '건물 착공': '착공', '랙 발주·인수': '인수'}
-        parts = ['<span class="cch%s">%s</span>'
-                 % ('' if x in on else ' off', esc(x if x in on else SHORT.get(x, x)))
-                 for x in full]
-        joins = []
-        for i2, seg in enumerate(parts):
-            joins.append(seg)
-            if i2 < len(parts) - 1:
-                a1, b1 = full[i2] in on, full[i2 + 1] in on
-                if a1 and b1:
-                    joins.append('<i class="chl on"></i>')   # 다루는 구간이 이어진 자리
-                elif a1 or b1:
-                    joins.append('<i class="chl"></i>')      # 구간의 경계
-                # 회색끼리는 선을 안 긋는다 — 줄만 늘어난다
-        chips = ('<span class="ckind">%s</span>' % kind_label) + ''.join(joins)
+        # 축 이름은 글 위 레일에 한 번만 적는다. 카드에는 그 축 위 어디인지만 —
+        # 같은 축을 쓰는 글끼리 눈으로 바로 겹쳐 보이게
+        bar = ''.join('<i%s></i>' % (' class="on"' if x in on else '') for x in full)
+        idx = [full.index(x) for x in path]
+        contiguous = len(idx) > 1 and idx == list(range(idx[0], idx[-1] + 1))
+        label = ('%s → %s' % (path[0], path[-1])) if contiguous else ' · '.join(path)
+        chips = ('<span class="axmini" aria-hidden="true">%s</span>'
+                 '<span class="cspan">%s</span>' % (bar, esc(label)))
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
         # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
         ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
@@ -178,11 +168,14 @@ def build():
                    % (len(dis), ''.join(dis)))
         if ins['view'] != prev_view:
             prev_view = ins['view']
+            rail = ''.join(
+                ('<i></i>' if k else '') + '<span class="rl">%s</span>' % esc(x)
+                for k, x in enumerate(full))
             ins_html.append(
-                '<p class="viewsep">%s</p>'
-                % ('스택 뷰 — 큰 것에서 작은 것으로'
-                   if ins['view'] == 'stack'
-                   else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'))
+                '<p class="viewsep">%s</p><div class="rail">%s</div>'
+                % (('스택 뷰 — 큰 것에서 작은 것으로'
+                    if ins['view'] == 'stack'
+                    else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'), rail))
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
@@ -262,70 +255,73 @@ TMPL = r'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>인사이트와 그 근거</title>
 <style>
-  :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05)}
+  :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05);
+        /* 글자·간격은 여기서만 정한다. 모바일은 이 값만 바꾼다 — 규칙을 두 벌 두면 어긋난다 */
+        --t-lbl:10.5px;--t-meta:12px;--t-body:13.5px;--t-lead:14.5px;--t-h2:19px;
+        --r:12px;--pad:16px 20px;--gap:12px}
   @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#7e8798;--line:#2a3140;--accent:#7aa5f8;--accent2:#9ab8fa;--soft:#1e2a44;--sunk:#242b38;--shadow:none}}
   *{box-sizing:border-box}
   html{font-size:100%}
   body{font-size:1rem;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.64;margin:0;padding:0 20px 80px}
   .wrap{max-width:900px;margin:0 auto}
   header{padding:52px 0 6px}
-  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  .eyebrow{font-size:var(--t-meta);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
   h1{font-size:clamp(28px,6vw,44px);font-weight:850;letter-spacing:-.035em;margin:0}
   h1::after{content:"";display:block;width:52px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
-  .lede{color:var(--sub);font-size:15px;margin:16px 0 0;max-width:64ch}
-  .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
-  h3.sec{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
-  h4.sub2{font-size:13px;font-weight:800;color:var(--sub);margin:22px 0 8px}
-  .ev{border:1px solid var(--line);border-radius:10px;background:var(--sunk);margin:14px 0 0}
-  .ev>summary{cursor:pointer;padding:9px 13px;font-size:12.5px;color:var(--sub);list-style:none}
+  .lede{color:var(--sub);font-size:var(--t-lead);margin:16px 0 0;max-width:64ch}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:var(--t-meta);color:var(--faint)}
+  h3.sec{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  h4.sub2{font-size:var(--t-body);font-weight:800;color:var(--sub);margin:22px 0 8px}
+  .ev{border:1px solid var(--line);border-radius:var(--r);background:var(--sunk);margin:14px 0 0}
+  .ev>summary{cursor:pointer;padding:10px 13px;font-size:var(--t-meta);color:var(--sub);list-style:none}
   .ev>summary::-webkit-details-marker{display:none}
   .ev>summary::before{content:"▸ ";color:var(--faint)}
   .ev[open]>summary::before{content:"▾ "}
   .ev>summary b{color:var(--ink)}
   .ev .atom{padding:11px 13px;border-top:1px solid var(--line)}
-  .axnote{font-size:13px;color:var(--sub);margin:0 0 14px;max-width:64ch}
+  .axnote{font-size:var(--t-body);color:var(--sub);margin:0 0 14px;max-width:64ch}
   .chain .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;position:relative}
   .band{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
-  .cell{text-align:left;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:11px;
-        padding:12px 13px;cursor:pointer;font:inherit;color:inherit;display:block;box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
+  .cell{text-align:left;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);
+        padding:13px 14px;cursor:pointer;font:inherit;color:inherit;display:block;box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
   .cell:hover{transform:translateY(-1px);border-color:var(--accent)}
   .cell.empty{border-left-color:var(--line);background:var(--sunk);opacity:.85}
   .cell.on{border-color:var(--accent);background:var(--soft)}
-  .cell .ord{display:block;font-size:10px;font-weight:800;color:var(--faint);letter-spacing:.08em}
-  .cell .nm{display:block;font-size:14.5px;font-weight:800;letter-spacing:-.01em}
-  .cell .ct{display:block;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums;margin-top:2px}
+  .cell .ord{display:block;font-size:var(--t-lbl);font-weight:800;color:var(--faint);letter-spacing:.08em}
+  .cell .nm{display:block;font-size:var(--t-lead);font-weight:800;letter-spacing:-.01em}
+  .cell .ct{display:block;font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums;margin-top:2px}
   .cell.empty .ct{color:#b0463f}
   @media (prefers-color-scheme:dark){.cell.empty .ct{color:#e08a8a}}
-  .flow{font-size:11px;color:var(--faint);letter-spacing:.04em;margin:6px 0 0}
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:18px;box-shadow:var(--shadow)}
-  .panel .ph{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
-  .panel h2{font-size:20px;font-weight:850;letter-spacing:-.02em;margin:0 0 10px}
-  .hint{font-size:13px;color:var(--faint);margin:0}
-  .lnk{display:block;font-size:13px;color:var(--ink);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--line)}
+  .flow{font-size:var(--t-lbl);color:var(--faint);letter-spacing:.04em;margin:6px 0 0}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);margin-top:18px;box-shadow:var(--shadow)}
+  .panel .ph{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+  .panel h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;margin:0 0 10px}
+  .hint{font-size:var(--t-body);color:var(--faint);margin:0}
+  .lnk{display:block;font-size:var(--t-body);color:var(--ink);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--line)}
   .lnk:last-child{border-bottom:0}
   .lnk b{color:var(--accent2)}
   .atom{border-top:1px solid var(--line);padding:11px 0}
   .atom:first-of-type{border-top:0}
-  .aid{font-size:10.5px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
-  .atag{font-size:10px;font-weight:800;padding:1px 7px;border-radius:999px;margin-left:6px;background:var(--sunk);color:var(--faint)}
-  .aclaim{font-size:13.5px;color:var(--ink);margin:3px 0 4px}
-  .kv{font-size:12px;color:var(--sub);margin:0 0 3px}
+  .aid{font-size:var(--t-lbl);font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .atag{font-size:var(--t-lbl);font-weight:800;padding:1px 7px;border-radius:999px;margin-left:6px;background:var(--sunk);color:var(--faint)}
+  .aclaim{font-size:var(--t-body);color:var(--ink);margin:3px 0 4px}
+  .kv{font-size:var(--t-meta);color:var(--sub);margin:0 0 3px}
   .kv span{color:var(--faint)}
-  .src{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--sub);background:var(--sunk);
+  .src{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:var(--t-meta);color:var(--sub);background:var(--sunk);
        border-left:2px solid var(--line);border-radius:0 6px 6px 0;padding:7px 9px;margin:5px 0 0;white-space:pre-wrap;word-break:break-word}
-  .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;box-shadow:var(--shadow)}
-  .viewsep{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:var(--pad);margin-top:12px;box-shadow:var(--shadow)}
+  .viewsep{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;
             color:var(--accent);margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
-  .hintline{font-size:12.5px;color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
+  .hintline{font-size:var(--t-meta);color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
   .ins>summary:hover h2{color:var(--accent)}
   .ins:not([open])>summary{padding-bottom:0}
   .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:26px}
   .ins>summary::-webkit-details-marker{display:none}
   .ins>summary::after{content:"⌄";position:absolute;right:2px;top:-2px;font-size:22px;color:var(--faint);transition:transform .2s}
   .ins[open]>summary::after{transform:rotate(180deg)}
-  .cid{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
-  .asof{float:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
-  .ins h2{font-size:19px;font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
+  .cid{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;color:var(--accent)}
+  .asof{float:right;font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums}
+  .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
   /* apple-design: 응답은 누르는 순간(포인터 다운), 열림은 임계감쇠(damping 1.0·response 0.35s).
      제스처가 아니라 클릭이라 오버슈트를 넣지 않는다. transform·opacity만 움직여 합성기에 맡긴다 */
   .ins>summary{-webkit-tap-highlight-color:transparent}
@@ -334,8 +330,7 @@ TMPL = r'''<meta charset="utf-8">
   .ins[open]>.body{animation:reveal .35s cubic-bezier(.32,.72,0,1) both}
   .ev[open]>.atom:first-of-type,.ev[open]>div:first-of-type{animation:reveal .3s cubic-bezier(.32,.72,0,1) both}
   @keyframes reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-  .cch{transition:background-color .2s ease,color .2s ease}
-  .ins>summary:hover .cch{background:var(--accent);color:var(--card)}
+  .axmini i{transition:background-color .2s ease}
   .cell,.ins,.grp{will-change:auto}
   @media (prefers-reduced-motion:reduce){
     .ins[open]>.body,.ev[open]>.atom:first-of-type,.ev[open]>div:first-of-type{animation:fadein .18s ease both}
@@ -345,95 +340,71 @@ TMPL = r'''<meta charset="utf-8">
     @keyframes fadein{from{opacity:0}to{opacity:1}}
   }
   @media (prefers-contrast:more){
-    .cch{border:1px solid var(--accent2)}
+    .axmini i{outline:1px solid var(--accent2)}
     .ins,.grp,.panel{border:1px solid var(--ink)}
   }
-  .claimfull{font-size:14.5px;line-height:1.62;color:var(--ink);margin:0 0 4px;
+  .claimfull{font-size:var(--t-lead);line-height:1.62;color:var(--ink);margin:0 0 4px;
               padding:11px 14px;background:var(--sunk);border-radius:8px}
-  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:3px 2px;margin:8px 0 0;row-gap:5px}
-  .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
-  .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
-              border-radius:999px;padding:2px 7px;white-space:nowrap;line-height:1.5}
-  .coord .cch.off{background:transparent;color:var(--faint);font-weight:600;
-                  border:1px solid var(--line);padding:1px 5px;font-size:10.5px;line-height:1.5}
-  .ins>summary:hover .cch.off{background:transparent;color:var(--faint)}
-  .coord .chl{display:block;width:7px;height:1px;background:var(--line);flex:0 0 auto;align-self:center;padding:0}
-  .coord .chl.on{width:10px;height:2px;background:var(--accent);border-radius:1px}
-  .coord .cnt{font-size:11.5px;color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
-  .ins .sub{font-size:13px;color:var(--faint);margin:3px 0 0;line-height:1.5}
-  .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
-  .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:11px;padding:14px 17px;margin-bottom:10px;box-shadow:var(--shadow)}
-  .gh{font-size:15px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
-  .gk{font-size:11px;font-weight:700;color:var(--faint);margin-left:6px}
-  .gp{font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px}
+  /* 축은 글 위 레일에 한 번. 카드는 그 축 위 자기 자리만 — 같은 축의 글끼리 겹쳐 보인다 */
+  .rail{display:flex;flex-wrap:wrap;align-items:center;gap:4px 3px;
+        margin:0 0 10px;padding:10px 13px;background:var(--sunk);border-radius:var(--r)}
+  .rail .rl{font-size:var(--t-meta);font-weight:700;color:var(--sub);white-space:nowrap}
+  .rail i{display:block;width:11px;height:1px;background:var(--line);flex:0 0 auto}
+  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:7px 0 0}
+  .axmini{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+  .axmini i{display:block;width:9px;height:3px;border-radius:2px;background:var(--line)}
+  .axmini i.on{background:var(--accent)}
+  .cspan{font-size:var(--t-meta);font-weight:750;color:var(--accent2);letter-spacing:-.01em}
+  .coord .cnt{font-size:var(--t-meta);color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
+  .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0;line-height:1.5}
+  .body h4{font-size:var(--t-meta);font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+  .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:var(--pad);margin-bottom:10px;box-shadow:var(--shadow)}
+  .gh{font-size:var(--t-lead);font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+  .gk{font-size:var(--t-meta);font-weight:700;color:var(--faint);margin-left:6px}
+  .gp{font-size:var(--t-lbl);font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px}
   .gp.yes{background:#e8f6ec;color:#1d6e45}
   .gp.no{background:var(--sunk);color:var(--faint)}
   @media (prefers-color-scheme:dark){.gp.yes{background:#173323;color:#63c08c}}
-  .gn{font-size:12.5px;color:var(--sub);margin:0 0 7px;line-height:1.55}
-  .gn2{font-size:11.5px;color:var(--faint);margin:7px 0 0;line-height:1.5}
+  .gn{font-size:var(--t-body);color:var(--sub);margin:0 0 7px;line-height:1.55}
+  .gn2{font-size:var(--t-meta);color:var(--faint);margin:7px 0 0;line-height:1.5}
   .gm{margin:0;padding-left:16px;list-style:none}
-  .gm li{font-size:12.5px;color:var(--sub);line-height:1.55;margin-bottom:3px;position:relative}
+  .gm li{font-size:var(--t-body);color:var(--sub);line-height:1.55;margin-bottom:3px;position:relative}
   .gm li::before{content:"";position:absolute;left:-12px;top:9px;width:6px;height:1.5px;background:var(--accent)}
   .gm li b{color:var(--ink)}
-  .gd{font-size:10.5px;color:var(--faint)}
+  .gd{font-size:var(--t-lbl);color:var(--faint)}
   .body h4.payoff{color:var(--accent);margin-top:4px}
   .body ul.payoff{background:var(--soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
                   margin:0 0 14px;padding:11px 16px 11px 30px}
-  .body ul.payoff li{color:var(--ink);font-size:13.5px}
+  .body ul.payoff li{color:var(--ink);font-size:var(--t-body)}
   .body ul{margin:0 0 6px;padding-left:17px}
-  .body li{font-size:13.5px;color:var(--sub);line-height:1.58;margin-bottom:4px}
+  .body li{font-size:var(--t-body);color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--sunk);padding:1px 4px;border-radius:4px}
 
-  footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
-  /* ── 모바일 — 손가락과 눈 기준으로 다시 잡는다 ──
-     본문 13px대는 폰에서 작다. 탭 타깃은 최소 44px, 여백은 화면 폭에 맞춰 줄인다 */
+  footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:var(--t-meta);color:var(--faint)}
+  /* ── 모바일 — 값이 아니라 토큰만 바꾼다. 규칙을 두 벌 두면 반드시 어긋난다 ── */
   @media (max-width:640px){
-    body{padding:0 14px 64px}
+    :root{--t-lbl:11.5px;--t-meta:12.5px;--t-body:14px;--t-lead:14.5px;--t-h2:17.5px;--pad:16px 15px}
+    body{padding:0 14px 64px;line-height:1.66}
     .wrap{max-width:100%}
     header{padding:34px 0 4px}
     h1{font-size:clamp(26px,7.5vw,34px);letter-spacing:-.03em}
-    .lede{font-size:14px;line-height:1.6}
-    .meta{gap:5px 14px;font-size:12.5px}
-    .ins{padding:16px 15px}
-    .ins>summary{padding:6px 30px 6px 0;min-height:44px}      /* 탭 타깃 */
+    .meta{gap:5px 14px}
+    .ins>summary{padding:6px 30px 6px 0;min-height:44px}       /* 손가락 타깃 */
     .ins>summary::after{right:0;top:2px;font-size:24px}
-    .ins h2{font-size:17.5px;line-height:1.38;letter-spacing:-.02em}
-    .coord{gap:6px}
-    .coord .cch{font-size:11.5px;padding:4px 10px}
-    .coord .cch.off{font-size:10.5px;padding:2px 6px}             /* 칩도 눌리는 것 */
-    .coord .cnt{margin-left:0;width:100%;font-size:12px}
-    .body li,.body ul.payoff li{font-size:13.5px;line-height:1.62}
-    .body h4{font-size:12.5px;margin:16px 0 6px}
-    .ev>summary{padding:13px 14px;font-size:13.5px;min-height:44px}
-    .ev .atom{padding:13px 14px}
-    .aclaim{font-size:13.5px;line-height:1.58}
-    .kv{font-size:13px;line-height:1.55}
-    .src{font-size:12px;line-height:1.58;padding:9px 11px}
+    .ins h2{line-height:1.38}
+    .coord .cnt{margin-left:0}
+    .ev>summary,.ev .atom{padding:13px 14px;min-height:44px}
     .chain .row{grid-template-columns:1fr;gap:8px;margin-bottom:8px}
     .band{grid-template-columns:1fr 1fr;gap:8px}
-    .cell{padding:13px 14px;min-height:56px}
-    .cell .nm{font-size:14px}
-    .cell .ct{font-size:12.5px}
-    .panel{padding:16px 15px}
-    .grp{padding:14px 15px}
-    .gh{font-size:15.5px}
-    .gn,.gm li{font-size:12.5px;line-height:1.58}
-    .hintline,.axnote{font-size:12.5px;line-height:1.58}
-    .viewsep{font-size:11.5px;margin:26px 0 8px}
-    .ins .sub{font-size:12.5px}
-    .aid,.atag,.cid,.gd,.gk,.gp,.cell .ord{font-size:11.5px}
-    .coord .ckind{font-size:11.5px}
-    .coord i{font-size:12px}
-    .kv{font-size:12.5px}
+    .cell{min-height:56px}
+    .rail{padding:10px 12px;gap:4px 2px}
+    .claimfull{padding:10px 12px}
     .atag{padding:2px 8px}
-    .asof{font-size:12px}
-    footer{font-size:12px;line-height:1.68}
-    .claimfull{font-size:13.5px;padding:10px 12px}
   }
   @media (max-width:380px){
     .band{grid-template-columns:1fr}
-    .coord .cch{font-size:12px;padding:3px 9px}
+    .rail .rl{font-size:11.5px}
   }
 </style>
 <div class="wrap">
