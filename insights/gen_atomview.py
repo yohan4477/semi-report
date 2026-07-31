@@ -163,13 +163,13 @@ def build():
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<h2>%s</h2><p class="coord">%s<span class="cnt">원자 %d개%s</span></p></summary>'
+            '<p class="coord">%s<span class="cnt">원자 %d개%s</span></p><h2>%s</h2></summary>'
             '<div class="body">%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
-               esc(ins['as_of']), md_inline(ins['claim']),
-               chips, len(ins['atoms']),
+               esc(ins['as_of']), chips, len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
+               md_inline(ins['claim']),
                ''.join(secs), ev))
 
     # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
@@ -300,7 +300,29 @@ TMPL = r'''<meta charset="utf-8">
   .ins[open]>summary::after{transform:rotate(180deg)}
   .cid{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
   .asof{float:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
-  .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.02em;margin:6px 0 2px}
+  .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.022em;line-height:1.34;margin:8px 0 2px}
+  /* apple-design: 응답은 누르는 순간(포인터 다운), 열림은 임계감쇠(damping 1.0·response 0.35s).
+     제스처가 아니라 클릭이라 오버슈트를 넣지 않는다. transform·opacity만 움직여 합성기에 맡긴다 */
+  .ins>summary{-webkit-tap-highlight-color:transparent}
+  .ins>summary:active{transform:scale(.994);transition:transform 100ms ease-out}
+  .ins>summary::after{transition:transform .35s cubic-bezier(.32,.72,0,1)}
+  .ins[open]>.body{animation:reveal .35s cubic-bezier(.32,.72,0,1) both}
+  .ev[open]>.atom:first-of-type,.ev[open]>div:first-of-type{animation:reveal .3s cubic-bezier(.32,.72,0,1) both}
+  @keyframes reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .cch{transition:background-color .2s ease,color .2s ease}
+  .ins>summary:hover .cch{background:var(--accent);color:var(--card)}
+  .cell,.ins,.grp{will-change:auto}
+  @media (prefers-reduced-motion:reduce){
+    .ins[open]>.body,.ev[open]>.atom:first-of-type,.ev[open]>div:first-of-type{animation:fadein .18s ease both}
+    .ins>summary:active{transform:none}
+    .cell:hover{transform:none}
+    .uc-links a:active{transform:none}
+    @keyframes fadein{from{opacity:0}to{opacity:1}}
+  }
+  @media (prefers-contrast:more){
+    .cch{border:1px solid var(--accent2)}
+    .ins,.grp,.panel{border:1px solid var(--ink)}
+  }
   .coord{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:8px 0 0}
   .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
   .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
