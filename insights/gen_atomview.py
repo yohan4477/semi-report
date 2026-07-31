@@ -114,7 +114,16 @@ def build():
         return ''.join(h)
 
     # 인사이트가 주인이고 원자는 그 밑을 받치는 근거다 — 인사이트 안에서 원문까지 내려간다
+    # 순서는 사슬을 따라간다 — 스택은 상류에서 하류로, 프로세스는 앞 단계에서 뒤 단계로.
+    # 파일명 알파벳순은 읽는 사람에게 아무 뜻이 없다
+    def ins_rank(i):
+        if i['view'] == 'stack':
+            return (0, min(STACK.index(n) for n in i['nodes'] if n in STACK))
+        return (1, min(stages.index(s) for s in i['stages'] if s in stages))
+    insights.sort(key=ins_rank)
+
     ins_html = []
+    prev_view = None
     for ins in insights:
         coord = ('노드 ' + ' · '.join(ins['nodes'])) if ins['view'] == 'stack' else ('단계 ' + ' → '.join(ins['stages']))
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
@@ -136,6 +145,13 @@ def build():
         if dis:
             ev += ('<details class="ev"><summary>검토 후 무관 <b>%d개</b> — 같은 칸이지만 이 주장과 안 맞물린다</summary>%s</details>'
                    % (len(dis), ''.join(dis)))
+        if ins['view'] != prev_view:
+            prev_view = ins['view']
+            ins_html.append(
+                '<p class="viewsep">%s</p>'
+                % ('스택 뷰 — 물리 의존을 따라 상류에서 하류로'
+                   if ins['view'] == 'stack'
+                   else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'))
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
@@ -265,6 +281,8 @@ TMPL = r'''<meta charset="utf-8">
   .src{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--sub);background:var(--sunk);
        border-left:2px solid var(--line);border-radius:0 6px 6px 0;padding:7px 9px;margin:5px 0 0;white-space:pre-wrap;word-break:break-word}
   .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;box-shadow:var(--shadow)}
+  .viewsep{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--accent);margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
   .hintline{font-size:12.5px;color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
   .ins>summary:hover h2{color:var(--accent)}
   .ins:not([open])>summary{padding-bottom:0}
