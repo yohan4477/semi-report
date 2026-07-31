@@ -10,7 +10,10 @@ ROOT = ca.ROOT
 OUT = os.path.join(ROOT, '대시보드', '인사이트와 근거.html')
 
 STACK = ca.STACK
-STACK_ROWS = [['전자·공정', '칩'], ['메모리', '열'], ['랙', '데이터센터'], ['전력망', '연료·지정학']]
+# 화면은 큰 것부터 — 연료·지정학에서 전자·공정으로 내려간다.
+# ca.STACK(정본)은 EDGES 연결성 판정에 쓰이므로 뒤집지 않는다
+DISP = list(reversed(STACK))
+STACK_ROWS = [DISP[i:i + 2] for i in range(0, len(DISP), 2)]
 
 
 def esc(s):
@@ -120,7 +123,7 @@ def build():
     # 파일명 알파벳순은 읽는 사람에게 아무 뜻이 없다
     def ins_rank(i):
         if i['view'] == 'stack':
-            return (0, min(STACK.index(n) for n in i['nodes'] if n in STACK))
+            return (0, min(DISP.index(n) for n in i['nodes'] if n in DISP))
         return (1, min(stages.index(s) for s in i['stages'] if s in stages))
     insights.sort(key=ins_rank)
 
@@ -130,7 +133,7 @@ def build():
         # 사슬 전체를 보여주고 이 글이 다루는 칸만 강조한다 — 어디쯤 이야기인지 알아야
         # 판단이 놓인다. 나머지는 회색으로 남겨 위치만 표시
         if ins['view'] == 'stack':
-            full, on = STACK, set(ins['nodes'])
+            full, on = DISP, set(ins['nodes'])
             kind_label = '스택'
         else:
             full, on = stages, set(ins['stages'])
@@ -162,7 +165,7 @@ def build():
             prev_view = ins['view']
             ins_html.append(
                 '<p class="viewsep">%s</p>'
-                % ('스택 뷰 — 물리 의존을 따라 상류에서 하류로'
+                % ('스택 뷰 — 큰 것에서 작은 것으로'
                    if ins['view'] == 'stack'
                    else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'))
         ins_html.append(
@@ -436,9 +439,9 @@ __INSIGHTS__
 <p class="axnote">원자는 두 축의 좌표에 매달립니다. 아래는 인사이트를 읽는 화면이 아니라 <b>근거의 분포를 보는 화면</b>입니다 —
    어느 칸이 두텁고 어느 칸이 비었는지, 그리고 각 원자가 제 칸에 제대로 들어갔는지를 봅니다.</p>
 
-<h4 class="sub2">스택 — 물리 의존 (위가 상류)</h4>
+<h4 class="sub2">스택 — 큰 것에서 작은 것으로 (아래가 상류)</h4>
 __CHAIN__
-<p class="flow">전자·공정 → 칩 → 메모리 / 열 → 랙 → 데이터센터 → 전력망 → 연료·지정학</p>
+<p class="flow">연료·지정학 → 전력망 → 데이터센터 → 랙 → 열 / 메모리 → 칩 → 전자·공정</p>
 
 <h4 class="sub2">프로세스 — 결정 순서 (어느 결정이 먼저 고정되나)</h4>
 __BAND__
