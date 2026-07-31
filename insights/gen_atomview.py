@@ -36,6 +36,7 @@ def load_insights(atoms):
             'dismissed': meta.get('dismissed') or [],
             'as_of': meta.get('as_of') or '',
             'claim': claim,
+            'headline': meta.get('headline') or re.split(r'(?<=다)\.', claim)[0].strip('* '),
             'sections': [(k, v) for k, v in sec.items() if k != '주장'],
         })
     return out
@@ -164,11 +165,12 @@ def build():
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
             '<p class="coord">%s<span class="cnt">원자 %d개%s</span></p><h2>%s</h2></summary>'
-            '<div class="body">%s%s</div></details>'
+            '<div class="body"><p class="claimfull">%s</p>%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
                esc(ins['as_of']), chips, len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
+               esc(ins['headline']),
                md_inline(ins['claim']),
                ''.join(secs), ev))
 
@@ -301,7 +303,7 @@ TMPL = r'''<meta charset="utf-8">
   .ins[open]>summary::after{transform:rotate(180deg)}
   .cid{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
   .asof{float:right;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
-  .ins h2{font-size:18.5px;font-weight:850;letter-spacing:-.022em;line-height:1.34;margin:8px 0 2px}
+  .ins h2{font-size:19px;font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
   /* apple-design: 응답은 누르는 순간(포인터 다운), 열림은 임계감쇠(damping 1.0·response 0.35s).
      제스처가 아니라 클릭이라 오버슈트를 넣지 않는다. transform·opacity만 움직여 합성기에 맡긴다 */
   .ins>summary{-webkit-tap-highlight-color:transparent}
@@ -324,6 +326,8 @@ TMPL = r'''<meta charset="utf-8">
     .cch{border:1px solid var(--accent2)}
     .ins,.grp,.panel{border:1px solid var(--ink)}
   }
+  .claimfull{font-size:14.5px;line-height:1.62;color:var(--ink);margin:0 0 4px;
+              padding:11px 14px;background:var(--sunk);border-radius:8px}
   .coord{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:8px 0 0}
   .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
   .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
@@ -351,7 +355,7 @@ TMPL = r'''<meta charset="utf-8">
                   margin:0 0 14px;padding:11px 16px 11px 30px}
   .body ul.payoff li{color:var(--ink);font-size:13.5px}
   .body ul{margin:0 0 6px;padding-left:17px}
-  .body li{font-size:13px;color:var(--sub);line-height:1.58;margin-bottom:4px}
+  .body li{font-size:13.5px;color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--sunk);padding:1px 4px;border-radius:4px}
 
@@ -363,40 +367,41 @@ TMPL = r'''<meta charset="utf-8">
     .wrap{max-width:100%}
     header{padding:34px 0 4px}
     h1{font-size:clamp(26px,7.5vw,34px);letter-spacing:-.03em}
-    .lede{font-size:15px;line-height:1.62}
+    .lede{font-size:14px;line-height:1.6}
     .meta{gap:5px 14px;font-size:12.5px}
     .ins{padding:16px 15px}
     .ins>summary{padding:6px 30px 6px 0;min-height:44px}      /* 탭 타깃 */
     .ins>summary::after{right:0;top:2px;font-size:24px}
-    .ins h2{font-size:19px;line-height:1.38;letter-spacing:-.02em}
+    .ins h2{font-size:17.5px;line-height:1.38;letter-spacing:-.02em}
     .coord{gap:6px}
-    .coord .cch{font-size:12.5px;padding:4px 11px}             /* 칩도 눌리는 것 */
+    .coord .cch{font-size:11.5px;padding:4px 10px}             /* 칩도 눌리는 것 */
     .coord .cnt{margin-left:0;width:100%;font-size:12px}
-    .body li,.body ul.payoff li{font-size:15px;line-height:1.66}
+    .body li,.body ul.payoff li{font-size:13.5px;line-height:1.62}
     .body h4{font-size:12.5px;margin:16px 0 6px}
     .ev>summary{padding:13px 14px;font-size:13.5px;min-height:44px}
     .ev .atom{padding:13px 14px}
-    .aclaim{font-size:15px;line-height:1.6}
+    .aclaim{font-size:13.5px;line-height:1.58}
     .kv{font-size:13px;line-height:1.55}
-    .src{font-size:12.5px;line-height:1.6;padding:9px 11px}
+    .src{font-size:12px;line-height:1.58;padding:9px 11px}
     .chain .row{grid-template-columns:1fr;gap:8px;margin-bottom:8px}
     .band{grid-template-columns:1fr 1fr;gap:8px}
     .cell{padding:13px 14px;min-height:56px}
-    .cell .nm{font-size:15px}
+    .cell .nm{font-size:14px}
     .cell .ct{font-size:12.5px}
     .panel{padding:16px 15px}
     .grp{padding:14px 15px}
     .gh{font-size:15.5px}
-    .gn,.gm li{font-size:13.5px;line-height:1.6}
-    .hintline,.axnote{font-size:13.5px;line-height:1.6}
+    .gn,.gm li{font-size:12.5px;line-height:1.58}
+    .hintline,.axnote{font-size:12.5px;line-height:1.58}
     .viewsep{font-size:11.5px;margin:26px 0 8px}
     .aid,.atag,.cid,.gd,.gk,.gp,.cell .ord{font-size:11.5px}
     .coord .ckind{font-size:11.5px}
     .coord i{font-size:12px}
-    .kv{font-size:13.5px}
+    .kv{font-size:12.5px}
     .atag{padding:2px 8px}
     .asof{font-size:12px}
-    footer{font-size:12.5px;line-height:1.7}
+    footer{font-size:12px;line-height:1.68}
+    .claimfull{font-size:13.5px;padding:10px 12px}
   }
   @media (max-width:380px){
     .band{grid-template-columns:1fr}
