@@ -126,15 +126,18 @@ def build():
     ins_html = []
     prev_view = None
     for ins in insights:
+        # 사슬 전체를 보여주고 이 글이 다루는 칸만 강조한다 — 어디쯤 이야기인지 알아야
+        # 판단이 놓인다. 나머지는 회색으로 남겨 위치만 표시
         if ins['view'] == 'stack':
-            path = sorted([n for n in ins['nodes'] if n in STACK], key=STACK.index)
+            full, on = STACK, set(ins['nodes'])
             kind_label = '스택'
         else:
-            path = [s for s in ins['stages'] if s in stages]
+            full, on = stages, set(ins['stages'])
             kind_label = '프로세스'
+        path = [x for x in full if x in on]
         coord = ' · '.join(path)
-        chips = ('<span class="ckind">%s</span>' % kind_label) + '<i>→</i>'.join(
-            '<span class="cch">%s</span>' % esc(x) for x in path)
+        chips = ('<span class="ckind">%s</span>' % kind_label) + ''.join(
+            '<span class="cch%s">%s</span>' % ('' if x in on else ' off', esc(x)) for x in full)
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
         # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
         ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
@@ -328,10 +331,13 @@ TMPL = r'''<meta charset="utf-8">
   }
   .claimfull{font-size:14.5px;line-height:1.62;color:var(--ink);margin:0 0 4px;
               padding:11px 14px;background:var(--sunk);border-radius:8px}
-  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:8px 0 0}
+  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:8px 0 0}
   .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
   .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
-              border-radius:999px;padding:2px 9px;white-space:nowrap}
+              border-radius:999px;padding:2px 8px;white-space:nowrap}
+  .coord .cch.off{background:transparent;color:var(--faint);font-weight:600;
+                  border:1px solid var(--line);padding:1px 6px;font-size:10.5px}
+  .ins>summary:hover .cch.off{background:transparent;color:var(--faint)}
   .coord i{font-style:normal;color:var(--faint);font-size:11px}
   .coord .cnt{font-size:11.5px;color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
   .ins .sub{font-size:12.5px;color:var(--faint);margin:0}
@@ -374,7 +380,8 @@ TMPL = r'''<meta charset="utf-8">
     .ins>summary::after{right:0;top:2px;font-size:24px}
     .ins h2{font-size:17.5px;line-height:1.38;letter-spacing:-.02em}
     .coord{gap:6px}
-    .coord .cch{font-size:11.5px;padding:4px 10px}             /* 칩도 눌리는 것 */
+    .coord .cch{font-size:11.5px;padding:4px 10px}
+    .coord .cch.off{font-size:10.5px;padding:2px 6px}             /* 칩도 눌리는 것 */
     .coord .cnt{margin-left:0;width:100%;font-size:12px}
     .body li,.body ul.payoff li{font-size:13.5px;line-height:1.62}
     .body h4{font-size:12.5px;margin:16px 0 6px}
