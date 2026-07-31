@@ -7,6 +7,7 @@ ATOMS = os.path.join(ROOT, "insights", "atoms")
 SYNTH = os.path.join(ROOT, "insights", "synth")
 MAN = os.path.join(ROOT, "insights", "manifest.json")
 ACTORS = os.path.join(ROOT, "insights", "views", "actors.json")
+ACTOR_MAP = os.path.join(ROOT, "insights", "views", "actor_map.json")
 PROCESS = os.path.join(ROOT, "insights", "views", "process.json")
 
 STACK = ['전자·공정', '칩', '메모리', '열', '랙', '데이터센터', '전력망', '연료·지정학']
@@ -285,6 +286,23 @@ def check_synth(atoms, pr):
                 % (as_of, len(newer), ', '.join(newer[:6])))
 
 
+def check_actor_map(actor_names):
+    """C20 — 주체 사전에 있는 회사는 actor_map.json에도 있어야 한다.
+    빠지면 「제약 → 회사」 지도에서 그 회사만 조용히 사라진다."""
+    if not os.path.exists(ACTOR_MAP):
+        return
+    m = json.load(io.open(ACTOR_MAP, encoding='utf-8')).get('companies') or {}
+    for name in sorted(actor_names - set(m)):
+        findings.append(('WARN', 'actor_map.json', 'C20', '회사 해석이 없는 주체: %s' % name))
+    for name in sorted(set(m) - actor_names):
+        findings.append(('WARN', 'actor_map.json', 'C20', 'actors.json에 없는 회사: %s' % name))
+    for name, v in sorted(m.items()):
+        if v.get('side') not in ('파는 쪽', '맞는 쪽', '양쪽'):
+            findings.append(('FAIL', 'actor_map.json', 'C20', '%s: side 값이 사전에 없다(%s)' % (name, v.get('side'))))
+        if v.get('listed') and not v.get('ticker'):
+            findings.append(('FAIL', 'actor_map.json', 'C20', '%s: 상장인데 티커가 없다' % name))
+
+
 def main():
     # cp949 콘솔에서 C16 등의 em dash·한글 메시지가 UnicodeEncodeError로 죽으면 그 뒤에 남은
     # FAIL 목록과 요약이 통째로 사라진다 — crosscheck.py와 같은 방식으로 막는다
@@ -296,6 +314,7 @@ def main():
     actor_names = set(json.load(io.open(ACTORS, encoding='utf-8')))
     atoms = load_atoms()
     check_atoms(atoms, man_hashes, actor_names)
+    check_actor_map(actor_names)
     pr = check_process(atoms, {a['id']: a for a in atoms})
     check_synth(atoms, pr)
 
