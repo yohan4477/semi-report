@@ -36,6 +36,7 @@ def load_insights(atoms):
             'dismissed': meta.get('dismissed') or [],
             'as_of': meta.get('as_of') or '',
             'claim': claim,
+            'subhead': meta.get('subhead') or '',
             'headline': meta.get('headline') or re.split(r'(?<=다)\.', claim)[0].strip('* '),
             'sections': [(k, v) for k, v in sec.items() if k != '주장'],
         })
@@ -167,13 +168,13 @@ def build():
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<p class="coord">%s<span class="cnt">원자 %d개%s</span></p><h2>%s</h2></summary>'
+            '<p class="coord">%s<span class="cnt">원자 %d개%s</span></p><h2>%s</h2><p class="sub">%s</p></summary>'
             '<div class="body"><p class="claimfull">%s</p>%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
                esc(ins['as_of']), chips, len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
-               esc(ins['headline']),
+               esc(ins['headline']), esc(ins['subhead']),
                md_inline(ins['claim']),
                ''.join(secs), ev))
 
@@ -340,7 +341,7 @@ TMPL = r'''<meta charset="utf-8">
   .ins>summary:hover .cch.off{background:transparent;color:var(--faint)}
   .coord i{font-style:normal;color:var(--faint);font-size:11px}
   .coord .cnt{font-size:11.5px;color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
-  .ins .sub{font-size:12.5px;color:var(--faint);margin:0}
+  .ins .sub{font-size:13px;color:var(--faint);margin:3px 0 0;line-height:1.5}
   .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
   .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:11px;padding:14px 17px;margin-bottom:10px;box-shadow:var(--shadow)}
   .gh{font-size:15px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
@@ -401,6 +402,7 @@ TMPL = r'''<meta charset="utf-8">
     .gn,.gm li{font-size:12.5px;line-height:1.58}
     .hintline,.axnote{font-size:12.5px;line-height:1.58}
     .viewsep{font-size:11.5px;margin:26px 0 8px}
+    .ins .sub{font-size:12.5px}
     .aid,.atag,.cid,.gd,.gk,.gp,.cell .ord{font-size:11.5px}
     .coord .ckind{font-size:11.5px}
     .coord i{font-size:12px}
