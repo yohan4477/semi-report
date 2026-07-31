@@ -5,7 +5,8 @@
   :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05)}
   @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#7e8798;--line:#2a3140;--accent:#7aa5f8;--accent2:#9ab8fa;--soft:#1e2a44;--sunk:#242b38;--shadow:none}}
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.64;margin:0;padding:0 20px 80px}
+  html{font-size:100%}
+  body{font-size:1rem;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.64;margin:0;padding:0 20px 80px}
   .wrap{max-width:900px;margin:0 auto}
   header{padding:52px 0 6px}
   .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
@@ -117,7 +118,54 @@
   .body li{font-size:13px;color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--sunk);padding:1px 4px;border-radius:4px}
+
   footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+  /* ── 모바일 — 손가락과 눈 기준으로 다시 잡는다 ──
+     본문 13px대는 폰에서 작다. 탭 타깃은 최소 44px, 여백은 화면 폭에 맞춰 줄인다 */
+  @media (max-width:640px){
+    body{padding:0 14px 64px}
+    .wrap{max-width:100%}
+    header{padding:34px 0 4px}
+    h1{font-size:clamp(26px,7.5vw,34px);letter-spacing:-.03em}
+    .lede{font-size:15px;line-height:1.62}
+    .meta{gap:5px 14px;font-size:12.5px}
+    .ins{padding:16px 15px}
+    .ins>summary{padding:6px 30px 6px 0;min-height:44px}      /* 탭 타깃 */
+    .ins>summary::after{right:0;top:2px;font-size:24px}
+    .ins h2{font-size:19px;line-height:1.38;letter-spacing:-.02em}
+    .coord{gap:6px}
+    .coord .cch{font-size:12.5px;padding:4px 11px}             /* 칩도 눌리는 것 */
+    .coord .cnt{margin-left:0;width:100%;font-size:12px}
+    .body li,.body ul.payoff li{font-size:15px;line-height:1.66}
+    .body h4{font-size:12.5px;margin:16px 0 6px}
+    .ev>summary{padding:13px 14px;font-size:13.5px;min-height:44px}
+    .ev .atom{padding:13px 14px}
+    .aclaim{font-size:15px;line-height:1.6}
+    .kv{font-size:13px;line-height:1.55}
+    .src{font-size:12.5px;line-height:1.6;padding:9px 11px}
+    .chain .row{grid-template-columns:1fr;gap:8px;margin-bottom:8px}
+    .band{grid-template-columns:1fr 1fr;gap:8px}
+    .cell{padding:13px 14px;min-height:56px}
+    .cell .nm{font-size:15px}
+    .cell .ct{font-size:12.5px}
+    .panel{padding:16px 15px}
+    .grp{padding:14px 15px}
+    .gh{font-size:15.5px}
+    .gn,.gm li{font-size:13.5px;line-height:1.6}
+    .hintline,.axnote{font-size:13.5px;line-height:1.6}
+    .viewsep{font-size:11.5px;margin:26px 0 8px}
+    .aid,.atag,.cid,.gd,.gk,.gp,.cell .ord{font-size:11.5px}
+    .coord .ckind{font-size:11.5px}
+    .coord i{font-size:12px}
+    .kv{font-size:13.5px}
+    .atag{padding:2px 8px}
+    .asof{font-size:12px}
+    footer{font-size:12.5px;line-height:1.7}
+  }
+  @media (max-width:380px){
+    .band{grid-template-columns:1fr}
+    .coord .cch{font-size:12px;padding:3px 9px}
+  }
 </style>
 <div class="wrap">
 <header>
