@@ -1,46 +1,236 @@
 {
-  "TSMC": ["TSMC", "티에스엠씨"],
-  "삼성": ["삼성", "삼성전자", "Samsung"],
-  "엔비디아": ["엔비디아", "Nvidia", "NVIDIA"],
-  "마이크로소프트": ["마이크로소프트", "MS", "Microsoft"],
-  "구글": ["구글", "Google"],
-  "메타": ["메타", "Meta"],
-  "AWS": ["AWS", "아마존", "Amazon"],
-  "인텔": ["인텔", "Intel"],
-  "SPIL": ["SPIL"],
-  "SK하이닉스": ["SK하이닉스", "하이닉스"],
-  "마이크론": ["마이크론", "Micron"],
-  "AMD": ["AMD"],
-  "CoreWeave": ["CoreWeave", "코어위브"],
-  "Crusoe": ["Crusoe", "크루소"],
-  "QTS": ["QTS"],
-  "Flex": ["Flex", "플렉스"],
-  "Karman Industries": ["Karman Industries", "카르만"],
-  "EdgeConneX": ["EdgeConneX"],
-  "Vertiv": ["Vertiv", "버티브"],
-  "Schneider Electric": ["Schneider Electric", "Schneider", "슈나이더", "슈나이더 일렉트릭"],
-  "Comfort Systems": ["Comfort Systems", "Comfort Systems USA"],
-  "Cupertino Electric": ["Cupertino Electric"],
-  "Aligned": ["Aligned", "Aligned Data Centers"],
-  "Delta Electronics": ["Delta Electronics", "Delta", "델타", "델타 일렉트로닉스"],
-  "ABB": ["ABB"],
-  "Applied Digital": ["Applied Digital"],
-  "Infineon": ["Infineon", "인피니언"],
-  "Danfoss": ["Danfoss", "단포스"],
-  "Aran Industries": ["Aran Industries", "아란 인더스트리즈"],
-  "Musashi Seimitsu": ["Musashi Seimitsu", "무사시 세이미츠", "Musashi Energy Solutions", "MES"],
-  "xAI": ["xAI"],
-  "OpenAI": ["OpenAI"],
-  "Oracle": ["Oracle"],
-  "AEP Ohio": ["AEP Ohio", "AEP"],
-  "Bloom Energy": ["Bloom Energy", "Bloom"],
-  "GE Vernova": ["GE Vernova", "GE"],
-  "Siemens Energy": ["Siemens Energy", "Siemens"],
-  "두산에너빌리티": ["두산에너빌리티", "Doosan Enerbility", "두산"],
-  "Mitsubishi Power": ["Mitsubishi Power", "MHI", "Mitsubishi Heavy Industries"],
-  "VoltaGrid": ["VoltaGrid"],
-  "Argan": ["Argan", "AGX"],
-  "Energy Transfer": ["Energy Transfer", "ET"],
-  "Williams": ["Williams", "WMB"],
-  "Targa Resources": ["Targa Resources", "TRGP"]
+  "TSMC": [
+    "TSMC",
+    "티에스엠씨"
+  ],
+  "삼성": [
+    "삼성",
+    "삼성전자",
+    "Samsung"
+  ],
+  "엔비디아": [
+    "엔비디아",
+    "Nvidia",
+    "NVIDIA"
+  ],
+  "마이크로소프트": [
+    "마이크로소프트",
+    "MS",
+    "Microsoft"
+  ],
+  "구글": [
+    "구글",
+    "Google"
+  ],
+  "메타": [
+    "메타",
+    "Meta"
+  ],
+  "AWS": [
+    "AWS",
+    "아마존",
+    "Amazon"
+  ],
+  "인텔": [
+    "인텔",
+    "Intel"
+  ],
+  "SPIL": [
+    "SPIL"
+  ],
+  "SK하이닉스": [
+    "SK하이닉스",
+    "하이닉스"
+  ],
+  "마이크론": [
+    "마이크론",
+    "Micron"
+  ],
+  "AMD": [
+    "AMD"
+  ],
+  "CoreWeave": [
+    "CoreWeave",
+    "코어위브"
+  ],
+  "Crusoe": [
+    "Crusoe",
+    "크루소"
+  ],
+  "QTS": [
+    "QTS"
+  ],
+  "Flex": [
+    "Flex",
+    "플렉스"
+  ],
+  "Karman Industries": [
+    "Karman Industries",
+    "카르만"
+  ],
+  "EdgeConneX": [
+    "EdgeConneX"
+  ],
+  "Vertiv": [
+    "Vertiv",
+    "버티브"
+  ],
+  "Schneider Electric": [
+    "Schneider Electric",
+    "Schneider",
+    "슈나이더",
+    "슈나이더 일렉트릭"
+  ],
+  "Comfort Systems": [
+    "Comfort Systems",
+    "Comfort Systems USA"
+  ],
+  "Cupertino Electric": [
+    "Cupertino Electric"
+  ],
+  "Aligned": [
+    "Aligned",
+    "Aligned Data Centers"
+  ],
+  "Delta Electronics": [
+    "Delta Electronics",
+    "Delta",
+    "델타",
+    "델타 일렉트로닉스"
+  ],
+  "ABB": [
+    "ABB"
+  ],
+  "Applied Digital": [
+    "Applied Digital"
+  ],
+  "Infineon": [
+    "Infineon",
+    "인피니언"
+  ],
+  "Danfoss": [
+    "Danfoss",
+    "단포스"
+  ],
+  "Aran Industries": [
+    "Aran Industries",
+    "아란 인더스트리즈"
+  ],
+  "Musashi Seimitsu": [
+    "Musashi Seimitsu",
+    "무사시 세이미츠",
+    "Musashi Energy Solutions",
+    "MES"
+  ],
+  "xAI": [
+    "xAI"
+  ],
+  "OpenAI": [
+    "OpenAI"
+  ],
+  "Oracle": [
+    "Oracle"
+  ],
+  "AEP Ohio": [
+    "AEP Ohio",
+    "AEP"
+  ],
+  "Bloom Energy": [
+    "Bloom Energy",
+    "Bloom"
+  ],
+  "GE Vernova": [
+    "GE Vernova",
+    "GE"
+  ],
+  "Siemens Energy": [
+    "Siemens Energy",
+    "Siemens"
+  ],
+  "두산에너빌리티": [
+    "두산에너빌리티",
+    "Doosan Enerbility",
+    "두산"
+  ],
+  "Mitsubishi Power": [
+    "Mitsubishi Power",
+    "MHI",
+    "Mitsubishi Heavy Industries"
+  ],
+  "VoltaGrid": [
+    "VoltaGrid"
+  ],
+  "Argan": [
+    "Argan",
+    "AGX"
+  ],
+  "Energy Transfer": [
+    "Energy Transfer",
+    "ET"
+  ],
+  "Williams": [
+    "Williams",
+    "WMB"
+  ],
+  "Targa Resources": [
+    "Targa Resources",
+    "TRGP"
+  ],
+  "CXMT": [
+    "CXMT",
+    "창신메모리",
+    "ChangXin"
+  ],
+  "한미반도체": [
+    "한미반도체",
+    "Hanmi"
+  ],
+  "ASML": [
+    "ASML"
+  ],
+  "IMEC": [
+    "IMEC",
+    "imec"
+  ],
+  "나우라": [
+    "나우라",
+    "NAURA"
+  ],
+  "AMEC": [
+    "AMEC",
+    "중미반도체"
+  ],
+  "알리바바": [
+    "알리바바",
+    "Alibaba"
+  ],
+  "바이트댄스": [
+    "바이트댄스",
+    "ByteDance"
+  ],
+  "텐센트": [
+    "텐센트",
+    "Tencent"
+  ],
+  "키옥시아": [
+    "키옥시아",
+    "키오시아",
+    "Kioxia"
+  ],
+  "샌디스크": [
+    "샌디스크",
+    "SanDisk"
+  ],
+  "미디어텍": [
+    "미디어텍",
+    "MediaTek"
+  ],
+  "브로드컴": [
+    "브로드컴",
+    "Broadcom"
+  ],
+  "마벨": [
+    "마벨",
+    "Marvell"
+  ]
 }

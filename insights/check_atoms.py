@@ -300,7 +300,8 @@ def check_actor_map(actor_names):
     for name in sorted(set(m) - actor_names):
         findings.append(('WARN', 'actor_map.json', 'C20', 'actors.json에 없는 회사: %s' % name))
     for name, v in sorted(m.items()):
-        if v.get('side') not in ('파는 쪽', '맞는 쪽', '양쪽'):
+        sides = set(json.load(io.open(ACTOR_MAP, encoding='utf-8')).get('side_def') or {})
+        if v.get('side') not in sides:
             findings.append(('FAIL', 'actor_map.json', 'C20', '%s: side 값이 사전에 없다(%s)' % (name, v.get('side'))))
         if v.get('listed') and not v.get('ticker'):
             findings.append(('FAIL', 'actor_map.json', 'C20', '%s: 상장인데 티커가 없다' % name))

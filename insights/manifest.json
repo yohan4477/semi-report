@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-30",
+ "generated": "2026-08-01",
  "sources": [
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
@@ -605,6 +605,17 @@
    "date": "2026-06-17",
    "path": "content/understanding/류상철 국장/경제 교과서 틀렸다 - 물가 때문에 금리 인상해도 주가 오른다.md",
    "hash": "6abe790b92f8"
+  },
+  {
+   "id": "und:류상철 국장:환율-오른다고-서학개미-탓하지-마라",
+   "corpus": "understanding",
+   "folder": "류상철 국장",
+   "categories": [
+    "류상철 국장"
+   ],
+   "date": "2026-07-24",
+   "path": "content/understanding/류상철 국장/환율 오른다고 서학개미 탓하지 마라.md",
+   "hash": "1fa65fda1719"
   },
   {
    "id": "und:언더스탠딩 백브리핑:독일-신재생-전기-때문에-북유럽이-빡친-이유",
