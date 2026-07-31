@@ -137,7 +137,7 @@ def build():
             ev += ('<details class="ev"><summary>검토 후 무관 <b>%d개</b> — 같은 칸이지만 이 주장과 안 맞물린다</summary>%s</details>'
                    % (len(dis), ''.join(dis)))
         ins_html.append(
-            '<details class="ins" id="%s" open>'
+            '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
             '<h2>%s</h2><p class="sub">%s · 원자 %d개%s</p></summary>'
             '<div class="body">%s%s</div></details>'
@@ -265,6 +265,9 @@ TMPL = r'''<meta charset="utf-8">
   .src{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--sub);background:var(--sunk);
        border-left:2px solid var(--line);border-radius:0 6px 6px 0;padding:7px 9px;margin:5px 0 0;white-space:pre-wrap;word-break:break-word}
   .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;box-shadow:var(--shadow)}
+  .hintline{font-size:12.5px;color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
+  .ins>summary:hover h2{color:var(--accent)}
+  .ins:not([open])>summary{padding-bottom:0}
   .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:26px}
   .ins>summary::-webkit-details-marker{display:none}
   .ins>summary::after{content:"⌄";position:absolute;right:2px;top:-2px;font-size:22px;color:var(--faint);transition:transform .2s}
@@ -310,6 +313,7 @@ TMPL = r'''<meta charset="utf-8">
   </div>
 </header>
 
+<p class="hintline">카드를 누르면 그 판단의 <b>그래서 무엇이 달라지나</b>부터 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p>
 __INSIGHTS__
 
 <h3 class="sec">근거 지도 — 어디에 근거가 있고 어디가 비었나</h3>
