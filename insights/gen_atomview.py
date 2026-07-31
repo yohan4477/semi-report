@@ -15,6 +15,19 @@ STACK = ca.STACK
 DISP = list(reversed(STACK))
 STACK_ROWS = [DISP[i:i + 2] for i in range(0, len(DISP), 2)]
 
+# 노드 이름만으로는 그 칸이 무엇을 담는지 모른다. 설계 문서
+# docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md의 「담는 것」 표를 줄인 것
+NODE_NOTE = {
+    '연료·지정학': 'LNG·원유, 해협·항로, 수출 통제',
+    '전력망': '예비율, 접속 대기, 변압기·송전, 발전원',
+    '데이터센터': '부지, 건설 일정, 시설 전력·용수, 인허가',
+    '랙': '랙 전력 밀도, 배전(800VDC), 스케일업 링크',
+    '열': '열저항, 냉각판, TIM, 마이크로플루이딕, 칠러',
+    '메모리': 'HBM·DRAM·NAND, 대역폭, 캐파 배분',
+    '칩': '다이 구성, 패키징(CoWoS·EMIB), 본딩, 연산 성능',
+    '전자·공정': '노드 세대, 가동률, 수율, CFET',
+}
+
 
 def esc(s):
     return (str(s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
@@ -57,6 +70,9 @@ def build():
     atoms = ca.load_atoms()
     pr = json.load(io.open(ca.PROCESS, encoding='utf-8'))
     stages, assign = pr['stages'], pr.get('assign') or {}
+    # 단계 설명은 process.json이 정본이다. 첫 문장만 잘라 레일에 싣는다
+    stage_note = {k: v.split('. ')[0].rstrip('.')
+                  for k, v in (pr.get('stage_note') or {}).items()}
     man = {s['id']: s for s in json.load(io.open(ca.MAN, encoding='utf-8'))['sources']}
     insights = load_insights(atoms)
 
@@ -142,9 +158,9 @@ def build():
         # 축 이름은 글 위 레일에 한 번만 적는다. 카드에는 그 축 위 어디인지만 —
         # 같은 축을 쓰는 글끼리 눈으로 바로 겹쳐 보이게
         bar = ''.join('<i%s></i>' % (' class="on"' if x in on else '') for x in full)
-        idx = [full.index(x) for x in path]
-        contiguous = len(idx) > 1 and idx == list(range(idx[0], idx[-1] + 1))
-        label = ('%s → %s' % (path[0], path[-1])) if contiguous else ' · '.join(path)
+        # 구분자는 언제나 화살표 하나로 — 어떤 카드는 점, 어떤 카드는 화살표면 규칙이 없어 보인다.
+        # 중간에 건너뛴 칸이 있으면 막대의 빈 칸이 그것을 말한다
+        label = path[0] if len(path) == 1 else '%s → %s' % (path[0], path[-1])
         chips = ('<span class="axmini" aria-hidden="true">%s</span>'
                  '<span class="cspan">%s</span>' % (bar, esc(label)))
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
@@ -168,14 +184,30 @@ def build():
                    % (len(dis), ''.join(dis)))
         if ins['view'] != prev_view:
             prev_view = ins['view']
-            rail = ''.join(
-                ('<i></i>' if k else '') + '<span class="rl">%s</span>' % esc(x)
+            # 이름만으로는 그 칸이 뭘로 이뤄졌는지 모른다. 번호로 순서를 박고 설명을 붙인다.
+            # 번호가 있으면 줄바꿈이 일어나도 순서를 잃지 않는다
+            notes = NODE_NOTE if ins['view'] == 'stack' else stage_note
+            strip = ''.join('<span class="rs"><i class="no">%d</i>%s</span>' % (k + 1, esc(x))
+                            for k, x in enumerate(full))
+            keys = ''.join(
+                '<span class="rl"><i class="no">%d</i><b>%s</b><em>%s</em></span>'
+                % (k + 1, esc(x), esc(notes.get(x, '')))
                 for k, x in enumerate(full))
             ins_html.append(
-                '<p class="viewsep">%s</p><div class="rail">%s</div>'
+                # 뷰마다 제 구역을 갖는다 — 고정된 레일은 그 구역이 끝나면 같이 물러난다.
+                # 한 컨테이너에 두 레일을 두면 둘 다 화면 위에 겹친다
+                ('</section>' if ins_html else '')
+                + '<section class="viewsec">'
+                '<p class="viewsep">%s</p>'
+                '<details class="rail"><summary>'
+                '<span class="rstrip"><span class="rk">%s %d칸</span>%s</span>'
+                '<span class="rmore">담는 것</span></summary>'
+                '<div class="railkey">%s</div></details>'
                 % (('스택 뷰 — 큰 것에서 작은 것으로'
                     if ins['view'] == 'stack'
-                    else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'), rail))
+                    else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'),
+                   '스택' if ins['view'] == 'stack' else '프로세스',
+                   len(full), strip, keys))
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
@@ -188,6 +220,8 @@ def build():
                esc(ins['headline']), esc(ins['subhead']),
                md_inline(ins['claim']),
                ''.join(secs), ev))
+    if ins_html:
+        ins_html.append('</section>')
 
     # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
     STRUCT = os.path.join(ROOT, 'insights', 'views', 'structures.json')
@@ -346,10 +380,42 @@ TMPL = r'''<meta charset="utf-8">
   .claimfull{font-size:var(--t-lead);line-height:1.62;color:var(--ink);margin:0 0 4px;
               padding:11px 14px;background:var(--sunk);border-radius:8px}
   /* 축은 글 위 레일에 한 번. 카드는 그 축 위 자기 자리만 — 같은 축의 글끼리 겹쳐 보인다 */
-  .rail{display:flex;flex-wrap:wrap;align-items:center;gap:4px 3px;
-        margin:0 0 10px;padding:10px 13px;background:var(--sunk);border-radius:var(--r)}
-  .rail .rl{font-size:var(--t-meta);font-weight:700;color:var(--sub);white-space:nowrap}
-  .rail i{display:block;width:11px;height:1px;background:var(--line);flex:0 0 auto}
+  /* 축은 스크롤해도 화면에 남는다 — 카드의 막대가 무엇 위에 그려졌는지 계속 보여야 한다.
+     이름 줄은 항상 붙어 있고, 각 칸이 뭘 담는지는 눌러서 접었다 편다(JS 없이 details로).
+     apple-design: 떠 있는 층은 반투명·블러 */
+  .rail{position:sticky;top:0;z-index:6;margin:0 0 12px;border-radius:var(--r);
+        border:1px solid var(--line);background:color-mix(in srgb,var(--sunk) 90%,transparent);
+        backdrop-filter:blur(14px) saturate(150%)}
+  .rail>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+                padding:0 11px 0 13px;position:relative;min-height:42px;
+                -webkit-tap-highlight-color:transparent}
+  /* 축은 언제나 한 줄이다 — 고정된 줄이 두세 줄이면 화면을 먹는다. 넘치면 옆으로 민다 */
+  .rstrip{display:flex;align-items:center;gap:4px 5px;flex:1 1 auto;min-width:0;
+          overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+          padding:10px 0;mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent)}
+  .rstrip::-webkit-scrollbar{display:none}
+  .rail>summary:active{background:color-mix(in srgb,var(--line) 35%,transparent)}
+  .rail>summary::-webkit-details-marker{display:none}
+  .rail .rmore{margin-left:auto;font-size:var(--t-lbl);font-weight:800;color:var(--accent);white-space:nowrap}
+  .rail .rmore::after{content:" ⌄";display:inline-block;transition:transform .3s cubic-bezier(.32,.72,0,1)}
+  .rail[open] .rmore::after{transform:rotate(180deg)}
+  .rail .rk{font-size:var(--t-lbl);font-weight:800;letter-spacing:.08em;color:var(--accent);
+            text-transform:uppercase;margin-right:2px;flex:0 0 auto;white-space:nowrap}
+  .rail .rs{display:inline-flex;align-items:center;gap:3px;font-size:var(--t-lbl);
+            font-weight:750;color:var(--ink);white-space:nowrap;flex:0 0 auto}
+  .railkey{display:grid;gap:7px 10px;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+           padding:2px 13px 11px;border-top:1px solid var(--line);margin-top:-1px;padding-top:11px}
+  .rail .rl{display:grid;grid-template-columns:auto 1fr;gap:0 6px;align-items:baseline;min-width:0}
+  .rail .no{align-self:center;display:flex;align-items:center;justify-content:center;
+            width:15px;height:15px;border-radius:50%;background:var(--card);border:1px solid var(--line);
+            font-size:9.5px;font-weight:800;color:var(--faint);font-style:normal;flex:0 0 auto}
+  .railkey .no{width:16px;height:16px;font-size:10px}
+  .railkey .no{grid-row:1/3}
+  .rail b{font-size:var(--t-meta);font-weight:800;color:var(--ink);letter-spacing:-.01em;
+          overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rail em{font-size:var(--t-lbl);font-style:normal;color:var(--faint);line-height:1.45}
+  .rail[open]>.railkey{animation:reveal .3s cubic-bezier(.32,.72,0,1) both}
+  @media (prefers-reduced-transparency:reduce){.rail{background:var(--sunk);backdrop-filter:none}}
   .coord{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:7px 0 0}
   .axmini{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
   .axmini i{display:block;width:9px;height:3px;border-radius:2px;background:var(--line)}
@@ -398,13 +464,13 @@ TMPL = r'''<meta charset="utf-8">
     .chain .row{grid-template-columns:1fr;gap:8px;margin-bottom:8px}
     .band{grid-template-columns:1fr 1fr;gap:8px}
     .cell{min-height:56px}
-    .rail{padding:10px 12px;gap:4px 2px}
+    .rail>summary{padding:0 9px 0 11px}
     .claimfull{padding:10px 12px}
     .atag{padding:2px 8px}
   }
   @media (max-width:380px){
     .band{grid-template-columns:1fr}
-    .rail .rl{font-size:11.5px}
+    .railkey{grid-template-columns:1fr 1fr;padding-left:11px;padding-right:11px}
   }
 </style>
 <div class="wrap">
