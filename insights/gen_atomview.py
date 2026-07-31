@@ -140,8 +140,23 @@ def build():
             kind_label = '프로세스'
         path = [x for x in full if x in on]
         coord = ' · '.join(path)
-        chips = ('<span class="ckind">%s</span>' % kind_label) + ''.join(
-            '<span class="cch%s">%s</span>' % ('' if x in on else ' off', esc(x)) for x in full)
+        SHORT = {'연료·지정학': '연료', '전자·공정': '공정', '데이터센터': 'DC',
+                 '웨이퍼 배정': '웨이퍼', '칩·랙 설계 확정': '설계', '부지·전력 계약': '부지·전력',
+                 '냉각 방식 확정': '냉각', '건물 착공': '착공', '랙 발주·인수': '인수'}
+        parts = ['<span class="cch%s">%s</span>'
+                 % ('' if x in on else ' off', esc(x if x in on else SHORT.get(x, x)))
+                 for x in full]
+        joins = []
+        for i2, seg in enumerate(parts):
+            joins.append(seg)
+            if i2 < len(parts) - 1:
+                a1, b1 = full[i2] in on, full[i2 + 1] in on
+                if a1 and b1:
+                    joins.append('<i class="chl on"></i>')   # 다루는 구간이 이어진 자리
+                elif a1 or b1:
+                    joins.append('<i class="chl"></i>')      # 구간의 경계
+                # 회색끼리는 선을 안 긋는다 — 줄만 늘어난다
+        chips = ('<span class="ckind">%s</span>' % kind_label) + ''.join(joins)
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
         # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
         ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
@@ -335,14 +350,15 @@ TMPL = r'''<meta charset="utf-8">
   }
   .claimfull{font-size:14.5px;line-height:1.62;color:var(--ink);margin:0 0 4px;
               padding:11px 14px;background:var(--sunk);border-radius:8px}
-  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:8px 0 0}
+  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:3px 2px;margin:8px 0 0;row-gap:5px}
   .coord .ckind{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--faint);margin-right:3px}
   .coord .cch{font-size:11.5px;font-weight:750;color:var(--accent2);background:var(--soft);
-              border-radius:999px;padding:2px 8px;white-space:nowrap}
+              border-radius:999px;padding:2px 7px;white-space:nowrap;line-height:1.5}
   .coord .cch.off{background:transparent;color:var(--faint);font-weight:600;
-                  border:1px solid var(--line);padding:1px 6px;font-size:10.5px}
+                  border:1px solid var(--line);padding:1px 5px;font-size:10.5px;line-height:1.5}
   .ins>summary:hover .cch.off{background:transparent;color:var(--faint)}
-  .coord i{font-style:normal;color:var(--faint);font-size:11px}
+  .coord .chl{display:block;width:7px;height:1px;background:var(--line);flex:0 0 auto;align-self:center;padding:0}
+  .coord .chl.on{width:10px;height:2px;background:var(--accent);border-radius:1px}
   .coord .cnt{font-size:11.5px;color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
   .ins .sub{font-size:13px;color:var(--faint);margin:3px 0 0;line-height:1.5}
   .body h4{font-size:12px;font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
