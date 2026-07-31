@@ -58,29 +58,41 @@ PYTHONIOENCODING=utf-8 py insights/structures.py
 - 순서가 없는 `hierarchy` 묶음은 단계로 승격하지 않는다. 분류는 서술로 쓴다
 - `promote: true`는 **표시만** 한다. 실제 좌표 변경(하위 단계 추가 등)은 사람이 스펙 개정으로 한다
 
-## 4. 산출물 재생성
+## 4. 검증 대장
+
+`insights/verify.json`이 「이 판단이 무엇으로 무너지나」를 담는다. C21이 검사한다.
+
+- **새 인사이트를 쓰면 검증 항목을 같이 연다.** 「아직 모르는 것」 절이 후보다. 항목 하나는 판정 가능한 질문(`question`) + 무엇을 보면 아는지(`watch`) + 그 답이 무엇을 정하는지(`settles`) + `due`로 이뤄진다
+- **질문은 근거보다 먼저 있어야 한다.** `opened_on`이 그 시점이고, 근거 원자의 문서 날짜가 그보다 이전이면 C21이 FAIL을 낸다(사후 편입). 결과를 보고 만든 질문은 검증이 아니다
+- **판정은 원자로만 한다.** `적중`/`빗나감`으로 바꾸려면 `resolved_on`과 `evidence`(원자 id 1개 이상)가 있어야 한다. 새 문서가 답을 가져왔으면 그 문서를 먼저 원자화한다
+- **기한이 지나면 WARN이 뜬다.** 판정하거나, 아직 답이 없으면 `due`를 미루고 `note`에 이유를 적는다
+- 판정 0건이면 페이지가 적중률을 계산하지 않는다. **없는 비율을 만들지 말 것**
+
+## 5. 산출물 재생성
 
 ```bash
 PYTHONIOENCODING=utf-8 py insights/gen_atomview.py
+PYTHONIOENCODING=utf-8 py insights/gen_actormap.py
 ```
 
-인사이트·원자·구조 묶음이 바뀌었으면 페이지를 다시 만든다. 대시보드 파일은 `대시보드/인사이트와 근거.html`이다.
+인사이트·원자·구조 묶음·검증 대장이 바뀌었으면 `대시보드/인사이트와 근거.html`을, `views/actor_map.json`이 바뀌었으면 `대시보드/제약과 회사.html`을 다시 만든다. 공유 CSS는 `insights/style.py`의 `BASE`다 — 페이지마다 토큰을 새로 정하지 않는다.
 
-## 5. 보고
+## 6. 보고
 
 - `check_atoms.py`·`check_prose.py` 요약 줄. `check_prose.py`가 한 파일에 WARN 5건을 넘겼으면 그 파일은 `humanize-korean` 스킬을 부를 계기다
 - STALE 인사이트 목록과 각각 4갈래 중 어느 쪽으로 보이는지
 - 충돌 후보·문서 내부 충돌 중 눈에 걸리는 쌍
 - 뭉침 중 승격 후보(한 문서 독점 60% 미만)
 - 구조 묶음 중 `members` 2편 이상인 것과 `promote` 판정
+- 검증 대장: 기한 지난 열림 항목, 판정 건수와 적중률(판정 0건이면 「계산 불가」로 보고한다)
 - 원자 인용률 — 과잉 추출 지표다
 
 ```bash
 PYTHONIOENCODING=utf-8 py -c "import io,json,glob,re;cited=set();[cited.update(re.findall(r'A-\d{6}-\d{2}',io.open(p,encoding='utf-8').read())) for p in glob.glob('insights/synth/*.md')];ids=[a['id'] for f in glob.glob('insights/atoms/*.json') for a in json.load(io.open(f,encoding='utf-8'))['atoms']];print('인용 %d/%d (%.0f%%)'%(len(cited&set(ids)),len(ids),100*len(cited&set(ids))/len(ids)))"
 ```
 
-## 6. 커밋
+## 7. 커밋
 
-`structure_groups.json`과 재생성된 페이지를 커밋한다.
+`structure_groups.json`·`verify.json`과 재생성된 페이지를 커밋한다.
 
 **고치지 않는 것**: 인사이트 본문(문체 게이트 FAIL 수정은 예외), 원자 파일, `process.json`, 좌표 사전. 이 스킬은 판단 재료를 만들어 사람에게 넘긴다.

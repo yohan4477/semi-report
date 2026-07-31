@@ -9,6 +9,8 @@ import style
 
 ROOT = ca.ROOT
 OUT = os.path.join(ROOT, '대시보드', '인사이트와 근거.html')
+VERIFY = os.path.join(ROOT, 'insights', 'verify.json')
+STCLS = {'열림': 'open', '적중': 'hit', '빗나감': 'miss', '무효': 'void'}
 
 STACK = ca.STACK
 # 화면은 큰 것부터 — 연료·지정학에서 전자·공정으로 내려간다.
@@ -75,6 +77,11 @@ def build():
     stage_note = {k: v.split('. ')[0].rstrip('.')
                   for k, v in (pr.get('stage_note') or {}).items()}
     man = {s['id']: s for s in json.load(io.open(ca.MAN, encoding='utf-8'))['sources']}
+    # 검증 대장 — 이 판단이 무엇으로 무너지는지. 판정은 원자로만 하고 C21이 사후 편입을 막는다
+    vdata = json.load(io.open(VERIFY, encoding='utf-8')) if os.path.exists(VERIFY) else {'checks': []}
+    vchecks = {}
+    for c in vdata.get('checks') or []:
+        vchecks.setdefault(c['insight'], []).append(c)
     insights = load_insights(atoms)
 
     adata = []
@@ -183,6 +190,20 @@ def build():
         if dis:
             ev += ('<details class="ev"><summary>검토 후 무관 <b>%d개</b> — 같은 칸이지만 이 주장과 안 맞물린다</summary>%s</details>'
                    % (len(dis), ''.join(dis)))
+        # 이 판단이 무엇으로 무너지는지를 글 안에 박아 둔다. 나중에 만든 질문은 검증이 아니므로
+        # 언제 열었는지(opened_on)를 같이 적는다
+        mine = vchecks.get(ins['file']) or []
+        vh = ''
+        if mine:
+            items = ''.join(
+                '<li><b>%s</b> <span class="vst %s">%s</span>'
+                '<br><span class="vw">볼 것</span> %s'
+                '<br><span class="vw">정해지는 것</span> %s'
+                '<br><span class="vm">%s 기록 · 기한 %s</span></li>'
+                % (esc(c['question']), STCLS.get(c['status'], ''), esc(c['status']),
+                   esc(c['watch']), esc(c['settles']), esc(c['opened_on']), esc(c['due']))
+                for c in mine)
+            vh = '<h4 class="falsify">무엇으로 무너지나</h4><ul class="falsify">%s</ul>' % items
         if ins['view'] != prev_view:
             prev_view = ins['view']
             # 이름만으로는 그 칸이 뭘로 이뤄졌는지 모른다. 번호로 순서를 박고 설명을 붙인다.
@@ -212,15 +233,16 @@ def build():
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<p class="coord">%s<span class="cnt">원자 %d개%s</span></p><h2>%s</h2><p class="sub">%s</p></summary>'
-            '<div class="body"><p class="claimfull">%s</p>%s%s</div></details>'
+            '<p class="coord">%s<span class="cnt">원자 %d개%s%s</span></p><h2>%s</h2><p class="sub">%s</p></summary>'
+            '<div class="body"><p class="claimfull">%s</p>%s%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
                esc(ins['as_of']), chips, len(ins['atoms']),
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
+               (' · 검증 %d건' % len(mine)) if mine else '',
                esc(ins['headline']), esc(ins['subhead']),
                md_inline(ins['claim']),
-               ''.join(secs), ev))
+               ''.join(secs), vh, ev))
     if ins_html:
         ins_html.append('</section>')
 
@@ -269,8 +291,29 @@ def build():
         ensure_ascii=False)
 
     docs = len({a['doc'] for a in adata})
+    # 검증 대장 — 판정 0건이면 적중률을 계산하지 않는다. 없는 비율을 만들면 그게 제일 나쁘다
+    allv = vdata.get('checks') or []
+    st = {}
+    for c in allv:
+        st[c['status']] = st.get(c['status'], 0) + 1
+    done = st.get('적중', 0) + st.get('빗나감', 0)
+    vsum = ''.join('<span>%s <b>%d건</b></span>' % (esc(k), v) for k, v in sorted(st.items()))
+    vsum += ('<span>적중률 <b>%.0f%%</b> (판정 %d건)</span>' % (100.0 * st.get('적중', 0) / done, done)
+             if done else '<span>판정 <b>0건</b> — 적중률은 아직 계산할 수 없다</span>')
+    hmap = {i['file']: i['headline'] for i in insights}
+    vrows = ''.join(
+        '<div class="vrow"><span class="vst %s">%s</span>'
+        '<span class="vq">%s</span><span class="vm">기한 %s</span>'
+        '<span class="vsrc">%s 기록 · <a href="#%s">%s</a></span></div>'
+        % (STCLS.get(c['status'], ''), esc(c['status']), esc(c['question']), esc(c['due']),
+           esc(c['opened_on']), esc(c['insight']), esc(hmap.get(c['insight'], c['insight'])))
+        for c in sorted(allv, key=lambda x: (x['due'], x['id'])))
+
     html = (TMPL
             .replace('__CSS__', style.BASE)
+            .replace('__VNOTE__', esc(vdata.get('note') or ''))
+            .replace('__VSUM__', vsum)
+            .replace('__VROWS__', vrows)
             .replace('__CHAIN__', chain_html)
             .replace('__BAND__', band_html)
             .replace('__INSIGHTS__', ''.join(ins_html))
@@ -415,6 +458,28 @@ TMPL = r'''<meta charset="utf-8">
   .body li{font-size:var(--t-body);color:var(--sub);line-height:1.58;margin-bottom:4px}
   .body b{color:var(--ink)}
 
+  /* 무엇으로 무너지나 — 판단 옆에 반증 조건을 둔다. 지금은 전부 열림이라 적중률이 없다 */
+  .body h4.falsify{color:var(--accent2);margin-top:14px}
+  .body ul.falsify{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}
+  .body ul.falsify li{background:var(--sunk);border-radius:10px;padding:10px 13px;
+                      font-size:var(--t-body);color:var(--sub);line-height:1.55;margin:0}
+  .body ul.falsify li b{color:var(--ink)}
+  .vst{font-size:var(--t-lbl);font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px;
+       white-space:nowrap;background:var(--sunk);color:var(--faint);border:1px solid var(--line)}
+  .vst.open{background:var(--soft);color:var(--accent2);border-color:transparent}
+  .vst.hit{background:#e8f6ec;color:#1d6e45;border-color:transparent}
+  .vst.miss{background:#fbe9e7;color:#a3372f;border-color:transparent}
+  @media (prefers-color-scheme:dark){.vst.hit{background:#173323;color:#63c08c}.vst.miss{background:#331a17;color:#e08a8a}}
+  .vw{font-size:var(--t-lbl);font-weight:800;color:var(--faint);letter-spacing:.04em}
+  .vm{font-size:var(--t-lbl);color:var(--faint);font-variant-numeric:tabular-nums}
+  .vrow{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:baseline;
+        padding:11px 0;border-top:1px solid var(--line)}
+  .vrow:first-of-type{border-top:0}
+  .vrow .vq{font-size:var(--t-body);color:var(--ink);min-width:0}
+  .vrow .vsrc{grid-column:2/4;font-size:var(--t-lbl);color:var(--faint)}
+  .vrow .vsrc a{color:var(--accent);text-decoration:none}
+  .vsum{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 12px;font-size:var(--t-meta);color:var(--faint)}
+  .vsum b{color:var(--ink)}
   /* ── 모바일 — 값이 아니라 토큰만 바꾼다. 규칙을 두 벌 두면 반드시 어긋난다 ── */
   @media (max-width:640px){
     .ins>summary{padding:6px 30px 6px 0;min-height:44px}       /* 손가락 타깃 */
@@ -472,6 +537,11 @@ __STRUCT__
   <p class="hint">스택 노드 또는 프로세스 단계를 누르면 그 칸의 원자와, 그 칸을 근거로 쓴 인사이트가 나옵니다.
      원자가 0인 칸은 감추지 않았습니다 — 사슬이 어디서 끊겼는지가 그 자체로 정보입니다.</p>
 </div>
+
+<h3 class="sec">검증 대장 — 무엇이 확인되면 판단이 바뀌나</h3>
+<p class="axnote">__VNOTE__</p>
+<div class="vsum">__VSUM__</div>
+<div class="panel">__VROWS__</div>
 
 <footer>insights/ 산출물 — atoms(원자)·synth(인사이트)·views/process.json(단계 배정)에서 <code>gen_atomview.py</code>로 생성.
 검사기 <code>check_atoms.py</code>가 줄 번호·수치·원문 hash·원문 병치를 대조합니다. 주장의 진위는 기계가 판정하지 않습니다 — 원문을 옆에 두는 것이 그 대비입니다.</footer>

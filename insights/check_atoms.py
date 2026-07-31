@@ -1,6 +1,8 @@
 # 원자·인사이트 검사기 — 설계: docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md
-# C1~C19. FAIL이 하나라도 있으면 종료코드 1.
+# C1~C21. FAIL이 하나라도 있으면 종료코드 1.
 import os, io, re, json, glob, sys
+import datetime
+TODAY = datetime.date.today().isoformat()
 
 ROOT = r"C:\Users\y\semianalysis"
 ATOMS = os.path.join(ROOT, "insights", "atoms")
@@ -8,6 +10,7 @@ SYNTH = os.path.join(ROOT, "insights", "synth")
 MAN = os.path.join(ROOT, "insights", "manifest.json")
 ACTORS = os.path.join(ROOT, "insights", "views", "actors.json")
 ACTOR_MAP = os.path.join(ROOT, "insights", "views", "actor_map.json")
+VERIFY = os.path.join(ROOT, "insights", "verify.json")
 PROCESS = os.path.join(ROOT, "insights", "views", "process.json")
 
 STACK = ['전자·공정', '칩', '메모리', '열', '랙', '데이터센터', '전력망', '연료·지정학']
@@ -303,6 +306,48 @@ def check_actor_map(actor_names):
             findings.append(('FAIL', 'actor_map.json', 'C20', '%s: 상장인데 티커가 없다' % name))
 
 
+def check_verify(atoms):
+    """C21 — 검증 대장. 이 체계에서 판정은 원자로만 하고, 질문은 근거보다 먼저 있어야 한다.
+    결과를 보고 나서 만든 질문은 검증이 아니므로 근거 원자의 문서 날짜가
+    질문을 연 날짜보다 나중인지 본다(사후 편입 금지)."""
+    if not os.path.exists(VERIFY):
+        return None
+    v = json.load(io.open(VERIFY, encoding='utf-8'))
+    ok_status = set(v.get('status_def') or {})
+    by_id = {a['id']: a for a in atoms}
+    synth = {os.path.basename(p) for p in glob.glob(os.path.join(SYNTH, '*.md'))}
+    seen = set()
+    for c in v.get('checks') or []:
+        where = 'verify.json %s' % c.get('id')
+        if c.get('id') in seen:
+            findings.append(('FAIL', where, 'C21', '검증 id 중복: %s' % c.get('id')))
+        seen.add(c.get('id'))
+        if c.get('insight') not in synth:
+            findings.append(('FAIL', where, 'C21', '없는 인사이트 파일: %s' % c.get('insight')))
+        if c.get('status') not in ok_status:
+            findings.append(('FAIL', where, 'C21', 'status 값이 사전에 없다: %s' % c.get('status')))
+        for k in ('question', 'settles', 'watch', 'opened_on', 'due'):
+            if not c.get(k):
+                findings.append(('FAIL', where, 'C21', '%s가 비었다' % k))
+        if c.get('status') in ('적중', '빗나감'):
+            if not c.get('resolved_on'):
+                findings.append(('FAIL', where, 'C21', '판정했는데 resolved_on이 없다'))
+            if not c.get('evidence'):
+                findings.append(('FAIL', where, 'C21', '판정했는데 근거 원자가 없다 — 원자 없이 판정하지 않는다'))
+        for aid in c.get('evidence') or []:
+            a = by_id.get(aid)
+            if not a:
+                findings.append(('FAIL', where, 'C21', '없는 원자를 근거로 든다: %s' % aid))
+                continue
+            if str(a['view']['time']) < str(c.get('opened_on') or ''):
+                findings.append(('FAIL', where, 'C21',
+                                 '%s는 질문(%s)보다 이전 문서(%s)다 — 사후 편입'
+                                 % (aid, c.get('opened_on'), a['view']['time'])))
+        if c.get('status') == '열림' and str(c.get('due') or '') < TODAY:
+            findings.append(('WARN', where, 'C21', '기한(%s)이 지났는데 열려 있다 — 판정하라' % c.get('due')))
+    return v
+
+
 def main():
     # cp949 콘솔에서 C16 등의 em dash·한글 메시지가 UnicodeEncodeError로 죽으면 그 뒤에 남은
     # FAIL 목록과 요약이 통째로 사라진다 — crosscheck.py와 같은 방식으로 막는다
@@ -315,6 +360,7 @@ def main():
     atoms = load_atoms()
     check_atoms(atoms, man_hashes, actor_names)
     check_actor_map(actor_names)
+    vr = check_verify(atoms)
     pr = check_process(atoms, {a['id']: a for a in atoms})
     check_synth(atoms, pr)
 
@@ -328,6 +374,14 @@ def main():
     print('요약: 원자 %d개 / 문서 %d편 / FAIL %d / WARN %d'
           % (len(atoms), len({a['_source_id'] for a in atoms}), fails, warns))
     print('노드별: ' + ', '.join('%s %d' % kv for kv in sorted(nodes.items(), key=lambda x: -x[1])))
+    if vr:
+        st = {}
+        for c in vr.get('checks') or []:
+            st[c.get('status')] = st.get(c.get('status'), 0) + 1
+        done = st.get('적중', 0) + st.get('빗나감', 0)
+        print('검증: %d건 (%s) / 판정 %d건%s'
+              % (sum(st.values()), ', '.join('%s %d' % kv for kv in sorted(st.items())), done,
+                 (' · 적중률 %.0f%%' % (100.0 * st.get('적중', 0) / done)) if done else ' — 적중률 계산 불가'))
     if pr:
         assign = pr.get('assign') or {}
         cnt = {s: 0 for s in pr['stages']}
