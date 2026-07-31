@@ -188,3 +188,46 @@ def test_order_passes_on_규정_순서():
     cp.findings.clear()
     cp.check_order(['주장', '그래서 무엇이 달라지나', '근거', '조건 충돌', '아직 모르는 것'], 'x.md')
     assert cp.findings == []
+
+
+def _hd(head=None, sub=None):
+    m = {}
+    if head is not None:
+        m['headline'] = head
+    if sub is not None:
+        m['subhead'] = sub
+    return m
+
+
+def test_headline_missing_fails():
+    cp.findings.clear()
+    cp.check_head(_hd(sub='요약 한 줄'), {}, 'x.md')
+    assert ('FAIL', 'P7') in [(f[0], f[2]) for f in cp.findings]
+
+
+def test_subhead_missing_fails():
+    cp.findings.clear()
+    cp.check_head(_hd(head='AI 칩은 확보량이 승부를 가른다'), {}, 'x.md')
+    assert ('FAIL', 'P7') in [(f[0], f[2]) for f in cp.findings]
+
+
+def test_head_and_sub_pass():
+    cp.findings.clear()
+    cp.check_head(_hd('AI 칩은 성능보다 몇 장 받느냐가 승부를 가른다',
+                      'N3 수요의 60%가 AI, 파운드리가 배정 권한을 쥔 국면'),
+                  {'주장': ['**전혀 다른 문장이다.**']}, 'x.md')
+    assert cp.findings == []
+
+
+def test_long_headline_warns():
+    cp.findings.clear()
+    cp.check_head(_hd('가' * 41, '요약'), {}, 'x.md')
+    assert ('WARN', 'P7') in [(f[0], f[2]) for f in cp.findings]
+
+
+def test_subhead_repeating_claim_warns():
+    # 부제는 또 하나의 주장이 아니라 무엇이 들었는지 알려 주는 요약이다
+    claim = '데이터센터 냉각의 병목이 건물에서 칩 안으로 내려간다'
+    cp.findings.clear()
+    cp.check_head(_hd('냉각 병목이 칩 안으로 내려간다', claim), {'주장': ['**' + claim + '**']}, 'x.md')
+    assert ('WARN', 'P7') in [(f[0], f[2]) for f in cp.findings]

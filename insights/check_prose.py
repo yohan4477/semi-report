@@ -116,6 +116,37 @@ def check_order(names, where):
         add('WARN', where, 'P6', '절 순서가 규정과 다르다: %s' % ' → '.join(names))
 
 
+HEADLINE_MAX = 40
+SUBHEAD_MAX = 60
+
+
+def check_head(meta, sec, where):
+    """P7 — 카드가 한 줄로 말하게 하는 두 필드.
+
+    headline은 무엇에 관한 판단인지 주어를 담아 자립해야 하고(대상 없이 "승부는
+    성능이 아니라 확보량에서 갈린다"고 쓰면 무엇의 승부인지 모른다), subhead는
+    또 하나의 주장이 아니라 그 카드에 무엇이 들었는지 알려 주는 요약이다."""
+    head = (meta.get('headline') or '').strip()
+    sub = (meta.get('subhead') or '').strip()
+    if not head:
+        add('FAIL', where, 'P7', 'headline 없음 — 카드에 제목이 안 붙는다')
+    elif len(head) > HEADLINE_MAX:
+        add('WARN', where, 'P7', 'headline이 %d자 (%d자 이하로) — %s…'
+            % (len(head), HEADLINE_MAX, head[:24]))
+    if not sub:
+        add('FAIL', where, 'P7', 'subhead 없음 — 제목 아래 요약 줄이 빈다')
+    elif len(sub) > SUBHEAD_MAX:
+        add('WARN', where, 'P7', 'subhead가 %d자 (%d자 이하로) — %s…'
+            % (len(sub), SUBHEAD_MAX, sub[:24]))
+    # subhead가 주장을 그대로 옮기면 요약이 아니라 반복이다
+    claim = ' '.join(sec.get('주장') or [])
+    if sub and claim:
+        a, b = shingles(sub), shingles(claim)
+        if a and b and len(a & b) / float(len(a)) >= 0.6:
+            add('WARN', where, 'P7', 'subhead가 주장과 %.0f%% 겹친다 — 무엇이 들었는지 나열하는 쪽으로'
+                % (100 * len(a & b) / float(len(a))))
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -136,6 +167,7 @@ def main():
         check_translationese(body, where)
         check_dup_claim(sec, where)
         check_order(names, where)
+        check_head(meta or {}, sec, where)
 
     for level, where, rule, msg in findings:
         print('%s %s [%s] %s' % (level, where, rule, msg))
