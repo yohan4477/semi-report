@@ -53,7 +53,7 @@
 | ai-infra/construction | 1 |
 | ai-models/rl | 3 |
 | ai-models/agents | 2 |
-| ai-models | 1 |
+| ai-models | 2 |
 | robotics | 1 |
 | semiconductors | 1 |
 
@@ -81,3 +81,6 @@
 
 - v1.0 (2026-07-04): 초기 카테고리 체계 수립 — ai-models, ai-infra(power/cooling/compute/memory), robotics
   - 기존 5개 문서를 소급 분류한 결과 전부 ai-infra/power(전력 시스템)에 해당, 냉각 시스템(Part 2)만 유일하게 ai-infra/cooling 추가 해당 — 현재 코퍼스가 전력 인프라에 편중되어 있음을 확인
+
+<!-- 2026-08-04: [260803] Kimi K3 아키텍처 해부 신규 변환 완료 — ai-models 1→2. KDA(Kimi Delta Attention) 계보, 어텐션 잔차, LatentMoE 등 모델 아키텍처 자체를 다루는 순수 프라이머로 agents/rl 어느 하위 카테고리에도 해당하지 않아 상위 ai-models 태그만 부여, content/newsletter/ai_models/ 루트에 배치 -->
+
