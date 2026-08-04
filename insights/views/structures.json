@@ -840,6 +840,69 @@
       ]
     },
     {
+      "source_id": "semi:ai_models:Kimi-K3-아키텍처-해부-압축-메모리-깊이-방향-어텐션-잠재-전문가-라우팅",
+      "path": "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md",
+      "kind_of_doc": "quantitative",
+      "structures": [
+        {
+          "kind": "hierarchy",
+          "name": "K3 3대 핵심 혁신 + 검증",
+          "line": 48,
+          "levels": [
+            "KDA(압축 메모리 어텐션)",
+            "어텐션 잔차(층 방향 어텐션)",
+            "LatentMoE(라우팅 전 압축)",
+            "서빙 성능·TCO 실측 검증"
+          ],
+          "note": "문서 전체 구성을 요약하는 4갈래 분류"
+        },
+        {
+          "kind": "process",
+          "name": "선형 어텐션 계보",
+          "line": 76,
+          "steps": [
+            "소프트맥스 어텐션",
+            "선형 어텐션",
+            "DeltaNet",
+            "Gated DeltaNet",
+            "KDA"
+          ],
+          "note": "압축 메모리가 무한정 커지는 문제를 해결해 온 순서"
+        },
+        {
+          "kind": "process",
+          "name": "FlashKDA 커널 2단계",
+          "line": 108,
+          "steps": [
+            "K1: 청크 단위 행렬 병렬 준비",
+            "K2: 청크 단위 순차 상태 갱신"
+          ],
+          "note": "청크 내부는 병렬, 청크 사이만 순서 유지"
+        },
+        {
+          "kind": "hierarchy",
+          "name": "KV 캐시 저장 계층",
+          "line": 208,
+          "levels": [
+            "GPU HBM",
+            "서버 DRAM",
+            "SSD 디스크"
+          ],
+          "note": "용량이 넘치면 이 순서로 spill"
+        },
+        {
+          "kind": "process",
+          "name": "블록 어텐션 잔차 추론 2단계",
+          "line": 286,
+          "steps": [
+            "1단계: 완결 블록 병렬 어텐션(쿼리 배치 처리)",
+            "2단계: 진행 중 블록 순차 처리(온라인 소프트맥스)"
+          ],
+          "note": "전체 I/O 부담을 표준 잔차 수준으로 유지"
+        }
+      ]
+    },
+    {
       "source_id": "semi:memory:중국-CXMT-DRAM-강자들에-도전장을-내밀다",
       "path": "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md",
       "kind_of_doc": "quantitative",
