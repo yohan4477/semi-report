@@ -1,4 +1,8 @@
 {
+  "Uptime Institute": [
+    "Uptime Institute",
+    "업타임 인스티튜트"
+  ],
   "TSMC": [
     "TSMC",
     "티에스엠씨"
@@ -238,5 +242,9 @@
     "Moonshot AI",
     "문샷",
     "Kimi 개발사"
+  ],
+  "앤트로픽": [
+    "앤트로픽",
+    "Anthropic"
   ]
 }
