@@ -984,6 +984,87 @@
           "note": "CXMT 창업으로 이어지는 창업자 경력 순서"
         }
       ]
+    },
+    {
+      "source_id": "semi:business:메타-인프라-팀에-필요한-문화-리셋",
+      "path": "content/newsletter/ai_infra/business/[260722] 메타 인프라 팀에 필요한 문화 리셋.md",
+      "kind_of_doc": "quantitative",
+      "structures": [
+        {
+          "kind": "hierarchy",
+          "name": "AI 학습 클러스터 네트워크 3대 문제",
+          "line": 350,
+          "levels": [
+            "엘리펀트 플로우",
+            "낮은 엔트로피",
+            "비효율적 활용"
+          ],
+          "note": "DSF가 스위치 단에서 미리 통제하려던 세 문제"
+        },
+        {
+          "kind": "hierarchy",
+          "name": "5개 실패 사례",
+          "line": 434,
+          "levels": [
+            "Rivos",
+            "DSF",
+            "Grand Teton",
+            "Ariel",
+            "MI450X"
+          ],
+          "note": "각각 좁은 지표에서는 정당화됐지만 회사 전체엔 나빴던 결정들"
+        },
+        {
+          "kind": "hierarchy",
+          "name": "문화 리셋 3가지 방향",
+          "line": 443,
+          "levels": [
+            "오너십 명확화",
+            "커스텀 설계는 표준 대비 더 높은 기준",
+            "인력·예산 규율 강화"
+          ],
+          "note": "저자들이 제안하는 해법 세 갈래"
+        }
+      ]
+    },
+    {
+      "source_id": "semi:business:제미나이는-끝났어도-GCP는-잘나간다-딥마인드-리더십-붕괴와-구글-클라우드의-반사이익",
+      "path": "content/newsletter/ai_infra/business/[260807] 제미나이는 끝났어도 GCP는 잘나간다 - 딥마인드 리더십 붕괴와 구글 클라우드의 반사이익.md",
+      "kind_of_doc": "quantitative",
+      "structures": [
+        {
+          "kind": "hierarchy",
+          "name": "리더십 개편 후 퇴사·잔류 두 갈래",
+          "line": 48,
+          "levels": [
+            "퇴사·창업",
+            "잔류·승진"
+          ],
+          "note": "딥마인드 리더십 개편 발표 이후 인물별로 갈린 두 경로"
+        },
+        {
+          "kind": "hierarchy",
+          "name": "조직문화 문제의 증거 3가지",
+          "line": 139,
+          "levels": [
+            "챗GPT보다 1년 앞선 챗봇 출시 불허",
+            "9년차 베테랑 티보의 오픈AI 이직",
+            "딥마인드 자체가 구글의 최초 대형 AI 인재 인수합병 사례"
+          ],
+          "note": "딥마인드가 프론티어로 복귀 못 할 것이라는 판단의 근거로 든 증거"
+        },
+        {
+          "kind": "hierarchy",
+          "name": "어려운 길 포기 후 돈 되는 길 선택 전례",
+          "line": 204,
+          "levels": [
+            "IBM",
+            "인텔",
+            "구글"
+          ],
+          "note": "첨단기술 경쟁을 포기하고 금융화를 택한 기업 전례로 구글을 나란히 놓음"
+        }
+      ]
     }
   ]
 }
