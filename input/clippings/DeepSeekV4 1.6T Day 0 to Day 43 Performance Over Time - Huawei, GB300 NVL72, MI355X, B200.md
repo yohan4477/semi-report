@@ -5,7 +5,7 @@ author:
   - "[[BRYAN SHAN]]"
   - "[[CAM QUILICI]]"
   - "[[KIMBO CHEN]]"
-published: 2026-02-05
+published: 2026-06-09
 created: 2026-07-10
 description: "Day 0 Inference Performance, InferenceX, 100x performance improvement in 26 Days, Cost per Million Tokens, Huawei 950DT Inference Trace Analysis"
 tags:

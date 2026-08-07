@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[MAYA BARKIN]]"
-published: 2026-02-05
+published: 2025-04-28
 created: 2026-07-10
 description: "OpenAI Shift, Oracle & Stargate Acceleration, Hyperscale Capex Implications, Vertiv's Impact Misunderstood, Copilot Weak Adoption"
 tags:

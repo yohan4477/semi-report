@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2025-01-15
 created: 2026-07-10
 description: "Malaysia's Stranded Capacity, Western Hyperscale Strength, AI Accelerator Restrictions, India Brazil Middle East Concerns, Sovereign AI Killed, VEU Restrictions and Implications, Compute Budget, Open-Source Creating Lower Bound, Model-Weights Controlled"
 tags:

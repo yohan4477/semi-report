@@ -6,7 +6,7 @@ author:
   - "[[AJ]]"
   - "[[DOUG]]"
   - "[[REYK KNUHTSEN]]"
-published: 2026-02-05
+published: 2025-01-31
 created: 2026-07-10
 description: "H100 Pricing Soaring, Subsidized Inference Pricing, Export Controls, MLA"
 tags:

@@ -6,7 +6,7 @@ author:
   - "[[DC]]"
   - "[[GERALD WONG]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-07-02
 created: 2026-07-10
 description: "ECTC 2026 Roundup, Intel, TSMC, SK Hynix, Samsung, Micron, Marvell, Lightmatter, Microsoft"
 tags:

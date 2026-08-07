@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-o
 author:
   - "[[MALCOLM SPITTLER]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-05-29
 created: 2026-07-10
 description: "Why AI's increasing output is going to be one of the hardest economic measurement problems in history. AI 'Dark Output' could end up being the majority of economic activity, but a challenge to measure"
 tags:

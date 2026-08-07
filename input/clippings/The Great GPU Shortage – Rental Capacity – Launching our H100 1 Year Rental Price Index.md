@@ -5,7 +5,7 @@ author:
   - "[[DANIEL NISHBALL]]"
   - "[[JORDAN NANOS]]"
   - "[[CHEANG KANG WEN]]"
-published: 2026-02-05
+published: 2026-04-02
 created: 2026-07-10
 description: "H100 Rental Prices up 40%, GPU Rental Pricing Dashboard Launch, Compute Rental Market Structure, Will Rental Prices keep going up?"
 tags:

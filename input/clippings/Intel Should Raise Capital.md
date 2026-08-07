@@ -5,7 +5,7 @@ author:
   - "[[DOUG]]"
   - "[[SRAVAN KUNDOJJALA]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-06-11
 created: 2026-07-10
 description: "Intel's woes are behind them. The heavy spending is ahead of them. Why an equity issuance in a hot equity market could make Intel so much better sooner."
 tags:

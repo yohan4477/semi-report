@@ -5,7 +5,7 @@ author:
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[DYLAN PATEL]]"
   - "[[WEI ZHOU]]"
-published: 2026-02-05
+published: 2025-09-16
 created: 2026-07-10
 description: "On Site Turbines, Mississippi Expansion, Solaris Energy, Can xAI afford it?, Middle East Funding, Tesla, Talent Exodus, API revenue, Consumer Growth, RL Environment"
 tags:

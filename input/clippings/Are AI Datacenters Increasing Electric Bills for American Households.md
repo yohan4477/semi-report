@@ -5,7 +5,7 @@ author:
   - "[[AISHWARYA MAHESH]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[AJEY PANDEY]]"
-published: 2026-02-05
+published: 2026-03-03
 created: 2026-07-10
 description: "Power prices misconception, PJM's poor market design, Capacity prices 9.3x growth, ERCOT vs PJM grid reliability and expansion"
 tags:

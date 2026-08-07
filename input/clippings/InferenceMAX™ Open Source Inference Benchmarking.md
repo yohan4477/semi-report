@@ -5,7 +5,7 @@ author:
   - "[[KIMBO CHEN]]"
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-10-09
 created: 2026-07-10
 description: "NVIDIA GB200 NVL72, AMD MI355X, Throughput Token per GPU, Latency Tok/s/user, Perf per Dollar, Cost per Million Tokens, Tokens per Provisioned Megawatt, DeepSeek R1 670B, GPTOSS 120B, Llama3 70B"
 tags:

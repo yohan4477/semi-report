@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[KIMBO CHEN]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-03-26
 created: 2026-07-10
 description: "90%+ Coverage by Rental GPU Value, GPU Cloud Evaluation Guidelines, GPU Pricing Updates, GPU Bubble Burst, CoreWeave IPO, Hyperscalers, AI Neocloud Economics, Neocloud IRR"
 tags:

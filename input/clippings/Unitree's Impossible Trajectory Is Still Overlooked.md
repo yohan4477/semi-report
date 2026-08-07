@@ -5,7 +5,7 @@ author:
   - "[[REYK KNUHTSEN]]"
   - "[[NIKO CIMINELLI]]"
   - "[[JACOB RINTAMAKI]]"
-published: 2026-02-05
+published: 2026-06-08
 created: 2026-07-10
 description: "The Fastest Iteration Cycle In Next-Gen Robotics Should See Unprecedented Acceleration"
 tags:

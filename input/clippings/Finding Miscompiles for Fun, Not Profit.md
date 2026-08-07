@@ -3,7 +3,7 @@ title: "Finding Miscompiles for Fun, Not Profit"
 source: "https://newsletter.semianalysis.com/p/finding-miscompiles-for-fun-not-profit"
 author:
   - "[[JUSTIN LEBAR]]"
-published: 2026-02-05
+published: 2026-05-28
 created: 2026-07-10
 description: "Or: You don’t need access to Claude Mythos to spend $10,000 in an afternoon."
 tags:

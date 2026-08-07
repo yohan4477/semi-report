@@ -5,7 +5,7 @@ author:
   - "[[KIMBO CHEN]]"
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-06-13
 created: 2026-07-10
 description: "Software Improvement, Marketing RDFs, AMD Fostering Neocloud, MI355 is not Rack Scale, MI400 is UALoE, Not UALink"
 tags:

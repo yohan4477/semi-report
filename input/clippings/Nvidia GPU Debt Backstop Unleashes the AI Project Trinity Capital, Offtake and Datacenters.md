@@ -5,7 +5,7 @@ author:
   - "[[DANIEL NISHBALL]]"
   - "[[CHEANG KANG WEN]]"
   - "[[ZANE FONG]]"
-published: 2026-02-05
+published: 2026-07-06
 created: 2026-07-10
 description: "Over 7T AI debt by 2029, There can be no Neoclouds without the Trinity. Nvidia's Backstop Economics Explained. AI Debt Needs Quantified. Nvidia's Objective is to Broaden Compute Access"
 tags:

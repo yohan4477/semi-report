@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/cpus-are-back-the-datacenter-cpu"
 author:
   - "[[GERALD WONG]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-02-09
 created: 2026-07-10
 description: "RL and Agent Usage, Context Memory Storage, DRAM Pricing Impacts, CPU Interconnect Evolution, AMD Venice, Verano, Florence, Intel Diamond Rapids, Coral Rapids, Arm Phoenix + Venom, Graviton 5, Axion"
 tags:

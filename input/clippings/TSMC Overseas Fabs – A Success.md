@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[STEVEN LEE]]"
   - "[[JEFF KOCH]]"
-published: 2026-02-05
+published: 2025-12-01
 created: 2026-07-10
 description: "Why Morris Chang Said U.S. Fabs Will Fail, Wafer Cost and Economics of Taiwan vs. U.S. Fabs, TSMC Supply Chain Details"
 tags:

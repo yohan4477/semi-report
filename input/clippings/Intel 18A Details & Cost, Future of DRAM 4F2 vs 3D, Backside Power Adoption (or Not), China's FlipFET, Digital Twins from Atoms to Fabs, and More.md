@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[JEFF KOCH]]"
   - "[[GERALD WONG]]"
-published: 2026-02-05
+published: 2025-07-21
 created: 2026-07-10
 description: "VLSI 2025 Roundup"
 tags:

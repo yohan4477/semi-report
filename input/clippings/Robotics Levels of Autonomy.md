@@ -5,7 +5,7 @@ author:
   - "[[REYK KNUHTSEN]]"
   - "[[DYLAN PATEL]]"
   - "[[NIKO CIMINELLI]]"
-published: 2026-02-05
+published: 2025-07-30
 created: 2026-07-10
 description: "Single-Purpose Robots Automating Hundreds Of Jobs, Pick And Place With Low Autonomy Is Expensive, General-Purpose Autonomy Navigating And Inspecting Large Sites, Targeting Low-Skill Labor In Early Pilots With Promise, Autonomy Capable Of Any Task In Resea"
 tags:

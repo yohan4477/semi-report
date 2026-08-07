@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2025-04-16
 created: 2026-07-10
 description: "China Abundance of Power, 100% Optics, 0% Copper, Power Inefficiency, 2.6x lower FLOP per Watt, 14 Transceivers per Chip, Linear Pluggable Optics"
 tags:

@@ -5,7 +5,7 @@ author:
   - "[[CRYSTAL HUANG]]"
   - "[[JOEY BROOKHART]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-06-30
 created: 2026-07-10
 description: "Was Widespread TokenMaxxing Ever Really Here?"
 tags:

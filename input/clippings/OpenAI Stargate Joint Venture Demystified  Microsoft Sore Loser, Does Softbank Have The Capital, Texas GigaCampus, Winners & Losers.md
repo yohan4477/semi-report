@@ -6,7 +6,7 @@ author:
   - "[[REYK KNUHTSEN]]"
   - "[[CHRISTOPHER SEIFEL]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
-published: 2026-02-05
+published: 2025-01-23
 created: 2026-07-10
 description: "Money Rules Everything Around Me, The Real Numbers Behind Stargate, Lancium, Abilene Texas, Crusoe, Oracle, Cost Breakdown, Arm Is Fake News"
 tags:

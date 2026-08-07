@@ -5,7 +5,7 @@ author:
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[DYLAN PATEL]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2025-11-12
 created: 2026-07-10
 description: "'The Big Pause', AI Tokens Factory Economics Stack, OpenAI, Neocloud Renting, GitHub Copilot, MAI and Maia"
 tags:

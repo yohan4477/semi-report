@@ -5,7 +5,7 @@ author:
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[DYLAN PATEL]]"
   - "[[AJEY PANDEY]]"
-published: 2026-02-05
+published: 2025-06-25
 created: 2026-07-10
 description: "108GW Large Load Queue, Tesla Megapacks, Supercapacitors, Gigawatt-scale Batteries, PyTorch No Power Plant Blow Up"
 tags:

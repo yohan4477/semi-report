@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2026-01-01
 created: 2026-07-10
 description: "Scale-out and Scale-up CPO, CPO TCO and Power Budgets, DSP Transceivers vs LPO vs NPO vs CPO, TSMC COUPE, MZM vs MRM vs EAM Modulator Deep Dive, CPO Focused companies and CPO Supply Chain"
 tags:

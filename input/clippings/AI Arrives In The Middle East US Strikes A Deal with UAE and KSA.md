@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[AJ]]"
-published: 2026-02-05
+published: 2025-05-16
 created: 2026-07-10
 description: "5 GW Datacenter, HUMAIN, G42, Diversion and Misuse Risks, Security Requirements, American AI Wins"
 tags:

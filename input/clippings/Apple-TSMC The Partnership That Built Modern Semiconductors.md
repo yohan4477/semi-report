@@ -6,7 +6,7 @@ author:
   - "[[GERALD WONG]]"
   - "[[DYLAN PATEL]]"
   - "[[JEFF KOCH]]"
-published: 2026-02-05
+published: 2026-01-08
 created: 2026-07-10
 description: "Wafer Demand Model, Node Economics, and the shifting power dynamics as AI reshapes the foundry landscape"
 tags:

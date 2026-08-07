@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[PATRICK ZHOU]]"
-published: 2026-02-05
+published: 2025-04-10
 created: 2026-07-10
 description: "UPS, Generators, Transformers, Switchgear, Power Distribution Equipment, Chillers, Cooling, Pumps, OEM & ODM Supply Chain, Lasers, Softbank Impact, Nvidia Balance Sheet Usage"
 tags:

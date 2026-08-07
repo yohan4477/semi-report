@@ -5,7 +5,7 @@ author:
   - "[[DANIEL NISHBALL]]"
   - "[[PRANAV MYANA]]"
   - "[[ELLIE HOLBROOK]]"
-published: 2026-02-05
+published: 2026-06-03
 created: 2026-07-10
 description: "Space DC Total Cost of Ownership Explained. Unpacking constraints from Terrestrial DCs and Chip Production. Space-Earth Parity in the late 2030s, Space DCs could start to be viable even sooner."
 tags:

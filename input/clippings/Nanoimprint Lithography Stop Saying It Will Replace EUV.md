@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/nanoimprint-lithography-stop-sayi
 author:
   - "[[JEFF KOCH]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2025-10-26
 created: 2026-07-10
 description: "NIL basics, why it won’t replace EUV, details of Canon’s tool, possible applications"
 tags:

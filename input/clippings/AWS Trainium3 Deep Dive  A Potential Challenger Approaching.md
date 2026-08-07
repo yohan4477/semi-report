@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[WEGA CHU]]"
-published: 2026-02-05
+published: 2025-12-04
 created: 2026-07-10
 description: "Step-Function Software & System Improvements, “Amazon Basics” GB200 NVL36x2, NL72x2/NL32x2 Scale Up Rack Architecture, Optimized Perf per TCO, Trainium4"
 tags:

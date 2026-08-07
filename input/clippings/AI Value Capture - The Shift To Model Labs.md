@@ -5,7 +5,7 @@ author:
   - "[[DANIEL NISHBALL]]"
   - "[[DYLAN PATEL]]"
   - "[[CHEANG KANG WEN]]"
-published: 2026-02-05
+published: 2026-05-01
 created: 2026-07-10
 description: "Vera Rubin VR NVL72: V for Value - Rubin delivers a step jump in performance per TCO. ROI accruing to users, Neoclouds, Hyperscalers, AI Labs, Memory Vendors or GPU Manufacturers?"
 tags:

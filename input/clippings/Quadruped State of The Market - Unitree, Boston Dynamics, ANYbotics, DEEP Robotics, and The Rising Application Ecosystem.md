@@ -5,7 +5,7 @@ author:
   - "[[REYK KNUHTSEN]]"
   - "[[DYLAN PATEL]]"
   - "[[NIKO CIMINELLI]]"
-published: 2026-02-05
+published: 2025-10-20
 created: 2026-07-10
 description: "Quadrupeds Superior Scalability, Unitree's Incredible Production, Third Party Providers Introduce New Dynamics, Novel Applications And Opportunities, Unitree's Impossible BoMs, Quadruped TAMs"
 tags:

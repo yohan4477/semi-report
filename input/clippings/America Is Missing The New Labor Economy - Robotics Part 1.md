@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[REYK KNUHTSEN]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
-published: 2026-02-05
+published: 2025-03-11
 created: 2026-07-10
 description: "China's Dominance Playbook, General Purpose Robotics Is The Holy Grail, Robotic Systems Breakdown, Supply Chain Hardships, The West Is Positioned Backward And Covering Their Eyes, China's Clear Path to Full Scale Automation, Call For Action"
 tags:

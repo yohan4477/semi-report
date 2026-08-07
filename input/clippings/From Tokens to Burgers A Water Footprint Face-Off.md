@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/from-tokens-to-burgers-a-water-fo
 author:
   - "[[NICOLAS BONTIGUI]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-01-15
 created: 2026-07-10
 description: "A different perspective on the datacenter water debate, forget tokens/watt or tokens/dollar, it's about tokens/burger, how many In-N-Outs is equivalent to the world's largest datacenter"
 tags:

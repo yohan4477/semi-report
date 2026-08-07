@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[MYRON XIE]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-03-19
 created: 2026-07-10
 description: "Next Generation Nvidia Systems, Ground Up Inference Optimizations from Silicon to Systems to Software, The More You Buy The More You Make"
 tags:

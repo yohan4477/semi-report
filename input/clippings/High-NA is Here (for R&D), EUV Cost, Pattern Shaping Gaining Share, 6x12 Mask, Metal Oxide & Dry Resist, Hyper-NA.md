@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/spie2025"
 author:
   - "[[DYLAN PATEL]]"
   - "[[JEFF KOCH]]"
-published: 2026-02-05
+published: 2025-04-14
 created: 2026-07-10
 description: "SPIE Advanced Litho & Patterning 2025 Round-Up"
 tags:

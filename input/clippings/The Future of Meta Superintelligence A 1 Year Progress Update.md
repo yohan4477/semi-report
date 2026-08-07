@@ -6,7 +6,7 @@ author:
   - "[[JULIEN MARTIN-PRIN]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-07-09
 created: 2026-07-10
 description: "A top tier RL environment startup spawns out of thin air, the most aggressive compute ramp we've ever seen, 2000km+ scale-across, and some advice for Google DeepMind"
 tags:

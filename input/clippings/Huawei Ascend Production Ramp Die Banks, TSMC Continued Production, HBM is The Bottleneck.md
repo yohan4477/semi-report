@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[AJ]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2025-09-08
 created: 2026-07-10
 description: "H20 Shipments, Blackwell B30A, Bottlenecks to Chinese Chip Production, Export Controls, CXMT, SMIC, Cambricon"
 tags:

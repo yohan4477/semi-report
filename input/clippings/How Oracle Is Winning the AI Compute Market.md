@@ -5,7 +5,7 @@ author:
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-06-30
 created: 2026-07-10
 description: "Stargate, OpenAI, ByteDance, Unique Datacenter Strategy, Investment Grade Neocloud, Revenue and EBIT Forecast"
 tags:

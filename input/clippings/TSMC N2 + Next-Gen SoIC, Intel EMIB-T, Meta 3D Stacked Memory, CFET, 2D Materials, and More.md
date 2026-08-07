@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/iedm2024"
 author:
   - "[[JEFF KOCH]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2025-02-05
 created: 2026-07-10
 description: "IEDM 2024 Round-Up"
 tags:

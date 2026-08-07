@@ -6,7 +6,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[WEI ZHOU]]"
   - "[[AJ]]"
-published: 2026-02-05
+published: 2025-08-13
 created: 2026-07-10
 description: "How ChatGPT will monetize free users, Router is the Release, AIs will serve Ads, Google's moat eroded?, The shift of purchasing intent queries"
 tags:

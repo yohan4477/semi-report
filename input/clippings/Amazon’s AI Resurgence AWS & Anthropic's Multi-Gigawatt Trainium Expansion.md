@@ -6,7 +6,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[AJ]]"
   - "[[MYRON XIE]]"
-published: 2026-02-05
+published: 2025-09-03
 created: 2026-07-10
 description: "Anthropic multi-gigawatt clusters, Trainium ramp, best TCO per memory bandwidth, system-level roadmap, Bedrock and internal models"
 tags:

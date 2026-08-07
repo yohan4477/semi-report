@@ -5,7 +5,7 @@ author:
   - "[[STEEL TEAM]]"
   - "[[AFZAL AHMAD]]"
   - "[[ANDREW WAGNER]]"
-published: 2026-02-05
+published: 2026-06-14
 created: 2026-07-10
 description: "SMIC N+3 Node Deep Dive vs TSMC N6, TechInsights Private Equity Sale, SemiAnalysis Teardown Engineering & Evaluation Lab, HiSilicon Kirin 9030, Process Technology, Patterning, Cell Architecture"
 tags:

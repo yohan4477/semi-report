@@ -6,7 +6,7 @@ author:
   - "[[JEFF KOCH]]"
   - "[[GERALD WONG]]"
   - "[[ANDREW WAGNER]]"
-published: 2026-02-05
+published: 2025-10-29
 created: 2026-07-10
 description: "Substrate X-Ray Lithography, a New American Foundry, $10k Logic Wafers"
 tags:

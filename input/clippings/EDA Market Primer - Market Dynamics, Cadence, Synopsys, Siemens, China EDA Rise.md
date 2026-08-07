@@ -5,7 +5,7 @@ author:
   - "[[SRAVAN KUNDOJJALA]]"
   - "[[DYLAN PATEL]]"
   - "[[GERALD WONG]]"
-published: 2026-02-05
+published: 2026-05-21
 created: 2026-07-10
 description: "EDA Market size, Share, Business Models, Drivers, Changing Customer Base, Competitive Dynamics, IP, Hardware, CoT, Lock-In Economics, Disruptive Forces"
 tags:

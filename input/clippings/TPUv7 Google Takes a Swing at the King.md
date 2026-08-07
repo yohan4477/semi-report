@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[MYRON XIE]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-11-28
 created: 2026-07-10
 description: "Potential End of the CUDA Moat?, Anthropic’s 1GW+ TPU Purchase, The more (TPU) Meta/SSI/xAI/OAI/Anthro buy the more (GPU capex) you save, Next Generation TPUv8AX and TPUv8X versus Vera Rubin"
 tags:

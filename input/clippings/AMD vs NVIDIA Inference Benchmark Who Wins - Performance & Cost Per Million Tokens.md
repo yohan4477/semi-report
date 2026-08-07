@@ -6,7 +6,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[IVAN CHIAM]]"
-published: 2026-02-05
+published: 2025-05-23
 created: 2026-07-10
 description: "MI300X, MI325X, H100, H200, B200, MI355X, VLLM, SGLang, TRT-LLM, ROCm CI Lack of Coverage, Inflated AMD Rental Prices"
 tags:

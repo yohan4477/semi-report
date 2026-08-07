@@ -4,7 +4,7 @@ source: "https://newsletter.semianalysis.com/p/the-new-ai-networks-ultra-etherne
 author:
   - "[[TANJ BENNETT]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2025-06-11
 created: 2026-07-10
 description: "LibFabric, Packet Spraying, Rail Optimized, Congestion Control, ECN, ACK, Flow Control, PFC, UEC Challenges"
 tags:

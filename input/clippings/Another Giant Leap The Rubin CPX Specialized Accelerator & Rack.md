@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[DANIEL NISHBALL]]"
   - "[[KIMBO CHEN]]"
-published: 2026-02-05
+published: 2025-09-10
 created: 2026-07-10
 description: "New Prefill Specialized GPU, Rack Architecture, BOM, Disaggregated PD, Higher Perf per TCO, Lower TCO, GDDR7 & HBM Market Trends"
 tags:

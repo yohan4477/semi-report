@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[KIMBO CHEN]]"
   - "[[DANIEL NISHBALL]]"
-published: 2026-02-05
+published: 2025-04-23
 created: 2026-07-10
 description: "Rapid Improvements, Developers First Approach, Low AMD AI Software Engineer Pay, Python DSL, UALink Disaster, MI325x, MI355x, MI430X UL4, MI450X Architecture, IF64/IF128, Flexible IO, UALink, IFoE"
 tags:

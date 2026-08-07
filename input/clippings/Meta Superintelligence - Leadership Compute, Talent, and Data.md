@@ -5,7 +5,7 @@ author:
   - "[[DYLAN PATEL]]"
   - "[[JEREMIE ELIAHOU ONTIVEROS]]"
   - "[[WEI ZHOU]]"
-published: 2026-02-05
+published: 2025-07-11
 created: 2026-07-10
 description: "AI Datacenter Titanomachy, 'The Tent', AI Data and Talent Wars, Zuck Founder Mode, Behemoth 4 Post-Mortem, OBBB Tax Windfall, AI and Reality Labs"
 tags:

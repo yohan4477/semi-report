@@ -5,7 +5,7 @@ author:
   - "[[GERALD WONG]]"
   - "[[DYLAN PATEL]]"
   - "[[SRAVAN KUNDOJJALA]]"
-published: 2026-02-05
+published: 2026-05-12
 created: 2026-07-10
 description: "Laying the Groundwork of the Current Chip Design Paradigm"
 tags:

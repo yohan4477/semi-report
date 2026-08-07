@@ -5,7 +5,7 @@ author:
   - "[[KIMBO CHEN]]"
   - "[[CHEANG KANG WEN]]"
   - "[[DYLAN PATEL]]"
-published: 2026-02-05
+published: 2026-06-16
 created: 2026-07-10
 description: "RL Training Infrastructure, GRPO, PipelineRL, Async RL, Policy Staleness, RL Sandbox Infra, CPU Requirements, TCO Analysis, Thinking Machines Tinker"
 tags:

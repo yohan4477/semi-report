@@ -5,7 +5,7 @@ author:
   - "[[MYRON XIE]]"
   - "[[JORDAN NANOS]]"
   - "[[MAX KAN]]"
-published: 2026-02-05
+published: 2026-05-13
 created: 2026-07-10
 description: "OpenAI and AWS Partnerships, Tokenomics Explainer, Architecture Deep Dive, Datacenter Ramp, Technical Roadmap"
 tags:
