@@ -488,6 +488,30 @@
    "side": "맞는 쪽",
    "role": "받는 가속기 물량이 곧 서빙 능력. 칩·메모리·전력 제약을 그대로 받는다",
    "confidence": "확인"
+  },
+  "아리스타": {
+   "ticker": "ANET",
+   "market": "NYSE",
+   "listed": true,
+   "side": "파는 쪽",
+   "role": "AI 클러스터 네트워크 스위치. 메타가 자체 패브릭 대신 표준을 살 때 받는 쪽",
+   "confidence": "확인"
+  },
+  "Rivos": {
+   "ticker": null,
+   "market": "비상장(메타 인수)",
+   "listed": false,
+   "side": "파는 쪽",
+   "role": "RISC-V 칩 설계사. 메타가 25억 달러에 인수했고 남은 결과물은 2028년 테이프아웃 목표 칩 하나",
+   "confidence": "확인"
+  },
+  "딥마인드": {
+   "ticker": null,
+   "market": "비상장(구글 산하)",
+   "listed": false,
+   "side": "맞는 쪽",
+   "role": "구글 내부에서 TPU 배분을 두고 클라우드 부문과 경쟁하는 모델 조직",
+   "confidence": "확인"
   }
  }
 }
