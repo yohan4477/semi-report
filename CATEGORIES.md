@@ -44,10 +44,10 @@
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 21 |
+| ai-infra/compute | 22 |
 | ai-infra/memory | 9 |
-| ai-infra/networking | 9 |
-| ai-infra/business | 9 |
+| ai-infra/networking | 10 |
+| ai-infra/business | 11 |
 | ai-infra/power | 6 |
 | ai-infra/cooling | 2 |
 | ai-infra/construction | 1 |
@@ -73,6 +73,8 @@
 <!-- 2026-07-16: [260205] InferenceX v2(엔비디아 블랙웰 vs AMD vs 호퍼, 구 InferenceMAX 후속) 신규 변환 완료 — ai-infra/compute 18→19. 거의 1,000개 GPU 대상 GB300/B300 Blackwell Ultra 최초 벤치마크, AMD 조합성(Composability) 문제 심층분석, MTP·Wide EP·분리형 서빙 원리, 세대별 TCO까지 전체 15개 섹션 완료 -->
 <!-- 2026-07-23: [260723] 베라 루빈 NVL72 vs GB200 NVL72(추론 TCO·아키텍처 분석) 신규 변환 완료 — ai-infra/compute 19→20, ai-infra/networking 7→8. Rubin 칩 마이크로아키텍처(SMEM·TMEM 확장, 2:4 스파시티, HBM4 2.8배 대역폭), LUT B 3비트 룩업테이블 가중치 압축(Kimi K3 사례), Feynman(SM_140) 미리보기, CoreWeave 벤치마크 방법론 비판, Rubin vs GB200/GB300 성능/MW·성능/TCO 파레토 분석, MI355X 비교, 소프트웨어 생태계, 전력예산·BOM까지 전체 10개 섹션 완료 -->
 <!-- 2026-07-30: `ai-infra/construction` 신규 카테고리 신설 — [260729] LEGO 데이터센터(모듈러 건설) 문서가 계기. 기존 ai-infra/power·cooling은 완성된 설비 스펙을 다루는데, 이 문서는 부지·셸·시스템 3층 구조와 모듈러·프리팹 조립 공정, 공사 인력 병목, EPC·통합업체·OEM 벤더 생태계라는 "어떻게 짓는가" 축이 중심이라 기존 카테고리 어디에도 맞지 않아 신설. 문서 후반부(벤더별 승자·패자, 백로그·마진·콘텐츠당 MW 경제성)는 ai-infra/business와도 겹쳐 이중 태그 부여 — ai-infra/construction 0→1, ai-infra/business 8→9 -->
+<!-- 2026-08-07: [260722] 메타 인프라 팀에 필요한 문화 리셋 신규 변환 완료 — ai-infra/business 9→10, ai-infra/compute 21→22, ai-infra/networking 9→10. Rivos 인수(25억 달러 헛발질)·Grand Teton 서버(쓰지 못한 스위치 트레이)·Ariel 랙(GB200 반쪽 구성, TCO 14%↑)·AMD MI450X 메타 전용 축소판·DSF↔NSF 네트워크 과잉설계 흥망까지 5개 실패 사례로 메타 인프라 조직의 정치화·단기 성과주의를 진단, 전체 7개 섹션 완료 -->
+<!-- 2026-08-07: [260807] 제미나이는 끝났어도 GCP는 잘나간다(딥마인드 리더십 붕괴·구글 클라우드 반사이익) 신규 변환 완료 — ai-infra/business 10→11. 딥마인드 리더십 전면 개편(제프 딘·산자이 게마왓·쿼크 레·오리올 비니알스 퇴사, 디스커버리 루프 창업), 제미나이 3.5 프로 조용한 취소·모델 경쟁력 하락, GCP의 TPU 완제품 시스템 판매(총액 기준 GW당 ~350억 달러)發 매출 금융화·2027년 EPS 기여 전망, IBM·인텔과의 역사적 유사 사례까지 전체 4개 섹션 완료 -->
 
 
 
