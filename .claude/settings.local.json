@@ -141,7 +141,32 @@
       "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py insights/check_prose.py 2>&1 | Select-String -Pattern \"WARN\"; py -c \"import io;t=io.open\\('insights/synth/stack-칩-열-랙-데이터센터-01.md',encoding='utf-8'\\).read\\(\\);print\\('레고 무관 보존:', 'A-260729-25' in t, '| Kimi 절:', 'A-260803-18' in t, '| 길이', len\\(t\\)\\)\")",
       "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py insights/check_prose.py 2>&1 | Select-String -Pattern \"^요약\"; py insights/check_atoms.py 2>&1 | Select-String -Pattern \"C11|^요약\")",
       "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py insights/check_prose.py 2>&1 | Select-String -Pattern \"WARN\" | ForEach-Object { $_.ToString\\(\\).Substring\\(0,[Math]::Min\\(130,$_.ToString\\(\\).Length\\)\\) })",
-      "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py insights/check_prose.py 2>&1 | Select-String \"^요약\"; py insights/gen_atomview.py 2>&1 | Select-Object -Last 1; py insights/gen_actormap.py 2>&1 | Select-Object -Last 1)"
+      "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py insights/check_prose.py 2>&1 | Select-String \"^요약\"; py insights/gen_atomview.py 2>&1 | Select-Object -Last 1; py insights/gen_actormap.py 2>&1 | Select-Object -Last 1)",
+      "Bash(PYTHONIOENCODING=utf-8 python:*)",
+      "Bash(PYTHONIOENCODING=utf-8 timeout:*)",
+      "Bash(python:*)",
+      "Bash(py:*)",
+      "PowerShell(cd C:\\\\Users\\\\y\\\\semianalysis; $env:PYTHONIOENCODING='utf-8'; py:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git ls-files:*)",
+      "Bash(sed -n:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(curl -s:*)",
+      "Bash(curl -sL:*)",
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "WebFetch(domain:contents.premium.naver.com)",
+      "Skill(artifact-diagramming)",
+      "Skill(dataviz)"
     ]
   }
 }
