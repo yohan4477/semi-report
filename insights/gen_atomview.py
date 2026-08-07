@@ -230,6 +230,8 @@ def build():
         for k, lab, _ in THEMES if tcount.get(k))
 
     ins_html = []
+    tseen, tmore = 0, False
+    FOLD = 3
     prev_view = None
     prev_theme = None
     for ins in insights:
@@ -299,7 +301,8 @@ def build():
             ins_html.append(
                 # 뷰마다 제 구역을 갖는다 — 고정된 레일은 그 구역이 끝나면 같이 물러난다.
                 # 한 컨테이너에 두 레일을 두면 둘 다 화면 위에 겹친다
-                ('</div></section>' if ins_html else '')
+                ((('</div></details></section>' if tmore else '</div></section>')
+                  if ins_html else ''))
                 + '<section class="viewsec">'
                 '<p class="viewsep">%s</p>'
                 '<details class="rail"><summary>'
@@ -315,11 +318,17 @@ def build():
         if ins['theme'] != prev_theme:
             lab, lead = next((l, d) for k, l, d in THEMES if k == ins['theme'])
             ins_html.append(
-                ('</div>' if prev_theme is not None else '')
+                (('</div>' if not tmore else '</div></details>') if prev_theme is not None else '')
                 + '<div class="thead" id="th-%s"><h3>%s<span class="tn">%d건</span></h3>'
                   '<p>%s</p></div><div class="tgrid">'
                 % (ins['theme'], esc(lab), tcount[ins['theme']], esc(lead)))
-            prev_theme = ins['theme']
+            prev_theme, tseen, tmore = ins['theme'], 0, False
+        # 처음 세 건만 깔고 나머지는 「N건 더」 뒤로 — 훑는 길이를 화면 하나로 묶는다
+        tseen += 1
+        if tseen == FOLD + 1 and tcount[ins['theme']] > FOLD:
+            ins_html.append('</div><details class="tmore"><summary>%s 나머지 %d건</summary><div class="tgrid">'
+                            % (esc(lab), tcount[ins['theme']] - FOLD))
+            tmore = True
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><h2>%s</h2><p class="sub">%s</p>%s'
@@ -337,7 +346,7 @@ def build():
                md_inline(ins['claim']),
                ''.join(secs), vh, ev))
     if ins_html:
-        ins_html.append('</div></section>')
+        ins_html.append('</div></details></section>' if tmore else '</div></section>')
         ins_html.insert(0, nav_html)
 
     # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
@@ -463,6 +472,17 @@ TMPL = r'''<meta charset="utf-8">
   .thead .tn{font-size:var(--t-lbl);font-weight:800;color:var(--faint);font-variant-numeric:tabular-nums}
   .thead p{font-size:var(--t-body);color:var(--sub);margin:5px 0 0;max-width:62ch}
   .tgrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px;align-items:start}
+  /* 한 묶음에서 처음 세 건만 깔고 나머지는 뒤로 — 목록이 끝없이 이어지면 고르는 일이 못 된다 */
+  .tmore{margin-top:12px}
+  .tmore>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:center;
+                 gap:7px;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;
+                 background:var(--card);color:var(--sub);font-size:var(--t-meta);font-weight:750;
+                 -webkit-tap-highlight-color:transparent;transition:color .15s,border-color .15s}
+  .tmore>summary::-webkit-details-marker{display:none}
+  .tmore>summary::after{content:'▾';font-size:10px;color:var(--faint)}
+  .tmore[open]>summary{color:var(--accent);border-color:var(--accent)}
+  .tmore[open]>summary::after{content:'▴'}
+  .tmore>summary:hover{color:var(--accent);border-color:var(--accent)}
   .tgrid>.ins{margin-top:0}
   @media (min-width:820px){
     .tgrid{grid-template-columns:1fr 1fr}
@@ -473,11 +493,20 @@ TMPL = r'''<meta charset="utf-8">
   /* 자르는 상자와 여백을 주는 상자를 나눈다 — 한 상자에 겸하면 잘린 셋째 줄이 아래 여백으로 비친다 */
   .peek{font-size:var(--t-meta);color:var(--sub);margin:9px 0 0;padding:9px 11px;background:var(--sunk);
         border-radius:8px;overflow:hidden}
-  .peek .pk{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .peek .pk{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .peek i{font-style:normal;font-size:var(--t-lbl);font-weight:800;color:var(--accent);letter-spacing:.06em;margin-right:7px}
   .ins[open] .peek{display:none}
   .viewsep{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;
             color:var(--accent);margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+  /* 근거 지도는 읽는 화면이 아니라 검토 화면이다 — 기본은 접어 두고 필요할 때 편다 */
+  .mapsec{margin:34px 0 0;border-top:1px solid var(--line);padding-top:16px}
+  .mapsec>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 10px;
+                  padding:6px 0;min-height:40px;-webkit-tap-highlight-color:transparent}
+  .mapsec>summary::-webkit-details-marker{display:none}
+  .mapsec>summary .mh{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em}
+  .mapsec>summary .mn{font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums}
+  .mapsec>summary::after{content:'▾';margin-left:auto;color:var(--faint);font-size:11px}
+  .mapsec[open]>summary::after{content:'▴'}
   .hintbox{margin:20px 0 4px;font-size:var(--t-meta);color:var(--faint)}
   .hintbox>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;
                    font-weight:750;color:var(--sub);padding:6px 0;min-height:32px}
@@ -570,7 +599,9 @@ TMPL = r'''<meta charset="utf-8">
   /* 두 칸으로 깔리면 카드 폭이 좁아진다 — 개수는 제 줄을 갖는다. 카드마다 줄이 다르게 접히면
      같은 줄에 있어야 할 것들이 어긋나 보인다 */
   @media (min-width:820px){.tgrid .coord .cnt{flex:1 0 100%;margin-left:0}}
-  .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0;line-height:1.5}
+  .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0;line-height:1.5;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .ins[open] .sub{-webkit-line-clamp:unset;overflow:visible}
   .body h4{font-size:var(--t-meta);font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
   .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:var(--pad);margin-bottom:10px;box-shadow:var(--shadow)}
   .gh{font-size:var(--t-lead);font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
@@ -651,7 +682,7 @@ TMPL = r'''<meta charset="utf-8">
 <p>글은 <b>주제 6묶음</b>으로 나뉘어 있습니다. 접힌 카드에도 「그래서 무엇이 달라지나」 첫 줄이 붙어 있어 열지 않고 고를 수 있고, 카드를 누르면 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p></details>
 __INSIGHTS__
 
-<h3 class="sec">근거 지도 — 어디에 근거가 있고 어디가 비었나</h3>
+<details class="mapsec"><summary><span class="mh">근거 지도 — 어디에 근거가 있고 어디가 비었나</span><span class="mn">원자 __NA__개 · 검토용</span></summary>
 <p class="axnote">원자는 두 축의 좌표에 매달립니다. 아래는 인사이트를 읽는 화면이 아니라 <b>근거의 분포를 보는 화면</b>입니다 —
    어느 칸이 두텁고 어느 칸이 비었는지, 그리고 각 원자가 제 칸에 제대로 들어갔는지를 봅니다.</p>
 
@@ -674,6 +705,8 @@ __STRUCT__
   <p class="hint">스택 노드 또는 프로세스 단계를 누르면 그 칸의 원자와, 그 칸을 근거로 쓴 인사이트가 나옵니다.
      원자가 0인 칸은 감추지 않았습니다 — 사슬이 어디서 끊겼는지가 그 자체로 정보입니다.</p>
 </div>
+
+</details>
 
 <h3 class="sec">검증 대장 — 무엇이 확인되면 판단이 바뀌나</h3>
 <p class="axnote">__VNOTE__</p>
