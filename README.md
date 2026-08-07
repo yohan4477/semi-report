@@ -25,11 +25,12 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 ### 제3자 해설 (SemiAnalysis 코퍼스 외)
 - 🎧 [언더스탠딩 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 언더스탠딩 유튜브 한국어 해설(권효재·이선엽 등) 자막요약. SemiAnalysis 코퍼스와 별개이며 확신도 산정 대상 아님
+- 🎓 [미국주식 사관학교 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 네이버 프리미엄 유료 채널(필자 카레라) 텍스트 요약. 개별 종목이 언급되지만 투자 추천이 아니며 가격·밸류에이션 검증도 하지 않음
 
 ## 폴더 구조
 
 - `content/newsletter/` — SemiAnalysis 뉴스레터 한글 변환본 (카테고리별 하위 폴더: `ai_infra/`, `ai_models/`, `robotics/`, `semiconductors/`)
-- `content/understanding/` — 언더스탠딩 유튜브 제3자 해설 자막요약 (출연자별: `권효재 대표/`, `이선엽 대표/`, `류상철 국장/`)
+- `content/understanding/` — 제3자 해설 요약 (출연자·채널별: `권효재 대표/`, `이선엽 대표/`, `류상철 국장/`, `언더스탠딩 백브리핑/`, `미국주식 사관학교/`). 유료 구독 원문 전문은 저장소에 두지 않고 요약만 둔다
 - `raw/linkedin/` — LinkedIn 게시물 원본 덤프
 - `통합 리포트/` — 카테고리별·기업별 익스포저 종합 리포트
 - `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`

@@ -1,0 +1,328 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미국주식 사관학교 인사이트</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    line-height:1.28; margin:0 0 10px; text-wrap:balance; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 통합 인사이트 ── */
+  #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
+  .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; padding:18px 22px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ins-card > summary { list-style:none; cursor:pointer; display:block; position:relative; padding-right:26px; }
+  .ins-card > summary::-webkit-details-marker { display:none; }
+  .ins-card > summary::after { content:"⌄"; position:absolute; right:2px; top:-4px; font-size:20px; line-height:1; color:var(--ink-3); transition:transform .2s; }
+  .ins-card[open] > summary::after { transform:rotate(180deg); }
+  .ins-card[open] > summary { margin-bottom:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .ins-card > summary .ins-sub { margin-bottom:0; }
+  .ins-card > summary:hover h3 { color:var(--accent); }
+  .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
+  .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
+  .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
+  .ins-body h4 { font-size:12.5px; font-weight:800; color:var(--accent-ink); margin:14px 0 6px;
+    text-transform:uppercase; letter-spacing:.04em; }
+  .ins-body p { font-size:14.5px; color:var(--ink); line-height:1.6; margin:0 0 8px; }
+  .ins-body ul { margin:0 0 8px; padding-left:18px; }
+  .ins-body li { font-size:13.5px; color:var(--ink-2); line-height:1.58; margin-bottom:4px; }
+  .ins-src-label { font-size:10.5px; font-weight:800; color:var(--ink-3); margin:14px 0 6px; }
+  .ins-srcs { display:flex; flex-wrap:wrap; gap:6px; }
+  .ins-srcs a { font-size:11.5px; padding:5px 10px; border-radius:999px; background:var(--sunk);
+    border:1px solid var(--line); color:var(--ink-2); text-decoration:none; }
+  .ins-srcs a:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    header { padding:34px 0 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 17px 17px; border-radius:10px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--faint);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">카레라 — 제3자 해설 아카이브</p>
+    <h1>미국주식 사관학교 인사이트</h1>
+    <p class="lede">네이버 프리미엄 유료 채널 「미국주식 사관학교」(필자 카레라)의 텍스트를 요약해 정리합니다.
+       원문 창작 없이 필자의 논지와 인용 수치만 재구성했습니다.</p>
+    <div class="meta-row">
+      <span>정리일 <b>2026-08-08</b></span>
+      <span>수록 <b>4건</b>(텍스트 4)</span>
+      <span>채널 <b>미국주식 사관학교</b></span>
+      <span>필자 <b>카레라</b></span>
+    </div>
+    <div class="noncorpus">
+      <span class="nc-tag">비-코퍼스 · 제3자 소스 · 종목 언급 포함</span>
+      <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
+      개별 종목이 언급되지만 <b>투자 추천이 아니고</b> 가격·밸류에이션 검증도 하지 않았습니다 — 필자 시각의 기록으로만 보세요.
+      유료 구독 원문의 요약이며 전문 재수록이 아닙니다.
+    </div>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트(권효재·이선엽·백브리핑) →</a>
+  </header>
+
+  <nav class="sec-nav"><a href="#sec-risk">시장 구조 · 리스크 <b>1</b></a><a href="#sec-chipwar">반도체 · 메모리 경쟁 <b>1</b></a><a href="#sec-modelcost">AI 모델 경제 · 소프트웨어 <b>1</b></a><a href="#sec-optics">광통신 · 포토닉스 <b>1</b></a></nav>
+
+  <section id="sec-risk"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">시장 구조 · 리스크</h2></div><p class="sec-sub">돈이 소수 회사 사이에서만 도는 구조와, 그 고리 바깥에 서 있는 기업들 — 카레라</p><div class="ucard"><span class="uc-topic market">시장 구조 · 리스크</span><h2 id="card-순환금융-AI-관련주-최대-리스크와-그-고리-밖에-있는-기업들">순환금융 — AI 관련주 최대 리스크와 그 고리 밖에 있는 기업들</h2><div class="uc-meta"><span>카레라 <b>미국주식 사관학교</b></span><span>발행 2026-08-07</span><span>네이버 프리미엄(유료 텍스트)</span><span>미국주식 사관학교</span></div><p class="uc-oneliner">공급자가 고객에게 돈을 빌려주고 그 돈으로 자기 제품을 사게 하는 구조가 AI 업계에서 8,000억 달러를 넘겼는데, 필자는 이걸 닷컴 통신장비 버블과 구분하면서도 "같은 돈이 한 바퀴 돌 때마다 여러 장부에 중복 계상된다"는 점을 핵심 위험으로 짚고, 메모리·장비·소비자 기기 쪽은 그 고리 바깥이라고 정리한다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>정의.</b> 순환금융 = 공급자가 고객에게 돈을 빌려주고, 고객은 그 돈으로 공급자 제품을 사는 방식. 매출은 잡히지만 그 돈은 원래 공급자 주머니에서 나온 것이다.</li><li><b>실제 사례.</b> 엔비디아가 오픈AI 데이터센터 임대료에 2,500억 달러 지급 보증, GPU 구매용 3,500억 달러 파이낸싱 검토. 구글은 앤트로픽 데이터센터 5곳 임대료를 보증해 사실상 350억 달러 대출 효과.</li><li>오픈AI는 마이크로소프트·AMD 등과 1조 달러에 육박하는 계약을 맺으며 AMD 최대 주주 중 하나가 되기로 했다 — <b>같은 회사가 투자자이자 공급자이자 고객</b>이 된다.</li><li><b>가장 큰 문제는 중복 집계.</b> 같은 돈이 한 바퀴 돌 때마다 여러 장부에 매출·수주 잔고로 겹쳐 잡혀 실제 최종 수요보다 부풀려 보인다.</li><li><b>선례는 닷컴 통신장비 버블.</b> 루슨트 81억·노텔 31억·시스코 24억 달러 고객 대출 → 장비 품귀 속 과주문 → 2001년 수요 과대평가가 드러나며 붕괴. 더 나가면 회계부정(라운드트리핑).</li><li><b>다만 두 가지가 다르다.</b> ① 통신 버블은 고객이 생기기 전 투기적 설비 선행, 지금은 추론 수요가 이미 있는 와중의 점유율 장악이다. ② 엔비디아는 잉여현금흐름 970억 달러로, 빚이 아니라 번 현금으로 한다.</li><li><b>양쪽의 계산.</b> 대주는 쪽은 매출 뻥튀기가 아니라 시장 지배력 고착이 목적이고, 받는 쪽은 적자·비상장이라 일반 시장에서 못 빌리는 돈을 보증으로 끌어와 전력·연산 계약에 공격적으로 입찰한다.</li><li><b>BIS가 지목한 핵심은 "외부 기준점이 없다".</b> 서로 돈을 돌리니 지분·부채·공급계약이 따로 나오지만 합치면 하나이고, 가치를 매길 바깥의 객관적 신호가 없어 자기들끼리 정한 가격이 유일한 기준이 된다.</li><li><b>메모리는 고리 안이 아니다.</b> 지분 맞투자·벤더 파이낸싱 당사자가 아니라 현금 받고 파는 쪽이다(SK하이닉스 2026년 물량 완판, 상당 부분 엔비디아향). AI 붐이 꺾이면 HBM 수요도 줄지만 그건 <b>순환금융이 터져서가 아니라 실수요가 식어서</b>다.</li></ul><p class="uc-label">필자가 꼽은 「고리 밖」 기업</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>구분</th><th>기업</th><th>이유</th></tr></thead><tbody><tr><td>가장 멀다</td><td>애플(AAPL) · 퀄컴(QCOM)</td><td>설비 투자 경쟁·GPU 벤더 파이낸싱에 거의 안 끼고, 자체 칩을 쓰며, 매출이 B2B가 아닌 소비자 기기 중심</td></tr><tr><td>중립 지대</td><td>TSMC</td><td>냉장고 부품 납품업체처럼 매장과 손님 사이 사금융과 무관하게 값만 받고 나간다</td></tr><tr><td>두 단계 떨어짐</td><td>브로드컴 · 마벨 · AMAT · 램리서치</td><td>매출이 클라우드 설비 투자가 아니라 <b>칩 제조사의 설비 투자</b>에서 나오고, 증설은 스마트폰·자동차·일반 서버까지 포함한 전체 수요를 보고 몇 년 단위로 움직인다</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">8,000억 달러 초과</div><div class="s-label">2026년 분석 기준 얽힌 거래 총 규모</div></div><div class="stat"><div class="s-val">2,500억 / 3,500억 달러</div><div class="s-label">엔비디아의 오픈AI 임대료 보증 / GPU 파이낸싱 검토액</div></div><div class="stat"><div class="s-val">350억 달러</div><div class="s-label">구글 보증으로 앤트로픽이 얻은 사실상의 대출</div></div><div class="stat"><div class="s-val">1조 달러 육박</div><div class="s-label">오픈AI가 마이크로소프트·AMD 등과 맺은 계약 규모</div></div><div class="stat"><div class="s-val">970억 달러</div><div class="s-label">엔비디아 직전 회계연도 잉여현금흐름</div></div><div class="stat"><div class="s-val">81 / 31 / 24억 달러</div><div class="s-label">닷컴기 루슨트 / 노텔 / 시스코 고객 대출</div></div></div><p class="uc-quote">"냉장고 매장이 손님에게 돈을 빌려줘 자기 냉장고를 판다" — 순환금융 한 문장 정의. "이 구조엔 외부 기준점이 없다" — BIS 우려의 핵심.</p><div class="side-note">필자 스스로 "명확한 수익모델 없이 배수가 지나치게 부풀려진 AI 관련주, 너무 뒷단에 있는 관련주는 대단히 조심하라"고 단서를 답니다. 3,500억 달러 GPU 파이낸싱은 확정이 아니라 검토 중인 방안으로 서술됩니다. 종목 추천이 아니며 가격·밸류에이션 검증도 하지 않았습니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://contents.premium.naver.com/usa/nasdaq/contents/260807153141672vt" target="_blank" rel="noopener">🔗 네이버 원본(유료)</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90/%5B260807%5D%20%EC%88%9C%ED%99%98%EA%B8%88%EC%9C%B5%20-%20AI%20%EA%B4%80%EB%A0%A8%EC%A3%BC%20%EC%B5%9C%EB%8C%80%20%EB%A6%AC%EC%8A%A4%ED%81%AC%EC%99%80%20%EA%B3%A0%EB%A6%AC%20%EB%B0%96%20%EA%B8%B0%EC%97%85%EB%93%A4.md" target="_blank" rel="noopener">📄 요약 전문</a></div></div></section><section id="sec-chipwar"><div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">반도체 · 메모리 경쟁</h2></div><p class="sec-sub">엔비디아와 AMD가 메모리 용량으로 벌이는 싸움, 그리고 그 끝에 남는 것 — 카레라</p><div class="ucard"><span class="uc-topic market">반도체 · 종목 해설</span><h2 id="card-엔비디아-vs-AMD-메모리-치킨게임-누가-이겨도-HBM이-남는다">엔비디아 vs AMD 메모리 치킨게임 — 누가 이겨도 HBM이 남는다</h2><div class="uc-meta"><span>카레라 <b>미국주식 사관학교</b></span><span>발행 2026-08-03</span><span>네이버 프리미엄(유료 텍스트)</span><span>미국주식 사관학교</span></div><p class="uc-oneliner">빅테크가 설비 투자 부담에 흔들리는 동안 엔비디아·AMD는 그 돈을 받는 쪽이라 조용한데, 둘의 싸움이 "칩당 메모리를 누가 더 때려박느냐"로 좁혀지면서 승자가 누구든 HBM 물량은 늘어난다는 게 필자가 메모리주를 아직 긍정적으로 보는 근거다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>설비 투자 문제는 액수가 아니라 속도다.</b> 지출이 매출보다 훨씬 빨리 늘고, 어떤 회사는 버는 돈의 절반 가까이를 쏟아붓는다 — 기술 회사가 아니라 발전소·중공업에 가까운 비율이다.</li><li><b>쓰는 쪽과 받는 쪽은 정반대.</b> 메타는 매출이 28% 늘고도 지출이 더 빨리 불어 주가가 급락했고, 마이크로소프트·아마존은 지출에 매출이 따라온다는 걸 보여 올랐다. 그 고민이 엔비디아에겐 매출이 된다.</li><li><b>엔비디아는 공장을 안 짓는다.</b> 분기 설비 투자 17.6억 달러(연 약 70억), 연구개발비 190~200억 달러 — 대부분 인건비다. 영업이익률 70%대에 만들면 곧바로 팔려 재고 위험도 없다.</li><li><b>급소는 추론이다.</b> 맞춤형 칩의 위협, 소프트웨어 잠금이 풀리는 것, 최대 고객이 경쟁자가 되는 것 — 셋 다 추론 한 곳에서 만난다. 매출 약 40%가 구글·아마존·마이크로소프트·메타에서 나오는데 이들이 자기 칩을 만든다.</li><li>전체 AI 칩 90%를 쥐고도 <b>추론만 떼면 2028년까지 20~30%로 내려갈 수 있다</b>는 시각이 있다(필자가 "논란의 여지가 있다"고 명시).</li><li><b>AMD의 유일한 무기는 메모리 용량.</b> 추론의 진짜 병목은 계산 속도가 아니라 메모리다. MI350X 288GB vs B200 192GB — 4천억 매개변수 모델을 AMD는 칩 3개, 엔비디아는 5개로 돌린다.</li><li><b>다만 그 가성비는 손볼 기술력이 있는 팀에게만 실현된다.</b> 대규모 학습에서 AMD는 이론 성능의 30% 미만, 엔비디아는 40%가량을 뽑고, 다칩 협업 소프트웨어·칩간 네트워크는 상대가 안 된다 — 빅테크엔 이득, 중소 개발사엔 그림의 떡.</li><li><b>왜 시대가 바뀌었나.</b> 학습기에 고객이 산 건 칩이 아니라 "실패하지 않음"이었다. 성숙기의 승부는 토큰당 이윤이고, 추론은 작업끼리 독립적이라 수천 칩을 촘촘히 엮을 필요가 줄어 시스템 통합·초고속 연결의 값이 덜 발휘된다.</li><li><b>엔비디아도 메모리로 반격한다.</b> 최신 칩은 엔비디아 288GB vs AMD 432GB로 아직 AMD 우위인데, 2027년 하반기 Rubin Ultra에서 GPU당 1TB를 예고했다. AMD는 MI500 준비.</li><li><b>결론.</b> 이 용량을 구현할 방법이 HBM뿐인 이상, 칩 전쟁의 승자가 누구든 HBM 물량은 늘어난다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">17.6억 달러 / 연 약 70억</div><div class="s-label">엔비디아 분기·연간 설비 투자</div></div><div class="stat"><div class="s-val">190~200억 달러</div><div class="s-label">엔비디아 연간 연구개발비(대부분 인건비)</div></div><div class="stat"><div class="s-val">약 40%</div><div class="s-label">엔비디아 매출 중 구글·아마존·MS·메타 비중</div></div><div class="stat"><div class="s-val">90% → 20~30%</div><div class="s-label">전체 AI 칩 점유율 vs 추론만 떼어본 2028년 전망(일부 시각)</div></div><div class="stat"><div class="s-val">288GB vs 192GB</div><div class="s-label">MI350X vs B200 탑재 메모리</div></div><div class="stat"><div class="s-val">3개 vs 5개</div><div class="s-label">4천억 매개변수 모델 구동에 필요한 칩 수(AMD vs 엔비디아)</div></div><div class="stat"><div class="s-val">30~40%</div><div class="s-label">추론 작업에서 AMD 채택 시 총소유비용 절감(여러 분석 종합)</div></div><div class="stat"><div class="s-val">432GB → 1TB</div><div class="s-label">MI400 탑재량 vs 2027년 하반기 Rubin Ultra 계획</div></div></div><p class="uc-quote">"최고 매출 파괴자" — 젠슨 황이 스스로를 부르는 말, 신제품마다 자기 작년 제품을 구식으로 만든다는 뜻. "로터스 같은 차" — 고성능이지만 매니악하고 수리가 어려워 정비 역량이 있는 쪽에만 값어치가 실현되는 AMD.</p><div class="side-note">추론 점유율 20~30% 전망은 필자가 논란의 여지가 있다고 밝힌 일부 시각이고, AMD 30~40% 절감은 단일 출처가 아니라 "여러 분석 종합"입니다. 종목 추천이 아니며 가격·밸류에이션 검증도 하지 않았습니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://contents.premium.naver.com/usa/nasdaq/contents/260803135207168yg" target="_blank" rel="noopener">🔗 네이버 원본(유료)</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90/%5B260803%5D%20%EC%97%94%EB%B9%84%EB%94%94%EC%95%84%20vs%20AMD%20%EB%A9%94%EB%AA%A8%EB%A6%AC%20%EC%B9%98%ED%82%A8%EA%B2%8C%EC%9E%84%20-%20%EB%88%84%EA%B0%80%20%EC%9D%B4%EA%B2%A8%EB%8F%84%20HBM%EC%9D%B4%20%EB%82%A8%EB%8A%94%EB%8B%A4.md" target="_blank" rel="noopener">📄 요약 전문</a></div></div></section><section id="sec-modelcost"><div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">AI 모델 경제 · 소프트웨어</h2></div><p class="sec-sub">토큰 단가가 아니라 「일 하나를 끝내는 값」으로 지표가 옮겨가면서 생기는 소프트웨어 쪽 수혜 — 카레라</p><div class="ucard"><span class="uc-topic market">AI 경제 · 종목 해설</span><h2 id="card-성공한-작업당-비용이-새-지표가-된다-모델-라우팅-수혜주-3종">성공한 작업당 비용이 새 지표가 된다 — 모델 라우팅 수혜주 3종</h2><div class="uc-meta"><span>카레라 <b>미국주식 사관학교</b></span><span>발행 2026-07-31</span><span>네이버 프리미엄(유료 텍스트)</span><span>미국주식 사관학교</span></div><p class="uc-oneliner">토큰 단가는 3년 만에 1,000분의 1로 떨어졌는데 "일 하나를 제대로 끝내는 값"은 그만큼 안 떨어졌다 — 그래서 어떤 AI를 만드느냐보다 싸진 AI를 골라 쓰는 장치(모델 라우팅)를 쥔 회사가 유리해지고, 필자는 클라우드플레어·스노우플레이크·데이터독을 그 자리로 꼽는다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>성능 지표가 칩에서 작업으로 옮겨간다.</b> AI 성능은 실리콘·아키텍처·소프트웨어·데이터 네 군데서 나오고 각자 다른 속도로 움직인다 — 카탈로그 스펙으로는 비교가 안 된다.</li><li>H100·H200보다 못한 GPU를 쓴 중국 AI가 비슷한 성능을 내는 게 그 증거다.</li><li><b>업계가 그 대신 쓰는 말.</b> OpenAI는 "성공한 작업당 비용(Cost per Successful Task)", 엔비디아는 "달러당 지능(Intelligence per Dollar)".</li><li><b>토큰이 싸다고 AI가 싼 게 아니다.</b> 싼 모델에 세 번 다시 시키고 사람이 붙어 고치면, 한 번에 끝낸 비싼 모델이 총비용에서 더 싸다.</li><li><b>실제로 역전이 나온다.</b> Claude Sonnet 5는 토큰 단가가 Opus 4.8보다 40%가량 싼데, 벤치마크 한 세트를 끝까지 돌려보니 작업당 2.29달러로 Opus 4.8의 1.99달러보다 비쌌다.</li><li>토큰 효율이 좋아진 만큼 <b>더 크고 더 길게 생각시키는 쪽으로 수요가 옮겨가 상쇄</b>해버린다.</li><li><b>그래서 갈아끼울 수 있느냐가 갈린다.</b> 최상위 모델 하나에 묶인 회사는 계속 최상위 가격을 낸다. 모델을 바꿔 낄 수 있는 회사는 가격 인하를 즉시 흡수한다.</li><li>각 회사가 실제로 어떻게 라우팅하는지는 <b>최고 기밀이라 알 수 없다</b> — 그래서 필자는 라우팅 자체를 파는 쪽을 본다.</li></ul><p class="uc-label">필자가 꼽은 3종과 각자의 자리</p><div class="tbl-wrap"><table class="uc-tbl tick"><thead><tr><th>회사</th><th>티커</th><th>하는 일</th><th>비유</th></tr></thead><tbody><tr><td>클라우드플레어</td><td>NET</td><td>AI Gateway — 여러 모델·공급자를 한 관문으로. 2026년 도입된 Dynamic Routing이 요청 조건·사용자 등급·예산 한도로 모델을 고르고, 오류 나면 다른 모델로 넘김</td><td>교통정리</td></tr><tr><td>스노우플레이크</td><td>SNOW</td><td>Cortex AI·Cortex AI Function Studio, AISQL의 adaptive model cascade — 싼 모델로 먼저 처리하고 확신이 부족할 때만 강한 모델로 올림</td><td>스스로 빠른 길 찾는 택시기사</td></tr><tr><td>데이터독</td><td>DDOG</td><td>Agent Observability — 모델별 호출 수·지연·오류·토큰 소비·추정 비용 추적. 라우팅이 되려면 먼저 측정이 돼야 한다</td><td>혼잡 통행료 걷는 쪽</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">30 / 60달러</div><div class="s-label">2023년 3월 GPT-4 등장 시 100만 토큰 입력/출력 단가</div></div><div class="stat"><div class="s-val">0.5달러 미만</div><div class="s-label">3년 뒤 같은 GPT-4급 성능의 100만 토큰 단가</div></div><div class="stat"><div class="s-val">약 95% / 약 1,000분의 1</div><div class="s-label">2년 / 3년 기준 토큰 단가 하락폭</div></div><div class="stat"><div class="s-val">2.29 vs 1.99달러</div><div class="s-label">같은 벤치마크 세트의 작업당 실제 비용(Sonnet 5 vs Opus 4.8) — 역전</div></div><div class="stat"><div class="s-val">40%</div><div class="s-label">Sonnet 5가 Opus 4.8보다 싼 토큰 단가</div></div><div class="stat"><div class="s-val">90~95% 품질 · 2~6배 속도</div><div class="s-label">adaptive model cascade 관련 연구가 제시한 결과</div></div></div><p class="uc-quote">"교통정리 → 택시기사 → 통행료" — 라우팅 밸류체인에서 세 회사가 서로 다른 자리에 선다는 정리. "돈 좀 더 내도 되니까 제발 한 번에 제대로 했으면" — 성공한 작업당 비용을 한 문장으로 옮긴 것.</p><div class="side-note">필자 스스로 단 단서: 클라우드플레어 매출에서 AI Gateway 비중은 공개되지 않아 신고가인 현 주가에 얼마나 반영됐는지 모른다고 밝히고, 데이터독은 모델 라우팅의 직접 수혜 정도가 나머지 둘보다 약하다고 적는다. 종목 추천이 아니며 이 카드도 같은 전제로 읽어 주세요.</div><div class="uc-links" style="margin-top:16px;"><a href="https://contents.premium.naver.com/usa/nasdaq/contents/260731180950248wl" target="_blank" rel="noopener">🔗 네이버 원본(유료)</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90/%5B260731%5D%20%EC%84%B1%EA%B3%B5%ED%95%9C%20%EC%9E%91%EC%97%85%EB%8B%B9%20%EB%B9%84%EC%9A%A9%20-%20%EB%AA%A8%EB%8D%B8%20%EB%9D%BC%EC%9A%B0%ED%8C%85%20%EC%88%98%ED%98%9C%EC%A3%BC%203%EC%A2%85.md" target="_blank" rel="noopener">📄 요약 전문</a></div></div></section><section id="sec-optics"><div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">광통신 · 포토닉스</h2></div><p class="sec-sub">구리가 한계에 닿은 지점과 그 자리를 메우는 기술·부품의 층위 — 카레라</p><div class="ucard"><span class="uc-topic market">광통신 · 기술 입문</span><h2 id="card-광통신-포토닉스-입문-CPO-OCS와-밸류체인-다섯-층">광통신·포토닉스 입문 — CPO·OCS와 밸류체인 다섯 층</h2><div class="uc-meta"><span>카레라 <b>미국주식 사관학교</b></span><span>발행 2026-07-15</span><span>네이버 프리미엄(유료 텍스트)</span><span>미국주식 사관학교</span></div><p class="uc-oneliner">빛이 전기보다 빨라서 광통신이 뜬 게 아니라 구리가 속도·거리에서 신호가 망가지고 전기를 퍼먹고 케이블이 소방호스처럼 굵어지기 때문이며, 그 해법인 CPO와 OCS가 2026년 재평가의 트리거 — 필자는 순수 수혜주 프레임 대신 밸류체인 다섯 층에서 위치를 보라고 정리한다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>속도는 이유가 아니다.</b> 구리 속 전기도 빛 속도의 60~70%, 광섬유 속 빛도 굴절률 때문에 약 68%다. 진짜 문제는 셋 — 신호가 망가지고, 전력을 먹고, 공간이 없다.</li><li><b>구리는 안테나에 가깝다.</b> 감쇠(고주파는 도선 표면만 흘러 속도를 올릴수록 나빠짐), 신호 뭉개짐(고속에서 0과 1 구분 불가), 누화(옆 케이블 신호가 새어 드는 셀프 도청). 광섬유는 이 셋이 거의 없다.</li><li><b>복원에 전력이 든다.</b> 미리 왜곡시켜 보내고 수신 쪽에서 수학적으로 되살리는 SerDes는 속도가 오를수록 기하급수적으로 어려워진다. HBM 최신 세대가 초당 몇 TB를 처리하면서 칩 바깥도 그만큼 뱉어내야 한다.</li><li><b>부피 문제.</b> 엔비디아는 원하는 스펙을 구리로 하면 케이블이 "소방호스 수준"이 된다고 표현한다. 광섬유는 머리카락 굵기에 한 가닥에 여러 파장을 동시에 싣는다(WDM).</li><li><b>왜 지금인가.</b> 예전엔 랙 위 스위치와 서버를 1~2미터 구리로 이으면 됐지만, GPU 수만 개가 한 컴퓨터처럼 동작하며 랙 덩치가 커졌다. Vera Rubin NVL576 같은 멀티랙 시스템에서 랙끼리 묶는 순간 구리로 해결이 안 된다 — <b>랙 안은 여전히 구리, 문제는 랙 바깥</b>.</li><li><b>CPO = 광 신호를 만드는 곳을 옮기는 것.</b> 트랜시버 모듈이 스위치에서 몇 인치 떨어져 있고 그 구간이 전력 먹는 하마가 되니, 모듈을 칩 패키지 안으로 넣어 구간 자체를 없앤다.</li><li>젠슨 황이 GTC 2025에서 든 예 — GPU 100만 개 데이터센터를 기존 트랜시버로 만들면 <b>모듈 600만 개, 네트워킹에만 180MW</b>(중소 도시 하나 몫)를 연산이 아닌 순수 데이터 이동에 쓴다.</li><li><b>CPO 신뢰성 우려는 풀렸다.</b> OFC 2026에서 메타가 직접 써보고 인증 — 플러거블보다 기계적 요소가 적다. 대규모 채택 2027년부터, 본격 물량 2028년경.</li><li><b>OCS = 보낼 곳을 정하는 방식을 바꾸는 것.</b> 기존 패킷 스위치는 빛→전기→빛으로 바꾸며 전력을 쓰는데, 작은 거울을 기울여 빛을 원하는 출구로 반사시키면(MEMS) 변환이 필요 없다. 액정으로 꺾는 LCoS 방식도 있다. 구글이 이 방식으로 <b>40% 전력 절감</b>을 실증했다.</li><li><b>비유.</b> CPO는 톨게이트를 고속도로에 일체화시키는 것, OCS는 톨게이트 자체를 하이패스로 바꾸는 것.</li></ul><p class="uc-label">밸류체인 다섯 층</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>층</th><th>기업</th><th>하는 일</th></tr></thead><tbody><tr><td>광 부품·레이저</td><td>코히어런트 · 루멘텀(LITE)</td><td>레이저 칩·광검출기·InP 웨이퍼 같은 알맹이. 루멘텀은 MEMS OCS 주력(구글·오라클 공급, MS·엔비디아 샘플 테스트), 코히어런트는 LCoS 기반(구글·오라클 주고객)</td></tr><tr><td>스위치 완성</td><td>브로드컴 · 엔비디아</td><td>CPO를 파는 쪽. 다만 포토닉스 부품은 루멘텀·코히어런트에서 가져온다</td></tr><tr><td>광섬유</td><td>코닝(GLW)</td><td>빛이 지나갈 유리섬유 자체</td></tr><tr><td>위탁생산</td><td>패브리넷(FN)</td><td>레이저 칩·드라이버·DSP·광검출기·렌즈·광섬유를 손가락만 한 케이스에 미크론 단위로 정렬해 붙이는 조립. 광통신 업계의 TSMC 격이며 경쟁자가 아니라 고객사·협력사</td></tr><tr><td>자체 브랜드 트랜시버</td><td>어플라이드 옵토일렉트로닉스(AAOI)</td><td>완성 모듈을 자기 이름으로 판매. 대형 하이퍼스케일러에 800G 첫 물량을 출하하며 데이터센터 매출이 전년비 두 배 넘게 뛰었다</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">60~70% vs 약 68%</div><div class="s-label">구리 속 전기 vs 광섬유 속 빛의 속도 — 거의 같다</div></div><div class="stat"><div class="s-val">600만 개 · 180MW</div><div class="s-label">GPU 100만 개 데이터센터를 기존 트랜시버로 구성할 때</div></div><div class="stat"><div class="s-val">40%</div><div class="s-label">구글이 OCS로 실증한 전력 절감</div></div><div class="stat"><div class="s-val">2027 / 2028</div><div class="s-label">CPO 대규모 채택 시작 / 본격 물량</div></div><div class="stat"><div class="s-val">158배 / 128배 / 약 40배</div><div class="s-label">코히어런트 / 루멘텀 / 패브리넷 PER</div></div><div class="stat"><div class="s-val">연 23%</div><div class="s-label">패브리넷의 지난 15년 이익 복리 성장률</div></div></div><p class="uc-quote">"소방호스 수천 개를 랙 뒤에 꽂을 수는 없다" — 구리로 고속·장거리를 할 때의 부피 한계. "엔진·변속기 회사(코히어런트·루멘텀) vs 완성차 조립 공장(패브리넷)" — 밸류체인 위치.</p><div class="side-note">필자는 섹터가 이미 많이 올랐다고 명시하고(2026년 7월 초 코히어런트·루멘텀이 악재 없이 한 달 만에 20% 이상 조정), 패브리넷이 싸 보이는 건 위탁생산이라 가격 협상력이 약해 원래 멀티플이 낮게 매겨지는 구조 탓도 있다고 단서를 답니다. AAOI는 빅테크 고객 의존도가 높아 가장 위험하다고 스스로 지목합니다. 종목 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://contents.premium.naver.com/usa/nasdaq/contents/260715091917892vs" target="_blank" rel="noopener">🔗 네이버 원본(유료)</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90/%5B260715%5D%20%EA%B4%91%ED%86%B5%EC%8B%A0%C2%B7%ED%8F%AC%ED%86%A0%EB%8B%89%EC%8A%A4%20%EC%9E%85%EB%AC%B8%20-%20CPO%C2%B7OCS%EC%99%80%20%EB%B0%B8%EB%A5%98%EC%B2%B4%EC%9D%B8%20%EB%8B%A4%EC%84%AF%20%EC%B8%B5.md" target="_blank" rel="noopener">📄 요약 전문</a></div></div></section>
+
+  <footer>제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 공개 저장소에 전문을 두지 않습니다.
+  요약은 <code>content/understanding/미국주식 사관학교/</code>, 페이지 생성은 <code>scratchpad/gen_usa_dashboard.py</code>.</footer>
+</div>
