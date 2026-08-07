@@ -34,6 +34,63 @@ NODE_NOTE = {
 }
 
 
+# 19건이 한 줄로 죽 늘어서면 어디부터 읽을지가 안 보인다. 읽는 사람이 실제로 쓰는 단위는
+# 스택 좌표가 아니라 주제다 — 전기, 열, 메모리, 칩. 좌표는 근거를 매다는 축이고,
+# 주제는 글을 찾는 문이다. 둘을 같은 화면에서 겸하게 하면 둘 다 흐려진다.
+THEMES = [
+    ('power', '전기를 어떻게 끌어오나',
+     '발전소를 직접 짓는 쪽으로 기울었고, 그 전기를 랙까지 어떤 형태로 나르느냐가 갈렸다.'),
+    ('cool', '열을 어디서 빼나',
+     '막히는 지점이 건물에서 칩 안으로 내려왔다. 누가 액체로 가고 누가 공기로 남나.'),
+    ('mem', '메모리는 왜 모자라나',
+     '수요가 아니라 만드는 쪽 사정이다 — 미세화 정체, HBM으로 빠지는 웨이퍼, 중국의 진입.'),
+    ('chip', '칩은 무엇으로 갈리나',
+     '성능이 아니라 몇 장 받느냐다. 미세화가 되돌아간 자리에서 이득은 다른 층으로 옮겨 갔다.'),
+    ('rack', '랙에서 무엇이 바뀌나',
+     '칩이 세진 값을 기판과 연결이 대신 치른다. 랙 안과 밖은 역할이 갈렸다.'),
+    ('order', '무엇이 먼저 고정되나',
+     '되돌릴 수 없는 순서다 — 착공과 웨이퍼 배정이 뒤의 선택지를 미리 지운다.'),
+]
+THEME_IDX = {k: i for i, (k, _, _) in enumerate(THEMES)}
+
+# 자동 규칙이 못 맞히는 세 건 — 좌표는 A인데 글이 실제로 다루는 것은 B다.
+# 규칙을 억지로 늘리는 대신 여기 세 줄로 적는다
+THEME_FIX = {
+    'stack-랙-데이터센터-02.md': 'power',            # 800V 배전 — 좌표엔 전력망이 없다
+    'stack-전자공정-01.md': 'mem',                   # 미세화 정체가 만든 메모리 부족
+    'stack-전자공정-칩-메모리-랙-01.md': 'chip',      # 자체 칩 이야기 — 메모리는 배경
+    'stack-칩-랙-01.md': 'rack',                     # 값이 옮겨 간 곳이 기판이다 — 칩이 아니라
+}
+
+
+def theme_of(ins):
+    if ins['file'] in THEME_FIX:
+        return THEME_FIX[ins['file']]
+    if ins['view'] == 'process':
+        return 'order'
+    n = set(ins['nodes'])
+    if n & {'HBM', '일반 D램', '낸드·스토리지'}:
+        return 'mem'
+    if '열' in n:
+        return 'cool'
+    if n & {'연료·지정학', '전력망'}:
+        return 'power'
+    if n & {'전자·공정', '칩'}:
+        return 'chip'
+    return 'rack'
+
+
+def payoff_line(ins):
+    """접힌 카드에서도 「그래서 무엇이 달라지나」 첫 줄이 보이게 — 열지 않고 값을 판단한다"""
+    for name, lines in ins['sections']:
+        if name == '그래서 무엇이 달라지나' and lines:
+            s = re.sub(r'^-\s*', '', lines[0]).strip()
+            s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
+            s = re.sub(r'`(.+?)`', r'\1', s)
+            return s
+    return ''
+
+
 def esc(s):
     return (str(s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
             .replace('"', '&quot;'))
@@ -151,10 +208,22 @@ def build():
         if i['view'] == 'stack':
             return (0, min(DISP.index(n) for n in i['nodes'] if n in DISP))
         return (1, min(stages.index(s) for s in i['stages'] if s in stages))
-    insights.sort(key=ins_rank)
+    # 묶음이 먼저고 그 안에서 사슬 순서다. 파일명 알파벳순은 읽는 사람에게 아무 뜻이 없다
+    for i in insights:
+        i['theme'] = theme_of(i)
+    insights.sort(key=lambda i: (THEME_IDX[i['theme']], ins_rank(i)))
+
+    tcount = {}
+    for i in insights:
+        tcount[i['theme']] = tcount.get(i['theme'], 0) + 1
+    # 맨 위 한 줄로 전체 지형을 먼저 준다 — 19건을 훑기 전에 어디로 갈지 고르게
+    nav_html = '<nav class="tnav">%s</nav>' % ''.join(
+        '<a href="#th-%s">%s<b>%d</b></a>' % (k, esc(lab), tcount[k])
+        for k, lab, _ in THEMES if tcount.get(k))
 
     ins_html = []
     prev_view = None
+    prev_theme = None
     for ins in insights:
         # 사슬 전체를 보여주고 이 글이 다루는 칸만 강조한다 — 어디쯤 이야기인지 알아야
         # 판단이 놓인다. 나머지는 회색으로 남겨 위치만 표시
@@ -208,6 +277,7 @@ def build():
             vh = '<h4 class="falsify">무엇으로 무너지나</h4><ul class="falsify">%s</ul>' % items
         if ins['view'] != prev_view:
             prev_view = ins['view']
+            prev_theme = None  # 구역이 새로 열렸으니 그 안의 격자도 아직 안 열렸다
             # 이름만으로는 그 칸이 뭘로 이뤄졌는지 모른다. 번호로 순서를 박고 설명을 붙인다.
             # 번호가 있으면 줄바꿈이 일어나도 순서를 잃지 않는다
             notes = NODE_NOTE if ins['view'] == 'stack' else stage_note
@@ -220,7 +290,7 @@ def build():
             ins_html.append(
                 # 뷰마다 제 구역을 갖는다 — 고정된 레일은 그 구역이 끝나면 같이 물러난다.
                 # 한 컨테이너에 두 레일을 두면 둘 다 화면 위에 겹친다
-                ('</section>' if ins_html else '')
+                ('</div></section>' if ins_html else '')
                 + '<section class="viewsec">'
                 '<p class="viewsep">%s</p>'
                 '<details class="rail"><summary>'
@@ -232,10 +302,19 @@ def build():
                     else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'),
                    '스택' if ins['view'] == 'stack' else '프로세스',
                    len(full), strip, keys))
+        # 묶음 머리 — 이름만 두면 또 다른 나열이다. 무엇이 이것들을 한데 묶는지 한 줄로 적는다
+        if ins['theme'] != prev_theme:
+            lab, lead = next((l, d) for k, l, d in THEMES if k == ins['theme'])
+            ins_html.append(
+                ('</div>' if prev_theme is not None else '')
+                + '<div class="thead" id="th-%s"><h3>%s<span class="tn">%d건</span></h3>'
+                  '<p>%s</p></div><div class="tgrid">'
+                % (ins['theme'], esc(lab), tcount[ins['theme']], esc(lead)))
+            prev_theme = ins['theme']
         ins_html.append(
             '<details class="ins" id="%s">'
             '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<p class="coord">%s<span class="cnt">원자 %d개%s%s</span></p><h2>%s</h2><p class="sub">%s</p></summary>'
+            '<p class="coord">%s<span class="cnt">원자 %d개%s%s</span></p><h2>%s</h2><p class="sub">%s</p>%s</summary>'
             '<div class="body"><p class="claimfull">%s</p>%s%s%s</div></details>'
             % (esc(ins['file']),
                '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
@@ -243,10 +322,12 @@ def build():
                (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
                (' · 검증 %d건' % len(mine)) if mine else '',
                esc(ins['headline']), esc(ins['subhead']),
+               ('<p class="peek"><span class="pk"><i>그래서</i>%s</span></p>' % esc(payoff_line(ins))) if payoff_line(ins) else '',
                md_inline(ins['claim']),
                ''.join(secs), vh, ev))
     if ins_html:
-        ins_html.append('</section>')
+        ins_html.append('</div></section>')
+        ins_html.insert(0, nav_html)
 
     # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
     STRUCT = os.path.join(ROOT, 'insights', 'views', 'structures.json')
@@ -358,6 +439,32 @@ TMPL = r'''<meta charset="utf-8">
   .lnk:last-child{border-bottom:0}
   .lnk b{color:var(--accent2)}
   .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:var(--pad);margin-top:12px;box-shadow:var(--shadow)}
+  /* ── 묶음 ── 19건을 한 줄로 세우면 어디부터 읽을지가 안 보인다. 주제로 묶고,
+     접힌 카드는 두 칸씩 깔아 훑게 하고, 펼친 카드만 한 줄을 다 쓴다 */
+  .tnav{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
+  .tnav a{display:inline-flex;align-items:center;gap:6px;font-size:var(--t-meta);font-weight:700;
+          color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:999px;
+          padding:7px 13px;text-decoration:none;min-height:34px;transition:color .15s,border-color .15s}
+  .tnav a:hover{color:var(--accent);border-color:var(--accent)}
+  .tnav a b{font-size:var(--t-lbl);font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .thead{margin:34px 0 2px;scroll-margin-top:56px}
+  .thead h3{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;margin:0;display:flex;align-items:baseline;gap:9px}
+  .thead .tn{font-size:var(--t-lbl);font-weight:800;color:var(--faint);font-variant-numeric:tabular-nums}
+  .thead p{font-size:var(--t-body);color:var(--sub);margin:5px 0 0;max-width:62ch}
+  .tgrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px;align-items:start}
+  .tgrid>.ins{margin-top:0}
+  @media (min-width:820px){
+    .tgrid{grid-template-columns:1fr 1fr}
+    /* 펼치면 읽는 화면이 된다 — 좁은 칸에 원문 줄을 밀어 넣지 않는다 */
+    .tgrid>.ins[open]{grid-column:1/-1}
+  }
+  /* 접힌 채로도 이 글의 값이 보여야 한다 — 부제는 무엇을 다루나, 이 줄은 그래서 무엇이 달라지나 */
+  /* 자르는 상자와 여백을 주는 상자를 나눈다 — 한 상자에 겸하면 잘린 셋째 줄이 아래 여백으로 비친다 */
+  .peek{font-size:var(--t-meta);color:var(--sub);margin:8px 0 0;padding:8px 11px;background:var(--sunk);
+        border-radius:8px;overflow:hidden}
+  .peek .pk{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .peek i{font-style:normal;font-size:var(--t-lbl);font-weight:800;color:var(--accent);letter-spacing:.06em;margin-right:7px}
+  .ins[open] .peek{display:none}
   .viewsep{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;
             color:var(--accent);margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
   .hintline{font-size:var(--t-meta);color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
@@ -436,6 +543,9 @@ TMPL = r'''<meta charset="utf-8">
   .axmini i.on{background:var(--accent)}
   .cspan{font-size:var(--t-meta);font-weight:750;color:var(--accent2);letter-spacing:-.01em}
   .coord .cnt{font-size:var(--t-meta);color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
+  /* 두 칸으로 깔리면 카드 폭이 좁아진다 — 개수는 제 줄을 갖는다. 카드마다 줄이 다르게 접히면
+     같은 줄에 있어야 할 것들이 어긋나 보인다 */
+  @media (min-width:820px){.tgrid .coord .cnt{flex:1 0 100%;margin-left:0}}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0;line-height:1.5}
   .body h4{font-size:var(--t-meta);font-weight:800;color:var(--accent2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.04em}
   .grp{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:var(--pad);margin-bottom:10px;box-shadow:var(--shadow)}
@@ -513,7 +623,7 @@ TMPL = r'''<meta charset="utf-8">
   </div>
 </header>
 
-<p class="hintline">카드를 누르면 그 판단의 <b>그래서 무엇이 달라지나</b>부터 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p>
+<p class="hintline">글은 <b>주제 6묶음</b>으로 나뉘어 있습니다. 접힌 카드에도 「그래서 무엇이 달라지나」 첫 줄이 붙어 있어 열지 않고 고를 수 있고, 카드를 누르면 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p>
 __INSIGHTS__
 
 <h3 class="sec">근거 지도 — 어디에 근거가 있고 어디가 비었나</h3>
