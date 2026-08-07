@@ -87,7 +87,15 @@ def payoff_line(ins):
             s = re.sub(r'^-\s*', '', lines[0]).strip()
             s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
             s = re.sub(r'`(.+?)`', r'\1', s)
-            return s
+            s = re.sub(r'\(A-\d{6}-\d{2}(?:,\s*A-\d{6}-\d{2})*\)', '', s).replace(' .', '.')
+            # 상자가 잘라 「...」로 끝나면 문장이 끊긴 자리가 남는다 — 문장 경계에서 우리가 끊는다
+            sents = re.findall(r'[^.]*\.', s)
+            out = ''
+            for t in sents:
+                if out and len(out) + len(t) > 75:
+                    break
+                out += t
+            return (out or s).strip()
     return ''
 
 
@@ -240,8 +248,9 @@ def build():
         # 구분자는 언제나 화살표 하나로 — 어떤 카드는 점, 어떤 카드는 화살표면 규칙이 없어 보인다.
         # 중간에 건너뛴 칸이 있으면 막대의 빈 칸이 그것을 말한다
         label = path[0] if len(path) == 1 else '%s → %s' % (path[0], path[-1])
-        chips = ('<span class="axmini" aria-hidden="true">%s</span>'
-                 '<span class="cspan">%s</span>' % (bar, esc(label)))
+        # 좌표는 헤드라인을 읽은 뒤에 확인하는 값이다 — 이름을 먼저 두고 막대는 그 보조로 붙인다
+        chips = ('<span class="cspan">%s</span>'
+                 '<span class="axmini" aria-hidden="true">%s</span>' % (esc(label), bar))
         # 「그래서 무엇이 달라지나」가 이 글의 값이다 — 주장 바로 뒤로 끌어올린다.
         # 근거·조건 충돌은 그 판단을 받치는 장치이므로 뒤로 간다
         ORDER = ['그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거', '조건 충돌',
@@ -313,16 +322,18 @@ def build():
             prev_theme = ins['theme']
         ins_html.append(
             '<details class="ins" id="%s">'
-            '<summary><span class="cid">%s</span><span class="asof">as_of %s</span>'
-            '<p class="coord">%s<span class="cnt">원자 %d개%s%s</span></p><h2>%s</h2><p class="sub">%s</p>%s</summary>'
+            '<summary><h2>%s</h2><p class="sub">%s</p>%s'
+            '<p class="coord"><span class="cid">%s</span>%s'
+            '<span class="cnt">원자 %d개%s%s · %s</span></p></summary>'
             '<div class="body"><p class="claimfull">%s</p>%s%s%s</div></details>'
             % (esc(ins['file']),
-               '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
-               esc(ins['as_of']), chips, len(ins['atoms']),
-               (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
-               (' · 검증 %d건' % len(mine)) if mine else '',
                esc(ins['headline']), esc(ins['subhead']),
                ('<p class="peek"><span class="pk"><i>그래서</i>%s</span></p>' % esc(payoff_line(ins))) if payoff_line(ins) else '',
+               '스택 뷰' if ins['view'] == 'stack' else '프로세스 뷰',
+               chips, len(ins['atoms']),
+               (' · 무관 %d개' % len(ins['dismissed'])) if ins['dismissed'] else '',
+               (' · 검증 %d건' % len(mine)) if mine else '',
+               esc(ins['as_of']),
                md_inline(ins['claim']),
                ''.join(secs), vh, ev))
     if ins_html:
@@ -460,23 +471,30 @@ TMPL = r'''<meta charset="utf-8">
   }
   /* 접힌 채로도 이 글의 값이 보여야 한다 — 부제는 무엇을 다루나, 이 줄은 그래서 무엇이 달라지나 */
   /* 자르는 상자와 여백을 주는 상자를 나눈다 — 한 상자에 겸하면 잘린 셋째 줄이 아래 여백으로 비친다 */
-  .peek{font-size:var(--t-meta);color:var(--sub);margin:8px 0 0;padding:8px 11px;background:var(--sunk);
+  .peek{font-size:var(--t-meta);color:var(--sub);margin:9px 0 0;padding:9px 11px;background:var(--sunk);
         border-radius:8px;overflow:hidden}
-  .peek .pk{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .peek .pk{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .peek i{font-style:normal;font-size:var(--t-lbl);font-weight:800;color:var(--accent);letter-spacing:.06em;margin-right:7px}
   .ins[open] .peek{display:none}
   .viewsep{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;
             color:var(--accent);margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
-  .hintline{font-size:var(--t-meta);color:var(--faint);margin:26px 0 10px;padding-left:12px;border-left:2px solid var(--line)}
+  .hintbox{margin:20px 0 4px;font-size:var(--t-meta);color:var(--faint)}
+  .hintbox>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;
+                   font-weight:750;color:var(--sub);padding:6px 0;min-height:32px}
+  .hintbox>summary::-webkit-details-marker{display:none}
+  .hintbox>summary::after{content:'▾';font-size:10px;color:var(--faint)}
+  .hintbox[open]>summary::after{content:'▴'}
+  .hintbox>p{margin:2px 0 0;padding-left:12px;border-left:2px solid var(--line);line-height:1.6}
   .ins>summary:hover h2{color:var(--accent)}
   .ins:not([open])>summary{padding-bottom:0}
   .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:26px}
   .ins>summary::-webkit-details-marker{display:none}
   .ins>summary::after{content:"⌄";position:absolute;right:2px;top:-2px;font-size:22px;color:var(--faint);transition:transform .2s}
   .ins[open]>summary::after{transform:rotate(180deg)}
-  .cid{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;color:var(--accent)}
-  .asof{float:right;font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums}
-  .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
+  /* 뷰 이름은 헤드라인을 가릴 만큼 크면 안 된다 — 좌표 줄 맨 앞의 작은 표식으로 둔다 */
+  .cid{font-size:var(--t-lbl);font-weight:800;letter-spacing:.06em;color:var(--faint);
+       border:1px solid var(--line);border-radius:5px;padding:2px 6px;flex:0 0 auto}
+  .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:0 0 2px}
   /* apple-design: 응답은 누르는 순간(포인터 다운), 열림은 임계감쇠(damping 1.0·response 0.35s).
      제스처가 아니라 클릭이라 오버슈트를 넣지 않는다. transform·opacity만 움직여 합성기에 맡긴다 */
   .ins>summary{-webkit-tap-highlight-color:transparent}
@@ -537,7 +555,13 @@ TMPL = r'''<meta charset="utf-8">
   .rail em{font-size:var(--t-lbl);font-style:normal;color:var(--faint);line-height:1.45}
   .rail[open]>.railkey{animation:reveal .3s cubic-bezier(.32,.72,0,1) both}
   @media (prefers-reduced-transparency:reduce){.rail{background:var(--sunk);backdrop-filter:none}}
-  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:7px 0 0}
+  @media (max-width:820px){
+    .rstrip{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);
+            mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent)}
+  }
+  /* 좌표·개수는 판단을 받치는 값이라 헤드라인 아래로 내린다 — 위에 쌓이면 제목이 넷째 줄이 된다 */
+  .coord{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;margin:10px 0 0;
+         padding-top:9px;border-top:1px solid var(--line)}
   .axmini{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
   .axmini i{display:block;width:9px;height:3px;border-radius:2px;background:var(--line)}
   .axmini i.on{background:var(--accent)}
@@ -614,8 +638,8 @@ TMPL = r'''<meta charset="utf-8">
 <header>
   <p class="eyebrow">Insights &amp; Evidence</p>
   <h1>인사이트와 그 근거</h1>
-  <p class="lede">판단이 주인이고, 원자는 그 밑을 받치는 근거입니다. 각 인사이트의 「근거 원자」를 펼치면
-     인용한 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다 — 주장이 원문과 어긋나는지 여기서 바로 확인됩니다.</p>
+  <p class="lede">판단이 주인이고 원자는 그 밑을 받치는 근거입니다. 카드를 펼치면
+     인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p>
   <div class="meta">
     <span>인사이트 __NI__건</span><span>원자 __NA__개</span><span>문서 __ND__편</span>
     <span>미배정 __NU__개</span><span>구조 __NS__개 · 묶음 __NG__</span><span>빈 노드: __EMPTY__</span>
@@ -623,7 +647,8 @@ TMPL = r'''<meta charset="utf-8">
   </div>
 </header>
 
-<p class="hintline">글은 <b>주제 6묶음</b>으로 나뉘어 있습니다. 접힌 카드에도 「그래서 무엇이 달라지나」 첫 줄이 붙어 있어 열지 않고 고를 수 있고, 카드를 누르면 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p>
+<details class="hintbox"><summary>이 페이지 읽는 법</summary>
+<p>글은 <b>주제 6묶음</b>으로 나뉘어 있습니다. 접힌 카드에도 「그래서 무엇이 달라지나」 첫 줄이 붙어 있어 열지 않고 고를 수 있고, 카드를 누르면 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p></details>
 __INSIGHTS__
 
 <h3 class="sec">근거 지도 — 어디에 근거가 있고 어디가 비었나</h3>
