@@ -6,7 +6,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 **🧭 [Yomianalysis — 어디로 들어갈까](https://claude.ai/code/artifact/71921e32-6def-4976-acea-712329628181)** ← 전체 입구. 여기만 북마크하면 됩니다. 생성: `py scripts/gen_hub.py`
 
-> 2026-08-09 정리: 대시보드를 19개에서 11개로 줄였습니다. 지운 8개(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다.
+> 2026-08-09 정리: 19장에서 8장을 지우고 입구 1장을 더해 **12장**이 됐습니다. 지운 것(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다. 같은 날 「인텔리전스 대시보드」는 담긴 게 전부 SemiAnalysis 코퍼스라 **SemiAnalysis 대시보드**로 이름을 바꿨습니다(URL은 그대로).
 
 ### 메인
 - 🧭 [SemiAnalysis 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/SemiAnalysis%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
@@ -29,13 +29,14 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 ## 폴더 구조
 
 - `content/newsletter/` — SemiAnalysis 뉴스레터 한글 변환본 (카테고리별 하위 폴더: `ai_infra/`, `ai_models/`, `robotics/`, `semiconductors/`)
-- `content/understanding/` — 제3자 해설 요약 (출연자·채널별: `권효재 대표/`, `이선엽 대표/`, `류상철 국장/`, `언더스탠딩 백브리핑/`, `미국주식 사관학교/`). 유료 구독 원문 전문은 저장소에 두지 않고 요약만 둔다
+- `content/understanding/` — 제3자 해설 요약. 출연자·채널별(`권효재 대표/`, `이선엽 대표/`, `류상철 국장/`, `언더스탠딩 백브리핑/`, `미국주식 사관학교/`, `빌 애크먼/`)과 주제별(`부동산/`, `통합/`)이 섞여 있다 — 주제 축으로 모으는 중이다. 유료 구독 원문 전문은 저장소에 두지 않고 요약만 둔다
 - `raw/linkedin/` — LinkedIn 게시물 원본 덤프
 - `통합 리포트/` — 카테고리별·기업별 익스포저 종합 리포트
 - `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`
-  - 원자·뷰 계통(아래 절 참조): `atoms/`(문서별 원자 JSON), `synth/`(원자 기반 인사이트 md), `views/`(주체 사전·프로세스 단계 배정), `check_atoms.py`(검사기 C1~C19), `crosscheck.py`(신규 원자 대조 리포트), `figures/`
+  - 원자·뷰 계통(아래 절 참조): `atoms/`(문서별 원자 JSON), `synth/`(원자 기반 인사이트 md), `theses/`(장기 판단), `views/`(주체 사전·상업적 해석·프로세스 단계 배정), `verify.json`(검증 대장), `check_atoms.py`(C1~C21)·`check_prose.py`(P1~P7)·`check_theses.py`(검사기 3종), `crosscheck.py`(신규 원자 대조 리포트), `figures/`
 - `대장/` — 예측 검증 대장, 크로스 도메인 숫자 대장
-- `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙)
+- `대시보드/` — 대시보드 HTML 소스 12장 (GitHub Pages로 서빙). 입구는 `Yomianalysis.html`, 생성기는 `scripts/gen_hub.py`
+- `scripts/` — `gen_hub.py`(입구), `gen_bmirror.py`(SemiAnalysis 대시보드 ① 미러 재생성), `gen_conceptmap_docs.py`
 - `input/clippings/` — 변환 대기 원문 클리핑
 
 ## 원자·뷰 기반 인사이트 (2026-07-30 도입)
@@ -45,16 +46,18 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 **원자** — `insights/atoms/<YYMMDD>-<슬러그>.json`. 문서 하나당 파일 하나. 원자마다 `line`(원문 줄 번호)·`line_text`(그 줄 원문)·`value`·`condition`(측정 조건·비교군)·`attributed_to`를 담습니다. 조건을 떼면 사실이 뒤집히는 사례가 실제로 있었기 때문에 `condition`은 비워둘 수 없습니다.
 
 **뷰(좌표)** — 원자는 두 축에 걸립니다.
-- **스택 뷰** (물리 의존, 8노드 고정): 전자·공정 → 칩 → 메모리/열 → 랙 → 데이터센터 → 전력망 → 연료·지정학
+- **스택 뷰** (물리 의존, 10노드 고정): 전자·공정 → 칩 → HBM · 일반 D램 · 낸드·스토리지 · 열 → 랙 → 데이터센터 → 전력망 → 연료·지정학. 「메모리」 한 칸이던 것을 2026-07-29에 셋으로 쪼갰다 — 수급과 가격이 서로 따로 움직여 한 칸에서는 판단이 뭉갰다
 - **프로세스 뷰** (결정 순서, 7단계 고정): 웨이퍼 배정 → 칩·랙 설계 확정 → 부지·전력 계약 → 냉각 방식 확정 → 건물 착공 → 랙 발주·인수 → 가동. 스택이 "무엇이 상류인가"를 말하고, 프로세스가 "그래서 무엇이 밀리나"를 말합니다
 
 **인사이트** — `insights/synth/<view>-<좌표>-<번호>.md`. 원자 3개 이상·문서 2편 이상이어야 쓸 수 있고, 주장·근거·조건 충돌·그래서 무엇이 달라지나·아직 모르는 것으로 구성됩니다. 프로세스 뷰에는 **되돌릴 수 없는 지점**이 하나 더 붙습니다.
 
-**검사기** — `py insights/check_atoms.py` (C1~C19). 줄 번호와 수치 대조(C2), 원문 hash 대조(C16), 원문 병치 검증(C17), 같은 단위·다른 조건 수치를 조건 표기 없이 이어 붙이는 것 차단(C9), 코퍼스 혼합 금지(C18), 원자 id 중복(C19) 등. 진위 판정은 기계가 못 하므로 원문을 원자 옆에 붙여 검토 비용을 낮추는 쪽으로 설계했습니다.
+**검사기 3종** — `py insights/check_atoms.py`(C1~C21), `check_prose.py`(P1~P7), `check_theses.py`. 줄 번호와 수치 대조(C2), 원문 hash 대조(C16), 원문 병치 검증(C17), 같은 단위·다른 조건 수치를 조건 표기 없이 이어 붙이는 것 차단(C9), 코퍼스 혼합 금지(C18), 원자 id 중복(C19), 주체 사전과 상업적 해석의 상호 커버리지(C20), 검증 대장의 사후 편입 금지(C21). 문체 쪽은 압축 용어 금지(P1), 용어 첫 등장 풀이(P2), 긴 문장·em dash 남발(P3), 번역투(P4) 등. 진위 판정은 기계가 못 하므로 원문을 원자 옆에 붙여 검토 비용을 낮추는 쪽으로 설계했습니다.
 
 **새 문서 넣기** — `insight-atomize` 스킬(`.claude/skills/`)이 절차를 지휘하고 `insight-atomizer` 에이전트(`.claude/agents/`)가 추출만 합니다. manifest 갱신 → 추출 → 단계 배정 → 검사기 FAIL 0 → `py insights/crosscheck.py`로 기존 인사이트와 대조(STALE·충돌 후보) → 커밋. 인사이트 본문은 기계가 고치지 않고 목록만 보고합니다.
 
-**보는 곳** — ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html). `py insights/gen_atomview.py`로 재생성합니다(원자·인사이트가 늘면 다시 돌리세요).
+**규모 (2026-08-09)** — 소스 84편 중 원자화 완료 24편, 원자 521개, 인사이트 29건, 장기 판단 3건, 검증 대장 55건(전부 열림 — 판정이 0건이라 적중률은 계산하지 않습니다).
+
+**보는 곳** — ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html)와 🏭 [제약과 회사](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%A0%9C%EC%95%BD%EA%B3%BC%20%ED%9A%8C%EC%82%AC.html). 각각 `py insights/gen_atomview.py`, `py insights/gen_actormap.py`로 재생성합니다(원자·인사이트가 늘면 다시 돌리세요).
 
 설계 문서는 `docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md`(체계)와 `2026-07-30-원자화-스킬-design.md`(절차)입니다.
 
