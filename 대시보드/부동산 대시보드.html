@@ -1,0 +1,341 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부동산 인사이트</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    line-height:1.28; margin:0 0 10px; text-wrap:balance; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 통합 인사이트 ── */
+  #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
+  .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; padding:18px 22px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ins-card > summary { list-style:none; cursor:pointer; display:block; position:relative; padding-right:26px; }
+  .ins-card > summary::-webkit-details-marker { display:none; }
+  .ins-card > summary::after { content:"⌄"; position:absolute; right:2px; top:-4px; font-size:20px; line-height:1; color:var(--ink-3); transition:transform .2s; }
+  .ins-card[open] > summary::after { transform:rotate(180deg); }
+  .ins-card[open] > summary { margin-bottom:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .ins-card > summary .ins-sub { margin-bottom:0; }
+  .ins-card > summary:hover h3 { color:var(--accent); }
+  .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
+  .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
+  .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
+  .ins-body h4 { font-size:12.5px; font-weight:800; color:var(--accent-ink); margin:14px 0 6px;
+    text-transform:uppercase; letter-spacing:.04em; }
+  .ins-body p { font-size:14.5px; color:var(--ink); line-height:1.6; margin:0 0 8px; }
+  .ins-body ul { margin:0 0 8px; padding-left:18px; }
+  .ins-body li { font-size:13.5px; color:var(--ink-2); line-height:1.58; margin-bottom:4px; }
+  .ins-src-label { font-size:10.5px; font-weight:800; color:var(--ink-3); margin:14px 0 6px; }
+  .ins-srcs { display:flex; flex-wrap:wrap; gap:6px; }
+  .ins-srcs a { font-size:11.5px; padding:5px 10px; border-radius:999px; background:var(--sunk);
+    border:1px solid var(--line); color:var(--ink-2); text-decoration:none; }
+  .ins-srcs a:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    header { padding:34px 0 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 17px 17px; border-radius:10px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--faint);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--sub);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">부동산 — 제3자 해설 아카이브</p>
+    <h1>부동산 인사이트</h1>
+    <p class="lede">채널을 가리지 않고 <b>부동산</b> 주제만 모읍니다. 유튜브 해설은 자막 전문을 기반으로,
+       유료 텍스트는 원문 요약만 싣습니다. 원문 창작 없이 발언과 인용 수치만 재구성했습니다.</p>
+    <div class="meta-row">
+      <span>정리일 <b>2026-08-08</b></span>
+      <span>수록 <b>1건</b></span>
+      <span>소스 <b>언더스탠딩</b></span>
+    </div>
+    <div class="noncorpus">
+      <span class="nc-tag">비-코퍼스 · 제3자 소스 · 지역·종목 언급 포함</span>
+      <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
+      특정 지역·기업이 언급되지만 <b>투자 추천이 아니고</b> 가격 검증도 하지 않았습니다 — 화자 시각의 기록으로만 보세요.
+    </div>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
+    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교 →</a>
+  </header>
+
+  <nav class="sec-nav"><a href="#sec-cluster">지방 부동산 · 산업 클러스터 <b>1</b></a></nav>
+
+  <section id="sec-cluster"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">지방 부동산 · 산업 클러스터</h2></div><p class="sec-sub">땅값이 오르는 지방은 어디이고 무엇이 그 자리에 있었나 — 기업·대학·병원·전력이 같이 가는 구조</p><div class="ucard"><span class="uc-topic market">일본 부동산 · 지역 개발</span><h2 id="card-일본-지방-땅값이-오르는-곳은-전부-기업을-끼고-있다">일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다</h2><div class="uc-meta"><span>박상준 <b>와세다대 교수</b></span><span>업로드 2026-08-04</span><span>58분(58:02)</span><span>언더스탠딩</span></div><p class="uc-oneliner">일본 지방 땅값이 30년 만에 버블기 수준을 되찾은 곳이 나왔는데 도쿄가 아니라 <b>홋카이도 치토세(라피더스)와 구마모토 기쿠요초(JASM)</b> — 둘 다 반도체 클러스터가 들어간 곳이고, 박 교수는 "땅값이 안 떨어지거나 오르는 곳은 전부 기업을 끼고 있다"며 한국 지방 문제의 답도 기업 유치에 있다고 본다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>버블 회복이 도쿄가 아니라 지방에서 나왔다.</b> 강남에 비견되는 도쿄 미나토구는 저점 100에서 300 넘게 올랐지만 버블기(약 700)의 절반도 못 회복했다. 반면 치토세시와 기쿠요초는 <b>버블기 땅값을 되찾았다</b>. 2025→2026년 공시지가 상승률 전국 1위도 치토세다(절대 가격이 아니라 상승폭 기준).</li><li><b>그 두 곳에 있는 것.</b> 치토세 = <b>라피더스</b>(일본 정부 주도, IBM 2나노 기술 도입, 8개 기업 출자). 기쿠요초 = <b>JASM</b>(TSMC·소니·덴소 합작, 구마모토).</li><li><b>왜 TSMC가 구마모토였나.</b> 처음엔 일본 정부가 첨단 공정을 요청했지만 TSMC가 응하지 않았다. 코로나기 반도체 부족으로 도요타·소니 공장이 멈추자 소니 쪽에서 "우리한테 납품할 반도체를 일본에서 만들어 달라"고 제안했고 14~22nm급으로 성사됐다 — <b>TSMC는 팔 곳이 확정돼야 움직인다.</b></li><li><b>맨땅이 아니라 이미 산업단지였다.</b> 기쿠요초엔 원래 소니 이미지센서·도쿄일렉트론·덴소 공장이 있었고 그 단지가 무너지지 않고 유지됐다. 치토세도 기존 산업단지가 있었다 — <b>논밭에 건물 하나 달랑 지어놓는 방식과 정반대.</b></li><li><b>한 기업이 아니라 클러스터.</b> JASM이 들어서자 반도체 장비·소재 기업들이 근처에 또 공장을 지었고 건설·인구 유입·투기 수요까지 붙어 버블기 가격을 회복했다. 박 교수는 "하나의 기업 단위가 아니라 하나의 산업단지, 하나의 클러스터가 만들어져야 한다"고 못 박는다.</li><li><b>네 가지가 같이 있다.</b> 두 지역 모두 ① 기존 산업단지 ② 전국 10위권 대학과 부속병원 ③ 원전 + 재생에너지 ④ 풍부한 용수. 규슈대·홋카이도대가 인력 공급과 연구 거점이 되고, 원전은 재생에너지의 간헐성을 받친다.</li><li><b>원전 재가동은 주민 반대를 넘겨야 했다.</b> 홋카이도는 후쿠시마 이후 주민 대부분이 결사반대했지만 탈탄소와 반도체 전력 수요가 겹치며 3호기부터 가동에 동의했다. 지자체·도지사가 그 과정에 크게 개입했다.</li><li><b>한국이 유독 독특하다.</b> 뉴스위크 세계 250대 병원에 일본 15개(도쿄권 7)·프랑스 15개(파리 6)·한국 16개 — 그런데 <b>한국은 16개가 전부 서울·수도권이고 그중 13개가 서울</b>이다. 인구가 일본의 절반도 안 되는데 병원 수는 더 많다. 이 패턴을 보이는 선진국은 대만(타이베이 2개)뿐이다.</li><li><b>대학도 마찬가지.</b> 일본 「진짜 강한 대학」 10위권에서 도쿄 밖이 대부분이고 홋카이도대 10위·규슈대 9위다. 한국은 과거 부산대·경북대·전남대가 좋았지만 지금은 수도권으로 무너졌다 — "그런 나라가 우리 외에 없다".</li><li><b>의대 쏠림도 유례가 없다.</b> "전국 의대를 다 채워야 서울대 공대에 간다"는 구조는 일본·중국·미국 어디에도 없다(일본은 대부분 지방 의대보다 도쿄공대가 위).</li><li><b>결론.</b> 지방 소멸 자체는 못 막는다 — 대신 <b>거점 도시</b>를 만들고 교통망으로 주변을 잇는다. 기업 본사를 옮기라는 게 아니라 산업단지를 만들라는 것. "기업이 있어야 대학도 병원도 된다."</li></ul><p class="uc-label">두 지역 비교</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>항목</th><th>홋카이도 치토세</th><th>구마모토 기쿠요초</th></tr></thead><tbody><tr><td>앵커 기업</td><td>라피더스(정부 주도·IBM 2나노·8개사 출자)</td><td>JASM(TSMC·소니·덴소 합작)</td></tr><tr><td>공정</td><td>2nm 목표 — <b>아직 양산 전, 도전 단계</b></td><td>14~22nm — 2024년 양산, 2025년 적자 → <b>2026년 흑자</b></td></tr><tr><td>수요처</td><td>잠재 고객과 협의 중, 팔릴지 미정</td><td>소니 이미지센서·덴소 차량용으로 <b>이미 확정</b></td></tr><tr><td>기존 기반</td><td>산업단지 있음(규슈보다 작음), 홋카이도대(10위)</td><td>소니·도쿄일렉트론·덴소 단지, 규슈대(9위)·부속병원</td></tr><tr><td>전력</td><td>원전 3호기 재가동 동의 + 태양광·풍력</td><td>원전 2기 + 태양광·풍력</td></tr><tr><td>땅값</td><td><b>버블기 회복</b>, 2025→2026 상승률 전국 1위</td><td><b>버블기 회복</b>(지수 약 120 수준 유지)</td></tr><tr><td>그 외</td><td>소프트뱅크 데이터센터 유치, 일본에서 건설이 가장 활발</td><td>2026년 지진 시 진도 5강 — JASM 일시 가동 중단</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">16개 / 13개</div><div class="s-label">세계 250대 병원 중 한국 개수 / 그중 서울 — 나머지 3개도 경기도</div></div><div class="stat"><div class="s-val">15개(도쿄권 7) / 15개(파리 6)</div><div class="s-label">같은 순위의 일본 / 프랑스 분포</div></div><div class="stat"><div class="s-val">5배 vs 2배</div><div class="s-label">버블기 일본 6대 도시 vs 지방 땅값 상승폭</div></div><div class="stat"><div class="s-val">600 → 100</div><div class="s-label">버블 붕괴 후 지방 땅값 지수(2010년=100 기준)</div></div><div class="stat"><div class="s-val">약 700 → 약 300</div><div class="s-label">도쿄 미나토구 버블 고점 vs 현재 — 절반도 회복 못 함</div></div><div class="stat"><div class="s-val">20개 / 71개</div><div class="s-label">세계 시총 1,000대 기업 수(한국 / 일본) — GDP 격차 2.5배인데 3.5배</div></div><div class="stat"><div class="s-val">137개 / 679개</div><div class="s-label">세계 시총 1만대 기업 수(한국 / 일본)</div></div><div class="stat"><div class="s-val">62위 / 172위</div><div class="s-label">도요타 / 현대차 세계 시총 순위(2026-05-16)</div></div></div><p class="uc-quote">"땅값이 안 떨어지는 곳은 전부 기업을 끼고 있다" — 이 방송의 한 문장 결론. "논밭 앞에 건물 하나 달랑" — 클러스터 없이 시설만 지은 지역 개발에 대한 평가. "닭이 먼저냐 달걀이 먼저냐" — 선후는 불분명해도 기업·대학·병원이 같이 간다는 건 확실하다는 정리.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">SemiAnalysis</span><b>전력이 있다고 끝이 아니다.</b> 2026-08-06 SemiAnalysis 신호에 따르면 뉴욕은 데이터센터를 주 단위로 처음 멈춰 세웠고(행정명령 62호), 2026-08-05 신호는 백업 전원 없는 AI 데이터센터가 15GW+ 늘고 있다고 본다. "원전이 있으니 클러스터가 성립한다"는 전제에는 <b>인허가·계통 안정성이라는 층이 빠져 있다.</b></li><li><span class="who">검증 대기</span><b>라피더스는 아직 팔아본 적이 없다.</b> 박 교수 본인이 "품질이 나와야 팔리고, 팔릴지 없을지 모른다 — 지금은 도전 중"이라고 말한다. 치토세 땅값은 <b>공장이 성공해서가 아니라 지어지고 있어서</b> 오른 값이라, 수요처가 확정되고 2026년 흑자를 낸 JASM과 같은 근거로 묶으면 안 된다.</li><li><span class="who">반대 방향</span><b>투기 수요가 섞여 있다.</b> 박 교수 스스로 인구 유입과 건설에 더해 "투기 수요도 발생한다"고 인정한다. 버블기 회복이라는 표현은 그 부분을 걸러내지 않은 값이다.</li><li><span class="who">한국 적용</span><b>한국이 그대로 쓸 수 있는지는 다른 문제다.</b> 진행자가 "라피더스는 우리로 치면 강원도에 들어간 느낌"이라 짚고, 채팅에서는 "한국은 국토가 작아 균형발전이 애초에 안 맞는다"는 반론도 나왔다. 박 교수는 한국 절반 크기인 네덜란드도 분산돼 있다고 받았지만 <b>네덜란드는 여러 대도시가 한 권역에 붙어 있는 구조</b>라 거리 조건이 같지 않다.</li><li><span class="who">지진</span>2026년 구마모토 지진으로 JASM이 일시 가동을 멈췄다(진도 5강). <b>클러스터 집중은 재해 집중이기도 하다</b> — 일본이 오사카를 제2 행정수도로 만든 논리가 산업단지에도 걸린다.</li></ul></div><div class="side-note">시가총액 순위는 2026년 5월 16일 기준이라 방송 시점에 이미 뒤집혔다고 박 교수가 직접 밝힙니다. 한국의 집중이 "좋은지 나쁜지"에 대해서는 정답이 없다고 반복해서 단서를 달며, 그 집중이 선진국 중 유례가 없다는 사실 자체를 논점으로 삼습니다. 개별 지역·기업이 언급되지만 가격 검증은 없으며 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://youtu.be/R840lTdtCSw" target="_blank" rel="noopener">▶ 유튜브 원본</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EB%B6%80%EB%8F%99%EC%82%B0/%5B260804%5D%20%EC%9D%BC%EB%B3%B8%20%EC%A7%80%EB%B0%A9%20%EB%95%85%EA%B0%92%EC%9D%B4%20%EC%98%A4%EB%A5%B4%EB%8A%94%20%EA%B3%B3%EC%9D%80%20%EC%A0%84%EB%B6%80%20%EA%B8%B0%EC%97%85%EC%9D%84%20%EB%81%BC%EA%B3%A0%20%EC%9E%88%EB%8B%A4%20-%20%EB%B0%95%EC%83%81%EC%A4%80.md" target="_blank" rel="noopener">📄 요약 전문</a></div></div></section>
+
+  <footer>제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기반입니다.
+  요약은 <code>content/understanding/부동산/</code>, 페이지 생성은 <code>scratchpad/gen_realestate_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).</footer>
+</div>
