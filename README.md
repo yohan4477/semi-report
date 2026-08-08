@@ -4,29 +4,25 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 ## 대시보드 (GitHub Pages)
 
+> 2026-08-09 정리: 대시보드를 19개에서 11개로 줄였습니다. 지운 8개(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다.
+
 ### 메인
-- 🧭 [통합 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%86%B5%ED%95%A9%20%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8.html) — 주제 클러스터별 크로스-문서 합성(통합 논지·공통 진단·연결·인과·상충·이견·함의)+근거 소스 발행일순. SemiAnalysis 코퍼스 + 제3자 해설 통합, `insights/` 아키텍처(매니페스트·provenance·커버리지) 산출물
 - 🧭 [인텔리전스 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
 - 📊 [임팩트 타임라인 (Yomianalysis)](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
 - 🗂️ [소셜 신호 히스토리](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html) — LinkedIn·YouTube 신호 전체 아카이브
-- ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html) — 원자 기반 인사이트를 먼저 읽고, 「근거 원자」를 펼치면 인용 원자가 **문서 원문의 그 줄**과 함께 나옵니다. 아래쪽 근거 지도는 스택 8노드·프로세스 7단계에 근거가 어디 몰렸고 어디가 비었는지 보여줍니다
+- ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html) — 원자 기반 인사이트를 먼저 읽고, 「근거 원자」를 펼치면 인용 원자가 **문서 원문의 그 줄**과 함께 나옵니다
+- 🏭 [제약과 회사](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%A0%9C%EC%95%BD%EA%B3%BC%20%ED%9A%8C%EC%82%AC.html) — 원자가 말하는 제약별로 파는 회사와 맞는 회사. 종목 추천이 아닙니다
 
-### 도메인·도구
-- ⚡ [전력 인프라 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%A0%84%EB%A0%A5%20%EC%9D%B8%ED%94%84%EB%9D%BC%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 데이터센터 전력·발전 밸류체인
-- 🔧 [파이프라인 현황](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8%20%ED%98%84%ED%99%A9.html) — 변환 파이프라인 진행 현황·히스토리
-- 🏁 [GPU 세대 시뮬레이터](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/GPU%20%EC%84%B8%EB%8C%80%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0.html) — 세대별 GPU 스펙 레이스 비교
-- 🔬 [GPU 구조 시뮬레이터](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/GPU%20%EA%B5%AC%EC%A1%B0%20%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%ED%84%B0.html) — GPU 내부 구조 시각화
-- 📜 [GPU 변천사 — 15년간의 베팅](https://yohan4477.github.io/semi-report/column/GPU%20%EB%B3%80%EC%B2%9C%EC%82%AC%20-%2015%EB%85%84%EA%B0%84%EC%9D%98%20%EB%B2%A0%ED%8C%85.html) — 15년 GPU 아키텍처 변천 칼럼
+### 지도
+- 🗺️ [인사이트 지도](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EC%A7%80%EB%8F%84.html) — 좌표가 있는 클러스터를 스크롤리텔링으로
 - 🧩 [개념 지도 — AI와 그 인프라 구조](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B0%9C%EB%85%90%20%EC%A7%80%EB%8F%84%20%E2%80%94%20LLM%20%EA%B3%84%EC%B8%B5%C2%B7%EB%B3%91%EB%A0%AC%ED%99%94.html) — 학습·추론 → 모델 계층 → 병렬화 → GPU 랙을 한 장에
-
-### 실험·목업
-- 🕸️ [그래프 뷰 목업](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B7%B8%EB%9E%98%ED%94%84%20%EB%B7%B0%20%EB%AA%A9%EC%97%85.html) — 관계 그래프 뷰 실험
-- 🗺️ [데이터센터 지도 목업](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%20%EC%A7%80%EB%8F%84%20%EB%AA%A9%EC%97%85.html) — 데이터센터 위치 지도 실험
+- 📜 [GPU 변천사 — 15년간의 베팅](https://yohan4477.github.io/semi-report/column/GPU%20%EB%B3%80%EC%B2%9C%EC%82%AC%20-%2015%EB%85%84%EA%B0%84%EC%9D%98%20%EB%B2%A0%ED%8C%85.html) — 15년 GPU 아키텍처 변천 칼럼
 
 ### 제3자 해설 (SemiAnalysis 코퍼스 외)
 - 🎧 [언더스탠딩 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 언더스탠딩 유튜브 한국어 해설(권효재·이선엽 등) 자막요약. SemiAnalysis 코퍼스와 별개이며 확신도 산정 대상 아님
 - 🎓 [미국주식 사관학교 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 네이버 프리미엄 유료 채널(필자 카레라) 텍스트 요약. 개별 종목이 언급되지만 투자 추천이 아니며 가격·밸류에이션 검증도 하지 않음
 - 🏠 [부동산 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%B6%80%EB%8F%99%EC%82%B0%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 채널을 가리지 않고 부동산 주제만 모은 아카이브(유튜브는 자막 전문 기반 요약). 지역·기업이 언급되지만 투자 추천이 아님
+- 💵 [금융 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B8%88%EC%9C%B5%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 금리·국채·환율 주제 아카이브(류상철 전 한국은행 국장 등). 투자 추천이 아님
 
 ## 폴더 구조
 

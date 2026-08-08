@@ -41,7 +41,7 @@ NVROWS = {
  ],
  "2026-07-21": [
    nv("https://developer.nvidia.com/blog/setting-a-world-record-for-moe-pre-training-on-nvidia-gb300-nvl72/", "MoE 사전학습 세계기록 — GB300 NVL72, 프론티어 학습 성능 입증 (NVIDIA 블로그)"),
-   nv("기술 브리핑 — NVIDIA Rubin.html", "Rubin GPU·Vera CPU 아키텍처 공개 — HBM4 288GB·Vera 88코어 커스텀 CPU·LPDDR5X (임원 브리핑)", ext=False, brief=True),
+   nv("https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md", "Rubin GPU·Vera CPU 아키텍처 공개 — HBM4 288GB·Vera 88코어 커스텀 CPU·LPDDR5X (변환 문서)", brief=True),
  ],
  "2026-07-20": [
    nv("https://developer.nvidia.com/blog/nvidia-nvlink-the-scale-up-network-for-ai-factories/", "NVLink — AI 팩토리용 스케일업 네트워크, Rubin NVLink 6(3.6TB/s) 맥락 (NVIDIA 블로그)"),
@@ -50,7 +50,9 @@ NVROWS = {
    nv("https://developer.nvidia.com/blog/scaling-agentic-ai-factories-through-extreme-co-design-with-nvidia-bluefield/", "BlueField 코디자인으로 에이전틱 인프라 확장 — DPU 극단 코디자인 (NVIDIA 블로그)"),
  ],
 }
-BRIEF = "기술 브리핑 — NVIDIA Rubin.html"
+# 기술 브리핑 대시보드는 2026-08-09에 지웠다 — 릴리스 1건짜리 페이지를 따로 두지 않는다.
+# 링크는 같은 내용을 담은 변환 문서로 보낸다
+BRIEF = "https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260226%5D%20%EB%B2%A0%EB%9D%BC%20%EB%A3%A8%EB%B9%88%20-%20%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%EC%BD%94%EB%94%94%EC%9E%90%EC%9D%B8%2C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%8A%A4%20%EB%B8%94%EB%9E%99%EC%9B%B0%20%EC%98%A4%EB%B2%A0%EB%A1%A0%EC%97%90%EC%84%9C%EC%9D%98%20%EC%A7%84%ED%99%94.md"
 NEWS = "https://newsletter.semianalysis.com/p/vera-rubin-nvl72-vs-gb200-nvl72-inference"
 # 클러스터 관련(직접참조 위에 얹는 테마 연결) — href 키.
 REL = {
