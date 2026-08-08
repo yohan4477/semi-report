@@ -296,8 +296,18 @@ def check_actor_map(actor_names):
     빠지면 「제약 → 회사」 지도에서 그 회사만 조용히 사라진다."""
     if not os.path.exists(ACTOR_MAP):
         return
-    m = json.load(io.open(ACTOR_MAP, encoding='utf-8')).get('companies') or {}
-    for name in sorted(actor_names - set(m)):
+    amap = json.load(io.open(ACTOR_MAP, encoding='utf-8'))
+    m = amap.get('companies') or {}
+    # 원자에는 남기되 지도에는 안 올리기로 한 이름. 사유를 적어야 통과한다 —
+    # 사유 없이 빼면 「해석하기 곤란한 주체」를 조용히 지우는 도피구가 된다
+    excluded = amap.get('excluded') or {}
+    for name, reason in sorted(excluded.items()):
+        if name in m:
+            findings.append(('FAIL', 'actor_map.json', 'C20',
+                             '%s가 companies와 excluded 양쪽에 있다' % name))
+        if not (reason or '').strip():
+            findings.append(('FAIL', 'actor_map.json', 'C20', '%s를 뺀 사유가 비어 있다' % name))
+    for name in sorted(actor_names - set(m) - set(excluded)):
         findings.append(('WARN', 'actor_map.json', 'C20', '회사 해석이 없는 주체: %s' % name))
     for name in sorted(set(m) - actor_names):
         findings.append(('WARN', 'actor_map.json', 'C20', 'actors.json에 없는 회사: %s' % name))

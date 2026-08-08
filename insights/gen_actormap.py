@@ -16,6 +16,9 @@ def build():
     atoms = ca.load_atoms()
     amap = json.load(io.open(AMAP, encoding='utf-8'))
     comp = amap['companies']
+    # 원자에는 남기지만 이 지도에는 올리지 않는 주체. 보도 출처나 옛 사례로만 나온 이름을
+    # 억지로 「파는 쪽·맞는 쪽」에 끼우면 지도가 거짓말을 한다. 원자는 원문 그대로 둔다
+    excluded = amap.get('excluded') or {}
     man = {s['id']: s for s in json.load(io.open(ca.MAN, encoding='utf-8'))['sources']}
 
     # (칸, 회사) -> 원자들. 한 원자에 주체가 여럿이면 그 회사 모두에 걸린다
@@ -24,6 +27,8 @@ def build():
     for a in atoms:
         node = a['view']['stack']
         for name in a['view'].get('actor') or []:
+            if name in excluded:
+                continue
             grid.setdefault((node, name), []).append(a)
             seen.add(name)
 
@@ -54,7 +59,9 @@ def build():
                 % (esc(name), tick, unsure, len(items), esc(c.get('role') or ''),
                    esc(c.get('market') or ''), ''.join(atom_card(a) for a in items)))
 
-    SIDES = ['파는 쪽', '맞는 쪽', '양쪽']
+    # side 목록은 사전(side_def)에서 그대로 가져온다. 여기에 손으로 적어 두면
+    # 사전에 side를 새로 만들었을 때 그 회사들이 지도에서 조용히 사라진다
+    SIDES = list(amap.get('side_def') or {})
     blocks = []
     for node in DISP:
         rows = [(n, v) for (nd, n), v in grid.items() if nd == node]
@@ -83,6 +90,11 @@ def build():
     unsure = sorted(n for n, v in comp.items() if v.get('confidence') != '확인')
     unsure_html = ('<p class="axnote">티커·소속을 더 확인해야 하는 곳: <b>%s</b>. '
                    '이 표시가 붙은 줄은 그대로 쓰지 말 것.</p>' % esc(', '.join(unsure))) if unsure else ''
+
+    if excluded:
+        ex = ' · '.join('<b>%s</b> %s' % (esc(n), esc(r))
+                        for n, r in sorted(excluded.items()))
+        unsure_html += ('<p class="axnote">원자에는 남겼지만 이 지도에서 뺀 이름: %s</p>' % ex)
 
     html = (TMPL
             .replace('__CSS__', style.BASE)
