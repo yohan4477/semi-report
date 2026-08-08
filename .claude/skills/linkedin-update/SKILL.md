@@ -1,6 +1,6 @@
 ---
 name: linkedin-update
-description: Fetch new SemiAnalysis LinkedIn posts via an authenticated CDP Chrome session, decode exact post timestamps from the activity URN (no OCR/guessing needed), and update 대시보드/소셜 신호 히스토리.html and 대시보드/인텔리전스 대시보드.html with new entries. Use whenever the user says something like "링크드인 글 더 올라왔다" / "링크드인 최신화해".
+description: Fetch new SemiAnalysis LinkedIn posts via an authenticated CDP Chrome session, decode exact post timestamps from the activity URN (no OCR/guessing needed), and update 대시보드/소셜 신호 히스토리.html and 대시보드/SemiAnalysis 대시보드.html with new entries. Use whenever the user says something like "링크드인 글 더 올라왔다" / "링크드인 최신화해".
 ---
 
 # LinkedIn Update Skill
@@ -108,7 +108,7 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
 
 1. **`대시보드/소셜 신호 히스토리.html`** (hand-edit): full history, newest day-group first, right after the `.tabbar` div, using the exact KST date from step 3 as the day-group header (`<h3>YYYY-MM-DD</h3>`). Row pattern: `<div class="row"><a class="rowmain" href="https://www.linkedin.com/feed/update/urn:li:activity:{ID}/" target="_blank" rel="noopener"><span class="src">{LI SVG}</span><span class="sn">{한글 요약}</span></a></div>`. If the post directly references a newsletter/YouTube, append `<a class="art" href="{url}" ...>` after the `</a>` so the mirror can surface it as a direct-link badge. Update the `.stamp` line's date and LinkedIn count. Copy the LI `<svg>` from any existing row.
 
-2. **`대시보드/인텔리전스 대시보드.html` section ① — regenerate, do not hand-edit** (B안 / history mirror, set 2026-07-23). ① mirrors the most recent N day-groups of the history file. After editing the history, run:
+2. **`대시보드/SemiAnalysis 대시보드.html` section ① — regenerate, do not hand-edit** (B안 / history mirror, set 2026-07-23). ① mirrors the most recent N day-groups of the history file. After editing the history, run:
    ```bash
    python scripts/gen_bmirror.py 10
    ```

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-# 인텔리전스 대시보드 ① 소셜 신호 = 소셜 신호 히스토리의 최근분 미러(B안).
+# SemiAnalysis 대시보드 ① 소셜 신호 = 소셜 신호 히스토리의 최근분 미러(B안).
 # 히스토리 최근 N일 day-group을 자동 파싱 → ① 재생성(LI/YT/뉴스레터 3소스 + NVIDIA 1차 인터리브 + 클러스터 관련 펼침).
 # 사용: python scripts/gen_bmirror.py [일수(기본 14)]
 # linkedin-update로 히스토리 갱신 후 이 스크립트를 돌리면 ①이 자동 동기됨.
 import io, sys, re, os, glob, urllib.parse
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 HIST = r"대시보드\소셜 신호 히스토리.html"
-DASH = r"대시보드\인텔리전스 대시보드.html"
+DASH = r"대시보드\SemiAnalysis 대시보드.html"
 NLDIR = r"content/newsletter"          # ② 뉴스레터 코퍼스
 NL_RECENT = 5                          # ② "최근 N편"
 DAYS_WINDOW = int(sys.argv[1]) if len(sys.argv) > 1 else 14

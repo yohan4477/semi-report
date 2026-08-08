@@ -167,7 +167,8 @@
       "WebFetch(domain:contents.premium.naver.com)",
       "Skill(artifact-diagramming)",
       "Skill(dataviz)",
-      "PowerShell(py *)"
+      "PowerShell(py *)",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_bmirror.py 2>&1 | Select-Object -Last 2)"
     ]
   }
 }
