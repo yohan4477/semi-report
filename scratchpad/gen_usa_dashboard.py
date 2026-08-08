@@ -359,6 +359,7 @@ HEADER = '''  <header>
     </div>
     <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
     <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트 →</a>
+    <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트 →</a>
   </header>''' % (STAMP, len(CARDS), len(CARDS))
 
 FOOTER = ('제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 공개 저장소에 전문을 두지 않습니다.\n'
