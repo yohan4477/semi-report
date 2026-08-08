@@ -34,6 +34,84 @@ NODE_NOTE = {
 }
 
 
+# 스택을 글자 칩으로만 늘어놓으면 열 칸이 그냥 목록으로 보인다. 실제 관계는
+# ① 바깥 넷은 안쪽을 담는 포함 관계이고 ② 랙 안의 다섯은 옆으로 이어진 사슬이며
+# ③ 인사이트는 EDGES 위에서 이어진 칸끼리만 묶을 수 있다(check_atoms C6).
+# 그림은 그 세 가지를 한 번에 보여 준다 — 문장으로는 세 번 말해야 한다.
+NEST = ['연료·지정학', '전력망', '데이터센터', '랙']   # 바깥 → 안, 서로를 담는다
+CHAIN = ['열', '칩', 'HBM', '일반 D램', '낸드·스토리지']  # 랙 안, 옆으로 이어진다
+#  CHAIN의 이웃은 전부 EDGES에 있는 실제 연결이다(열–칩, 칩–HBM, HBM–일반 D램, 일반 D램–낸드).
+#  순서를 바꾸면 그림이 없는 연결을 있는 것처럼 보이게 하므로 EDGES를 먼저 확인할 것
+
+
+def stack_svg(ncount):
+    """포함 관계를 중첩 사각형으로, 랙 안의 사슬을 가로 배치로 그린다.
+    색·글자는 currentColor라 라이트·다크 어느 쪽에서도 읽힌다."""
+    W, H = 720, 400
+    p = ['<svg viewBox="0 0 %d %d" role="img" width="100%%" '
+         'style="max-width:100%%;height:auto;color:inherit" '
+         'aria-label="%s">'
+         % (W, H, esc('연료·지정학이 전력망을, 전력망이 데이터센터를, 데이터센터가 랙을 담고, '
+                      '랙 안에 열·칩·HBM·일반 D램·낸드가 옆으로 이어져 있다. '
+                      '전자·공정은 칩을 만든다'))]
+    p.append('<defs><marker id="stkar" viewBox="0 0 10 10" refX="9" refY="5" '
+             'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
+             '<path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>')
+
+    def label(x, y, txt, size=12, weight=800, anchor='start', op=1.0):
+        p.append('<text x="%g" y="%g" font-size="%g" font-weight="%d" '
+                 'text-anchor="%s" fill="currentColor" fill-opacity="%.2f">%s</text>'
+                 % (x, y, size, weight, anchor, op, esc(txt)))
+
+    # ── 바깥 넷 — 담는 관계는 중첩으로 말한다. 화살표를 쓰면 흐름으로 읽힌다
+    for i, name in enumerate(NEST):
+        x, y = 6 + i * 18, 6 + i * 34
+        w, h = W - 2 * x, H - y - (6 + i * 12)
+        p.append('<rect x="%g" y="%g" width="%g" height="%g" rx="14" '
+                 'fill="none" stroke="currentColor" stroke-opacity="%.2f"/>'
+                 % (x, y, w, h, 0.32 + i * 0.14))
+        label(x + 13, y + 21, name)
+        label(x + 15 + len(name) * 12.2, y + 21, '원자 %d개' % ncount.get(name, 0),
+              size=10.5, weight=700, op=.55)
+
+    # ── 랙 안의 다섯 — 옆으로 이어진 사슬. 이웃끼리만 실제로 연결돼 있다
+    bx, by, bw, bh, gap = 72, 150, 107, 72, 10
+    for i, name in enumerate(CHAIN):
+        x = bx + i * (bw + gap)
+        empty = not ncount.get(name)
+        p.append('<rect x="%g" y="%g" width="%g" height="%g" rx="10" fill="none" '
+                 'stroke="currentColor" stroke-opacity="%.2f"%s/>'
+                 % (x, by, bw, bh, .28 if empty else .7,
+                    ' stroke-dasharray="4 3"' if empty else ''))
+        label(x + bw / 2, by + 30, name, size=12.5, anchor='middle')
+        label(x + bw / 2, by + 50, '원자 %d개' % ncount.get(name, 0),
+              size=10.5, weight=700, anchor='middle', op=.55)
+        if i:  # 이웃 사이의 짧은 연결선 — 이 선이 있어야 한 인사이트로 묶인다
+            p.append('<line x1="%g" y1="%g" x2="%g" y2="%g" stroke="currentColor" '
+                     'stroke-width="2" stroke-opacity=".55"/>'
+                     % (x - gap, by + bh / 2, x, by + bh / 2))
+    label(bx + (bw * 5 + gap * 4) / 2, by - 12,
+          '이어진 이웃끼리만 한 인사이트로 묶는다', size=11, weight=700,
+          anchor='middle', op=.6)
+
+    # ── 전자·공정은 담기는 게 아니라 칩을 만든다. 그래서 혼자 화살표를 갖는다
+    cx = bx + 1 * (bw + gap) + bw / 2          # 칩 칸 중앙
+    p.append('<rect x="%g" y="264" width="%g" height="54" rx="10" fill="none" '
+             'stroke="currentColor" stroke-opacity=".7"/>' % (cx - bw / 2, bw))
+    label(cx, 288, '전자·공정', size=12.5, anchor='middle')
+    label(cx, 306, '원자 %d개' % ncount.get('전자·공정', 0),
+          size=10.5, weight=700, anchor='middle', op=.55)
+    p.append('<line x1="%g" y1="264" x2="%g" y2="%g" stroke="currentColor" '
+             'stroke-width="2" marker-end="url(#stkar)"/>' % (cx, cx, by + bh + 4))
+    label(cx + 12, 252, '칩을 만든다', size=11, weight=700, op=.75)
+    p.append('</svg>')
+    return ('<figure class="stkfig">%s<figcaption>바깥 넷은 서로를 담고, 랙 안의 다섯은 '
+            '옆으로 이어져 있습니다. 인사이트는 이 그림에서 <b>선으로 이어진 칸끼리만</b> '
+            '묶을 수 있습니다 — 칩과 랙, 칩과 일반 D램처럼 그림에 안 그린 연결도 몇 개 더 '
+            '있습니다. 점선 칸은 아직 원자가 없는 칸입니다.</figcaption></figure>'
+            % ''.join(p))
+
+
 # 19건이 한 줄로 죽 늘어서면 어디부터 읽을지가 안 보인다. 읽는 사람이 실제로 쓰는 단위는
 # 스택 좌표가 아니라 주제다 — 전기, 열, 메모리, 칩. 좌표는 근거를 매다는 축이고,
 # 주제는 글을 찾는 문이다. 둘을 같은 화면에서 겸하게 하면 둘 다 흐려진다.
@@ -375,12 +453,15 @@ def build():
                 '<details class="rail"><summary>'
                 '<span class="rstrip"><span class="rk">%s %d칸</span>%s</span>'
                 '<span class="rmore">담는 것</span></summary>'
-                '<div class="railkey">%s</div></details>'
+                # 그림은 레일 밖에 둔다 — 레일은 sticky라, 안에 넣으면 펼치는 순간
+                # 그림이 화면 위에 눌러앉는다. 접어 두면 아예 안 보이고
+                '<div class="railkey">%s</div></details>%s'
                 % (('스택 뷰 — 큰 것에서 작은 것으로'
                     if ins['view'] == 'stack'
                     else '프로세스 뷰 — 결정 순서를 따라 앞 단계에서 뒤 단계로'),
                    '스택' if ins['view'] == 'stack' else '프로세스',
-                   len(full), strip, keys))
+                   len(full), strip, keys,
+                   stack_svg(ncount) if ins['view'] == 'stack' else ''))
         # 묶음 머리 — 이름만 두면 또 다른 나열이다. 무엇이 이것들을 한데 묶는지 한 줄로 적는다
         if ins['theme'] != prev_theme:
             lab, lead = next((l, d) for k, l, d in THEMES if k == ins['theme'])
@@ -699,6 +780,14 @@ TMPL = r'''<meta charset="utf-8">
   .rail .no{align-self:center;display:flex;align-items:center;justify-content:center;
             width:15px;height:15px;border-radius:50%;background:var(--card);border:1px solid var(--line);
             font-size:9.5px;font-weight:800;color:var(--faint);font-style:normal;flex:0 0 auto}
+  /* 계층 그림 — 열 칸이 목록이 아니라 포함 관계라는 것을 글 읽기 전에 한 번 보여 준다 */
+  .stkfig{margin:0 0 18px;padding:14px 16px 12px;background:var(--card);
+          border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .stkfig svg{display:block;width:100%;height:auto}
+  .stkfig figcaption{font-size:var(--t-meta);color:var(--faint);line-height:1.55;
+                     margin-top:10px;max-width:70ch}
+  .stkfig figcaption b{color:var(--sub)}
+  @media (max-width:640px){.stkfig{padding:11px 12px 10px;margin-bottom:14px}}
   .railkey .no{width:16px;height:16px;font-size:10px}
   .railkey .no{grid-row:1/3}
   .rail b{font-size:var(--t-meta);font-weight:800;color:var(--ink);letter-spacing:-.01em;
