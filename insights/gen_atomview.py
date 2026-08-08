@@ -424,7 +424,17 @@ def build():
         m1 = re.search(r'^## 한 줄\n+(.*?)(?=\n## )', th['body'], re.S | re.M)
         if m1:
             one = re.sub(r'\*\*(.+?)\*\*', r'\1', m1.group(1)).strip()
-        tickers = re.findall(r'\| ([A-Z]{2,5}|\d{6}|\d{4}) \|', th['body'])
+        tickers = []
+        # 티커는 「종목 노출」 표에서만 뽑는다 — 다른 표의 약어가 섞이면 칩이 거짓말을 한다
+        tsec = re.search(r'^## 종목 노출.*?$(.*?)(?=^## )', th['body'], re.S | re.M)
+        for row in re.findall(r'^\|(.+)\|$', tsec.group(1) if tsec else '', re.M):
+            cells = [c.strip() for c in row.split('|')]
+            if len(cells) < 2:
+                continue
+            for tk in re.split(r'[,/·]', cells[1]):
+                tk = tk.strip()
+                if re.fullmatch(r'[A-Z]{2,5}|\d{4}|\d{6}|\d{3}[A-Z]', tk):
+                    tickers.append(tk)
         chips = ''.join('<span class="tk">%s</span>' % esc(x) for x in dict.fromkeys(tickers))
         tcards.append(
             '<details class="th"><summary>'
