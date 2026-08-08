@@ -47,10 +47,10 @@
 | ai-infra/compute | 22 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 10 |
-| ai-infra/business | 11 |
-| ai-infra/power | 6 |
+| ai-infra/business | 12 |
+| ai-infra/power | 7 |
 | ai-infra/cooling | 2 |
-| ai-infra/construction | 1 |
+| ai-infra/construction | 2 |
 | ai-models/rl | 3 |
 | ai-models/agents | 2 |
 | ai-models | 2 |
@@ -75,6 +75,7 @@
 <!-- 2026-07-30: `ai-infra/construction` 신규 카테고리 신설 — [260729] LEGO 데이터센터(모듈러 건설) 문서가 계기. 기존 ai-infra/power·cooling은 완성된 설비 스펙을 다루는데, 이 문서는 부지·셸·시스템 3층 구조와 모듈러·프리팹 조립 공정, 공사 인력 병목, EPC·통합업체·OEM 벤더 생태계라는 "어떻게 짓는가" 축이 중심이라 기존 카테고리 어디에도 맞지 않아 신설. 문서 후반부(벤더별 승자·패자, 백로그·마진·콘텐츠당 MW 경제성)는 ai-infra/business와도 겹쳐 이중 태그 부여 — ai-infra/construction 0→1, ai-infra/business 8→9 -->
 <!-- 2026-08-07: [260722] 메타 인프라 팀에 필요한 문화 리셋 신규 변환 완료 — ai-infra/business 9→10, ai-infra/compute 21→22, ai-infra/networking 9→10. Rivos 인수(25억 달러 헛발질)·Grand Teton 서버(쓰지 못한 스위치 트레이)·Ariel 랙(GB200 반쪽 구성, TCO 14%↑)·AMD MI450X 메타 전용 축소판·DSF↔NSF 네트워크 과잉설계 흥망까지 5개 실패 사례로 메타 인프라 조직의 정치화·단기 성과주의를 진단, 전체 7개 섹션 완료 -->
 <!-- 2026-08-07: [260807] 제미나이는 끝났어도 GCP는 잘나간다(딥마인드 리더십 붕괴·구글 클라우드 반사이익) 신규 변환 완료 — ai-infra/business 10→11. 딥마인드 리더십 전면 개편(제프 딘·산자이 게마왓·쿼크 레·오리올 비니알스 퇴사, 디스커버리 루프 창업), 제미나이 3.5 프로 조용한 취소·모델 경쟁력 하락, GCP의 TPU 완제품 시스템 판매(총액 기준 GW당 ~350억 달러)發 매출 금융화·2027년 EPS 기여 전망, IBM·인텔과의 역사적 유사 사례까지 전체 4개 섹션 완료 -->
+<!-- 2026-08-08: [260807] 스페이스X 2027년 10GW 베팅(마이크로소프트가 최대 고객이 되는 이유) 신규 변환 완료 — ai-infra/business 11→12, ai-infra/construction 1→2, ai-infra/power 6→7. 스페이스X 10GW 목표의 추론 매출 경제성(GW당 연 1,000억 달러)·마이크로소프트의 컴퓨트 확보 유인(오픈AI 재협상·MW당 1억 달러 기회)·자금조달(엔비디아 벤더 파이낸싱)이라는 사업 축은 business, 대형 전력변압기(LPT) 우회·30개+ 가스터빈 멀티벤더 소싱·텍사스 팜파 2GW 온사이트 발전이라는 전력 축은 power, Colossus/MiniHard의 122일\~6개월 건설 속도·리트로핏 대 그린필드·인력 병목 우회(사전조립·병렬화)라는 시공 축은 construction으로 3중 분류. 전체 4개 섹션 완료, 전력 통합 리포트 §1.3(BTM 확산) 갱신 -->
 
 
 
