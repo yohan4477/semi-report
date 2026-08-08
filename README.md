@@ -4,6 +4,8 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 ## 대시보드 (GitHub Pages)
 
+**🧭 [Yomianalysis — 어디로 들어갈까](https://claude.ai/code/artifact/71921e32-6def-4976-acea-712329628181)** ← 전체 입구. 여기만 북마크하면 됩니다. 생성: `py scripts/gen_hub.py`
+
 > 2026-08-09 정리: 대시보드를 19개에서 11개로 줄였습니다. 지운 8개(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다.
 
 ### 메인

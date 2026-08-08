@@ -1,0 +1,101 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yomianalysis</title>
+<style>
+  :root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--faint:#8892a3;--line:#e3e7ee;--accent:#2563eb;--accent2:#1e40af;--soft:#eaf1fe;--sunk:#eef1f5;--shadow:0 1px 2px rgba(26,34,51,.05);
+        /* 글자·간격은 여기서만 정한다. 모바일은 이 값만 바꾼다 — 규칙을 두 벌 두면 어긋난다 */
+        --t-lbl:10.5px;--t-meta:12px;--t-body:13.5px;--t-lead:14.5px;--t-h2:19px;
+        --r:12px;--pad:16px 20px;--gap:12px}
+  @media (prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--faint:#7e8798;--line:#2a3140;--accent:#7aa5f8;--accent2:#9ab8fa;--soft:#1e2a44;--sunk:#242b38;--shadow:none}}
+  *{box-sizing:border-box}
+  html{font-size:100%}
+  body{font-size:1rem;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;line-height:1.64;margin:0;padding:0 20px 80px}
+  .wrap{max-width:900px;margin:0 auto}
+  header{padding:52px 0 6px}
+  .eyebrow{font-size:var(--t-meta);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h1{font-size:clamp(28px,6vw,44px);font-weight:850;letter-spacing:-.035em;margin:0}
+  h1::after{content:"";display:block;width:52px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
+  .lede{color:var(--sub);font-size:var(--t-lead);margin:16px 0 0;max-width:64ch}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:var(--t-meta);color:var(--faint)}
+  h3.sec{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  h4.sub2{font-size:var(--t-body);font-weight:800;color:var(--sub);margin:22px 0 8px}
+  .ev{border:1px solid var(--line);border-radius:var(--r);background:var(--sunk);margin:14px 0 0}
+  .ev>summary{cursor:pointer;padding:10px 13px;font-size:var(--t-meta);color:var(--sub);list-style:none}
+  .ev>summary::-webkit-details-marker{display:none}
+  .ev>summary::before{content:"▸ ";color:var(--faint)}
+  .ev[open]>summary::before{content:"▾ "}
+  .ev>summary b{color:var(--ink)}
+  .ev .atom{padding:11px 13px;border-top:1px solid var(--line)}
+  .axnote{font-size:var(--t-body);color:var(--sub);margin:0 0 14px;max-width:64ch}
+  .atom{border-top:1px solid var(--line);padding:11px 0}
+  .atom:first-of-type{border-top:0}
+  .aid{font-size:var(--t-lbl);font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .atag{font-size:var(--t-lbl);font-weight:800;padding:1px 7px;border-radius:999px;margin-left:6px;background:var(--sunk);color:var(--faint)}
+  .aclaim{font-size:var(--t-body);color:var(--ink);margin:3px 0 4px}
+  .kv{font-size:var(--t-meta);color:var(--sub);margin:0 0 3px}
+  .kv span{color:var(--faint)}
+  .src{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:var(--t-meta);color:var(--sub);background:var(--sunk);
+       border-left:2px solid var(--line);border-radius:0 6px 6px 0;padding:7px 9px;margin:5px 0 0;white-space:pre-wrap;word-break:break-word}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--sunk);padding:1px 4px;border-radius:4px}
+  .maplink{color:var(--accent);font-weight:700;text-decoration:none}
+  .maplink:hover{text-decoration:underline}
+  footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:var(--t-meta);color:var(--faint)}
+  /* ── 모바일 — 값이 아니라 토큰만 바꾼다. 규칙을 두 벌 두면 반드시 어긋난다 ── */
+  @media (max-width:640px){
+    :root{--t-lbl:11.5px;--t-meta:12.5px;--t-body:14px;--t-lead:14.5px;--t-h2:17.5px;--pad:16px 15px}
+    body{padding:0 14px 64px;line-height:1.66}
+    .wrap{max-width:100%}
+    header{padding:34px 0 4px}
+    h1{font-size:clamp(26px,7.5vw,34px);letter-spacing:-.03em}
+    .meta{gap:5px 14px}
+    .ev>summary,.ev .atom{padding:13px 14px;min-height:44px}
+    .atag{padding:2px 8px}
+  }
+
+
+  .tp{margin:44px 0 0;padding-top:26px;border-top:1px solid var(--line)}
+  .tp:first-of-type{border-top:0;padding-top:8px;margin-top:26px}
+  .tph{display:flex;align-items:baseline;gap:10px;margin:0}
+  .tpe{font-size:24px;line-height:1}
+  .tph h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;margin:0}
+  .tph .n{font-size:var(--t-lbl);font-weight:800;color:var(--faint);font-variant-numeric:tabular-nums}
+  .tp>p{font-size:var(--t-body);color:var(--sub);margin:6px 0 0;max-width:64ch}
+  .cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));margin-top:14px}
+  .pc{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
+      border-left:3px solid var(--accent);border-radius:var(--r);padding:13px 15px;box-shadow:var(--shadow);
+      transition:transform .12s cubic-bezier(.32,.72,0,1),border-color .12s}
+  .pc:hover{transform:translateY(-1px);border-color:var(--accent)}
+  .pc:active{transform:scale(.995)}
+  .pct{display:flex;align-items:baseline;gap:7px}
+  .pct .e{font-size:15px;line-height:1}
+  .pct b{font-size:var(--t-lead);font-weight:800;letter-spacing:-.01em}
+  .pc p{font-size:var(--t-body);color:var(--sub);margin:5px 0 0;line-height:1.55}
+  .bd{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:5px}
+  .bd i{font-style:normal;font-size:var(--t-lbl);font-weight:800;padding:2px 8px;border-radius:999px;
+        background:var(--sunk);color:var(--faint)}
+  .bd i.semi{background:var(--soft);color:var(--accent2)}
+  .bd i.warn{background:#f6ecda;color:#9a5b12}
+  @media (prefers-color-scheme:dark){.bd i.warn{background:#2a2113;color:#d79a4e}}
+  .rule{background:var(--soft);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;
+        padding:12px 16px;margin:26px 0 0;font-size:var(--t-body);line-height:1.6}
+  .rule b{color:var(--accent2)}
+  @media (max-width:640px){
+    .cards{grid-template-columns:1fr}
+    .pc{padding:14px 15px}
+  }
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Yomianalysis</p>
+  <h1>어디로 들어갈까</h1>
+  <p class="lede">SemiAnalysis 뉴스레터와 LinkedIn·YouTube 신호, 그리고 제3자 해설을
+  한국어로 옮기고 엮은 것들입니다. 여기만 북마크하면 됩니다 — 나머지는 이 페이지에서 닿습니다.</p>
+  <div class="meta"><span>페이지 11장</span><span>주제 3 · 소스 아카이브 2</span></div>
+</header>
+<section class="tp"><div class="tph"><span class="tpe">🔬</span><h2>반도체 · AI · 인프라</h2><span class="n">7장</span></div><p>칩에서 전력망까지. 이 저장소의 본진이고, 새 소스는 대부분 여기로 들어온다.</p><div class="cards"><a class="pc" href="https://claude.ai/code/artifact/7b4ce9f2-6fe1-43ec-b1eb-1722bd24dadb"><span class="pct"><span class="e">🧭</span><b>SemiAnalysis 대시보드</b></span><p>소셜·영상 신호, 뉴스레터 최근분, 클러스터 종합 판단, 기업 익스포저 — 코퍼스 전체를 한 화면에</p><p class="bd"><i class="semi">SemiAnalysis</i></p></a><a class="pc" href="https://claude.ai/code/artifact/42978428-610b-43ec-8383-364d4b1dedd1"><span class="pct"><span class="e">⚛️</span><b>인사이트와 그 근거</b></span><p>판단을 먼저 읽고 「근거 원자」를 펼치면 인용 원자가 문서 원문의 그 줄과 함께 나온다</p><p class="bd"><i class="semi">SemiAnalysis</i><i class="">원자 검사기</i></p></a><a class="pc" href="https://claude.ai/code/artifact/3bc44125-c106-478d-a48b-b4a04b0849e5"><span class="pct"><span class="e">🏭</span><b>제약과 회사</b></span><p>제약별로 그것을 파는 회사와 맞는 회사. 종목 추천이 아니다 — 가격도 검증도 여기 없다</p><p class="bd"><i class="semi">SemiAnalysis</i><i class="">해석 사전</i></p></a><a class="pc" href="https://claude.ai/code/artifact/a2742433-8236-4907-8a8a-96e070452455"><span class="pct"><span class="e">🗺️</span><b>인사이트 지도</b></span><p>좌표가 있는 클러스터를 스크롤하며 따라가는 지도</p><p class="bd"><i class="semi">SemiAnalysis</i></p></a><a class="pc" href="https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B0%9C%EB%85%90%20%EC%A7%80%EB%8F%84%20%E2%80%94%20LLM%20%EA%B3%84%EC%B8%B5%C2%B7%EB%B3%91%EB%A0%AC%ED%99%94.html"><span class="pct"><span class="e">🧩</span><b>개념 지도</b></span><p>학습·추론에서 모델 계층, 병렬화, GPU 랙까지 구조를 한 장에</p><p class="bd"><i class="semi">SemiAnalysis</i><i class="warn">미발행</i></p></a><a class="pc" href="https://claude.ai/code/artifact/eeb52a64-fd05-4969-97f6-6f112346665d"><span class="pct"><span class="e">🗂️</span><b>소셜 신호 히스토리</b></span><p>LinkedIn·YouTube 신호 전체 아카이브. SemiAnalysis 대시보드 ①이 여기를 비춘다</p><p class="bd"><i class="">LinkedIn</i><i class="">YouTube</i></p></a><a class="pc" href="https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html"><span class="pct"><span class="e">📊</span><b>임팩트 타임라인</b></span><p>이벤트 하나가 어디까지 번지는지를 가지로 그린다. 2차 파급까지만 — 3차는 추측이다</p><p class="bd"><i class="">LinkedIn</i><i class="warn">미발행</i></p></a></div></section><section class="tp"><div class="tph"><span class="tpe">🏠</span><h2>부동산</h2><span class="n">1장</span></div><p>채널을 가리지 않고 부동산 주제만 모은다.</p><div class="cards"><a class="pc" href="https://claude.ai/code/artifact/e0b5d7a2-5b2a-485c-86d9-cf87d4a021ab"><span class="pct"><span class="e">🏠</span><b>부동산 인사이트</b></span><p>공급·세제·건설 원가·토지. 유튜브는 자막 전문 기반 요약이다</p><p class="bd"><i class="">제3자 해설</i></p></a></div></section><section class="tp"><div class="tph"><span class="tpe">💵</span><h2>금융</h2><span class="n">1장</span></div><p>금리·국채·환율.</p><div class="cards"><a class="pc" href="https://claude.ai/code/artifact/e103df37-e013-41a2-af04-1c44dc689e5d"><span class="pct"><span class="e">💵</span><b>금융 인사이트</b></span><p>통화정책과 채권 시장을 다룬 해설 요약</p><p class="bd"><i class="">제3자 해설</i></p></a></div></section><section class="tp"><div class="tph"><span class="tpe">📼</span><h2>소스별 아카이브</h2><span class="n">2장</span></div><p>주제가 아니라 채널로 묶여 있는 것들이다. 한 채널이 여러 주제를 다루면 읽는 사람이 골라내야 해서, 위의 주제 쪽으로 옮기는 중이다.</p><div class="cards"><a class="pc" href="https://claude.ai/code/artifact/178afa89-49aa-43bc-8a3a-e52c7a094686"><span class="pct"><span class="e">🎧</span><b>언더스탠딩 인사이트</b></span><p>권효재·이선엽 등 언더스탠딩 유튜브 해설. 에너지·AI 편은 🔬로, 부동산 편은 🏠로 옮겨 갈 몫이다</p></a><a class="pc" href="https://claude.ai/code/artifact/1cef7eee-019d-49de-ba36-20e85e959db0"><span class="pct"><span class="e">🎓</span><b>미국주식 사관학교</b></span><p>네이버 프리미엄 유료 채널 요약. 종목이 나오지만 추천이 아니고 가격 검증도 없다</p></a></div></section>
+<div class="rule"><b>페이지를 늘리지 않는 규칙.</b> 리포트 한 편이나 릴리스 하나 때문에
+대시보드를 새로 만들지 않습니다. 주제 대시보드의 한 섹션으로 넣고 원문을 링크합니다 —
+2026-08-09에 19장을 11장으로 줄인 이유가 그것이었습니다.</div>
+<footer>이 저장소는 public입니다. 종목이 언급되더라도 투자 추천이 아니며,
+가격·밸류에이션·타이밍은 이 체계에 없습니다.</footer>
+</div>
