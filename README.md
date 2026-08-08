@@ -4,7 +4,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 ## 대시보드 (GitHub Pages)
 
-**🧭 [Yomianalysis — 어디로 들어갈까](https://claude.ai/code/artifact/71921e32-6def-4976-acea-712329628181)** ← 전체 입구. 여기만 북마크하면 됩니다. 생성: `py scripts/gen_hub.py`
+**🧭 [Yomianalysis — 어디로 들어갈까](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/Yomianalysis.html)** ← 전체 입구. 여기만 북마크하면 됩니다. 생성: `py scripts/gen_hub.py`
 
 > 2026-08-09 정리: 19장에서 8장을 지우고 입구 1장을 더해 **12장**이 됐습니다. 지운 것(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다. 같은 날 「인텔리전스 대시보드」는 담긴 게 전부 SemiAnalysis 코퍼스라 **SemiAnalysis 대시보드**로 이름을 바꿨습니다(URL은 그대로).
 

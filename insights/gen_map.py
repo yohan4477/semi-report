@@ -120,7 +120,7 @@ def main():
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('OK: %d clusters, %d markers -> %s' % (len(clusters), len(markers), OUT))
 
-INS_URL = "https://claude.ai/code/artifact/6acd6d5a-9c65-4c23-8225-6885b35add31"
+INS_URL = "https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html"
 
 TMPL = r'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

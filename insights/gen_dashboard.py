@@ -7,7 +7,7 @@ import facts as fct
 ROOT = r"C:\Users\y\semianalysis"
 MAN = os.path.join(ROOT, "insights", "manifest.json")
 OUT = os.path.join(ROOT, "대시보드", "통합 인사이트.html")
-MAP_URL = "https://claude.ai/code/artifact/a2742433-8236-4907-8a8a-96e070452455"
+MAP_URL = "https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EC%A7%80%EB%8F%84.html"
 GH = "https://github.com/yohan4477/semi-report/blob/main/"
 
 import urllib.parse
