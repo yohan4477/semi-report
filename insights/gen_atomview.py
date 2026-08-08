@@ -136,6 +136,73 @@ def md_inline(s):
     return s
 
 
+
+def load_theses():
+    """종합 판단 — 문서 여럿을 겹쳐 세운 판단. 인사이트보다 위에 놓는다"""
+    out = []
+    for p in sorted(glob.glob(os.path.join(ROOT, 'insights', 'theses', '*.md'))):
+        t = io.open(p, encoding='utf-8').read()
+        m = re.match(r'^---\n(.*?)\n---\n(.*)$', t, re.S)
+        if not m:
+            continue
+        fm, body = m.group(1), m.group(2)
+        def f(k, d=''):
+            r = re.search(r'^%s: (.*)$' % k, fm, re.M)
+            return r.group(1).strip() if r else d
+        out.append({
+            'id': f('id'), 'title': f('title'), 'question': f('question'),
+            'span': f('doc_span'), 'as_of': f('as_of'), 'review_by': f('review_by'),
+            'atoms': re.findall(r'A-\d{6}-\d{2}', f('atoms')),
+            'lis': re.findall(r'L-\d{8}-\d{4}', f('li_signals')),
+            'docs': len([x for x in f('docs').strip('[]').split(',') if x.strip()]),
+            'body': body,
+        })
+    return out
+
+
+def md_block(s):
+    """판단 본문 — 표·굵은 글씨·목록만 쓰는 좁은 마크다운이라 이 정도로 충분하다"""
+    html, rows, para = [], [], []
+    def flush_rows():
+        if not rows:
+            return
+        body = [r for r in rows if not re.match(r'^\|[\s\-|]+\|$', r)]
+        cells = [[c.strip() for c in r.strip('|').split('|')] for r in body]
+        head, rest = cells[0], cells[1:]
+        html.append('<div class="tw"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+                    % (''.join('<th>%s</th>' % md_inline(c) for c in head),
+                       ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % md_inline(c) for c in r) for r in rest)))
+        rows.clear()
+    def flush_para():
+        if para:
+            html.append('<p>%s</p>' % md_inline(' '.join(para)))
+            para.clear()
+    for line in s.splitlines():
+        ln = line.rstrip()
+        if ln.startswith('|'):
+            flush_para(); rows.append(ln); continue
+        flush_rows()
+        if not ln.strip():
+            flush_para(); continue
+        if ln.startswith('## '):
+            flush_para(); html.append('<h4>%s</h4>' % md_inline(ln[3:])); continue
+        if ln.startswith('- '):
+            flush_para(); html.append('<li>%s</li>' % md_inline(ln[2:])); continue
+        para.append(ln.strip())
+    flush_rows(); flush_para()
+    # 목록은 여닫이를 상태로 처리한다 — 정규식으로 감싸면 표 안의 문자열까지 건드린다
+    out, inlist = [], False
+    for h in html:
+        if h.startswith('<li>') and not inlist:
+            out.append('<ul>'); inlist = True
+        elif not h.startswith('<li>') and inlist:
+            out.append('</ul>'); inlist = False
+        out.append(h)
+    if inlist:
+        out.append('</ul>')
+    return ''.join(out)
+
+
 def build():
     atoms = ca.load_atoms()
     pr = json.load(io.open(ca.PROCESS, encoding='utf-8'))
@@ -349,6 +416,25 @@ def build():
         ins_html.append('</div></details></section>' if tmore else '</div></section>')
         ins_html.insert(0, nav_html)
 
+    # 종합 판단 — 문서 여럿을 겹쳐 세운 판단. 인사이트 위에 놓는다
+    theses = load_theses()
+    tcards = []
+    for th in theses:
+        one = ''
+        m1 = re.search(r'^## 한 줄\n+(.*?)(?=\n## )', th['body'], re.S | re.M)
+        if m1:
+            one = re.sub(r'\*\*(.+?)\*\*', r'\1', m1.group(1)).strip()
+        tickers = re.findall(r'\| ([A-Z]{2,5}|\d{6}|\d{4}) \|', th['body'])
+        chips = ''.join('<span class="tk">%s</span>' % esc(x) for x in dict.fromkeys(tickers))
+        tcards.append(
+            '<details class="th"><summary>'
+            '<span class="thid">%s</span><h3>%s</h3><p class="thone">%s</p>'
+            '<p class="thmeta">문서 %d편 · %s · 원자 %d개 · 신호 %d건 · 다시 볼 날 %s</p>'
+            '<p class="thtk">%s</p></summary><div class="thbody">%s</div></details>'
+            % (esc(th['id']), esc(th['title']), esc(one), th['docs'], esc(th['span']),
+               len(th['atoms']), len(th['lis']), esc(th['review_by']), chips, md_block(th['body'])))
+    th_html = ''.join(tcards)
+
     # 문서가 자기 본문에 갖고 있는 구조 — 전역 좌표가 못 담는 층이다
     STRUCT = os.path.join(ROOT, 'insights', 'views', 'structures.json')
     GROUPS = os.path.join(ROOT, 'insights', 'views', 'structure_groups.json')
@@ -420,6 +506,8 @@ def build():
             .replace('__CHAIN__', chain_html)
             .replace('__BAND__', band_html)
             .replace('__INSIGHTS__', ''.join(ins_html))
+            .replace('__THESES__', th_html)
+            .replace('__NT__', str(len(theses)))
             .replace('__STRUCT__', st_html)
             .replace('__NS__', str(n_struct))
             .replace('__NG__', str(n_group))
@@ -507,6 +595,30 @@ TMPL = r'''<meta charset="utf-8">
   .mapsec>summary .mn{font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums}
   .mapsec>summary::after{content:'▾';margin-left:auto;color:var(--faint);font-size:11px}
   .mapsec[open]>summary::after{content:'▴'}
+  /* 종합 판단 — 이 페이지의 주인. 인사이트 카드보다 무겁게 둔다 */
+  .thsec{font-size:var(--t-h1);font-weight:880;letter-spacing:-.025em;margin:34px 0 6px}
+  .thnote{font-size:var(--t-meta);color:var(--faint);margin:0 0 14px;max-width:66ch;line-height:1.6}
+  .th{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);
+      border-radius:var(--r);padding:var(--pad);margin-bottom:12px;box-shadow:var(--shadow)}
+  .th>summary{cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent}
+  .th>summary::-webkit-details-marker{display:none}
+  .thid{font-size:var(--t-lbl);font-weight:850;letter-spacing:.08em;color:var(--accent2)}
+  .th h3{font-size:var(--t-h2);font-weight:860;letter-spacing:-.02em;line-height:1.34;margin:4px 0 6px}
+  .thone{font-size:var(--t-body);color:var(--sub);line-height:1.62;margin:0 0 8px}
+  .thmeta{font-size:var(--t-meta);color:var(--faint);margin:0;font-variant-numeric:tabular-nums}
+  .thtk{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 0}
+  .tk{font-size:var(--t-lbl);font-weight:800;color:var(--accent);background:var(--soft);
+      border-radius:5px;padding:3px 7px;font-variant-numeric:tabular-nums}
+  .th[open]>summary{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px}
+  .thbody{font-size:var(--t-body);line-height:1.72}
+  .thbody h4{font-size:var(--t-lead);font-weight:820;margin:18px 0 6px;letter-spacing:-.01em}
+  .thbody p{margin:8px 0}
+  .thbody ul{margin:6px 0;padding-left:18px}
+  .thbody li{margin:5px 0}
+  .thbody .tw{overflow-x:auto;margin:10px 0}
+  .thbody table{border-collapse:collapse;width:100%;font-size:var(--t-meta)}
+  .thbody th{text-align:left;font-weight:800;color:var(--sub);border-bottom:1px solid var(--line);padding:7px 9px;white-space:nowrap}
+  .thbody td{border-bottom:1px solid var(--line);padding:7px 9px;vertical-align:top}
   .hintbox{margin:20px 0 4px;font-size:var(--t-meta);color:var(--faint)}
   .hintbox>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;
                    font-weight:750;color:var(--sub);padding:6px 0;min-height:32px}
@@ -678,6 +790,13 @@ TMPL = r'''<meta charset="utf-8">
   </div>
 </header>
 
+<h2 class="thsec">종합 판단 __NT__건 — 문서 여럿을 겹쳐 세운 것</h2>
+<p class="thnote">한 문서로는 안 나오는 결론만 여기 둡니다. 각 판단은 근거 문서 3편 이상,
+   한 문서가 근거의 절반을 넘지 않고, 시간표와 폐기 조건을 갖습니다. 가격·밸류에이션은 없습니다 —
+   제약이 매출에 닿는 경로이지 매수·매도 판단이 아닙니다.</p>
+__THESES__
+
+<h2 class="thsec">근거가 되는 판단 __NI__건 — 좌표 한 칸씩</h2>
 <details class="hintbox"><summary>이 페이지 읽는 법</summary>
 <p>글은 <b>주제 6묶음</b>으로 나뉘어 있습니다. 접힌 카드에도 「그래서 무엇이 달라지나」 첫 줄이 붙어 있어 열지 않고 고를 수 있고, 카드를 누르면 근거·조건 충돌·미지까지 펼쳐집니다. 「근거 원자」를 한 번 더 누르면 인용 원자가 <b>문서 원문의 그 줄</b>과 함께 나옵니다.</p></details>
 __INSIGHTS__
