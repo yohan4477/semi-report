@@ -166,7 +166,8 @@
       "MultiEdit",
       "WebFetch(domain:contents.premium.naver.com)",
       "Skill(artifact-diagramming)",
-      "Skill(dataviz)"
+      "Skill(dataviz)",
+      "PowerShell(py *)"
     ]
   }
 }
