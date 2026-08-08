@@ -9,11 +9,10 @@ from clip_naver import CDP, EXTRACT
 
 VAULT = r"C:\Users\y\semi_docs\Clippings\미국주식 사관학교"
 URLS = [
-    'https://contents.premium.naver.com/usa/nasdaq/contents/260803135207168yg',
-    'https://contents.premium.naver.com/usa/nasdaq/contents/260807153141672vt',
-    'https://contents.premium.naver.com/usa/nasdaq/contents/260715091917892vs',
+    'https://contents.premium.naver.com/usa/nasdaq/contents/260805170706658si',
+    'https://contents.premium.naver.com/usa/nasdaq/contents/260729124904382xt',
+    'https://contents.premium.naver.com/usa/nasdaq/contents/260727120731275qv',
 ]
-
 
 def pub_from_url(u):
     m = re.search(r'/contents/(\d{6})', u)
