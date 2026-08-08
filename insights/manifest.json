@@ -84,6 +84,19 @@
    "hash": "3be64e35b63c"
   },
   {
+   "id": "semi:business:스페이스X-2027년-10GW-베팅-마이크로소프트가-최대-고객이-되는-이유",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/construction",
+    "ai-infra/power"
+   ],
+   "date": "2026-08-07",
+   "path": "content/newsletter/ai_infra/business/[260807] 스페이스X 2027년 10GW 베팅 - 마이크로소프트가 최대 고객이 되는 이유.md",
+   "hash": "e0c75abccee0"
+  },
+  {
    "id": "semi:business:앤트로픽-3분기-10억-달러-흑자-IPO-재무제표-미리보기",
    "corpus": "semianalysis",
    "folder": "business",
@@ -653,6 +666,50 @@
    "hash": "1fa65fda1719"
   },
   {
+   "id": "und:미국주식 사관학교:SK하이닉스-실적의-역설-HBM-1등이라-상승분을-덜-받았다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-29",
+   "path": "content/understanding/미국주식 사관학교/[260729] SK하이닉스 실적의 역설 - HBM 1등이라 상승분을 덜 받았다.md",
+   "hash": "b524feaa9867"
+  },
+  {
+   "id": "und:미국주식 사관학교:광통신포토닉스-입문-CPOOCS와-밸류체인-다섯-층",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-15",
+   "path": "content/understanding/미국주식 사관학교/[260715] 광통신·포토닉스 입문 - CPO·OCS와 밸류체인 다섯 층.md",
+   "hash": "c448f5a7426e"
+  },
+  {
+   "id": "und:미국주식 사관학교:데이터센터-60곳-동시-이탈-31GW가-30초-만에-사라진-사고",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-27",
+   "path": "content/understanding/미국주식 사관학교/[260727] 데이터센터 60곳 동시 이탈 - 3.1GW가 30초 만에 사라진 사고.md",
+   "hash": "cc1f6550df7d"
+  },
+  {
+   "id": "und:미국주식 사관학교:마이클-버리-8월-4일-포지션-재정비-반도체에서-순환금융으로",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-05",
+   "path": "content/understanding/미국주식 사관학교/[260805] 마이클 버리 8월 4일 포지션 재정비 - 반도체에서 순환금융으로.md",
+   "hash": "ff1686ebba8a"
+  },
+  {
    "id": "und:미국주식 사관학교:성공한-작업당-비용-모델-라우팅-수혜주-3종",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -661,7 +718,73 @@
    ],
    "date": "2026-07-31",
    "path": "content/understanding/미국주식 사관학교/[260731] 성공한 작업당 비용 - 모델 라우팅 수혜주 3종.md",
-   "hash": "66fff0704459"
+   "hash": "5859398dfbde"
+  },
+  {
+   "id": "und:미국주식 사관학교:순환금융-AI-관련주-최대-리스크와-고리-밖-기업들",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-07",
+   "path": "content/understanding/미국주식 사관학교/[260807] 순환금융 - AI 관련주 최대 리스크와 고리 밖 기업들.md",
+   "hash": "3fc064f80a09"
+  },
+  {
+   "id": "und:미국주식 사관학교:엔비디아-vs-AMD-메모리-치킨게임-누가-이겨도-HBM이-남는다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-03",
+   "path": "content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md",
+   "hash": "791c9b3c6637"
+  },
+  {
+   "id": "und:부동산:싱가포르-주택-모델-공급연금세금-세-축과-한국이-못-하는-이유",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-06-20",
+   "path": "content/understanding/부동산/[260620] 싱가포르 주택 모델 - 공급·연금·세금 세 축과 한국이 못 하는 이유.md",
+   "hash": "dcdaff34446c"
+  },
+  {
+   "id": "und:부동산:일본-지방-땅값이-오르는-곳은-전부-기업을-끼고-있다-박상준",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-08-04",
+   "path": "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md",
+   "hash": "dc4386544223"
+  },
+  {
+   "id": "und:부동산:전세와-거래세가-시장을-잠근다-필터링이-안-돌아간다-2부",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-30",
+   "path": "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md",
+   "hash": "d74320595f00"
+  },
+  {
+   "id": "und:부동산:한국-보유세는-정말-낮은가-같은-집에-각-도시-세제를-붙여봤다-1부",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-29",
+   "path": "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md",
+   "hash": "d2361535f87e"
   },
   {
    "id": "und:빌 애크먼:제가-이걸-공짜로-들어도-될까요-빌-애크먼",

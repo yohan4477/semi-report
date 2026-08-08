@@ -512,6 +512,30 @@
    "side": "맞는 쪽",
    "role": "구글 내부에서 TPU 배분을 두고 클라우드 부문과 경쟁하는 모델 조직",
    "confidence": "확인"
+  },
+  "스페이스X": {
+   "ticker": null,
+   "market": "비상장",
+   "listed": false,
+   "side": "양쪽",
+   "role": "데이터센터를 직접 짓고 컴퓨트를 판다. 조달 병목은 우회로 푼다",
+   "confidence": "확인"
+  },
+  "킨더모건": {
+   "ticker": "KMI",
+   "market": "NYSE",
+   "listed": true,
+   "side": "파는 쪽",
+   "role": "가스 배관. 부지까지 가스가 닿아야 온사이트 발전이 돈다",
+   "confidence": "확인"
+  },
+  "APR에너지": {
+   "ticker": null,
+   "market": "비상장",
+   "listed": false,
+   "side": "파는 쪽",
+   "role": "가스발전 장비. 팜파 부지 2GW 온사이트 발전 계획과 연결(추정)",
+   "confidence": "추정"
   }
  }
 }
