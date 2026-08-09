@@ -169,7 +169,11 @@
       "Skill(dataviz)",
       "PowerShell(py *)",
       "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_bmirror.py 2>&1 | Select-Object -Last 2)",
-      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_hub.py)"
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_hub.py)",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py \"C:\\\\Users\\\\y\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-y-semianalysis\\\\933ef2c9-71ee-420e-a871-f28a8d50fb8f\\\\scratchpad\\\\inspect_docs.py\")",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py insights/gen_map.py 2>&1 | Select-Object -Last 3; git diff --stat \"대시보드/인사이트 지도.html\")",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py insights/gen_entity_board.py musk)",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_bmirror.py 10)"
     ]
   }
 }
