@@ -123,6 +123,92 @@ def signal_hits(alias):
     return out
 
 
+# ── 지도 ──────────────────────────────────────────────────────────────
+# 세계지도 path는 gen_map.py와 같은 파일을 쓴다. 두 벌 두면 한쪽만 고쳐진다
+WORLD = os.path.join(ROOT, 'insights', 'world_path.txt')
+MW, MH, LAT_MIN, LAT_MAX = 1000.0, 500.0, -58.0, 78.0
+
+
+def project(lon, lat):
+    return ((lon + 180) / 360 * MW, (LAT_MAX - lat) / (LAT_MAX - LAT_MIN) * MH)
+
+
+def site_map(ent):
+    """부지를 시점별로 보여 준다. 시점이 하나뿐인 곳은 안 움직이고 계속 떠 있다 —
+    코퍼스가 그 뒤를 안 말했을 뿐이지 사라진 게 아니다."""
+    sites = ent.get('sites') or []
+    if not sites:
+        return ''
+    times = sorted({p['t'] for s in sites for p in s['timeline']},
+                   key=lambda t: (t == '계획', t))
+    pts = [project(s['lon'], s['lat']) for s in sites]
+    x0 = min(p[0] for p in pts); x1 = max(p[0] for p in pts)
+    y0 = min(p[1] for p in pts); y1 = max(p[1] for p in pts)
+    pad = max(28.0, (x1 - x0) * .55, (y1 - y0) * .55)
+    vb = (x0 - pad, y0 - pad, (x1 - x0) + 2 * pad, (y1 - y0) + 2 * pad)
+    k = vb[2] / 520.0                       # 화면 대비 축척 — 글자·점이 같이 커지지 않게
+
+    marks = []
+    for s in sites:
+        x, y = project(s['lon'], s['lat'])
+        base = 'planned' if s.get('planned') else ('cand' if s.get('candidate') else 'live')
+        for t in times:
+            # 그 시점까지 확인된 마지막 값을 쓴다. 뒤 데이터가 없다고 부지가 사라진 게
+            # 아니다 — 리포트가 그 뒤를 안 말했을 뿐이다. 계획 부지만 제 탭에서만 뜬다
+            if s.get('planned'):
+                seen = [p for p in s['timeline'] if p['t'] == t]
+            else:
+                seen = [p for p in s['timeline'] if p['t'] == '계획' or p['t'] <= t] \
+                       if t == '계획' else [p for p in s['timeline'] if p['t'] <= t]
+            if not seen:
+                continue
+            p = seen[-1]
+            carried = p['t'] != t
+            r = max(3.0, (p['mw'] ** .5) / 9.0) * k
+            lab = '%s · %s' % (s['name'], p['label'])
+            if carried:
+                lab += ' (%s 확인)' % p['t']
+            marks.append(
+                '<g class="mk %s%s" data-t="%s"><circle cx="%.1f" cy="%.1f" r="%.2f"/>'
+                '<text x="%.1f" y="%.1f" font-size="%.1f">%s</text></g>'
+                % (base, ' carried' if carried else '', esc(t), x, y, r,
+                   x + 5 * k, y - 5 * k, 11 * k, esc(lab)))
+
+    tabs = ''.join('<button class="tb%s" data-t="%s">%s</button>'
+                   % (' on' if t == times[-1] else '', esc(t), esc(t))
+                   for t in times)
+    world = io.open(WORLD, encoding='utf-8').read().strip()
+
+    lst = ''.join(
+        '<li><b>%s</b> <span>%s</span><br>%s%s</li>'
+        % (esc(s['name']), esc(s['place']), esc(s['note']),
+           ''.join(' <i class="aid">%s</i>' % esc(p['atom'])
+                   for p in s['timeline'] if p.get('atom')))
+        for s in sites)
+    for u in ent.get('sites_unplaced') or []:
+        lst += ('<li class="np"><b>%s</b> <span>위치 미상</span><br>%s <i class="aid">%s</i></li>'
+                % (esc(u['name']), esc(u['note']), esc(u.get('atom', ''))))
+
+    return (
+        '<h3 class="sec">부지 — 언제 어디서 늘었나</h3>'
+        '<p class="axnote">%s</p>'
+        '<div class="tabs">%s</div>'
+        '<div class="mapwrap"><svg viewBox="%.1f %.1f %.1f %.1f" role="img" '
+        'aria-label="머스크 계열 데이터센터 부지와 시점별 발전 용량">'
+        '<path class="land" d="%s"/>%s</svg></div>'
+        '<ul class="sites">%s</ul>'
+        '<script>(function(){var w=document.currentScript.parentNode;'
+        'function set(t){w.querySelectorAll(".mk").forEach(function(g){'
+        'g.classList.toggle("off",g.dataset.t!==t)});'
+        'w.querySelectorAll(".tb").forEach(function(b){'
+        'b.classList.toggle("on",b.dataset.t===t)})}'
+        'w.querySelectorAll(".tb").forEach(function(b){'
+        'b.addEventListener("click",function(){set(b.dataset.t)})});'
+        'set(%s)})();</script>'
+        % (esc(ent.get('site_note', '')), tabs, vb[0], vb[1], vb[2], vb[3],
+           world, ''.join(marks), lst, json.dumps(times[-1], ensure_ascii=False)))
+
+
 def lane_of(text, hint):
     """갈래는 낱말로 가른다. 안 걸리면 사업·계약으로 — 버리지는 않는다."""
     best, score = 'deal', 0
@@ -259,6 +345,7 @@ def build(key):
                 .replace('__STAMP__', '%s 기준 · 원자 %d · 문서 언급 %d · 신호 %d'
                          % (TODAY.isoformat(), len(mine), len(docs), len(sigs)))
                 .replace('__CARDS__', ''.join(cards))
+                .replace('__MAP__', site_map(ent))
                 .replace('__LANES__', ''.join(lanes))
                 .replace('__UNK__', unk_html))
     out = os.path.join(ROOT, '대시보드', '추적 - %s.html' % ent['title'])
@@ -319,6 +406,33 @@ CSS = r'''
   .more>summary::-webkit-details-marker{display:none}
   .more>summary::before{content:"▸ "}
   .more[open]>summary::before{content:"▾ "}
+  /* 지도 — 시점 탭으로 갈아 끼운다. 시점이 하나뿐인 부지는 그 시점에만 뜬다 */
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+  .tb{font:inherit;font-size:var(--t-meta);font-weight:800;cursor:pointer;
+      padding:7px 14px;min-height:36px;border-radius:999px;border:1px solid var(--line);
+      background:var(--card);color:var(--sub);-webkit-tap-highlight-color:transparent}
+  .tb:hover{border-color:var(--accent);color:var(--accent)}
+  .tb.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .mapwrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+           background:var(--sunk)}
+  .mapwrap svg{display:block;width:100%;height:auto}
+  .land{fill:var(--card);stroke:var(--line);stroke-width:.4}
+  .mk circle{fill:var(--accent);fill-opacity:.35;stroke:var(--accent);stroke-width:1.2}
+  .mk text{fill:var(--ink);font-weight:700;paint-order:stroke;
+           stroke:var(--bg);stroke-width:2.4px;stroke-linejoin:round}
+  .mk.cand circle{fill-opacity:.10;stroke-dasharray:3 2}
+  .mk.planned circle{fill:#c98a2e;stroke:#c98a2e;fill-opacity:.18;stroke-dasharray:4 3}
+  .mk.off{display:none}
+  /* 이월된 마커 — 그 시점 데이터가 아니라 마지막 확인값이다. 같은 굵기로 그리면 거짓말이 된다 */
+  .mk.carried circle{fill-opacity:.12;stroke-dasharray:2 3}
+  .mk.carried text{opacity:.6}
+  .sites{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:9px;
+         grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .sites li{font-size:var(--t-meta);color:var(--sub);line-height:1.55;
+            background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 13px}
+  .sites li b{color:var(--ink);font-size:var(--t-body)}
+  .sites li span{color:var(--faint);font-size:var(--t-lbl)}
+  .sites li.np{border-style:dashed}
   .unk{margin:0;padding-left:17px}
   .unk li{font-size:var(--t-body);color:var(--ink);margin-bottom:9px;line-height:1.55}
   .unk li span{font-size:var(--t-lbl);color:var(--faint)}
@@ -346,6 +460,8 @@ TMPL = '''<meta charset="utf-8">
 <p class="axnote">「최신」은 이 코퍼스가 마지막으로 그 이름을 말한 날입니다. 그 뒤로 조용한 것이지
 아무 일이 없었던 것은 아닙니다 — 리포트가 안 다뤘다는 뜻입니다.</p>
 <div class="mcs">__CARDS__</div>
+
+__MAP__
 
 <h3 class="sec">근거 — 갈래별</h3>
 <p class="axnote"><b>원자</b>는 조건과 원문 줄이 붙은 검증된 사실, <b>문서</b>는 변환 문서의 문단,

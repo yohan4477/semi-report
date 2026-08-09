@@ -42,7 +42,7 @@ TOPICS = [
        '학습·추론에서 모델 계층, 병렬화, GPU 랙까지 구조를 한 장에',
        ['SemiAnalysis']),
       ('🚀', '추적 · 일론 머스크', pg('추적 - 일론 머스크.html'),
-       '스페이스X·xAI·Grok·Colossus·APR Energy가 지금 어디쯤인지. 주체마다 마지막으로 확인된 날을 박아 둔다',
+       '스페이스X·xAI·Colossus·APR Energy가 지금 어디쯤인지. 부지 지도는 시점 탭으로 용량이 언제 늘었는지 보여준다',
        ['SemiAnalysis', 'LinkedIn']),
       ('🗂️', '소셜 신호 히스토리', pg('소셜 신호 히스토리.html'),
        'LinkedIn·YouTube 신호 전체 아카이브. SemiAnalysis 대시보드 ①이 여기를 비춘다',

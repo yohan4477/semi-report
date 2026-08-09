@@ -4,7 +4,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import coverage as cov
 
 ROOT = r"C:\Users\y\semianalysis"
-MOCKUP = os.path.join(ROOT, "대시보드", "데이터센터 지도 목업.html")
+# 세계지도 path는 데이터다 — 예전엔 목업 HTML에서 정규식으로 긁어 썼는데
+# 2026-08-09에 그 목업을 지우면서 이 생성기가 조용히 깨졌다. 데이터를 산출물에
+# 숨겨 두면 산출물을 지우는 순간 생성기가 죽는다
+WORLD = os.path.join(ROOT, "insights", "world_path.txt")
 GEO = os.path.join(ROOT, "insights", "cluster_geo.json")
 OUT = os.path.join(ROOT, "대시보드", "인사이트 지도.html")
 
@@ -30,9 +33,7 @@ LBL_CH, LBL_H = 10.5, 14.0           # 화면 px 기준 글자폭·줄높이(라
 LBL_DY = [-9.0, 19.0, -25.0, 35.0]   # 마커 기준 후보 오프셋(위·아래 교대)
 
 def world_path():
-    t = io.open(MOCKUP, encoding='utf-8').read()
-    m = re.search(r'WORLD_PATH\s*=\s*"([^"]+)"', t)
-    return m.group(1) if m else ''
+    return io.open(WORLD, encoding='utf-8').read().strip()
 
 def main():
     geo = json.load(io.open(GEO, encoding='utf-8'))
