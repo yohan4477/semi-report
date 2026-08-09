@@ -26,6 +26,12 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - 🧩 [개념 지도 — AI와 그 인프라 구조](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B0%9C%EB%85%90%20%EC%A7%80%EB%8F%84%20%E2%80%94%20LLM%20%EA%B3%84%EC%B8%B5%C2%B7%EB%B3%91%EB%A0%AC%ED%99%94.html) — 학습·추론 → 모델 계층 → 병렬화 → GPU 랙을 한 장에
 - 📜 [GPU 변천사 — 15년간의 베팅](https://yohan4477.github.io/semi-report/column/GPU%20%EB%B3%80%EC%B2%9C%EC%82%AC%20-%2015%EB%85%84%EA%B0%84%EC%9D%98%20%EB%B2%A0%ED%8C%85.html) — 15년 GPU 아키텍처 변천 칼럼
 
+## 왜 이렇게 생겼나
+
+이 저장소는 여러 번 방향을 틀었습니다. 무엇을 시도했고 왜 버렸는지는
+**[왜 이렇게 됐나 — 설계 변천사](docs/%EC%99%9C%20%EC%9D%B4%EB%A0%87%EA%B2%8C%20%EB%90%90%EB%82%98%20%E2%80%94%20%EC%84%A4%EA%B3%84%20%EB%B3%80%EC%B2%9C%EC%82%AC.md)**에 시간순으로 적어 뒀습니다.
+클러스터 요약 → 원자 → 문서 노트로 두 번 갈아엎은 이유와, 되풀이한 실수 여섯 가지가 있습니다.
+
 ## 폴더 구조
 
 - `content/newsletter/` — SemiAnalysis 뉴스레터 한글 변환본 (카테고리별 하위 폴더: `ai_infra/`, `ai_models/`, `robotics/`, `semiconductors/`)
