@@ -28,6 +28,34 @@ def norm(t):
     return re.sub(r'[\s,]', '', t)
 
 
+# 전문용어는 쉬운 말로 바꾸지 않고 첫 등장에 괄호로 푼다(korean-readability 규칙).
+# 슬림으로 줄이면서 이 괄호가 빠지는 일이 잦아 여기서 잡는다
+GLOSS_TERMS = [
+    '정주 인구', '용적률', '연담화', '도정법', '도시정비법', '장특공제', '장기보유특별공제',
+    '대항력', '최우선변제권', '토지거래허가', '감정평가', '공공기여', '재초환', 'PF', 'DSR',
+    '구분등기', '공유지분', '필터링', 'PIR', '락인', 'OSC', '모듈러', '점용허가', '제척기간',
+    '자금조달계획서', '일몰제', '도급계약', '산출내역서', '유치권', '매수청구', '완충녹지',
+    '부담부 증여', '차용증', '거래사례비교법', '분양가 상한제', '후분양', '인구집중유발시설',
+    '공정시장가액비율', '공시가격 현실화율', '토지임대부', '전매제한', '지목', '과소필지',
+]
+
+
+def gloss_missing(card):
+    """슬림 텍스트에 나온 전문용어 중 괄호 설명이 안 붙은 것"""
+    body = ' '.join([card.get('slim_oneliner', '')] + list(card['slim_points']))
+    body = STRIP.sub('', body)
+    out = []
+    for t in GLOSS_TERMS:
+        i = body.find(t)
+        if i < 0:
+            continue
+        tail = body[i + len(t):i + len(t) + 60]
+        if tail.lstrip().startswith('(') or '(' in body[max(0, i - 30):i]:
+            continue
+        out.append(t)
+    return out
+
+
 def best_ratio(q, sub):
     """자막에서 이 인용과 가장 비슷한 대목의 유사도. 창을 겹쳐 훑는다"""
     best, step, win = 0.0, max(4, len(q) // 2), len(q) * 2
@@ -94,6 +122,9 @@ def main():
         if want and want not in c['title']:
             continue
         bad, warn = check(c)
+        miss = gloss_missing(c)
+        if miss:
+            warn.append('괄호 설명이 없는 용어: ' + ', '.join(miss))
         mark = 'FAIL' if bad else ('warn' if warn else 'OK  ')
         print('%s %s' % (mark, c['title']))
         for b in bad:
