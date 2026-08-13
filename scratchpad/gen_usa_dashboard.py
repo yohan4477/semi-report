@@ -358,12 +358,6 @@ HEADER = '''  <header>
       <span>채널 <b>미국주식 사관학교</b></span>
       <span>필자 <b>카레라</b></span>
     </div>
-    <div class="noncorpus">
-      <span class="nc-tag">비-코퍼스 · 제3자 소스 · 종목 언급 포함</span>
-      <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
-      개별 종목이 언급되지만 <b>투자 추천이 아니고</b> 가격·밸류에이션 검증도 하지 않았습니다. 필자 시각의 기록으로만 보세요.
-      유료 구독 원문의 요약이며 전문 재수록이 아닙니다.
-    </div>
     <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
     <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
     <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트</a>
