@@ -725,6 +725,33 @@
  "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md#L86": {
   "sha1": "231183f029f2"
  },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L100": {
+  "sha1": "96afbd98591b"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L280": {
+  "sha1": "fcbbe10f968f"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L368": {
+  "sha1": "5ce663cc31e1"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L414": {
+  "sha1": "29edc89046e0"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L460": {
+  "sha1": "90cd5382e39f"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L50": {
+  "sha1": "abb7f713c206"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L506": {
+  "sha1": "741e2e587da2"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L507": {
+  "sha1": "dc339c8d6742"
+ },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L689": {
+  "sha1": "b01a53b79ccb"
+ },
  "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md#L166": {
   "sha1": "1409bb8415e1"
  },
@@ -779,6 +806,18 @@
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L138": {
   "sha1": "78e758d7a35a"
  },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L210": {
+  "sha1": "3b7ea15ca70d"
+ },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L250": {
+  "sha1": "38b4adce73a8"
+ },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L252": {
+  "sha1": "9b1065ab5982"
+ },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L303": {
+  "sha1": "cc071f3491bb"
+ },
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L348": {
   "sha1": "ec0dc7cb78e7"
  },
@@ -797,14 +836,59 @@
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L79": {
   "sha1": "75ff88033d63"
  },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L80": {
+  "sha1": "c37abd74079e"
+ },
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L81": {
   "sha1": "377e68e2d525"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L109": {
+  "sha1": "4df02639a3e2"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L373": {
+  "sha1": "9707efb56469"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L468": {
+  "sha1": "f3d3fd5ccf8c"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L500": {
+  "sha1": "7362cd94356f"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L533": {
+  "sha1": "c043c68cc134"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L608": {
+  "sha1": "238e2a48e2ed"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L645": {
+  "sha1": "3830d3dc5c17"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L80": {
+  "sha1": "7a24221f4820"
+ },
+ "content/newsletter/ai_infra/compute/[260324] GTC 2026 - 추론 왕국의 확장.md#L82": {
+  "sha1": "c0ba3782fee4"
+ },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L124": {
+  "sha1": "0ca1476173ed"
+ },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L125": {
+  "sha1": "367b311b2db4"
  },
  "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L173": {
   "sha1": "19d989e4a381"
  },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L174": {
+  "sha1": "38189accfc2a"
+ },
  "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L202": {
   "sha1": "98c9226a3977"
+ },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L221": {
+  "sha1": "9acd17e6c314"
+ },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L222": {
+  "sha1": "fa5a44d0a9bb"
  },
  "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L390": {
   "sha1": "a84ee518ae53"
@@ -830,8 +914,44 @@
  "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L582": {
   "sha1": "05d7cf2e919c"
  },
+ "content/newsletter/ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, 플로어스위프, 수율.md#L79": {
+  "sha1": "9429f17e94a7"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L146": {
+  "sha1": "3f29ebac10d9"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L181": {
+  "sha1": "3809200d479c"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L183": {
+  "sha1": "7b5fdcb05a2b"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L217": {
+  "sha1": "5141daf41712"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L261": {
+  "sha1": "1c472be5b6bf"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L287": {
+  "sha1": "03051eee06e2"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L288": {
+  "sha1": "cb20e5e54631"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L466": {
+  "sha1": "e5f53b838352"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L51": {
+  "sha1": "4a1391ec1f41"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L527": {
+  "sha1": "153d6c13d48c"
+ },
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L256": {
   "sha1": "7d891f509594"
+ },
+ "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L257": {
+  "sha1": "e39fb5bd7b51"
  },
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L258": {
   "sha1": "027804b135fc"
@@ -845,11 +965,53 @@
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L416": {
   "sha1": "6966819e67ac"
  },
+ "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L417": {
+  "sha1": "436a58f5da03"
+ },
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L46": {
   "sha1": "0a197fa4a304"
  },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L131": {
+  "sha1": "75aa28f487cf"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L133": {
+  "sha1": "b518198d2bff"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L177": {
+  "sha1": "5ac1faa31fba"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L241": {
+  "sha1": "a2194b82ed13"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L242": {
+  "sha1": "e7f7d76b0e3f"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L458": {
+  "sha1": "0b1aa948956e"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L52": {
+  "sha1": "5bb533bf585a"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L53": {
+  "sha1": "c78e5739d34e"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L539": {
+  "sha1": "4591c0376a69"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L87": {
+  "sha1": "81e7edb621c6"
+ },
+ "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md#L88": {
+  "sha1": "3892622764c1"
+ },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L125": {
+  "sha1": "43e801df5275"
+ },
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L162": {
   "sha1": "1808bc071d10"
+ },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L180": {
+  "sha1": "4178652e0efb"
  },
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L181": {
   "sha1": "e7d39814b15e"
@@ -869,8 +1031,20 @@
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L48": {
   "sha1": "a593332bfdfb"
  },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L49": {
+  "sha1": "cff2b69b95b2"
+ },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L50": {
+  "sha1": "4eda529714f5"
+ },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L524": {
+  "sha1": "d91d0dab254f"
+ },
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L527": {
   "sha1": "d63b4682d560"
+ },
+ "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L66": {
+  "sha1": "0e2e5cfedf7b"
  },
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L94": {
   "sha1": "71d6cd61c1f8"
@@ -929,8 +1103,41 @@
  "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md#L98": {
   "sha1": "fa5e4fde2312"
  },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L109": {
+  "sha1": "6f08e2ffd63b"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L210": {
+  "sha1": "aca09791fc1a"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L223": {
+  "sha1": "0fdc9a8f0b45"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L246": {
+  "sha1": "d9cadb0d6020"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L247": {
+  "sha1": "cbb43f1a17b7"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L290": {
+  "sha1": "c1f00c687599"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L365": {
+  "sha1": "62d611b68d4b"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L366": {
+  "sha1": "904d12d75ff0"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L37": {
+  "sha1": "b114527afea6"
+ },
+ "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L61": {
+  "sha1": "9cfc9b6cd3b6"
+ },
  "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L135": {
   "sha1": "01f6f6a328fc"
+ },
+ "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L154": {
+  "sha1": "d644deee7c6c"
  },
  "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L199": {
   "sha1": "4ea243ad4293"
@@ -961,6 +1168,9 @@
  },
  "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L387": {
   "sha1": "d927456aa765"
+ },
+ "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L447": {
+  "sha1": "bfe993273e36"
  },
  "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L551": {
   "sha1": "12458d0272c9"
@@ -1096,6 +1306,12 @@
  },
  "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md#L159": {
   "sha1": "f311b6d08152"
+ },
+ "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md#L193": {
+  "sha1": "cee2dcab0944"
+ },
+ "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md#L195": {
+  "sha1": "78b928cc7f31"
  },
  "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md#L230": {
   "sha1": "81911dded548"
