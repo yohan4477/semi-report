@@ -44,6 +44,9 @@ EXTRA_CSS = '''
   .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
                                           color:var(--accent-ink)}
   .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  .scope-tabs ~ .sec-nav a[aria-current="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                                color:var(--accent-ink)}
   section[hidden]{display:none}
 </style>'''
 
@@ -116,26 +119,41 @@ SCOPE_TABS = '''<div class="scope-tabs">
 SCOPE_JS = '''<script>
 (function(){
   var tabs=document.querySelector('.scope-tabs'); if(!tabs) return;
-  function apply(pick){
+  var nav=document.querySelector('.sec-nav');
+  var pick='kr', only=null;   // only = 목차에서 고른 섹션 하나, 다시 누르면 풀린다
+  function link(id){ return nav && nav.querySelector('a[href="#'+id+'"]'); }
+  function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
     document.querySelectorAll('section[id]').forEach(function(s){
       var live=s.querySelectorAll('.ucard:not([hidden])').length;
-      s.hidden = live===0;
-      var a=document.querySelector('.sec-nav a[href="#'+s.id+'"] b');
-      if(a) a.textContent=live;
-      var nav=document.querySelector('.sec-nav a[href="#'+s.id+'"]');
-      if(nav) nav.style.display = live? '' : 'none';
+      s.hidden = live===0 || (only && s.id!==only);
+      var a=link(s.id);
+      if(a){
+        a.style.display = live? '' : 'none';
+        a.setAttribute('aria-current', String(only===s.id));
+        var b=a.querySelector('b'); if(b) b.textContent=live;
+      }
     });
     tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
     });
   }
   tabs.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(b) apply(b.dataset.pick);
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; apply();
   });
-  apply('kr');
+  if(nav) nav.addEventListener('click', function(e){
+    var a=e.target.closest('a'); if(!a) return;
+    e.preventDefault();
+    var id=a.getAttribute('href').slice(1);
+    only = (only===id) ? null : id;
+    apply();
+    if(only) nav.scrollIntoView({block:'start'});
+  });
+  apply();
 })();
 </script>'''
 
