@@ -292,11 +292,17 @@ def rollup_for(key, cards, unit='편'):
     if not os.path.exists(path):
         return ''
     notes = json.load(io.open(path, encoding='utf-8'))
-    counts = {}
+    # '*'는 전체, 그 밖은 카드 scope(kr·intl)별 — 리포트가 scope를 달면 그 범위만 센다
+    counts = {'*': {}}
     for c in cards:
         d = upload_date(c)
-        if d:
-            counts[d] = counts.get(d, 0) + 1
+        if not d:
+            continue
+        counts['*'][d] = counts['*'].get(d, 0) + 1
+        sc = c.get('scope')
+        if sc:
+            counts.setdefault(sc, {})
+            counts[sc][d] = counts[sc].get(d, 0) + 1
     return _rl.build(notes, counts, unit)
 
 

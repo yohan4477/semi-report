@@ -38,15 +38,23 @@ CSS = """
 """
 
 KIND = {'week': '주간 리포트', 'month': '월간 리포트'}
+SCOPE = {'kr': '국내', 'intl': '해외'}
 
 
 def _norm(v):
     return v if isinstance(v, dict) else {'all': v}
 
 
-def count_range(counts, a, b):
+def _scoped(counts, scope):
+    """counts가 {'*':{날짜:n}, 'kr':{...}} 꼴이면 해당 범위만, 아니면 통째로 쓴다"""
+    if counts and '*' in counts:
+        return counts.get(scope or '*', {})
+    return counts
+
+
+def count_range(counts, a, b, scope=None):
     tot = {}
-    for d, v in counts.items():
+    for d, v in _scoped(counts, scope).items():
         if a <= d <= b:
             for k, n in _norm(v).items():
                 tot[k] = tot.get(k, 0) + n
@@ -54,7 +62,7 @@ def count_range(counts, a, b):
 
 
 def render_report(r, counts, unit='건'):
-    c = count_range(counts, r['from'], r['to'])
+    c = count_range(counts, r['from'], r['to'], r.get('scope'))
     n = c.get('all', 0)
     meta = '%s~%s · %d%s' % (r['from'][5:], r['to'][5:], n, unit)
     if c.get('yt'):
@@ -62,19 +70,25 @@ def render_report(r, counts, unit='건'):
     items = ''.join(
         '<li><span class="rlh">%s</span><span class="rlb">%s</span></li>' % (it['h'], it['b'])
         for it in r['items'])
+    label = KIND.get(r['kind'], r['kind'])
+    if r.get('scope'):
+        label += ' · ' + SCOPE.get(r['scope'], r['scope'])
     return ('<details class="rlrep"><summary class="rlhd"><span class="rlk">%s</span>'
             '<span class="rlt">%s</span><span class="rlmeta">%s</span></summary>'
-            '<ol class="rll">%s</ol></details>') % (KIND.get(r['kind'], r['kind']), r['title'], meta, items)
+            '<ol class="rll">%s</ol></details>') % (label, r['title'], meta, items)
 
 
 def build(notes, counts, unit='건'):
     """최신 회차는 펼쳐 보이고, 이전 회차는 <details>로 접어 누적한다."""
-    reps = [r for r in notes.get('reports', []) if count_range(counts, r['from'], r['to']).get('all', 0)]
+    reps = [r for r in notes.get('reports', [])
+            if count_range(counts, r['from'], r['to'], r.get('scope')).get('all', 0)]
     if not reps:
         return ''
     reps.sort(key=lambda r: (r['asof'], r['kind']), reverse=True)
     newest = reps[0]['asof']
-    cur = sorted([r for r in reps if r['asof'] == newest], key=lambda r: 0 if r['kind'] == 'week' else 1)
+    cur = sorted([r for r in reps if r['asof'] == newest],
+                 key=lambda r: (0 if r['kind'] == 'week' else 1,
+                                {'kr': 0, 'intl': 1}.get(r.get('scope'), 0)))
     old = [r for r in reps if r['asof'] != newest]
     html = '<div class="rollup">' + ''.join(render_report(r, counts, unit) for r in cur)
     if old:

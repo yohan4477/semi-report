@@ -712,4 +712,4 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
           '페이지 생성은 <code>scratchpad/gen_realestate_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT)
+    dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('realestate', CARDS, '편'))
