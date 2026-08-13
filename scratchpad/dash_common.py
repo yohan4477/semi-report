@@ -183,7 +183,7 @@ FOLD_JS = '''<script>
 
 NAV_JS = '''<script>
 (function(){
-  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 부동산에만 있다
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var btn=box && box.querySelector('.sp-btn');
   var list=box && box.querySelector('.sp-list');
