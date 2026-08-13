@@ -98,6 +98,15 @@ EXTRA_CSS = '''
   .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
             transition:transform .15s ease}
   .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  /* 자세히 서랍 — 슬림 본문 아래에서 전체 포인트·표·유보를 연다 */
+  .uc-more{margin:14px 0 0;border-top:1px solid var(--line);padding-top:10px}
+  .uc-more>summary{cursor:pointer;list-style:none;font-size:12.5px;font-weight:800;color:var(--ink-3);
+                   padding:4px 0;display:flex;align-items:center;gap:6px}
+  .uc-more>summary::-webkit-details-marker{display:none}
+  .uc-more>summary::after{content:'▾';font-size:12px;transition:transform .15s ease}
+  .uc-more[open]>summary::after{transform:rotate(180deg)}
+  .uc-more>summary:hover{color:var(--accent-ink)}
+  .uc-more-body{padding-top:6px}
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
@@ -120,10 +129,16 @@ def slim_html(c):
       slim_stats     4개
       slim_clash     3개까지(없으면 생략)
     """
-    h = ['<div class="ucard"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    # 접힌 상태는 지금까지와 같다 — 주제칩·제목·이 편에서 무엇을 알 수 있는지·화자와 날짜
+    h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
     h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
+    if c.get('gain'):
+        h.append('<p class="uc-gain">%s</p>' % c['gain'])
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
+    h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
+    h.append('<div class="uc-body">')
     h.append('<p class="uc-oneliner">%s</p>' % c.get('slim_oneliner', c['oneliner']))
     h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
              % ''.join('<li>%s</li>' % p for p in c['slim_points']))
@@ -134,10 +149,31 @@ def slim_html(c):
     if c.get('slim_clash'):
         h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
                  % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['slim_clash']))
+    # 더 볼 사람만 여는 서랍 — 접힌 슬림 카드 아래에 전체 포인트·표·나머지 반론·유보를 둔다.
+    # <details>라 스크립트 없이도 열린다
+    more = ['<details class="uc-more"><summary>자세히 — 전체 포인트와 표, 유보 사항</summary>'
+            '<div class="uc-more-body">']
+    more.append('<p class="uc-label">핵심 포인트 전체</p><ul class="uc-points">%s</ul>'
+                % ''.join('<li>%s</li>' % p for p in c['points']))
+    if c.get('table'):
+        cap, head, rows = c['table']
+        more.append('<p class="uc-label">%s</p>' % cap)
+        more.append('<div class="tbl-wrap"><table class="uc-tbl"><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+                    % (''.join('<th>%s</th>' % x for x in head),
+                       ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % x for x in r) for r in rows)))
+    more.append('<p class="uc-label">주요 숫자 전체</p><div class="stat-grid">%s</div>'
+                % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
+                          for s in c['stats']))
+    if c.get('clash'):
+        more.append('<div class="clash"><p class="ch">반론 · 충돌 전체</p><ul>%s</ul></div>'
+                    % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
+    more.append('<div class="side-note">%s</div>' % c['note'])
+    more.append('</div></details>')
+    h.append(''.join(more))
     h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
              % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
-    h.append('</div>')
+    h.append('</div></div>')
     return ''.join(h)
 
 
