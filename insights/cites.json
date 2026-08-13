@@ -1538,6 +1538,21 @@
  "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L542": {
   "sha1": "1af893da023c"
  },
+ "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L648": {
+  "sha1": "4cf304da89c5"
+ },
+ "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L653": {
+  "sha1": "5da9a3e74711"
+ },
+ "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L663": {
+  "sha1": "9d989666d2aa"
+ },
+ "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L668": {
+  "sha1": "159cfbd12444"
+ },
+ "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L712": {
+  "sha1": "e82e3b78e6d8"
+ },
  "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L108": {
   "sha1": "ca7861f67ca8"
  },
@@ -1790,6 +1805,12 @@
  "content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md#L489": {
   "sha1": "9899ccc082b1"
  },
+ "content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md#L49": {
+  "sha1": "f910804c2fc7"
+ },
+ "content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md#L50": {
+  "sha1": "1a840d7c80ab"
+ },
  "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L136": {
   "sha1": "7572d4b70dbf"
  },
@@ -1960,6 +1981,93 @@
  },
  "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L586": {
   "sha1": "8a1471ef1e5f"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L100": {
+  "sha1": "6a8687e9fb35"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L163": {
+  "sha1": "c7002019295b"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L213": {
+  "sha1": "74ad8a4f510c"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L215": {
+  "sha1": "82e5870c7feb"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L264": {
+  "sha1": "0e0257a83976"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L389": {
+  "sha1": "0410440571e5"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L41": {
+  "sha1": "651e89e7e746"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L445": {
+  "sha1": "0ab6770644bc"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L656": {
+  "sha1": "fb5261c9e5d9"
+ },
+ "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L99": {
+  "sha1": "b793237e4aa3"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L148": {
+  "sha1": "dc6110e28e5b"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L201": {
+  "sha1": "f2a0c73d12b0"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L290": {
+  "sha1": "11cf050bcbba"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L292": {
+  "sha1": "457a11b35e66"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L344": {
+  "sha1": "474e3d8f35f4"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L397": {
+  "sha1": "8297f5c1772d"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L49": {
+  "sha1": "f8c4507c9dc7"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L91": {
+  "sha1": "cdf115beb283"
+ },
+ "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L92": {
+  "sha1": "d474aa7b3af3"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L235": {
+  "sha1": "63f4453e5751"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L328": {
+  "sha1": "08fe20dda196"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L53": {
+  "sha1": "a44273d19f61"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L54": {
+  "sha1": "4e0caec61b96"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L640": {
+  "sha1": "bc98ab284d58"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L655": {
+  "sha1": "01f7eb2c43f6"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L713": {
+  "sha1": "37fa50709e02"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L779": {
+  "sha1": "070aa7b2572f"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L836": {
+  "sha1": "0f78b5145f07"
+ },
+ "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L92": {
+  "sha1": "17f7c20901a7"
  },
  "input/clippings/Meta Compute Everyone Wants To Be A Neocloud.md#L100": {
   "sha1": "db58e8da4da7"
