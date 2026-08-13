@@ -208,31 +208,6 @@
     .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
   }
 
-  /* ── 통합 인사이트 ── */
-  #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
-  .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
-    border-radius:12px; padding:18px 22px; margin-bottom:12px; box-shadow:var(--shadow); }
-  .ins-card > summary { list-style:none; cursor:pointer; display:block; position:relative; padding-right:26px; }
-  .ins-card > summary::-webkit-details-marker { display:none; }
-  .ins-card > summary::after { content:"⌄"; position:absolute; right:2px; top:-4px; font-size:20px; line-height:1; color:var(--ink-3); transition:transform .2s; }
-  .ins-card[open] > summary::after { transform:rotate(180deg); }
-  .ins-card[open] > summary { margin-bottom:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
-  .ins-card > summary .ins-sub { margin-bottom:0; }
-  .ins-card > summary:hover h3 { color:var(--accent); }
-  .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
-  .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
-  .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
-  .ins-body h4 { font-size:12.5px; font-weight:800; color:var(--accent-ink); margin:14px 0 6px;
-    text-transform:uppercase; letter-spacing:.04em; }
-  .ins-body p { font-size:14.5px; color:var(--ink); line-height:1.6; margin:0 0 8px; }
-  .ins-body ul { margin:0 0 8px; padding-left:18px; }
-  .ins-body li { font-size:13.5px; color:var(--ink-2); line-height:1.58; margin-bottom:4px; }
-  .ins-src-label { font-size:10.5px; font-weight:800; color:var(--ink-3); margin:14px 0 6px; }
-  .ins-srcs { display:flex; flex-wrap:wrap; gap:6px; }
-  .ins-srcs a { font-size:11.5px; padding:5px 10px; border-radius:999px; background:var(--sunk);
-    border:1px solid var(--line); color:var(--ink-2); text-decoration:none; }
-  .ins-srcs a:hover { border-color:var(--accent); color:var(--accent); }
-
   /* ── 섹션 점프 내비 ── */
   .sec-nav {
     position:sticky; top:0; z-index:20;
@@ -307,199 +282,9 @@
     <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트 →</a>
   </header>
 
-<!-- INSIGHTS:START -->
-  <section id="sec-insights">
-    <div class="sec-head"><span class="sec-num">🧭</span><h2 class="sec-title">통합 인사이트</h2></div>
-    <p class="sec-sub">여러 문서가 합쳐서 말하는 것. 주제별 합성 4편 · 제목을 클릭해 펼치기</p>
-    <details class="ins-card" id="ins-A">
-      <summary>
-        <span class="ins-id">A</span>
-        <h3>이란 전쟁과 원유 수급 충격</h3>
-        <p class="ins-sub">해협 하나가 막히자 유가·해운·LNG·방산까지 번진 연쇄</p>
-      </summary>
-      <div class="ins-body">
-<h4>통합 논지</h4>
-<p>이란 전쟁은 '유가 이벤트'가 아니라 <b>물리적 병목의 연쇄</b>다. 호르무즈 한 곳이 선택적으로 막히자 충격은 유가→해운운임→LNG→요격미사일 재고→아시아 식량까지 옆으로 번졌고, 봉쇄를 풀거나 뚫는 것보다 <b>시설 파괴·재고 소진 같은 비가역 손상</b>이 진짜 위험으로 드러났다.</p>
-<h4>공통 진단</h4>
-<ul>
-<li><b>가격보다 물량 단절이 본질.</b> 유가 급등은 표면이고, 실제 타격은 특정 항로·시설로 나가던 물량이 통째로 사라지는 데서 온다(호르무즈 2,000만 배럴/일, 하르그 이란 수출 90%).</li>
-<li><b>봉쇄는 되돌릴 수 있어도 파괴는 못 되돌린다.</b> 해협은 뚫리면 끝이지만, 카타르 라스라판·이란 하르그·유전 셧인은 수년간 공급을 지운다.</li>
-<li><b>재고·요격미사일 같은 '버퍼'가 승부처.</b> 사우디 PAC-3 2,800→400발, 카타르 요격 재고 나흘치처럼, 전쟁의 향방은 물량이 아니라 <b>비축 소진 속도</b>가 가른다.</li>
-</ul>
-<h4>연결·인과</h4>
-<ul>
-<li>호르무즈 봉쇄 → 사우디가 홍해 얀부로 700만 배럴 우회 → 그래서 밥 엘-만데브(홍해 입구)까지 막히면 <b>우회로 자체가 소멸</b>(A의 여러 문서가 한 사슬).</li>
-<li>이란은 호르무즈를 '선택 봉쇄'해 중국엔 계속 팔며 전쟁자금(예산 35%)을 댐 → 미국이 그 돈줄 하르그를 때림 → 이란은 2만 달러 드론으로 400만 달러 요격미사일을 소모시키는 <b>가성비 소모전</b>으로 응수.</li>
-<li>유조선 운임 5배 폭등 → 위기 직전 VLCC를 사둔 한국 선사가 반사이익(호르무즈선사). 같은 충격이 누구에겐 재난, 누구엔 돈벼락.</li>
-</ul>
-<h4>상충·이견</h4>
-<ul>
-<li><b>이란 셧인이 치명적이냐</b>에 이견: 노후 유전 영구감소 20~30% 주장 vs 압력 회복으로 오히려 잘 나올 수 있다는 반론.</li>
-<li><b>미국의 득실</b>: 하르그 물량은 세계 소비 1.3%라 때려도 손해 적다는 계산 vs 유가·물가 역풍.</li>
-<li>한국의 실제 원유수입은 -7.9%로 선방했지만(대만 LNG·호르무즈선사), 사우디 비중 32%가 남아 밥 엘-만데브까지 막히면 서방 진영만 기름줄이 끊긴다.</li>
-</ul>
-<h4>한국 함의</h4>
-<ul>
-<li>위기는 '가격'이 아니라 '경로'에서 온다. 호르무즈·홍해·수에즈 <b>다중 경로 리스크</b>를 함께 봐야 한다.</li>
-<li>정부의 "9월까진 문제없다"는 재고 기준일 뿐, 시설 파괴·장기 봉쇄 시 버퍼가 빠르게 마른다.</li>
-<li>대만은 저장률 8%·중동 의존 최악으로 반도체 생산까지 위협. 동아시아 공급망 전체의 병목이 곧 우리 문제.</li>
-</ul>
-      </div>
-      <p class="ins-src-label">근거 카드</p>
-      <div class="ins-srcs">
-        <a class="ins-src" href="#card-이란-전쟁-오늘-끝나도-유가-9월까지-뛴다-6월-2부작-1부">이란 전쟁 오늘 끝나도 유가 9월까지 뛴다</a>
-        <a class="ins-src" href="#card-호르무즈-해협-봉쇄-맞불-하르그섬-뭐길래-백브리핑-텍스트">호르무즈 해협 봉쇄 맞불… 하르그섬 뭐길래?</a>
-        <a class="ins-src" href="#card-호르무즈-막히자-10조-돈벼락-맞은-한국선사-에너지-3부작-2부">호르무즈 막히자 10조 돈벼락 맞은 한국선사</a>
-        <a class="ins-src" href="#card-호르무즈-막히는-것보다-더-큰일이-생긴다고-밥-엘-만데브-해협">호르무즈 막히는 것보다, 더 큰일이 생긴다고?</a>
-        <a class="ins-src" href="#card-미국의-석유-치킨게임-이란이-불리한-이유-원유-다변화-연작">미국의 석유 치킨게임…이란이 불리한 이유</a>
-        <a class="ins-src" href="#card-미군은-이란-미사일-지옥에-빠졌나-백브리핑-텍스트">미군은 이란 미사일 지옥에 빠졌나</a>
-        <a class="ins-src" href="#card-대만-LNG-초비상-한국만-여유로운-이유-에너지-3부작-1부">대만 LNG 초비상, 한국만 여유로운 이유</a>
-        <a class="ins-src" href="#card-15억-인구-밥-못-짓는다-인도-덮친-비상사태-에너지-3부작-3부">15억 인구 밥 못 짓는다, 인도 덮친 비상사태</a>
-      </div>
-    </details>
-    <details class="ins-card" id="ins-B">
-      <summary>
-        <span class="ins-id">B</span>
-        <h3>원유 의존 구조와 다변화의 벽</h3>
-        <p class="ins-sub">왜 위기를 겪고도 중동산을 못 버리나. 설비·지리·금융의 록인</p>
-      </summary>
-      <div class="ins-body">
-<h4>통합 논지</h4>
-<p>원유 수급 위기의 해법으로 늘 '다변화'가 나오지만, 실제로는 <b>정제설비·지리·금융이 만든 록인(lock-in)</b> 때문에 아무도 쉽게 못 바꾼다. 한국은 중질유용 고도화 설비에, 미국은 중질유 공급을 캐나다에, 산유국은 유가에 묶여 있다. 다변화는 구호가 아니라 수십조 원짜리 구조 문제다.</p>
-<h4>공통 진단</h4>
-<ul>
-<li><b>원유는 '기름'이 아니라 '유종'이다.</b> 경질유·중질유가 갈리고, 설비가 특정 유종에 맞춰져 있으면 다른 걸 넣는 순간 수율이 무너진다(한국 34조 고도화 설비, 미국 정제 70%가 중질유용).</li>
-<li><b>가격은 금융이 흔든다.</b> 실물보다 훨씬 큰 선물·옵션 자금(증거금 5%)이 유가를 좌우. 미국 실물 1억 vs 금융 25억 배럴.</li>
-<li><b>자원은 이제 안보 자산.</b> 미국은 베네수엘라를 무력으로 장악해 중질유·서반구 자원을 확보('돈로 독트린'), 곧 자원 확보 경쟁이 지정학의 본판.</li>
-</ul>
-<h4>연결·인과</h4>
-<ul>
-<li>한국이 중동산 70%에 묶인 이유(싸다+가깝다) → 그 유종에 맞춰 고도화 설비 투자 → 미국산 경질유를 넣으면 설비가 논다 → <b>위기에도 중동산을 못 버림</b>(중동산대체).</li>
-<li>미국도 같은 함정 → 셰일=초경질유라 중질유는 캐나다 WCS에 전적 의존 → 미-캐 관계 악화·캐나다의 아시아 판로 개척 → <b>베네수엘라 중질유를 무력으로라도 확보</b>(베네수엘라).</li>
-<li>유가 급등락의 뿌리는 전쟁이 아니라 2013년 이후 화석연료 투자 감소(자원전쟁) → 그래서 "전쟁 끝나도 계속 간다".</li>
-</ul>
-<h4>상충·이견</h4>
-<ul>
-<li><b>다변화 가능성</b>: 유럽은 러시아→미국산 전환을 해냈다 vs 그 대가로 독일 석유제품 생산 -8.9%. 즉 '가능하지만 비싸다'.</li>
-<li><b>투자 대상</b>: 커머디티 직접투자는 비추(선물이 실물의 20~50배) vs 인프라·기술·회사에 투자하라(에너지투자100년). 같은 화자도 '실물 말고 구조에 태워라'.</li>
-<li>캐나다·베네수엘라 대체 후보는 물량·거리·인프라 붕괴로 당장은 역부족.</li>
-</ul>
-<h4>한국 함의</h4>
-<ul>
-<li>다변화는 '어디서 사오나'가 아니라 <b>'우리 설비가 뭘 소화하나'</b> 문제. 설비를 바꾸지 않는 한 중동 의존은 구조적으로 지속된다.</li>
-<li>90%+ 수입국인데 위기의식이 없다는 반복된 경고. 해외 자원개발·비축·원가 연동이 3대 숙제.</li>
-<li>서반구 자원을 미국이 틀어쥐면 중국 공급망뿐 아니라 한국의 조달선택지도 좁아진다.</li>
-</ul>
-      </div>
-      <p class="ins-src-label">근거 카드</p>
-      <div class="ins-srcs">
-        <a class="ins-src" href="#card-중동산-기름-미국산으로-대체가-어려운-이유-원유-다변화-연작">중동산 기름, 미국산으로 대체가 어려운 이유</a>
-        <a class="ins-src" href="#card-미국이-베네수엘라를-친-건-캐나다-때문이다-백브리핑-텍스트">미국이 베네수엘라를 친 건, 캐나다 때문이다?</a>
-        <a class="ins-src" href="#card-전쟁-끝나도-계속-간다-가격보다-에너지-믹스-자원-확보-전쟁">전쟁 끝나도 계속 간다. 가격보다 에너지 믹스·자원 확보 전쟁</a>
-        <a class="ins-src" href="#card-지금-에너지-투자-놓치면-100년-자산-버린다">지금 에너지 투자 놓치면 100년 자산 버린다</a>
-      </div>
-    </details>
-    <details class="ins-card" id="ins-C">
-      <summary>
-        <span class="ins-id">C</span>
-        <h3>재생 전환의 진짜 비용</h3>
-        <p class="ins-sub">발전단가는 쌌지만 요금은 오른다. 간헐성·유연성·송전망의 청구서</p>
-      </summary>
-      <div class="ins-body">
-<h4>통합 논지</h4>
-<p>"태양광이 원전만큼 싸졌다"는 말은 <b>도매가만 본 착시</b>다. 재생 시대에 요금을 결정하는 건 발전단가가 아니라 <b>간헐성을 메우는 비용</b>(ESS)과 <b>생산지-소비지 불일치</b>(송전망), 그리고 그 시간대 가장 비싼 LNG가 정하는 SMP다. 재생 확대는 곧 요금 상승이며, 그걸 완충하는 유일한 검증된 짝이 <b>탄력운전 원전</b>이다.</p>
-<h4>공통 진단</h4>
-<ul>
-<li><b>가격 지표를 구분해야 한다.</b> 도매가(태양광 121원, 싸다) ≠ 생산원가 LCOE(122원) ≠ 시스템 비용 얹은 소매가(비싸다). 싸다·비싸다는 어느 층을 보느냐의 문제.</li>
-<li><b>요금은 '가장 비싼 발전기'가 정한다(SMP).</b> 원전·태양광을 아무리 돌려도, 부족분을 메우는 LNG 가격이 오르면 전기요금은 오른다.</li>
-<li><b>간헐성엔 유연성 자원이 필수.</b> LNG는 우크라이나·이란 전쟁으로 실격, 석탄은 퇴출, 원전은 탄력운전 전엔 못 받침 → 남은 건 ESS와 탄력 원전.</li>
-</ul>
-<h4>연결·인과</h4>
-<ul>
-<li>태양광 3배(37→100GW) → 정오 과잉·야간 부족 심화 → ESS 없으면 못 굴림(태양광세배) → 그런데 요금 결정은 LNG(SMP)라 원전 풀가동도 소용없음(원전만으로는).</li>
-<li>독일 재생 60%는 이웃(프랑스 원전 탄력운전·노르웨이 수력)이 간헐성을 받쳐 성립(독일북유럽) → 그 부작용이 북유럽 요금 폭등·EU 탈퇴론 → <b>한국엔 받쳐줄 이웃이 없어</b> 탄력 원전이 답(프랑스·독일).</li>
-<li>생산지(호남·스코틀랜드)와 소비지(수도권·런던) 불일치 → 송전망 병목 → 지역 차등요금으로 풀려다 정치 반대로 영국 실패 → 결국 송전망 확충(서울-지방).</li>
-<li>태양광 확대 자체가 은 수요를 밀어올려 원가를 다시 압박(은 가격). 재생 전환은 소재값까지 건드린다.</li>
-</ul>
-<h4>상충·이견</h4>
-<ul>
-<li><b>"태양광은 싸다" vs "결국 비싸다"</b>: 도매가 근거 vs 시스템 비용(ESS·송전) 근거. 정부는 전자, 현장 분석은 후자.</li>
-<li><b>BESS 짝꿍</b>: 세계 표준은 태양광+BESS vs 한국형은 원전+BESS(원전이 최저단가라)라는 발상 전환.</li>
-<li><b>차등요금</b>: 지산지소의 핵심 툴 vs 영국도 정치벽에 막혀 철회. 제조업 한국은 유인 여지 있으나 수도권 표심이 관건.</li>
-</ul>
-<h4>한국 함의</h4>
-<ul>
-<li>재생을 늘리되 <b>"요금이 오른다"는 걸 국민에게 솔직히</b> 말해야 이념 대립을 피한다.</li>
-<li>값싼 유연성(탄력 원전) 확보가 재생 확대의 전제. 신규 원전 탄력운전 의무화가 그래서 의미심장.</li>
-<li>ESS는 한국이 세계 최후발(양수 4.7GW+BESS 0.5GW). 배터리 3사 산업정책과 맞물려 국가가 속도를 내야 한다.</li>
-</ul>
-      </div>
-      <p class="ins-src-label">근거 카드</p>
-      <div class="ins-srcs">
-        <a class="ins-src" href="#card-태양광-세배로-전기요금-오른단-얘기입니다-백브리핑-텍스트">태양광 세배로? 전기요금 오른단 얘기입니다</a>
-        <a class="ins-src" href="#card-원전만으로는-전기요금-오르는-거-못-막습니다-백브리핑-텍스트">원전만으로는, 전기요금 오르는 거 못 막습니다</a>
-        <a class="ins-src" href="#card-서울-지방-따로-전기요금-영국은-왜-실패했을까-백브리핑-텍스트">서울-지방 따로 전기요금… 영국은 왜 실패했을까?</a>
-        <a class="ins-src" href="#card-독일-신재생-전기-때문에-북유럽이-빡친-이유-백브리핑-텍스트">독일 신재생 전기 때문에 북유럽이 빡친 이유</a>
-        <a class="ins-src" href="#card-싼-전기-시대-끝났다-프랑스-독일의-미친-결정-6월-2부작-2부">싼 전기 시대 끝났다, 프랑스·독일의 미친 결정</a>
-        <a class="ins-src" href="#card-삼성까지-뛰어들었다-4년만에-3배-급증할-에너지-시장">삼성까지 뛰어들었다. 4년만에 3배 급증할 에너지 시장</a>
-        <a class="ins-src" href="#card-은-가격-급등이-태양광-때문이다-백브리핑-텍스트">은 가격 급등이 태양광 때문이다?</a>
-      </div>
-    </details>
-    <details class="ins-card" id="ins-D">
-      <summary>
-        <span class="ins-id">D</span>
-        <h3>AI·반도체가 부른 전력 수요</h3>
-        <p class="ins-sub">메모리 슈퍼사이클이 전력 병목을 만들고, 호남 반도체 산단이 그 시험대</p>
-      </summary>
-      <div class="ins-body">
-<h4>통합 논지</h4>
-<p>AI는 반도체 수요를, 반도체는 전력 수요를 폭증시킨다. 이 사슬이 미국에선 '에너지 캠퍼스'를, 한국에선 '호남 반도체 산단'을 낳았다. 그리고 두 곳 모두 <b>진짜 병목은 실리콘이 아니라 전력·용수·송전망</b>이라는 같은 결론에 도달한다.</p>
-<h4>공통 진단</h4>
-<ul>
-<li><b>AI 데이터센터·반도체 펩은 기존과 다른 전력 부하.</b> 0.1초에 200MW→1.9GW로 튀는 '혈당 스파이크', 24시간 균질 수요. 기존 전력망 기술로 감당 불가.</li>
-<li><b>메모리가 사이클 산업에서 안정 이익 산업으로 리레이팅.</b> 마이크론 SCA 장기계약·영업이익률 70~80%, 시장 2,000억→8,000억 달러(2030) → 증설 경쟁이 곧 전력 수요.</li>
-<li><b>병목은 전력.</b> 미국도 한국도 실리콘보다 전기·용수·송전망을 못 대서 막힌다.</li>
-</ul>
-<h4>연결·인과</h4>
-<ul>
-<li>메모리 슈퍼사이클(반도체룰) → 삼성·하이닉스 증설 가속 + 정부의 호남 제2 거점(호남 펩) → 6.3GW 전력을 어떻게 대나가 핵심.</li>
-<li>미국은 발전소를 옆에 직접 짓고 AI가 실시간 조율(에너지 캠퍼스·오케스트레이터)로 뚫음(미국DC) → 한국 호남은 재생+BESS냐 한빛 원전 증설이냐로 갈림.</li>
-<li>4년 완공 공약(호남 4년완공) → 부지·용수는 몰라도 6.3GW를 재생으로 4년 내 받치는 건 비현실적 → 그래서 '원전이 구세주'(호남 원전)라는 결론.</li>
-</ul>
-<h4>상충·이견</h4>
-<ul>
-<li><b>호남 전력 해법</b>: 태양광+BESS(정부) vs 한빛 원전 2기 증설(현실론). 후자가 송전망·요금 부담이 덜하나 신규 원전은 4년 내 불가.</li>
-<li><b>4년 완공 가능성</b>: 정부 "할 수 있다" vs 대다수 "불가능"(TSMC 가오슝도 실제 6년, 규모는 호남의 1/5).</li>
-<li><b>AI 거품 논쟁</b>: 수요는 진짜(오픈AI CFO "병목은 컴퓨팅 공급")라는 시각 vs 롤러코스터 리스크.</li>
-</ul>
-<h4>한국 함의</h4>
-<ul>
-<li>반도체 경쟁력은 이제 <b>전력 인프라 경쟁력</b>. 값싸고 안정적인 전기를 못 대면 산단은 껍데기.</li>
-<li>호남 산단은 한국 에너지믹스(원전+재생+송전망+ESS) 전체의 시험대이자, [[C-재생전환-진짜비용]]의 딜레마가 현실로 부딪히는 현장.</li>
-<li>미국식 '에너지 캠퍼스+AI 오케스트레이터' 모델은 규제·전력망 비공개 탓에 한국에선 아직 회색지대. SK·GS가 유력 주자.</li>
-</ul>
-      </div>
-      <p class="ins-src-label">근거 카드</p>
-      <div class="ins-srcs">
-        <a class="ins-src" href="#card-미국-데이터센터-전력난-이걸로-뚫었다">미국 데이터센터 전력난 이걸로 뚫었다</a>
-        <a class="ins-src" href="#card-호남-반도체-산단-4년-만에-완공-가능할까-호남-반도체-연작">호남 반도체 산단, 4년 만에 완공 가능할까?</a>
-        <a class="ins-src" href="#card-호남-반도체-펩-원전이-구세주입니다-호남-반도체-연작">호남 반도체 펩, 원전이 구세주입니다</a>
-        <a class="ins-src" href="#card-반도체-룰이-바뀌었다-주가-재평가-시작됐다">반도체 룰이 바뀌었다 주가 재평가 시작됐다</a>
-      </div>
-    </details>
-  </section>
-<!-- INSIGHTS:END -->
 
-  <nav class="sec-nav">
-    <a href="#sec-insights">🧭 통합인사이트 <b>4</b></a>
-    <a href="#sec-ai">AI·DC전력 <b>2</b></a>
-    <a href="#sec-renew">재생·원전 <b>4</b></a>
-    <a href="#sec-pmarket">전력요금·시장 <b>3</b></a>
-    <a href="#sec-oilsupply">원유수급 <b>6</b></a>
-    <a href="#sec-war">중동전쟁 <b>5</b></a>
-    <a href="#sec-semi">반도체 <b>3</b></a>
-    <a href="#sec-macro">거시·금리 <b>3</b></a>
-  </nav>
+
+  <div class="sec-pick"><button class="sp-btn" aria-expanded="false" aria-haspopup="true"><span class="sp-label">섹션 전체</span><span class="sp-cnt">26</span><span class="sp-caret" aria-hidden="true">▾</span></button><ul class="sp-list" hidden><li><button data-sec="">전체 보기<span class="cnt">26</span></button></li><li class="sp-sep"></li><li><button data-sec="sec-ai">AI · 데이터센터 전력<span class="cnt">2</span></button></li><li><button data-sec="sec-renew">재생에너지 · 원전 · 소재<span class="cnt">4</span></button></li><li><button data-sec="sec-pmarket">전력요금 · 시장 메커니즘<span class="cnt">3</span></button></li><li><button data-sec="sec-oilsupply">원유 수급 · 정유<span class="cnt">6</span></button></li><li><button data-sec="sec-war">중동 전쟁 · 지정학<span class="cnt">5</span></button></li><li><button data-sec="sec-semi">반도체 · 메모리<span class="cnt">3</span></button></li><li><button data-sec="sec-macro">거시 · 금리 · 환율<span class="cnt">3</span></button></li></ul></div>
 
   <section id="sec-ai">
     <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">AI · 데이터센터 전력</h2></div>
@@ -1514,5 +1299,125 @@
   },{rootMargin:'-58px 0px -75% 0px', threshold:0});
   secs.forEach(function(s){ spy.observe(s); });
   setActive(secs[0].id);
+})();
+</script>
+<!-- SECPICK -->
+<style>
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+</style>
+<script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 부동산에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
+  var btn=box && box.querySelector('.sp-btn');
+  var list=box && box.querySelector('.sp-list');
+  var label=box && box.querySelector('.sp-label');
+  var total=box && box.querySelector('.sp-cnt');
+  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  var only=null;                   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
+  function opt(id){ return list && list.querySelector('button[data-sec="'+id+'"]'); }
+  function close(){ if(box){ box.classList.remove('open'); list.hidden=true; btn.setAttribute('aria-expanded','false'); } }
+  // 섹션을 고른 상태면 그 항목을, 전체를 보는 중이면 지금 화면에 걸린 섹션 항목을 켠다
+  function spy(){
+    var cur=only, line=120;
+    if(!cur){
+      var live=document.querySelectorAll('section[id]:not([hidden])');
+      live.forEach(function(s){ if(s.getBoundingClientRect().top<=line) cur=s.id; });
+      if(!cur && live.length) cur=live[0].id;
+    }
+    if(list) list.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-current', String(b.dataset.sec===(only||'') || (!only && b.dataset.sec===cur)));
+    });
+  }
+  function apply(){
+    document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
+      c.hidden = !(pick==='all' || c.dataset.scope===pick);
+    });
+    var seen=0;
+    document.querySelectorAll('section[id]').forEach(function(s){
+      var live=s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
+      s.hidden = live===0 || (only && s.id!==only);
+      var o=opt(s.id);
+      if(o){
+        o.parentNode.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
+      }
+    });
+    if(only){
+      var head=document.querySelector('#'+only+' .sec-title');
+      var one=document.querySelector('#'+only+' .ucard:not([hidden])');
+      if(label) label.textContent = head? head.textContent : '섹션';
+      if(total) total.textContent = document.querySelectorAll('#'+only+' .ucard:not([hidden])').length;
+      if(!one && label) label.textContent='섹션 전체';
+    }else{
+      if(label) label.textContent='섹션 전체';
+      if(total) total.textContent=seen;
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
+    spy();
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; close(); apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
+  });
+  if(btn) btn.addEventListener('click', function(){
+    var open=!box.classList.contains('open');
+    box.classList.toggle('open', open);
+    list.hidden=!open;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  if(list) list.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    only = b.dataset.sec || null;
+    close(); apply();
+    window.scrollTo({top:0});
+  });
+  document.addEventListener('click', function(e){
+    if(box && !e.target.closest('.sec-pick')) close();
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+  var tick=false;
+  window.addEventListener('scroll', function(){
+    if(tick) return;
+    tick=true;
+    requestAnimationFrame(function(){ tick=false; spy(); });
+  }, {passive:true});
+  apply();
 })();
 </script>

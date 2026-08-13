@@ -38,8 +38,9 @@ EXTRA_CSS = '''
   .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
               padding:10px 0 9px;margin:0;background:var(--paper)}
   /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
-  .sec-pick{position:sticky;top:55px;z-index:20;background:var(--paper);padding:0 0 10px;
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
             margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
   .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
           cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
           background:var(--surface);color:var(--ink);text-align:left}
@@ -172,15 +173,16 @@ FOLD_JS = '''<script>
 })();
 </script>'''
 
-SCOPE_JS = '''<script>
+NAV_JS = '''<script>
 (function(){
-  var tabs=document.querySelector('.scope-tabs'); if(!tabs) return;
-  var box=document.querySelector('.sec-pick');
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 부동산에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
   var btn=box && box.querySelector('.sp-btn');
   var list=box && box.querySelector('.sp-list');
   var label=box && box.querySelector('.sp-label');
   var total=box && box.querySelector('.sp-cnt');
-  var pick='kr', only=null;   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
+  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  var only=null;                   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
   function opt(id){ return list && list.querySelector('button[data-sec="'+id+'"]'); }
   function close(){ if(box){ box.classList.remove('open'); list.hidden=true; btn.setAttribute('aria-expanded','false'); } }
   // 섹션을 고른 상태면 그 항목을, 전체를 보는 중이면 지금 화면에 걸린 섹션 항목을 켠다
@@ -222,11 +224,11 @@ SCOPE_JS = '''<script>
     }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     spy();
-    tabs.querySelectorAll('button').forEach(function(b){
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
     });
   }
-  tabs.addEventListener('click', function(e){
+  if(tabs) tabs.addEventListener('click', function(e){
     var b=e.target.closest('button');
     if(!b) return;
     pick=b.dataset.pick; only=null; close(); apply();
@@ -275,17 +277,11 @@ def sec_picker(secs, order, total):
 def render(cards, title, header, footer, out):
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
+    kr = len([c for c in scoped if c['scope'] == 'kr'])
+    nav = sec_picker(secs, order, kr if scoped else len(cards))
+    tabs = ''
     if scoped:
-        kr_total = len([c for c in scoped if c['scope'] == 'kr'])
-        nav = sec_picker(secs, order, kr_total)
-    else:
-        nav = '<nav class="sec-nav">%s</nav>' % ''.join(
-            '<a href="#%s">%s <b>%d</b></a>' % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order)
-    tabs = js = ''
-    if scoped:
-        kr = len([c for c in scoped if c['scope'] == 'kr'])
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
-        js = SCOPE_JS
     body = []
     for sid in order:
         (_, num, stitle, sub), cs = secs[sid]
@@ -295,7 +291,7 @@ def render(cards, title, header, footer, out):
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
             + '\n<div class="wrap">\n' + header + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
-            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + FOLD_JS + js + '\n')
+            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + FOLD_JS + NAV_JS + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))

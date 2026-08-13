@@ -208,31 +208,6 @@
     .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
   }
 
-  /* ── 통합 인사이트 ── */
-  #sec-insights .sec-num { background:var(--accent); color:var(--surface); }
-  .ins-card { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
-    border-radius:12px; padding:18px 22px; margin-bottom:12px; box-shadow:var(--shadow); }
-  .ins-card > summary { list-style:none; cursor:pointer; display:block; position:relative; padding-right:26px; }
-  .ins-card > summary::-webkit-details-marker { display:none; }
-  .ins-card > summary::after { content:"⌄"; position:absolute; right:2px; top:-4px; font-size:20px; line-height:1; color:var(--ink-3); transition:transform .2s; }
-  .ins-card[open] > summary::after { transform:rotate(180deg); }
-  .ins-card[open] > summary { margin-bottom:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
-  .ins-card > summary .ins-sub { margin-bottom:0; }
-  .ins-card > summary:hover h3 { color:var(--accent); }
-  .ins-card .ins-id { font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); }
-  .ins-card h3 { font-size:20px; font-weight:850; letter-spacing:-.02em; margin:4px 0 2px; color:var(--ink); }
-  .ins-sub { font-size:13.5px; color:var(--ink-3); margin:0 0 14px; }
-  .ins-body h4 { font-size:12.5px; font-weight:800; color:var(--accent-ink); margin:14px 0 6px;
-    text-transform:uppercase; letter-spacing:.04em; }
-  .ins-body p { font-size:14.5px; color:var(--ink); line-height:1.6; margin:0 0 8px; }
-  .ins-body ul { margin:0 0 8px; padding-left:18px; }
-  .ins-body li { font-size:13.5px; color:var(--ink-2); line-height:1.58; margin-bottom:4px; }
-  .ins-src-label { font-size:10.5px; font-weight:800; color:var(--ink-3); margin:14px 0 6px; }
-  .ins-srcs { display:flex; flex-wrap:wrap; gap:6px; }
-  .ins-srcs a { font-size:11.5px; padding:5px 10px; border-radius:999px; background:var(--sunk);
-    border:1px solid var(--line); color:var(--ink-2); text-decoration:none; }
-  .ins-srcs a:hover { border-color:var(--accent); color:var(--accent); }
-
   /* ── 섹션 점프 내비 ── */
   .sec-nav {
     position:sticky; top:0; z-index:20;
@@ -316,8 +291,9 @@
   .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
               padding:10px 0 9px;margin:0;background:var(--paper)}
   /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
-  .sec-pick{position:sticky;top:55px;z-index:20;background:var(--paper);padding:0 0 10px;
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
             margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
   .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
           cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
           background:var(--surface);color:var(--ink);text-align:left}
@@ -413,13 +389,14 @@
 })();
 </script><script>
 (function(){
-  var tabs=document.querySelector('.scope-tabs'); if(!tabs) return;
-  var box=document.querySelector('.sec-pick');
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 부동산에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
   var btn=box && box.querySelector('.sp-btn');
   var list=box && box.querySelector('.sp-list');
   var label=box && box.querySelector('.sp-label');
   var total=box && box.querySelector('.sp-cnt');
-  var pick='kr', only=null;   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
+  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  var only=null;                   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
   function opt(id){ return list && list.querySelector('button[data-sec="'+id+'"]'); }
   function close(){ if(box){ box.classList.remove('open'); list.hidden=true; btn.setAttribute('aria-expanded','false'); } }
   // 섹션을 고른 상태면 그 항목을, 전체를 보는 중이면 지금 화면에 걸린 섹션 항목을 켠다
@@ -461,11 +438,11 @@
     }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     spy();
-    tabs.querySelectorAll('button').forEach(function(b){
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
     });
   }
-  tabs.addEventListener('click', function(e){
+  if(tabs) tabs.addEventListener('click', function(e){
     var b=e.target.closest('button');
     if(!b) return;
     pick=b.dataset.pick; only=null; close(); apply();
