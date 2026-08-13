@@ -234,15 +234,19 @@
 
   /* ── 모바일 최적화 ── */
   @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
     body { padding:0 14px 64px; }
     .wrap { max-width:100%; }
-    header { padding:34px 0 4px; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
     h1 { letter-spacing:-.03em; }
     .lede { font-size:14px; }
     .meta-row { gap:5px 16px; margin-top:18px; }
     section { margin-top:40px; }
     h2.sec-title { font-size:20px; }
-    .ucard { padding:20px 17px 17px; border-radius:10px; margin-bottom:14px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
     .ucard h2 { font-size:20px; line-height:1.3; }
     .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
     .uc-points li { font-size:13px; line-height:1.55; }
