@@ -1,4 +1,5 @@
 scratchpad/
+site/
 __pycache__/
 *.pyc
 .claude/worktrees/
