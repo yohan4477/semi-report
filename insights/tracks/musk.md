@@ -5,7 +5,7 @@ as_of: 2026-08-09
 sources:
   - {file: "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md", date: "2025-09-16", note: "콜로서스1·2 건설 타임라인, 미시시피 전력 전략, 솔라리스 JV, xAI 자금조달"}
   - {file: "input/clippings/To Boldly Go The Case for Space Datacenters.md", date: "2026-06-03", note: "우주 데이터센터 TCO 모델, 테라팹, 스타십 발사비용·V3 시험비행"}
-  - {file: "input/clippings/SpaceX 10GW in 2027 – Why It's Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md", date: "2026-08-07", note: "2027년 10GW 목표, 마이크로소프트 딜, 스페이스X 자금조달, 신규 부지 후보"}
+  - {file: "input/clippings/SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md", date: "2026-08-07", note: "2027년 10GW 목표, 마이크로소프트 딜, 스페이스X 자금조달, 신규 부지 후보"}
   - {file: "input/clippings/Meta Compute Everyone Wants To Be A Neocloud.md", date: "2026-07-02", note: "스페이스X식 컴퓨트 단가 전략 부분만"}
   - {file: "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md", date: "2025-12-31", note: "온사이트 가스 발전 전략 중 xAI·콜로서스 부분만"}
 ---
