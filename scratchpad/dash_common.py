@@ -209,6 +209,15 @@ NAV_JS = '''<script>
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
+    // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
+    document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
+      r.hidden = !(pick==='all' || r.dataset.scope===pick);
+    });
+    document.querySelectorAll('.rlold').forEach(function(o){
+      o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
+    });
+    var roll=document.querySelector('.rollup');
+    if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
       var live=s.querySelectorAll('.ucard:not([hidden])').length;

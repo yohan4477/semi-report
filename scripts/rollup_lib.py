@@ -73,9 +73,11 @@ def render_report(r, counts, unit='건'):
     label = KIND.get(r['kind'], r['kind'])
     if r.get('scope'):
         label += ' · ' + SCOPE.get(r['scope'], r['scope'])
-    return ('<details class="rlrep"><summary class="rlhd"><span class="rlk">%s</span>'
+    # data-scope는 대시보드의 국내·해외 탭이 골라 보여주는 표시다(범위 없는 리포트는 늘 보인다)
+    return ('<details class="rlrep"%s><summary class="rlhd"><span class="rlk">%s</span>'
             '<span class="rlt">%s</span><span class="rlmeta">%s</span></summary>'
-            '<ol class="rll">%s</ol></details>') % (label, r['title'], meta, items)
+            '<ol class="rll">%s</ol></details>') % (
+        ' data-scope="%s"' % r['scope'] if r.get('scope') else '', label, r['title'], meta, items)
 
 
 def build(notes, counts, unit='건'):
