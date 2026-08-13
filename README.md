@@ -16,7 +16,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - 🏭 [제약과 회사](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%A0%9C%EC%95%BD%EA%B3%BC%20%ED%9A%8C%EC%82%AC.html) — 원자가 말하는 제약별로 파는 회사와 맞는 회사. 종목 추천이 아닙니다
 
 ### 제3자 해설 (SemiAnalysis 코퍼스 외)
-- 🎧 [AI · 인프라 · 전력 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 언더스탠딩 유튜브 한국어 해설(권효재·이선엽 등) 자막요약. SemiAnalysis 코퍼스와 별개이며 확신도 산정 대상 아님
+- 🎧 [AI · 인프라 · 에너지 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 언더스탠딩 유튜브 한국어 해설(권효재·이선엽 등) 자막요약. SemiAnalysis 코퍼스와 별개이며 확신도 산정 대상 아님
 - 🎓 [미국주식 사관학교 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%AF%B8%EA%B5%AD%EC%A3%BC%EC%8B%9D%20%EC%82%AC%EA%B4%80%ED%95%99%EA%B5%90%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 네이버 프리미엄 유료 채널(필자 카레라) 텍스트 요약. 개별 종목이 언급되지만 투자 추천이 아니며 가격·밸류에이션 검증도 하지 않음
 - 🏠 [부동산 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EB%B6%80%EB%8F%99%EC%82%B0%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 채널을 가리지 않고 부동산 주제만 모은 아카이브(유튜브는 자막 전문 기반 요약). 지역·기업이 언급되지만 투자 추천이 아님
 - 💵 [금융 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EA%B8%88%EC%9C%B5%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 금리·국채·환율 주제 아카이브(류상철 전 한국은행 국장 등). 투자 추천이 아님

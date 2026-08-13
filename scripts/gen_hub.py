@@ -47,7 +47,7 @@ TOPICS = [
       ('📊', '임팩트 타임라인', pg('소스 타임라인.html'),
        '이벤트 하나가 어디까지 번지는지를 가지로 그린다. 2차 파급까지만 — 3차는 추측이다',
        ['LinkedIn']),
-      ('⚡', 'AI · 인프라 · 전력 인사이트', pg('언더스탠딩 대시보드.html'),
+      ('⚡', 'AI · 인프라 · 에너지 인사이트', pg('언더스탠딩 대시보드.html'),
        '같은 주제를 국내 해설 쪽에서 본 것. 데이터센터 전력·에너지 수급·중동 유가까지',
        ['제3자 해설']),
      ]),
@@ -143,7 +143,9 @@ def build():
     n = sum(len(p) for _, _, _, p in TOPICS) + len(LEGACY)
     html = TMPL.replace('__CSS__', style.BASE + CSS) \
                .replace('__BLOCKS__', ''.join(blocks)) \
-               .replace('__N__', str(n))
+               .replace('__N__', str(n)) \
+               .replace('__T__', str(len(TOPICS))) \
+               .replace('__L__', str(len(LEGACY)))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('OK: %d장 -> %s' % (n, OUT))
 
@@ -158,7 +160,7 @@ TMPL = '''<meta charset="utf-8">
   <h1>어디로 들어갈까</h1>
   <p class="lede">SemiAnalysis 뉴스레터와 LinkedIn·YouTube 신호, 그리고 제3자 해설을
   한국어로 옮기고 엮은 것들입니다. 여기만 북마크하면 됩니다 — 나머지는 이 페이지에서 닿습니다.</p>
-  <div class="meta"><span>페이지 __N__장</span><span>주제 3 · 소스 아카이브 2</span></div>
+  <div class="meta"><span>페이지 __N__장</span><span>주제 __T__ · 소스 아카이브 __L__</span></div>
 </header>
 __BLOCKS__
 <div class="rule"><b>페이지를 늘리지 않는 규칙.</b> 리포트 한 편이나 릴리스 하나 때문에
