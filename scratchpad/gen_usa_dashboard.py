@@ -358,7 +358,7 @@ HEADER = '''  <header>
       <span>채널 <b>미국주식 사관학교</b></span>
       <span>필자 <b>카레라</b></span>
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">⚡ AI · 인프라 · 전력 인사이트</a>
     <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
     <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트</a>
   </header>''' % (STAMP, len(CARDS), len(CARDS))
