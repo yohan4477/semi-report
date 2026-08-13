@@ -2,7 +2,7 @@
 # 부동산 인사이트 대시보드 생성. 채널을 가리지 않고 「부동산」 주제만 모으는 아카이브다.
 # 카드는 이 파일 CARDS에 적고 재실행하면 페이지가 다시 만들어진다.
 # 마크업과 CSS는 dash_common이 갖고 있고, 미국주식 사관학교 대시보드와 한 벌로 움직인다.
-import io, os, sys
+import io, os, re, sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -14,6 +14,7 @@ blob = dc.blob
 STAMP = '2026-08-13'
 SUM = 'content/understanding/부동산/'
 
+# 섹션 번호는 by_upload_desc가 다시 매긴다 — 여기 숫자는 자리표시용이다
 SEC_CLUSTER = ('sec-cluster', '01', '지방 부동산 · 산업 클러스터',
                '땅값이 오르는 지방은 어디이고 그 자리에 무엇이 있었나. 기업과 대학, 병원, 전력이 같이 간다')
 SEC_TAX = ('sec-tax', '02', '보유세 · 양도세 · 거래세',
@@ -533,6 +534,36 @@ CARDS = [{
               ('📄 요약 전문', blob(SUM + '[260407] 땅값은 직선이 아니라 2차 함수 - 호재가 아니라 정주 인구를 보고 산다 - 김종율.md'), 'secondary')],
 }]
 
+
+def upload_date(card):
+    """카드 meta의 '업로드 2026-08-04'에서 날짜를 뽑는다 — 정렬 기준을 따로 적지 않는다"""
+    for m in card['meta']:
+        hit = re.search(r'업로드\s*(\d{4}-\d{2}-\d{2})', m)
+        if hit:
+            return hit.group(1)
+    raise ValueError('업로드 날짜가 없는 카드: ' + card['title'])
+
+
+def by_upload_desc(cards):
+    """섹션은 유지하고 섹션 안을 최신순으로. 섹션끼리는 그 섹션 최신 편이 앞이고, 번호는 다시 매긴다"""
+    newest = {}
+    for c in cards:
+        sid = c['section'][0]
+        newest[sid] = max(newest.get(sid, ''), upload_date(c))
+    ordered = sorted(cards, key=lambda c: (newest[c['section'][0]], upload_date(c)), reverse=True)
+    num, seen, out = 0, {}, []
+    for c in ordered:
+        sid, sec = c['section'][0], c['section']
+        if sid not in seen:
+            num += 1
+            seen[sid] = '%02d' % num
+        c = dict(c)
+        c['section'] = (sec[0], seen[sid], sec[2], sec[3])
+        out.append(c)
+    return out
+
+
+CARDS = by_upload_desc(CARDS)
 
 HEADER = '''  <header>
     <p class="eyebrow">부동산 — 제3자 해설 아카이브</p>
