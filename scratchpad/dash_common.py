@@ -321,10 +321,10 @@ def render(cards, title, header, footer, out, rollup=''):
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
     body = []
     for sid in order:
-        (_, num, stitle, sub), cs = secs[sid]
+        (_, num, stitle, _sub), cs = secs[sid]
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
-                    '<h2 class="sec-title">%s</h2></div><p class="sec-sub">%s</p>%s</section>'
-                    % (sid, num, stitle, sub, ''.join(card_html(c) for c in cs)))
+                    '<h2 class="sec-title">%s</h2></div>%s</section>'
+                    % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
             + '\n<div class="wrap">\n' + header + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
