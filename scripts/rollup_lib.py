@@ -23,7 +23,10 @@ CSS = """
   .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
   .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
     background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
-  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; flex:1 1 auto; min-width:0; color:var(--ink);}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
   .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
   .rll{list-style:none; margin:10px 0 0; padding:0;}
   .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
@@ -73,11 +76,15 @@ def render_report(r, counts, unit='건'):
     label = KIND.get(r['kind'], r['kind'])
     if r.get('scope'):
         label += ' · ' + SCOPE.get(r['scope'], r['scope'])
+    # 접힌 상태에서 무슨 내용인지 한 줄로 알려준다. 없으면 제목만 나온다
+    desc = '<span class="rld">%s</span>' % r['desc'] if r.get('desc') else ''
     # data-scope는 대시보드의 국내·해외 탭이 골라 보여주는 표시다(범위 없는 리포트는 늘 보인다)
     return ('<details class="rlrep"%s><summary class="rlhd"><span class="rlk">%s</span>'
-            '<span class="rlt">%s</span><span class="rlmeta">%s</span></summary>'
+            '<span class="rlttl"><span class="rlt">%s</span>%s</span>'
+            '<span class="rlmeta">%s</span></summary>'
             '<ol class="rll">%s</ol></details>') % (
-        ' data-scope="%s"' % r['scope'] if r.get('scope') else '', label, r['title'], meta, items)
+        ' data-scope="%s"' % r['scope'] if r.get('scope') else '',
+        label, r['title'], desc, meta, items)
 
 
 def build(notes, counts, unit='건'):
