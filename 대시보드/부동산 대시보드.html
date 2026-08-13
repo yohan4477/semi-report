@@ -331,6 +331,30 @@
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; flex:1 1 auto; min-width:0; color:var(--ink);}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
 </style>
 <div class="wrap">
   <header>
@@ -349,9 +373,11 @@
       <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
       특정 지역·기업이 언급되지만 <b>투자 추천이 아니고</b> 가격 검증도 하지 않았습니다 — 화자 시각의 기록으로만 보세요.
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
-    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교 →</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교</a>
   </header>
+
+  
 
   <div class="scope-tabs">
     <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">8</span></button>
