@@ -120,14 +120,16 @@ def slug(t):
 
 
 def slim_html(c):
-    """슬림 형식 — 한 화면에 다 읽히게. 접지 않고, 표와 곁다리 메모를 빼고, 반론만 남긴다.
+    """펼쳤을 때 본문을 AI · 인프라 · 에너지 카드와 같은 형태로 낸다.
 
-    지금 형식의 데이터(oneliner·points·stats·table·clash·note)는 카드에 그대로 둔다.
-    slim_* 필드를 갖춘 카드만 이 형식으로 나가므로 언제든 되돌릴 수 있다.
+    접힌 상태는 부동산 인사이트 그대로다(주제칩·제목·gain·화자와 날짜).
+    펼치면 한 줄 요약 → 핵심 포인트 → 주요 숫자 → 인용까지가 저쪽 형식과 같고,
+    그 뒤에 <b>반론·충돌은 원본 그대로</b> 붙인다(줄이지 않는다). 표는 내지 않는다.
+
+    slim_* 필드를 갖춘 카드만 이 형식으로 나가고 기존 필드는 그대로 남는다.
       slim_oneliner  두세 문장
       slim_points    6~8개, 각 한두 문장
       slim_stats     4개
-      slim_clash     3개까지(없으면 생략)
     """
     h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
     # 접힌 상태는 지금까지와 같다 — 주제칩·제목·이 편에서 무엇을 알 수 있는지·화자와 날짜
@@ -146,30 +148,11 @@ def slim_html(c):
              % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
                        for s in c.get('slim_stats', c['stats'])))
     h.append('<p class="uc-quote">%s</p>' % c['quote'])
-    if c.get('slim_clash'):
-        h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
-                 % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['slim_clash']))
-    # 더 볼 사람만 여는 서랍 — 접힌 슬림 카드 아래에 전체 포인트·표·나머지 반론·유보를 둔다.
-    # <details>라 스크립트 없이도 열린다
-    more = ['<details class="uc-more"><summary>자세히 — 전체 포인트와 표, 유보 사항</summary>'
-            '<div class="uc-more-body">']
-    more.append('<p class="uc-label">핵심 포인트 전체</p><ul class="uc-points">%s</ul>'
-                % ''.join('<li>%s</li>' % p for p in c['points']))
-    if c.get('table'):
-        cap, head, rows = c['table']
-        more.append('<p class="uc-label">%s</p>' % cap)
-        more.append('<div class="tbl-wrap"><table class="uc-tbl"><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-                    % (''.join('<th>%s</th>' % x for x in head),
-                       ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % x for x in r) for r in rows)))
-    more.append('<p class="uc-label">주요 숫자 전체</p><div class="stat-grid">%s</div>'
-                % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
-                          for s in c['stats']))
+    # 반론·충돌은 줄이지 않는다 — 한 편만 읽고 결론 내리지 않게 하는 장치라 원본 그대로 쓴다
     if c.get('clash'):
-        more.append('<div class="clash"><p class="ch">반론 · 충돌 전체</p><ul>%s</ul></div>'
-                    % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
-    more.append('<div class="side-note">%s</div>' % c['note'])
-    more.append('</div></details>')
-    h.append(''.join(more))
+        h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
+                 % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
+    h.append('<div class="side-note">%s</div>' % c['note'])
     h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
              % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
