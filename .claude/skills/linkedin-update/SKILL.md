@@ -114,7 +114,13 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
    ```
    This re-splices ①'s day-groups from the history's most recent 10 day-groups (3-source LI/YouTube/newsletter, direct-link badges, NVIDIA-first-party interleave, cluster "관련" expanders). The generator carries a small `NVROWS`/`REL` overlay for NVIDIA blog + nvidia-ai-infra rows and thematic cross-links — add new NVIDIA-first-party items or relations there, not in the HTML. Adjust the window number if the feed gets too long/short.
 
-After both, sanity-check tag balance (`<div>` open/close counts must match — the generator prints them) before committing. Commit the history edit and the regenerated dashboard together.
+3. **주간·월간 롤업 리포트** (히스토리 상단, 2026-08-13 신설). 산문은 판단이므로 **메인 세션 모델이 직접** `data/rollup_notes.json`에 새 항목 2개(`kind: week` / `kind: month`, 같은 `asof`)를 쓴다. 주간 = 최근 7일, 월간 = 최근 30일 창이고, 각 항목은 헤드(`h`) + 숫자·회사명이 박힌 근거(`b`) 3~5개다. 그 뒤:
+   ```bash
+   python scripts/gen_rollup.py
+   ```
+   최신 `asof`의 주간·월간 카드를 펼쳐 보여 주고 이전 회차는 `<details>`로 접어 누적한다(리포트 히스토리 유지). 건수·기간 메타는 히스토리 day 그룹에서 자동 계산하므로 손대지 말 것. 스플라이스 구간은 `<!--ROLLUP:START--> ~ <!--ROLLUP:END-->`.
+
+After all three, sanity-check tag balance (`<div>` open/close counts must match — the generators print them) before committing. Commit the history edit, the regenerated dashboard, and the rollup together.
 
 ## 6. Impact assessment → 대시보드/소스 타임라인.html
 

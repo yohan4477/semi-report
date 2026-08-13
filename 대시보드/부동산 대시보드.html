@@ -290,7 +290,7 @@
   .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
   .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
   .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
-  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--faint);letter-spacing:.04em;text-transform:uppercase;
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
              border-bottom:1px solid var(--line)}
   .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
   /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
@@ -305,19 +305,23 @@
   .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
   @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
   .clash ul{margin:0;padding-left:17px}
-  .clash li{font-size:.84rem;line-height:1.6;color:var(--sub);margin-bottom:5px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
   .clash li:last-child{margin-bottom:0}
   .clash li b{color:var(--ink)}
   .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
               background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
   @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
-  /* 국내·국외 필터 — 카드에 data-scope가 있을 때만 생긴다 */
-  .scope-tabs{display:flex;gap:8px;margin:0 0 18px;flex-wrap:wrap}
-  .scope-tabs button{font:inherit;font-size:.82rem;font-weight:800;cursor:pointer;padding:8px 16px;
-                     border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--sub)}
-  .scope-tabs button:hover{color:var(--ink);border-color:var(--faint)}
-  .scope-tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-  .scope-tabs .cnt{font-weight:700;opacity:.65;margin-left:5px}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  .scope-tabs ~ .sec-nav{top:47px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
   section[hidden]{display:none}
 </style>
 <div class="wrap">
@@ -343,7 +347,7 @@
 
   <div class="scope-tabs">
     <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">8</span></button>
-    <button data-pick="intl" aria-pressed="false">🌍 국외 <span class="cnt">2</span></button>
+    <button data-pick="intl" aria-pressed="false">🌍 해외 <span class="cnt">2</span></button>
     <button data-pick="all" aria-pressed="false">전체 <span class="cnt">10</span></button>
   </div>
 
