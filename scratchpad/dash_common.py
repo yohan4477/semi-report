@@ -48,6 +48,16 @@ EXTRA_CSS = '''
   .scope-tabs ~ .sec-nav a[aria-current="true"]{background:var(--accent-soft);border-color:var(--accent);
                                                 color:var(--accent-ink)}
   section[hidden]{display:none}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
 </style>'''
 
 
@@ -69,10 +79,14 @@ def css():
 
 def card_html(c):
     # scope는 국내(kr)·국외(intl) 필터용이다. 안 적은 카드는 필터와 무관하게 늘 보인다
-    h = ['<div class="ucard"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    # 접힌 상태에서는 머리(주제칩·제목·화자/날짜)만 남고 uc-body는 감춘다
+    h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
     h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
+    h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
+    h.append('<div class="uc-body">')
     h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
     h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
              % ''.join('<li>%s</li>' % p for p in c['points']))
@@ -94,7 +108,7 @@ def card_html(c):
     h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
              % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
-    h.append('</div>')
+    h.append('</div></div>')
     return ''.join(h)
 
 
@@ -115,6 +129,29 @@ SCOPE_TABS = '''<div class="scope-tabs">
     <button data-pick="intl" aria-pressed="false">🌍 해외 <span class="cnt">%d</span></button>
     <button data-pick="all" aria-pressed="false">전체 <span class="cnt">%d</span></button>
   </div>'''
+
+FOLD_JS = '''<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script>'''
 
 SCOPE_JS = '''<script>
 (function(){
@@ -198,7 +235,7 @@ def render(cards, title, header, footer, out):
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
             + '\n<div class="wrap">\n' + header + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
-            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + js + '\n')
+            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + FOLD_JS + js + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
