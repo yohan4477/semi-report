@@ -38,9 +38,23 @@ SLUGS = {src: slug for src, slug, *_ in PAGES}
 # 클래스는 ida- 접두어로 격리한다.
 HOME_BTN = '''
 <style>
+  /* 나가는 길은 처음부터 보여야 한다 — 제목 위에 놓는 인라인 링크 */
+  .ida-top {
+    display:inline-flex; align-items:center; gap:6px; margin:0 0 14px;
+    font:600 .8rem/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    letter-spacing:.012em; text-decoration:none; color:currentColor; opacity:.6;
+    transition:opacity .2s ease, transform .34s cubic-bezier(.19,1,.22,1);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ida-top:hover { opacity:1; transform:translateX(-2px); }
+  .ida-top:active { opacity:.45; transition-duration:.09s; }
+  .ida-top:focus-visible { outline:2px solid currentColor; outline-offset:3px; border-radius:4px; }
+
+  /* 스크롤로 머리글이 밀려난 뒤에만 뜬다 — 헤더를 가리지 않으려고 */
   .ida-home {
     position:fixed; z-index:9999;
-    left:max(16px, env(safe-area-inset-left)); bottom:max(16px, env(safe-area-inset-bottom));
+    left:max(16px, env(safe-area-inset-left)); top:max(14px, env(safe-area-inset-top));
+    opacity:0; pointer-events:none; transform:translateY(-6px);
     display:inline-flex; align-items:center; gap:7px;
     padding:9px 14px 9px 12px; border-radius:999px;
     /* 작은 글씨는 tracking을 살짝 벌려야 읽힌다 */
@@ -51,12 +65,15 @@ HOME_BTN = '''
     box-shadow:0 4px 16px -4px rgba(0,0,0,.22);
     -webkit-backdrop-filter:saturate(1.5) blur(14px); backdrop-filter:saturate(1.5) blur(14px);
     /* 놓았을 때 감속하듯 — 임계감쇠 스프링에 가까운 곡선 */
-    transition:transform .34s cubic-bezier(.19,1,.22,1), box-shadow .34s cubic-bezier(.19,1,.22,1);
+    transition:transform .34s cubic-bezier(.19,1,.22,1),
+               box-shadow .34s cubic-bezier(.19,1,.22,1),
+               opacity .22s ease;
     -webkit-tap-highlight-color:transparent; touch-action:manipulation;
   }
-  .ida-home:hover { transform:translateY(-1px); box-shadow:0 8px 22px -6px rgba(0,0,0,.3); }
+  .ida-home.is-on { opacity:1; pointer-events:auto; transform:translateY(0); }
+  .ida-home.is-on:hover { transform:translateY(-1px); box-shadow:0 8px 22px -6px rgba(0,0,0,.3); }
   /* 피드백은 누르는 순간에. 뗄 때까지 기다리면 죽은 느낌이 난다 */
-  .ida-home:active {
+  .ida-home.is-on:active {
     transform:translateY(0) scale(.955);
     transition-duration:.09s; transition-timing-function:ease-out;
   }
@@ -82,11 +99,13 @@ HOME_BTN = '''
   }
   /* 움직임을 줄여도 피드백 자체는 남긴다 — 이동 대신 명암으로 */
   @media (prefers-reduced-motion: reduce) {
-    .ida-home { transition:opacity .15s ease; }
-    .ida-home:hover { transform:none; }
-    .ida-home:active { transform:none; opacity:.65; }
+    .ida-home { transition:opacity .15s ease; transform:none; }
+    .ida-home.is-on { transform:none; }
+    .ida-home.is-on:hover { transform:none; }
+    .ida-home.is-on:active { transform:none; opacity:.65; }
+    .ida-top:hover { transform:none; }
   }
-  @media print { .ida-home { display:none; } }
+  @media print { .ida-home, .ida-top { display:none; } }
 
   /* NEW 배지 — 영상 업로드일이 아니라 사이트에 올라온 날 기준 */
   .ida-new {
@@ -115,8 +134,24 @@ HOME_BTN = '''
     if (!(now - since < WINDOW)) el.remove();
   });
 })();
+
+/* 머리글의 인라인 링크가 화면에서 사라지면 고정 버튼이 그 역할을 넘겨받는다 */
+(function () {
+  var pill = document.querySelector('.ida-home');
+  var anchor = document.querySelector('.ida-top');
+  if (!pill) return;
+  if (!anchor) { pill.classList.add('is-on'); return; }
+  if (!('IntersectionObserver' in window)) { pill.classList.add('is-on'); return; }
+  new IntersectionObserver(function (entries) {
+    pill.classList.toggle('is-on', !entries[0].isIntersecting);
+  }, { rootMargin: '-8px 0px 0px 0px' }).observe(anchor);
+})();
 </script>
 '''
+
+# 머리글 링크는 문서 맨 앞 컨테이너 바로 안쪽에 꽂는다 (대시보드마다 header 또는 main)
+TOP_LINK = '<a class="ida-top" href="/"><span aria-hidden="true">←</span>메인</a>\n'
+TOP_ANCHOR = re.compile(r'(<(?:header|main)\b[^>]*>)')
 
 LEDGER = ROOT / 'data' / 'site_card_first_seen.json'
 NEW_DAYS = 7
@@ -263,6 +298,9 @@ def main():
     for src, slug, *_ in PAGES:
         html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
         html, fresh = mark_new(html, ledger.get(slug, {}))
+        html, hit = TOP_ANCHOR.subn(lambda m: m.group(1) + TOP_LINK, html, count=1)
+        if not hit:
+            print(f'  ! {src}: header/main을 못 찾아 머리글 링크를 넣지 못했다')
         (OUT / f'{slug}.html').write_text(html + HOME_BTN, encoding='utf-8')
         badge = f'  NEW {len(fresh)}' if fresh else ''
         print(f'  {src}  ->  {slug}.html{badge}')
