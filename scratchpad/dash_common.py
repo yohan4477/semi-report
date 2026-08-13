@@ -122,6 +122,20 @@ SCOPE_JS = '''<script>
   var nav=document.querySelector('.sec-nav');
   var pick='kr', only=null;   // only = 목차에서 고른 섹션 하나, 다시 누르면 풀린다
   function link(id){ return nav && nav.querySelector('a[href="#'+id+'"]'); }
+  // 섹션 하나만 고른 상태면 그 칩을, 전체를 보는 중이면 지금 화면에 걸린 섹션의 칩을 켠다
+  function spy(){
+    var cur=only, line=110;
+    if(!cur){
+      var live=document.querySelectorAll('section[id]:not([hidden])');
+      live.forEach(function(s){
+        if(s.getBoundingClientRect().top<=line) cur=s.id;   // 기준선을 지난 마지막 섹션
+      });
+      if(!cur && live.length) cur=live[0].id;               // 아직 첫 섹션 위라면 첫 칩
+    }
+    if(nav) nav.querySelectorAll('a').forEach(function(a){
+      a.setAttribute('aria-current', String(a.getAttribute('href')==='#'+cur));
+    });
+  }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
@@ -132,10 +146,10 @@ SCOPE_JS = '''<script>
       var a=link(s.id);
       if(a){
         a.style.display = live? '' : 'none';
-        a.setAttribute('aria-current', String(only===s.id));
         var b=a.querySelector('b'); if(b) b.textContent=live;
       }
     });
+    spy();
     tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
     });
@@ -154,6 +168,12 @@ SCOPE_JS = '''<script>
     apply();
     if(only) nav.scrollIntoView({block:'start'});
   });
+  var tick=false;
+  window.addEventListener('scroll', function(){
+    if(tick) return;
+    tick=true;
+    requestAnimationFrame(function(){ tick=false; spy(); });
+  }, {passive:true});
   apply();
 })();
 </script>'''
