@@ -8,8 +8,10 @@ SRC_RE = re.compile(r'^\s*-\s*\{(.+)\}\s*$', re.M)
 KV_RE = re.compile(r'(\w+):\s*"([^"]*)"')
 META_RE = re.compile(r'^(\w+):\s*(.+)$', re.M)
 
-# 라벨은 사람이 줄여 쓴 이름, 뒤는 L12 또는 L51, L60 형태
-CITE = re.compile(r'\(([^()]{2,80}?)\s*(L\d[\d,\sL–-]*)\)')
+# 라벨은 사람이 줄여 쓴 이름, 뒤는 L12 또는 L51, L60 형태.
+# 상한이 80자였을 때 마이그레이션이 만든 긴 파일명 인용(「[260416] ISSCC 2026
+# 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등…」)을 통째로 놓쳤다
+CITE = re.compile(r'\(([^()]{2,160}?)\s*(L\d[\d,\sL–-]*)\)')
 
 
 def parse_front(text):

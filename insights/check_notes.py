@@ -66,7 +66,7 @@ def main(write_lock=True):
     findings, n = [], 0
     # synth·theses는 Task 5(참조 치환)가 끝난 뒤에 넣는다. 지금 넣으면
     # sources: frontmatter가 없어 전부 N1 FAIL이 난다
-    for d in (paths.NOTES, paths.TRACKS):
+    for d in (paths.NOTES, paths.TRACKS, paths.SYNTH, paths.THESES):
         for p in sorted(glob.glob(os.path.join(d, '*.md'))):
             n += 1
             rel = os.path.relpath(p, paths.ROOT).replace(os.sep, '/')
