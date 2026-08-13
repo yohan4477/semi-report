@@ -11,7 +11,7 @@ import dash_common as dc
 OUT = os.path.join(dc.ROOT, '대시보드', '부동산 대시보드.html')
 blob = dc.blob
 
-STAMP = '2026-08-13'
+STAMP = '2026-08-14'
 SUM = 'content/understanding/부동산/'
 
 # 섹션 번호는 by_upload_desc가 다시 매긴다 — 여기 숫자는 자리표시용이다
@@ -33,7 +33,7 @@ SEC_LAND = ('sec-land', '06', '토지 · 로드사이드 · 투자 실무',
 
 CARDS = [{
     'section': SEC_PERMIT,
-    'topic': ('policy', '심의 · 공공복리 · 대공방어'),
+    'topic': ('market', '심의 · 공공복리 · 대공방어'),
     'title': '300평 펜트하우스에 걸린 공공복리',
     'gain': '서울시 허가가 나도 국토부에서 막히는 사업이 왜 생기는지. 초고층 개발에 어떤 심의와 비용이 따라붙는지.',
     'meta': ['장순원 <b>언더스탠딩 기자</b>', '업로드 2026-08-10', '39분(39:53)', '언더스탠딩'],
@@ -844,7 +844,7 @@ def upload_date(card):
 
 
 # 섹션 순서는 손으로 정한다. 여기 없는 섹션은 뒤에 붙고 그들끼리는 최신 편 순이다
-SEC_ORDER = ['sec-cluster', 'sec-land', 'sec-tax', 'sec-supply', 'sec-fight', 'sec-build']
+SEC_ORDER = ['sec-cluster', 'sec-land', 'sec-tax', 'sec-supply', 'sec-permit', 'sec-fight', 'sec-build']
 
 
 def by_upload_desc(cards):
