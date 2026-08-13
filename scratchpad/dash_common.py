@@ -144,6 +144,7 @@ SCOPE_JS = '''<script>
     var b=e.target.closest('button');
     if(!b) return;
     pick=b.dataset.pick; only=null; apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
   });
   if(nav) nav.addEventListener('click', function(e){
     var a=e.target.closest('a'); if(!a) return;
