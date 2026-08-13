@@ -37,7 +37,28 @@ EXTRA_CSS = '''
      목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
   .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
               padding:10px 0 9px;margin:0;background:var(--paper)}
-  .scope-tabs ~ .sec-nav{top:47px}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:47px;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
   .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
                      border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
   .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
@@ -45,8 +66,6 @@ EXTRA_CSS = '''
                                           color:var(--accent-ink)}
   .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
   /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
-  .scope-tabs ~ .sec-nav a[aria-current="true"]{background:var(--accent-soft);border-color:var(--accent);
-                                                color:var(--accent-ink)}
   section[hidden]{display:none}
   /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
   .uc-head{position:relative;cursor:pointer;padding-right:28px}
@@ -156,36 +175,52 @@ FOLD_JS = '''<script>
 SCOPE_JS = '''<script>
 (function(){
   var tabs=document.querySelector('.scope-tabs'); if(!tabs) return;
-  var nav=document.querySelector('.sec-nav');
-  var pick='kr', only=null;   // only = 목차에서 고른 섹션 하나, 다시 누르면 풀린다
-  function link(id){ return nav && nav.querySelector('a[href="#'+id+'"]'); }
-  // 섹션 하나만 고른 상태면 그 칩을, 전체를 보는 중이면 지금 화면에 걸린 섹션의 칩을 켠다
+  var box=document.querySelector('.sec-pick');
+  var btn=box && box.querySelector('.sp-btn');
+  var list=box && box.querySelector('.sp-list');
+  var label=box && box.querySelector('.sp-label');
+  var total=box && box.querySelector('.sp-cnt');
+  var pick='kr', only=null;   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
+  function opt(id){ return list && list.querySelector('button[data-sec="'+id+'"]'); }
+  function close(){ if(box){ box.classList.remove('open'); list.hidden=true; btn.setAttribute('aria-expanded','false'); } }
+  // 섹션을 고른 상태면 그 항목을, 전체를 보는 중이면 지금 화면에 걸린 섹션 항목을 켠다
   function spy(){
-    var cur=only, line=110;
+    var cur=only, line=120;
     if(!cur){
       var live=document.querySelectorAll('section[id]:not([hidden])');
-      live.forEach(function(s){
-        if(s.getBoundingClientRect().top<=line) cur=s.id;   // 기준선을 지난 마지막 섹션
-      });
-      if(!cur && live.length) cur=live[0].id;               // 아직 첫 섹션 위라면 첫 칩
+      live.forEach(function(s){ if(s.getBoundingClientRect().top<=line) cur=s.id; });
+      if(!cur && live.length) cur=live[0].id;
     }
-    if(nav) nav.querySelectorAll('a').forEach(function(a){
-      a.setAttribute('aria-current', String(a.getAttribute('href')==='#'+cur));
+    if(list) list.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-current', String(b.dataset.sec===(only||'') || (!only && b.dataset.sec===cur)));
     });
   }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
+    var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
       var live=s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
       s.hidden = live===0 || (only && s.id!==only);
-      var a=link(s.id);
-      if(a){
-        a.style.display = live? '' : 'none';
-        var b=a.querySelector('b'); if(b) b.textContent=live;
+      var o=opt(s.id);
+      if(o){
+        o.parentNode.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
+    if(only){
+      var head=document.querySelector('#'+only+' .sec-title');
+      var one=document.querySelector('#'+only+' .ucard:not([hidden])');
+      if(label) label.textContent = head? head.textContent : '섹션';
+      if(total) total.textContent = document.querySelectorAll('#'+only+' .ucard:not([hidden])').length;
+      if(!one && label) label.textContent='섹션 전체';
+    }else{
+      if(label) label.textContent='섹션 전체';
+      if(total) total.textContent=seen;
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     spy();
     tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
@@ -194,17 +229,25 @@ SCOPE_JS = '''<script>
   tabs.addEventListener('click', function(e){
     var b=e.target.closest('button');
     if(!b) return;
-    pick=b.dataset.pick; only=null; apply();
+    pick=b.dataset.pick; only=null; close(); apply();
     window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
   });
-  if(nav) nav.addEventListener('click', function(e){
-    var a=e.target.closest('a'); if(!a) return;
-    e.preventDefault();
-    var id=a.getAttribute('href').slice(1);
-    only = (only===id) ? null : id;
-    apply();
-    if(only) nav.scrollIntoView({block:'start'});
+  if(btn) btn.addEventListener('click', function(){
+    var open=!box.classList.contains('open');
+    box.classList.toggle('open', open);
+    list.hidden=!open;
+    btn.setAttribute('aria-expanded', String(open));
   });
+  if(list) list.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    only = b.dataset.sec || null;
+    close(); apply();
+    window.scrollTo({top:0});
+  });
+  document.addEventListener('click', function(e){
+    if(box && !e.target.closest('.sec-pick')) close();
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
   var tick=false;
   window.addEventListener('scroll', function(){
     if(tick) return;
@@ -216,11 +259,28 @@ SCOPE_JS = '''<script>
 </script>'''
 
 
+def sec_picker(secs, order, total):
+    """섹션 고르기 목록. 칩을 늘어놓지 않고 눌러서 아래로 펼친다"""
+    items = ['<li><button data-sec="">전체 보기<span class="cnt">%d</span></button></li>'
+             '<li class="sp-sep"></li>' % total]
+    items += ['<li><button data-sec="%s">%s<span class="cnt">%d</span></button></li>'
+              % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order]
+    return ('<div class="sec-pick">'
+            '<button class="sp-btn" aria-expanded="false" aria-haspopup="true">'
+            '<span class="sp-label">섹션 전체</span><span class="sp-cnt">%d</span>'
+            '<span class="sp-caret" aria-hidden="true">▾</span></button>'
+            '<ul class="sp-list" hidden>%s</ul></div>' % (total, ''.join(items)))
+
+
 def render(cards, title, header, footer, out):
     secs, order = sections(cards)
-    nav = '<nav class="sec-nav">%s</nav>' % ''.join(
-        '<a href="#%s">%s <b>%d</b></a>' % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order)
     scoped = [c for c in cards if c.get('scope')]
+    if scoped:
+        kr_total = len([c for c in scoped if c['scope'] == 'kr'])
+        nav = sec_picker(secs, order, kr_total)
+    else:
+        nav = '<nav class="sec-nav">%s</nav>' % ''.join(
+            '<a href="#%s">%s <b>%d</b></a>' % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order)
     tabs = js = ''
     if scoped:
         kr = len([c for c in scoped if c['scope'] == 'kr'])
