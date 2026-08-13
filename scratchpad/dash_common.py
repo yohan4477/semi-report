@@ -38,7 +38,7 @@ EXTRA_CSS = '''
   .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
               padding:10px 0 9px;margin:0;background:var(--paper)}
   /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
-  .sec-pick{position:sticky;top:47px;z-index:20;background:var(--paper);padding:0 0 10px;
+  .sec-pick{position:sticky;top:55px;z-index:20;background:var(--paper);padding:0 0 10px;
             margin:0 0 6px;border-bottom:1px solid var(--line)}
   .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
           cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
