@@ -10,10 +10,10 @@
 # 본문이고, 이 파일은 그것을 렌더한다. 문장 뒤의 (파일이름 L123)은 원문 그 줄로 링크된다.
 import os, io, re, sys, json, datetime, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import check_atoms as ca
+import paths
 import style
 
-ROOT = ca.ROOT
+ROOT = paths.ROOT
 ENT = os.path.join(ROOT, 'insights', 'views', 'entities.json')
 TRACKS = os.path.join(ROOT, 'insights', 'tracks')
 HIST = os.path.join(ROOT, '대시보드', '소셜 신호 히스토리.html')
