@@ -105,6 +105,16 @@ HOME_BTN = '''
     .ida-home.is-on:active { transform:none; opacity:.65; }
     .ida-top:hover { transform:none; }
   }
+  /* 좁은 화면에서는 위쪽이 sticky 섹션 선택기 자리라 겹친다 — 아래로 내린다.
+     머리글 인라인 링크가 이미 처음부터 보이므로 발견성은 그쪽이 맡는다 */
+  @media (max-width: 760px) {
+    .ida-home {
+      top:auto; bottom:max(16px, env(safe-area-inset-bottom));
+      transform:translateY(6px);
+    }
+    .ida-home.is-on { transform:translateY(0); }
+    .ida-home.is-on:hover { transform:translateY(0); }
+  }
   @media print { .ida-home, .ida-top { display:none; } }
 
   /* NEW 배지 — 영상 업로드일이 아니라 사이트에 올라온 날 기준 */
