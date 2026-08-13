@@ -110,7 +110,41 @@ def slug(t):
 
 
 
+def slim_html(c):
+    """슬림 형식 — 한 화면에 다 읽히게. 접지 않고, 표와 곁다리 메모를 빼고, 반론만 남긴다.
+
+    지금 형식의 데이터(oneliner·points·stats·table·clash·note)는 카드에 그대로 둔다.
+    slim_* 필드를 갖춘 카드만 이 형식으로 나가므로 언제든 되돌릴 수 있다.
+      slim_oneliner  두세 문장
+      slim_points    6~8개, 각 한두 문장
+      slim_stats     4개
+      slim_clash     3개까지(없으면 생략)
+    """
+    h = ['<div class="ucard"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
+    h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
+    h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
+    h.append('<p class="uc-oneliner">%s</p>' % c.get('slim_oneliner', c['oneliner']))
+    h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
+             % ''.join('<li>%s</li>' % p for p in c['slim_points']))
+    h.append('<p class="uc-label">주요 숫자</p><div class="stat-grid">%s</div>'
+             % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
+                       for s in c.get('slim_stats', c['stats'])))
+    h.append('<p class="uc-quote">%s</p>' % c['quote'])
+    if c.get('slim_clash'):
+        h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
+                 % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['slim_clash']))
+    h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
+             % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
+                       % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
+    h.append('</div>')
+    return ''.join(h)
+
+
 def card_html(c):
+    # 슬림 필드를 갖춘 카드는 슬림으로, 아직 없는 카드는 지금까지의 형식 그대로 나간다
+    if c.get('slim_points'):
+        return slim_html(c)
     # scope는 국내(kr)·국외(intl) 필터용이다. 안 적은 카드는 필터와 무관하게 늘 보인다
     h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
     # 접힌 상태에서는 머리(주제칩·제목·화자/날짜)만 남고 uc-body는 감춘다
@@ -146,3 +180,28 @@ def card_html(c):
                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
     h.append('</div></div>')
     return ''.join(h)
+
+
+# 카드 접기 동작 — card_html 이 만든 .uc-head 를 눌러 편다
+FOLD_JS = '''<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script>'''
