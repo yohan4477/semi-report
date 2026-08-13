@@ -4,6 +4,8 @@
 import os, io, re, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import check_atoms as ca
+import paths
+import notes_lib as nl
 
 GLOSSARY = os.path.join(ca.ROOT, 'insights', 'views', 'glossary.json')
 
@@ -22,9 +24,12 @@ def add(level, where, rule, msg):
 
 
 def strip_refs(text):
-    """원자 id 인용과 frontmatter를 떨어낸 서술만 남긴다 — 검사 대상은 사람이 쓴 문장이다."""
+    """인용과 frontmatter를 떨어낸 서술만 남긴다 — 검사 대상은 사람이 쓴 문장이다.
+    (파일 L줄) 인용은 파일명이 통째로 들어 있어, 안 떼면 파일명 속 'HBM'을
+    풀지 않은 용어로 잡는다."""
     text = FM.sub('', text or '')
-    return REF.sub('', text)
+    text = REF.sub('', text)
+    return nl.CITE.sub('', text)
 
 
 def sentences(text):
@@ -154,6 +159,17 @@ def main():
         pass
     gloss = load_glossary()
     files = sorted(glob.glob(os.path.join(ca.SYNTH, '*.md')))
+    # 노트는 문체만 본다. 절 순서·headline 검사(P5~P7)는 인사이트 형식이라
+    # 노트(주장/수치/추정)에 대면 있지도 않은 절을 없다고 잡는다
+    notes = sorted(glob.glob(os.path.join(paths.NOTES, '*.md')))
+    for p in notes:
+        where = os.path.basename(p)
+        body = strip_refs(io.open(p, encoding='utf-8').read())
+        check_banned(body, where)
+        check_glossary(body, where, gloss)
+        check_length(body, where)
+        check_translationese(body, where)
+
     for p in files:
         where = os.path.basename(p)
         raw = io.open(p, encoding='utf-8').read()
@@ -176,7 +192,8 @@ def main():
     per = {}
     for f in findings:
         per[f[1]] = per.get(f[1], 0) + (0 if f[0] == 'FAIL' else 1)
-    print('요약: 인사이트 %d건 / FAIL %d / WARN %d' % (len(files), fails, warns))
+    print('요약: 인사이트 %d건 / 노트 %d장 / FAIL %d / WARN %d'
+          % (len(files), len(notes), fails, warns))
     heavy = [k for k, v in per.items() if v > 5]
     if heavy:
         print('WARN 5건 초과: %s — 이 파일은 humanize-korean 스킬을 부를 계기다'
