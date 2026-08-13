@@ -33,6 +33,14 @@ EXTRA_CSS = '''
   .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
               background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
   @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·국외 필터 — 카드에 data-scope가 있을 때만 생긴다 */
+  .scope-tabs{display:flex;gap:8px;margin:0 0 18px;flex-wrap:wrap}
+  .scope-tabs button{font:inherit;font-size:.82rem;font-weight:800;cursor:pointer;padding:8px 16px;
+                     border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--sub)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--faint)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+  .scope-tabs .cnt{font-weight:700;opacity:.65;margin-left:5px}
+  section[hidden]{display:none}
 </style>'''
 
 
@@ -53,7 +61,8 @@ def css():
 
 
 def card_html(c):
-    h = ['<div class="ucard">']
+    # scope는 국내(kr)·국외(intl) 필터용이다. 안 적은 카드는 필터와 무관하게 늘 보인다
+    h = ['<div class="ucard"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
     h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
@@ -94,10 +103,49 @@ def sections(cards):
     return secs, order
 
 
+SCOPE_TABS = '''<div class="scope-tabs">
+    <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">%d</span></button>
+    <button data-pick="intl" aria-pressed="false">🌍 국외 <span class="cnt">%d</span></button>
+    <button data-pick="all" aria-pressed="false">전체 <span class="cnt">%d</span></button>
+  </div>'''
+
+SCOPE_JS = '''<script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs'); if(!tabs) return;
+  function apply(pick){
+    document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
+      c.hidden = !(pick==='all' || c.dataset.scope===pick);
+    });
+    document.querySelectorAll('section[id]').forEach(function(s){
+      var live=s.querySelectorAll('.ucard:not([hidden])').length;
+      s.hidden = live===0;
+      var a=document.querySelector('.sec-nav a[href="#'+s.id+'"] b');
+      if(a) a.textContent=live;
+      var nav=document.querySelector('.sec-nav a[href="#'+s.id+'"]');
+      if(nav) nav.style.display = live? '' : 'none';
+    });
+    tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) apply(b.dataset.pick);
+  });
+  apply('kr');
+})();
+</script>'''
+
+
 def render(cards, title, header, footer, out):
     secs, order = sections(cards)
     nav = '<nav class="sec-nav">%s</nav>' % ''.join(
         '<a href="#%s">%s <b>%d</b></a>' % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order)
+    scoped = [c for c in cards if c.get('scope')]
+    tabs = js = ''
+    if scoped:
+        kr = len([c for c in scoped if c['scope'] == 'kr'])
+        tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
+        js = SCOPE_JS
     body = []
     for sid in order:
         (_, num, stitle, sub), cs = secs[sid]
@@ -106,8 +154,8 @@ def render(cards, title, header, footer, out):
                     % (sid, num, stitle, sub, ''.join(card_html(c) for c in cs)))
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
-            + '\n<div class="wrap">\n' + header + '\n\n  ' + nav + '\n\n  ' + ''.join(body)
-            + '\n\n  <footer>' + footer + '</footer>\n</div>\n')
+            + '\n<div class="wrap">\n' + header + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
+            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + js + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
