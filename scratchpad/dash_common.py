@@ -71,6 +71,8 @@ EXTRA_CSS = '''
   .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
   /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
   section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
   /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
   .uc-head{position:relative;cursor:pointer;padding-right:28px}
   .uc-head:hover h2{color:var(--accent-ink)}
@@ -107,6 +109,9 @@ def card_html(c):
     h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
     h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
+    # gain = 이 편을 열면 무엇을 알게 되는지. 접힌 상태에서 고를 수 있게 제목 바로 밑에 둔다
+    if c.get('gain'):
+        h.append('<p class="uc-gain">%s</p>' % c['gain'])
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
     h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
     h.append('<div class="uc-body">')
