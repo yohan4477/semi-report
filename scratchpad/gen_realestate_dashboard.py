@@ -833,11 +833,6 @@ HEADER = '''  <header>
       <span>소스 <b>언더스탠딩</b></span>
       <span>화자 <b>박상준 · 이관옥 · 최도영 · 김종율 · 장순원 · 백종훈 · 이장원</b></span>
     </div>
-    <div class="noncorpus">
-      <span class="nc-tag">비-코퍼스 · 제3자 소스 · 지역·종목 언급 포함</span>
-      <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
-      특정 지역·기업이 언급되지만 <b>투자 추천이 아니고</b> 가격 검증도 하지 않았습니다 — 화자 시각의 기록으로만 보세요.
-    </div>
     <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
     <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교</a>
   </header>''' % (STAMP, len(CARDS))
