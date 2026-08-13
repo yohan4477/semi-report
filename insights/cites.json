@@ -1466,6 +1466,42 @@
  "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L435": {
   "sha1": "7907695a0d4d"
  },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L1005": {
+  "sha1": "1a12874923a8"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L121": {
+  "sha1": "cc96d503b196"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L218": {
+  "sha1": "736e4b73b52b"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L220": {
+  "sha1": "1ffeb3509c7e"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L298": {
+  "sha1": "5810b6616e7c"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L341": {
+  "sha1": "7c3e5cc9f573"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L342": {
+  "sha1": "f5398ae25dc2"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L389": {
+  "sha1": "30b4f5ce0d28"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L457": {
+  "sha1": "5de12fd24df3"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L459": {
+  "sha1": "9ade0b2c10cc"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L51": {
+  "sha1": "373a55830988"
+ },
+ "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L52": {
+  "sha1": "605fd6b6f926"
+ },
  "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L135": {
   "sha1": "ec8a76b4ef9d"
  },
@@ -1802,20 +1838,128 @@
  "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L80": {
   "sha1": "c371a9de1454"
  },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L139": {
+  "sha1": "67e36a2d3c6a"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L141": {
+  "sha1": "37f5a318b60f"
+ },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L180": {
   "sha1": "a5999be29c7b"
  },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L209": {
   "sha1": "008a3f02c924"
  },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L211": {
+  "sha1": "d99537c17356"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L284": {
+  "sha1": "cbdda811d0ed"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L285": {
+  "sha1": "14364a67456f"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L331": {
+  "sha1": "6e67b5a78d6b"
+ },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L333": {
   "sha1": "e0ad32534c84"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L405": {
+  "sha1": "502bd75c658a"
  },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L406": {
   "sha1": "a2c2c9b09ed8"
  },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L407": {
   "sha1": "5b4681bbd8a7"
+ },
+ "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L408": {
+  "sha1": "7ac300486a3c"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L174": {
+  "sha1": "4bd194d9364c"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L212": {
+  "sha1": "25f85087b52c"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L214": {
+  "sha1": "66d643361af7"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L215": {
+  "sha1": "7d88d4e53249"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L264": {
+  "sha1": "dcea7de94d70"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L265": {
+  "sha1": "ccbfc5152d63"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L38": {
+  "sha1": "67b5a470b80f"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L40": {
+  "sha1": "5e84bdd5341f"
+ },
+ "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L429": {
+  "sha1": "d59cb830d61e"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L185": {
+  "sha1": "af77dc0cc350"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L186": {
+  "sha1": "52699460fa54"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L218": {
+  "sha1": "478f64c7289e"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L278": {
+  "sha1": "ee29023fa250"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L304": {
+  "sha1": "4334fdc2bf9d"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L306": {
+  "sha1": "3be7795f9116"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L343": {
+  "sha1": "11e2f8b4aef0"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L60": {
+  "sha1": "f267c5ba75d6"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L61": {
+  "sha1": "918df6851888"
+ },
+ "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L62": {
+  "sha1": "9b0db12443da"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L119": {
+  "sha1": "b63bed9fccc7"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L158": {
+  "sha1": "88e0a29c233e"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L161": {
+  "sha1": "6cfef5c0a8c4"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L212": {
+  "sha1": "ac2c24812eee"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L275": {
+  "sha1": "196012f8b529"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L356": {
+  "sha1": "d5f85060a7ec"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L407": {
+  "sha1": "ac07929d743a"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L408": {
+  "sha1": "0116b711a891"
+ },
+ "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L586": {
+  "sha1": "8a1471ef1e5f"
  },
  "input/clippings/Meta Compute Everyone Wants To Be A Neocloud.md#L100": {
   "sha1": "db58e8da4da7"
