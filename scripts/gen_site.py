@@ -32,6 +32,36 @@ PAGES = [
 
 SLUGS = {src: slug for src, slug, *_ in PAGES}
 
+# 대시보드마다 CSS 변수 이름이 달라서(--ink/--paper vs --sub/--card) 버튼은 색을 자기가 들고 간다.
+# 클래스는 ida- 접두어로 격리한다.
+HOME_BTN = '''
+<style>
+  .ida-home {
+    position:fixed; z-index:9999;
+    left:max(16px, env(safe-area-inset-left)); bottom:max(16px, env(safe-area-inset-bottom));
+    display:inline-flex; align-items:center; gap:7px;
+    padding:9px 14px 9px 12px; border-radius:999px;
+    font:600 .82rem/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    text-decoration:none; color:#33312c;
+    background:rgba(255,255,255,.86); border:1px solid rgba(0,0,0,.12);
+    box-shadow:0 4px 16px -4px rgba(0,0,0,.22);
+    -webkit-backdrop-filter:saturate(1.4) blur(10px); backdrop-filter:saturate(1.4) blur(10px);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .ida-home:hover { transform:translateY(-1px); box-shadow:0 8px 22px -6px rgba(0,0,0,.3); }
+  .ida-home:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+  .ida-home .ida-arrow { font-size:.95em; opacity:.7; }
+  @media (prefers-color-scheme: dark) {
+    .ida-home {
+      color:#ecead9; background:rgba(28,28,32,.86);
+      border-color:rgba(255,255,255,.16); box-shadow:0 4px 16px -4px rgba(0,0,0,.55);
+    }
+  }
+  @media print { .ida-home { display:none; } }
+</style>
+<a class="ida-home" href="/" aria-label="메인 화면으로"><span class="ida-arrow" aria-hidden="true">←</span>메인</a>
+'''
+
 
 def rewrite_links(html: str) -> str:
     """상대 .html 링크를 슬러그(사이트 내) 또는 github.io 절대 URL(사이트 밖)로."""
@@ -124,7 +154,7 @@ def main():
 
     for src, slug, *_ in PAGES:
         html = (SRC / src).read_text(encoding='utf-8')
-        (OUT / f'{slug}.html').write_text(rewrite_links(html), encoding='utf-8')
+        (OUT / f'{slug}.html').write_text(rewrite_links(html) + HOME_BTN, encoding='utf-8')
         print(f'  {src}  ->  {slug}.html')
 
     (OUT / 'index.html').write_text(build_index(), encoding='utf-8')
