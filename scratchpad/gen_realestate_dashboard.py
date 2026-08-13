@@ -718,13 +718,26 @@ def upload_date(card):
     raise ValueError('업로드 날짜가 없는 카드: ' + card['title'])
 
 
+# 섹션 자리 고정. 기본은 최신 편이 있는 섹션이 위인데, 여기 적은 것만 자리를 못 박는다
+PIN_AT = {'sec-fight': 1}      # 0부터 센 자리 — 재개발 분쟁은 두 번째
+PIN_LAST = ['sec-build']       # 맨 아래로 — 건설 원가·공법
+
+
 def by_upload_desc(cards):
-    """섹션은 유지하고 섹션 안을 최신순으로. 섹션끼리는 그 섹션 최신 편이 앞이고, 번호는 다시 매긴다"""
+    """섹션 안은 최신순. 섹션끼리는 그 섹션 최신 편 순서인데 PIN_AT·PIN_LAST가 우선한다"""
     newest = {}
     for c in cards:
         sid = c['section'][0]
         newest[sid] = max(newest.get(sid, ''), upload_date(c))
-    ordered = sorted(cards, key=lambda c: (newest[c['section'][0]], upload_date(c)), reverse=True)
+    order = [sid for sid, _ in sorted(newest.items(), key=lambda kv: kv[1], reverse=True)]
+    for sid in PIN_LAST:
+        if sid in order:
+            order.append(order.pop(order.index(sid)))
+    for sid, pos in sorted(PIN_AT.items(), key=lambda kv: kv[1]):
+        if sid in order:
+            order.insert(pos, order.pop(order.index(sid)))
+    rank = {sid: i for i, sid in enumerate(order)}
+    ordered = sorted(cards, key=lambda c: (rank[c['section'][0]], [-ord(ch) for ch in upload_date(c)]))
     num, seen, out = 0, {}, []
     for c in ordered:
         sid, sec = c['section'][0], c['section']
