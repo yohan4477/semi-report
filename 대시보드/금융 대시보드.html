@@ -331,6 +331,30 @@
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; flex:1 1 auto; min-width:0; color:var(--ink);}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
 </style>
 <div class="wrap">
   <header>
@@ -349,10 +373,12 @@
       <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
       금리·환율 전망은 화자가 <b>개인 견해</b>임을 명시한 발언이며 <b>투자 추천이 아닙니다</b> — 화자 시각의 기록으로만 보세요.
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
-    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트 →</a>
-    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교 →</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
+    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교</a>
   </header>
+
+  <div class="rollup"><details class="rlrep"><summary class="rlhd"><span class="rlk">월간 리포트</span><span class="rlt">환율은 수급으로 설명이 안 된다 — 한 달 사이 올라온 건 이 한 편</span><span class="rlmeta">07-15~08-13 · 1편</span></summary><ol class="rll"><li><span class="rlh">엔저도 원화 약세도 「누가 얼마 팔았다」로는 앞뒤가 안 맞는다</span><span class="rlb">일본은 금리를 -0.1%에서 1%까지 올렸는데 엔화는 38년 만의 최저다(7/24 업로드). 류상철 전 한국은행 국장은 엔저 설명도 원화 약세 설명도 수급으로는 성립하지 않는다고 데이터로 짚고, 원/달러를 움직이는 건 국내 물량이 아니라 <b>미국 국채 수익률이 만든 달러 자체의 값</b>이라고 정리했다. 서학개미 탓이라는 통념을 정면으로 부정한 편이다.</span></li><li><span class="rlh">앞선 금리 편과 한 줄로 이어진다</span><span class="rlb">6월 17일 편에서 그는 이제 금리를 끄는 게 성장이 아니라 물가라고 봤다(중앙은행 통화결정 방정식에서 물가 가중치가 성장의 1.5배). 두 편을 붙이면 결론이 하나다 — 국내 수급이 아니라 <b>미국 10년물 국채 금리</b> 하나를 보면 금리·환율 이야기가 대부분 들어 있다는 것이다.</span></li></ol></details></div>
 
   <div class="sec-pick"><button class="sp-btn" aria-expanded="false" aria-haspopup="true"><span class="sp-label">섹션 전체</span><span class="sp-cnt">2</span><span class="sp-caret" aria-hidden="true">▾</span></button><ul class="sp-list" hidden><li><button data-sec="">전체 보기<span class="cnt">2</span></button></li><li class="sp-sep"></li><li><button data-sec="sec-rate">금리 · 국채<span class="cnt">1</span></button></li><li><button data-sec="sec-fx">환율 · 달러<span class="cnt">1</span></button></li></ul></div>
 

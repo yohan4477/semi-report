@@ -357,9 +357,9 @@ HEADER = '''  <header>
       개별 종목이 언급되지만 <b>투자 추천이 아니고</b> 가격·밸류에이션 검증도 하지 않았습니다. 필자 시각의 기록으로만 보세요.
       유료 구독 원문의 요약이며 전문 재수록이 아닙니다.
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
-    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트 →</a>
-    <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트 →</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
+    <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트</a>
   </header>''' % (STAMP, len(CARDS), len(CARDS))
 
 FOOTER = ('제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 공개 저장소에 전문을 두지 않습니다.\n'
@@ -367,4 +367,4 @@ FOOTER = ('제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 �
           '페이지 생성은 <code>scratchpad/gen_usa_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '미국주식 사관학교 인사이트', HEADER, FOOTER, OUT)
+    dc.render(CARDS, '미국주식 사관학교 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('usa', CARDS, '편'))

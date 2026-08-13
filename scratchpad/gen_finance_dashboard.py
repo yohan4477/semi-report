@@ -155,9 +155,9 @@ HEADER = '''  <header>
       <b>SemiAnalysis 코퍼스와 별개</b>입니다. 확신도 산정·시계열 재확인 대상이 아니며, 다른 SemiAnalysis 기반 대시보드와 교차 검증되지 않았습니다.
       금리·환율 전망은 화자가 <b>개인 견해</b>임을 명시한 발언이며 <b>투자 추천이 아닙니다</b> — 화자 시각의 기록으로만 보세요.
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
-    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트 →</a>
-    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교 →</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
+    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교</a>
   </header>''' % (STAMP, len(CARDS))
 
 FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기반입니다.\n'
@@ -165,4 +165,4 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
           '페이지 생성은 <code>scratchpad/gen_finance_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '금융 인사이트', HEADER, FOOTER, OUT)
+    dc.render(CARDS, '금융 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('finance', CARDS, '편'))

@@ -331,6 +331,30 @@
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; flex:1 1 auto; min-width:0; color:var(--ink);}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
 </style>
 <div class="wrap">
   <header>
@@ -350,10 +374,12 @@
       개별 종목이 언급되지만 <b>투자 추천이 아니고</b> 가격·밸류에이션 검증도 하지 않았습니다. 필자 시각의 기록으로만 보세요.
       유료 구독 원문의 요약이며 전문 재수록이 아닙니다.
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트 →</a>
-    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트 →</a>
-    <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트 →</a>
+    <a class="xlink" href="언더스탠딩 대시보드.html">🎧 언더스탠딩 인사이트</a>
+    <a class="xlink" href="부동산 대시보드.html" style="margin-left:14px">🏠 부동산 인사이트</a>
+    <a class="xlink" href="금융 대시보드.html" style="margin-left:14px">💵 금융 인사이트</a>
   </header>
+
+  <div class="rollup"><details class="rlrep"><summary class="rlhd"><span class="rlk">주간 리포트</span><span class="rlt">이번 주는 순환금융 한 편 — 「고리 밖」 기업을 골라내는 글</span><span class="rlmeta">08-07~08-13 · 1편</span></summary><ol class="rll"><li><span class="rlh">AI 관련주 최대 위험은 순환금융이고, 메모리는 그 고리 밖이라고 봤다</span><span class="rlb">공급자가 고객에게 돈을 빌려주고 그 돈으로 자기 제품을 사게 하는 거래가 8,000억 달러를 넘겼다는 진단이다(8/7). 필자가 꼽은 핵심 위험은 부도가 아니라 <b>중복 집계</b> — 같은 돈이 한 바퀴 돌 때마다 여러 회사 장부에 매출로 겹쳐 잡힌다. 닷컴 통신장비 버블과 다른 점은 두 가지라고 했다: 지금은 추론 수요가 이미 있고, 엔비디아는 빚이 아니라 잉여현금흐름 970억 달러로 하고 있다. 고리 밖으로는 애플·퀄컴(소비자 기기), TSMC, 브로드컴·마벨·AMAT·램리서치를 들었고 메모리도 현금 받고 파는 쪽이라 고리 안이 아니라고 정리했다.</span></li><li><span class="rlh">다만 같은 채널 안에서 온도가 엇갈린다</span><span class="rlb">이 글은 「AI 붐이 꺾이면 HBM 수요도 준다」고 인정하는데, 이틀 전 메모리 치킨게임 편은 「아직 발 뺄 때가 아니다」로 끝난다. 8월 5일 정리한 마이클 버리는 마이크론·SOXX 하락 베팅을 그대로 들고 간다. 한 채널 안에서도 결론이 갈리는 구간이니 한 편만 읽고 판단하지 않는 게 맞다.</span></li></ol></details><details class="rlrep"><summary class="rlhd"><span class="rlk">월간 리포트</span><span class="rlt">메모리 낙관에서 순환금융 경계로 — 한 달 사이 무게중심이 옮겨갔다</span><span class="rlmeta">07-15~08-13 · 7편</span></summary><ol class="rll"><li><span class="rlh">메모리는 「누가 이겨도 남는 쪽」이라는 논리로 계속 밀었다</span><span class="rlb">엔비디아와 AMD의 싸움이 「칩당 메모리를 누가 더 때려박느냐」로 좁혀지면서 승자가 누구든 HBM 물량은 늘어난다는 게 메모리 낙관의 뼈대다(8/3). SK하이닉스가 사상 최대 실적에도 시장 기대를 밑돈 건 <b>HBM은 연간 고정가로 팔리고 그 분기에 폭등한 건 범용 D램</b>이었기 때문이며, 연말 판가 협상에서 그 간극이 되돌아온다고 봤다(7/29).</span></li><li><span class="rlh">그러다 8월 들어 시선이 순환금융으로 옮겨갔다</span><span class="rlb">마이클 버리가 8월 4일 마이크로소프트 상승·오라클 하락 같은 섞인 베팅을 정리하고 AI 버블 핵심에 대한 하락 베팅만 남긴 채 만기를 2027년까지 밀었다 — 필자는 이를 「방향 확신은 유지, 시점은 틀렸다고 인정」으로 읽었다(8/5). 이틀 뒤 글에서는 8,000억 달러 규모의 순환금융을 최대 위험으로 지목했다(8/7).</span></li><li><span class="rlh">지표가 토큰 단가에서 「일 하나 끝내는 값」으로 바뀐다고 봤다</span><span class="rlb">토큰 값은 3년 만에 1,000분의 1이 됐는데 작업 하나를 제대로 끝내는 비용은 그만큼 안 내려갔다. 그래서 모델을 만드는 쪽보다 싼 모델을 골라 쓰는 장치(모델 라우팅)를 쥔 회사가 유리해진다며 클라우드플레어·스노우플레이크·데이터독을 꼽았다(7/31).</span></li><li><span class="rlh">전력과 광통신에서는 사고와 물리 한계를 짚었다</span><span class="rlb">7월 22일 워싱턴DC 인근 송전선 한 가닥이 끊기자 데이터센터 수십 곳이 스스로 전력망에서 떨어져 나가 <b>30초 만에 3.1GW 수요가 증발</b>했다 — 무정전전원장치가 회복될 장애를 기다리지 않고 먼저 끊는 순서 문제라며 라이드스루(짧은 전압 흔들림을 버티는 것) 규정 강화 수혜로 AMSC·파월 인더스트리스를 들었다(7/27). 광통신 편은 빛이 빨라서가 아니라 구리가 속도·거리·전력·굵기에서 한계라 넘어가는 것이며, CPO와 OCS가 2026년 재평가의 방아쇠라고 정리했다(7/15).</span></li></ol></details></div>
 
   <div class="sec-pick"><button class="sp-btn" aria-expanded="false" aria-haspopup="true"><span class="sp-label">섹션 전체</span><span class="sp-cnt">7</span><span class="sp-caret" aria-hidden="true">▾</span></button><ul class="sp-list" hidden><li><button data-sec="">전체 보기<span class="cnt">7</span></button></li><li class="sp-sep"></li><li><button data-sec="sec-risk">시장 구조 · 리스크<span class="cnt">2</span></button></li><li><button data-sec="sec-chipwar">반도체 · 메모리 경쟁<span class="cnt">2</span></button></li><li><button data-sec="sec-modelcost">AI 모델 경제 · 소프트웨어<span class="cnt">1</span></button></li><li><button data-sec="sec-power">데이터센터 전력 · 계통<span class="cnt">1</span></button></li><li><button data-sec="sec-optics">광통신 · 포토닉스<span class="cnt">1</span></button></li></ul></div>
 

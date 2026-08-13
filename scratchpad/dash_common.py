@@ -2,7 +2,10 @@
 # 제3자 해설 대시보드 공용 부품 — 카드 마크업·추가 CSS·페이지 조립.
 # 미국주식 사관학교와 부동산 두 페이지가 같은 규칙을 쓰게 한 벌만 둔다.
 # 기본 CSS는 언더스탠딩 대시보드의 <style>을 통째로 물려받는다(세 페이지가 한 벌로 보이게).
-import io, os, re, urllib.parse
+import io, json, os, re, sys, urllib.parse
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
+import rollup_lib as _rl
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, '대시보드', '언더스탠딩 대시보드.html')
@@ -78,7 +81,7 @@ EXTRA_CSS = '''
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
-</style>'''
+''' + _rl.CSS + '''</style>'''
 
 
 def blob(path):
@@ -274,7 +277,30 @@ def sec_picker(secs, order, total):
             '<ul class="sp-list" hidden>%s</ul></div>' % (total, ''.join(items)))
 
 
-def render(cards, title, header, footer, out):
+def upload_date(card):
+    """카드 meta의 '업로드 YYYY-MM-DD' / '발행 YYYY-MM-DD' — 매체에 올라간 날이 기준이다"""
+    for m in card.get('meta', []):
+        d = re.search(r'(20\d\d-\d\d-\d\d)', m)
+        if d:
+            return d.group(1)
+    return None
+
+
+def rollup_for(key, cards, unit='편'):
+    """data/rollup_notes_<key>.json의 산문 + 카드 업로드일로 센 건수 → 롤업 블록"""
+    path = os.path.join(ROOT, 'data', 'rollup_notes_%s.json' % key)
+    if not os.path.exists(path):
+        return ''
+    notes = json.load(io.open(path, encoding='utf-8'))
+    counts = {}
+    for c in cards:
+        d = upload_date(c)
+        if d:
+            counts[d] = counts.get(d, 0) + 1
+    return _rl.build(notes, counts, unit)
+
+
+def render(cards, title, header, footer, out, rollup=''):
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
@@ -290,7 +316,7 @@ def render(cards, title, header, footer, out):
                     % (sid, num, stitle, sub, ''.join(card_html(c) for c in cs)))
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
-            + '\n<div class="wrap">\n' + header + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
+            + '\n<div class="wrap">\n' + header + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + FOLD_JS + NAV_JS + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
