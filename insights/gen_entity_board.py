@@ -12,6 +12,7 @@ import os, io, re, sys, json, datetime, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths
 import style
+import notes_lib as nl
 
 ROOT = paths.ROOT
 ENT = os.path.join(ROOT, 'insights', 'views', 'entities.json')
@@ -22,10 +23,6 @@ BLOB = 'https://github.com/yohan4477/semi-report/blob/main/'
 TODAY = datetime.date.today()
 
 MW, MH, LAT_MIN, LAT_MAX = 1000.0, 500.0, -58.0, 78.0
-
-
-def esc(s):
-    return (str(s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
 def project(lon, lat):
@@ -46,43 +43,6 @@ def load_track(key):
             src.append(d)
     meta = dict(re.findall(r'^(\w+):\s*(.+)$', head, re.M))
     return meta, src, body
-
-
-CITE = re.compile(r'\(([^()]{3,80}?)\s*(L\d[\d,\sL–-]*)\)')
-
-
-def link_cites(text, src):
-    """(파일이름 L123) → 원문 그 줄로 가는 각주. 서술과 근거를 한 클릭 거리에 둔다."""
-    def one(m):
-        label, lines = m.group(1).strip().rstrip(','), m.group(2)
-        # 라벨은 사람이 줄여 쓴 것이라 파일명 앞머리와 안 맞을 수 있다
-        # (예: 「온사이트 가스 딥다이브」 vs 「[251231] AI 랩들은 …」). 부분 일치로 찾는다
-        key = label[:18]
-        hit = next((s for s in src if s['base'].startswith(key) or key in s['base']), None)
-        nums = re.findall(r'L(\d+)', lines)
-        if not hit or not nums:
-            return m.group(0)
-        url = BLOB + urllib.parse.quote(hit['file'].replace('\\', '/')) + '#L' + nums[0]
-        return ('<a class="cite" href="%s" target="_blank" rel="noopener" title="%s">%s</a>'
-                % (url, esc(hit['base']), esc(lines.replace(' ', ''))))
-    return CITE.sub(one, text)
-
-
-def md_body(body, src):
-    """작은 마크다운만 쓴다 — ##, 문단, **굵게**. 그 이상은 이 판에 필요 없다."""
-    out = []
-    for block in re.split(r'\n\s*\n', body.strip()):
-        b = block.strip()
-        if not b:
-            continue
-        h = re.match(r'^##\s+(.+)$', b)
-        if h:
-            out.append('<h2 class="tsec">%s</h2>' % esc(h.group(1)))
-            continue
-        p = esc(b).replace('\n', ' ')
-        p = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', p)
-        out.append('<p>%s</p>' % link_cites(p, src))
-    return ''.join(out)
 
 
 # ── 신호 (최신성만 담당) ──────────────────────────────────────────────
@@ -148,16 +108,16 @@ def site_map(ent):
             marks.append(
                 '<g class="mk %s%s" data-t="%s"><circle cx="%.1f" cy="%.1f" r="%.2f"/>'
                 '<text x="%.1f" y="%.1f" font-size="%.1f">%s</text></g>'
-                % (base, ' carried' if carried else '', esc(t), x, y, r,
-                   x + 5 * k, y - 5 * k, 11 * k, esc(lab)))
+                % (base, ' carried' if carried else '', nl.esc(t), x, y, r,
+                   x + 5 * k, y - 5 * k, 11 * k, nl.esc(lab)))
 
     tabs = ''.join('<button class="tb%s" data-t="%s">%s</button>'
-                   % (' on' if t == times[-1] else '', esc(t), esc(t)) for t in times)
+                   % (' on' if t == times[-1] else '', nl.esc(t), nl.esc(t)) for t in times)
     lst = ''.join('<li><b>%s</b> <span>%s</span><br>%s</li>'
-                  % (esc(s['name']), esc(s['place']), esc(s['note'])) for s in sites)
+                  % (nl.esc(s['name']), nl.esc(s['place']), nl.esc(s['note'])) for s in sites)
     for u in ent.get('sites_unplaced') or []:
         lst += ('<li class="np"><b>%s</b> <span>위치 미상</span><br>%s</li>'
-                % (esc(u['name']), esc(u['note'])))
+                % (nl.esc(u['name']), nl.esc(u['note'])))
 
     return ('<h2 class="tsec">부지 — 언제 어디서 늘었나</h2>'
             '<p class="axnote">%s</p><div class="tabs">%s</div>'
@@ -171,7 +131,7 @@ def site_map(ent):
             'b.classList.toggle("on",b.dataset.t===t)})}'
             'w.querySelectorAll(".tb").forEach(function(b){'
             'b.addEventListener("click",function(){set(b.dataset.t)})});set(%s)})();</script>'
-            % (esc(ent.get('site_note', '')), tabs, vb[0], vb[1], vb[2], vb[3],
+            % (nl.esc(ent.get('site_note', '')), tabs, vb[0], vb[1], vb[2], vb[3],
                io.open(WORLD, encoding='utf-8').read().strip(), ''.join(marks), lst,
                json.dumps(times[-1], ensure_ascii=False)))
 
@@ -184,7 +144,7 @@ def build(key):
     sigs = signal_hits(alias)
 
     # 서술과 지도를 갈라 끼운다 — 지도는 「부지」 절이 나올 자리에 들어간다
-    html_body = md_body(body, src)
+    html_body = nl.md_body(body, src)
     mp = site_map(ent)
     if mp:
         anchor = '<h2 class="tsec">무엇이 아직 안 정해졌나</h2>'
@@ -198,20 +158,20 @@ def build(key):
                     'LinkedIn·YouTube 한 줄로, 아직 리포트로 정리되지 않은 것입니다.</p>'
                     '<ul class="sigs">%s</ul>'
                     % ''.join('<li><span>%s</span><a href="%s" target="_blank" rel="noopener">%s</a></li>'
-                              % (esc(s['date'][5:]), esc(s['url']), esc(s['text'])) for s in sigs))
+                              % (nl.esc(s['date'][5:]), nl.esc(s['url']), nl.esc(s['text'])) for s in sigs))
 
     srcs = ''.join('<li><a href="%s" target="_blank" rel="noopener">%s</a>'
                    '<span>%s · %s</span></li>'
                    % (BLOB + urllib.parse.quote(s['file'].replace('\\', '/')),
-                      esc(s['base'][:70]), esc(s.get('date', '')), esc(s.get('note', '')))
+                      nl.esc(s['base'][:70]), nl.esc(s.get('date', '')), nl.esc(s.get('note', '')))
                    for s in src)
 
     html = (TMPL.replace('__CSS__', style.BASE + CSS)
-                .replace('__TITLE__', esc(ent['title']))
+                .replace('__TITLE__', nl.esc(ent['title']))
                 .replace('__EMOJI__', ent.get('emoji', '📌'))
-                .replace('__LEDE__', esc(ent['lede']))
+                .replace('__LEDE__', nl.esc(ent['lede']))
                 .replace('__STAMP__', '%s 기준 · 원문 %d편에서 직접 서술'
-                         % (esc(meta.get('as_of', TODAY.isoformat())), len(src)))
+                         % (nl.esc(meta.get('as_of', TODAY.isoformat())), len(src)))
                 .replace('__BODY__', html_body)
                 .replace('__SIGS__', sig_html)
                 .replace('__SRCS__', srcs))

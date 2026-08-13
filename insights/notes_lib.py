@@ -79,3 +79,47 @@ def line_hash(abs_path, n):
 
 def abspath(rel):
     return os.path.join(paths.ROOT, rel.replace('/', os.sep))
+
+
+BLOB = 'https://github.com/yohan4477/semi-report/blob/main/'
+
+
+def esc(s):
+    return (str(s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
+
+
+def link_cites(text, sources):
+    """(라벨 L123) → 원문 그 줄로 가는 각주. 서술과 근거를 한 클릭 거리에 둔다."""
+    import urllib.parse
+
+    def one(m):
+        hit = resolve(m.group(1), sources)
+        nums = re.findall(r'L(\d+)', m.group(2))
+        if not hit or not nums:
+            return m.group(0)
+        url = BLOB + urllib.parse.quote(hit['file'].replace('\\', '/')) + '#L' + nums[0]
+        return ('<a class="cite" href="%s" target="_blank" rel="noopener" title="%s">%s</a>'
+                % (url, esc(hit['base']), esc(m.group(2).replace(' ', ''))))
+    return CITE.sub(one, text)
+
+
+def md_body(body, sources, h='h2', cls='tsec'):
+    """작은 마크다운만 — ##, 문단, **굵게**. 그 이상은 이 판에 필요 없다."""
+    out = []
+    for block in re.split(r'\n\s*\n', body.strip()):
+        b = block.strip()
+        if not b:
+            continue
+        m = re.match(r'^##\s+(.+)$', b)
+        if m:
+            out.append('<%s class="%s">%s</%s>' % (h, cls, esc(m.group(1)), h))
+            continue
+        if b.startswith('- '):
+            items = ''.join('<li>%s</li>' % link_cites(
+                re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(x[2:])), sources)
+                for x in b.split('\n') if x.startswith('- '))
+            out.append('<ul>%s</ul>' % items)
+            continue
+        p = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(b).replace('\n', ' '))
+        out.append('<p>%s</p>' % link_cites(p, sources))
+    return ''.join(out)
