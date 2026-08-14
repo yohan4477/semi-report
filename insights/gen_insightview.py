@@ -54,14 +54,16 @@ def one(meta, body, tab, kind):
 
 
 def cards():
-    out, per = [], {}
+    out, per, bysec = [], {}, {}
     for d, kind, tab in KINDS:
         got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
             meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
             meta.setdefault('headline', os.path.basename(p)[:-3])
-            got.setdefault(meta.get('section', 'etc'), []).append(one(meta, body, tab, kind))
+            sid = meta.get('section', 'etc')
+            got.setdefault(sid, []).append(one(meta, body, tab, kind))
             per[tab] = per.get(tab, 0) + 1
+            bysec[sid] = bysec.get(sid, 0) + 1
         if not got:
             continue
         blocks, num = [], 0
@@ -69,13 +71,13 @@ def cards():
             if not got.get(sid):
                 continue
             num += 1
-            blocks.append('<section class="isec" data-kind="%s"><div class="ihead">'
+            blocks.append('<section class="isec" data-kind="%s" data-sec="%s"><div class="ihead">'
                           '<span class="inum">%02d</span><h3>%s</h3>'
                           '<span class="icnt">%d</span></div>%s</section>'
-                          % (tab, num, nl.esc(title), len(got[sid]), ''.join(got[sid])))
+                          % (tab, sid, num, nl.esc(title), len(got[sid]), ''.join(got[sid])))
         out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
                    % (tab, nl.esc(kind), ''.join(blocks)))
-    return ''.join(out), per
+    return ''.join(out), per, bysec
 
 
 GUIDE = ('<div class="guide">'
@@ -90,6 +92,18 @@ def guide(per):
     return GUIDE % (per.get('brief', 0), per.get('cross', 0))
 
 
+def sectabs(bysec):
+    """주제로도 골라 볼 수 있어야 한다 — 종류 탭과 겹쳐 걸린다"""
+    total = sum(bysec.values())
+    out = ['<button data-sec="all" aria-pressed="true">전체 주제 '
+           '<span class="tn">%d</span></button>' % total]
+    for sid, title in SECTIONS + (('etc', '그 밖'),):
+        if bysec.get(sid):
+            out.append('<button data-sec="%s" aria-pressed="false">%s <span class="tn">%d</span></button>'
+                       % (sid, nl.esc(title), bysec[sid]))
+    return '<div class="itabs sectabs">%s</div>' % ''.join(out)
+
+
 def tabs(per):
     """교차 인사이트와 정리본은 성격이 달라 섞어 두면 무엇을 읽는지 헷갈린다"""
     total = sum(per.values())
@@ -102,11 +116,11 @@ def tabs(per):
 
 
 def build():
-    body, per = cards()
+    body, per, bysec = cards()
     n = sum(per.values())
     html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CSS)
                 .replace('__GUIDE__', guide(per))
-                .replace('__TABS__', tabs(per))
+                .replace('__TABS__', tabs(per) + sectabs(bysec))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
                 .replace('__TABJS__', TAB_JS))
@@ -138,6 +152,9 @@ CSS = r'''
         color:var(--sub);cursor:pointer}
   .itabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
   .itabs .tn{margin-left:6px;font-variant-numeric:tabular-nums;opacity:.7}
+  .sectabs{margin-top:6px}
+  .sectabs button{font-weight:600;color:var(--faint)}
+  .sectabs button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
   .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
   .srcs>summary{cursor:pointer;font-size:var(--t-meta);font-weight:700;color:var(--sub);
         list-style:none}
@@ -210,17 +227,35 @@ KIND_CSS = '''
 
 TAB_JS = '''<script>
 (function(){
-  var bar=document.querySelector('.itabs'); if(!bar) return;
-  bar.addEventListener('click', function(e){
+  var kbar=document.querySelector('.itabs:not(.sectabs)');
+  var sbar=document.querySelector('.sectabs');
+  if(!kbar) return;
+  var kind='all', sec='all';
+  function apply(){
+    document.querySelectorAll('.isec').forEach(function(s){
+      s.hidden = !((kind==='all' || s.dataset.kind===kind) &&
+                   (sec==='all'  || s.dataset.sec===sec));
+    });
+    // 남은 섹션이 하나도 없는 종류 묶음은 제목만 남으므로 통째로 접는다
+    document.querySelectorAll('.kgroup').forEach(function(g){
+      g.hidden = g.querySelectorAll('.isec:not([hidden])').length===0;
+    });
+    kbar.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.tab===kind));
+    });
+    if(sbar) sbar.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.sec===sec));
+    });
+  }
+  kbar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
-    var pick=b.dataset.tab;
-    document.querySelectorAll('.kgroup[data-kind]').forEach(function(g){
-      g.hidden = !(pick==='all' || g.dataset.kind===pick);
-    });
-    bar.querySelectorAll('button').forEach(function(x){
-      x.setAttribute('aria-pressed', String(x.dataset.tab===pick));
-    });
+    kind=b.dataset.tab; apply();
   });
+  if(sbar) sbar.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    sec=b.dataset.sec; apply();
+  });
+  apply();
 })();
 </script>'''
 
