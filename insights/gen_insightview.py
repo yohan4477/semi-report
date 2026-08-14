@@ -1,7 +1,7 @@
 # 🧩 통합 인사이트 — 노트를 통째로 읽고 교차에서 나온 판단만 싣는다.
 # 카드를 모아 두는 페이지가 아니라, 문서 여러 편을 가로질러야 보이는 것만 남긴다.
 # 문장 옆 줄번호를 누르면 근거가 된 원문 그 줄로 간다.
-import io, os, sys, glob
+import io, os, re, sys, glob
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import notes_lib as nl
@@ -13,6 +13,12 @@ OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 KINDS = ((paths.BRIEFS, '브리핑', 'brief'),
          (paths.SYNTH, '교차 인사이트', 'cross'),
          (paths.THESES, '종합 판단', 'thesis'))
+
+
+def anchor(head):
+    """NEW 배지는 카드 id 기준이라(scripts/update_card_ledger.py) h2에 id가 있어야 한다"""
+    key = re.sub(r'[^0-9A-Za-z가-힣]+', '-', head).strip('-')
+    return 'card-' + key
 
 
 def srcbox(src):
@@ -38,11 +44,11 @@ def cards():
             head = meta.get('headline') or os.path.basename(p)[:-3]
             sub = meta.get('subhead', '')
             out.append('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
-                       '<span class="asof">as_of %s</span><h2>%s</h2>'
+                       '<span class="asof">as_of %s</span><h2 id="%s">%s</h2>'
                        '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
                        % (tab, nl.esc(kind), nl.esc(meta.get('as_of', '')),
-                          nl.esc(head), nl.esc(sub), nl.md_body(body, src, 'h4', 'bsec'),
-                          srcbox(src)))
+                          anchor(head), nl.esc(head), nl.esc(sub),
+                          nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
             per[tab] = per.get(tab, 0) + 1
     return ''.join(out), per
 
