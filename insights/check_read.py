@@ -62,6 +62,8 @@ CLICHE = [('결론적으로', 'D-1'), ('요약하면', 'D-1'), ('정리하자면
           ('혁신적', 'D-4'), ('획기적', 'D-4'), ('압도적', 'D-4'), ('폭발적', 'D-4')]
 CONNECT = ['또한', '따라서', '즉', '게다가', '더욱이', '아울러', '나아가']
 NOMINAL = ['라는 것이다', '다는 것이다', '다는 뜻이다', '것으로 보인다']
+# 통념을 뒤집는 단정 — 근거 없이 쓰면 원문을 뒤집는다
+DENY = re.compile(r'(때문이 아니|가 아니다|늘어서가 아니|틀렸다|사실과 다르)')
 COMMA = re.compile(r'(고|며|지만|면서|아서|어서),\s')
 
 findings = []
@@ -120,6 +122,17 @@ def check_file(path):
     cm = len(COMMA.findall(body))
     if cm >= 6:
         add('WARN', where, 'R8', '연결어미 뒤 쉼표가 %d번 — 쉼표를 뺀다' % cm)
+
+    # R9 — 통념을 뒤집는 단정은 눈에 잘 띄어서 쓰고 싶어진다. 근거 없이 쓰면 원문이 뒤집힌다.
+    # 메모리 편에서 "수요가 늘어서가 아니다"라고 썼는데 원문은 정반대였다.
+    for para in re.split(r'\n\s*\n', mdbody):
+        if para.lstrip().startswith('|') or para.lstrip().startswith('##'):
+            continue
+        m = DENY.search(strip(para))
+        if m and not nl.CITE.search(para) and not re.search(r'\(\[\d{6}\]', para):
+            add('FAIL', where, 'R9',
+                '근거 없는 단정 "%s" — 원문 줄을 인용하거나 문장을 뺀다: %s…'
+                % (m.group(1).strip(), strip(para).strip()[:44]))
 
     head = (meta.get('headline') or '')
     for v in VAGUE:
