@@ -3,11 +3,40 @@
 # 규칙이 이미 스펙 문체 절에 표로 있어 결정론적으로 검사할 수 있다 — 에이전트 호출 0회.
 import os, io, re, json, glob, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import check_atoms as ca
 import paths
 import notes_lib as nl
 
-GLOSSARY = os.path.join(ca.ROOT, 'insights', 'views', 'glossary.json')
+GLOSSARY = os.path.join(paths.ROOT, 'insights', 'views', 'glossary.json')
+
+
+# 아래 둘은 원자 검사기(check_atoms)에 있던 것을 옮겨왔다. 원자를 걷어내면서
+# 이 검사기가 같이 죽지 않도록 여기로 내린다.
+def parse_synth(text):
+    m = re.match(r'^---\n(.*?)\n---\n(.*)$', text, re.DOTALL)
+    if not m:
+        return None, text
+    meta, body = {}, m.group(2)
+    for line in m.group(1).splitlines():
+        mm = re.match(r'^(\w+):\s*(.*)$', line)
+        if not mm:
+            continue
+        k, v = mm.group(1), mm.group(2).strip()
+        if v.startswith('['):
+            v = [x.strip() for x in v.strip('[]').split(',') if x.strip()]
+        meta[k] = v
+    return meta, body
+
+
+def sections(body):
+    out, cur = {}, None
+    for line in body.splitlines():
+        h = re.match(r'^##\s+(.+?)\s*$', line)
+        if h:
+            cur = h.group(1)
+            out[cur] = []
+        elif cur and line.strip():
+            out[cur].append(line.strip())
+    return out
 
 # 용어가 아니라 문장을 망가뜨리는 것들 — 어느 회사인지 모르면 문장이 성립하지 않고,
 # 다른 분야 비유는 이 문서의 용어가 아니다
@@ -158,7 +187,7 @@ def main():
     except Exception:
         pass
     gloss = load_glossary()
-    files = sorted(glob.glob(os.path.join(ca.SYNTH, '*.md')))
+    files = sorted(glob.glob(os.path.join(paths.SYNTH, '*.md')))
     # 노트는 문체만 본다. 절 순서·headline 검사(P5~P7)는 인사이트 형식이라
     # 노트(주장/수치/추정)에 대면 있지도 않은 절을 없다고 잡는다
     notes = sorted(glob.glob(os.path.join(paths.NOTES, '*.md')))
@@ -174,8 +203,8 @@ def main():
         where = os.path.basename(p)
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
-        meta, mdbody = ca.parse_synth(raw)
-        sec = ca.sections(strip_refs(raw)) if meta else ca.sections(body)
+        meta, mdbody = parse_synth(raw)
+        sec = sections(strip_refs(raw)) if meta else sections(body)
         names = [n for n in sec.keys()]
         check_banned(body, where)
         check_glossary(body, where, gloss)
