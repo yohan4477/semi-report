@@ -15,22 +15,18 @@ STAMP = '2026-08-14'
 SUM = 'content/understanding/부동산/'
 
 # 섹션 번호는 by_upload_desc가 다시 매긴다 — 여기 숫자는 자리표시용이다
-SEC_CLUSTER = ('sec-cluster', '01', '지방 부동산 · 산업 클러스터',
-               '땅값이 오르는 지방은 어디이고 그 자리에 무엇이 있었나. 기업과 대학, 병원, 전력이 같이 간다')
+SEC_CLUSTER = ('sec-cluster', '01', '지방 · 토지 · 산업 클러스터',
+               '땅값이 오르는 지방은 어디이고 그 자리에 무엇이 있었나. 로드사이드(도로변 상가·창고 자리)와 호재가 값이 되는 시점까지 같이 본다')
 SEC_TAX = ('sec-tax', '02', '보유세 · 양도세 · 거래세',
            '세금이 시장을 어떻게 움직이나. 장특공제 개편 논쟁과, 같은 집에 각 도시 세제를 붙여본 이관옥 2부작')
 SEC_SUPPLY = ('sec-supply', '03', '공급 · 공공주택 · 입주 물량',
               '집이 얼마나 나오고 있나, 그 숫자는 믿을 만한가, 20년 뒤 만기가 오면 어떻게 되나')
 SEC_BUILD = ('sec-build', '04', '건설 원가 · 공법 · 아파트 수명',
              '공사비는 왜 올랐고 지금 짓는 아파트는 나중에 재건축이 되나. 현장 쪽에서 본 이야기')
-SEC_FIGHT = ('sec-fight', '05', '재개발 조합 · 시공사 분쟁',
-             '착공을 앞두고 조합과 시공사가 갈라서면 무슨 일이 벌어지나. 공사비·브랜드·표 대결과 선례')
+SEC_FIGHT = ('sec-fight', '05', '재개발 · 조합 · 인허가',
+             '착공을 앞두고 조합과 시공사가 갈라서면 무슨 일이 벌어지나. 무엇을 지을지 최종으로 정하는 심의도 여기서 본다')
 SEC_LEASE = ('sec-lease', '08', '전세 · 임차인 보호',
              '전세라는 제도가 어디서 부러지나. 전세사기 피해 구제와 대항력·최우선변제권 같은 임차인 보호 장치')
-SEC_PERMIT = ('sec-permit', '07', '인허가 · 심의 · 규제',
-              '누가 무엇을 지을지 최종으로 정하는 심의들. 서울시와 국토부가 같은 사업을 다르게 보는 지점')
-SEC_LAND = ('sec-land', '06', '토지 · 로드사이드 · 투자 실무',
-            '로드사이드(도로변 상가·창고 자리)를 다룬다. 호재는 언제 가격이 되나. 수익 사례가 전면에 나오는 편이라 반론을 특히 길게 붙였다')
 
 
 CARDS = [{
@@ -553,7 +549,7 @@ CARDS = [{
     'links': [('▶ 유튜브 원본', 'https://youtu.be/yXupZjctWjM', ''),
               ('📄 요약 전문', blob(SUM + '[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md'), 'secondary')],
 }, {
-    'section': SEC_PERMIT,
+    'section': SEC_FIGHT,
     'topic': ('market', '심의 · 공공복리 · 대공방어'),
     'title': '300평 펜트하우스에 걸린 공공복리',
     'gain': '서울시 허가가 나도 국토부에서 막히는 사업이 왜 생기는지. 초고층 개발에 어떤 심의와 비용이 따라붙는지.',
@@ -1509,7 +1505,7 @@ CARDS = [{
     'links': [('▶ 유튜브 원본', 'https://youtu.be/ug2iyPwtQdI', ''),
               ('📄 요약 전문', blob(SUM + '[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md'), 'secondary')],
 }, {
-    'section': SEC_LAND,
+    'section': SEC_CLUSTER,
     'topic': ('market', '토지 투자 · 상권'),
     'title': '땅값은 뒤에서 붙는다',
     'gain': '호재 발표와 땅값이 실제로 붙는 시점이 얼마나 벌어지는지, 사기 전에 무엇을 확인해야 하는지.',
@@ -1604,7 +1600,7 @@ def upload_date(card):
 
 
 # 섹션 순서는 손으로 정한다. 여기 없는 섹션은 뒤에 붙고 그들끼리는 최신 편 순이다
-SEC_ORDER = ['sec-cluster', 'sec-land', 'sec-tax', 'sec-supply', 'sec-lease', 'sec-permit', 'sec-fight', 'sec-build']
+SEC_ORDER = ['sec-cluster', 'sec-tax', 'sec-supply', 'sec-lease', 'sec-fight', 'sec-build']
 
 
 def by_upload_desc(cards):
