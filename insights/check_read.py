@@ -93,8 +93,15 @@ def check_file(path):
 
     head = (meta.get('headline') or '')
     for v in VAGUE:
-        if v in head:
-            add('WARN', where, 'R3', '제목에 뜻이 흐린 표현 "%s" — 무엇이 어떤지 적는다: %s' % (v, head))
+        i = head.find(v)
+        if i < 0:
+            continue
+        # "엔비디아 상대 협상력"처럼 누구를 상대로 한 것인지 앞에 붙었으면 뜻이 통한다
+        before = head[max(0, i - 14):i]
+        if re.search(r'(상대|와의|과의|대비|앞에서|사이)\s*$', before):
+            continue
+        add('WARN', where, 'R3',
+            '제목에 뜻이 흐린 표현 "%s" — 무엇에 대한 것인지 앞에 붙인다: %s' % (v, head))
 
 
 def main():
