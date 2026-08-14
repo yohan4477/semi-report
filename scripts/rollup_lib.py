@@ -70,8 +70,10 @@ def render_report(r, counts, unit='건'):
     meta = '%s~%s · %d%s' % (r['from'][5:], r['to'][5:], n, unit)
     if c.get('yt'):
         meta += ' (LinkedIn %d · 영상 %d)' % (c.get('li', 0), c['yt'])
+    # 항목에 sec(섹션 id)을 달면 그 대시보드에서 섹션을 골랐을 때 해당 항목만 남는다
     items = ''.join(
-        '<li><span class="rlh">%s</span><span class="rlb">%s</span></li>' % (it['h'], it['b'])
+        '<li%s><span class="rlh">%s</span><span class="rlb">%s</span></li>'
+        % (' data-sec="%s"' % it['sec'] if it.get('sec') else '', it['h'], it['b'])
         for it in r['items'])
     label = KIND.get(r['kind'], r['kind'])
     if r.get('scope'):

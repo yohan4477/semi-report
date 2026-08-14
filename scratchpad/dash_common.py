@@ -103,6 +103,13 @@ NAV_JS = '''<script>
     document.querySelectorAll('.rlold').forEach(function(o){
       o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
     });
+    // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
+    document.querySelectorAll('.rlrep').forEach(function(rep){
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;   // 범위 규칙이 없는 리포트는 여기서 되살린다
+      var tagged=rep.querySelectorAll('.rll li[data-sec]');
+      tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
+      if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
+    });
     var roll=document.querySelector('.rollup');
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
