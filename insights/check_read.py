@@ -39,6 +39,13 @@ POINTER = re.compile(r'(두 (?:리스크|문제|가지|축|요인|갈래)|세 (?
                      r'|경쟁 제품|해당 제품|양쪽|후자|전자)')
 ENUM = re.compile(r'(하나는|첫째|둘째|①|②|—|·|:|\n-)')
 
+# 영어를 그대로 옮겨 굳은 말들 — 우리말로 풀어 쓴다(오른쪽이 권장)
+LITERAL = {'함대': 'GPU 물량 전체', '모트': '진입 장벽', '풋프린트': '설치 규모',
+           '랜드스케이프': '판도', '에코시스템': '생태계', '런레이트': '연환산 매출',
+           '오프테이크': '장기 구매 계약', '백스톱': '최소 매출 보증',
+           '리레이팅': '값을 다시 매기는 것', '스택': '층 또는 소프트웨어 묶음'}
+
+
 # 제목에 쓰면 무슨 말인지 모르는 압축 표현
 VAGUE = ['붙었', '갈랐', '갈린 자리', '뒤집힌다', '남는다', '돌아온다', '옮겨간다']
 
@@ -78,6 +85,10 @@ def check_file(path):
     for m in POINTER.finditer(body):
         if not ENUM.search(body[m.end():m.end() + 240]):
             add('FAIL', where, 'R2', '"%s" 라고만 하고 무엇인지 안 밝혔다' % m.group(1))
+
+    for w, alt in LITERAL.items():
+        if w in body:
+            add('FAIL', where, 'R4', '직역 표현 "%s" — 우리말로 쓴다(예: %s)' % (w, alt))
 
     head = (meta.get('headline') or '')
     for v in VAGUE:
