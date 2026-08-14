@@ -205,14 +205,28 @@ def rewrite_links(html: str) -> str:
     return re.sub(r'href="([^"/:]+\.html)"', repl, html)
 
 
+def _card(slug: str, title: str, emoji: str, desc: str, locked: bool) -> str:
+    lock = '<span class="lock">🔒</span>' if locked else ''
+    return f'''    <a class="card" href="/{slug}">
+      <span class="ico">{emoji}</span>
+      <span class="tx"><strong>{title}{lock}</strong><em>{desc}</em></span>
+    </a>'''
+
+
+# 잠긴 대시보드는 첫 화면에 늘어놓지 않는다. 「비공개 자료」 한 칸으로 묶고
+# 비밀번호를 통과한 뒤 그 안에서 고르게 한다. /private 도 미들웨어가 막는다.
+PRIVATE_SLUG = 'private'
+
+
 def build_index() -> str:
     cards = '\n'.join(
-        f'''    <a class="card" href="/{slug}">
-      <span class="ico">{emoji}</span>
-      <span class="tx"><strong>{title}{'<span class="lock">🔒</span>' if locked else ''}</strong><em>{desc}</em></span>
-    </a>'''
-        for _, slug, title, emoji, desc, locked in PAGES
+        _card(slug, title, emoji, desc, False)
+        for _, slug, title, emoji, desc, locked in PAGES if not locked
     )
+    n = sum(1 for *_, locked in PAGES if locked)
+    if n:
+        cards += '\n' + _card(PRIVATE_SLUG, '비공개 자료', '🔒',
+                              f'구독 매체를 정리한 대시보드 {n}장 — 비밀번호가 필요합니다', True)
     return f'''<!doctype html>
 <html lang="ko">
 <head>
@@ -299,6 +313,35 @@ def build_index() -> str:
 '''
 
 
+def build_private() -> str:
+    """비밀번호를 통과한 뒤 보이는 고르는 화면. 인덱스와 같은 셸을 쓴다."""
+    cards = '\n'.join(
+        _card(slug, title, emoji, desc, False)
+        for _, slug, title, emoji, desc, locked in PAGES if locked
+    )
+    page = build_index()
+    body = f'''    <a class="back" href="/">← 전체 목록</a>
+    <h1>비공개 자료</h1>
+    <p class="lead">구독 매체를 정리한 대시보드입니다. 원문 전문은 두지 않고 요약과 판단만 남깁니다.</p>
+    <div class="grid">
+{cards}
+    </div>
+    <footer>
+      이 페이지와 아래 대시보드는 비밀번호로 보호됩니다.<br>
+      원문 저작권은 각 발행처에 있습니다.
+    </footer>
+'''
+    page = page[:page.index('    <h1>')] + body + page[page.index('  </div>\n</body>'):]
+    page = page.replace('<title>Insight Dashboard</title>',
+                        '<title>비공개 자료</title>\n<meta name="robots" content="noindex">')
+    return page.replace('</style>', '''  .back {
+    display:inline-block; margin:0 0 18px; color:var(--sub); text-decoration:none;
+    font-size:.84rem; letter-spacing:.01em;
+  }
+  .back:hover { color:var(--accent); }
+</style>''', 1)
+
+
 def main():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -316,8 +359,9 @@ def main():
         print(f'  {src}  ->  {slug}.html{badge}')
 
     (OUT / 'index.html').write_text(build_index(), encoding='utf-8')
+    (OUT / f'{PRIVATE_SLUG}.html').write_text(build_private(), encoding='utf-8')
     (OUT / '.nojekyll').write_text('', encoding='utf-8')
-    print(f'\n{len(PAGES) + 1} files -> {OUT}')
+    print(f'\n{len(PAGES) + 2} files -> {OUT}')
 
 
 if __name__ == '__main__':
