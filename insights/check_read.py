@@ -50,6 +50,20 @@ LITERAL = {'함대': 'GPU 물량 전체', '모트': '진입 장벽', '풋프린�
 VAGUE = ['붙었', '갈랐', '갈린 자리', '뒤집힌다', '남는다', '돌아온다', '옮겨간다',
          '협상력', '경쟁력', '역량', '구조적', '패러다임', '지형']
 
+# 아래 넷은 humanize-korean 룰북(quick-rules.md)에서 이 저장소가 실제로 어긴 것만 옮겼다.
+# 규칙 전문은 docs/글쓰기 규칙 — 인사이트 문장.md 참조.
+PASSIVE = [('되어진', '이중 피동 — "되었다"로'), ('지게 된다', '이중 피동 — "된다"로'),
+           ('가지고 있다', 'have 직역 — "…가 강하다"처럼 형용사로'),
+           ('보여준다', '추상 주어 + 만능 동사 — 누가 무엇을 적었는지로'),
+           ('제공한다', '추상 주어 + 만능 동사 — 구체 동사로')]
+CLICHE = [('결론적으로', 'D-1'), ('요약하면', 'D-1'), ('정리하자면', 'D-1'),
+          ('시사하는 바', 'D-2'), ('주목할 만하다', 'D-2'), ('매우 중요하다', 'D-2'),
+          ('크게 세 가지로', 'D-3'), ('다음과 같은', 'D-3'),
+          ('혁신적', 'D-4'), ('획기적', 'D-4'), ('압도적', 'D-4'), ('폭발적', 'D-4')]
+CONNECT = ['또한', '따라서', '즉', '게다가', '더욱이', '아울러', '나아가']
+NOMINAL = ['라는 것이다', '다는 것이다', '다는 뜻이다', '것으로 보인다']
+COMMA = re.compile(r'(고|며|지만|면서|아서|어서),\s')
+
 findings = []
 
 
@@ -90,6 +104,22 @@ def check_file(path):
     for w, alt in LITERAL.items():
         if w in body:
             add('FAIL', where, 'R4', '직역 표현 "%s" — 우리말로 쓴다(예: %s)' % (w, alt))
+
+    for w, why in PASSIVE:
+        if w in body:
+            add('FAIL', where, 'R5', '"%s" — %s' % (w, why))
+    for w, rid in CLICHE:
+        if w in body:
+            add('FAIL', where, 'R6', 'AI 상투구 "%s" (%s) — 빼거나 구체 결론으로' % (w, rid))
+    heads = sum(len(re.findall(r'(?m)^[-*\s]*\**' + w, body)) for w in CONNECT)
+    if heads >= 5:
+        add('WARN', where, 'R7', '문두 접속사가 %d번 — 문장이 스스로 이어지게 줄인다' % heads)
+    nom = sum(body.count(w) for w in NOMINAL)
+    if nom >= 3:
+        add('WARN', where, 'R7', '"~라는 것이다" 류가 %d번 — 그냥 "~다"로' % nom)
+    cm = len(COMMA.findall(body))
+    if cm >= 6:
+        add('WARN', where, 'R8', '연결어미 뒤 쉼표가 %d번 — 쉼표를 뺀다' % cm)
 
     head = (meta.get('headline') or '')
     for v in VAGUE:
