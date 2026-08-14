@@ -53,6 +53,18 @@ def cards():
     return ''.join(out), per
 
 
+GUIDE = ('<div class="guide">'
+         '<div class="g-brief"><b>브리핑 %d</b>'
+         '<p>한 주제의 지금 상태를 모아 둔 것. 판단하지 않고 나온 숫자와 갈리는 지점만 정리한다.</p></div>'
+         '<div class="g-cross"><b>교차 인사이트 %d</b>'
+         '<p>문서 여러 편을 가로질러야 보이는 것. 같은 단위가 다른 것을 재거나, 서로 어긋나거나, '
+         '아무도 안 다룬 자리를 짚는다.</p></div></div>')
+
+
+def guide(per):
+    return GUIDE % (per.get('brief', 0), per.get('cross', 0))
+
+
 def tabs(per):
     """교차 인사이트와 정리본은 성격이 달라 섞어 두면 무엇을 읽는지 헷갈린다"""
     total = sum(per.values())
@@ -67,7 +79,8 @@ def tabs(per):
 def build():
     body, per = cards()
     n = sum(per.values())
-    html = (TMPL.replace('__CSS__', style.BASE + CSS)
+    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CSS)
+                .replace('__GUIDE__', guide(per))
                 .replace('__TABS__', tabs(per))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
@@ -109,6 +122,40 @@ CSS = r'''
   .srcs li{font-size:var(--t-meta);line-height:1.8}
   .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
   .srcs a:hover{color:var(--accent)}
+
+  /* 종류마다 색을 달리한다 — 브리핑은 현황, 교차 인사이트는 판단이라 읽는 자세가 다르다 */
+  .ins[data-kind="brief"]{border-left-color:var(--brief)}
+  .ins[data-kind="brief"] .cid{color:var(--brief)}
+  .ins[data-kind="brief"] .bsec{color:var(--brief)}
+  .ins[data-kind="brief"] .cite{color:var(--brief)}
+  .ins[data-kind="cross"]{border-left-color:var(--cross)}
+  .ins[data-kind="cross"] .cid{color:var(--cross)}
+  .ins[data-kind="cross"] .bsec{color:var(--cross)}
+  .ins[data-kind="cross"] .cite{color:var(--cross)}
+
+  /* 절이 이어 붙으면 어디서 화제가 바뀌는지 안 보인다 — 선을 하나 긋는다 */
+  .body .bsec{position:relative;border-top:1px solid var(--line);
+        margin:20px 0 8px;padding-top:14px}
+  .body .bsec:first-child{border-top:0;margin-top:6px;padding-top:0}
+  .body table{margin:6px 0 2px}
+
+  /* 페이지 안내 — 두 종류가 무엇인지 먼저 알려 준다 */
+  .guide{display:grid;gap:8px;margin:14px 0 2px}
+  .guide div{border:1px solid var(--line);border-left:3px solid var(--line);
+        border-radius:var(--r);background:var(--card);padding:10px 14px}
+  .guide .g-brief{border-left-color:var(--brief)}
+  .guide .g-cross{border-left-color:var(--cross)}
+  .guide b{font-size:var(--t-meta);letter-spacing:.02em}
+  .guide .g-brief b{color:var(--brief)}
+  .guide .g-cross b{color:var(--cross)}
+  .guide p{margin:3px 0 0;font-size:var(--t-meta);color:var(--sub);line-height:1.6}
+  @media (min-width:680px){.guide{grid-template-columns:1fr 1fr}}
+'''
+
+# 종류 색은 밝기 대비를 지키는 선에서 고른다(다크 모드 값은 아래에서 덮어쓴다)
+KIND_CSS = '''
+  :root{--brief:#0f766e;--cross:#b45309}
+  @media (prefers-color-scheme:dark){:root{--brief:#5eead4;--cross:#fbbf24}}
 '''
 
 TAB_JS = '''<script>
@@ -135,11 +182,13 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">노트 45장을 가로질러</p>
   <h1>통합 인사이트</h1>
-  <p class="lede">문서 하나를 요약한 것이 아니라, 노트 전량을 한 번에 읽어야 보이는 것만
-  올립니다. 문장 옆의 파란 줄번호를 누르면 그 근거가 된 원문 줄로 갑니다.</p>
+  <p class="lede">문서 하나를 요약한 페이지가 아닙니다. 원문마다 노트 한 장을 만들어 두고,
+  그 노트 전량을 한 번에 읽어야 보이는 것만 올립니다. 문장 옆 줄번호를 누르면 근거가 된
+  원문 그 줄로 가고, 카드 아래 「참고한 문서」를 펼치면 무엇을 읽고 썼는지 나옵니다.</p>
   <div class="meta"><span>판단 __N__건</span>
     <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
+__GUIDE__
 __TABS__
 __CARDS__
 __TABJS__
