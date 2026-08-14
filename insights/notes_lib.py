@@ -114,6 +114,22 @@ def md_body(body, sources, h='h2', cls='tsec'):
         if m:
             out.append('<%s class="%s">%s</%s>' % (h, cls, esc(m.group(1)), h))
             continue
+        # 표 — 파이프를 그대로 두면 숫자가 한 줄로 뭉개져 읽을 수가 없다
+        if b.startswith('|') and '\n' in b:
+            rows = [r.strip() for r in b.split('\n') if r.strip().startswith('|')]
+            grid = [[c.strip() for c in r.strip('|').split('|')] for r in rows]
+            grid = [row for row in grid
+                    if not all(set(c) <= set('-: ') for c in row)]   # 구분선 줄은 버린다
+            if grid:
+                def cell(c):
+                    return link_cites(re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(c)), sources)
+                head = ''.join('<th>%s</th>' % cell(c) for c in grid[0])
+                rest = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % cell(c) for c in row)
+                               for row in grid[1:])
+                out.append('<div class="tw"><table><thead><tr>%s</tr></thead>'
+                           '<tbody>%s</tbody></table></div>' % (head, rest))
+                continue
+
         if b.startswith('- '):
             items = ''.join('<li>%s</li>' % link_cites(
                 re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(x[2:])), sources)

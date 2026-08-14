@@ -2,6 +2,7 @@
 kind: brief
 headline: AMD와 엔비디아 — 값은 붙었고 소프트웨어가 갈랐다
 subhead: 스펙·총소유비용·실측이 어디서 뒤집히는지, 그리고 고객이 실제로 무엇을 샀는지
+section: chip
 as_of: 2026-08-14
 sources:
   - {file: "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md", note: ""}
@@ -28,14 +29,14 @@ sources:
 
 | 항목 | 값 | 출처 |
 |---|---|---|
-| 추론 총소유비용 | MI355X가 HGX B200 대비 33% 낮음 | [250613] AMD Advancing AI L184 |
-| 시간당 GPU당 총소유비용 | 1.38달러 vs 1.97달러(약 30% 낮음) | [250613] AMD Advancing AI L841 |
-| 전력 역전 | MI400 240kW vs VR200 187kW, 운영비 0.85달러 vs 0.67달러 | [250613] AMD Advancing AI L842 |
-| 집단 통신 | all-to-all에서 MI355X가 GB200 NVL72보다 18배 느림 | [250613] AMD Advancing AI L271 |
-| 전력효율 | 동세대 B200이 MI355X보다 약 20% 높음(TDP(발열 한도) 1.4kW 대 1kW) | [251009] InferenceMAX L365 |
-| 서버 가격 | H100 18만9,637달러 vs MI300X 14만5,017달러, B200 30만8,680달러 vs MI355X 18만9,607달러 | [251009] InferenceMAX L480 |
-| 종이 스펙 기준 | FP8 총소유비용/PFLOP은 MI355X 0.30달러, B200 0.43달러 | [251009] InferenceMAX L482 |
-| 자동검증 | vLLM CI에 MI355X 테스트 0건, Pollara NIC 매칭률 0% | [260216] InferenceX v2 L460 · [260725] AMD는 CUDA 모트를 깰 수 있는가 L87 |
+| 추론 총소유비용 | MI355X가 HGX B200 대비 33% 낮음 | ([250613] AMD Advancing AI L184) |
+| 시간당 GPU당 총소유비용 | 1.38달러 vs 1.97달러(약 30% 낮음) | ([250613] AMD Advancing AI L841) |
+| 전력 역전 | MI400 240kW vs VR200 187kW, 운영비 0.85달러 vs 0.67달러 | ([250613] AMD Advancing AI L842) |
+| 집단 통신 | all-to-all에서 MI355X가 GB200 NVL72보다 18배 느림 | ([250613] AMD Advancing AI L271) |
+| 전력효율 | 동세대 B200이 MI355X보다 약 20% 높음(TDP(발열 한도) 1.4kW 대 1kW) | ([251009] InferenceMAX L365) |
+| 서버 가격 | H100 18만9,637달러 vs MI300X 14만5,017달러, B200 30만8,680달러 vs MI355X 18만9,607달러 | ([251009] InferenceMAX L480) |
+| 종이 스펙 기준 | FP8 총소유비용/PFLOP은 MI355X 0.30달러, B200 0.43달러 | ([251009] InferenceMAX L482) |
+| 자동검증 | vLLM CI에 MI355X 테스트 0건, Pollara NIC 매칭률 0% | ([260216] InferenceX v2 L460) · ([260725] AMD는 CUDA 모트를 깰 수 있는가 L87) |
 
 ## 어디서 갈리나
 

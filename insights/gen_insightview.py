@@ -9,6 +9,13 @@ import notes_lib as nl
 OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
 
+# 종류 안에서도 주제로 묶는다 — 카드 열 장이 한 줄로 늘어서면 어디를 보는지 놓친다
+SECTIONS = (('chip', '반도체 · 메모리 · 가속기'),
+            ('power', '전력 · 데이터센터'),
+            ('model', '모델 · 학습'),
+            ('biz', '사업 · 비용 · 재무'))
+
+
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
 KINDS = ((paths.BRIEFS, '브리핑', 'brief'),
          (paths.SYNTH, '교차 인사이트', 'cross'),
@@ -35,21 +42,39 @@ def srcbox(src):
             % (len(src), ''.join(rows)))
 
 
+def one(meta, body, tab, kind):
+    src = nl.sources_of(meta)
+    head = meta.get('headline') or ''
+    return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
+            '<span class="asof">as_of %s</span><h2 id="%s">%s</h2>'
+            '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
+            % (tab, nl.esc(kind), nl.esc(meta.get('as_of', '')),
+               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
+               nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
+
+
 def cards():
     out, per = [], {}
     for d, kind, tab in KINDS:
+        got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
             meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
-            src = nl.sources_of(meta)
-            head = meta.get('headline') or os.path.basename(p)[:-3]
-            sub = meta.get('subhead', '')
-            out.append('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
-                       '<span class="asof">as_of %s</span><h2 id="%s">%s</h2>'
-                       '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
-                       % (tab, nl.esc(kind), nl.esc(meta.get('as_of', '')),
-                          anchor(head), nl.esc(head), nl.esc(sub),
-                          nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
+            meta.setdefault('headline', os.path.basename(p)[:-3])
+            got.setdefault(meta.get('section', 'etc'), []).append(one(meta, body, tab, kind))
             per[tab] = per.get(tab, 0) + 1
+        if not got:
+            continue
+        blocks, num = [], 0
+        for sid, title in SECTIONS + (('etc', '그 밖'),):
+            if not got.get(sid):
+                continue
+            num += 1
+            blocks.append('<section class="isec" data-kind="%s"><div class="ihead">'
+                          '<span class="inum">%02d</span><h3>%s</h3>'
+                          '<span class="icnt">%d</span></div>%s</section>'
+                          % (tab, num, nl.esc(title), len(got[sid]), ''.join(got[sid])))
+        out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
+                   % (tab, nl.esc(kind), ''.join(blocks)))
     return ''.join(out), per
 
 
@@ -123,6 +148,19 @@ CSS = r'''
   .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
   .srcs a:hover{color:var(--accent)}
 
+  /* 종류 묶음과 그 안의 주제 섹션 */
+  .kgroup{margin-top:26px}
+  .ktitle{font-size:var(--t-lead);font-weight:850;letter-spacing:-.01em;margin:0 0 2px}
+  .kgroup[data-kind="brief"] .ktitle{color:var(--brief)}
+  .kgroup[data-kind="cross"] .ktitle{color:var(--cross)}
+  .isec{margin-top:16px}
+  .ihead{display:flex;align-items:baseline;gap:9px;padding-bottom:6px;
+        border-bottom:1px solid var(--line)}
+  .inum{font-size:var(--t-lbl);font-weight:800;letter-spacing:.09em;color:var(--faint);
+        font-variant-numeric:tabular-nums}
+  .ihead h3{font-size:var(--t-body);font-weight:800;letter-spacing:-.01em;margin:0;color:var(--ink)}
+  .icnt{margin-left:auto;font-size:var(--t-lbl);color:var(--faint);font-variant-numeric:tabular-nums}
+
   /* 종류마다 색을 달리한다 — 브리핑은 현황, 교차 인사이트는 판단이라 읽는 자세가 다르다 */
   .ins[data-kind="brief"]{border-left-color:var(--brief)}
   .ins[data-kind="brief"] .cid{color:var(--brief)}
@@ -137,7 +175,19 @@ CSS = r'''
   .body .bsec{position:relative;border-top:1px solid var(--line);
         margin:20px 0 8px;padding-top:14px}
   .body .bsec:first-child{border-top:0;margin-top:6px;padding-top:0}
-  .body table{margin:6px 0 2px}
+  /* 표 — 좁은 화면에서는 표만 옆으로 밀린다 */
+  .tw{overflow-x:auto;margin:8px 0 2px;-webkit-overflow-scrolling:touch}
+  .body table{width:100%;border-collapse:collapse;font-size:var(--t-meta);
+        background:var(--card)}
+  .body th{text-align:left;font-weight:800;color:var(--faint);white-space:nowrap;
+        border-bottom:1px solid var(--line);padding:7px 12px 7px 0;
+        text-transform:uppercase;letter-spacing:.03em;font-size:var(--t-lbl)}
+  .body td{color:var(--sub);line-height:1.6;vertical-align:top;
+        border-bottom:1px solid var(--line);padding:8px 12px 8px 0}
+  .body tbody tr:last-child td{border-bottom:0}
+  .body td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+  .body td:nth-child(2){font-variant-numeric:tabular-nums}
+  .body td:last-child{color:var(--faint);font-size:var(--t-lbl);line-height:1.5}
 
   /* 페이지 안내 — 두 종류가 무엇인지 먼저 알려 준다 */
   .guide{display:grid;gap:8px;margin:14px 0 2px}
@@ -164,8 +214,8 @@ TAB_JS = '''<script>
   bar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     var pick=b.dataset.tab;
-    document.querySelectorAll('.ins[data-kind]').forEach(function(c){
-      c.hidden = !(pick==='all' || c.dataset.kind===pick);
+    document.querySelectorAll('.kgroup[data-kind]').forEach(function(g){
+      g.hidden = !(pick==='all' || g.dataset.kind===pick);
     });
     bar.querySelectorAll('button').forEach(function(x){
       x.setAttribute('aria-pressed', String(x.dataset.tab===pick));
