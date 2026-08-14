@@ -62,6 +62,9 @@ def check(path, notes, today):
     meta, _ = nl.parse_front(io.open(path, encoding='utf-8').read())
     section = str(meta.get('section') or '').strip()
     used = set(s['file'] for s in nl.sources_of(meta) if s.get('file'))
+    # 읽고 "이건 안 바뀐다"고 판단한 것도 검토한 것이다. 그 판단을 frontmatter 의
+    # checked: 에 이유와 함께 적어 두면 다음 회차에 같은 문서를 다시 뒤지지 않는다.
+    seen = set(re.findall(r'file:\s*"([^"]+)"', meta.get('_head', '')))
 
     mine = [n for n in notes if n['src'] in used]
     if not mine:
@@ -75,7 +78,8 @@ def check(path, notes, today):
 
     # F1 — 이 글이 선 자리보다 뒤에 나온 같은 주제 문서. 있으면 결론이 바뀌었을 수 있다.
     later = [n for n in notes
-             if n['date'] > newest and n['src'] not in used and (n['topics'] & topics)]
+             if n['date'] > newest and n['src'] not in used and n['src'] not in seen
+             and (n['topics'] & topics)]
     if later:
         later.sort(key=lambda n: n['date'], reverse=True)
         names = ', '.join('%s(%s)' % (n['path'][:24], n['date']) for n in later[:3])

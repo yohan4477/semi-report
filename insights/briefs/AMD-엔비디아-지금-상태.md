@@ -10,6 +10,8 @@ sources:
   - {file: "content/newsletter/ai_infra/compute/[251009] InferenceMAX - 오픈소스 추론 벤치마킹.md", note: ""}
   - {file: "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md", note: ""}
   - {file: "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md", note: ""}
+checked:   # 읽고 반영 안 하기로 한 문서 — check_fresh F1 이 이걸 보고 넘어간다
+  - {file: "input/clippings/SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md", why: "전력·매출 이야기라 칩 경쟁과 무관"}
 ---
 
 ## 한 줄
