@@ -75,26 +75,9 @@ NAV_JS = '''<script>
 (function(){
   var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
   var box=document.querySelector('.sec-pick'); if(!box) return;
-  var btn=box && box.querySelector('.sp-btn');
-  var list=box && box.querySelector('.sp-list');
-  var label=box && box.querySelector('.sp-label');
-  var total=box && box.querySelector('.sp-cnt');
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   var only=null;                   // only = 고른 섹션 하나, "전체 보기"로 되돌린다
-  function opt(id){ return list && list.querySelector('button[data-sec="'+id+'"]'); }
-  function close(){ if(box){ box.classList.remove('open'); list.hidden=true; btn.setAttribute('aria-expanded','false'); } }
-  // 섹션을 고른 상태면 그 항목을, 전체를 보는 중이면 지금 화면에 걸린 섹션 항목을 켠다
-  function spy(){
-    var cur=only, line=120;
-    if(!cur){
-      var live=document.querySelectorAll('section[id]:not([hidden])');
-      live.forEach(function(s){ if(s.getBoundingClientRect().top<=line) cur=s.id; });
-      if(!cur && live.length) cur=live[0].id;
-    }
-    if(list) list.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-current', String(b.dataset.sec===(only||'') || (!only && b.dataset.sec===cur)));
-    });
-  }
+  function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
@@ -108,7 +91,7 @@ NAV_JS = '''<script>
     });
     // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
     document.querySelectorAll('.rlrep').forEach(function(rep){
-      if(!rep.hasAttribute('data-scope')) rep.hidden = false;   // 범위 규칙이 없는 리포트는 여기서 되살린다
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;
       var tagged=rep.querySelectorAll('.rll li[data-sec]');
       tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
       if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
@@ -122,22 +105,14 @@ NAV_JS = '''<script>
       s.hidden = live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
-        o.parentNode.hidden = live===0;
+        o.hidden = live===0;
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
-    if(only){
-      var head=document.querySelector('#'+only+' .sec-title');
-      var one=document.querySelector('#'+only+' .ucard:not([hidden])');
-      if(label) label.textContent = head? head.textContent : '섹션';
-      if(total) total.textContent = document.querySelectorAll('#'+only+' .ucard:not([hidden])').length;
-      if(!one && label) label.textContent='섹션 전체';
-    }else{
-      if(label) label.textContent='섹션 전체';
-      if(total) total.textContent=seen;
-    }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
-    spy();
+    box.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String((b.dataset.sec||null)===only));
+    });
     if(tabs) tabs.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
     });
@@ -145,47 +120,39 @@ NAV_JS = '''<script>
   if(tabs) tabs.addEventListener('click', function(e){
     var b=e.target.closest('button');
     if(!b) return;
-    pick=b.dataset.pick; only=null; close(); apply();
+    pick=b.dataset.pick; only=null; apply();
     window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
   });
-  if(btn) btn.addEventListener('click', function(){
-    var open=!box.classList.contains('open');
-    box.classList.toggle('open', open);
-    list.hidden=!open;
-    btn.setAttribute('aria-expanded', String(open));
-  });
-  if(list) list.addEventListener('click', function(e){
+  box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
-    only = b.dataset.sec || null;
-    close(); apply();
-    window.scrollTo({top:0});
+    var sid = b.dataset.sec || null;
+    only = (only===sid && sid) ? null : sid;   // 다시 누르면 전체로 돌아온다
+    apply();
+    if(only){
+      var sec=document.getElementById(only);
+      if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    }else{
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
   });
-  document.addEventListener('click', function(e){
-    if(box && !e.target.closest('.sec-pick')) close();
-  });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
-  var tick=false;
-  window.addEventListener('scroll', function(){
-    if(tick) return;
-    tick=true;
-    requestAnimationFrame(function(){ tick=false; spy(); });
-  }, {passive:true});
   apply();
 })();
 </script>'''
 
 
 def sec_picker(secs, order, total):
-    """섹션 고르기 목록. 칩을 늘어놓지 않고 눌러서 아래로 펼친다"""
-    items = ['<li><button data-sec="">전체 보기<span class="cnt">%d</span></button></li>'
-             '<li class="sp-sep"></li>' % total]
-    items += ['<li><button data-sec="%s">%s<span class="cnt">%d</span></button></li>'
-              % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order]
-    return ('<div class="sec-pick">'
-            '<button class="sp-btn" aria-expanded="false" aria-haspopup="true">'
-            '<span class="sp-label">섹션 전체</span>'
-            '<span class="sp-caret" aria-hidden="true">▾</span></button>'
-            '<ul class="sp-list" hidden>%s</ul></div>' % ''.join(items))
+    """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다"""
+    tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
+             '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
+             '<span class="st-s">모든 섹션을 한 줄로</span>'
+             '<span class="st-n cnt">%d</span></button>' % total]
+    for sid in order:
+        (_id, num, title, sub), cs = secs[sid]
+        tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
+                     '<span class="st-num">%s</span><span class="st-t">%s</span>'
+                     '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
+                     % (sid, num, title, (sub or '')[:46], len(cs)))
+    return '<div class="sec-pick sgrid">%s</div>' % ''.join(tiles)
 
 
 def upload_date(card):
