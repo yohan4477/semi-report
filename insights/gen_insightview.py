@@ -1,12 +1,12 @@
-# ⚛️ 인사이트와 근거 — 판단을 읽고, 문장 옆 줄번호를 누르면 원문 그 줄로 간다.
-# 옛 gen_atomview.py에 있던 근거 지도(스택 10칸·프로세스 7단계)와 구조 뷰,
-# 검증 대장은 뺐다. 사용자가 실제로 읽는 것은 판단 본문 하나였다.
+# 🧩 통합 인사이트 — 노트를 통째로 읽고 교차에서 나온 판단만 싣는다.
+# 카드를 모아 두는 페이지가 아니라, 문서 여러 편을 가로질러야 보이는 것만 남긴다.
+# 문장 옆 줄번호를 누르면 근거가 된 원문 그 줄로 간다.
 import io, os, sys, glob
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import notes_lib as nl
 
-OUT = os.path.join(paths.ROOT, '대시보드', '인사이트와 근거.html')
+OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
 
 def cards():
@@ -57,14 +57,14 @@ CSS = r'''
 
 TMPL = '''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>인사이트와 그 근거</title>
+<title>통합 인사이트</title>
 <style>__CSS__</style>
 <div class="wrap">
 <header>
-  <p class="eyebrow">Insights &amp; Evidence</p>
-  <h1>인사이트와 그 근거</h1>
-  <p class="lede">판단을 먼저 읽고, 문장 옆의 파란 줄번호를 누르면 그 문장의 근거가 된
-  원문 줄로 갑니다.</p>
+  <p class="eyebrow">노트 45장을 가로질러</p>
+  <h1>통합 인사이트</h1>
+  <p class="lede">문서 하나를 요약한 것이 아니라, 노트 전량을 한 번에 읽어야 보이는 것만
+  올립니다. 문장 옆의 파란 줄번호를 누르면 그 근거가 된 원문 줄로 갑니다.</p>
   <div class="meta"><span>판단 __N__건</span>
     <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>

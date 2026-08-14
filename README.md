@@ -12,7 +12,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - 🧭 [SemiAnalysis 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/SemiAnalysis%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
 - 📊 [임팩트 타임라인 (Yomianalysis)](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
 - 🗂️ [소셜 신호 히스토리](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html) — LinkedIn·YouTube 신호 전체 아카이브
-- ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html) — 판단을 먼저 읽고, 문장 옆 줄번호를 누르면 근거가 된 **원문 그 줄**로 갑니다
+- 🧩 [통합 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%86%B5%ED%95%A9%20%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8.html) — 판단을 먼저 읽고, 문장 옆 줄번호를 누르면 근거가 된 **원문 그 줄**로 갑니다
 
 ### 제3자 해설 (SemiAnalysis 코퍼스 외)
 - 🎧 [AI · 인프라 · 에너지 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 언더스탠딩 유튜브 한국어 해설(권효재·이선엽 등) 자막요약. SemiAnalysis 코퍼스와 별개이며 확신도 산정 대상 아님
@@ -67,7 +67,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 **규모 (2026-08-14)** — 노트 45장(전부 SemiAnalysis 코퍼스), 교차 인사이트 3건.
 
-**보는 곳** — ⚛️ [인사이트와 그 근거](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html).
+**보는 곳** — 🧩 [통합 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%86%B5%ED%95%A9%20%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8.html).
 `py insights/gen_insightview.py`로 재생성합니다.
 
 **2026-08-14에 걷어낸 것** — 원자 24개 JSON(521개), 좌표 축 2종(스택 10칸·프로세스 7단계),
