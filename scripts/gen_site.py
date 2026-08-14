@@ -20,6 +20,8 @@ GH = 'https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%
 
 # 공개 대상: 원본 파일명 -> (슬러그, 카드 제목, 이모지, 한 줄 설명, 잠금 여부)
 PAGES = [
+    ('통합 인사이트.html', 'unified', '통합 인사이트', '🧩',
+     '노트 45장을 가로질러야 보이는 판단만 — 문서 한 편 요약은 싣지 않는다', True),
     ('SemiAnalysis 대시보드.html', 'semianalysis', 'SemiAnalysis', '📊',
      '반도체·AI 인프라 뉴스레터 변환본과 소셜 신호 아카이브', True),
     ('미국주식 사관학교 대시보드.html', 'usa-academy', '미국주식 사관학교', '🎓',
