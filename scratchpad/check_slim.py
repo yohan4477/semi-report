@@ -15,7 +15,9 @@ import difflib, io, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scratchpad'))
-import gen_realestate_dashboard as g
+OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
+import gen_realestate_dashboard as _re
+import gen_usa_dashboard as _usa
 
 SUBS = os.path.join(ROOT, 'scratchpad', 'yt_subs')
 STRIP = re.compile(r'<[^>]+>')
@@ -76,11 +78,23 @@ def vid_of(card):
     return None
 
 
-def check(card):
+def source_path(card):
+    """대조할 원문 파일. 유튜브는 자막, 네이버 프리미엄은 파싱해 둔 본문이다"""
     vid = vid_of(card)
-    path = os.path.join(SUBS, (vid or '') + '.txt')
-    if not vid or not os.path.exists(path):
-        return ['자막 없음(%s) — 대조 못 함' % vid], []
+    if vid:
+        return os.path.join(SUBS, vid + '.txt'), vid
+    for m in card.get('meta', []):
+        d = re.search(r'(20\d\d)-(\d\d)-(\d\d)', m)
+        if d:
+            key = ''.join(d.groups())
+            return os.path.join(ROOT, 'scratchpad', 'naver_%s.txt' % key), key
+    return None, None
+
+
+def check(card):
+    path, key = source_path(card)
+    if not path or not os.path.exists(path):
+        return ['원문 없음(%s) — 대조 못 함' % key], []
     sub = norm(io.open(path, encoding='utf-8').read())
     bad, warn = [], []
     body = ' '.join([card.get('slim_oneliner', '')] + list(card['slim_points'])
@@ -116,7 +130,8 @@ def check(card):
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else None
     fails = 0
-    for c in g.CARDS:
+    cards = _re.CARDS + _usa.CARDS
+    for c in cards:
         if not c.get('slim_points'):
             continue
         if want and want not in c['title']:
@@ -126,13 +141,13 @@ def main():
         if miss:
             warn.append('괄호 설명이 없는 용어: ' + ', '.join(miss))
         mark = 'FAIL' if bad else ('warn' if warn else 'OK  ')
-        print('%s %s' % (mark, c['title']))
+        print('%s %s' % (mark, c['title']), file=OUT)
         for b in bad:
-            print('       ! %s' % b)
+            print('       ! %s' % b, file=OUT)
         for w in warn:
-            print('       ~ %s' % w)
+            print('       ~ %s' % w, file=OUT)
         fails += bool(bad)
-    print('\nFAIL %d건 (! = 고쳐야 함, ~ = 사람이 확인)' % fails)
+    print('\nFAIL %d건 (! = 고쳐야 함, ~ = 사람이 확인)' % fails, file=OUT)
     return 1 if fails else 0
 
 
