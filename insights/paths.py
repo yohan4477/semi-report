@@ -9,7 +9,7 @@ NOTES = os.path.join(HERE, 'notes')
 CITES = os.path.join(HERE, 'cites.json')
 TRACKS = os.path.join(HERE, 'tracks')
 SYNTH = os.path.join(HERE, 'synth')
-# 판단까지는 아닌 주제 정리본. 통합 인사이트에 인사이트와 나란히 실린다
-DIGESTS = os.path.join(HERE, 'digests')
+# 판단까지는 아닌 주제 브리핑. 통합 인사이트에서 인사이트보다 앞에 선다
+BRIEFS = os.path.join(HERE, 'briefs')
 THESES = os.path.join(HERE, 'theses')
 WORLD = os.path.join(HERE, 'world_path.txt')

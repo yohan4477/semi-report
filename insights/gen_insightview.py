@@ -10,9 +10,23 @@ OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
 
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
-KINDS = ((paths.SYNTH, '교차 인사이트', 'cross'),
-         (paths.DIGESTS, '정리본', 'digest'),
+KINDS = ((paths.BRIEFS, '브리핑', 'brief'),
+         (paths.SYNTH, '교차 인사이트', 'cross'),
          (paths.THESES, '종합 판단', 'thesis'))
+
+
+def srcbox(src):
+    """무엇을 읽고 썼는지 카드 안에서 바로 보이게 — 인용은 줄 단위라 문서 목록이 따로 필요하다"""
+    if not src:
+        return ''
+    import urllib.parse
+    rows = []
+    for d in src:
+        f = d['file'].replace(os.sep, '/')
+        rows.append('<li><a href="%s%s" target="_blank" rel="noopener">%s</a></li>'
+                    % (nl.BLOB, urllib.parse.quote(f), nl.esc(d['base'])))
+    return ('<details class="srcs"><summary>참고한 문서 %d편</summary><ul>%s</ul></details>'
+            % (len(src), ''.join(rows)))
 
 
 def cards():
@@ -25,9 +39,10 @@ def cards():
             sub = meta.get('subhead', '')
             out.append('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
                        '<span class="asof">as_of %s</span><h2>%s</h2>'
-                       '<p class="sub">%s</p></summary><div class="body">%s</div></details>'
+                       '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
                        % (tab, nl.esc(kind), nl.esc(meta.get('as_of', '')),
-                          nl.esc(head), nl.esc(sub), nl.md_body(body, src, 'h4', 'bsec')))
+                          nl.esc(head), nl.esc(sub), nl.md_body(body, src, 'h4', 'bsec'),
+                          srcbox(src)))
             per[tab] = per.get(tab, 0) + 1
     return ''.join(out), per
 
@@ -79,6 +94,15 @@ CSS = r'''
         color:var(--sub);cursor:pointer}
   .itabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
   .itabs .tn{margin-left:6px;font-variant-numeric:tabular-nums;opacity:.7}
+  .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+  .srcs>summary{cursor:pointer;font-size:var(--t-meta);font-weight:700;color:var(--sub);
+        list-style:none}
+  .srcs>summary::-webkit-details-marker{display:none}
+  .srcs>summary::before{content:"📄 ";opacity:.7}
+  .srcs ul{margin:8px 0 0;padding-left:18px}
+  .srcs li{font-size:var(--t-meta);line-height:1.8}
+  .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
+  .srcs a:hover{color:var(--accent)}
 '''
 
 TAB_JS = '''<script>

@@ -199,8 +199,8 @@ def main():
         check_length(body, where)
         check_translationese(body, where)
 
-    # 정리본은 판단이 아니라 한 주제의 현재 상태를 묶은 것이라 절 구성이 다르다
-    for p in sorted(glob.glob(os.path.join(paths.DIGESTS, '*.md'))):
+    # 브리핑은 판단이 아니라 한 주제의 현재 상태를 묶은 것이라 절 구성이 다르다
+    for p in sorted(glob.glob(os.path.join(paths.BRIEFS, '*.md'))):
         where = os.path.basename(p)
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
