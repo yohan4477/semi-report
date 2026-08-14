@@ -251,6 +251,7 @@ def build_index() -> str:
   }}
   * {{ box-sizing:border-box; }}
   body {{
+    word-break:keep-all; overflow-wrap:break-word;
     margin:0; background:var(--bg); color:var(--fg);
     font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     -webkit-font-smoothing:antialiased;

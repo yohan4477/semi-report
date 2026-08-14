@@ -119,6 +119,9 @@
   .legend span{display:inline-flex; align-items:center; gap:5px;}
   .dot{width:9px; height:9px; border-radius:3px;}
   .foot{color:var(--sub); font-size:.75rem; text-align:center; padding:6px 0 10px;}
+
+  /* 한글은 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다 */
+  body,h1,h2,h3{word-break:keep-all;overflow-wrap:break-word}
 </style>
 </head>
 <body>

@@ -55,7 +55,9 @@
   footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px}
   @media(prefers-reduced-motion:reduce){#cam{transition:none}.mk,.lbl{transition:none}}
   @media(max-width:640px){svg#map{aspect-ratio:3/2}.pl{grid-template-columns:1fr}}
-</style>
+
+  /* 한글은 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다 */
+  body,h1,h2,h3{word-break:keep-all;overflow-wrap:break-word}</style>
 <div class="wrap">
   <header>
     <p class="eyebrow">통합 인사이트 · 장소로 보기</p>
