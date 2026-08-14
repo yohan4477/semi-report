@@ -11,7 +11,8 @@ OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
 def cards():
     out, n = [], 0
-    for d, kind in ((paths.THESES, '종합 판단'), (paths.SYNTH, '인사이트')):
+    for d, kind in ((paths.THESES, '종합 판단'), (paths.SYNTH, '교차 인사이트'),
+                    (paths.DIGESTS, '정리본')):
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
             meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
             src = nl.sources_of(meta)

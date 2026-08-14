@@ -199,6 +199,19 @@ def main():
         check_length(body, where)
         check_translationese(body, where)
 
+    # 정리본은 판단이 아니라 한 주제의 현재 상태를 묶은 것이라 절 구성이 다르다
+    for p in sorted(glob.glob(os.path.join(paths.DIGESTS, '*.md'))):
+        where = os.path.basename(p)
+        raw = io.open(p, encoding='utf-8').read()
+        body = strip_refs(raw)
+        meta, _ = parse_synth(raw)
+        check_banned(body, where)
+        check_glossary(body, where, gloss)
+        check_length(body, where)
+        check_translationese(body, where)
+        if not (meta or {}).get('headline'):
+            add('FAIL', where, 'P7', 'headline 없음 — 카드에 제목이 안 붙는다')
+
     for p in files:
         where = os.path.basename(p)
         raw = io.open(p, encoding='utf-8').read()
