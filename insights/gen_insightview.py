@@ -120,7 +120,8 @@ def build():
     n = sum(per.values())
     html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CSS)
                 .replace('__GUIDE__', guide(per))
-                .replace('__TABS__', tabs(per) + sectabs(bysec))
+                .replace('__TABS__',
+                         '<div class="tabbar">%s%s</div>' % (tabs(per), sectabs(bysec)))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
                 .replace('__TABJS__', TAB_JS))
@@ -146,13 +147,19 @@ CSS = r'''
   .body b{color:var(--ink)}
   .cite{font-size:.72em;font-weight:800;color:var(--accent);text-decoration:none;
         vertical-align:.28em;margin-left:2px;padding:0 3px;border-radius:4px;background:var(--sunk)}
-  .itabs{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  /* 탭은 스크롤해도 따라온다 — 긴 카드 안에서 종류·주제를 다시 고르려고 위로 올라가지 않게 */
+  .tabbar{position:sticky;top:0;z-index:5;margin:16px 0 6px;padding:8px 0 6px;
+        background:var(--bg);border-bottom:1px solid var(--line)}
+  .itabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;margin:0;
+        padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .itabs::-webkit-scrollbar{display:none}
+  .itabs button{flex:none}
   .itabs button{font:inherit;font-size:var(--t-meta);font-weight:700;padding:6px 13px;
         border:1px solid var(--line);border-radius:999px;background:transparent;
         color:var(--sub);cursor:pointer}
   .itabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
   .itabs .tn{margin-left:6px;font-variant-numeric:tabular-nums;opacity:.7}
-  .sectabs{margin-top:6px}
+  .sectabs{margin-top:5px}
   .sectabs button{font-weight:600;color:var(--faint)}
   .sectabs button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
   .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
@@ -164,6 +171,20 @@ CSS = r'''
   .srcs li{font-size:var(--t-meta);line-height:1.8}
   .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
   .srcs a:hover{color:var(--accent)}
+
+  /* 좁은 화면 — 글이 화면 가장자리에 붙으면 읽기 힘들다 */
+  @media (max-width:640px){
+    .ins{padding:15px 16px;border-radius:10px}
+    .body ul{padding-left:17px;margin:6px 0}
+    .body li{margin-bottom:7px}
+    .body p{margin:6px 0}
+    .guide{gap:6px}
+    .guide div{padding:10px 13px}
+    .ihead{gap:7px}
+    .tabbar{margin:12px -14px 6px;padding:8px 14px 6px}
+    .tw{margin-left:-16px;margin-right:-16px;padding:0 16px}
+    .body td:first-child{white-space:normal}
+  }
 
   /* 종류 묶음과 그 안의 주제 섹션 */
   .kgroup{margin-top:26px}
