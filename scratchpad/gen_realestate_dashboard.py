@@ -1645,8 +1645,6 @@ HEADER = '''  <header>
       <span>소스 <b>언더스탠딩</b></span>
       <span>화자 <b>박상준 · 이관옥 · 최도영 · 김종율 · 장순원 · 백종훈 · 이장원</b></span>
     </div>
-    <a class="xlink" href="언더스탠딩 대시보드.html">⚡ AI · 인프라 · 에너지 인사이트</a>
-    <a class="xlink" href="미국주식 사관학교 대시보드.html" style="margin-left:14px">🎓 미국주식 사관학교</a>
   </header>''' % (STAMP, len(CARDS))
 
 FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기반입니다.\n'
