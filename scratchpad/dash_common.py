@@ -173,9 +173,9 @@ def sec_picker(secs, order, total):
               % (sid, secs[sid][0][2], len(secs[sid][1])) for sid in order]
     return ('<div class="sec-pick">'
             '<button class="sp-btn" aria-expanded="false" aria-haspopup="true">'
-            '<span class="sp-label">섹션 전체</span><span class="sp-cnt">%d</span>'
+            '<span class="sp-label">섹션 전체</span>'
             '<span class="sp-caret" aria-hidden="true">▾</span></button>'
-            '<ul class="sp-list" hidden>%s</ul></div>' % (total, ''.join(items)))
+            '<ul class="sp-list" hidden>%s</ul></div>' % ''.join(items))
 
 
 def upload_date(card):
