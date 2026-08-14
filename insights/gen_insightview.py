@@ -5,6 +5,8 @@ import io, os, re, sys, glob
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import notes_lib as nl
+sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
+import ui_bits  # noqa: E402
 
 OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
@@ -135,7 +137,7 @@ def build():
                          % (tabs(per), sectiles(bysec, mix)))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
-                .replace('__TABJS__', TAB_JS))
+                .replace('__TABJS__', TAB_JS + ui_bits.TOP_BTN))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('OK: %s -> %s' % (' · '.join('%s %d' % (k, per[t]) for _d, k, t in KINDS if per.get(t)), OUT))
 

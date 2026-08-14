@@ -12,6 +12,8 @@ import style
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 OUT = os.path.join(ROOT, '대시보드', 'Yomianalysis.html')
+import ui_bits
+
 
 # 2026-08-09부터 claude.ai 아티팩트를 쓰지 않는다. 정본은 GitHub Pages 하나다 —
 # 두 벌을 두면 한쪽이 몇 주씩 낡고, 아티팩트는 도구로 지울 수도 없다.
@@ -146,7 +148,7 @@ def build():
                .replace('__N__', str(n)) \
                .replace('__T__', str(len(TOPICS))) \
                .replace('__L__', str(len(LEGACY)))
-    io.open(OUT, 'w', encoding='utf-8').write(html)
+    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
     print('OK: %d장 -> %s' % (n, OUT))
 
 

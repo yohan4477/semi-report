@@ -11,6 +11,9 @@
 import os, io, re, sys, json, datetime, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.join(paths.ROOT, 'scripts'))
+import ui_bits  # noqa: E402
 import style
 import notes_lib as nl
 
@@ -176,7 +179,7 @@ def build(key):
                 .replace('__SIGS__', sig_html)
                 .replace('__SRCS__', srcs))
     out = os.path.join(ROOT, '대시보드', '추적 - %s.html' % ent['title'])
-    io.open(out, 'w', encoding='utf-8').write(html)
+    io.open(out, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
     print('OK: %s — 원문 %d편 / 출처 표기 %d / 신호 %d -> %s'
           % (ent['title'], len(src), html.count('class="cite"'), len(sigs), out))
 

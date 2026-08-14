@@ -10,6 +10,10 @@ ROOT = r"C:\Users\y\semianalysis"
 WORLD = os.path.join(ROOT, "insights", "world_path.txt")
 GEO = os.path.join(ROOT, "insights", "cluster_geo.json")
 OUT = os.path.join(ROOT, "대시보드", "인사이트 지도.html")
+import sys as _sys
+_sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+import ui_bits  # noqa: E402
+
 
 W, H, LAT_MIN, LAT_MAX = 1000, 500, -58, 78
 def project(lon, lat):
@@ -118,7 +122,7 @@ def main():
                 .replace('__CHIPS__', '\n'.join(chips))
                 .replace('__STEPS__', '\n'.join(steps))
                 .replace('__COUNT__', str(len(clusters))))
-    io.open(OUT, 'w', encoding='utf-8').write(html)
+    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
     print('OK: %d clusters, %d markers -> %s' % (len(clusters), len(markers), OUT))
 
 INS_URL = "https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html"

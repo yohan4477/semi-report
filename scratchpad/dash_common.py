@@ -10,6 +10,9 @@ import rollup_lib as _rl
 from card_lib import EXTRA_CSS, slug, card_html  # noqa: F401
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+import ui_bits  # noqa: E402
+
 SRC = os.path.join(ROOT, '대시보드', '언더스탠딩 대시보드.html')
 BLOB = 'https://github.com/yohan4477/semi-report/blob/main/'
 
@@ -231,7 +234,8 @@ def render(cards, title, header, footer, out, rollup=''):
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
             + '\n<div class="wrap">\n' + header + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
-            + '\n\n  <footer>' + footer + '</footer>\n</div>\n' + FOLD_JS + NAV_JS + '\n')
+            + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
+            + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
