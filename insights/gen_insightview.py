@@ -1,7 +1,7 @@
 # 🧩 통합 인사이트 — 노트를 통째로 읽고 교차에서 나온 판단만 싣는다.
 # 카드를 모아 두는 페이지가 아니라, 문서 여러 편을 가로질러야 보이는 것만 남긴다.
 # 문장 옆 줄번호를 누르면 근거가 된 원문 그 줄로 간다.
-import io, os, re, sys, glob
+import io, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import notes_lib as nl
@@ -44,13 +44,36 @@ def srcbox(src):
             % (len(src), ''.join(rows)))
 
 
+STALE_DAYS = {'biz': 120, 'chip': 180, 'model': 180, 'power': 365}
+
+
+def period(meta, src):
+    """근거가 언제 것인지를 카드 겉면에 박는다.
+
+    맞는 말이어도 옛날 이야기면 지금은 틀린 말일 수 있다. 그런데 as_of 는 내가 쓴 날짜라
+    글을 안 고치고 두면 그대로 남는다. 그래서 실제로 인용한 원문의 발행일 범위를 쓴다.
+    검사기는 insights/check_fresh.py 가 따로 본다.
+    """
+    ds = sorted(re.findall(r'\[(\d{6})\]', ' '.join(d.get('base', '') for d in src)))
+    if not ds:
+        return '<span class="asof">as_of %s</span>' % nl.esc(meta.get('as_of', ''))
+    fmt = lambda s: '20%s.%s' % (s[:2], s[2:4])
+    span = fmt(ds[0]) if ds[0][:4] == ds[-1][:4] else '%s~%s' % (fmt(ds[0]), fmt(ds[-1]))
+    newest = datetime.date(2000 + int(ds[-1][:2]), int(ds[-1][2:4]), int(ds[-1][4:6]))
+    age = (datetime.date.today() - newest).days
+    limit = STALE_DAYS.get(meta.get('section', ''), 180)
+    old = ' stale' if age > limit else ''
+    tip = '가장 새로운 근거가 %d일 전' % age
+    return '<span class="asof%s" title="%s">근거 %s</span>' % (old, tip, nl.esc(span))
+
+
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
     return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
-            '<span class="asof">as_of %s</span><h2 id="%s">%s</h2>'
+            '%s<h2 id="%s">%s</h2>'
             '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
-            % (tab, nl.esc(kind), nl.esc(meta.get('as_of', '')),
+            % (tab, nl.esc(kind), period(meta, src),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
 
@@ -152,6 +175,9 @@ CSS = r'''
   .ins[open]>summary::after{transform:rotate(180deg)}
   .cid{font-size:var(--t-lbl);font-weight:800;letter-spacing:.1em;color:var(--accent)}
   .asof{float:right;font-size:var(--t-meta);color:var(--faint);font-variant-numeric:tabular-nums}
+  /* 근거가 오래된 카드는 겉면에서 바로 보이게 — 옛날 이야기를 지금 이야기로 읽지 않도록 */
+  .asof.stale{color:#b45309;font-weight:600}
+  .asof.stale::after{content:' · 오래됨'}
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
   .bsec{font-size:var(--t-meta);font-weight:800;color:var(--accent2);margin:14px 0 5px;

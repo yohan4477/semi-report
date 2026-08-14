@@ -31,6 +31,7 @@ CHECK = [
     ('문체', ['insights/check_prose.py']),
     ('읽히는가', ['insights/check_read.py']),
     ('숫자와 원문 대조', ['insights/check_cite.py']),
+    ('시점', ['insights/check_fresh.py']),
 ]
 
 
