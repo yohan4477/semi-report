@@ -43,7 +43,9 @@ def sources_of(meta):
 def resolve(label, sources):
     """앞머리 일치를 먼저 보고, 없으면 부분 일치. 사람이 줄여 쓴 라벨은
     파일명 앞머리와 안 맞는 경우가 흔하다(예: [251231]로 시작하는 파일)."""
-    key = label.strip().rstrip(',')[:18]
+    # 인용이 줄 끝에 걸리면 라벨 안에 줄바꿈이 들어간다. 사람 눈에는 같은 라벨인데
+    # 기계는 못 찾아 N2로 떨어졌다 — 공백을 한 칸으로 눌러서 본다.
+    key = re.sub(r'\s+', ' ', label).strip().rstrip(',')[:18]
     if not key:
         return None
     for s in sources:
