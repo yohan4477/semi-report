@@ -8,7 +8,7 @@
  * Settings > Variables and secrets 에 SITE_PASSWORD 를 secret 으로 등록해야 한다.
  */
 
-const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy']);
+const PROTECTED = new Set(['/private', '/semianalysis', '/usa-academy']);
 const COOKIE = 'ida_auth';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30일
 

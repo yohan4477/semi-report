@@ -22,9 +22,6 @@ from gen_site import PAGES, SRC, ROOT  # noqa: E402
 
 LEDGER = ROOT / 'data' / 'site_card_first_seen.json'
 CARD_ID = re.compile(r'<h2 id="(card-[^"]+)"')
-# 다른 대시보드의 카드를 그대로 옮겨 담는 페이지. NEW 기준은 원래 페이지에 올라온 날이라
-# 여기서 새로 날짜를 잡으면 옛 카드가 전부 새 카드로 보인다
-COPY_SLUGS = {'unified'}
 
 
 def git_first_seen(rel_path: str, needle: str) -> str | None:
@@ -50,9 +47,7 @@ def main():
     ledger = json.loads(LEDGER.read_text(encoding='utf-8')) if LEDGER.exists() else {}
 
     added = dropped = 0
-    # 원본 페이지를 먼저 처리해야 복사본이 그 날짜를 물려받는다
-    pages = sorted(PAGES, key=lambda p: p[1] in COPY_SLUGS)
-    for src, slug, *_ in pages:
+    for src, slug, *_ in PAGES:
         path = SRC / src
         ids = CARD_ID.findall(path.read_text(encoding='utf-8'))
         if not ids:
@@ -60,18 +55,10 @@ def main():
 
         book = ledger.setdefault(slug, {})
         rel = f'대시보드/{src}'
-        origin = {}
-        if slug in COPY_SLUGS:
-            for other, seen in ledger.items():
-                if other == slug:
-                    continue
-                for cid, day in seen.items():
-                    if cid not in origin or day < origin[cid]:
-                        origin[cid] = day
         for cid in ids:
             if cid in book:
                 continue
-            book[cid] = origin.get(cid) or git_first_seen(rel, cid) or today
+            book[cid] = git_first_seen(rel, cid) or today
             added += 1
             print(f'  + {slug}/{cid[:44]} -> {book[cid]}')
 
