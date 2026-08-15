@@ -11,15 +11,26 @@ import ui_bits  # noqa: E402
 OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
 
-# 종류 안에서도 주제로 묶는다 — 카드 열 장이 한 줄로 늘어서면 어디를 보는지 놓친다
-SECTIONS = (('chip', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
-            ('power', '전력 · 데이터센터', '전력망 제약과 자가발전, 랙 밀도와 냉각'),
-            ('model', '모델 · 학습', '강화학습과 환경 제작, 모델 구조'),
-            ('biz', '사업 · 비용 · 재무', '토큰 값과 마진, 누가 얼마를 버나'),
-            # 아래 둘은 제3자 코퍼스가 들어오며 생겼다. 앞의 넷에 억지로 밀어 넣으면
+# 주제 여섯을 한 줄로 세우면 "사업 · 재무"가 원유·환율과 같은 급으로 보인다.
+# 실제로는 앞의 넷이 다 AI 이야기고(칩·전력·모델·그 돈), 뒤의 둘만 AI 밖이다.
+# 그래서 큰 묶음을 한 겹 위에 둔다 — 주제 id는 그대로라 노트는 안 고친다.
+GROUPS = (('ai', 'AI 판', 'AI를 만들고 파는 쪽 — 칩부터 그 돈까지'),
+          ('macro', 'AI 밖', 'AI 판을 흔드는 바깥 조건 — 기름값과 돈값'))
+
+# (id, 큰 묶음, 이름, 설명)
+SECTIONS = (('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
+            ('power', 'ai', '전력 · 데이터센터', '전력망 제약과 자가발전, 랙 밀도와 냉각'),
+            ('model', 'ai', '모델 · 학습', '강화학습과 환경 제작, 모델 구조'),
+            # 옛 이름 "사업 · 비용 · 재무"는 아래 "시장 · 자금"과 구별이 안 됐다.
+            # 여기는 AI를 파는 회사들의 손익이고, 저기는 금리·환율이다.
+            ('biz', 'ai', 'AI 사업 · 수익', '토큰 값과 마진, AI로 누가 얼마를 버나'),
+            # 아래 둘은 제3자 코퍼스가 들어오며 생겼다. 위 넷에 억지로 밀어 넣으면
             # 원유·해협·환율 이야기가 칩 이야기와 섞여 어느 것도 안 읽힌다.
-            ('energy', '에너지 · 원자재', '유가와 해협, LNG 비축, 에너지 안보'),
-            ('market', '시장 · 자금', '금리와 환율, 수급과 포지션, 값이 매겨지는 방식'))
+            ('energy', 'macro', '에너지 · 원자재', '유가와 해협, LNG 비축, 에너지 안보'),
+            ('market', 'macro', '금리 · 환율 · 시장', '돈값과 환율, 수급과 포지션, 값이 매겨지는 방식'))
+
+ALLSEC = SECTIONS + (('etc', 'macro', '그 밖', ''),)
+GRPNAME = dict((g, t) for g, t, _s in GROUPS)
 
 
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
@@ -97,14 +108,16 @@ def cards():
         if not got:
             continue
         blocks, num = [], 0
-        for sid, title, _sub in SECTIONS + (('etc', '그 밖', ''),):
+        for sid, grp, title, _sub in ALLSEC:
             if not got.get(sid):
                 continue
             num += 1
-            blocks.append('<section class="isec" data-kind="%s" data-sec="%s"><div class="ihead">'
-                          '<span class="inum">%02d</span><h3>%s</h3>'
+            blocks.append('<section class="isec" data-kind="%s" data-sec="%s" data-grp="%s">'
+                          '<div class="ihead"><span class="inum">%02d</span>'
+                          '<h3>%s</h3><span class="igrp">%s</span>'
                           '<span class="icnt">%d</span></div>%s</section>'
-                          % (tab, sid, num, nl.esc(title), len(got[sid]), ''.join(got[sid])))
+                          % (tab, sid, grp, num, nl.esc(title), nl.esc(GRPNAME[grp]),
+                             len(got[sid]), ''.join(got[sid])))
         out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
                    % (tab, nl.esc(kind), ''.join(blocks)))
     return ''.join(out), per, bysec, mix
@@ -130,17 +143,24 @@ def sectiles(bysec, bykindsec):
              '<span class="st-s">모든 주제를 한 줄로</span>'
              '<span class="st-n">%d</span></button>' % total]
     num = 0
-    for sid, title, sub in SECTIONS + (('etc', '그 밖', ''),):
-        if not bysec.get(sid):
+    for gid, gtitle, gsub in GROUPS:
+        rows = [s for s in ALLSEC if s[1] == gid and bysec.get(s[0])]
+        if not rows:
             continue
-        num += 1
-        mix = ' · '.join('%s %d' % (k, bykindsec.get((t, sid), 0))
-                         for _d, k, t in KINDS if bykindsec.get((t, sid)))
-        tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
-                     '<span class="st-num">%02d</span><span class="st-t">%s</span>'
-                     '<span class="st-s">%s</span><span class="st-n">%d</span>'
-                     '<span class="st-mix">%s</span></button>'
-                     % (sid, num, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
+        # 큰 묶음 이름을 한 줄 띄워 준다 — 이게 없으면 여섯 장이 다 같은 급으로 보인다
+        tiles.append('<div class="sgrp"><b>%s</b><span>%s</span>'
+                     '<span class="sg-n">%d</span></div>'
+                     % (nl.esc(gtitle), nl.esc(gsub),
+                        sum(bysec[s[0]] for s in rows)))
+        for sid, _g, title, sub in rows:
+            num += 1
+            mix = ' · '.join('%s %d' % (k, bykindsec.get((t, sid), 0))
+                             for _d, k, t in KINDS if bykindsec.get((t, sid)))
+            tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
+                         '<span class="st-num">%02d</span><span class="st-t">%s</span>'
+                         '<span class="st-s">%s</span><span class="st-n">%d</span>'
+                         '<span class="st-mix">%s</span></button>'
+                         % (sid, num, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
     # 주제를 고르면 타일은 사라지고 카드만 남는다. 돌아올 길이 필요하다.
     back = ('<div class="sback" hidden><button type="button" class="sb-btn">← 주제 다시 고르기</button>'
             '<span class="sb-now"></span></div>')
@@ -230,6 +250,12 @@ CSS = r'''
         color:var(--ink);font-variant-numeric:tabular-nums}
   .st-mix{margin-top:5px;font-size:var(--t-lbl);color:var(--sub)}
   .stile.is-all .st-t{color:var(--accent)}
+  /* 큰 묶음 줄 — 타일 격자를 가로로 끊는다 */
+  .sgrp{grid-column:1/-1;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+        margin:8px 0 -2px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+  .sgrp>b{font-size:var(--t-body);font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .sgrp>span{font-size:var(--t-lbl);color:var(--faint)}
+  .sg-n{margin-left:auto;font-weight:800;color:var(--faint);font-variant-numeric:tabular-nums}
   .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
   .srcs>summary{cursor:pointer;font-size:var(--t-meta);font-weight:700;color:var(--sub);
         list-style:none}
@@ -270,6 +296,9 @@ CSS = r'''
         font-variant-numeric:tabular-nums}
   .ihead h3{font-size:var(--t-body);font-weight:800;letter-spacing:-.01em;margin:0;color:var(--ink)}
   .icnt{margin-left:auto;font-size:var(--t-lbl);color:var(--faint);font-variant-numeric:tabular-nums}
+  /* 주제 이름 옆에 "AI 판 / AI 밖"을 달아 둔다 — 스크롤 도중에도 어느 쪽인지 안다 */
+  .igrp{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
+        border:1px solid var(--line);border-radius:999px;padding:1px 7px}
 
   /* 종류마다 색을 달리한다 — 브리핑은 현황, 교차 인사이트는 판단이라 읽는 자세가 다르다 */
   .ins[data-kind="brief"]{border-left-color:var(--brief)}
