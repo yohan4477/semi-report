@@ -141,7 +141,10 @@ def sectiles(bysec, bykindsec):
                      '<span class="st-s">%s</span><span class="st-n">%d</span>'
                      '<span class="st-mix">%s</span></button>'
                      % (sid, num, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
-    return '<div class="sgrid">%s</div>' % ''.join(tiles)
+    # 주제를 고르면 타일은 사라지고 카드만 남는다. 돌아올 길이 필요하다.
+    back = ('<div class="sback" hidden><button type="button" class="sb-btn">← 주제 다시 고르기</button>'
+            '<span class="sb-now"></span></div>')
+    return '<div class="sgrid">%s</div>%s' % (''.join(tiles), back)
 
 
 def tabs(per):
@@ -203,6 +206,14 @@ CSS = r'''
   .itabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
   .itabs .tn{margin-left:6px;font-variant-numeric:tabular-nums;opacity:.7}
   /* 주제 타일 — 누르면 그 주제의 글만 펼쳐진다 */
+  /* 카드 화면에서 주제 고르는 화면으로 돌아가는 줄 — 지금 어느 주제를 보는지도 여기 적는다 */
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-btn{font:inherit;font-size:var(--t-meta);cursor:pointer;padding:7px 13px;
+          border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
+  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sb-now{font-weight:700}
+  .sgrid[hidden]{display:none}
   .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
         gap:10px;margin:14px 0 4px}
   .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
@@ -311,25 +322,38 @@ TAB_JS = '''<script>
 (function(){
   var kbar=document.querySelector('.itabs');
   var sbar=document.querySelector('.sgrid');
+  var back=document.querySelector('.sback');
   if(!kbar) return;
-  var kind='all', sec='all';
+  // 화면이 둘이다. 주제를 고르는 화면(sec===null)과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  var kind='all', sec=null;
+  var names={};
+  if(sbar) sbar.querySelectorAll('button').forEach(function(b){
+    var t=b.querySelector('.st-t');
+    names[b.dataset.sec] = t ? t.textContent : b.dataset.sec;
+  });
   function apply(){
-    document.querySelectorAll('.isec').forEach(function(s){
-      s.hidden = !((kind==='all' || s.dataset.kind===kind) &&
-                   (sec==='all'  || s.dataset.sec===sec));
+    var picking = (sec===null);
+    document.querySelectorAll('.isec').forEach(function(s2){
+      s2.hidden = picking || !((kind==='all' || s2.dataset.kind===kind) &&
+                               (sec==='all'  || s2.dataset.sec===sec));
     });
-    // 남은 섹션이 하나도 없는 종류 묶음은 제목만 남으므로 통째로 접는다
     document.querySelectorAll('.kgroup').forEach(function(g){
       g.hidden = g.querySelectorAll('.isec:not([hidden])').length===0;
     });
+    if(sbar) sbar.hidden = !picking;
+    if(back){
+      back.hidden = picking;
+      var now=back.querySelector('.sb-now');
+      if(now) now.textContent = picking ? '' : (names[sec]||'');
+    }
+    kbar.hidden = picking;
     kbar.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.tab===kind));
     });
     if(sbar) sbar.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.sec===sec));
     });
-    var back=document.querySelector('.sback');
-    if(back) back.hidden = sec==='all';
   }
   kbar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
@@ -337,12 +361,14 @@ TAB_JS = '''<script>
   });
   if(sbar) sbar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
-    sec = (sec===b.dataset.sec && sec!=='all') ? 'all' : b.dataset.sec;   // 다시 누르면 접는다
-    apply();
-    if(sec!=='all'){
-      var first=document.querySelector('.isec:not([hidden])');
-      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
-    }
+    sec=b.dataset.sec; apply();
+    var first=document.querySelector('.isec:not([hidden])');
+    if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  if(back) back.addEventListener('click', function(e){
+    if(!e.target.closest('.sb-btn')) return;
+    sec=null; kind='all'; apply();
+    if(sbar) sbar.scrollIntoView({behavior:'smooth', block:'start'});
   });
   apply();
 })();

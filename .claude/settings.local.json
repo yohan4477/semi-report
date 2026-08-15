@@ -173,7 +173,10 @@
       "PowerShell($env:PYTHONIOENCODING='utf-8'; py \"C:\\\\Users\\\\y\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-y-semianalysis\\\\933ef2c9-71ee-420e-a871-f28a8d50fb8f\\\\scratchpad\\\\inspect_docs.py\")",
       "PowerShell($env:PYTHONIOENCODING='utf-8'; py insights/gen_map.py 2>&1 | Select-Object -Last 3; git diff --stat \"대시보드/인사이트 지도.html\")",
       "PowerShell($env:PYTHONIOENCODING='utf-8'; py insights/gen_entity_board.py musk)",
-      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_bmirror.py 10)"
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; py scripts/gen_bmirror.py 10)",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; cd insights; py -m pytest test_prose.py -q 2>&1 | Select-Object -Last 4)",
+      "PowerShell($c = Get-Content \"C:\\\\Users\\\\y\\\\semianalysis\\\\대시보드\\\\금융 대시보드.html\" -Raw -Encoding UTF8; $i = $c.IndexOf\\('미국주식'\\); $c.Substring\\([Math]::Max\\(0,$i-700\\), 1100\\))",
+      "PowerShell(Get-CimInstance Win32_Process -Filter \"Name='chrome.exe'\" | Where-Object { $_.CommandLine -match '9222' } | Select-Object -First 3 -ExpandProperty CommandLine)"
     ]
   }
 }
