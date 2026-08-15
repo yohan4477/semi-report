@@ -74,8 +74,10 @@ def load_glossary():
 
 
 def check_banned(text, where):
+    # 앞에 한글이 붙어 있으면 다른 낱말이다 — 사람 이름 「서진영」을 진영 진영으로
+    # 잡아서 부동산 노트가 통째로 FAIL 났다
     for w in BANNED:
-        if w in text:
+        if re.search(r'(?<![가-힣])' + re.escape(w), text):
             add('FAIL', where, 'P1', '금지어 "%s" — 어느 회사인지 밝히거나 뜻을 그대로 쓴다' % w)
 
 
