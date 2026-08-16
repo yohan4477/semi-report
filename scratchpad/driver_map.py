@@ -309,18 +309,20 @@ def _scenario_html():
             '<span class="dm-scenario-price">주가 %s</span>'
             '<span class="dm-scenario-mcap">시가총액 %s</span>'
             '</div></div>'
-            '%s'
+            # 시나리오가 먼저다. 실적 추이는 그 값을 왜 그렇게 잡았는지 받쳐 주는
+            # 재료라 아래에 둔다 — 위에 두면 결론 앞에 표가 하나 더 서서 가린다.
             '<p class="dm-fwd-label">정방향 — 이익을 가정하면 적정가가 나온다</p>'
             '<p class="dm-scenario-formula">%s</p>'
             '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '%s'
             '%s'
+            '%s'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
-            % (s['asof'], s['price'], s['mcap'], act_html, s['formula'], head,
-               ''.join(body_rows), rev_html, auth_html, s['note'], s['punch']))
+            % (s['asof'], s['price'], s['mcap'], s['formula'], head,
+               ''.join(body_rows), rev_html, auth_html, act_html, s['note'], s['punch']))
 
 
 def _timeline_html():
