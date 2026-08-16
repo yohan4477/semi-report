@@ -24,7 +24,7 @@
 
 ```bash
 PYTHONIOENCODING=utf-8 python insights/check_notes.py   # 노트·인용 무결성
-PYTHONIOENCODING=utf-8 python insights/check_prose.py   # 문체·용어·절 순서
+PYTHONIOENCODING=utf-8 python insights/check_prose.py   # 문체·용어·절 순서 (대시보드 HTML 포함)
 PYTHONIOENCODING=utf-8 python insights/check_read.py    # 읽히는가
 PYTHONIOENCODING=utf-8 python insights/check_cite.py    # 인용한 줄에 그 숫자가 있나
 PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야기인가
@@ -37,6 +37,7 @@ FAIL 0이어야 푸시한다. **앞의 셋만 돌리지 않는다** — 2026-08-
 ## 글 규칙
 
 - **용어는 남기고 첫 등장에 괄호로 푼다.** 쉬운 말로 치환하지 않는다. 지웠다가 되돌린 이력이 있다
+- **대시보드 산문도 같은 규칙이다.** `check_prose`가 `대시보드/*.html`까지 본다. 오래된 장은 `DASH_BACKLOG`로 WARN을 물려 두었고, 목록 밖 장에 금지어를 새로 쓰면 바로 FAIL이다 — 목록은 늘리지 말고 줄인다
 - **일반론 금지.** 숫자·명명된 주체·비직관적인 것으로 쓴다
 - 문체·이해도 규칙은 `korean-readability` 스킬
 

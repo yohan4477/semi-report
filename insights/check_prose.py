@@ -183,6 +183,78 @@ def check_head(meta, sec, where):
                 % (100 * len(a & b) / float(len(a))))
 
 
+DASH_DIR = os.path.join(paths.ROOT, '대시보드')
+
+# 검사기를 붙인 날(2026-08-17) 이미 금지어가 들어 있던 대시보드. 이 장들의 FAIL만
+# WARN으로 내린다. 목록에 없는 장은 처음부터 FAIL이다 — 새로 쓰는 글이 바로 막히는
+# 것이 이 검사기를 붙인 이유라서 목록을 늘리지 않는다. 비우는 것이 목표다.
+# 한 장을 고칠 때마다 여기서 지운다.
+DASH_BACKLOG = {
+    'SemiAnalysis 대시보드.html',
+    '금융 대시보드.html',
+    '미국주식 사관학교 대시보드.html',
+    '부동산 대시보드.html',
+    '소셜 신호 히스토리.html',
+    '언더스탠딩 대시보드.html',
+    '인사이트 지도.html',
+    '추적 - 일론 머스크.html',
+    '통합 인사이트.html',
+}
+
+# 대시보드 산문에서 걷어내야 하는 것. 눈에 보이는 글만 남긴다.
+_TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
+_TAG = re.compile(r'<[^>]+>')
+_ENT = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&#39;', "'"),
+        ('&nbsp;', ' ')]
+
+
+def dashboard_text(path):
+    """대시보드 HTML에서 화면에 보이는 한글 문장만 뽑는다.
+
+    script는 통째로 뺀다 — 모달 데이터(JSON)가 거기 있는데, 그건 이 검사기가
+    이미 노트·인사이트에서 본 문장이 아니라 파이썬 생성기가 만든 원본이라
+    같은 문장을 두 번 잡는다. 표의 숫자 칸은 문장이 아니라서 저절로 걸러진다."""
+    raw = io.open(path, encoding='utf-8').read()
+    raw = _TAGBLOCK.sub(' ', raw)
+    raw = _TAG.sub('\n', raw)
+    for a, b in _ENT:
+        raw = raw.replace(a, b)
+    out = []
+    for line in raw.split('\n'):
+        line = line.strip()
+        # 한글이 두 글자도 없으면 숫자 칸이거나 라벨이다. 문장 규칙을 대지 않는다.
+        if len(re.findall(r'[가-힣]', line)) < 2:
+            continue
+        out.append(line)
+    return '\n'.join(out)
+
+
+def check_dashboards(gloss):
+    """대시보드도 문체 게이트에 넣는다.
+
+    왜 뒤늦게 넣나: 이 검사기가 insights/ 아래 세 곳만 보고 있어서, 같은 사람이
+    같은 날 쓴 문장이라도 대시보드에 쓰면 번역투가 그대로 나갔다. 실제로
+    회계사 대시보드에 em dash가 95개 쌓이고 나서야 사람 눈에 걸렸다.
+
+    용어 사전(P2)은 대지 않는다. 대시보드는 카드마다 독립해 읽히는 화면이라
+    「첫 등장」이라는 개념이 문서와 다르다."""
+    paths_ = sorted(glob.glob(os.path.join(DASH_DIR, '*.html')))
+    for p in paths_:
+        where = os.path.basename(p)
+        body = dashboard_text(p)
+        before = len(findings)
+        check_banned(body, where)
+        check_length(body, where)
+        check_translationese(body, where)
+        # 기존 목록에 있는 장만 FAIL을 WARN으로 내린다. 목록 밖은 처음부터 FAIL이다.
+        if where in DASH_BACKLOG:
+            for i in range(before, len(findings)):
+                lv, w, rule, msg = findings[i]
+                if lv == 'FAIL':
+                    findings[i] = ('WARN', w, rule, msg + ' [기존 목록]')
+    return paths_
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -229,6 +301,8 @@ def main():
         check_order(names, where)
         check_head(meta or {}, sec, where)
 
+    dashes = check_dashboards(gloss)
+
     for level, where, rule, msg in findings:
         print('%s %s [%s] %s' % (level, where, rule, msg))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
@@ -236,8 +310,8 @@ def main():
     per = {}
     for f in findings:
         per[f[1]] = per.get(f[1], 0) + (0 if f[0] == 'FAIL' else 1)
-    print('요약: 인사이트 %d건 / 노트 %d장 / FAIL %d / WARN %d'
-          % (len(files), len(notes), fails, warns))
+    print('요약: 인사이트 %d건 / 노트 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
+          % (len(files), len(notes), len(dashes), fails, warns))
     heavy = [k for k, v in per.items() if v > 5]
     if heavy:
         print('WARN 5건 초과: %s — 이 파일은 humanize-korean 스킬을 부를 계기다'
