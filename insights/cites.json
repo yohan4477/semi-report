@@ -1,4 +1,34 @@
 {
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L233": {
+  "sha1": "65a72f3b5e94"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L264": {
+  "sha1": "7ee787142ab2"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L265": {
+  "sha1": "51279e798e0f"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L280": {
+  "sha1": "cf4bec51191a"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L305": {
+  "sha1": "c4b521878082"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L324": {
+  "sha1": "e233c87ffdfd"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L334": {
+  "sha1": "dbbd53d92e20"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L380": {
+  "sha1": "0029b5aaea26"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L381": {
+  "sha1": "4ebc19e8a750"
+ },
+ "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L528": {
+  "sha1": "7780e33b9cc5"
+ },
  "content/newsletter/ai_infra/business/[260501] AI 가치 포착 - 모델 랩으로의 이동.md#L122": {
   "sha1": "45c9a49ce8d0"
  },
@@ -1682,6 +1712,51 @@
  "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L712": {
   "sha1": "e82e3b78e6d8"
  },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L120": {
+  "sha1": "f44210b7887e"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L170": {
+  "sha1": "daee6c76ef5a"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L171": {
+  "sha1": "dd9007458df5"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L241": {
+  "sha1": "b69dc930cc36"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L243": {
+  "sha1": "ad4b5cdc8c84"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L271": {
+  "sha1": "87d77431036b"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L279": {
+  "sha1": "556b6f63e403"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L280": {
+  "sha1": "c7bd669d4d78"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L281": {
+  "sha1": "a066d5a7faa3"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L282": {
+  "sha1": "8905ef2f326e"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L309": {
+  "sha1": "fde0b3eb2e06"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L484": {
+  "sha1": "3a96a7a642a3"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L523": {
+  "sha1": "ae39c2b188da"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L548": {
+  "sha1": "c94be1897853"
+ },
+ "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L86": {
+  "sha1": "fddbfa4d81c6"
+ },
  "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L108": {
   "sha1": "ca7861f67ca8"
  },
@@ -1795,6 +1870,48 @@
  },
  "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L951": {
   "sha1": "aaaa03a82cd2"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L113": {
+  "sha1": "b030c2d11498"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L114": {
+  "sha1": "8bd6737b66b1"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L115": {
+  "sha1": "307796f5cfcb"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L116": {
+  "sha1": "5d80aae1ac98"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L154": {
+  "sha1": "c4b3855fb954"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L155": {
+  "sha1": "733d292762ec"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L157": {
+  "sha1": "13f4b984e692"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L177": {
+  "sha1": "731ea469a6be"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L221": {
+  "sha1": "b80221194136"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L303": {
+  "sha1": "4a7279a9d542"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L367": {
+  "sha1": "2387c73e6fed"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L402": {
+  "sha1": "88f18acb726e"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L412": {
+  "sha1": "f17f56eb87c1"
+ },
+ "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L48": {
+  "sha1": "347e358f72cd"
  },
  "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md#L226": {
   "sha1": "e97425635d7f"
@@ -2153,6 +2270,36 @@
  "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L99": {
   "sha1": "b793237e4aa3"
  },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L131": {
+  "sha1": "cb3b5a996b63"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L299": {
+  "sha1": "f2625019fcf8"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L335": {
+  "sha1": "d0fae3f95e13"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L370": {
+  "sha1": "11cfa4dc404d"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L371": {
+  "sha1": "2958921c0225"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L402": {
+  "sha1": "ae7e4b559aba"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L515": {
+  "sha1": "a82bba0dfccc"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L516": {
+  "sha1": "eadc461b1861"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L578": {
+  "sha1": "95841ac952fe"
+ },
+ "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L580": {
+  "sha1": "56f3da3390bb"
+ },
  "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L148": {
   "sha1": "dc6110e28e5b"
  },
@@ -2209,6 +2356,36 @@
  },
  "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L92": {
   "sha1": "17f7c20901a7"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L330": {
+  "sha1": "02bfbc331c92"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L332": {
+  "sha1": "ab4aed7be383"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L433": {
+  "sha1": "1dcc7551be71"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L470": {
+  "sha1": "1a69b3fe7fdd"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L50": {
+  "sha1": "007bb1c35740"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L542": {
+  "sha1": "121d79369150"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L550": {
+  "sha1": "1b350d154378"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L552": {
+  "sha1": "dfb7257d67be"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L563": {
+  "sha1": "74776a010e7a"
+ },
+ "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L604": {
+  "sha1": "6741b5e96bbf"
  },
  "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L104": {
   "sha1": "70acaeddbd34"
