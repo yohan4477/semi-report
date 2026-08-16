@@ -252,6 +252,19 @@
    "hash": "2acaf6100cd9"
   },
   {
+   "id": "semi:business:우주로-담대하게-우주-데이터센터의-경제성",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/power",
+    "ai-infra/construction"
+   ],
+   "date": "2026-06-03",
+   "path": "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md",
+   "hash": "8cb769eb0be4"
+  },
+  {
    "id": "semi:business:인텔은-지금-자본을-조달해야-한다",
    "corpus": "semianalysis",
    "folder": "business",
