@@ -84,64 +84,135 @@ FIG_INFLAM = '''<svg viewBox="0 0 640 262" role="img" aria-label="급성 염증�
   <text class="t-sm" x="376" y="86">유리 지방산 — 내 몸에서 나온다</text>
 </svg>'''
 
-# ── 그림 2. 과잉 칼로리가 도는 길 — 몸통 해부도와 동맥 단면 ─────────────────
-FIG_ROUTE = '''<svg viewBox="0 0 640 356" role="img" aria-label="간·내장지방·근육·동맥으로 이어지는 과잉 칼로리 경로">
-  <text class="t-lab" x="18" y="22">몸통 단면 — 남은 에너지가 가는 곳</text>
-  <text class="t-lab" x="372" y="22">동맥 벽 확대 — 그 결과</text>
+# ── 그림 2. 동맥 벽 세로단면 — 지방산이 쌓이는 자리 ─────────────────────────
+# 몸통과 한 그림에 넣었더니 라벨 자리가 없어 둘로 쪼갰다. 벽은 세 층으로 그린다.
+FIG_ARTERY = '''<svg viewBox="0 0 640 250" role="img" aria-label="동맥 벽 세로단면과 쌓인 플라크">
+  <text class="t-lab" x="18" y="22">동맥 벽 세로단면</text>
 
-  <path class="body cut" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
-                        C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
-                        C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
-  <path class="hatch-w" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
-                        C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
-                        C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
-  <path class="organ" d="M128 118 C 158 104, 208 108, 236 122 C 240 140, 226 158, 198 163
-                         C 164 168, 134 154, 128 138 Z"/>
-  <text class="t-lab" x="152" y="140">간</text>
-  <path class="organ2" d="M234 132 C 252 130, 262 144, 256 158 C 250 172, 232 172, 228 158 Z"/>
-  <text class="t-sm" x="252" y="186">위</text>
-  <circle class="fat" cx="156" cy="204" r="13"/>
-  <circle class="fat" cx="186" cy="212" r="15"/>
-  <circle class="fat" cx="218" cy="204" r="13"/>
-  <circle class="fat" cx="168" cy="236" r="14"/>
-  <circle class="fat" cx="202" cy="240" r="13"/>
-  <circle class="fat" cx="234" cy="228" r="11"/>
-  <text class="t-lab" x="196" y="272" text-anchor="middle">내장 지방</text>
-  <text class="t-sm" x="196" y="288" text-anchor="middle">이미 꽉 차 더 못 받는다</text>
-  <path class="organ" d="M126 250 C 136 246, 142 262, 140 288 C 138 312, 132 322, 126 322 Z"/>
-  <text class="t-sm" x="86" y="292">근육</text>
-  <path class="vessel" d="M198 62 C 206 120, 202 200, 206 330"/>
-  <text class="t-sm" x="212" y="76">대동맥</text>
+  <!-- 위쪽 벽 — 바깥 막과 근육층 -->
+  <rect x="26" y="44" width="392" height="26" class="organ2 cut"/>
+  <rect x="26" y="44" width="392" height="26" class="hatch"/>
+  <rect x="26" y="70" width="392" height="16" class="organ cut"/>
+  <rect x="26" y="70" width="392" height="16" class="hatch"/>
+  <!-- 혈액이 흐르는 안쪽 -->
+  <rect x="26" y="86" width="392" height="78" class="body"/>
+  <!-- 아래쪽 벽 -->
+  <rect x="26" y="164" width="392" height="16" class="organ cut"/>
+  <rect x="26" y="164" width="392" height="16" class="hatch"/>
+  <rect x="26" y="180" width="392" height="26" class="organ2 cut"/>
+  <rect x="26" y="180" width="392" height="26" class="hatch"/>
 
-  <path class="flow" d="M140 158 C 128 190, 128 226, 132 252"/>
-  <text class="t-sm" x="60" y="212">① 근육으로</text>
-  <text class="t-bad" x="60" y="226">안 받는다</text>
-  <path class="flow" d="M186 166 L 184 192"/>
-  <text class="t-sm" x="288" y="212">② 내장 지방으로</text>
-  <text class="t-bad" x="288" y="226">자리가 없다</text>
-  <path class="flow" d="M232 214 C 258 196, 250 166, 226 152"/>
-  <text class="t-sm" x="288" y="140">③ 그래서 간세포가</text>
-  <text class="t-bad" x="288" y="154">떠안는다 — 지방간</text>
-  <path class="flow" d="M172 218 C 190 214, 194 210, 200 200"/>
-  <text class="t-sm" x="30" y="126">④ 새어 나온 지방산이</text>
-  <text class="t-bad" x="30" y="140">혈액을 떠돈다</text>
-  <path class="flow" d="M120 132 C 150 120, 176 112, 194 96"/>
+  <!-- 플라크 — 안쪽 막 밑에서 부풀어 혈액 길을 좁힌다 -->
+  <path fill="var(--fig-bad,#c2504a)" fill-opacity=".26" stroke="var(--fig-bad,#c2504a)"
+        stroke-width="1.4" d="M150 86 C 184 86, 196 130, 240 134 C 286 138, 302 98, 332 86 Z"/>
+  <circle class="fat" cx="196" cy="102" r="5"/>
+  <circle class="fat" cx="228" cy="112" r="5"/>
+  <circle class="fat" cx="262" cy="106" r="5"/>
+  <circle class="fat" cx="290" cy="98" r="5"/>
+  <circle class="cell" cx="216" cy="96" r="7"/>
+  <circle class="cell" cx="272" cy="120" r="7"/>
 
-  <path class="organ2 cut" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
-  <path class="hatch" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
-  <path class="body" d="M382 128 C 470 108, 556 108, 610 128 L 610 226 C 556 246, 470 246, 382 226 Z"/>
-  <text class="t-sm" x="496" y="182" text-anchor="middle">혈액이 흐르는 안쪽</text>
-  <path fill="var(--fig-bad,#c2504a)" fill-opacity=".28" stroke="var(--fig-bad,#c2504a)" stroke-width="1.2"
-        d="M430 128 C 470 112, 520 112, 552 126 C 540 152, 502 160, 466 156 C 444 152, 432 142, 430 128 Z"/>
-  <circle class="fat" cx="462" cy="132" r="6"/>
-  <circle class="fat" cx="492" cy="128" r="6"/>
-  <circle class="fat" cx="520" cy="132" r="6"/>
-  <circle class="cell" cx="478" cy="146" r="8"/>
-  <circle class="cell" cx="510" cy="144" r="8"/>
-  <text class="t-bad" x="492" y="102" text-anchor="middle">쌓인 콜레스테롤 — 동맥경화</text>
-  <!-- 긴 문장은 viewBox 밖으로 삐져나간다 — 두 줄로 끊는다 -->
-  <text class="t-sm" x="496" y="272" text-anchor="middle">혈압이 벽을 눌러 터지고</text>
-  <text class="t-sm" x="496" y="288" text-anchor="middle">복구하는 자리가 딱딱해진다</text>
+  <!-- 혈류 -->
+  <path class="flow" d="M40 150 L 108 150"/>
+  <path class="flow" d="M40 126 L 96 126"/>
+  <text class="t-sm" x="40" y="172">혈류</text>
+
+  <!-- 라벨 -->
+  <path class="lead-line" d="M418 57 L 430 57"/>
+  <text class="t-sm" x="434" y="61">바깥 막</text>
+  <path class="lead-line" d="M418 78 L 430 78"/>
+  <text class="t-sm" x="434" y="82">가운데 근육층</text>
+  <path class="lead-line" d="M336 96 L 430 108"/>
+  <text class="t-bad" x="434" y="112">쌓인 콜레스테롤</text>
+  <text class="t-sm" x="434" y="130">노란 알갱이가 지방,</text>
+  <text class="t-sm" x="434" y="146">파란 것이 대식 세포다</text>
+  <path class="lead-line" d="M418 190 L 430 190"/>
+  <text class="t-sm" x="434" y="194">반대쪽 벽도 같은 구조</text>
+  <text class="t-sm" x="26" y="228">혈압이 벽을 눌러 터뜨리고, 복구가 덜 된 자리가 딱딱해진다. 그 틈으로 지방이 파고든다.</text>
+</svg>'''
+
+# ── 그림 3. 복부 관상단면 — 남은 에너지가 도는 길 ───────────────────────────
+# 번호는 해부 위에 찍고 설명은 오른쪽 열에 세운다. 화살표를 몸통 안에서 꼬면
+# 어느 장기에서 어디로 가는지 읽히지 않는다.
+FIG_TORSO = '''<svg viewBox="0 0 640 400" role="img" aria-label="복부 관상단면에서 간·근육·내장지방을 도는 지방 경로">
+  <text class="t-lab" x="18" y="22">복부 관상단면</text>
+
+  <path class="body cut" d="M155 56 C 147 100, 155 140, 159 170 C 163 205, 167 240, 177 272
+                            C 187 306, 205 330, 230 342 C 255 330, 273 306, 283 272
+                            C 293 240, 297 205, 301 170 C 305 140, 313 100, 305 56 Z"/>
+  <path class="hatch-w" d="M155 56 C 147 100, 155 140, 159 170 C 163 205, 167 240, 177 272
+                           C 187 306, 205 330, 230 342 C 255 330, 273 306, 283 272
+                           C 293 240, 297 205, 301 170 C 305 140, 313 100, 305 56 Z"/>
+  <path fill="none" stroke="var(--fig-line,#9a8078)" stroke-width="2" d="M153 62 C 187 26, 273 26, 307 62"/>
+  <text class="t-sm" x="230" y="44" text-anchor="middle">횡격막</text>
+
+  <!-- 간 — 오른쪽 엽이 크고 아래 모서리가 얇다 -->
+  <path class="organ cut" d="M159 80 C 185 68, 231 68, 263 80 C 267 98, 255 118, 231 124
+                             C 201 130, 167 118, 159 102 Z"/>
+  <path class="hatch" d="M159 80 C 185 68, 231 68, 263 80 C 267 98, 255 118, 231 124
+                         C 201 130, 167 118, 159 102 Z"/>
+  <path fill="none" stroke="var(--fig-line,#9a8078)" stroke-width="1.1" d="M231 72 L 227 122"/>
+  <text class="t-lab" x="188" y="100">간</text>
+  <circle class="fat" cx="176" cy="96" r="4"/>
+  <circle class="fat" cx="192" cy="110" r="4"/>
+  <circle class="fat" cx="206" cy="96" r="4"/>
+
+  <!-- 위 -->
+  <path class="organ2 cut" d="M265 86 C 287 82, 299 98, 295 118 C 291 140, 269 148, 257 136
+                              C 251 126, 255 112, 265 102 Z"/>
+  <text class="t-sm" x="276" y="118" text-anchor="middle">위</text>
+
+  <!-- 창자 -->
+  <path class="organ2 cut" d="M173 198 C 205 186, 261 186, 287 200 C 295 228, 285 260, 263 274
+                              C 235 286, 201 280, 183 264 C 169 248, 167 218, 173 198 Z"/>
+  <path class="lead-line" d="M183 216 C 205 202, 251 202, 275 216"/>
+  <path class="lead-line" d="M181 236 C 207 222, 255 222, 279 236"/>
+  <path class="lead-line" d="M187 256 C 211 244, 253 244, 275 256"/>
+  <text class="t-sm" x="230" y="196" text-anchor="middle">창자</text>
+
+  <!-- 내장 지방 — 창자 사이를 메운다 -->
+  <circle class="fat" cx="166" cy="202" r="10"/>
+  <circle class="fat" cx="294" cy="206" r="10"/>
+  <circle class="fat" cx="174" cy="268" r="11"/>
+  <circle class="fat" cx="288" cy="264" r="10"/>
+  <circle class="fat" cx="230" cy="294" r="12"/>
+  <circle class="fat" cx="230" cy="178" r="9"/>
+  <text class="t-sm" x="230" y="320" text-anchor="middle">내장 지방</text>
+
+  <!-- 복벽 근육 -->
+  <path fill="none" stroke="var(--fig-organ,#e3d3cc)" stroke-width="8" stroke-linecap="round"
+        d="M161 178 C 157 212, 161 248, 173 276"/>
+  <path fill="none" stroke="var(--fig-line,#9a8078)" stroke-width="1"
+        d="M161 178 C 157 212, 161 248, 173 276"/>
+  <text class="t-sm" x="104" y="230">복벽 근육</text>
+
+  <!-- 대동맥과 대정맥 -->
+  <path class="vessel" d="M239 64 C 243 140, 241 240, 243 336"/>
+  <path class="vein" d="M221 64 C 217 140, 219 240, 217 336"/>
+  <text class="t-sm" x="250" y="358">대동맥</text>
+  <text class="t-sm" x="180" y="358">대정맥</text>
+
+  <!-- 번호는 해부 위에 -->
+  <circle cx="276" cy="70" r="11" fill="var(--fig-organ2,#f0e2d8)" stroke="var(--fig-line,#9a8078)"/>
+  <text class="t-lab" x="276" y="74" text-anchor="middle">1</text>
+  <circle cx="140" cy="256" r="11" fill="var(--fig-organ2,#f0e2d8)" stroke="var(--fig-line,#9a8078)"/>
+  <text class="t-lab" x="140" y="260" text-anchor="middle">2</text>
+  <circle cx="306" cy="294" r="11" fill="var(--fig-organ2,#f0e2d8)" stroke="var(--fig-line,#9a8078)"/>
+  <text class="t-lab" x="306" y="298" text-anchor="middle">3</text>
+  <circle cx="150" cy="112" r="11" fill="var(--fig-organ2,#f0e2d8)" stroke="var(--fig-line,#9a8078)"/>
+  <text class="t-lab" x="150" y="116" text-anchor="middle">4</text>
+
+  <!-- 설명은 오른쪽 열에 -->
+  <text class="t-lab" x="370" y="86">1 · 간이 지방을 만든다</text>
+  <text class="t-sm" x="370" y="104">근육과 심장이 태울 연료다</text>
+  <text class="t-lab" x="370" y="146">2 · 근육이 더 안 받는다</text>
+  <text class="t-sm" x="370" y="164">그날 쓸 만큼은 이미 썼다</text>
+  <text class="t-lab" x="370" y="206">3 · 내장 지방도 자리가 없다</text>
+  <text class="t-sm" x="370" y="224">지방 세포가 이미 빵빵하다</text>
+  <text class="t-lab" x="370" y="266">4 · 간세포가 떠안는다</text>
+  <text class="t-sm" x="370" y="284">이 상태가 지방간이다</text>
+  <text class="t-bad" x="370" y="326">삐져나온 지방산은 혈액을 돌다</text>
+  <text class="t-bad" x="370" y="344">동맥 벽에 쌓인다</text>
 </svg>'''
 
 # ── 그림 3. 3대 영양소가 가는 곳 — 소화관 해부와 세 갈래 ────────────────────
@@ -351,10 +422,14 @@ CARDS = [{
          FIG_INFLAM,
          '급성은 침입 지점 둘레에서 멈추고, 만성은 같은 반응이 되풀이돼 손상이 조직 전체로 번진다. 두 그림에서 '
          '달라지는 것은 점선 안쪽 넓이 하나다.'),
-        (12, '그림 2 · 몸통 단면과 동맥 벽',
-         FIG_ROUTE,
-         '남은 에너지는 간이 지방으로 만들어 내보낸다. 근육이 안 받고 내장 지방도 꽉 차면 간세포가 떠안아 '
-         '지방간이 되고, 삐져나온 지방산은 혈액을 돌다가 동맥 벽에 쌓인다.'),
+        (11, '그림 2 · 동맥 벽 세로단면',
+         FIG_ARTERY,
+         '벽은 세 층이다. 혈압에 눌려 터진 자리를 복구하다 굳고, 그 틈으로 콜레스테롤이 파고들어 대식 세포와 '
+         '싸운다. 그 자리에 지방이 농축돼 쌓인 것이 동맥경화다.'),
+        (12, '그림 3 · 복부 관상단면',
+         FIG_TORSO,
+         '남은 에너지가 도는 순서를 번호로 따라간다. 간이 만들어 내보내고(1), 근육이 안 받고(2), 내장 지방도 '
+         '자리가 없어(3), 결국 간세포가 떠안는다(4). 그 상태가 지방간이다.'),
     ],
     'slim_stats': [('부수적 손상', '싸움에 딸려오는 정상 조직 손상. 병은 여기서 온다'),
                    ('70% · 20%', '기본 생존과 활동이 먼저 가져가는 에너지 몫'),
@@ -420,11 +495,11 @@ CARDS = [{
         '경우다. 값이 너무 싸서 제약회사가 홍보할 이유가 없어 의사들이 알리고 있다고 그는 덧붙인다.',
     ],
     'figs': [
-        (4, '그림 3 · 소화관과 세 갈래',
+        (4, '그림 4 · 소화관과 세 갈래',
          FIG_FUEL,
          '위와 소장을 지나 간에서 갈린다. 단백질은 몸을 이루는 쪽으로 가고, 탄수화물과 지방은 그날 쓸 연료로 '
          '간다. 남은 만큼은 예외 없이 지방이 된다.'),
-        (12, '그림 4 · 무엇을 어디서 재나',
+        (12, '그림 5 · 무엇을 어디서 재나',
          FIG_MEASURE,
          '다섯 가지 모두 숫자로 잡는다. 몸이 보내는 느낌으로는 안 잡힌다. 아프기 전에 움직이자는 게 목적이라 '
          '들어도 HS-CRP가 0.2를 넘었으면 생활에서 낮출 대상으로 본다.'),
@@ -476,7 +551,7 @@ CARDS = [{
         '일어난다), 집에서 혈압을 자주 재고, 스스로 정한 체중과 허리둘레를 지킨다.',
     ],
     'figs': [
-        (4, '그림 5 · 뇌 시상단면과 수면 곡선',
+        (4, '그림 6 · 뇌 시상단면과 수면 곡선',
          FIG_SLEEP,
          '뇌척수액이 뇌를 훑고 나가는 청소는 수면 3·4단계에서만 일어난다. 1·2단계에서는 청소부가 들어오지 않으니, '
          '하룻밤 네댓 번 도는 사이클이 중간에 깨지면 깊은 구간이 통째로 사라진다.'),
