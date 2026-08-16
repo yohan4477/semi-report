@@ -77,6 +77,65 @@ def test_samsung_implied_discount_rate():
     assert abs(r - 0.162) <= 0.005  # 0.5%p 허용오차
 
 
+# ── 사례 1-B: 위 FCF가 매출·마진·CAPEX에서 실제로 나오는가 ──────────
+# 필자는 매출·영업이익률·CAPEX·FCF는 표로 냈는데 법인세율과 2026~2028년 D&A는
+# 안 냈다. 그 두 자리를 FCF 항등식으로 되돌린다. 되돌아온다는 것 자체가
+# △NWC(운전자본 증감)를 한 해도 빼지 않았다는 증거다 — R1은 빼라고 한다.
+SEC_REV = [7324732, 9465119, 9985224, 9485963, 8727086, 8988899, 9438344, 9815878]
+SEC_OPM = [0.523, 0.573, 0.533, 0.450, 0.350, 0.260, 0.200, 0.160]
+SEC_CAPEX = [721292, 781279, 770143, 800000, 650000, 700000, 750000, 780000]
+# D&A는 2029년부터만 표에 있다. 앞 3년은 None — 항등식으로 되돌린다.
+SEC_DNA_PUBLISHED = [None, None, None, 686984, 768178, 750356, 730036, 725000]
+# 본문에 세율이 없다. WACC의 Kd 계산(세전 3.80% × (1−26.4%) = 2.80%)에만 나온다.
+SEC_TAX = 0.264
+
+
+def _sec_dna_solved():
+    """표에 없는 D&A를 FCF 항등식에서 되돌린다. △NWC = 0을 전제한다."""
+    out = []
+    for i, published in enumerate(SEC_DNA_PUBLISHED):
+        if published is not None:
+            out.append(published)
+            continue
+        nopat = dcf.nopat(SEC_REV[i] * SEC_OPM[i], SEC_TAX)
+        out.append(SEC_FCFS[i] - nopat + SEC_CAPEX[i])
+    return out
+
+
+def test_samsung_tax_rate_reproduces_published_fcf():
+    # 세율 26.4%를 넣으면 D&A가 표에 있는 다섯 해(2029~2033)의 FCF가 그대로
+    # 재현된다. △NWC 자리에 0 말고 다른 값이 들어갔다면 맞을 수 없다.
+    dna = _sec_dna_solved()
+    for i in range(3, 8):
+        nopat = dcf.nopat(SEC_REV[i] * SEC_OPM[i], SEC_TAX)
+        fcf = dcf.fcff(nopat, dna[i], SEC_CAPEX[i], 0)
+        assert approx(fcf, SEC_FCFS[i], 0.01), (i, fcf, SEC_FCFS[i])
+
+
+def test_samsung_front_years_dna_is_far_below_the_published_ones():
+    # 되돌아온 앞 3년 값은 24.0 / 44.6 / 35.1조로, 2029년 표기값 68.7조의
+    # 3분의 1 수준이다. 필자가 밝힌 규칙("직전 4개년 CAPEX 평균")과 맞지 않는다.
+    # 다만 이 값이 D&A 단독인지 D&A − △NWC인지는 가를 수 없다.
+    dna = _sec_dna_solved()
+    for i in range(3):
+        assert dna[i] < SEC_DNA_PUBLISHED[3] * 0.7, (i, dna[i])
+    assert approx(dna[0], 239730, 0.5)
+    assert approx(dna[1], 445522, 0.5)
+    assert approx(dna[2], 351275, 0.5)
+
+
+def test_samsung_bridge_rebuilds_the_whole_valuation():
+    # 매출 → 영업이익 → NOPAT → +D&A −CAPEX → FCF를 8년 다시 굴려도
+    # 필자 결과가 그대로 나온다. 마진·성장 경로를 갈아끼울 수 있다는 뜻이다.
+    dna = _sec_dna_solved()
+    fcfs = [dcf.fcff(dcf.nopat(SEC_REV[i] * SEC_OPM[i], SEC_TAX),
+                     dna[i], SEC_CAPEX[i], 0) for i in range(8)]
+    v = dcf.value(fcfs, SEC_R, SEC_G, SEC_NET_DEBT, SEC_SHARES)
+    assert approx(v['pv_explicit'], 13385590, 0.01)
+    assert approx(v['equity'], 21128616, 0.01)
+    assert approx(v['per_share'] * UNIT, 361403, 0.01)
+
+
 # ── 사례 2: WACC 산출, 필자 2026-07-16 ──────────────────────────────
 def test_wacc_matches_author():
     w = dcf.wacc(rf=0.0420, beta=1.18, mrp=0.0550, kd_after_tax=0.0280, debt_weight=0.0444)
