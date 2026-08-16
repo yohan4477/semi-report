@@ -280,15 +280,26 @@ def _scenario_html():
             rv_rows.append(
                 '<tr class="dm-rv-row"><td>%s</td>'
                 '<td class="dm-rv-val dm-rv-val--%s">%s</td><td></td></tr>' % (k, tone, v))
+        hl = ''
+        if rv.get('headline'):
+            h = rv['headline']
+            ds = ''.join(
+                '<div class="dm-rv-hl-row"><span class="dm-rv-hl-if">%s</span>'
+                '<span class="dm-rv-hl-d">%s</span>'
+                '<span class="dm-rv-hl-n">%s</span></div>' % (a, b, c)
+                for a, b, c in h['demands'])
+            hl = ('<div class="dm-rv-hl"><p class="dm-rv-hl-px">%s</p>%s</div>'
+                  % (h['price'], ds))
         rev_html = (
             '<div class="dm-rv">'
             '<p class="dm-rv-label">%s %s</p>'
             '<p class="dm-rv-lede">%s</p>'
+            '%s'
             '<p class="dm-rv-formula">%s</p>'
             '<div class="dm-rv-wrap"><table class="dm-rv-tbl">'
             '<thead><tr><th>항목</th><th>값</th><th>비고</th></tr></thead>'
             '<tbody>%s</tbody></table></div>'
-            '</div>' % (rv['label'], _by_badge(rv['by']), rv['lede'], rv['formula'],
+            '</div>' % (rv['label'], _by_badge(rv['by']), rv['lede'], hl, rv['formula'],
                         ''.join(rv_rows)))
     return ('<div class="dm-scenario">'
             '<div class="dm-scenario-head">'
@@ -439,6 +450,19 @@ DM_CSS = '''<style>
 .dm-mr-tbl td:nth-last-child(-n+2){font-weight:800;color:var(--ink)}
 .dm-mr-tbl tr:last-child td{border-bottom:0}
 .dm-mr-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
+
+/* 역방향 결론 두 줄 — 가격이 얼마고, 그 가격이 무엇을 요구하는가 */
+.dm-rv-hl{margin:0 0 12px;padding:11px 13px;background:var(--surface);border-radius:10px}
+.dm-rv-hl-px{font-size:17px;font-weight:850;letter-spacing:-.01em;color:var(--ink);margin:0 0 8px;
+             font-variant-numeric:tabular-nums}
+.dm-rv-hl-row{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;
+              padding:7px 0 0;border-top:1px solid var(--line)}
+.dm-rv-hl-if{grid-column:1;font-size:11px;color:var(--ink-3);white-space:nowrap;align-self:center}
+.dm-rv-hl-d{grid-column:2;font-size:14.5px;font-weight:850;color:var(--accent-ink);
+            font-variant-numeric:tabular-nums}
+.dm-rv-hl-n{grid-column:2;font-size:11px;color:var(--ink-3);line-height:1.5}
+@media (max-width:560px){.dm-rv-hl-row{grid-template-columns:1fr}
+  .dm-rv-hl-if,.dm-rv-hl-d,.dm-rv-hl-n{grid-column:1}}
 
 /* ── 정방향 / 역방향 ── 방향이 반대라 한 표에 세우면 네 번째 시나리오로 읽힌다 */
 .dm-fwd-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:14px 0 4px}
