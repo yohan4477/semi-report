@@ -90,6 +90,17 @@
    "hash": "0d3e2dea98ab"
   },
   {
+   "id": "semi:agents:재미로-미스컴파일-찾기-오후-한나절에-1만-달러를-쓰는-법",
+   "corpus": "semianalysis",
+   "folder": "agents",
+   "categories": [
+    "ai-models/agents"
+   ],
+   "date": "2026-05-28",
+   "path": "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md",
+   "hash": "13207a5d05f7"
+  },
+  {
    "id": "semi:agents:코딩-어시스턴트-해부-토큰을-더-주세요",
    "corpus": "semianalysis",
    "folder": "agents",
@@ -99,6 +110,17 @@
    "date": "2026-04-25",
    "path": "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md",
    "hash": "50fce79475a2"
+  },
+  {
+   "id": "semi:ai_economy:AI-다크-아웃풋-보이지-않는-산출물의-보이는-비용",
+   "corpus": "semianalysis",
+   "folder": "ai_economy",
+   "categories": [
+    "ai-economy"
+   ],
+   "date": "2026-05-29",
+   "path": "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md",
+   "hash": "e30634dab8ee"
   },
   {
    "id": "semi:ai_models:Kimi-K3-아키텍처-해부-압축-메모리-깊이-방향-어텐션-잠재-전문가-라우팅",
@@ -123,6 +145,17 @@
    "date": "2026-05-01",
    "path": "content/newsletter/ai_infra/business/[260501] AI 가치 포착 - 모델 랩으로의 이동.md",
    "hash": "f2d8fb9f9424"
+  },
+  {
+   "id": "semi:business:GPU-대란-임대편-H100-1년-임대-가격-지수-출범",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
+   "date": "2026-04-02",
+   "path": "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md",
+   "hash": "b7ab2faf61fc"
   },
   {
    "id": "semi:business:GPU-클러스터-진짜-비용-계산법-총소유비용TCO과-굿풋-이론",
@@ -217,6 +250,17 @@
    "date": "2026-07-06",
    "path": "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md",
    "hash": "2acaf6100cd9"
+  },
+  {
+   "id": "semi:business:인텔은-지금-자본을-조달해야-한다",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
+   "date": "2026-06-11",
+   "path": "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md",
+   "hash": "0e1cec363c8b"
   },
   {
    "id": "semi:business:제미나이는-끝났어도-GCP는-잘나간다-딥마인드-리더십-붕괴와-구글-클라우드의-반사이익",
@@ -430,6 +474,18 @@
    "hash": "8e015539f256"
   },
   {
+   "id": "semi:compute:세레브라스-더-빠른-토큰을-주세요",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/business"
+   ],
+   "date": "2026-05-13",
+   "path": "content/newsletter/ai_infra/compute/[260513] 세레브라스 - 더 빠른 토큰을 주세요.md",
+   "hash": "fc837cd29e9f"
+  },
+  {
    "id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
    "corpus": "semianalysis",
    "folder": "construction",
@@ -451,6 +507,17 @@
    "date": "2025-02-14",
    "path": "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md",
    "hash": "e91150c7d095"
+  },
+  {
+   "id": "semi:cooling:토큰-대-햄버거-데이터센터-물-발자국-대결",
+   "corpus": "semianalysis",
+   "folder": "cooling",
+   "categories": [
+    "ai-infra/cooling"
+   ],
+   "date": "2026-01-15",
+   "path": "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md",
+   "hash": "842e0dca5a09"
   },
   {
    "id": "semi:memory:ECTC-2026-총정리-EMIB-T-로드맵-커스텀-HBM-마이크로플루이딕-냉각-광학-인터커넥트",
@@ -676,6 +743,28 @@
    "date": "2026-05-21",
    "path": "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md",
    "hash": "9f7a13773108"
+  },
+  {
+   "id": "semi:semiconductors:EDA-입문-RTL에서-실리콘까지",
+   "corpus": "semianalysis",
+   "folder": "semiconductors",
+   "categories": [
+    "semiconductors"
+   ],
+   "date": "2026-05-12",
+   "path": "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md",
+   "hash": "068a204f1408"
+  },
+  {
+   "id": "semi:semiconductors:애플-TSMC-현대-반도체를-만든-파트너십",
+   "corpus": "semianalysis",
+   "folder": "semiconductors",
+   "categories": [
+    "semiconductors"
+   ],
+   "date": "2026-01-08",
+   "path": "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md",
+   "hash": "1d9a69f87091"
   },
   {
    "id": "und:root:대기-목록",
