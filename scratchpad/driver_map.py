@@ -1388,16 +1388,16 @@ def render():
     parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_scenario_html())
+    # 방법을 가로지르는 것을 방법 버튼보다 위에 둔다. 한 방법 안에서는 안 보이고
+    # 여러 방법을 겹쳐 놔야 보이는 것들이라, 방법을 고르기 전에 먼저 읽어야 한다.
+    # (한 글에서 나온 자료는 그 글의 축 패널 안에 있다 — 07-16 민감도 격자가 그렇다.)
+    parts.append('<h2 class="dm-axheading">방법을 가로질러 본 것</h2>')
+    parts.append(_ranges_html())
+    parts.append(_earnpath_html())
+    parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
     parts.append('<h2 class="dm-axheading">엘곰이 한 것 — 방법을 고르면 그 방법의 최신 글이 열린다</h2>')
     parts.append(_axis_buttons_html())
     parts.append(_axis_panels_html())
-    # 연도별 이익 경로 표는 옛 평가가 아니다 — 07-16 가정의 상세다(그 열이 표 안에 있다).
-    # 접어 두면 못 찾는다. 버튼 패널 바로 뒤에 펼쳐 둔다.
-    # 07-16 민감도 격자는 dcf 축 패널 안으로 옮겼다(그 글이 낸 DCF 축 자료라서) —
-    # 여기서는 더 이상 부르지 않는다.
-    parts.append(_ranges_html())
-    parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
-    parts.append(_earnpath_html())
     parts.append(
         '<details class="dm-past">'
         '<summary class="dm-past-summary">지난 평가 — 열다섯 달 동안 여섯 번, 값이 어떻게 움직였나</summary>'
