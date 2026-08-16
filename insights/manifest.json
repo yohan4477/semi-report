@@ -125,6 +125,18 @@
    "hash": "f2d8fb9f9424"
   },
   {
+   "id": "semi:business:GPU-클러스터-진짜-비용-계산법-총소유비용TCO과-굿풋-이론",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/compute"
+   ],
+   "date": "2026-04-20",
+   "path": "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md",
+   "hash": "00062c910604"
+  },
+  {
    "id": "semi:business:메타-슈퍼인텔리전스의-미래-출범-1주년-성과-점검",
    "corpus": "semianalysis",
    "folder": "business",
@@ -556,6 +568,17 @@
    "hash": "ddd256cf8a10"
   },
   {
+   "id": "semi:power:기가와트급-AI-학습-부하-변동-전력망-정전을-부를-수-있는가",
+   "corpus": "semianalysis",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
+   "date": "2025-06-25",
+   "path": "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md",
+   "hash": "5187d804c602"
+  },
+  {
    "id": "semi:power:데이터센터-해부학-Part-1-전기-시스템",
    "corpus": "semianalysis",
    "folder": "power",
@@ -567,6 +590,17 @@
    "hash": "6506785bc629"
   },
   {
+   "id": "semi:power:데이터센터가-미국-가정의-전기요금을-올리는가",
+   "corpus": "semianalysis",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
+   "date": "2026-03-03",
+   "path": "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md",
+   "hash": "5aac0320f85a"
+  },
+  {
    "id": "semi:power:미국-전력망-제약-2028년까지-40GW-자가발전-데이터센터로-가는-길",
    "corpus": "semianalysis",
    "folder": "power",
@@ -576,6 +610,28 @@
    "date": "2026-06-26",
    "path": "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md",
    "hash": "f21ee56a5448"
+  },
+  {
+   "id": "semi:process:SMIC-N3-금속-배선-간격-인텔-18A보다-좁을까-화웨이-기린-9030-해부",
+   "corpus": "semianalysis",
+   "folder": "process",
+   "categories": [
+    "semiconductors/process"
+   ],
+   "date": "2026-06-14",
+   "path": "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md",
+   "hash": "9da64fa7a321"
+  },
+  {
+   "id": "semi:rl:RL-시스템-틈새를-조심하라-학습기와-생성기-처리량-맞추기",
+   "corpus": "semianalysis",
+   "folder": "rl",
+   "categories": [
+    "ai-models/rl"
+   ],
+   "date": "2026-06-16",
+   "path": "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md",
+   "hash": "133f3f57d7df"
   },
   {
    "id": "semi:rl:RL-환경과-과학을-위한-RL-데이터-파운드리와-멀티-에이전트-아키텍처",
@@ -842,6 +898,17 @@
    "hash": "255f80701ba5"
   },
   {
+   "id": "und:미국주식 사관학교:가진-주식의-7085는-그대로-오르게-둔다-커버드콜인데-커버드콜이-아닌-배당-ETF-하나",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-21",
+   "path": "content/understanding/미국주식 사관학교/[260621] 가진 주식의 70~85%는 그대로 오르게 둔다 - 커버드콜인데 커버드콜이 아닌 배당 ETF 하나.md",
+   "hash": "4aea3382d67b"
+  },
+  {
    "id": "und:미국주식 사관학교:같은-25bp인데-효과가-다르다-한국은-올리면-크고-일본은-올려도-작다",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -862,6 +929,28 @@
    "date": "2026-07-15",
    "path": "content/understanding/미국주식 사관학교/[260715] 광통신·포토닉스 입문 - CPO·OCS와 밸류체인 다섯 층.md",
    "hash": "2c2d4e3773e6"
+  },
+  {
+   "id": "und:미국주식 사관학교:국민연금-매도폭탄-국채로-흡수된다-목표비중-올려-위기-넘겼고-미국주식엔-안-간다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-01",
+   "path": "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md",
+   "hash": "ce606b5d1fb6"
+  },
+  {
+   "id": "und:미국주식 사관학교:금값-4200달러-잣대를-바꾸면-비싼-값이-아니다-인플레이션경제규모통화량으로-다시-잰-금-시세",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-14",
+   "path": "content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md",
+   "hash": "390bba9dc093"
   },
   {
    "id": "und:미국주식 사관학교:기준금리는-내렸는데-10년물은-그대로다-물타기는-TLT가-아니라-단기채로",
@@ -886,6 +975,28 @@
    "hash": "b7db938c3ed4"
   },
   {
+   "id": "und:미국주식 사관학교:논리적으로-반대인-두-베팅이-동시에-맞았던-이유-헬스케어로-흘러간-돈의-정체",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-12",
+   "path": "content/understanding/미국주식 사관학교/[260712] 논리적으로 반대인 두 베팅이 동시에 맞았던 이유 - 헬스케어로 흘러간 돈의 정체.md",
+   "hash": "8e63f5398f50"
+  },
+  {
+   "id": "und:미국주식 사관학교:다이-하나가-열셋을-함께-버린다-HBM-시대-검사장비-KLA코퍼레이션",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-08",
+   "path": "content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md",
+   "hash": "4d1fa875f6a2"
+  },
+  {
    "id": "und:미국주식 사관학교:데이터센터-60곳-동시-이탈-31GW가-30초-만에-사라진-사고",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -895,6 +1006,28 @@
    "date": "2026-07-27",
    "path": "content/understanding/미국주식 사관학교/[260727] 데이터센터 60곳 동시 이탈 - 3.1GW가 30초 만에 사라진 사고.md",
    "hash": "14a356ca6c80"
+  },
+  {
+   "id": "und:미국주식 사관학교:돈이-없어서가-아니라-AI-컴퓨팅이-모자라서다-구글-800억-달러-유상증자의-구조",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-03",
+   "path": "content/understanding/미국주식 사관학교/[260603] 돈이 없어서가 아니라 AI 컴퓨팅이 모자라서다 - 구글 800억 달러 유상증자의 구조.md",
+   "hash": "2e0917dc60ef"
+  },
+  {
+   "id": "und:미국주식 사관학교:로봇은-인건비가-아니라-설비투자-예산에서-팔린다-구글과-테슬라의-로봇-두뇌-경쟁",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-20",
+   "path": "content/understanding/미국주식 사관학교/[260720] 로봇은 인건비가 아니라 설비투자 예산에서 팔린다 - 구글과 테슬라의 로봇 두뇌 경쟁.md",
+   "hash": "e7a0cd79f89c"
   },
   {
    "id": "und:미국주식 사관학교:마이크론과-마벨-없으면-멈추는-쪽이-더-싸게-거래된다",
@@ -930,6 +1063,28 @@
    "hash": "9024149330fd"
   },
   {
+   "id": "und:미국주식 사관학교:무엇으로-찌르든-터졌을-풍선-나스닥-5-급락의-진짜-원인",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-06",
+   "path": "content/understanding/미국주식 사관학교/[260606] 무엇으로 찌르든 터졌을 풍선 - 나스닥 5% 급락의 진짜 원인.md",
+   "hash": "584f2609b69b"
+  },
+  {
+   "id": "und:미국주식 사관학교:배당이-가장-낮은-우선주가-오히려-가장-세다-스트래티지-우선주-STRF의-교차조항",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-13",
+   "path": "content/understanding/미국주식 사관학교/[260713] 배당이 가장 낮은 우선주가 오히려 가장 세다 - 스트래티지 우선주 STRF의 교차조항.md",
+   "hash": "ae23238482ae"
+  },
+  {
    "id": "und:미국주식 사관학교:벌어서-60를-다시-넣는-국면-리스로-현금-유출을-미룬-쪽이-버틴다",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -961,6 +1116,17 @@
    "date": "2026-06-05",
    "path": "content/understanding/미국주식 사관학교/[260605] 브로드컴 급락은 거품이 아니라 가격표 문제다 - 수요 곡선과 밸류에이션을 가른다.md",
    "hash": "040562aa06e8"
+  },
+  {
+   "id": "und:미국주식 사관학교:빅테크-하나-없는-모멘텀-ETF가-나스닥을-앞질렀다-짧은-신호가-넓어진-장세를-먼저-잡은-이야기",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-22",
+   "path": "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md",
+   "hash": "dc87554e8c68"
   },
   {
    "id": "und:미국주식 사관학교:사과가-안-팔리는-것과-사과-가게가-하나-는-것-메타-클라우드-진출",
@@ -1106,6 +1272,17 @@
    "hash": "556622a1345b"
   },
   {
+   "id": "und:미국주식 사관학교:엔화를-지운-펀드가-알고-보니-엔화-약세에-세-겹으로-걸려-있다-통화-헤지-ETF-DXJ",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-22",
+   "path": "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md",
+   "hash": "eaa75bc1bc97"
+  },
+  {
    "id": "und:미국주식 사관학교:오픈AI가-앤트로픽에-매출로-역전당했다-처음부터-어디를-팠느냐의-차이",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -1161,6 +1338,17 @@
    "hash": "21619ba27061"
   },
   {
+   "id": "und:미국주식 사관학교:재무가-튼튼한-순서와-전환이-빠른-순서가-반대다-비트코인-채굴사-넷의-AI-인프라-전환-성적표",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-26",
+   "path": "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md",
+   "hash": "717dd08bf62b"
+  },
+  {
    "id": "und:미국주식 사관학교:전력회사는-돈을-쓸수록-번다-1조-4천억-달러-공사판의-구조",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -1192,6 +1380,39 @@
    "date": "2026-04-24",
    "path": "content/understanding/미국주식 사관학교/[260424] 채권이 주식을 지켜주던 20년은 예외였다 - 갈림길은 물가 3%.md",
    "hash": "6c7c6ddb7ea3"
+  },
+  {
+   "id": "und:미국주식 사관학교:코딩에서-밀린-구글이-실은-유튜브로-다음-판을-준비한다-인재-유출과-주가-16-하락-뒤에-숨은-진짜-패",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-24",
+   "path": "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md",
+   "hash": "2943dc403982"
+  },
+  {
+   "id": "und:미국주식 사관학교:클로드가-90분-만에-전-세계에서-꺼졌다-AI-모델-수출통제와-각자도생-인프라-수요",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-15",
+   "path": "content/understanding/미국주식 사관학교/[260615] 클로드가 90분 만에 전 세계에서 꺼졌다 - AI 모델 수출통제와 각자도생 인프라 수요.md",
+   "hash": "e018fef2c9ae"
+  },
+  {
+   "id": "und:미국주식 사관학교:한국-반도체가-미국-반도체의-잣대가-됐다-SK하이닉스-상장이-만드는-폐순환-고리",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-05",
+   "path": "content/understanding/미국주식 사관학교/[260705] 한국 반도체가 미국 반도체의 잣대가 됐다 - SK하이닉스 상장이 만드는 폐순환 고리.md",
+   "hash": "3f30903f06ba"
   },
   {
    "id": "und:부동산:20년-장기전세-첫-만기-계약대로-나가라와-갈-데가-없다-사이-장순원",
