@@ -1,6 +1,83 @@
 {
- "generated": "2026-08-15",
+ "generated": "2026-08-16",
  "sources": [
+  {
+   "id": "li:root:2602-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-02-01",
+   "path": "content/linkedin/[2602] 링크드인 게시물.md",
+   "hash": "b652430524f7"
+  },
+  {
+   "id": "li:root:2603-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-03-01",
+   "path": "content/linkedin/[2603] 링크드인 게시물.md",
+   "hash": "11c8c2f1a4ca"
+  },
+  {
+   "id": "li:root:2604-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-04-01",
+   "path": "content/linkedin/[2604] 링크드인 게시물.md",
+   "hash": "b6aaccb369dd"
+  },
+  {
+   "id": "li:root:2605-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-05-01",
+   "path": "content/linkedin/[2605] 링크드인 게시물.md",
+   "hash": "34ffe9c3efac"
+  },
+  {
+   "id": "li:root:2606-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-06-01",
+   "path": "content/linkedin/[2606] 링크드인 게시물.md",
+   "hash": "f3fc8984ed59"
+  },
+  {
+   "id": "li:root:2607-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-07-01",
+   "path": "content/linkedin/[2607] 링크드인 게시물.md",
+   "hash": "742c5ae37d11"
+  },
+  {
+   "id": "li:root:2608-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-08-01",
+   "path": "content/linkedin/[2608] 링크드인 게시물.md",
+   "hash": "636493de7964"
+  },
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
    "corpus": "semianalysis",
@@ -1236,6 +1313,83 @@
    "date": "2026-06-26",
    "path": "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md",
    "hash": "b22ab45a4f5d"
+  },
+  {
+   "id": "und:회계사:304-오른-뒤에도-61-저평가라는-계산-삼성전자-내재가치-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-03",
+   "path": "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md",
+   "hash": "93a3c8358b40"
+  },
+  {
+   "id": "und:회계사:8년-사이클을-통째로-넣은-DCF-주당-361000원-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-16",
+   "path": "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md",
+   "hash": "28246f5a16b7"
+  },
+  {
+   "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-25",
+   "path": "content/understanding/회계사/[260425] DCF 프레임워크 1 - 현금흐름은 어떻게 산정하나 - 엘곰.md",
+   "hash": "c563c36b5c3e"
+  },
+  {
+   "id": "und:회계사:DCF-프레임워크-2-빅테크가-매출은-느는데-현금이-마이너스인-이유-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-25",
+   "path": "content/understanding/회계사/[260425] DCF 프레임워크 2 - 빅테크가 매출은 느는데 현금이 마이너스인 이유 - 엘곰.md",
+   "hash": "48585e2d7c85"
+  },
+  {
+   "id": "und:회계사:빅테크-DCF-성장률은-한-번에-꺾지-않고-서서히-낮춘다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-03-05",
+   "path": "content/understanding/회계사/[250305] 빅테크 DCF, 성장률은 한 번에 꺾지 않고 서서히 낮춘다 - 엘곰.md",
+   "hash": "3d3743274556"
+  },
+  {
+   "id": "und:회계사:빅테크-DCF는-3단계로-나눈다-NVIDIA-내재가치는-주당-12719달러-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-03-07",
+   "path": "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러 - 엘곰.md",
+   "hash": "60a0388f461f"
+  },
+  {
+   "id": "und:회계사:시총-1290조가-요구하는-영업이익은-61조다-DCF-역산으로-본-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-02-26",
+   "path": "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md",
+   "hash": "3285e839986e"
   }
  ]
 }

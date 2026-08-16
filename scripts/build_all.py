@@ -19,6 +19,10 @@ BUILD = [
     ('미주사 대시보드', ['scratchpad/gen_usa_dashboard.py']),
     ('금융 대시보드', ['scratchpad/gen_finance_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
+    # 링크드인은 원문 파일이 먼저 있어야 노트가 인용할 수 있다
+    ('링크드인 원문', ['scripts/gen_li_source.py']),
+    ('링크드인 신호 자격', ['insights/li_signal.py']),
+    ('소스 매니페스트', ['insights/gen_manifest.py']),
     ('통합 인사이트', ['insights/gen_insightview.py']),
     ('추적 · 일론 머스크', ['insights/gen_entity_board.py', 'musk']),
     ('인사이트 지도', ['insights/gen_map.py']),

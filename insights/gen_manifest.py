@@ -1,9 +1,12 @@
-# 소스 매니페스트 생성 — content/newsletter + content/understanding 스캔
+# 소스 매니페스트 생성 — content/newsletter + content/understanding + content/linkedin 스캔
 import os, re, io, json, hashlib, glob
 
 ROOT = r"C:\Users\y\semianalysis"
 BASES = [(os.path.join(ROOT, "content", "newsletter"), "semianalysis", "semi"),
-         (os.path.join(ROOT, "content", "understanding"), "understanding", "und")]
+         (os.path.join(ROOT, "content", "understanding"), "understanding", "und"),
+         # 링크드인은 월별 묶음 파일이다(scripts/gen_li_source.py 생성물).
+         # 글마다 파일을 두면 400개가 넘고, 인용은 어차피 줄 번호로 간다
+         (os.path.join(ROOT, "content", "linkedin"), "linkedin", "li")]
 OUT = os.path.join(ROOT, "insights", "manifest.json")
 EXCLUDE_DIRS = ("통합",)  # understanding/통합 = Layer2 인사이트, 소스 아님
 
@@ -37,9 +40,11 @@ def strip_fm(text):
 def body_hash(text):
     return hashlib.sha1(strip_fm(text).encode('utf-8')).hexdigest()[:12]
 
+ABBR = {"semianalysis": "semi", "understanding": "und", "linkedin": "li"}
+
+
 def source_id(corpus, folder, filename):
-    abbr = "semi" if corpus == "semianalysis" else "und"
-    return "%s:%s:%s" % (abbr, folder, slug(filename))
+    return "%s:%s:%s" % (ABBR.get(corpus, "und"), folder, slug(filename))
 
 def read_categories(text, folder, sid, overlay):
     # ① frontmatter categories 다값 ② 오버레이 ③ 폴더 fallback

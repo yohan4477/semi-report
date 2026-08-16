@@ -9,6 +9,9 @@
 #   2) 시차가 LAG_MAX일을 넘으면 재홍보로 본다 — 새 정보가 아니므로 시간축에서 뺀다.
 #   3) 링크가 없으면 게시일을 정보 날짜로 인정하되, 수치가 박힌 자체 발화만 근거로 쓴다.
 #      밈·행사·팟캐스트·채용·과거 회고는 신호가 아니다.
+#   4) 재홍보와 행사·홍보는 시간축에서 빼되 **버리지는 않는다**(push=True).
+#      「몇 달 전 글을 지금 다시 민다」는 새 사실은 아니어도 지금 무엇을 밀고 있나의 신호다.
+#      이 축은 usable과 별개다 — 근거로 인용하지 않고, 무엇이 반복되는지를 볼 때만 쓴다.
 import io, os, re, sys, json, html, datetime, collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +47,29 @@ def publish_dates():
     return out
 
 
+def classify(text, slug, posted, pub, has_video=False):
+    """게시물 하나의 자격 판정. 이 규칙은 여기 한 벌만 둔다 —
+    scripts/gen_li_source.py도 이 함수를 부른다.
+
+    반환: (kind, usable, basis_date, lag_days, push)
+    """
+    if slug:
+        src = pub.get(slug)
+        if src is None:
+            return '뉴스레터 링크(발행일 미상)', False, posted, None, False
+        lag = (datetime.date.fromisoformat(posted) - datetime.date.fromisoformat(src)).days
+        if lag > LAG_MAX:
+            return '재홍보', False, src, lag, True
+        return '신규 발행 알림', True, src, lag, False
+    if PROMO.search(text) or has_video:
+        return '행사·홍보', False, posted, None, True
+    if NUM.search(text):
+        return '수치 있는 자체 발화', True, posted, None, False
+    if PAST.search(text):
+        return '과거 회고', False, posted, None, False
+    return '논평·서술', False, posted, None, False
+
+
 def build():
     hist = io.open(HIST, encoding='utf-8').read()
     pub = publish_dates()
@@ -61,39 +87,25 @@ def build():
         posted = urn_date(aid)
         text = title + ' ' + desc
 
-        if slug:
-            src = pub.get(slug)
-            lag = ((datetime.date.fromisoformat(posted) - datetime.date.fromisoformat(src)).days
-                   if src else None)
-            if src is None:
-                kind, usable, basis = '뉴스레터 링크(발행일 미상)', False, posted
-            elif lag > LAG_MAX:
-                kind, usable, basis = '재홍보', False, src
-            else:
-                kind, usable, basis = '신규 발행 알림', True, src
-        else:
-            src, lag = None, None
-            if PROMO.search(text) or 'youtu' in seg[:2000]:
-                kind, usable, basis = '행사·홍보', False, posted
-            elif NUM.search(text):
-                kind, usable, basis = '수치 있는 자체 발화', True, posted
-            elif PAST.search(text):
-                kind, usable, basis = '과거 회고', False, posted
-            else:
-                kind, usable, basis = '논평·서술', False, posted
+        kind, usable, basis, lag, push = classify(
+            text, slug, posted, pub, has_video='youtu' in seg[:2000])
+        src = pub.get(slug) if slug else None
 
         rows.append({'id': 'L-' + posted.replace('-', '') + '-' + aid[-4:],
                      'activity': aid, 'posted': posted, 'slug': slug, 'source_date': src,
-                     'lag_days': lag, 'kind': kind, 'usable': usable, 'basis_date': basis,
+                     'lag_days': lag, 'kind': kind, 'usable': usable, 'push': push,
+                     'basis_date': basis,
                      'title': title[:400], 'desc': desc[:900],
                      'url': 'https://www.linkedin.com/feed/update/urn:li:activity:%s/' % aid})
 
     rows.sort(key=lambda r: r['basis_date'], reverse=True)
     data = {
         'note': ('링크드인 글의 시간축 자격. 기준일(basis_date)은 뉴스레터 링크가 있으면 그 원문 발행일, '
-                 '없으면 게시일이다. usable=true인 것만 판단의 근거로 인용한다.'),
+                 '없으면 게시일이다. usable=true인 것만 판단의 근거로 인용한다. '
+                 'push=true는 새 사실은 아니지만 「지금 무엇을 다시 미나」를 보는 별도 축이다.'),
         'rule': {'lag_max_days': LAG_MAX,
-                 'usable_kinds': ['신규 발행 알림', '수치 있는 자체 발화']},
+                 'usable_kinds': ['신규 발행 알림', '수치 있는 자체 발화'],
+                 'push_kinds': ['재홍보', '행사·홍보']},
         'generated_from': '대시보드/소셜 신호 히스토리.html',
         'counts': dict(collections.Counter(r['kind'] for r in rows)),
         'signals': rows,
@@ -102,7 +114,8 @@ def build():
     print('OK: 링크드인 %d건 -> %s' % (len(rows), OUT))
     for k, v in sorted(data['counts'].items(), key=lambda kv: -kv[1]):
         print('   %-22s %3d%s' % (k, v, '  (사용 가능)' if k in data['rule']['usable_kinds'] else ''))
-    print('   사용 가능 합계 %d건' % sum(1 for r in rows if r['usable']))
+    print('   사용 가능 합계 %d건 · 다시 미는 글(push) %d건'
+          % (sum(1 for r in rows if r['usable']), sum(1 for r in rows if r['push'])))
     return data
 
 
