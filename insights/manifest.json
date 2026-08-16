@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-16",
+ "generated": "2026-08-17",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -1315,6 +1315,28 @@
    "hash": "b22ab45a4f5d"
   },
   {
+   "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-12-10",
+   "path": "content/understanding/회계사/[251210] 10년 추정+6.5% 성장으로 낸 주당 113,024원 - 엘곰.md",
+   "hash": "3a5d77ad03c0"
+  },
+  {
+   "id": "und:회계사:2분기-영업이익-89조-연환산-1890조-vs-시총-1768조-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-07",
+   "path": "content/understanding/회계사/[260707] 2분기 영업이익 89조, 연환산 1,890조 vs 시총 1,768조 - 삼성전자 - 엘곰.md",
+   "hash": "a55b46fa3233"
+  },
+  {
    "id": "und:회계사:304-오른-뒤에도-61-저평가라는-계산-삼성전자-내재가치-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -1335,6 +1357,17 @@
    "date": "2026-07-16",
    "path": "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md",
    "hash": "28246f5a16b7"
+  },
+  {
+   "id": "und:회계사:DCF-결과-697조-시장가치의-143-주식가치-평가-4-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-07-04",
+   "path": "content/understanding/회계사/[240704] DCF 결과 697조, 시장가치의 143% - 주식가치 평가 4 - 삼성전자 - 엘곰.md",
+   "hash": "d3f6a8620317"
   },
   {
    "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
@@ -1359,6 +1392,116 @@
    "hash": "48585e2d7c85"
   },
   {
+   "id": "und:회계사:DS-영업이익률-275-SK하이닉스-5775-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-08-16",
+   "path": "content/understanding/회계사/[250816] DS 영업이익률 2.75%, SK하이닉스 57.75% - 엘곰.md",
+   "hash": "2d872262c9ea"
+  },
+  {
+   "id": "und:회계사:EBITDA와-CAPEX가-같아진-47조-주식가치-평가-1-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-06-29",
+   "path": "content/understanding/회계사/[240629] EBITDA와 CAPEX가 같아진 47조 - 주식가치 평가 1 - 삼성전자 - 엘곰.md",
+   "hash": "f6574e041079"
+  },
+  {
+   "id": "und:회계사:Forward-PER-5배-미만이-의미하는-것-삼성전자SK하이닉스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-10",
+   "path": "content/understanding/회계사/[260810] Forward PER 5배 미만이 의미하는 것 - 삼성전자·SK하이닉스 - 엘곰.md",
+   "hash": "798dd03164cb"
+  },
+  {
+   "id": "und:회계사:PEG-027로-본-저평가-Peter-Lynch-평가법-1-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-11-28",
+   "path": "content/understanding/회계사/[241128] PEG 0.27로 본 저평가 - Peter Lynch 평가법 1 - 삼성전자 - 엘곰.md",
+   "hash": "a17832daacdc"
+  },
+  {
+   "id": "und:회계사:같은-불황에도-운전자본이-갈랐다-삼성전자-48-vs-솔브레인-135-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-08-25",
+   "path": "content/understanding/회계사/[240825] 같은 불황에도 운전자본이 갈랐다 - 삼성전자 48% vs 솔브레인 135% - 엘곰.md",
+   "hash": "f537f1b5dad1"
+  },
+  {
+   "id": "und:회계사:공식-그대로면-113-고평가-PER-바꾸면-21-저평가-Peter-Lynch-평가법-2-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-11-28",
+   "path": "content/understanding/회계사/[241128] 공식 그대로면 1.13 고평가, PER 바꾸면 2.1 저평가 - Peter Lynch 평가법 2 - 삼성전자 - 엘곰.md",
+   "hash": "0756b72241dc"
+  },
+  {
+   "id": "und:회계사:메모리-부문-영업가치-458조-시총-487조와-마주하다-주식가치-평가-3-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-07-03",
+   "path": "content/understanding/회계사/[240703] 메모리 부문 영업가치 458조, 시총 487조와 마주하다 - 주식가치 평가 3 - 삼성전자 - 엘곰.md",
+   "hash": "32b2aa16b32d"
+  },
+  {
+   "id": "und:회계사:목표주가-평균-85만원-Simply-Wall-St는-10만원대-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-12-02",
+   "path": "content/understanding/회계사/[241202] 목표주가 평균 8.5만원, Simply Wall St는 10만원대 - 삼성전자 - 엘곰.md",
+   "hash": "fd16c73b8df4"
+  },
+  {
+   "id": "und:회계사:반도체만-떼어봐야-하는-이유-HBM과-파운드리-주식가치-평가-2-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-06-30",
+   "path": "content/understanding/회계사/[240630] 반도체만 떼어봐야 하는 이유, HBM과 파운드리 - 주식가치 평가 2 - 삼성전자 - 엘곰.md",
+   "hash": "85d6831069a2"
+  },
+  {
+   "id": "und:회계사:부문-4개로-쪼갠-Simple-DCF-지분가치-501조-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-04-30",
+   "path": "content/understanding/회계사/[250430] 부문 4개로 쪼갠 Simple DCF, 지분가치 501조 - 엘곰.md",
+   "hash": "473a5846aff4"
+  },
+  {
    "id": "und:회계사:빅테크-DCF-성장률은-한-번에-꺾지-않고-서서히-낮춘다-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -1381,6 +1524,50 @@
    "hash": "60a0388f461f"
   },
   {
+   "id": "und:회계사:삼성전자-SK하이닉스-마이크론의-재무지표-비교분석-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-04-13",
+   "path": "content/understanding/회계사/[250413] 삼성전자, SK하이닉스, 마이크론의 재무지표 비교분석 - 엘곰.md",
+   "hash": "41bfc8ba1a8c"
+  },
+  {
+   "id": "und:회계사:삼성전자-SK하이닉스-마이크론테크놀로지-엔비디아-재무지표-비교-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-02-02",
+   "path": "content/understanding/회계사/[250202] 삼성전자, SK하이닉스, 마이크론테크놀로지, 엔비디아 재무지표 비교 - 엘곰.md",
+   "hash": "885eeddf6ba8"
+  },
+  {
+   "id": "und:회계사:삼성전자와-SK하이닉스의-PBR비교의-시사점-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-06-27",
+   "path": "content/understanding/회계사/[240627] 삼성전자와 SK하이닉스의 PBR비교의 시사점 - 엘곰.md",
+   "hash": "098a43a4147a"
+  },
+  {
+   "id": "und:회계사:성장률-10면-23-저평가-Simple-DCF-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2025-02-23",
+   "path": "content/understanding/회계사/[250223] 성장률 10%면 23% 저평가 - Simple DCF - 삼성전자 - 엘곰.md",
+   "hash": "11dec90a8203"
+  },
+  {
    "id": "und:회계사:시총-1290조가-요구하는-영업이익은-61조다-DCF-역산으로-본-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -1390,6 +1577,50 @@
    "date": "2026-02-26",
    "path": "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md",
    "hash": "3285e839986e"
+  },
+  {
+   "id": "und:회계사:엔비디아-TSMC-삼성전자-SK하이닉스-투자지표-비교-Yahoofinancials-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-07-22",
+   "path": "content/understanding/회계사/[240722] 엔비디아, TSMC, 삼성전자, SK하이닉스 투자지표 비교 (Yahoofinancials) - 엘곰.md",
+   "hash": "c9b9734817b1"
+  },
+  {
+   "id": "und:회계사:엔비디아-TSMC-삼성전자-SK하이닉스의-투자지표-재무지표-비교-using-Yahoofinance-stock",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-08-30",
+   "path": "content/understanding/회계사/[240830] 엔비디아, TSMC, 삼성전자, SK하이닉스의 투자지표, 재무지표 비교 (using Yahoofinance stock comparison) - 엘곰.md",
+   "hash": "27a1ebcfd73d"
+  },
+  {
+   "id": "und:회계사:총자본-364조-vs-시총-334조-PBR-1-밑으로-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2024-10-26",
+   "path": "content/understanding/회계사/[241026] 총자본 364조 vs 시총 334조, PBR 1 밑으로 - 삼성전자 - 엘곰.md",
+   "hash": "8f84e2e3f46c"
+  },
+  {
+   "id": "und:회계사:판매장려금이-핵심감사사항인-이유-IFRS-15-변동대가-삼성전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-17",
+   "path": "content/understanding/회계사/[260417] 판매장려금이 핵심감사사항인 이유 - IFRS 15 변동대가 - 삼성전자 - 엘곰.md",
+   "hash": "af13cd54ab15"
   }
  ]
 }

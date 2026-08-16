@@ -89,7 +89,7 @@ LANES = [
     [('통합 인사이트', 'insights/gen_insightview.py'),
      ('주체 보드', 'insights/gen_entity_board.py musk'),
      ('지도', 'insights/gen_map.py')],
-    ['클러스터·좌표를 건드렸으면 <code>refresh_provenance.py</code> → <code>validate_insights.py</code> → <code>gen_dashboard.py</code>·<code>gen_map.py</code>.',
+    ['클러스터·좌표를 건드렸으면 <code>refresh_provenance.py</code> → <code>validate_insights.py</code> → <code>gen_map.py</code>. <b>클러스터는 인사이트 지도만 쓴다</b> — 통합 인사이트는 노트에서 나온다.',
      '<b>페이지마다 CSS 토큰을 새로 정하지 않는다.</b>']),
 
    ('⑥ 화면', 'out', '',
