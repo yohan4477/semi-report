@@ -430,6 +430,11 @@
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
   .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
