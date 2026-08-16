@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 # 제3자 해설 대시보드 공용 부품 — 카드 마크업·추가 CSS·페이지 조립.
-# 미국주식 사관학교와 부동산 두 페이지가 같은 규칙을 쓰게 한 벌만 둔다.
-# 기본 CSS는 언더스탠딩 대시보드의 <style>을 통째로 물려받는다(세 페이지가 한 벌로 보이게).
+# 부동산·미주사·금융·회계사·건강이 같은 규칙을 쓰게 한 벌만 둔다.
+# 기본 CSS는 언더스탠딩 대시보드의 <style>을 통째로 물려받는다(모든 페이지가 한 벌로 보이게).
+#
+# ── UI 규약 (새 대시보드·새 섹션을 만들 때도 그대로) ──────────────────────────
+# 1. 페이지를 열면 **첫 화면은 섹션 타일**이다. 그 앞에 무엇을 읽을지 고르는 관문 버튼을
+#    두지 않는다. 2026-08-17에 부동산만 관문을 하나 더 뒀다가 대시보드마다 첫 화면이
+#    달라졌다. 성격이 다른 글(통합 인사이트)도 관문이 아니라 **타일 하나**로 넣는다.
+# 2. 화면은 둘뿐이다 — 주제를 고르는 화면, 그 주제의 카드를 읽는 화면.
+# 3. 되돌아가는 길은 「← 이전」 하나. 주제를 고른 뒤에만 나온다.
+# 4. 카드가 없는 섹션은 <section data-fixed="1">로 표시한다. NAV_JS가 .ucard 대신
+#    .ins로 세고, 국내·해외 범위 필터를 타지 않는다.
+# 5. 조립은 반드시 render()를 거친다. render()가 check_ui()로 위 규약을 검사하고
+#    어기면 파일을 쓰지 않는다. 페이지마다 손으로 조립하지 않는다.
+# 새 대시보드는 gen_realestate_dashboard.py를 본떠 CARDS와 HEADER만 갈아 끼운다.
 import io, json, os, re, sys, urllib.parse
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
@@ -104,19 +116,11 @@ NAV_JS = '''<script>
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
-  var modes=document.querySelector('.mode-pick');
-  var layer=document.querySelector('.xlayer');
-  // 화면이 셋이다. 무엇을 읽을지 고르는 화면(mode===null), 주제를 고르는 화면,
-  // 그 주제의 카드를 읽는 화면. 한 화면에 다 쌓으면 무엇을 보고 있는지 흐려진다.
-  // 모드 버튼이 없는 페이지(금융·회계사 등)는 예전처럼 곧장 단일 포스트로 연다.
-  var mode = modes ? null : 'single';
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
   var only=null, picking=true;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
-    var single = (mode==='single');
-    if(modes) modes.hidden = (mode!==null);
-    if(layer) layer.hidden = (mode!=='cross');
-    if(tabs) tabs.hidden = !single;
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
@@ -138,9 +142,11 @@ NAV_JS = '''<script>
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
-      var live=s.querySelectorAll('.ucard:not([hidden])').length;
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
+                                              : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = !single || picking || live===0 || (only && s.id!==only);
+      s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
         o.hidden = live===0;
@@ -148,19 +154,16 @@ NAV_JS = '''<script>
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
-    box.hidden = !(single && picking);
+    box.hidden = !picking;
     var roll2=document.querySelector('.rollup');
-    // 롤업은 개별 포스트를 고른 뒤 주제 고르는 화면에서만 — 통합 인사이트 쪽 글이 아니다
-    if(roll2){ if(!single) roll2.hidden = true; else if(picking) roll2.hidden = false; }
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
     if(back){
-      // 돌아갈 데가 있을 때만 — 모드 버튼이 없는 페이지는 주제를 고른 뒤에야 나온다
-      back.hidden = modes ? (mode===null) : picking;
+      back.hidden = picking;
       var now=back.querySelector('.sb-now');
       if(now){
         var cur = only ? opt(only) : opt('');
         var t = cur && cur.querySelector('.st-t');
-        now.textContent = !single ? '통합 인사이트'
-                        : picking ? '개별 포스트' : (t ? t.textContent : '');
+        now.textContent = picking ? '' : (t ? t.textContent : '');
       }
     }
     box.querySelectorAll('button').forEach(function(b){
@@ -185,19 +188,10 @@ NAV_JS = '''<script>
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
   });
-  if(modes) modes.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(!b) return;
-    mode=b.dataset.mode; picking=true; only=null; apply();
-    window.scrollTo({top:0});
-  });
-  // 「← 이전」은 한 단계씩 거슬러 간다 — 카드 → 주제 고르기 → 무엇을 읽을지 고르기
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
-    if(mode==='single' && !picking){ picking=true; }
-    else if(modes){ mode=null; }
-    only=null; apply();
-    var to = (mode===null) ? modes : box;
-    if(to) to.scrollIntoView({behavior:'smooth', block:'start'});
+    picking=true; only=null; apply();
+    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   apply();
 })();
@@ -220,15 +214,21 @@ BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이�
         '<span class="sb-now"></span></div>')
 
 
-def sec_picker(secs, order, total, with_back=True):
+def sec_picker(secs, order, total, extra=None):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
-    층이 있는 페이지는 「← 이전」을 층보다 위에 둬야 해서(with_back=False) 조립기가 따로 꽂는다.
-    안 그러면 카드 아홉 장을 다 지나야 되돌아갈 버튼이 나온다."""
+    extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
+    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다."""
     tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
              '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
              '<span class="st-s">모든 섹션을 한 줄로</span>'
              '<span class="st-n cnt">%d</span></button>' % total]
+    if extra:
+        xid, xtitle, xsub, xn = extra
+        tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
+                     '<span class="st-num">00</span><span class="st-t">%s</span>'
+                     '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
+                     % (xid, xtitle, snip(xsub), xn))
     for sid in order:
         (_id, num, title, sub), cs = secs[sid]
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
@@ -236,30 +236,19 @@ def sec_picker(secs, order, total, with_back=True):
                      '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
                      % (sid, num, title, snip(sub), len(cs)))
     # 주제를 고르면 타일이 사라지고 카드만 남는다 — 돌아올 길을 같이 둔다
-    return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK if with_back else '')
+    return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK)
 
 
 def layer(secs, lede):
-    """교차 인사이트 층. 카드 마크업은 gen_insightview가 만들고, 갈래 머리만 여기서 그린다 —
-    단일 포스트 쪽 섹션과 같은 모양이어야 두 화면이 한 페이지로 읽힌다."""
+    """교차 인사이트를 섹션 하나로 만든다 — 다른 대시보드와 첫 화면이 같아야 하므로
+    따로 서는 층이 아니라 주제 타일 중 하나로 들어간다. 안의 갈래는 소제목으로만 나눈다."""
     n = sum(len(cs) for _t, _s, cs in secs)
     body = []
-    for i, (title, sub, cs) in enumerate(secs, 1):
-        body.append('<section class="xsec"><div class="sec-head"><span class="sec-num">%02d</span>'
-                    '<h2 class="sec-title">%s</h2></div>%s</section>'
-                    % (i, title, ''.join(cs)))
-    return ('<div class="xlayer" hidden><p class="xl-lede">%s</p>%s</div>'
+    for title, _sub, cs in secs:
+        body.append('<div class="xsec"><h3 class="xsec-t">%s</h3>%s</div>'
+                    % (title, ''.join(cs)))
+    return ('<p class="xl-lede">%s</p>%s'
             % ((lede % n) if '%d' in lede else lede, ''.join(body))), n
-
-
-MODE_PICK = '''<div class="mode-pick sgrid">
-    <button class="stile" data-mode="cross" aria-pressed="false">
-      <span class="st-num">✦</span><span class="st-t">통합 인사이트</span>
-      <span class="st-s">%s</span><span class="st-n">%d</span></button>
-    <button class="stile" data-mode="single" aria-pressed="false">
-      <span class="st-num">📄</span><span class="st-t">개별 포스트</span>
-      <span class="st-s">%s</span><span class="st-n">%d</span></button>
-  </div>'''
 
 
 def upload_date(card):
@@ -291,18 +280,28 @@ def rollup_for(key, cards, unit='편'):
     return _rl.build(notes, counts, unit)
 
 
+XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
+
+
 def render(cards, title, header, footer, out, rollup='', top='', top_css='',
-           top_n=0, top_sub='', main_sub=''):
-    """top이 있으면 첫 화면이 「교차 인사이트 / 단일 포스트」 두 버튼이 된다. 성격이 다른 두 글을
-    한 화면에 쌓으면 어느 것을 읽는지 흐려진다. 되돌아갈 길은 「← 이전」 하나로 단계를 거슬러 간다."""
+           top_n=0, top_sub='', top_title='통합 인사이트'):
+    """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
+    버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
+    눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
-    nav = sec_picker(secs, order, kr if scoped else len(cards), with_back=not top)
+    extra = (XSEC, top_title, top_sub, top_n) if top else None
+    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
     body = []
+    if top:
+        # 카드가 없는 섹션이라 data-fixed로 표시한다 — 국내·해외 범위 필터도 타지 않는다
+        body.append('<section id="%s" data-fixed="1"><div class="sec-head">'
+                    '<span class="sec-num">00</span><h2 class="sec-title">%s</h2></div>%s</section>'
+                    % (XSEC, top_title, top))
     for sid in order:
         (_, num, stitle, _sub), cs = secs[sid]
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
@@ -315,14 +314,30 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css='',
             '<title>%s</title>\n' % title + page_css
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
-            # 층이 없는 페이지는 예전 그대로 — 빈 줄만 새로 끼면 생성물 차이가 매번 남는다
             + '\n<div class="wrap">\n' + header
-            + (('\n\n  ' + MODE_PICK % (top_sub, top_n, main_sub, len(cards))
-                + '\n\n  ' + BACK + '\n\n  ' + top) if top else '')
             + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
+    check_ui(html, bool(top))
     io.open(out, 'w', encoding='utf-8').write(html)
-    print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order), out))
+    print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
     return html
+
+
+# 이 규약이 깨진 채로 페이지가 나가면 대시보드마다 첫 화면이 달라진다. 2026-08-17에 부동산만
+# 관문 버튼이 하나 더 생겨 그렇게 됐다. 사람이 눈으로 지키지 말고 여기서 막는다.
+def check_ui(html, has_top):
+    must = [('sec-pick', '섹션 타일'), ('class="sback"', '「← 이전」 버튼'),
+            ('class="stile is-all"', '전체 보기 타일')]
+    for key, name in must:
+        assert key in html, 'UI 규약 위반: %s이 없다' % name
+    assert 'mode-pick' not in html, \
+        'UI 규약 위반: 섹션 타일 앞에 관문 버튼을 두지 않는다 — 타일 하나로 넣는다'
+    if has_top:
+        assert 'data-sec="%s"' % XSEC in html, 'UI 규약 위반: 통합 인사이트가 타일로 안 섰다'
+    # 클래스가 'sec-pick sgrid'라 닫는 따옴표까지 찾으면 -1이 나와 문서 전체를 앞부분으로 본다
+    at = html.find('class="sec-pick')
+    assert at > 0, 'UI 규약 위반: 섹션 타일을 못 찾았다'
+    assert '<section id=' not in html[:at], \
+        'UI 규약 위반: 섹션 타일보다 먼저 나오는 본문 섹션이 있다'

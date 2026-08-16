@@ -43,8 +43,7 @@ GRPNAME = dict((g, t) for g, t, _s in GROUPS)
 # 부동산 묶음의 글은 공개 페이지에도 그대로 나간다(export 참조). 그 사실을 여기 적어 두지 않으면
 # 같은 판단을 두 번 읽거나, 저쪽에서 본 글을 여기서 새 글로 여긴다.
 ALSO = {'estate': ('이 묶음의 %d장은 <a href="부동산 대시보드.html">부동산 인사이트</a>에도 '
-                   '같은 내용으로 나갑니다. 저쪽에서는 첫 화면의 「통합 인사이트」 버튼을 누르면 '
-                   '개별 포스트와 갈라져 나옵니다.')}
+                   '같은 내용으로 나갑니다. 저쪽에서는 첫 화면 「통합 인사이트」 타일에 들어 있습니다.')}
 
 
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
@@ -178,17 +177,16 @@ def export_sections(gid):
 # :root에서 이름을 이어 붙이면 저쪽 기존 규칙의 값까지 바뀐다(.rlrep은 var(--card, var(--surface))를
 # 쓴다). 그래서 층 안에서만 잇는다. 카드 쪽 클래스 이름(.ins·.cid·.srcs·.tw)은 저쪽에 없다.
 EXPORT_CSS = '''
-  .xlayer{--bg:var(--paper);--card:var(--surface);--sub:var(--ink-2);--faint:var(--ink-3);
+  #sec-cross{--bg:var(--paper);--card:var(--surface);--sub:var(--ink-2);--faint:var(--ink-3);
         --accent2:var(--accent-ink);--soft:var(--accent-soft);
         --t-lbl:10.5px;--t-meta:12px;--t-body:13.5px;--t-lead:14.5px;--t-h2:19px;
-        --r:12px;--pad:16px 20px;
-        margin:0 0 30px}
-  .xlayer[hidden]{display:none}
-  .xl-lede{margin:0 0 6px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+        --r:12px;--pad:16px 20px}
+  .xl-lede{margin:10px 0 4px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
   .xl-lede a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line)}
-  /* 갈래 머리는 카드 쪽 페이지의 .sec-head를 그대로 쓴다 — 두 화면이 같은 모양이어야 한다 */
-  .xsec{margin-top:26px}
-  .xsec:first-of-type{margin-top:14px}
+  /* 섹션 안의 갈래 — 섹션 머리(.sec-head)보다 한 단 낮게 보여야 층이 안 헷갈린다 */
+  .xsec{margin-top:22px}
+  .xsec-t{margin:0 0 2px;font-size:12px;font-weight:800;letter-spacing:.06em;
+        text-transform:uppercase;color:var(--ink-3)}
 '''
 
 

@@ -1729,14 +1729,13 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
 sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
 import gen_insightview as iv  # noqa: E402
 
-XLEDE = ('여기 %d장은 개별 포스트 여러 편을 겹쳐야 나오는 판단이라 말한 사람이 따로 없습니다. '
+XLEDE = ('여기 %d장은 아래 해설 카드 여러 편을 겹쳐야 나오는 판단이라 말한 사람이 따로 없습니다. '
          '문장 옆 줄번호를 누르면 근거가 된 원문 그 줄로 갑니다.')
-XSUB = '여러 편을 겹쳐야 보이는 판단'
-MSUB = '해설 한 편을 그대로 옮긴 카드'
+XSUB = '해설 여러 편을 겹쳐야 보이는 판단'
 
 if __name__ == '__main__':
     top, _n = dc.layer(iv.export_sections('estate'), XLEDE)
     dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('realestate', CARDS, '편'),
               top=top, top_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS,
-              top_n=_n, top_sub=XSUB, main_sub=MSUB)
+              top_n=_n, top_sub=XSUB)

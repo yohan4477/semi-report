@@ -498,19 +498,11 @@
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
-  var modes=document.querySelector('.mode-pick');
-  var layer=document.querySelector('.xlayer');
-  // 화면이 셋이다. 무엇을 읽을지 고르는 화면(mode===null), 주제를 고르는 화면,
-  // 그 주제의 카드를 읽는 화면. 한 화면에 다 쌓으면 무엇을 보고 있는지 흐려진다.
-  // 모드 버튼이 없는 페이지(금융·회계사 등)는 예전처럼 곧장 단일 포스트로 연다.
-  var mode = modes ? null : 'single';
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
   var only=null, picking=true;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
-    var single = (mode==='single');
-    if(modes) modes.hidden = (mode!==null);
-    if(layer) layer.hidden = (mode!=='cross');
-    if(tabs) tabs.hidden = !single;
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
@@ -532,9 +524,11 @@
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
-      var live=s.querySelectorAll('.ucard:not([hidden])').length;
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
+                                              : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = !single || picking || live===0 || (only && s.id!==only);
+      s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
         o.hidden = live===0;
@@ -542,19 +536,16 @@
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
-    box.hidden = !(single && picking);
+    box.hidden = !picking;
     var roll2=document.querySelector('.rollup');
-    // 롤업은 개별 포스트를 고른 뒤 주제 고르는 화면에서만 — 통합 인사이트 쪽 글이 아니다
-    if(roll2){ if(!single) roll2.hidden = true; else if(picking) roll2.hidden = false; }
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
     if(back){
-      // 돌아갈 데가 있을 때만 — 모드 버튼이 없는 페이지는 주제를 고른 뒤에야 나온다
-      back.hidden = modes ? (mode===null) : picking;
+      back.hidden = picking;
       var now=back.querySelector('.sb-now');
       if(now){
         var cur = only ? opt(only) : opt('');
         var t = cur && cur.querySelector('.st-t');
-        now.textContent = !single ? '통합 인사이트'
-                        : picking ? '개별 포스트' : (t ? t.textContent : '');
+        now.textContent = picking ? '' : (t ? t.textContent : '');
       }
     }
     box.querySelectorAll('button').forEach(function(b){
@@ -579,19 +570,10 @@
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
   });
-  if(modes) modes.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(!b) return;
-    mode=b.dataset.mode; picking=true; only=null; apply();
-    window.scrollTo({top:0});
-  });
-  // 「← 이전」은 한 단계씩 거슬러 간다 — 카드 → 주제 고르기 → 무엇을 읽을지 고르기
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
-    if(mode==='single' && !picking){ picking=true; }
-    else if(modes){ mode=null; }
-    only=null; apply();
-    var to = (mode===null) ? modes : box;
-    if(to) to.scrollIntoView({behavior:'smooth', block:'start'});
+    picking=true; only=null; apply();
+    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   apply();
 })();
