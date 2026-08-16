@@ -49,9 +49,9 @@
 | ai-infra/compute | 23 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 10 |
-| ai-infra/business | 13 |
+| ai-infra/business | 14 |
 | ai-infra/power | 9 |
-| ai-infra/cooling | 2 |
+| ai-infra/cooling | 3 |
 | ai-infra/construction | 2 |
 | ai-models/rl | 4 |
 | ai-models/agents | 2 |
@@ -95,5 +95,7 @@
 <!-- 2026-08-17: [260420] GPU 클러스터 진짜 비용 계산법(총소유비용·굿풋 이론) 신규 변환 완료 — ai-infra/business 12→13, ai-infra/compute 22→23. ClusterMAX 등급 체계(골드·하이퍼스케일러·실버)와 TCO 8개 구성요소(GPU·저장장치·네트워크·컨트롤플레인·지원·굿풋·구축·디버깅), 대형 LLM 사전학습·멀티모달 RL 연구·추론 엔드포인트 3개 시나리오 실측 비교, TorchFT·AWS 체크포인트리스·TorchPass 장애 허용 프레임워크 비교, 굿풋 비용-마진 민감도 분석까지 전체 10개 섹션 완료. 클러스터 조달·가격 경제성이라는 사업 축은 business, GPU 클러스터 구성·장애 허용 소프트웨어 아키텍처 축은 compute로 이중 분류 — 컴퓨트 통합 리포트 문서별 요약에 추가 -->
 <!-- 2026-08-17: [260616] RL 시스템, 틈새를 조심하라(학습기와 생성기 처리량 맞추기) 신규 변환 완료 — ai-models/rl 3→4. 생성기·RL 환경·학습기 세 주체와 GRPO 알고리즘, PipelineRL 비동기 처리·정책 지연(궤적·토큰·환경 상태 3단계), 샌드박스 인프라, 처리량 매칭 프레임워크(트레이너/제너레이터 처리량 정량화·제약 요인), Qwen3-235B·GLM-5·GB300·slime 4개 실측 사례 연구, Prime RL·slime·Modal 소프트웨어 사용기, 오픈소스 RL 프레임워크 계보(OpenRLHF→slime/verl), RL 학습 TCO 분석(H200 $1.59/hr/GPU)과 Tinker 대비 2\~5배 비용 격차까지 전체 16개 섹션 완료. 순수 모델 아키텍처가 아니라 RL 학습 인프라·시스템 효율을 다루는 문서로 rl 카테고리 단일 분류 -->
 <!-- 2026-08-17: `semiconductors/process` 신규 하위 카테고리 신설 + [260614] SMIC N+3 금속 배선 간격 vs 인텔 18A(화웨이 기린 9030 STEEL 분해) 신규 변환 완료 — semiconductors/process 0→1. 기존 `semiconductors`가 EDA·IP·파운드리 산업 구조라는 소프트웨어·비즈니스 축을 다루는 것과 달리, 이 문서는 SemiAnalysis의 자체 칩 분해 연구소 STEEL이 실물 칩을 뜯어 측정한 금속 배선 간격·게이트 피치·셀 높이·트랜지스터 밀도(Bohr 밀도) 같은 공정 기술 자체가 핵심이라 신규 하위 카테고리로 분리. SMIC N+3 vs TSMC N6 vs 인텔 18A 금속 배선 층별 피치 비교표(M0\~M13), DUV SAQP/SADP 다중 패터닝과 DTCO(핀 개수 축소·COAG·SDB), 화웨이 τ 스케일링·LogicFolding 3D 적층 로드맵, 수출 통제의 실제 효과(SMIC N+2/N+3의 HLMC·화훙 라이선싱으로 인한 생태계 확산 리스크)까지 전체 13개 섹션 완료 -->
+<!-- 2026-08-17: [260115] 토큰 대 햄버거(콜로서스 2 vs 인엔아웃 물 발자국 대결) 신규 변환 완료 — ai-infra/cooling 2→3. 물 사용 회계 경계(직접 냉각·발전·칩 제조 vs 간접 건설·학습, 취수 vs 소비, 블루·그린·그레이워터)를 명시하고 콜로서스 2의 냉각(건식·습식·단열)·전력 생산·칩 제조 물 발자국을 직접 계산(연 3억 4,600만 갤런, WUE 0.51L/kWh), 인엔아웃 매장의 더블더블 버거 물 발자국을 서부 해안 지역 물 집약도로 재산정(개당 245갤런, 세간 추정 650\~700갤런보다 낮음, 매장 연 1억 4,700만 갤런), 토큰당 물 발자국(갤런당 890만 토큰, 버거 1개=Grok 하루 30회 668년 사용분)까지 전체 4개 섹션 완료 -->
+
 
 
