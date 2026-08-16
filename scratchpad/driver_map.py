@@ -31,6 +31,12 @@ def _linkify(line):
     return _CHIP_RE.sub(lambda m: _chain_label(m.group(1)), line)
 
 
+def _by_badge(key):
+    """누가 낸 값인가 배지. 우리 계산(ours)을 필자 주장으로 읽지 않게 값마다 붙인다."""
+    label, desc = dmd.BY[key]
+    return '<span class="dm-by dm-by--%s" title="%s">%s</span>' % (key, desc, label)
+
+
 def _group_chips_html(ax):
     """그 축이 쓰는 갈래만, GROUPS 순서대로 칩을 낸다. 세부 개수를 같이 보이고,
     그 축의 세부 드라이버 중 근거가 빈 것(basis=='none')이 있으면 경고 표시를 단다."""
@@ -96,10 +102,10 @@ def _axis_html(ax):
         mr = ax['market_read']
         head = ''.join('<th>%s</th>' % h for h in mr['head'])
         body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in mr['rows'])
-        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">시장이 요구하는 것 — 시점마다 다시 계산했다</p>'
+        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">시장이 요구하는 것 — 시점마다 다시 계산했다 %s</p>'
                    '<div class="dm-mr-wrap"><table class="dm-mr-tbl">'
                    '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-                   '<p class="dm-mr-note">%s</p></div>' % (head, body, mr['note']))
+                   '<p class="dm-mr-note">%s</p></div>' % (_by_badge('ours'), head, body, mr['note']))
 
     bench_html = ''
     if ax.get('benchmark'):
@@ -174,13 +180,54 @@ def _earnpath_html():
             '</div>' % (e['lede'], head, body, e['punch'], e['foot']))
 
 
+def _scenario_html():
+    """이 페이지의 결론 — 한 시점(최신)의 밸류에이션을 보수·기준·공격 세 갈래로
+    놓는다. 시장이 실제로 깔고 있는 값은 시나리오가 아니라 참고선이라 표 안에서
+    굵은 위쪽 경계선으로 확실히 구분해 마지막에 붙인다."""
+    s = dmd.SCENARIOS
+    head = ''.join('<th>%s</th>' % h for h in s['head'])
+    body_rows = []
+    for r in s['rows']:
+        tone = r.get('tone')
+        tone_cls = ' dm-sc-gap--%s' % tone if tone else ''
+        tds = []
+        for i, c in enumerate(r['cells']):
+            if i == 4:
+                tds.append('<td class="dm-sc-gap%s">%s</td>' % (tone_cls, c))
+            else:
+                tds.append('<td>%s</td>' % c)
+        tds.append('<td>%s</td>' % _by_badge(r['by']))
+        body_rows.append('<tr class="dm-sc-row">%s</tr>' % ''.join(tds))
+    m = s['market']
+    market_tds = ''.join('<td>%s</td>' % c for c in m['cells'])
+    body_rows.append('<tr class="dm-sc-market">%s<td>%s</td></tr>'
+                      % (market_tds, _by_badge(m['by'])))
+    return ('<div class="dm-scenario">'
+            '<div class="dm-scenario-head">'
+            '<p class="dm-scenario-kicker">이 시점의 평가 — 이 페이지의 결론</p>'
+            '<div class="dm-scenario-meta">'
+            '<span class="dm-scenario-asof">%s 기준</span>'
+            '<span class="dm-scenario-price">주가 %s</span>'
+            '<span class="dm-scenario-mcap">시가총액 %s</span>'
+            '</div></div>'
+            '<p class="dm-scenario-formula">%s</p>'
+            '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-scenario-note">%s</p>'
+            '<div class="dm-scenario-punch">%s</div>'
+            '</div>'
+            % (s['asof'], s['price'], s['mcap'], s['formula'], head, ''.join(body_rows),
+               s['note'], s['punch']))
+
+
 def _timeline_html():
     # kind: 'price'(적정가를 낸 평가) | 'ask'(역산 — 가격이 입력이라 값이 아니라
     # 요구 문장이다). 같은 줄의 값처럼 보이면 안 되므로 마름모·점선 상자로 따로 그린다.
     items = []
-    for date, axid, kind, v1, v2, tag in dmd.TIMELINE:
+    for date, axid, kind, v1, v2, tag, by in dmd.TIMELINE:
         no, name = _AXIS_LOOKUP.get(axid, ('—', axid))
         target = ' data-target="dm-axis-%s"' % axid if axid in _AXIS_IDS else ''
+        badge_html = _by_badge(by)
         if kind == 'ask':
             items.append(
                 '<div class="dm-tl-item dm-tl-ask"%s tabindex="0" role="button">'
@@ -188,8 +235,8 @@ def _timeline_html():
                 '<span class="dm-tl-date">%s</span>'
                 '<div class="dm-tl-ask-body">'
                 '<p class="dm-tl-ask-sent">%s <b>%s</b></p>'
-                '<span class="dm-tl-tag">%s</span>'
-                '</div></div>' % (target, date, v1, v2, tag))
+                '<span class="dm-tl-tag">%s</span> %s'
+                '</div></div>' % (target, date, v1, v2, tag, badge_html))
             continue
         cls = ' dm-tl-quote' if axid == 'quote' else ''
         tag_html = '<span class="dm-tl-tag">%s</span>' % tag if tag else ''
@@ -201,8 +248,8 @@ def _timeline_html():
             '<span class="dm-tl-axis">%s %s</span>'
             '<span class="dm-tl-v1">%s</span>'
             '%s'
-            '%s'
-            '</div>' % (cls, target, date, no, name, v1, v2_html, tag_html))
+            '%s %s'
+            '</div>' % (cls, target, date, no, name, v1, v2_html, tag_html, badge_html))
     return ('<div class="dm-timeline"><div class="dm-tl-track">%s</div></div>'
             '<p class="dm-tl-hint">점을 누르면 그 축 카드로 이동한다</p>' % ''.join(items))
 
@@ -233,6 +280,56 @@ DM_CSS = '''<style>
 .dm-title{font-size:20px;font-weight:850;letter-spacing:-.02em;margin:0 0 8px;color:var(--ink)}
 .dm-lede{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0;max-width:68ch}
 .dm-lede b{color:var(--ink)}
+
+/* ── 주체 배지 — 값마다 누가 낸 값인지 붙인다. ours가 가장 눈에 띈다 ── */
+.dm-by{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.02em;
+      padding:2px 8px;border-radius:999px;line-height:1.5;white-space:nowrap;cursor:help}
+.dm-by--author{background:var(--sunk);color:var(--ink-2);border:1px solid var(--line)}
+.dm-by--ours{background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent);
+            font-weight:850}
+.dm-by--ext{background:transparent;color:var(--ink-3);border:1px dashed var(--line)}
+.dm-by--market{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+
+/* ── 최신 시점 세 시나리오 — 이 페이지의 결론 ── */
+.dm-scenario{margin:0 0 22px;background:var(--surface);border:1px solid var(--line);
+            border-radius:12px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+.dm-scenario-head{margin:0 0 10px}
+.dm-scenario-kicker{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--accent-ink);
+                    margin:0 0 6px}
+.dm-scenario-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px}
+.dm-scenario-asof{font-size:16px;font-weight:850;color:var(--ink)}
+.dm-scenario-price,.dm-scenario-mcap{font-size:13px;font-weight:700;color:var(--ink-2)}
+.dm-scenario-formula{font-size:12px;line-height:1.6;color:var(--ink-3);margin:8px 0 14px;
+                     font-variant-numeric:tabular-nums}
+.dm-scenario-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-scenario-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+/* 표 첫 칸 왼쪽 여백을 0으로 두면 하이라이트가 글자에 겹친다. 8px를 준다 */
+.dm-scenario-tbl th{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);
+                    text-align:left;padding:5px 12px 7px 8px;border-bottom:1px solid var(--line);
+                    white-space:nowrap;vertical-align:top}
+.dm-scenario-tbl td{padding:8px 12px 8px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+.dm-scenario-tbl td:first-child{font-weight:800}
+.dm-sc-gap--low{color:var(--risk);font-weight:800}
+.dm-sc-gap--high{color:var(--good);font-weight:800}
+/* 시장 행은 시나리오가 아니라 시장이 깔고 있는 값이다 — 굵은 위 경계선으로 가른다 */
+.dm-sc-market{border-top:2px solid var(--ink);background:var(--sunk)}
+.dm-sc-market td{font-weight:800;border-bottom:0}
+.dm-scenario-note{font-size:11.5px;line-height:1.55;color:var(--ink-3);margin:10px 0 0;max-width:70ch}
+.dm-scenario-punch{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:12px 0 0;
+                   border-left:3px solid var(--warn);background:var(--warn-soft);
+                   border-radius:0 8px 8px 0;padding:10px 14px}
+.dm-scenario-punch b{color:var(--ink);font-weight:850}
+
+/* ── 지난 평가 (접힘) — 시간축·이익 경로 표는 결론이 아니라 근거라 뒤로 보낸다 ── */
+.dm-past{margin:0 0 24px;border:1px solid var(--line);border-radius:10px;
+        background:var(--surface);box-shadow:var(--shadow)}
+.dm-past-summary{cursor:pointer;list-style:none;font-size:13px;font-weight:800;color:var(--ink-2);
+                 padding:14px 16px}
+.dm-past-summary::-webkit-details-marker{display:none}
+.dm-past-summary::before{content:"▸ ";color:var(--ink-3)}
+.dm-past[open] .dm-past-summary::before{content:"▾ "}
+.dm-past-summary:hover{color:var(--ink)}
+.dm-past-body{padding:0 16px 16px}
 
 /* ── 시장 읽기 (역산 축만) ── */
 .dm-mr{margin:12px 0 0}
@@ -664,9 +761,13 @@ def render():
     parts.append('<div class="dm-wrap">')
     parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
-    parts.append(_timeline_html())
-    parts.append(_earnpath_html())
+    parts.append(_scenario_html())
     parts.append('<div class="dm-axes">%s</div>' % axes_html)
+    parts.append(
+        '<details class="dm-past">'
+        '<summary class="dm-past-summary">지난 평가 — 열다섯 달 동안 여섯 번, 값이 어떻게 움직였나</summary>'
+        '<div class="dm-past-body">%s%s</div>'
+        '</details>' % (_timeline_html(), _earnpath_html()))
     parts.append(
         '<div class="dm-modal-backdrop" id="dm-modal-backdrop" hidden>'
         '<div class="dm-modal" id="dm-modal" role="dialog" aria-modal="true" '
