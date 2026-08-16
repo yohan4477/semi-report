@@ -161,7 +161,7 @@ PYTHONIOENCODING=utf-8 python insights/gen_insightview.py  # 대시보드/통합
 PYTHONIOENCODING=utf-8 python insights/gen_entity_board.py # 대시보드/추적 - *.html
 ```
 
-클러스터·좌표를 건드렸으면 `refresh_provenance.py` → `validate_insights.py` → `gen_dashboard.py`·`gen_map.py`. 공유 CSS는 `insights/style.py`의 `BASE`다 — 페이지마다 토큰을 새로 정하지 않는다.
+클러스터·좌표를 건드렸으면 `refresh_provenance.py` → `validate_insights.py` → `gen_map.py`. **클러스터는 인사이트 지도만 쓴다** — 통합 인사이트는 노트에서 나오고 `gen_insightview.py`가 만든다. 공유 CSS는 `insights/style.py`의 `BASE`다 — 페이지마다 토큰을 새로 정하지 않는다.
 
 ## 5. 보고
 
