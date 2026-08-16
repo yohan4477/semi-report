@@ -57,6 +57,11 @@ FIG_CSS = '''
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
   .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
@@ -176,12 +181,23 @@ def slug(t):
     return 'card-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', t).strip('-')
 
 
-# SVG 화살촉 한 벌 — 그림마다 defs를 되풀이하지 않게 페이지에 한 번만 깐다
+# SVG 붓 한 벌 — 그림마다 defs를 되풀이하지 않게 페이지에 한 번만 깐다.
+# 화살촉과 해칭 둘이다. 해칭은 「여기가 잘린 면」을 표시한다 — 윤곽선만 있으면
+# 장기가 덩어리로만 보여서 단면인지 겉모습인지 구분이 안 된다.
 FIG_DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
-            '<marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" '
-                        # 마커는 defs 쪽 색을 물려받는다 — currentColor는 참조한 선의 색이 아니라서
+            # 마커는 defs 쪽 색을 물려받는다 — currentColor는 참조한 선의 색이 아니라서
             # 페이지 변수(--ink-3)를 직접 박는다
+            '<marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" '
             'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker>'
+            '<pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" '
+            'patternTransform="rotate(45)">'
+            '<line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" '
+            'stroke-opacity=".30"/></pattern>'
+            # 성긴 해칭 — 넓은 면에 촘촘한 해칭을 깔면 글씨를 먹는다
+            '<pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" '
+            'patternTransform="rotate(45)">'
+            '<line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" '
+            'stroke-opacity=".22"/></pattern>'
             '</defs></svg>')
 
 

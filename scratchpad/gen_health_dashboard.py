@@ -43,8 +43,10 @@ SEC_BRAIN = ('sec-brain', '02', '뇌 · 수면',
 # 왼쪽은 한 번 다치고 끝나는 급성, 오른쪽은 같은 반응이 되풀이되는 만성.
 # 두 그림에서 달라지는 것은 손상 구역(점선 타원)의 크기 하나다.
 FIG_INFLAM = '''<svg viewBox="0 0 640 262" role="img" aria-label="급성 염증과 만성 염증의 조직 단면 비교">
-  <rect x="18" y="34" width="286" height="184" rx="16" class="organ2"/>
-  <rect x="336" y="34" width="286" height="184" rx="16" class="organ2"/>
+  <rect x="18" y="34" width="286" height="184" rx="16" class="organ2 cut"/>
+  <rect x="18" y="34" width="286" height="184" rx="16" class="hatch-w"/>
+  <rect x="336" y="34" width="286" height="184" rx="16" class="organ2 cut"/>
+  <rect x="336" y="34" width="286" height="184" rx="16" class="hatch-w"/>
   <text class="t-lab" x="18" y="24">급성 염증 — 한 번 다치고 끝난다</text>
   <text class="t-lab" x="336" y="24">만성 염증 — 같은 반응이 5~10년</text>
 
@@ -87,7 +89,10 @@ FIG_ROUTE = '''<svg viewBox="0 0 640 356" role="img" aria-label="간·내장지�
   <text class="t-lab" x="18" y="22">몸통 단면 — 남은 에너지가 가는 곳</text>
   <text class="t-lab" x="372" y="22">동맥 벽 확대 — 그 결과</text>
 
-  <path class="body" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
+  <path class="body cut" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
+                        C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
+                        C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
+  <path class="hatch-w" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
                         C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
                         C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
   <path class="organ" d="M128 118 C 158 104, 208 108, 236 122 C 240 140, 226 158, 198 163
@@ -122,7 +127,8 @@ FIG_ROUTE = '''<svg viewBox="0 0 640 356" role="img" aria-label="간·내장지�
   <text class="t-bad" x="30" y="140">혈액을 떠돈다</text>
   <path class="flow" d="M120 132 C 150 120, 176 112, 194 96"/>
 
-  <path class="organ2" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
+  <path class="organ2 cut" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
+  <path class="hatch" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
   <path class="body" d="M382 128 C 470 108, 556 108, 610 128 L 610 226 C 556 246, 470 246, 382 226 Z"/>
   <text class="t-sm" x="496" y="182" text-anchor="middle">혈액이 흐르는 안쪽</text>
   <path fill="var(--fig-bad,#c2504a)" fill-opacity=".28" stroke="var(--fig-bad,#c2504a)" stroke-width="1.2"
@@ -234,17 +240,26 @@ FIG_SLEEP = '''<svg viewBox="0 0 640 300" role="img" aria-label="뇌 시상단�
   <text class="t-lab" x="18" y="22">뇌 시상단면 — 청소 통로</text>
   <text class="t-lab" x="352" y="22">하룻밤 수면 단계</text>
 
-  <path class="organ" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
+  <path class="organ cut" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
                          C 296 168, 276 190, 248 196 C 210 204, 150 206, 110 198
                          C 68 190, 40 178, 40 148 Z"/>
+  <path class="hatch-w" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
+                         C 296 168, 276 190, 248 196 C 210 204, 150 206, 110 198
+                         C 68 190, 40 178, 40 148 Z"/>
+  <!-- 뇌량 — 시상면에서 좌우 반구를 잇는 활 모양 띠. 이게 있어야 시상면으로 읽힌다 -->
+  <path fill="none" stroke="var(--fig-line,#9a8078)" stroke-width="2.2"
+        d="M96 150 C 104 116, 140 100, 178 104 C 208 107, 226 120, 232 136"/>
   <path class="lead-line" d="M74 106 C 96 92, 120 92, 138 104"/>
   <path class="lead-line" d="M150 82 C 174 72, 202 78, 216 94"/>
   <path class="lead-line" d="M226 116 C 248 112, 264 122, 268 138"/>
   <path class="organ2" d="M126 138 C 152 126, 190 128, 210 142 C 202 158, 168 164, 142 158 Z"/>
   <text class="t-sm" x="168" y="152" text-anchor="middle">뇌실</text>
-  <path class="organ2" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
+  <path class="organ2 cut" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
+  <path class="hatch" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
   <text class="t-sm" x="292" y="222">소뇌</text>
-  <path class="organ2" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
+  <path class="organ2 cut" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
+                          C 176 240, 178 214, 186 198 Z"/>
+  <path class="hatch" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
                           C 176 240, 178 214, 186 198 Z"/>
   <text class="t-sm" x="140" y="252">뇌간</text>
   <path class="flow" d="M92 168 C 118 150, 150 142, 178 140"/>

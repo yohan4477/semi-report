@@ -430,6 +430,11 @@
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
   .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
@@ -442,7 +447,7 @@
             --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
   }
 </style>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
 <div class="wrap">
   <header>
     <p class="eyebrow">건강 — 제3자 해설 아카이브</p>
@@ -460,13 +465,13 @@
 
   
 
-  
-
-  <div class="sec-pick sgrid"><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-inflam" aria-pressed="false"><span class="st-num">01</span><span class="st-t">만성 염증</span><span class="st-s">염증이 뭔지, 남은 칼로리가 그걸 어떻게 계속 켜 두는지, 숫자로는 어디서 보이는지</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-brain" aria-pressed="false"><span class="st-num">02</span><span class="st-t">뇌 · 수면</span><span class="st-s">치매를 왜 미리 알기 어려운지, 뇌가 씻기는 시간대는 언제인지</span><span class="st-n cnt">1</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 주제 다시 고르기</button><span class="sb-now"></span></div>
+  <div class="sec-pick sgrid"><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-inflam" aria-pressed="false"><span class="st-num">01</span><span class="st-t">만성 염증</span><span class="st-s">염증이 뭔지, 남은 칼로리가 그걸 어떻게 계속 켜 두는지, 숫자로는 어디서 보이는지</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-brain" aria-pressed="false"><span class="st-num">02</span><span class="st-t">뇌 · 수면</span><span class="st-s">치매를 왜 미리 알기 어려운지, 뇌가 씻기는 시간대는 언제인지</span><span class="st-n cnt">1</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
 
   <section id="sec-inflam"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">만성 염증</h2></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">염증 · 면역</span><h2 id="card-염증은-죄가-없다-그걸-계속-켜-두는-게-남은-칼로리다">염증은 죄가 없다. 그걸 계속 켜 두는 게 남은 칼로리다</h2><p class="uc-gain">급성과 만성이 어떻게 다른지, 그리고 살이 왜 그 자체로 염증인지.</p><div class="uc-meta"><span>이승훈 <b>서울대 신경과 교수</b></span><span>지식인사이드 EP.155 (1부)</span><span>2026-08-01</span><span>출처 1편</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">염증은 몸이 침입자와 싸울 때 나는 현상이다. 감기로 붓고 열이 오르는 고통도 균이 만드는 게 아니라 우리 편이 만든다. 이승훈 교수는 병을 만드는 쪽이 그 싸움에 딸려오는 <b>부수적 손상</b>이라고 정리한다. 그리고 그 손상을 5년 10년 켜 둔 채로 두는 흔한 원인이 <b>남은 칼로리</b>다. 혈관 쪽에서는 동맥경화로, 간 쪽에서는 지방간으로 나온다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>염증은 선천 면역이 일한 결과다.</b> 처음 보는 침입자에게도 곧바로 달려드는 1차 방어를 선천 면역이라 하고, 주인공은 대식 세포와 호중구다. 이들이 싸우는 자리가 붓고 열이 난다.</li><li><b>정상 조직도 같이 죽는다.</b> 불난 집을 끄면서 옆집에도 물을 뿌리고 출입을 막는 것과 같다. 넓게 다치면 그만큼 넓게 염증이 된다.</li><li><b>면역 세포에는 브레이크가 없다.</b> 회사 자본이 1억인데 5억을 달라 하고, 회사가 망하든 말든 제 프로젝트만 끝내려 든다는 게 그의 비유다. 다리가 끝장나도 신경 쓰지 않는다.</li><li><b>급성은 한 번 다치고 끝난다.</b> 만성은 뭐가 들어왔는지도 모르는 채 같은 반응을 되풀이한다. 5년 10년 지나면 장기가 조용히 망가지고, 그 과정에서 암·동맥경화증·뇌졸중이 나온다.</li></ul><figure class="uc-fig"><p class="fig-title">그림 1 · 조직 단면</p><svg viewBox="0 0 640 262" role="img" aria-label="급성 염증과 만성 염증의 조직 단면 비교">
-  <rect x="18" y="34" width="286" height="184" rx="16" class="organ2"/>
-  <rect x="336" y="34" width="286" height="184" rx="16" class="organ2"/>
+  <rect x="18" y="34" width="286" height="184" rx="16" class="organ2 cut"/>
+  <rect x="18" y="34" width="286" height="184" rx="16" class="hatch-w"/>
+  <rect x="336" y="34" width="286" height="184" rx="16" class="organ2 cut"/>
+  <rect x="336" y="34" width="286" height="184" rx="16" class="hatch-w"/>
   <text class="t-lab" x="18" y="24">급성 염증 — 한 번 다치고 끝난다</text>
   <text class="t-lab" x="336" y="24">만성 염증 — 같은 반응이 5~10년</text>
 
@@ -506,7 +511,10 @@
   <text class="t-lab" x="18" y="22">몸통 단면 — 남은 에너지가 가는 곳</text>
   <text class="t-lab" x="372" y="22">동맥 벽 확대 — 그 결과</text>
 
-  <path class="body" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
+  <path class="body cut" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
+                        C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
+                        C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
+  <path class="hatch-w" d="M196 40 C 152 42, 126 66, 120 104 C 113 146, 126 172, 124 208
                         C 122 258, 130 296, 134 330 L 262 330 C 266 296, 274 258, 272 208
                         C 270 172, 283 146, 276 104 C 270 66, 244 42, 196 40 Z"/>
   <path class="organ" d="M128 118 C 158 104, 208 108, 236 122 C 240 140, 226 158, 198 163
@@ -541,7 +549,8 @@
   <text class="t-bad" x="30" y="140">혈액을 떠돈다</text>
   <path class="flow" d="M120 132 C 150 120, 176 112, 194 96"/>
 
-  <path class="organ2" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
+  <path class="organ2 cut" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
+  <path class="hatch" d="M372 92 C 470 66, 560 66, 620 92 L 620 262 C 560 288, 470 288, 372 262 Z"/>
   <path class="body" d="M382 128 C 470 108, 556 108, 610 128 L 610 226 C 556 246, 470 246, 382 226 Z"/>
   <text class="t-sm" x="496" y="182" text-anchor="middle">혈액이 흐르는 안쪽</text>
   <path fill="var(--fig-bad,#c2504a)" fill-opacity=".28" stroke="var(--fig-bad,#c2504a)" stroke-width="1.2"
@@ -644,17 +653,26 @@
   <text class="t-lab" x="18" y="22">뇌 시상단면 — 청소 통로</text>
   <text class="t-lab" x="352" y="22">하룻밤 수면 단계</text>
 
-  <path class="organ" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
+  <path class="organ cut" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
                          C 296 168, 276 190, 248 196 C 210 204, 150 206, 110 198
                          C 68 190, 40 178, 40 148 Z"/>
+  <path class="hatch-w" d="M40 148 C 40 86, 96 44, 168 44 C 236 44, 288 78, 292 130
+                         C 296 168, 276 190, 248 196 C 210 204, 150 206, 110 198
+                         C 68 190, 40 178, 40 148 Z"/>
+  <!-- 뇌량 — 시상면에서 좌우 반구를 잇는 활 모양 띠. 이게 있어야 시상면으로 읽힌다 -->
+  <path fill="none" stroke="var(--fig-line,#9a8078)" stroke-width="2.2"
+        d="M96 150 C 104 116, 140 100, 178 104 C 208 107, 226 120, 232 136"/>
   <path class="lead-line" d="M74 106 C 96 92, 120 92, 138 104"/>
   <path class="lead-line" d="M150 82 C 174 72, 202 78, 216 94"/>
   <path class="lead-line" d="M226 116 C 248 112, 264 122, 268 138"/>
   <path class="organ2" d="M126 138 C 152 126, 190 128, 210 142 C 202 158, 168 164, 142 158 Z"/>
   <text class="t-sm" x="168" y="152" text-anchor="middle">뇌실</text>
-  <path class="organ2" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
+  <path class="organ2 cut" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
+  <path class="hatch" d="M236 200 C 268 194, 288 208, 284 228 C 278 246, 248 250, 230 238 Z"/>
   <text class="t-sm" x="292" y="222">소뇌</text>
-  <path class="organ2" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
+  <path class="organ2 cut" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
+                          C 176 240, 178 214, 186 198 Z"/>
+  <path class="hatch" d="M186 198 C 202 198, 208 216, 204 244 C 200 264, 188 268, 180 262
                           C 176 240, 178 214, 186 198 Z"/>
   <text class="t-sm" x="140" y="252">뇌간</text>
   <path class="flow" d="M92 168 C 118 150, 150 142, 178 140"/>
@@ -711,11 +729,19 @@
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
-  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
-  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  var modes=document.querySelector('.mode-pick');
+  var layer=document.querySelector('.xlayer');
+  // 화면이 셋이다. 무엇을 읽을지 고르는 화면(mode===null), 주제를 고르는 화면,
+  // 그 주제의 카드를 읽는 화면. 한 화면에 다 쌓으면 무엇을 보고 있는지 흐려진다.
+  // 모드 버튼이 없는 페이지(금융·회계사 등)는 예전처럼 곧장 단일 포스트로 연다.
+  var mode = modes ? null : 'single';
   var only=null, picking=true;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
+    var single = (mode==='single');
+    if(modes) modes.hidden = (mode!==null);
+    if(layer) layer.hidden = (mode!=='cross');
+    if(tabs) tabs.hidden = !single;
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
@@ -739,7 +765,7 @@
     document.querySelectorAll('section[id]').forEach(function(s){
       var live=s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || live===0 || (only && s.id!==only);
+      s.hidden = !single || picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
         o.hidden = live===0;
@@ -747,16 +773,19 @@
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
-    box.hidden = !picking;
+    box.hidden = !(single && picking);
     var roll2=document.querySelector('.rollup');
-    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    // 롤업은 개별 포스트를 고른 뒤 주제 고르는 화면에서만 — 통합 인사이트 쪽 글이 아니다
+    if(roll2){ if(!single) roll2.hidden = true; else if(picking) roll2.hidden = false; }
     if(back){
-      back.hidden = picking;
+      // 돌아갈 데가 있을 때만 — 모드 버튼이 없는 페이지는 주제를 고른 뒤에야 나온다
+      back.hidden = modes ? (mode===null) : picking;
       var now=back.querySelector('.sb-now');
       if(now){
         var cur = only ? opt(only) : opt('');
         var t = cur && cur.querySelector('.st-t');
-        now.textContent = picking ? '' : (t ? t.textContent : '');
+        now.textContent = !single ? '통합 인사이트'
+                        : picking ? '개별 포스트' : (t ? t.textContent : '');
       }
     }
     box.querySelectorAll('button').forEach(function(b){
@@ -781,10 +810,19 @@
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
   });
+  if(modes) modes.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    mode=b.dataset.mode; picking=true; only=null; apply();
+    window.scrollTo({top:0});
+  });
+  // 「← 이전」은 한 단계씩 거슬러 간다 — 카드 → 주제 고르기 → 무엇을 읽을지 고르기
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
-    picking=true; only=null; apply();
-    box.scrollIntoView({behavior:'smooth', block:'start'});
+    if(mode==='single' && !picking){ picking=true; }
+    else if(modes){ mode=null; }
+    only=null; apply();
+    var to = (mode===null) ? modes : box;
+    if(to) to.scrollIntoView({behavior:'smooth', block:'start'});
   });
   apply();
 })();
