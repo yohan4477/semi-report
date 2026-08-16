@@ -40,6 +40,11 @@ SECTIONS = (('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수
 ALLSEC = SECTIONS + (('etc', 'macro', '그 밖', ''),)
 GRPNAME = dict((g, t) for g, t, _s in GROUPS)
 
+# 부동산 묶음의 글은 공개 페이지에도 그대로 나간다(export 참조). 그 사실을 여기 적어 두지 않으면
+# 같은 판단을 두 번 읽거나, 저쪽에서 본 글을 여기서 새 글로 여긴다.
+ALSO = {'estate': ('이 묶음의 %d장은 <a href="부동산 대시보드.html">부동산 인사이트</a>에도 '
+                   '같은 내용으로 나갑니다. 저쪽에서는 해설 카드 아래가 아니라 맨 위 한 층에 따로 섭니다.')}
+
 
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
 KINDS = ((paths.BRIEFS, '브리핑', 'brief'),
@@ -131,6 +136,61 @@ def cards():
     return ''.join(out), per, bysec, mix
 
 
+def export(gid):
+    """묶음 하나의 카드를 다른 대시보드가 그대로 실을 수 있게 조각으로 내준다.
+
+    본문은 insights/synth·briefs의 .md 한 벌뿐이다. 저쪽 생성기에 글을 옮겨 적으면 두 벌이 되고,
+    한쪽만 고친 날부터 어느 것이 맞는지 알 수 없게 된다. 그래서 마크업까지 여기서 만든다.
+    """
+    secs = [s for s, g, _t, _sub in ALLSEC if g == gid]
+    got = []
+    for d, kind, tab in KINDS:
+        for p in sorted(glob.glob(os.path.join(d, '*.md'))):
+            meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
+            if meta.get('section') not in secs:
+                continue
+            meta.setdefault('headline', os.path.basename(p)[:-3])
+            got.append((meta.get('as_of', ''), one(meta, body, tab, kind)))
+    got.sort(key=lambda t: t[0], reverse=True)   # 새 판단이 위로
+    return [h for _a, h in got]
+
+
+def export_block(gid, title, lede):
+    """카드 조각을 층 하나로 묶는다 — 아래 해설 카드와 섞이지 않게 겉을 달리한다.
+
+    lede에 %d가 있으면 카드 수를 넣는다. 문구에 숫자를 손으로 적어 두면 글이 늘어난 날 어긋난다.
+    """
+    got = export(gid)
+    return ('<div class="xlayer"><div class="xl-head"><span class="xl-num">✦</span>'
+            '<h2>%s</h2><span class="xl-n">%d</span></div>'
+            '<p class="xl-lede">%s</p>%s</div>'
+            % (nl.esc(title), len(got), (lede % len(got)) if '%d' in lede else lede,
+               ''.join(got))), len(got)
+
+
+# 다른 페이지에 실을 때 같이 넘기는 CSS.
+# 두 페이지는 색 이름이 다르다(--paper·--surface·--ink-2 vs --bg·--card·--sub).
+# :root에서 이름을 이어 붙이면 저쪽 기존 규칙의 값까지 바뀐다(.rlrep은 var(--card, var(--surface))를
+# 쓴다). 그래서 층 안에서만 잇는다. 카드 쪽 클래스 이름(.ins·.cid·.srcs·.tw)은 저쪽에 없다.
+EXPORT_CSS = '''
+  .xlayer{--bg:var(--paper);--card:var(--surface);--sub:var(--ink-2);--faint:var(--ink-3);
+        --accent2:var(--accent-ink);--soft:var(--accent-soft);
+        --t-lbl:10.5px;--t-meta:12px;--t-body:13.5px;--t-lead:14.5px;--t-h2:19px;
+        --r:12px;--pad:16px 20px;
+        margin:0 0 30px;padding:18px 20px 22px;border-radius:14px;
+        background:var(--sunk);border:1px solid var(--line)}
+  .xl-head{display:flex;align-items:baseline;gap:10px;padding-bottom:8px;
+        border-bottom:1px solid var(--line)}
+  .xl-num{font-size:13px;color:var(--cross)}
+  .xl-head h2{font-size:17px;font-weight:850;letter-spacing:-.02em;margin:0;color:var(--ink)}
+  .xl-n{margin-left:auto;font-size:12px;font-weight:800;color:var(--ink-3);
+        font-variant-numeric:tabular-nums}
+  .xl-lede{margin:10px 0 4px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .xl-lede a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line)}
+  @media (max-width:640px){.xlayer{padding:15px 14px 18px;border-radius:12px}}
+'''
+
+
 GUIDE = ('<div class="guide">'
          '<div class="g-brief"><b>브리핑 %d</b>'
          '<p>한 주제의 지금 상태를 모아 둔 것. 판단하지 않고 나온 숫자와 갈리는 지점만 정리한다.</p></div>'
@@ -156,10 +216,12 @@ def sectiles(bysec, bykindsec):
         if not rows:
             continue
         # 큰 묶음 이름을 한 줄 띄워 준다 — 이게 없으면 여섯 장이 다 같은 급으로 보인다
+        gn = sum(bysec[s[0]] for s in rows)
         tiles.append('<div class="sgrp"><b>%s</b><span>%s</span>'
                      '<span class="sg-n">%d</span></div>'
-                     % (nl.esc(gtitle), nl.esc(gsub),
-                        sum(bysec[s[0]] for s in rows)))
+                     % (nl.esc(gtitle), nl.esc(gsub), gn))
+        if gid in ALSO:
+            tiles.append('<p class="sg-also">%s</p>' % (ALSO[gid] % gn))
         for sid, _g, title, sub in rows:
             num += 1
             mix = ' · '.join('%s %d' % (k, bykindsec.get((t, sid), 0))
@@ -189,7 +251,7 @@ def tabs(per):
 def build():
     body, per, bysec, mix = cards()
     n = sum(per.values())
-    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CSS)
+    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS)
                 .replace('__GUIDE__', guide(per))
                 .replace('__TABS__', '<div class="tabbar">%s</div>%s'
                          % (tabs(per), sectiles(bysec, mix)))
@@ -200,7 +262,9 @@ def build():
     print('OK: %s -> %s' % (' · '.join('%s %d' % (k, per[t]) for _d, k, t in KINDS if per.get(t)), OUT))
 
 
-CSS = r'''
+# 카드 한 장을 그리는 규칙만 따로 세운다. 부동산 대시보드가 같은 카드를 그대로 싣기 때문이다
+# (export 참조). 아래 CSS 쪽 규칙까지 넘기면 .stile·.sgrid 이름이 겹쳐 그쪽 주제 타일을 덮어쓴다.
+CARD_CSS = r'''
   .ins{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
        border-radius:var(--r);padding:var(--pad);margin-top:12px;box-shadow:var(--shadow)}
   .ins>summary{list-style:none;cursor:pointer;position:relative;padding-right:26px}
@@ -221,6 +285,56 @@ CSS = r'''
   .body b{color:var(--ink)}
   .cite{font-size:.72em;font-weight:800;color:var(--accent);text-decoration:none;
         vertical-align:.28em;margin-left:2px;padding:0 3px;border-radius:4px;background:var(--sunk)}
+  .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+  .srcs>summary{cursor:pointer;font-size:var(--t-meta);font-weight:700;color:var(--sub);
+        list-style:none}
+  .srcs>summary::-webkit-details-marker{display:none}
+  .srcs>summary::before{content:"📄 ";opacity:.7}
+  .srcs ul{margin:8px 0 0;padding-left:18px}
+  .srcs li{font-size:var(--t-meta);line-height:1.8}
+  .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
+  .srcs a:hover{color:var(--accent)}
+
+  /* 종류마다 색을 달리한다 — 브리핑은 현황, 교차 인사이트는 판단이라 읽는 자세가 다르다 */
+  .ins[data-kind="brief"]{border-left-color:var(--brief)}
+  .ins[data-kind="brief"] .cid{color:var(--brief)}
+  .ins[data-kind="brief"] .bsec{color:var(--brief)}
+  .ins[data-kind="brief"] .cite{color:var(--brief)}
+  .ins[data-kind="cross"]{border-left-color:var(--cross)}
+  .ins[data-kind="cross"] .cid{color:var(--cross)}
+  .ins[data-kind="cross"] .bsec{color:var(--cross)}
+  .ins[data-kind="cross"] .cite{color:var(--cross)}
+
+  /* 절이 이어 붙으면 어디서 화제가 바뀌는지 안 보인다 — 선을 하나 긋는다 */
+  .body .bsec{position:relative;border-top:1px solid var(--line);
+        margin:20px 0 8px;padding-top:14px}
+  .body .bsec:first-child{border-top:0;margin-top:6px;padding-top:0}
+  /* 표 — 좁은 화면에서는 표만 옆으로 밀린다 */
+  .tw{overflow-x:auto;margin:8px 0 2px;-webkit-overflow-scrolling:touch}
+  .body table{width:100%;border-collapse:collapse;font-size:var(--t-meta);
+        background:var(--card)}
+  .body th{text-align:left;font-weight:800;color:var(--faint);white-space:nowrap;
+        border-bottom:1px solid var(--line);padding:7px 12px 7px 0;
+        text-transform:uppercase;letter-spacing:.03em;font-size:var(--t-lbl)}
+  .body td{color:var(--sub);line-height:1.6;vertical-align:top;
+        border-bottom:1px solid var(--line);padding:8px 12px 8px 0}
+  .body tbody tr:last-child td{border-bottom:0}
+  .body td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+  .body td:nth-child(2){font-variant-numeric:tabular-nums}
+  .body td:last-child{color:var(--faint);font-size:var(--t-lbl);line-height:1.5}
+
+  /* 좁은 화면 — 글이 화면 가장자리에 붙으면 읽기 힘들다 */
+  @media (max-width:640px){
+    .ins{padding:15px 16px;border-radius:10px}
+    .body ul{padding-left:17px;margin:6px 0}
+    .body li{margin-bottom:7px}
+    .body p{margin:6px 0}
+    .tw{margin-left:-16px;margin-right:-16px;padding:0 16px}
+    .body td:first-child{white-space:normal}
+  }
+'''
+
+CSS = r'''
   /* 탭은 스크롤해도 따라온다 — 긴 카드 안에서 종류·주제를 다시 고르려고 위로 올라가지 않게 */
   .tabbar{position:sticky;top:0;z-index:5;margin:16px 0 6px;padding:8px 0 6px;
         background:var(--bg);border-bottom:1px solid var(--line)}
@@ -264,22 +378,9 @@ CSS = r'''
   .sgrp>b{font-size:var(--t-body);font-weight:800;color:var(--ink);letter-spacing:-.01em}
   .sgrp>span{font-size:var(--t-lbl);color:var(--faint)}
   .sg-n{margin-left:auto;font-weight:800;color:var(--faint);font-variant-numeric:tabular-nums}
-  .srcs{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
-  .srcs>summary{cursor:pointer;font-size:var(--t-meta);font-weight:700;color:var(--sub);
-        list-style:none}
-  .srcs>summary::-webkit-details-marker{display:none}
-  .srcs>summary::before{content:"📄 ";opacity:.7}
-  .srcs ul{margin:8px 0 0;padding-left:18px}
-  .srcs li{font-size:var(--t-meta);line-height:1.8}
-  .srcs a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
-  .srcs a:hover{color:var(--accent)}
 
-  /* 좁은 화면 — 글이 화면 가장자리에 붙으면 읽기 힘들다 */
+  /* 좁은 화면 — 페이지 부품 쪽만. 카드 쪽 규칙은 CARD_CSS 안에 같이 있다 */
   @media (max-width:640px){
-    .ins{padding:15px 16px;border-radius:10px}
-    .body ul{padding-left:17px;margin:6px 0}
-    .body li{margin-bottom:7px}
-    .body p{margin:6px 0}
     .guide{gap:6px}
     .guide div{padding:10px 13px}
     .ihead{gap:7px}
@@ -288,8 +389,6 @@ CSS = r'''
     .stile{padding:11px 12px 10px}
     .st-s{display:none}
     .st-mix{margin-top:4px}
-    .tw{margin-left:-16px;margin-right:-16px;padding:0 16px}
-    .body td:first-child{white-space:normal}
   }
 
   /* 종류 묶음과 그 안의 주제 섹션 */
@@ -308,33 +407,11 @@ CSS = r'''
   .igrp{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
         border:1px solid var(--line);border-radius:999px;padding:1px 7px}
 
-  /* 종류마다 색을 달리한다 — 브리핑은 현황, 교차 인사이트는 판단이라 읽는 자세가 다르다 */
-  .ins[data-kind="brief"]{border-left-color:var(--brief)}
-  .ins[data-kind="brief"] .cid{color:var(--brief)}
-  .ins[data-kind="brief"] .bsec{color:var(--brief)}
-  .ins[data-kind="brief"] .cite{color:var(--brief)}
-  .ins[data-kind="cross"]{border-left-color:var(--cross)}
-  .ins[data-kind="cross"] .cid{color:var(--cross)}
-  .ins[data-kind="cross"] .bsec{color:var(--cross)}
-  .ins[data-kind="cross"] .cite{color:var(--cross)}
-
-  /* 절이 이어 붙으면 어디서 화제가 바뀌는지 안 보인다 — 선을 하나 긋는다 */
-  .body .bsec{position:relative;border-top:1px solid var(--line);
-        margin:20px 0 8px;padding-top:14px}
-  .body .bsec:first-child{border-top:0;margin-top:6px;padding-top:0}
-  /* 표 — 좁은 화면에서는 표만 옆으로 밀린다 */
-  .tw{overflow-x:auto;margin:8px 0 2px;-webkit-overflow-scrolling:touch}
-  .body table{width:100%;border-collapse:collapse;font-size:var(--t-meta);
-        background:var(--card)}
-  .body th{text-align:left;font-weight:800;color:var(--faint);white-space:nowrap;
-        border-bottom:1px solid var(--line);padding:7px 12px 7px 0;
-        text-transform:uppercase;letter-spacing:.03em;font-size:var(--t-lbl)}
-  .body td{color:var(--sub);line-height:1.6;vertical-align:top;
-        border-bottom:1px solid var(--line);padding:8px 12px 8px 0}
-  .body tbody tr:last-child td{border-bottom:0}
-  .body td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
-  .body td:nth-child(2){font-variant-numeric:tabular-nums}
-  .body td:last-child{color:var(--faint);font-size:var(--t-lbl);line-height:1.5}
+  /* 같은 글이 다른 페이지에도 실린다는 표시 — 타일 화면에서 먼저 보이게 묶음 줄에 붙인다 */
+  .sg-also{grid-column:1/-1;margin:2px 0 0;font-size:var(--t-lbl);color:var(--faint);
+        line-height:1.6}
+  .sg-also a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line)}
+  .sg-also a:hover{border-bottom-color:var(--accent)}
 
   /* 페이지 안내 — 두 종류가 무엇인지 먼저 알려 준다 */
   .guide{display:grid;gap:8px;margin:14px 0 2px}

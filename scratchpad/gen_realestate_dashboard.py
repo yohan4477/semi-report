@@ -1724,5 +1724,18 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
           '  요약은 <code>content/understanding/부동산/</code>, '
           '페이지 생성은 <code>scratchpad/gen_realestate_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
+# 교차 인사이트 층. 본문은 insights/synth·briefs의 .md 한 벌뿐이고 마크업까지 저쪽이 만든다 —
+# 여기에 글을 옮겨 적으면 두 벌이 되고 한쪽만 고친 날부터 어느 것이 맞는지 알 수 없게 된다.
+sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
+import gen_insightview as iv  # noqa: E402
+
+XTITLE = '겹쳐 봐야 보이는 것'
+XLEDE = ('아래 섹션의 카드는 해설 한 편을 그대로 옮긴 것입니다. 여기 %d장은 그 카드 여러 편을 '
+         '겹쳐야 나오는 판단이라 말한 사람이 따로 없습니다. 문장 옆 줄번호를 누르면 근거가 된 '
+         '원문 그 줄로 갑니다.')
+
 if __name__ == '__main__':
-    dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('realestate', CARDS, '편'))
+    top, _n = iv.export_block('estate', XTITLE, XLEDE)
+    dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT,
+              rollup=dc.rollup_for('realestate', CARDS, '편'),
+              top=top, top_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS)

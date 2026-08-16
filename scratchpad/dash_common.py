@@ -243,7 +243,9 @@ def rollup_for(key, cards, unit='편'):
     return _rl.build(notes, counts, unit)
 
 
-def render(cards, title, header, footer, out, rollup=''):
+def render(cards, title, header, footer, out, rollup='', top='', top_css=''):
+    """top은 섹션 위에 따로 서는 층이다(교차 인사이트 등). 카드 목록·주제 타일과 섞이지 않는다 —
+    NAV_JS는 section[id]와 .ucard만 여닫으므로 층은 무엇을 골라도 그대로 남는다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
@@ -257,11 +259,16 @@ def render(cards, title, header, footer, out, rollup=''):
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2></div>%s</section>'
                     % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
+    page_css = css()
+    if top_css:
+        page_css = page_css.replace('</style>', top_css + '</style>')
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-            '<title>%s</title>\n' % title + css()
+            '<title>%s</title>\n' % title + page_css
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
-            + '\n<div class="wrap">\n' + header + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
+            # 층이 없는 페이지는 예전 그대로 — 빈 줄만 새로 끼면 생성물 차이가 매번 남는다
+            + '\n<div class="wrap">\n' + header + ('\n\n  ' + top if top else '')
+            + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
     io.open(out, 'w', encoding='utf-8').write(html)

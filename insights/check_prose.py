@@ -38,9 +38,8 @@ def sections(body):
             out[cur].append(line.strip())
     return out
 
-# 용어가 아니라 문장을 망가뜨리는 것들 — 어느 회사인지 모르면 문장이 성립하지 않고,
-# 다른 분야 비유는 이 문서의 용어가 아니다
-BANNED = ['벤더', '진영', '커스텀 실리콘', '헤지', '익스포저']
+# 금지어 목록은 2026-08-17에 걷어냈다. 낱말을 세는 방식은 「서진영」을 진영으로 잡는 식의
+# 오탐을 계속 냈고, 정작 글을 망가뜨리는 밀도·누락은 못 잡았다. 대신 P8~P11로 옮겼다.
 
 REF = re.compile(r'\(\s*A-\d{6}-\d{2}(?:\s*,\s*A-\d{6}-\d{2})*\s*\)')
 FM = re.compile(r'^---\n.*?\n---\n', re.DOTALL)
@@ -73,12 +72,38 @@ def load_glossary():
             if not k.startswith('_')}
 
 
-def check_banned(text, where):
-    # 앞에 한글이 붙어 있으면 다른 낱말이다 — 사람 이름 「서진영」을 진영 진영으로
-    # 잡아서 부동산 노트가 통째로 FAIL 났다
-    for w in BANNED:
-        if re.search(r'(?<![가-힣])' + re.escape(w), text):
-            add('FAIL', where, 'P1', '금지어 "%s" — 어느 회사인지 밝히거나 뜻을 그대로 쓴다' % w)
+def check_density(text, where):
+    """P8~P11 — 낱말이 아니라 밀도를 본다.
+
+    금지어를 세던 자리를 대신한다. 2026-08-17 건강 대시보드를 쓰면서 드러난 것들이다.
+    대시 14개, 「A가 아니라 B」 대구 14회, 문장 속 볼드가 그대로 나갔는데 검사기는
+    전부 통과시켰다. 낱말이 아니라 되풀이가 글을 AI 문장으로 만든다."""
+    paras = [p for p in (text or '').split('\n') if p.strip()]
+    if not paras:
+        return
+    dash = text.count('—')
+    if dash > len(paras) * 0.5:
+        add('WARN', where, 'P8',
+            'em dash가 %d개 (문단 %d개) — 쉼표·괄호·문장 분리로 바꾼다' % (dash, len(paras)))
+    contrast = len(re.findall(r'[가-힣]\s*(?:가|이)\s+아니라', text))
+    if contrast > 2:
+        add('WARN', where, 'P9',
+            '「A가 아니라 B」 대구가 %d회 — 문서당 2회까지다' % contrast)
+    for s in sentences(text):
+        if s.count(',') >= 4:
+            add('WARN', where, 'P11',
+                '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
+
+
+def check_bold(raw, where):
+    """P10 — 문장 속 볼드. 태그를 떼기 전 원본에서 센다.
+
+    항목 머리말 볼드는 스캔을 돕지만, 한 문단에서 두 번을 넘으면 강조가 강조를 지운다."""
+    bold = raw.count('<b>') + raw.count('<strong>')
+    blocks = raw.count('<li') + raw.count('<p ') + raw.count('<p>')
+    if blocks and bold > blocks * 2:
+        add('WARN', where, 'P10',
+            '볼드 %d개 / 문단·항목 %d개 — 항목 머리말만 남기고 본문 안 강조는 뺀다' % (bold, blocks))
 
 
 def check_glossary(text, where, gloss):
@@ -185,21 +210,8 @@ def check_head(meta, sec, where):
 
 DASH_DIR = os.path.join(paths.ROOT, '대시보드')
 
-# 검사기를 붙인 날(2026-08-17) 이미 금지어가 들어 있던 대시보드. 이 장들의 FAIL만
-# WARN으로 내린다. 목록에 없는 장은 처음부터 FAIL이다 — 새로 쓰는 글이 바로 막히는
-# 것이 이 검사기를 붙인 이유라서 목록을 늘리지 않는다. 비우는 것이 목표다.
-# 한 장을 고칠 때마다 여기서 지운다.
-DASH_BACKLOG = {
-    'SemiAnalysis 대시보드.html',
-    '금융 대시보드.html',
-    '미국주식 사관학교 대시보드.html',
-    '부동산 대시보드.html',
-    '소셜 신호 히스토리.html',
-    '언더스탠딩 대시보드.html',
-    '인사이트 지도.html',
-    '추적 - 일론 머스크.html',
-    '통합 인사이트.html',
-}
+# 금지어를 걷어내면서 DASH_BACKLOG도 같이 없앴다. 대시보드에서 나오는 지적은 전부
+# WARN이라 예외 목록을 둘 이유가 사라졌다.
 
 # 대시보드 산문에서 걷어내야 하는 것. 눈에 보이는 글만 남긴다.
 _TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
@@ -242,16 +254,11 @@ def check_dashboards(gloss):
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)
-        before = len(findings)
-        check_banned(body, where)
+        check_density(body, where)
         check_length(body, where)
         check_translationese(body, where)
-        # 기존 목록에 있는 장만 FAIL을 WARN으로 내린다. 목록 밖은 처음부터 FAIL이다.
-        if where in DASH_BACKLOG:
-            for i in range(before, len(findings)):
-                lv, w, rule, msg = findings[i]
-                if lv == 'FAIL':
-                    findings[i] = ('WARN', w, rule, msg + ' [기존 목록]')
+        # 볼드는 태그를 떼기 전 원본에서 센다
+        check_bold(io.open(p, encoding='utf-8').read(), where)
     return paths_
 
 
@@ -268,7 +275,7 @@ def main():
     for p in notes:
         where = os.path.basename(p)
         body = strip_refs(io.open(p, encoding='utf-8').read())
-        check_banned(body, where)
+        check_density(body, where)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
@@ -279,7 +286,7 @@ def main():
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
         meta, _ = parse_synth(raw)
-        check_banned(body, where)
+        check_density(body, where)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
@@ -293,7 +300,7 @@ def main():
         meta, mdbody = parse_synth(raw)
         sec = sections(strip_refs(raw)) if meta else sections(body)
         names = [n for n in sec.keys()]
-        check_banned(body, where)
+        check_density(body, where)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
