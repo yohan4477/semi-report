@@ -54,7 +54,7 @@
 | ai-infra/cooling | 3 |
 | ai-infra/construction | 2 |
 | ai-models/rl | 4 |
-| ai-models/agents | 2 |
+| ai-models/agents | 3 |
 | ai-models | 2 |
 | robotics | 1 |
 | semiconductors | 1 |
@@ -101,3 +101,5 @@
 
 
 
+
+<!-- 2026-08-17: `ai-models/agents` 2→3 — [260528] 재미로 미스컴파일 찾기 반영. 변환 에이전트가 동시 작업 중이던 공유 파일 충돌을 피해 후속 갱신을 건너뛴 것을 메인 세션이 마무리. 이 문서는 컴파일러 버그 사냥처럼 보이지만 실제 내용은 Codex 협업 퍼저·클로드 50개 서브에이전트 오케스트레이션이라 semiconductors가 아니라 agents로 분류됨 -->
