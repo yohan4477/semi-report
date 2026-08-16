@@ -614,6 +614,17 @@
    "hash": "49ee54d76851"
   },
   {
+   "id": "semi:networking:코패키지드-옵틱스CPO-빛으로-확장하는-차세대-인터커넥트",
+   "corpus": "semianalysis",
+   "folder": "networking",
+   "categories": [
+    "ai-infra/networking"
+   ],
+   "date": "2026-01-01",
+   "path": "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md",
+   "hash": "8f45eaf5bfc1"
+  },
+  {
    "id": "semi:power:2026년-미국-데이터센터-용량-절반-취소설은-틀렸다",
    "corpus": "semianalysis",
    "folder": "power",
