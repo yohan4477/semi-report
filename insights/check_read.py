@@ -69,6 +69,8 @@ DENY = re.compile(r'(때문이 아니|가 아니다|늘어서가 아니|틀렸�
                   r'|아니라\s+\S+[이가]?\s*\S*다|진짜 이유|통념과|알려진 것과'
                   r'|[늘줄벌났]어서다|때문이다|덕분이다)')
 COMMA = re.compile(r'(고|며|지만|면서|아서|어서),\s')
+KNUM = {'한': 1, '두': 2, '세': 3, '네': 4, '다섯': 5, '여섯': 6,
+        '일곱': 7, '여덟': 8, '아홉': 9, '열': 10}
 
 findings = []
 
@@ -146,6 +148,32 @@ def check_file(path):
         add('FAIL', where, 'R10',
             '첫 문단에 인용이 없다 — 원문 줄을 대거나 대지 못할 문장은 뺀다: %s…'
             % strip(m.group(1)).strip()[:44])
+
+    # R11 — 열거 안에 낀 괄호 설명은 열거를 끊는다. 독자가 항목을 못 센다.
+    # "장기전세는 20년, 마곡 토지임대부(땅은 공공이…)는 40년, 리스는 99년이다"
+    # 용어 풀이 자체는 규칙이다(P2). 위치만 열거 뒤로 옮기면 된다.
+    # 괄호 안의 쉼표는 열거가 아니다 — 자리를 지킨 채 지우고 센다.
+    notable = '\n'.join(l for l in body.split('\n') if not l.lstrip().startswith('|'))
+    for s in re.split(r'(?<=다[.。])\s+', notable):
+        flat = re.sub(r'\(([^()]*)\)', lambda m: '(' + m.group(1).replace(',', '·') + ')', s)
+        flat = re.sub(r'(?<=\d),(?=\d)', '·', flat)     # 2,700 의 쉼표는 열거가 아니다
+        for m in re.finditer(r'\(([^()]{8,})\)', flat):
+            if ',' in flat[:m.start()] and ',' in flat[m.end():]:
+                add('WARN', where, 'R11',
+                    '열거 항목 사이에 괄호 설명이 끼었다 — 열거를 끝내고 다음 문장에서 푼다: (%s…)'
+                    % s[m.start() + 1:m.start() + 21])
+                break
+
+    # R12 — 저장소 내부 카운트. 출처 상자에 N편이 실리므로 독자가 셀 수 있는 수는
+    # 그 이하다. "21편이 내놓은 방법"의 21은 노트 전량이라 독자에게 정의된 적이 없다.
+    nsrc = len(nl.sources_of(meta)) if hasattr(nl, 'sources_of') else len(meta.get('sources') or [])
+    if nsrc:
+        for m in re.finditer(r'(\d+|[한두세네]|다섯|여섯|일곱|여덟|아홉|열)\s*편', body):
+            n = KNUM.get(m.group(1)) or (int(m.group(1)) if m.group(1).isdigit() else 0)
+            if n > nsrc:
+                add('FAIL', where, 'R12',
+                    '"%s편" — 이 카드의 출처는 %d편이라 독자가 셀 수 없는 수다. '
+                    '문서를 이름으로 부른다' % (m.group(1), nsrc))
 
     head = (meta.get('headline') or '')
     for v in VAGUE:
