@@ -192,10 +192,16 @@ def _scenario_html():
         a = s['actuals']
         ah = ''.join('<th>%s</th>' % h for h in a['head'])
         ab = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in a['rows'])
+        # 연간·합계는 분기 줄과 기간이 달라 같은 표에 놓으면 분기로 읽힌다. 따로 세운다.
+        sums = ''
+        if a.get('rows2'):
+            sums = '<dl class="dm-act-sums">%s</dl>' % ''.join(
+                '<dt>%s</dt><dd>%s</dd>' % (k, v) for k, v in a['rows2'])
         act_html = ('<div class="dm-act"><p class="dm-act-label">%s</p>'
                     '<div class="dm-act-wrap"><table class="dm-act-tbl">'
                     '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-                    '<p class="dm-act-note">%s</p></div>' % (a['label'], ah, ab, a['note']))
+                    '%s<p class="dm-act-note">%s</p></div>'
+                    % (a['label'], ah, ab, sums, a['note']))
     head = ''.join('<th>%s</th>' % h for h in s['head'])
     body_rows = []
     for r in s['rows']:
@@ -367,7 +373,14 @@ DM_CSS = '''<style>
 .dm-act-tbl td{padding:6px 14px 4px 8px;color:var(--ink);font-weight:800;white-space:nowrap}
 .dm-act-tbl td:first-child{color:var(--ink-3);font-weight:700}
 .dm-act-tbl th:nth-child(n+6),.dm-act-tbl td:nth-child(n+6){color:var(--accent-ink)}
-.dm-act-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
+.dm-act-tbl i{font-style:normal;font-size:10px;font-weight:700;color:var(--ink-3);margin-left:3px}
+/* 연간·합계 — 분기 표와 기간이 달라 따로 세운다 */
+.dm-act-sums{display:grid;grid-template-columns:1fr auto;gap:4px 14px;margin:10px 0 0;
+             padding:9px 10px 8px;background:var(--paper);border-radius:8px}
+.dm-act-sums dt{font-size:11.5px;color:var(--ink-2);margin:0}
+.dm-act-sums dd{font-size:12.5px;font-weight:850;color:var(--ink);margin:0;text-align:right;
+                font-variant-numeric:tabular-nums;white-space:nowrap}
+.dm-act-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 이익 성장 경로 표 ── */
 .dm-ep{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
