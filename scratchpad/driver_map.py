@@ -763,11 +763,14 @@ def render():
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_scenario_html())
     parts.append('<div class="dm-axes">%s</div>' % axes_html)
+    # 연도별 이익 경로 표는 옛 평가가 아니다 — 07-16 가정의 상세다(그 열이 표 안에 있다).
+    # 접어 두면 못 찾는다. 축 바로 뒤에 펼쳐 둔다.
+    parts.append(_earnpath_html())
     parts.append(
         '<details class="dm-past">'
         '<summary class="dm-past-summary">지난 평가 — 열다섯 달 동안 여섯 번, 값이 어떻게 움직였나</summary>'
-        '<div class="dm-past-body">%s%s</div>'
-        '</details>' % (_timeline_html(), _earnpath_html()))
+        '<div class="dm-past-body">%s</div>'
+        '</details>' % _timeline_html())
     parts.append(
         '<div class="dm-modal-backdrop" id="dm-modal-backdrop" hidden>'
         '<div class="dm-modal" id="dm-modal" role="dialog" aria-modal="true" '
