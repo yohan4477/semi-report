@@ -185,6 +185,17 @@ def _scenario_html():
     놓는다. 시장이 실제로 깔고 있는 값은 시나리오가 아니라 참고선이라 표 안에서
     굵은 위쪽 경계선으로 확실히 구분해 마지막에 붙인다."""
     s = dmd.SCENARIOS
+    # 정상화 수준을 정하려면 실제 실적을 먼저 봐야 한다. 2025년 값만 보이고 2026년
+    # 확정 분기가 안 보이면 보수 시나리오가 이미 나온 실적보다 낮아지는 사고가 난다.
+    act_html = ''
+    if s.get('actuals'):
+        a = s['actuals']
+        ah = ''.join('<th>%s</th>' % h for h in a['head'])
+        ab = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in a['rows'])
+        act_html = ('<div class="dm-act"><p class="dm-act-label">%s</p>'
+                    '<div class="dm-act-wrap"><table class="dm-act-tbl">'
+                    '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+                    '<p class="dm-act-note">%s</p></div>' % (a['label'], ah, ab, a['note']))
     head = ''.join('<th>%s</th>' % h for h in s['head'])
     body_rows = []
     for r in s['rows']:
@@ -210,14 +221,15 @@ def _scenario_html():
             '<span class="dm-scenario-price">주가 %s</span>'
             '<span class="dm-scenario-mcap">시가총액 %s</span>'
             '</div></div>'
+            '%s'
             '<p class="dm-scenario-formula">%s</p>'
             '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
-            % (s['asof'], s['price'], s['mcap'], s['formula'], head, ''.join(body_rows),
-               s['note'], s['punch']))
+            % (s['asof'], s['price'], s['mcap'], act_html, s['formula'], head,
+               ''.join(body_rows), s['note'], s['punch']))
 
 
 def _timeline_html():
@@ -343,6 +355,19 @@ DM_CSS = '''<style>
 .dm-mr-tbl td:nth-last-child(-n+2){font-weight:800;color:var(--ink)}
 .dm-mr-tbl tr:last-child td{border-bottom:0}
 .dm-mr-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
+
+/* ── 실적 표 (시나리오 맨 위) ── 정상화 수준은 실제 실적에서 출발해야 한다 */
+.dm-act{margin:12px 0 14px;background:var(--sunk);border-radius:10px;padding:11px 13px}
+.dm-act-label{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:0 0 8px}
+.dm-act-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-act-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.dm-act-tbl th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+               text-align:left;padding:3px 14px 5px 8px;border-bottom:1px solid var(--line);
+               white-space:nowrap;vertical-align:top}
+.dm-act-tbl td{padding:6px 14px 4px 8px;color:var(--ink);font-weight:800;white-space:nowrap}
+.dm-act-tbl td:first-child{color:var(--ink-3);font-weight:700}
+.dm-act-tbl th:nth-child(n+6),.dm-act-tbl td:nth-child(n+6){color:var(--accent-ink)}
+.dm-act-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
 
 /* ── 이익 성장 경로 표 ── */
 .dm-ep{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
