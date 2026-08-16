@@ -22,6 +22,7 @@ BUILD = [
     ('추적 · 일론 머스크', ['insights/gen_entity_board.py', 'musk']),
     ('인사이트 지도', ['insights/gen_map.py']),
     ('허브', ['scripts/gen_hub.py']),
+    ('관리자 지도', ['scripts/gen_admin.py']),
     ('NEW 배지 대장', ['scripts/update_card_ledger.py']),
     ('사이트 빌드', ['scripts/gen_site.py']),
 ]

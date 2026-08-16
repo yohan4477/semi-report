@@ -40,7 +40,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`
   - 노트 계통(아래 절 참조): `notes/`(문서 노트 md), `synth/`(교차 인사이트 md), `cites.json`(줄 해시 잠금), `check_notes.py`(N1~N7)·`check_prose.py`(P1~P7), `notes_lib.py`·`paths.py`(공용), `clusters/`·`coverage.py`(클러스터 계통), `figures/`
 - `대장/` — 크로스 도메인 숫자 대장
-- `대시보드/` — 대시보드 HTML 소스 12장 (GitHub Pages로 서빙). 입구는 `Yomianalysis.html`, 생성기는 `scripts/gen_hub.py`
+- `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙). 입구는 `Yomianalysis.html`, 생성기는 `scripts/gen_hub.py`. `관리자 대시보드.html`은 허브에 없다 — 세 갈래(통합 인사이트 · 주제 대시보드 · SemiAnalysis)가 데이터를 어떻게 처리하는지 모은 룰 색인이고, 공개 사이트에서는 `/admin`으로 잠겨 나간다(`scripts/gen_admin.py`)
 - `scripts/` — `gen_hub.py`(입구), `gen_bmirror.py`(SemiAnalysis 대시보드 ① 미러 재생성), `gen_conceptmap_docs.py`
 - `input/clippings/` — 변환 대기 원문 클리핑
 

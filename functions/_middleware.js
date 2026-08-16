@@ -9,7 +9,7 @@
  */
 
 // /unified 는 파일을 지웠지만 옛 배포본이 캐시에 남을 수 있어 잠금을 유지한다
-const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy']);
+const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy', '/admin']);
 const COOKIE = 'ida_auth';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30일
 

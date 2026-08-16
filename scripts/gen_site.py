@@ -32,6 +32,8 @@ PAGES = [
      '금리·국채·환율 — 전 한국은행 국장 해설 정리', False),
     ('부동산 대시보드.html', 'realestate', '부동산 인사이트', '🏠',
      '공급·세제·전세 — 주제별 해설 아카이브', False),
+    ('관리자 대시보드.html', 'admin', '관리자', '🛠️',
+     '세 갈래가 데이터를 어떻게 처리하는지 — 소스·집필 룰·검사기 색인', True),
 ]
 
 SLUGS = {src: slug for src, slug, *_ in PAGES}
