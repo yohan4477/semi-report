@@ -16,6 +16,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 import driver_map_data as dmd
 
+sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
+import notes_lib as nl  # noqa: E402
+
 # 수식 사슬 안의 {드라이버id} 를 이제는 텍스트로 바꾼다 — 수식은 읽는 것이지 누르는 것이
 # 아니다. str.format을 쓰지 않는 건 수식에 (1+...) 같은 괄호가 있어서 format의 {}와
 # 충돌하기 때문이다.
@@ -37,6 +40,162 @@ def _by_badge(key):
     return '<span class="dm-by dm-by--%s" title="%s">%s</span>' % (key, desc, label)
 
 
+# ── 내 판정 (insights/valuation/005930-삼성전자/judgment.json) ──────
+# 이 파일은 종목마다 있을 수도 없을 수도 있다. 없거나 깨졌으면 조용히 건너뛴다 —
+# 예외를 던지면 이 파일이 없는 다른 종목 대시보드까지 죽는다.
+_JUDGMENT_PATH = os.path.join(dc.ROOT, 'insights', 'valuation', '005930-삼성전자', 'judgment.json')
+_NOTES_DIR = os.path.join(dc.ROOT, 'insights', 'notes')
+
+_VERDICT_CLASS = {'유지': 'keep', '수정': 'fix', '보류': 'hold', '확인필요': 'check'}
+
+# 근거 묶음 키 → 화면에 쓸 이름. cite만 「근거」로 바꾸고 나머지는 밑줄을 공백으로
+# 바꿔 그대로 쓴다(높게_볼_근거 → 높게 볼 근거).
+_EV_KEYS = [('cite', '근거'), ('높게_볼_근거', '높게 볼 근거'),
+            ('낮게_볼_근거', '낮게 볼 근거'), ('반대_근거', '반대 근거')]
+_EXTRA_KEYS = [('영향', '영향'), ('단서', '단서'), ('다음에_할_일', '다음에 할 일')]
+
+# 인용 해석 성공/실패를 세어 보고에 쓴다. (note, cite, ok) 튜플을 쌓는다.
+_RESOLVE_LOG = []
+_resolve_cache = {}
+
+
+def _map_driver_id(raw):
+    """judgment.json의 driver 값을 DRIVERS 키로 맞춘다. d_opm_하강시점처럼
+    DRIVERS에 없는 세부 키는 마지막 밑줄 뒤를 잘라 상위 드라이버로 붙인다."""
+    if raw in dmd.DRIVERS:
+        return raw
+    if '_' in raw:
+        cut = raw.rsplit('_', 1)[0]
+        if cut in dmd.DRIVERS:
+            return cut
+    return None
+
+
+def _load_judgment():
+    try:
+        with io.open(_JUDGMENT_PATH, encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception:
+        return {}, None, []
+
+    by_driver = {}
+
+    def add(did, entry):
+        if did is None:
+            return
+        by_driver.setdefault(did, []).append(entry)
+
+    fixed = data.get('고정한_것') or {}
+    if isinstance(fixed.get('discount_rate'), dict):
+        v = fixed['discount_rate']
+        add('d_wacc', dict(verdict=v.get('verdict'), why=v.get('why')))
+    if isinstance(fixed.get('terminal_growth'), dict):
+        v = fixed['terminal_growth']
+        add('d_g', dict(verdict=v.get('verdict'), why=v.get('why')))
+
+    for v in (data.get('verdicts') or []):
+        did = _map_driver_id(v.get('driver', ''))
+        add(did, dict(v))
+
+    return by_driver, data.get('as_of'), data.get('아직_판정_못한_것') or []
+
+
+_JUDGMENTS, _JUDGMENT_ASOF, _JUDGMENT_TODO = _load_judgment()
+
+
+def _resolve_note_sources(note_name):
+    if note_name in _resolve_cache:
+        return _resolve_cache[note_name]
+    sources = []
+    try:
+        path = os.path.join(_NOTES_DIR, note_name + '.md')
+        with io.open(path, encoding='utf-8') as f:
+            text = f.read()
+        meta, _body = nl.parse_front(text)
+        sources = nl.sources_of(meta)
+    except Exception:
+        sources = []
+    _resolve_cache[note_name] = sources
+    return sources
+
+
+def _resolve_evidence_url(note_name, cite_str):
+    """근거 {note, cite}를 원문 파일 + 줄로 풀어 blob 링크를 낸다. 못 풀면 None —
+    조용히 죽지 않고 링크 없이 인용 문자열만 보인다."""
+    if not note_name or not cite_str:
+        return None
+    sources = _resolve_note_sources(note_name)
+    ok = False
+    url = None
+    if sources:
+        try:
+            refs = nl.cite_refs('(%s)' % cite_str, sources)
+        except Exception:
+            refs = []
+        if refs and refs[0]['ok'] and refs[0]['lines']:
+            url = dc.blob(refs[0]['file']) + '#L%d' % refs[0]['lines'][0]
+            ok = True
+    _RESOLVE_LOG.append((note_name, cite_str, ok))
+    return url
+
+
+def _evidence_item_data(item):
+    """근거 한 줄. url은 여기서(파이썬) 미리 풀어 둔다 — JS는 텍스트만 조립한다.
+    HTML은 JS 쪽에서 만든다 — JSON 데이터 안에 <div>가 그대로 박히면 </div>만
+    </ 이스케이프 규칙(data_json의 replace('</','<\\/'))에 걸려 div 짝이 안 맞아 보인다."""
+    note = item.get('note', '')
+    cite = item.get('cite', '')
+    fact = item.get('fact', '')
+    return dict(note=note, cite=cite, fact=fact, url=_resolve_evidence_url(note, cite))
+
+
+def _evidence_groups_data(v):
+    groups = []
+    for key, label in _EV_KEYS:
+        items = v.get(key)
+        if not items:
+            continue
+        groups.append(dict(label=label, items=[_evidence_item_data(it) for it in items]))
+    return groups
+
+
+def _extra_data(v):
+    out = []
+    for key, label in _EXTRA_KEYS:
+        val = v.get(key)
+        if val:
+            out.append(dict(label=label, text=val))
+    return out
+
+
+def _judgment_entries_data(entries):
+    """드라이버 상세(2단계)의 「내 판정」 칸에 쓸 구조화 데이터. 판정이 둘이면(d_opm)
+    항목이 둘이고, 그때만 각 항목에 원래 label을 붙여 구분한다."""
+    if not entries:
+        return None
+    show_label = len(entries) > 1
+    out = []
+    for v in entries:
+        out.append(dict(
+            label=v.get('label') if show_label else None,
+            verdict=v.get('verdict'),
+            why=v.get('why'),
+            mine=v.get('mine'),
+            evidence=_evidence_groups_data(v),
+            extra=_extra_data(v),
+        ))
+    return out
+
+
+def _judgment_todo_html(items, as_of):
+    if not items:
+        return ''
+    lis = ''.join('<li>%s</li>' % nl.esc(x) for x in items)
+    asof_html = ('<span class="dm-jgtodo-date">%s 기준</span>' % nl.esc(as_of)) if as_of else ''
+    return ('<div class="dm-jgtodo"><p class="dm-jgtodo-label">아직 판정 못한 것%s</p>'
+            '<ul class="dm-jgtodo-list">%s</ul></div>' % (asof_html, lis))
+
+
 def _group_chips_html(ax):
     """그 축이 쓰는 갈래만, GROUPS 순서대로 칩을 낸다. 세부 개수를 같이 보이고,
     그 축의 세부 드라이버 중 근거가 빈 것(basis=='none')이 있으면 경고 표시를 단다."""
@@ -48,11 +207,16 @@ def _group_chips_html(ax):
         warn = any(dmd.DRIVERS[did]['basis'] == 'none' for did in members)
         warn_html = ('<span class="dm-gchip-warn" aria-hidden="true" title="근거가 빈 값 포함">!</span>'
                      if warn else '')
+        # 내 판정이 붙은 세부 드라이버 개수 — 근거 없음 경고(!)와 자리를 나눠 구분되게 둔다.
+        jg_n = sum(1 for did in members if did in _JUDGMENTS)
+        jg_html = ('<span class="dm-gchip-jg" aria-hidden="true" '
+                   'title="내 판정이 있는 세부 드라이버 %d개">%d</span>' % (jg_n, jg_n)
+                   if jg_n else '')
         rows.append(
             '<button type="button" class="dm-gchip" data-group="%s" data-members="%s" '
             'aria-haspopup="dialog">'
-            '<span class="dm-gchip-name">%s</span><span class="dm-gchip-n">· %d</span>%s'
-            '</button>' % (g['id'], ','.join(members), g['name'], len(members), warn_html))
+            '<span class="dm-gchip-name">%s</span><span class="dm-gchip-n">· %d</span>%s%s'
+            '</button>' % (g['id'], ','.join(members), g['name'], len(members), warn_html, jg_html))
     if not rows:
         return ''
     return '<div class="dm-gchips">%s</div>' % ''.join(rows)
@@ -139,6 +303,11 @@ def _axis_html(ax):
         out_html = ('<div class="dm-axis-out"><span class="dm-axis-out-tag">%s</span>'
                     '<span class="dm-axis-out-val">%s</span></div>' % (out_tag, ax['out']))
 
+    # 07-16 민감도 25칸 격자는 그 글이 낸 DCF 축 자료다. 드라이버 범위·이익 경로 표와
+    # 달리 다섯 축을 가로지르지 않으므로 패널 밖에 두면 어느 글 것인지 안 보인다.
+    # dcf 축에만, 수식→칩→결과 다음 자리에 끼운다.
+    sens_html = _sens_html() if ax['id'] == 'dcf' else ''
+
     # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
     # 읽는 데 있다. 그래서 같은 공식을 시점마다 내가 다시 돌린 표를 결과 뒤에 붙인다.
     mr_html = ''
@@ -186,10 +355,11 @@ def _axis_html(ax):
             '%s'
             '%s'
             '%s'
+            '%s'
             '</article>'
             % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
-               inputs_html, chain_html, gchips_html, out_html, mr_html, bench_html, auth_html,
-               verdict_html))
+               inputs_html, chain_html, gchips_html, out_html, sens_html, mr_html, bench_html,
+               auth_html, verdict_html))
 
 
 _AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
@@ -414,12 +584,16 @@ def _data_json():
     for did, d in dmd.DRIVERS.items():
         basis_label, basis_desc = dmd.BASIS[d['basis']]
         url = dc.blob(dmd.SUM + dmd.DOCS[d['doc']]) + '#L%d' % d['line']
+        jentries = _JUDGMENTS.get(did)
         drivers[did] = dict(
             label=d['label'], axisMeta=axis_meta.get(d['axis'], d['axis']),
             doc=d['doc'], line=d['line'], base=d['base'],
             basisKey=d['basis'], basisLabel=basis_label, basisDesc=basis_desc,
             why=d['why'], impact=d['impact'], url=url,
             bar=list(d['bar']) if 'bar' in d else None,
+            # 「내 판정」 칸 — 구조화 데이터만 넘긴다. HTML은 JS가 만든다(fmtJudgment).
+            judgment=_judgment_entries_data(jentries),
+            judgmentVerdicts=[e.get('verdict') for e in jentries] if jentries else None,
         )
     groups = {g['id']: dict(name=g['name'], q=g['q'], why=g['why'], corpus=g['corpus'])
               for g in dmd.GROUPS}
@@ -720,6 +894,11 @@ DM_CSS = '''<style>
 .dm-gchip-warn{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
                width:14px;height:14px;border-radius:50%;background:var(--warn);color:var(--surface);
                font-size:10px;font-weight:900;line-height:1}
+/* 내 판정이 있는 세부 드라이버 개수 — 근거 없음 경고(!)와 자리를 나눠 색으로 구분한다 */
+.dm-gchip-jg{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+             min-width:14px;height:14px;padding:0 4px;border-radius:999px;
+             background:var(--accent);color:var(--surface);
+             font-size:9.5px;font-weight:900;line-height:1}
 
 .dm-axis-out{display:flex;flex-direction:column;gap:2px;margin:0 0 10px;padding-top:10px;
              border-top:1px solid var(--line)}
@@ -840,6 +1019,51 @@ DM_CSS = '''<style>
 .dm-bar-base-lbl{position:absolute;top:0;font-size:11px;font-weight:800;color:var(--accent-ink);
                   transform:translateX(-50%);white-space:nowrap}
 
+/* ── 내 판정(2단계 맨 아래) — judgment.json에서 붙인 판정 ── */
+.dm-jg{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.dm-jg-title{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 10px}
+.dm-jg-entry{margin:0 0 16px}
+.dm-jg-entry:last-child{margin-bottom:0}
+.dm-jg-sub{font-size:12.5px;font-weight:800;color:var(--ink-2);margin:0 0 6px}
+.dm-jg-badge{display:inline-block;font-size:11px;font-weight:850;padding:3px 10px;
+             border-radius:999px;margin:0 0 8px}
+.dm-jg-badge--keep{background:var(--good-soft);color:var(--good);border:1px solid var(--good)}
+.dm-jg-badge--fix{background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent)}
+.dm-jg-badge--hold{background:var(--sunk);color:var(--ink-3);border:1px solid var(--line)}
+.dm-jg-badge--check{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+.dm-jg-why{font-size:12.5px;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
+.dm-jg-mine{font-size:12.5px;line-height:1.6;color:var(--ink);margin:0 0 10px;
+            padding:8px 10px;background:var(--accent-soft);border-radius:8px}
+.dm-jg-mine b{font-weight:850;color:var(--accent-ink);margin-right:4px}
+.dm-jg-ev{margin:0 0 10px}
+.dm-jg-ev-label{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);margin:0 0 6px}
+.dm-jg-ev-item{margin:0 0 8px;padding:8px 10px;background:var(--sunk);border-radius:8px}
+.dm-jg-ev-item:last-child{margin-bottom:0}
+.dm-jg-ev-fact{font-size:12px;line-height:1.55;color:var(--ink);margin:0 0 3px}
+.dm-jg-ev-src{display:inline-block;font-size:10.5px;color:var(--ink-3);text-decoration:none}
+.dm-jg-ev-src:hover{color:var(--accent-ink);text-decoration:underline}
+.dm-jg-ev-src--nolink{cursor:default}
+.dm-jg-ev-src--nolink:hover{color:var(--ink-3);text-decoration:none}
+.dm-jg-extra{font-size:12px;line-height:1.55;color:var(--ink-2);margin:0 0 6px}
+.dm-jg-extra b{color:var(--ink);font-weight:800;margin-right:4px}
+
+/* ── 판정 배지(1단계 세부 드라이버 목록 줄) ── */
+.dm-jg-rowbadge{display:inline-block;font-size:9.5px;font-weight:850;padding:1px 7px;
+                border-radius:999px;margin-left:2px;white-space:nowrap}
+.dm-jg-rowbadge--keep{background:var(--good-soft);color:var(--good)}
+.dm-jg-rowbadge--fix{background:var(--accent-soft);color:var(--accent-ink)}
+.dm-jg-rowbadge--hold{background:var(--sunk);color:var(--ink-3);border:1px solid var(--line)}
+.dm-jg-rowbadge--check{background:var(--warn-soft);color:var(--warn)}
+
+/* ── 「아직 판정 못한 것」 — 드라이버 범위 표 다음 ── */
+.dm-jgtodo{margin:20px 0 0;background:var(--surface);border:1px dashed var(--line);
+          border-radius:10px;padding:12px 15px;box-shadow:var(--shadow)}
+.dm-jgtodo-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:0 0 8px}
+.dm-jgtodo-date{font-weight:700;color:var(--ink-3);margin-left:6px;font-size:11px}
+.dm-jgtodo-list{margin:0;padding-left:18px}
+.dm-jgtodo-list li{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 4px}
+.dm-jgtodo-list li:last-child{margin-bottom:0}
+
 /* 모달 열린 동안 배경 스크롤을 막는다 */
 body.dm-modal-open{overflow:hidden}
 body.dm-modal-open .ui-top{opacity:0;pointer-events:none}
@@ -913,6 +1137,52 @@ DM_JS = '''<script>
     requestAnimationFrame(function(){ modal.focus(); });
   }
 
+  var JG_CLASS = {'유지':'keep', '수정':'fix', '보류':'hold', '확인필요':'check'};
+
+  function fmtJgBadges(verdicts){
+    if(!verdicts || !verdicts.length) return '';
+    return verdicts.map(function(v){
+      var cls = JG_CLASS[v] || 'hold';
+      return '<span class="dm-jg-rowbadge dm-jg-rowbadge--'+cls+'">'+v+'</span>';
+    }).join('');
+  }
+
+  // 「내 판정」 칸(2단계 맨 아래). 데이터는 파이썬이 구조화해 넘기고 HTML은 여기서 만든다.
+  function fmtJgEvidence(groups){
+    if(!groups || !groups.length) return '';
+    return groups.map(function(g){
+      var items = g.items.map(function(it){
+        var src = it.url
+          ? '<a class="dm-jg-ev-src" href="'+it.url+'" target="_blank" rel="noopener">'
+            +it.note+' · '+it.cite+' ▸</a>'
+          : '<span class="dm-jg-ev-src dm-jg-ev-src--nolink">'+it.note+' · '+it.cite+'</span>';
+        return '<div class="dm-jg-ev-item"><p class="dm-jg-ev-fact">'+it.fact+'</p>'+src+'</div>';
+      }).join('');
+      return '<div class="dm-jg-ev"><p class="dm-jg-ev-label">'+g.label+'</p>'+items+'</div>';
+    }).join('');
+  }
+
+  function fmtJgExtra(extra){
+    if(!extra || !extra.length) return '';
+    return extra.map(function(e){
+      return '<p class="dm-jg-extra"><b>'+e.label+'</b>'+e.text+'</p>';
+    }).join('');
+  }
+
+  function fmtJudgment(entries){
+    if(!entries || !entries.length) return '';
+    var body = entries.map(function(v){
+      var cls = JG_CLASS[v.verdict] || 'hold';
+      var sub = v.label ? '<p class="dm-jg-sub">'+v.label+'</p>' : '';
+      var badge = '<span class="dm-jg-badge dm-jg-badge--'+cls+'">'+v.verdict+'</span>';
+      var why = v.why ? '<p class="dm-jg-why">'+v.why+'</p>' : '';
+      var mine = v.mine ? '<p class="dm-jg-mine"><b>내가 대신 보는 값</b>'+v.mine+'</p>' : '';
+      return '<div class="dm-jg-entry">'+sub+badge+why+mine
+           + fmtJgEvidence(v.evidence)+fmtJgExtra(v.extra)+'</div>';
+    }).join('');
+    return '<div class="dm-jg"><p class="dm-jg-title">내 판정</p>'+body+'</div>';
+  }
+
   function renderStage1(){
     var g = DATA.groups[state.gid];
     if(!g) return;
@@ -923,7 +1193,7 @@ DM_JS = '''<script>
       var basisNoneCls = d.basisKey === 'none' ? ' dm-basis--none' : '';
       return '<button type="button" class="dm-modal-row'+noneCls+'" data-driver="'+did+'">'
            + '<span class="dm-modal-row-main">'
-           +   '<span class="dm-modal-row-label">'+d.label+'</span>'
+           +   '<span class="dm-modal-row-label">'+d.label+fmtJgBadges(d.judgmentVerdicts)+'</span>'
            +   '<span class="dm-modal-row-base">'+d.base+'</span>'
            + '</span>'
            + (d.bar ? fmtBarMini(d.bar) : '')
@@ -953,7 +1223,8 @@ DM_JS = '''<script>
       + '<p class="dm-basis-desc">'+d.basisDesc+'</p>'
       + '<p class="dm-detail-sec"><b>왜</b>'+d.why+'</p>'
       + '<p class="dm-detail-sec"><b>영향</b>'+d.impact+'</p>'
-      + '<a class="dm-detail-src" href="'+d.url+'" target="_blank" rel="noopener">출처: 요약본 L'+d.line+' ▸</a>';
+      + '<a class="dm-detail-src" href="'+d.url+'" target="_blank" rel="noopener">출처: 요약본 L'+d.line+' ▸</a>'
+      + fmtJudgment(d.judgment);
     backBtn.hidden = state.noback || !state.gid;
     focusModal();
   }
@@ -1122,8 +1393,10 @@ def render():
     parts.append(_axis_panels_html())
     # 연도별 이익 경로 표는 옛 평가가 아니다 — 07-16 가정의 상세다(그 열이 표 안에 있다).
     # 접어 두면 못 찾는다. 버튼 패널 바로 뒤에 펼쳐 둔다.
+    # 07-16 민감도 격자는 dcf 축 패널 안으로 옮겼다(그 글이 낸 DCF 축 자료라서) —
+    # 여기서는 더 이상 부르지 않는다.
     parts.append(_ranges_html())
-    parts.append(_sens_html())
+    parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
     parts.append(_earnpath_html())
     parts.append(
         '<details class="dm-past">'
@@ -1150,3 +1423,12 @@ if __name__ == '__main__':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     print('OK: 렌더 길이 %d자 / 축 %d개 / 상위칩 %d개 / 드라이버 %d개'
           % (len(out), len(dmd.AXES), out.count('class="dm-gchip"'), len(dmd.DRIVERS)))
+    n_ok = sum(1 for _n, _c, ok in _RESOLVE_LOG if ok)
+    n_fail = len(_RESOLVE_LOG) - n_ok
+    print('판정 붙은 드라이버 %d개 / 인용 링크 해석 %d건 성공, %d건 실패'
+          % (len(_JUDGMENTS), n_ok, n_fail))
+    if n_fail:
+        for _n, _c, ok in _RESOLVE_LOG:
+            if not ok:
+                print('  실패: %s / %s' % (_n, _c))
+    print('아직 판정 못한 것 %d건 (dm-sn 위치: dcf 패널 안)' % len(_JUDGMENT_TODO))
