@@ -215,6 +215,21 @@ def _scenario_html():
                 tds.append('<td>%s</td>' % c)
         tds.append('<td>%s</td>' % _by_badge(r['by']))
         body_rows.append('<tr class="dm-sc-row">%s</tr>' % ''.join(tds))
+    # 엘곰도 시나리오를 만들었다 — 다만 02-26 역산 글에서만이다. 그걸 안 보이면
+    # 내가 만든 사다리를 그의 것으로 읽는다. 시점이 달라 같은 표엔 못 넣는다.
+    auth_html = ''
+    if s.get('author_scenarios'):
+        au = s['author_scenarios']
+        ah2 = ''.join('<th>%s</th>' % h for h in au['head'])
+        ab2 = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in au['rows'])
+        auth_html = (
+            '<div class="dm-auth"><p class="dm-auth-label">%s %s</p>'
+            '<p class="dm-auth-lede">%s</p>'
+            '<div class="dm-auth-wrap"><table class="dm-auth-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-auth-note">%s</p></div>'
+            % (au['label'], _by_badge(au['by']), au['lede'], ah2, ab2, au['note']))
+
     # 역산은 방향이 반대라 같은 표에 넣으면 네 번째 시나리오로 읽힌다. 블록을 따로 세운다.
     rev_html = ''
     if s.get('reverse'):
@@ -247,11 +262,12 @@ def _scenario_html():
             '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '%s'
+            '%s'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
             % (s['asof'], s['price'], s['mcap'], act_html, s['formula'], head,
-               ''.join(body_rows), rev_html, s['note'], s['punch']))
+               ''.join(body_rows), rev_html, auth_html, s['note'], s['punch']))
 
 
 def _timeline_html():
@@ -397,6 +413,21 @@ DM_CSS = '''<style>
 .dm-rv-cmp-v{font-size:13px;font-weight:850;font-variant-numeric:tabular-nums}
 .dm-rv-cmp--high .dm-rv-cmp-v{color:var(--warn)}
 .dm-rv-cmp--low .dm-rv-cmp-v{color:var(--good)}
+
+/* ── 엘곰이 직접 만든 시나리오 ── 시점이 달라 위 표와 같은 축에 못 놓는다 */
+.dm-auth{margin:16px 0 0;border:1px dashed var(--line);border-radius:10px;padding:12px 14px}
+.dm-auth-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:0 0 4px}
+.dm-auth-lede{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 9px}
+.dm-auth-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-auth-tbl{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.dm-auth-tbl th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+                text-align:left;padding:3px 12px 5px 8px;border-bottom:1px solid var(--line);
+                white-space:nowrap;vertical-align:top}
+.dm-auth-tbl td{padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+                color:var(--ink-2);white-space:nowrap}
+.dm-auth-tbl td:first-child{font-weight:850;color:var(--ink)}
+.dm-auth-tbl tr:last-child td{border-bottom:0}
+.dm-auth-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 실적 표 (시나리오 맨 위) ── 정상화 수준은 실제 실적에서 출발해야 한다 */
 .dm-act{margin:12px 0 14px;background:var(--sunk);border-radius:10px;padding:11px 13px}
