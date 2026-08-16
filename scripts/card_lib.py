@@ -21,6 +21,9 @@
 선택 키
   scope    'kr' | 'intl'   국내·해외 탭이 있는 페이지에서만
   table    (표 제목, [머리], [[행]])
+  lead_table  같은 형식. 본문 맨 위(한 줄 요약보다 앞)에 놓는다. 여러 편을 묶은
+              통합 카드에서 결론부터 보여주려고 쓴다
+  tables      [(표 제목, [머리], [[행]])] 표가 여럿일 때. table 다음에 순서대로 붙는다
 """
 import os
 import re
@@ -114,6 +117,19 @@ EXTRA_CSS = '''
 
 
 
+def tbl_html(t):
+    """(표 제목, [머리], [[행]]) 하나를 마크업으로. 표를 세 자리(lead_table·table·
+    tables)에서 쓰게 되면서 같은 코드가 세 벌이 될 뻔했다 — 한 벌만 둔다."""
+    cap, head, rows = t
+    return ('<p class="uc-label">%s</p>'
+            '<div class="tbl-wrap"><table class="uc-tbl%s"><thead><tr>%s</tr></thead>'
+            '<tbody>%s</tbody></table></div>'
+            % (cap,
+               ' tick' if '티커' in head else '',
+               ''.join('<th>%s</th>' % x for x in head),
+               ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % x for x in r) for r in rows)))
+
+
 def slug(t):
     return 'card-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', t).strip('-')
 
@@ -176,16 +192,17 @@ def card_html(c):
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
     h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
     h.append('<div class="uc-body">')
+    # 여러 편을 하나로 묶은 카드는 결론(적정가 레인지 같은 것)이 본문 맨 위에 와야 한다.
+    # 읽고 나서야 값이 나오면 그 카드는 통합본 구실을 못 한다.
+    if c.get('lead_table'):
+        h.append(tbl_html(c['lead_table']))
     h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
     h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
              % ''.join('<li>%s</li>' % p for p in c['points']))
     if c.get('table'):
-        cap, head, rows = c['table']
-        h.append('<p class="uc-label">%s</p>' % cap)
-        h.append('<div class="tbl-wrap"><table class="uc-tbl%s"><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-                 % (' tick' if '티커' in head else '',
-                    ''.join('<th>%s</th>' % x for x in head),
-                    ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % x for x in r) for r in rows)))
+        h.append(tbl_html(c['table']))
+    for t in c.get('tables', ()):
+        h.append(tbl_html(t))
     h.append('<p class="uc-label">주요 숫자</p><div class="stat-grid">%s</div>'
              % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
                        for s in c['stats']))
