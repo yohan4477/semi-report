@@ -97,8 +97,6 @@ PYTHONIOENCODING=utf-8 python scripts/build_all.py --check
 
 `check_prose.py` FAIL은 **용어를 지우지 말고 괄호로 푼다.** 이 저장소의 확정 규칙이다.
 
-한 파일에 `check_prose` WARN이 5건을 넘으면 `humanize-korean` 스킬을 부를 계기다.
-
 ## 4. 커밋·보고
 
 ```bash

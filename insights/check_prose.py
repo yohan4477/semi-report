@@ -314,15 +314,11 @@ def main():
         print('%s %s [%s] %s' % (level, where, rule, msg))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
     warns = len(findings) - fails
-    per = {}
-    for f in findings:
-        per[f[1]] = per.get(f[1], 0) + (0 if f[0] == 'FAIL' else 1)
+    # 「WARN 5건 초과 → humanize-korean」 줄은 2026-08-17에 걷어냈다. 다섯 장이 상시
+    # 초과 상태라 늘 켜져 있었고, 늘 켜진 신호는 신호가 아니다. 윤문을 부를 계기는
+    # 개별 규칙(P8~P11)이 무엇을 몇 개 잡았는지로 판단한다.
     print('요약: 인사이트 %d건 / 노트 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
           % (len(files), len(notes), len(dashes), fails, warns))
-    heavy = [k for k, v in per.items() if v > 5]
-    if heavy:
-        print('WARN 5건 초과: %s — 이 파일은 humanize-korean 스킬을 부를 계기다'
-              % ', '.join(heavy))
     return 1 if fails else 0
 
 

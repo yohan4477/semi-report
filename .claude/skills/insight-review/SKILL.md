@@ -46,7 +46,6 @@ PYTHONIOENCODING=utf-8 python insights/check_fresh.py    # F1~F3  아직 지금 
 |---|---|
 | `check_notes` FAIL | 여기서 멈춘다. 노트 쪽 문제다 — 줄 번호를 손으로 맞추지 말고 그 문서를 재추출한다 |
 | `check_prose` FAIL | **용어를 지우지 말고 괄호로 푼다.** 이 저장소의 확정 규칙이다(지웠다가 되돌린 이력) |
-| `check_prose` 한 파일 WARN 5건 초과 | `humanize-korean` 스킬을 부를 계기 |
 | `check_read` FAIL | 약어 풀이·지시어 해소·제목 교체. R2("두 문제"라 해놓고 뭔지 없음)는 아래 집필 계약과 같은 결함이다 |
 | `check_cite` 확인필요 | 기계는 절반만 본다. **원문 줄을 열어 사람이 확인한다.** 숫자가 그 줄에 있어도 뜻이 다를 수 있다 |
 | `check_fresh` F1 | 새 노트를 읽고 반영하거나, 안 바뀐다고 판단했으면 **그 판단의 근거를 본문에 쓴다**. 날짜만 미루지 않는다 |
