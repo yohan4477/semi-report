@@ -3515,6 +3515,12 @@
  "content/understanding/미국주식 사관학교/[260812] DIVO 옵션 명세 읽기 - 양산형 커버드콜과 무엇이 다른가.md#L50": {
   "sha1": "f528fa75fdd8"
  },
+ "content/understanding/부동산/[260106] 용인에 공장이 와도 사람은 동탄에 산다 - 전기는 묻으면 되지만 물은 답이 없다 - 김시덕.md#L110": {
+  "sha1": "9d20d6a41465"
+ },
+ "content/understanding/부동산/[260106] 용인에 공장이 와도 사람은 동탄에 산다 - 전기는 묻으면 되지만 물은 답이 없다 - 김시덕.md#L18": {
+  "sha1": "ca9d014f68ec"
+ },
  "content/understanding/부동산/[260106] 용인에 공장이 와도 사람은 동탄에 산다 - 전기는 묻으면 되지만 물은 답이 없다 - 김시덕.md#L24": {
   "sha1": "ca0d4b269040"
  },
@@ -3589,6 +3595,9 @@
  },
  "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L56": {
   "sha1": "86e4c483404d"
+ },
+ "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L6": {
+  "sha1": "e74dc74d8486"
  },
  "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L66": {
   "sha1": "e12d0b94daa3"
@@ -3947,6 +3956,9 @@
  "content/understanding/부동산/[260620] 싱가포르 주택 모델 - 공급·연금·세금 세 축과 한국이 못 하는 이유.md#L22": {
   "sha1": "77638f72e8e7"
  },
+ "content/understanding/부동산/[260620] 싱가포르 주택 모델 - 공급·연금·세금 세 축과 한국이 못 하는 이유.md#L24": {
+  "sha1": "dcb820869a91"
+ },
  "content/understanding/부동산/[260620] 싱가포르 주택 모델 - 공급·연금·세금 세 축과 한국이 못 하는 이유.md#L28": {
   "sha1": "c376a02de87a"
  },
@@ -3995,6 +4007,9 @@
  "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L20": {
   "sha1": "af31a7775ce2"
  },
+ "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L30": {
+  "sha1": "8bad051dd996"
+ },
  "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L38": {
   "sha1": "cd42930635fd"
  },
@@ -4015,6 +4030,9 @@
  },
  "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L70": {
   "sha1": "eee46985b2ed"
+ },
+ "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L82": {
+  "sha1": "818f649a20f2"
  },
  "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L88": {
   "sha1": "fcd0b791e18f"
@@ -4318,6 +4336,159 @@
  },
  "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L91": {
   "sha1": "a70fe0f65200"
+ },
+ "content/understanding/회계사/[250305] 빅테크 DCF, 성장률은 한 번에 꺾지 않고 서서히 낮춘다.md#L12": {
+  "sha1": "c5584c4607a9"
+ },
+ "content/understanding/회계사/[250305] 빅테크 DCF, 성장률은 한 번에 꺾지 않고 서서히 낮춘다.md#L28": {
+  "sha1": "2e2183d0367c"
+ },
+ "content/understanding/회계사/[250305] 빅테크 DCF, 성장률은 한 번에 꺾지 않고 서서히 낮춘다.md#L32": {
+  "sha1": "c80d1ff5ea73"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L14": {
+  "sha1": "6aaa0af17ee1"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L30": {
+  "sha1": "e5bec6e1f809"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L42": {
+  "sha1": "ace3866f18d3"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L46": {
+  "sha1": "16063d780555"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L52": {
+  "sha1": "513698b558ac"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L54": {
+  "sha1": "8248594933d3"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L55": {
+  "sha1": "84b6f30d39aa"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L57": {
+  "sha1": "778383c1f65d"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L61": {
+  "sha1": "2b5d1a800f60"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L66": {
+  "sha1": "0612c8fb5d77"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L67": {
+  "sha1": "3e8a2f4d592f"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L68": {
+  "sha1": "7be78aad1eea"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L74": {
+  "sha1": "417018276a83"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L75": {
+  "sha1": "103c2ce4d9b5"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L82": {
+  "sha1": "3ff0dceb98e6"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L83": {
+  "sha1": "d3f8721e5aa4"
+ },
+ "content/understanding/회계사/[250307] 빅테크 DCF는 3단계로 나눈다 - NVIDIA 내재가치는 주당 127.19달러.md#L89": {
+  "sha1": "78810d842bff"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L119": {
+  "sha1": "7aa944c909e2"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L19": {
+  "sha1": "910f8da71c65"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L29": {
+  "sha1": "a6c87d7d2c37"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L37": {
+  "sha1": "ed64008c564a"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L39": {
+  "sha1": "22f049123a18"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L42": {
+  "sha1": "4388fb2c98ff"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L53": {
+  "sha1": "5f539398367f"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L63": {
+  "sha1": "8adb30bbde2a"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L74": {
+  "sha1": "91d7a311c30d"
+ },
+ "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md#L84": {
+  "sha1": "44cb19acf653"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L12": {
+  "sha1": "662f4e160964"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L16": {
+  "sha1": "924f1865ac9a"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L20": {
+  "sha1": "0243bff5a753"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L22": {
+  "sha1": "37ea50346d3e"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L24": {
+  "sha1": "c74dd83d0568"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L28": {
+  "sha1": "0c27a847c41b"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L30": {
+  "sha1": "7040aa969775"
+ },
+ "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md#L46": {
+  "sha1": "70cba3bf20e5"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L109": {
+  "sha1": "b9133e383750"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L14": {
+  "sha1": "5954497f1ef5"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L26": {
+  "sha1": "e535ada62f59"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L30": {
+  "sha1": "388c3d9eeb20"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L37": {
+  "sha1": "d54defe89b25"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L38": {
+  "sha1": "a9e9a95449bb"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L40": {
+  "sha1": "608790ec6bc3"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L46": {
+  "sha1": "2aee886ca4ad"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L74": {
+  "sha1": "ae311c9a6fb8"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L86": {
+  "sha1": "8d8921c91c17"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L88": {
+  "sha1": "ed4d08d190f1"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L96": {
+  "sha1": "104bf45068d6"
+ },
+ "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md#L97": {
+  "sha1": "117ebfdf0b9a"
  },
  "input/clippings/Meta Compute Everyone Wants To Be A Neocloud.md#L100": {
   "sha1": "db58e8da4da7"
