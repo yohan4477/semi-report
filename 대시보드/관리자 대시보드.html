@@ -66,13 +66,55 @@
 
   /* 매트릭스 — 행은 단계, 열은 갈래. 비교 대상이라 탭으로 나누지 않는다 */
   .mx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 0}
-  .lane{border:1px solid var(--line);border-top:3px solid var(--ac);border-radius:var(--r);
-        background:var(--card);padding:13px 15px;box-shadow:var(--shadow);position:sticky;top:0;z-index:2}
+  /* 갈래 카드는 누르는 것이다 — 누르면 그 갈래의 흐름도가 표 위로 펼쳐진다 */
+  .lane{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
+        border:1px solid var(--line);border-top:3px solid var(--ac);border-radius:var(--r);
+        background:var(--card);padding:13px 15px;box-shadow:var(--shadow);
+        transition:border-color .2s ease,transform .3s cubic-bezier(.19,1,.22,1),box-shadow .3s cubic-bezier(.19,1,.22,1);
+        -webkit-tap-highlight-color:transparent}
+  .lane:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 10px 22px -14px rgba(0,0,0,.4)}
+  .lane:active{transform:translateY(0) scale(.99);transition-duration:.09s}
+  .lane:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
   .lane .nm{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;margin:0;display:flex;gap:8px;align-items:baseline}
   .lane .nm span{font-size:19px}
   .lane p{margin:6px 0 0;font-size:var(--t-meta);color:var(--sub)}
   .lane .rl{margin:8px 0 0;font-size:var(--t-lbl);font-weight:700;color:var(--ac);
             font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0}
+  .lane .op{display:inline-flex;align-items:center;gap:5px;margin:9px 0 0;
+            font-size:var(--t-lbl);font-weight:800;letter-spacing:.06em;color:var(--ac)}
+  .lane .op::before{content:"▸";transition:transform .2s ease}
+  .lane[aria-expanded="true"] .op::before{transform:rotate(90deg)}
+  .lane[aria-expanded="true"]{border-color:var(--ac);background:var(--sunk)}
+
+  /* 흐름도 — 단계가 위에서 아래로, 같은 단계의 상자는 나란히 */
+  .fl{grid-column:1/-1;border:1px solid var(--ac);border-radius:var(--r);
+      background:var(--card);padding:16px 16px 20px;margin:10px 0 4px;box-shadow:var(--shadow)}
+  .fl[hidden]{display:none}
+  .fl>.ttl{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0 0 4px}
+  .fl>.ttl b{font-size:var(--t-body);font-weight:850;color:var(--ink)}
+  .fl>.ttl i{font-style:normal;font-size:var(--t-meta);color:var(--faint)}
+  .fl>.ttl .x{margin-left:auto;font-size:var(--t-lbl);font-weight:800;color:var(--ac);letter-spacing:.06em}
+  .fs{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 12px 11px}
+  .fs>.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin:0 0 8px}
+  .fs>.sh b{font-size:var(--t-body);font-weight:850;color:var(--ink);letter-spacing:-.01em}
+  .fs>.sh i{font-style:normal;font-size:var(--t-meta);color:var(--sub)}
+  .fnn{display:flex;flex-wrap:wrap;gap:8px}
+  .fn{flex:1 1 200px;min-width:0;border:1px solid var(--line);border-left:3px solid var(--nc);
+      border-radius:0 8px 8px 0;background:var(--card);padding:8px 10px}
+  .fn .nn{display:block;font-size:var(--t-meta);font-weight:800;color:var(--ink)}
+  .fn .ns{display:block;margin:3px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+          font-size:var(--t-lbl);color:var(--faint);word-break:break-word}
+  /* 막는 단계는 색으로 구분한다 — 파이프라인 문서의 gate와 같은 계열 */
+  .fs[data-kind="gate"]{border-color:#ea580c;background:#fff7ed}
+  .fs[data-kind="gate"]>.sh b,.fs[data-kind="gate"]>.sh i{color:#9a3412}
+  .fs[data-kind="gate"] .fn{background:#fff}
+  @media (prefers-color-scheme:dark){
+    .fs[data-kind="gate"]{border-color:#c2410c;background:#2a1509}
+    .fs[data-kind="gate"]>.sh b,.fs[data-kind="gate"]>.sh i{color:#fdba74}
+    .fs[data-kind="gate"] .fn{background:#1f1710}
+  }
+  .arw{height:20px;display:flex;align-items:center;justify-content:center;color:var(--ac);
+       font-size:12px;line-height:1;opacity:.75}
 
   .band{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin:16px 0 -2px;
         padding:0 2px 7px;border-bottom:1px solid var(--line)}
@@ -96,13 +138,19 @@
      그래서 셀마다 어느 갈래인지 이름을 되살린다 */
   @media (max-width:860px){
     .mx{grid-template-columns:1fr}
-    .lane{position:static}
     .cell .lb{display:block}
+    .fn{flex:1 1 100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .lane{transition:border-color .2s ease}
+    .lane:hover{transform:none;box-shadow:var(--shadow)}
+    .lane:active{transform:none;opacity:.7}
+    .lane .op::before{transition:none}
   }
 </style>
 </head><body><main class="wrap">
 
-<header><p class="eyebrow">관리자 · 비공개</p><h1>데이터 처리 지도</h1><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">행은 단계, 열은 갈래다. 세 갈래가 함께 지키는 것은 아래 공통 밴드에 한 번만 적었다.</p><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div></header>
+<header><p class="eyebrow">관리자 · 비공개</p><h1>데이터 처리 지도</h1><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2"><b>갈래 카드를 누르면 그 갈래의 흐름도가 펼쳐진다</b> — 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지. 아래 표는 행이 단계, 열이 갈래이고 셀에 룰 전문이 있다. 세 갈래가 함께 지키는 것은 공통 밴드에 한 번만 적었다.</p><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div></header>
 <h3 class="sec">세 갈래가 함께 지키는 것</h3><div class="common">
 <div class="cm"><b>푸시 전 한 방</b><span class="w">py -3.13 scripts/build_all.py</span><p>생성기 전부와 검사기 다섯을 순서대로 돌리고 하나라도 실패하면 종료 코드 1이다. <code>--check</code>는 검사만.</p></div>
 <div class="cm"><b>FAIL 0</b><span class="w">다섯 검사기 전부</span><p>FAIL이 남은 채로 푸시하지 않는다. 검사기가 <b>못 잡는 것</b>도 안다 — 숫자는 맞는데 뜻이 다른 경우(68,928달러가 배선 값인지 백플레인 값인지)는 원문 줄을 열어야 한다.</p></div>
@@ -113,9 +161,12 @@
 <div class="cm"><b>인코딩</b><span class="w">PYTHONIOENCODING=utf-8</span><p>콘솔이 cp949라 파이썬 실행에 붙인다.</p></div>
 </div>
 <h3 class="sec">갈래 × 단계</h3><div class="mx">
-<div class="lane" style="--ac:#2563eb"><p class="nm"><span>🧩</span>통합 인사이트</p><p>문서를 가로질러야 보이는 판단만. 문서 한 편 요약은 여기 안 온다.</p><p class="rl">insight-note · insight-review 스킬</p></div>
-<div class="lane" style="--ac:#0f9d76"><p class="nm"><span>🏠</span>주제 대시보드 4장</p><p>부동산 · 금융 · 미주사 · AI·인프라·에너지. 제3자 해설 한 편 = 카드 한 장.</p><p class="rl">insight-upload 스킬 · scripts/card_lib.py</p></div>
-<div class="lane" style="--ac:#b4522b"><p class="nm"><span>📊</span>SemiAnalysis 대시보드</p><p>카드 체계가 아니다. 소셜 신호·뉴스레터·클러스터 판단으로 짜인 다른 구조.</p><p class="rl">LINKEDIN_RULES.md · semianalysis-newsletter 스킬</p></div>
+<button type="button" class="lane" style="--ac:#2563eb" data-flow="fl-unified" aria-expanded="false" aria-controls="fl-unified"><p class="nm"><span>🧩</span>통합 인사이트</p><p>문서를 가로질러야 보이는 판단만. 문서 한 편 요약은 여기 안 온다.</p><p class="rl">insight-note · insight-review 스킬</p><p class="op">흐름 보기</p></button>
+<button type="button" class="lane" style="--ac:#0f9d76" data-flow="fl-topic" aria-expanded="false" aria-controls="fl-topic"><p class="nm"><span>🏠</span>주제 대시보드 4장</p><p>부동산 · 금융 · 미주사 · AI·인프라·에너지. 제3자 해설 한 편 = 카드 한 장.</p><p class="rl">insight-upload 스킬 · scripts/card_lib.py</p><p class="op">흐름 보기</p></button>
+<button type="button" class="lane" style="--ac:#b4522b" data-flow="fl-semi" aria-expanded="false" aria-controls="fl-semi"><p class="nm"><span>📊</span>SemiAnalysis 대시보드</p><p>카드 체계가 아니다. 소셜 신호·뉴스레터·클러스터 판단으로 짜인 다른 구조.</p><p class="rl">LINKEDIN_RULES.md · semianalysis-newsletter 스킬</p><p class="op">흐름 보기</p></button>
+<div class="fl" id="fl-unified" style="--ac:#2563eb" hidden><p class="ttl"><b>🧩 통합 인사이트 — 흐름</b><i>단계마다 걸리는 룰은 한 줄만. 전문은 아래 표에 있다</i><span class="x">다시 누르면 접힌다</span></p><div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>줄 번호가 인용의 기준이다</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">뉴스레터 변환본</span><span class="ns">content/newsletter/**</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">미변환 클리핑</span><span class="ns">input/clippings/**</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">제3자 해설 요약</span><span class="ns">content/understanding/**</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>② 노트</b><i>문서 1편 = 노트 1장, 3KB 이하 · insight-note</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">문서 노트</span><span class="ns">insights/notes/&lt;yymmdd&gt;-&lt;슬러그&gt;.md</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>③ 서술</b><i>노트 전량을 한 콜에 읽고 쓴다 · insight-review</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">교차 인사이트</span><span class="ns">insights/synth/cross-*.md</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">현황 브리핑</span><span class="ns">insights/briefs/*-지금-상태.md</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">주체 추적</span><span class="ns">insights/tracks/*.md</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gate"><p class="sh"><b>④ 검사</b><i>다섯 다 FAIL 0이어야 푸시한다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">노트·인용 무결성</span><span class="ns">check_notes.py  N1~N7</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">문체·용어·절 순서</span><span class="ns">check_prose.py  P1~P7</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">읽히는가</span><span class="ns">check_read.py  R1~R12</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">숫자와 원문 대조</span><span class="ns">check_cite.py  C1</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">아직 지금 이야기인가</span><span class="ns">check_fresh.py  F1~F3</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>⑤ 생성</b><i>공유 CSS는 insights/style.py의 BASE 하나</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">통합 인사이트</span><span class="ns">insights/gen_insightview.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">주체 보드</span><span class="ns">insights/gen_entity_board.py musk</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">지도</span><span class="ns">insights/gen_map.py</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="out"><p class="sh"><b>⑥ 화면</b></p><div class="fnn"><div class="fn" style="--nc:#b4522b"><span class="nn">통합 인사이트.html</span><span class="ns">/unified 🔒</span></div><div class="fn" style="--nc:#b4522b"><span class="nn">추적 - 일론 머스크.html</span></div><div class="fn" style="--nc:#b4522b"><span class="nn">인사이트 지도.html</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>main에 푸시하면 Cloudflare Pages가 자동 배포한다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div></div></div>
+<div class="fl" id="fl-topic" style="--ac:#0f9d76" hidden><p class="ttl"><b>🏠 주제 대시보드 4장 — 흐름</b><i>단계마다 걸리는 룰은 한 줄만. 전문은 아래 표에 있다</i><span class="x">다시 누르면 접힌다</span></p><div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>유튜브는 자막 전문. 설명란 요약으로 때우지 않는다</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">유튜브 자막</span><span class="ns">scratchpad/ytsub.py &lt;영상ID&gt;</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">네이버 프리미엄</span><span class="ns">scratchpad/clip_one.py &lt;URL&gt; &lt;날짜&gt;</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>② 요약본</b><i>유료 원문은 로컬에만. 공개엔 요약만 싣는다</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">해설 요약</span><span class="ns">content/understanding/&lt;주제 또는 화자&gt;/</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>③ 카드</b><i>채널이 아니라 주제로 고른다 · insight-upload</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">카드 dict</span><span class="ns">scripts/card_lib.py 스키마 한 벌</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">슬림 필드</span><span class="ns">slim_oneliner · slim_points 6~8 · slim_stats 4</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gate"><p class="sh"><b>④ 검사</b><i>따옴표는 자막에 있는 말만</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">슬림 ↔ 자막 대조</span><span class="ns">scratchpad/check_slim.py</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>⑤ 생성</b><i>섹션 번호는 손대지 않는다 — SEC_ORDER가 다시 매긴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">부동산</span><span class="ns">scratchpad/gen_realestate_dashboard.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">금융</span><span class="ns">scratchpad/gen_finance_dashboard.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">미주사</span><span class="ns">scratchpad/gen_usa_dashboard.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">AI·인프라·에너지 (생성기 없음)</span><span class="ns">scripts/add_card.py --section sec-ai</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>⑥ 롤업</b><i>산문은 사람이 쓴다. 기간 기준은 매체 업로드일</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">주간·월간 리포트</span><span class="ns">data/rollup_notes_*.json</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="out"><p class="sh"><b>⑦ 화면</b></p><div class="fnn"><div class="fn" style="--nc:#b4522b"><span class="nn">부동산 대시보드.html</span><span class="ns">/realestate</span></div><div class="fn" style="--nc:#b4522b"><span class="nn">금융 대시보드.html</span><span class="ns">/finance</span></div><div class="fn" style="--nc:#b4522b"><span class="nn">언더스탠딩 대시보드.html</span><span class="ns">/understanding</span></div><div class="fn" style="--nc:#b4522b"><span class="nn">미국주식 사관학교 대시보드.html</span><span class="ns">/usa-academy 🔒</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>main에 푸시하면 Cloudflare Pages가 자동 배포한다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div></div></div>
+<div class="fl" id="fl-semi" style="--ac:#b4522b" hidden><p class="ttl"><b>📊 SemiAnalysis 대시보드 — 흐름</b><i>단계마다 걸리는 룰은 한 줄만. 전문은 아래 표에 있다</i><span class="x">다시 누르면 접힌다</span></p><div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>전용 프로필 chrome-semianalysis 하나로 둘 다 로그인</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">LinkedIn 게시물</span><span class="ns">CDP 크롬 9222 · 「최근」 정렬</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">뉴스레터 전문</span><span class="ns">semianalysis-newsletter 스킬</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">YouTube 신호</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gate"><p class="sh"><b>② 게이트</b><i>여기 말고는 막는 곳이 없다 — 이 갈래엔 문장 검사기가 없다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">게시물 필터</span><span class="ns">채용·행사·수상·구독유도 제외</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">페이월 통과 확인</span><span class="ns">text_len &gt; 6000 · paywalled:false</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>③ 적재</b><i>카드 체계가 아니다. insight-upload 대상이 아니다</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">소셜 신호 히스토리</span><span class="ns">대시보드/소셜 신호 히스토리.html · 손으로</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">뉴스레터 변환</span><span class="ns">input/clippings → transformer → content/newsletter/**</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>④ 생성</b><i>자동은 ① 소셜 신호뿐이다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">① 미러 재생성</span><span class="ns">scripts/gen_bmirror.py [일수=14]</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">롤업 재배치</span><span class="ns">scripts/gen_rollup.py</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="work"><p class="sh"><b>⑤ 손편집</b><i>「대시보드 HTML은 생성물」의 예외가 여기다</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">② 뉴스레터 최근분</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">③ 클러스터 종합 판단</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">④ 기업 익스포저</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="out"><p class="sh"><b>⑥ 화면</b></p><div class="fnn"><div class="fn" style="--nc:#b4522b"><span class="nn">SemiAnalysis 대시보드.html</span><span class="ns">/semianalysis 🔒</span></div></div></div><div class="arw" aria-hidden="true">▼</div><div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>main에 푸시하면 Cloudflare Pages가 자동 배포한다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div></div></div>
 <div class="band"><b>① 소스</b><i>무엇이 들어오나</i></div>
 <div class="cell" style="--ac:#2563eb"><p class="lb">🧩 통합 인사이트</p><span class="thing">content/newsletter/**</span><span class="thing">input/clippings/**</span><span class="thing">content/understanding/**</span><ul><li><b>줄 번호가 인용의 기준이다.</b> 원문이 바뀌면 <code>cites.json</code>의 줄 해시가 어긋나 검사기가 잡는다.</li><li>manifest에 원문이 없으면 노트를 쓰지 않고 멈춘다 — 변환 파이프라인 쪽 문제다.</li></ul></div>
 <div class="cell" style="--ac:#0f9d76"><p class="lb">🏠 주제 대시보드 4장</p><span class="thing">py -3.13 scratchpad/ytsub.py &lt;영상ID&gt;</span><span class="thing">py -3.13 scratchpad/clip_one.py &lt;URL&gt; &lt;YYYYMMDD&gt;</span><span class="thing">content/understanding/&lt;주제 또는 화자&gt;/</span><ul><li><b>유튜브는 자막 전문을 받는다.</b> 설명란 요약으로 때우지 않는다.</li><li>네이버 프리미엄 유료 텍스트는 CDP 크롬으로 파싱하고 <b>원문은 로컬에만</b> 둔다. 공개엔 요약만.</li></ul></div>
@@ -142,4 +193,25 @@
 <div class="cell" style="--ac:#b4522b"><p class="lb">📊 SemiAnalysis 대시보드</p><span class="thing">site 슬러그 <code>/semianalysis</code> 🔒</span><ul><li>LinkedIn 배치를 돌린 뒤 <b>소셜 신호 히스토리와 이 대시보드 둘 다</b> 갱신한다.</li><li>주제 대시보드에는 <b>해당 주제 신호만</b> 골라 반영한다.</li></ul></div>
 </div>
 <footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 <code>scripts/gen_admin.py</code>의 <code>CELLS</code>를 맞춘 뒤 다시 만든다. 공개 도메인에서는 <code>/admin</code>으로 잠겨 나간다.</footer>
-</main></body></html>
+</main>
+<script>
+/* 갈래 카드 = 흐름도 스위치. 한 번에 하나만 연다 — 셋을 다 펼치면 표가 저 아래로 밀려난다 */
+(function () {
+  var btns = [].slice.call(document.querySelectorAll('.lane[data-flow]'));
+  function close(b) {
+    b.setAttribute('aria-expanded', 'false');
+    document.getElementById(b.getAttribute('data-flow')).hidden = true;
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var open = b.getAttribute('aria-expanded') === 'true';
+      btns.forEach(close);
+      if (!open) {
+        b.setAttribute('aria-expanded', 'true');
+        document.getElementById(b.getAttribute('data-flow')).hidden = false;
+      }
+    });
+  });
+})();
+</script>
+</body></html>
