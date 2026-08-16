@@ -58,12 +58,54 @@ def _group_chips_html(ax):
     return '<div class="dm-gchips">%s</div>' % ''.join(rows)
 
 
+def _doc_date(key):
+    return '20%s-%s-%s' % (key[:2], key[2:4], key[4:6])
+
+
+def _axis_latest_html(ax):
+    """이 축의 최신 글이 무엇인지 패널 맨 위에 한 줄로 적는다. 그 축이 글을
+    여럿 쓰면 나머지도 작게 나열한다 — 아니면 「이 하나가 이 방법의 전부다」로 읽힌다."""
+    key, date, title = ax['latest']
+    url = dc.blob(dmd.SUM + dmd.DOCS[key])
+    others = [d for d in ax.get('docs', []) if d != key]
+    others_html = ''
+    if others:
+        links = ' · '.join(
+            '<a href="%s" target="_blank" rel="noopener">%s</a>'
+            % (dc.blob(dmd.SUM + dmd.DOCS[d]), _doc_date(d)) for d in others)
+        others_html = '<p class="dm-axis-otherdocs">그 밖에: %s</p>' % links
+    return ('<div class="dm-axis-latest">'
+            '<span class="dm-axis-latest-date">%s</span>'
+            '<span class="dm-axis-latest-title">%s</span>'
+            '<a class="dm-axis-latest-link" href="%s" target="_blank" rel="noopener">요약본 ▸</a>'
+            '</div>%s' % (date, title, url, others_html))
+
+
+def _author_scenarios_html():
+    """엘곰이 직접 만든 시나리오(02-26 역산 글의 보수 A·기준 B). 그 글에서 나온
+    것이라 rev 축 패널에 속한다 — 위층 「내 계산」과 섞이면 안 된다."""
+    s = dmd.SCENARIOS
+    if not s.get('author_scenarios'):
+        return ''
+    au = s['author_scenarios']
+    ah2 = ''.join('<th>%s</th>' % h for h in au['head'])
+    ab2 = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in au['rows'])
+    return (
+        '<div class="dm-auth"><p class="dm-auth-label">%s %s</p>'
+        '<p class="dm-auth-lede">%s</p>'
+        '<div class="dm-auth-wrap"><table class="dm-auth-tbl">'
+        '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+        '<p class="dm-auth-note">%s</p></div>'
+        % (au['label'], _by_badge(au['by']), au['lede'], ah2, ab2, au['note']))
+
+
 def _axis_html(ax):
     # 역산(rev)은 방향이 반대다 — 가격이 출력이 아니라 입력이다. 그래서 셋과
     # 같은 「적정가」 줄에 세우지 않고, 테두리·머리 색·결과 라벨을 다르게 그린다.
     is_rev = ax.get('kind') == 'reverse'
     axis_cls = 'dm-axis dm-axis--reverse' if is_rev else 'dm-axis'
     input_driver = dmd.INPUT_DRIVER.get(ax['id']) if is_rev else None
+    latest_html = _axis_latest_html(ax)
 
     inputs_html = ''
     if ax.get('inputs'):
@@ -119,6 +161,10 @@ def _axis_html(ax):
                       '<thead><tr><th>대조 대상</th><th>값</th><th>요구치와 견주면</th></tr></thead>'
                       '<tbody>%s</tbody></table></div></div>' % rows)
 
+    # 엘곰이 직접 만든 시나리오(02-26 역산 글)는 rev 축에만 속한다. 대조 표
+    # 다음, 판정 앞에 놓는다.
+    auth_html = _author_scenarios_html() if is_rev else ''
+
     verdict_html = ''
     if ax['verdict']:
         vlabel, vdesc = ax['verdict']
@@ -130,6 +176,7 @@ def _axis_html(ax):
             '<div class="dm-axis-head"><span class="dm-axis-no">%s</span>'
             '<div class="dm-axis-headtext"><h3 class="dm-axis-name">%s</h3>'
             '<span class="dm-axis-tag">%s</span></div></div>'
+            '%s'
             '<p class="dm-axis-sub">%s</p>'
             '%s'
             '<div class="dm-chain">%s</div>'
@@ -138,9 +185,11 @@ def _axis_html(ax):
             '%s'
             '%s'
             '%s'
+            '%s'
             '</article>'
-            % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], ax['sub'],
-               inputs_html, chain_html, gchips_html, out_html, mr_html, bench_html, verdict_html))
+            % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
+               inputs_html, chain_html, gchips_html, out_html, mr_html, bench_html, auth_html,
+               verdict_html))
 
 
 _AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
@@ -261,20 +310,8 @@ def _scenario_html():
                 tds.append('<td>%s</td>' % c)
         tds.append('<td>%s</td>' % _by_badge(r['by']))
         body_rows.append('<tr class="dm-sc-row">%s</tr>' % ''.join(tds))
-    # 엘곰도 시나리오를 만들었다 — 다만 02-26 역산 글에서만이다. 그걸 안 보이면
-    # 내가 만든 사다리를 그의 것으로 읽는다. 시점이 달라 같은 표엔 못 넣는다.
-    auth_html = ''
-    if s.get('author_scenarios'):
-        au = s['author_scenarios']
-        ah2 = ''.join('<th>%s</th>' % h for h in au['head'])
-        ab2 = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in au['rows'])
-        auth_html = (
-            '<div class="dm-auth"><p class="dm-auth-label">%s %s</p>'
-            '<p class="dm-auth-lede">%s</p>'
-            '<div class="dm-auth-wrap"><table class="dm-auth-tbl">'
-            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-            '<p class="dm-auth-note">%s</p></div>'
-            % (au['label'], _by_badge(au['by']), au['lede'], ah2, ab2, au['note']))
+    # 엘곰이 직접 만든 시나리오(02-26 역산 글)는 이 위층이 아니라 rev 축 패널에
+    # 놓는다 — 여기는 「내 계산」만 남는 자리다.
 
     # 역산은 방향이 반대라 같은 표에 넣으면 네 번째 시나리오로 읽힌다. 블록을 따로 세운다.
     rev_html = ''
@@ -310,7 +347,7 @@ def _scenario_html():
                         ''.join(rv_rows)))
     return ('<div class="dm-scenario">'
             '<div class="dm-scenario-head">'
-            '<p class="dm-scenario-kicker">이 시점의 평가 — 이 페이지의 결론</p>'
+            '<p class="dm-scenario-kicker">내 계산 — 지금 시점의 결론</p>'
             '<div class="dm-scenario-meta">'
             '<span class="dm-scenario-asof">%s 기준</span>'
             '<span class="dm-scenario-price">주가 %s</span>'
@@ -324,12 +361,11 @@ def _scenario_html():
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '%s'
             '%s'
-            '%s'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
             % (s['asof'], s['price'], s['mcap'], s['formula'], head,
-               ''.join(body_rows), rev_html, auth_html, act_html, s['note'], s['punch']))
+               ''.join(body_rows), rev_html, act_html, s['note'], s['punch']))
 
 
 def _timeline_html():
@@ -626,12 +662,40 @@ DM_CSS = '''<style>
 .dm-tl-ask .dm-tl-val{color:var(--ink-2);font-weight:700}
 .dm-tl-ask .dm-tl-val b{color:var(--ink);font-weight:850}
 
-/* ── 축 4개 ── */
-/* 넷을 한 줄에 세우면 1280px에서 칸이 300px도 안 돼 수식이 잘게 접힌다.
-   아주 넓을 때만 4열로 간다 */
-.dm-axes{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 24px;
-         align-items:start}
-@media (max-width:560px){.dm-axes{grid-template-columns:1fr}}
+/* ── 방법 버튼 줄 + 패널 하나 ── */
+.dm-axheading{font-size:14px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
+              margin:26px 0 10px}
+.dm-axisbtns{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+             margin:0 0 14px;padding:2px 2px 6px}
+.dm-axisbtn{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+            font:inherit;cursor:pointer;padding:8px 14px;border-radius:10px;
+            border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+.dm-axisbtn:hover{border-color:var(--accent)}
+.dm-axisbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dm-axisbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);
+                                 box-shadow:inset 0 0 0 1px var(--accent)}
+.dm-axisbtn-no{font-size:10px;font-weight:800;letter-spacing:.02em;color:var(--ink-3)}
+.dm-axisbtn[aria-pressed="true"] .dm-axisbtn-no{color:var(--accent-ink)}
+.dm-axisbtn-name{font-size:13px;font-weight:850;color:var(--ink)}
+.dm-axisbtn[aria-pressed="true"] .dm-axisbtn-name{color:var(--accent-ink)}
+.dm-axisbtn-date{font-size:10.5px;font-weight:700;color:var(--ink-3);
+                 font-variant-numeric:tabular-nums}
+.dm-axispanels{margin:0 0 24px}
+.dm-axispanel[hidden]{display:none}
+
+/* ── 축 패널 맨 위 — 이 축의 최신 글 ── */
+.dm-axis-latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;
+                margin:0 0 8px;padding:8px 10px;background:var(--sunk);border-radius:8px}
+.dm-axis-latest-date{font-size:11px;font-weight:850;color:var(--ink-3);
+                     font-variant-numeric:tabular-nums;white-space:nowrap}
+.dm-axis-latest-title{font-size:12px;font-weight:700;color:var(--ink);line-height:1.4}
+.dm-axis-latest-link{margin-left:auto;font-size:11px;font-weight:800;color:var(--accent-ink);
+                     text-decoration:none;white-space:nowrap}
+.dm-axis-latest-link:hover{text-decoration:underline}
+.dm-axis-otherdocs{font-size:10.5px;color:var(--ink-3);margin:0 0 10px}
+.dm-axis-otherdocs a{color:var(--accent-ink);text-decoration:none}
+.dm-axis-otherdocs a:hover{text-decoration:underline}
+
 .dm-axis{background:var(--surface);border:1px solid var(--line);border-radius:12px;
          padding:16px 15px 15px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
 .dm-axis-head{display:flex;align-items:flex-start;gap:9px;margin:0 0 6px}
@@ -979,17 +1043,85 @@ DM_JS = '''<script>
 </script>'''
 
 
+AXBTN_JS = '''<script>
+(function(){
+  var wrap = document.getElementById('dm-axisbtns');
+  if(!wrap) return;
+  var btns = Array.prototype.slice.call(wrap.querySelectorAll('.dm-axisbtn'));
+
+  function select(id){
+    btns.forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.axis === id ? 'true' : 'false');
+    });
+    document.querySelectorAll('.dm-axispanel').forEach(function(p){
+      p.hidden = (p.id !== 'dm-axispanel-' + id);
+    });
+  }
+
+  wrap.addEventListener('click', function(e){
+    var b = e.target.closest('.dm-axisbtn');
+    if(!b) return;
+    select(b.dataset.axis);
+  });
+
+  wrap.addEventListener('keydown', function(e){
+    if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var idx = btns.indexOf(document.activeElement);
+    if(idx === -1) return;
+    e.preventDefault();
+    var next = e.key === 'ArrowRight' ? (idx + 1) % btns.length
+                                       : (idx - 1 + btns.length) % btns.length;
+    btns[next].focus();
+  });
+})();
+</script>'''
+
+# 다섯 방법을 보여줄 순서. dcf(03)가 가장 완전한 평가라 기본으로 연다.
+_AXIS_BTN_ORDER = ['stmt', 'simple', 'dcf', 'rev', 'mult']
+_AXIS_BTN_DEFAULT = 'dcf'
+
+
+def _axis_buttons_html():
+    axes_by_id = {ax['id']: ax for ax in dmd.AXES}
+    btns = []
+    for aid in _AXIS_BTN_ORDER:
+        ax = axes_by_id[aid]
+        pressed = 'true' if aid == _AXIS_BTN_DEFAULT else 'false'
+        btns.append(
+            '<button type="button" class="dm-axisbtn" id="dm-axisbtn-%s" data-axis="%s" '
+            'aria-pressed="%s" aria-controls="dm-axispanel-%s">'
+            '<span class="dm-axisbtn-no">%s</span>'
+            '<span class="dm-axisbtn-name">%s</span>'
+            '<span class="dm-axisbtn-date">%s</span>'
+            '</button>' % (aid, aid, pressed, aid, ax['no'], ax['name'], ax['latest'][1]))
+    return '<div class="dm-axisbtns" id="dm-axisbtns">%s</div>' % ''.join(btns)
+
+
+def _axis_panels_html():
+    axes_by_id = {ax['id']: ax for ax in dmd.AXES}
+    parts = []
+    for aid in _AXIS_BTN_ORDER:
+        ax = axes_by_id[aid]
+        hidden = '' if aid == _AXIS_BTN_DEFAULT else ' hidden'
+        parts.append(
+            '<div class="dm-axispanel" id="dm-axispanel-%s" role="tabpanel" '
+            'aria-labelledby="dm-axisbtn-%s"%s>%s</div>'
+            % (aid, aid, hidden, _axis_html(ax)))
+    return '<div class="dm-axispanels">%s</div>' % ''.join(parts)
+
+
 def render():
-    axes_html = ''.join(_axis_html(ax) for ax in dmd.AXES)
     data_json = json.dumps(_data_json(), ensure_ascii=False).replace('</', '<\\/')
     parts = [DM_CSS]
     parts.append('<div class="dm-wrap">')
     parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_scenario_html())
-    parts.append('<div class="dm-axes">%s</div>' % axes_html)
+    parts.append('<h2 class="dm-axheading">엘곰이 한 것 — 방법을 고르면 그 방법의 최신 글이 열린다</h2>')
+    parts.append(_axis_buttons_html())
+    parts.append(_axis_panels_html())
     # 연도별 이익 경로 표는 옛 평가가 아니다 — 07-16 가정의 상세다(그 열이 표 안에 있다).
-    # 접어 두면 못 찾는다. 축 바로 뒤에 펼쳐 둔다.
+    # 접어 두면 못 찾는다. 버튼 패널 바로 뒤에 펼쳐 둔다.
     parts.append(_ranges_html())
     parts.append(_sens_html())
     parts.append(_earnpath_html())
@@ -1009,6 +1141,7 @@ def render():
     parts.append('</div>')
     parts.append('<script type="application/json" id="dm-data">%s</script>' % data_json)
     parts.append(DM_JS)
+    parts.append(AXBTN_JS)
     return '\n'.join(parts)
 
 
