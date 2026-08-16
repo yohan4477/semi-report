@@ -7,6 +7,7 @@ import io, os, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import driver_map
 
 OUT = os.path.join(dc.ROOT, '대시보드', '회계사 대시보드.html')
 blob = dc.blob
@@ -273,4 +274,5 @@ FOOTER = ('제3자 해설 아카이브 · 유료 구독 글 요약입니다. 원
           '필자가 실제로 정한 규칙 번호는 <code>docs/valuation-rulebook.md</code>에 있습니다.')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT, rollup='')
+    dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
+              rollup=driver_map.render())
