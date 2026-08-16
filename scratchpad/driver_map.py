@@ -215,10 +215,24 @@ def _scenario_html():
                 tds.append('<td>%s</td>' % c)
         tds.append('<td>%s</td>' % _by_badge(r['by']))
         body_rows.append('<tr class="dm-sc-row">%s</tr>' % ''.join(tds))
-    m = s['market']
-    market_tds = ''.join('<td>%s</td>' % c for c in m['cells'])
-    body_rows.append('<tr class="dm-sc-market">%s<td>%s</td></tr>'
-                      % (market_tds, _by_badge(m['by'])))
+    # 역산은 방향이 반대라 같은 표에 넣으면 네 번째 시나리오로 읽힌다. 블록을 따로 세운다.
+    rev_html = ''
+    if s.get('reverse'):
+        rv = s['reverse']
+        cmps = ''.join(
+            '<div class="dm-rv-cmp dm-rv-cmp--%s"><span class="dm-rv-cmp-k">%s</span>'
+            '<span class="dm-rv-cmp-v">%s</span></div>' % (tone, k, v)
+            for k, v, tone in rv['compare'])
+        rev_html = (
+            '<div class="dm-rv">'
+            '<p class="dm-rv-label">%s %s</p>'
+            '<p class="dm-rv-lede">%s</p>'
+            '<p class="dm-rv-formula">%s</p>'
+            '<div class="dm-rv-result"><span class="dm-rv-val">%s</span>'
+            '<span class="dm-rv-note">%s</span></div>'
+            '<div class="dm-rv-cmps">%s</div>'
+            '</div>' % (rv['label'], _by_badge(rv['by']), rv['lede'], rv['formula'],
+                        rv['result'], rv['result_note'], cmps))
     return ('<div class="dm-scenario">'
             '<div class="dm-scenario-head">'
             '<p class="dm-scenario-kicker">이 시점의 평가 — 이 페이지의 결론</p>'
@@ -228,14 +242,16 @@ def _scenario_html():
             '<span class="dm-scenario-mcap">시가총액 %s</span>'
             '</div></div>'
             '%s'
+            '<p class="dm-fwd-label">정방향 — 이익을 가정하면 적정가가 나온다</p>'
             '<p class="dm-scenario-formula">%s</p>'
             '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '%s'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
             % (s['asof'], s['price'], s['mcap'], act_html, s['formula'], head,
-               ''.join(body_rows), s['note'], s['punch']))
+               ''.join(body_rows), rev_html, s['note'], s['punch']))
 
 
 def _timeline_html():
@@ -361,6 +377,26 @@ DM_CSS = '''<style>
 .dm-mr-tbl td:nth-last-child(-n+2){font-weight:800;color:var(--ink)}
 .dm-mr-tbl tr:last-child td{border-bottom:0}
 .dm-mr-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
+
+/* ── 정방향 / 역방향 ── 방향이 반대라 한 표에 세우면 네 번째 시나리오로 읽힌다 */
+.dm-fwd-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:14px 0 4px}
+.dm-rv{margin:16px 0 0;border-left:3px solid var(--accent);background:var(--accent-soft);
+       border-radius:0 10px 10px 0;padding:12px 15px}
+.dm-rv-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--accent-ink);margin:0 0 4px}
+.dm-rv-lede{font-size:12px;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
+.dm-rv-formula{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 10px;
+               font-variant-numeric:tabular-nums}
+.dm-rv-result{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.dm-rv-val{font-size:24px;font-weight:850;letter-spacing:-.02em;color:var(--ink);
+           font-variant-numeric:tabular-nums;line-height:1.1}
+.dm-rv-note{font-size:12px;line-height:1.55;color:var(--ink-2);flex:1 1 16ch;min-width:16ch}
+.dm-rv-cmps{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.dm-rv-cmp{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+           background:var(--surface);border-radius:8px;padding:6px 10px}
+.dm-rv-cmp-k{font-size:11px;color:var(--ink-3)}
+.dm-rv-cmp-v{font-size:13px;font-weight:850;font-variant-numeric:tabular-nums}
+.dm-rv-cmp--high .dm-rv-cmp-v{color:var(--warn)}
+.dm-rv-cmp--low .dm-rv-cmp-v{color:var(--good)}
 
 /* ── 실적 표 (시나리오 맨 위) ── 정상화 수준은 실제 실적에서 출발해야 한다 */
 .dm-act{margin:12px 0 14px;background:var(--sunk);border-radius:10px;padding:11px 13px}
