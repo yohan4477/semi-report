@@ -25,7 +25,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import ui_bits  # noqa: E402
 
-SRC = os.path.join(ROOT, '대시보드', '언더스탠딩 대시보드.html')
+# 기본 CSS 원천. 예전에는 「언더스탠딩 대시보드.html」의 <style>을 통째로 읽었는데,
+# 그 페이지도 생성기로 만들게 되면 자기가 만들 파일을 읽는 순환이 된다. 파일로 떼어 둔다.
+# 내용은 떼어낸 그대로다 — <style>로 시작해 </style>로 끝나서 아래 슬라이스가 그대로 먹는다.
+SRC = os.path.join(ROOT, 'scripts', 'dash_base_css.html')
 BLOB = 'https://github.com/yohan4477/semi-report/blob/main/'
 
 def blob(path):
