@@ -85,7 +85,7 @@ def _axis_html(ax):
     chain_html = ''.join('<p class="dm-chain-line">%s</p>' % _linkify(c) for c in ax['chain'])
     gchips_html = _group_chips_html(ax)
 
-    out_tag = '이 가격이 요구하는 것' if is_rev else '결과'
+    out_tag = '이 주가를 유지하려면 필요한 것' if is_rev else '결과'
     result_driver = dmd.RESULT_OF.get(ax['id'])
     if result_driver:
         out_html = (
@@ -104,7 +104,7 @@ def _axis_html(ax):
         mr = ax['market_read']
         head = ''.join('<th>%s</th>' % h for h in mr['head'])
         body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in mr['rows'])
-        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">시장이 요구하는 것 — 시점마다 다시 계산했다 %s</p>'
+        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">그 주가를 유지하려면 필요한 이익 — 시점마다 다시 계산했다 %s</p>'
                    '<div class="dm-mr-wrap"><table class="dm-mr-tbl">'
                    '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
                    '<p class="dm-mr-note">%s</p></div>' % (_by_badge('ours'), head, body, mr['note']))
@@ -114,7 +114,7 @@ def _axis_html(ax):
         rows = ''.join(
             '<tr><td>%s</td><td class="dm-bench-v">%s</td><td class="dm-bench-note">%s</td></tr>'
             % (k, v, note) for k, v, note in ax['benchmark'])
-        bench_html = ('<div class="dm-bench"><p class="dm-bench-label">이 요구가 말이 되나</p>'
+        bench_html = ('<div class="dm-bench"><p class="dm-bench-label">그 이익이 나올 만한가</p>'
                       '<div class="dm-bench-wrap"><table class="dm-bench-tbl">'
                       '<thead><tr><th>대조 대상</th><th>값</th><th>요구치와 견주면</th></tr></thead>'
                       '<tbody>%s</tbody></table></div></div>' % rows)
@@ -318,7 +318,7 @@ def _scenario_html():
             '</div></div>'
             # 시나리오가 먼저다. 실적 추이는 그 값을 왜 그렇게 잡았는지 받쳐 주는
             # 재료라 아래에 둔다 — 위에 두면 결론 앞에 표가 하나 더 서서 가린다.
-            '<p class="dm-fwd-label">정방향 — 이익을 가정하면 적정가가 나온다</p>'
+            '<p class="dm-fwd-label">이익을 가정하면 적정 주가가 나온다</p>'
             '<p class="dm-scenario-formula">%s</p>'
             '<div class="dm-scenario-wrap"><table class="dm-scenario-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
