@@ -286,8 +286,12 @@ DM_CSS = '''<style>
 .dm-ep-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 9px}
 .dm-ep-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .dm-ep-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
-.dm-ep-tbl th{font-size:10px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);
-              text-align:left;padding:4px 12px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.dm-ep-tbl th{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);
+              text-align:left;padding:4px 12px 7px 0;border-bottom:1px solid var(--line);
+              white-space:nowrap;vertical-align:bottom}
+/* 보수·기준·직접이 무슨 뜻인지 머리에서 바로 알려 준다 */
+.dm-ep-tbl th span{display:block;font-size:10px;font-weight:700;color:var(--ink-3);
+                   letter-spacing:0;margin-top:3px;white-space:normal;max-width:19ch}
 .dm-ep-tbl td{padding:5px 12px 5px 0;border-bottom:1px solid var(--line);
               color:var(--ink);white-space:nowrap}
 .dm-ep-tbl td:first-child{font-weight:800}
