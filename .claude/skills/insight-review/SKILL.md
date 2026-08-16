@@ -1,98 +1,145 @@
 ---
 name: insight-review
-description: 문서가 쌓인 뒤 인사이트 체계를 점검한다 — 검사기·문체 게이트, 대조(STALE·충돌 후보·문서 내부 충돌·뭉침), 구조 의미 중복제거, 좌표 승격 후보 보고까지. "인사이트 리뷰해" / "쌓인 문서 점검해" / 인사이트를 새로 쓰거나 고치기 직전에 쓴다. 원자를 만들지 않고 인사이트 본문도 고치지 않는다.
+description: 노트가 쌓인 뒤 교차 인사이트를 점검하거나 새로 쓸 때 쓴다. "인사이트 리뷰해" / "쌓인 문서 점검해" / "교차 인사이트 뽑아" / 새 노트가 3편 이상 들어왔을 때 / 인사이트 본문을 고치기 직전. 노트를 만들지는 않는다.
 ---
 
 # 인사이트 리뷰
 
-선행 설계: `docs/superpowers/specs/2026-07-30-원자-뷰-인사이트-design.md`(체계), `2026-07-30-스킬-분할-구조화-design.md`(이 절차).
+설계 SSOT: `docs/superpowers/specs/2026-08-09-원문-기반-노트-체계-design.md`. 원자(atom) 체계는 2026-08-09에 폐기됐다 — `check_atoms.py`·`crosscheck.py`·`structures.py`·`verify.json`·`insights/atoms/`는 없다. 옛 이름이 보이면 이 스킬이 낡은 것이다.
 
-저장소 루트 `C:\Users\y\semianalysis`. 콘솔이 cp949라 파이썬 실행에는 `PYTHONIOENCODING=utf-8`을 붙인다.
+저장소 루트 `C:\Users\y\semianalysis`. 콘솔이 cp949라 파이썬 실행에 `PYTHONIOENCODING=utf-8`을 붙인다.
 
-## 언제 도나 (셋 중 하나)
+## 체계 3층
 
-- 직전 리뷰 이후 원자화된 문서가 **3편 이상**
-- `check_atoms.py`의 **STALE(C11) WARN이 1건 이상**
-- **인사이트를 새로 쓰거나 고치기 직전** — 문서 수와 무관하게 돈다. 충돌 후보를 모르고 쓰면 C9가 나중에 FAIL을 낸다
-
-## 1. 검사
-
-```bash
-PYTHONIOENCODING=utf-8 py insights/check_atoms.py
-PYTHONIOENCODING=utf-8 py insights/check_prose.py
+```
+① 원문   content/newsletter/**/*.md · content/understanding/**/*.md · input/clippings/*.md
+              │  문서 1편 = 노트 1장, 논지를 보존한 채 줄인다 (insight-note 스킬)
+② 노트   insights/notes/<yymmdd>-<슬러그>.md          ← 전부 한 콜에 들어간다
+              │  교차 작업은 전부 여기서 한다
+③ 서술   insights/synth/cross-*.md   교차 인사이트
+          insights/briefs/*-지금-상태.md  현황 브리핑
+          insights/tracks/*.md        주체별 추적
+              ▼  대시보드/통합 인사이트.html · 추적 - *.html
 ```
 
-둘 다 FAIL 0이어야 한다.
+이 스킬은 ②를 읽고 ③을 쓴다.
 
-- `check_atoms.py` FAIL이면 여기서 멈추고 원자화 쪽 문제로 보고한다. 줄 번호를 손으로 맞추지 말고 그 문서를 재추출한다(C16이 원문 변경을 잡는다)
-- `check_prose.py` FAIL이면 **용어를 지우지 말고 괄호로 풀어** 고친다. 이 저장소의 확정 규칙이다 — 용어를 없앴다가 되돌린 이력이 있다
-- 절 순서를 바꾸면 **첫 등장 위치가 이동해 P2가 새로 뜬다.** 실측된 현상이니 놀라지 말고 새 첫 등장에서 풀면 된다
-- 새 인사이트를 쓸 때는 `headline`·`subhead`를 반드시 넣는다(P7). 헤드라인은 주어를 담아 자립하게, 부제는 또 하나의 주장이 아니라 **무엇이 들었는지 나열하는 요약**으로
+## 언제 도나
 
-## 2. 대조
+- 직전 리뷰 이후 새 노트가 **3편 이상**
+- `check_fresh.py`가 **F1 FAIL**을 낸다 — 더 새 문서가 들어왔는데 서술을 안 고쳤다
+- **교차 인사이트를 새로 쓰거나 고치기 직전** — 노트 수와 무관하게 돈다
 
-```bash
-PYTHONIOENCODING=utf-8 py insights/crosscheck.py
-```
-
-네 가지가 나온다.
-
-- **뭉침** — 원자 10개 이상인 칸. 한 문서가 60%를 넘으면 쪼개지 않는다(그 문서의 목차다). 비중이 흩어진 칸만 하위 단계 후보
-- **STALE 인사이트** — 처리 4갈래: 뒷받침(`atoms:`에 id 추가) / 조건 다름(`## 조건 충돌` 갱신) / 뒤집음(`## 주장` 재작성, 이전 판단은 무너진 이유와 함께 보존) / 무관(`dismissed:` + `## 검토 후 무관` 절)
-- **문서 내부 충돌** — 같은 문서 안에서 같은 단위·다른 조건인 쌍. 이 체계를 만든 5.4배 사고가 이 유형이다
-- **충돌 후보** — 다른 문서와의 쌍. 한 인사이트에서 함께 인용하면 C9가 FAIL
-
-## 3. 구조 의미 중복제거
+## 1. 검사 — 다섯 개 전부
 
 ```bash
-PYTHONIOENCODING=utf-8 py insights/structures.py
+PYTHONIOENCODING=utf-8 python insights/check_notes.py    # N1~N7  노트·인용 무결성
+PYTHONIOENCODING=utf-8 python insights/check_prose.py    # P1~P7  문체·용어·절 순서
+PYTHONIOENCODING=utf-8 python insights/check_read.py     # R1~R8  읽히는가
+PYTHONIOENCODING=utf-8 python insights/check_cite.py     # C1     인용한 줄에 그 숫자가 있나
+PYTHONIOENCODING=utf-8 python insights/check_fresh.py    # F1~F3  아직 지금 이야기인가
 ```
 
-기록 검증(오류 0건)과 1차 겹침(라벨 Jaccard)을 본다. **라벨 겹침은 거의 0으로 나온다** — 실측에서 구조 38개 중 0쌍이었고 문턱 0.15까지 낮춰도 0이었다. 리포트마다 자기 어휘로 틀을 만들기 때문이다. 버그가 아니다.
+**다섯 개를 다 돌린다.** 앞의 셋만 돌리고 푸시한 이력이 있다 — 2026-08-15 부동산 카드가 `check_read` FAIL 0으로 통과했는데 `check_cite` 확인필요 6건과 `check_fresh` FAIL 3건을 달고 있었다.
 
-그래서 의미 묶기는 직접 한다. `insights/views/structures.json`을 **전수 읽고**(라벨만 담아 짧다) 같은 것을 말하는 구조를 묶어 `insights/views/structure_groups.json`에 쓴다. 형식은 그 파일의 기존 항목을 그대로 따른다 — `name`·`kind`·`members`·`shared_order`·`note`·`docs`·`promote`·`promote_note`.
+| 결과 | 처리 |
+|---|---|
+| `check_notes` FAIL | 여기서 멈춘다. 노트 쪽 문제다 — 줄 번호를 손으로 맞추지 말고 그 문서를 재추출한다 |
+| `check_prose` FAIL | **용어를 지우지 말고 괄호로 푼다.** 이 저장소의 확정 규칙이다(지웠다가 되돌린 이력) |
+| `check_prose` 한 파일 WARN 5건 초과 | `humanize-korean` 스킬을 부를 계기 |
+| `check_read` FAIL | 약어 풀이·지시어 해소·제목 교체. R2("두 문제"라 해놓고 뭔지 없음)는 아래 집필 계약과 같은 결함이다 |
+| `check_cite` 확인필요 | 기계는 절반만 본다. **원문 줄을 열어 사람이 확인한다.** 숫자가 그 줄에 있어도 뜻이 다를 수 있다 |
+| `check_fresh` F1 | 새 노트를 읽고 반영하거나, 안 바뀐다고 판단했으면 **그 판단의 근거를 본문에 쓴다**. 날짜만 미루지 않는다 |
+| `check_fresh` F3 | `as_of`가 근거보다 앞섰다. 표기를 고친다 |
 
-**규칙**
-- **멱등**: 기존 묶음은 유지하고 새 구조만 배치한다. 묶음 이름을 바꾸는 것은 스펙 개정으로 본다
-- `members`가 **2편 이상**이어야 승격 후보다. 단독 구조는 그 문서의 목차이므로 묶음을 만들지 않는다
-- 순서가 없는 `hierarchy` 묶음은 단계로 승격하지 않는다. 분류는 서술로 쓴다
-- `promote: true`는 **표시만** 한다. 실제 좌표 변경(하위 단계 추가 등)은 사람이 스펙 개정으로 한다
+절 순서를 바꾸면 첫 등장 위치가 옮겨져 P2가 새로 뜬다. 실측된 현상이니 새 첫 등장에서 다시 풀면 된다.
 
-## 4. 검증 대장
+## 2. 교차 — 노트를 통째로 읽는다
 
-`insights/verify.json`이 「이 판단이 무엇으로 무너지나」를 담는다. C21이 검사한다.
+`crosscheck.py`는 없다. 노트 전량이 한 콜에 들어가므로 직접 읽는다.
 
-- **새 인사이트를 쓰면 검증 항목을 같이 연다.** 「아직 모르는 것」 절이 후보다. 항목 하나는 판정 가능한 질문(`question`) + 무엇을 보면 아는지(`watch`) + 그 답이 무엇을 정하는지(`settles`) + `due`로 이뤄진다
-- **질문은 근거보다 먼저 있어야 한다.** `opened_on`이 그 시점이고, 근거 원자의 문서 날짜가 그보다 이전이면 C21이 FAIL을 낸다(사후 편입). 결과를 보고 만든 질문은 검증이 아니다
-- **판정은 원자로만 한다.** `적중`/`빗나감`으로 바꾸려면 `resolved_on`과 `evidence`(원자 id 1개 이상)가 있어야 한다. 새 문서가 답을 가져왔으면 그 문서를 먼저 원자화한다
-- **기한이 지나면 WARN이 뜬다.** 판정하거나, 아직 답이 없으면 `due`를 미루고 `note`에 이유를 적는다
-- 판정 0건이면 페이지가 적중률을 계산하지 않는다. **없는 비율을 만들지 말 것**
+**① 훑기 (수시).** `insights/notes/` 전량을 읽고 넷을 찾는다.
 
-## 5. 산출물 재생성
+- **같은 단위를 다르게 세는 곳** — 같은 이름표가 다른 것을 포함한다
+- **어긋남** — 한쪽이 지목한 문제와 다른 쪽이 내놓은 답이 안 맞는다
+- **구멍** — 어느 노트도 제약으로 넣지 않은 것
+- **뭉침** — 한 주제에 노트가 몰렸는데 서술이 없다
+
+**② 신규 대조 (노트가 들어올 때마다).** 새 노트 + 기존 서술을 놓고 「이게 기존 판단 중 무엇을 깎나」를 본다. 처리 네 갈래 — 뒷받침(`sources:`에 추가) / 조건 다름(`## 조건 충돌` 갱신) / 뒤집음(`## 주장` 재작성, 이전 판단은 **무너진 이유와 함께 보존**) / 무관(`## 검토 후 무관` 절).
+
+**③ 파고들기.** ①·②에서 걸린 것만 원문 5~10편을 통째로 읽고 서술을 쓴다. 얕게 전부 → 걸린 데만 깊게.
+
+## 3. 집필 계약 — 교차 인사이트 한 장
+
+기계가 못 잡는 자리다. 2026-08-15 부동산 카드 두 장에서 결함 15개가 나왔고 검사기 셋은 전부 통과했다. 아래는 **카드가 무엇으로 이뤄지는지**의 명세다.
+
+### 카드 하나 = 어긋남 하나
+
+한 장에는 **대립쌍 하나**만 담는다. 쌍의 양쪽은 같은 층위여야 한다 — 말과 말, 수와 수, 계획과 실적. 「필요한 평형과 공급 아이디어가 안 맞는다」와 「지을 사람이 없다」는 서로 다른 쌍이므로 카드 두 장이다. 「그리고」로 두 쌍을 이으면 그 자리가 쪼갤 자리다.
+
+### `## 주장` 문단의 부품과 순서
+
+| 순서 | 부품 | 규칙 |
+|---|---|---|
+| 1 | **쌍의 양쪽을 실명으로** | 첫 문장 안에서 무엇과 무엇이 어긋나는지 둘 다 말한다. 「지목하는 것」·「내놓는 것」처럼 대명사로 미루지 않는다 |
+| 2 | **어긋남의 주체** | 누가 그랬는지 하나로 고정한다 — 문서인지, 정부인지, 업계인지. 절마다 바뀌면 동어반복이 된다 |
+| 3 | **양쪽의 값** | 각각 인용을 단다. 사례 셋 중 하나만 인용 없는 상태로 두지 않는다 |
+| 4 | **이 카드가 정하는 것** | 이 어긋남이 무엇을 바꾸는지 한 문장. 독법 훈계("~로 읽어야 한다")가 아니라 이 사안의 결과 |
+
+**답은 첫 문단이 쥔다.** 무엇이 부족한지·무엇이 어긋나는지의 답이 아래 절에 처음 나오면 순서가 뒤집힌 것이다. 아래 절은 그 답을 넓히는 자리지 밝히는 자리가 아니다.
+
+### 카드 안의 수
+
+- **독자가 셀 수 있는 수만 쓴다.** 「21편」 같은 저장소 내부 카운트는 독자에게 정의된 적이 없다. 근거 문서를 가리키려면 그 문서를 이름으로 부른다
+- **헤드라인의 수와 본문의 수를 같게 쓴다.** 제목 「3만 호」·본문 「2만 9천 호」는 같은 카드 안의 두 값이다
+- **세기 방식이 다른 것을 「반대」로 뭉치지 않는다.** 결론이 뒤집히는 사례와 크기만 달라지는 사례는 다른 주장이다
+
+### 문장
+
+- **지시어는 그 문장 안에서 해소한다.** 「값이 갈리는 자리」의 값이 숫자인지 가격인지 결론인지 카드가 정한다(R2가 일부만 잡는다)
+- **추상 동사를 실물로 바꾼다.** 「서로 다른 것을 담고」 → 「부대비와 금융비가 한쪽에만 들어가고」
+- **원문 화자의 인상은 인상으로 쓴다.** 「숙련공은 70대는 넘어야 있다」는 현장 진술이지 통계가 아니다. 조건 없이 단정문으로 올리지 않는다
+- **주장 문단에 없는 것을 「두 방식」·「셋」으로 부르지 않는다.** 부르려면 그 자리에서 이름을 댄다
+
+### 화면 확인
+
+인용 `(라벨 L123)`은 `insights/notes_lib.py`의 `cite()`가 링크로 바꾸는데 **글자로는 `L123`만 남고 문서명은 tooltip으로 들어간다.** 문장 끝에 인용을 붙이면 화면에서 `…나오는데L6,`처럼 달라붙는다. 인용은 문장 끝 마침표 앞, 앞에 공백을 두고 단다.
+
+### frontmatter
+
+```yaml
+view: cross
+headline: 주어를 담아 자립하는 한 문장
+subhead: 또 하나의 주장이 아니라 무엇이 들었는지 나열하는 요약   # P7이 겹침을 잡는다
+section: <섹션 키>
+as_of: <YYYY-MM-DD>
+sources:
+  - {file: "<원문 경로>", note: ""}
+```
+
+절 순서는 `check_prose.py`의 `SECTION_ORDER` — 주장 / 그래서 무엇이 달라지나 / 되돌릴 수 없는 지점 / 근거 / 조건 충돌 / 아직 모르는 것 / 검토 후 무관.
+
+## 4. 산출물 재생성
 
 ```bash
-PYTHONIOENCODING=utf-8 py insights/gen_atomview.py
-PYTHONIOENCODING=utf-8 py insights/gen_actormap.py
+PYTHONIOENCODING=utf-8 python insights/gen_manifest.py     # 원문이 늘었을 때
+PYTHONIOENCODING=utf-8 python insights/coverage.py         # 커버리지 리포트
+PYTHONIOENCODING=utf-8 python insights/gen_insightview.py  # 대시보드/통합 인사이트.html
+PYTHONIOENCODING=utf-8 python insights/gen_entity_board.py # 대시보드/추적 - *.html
 ```
 
-인사이트·원자·구조 묶음·검증 대장이 바뀌었으면 `대시보드/인사이트와 근거.html`을, `views/actor_map.json`이 바뀌었으면 `대시보드/제약과 회사.html`을 다시 만든다. 공유 CSS는 `insights/style.py`의 `BASE`다 — 페이지마다 토큰을 새로 정하지 않는다.
+클러스터·좌표를 건드렸으면 `refresh_provenance.py` → `validate_insights.py` → `gen_dashboard.py`·`gen_map.py`. 공유 CSS는 `insights/style.py`의 `BASE`다 — 페이지마다 토큰을 새로 정하지 않는다.
 
-## 6. 보고
+## 5. 보고
 
-- `check_atoms.py`·`check_prose.py` 요약 줄. `check_prose.py`가 한 파일에 WARN 5건을 넘겼으면 그 파일은 `humanize-korean` 스킬을 부를 계기다
-- STALE 인사이트 목록과 각각 4갈래 중 어느 쪽으로 보이는지
-- 충돌 후보·문서 내부 충돌 중 눈에 걸리는 쌍
-- 뭉침 중 승격 후보(한 문서 독점 60% 미만)
-- 구조 묶음 중 `members` 2편 이상인 것과 `promote` 판정
-- 검증 대장: 기한 지난 열림 항목, 판정 건수와 적중률(판정 0건이면 「계산 불가」로 보고한다)
-- 원자 인용률 — 과잉 추출 지표다
+- 검사기 **다섯 개**의 요약 줄
+- `check_cite` 확인필요 건 중 원문을 열어 본 결과
+- `check_fresh` F1 목록과 각각 어느 갈래로 처리했는지
+- ① 훑기에서 나온 어긋남·구멍 후보
+- 쪼갠 카드가 있으면 무엇을 무엇으로 나눴는지
 
-```bash
-PYTHONIOENCODING=utf-8 py -c "import io,json,glob,re;cited=set();[cited.update(re.findall(r'A-\d{6}-\d{2}',io.open(p,encoding='utf-8').read())) for p in glob.glob('insights/synth/*.md')];ids=[a['id'] for f in glob.glob('insights/atoms/*.json') for a in json.load(io.open(f,encoding='utf-8'))['atoms']];print('인용 %d/%d (%.0f%%)'%(len(cited&set(ids)),len(ids),100*len(cited&set(ids))/len(ids)))"
-```
+## 6. 커밋
 
-## 7. 커밋
+재생성된 페이지와 고친 서술을 커밋한다. 의미 단위마다 바로 커밋·푸시한다.
 
-`structure_groups.json`·`verify.json`과 재생성된 페이지를 커밋한다.
-
-**고치지 않는 것**: 인사이트 본문(문체 게이트 FAIL 수정은 예외), 원자 파일, `process.json`, 좌표 사전. 이 스킬은 판단 재료를 만들어 사람에게 넘긴다.
+**고치지 않는 것**: 노트 본문(`insights/notes/`), `manifest.json`을 손으로, 원문. 노트가 틀렸으면 `insight-note`로 다시 만든다.
