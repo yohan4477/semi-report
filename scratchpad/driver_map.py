@@ -46,6 +46,18 @@ def _axis_html(ax):
     out_html = ('<div class="dm-axis-out"><span class="dm-axis-out-tag">%s</span>'
                 '<span class="dm-axis-out-val">%s</span></div>' % (out_tag, ax['out']))
 
+    # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
+    # 읽는 데 있다. 그래서 같은 공식을 시점마다 우리가 다시 돌린 표를 결과 뒤에 붙인다.
+    mr_html = ''
+    if ax.get('market_read'):
+        mr = ax['market_read']
+        head = ''.join('<th>%s</th>' % h for h in mr['head'])
+        body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in mr['rows'])
+        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">시장이 요구하는 것 — 시점마다 다시 계산했다</p>'
+                   '<div class="dm-mr-wrap"><table class="dm-mr-tbl">'
+                   '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+                   '<p class="dm-mr-note">%s</p></div>' % (head, body, mr['note']))
+
     bench_html = ''
     if ax.get('benchmark'):
         rows = ''.join(
@@ -73,9 +85,10 @@ def _axis_html(ax):
             '%s'
             '%s'
             '%s'
+            '%s'
             '</article>'
             % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], ax['sub'],
-               inputs_html, chain_html, out_html, bench_html, verdict_html))
+               inputs_html, chain_html, out_html, mr_html, bench_html, verdict_html))
 
 
 _AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
@@ -172,6 +185,19 @@ DM_CSS = '''<style>
 .dm-cc-label{font-size:12px;font-weight:800;color:var(--faint);margin-top:3px}
 .dm-cc-body{font-size:13px;line-height:1.6;color:var(--ink-2);margin:8px 0 0}
 @media (max-width:640px){.dm-cc-grid{grid-template-columns:1fr}}
+
+/* ── 시장 읽기 (역산 축만) ── */
+.dm-mr{margin:12px 0 0}
+.dm-mr-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--faint);margin:0 0 6px}
+.dm-mr-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-mr-tbl{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.dm-mr-tbl th{font-size:10px;font-weight:850;letter-spacing:.04em;color:var(--faint);
+              text-align:left;padding:4px 8px 4px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.dm-mr-tbl td{padding:5px 8px 5px 0;border-bottom:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.dm-mr-tbl td:first-child{font-weight:800;color:var(--ink)}
+.dm-mr-tbl td:nth-last-child(-n+2){font-weight:800;color:var(--ink)}
+.dm-mr-tbl tr:last-child td{border-bottom:0}
+.dm-mr-note{font-size:11px;line-height:1.55;color:var(--faint);margin:7px 0 0}
 
 /* ── 시간축 ── */
 .dm-timeline{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
