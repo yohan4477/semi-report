@@ -595,7 +595,9 @@
 .dm-bench-note{margin:2px 0 0;font-size:10.5px;color:var(--ink-3)}
 
 /* ── 모달 — 상위 드라이버 칩을 누르면 뜬다. 1단계(갈래)·2단계(세부)를 한 팝업에서 넘긴다 ── */
-.dm-modal-backdrop{position:fixed;inset:0;z-index:200;display:flex;align-items:center;
+/* 「맨 위로」 버튼이 z-index 9998이라 200으로는 모달 위로 뚫고 올라왔다.
+   그 위로 올리고, 모달이 떠 있는 동안에는 버튼 자체를 감춘다 */
+.dm-modal-backdrop{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;
                    justify-content:center;background:rgba(0,0,0,.5);padding:20px}
 .dm-modal-backdrop[hidden]{display:none}
 .dm-modal{position:relative;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;
@@ -661,6 +663,7 @@
 
 /* 모달 열린 동안 배경 스크롤을 막는다 */
 body.dm-modal-open{overflow:hidden}
+body.dm-modal-open .ui-top{opacity:0;pointer-events:none}
 
 @media (max-width:560px){
   .dm-wrap{margin:0 0 24px;padding-bottom:20px}
