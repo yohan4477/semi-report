@@ -49,7 +49,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 24 |
+| ai-infra/compute | 25 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 10 |
 | ai-infra/business | 17 |
@@ -96,6 +96,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 - v1.0 (2026-07-04): 초기 카테고리 체계 수립 — ai-models, ai-infra(power/cooling/compute/memory), robotics
   - 기존 5개 문서를 소급 분류한 결과 전부 ai-infra/power(전력 시스템)에 해당, 냉각 시스템(Part 2)만 유일하게 ai-infra/cooling 추가 해당 — 현재 코퍼스가 전력 인프라에 편중되어 있음을 확인
+- (2026-08-17) [260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도 신규 변환 완료 — ai-infra/compute 24→25. 데이터센터 CPU 40년사(PC→닷컴→가상화·클라우드→AI 헤드노드/클라우드 네이티브→RL·에이전트 시대), 인텔 메시 인터커넥트의 EMIB·Foveros Direct 분리형 패키징 진화와 클리어워터 포레스트 실패, AMD 중앙집중형 I/O 다이 진화, 2026년 세대(인텔 다이아몬드 래피즈·AMD 베니스) 아키텍처, ARM 진영 전체(엔비디아 Grace·Vera, AWS 그래비톤5, MS 코발트 200, 구글 액시온, 암페어원과 소프트뱅크 인수, ARM 피닉스, 화웨이 쿤펑), 2028년까지 로드맵(AMD 베라노·플로렌스, 인텔 코랄 래피즈, ARM 베놈, 퀄컴 SD2), 블루필드-4 컨텍스트 메모리 스토리지, DRAM 공급난과 향후 CPU 트렌드까지 전체 19개 섹션 완료. 하드웨어 아키텍처·산업 로드맵이 중심인 순수 컴퓨트 문서로 ai-infra/compute 단일 분류, 컴퓨트 통합 리포트 §3 문서별 요약에 추가
 
 <!-- 2026-08-04: [260803] Kimi K3 아키텍처 해부 신규 변환 완료 — ai-models 1→2. KDA(Kimi Delta Attention) 계보, 어텐션 잔차, LatentMoE 등 모델 아키텍처 자체를 다루는 순수 프라이머로 agents/rl 어느 하위 카테고리에도 해당하지 않아 상위 ai-models 태그만 부여, content/newsletter/ai_models/ 루트에 배치 -->
 <!-- 2026-08-17: [260420] GPU 클러스터 진짜 비용 계산법(총소유비용·굿풋 이론) 신규 변환 완료 — ai-infra/business 12→13, ai-infra/compute 22→23. ClusterMAX 등급 체계(골드·하이퍼스케일러·실버)와 TCO 8개 구성요소(GPU·저장장치·네트워크·컨트롤플레인·지원·굿풋·구축·디버깅), 대형 LLM 사전학습·멀티모달 RL 연구·추론 엔드포인트 3개 시나리오 실측 비교, TorchFT·AWS 체크포인트리스·TorchPass 장애 허용 프레임워크 비교, 굿풋 비용-마진 민감도 분석까지 전체 10개 섹션 완료. 클러스터 조달·가격 경제성이라는 사업 축은 business, GPU 클러스터 구성·장애 허용 소프트웨어 아키텍처 축은 compute로 이중 분류 — 컴퓨트 통합 리포트 문서별 요약에 추가 -->

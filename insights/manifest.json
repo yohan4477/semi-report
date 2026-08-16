@@ -359,6 +359,17 @@
    "hash": "8f3c628fb220"
   },
   {
+   "id": "semi:compute:CPU가-돌아왔다-2026년-데이터센터-CPU-판도",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
+   "date": "2026-02-09",
+   "path": "content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md",
+   "hash": "c991269a568a"
+  },
+  {
    "id": "semi:compute:DeepSeek-V4-16T-Day-0부터-Day-43까지-성능-변화-Huawei-GB300-NVL72-MI",
    "corpus": "semianalysis",
    "folder": "compute",
