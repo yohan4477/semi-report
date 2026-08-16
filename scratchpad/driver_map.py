@@ -147,6 +147,43 @@ _AXIS_LOOKUP['quote'] = ('—', '외부 인용')
 
 
 
+def _ranges_html():
+    """엘곰이 드라이버마다 얼마나 벌려 봤는지. 성장 경로 둘만 보이면 그가 시나리오를
+    조금밖에 안 만든 것처럼 읽힌다."""
+    a = dmd.AUTHOR_RANGES
+    head = ''.join('<th>%s</th>' % h for h in a['head'])
+    body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in a['rows'])
+    return ('<div class="dm-rg"><p class="dm-rg-label">%s %s</p>'
+            '<p class="dm-rg-lede">%s</p>'
+            '<div class="dm-rg-wrap"><table class="dm-rg-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-rg-note">%s</p></div>'
+            % (a['label'], _by_badge(a['by']), a['lede'], head, body, a['note']))
+
+
+def _sens_html():
+    """25칸 격자를 그대로 올린다. 3×3으로 줄이면 그가 얼마나 넓게 시험했는지가 안 보인다."""
+    v = dmd.SENSITIVITY
+    br, bc = v['base']
+    head = ''.join('<th>%s</th>' % h for h in v['head'])
+    body = []
+    for i, r in enumerate(v['rows']):
+        tds = []
+        for j, c in enumerate(r):
+            cls = ''
+            if j == 0:
+                cls = ' class="dm-sn-rowhead"'
+            elif i == br and j - 1 == bc:
+                cls = ' class="dm-sn-base"'
+            tds.append('<td%s>%s</td>' % (cls, c))
+        body.append('<tr>%s</tr>' % ''.join(tds))
+    return ('<div class="dm-sn"><p class="dm-sn-label">%s %s</p>'
+            '<div class="dm-sn-wrap"><table class="dm-sn-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-sn-note">%s</p></div>'
+            % (v['label'], _by_badge(v['by']), head, ''.join(body), v['note']))
+
+
 def _earnpath_html():
     """이익 성장 경로를 한 표에 세운다. 말로 적으면 「+25%로 3년, 그다음 10%」가
     귀에 안 들어온다. 나란히 놓아야 출발점과 착지점의 어긋남이 보인다."""
@@ -448,6 +485,28 @@ DM_CSS = '''<style>
 .dm-act-sums dd{font-size:12.5px;font-weight:850;color:var(--ink);margin:0;text-align:right;
                 font-variant-numeric:tabular-nums;white-space:nowrap}
 .dm-act-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
+
+/* ── 엘곰이 벌려 본 범위 · 민감도 격자 ── */
+.dm-rg,.dm-sn{margin:20px 0 0;background:var(--surface);border:1px solid var(--line);
+              border-radius:10px;padding:13px 15px;box-shadow:var(--shadow)}
+.dm-rg-label,.dm-sn-label{font-size:12px;font-weight:850;letter-spacing:.02em;
+                          color:var(--ink-2);margin:0 0 5px}
+.dm-rg-lede{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 9px}
+.dm-rg-wrap,.dm-sn-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-rg-tbl,.dm-sn-tbl{width:100%;border-collapse:collapse;font-size:12px;
+                      font-variant-numeric:tabular-nums}
+.dm-rg-tbl th,.dm-sn-tbl th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+                            text-align:left;padding:3px 12px 5px 8px;
+                            border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+.dm-rg-tbl td,.dm-sn-tbl td{padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+                            color:var(--ink-2);white-space:nowrap}
+.dm-rg-tbl td:first-child,.dm-sn-rowhead{font-weight:850;color:var(--ink)}
+.dm-rg-tbl td:last-child{color:var(--ink-3);font-size:11px}
+.dm-rg-tbl tr:last-child td,.dm-sn-tbl tr:last-child td{border-bottom:0}
+/* 그가 실제로 쓴 조합 한 칸 */
+.dm-sn-base{background:var(--accent-soft);color:var(--accent-ink);font-weight:850;
+            box-shadow:inset 0 0 0 1px var(--accent)}
+.dm-rg-note,.dm-sn-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 이익 성장 경로 표 ── */
 .dm-ep{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
@@ -870,6 +929,8 @@ def render():
     parts.append('<div class="dm-axes">%s</div>' % axes_html)
     # 연도별 이익 경로 표는 옛 평가가 아니다 — 07-16 가정의 상세다(그 열이 표 안에 있다).
     # 접어 두면 못 찾는다. 축 바로 뒤에 펼쳐 둔다.
+    parts.append(_ranges_html())
+    parts.append(_sens_html())
     parts.append(_earnpath_html())
     parts.append(
         '<details class="dm-past">'
