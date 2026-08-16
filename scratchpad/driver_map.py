@@ -157,6 +157,21 @@ def _conclusions_html():
             '</div>' % ''.join(cards))
 
 
+def _earnpath_html():
+    """이익 성장 경로를 한 표에 세운다. 말로 적으면 「+25%로 3년, 그다음 10%」가
+    귀에 안 들어온다. 나란히 놓아야 출발점과 착지점의 어긋남이 보인다."""
+    e = dmd.EARN_PATH
+    head = ''.join('<th>%s</th>' % h for h in e['head'])
+    body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in e['rows'])
+    return ('<div class="dm-ep">'
+            '<p class="dm-ep-label">%s</p>'
+            '<div class="dm-ep-wrap"><table class="dm-ep-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-ep-punch">%s</p>'
+            '<p class="dm-ep-foot">%s</p>'
+            '</div>' % (e['lede'], head, body, e['punch'], e['foot']))
+
+
 def _timeline_html():
     # kind: 'price'(적정가를 낸 평가) | 'ask'(역산 — 가격이 입력이라 값이 아니라
     # 요구 문장이다). 같은 줄의 값처럼 보이면 안 되므로 마름모·점선 상자로 따로 그린다.
@@ -246,6 +261,26 @@ DM_CSS = '''<style>
 .dm-mr-tbl td:nth-last-child(-n+2){font-weight:800;color:var(--ink)}
 .dm-mr-tbl tr:last-child td{border-bottom:0}
 .dm-mr-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:7px 0 0}
+
+/* ── 이익 성장 경로 표 ── */
+.dm-ep{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
+       border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+.dm-ep-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 9px}
+.dm-ep-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-ep-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.dm-ep-tbl th{font-size:10px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);
+              text-align:left;padding:4px 12px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.dm-ep-tbl td{padding:5px 12px 5px 0;border-bottom:1px solid var(--line);
+              color:var(--ink);white-space:nowrap}
+.dm-ep-tbl td:first-child{font-weight:800}
+.dm-ep-tbl td:nth-child(2){color:var(--ink-3);font-size:11px;font-weight:700}
+.dm-ep-tbl i{font-style:normal;font-size:11px;font-weight:700;color:var(--ink-3);margin-left:3px}
+.dm-ep-tbl tr:last-child td{border-bottom:0;color:var(--ink-3)}
+.dm-ep-punch{font-size:13px;line-height:1.62;color:var(--ink-2);margin:11px 0 0;
+             border-left:3px solid var(--warn);background:var(--warn-soft);
+             border-radius:0 8px 8px 0;padding:9px 13px}
+.dm-ep-punch b{color:var(--ink);font-weight:850}
+.dm-ep-foot{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 시간축 ── */
 .dm-timeline{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -621,6 +656,7 @@ def render():
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_conclusions_html())
     parts.append(_timeline_html())
+    parts.append(_earnpath_html())
     parts.append('<div class="dm-axes">%s</div>' % axes_html)
     parts.append(
         '<div class="dm-modal-backdrop" id="dm-modal-backdrop" hidden>'
