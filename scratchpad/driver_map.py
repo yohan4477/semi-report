@@ -291,6 +291,18 @@ def _axis_html(ax):
     chain_html = ''.join('<p class="dm-chain-line">%s</p>' % _linkify(c) for c in ax['chain'])
     gchips_html = _group_chips_html(ax)
 
+    # 축 머리에 찍힌 최신 글 날짜와 그 축이 실제로 쓰는 드라이버의 날짜가 어긋나는
+    # 축이 있다. 칩을 누르기 전에 알려 준다 — 누른 뒤에 알면 이미 숫자를 읽은 뒤다.
+    stale_html = ''
+    if _axis_is_stale(ax['id']):
+        docs = _axis_driver_docs(ax['id'])
+        span = (_doc_date(docs[0]) if docs[0] == docs[-1]
+                else '%s ~ %s' % (_doc_date(docs[0]), _doc_date(docs[-1])))
+        stale_html = ('<div class="dm-axis-stale">'
+                      '<span class="dm-axis-stale-tag">옛 값</span>'
+                      '<span class="dm-axis-stale-text">이 축의 드라이버는 전부 '
+                      '%s 값이다. %s</span></div>' % (span, dmd.STALE_WHY))
+
     out_tag = '이 주가를 유지하려면 필요한 것' if is_rev else '결과'
     result_driver = dmd.RESULT_OF.get(ax['id'])
     if result_driver:
@@ -353,6 +365,7 @@ def _axis_html(ax):
             '%s'
             '<p class="dm-axis-sub">%s</p>'
             '%s'
+            '%s'
             '<div class="dm-chain">%s</div>'
             '%s'
             '%s'
@@ -363,8 +376,8 @@ def _axis_html(ax):
             '%s'
             '</article>'
             % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
-               inputs_html, chain_html, gchips_html, out_html, sens_html, mr_html, bench_html,
-               auth_html, verdict_html))
+               stale_html, inputs_html, chain_html, gchips_html, out_html, sens_html,
+               mr_html, bench_html, auth_html, verdict_html))
 
 
 _AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
@@ -637,6 +650,9 @@ def _data_json():
         drivers[did] = dict(
             label=d['label'], axisMeta=axis_meta.get(d['axis'], d['axis']),
             doc=d['doc'], line=d['line'], base=d['base'],
+            # 목록에서 옛 값을 갈라 놓으려면 날짜가 데이터로 있어야 한다.
+            # 지금까지는 '250816' 여섯 자리만 넘겨서 읽히지 않았다.
+            date=_doc_date(d['doc']), stale=dmd.is_stale(d['doc']),
             basisKey=d['basis'], basisLabel=basis_label, basisDesc=basis_desc,
             why=d['why'], impact=d['impact'], url=url,
             bar=list(d['bar']) if 'bar' in d else None,
@@ -646,7 +662,7 @@ def _data_json():
         )
     groups = {g['id']: dict(name=g['name'], q=g['q'], why=g['why'], corpus=g['corpus'])
               for g in dmd.GROUPS}
-    return dict(drivers=drivers, groups=groups)
+    return dict(drivers=drivers, groups=groups, staleWhy=dmd.STALE_WHY)
 
 
 DM_CSS = '''<style>
@@ -856,6 +872,37 @@ DM_CSS = '''<style>
              border-radius:0 8px 8px 0;padding:9px 13px}
 .dm-ep-punch b{color:var(--ink);font-weight:850}
 .dm-ep-foot{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
+
+/* ── 옛 값 표시 ── 사이클 전환(2026-01) 앞쪽 값에 붙는다.
+   회색으로만 죽이면 「덜 중요한 것」으로 읽힌다. 옛것은 덜 중요한 게 아니라
+   다른 국면의 값이다. 그래서 점선 테두리로 「따로 놓은 것」임을 보인다 */
+.dm-axisbtn--stale .dm-axisbtn-date{color:var(--ink-3)}
+.dm-axisbtn-stale{display:block;font-size:9.5px;font-weight:850;letter-spacing:.02em;
+                  color:var(--warn);margin-top:3px;white-space:nowrap}
+.dm-axis-stale{display:flex;gap:9px;align-items:flex-start;margin:0 0 12px;
+               border:1px dashed var(--warn);border-radius:8px;background:var(--warn-soft);
+               padding:9px 12px}
+.dm-axis-stale-tag{flex:none;font-size:10px;font-weight:850;letter-spacing:.03em;
+                   color:var(--warn);border:1px solid var(--warn);border-radius:999px;
+                   padding:1px 8px;line-height:1.6;white-space:nowrap}
+.dm-axis-stale-text{font-size:11.5px;line-height:1.55;color:var(--ink-2)}
+/* 모달 목록 — 옛것은 구분선 아래로 내려간다 */
+.dm-modal-row-date{flex:none;font-size:10px;font-weight:700;color:var(--ink-3);
+                   font-variant-numeric:tabular-nums;white-space:nowrap}
+.dm-modal-row--stale{border-style:dashed}
+.dm-modal-row--stale .dm-modal-row-base{color:var(--ink-3)}
+.dm-modal-row--stale .dm-modal-row-date{color:var(--warn);font-weight:850}
+.dm-modal-staleline{margin:12px 0 8px;padding:8px 11px;border-top:1px dashed var(--warn);
+                    background:var(--warn-soft);border-radius:0 0 8px 8px}
+.dm-modal-staleline-tag{display:inline-block;font-size:10px;font-weight:850;letter-spacing:.03em;
+                        color:var(--warn);margin-right:7px}
+.dm-modal-staleline-why{font-size:11px;line-height:1.55;color:var(--ink-3)}
+/* 상세 — 숫자보다 위에 둔다. 아래 두면 이미 읽은 뒤가 된다 */
+.dm-modal-stale{margin:9px 0 4px;padding:9px 12px;border:1px dashed var(--warn);
+                border-radius:8px;background:var(--warn-soft);
+                font-size:11.5px;line-height:1.55;color:var(--ink-2)}
+.dm-modal-stale b{display:block;color:var(--warn);font-weight:850;font-size:12px;
+                  margin-bottom:3px}
 
 /* ── 재무제표가 잰 것 vs DCF가 쓴 것 ── 마주 세우는 표라 두 열이 대비돼야 한다 */
 .dm-sv{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
@@ -1296,23 +1343,42 @@ DM_JS = '''<script>
     return '<div class="dm-jg"><p class="dm-jg-title">내 판정</p>'+body+'</div>';
   }
 
+  function fmtRow(did){
+    var d = DATA.drivers[did];
+    if(!d) return '';
+    var noneCls = d.basisKey === 'none' ? ' dm-modal-row--none' : '';
+    var basisNoneCls = d.basisKey === 'none' ? ' dm-basis--none' : '';
+    var staleCls = d.stale ? ' dm-modal-row--stale' : '';
+    return '<button type="button" class="dm-modal-row'+noneCls+staleCls+'" data-driver="'+did+'">'
+         + '<span class="dm-modal-row-main">'
+         +   '<span class="dm-modal-row-label">'+d.label+fmtJgBadges(d.judgmentVerdicts)+'</span>'
+         +   '<span class="dm-modal-row-base">'+d.base+'</span>'
+         + '</span>'
+         + '<span class="dm-modal-row-date">'+d.date+'</span>'
+         + (d.bar ? fmtBarMini(d.bar) : '')
+         + '<span class="dm-basis'+basisNoneCls+'">'+d.basisLabel+'</span>'
+         + '</button>';
+  }
+
   function renderStage1(){
     var g = DATA.groups[state.gid];
     if(!g) return;
-    var rows = state.members.map(function(did){
+    // 사이클 전환 앞뒤를 한 줄기로 늘어놓으면 2024년 값이 지금 값으로 읽힌다.
+    // 지금 것을 위에, 옛것을 구분선 아래에 둔다. 순서는 각 묶음 안에서 보존한다.
+    var now = [], old = [];
+    state.members.forEach(function(did){
       var d = DATA.drivers[did];
-      if(!d) return '';
-      var noneCls = d.basisKey === 'none' ? ' dm-modal-row--none' : '';
-      var basisNoneCls = d.basisKey === 'none' ? ' dm-basis--none' : '';
-      return '<button type="button" class="dm-modal-row'+noneCls+'" data-driver="'+did+'">'
-           + '<span class="dm-modal-row-main">'
-           +   '<span class="dm-modal-row-label">'+d.label+fmtJgBadges(d.judgmentVerdicts)+'</span>'
-           +   '<span class="dm-modal-row-base">'+d.base+'</span>'
-           + '</span>'
-           + (d.bar ? fmtBarMini(d.bar) : '')
-           + '<span class="dm-basis'+basisNoneCls+'">'+d.basisLabel+'</span>'
-           + '</button>';
-    }).join('');
+      if(!d) return;
+      (d.stale ? old : now).push(did);
+    });
+    var rows = now.map(fmtRow).join('');
+    if(old.length){
+      rows += '<div class="dm-modal-staleline">'
+            +   '<span class="dm-modal-staleline-tag">옛 값 · '+old.length+'</span>'
+            +   '<span class="dm-modal-staleline-why">'+DATA.staleWhy+'</span>'
+            + '</div>'
+            + old.map(fmtRow).join('');
+    }
     bodyEl.innerHTML =
         '<h3 id="dm-modal-title" class="dm-modal-gname" tabindex="-1">'+g.name+'</h3>'
       + '<p class="dm-modal-q">'+g.q+'</p>'
@@ -1328,9 +1394,14 @@ DM_JS = '''<script>
     if(!d) return;
     var barHtml = d.bar ? fmtBar(d.bar) : '<div class="dm-basebig">'+d.base+'</div>';
     var noneCls = d.basisKey === 'none' ? ' dm-basis--none' : '';
+    // 옛 값은 열자마자 알아야 한다. 숫자를 먼저 보고 나면 이미 늦다.
+    var staleHtml = d.stale
+      ? '<div class="dm-modal-stale"><b>'+d.date+' 값이다</b>'+DATA.staleWhy+'</div>'
+      : '';
     bodyEl.innerHTML =
         '<h3 id="dm-modal-title" class="dm-modal-dname" tabindex="-1">'+d.label+'</h3>'
-      + '<span class="dm-modal-loc">'+d.axisMeta+' · '+d.doc+'</span>'
+      + '<span class="dm-modal-loc">'+d.axisMeta+' · '+d.date+'</span>'
+      + staleHtml
       + barHtml
       + '<span class="dm-basis'+noneCls+'">'+d.basisLabel+'</span>'
       + '<p class="dm-basis-desc">'+d.basisDesc+'</p>'
@@ -1465,19 +1536,44 @@ _AXIS_BTN_ORDER = ['stmt', 'simple', 'dcf', 'rev', 'mult']
 _AXIS_BTN_DEFAULT = 'dcf'
 
 
+def _axis_driver_docs(aid):
+    """그 축의 드라이버가 어느 글에서 왔나. 축의 latest와 다를 수 있다 —
+    stmt는 최신 글이 2026-04-17인데 드라이버는 전부 2024~2025년이다."""
+    return sorted(d['doc'] for d in dmd.DRIVERS.values() if d['axis'] == aid)
+
+
+def _axis_is_stale(aid):
+    """드라이버가 하나도 남김없이 사이클 전환 앞쪽이면 그 축은 옛 값만 담고 있다."""
+    docs = _axis_driver_docs(aid)
+    return bool(docs) and all(dmd.is_stale(k) for k in docs)
+
+
 def _axis_buttons_html():
     axes_by_id = {ax['id']: ax for ax in dmd.AXES}
     btns = []
     for aid in _AXIS_BTN_ORDER:
         ax = axes_by_id[aid]
         pressed = 'true' if aid == _AXIS_BTN_DEFAULT else 'false'
+        # 버튼에 찍힌 날짜는 그 축의 최신 글이다. 그런데 눌러서 나오는 드라이버가
+        # 그보다 한참 옛것일 수 있다. 그 어긋남을 버튼에서 미리 알려 준다.
+        stale = _axis_is_stale(aid)
+        docs = _axis_driver_docs(aid)
+        stale_html = ''
+        if stale:
+            # 한 글에서만 온 축은 「25-12-10 ~ 25-12-10」이 된다. 한 번만 적는다.
+            span = (_doc_date(docs[0])[2:] if docs[0] == docs[-1]
+                    else '%s ~ %s' % (_doc_date(docs[0])[2:], _doc_date(docs[-1])[2:]))
+            stale_html = ('<span class="dm-axisbtn-stale" title="이 축의 값은 전부 '
+                          '메모리 다운사이클 때 것이다">옛 값 %s</span>' % span)
         btns.append(
-            '<button type="button" class="dm-axisbtn" id="dm-axisbtn-%s" data-axis="%s" '
+            '<button type="button" class="dm-axisbtn%s" id="dm-axisbtn-%s" data-axis="%s" '
             'aria-pressed="%s" aria-controls="dm-axispanel-%s">'
             '<span class="dm-axisbtn-no">%s</span>'
             '<span class="dm-axisbtn-name">%s</span>'
             '<span class="dm-axisbtn-date">%s</span>'
-            '</button>' % (aid, aid, pressed, aid, ax['no'], ax['name'], ax['latest'][1]))
+            '%s</button>'
+            % (' dm-axisbtn--stale' if stale else '', aid, aid, pressed, aid,
+               ax['no'], ax['name'], ax['latest'][1], stale_html))
     return '<div class="dm-axisbtns" id="dm-axisbtns">%s</div>' % ''.join(btns)
 
 
