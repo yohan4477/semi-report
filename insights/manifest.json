@@ -930,6 +930,28 @@
    "hash": "9024149330fd"
   },
   {
+   "id": "und:미국주식 사관학교:벌어서-60를-다시-넣는-국면-리스로-현금-유출을-미룬-쪽이-버틴다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-03-02",
+   "path": "content/understanding/미국주식 사관학교/[260302] 벌어서 60%를 다시 넣는 국면 - 리스로 현금 유출을 미룬 쪽이 버틴다.md",
+   "hash": "6b8bc0b760fc"
+  },
+  {
+   "id": "und:미국주식 사관학교:병목이-이사를-가면-협상력도-옮겨간다-전력형과-메모리형을-가르는-법",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-10",
+   "path": "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 가르는 법.md",
+   "hash": "e3a552872976"
+  },
+  {
    "id": "und:미국주식 사관학교:브로드컴-급락은-거품이-아니라-가격표-문제다-수요-곡선과-밸류에이션을-가른다",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -939,6 +961,17 @@
    "date": "2026-06-05",
    "path": "content/understanding/미국주식 사관학교/[260605] 브로드컴 급락은 거품이 아니라 가격표 문제다 - 수요 곡선과 밸류에이션을 가른다.md",
    "hash": "040562aa06e8"
+  },
+  {
+   "id": "und:미국주식 사관학교:사과가-안-팔리는-것과-사과-가게가-하나-는-것-메타-클라우드-진출",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-03",
+   "path": "content/understanding/미국주식 사관학교/[260703] 사과가 안 팔리는 것과 사과 가게가 하나 는 것 - 메타 클라우드 진출.md",
+   "hash": "8f1448bfa0f8"
   },
   {
    "id": "und:미국주식 사관학교:상장-일주일-본주는-오르고-대리-종목은-빠졌다",
@@ -1073,6 +1106,17 @@
    "hash": "556622a1345b"
   },
   {
+   "id": "und:미국주식 사관학교:오픈AI가-앤트로픽에-매출로-역전당했다-처음부터-어디를-팠느냐의-차이",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-29",
+   "path": "content/understanding/미국주식 사관학교/[260429] 오픈AI가 앤트로픽에 매출로 역전당했다 - 처음부터 어디를 팠느냐의 차이.md",
+   "hash": "cb512e4a0bb3"
+  },
+  {
    "id": "und:미국주식 사관학교:원달러-급락의-정체-일회성-물량과-안-바뀐-구조",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -1115,6 +1159,17 @@
    "date": "2026-03-18",
    "path": "content/understanding/미국주식 사관학교/[260318] 인하 논쟁 - 물가가 안 죽었다 대 안 내리면 경기가 먼저 깨진다.md",
    "hash": "21619ba27061"
+  },
+  {
+   "id": "und:미국주식 사관학교:전력회사는-돈을-쓸수록-번다-1조-4천억-달러-공사판의-구조",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-20",
+   "path": "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md",
+   "hash": "54b167d188c2"
   },
   {
    "id": "und:미국주식 사관학교:집이-안-팔릴수록-유리한-채권-Agency-MBS와-장기채의-공급-방향이-반대다",
@@ -1566,6 +1621,50 @@
    "date": "2026-06-26",
    "path": "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md",
    "hash": "b22ab45a4f5d"
+  },
+  {
+   "id": "und:피지컬AI:Action-Data-Scaling-문제",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "physical-ai"
+   ],
+   "date": "2026-03-19",
+   "path": "content/understanding/피지컬AI/Action Data Scaling 문제.md",
+   "hash": "f7f873128898"
+  },
+  {
+   "id": "und:피지컬AI:Physical-AI의-정의",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "physical-ai"
+   ],
+   "date": "2026-03-19",
+   "path": "content/understanding/피지컬AI/Physical AI의 정의.md",
+   "hash": "11bb77ad8774"
+  },
+  {
+   "id": "und:피지컬AI:RFM-VLA란-무엇인가",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "physical-ai"
+   ],
+   "date": "2026-03-19",
+   "path": "content/understanding/피지컬AI/RFM & VLA란 무엇인가.md",
+   "hash": "d4765d2b43b9"
+  },
+  {
+   "id": "und:피지컬AI:Specialist에서-Generalist로",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "physical-ai"
+   ],
+   "date": "2026-03-19",
+   "path": "content/understanding/피지컬AI/Specialist에서 Generalist로.md",
+   "hash": "80ca49a5aa13"
   },
   {
    "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",

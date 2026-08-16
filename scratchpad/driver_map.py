@@ -308,6 +308,11 @@ def _axis_html(ax):
     # dcf 축에만, 수식→칩→결과 다음 자리에 끼운다.
     sens_html = (_sens_html() + _earnpath_html()) if ax['id'] == 'dcf' else ''
 
+    # 재무제표 축은 값을 내지 않는 앞단계다. 그래서 결과 줄만 두면 왜 있는 축인지
+    # 안 보인다. 다섯 편이 잰 것과 그걸 8년 DCF가 어떻게 썼는지를 여기 붙인다.
+    if ax['id'] == 'stmt':
+        sens_html = _stmt_vs_dcf_html() + _cash_bridge_html()
+
     # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
     # 읽는 데 있다. 그래서 같은 공식을 시점마다 내가 다시 돌린 표를 결과 뒤에 붙인다.
     mr_html = ''
@@ -436,6 +441,50 @@ def _earnpath_html():
             '<p class="dm-ep-punch">%s</p>'
             '<p class="dm-ep-foot">%s</p>'
             '</div>' % (e['lede'], head, body, e['punch'], e['foot']))
+
+
+def _stmt_vs_dcf_html():
+    """재무제표 본편 다섯이 잰 것과 8년 DCF가 실제로 쓴 것을 마주 세운다.
+    따로 두면 다섯 편이 그냥 옛날 글로 보인다. 나란히 놓아야 빠진 자리가 보인다."""
+    v = dmd.STMT_VS_DCF
+    head = ''.join('<th>%s</th>' % h for h in v['head'])
+    body = []
+    for r in v['rows']:
+        cls = ' class="dm-sv-hi"' if r.get('tone') == 'high' else ''
+        body.append('<tr%s>%s</tr>'
+                    % (cls, ''.join('<td>%s</td>' % c for c in r['cells'])))
+    return ('<div class="dm-sv"><p class="dm-sv-label">%s %s</p>'
+            '<p class="dm-sv-lede">%s</p>'
+            '<div class="dm-sv-wrap"><table class="dm-sv-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-sv-note">%s</p></div>'
+            % (v['label'], _by_badge(v['by']), v['lede'], head, ''.join(body), v['note']))
+
+
+def _cash_bridge_html():
+    """영업이익에서 FCF까지의 다리. 원문에 빈칸이던 두 자리(세율·앞 3년 D&A)를
+    항등식으로 되돌린 것이라, 되돌아왔다는 사실 자체가 △NWC=0의 증거다."""
+    v = dmd.CASH_BRIDGE
+    head = ''.join('<th>%s</th>' % h for h in v['head'])
+    body = []
+    for r in v['rows']:
+        cls = ' class="dm-cb-solved"' if r.get('solved') else ''
+        body.append('<tr%s>%s</tr>'
+                    % (cls, ''.join('<td>%s</td>' % c for c in r['cells'])))
+    results = ''.join(
+        '<tr><td class="dm-cb-rk">%s</td><td class="dm-cb-rv">%s</td></tr>' % (k, d)
+        for k, d in v['results'])
+    return ('<div class="dm-cb"><p class="dm-cb-label">%s %s</p>'
+            '<p class="dm-cb-lede">%s</p>'
+            '<div class="dm-cb-wrap"><table class="dm-cb-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-cb-note">%s</p>'
+            '<div class="dm-cb-res"><p class="dm-cb-reslabel">되돌린 것</p>'
+            '<table class="dm-cb-restbl"><tbody>%s</tbody></table></div>'
+            '<p class="dm-cb-punch">%s</p>'
+            '<p class="dm-cb-foot">%s</p></div>'
+            % (v['label'], _by_badge(v['by']), v['lede'], head, ''.join(body),
+               v['solved_note'], results, v['punch'], v['foot']))
 
 
 def _scenario_html():
@@ -807,6 +856,70 @@ DM_CSS = '''<style>
              border-radius:0 8px 8px 0;padding:9px 13px}
 .dm-ep-punch b{color:var(--ink);font-weight:850}
 .dm-ep-foot{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
+
+/* ── 재무제표가 잰 것 vs DCF가 쓴 것 ── 마주 세우는 표라 두 열이 대비돼야 한다 */
+.dm-sv{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
+       border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+.dm-sv-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 4px}
+.dm-sv-lede{font-size:11.5px;line-height:1.55;color:var(--ink-3);margin:0 0 9px}
+.dm-sv-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-sv-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.dm-sv-tbl th{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);
+              text-align:left;padding:4px 12px 7px 8px;border-bottom:1px solid var(--line);
+              white-space:nowrap;vertical-align:top}
+.dm-sv-tbl td{padding:7px 12px 7px 8px;border-bottom:1px solid var(--line);
+              color:var(--ink-2);line-height:1.5;vertical-align:top}
+.dm-sv-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+.dm-sv-tbl td:nth-child(2){font-size:11px;color:var(--ink-3);white-space:nowrap}
+/* 마지막 열이 「안 썼다」를 말하는 자리다. 왼쪽 경계로 갈라 놓는다 */
+.dm-sv-tbl td:last-child{border-left:1px solid var(--line);color:var(--ink-3)}
+.dm-sv-tbl tr:last-child td{border-bottom:0}
+.dm-sv-hi td{background:var(--warn-soft);color:var(--ink)}
+.dm-sv-hi td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+.dm-sv-hi td:last-child{color:var(--warn);font-weight:800}
+.dm-sv-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:9px 0 0}
+
+/* ── 현금흐름 다리 ── 숫자 표라 tabular-nums로 자리를 맞춘다 */
+.dm-cb{margin:16px 0 4px;background:var(--surface);border:1px solid var(--line);
+       border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+.dm-cb-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 4px}
+.dm-cb-lede{font-size:11.5px;line-height:1.55;color:var(--ink-3);margin:0 0 9px}
+.dm-cb-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-cb-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.dm-cb-tbl th{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);
+              text-align:right;padding:4px 10px 7px 8px;border-bottom:1px solid var(--line);
+              white-space:nowrap}
+.dm-cb-tbl th:first-child{text-align:left}
+.dm-cb-tbl td{padding:5px 10px 5px 8px;border-bottom:1px solid var(--line);
+              color:var(--ink);white-space:nowrap;text-align:right}
+.dm-cb-tbl td:first-child{font-weight:800;text-align:left}
+/* 원문 FCF는 대조용이다. 우리 계산과 같은 무게로 두면 두 번 센 것처럼 보인다 */
+.dm-cb-tbl td:last-child{color:var(--ink-3);border-left:1px solid var(--line)}
+.dm-cb-tbl th:last-child{border-left:1px solid var(--line)}
+.dm-cb-tbl tr:last-child td{border-bottom:0}
+/* 되돌린 세 해 — 원문에 없던 값이 들어간 행이라 표시해 둔다 */
+.dm-cb-solved td{background:var(--warn-soft)}
+.dm-cb-solved td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+.dm-cb-solved b{color:var(--warn);font-weight:850}
+.dm-cb-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
+.dm-cb-res{margin:12px 0 0;background:var(--sunk);border-radius:8px;padding:10px 12px}
+.dm-cb-reslabel{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 6px}
+.dm-cb-restbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.dm-cb-rk{font-weight:850;color:var(--ink);padding:4px 12px 4px 0;
+          white-space:nowrap;vertical-align:top}
+.dm-cb-rv{color:var(--ink-3);line-height:1.55;padding:4px 0}
+.dm-cb-punch{font-size:13px;line-height:1.62;color:var(--ink-2);margin:11px 0 0;
+             border-left:3px solid var(--warn);background:var(--warn-soft);
+             border-radius:0 8px 8px 0;padding:9px 13px}
+.dm-cb-punch b{color:var(--ink);font-weight:850}
+.dm-cb-foot{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
+
+@media (max-width:560px){
+  /* 좁은 화면에서 다리 표가 8열이라 넘친다. 셀 여백을 줄여 스크롤 폭을 줄인다 */
+  .dm-cb-tbl{font-size:11.5px}
+  .dm-cb-tbl td, .dm-cb-tbl th{padding-left:6px;padding-right:7px}
+  .dm-sv-tbl td:first-child{white-space:normal}
+}
 
 /* ── 시간축 ── */
 .dm-timeline-wrap{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
