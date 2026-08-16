@@ -319,13 +319,15 @@ DM_CSS = '''<style>
 /* ── 시간축 ── */
 .dm-timeline{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .dm-tl-track{display:flex;gap:0;position:relative;min-width:max-content;padding:8px 2px 2px}
-.dm-tl-track::before{content:"";position:absolute;left:10px;right:10px;top:19px;height:1px;background:var(--line)}
+/* 선은 점 한가운데를 지나야 한다. 점 위를 스치면 어긋나 보인다 */
+.dm-tl-track::before{content:"";position:absolute;left:14px;right:14px;top:24px;height:1px;background:var(--line)}
+/* 위 여백이 22px이면 점(12~21px)과 날짜가 맞붙어 1px 겹쳤다. 32px로 벌린다 */
 .dm-tl-item{position:relative;display:flex;flex-direction:column;gap:2px;width:150px;flex:0 0 auto;
-            padding:22px 10px 8px;cursor:pointer;border-radius:8px;border:0;background:transparent;
+            padding:32px 10px 8px;cursor:pointer;border-radius:8px;border:0;background:transparent;
             text-align:left;font:inherit}
 .dm-tl-item:hover{background:var(--sunk)}
 .dm-tl-item:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.dm-tl-dot{position:absolute;left:10px;top:14px;width:9px;height:9px;border-radius:50%;
+.dm-tl-dot{position:absolute;left:10px;top:12px;width:9px;height:9px;border-radius:50%;
            background:var(--accent);border:2px solid var(--surface)}
 .dm-tl-quote .dm-tl-dot{background:var(--warn)}
 .dm-tl-date{font-size:10.5px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
@@ -338,7 +340,7 @@ DM_CSS = '''<style>
 /* 역산 항목 — 값이 아니라 「이 가격이 요구하는 것」이라 같은 줄의 점으로 보이면 안 된다 */
 .dm-tl-item.dm-tl-ask{width:190px}
 .dm-tl-ask-mark{border-radius:2px;background:var(--warn);transform:rotate(45deg)}
-.dm-tl-ask-body{margin-top:18px;padding:8px 9px;border:1px dashed var(--warn);
+.dm-tl-ask-body{margin-top:8px;padding:8px 9px;border:1px dashed var(--warn);
                 border-radius:8px;background:var(--warn-soft)}
 .dm-tl-ask-sent{margin:0 0 5px;font-size:11.5px;line-height:1.55;color:var(--ink-2)}
 .dm-tl-ask-sent b{color:var(--ink);font-weight:800}
