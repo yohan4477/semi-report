@@ -32,7 +32,7 @@ def _linkify(line):
 
 
 def _by_badge(key):
-    """누가 낸 값인가 배지. 우리 계산(ours)을 필자 주장으로 읽지 않게 값마다 붙인다."""
+    """누가 낸 값인가 배지. 내 계산(ours)을 필자 주장으로 읽지 않게 값마다 붙인다."""
     label, desc = dmd.BY[key]
     return '<span class="dm-by dm-by--%s" title="%s">%s</span>' % (key, desc, label)
 
@@ -96,7 +96,7 @@ def _axis_html(ax):
                     '<span class="dm-axis-out-val">%s</span></div>' % (out_tag, ax['out']))
 
     # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
-    # 읽는 데 있다. 그래서 같은 공식을 시점마다 우리가 다시 돌린 표를 결과 뒤에 붙인다.
+    # 읽는 데 있다. 그래서 같은 공식을 시점마다 내가 다시 돌린 표를 결과 뒤에 붙인다.
     mr_html = ''
     if ax.get('market_read'):
         mr = ax['market_read']
