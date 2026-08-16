@@ -306,7 +306,7 @@ def _axis_html(ax):
     # 07-16 민감도 25칸 격자는 그 글이 낸 DCF 축 자료다. 드라이버 범위·이익 경로 표와
     # 달리 다섯 축을 가로지르지 않으므로 패널 밖에 두면 어느 글 것인지 안 보인다.
     # dcf 축에만, 수식→칩→결과 다음 자리에 끼운다.
-    sens_html = _sens_html() if ax['id'] == 'dcf' else ''
+    sens_html = (_sens_html() + _earnpath_html()) if ax['id'] == 'dcf' else ''
 
     # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
     # 읽는 데 있다. 그래서 같은 공식을 시점마다 내가 다시 돌린 표를 결과 뒤에 붙인다.
@@ -1388,16 +1388,14 @@ def render():
     parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_scenario_html())
-    # 방법을 가로지르는 것을 방법 버튼보다 위에 둔다. 한 방법 안에서는 안 보이고
-    # 여러 방법을 겹쳐 놔야 보이는 것들이라, 방법을 고르기 전에 먼저 읽어야 한다.
-    # (한 글에서 나온 자료는 그 글의 축 패널 안에 있다 — 07-16 민감도 격자가 그렇다.)
-    parts.append('<h2 class="dm-axheading">방법을 가로질러 본 것</h2>')
-    parts.append(_ranges_html())
-    parts.append(_earnpath_html())
-    parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
+    # 드라이버 범위 표(_ranges_html)는 걷어냈다. 같은 내용이 각 드라이버 상세의
+    # 「영향」 칸에 들어 있어 두 번 말하는 셈이었다.
+    # 연도별 이익 경로 표는 DCF 축 패널 안으로 옮겼다 — 연도별 추정이 그 방법의
+    # 본체라서다. 07-16 민감도 격자도 같은 이유로 그 패널 안에 있다.
     parts.append('<h2 class="dm-axheading">엘곰이 한 것 — 방법을 고르면 그 방법의 최신 글이 열린다</h2>')
     parts.append(_axis_buttons_html())
     parts.append(_axis_panels_html())
+    parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
     parts.append(
         '<details class="dm-past">'
         '<summary class="dm-past-summary">지난 평가 — 열다섯 달 동안 여섯 번, 값이 어떻게 움직였나</summary>'
