@@ -53,7 +53,7 @@
 | ai-infra/power | 9 |
 | ai-infra/cooling | 2 |
 | ai-infra/construction | 2 |
-| ai-models/rl | 3 |
+| ai-models/rl | 4 |
 | ai-models/agents | 2 |
 | ai-models | 2 |
 | robotics | 1 |
@@ -92,4 +92,6 @@
 
 <!-- 2026-08-04: [260803] Kimi K3 아키텍처 해부 신규 변환 완료 — ai-models 1→2. KDA(Kimi Delta Attention) 계보, 어텐션 잔차, LatentMoE 등 모델 아키텍처 자체를 다루는 순수 프라이머로 agents/rl 어느 하위 카테고리에도 해당하지 않아 상위 ai-models 태그만 부여, content/newsletter/ai_models/ 루트에 배치 -->
 <!-- 2026-08-17: [260420] GPU 클러스터 진짜 비용 계산법(총소유비용·굿풋 이론) 신규 변환 완료 — ai-infra/business 12→13, ai-infra/compute 22→23. ClusterMAX 등급 체계(골드·하이퍼스케일러·실버)와 TCO 8개 구성요소(GPU·저장장치·네트워크·컨트롤플레인·지원·굿풋·구축·디버깅), 대형 LLM 사전학습·멀티모달 RL 연구·추론 엔드포인트 3개 시나리오 실측 비교, TorchFT·AWS 체크포인트리스·TorchPass 장애 허용 프레임워크 비교, 굿풋 비용-마진 민감도 분석까지 전체 10개 섹션 완료. 클러스터 조달·가격 경제성이라는 사업 축은 business, GPU 클러스터 구성·장애 허용 소프트웨어 아키텍처 축은 compute로 이중 분류 — 컴퓨트 통합 리포트 문서별 요약에 추가 -->
+<!-- 2026-08-17: [260616] RL 시스템, 틈새를 조심하라(학습기와 생성기 처리량 맞추기) 신규 변환 완료 — ai-models/rl 3→4. 생성기·RL 환경·학습기 세 주체와 GRPO 알고리즘, PipelineRL 비동기 처리·정책 지연(궤적·토큰·환경 상태 3단계), 샌드박스 인프라, 처리량 매칭 프레임워크(트레이너/제너레이터 처리량 정량화·제약 요인), Qwen3-235B·GLM-5·GB300·slime 4개 실측 사례 연구, Prime RL·slime·Modal 소프트웨어 사용기, 오픈소스 RL 프레임워크 계보(OpenRLHF→slime/verl), RL 학습 TCO 분석(H200 $1.59/hr/GPU)과 Tinker 대비 2\~5배 비용 격차까지 전체 16개 섹션 완료. 순수 모델 아키텍처가 아니라 RL 학습 인프라·시스템 효율을 다루는 문서로 rl 카테고리 단일 분류 -->
+
 
