@@ -24,6 +24,9 @@
   lead_table  같은 형식. 본문 맨 위(한 줄 요약보다 앞)에 놓는다. 여러 편을 묶은
               통합 카드에서 결론부터 보여주려고 쓴다
   tables      [(표 제목, [머리], [[행]])] 표가 여럿일 때. table 다음에 순서대로 붙는다
+  figs        [(anchor, 제목, svg, 캡션)] 본문 중간에 끼우는 그림. anchor는 몇 번째
+              핵심 포인트 뒤인지(1부터, 0이면 포인트 앞). 인라인 SVG만 쓰고 색은
+              .uc-fig 붓(organ·vessel·body·bad·good)을 class로 받는다
 """
 import os
 import re
@@ -31,6 +34,42 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rollup_lib as _rl
+
+# 그림 규칙만 따로 둔다 — 페이지가 물려받는 CSS에 이미 표준 규칙이 구워져 있으면
+# EXTRA_CSS는 통째로 안 붙는다(dash_common.css). 그때도 이 한 벌은 따로 넣어야 한다.
+FIG_CSS = '''
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:center}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
+  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+  }
+'''
+
 
 EXTRA_CSS = '''
   .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
@@ -113,7 +152,10 @@ EXTRA_CSS = '''
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
+''' + FIG_CSS + '''
 ''' + _rl.CSS + '''</style>'''
+
+
 
 
 
@@ -132,6 +174,63 @@ def tbl_html(t):
 
 def slug(t):
     return 'card-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', t).strip('-')
+
+
+# SVG 화살촉 한 벌 — 그림마다 defs를 되풀이하지 않게 페이지에 한 번만 깐다
+FIG_DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
+            '<marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" '
+                        # 마커는 defs 쪽 색을 물려받는다 — currentColor는 참조한 선의 색이 아니라서
+            # 페이지 변수(--ink-3)를 직접 박는다
+            'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker>'
+            '</defs></svg>')
+
+
+def fig_html(f):
+    """(제목, svg, 캡션) 하나를 본문 중간에 넣을 그림 블록으로.
+
+    svg는 생성기가 손으로 짠 인라인 마크업이다. 색은 EXTRA_CSS의 .uc-fig 붓
+    (organ·vessel·body·bad·good)을 class로 받아 다크모드까지 한 벌로 간다.
+    """
+    title, svg, cap = f
+    h = ['<figure class="uc-fig">']
+    if title:
+        h.append('<p class="fig-title">%s</p>' % title)
+    h.append(svg)
+    if cap:
+        h.append('<figcaption>%s</figcaption>' % cap)
+    h.append('</figure>')
+    return ''.join(h)
+
+
+def points_html(points, figs=()):
+    """핵심 포인트 목록 — figs가 있으면 지정한 포인트 뒤에서 목록을 끊고 그림을 낀다.
+
+    figs = [(anchor, 제목, svg, 캡션)]. anchor는 몇 번째 포인트 뒤에 놓을지(1부터).
+    0이면 포인트보다 앞이다. 범위를 넘는 값은 맨 뒤로 간다. figs가 없으면
+    지금까지와 똑같은 <ul> 한 덩어리가 나간다.
+    """
+    if not figs:
+        return '<ul class="uc-points">%s</ul>' % ''.join('<li>%s</li>' % p for p in points)
+    at = {}
+    for anchor, title, svg, cap in figs:
+        at.setdefault(min(max(int(anchor), 0), len(points)), []).append((title, svg, cap))
+    h, chunk = [], []
+
+    def flush():
+        if chunk:
+            h.append('<ul class="uc-points">%s</ul>' % ''.join('<li>%s</li>' % p for p in chunk))
+            del chunk[:]
+
+    for f in at.get(0, ()):
+        h.append(fig_html(f))
+    for i, p in enumerate(points, 1):
+        chunk.append(p)
+        if i in at:
+            flush()
+            for f in at[i]:
+                h.append(fig_html(f))
+    flush()
+    return ''.join(h)
 
 
 
@@ -157,12 +256,13 @@ def slim_html(c):
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
     h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
     h.append('<div class="uc-body">')
-    h.append('<p class="uc-oneliner">%s</p>' % c.get('slim_oneliner', c['oneliner']))
-    h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
-             % ''.join('<li>%s</li>' % p for p in c['slim_points']))
+    # 슬림 전용 필드만 갖춘 카드도 있다 — 기본값을 미리 꺼내면 KeyError가 난다
+    h.append('<p class="uc-oneliner">%s</p>' % (c.get('slim_oneliner') or c.get('oneliner', '')))
+    h.append('<p class="uc-label">핵심 포인트</p>')
+    h.append(points_html(c['slim_points'], c.get('figs', ())))
     h.append('<p class="uc-label">주요 숫자</p><div class="stat-grid">%s</div>'
              % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
-                       for s in c.get('slim_stats', c['stats'])))
+                       for s in (c.get('slim_stats') or c.get('stats', ()))))
     h.append('<p class="uc-quote">%s</p>' % c['quote'])
     # 반론·충돌은 줄이지 않는다 — 한 편만 읽고 결론 내리지 않게 하는 장치라 원본 그대로 쓴다
     if c.get('clash'):
@@ -197,8 +297,8 @@ def card_html(c):
     if c.get('lead_table'):
         h.append(tbl_html(c['lead_table']))
     h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
-    h.append('<p class="uc-label">핵심 포인트</p><ul class="uc-points">%s</ul>'
-             % ''.join('<li>%s</li>' % p for p in c['points']))
+    h.append('<p class="uc-label">핵심 포인트</p>')
+    h.append(points_html(c['points'], c.get('figs', ())))
     if c.get('table'):
         h.append(tbl_html(c['table']))
     for t in c.get('tables', ()):

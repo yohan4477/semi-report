@@ -7,7 +7,7 @@ import io, json, os, re, sys, urllib.parse
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 import rollup_lib as _rl
 # 카드 마크업 표준은 scripts/card_lib.py 한 벌뿐이다 — 여기서는 가져다 쓴다
-from card_lib import EXTRA_CSS, slug, card_html  # noqa: F401
+from card_lib import EXTRA_CSS, FIG_CSS, FIG_DEFS, slug, card_html  # noqa: F401
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
@@ -30,6 +30,12 @@ PICK_CSS = '''
           border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
 </style>'''
 
 
@@ -40,6 +46,12 @@ def css():
     out = out if '.uc-gain{' in out else out.replace('</style>', EXTRA_CSS)
     if '.sb-btn{' not in out:
         out = out.replace('</style>', PICK_CSS)
+    # 물려받은 CSS에 표준 규칙이 이미 구워져 있으면 위에서 EXTRA_CSS가 안 붙는다 —
+    # 그림 규칙은 그때도 있어야 한다. 없으면 검은 덩어리로만 그려진다.
+    if '.uc-fig{' not in out:
+        # FIG_CSS는 규칙만 담은 조각이라 태그를 다시 닫아 준다. 안 닫으면 문서 나머지가
+        # 통째로 스타일로 먹혀 본문이 빈 페이지가 나간다.
+        out = out.replace('</style>', FIG_CSS + '</style>')
     # .xlink는 언더스탠딩 대시보드 CSS에 있다 — 페이지끼리 오가는 링크가 같은 모양이어야 한다
     assert '.xlink{' in out, '언더스탠딩 대시보드 CSS에 .xlink 규칙이 없다'
     return out
@@ -247,6 +259,8 @@ def render(cards, title, header, footer, out, rollup=''):
                     % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + css()
+            # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
+            + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
             + '\n<div class="wrap">\n' + header + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
