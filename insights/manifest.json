@@ -754,6 +754,17 @@
    "hash": "c771373329bf"
   },
   {
+   "id": "und:미국주식 사관학교:7월-CPI-세부-항목-에너지가-눌렀고-서비스가-밀어올렸다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-14",
+   "path": "content/understanding/미국주식 사관학교/[260814] 7월 CPI 세부 항목 - 에너지가 눌렀고 서비스가 밀어올렸다.md",
+   "hash": "c4fbf195c97f"
+  },
+  {
    "id": "und:미국주식 사관학교:7월-고용-지표의-왜곡-CPI를-읽는-기준",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -763,6 +774,17 @@
    "date": "2026-08-09",
    "path": "content/understanding/미국주식 사관학교/[260809] 7월 고용 지표의 왜곡 - CPI를 읽는 기준.md",
    "hash": "57f42b2fa629"
+  },
+  {
+   "id": "und:미국주식 사관학교:CXMT는-딥시크와-다르다-수요-충격이-아니라-공급-충격이다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-19",
+   "path": "content/understanding/미국주식 사관학교/[260719] CXMT는 딥시크와 다르다 - 수요 충격이 아니라 공급 충격이다.md",
+   "hash": "033ccc669e78"
   },
   {
    "id": "und:미국주식 사관학교:DIVO-옵션-명세-읽기-양산형-커버드콜과-무엇이-다른가",
@@ -776,6 +798,28 @@
    "hash": "5ec3d9b68fd0"
   },
   {
+   "id": "und:미국주식 사관학교:S-1이-말하는-정체-매출은-스타링크인데-돈은-AI로-흐른다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-05-27",
+   "path": "content/understanding/미국주식 사관학교/[260527] S-1이 말하는 정체 - 매출은 스타링크인데 돈은 AI로 흐른다.md",
+   "hash": "764568aae9bb"
+  },
+  {
+   "id": "und:미국주식 사관학교:SK하이닉스-미국-상장-재평가-기대의-발목은-환율이다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-01",
+   "path": "content/understanding/미국주식 사관학교/[260701] SK하이닉스 미국 상장 - 재평가 기대의 발목은 환율이다.md",
+   "hash": "a5b130542f04"
+  },
+  {
    "id": "und:미국주식 사관학교:SK하이닉스-실적의-역설-HBM-1등이라-상승분을-덜-받았다",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -787,6 +831,28 @@
    "hash": "2ea12e399763"
   },
   {
+   "id": "und:미국주식 사관학교:가격이-논리를-만든다-마이크론의-여기쯤-선",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-17",
+   "path": "content/understanding/미국주식 사관학교/[260717] 가격이 논리를 만든다 - 마이크론의 「여기쯤」 선.md",
+   "hash": "255f80701ba5"
+  },
+  {
+   "id": "und:미국주식 사관학교:같은-25bp인데-효과가-다르다-한국은-올리면-크고-일본은-올려도-작다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-17",
+   "path": "content/understanding/미국주식 사관학교/[260617] 같은 25bp인데 효과가 다르다 - 한국은 올리면 크고 일본은 올려도 작다.md",
+   "hash": "2b2d76ad7571"
+  },
+  {
    "id": "und:미국주식 사관학교:광통신포토닉스-입문-CPOOCS와-밸류체인-다섯-층",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -796,6 +862,17 @@
    "date": "2026-07-15",
    "path": "content/understanding/미국주식 사관학교/[260715] 광통신·포토닉스 입문 - CPO·OCS와 밸류체인 다섯 층.md",
    "hash": "2c2d4e3773e6"
+  },
+  {
+   "id": "und:미국주식 사관학교:기준금리는-내렸는데-10년물은-그대로다-물타기는-TLT가-아니라-단기채로",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-01-15",
+   "path": "content/understanding/미국주식 사관학교/[260115] 기준금리는 내렸는데 10년물은 그대로다 - 물타기는 TLT가 아니라 단기채로.md",
+   "hash": "6d08d28b0581"
   },
   {
    "id": "und:미국주식 사관학교:내부자와-기관이-반대로-움직인다-브레이크-없는-시장",
@@ -820,6 +897,17 @@
    "hash": "14a356ca6c80"
   },
   {
+   "id": "und:미국주식 사관학교:마이크론과-마벨-없으면-멈추는-쪽이-더-싸게-거래된다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-10",
+   "path": "content/understanding/미국주식 사관학교/[260610] 마이크론과 마벨 - 없으면 멈추는 쪽이 더 싸게 거래된다.md",
+   "hash": "aa1420f20866"
+  },
+  {
    "id": "und:미국주식 사관학교:마이클-버리-8월-4일-포지션-재정비-반도체에서-순환금융으로",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -829,6 +917,61 @@
    "date": "2026-08-05",
    "path": "content/understanding/미국주식 사관학교/[260805] 마이클 버리 8월 4일 포지션 재정비 - 반도체에서 순환금융으로.md",
    "hash": "d1dccba7a405"
+  },
+  {
+   "id": "und:미국주식 사관학교:마이클-버리-반박-웨이퍼를-늘려도-HBM은-그만큼-안-나온다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-07-06",
+   "path": "content/understanding/미국주식 사관학교/[260706] 마이클 버리 반박 - 웨이퍼를 늘려도 HBM은 그만큼 안 나온다.md",
+   "hash": "9024149330fd"
+  },
+  {
+   "id": "und:미국주식 사관학교:브로드컴-급락은-거품이-아니라-가격표-문제다-수요-곡선과-밸류에이션을-가른다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-05",
+   "path": "content/understanding/미국주식 사관학교/[260605] 브로드컴 급락은 거품이 아니라 가격표 문제다 - 수요 곡선과 밸류에이션을 가른다.md",
+   "hash": "040562aa06e8"
+  },
+  {
+   "id": "und:미국주식 사관학교:상장-일주일-본주는-오르고-대리-종목은-빠졌다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-19",
+   "path": "content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md",
+   "hash": "46f1d6951a41"
+  },
+  {
+   "id": "und:미국주식 사관학교:상장-전에-32억-달러가-먼저-값을-매겼다-스페이스X-합성-선물과-예측-시장-읽기",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-12",
+   "path": "content/understanding/미국주식 사관학교/[260612] 상장 전에 32억 달러가 먼저 값을 매겼다 - 스페이스X 합성 선물과 예측 시장 읽기.md",
+   "hash": "f29cf931645c"
+  },
+  {
+   "id": "und:미국주식 사관학교:상장이-지수를-흔드는-자리는-공모가-아니라-강제-매수다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-05-25",
+   "path": "content/understanding/미국주식 사관학교/[260525] 상장이 지수를 흔드는 자리는 공모가 아니라 강제 매수다.md",
+   "hash": "7fd8fff27147"
   },
   {
    "id": "und:미국주식 사관학교:성공한-작업당-비용-모델-라우팅-수혜주-3종",
@@ -864,6 +1007,50 @@
    "hash": "1e6921222ffe"
   },
   {
+   "id": "und:미국주식 사관학교:스페이스X-상장이-테슬라에서-빼앗는-것은-실적이-아니라-희소성이다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-11",
+   "path": "content/understanding/미국주식 사관학교/[260411] 스페이스X 상장이 테슬라에서 빼앗는 것은 실적이 아니라 희소성이다.md",
+   "hash": "7e63dcffc704"
+  },
+  {
+   "id": "und:미국주식 사관학교:스페이스X를-어떤-회사로-보느냐에-따라-값이-35배-달라진다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-09",
+   "path": "content/understanding/미국주식 사관학교/[260409] 스페이스X를 어떤 회사로 보느냐에 따라 값이 35배 달라진다.md",
+   "hash": "ad5ee305ea34"
+  },
+  {
+   "id": "und:미국주식 사관학교:애플이-40년-만에-값을-올렸다-아이폰은-피한-게-아니라-미룬-것이다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-29",
+   "path": "content/understanding/미국주식 사관학교/[260629] 애플이 40년 만에 값을 올렸다 - 아이폰은 피한 게 아니라 미룬 것이다.md",
+   "hash": "2c1f7562e8fa"
+  },
+  {
+   "id": "und:미국주식 사관학교:애플이-중국산-D램을-두드린-이유-이익률은-깎여도-대당-이익은-지킨다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-16",
+   "path": "content/understanding/미국주식 사관학교/[260816] 애플이 중국산 D램을 두드린 이유 - 이익률은 깎여도 대당 이익은 지킨다.md",
+   "hash": "117898b815b9"
+  },
+  {
    "id": "und:미국주식 사관학교:엔비디아-vs-AMD-메모리-치킨게임-누가-이겨도-HBM이-남는다",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -873,6 +1060,17 @@
    "date": "2026-08-03",
    "path": "content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md",
    "hash": "3189ae7aa68f"
+  },
+  {
+   "id": "und:미국주식 사관학교:엔비디아만-3-오른-이유-전용-칩은-정해진-땅을-나눠-가질-뿐이다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-28",
+   "path": "content/understanding/미국주식 사관학교/[260628] 엔비디아만 3% 오른 이유 - 전용 칩은 정해진 땅을 나눠 가질 뿐이다.md",
+   "hash": "556622a1345b"
   },
   {
    "id": "und:미국주식 사관학교:원달러-급락의-정체-일회성-물량과-안-바뀐-구조",
@@ -895,6 +1093,50 @@
    "date": "2026-07-24",
    "path": "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md",
    "hash": "ed66a3d9f2c9"
+  },
+  {
+   "id": "und:미국주식 사관학교:인상-소나기를-정통으로-맞는-건-중기채다-충격이-꽂히는-자리와-가격-반응은-다르다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-06-08",
+   "path": "content/understanding/미국주식 사관학교/[260608] 인상 소나기를 정통으로 맞는 건 중기채다 - 충격이 꽂히는 자리와 가격 반응은 다르다.md",
+   "hash": "f951722bbb16"
+  },
+  {
+   "id": "und:미국주식 사관학교:인하-논쟁-물가가-안-죽었다-대-안-내리면-경기가-먼저-깨진다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-03-18",
+   "path": "content/understanding/미국주식 사관학교/[260318] 인하 논쟁 - 물가가 안 죽었다 대 안 내리면 경기가 먼저 깨진다.md",
+   "hash": "21619ba27061"
+  },
+  {
+   "id": "und:미국주식 사관학교:집이-안-팔릴수록-유리한-채권-Agency-MBS와-장기채의-공급-방향이-반대다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-27",
+   "path": "content/understanding/미국주식 사관학교/[260427] 집이 안 팔릴수록 유리한 채권 - Agency MBS와 장기채의 공급 방향이 반대다.md",
+   "hash": "c5cf552ee0d1"
+  },
+  {
+   "id": "und:미국주식 사관학교:채권이-주식을-지켜주던-20년은-예외였다-갈림길은-물가-3",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-04-24",
+   "path": "content/understanding/미국주식 사관학교/[260424] 채권이 주식을 지켜주던 20년은 예외였다 - 갈림길은 물가 3%.md",
+   "hash": "6c7c6ddb7ea3"
   },
   {
    "id": "und:부동산:20년-장기전세-첫-만기-계약대로-나가라와-갈-데가-없다-사이-장순원",
@@ -1302,6 +1544,17 @@
    "date": "2026-03-18",
    "path": "content/understanding/언더스탠딩 백브리핑/호르무즈 해협 봉쇄 맞불... 하르그섬 뭐길래.md",
    "hash": "5bae4bc2871f"
+  },
+  {
+   "id": "und:이선엽 대표:같은-반도체-급락인데-한국만-더-깊었다-레버리지와-기계-매매-이선엽",
+   "corpus": "understanding",
+   "folder": "이선엽 대표",
+   "categories": [
+    "이선엽 대표"
+   ],
+   "date": "2026-08-12",
+   "path": "content/understanding/이선엽 대표/[260812] 같은 반도체 급락인데 한국만 더 깊었다 - 레버리지와 기계 매매 - 이선엽.md",
+   "hash": "0c1ad393cae6"
   },
   {
    "id": "und:이선엽 대표:반도체-룰이-바뀌었다-주가-재평가-시작됐다",

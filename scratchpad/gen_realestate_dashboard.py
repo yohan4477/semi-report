@@ -4,7 +4,9 @@
 # 마크업과 CSS는 dash_common이 갖고 있고, 미국주식 사관학교 대시보드와 한 벌로 움직인다.
 import io, os, re, sys
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# 여러 생성기를 한 프로세스에서 import 하면(check_slim) 감싸기가 겹쳐
+# 앞 래퍼가 수거될 때 버퍼를 닫아 버린다. 새 객체를 만들지 않는 reconfigure를 쓴다.
+sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 

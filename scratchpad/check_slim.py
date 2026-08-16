@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.join(ROOT, 'scratchpad'))
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 import gen_realestate_dashboard as _re
 import gen_usa_dashboard as _usa
+import gen_finance_dashboard as _fin
 
 SUBS = os.path.join(ROOT, 'scratchpad', 'yt_subs')
 STRIP = re.compile(r'<[^>]+>')
@@ -130,7 +131,7 @@ def check(card):
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else None
     fails = 0
-    cards = _re.CARDS + _usa.CARDS
+    cards = _re.CARDS + _usa.CARDS + _fin.CARDS
     for c in cards:
         if not c.get('slim_points'):
             continue
