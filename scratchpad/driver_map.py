@@ -161,8 +161,25 @@ def _earnpath_html():
     """이익 성장 경로를 한 표에 세운다. 말로 적으면 「+25%로 3년, 그다음 10%」가
     귀에 안 들어온다. 나란히 놓아야 출발점과 착지점의 어긋남이 보인다."""
     e = dmd.EARN_PATH
+    ncol = len(e['head'])
     head = ''.join('<th>%s</th>' % h for h in e['head'])
-    body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in e['rows'])
+    body = []
+    for label, rows in e['bands']:
+        body.append('<tr class="dm-ep-band"><td colspan="%d">%s</td></tr>' % (ncol, label))
+        for r in rows:
+            cls = []
+            if r.get('note'):
+                cls.append('dm-ep-hi')
+            if r.get('muted'):
+                cls.append('dm-ep-muted')
+            cells = ''.join('<td>%s</td>' % c for c in r['cells'])
+            if r.get('note'):
+                # 하이라이트한 행에는 왜 하이라이트했는지를 첫 칸에 붙인다.
+                cells = cells.replace('</td>', '<span class="dm-ep-note">%s</span></td>'
+                                      % r['note'], 1)
+            body.append('<tr%s>%s</tr>'
+                        % (' class="%s"' % ' '.join(cls) if cls else '', cells))
+    body = ''.join(body)
     return ('<div class="dm-ep">'
             '<p class="dm-ep-label">%s</p>'
             '<div class="dm-ep-wrap"><table class="dm-ep-tbl">'
@@ -273,9 +290,19 @@ DM_CSS = '''<style>
 .dm-ep-tbl td{padding:5px 12px 5px 0;border-bottom:1px solid var(--line);
               color:var(--ink);white-space:nowrap}
 .dm-ep-tbl td:first-child{font-weight:800}
-.dm-ep-tbl td:nth-child(2){color:var(--ink-3);font-size:11px;font-weight:700}
 .dm-ep-tbl i{font-style:normal;font-size:11px;font-weight:700;color:var(--ink-3);margin-left:3px}
-.dm-ep-tbl tr:last-child td{border-bottom:0;color:var(--ink-3)}
+/* 국면 띠 — 같은 구간을 두 필자가 다르게 부르므로 라벨에 둘 다 적는다 */
+.dm-ep-band td{background:var(--sunk);font-size:10.5px;font-weight:850;letter-spacing:.03em;
+               color:var(--ink-3);padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+               white-space:normal}
+/* 출발과 착지 — 이 표의 요점이라 눈에 걸리게 둔다 */
+.dm-ep-hi td{background:var(--warn-soft);color:var(--ink);font-weight:800}
+.dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+.dm-ep-hi i{color:var(--ink-2)}
+.dm-ep-note{display:block;font-size:10px;font-weight:800;color:var(--warn);
+            letter-spacing:.02em;margin-top:2px;white-space:nowrap}
+.dm-ep-muted td{color:var(--ink-3)}
+.dm-ep-tbl tr:last-child td{border-bottom:0}
 .dm-ep-punch{font-size:13px;line-height:1.62;color:var(--ink-2);margin:11px 0 0;
              border-left:3px solid var(--warn);background:var(--warn-soft);
              border-radius:0 8px 8px 0;padding:9px 13px}
