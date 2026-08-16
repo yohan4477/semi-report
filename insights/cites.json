@@ -119,6 +119,45 @@
  "content/newsletter/ai_infra/business/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md#L51": {
   "sha1": "3bad8368b950"
  },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L114": {
+  "sha1": "09bbba2b2c2e"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L115": {
+  "sha1": "d8beff6244dd"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L116": {
+  "sha1": "00d6eef3acf0"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L159": {
+  "sha1": "489e7f090069"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L195": {
+  "sha1": "e675ab42cb7a"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L198": {
+  "sha1": "6f825325c377"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L228": {
+  "sha1": "dd9cb436d5fe"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L229": {
+  "sha1": "2dc53bbb12e8"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L259": {
+  "sha1": "02682166948c"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L275": {
+  "sha1": "b8258657e89c"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L68": {
+  "sha1": "49c160f6b29d"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L69": {
+  "sha1": "f498238b04e7"
+ },
+ "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L93": {
+  "sha1": "0b9b620ebd6f"
+ },
  "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md#L103": {
   "sha1": "7ccf958c1ce6"
  },
@@ -1229,6 +1268,42 @@
  "content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md#L98": {
   "sha1": "fa5e4fde2312"
  },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L102": {
+  "sha1": "a117341ddfef"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L132": {
+  "sha1": "22d02d69ba58"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L144": {
+  "sha1": "cd29bbbe9255"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L159": {
+  "sha1": "72fe26e5a6ba"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L177": {
+  "sha1": "fb03f98b8de1"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L196": {
+  "sha1": "7b32fd29930a"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L197": {
+  "sha1": "45d120790e37"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L218": {
+  "sha1": "deebda7d09c7"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L224": {
+  "sha1": "fb258d81fb38"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L65": {
+  "sha1": "5d84d4605186"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L66": {
+  "sha1": "b99ee0de4ff6"
+ },
+ "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L92": {
+  "sha1": "ecdd218acf8d"
+ },
  "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md#L109": {
   "sha1": "6f08e2ffd63b"
  },
@@ -2212,6 +2287,42 @@
  },
  "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L62": {
   "sha1": "9b0db12443da"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L111": {
+  "sha1": "b3c930ed8a1a"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L13": {
+  "sha1": "d1df6ad99e1c"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L138": {
+  "sha1": "6e997bd1c501"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L159": {
+  "sha1": "02b269ae4a5b"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L178": {
+  "sha1": "8f49191a9102"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L180": {
+  "sha1": "a8a33c02e85b"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L201": {
+  "sha1": "c10c13324516"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L223": {
+  "sha1": "06476fb647a3"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L224": {
+  "sha1": "e008d1d4bb73"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L47": {
+  "sha1": "b40d72b6269e"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L68": {
+  "sha1": "4375ed940faa"
+ },
+ "content/newsletter/ai_models/agents/[260528] 재미로 미스컴파일 찾기 - 오후 한나절에 1만 달러를 쓰는 법.md#L90": {
+  "sha1": "aedc00a6a006"
  },
  "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L119": {
   "sha1": "b63bed9fccc7"
