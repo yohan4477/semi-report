@@ -18,6 +18,7 @@ BUILD = [
     ('부동산 대시보드', ['scratchpad/gen_realestate_dashboard.py']),
     ('미주사 대시보드', ['scratchpad/gen_usa_dashboard.py']),
     ('금융 대시보드', ['scratchpad/gen_finance_dashboard.py']),
+    ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
     ('통합 인사이트', ['insights/gen_insightview.py']),
     ('추적 · 일론 머스크', ['insights/gen_entity_board.py', 'musk']),
     ('인사이트 지도', ['insights/gen_map.py']),
