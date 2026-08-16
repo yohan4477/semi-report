@@ -23,6 +23,12 @@ description: 제3자 해설(유튜브 자막·네이버 프리미엄 텍스트) 
 | 금리·국채·환율 | `대시보드/금융 대시보드.html` | `scratchpad/gen_finance_dashboard.py` |
 | AI·데이터센터·전력·에너지·원유 | `대시보드/언더스탠딩 대시보드.html` | 없음 → `scripts/add_card.py` |
 | 미국 증시 강의(네이버 프리미엄 카레라) | `대시보드/미국주식 사관학교 대시보드.html` | `scratchpad/gen_usa_dashboard.py` |
+| 회계·재무제표·기업 평가 | `대시보드/회계사 대시보드.html` | `scratchpad/gen_accountant_dashboard.py` |
+| 몸·질병·수면·대사 | `대시보드/건강 대시보드.html` | **`health-insight` 스킬로 간다** — 카드 단위가 영상이 아니라 주제다 |
+
+생성기를 새로 만들거나 고칠 때는 `scratchpad/dash_common.py` 머리의 UI 규약을 먼저 읽는다.
+첫 화면은 어느 장이든 섹션 타일이고, 조립은 `render()`만 거친다.
+새 대시보드를 만들면 `scripts/build_all.py`의 `BUILD` 목록에 반드시 넣는다.
 
 파일명이 옛 이름(`언더스탠딩 대시보드.html`)인 페이지의 표시 이름은 **AI · 인프라 · 에너지 인사이트**다.
 `scratchpad/dash_common.py`가 이 파일의 `<style>`을 CSS 원본으로 읽으므로 파일명을 바꾸지 않는다.

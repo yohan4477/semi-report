@@ -71,12 +71,22 @@ topics: [주제, 주제]
 
 ## 3. 검사
 
+노트를 고치는 동안은 이 둘만 봐도 된다.
+
 ```bash
 PYTHONIOENCODING=utf-8 python insights/check_notes.py
 PYTHONIOENCODING=utf-8 python insights/check_prose.py
 ```
 
 `check_notes.py` FAIL 0이 되어야 한다.
+
+**푸시 직전에는 다섯을 전부 돌린다.** 노트 한 장이 들어오면 `check_fresh`의 F1이 뜬다 —
+더 새 문서가 있는데 서술을 안 고쳤다는 뜻이라 노트 단계에서 새로 생기는 지적이다.
+둘만 돌리고 푸시해서 FAIL을 그대로 내보낸 이력이 있다(CLAUDE.md 「검사기는 다섯이다」).
+
+```bash
+PYTHONIOENCODING=utf-8 python scripts/build_all.py --check
+```
 
 | | 흔한 원인 | 처리 |
 |---|---|---|
