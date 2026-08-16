@@ -51,7 +51,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 |---|---|
 | ai-infra/compute | 25 |
 | ai-infra/memory | 9 |
-| ai-infra/networking | 10 |
+| ai-infra/networking | 11 |
 | ai-infra/business | 17 |
 | ai-infra/power | 10 |
 | ai-infra/cooling | 3 |
@@ -91,6 +91,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 
 
+
+<!-- 2026-08-17: [260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트 신규 변환 완료 — ai-infra/networking 10→11. 이전까지 networking은 전부 compute 문서의 이중 태그였는데, 이 문서는 처음으로 networking이 유일·주 카테고리인 문서(content/newsletter/ai_infra/networking/ 폴더 신설) — Scale-out CPO TCO·전력 분석(3층망 총비용 3%↓·2층망 7%↓ 등 실측), Scale-up이 CPO의 킬러 애플리케이션인 이유(구리 2m 도달거리·NVLink 대역폭 9배 격차), 메타 ECOC 2025 신뢰성 실측(MTBF 260만 시간), DSP→LPO→CPO 진화와 SerDes/Wide I/O 한계, TSMC COUPE 패키징·FAU·레이저·변조기(MZM·MRM·EAM) 부품 기술, 엔비디아(Quantum-X·Spectrum-X Photonics)·브로드컴(Humboldt·Bailly·Davisson)·인텔·미디어텍 제품 로드맵, CPO 전문기업 7곳(Ayar Labs·Nubis·Celestial AI·Lightmatter·Xscape·Ranovus·Scintil)과 엔비디아 CPO 공급망 전체 지도(레이저·FAU·셔플박스·OSAT·테스트 장비 명명 공급사)까지 전체 24개 섹션 완료. networking 전용 통합 리포트가 아직 없어 리포트 갱신은 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용) -->
 
 ## 버전 히스토리
 
