@@ -43,7 +43,8 @@ GRPNAME = dict((g, t) for g, t, _s in GROUPS)
 # 부동산 묶음의 글은 공개 페이지에도 그대로 나간다(export 참조). 그 사실을 여기 적어 두지 않으면
 # 같은 판단을 두 번 읽거나, 저쪽에서 본 글을 여기서 새 글로 여긴다.
 ALSO = {'estate': ('이 묶음의 %d장은 <a href="부동산 대시보드.html">부동산 인사이트</a>에도 '
-                   '같은 내용으로 나갑니다. 저쪽에서는 해설 카드 아래가 아니라 맨 위 한 층에 따로 섭니다.')}
+                   '같은 내용으로 나갑니다. 저쪽에서는 첫 화면의 「통합 인사이트」 버튼을 누르면 '
+                   '개별 포스트와 갈라져 나옵니다.')}
 
 
 # (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
@@ -136,13 +137,14 @@ def cards():
     return ''.join(out), per, bysec, mix
 
 
-def export(gid):
-    """묶음 하나의 카드를 다른 대시보드가 그대로 실을 수 있게 조각으로 내준다.
+def export(key, by='group'):
+    """카드를 다른 대시보드가 그대로 실을 수 있게 조각으로 내준다.
 
     본문은 insights/synth·briefs의 .md 한 벌뿐이다. 저쪽 생성기에 글을 옮겨 적으면 두 벌이 되고,
-    한쪽만 고친 날부터 어느 것이 맞는지 알 수 없게 된다. 그래서 마크업까지 여기서 만든다.
+    한쪽만 고친 날부터 어느 것이 맞는지 알 수 없게 된다. 그래서 카드 마크업까지 여기서 만든다.
+    by='group'이면 큰 묶음 전체, 'section'이면 갈래 하나다.
     """
-    secs = [s for s, g, _t, _sub in ALLSEC if g == gid]
+    secs = [key] if by == 'section' else [s for s, g, _t, _sub in ALLSEC if g == key]
     got = []
     for d, kind, tab in KINDS:
         for p in sorted(glob.glob(os.path.join(d, '*.md'))):
@@ -155,17 +157,20 @@ def export(gid):
     return [h for _a, h in got]
 
 
-def export_block(gid, title, lede):
-    """카드 조각을 층 하나로 묶는다 — 아래 해설 카드와 섞이지 않게 겉을 달리한다.
+def export_sections(gid):
+    """묶음 안을 갈래별로 나눠 준다 — (이름, 설명, 카드 HTML 목록).
 
-    lede에 %d가 있으면 카드 수를 넣는다. 문구에 숫자를 손으로 적어 두면 글이 늘어난 날 어긋난다.
+    한 층에 아홉 장을 그냥 쌓으면 공급·심의·세금이 섞여 어느 것도 안 읽힌다.
+    섹션 머리 마크업은 받는 쪽 페이지가 자기 것으로 그린다. 여기는 순서와 내용만 넘긴다.
     """
-    got = export(gid)
-    return ('<div class="xlayer"><div class="xl-head"><span class="xl-num">✦</span>'
-            '<h2>%s</h2><span class="xl-n">%d</span></div>'
-            '<p class="xl-lede">%s</p>%s</div>'
-            % (nl.esc(title), len(got), (lede % len(got)) if '%d' in lede else lede,
-               ''.join(got))), len(got)
+    out = []
+    for sid, grp, title, sub in ALLSEC:
+        if grp != gid:
+            continue
+        got = export(sid, by='section')
+        if got:
+            out.append((title, sub, got))
+    return out
 
 
 # 다른 페이지에 실을 때 같이 넘기는 CSS.
@@ -177,17 +182,13 @@ EXPORT_CSS = '''
         --accent2:var(--accent-ink);--soft:var(--accent-soft);
         --t-lbl:10.5px;--t-meta:12px;--t-body:13.5px;--t-lead:14.5px;--t-h2:19px;
         --r:12px;--pad:16px 20px;
-        margin:0 0 30px;padding:18px 20px 22px;border-radius:14px;
-        background:var(--sunk);border:1px solid var(--line)}
-  .xl-head{display:flex;align-items:baseline;gap:10px;padding-bottom:8px;
-        border-bottom:1px solid var(--line)}
-  .xl-num{font-size:13px;color:var(--cross)}
-  .xl-head h2{font-size:17px;font-weight:850;letter-spacing:-.02em;margin:0;color:var(--ink)}
-  .xl-n{margin-left:auto;font-size:12px;font-weight:800;color:var(--ink-3);
-        font-variant-numeric:tabular-nums}
-  .xl-lede{margin:10px 0 4px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+        margin:0 0 30px}
+  .xlayer[hidden]{display:none}
+  .xl-lede{margin:0 0 6px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
   .xl-lede a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line)}
-  @media (max-width:640px){.xlayer{padding:15px 14px 18px;border-radius:12px}}
+  /* 갈래 머리는 카드 쪽 페이지의 .sec-head를 그대로 쓴다 — 두 화면이 같은 모양이어야 한다 */
+  .xsec{margin-top:26px}
+  .xsec:first-of-type{margin-top:14px}
 '''
 
 

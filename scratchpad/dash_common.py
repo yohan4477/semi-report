@@ -104,11 +104,19 @@ NAV_JS = '''<script>
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
-  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
-  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  var modes=document.querySelector('.mode-pick');
+  var layer=document.querySelector('.xlayer');
+  // 화면이 셋이다. 무엇을 읽을지 고르는 화면(mode===null), 주제를 고르는 화면,
+  // 그 주제의 카드를 읽는 화면. 한 화면에 다 쌓으면 무엇을 보고 있는지 흐려진다.
+  // 모드 버튼이 없는 페이지(금융·회계사 등)는 예전처럼 곧장 단일 포스트로 연다.
+  var mode = modes ? null : 'single';
   var only=null, picking=true;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
+    var single = (mode==='single');
+    if(modes) modes.hidden = (mode!==null);
+    if(layer) layer.hidden = (mode!=='cross');
+    if(tabs) tabs.hidden = !single;
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
       c.hidden = !(pick==='all' || c.dataset.scope===pick);
     });
@@ -132,7 +140,7 @@ NAV_JS = '''<script>
     document.querySelectorAll('section[id]').forEach(function(s){
       var live=s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || live===0 || (only && s.id!==only);
+      s.hidden = !single || picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
         o.hidden = live===0;
@@ -140,16 +148,19 @@ NAV_JS = '''<script>
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
-    box.hidden = !picking;
+    box.hidden = !(single && picking);
     var roll2=document.querySelector('.rollup');
-    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    // 롤업은 개별 포스트를 고른 뒤 주제 고르는 화면에서만 — 통합 인사이트 쪽 글이 아니다
+    if(roll2){ if(!single) roll2.hidden = true; else if(picking) roll2.hidden = false; }
     if(back){
-      back.hidden = picking;
+      // 돌아갈 데가 있을 때만 — 모드 버튼이 없는 페이지는 주제를 고른 뒤에야 나온다
+      back.hidden = modes ? (mode===null) : picking;
       var now=back.querySelector('.sb-now');
       if(now){
         var cur = only ? opt(only) : opt('');
         var t = cur && cur.querySelector('.st-t');
-        now.textContent = picking ? '' : (t ? t.textContent : '');
+        now.textContent = !single ? '통합 인사이트'
+                        : picking ? '개별 포스트' : (t ? t.textContent : '');
       }
     }
     box.querySelectorAll('button').forEach(function(b){
@@ -174,10 +185,19 @@ NAV_JS = '''<script>
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
   });
+  if(modes) modes.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    mode=b.dataset.mode; picking=true; only=null; apply();
+    window.scrollTo({top:0});
+  });
+  // 「← 이전」은 한 단계씩 거슬러 간다 — 카드 → 주제 고르기 → 무엇을 읽을지 고르기
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
-    picking=true; only=null; apply();
-    box.scrollIntoView({behavior:'smooth', block:'start'});
+    if(mode==='single' && !picking){ picking=true; }
+    else if(modes){ mode=null; }
+    only=null; apply();
+    var to = (mode===null) ? modes : box;
+    if(to) to.scrollIntoView({behavior:'smooth', block:'start'});
   });
   apply();
 })();
@@ -196,8 +216,15 @@ def snip(text, limit=46):
     return cut.rstrip(' ,·') + '…'
 
 
-def sec_picker(secs, order, total):
-    """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다"""
+BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이전</button>'
+        '<span class="sb-now"></span></div>')
+
+
+def sec_picker(secs, order, total, with_back=True):
+    """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
+
+    층이 있는 페이지는 「← 이전」을 층보다 위에 둬야 해서(with_back=False) 조립기가 따로 꽂는다.
+    안 그러면 카드 아홉 장을 다 지나야 되돌아갈 버튼이 나온다."""
     tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
              '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
              '<span class="st-s">모든 섹션을 한 줄로</span>'
@@ -209,9 +236,30 @@ def sec_picker(secs, order, total):
                      '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
                      % (sid, num, title, snip(sub), len(cs)))
     # 주제를 고르면 타일이 사라지고 카드만 남는다 — 돌아올 길을 같이 둔다
-    back = ('<div class="sback" hidden><button type="button" class="sb-btn">← 주제 다시 고르기</button>'
-            '<span class="sb-now"></span></div>')
-    return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), back)
+    return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK if with_back else '')
+
+
+def layer(secs, lede):
+    """교차 인사이트 층. 카드 마크업은 gen_insightview가 만들고, 갈래 머리만 여기서 그린다 —
+    단일 포스트 쪽 섹션과 같은 모양이어야 두 화면이 한 페이지로 읽힌다."""
+    n = sum(len(cs) for _t, _s, cs in secs)
+    body = []
+    for i, (title, sub, cs) in enumerate(secs, 1):
+        body.append('<section class="xsec"><div class="sec-head"><span class="sec-num">%02d</span>'
+                    '<h2 class="sec-title">%s</h2></div>%s</section>'
+                    % (i, title, ''.join(cs)))
+    return ('<div class="xlayer" hidden><p class="xl-lede">%s</p>%s</div>'
+            % ((lede % n) if '%d' in lede else lede, ''.join(body))), n
+
+
+MODE_PICK = '''<div class="mode-pick sgrid">
+    <button class="stile" data-mode="cross" aria-pressed="false">
+      <span class="st-num">✦</span><span class="st-t">통합 인사이트</span>
+      <span class="st-s">%s</span><span class="st-n">%d</span></button>
+    <button class="stile" data-mode="single" aria-pressed="false">
+      <span class="st-num">📄</span><span class="st-t">개별 포스트</span>
+      <span class="st-s">%s</span><span class="st-n">%d</span></button>
+  </div>'''
 
 
 def upload_date(card):
@@ -243,13 +291,14 @@ def rollup_for(key, cards, unit='편'):
     return _rl.build(notes, counts, unit)
 
 
-def render(cards, title, header, footer, out, rollup='', top='', top_css=''):
-    """top은 섹션 위에 따로 서는 층이다(교차 인사이트 등). 카드 목록·주제 타일과 섞이지 않는다 —
-    NAV_JS는 section[id]와 .ucard만 여닫으므로 층은 무엇을 골라도 그대로 남는다."""
+def render(cards, title, header, footer, out, rollup='', top='', top_css='',
+           top_n=0, top_sub='', main_sub=''):
+    """top이 있으면 첫 화면이 「교차 인사이트 / 단일 포스트」 두 버튼이 된다. 성격이 다른 두 글을
+    한 화면에 쌓으면 어느 것을 읽는지 흐려진다. 되돌아갈 길은 「← 이전」 하나로 단계를 거슬러 간다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
-    nav = sec_picker(secs, order, kr if scoped else len(cards))
+    nav = sec_picker(secs, order, kr if scoped else len(cards), with_back=not top)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
@@ -267,7 +316,9 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css=''):
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
             # 층이 없는 페이지는 예전 그대로 — 빈 줄만 새로 끼면 생성물 차이가 매번 남는다
-            + '\n<div class="wrap">\n' + header + ('\n\n  ' + top if top else '')
+            + '\n<div class="wrap">\n' + header
+            + (('\n\n  ' + MODE_PICK % (top_sub, top_n, main_sub, len(cards))
+                + '\n\n  ' + BACK + '\n\n  ' + top) if top else '')
             + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
