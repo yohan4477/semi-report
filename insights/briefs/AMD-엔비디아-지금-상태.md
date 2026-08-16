@@ -3,15 +3,16 @@ kind: brief
 headline: AMD 칩은 싸졌는데 왜 아직 안 팔리나
 subhead: 칩값·전기값을 합친 비용은 AMD가 낮은데, 소프트웨어와 랙에서 막힌다
 section: chip
-as_of: 2026-08-14
+as_of: 2026-08-16
 sources:
   - {file: "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md", note: ""}
+  - {file: "content/understanding/언더스탠딩 백브리핑/[260814] 미국 수출통제의 구멍 셋 - 밀수·원격접속·증류.md", note: "중국이 판도에서 차지하는 몫"}
   - {file: "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md", note: ""}
   - {file: "content/newsletter/ai_infra/compute/[251009] InferenceMAX - 오픈소스 추론 벤치마킹.md", note: ""}
   - {file: "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md", note: ""}
   - {file: "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md", note: ""}
 checked:   # 읽고 반영 안 하기로 한 문서 — check_fresh F1 이 이걸 보고 넘어간다
-  - {file: "input/clippings/SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md", why: "전력·매출 이야기라 칩 경쟁과 무관"}
+  - {file: "content/newsletter/ai_infra/business/[260807] 스페이스X 2027년 10GW 베팅 - 마이크로소프트가 최대 고객이 되는 이유.md", why: "전력·매출 이야기라 칩 경쟁과 무관"}
 ---
 
 ## 한 줄
@@ -31,6 +32,8 @@ checked:   # 읽고 반영 안 하기로 한 문서 — check_fresh F1 이 이�
 - **랙에서 값도 되돌아온다.** AMD는 칩끼리 신호를 보내는 회로가 약해 배선을 지나며 신호가 뭉개진다. 그래서 리타이머, 곧 신호를 다시 키워 주는 중계 칩을 배선판 최대 85%에 끼운다. 랙 하나에 550개가 넘고, 배선판과 케이블 값만 68,928달러다([260725] AMD는 CUDA 모트를 깰 수 있는가 L79, L241, L242).
 - **두 번째 걸림돌은 소프트웨어다.** DeepSeek V4가 공개된 날 AMD 쪽은 사실상 돌아가지 않았다. 사용자 한 명이 받는 속도가 초당 1~2토큰으로 사람이 글 읽는 속도보다 느렸다. 43일 만에 100배 넘게 끌어올렸지만, 그 43일이 매번 반복된다([260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200 L51, L146).
 - **그래도 평가는 세 번 올라갔다.** SemiAnalysis는 AMD가 CUDA(엔비디아 GPU에서만 도는 개발 환경) 장벽을 넘을 확률을 2023년 0%에서 2025년 4월 의미 있는 가능성으로, 2026년 7월에는 위 두 걸림돌만 풀면 높다는 쪽으로 올렸다. 근거는 스펙이 아니라 고객이다. 앤트로픽이 AMD 칩 2GW 배치를 공식화했고, 2023년 품질 문제로 떠났던 마이크로소프트가 돌아왔다([260725] AMD는 CUDA 모트를 깰 수 있는가 L52, L53).
+- **이 경쟁이 벌어지는 판은 거의 미국 안이다.** 엔비디아가 판 GPU는 H100 환산 약 2,000만 개인데 80%가 미국에서 쓰이고 중국으로 흘러든 물량은 많아야 5%다. 중국 전체 컴퓨팅은 H100 환산 약 180만 개로 추산되는데, 그중 합법 반입이 112만 개다(수출통제의 구멍 셋 L44, L23).
+- **중국은 허가가 난 칩도 안 사간다.** 미국이 H200을 허가제로 풀었는데도 사가지 않는다. 원문은 그 이유를 화웨이 칩 성능이 올라서라기보다 해외 데이터센터를 빌려 학습하거나 남의 모델을 증류(다른 모델에 대량으로 질문해 답을 베끼는 것)해 메울 수 있어서일 것으로 본다. 저자가 추정이라고 밝힌 대목이다(수출통제의 구멍 셋 L69).
 
 ## 어디서 갈리나
 
