@@ -311,34 +311,33 @@ CSS = r'''
 
   /* 매트릭스 — 행은 단계, 열은 갈래. 비교 대상이라 탭으로 나누지 않는다 */
   .mx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 0}
-  /* 갈래 카드는 누르는 것이다 — 누르면 그 갈래의 흐름도가 표 위로 펼쳐진다 */
-  .lane{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
-        border:1px solid var(--line);border-top:3px solid var(--ac);border-radius:var(--r);
-        background:var(--card);padding:13px 15px;box-shadow:var(--shadow);
-        transition:border-color .2s ease,transform .3s cubic-bezier(.19,1,.22,1),box-shadow .3s cubic-bezier(.19,1,.22,1);
-        -webkit-tap-highlight-color:transparent}
-  .lane:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 10px 22px -14px rgba(0,0,0,.4)}
-  .lane:active{transform:translateY(0) scale(.99);transition-duration:.09s}
-  .lane:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+  .lane{border:1px solid var(--line);border-top:3px solid var(--ac);border-radius:var(--r);
+        background:var(--card);padding:13px 15px;box-shadow:var(--shadow)}
   .lane .nm{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;margin:0;display:flex;gap:8px;align-items:baseline}
   .lane .nm span{font-size:19px}
   .lane p{margin:6px 0 0;font-size:var(--t-meta);color:var(--sub)}
   .lane .rl{margin:8px 0 0;font-size:var(--t-lbl);font-weight:700;color:var(--ac);
             font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0}
-  .lane .op{display:inline-flex;align-items:center;gap:5px;margin:9px 0 0;
-            font-size:var(--t-lbl);font-weight:800;letter-spacing:.06em;color:var(--ac)}
-  .lane .op::before{content:"▸";transition:transform .2s ease}
-  .lane[aria-expanded="true"] .op::before{transform:rotate(90deg)}
-  .lane[aria-expanded="true"]{border-color:var(--ac);background:var(--sunk)}
 
-  /* 흐름도 — 단계가 위에서 아래로, 같은 단계의 상자는 나란히 */
-  .fl{grid-column:1/-1;border:1px solid var(--ac);border-radius:var(--r);
-      background:var(--card);padding:16px 16px 20px;margin:10px 0 4px;box-shadow:var(--shadow)}
-  .fl[hidden]{display:none}
-  .fl>.ttl{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0 0 4px}
-  .fl>.ttl b{font-size:var(--t-body);font-weight:850;color:var(--ink)}
-  .fl>.ttl i{font-style:normal;font-size:var(--t-meta);color:var(--faint)}
-  .fl>.ttl .x{margin-left:auto;font-size:var(--t-lbl);font-weight:800;color:var(--ac);letter-spacing:.06em}
+  /* 흐름도 — 갈래 띠를 누르면 열린다. 자바스크립트를 쓰지 않는다(details) */
+  .flows{margin:14px 0 0;display:grid;gap:10px}
+  .fl{border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:var(--r);
+      background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+  .fl[open]{border-color:var(--ac)}
+  .fl>summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;flex-wrap:wrap;
+              align-items:baseline;gap:5px 10px;-webkit-tap-highlight-color:transparent}
+  .fl>summary::-webkit-details-marker{display:none}
+  .fl>summary:hover{background:var(--sunk)}
+  .fl>summary:focus-visible{outline:2px solid var(--ac);outline-offset:-3px}
+  .fl>summary .em{font-size:19px;line-height:1}
+  .fl>summary .ti{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;color:var(--ink)}
+  .fl>summary .de{font-size:var(--t-meta);color:var(--sub);flex:1 1 240px}
+  .fl>summary .op{font-size:var(--t-lbl);font-weight:800;letter-spacing:.06em;color:var(--ac);margin-left:auto;white-space:nowrap}
+  .fl>summary .op::before{content:"▸ 흐름 보기"}
+  .fl[open]>summary .op::before{content:"▾ 접기"}
+  .fl[open]>summary{border-bottom:1px solid var(--line);background:var(--sunk)}
+  .fl>.bd{padding:14px 16px 18px}
+  .fl>.bd>.ttl{font-size:var(--t-meta);color:var(--faint);margin:0 0 10px}
   .fs{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 12px 11px}
   .fs>.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin:0 0 8px}
   .fs>.sh b{font-size:var(--t-body);font-weight:850;color:var(--ink);letter-spacing:-.01em}
@@ -385,36 +384,8 @@ CSS = r'''
     .mx{grid-template-columns:1fr}
     .cell .lb{display:block}
     .fn{flex:1 1 100%}
+    .fl>summary .op{margin-left:0}
   }
-  @media (prefers-reduced-motion:reduce){
-    .lane{transition:border-color .2s ease}
-    .lane:hover{transform:none;box-shadow:var(--shadow)}
-    .lane:active{transform:none;opacity:.7}
-    .lane .op::before{transition:none}
-  }
-'''
-
-JS = r'''
-<script>
-/* 갈래 카드 = 흐름도 스위치. 한 번에 하나만 연다 — 셋을 다 펼치면 표가 저 아래로 밀려난다 */
-(function () {
-  var btns = [].slice.call(document.querySelectorAll('.lane[data-flow]'));
-  function close(b) {
-    b.setAttribute('aria-expanded', 'false');
-    document.getElementById(b.getAttribute('data-flow')).hidden = true;
-  }
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var open = b.getAttribute('aria-expanded') === 'true';
-      btns.forEach(close);
-      if (!open) {
-        b.setAttribute('aria-expanded', 'true');
-        document.getElementById(b.getAttribute('data-flow')).hidden = false;
-      }
-    });
-  });
-})();
-</script>
 '''
 
 HEAD = '''<!doctype html>
@@ -440,12 +411,18 @@ ACCENT = {'unified': '#2563eb', 'topic': '#0f9d76', 'semi': '#b4522b'}
 KIND_COLOR = {'src': '#8892a3', 'work': '#6366f1', 'gate': '#ea580c', 'gen': '#0f9d76', 'out': '#b4522b'}
 
 
-def flow_html(key, emo, name, ac):
-    """갈래 하나의 흐름도. 단계 상자를 위에서 아래로 쌓고 사이에 화살표를 둔다."""
-    parts = ['<div class="fl" id="fl-%s" style="--ac:%s" hidden>' % (key, ac),
-             '<p class="ttl"><b>%s %s — 흐름</b>'
-             '<i>단계마다 걸리는 룰은 한 줄만. 전문은 아래 표에 있다</i>'
-             '<span class="x">다시 누르면 접힌다</span></p>' % (emo, name)]
+def flow_html(key, emo, name, one, ac):
+    """갈래 하나의 흐름도. 단계 상자를 위에서 아래로 쌓고 사이에 화살표를 둔다.
+
+    <details>로 짠다 — 자바스크립트가 안 돌아도 열린다. name을 같게 줘서 최신
+    브라우저에서는 하나를 열면 나머지가 닫힌다(지원 안 하면 여러 개가 열릴 뿐이다).
+    """
+    parts = ['<details class="fl" id="fl-%s" name="flow" style="--ac:%s">' % (key, ac),
+             '<summary><span class="em">%s</span><span class="ti">%s</span>'
+             '<span class="de">%s</span><span class="op"></span></summary>'
+             % (emo, name, one),
+             '<div class="bd"><p class="ttl">단계마다 걸리는 룰은 한 줄만 적었다. '
+             '전문은 아래 「갈래 × 단계」 표에 있다.</p>']
     stages = FLOW[key] + [TAIL]
     for j, (stg, kind, note, nodes) in enumerate(stages):
         if j:
@@ -457,7 +434,7 @@ def flow_html(key, emo, name, ac):
         parts.append('<div class="fs" data-kind="%s"><p class="sh"><b>%s</b>%s</p>'
                      '<div class="fnn">%s</div></div>'
                      % (kind, stg, '<i>%s</i>' % note if note else '', n))
-    parts.append('</div>')
+    parts.append('</div></details>')
     return ''.join(parts)
 
 
@@ -468,8 +445,8 @@ def main():
                '<h1>데이터 처리 지도</h1>'
                '<p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. '
                '룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p>'
-               '<p class="lede2"><b>갈래 카드를 누르면 그 갈래의 흐름도가 펼쳐진다</b> — 원문이 어디로 들어와 '
-               '무엇을 거쳐 어느 화면으로 나가는지. 아래 표는 행이 단계, 열이 갈래이고 셀에 룰 전문이 있다. '
+               '<p class="lede2"><b>갈래 띠를 누르면 흐름도가 펼쳐진다</b> — 원문이 어디로 들어와 무엇을 '
+               '거쳐 어느 화면으로 나가는지. 그 아래 표는 행이 단계, 열이 갈래이고 셀에 룰 전문이 있다. '
                '세 갈래가 함께 지키는 것은 공통 밴드에 한 번만 적었다.</p>'
                '<div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · '
                '.claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div>'
@@ -480,15 +457,15 @@ def main():
         out.append('<div class="cm"><b>%s</b><span class="w">%s</span><p>%s</p></div>' % (lbl, word, desc))
     out.append('</div>')
 
+    out.append('<h3 class="sec">갈래별 흐름 — 눌러서 펼친다</h3><div class="flows">')
+    for key, emo, name, one, _src in LANES:
+        out.append(flow_html(key, emo, name, one, ACCENT[key]))
+    out.append('</div>')
+
     out.append('<h3 class="sec">갈래 × 단계</h3><div class="mx">')
     for key, emo, name, one, rule_src in LANES:
-        out.append('<button type="button" class="lane" style="--ac:%s" '
-                   'data-flow="fl-%s" aria-expanded="false" aria-controls="fl-%s">'
-                   '<p class="nm"><span>%s</span>%s</p><p>%s</p><p class="rl">%s</p>'
-                   '<p class="op">흐름 보기</p></button>'
-                   % (ACCENT[key], key, key, emo, name, one, rule_src))
-    for key, emo, name, _one, _src in LANES:
-        out.append(flow_html(key, emo, name, ACCENT[key]))
+        out.append('<div class="lane" style="--ac:%s"><p class="nm"><span>%s</span>%s</p>'
+                   '<p>%s</p><p class="rl">%s</p></div>' % (ACCENT[key], emo, name, one, rule_src))
     for i, (stg, note) in enumerate(STAGES):
         out.append('<div class="band"><b>%s</b><i>%s</i></div>' % (stg, note))
         for key, emo, name, _one, _src in LANES:
@@ -499,7 +476,7 @@ def main():
     out.append('<footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
                '<code>scripts/gen_admin.py</code>의 <code>CELLS</code>를 맞춘 뒤 다시 만든다. '
                '공개 도메인에서는 <code>/admin</code>으로 잠겨 나간다.</footer>')
-    out.append('</main>' + JS + '</body></html>')
+    out.append('</main></body></html>')
 
     html = '\n'.join(out)
     with io.open(OUT, 'w', encoding='utf-8') as f:
