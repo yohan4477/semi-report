@@ -173,12 +173,13 @@ def _earnpath_html():
             if r.get('muted'):
                 cls.append('dm-ep-muted')
             cells = ''.join('<td>%s</td>' % c for c in r['cells'])
-            if r.get('note'):
-                # 하이라이트한 행에는 왜 하이라이트했는지를 첫 칸에 붙인다.
-                cells = cells.replace('</td>', '<span class="dm-ep-note">%s</span></td>'
-                                      % r['note'], 1)
             body.append('<tr%s>%s</tr>'
                         % (' class="%s"' % ' '.join(cls) if cls else '', cells))
+            # 메모를 연도 칸 안에 넣었더니 좁은 칸을 넘쳐 옆 숫자와 겹쳤다.
+            # 행을 하나 더 써서 가로로 펼친다.
+            if r.get('note'):
+                body.append('<tr class="dm-ep-noterow"><td colspan="%d">%s</td></tr>'
+                            % (ncol, r['note']))
     body = ''.join(body)
     return ('<div class="dm-ep">'
             '<p class="dm-ep-label">%s</p>'
@@ -296,11 +297,13 @@ DM_CSS = '''<style>
                color:var(--ink-3);padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
                white-space:normal}
 /* 출발과 착지 — 이 표의 요점이라 눈에 걸리게 둔다 */
-.dm-ep-hi td{background:var(--warn-soft);color:var(--ink);font-weight:800}
+.dm-ep-hi td{background:var(--warn-soft);color:var(--ink);font-weight:800;border-bottom:0}
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
 .dm-ep-hi i{color:var(--ink-2)}
-.dm-ep-note{display:block;font-size:10px;font-weight:800;color:var(--warn);
-            letter-spacing:.02em;margin-top:2px;white-space:nowrap}
+.dm-ep-noterow td{background:var(--warn-soft);color:var(--warn);font-size:11px;font-weight:850;
+                  letter-spacing:.02em;padding:0 12px 7px 8px;border-bottom:1px solid var(--line);
+                  white-space:normal;box-shadow:inset 3px 0 0 var(--warn)}
+.dm-ep-noterow td::before{content:"◆ ";font-size:9px;vertical-align:1px}
 .dm-ep-muted td{color:var(--ink-3)}
 .dm-ep-tbl tr:last-child td{border-bottom:0}
 .dm-ep-punch{font-size:13px;line-height:1.62;color:var(--ink-2);margin:11px 0 0;
@@ -337,8 +340,10 @@ DM_CSS = '''<style>
 .dm-tl-ask-sent b{color:var(--ink);font-weight:800}
 
 /* ── 축 4개 ── */
-.dm-axes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 24px}
-@media (max-width:920px){.dm-axes{grid-template-columns:repeat(2,1fr)}}
+/* 넷을 한 줄에 세우면 1280px에서 칸이 300px도 안 돼 수식이 잘게 접힌다.
+   아주 넓을 때만 4열로 간다 */
+.dm-axes{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 24px;
+         align-items:start}
 @media (max-width:560px){.dm-axes{grid-template-columns:1fr}}
 .dm-axis{background:var(--surface);border:1px solid var(--line);border-radius:12px;
          padding:16px 15px 15px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
