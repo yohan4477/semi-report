@@ -46,7 +46,13 @@ def load_notes():
         d = str(meta.get('date') or '').strip().strip('"')
         if not re.match(r'^\d{4}-\d{2}-\d{2}$', d):
             continue
-        topics = re.findall(r'[^\[\],\s]+', str(meta.get('topics') or ''))
+        # 쉼표로만 나눈다. 공백으로도 쪼개면 「반도체 클러스터」가 「반도체」가 돼
+        # 부동산 노트가 추론 경제 브리핑을 낡게 만드는 오탐이 난다(2026-08-16).
+        # 대신 표기가 다르면 못 잡는다 — 「종부세」와 「종합부동산세」는 남남이다.
+        # 노트를 쓸 때 topics 를 같은 말로 적는 편이 맞고, 동의어 사전은 두지 않는다.
+        topics = [t.strip() for t in
+                  str(meta.get('topics') or '').strip().strip('[]').split(',')]
+        topics = [t for t in topics if t]
         out.append({
             'path': os.path.basename(p),
             'src': str(meta.get('source') or '').strip().strip('"'),
