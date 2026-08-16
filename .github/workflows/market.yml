@@ -1,0 +1,76 @@
+name: 시장 데이터 갱신
+
+# 매 영업일 한국 장 마감(16:30 KST) 뒤에 삼성전자 시세·실적을 받아 온다.
+# 수집기(scripts/fetch_market.py)가 검증 실패로 죽으면 이 워크플로도 실패로 남고 커밋하지 않는다.
+# 휴장일엔 fetch_market.py가 "변화 없음"으로 조용히 끝나므로 diff가 없으면 커밋도 건너뛴다.
+
+on:
+  schedule:
+    - cron: "30 7 * * 1-5"  # UTC 07:30 = KST 16:30, 월~금
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: 삼성전자 시세·실적 수집
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/fetch_market.py 005930
+
+      # TODO: gen_valuation.py + 대시보드 재생성 추가
+
+      # git diff 는 추적 안 되는 새 파일을 못 본다. 새 종목을 추가하면 그 폴더가
+      # 통째로 untracked라서 첫 커밋이 조용히 누락된다. status --porcelain 으로 본다.
+      - name: 변경 여부 확인
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -uall -- insights/valuation)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # price.json/fundamentals.json/meta.json은 바뀌는 주기가 다르다(주가는 매 영업일,
+      # 실적은 발표 때만, 메타는 거의 안 바뀜). 커밋 제목을 무엇이 바뀌었는지로 고르고,
+      # 바뀐 파일명은 본문에 그대로 남긴다 — 히스토리에서 "실제로 뭐가 변했나"가 보이게.
+      - name: 커밋 메시지 구성
+        if: steps.diff.outputs.changed == 'true'
+        id: msg
+        run: |
+          FILES=$(git status --porcelain -uall -- insights/valuation | awk '{print $NF}')
+          TODAY=$(TZ=Asia/Seoul date +%F)
+
+          if echo "$FILES" | grep -q 'fundamentals\.json'; then
+            SUBJECT="chore(시장): 삼성전자 실적·컨센서스 갱신 — ${TODAY}"
+          elif echo "$FILES" | grep -q 'price\.json'; then
+            SUBJECT="chore(시장): 삼성전자 종가 갱신 — ${TODAY}"
+          else
+            SUBJECT="chore(시장): 삼성전자 시장 데이터 갱신 — ${TODAY}"
+          fi
+
+          echo "subject=${SUBJECT}" >> "$GITHUB_OUTPUT"
+          {
+            echo "body<<MSGEOF"
+            echo "바뀐 파일:"
+            echo "$FILES"
+            echo "MSGEOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: 커밋·푸시
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add insights/valuation
+          git commit -m "${{ steps.msg.outputs.subject }}" -m "${{ steps.msg.outputs.body }}"
+          git push

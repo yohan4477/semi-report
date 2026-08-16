@@ -1,0 +1,93 @@
+{
+  "ticker": "005930",
+  "fetched_at": "2026-08-16T17:33:22.635619+09:00",
+  "sources": [
+    "https://m.stock.naver.com/api/stock/005930/finance/quarter",
+    "https://m.stock.naver.com/api/stock/005930/finance/annual"
+  ],
+  "unit": "억원",
+  "quarters": [
+    {
+      "key": "202503",
+      "label": "2025.03",
+      "consensus": false,
+      "revenue_100m": 791405,
+      "operating_profit_100m": 66853,
+      "net_income_100m": 82229
+    },
+    {
+      "key": "202506",
+      "label": "2025.06",
+      "consensus": false,
+      "revenue_100m": 745663,
+      "operating_profit_100m": 46761,
+      "net_income_100m": 51164
+    },
+    {
+      "key": "202509",
+      "label": "2025.09",
+      "consensus": false,
+      "revenue_100m": 860617,
+      "operating_profit_100m": 121661,
+      "net_income_100m": 122257
+    },
+    {
+      "key": "202512",
+      "label": "2025.12",
+      "consensus": false,
+      "revenue_100m": 938374,
+      "operating_profit_100m": 200737,
+      "net_income_100m": 196417
+    },
+    {
+      "key": "202603",
+      "label": "2026.03",
+      "consensus": false,
+      "revenue_100m": 1338734,
+      "operating_profit_100m": 572328,
+      "net_income_100m": 472253
+    },
+    {
+      "key": "202606",
+      "label": "2026.06",
+      "consensus": true,
+      "revenue_100m": 1738644,
+      "operating_profit_100m": 850494,
+      "net_income_100m": 734933
+    }
+  ],
+  "annuals": [
+    {
+      "key": "202312",
+      "label": "2023.12",
+      "consensus": false,
+      "revenue_100m": 2589355,
+      "operating_profit_100m": 65670,
+      "net_income_100m": 154871
+    },
+    {
+      "key": "202412",
+      "label": "2024.12",
+      "consensus": false,
+      "revenue_100m": 3008709,
+      "operating_profit_100m": 327260,
+      "net_income_100m": 344514
+    },
+    {
+      "key": "202512",
+      "label": "2025.12",
+      "consensus": false,
+      "revenue_100m": 3336059,
+      "operating_profit_100m": 436011,
+      "net_income_100m": 452068
+    },
+    {
+      "key": "202612",
+      "label": "2026.12",
+      "consensus": true,
+      "revenue_100m": 7386252,
+      "operating_profit_100m": 3909276,
+      "net_income_100m": 3260751
+    }
+  ]
+}
