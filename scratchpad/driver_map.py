@@ -140,22 +140,6 @@ _AXIS_LOOKUP = {ax['id']: (ax['no'], ax['name']) for ax in dmd.AXES}
 _AXIS_LOOKUP['quote'] = ('—', '외부 인용')
 
 
-def _conclusions_html():
-    """축 넷을 다 읽어야 나오는 것을 맨 위에 먼저 놓는다. 아래로 스크롤하기 전에
-    무엇이 문제인지 알고 들어가야 드라이버를 누를 이유가 생긴다."""
-    cards = []
-    for c in dmd.CONCLUSIONS:
-        cards.append(
-            '<div class="dm-cc dm-cc--%s">'
-            '<div class="dm-cc-big">%s</div>'
-            '<div class="dm-cc-label">%s</div>'
-            '<p class="dm-cc-body">%s</p>'
-            '</div>' % (c.get('tone', 'plain'), c['big'], c['label'], c['body']))
-    return ('<div class="dm-concl">'
-            '<p class="dm-concl-h">결론 — 열다섯 달을 가로질러 본 것</p>'
-            '<div class="dm-cc-grid">%s</div>'
-            '</div>' % ''.join(cards))
-
 
 def _earnpath_html():
     """이익 성장 경로를 한 표에 세운다. 말로 적으면 「+25%로 3년, 그다음 10%」가
@@ -249,23 +233,6 @@ DM_CSS = '''<style>
 .dm-title{font-size:20px;font-weight:850;letter-spacing:-.02em;margin:0 0 8px;color:var(--ink)}
 .dm-lede{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0;max-width:68ch}
 .dm-lede b{color:var(--ink)}
-
-/* ── 결론 ── 축을 다 읽어야 나오는 것을 맨 위에 먼저 놓는다 */
-.dm-concl{margin:20px 0 6px}
-.dm-concl-h{font-size:12px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
-            text-transform:uppercase;margin:0 0 10px}
-.dm-cc-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
-.dm-cc{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--line);
-       border-radius:10px;padding:13px 15px;box-shadow:var(--shadow)}
-.dm-cc--warn{border-left-color:var(--warn);background:var(--warn-soft)}
-.dm-cc--ok{border-left-color:var(--accent)}
-.dm-cc-big{font-size:23px;font-weight:850;letter-spacing:-.02em;color:var(--ink);
-           font-variant-numeric:tabular-nums;line-height:1.1}
-.dm-cc--warn .dm-cc-big{color:var(--warn)}
-.dm-cc--ok .dm-cc-big{color:var(--accent)}
-.dm-cc-label{font-size:12px;font-weight:800;color:var(--ink-3);margin-top:3px}
-.dm-cc-body{font-size:13px;line-height:1.6;color:var(--ink-2);margin:8px 0 0}
-@media (max-width:640px){.dm-cc-grid{grid-template-columns:1fr}}
 
 /* ── 시장 읽기 (역산 축만) ── */
 .dm-mr{margin:12px 0 0}
@@ -695,7 +662,6 @@ def render():
     parts.append('<div class="dm-wrap">')
     parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
-    parts.append(_conclusions_html())
     parts.append(_timeline_html())
     parts.append(_earnpath_html())
     parts.append('<div class="dm-axes">%s</div>' % axes_html)
