@@ -71,14 +71,16 @@ def _axis_html(ax):
         for k, v in ax['inputs']:
             if input_driver and '시가총액' in k:
                 rows.append(
-                    '<button type="button" class="dm-inputs-row dm-inputs-row--btn" '
-                    'data-driver="%s" data-noback="1">'
-                    '<span class="dm-inputs-k">%s</span><span class="dm-inputs-v">%s</span>'
-                    '</button>' % (input_driver, k, v))
+                    '<tr><td class="dm-inputs-k">%s</td><td><button type="button" '
+                    'class="dm-inputs-btn" data-driver="%s" data-noback="1">%s</button></td></tr>'
+                    % (k, input_driver, v))
             else:
-                rows.append('<div class="dm-inputs-row"><span class="dm-inputs-k">%s</span>'
-                            '<span class="dm-inputs-v">%s</span></div>' % (k, v))
-        inputs_html = '<div class="dm-inputs"><p class="dm-inputs-label">입력</p>%s</div>' % ''.join(rows)
+                rows.append('<tr><td class="dm-inputs-k">%s</td>'
+                            '<td class="dm-inputs-v">%s</td></tr>' % (k, v))
+        inputs_html = ('<div class="dm-inputs"><p class="dm-inputs-label">입력</p>'
+                       '<div class="dm-inputs-wrap"><table class="dm-inputs-tbl">'
+                       '<thead><tr><th>입력</th><th>값</th></tr></thead>'
+                       '<tbody>%s</tbody></table></div></div>' % ''.join(rows))
 
     chain_html = ''.join('<p class="dm-chain-line">%s</p>' % _linkify(c) for c in ax['chain'])
     gchips_html = _group_chips_html(ax)
@@ -110,12 +112,12 @@ def _axis_html(ax):
     bench_html = ''
     if ax.get('benchmark'):
         rows = ''.join(
-            '<div class="dm-bench-row"><div class="dm-bench-top">'
-            '<span class="dm-bench-k">%s</span><span class="dm-bench-v">%s</span></div>'
-            '<p class="dm-bench-note">%s</p></div>' % (k, v, note)
-            for k, v, note in ax['benchmark'])
-        bench_html = ('<div class="dm-bench"><p class="dm-bench-label">이 요구가 말이 되나</p>%s</div>'
-                      % rows)
+            '<tr><td>%s</td><td class="dm-bench-v">%s</td><td class="dm-bench-note">%s</td></tr>'
+            % (k, v, note) for k, v, note in ax['benchmark'])
+        bench_html = ('<div class="dm-bench"><p class="dm-bench-label">이 요구가 말이 되나</p>'
+                      '<div class="dm-bench-wrap"><table class="dm-bench-tbl">'
+                      '<thead><tr><th>대조 대상</th><th>값</th><th>요구치와 견주면</th></tr></thead>'
+                      '<tbody>%s</tbody></table></div></div>' % rows)
 
     verdict_html = ''
     if ax['verdict']:
@@ -271,20 +273,23 @@ def _scenario_html():
     rev_html = ''
     if s.get('reverse'):
         rv = s['reverse']
-        cmps = ''.join(
-            '<div class="dm-rv-cmp dm-rv-cmp--%s"><span class="dm-rv-cmp-k">%s</span>'
-            '<span class="dm-rv-cmp-v">%s</span></div>' % (tone, k, v)
-            for k, v, tone in rv['compare'])
+        rv_rows = ['<tr class="dm-rv-row dm-rv-row--main"><td>요구 할인율</td>'
+                   '<td class="dm-rv-val">%s</td><td class="dm-rv-notecell">%s</td></tr>'
+                   % (rv['result'], rv['result_note'])]
+        for k, v, tone in rv['compare']:
+            rv_rows.append(
+                '<tr class="dm-rv-row"><td>%s</td>'
+                '<td class="dm-rv-val dm-rv-val--%s">%s</td><td></td></tr>' % (k, tone, v))
         rev_html = (
             '<div class="dm-rv">'
             '<p class="dm-rv-label">%s %s</p>'
             '<p class="dm-rv-lede">%s</p>'
             '<p class="dm-rv-formula">%s</p>'
-            '<div class="dm-rv-result"><span class="dm-rv-val">%s</span>'
-            '<span class="dm-rv-note">%s</span></div>'
-            '<div class="dm-rv-cmps">%s</div>'
+            '<div class="dm-rv-wrap"><table class="dm-rv-tbl">'
+            '<thead><tr><th>항목</th><th>값</th><th>비고</th></tr></thead>'
+            '<tbody>%s</tbody></table></div>'
             '</div>' % (rv['label'], _by_badge(rv['by']), rv['lede'], rv['formula'],
-                        rv['result'], rv['result_note'], cmps))
+                        ''.join(rv_rows)))
     return ('<div class="dm-scenario">'
             '<div class="dm-scenario-head">'
             '<p class="dm-scenario-kicker">이 시점의 평가 — 이 페이지의 결론</p>'
@@ -309,36 +314,40 @@ def _scenario_html():
 
 def _timeline_html():
     # kind: 'price'(적정가를 낸 평가) | 'ask'(역산 — 가격이 입력이라 값이 아니라
-    # 요구 문장이다). 같은 줄의 값처럼 보이면 안 되므로 마름모·점선 상자로 따로 그린다.
-    items = []
+    # 요구 문장이다). 같은 칸의 값처럼 보이면 안 되므로 행 배경을 경고톤으로 가른다.
+    # JS는 e.target.closest('.dm-tl-item')로 행을 찾으므로 클래스·data-target·
+    # tabindex·role은 그대로 <tr>에 옮긴다 — 이 넷을 건드리면 클릭 이동이 죽는다.
+    rows = []
     for date, axid, kind, v1, v2, tag, by in dmd.TIMELINE:
         no, name = _AXIS_LOOKUP.get(axid, ('—', axid))
         target = ' data-target="dm-axis-%s"' % axid if axid in _AXIS_IDS else ''
         badge_html = _by_badge(by)
+        axis_label = '%s %s' % (no, name)
         if kind == 'ask':
-            items.append(
-                '<div class="dm-tl-item dm-tl-ask"%s tabindex="0" role="button">'
-                '<span class="dm-tl-dot dm-tl-ask-mark" aria-hidden="true"></span>'
-                '<span class="dm-tl-date">%s</span>'
-                '<div class="dm-tl-ask-body">'
-                '<p class="dm-tl-ask-sent">%s <b>%s</b></p>'
-                '<span class="dm-tl-tag">%s</span> %s'
-                '</div></div>' % (target, date, v1, v2, tag, badge_html))
+            rows.append(
+                '<tr class="dm-tl-item dm-tl-ask"%s tabindex="0" role="button">'
+                '<td class="dm-tl-date">%s</td>'
+                '<td class="dm-tl-axis">%s</td>'
+                '<td class="dm-tl-val">%s <b>%s</b></td>'
+                '<td class="dm-tl-tagcell"><span class="dm-tl-tag">%s</span></td>'
+                '<td>%s</td>'
+                '</tr>' % (target, date, axis_label, v1, v2, tag, badge_html))
             continue
         cls = ' dm-tl-quote' if axid == 'quote' else ''
+        val_html = '%s %s' % (v1, v2) if v2 else v1
         tag_html = '<span class="dm-tl-tag">%s</span>' % tag if tag else ''
-        v2_html = '<span class="dm-tl-v2">%s</span>' % v2 if v2 else ''
-        items.append(
-            '<div class="dm-tl-item%s"%s tabindex="0" role="button">'
-            '<span class="dm-tl-dot" aria-hidden="true"></span>'
-            '<span class="dm-tl-date">%s</span>'
-            '<span class="dm-tl-axis">%s %s</span>'
-            '<span class="dm-tl-v1">%s</span>'
-            '%s'
-            '%s %s'
-            '</div>' % (cls, target, date, no, name, v1, v2_html, tag_html, badge_html))
-    return ('<div class="dm-timeline"><div class="dm-tl-track">%s</div></div>'
-            '<p class="dm-tl-hint">점을 누르면 그 축 카드로 이동한다</p>' % ''.join(items))
+        rows.append(
+            '<tr class="dm-tl-item%s"%s tabindex="0" role="button">'
+            '<td class="dm-tl-date">%s</td>'
+            '<td class="dm-tl-axis">%s</td>'
+            '<td class="dm-tl-val">%s</td>'
+            '<td class="dm-tl-tagcell">%s</td>'
+            '<td>%s</td>'
+            '</tr>' % (cls, target, date, axis_label, val_html, tag_html, badge_html))
+    return ('<div class="dm-timeline-wrap"><table class="dm-timeline-tbl">'
+            '<thead><tr><th>날짜</th><th>축</th><th>값</th><th>꼬리표</th><th>계산</th></tr></thead>'
+            '<tbody>%s</tbody></table></div>'
+            '<p class="dm-tl-hint">행을 누르면 그 축 카드로 이동한다</p>' % ''.join(rows))
 
 
 def _data_json():
@@ -439,17 +448,21 @@ DM_CSS = '''<style>
 .dm-rv-lede{font-size:12px;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
 .dm-rv-formula{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 10px;
                font-variant-numeric:tabular-nums}
-.dm-rv-result{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
-.dm-rv-val{font-size:24px;font-weight:850;letter-spacing:-.02em;color:var(--ink);
-           font-variant-numeric:tabular-nums;line-height:1.1}
-.dm-rv-note{font-size:12px;line-height:1.55;color:var(--ink-2);flex:1 1 16ch;min-width:16ch}
-.dm-rv-cmps{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.dm-rv-cmp{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
-           background:var(--surface);border-radius:8px;padding:6px 10px}
-.dm-rv-cmp-k{font-size:11px;color:var(--ink-3)}
-.dm-rv-cmp-v{font-size:13px;font-weight:850;font-variant-numeric:tabular-nums}
-.dm-rv-cmp--high .dm-rv-cmp-v{color:var(--warn)}
-.dm-rv-cmp--low .dm-rv-cmp-v{color:var(--good)}
+.dm-rv-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-rv-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.dm-rv-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--accent-ink);
+             text-align:left;padding:3px 12px 6px 8px;border-bottom:1px solid var(--accent);
+             white-space:nowrap;vertical-align:top}
+.dm-rv-tbl td{padding:7px 12px 7px 8px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.dm-rv-tbl tr:last-child td{border-bottom:0}
+.dm-rv-tbl td:first-child{font-weight:700;color:var(--ink-2)}
+.dm-rv-row--main td{font-weight:850;color:var(--ink);font-size:15px}
+.dm-rv-row--main td:first-child{font-size:12.5px;font-weight:800;color:var(--ink-2)}
+.dm-rv-val{font-variant-numeric:tabular-nums}
+.dm-rv-val--high{color:var(--warn);font-weight:800}
+.dm-rv-val--low{color:var(--good);font-weight:800}
+.dm-rv-notecell{color:var(--ink-3);font-size:11px;font-weight:500;line-height:1.5;
+                white-space:normal;max-width:32ch}
 
 /* ── 엘곰이 직접 만든 시나리오 ── 시점이 달라 위 표와 같은 축에 못 놓는다 */
 .dm-auth{margin:16px 0 0;border:1px dashed var(--line);border-radius:10px;padding:12px 14px}
@@ -547,33 +560,32 @@ DM_CSS = '''<style>
 .dm-ep-foot{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 시간축 ── */
-.dm-timeline{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.dm-tl-track{display:flex;gap:0;position:relative;min-width:max-content;padding:8px 2px 2px}
-/* 선은 점 한가운데를 지나야 한다. 점 위를 스치면 어긋나 보인다 */
-.dm-tl-track::before{content:"";position:absolute;left:14px;right:14px;top:24px;height:1px;background:var(--line)}
-/* 위 여백이 22px이면 점(12~21px)과 날짜가 맞붙어 1px 겹쳤다. 32px로 벌린다 */
-.dm-tl-item{position:relative;display:flex;flex-direction:column;gap:2px;width:150px;flex:0 0 auto;
-            padding:32px 10px 8px;cursor:pointer;border-radius:8px;border:0;background:transparent;
-            text-align:left;font:inherit}
-.dm-tl-item:hover{background:var(--sunk)}
+.dm-timeline-wrap{margin:18px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-timeline-tbl{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.dm-timeline-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+                    text-align:left;padding:4px 12px 6px 8px;border-bottom:1px solid var(--line);
+                    white-space:nowrap;vertical-align:top}
+.dm-timeline-tbl td{padding:8px 12px 8px 8px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.dm-timeline-tbl tr:last-child td{border-bottom:0}
+.dm-tl-item{cursor:pointer}
+.dm-tl-item:hover td{background:var(--sunk)}
 .dm-tl-item:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.dm-tl-dot{position:absolute;left:10px;top:12px;width:9px;height:9px;border-radius:50%;
-           background:var(--accent);border:2px solid var(--surface)}
-.dm-tl-quote .dm-tl-dot{background:var(--warn)}
-.dm-tl-date{font-size:10.5px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.dm-tl-axis{font-size:10.5px;color:var(--ink-3)}
-.dm-tl-v1{font-size:13px;font-weight:800;color:var(--ink);margin-top:2px}
-.dm-tl-v2{font-size:11.5px;color:var(--ink-2)}
-.dm-tl-tag{align-self:flex-start;font-size:9.5px;font-weight:800;color:var(--ink-3);
-           background:var(--sunk);border-radius:999px;padding:1px 7px;margin-top:3px}
-.dm-tl-hint{margin:2px 0 22px;font-size:11px;color:var(--ink-3)}
-/* 역산 항목 — 값이 아니라 「이 가격이 요구하는 것」이라 같은 줄의 점으로 보이면 안 된다 */
-.dm-tl-item.dm-tl-ask{width:190px}
-.dm-tl-ask-mark{border-radius:2px;background:var(--warn);transform:rotate(45deg)}
-.dm-tl-ask-body{margin-top:8px;padding:8px 9px;border:1px dashed var(--warn);
-                border-radius:8px;background:var(--warn-soft)}
-.dm-tl-ask-sent{margin:0 0 5px;font-size:11.5px;line-height:1.55;color:var(--ink-2)}
-.dm-tl-ask-sent b{color:var(--ink);font-weight:800}
+.dm-tl-date{font-weight:800;color:var(--ink-3);white-space:nowrap}
+.dm-tl-axis{color:var(--ink-2);white-space:nowrap}
+.dm-tl-val{font-weight:800;color:var(--ink)}
+.dm-tl-val b{color:var(--ink);font-weight:850}
+.dm-tl-tagcell{white-space:nowrap}
+.dm-tl-tag{display:inline-block;font-size:9.5px;font-weight:800;color:var(--ink-3);
+          background:var(--sunk);border-radius:999px;padding:2px 8px}
+.dm-tl-hint{margin:8px 0 22px;font-size:11px;color:var(--ink-3)}
+/* 인용 행에 세로 바를 달았더니 같은 경고색이 역산(배경)과 인용(바) 두 뜻으로
+   쓰여 헷갈렸다. 표가 된 뒤로는 「계산」 칸의 배지가 그 일을 하므로 바를 뗀다 */
+/* 역산 행 — 값이 아니라 「이 가격이 요구하는 것」이라 배경과 세로 바로 가른다 */
+.dm-tl-ask td{background:var(--warn-soft)}
+.dm-tl-ask td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+.dm-tl-ask:hover td{background:var(--warn-soft)}
+.dm-tl-ask .dm-tl-val{color:var(--ink-2);font-weight:700}
+.dm-tl-ask .dm-tl-val b{color:var(--ink);font-weight:850}
 
 /* ── 축 4개 ── */
 /* 넷을 한 줄에 세우면 1280px에서 칸이 300px도 안 돼 수식이 잘게 접힌다.
@@ -632,21 +644,31 @@ DM_CSS = '''<style>
 .dm-inputs{background:var(--sunk);border-radius:8px;padding:9px 10px;margin:0 0 11px}
 .dm-inputs-label{font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.08em;
                  text-transform:uppercase;margin:0 0 6px}
-.dm-inputs-row{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;padding:2px 0}
+.dm-inputs-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-inputs-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.dm-inputs-tbl th{font-size:10px;font-weight:800;color:var(--ink-3);text-align:left;
+                  padding:2px 10px 4px 8px;border-bottom:1px solid var(--line);
+                  white-space:nowrap;vertical-align:top}
+.dm-inputs-tbl td{padding:4px 10px 4px 8px;border-bottom:1px solid var(--line)}
+.dm-inputs-tbl tr:last-child td{border-bottom:0}
 .dm-inputs-k{color:var(--ink-3)}
-.dm-inputs-v{font-weight:700;color:var(--ink);text-align:right}
-.dm-inputs-row--btn{border:0;background:transparent;width:100%;text-align:left;font:inherit;
-                    cursor:pointer;border-radius:6px;padding:3px 4px}
-.dm-inputs-row--btn:hover{background:var(--surface)}
-.dm-inputs-row--btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dm-inputs-v{font-weight:700;color:var(--ink)}
+.dm-inputs-btn{border:0;background:transparent;width:100%;text-align:left;font:inherit;
+               font-weight:700;color:var(--ink);cursor:pointer;padding:2px 4px;border-radius:6px}
+.dm-inputs-btn:hover{background:var(--surface)}
+.dm-inputs-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-.dm-bench{margin:0 0 12px;padding:10px 10px 1px;border:1px dashed var(--line);border-radius:8px}
+.dm-bench{margin:0 0 12px;padding:10px 10px 8px;border:1px dashed var(--line);border-radius:8px}
 .dm-bench-label{font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin:0 0 8px}
-.dm-bench-row{margin:0 0 9px}
-.dm-bench-top{display:flex;justify-content:space-between;gap:6px;font-size:11.5px}
-.dm-bench-k{color:var(--ink-2)}
+.dm-bench-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-bench-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.dm-bench-tbl th{font-size:10px;font-weight:800;color:var(--ink-3);text-align:left;
+                 padding:2px 10px 4px 8px;border-bottom:1px solid var(--line);
+                 white-space:nowrap;vertical-align:top}
+.dm-bench-tbl td{padding:5px 10px 5px 8px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.dm-bench-tbl tr:last-child td{border-bottom:0}
 .dm-bench-v{font-weight:800;color:var(--ink);white-space:nowrap}
-.dm-bench-note{margin:2px 0 0;font-size:10.5px;color:var(--ink-3)}
+.dm-bench-note{color:var(--ink-3);white-space:normal;max-width:28ch}
 
 /* ── 모달 — 상위 드라이버 칩을 누르면 뜬다. 1단계(갈래)·2단계(세부)를 한 팝업에서 넘긴다 ── */
 /* 「맨 위로」 버튼이 z-index 9998이라 200으로는 모달 위로 뚫고 올라왔다.
