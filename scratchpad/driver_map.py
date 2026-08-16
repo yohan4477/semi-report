@@ -248,7 +248,14 @@ def _scenario_html():
         tone_cls = ' dm-sc-gap--%s' % tone if tone else ''
         tds = []
         for i, c in enumerate(r['cells']):
-            if i == 4:
+            if i == 2 and r.get('doc'):
+                # 근거만 적으면 어느 글 어느 시점 값인지 알 수 없다. 출처 칩을 붙인다.
+                d = r['doc']
+                url = dc.blob(dmd.SUM + dmd.DOCS[d]) + '#L%d' % r.get('line', 1)
+                label = '%s-%s-%s' % ('20' + d[:2], d[2:4], d[4:6])
+                tds.append('<td>%s <a class="dm-sc-src" href="%s" target="_blank" '
+                           'rel="noopener">%s ▸</a></td>' % (c, url, label))
+            elif i == 4:
                 tds.append('<td class="dm-sc-gap%s">%s</td>' % (tone_cls, c))
             else:
                 tds.append('<td>%s</td>' % c)
@@ -465,6 +472,12 @@ DM_CSS = '''<style>
 .dm-rv-hl-n{grid-column:2;font-size:11px;color:var(--ink-3);line-height:1.5}
 @media (max-width:560px){.dm-rv-hl-row{grid-template-columns:1fr}
   .dm-rv-hl-if,.dm-rv-hl-d,.dm-rv-hl-n{grid-column:1}}
+
+/* 근거 옆 출처 칩 — 어느 글 어느 시점 값인지 */
+.dm-sc-src{display:inline-block;margin-left:4px;font-size:10px;font-weight:800;
+           color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;
+           padding:1px 7px;text-decoration:none;white-space:nowrap}
+.dm-sc-src:hover{text-decoration:underline}
 
 /* ── 정방향 / 역방향 ── 방향이 반대라 한 표에 세우면 네 번째 시나리오로 읽힌다 */
 .dm-fwd-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:14px 0 4px}
