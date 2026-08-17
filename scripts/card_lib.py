@@ -265,7 +265,10 @@ def slim_html(c):
     h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
     # 접힌 상태는 지금까지와 같다 — 주제칩·제목·이 편에서 무엇을 알 수 있는지·화자와 날짜
     h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
-    h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
+    # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
+    # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
+    if c.get('topic'):
+        h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
     if c.get('gain'):
         h.append('<p class="uc-gain">%s</p>' % c['gain'])
@@ -300,7 +303,10 @@ def card_html(c):
     h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
     # 접힌 상태에서는 머리(주제칩·제목·화자/날짜)만 남고 uc-body는 감춘다
     h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
-    h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
+    # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
+    # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
+    if c.get('topic'):
+        h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
     h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
     # gain = 이 편을 열면 무엇을 알게 되는지. 접힌 상태에서 고를 수 있게 제목 바로 밑에 둔다
     if c.get('gain'):
@@ -312,24 +318,29 @@ def card_html(c):
     # 읽고 나서야 값이 나오면 그 카드는 통합본 구실을 못 한다.
     if c.get('lead_table'):
         h.append(tbl_html(c['lead_table']))
-    h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
+    if c.get('oneliner'):
+        h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
     h.append('<p class="uc-label">핵심 포인트</p>')
     h.append(points_html(c['points'], c.get('figs', ())))
     if c.get('table'):
         h.append(tbl_html(c['table']))
     for t in c.get('tables', ()):
         h.append(tbl_html(t))
-    h.append('<p class="uc-label">주요 숫자</p><div class="stat-grid">%s</div>'
-             % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
-                       for s in c['stats']))
-    h.append('<p class="uc-quote">%s</p>' % c['quote'])
+    if c.get('stats'):
+        h.append('<p class="uc-label">주요 숫자</p><div class="stat-grid">%s</div>'
+                 % ''.join('<div class="stat"><div class="s-val">%s</div><div class="s-label">%s</div></div>' % s
+                           for s in c['stats']))
+    if c.get('quote'):
+        h.append('<p class="uc-quote">%s</p>' % c['quote'])
     if c.get('clash'):
         h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
                  % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
-    h.append('<div class="side-note">%s</div>' % c['note'])
-    h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
-             % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
-                       % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
+    if c.get('note'):
+        h.append('<div class="side-note">%s</div>' % c['note'])
+    if c.get('links'):
+        h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
+                 % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
+                           % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
     h.append('</div></div>')
     return ''.join(h)
 
