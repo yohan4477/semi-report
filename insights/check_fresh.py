@@ -64,6 +64,18 @@ def load_notes():
     return out
 
 
+HUB_MIN = 10   # 노트 이만큼에 달린 주제어는 허브로 본다
+
+
+def hub_topics(notes):
+    """여러 갈래에 두루 붙어 신호가 안 되는 주제어."""
+    cnt = {}
+    for n in notes:
+        for t in n['topics']:
+            cnt[t] = cnt.get(t, 0) + 1
+    return set(t for t, c in cnt.items() if c >= HUB_MIN)
+
+
 def check(path, notes, today):
     where = os.path.basename(path)
     meta, _ = nl.parse_front(io.open(path, encoding='utf-8').read())
@@ -73,7 +85,12 @@ def check(path, notes, today):
     # checked: 에 이유와 함께 적어 두면 다음 회차에 같은 문서를 다시 뒤지지 않는다.
     seen = set(re.findall(r'file:\s*"([^"]+)"', meta.get('_head', '')))
 
-    mine = [n for n in notes if n['src'] in used]
+    # 시점을 재는 기준은 「인용한 것」이다. checked: 는 읽고 안 쓰기로 한 문서라
+    # 여기 넣으면 안 쓴 문서가 글을 더 새것으로 보이게 만들고, as_of 가 그 뒤로
+    # 밀려 F3 가 엉뚱하게 뜬다(2026-08-17).
+    cited = set(re.findall(r'file:\s*"([^"]+)"',
+                           meta.get('_head', '').split('\nchecked:')[0]))
+    mine = [n for n in notes if n['src'] in (cited or used)]
     if not mine:
         add('WARN', where, 'F1', '인용한 원문에 대응하는 노트가 없다 — 시점을 잴 수 없다')
         return
@@ -84,9 +101,12 @@ def check(path, notes, today):
         topics |= n['topics']
 
     # F1 — 이 글이 선 자리보다 뒤에 나온 같은 주제 문서. 있으면 결론이 바뀌었을 수 있다.
+    # 「데이터센터」처럼 노트 열 장 넘게 달린 말은 허브라 겹쳐도 신호가 아니다.
+    # 그 한 단어로만 걸리면 냉각 브리핑이 용량시장 문서 때문에 FAIL 났다(2026-08-17).
+    hubs = hub_topics(notes)
     later = [n for n in notes
              if n['date'] > newest and n['src'] not in used and n['src'] not in seen
-             and (n['topics'] & topics)]
+             and ((n['topics'] & topics) - hubs)]
     if later:
         later.sort(key=lambda n: n['date'], reverse=True)
         names = ', '.join('%s(%s)' % (n['path'][:24], n['date']) for n in later[:3])
