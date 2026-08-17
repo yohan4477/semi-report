@@ -82,7 +82,12 @@ def period(meta, src):
     글을 안 고치고 두면 그대로 남는다. 그래서 실제로 인용한 원문의 발행일 범위를 쓴다.
     검사기는 insights/check_fresh.py 가 따로 본다.
     """
-    ds = sorted(re.findall(r'\[(\d{6})\]', ' '.join(d.get('base', '') for d in src)))
+    # checked: 는 "읽고 안 쓰기로 했다"는 표시다. 근거 범위에 넣으면 안 쓴 문서가
+    # 카드를 더 새것으로 보이게 만든다(2026-08-17 확인). 인용한 것만 센다.
+    cited = set(re.findall(r'file:\s*"([^"]+)"',
+                           meta.get('_head', '').split('\nchecked:')[0]))
+    used = [d for d in src if d.get('file') in cited] or src
+    ds = sorted(re.findall(r'\[(\d{6})\]', ' '.join(d.get('base', '') for d in used)))
     if not ds:
         return '<span class="asof">as_of %s</span>' % nl.esc(meta.get('as_of', ''))
     fmt = lambda s: '20%s.%s' % (s[:2], s[2:4])
