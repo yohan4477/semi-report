@@ -14,6 +14,7 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import health_assets as ha
 
 OUT = os.path.join(dc.ROOT, '대시보드', '건강 대시보드.html')
 blob = dc.blob
@@ -248,49 +249,37 @@ FIG_TORSO = '''<svg viewBox="0 0 640 400" role="img" aria-label="복부 관상�
   <text class="t-bad" x="370" y="344">동맥 벽에 쌓인다</text>
 </svg>'''
 
-# ── 그림 3. 3대 영양소가 가는 곳 — 소화관 해부와 세 갈래 ────────────────────
-FIG_FUEL = '''<svg viewBox="0 0 640 300" role="img" aria-label="위·소장·간을 지난 3대 영양소가 갈라지는 경로">
-  <text class="t-lab" x="18" y="22">소화관 — 들어온 것이 지나는 길</text>
-  <text class="t-lab" x="330" y="22">그다음 세 갈래</text>
+# ── 그림 6. 소화관과 세 갈래 ────────────────────────────────────────────────
+# 왼쪽 해부도는 손으로 그리지 않았다. 위키미디어 공용의 퍼블릭도메인 도해를 가져와
+# 라벨을 떼고 색만 우리 붓으로 갈아끼웠다(scratchpad/health_assets.py 참고).
+FIG_FUEL = '''<svg viewBox="0 0 640 344" role="img" aria-label="위와 창자를 지난 3대 영양소가 갈라지는 경로">
+  <text class="t-lab" x="18" y="22">소화관 — 위에서 대장까지</text>
+  <text class="t-lab" x="336" y="22">그다음 세 갈래</text>
 
-  <!-- 식도·위·소장 -->
-  <path class="vessel" d="M92 36 L 92 74" stroke="var(--fig-line,#9a8078)"/>
-  <text class="t-sm" x="100" y="52">식도</text>
-  <path class="organ" d="M92 74 C 126 70, 152 92, 148 122 C 144 152, 116 166, 96 154
-                         C 78 142, 76 108, 92 74 Z"/>
-  <text class="t-lab" x="112" y="120">위</text>
-  <path class="organ2" d="M104 160 C 148 158, 176 178, 172 200 C 168 222, 128 226, 106 216
-                          C 84 206, 78 178, 104 160 Z"/>
-  <path class="lead-line" d="M100 178 C 130 170, 156 184, 158 200"/>
-  <path class="lead-line" d="M104 196 C 128 190, 150 200, 154 212"/>
-  <text class="t-lab" x="122" y="248">소장</text>
-  <!-- 간 — 흡수한 것이 먼저 들르는 공장 -->
-  <path class="organ" d="M186 108 C 216 96, 258 100, 282 114 C 286 132, 272 150, 246 154
-                         C 214 158, 190 144, 186 126 Z"/>
-  <text class="t-lab" x="212" y="132">간</text>
-  <text class="t-sm" x="186" y="176">영양분을 만들어</text>
-  <text class="t-sm" x="186" y="190">몸에 대는 공장</text>
-  <path class="flow" d="M158 176 C 180 168, 194 160, 210 156"/>
+  <g transform="translate(24,32) scale(0.42)">%s</g>
 
-  <!-- 세 갈래 -->
-  <path class="flow" d="M296 128 C 330 108, 348 92, 366 84"/>
-  <path class="flow" d="M296 136 C 336 142, 350 146, 366 150"/>
-  <path class="flow" d="M296 146 C 332 178, 348 202, 366 216"/>
+  <path class="flow" d="M286 92 L 328 88"/>
+  <path class="flow" d="M286 160 L 328 158"/>
+  <path class="flow" d="M286 216 L 328 226"/>
 
-  <text class="t-lab" x="376" y="76">단백질</text>
-  <text class="t-sm" x="376" y="94">몸을 이루고 기능하는 성분으로 간다.</text>
-  <text class="t-sm" x="376" y="108">에너지로 바꾸는 걸 몸이 싫어한다.</text>
-  <text class="t-lab" x="376" y="146">탄수화물 · 지방 — 그날 쓸 만큼</text>
-  <text class="t-sm" x="376" y="164">근육이 태운다. 갑자기 뛸 때는 포도당,</text>
-  <text class="t-sm" x="376" y="178">평상시에는 지방이 연료다.</text>
-  <text class="t-bad" x="376" y="212">남은 만큼 — 반드시 지방으로</text>
-  <text class="t-sm" x="376" y="230">탄수화물이 남아도 지방, 지방이 남아도 지방.</text>
-  <text class="t-sm" x="376" y="244">자동차는 배부르면 안 받지만 몸은 받는다.</text>
-  <circle class="fat" cx="392" cy="266" r="10"/>
-  <circle class="fat" cx="416" cy="270" r="12"/>
-  <circle class="fat" cx="442" cy="264" r="9"/>
-  <text class="t-sm" x="460" y="272">지방 세포로 쌓인다</text>
-</svg>'''
+  <text class="t-lab" x="336" y="76">단백질</text>
+  <text class="t-sm" x="336" y="94">몸을 이루고 기능하는 성분으로 간다.</text>
+  <text class="t-sm" x="336" y="108">에너지로 바꾸는 걸 몸이 싫어한다.</text>
+
+  <text class="t-lab" x="336" y="146">탄수화물과 지방, 그날 쓸 만큼</text>
+  <text class="t-sm" x="336" y="164">근육이 태운다. 갑자기 뛸 때는 포도당,</text>
+  <text class="t-sm" x="336" y="178">평상시에는 지방이 연료다.</text>
+
+  <text class="t-bad" x="336" y="216">남은 만큼은 반드시 지방으로</text>
+  <text class="t-sm" x="336" y="234">탄수화물이 남아도 지방,</text>
+  <text class="t-sm" x="336" y="248">지방이 남아도 지방이다.</text>
+  <circle class="fat" cx="348" cy="278" r="10"/>
+  <circle class="fat" cx="372" cy="282" r="12"/>
+  <circle class="fat" cx="398" cy="276" r="9"/>
+  <text class="t-sm" x="416" y="284">지방 세포로 쌓인다</text>
+
+  <text class="t-sm" x="18" y="330">왼쪽 도해는 위키미디어 공용의 퍼블릭도메인 그림을 다시 칠한 것이다.</text>
+</svg>''' % ha.GUT
 
 # ── 그림 4. 무엇을 어디서 재나 — 전신 계측 지도 ─────────────────────────────
 FIG_MEASURE = '''<svg viewBox="0 0 640 320" role="img" aria-label="혈압·허리둘레·혈액검사를 재는 위치를 표시한 전신 그림">

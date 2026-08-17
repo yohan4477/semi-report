@@ -88,6 +88,8 @@ py -3.13 scratchpad/ytsub.py <영상ID>      # scratchpad/yt_subs/<ID>.txt 로 �
 ### 외부 애셋을 쓸 때
 
 - **CC0·퍼블릭도메인 우선.** CC BY는 카드 각주에 출처와 라이선스를 적는다. **CC BY-SA는 쓰지 않는다** — 페이지 라이선스에 영향을 줄 소지가 있다
+- 받아온 SVG는 `scratchpad/health_assets.py`에 출처와 변경 내역을 적어 두고 상수로 보관한다. 생성기에서 `<g transform="translate(x,y) scale(s)">`로 앉힌다
+- **색은 fill만 바꾸면 안 된다.** 트레이싱된 도해는 윤곽이 `stroke="#010101"` 같은 검정으로 박혀 있어, 선까지 `--fig-line`으로 갈지 않으면 다크모드에서 배경에 묻힌다. 라벨(`<text>`)은 떼고 우리 말로 다시 단다
 - Servier Medical Art는 CC BY 4.0이지만 **SVG를 제공하지 않는다**(PPTX·PNG뿐)
 - bioicons는 라이선스별로 폴더가 갈려 있어 고르기 쉽지만 장기 종류가 적다. 정밀 해부도(DBCLS)는 500KB를 넘어 인라인에 못 쓴다
 - Wikimedia는 연속 요청에 429를 준다. 검색과 다운로드를 몰아 치지 말고 필요한 파일만 받는다
@@ -98,12 +100,25 @@ py -3.13 scratchpad/ytsub.py <영상ID>      # scratchpad/yt_subs/<ID>.txt 로 �
 PYTHONIOENCODING=utf-8 py -3.13 scratchpad/gen_health_dashboard.py
 ```
 
-그림을 건드렸으면 브라우저에서 넘침을 확인한다. 로컬 서버를 띄우고 다음을 실행해 `overflow`가 빈 배열인지 본다.
+그림을 건드렸으면 브라우저에서 넘침을 확인한다. 로컬 서버를 띄우고 페이지를 연 뒤 아래를 실행해 `ok`가 전부 true인지 본다.
+
+**함정 둘을 먼저 통과해야 검사가 성립한다.**
+
+1. 첫 화면은 「주제 고르기」이고 그때 모든 `section`이 `hidden`이다. 숨은 요소의 `getBBox()`는 0을 돌려주므로, 타일을 누르지 않고 재면 **넘쳐도 통과로 나온다.** 2026-08-17에 이걸로 헛검증을 했다.
+2. `transform`이 걸린 그룹의 자식은 로컬 좌표를 돌려준다. 자식 하나하나를 바깥 viewBox와 비교하면 멀쩡한 그림이 넘친 것으로 잡힌다. **루트 `<svg>`의 bbox 하나만 본다** — 거기에 자식 변환이 이미 반영돼 있다.
 
 ```js
-[...document.querySelectorAll('.uc-fig svg')].map((s,i)=>{const V=s.getAttribute('viewBox').split(' ').map(Number);
- return [...s.querySelectorAll('text,rect,path,circle,ellipse')].map(el=>{let b;try{b=el.getBBox()}catch(e){return null}
-  return (b.x<-2||b.x+b.width>V[2]+2||b.y<-2||b.y+b.height>V[3]+2)?{fig:i+1,t:el.textContent.slice(0,18)}:null}).filter(Boolean)}).flat()
+// 1) 주제 타일을 눌러 본문을 띄우고 2) 카드를 모두 펴고 3) 루트 bbox로 잰다
+document.querySelector('.sp-btn')?.click();
+await new Promise(r=>setTimeout(r,250));
+document.querySelector('.sp-list button')?.click();
+await new Promise(r=>setTimeout(r,250));
+document.querySelectorAll('.ucard:not(.is-open) .uc-head').forEach(h=>h.click());
+[...document.querySelectorAll('.uc-fig svg')].map((s,i)=>{
+  const V=s.getAttribute('viewBox').split(' ').map(Number), b=s.getBBox();
+  return {fig:i+1, ok:(b.x>=-2 && b.y>=-2 && b.x+b.width<=V[2]+2 && b.y+b.height<=V[3]+2),
+          w:Math.round(b.width), h:Math.round(b.height), vb:V.slice(2)};
+});
 ```
 
 그다음 검사기 다섯을 전부 돌린다. FAIL 0이어야 푸시한다.
