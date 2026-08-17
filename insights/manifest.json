@@ -670,6 +670,17 @@
    "hash": "ddd256cf8a10"
   },
   {
+   "id": "semi:power:PJM-모델링-오류로-날린-120억-달러-그리고-다시-반복하려-한다",
+   "corpus": "semianalysis",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power"
+   ],
+   "date": "2026-08-16",
+   "path": "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md",
+   "hash": "42c539c7152d"
+  },
+  {
    "id": "semi:power:기가와트급-AI-학습-부하-변동-전력망-정전을-부를-수-있는가",
    "corpus": "semianalysis",
    "folder": "power",
