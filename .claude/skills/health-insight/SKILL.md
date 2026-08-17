@@ -108,18 +108,20 @@ PYTHONIOENCODING=utf-8 py -3.13 scratchpad/gen_health_dashboard.py
 2. `transform`이 걸린 그룹의 자식은 로컬 좌표를 돌려준다. 자식 하나하나를 바깥 viewBox와 비교하면 멀쩡한 그림이 넘친 것으로 잡힌다. **루트 `<svg>`의 bbox 하나만 본다** — 거기에 자식 변환이 이미 반영돼 있다.
 
 ```js
-// 1) 주제 타일을 눌러 본문을 띄우고 2) 카드를 모두 펴고 3) 루트 bbox로 잰다
-document.querySelector('.sp-btn')?.click();
-await new Promise(r=>setTimeout(r,250));
-document.querySelector('.sp-list button')?.click();
-await new Promise(r=>setTimeout(r,250));
+// 1) 「전체 보기」 타일을 눌러 본문을 띄우고 2) 카드를 모두 펴고 3) 루트 bbox로 잰다
+document.querySelector('.stile.is-all, .sec-pick button').click();
+await new Promise(r=>setTimeout(r,300));
 document.querySelectorAll('.ucard:not(.is-open) .uc-head').forEach(h=>h.click());
+// 숨은 채로 재면 전부 0이 나와 조용히 통과한다. 그래서 여기서 먼저 터뜨린다.
+if([...document.querySelectorAll('section[id]')].some(s=>s.hidden)) throw new Error('섹션이 숨어 있다 — 측정 무효');
 [...document.querySelectorAll('.uc-fig svg')].map((s,i)=>{
   const V=s.getAttribute('viewBox').split(' ').map(Number), b=s.getBBox();
   return {fig:i+1, ok:(b.x>=-2 && b.y>=-2 && b.x+b.width<=V[2]+2 && b.y+b.height<=V[3]+2),
           w:Math.round(b.width), h:Math.round(b.height), vb:V.slice(2)};
 });
 ```
+
+타일 선택자(`.stile`)는 공용 부품(`dash_common`)이 바뀌면 같이 바뀐다. 2026-08-17에도 한 번 바뀌어 스니펫이 헛돌았다. **`secHidden`이 하나라도 true면 그 측정은 버린다.**
 
 그다음 검사기 다섯을 전부 돌린다. FAIL 0이어야 푸시한다.
 
