@@ -433,5 +433,139 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 75% 완료*
-*업데이트: 7\~9장(PD 분리형 엔진·vLLM 결합, 데이터플로우 칩과의 비교(하드웨어 vs 소프트웨어), PD 비율 유연성이라는 구조적 강점) 작성 완료*
+## 10. TileRT 개발이 느린 이유 - 정적 컴파일의 대가
+
+**📌 핵심:**
+- GLM5.1은 이미 한 세대 뒤처졌고 InferenceX 메인라인에서도 이미 지원 종료(deprecated)됐다 — TileRT의 모델 카탈로그는 현재 GLM-5/5.1과 DeepSeek-V3.2뿐으로 매우 좁다. MiMo-V2.5-Pro-UltraSpeed는 공동설계 파트너십의 결과물이라 아직 오픈소스로 공개되지 않았다
+- TileRT는 ASIC(주문형 반도체) 업체들의 가장 큰 약점을 그대로 물려받는다 — 정적 사전(AoT) 컴파일이라는 특성상 모델 카탈로그가 작고, 의존성이 특정 버전에 고정되며, 새 아키텍처마다 실제 엔지니어링 노력이 들어간다. 완전히 범용적인 경로는 없다 — 지속형 엔진 커널은 모델을 미리 정적으로 통째로 펼쳐 하나의 상주 프로그램으로 만든다는 뜻이라, 타일 형태·파이프라인 깊이·레지스터/공유메모리/L2 사이 버퍼 배치·워프 그룹이 적재·연산·통신을 어떻게 나눌지·집단통신을 어디서 타일 흐름에 합칠지·어떤 GPU가 GLM-5.1의 전담 희소 인덱서 같은 특화 역할을 맡을지까지 전부 미리 결정해야 한다. 어텐션 메커니즘이나 라우팅 방식을 바꾸면 이 스케줄 상당 부분이 무효화된다 — 데이터플로우 칩도 같은 문제를 겪는다. 좋은 컴파일러를 만드는 건 원래 악명 높게 어렵다
+- 이 부담을 줄이려는 작업도 진행 중이다 — TileOPs는 연산자(operator) 하나하나를 기계가 읽을 수 있는 매니페스트(시그니처·워크로드·루프라인 모델 명세)로 선언하게 해, 이 매니페스트가 코드 생성·테스트·벤치마킹을 이전 구현이 아니라 하드웨어 한계 자체를 기준으로 돌아가게 만든다
+- 결론: AI 코딩 에이전트는 이미 알려진 템플릿 안에서의 튜닝은 가속하지만, 새로운 방식의 변환은 여전히 전문가의 판단이 필요하다 — 단일한 지속형 커널 구조는 기존의 커널별 프로파일러 타임라인의 유용성도 떨어뜨려, 자동화된 피드백 루프를 만들기가 더 어려워진다
+
+---
+
+```mermaid
+flowchart TD
+    Catalog["TileRT 모델 카탈로그"] --> GLM["GLM-5/5.1<br/>이미 InferenceX 지원종료"]
+    Catalog --> DS["DeepSeek-V3.2"]
+    Catalog --> MiMo2["MiMo-V2.5-Pro-UltraSpeed<br/>공동설계, 미공개"]
+
+    style Catalog fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ASICWeak["ASIC식 약점 상속"] --> Static["정적 AoT 컴파일"]
+    Static --> Small["작은 모델 카탈로그"]
+    Static --> Pinned["버전 고정 의존성"]
+    Static --> PerModel["새 아키텍처마다<br/>실제 엔지니어링 필요"]
+
+    style Static fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Invalidate["아키텍처 변경 시"] --> Change["어텐션·라우팅 방식 변경"]
+    Change --> Invalid["기존 스케줄<br/>상당 부분 무효화"]
+    Invalid --> Rebuild["타일형태·파이프라인·버퍼<br/>배치를 다시 결정"]
+
+    style Invalid fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TileOPs["TileOPs 완화 작업"] --> Manifest["연산자별 기계판독<br/>매니페스트(시그니처·<br/>워크로드·루프라인)"]
+    Manifest --> AutoGen["코드생성·테스트·벤치마킹<br/>하드웨어 한계 기준 자동화"]
+
+    style TileOPs fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+---
+
+## 11. 다음 단계 - AgentX 벤치마크와 배치 크기 확장
+
+**📌 핵심:**
+- InferenceX는 TileRT 벤치마크를 지금의 단일턴 8k/1k 시나리오에서 새로운 에이전틱 코딩 벤치마크 AgentX로 확장하는 작업을 진행 중이다 — 실제 Claude Code·Codex 사용 흔적을 재생해 긴 문맥·멀티턴 요청·현실적인 서브에이전트 활동·동적 도구 사용 지연을 반영한다. 입력 길이 중앙값은 14만 토큰, 이론상 캐시 적중률 루프라인(상한)은 99.2%에 달한다
+- 이 워크로드는 디코드 속도뿐 아니라 TileRT<>vLLM 시스템 전체를 시험한다 — 증분 KV 전송, 프리픽스 캐시 재사용, 캐시 보존·오프로딩, 라우팅, 스케줄링까지 전부 포함
+- 핵심 질문은 TileRT가 턴과 턴 사이에 새로 추가된 문맥만 전송하면서도 초고속 상호작용성 우위를 유지할 수 있는가다
+- 결론: 두 번째 단계는 배치 크기 1을 넘어서는 것 — 배치 크기 2·4·8에서도 TileRT를 벤치마크해, 처리량-상호작용성 파레토 프론티어(어느 쪽도 희생하지 않고는 더 나아질 수 없는 최적점들의 곡선)를 그리고 지속형 엔진 커널의 지연시간 우위가 어느 지점에서 꺾이기 시작하는지 찾아낸다는 목표다
+
+---
+
+```mermaid
+flowchart TD
+    AgentX["새 벤치마크 AgentX"] --> Trace["Claude Code·Codex<br/>실사용 흔적 재생"]
+    AgentX --> Long["긴 문맥·멀티턴·<br/>서브에이전트·도구지연"]
+    AgentX --> Stats["입력 길이 중앙값 14만 토큰<br/>캐시적중률 루프라인 99.2%"]
+
+    style AgentX fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    FullTest["시스템 전체 시험 항목"] --> KVInc["증분 KV 전송"]
+    FullTest --> Prefix2["프리픽스 캐시 재사용"]
+    FullTest --> Route2["캐시 보존·오프로딩·<br/>라우팅·스케줄링"]
+
+    style FullTest fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    NextBatch["배치 크기 확장 계획"] --> B248["배치 크기 2·4·8<br/>벤치마크"]
+    B248 --> Pareto2["처리량-상호작용성<br/>파레토 프론티어 작성"]
+    Pareto2 --> Flatten["지속형 엔진 커널<br/>우위가 꺾이는 지점 탐색"]
+
+    style Pareto2 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+---
+
+## 12. 성능당 TCO 분석 - 백만 토큰당 비용
+
+**📌 핵심:**
+- TileRT의 초고속 상호작용성이 낸 비용을 정상적인 저상호작용성 디코드와 비교해 백만 출력 토큰당 비용으로 심층 분석했다 — TileRT는 같은 비용(iso-cost) 기준으로 전통적 엔진 대비 최대 1.9배 빠른 상호작용성을 낸다. 각 칩 SKU의 설비투자·운영비 기준선은 SemiAnalysis AI TCO 모델을 썼다
+- 비용 비교는 지연시간 목표를 만족한 뒤에야 의미가 있다 — 초당 사용자당 339토큰이라는 목표에서는, 측정된 GLM-5.1 GPU 결과 중 이 목표를 만족하는 건 TileRT뿐이다. 가장 빠른 전통 엔진 지점은 초당 176토큰, 가장 빠른 전통 분리형 FP8 지점(GB300 SGLang+MTP)조차 초당 108.0토큰에 그친다. 8k/1k 기준 TileRT는 초당 사용자당 340토큰을 내면서 B200 한 대당 초당 35.4개의 출력 토큰을 만들어, 백만 출력 토큰당 13.56달러가 든다
+- 상호작용성이 가장 높은 FP4 분리형 디코드 구성은 GB200(FP4+MTP, 동시요청 5)로 GPU당 총 처리량 약 286토큰을 내면서 사용자당 약 176토큰을 유지한다 — GB200 시간당 1.86달러를 적용하면 백만 출력 토큰당 13.4달러다. 즉 TileRT는 비용이 겨우 1% 더 들면서 상호작용성은 1.9배 높다 — 이는 앤트로픽 Claude Code 빠른 모드(상호작용성 최대 2.5배지만 토큰당 가격도 2배)보다 훨씬 남는 장사다
+- 결론: 같은 정밀도(FP8)로 비교하면 격차가 더 뚜렷하다 — 가장 빠른 전통 FP8 지점은 GB300(FP8+MTP) 초당 108토큰으로 백만 출력 토큰당 35달러가 드는데, TileRT는 초당 340토큰을 내면서 백만 토큰당 13.56달러 — 토큰당 비용은 61% 더 싸면서 상호작용성은 3.1배 높다
+
+---
+
+```mermaid
+flowchart TD
+    Feasible["상호작용성 339 tok/s/user<br/>목표 충족 여부"] --> OnlyTileRT["충족: TileRT뿐"]
+    Feasible --> BestConv["최고 전통엔진: 176"]
+    Feasible --> BestDisagg["최고 분리형FP8<br/>GB300+MTP: 108.0"]
+
+    style OnlyTileRT fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TileRTCost["TileRT 8k/1k<br/>340 tok/s/user"] --> PerB200["B200 1대당<br/>초당 35.4 출력토큰"]
+    PerB200 --> Cost1["백만 출력토큰당<br/>13.56달러"]
+
+    style Cost1 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    FP4Compare["FP4 최고 상호작용성<br/>GB200+MTP 동시요청5"] --> FP4Val["286 tok/s/GPU<br/>176 tok/s/user<br/>13.4달러/백만토큰"]
+    FP4Val --> VsTileRT["TileRT: 비용 1%↑<br/>상호작용성 1.9배"]
+    VsTileRT --> ClaudeCmp["앤트로픽 Claude Code<br/>빠른모드보다 유리<br/>2.5배 속도, 가격은 2배"]
+
+    style VsTileRT fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    FP8Compare["같은 정밀도(FP8) 비교"] --> GB300FP8["GB300+MTP:<br/>108 tok/s/user<br/>35달러/백만토큰"]
+    FP8Compare --> TileRTFP8b["TileRT:<br/>340 tok/s/user<br/>13.56달러/백만토큰"]
+    TileRTFP8b --> Result["61% 저렴 +<br/>상호작용성 3.1배"]
+
+    style Result fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 전체 12개 섹션(배경·GPU 지연시간 격차, InferenceX 플랫폼·처리량 대 상호작용성, 시나리오별 벤치마크 결과, 처리량 트레이드오프·배치 크기 1, 지속형 엔진 커널, 타일·워프·GPU 특화, PD 분리형 엔진·vLLM 결합, 데이터플로우 칩 비교(하드웨어 vs 소프트웨어), PD 비율 유연성, 정적 컴파일의 대가, AgentX·배치 크기 확장 계획, 성능당 TCO 분석) 작성 완료*

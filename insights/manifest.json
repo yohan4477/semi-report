@@ -510,6 +510,17 @@
    "hash": "fc837cd29e9f"
   },
   {
+   "id": "semi:compute:엔비디아-GPU의-초고속-상호작용성-TileRT-InferenceX",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute"
+   ],
+   "date": "2026-08-10",
+   "path": "content/newsletter/ai_infra/compute/[260810] 엔비디아 GPU의 초고속 상호작용성 - TileRT InferenceX.md",
+   "hash": "490b60431ae6"
+  },
+  {
    "id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
    "corpus": "semianalysis",
    "folder": "construction",

@@ -49,7 +49,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 25 |
+| ai-infra/compute | 26 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 11 |
 | ai-infra/business | 17 |
@@ -95,6 +95,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 <!-- 2026-08-17: [260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트 신규 변환 완료 — ai-infra/networking 10→11. 이전까지 networking은 전부 compute 문서의 이중 태그였는데, 이 문서는 처음으로 networking이 유일·주 카테고리인 문서(content/newsletter/ai_infra/networking/ 폴더 신설) — Scale-out CPO TCO·전력 분석(3층망 총비용 3%↓·2층망 7%↓ 등 실측), Scale-up이 CPO의 킬러 애플리케이션인 이유(구리 2m 도달거리·NVLink 대역폭 9배 격차), 메타 ECOC 2025 신뢰성 실측(MTBF 260만 시간), DSP→LPO→CPO 진화와 SerDes/Wide I/O 한계, TSMC COUPE 패키징·FAU·레이저·변조기(MZM·MRM·EAM) 부품 기술, 엔비디아(Quantum-X·Spectrum-X Photonics)·브로드컴(Humboldt·Bailly·Davisson)·인텔·미디어텍 제품 로드맵, CPO 전문기업 7곳(Ayar Labs·Nubis·Celestial AI·Lightmatter·Xscape·Ranovus·Scintil)과 엔비디아 CPO 공급망 전체 지도(레이저·FAU·셔플박스·OSAT·테스트 장비 명명 공급사)까지 전체 24개 섹션 완료. networking 전용 통합 리포트가 아직 없어 리포트 갱신은 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용) -->
 
 <!-- 2026-08-17: [260816] $12B of US Ratepayers' Money Wasted on a Modeling Mistake and PJM Wants to Do It Again 신규 변환 완료 — ai-infra/power 10→11. SemiAnalysis 에너지 모델팀이 6개월간 PJM의 핵심 시스템 모델(예비력연구, Reserve Requirement Study)을 역설계해, PJM이 기존 발전설비 신뢰용량을 약 4GW 과소평가(콜드에어 업리프트·방한 투자 미반영)하고 있음을 밝히고 그 결과 2025/26·2026/27 두 경매에서만 116억 달러(2025~2027년 누적 약 120억 달러)가 낭비됐다고 계산, 그런데도 PJM이 같은 모델링 오류를 고치지 않은 채 9월 30일~10월 21일 카운터파티 없는 긴급경매(Reliability Backstop Auction)를 또 실시하며 목표 6.8GW의 56%(3.8GW)가 모델만 고치면 사라지는 유령 부족분이라는 점, PJM의 거버넌스 마비(3분의 2 다수결·상호 거부권)로 2023년부터 반복 제안된 계절형 인증 개혁이 매번 부결된 경위까지 전체 12개 섹션 완료. 앞선 [260303] 데이터센터가 미국 가정의 전기요금을 올리는가의 후속·정량화 편으로, 전력 통합 리포트 §1.1(BRA 경매·용량시장 구조) 갱신 예정 -->
+
+<!-- 2026-08-17: [260810] 엔비디아 GPU의 초고속 상호작용성(TileRT InferenceX) 신규 변환 완료 — ai-infra/compute 25→26. GPU HBM 대역폭 루프라인(64TB/s)과 실제 상호작용성 사이 격차가 대역폭이 아니라 커널 실행 지연시간에서 온다는 진단, TileRT의 지속형 엔진 커널(모델 전체를 정적 컴파일해 GPU에 상주시키는 방식)이 CUDA 그래프와 다른 이유, 타일·워프·GPU 단위 특화(GLM-5.1 희소 인덱서 전담 GPU 사례), vLLM과의 PD 분리형 결합(MultiConnector API·Mooncake/NIXL), InferenceX 실측(8k/1k 340 tok/s/user·GB300 NVL72 대비 1.9배, 1k/1k 494.2 tok/s/user), 세레브라스·Groq·SambaNova 데이터플로우 칩과의 비교(하드웨어 데이터플로우 vs 소프트웨어 데이터플로우, PD 비율 유동성이라는 GPU 함대의 구조적 강점), 정적 AoT 컴파일이 낳는 좁은 모델 카탈로그·TileOPs 완화 노력, AgentX 에이전틱 벤치마크·배치 크기 확장 계획, 백만 출력 토큰당 비용 분석(FP8 동일정밀도 비교 61% 저렴+3.1배 빠름)까지 전체 12개 섹션 완료. InferenceX v2·InferenceMAX와 자매 문서로 상호작용성·처리량·분리형 서빙 용어를 동일하게 사용, 컴퓨트 통합 리포트 문서별 요약에 추가 -->
 
 ## 버전 히스토리
 
