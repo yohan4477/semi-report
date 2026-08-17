@@ -294,5 +294,144 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 50% 완료*
-*업데이트: 4\~6장(처리량 트레이드오프·배치 크기 1, 지속형 엔진 커널, 타일·워프·GPU 특화) 작성 완료*
+## 7. PD 분리형 엔진 - vLLM과 TileRT의 결합
+
+**📌 핵심:**
+- LLM 추론은 두 단계로 나뉜다 — 프리필(입력 프롬프트를 병렬 처리, 연산 집약적, 처리량이 핵심 지표)과 디코드(토큰을 순차 생성하며 계속 커지는 KV캐시(과거 토큰의 연산 결과를 저장해두는 메모리)에 접근, 메모리 대역폭 집약적, 토큰당 지연시간에 민감)
+- TileRT는 vLLM을 대체하지 않는다 — vLLM은 여전히 고처리량 프리필 엔진이자 스케줄러·청크 단위 프리필·프리픽스 캐싱(반복되는 입력 앞부분을 재사용)·OpenAI 호환 API·운영 툴링을 포함한 서빙 계층 전체를 담당하고, 지연시간에 민감한 디코드 트래픽만 TileRT로 넘어간다 — TileRT가 승객 1명짜리 로켓이라면 vLLM은 비행기·자동차·버스·기차 역할을 그대로 유지한다
+- 프리필과 디코드를 분리하면(PD 분리) 공유 vLLM 프리필 풀 하나가 서로 다른 두 디코드 풀에 동시에 먹이를 줄 수 있다 — 지연시간에 민감한 요청은 TileRT PD 라우터를 거쳐 vLLM이 첫 토큰만 생성한 뒤 kv_transfer_params에 목적지 TileRT 노드를 표시해 넘기고(풀 A), 일반 트래픽은 vLLM의 기존 분리형 프록시를 거쳐 통상적인 vLLM 디코드 풀로 향한다(풀 B)
+- 결론: 이 결합은 vLLM의 MultiConnector API로 TileRTConnector를 기존 커넥터와 조합하는 방식으로 구현된다 — TileRT 커넥터는 표시된 고상호작용성 트래픽만 처리하고 나머지는 아무 일도 하지 않아, 두 트래픽 클래스가 같은 프리필 서버를 공유할 수 있다. 프리필과 디코드 사이 KV캐시 이동은 Mooncake·NIXL 전송 엔진이 맡고, TileRT v0.1.5 기준 디코드 노드 하나는 한 번에 요청 1건만 처리하며 라우터가 디스패치를 통제하고 노드가 점유 중이면 배압(back-pressure)을 건다
+
+---
+
+```mermaid
+flowchart TD
+    Infer2["LLM 추론 2단계"] --> Prefill2["프리필<br/>입력 병렬 처리<br/>연산 집약, 처리량이 핵심"]
+    Infer2 --> Decode2["디코드<br/>토큰 순차 생성<br/>KV캐시 반복 접근, 지연시간 민감"]
+
+    style Prefill2 fill:#eff6ff,stroke:#3b82f6
+    style Decode2 fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Roles["역할 분담"] --> VLLMRole["vLLM: 고처리량 프리필<br/>+ 스케줄러·캐싱·API·운영툴"]
+    Roles --> TileRTRole["TileRT: 지연시간 민감<br/>디코드 트래픽만 전담"]
+
+    style VLLMRole fill:#eff6ff,stroke:#3b82f6
+    style TileRTRole fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    SharedPool["공유 vLLM 프리필 풀"] --> PoolA["풀 A: TileRT PD 라우터<br/>→ 고상호작용성 디코드"]
+    SharedPool --> PoolB["풀 B: vLLM 네이티브<br/>분리형 프록시 → 일반 디코드"]
+
+    style PoolA fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style PoolB fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    Impl["구현 방식"] --> MultiConn["vLLM MultiConnector API<br/>TileRTConnector + 기존 커넥터 조합"]
+    MultiConn --> KVMove["KV캐시 이동:<br/>Mooncake·NIXL 전송 엔진"]
+    MultiConn --> OneReq["디코드 노드당<br/>동시 요청 1건, 배압 제어"]
+
+    style MultiConn fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+---
+
+## 8. 세레브라스·Groq·SambaNova와의 비교 - 하드웨어 데이터플로우 vs 소프트웨어 데이터플로우
+
+**📌 핵심:**
+- 전용 추론 칩 업체들은 같은 병목을 몇 년 전에 발견했지만 해법을 하드웨어에 더 많이 새겨 넣었다 — Groq는 결정론적(매번 같은 순서로 실행되는)·컴파일러가 직접 조율하는 실행과 대용량 온칩 SRAM 계층을 쓰고, 세레브라스는 웨이퍼 스케일 프로세서(반도체 웨이퍼 한 장 전체를 하나의 칩으로 쓰는 설계) 위에 연산을 공간적으로 배치하며 CS-3는 코어 약 90만 개·온칩 SRAM 44GB·메모리 대역폭 초당 21페타바이트(PB/s)를 낸다. SambaNova는 재구성 가능한 데이터플로우 유닛을 SRAM·HBM·DDR 계층 메모리로 뒷받침한다
+- 칩 구조는 다르지만 아이디어는 같다 — 저지연 추론은 런타임 스케줄링·연산자 경계·동기화·불필요한 외부 메모리 이동을 줄일수록 유리하다는 것. 배치가 클 때는 이런 비용을 나눠 갚기 쉽지만, 배치 크기 1에서는 토큰 하나당 지연시간의 훨씬 큰 몫을 차지한다
+- TileRT는 이 데이터플로우 아이디어의 소프트웨어 버전을 들여온다 — 사전(AoT) 스케줄링, 지속형 실행, 특화된 작업자, 통신·연산 사이의 더 촘촘한 오버랩. 다만 닮은 건 구조이지 실체가 아니다 — TileRT는 여전히 동적 하드웨어 스케줄러를 쓰는 SIMT GPU 위에서, HBM과 모델별로 컴파일된 스케줄을 그대로 쓰며 돌아간다
+- 결론: TileRT는 어디까지나 소프트웨어다 — 데이터플로우 방식을 애초에 그걸 위해 설계되지 않은 기계에 강제로 씌우는 것. GPU는 동적 워프 스케줄러·SIMT 모델·HBM 계층 구조를 그대로 지니고, TileRT는 정적으로 펼쳐진 지속형 커널·손으로 깎은 워프 특화·드라이버 스택에 고정된 모델별 컴파일이라는 막대한 컴파일러 노력을 쏟아 이 하드웨어가 공간적 파이프라인인 척하도록 설득해 숫자를 뽑아낸다. 네이티브 데이터플로우 실리콘은 자기 하드웨어와 싸울 필요가 없다 — 전용 가속기는 실행 모델을 하드웨어에 더 많이 새겨 넣어 TileRT가 소프트웨어로 숨겨야 하는 오버헤드 일부를 아예 피한다. 그 우위는 여전히 모델·정밀도·메모리 계층·컴파일러 품질·시스템 규모·서빙 구성에 좌우되지만, 세레브라스가 조밀한(dense) 700억 파라미터 모델을 8-GPU 노드가 아무리 스케줄링을 잘해도 못 따라올 속도로 서빙하는 이유가 여기 있다 — 소프트웨어는 HBM 루프라인(이론적 상한)에 다가갈 수는 있어도 그 상한 자체를 끌어올릴 수는 없다
+
+---
+
+```mermaid
+flowchart TD
+    Vendors["전용 추론 칩 3사"] --> Groq2["Groq: 결정론적 실행<br/>대용량 온칩 SRAM"]
+    Vendors --> Cerebras["세레브라스 CS-3:<br/>코어 약 90만 개<br/>SRAM 44GB, 21PB/s"]
+    Vendors --> Samba["SambaNova: 재구성형<br/>데이터플로우 유닛<br/>SRAM+HBM+DDR"]
+
+    style Cerebras fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    SharedIdea["공통 아이디어"] --> Reduce["런타임 스케줄링·경계·<br/>동기화·외부메모리 이동 축소"]
+    Reduce --> Batch1v["배치1에서<br/>지연시간 비중 최대"]
+
+    style Reduce fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    TileRTSW["TileRT = 소프트웨어<br/>데이터플로우"] --> Import["AoT 스케줄링·지속형 실행·<br/>특화 작업자·연산통신 오버랩"]
+    Import --> StillGPU["실체는 여전히<br/>동적 스케줄러 SIMT GPU"]
+
+    style StillGPU fill:#fff7ed,stroke:#ea580c
+```
+
+```mermaid
+flowchart TD
+    Fight["소프트웨어가<br/>하드웨어를 설득"] --> Native["네이티브 데이터플로우 실리콘:<br/>자기 하드웨어와 안 싸움"]
+    Fight --> Roofline2["결론: 소프트웨어는<br/>HBM 루프라인에 다가갈 뿐<br/>끌어올리지는 못함<br/>(예: 세레브라스 조밀 70B 서빙속도)"]
+
+    style Roofline2 fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+---
+
+## 9. 세레브라스·Groq·SambaNova와의 비교 - PD 비율 유연성이라는 구조적 강점
+
+**📌 핵심:**
+- 시장의 초기 답은 "순수성은 협상 가능하다"는 것 — TileRT의 디코드 엔진은 이미 샤오미 MiMo V2.5 Pro UltraSpeed와 Z.ai GLM-5.1 HighSpeed 상용 서비스 뒤에서 돌고 있다. 두 회사 모두 새 데이터플로우 칩을 사지 않았다 — 이미 갖고 있던 가속기 클러스터에서 속도 등급 하나를 오려냈을 뿐, vLLM이 여전히 프리필·스케줄링·API를 맡고 TileRT는 같은 엔드포인트 뒤에서 디코드만 넘겨받는다. "이미 갖고 있는 하드웨어 위의 웬만큼 좋은 답"이 "새로 사야 하는 하드웨어 위의 아키텍처적으로 순수한 답"을 이기는 경향이 있다는 뜻
+- 더 깊은 구조적 문제는 프리필-디코드(PD) 비율의 유동성(fungibility, 자원을 상황에 맞게 바꿔 쓸 수 있는 정도)이다 — GPU 풀은 프리필도 잘하고 중\~고배치 디코드도 잘하고 이제 초고상호작용성 디코드까지 제법 잘하는 하나의 유동 자원이라, 소프트웨어 스케줄러의 결정만으로 시간 단위로 역할 배분을 수요에 맞춰 바꿀 수 있다. 반면 전용 칩 함대는 정반대다 — 속도 등급 용량과 나머지 용량의 비율이 발주서에 서명하는 순간 하드웨어에 고정되고, 그 비율을 바꾸려면 물리적으로 랙을 다시 짜고 케이블을 다시 까는 데 수개월이 걸린다
+- 워크로드 구성이 안정적이고 예측 가능하다면 문제없겠지만, 통상적인 대화형 지연시간을 원하는 사용자와 극단적 상호작용성 SLO(서비스수준목표)에 웃돈을 낼 사용자(점점 에이전트가 많아짐)의 비율에는 변수가 많다 — GPU에서 예측이 틀리면 소프트웨어로 재조정하면 되지만, 전용 실리콘에서 예측이 틀리면 놀고 있는 고속 장비에 자본이 묶이거나, 애초에 사려고 했던 프리미엄 트래픽을 놓치게 된다. 게다가 요구사항은 시간이 지나며 계속 바뀌어, 지금 맞는 예측도 한동안만 맞는다
+- 결론: 그렇다고 최상위 속도 시장이 없어지는 건 아니다 — SRAM 루프라인은 여전히 더 높고, 특정 크기의 모델은 여전히 그쪽을 선호하며, 일부 워크로드는 가격을 불문하고 최대 초당 토큰 수를 원한다. 하지만 TileRT는 대부분의 구매자에게 필요한 게 속도 전용 기계가 아니라 "어차피 갖고 있을 함대에서 동적으로 떼어내는 속도 등급"이라는 점을 재정의한다 — 세레브라스·Groq·SambaNova는 이제 서투른 커널 실행기가 아니라, 설정 파일 하나로 재배분되는 유동적 하드웨어 위에서 돌아가는 자기 자신의 실행 모델과 경쟁하는 셈이다. TileRT가 승객 1명짜리 로켓이라도, 완전히 새로운 발사체를 설계하는 대신 이미 있는 버스에 고체 로켓 부스터를 붙이는 걸 가능하게 해준다
+
+---
+
+```mermaid
+flowchart TD
+    Prod["실제 상용 배포"] --> Xiaomi2["샤오미 MiMo V2.5<br/>Pro UltraSpeed"]
+    Prod --> ZAI["Z.ai GLM-5.1<br/>HighSpeed"]
+    Xiaomi2 --> Pattern["공통점: 새 칩 안 사고<br/>기존 GPU 클러스터에서<br/>속도 등급만 오려냄"]
+
+    style Pattern fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Fungible["GPU 풀 = 유동 자원"] --> AllRoles["프리필·중고배치 디코드·<br/>초고상호작용성 디코드<br/>전부 소화"]
+    AllRoles --> Rebalance["소프트웨어 설정만으로<br/>시간 단위 역할 재배분"]
+
+    style Rebalance fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    ASICFleet["전용 칩 함대 = 고정 자원"] --> Fixed["속도등급 비율이<br/>발주 시점에 하드웨어 고정"]
+    Fixed --> Recable["비율 변경 =<br/>재랙·재배선 수개월"]
+    Recable --> Risk["예측 틀리면: 유휴 자본<br/>또는 프리미엄 트래픽 상실"]
+
+    style Risk fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Reframe["TileRT의 재정의"] --> NotMachine["필요한 건 속도 전용 기계가<br/>아니라 속도 등급"]
+    NotMachine --> Competition["데이터플로우 칩 3사:<br/>이제 자기 실행모델과<br/>경쟁하는 셈"]
+
+    style Competition fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 75% 완료*
+*업데이트: 7\~9장(PD 분리형 엔진·vLLM 결합, 데이터플로우 칩과의 비교(하드웨어 vs 소프트웨어), PD 비율 유연성이라는 구조적 강점) 작성 완료*
