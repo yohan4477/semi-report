@@ -93,6 +93,37 @@ def check_density(text, where):
         if s.count(',') >= 4:
             add('WARN', where, 'P11',
                 '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
+    check_vague(text, where)
+
+
+# 무엇을 먹는지·마시는지 안 밝히고 「먹으면」으로 넘어가는 조건절. 2026-08-17에
+# "GLP-1은 먹으면 장에서 나오는 호르몬이다"를 그대로 내보냈다. 읽는 사람은 무엇을
+# 먹어야 나오는지 알 수 없다. 앞 15자 안에 목적어(을/를)가 있으면 통과시킨다.
+# 「맞으면」은 들어맞다·주사 맞다로 갈려 오탐이 크다. 뜻이 하나인 둘만 본다.
+INGEST = re.compile(r'(?<![가-힣])(먹|마시)으?면')
+# 정도만 말하고 값을 안 대는 주장. 같은 문장에 숫자가 있으면 통과시킨다.
+DEGREE = re.compile(r'(훨씬|크게|상당히|대폭|급격히)\s*[가-힣]{0,4}?'
+                    r'(늘|줄|올라|떨어|커지|작아지|높아|낮아|많아|적어)')
+
+
+def check_vague(text, where):
+    """P12·P13 — 문장은 매끄러운데 뜻이 안 닿는 자리를 잡는다.
+
+    검사기가 밀도(P8~P11)만 보던 동안, 조건이 빠진 결론과 값이 없는 정도 주장은
+    그대로 나갔다. 둘 다 사람이 읽다가 "그래서 뭘?"이라고 되묻게 되는 자리다."""
+    for s in sentences(text):
+        for m in INGEST.finditer(s):
+            # 목적어(을/를)만 인정한다. 「GLP-1은 먹으면」처럼 주어가 앞에 있어도
+            # 무엇을 먹는지는 여전히 빠져 있다 — 그게 이 규칙을 만든 사건이었다.
+            head = s[:m.start()]
+            if '을 ' in head or '를 ' in head or head[-1:] in ('을', '를'):
+                continue
+            add('WARN', where, 'P12',
+                '「%s」 앞에 무엇을 먹는지가 없다 — 조건을 밝힌다: %s…'
+                % (m.group(0), s[:44]))
+        if DEGREE.search(s) and not re.search(r'\d', s):
+            add('WARN', where, 'P13',
+                '정도만 말하고 값이 없다 — 숫자를 대거나 무엇에 견줘 큰지 쓴다: %s…' % s[:44])
 
 
 def check_bold(raw, where):
