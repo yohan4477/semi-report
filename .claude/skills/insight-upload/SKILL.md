@@ -20,8 +20,8 @@ description: 제3자 해설(유튜브 자막·네이버 프리미엄 텍스트) 
 | 주제 | 페이지 | 생성기 |
 |---|---|---|
 | 공급·세제·전세·건설·토지 | `대시보드/부동산 대시보드.html` | `scratchpad/gen_realestate_dashboard.py` |
-| 금리·국채·환율 | `대시보드/금융 대시보드.html` | `scratchpad/gen_finance_dashboard.py` |
-| AI·데이터센터·전력·에너지·원유 | `대시보드/언더스탠딩 대시보드.html` | 없음 → `scripts/add_card.py` |
+| AI·데이터센터·전력·에너지·원유·금리·환율 | `대시보드/산업시장 대시보드.html` | `scratchpad/gen_industry_dashboard.py` |
+| 위 주제인데 **네이버 프리미엄·백브리핑 유료물** | `대시보드/언더스탠딩 프리미엄 대시보드.html` 🔒 | `scratchpad/gen_undpremium_dashboard.py` |
 | 미국 증시 강의(네이버 프리미엄 카레라) | `대시보드/미국주식 사관학교 대시보드.html` | `scratchpad/gen_usa_dashboard.py` |
 | 회계·재무제표·기업 평가 | `대시보드/회계사 대시보드.html` | `scratchpad/gen_accountant_dashboard.py` |
 | 몸·질병·수면·대사 | `대시보드/건강 대시보드.html` | **`health-insight` 스킬로 간다** — 카드 단위가 영상이 아니라 주제다 |
@@ -105,13 +105,11 @@ python scratchpad/gen_realestate_dashboard.py
 
 섹션 순서는 각 생성기의 `SEC_ORDER`가 정한다. 섹션 번호는 생성기가 다시 매기므로 손대지 않는다.
 
-생성기가 없는 AI · 인프라 · 에너지 페이지는 카드 dict를 파일 하나에 담아 끼워 넣는다.
+**생성기가 없는 페이지는 이제 없다.** 2026-08-17에 손유지되던 언더스탠딩 27장을 생성기 둘로
+갈랐다(무료는 산업/시장, 유료는 잠긴 페이지). `scripts/add_card.py`는 그 페이지 전용이라 함께
+없앴다. 새 대시보드를 만들 때는 `scratchpad/dash_common.py` 머리의 UI 규약을 먼저 읽는다.
 
-```bash
-python scripts/add_card.py scratchpad/card_new.py --section sec-ai
-```
-
-옛 형식 카드 26장은 **아직 소급 변환하지 않는다**. 새 카드만 표준 형식으로 올라가고
+옛 형식 카드는 **아직 소급 변환하지 않는다**. 새 카드만 표준 형식으로 올라가고
 한동안 두 형식이 섞인다. 소급은 별도 지시가 있을 때 한다.
 
 ### 3. 주간·월간 리포트 갱신 — 빠뜨리지 않는다

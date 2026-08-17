@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.join(ROOT, 'scratchpad'))
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 import gen_realestate_dashboard as _re
 import gen_usa_dashboard as _usa
-import gen_finance_dashboard as _fin
+import gen_industry_dashboard as _fin   # 금융 3장은 2026-08-17에 이 페이지로 합쳐졌다
 
 SUBS = os.path.join(ROOT, 'scratchpad', 'yt_subs')
 STRIP = re.compile(r'<[^>]+>')

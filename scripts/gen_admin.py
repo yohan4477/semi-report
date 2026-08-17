@@ -130,11 +130,14 @@ LANES = [
 
    ('⑤ 생성', 'gen', '섹션 번호는 손대지 않는다 — SEC_ORDER가 다시 매긴다',
     [('부동산', 'scratchpad/gen_realestate_dashboard.py'),
-     ('금융', 'scratchpad/gen_finance_dashboard.py'),
+     ('산업/시장', 'scratchpad/gen_industry_dashboard.py'),
+     ('언더스탠딩 프리미엄 🔒', 'scratchpad/gen_undpremium_dashboard.py'),
      ('미주사', 'scratchpad/gen_usa_dashboard.py'),
-     ('AI·인프라·에너지 — 생성기 없음', 'scripts/add_card.py --section sec-ai')],
-    ['<code>scratchpad/dash_common.py</code>가 <code>언더스탠딩 대시보드.html</code>의 <code>&lt;style&gt;</code>을 CSS 원본으로 읽는다. <b>파일명을 바꾸지 않는다</b>(표시 이름만 AI·인프라·에너지).',
-     '옛 형식 카드 26장은 <b>소급 변환하지 않는다.</b> 한동안 두 형식이 섞인다.']),
+     ('건강', 'scratchpad/gen_health_dashboard.py')],
+    ['CSS 원본은 <code>scripts/dash_base_css.html</code>다. 예전에는 언더스탠딩 대시보드 HTML의 '
+     '<code>&lt;style&gt;</code>을 읽었는데, 그 페이지도 생성기로 만들면서 순환이 되어 떼어냈다.',
+     '<b>손유지 페이지는 이제 없다.</b> 2026-08-17에 언더스탠딩 27장을 생성기 둘로 갈랐다 — '
+     '무료는 산업/시장, 네이버 프리미엄·백브리핑은 잠긴 페이지로.']),
 
    ('⑥ 롤업', 'work', '카드를 올렸으면 리포트도 같이 손본다',
     [('주간·월간 리포트', 'data/rollup_notes_*.json'),
@@ -146,8 +149,9 @@ LANES = [
 
    ('⑦ 화면', 'out', '',
     [('부동산 대시보드.html', '/realestate'),
-     ('금융 대시보드.html', '/finance'),
-     ('언더스탠딩 대시보드.html', '/understanding'),
+     ('산업시장 대시보드.html', '/understanding'),
+     ('언더스탠딩 프리미엄 대시보드.html', '/und-premium 🔒'),
+     ('건강 대시보드.html', '/health'),
      ('미국주식 사관학교 대시보드.html', '/usa-academy 🔒')],
     ['종목이 언급돼도 <b>추천이 아니다.</b> 가격·타이밍은 이 체계에 없다.']),
   ]),

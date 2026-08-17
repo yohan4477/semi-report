@@ -17,7 +17,8 @@ PY = [sys.executable]
 BUILD = [
     ('부동산 대시보드', ['scratchpad/gen_realestate_dashboard.py']),
     ('미주사 대시보드', ['scratchpad/gen_usa_dashboard.py']),
-    ('금융 대시보드', ['scratchpad/gen_finance_dashboard.py']),
+    ('산업/시장 대시보드', ['scratchpad/gen_industry_dashboard.py']),
+    ('언더스탠딩 프리미엄', ['scratchpad/gen_undpremium_dashboard.py']),
     ('건강 대시보드', ['scratchpad/gen_health_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
     # 링크드인은 원문 파일이 먼저 있어야 노트가 인용할 수 있다
