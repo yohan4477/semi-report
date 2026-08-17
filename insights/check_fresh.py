@@ -113,15 +113,23 @@ def check(path, notes, today):
     # 반년 떨어진 두 글이 다른 말을 하는 것은 대립이 아니라 그사이에 사실이 바뀐
     # 것일 수 있다. 시차가 주제 기준을 넘으면 본문이 그 시차를 밝혔는지 본다.
     # 브리핑은 쌓인 상태를 적는 자리라 시차가 당연하므로 뺀다.
-    if str(meta.get('view') or '').strip() == 'cross':
-        # checked: 에 적은 문서는 "읽고 안 쓰기로 했다"는 표시라 시차 계산에서 뺀다.
-        head = meta.get('_head', '')
-        cited = set(re.findall(r'file:\s*"([^"]+)"', head.split('\nchecked:')[0]))
-        span = [n['date'] for n in mine if n['src'] in cited] or [n['date'] for n in mine]
+    if 'cross' in (str(meta.get('view') or '') + str(meta.get('kind') or '')):
+        # 재는 것은 카드 전체가 아니라 「## 주장」이 맞대 놓은 두 문서의 시차다.
+        # 카드 전체 범위로 재면 배경으로 깐 옛 문서 하나가 오탐을 만든다 —
+        # 「병목은 풀리나」는 대립쌍이 한 달 차이인데 2024년 해부학 편 때문에
+        # 651일로 잡혔다(2026-08-17).
+        raw = io.open(path, encoding='utf-8').read()
+        body = raw.split('---', 2)[2] if raw.startswith('---') else raw
+        m = re.search(r'##\s*주장\s*\n+(.+?)(?=\n##\s|\Z)', body, re.S)
+        srcs = nl.sources_of(meta)
+        files = set(r['file'] for r in nl.cite_refs(m.group(1) if m else '', srcs)
+                    if r.get('file'))
+        span = [n['date'] for n in mine if n['src'] in files]
+        if len(span) < 2:
+            return
         oldest, latest = min(span), max(span)
         spread = (latest - oldest).days
         if spread > limit:
-            body = io.open(path, encoding='utf-8').read()
             # 「9개월 사이」 같은 표현은 본문이 다루는 사실의 기간일 때가 많아
             # 근거로 안 친다(2026-08-17에 「2026년 전분기」가 「2026년 전」으로
             # 잡히는 오탐까지 확인했다). 양쪽 발행 연월을 다 적은 경우만 인정한다.
