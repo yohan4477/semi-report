@@ -37,7 +37,7 @@ PYTHONIOENCODING=utf-8 python insights/check_notes.py    # N1~N7  노트·인용
 PYTHONIOENCODING=utf-8 python insights/check_prose.py    # P1~P7  문체·용어·절 순서
 PYTHONIOENCODING=utf-8 python insights/check_read.py     # R1~R8  읽히는가
 PYTHONIOENCODING=utf-8 python insights/check_cite.py     # C1     인용한 줄에 그 숫자가 있나
-PYTHONIOENCODING=utf-8 python insights/check_fresh.py    # F1~F3  아직 지금 이야기인가
+PYTHONIOENCODING=utf-8 python insights/check_fresh.py    # F1~F4  아직 지금 이야기인가
 ```
 
 **다섯 개를 다 돌린다.** 앞의 셋만 돌리고 푸시한 이력이 있다 — 2026-08-15 부동산 카드가 `check_read` FAIL 0으로 통과했는데 `check_cite` 확인필요 6건과 `check_fresh` FAIL 3건을 달고 있었다.
@@ -50,6 +50,7 @@ PYTHONIOENCODING=utf-8 python insights/check_fresh.py    # F1~F3  아직 지금 
 | `check_cite` 확인필요 | 기계는 절반만 본다. **원문 줄을 열어 사람이 확인한다.** 숫자가 그 줄에 있어도 뜻이 다를 수 있다 |
 | `check_fresh` F1 | 새 노트를 읽고 반영하거나, 안 바뀐다고 판단했으면 **그 판단의 근거를 본문에 쓴다**. 날짜만 미루지 않는다 |
 | `check_fresh` F3 | `as_of`가 근거보다 앞섰다. 표기를 고친다 |
+| `check_fresh` F4 | 교차 카드가 인용한 문서들의 **발행일 간격**이 주제 기준(biz 120일·chip/model 180일·power 365일)을 넘는다. 반년 떨어진 두 글이 다른 말을 하는 건 대립이 아니라 그사이 사실이 바뀐 것일 수 있다. 양쪽 발행 연월을 본문에 「2026년 2월」 꼴로 적고, 시차가 결론을 흔드는지 흔들지 않는지를 쓴다. `checked:` 문서는 간격 계산에서 빠진다 |
 
 절 순서를 바꾸면 첫 등장 위치가 옮겨져 P2가 새로 뜬다. 실측된 현상이니 새 첫 등장에서 다시 풀면 된다.
 
