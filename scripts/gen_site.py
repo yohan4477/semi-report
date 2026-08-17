@@ -43,6 +43,22 @@ PAGES = [
 
 SLUGS = {src: slug for src, slug, *_ in PAGES}
 
+# 접힌 주소 -> 지금 그 내용이 있는 주소. 페이지를 합쳐도 이미 나간 링크는 살려 둔다.
+# 금융 인사이트는 2026-08-17에 산업/시장 인사이트로 흡수됐다.
+REDIRECTS = {'finance': ('understanding', '산업/시장 인사이트')}
+
+REDIRECT_PAGE = '''<!doctype html>
+<meta charset="utf-8">
+<title>옮겨졌습니다 — %(title)s</title>
+<link rel="canonical" href="/%(slug)s">
+<meta http-equiv="refresh" content="0; url=/%(slug)s">
+<style>body{font-family:"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif;
+  max-width:34rem;margin:22vh auto;padding:0 1.2rem;line-height:1.7;color:#1a2233}
+a{color:#2563eb}</style>
+<p>이 페이지는 <a href="/%(slug)s">%(title)s</a>로 옮겨졌습니다.</p>
+<p>자동으로 넘어가지 않으면 위 링크를 누르세요.</p>
+'''
+
 # 대시보드마다 CSS 변수 이름이 달라서(--ink/--paper vs --sub/--card) 버튼은 색을 자기가 들고 간다.
 # 클래스는 ida- 접두어로 격리한다.
 HOME_BTN = '''
@@ -368,10 +384,15 @@ def main():
         badge = f'  NEW {len(fresh)}' if fresh else ''
         print(f'  {src}  ->  {slug}.html{badge}')
 
+    for old, (slug, title) in REDIRECTS.items():
+        (OUT / f'{old}.html').write_text(REDIRECT_PAGE % {'slug': slug, 'title': title},
+                                         encoding='utf-8')
+        print(f'  /{old}  ->  /{slug} (넘김)')
+
     (OUT / 'index.html').write_text(build_index(), encoding='utf-8')
     (OUT / f'{PRIVATE_SLUG}.html').write_text(build_private(), encoding='utf-8')
     (OUT / '.nojekyll').write_text('', encoding='utf-8')
-    print(f'\n{len(PAGES) + 2} files -> {OUT}')
+    print(f'\n{len(PAGES) + len(REDIRECTS) + 2} files -> {OUT}')
 
 
 if __name__ == '__main__':

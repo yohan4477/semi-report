@@ -602,5 +602,9 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
           '  요약은 <code>content/understanding/</code>, '
           '페이지 생성은 <code>scratchpad/gen_industry_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
+# 롤업은 아직 안 붙인다. data/rollup_notes_finance.json이 남아 있지만 그 산문은 금융 2편을
+# 놓고 쓴 것이라, 같은 기간(07-15~08-13)에 이 페이지 카드가 4장 들어 건수가 어긋난다.
+# 롤업 산문은 판단이라 사람이 쓴다(insight-upload). 다시 쓴 뒤 아래를 살린다.
+#     rollup=dc.rollup_for('industry', CARDS, '편')
 if __name__ == '__main__':
     dc.render(CARDS, '산업/시장 인사이트', HEADER, FOOTER, OUT)
