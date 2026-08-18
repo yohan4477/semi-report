@@ -113,15 +113,15 @@ FOLD_JS = '''<script>
 })();
 </script>'''
 
-# 「같은 영상에서 나온 카드」 링크는 같은 페이지 안의 다른 카드로 뛴다. 그냥 앵커로 두면
-# 두 번 막힌다 — 대상 섹션이 숨어 있고(주제 타일로 하나만 골랐을 때), 대상 카드가 접혀 있다.
-# 그래서 「전체 보기」 타일을 눌러 섹션을 되살린 뒤 카드를 펴고 그리로 스크롤한다.
-KIN_JS = """<script>
+# 카드 하나를 지목하는 링크를 성립시킨다. 앵커(id="card-…")는 처음부터 있었지만 페이지가
+# 주소의 #을 보지 않았다 — 첫 화면이 타일 고르기라 모든 섹션이 hidden이고, 링크를 받은 사람은
+# 타일 화면에 떨어졌다. 카드 안의 「같은 영상에서 나온 카드」도 같은 이유로 두 번 막혔다.
+# 그래서 한 자리에서 처리한다: 섹션을 되살리고(「전체 보기」 타일을 눌러서) 카드를 펴고 그리로
+# 간다. 「링크 복사」 버튼은 그 주소를 집어 준다.
+LINK_JS = """<script>
 (function(){
-  document.addEventListener('click', function(e){
-    var a=e.target.closest('a.kin-link'); if(!a) return;
-    e.preventDefault();
-    var h=document.getElementById(a.getAttribute('href').slice(1)); if(!h) return;
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
     var card=h.closest('.ucard'), sec=h.closest('section');
     if(sec && sec.hidden){
       var all=document.querySelector('.stile.is-all');
@@ -132,9 +132,41 @@ KIN_JS = """<script>
         var head=card.querySelector('.uc-head');
         if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
       }
-      if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+      if(card) card.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
     }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1), true);
+      return;
+    }
+    var b=e.target.closest('.uc-copy'); if(!b) return;
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
   });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
 })();
 </script>"""
 
@@ -311,6 +343,71 @@ def rollup_for(key, cards, unit='편'):
     return _rl.build(notes, counts, unit)
 
 
+# ── 읽는 순서(「처음 오셨다면」) ──────────────────────────────────────────────
+# 처음 온 사람이 어디서부터 읽을지 정해 두는 층. 섹션 순서와 읽는 순서는 다르다 — 섹션은
+# 주제를 나눈 것이고, 읽는 순서는 아무것도 모르는 사람이 밟아야 덜 걸리는 계단이다.
+#
+# 자리는 섹션 타일 그리드 바깥, 그 위다. 타일 하나로 들어가면 「전체 보기」와 같은 줄에 서서
+# 주제 중 하나로 읽힌다. 이건 주제가 아니라 길잡이라 타일 위에 따로 선다. 관문은 아니다 —
+# 접을 수 있고 바로 아래에 타일이 그대로 있다.
+#
+# steps는 [(단계 이름, 왜 이 자리인가, [카드 제목…])]. 카드 제목이 CARDS와 한 글자라도
+# 어긋나면 assert로 걸리고, 빠뜨린 카드도 같이 걸린다 — 카드를 새로 만들면 여기에도 자리를
+# 정해 줘야 한다.
+_STEP_KO = {2: '두', 3: '세', 4: '네', 5: '다섯', 6: '여섯', 7: '일곱', 8: '여덟'}
+
+COURSE_CSS = '''
+  .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
+    background:var(--sunk); padding:0 16px; }
+  .intro > summary { list-style:none; cursor:pointer; padding:13px 0; display:flex;
+    align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .intro > summary::-webkit-details-marker { display:none; }
+  .intro > summary::after { content:"▾"; margin-left:auto; color:var(--ink-3); font-size:12px; }
+  .intro[open] > summary::after { content:"▴"; }
+  .in-t { font-size:14px; font-weight:800; color:var(--ink); }
+  .in-s { font-size:12px; color:var(--ink-3); }
+  .in-b { padding:0 0 16px; }
+  .in-lede { margin:0 0 16px; font-size:13px; line-height:1.7; color:var(--ink-2); }
+  .csteps { display:grid; grid-template-columns:1fr 1fr; gap:18px 26px; }
+  @media (max-width:720px) { .csteps { grid-template-columns:1fr; } }
+  .cs-h { margin:0 0 4px; font-size:14px; font-weight:800; color:var(--ink); }
+  .cs-h .cs-n { display:inline-block; min-width:20px; color:var(--accent-ink); }
+  .cs-why { margin:0 0 8px 20px; font-size:12.5px; line-height:1.6; color:var(--ink-2); }
+  .course { margin-left:20px; }
+  .course ol { margin:0; padding-left:17px; }
+  .course li { font-size:12.5px; line-height:1.65; margin-bottom:3px; }
+  .course li:last-child { margin-bottom:0; }
+  .course a.kin-link { color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--line); }
+  .course a.kin-link:hover { border-bottom-color:var(--accent); }
+'''
+
+
+def course(cards, steps, lede):
+    """읽는 순서를 render(intro=…)에 넣을 한 덩어리로 만든다. lede에 %d 하나(카드 수)."""
+    have = {c['title'] for c in cards}
+    listed = [t for _h, _w, ts in steps for t in ts]
+    missing = have - set(listed)
+    unknown = [t for t in listed if t not in have]
+    assert not unknown, '읽는 순서에 없는 카드 제목이 있다: %s' % unknown
+    assert not missing, '읽는 순서에서 빠진 카드가 있다: %s' % sorted(missing)
+    assert len(listed) == len(set(listed)), '읽는 순서에 같은 카드가 두 번 들어갔다'
+
+    h = ['<details class="intro" open><summary><span class="in-t">처음 오셨다면</span>'
+         '<span class="in-s">카드 %d장을 %s 단계로</span></summary><div class="in-b">'
+         % (len(cards), _STEP_KO[len(steps)])]
+    h.append('<p class="in-lede">%s</p><div class="csteps">' % (lede % len(cards)))
+    for i, (head, why, titles) in enumerate(steps, 1):
+        h.append('<div class="cstep"><p class="cs-h"><span class="cs-n">%d</span>%s</p>' % (i, head))
+        h.append('<p class="cs-why">%s</p>' % why)
+        # 제목은 카드에 있는 글을 그대로 옮긴 것이라 산문 검사에서 빼는 자리다(class="course")
+        h.append('<div class="course"><ol>%s</ol></div></div>'
+                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (slug(t), t)
+                           for t in titles))
+    h.append('</div></div></details>')
+    return ''.join(h)
+
+
 XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
 
 
@@ -342,7 +439,6 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
                     '<h2 class="sec-title">%s</h2></div>%s</section>'
                     % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
-    kin_js = KIN_JS if any(c.get('kin') for c in cards) else ''
     page_css = css()
     if extra_css:
         page_css = page_css.replace('</style>', extra_css + '</style>')
@@ -353,7 +449,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             + '\n<div class="wrap">\n' + header
             + '\n\n  ' + intro + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
-            + FOLD_JS + NAV_JS + kin_js + ui_bits.TOP_BTN + '\n')
+            + FOLD_JS + NAV_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
     check_ui(html, bool(top))
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))
