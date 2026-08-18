@@ -412,13 +412,18 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
-           top_n=0, top_sub='', top_title='통합 인사이트', intro=''):
+           top_n=0, top_sub='', top_title='통합 인사이트', intro='', sec_top=None,
+           sec_bottom=None):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
 
     intro는 타일 그리드 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않고
-    접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다."""
+    접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다.
+
+    sec_top = {섹션 id: HTML}. 그 섹션 머리 바로 아래, 카드 앞에 들어간다. 한 회사를 여러 편으로
+    평가한 것을 견주는 지도처럼 **그 섹션에만 해당하는** 층을 둘 자리다. 페이지 맨 위 롤업으로
+    두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
@@ -433,11 +438,17 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         body.append('<section id="%s" data-fixed="1"><div class="sec-head">'
                     '<span class="sec-num">00</span><h2 class="sec-title">%s</h2></div>%s</section>'
                     % (XSEC, top_title, top))
+    sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
+    unknown = [k for k in list(sec_top) + list(sec_bottom) if k not in secs]
+    assert not unknown, 'sec_top·sec_bottom에 없는 섹션 id가 있다: %s' % unknown
     for sid in order:
         (_, num, stitle, _sub), cs = secs[sid]
+        # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
+        # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
-                    '<h2 class="sec-title">%s</h2></div>%s</section>'
-                    % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
+                    '<h2 class="sec-title">%s</h2></div>%s%s%s</section>'
+                    % (sid, num, stitle, sec_top.get(sid, ''),
+                       ''.join(card_html(c) for c in cs), sec_bottom.get(sid, '')))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     page_css = css()
     if extra_css:
@@ -473,6 +484,34 @@ ACTORS = ('삼성전자', 'SK하이닉스', '마이크론', '엔비디아', 'TSM
           '마이크로소프트', '알파벳', '구글', '아마존', '메타', '오픈AI', '앤트로픽',
           'AMD', '인텔', '컨스텔레이션', '비스트라', '탈렌', 'GE버노바', 'CXMT',
           'KLA', '브로드컴', '퀄컴', '코어위브', '오라클')
+
+
+def attach_related(cards, by_title=None, by_keyword=()):
+    """카드끼리 잇는 「연관 포스트」를 붙인다.
+
+    섹션이 회사별로 갈리면 그 방법을 설명한 포스트가 다른 타일에 있어 카드 안에서 길이 끊긴다.
+    by_title  = {카드 제목: [연결할 카드 제목, …]}          — 한 장씩 지목
+    by_keyword = [(키워드, [연결할 카드 제목, …]), …]        — 제목이나 topic에 그 말이 든 카드 전부
+
+    제목이 CARDS에 없으면 assert로 걸린다. 자기 자신은 빼고, 같은 대상이 두 번 붙지 않는다."""
+    have = {c['title'] for c in cards}
+
+    def links(c, titles):
+        out = []
+        for t in titles:
+            assert t in have, '연관 포스트로 지목한 카드가 없다: %s' % t
+            if t != c['title']:
+                out.append(t)
+        return out
+
+    for c in cards:
+        picked = list(links(c, (by_title or {}).get(c['title'], [])))
+        label = c['title'] + ' ' + (c.get('topic', ('', ''))[1] if isinstance(c.get('topic'), tuple) else '')
+        for kw, titles in by_keyword:
+            if kw in label:
+                picked += [t for t in links(c, titles) if t not in picked]
+        if picked:
+            c['related'] = [(t, slug(t)) for t in picked]
 
 
 def check_links(cards):

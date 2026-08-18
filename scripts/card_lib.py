@@ -308,6 +308,14 @@ def slim_html(c):
             k.append('</ol></div>')
         k.append('</div>')
         h.append(''.join(k))
+    # 다른 섹션에 있는 카드로 건너가는 자리. 밸류에이션 카드에서 그 방법을 설명한 포스트로,
+    # 포스트에서 그 방법을 쓴 회사 카드로 잇는다. related = [(제목, 앵커)]
+    # 링크는 kin과 같은 부품을 쓴다 — 숨은 섹션이라도 열고 찾아가는 일은 LINK_JS가 한다.
+    if c.get('related'):
+        h.append('<div class="uc-kin"><p class="uc-label">연관 포스트</p>'
+                 '<div class="kin-g"><ol>%s</ol></div></div>'
+                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (a, t)
+                           for t, a in c['related']))
     h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
              % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                         % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']),
@@ -358,6 +366,12 @@ def card_html(c):
                  % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
     if c.get('note'):
         h.append('<div class="side-note">%s</div>' % c['note'])
+    # 연관 포스트 — 슬림 카드와 같은 부품. 다른 섹션의 카드로 건너간다(LINK_JS가 연다).
+    if c.get('related'):
+        h.append('<div class="uc-kin"><p class="uc-label">연관 포스트</p>'
+                 '<div class="kin-g"><ol>%s</ol></div></div>'
+                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (a, t)
+                           for t, a in c['related']))
     h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
              % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                         % (('class="%s" ' % cls) if cls else '', url, lab)
