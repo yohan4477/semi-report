@@ -48,6 +48,9 @@ PICK_CSS = '''
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
   .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
   .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
           border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -192,7 +195,7 @@ LINK_JS = """<script>
 })();
 </script>"""
 
-SW_JS = '<script>\n(function(){\n  function show(sid, view){\n    var sw=document.querySelector(\'.secsw[data-sec="\'+sid+\'"]\');\n    if(sw) sw.querySelectorAll(\'.sw-btn\').forEach(function(b){\n      b.setAttribute(\'aria-pressed\', String(b.dataset.view===view));\n    });\n    var val=document.querySelector(\'.sv-val[data-sec="\'+sid+\'"]\');\n    var posts=document.querySelector(\'.sv-posts[data-sec="\'+sid+\'"]\');\n    if(val) val.hidden = view!==\'val\';\n    if(posts) posts.hidden = view!==\'posts\';\n  }\n  document.addEventListener(\'click\', function(e){\n    var b=e.target.closest(\'.sw-btn\'); if(!b) return;\n    show(b.closest(\'.secsw\').dataset.sec, b.dataset.view);\n  });\n  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다\n  function fromHash(){\n    var id=(location.hash||\'\').slice(1); if(!id) return;\n    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;\n    var box=h.closest(\'.sv-posts\'); if(box) show(box.dataset.sec, \'posts\');\n  }\n  window.addEventListener(\'hashchange\', fromHash);\n  if(document.readyState===\'loading\'){\n    document.addEventListener(\'DOMContentLoaded\', fromHash);\n  } else { fromHash(); }\n})();\n</script>'
+SW_JS = '<script>\n(function(){\n  function show(sid, view){\n    var sw=document.querySelector(\'.secsw[data-sec="\'+sid+\'"]\');\n    if(sw) sw.querySelectorAll(\'.sw-btn\').forEach(function(b){\n      b.setAttribute(\'aria-pressed\', String(b.dataset.view===view));\n    });\n    var val=document.querySelector(\'.sv-val[data-sec="\'+sid+\'"]\');\n    var posts=document.querySelector(\'.sv-posts[data-sec="\'+sid+\'"]\');\n    if(val) val.hidden = view!==\'val\';\n    if(posts) posts.hidden = view!==\'posts\';\n  }\n  document.addEventListener(\'click\', function(e){\n    if(e.target.closest(\'.sw-up\')){\n      var back=document.querySelector(\'.sback .sb-btn\');\n      if(back) back.click();\n      return;\n    }\n    var b=e.target.closest(\'.sw-btn\'); if(!b) return;\n    show(b.closest(\'.secsw\').dataset.sec, b.dataset.view);\n  });\n  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다\n  function fromHash(){\n    var id=(location.hash||\'\').slice(1); if(!id) return;\n    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;\n    var box=h.closest(\'.sv-posts\'); if(box) show(box.dataset.sec, \'posts\');\n  }\n  window.addEventListener(\'hashchange\', fromHash);\n  if(document.readyState===\'loading\'){\n    document.addEventListener(\'DOMContentLoaded\', fromHash);\n  } else { fromHash(); }\n})();\n</script>'
 
 
 NAV_JS = '''<script>
@@ -510,6 +513,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
             # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
             lead = ('<div class="secsw" data-sec="%s" hidden>'
+                    # 맨 앞은 올라가는 길이다. 내용 버튼과 생김새를 갈라 놓는다 —
+                    # 같은 모양이면 어느 쪽이 위로 가는 길인지 눌러 봐야 안다.
+                    '<button type="button" class="sw-up">◂ 회사 다시 고르기</button>'
                     '<button type="button" class="sw-btn" data-view="val">밸류에이션</button>'
                     '<button type="button" class="sw-btn" data-view="posts">개별 포스트'
                     ' <span class="sw-n">%d</span></button></div>'

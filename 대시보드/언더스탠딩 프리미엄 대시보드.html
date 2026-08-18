@@ -428,6 +428,9 @@
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
   .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
   .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
           border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -718,6 +721,11 @@
     if(posts) posts.hidden = view!=='posts';
   }
   document.addEventListener('click', function(e){
+    if(e.target.closest('.sw-up')){
+      var back=document.querySelector('.sback .sb-btn');
+      if(back) back.click();
+      return;
+    }
     var b=e.target.closest('.sw-btn'); if(!b) return;
     show(b.closest('.secsw').dataset.sec, b.dataset.view);
   });
