@@ -2108,7 +2108,7 @@
    ],
    "date": "2026-08-17",
    "path": "content/understanding/회계사/[260817] DCF 내재가치 188만원, 주가보다 14.3% 위 - SK하이닉스 - 엘곰.md",
-   "hash": "5654bb4f974e"
+   "hash": "09e53f1a5feb"
   },
   {
    "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
@@ -2175,6 +2175,17 @@
    "date": "2024-11-28",
    "path": "content/understanding/회계사/[241128] PEG 0.27로 본 저평가 - Peter Lynch 평가법 1 - 삼성전자 - 엘곰.md",
    "hash": "a17832daacdc"
+  },
+  {
+   "id": "und:회계사:ROE-61-대-40-유동비율-1226-대-290-마이크론과-SK하이닉스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-09",
+   "path": "content/understanding/회계사/[260509] ROE 61% 대 40%, 유동비율 12.26 대 2.90 - 마이크론과 SK하이닉스 - 엘곰.md",
+   "hash": "e2cab541700d"
   },
   {
    "id": "und:회계사:같은-불황에도-운전자본이-갈랐다-삼성전자-48-vs-솔브레인-135-엘곰",
