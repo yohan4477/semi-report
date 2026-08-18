@@ -497,6 +497,10 @@ def _axis_html(ax):
             sens_html += _path_html(dcf_path)
         if getattr(dmd, 'SENSITIVITY', None):
             sens_html += _sens_html()
+    elif ax['id'] == 'stmt26':
+        vs = getattr(dmd, 'VS_TABLE', None)
+        if vs:
+            sens_html = _vs_html(vs)
     elif ax['id'] == 'quote':
         qp = getattr(dmd, 'QUOTE_PATH', None)
         if qp:
@@ -591,6 +595,30 @@ def _sens_html():
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '<p class="dm-sn-note">%s</p></div>'
             % (v['label'], _by_badge(v['by']), head, ''.join(body), v['note']))
+
+
+def _vs_html(spec):
+    """두 회사 지표 대조표. 원문 표를 그대로 옮긴 것이라 계산이 한 칸도 없다.
+
+    드라이버 칩으로 흩어 놓으면 「ROE 61.17%」가 누구 값인지, 상대가 얼마인지가
+    각 칩 안에 묻힌다. 같은 줄에 나란히 놓아야 어디서 갈리는지 한눈에 보인다."""
+    ncol = len(spec['head'])
+    head = ''.join('<th>%s</th>' % h for h in spec['head'])
+    body = []
+    for label, rows in spec['bands']:
+        body.append('<tr class="dm-ep-band"><td colspan="%d">%s</td></tr>' % (ncol, label))
+        for r in rows:
+            cells = ''.join('<td%s>%s</td>' % (' class="dm-vs-win"' if j and j == r.get('win') else '', c)
+                            for j, c in enumerate(r['cells']))
+            body.append('<tr>%s</tr>' % cells)
+    url = dc.blob(dmd.SUM + dmd.DOCS[spec['doc']]) + '#L%d' % spec['line']
+    return ('<div class="dm-ep">'
+            '<p class="dm-ep-label">%s %s '
+            '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
+            '<div class="dm-ep-wrap"><table class="dm-ep-tbl dm-vs-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-ep-foot">%s</p></div>'
+            % (spec['lede'], _by_badge('author'), url, head, ''.join(body), spec['foot']))
 
 
 def _path_html(spec):
@@ -1148,6 +1176,12 @@ DM_CSS = '''<style>
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
 /* 연도를 가로로 세운 표. 열이 열 개를 넘어가므로 첫 열(지표 이름)을 붙박이로 둔다 */
+/* 두 회사 대조표. 앞선 쪽 칸만 진하게 — 화살표나 색 배지를 붙이면 표가 시끄럽다 */
+.dm-vs-tbl td{text-align:right;font-variant-numeric:tabular-nums}
+.dm-vs-tbl td:first-child{text-align:left;font-weight:800;color:var(--ink-2)}
+.dm-vs-tbl th{text-align:right}
+.dm-vs-tbl th:first-child{text-align:left}
+.dm-vs-win{color:var(--ink);font-weight:850}
 /* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
    컨센서스든 필자가 깐 것이든 같은 표의 같은 줄이다. 경계만 또렷하면 된다. */
 .dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
