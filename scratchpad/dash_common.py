@@ -46,7 +46,11 @@ PICK_CSS = '''
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
+     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
   .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
          border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
@@ -55,7 +59,7 @@ PICK_CSS = '''
           border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sw-btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
-  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
