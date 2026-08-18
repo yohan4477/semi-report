@@ -390,6 +390,50 @@ def _author_scenarios_html():
         % (au['label'], _by_badge(au['by']), au['lede'], ah2, ab2, au['note']))
 
 
+# 방법이 무엇인지 모르면 표를 봐도 무엇을 견주는지 알 수 없다. 축마다 한 문단으로 붙인다.
+# 「무엇을 가정하나 → 어떻게 값이 나오나 → 어디서 틀리나」 세 조각이다. 값이 아니라 정의라
+# 회사와 무관하고, 데이터 모듈이 아니라 렌더러가 갖는다.
+HOWTO = {
+    'dcf': ('현금흐름할인법',
+            '앞으로 회사가 벌어들일 현금을 해마다 추정하고, 그 돈을 지금 값으로 깎아 더한다. '
+            '깎는 비율이 할인율(WACC)이고, 추정 기간이 끝난 뒤의 값은 영구성장률로 한 덩어리로 묶는다.',
+            '틀리는 자리는 대개 앞 몇 해의 마진이다. 할인율을 1%p 흔드는 것보다 마진 가정을 '
+            '10%p 낮추는 쪽이 값을 훨씬 크게 움직인다.'),
+    'simple': ('간이 현금흐름할인법',
+               '해마다의 매출·마진을 따로 깔지 않고, 최근 잉여현금흐름 하나에 성장률과 할인율만 '
+               '얹어 값을 낸다. 계산이 짧아 가정이 몇 개 안 되는 만큼 가정 하나가 결과를 다 정한다.',
+               '성장률을 몇 %로 놓느냐가 사실상 결론이다. 사이클이 있는 회사에서는 어느 해의 '
+               '현금흐름을 출발점으로 쓰느냐도 같은 무게를 갖는다.'),
+    'rev': ('역산',
+            '값을 내는 대신 반대로 묻는다. 지금 시가총액이 옳다면 회사가 앞으로 얼마를 벌어야 '
+            '하는지를 되돌려 푼다. 나온 숫자를 컨센서스나 과거 실적과 견주면 지금 가격이 무엇을 '
+            '전제하고 있는지가 보인다.',
+            '역산은 적정가를 내지 않는다. 「이 가격이 요구하는 이익」이 현실적인지는 사람이 판단한다.'),
+    'stmt': ('재무제표 분석',
+             '손익계산서·재무상태표·현금흐름표에서 마진, 자본 효율, 부채, 운전자본 같은 지표를 뽑아 '
+             '회사의 지금 상태를 잰다. 값을 매기는 방법이 아니라 값을 매기기 전에 재는 자다.',
+             '지표는 대개 최근 12개월이나 최근 분기 값이다. 사이클 꼭대기에서 잰 수익성은 그 자체로 '
+             '미래를 말해 주지 않는다.'),
+    'mult': ('멀티플',
+             'PER·PBR·EV/EBITDA처럼 이익이나 자산에 몇 배를 쳐 주는지로 값을 잰다. 같은 업종의 '
+             '다른 회사와 견주기 쉬워 가장 널리 쓰인다.',
+             '배수가 낮다고 싼 것이 아니다. 분모(이익)가 꼭대기면 낮은 배수가 오히려 정점 신호일 수 '
+             '있다. 그래서 이익이 얼마나 오래 갈지를 같이 봐야 한다.'),
+}
+
+
+def _howto_html(axis_id):
+    """이 방법이 무엇인지 — 표를 읽기 전에 필요한 정의."""
+    spec = HOWTO.get(axis_id)
+    if not spec:
+        return ''
+    name, what, risk = spec
+    return ('<details class="dm-howto"><summary>%s — 어떤 방법인가</summary>'
+            '<p class="dm-howto-p">%s</p>'
+            '<p class="dm-howto-p dm-howto-risk"><b>어디서 틀리나</b> %s</p>'
+            '</details>' % (name, what, risk))
+
+
 def _axis_html(ax):
     # 역산(rev)은 방향이 반대다 — 가격이 출력이 아니라 입력이다. 그래서 셋과
     # 같은 「적정가」 줄에 세우지 않고, 테두리·머리 색·결과 라벨을 다르게 그린다.
@@ -488,8 +532,8 @@ def _axis_html(ax):
             # 연도별 경로 표(sens_html)가 드라이버 칩보다 먼저 온다. 방법을 눌렀을 때
             # 가장 먼저 보고 싶은 것은 「어느 해에 무엇을 얼마로 놓았나」이기 때문이다.
             % (axis_cls, _PX, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
-               stale_html, sens_html, chain_html, inputs_html, gchips_html, out_html,
-               mr_html, bench_html, auth_html, verdict_html))
+               stale_html, _howto_html(ax['id']) + sens_html, chain_html, inputs_html,
+               gchips_html, out_html, mr_html, bench_html, auth_html, verdict_html))
 
 
 # render()가 호출될 때마다 그 회사의 AXES로 다시 채운다.
@@ -540,34 +584,32 @@ def _path_html(spec):
 
     국면·단계는 원문 표의 행이라 열로 두지 않고 띠로 묶는다. 띠에 그 구간이
     무엇으로 채워졌는지(컨센서스냐 독립 추정이냐)를 적어야 숫자가 읽힌다.
-    메모가 붙은 행은 하이라이트하고, 메모는 아래에 한 줄로 펼친다 — 칸 안에
-    넣으면 좁아서 옆 숫자와 겹친다."""
+    메모는 표 안에 끼우지 않는다. 줄 사이에 문장이 들어가면 위아래 숫자가 끊겨
+    표가 표로 안 읽힌다(2026-08-18 지적). 표 아래에 연도를 앞세워 모아 둔다."""
     ncol = len(spec['head'])
     head = ''.join('<th>%s</th>' % h for h in spec['head'])
-    body = []
+    body, notes = [], []
     for label, rows in spec['bands']:
         body.append('<tr class="dm-ep-band"><td colspan="%d">%s</td></tr>' % (ncol, label))
         for r in rows:
-            cls = []
-            if r.get('note'):
-                cls.append('dm-ep-hi')
-            if r.get('muted'):
-                cls.append('dm-ep-muted')
+            cls = ['dm-ep-muted'] if r.get('muted') else []
             cells = ''.join('<td>%s</td>' % c for c in r['cells'])
             body.append('<tr%s>%s</tr>'
                         % (' class="%s"' % ' '.join(cls) if cls else '', cells))
             if r.get('note'):
-                body.append('<tr class="dm-ep-noterow"><td colspan="%d">%s</td></tr>'
-                            % (ncol, r['note']))
+                notes.append('<li><b>%s</b> %s</li>' % (r['cells'][0], r['note']))
     url = dc.blob(dmd.SUM + dmd.DOCS[spec['doc']]) + '#L%d' % spec['line']
     return ('<div class="dm-ep">'
             '<p class="dm-ep-label">%s %s '
             '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
             '<div class="dm-ep-wrap"><table class="dm-ep-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '%s'
             '<p class="dm-ep-foot">%s</p>'
             '</div>' % (spec['lede'], _by_badge('author'), url, head,
-                        ''.join(body), spec['foot']))
+                        ''.join(body),
+                        ('<ul class="dm-ep-notes">%s</ul>' % ''.join(notes)) if notes else '',
+                        spec['foot']))
 
 
 def _stmt_vs_dcf_html():
@@ -1067,12 +1109,23 @@ DM_CSS = '''<style>
 .dm-ep-hi td{background:var(--sunk);color:var(--ink);font-weight:800;border-bottom:0}
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
-/* 표 안의 메모. 숫자보다 작아야 표가 표로 읽힌다 — 같은 크기면 메모가 줄을 먹는다 */
-.dm-ep-noterow td{background:var(--sunk);color:var(--ink-3);font-size:10px;font-weight:600;
-                  line-height:1.5;letter-spacing:0;padding:0 12px 6px 8px;
-                  border-bottom:1px solid var(--line);
-                  white-space:normal;box-shadow:inset 3px 0 0 var(--line)}
-.dm-ep-noterow td::before{content:"— ";font-size:9px;vertical-align:1px}
+/* 메모는 표 밖, 표 바로 아래에 모은다. 연도를 앞세워 어느 줄 이야기인지 잇는다 */
+/* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
+.dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.dm-howto>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:12px;font-weight:800;
+                  color:var(--ink-2)}
+.dm-howto>summary::-webkit-details-marker{display:none}
+.dm-howto>summary::after{content:"▾";float:right;color:var(--ink-3);font-size:10px}
+.dm-howto[open]>summary::after{content:"▴"}
+.dm-howto-p{font-size:11.5px;line-height:1.65;color:var(--ink-3);margin:0 12px 10px}
+.dm-howto-risk b{color:var(--ink-2);font-weight:800;margin-right:4px}
+.dm-ep-notes{list-style:none;margin:9px 0 0;padding:0}
+.dm-ep-notes li{font-size:11px;line-height:1.6;color:var(--ink-3);margin:0 0 4px;padding-left:11px;
+                position:relative}
+.dm-ep-notes li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:1px;
+                        background:var(--line)}
+.dm-ep-notes b{color:var(--ink-2);font-weight:800;margin-right:5px;
+               font-variant-numeric:tabular-nums}
 .dm-ep-muted td{color:var(--ink-3)}
 .dm-ep-tbl tr:last-child td{border-bottom:0}
 .dm-ep-punch{font-size:13px;line-height:1.62;color:var(--ink-2);margin:11px 0 0;
