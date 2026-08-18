@@ -7319,6 +7319,27 @@
  "content/understanding/회계사/[260811] 목표주가는 260만원인데 주가는 반토막 - 반도체 3사 IB 관점 - 엘곰.md#L36": {
   "sha1": "0f3a62faf9d6"
  },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L13": {
+  "sha1": "dff45819710e"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L17": {
+  "sha1": "6cbaf0115212"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L21": {
+  "sha1": "593075561cbf"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L23": {
+  "sha1": "736f8f39fd6d"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L34": {
+  "sha1": "3df441e8a2f7"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L36": {
+  "sha1": "9be85e84047c"
+ },
+ "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L7": {
+  "sha1": "9140a8a3d127"
+ },
  "content/understanding/회계사/[260816] 멀티플을 가르는 것은 성장률이 아니라 이익 지속기간 - 삼성전자·SK하이닉스 - 엘곰.md#L13": {
   "sha1": "1379f95295f3"
  },
@@ -7408,6 +7429,72 @@
  },
  "content/understanding/회계사/[260817] DCF 내재가치 188만원, 주가보다 14.3% 위 - SK하이닉스 - 엘곰.md#L66": {
   "sha1": "1052328f19c3"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L13": {
+  "sha1": "685157931317"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L15": {
+  "sha1": "f4db99f8d72e"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L19": {
+  "sha1": "96e2579a44be"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L21": {
+  "sha1": "66d4d5cd7056"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L23": {
+  "sha1": "2948d85b4f80"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L30": {
+  "sha1": "cc8276ba690b"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L32": {
+  "sha1": "23be35bdac3d"
+ },
+ "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md#L7": {
+  "sha1": "07a69ee94fb3"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L11": {
+  "sha1": "32e1682f9186"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L13": {
+  "sha1": "c6251a5419d6"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L15": {
+  "sha1": "2a9daed1a3ee"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L17": {
+  "sha1": "98bed3083aca"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L19": {
+  "sha1": "7b523897755f"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L21": {
+  "sha1": "07394a672c0a"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L23": {
+  "sha1": "d38702277b65"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L27": {
+  "sha1": "6246465e07f3"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L29": {
+  "sha1": "0a8edf3c7f87"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L31": {
+  "sha1": "fc844fe9f4be"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L33": {
+  "sha1": "5bd1aa8c9fc7"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L37": {
+  "sha1": "62b45b6ad124"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L41": {
+  "sha1": "98bc80ef6969"
+ },
+ "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md#L7": {
+  "sha1": "8a03e7bb30db"
  },
  "input/clippings/Meta Compute Everyone Wants To Be A Neocloud.md#L100": {
   "sha1": "db58e8da4da7"

@@ -2342,6 +2342,17 @@
    "hash": "3285e839986e"
   },
   {
+   "id": "und:회계사:어닝서프라이즈와-플러스-FCF-없인-주가는-안-오른다-AI-빅테크-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-17",
+   "path": "content/understanding/회계사/[260817] 어닝서프라이즈와 플러스 FCF 없인 주가는 안 오른다 - AI 빅테크 - 엘곰.md",
+   "hash": "9124fa046b7e"
+  },
+  {
    "id": "und:회계사:엔비디아-TSMC-삼성전자-SK하이닉스-투자지표-비교-Yahoofinancials-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2364,6 +2375,17 @@
    "hash": "27a1ebcfd73d"
   },
   {
+   "id": "und:회계사:이익은-부풀고-부채는-숨고-수요는-순환한다-AI-투자-리스크-다섯-가지-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-17",
+   "path": "content/understanding/회계사/[260817] 이익은 부풀고 부채는 숨고 수요는 순환한다 - AI 투자 리스크 다섯 가지 - 엘곰.md",
+   "hash": "4e827b70d90b"
+  },
+  {
    "id": "und:회계사:총자본-364조-vs-시총-334조-PBR-1-밑으로-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2373,6 +2395,17 @@
    "date": "2024-10-26",
    "path": "content/understanding/회계사/[241026] 총자본 364조 vs 시총 334조, PBR 1 밑으로 - 삼성전자 - 엘곰.md",
    "hash": "8f84e2e3f46c"
+  },
+  {
+   "id": "und:회계사:토큰-값이-아니라-회사-아키텍처가-AI-비용을-결정한다-AI-토크노믹스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-13",
+   "path": "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md",
+   "hash": "d9222fe26c17"
   },
   {
    "id": "und:회계사:판매장려금이-핵심감사사항인-이유-IFRS-15-변동대가-삼성전자-엘곰",
