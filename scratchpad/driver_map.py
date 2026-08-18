@@ -319,7 +319,9 @@ def _driver_table_html(ax):
         by_doc.setdefault(d['doc'], []).append(did)
     if not by_doc:
         return ''
-    keys = sorted(by_doc)
+    # 최신이 맨 왼쪽이다. 지금 유효한 값이 무엇인지부터 보여야 하고, 오래된 편을
+    # 먼저 세우면 첫 탭이 늘 옛날 숫자가 된다(2026-08-19 지적).
+    keys = sorted(by_doc, reverse=True)
 
     def panel(k, hidden):
         gist = _doc_gist(k)
