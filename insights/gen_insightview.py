@@ -107,7 +107,7 @@ def period(meta, src):
 
 
 def roster(meta):
-    """수혜·비수혜 회사를 카드 맨 앞에 세운다 — 접힌 상태에서 이름부터 보여야
+    """수혜·비수혜 회사를 제목보다 위에 세운다 — 접힌 상태에서 이름부터 보여야
     「그래서 누가 받나」를 본문 안에서 찾아 읽지 않는다. frontmatter의
     winners·losers에 회사 이름만 적는다(근거는 본문 표가 진다)."""
     w = (meta.get('winners') or '').strip()
@@ -125,11 +125,13 @@ def roster(meta):
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
+    # 수혜·비수혜 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
+    # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
-            '%s<h2 id="%s">%s</h2>'
-            '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
-            % (tab, nl.esc(kind), period(meta, src),
-               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')), roster(meta),
+            '%s%s<h2 id="%s">%s</h2>'
+            '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
+            % (tab, nl.esc(kind), period(meta, src), roster(meta),
+               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
 
 
@@ -327,14 +329,14 @@ CARD_CSS = r'''
   /* 근거가 오래된 카드는 겉면에서 바로 보이게 — 옛날 이야기를 지금 이야기로 읽지 않도록 */
   .asof.stale{color:#b45309;font-weight:600}
   .asof.stale::after{content:' · 오래됨'}
-  .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
+  .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:6px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
   /* 수혜·비수혜 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
   /* 맨 위 고정 층 — 타일을 고르기 전에도 보인다 */
   .topsec{margin:18px 0 6px;padding:14px 0 4px;border-top:2px solid var(--accent);
         border-bottom:1px solid var(--line)}
   .topsec .ihead .inum{color:var(--accent)}
-  .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:9px 0 0}
+  .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 0;clear:right}
   .rk{flex:none;font-size:var(--t-lbl);font-weight:800;letter-spacing:.04em;
       border-radius:999px;padding:2px 8px}
   .rk-w{color:var(--accent);background:var(--soft)}
