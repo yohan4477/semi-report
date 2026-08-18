@@ -489,6 +489,12 @@ def _axis_html(ax):
         owner_html = ('<details class="dm-owner"><summary>주인장이 본 지금 시점의 결론</summary>'
                       '%s</details>' % _scenario_html())
 
+    # 비교·추이는 표로 낸다. 어느 축에든 걸 수 있게 축 id로 찾는다.
+    # VS_TABLES = {축 id: spec} (한 축에 여럿이면 리스트로 준다)
+    vs_html = ''
+    for spec in (getattr(dmd, 'VS_TABLES', {}) or {}).get(ax['id'], []) or []:
+        vs_html += _vs_html(spec)
+
     sens_html = ''
     if ax['id'] == 'dcf':
         # 연도별 추정이 이 방법의 본체다. 민감도는 그 결과를 흔들어 본 것이라 뒤에 둔다.
@@ -497,10 +503,6 @@ def _axis_html(ax):
             sens_html += _path_html(dcf_path)
         if getattr(dmd, 'SENSITIVITY', None):
             sens_html += _sens_html()
-    elif ax['id'] == 'stmt26':
-        vs = getattr(dmd, 'VS_TABLE', None)
-        if vs:
-            sens_html = _vs_html(vs)
     elif ax['id'] == 'quote':
         qp = getattr(dmd, 'QUOTE_PATH', None)
         if qp:
@@ -550,7 +552,7 @@ def _axis_html(ax):
             # 연도별 경로 표(sens_html)가 드라이버 칩보다 먼저 온다. 방법을 눌렀을 때
             # 가장 먼저 보고 싶은 것은 「어느 해에 무엇을 얼마로 놓았나」이기 때문이다.
             % (axis_cls, _PX, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
-               stale_html, _howto_html(ax['id']) + sens_html, chain_html, inputs_html,
+               stale_html, _howto_html(ax['id']) + vs_html + sens_html, chain_html, inputs_html,
                gchips_html, out_html + owner_html, mr_html, bench_html, auth_html, verdict_html))
 
 
@@ -648,9 +650,13 @@ def _path_html(spec):
                 cls.append('dm-ep-muted')
             ccls.append(' class="%s"' % ' '.join(cls))
 
-    band_row = ''.join('<th class="dm-ep-bandh dm-ep-b%d%s" colspan="%d">%s</th>'
-                       % (bi % 3, ' dm-ep-bcut' if bi else '', n, lab)
-                       for lab, n, bi in bands)
+    # 구간은 머리에 colspan 띠로 얹지 않는다. 띠는 칸보다 길어 잘리고, 그 줄 하나 때문에
+    # 표 위가 벌어졌다. 지표처럼 한 행으로 내려 열마다 짧은 이름을 적는다(2026-08-19).
+    short = []
+    for lab, n, _bi in bands:
+        nm = lab.split('·')[0].split('—')[0].strip()
+        short += [nm] * n
+    band_row = ''.join('<td%s>%s</td>' % (ccls[i], short[i]) for i in range(len(cols)))
     year_row = ''.join('<th%s>%s</th>' % (ccls[i], c['cells'][0])
                        for i, c in enumerate(cols))
     body = []
@@ -666,14 +672,14 @@ def _path_html(spec):
             '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
             '<div class="dm-ep-wrap"><table class="dm-ep-tbl dm-ep-wide">'
             '%s'
-            '<thead><tr><th class="dm-ep-corner"></th>%s</tr>'
-            '<tr><th class="dm-ep-corner">%s</th>%s</tr></thead>'
-            '<tbody>%s</tbody></table></div>'
+            '<thead><tr><th class="dm-ep-corner">%s</th>%s</tr></thead>'
+            '<tbody><tr class="dm-ep-bandrow"><th scope="row">구간</th>%s</tr>%s</tbody>'
+            '</table></div>'
             '%s'
             '<p class="dm-ep-foot">%s</p>'
             '</div>' % (spec['lede'], _by_badge('author'), url,
                         '<colgroup><col class="dm-ep-mt">%s</colgroup>' % ('<col class="dm-ep-yr">' * len(cols)),
-                        band_row, spec['head'][0], year_row, ''.join(body),
+                        spec['head'][0], year_row, band_row, ''.join(body),
                         ('<ul class="dm-ep-notes">%s</ul>' % ''.join(notes)) if notes else '',
                         spec['foot']))
 
@@ -1176,8 +1182,11 @@ DM_CSS = '''<style>
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
 /* 연도를 가로로 세운 표. 열이 열 개를 넘어가므로 첫 열(지표 이름)을 붙박이로 둔다 */
-/* 두 회사 대조표. 앞선 쪽 칸만 진하게 — 화살표나 색 배지를 붙이면 표가 시끄럽다 */
-.dm-vs-tbl td{text-align:right;font-variant-numeric:tabular-nums}
+/* 두 회사 대조표. 한 화면에 들어와야 나란히 놓은 뜻이 산다 — 줄 높이를 조인다.
+   앞선 쪽 칸만 진하게. 화살표나 색 배지를 붙이면 표가 시끄럽다. */
+.dm-vs-tbl td{text-align:right;font-variant-numeric:tabular-nums;padding:3px 12px 3px 8px}
+.dm-vs-tbl th{padding:3px 12px 5px 8px}
+.dm-vs-tbl .dm-ep-band td{padding:3px 8px}
 .dm-vs-tbl td:first-child{text-align:left;font-weight:800;color:var(--ink-2)}
 .dm-vs-tbl th{text-align:right}
 .dm-vs-tbl th:first-child{text-align:left}
@@ -1199,7 +1208,13 @@ DM_CSS = '''<style>
      overflow:hidden;text-overflow:ellipsis;
      padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
      box-shadow:1px 0 0 var(--line)}
-.dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;
+     padding:4px 12px 4px 8px}
+.dm-ep-wide thead th{padding:4px 12px 6px 8px}
+/* 구간 행 — 숫자가 아니라 이름이라 작게, 위아래 선으로 묶는다 */
+.dm-ep-bandrow td{font-size:10px;font-weight:850;letter-spacing:.02em;color:var(--ink-3);
+     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dm-ep-bandrow th[scope="row"]{font-size:10px;color:var(--ink-3)}
 .dm-ep-wide thead th{text-align:right;white-space:nowrap}
 .dm-ep-corner{position:sticky;left:0;z-index:3;background:var(--surface);text-align:left !important;box-shadow:1px 0 0 var(--line)}
 .dm-ep-bandh{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
@@ -2060,7 +2075,10 @@ def _axis_button_html(ax, stale):
     date_html = '<span class="dm-axisbtn-date">%s</span>' % ax['latest'][1]
     sub_html = ''
     if stale:
-        docs = _axis_driver_docs(aid)
+        # 값이 표로 옮겨 간 축은 드라이버가 하나도 없을 수 있다. 그때는 축이 선언한
+        # docs로 기간을 잡는다 — 표만으로 서는 축도 버튼에 날짜가 있어야 한다.
+        docs = _axis_driver_docs(aid) or sorted(ax.get('docs') or [])
+    if stale and docs:
         # 한 글에서만 온 축은 「2025-12-10 ~ 2025-12-10」이 된다. 한 번만 적는다.
         span = (_doc_date(docs[0]) if docs[0] == docs[-1]
                 else '%s ~ %s' % (_doc_date(docs[0]), _doc_date(docs[-1])))
