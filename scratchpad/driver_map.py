@@ -1260,8 +1260,9 @@ DM_CSS = '''<style>
 .dm-dvt-head th{text-align:left;font-size:12.5px;font-weight:850;color:var(--ink);
      padding:12px 0 5px;border-top:1px solid var(--line)}
 .dm-dvt tr:first-child .dm-dvt-head th, .dm-dvt-head:first-child th{border-top:0;padding-top:2px}
-.dm-dvt th[scope="row"]{width:52px;text-align:left;font-size:10.5px;font-weight:800;
-     color:var(--ink-3);letter-spacing:.03em;padding:3px 8px 3px 0;vertical-align:top}
+.dm-dvt th[scope="row"]{width:34px;text-align:left;font-size:10px;font-weight:800;
+     color:var(--ink-3);letter-spacing:0;padding:3px 6px 3px 0;vertical-align:top;
+     white-space:nowrap}
 .dm-dvt td{padding:3px 0;vertical-align:top;color:var(--ink-3);line-height:1.6;
      overflow-wrap:anywhere}
 .dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);font-variant-numeric:tabular-nums}
@@ -1273,7 +1274,7 @@ DM_CSS = '''<style>
 .dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
 @media (max-width:560px){
   .dm-dvt{font-size:11.5px}
-  .dm-dvt th[scope="row"]{width:44px;font-size:10px}
+  .dm-dvt th[scope="row"]{width:30px;font-size:9.5px;padding-right:5px}
 }
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
