@@ -258,31 +258,41 @@ def _judgment_inline_html(did):
 _GROUP_OF = {}
 
 
-def _driver_row_html(did):
-    """드라이버 한 줄. 값과 근거와 설명이 같은 줄에 있어야 「이 숫자를 왜 이렇게 놓았나」가
-    한 번에 읽힌다. 블록으로 쌓아 두면 값 하나에 문단 둘이 붙어 축 하나가 화면 여러 판이
-    됐다(2026-08-19)."""
+def _driver_cells(did):
+    """드라이버 한 개를 열 하나로 낸다 — (이름, 값, 근거, 설명).
+
+    가로가 드라이버, 세로가 항목이다. 값이 여럿일 때 「얼마」끼리 한 줄에 서야
+    서로 견줘진다. 세로로 쌓으면 값 하나를 보려고 설명 문단을 건너뛰어야 한다."""
     d = dmd.DRIVERS[did]
     basis_label, basis_desc = dmd.BASIS[d['basis']]
-    none_cls = ' class="dm-dv--none"' if d['basis'] == 'none' else ''
     grp = _GROUP_OF.get(did, '')
-    return ('<tr%s>'
-            '<th scope="row">%s%s</th>'
-            '<td class="dm-dvt-val">%s</td>'
-            '<td class="dm-dvt-basis"><span class="dm-basis%s" title="%s">%s</span></td>'
-            '<td class="dm-dvt-why">%s'
-            '<span class="dm-dvt-impact"><b>그래서</b> %s</span>%s</td>'
-            '</tr>'
-            % (none_cls, d['label'],
-               ('<span class="dm-dv-grp">%s</span>' % grp) if grp else '',
-               d['base'],
-               ' dm-basis--none' if d['basis'] == 'none' else '', basis_desc, basis_label,
-               d['why'], d['impact'], _judgment_inline_html(did)))
+    name = ('%s%s' % (d['label'],
+                      ('<span class="dm-dv-grp">%s</span>' % grp) if grp else ''))
+    basis = ('<span class="dm-basis%s" title="%s">%s</span>'
+             % (' dm-basis--none' if d['basis'] == 'none' else '', basis_desc, basis_label))
+    why = ('%s<span class="dm-dvt-impact"><b>그래서</b> %s</span>%s'
+           % (d['why'], d['impact'], _judgment_inline_html(did)))
+    return name, d['base'], basis, why, d['basis'] == 'none'
+
+
+def _drivers_table_html(dids):
+    """세로 항목 넷(무엇·얼마·근거·왜), 가로 드라이버."""
+    cols = [_driver_cells(x) for x in dids]
+    def row(label, idx, cls=''):
+        tds = ''.join('<td%s>%s</td>'
+                      % (' class="dm-dv--none"' if c[4] else '', c[idx]) for c in cols)
+        return '<tr%s><th scope="row">%s</th>%s</tr>' % (cls, label, tds)
+    body = (row('무엇', 0, ' class="dm-dvt-namerow"')
+            + row('얼마', 1, ' class="dm-dvt-valrow"')
+            + row('근거', 2)
+            + row('왜 그렇게 놓았나', 3, ' class="dm-dvt-whyrow"'))
+    return ('<div class="dm-dvt-wrap"><table class="dm-dvt"><tbody>%s</tbody></table></div>'
+            % body)
 
 
 def _driver_block_html(did):
-    """옛 이름 — 표 한 줄을 낸다. 부르는 자리가 여럿이라 이름을 남겨 둔다."""
-    return _driver_row_html(did)
+    """옛 이름 — 드라이버 하나짜리 표를 낸다. 부르는 자리가 남아 있어 이름을 지키다."""
+    return _drivers_table_html([did])
 
 
 def _doc_gist(key):
@@ -342,10 +352,7 @@ def _driver_table_html(ax):
                 % (_PX, ax['id'], k, ax['id'], k, ' hidden' if hidden else '',
                    _doc_title(k), url,
                    ('<p class="dm-dvdoc-gist">%s</p>' % gist) if gist else '',
-                   ('<div class="dm-dvt-wrap"><table class="dm-dvt">'
-                    '<thead><tr><th>무엇</th><th>얼마</th><th>근거</th>'
-                    '<th>왜 그렇게 놓았나</th></tr></thead><tbody>%s</tbody></table></div>'
-                    % ''.join(_driver_row_html(x) for x in by_doc[k]))))
+                   _drivers_table_html(by_doc[k])))
 
     if len(keys) == 1:
         body = panel(keys[0], False)
@@ -1245,24 +1252,24 @@ DM_CSS = '''<style>
 /* 드라이버 표 — 값 하나에 문단 둘을 붙이던 블록을 한 줄로 바꿨다 */
 .dm-dvt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 10px}
 .dm-dvt{width:100%;border-collapse:collapse;font-size:12px}
-.dm-dvt thead th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
-     text-align:left;padding:0 10px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
-.dm-dvt th[scope="row"]{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink-2);
-     padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);min-width:92px}
-.dm-dvt td{padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
-     color:var(--ink-3);line-height:1.6}
+/* 가로가 드라이버, 세로가 항목이다. 첫 열(항목 이름)은 붙박이로 두고 나머지가 스크롤한다 */
+.dm-dvt th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
+     text-align:left;font-size:10.5px;font-weight:850;color:var(--ink-3);letter-spacing:.03em;
+     padding:8px 8px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
+     white-space:nowrap;box-shadow:1px 0 0 var(--line)}
+.dm-dvt td{padding:8px 12px 8px 8px;vertical-align:top;border-bottom:1px solid var(--line);
+     color:var(--ink-3);line-height:1.6;min-width:190px;max-width:300px}
 .dm-dvt tr:last-child th, .dm-dvt tr:last-child td{border-bottom:0}
-.dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);white-space:nowrap;
+.dm-dvt-namerow td{font-size:11.5px;font-weight:800;color:var(--ink-2)}
+.dm-dvt-valrow td{font-size:13px;font-weight:850;color:var(--ink);
      font-variant-numeric:tabular-nums}
-.dm-dvt-basis{white-space:nowrap}
-.dm-dvt-why{min-width:220px}
+.dm-dvt-whyrow td{font-size:11.5px}
 .dm-dvt-impact{display:block;margin-top:4px;color:var(--ink-2)}
 .dm-dvt-impact b{color:var(--ink);font-weight:850;margin-right:4px}
 .dm-dvt .dm-dv-grp{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:2px}
-.dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
+.dm-dvt td.dm-dv--none{box-shadow:inset 3px 0 0 var(--risk)}
 @media (max-width:560px){
-  .dm-dvt-why{min-width:170px}
-  .dm-dvt th[scope="row"]{min-width:78px;font-size:11px}
+  .dm-dvt td{min-width:150px;max-width:230px;font-size:11px}
 }
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
@@ -1568,8 +1575,10 @@ DM_CSS = '''<style>
              background:var(--accent);color:var(--surface);
              font-size:9.5px;font-weight:900;line-height:1}
 
-.dm-axis-out{display:flex;flex-direction:column;gap:2px;margin:0 0 10px;padding-top:10px;
-             border-top:1px solid var(--line)}
+/* 「결과」 꼬리표와 값이 붙어 「결과주당 내재가치…」로 읽혔다(2026-08-19).
+   같은 줄에 두되 사이를 벌리고, 좁으면 값이 아래로 내려간다. */
+.dm-axis-out{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px;margin:0 0 10px;
+             padding-top:10px;border-top:1px solid var(--line)}
 .dm-axis-out-tag{font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.04em}
 .dm-axis-out-val{font-size:13px;font-weight:800;color:var(--ink)}
                   width:100%;text-align:left;font:inherit;cursor:pointer;padding:10px 0 0;
