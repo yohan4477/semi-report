@@ -485,8 +485,10 @@ def _axis_html(ax):
             '%s'
             '%s'
             '</article>'
+            # 연도별 경로 표(sens_html)가 드라이버 칩보다 먼저 온다. 방법을 눌렀을 때
+            # 가장 먼저 보고 싶은 것은 「어느 해에 무엇을 얼마로 놓았나」이기 때문이다.
             % (axis_cls, _PX, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
-               stale_html, inputs_html, chain_html, gchips_html, out_html, sens_html,
+               stale_html, sens_html, chain_html, inputs_html, gchips_html, out_html,
                mr_html, bench_html, auth_html, verdict_html))
 
 
