@@ -43,7 +43,7 @@
    ],
    "date": "2026-05-01",
    "path": "content/linkedin/[2605] 링크드인 게시물.md",
-   "hash": "34ffe9c3efac"
+   "hash": "c7d56c24c81d"
   },
   {
    "id": "li:root:2606-링크드인-게시물",
@@ -76,7 +76,7 @@
    ],
    "date": "2026-08-01",
    "path": "content/linkedin/[2608] 링크드인 게시물.md",
-   "hash": "361b16bb09d5"
+   "hash": "cc8339f5ecf3"
   },
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
@@ -2098,6 +2098,17 @@
    "date": "2024-07-04",
    "path": "content/understanding/회계사/[240704] DCF 결과 697조, 시장가치의 143% - 주식가치 평가 4 - 삼성전자 - 엘곰.md",
    "hash": "d3f6a8620317"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-188만원-주가보다-143-위-SK하이닉스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-17",
+   "path": "content/understanding/회계사/[260817] DCF 내재가치 188만원, 주가보다 14.3% 위 - SK하이닉스 - 엘곰.md",
+   "hash": "5654bb4f974e"
   },
   {
    "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
