@@ -476,6 +476,30 @@
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
             --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
   }
+
+  .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
+    background:var(--sunk); padding:0 16px; }
+  .intro > summary { list-style:none; cursor:pointer; padding:13px 0; display:flex;
+    align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .intro > summary::-webkit-details-marker { display:none; }
+  .intro > summary::after { content:"▾"; margin-left:auto; color:var(--ink-3); font-size:12px; }
+  .intro[open] > summary::after { content:"▴"; }
+  .in-t { font-size:14px; font-weight:800; color:var(--ink); }
+  .in-s { font-size:12px; color:var(--ink-3); }
+  .in-b { padding:0 0 16px; }
+  .in-lede { margin:0 0 16px; font-size:13px; line-height:1.7; color:var(--ink-2); }
+  .csteps { display:grid; grid-template-columns:1fr 1fr; gap:18px 26px; }
+  @media (max-width:720px) { .csteps { grid-template-columns:1fr; } }
+  .cs-h { margin:0 0 4px; font-size:14px; font-weight:800; color:var(--ink); }
+  .cs-h .cs-n { display:inline-block; min-width:20px; color:var(--accent-ink); }
+  .cs-why { margin:0 0 8px 20px; font-size:12.5px; line-height:1.6; color:var(--ink-2); }
+  .course { margin-left:20px; }
+  .course ol { margin:0; padding-left:17px; }
+  .course li { font-size:12.5px; line-height:1.65; margin-bottom:3px; }
+  .course li:last-child { margin-bottom:0; }
+  .course a.kin-link { color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--line); }
+  .course a.kin-link:hover { border-bottom-color:var(--accent); }
 </style>
 
 <div class="wrap">
@@ -490,7 +514,7 @@
     </div>
   </header>
 
-  
+  <details class="intro" open><summary><span class="in-t">처음 오셨다면</span><span class="in-s">카드 14장을 네 단계로</span></summary><div class="in-b"><p class="in-lede">카드 14장을 어디서부터 읽을지 정해 두었습니다. 앞 단계는 매달 내는 요금 이야기고, 뒤로 갈수록 그 요금을 정하는 발전원과 기름길로 들어갑니다. 제목을 누르면 그 카드가 열립니다.</p><div class="csteps"><div class="cstep"><p class="cs-h"><span class="cs-n">1</span>요금이 왜 오르나</p><p class="cs-why">매달 내는 값에서 시작한다. 무엇을 더 지어도 요금이 내려가지 않는 까닭을 셋으로 나눠 본다.</p><div class="course"><ol><li><a class="kin-link" href="#card-태양광-세배로-전기요금-오른단-얘기입니다-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">태양광 세배로? 전기요금 오른단 얘기입니다 <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li><li><a class="kin-link" href="#card-원전만으로는-전기요금-오르는-거-못-막습니다-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">원전만으로는, 전기요금 오르는 거 못 막습니다 <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li><li><a class="kin-link" href="#card-서울-지방-따로-전기요금-영국은-왜-실패했을까-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">서울-지방 따로 전기요금… 영국은 왜 실패했을까? <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">2</span>그 전기를 무엇으로 만드나</p><p class="cs-why">발전원을 바꾸면 재료값과 이웃 나라 사정이 따라온다. 요금 이야기의 뒷면이다.</p><div class="course"><ol><li><a class="kin-link" href="#card-은-가격-급등이-태양광-때문이다-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">은 가격 급등이 태양광 때문이다? <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li><li><a class="kin-link" href="#card-독일-신재생-전기-때문에-북유럽이-빡친-이유-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">독일 신재생 전기 때문에 북유럽이 빡친 이유 <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">3</span>기름이 오는 길</p><p class="cs-why">어디서 나와 어느 해협을 지나 오는지다. 대체가 왜 어려운지까지 이어 읽는다.</p><div class="course"><ol><li><a class="kin-link" href="#card-중동산-기름-미국산으로-대체가-어려운-이유-span-style-font-weight-600-font-size-78em-opacity-65-원유-다변화-연작-span">중동산 기름, 미국산으로 대체가 어려운 이유 <span style="font-weight:600;font-size:.78em;opacity:.65;">(원유 다변화 연작)</span></a></li><li><a class="kin-link" href="#card-호르무즈-막히는-것보다-더-큰일이-생긴다고-span-style-font-weight-600-font-size-78em-opacity-65-밥-엘-만데브-해협-span">호르무즈 막히는 것보다, 더 큰일이 생긴다고? <span style="font-weight:600;font-size:.78em;opacity:.65;">(밥 엘-만데브 해협)</span></a></li><li><a class="kin-link" href="#card-미국의-석유-치킨게임-이란이-불리한-이유-span-style-font-weight-600-font-size-78em-opacity-65-원유-다변화-연작-span">미국의 석유 치킨게임…이란이 불리한 이유 <span style="font-weight:600;font-size:.78em;opacity:.65;">(원유 다변화 연작)</span></a></li><li><a class="kin-link" href="#card-미국이-베네수엘라를-친-건-캐나다-때문이다-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">미국이 베네수엘라를 친 건, 캐나다 때문이다? <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">4</span>전쟁과 공장</p><p class="cs-why">길이 막히는 쪽과, 그 사이 국내에 지어지는 공장이다. 수출 통제 이야기를 여기 붙인다.</p><div class="course"><ol><li><a class="kin-link" href="#card-호르무즈-해협-봉쇄-맞불-하르그섬-뭐길래-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">호르무즈 해협 봉쇄 맞불… 하르그섬 뭐길래? <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li><li><a class="kin-link" href="#card-미군은-이란-미사일-지옥에-빠졌나-span-style-font-weight-600-font-size-78em-opacity-65-백브리핑-텍스트-span">미군은 이란 미사일 지옥에 빠졌나 <span style="font-weight:600;font-size:.78em;opacity:.65;">(백브리핑 텍스트)</span></a></li><li><a class="kin-link" href="#card-중국이-미국-GPU-통제를-뚫은-구멍-셋-밀수-원격접속-증류">중국이 미국 GPU 통제를 뚫은 구멍 셋 — 밀수 · 원격접속 · 증류</a></li><li><a class="kin-link" href="#card-호남-반도체-산단-4년-만에-완공-가능할까-span-style-font-weight-600-font-size-78em-opacity-65-호남-반도체-연작-span">호남 반도체 산단, 4년 만에 완공 가능할까? <span style="font-weight:600;font-size:.78em;opacity:.65;">(호남 반도체 연작)</span></a></li><li><a class="kin-link" href="#card-호남-반도체-펩-원전이-구세주입니다-span-style-font-weight-600-font-size-78em-opacity-65-호남-반도체-연작-span">호남 반도체 펩, 원전이 구세주입니다 <span style="font-weight:600;font-size:.78em;opacity:.65;">(호남 반도체 연작)</span></a></li></ol></div></div></div></div></details>
 
   <div class="scope-tabs">
     <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">6</span></button>

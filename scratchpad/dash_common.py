@@ -423,6 +423,21 @@ COURSE_CSS = '''
 '''
 
 
+def by_frag(cards, frags):
+    """짧은 조각으로 카드 제목을 찾아 돌려준다.
+
+    읽는 순서(course)는 제목을 그대로 적어야 하는데, 카드 제목에는 연작 표시 같은 태그가
+    섞여 있어 손으로 옮기면 어긋난다. 조각 하나가 카드 둘을 가리키거나 하나도 못 가리키면
+    여기서 멈춘다 — 조용히 엉뚱한 카드가 걸리는 것보다 낫다."""
+    out = []
+    for f in frags:
+        hits = [c['title'] for c in cards if f in c['title']]
+        assert len(hits) == 1, ('읽는 순서의 조각이 카드 하나를 못 가리킨다: %r — %d건 %s'
+                                % (f, len(hits), [h[:30] for h in hits]))
+        out.append(hits[0])
+    return out
+
+
 def course(cards, steps, lede):
     """읽는 순서를 render(intro=…)에 넣을 한 덩어리로 만든다. lede에 %d 하나(카드 수)."""
     have = {c['title'] for c in cards}
