@@ -26,7 +26,7 @@ GROUPS = (# 수혜 기업은 주제가 아니라 가로지르는 물음이다("�
           ('estate', '부동산', '집을 짓고 사고 파는 쪽 — 공급부터 세금까지'))
 
 # (id, 큰 묶음, 이름, 설명)
-SECTIONS = (('winner', 'winner', '수혜 기업과 위험에 빠진 기업', '지금 나온 숫자로 누가 값을 받고 누가 밀리나'),
+SECTIONS = (('winner', 'winner', '수혜 기업과 위기에 빠진 기업', '지금 나온 숫자로 누가 값을 받고 누가 밀리나'),
             ('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
             ('power', 'ai', '전력 · 데이터센터', '전력망 제약과 자가발전, 랙 밀도와 냉각'),
             ('model', 'ai', '모델 · 학습', '강화학습과 환경 제작, 모델 구조'),
@@ -107,7 +107,7 @@ def period(meta, src):
 
 
 def roster(meta):
-    """수혜 기업과 위험에 빠진 기업을 제목보다 위에 세운다 — 접힌 상태에서 이름부터 보여야
+    """수혜 기업과 위기에 빠진 기업을 제목보다 위에 세운다 — 접힌 상태에서 이름부터 보여야
     「그래서 누가 받나」를 본문 안에서 찾아 읽지 않는다. frontmatter의
     winners·losers에 회사 이름만 적는다(근거는 본문 표가 진다)."""
     w = (meta.get('winners') or '').strip()
@@ -118,20 +118,20 @@ def roster(meta):
     if w:
         out.append('<span class="rk rk-w">수혜 기업</span><span class="rv">%s</span>' % nl.esc(w))
     if l:
-        out.append('<span class="rk rk-l">위험에 빠진 기업</span><span class="rv">%s</span>' % nl.esc(l))
+        out.append('<span class="rk rk-l">위기에 빠진 기업</span><span class="rv">%s</span>' % nl.esc(l))
     return '<p class="rost">%s</p>' % ''.join(out)
 
 
 # 「수혜 기업」 층은 카드를 열기 전에 한눈에 대조하는 자리다. 카드마다 명단을 따로 읽으면
 # 어느 회사가 어느 판단에서 받는 쪽인지 겹쳐 보이지 않는다 — 한 표에 나란히 세운다.
-# 열 순서는 수혜 기업·위험에 빠진 기업·제목이다. 판단 제목보다 회사 이름이 먼저 읽혀야 한다.
+# 열 순서는 수혜 기업·위기에 빠진 기업·제목이다. 판단 제목보다 회사 이름이 먼저 읽혀야 한다.
 def roster_table(metas):
     rows = [m for m in metas if (m.get('winners') or '').strip()
             or (m.get('losers') or '').strip()]
     if not rows:
         return ''
     h = ['<div class="rtwrap"><table class="rtab"><thead><tr>'
-         '<th class="rt-w">수혜 기업</th><th class="rt-l">위험에 빠진 기업</th><th>제목</th>'
+         '<th class="rt-w">수혜 기업</th><th class="rt-l">위기에 빠진 기업</th><th>제목</th>'
          '</tr></thead><tbody>']
     for m in rows:
         head = m.get('headline') or ''
