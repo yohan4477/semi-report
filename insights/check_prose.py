@@ -251,6 +251,45 @@ _ENT = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&#39;',
         ('&nbsp;', ' ')]
 
 
+# 페이지 안내(「같은 영상에서 나온 카드」·「읽는 순서」)는 다른 자리에 있는 카드 제목을
+# 그대로 되풀이한다. 산문이 아니라 길잡이다. 그대로 세면 제목 하나가 문서에 여러 번
+# 있는 것으로 잡혀 밀도 규칙이 헛돈다 — 2026-08-18에 P9 대구가 2회에서 5회로 뛴 원인이
+# 이것이었다. script를 통째로 빼는 이유(같은 문장을 두 번 잡는다)와 같다.
+_ECHO_CLASSES = ('uc-kin', 'course')
+
+
+def _drop_block(raw, cls):
+    """class="…cls…"를 단 <div>를 여는 태그부터 짝이 맞는 </div>까지 통째로 지운다.
+
+    안에 <div>가 겹쳐 있어서 정규식으로는 끝을 못 찾는다. 깊이를 세서 끊는다."""
+    out, at = [], 0
+    key = 'class="%s' % cls
+    while True:
+        i = raw.find(key, at)
+        if i < 0:
+            out.append(raw[at:])
+            return ''.join(out)
+        start = raw.rfind('<div', 0, i)
+        if start < 0:
+            out.append(raw[at:i + len(key)])
+            at = i + len(key)
+            continue
+        out.append(raw[at:start])
+        depth, j = 0, start
+        while j < len(raw):
+            if raw.startswith('<div', j):
+                depth += 1
+                j += 4
+            elif raw.startswith('</div>', j):
+                depth -= 1
+                j += 6
+                if depth == 0:
+                    break
+            else:
+                j += 1
+        at = j
+
+
 def dashboard_text(path):
     """대시보드 HTML에서 화면에 보이는 한글 문장만 뽑는다.
 
@@ -259,6 +298,8 @@ def dashboard_text(path):
     같은 문장을 두 번 잡는다. 표의 숫자 칸은 문장이 아니라서 저절로 걸러진다."""
     raw = io.open(path, encoding='utf-8').read()
     raw = _TAGBLOCK.sub(' ', raw)
+    for _cls in _ECHO_CLASSES:
+        raw = _drop_block(raw, _cls)
     raw = _TAG.sub('\n', raw)
     for a, b in _ENT:
         raw = raw.replace(a, b)

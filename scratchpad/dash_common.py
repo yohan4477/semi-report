@@ -170,14 +170,17 @@ NAV_JS = '''<script>
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
-      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
-      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
-                                              : s.querySelectorAll('.ucard:not([hidden])').length;
+      // 카드가 없는 섹션(통합 인사이트·읽는 순서)은 교차 카드로 센다. 범위 탭은 타지 않는다.
+      // 셀 것이 하나도 없어도 접지 않는다 — 읽는 순서 안내는 카드를 담지 않는 섹션이라
+      // 편수로 생사를 판정하면 타일째 사라진다.
+      var fixed = s.hasAttribute('data-fixed');
+      var live = fixed ? s.querySelectorAll('.ins').length
+                       : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || live===0 || (only && s.id!==only);
+      s.hidden = picking || (!fixed && live===0) || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
-        o.hidden = live===0;
+        o.hidden = !fixed && live===0;
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
@@ -253,10 +256,13 @@ def sec_picker(secs, order, total, extra=None):
              '<span class="st-n cnt">%d</span></button>' % total]
     if extra:
         xid, xtitle, xsub, xn = extra
+        # 편수가 0이면 숫자를 아예 세우지 않는다 — 카드를 담지 않는 섹션(읽는 순서 안내 등)이
+        # 「0」을 달고 서면 빈 칸으로 읽힌다
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
                      '<span class="st-num">00</span><span class="st-t">%s</span>'
-                     '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
-                     % (xid, xtitle, snip(xsub), xn))
+                     '<span class="st-s">%s</span>%s</button>'
+                     % (xid, xtitle, snip(xsub),
+                        ('<span class="st-n cnt">%d</span>' % xn) if xn else ''))
     for sid in order:
         (_id, num, title, sub), cs = secs[sid]
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'

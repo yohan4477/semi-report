@@ -1823,6 +1823,87 @@ def attach_kin(cards):
             c['kin'] = kin
 
 
+# 처음 온 사람이 어디서부터 읽을지 정해 둔다. 섹션은 몸에서 벌어지는 순서라 그대로 두고,
+# 읽는 순서는 따로 세운다 — 둘이 다르기 때문이다. 섹션은 염증부터 시작하지만 처음 읽는
+# 사람에게는 오늘 저녁 식탁 이야기가 먼저다.
+#
+# 카드 제목은 여기 적힌 것과 CARDS가 한 글자라도 어긋나면 assert로 걸린다. 빠뜨린 카드도
+# 같이 걸린다 — 카드를 새로 만들면 여기에도 자리를 정해 줘야 한다.
+COURSE_LEDE = ('카드 %d장을 어디서부터 읽을지 정해 두었습니다. 앞 두 단계는 오늘 저녁 식탁에서 바로 쓰는 '
+               '이야기고, 뒤로 갈수록 몸속에서 벌어지는 일로 들어갑니다. 제목을 누르면 그 카드가 열립니다.')
+
+COURSE = [
+    ('오늘 저녁부터',
+     '무엇을 뺄지 고르기 전에 얼마나 먹는지부터 본다. 밥과 과일과 단백질 순으로 읽는다.',
+     ['밥·빵 종류가 문제가 아니라 얼마나 많이 먹느냐가 문제다',
+      '같은 열량이면 과일이 밀가루보다 나쁘다. 과당은 간만 받는다',
+      '단백질은 노인이 더 먹어야 하는데 우리나라는 거꾸로 간다']),
+    ('몸무게와 잠',
+     '둘 다 병이 생기기 전에 손댈 수 있는 자리다. 체중은 쌓아 두는 쪽이고 잠은 씻어 내는 쪽이다.',
+     ['살은 병을 이기는 자산이다. 영양제는 대부분 필요 없다',
+      '뇌는 깊은 잠에서만 씻긴다']),
+    ('왜 그렇게 되는가',
+     '앞 다섯 장의 이유가 여기 있다. 과잉 칼로리에서 만성 염증으로, 지방산에서 당뇨로 이어지는 경로다.',
+     ['염증은 나쁜 게 아니다. 과하게 먹는 것이 만성 염증을 만든다',
+      '당뇨는 포도당이 넘쳐서 생기는 병이 아니다. 지방산이 신호를 막는다']),
+    ('내가 몇 단계인지 알기',
+     '검사 숫자로 자기 위치를 읽는 법이다. 손상됐는데 못 느끼는 경우가 흔해서 신호를 가리는 법을 같이 둔다.',
+     ['의사를 만나기 전에 내가 몇 단계인지 안다',
+      '통증은 믿을 만한 알람이 아니다',
+      '전조증상은 하나뿐이다. 그리고 시간이 곧 치료다',
+      '뇌출혈은 뇌경색과 다른 병이다. 막을 수 있는 건 다음 출혈뿐이다']),
+    ('약은 어디까지 왔나',
+     '먹는 약이 왜 작아야 하는지에서 시작해, 비만약이 술과 담배까지 줄인다는 임상까지 간다.',
+     ['먹는 약은 900달톤을 넘지 못한다',
+      '덜 먹게 하는 약이 술과 담배까지 줄이는 이유',
+      '근거는 관찰에서 임상으로 막 넘어왔다',
+      '미국은 이미 대실험 중이고, 짝퉁 약이 같이 돈다']),
+    ('더 깊이',
+     '2025년 노벨생리의학상 해설과 뇌 이야기다. 앞을 읽고 오면 훨씬 잘 붙는다.',
+     ['면역을 말리는 세포가 있다. 암이 그 세포를 구슬린다',
+      '도파민은 쾌락이 아니라 희망의 물질이다']),
+]
+
+COURSE_CSS = '''
+  .cstep { margin:0 0 26px; }
+  .cstep:last-child { margin-bottom:0; }
+  .cs-h { margin:0 0 5px; font-size:15px; font-weight:800; color:var(--ink); }
+  .cs-h .cs-n { display:inline-block; min-width:22px; color:var(--accent-ink); }
+  .cs-why { margin:0 0 9px 22px; font-size:13px; line-height:1.65; color:var(--ink-2); }
+  .course { margin-left:22px; }
+  .course ol { margin:0; padding-left:18px; }
+  .course li { font-size:13px; line-height:1.7; margin-bottom:3px; }
+  .course li:last-child { margin-bottom:0; }
+  .course a.kin-link { color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--line); }
+  .course a.kin-link:hover { border-bottom-color:var(--accent); }
+'''
+
+
+def course_html(cards):
+    """읽는 순서를 섹션 하나로 만든다 — 타일 하나로 들어간다(관문 버튼을 두지 않는다)."""
+    have = {c['title'] for c in cards}
+    listed = [t for _h, _w, ts in COURSE for t in ts]
+    missing = have - set(listed)
+    unknown = [t for t in listed if t not in have]
+    assert not unknown, '읽는 순서에 없는 카드 제목이 있다: %s' % unknown
+    assert not missing, '읽는 순서에서 빠진 카드가 있다: %s' % sorted(missing)
+    assert len(listed) == len(set(listed)), '읽는 순서에 같은 카드가 두 번 들어갔다'
+
+    h = ['<p class="lede">%s</p>' % (COURSE_LEDE % len(cards))]
+    for i, (head, why, titles) in enumerate(COURSE, 1):
+        h.append('<div class="cstep"><p class="cs-h"><span class="cs-n">%d</span>%s</p>' % (i, head))
+        h.append('<p class="cs-why">%s</p>' % why)
+        # 제목은 카드에 있는 글을 그대로 옮긴 것이라 산문 검사에서 빼는 자리다(class="course")
+        h.append('<div class="course"><ol>%s</ol></div></div>'
+                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (dc.slug(t), t)
+                           for t in titles))
+    return ''.join(h)
+
+
 if __name__ == '__main__':
     attach_kin(CARDS)
-    dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('health', CARDS, '편'))
+    dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT,
+              rollup=dc.rollup_for('health', CARDS, '편'),
+              top=course_html(CARDS), top_css=COURSE_CSS, top_n=0,
+              top_title='처음 오셨다면', top_sub='카드 %d장을 여섯 단계로' % len(CARDS))
