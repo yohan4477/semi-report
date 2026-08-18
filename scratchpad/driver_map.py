@@ -276,18 +276,21 @@ def _driver_cells(did):
 
 
 def _drivers_table_html(dids):
-    """세로 항목 넷(무엇·얼마·근거·왜), 가로 드라이버."""
-    cols = [_driver_cells(x) for x in dids]
-    def row(label, idx, cls=''):
-        tds = ''.join('<td%s>%s</td>'
-                      % (' class="dm-dv--none"' if c[4] else '', c[idx]) for c in cols)
-        return '<tr%s><th scope="row">%s</th>%s</tr>' % (cls, label, tds)
-    body = (row('무엇', 0, ' class="dm-dvt-namerow"')
-            + row('얼마', 1, ' class="dm-dvt-valrow"')
-            + row('근거', 2)
-            + row('왜 그렇게 놓았나', 3, ' class="dm-dvt-whyrow"'))
-    return ('<div class="dm-dvt-wrap"><table class="dm-dvt"><tbody>%s</tbody></table></div>'
-            % body)
+    """드라이버가 세로로 쌓이는 표. 매출 성장률 아래에 영업이익률이 오고, 그 아래에
+    할인율이 온다 — 계산이 내려가는 순서와 같다(2026-08-19). 가로는 항목 넷이다."""
+    rows = []
+    for did in dids:
+        name, val, basis, why, is_none = _driver_cells(did)
+        cls = ' class="dm-dv--none"' if is_none else ''
+        rows.append('<tr%s><th scope="row">%s</th>'
+                    '<td class="dm-dvt-val">%s</td>'
+                    '<td class="dm-dvt-basis">%s</td>'
+                    '<td class="dm-dvt-why">%s</td></tr>'
+                    % (cls, name, val, basis, why))
+    return ('<div class="dm-dvt-wrap"><table class="dm-dvt">'
+            '<thead><tr><th>무엇</th><th>얼마</th><th>근거</th>'
+            '<th>왜 그렇게 놓았나</th></tr></thead>'
+            '<tbody>%s</tbody></table></div>' % ''.join(rows))
 
 
 def _driver_block_html(did):
@@ -1252,24 +1255,27 @@ DM_CSS = '''<style>
 /* 드라이버 표 — 값 하나에 문단 둘을 붙이던 블록을 한 줄로 바꿨다 */
 .dm-dvt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 10px}
 .dm-dvt{width:100%;border-collapse:collapse;font-size:12px}
-/* 가로가 드라이버, 세로가 항목이다. 첫 열(항목 이름)은 붙박이로 두고 나머지가 스크롤한다 */
-.dm-dvt th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
-     text-align:left;font-size:10.5px;font-weight:850;color:var(--ink-3);letter-spacing:.03em;
-     padding:8px 8px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
-     white-space:nowrap;box-shadow:1px 0 0 var(--line)}
-.dm-dvt td{padding:8px 12px 8px 8px;vertical-align:top;border-bottom:1px solid var(--line);
-     color:var(--ink-3);line-height:1.6;min-width:190px;max-width:300px}
+/* 드라이버가 세로로 쌓인다 — 계산이 내려가는 순서와 같다. 가로는 항목 넷 */
+.dm-dvt thead th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+     text-align:left;padding:0 10px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.dm-dvt th[scope="row"]{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink-2);
+     padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
+     min-width:88px}
+.dm-dvt td{padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
+     color:var(--ink-3);line-height:1.6}
 .dm-dvt tr:last-child th, .dm-dvt tr:last-child td{border-bottom:0}
-.dm-dvt-namerow td{font-size:11.5px;font-weight:800;color:var(--ink-2)}
-.dm-dvt-valrow td{font-size:13px;font-weight:850;color:var(--ink);
+.dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);white-space:nowrap;
      font-variant-numeric:tabular-nums}
-.dm-dvt-whyrow td{font-size:11.5px}
+.dm-dvt-basis{white-space:nowrap}
+.dm-dvt-why{min-width:210px}
 .dm-dvt-impact{display:block;margin-top:4px;color:var(--ink-2)}
 .dm-dvt-impact b{color:var(--ink);font-weight:850;margin-right:4px}
 .dm-dvt .dm-dv-grp{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:2px}
-.dm-dvt td.dm-dv--none{box-shadow:inset 3px 0 0 var(--risk)}
+.dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
 @media (max-width:560px){
-  .dm-dvt td{min-width:150px;max-width:230px;font-size:11px}
+  .dm-dvt{font-size:11px}
+  .dm-dvt-why{min-width:160px}
+  .dm-dvt th[scope="row"]{min-width:72px;font-size:11px}
 }
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
