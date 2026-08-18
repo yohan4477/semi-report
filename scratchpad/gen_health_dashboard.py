@@ -1906,4 +1906,5 @@ if __name__ == '__main__':
     dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('health', CARDS, '편'),
               top=course_html(CARDS), top_css=COURSE_CSS, top_n=0,
-              top_title='처음 오셨다면', top_sub='카드 %d장을 여섯 단계로' % len(CARDS))
+              top_title='처음 오셨다면', top_sub='카드 %d장을 여섯 단계로' % len(CARDS),
+              top_first=True)

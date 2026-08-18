@@ -245,15 +245,20 @@ BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이�
         '<span class="sb-now"></span></div>')
 
 
-def sec_picker(secs, order, total, extra=None):
+def sec_picker(secs, order, total, extra=None, extra_first=False):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
-    extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
-    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다."""
-    tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
-             '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
-             '<span class="st-s">모든 섹션을 한 줄로</span>'
-             '<span class="st-n cnt">%d</span></button>' % total]
+    extra는 카드가 아닌 섹션(통합 인사이트 등)을 타일 하나로 세운다: (sid, 이름, 설명, 편수).
+    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다.
+    extra_first면 「전체 보기」보다 앞에 세운다. 읽는 순서 안내처럼 처음 온 사람이 먼저 짚을
+    자리에 쓴다. 교차 인사이트처럼 읽을거리인 경우는 전체 보기 뒤가 맞다."""
+    tiles = []
+    all_tile = ('<button class="stile is-all" data-sec="" aria-pressed="true">'
+                '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
+                '<span class="st-s">모든 섹션을 한 줄로</span>'
+                '<span class="st-n cnt">%d</span></button>' % total)
+    if not (extra and extra_first):
+        tiles.append(all_tile)
     if extra:
         xid, xtitle, xsub, xn = extra
         # 편수가 0이면 숫자를 아예 세우지 않는다 — 카드를 담지 않는 섹션(읽는 순서 안내 등)이
@@ -263,6 +268,8 @@ def sec_picker(secs, order, total, extra=None):
                      '<span class="st-s">%s</span>%s</button>'
                      % (xid, xtitle, snip(xsub),
                         ('<span class="st-n cnt">%d</span>' % xn) if xn else ''))
+        if extra_first:
+            tiles.append(all_tile)
     for sid in order:
         (_id, num, title, sub), cs = secs[sid]
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
@@ -318,7 +325,7 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 
 def render(cards, title, header, footer, out, rollup='', top='', top_css='',
-           top_n=0, top_sub='', top_title='통합 인사이트'):
+           top_n=0, top_sub='', top_title='통합 인사이트', top_first=False):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다."""
@@ -326,7 +333,7 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css='',
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
     extra = (XSEC, top_title, top_sub, top_n) if top else None
-    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra)
+    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra, top_first)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
