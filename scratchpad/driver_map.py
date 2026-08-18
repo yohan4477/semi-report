@@ -495,6 +495,10 @@ def _axis_html(ax):
             sens_html += _path_html(dcf_path)
         if getattr(dmd, 'SENSITIVITY', None):
             sens_html += _sens_html()
+    elif ax['id'] == 'quote':
+        qp = getattr(dmd, 'QUOTE_PATH', None)
+        if qp:
+            sens_html = _path_html(qp)
     elif ax['id'] == 'rev':
         rev_path = getattr(dmd, 'REV_PATH', None)
         if rev_path:
@@ -1148,9 +1152,11 @@ DM_CSS = '''<style>
      border-bottom:1px solid var(--line)}
 /* 메모는 표 밖, 표 바로 아래에 모은다. 연도를 앞세워 어느 줄 이야기인지 잇는다 */
 /* 주인장 계산 — 축 안에서 버튼 하나로 연다 */
-.dm-owner{margin:14px 0 0;border:1px solid var(--accent);border-radius:10px;background:var(--accent-soft)}
-.dm-owner>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:13px;font-weight:850;
-                  color:var(--accent-ink)}
+/* 주인장 계산은 내용 한 겹일 뿐이라 강조색을 쓰지 않는다 — 주황은 올라가는 길과
+   판정 배지에만 남긴다 */
+.dm-owner{margin:14px 0 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.dm-owner>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:12.5px;font-weight:800;
+                  color:var(--ink-2)}
 .dm-owner>summary::-webkit-details-marker{display:none}
 .dm-owner>summary::after{content:"▾";float:right;font-size:11px}
 .dm-owner[open]>summary::after{content:"▴"}
