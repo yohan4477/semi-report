@@ -921,4 +921,4 @@ FOOTER = ('제3자 해설 아카이브 · 유료 구독 글 요약입니다. 원
 
 if __name__ == '__main__':
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
-              sec_bottom={'sec-samsung': driver_map.render()})
+              sec_top={'sec-samsung': driver_map.render()})

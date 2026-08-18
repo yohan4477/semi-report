@@ -213,6 +213,10 @@ NAV_JS = '''<script>
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다
+    document.querySelectorAll('.sec-lead').forEach(function(l){
+      l.hidden = !only || l.dataset.sec!==only;
+    });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
@@ -445,9 +449,14 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         (_, num, stitle, _sub), cs = secs[sid]
         # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
         # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
+        lead = sec_top.get(sid, '')
+        if lead:
+            # 섹션 전용 층. 「전체 보기」에서는 접어 둔다 — 거기서는 글이 먼저 나와야 한다.
+            # 그 섹션을 고르면 NAV_JS가 펴서 카드보다 위에 세운다.
+            lead = '<div class="sec-lead" data-sec="%s" hidden>%s</div>' % (sid, lead)
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2></div>%s%s%s</section>'
-                    % (sid, num, stitle, sec_top.get(sid, ''),
+                    % (sid, num, stitle, lead,
                        ''.join(card_html(c) for c in cs), sec_bottom.get(sid, '')))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     page_css = css()

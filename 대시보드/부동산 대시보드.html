@@ -681,6 +681,10 @@
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다
+    document.querySelectorAll('.sec-lead').forEach(function(l){
+      l.hidden = !only || l.dataset.sec!==only;
+    });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
