@@ -479,6 +479,14 @@ def _axis_html(ax):
     # 성장 경로는 역산 축에. 둘 다 원문 표 그대로다.
     # 평가가 여러 편인 회사(삼성전자)만 이 표들을 갖는다. 평가가 한 편뿐인 회사는
     # DCF_PATH·SENSITIVITY·REV_PATH가 없을 수 있다 — 없으면 조용히 건너뛴다.
+    # 주인장 계산은 지도 맨 위에 따로 서 있었다. 방법과 떼어 놓으면 「그가 쓴 값」과
+    # 「내가 돌린 값」이 다른 층으로 읽혀 같은 DCF를 두 번 설명하는 모양이 된다.
+    # DCF 축 안에 버튼으로 넣는다 — 기본은 접혀 있고 누르면 펴진다.
+    owner_html = ''
+    if ax['id'] == 'dcf' and getattr(dmd, 'SCENARIOS', None):
+        owner_html = ('<details class="dm-owner"><summary>주인장이 본 지금 시점의 결론</summary>'
+                      '%s</details>' % _scenario_html())
+
     sens_html = ''
     if ax['id'] == 'dcf':
         # 연도별 추정이 이 방법의 본체다. 민감도는 그 결과를 흔들어 본 것이라 뒤에 둔다.
@@ -533,7 +541,7 @@ def _axis_html(ax):
             # 가장 먼저 보고 싶은 것은 「어느 해에 무엇을 얼마로 놓았나」이기 때문이다.
             % (axis_cls, _PX, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
                stale_html, _howto_html(ax['id']) + sens_html, chain_html, inputs_html,
-               gchips_html, out_html, mr_html, bench_html, auth_html, verdict_html))
+               gchips_html, out_html + owner_html, mr_html, bench_html, auth_html, verdict_html))
 
 
 # render()가 호출될 때마다 그 회사의 AXES로 다시 채운다.
@@ -618,12 +626,14 @@ def _path_html(spec):
             '<p class="dm-ep-label">%s %s '
             '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
             '<div class="dm-ep-wrap"><table class="dm-ep-tbl dm-ep-wide">'
+            '%s'
             '<thead><tr><th class="dm-ep-corner"></th>%s</tr>'
             '<tr><th class="dm-ep-corner">%s</th>%s</tr></thead>'
             '<tbody>%s</tbody></table></div>'
             '%s'
             '<p class="dm-ep-foot">%s</p>'
             '</div>' % (spec['lede'], _by_badge('author'), url,
+                        '<colgroup><col>%s</colgroup>' % ('<col class="dm-ep-yr">' * len(cols)),
                         band_row, spec['head'][0], year_row, ''.join(body),
                         ('<ul class="dm-ep-notes">%s</ul>' % ''.join(notes)) if notes else '',
                         spec['foot']))
@@ -765,8 +775,8 @@ def _scenario_html():
             '</div>' % (rv['label'], _by_badge(rv['by']), rv['lede'], hl, rv['formula'],
                         ''.join(rv_rows)))
     return ('<div class="dm-scenario">'
+            # 제목은 버튼(summary)이 갖는다 — 안에서 또 적으면 같은 말이 두 번 선다
             '<div class="dm-scenario-head">'
-            '<p class="dm-scenario-kicker">주인장이 본 지금 시점의 결론</p>'
             '<div class="dm-scenario-meta">'
             '<span class="dm-scenario-asof">%s 기준</span>'
             '<span class="dm-scenario-price">주가 %s</span>'
@@ -1137,6 +1147,14 @@ DM_CSS = '''<style>
      background:var(--sunk);text-align:left !important;padding:4px 8px;
      border-bottom:1px solid var(--line)}
 /* 메모는 표 밖, 표 바로 아래에 모은다. 연도를 앞세워 어느 줄 이야기인지 잇는다 */
+/* 주인장 계산 — 축 안에서 버튼 하나로 연다 */
+.dm-owner{margin:14px 0 0;border:1px solid var(--accent);border-radius:10px;background:var(--accent-soft)}
+.dm-owner>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:13px;font-weight:850;
+                  color:var(--accent-ink)}
+.dm-owner>summary::-webkit-details-marker{display:none}
+.dm-owner>summary::after{content:"▾";float:right;font-size:11px}
+.dm-owner[open]>summary::after{content:"▴"}
+.dm-owner .dm-scenario{margin:0;border:0;background:transparent}
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .dm-howto>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:12px;font-weight:800;
@@ -2083,7 +2101,7 @@ def render(data=None, judgment_dir='005930-삼성전자'):
     parts.append('<div class="dm-wrap" id="dm-%s-root">' % _PX)
     parts.append('<div class="dm-head"><h2 class="dm-title">무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
-    parts.append(_scenario_html())
+    # 주인장 계산은 DCF 축 패널 안으로 옮겼다(_axis_html). 여기서 또 그리면 두 벌이 된다.
     # 드라이버 범위 표(_ranges_html)는 걷어냈다. 같은 내용이 각 드라이버 상세의
     # 「영향」 칸에 들어 있어 두 번 말하는 셈이었다.
     # 연도별 이익 경로 표는 DCF 축 패널 안으로 옮겼다 — 연도별 추정이 그 방법의
