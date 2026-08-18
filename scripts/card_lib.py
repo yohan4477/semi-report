@@ -250,6 +250,12 @@ def points_html(points, figs=()):
 
 
 
+def copy_btn(c):
+    """이 카드만 가리키는 주소를 집어 가는 버튼. 대시보드 전체 링크밖에 못 보내던 자리다."""
+    return ('<button type="button" class="uc-copy" data-anchor="%s">링크 복사</button>'
+            % slug(c['title']))
+
+
 def slim_html(c):
     """펼쳤을 때 본문을 AI · 인프라 · 에너지 카드와 같은 형태로 낸다.
 
@@ -302,9 +308,10 @@ def slim_html(c):
             k.append('</ol></div>')
         k.append('</div>')
         h.append(''.join(k))
-    h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
-             % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
-                       % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
+    h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
+             % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
+                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']),
+                copy_btn(c)))
     h.append('</div></div>')
     return ''.join(h)
 
@@ -351,10 +358,11 @@ def card_html(c):
                  % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
     if c.get('note'):
         h.append('<div class="side-note">%s</div>' % c['note'])
-    if c.get('links'):
-        h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
-                 % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
-                           % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))
+    h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
+             % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
+                        % (('class="%s" ' % cls) if cls else '', url, lab)
+                        for lab, url, cls in (c.get('links') or ())),
+                copy_btn(c)))
     h.append('</div></div>')
     return ''.join(h)
 
