@@ -644,7 +644,7 @@ def _path_html(spec):
             '%s'
             '<p class="dm-ep-foot">%s</p>'
             '</div>' % (spec['lede'], _by_badge('author'), url,
-                        '<colgroup><col>%s</colgroup>' % ('<col class="dm-ep-yr">' * len(cols)),
+                        '<colgroup><col class="dm-ep-mt">%s</colgroup>' % ('<col class="dm-ep-yr">' * len(cols)),
                         band_row, spec['head'][0], year_row, ''.join(body),
                         ('<ul class="dm-ep-notes">%s</ul>' % ''.join(notes)) if notes else '',
                         spec['foot']))
@@ -1156,21 +1156,27 @@ DM_CSS = '''<style>
 .dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
 .dm-ep-bandh.dm-ep-b1{background:var(--sunk)}
 /* 연도 열은 폭을 같게 잡는다. 값 길이에 따라 칸이 들쭉날쭉하면 경사가 안 읽힌다 */
-.dm-ep-wide{table-layout:fixed}
+/* 폭은 <col>이 갖는다. th에 width를 또 주면 fixed 레이아웃에서 첫 열이 다음 열과
+   겹쳐 글자가 포개졌다(2026-08-19 화면 확인). 표는 내용만큼 넓히고 감싼 상자가 스크롤한다. */
+.dm-ep-wide{table-layout:fixed;width:max-content;min-width:100%}
+.dm-ep-wide col.dm-ep-mt{width:132px}
 .dm-ep-wide col.dm-ep-yr{width:98px}
 /* 구간 칠. 컨센서스(남의 숫자)와 필자가 깐 숫자를 색과 세로선으로 가른다 —
    띠 한 줄로만 표시하면 표 아래쪽에서 경계가 사라진다 */
 .dm-ep-b1{background:var(--sunk)}
 .dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
-.dm-ep-wide th[scope="row"]{position:sticky;left:0;background:var(--surface);text-align:left;
-     width:120px;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;
-     padding:6px 12px 6px 8px;border-bottom:1px solid var(--line)}
+.dm-ep-wide th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
+     text-align:left;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;
+     overflow:hidden;text-overflow:ellipsis;
+     padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+     box-shadow:1px 0 0 var(--line)}
 .dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .dm-ep-wide thead th{text-align:right;white-space:nowrap}
-.dm-ep-corner{position:sticky;left:0;background:var(--surface);text-align:left !important}
+.dm-ep-corner{position:sticky;left:0;z-index:3;background:var(--surface);text-align:left !important;box-shadow:1px 0 0 var(--line)}
 .dm-ep-bandh{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
      background:var(--sunk);text-align:left !important;padding:4px 8px;
-     border-bottom:1px solid var(--line)}
+     border-bottom:1px solid var(--line);
+     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* 메모는 표 밖, 표 바로 아래에 모은다. 연도를 앞세워 어느 줄 이야기인지 잇는다 */
 /* 주인장 계산 — 축 안에서 버튼 하나로 연다 */
 /* 주인장 계산은 내용 한 겹일 뿐이라 강조색을 쓰지 않는다 — 주황은 올라가는 길과
