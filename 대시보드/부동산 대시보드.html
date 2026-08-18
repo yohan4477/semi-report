@@ -490,6 +490,20 @@
   .topsec{margin:18px 0 6px;padding:14px 0 4px;border-top:2px solid var(--accent);
         border-bottom:1px solid var(--line)}
   .topsec .ihead .inum{color:var(--accent)}
+  /* 수혜·비수혜 대조표 — 카드를 열기 전에 회사끼리 나란히 놓고 본다 */
+  .rtwrap{overflow-x:auto;margin:10px 0 14px}
+  .rtab{width:100%;border-collapse:collapse;font-size:var(--t-meta)}
+  .rtab th{text-align:left;font-weight:800;letter-spacing:.04em;color:var(--faint);
+        padding:0 10px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+  .rtab th.rt-w{color:var(--accent)}
+  .rtab td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);
+        vertical-align:top;line-height:1.5}
+  .rtab td.rt-w{font-weight:700;color:var(--ink)}
+  .rtab td.rt-l{color:var(--faint)}
+  .rtab td.rt-t{min-width:14em}
+  .rtab td.rt-t a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
+  .rtab td.rt-t a:hover{color:var(--accent)}
+  .rtab tbody tr:last-child td{border-bottom:none}
   .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 0;clear:right}
   .rk{flex:none;font-size:var(--t-lbl);font-weight:800;letter-spacing:.04em;
       border-radius:999px;padding:2px 8px}
