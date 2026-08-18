@@ -72,7 +72,7 @@ def load_glossary():
             if not k.startswith('_')}
 
 
-def check_density(text, where):
+def check_density(text, where, actor=True):
     """P8~P11 — 낱말이 아니라 밀도를 본다.
 
     금지어를 세던 자리를 대신한다. 2026-08-17 건강 대시보드를 쓰면서 드러난 것들이다.
@@ -95,6 +95,9 @@ def check_density(text, where):
                 '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
     check_vague(text, where)
     check_figure(text, where)
+    # 노트는 화면에 안 나오는 중간물이라 「쪽·자리」 밀도는 보지 않는다
+    if actor:
+        check_actor(text, where)
 
 
 
@@ -120,6 +123,28 @@ def check_figure(text, where):
             snip = ' '.join(text[at:m.end() + 30].split())
             add('FAIL', where, 'P14',
                 '은유가 주어 자리에 있다 — %s: …%s…' % (fix, snip))
+
+
+
+# P15 — 「~는 쪽」·「~하는 자리」로 주체를 대신한 문장. 한두 번은 문장을 가볍게 하지만
+# 쌓이면 누가 무엇을 하는지가 글 전체에서 사라진다. 2026-08-18에 글 38편에 「쪽」이
+# 146번(1천자당 1.2) 있었고 사용자가 「전부 번역투」로 잡아냈다. 회사·기관·제품 이름을
+# 댈 수 있으면 대고, 못 댈 때만 쓴다.
+# 조사가 붙은 꼴(쪽이·쪽은)이 대부분이라 뒤를 막으면 아무것도 안 잡힌다.
+# 「자리」는 뺐다 — 건강 카드에서 「붙는 자리」·「퍼진 자리」처럼 몸의 위치를 가리키는
+# 정상 어휘로 쓰인다. 주체를 지우는 것은 「~는 쪽」 쪽이 압도적이다.
+VAGUE_ACTOR = re.compile(r'[가-힣] 쪽')
+VAGUE_PER_1K = 1.5      # 1천자당. 대시보드는 카드 수십 장을 이어 붙인 문서라 절대 횟수로는 못 잰다
+
+
+def check_actor(text, where):
+    """P15 — 이름 없이 「쪽·자리」로 부른 밀도."""
+    n = len(VAGUE_ACTOR.findall(text))
+    per = n * 1000.0 / max(len(text), 1)
+    if per > VAGUE_PER_1K:
+        add('FAIL', where, 'P15',
+            '「~는 쪽·자리」가 %d회(1천자당 %.1f) — %.1f까지다. 회사·기관 이름을 댄다'
+            % (n, per, VAGUE_PER_1K))
 
 
 # 무엇을 먹는지·마시는지 안 밝히고 「먹으면」으로 넘어가는 조건절. 2026-08-17에
@@ -373,7 +398,7 @@ def main():
     for p in notes:
         where = os.path.basename(p)
         body = strip_refs(io.open(p, encoding='utf-8').read())
-        check_density(body, where)
+        check_density(body, where, actor=False)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
