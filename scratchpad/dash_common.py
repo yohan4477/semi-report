@@ -447,7 +447,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
             + '\n<div class="wrap">\n' + header
-            + '\n\n  ' + intro + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
+            # 타일이 롤업보다 먼저다. 회계사 장은 롤업 자리에 드라이버 지도가 들어 있어
+            # 타일이 화면 한참 아래로 밀렸다(2026-08-18). 첫 화면은 어느 장이든 타일이다.
+            + '\n\n  ' + intro + '\n\n  ' + tabs + nav + '\n\n  ' + rollup + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
     check_ui(html, bool(top))
