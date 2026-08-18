@@ -122,28 +122,6 @@ def roster(meta):
     return '<p class="rost">%s</p>' % ''.join(out)
 
 
-# 「수혜 기업」 층은 카드를 열기 전에 한눈에 대조하는 자리다. 카드마다 명단을 따로 읽으면
-# 어느 회사가 어느 판단에서 받는 쪽인지 겹쳐 보이지 않는다 — 한 표에 나란히 세운다.
-# 열 순서는 수혜 기업·위기에 빠진 기업·제목이다. 판단 제목보다 회사 이름이 먼저 읽혀야 한다.
-def roster_table(metas):
-    rows = [m for m in metas if (m.get('winners') or '').strip()
-            or (m.get('losers') or '').strip()]
-    if not rows:
-        return ''
-    h = ['<div class="rtwrap"><table class="rtab"><thead><tr>'
-         '<th class="rt-w">수혜 기업</th><th class="rt-l">위기에 빠진 기업</th><th>제목</th>'
-         '</tr></thead><tbody>']
-    for m in rows:
-        head = m.get('headline') or ''
-        h.append('<tr><td class="rt-w">%s</td><td class="rt-l">%s</td>'
-                 '<td class="rt-t"><a href="#%s">%s</a></td></tr>'
-                 % (nl.esc((m.get('winners') or '').strip() or '—'),
-                    nl.esc((m.get('losers') or '').strip() or '—'),
-                    anchor(head), nl.esc(head)))
-    h.append('</tbody></table></div>')
-    return ''.join(h)
-
-
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
@@ -167,7 +145,6 @@ def cards():
     「수혜 기업」만 그 규칙에서 뺀다 — 누가 값을 받아 가는지는 클릭 없이 보여야 한다.
     """
     out, top, per, bysec, mix = [], [], {}, {}, {}
-    topmeta = []
     for d, kind, tab in KINDS:
         got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
@@ -175,8 +152,6 @@ def cards():
             meta.setdefault('headline', os.path.basename(p)[:-3])
             sid = meta.get('section', 'etc')
             got.setdefault(sid, []).append(one(meta, body, tab, kind))
-            if sid == TOPSEC:
-                topmeta.append(meta)
             per[tab] = per.get(tab, 0) + 1
             bysec[sid] = bysec.get(sid, 0) + 1
             mix[(tab, sid)] = mix.get((tab, sid), 0) + 1
@@ -204,8 +179,7 @@ def cards():
         sub = next((x for s, _g, _t, x in ALLSEC if s == TOPSEC), '')
         tophtml = ('<section class="topsec"><div class="ihead"><span class="inum">★</span>'
                    '<h3>%s</h3><span class="igrp">%s</span><span class="icnt">%d</span></div>'
-                   '%s%s</section>' % (nl.esc(title), nl.esc(sub), len(top),
-                                      roster_table(topmeta), ''.join(top)))
+                   '%s</section>' % (nl.esc(title), nl.esc(sub), len(top), ''.join(top)))
     return ''.join(out), tophtml, per, bysec, mix
 
 
@@ -362,20 +336,6 @@ CARD_CSS = r'''
   .topsec{margin:18px 0 6px;padding:14px 0 4px;border-top:2px solid var(--accent);
         border-bottom:1px solid var(--line)}
   .topsec .ihead .inum{color:var(--accent)}
-  /* 대조표 — 카드를 열기 전에 받는 쪽과 밀리는 쪽을 나란히 놓고 본다 */
-  .rtwrap{overflow-x:auto;margin:10px 0 14px}
-  .rtab{width:100%;border-collapse:collapse;font-size:var(--t-meta)}
-  .rtab th{text-align:left;font-weight:800;letter-spacing:.04em;color:var(--faint);
-        padding:0 10px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
-  .rtab th.rt-w{color:var(--accent)}
-  .rtab td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);
-        vertical-align:top;line-height:1.5}
-  .rtab td.rt-w{font-weight:700;color:var(--ink)}
-  .rtab td.rt-l{color:var(--faint)}
-  .rtab td.rt-t{min-width:14em}
-  .rtab td.rt-t a{color:var(--sub);text-decoration:none;border-bottom:1px solid var(--line)}
-  .rtab td.rt-t a:hover{color:var(--accent)}
-  .rtab tbody tr:last-child td{border-bottom:none}
   .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 0;clear:right}
   .rk{flex:none;font-size:var(--t-lbl);font-weight:800;letter-spacing:.04em;
       border-radius:999px;padding:2px 8px}
