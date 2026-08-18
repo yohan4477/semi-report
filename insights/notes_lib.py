@@ -6,7 +6,9 @@ import paths
 FRONT_RE = re.compile(r'^---\n(.*?)\n---\n(.*)$', re.S)
 SRC_RE = re.compile(r'^\s*-\s*\{(.+)\}\s*$', re.M)
 KV_RE = re.compile(r'(\w+):\s*"([^"]*)"')
-META_RE = re.compile(r'^(\w+):\s*(.+)$', re.M)
+# \s는 줄바꿈까지 먹는다 — 값이 빈 키(losers:)를 만나면 다음 줄 키를 값으로 집어
+# 왔다(2026-08-18에 표에 'sources:'가 찍혔다). 같은 줄의 공백만 건너뛴다.
+META_RE = re.compile(r'^(\w+):[ 	]*(.+)$', re.M)
 
 # 라벨은 사람이 줄여 쓴 이름, 뒤는 L12 또는 L51, L60 형태.
 # 상한이 80자였을 때 마이그레이션이 만든 긴 파일명 인용(「[260416] ISSCC 2026
