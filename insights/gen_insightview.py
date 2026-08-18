@@ -17,8 +17,8 @@ OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 GROUPS = (# 수혜 기업은 주제가 아니라 가로지르는 물음이다("그래서 누가 받나"). AI 판 안에 두면
           # 칩·전력·시장 타일과 같은 급으로 읽혀 묻힌다. 그래서 층을 따로 세우고
           # 「전체 보기」보다 위에 놓는다(sectiles 참조).
-          # 묶음 이름은 섹션 제목(수혜 기업)과 달라야 한다 — 같으면 카드 머리에 같은 말이 두 번 찍힌다
-          ('winner', '가로지르는 물음', '갈래를 가로질러 — 지금 나온 숫자로 누가 값을 받아 가나'),
+          # 묶음 이름은 섹션 제목과 달라야 한다 — 같으면 카드 머리에 같은 말이 두 번 찍힌다
+          ('winner', '가로지르는 물음', '갈래를 가로질러 — 지금 나온 숫자로 누가 값을 받고 누가 밀리나'),
           ('ai', 'AI 판', 'AI를 만들고 파는 쪽 — 칩부터 그 돈까지'),
           ('macro', 'AI 밖', 'AI 판을 흔드는 바깥 조건 — 기름값과 돈값'),
           # 부동산은 「AI 밖」에 넣으면 원유·환율 카드와 같은 급으로 읽힌다.
@@ -26,7 +26,7 @@ GROUPS = (# 수혜 기업은 주제가 아니라 가로지르는 물음이다("�
           ('estate', '부동산', '집을 짓고 사고 파는 쪽 — 공급부터 세금까지'))
 
 # (id, 큰 묶음, 이름, 설명)
-SECTIONS = (('winner', 'winner', '수혜 기업', '지금 나온 숫자로 누가 값을 받아 가나'),
+SECTIONS = (('winner', 'winner', '수혜 기업과 위험에 빠진 기업', '지금 나온 숫자로 누가 값을 받고 누가 밀리나'),
             ('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
             ('power', 'ai', '전력 · 데이터센터', '전력망 제약과 자가발전, 랙 밀도와 냉각'),
             ('model', 'ai', '모델 · 학습', '강화학습과 환경 제작, 모델 구조'),
@@ -107,7 +107,7 @@ def period(meta, src):
 
 
 def roster(meta):
-    """수혜·비수혜 회사를 제목보다 위에 세운다 — 접힌 상태에서 이름부터 보여야
+    """수혜 기업과 위험에 빠진 기업을 제목보다 위에 세운다 — 접힌 상태에서 이름부터 보여야
     「그래서 누가 받나」를 본문 안에서 찾아 읽지 않는다. frontmatter의
     winners·losers에 회사 이름만 적는다(근거는 본문 표가 진다)."""
     w = (meta.get('winners') or '').strip()
@@ -116,22 +116,22 @@ def roster(meta):
         return ''
     out = []
     if w:
-        out.append('<span class="rk rk-w">수혜</span><span class="rv">%s</span>' % nl.esc(w))
+        out.append('<span class="rk rk-w">수혜 기업</span><span class="rv">%s</span>' % nl.esc(w))
     if l:
-        out.append('<span class="rk rk-l">비수혜</span><span class="rv">%s</span>' % nl.esc(l))
+        out.append('<span class="rk rk-l">위험에 빠진 기업</span><span class="rv">%s</span>' % nl.esc(l))
     return '<p class="rost">%s</p>' % ''.join(out)
 
 
 # 「수혜 기업」 층은 카드를 열기 전에 한눈에 대조하는 자리다. 카드마다 명단을 따로 읽으면
 # 어느 회사가 어느 판단에서 받는 쪽인지 겹쳐 보이지 않는다 — 한 표에 나란히 세운다.
-# 열 순서는 수혜·비수혜·제목이다. 판단 제목보다 회사 이름이 먼저 읽혀야 한다.
+# 열 순서는 수혜 기업·위험에 빠진 기업·제목이다. 판단 제목보다 회사 이름이 먼저 읽혀야 한다.
 def roster_table(metas):
     rows = [m for m in metas if (m.get('winners') or '').strip()
             or (m.get('losers') or '').strip()]
     if not rows:
         return ''
     h = ['<div class="rtwrap"><table class="rtab"><thead><tr>'
-         '<th class="rt-w">수혜</th><th class="rt-l">비수혜</th><th>제목</th>'
+         '<th class="rt-w">수혜 기업</th><th class="rt-l">위험에 빠진 기업</th><th>제목</th>'
          '</tr></thead><tbody>']
     for m in rows:
         head = m.get('headline') or ''
@@ -147,7 +147,7 @@ def roster_table(metas):
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
-    # 수혜·비수혜 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
+    # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s</h2>'
@@ -357,12 +357,12 @@ CARD_CSS = r'''
   .asof.stale::after{content:' · 오래됨'}
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:6px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
-  /* 수혜·비수혜 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
+  /* 받는 쪽·밀리는 쪽 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
   /* 맨 위 고정 층 — 타일을 고르기 전에도 보인다 */
   .topsec{margin:18px 0 6px;padding:14px 0 4px;border-top:2px solid var(--accent);
         border-bottom:1px solid var(--line)}
   .topsec .ihead .inum{color:var(--accent)}
-  /* 수혜·비수혜 대조표 — 카드를 열기 전에 회사끼리 나란히 놓고 본다 */
+  /* 대조표 — 카드를 열기 전에 받는 쪽과 밀리는 쪽을 나란히 놓고 본다 */
   .rtwrap{overflow-x:auto;margin:10px 0 14px}
   .rtab{width:100%;border-collapse:collapse;font-size:var(--t-meta)}
   .rtab th{text-align:left;font-weight:800;letter-spacing:.04em;color:var(--faint);
