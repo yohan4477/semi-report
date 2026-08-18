@@ -1062,10 +1062,12 @@ DM_CSS = '''<style>
                color:var(--ink-3);padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
                white-space:normal}
 /* 출발과 착지 — 이 표의 요점이라 눈에 걸리게 둔다 */
-.dm-ep-hi td{background:var(--warn-soft);color:var(--ink);font-weight:800;border-bottom:0}
-.dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+/* 메모가 붙은 줄. 주황으로 칠했더니 표 절반이 주황이 돼 어느 줄이 중요한지 안 보였다.
+   바탕은 지면과 같은 톤으로 낮추고 왼쪽 선 하나로만 표시한다. */
+.dm-ep-hi td{background:var(--sunk);color:var(--ink);font-weight:800;border-bottom:0}
+.dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
-.dm-ep-noterow td{background:var(--warn-soft);color:var(--warn);font-size:11px;font-weight:850;
+.dm-ep-noterow td{background:var(--sunk);color:var(--ink-3);font-size:11px;font-weight:700;
                   letter-spacing:.02em;padding:0 12px 7px 8px;border-bottom:1px solid var(--line);
                   white-space:normal;box-shadow:inset 3px 0 0 var(--warn)}
 .dm-ep-noterow td::before{content:"◆ ";font-size:9px;vertical-align:1px}
