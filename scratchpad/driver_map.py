@@ -276,21 +276,21 @@ def _driver_cells(did):
 
 
 def _drivers_table_html(dids):
-    """드라이버가 세로로 쌓이는 표. 매출 성장률 아래에 영업이익률이 오고, 그 아래에
-    할인율이 온다 — 계산이 내려가는 순서와 같다(2026-08-19). 가로는 항목 넷이다."""
-    rows = []
+    """열은 둘뿐이다 — 왼쪽이 항목, 오른쪽이 내용. 드라이버는 위에서 아래로 쌓인다.
+
+    네 열로 늘어놓으면 설명 칸이 좁아 문장이 세로로 흘렀고, 가로로 뒤집으면 한 항목을
+    보려고 옆으로 밀어야 했다. 두 열이면 좁은 화면에서도 가로 스크롤이 없다(2026-08-19)."""
+    out = []
     for did in dids:
         name, val, basis, why, is_none = _driver_cells(did)
         cls = ' class="dm-dv--none"' if is_none else ''
-        rows.append('<tr%s><th scope="row">%s</th>'
-                    '<td class="dm-dvt-val">%s</td>'
-                    '<td class="dm-dvt-basis">%s</td>'
-                    '<td class="dm-dvt-why">%s</td></tr>'
-                    % (cls, name, val, basis, why))
-    return ('<div class="dm-dvt-wrap"><table class="dm-dvt">'
-            '<thead><tr><th>무엇</th><th>얼마</th><th>근거</th>'
-            '<th>왜 그렇게 놓았나</th></tr></thead>'
-            '<tbody>%s</tbody></table></div>' % ''.join(rows))
+        out.append('<tr class="dm-dvt-head"%s><th colspan="2">%s</th></tr>'
+                   '<tr><th scope="row">얼마</th><td class="dm-dvt-val">%s</td></tr>'
+                   '<tr><th scope="row">근거</th><td>%s</td></tr>'
+                   '<tr><th scope="row">왜</th><td class="dm-dvt-why">%s</td></tr>'
+                   % (cls, name, val, basis, why))
+    return ('<div class="dm-dvt-wrap"><table class="dm-dvt"><tbody>%s</tbody></table></div>'
+            % ''.join(out))
 
 
 def _driver_block_html(did):
@@ -1255,27 +1255,25 @@ DM_CSS = '''<style>
 /* 드라이버 표 — 값 하나에 문단 둘을 붙이던 블록을 한 줄로 바꿨다 */
 .dm-dvt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 10px}
 .dm-dvt{width:100%;border-collapse:collapse;font-size:12px}
-/* 드라이버가 세로로 쌓인다 — 계산이 내려가는 순서와 같다. 가로는 항목 넷 */
-.dm-dvt thead th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
-     text-align:left;padding:0 10px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
-.dm-dvt th[scope="row"]{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink-2);
-     padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
-     min-width:88px}
-.dm-dvt td{padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
-     color:var(--ink-3);line-height:1.6}
-.dm-dvt tr:last-child th, .dm-dvt tr:last-child td{border-bottom:0}
-.dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);white-space:nowrap;
-     font-variant-numeric:tabular-nums}
-.dm-dvt-basis{white-space:nowrap}
-.dm-dvt-why{min-width:210px}
+/* 두 열짜리 표. 왼쪽이 항목, 오른쪽이 내용. 드라이버마다 이름 줄이 앞에 선다 */
+.dm-dvt{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.dm-dvt-head th{text-align:left;font-size:12.5px;font-weight:850;color:var(--ink);
+     padding:12px 0 5px;border-top:1px solid var(--line)}
+.dm-dvt tr:first-child .dm-dvt-head th, .dm-dvt-head:first-child th{border-top:0;padding-top:2px}
+.dm-dvt th[scope="row"]{width:52px;text-align:left;font-size:10.5px;font-weight:800;
+     color:var(--ink-3);letter-spacing:.03em;padding:3px 8px 3px 0;vertical-align:top}
+.dm-dvt td{padding:3px 0;vertical-align:top;color:var(--ink-3);line-height:1.6;
+     overflow-wrap:anywhere}
+.dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);font-variant-numeric:tabular-nums}
+.dm-dvt-why{font-size:11.5px}
+.dm-dvt tr.dm-dv--none th{box-shadow:inset 3px 0 0 var(--risk);padding-left:7px}
 .dm-dvt-impact{display:block;margin-top:4px;color:var(--ink-2)}
 .dm-dvt-impact b{color:var(--ink);font-weight:850;margin-right:4px}
 .dm-dvt .dm-dv-grp{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:2px}
 .dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
 @media (max-width:560px){
-  .dm-dvt{font-size:11px}
-  .dm-dvt-why{min-width:160px}
-  .dm-dvt th[scope="row"]{min-width:72px;font-size:11px}
+  .dm-dvt{font-size:11.5px}
+  .dm-dvt th[scope="row"]{width:44px;font-size:10px}
 }
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
