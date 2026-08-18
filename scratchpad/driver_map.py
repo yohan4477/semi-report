@@ -258,24 +258,31 @@ def _judgment_inline_html(did):
 _GROUP_OF = {}
 
 
-def _driver_block_html(did):
+def _driver_row_html(did):
+    """드라이버 한 줄. 값과 근거와 설명이 같은 줄에 있어야 「이 숫자를 왜 이렇게 놓았나」가
+    한 번에 읽힌다. 블록으로 쌓아 두면 값 하나에 문단 둘이 붙어 축 하나가 화면 여러 판이
+    됐다(2026-08-19)."""
     d = dmd.DRIVERS[did]
     basis_label, basis_desc = dmd.BASIS[d['basis']]
-    none_cls = ' dm-dv--none' if d['basis'] == 'none' else ''
+    none_cls = ' class="dm-dv--none"' if d['basis'] == 'none' else ''
     grp = _GROUP_OF.get(did, '')
-    return ('<div class="dm-dv%s">'
-            '<div class="dm-dv-head">'
-            '<span class="dm-dv-name">%s</span>'
-            '<span class="dm-dv-val">%s</span>'
-            '<span class="dm-basis%s" title="%s">%s</span>'
-            '<span class="dm-dv-grp">%s</span>'
-            '</div>'
-            '<p class="dm-dv-why">%s</p>'
-            '<p class="dm-dv-impact"><b>그래서</b> %s</p>'
-            '%s</div>'
-            % (none_cls, d['label'], d['base'],
+    return ('<tr%s>'
+            '<th scope="row">%s%s</th>'
+            '<td class="dm-dvt-val">%s</td>'
+            '<td class="dm-dvt-basis"><span class="dm-basis%s" title="%s">%s</span></td>'
+            '<td class="dm-dvt-why">%s'
+            '<span class="dm-dvt-impact"><b>그래서</b> %s</span>%s</td>'
+            '</tr>'
+            % (none_cls, d['label'],
+               ('<span class="dm-dv-grp">%s</span>' % grp) if grp else '',
+               d['base'],
                ' dm-basis--none' if d['basis'] == 'none' else '', basis_desc, basis_label,
-               grp, d['why'], d['impact'], _judgment_inline_html(did)))
+               d['why'], d['impact'], _judgment_inline_html(did)))
+
+
+def _driver_block_html(did):
+    """옛 이름 — 표 한 줄을 낸다. 부르는 자리가 여럿이라 이름을 남겨 둔다."""
+    return _driver_row_html(did)
 
 
 def _doc_gist(key):
@@ -335,7 +342,10 @@ def _driver_table_html(ax):
                 % (_PX, ax['id'], k, ax['id'], k, ' hidden' if hidden else '',
                    _doc_title(k), url,
                    ('<p class="dm-dvdoc-gist">%s</p>' % gist) if gist else '',
-                   ''.join(_driver_block_html(x) for x in by_doc[k])))
+                   ('<div class="dm-dvt-wrap"><table class="dm-dvt">'
+                    '<thead><tr><th>무엇</th><th>얼마</th><th>근거</th>'
+                    '<th>왜 그렇게 놓았나</th></tr></thead><tbody>%s</tbody></table></div>'
+                    % ''.join(_driver_row_html(x) for x in by_doc[k]))))
 
     if len(keys) == 1:
         body = panel(keys[0], False)
@@ -1232,6 +1242,28 @@ DM_CSS = '''<style>
 .dm-owner>summary::after{content:"▾";float:right;font-size:11px}
 .dm-owner[open]>summary::after{content:"▴"}
 .dm-owner .dm-scenario{margin:0;border:0;background:transparent}
+/* 드라이버 표 — 값 하나에 문단 둘을 붙이던 블록을 한 줄로 바꿨다 */
+.dm-dvt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 10px}
+.dm-dvt{width:100%;border-collapse:collapse;font-size:12px}
+.dm-dvt thead th{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+     text-align:left;padding:0 10px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.dm-dvt th[scope="row"]{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink-2);
+     padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);min-width:92px}
+.dm-dvt td{padding:8px 10px 8px 0;vertical-align:top;border-bottom:1px solid var(--line);
+     color:var(--ink-3);line-height:1.6}
+.dm-dvt tr:last-child th, .dm-dvt tr:last-child td{border-bottom:0}
+.dm-dvt-val{font-size:13px;font-weight:850;color:var(--ink);white-space:nowrap;
+     font-variant-numeric:tabular-nums}
+.dm-dvt-basis{white-space:nowrap}
+.dm-dvt-why{min-width:220px}
+.dm-dvt-impact{display:block;margin-top:4px;color:var(--ink-2)}
+.dm-dvt-impact b{color:var(--ink);font-weight:850;margin-right:4px}
+.dm-dvt .dm-dv-grp{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:2px}
+.dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
+@media (max-width:560px){
+  .dm-dvt-why{min-width:170px}
+  .dm-dvt th[scope="row"]{min-width:78px;font-size:11px}
+}
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .dm-howto>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:12px;font-weight:800;
