@@ -14,22 +14,25 @@ OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 # 주제 여섯을 한 줄로 세우면 "사업 · 재무"가 원유·환율과 같은 급으로 보인다.
 # 실제로는 앞의 넷이 다 AI 이야기고(칩·전력·모델·그 돈), 뒤의 둘만 AI 밖이다.
 # 그래서 큰 묶음을 한 겹 위에 둔다 — 주제 id는 그대로라 노트는 안 고친다.
-GROUPS = (('ai', 'AI 판', 'AI를 만들고 파는 쪽 — 칩부터 그 돈까지'),
+GROUPS = (# 수혜 기업은 주제가 아니라 가로지르는 물음이다("그래서 누가 받나"). AI 판 안에 두면
+          # 칩·전력·시장 타일과 같은 급으로 읽혀 묻힌다. 그래서 층을 따로 세우고
+          # 「전체 보기」보다 위에 놓는다(sectiles 참조).
+          # 묶음 이름은 섹션 제목(수혜 기업)과 달라야 한다 — 같으면 카드 머리에 같은 말이 두 번 찍힌다
+          ('winner', '가로지르는 물음', '갈래를 가로질러 — 지금 나온 숫자로 누가 값을 받아 가나'),
+          ('ai', 'AI 판', 'AI를 만들고 파는 쪽 — 칩부터 그 돈까지'),
           ('macro', 'AI 밖', 'AI 판을 흔드는 바깥 조건 — 기름값과 돈값'),
           # 부동산은 「AI 밖」에 넣으면 원유·환율 카드와 같은 급으로 읽힌다.
           # 코퍼스가 22편으로 따로 서 있고 안에서 갈래가 셋이라 묶음을 따로 낸다.
           ('estate', '부동산', '집을 짓고 사고 파는 쪽 — 공급부터 세금까지'))
 
 # (id, 큰 묶음, 이름, 설명)
-SECTIONS = (('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
+SECTIONS = (('winner', 'winner', '수혜 기업', '지금 나온 숫자로 누가 값을 받아 가나'),
+            ('chip', 'ai', '반도체 · 메모리 · 가속기', '메모리 수급, GPU 경쟁, 직접 설계한 칩'),
             ('power', 'ai', '전력 · 데이터센터', '전력망 제약과 자가발전, 랙 밀도와 냉각'),
             ('model', 'ai', '모델 · 학습', '강화학습과 환경 제작, 모델 구조'),
             # 옛 이름 "사업 · 비용 · 재무"는 아래 "시장 · 자금"과 구별이 안 됐다.
             # 여기는 AI를 파는 회사들의 손익이고, 저기는 금리·환율이다.
             ('biz', 'ai', 'AI 사업 · 수익', '토큰 값과 마진, AI로 누가 얼마를 버나'),
-            # 수혜는 칩·전력·시장 어디에서든 나온다. 주제별로 흩으면 "그래서 누가 받나"가
-            # 한 화면에 안 모여, 갈래를 가로지르는 칸을 하나 둔다.
-            ('winner', 'ai', '수혜 기업', '지금 나온 숫자로 누가 값을 받아 가나'),
             # 아래 둘은 제3자 코퍼스가 들어오며 생겼다. 위 넷에 억지로 밀어 넣으면
             # 원유·해협·환율 이야기가 칩 이야기와 섞여 어느 것도 안 읽힌다.
             ('energy', 'macro', '에너지 · 원자재', '유가와 해협, LNG 비축, 에너지 안보'),
@@ -213,12 +216,27 @@ def guide(per):
 def sectiles(bysec, bykindsec):
     """주제를 네모 카드로 세운다 — 누르면 그 주제의 글만 펼쳐진다"""
     total = sum(bysec.values())
-    tiles = ['<button class="stile is-all" data-sec="all" aria-pressed="true">'
-             '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
-             '<span class="st-s">모든 주제를 한 줄로</span>'
-             '<span class="st-n">%d</span></button>' % total]
+    tiles = []
+    # 「수혜 기업」은 주제 타일 줄에 섞지 않고 맨 위 한 층으로 세운다 — 갈래를 가로지르는
+    # 물음이라 칩·전력과 나란히 두면 같은 급으로 읽힌다(2026-08-18 요청).
+    for sid, gid, title, sub in ALLSEC:
+        if gid != 'winner' or not bysec.get(sid):
+            continue
+        mix = ' · '.join('%s %d' % (k, bykindsec.get((t, sid), 0))
+                         for _d, k, t in KINDS if bykindsec.get((t, sid)))
+        tiles.append('<button class="stile is-top" data-sec="%s" aria-pressed="false">'
+                     '<span class="st-num">★</span><span class="st-t">%s</span>'
+                     '<span class="st-s">%s</span><span class="st-n">%d</span>'
+                     '<span class="st-mix">%s</span></button>'
+                     % (sid, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
+    tiles.append('<button class="stile is-all" data-sec="all" aria-pressed="true">'
+                 '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
+                 '<span class="st-s">모든 주제를 한 줄로</span>'
+                 '<span class="st-n">%d</span></button>' % total)
     num = 0
     for gid, gtitle, gsub in GROUPS:
+        if gid == 'winner':      # 위에서 이미 한 층으로 냈다
+            continue
         rows = [s for s in ALLSEC if s[1] == gid and bysec.get(s[0])]
         if not rows:
             continue
@@ -379,6 +397,11 @@ CSS = r'''
         color:var(--ink);font-variant-numeric:tabular-nums}
   .st-mix{margin-top:5px;font-size:var(--t-lbl);color:var(--sub)}
   .stile.is-all .st-t{color:var(--accent)}
+  /* 가로지르는 층 — 격자 한 줄을 통째로 쓰고 위아래로 선을 그어 주제 타일과 급을 가른다 */
+  .stile.is-top{grid-column:1/-1;border-color:var(--accent);border-left-width:3px;
+        background:var(--soft, var(--card))}
+  .stile.is-top .st-num{color:var(--accent)}
+  .stile.is-top .st-t{font-size:var(--t-lead);color:var(--accent)}
   /* 큰 묶음 줄 — 타일 격자를 가로로 끊는다 */
   .sgrp{grid-column:1/-1;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
         margin:8px 0 -2px;padding-bottom:5px;border-bottom:1px solid var(--line)}
