@@ -582,32 +582,49 @@ def _sens_html():
 def _path_html(spec):
     """한 글의 연도별 추정 표. 원문 표를 그대로 옮긴 것이라 계산이 한 칸도 없다.
 
-    국면·단계는 원문 표의 행이라 열로 두지 않고 띠로 묶는다. 띠에 그 구간이
-    무엇으로 채워졌는지(컨센서스냐 독립 추정이냐)를 적어야 숫자가 읽힌다.
-    메모는 표 안에 끼우지 않는다. 줄 사이에 문장이 들어가면 위아래 숫자가 끊겨
-    표가 표로 안 읽힌다(2026-08-18 지적). 표 아래에 연도를 앞세워 모아 둔다."""
-    ncol = len(spec['head'])
-    head = ''.join('<th>%s</th>' % h for h in spec['head'])
-    body, notes = [], []
+    **연도가 가로축이다.** 세로로 세우면 한 지표가 어떻게 움직이는지 보려고 눈이
+    아래로 훑어야 하는데, 재무 모형은 왼쪽에서 오른쪽으로 읽는 물건이다(2026-08-18).
+    원문 표는 연도가 행이므로 여기서 뒤집는다 — 첫 열이 지표 이름, 나머지가 연도다.
+
+    구간(컨센서스·필자·정상화)은 연도 위에 띠로 얹는다. 어느 해까지가 남의 숫자이고
+    어디서부터 필자가 깐 것인지가 표 안에서 보여야 한다.
+
+    메모는 표 안에 끼우지 않는다. 줄 사이에 문장이 들어가면 숫자가 끊긴다. 표 아래에
+    연도를 앞세워 모아 둔다."""
+    metrics = spec['head'][1:]          # 첫 열은 연도라 행 머리로 간다
+    cols, notes, bands = [], [], []
     for label, rows in spec['bands']:
-        body.append('<tr class="dm-ep-band"><td colspan="%d">%s</td></tr>' % (ncol, label))
+        bands.append((label, len(rows)))
         for r in rows:
-            cls = ['dm-ep-muted'] if r.get('muted') else []
-            cells = ''.join('<td>%s</td>' % c for c in r['cells'])
-            body.append('<tr%s>%s</tr>'
-                        % (' class="%s"' % ' '.join(cls) if cls else '', cells))
+            cols.append(r)
             if r.get('note'):
                 notes.append('<li><b>%s</b> %s</li>' % (r['cells'][0], r['note']))
+
+    band_row = ''.join('<th class="dm-ep-bandh" colspan="%d">%s</th>' % (n, lab)
+                       for lab, n in bands)
+    year_row = ''.join('<th%s>%s</th>'
+                       % (' class="dm-ep-muted"' if c.get('muted') else '', c['cells'][0])
+                       for c in cols)
+    body = []
+    for i, name in enumerate(metrics, 1):
+        cells = ''.join('<td%s>%s</td>'
+                        % (' class="dm-ep-muted"' if c.get('muted') else '',
+                           c['cells'][i] if i < len(c['cells']) else '')
+                        for c in cols)
+        body.append('<tr><th scope="row">%s</th>%s</tr>' % (name, cells))
+
     url = dc.blob(dmd.SUM + dmd.DOCS[spec['doc']]) + '#L%d' % spec['line']
     return ('<div class="dm-ep">'
             '<p class="dm-ep-label">%s %s '
             '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
-            '<div class="dm-ep-wrap"><table class="dm-ep-tbl">'
-            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<div class="dm-ep-wrap"><table class="dm-ep-tbl dm-ep-wide">'
+            '<thead><tr><th class="dm-ep-corner"></th>%s</tr>'
+            '<tr><th class="dm-ep-corner">%s</th>%s</tr></thead>'
+            '<tbody>%s</tbody></table></div>'
             '%s'
             '<p class="dm-ep-foot">%s</p>'
-            '</div>' % (spec['lede'], _by_badge('author'), url, head,
-                        ''.join(body),
+            '</div>' % (spec['lede'], _by_badge('author'), url,
+                        band_row, spec['head'][0], year_row, ''.join(body),
                         ('<ul class="dm-ep-notes">%s</ul>' % ''.join(notes)) if notes else '',
                         spec['foot']))
 
@@ -1109,6 +1126,16 @@ DM_CSS = '''<style>
 .dm-ep-hi td{background:var(--sunk);color:var(--ink);font-weight:800;border-bottom:0}
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
+/* 연도를 가로로 세운 표. 열이 열 개를 넘어가므로 첫 열(지표 이름)을 붙박이로 둔다 */
+.dm-ep-wide th[scope="row"]{position:sticky;left:0;background:var(--surface);text-align:left;
+     font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;padding:6px 12px 6px 8px;
+     border-bottom:1px solid var(--line)}
+.dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dm-ep-wide thead th{text-align:right;white-space:nowrap}
+.dm-ep-corner{position:sticky;left:0;background:var(--surface);text-align:left !important}
+.dm-ep-bandh{font-size:10px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+     background:var(--sunk);text-align:left !important;padding:4px 8px;
+     border-bottom:1px solid var(--line)}
 /* 메모는 표 밖, 표 바로 아래에 모은다. 연도를 앞세워 어느 줄 이야기인지 잇는다 */
 /* 방법 설명. 아는 사람에게는 군더더기라 접어 둔다 */
 .dm-howto{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
