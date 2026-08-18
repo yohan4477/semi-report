@@ -81,15 +81,28 @@ def css():
     return out
 
 
+def _card(c, dup=False):
+    """카드 마크업. 사본(다른 회사 섹션에 한 번 더 서는 것)은 앵커를 뗀다."""
+    h = card_html(c)
+    if dup:
+        h = h.replace(' id="%s"' % slug(c['title']), '', 1)
+    return h
+
+
 def sections(cards):
-    """카드를 섹션별로 묶는다 — CARDS에 적힌 순서가 곧 화면 순서다"""
+    """카드를 섹션별로 묶는다 — CARDS에 적힌 순서가 곧 화면 순서다.
+
+    c['also'] = [섹션, …]이면 그 섹션에도 같은 카드가 선다. 마이크론과 SK하이닉스를 같이
+    다룬 글은 두 회사 어느 쪽을 눌러도 나와야 한다. 두 번째 자리부터는 앵커(id)를 떼고
+    낸다 — 같은 id가 문서에 둘이면 링크가 어디로 갈지 정해지지 않는다."""
     secs, order = {}, []
     for c in cards:
-        sid = c['section'][0]
-        if sid not in secs:
-            secs[sid] = (c['section'], [])
-            order.append(sid)
-        secs[sid][1].append(c)
+        for i, sec in enumerate([c['section']] + list(c.get('also') or ())):
+            sid = sec[0]
+            if sid not in secs:
+                secs[sid] = (sec, [])
+                order.append(sid)
+            secs[sid][1].append((c, i > 0))
     return secs, order
 
 
@@ -477,7 +490,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
         # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
         lead = sec_top.get(sid, '')
-        cards_html = ''.join(card_html(c) for c in cs)
+        cards_html = ''.join(_card(c, dup) for c, dup in cs)
         if lead:
             # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
             # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
@@ -581,12 +594,17 @@ def check_labels(cards):
                        if len(l) > 1 and 'content/' in l[1])
         if not src:
             continue                      # 원문 링크가 없는 카드(영상 등)는 대상이 아니다
+        # 「라벨에만 있는 회사」는 카드 본문까지 보고 판단한다. 파일명만 보면 「DS 영업이익률」처럼
+        # 회사 이름이 제목에 안 든 글이 걸린다. 반대로 「좁혔다」 판정은 파일명만 본다 —
+        # 본문은 비교 대상으로 다른 회사를 스칠 뿐인데 그것까지 세면 전부 걸린다.
+        body_src = src + ' ' + (c.get('oneliner') or '') + ' ' + ' '.join(c.get('points') or ())
         title = c.get('title', '')
         named = [n for n in ACTORS if n in label]
-        alien = [n for n in named if n not in src and n not in title]
+        alien = [n for n in named if n not in body_src and n not in title]
         assert not alien, ('라벨 규칙 위반: 원문에 없는 회사를 라벨에 달았다 — %s / 라벨 %s / 없는 이름 %s'
                            % (title, label.strip(), ', '.join(alien)))
-        if named:
+        # 여러 회사 섹션에 같이 서는 카드(c['also'])는 좁힌 것이 아니다 — 양쪽에 다 있다
+        if named and not c.get('also'):
             narrowed = [n for n in ACTORS if n in src and n not in label and n not in title]
             assert not narrowed, (
                 '라벨 규칙 위반: 여러 회사를 다룬 원문을 한 회사 라벨 아래 뒀다 — %s / 라벨 %s / '
