@@ -41,7 +41,7 @@ def _chain_label(driver_id, repeat=False):
         return '<b class="dm-chain-val">%s</b>' % val
     return ('<span class="dm-chain-driver">'
             '<span class="dm-chain-name">%s</span>'
-            '<b class="dm-chain-val">%s</b></span>' % (d['label'], val))
+            '<b class="dm-chain-val">%s</b></span> ' % (d['label'], val))
 
 
 def _linkify(line):
@@ -1514,10 +1514,15 @@ DM_CSS = '''<style>
 .dm-chain-line{font-size:12.5px;line-height:2;color:var(--ink-2);margin:0}
 /* 수식 한 자리 = 이름 + 값. 줄바꿈으로 둘이 갈라지면 어느 값이 어느 이름의
    것인지 안 보이므로 통째로 묶어 둔다 */
-.dm-chain-driver{display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap;
+/* 값이 길면 inline-flex 상자를 뚫고 글자가 배경 밖으로 나갔다(2026-08-19 모바일).
+   글처럼 흐르게 display:inline으로 두고, 줄이 바뀌어도 배경이 각 줄에 다시 칠해지도록
+   box-decoration-break:clone을 준다. 이름과 값은 사이 여백으로 묶는다. */
+.dm-chain-driver{display:inline;white-space:normal;overflow-wrap:anywhere;
                  padding:1px 7px;border-radius:6px;background:var(--sunk);
-                 border:1px solid var(--line)}
-.dm-chain-name{font-size:11px;font-weight:700;color:var(--ink-3)}
+                 border:1px solid var(--line);
+                 -webkit-box-decoration-break:clone;box-decoration-break:clone}
+.dm-chain-driver + .dm-chain-driver{margin-left:3px}
+.dm-chain-name{font-size:11px;font-weight:700;color:var(--ink-3);margin-right:4px}
 .dm-chain-val{color:var(--ink);font-weight:850;font-variant-numeric:tabular-nums}
 
 /* ── 상위 드라이버 칩 줄 ── */
@@ -1675,7 +1680,6 @@ DM_CSS = '''<style>
   /* 계산 사슬 칩이 화면 밖으로 튀어나왔다(2026-08-19 하이닉스 멀티플). 이름과 값이
      갈라지지 않게 nowrap을 걸어 둔 것이 원인이다. 좁은 화면에서는 칩 안에서 줄을
      바꾸게 풀고, 이름과 값은 위아래로 쌓아 짝을 유지한다. */
-  .dm-chain-driver{white-space:normal;flex-wrap:wrap;max-width:100%}
   .dm-chain-line{overflow-wrap:anywhere;line-height:1.9}
   .dm-axis, .dm-axispanel, .dm-dv, .dm-scenario{min-width:0}
   .dm-axis{padding:14px 12px 13px}
