@@ -425,6 +425,15 @@
           border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+  .secsw[hidden]{display:none}
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sw-btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
   @media (min-width:820px){
@@ -552,8 +561,9 @@
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
       // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
-      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
-                                              : s.querySelectorAll('.ucard:not([hidden])').length;
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
       s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
@@ -562,9 +572,19 @@
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
-    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다
-    document.querySelectorAll('.sec-lead').forEach(function(l){
-      l.hidden = !only || l.dataset.sec!==only;
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
@@ -660,6 +680,33 @@
     fromHash(false);
   }
   window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script><script>
+(function(){
+  function show(sid, view){
+    var sw=document.querySelector('.secsw[data-sec="'+sid+'"]');
+    if(sw) sw.querySelectorAll('.sw-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.view===view));
+    });
+    var val=document.querySelector('.sv-val[data-sec="'+sid+'"]');
+    var posts=document.querySelector('.sv-posts[data-sec="'+sid+'"]');
+    if(val) val.hidden = view!=='val';
+    if(posts) posts.hidden = view!=='posts';
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('.sw-btn'); if(!b) return;
+    show(b.closest('.secsw').dataset.sec, b.dataset.view);
+  });
+  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다
+  function fromHash(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;
+    var box=h.closest('.sv-posts'); if(box) show(box.dataset.sec, 'posts');
+  }
+  window.addEventListener('hashchange', fromHash);
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else { fromHash(); }
 })();
 </script>
 <style>

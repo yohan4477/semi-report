@@ -45,6 +45,15 @@ PICK_CSS = '''
           border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+  .secsw[hidden]{display:none}
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sw-btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
   @media (min-width:820px){
@@ -170,6 +179,9 @@ LINK_JS = """<script>
 })();
 </script>"""
 
+SW_JS = '<script>\n(function(){\n  function show(sid, view){\n    var sw=document.querySelector(\'.secsw[data-sec="\'+sid+\'"]\');\n    if(sw) sw.querySelectorAll(\'.sw-btn\').forEach(function(b){\n      b.setAttribute(\'aria-pressed\', String(b.dataset.view===view));\n    });\n    var val=document.querySelector(\'.sv-val[data-sec="\'+sid+\'"]\');\n    var posts=document.querySelector(\'.sv-posts[data-sec="\'+sid+\'"]\');\n    if(val) val.hidden = view!==\'val\';\n    if(posts) posts.hidden = view!==\'posts\';\n  }\n  document.addEventListener(\'click\', function(e){\n    var b=e.target.closest(\'.sw-btn\'); if(!b) return;\n    show(b.closest(\'.secsw\').dataset.sec, b.dataset.view);\n  });\n  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다\n  function fromHash(){\n    var id=(location.hash||\'\').slice(1); if(!id) return;\n    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;\n    var box=h.closest(\'.sv-posts\'); if(box) show(box.dataset.sec, \'posts\');\n  }\n  window.addEventListener(\'hashchange\', fromHash);\n  if(document.readyState===\'loading\'){\n    document.addEventListener(\'DOMContentLoaded\', fromHash);\n  } else { fromHash(); }\n})();\n</script>'
+
+
 NAV_JS = '''<script>
 (function(){
   var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
@@ -214,9 +226,19 @@ NAV_JS = '''<script>
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
-    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다
-    document.querySelectorAll('.sec-lead').forEach(function(l){
-      l.hidden = !only || l.dataset.sec!==only;
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
@@ -455,14 +477,20 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
         # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
         lead = sec_top.get(sid, '')
+        cards_html = ''.join(card_html(c) for c in cs)
         if lead:
-            # 섹션 전용 층. 「전체 보기」에서는 접어 둔다 — 거기서는 글이 먼저 나와야 한다.
-            # 그 섹션을 고르면 NAV_JS가 펴서 카드보다 위에 세운다.
-            lead = '<div class="sec-lead" data-sec="%s" hidden>%s</div>' % (sid, lead)
+            # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
+            # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
+            lead = ('<div class="secsw" data-sec="%s" hidden>'
+                    '<button type="button" class="sw-btn" data-view="val">밸류에이션</button>'
+                    '<button type="button" class="sw-btn" data-view="posts">개별 포스트'
+                    ' <span class="sw-n">%d</span></button></div>'
+                    '<div class="sec-lead sv-val" data-sec="%s" hidden>%s</div>'
+                    % (sid, len(cs), sid, lead))
+            cards_html = '<div class="sv-posts" data-sec="%s" hidden>%s</div>' % (sid, cards_html)
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2></div>%s%s%s</section>'
-                    % (sid, num, stitle, lead,
-                       ''.join(card_html(c) for c in cs), sec_bottom.get(sid, '')))
+                    % (sid, num, stitle, lead, cards_html, sec_bottom.get(sid, '')))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     page_css = css()
     if extra_css:
@@ -476,7 +504,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             # 타일이 화면 한참 아래로 밀렸다(2026-08-18). 첫 화면은 어느 장이든 타일이다.
             + '\n\n  ' + intro + '\n\n  ' + tabs + nav + '\n\n  ' + rollup + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
-            + FOLD_JS + NAV_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
+            + FOLD_JS + NAV_JS + LINK_JS + SW_JS + ui_bits.TOP_BTN + '\n')
     check_labels(cards)
     check_links(cards)
     check_ui(html, bool(top))
