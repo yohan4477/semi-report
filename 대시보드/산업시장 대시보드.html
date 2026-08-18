@@ -475,6 +475,8 @@
 
   
 
+  
+
   <div class="scope-tabs">
     <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">8</span></button>
     <button data-pick="intl" aria-pressed="false">🌍 해외 <span class="cnt">7</span></button>
@@ -541,22 +543,22 @@
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
-      // 카드가 없는 섹션(통합 인사이트·읽는 순서)은 교차 카드로 센다. 범위 탭은 타지 않는다.
-      // 셀 것이 하나도 없어도 접지 않는다 — 읽는 순서 안내는 카드를 담지 않는 섹션이라
-      // 편수로 생사를 판정하면 타일째 사라진다.
-      var fixed = s.hasAttribute('data-fixed');
-      var live = fixed ? s.querySelectorAll('.ins').length
-                       : s.querySelectorAll('.ucard:not([hidden])').length;
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
+                                              : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || (!fixed && live===0) || (only && s.id!==only);
+      s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
-        o.hidden = !fixed && live===0;
+        o.hidden = live===0;
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
     var roll2=document.querySelector('.rollup');
     if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
     if(back){

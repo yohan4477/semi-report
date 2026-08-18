@@ -170,22 +170,22 @@ NAV_JS = '''<script>
     if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
-      // 카드가 없는 섹션(통합 인사이트·읽는 순서)은 교차 카드로 센다. 범위 탭은 타지 않는다.
-      // 셀 것이 하나도 없어도 접지 않는다 — 읽는 순서 안내는 카드를 담지 않는 섹션이라
-      // 편수로 생사를 판정하면 타일째 사라진다.
-      var fixed = s.hasAttribute('data-fixed');
-      var live = fixed ? s.querySelectorAll('.ins').length
-                       : s.querySelectorAll('.ucard:not([hidden])').length;
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
+                                              : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || (!fixed && live===0) || (only && s.id!==only);
+      s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
-        o.hidden = !fixed && live===0;
+        o.hidden = live===0;
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
     var roll2=document.querySelector('.rollup');
     if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
     if(back){
@@ -245,31 +245,21 @@ BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이�
         '<span class="sb-now"></span></div>')
 
 
-def sec_picker(secs, order, total, extra=None, extra_first=False):
+def sec_picker(secs, order, total, extra=None):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
-    extra는 카드가 아닌 섹션(통합 인사이트 등)을 타일 하나로 세운다: (sid, 이름, 설명, 편수).
-    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다.
-    extra_first면 「전체 보기」보다 앞에 세운다. 읽는 순서 안내처럼 처음 온 사람이 먼저 짚을
-    자리에 쓴다. 교차 인사이트처럼 읽을거리인 경우는 전체 보기 뒤가 맞다."""
-    tiles = []
-    all_tile = ('<button class="stile is-all" data-sec="" aria-pressed="true">'
-                '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
-                '<span class="st-s">모든 섹션을 한 줄로</span>'
-                '<span class="st-n cnt">%d</span></button>' % total)
-    if not (extra and extra_first):
-        tiles.append(all_tile)
+    extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
+    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다."""
+    tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
+             '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
+             '<span class="st-s">모든 섹션을 한 줄로</span>'
+             '<span class="st-n cnt">%d</span></button>' % total]
     if extra:
         xid, xtitle, xsub, xn = extra
-        # 편수가 0이면 숫자를 아예 세우지 않는다 — 카드를 담지 않는 섹션(읽는 순서 안내 등)이
-        # 「0」을 달고 서면 빈 칸으로 읽힌다
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
                      '<span class="st-num">00</span><span class="st-t">%s</span>'
-                     '<span class="st-s">%s</span>%s</button>'
-                     % (xid, xtitle, snip(xsub),
-                        ('<span class="st-n cnt">%d</span>' % xn) if xn else ''))
-        if extra_first:
-            tiles.append(all_tile)
+                     '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
+                     % (xid, xtitle, snip(xsub), xn))
     for sid in order:
         (_id, num, title, sub), cs = secs[sid]
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
@@ -324,16 +314,19 @@ def rollup_for(key, cards, unit='편'):
 XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
 
 
-def render(cards, title, header, footer, out, rollup='', top='', top_css='',
-           top_n=0, top_sub='', top_title='통합 인사이트', top_first=False):
+def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
+           top_n=0, top_sub='', top_title='통합 인사이트', intro=''):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
-    눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다."""
+    눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
+
+    intro는 타일 그리드 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않고
+    접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
     extra = (XSEC, top_title, top_sub, top_n) if top else None
-    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra, top_first)
+    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
@@ -351,14 +344,14 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css='',
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     kin_js = KIN_JS if any(c.get('kin') for c in cards) else ''
     page_css = css()
-    if top_css:
-        page_css = page_css.replace('</style>', top_css + '</style>')
+    if extra_css:
+        page_css = page_css.replace('</style>', extra_css + '</style>')
     html = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n' % title + page_css
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
             + '\n<div class="wrap">\n' + header
-            + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
+            + '\n\n  ' + intro + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + kin_js + ui_bits.TOP_BTN + '\n')
     check_ui(html, bool(top))

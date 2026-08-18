@@ -1737,5 +1737,5 @@ if __name__ == '__main__':
     top, _n = dc.layer(iv.export_sections('estate'), XLEDE)
     dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('realestate', CARDS, '편'),
-              top=top, top_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS,
+              top=top, extra_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS,
               top_n=_n, top_sub=XSUB)

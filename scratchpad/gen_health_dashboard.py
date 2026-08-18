@@ -1827,6 +1827,10 @@ def attach_kin(cards):
 # 읽는 순서는 따로 세운다 — 둘이 다르기 때문이다. 섹션은 염증부터 시작하지만 처음 읽는
 # 사람에게는 오늘 저녁 식탁 이야기가 먼저다.
 #
+# 자리는 섹션 타일 그리드 바깥, 그 위다. 타일 하나로 들어가면 「전체 보기」와 같은 줄에 서서
+# 주제 중 하나로 읽힌다. 이건 주제가 아니라 길잡이라 타일 위에 따로 선다. 관문은 아니다 —
+# 접을 수 있고 바로 아래에 타일이 그대로 있다.
+#
 # 카드 제목은 여기 적힌 것과 CARDS가 한 글자라도 어긋나면 assert로 걸린다. 빠뜨린 카드도
 # 같이 걸린다 — 카드를 새로 만들면 여기에도 자리를 정해 줘야 한다.
 COURSE_LEDE = ('카드 %d장을 어디서부터 읽을지 정해 두었습니다. 앞 두 단계는 오늘 저녁 식탁에서 바로 쓰는 '
@@ -1865,14 +1869,25 @@ COURSE = [
 ]
 
 COURSE_CSS = '''
-  .cstep { margin:0 0 26px; }
-  .cstep:last-child { margin-bottom:0; }
-  .cs-h { margin:0 0 5px; font-size:15px; font-weight:800; color:var(--ink); }
-  .cs-h .cs-n { display:inline-block; min-width:22px; color:var(--accent-ink); }
-  .cs-why { margin:0 0 9px 22px; font-size:13px; line-height:1.65; color:var(--ink-2); }
-  .course { margin-left:22px; }
-  .course ol { margin:0; padding-left:18px; }
-  .course li { font-size:13px; line-height:1.7; margin-bottom:3px; }
+  .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
+    background:var(--sunk); padding:0 16px; }
+  .intro > summary { list-style:none; cursor:pointer; padding:13px 0; display:flex;
+    align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .intro > summary::-webkit-details-marker { display:none; }
+  .intro > summary::after { content:"▾"; margin-left:auto; color:var(--ink-3); font-size:12px; }
+  .intro[open] > summary::after { content:"▴"; }
+  .in-t { font-size:14px; font-weight:800; color:var(--ink); }
+  .in-s { font-size:12px; color:var(--ink-3); }
+  .in-b { padding:0 0 16px; }
+  .in-lede { margin:0 0 16px; font-size:13px; line-height:1.7; color:var(--ink-2); }
+  .csteps { display:grid; grid-template-columns:1fr 1fr; gap:18px 26px; }
+  @media (max-width:720px) { .csteps { grid-template-columns:1fr; } }
+  .cs-h { margin:0 0 4px; font-size:14px; font-weight:800; color:var(--ink); }
+  .cs-h .cs-n { display:inline-block; min-width:20px; color:var(--accent-ink); }
+  .cs-why { margin:0 0 8px 20px; font-size:12.5px; line-height:1.6; color:var(--ink-2); }
+  .course { margin-left:20px; }
+  .course ol { margin:0; padding-left:17px; }
+  .course li { font-size:12.5px; line-height:1.65; margin-bottom:3px; }
   .course li:last-child { margin-bottom:0; }
   .course a.kin-link { color:var(--ink); text-decoration:none;
     border-bottom:1px solid var(--line); }
@@ -1890,7 +1905,9 @@ def course_html(cards):
     assert not missing, '읽는 순서에서 빠진 카드가 있다: %s' % sorted(missing)
     assert len(listed) == len(set(listed)), '읽는 순서에 같은 카드가 두 번 들어갔다'
 
-    h = ['<p class="lede">%s</p>' % (COURSE_LEDE % len(cards))]
+    h = ['<details class="intro" open><summary><span class="in-t">처음 오셨다면</span>'
+         '<span class="in-s">카드 %d장을 여섯 단계로</span></summary><div class="in-b">' % len(cards)]
+    h.append('<p class="in-lede">%s</p><div class="csteps">' % (COURSE_LEDE % len(cards)))
     for i, (head, why, titles) in enumerate(COURSE, 1):
         h.append('<div class="cstep"><p class="cs-h"><span class="cs-n">%d</span>%s</p>' % (i, head))
         h.append('<p class="cs-why">%s</p>' % why)
@@ -1898,6 +1915,7 @@ def course_html(cards):
         h.append('<div class="course"><ol>%s</ol></div></div>'
                  % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (dc.slug(t), t)
                            for t in titles))
+    h.append('</div></div></details>')
     return ''.join(h)
 
 
@@ -1905,6 +1923,4 @@ if __name__ == '__main__':
     attach_kin(CARDS)
     dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('health', CARDS, '편'),
-              top=course_html(CARDS), top_css=COURSE_CSS, top_n=0,
-              top_title='처음 오셨다면', top_sub='카드 %d장을 여섯 단계로' % len(CARDS),
-              top_first=True)
+              intro=course_html(CARDS), extra_css=COURSE_CSS)
