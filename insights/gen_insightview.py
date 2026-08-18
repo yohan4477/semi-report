@@ -133,8 +133,16 @@ def one(meta, body, tab, kind):
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
 
 
+TOPSEC = 'winner'   # 타일을 고르기 전에도 보이는 층 — 첫 화면에서 바로 읽힌다
+
+
 def cards():
-    out, per, bysec, mix = [], {}, {}, {}
+    """(필터 대상 카드, 맨 위 고정 카드, 집계들)
+
+    이 페이지는 첫 화면이 주제 고르기라 타일을 누르기 전에는 카드가 전부 hidden이다.
+    「수혜 기업」만 그 규칙에서 뺀다 — 누가 값을 받아 가는지는 클릭 없이 보여야 한다.
+    """
+    out, top, per, bysec, mix = [], [], {}, {}, {}
     for d, kind, tab in KINDS:
         got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
@@ -147,9 +155,11 @@ def cards():
             mix[(tab, sid)] = mix.get((tab, sid), 0) + 1
         if not got:
             continue
+        if got.get(TOPSEC):
+            top.extend(got[TOPSEC])
         blocks, num = [], 0
         for sid, grp, title, _sub in ALLSEC:
-            if not got.get(sid):
+            if not got.get(sid) or sid == TOPSEC:
                 continue
             num += 1
             blocks.append('<section class="isec" data-kind="%s" data-sec="%s" data-grp="%s">'
@@ -158,9 +168,17 @@ def cards():
                           '<span class="icnt">%d</span></div>%s</section>'
                           % (tab, sid, grp, num, nl.esc(title), nl.esc(GRPNAME[grp]),
                              len(got[sid]), ''.join(got[sid])))
-        out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
-                   % (tab, nl.esc(kind), ''.join(blocks)))
-    return ''.join(out), per, bysec, mix
+        if blocks:
+            out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
+                       % (tab, nl.esc(kind), ''.join(blocks)))
+    tophtml = ''
+    if top:
+        title = next((t for s, _g, t, _sub in ALLSEC if s == TOPSEC), TOPSEC)
+        sub = next((x for s, _g, _t, x in ALLSEC if s == TOPSEC), '')
+        tophtml = ('<section class="topsec"><div class="ihead"><span class="inum">★</span>'
+                   '<h3>%s</h3><span class="igrp">%s</span><span class="icnt">%d</span></div>'
+                   '%s</section>' % (nl.esc(title), nl.esc(sub), len(top), ''.join(top)))
+    return ''.join(out), tophtml, per, bysec, mix
 
 
 def export(key, by='group'):
@@ -231,20 +249,10 @@ def guide(per):
 
 def sectiles(bysec, bykindsec):
     """주제를 네모 카드로 세운다 — 누르면 그 주제의 글만 펼쳐진다"""
-    total = sum(bysec.values())
+    # 「수혜 기업」은 타일이 아니라 페이지 맨 위 고정 층이다(cards의 TOPSEC 참조).
+    # 여기서 세면 타일을 눌러야 나오는 카드 수와 안 맞는다.
+    total = sum(n for s, n in bysec.items() if s != TOPSEC)
     tiles = []
-    # 「수혜 기업」은 주제 타일 줄에 섞지 않고 맨 위 한 층으로 세운다 — 갈래를 가로지르는
-    # 물음이라 칩·전력과 나란히 두면 같은 급으로 읽힌다(2026-08-18 요청).
-    for sid, gid, title, sub in ALLSEC:
-        if gid != 'winner' or not bysec.get(sid):
-            continue
-        mix = ' · '.join('%s %d' % (k, bykindsec.get((t, sid), 0))
-                         for _d, k, t in KINDS if bykindsec.get((t, sid)))
-        tiles.append('<button class="stile is-top" data-sec="%s" aria-pressed="false">'
-                     '<span class="st-num">★</span><span class="st-t">%s</span>'
-                     '<span class="st-s">%s</span><span class="st-n">%d</span>'
-                     '<span class="st-mix">%s</span></button>'
-                     % (sid, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
     tiles.append('<button class="stile is-all" data-sec="all" aria-pressed="true">'
                  '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
                  '<span class="st-s">모든 주제를 한 줄로</span>'
@@ -290,10 +298,11 @@ def tabs(per):
 
 
 def build():
-    body, per, bysec, mix = cards()
+    body, top, per, bysec, mix = cards()
     n = sum(per.values())
     html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS)
                 .replace('__GUIDE__', guide(per))
+                .replace('__TOP__', top)
                 .replace('__TABS__', '<div class="tabbar">%s</div>%s'
                          % (tabs(per), sectiles(bysec, mix)))
                 .replace('__CARDS__', body)
@@ -321,6 +330,10 @@ CARD_CSS = r'''
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
   /* 수혜·비수혜 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
+  /* 맨 위 고정 층 — 타일을 고르기 전에도 보인다 */
+  .topsec{margin:18px 0 6px;padding:14px 0 4px;border-top:2px solid var(--accent);
+        border-bottom:1px solid var(--line)}
+  .topsec .ihead .inum{color:var(--accent)}
   .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:9px 0 0}
   .rk{flex:none;font-size:var(--t-lbl);font-weight:800;letter-spacing:.04em;
       border-radius:999px;padding:2px 8px}
@@ -556,6 +569,7 @@ TMPL = '''<meta charset="utf-8">
     <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
 __GUIDE__
+__TOP__
 __TABS__
 __CARDS__
 __TABJS__
