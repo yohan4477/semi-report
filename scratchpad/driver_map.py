@@ -10,11 +10,14 @@
 # 구조는 상위/하위 2단계다. 수식 사슬 안의 드라이버는 이제 누르는 칩이 아니라 읽는 텍스트고,
 # 축 카드 아래에 그 축이 쓰는 상위 드라이버(GROUPS)만 칩으로 놓는다. 누르면 팝업(모달)이
 # 뜨고, 1단계는 갈래 화면(질문·왜·코퍼스+세부 드라이버 목록), 2단계는 세부 드라이버 화면이다.
-import io, json, os, re, sys
+import glob, io, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
-import driver_map_data as dmd
+import driver_map_data
+# 기본값(삼성전자). render(data=...)가 호출되면 그 데이터 모듈로 다시 잡는다 —
+# 아래 모든 헬퍼 함수는 이 전역 dmd를 통해서만 데이터에 접근한다.
+dmd = driver_map_data
 
 sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
 import notes_lib as nl  # noqa: E402
@@ -25,13 +28,32 @@ import notes_lib as nl  # noqa: E402
 _CHIP_RE = re.compile(r'\{([a-zA-Z_][a-zA-Z0-9_]*)\}')
 
 
-def _chain_label(driver_id):
+def _chain_label(driver_id, repeat=False):
+    """수식 한 자리. 이름만 있으면 값을 보려고 아래 칩을 눌러야 한다 —
+    수식이 무슨 계산인지는 알려 주는데 결과가 어떤 자릿수인지는 안 알려 준다.
+    그래서 이름 옆에 값을 같이 박는다. base가 긴 드라이버는 short를 쓴다.
+
+    한 줄에 같은 드라이버가 여러 번 나오면(영구가치 줄의 할인율이 세 번)
+    두 번째부터는 값만 남긴다. 이름까지 세 번 적으면 수식이 안 읽힌다."""
     d = dmd.DRIVERS[driver_id]
-    return '<b class="dm-chain-driver">%s</b>' % d['label']
+    val = d.get('short', d['base'])
+    if repeat:
+        return '<b class="dm-chain-val">%s</b>' % val
+    return ('<span class="dm-chain-driver">'
+            '<span class="dm-chain-name">%s</span>'
+            '<b class="dm-chain-val">%s</b></span>' % (d['label'], val))
 
 
 def _linkify(line):
-    return _CHIP_RE.sub(lambda m: _chain_label(m.group(1)), line)
+    seen = set()
+
+    def one(m):
+        did = m.group(1)
+        html = _chain_label(did, repeat=did in seen)
+        seen.add(did)
+        return html
+
+    return _CHIP_RE.sub(one, line)
 
 
 def _by_badge(key):
@@ -40,13 +62,26 @@ def _by_badge(key):
     return '<span class="dm-by dm-by--%s" title="%s">%s</span>' % (key, desc, label)
 
 
-# ── 내 판정 (insights/valuation/005930-삼성전자/judgment.json) ──────
+# ── 내 판정 (insights/valuation/<judgment_dir>/judgment.json) ──────
 # 이 파일은 종목마다 있을 수도 없을 수도 있다. 없거나 깨졌으면 조용히 건너뛴다 —
 # 예외를 던지면 이 파일이 없는 다른 종목 대시보드까지 죽는다.
-_JUDGMENT_PATH = os.path.join(dc.ROOT, 'insights', 'valuation', '005930-삼성전자', 'judgment.json')
+# render()가 호출될 때마다 그 회사의 judgment_dir로 다시 잡는다. 기본값은 삼성전자 폴더다.
+_JUDGMENT_PATH = None
 _NOTES_DIR = os.path.join(dc.ROOT, 'insights', 'notes')
 
 _VERDICT_CLASS = {'유지': 'keep', '수정': 'fix', '보류': 'hold', '확인필요': 'check'}
+
+# 지도 뿌리 요소의 접두어. 회사별로 갈라 한 페이지에 지도 두 개가 있어도 id가 안 부딪히게 한다.
+# render()가 호출될 때마다 데이터 모듈 이름에서 다시 뽑는다.
+_PX = 'ss'
+
+
+def _prefix_for(data):
+    """데이터 모듈 이름에서 접두어를 뽑는다. driver_map_data → 'ss'(기본·삼성전자),
+    driver_map_data_hynix → 'hynix'. 값을 손으로 안 붙여도 되게 모듈명에서 뽑는다."""
+    name = getattr(data, '__name__', '') or ''
+    tail = name.rsplit('driver_map_data', 1)[-1].strip('_')
+    return tail or 'ss'
 
 # 근거 묶음 키 → 화면에 쓸 이름. cite만 「근거」로 바꾸고 나머지는 밑줄을 공백으로
 # 바꿔 그대로 쓴다(높게_볼_근거 → 높게 볼 근거).
@@ -72,6 +107,8 @@ def _map_driver_id(raw):
 
 
 def _load_judgment():
+    if not _JUDGMENT_PATH:
+        return {}, None, []
     try:
         with io.open(_JUDGMENT_PATH, encoding='utf-8') as f:
             data = json.load(f)
@@ -100,7 +137,9 @@ def _load_judgment():
     return by_driver, data.get('as_of'), data.get('아직_판정_못한_것') or []
 
 
-_JUDGMENTS, _JUDGMENT_ASOF, _JUDGMENT_TODO = _load_judgment()
+# render()가 호출될 때마다 그 회사의 judgment_dir로 다시 채운다. 모듈을 처음 불러온 시점에는
+# 빈 상태 — render()를 거치지 않고 이 아래 함수들을 직접 부르는 코드는 없다.
+_JUDGMENTS, _JUDGMENT_ASOF, _JUDGMENT_TODO = {}, None, []
 
 
 def _resolve_note_sources(note_name):
@@ -196,30 +235,118 @@ def _judgment_todo_html(items, as_of):
             '<ul class="dm-jgtodo-list">%s</ul></div>' % (asof_html, lis))
 
 
-def _group_chips_html(ax):
-    """그 축이 쓰는 갈래만, GROUPS 순서대로 칩을 낸다. 세부 개수를 같이 보이고,
-    그 축의 세부 드라이버 중 근거가 빈 것(basis=='none')이 있으면 경고 표시를 단다."""
-    rows = []
-    for g in dmd.GROUPS:
-        members = g['members'].get(ax['id'])
-        if not members:
-            continue
-        warn = any(dmd.DRIVERS[did]['basis'] == 'none' for did in members)
-        warn_html = ('<span class="dm-gchip-warn" aria-hidden="true" title="근거가 빈 값 포함">!</span>'
-                     if warn else '')
-        # 내 판정이 붙은 세부 드라이버 개수 — 근거 없음 경고(!)와 자리를 나눠 구분되게 둔다.
-        jg_n = sum(1 for did in members if did in _JUDGMENTS)
-        jg_html = ('<span class="dm-gchip-jg" aria-hidden="true" '
-                   'title="내 판정이 있는 세부 드라이버 %d개">%d</span>' % (jg_n, jg_n)
-                   if jg_n else '')
-        rows.append(
-            '<button type="button" class="dm-gchip" data-group="%s" data-members="%s" '
-            'aria-haspopup="dialog">'
-            '<span class="dm-gchip-name">%s</span><span class="dm-gchip-n">· %d</span>%s%s'
-            '</button>' % (g['id'], ','.join(members), g['name'], len(members), warn_html, jg_html))
-    if not rows:
+def _judgment_inline_html(did):
+    """내 판정. 모달에 있던 것을 지면으로 내린다 — 이 페이지에는 눌러서 여는 것이 없다."""
+    entries = _JUDGMENTS.get(did)
+    if not entries:
         return ''
-    return '<div class="dm-gchips">%s</div>' % ''.join(rows)
+    show_label = len(entries) > 1
+    out = []
+    for v in entries:
+        vd = v.get('verdict') or ''
+        cls = _VERDICT_CLASS.get(vd, 'check')
+        lab = ('<span class="dm-dv-jglabel">%s</span>' % v['label']) if (show_label and v.get('label')) else ''
+        why = ('<span class="dm-dv-jgwhy">%s</span>' % v['why']) if v.get('why') else ''
+        mine = ('<p class="dm-dv-jgmine"><b>주인장이 대신 보는 값</b> %s</p>' % v['mine']) if v.get('mine') else ''
+        out.append('<div class="dm-dv-jgitem">%s<span class="dm-dv-jgbadge dm-dv-jgbadge--%s">%s</span>%s%s</div>'
+                   % (lab, cls, vd, why, mine))
+    return ('<div class="dm-dv-jg"><p class="dm-dv-jgtitle">주인장 판정 %s</p>%s</div>'
+            % (_by_badge('ours'), ''.join(out)))
+
+
+# render()가 호출될 때마다 그 회사의 GROUPS로 다시 채운다 (아래 참조).
+_GROUP_OF = {}
+
+
+def _driver_block_html(did):
+    d = dmd.DRIVERS[did]
+    basis_label, basis_desc = dmd.BASIS[d['basis']]
+    none_cls = ' dm-dv--none' if d['basis'] == 'none' else ''
+    grp = _GROUP_OF.get(did, '')
+    return ('<div class="dm-dv%s">'
+            '<div class="dm-dv-head">'
+            '<span class="dm-dv-name">%s</span>'
+            '<span class="dm-dv-val">%s</span>'
+            '<span class="dm-basis%s" title="%s">%s</span>'
+            '<span class="dm-dv-grp">%s</span>'
+            '</div>'
+            '<p class="dm-dv-why">%s</p>'
+            '<p class="dm-dv-impact"><b>그래서</b> %s</p>'
+            '%s</div>'
+            % (none_cls, d['label'], d['base'],
+               ' dm-basis--none' if d['basis'] == 'none' else '', basis_desc, basis_label,
+               grp, d['why'], d['impact'], _judgment_inline_html(did)))
+
+
+def _doc_gist(key):
+    """그 글이 무엇을 주장하는지 한 문장. 노트의 「이 문서가 주장하는 것」 첫 문장이다."""
+    src = dmd.DOCS.get(key, '')
+    for path in glob.glob(os.path.join(_NOTES_DIR, '*.md')):
+        try:
+            t = io.open(path, encoding='utf-8').read()
+        except Exception:
+            continue
+        if src and src in t:
+            m = re.search(r'## 이 문서가 주장하는 것\n+(.+?)(?:\n|$)', t)
+            if not m:
+                return ''
+            first = re.match(r'^(.+?다[.])', m.group(1).strip())
+            return (first.group(1) if first else m.group(1).strip())[:190]
+    return ''
+
+
+def _doc_title(key):
+    """DOCS 파일명에서 제목만 뽑는다. 「[260716] 제목 - 삼성전자 - 엘곰.md」 꼴이다."""
+    name = dmd.DOCS.get(key, '')
+    name = re.sub(r'^\[\d{6}\]\s*', '', name)
+    name = re.sub(r'\.md$', '', name)
+    name = re.sub(r'\s*-\s*엘곰$', '', name)
+    return name
+
+
+def _driver_table_html(ax):
+    """그 방법이 쓴 값을 글마다 갈라서 지면에 편다.
+
+    한 방법에 글이 여럿인 축이 있다. 재무제표(그때)는 여섯 편, 멀티플은 세 편이다.
+    전에는 갈래(이익 수준·재투자…)로만 묶어서, 2024년 글의 값과 2026년 글의 값이
+    한 줄기로 섞였다. 글이 둘 이상이면 날짜 탭으로 가른다 — 한 탭이 한 편이다.
+
+    갈래는 값마다 작은 꼬리표로 남긴다. 묶음 축이 아니라 표시로 내린 것이다."""
+    by_doc = {}
+    for did, d in dmd.DRIVERS.items():
+        if d['axis'] != ax['id']:
+            continue
+        by_doc.setdefault(d['doc'], []).append(did)
+    if not by_doc:
+        return ''
+    keys = sorted(by_doc)
+
+    def panel(k, hidden):
+        gist = _doc_gist(k)
+        url = dc.blob(dmd.SUM + dmd.DOCS[k])
+        # id는 회사 접두어까지 넣어 두지만(HTML 중복 id 방지), 탭 전환 JS는 이제 data-axis·
+        # data-doc만 본다 — id 문자열을 다시 조립할 필요가 없어 접두어를 JS에 넘길 일도 없다.
+        return ('<div class="dm-dvdoc" id="dm-%s-dvdoc-%s-%s" data-axis="%s" data-doc="%s"%s>'
+                '<p class="dm-dvdoc-title">%s '
+                '<a class="dm-dvdoc-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
+                '%s%s</div>'
+                % (_PX, ax['id'], k, ax['id'], k, ' hidden' if hidden else '',
+                   _doc_title(k), url,
+                   ('<p class="dm-dvdoc-gist">%s</p>' % gist) if gist else '',
+                   ''.join(_driver_block_html(x) for x in by_doc[k])))
+
+    if len(keys) == 1:
+        body = panel(keys[0], False)
+        tabs = ''
+    else:
+        tabs = ('<div class="dm-dvtabs" role="tablist">%s</div>' % ''.join(
+            '<button type="button" class="dm-dvtab" role="tab" data-axis="%s" data-doc="%s" '
+            'aria-selected="%s">%s<span class="dm-dvtab-n">%d</span></button>'
+            % (ax['id'], k, 'true' if i == 0 else 'false', _doc_date(k), len(by_doc[k]))
+            for i, k in enumerate(keys)))
+        body = ''.join(panel(k, i > 0) for i, k in enumerate(keys))
+    return ('<div class="dm-dvwrap"><p class="dm-dvwrap-label">무엇을 얼마로 놓았나 %s</p>'
+            '%s%s</div>' % (_by_badge('author'), tabs, body))
 
 
 def _doc_date(key):
@@ -268,28 +395,21 @@ def _axis_html(ax):
     # 같은 「적정가」 줄에 세우지 않고, 테두리·머리 색·결과 라벨을 다르게 그린다.
     is_rev = ax.get('kind') == 'reverse'
     axis_cls = 'dm-axis dm-axis--reverse' if is_rev else 'dm-axis'
-    input_driver = dmd.INPUT_DRIVER.get(ax['id']) if is_rev else None
     latest_html = _axis_latest_html(ax)
 
     inputs_html = ''
     if ax.get('inputs'):
         rows = []
         for k, v in ax['inputs']:
-            if input_driver and '시가총액' in k:
-                rows.append(
-                    '<tr><td class="dm-inputs-k">%s</td><td><button type="button" '
-                    'class="dm-inputs-btn" data-driver="%s" data-noback="1">%s</button></td></tr>'
-                    % (k, input_driver, v))
-            else:
-                rows.append('<tr><td class="dm-inputs-k">%s</td>'
-                            '<td class="dm-inputs-v">%s</td></tr>' % (k, v))
+            rows.append('<tr><td class="dm-inputs-k">%s</td>'
+                        '<td class="dm-inputs-v">%s</td></tr>' % (k, v))
         inputs_html = ('<div class="dm-inputs"><p class="dm-inputs-label">입력</p>'
                        '<div class="dm-inputs-wrap"><table class="dm-inputs-tbl">'
                        '<thead><tr><th>입력</th><th>값</th></tr></thead>'
                        '<tbody>%s</tbody></table></div></div>' % ''.join(rows))
 
     chain_html = ''.join('<p class="dm-chain-line">%s</p>' % _linkify(c) for c in ax['chain'])
-    gchips_html = _group_chips_html(ax)
+    gchips_html = _driver_table_html(ax)
 
     # 축 머리에 찍힌 최신 글 날짜와 그 축이 실제로 쓰는 드라이버의 날짜가 어긋나는
     # 축이 있다. 칩을 누르기 전에 알려 준다 — 누른 뒤에 알면 이미 숫자를 읽은 뒤다.
@@ -304,51 +424,41 @@ def _axis_html(ax):
                       '%s 값이다. %s</span></div>' % (span, dmd.STALE_WHY))
 
     out_tag = '이 주가를 유지하려면 필요한 것' if is_rev else '결과'
-    result_driver = dmd.RESULT_OF.get(ax['id'])
-    if result_driver:
-        out_html = (
-            '<button type="button" class="dm-axis-out dm-axis-out--btn" '
-            'data-driver="%s" data-noback="1">'
-            '<span class="dm-axis-out-tag">%s</span><span class="dm-axis-out-val">%s</span>'
-            '</button>' % (result_driver, out_tag, ax['out']))
-    else:
-        out_html = ('<div class="dm-axis-out"><span class="dm-axis-out-tag">%s</span>'
-                    '<span class="dm-axis-out-val">%s</span></div>' % (out_tag, ax['out']))
+    # 결과 값도 눌러서 여는 버튼이었다. 이 페이지에는 눌러서 나오는 것을 두지 않는다.
+    out_html = ('<div class="dm-axis-out"><span class="dm-axis-out-tag">%s</span>'
+                '<span class="dm-axis-out-val">%s</span></div>' % (out_tag, ax['out']))
 
     # 07-16 민감도 25칸 격자는 그 글이 낸 DCF 축 자료다. 드라이버 범위·이익 경로 표와
     # 달리 다섯 축을 가로지르지 않으므로 패널 밖에 두면 어느 글 것인지 안 보인다.
     # dcf 축에만, 수식→칩→결과 다음 자리에 끼운다.
-    sens_html = (_sens_html() + _earnpath_html()) if ax['id'] == 'dcf' else ''
+    # 글마다 자기 연도별 표를 갖는다. 07-16 8년 추정은 DCF 축에, 02-26의 두
+    # 성장 경로는 역산 축에. 둘 다 원문 표 그대로다.
+    # 평가가 여러 편인 회사(삼성전자)만 이 표들을 갖는다. 평가가 한 편뿐인 회사는
+    # DCF_PATH·SENSITIVITY·REV_PATH가 없을 수 있다 — 없으면 조용히 건너뛴다.
+    sens_html = ''
+    if ax['id'] == 'dcf':
+        # 연도별 추정이 이 방법의 본체다. 민감도는 그 결과를 흔들어 본 것이라 뒤에 둔다.
+        dcf_path = getattr(dmd, 'DCF_PATH', None)
+        if dcf_path:
+            sens_html += _path_html(dcf_path)
+        if getattr(dmd, 'SENSITIVITY', None):
+            sens_html += _sens_html()
+    elif ax['id'] == 'rev':
+        rev_path = getattr(dmd, 'REV_PATH', None)
+        if rev_path:
+            sens_html = _path_html(rev_path)
 
-    # 재무제표 축은 값을 내지 않는 앞단계다. 그래서 결과 줄만 두면 왜 있는 축인지
-    # 안 보인다. 다섯 편이 잰 것과 그걸 8년 DCF가 어떻게 썼는지를 여기 붙인다.
-    if ax['id'] == 'stmt':
-        sens_html = _stmt_vs_dcf_html() + _cash_bridge_html()
+    # 축 패널에는 엘곰이 쓴 것만 둔다. 대조표와 현금흐름 다리는 내가 계산한
+    # 것이라 여기 있으면 그의 글에 있던 내용으로 읽힌다. 위층 「내 계산」 카드로
+    # 옮겼다 — 이 페이지는 그 두 층을 갈라 놓는 것이 설계다.
 
-    # 역산 축의 값어치는 필자를 감사하는 데 있지 않고 시장이 무엇을 깔고 있는지를
-    # 읽는 데 있다. 그래서 같은 공식을 시점마다 내가 다시 돌린 표를 결과 뒤에 붙인다.
+    # 시장 읽기 표와 대조 표도 내가 계산한 것이라 축 패널에서 뺐다.
+    # _mycalc_html이 위층 「내 계산」 카드에서 그린다.
     mr_html = ''
-    if ax.get('market_read'):
-        mr = ax['market_read']
-        head = ''.join('<th>%s</th>' % h for h in mr['head'])
-        body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in mr['rows'])
-        mr_html = ('<div class="dm-mr"><p class="dm-mr-label">그 주가를 유지하려면 필요한 이익 — 시점마다 다시 계산했다 %s</p>'
-                   '<div class="dm-mr-wrap"><table class="dm-mr-tbl">'
-                   '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-                   '<p class="dm-mr-note">%s</p></div>' % (_by_badge('ours'), head, body, mr['note']))
-
     bench_html = ''
-    if ax.get('benchmark'):
-        rows = ''.join(
-            '<tr><td>%s</td><td class="dm-bench-v">%s</td><td class="dm-bench-note">%s</td></tr>'
-            % (k, v, note) for k, v, note in ax['benchmark'])
-        bench_html = ('<div class="dm-bench"><p class="dm-bench-label">그 이익이 나올 만한가</p>'
-                      '<div class="dm-bench-wrap"><table class="dm-bench-tbl">'
-                      '<thead><tr><th>대조 대상</th><th>값</th><th>요구치와 견주면</th></tr></thead>'
-                      '<tbody>%s</tbody></table></div></div>' % rows)
 
-    # 엘곰이 직접 만든 시나리오(02-26 역산 글)는 rev 축에만 속한다. 대조 표
-    # 다음, 판정 앞에 놓는다.
+    # 엘곰이 직접 만든 시나리오(02-26 역산 글)는 rev 축에만 속한다. 이 축에
+    # 남는 유일한 표다 — 나머지 둘과 달리 그가 실제로 계산한 것이다.
     auth_html = _author_scenarios_html() if is_rev else ''
 
     verdict_html = ''
@@ -358,7 +468,7 @@ def _axis_html(ax):
         verdict_html = ('<div class="dm-verdict %s"><span class="dm-verdict-tag">%s</span>'
                          '<span class="dm-verdict-desc">%s</span></div>' % (vcls, vlabel, vdesc))
 
-    return ('<article class="%s" id="dm-axis-%s">'
+    return ('<article class="%s" id="dm-%s-axis-%s">'
             '<div class="dm-axis-head"><span class="dm-axis-no">%s</span>'
             '<div class="dm-axis-headtext"><h3 class="dm-axis-name">%s</h3>'
             '<span class="dm-axis-tag">%s</span></div></div>'
@@ -375,14 +485,14 @@ def _axis_html(ax):
             '%s'
             '%s'
             '</article>'
-            % (axis_cls, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
+            % (axis_cls, _PX, ax['id'], ax['no'], ax['name'], ax['tag'], latest_html, ax['sub'],
                stale_html, inputs_html, chain_html, gchips_html, out_html, sens_html,
                mr_html, bench_html, auth_html, verdict_html))
 
 
-_AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
-_AXIS_LOOKUP = {ax['id']: (ax['no'], ax['name']) for ax in dmd.AXES}
-_AXIS_LOOKUP['quote'] = ('—', '외부 인용')
+# render()가 호출될 때마다 그 회사의 AXES로 다시 채운다.
+_AXIS_IDS = set()
+_AXIS_LOOKUP = {}
 
 
 
@@ -423,14 +533,17 @@ def _sens_html():
             % (v['label'], _by_badge(v['by']), head, ''.join(body), v['note']))
 
 
-def _earnpath_html():
-    """이익 성장 경로를 한 표에 세운다. 말로 적으면 「+25%로 3년, 그다음 10%」가
-    귀에 안 들어온다. 나란히 놓아야 출발점과 착지점의 어긋남이 보인다."""
-    e = dmd.EARN_PATH
-    ncol = len(e['head'])
-    head = ''.join('<th>%s</th>' % h for h in e['head'])
+def _path_html(spec):
+    """한 글의 연도별 추정 표. 원문 표를 그대로 옮긴 것이라 계산이 한 칸도 없다.
+
+    국면·단계는 원문 표의 행이라 열로 두지 않고 띠로 묶는다. 띠에 그 구간이
+    무엇으로 채워졌는지(컨센서스냐 독립 추정이냐)를 적어야 숫자가 읽힌다.
+    메모가 붙은 행은 하이라이트하고, 메모는 아래에 한 줄로 펼친다 — 칸 안에
+    넣으면 좁아서 옆 숫자와 겹친다."""
+    ncol = len(spec['head'])
+    head = ''.join('<th>%s</th>' % h for h in spec['head'])
     body = []
-    for label, rows in e['bands']:
+    for label, rows in spec['bands']:
         body.append('<tr class="dm-ep-band"><td colspan="%d">%s</td></tr>' % (ncol, label))
         for r in rows:
             cls = []
@@ -441,25 +554,29 @@ def _earnpath_html():
             cells = ''.join('<td>%s</td>' % c for c in r['cells'])
             body.append('<tr%s>%s</tr>'
                         % (' class="%s"' % ' '.join(cls) if cls else '', cells))
-            # 메모를 연도 칸 안에 넣었더니 좁은 칸을 넘쳐 옆 숫자와 겹쳤다.
-            # 행을 하나 더 써서 가로로 펼친다.
             if r.get('note'):
                 body.append('<tr class="dm-ep-noterow"><td colspan="%d">%s</td></tr>'
                             % (ncol, r['note']))
-    body = ''.join(body)
+    url = dc.blob(dmd.SUM + dmd.DOCS[spec['doc']]) + '#L%d' % spec['line']
     return ('<div class="dm-ep">'
-            '<p class="dm-ep-label">%s</p>'
+            '<p class="dm-ep-label">%s %s '
+            '<a class="dm-ep-src" href="%s" target="_blank" rel="noopener">요약본 ▸</a></p>'
             '<div class="dm-ep-wrap"><table class="dm-ep-tbl">'
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-            '<p class="dm-ep-punch">%s</p>'
             '<p class="dm-ep-foot">%s</p>'
-            '</div>' % (e['lede'], head, body, e['punch'], e['foot']))
+            '</div>' % (spec['lede'], _by_badge('author'), url, head,
+                        ''.join(body), spec['foot']))
 
 
 def _stmt_vs_dcf_html():
     """재무제표 본편 다섯이 잰 것과 8년 DCF가 실제로 쓴 것을 마주 세운다.
-    따로 두면 다섯 편이 그냥 옛날 글로 보인다. 나란히 놓아야 빠진 자리가 보인다."""
-    v = dmd.STMT_VS_DCF
+    따로 두면 다섯 편이 그냥 옛날 글로 보인다. 나란히 놓아야 빠진 자리가 보인다.
+
+    평가가 한 편뿐인 회사는 「본편이 잰 것 vs 평가가 쓴 것」을 마주 세울 다른 글이 없다 —
+    STMT_VS_DCF가 없으면 조용히 빈 문자열을 낸다."""
+    v = getattr(dmd, 'STMT_VS_DCF', None)
+    if not v:
+        return ''
     head = ''.join('<th>%s</th>' % h for h in v['head'])
     body = []
     for r in v['rows']:
@@ -476,8 +593,12 @@ def _stmt_vs_dcf_html():
 
 def _cash_bridge_html():
     """영업이익에서 FCF까지의 다리. 원문에 빈칸이던 두 자리(세율·앞 3년 D&A)를
-    항등식으로 되돌린 것이라, 되돌아왔다는 사실 자체가 △NWC=0의 증거다."""
-    v = dmd.CASH_BRIDGE
+    항등식으로 되돌린 것이라, 되돌아왔다는 사실 자체가 △NWC=0의 증거다.
+
+    되돌릴 빈칸이 없는(원문 표가 없는) 회사는 CASH_BRIDGE가 없을 수 있다."""
+    v = getattr(dmd, 'CASH_BRIDGE', None)
+    if not v:
+        return ''
     head = ''.join('<th>%s</th>' % h for h in v['head'])
     body = []
     for r in v['rows']:
@@ -515,8 +636,13 @@ def _scenario_html():
         # 연간·합계는 분기 줄과 기간이 달라 같은 표에 놓으면 분기로 읽힌다. 따로 세운다.
         sums = ''
         if a.get('rows2'):
+            # 「→」로 시작하는 항목은 확정 실적이 아니라 컨센서스를 채우려면
+            # 필요한 값이다. 나머지와 같은 색으로 두면 이미 번 돈으로 읽힌다.
             sums = '<dl class="dm-act-sums">%s</dl>' % ''.join(
-                '<dt>%s</dt><dd>%s</dd>' % (k, v) for k, v in a['rows2'])
+                '<dt%s>%s</dt><dd%s>%s</dd>'
+                % ((' class="dm-act-sums-calc"' if k.startswith('→') else ''), k,
+                   (' class="dm-act-sums-calc"' if k.startswith('→') else ''), v)
+                for k, v in a['rows2'])
         act_html = ('<div class="dm-act"><p class="dm-act-label">%s</p>'
                     '<div class="dm-act-wrap"><table class="dm-act-tbl">'
                     '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
@@ -579,7 +705,7 @@ def _scenario_html():
                         ''.join(rv_rows)))
     return ('<div class="dm-scenario">'
             '<div class="dm-scenario-head">'
-            '<p class="dm-scenario-kicker">내 계산 — 지금 시점의 결론</p>'
+            '<p class="dm-scenario-kicker">주인장이 본 지금 시점의 결론</p>'
             '<div class="dm-scenario-meta">'
             '<span class="dm-scenario-asof">%s 기준</span>'
             '<span class="dm-scenario-price">주가 %s</span>'
@@ -593,11 +719,61 @@ def _scenario_html():
             '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
             '%s'
             '%s'
+            '%s'
             '<p class="dm-scenario-note">%s</p>'
             '<div class="dm-scenario-punch">%s</div>'
             '</div>'
             % (s['asof'], s['price'], s['mcap'], s['formula'], head,
-               ''.join(body_rows), rev_html, act_html, s['note'], s['punch']))
+               ''.join(body_rows), rev_html, act_html, _mycalc_html(),
+               s['note'], s['punch']))
+
+
+def _market_read_html():
+    """같은 역산 공식을 시점마다 내가 다시 돌린 표. 02-26 글에 있던 표가 아니다."""
+    ax = next((a for a in dmd.AXES if a.get('market_read')), None)
+    if not ax:
+        return ''
+    mr = ax['market_read']
+    head = ''.join('<th>%s</th>' % h for h in mr['head'])
+    body = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in mr['rows'])
+    return ('<div class="dm-mr"><p class="dm-mr-label">그 주가를 유지하려면 필요한 이익 '
+            '(시점마다 다시 계산했다) %s</p>'
+            '<div class="dm-mr-wrap"><table class="dm-mr-tbl">'
+            '<thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="dm-mr-note">%s</p></div>'
+            % (_by_badge('ours'), head, body, mr['note']))
+
+
+def _benchmark_html():
+    """요구 이익이 나올 만한 값인지 실적·컨센서스에 대 본 것. 내가 모은 대조다."""
+    ax = next((a for a in dmd.AXES if a.get('benchmark')), None)
+    if not ax:
+        return ''
+    rows = ''.join(
+        '<tr><td>%s</td><td class="dm-bench-v">%s</td><td class="dm-bench-note">%s</td></tr>'
+        % (k, v, note) for k, v, note in ax['benchmark'])
+    return ('<div class="dm-bench"><p class="dm-bench-label">그 이익이 나올 만한가 %s</p>'
+            '<div class="dm-bench-wrap"><table class="dm-bench-tbl">'
+            '<thead><tr><th>대조 대상</th><th>값</th><th>요구치와 견주면</th></tr></thead>'
+            '<tbody>%s</tbody></table></div></div>' % (_by_badge('ours'), rows))
+
+
+def _mycalc_html():
+    """내가 계산한 네 표. 원래 축 패널에 흩어져 있었는데, 그 자리는 엘곰이 쓴
+    것만 두는 자리다 — 거기 있으면 그의 글에 있던 내용으로 읽힌다. 이 카드가
+    「내 계산」 층이라 여기가 맞다. 결론을 아래로 밀지 않게 접어 둔다.
+
+    네 표 전부 평가가 여러 편이라야 나오는 대조·역산 자료다. 한 편도 안 나오면
+    (평가가 한 편뿐인 회사) 빈 details를 띄우지 않고 통째로 건너뛴다."""
+    body = _cash_bridge_html() + _stmt_vs_dcf_html() + _market_read_html() + _benchmark_html()
+    if not body:
+        return ''
+    return ('<details class="dm-mycalc">'
+            '<summary class="dm-mycalc-summary">'
+            '이 값을 어떻게 냈나 (원문에 없던 자리를 되돌리고 시점마다 다시 돌린 것) %s'
+            '</summary>'
+            '<div class="dm-mycalc-body">%s</div>'
+            '</details>' % (_by_badge('ours'), body))
 
 
 def _timeline_html():
@@ -722,6 +898,21 @@ DM_CSS = '''<style>
 .dm-past-summary:hover{color:var(--ink)}
 .dm-past-body{padding:0 16px 16px}
 
+/* ── 내 계산 과정 (접힘) ── 결론 카드 안이라 열기 전에는 자리를 거의 안 먹어야
+   한다. 안에 든 두 표는 자기 테두리를 갖고 있어 여기선 테두리를 겹치지 않는다 */
+.dm-mycalc{margin:14px 0 0;border:1px dashed var(--line);border-radius:10px;
+           background:var(--sunk)}
+.dm-mycalc-summary{cursor:pointer;list-style:none;font-size:12px;font-weight:850;
+                   color:var(--ink-2);padding:10px 13px;display:flex;align-items:center;
+                   gap:8px;flex-wrap:wrap}
+.dm-mycalc-summary::-webkit-details-marker{display:none}
+.dm-mycalc-summary::before{content:"▸";color:var(--ink-3);font-size:11px}
+.dm-mycalc[open] .dm-mycalc-summary::before{content:"▾"}
+.dm-mycalc-summary:hover{color:var(--ink)}
+.dm-mycalc-body{padding:0 13px 13px}
+/* 안쪽 표의 첫 위 여백은 summary가 이미 만들어 준다 */
+.dm-mycalc-body > .dm-cb{margin-top:0}
+
 /* ── 시장 읽기 (역산 축만) ── */
 .dm-mr{margin:12px 0 0}
 .dm-mr-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 6px}
@@ -756,16 +947,18 @@ DM_CSS = '''<style>
 
 /* ── 정방향 / 역방향 ── 방향이 반대라 한 표에 세우면 네 번째 시나리오로 읽힌다 */
 .dm-fwd-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:14px 0 4px}
-.dm-rv{margin:16px 0 0;border-left:3px solid var(--accent);background:var(--accent-soft);
-       border-radius:0 10px 10px 0;padding:12px 15px}
-.dm-rv-label{font-size:12px;font-weight:850;letter-spacing:.02em;color:var(--accent-ink);margin:0 0 4px}
+/* 배경은 같은 카드 안의 실적 표(.dm-act)와 맞춘다. 강조색을 혼자 쓰면
+   블록 하나만 다른 화면에서 온 것처럼 보인다. 방향이 반대라는 것은 색이
+   아니라 제목과 머리말이 말한다 */
+.dm-rv{margin:16px 0 0;background:var(--sunk);border-radius:10px;padding:11px 13px}
+.dm-rv-label{font-size:11px;font-weight:850;letter-spacing:.02em;color:var(--ink-2);margin:0 0 4px}
 .dm-rv-lede{font-size:12px;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
 .dm-rv-formula{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 10px;
                font-variant-numeric:tabular-nums}
 .dm-rv-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .dm-rv-tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
-.dm-rv-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--accent-ink);
-             text-align:left;padding:3px 12px 6px 8px;border-bottom:1px solid var(--accent);
+.dm-rv-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+             text-align:left;padding:3px 12px 6px 8px;border-bottom:1px solid var(--line);
              white-space:nowrap;vertical-align:top}
 .dm-rv-tbl td{padding:7px 12px 7px 8px;border-bottom:1px solid var(--line);color:var(--ink-2)}
 .dm-rv-tbl tr:last-child td{border-bottom:0}
@@ -775,7 +968,10 @@ DM_CSS = '''<style>
 .dm-rv-val{font-variant-numeric:tabular-nums}
 .dm-rv-val--high{color:var(--warn);font-weight:800}
 .dm-rv-val--low{color:var(--good);font-weight:800}
-.dm-rv-notecell{color:var(--ink-3);font-size:11px;font-weight:500;line-height:1.5;
+/* 결과 행 규칙(.dm-rv-row--main td, 15px)이 명시도에서 이겨 비고 칸까지 크게
+   나왔다. 값만 커야 하고 설명은 다른 설명글과 같은 크기라야 한다 */
+.dm-rv-row--main td.dm-rv-notecell,
+.dm-rv-notecell{color:var(--ink-3);font-size:11.5px;font-weight:500;line-height:1.55;
                 white-space:normal;max-width:32ch}
 
 /* ── 엘곰이 직접 만든 시나리오 ── 시점이 달라 위 표와 같은 축에 못 놓는다 */
@@ -811,6 +1007,12 @@ DM_CSS = '''<style>
 .dm-act-sums dt{font-size:11.5px;color:var(--ink-2);margin:0}
 .dm-act-sums dd{font-size:12.5px;font-weight:850;color:var(--ink);margin:0;text-align:right;
                 font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 확정 실적과 「그러려면 필요한 값」을 같은 회색으로 두면 이미 번 돈으로 읽힌다.
+   이 줄만 갈라 놓는다 — 아직 벌지 않은 숫자다. 숫자는 파랑(--accent-ink)이다.
+   이 저장소는 호재를 빨강, 부담을 파랑으로 쓴다 */
+.dm-act-sums dt.dm-act-sums-calc{border-top:1px dashed var(--line);padding-top:6px}
+.dm-act-sums dd.dm-act-sums-calc{border-top:1px dashed var(--line);padding-top:6px;
+                                 color:var(--accent-ink);font-weight:850}
 .dm-act-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 엘곰이 벌려 본 범위 · 민감도 격자 ── */
@@ -887,22 +1089,89 @@ DM_CSS = '''<style>
                    padding:1px 8px;line-height:1.6;white-space:nowrap}
 .dm-axis-stale-text{font-size:11.5px;line-height:1.55;color:var(--ink-2)}
 /* 모달 목록 — 옛것은 구분선 아래로 내려간다 */
-.dm-modal-row-date{flex:none;font-size:10px;font-weight:700;color:var(--ink-3);
                    font-variant-numeric:tabular-nums;white-space:nowrap}
-.dm-modal-row--stale{border-style:dashed}
-.dm-modal-row--stale .dm-modal-row-base{color:var(--ink-3)}
-.dm-modal-row--stale .dm-modal-row-date{color:var(--warn);font-weight:850}
-.dm-modal-staleline{margin:12px 0 8px;padding:8px 11px;border-top:1px dashed var(--warn);
                     background:var(--warn-soft);border-radius:0 0 8px 8px}
-.dm-modal-staleline-tag{display:inline-block;font-size:10px;font-weight:850;letter-spacing:.03em;
+/* 그 갈래가 통째로 옛것이면 구분선 위에 아무것도 없다 — 선만 떠 보인다 */
+                                                 border-radius:8px}
                         color:var(--warn);margin-right:7px}
-.dm-modal-staleline-why{font-size:11px;line-height:1.55;color:var(--ink-3)}
 /* 상세 — 숫자보다 위에 둔다. 아래 두면 이미 읽은 뒤가 된다 */
-.dm-modal-stale{margin:9px 0 4px;padding:9px 12px;border:1px dashed var(--warn);
                 border-radius:8px;background:var(--warn-soft);
                 font-size:11.5px;line-height:1.55;color:var(--ink-2)}
-.dm-modal-stale b{display:block;color:var(--warn);font-weight:850;font-size:12px;
                   margin-bottom:3px}
+
+/* ── 드라이버 표 ── 값을 숨기지 않고 편다. 행을 누르면 상세가 열린다 */
+.dm-dt{margin:0 0 14px}
+.dm-dt-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 7px}
+.dm-dt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-dt-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.dm-dt-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+              text-align:left;padding:3px 12px 6px 8px;border-bottom:1px solid var(--line);
+              white-space:nowrap}
+.dm-dt-tbl td{padding:7px 12px 7px 8px;border-bottom:1px solid var(--line);
+              color:var(--ink-2);line-height:1.5;vertical-align:top}
+/* 갈래 띠 — 갈래마다 묻는 질문이 다르고 그 질문이 표를 읽는 실마리다 */
+.dm-dt-band td{background:var(--sunk);padding:6px 12px 6px 8px;border-bottom:1px solid var(--line)}
+.dm-dt-bandname{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-2)}
+.dm-dt-bandq{font-size:10.5px;color:var(--ink-3);margin-left:8px}
+.dm-dt-row{cursor:pointer}
+.dm-dt-row:hover td{background:var(--accent-soft)}
+.dm-dt-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.dm-dt-name{font-weight:800;color:var(--ink);white-space:nowrap}
+.dm-dt-val{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;
+           min-width:14ch;max-width:26ch}
+.dm-dt-basis{white-space:nowrap}
+.dm-dt-why{color:var(--ink-3);min-width:24ch;max-width:44ch}
+/* 근거가 빈 값은 왼쪽에 표시를 남긴다 — 비어 있다는 사실 자체가 감사 대상이다 */
+.dm-dt-row--none .dm-dt-name{box-shadow:inset 3px 0 0 var(--warn)}
+.dm-dt-jg{display:inline-block;font-size:9.5px;font-weight:850;color:var(--accent-ink);
+          background:var(--accent-soft);border-radius:999px;padding:1px 6px;margin-left:6px}
+.dm-dt-hint{font-size:10.5px;color:var(--ink-3);margin:7px 0 0}
+
+/* ── 드라이버 지면 ── 눌러서 여는 것을 없애고 값·근거·왜·영향을 다 편다 */
+.dm-dvwrap{margin:0 0 14px}
+.dm-dvwrap-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 8px}
+/* 글 고르는 탭 — 한 방법에 글이 여럿일 때만 선다 */
+.dm-dvtabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.dm-dvtab{font:inherit;cursor:pointer;font-size:11.5px;font-weight:800;color:var(--ink-3);
+          background:var(--surface);border:1px solid var(--line);border-radius:999px;
+          padding:4px 11px;display:inline-flex;align-items:baseline;gap:5px}
+.dm-dvtab:hover{border-color:var(--accent);color:var(--accent-ink)}
+.dm-dvtab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dm-dvtab[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                color:var(--accent-ink)}
+.dm-dvtab-n{font-size:9.5px;font-weight:850;opacity:.7}
+.dm-dvdoc-title{font-size:12.5px;font-weight:850;color:var(--ink);margin:0 0 4px;line-height:1.5}
+.dm-dvdoc-src{font-size:10.5px;font-weight:700;color:var(--accent-ink);text-decoration:none;
+              margin-left:6px;white-space:nowrap}
+.dm-dvdoc-src:hover{text-decoration:underline}
+.dm-dvdoc-gist{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:0 0 10px;max-width:74ch}
+/* 값 한 덩이 */
+.dm-dv{margin:0 0 9px;background:var(--surface);border:1px solid var(--line);
+       border-radius:9px;padding:10px 12px;box-shadow:var(--shadow)}
+.dm-dv--none{border-left:3px solid var(--warn)}
+.dm-dv-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 9px;margin:0 0 6px}
+.dm-dv-name{font-size:12px;font-weight:850;color:var(--ink-2)}
+.dm-dv-val{font-size:14px;font-weight:850;color:var(--ink);font-variant-numeric:tabular-nums}
+.dm-dv-grp{margin-left:auto;font-size:10px;font-weight:700;color:var(--ink-3);
+           border:1px solid var(--line);border-radius:999px;padding:1px 7px;white-space:nowrap}
+.dm-dv-why{font-size:11.5px;line-height:1.62;color:var(--ink-2);margin:0 0 5px;max-width:78ch}
+.dm-dv-impact{font-size:11.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:78ch}
+.dm-dv-impact b{color:var(--ink-2);font-weight:850;margin-right:4px}
+/* 내 판정 — 필자 값 아래에 붙지만 주체가 다르다 */
+.dm-dv-jg{margin:8px 0 0;padding:8px 10px;background:var(--accent-soft);border-radius:7px}
+.dm-dv-jgtitle{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--accent-ink);margin:0 0 5px}
+.dm-dv-jgitem{margin:0 0 6px}
+.dm-dv-jgitem:last-child{margin-bottom:0}
+.dm-dv-jglabel{display:block;font-size:10.5px;font-weight:800;color:var(--ink-3);margin:0 0 2px}
+.dm-dv-jgbadge{display:inline-block;font-size:10px;font-weight:850;border-radius:999px;
+               padding:1px 8px;margin-right:6px}
+.dm-dv-jgbadge--keep{background:var(--good-soft);color:var(--good)}
+.dm-dv-jgbadge--fix{background:var(--warn-soft);color:var(--warn)}
+.dm-dv-jgbadge--hold{background:var(--sunk);color:var(--ink-3)}
+.dm-dv-jgbadge--check{background:var(--risk-soft);color:var(--risk)}
+.dm-dv-jgwhy{font-size:11px;line-height:1.6;color:var(--ink-2)}
+.dm-dv-jgmine{font-size:11px;line-height:1.6;color:var(--ink-2);margin:5px 0 0}
+.dm-dv-jgmine b{color:var(--accent-ink);font-weight:850;margin-right:4px}
 
 /* ── 재무제표가 잰 것 vs DCF가 쓴 것 ── 마주 세우는 표라 두 열이 대비돼야 한다 */
 .dm-sv{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
@@ -918,8 +1187,12 @@ DM_CSS = '''<style>
               color:var(--ink-2);line-height:1.5;vertical-align:top}
 .dm-sv-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
 .dm-sv-tbl td:nth-child(2){font-size:11px;color:var(--ink-3);white-space:nowrap}
+/* 값과 뜻은 문장이라 좁으면 세로로 길어진다. 각각 폭을 잡아 준다 */
+.dm-sv-tbl td:nth-child(3){min-width:20ch;max-width:30ch}
+.dm-sv-tbl td:nth-child(4){min-width:22ch;max-width:34ch;color:var(--ink-3)}
 /* 마지막 열이 「안 썼다」를 말하는 자리다. 왼쪽 경계로 갈라 놓는다 */
-.dm-sv-tbl td:last-child{border-left:1px solid var(--line);color:var(--ink-3)}
+.dm-sv-tbl td:last-child{border-left:1px solid var(--line);color:var(--ink-3);
+                         min-width:20ch;max-width:30ch}
 .dm-sv-tbl tr:last-child td{border-bottom:0}
 .dm-sv-hi td{background:var(--warn-soft);color:var(--ink)}
 .dm-sv-hi td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
@@ -999,19 +1272,37 @@ DM_CSS = '''<style>
 /* ── 방법 버튼 줄 + 패널 하나 ── */
 .dm-axheading{font-size:14px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
               margin:26px 0 10px}
-.dm-axisbtns{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-             margin:0 0 14px;padding:2px 2px 6px}
+/* ── 시기 머리말 ── 방법보다 위층이다. 한 시기 안에서만 값이 서로 비교된다 */
+.dm-axisera{margin:0 0 14px}
+.dm-axisera-head{margin:0 0 7px}
+.dm-axisera-label{display:block;font-size:12px;font-weight:850;letter-spacing:.03em;
+                  color:var(--ink)}
+.dm-axisera-sub{display:block;font-size:11px;line-height:1.55;color:var(--ink-3);
+                margin-top:2px;max-width:64ch}
+/* 다운사이클 묶음은 들여쓰고 왼쪽 선을 둔다 — 같은 줄에 세우면 안 되는 값들이다 */
+.dm-axisera--stale{padding-left:11px;border-left:2px dashed var(--line)}
+.dm-axisera--stale .dm-axisera-label{color:var(--ink-3)}
+.dm-axisera-btns{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+                 padding:2px 2px 6px}
+.dm-axisbtns{margin:0 0 8px}
 .dm-axisbtn{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
             font:inherit;cursor:pointer;padding:8px 14px;border-radius:10px;
             border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
-.dm-axisbtn:hover{border-color:var(--accent)}
+.dm-axisbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
 .dm-axisbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dm-axisbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);
-                                 box-shadow:inset 0 0 0 1px var(--accent)}
+/* ── 목록으로 돌아가는 버튼 ── 상세 맨 위, 내용보다 먼저 눈에 걸려야 한다 */
+.dm-axisback{display:inline-flex;align-items:baseline;gap:7px;font:inherit;cursor:pointer;
+             margin:0 0 12px;padding:6px 13px 6px 10px;border-radius:999px;
+             border:1px solid var(--line);background:var(--sunk);color:var(--ink-2)}
+.dm-axisback:hover{border-color:var(--accent);color:var(--accent-ink);
+                   background:var(--accent-soft)}
+.dm-axisback:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dm-axisback-arrow{font-size:12px;line-height:1}
+.dm-axisback-text{font-size:12px;font-weight:850}
+.dm-axisback-era{font-size:10.5px;font-weight:700;color:var(--ink-3)}
+.dm-axisback:hover .dm-axisback-era{color:var(--accent-ink)}
 .dm-axisbtn-no{font-size:10px;font-weight:800;letter-spacing:.02em;color:var(--ink-3)}
-.dm-axisbtn[aria-pressed="true"] .dm-axisbtn-no{color:var(--accent-ink)}
 .dm-axisbtn-name{font-size:13px;font-weight:850;color:var(--ink)}
-.dm-axisbtn[aria-pressed="true"] .dm-axisbtn-name{color:var(--accent-ink)}
 .dm-axisbtn-date{font-size:10.5px;font-weight:700;color:var(--ink-3);
                  font-variant-numeric:tabular-nums}
 .dm-axispanels{margin:0 0 24px}
@@ -1039,23 +1330,22 @@ DM_CSS = '''<style>
 .dm-axis-tag{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:3px}
 .dm-axis-sub{font-size:12px;color:var(--ink-3);line-height:1.5;margin:0 0 12px}
 .dm-chain{display:flex;flex-direction:column;gap:7px;margin:0 0 12px}
-.dm-chain-line{font-size:12.5px;line-height:1.75;color:var(--ink-2);margin:0}
-.dm-chain-driver{color:var(--ink);font-weight:800}
+.dm-chain-line{font-size:12.5px;line-height:2;color:var(--ink-2);margin:0}
+/* 수식 한 자리 = 이름 + 값. 줄바꿈으로 둘이 갈라지면 어느 값이 어느 이름의
+   것인지 안 보이므로 통째로 묶어 둔다 */
+.dm-chain-driver{display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap;
+                 padding:1px 7px;border-radius:6px;background:var(--sunk);
+                 border:1px solid var(--line)}
+.dm-chain-name{font-size:11px;font-weight:700;color:var(--ink-3)}
+.dm-chain-val{color:var(--ink);font-weight:850;font-variant-numeric:tabular-nums}
 
 /* ── 상위 드라이버 칩 줄 ── */
-.dm-gchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
-.dm-gchip{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:11.5px;font-weight:700;
           cursor:pointer;padding:4px 10px;margin:0;border-radius:999px;
           border:1px solid var(--accent-soft);background:var(--accent-soft);color:var(--accent-ink);
           line-height:1.4}
-.dm-gchip:hover{border-color:var(--accent)}
-.dm-gchip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dm-gchip-n{opacity:.75;font-weight:600}
-.dm-gchip-warn{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
                width:14px;height:14px;border-radius:50%;background:var(--warn);color:var(--surface);
                font-size:10px;font-weight:900;line-height:1}
 /* 내 판정이 있는 세부 드라이버 개수 — 근거 없음 경고(!)와 자리를 나눠 색으로 구분한다 */
-.dm-gchip-jg{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
              min-width:14px;height:14px;padding:0 4px;border-radius:999px;
              background:var(--accent);color:var(--surface);
              font-size:9.5px;font-weight:900;line-height:1}
@@ -1064,11 +1354,8 @@ DM_CSS = '''<style>
              border-top:1px solid var(--line)}
 .dm-axis-out-tag{font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.04em}
 .dm-axis-out-val{font-size:13px;font-weight:800;color:var(--ink)}
-.dm-axis-out--btn{border:0;border-top:1px solid var(--line);background:transparent;color:inherit;
                   width:100%;text-align:left;font:inherit;cursor:pointer;padding:10px 0 0;
                   margin:0 0 10px;border-radius:4px}
-.dm-axis-out--btn:hover{background:var(--sunk)}
-.dm-axis-out--btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .dm-verdict{border-radius:8px;padding:9px 11px;margin-top:auto}
 .dm-verdict-tag{display:block;font-size:11.5px;font-weight:800;margin-bottom:2px}
 .dm-verdict-desc{display:block;font-size:11px;line-height:1.5;color:var(--ink-2)}
@@ -1095,10 +1382,7 @@ DM_CSS = '''<style>
 .dm-inputs-tbl tr:last-child td{border-bottom:0}
 .dm-inputs-k{color:var(--ink-3)}
 .dm-inputs-v{font-weight:700;color:var(--ink)}
-.dm-inputs-btn{border:0;background:transparent;width:100%;text-align:left;font:inherit;
                font-weight:700;color:var(--ink);cursor:pointer;padding:2px 4px;border-radius:6px}
-.dm-inputs-btn:hover{background:var(--surface)}
-.dm-inputs-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .dm-bench{margin:0 0 12px;padding:10px 10px 8px;border:1px dashed var(--line);border-radius:8px}
 .dm-bench-label{font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin:0 0 8px}
@@ -1115,44 +1399,21 @@ DM_CSS = '''<style>
 /* ── 모달 — 상위 드라이버 칩을 누르면 뜬다. 1단계(갈래)·2단계(세부)를 한 팝업에서 넘긴다 ── */
 /* 「맨 위로」 버튼이 z-index 9998이라 200으로는 모달 위로 뚫고 올라왔다.
    그 위로 올리고, 모달이 떠 있는 동안에는 버튼 자체를 감춘다 */
-.dm-modal-backdrop{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;
                    justify-content:center;background:rgba(0,0,0,.5);padding:20px}
-.dm-modal-backdrop[hidden]{display:none}
-.dm-modal{position:relative;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;
          background:var(--surface);border:1px solid var(--line);border-radius:10px;
          box-shadow:var(--shadow);padding:20px 20px 22px;outline:none}
-.dm-modal-close{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;
                 border:1px solid var(--line);background:var(--sunk);color:var(--ink-2);
                 font-size:18px;line-height:1;cursor:pointer}
-.dm-modal-close:hover{color:var(--ink);border-color:var(--accent)}
-.dm-modal-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dm-modal-back{display:block;font:inherit;font-size:12.5px;font-weight:700;color:var(--accent);
                background:transparent;border:0;cursor:pointer;padding:2px 0;margin:0 0 10px}
-.dm-modal-back:hover{text-decoration:underline}
-.dm-modal-back[hidden]{display:none}
-.dm-modal-gname{font-size:18px;font-weight:850;margin:4px 30px 6px 0;color:var(--ink)}
-.dm-modal-q{font-size:13.5px;font-weight:700;color:var(--ink-2);margin:0 0 10px;line-height:1.5}
-.dm-modal-why{font-size:13px;line-height:1.62;color:var(--ink-2);margin:0 0 10px}
-.dm-modal-corpus{font-size:12.5px;line-height:1.6;color:var(--warn);
                  background:var(--warn-soft);border:1px dashed var(--warn);border-radius:8px;
                  padding:9px 11px;margin:0 0 14px}
-.dm-modal-list{display:flex;flex-direction:column;gap:8px}
-.dm-modal-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;width:100%;
               text-align:left;font:inherit;padding:9px 10px;border:1px solid var(--line);
               border-radius:8px;background:var(--sunk);cursor:pointer}
-.dm-modal-row:hover{border-color:var(--accent)}
-.dm-modal-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dm-modal-row--none{border-color:var(--risk)}
-.dm-modal-row-main{display:flex;flex-direction:column;gap:1px;flex:1 1 auto;min-width:120px}
-.dm-modal-row-label{font-size:12.5px;font-weight:700;color:var(--ink)}
-.dm-modal-row-base{font-size:11.5px;color:var(--ink-3)}
 .dm-bar-mini{position:relative;display:inline-block;width:56px;height:4px;border-radius:999px;
             background:var(--line);flex:0 0 auto}
 .dm-bar-mini-fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--accent-soft)}
 .dm-bar-mini-dot{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--accent);
                  border:2px solid var(--surface);transform:translate(-50%,-50%)}
-.dm-modal-dname{font-size:18px;font-weight:850;margin:4px 30px 4px 0;color:var(--ink)}
-.dm-modal-loc{display:block;font-size:11.5px;color:var(--ink-3);margin:0 0 12px;
              font-variant-numeric:tabular-nums}
 
 /* ── 상세(2단계) — 예전 인라인 dm-detail의 부품을 모달 안에서 재활용한다 ── */
@@ -1225,14 +1486,10 @@ DM_CSS = '''<style>
 .dm-jgtodo-list li:last-child{margin-bottom:0}
 
 /* 모달 열린 동안 배경 스크롤을 막는다 */
-body.dm-modal-open{overflow:hidden}
-body.dm-modal-open .ui-top{opacity:0;pointer-events:none}
 
 @media (max-width:560px){
   .dm-wrap{margin:0 0 24px;padding-bottom:20px}
   /* 좁은 화면에선 가운데 정렬 모달이 답답하다 — 아래에서 올라오는 시트로 바꾼다 */
-  .dm-modal-backdrop{align-items:flex-end;padding:0}
-  .dm-modal{max-width:100%;border-radius:16px 16px 0 0;max-height:88vh;padding:18px 16px 20px}
 }
 </style>'''
 
@@ -1336,11 +1593,11 @@ DM_JS = '''<script>
       var sub = v.label ? '<p class="dm-jg-sub">'+v.label+'</p>' : '';
       var badge = '<span class="dm-jg-badge dm-jg-badge--'+cls+'">'+v.verdict+'</span>';
       var why = v.why ? '<p class="dm-jg-why">'+v.why+'</p>' : '';
-      var mine = v.mine ? '<p class="dm-jg-mine"><b>내가 대신 보는 값</b>'+v.mine+'</p>' : '';
+      var mine = v.mine ? '<p class="dm-jg-mine"><b>주인장이 대신 보는 값</b>'+v.mine+'</p>' : '';
       return '<div class="dm-jg-entry">'+sub+badge+why+mine
            + fmtJgEvidence(v.evidence)+fmtJgExtra(v.extra)+'</div>';
     }).join('');
-    return '<div class="dm-jg"><p class="dm-jg-title">내 판정</p>'+body+'</div>';
+    return '<div class="dm-jg"><p class="dm-jg-title">주인장 판정</p>'+body+'</div>';
   }
 
   function fmtRow(did){
@@ -1434,6 +1691,15 @@ DM_JS = '''<script>
     renderStage1();
   }
 
+  // 드라이버 표의 행은 tr이라 Enter·Space가 저절로 먹지 않는다. 직접 붙인다.
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter' && e.key !== ' ') return;
+    var row = e.target.closest && e.target.closest('.dm-dt-row');
+    if(!row) return;
+    e.preventDefault();
+    openDriverDirect(row.dataset.driver, row);
+  });
+
   function openDriverFromGroup(did){
     state.driver = did; state.noback = false;
     renderStage2();
@@ -1498,38 +1764,109 @@ DM_JS = '''<script>
 </script>'''
 
 
-AXBTN_JS = '''<script>
+DVTAB_JS = '''<script>
 (function(){
-  var wrap = document.getElementById('dm-axisbtns');
+  // 방법 안에서 글을 고르는 탭. 한 방법에 글이 여럿인 축(재무제표 여섯 편,
+  // 멀티플 세 편)에서 값이 어느 글 것인지 섞이지 않게 가른다.
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('.dm-dvtab');
+    if(!t) return;
+    var ax = t.dataset.axis, doc = t.dataset.doc;
+    var wrap = t.closest('.dm-dvwrap');
+    if(!wrap) return;
+    wrap.querySelectorAll('.dm-dvtab').forEach(function(b){
+      b.setAttribute('aria-selected', b.dataset.doc === doc ? 'true' : 'false');
+    });
+    wrap.querySelectorAll('.dm-dvdoc').forEach(function(d){
+      d.hidden = !(d.dataset.axis === ax && d.dataset.doc === doc);
+    });
+  });
+})();
+</script>'''
+
+
+# 회사 접두어(px)를 문자열에 구워 넣는 함수다 — 페이지에 지도가 둘 있으면 이 스크립트도
+# 두 벌 실리는데, 각자 자기 접두어가 붙은 뿌리(#dm-<px>-root) 안에서만 찾고 움직여야
+# 서로 안 부딪힌다. document 전체를 뒤지던 자리(getElementById('dm-axisbtns') 등)를
+# 전부 그 뿌리 기준 조회로 바꿨다.
+def _axbtn_js(px):
+    return ('''<script>
+(function(){
+  var root = document.getElementById('dm-%(px)s-root');
+  if(!root) return;
+  var wrap = root.querySelector('.dm-axisbtns');
   if(!wrap) return;
   var btns = Array.prototype.slice.call(wrap.querySelectorAll('.dm-axisbtn'));
+  var panels = Array.prototype.slice.call(root.querySelectorAll('.dm-axispanel'));
+  var heading = root.querySelector('.dm-axheading');
 
-  function select(id){
+  function panelOf(id){ return root.querySelector('#dm-%(px)s-axispanel-' + id); }
+
+  // 고르면 목록이 통째로 사라지고 그 방법만 남는다. 다섯을 늘 띄워 두면
+  // 어느 것을 보고 있는지가 버튼 색 하나에만 걸린다.
+  function open(id){
+    var p = panelOf(id);
+    if(!p) return;
+    panels.forEach(function(x){ x.hidden = (x !== p); });
     btns.forEach(function(b){
-      b.setAttribute('aria-pressed', b.dataset.axis === id ? 'true' : 'false');
+      b.setAttribute('aria-expanded', b.dataset.axis === id ? 'true' : 'false');
     });
-    document.querySelectorAll('.dm-axispanel').forEach(function(p){
-      p.hidden = (p.id !== 'dm-axispanel-' + id);
-    });
+    wrap.hidden = true;
+    if(heading) heading.hidden = true;
+    var back = p.querySelector('.dm-axisback');
+    if(back) back.focus();
+  }
+
+  function close(id){
+    panels.forEach(function(x){ x.hidden = true; });
+    btns.forEach(function(b){ b.setAttribute('aria-expanded', 'false'); });
+    wrap.hidden = false;
+    if(heading) heading.hidden = false;
+    // 돌아왔을 때 방금 누른 버튼에 초점을 돌려준다 — 아니면 페이지 맨 위로 튄다.
+    var b = root.querySelector('#dm-%(px)s-axisbtn-' + id);
+    if(b) b.focus();
   }
 
   wrap.addEventListener('click', function(e){
     var b = e.target.closest('.dm-axisbtn');
     if(!b) return;
-    select(b.dataset.axis);
+    open(b.dataset.axis);
   });
+
+  // 뒤로가기 버튼은 이 뿌리 안에서만 듣는다 — document에 달면 옆 지도의 뒤로가기를
+  // 눌러도 이 지도의 close()가 같이 실행돼 낭비다(결과적으로 잘못 움직이진 않지만).
+  root.addEventListener('click', function(e){
+    var back = e.target.closest('.dm-axisback');
+    if(!back) return;
+    close(back.dataset.axisback);
+  });
+
+  // 상세를 열어 둔 채 Esc를 누르면 목록으로 돌아온다. 단 모달이 떠 있으면
+  // 그쪽만 닫혀야 한다.
+  //
+  // 캡처 단계에 단다. 버블 단계에 달면 모달의 Esc 핸들러가 먼저 돌아
+  // dm-modal-open을 지운 뒤에 이 핸들러가 실행돼, 모달이 방금 닫힌 것을
+  // 「모달 없음」으로 읽고 패널까지 같이 닫는다. Esc 한 번에 두 겹이 닫혔다.
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' || wrap.hidden !== true) return;
+    if(document.body.classList.contains('dm-modal-open')) return;
+    var openPanel = panels.filter(function(x){ return !x.hidden; })[0];
+    if(!openPanel) return;
+    var back = openPanel.querySelector('.dm-axisback');
+    if(back) close(back.dataset.axisback);
+  }, true);
 
   wrap.addEventListener('keydown', function(e){
     if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     var idx = btns.indexOf(document.activeElement);
     if(idx === -1) return;
     e.preventDefault();
-    var next = e.key === 'ArrowRight' ? (idx + 1) % btns.length
-                                       : (idx - 1 + btns.length) % btns.length;
+    var next = e.key === 'ArrowRight' ? (idx + 1) %% btns.length
+                                       : (idx - 1 + btns.length) %% btns.length;
     btns[next].focus();
   });
 })();
-</script>'''
+</script>''' % {'px': px})
 
 # 다섯 방법을 보여줄 순서. dcf(03)가 가장 완전한 평가라 기본으로 연다.
 _AXIS_BTN_ORDER = ['stmt', 'simple', 'dcf', 'rev', 'mult']
@@ -1548,80 +1885,140 @@ def _axis_is_stale(aid):
     return bool(docs) and all(dmd.is_stale(k) for k in docs)
 
 
-def _axis_buttons_html():
-    axes_by_id = {ax['id']: ax for ax in dmd.AXES}
-    btns = []
-    for aid in _AXIS_BTN_ORDER:
-        ax = axes_by_id[aid]
-        pressed = 'true' if aid == _AXIS_BTN_DEFAULT else 'false'
-        # 버튼에 찍힌 날짜는 그 축의 최신 글이다. 그런데 눌러서 나오는 드라이버가
-        # 그보다 한참 옛것일 수 있다. 그 어긋남을 버튼에서 미리 알려 준다.
-        stale = _axis_is_stale(aid)
+def _axis_button_html(ax, stale):
+    aid = ax['id']
+    # 버튼의 큰 날짜는 그 축의 최신 글이었다. 그런데 01은 최신 글이 2026-04-17
+    # (판매장려금 편)인데 드라이버는 하나도 그 글에서 오지 않는다. 다운사이클
+    # 묶음에 2026년 날짜가 걸려 있으면 묶음과 버튼이 서로 어긋나 보인다.
+    # 옛 묶음에서는 값이 실제로 어느 시점 것인지를 앞세우고, 최신 글은 작게 뒤로 뺀다.
+    date_html = '<span class="dm-axisbtn-date">%s</span>' % ax['latest'][1]
+    sub_html = ''
+    if stale:
         docs = _axis_driver_docs(aid)
-        stale_html = ''
-        if stale:
-            # 한 글에서만 온 축은 「25-12-10 ~ 25-12-10」이 된다. 한 번만 적는다.
-            span = (_doc_date(docs[0])[2:] if docs[0] == docs[-1]
-                    else '%s ~ %s' % (_doc_date(docs[0])[2:], _doc_date(docs[-1])[2:]))
-            stale_html = ('<span class="dm-axisbtn-stale" title="이 축의 값은 전부 '
-                          '메모리 다운사이클 때 것이다">옛 값 %s</span>' % span)
-        btns.append(
-            '<button type="button" class="dm-axisbtn%s" id="dm-axisbtn-%s" data-axis="%s" '
-            'aria-pressed="%s" aria-controls="dm-axispanel-%s">'
+        # 한 글에서만 온 축은 「2025-12-10 ~ 2025-12-10」이 된다. 한 번만 적는다.
+        span = (_doc_date(docs[0]) if docs[0] == docs[-1]
+                else '%s ~ %s' % (_doc_date(docs[0]), _doc_date(docs[-1])))
+        date_html = '<span class="dm-axisbtn-date">%s</span>' % span
+        if ax['latest'][0] not in docs:
+            sub_html = ('<span class="dm-axisbtn-stale" title="이 축의 최신 글에서는 '
+                        '드라이버가 나오지 않았다">최신 글은 %s</span>' % ax['latest'][1])
+    # 탭이 아니라 드릴다운이다 — 누르면 목록이 사라지고 그 방법만 남는다.
+    # 그래서 aria-pressed(눌린 상태 유지)가 아니라 aria-expanded를 쓴다.
+    return ('<button type="button" class="dm-axisbtn%s" id="dm-%s-axisbtn-%s" data-axis="%s" '
+            'aria-expanded="false" aria-controls="dm-%s-axispanel-%s">'
             '<span class="dm-axisbtn-no">%s</span>'
             '<span class="dm-axisbtn-name">%s</span>'
-            '<span class="dm-axisbtn-date">%s</span>'
-            '%s</button>'
-            % (' dm-axisbtn--stale' if stale else '', aid, aid, pressed, aid,
-               ax['no'], ax['name'], ax['latest'][1], stale_html))
-    return '<div class="dm-axisbtns" id="dm-axisbtns">%s</div>' % ''.join(btns)
+            '%s%s</button>'
+            % (' dm-axisbtn--stale' if stale else '', _PX, aid, aid, _PX, aid,
+               ax['no'], ax['name'], date_html, sub_html))
+
+
+def _axis_buttons_html():
+    """시기를 위층, 방법을 아래층으로 놓는다. 방법을 먼저 고르게 두면 「재무제표
+    분석」을 눌렀을 때 2024년 값이 나온다 — 눌러 본 뒤에야 알게 된다."""
+    axes_by_id = {ax['id']: ax for ax in dmd.AXES}
+    groups = []
+    for era in dmd.AXIS_ERAS:
+        stale = era['id'] != 'now'
+        btns = ''.join(_axis_button_html(axes_by_id[aid], stale) for aid in era['axes'])
+        groups.append(
+            '<div class="dm-axisera%s">'
+            '<div class="dm-axisera-head">'
+            '<span class="dm-axisera-label">%s</span>'
+            '<span class="dm-axisera-sub">%s</span></div>'
+            '<div class="dm-axisera-btns">%s</div></div>'
+            % (' dm-axisera--stale' if stale else '', era['label'], era['sub'], btns))
+    return '<div class="dm-axisbtns" id="dm-%s-axisbtns">%s</div>' % (_PX, ''.join(groups))
+
+
+def _era_axis_order():
+    """시기 머리말 순서대로 축을 편다. 축을 새로 만들고 AXIS_ERAS에 안 넣으면
+    화면에서 조용히 사라지므로 여기서 잡는다."""
+    order = [aid for era in dmd.AXIS_ERAS for aid in era['axes']]
+    missing = [ax['id'] for ax in dmd.AXES if ax['id'] not in order]
+    if missing:
+        raise ValueError('AXIS_ERAS에 빠진 축: %s' % ', '.join(missing))
+    return order
 
 
 def _axis_panels_html():
+    """처음엔 하나도 열지 않는다. 방법 목록이 먼저 보이고, 고른 뒤에 그 방법만 남는다.
+    다섯을 늘 띄워 두면 어느 것을 보고 있는지가 버튼 색 하나에만 걸린다."""
     axes_by_id = {ax['id']: ax for ax in dmd.AXES}
     parts = []
-    for aid in _AXIS_BTN_ORDER:
+    for aid in _era_axis_order():
         ax = axes_by_id[aid]
-        hidden = '' if aid == _AXIS_BTN_DEFAULT else ' hidden'
+        era = next(e for e in dmd.AXIS_ERAS if aid in e['axes'])
+        back = ('<button type="button" class="dm-axisback" data-axisback="%s">'
+                '<span class="dm-axisback-arrow" aria-hidden="true">◂</span>'
+                '<span class="dm-axisback-text">방법 다시 고르기</span>'
+                '<span class="dm-axisback-era">%s</span></button>' % (aid, era['label']))
         parts.append(
-            '<div class="dm-axispanel" id="dm-axispanel-%s" role="tabpanel" '
-            'aria-labelledby="dm-axisbtn-%s"%s>%s</div>'
-            % (aid, aid, hidden, _axis_html(ax)))
+            '<div class="dm-axispanel" id="dm-%s-axispanel-%s" role="region" '
+            'aria-labelledby="dm-%s-axisbtn-%s" hidden>%s%s</div>'
+            % (_PX, aid, _PX, aid, back, _axis_html(ax)))
     return '<div class="dm-axispanels">%s</div>' % ''.join(parts)
 
 
-def render():
-    data_json = json.dumps(_data_json(), ensure_ascii=False).replace('</', '<\\/')
+def render(data=None, judgment_dir='005930-삼성전자'):
+    """드라이버 지도 한 장. data는 driver_map_data 꼴 모듈(기본은 삼성전자),
+    judgment_dir는 insights/valuation/ 아래 그 회사 판정 폴더 이름이다. 없으면(None)
+    「내 판정」 층 전체를 건너뛴다 — 판정 파일이 없는 회사도 지도는 그려야 한다.
+
+    한 페이지에 지도가 둘 있어도(회사별로) id·JS가 안 부딪히게, 데이터 모듈 이름에서
+    뽑은 접두어(_PX)를 뿌리 요소와 그 안의 id마다 붙인다."""
+    global dmd, _JUDGMENT_PATH, _JUDGMENTS, _JUDGMENT_ASOF, _JUDGMENT_TODO
+    global _GROUP_OF, _AXIS_IDS, _AXIS_LOOKUP, _RESOLVE_LOG, _resolve_cache, _PX
+
+    dmd = data or driver_map_data
+    _PX = _prefix_for(dmd)
+    _JUDGMENT_PATH = (os.path.join(dc.ROOT, 'insights', 'valuation', judgment_dir, 'judgment.json')
+                       if judgment_dir else None)
+    _RESOLVE_LOG = []
+    _resolve_cache = {}
+    _JUDGMENTS, _JUDGMENT_ASOF, _JUDGMENT_TODO = _load_judgment()
+
+    _GROUP_OF = {}
+    for _g in dmd.GROUPS:
+        for _ms in _g['members'].values():
+            for _m in _ms:
+                _GROUP_OF[_m] = _g['name']
+
+    _AXIS_IDS = set(ax['id'] for ax in dmd.AXES)
+    _AXIS_LOOKUP = {ax['id']: (ax['no'], ax['name']) for ax in dmd.AXES}
+    _AXIS_LOOKUP['quote'] = ('—', '외부 인용')
+
+    # data_json은 아무 데도 안 붙는다(모달을 걷어낸 뒤로 죽은 계산이다) — 그래도 그대로
+    # 둔다. _RESOLVE_LOG(인용 링크 해석 성공/실패 집계)가 이 호출의 부작용으로 채워지고,
+    # __main__ 진단 출력이 그 집계를 쓴다. 계산을 지우면 진단 출력만 조용히 달라진다.
+    data_json = json.dumps(_data_json(), ensure_ascii=False).replace('</', '<\\/')  # noqa: F841
+
     parts = [DM_CSS]
-    parts.append('<div class="dm-wrap">')
-    parts.append('<div class="dm-head"><h2 class="dm-title">드라이버 지도 — 무엇을 얼마로 가정했나</h2>'
+    parts.append('<div class="dm-wrap" id="dm-%s-root">' % _PX)
+    parts.append('<div class="dm-head"><h2 class="dm-title">무엇을 얼마로 가정했나</h2>'
                   '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
     parts.append(_scenario_html())
     # 드라이버 범위 표(_ranges_html)는 걷어냈다. 같은 내용이 각 드라이버 상세의
     # 「영향」 칸에 들어 있어 두 번 말하는 셈이었다.
     # 연도별 이익 경로 표는 DCF 축 패널 안으로 옮겼다 — 연도별 추정이 그 방법의
     # 본체라서다. 07-16 민감도 격자도 같은 이유로 그 패널 안에 있다.
-    parts.append('<h2 class="dm-axheading">엘곰이 한 것 — 방법을 고르면 그 방법의 최신 글이 열린다</h2>')
+    # 상세를 열면 이 머리말도 목록과 함께 접힌다 — 고르라고 해 놓고 이미 고른
+    # 뒤에도 남아 있으면 아직 목록이 있는 줄 안다.
+    parts.append(('<h2 class="dm-axheading" id="dm-%s-axheading">'
+                 '엘곰이 한 것. 시기를 고르면 그 안에서 방법이 나온다</h2>') % _PX)
     parts.append(_axis_buttons_html())
     parts.append(_axis_panels_html())
     parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
     parts.append(
         '<details class="dm-past">'
-        '<summary class="dm-past-summary">지난 평가 — 열다섯 달 동안 여섯 번, 값이 어떻게 움직였나</summary>'
+        '<summary class="dm-past-summary">%s</summary>'
         '<div class="dm-past-body">%s</div>'
-        '</details>' % _timeline_html())
-    parts.append(
-        '<div class="dm-modal-backdrop" id="dm-modal-backdrop" hidden>'
-        '<div class="dm-modal" id="dm-modal" role="dialog" aria-modal="true" '
-        'aria-labelledby="dm-modal-title" tabindex="-1">'
-        '<button type="button" class="dm-modal-close" id="dm-modal-close" aria-label="닫기">×</button>'
-        '<button type="button" class="dm-modal-back" id="dm-modal-back" hidden>← 뒤로</button>'
-        '<div id="dm-modal-body"></div>'
-        '</div></div>')
+        '</details>' % (dmd.TIMELINE_LABEL, _timeline_html()))
     parts.append('</div>')
-    parts.append('<script type="application/json" id="dm-data">%s</script>' % data_json)
-    parts.append(DM_JS)
-    parts.append(AXBTN_JS)
+    # 모달과 그 데이터(dm-data)·JS는 걷어냈다. 값·근거·왜·영향·판정을 전부 지면에
+    # 펼쳐 두었으므로 눌러서 열 것이 남지 않았다. 축 고르기 JS만 남는다.
+    parts.append(_axbtn_js(_PX))
+    parts.append(DVTAB_JS)
     return '\n'.join(parts)
 
 

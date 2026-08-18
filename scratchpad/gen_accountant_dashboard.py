@@ -8,6 +8,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 import driver_map
+import driver_map_data_hynix as dmd_hynix
 
 OUT = os.path.join(dc.ROOT, '대시보드', '회계사 대시보드.html')
 blob = dc.blob
@@ -15,23 +16,12 @@ blob = dc.blob
 STAMP = '2026-08-16'
 SUM = 'content/understanding/회계사/'
 
-# 섹션은 둘이다. 종목에 값을 매긴 글과 값 매기는 법을 다룬 글은 읽는 자세가 다르다.
-# 한 칸에 섞으면 방법론 네 편이 종목 평가 사이에 끼어 어느 쪽도 안 읽힌다.
-#
-# 카드 라벨은 원문이 다루는 대상을 그대로 적는다. 2026-08-18에 삼성전자·SK하이닉스 공동
-# 원문과 반도체 3사 원문을 「SK하이닉스」로 달아 놓아 카드 제목과 안이 어긋났다.
-# 첫 화면 타일은 「전체 보기 + 회사들 + 일반 포스트」다. 회사 타일을 누르면 그 회사에 값을
-# 매긴 글만 남는다. 기업 밸류에이션을 한 칸에 묶어 두면 삼성전자와 SK하이닉스가 섞여
-# 「이 회사 값이 얼마라는 거냐」를 다시 찾아 읽어야 한다.
-#
-# 회사 이름을 단 섹션에는 그 회사에 값을 매긴 글만 넣는다. 여러 회사를 다룬 글(투자은행
-# 관점, 멀티플이 갈리는 이유)은 일반 포스트다 — dash_common.check_labels()가 검사한다.
-SEC_SS = ('sec-samsung', '01', '삼성전자 005930',
-          '같은 필자가 다섯 달 사이 세 번 평가했고, 세 번 다른 값이 나왔다')
-SEC_HY = ('sec-hynix', '02', 'SK하이닉스 000660',
-          '현금흐름을 깔아 낸 주당 내재가치와, 그 값을 쥐고 있는 마진 가정')
-SEC_POST = ('sec-post', '03', '일반 포스트',
-            '값 매기는 법과 시장 읽는 법 — 현금흐름 산정, 성장률 하강, 멀티플이 갈리는 이유')
+# 섹션은 이제 하나다. 회사별로 값을 매긴 글과 방법론·비교 글을 따로 가르던 사(SS·HY·
+# METHOD·READ) 구조를 걷어냈다 — 회사를 가로질러 「무엇을 얼마로 가정했나」를 견주는
+# 일은 카드가 아니라 위쪽 밸류에이션 지도(driver_map)가 한다. 카드는 전부 「일반 포스트」
+# 한 칸에 담고, 회사·방법론 구분은 각 카드의 topic 라벨로만 남긴다.
+SEC_POST = ('sec-post', '01', '일반 포스트',
+            '엘곰의 밸류에이션 글 28편 — 회사별 계산, 방법론, 비교')
 
 
 CARDS = [{
@@ -167,7 +157,7 @@ CARDS = [{
     # 편별 적정가를 나란히 놓고 비교하는 일은 이 페이지 위쪽 드라이버 지도(「무엇을 얼마로
     # 가정했나」)가 한다. 카드까지 같은 표를 들면 같은 숫자가 한 페이지에 두 번 찍힌다.
     # 그래서 카드는 07-16 직접 계산 한 편의 계산 사슬과 필자 자신의 반박만 남긴다.
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 005930'),
     'title': '8년 사이클을 통째로 넣은 DCF, 주당 361,000원',
     'gain': ('필자가 직접 짠 유일한 삼성전자 DCF다. 2026~2033년 매출과 마진을 해마다 깔고 '
@@ -246,7 +236,7 @@ CARDS = [{
               ('📄 05-03 인용', blob(SUM + '[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md'), 'secondary'),
               ('📄 02-26 역산', blob(SUM + '[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_HY,
+    'section': SEC_POST,
     'topic': ('market', 'SK하이닉스 · 000660'),
     'title': 'DCF로 낸 SK하이닉스 값은 188만원, 종가보다 14.3% 위',
     'gain': '삼성전자에 쓰던 DCF를 SK하이닉스에 그대로 적용한 편. 결론을 쥐는 것이 할인율이 아니라 앞 5년 마진 가정이다.',
@@ -344,7 +334,7 @@ CARDS = [{
              '아닙니다. 종목 추천이 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[260811] 목표주가는 260만원인데 주가는 반토막 - 반도체 3사 IB 관점 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · EBITDA와 CAPEX'),
     'title': 'EBITDA 47조와 반도체 CAPEX 48조가 같아졌다',
     'gain': ('4부작 DCF의 출발점. 현금창출력(EBITDA)이 설비투자(CAPEX)와 같아지면 이론상 기업가치가 0에 '
@@ -373,7 +363,7 @@ CARDS = [{
              'CAPEX는 원문에 구체적 수치가 없습니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[240629] EBITDA와 CAPEX가 같아진 47조 - 주식가치 평가 1 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 부문 분리'),
     'title': '매출성장률 -97%를 6.2%로 되돌린 이유',
     'gain': ('삼성전자를 통째로 보지 말고 반도체만 떼어 평가해야 하는 회계 논리, 그리고 -97%로 나온 매출성장률을 '
@@ -400,7 +390,7 @@ CARDS = [{
     'note': '유료 구독 글 요약입니다. 2021·2022년 CAPEX 구체적 수치는 원문에 없고 "유사한 금액"으로만 서술됩니다. 투자 권유가 아닙니다.',
     'links': [('📄 요약 전문', blob(SUM + '[240630] 반도체만 떼어봐야 하는 이유, HBM과 파운드리 - 주식가치 평가 2 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 부문별 영업가치'),
     'title': '메모리 부문만 458조, 전사 시총 487조와 거의 같다',
     'gain': '반도체 부문 중에서도 HBM을 뺀 메모리(D램·낸드·모바일AP)만의 영업가치를 구했더니 전사 시가총액에 육박했다.',
@@ -425,7 +415,7 @@ CARDS = [{
     'note': 'HBM과 CAPEX를 뺀 중간 계산값입니다. 최종 결론은 다음 편([240704])입니다. 투자 권유가 아닙니다.',
     'links': [('📄 요약 전문', blob(SUM + '[240703] 메모리 부문 영업가치 458조, 시총 487조와 마주하다 - 주식가치 평가 3 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · DCF 697조'),
     'title': 'DCF 결과 697조, 시장가치의 143%',
     'gain': '4부작의 결론. HBM 미래이익을 더하고 CAPEX를 뺀 최종 DCF 값과, 그 143%라는 숫자를 왜 "저평가 확정"으로 읽으면 안 되는지.',
@@ -451,7 +441,7 @@ CARDS = [{
              '결론이라고 필자가 명시합니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[240704] DCF 결과 697조, 시장가치의 143% - 주식가치 평가 4 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · PBR'),
     'title': '총자본 364조가 시총 334조를 넘어 PBR이 1 밑으로',
     'gain': 'PBR(주가순자산비율)이 1 아래로 떨어진 것을 "바닥"이 아니라 자산손상 검토 신호로 읽는 논리, 그리고 FCFF가 마이너스라는 진단.',
@@ -477,7 +467,7 @@ CARDS = [{
              '투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[241026] 총자본 364조 vs 시총 334조, PBR 1 밑으로 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · PEG'),
     'title': 'PEG 0.27, 다섯 배수 중 가장 저평가',
     'gain': '피터 린치(피델리티 마젤란 펀드를 13년간 운용한 펀드매니저) 방식의 PEG로 삼성전자·엔비디아·TSMC·애플·테슬라 5개사를 줄 세운 결과.',
@@ -500,7 +490,7 @@ CARDS = [{
              '넘어갑니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[241128] PEG 0.27로 본 저평가 - Peter Lynch 평가법 1 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · Peter Lynch 공식'),
     'title': '공식 그대로면 1.13 고평가, PER 바꾸면 2.1 저평가',
     'gain': '같은 공식에 PER 입력값만 바꿨더니 고평가와 저평가 사이를 오간 계산 과정.',
@@ -527,7 +517,7 @@ CARDS = [{
              '재계산값을 나란히 남깁니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[241128] 공식 그대로면 1.13 고평가, PER 바꾸면 2.1 저평가 - Peter Lynch 평가법 2 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 목표주가 비교'),
     'title': '월가 37명은 Buy 일색, 목표주가 평균 8.5만원',
     'gain': '애널리스트 37명 전원 매수 의견과 Simply Wall St DCF의 48.2% 저평가 판정이 어떻게 나왔는지, 그리고 필자가 짚는 괴리 지점.',
@@ -552,7 +542,7 @@ CARDS = [{
              '원문에 다 나오지 않습니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[241202] 목표주가 평균 8.5만원, Simply Wall St는 10만원대 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · Simple DCF'),
     'title': '성장률 10%면 23% 저평가, 5%면 딱 시총',
     'gain': '필자가 "Simple DCF"라 부르는 배수 방식. 성장률 시나리오 3개(5·10·20%)로 시가총액이 어떤 성장률을 이미 가정하고 있는지 역산한다.',
@@ -577,7 +567,7 @@ CARDS = [{
              '산출 과정 전체는 원문에 없습니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[250223] 성장률 10%면 23% 저평가 - Simple DCF - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 부문별 Simple DCF'),
     'title': '삼성전자를 4개 부문으로 쪼갠 Simple DCF, 지분가치 501조',
     'gain': 'DS·DX·SDC·Harman 4개 부문을 각각 다른 성장률·할인율로 평가해 합산한 결과와, 왜 부문을 쪼개야 하는지의 논리.',
@@ -603,7 +593,7 @@ CARDS = [{
              '변동은 반영되지 않습니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[250430] 부문 4개로 쪼갠 Simple DCF, 지분가치 501조 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 10년 추정 DCF'),
     'title': '삼성전자 10년 추정 DCF, 시가와 거의 같은 113,024원',
     'gain': '10년 명시적 추정과 부문별 EBITDA 가중평균 성장률로 낸 값이 처음으로 시장가와 거의 일치한 편.',
@@ -629,7 +619,7 @@ CARDS = [{
              '고치지 않고 그대로 옮겼습니다. 투자 권유가 아닙니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[251210] 10년 추정+6.5% 성장으로 낸 주당 113,024원 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 연환산 이익 대 시총'),
     'title': '영업이익 89조 역대 최대인데 주가는 -4%로 출발',
     'gain': '역대 최대 실적 발표일 아침 주가가 오히려 빠진 역설을, 연환산 이익×FCF 비율×멀티플의 약식 계산으로 설명한다.',
@@ -653,7 +643,7 @@ CARDS = [{
     'note': '유료 구독 글 요약입니다. FCF 비율 70%·멀티플 15는 정밀한 산출 근거 없이 필자가 예시로 든 값입니다. 투자 권유가 아닙니다.',
     'links': [('📄 요약 전문', blob(SUM + '[260707] 2분기 영업이익 89조, 연환산 1,890조 vs 시총 1,768조 - 삼성전자 - 엘곰.md'), 'secondary')],
 }, {
-    'section': SEC_SS,
+    'section': SEC_POST,
     'topic': ('market', '삼성전자 · 매출 인식'),
     'title': '판매장려금이 핵심감사사항인 이유',
     'gain': '삼성전자 2025년 감사보고서가 DX부문 판매장려금을 핵심감사사항으로 꼽은 이유를 IFRS 15 조문 단위로 뜯는다. 이 편에는 금액이 없다.',
@@ -850,11 +840,8 @@ CARDS = [{
     'links': [('📄 요약 전문', blob(SUM + '[240830] 엔비디아, TSMC, 삼성전자, SK하이닉스의 투자지표, 재무지표 비교 (using Yahoofinance stock comparison) - 엘곰.md'), 'secondary')],
 }]
 
-# 화면 순서는 CARDS에 적힌 순서다(dash_common.sections). 카드를 어디에 적었든 섹션대로 세운다.
-CARDS = ([c for c in CARDS if c['section'] is SEC_SS]
-         + [c for c in CARDS if c['section'] is SEC_HY]
-         + [c for c in CARDS if c['section'] is SEC_POST])
-assert len(CARDS) == 28, '섹션이 없는 카드가 있다'
+# 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
+assert len(CARDS) == 28, '카드 수가 달라졌다'
 
 
 
@@ -902,9 +889,10 @@ HEADER = '''  <header>
     <p class="eyebrow">밸류에이션 — 제3자 해설 아카이브</p>
     <h1>20년차 회계사가 남긴 모든 것</h1>
     <p class="lede">네이버 프리미엄 유료 채널 필자 <b>엘곰</b>(회계사)의 밸류에이션 글을 모읍니다.
-       회사 타일을 누르면 그 회사에 값을 매긴 글만 나옵니다. 값 매기는 법과 시장 읽는 법은 「일반 포스트」에 둡니다.
+       「밸류에이션」 타일은 회사별로 「무엇을 얼마로 가정했나」를 시기와 방법으로 갈라 견주는 지도이고,
+       「일반 포스트」 타일은 그 계산이 나온 글 28편입니다.
        유료 구독 글이라 원문은 싣지 않고 요약과 판단만 남겼습니다. <b>종목 추천이 아니고, 가격 검증도 하지 않았습니다.</b>
-       삼성전자 세 편은 같은 필자가 다섯 달 사이 서로 다른 값을 낸 기록이라, 한 편만 읽고 결론 내리지 않도록
+       삼성전자는 같은 필자가 열다섯 달 사이 여섯 번 값을 낸 기록이라, 한 편만 읽고 결론 내리지 않도록
        카드마다 어긋나는 지점을 같이 적었습니다.</p>
     <div class="meta-row">
       <span>정리일 <b>%s</b></span>
@@ -919,6 +907,25 @@ FOOTER = ('제3자 해설 아카이브 · 유료 구독 글 요약입니다. 원
           '페이지 생성은 <code>scratchpad/gen_accountant_dashboard.py</code>(공용 부품 <code>dash_common.py</code>), '
           '필자가 실제로 정한 규칙 번호는 <code>docs/valuation-rulebook.md</code>에 있습니다.')
 
+# 지도를 감싸는 회사 이름표 하나뿐인 CSS라 여기 둔다. 지도 자체의 CSS(DM_CSS)는
+# driver_map.render() 호출마다 실려 회사 수만큼 반복되지만(현재는 감수한다), 이 CSS는
+# render() 호출 한 번(extra_css)으로만 페이지에 실린다.
+VALUATION_CSS = '''
+  .dm-co{margin:0 0 34px}
+  .dm-co:last-child{margin-bottom:0}
+  .dm-co-t{font-size:15px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
+           margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+'''
+
+# 밸류에이션 층 — 카드가 아니라 render()의 top 인자로 붙는다. 회사별 지도 둘을 그대로
+# 이어 붙인다. 지도 자체가 이제 회사 접두어로 id·이벤트 범위를 가르므로(driver_map.py
+# _PX), 같은 페이지에 둘이 있어도 서로 안 눌린다.
+VALUATION = ('<div class="dm-co"><h3 class="dm-co-t">삼성전자 005930 · 평가 6편</h3>%s</div>'
+             '<div class="dm-co"><h3 class="dm-co-t">SK하이닉스 000660 · 평가 1편</h3>%s</div>'
+             % (driver_map.render(), driver_map.render(dmd_hynix, judgment_dir=None)))
+
 if __name__ == '__main__':
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
-              sec_top={'sec-samsung': driver_map.render()})
+              extra_css=VALUATION_CSS,
+              top=VALUATION, top_title='밸류에이션', top_id='sec-valuation', top_n=2,
+              top_sub='회사별로 평가를 모아 시기와 방법으로 갈랐다')

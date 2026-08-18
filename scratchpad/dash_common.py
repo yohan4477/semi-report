@@ -203,8 +203,9 @@ NAV_JS = '''<script>
     var seen=0;
     document.querySelectorAll('section[id]').forEach(function(s){
       // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
-      var live = s.hasAttribute('data-fixed') ? s.querySelectorAll('.ins').length
-                                              : s.querySelectorAll('.ucard:not([hidden])').length;
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
       s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
@@ -416,7 +417,7 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
-           top_n=0, top_sub='', top_title='통합 인사이트', intro='', sec_top=None,
+           top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
@@ -431,7 +432,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
-    extra = (XSEC, top_title, top_sub, top_n) if top else None
+    # 카드가 없는 층(통합 인사이트·밸류에이션 지도)도 타일 하나로 선다. id를 바꿀 수 있게 둔다 —
+    # 한 저장소에 성격이 다른 고정 층이 여럿이라 sec-cross 하나로는 안 된다.
+    tid = top_id or XSEC
+    extra = (tid, top_title, top_sub, top_n) if top else None
     nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra)
     tabs = ''
     if scoped:
@@ -439,9 +443,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     body = []
     if top:
         # 카드가 없는 섹션이라 data-fixed로 표시한다 — 국내·해외 범위 필터도 타지 않는다
-        body.append('<section id="%s" data-fixed="1"><div class="sec-head">'
+        # data-n은 이 층이 몇 편을 담고 있는지다. 카드가 없으니 세어 볼 수가 없다.
+        body.append('<section id="%s" data-fixed="1" data-n="%d"><div class="sec-head">'
                     '<span class="sec-num">00</span><h2 class="sec-title">%s</h2></div>%s</section>'
-                    % (XSEC, top_title, top))
+                    % (tid, top_n, top_title, top))
     sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
     unknown = [k for k in list(sec_top) + list(sec_bottom) if k not in secs]
     assert not unknown, 'sec_top·sec_bottom에 없는 섹션 id가 있다: %s' % unknown
@@ -571,7 +576,7 @@ def check_ui(html, has_top):
     assert 'mode-pick' not in html, \
         'UI 규약 위반: 섹션 타일 앞에 관문 버튼을 두지 않는다 — 타일 하나로 넣는다'
     if has_top:
-        assert 'data-sec="%s"' % XSEC in html, 'UI 규약 위반: 통합 인사이트가 타일로 안 섰다'
+        assert 'data-fixed="1"' in html and 'class="stile" data-sec=' in html,             'UI 규약 위반: 카드 없는 고정 층이 타일로 안 섰다'
     # 클래스가 'sec-pick sgrid'라 닫는 따옴표까지 찾으면 -1이 나와 문서 전체를 앞부분으로 본다
     at = html.find('class="sec-pick')
     assert at > 0, 'UI 규약 위반: 섹션 타일을 못 찾았다'
