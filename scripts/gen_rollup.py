@@ -46,7 +46,9 @@ def splice(path, anchor, block, indent=''):
 def main():
     notes = json.load(io.open(NOTES, encoding='utf-8'))
     counts = day_counts(io.open(HIST, encoding='utf-8').read())
-    block = rl.build(notes, counts, unit='건')
+    # 최신 회차는 열어 두고 접힌 요약 한 줄은 뺀다 — 요약과 항목을 두 번 읽게 하지 않는다.
+    # 다른 대시보드(부동산·미주사·금융)는 기본값 그대로라 접힌 채 요약 줄이 남는다.
+    block = rl.build(notes, counts, unit='건', open_current=True, show_desc=False)
     splice(HIST, '  <div class="tabbar">', block, '  ')
     splice(DASH, '  <section id="social-section"', block, '  ')
     print('reports: %d' % len(notes['reports']))

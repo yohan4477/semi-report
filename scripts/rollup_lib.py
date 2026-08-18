@@ -64,7 +64,7 @@ def count_range(counts, a, b, scope=None):
     return tot
 
 
-def render_report(r, counts, unit='건'):
+def render_report(r, counts, unit='건', open_=False, show_desc=True):
     c = count_range(counts, r['from'], r['to'], r.get('scope'))
     n = c.get('all', 0)
     meta = '%s~%s · %d%s' % (r['from'][5:], r['to'][5:], n, unit)
@@ -78,19 +78,26 @@ def render_report(r, counts, unit='건'):
     label = KIND.get(r['kind'], r['kind'])
     if r.get('scope'):
         label += ' · ' + SCOPE.get(r['scope'], r['scope'])
-    # 접힌 상태에서 무슨 내용인지 한 줄로 알려준다. 없으면 제목만 나온다
-    desc = '<span class="rld">%s</span>' % r['desc'] if r.get('desc') else ''
+    # 접힌 상태에서 무슨 내용인지 한 줄로 알려준다. 없으면 제목만 나온다.
+    # show_desc=False면 이 줄을 통째로 뺀다 — 항목을 처음부터 펼쳐 두는 페이지에서는
+    # 같은 이야기를 요약과 본문으로 두 번 읽게 된다(2026-08-18 SemiAnalysis 쪽 요청).
+    desc = '<span class="rld">%s</span>' % r['desc'] if (show_desc and r.get('desc')) else ''
     # data-scope는 대시보드의 국내·해외 탭이 골라 보여주는 표시다(범위 없는 리포트는 늘 보인다)
-    return ('<details class="rlrep"%s><summary class="rlhd"><span class="rlk">%s</span>'
+    return ('<details class="rlrep"%s%s><summary class="rlhd"><span class="rlk">%s</span>'
             '<span class="rlttl"><span class="rlt">%s</span>%s</span>'
             '<span class="rlmeta">%s</span></summary>'
             '<ol class="rll">%s</ol></details>') % (
+        ' open' if open_ else '',
         ' data-scope="%s"' % r['scope'] if r.get('scope') else '',
         label, r['title'], desc, meta, items)
 
 
-def build(notes, counts, unit='건'):
-    """최신 회차는 펼쳐 보이고, 이전 회차는 <details>로 접어 누적한다."""
+def build(notes, counts, unit='건', open_current=False, show_desc=True):
+    """최신 회차는 위에, 이전 회차는 <details>로 접어 누적한다.
+
+    open_current=True면 최신 회차를 열린 상태로 낸다 — 클릭하지 않아도 항목이 보인다.
+    지난 회차는 그대로 접어 둔다(다 펼치면 페이지가 리포트로 뒤덮인다).
+    """
     reps = [r for r in notes.get('reports', [])
             if count_range(counts, r['from'], r['to'], r.get('scope')).get('all', 0)]
     if not reps:
@@ -101,8 +108,10 @@ def build(notes, counts, unit='건'):
                  key=lambda r: (0 if r['kind'] == 'week' else 1,
                                 {'kr': 0, 'intl': 1}.get(r.get('scope'), 0)))
     old = [r for r in reps if r['asof'] != newest]
-    html = '<div class="rollup">' + ''.join(render_report(r, counts, unit) for r in cur)
+    html = '<div class="rollup">' + ''.join(
+        render_report(r, counts, unit, open_=open_current, show_desc=show_desc) for r in cur)
     if old:
         html += ('<details class="rlold"><summary>지난 리포트 %d편 ▾</summary>' % len(old)) \
-                + ''.join(render_report(r, counts, unit) for r in old) + '</details>'
+                + ''.join(render_report(r, counts, unit, show_desc=show_desc)
+                          for r in old) + '</details>'
     return html + '</div>'
