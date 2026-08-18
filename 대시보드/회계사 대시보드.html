@@ -751,7 +751,7 @@
 /* 폭은 <col>이 갖는다. th에 width를 또 주면 fixed 레이아웃에서 첫 열이 다음 열과
    겹쳐 글자가 포개졌다(2026-08-19 화면 확인). 표는 내용만큼 넓히고 감싼 상자가 스크롤한다. */
 .dm-ep-wide{table-layout:fixed;width:max-content;min-width:100%}
-.dm-ep-wide col.dm-ep-mt{width:132px}
+.dm-ep-wide col.dm-ep-mt{width:104px}
 .dm-ep-wide col.dm-ep-yr{width:98px}
 /* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
    컨센서스든 필자가 깐 것이든 같은 표의 같은 줄이다. 경계만 또렷하면 된다. */
@@ -759,7 +759,7 @@
 .dm-ep-wide th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
      text-align:left;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;
      overflow:hidden;text-overflow:ellipsis;
-     padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+     padding:6px 6px 6px 8px;border-bottom:1px solid var(--line);
      box-shadow:1px 0 0 var(--line)}
 .dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;
      padding:4px 12px 4px 8px}
@@ -1234,6 +1234,9 @@
      갈라지지 않게 nowrap을 걸어 둔 것이 원인이다. 좁은 화면에서는 칩 안에서 줄을
      바꾸게 풀고, 이름과 값은 위아래로 쌓아 짝을 유지한다. */
   .dm-chain-line{overflow-wrap:anywhere;line-height:1.9}
+  /* 지표 이름 열이 넓으면 첫 칸과 경계선 사이가 텅 빈다 */
+  .dm-ep-wide col.dm-ep-mt{width:88px}
+  .dm-ep-wide th[scope="row"]{font-size:10.5px;padding-right:4px}
   .dm-axis, .dm-axispanel, .dm-dv, .dm-scenario{min-width:0}
   .dm-axis{padding:14px 12px 13px}
 }
@@ -1582,7 +1585,7 @@
 /* 폭은 <col>이 갖는다. th에 width를 또 주면 fixed 레이아웃에서 첫 열이 다음 열과
    겹쳐 글자가 포개졌다(2026-08-19 화면 확인). 표는 내용만큼 넓히고 감싼 상자가 스크롤한다. */
 .dm-ep-wide{table-layout:fixed;width:max-content;min-width:100%}
-.dm-ep-wide col.dm-ep-mt{width:132px}
+.dm-ep-wide col.dm-ep-mt{width:104px}
 .dm-ep-wide col.dm-ep-yr{width:98px}
 /* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
    컨센서스든 필자가 깐 것이든 같은 표의 같은 줄이다. 경계만 또렷하면 된다. */
@@ -1590,7 +1593,7 @@
 .dm-ep-wide th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
      text-align:left;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;
      overflow:hidden;text-overflow:ellipsis;
-     padding:6px 12px 6px 8px;border-bottom:1px solid var(--line);
+     padding:6px 6px 6px 8px;border-bottom:1px solid var(--line);
      box-shadow:1px 0 0 var(--line)}
 .dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;
      padding:4px 12px 4px 8px}
@@ -2065,6 +2068,9 @@
      갈라지지 않게 nowrap을 걸어 둔 것이 원인이다. 좁은 화면에서는 칩 안에서 줄을
      바꾸게 풀고, 이름과 값은 위아래로 쌓아 짝을 유지한다. */
   .dm-chain-line{overflow-wrap:anywhere;line-height:1.9}
+  /* 지표 이름 열이 넓으면 첫 칸과 경계선 사이가 텅 빈다 */
+  .dm-ep-wide col.dm-ep-mt{width:88px}
+  .dm-ep-wide th[scope="row"]{font-size:10.5px;padding-right:4px}
   .dm-axis, .dm-axispanel, .dm-dv, .dm-scenario{min-width:0}
   .dm-axis{padding:14px 12px 13px}
 }
