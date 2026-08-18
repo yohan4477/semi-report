@@ -106,14 +106,30 @@ def period(meta, src):
     return '<span class="asof%s" title="%s">근거 %s</span>' % (old, tip, nl.esc(span))
 
 
+def roster(meta):
+    """수혜·비수혜 회사를 카드 맨 앞에 세운다 — 접힌 상태에서 이름부터 보여야
+    「그래서 누가 받나」를 본문 안에서 찾아 읽지 않는다. frontmatter의
+    winners·losers에 회사 이름만 적는다(근거는 본문 표가 진다)."""
+    w = (meta.get('winners') or '').strip()
+    l = (meta.get('losers') or '').strip()
+    if not (w or l):
+        return ''
+    out = []
+    if w:
+        out.append('<span class="rk rk-w">수혜</span><span class="rv">%s</span>' % nl.esc(w))
+    if l:
+        out.append('<span class="rk rk-l">비수혜</span><span class="rv">%s</span>' % nl.esc(l))
+    return '<p class="rost">%s</p>' % ''.join(out)
+
+
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
     return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
             '%s<h2 id="%s">%s</h2>'
-            '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
+            '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
             % (tab, nl.esc(kind), period(meta, src),
-               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
+               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')), roster(meta),
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
 
 
@@ -304,6 +320,13 @@ CARD_CSS = r'''
   .asof.stale::after{content:' · 오래됨'}
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:8px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
+  /* 수혜·비수혜 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
+  .rost{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:9px 0 0}
+  .rk{flex:none;font-size:var(--t-lbl);font-weight:800;letter-spacing:.04em;
+      border-radius:999px;padding:2px 8px}
+  .rk-w{color:var(--accent);background:var(--soft)}
+  .rk-l{color:var(--faint);background:var(--sunk)}
+  .rv{font-size:var(--t-meta);font-weight:700;color:var(--ink);margin-right:6px}
   .bsec{font-size:var(--t-meta);font-weight:800;color:var(--accent2);margin:14px 0 5px;
         text-transform:uppercase;letter-spacing:.04em}
   .body p,.body li{font-size:var(--t-body);color:var(--sub);line-height:1.65}
