@@ -249,6 +249,134 @@ def guide(per):
     return GUIDE % (per.get('brief', 0), per.get('cross', 0))
 
 
+# ── 처음 오셨다면 — 읽는 순서 ──────────────────────────────────────────────
+# 건강 인사이트에서 자리 잡은 장치를 이 장에도 둔다. 주제 타일은 무엇이 있는지는 보여 주지만
+# 어디부터 읽을지는 말해 주지 않는다. 39장을 아무 데서나 열면 앞뒤가 없다.
+#
+# 부품을 dash_common에서 가져다 쓰지 않는다. 저쪽 카드는 dict이고 앵커가 slug(제목)인데
+# 이 장은 frontmatter의 headline이고 앵커가 anchor(headline)이라 데이터 모양이 다르다.
+# 대신 같은 보증을 건다 — 아래 목록이 글 전량을 정확히 한 번씩 담지 않으면 생성이 멈춘다.
+COURSE_CSS = '''
+  .intro{margin:0 0 22px;border:1px solid var(--line);border-radius:10px;
+    background:var(--sunk);padding:0 16px}
+  .intro>summary{list-style:none;cursor:pointer;padding:13px 0;display:flex;
+    align-items:baseline;gap:10px;flex-wrap:wrap}
+  .intro>summary::-webkit-details-marker{display:none}
+  .intro>summary::after{content:"▾";margin-left:auto;color:var(--faint);font-size:12px}
+  .intro[open]>summary::after{content:"▴"}
+  .in-t{font-size:14px;font-weight:800;color:var(--ink)}
+  .in-s{font-size:12px;color:var(--faint)}
+  .in-b{padding:0 0 16px}
+  .in-lede{margin:0 0 16px;font-size:13px;line-height:1.7;color:var(--sub)}
+  .csteps{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+  @media (max-width:720px){.csteps{grid-template-columns:1fr}}
+  .cs-h{margin:0 0 4px;font-size:14px;font-weight:800;color:var(--ink)}
+  .cs-h .cs-n{display:inline-block;min-width:20px;color:var(--accent)}
+  .cs-why{margin:0 0 8px 20px;font-size:12.5px;line-height:1.6;color:var(--sub)}
+  .course{margin-left:20px}
+  .course ol{margin:0;padding-left:17px}
+  .course li{font-size:12.5px;line-height:1.65;margin-bottom:3px}
+  .course li:last-child{margin-bottom:0}
+  .course a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  .course a:hover{border-bottom-color:var(--accent)}
+'''
+
+COURSE_LEDE = ('글 %d편을 어디서부터 읽을지 정해 두었습니다. 앞 네 단계는 AI를 만들고 파는 쪽을 돈·모델·'
+               '칩·전기 순으로 따라가고, 뒤는 그 바깥 조건과 부동산입니다. 제목을 누르면 그 글로 갑니다.')
+
+COURSE = [
+    ('돈이 어디서 나오나',
+     'AI를 파는 회사들의 손익부터 본다. 뒤에 나오는 칩과 전기 이야기가 결국 이 숫자로 돌아온다.',
+     ['앤트로픽은 흑자, 오픈AI는 매출만큼 적자',
+      'AI 값은 내려가는데 파는 쪽 마진은 오른다',
+      '빅테크는 쓴 돈만큼 장부에 담지 않는다',
+      '같은 1GW인데 매출이 열 배 다르다',
+      '같은 날 메타는 코어위브의 고객이자 경쟁자가 됐다',
+      '같은 보증 계약을 한쪽은 다리로, 한쪽은 부풀림으로 센다']),
+    ('모델은 어떻게 만들고 얼마를 받나',
+     '파는 물건 자체를 본다. 만드는 값이 어디서 붙고, 받는 값이 왜 내리면서 동시에 오르는지다.',
+     ['모델을 키우는 돈이 사람 손으로 만드는 과제로 간다',
+      '사 오는 과제가 병목이라더니 산 GPU가 74% 놀았다',
+      '토큰 값은 1,000분의 1인데 최신 모델 청구서는 2배다']),
+    ('칩에서 무엇이 모자라나',
+     '그 모델을 돌리는 물건이다. 무엇이 밀려나고 누가 값을 받는지 따라간다.',
+     ['AI가 부른 HBM 수요가 일반 D램 생산까지 갉아먹는다',
+      '일반 D램을 밀어낸 쪽과 사가는 쪽이 같다',
+      'AMD 칩은 싸졌는데 왜 아직 안 팔리나',
+      '같은 칩을 두고 2배와 100배가 같이 나온다',
+      '직접 만든 칩은 엔비디아 청구서를 깎는다',
+      '트랜지스터가 안 줄어드니 성능을 패키지와 메모리에서 뽑는다']),
+    ('전기는 어디서 막히나',
+     '칩을 사도 꽂을 데가 없으면 못 쓴다. 전력망과 요금, 그리고 연료가 오는 길이다.',
+     ['데이터센터 전력 — 전력망을 안 기다리는 쪽으로',
+      '랙 한 대가 먹는 전력이 건물 설계를 정한다',
+      '2026년에 무엇이 먼저 막히나 — 답이 셋이다',
+      '같은 전력 병목을 두고 한쪽은 벌어진다 하고 한쪽은 곧 풀린다 한다',
+      '전기요금은 가장 싼 발전기가 아니라 그 순간 가장 비싼 발전기가 정한다',
+      '태양광 3배 계획을 한쪽은 요금으로, 한쪽은 팔 곳으로 센다',
+      '비싸도 자국에서 짓는 쪽으로 각국이 방향을 틀었다',
+      '해협 하나가 막히자 값이 아니라 물량이 문제가 됐다']),
+    ('그래서 누가 버나',
+     '앞 네 단계의 숫자를 회사 이름으로 옮긴 자리다. 종목 추천이 아니다. 나온 숫자를 정리한 것이다.',
+     ['수혜 엔비디아·AMD, 위기 세레브라스·Groq: 소프트웨어가 1.9배',
+      '수혜 마벨·코히어런트·루멘텀·AOI: 성능이 다이 바깥에서 나온다',
+      '수혜 컨스텔레이션·비스트라, 위기 탈렌 에너지: 선 설비가 먼저',
+      '수혜 SK하이닉스·삼성·마이크론·KLA: 이익은 최대인데 PER 5배 밑',
+      'SK하이닉스는 사상 최대 이익에도 멀티플 5배가 안 된다']),
+    ('AI 밖의 돈값',
+     '금리와 환율이다. 위의 판단들이 어떤 바깥 조건 위에 서 있는지 확인하는 자리다.',
+     ['금리와 환율을 국내 수급으로 설명하는 방식이 깨졌다',
+      '값을 붙잡아 주던 쪽이 빠지고 흐름을 보는 돈만 남았다']),
+    ('부동산',
+     '따로 서 있는 묶음이다. 몇 채를 세느냐에서 시작해 공사비와 세금과 규칙의 빈자리로 간다.',
+     ['서울 입주 물량이 집계하는 곳마다 4천 호에서 2만 9천 호까지 나온다',
+      '서울에 모자란 집과 새로 내놓는 집이 다르다',
+      '공사비를 올린 건 자재값이 아니라 사람과 규정이다',
+      '「집이 왜 안 팔리나」에 정부와 학자가 정반대로 답한다',
+      '기준이 몇 채 가졌나에서 그 집에 사는가로 옮겨갔다',
+      '만기 뒤 규칙을 안 정한 채 20년이 지났다',
+      '클러스터가 땅값을 올린 건 병원과 대학이 이미 있어서다',
+      '무엇을 고쳐야 통과인지 아무도 말해 주지 않는다',
+      '깨는 문턱이 다시 묶는 문턱보다 낮다']),
+]
+
+_STEP_KO = {2: '두', 3: '세', 4: '네', 5: '다섯', 6: '여섯', 7: '일곱', 8: '여덟'}
+
+
+def all_headlines():
+    out = []
+    for d, _kind, _tab in KINDS:
+        for f in sorted(glob.glob(os.path.join(d, '*.md'))):
+            m, _b = nl.parse_front(io.open(f, encoding='utf-8').read())
+            if m.get('headline'):
+                out.append(m['headline'])
+    return out
+
+
+def course():
+    """읽는 순서 한 덩어리. 글 전량을 정확히 한 번씩 담지 않으면 여기서 멈춘다."""
+    have = set(all_headlines())
+    listed = [h for _t, _w, hs in COURSE for h in hs]
+    unknown = [h for h in listed if h not in have]
+    missing = sorted(have - set(listed))
+    assert not unknown, '읽는 순서에 없는 글이 있다: %s' % unknown
+    assert not missing, '읽는 순서에서 빠진 글이 있다: %s' % missing
+    assert len(listed) == len(set(listed)), '읽는 순서에 같은 글이 두 번 들어갔다'
+
+    h = ['<details class="intro" open><summary><span class="in-t">처음 오셨다면</span>'
+         '<span class="in-s">글 %d편을 %s 단계로</span></summary><div class="in-b">'
+         % (len(listed), _STEP_KO[len(COURSE)])]
+    h.append('<p class="in-lede">%s</p><div class="csteps">' % (COURSE_LEDE % len(listed)))
+    for i, (head, why, heads) in enumerate(COURSE, 1):
+        h.append('<div class="cstep"><p class="cs-h"><span class="cs-n">%d</span>%s</p>'
+                 % (i, nl.esc(head)))
+        h.append('<p class="cs-why">%s</p>' % nl.esc(why))
+        h.append('<div class="course"><ol>%s</ol></div></div>'
+                 % ''.join('<li><a href="#%s">%s</a></li>' % (anchor(t), nl.esc(t)) for t in heads))
+    h.append('</div></div></details>')
+    return ''.join(h)
+
+
 def sectiles(bysec, bykindsec):
     """주제를 네모 카드로 세운다 — 누르면 그 주제의 글만 펼쳐진다"""
     # 「수혜 기업」은 타일이 아니라 페이지 맨 위 고정 층이다(cards의 TOPSEC 참조).
@@ -302,8 +430,10 @@ def tabs(per):
 def build():
     body, top, per, bysec, mix = cards()
     n = sum(per.values())
-    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS)
-                .replace('__GUIDE__', guide(per))
+    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + COURSE_CSS)
+                # 읽는 순서가 카드 종류 설명보다 먼저다 — 처음 온 사람은 무엇이 있는지보다
+                # 어디부터 읽을지가 급하다
+                .replace('__GUIDE__', course() + guide(per))
                 .replace('__TOP__', top)
                 .replace('__TABS__', '<div class="tabbar">%s</div>%s'
                          % (tabs(per), sectiles(bysec, mix)))
