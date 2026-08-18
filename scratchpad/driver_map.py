@@ -606,25 +606,30 @@ def _path_html(spec):
     메모는 표 안에 끼우지 않는다. 줄 사이에 문장이 들어가면 숫자가 끊긴다. 표 아래에
     연도를 앞세워 모아 둔다."""
     metrics = spec['head'][1:]          # 첫 열은 연도라 행 머리로 간다
-    cols, notes, bands = [], [], []
-    for label, rows in spec['bands']:
-        bands.append((label, len(rows)))
-        for r in rows:
+    cols, notes, bands, ccls = [], [], [], []
+    for bi, (label, rows) in enumerate(spec['bands']):
+        bands.append((label, len(rows), bi))
+        for ri, r in enumerate(rows):
             cols.append(r)
-            if r.get('note'):
-                notes.append('<li><b>%s</b> %s</li>' % (r['cells'][0], r['note']))
+            # 구간은 열 전체를 따라 내려가야 보인다. 띠 한 줄로만 칠하면 숫자 줄에서
+            # 경계가 사라져 어디까지가 남의 숫자인지 다시 위를 봐야 한다(2026-08-19).
+            cls = ['dm-ep-b%d' % (bi % 3)]
+            if ri == 0 and bi:
+                cls.append('dm-ep-bcut')      # 구간이 바뀌는 자리에 세로선
+            if r.get('muted'):
+                cls.append('dm-ep-muted')
+            ccls.append(' class="%s"' % ' '.join(cls))
 
-    band_row = ''.join('<th class="dm-ep-bandh" colspan="%d">%s</th>' % (n, lab)
-                       for lab, n in bands)
-    year_row = ''.join('<th%s>%s</th>'
-                       % (' class="dm-ep-muted"' if c.get('muted') else '', c['cells'][0])
-                       for c in cols)
+    band_row = ''.join('<th class="dm-ep-bandh dm-ep-b%d%s" colspan="%d">%s</th>'
+                       % (bi % 3, ' dm-ep-bcut' if bi else '', n, lab)
+                       for lab, n, bi in bands)
+    year_row = ''.join('<th%s>%s</th>' % (ccls[i], c['cells'][0])
+                       for i, c in enumerate(cols))
     body = []
     for i, name in enumerate(metrics, 1):
         cells = ''.join('<td%s>%s</td>'
-                        % (' class="dm-ep-muted"' if c.get('muted') else '',
-                           c['cells'][i] if i < len(c['cells']) else '')
-                        for c in cols)
+                        % (ccls[j], c['cells'][i] if i < len(c['cells']) else '')
+                        for j, c in enumerate(cols))
         body.append('<tr><th scope="row">%s</th>%s</tr>' % (name, cells))
 
     url = dc.blob(dmd.SUM + dmd.DOCS[spec['doc']]) + '#L%d' % spec['line']
@@ -1143,9 +1148,23 @@ DM_CSS = '''<style>
 .dm-ep-hi td:first-child{box-shadow:inset 3px 0 0 var(--line)}
 .dm-ep-hi i{color:var(--ink-2)}
 /* 연도를 가로로 세운 표. 열이 열 개를 넘어가므로 첫 열(지표 이름)을 붙박이로 둔다 */
+/* 구간 칠. 남의 숫자(컨센서스)와 필자가 깐 숫자를 색으로 가른다 — 띠 한 줄로는
+   표 아래쪽에서 경계가 사라진다. 색은 거의 안 보일 만큼 옅게, 경계선은 또렷하게. */
+.dm-ep-b0{background:transparent}
+.dm-ep-b1{background:var(--sunk)}
+.dm-ep-b2{background:transparent}
+.dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
+.dm-ep-bandh.dm-ep-b1{background:var(--sunk)}
+/* 연도 열은 폭을 같게 잡는다. 값 길이에 따라 칸이 들쭉날쭉하면 경사가 안 읽힌다 */
+.dm-ep-wide{table-layout:fixed}
+.dm-ep-wide col.dm-ep-yr{width:98px}
+/* 구간 칠. 컨센서스(남의 숫자)와 필자가 깐 숫자를 색과 세로선으로 가른다 —
+   띠 한 줄로만 표시하면 표 아래쪽에서 경계가 사라진다 */
+.dm-ep-b1{background:var(--sunk)}
+.dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
 .dm-ep-wide th[scope="row"]{position:sticky;left:0;background:var(--surface);text-align:left;
-     font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;padding:6px 12px 6px 8px;
-     border-bottom:1px solid var(--line)}
+     width:120px;font-size:11px;font-weight:800;color:var(--ink-2);white-space:nowrap;
+     padding:6px 12px 6px 8px;border-bottom:1px solid var(--line)}
 .dm-ep-wide td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .dm-ep-wide thead th{text-align:right;white-space:nowrap}
 .dm-ep-corner{position:sticky;left:0;background:var(--surface);text-align:left !important}
