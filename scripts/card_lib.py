@@ -288,6 +288,20 @@ def slim_html(c):
         h.append('<div class="clash"><p class="ch">반론 · 충돌</p><ul>%s</ul></div>'
                  % ''.join('<li><span class="who">%s</span>%s</li>' % (w, t) for w, t in c['clash']))
     h.append('<div class="side-note">%s</div>' % c['note'])
+    # 같은 영상이 여러 카드로 갈렸을 때만 붙는다 — 한 편을 어느 순서로 읽는지 카드 안에서 잇는다.
+    # kin = [(영상 이름, [(제목, 앵커 또는 None)])]. 앵커가 None인 항목이 지금 이 카드다.
+    if c.get('kin'):
+        k = ['<div class="uc-kin"><p class="uc-label">같은 영상에서 나온 카드</p>']
+        for src, items in c['kin']:
+            k.append('<div class="kin-g"><p class="kin-src">%s · %d장</p><ol>' % (src, len(items)))
+            for title, anchor in items:
+                if anchor is None:
+                    k.append('<li class="is-here">%s<span class="kin-now">지금 이 카드</span></li>' % title)
+                else:
+                    k.append('<li><a class="kin-link" href="#%s">%s</a></li>' % (anchor, title))
+            k.append('</ol></div>')
+        k.append('</div>')
+        h.append(''.join(k))
     h.append('<div class="uc-links" style="margin-top:16px;">%s</div>'
              % ''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                        % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']))

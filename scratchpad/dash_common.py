@@ -113,6 +113,31 @@ FOLD_JS = '''<script>
 })();
 </script>'''
 
+# 「같은 영상에서 나온 카드」 링크는 같은 페이지 안의 다른 카드로 뛴다. 그냥 앵커로 두면
+# 두 번 막힌다 — 대상 섹션이 숨어 있고(주제 타일로 하나만 골랐을 때), 대상 카드가 접혀 있다.
+# 그래서 「전체 보기」 타일을 눌러 섹션을 되살린 뒤 카드를 펴고 그리로 스크롤한다.
+KIN_JS = """<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link'); if(!a) return;
+    e.preventDefault();
+    var h=document.getElementById(a.getAttribute('href').slice(1)); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    if(sec && sec.hidden){
+      var all=document.querySelector('.stile.is-all');
+      if(all) all.click();   // 섹션 필터를 푼다. NAV_JS가 화면을 맨 위로 올린다
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        var head=card.querySelector('.uc-head');
+        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+      }
+      if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 140);
+  });
+})();
+</script>"""
+
 NAV_JS = '''<script>
 (function(){
   var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
@@ -310,6 +335,8 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css='',
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2></div>%s</section>'
                     % (sid, num, stitle, ''.join(card_html(c) for c in cs)))
+    # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
+    kin_js = KIN_JS if any(c.get('kin') for c in cards) else ''
     page_css = css()
     if top_css:
         page_css = page_css.replace('</style>', top_css + '</style>')
@@ -320,7 +347,7 @@ def render(cards, title, header, footer, out, rollup='', top='', top_css='',
             + '\n<div class="wrap">\n' + header
             + '\n\n  ' + rollup + '\n\n  ' + tabs + nav + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
-            + FOLD_JS + NAV_JS + ui_bits.TOP_BTN + '\n')
+            + FOLD_JS + NAV_JS + kin_js + ui_bits.TOP_BTN + '\n')
     check_ui(html, bool(top))
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))

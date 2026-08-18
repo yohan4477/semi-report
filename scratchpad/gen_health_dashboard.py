@@ -1780,5 +1780,49 @@ FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기�
           '  요약은 <code>content/health/</code>, '
           '페이지 생성은 <code>scratchpad/gen_health_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
+# 한 영상이 여러 카드로 갈릴 때 「어느 순서로 읽는가」를 카드 안에서 잇는다. 이 페이지는 카드
+# 단위가 영상이 아니라 주제라, 3부작 한 편이 섹션 넷 떨어진 자리에 흩어진다. 링크가 없으면
+# 화면에서는 같은 영상인지 알 길이 없다.
+VID = {
+    SRC_EP155: ('지식인사이드 EP.155', '2026-08-01'),
+    SRC_EP156: ('지식인사이드 EP.156', '2026-08-02'),
+    SRC_EP107: ('지식인사이드 EP.107', '2026-03-09'),
+    SRC_EP108: ('지식인사이드 EP.108', '2026-03-10'),
+    SRC_LEGEND: ('언더스탠딩 레전드 모음집', '2024-09-18'),
+    SRC_NOBEL: ('언더스탠딩 노벨생리의학상 해설', '2025-10-27'),
+    SRC_DOPA: ('언더스탠딩 도파민', '2026-07-12'),
+    SRC_GLP1: ('언더스탠딩 비만약과 중독', '2026-07-20'),
+    SRC_3PART: ('언더스탠딩 3부작 (질병·소화·신약)', '2025-10-07'),
+}
+
+
+def attach_kin(cards):
+    """카드마다 c['kin']을 채운다 — [(영상 이름, [(제목, 앵커 또는 None)])].
+
+    앵커가 None인 항목이 그 카드 자신이다. 순서는 CARDS에 적힌 순서 그대로다(섹션이 몸에서
+    벌어지는 순서라 그게 곧 읽는 순서다). 한 영상이 카드 하나만 받쳤으면 붙이지 않는다."""
+    def videos(c):
+        return [u for lab, u, _cls in c['links'] if lab.startswith('영상')]
+
+    by = {}
+    for c in cards:
+        for u in videos(c):
+            assert u in VID, '영상 이름이 VID에 없다: %s' % u
+            by.setdefault(u, []).append(c)
+
+    for c in cards:
+        kin = []
+        for u in videos(c):
+            group = by[u]
+            if len(group) < 2:
+                continue
+            name, date = VID[u]
+            kin.append(('%s · %s' % (name, date),
+                        [(g['title'], None if g is c else dc.slug(g['title'])) for g in group]))
+        if kin:
+            c['kin'] = kin
+
+
 if __name__ == '__main__':
+    attach_kin(CARDS)
     dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT, rollup=dc.rollup_for('health', CARDS, '편'))
