@@ -1671,6 +1671,14 @@ DM_CSS = '''<style>
 @media (max-width:560px){
   .dm-wrap{margin:0 0 24px;padding-bottom:20px}
   /* 좁은 화면에선 가운데 정렬 모달이 답답하다 — 아래에서 올라오는 시트로 바꾼다 */
+
+  /* 계산 사슬 칩이 화면 밖으로 튀어나왔다(2026-08-19 하이닉스 멀티플). 이름과 값이
+     갈라지지 않게 nowrap을 걸어 둔 것이 원인이다. 좁은 화면에서는 칩 안에서 줄을
+     바꾸게 풀고, 이름과 값은 위아래로 쌓아 짝을 유지한다. */
+  .dm-chain-driver{white-space:normal;flex-wrap:wrap;max-width:100%}
+  .dm-chain-line{overflow-wrap:anywhere;line-height:1.9}
+  .dm-axis, .dm-axispanel, .dm-dv, .dm-scenario{min-width:0}
+  .dm-axis{padding:14px 12px 13px}
 }
 </style>'''
 
