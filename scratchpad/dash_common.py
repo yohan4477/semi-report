@@ -453,6 +453,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
     check_labels(cards)
+    check_links(cards)
     check_ui(html, bool(top))
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))
@@ -472,6 +473,20 @@ ACTORS = ('삼성전자', 'SK하이닉스', '마이크론', '엔비디아', 'TSM
           '마이크로소프트', '알파벳', '구글', '아마존', '메타', '오픈AI', '앤트로픽',
           'AMD', '인텔', '컨스텔레이션', '비스트라', '탈렌', 'GE버노바', 'CXMT',
           'KLA', '브로드컴', '퀄컴', '코어위브', '오라클')
+
+
+def check_links(cards):
+    """카드가 가리키는 저장소 파일이 실제로 있는지 본다.
+
+    blob 링크는 파일명을 손으로 적는 자리라 요약본 제목을 한 글자만 고쳐도 404가 된다.
+    2026-08-18에 「주당 361,000원」을 「주가」로 적은 링크 둘이 그렇게 죽어 있었다."""
+    import urllib.parse as _up
+    for c in cards:
+        for l in c.get('links', ()):
+            if len(l) < 2 or 'content/' not in l[1]:
+                continue
+            rel = _up.unquote(l[1].split('/main/')[-1])
+            assert os.path.exists(os.path.join(ROOT, rel)),                 '죽은 링크: %s — %s' % (c.get('title', ''), rel)
 
 
 def check_labels(cards):
