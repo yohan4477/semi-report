@@ -452,11 +452,50 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             + '\n\n  ' + intro + '\n\n  ' + tabs + nav + '\n\n  ' + rollup + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
+    check_labels(cards)
     check_ui(html, bool(top))
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
     return html
+
+
+# 카드 라벨(섹션 제목·topic)에 회사 이름을 달 때 지키는 규칙. 2026-08-18에 삼성전자·SK하이닉스
+# 공동 원문과 반도체 3사 원문을 「SK하이닉스」 섹션에 밀어 넣어 카드 제목과 안이 어긋났다.
+# 섹션을 먼저 세우고 카드를 거기 맞추면 이렇게 된다. 사람이 눈으로 지키지 말고 여기서 막는다.
+#
+# 두 가지를 본다.
+#   ① 라벨에 있는 회사가 원문에도 카드 제목에도 없다        — 남의 회사 이름을 달았다
+#   ② 원문이 여러 회사를 다루는데 라벨은 그중 하나만 달았다  — 남의 글을 한 회사 것으로 좁혔다
+# ②는 라벨이 회사 이름을 하나라도 달았을 때만 본다. 주제어로만 된 라벨(공급·세금·염증)은 대상이 아니다.
+ACTORS = ('삼성전자', 'SK하이닉스', '마이크론', '엔비디아', 'TSMC', '애플', '테슬라',
+          '마이크로소프트', '알파벳', '구글', '아마존', '메타', '오픈AI', '앤트로픽',
+          'AMD', '인텔', '컨스텔레이션', '비스트라', '탈렌', 'GE버노바', 'CXMT',
+          'KLA', '브로드컴', '퀄컴', '코어위브', '오라클')
+
+
+def check_labels(cards):
+    """카드 라벨이 원문보다 좁거나 원문에 없는 회사를 달고 있으면 여기서 멈춘다."""
+    import urllib.parse as _up
+    for c in cards:
+        sec, top = c.get('section'), c.get('topic')
+        label = ' '.join([sec[2] if isinstance(sec, tuple) and len(sec) > 2 else '',
+                          top[1] if isinstance(top, tuple) and len(top) > 1 else ''])
+        src = ' '.join(_up.unquote(l[1]) for l in c.get('links', ())
+                       if len(l) > 1 and 'content/' in l[1])
+        if not src:
+            continue                      # 원문 링크가 없는 카드(영상 등)는 대상이 아니다
+        title = c.get('title', '')
+        named = [n for n in ACTORS if n in label]
+        alien = [n for n in named if n not in src and n not in title]
+        assert not alien, ('라벨 규칙 위반: 원문에 없는 회사를 라벨에 달았다 — %s / 라벨 %s / 없는 이름 %s'
+                           % (title, label.strip(), ', '.join(alien)))
+        if named:
+            narrowed = [n for n in ACTORS if n in src and n not in label and n not in title]
+            assert not narrowed, (
+                '라벨 규칙 위반: 여러 회사를 다룬 원문을 한 회사 라벨 아래 뒀다 — %s / 라벨 %s / '
+                '원문에도 있는 이름 %s. 라벨을 넓히거나(예: 「반도체 3사」) 주제 라벨로 바꾼다'
+                % (title, label.strip(), ', '.join(narrowed)))
 
 
 # 이 규약이 깨진 채로 페이지가 나가면 대시보드마다 첫 화면이 달라진다. 2026-08-17에 부동산만
