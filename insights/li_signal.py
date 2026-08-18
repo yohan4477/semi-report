@@ -21,6 +21,13 @@ OUT = os.path.join(ROOT, 'insights', 'views', 'li_signals.json')
 LAG_MAX = 15   # 이 날짜를 넘겨 올린 뉴스레터 홍보는 새 정보로 세지 않는다
 
 NUM = re.compile(r'\d+(?:\.\d+)?\s?(?:GW|MW|kW|억|조|%|배|TB/s|GB|nm|kV|달러|\$|명)')
+# 제품·모델명끼리 우열을 매기는 주장 — 수치 단위가 없어도 판단 재료다.
+# 예: "MI355X의 vLLM이 B200의 vLLM보다 낫다" / "X outperforms Y" / "X beats Y"
+COMPARE = re.compile(
+    r'보다\s*(?:더\s*)?(?:낫다|나은|앞선다|앞섰다|앞서는|빠르다|빠른|빨랐다|우수하다|우세하다|우위)'
+    r'|is\s+(?:much\s+|far\s+)?better\s+than|outperforms?|outperformed'
+    r'|\bbeats?\b'
+    , re.I)
 PROMO = re.compile(r'팟캐스트|Podcast|에피소드|Ep\.|채용|합류|모집|컨퍼런스|콘퍼런스|행사|웨비나|구독|밈 —|밈-')
 PAST = re.compile(r'작년|지난해|20(1\d|2[0-4])년|당시|그때|돌아보면')
 
@@ -65,6 +72,8 @@ def classify(text, slug, posted, pub, has_video=False):
         return '행사·홍보', False, posted, None, True
     if NUM.search(text):
         return '수치 있는 자체 발화', True, posted, None, False
+    if COMPARE.search(text):
+        return '제품 비교 주장', True, posted, None, False
     if PAST.search(text):
         return '과거 회고', False, posted, None, False
     return '논평·서술', False, posted, None, False
@@ -104,7 +113,7 @@ def build():
                  '없으면 게시일이다. usable=true인 것만 판단의 근거로 인용한다. '
                  'push=true는 새 사실은 아니지만 「지금 무엇을 다시 미나」를 보는 별도 축이다.'),
         'rule': {'lag_max_days': LAG_MAX,
-                 'usable_kinds': ['신규 발행 알림', '수치 있는 자체 발화'],
+                 'usable_kinds': ['신규 발행 알림', '수치 있는 자체 발화', '제품 비교 주장'],
                  'push_kinds': ['재홍보', '행사·홍보']},
         'generated_from': '대시보드/소셜 신호 히스토리.html',
         'counts': dict(collections.Counter(r['kind'] for r in rows)),

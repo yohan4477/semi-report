@@ -4,7 +4,8 @@
   "lag_max_days": 15,
   "usable_kinds": [
    "신규 발행 알림",
-   "수치 있는 자체 발화"
+   "수치 있는 자체 발화",
+   "제품 비교 주장"
   ],
   "push_kinds": [
    "재홍보",
@@ -13,9 +14,10 @@
  },
  "generated_from": "대시보드/소셜 신호 히스토리.html",
  "counts": {
-  "논평·서술": 137,
+  "논평·서술": 136,
   "행사·홍보": 129,
   "신규 발행 알림": 54,
+  "제품 비교 주장": 1,
   "수치 있는 자체 발화": 49,
   "재홍보": 10,
   "뉴스레터 링크(발행일 미상)": 14
@@ -178,8 +180,8 @@
    "slug": null,
    "source_date": null,
    "lag_days": null,
-   "kind": "논평·서술",
-   "usable": false,
+   "kind": "제품 비교 주장",
+   "usable": true,
    "push": false,
    "basis_date": "2026-08-14",
    "title": "AMD의 Anush Elangovan 팀이 계속 빨라지고 있다며 밈 영상을 올렸는데, 영상 자막에 수치 주장이 박혀 있다 — SemiAnalysis InferenceX 측정에서 Kimi K2.5 기준 집계 성능으로 MI355X의 vLLM이 B200의 vLLM보다 낫다 는 것이다(같은 모델 아키텍처를 쓰는 xAI Cursor Composer 2.5도 해당된다). 본문은 그 팀이 더 빨리 달리고 싶어도 사내 개발 클러스터가 불안정한 것 이 반복해서 걸림돌로 지목된다는 이야기다.",
