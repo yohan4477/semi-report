@@ -570,7 +570,10 @@
   .vtop-note summary{cursor:pointer;font-weight:700;white-space:nowrap}
   .vtop-note summary:hover{color:var(--accent)}
   .vtop-note p{margin:3px 0 0;max-width:420px;line-height:1.35;text-align:left}
-  .vtop-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin-top:5px}
+  /* 칸을 minmax(0,1fr)로 못 박는다. 그냥 1fr이면 내용이 길 때 칸이 제 몫보다 넓어지고
+     그만큼 보드가 화면 밖으로 나간다 — 430px에서 19px 넘쳤다 */
+  .vtop-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+             gap:0 18px;margin-top:5px}
   /* 좁은 화면에서도 두 칸을 좌우로 둔다 — 저평가와 고평가는 견주라고 나란히 세운 것이라
      위아래로 쌓이면 한눈에 대조가 안 된다. 대신 글씨와 사이를 좁혀 두 칸이 들어가게 한다.
      기준선을 640px에 두었더니 창을 줄이거나 확대율을 올린 화면에서 바로 쌓였다 */
@@ -582,7 +585,12 @@
     .vtop-list{gap:0 6px}
     .vtop-h{font-size:8.5px}
   }
-  @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
+  /* 폰에서는 두 칸을 위아래로 쌓는다. 한 칸에 세 열이라 좌우로 나누면 폭이 200px도 안 돼
+     회사 이름이 밀려난다. 쌓으면 각 칸이 폭을 통째로 쓴다 */
+  @media (max-width:520px){
+    .vtop-cols{grid-template-columns:1fr}
+    .vtop-col + .vtop-col{margin-top:9px}
+  }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
           white-space:nowrap}
   /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
