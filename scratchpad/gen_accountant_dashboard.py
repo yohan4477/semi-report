@@ -1876,12 +1876,6 @@ assert len(CARDS) == _n, '섹션이 SEC_ORDER에 없는 카드가 있다'
 HEADER = '''  <header>
     <p class="eyebrow">밸류에이션 — 제3자 해설 아카이브</p>
     <h1>20년차 회계사가 남긴 모든 것</h1>
-    <p class="lede">네이버 프리미엄 유료 채널 필자 <b>엘곰</b>(회계사)의 밸류에이션 글을 모읍니다.
-       「밸류에이션」 타일은 회사별로 「무엇을 얼마로 가정했나」를 시기와 방법으로 갈라 견주는 지도이고,
-       「일반 포스트」 타일은 그 계산이 나온 글 28편입니다.
-       회사 타일의 숫자는 그 회사 <b>가장 최근 평가</b>가 그 글의 비교 주가보다 몇 %% 위(빨강)·아래(파랑)인가입니다. 비교 시점과 시장은 편마다 다르니(종가·장중·장전·KRX 기준가·NXT) 타일에 마우스를 올려 무엇과 견준 값인지 확인하십시오. 유료 구독 글이라 원문은 싣지 않고 요약과 판단만 남겼습니다. <b>종목 추천이 아니고, 가격 검증도 하지 않았습니다.</b>
-       삼성전자는 같은 필자가 열다섯 달 사이 여섯 번 값을 낸 기록이라, 한 편만 읽고 결론 내리지 않도록
-       카드마다 어긋나는 지점을 같이 적었습니다.</p>
     <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>수록 <b>%d건</b></span>
@@ -1890,7 +1884,16 @@ HEADER = '''  <header>
     </div>
   </header>''' % (STAMP, len(CARDS))
 
-FOOTER = ('제3자 해설 아카이브 · 유료 구독 글 요약입니다. 원문은 저장소에 없습니다.\n'
+# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
+# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
+LEDE = '''<p class="lede">네이버 프리미엄 유료 채널 필자 <b>엘곰</b>(회계사)의 밸류에이션 글을 모읍니다.
+       「밸류에이션」 타일은 회사별로 「무엇을 얼마로 가정했나」를 시기와 방법으로 갈라 견주는 지도이고,
+       「일반 포스트」 타일은 그 계산이 나온 글 28편입니다.
+       회사 타일의 숫자는 그 회사 <b>가장 최근 평가</b>가 그 글의 비교 주가보다 몇 % 위(빨강)·아래(파랑)인가입니다. 비교 시점과 시장은 편마다 다르니(종가·장중·장전·KRX 기준가·NXT) 타일에 마우스를 올려 무엇과 견준 값인지 확인하십시오. 유료 구독 글이라 원문은 싣지 않고 요약과 판단만 남겼습니다. <b>종목 추천이 아니고, 가격 검증도 하지 않았습니다.</b>
+       삼성전자는 같은 필자가 열다섯 달 사이 여섯 번 값을 낸 기록이라, 한 편만 읽고 결론 내리지 않도록
+       카드마다 어긋나는 지점을 같이 적었습니다.</p>'''
+
+FOOTER = (LEDE + '\n제3자 해설 아카이브 · 유료 구독 글 요약입니다. 원문은 저장소에 없습니다.\n'
           '  요약은 <code>content/understanding/회계사/</code>, '
           '페이지 생성은 <code>scratchpad/gen_accountant_dashboard.py</code>(공용 부품 <code>dash_common.py</code>), '
           '필자가 실제로 정한 규칙 번호는 <code>docs/valuation-rulebook.md</code>에 있습니다.')
@@ -1929,18 +1932,27 @@ VALUATION_CSS = '''
     .vtop-list a{font-size:10px}
     .vtop-v{font-size:10px}
     .vtop-d{font-size:9px}
-    .vtop-r{gap:4px}
+    .vtop-list li{grid-template-columns:1fr 52px 32px;gap:0 6px}
     .vtop-h{font-size:8.5px}
   }
   @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
   .vtop-list{margin:0;padding:0;list-style:none}
-  .vtop-list li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  /* 회사 이름·값·날짜를 한 격자의 세 칸으로 세운다. flex로 양끝에 밀면 이름 길이에 따라
+     사이가 줄마다 달라져 세로로 안 읽힌다. 이름 칸은 남는 폭을 다 갖고, 넘치면 말줄임한다 */
+  .vtop-list li{display:grid;grid-template-columns:1fr 58px 34px;gap:0 8px;
+                align-items:baseline;
                 padding:1px 0;border-top:1px solid var(--line);line-height:1.3}
   .vtop-list li:first-child{border-top:0}
-  .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700}
+  .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;
+               min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .vtop-list a:hover{color:var(--accent)}
-  .vtop-r{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+  /* 값과 날짜를 칸으로 세운다 — 회사 이름 길이가 제각각이라 flex로 밀면 값의 오른쪽 끝이
+     줄마다 어긋나 세로로 안 읽힌다. 폭을 못 박고 오른쪽으로 붙인다 */
+  .vtop-r{display:contents}
+  /* 값은 오른쪽으로 붙여 자릿수를 맞추고, 날짜는 왼쪽으로 붙여 줄마다 시작이 맞게 한다 */
+  .vtop-v{text-align:right}
+  .vtop-d{text-align:left}
   .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
   /* 평가일 — 값보다 작고 회색이다. 편마다 비교 시점이 다르므로 숫자 옆에 붙여 둔다 */
   .vtop-d{font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:700;color:var(--ink-3)}
@@ -2018,14 +2030,22 @@ def _top5_html():
     pos, neg = _top5_rows()
     assert pos and neg, '괴리 상위 5 보드에 넣을 값이 부족하다 — 플러스 %d건, 마이너스 %d건' % (len(pos), len(neg))
 
+    # 3개월 창이 한 해 안에 들어오면 연도를 뺀다 — 열 줄이 전부 같은 해면 「26.」이 열 번
+    # 반복될 뿐 아무것도 안 가른다. 창이 해를 넘는 때(1~3월)만 열 줄 모두에 연도를 붙인다.
+    # 한 줄만 붙이면 자릿수가 어긋나 세로로 안 읽힌다.
+    yr = set(r[5].year for r in pos + neg)
+    show_year = len(yr) > 1 or yr != {datetime.date.today().year}
+
     def _li(row):
         sid, name, text, tone, _v, day = row
         # 평가일을 값 옆에 같이 둔다. 편마다 비교 시점이 다르니 숫자만 보면 서로 다른 날의
         # 값을 나란히 견주게 된다. 값보다 작고 회색이라 숫자를 안 먹는다.
+        when = ('%02d.%02d.%02d' % (day.year % 100, day.month, day.day) if show_year
+                else '%02d.%02d' % (day.month, day.day))
         return ('<li><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
                 '<span class="vtop-v %s">%s</span>'
-                '<span class="vtop-d">%02d.%02d.%02d</span></span></li>'
-                % (sid, name, tone, text, day.year % 100, day.month, day.day))
+                '<span class="vtop-d">%s</span></span></li>'
+                % (sid, name, tone, text, when))
 
     # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
     # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
