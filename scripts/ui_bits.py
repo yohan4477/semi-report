@@ -5,6 +5,8 @@
 색을 스스로 들고 간다. 클래스는 ui- 접두어로 격리한다.
 """
 
+import json
+
 # 맨 위로 — 카드가 길어 스크롤이 깊어지면 되돌아갈 길이 필요하다
 TOP_BTN = '''
 <style>
@@ -86,6 +88,9 @@ COPY_JS = """
     }
   }
   function jump(id, smooth){
+    // 페이지가 제 방식으로 여는 곳(탭·타임라인 등)은 window.__jumpTo를 두고 가로챈다.
+    // 그런 자리에서 hidden만 벗기면 화면이 두 겹으로 서고 탭 표시가 어긋난다.
+    if(window.__jumpTo && window.__jumpTo(id, smooth)) return;
     var el=document.getElementById(id); if(!el) return;
     reveal(el);
     setTimeout(function(){
@@ -120,3 +125,51 @@ COPY_JS = """
 })();
 </script>
 """
+
+
+# 자리마다 id와 버튼을 브라우저에서 붙인다. __SEL__·__HEAD__·__PRE__를 auto_copy가 채운다.
+_AUTO_JS = """
+<script>
+(function(){
+  var SEL=__SEL__, HEAD=__HEAD__, PRE=__PRE__;
+  function slug(t){
+    return (t||'').trim().replace(/\\s+/g,' ')
+             .replace(/[^0-9A-Za-z가-힣]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);
+  }
+  function stamp(){
+    document.querySelectorAll(SEL).forEach(function(el){
+      var h=el.querySelector(HEAD); if(!h) return;
+      var id=el.id || (PRE + slug(h.textContent));
+      if(id===PRE) return;
+      el.id=id;
+      if(h.querySelector('.ui-copy')) return;
+      var b=document.createElement('button');
+      b.type='button'; b.className='ui-copy'; b.dataset.anchor=id;
+      b.style.marginLeft='8px'; b.textContent='링크 복사';
+      h.appendChild(b);
+    });
+  }
+  stamp();
+  // 화면을 다시 그리는 장에서는 버튼도 같이 지워진다. 그릴 때마다 다시 붙인다.
+  var t; new MutationObserver(function(){
+    clearTimeout(t); t=setTimeout(stamp, 120);
+  }).observe(document.body, {childList:true, subtree:true});
+})();
+</script>
+"""
+
+
+def auto_copy(sel, head, prefix='sec-'):
+    """자리마다 id와 「링크 복사」를 브라우저에서 붙이는 조각.
+
+    생성기를 거치지 않고 손으로 유지되는 장(히스토리 미러·개념 지도·타임라인)이 대상이다.
+    HTML에 버튼을 박아 두면 다음에 한 줄 손으로 넣는 사람이 같이 넣어야 하는데, 그 규칙은
+    지켜지지 않는다. id는 그 자리 제목에서 뽑는다 — 순번으로 매기면 자리가 하나 끼는 날
+    남이 받아 둔 링크가 다른 자리를 가리킨다.
+
+    sel  = 자리를 고르는 선택자(예: '.day')
+    head = 그 안에서 제목을 담은 요소(예: 'h3')
+    """
+    return (_AUTO_JS.replace('__SEL__', json.dumps(sel))
+                    .replace('__HEAD__', json.dumps(head))
+                    .replace('__PRE__', json.dumps(prefix)))

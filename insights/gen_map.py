@@ -108,13 +108,14 @@ def main():
             '  <section class="panel" id="panel-%d" role="tabpanel" aria-labelledby="tab-%d"%s style="--c:%s">\n'
             '    <div class="chd"><span class="bdg %s">%s</span><span class="ao">근거 %d건 · 최신 %s</span>'
             '<span class="ao">장소 %d곳</span></div>\n'
-            '    <h2>%s</h2>\n    <p class="th">%s</p>\n'
+            '    <h2 id="sec-%s">%s</h2>%s\n    <p class="th">%s</p>\n'
             '    <h3 class="plh">지도 위 장소</h3>\n    <ul class="pl">%s</ul>\n'
             '    <div class="blks">%s</div>\n'
             '    <a class="more" href="%s" target="_blank" rel="noopener">통합 인사이트에서 전체 보기 ↗</a>\n'
             '  </section>' % (
                 i, i, '' if i == 0 else ' hidden', color, badge[1], badge[0], c['n_src'], esc(c['as_of']),
-                len(c['places']), esc(c['title']), c['thesis'], place_html, detail, INS_URL))
+                len(c['places']), esc(c['id']), esc(c['title']),
+                ui_bits.copy_btn('sec-' + c['id']), c['thesis'], place_html, detail, INS_URL))
 
     html = (TMPL.replace('__WORLD__', world_path())
                 .replace('__MARKERS__', '\n'.join(markers))
@@ -122,7 +123,7 @@ def main():
                 .replace('__CHIPS__', '\n'.join(chips))
                 .replace('__STEPS__', '\n'.join(steps))
                 .replace('__COUNT__', str(len(clusters))))
-    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
+    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.COPY_JS + ui_bits.TOP_BTN)
     print('OK: %d clusters, %d markers -> %s' % (len(clusters), len(markers), OUT))
 
 INS_URL = "https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%99%80%20%EA%B7%BC%EA%B1%B0.html"
@@ -252,6 +253,16 @@ __STEPS__
   document.getElementById('prev').addEventListener('click',function(){ select(cur-1); });
   document.getElementById('next').addEventListener('click',function(){ select(cur+1); });
   select(0);
+  // 묶음 하나를 지목한 주소(#sec-…)로 들어온 사람. 탭을 눌러 그 묶음을 편다 —
+  // 지도 카메라와 표시가 select()에 묶여 있어 hidden만 벗기면 화면이 어긋난다.
+  window.__jumpTo=function(id, smooth){
+    var el=document.getElementById(id); if(!el) return false;
+    var p=el.closest('.panel'); if(!p) return false;
+    var i=panels.indexOf(p); if(i<0) return false;
+    select(i);
+    p.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    return true;
+  };
   var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ paint(cur); },150); });
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ paint(cur); });
 })();

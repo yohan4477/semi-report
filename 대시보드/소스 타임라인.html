@@ -605,3 +605,89 @@ render();
   show();
 })();
 </script>
+<!-- ui-copy: scripts/stamp_links.py 가 붙인다. 손으로 고치지 않는다 -->
+
+<style>
+  .ui-copy{
+    font:750 11.5px/1 inherit; letter-spacing:.01em; cursor:pointer;
+    color:currentColor; opacity:.62; background:transparent;
+    border:1px dashed currentColor; border-radius:6px; padding:4px 9px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ui-copy:hover{ opacity:1; }
+  @media print{ .ui-copy{ display:none; } }
+</style>
+<script>
+(function(){
+  function reveal(el){
+    // 접혀 있는 자리(details)와 숨겨 둔 자리(hidden)를 위로 훑어 올라가며 편다
+    for(var n=el; n && n!==document.body; n=n.parentElement){
+      if(n.tagName==='DETAILS') n.open=true;
+      if(n.hasAttribute && n.hasAttribute('hidden')) n.hidden=false;
+    }
+  }
+  function jump(id, smooth){
+    // 페이지가 제 방식으로 여는 곳(탭·타임라인 등)은 window.__jumpTo를 두고 가로챈다.
+    // 그런 자리에서 hidden만 벗기면 화면이 두 겹으로 서고 탭 표시가 어긋난다.
+    if(window.__jumpTo && window.__jumpTo(id, smooth)) return;
+    var el=document.getElementById(id); if(!el) return;
+    reveal(el);
+    setTimeout(function(){
+      el.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 40);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('.ui-copy'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var txt=b.textContent;
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent=txt; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else { fromHash(false); }
+})();
+</script>
+
+<script>
+(function(){
+  var SEL=".sec", HEAD=".cap, .ccap", PRE="sec-";
+  function slug(t){
+    return (t||'').trim().replace(/\s+/g,' ')
+             .replace(/[^0-9A-Za-z가-힣]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);
+  }
+  function stamp(){
+    document.querySelectorAll(SEL).forEach(function(el){
+      var h=el.querySelector(HEAD); if(!h) return;
+      var id=el.id || (PRE + slug(h.textContent));
+      if(id===PRE) return;
+      el.id=id;
+      if(h.querySelector('.ui-copy')) return;
+      var b=document.createElement('button');
+      b.type='button'; b.className='ui-copy'; b.dataset.anchor=id;
+      b.style.marginLeft='8px'; b.textContent='링크 복사';
+      h.appendChild(b);
+    });
+  }
+  stamp();
+  // 화면을 다시 그리는 장에서는 버튼도 같이 지워진다. 그릴 때마다 다시 붙인다.
+  var t; new MutationObserver(function(){
+    clearTimeout(t); t=setTimeout(stamp, 120);
+  }).observe(document.body, {childList:true, subtree:true});
+})();
+</script>

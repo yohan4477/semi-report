@@ -8,7 +8,7 @@
 # 규칙: 페이지를 새로 만들면 반드시 아래 TOPICS에 한 줄 넣는다. 여기에 없는 페이지는
 # 사실상 없는 페이지다. 반대로, 리포트 한 편 때문에 페이지를 새로 만들지 않는다
 # (REPORT_RULES.md 참조 — 그렇게 늘어난 게 19개였다).
-import os, io, sys, urllib.parse
+import os, io, re, sys, urllib.parse
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'insights'))
 import style
 
@@ -135,22 +135,30 @@ def card(e, name, href, note, badges=()):
             % (esc(href), e, esc(name), esc(note), b))
 
 
+def sec_id(name):
+    """묶음 하나를 지목하는 주소. 이름에서 뽑는다 — 순번으로 매기면 묶음이 하나 끼는 날
+    남이 받아 둔 링크가 다른 묶음을 가리킨다."""
+    return 'sec-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', name).strip('-')
+
+
 def build():
     blocks = []
     for emoji, name, lede, pages in TOPICS:
         blocks.append(
-            '<section class="tp"><div class="tph"><span class="tpe">%s</span>'
-            '<h2>%s</h2><span class="n">%d장</span></div><p>%s</p>'
+            '<section class="tp" id="%s"><div class="tph"><span class="tpe">%s</span>'
+            '<h2>%s</h2><span class="n">%d장</span>%s</div><p>%s</p>'
             '<div class="cards">%s</div></section>'
-            % (emoji, esc(name), len(pages), esc(lede),
-               ''.join(card(*p) for p in pages)))
+            % (sec_id(name), emoji, esc(name), len(pages), ui_bits.copy_btn(sec_id(name)),
+               esc(lede), ''.join(card(*p) for p in pages)))
     blocks.append(
-        '<section class="tp"><div class="tph"><span class="tpe">📼</span>'
-        '<h2>소스별 아카이브</h2><span class="n">%d장</span></div>'
+        '<section class="tp" id="sec-소스별-아카이브"><div class="tph">'
+        '<span class="tpe">📼</span>'
+        '<h2>소스별 아카이브</h2><span class="n">%d장</span>%s</div>'
         '<p>주제가 아니라 채널로 묶여 있는 것들이다. 한 채널이 여러 주제를 다루면 '
         '읽는 사람이 골라내야 해서, 위의 주제 쪽으로 옮기는 중이다.</p>'
         '<div class="cards">%s</div></section>'
-        % (len(LEGACY), ''.join(card(*p) for p in LEGACY)))
+        % (len(LEGACY), ui_bits.copy_btn('sec-소스별-아카이브'),
+           ''.join(card(*p) for p in LEGACY)))
 
     n = sum(len(p) for _, _, _, p in TOPICS) + len(LEGACY)
     html = TMPL.replace('__CSS__', style.BASE + CSS) \
@@ -158,7 +166,7 @@ def build():
                .replace('__N__', str(n)) \
                .replace('__T__', str(len(TOPICS))) \
                .replace('__L__', str(len(LEGACY)))
-    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
+    io.open(OUT, 'w', encoding='utf-8').write(html + ui_bits.COPY_JS + ui_bits.TOP_BTN)
     print('OK: %d장 -> %s' % (n, OUT))
 
 

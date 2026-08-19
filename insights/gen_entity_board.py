@@ -139,6 +139,19 @@ def site_map(ent):
                json.dumps(times[-1], ensure_ascii=False)))
 
 
+def anchor_heads(html):
+    """절 제목마다 id와 「링크 복사」를 단다.
+
+    이 장은 서술이 한 흐름이라 절이 곧 사람이 가리키는 단위다 — 「부지」만 보라고 보내려면
+    페이지 주소 말고 그 절의 주소가 있어야 한다. 본문 절은 마크다운에서 나오므로 마지막에
+    한 번 훑어 단다. id는 제목에서 뽑는다."""
+    def one(m):
+        text = re.sub(r'<[^>]+>', '', m.group(1))
+        aid = 'sec-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', text).strip('-')
+        return '<h2 class="tsec" id="%s">%s%s</h2>' % (aid, m.group(1), ui_bits.copy_btn(aid))
+    return re.sub(r'<h2 class="tsec">(.*?)</h2>', one, html)
+
+
 def build(key):
     spec = json.load(io.open(ENT, encoding='utf-8'))
     ent = spec['entities'][key]
@@ -179,7 +192,7 @@ def build(key):
                 .replace('__SIGS__', sig_html)
                 .replace('__SRCS__', srcs))
     out = os.path.join(ROOT, '대시보드', '추적 - %s.html' % ent['title'])
-    io.open(out, 'w', encoding='utf-8').write(html + ui_bits.TOP_BTN)
+    io.open(out, 'w', encoding='utf-8').write(anchor_heads(html) + ui_bits.COPY_JS + ui_bits.TOP_BTN)
     print('OK: %s — 원문 %d편 / 출처 표기 %d / 신호 %d -> %s'
           % (ent['title'], len(src), html.count('class="cite"'), len(sigs), out))
 
