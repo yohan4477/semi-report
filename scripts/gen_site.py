@@ -159,7 +159,7 @@ HOME_BTN = '''
   }
   @media print { .ida-new { display:none; } }
 </style>
-<a class="ida-home" href="/" aria-label="메인 화면으로"><span class="ida-arrow" aria-hidden="true">←</span>메인</a>
+<a class="ida-home" href="__PARENT__" aria-label="상위 화면으로"><span class="ida-arrow" aria-hidden="true">←</span>이전</a>
 <script>
 /* 배지는 보는 시점 기준으로 스스로 만료된다 — 재배포를 안 해도 일주일이 지나면 사라진다 */
 (function () {
@@ -185,8 +185,14 @@ HOME_BTN = '''
 '''
 
 # 머리글 링크는 문서 맨 앞 컨테이너 바로 안쪽에 꽂는다 (대시보드마다 header 또는 main)
-TOP_LINK = '<a class="ida-top" href="/"><span aria-hidden="true">←</span>메인</a>\n'
+TOP_LINK = '<a class="ida-top" href="__PARENT__"><span aria-hidden="true">←</span>이전</a>\n'
 TOP_ANCHOR = re.compile(r'(<(?:header|main)\b[^>]*>)')
+
+# 나가는 길은 한 칸씩만 올라간다. 잠긴 대시보드는 「비공개 자료」를 거쳐 들어오므로 그리로
+# 돌아가야 하고, 공개 대시보드는 첫 화면이 바로 위다. 전에는 어디서 눌러도 「메인」이라
+# 이름으로 /까지 튀어서, 비공개 자료에서 들어온 사람은 비밀번호 화면을 다시 지나야 했다.
+def parent_of(locked: bool) -> str:
+    return '/' + PRIVATE_SLUG if locked else '/'
 
 LEDGER = ROOT / 'data' / 'site_card_first_seen.json'
 NEW_DAYS = 7
@@ -346,7 +352,7 @@ def build_private() -> str:
         for _, slug, title, emoji, desc, locked in PAGES if locked
     )
     page = build_index()
-    body = f'''    <a class="back" href="/">← 전체 목록</a>
+    body = f'''    <a class="back" href="/">← 이전</a>
     <h1>비공개 자료</h1>
     <p class="lead">구독 매체를 정리한 대시보드입니다. 원문 전문은 두지 않고 요약과 판단만 남깁니다.</p>
     <div class="grid">
@@ -374,13 +380,16 @@ def main():
     OUT.mkdir(parents=True)
 
     ledger = load_ledger()
-    for src, slug, *_ in PAGES:
+    for src, slug, _title, _emoji, _desc, locked in PAGES:
+        up = parent_of(locked)
         html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
         html, fresh = mark_new(html, ledger.get(slug, {}))
-        html, hit = TOP_ANCHOR.subn(lambda m: m.group(1) + TOP_LINK, html, count=1)
+        top = TOP_LINK.replace('__PARENT__', up)
+        html, hit = TOP_ANCHOR.subn(lambda m: m.group(1) + top, html, count=1)
         if not hit:
             print(f'  ! {src}: header/main을 못 찾아 머리글 링크를 넣지 못했다')
-        (OUT / f'{slug}.html').write_text(html + HOME_BTN, encoding='utf-8')
+        (OUT / f'{slug}.html').write_text(html + HOME_BTN.replace('__PARENT__', up),
+                                          encoding='utf-8')
         badge = f'  NEW {len(fresh)}' if fresh else ''
         print(f'  {src}  ->  {slug}.html{badge}')
 
