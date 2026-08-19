@@ -74,15 +74,14 @@ PICK_CSS = '''
   .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
           border:1px solid var(--line);border-radius:12px;
           background:var(--card,var(--surface,#fff));color:var(--ink)}
-  .sw-btn:hover{border-color:var(--accent)}
-  .sw-btn[aria-pressed="true"]{border-color:var(--accent);
-          color:var(--accent-ink,var(--accent));
-          background:var(--soft,var(--accent-soft))}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
   .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
   /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
      한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
      방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
-  .stile .st-gap{display:inline-block;margin-top:6px;font-size:12px;font-weight:850;
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
     font-variant-numeric:tabular-nums;letter-spacing:-.01em}
   .stile .st-gap.up{color:var(--risk)}
   .stile .st-gap.down{color:var(--accent)}
