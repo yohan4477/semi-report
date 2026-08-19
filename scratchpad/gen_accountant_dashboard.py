@@ -1932,18 +1932,26 @@ VALUATION_CSS = '''
     .vtop-list a{font-size:10px}
     .vtop-v{font-size:10px}
     .vtop-d{font-size:9px}
-    .vtop-list li{grid-template-columns:1fr 52px 32px;gap:0 6px}
+    .vtop-list{gap:0 6px}
     .vtop-h{font-size:8.5px}
   }
   @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
-  .vtop-list{margin:0;padding:0;list-style:none}
+  /* 격자를 목록 전체에 건다 — 줄마다 따로 세우면 이름 칸이 줄 안에서만 폭을 정해,
+     짧은 이름은 자리를 남기고 긴 이름은 잘린다(2026-08-19에 「주성엔지…」로 잘렸다).
+     목록에 걸면 열 줄이 칸을 공유해 이름 칸이 가장 긴 이름에 맞춰지고 나머지가 남는다.
+     칸을 내용 폭으로 두고 왼쪽으로 몰아 숫자가 이름 옆에 붙게 한다 — 가운데를 1fr로 두면
+     남는 폭을 다 먹어 이름과 값 사이가 245px까지 벌어졌다. */
+  .vtop-list{display:grid;
+             grid-template-columns:minmax(0,max-content) max-content max-content;
+             justify-content:start;gap:0 14px;margin:0;padding:0;list-style:none}
+  .vtop-list > li{display:contents}
   /* 회사 이름·값·날짜를 한 격자의 세 칸으로 세운다. flex로 양끝에 밀면 이름 길이에 따라
      사이가 줄마다 달라져 세로로 안 읽힌다. 이름 칸은 남는 폭을 다 갖고, 넘치면 말줄임한다 */
-  .vtop-list li{display:grid;grid-template-columns:1fr 58px 34px;gap:0 8px;
-                align-items:baseline;
-                padding:1px 0;border-top:1px solid var(--line);line-height:1.3}
-  .vtop-list li:first-child{border-top:0}
+  /* 줄이 격자 항목 셋으로 흩어지므로 줄 사이 선과 여백은 항목마다 건다 */
+  .vtop-list > li > *{align-self:baseline;padding:1px 0;line-height:1.3;
+                      border-top:1px solid var(--line)}
+  .vtop-list > li:first-child > *{border-top:0}
   .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;
                min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .vtop-list a:hover{color:var(--accent)}
@@ -1951,8 +1959,8 @@ VALUATION_CSS = '''
      줄마다 어긋나 세로로 안 읽힌다. 폭을 못 박고 오른쪽으로 붙인다 */
   .vtop-r{display:contents}
   /* 값은 오른쪽으로 붙여 자릿수를 맞추고, 날짜는 왼쪽으로 붙여 줄마다 시작이 맞게 한다 */
-  .vtop-v{text-align:right}
-  .vtop-d{text-align:left}
+  .vtop-v{justify-self:end}
+  .vtop-d{justify-self:start}
   .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
   /* 평가일 — 값보다 작고 회색이다. 편마다 비교 시점이 다르므로 숫자 옆에 붙여 둔다 */
   .vtop-d{font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:700;color:var(--ink-3)}
