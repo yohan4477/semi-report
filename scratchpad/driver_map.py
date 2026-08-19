@@ -482,6 +482,9 @@ def _axis_html(ax):
                        '<thead><tr><th>입력</th><th>값</th></tr></thead>'
                        '<tbody>%s</tbody></table></div></div>' % ''.join(rows))
 
+    # 수식 사슬은 접는다. 표를 보고 값을 확인한 다음에야 「그 값이 어떤 식으로 나왔나」를
+    # 묻게 되는데, 펼쳐 두면 표 바로 아래 수식 대여섯 줄이 깔려 다음 절이 화면 밖으로
+    # 밀려난다(2026-08-19 화면에서 지적).
     chain_html = ''.join('<p class="dm-chain-line">%s</p>' % _linkify(c) for c in ax['chain'])
     gchips_html = _driver_table_html(ax)
 
@@ -568,7 +571,8 @@ def _axis_html(ax):
             '<p class="dm-axis-sub">%s</p>'
             '%s'
             '%s'
-            '<div class="dm-chain">%s</div>'
+            '<details class="dm-chainbox"><summary>수식 — 어떻게 계산했나</summary>'
+            '<div class="dm-chain">%s</div></details>'
             '%s'
             '%s'
             '%s'
@@ -1182,7 +1186,7 @@ DM_CSS = '''<style>
 .dm-rg-note,.dm-sn-note{font-size:11px;line-height:1.55;color:var(--ink-3);margin:8px 0 0}
 
 /* ── 이익 성장 경로 표 ── */
-.dm-ep{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line);
+.dm-ep{margin:20px 0 22px;background:var(--surface);border:1px solid var(--line);
        border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
 .dm-ep-label{font-size:11px;font-weight:850;letter-spacing:.04em;color:var(--ink-3);margin:0 0 9px}
 .dm-ep-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -1566,7 +1570,14 @@ DM_CSS = '''<style>
 .dm-axis-name{font-size:15.5px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--ink);line-height:1.3}
 .dm-axis-tag{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:3px}
 .dm-axis-sub{font-size:12px;color:var(--ink-3);line-height:1.5;margin:0 0 12px}
-.dm-chain{display:flex;flex-direction:column;gap:7px;margin:0 0 12px}
+.dm-chainbox{margin:18px 0 14px;border:1px solid var(--line);border-radius:8px;
+     background:var(--surface)}
+.dm-chainbox>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:12px;
+     font-weight:800;color:var(--ink-2)}
+.dm-chainbox>summary::-webkit-details-marker{display:none}
+.dm-chainbox>summary::after{content:"▾";float:right;color:var(--ink-3);font-size:10px}
+.dm-chainbox[open]>summary::after{content:"▴"}
+.dm-chain{display:flex;flex-direction:column;gap:7px;margin:0;padding:2px 12px 12px}
 .dm-chain-line{font-size:12.5px;line-height:2;color:var(--ink-2);margin:0}
 /* 수식 한 자리 = 이름 + 값. 줄바꿈으로 둘이 갈라지면 어느 값이 어느 이름의
    것인지 안 보이므로 통째로 묶어 둔다 */
