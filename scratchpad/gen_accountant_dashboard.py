@@ -2,7 +2,7 @@
 # 밸류에이션 대시보드 생성. 네이버 프리미엄 유료 채널 필자 엘곰(회계사)의 DCF 글 7편을 카드로 담는다.
 # 카드는 이 파일 CARDS에 적고 재실행하면 페이지가 다시 만들어진다.
 # 마크업과 CSS는 dash_common이 갖고 있고, 금융·부동산·미국주식 사관학교 대시보드와 한 벌로 움직인다.
-import io, os, sys
+import calendar, datetime, io, os, re, sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -1903,6 +1903,40 @@ VALUATION_CSS = '''
   .dm-co:last-child{margin-bottom:0}
   .dm-co-t{font-size:15px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
            margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+  /* 괴리 상위 5 보드 — 검색창 다음·타일 격자 앞(sec_picker의 pick_top)에 선다. 타일과 같은
+     .sec-pick 안이라 회사를 고르면 검색창·이 보드·타일이 함께 접힌다. 플러스는 왼쪽,
+     마이너스는 오른쪽. 첫 화면에서 타일 첫 줄이 같이 보여야 하므로 세로 폭을 150px 안쪽으로
+     누른다 — 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 두고, 안내 본문은 <details>로
+     접어 둔다(내용은 그대로, 기본 화면에서만 한 줄로 준다). 목록도 줄마다 1px대 여백뿐이다.
+     .sec-pick.sgrid(묶음 없는 페이지)에 pick_top을 쓰면 그리드 항목이 되므로 한 줄 전체를
+     차지하게 편다. */
+  .vtop{grid-column:1/-1;margin:0 0 8px;padding:7px 12px;border:1px solid var(--line);
+        border-radius:10px;background:var(--sunk)}
+  .vtop-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+             flex-wrap:wrap}
+  .vtop-t{margin:0;font-size:11.5px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vtop-note{flex:none;font-size:10px;color:var(--ink-3)}
+  .vtop-note summary{cursor:pointer;font-weight:700;white-space:nowrap}
+  .vtop-note summary:hover{color:var(--accent)}
+  .vtop-note p{margin:3px 0 0;max-width:420px;line-height:1.35;text-align:left}
+  .vtop-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin-top:5px}
+  @media (max-width:640px){ .vtop-cols{grid-template-columns:1fr} }
+  .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
+  .vtop-list{margin:0;padding:0;list-style:none}
+  .vtop-list li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+                padding:1px 0;border-top:1px solid var(--line);line-height:1.3}
+  .vtop-list li:first-child{border-top:0}
+  .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700}
+  .vtop-list a:hover{color:var(--accent)}
+  .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
+  .vtop-v.up{color:var(--risk)}
+  .vtop-v.down{color:var(--accent)}
+  /* 검색창 → 보드 → 타일 사이 간격. 공용 마진(검색창 14px, .sgrid 14px)이 이 장에서는
+     두 번 겹쳐 타일 격자를 밀어낸다 — 이 장만(extra_css라 다른 장은 안 탄다) 좁힌다. */
+  .sec-pick > .ssearch{margin-bottom:6px}
+  .vtop{margin-bottom:0}
+  .vtop + .sectpick > .sgrid:first-child{margin-top:6px}
 '''
 
 # 밸류에이션 층 — 카드가 아니라 render()의 top 인자로 붙는다. 회사별 지도 둘을 그대로
@@ -1912,6 +1946,85 @@ def _val(title, html):
     return '<div class="dm-co"><h3 class="dm-co-t">%s</h3>%s</div>' % (title, html)
 
 
+# 「주가 대비 밸류에이션」 괴리 상위 5 보드 — 값은 손으로 다시 적지 않고 SEC_BADGES에서
+# 뽑는다. 배지와 보드가 어긋나면 같은 화면에서 두 말을 하게 된다.
+_SEC_TITLE = {sec[0]: sec[2] for sec in SEC_ORDER}
+
+
+def _sec_name(sid):
+    """섹션 타일 제목(예: 「한국콜마 161890」)에서 종목코드를 떼고 회사 이름만 돌려준다."""
+    return re.sub(r'\s+\d{6}$', '', _SEC_TITLE[sid])
+
+
+def _cutoff_date(today=None):
+    """최신 3개월 — 정확히 「오늘에서 달을 3 뺀 날」로 계산한다(날짜 산수 오차를 남기지 않는다)."""
+    today = today or datetime.date.today()
+    y, m = today.year, today.month - 3
+    while m <= 0:
+        m += 12
+        y -= 1
+    day = min(today.day, calendar.monthrange(y, m)[1])
+    return datetime.date(y, m, day)
+
+
+def _parse_gap(text):
+    """배지 값을 순위 매길 숫자로 바꾼다. 범위(+87~92%)는 하한으로, 부호는 up=+·down=−로 본다.
+
+    부호를 지켜야 마이너스 쪽이 절댓값 순으로 선다 — 부호를 버리면 −0.14%가 −59.8%보다
+    「큰」 값으로 읽혀 고평가 순위가 뒤집힌다(2026-08-19에 실제로 그렇게 났다)."""
+    t = text.replace('−', '-')
+    m = re.match(r'^([+-])(\d+(?:\.\d+)?)(?:~\d+(?:\.\d+)?)?%$', t)
+    assert m, '괴리 값을 못 읽었다: %s' % text
+    v = float(m.group(2))
+    return v if m.group(1) == '+' else -v
+
+
+def _badge_date(tip):
+    m = re.match(r'^(\d{4})-(\d{2})-(\d{2})', tip)
+    assert m, '배지 툴팁에 날짜가 없다: %s' % tip
+    return datetime.date(*[int(x) for x in m.groups()])
+
+
+def _top5_rows():
+    """SEC_BADGES에서 최신 3개월·역산 제외분을 골라 (플러스 상위5, 마이너스 상위5)를 낸다."""
+    cutoff = _cutoff_date()
+    rows = []
+    for sid, (text, tone, tip) in SEC_BADGES.items():
+        if tone == 'flat':          # 역산 편은 값이 없어 순위에 못 낀다
+            continue
+        if _badge_date(tip) < cutoff:
+            continue
+        rows.append((sid, _sec_name(sid), text, tone, _parse_gap(text)))
+    pos = sorted([r for r in rows if r[3] == 'up'], key=lambda r: -r[4])[:5]
+    neg = sorted([r for r in rows if r[3] == 'down'], key=lambda r: r[4])[:5]
+    return pos, neg
+
+
+def _top5_html():
+    pos, neg = _top5_rows()
+    assert pos and neg, '괴리 상위 5 보드에 넣을 값이 부족하다 — 플러스 %d건, 마이너스 %d건' % (len(pos), len(neg))
+
+    def _li(row):
+        sid, name, text, tone, _v = row
+        return ('<li><a class="kin-link" href="#%s">%s</a>'
+                '<span class="vtop-v %s">%s</span></li>' % (sid, name, tone, text))
+
+    # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
+    # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
+    # 없으면 화면이 필자가 안 한 판정(「저평가·고평가」)을 한 것처럼 읽힌다.
+    return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
+            '최근 3개월 평가에서 가장 벌어진 곳</h2>'
+            '<details class="vtop-note"><summary>비교 시점·판정 기준</summary>'
+            '<p>비교 시점은 편마다 다르다(종가·장중·장전·KRX 기준가·NXT가 섞여 있다). '
+            '「저평가·고평가」는 모형이 낸 계산값이지 필자의 판정이 아니다 — 에이피알 편은 민감도 25칸이 '
+            '전부 주가 위인데도 필자가 결론을 유보했다.</p></details></div>'
+            '<div class="vtop-cols">'
+            '<div class="vtop-col"><p class="vtop-h">저평가</p><ol class="vtop-list">%s</ol></div>'
+            '<div class="vtop-col"><p class="vtop-h">고평가</p><ol class="vtop-list">%s</ol></div>'
+            '</div></section>'
+            % (''.join(_li(r) for r in pos), ''.join(_li(r) for r in neg)))
+
+
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
 # 방법을 모르는 채 삼성전자 숫자부터 보게 된다. 방법 넷을 앞으로 뺀다.
 # 제목에 태그가 섞여 있어 조각으로 찾는다(dc.by_frag).
@@ -1919,6 +2032,7 @@ if __name__ == '__main__':
     # 지도는 그 회사 섹션 안, 카드 앞에 선다. 「전체 보기」에서는 접혀 있다(.sec-lead).
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               extra_css=VALUATION_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              pick_top=_top5_html(),
               sec_top={
                   'sec-samsung': _val('밸류에이션 — 평가 6편을 시기와 방법으로', driver_map.render()),
                   'sec-hynix': _val('밸류에이션 — 2026년 DCF 한 편',

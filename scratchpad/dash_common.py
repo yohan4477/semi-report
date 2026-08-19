@@ -44,6 +44,10 @@ PICK_CSS = '''
           margin:16px 0 8px}
   .sgrp:first-of-type .sgrp-t{margin-top:12px}
   .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
   .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
   .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
            border:1px dashed var(--line);border-radius:999px;background:transparent;
@@ -92,6 +96,17 @@ PICK_CSS = '''
   .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
     color:var(--ink-3);letter-spacing:0}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
   @media (min-width:820px){
@@ -254,7 +269,9 @@ NAV_JS = '''<script>
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var only=null, picking=true, sect=null;
+  var only=null, picking=true, sect=null, q='';
+  var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
+  function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
@@ -286,6 +303,9 @@ NAV_JS = '''<script>
       s.hidden = picking || live===0 || (only && s.id!==only);
       var o=opt(s.id);
       if(o){
+        // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
+        // 이 표시를 보고 판단하므로, 검색 분기가 o.hidden을 다시 덮어써도 이 값은 남는다.
+        o.dataset.empty = live===0 ? '1' : '';
         o.hidden = live===0;
         var c=o.querySelector('.cnt'); if(c) c.textContent=live;
       }
@@ -334,6 +354,26 @@ NAV_JS = '''<script>
       box.querySelectorAll('.sectp').forEach(function(pn){
         pn.hidden = !sect || pn.dataset.sect!==sect;
       });
+    }
+    // 검색어가 있으면 섹터 층을 건너뛴다. 회사 타일 글자(.st-t)로만 맞추고, 카드 0편이라
+    // 이미 숨어 있던 타일(dataset.empty)은 글자가 맞아도 그대로 숨긴다.
+    if(q){
+      if(pickBox) pickBox.hidden = true;
+      box.querySelectorAll('.sectp').forEach(function(pn){ pn.hidden = false; });
+      var qn=0;
+      box.querySelectorAll('.stile[data-sec]').forEach(function(t){
+        if(!t.dataset.sec) return;   // 「전체 보기」 타일은 검색 대상이 아니다
+        var tt=t.querySelector('.st-t');
+        var match = t.dataset.empty!=='1' && norm(tt?tt.textContent:t.textContent).indexOf(q)!==-1;
+        t.hidden = !match;
+        if(match) qn++;
+      });
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = pn.querySelectorAll('.stile[data-sec]:not([hidden])').length===0;
+      });
+      if(sqn) sqn.textContent = qn + '곳';
+    } else if(sqn){
+      sqn.textContent = '';
     }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
@@ -398,6 +438,11 @@ NAV_JS = '''<script>
     }
     quiet = false;
   }
+  if(sq) sq.addEventListener('input', function(){
+    q = norm(sq.value);
+    sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
+    apply();
+  });
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
@@ -448,12 +493,24 @@ def snip(text, limit=46):
 BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이전</button>'
         '<span class="sb-now"></span></div>')
 
+# 회사 검색창 — 타일 격자 바로 위, 같은 .sec-pick 컨테이너 안에 둔다. box.hidden = !picking를
+# 같이 타게 하려는 것이다(타일 고르는 화면에만 있으면 된다). 관문이 아니다 — 아무것도 막지
+# 않고 바로 아래에 타일이 그대로 있다. NAV_JS가 입력을 받아 섹터 층을 건너뛰고 회사 타일만
+# 글자로 거른다.
+SEARCH_HTML = ('<div class="ssearch"><input type="search" class="sq" '
+               'placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기">'
+               '<span class="sq-n"></span></div>')
 
-def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
+
+def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_top=''):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
     extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
-    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다."""
+    별도 관문 버튼을 만들지 않는 것이 규약이다 — 페이지를 열면 어느 대시보드든 이 타일이 첫 화면이다.
+
+    pick_top은 검색창 다음·타일 격자 앞에 서는 조각이다(회계사 장의 괴리 상위 5 보드 등).
+    타일과 같은 .sec-pick 컨테이너 안에 두는 이유는 box.hidden = !picking을 같이 타게
+    하려는 것이다 — 회사를 고르면 검색창·이 조각·타일이 함께 접힌다."""
     tiles = ['<button class="stile is-all" data-sec="" aria-pressed="true">'
              '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
              '<span class="st-s">모든 섹션을 한 줄로</span>'
@@ -485,7 +542,8 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
     # 주제를 고르면 타일이 사라지고 카드만 남는다 — 돌아올 길을 같이 둔다
     if not groups:
         tiles.extend(_tile(sid) for sid in order)
-        return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK)
+        return ('<div class="sec-pick sgrid">%s%s%s</div>%s'
+                % (SEARCH_HTML, pick_top, ''.join(tiles), BACK))
 
     # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음 안이
     # (섹터, 설명, [sid…]) 꼴이면 섹터 타일이 한 겹 더 선다. 묶음·섹터에 안 들어간
@@ -507,7 +565,8 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
             inner = ''.join(_tile(sid) for sid in order if sid in sids)
             body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
                         '<div class="sgrid">%s</div></div>' % (label, inner))
-        return '<div class="sec-pick">%s</div>%s' % (''.join(body), BACK)
+        return ('<div class="sec-pick">%s%s%s</div>%s'
+                % (SEARCH_HTML, pick_top, ''.join(body), BACK))
 
     # 섹터 타일은 그 섹터에 든 섹션 id를 달고 다닌다 — 회사 수를 세는 것도, 눌렀을 때
     # 어느 회사를 펼지도 이 목록 하나로 정해진다.
@@ -533,8 +592,8 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
                           '<div class="sgrid">%s</div></div>' % (sect_id, name, inner))
         body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
                     '<div class="sgrid">%s</div></div>' % (label, ''.join(cells)))
-    return ('<div class="sec-pick"><div class="sectpick">%s</div>%s</div>%s'
-            % (''.join(body), ''.join(panels), BACK))
+    return ('<div class="sec-pick">%s%s<div class="sectpick">%s</div>%s</div>%s'
+            % (SEARCH_HTML, pick_top, ''.join(body), ''.join(panels), BACK))
 
 
 def layer(secs, lede):
@@ -669,7 +728,7 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
-           sec_bottom=None, sec_groups=None, sec_badges=None):
+           sec_bottom=None, sec_groups=None, sec_badges=None, pick_top=''):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -679,7 +738,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
 
     sec_top = {섹션 id: HTML}. 그 섹션 머리 바로 아래, 카드 앞에 들어간다. 한 회사를 여러 편으로
     평가한 것을 견주는 지도처럼 **그 섹션에만 해당하는** 층을 둘 자리다. 페이지 맨 위 롤업으로
-    두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다."""
+    두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다.
+
+    pick_top은 검색창 다음·타일 격자 앞에 서는 조각이다(sec_picker에 그대로 넘긴다). rollup과
+    달리 타일과 한 컨테이너(.sec-pick) 안에 있어 회사를 고르면 같이 접힌다."""
     secs, order = sections(cards)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
@@ -688,7 +750,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     tid = top_id or XSEC
     extra = (tid, top_title, top_sub, top_n) if top else None
     nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra,
-                     groups=sec_groups, badges=sec_badges)
+                     groups=sec_groups, badges=sec_badges, pick_top=pick_top)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
