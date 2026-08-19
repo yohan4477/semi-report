@@ -565,7 +565,16 @@
   .vtop-note summary:hover{color:var(--accent)}
   .vtop-note p{margin:3px 0 0;max-width:420px;line-height:1.35;text-align:left}
   .vtop-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin-top:5px}
-  @media (max-width:640px){ .vtop-cols{grid-template-columns:1fr} }
+  /* 좁은 화면에서도 두 칸을 좌우로 둔다 — 저평가와 고평가는 견주라고 나란히 세운 것이라
+     위아래로 쌓이면 한눈에 대조가 안 된다. 대신 글씨와 사이를 좁혀 두 칸이 들어가게 한다.
+     기준선을 640px에 두었더니 창을 줄이거나 확대율을 올린 화면에서 바로 쌓였다 */
+  @media (max-width:700px){
+    .vtop-cols{gap:0 10px}
+    .vtop-list a{font-size:10px}
+    .vtop-v{font-size:10px}
+    .vtop-h{font-size:8.5px}
+  }
+  @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
   .vtop-list{margin:0;padding:0;list-style:none}
   .vtop-list li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
