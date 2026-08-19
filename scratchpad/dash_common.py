@@ -271,12 +271,14 @@ NAV_JS = '''<script>
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
-    // 섹터 타일은 그 섹터에 든 섹션들의 합이다. 섹션이 범위 탭에 걸려 비면 섹터도 빈다.
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
     box.querySelectorAll('.stile[data-secs]').forEach(function(t){
       var n=0;
       t.dataset.secs.split(',').forEach(function(id){
         var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
-        if(o && !o.hidden){ var c=o.querySelector('.cnt'); n += c? parseInt(c.textContent,10)||0 : 0; }
+        if(o && !o.hidden) n += 1;
       });
       t.hidden = n===0;
       var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
@@ -409,7 +411,7 @@ def sec_picker(secs, order, total, extra=None, groups=None):
                         '<div class="sgrid">%s</div></div>' % (label, inner))
         return '<div class="sec-pick">%s</div>%s' % (''.join(body), BACK)
 
-    # 섹터 타일은 그 섹터에 든 섹션 id를 달고 다닌다 — 카드 수를 세는 것도, 눌렀을 때
+    # 섹터 타일은 그 섹터에 든 섹션 id를 달고 다닌다 — 회사 수를 세는 것도, 눌렀을 때
     # 어느 회사를 펼지도 이 목록 하나로 정해진다.
     panels, no = [], 0
     for label, sids in groups:
@@ -417,7 +419,9 @@ def sec_picker(secs, order, total, extra=None, groups=None):
         for name, sub, members in sids:
             no += 1
             sect_id = 'sect-%d' % no
-            n = sum(len(secs[sid][1]) for sid in members)
+            # 섹터에 든 회사 수다. 카드 수를 합치면 한 회사를 여섯 편으로 평가한 섹터가
+            # 회사 여섯 곳인 섹터처럼 보인다. 카드가 하나도 없는 회사는 타일이 안 서므로 뺀다.
+            n = sum(1 for sid in members if sid in secs)
             cells.append('<button class="stile" data-sect="%s" data-secs="%s" '
                          'aria-pressed="false">'
                          '<span class="st-num">%02d</span><span class="st-t">%s</span>'
