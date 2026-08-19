@@ -2518,6 +2518,12 @@ VALUATION_CSS = '''
   }
   @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
+  /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
+  .vtop-hd > *{border-top:0 !important;padding-bottom:2px}
+  .vtop-h2{font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
+           white-space:nowrap}
+  .vtop-hd .vtop-h2:nth-of-type(1){justify-self:end}
+  .vtop-hd .vtop-h2:nth-of-type(2){justify-self:start}
   /* 격자를 목록 전체에 건다 — 줄마다 따로 세우면 이름 칸이 줄 안에서만 폭을 정해,
      짧은 이름은 자리를 남기고 긴 이름은 잘린다(2026-08-19에 「주성엔지…」로 잘렸다).
      목록에 걸면 열 줄이 칸을 공유해 이름 칸이 가장 긴 이름에 맞춰지고 나머지가 남는다.
@@ -2649,6 +2655,13 @@ def _top5_html():
              + _rank_rows(datetime.date(2026, 1, 1))[1])
     show_year = len(yr) > 1 or yr != {datetime.date.today().year}
 
+    def _hd(side):
+        # 칸 이름 줄. 「주가 기준일」이 없으면 날짜가 무엇의 날짜인지 화면에서 안 읽힌다 —
+        # 평가를 올린 날인지 견준 주가의 날인지가 갈린다. 견준 주가 쪽이다.
+        return ('<li class="vtop-hd"><span class="vtop-h">%s</span>'
+                '<span class="vtop-h2">괴리</span>'
+                '<span class="vtop-h2">주가 기준일</span></li>' % side)
+
     def _li(row):
         sid, name, text, tone, _v, day = row
         # 평가일을 값 옆에 같이 둔다. 편마다 비교 시점이 다르니 숫자만 보면 서로 다른 날의
@@ -2670,11 +2683,12 @@ def _top5_html():
     more = ('<details class="vtop-all"><summary>2026년 평가 전부 보기 '
             '<span class="vtop-n">저평가 %d · 고평가 %d</span></summary>'
             '<div class="vtop-cols">'
-            '<div class="vtop-col"><p class="vtop-h">저평가</p><ol class="vtop-list">%s</ol></div>'
-            '<div class="vtop-col"><p class="vtop-h">고평가</p><ol class="vtop-list">%s</ol></div>'
+            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
+            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '</div></details>'
             % (len(allp), len(alln),
-               ''.join(_li(r) for r in allp), ''.join(_li(r) for r in alln)))
+               _hd('저평가'), ''.join(_li(r) for r in allp),
+               _hd('고평가'), ''.join(_li(r) for r in alln)))
 
     return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
             '최근 3개월 평가에서 가장 벌어진 곳</h2>'
@@ -2683,10 +2697,11 @@ def _top5_html():
             '「저평가·고평가」는 모형이 낸 계산값이지 필자의 판정이 아니다 — 에이피알 편은 민감도 25칸이 '
             '전부 주가 위인데도 필자가 결론을 유보했다.</p></details></div>'
             '<div class="vtop-cols">'
-            '<div class="vtop-col"><p class="vtop-h">저평가</p><ol class="vtop-list">%s</ol></div>'
-            '<div class="vtop-col"><p class="vtop-h">고평가</p><ol class="vtop-list">%s</ol></div>'
+            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
+            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '</div>%s</section>'
-            % (''.join(_li(r) for r in pos), ''.join(_li(r) for r in neg), more))
+            % (_hd('저평가'), ''.join(_li(r) for r in pos),
+               _hd('고평가'), ''.join(_li(r) for r in neg), more))
 
 
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
