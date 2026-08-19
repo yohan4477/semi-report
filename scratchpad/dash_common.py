@@ -79,6 +79,14 @@ PICK_CSS = '''
           color:var(--accent-ink,var(--accent));
           background:var(--soft,var(--accent-soft))}
   .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:6px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
@@ -171,16 +179,29 @@ LINK_JS = """<script>
   function jump(id, smooth){
     var h=document.getElementById(id); if(!h) return;
     var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
     if(sec && sec.hidden){
-      var all=document.querySelector('.stile.is-all');
-      if(all) all.click();   // 섹션 필터를 푼다. NAV_JS가 화면을 맨 위로 올린다
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
     }
     setTimeout(function(){
       if(card && !card.classList.contains('is-open')){
         var head=card.querySelector('.uc-head');
         if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
       }
-      if(card) card.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
     }, 140);
   }
   function fromHash(smooth){
@@ -194,7 +215,7 @@ LINK_JS = """<script>
       jump(a.getAttribute('href').slice(1), true);
       return;
     }
-    var b=e.target.closest('.uc-copy'); if(!b) return;
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
     var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
     var done=function(ok){
       b.textContent = ok ? '복사됨' : '주소창에 있습니다';
@@ -370,7 +391,7 @@ BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이�
         '<span class="sb-now"></span></div>')
 
 
-def sec_picker(secs, order, total, extra=None, groups=None):
+def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
     extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
@@ -385,12 +406,21 @@ def sec_picker(secs, order, total, extra=None, groups=None):
                      '<span class="st-num">00</span><span class="st-t">%s</span>'
                      '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
                      % (xid, xtitle, snip(xsub), xn))
+    def _gap(sid):
+        # badges = {섹션 id: (표시할 값, up|down|flat, 마우스를 올리면 뜨는 기준)}
+        b = (badges or {}).get(sid)
+        if not b:
+            return ''
+        text, tone, tip = b
+        return ('<span class="st-gap %s" title="%s">%s</span>'
+                % (tone, tip.replace('"', '&quot;'), text))
+
     def _tile(sid):
         (_id, num, title, sub), cs = secs[sid]
         return ('<button class="stile" data-sec="%s" aria-pressed="false">'
                 '<span class="st-num">%s</span><span class="st-t">%s</span>'
-                '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
-                % (sid, num, title, snip(sub), len(cs)))
+                '<span class="st-s">%s</span>%s<span class="st-n cnt">%d</span></button>'
+                % (sid, num, title, snip(sub), _gap(sid), len(cs)))
 
     # 주제를 고르면 타일이 사라지고 카드만 남는다 — 돌아올 길을 같이 둔다
     if not groups:
@@ -568,12 +598,18 @@ def course(cards, steps, lede):
     return ''.join(h)
 
 
+def sec_copy(sid):
+    """섹션 하나를 지목하는 주소를 집어 가는 버튼. 카드가 아닌 층(지도·밸류에이션)도 링크로
+    보낼 수 있어야 한다 — 카드 링크는 uc-copy, 섹션 링크는 이것이다. LINK_JS가 둘을 같이 받는다."""
+    return '<button type="button" class="sec-copy" data-anchor="%s">링크 복사</button>' % sid
+
+
 XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
 
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
-           sec_bottom=None, sec_groups=None):
+           sec_bottom=None, sec_groups=None, sec_badges=None):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -592,7 +628,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     tid = top_id or XSEC
     extra = (tid, top_title, top_sub, top_n) if top else None
     nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra,
-                     groups=sec_groups)
+                     groups=sec_groups, badges=sec_badges)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
@@ -601,8 +637,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         # 카드가 없는 섹션이라 data-fixed로 표시한다 — 국내·해외 범위 필터도 타지 않는다
         # data-n은 이 층이 몇 편을 담고 있는지다. 카드가 없으니 세어 볼 수가 없다.
         body.append('<section id="%s" data-fixed="1" data-n="%d"><div class="sec-head">'
-                    '<span class="sec-num">00</span><h2 class="sec-title">%s</h2></div>%s</section>'
-                    % (tid, top_n, top_title, top))
+                    '<span class="sec-num">00</span><h2 class="sec-title">%s</h2>%s</div>%s</section>'
+                    % (tid, top_n, top_title, sec_copy(tid), top))
     sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
     unknown = [k for k in list(sec_top) + list(sec_bottom) if k not in secs]
     assert not unknown, 'sec_top·sec_bottom에 없는 섹션 id가 있다: %s' % unknown
@@ -626,8 +662,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
                     % (sid, len(cs), sid, lead))
             cards_html = '<div class="sv-posts" data-sec="%s" hidden>%s</div>' % (sid, cards_html)
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
-                    '<h2 class="sec-title">%s</h2></div>%s%s%s</section>'
-                    % (sid, num, stitle, lead, cards_html, sec_bottom.get(sid, '')))
+                    '<h2 class="sec-title">%s</h2>%s</div>%s%s%s</section>'
+                    % (sid, num, stitle, sec_copy(sid), lead, cards_html,
+                       sec_bottom.get(sid, '')))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     page_css = css()
     if extra_css:
