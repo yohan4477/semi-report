@@ -2188,7 +2188,14 @@ def _axis_buttons_html():
     groups = []
     for era in dmd.AXIS_ERAS:
         stale = era['id'] != 'now'
-        btns = ''.join(_axis_button_html(axes_by_id[aid], stale) for aid in era['axes'])
+        # 최신이 왼쪽이다. 옛 묶음은 드라이버가 나온 글의 마지막 날짜로, 지금 묶음은
+        # 그 축의 최신 글 날짜로 잰다 — 버튼에 찍히는 날짜와 같은 기준이어야 한다.
+        def _when(aid):
+            ax = axes_by_id[aid]
+            docs = _axis_driver_docs(aid) or sorted(ax.get('docs') or ())
+            return _doc_date(docs[-1]) if (stale and docs) else ax['latest'][1]
+        btns = ''.join(_axis_button_html(axes_by_id[aid], stale)
+                       for aid in sorted(era['axes'], key=_when, reverse=True))
         groups.append(
             '<div class="dm-axisera%s">'
             '<div class="dm-axisera-head">'
