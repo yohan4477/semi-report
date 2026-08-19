@@ -510,6 +510,18 @@
    "hash": "fc837cd29e9f"
   },
   {
+   "id": "semi:compute:세레브라스-차세대-CS-4-빠른-게-더-빨라졌다",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-19",
+   "path": "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md",
+   "hash": "64b722403d8a"
+  },
+  {
    "id": "semi:compute:엔비디아-GPU의-초고속-상호작용성-TileRT-InferenceX",
    "corpus": "semianalysis",
    "folder": "compute",
