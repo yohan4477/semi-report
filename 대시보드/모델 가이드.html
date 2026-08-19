@@ -397,8 +397,11 @@
     font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
     border:1px solid var(--line);background:var(--surface,#fff);
     transition:border-color .15s ease,transform .15s ease}
-  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
-  .stile[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+  .stile:hover{border-color:var(--accent);transform:translateY(-1px)}
+  /* 고른 타일은 테두리를 검정으로 굵히지 않는다 — 배경을 옅게 깔고 테두리만 강조색으로
+     바꾼다. 검정 테두리에 안쪽 그림자를 겹치면 눌린 타일이 화면에서 튀어 나온다 */
+  .stile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .stile[aria-pressed="true"] .st-t{color:var(--accent-ink)}
   .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
     font-variant-numeric:tabular-nums}
   .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
@@ -419,6 +422,17 @@
   @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
 
   .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
@@ -426,13 +440,20 @@
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  .secsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
+     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
           border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sw-btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
-  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
@@ -687,7 +708,7 @@
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var only=null, picking=true;
+  var only=null, picking=true, sect=null;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
@@ -737,6 +758,30 @@
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden) n += 1;
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
@@ -768,7 +813,10 @@
   });
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
     apply();
     var sec = only ? document.getElementById(only) : null;
@@ -845,6 +893,11 @@
     if(posts) posts.hidden = view!=='posts';
   }
   document.addEventListener('click', function(e){
+    if(e.target.closest('.sw-up')){
+      var back=document.querySelector('.sback .sb-btn');
+      if(back) back.click();
+      return;
+    }
     var b=e.target.closest('.sw-btn'); if(!b) return;
     show(b.closest('.secsw').dataset.sec, b.dataset.view);
   });

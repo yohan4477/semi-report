@@ -394,8 +394,11 @@
     font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
     border:1px solid var(--line);background:var(--surface,#fff);
     transition:border-color .15s ease,transform .15s ease}
-  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
-  .stile[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+  .stile:hover{border-color:var(--accent);transform:translateY(-1px)}
+  /* 고른 타일은 테두리를 검정으로 굵히지 않는다 — 배경을 옅게 깔고 테두리만 강조색으로
+     바꾼다. 검정 테두리에 안쪽 그림자를 겹치면 눌린 타일이 화면에서 튀어 나온다 */
+  .stile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .stile[aria-pressed="true"] .st-t{color:var(--accent-ink)}
   .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
     font-variant-numeric:tabular-nums}
   .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}

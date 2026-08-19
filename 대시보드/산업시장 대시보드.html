@@ -397,8 +397,11 @@
     font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
     border:1px solid var(--line);background:var(--surface,#fff);
     transition:border-color .15s ease,transform .15s ease}
-  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
-  .stile[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+  .stile:hover{border-color:var(--accent);transform:translateY(-1px)}
+  /* 고른 타일은 테두리를 검정으로 굵히지 않는다 — 배경을 옅게 깔고 테두리만 강조색으로
+     바꾼다. 검정 테두리에 안쪽 그림자를 겹치면 눌린 타일이 화면에서 튀어 나온다 */
+  .stile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .stile[aria-pressed="true"] .st-t{color:var(--accent-ink)}
   .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
     font-variant-numeric:tabular-nums}
   .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
@@ -628,12 +631,14 @@
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
-    // 섹터 타일은 그 섹터에 든 섹션들의 합이다. 섹션이 범위 탭에 걸려 비면 섹터도 빈다.
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
     box.querySelectorAll('.stile[data-secs]').forEach(function(t){
       var n=0;
       t.dataset.secs.split(',').forEach(function(id){
         var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
-        if(o && !o.hidden){ var c=o.querySelector('.cnt'); n += c? parseInt(c.textContent,10)||0 : 0; }
+        if(o && !o.hidden) n += 1;
       });
       t.hidden = n===0;
       var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
