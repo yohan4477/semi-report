@@ -841,6 +841,40 @@
     pick=b.dataset.pick; only=null; picking=true; apply();
     window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
   });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「타일 고르기」로
+  // 돌아가지 않고 대시보드 밖으로 나간다 — 섹션을 하나 열었을 뿐인데 페이지를 떠난다.
+  // 주소는 그 섹션을 지목한 주소와 같은 것을 쓴다(#섹션id). 「링크 복사」와 한 몸이다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base = location.pathname + location.search;
+    // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
+    var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
+  }
+  function restore(st){
+    quiet = true;
+    var id = (location.hash || '').slice(1);
+    if(st && typeof st.picking === 'boolean'){
+      picking = st.picking; only = st.sec || null;
+    } else if(!id){
+      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+    } else if(id === 'all'){
+      picking = false; only = null;
+    } else {
+      var el = document.getElementById(decodeURIComponent(id));
+      var sc = el && el.closest ? el.closest('section[id]') : null;
+      picking = false; only = sc ? sc.id : null;
+    }
+    if(!only) sect = null;
+    apply();
+    // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
+    // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
+    if(picking && location.hash){
+      history.replaceState({sec: null, picking: true}, '', location.pathname + location.search);
+    }
+    quiet = false;
+  }
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
@@ -849,16 +883,29 @@
     if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
     apply();
+    mark();
     var sec = only ? document.getElementById(only) : null;
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
   });
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
+    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(history.state && history.state.picking === false){ history.back(); return; }
     picking=true; only=null; apply();
+    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
     box.scrollIntoView({behavior:'smooth', block:'start'});
   });
+  window.addEventListener('popstate', function(e){
+    restore(e.state);
+    var id=(location.hash||'').slice(1);
+    var el=id ? document.getElementById(decodeURIComponent(id)) : null;
+    if(el) el.scrollIntoView({block:'start'});
+    else box.scrollIntoView({block:'start'});
+  });
   apply();
+  // 링크를 받고 들어온 사람의 첫 화면은 LINK_JS가 연다. 여기서는 히스토리 첫 칸만 표시해 둔다
+  history.replaceState({sec: null, picking: true}, '');
 })();
 </script><script>
 (function(){

@@ -53,3 +53,70 @@ TOP_BTN = '''
 })();
 </script>
 '''
+
+
+# 갈래(섹션) 하나·글 하나를 지목하는 주소를 집어 가는 버튼.
+#
+# 대시보드 주소를 통째로 보내면 받은 사람이 무엇을 보라는 것인지 모른다. 카드 체계를 쓰는
+# 장(dash_common)은 자기 것(.uc-copy/.sec-copy)이 있고, 여기 있는 것은 그 밖의 장 — 관리자·
+# 허브·지도·타임라인처럼 만드는 방식이 저마다 다른 페이지가 같은 부품을 쓰라고 둔 것이다.
+# 색을 스스로 들고 간다(페이지마다 CSS 변수 이름이 다르다).
+def copy_btn(aid, label='링크 복사'):
+    return '<button type="button" class="ui-copy" data-anchor="%s">%s</button>' % (aid, label)
+
+
+COPY_JS = """
+<style>
+  .ui-copy{
+    font:750 11.5px/1 inherit; letter-spacing:.01em; cursor:pointer;
+    color:currentColor; opacity:.62; background:transparent;
+    border:1px dashed currentColor; border-radius:6px; padding:4px 9px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ui-copy:hover{ opacity:1; }
+  @media print{ .ui-copy{ display:none; } }
+</style>
+<script>
+(function(){
+  function reveal(el){
+    // 접혀 있는 자리(details)와 숨겨 둔 자리(hidden)를 위로 훑어 올라가며 편다
+    for(var n=el; n && n!==document.body; n=n.parentElement){
+      if(n.tagName==='DETAILS') n.open=true;
+      if(n.hasAttribute && n.hasAttribute('hidden')) n.hidden=false;
+    }
+  }
+  function jump(id, smooth){
+    var el=document.getElementById(id); if(!el) return;
+    reveal(el);
+    setTimeout(function(){
+      el.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 40);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('.ui-copy'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var txt=b.textContent;
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent=txt; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else { fromHash(false); }
+})();
+</script>
+"""

@@ -19,6 +19,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'insights'))
 import style  # noqa: E402
+import ui_bits  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 OUT = os.path.join(ROOT, '대시보드', '관리자 대시보드.html')
@@ -353,7 +354,8 @@ def main():
     for key, emo, name, one, rule_src, stages in LANES:
         out.append('<section class="lane" id="%s" style="--ac:%s">' % (key, ACCENT[key]))
         out.append('<div class="lh"><span class="em">%s</span><h2>%s</h2>'
-                   '<span class="rl">%s</span></div>' % (emo, name, rule_src))
+                   '<span class="rl">%s</span>%s</div>'
+                   % (emo, name, rule_src, ui_bits.copy_btn(key)))
         out.append('<p class="one">%s</p>' % one)
         for j, st in enumerate(stages + [TAIL]):
             if j:
@@ -364,6 +366,7 @@ def main():
     out.append('<footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
                '<code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. '
                'insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>')
+    out.append(ui_bits.COPY_JS)
     out.append('</main></body></html>')
 
     with io.open(OUT, 'w', encoding='utf-8') as f:

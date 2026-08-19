@@ -151,7 +151,7 @@
 <a href="#semi" style="--ac:#b4522b"><span class="t">📊 SemiAnalysis 대시보드</span><span class="s">단계 7</span></a>
 </div>
 <section class="lane" id="unified" style="--ac:#2563eb">
-<div class="lh"><span class="em">🧩</span><h2>통합 인사이트</h2><span class="rl">insight-note · insight-review 스킬</span></div>
+<div class="lh"><span class="em">🧩</span><h2>통합 인사이트</h2><span class="rl">insight-note · insight-review 스킬</span><button type="button" class="ui-copy" data-anchor="unified">링크 복사</button></div>
 <p class="one">문서를 가로질러야 보이는 판단만. 문서 한 편 요약은 여기 안 온다.</p>
 <div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>줄 번호가 인용의 기준이다</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">뉴스레터 변환본</span><span class="ns">content/newsletter/**</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">미변환 클리핑</span><span class="ns">input/clippings/**</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">제3자 해설 요약</span><span class="ns">content/understanding/**</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">링크드인 월별 묶음</span><span class="ns">content/linkedin/[YYMM] 링크드인 게시물.md</span></div></div><ul><li>원문이 바뀌면 <code>insights/cites.json</code>의 줄 해시가 어긋나 검사기가 잡는다.</li><li>manifest에 원문이 없으면 노트를 쓰지 않고 <b>멈춘다</b> — 변환 파이프라인 쪽 문제다.</li><li>링크드인은 <code>scripts/gen_li_source.py</code>가 떨군다. <b>게시 시각 오름차순으로만 쌓여</b> 새 글이 들어와도 앞줄의 줄 번호가 밀리지 않는다 — 그래서 손으로 고치지 않는다.</li></ul></div>
 <div class="arw" aria-hidden="true">▼</div>
@@ -170,7 +170,7 @@
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
 <section class="lane" id="topic" style="--ac:#0f9d76">
-<div class="lh"><span class="em">🏠</span><h2>주제 대시보드 4장</h2><span class="rl">insight-upload 스킬 · scripts/card_lib.py</span></div>
+<div class="lh"><span class="em">🏠</span><h2>주제 대시보드 4장</h2><span class="rl">insight-upload 스킬 · scripts/card_lib.py</span><button type="button" class="ui-copy" data-anchor="topic">링크 복사</button></div>
 <p class="one">부동산 · 금융 · 미주사 · AI·인프라·에너지. 제3자 해설 한 편 = 카드 한 장.</p>
 <div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>유튜브는 자막 전문. 설명란 요약으로 때우지 않는다</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">유튜브 자막</span><span class="ns">scratchpad/ytsub.py &lt;영상ID&gt;</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">네이버 프리미엄</span><span class="ns">scratchpad/clip_one.py &lt;URL&gt; &lt;YYYYMMDD&gt;</span></div></div><ul><li>네이버 프리미엄은 CDP 크롬으로 파싱하고 <b>유료 원문은 로컬에만</b> 둔다. 공개엔 요약만 싣는다.</li></ul></div>
 <div class="arw" aria-hidden="true">▼</div>
@@ -189,7 +189,7 @@
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
 <section class="lane" id="semi" style="--ac:#b4522b">
-<div class="lh"><span class="em">📊</span><h2>SemiAnalysis 대시보드</h2><span class="rl">LINKEDIN_RULES.md · semianalysis-newsletter 스킬</span></div>
+<div class="lh"><span class="em">📊</span><h2>SemiAnalysis 대시보드</h2><span class="rl">LINKEDIN_RULES.md · semianalysis-newsletter 스킬</span><button type="button" class="ui-copy" data-anchor="semi">링크 복사</button></div>
 <p class="one">카드 체계가 아니다. 소셜 신호·뉴스레터·클러스터 판단으로 짜인 다른 구조.</p>
 <div class="fs" data-kind="src"><p class="sh"><b>① 원문</b><i>전용 프로필 chrome-semianalysis 하나로 둘 다 로그인</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">LinkedIn 게시물</span><span class="ns">CDP 크롬 9222 · 「최근」 정렬</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">뉴스레터 전문</span><span class="ns">semianalysis-newsletter 스킬</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">YouTube 신호</span></div></div><ul><li><b>「최근」으로 바꾼 뒤</b> 스크롤한다. 기본값 「인기순」은 오래된 글을 섞어 새 글을 굶긴다.</li><li>웹소켓은 <code>suppress_origin=True</code>, 크롬은 <code>--remote-allow-origins=*</code> 없으면 403이다.</li></ul></div>
 <div class="arw" aria-hidden="true">▼</div>
@@ -206,4 +206,59 @@
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
 <footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 <code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>
+
+<style>
+  .ui-copy{
+    font:750 11.5px/1 inherit; letter-spacing:.01em; cursor:pointer;
+    color:currentColor; opacity:.62; background:transparent;
+    border:1px dashed currentColor; border-radius:6px; padding:4px 9px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ui-copy:hover{ opacity:1; }
+  @media print{ .ui-copy{ display:none; } }
+</style>
+<script>
+(function(){
+  function reveal(el){
+    // 접혀 있는 자리(details)와 숨겨 둔 자리(hidden)를 위로 훑어 올라가며 편다
+    for(var n=el; n && n!==document.body; n=n.parentElement){
+      if(n.tagName==='DETAILS') n.open=true;
+      if(n.hasAttribute && n.hasAttribute('hidden')) n.hidden=false;
+    }
+  }
+  function jump(id, smooth){
+    var el=document.getElementById(id); if(!el) return;
+    reveal(el);
+    setTimeout(function(){
+      el.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 40);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('.ui-copy'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var txt=b.textContent;
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent=txt; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else { fromHash(false); }
+})();
+</script>
+
 </main></body></html>
