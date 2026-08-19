@@ -419,6 +419,10 @@
   @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
 
   .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
@@ -612,6 +616,10 @@
       if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
     });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;

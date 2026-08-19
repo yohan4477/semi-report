@@ -1228,6 +1228,15 @@ dc.attach_related(
 # 회사가 늘어나므로 순서를 손으로 나열하지 않는다 — SEC_ORDER에 섹션을 더하면 된다.
 # 회사 밖 이야기는 언제나 맨 뒤다.
 SEC_ORDER = [SEC_SS, SEC_HY, SEC_CM, SEC_S2, SEC_OR, SEC_HG, SEC_JS, SEC_SD, SEC_ETC]
+
+# 타일은 묶음으로 갈라 세운다. 회사가 아홉이 되자 한 줄에 국내 제조사와 나스닥 상장사가
+# 섞여, 어느 시장 이야기인지가 타일 이름을 하나씩 읽어야 알 수 있었다.
+# 방법론 글은 나라로 가를 수 있는 대상이 아니라 세 번째 묶음으로 따로 둔다.
+SEC_GROUPS = [
+    ('🇰🇷 국내', [x[0] for x in (SEC_SS, SEC_HY, SEC_CM, SEC_S2, SEC_OR, SEC_HG, SEC_JS)]),
+    ('🌍 국외', [SEC_SD[0]]),
+    ('📐 회사 밖 — 값 매기는 법', [SEC_ETC[0]]),
+]
 _n = len(CARDS)
 CARDS = [c for sec in SEC_ORDER for c in CARDS if c['section'] is sec]
 assert len(CARDS) == _n, '섹션이 SEC_ORDER에 없는 카드가 있다'
@@ -1276,7 +1285,7 @@ def _val(title, html):
 if __name__ == '__main__':
     # 지도는 그 회사 섹션 안, 카드 앞에 선다. 「전체 보기」에서는 접혀 있다(.sec-lead).
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
-              extra_css=VALUATION_CSS,
+              extra_css=VALUATION_CSS, sec_groups=SEC_GROUPS,
               sec_top={
                   'sec-samsung': _val('밸류에이션 — 평가 6편을 시기와 방법으로', driver_map.render()),
                   'sec-hynix': _val('밸류에이션 — 2026년 DCF 한 편',

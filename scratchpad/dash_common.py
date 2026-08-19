@@ -39,6 +39,10 @@ def blob(path):
 # .sgrid는 display:grid라 hidden 속성만으로는 안 사라진다. 그래서 [hidden] 규칙이 꼭 있어야 한다.
 PICK_CSS = '''
   .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
@@ -260,6 +264,10 @@ NAV_JS = '''<script>
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
@@ -324,7 +332,7 @@ BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이�
         '<span class="sb-now"></span></div>')
 
 
-def sec_picker(secs, order, total, extra=None):
+def sec_picker(secs, order, total, extra=None, groups=None):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
     extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
@@ -339,14 +347,31 @@ def sec_picker(secs, order, total, extra=None):
                      '<span class="st-num">00</span><span class="st-t">%s</span>'
                      '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
                      % (xid, xtitle, snip(xsub), xn))
-    for sid in order:
+    def _tile(sid):
         (_id, num, title, sub), cs = secs[sid]
-        tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
-                     '<span class="st-num">%s</span><span class="st-t">%s</span>'
-                     '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
-                     % (sid, num, title, snip(sub), len(cs)))
+        return ('<button class="stile" data-sec="%s" aria-pressed="false">'
+                '<span class="st-num">%s</span><span class="st-t">%s</span>'
+                '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
+                % (sid, num, title, snip(sub), len(cs)))
+
     # 주제를 고르면 타일이 사라지고 카드만 남는다 — 돌아올 길을 같이 둔다
-    return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK)
+    if not groups:
+        tiles.extend(_tile(sid) for sid in order)
+        return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK)
+
+    # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음에 안 들어간
+    # 섹션이 있으면 화면에서 조용히 사라지므로 여기서 잡는다.
+    placed = [sid for _lab, sids in groups for sid in sids]
+    missing = [sid for sid in order if sid not in placed]
+    assert not missing, '섹션 묶음에 빠진 섹션: %s' % ', '.join(missing)
+    unknown = [sid for sid in placed if sid not in secs]
+    assert not unknown, '없는 섹션을 묶음에 넣었다: %s' % ', '.join(unknown)
+    body = ['<div class="sgrid">%s</div>' % ''.join(tiles)]
+    for label, sids in groups:
+        inner = ''.join(_tile(sid) for sid in order if sid in sids)
+        body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
+                    '<div class="sgrid">%s</div></div>' % (label, inner))
+    return '<div class="sec-pick">%s</div>%s' % (''.join(body), BACK)
 
 
 def layer(secs, lede):
@@ -475,7 +500,7 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
-           sec_bottom=None):
+           sec_bottom=None, sec_groups=None):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -493,7 +518,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     # 한 저장소에 성격이 다른 고정 층이 여럿이라 sec-cross 하나로는 안 된다.
     tid = top_id or XSEC
     extra = (tid, top_title, top_sub, top_n) if top else None
-    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra)
+    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra,
+                     groups=sec_groups)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
