@@ -682,7 +682,6 @@ for _c in CARDS:
 HEADER = '''  <header>
     <p class="eyebrow">산업 · 시장 — 제3자 해설 아카이브</p>
     <h1>산업/시장 인사이트</h1>
-    <p class="lede">에너지와 원유, 반도체와 돈값을 한자리에서 봅니다. 채널을 가리지 않고 <b>주제</b>로 모으며, 유튜브 해설은 자막 전문을 기반으로 재구성했습니다. 원문 창작 없이 발언과 인용 수치만 옮겼습니다.</p>
     <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>수록 <b>%d건</b></span>
@@ -690,7 +689,11 @@ HEADER = '''  <header>
     </div>
   </header>''' % (STAMP, len(CARDS))
 
-FOOTER = ('제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기반입니다.\n'
+# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
+# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
+LEDE = '''<p class="lede">에너지와 원유, 반도체와 돈값을 한자리에서 봅니다. 채널을 가리지 않고 <b>주제</b>로 모으며, 유튜브 해설은 자막 전문을 기반으로 재구성했습니다. 원문 창작 없이 발언과 인용 수치만 옮겼습니다.</p>'''
+
+FOOTER = (LEDE + '\n제3자 해설 아카이브 · 유튜브 요약은 자막 전문 기반입니다.\n'
           '  요약은 <code>content/understanding/</code>, '
           '페이지 생성은 <code>scratchpad/gen_industry_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 

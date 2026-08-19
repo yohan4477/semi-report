@@ -326,10 +326,6 @@ def main():
     out.append('<header>'
                '<p class="eyebrow">관리자 · 비공개</p>'
                '<h1>데이터 처리 지도</h1>'
-               '<p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. '
-               '룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p>'
-               '<p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 '
-               '나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p>'
                '<div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · '
                '.claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div>'
                '</header>')
@@ -363,7 +359,7 @@ def main():
             out.append(stage_html(*st))
         out.append('</section>')
 
-    out.append('<footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
+    out.append('<footer><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
                '<code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. '
                'insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>')
     out.append(ui_bits.COPY_JS)

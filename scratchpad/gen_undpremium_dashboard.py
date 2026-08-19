@@ -504,7 +504,6 @@ CARDS = [
 HEADER = '''  <header>
     <p class="eyebrow">언더스탠딩 — 유료 구독물 아카이브</p>
     <h1>언더스탠딩 프리미엄</h1>
-    <p class="lede">네이버 프리미엄과 백브리핑으로 나간 유료 글을 정리한 페이지입니다. 원문은 싣지 않고 <b>요약만</b> 남기며, 구독자가 아닌 사람에게 열지 않습니다.</p>
     <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>수록 <b>%d건</b></span>
@@ -512,7 +511,11 @@ HEADER = '''  <header>
     </div>
   </header>''' % (STAMP, len(CARDS))
 
-FOOTER = ('유료 구독물 요약 아카이브 · 원문은 싣지 않습니다.\n'
+# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
+# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
+LEDE = '''<p class="lede">네이버 프리미엄과 백브리핑으로 나간 유료 글을 정리한 페이지입니다. 원문은 싣지 않고 <b>요약만</b> 남기며, 구독자가 아닌 사람에게 열지 않습니다.</p>'''
+
+FOOTER = (LEDE + '\n유료 구독물 요약 아카이브 · 원문은 싣지 않습니다.\n'
           '  페이지 생성은 <code>scratchpad/gen_undpremium_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 
 # 읽는 순서는 섹션 순서와 다르다. 처음 오는 사람에게는 매달 내는 전기요금이 먼저고,

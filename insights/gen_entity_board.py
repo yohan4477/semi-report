@@ -256,7 +256,6 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">__EMOJI__ 추적</p>
   <h1>__TITLE__</h1>
-  <p class="lede">__LEDE__</p>
   <div class="meta"><span>__STAMP__</span>
     <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
@@ -266,7 +265,9 @@ __SIGS__
 <p class="axnote">본문은 아래 문서를 통째로 읽고 쓴 것입니다. 문장 뒤의 파란 줄번호를 누르면
 그 문장의 근거가 된 원문 줄로 갑니다.</p>
 <ul class="srcs">__SRCS__</ul>
-<footer>추적 대상은 <code>insights/views/entities.json</code>, 본문은
+<footer>
+<p class="lede">__LEDE__</p>
+추적 대상은 <code>insights/views/entities.json</code>, 본문은
 <code>insights/tracks/&lt;키&gt;.md</code>입니다.
 재생성 <code>py insights/gen_entity_board.py musk</code>.
 종목 추천이 아니며 가격·밸류에이션·타이밍은 이 체계에 없습니다.</footer>

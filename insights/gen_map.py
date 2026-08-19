@@ -192,7 +192,6 @@ TMPL = r'''<meta charset="utf-8">
   <header>
     <p class="eyebrow">통합 인사이트 · 장소로 보기</p>
     <h1>인사이트가 벌어지는 곳</h1>
-    <p class="lede">__COUNT__개 클러스터의 핵심 장소를 지도 위에 놓았습니다. 클러스터를 고르면 지도가 그 지역으로 이동하고, 논지와 장소가 아래에 펼쳐집니다.</p>
   </header>
   <div class="mapwrap">
     <svg id="map" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="인사이트 세계 지도">
@@ -208,7 +207,9 @@ TMPL = r'''<meta charset="utf-8">
 __CHIPS__
   </div>
 __STEPS__
-  <footer>자기완결 SVG(Natural Earth 110m) · 외부 로드 없음. 좌표·장소는 편집 주석이며 정밀 GIS 아님. insights/cluster_geo.json + gen_map.py 산출물.</footer>
+  <footer>
+<p class="lede">__COUNT__개 클러스터의 핵심 장소를 지도 위에 놓았습니다. 클러스터를 고르면 지도가 그 지역으로 이동하고, 논지와 장소가 아래에 펼쳐집니다.</p>
+자기완결 SVG(Natural Earth 110m) · 외부 로드 없음. 좌표·장소는 편집 주석이며 정밀 GIS 아님. insights/cluster_geo.json + gen_map.py 산출물.</footer>
 </div>
 <script>
 (function(){

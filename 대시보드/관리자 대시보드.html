@@ -129,7 +129,7 @@
 </style>
 </head><body><main class="wrap">
 
-<header><p class="eyebrow">관리자 · 비공개</p><h1>데이터 처리 지도</h1><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div></header>
+<header><p class="eyebrow">관리자 · 비공개</p><h1>데이터 처리 지도</h1><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div></header>
 <h3 class="sec">세 갈래가 함께 지키는 것</h3><div class="common">
 <div class="cm"><b>푸시 전 한 방</b><span class="w">py -3.13 scripts/build_all.py</span><p>생성기 전부와 검사기 다섯을 순서대로 돌리고 하나라도 실패하면 종료 코드 1이다. <code>--check</code>는 검사만.</p></div>
 <div class="cm"><b>FAIL 0</b><span class="w">검사기가 못 잡는 것도 안다</span><p>숫자는 맞는데 뜻이 다른 경우(68,928달러가 배선 값인지 백플레인 값인지)는 기계가 모른다. 원문 줄을 열어야 한다.</p></div>
@@ -205,7 +205,7 @@
 <div class="arw" aria-hidden="true">▼</div>
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
-<footer>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 <code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>
+<footer><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 <code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>
 
 <style>
   .ui-copy{
@@ -227,6 +227,9 @@
     }
   }
   function jump(id, smooth){
+    // 페이지가 제 방식으로 여는 곳(탭·타임라인 등)은 window.__jumpTo를 두고 가로챈다.
+    // 그런 자리에서 hidden만 벗기면 화면이 두 겹으로 서고 탭 표시가 어긋난다.
+    if(window.__jumpTo && window.__jumpTo(id, smooth)) return;
     var el=document.getElementById(id); if(!el) return;
     reveal(el);
     setTimeout(function(){
