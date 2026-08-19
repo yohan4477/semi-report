@@ -2357,6 +2357,17 @@ VALUATION_CSS = '''
   .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
   /* 평가일 — 값보다 작고 회색이다. 편마다 비교 시점이 다르므로 숫자 옆에 붙여 둔다 */
   .vtop-d{font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:700;color:var(--ink-3)}
+  /* 눌러서 펴는 전체 순위 — 기본 화면은 최근 3개월 다섯 줄이고, 여기에 2026년 평가
+     전부가 접혀 있다. 접힌 채로는 한 줄만 먹어 타일이 첫 화면에 남는다 */
+  .vtop-all{margin-top:7px;border-top:1px solid var(--line);padding-top:6px}
+  .vtop-all > summary{cursor:pointer;font-size:10.5px;font-weight:800;color:var(--ink-2);
+                      list-style:none}
+  .vtop-all > summary::-webkit-details-marker{display:none}
+  .vtop-all > summary::before{content:"▸ ";color:var(--ink-3)}
+  .vtop-all[open] > summary::before{content:"▾ "}
+  .vtop-all > summary:hover{color:var(--accent)}
+  .vtop-all .vtop-n{font-weight:700;color:var(--ink-3);margin-left:5px}
+  .vtop-all .vtop-cols{margin-top:6px}
   .vtop-v.up{color:var(--risk)}
   .vtop-v.down{color:var(--accent)}
   /* 검색창 → 보드 → 타일 사이 간격. 공용 마진(검색창 14px, .sgrid 14px)이 이 장에서는
@@ -2412,19 +2423,26 @@ def _badge_date(tip):
     return datetime.date(*[int(x) for x in m.groups()])
 
 
-def _top5_rows():
-    """SEC_BADGES에서 최신 3개월·역산 제외분을 골라 (플러스 상위5, 마이너스 상위5)를 낸다."""
-    cutoff = _cutoff_date()
+def _rank_rows(since, top=None):
+    """SEC_BADGES에서 since 이후·역산 제외분을 골라 (저평가, 고평가)로 갈라 세운다.
+
+    top이 있으면 그만큼만 자른다. 마이너스 쪽은 절댓값이 큰 쪽이 위다 — 부호를 그대로
+    큰 순으로 세우면 −0.14%가 −59.8%보다 위로 올라가 순위가 뒤집힌다."""
     rows = []
     for sid, (text, tone, tip) in SEC_BADGES.items():
-        if tone == 'flat':          # 역산 편은 값이 없어 순위에 못 낀다
+        if tone == 'flat':          # 역산·값 없음 편은 괴리 값이 없어 순위에 못 낀다
             continue
-        if _badge_date(tip) < cutoff:
+        if _badge_date(tip) < since:
             continue
         rows.append((sid, _sec_name(sid), text, tone, _parse_gap(text), _badge_date(tip)))
-    pos = sorted([r for r in rows if r[3] == 'up'], key=lambda r: -r[4])[:5]
-    neg = sorted([r for r in rows if r[3] == 'down'], key=lambda r: r[4])[:5]
-    return pos, neg
+    pos = sorted([r for r in rows if r[3] == 'up'], key=lambda r: -r[4])
+    neg = sorted([r for r in rows if r[3] == 'down'], key=lambda r: r[4])
+    return (pos[:top], neg[:top]) if top else (pos, neg)
+
+
+def _top5_rows():
+    """기본 화면에 서는 최근 3개월 상위 다섯."""
+    return _rank_rows(_cutoff_date(), top=5)
 
 
 def _top5_html():
@@ -2434,7 +2452,8 @@ def _top5_html():
     # 3개월 창이 한 해 안에 들어오면 연도를 뺀다 — 열 줄이 전부 같은 해면 「26.」이 열 번
     # 반복될 뿐 아무것도 안 가른다. 창이 해를 넘는 때(1~3월)만 열 줄 모두에 연도를 붙인다.
     # 한 줄만 붙이면 자릿수가 어긋나 세로로 안 읽힌다.
-    yr = set(r[5].year for r in pos + neg)
+    yr = set(r[5].year for r in pos + neg + _rank_rows(datetime.date(2026, 1, 1))[0]
+             + _rank_rows(datetime.date(2026, 1, 1))[1])
     show_year = len(yr) > 1 or yr != {datetime.date.today().year}
 
     def _li(row):
@@ -2451,6 +2470,19 @@ def _top5_html():
     # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
     # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
     # 없으면 화면이 필자가 안 한 판정(「저평가·고평가」)을 한 것처럼 읽힌다.
+    # 기본 화면은 최근 3개월 다섯 줄이다. 그 아래에 2026년 평가 전부를 접어 둔다 — 3개월
+    # 창을 벗어난 편도 값을 갖고 있는데 화면에서 아예 사라지면 없는 것처럼 읽힌다. 펴는
+    # 자리로 두면 기본 화면 높이는 그대로 두고 전부를 견줄 길도 남는다.
+    allp, alln = _rank_rows(datetime.date(2026, 1, 1))
+    more = ('<details class="vtop-all"><summary>2026년 평가 전부 보기 '
+            '<span class="vtop-n">저평가 %d · 고평가 %d</span></summary>'
+            '<div class="vtop-cols">'
+            '<div class="vtop-col"><p class="vtop-h">저평가</p><ol class="vtop-list">%s</ol></div>'
+            '<div class="vtop-col"><p class="vtop-h">고평가</p><ol class="vtop-list">%s</ol></div>'
+            '</div></details>'
+            % (len(allp), len(alln),
+               ''.join(_li(r) for r in allp), ''.join(_li(r) for r in alln)))
+
     return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
             '최근 3개월 평가에서 가장 벌어진 곳</h2>'
             '<details class="vtop-note"><summary>비교 시점·판정 기준</summary>'
@@ -2460,8 +2492,8 @@ def _top5_html():
             '<div class="vtop-cols">'
             '<div class="vtop-col"><p class="vtop-h">저평가</p><ol class="vtop-list">%s</ol></div>'
             '<div class="vtop-col"><p class="vtop-h">고평가</p><ol class="vtop-list">%s</ol></div>'
-            '</div></section>'
-            % (''.join(_li(r) for r in pos), ''.join(_li(r) for r in neg)))
+            '</div>%s</section>'
+            % (''.join(_li(r) for r in pos), ''.join(_li(r) for r in neg), more))
 
 
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
