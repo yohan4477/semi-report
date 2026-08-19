@@ -86,6 +86,11 @@ PICK_CSS = '''
   .stile .st-gap.up{color:var(--risk)}
   .stile .st-gap.down{color:var(--accent)}
   .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
      배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
@@ -411,8 +416,10 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None):
         if not b:
             return ''
         text, tone, tip = b
-        return ('<span class="st-gap %s" title="%s">%s</span>'
-                % (tone, tip.replace('"', '&quot;'), text))
+        # 값이 없는 편(flat)에는 말표를 안 단다 — 「주가 대비 역산」은 뜻이 안 닿는다
+        lab = '' if tone == 'flat' else '<span class="st-gap-l">주가 대비 밸류에이션</span>'
+        return ('<span class="st-gap %s" title="%s">%s%s</span>'
+                % (tone, tip.replace('"', '&quot;'), lab, text))
 
     def _tile(sid):
         (_id, num, title, sub), cs = secs[sid]

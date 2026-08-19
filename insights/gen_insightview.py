@@ -122,6 +122,15 @@ def roster(meta):
     return '<p class="rost">%s</p>' % ''.join(out)
 
 
+def copy_btn(aid, cls):
+    """이 카드(또는 이 갈래)만 가리키는 주소를 집어 가는 버튼.
+
+    페이지 전체 주소밖에 못 보내던 자리다. 카드는 uc-copy, 갈래는 sec-copy로 갈라 두고
+    TAB_JS가 둘을 같이 받는다 — 받은 사람 화면에서 그 갈래를 펴 주는 일까지 거기서 한다."""
+    return ('<button type="button" class="%s" data-anchor="%s">링크 복사</button>'
+            % (cls, nl.esc(aid)))
+
+
 def one(meta, body, tab, kind):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
@@ -129,9 +138,10 @@ def one(meta, body, tab, kind):
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s</h2>'
-            '<p class="sub">%s</p></summary><div class="body">%s</div>%s</details>'
+            '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
             % (tab, nl.esc(kind), period(meta, src), roster(meta),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
+               copy_btn(anchor(head), 'uc-copy'),
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
 
 
@@ -164,12 +174,13 @@ def cards():
             if not got.get(sid) or sid == TOPSEC:
                 continue
             num += 1
-            blocks.append('<section class="isec" data-kind="%s" data-sec="%s" data-grp="%s">'
-                          '<div class="ihead"><span class="inum">%02d</span>'
+            aid = 'sec-%s-%s' % (tab, sid)
+            blocks.append('<section class="isec" id="%s" data-kind="%s" data-sec="%s" '
+                          'data-grp="%s"><div class="ihead"><span class="inum">%02d</span>'
                           '<h3>%s</h3><span class="igrp">%s</span>'
-                          '<span class="icnt">%d</span></div>%s</section>'
-                          % (tab, sid, grp, num, nl.esc(title), nl.esc(GRPNAME[grp]),
-                             len(got[sid]), ''.join(got[sid])))
+                          '<span class="icnt">%d</span>%s</div>%s</section>'
+                          % (aid, tab, sid, grp, num, nl.esc(title), nl.esc(GRPNAME[grp]),
+                             len(got[sid]), copy_btn(aid, 'sec-copy'), ''.join(got[sid])))
         if blocks:
             out.append('<div class="kgroup" data-kind="%s"><h2 class="ktitle">%s</h2>%s</div>'
                        % (tab, nl.esc(kind), ''.join(blocks)))
@@ -177,9 +188,11 @@ def cards():
     if top:
         title = next((t for s, _g, t, _sub in ALLSEC if s == TOPSEC), TOPSEC)
         sub = next((x for s, _g, _t, x in ALLSEC if s == TOPSEC), '')
-        tophtml = ('<section class="topsec"><div class="ihead"><span class="inum">★</span>'
-                   '<h3>%s</h3><span class="igrp">%s</span><span class="icnt">%d</span></div>'
-                   '%s</section>' % (nl.esc(title), nl.esc(sub), len(top), ''.join(top)))
+        tophtml = ('<section class="topsec" id="sec-%s"><div class="ihead">'
+                   '<span class="inum">★</span><h3>%s</h3><span class="igrp">%s</span>'
+                   '<span class="icnt">%d</span>%s</div>%s</section>'
+                   % (TOPSEC, nl.esc(title), nl.esc(sub), len(top),
+                      copy_btn('sec-' + TOPSEC, 'sec-copy'), ''.join(top)))
     return ''.join(out), tophtml, per, bysec, mix
 
 
@@ -292,7 +305,8 @@ COURSE = [
       '빅테크는 쓴 돈만큼 장부에 담지 않는다',
       '같은 1GW인데 매출이 열 배 다르다',
       '같은 날 메타는 코어위브의 고객이자 경쟁자가 됐다',
-      '같은 보증 계약을 한쪽은 다리로, 한쪽은 부풀림으로 센다']),
+      '같은 보증 계약을 한쪽은 다리로, 한쪽은 부풀림으로 센다',
+      '한 회계사가 같은 범위의 중간값이라 적고 서로 다른 프리미엄을 쓴다']),
     ('모델은 어떻게 만들고 얼마를 받나',
      '파는 물건 자체를 본다. 만드는 값이 어디서 붙고, 받는 값이 왜 내리면서 동시에 오르는지다.',
      ['모델을 키우는 돈이 사람 손으로 만드는 과제로 간다',
@@ -601,6 +615,12 @@ CSS = r'''
         font-variant-numeric:tabular-nums}
   .ihead h3{font-size:var(--t-body);font-weight:800;letter-spacing:-.01em;margin:0;color:var(--ink)}
   .icnt{margin-left:auto;font-size:var(--t-lbl);color:var(--faint);font-variant-numeric:tabular-nums}
+  /* 카드 하나·갈래 하나를 지목하는 주소를 집어 가는 버튼 */
+  .uc-copy,.sec-copy{font-family:inherit;font-size:var(--t-lbl);font-weight:750;cursor:pointer;
+        color:var(--sub);background:transparent;border:1px dashed var(--line);
+        border-radius:6px;padding:4px 10px}
+  .uc-copy:hover,.sec-copy:hover{color:var(--accent);border-color:var(--accent)}
+  .uc-copy{margin-top:9px}
   /* 주제 이름 옆에 "AI 판 / AI 밖"을 달아 둔다 — 스크롤 도중에도 어느 쪽인지 안다 */
   .igrp{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
         border:1px solid var(--line);border-radius:999px;padding:1px 7px}
@@ -682,7 +702,45 @@ TAB_JS = '''<script>
     sec=null; kind='all'; apply();
     if(sbar) sbar.scrollIntoView({behavior:'smooth', block:'start'});
   });
+  // 카드 하나·갈래 하나를 지목한 주소로 들어온 사람. 첫 화면이 주제 고르기라 그냥 두면
+  // 링크를 받은 사람이 타일 화면에 떨어진다 — 그 갈래를 펴고 카드를 열어 거기로 보낸다.
+  function jump(el, smooth){
+    var isec=el.closest('.isec'), det=el.closest('details.ins');
+    if(isec){ sec=isec.dataset.sec; kind='all'; apply(); }
+    if(det && !det.open) det.open=true;
+    setTimeout(function(){
+      (det||el).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 60);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var el=document.getElementById(decodeURIComponent(id));
+    if(el) jump(el, smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('.course a[href^="#"], .body a[href^="#card-"]');
+    if(a){
+      var t=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      if(t){ e.preventDefault(); jump(t, true); return; }
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    e.preventDefault();        // 카드 머리 안에 있는 버튼이라 그냥 두면 카드가 접힌다
+    e.stopPropagation();
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  window.addEventListener('hashchange', function(){ fromHash(true); });
   apply();
+  fromHash(false);
 })();
 </script>'''
 
