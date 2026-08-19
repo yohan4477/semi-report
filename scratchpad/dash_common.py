@@ -43,6 +43,13 @@ PICK_CSS = '''
   .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
           margin:16px 0 8px}
   .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
@@ -214,7 +221,7 @@ NAV_JS = '''<script>
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var only=null, picking=true;
+  var only=null, picking=true, sect=null;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
@@ -264,10 +271,28 @@ NAV_JS = '''<script>
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
+    // 섹터 타일은 그 섹터에 든 섹션들의 합이다. 섹션이 범위 탭에 걸려 비면 섹터도 빈다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden){ var c=o.querySelector('.cnt'); n += c? parseInt(c.textContent,10)||0 : 0; }
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
     // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
     box.querySelectorAll('.sgrp').forEach(function(g){
       g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
     });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
@@ -299,7 +324,10 @@ NAV_JS = '''<script>
   });
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
     apply();
     var sec = only ? document.getElementById(only) : null;
@@ -359,19 +387,52 @@ def sec_picker(secs, order, total, extra=None, groups=None):
         tiles.extend(_tile(sid) for sid in order)
         return '<div class="sec-pick sgrid">%s</div>%s' % (''.join(tiles), BACK)
 
-    # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음에 안 들어간
+    # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음 안이
+    # (섹터, 설명, [sid…]) 꼴이면 섹터 타일이 한 겹 더 선다. 묶음·섹터에 안 들어간
     # 섹션이 있으면 화면에서 조용히 사라지므로 여기서 잡는다.
-    placed = [sid for _lab, sids in groups for sid in sids]
+    sectored = any(sids and not isinstance(sids[0], str) for _lab, sids in groups)
+    if sectored:
+        sectors = [(lab, sec) for lab, sids in groups for sec in sids]
+        placed = [sid for _lab, sec in sectors for sid in sec[2]]
+    else:
+        placed = [sid for _lab, sids in groups for sid in sids]
     missing = [sid for sid in order if sid not in placed]
     assert not missing, '섹션 묶음에 빠진 섹션: %s' % ', '.join(missing)
     unknown = [sid for sid in placed if sid not in secs]
     assert not unknown, '없는 섹션을 묶음에 넣었다: %s' % ', '.join(unknown)
+
     body = ['<div class="sgrid">%s</div>' % ''.join(tiles)]
+    if not sectored:
+        for label, sids in groups:
+            inner = ''.join(_tile(sid) for sid in order if sid in sids)
+            body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
+                        '<div class="sgrid">%s</div></div>' % (label, inner))
+        return '<div class="sec-pick">%s</div>%s' % (''.join(body), BACK)
+
+    # 섹터 타일은 그 섹터에 든 섹션 id를 달고 다닌다 — 카드 수를 세는 것도, 눌렀을 때
+    # 어느 회사를 펼지도 이 목록 하나로 정해진다.
+    panels, no = [], 0
     for label, sids in groups:
-        inner = ''.join(_tile(sid) for sid in order if sid in sids)
+        cells = []
+        for name, sub, members in sids:
+            no += 1
+            sect_id = 'sect-%d' % no
+            n = sum(len(secs[sid][1]) for sid in members)
+            cells.append('<button class="stile" data-sect="%s" data-secs="%s" '
+                         'aria-pressed="false">'
+                         '<span class="st-num">%02d</span><span class="st-t">%s</span>'
+                         '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
+                         % (sect_id, ','.join(members), no, name, snip(sub), n))
+            inner = ''.join(_tile(sid) for sid in order if sid in members)
+            panels.append('<div class="sectp" data-sect="%s" hidden>'
+                          '<div class="sectp-head">'
+                          '<button type="button" class="sect-up">◂ 섹터 다시 고르기</button>'
+                          '<span class="sectp-t">%s</span></div>'
+                          '<div class="sgrid">%s</div></div>' % (sect_id, name, inner))
         body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
-                    '<div class="sgrid">%s</div></div>' % (label, inner))
-    return '<div class="sec-pick">%s</div>%s' % (''.join(body), BACK)
+                    '<div class="sgrid">%s</div></div>' % (label, ''.join(cells)))
+    return ('<div class="sec-pick"><div class="sectpick">%s</div>%s</div>%s'
+            % (''.join(body), ''.join(panels), BACK))
 
 
 def layer(secs, lede):

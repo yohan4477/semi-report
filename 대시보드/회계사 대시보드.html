@@ -423,6 +423,13 @@
   .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
           margin:16px 0 8px}
   .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
@@ -514,7 +521,7 @@
 
   
 
-  <div class="sec-pick"><div class="sgrid"><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">35</span></button></div><div class="sgrp"><p class="sgrp-t">🇰🇷 국내</p><div class="sgrid"><button class="stile" data-sec="sec-samsung" aria-pressed="false"><span class="st-num">01</span><span class="st-t">삼성전자 005930</span><span class="st-s">평가 6편을 시기와 방법으로 가른 지도, 그리고 이 회사를 다룬 글 전부</span><span class="st-n cnt">23</span></button><button class="stile" data-sec="sec-hynix" aria-pressed="false"><span class="st-num">02</span><span class="st-t">SK하이닉스 000660</span><span class="st-s">2026년 DCF 지도, 그리고 이 회사를 다룬 글 전부 — 비교 글은 삼성전자…</span><span class="st-n cnt">10</span></button><button class="stile" data-sec="sec-cosmax" aria-pressed="false"><span class="st-num">03</span><span class="st-t">코스맥스 192820</span><span class="st-s">2026년 DCF 한 편 — 값을 흔드는 것이 성장률이 아니라 베타다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-silicon2" aria-pressed="false"><span class="st-num">04</span><span class="st-t">실리콘투 257720</span><span class="st-s">2026년 DCF 한 편 — 앞 3년을 컨센서스로 받고도 값이 두 배 가까이 나온다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-orion" aria-pressed="false"><span class="st-num">05</span><span class="st-t">오리온 271560</span><span class="st-s">2026년 DCF 한 편 — 보수적인 조합을 다 넣어도 괴리가 100%대로 남는다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-hugel" aria-pressed="false"><span class="st-num">06</span><span class="st-t">휴젤 145020</span><span class="st-s">2026년 DCF 한 편 — 예고한 민감도 표가 글에 없다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-jusung" aria-pressed="false"><span class="st-num">07</span><span class="st-t">주성엔지니어링 036930</span><span class="st-s">2026년 DCF 한 편 — 낙관적 시나리오조차 시장가에 못 미친다</span><span class="st-n cnt">1</span></button></div></div><div class="sgrp"><p class="sgrp-t">🌍 국외</p><div class="sgrid"><button class="stile" data-sec="sec-sandisk" aria-pressed="false"><span class="st-num">08</span><span class="st-t">샌디스크 SNDK</span><span class="st-s">2026년 역산 한 편 — 회계상 설비투자가 산업의 자본집약도를 가린다</span><span class="st-n cnt">1</span></button></div></div><div class="sgrp"><p class="sgrp-t">📐 회사 밖 — 값 매기는 법</p><div class="sgrid"><button class="stile" data-sec="sec-etc" aria-pressed="false"><span class="st-num">09</span><span class="st-t">회사 밖 이야기</span><span class="st-s">값 매기는 법 자체를 다룬 글 — 어느 회사에도 매이지 않는다</span><span class="st-n cnt">4</span></button></div></div></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+  <div class="sec-pick"><div class="sectpick"><div class="sgrid"><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">35</span></button></div><div class="sgrp"><p class="sgrp-t">🇰🇷 국내</p><div class="sgrid"><button class="stile" data-sect="sect-1" data-secs="sec-samsung,sec-hynix,sec-jusung" aria-pressed="false"><span class="st-num">01</span><span class="st-t">반도체·장비</span><span class="st-s">메모리 두 곳과 증착장비 한 곳 — 사이클을 어디까지 넣느냐가 갈린다</span><span class="st-n cnt">34</span></button><button class="stile" data-sect="sect-2" data-secs="sec-cosmax,sec-silicon2" aria-pressed="false"><span class="st-num">02</span><span class="st-t">화장품·유통</span><span class="st-s">ODM 한 곳과 유통 플랫폼 한 곳 — 둘 다 할인율이 값을 만든다</span><span class="st-n cnt">2</span></button><button class="stile" data-sect="sect-3" data-secs="sec-hugel" aria-pressed="false"><span class="st-num">03</span><span class="st-t">바이오·에스테틱</span><span class="st-s">보툴리눔 톡신 한 곳</span><span class="st-n cnt">1</span></button><button class="stile" data-sect="sect-4" data-secs="sec-orion" aria-pressed="false"><span class="st-num">04</span><span class="st-t">식품</span><span class="st-s">제과 한 곳</span><span class="st-n cnt">1</span></button></div></div><div class="sgrp"><p class="sgrp-t">🌍 국외</p><div class="sgrid"><button class="stile" data-sect="sect-5" data-secs="sec-sandisk" aria-pressed="false"><span class="st-num">05</span><span class="st-t">메모리·스토리지</span><span class="st-s">낸드플래시 한 곳 — 값이 아니라 지금 값이 무엇을 전제하는지를 되짚는다</span><span class="st-n cnt">1</span></button></div></div><div class="sgrp"><p class="sgrp-t">📐 회사 밖</p><div class="sgrid"><button class="stile" data-sect="sect-6" data-secs="sec-etc" aria-pressed="false"><span class="st-num">06</span><span class="st-t">값 매기는 법</span><span class="st-s">어느 회사에도 매이지 않는 방법론 글</span><span class="st-n cnt">4</span></button></div></div></div><div class="sectp" data-sect="sect-1" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">반도체·장비</span></div><div class="sgrid"><button class="stile" data-sec="sec-samsung" aria-pressed="false"><span class="st-num">01</span><span class="st-t">삼성전자 005930</span><span class="st-s">평가 6편을 시기와 방법으로 가른 지도, 그리고 이 회사를 다룬 글 전부</span><span class="st-n cnt">23</span></button><button class="stile" data-sec="sec-hynix" aria-pressed="false"><span class="st-num">02</span><span class="st-t">SK하이닉스 000660</span><span class="st-s">2026년 DCF 지도, 그리고 이 회사를 다룬 글 전부 — 비교 글은 삼성전자…</span><span class="st-n cnt">10</span></button><button class="stile" data-sec="sec-jusung" aria-pressed="false"><span class="st-num">07</span><span class="st-t">주성엔지니어링 036930</span><span class="st-s">2026년 DCF 한 편 — 낙관적 시나리오조차 시장가에 못 미친다</span><span class="st-n cnt">1</span></button></div></div><div class="sectp" data-sect="sect-2" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">화장품·유통</span></div><div class="sgrid"><button class="stile" data-sec="sec-cosmax" aria-pressed="false"><span class="st-num">03</span><span class="st-t">코스맥스 192820</span><span class="st-s">2026년 DCF 한 편 — 값을 흔드는 것이 성장률이 아니라 베타다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-silicon2" aria-pressed="false"><span class="st-num">04</span><span class="st-t">실리콘투 257720</span><span class="st-s">2026년 DCF 한 편 — 앞 3년을 컨센서스로 받고도 값이 두 배 가까이 나온다</span><span class="st-n cnt">1</span></button></div></div><div class="sectp" data-sect="sect-3" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">바이오·에스테틱</span></div><div class="sgrid"><button class="stile" data-sec="sec-hugel" aria-pressed="false"><span class="st-num">06</span><span class="st-t">휴젤 145020</span><span class="st-s">2026년 DCF 한 편 — 예고한 민감도 표가 글에 없다</span><span class="st-n cnt">1</span></button></div></div><div class="sectp" data-sect="sect-4" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">식품</span></div><div class="sgrid"><button class="stile" data-sec="sec-orion" aria-pressed="false"><span class="st-num">05</span><span class="st-t">오리온 271560</span><span class="st-s">2026년 DCF 한 편 — 보수적인 조합을 다 넣어도 괴리가 100%대로 남는다</span><span class="st-n cnt">1</span></button></div></div><div class="sectp" data-sect="sect-5" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">메모리·스토리지</span></div><div class="sgrid"><button class="stile" data-sec="sec-sandisk" aria-pressed="false"><span class="st-num">08</span><span class="st-t">샌디스크 SNDK</span><span class="st-s">2026년 역산 한 편 — 회계상 설비투자가 산업의 자본집약도를 가린다</span><span class="st-n cnt">1</span></button></div></div><div class="sectp" data-sect="sect-6" hidden><div class="sectp-head"><button type="button" class="sect-up">◂ 섹터 다시 고르기</button><span class="sectp-t">값 매기는 법</span></div><div class="sgrid"><button class="stile" data-sec="sec-etc" aria-pressed="false"><span class="st-num">09</span><span class="st-t">회사 밖 이야기</span><span class="st-s">값 매기는 법 자체를 다룬 글 — 어느 회사에도 매이지 않는다</span><span class="st-n cnt">4</span></button></div></div></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
 
   
 
@@ -7520,7 +7527,7 @@
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var only=null, picking=true;
+  var only=null, picking=true, sect=null;
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
     document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
@@ -7570,10 +7577,28 @@
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
       if(!only || l.dataset.sec!==only) l.hidden = true;
     });
+    // 섹터 타일은 그 섹터에 든 섹션들의 합이다. 섹션이 범위 탭에 걸려 비면 섹터도 빈다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden){ var c=o.querySelector('.cnt'); n += c? parseInt(c.textContent,10)||0 : 0; }
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
     // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
     box.querySelectorAll('.sgrp').forEach(function(g){
       g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
     });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
     var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
     box.hidden = !picking;
     // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
@@ -7605,7 +7630,10 @@
   });
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
     apply();
     var sec = only ? document.getElementById(only) : null;
