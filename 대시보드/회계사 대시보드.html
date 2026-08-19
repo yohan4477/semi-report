@@ -614,14 +614,16 @@
   /* 눌러서 펴는 전체 순위 — 기본 화면은 최근 3개월 다섯 줄이고, 여기에 2026년 평가
      전부가 접혀 있다. 접힌 채로는 한 줄만 먹어 타일이 첫 화면에 남는다 */
   .vtop-all{margin-top:7px;border-top:1px solid var(--line);padding-top:6px}
+  /* 여는 줄은 한 줄짜리 격자다 — 화살표·이름·세는 수는 왼쪽에 붙고 「펼치기·접기」만
+     오른쪽 끝으로 민다. 가운데 두면 어디를 눌러야 하는지가 문장 속에 묻힌다 */
   .vtop-all > summary{cursor:pointer;font-size:10.5px;font-weight:800;color:var(--ink-2);
-                      list-style:none}
+                      list-style:none;display:flex;align-items:baseline;gap:5px}
   .vtop-all > summary::-webkit-details-marker{display:none}
   .vtop-all > summary::before{content:"▸ ";color:var(--ink-3)}
   .vtop-all[open] > summary::before{content:"▾ "}
   /* 화살표만으로는 눌러서 펴는 자리인지 안 읽힌다. 말로 같이 적고 상태에 따라 바꾼다 */
-  .vtop-all > summary::after{content:" 펼치기";color:var(--ink-3);font-weight:700}
-  .vtop-all[open] > summary::after{content:" 접기"}
+  .vtop-all > summary::after{content:"펼치기";color:var(--ink-3);font-weight:700;margin-left:auto}
+  .vtop-all[open] > summary::after{content:"접기"}
   .vtop-all > summary:hover{color:var(--accent)}
   .vtop-all .vtop-n{font-weight:700;color:var(--ink-3);margin-left:5px}
   .vtop-all .vtop-cols{margin-top:6px}
