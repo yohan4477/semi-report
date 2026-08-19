@@ -298,7 +298,14 @@ NAV_JS = '''<script>
         b.setAttribute('aria-pressed','false');
       });
     });
+    // 「전체 보기」는 회사를 안 고른 채 전부 읽는 화면이다(picking=false, only=null).
+    // 갈래 버튼은 회사 하나를 고른 뒤에만 뜻이 있으므로 여기서는 글(.sv-posts)만 펴고
+    // 지도(.sv-val)는 접어 둔다 — 회사 스물둘의 지도를 한꺼번에 펴면 첫 카드에 닿기까지
+    // 스크롤이 수십 판이 된다. 이 갈래가 없던 동안 전체 보기에 제목만 나오고 카드가
+    // 통째로 안 나왔다.
+    var allView = !picking && !only;
     document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      if(allView){ l.hidden = !l.classList.contains('sv-posts'); return; }
       var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
       if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
       // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
