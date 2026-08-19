@@ -1928,6 +1928,8 @@ VALUATION_CSS = '''
     .vtop-cols{gap:0 10px}
     .vtop-list a{font-size:10px}
     .vtop-v{font-size:10px}
+    .vtop-d{font-size:9px}
+    .vtop-r{gap:4px}
     .vtop-h{font-size:8.5px}
   }
   @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
@@ -1938,7 +1940,10 @@ VALUATION_CSS = '''
   .vtop-list li:first-child{border-top:0}
   .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700}
   .vtop-list a:hover{color:var(--accent)}
+  .vtop-r{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
   .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
+  /* 평가일 — 값보다 작고 회색이다. 편마다 비교 시점이 다르므로 숫자 옆에 붙여 둔다 */
+  .vtop-d{font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:700;color:var(--ink-3)}
   .vtop-v.up{color:var(--risk)}
   .vtop-v.down{color:var(--accent)}
   /* 검색창 → 보드 → 타일 사이 간격. 공용 마진(검색창 14px, .sgrid 14px)이 이 장에서는
@@ -2003,7 +2008,7 @@ def _top5_rows():
             continue
         if _badge_date(tip) < cutoff:
             continue
-        rows.append((sid, _sec_name(sid), text, tone, _parse_gap(text)))
+        rows.append((sid, _sec_name(sid), text, tone, _parse_gap(text), _badge_date(tip)))
     pos = sorted([r for r in rows if r[3] == 'up'], key=lambda r: -r[4])[:5]
     neg = sorted([r for r in rows if r[3] == 'down'], key=lambda r: r[4])[:5]
     return pos, neg
@@ -2014,9 +2019,13 @@ def _top5_html():
     assert pos and neg, '괴리 상위 5 보드에 넣을 값이 부족하다 — 플러스 %d건, 마이너스 %d건' % (len(pos), len(neg))
 
     def _li(row):
-        sid, name, text, tone, _v = row
-        return ('<li><a class="kin-link" href="#%s">%s</a>'
-                '<span class="vtop-v %s">%s</span></li>' % (sid, name, tone, text))
+        sid, name, text, tone, _v, day = row
+        # 평가일을 값 옆에 같이 둔다. 편마다 비교 시점이 다르니 숫자만 보면 서로 다른 날의
+        # 값을 나란히 견주게 된다. 값보다 작고 회색이라 숫자를 안 먹는다.
+        return ('<li><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
+                '<span class="vtop-v %s">%s</span>'
+                '<span class="vtop-d">%02d.%02d.%02d</span></span></li>'
+                % (sid, name, tone, text, day.year % 100, day.month, day.day))
 
     # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
     # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
