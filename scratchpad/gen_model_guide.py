@@ -735,21 +735,24 @@ CARDS = [{
 HEADER = '''  <header>
     <p class="eyebrow">AI 모델 — 처음 보는 사람을 위한 가이드</p>
     <h1>모델 가이드</h1>
-    <div class="meta-row">
+  </header>'''
+
+# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
+# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
+# 수록 건수·정리일 같은 명세도 맨 밑이다. 처음 화면에서 알아야 할 것은 무엇이 들었나이지
+# 몇 건인지가 아니다. 설명 바로 뒤, 저작권 줄 앞에 선다.
+META = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>카드 <b>%d장</b></span>
       <span>출처 <b>12편</b></span>
       <span>소스 <b>SemiAnalysis · 미국주식 사관학교</b></span>
-    </div>
-  </header>''' % (STAMP, len(CARDS))
+    </div>'''% (STAMP, len(CARDS))
 
-# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
-# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
 LEDE = '''<p class="lede">AI 모델이 <b>무엇을 하고, 어떻게 만들어지고, 왜 그 값이 나오는지</b>를 순서대로 읽는
        페이지입니다. 카드는 주제로 묶습니다. 원문 한 편이 카드 한 장이 되지는 않습니다. 말로만 지나가면 안 박히는 대목에는 그림을
        함께 그렸습니다. 숫자는 모두 원문에서 왔고 카드 아래 링크로 걸어 두었습니다. 투자 판단이 아닙니다.</p>'''
 
-FOOTER = (LEDE + '\n처음 보는 사람을 위한 해설 페이지입니다. 판단을 새로 만들지 않고 원문에 나온 숫자를 풀어 씁니다.\n'
+FOOTER = (LEDE + META + '\n처음 보는 사람을 위한 해설 페이지입니다. 판단을 새로 만들지 않고 원문에 나온 숫자를 풀어 씁니다.\n'
           '  판단이 궁금하면 <code>통합 인사이트</code>로, 구조를 더 깊이 보려면 <code>개념 지도</code>로 갑니다.\n'
           '  원문은 <code>content/newsletter/</code>와 <code>content/understanding/</code>, '
           '페이지 생성은 <code>scratchpad/gen_model_guide.py</code>(공용 부품 <code>dash_common.py</code>).')

@@ -788,8 +788,7 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">노트 45장을 가로질러</p>
   <h1>통합 인사이트</h1>
-  <div class="meta"><span>판단 __N__건</span>
-    <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
+  <div class="meta"><a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
 __GUIDE__
 __TOP__
@@ -800,6 +799,7 @@ __TABJS__
 <p class="lede">문서 하나를 요약한 페이지가 아닙니다. 원문마다 노트 한 장을 만들어 두고,
   그 노트 전량을 한 번에 읽어야 보이는 것만 올립니다. 문장 옆 줄번호를 누르면 근거가 된
   원문 그 줄로 가고, 카드 아래 「참고한 문서」를 펼치면 무엇을 읽고 썼는지 나옵니다.</p>
+<div class="meta"><span>판단 __N__건</span></div>
 근거는 원문 줄 인용입니다. 종목 추천이 아니며 가격·밸류에이션·타이밍은
 이 체계에 없습니다.</footer>
 </div>

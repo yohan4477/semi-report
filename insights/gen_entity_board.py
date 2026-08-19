@@ -256,8 +256,7 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">__EMOJI__ 추적</p>
   <h1>__TITLE__</h1>
-  <div class="meta"><span>__STAMP__</span>
-    <a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
+  <div class="meta"><a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
 <div class="body">__BODY__</div>
 __SIGS__
@@ -267,6 +266,7 @@ __SIGS__
 <ul class="srcs">__SRCS__</ul>
 <footer>
 <p class="lede">__LEDE__</p>
+<div class="meta"><span>__STAMP__</span></div>
 추적 대상은 <code>insights/views/entities.json</code>, 본문은
 <code>insights/tracks/&lt;키&gt;.md</code>입니다.
 재생성 <code>py insights/gen_entity_board.py musk</code>.

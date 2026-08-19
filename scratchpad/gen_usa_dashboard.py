@@ -2702,20 +2702,23 @@ CARDS = [{
 HEADER = '''  <header>
     <p class="eyebrow">카레라 — 제3자 해설 아카이브</p>
     <h1>미국주식 사관학교 인사이트</h1>
-    <div class="meta-row">
+  </header>'''
+
+# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
+# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
+# 수록 건수·정리일 같은 명세도 맨 밑이다. 처음 화면에서 알아야 할 것은 무엇이 들었나이지
+# 몇 건인지가 아니다. 설명 바로 뒤, 저작권 줄 앞에 선다.
+META = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>수록 <b>%d건</b>(텍스트 %d)</span>
       <span>채널 <b>미국주식 사관학교</b></span>
       <span>필자 <b>카레라</b></span>
-    </div>
-  </header>''' % (STAMP, len(CARDS), len(CARDS))
+    </div>'''% (STAMP, len(CARDS), len(CARDS))
 
-# 페이지 설명은 맨 밑이다. 첫 화면은 어느 장이든 섹션 타일이라(CLAUDE.md), 설명 여섯 줄이
-# 그 위에 서면 타일이 화면 밖으로 밀린다. 읽는 순서 안내(「처음 오셨다면」)만 위에 남긴다.
 LEDE = '''<p class="lede">네이버 프리미엄 유료 채널 「미국주식 사관학교」(필자 카레라)의 텍스트를 요약해 정리합니다.
        원문 창작 없이 필자의 논지와 인용 수치만 재구성했습니다.</p>'''
 
-FOOTER = (LEDE + '\n제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 공개 저장소에 전문을 두지 않습니다.\n'
+FOOTER = (LEDE + META + '\n제3자 해설 아카이브 · 원문은 유료 구독 콘텐츠로 공개 저장소에 전문을 두지 않습니다.\n'
           '  요약은 <code>content/understanding/미국주식 사관학교/</code>, '
           '페이지 생성은 <code>scratchpad/gen_usa_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).')
 

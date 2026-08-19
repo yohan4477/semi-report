@@ -178,7 +178,6 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">Yomianalysis</p>
   <h1>어디로 들어갈까</h1>
-  <div class="meta"><span>페이지 __N__장</span><span>주제 __T__ · 소스 아카이브 __L__</span></div>
 </header>
 __BLOCKS__
 <div class="rule"><b>페이지를 늘리지 않는 규칙.</b> 리포트 한 편이나 릴리스 하나 때문에
@@ -187,6 +186,7 @@ __BLOCKS__
 <footer>
 <p class="lede">SemiAnalysis 뉴스레터와 LinkedIn·YouTube 신호, 그리고 제3자 해설을
   한국어로 옮기고 엮은 것들입니다. 여기만 북마크하면 됩니다 — 나머지는 이 페이지에서 닿습니다.</p>
+<div class="meta"><span>페이지 __N__장</span><span>주제 __T__ · 소스 아카이브 __L__</span></div>
 이 저장소는 public입니다. 종목이 언급되더라도 투자 추천이 아니며,
 가격·밸류에이션·타이밍은 이 체계에 없습니다.</footer>
 </div>
