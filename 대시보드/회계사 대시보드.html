@@ -583,12 +583,20 @@
     .vtop-h{font-size:8.5px}
   }
   @media (max-width:380px){ .vtop-cols{grid-template-columns:1fr} }
-  .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
+  .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
+          white-space:nowrap}
   /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
   .vtop-hd > *{border-top:0 !important;padding-bottom:2px}
   /* 전체 순위에는 「지금 대비」 칸이 하나 더 선다. 접힌 화면(최근 3개월 다섯 줄)은
      좁게 두고 펼친 목록만 넓힌다 — 첫 화면 높이를 지키려는 것이다 */
-  .vtop-all .vtop-list{grid-template-columns:minmax(0,max-content) max-content max-content max-content}
+  .vtop-all .vtop-list{grid-template-columns:minmax(5.5em,max-content) max-content max-content max-content}
+  /* 펼친 순위는 한 줄에 네 칸이라, 좌우 두 칸으로 서면 좁은 화면에서 여덟 칸이 된다.
+     그러면 바닥을 준 이름 칸부터 넘쳐 회사 이름이 한 글자로 잘렸다(폰 화면에서 확인).
+     넓지 않으면 위아래로 쌓아 각 칸에 폭을 통째로 준다 — 접힌 보드(세 칸)는 그대로 둔다 */
+  @media (max-width:1000px){
+    .vtop-all .vtop-cols{grid-template-columns:1fr}
+    .vtop-all .vtop-col + .vtop-col{margin-top:10px}
+  }
   .vtop-now{font-variant-numeric:tabular-nums;font-size:10.5px;font-weight:800;
             justify-self:end;white-space:nowrap}
   .vtop-now.up{color:var(--risk)}
@@ -605,7 +613,7 @@
      칸을 내용 폭으로 두고 왼쪽으로 몰아 숫자가 이름 옆에 붙게 한다 — 가운데를 1fr로 두면
      남는 폭을 다 먹어 이름과 값 사이가 245px까지 벌어졌다. */
   .vtop-list{display:grid;
-             grid-template-columns:minmax(0,max-content) max-content max-content;
+             grid-template-columns:minmax(5.5em,max-content) max-content max-content;
              justify-content:start;gap:0 14px;margin:0;padding:0;list-style:none}
   .vtop-list > li{display:contents}
   /* 회사 이름·값·날짜를 한 격자의 세 칸으로 세운다. flex로 양끝에 밀면 이름 길이에 따라
@@ -615,7 +623,8 @@
                       border-top:1px solid var(--line)}
   .vtop-list > li:first-child > *{border-top:0}
   .vtop-list a{color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;
-               min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+               min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+               white-space:nowrap}
   .vtop-list a:hover{color:var(--accent)}
   /* 값과 날짜를 칸으로 세운다 — 회사 이름 길이가 제각각이라 flex로 밀면 값의 오른쪽 끝이
      줄마다 어긋나 세로로 안 읽힌다. 폭을 못 박고 오른쪽으로 붙인다 */
