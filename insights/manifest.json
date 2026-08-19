@@ -2111,6 +2111,17 @@
    "hash": "6f705c2bf726"
   },
   {
+   "id": "und:회계사:DCF-내재가치-26만원-주가보다-192-위-삼성SDS-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-04",
+   "path": "content/understanding/회계사/[260804] DCF 내재가치 26만원, 주가보다 19.2% 위 - 삼성SDS - 엘곰.md",
+   "hash": "cd1ff3a9ef3f"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-38만원-주가보다-1808-위-오리온-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2120,6 +2131,28 @@
    "date": "2026-08-11",
    "path": "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md",
    "hash": "400b83699662"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-51400원-주가보다-598-아래-주성엔지니어링-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-09",
+   "path": "content/understanding/회계사/[260809] DCF 내재가치 51,400원, 주가보다 59.8% 아래 - 주성엔지니어링 - 엘곰.md",
+   "hash": "b71882265a91"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-58만원-주가보다-113-위-휴젤-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-09",
+   "path": "content/understanding/회계사/[260809] DCF 내재가치 58만원, 주가보다 113% 위 - 휴젤 - 엘곰.md",
+   "hash": "9ae796e7ccbf"
   },
   {
    "id": "und:회계사:DCF-내재가치-62만원-주가보다-169-위-코스맥스-엘곰",
@@ -2384,6 +2417,17 @@
    "date": "2026-02-26",
    "path": "content/understanding/회계사/[260226] 시총 1,290조가 요구하는 영업이익은 61조다 - DCF 역산으로 본 삼성전자 - 엘곰.md",
    "hash": "3285e839986e"
+  },
+  {
+   "id": "und:회계사:시총-1875억-달러가-요구하는-내재성장률은-912다-샌디스크-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-08",
+   "path": "content/understanding/회계사/[260808] 시총 1,875억 달러가 요구하는 내재성장률은 9~12%다 - 샌디스크 - 엘곰.md",
+   "hash": "cea2ff88c4a8"
   },
   {
    "id": "und:회계사:어닝서프라이즈와-플러스-FCF-없인-주가는-안-오른다-AI-빅테크-엘곰",

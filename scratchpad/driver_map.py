@@ -265,9 +265,7 @@ def _driver_cells(did):
     서로 견줘진다. 세로로 쌓으면 값 하나를 보려고 설명 문단을 건너뛰어야 한다."""
     d = dmd.DRIVERS[did]
     basis_label, basis_desc = dmd.BASIS[d['basis']]
-    grp = _GROUP_OF.get(did, '')
-    name = ('%s%s' % (d['label'],
-                      ('<span class="dm-dv-grp">%s</span>' % grp) if grp else ''))
+    name = d['label']
     basis = ('<span class="dm-basis%s" title="%s">%s</span>'
              % (' dm-basis--none' if d['basis'] == 'none' else '', basis_desc, basis_label))
     why = ('%s<span class="dm-dvt-impact"><b>그래서</b> %s</span>%s'
@@ -280,8 +278,15 @@ def _drivers_table_html(dids):
 
     네 열로 늘어놓으면 설명 칸이 좁아 문장이 세로로 흘렀고, 가로로 뒤집으면 한 항목을
     보려고 옆으로 밀어야 했다. 두 열이면 좁은 화면에서도 가로 스크롤이 없다(2026-08-19)."""
-    out = []
+    out, cur = [], None
     for did in dids:
+        # 묶음(「이익 수준」 같은 상위 갈래)은 드라이버 이름 옆 알약이 아니라 그 묶음이
+        # 시작하는 자리의 머리줄로 낸다. 알약으로 붙이면 이름과 같은 층으로 읽히는데
+        # 실제로는 드라이버 여럿을 덮는 위 칸이다(2026-08-19 화면에서 지적).
+        grp = _GROUP_OF.get(did, '')
+        if grp and grp != cur:
+            out.append('<tr class="dm-dvt-grp"><th colspan="2">%s</th></tr>' % grp)
+        cur = grp
         name, val, basis, why, is_none = _driver_cells(did)
         cls = ' class="dm-dv--none"' if is_none else ''
         out.append('<tr class="dm-dvt-head"%s><th colspan="2">%s</th></tr>'
@@ -1274,7 +1279,9 @@ DM_CSS = '''<style>
 .dm-dvt tr.dm-dv--none th{box-shadow:inset 3px 0 0 var(--risk);padding-left:7px}
 .dm-dvt-impact{display:block;margin-top:4px;color:var(--ink-2)}
 .dm-dvt-impact b{color:var(--ink);font-weight:850;margin-right:4px}
-.dm-dvt .dm-dv-grp{display:block;font-size:10px;font-weight:700;color:var(--ink-3);margin-top:2px}
+.dm-dvt-grp th{text-align:left;font-size:9.5px;font-weight:850;letter-spacing:.06em;
+     color:var(--ink-3);padding:12px 0 4px;border-bottom:1px solid var(--line)}
+.dm-dvt tr:first-child.dm-dvt-grp th{padding-top:2px}
 .dm-dvt tr.dm-dv--none th[scope="row"]{box-shadow:inset 3px 0 0 var(--risk)}
 @media (max-width:560px){
   .dm-dvt{font-size:11.5px}
