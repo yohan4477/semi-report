@@ -2155,6 +2155,17 @@
    "hash": "b71882265a91"
   },
   {
+   "id": "und:회계사:DCF-내재가치-57만원-주가보다-589-위-에이피알-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-22",
+   "path": "content/understanding/회계사/[260722] DCF 내재가치 57만원, 주가보다 58.9% 위 - 에이피알 - 엘곰.md",
+   "hash": "864f4fbacb0c"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-58만원-주가보다-113-위-휴젤-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2252,6 +2263,17 @@
    "date": "2024-11-28",
    "path": "content/understanding/회계사/[241128] PEG 0.27로 본 저평가 - Peter Lynch 평가법 1 - 삼성전자 - 엘곰.md",
    "hash": "a17832daacdc"
+  },
+  {
+   "id": "und:회계사:RIM-내재가치-138만145만원CAP-510년-주가보다-3239-위-신한지주-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-28",
+   "path": "content/understanding/회계사/[260728] RIM 내재가치 13.8만~14.5만원(CAP 5~10년), 주가보다 32~39% 위 - 신한지주 - 엘곰.md",
+   "hash": "3d202e2b6580"
   },
   {
    "id": "und:회계사:ROE-61-대-40-유동비율-1226-대-290-마이크론과-SK하이닉스-엘곰",
