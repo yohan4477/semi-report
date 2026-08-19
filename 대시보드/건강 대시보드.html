@@ -398,10 +398,11 @@
     border:1px solid var(--line);background:var(--surface,#fff);
     transition:border-color .15s ease,transform .15s ease}
   .stile:hover{border-color:var(--accent);transform:translateY(-1px)}
-  /* 고른 타일은 테두리를 검정으로 굵히지 않는다 — 배경을 옅게 깔고 테두리만 강조색으로
-     바꾼다. 검정 테두리에 안쪽 그림자를 겹치면 눌린 타일이 화면에서 튀어 나온다 */
-  .stile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-  .stile[aria-pressed="true"] .st-t{color:var(--accent-ink)}
+  /* 고른 타일은 회사 안 버튼(.sw-btn)과 같은 꼴로 눕힌다 — 테두리와 글자만 강조색으로
+     바뀌고 배경은 그대로다. 검정 테두리에 안쪽 그림자를 겹치거나 배경을 파랗게 채우면
+     타일 하나가 화면에서 튀어 나와, 나머지 타일이 눌린 것처럼 읽힌다 */
+  .stile[aria-pressed="true"]{border-color:var(--accent)}
+  .stile[aria-pressed="true"] .st-t{color:var(--accent)}
   .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
     font-variant-numeric:tabular-nums}
   .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
@@ -436,7 +437,8 @@
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
   .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
+          border:1px solid var(--line);border-radius:999px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
   .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
@@ -449,10 +451,17 @@
   .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
          border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
   .sw-up:hover{border-color:var(--accent);color:var(--accent)}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
   .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
-          border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
-  .sw-btn:hover{border-color:var(--accent);color:var(--accent)}
-  .sw-btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--accent)}
+  .sw-btn[aria-pressed="true"]{border-color:var(--accent);
+          color:var(--accent-ink,var(--accent));
+          background:var(--soft,var(--accent-soft))}
   .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
   .sv-val[hidden], .sv-posts[hidden]{display:none}
   /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.

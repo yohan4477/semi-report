@@ -398,10 +398,11 @@
     border:1px solid var(--line);background:var(--surface,#fff);
     transition:border-color .15s ease,transform .15s ease}
   .stile:hover{border-color:var(--accent);transform:translateY(-1px)}
-  /* 고른 타일은 테두리를 검정으로 굵히지 않는다 — 배경을 옅게 깔고 테두리만 강조색으로
-     바꾼다. 검정 테두리에 안쪽 그림자를 겹치면 눌린 타일이 화면에서 튀어 나온다 */
-  .stile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-  .stile[aria-pressed="true"] .st-t{color:var(--accent-ink)}
+  /* 고른 타일은 회사 안 버튼(.sw-btn)과 같은 꼴로 눕힌다 — 테두리와 글자만 강조색으로
+     바뀌고 배경은 그대로다. 검정 테두리에 안쪽 그림자를 겹치거나 배경을 파랗게 채우면
+     타일 하나가 화면에서 튀어 나와, 나머지 타일이 눌린 것처럼 읽힌다 */
+  .stile[aria-pressed="true"]{border-color:var(--accent)}
+  .stile[aria-pressed="true"] .st-t{color:var(--accent)}
   .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
     font-variant-numeric:tabular-nums}
   .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
