@@ -1,0 +1,151 @@
+{
+ "sec-apr": {
+  "code": "278470",
+  "name": "에이피알"
+ },
+ "sec-bobcat": {
+  "checked_by": "이름 대조",
+  "code": "241560",
+  "name": "두산밥캣"
+ },
+ "sec-cosmax": {
+  "code": "192820",
+  "name": "코스맥스"
+ },
+ "sec-ecopro": {
+  "code": "247540",
+  "name": "에코프로비엠"
+ },
+ "sec-hanmi": {
+  "checked_by": "이름 대조",
+  "code": "042700",
+  "name": "한미반도체"
+ },
+ "sec-hdel": {
+  "code": "267260",
+  "name": "HD현대일렉트릭"
+ },
+ "sec-hdhi": {
+  "code": "329180",
+  "name": "HD현대중공업"
+ },
+ "sec-hmc": {
+  "checked_by": "이름 대조",
+  "code": "005380",
+  "name": "현대차"
+ },
+ "sec-hugel": {
+  "code": "145020",
+  "name": "휴젤"
+ },
+ "sec-hws": {
+  "code": "272210",
+  "name": "한화시스템"
+ },
+ "sec-hynix": {
+  "code": "000660",
+  "name": "SK하이닉스"
+ },
+ "sec-hyosung": {
+  "code": "298040",
+  "name": "효성중공업"
+ },
+ "sec-isu": {
+  "code": "007660",
+  "name": "이수페타시스"
+ },
+ "sec-jeju": {
+  "code": "080220",
+  "name": "제주반도체"
+ },
+ "sec-jusung": {
+  "code": "036930",
+  "name": "주성엔지니어링"
+ },
+ "sec-kia": {
+  "code": "000270",
+  "name": "기아"
+ },
+ "sec-kolmar": {
+  "code": "161890",
+  "name": "한국콜마"
+ },
+ "sec-kzinc": {
+  "code": "010130",
+  "name": "고려아연"
+ },
+ "sec-lgcns": {
+  "checked_by": "이름 대조",
+  "code": "064400",
+  "name": "LG씨엔에스"
+ },
+ "sec-lge": {
+  "code": "066570",
+  "name": "LG전자"
+ },
+ "sec-lnf": {
+  "checked_by": "이름 대조",
+  "code": "066970",
+  "name": "엘앤에프"
+ },
+ "sec-lselectric": {
+  "code": "010120",
+  "name": "LS ELECTRIC"
+ },
+ "sec-mobis": {
+  "checked_by": "이름 대조",
+  "code": "012330",
+  "name": "현대모비스"
+ },
+ "sec-naver": {
+  "code": "035420",
+  "name": "NAVER"
+ },
+ "sec-orion": {
+  "code": "271560",
+  "name": "오리온"
+ },
+ "sec-samsung": {
+  "code": "005930",
+  "name": "삼성전자"
+ },
+ "sec-sbl": {
+  "checked_by": "이름 대조",
+  "code": "207940",
+  "name": "삼성바이오로직스"
+ },
+ "sec-scnt": {
+  "checked_by": "이름 대조",
+  "code": "028260",
+  "name": "삼성물산"
+ },
+ "sec-sdi": {
+  "checked_by": "이름 대조",
+  "code": "006400",
+  "name": "삼성SDI"
+ },
+ "sec-sds": {
+  "code": "018260",
+  "name": "삼성에스디에스"
+ },
+ "sec-semco": {
+  "code": "009150",
+  "name": "삼성전기"
+ },
+ "sec-shinhan": {
+  "code": "055550",
+  "name": "신한지주"
+ },
+ "sec-silicon2": {
+  "code": "257720",
+  "name": "실리콘투"
+ },
+ "sec-skt": {
+  "code": "017670",
+  "name": "SK텔레콤"
+ },
+ "sec-wontech": {
+  "code": "336570",
+  "name": "원텍"
+ }
+}

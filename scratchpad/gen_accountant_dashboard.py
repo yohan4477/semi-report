@@ -2,7 +2,7 @@
 # 밸류에이션 대시보드 생성. 네이버 프리미엄 유료 채널 필자 엘곰(회계사)의 DCF 글 7편을 카드로 담는다.
 # 카드는 이 파일 CARDS에 적고 재실행하면 페이지가 다시 만들어진다.
 # 마크업과 CSS는 dash_common이 갖고 있고, 금융·부동산·미국주식 사관학교 대시보드와 한 벌로 움직인다.
-import calendar, datetime, io, os, re, sys
+import calendar, datetime, io, json, os, re, sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -2523,6 +2523,15 @@ VALUATION_CSS = '''
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3)}
   /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
   .vtop-hd > *{border-top:0 !important;padding-bottom:2px}
+  /* 전체 순위에는 「지금 대비」 칸이 하나 더 선다. 접힌 화면(최근 3개월 다섯 줄)은
+     좁게 두고 펼친 목록만 넓힌다 — 첫 화면 높이를 지키려는 것이다 */
+  .vtop-all .vtop-list{grid-template-columns:minmax(0,max-content) max-content max-content max-content}
+  .vtop-now{font-variant-numeric:tabular-nums;font-size:10.5px;font-weight:800;
+            justify-self:end;white-space:nowrap}
+  .vtop-now.up{color:var(--risk)}
+  .vtop-now.down{color:var(--accent)}
+  .vtop-now.flat{color:var(--ink-3);font-weight:700}
+  .vtop-src{margin:5px 0 0;font-size:9.5px;line-height:1.45;color:var(--ink-3)}
   .vtop-h2{font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
            white-space:nowrap}
   .vtop-hd .vtop-h2:nth-of-type(1){justify-self:end}
@@ -2625,6 +2634,46 @@ def _badge_date(tip):
     return datetime.date(*[int(x) for x in m.groups()])
 
 
+# 필자가 낸 주당 내재가치. 배지에는 그가 적은 괴리율이 그대로 서고, 이 표는 그 값을 오늘
+# 종가와 다시 견주는 데만 쓴다. 총액으로만 내고 주당을 안 낸 편(기아)과 값을 안 내는 편
+# (역산·알파벳)은 여기 없다 — 없는 값을 만들지 않는다.
+SEC_INTRINSIC = {
+    'sec-samsung': 361000, 'sec-hynix': 1880000, 'sec-cosmax': 620000,
+    'sec-silicon2': 85100, 'sec-orion': 380000, 'sec-hugel': 580000,
+    'sec-jusung': 51400, 'sec-sds': 257381, 'sec-lselectric': 108915,
+    'sec-apr': 570500, 'sec-shinhan': 140534, 'sec-hdel': 557698,
+    'sec-semco': 599679, 'sec-kolmar': 352520, 'sec-hdhi': 435000,
+    'sec-hws': 82941, 'sec-isu': 96163, 'sec-naver': 354800,
+    'sec-lgcns': 108400, 'sec-scnt': 460177, 'sec-hmc': 633700,
+    'sec-mobis': 650361, 'sec-bobcat': 124956, 'sec-skt': 149108,
+    'sec-hyosung': 1209445, 'sec-lge': 277794, 'sec-wontech': 12771,
+    'sec-kzinc': 1305033,
+}
+
+_PRICES = os.path.join(dc.ROOT, 'insights', 'prices.json')
+
+
+def _now_gap(sid):
+    """필자 값이 오늘 종가보다 몇 % 위/아래인가. 시세나 값이 없으면 None을 낸다.
+
+    필자 괴리율과 다른 값이다 — 그가 견준 주가는 그 글의 시점이고 이것은 오늘 종가다.
+    그래서 화면에서도 다른 칸에 다른 이름으로 세운다."""
+    v = SEC_INTRINSIC.get(sid)
+    if not v or not os.path.isfile(_PRICES):
+        return None
+    items = json.load(io.open(_PRICES, encoding='utf-8')).get('items', {})
+    row = items.get(sid)
+    if not row or not row.get('price'):
+        return None
+    return (v / float(row['price']) - 1) * 100
+
+
+def _price_asof():
+    if not os.path.isfile(_PRICES):
+        return ''
+    return json.load(io.open(_PRICES, encoding='utf-8')).get('as_of') or ''
+
+
 def _rank_rows(since, top=None):
     """SEC_BADGES에서 since 이후·역산 제외분을 골라 (저평가, 고평가)로 갈라 세운다.
 
@@ -2658,25 +2707,35 @@ def _top5_html():
              + _rank_rows(datetime.date(2026, 1, 1))[1])
     show_year = len(yr) > 1 or yr != {datetime.date.today().year}
 
-    def _hd(side):
+    now_asof = _price_asof()
+
+    def _hd(side, wide=False):
         # 칸 이름 줄. 날짜가 무엇의 날짜인지 밝힌다 — 평가를 올린 날이다. 견준 주가의
         # 날짜는 이와 다를 수 있어(글보다 하루 이틀 앞선 종가를 쓰는 편이 있다) 배지에
         # 마우스를 올리면 뜨는 설명에 따로 적는다. 「주가 기준일」이라 적으면 마지막
         # 장마감 종가를 가리키는 말이 되어 뜻이 어긋난다.
-        return ('<li class="vtop-hd"><span class="vtop-h">%s</span>'
+        tail = '<span class="vtop-h2">지금 대비</span>' if wide else ''
+        return ('<li class="vtop-hd%s"><span class="vtop-h">%s</span>'
                 '<span class="vtop-h2">괴리</span>'
-                '<span class="vtop-h2">평가 시점</span></li>' % side)
+                '<span class="vtop-h2">평가 시점</span>%s</li>'
+                % (' vtop-w' if wide else '', side, tail))
 
-    def _li(row):
+    def _li(row, wide=False):
         sid, name, text, tone, _v, day = row
         # 평가일을 값 옆에 같이 둔다. 편마다 비교 시점이 다르니 숫자만 보면 서로 다른 날의
         # 값을 나란히 견주게 된다. 값보다 작고 회색이라 숫자를 안 먹는다.
         when = ('%02d.%02d.%02d' % (day.year % 100, day.month, day.day) if show_year
                 else '%02d.%02d' % (day.month, day.day))
-        return ('<li><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
+        tail = ''
+        if wide:
+            g = _now_gap(sid)
+            tail = ('<span class="vtop-now %s">%+.1f%%</span>'
+                    % ('up' if g >= 0 else 'down', g)) if g is not None else \
+                   '<span class="vtop-now flat">—</span>'
+        return ('<li%s><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
                 '<span class="vtop-v %s">%s</span>'
-                '<span class="vtop-d">%s</span></span></li>'
-                % (sid, name, tone, text, when))
+                '<span class="vtop-d">%s</span>%s</span></li>'
+                % (' class="vtop-w"' if wide else '', sid, name, tone, text, when, tail))
 
     # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
     # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
@@ -2687,13 +2746,16 @@ def _top5_html():
     allp, alln = _rank_rows(datetime.date(2026, 1, 1))
     more = ('<details class="vtop-all"><summary>2026년 평가 전부 보기 '
             '<span class="vtop-n">저평가 %d · 고평가 %d</span></summary>'
+            '<p class="vtop-src">「지금 대비」는 필자 값을 오늘 종가와 다시 견준 값이다 — '
+            '필자가 견준 주가는 그 글의 시점이라 앞의 괴리와 다르다. 시세 %s, 네이버 금융. '
+            '값을 안 내는 편과 총액으로만 낸 편은 이 칸이 비어 있다.</p>'
             '<div class="vtop-cols">'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '</div></details>'
-            % (len(allp), len(alln),
-               _hd('저평가'), ''.join(_li(r) for r in allp),
-               _hd('고평가'), ''.join(_li(r) for r in alln)))
+            % (len(allp), len(alln), now_asof,
+               _hd('저평가', True), ''.join(_li(r, True) for r in allp),
+               _hd('고평가', True), ''.join(_li(r, True) for r in alln)))
 
     return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
             '최근 3개월 평가에서 가장 벌어진 곳</h2>'
