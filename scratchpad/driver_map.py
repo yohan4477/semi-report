@@ -924,42 +924,40 @@ def _mycalc_html():
             '</details>' % (_by_badge('ours'), body))
 
 
-def _timeline_html():
-    # kind: 'price'(적정가를 낸 평가) | 'ask'(역산 — 가격이 입력이라 값이 아니라
-    # 요구 문장이다). 같은 칸의 값처럼 보이면 안 되므로 행 배경을 경고톤으로 가른다.
-    # JS는 e.target.closest('.dm-tl-item')로 행을 찾으므로 클래스·data-target·
-    # tabindex·role은 그대로 <tr>에 옮긴다 — 이 넷을 건드리면 클릭 이동이 죽는다.
+def _valsum_html():
+    """지도 맨 위의 값 요약표. 누가 언제 얼마로 놓았나만 한 줄씩 적는다.
+
+    축 패널을 열기 전에 「지금 유효한 값이 얼마냐」에 먼저 답하는 자리다. 최신이 맨
+    위다 — 축 안 날짜 탭이 최신을 왼쪽에 두는 것과 같은 순서다. 역산(kind='ask')은
+    적정가를 내지 않으므로 값 칸에 요구 이익을 적고 행을 경고톤으로 가른다."""
     rows = []
-    for date, axid, kind, v1, v2, tag, by in dmd.TIMELINE:
+    for date, axid, kind, v1, v2, tag, by in reversed(dmd.TIMELINE):
         no, name = _AXIS_LOOKUP.get(axid, ('—', axid))
-        target = ' data-target="dm-axis-%s"' % axid if axid in _AXIS_IDS else ''
-        badge_html = _by_badge(by)
-        axis_label = '%s %s' % (no, name)
+        who = dmd.BY[by][0]
+        tag_html = '<span class="dm-vs-tag">%s</span>' % tag if tag else ''
         if kind == 'ask':
-            rows.append(
-                '<tr class="dm-tl-item dm-tl-ask"%s tabindex="0" role="button">'
-                '<td class="dm-tl-date">%s</td>'
-                '<td class="dm-tl-axis">%s</td>'
-                '<td class="dm-tl-val">%s <b>%s</b></td>'
-                '<td class="dm-tl-tagcell"><span class="dm-tl-tag">%s</span></td>'
-                '<td>%s</td>'
-                '</tr>' % (target, date, axis_label, v1, v2, tag, badge_html))
-            continue
-        cls = ' dm-tl-quote' if axid == 'quote' else ''
-        val_html = '%s %s' % (v1, v2) if v2 else v1
-        tag_html = '<span class="dm-tl-tag">%s</span>' % tag if tag else ''
+            val_html = '<span class="dm-vs-none">%s</span> <b>%s</b>' % (v1, v2)
+            cls = ' dm-vs-ask'
+        else:
+            val_html = '%s <span class="dm-vs-sub">%s</span>' % (v1, v2) if v2 else v1
+            cls = ''
         rows.append(
-            '<tr class="dm-tl-item%s"%s tabindex="0" role="button">'
-            '<td class="dm-tl-date">%s</td>'
-            '<td class="dm-tl-axis">%s</td>'
-            '<td class="dm-tl-val">%s</td>'
-            '<td class="dm-tl-tagcell">%s</td>'
-            '<td>%s</td>'
-            '</tr>' % (cls, target, date, axis_label, val_html, tag_html, badge_html))
-    return ('<div class="dm-timeline-wrap"><table class="dm-timeline-tbl">'
-            '<thead><tr><th>날짜</th><th>축</th><th>값</th><th>꼬리표</th><th>계산</th></tr></thead>'
-            '<tbody>%s</tbody></table></div>'
-            '<p class="dm-tl-hint">행을 누르면 그 축 카드로 이동한다</p>' % ''.join(rows))
+            '<tr class="dm-vs-row%s">'
+            '<td class="dm-vs-date">%s</td>'
+            '<td class="dm-vs-who">%s</td>'
+            '<td class="dm-vs-axis">%s %s</td>'
+            '<td class="dm-vs-val">%s</td>'
+            '<td class="dm-vs-tagcell">%s</td>'
+            '</tr>' % (cls, date, who, no, name, val_html, tag_html))
+    # 제목은 회사와 무관하게 같다 — 「누가 언제 얼마로」가 이 표가 답하는 질문이다.
+    # 회사마다 다른 TIMELINE_LABEL(편수·기간)은 그 아래 작은 줄로 내린다.
+    return ('<div class="dm-valsum">'
+            '<h3 class="dm-valsum-title">누가 언제 얼마로 봤나'
+            '<span class="dm-valsum-note">%s</span></h3>'
+            '<div class="dm-valsum-wrap"><table class="dm-valsum-tbl">'
+            '<thead><tr><th>언제</th><th>누가</th><th>방법</th><th>값</th><th>꼬리표</th></tr>'
+            '</thead><tbody>%s</tbody></table></div>'
+            '</div>' % (dmd.TIMELINE_LABEL, ''.join(rows)))
 
 
 def _data_json():
@@ -1480,6 +1478,39 @@ DM_CSS = '''<style>
   .dm-cb-tbl{font-size:11.5px}
   .dm-cb-tbl td, .dm-cb-tbl th{padding-left:6px;padding-right:7px}
   .dm-sv-tbl td:first-child{white-space:normal}
+}
+
+/* ── 값 요약표 ── 지도 맨 위. 축을 열기 전에 「얼마로 봤나」에 답한다 */
+.dm-valsum{margin:0 0 18px;border:1px solid var(--line);border-radius:10px;
+           background:var(--surface);overflow:hidden}
+.dm-valsum-title{font-size:12px;font-weight:850;letter-spacing:.01em;color:var(--ink-2);
+                 margin:0;padding:11px 14px 9px;border-bottom:1px solid var(--line);
+                 background:var(--sunk)}
+.dm-valsum-note{display:block;font-size:10.5px;font-weight:700;color:var(--ink-3);margin:3px 0 0}
+.dm-valsum-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dm-valsum-tbl{width:100%;border-collapse:collapse;font-size:12.5px;
+               font-variant-numeric:tabular-nums}
+.dm-valsum-tbl th{font-size:10.5px;font-weight:850;letter-spacing:.03em;color:var(--ink-3);
+                  text-align:left;padding:7px 12px 6px 14px;border-bottom:1px solid var(--line);
+                  white-space:nowrap}
+.dm-valsum-tbl td{padding:9px 12px 9px 14px;border-bottom:1px solid var(--line);
+                  color:var(--ink-2);vertical-align:baseline}
+.dm-valsum-tbl tr:last-child td{border-bottom:0}
+.dm-vs-date{font-weight:800;color:var(--ink-3);white-space:nowrap}
+.dm-vs-who{font-weight:800;color:var(--ink);white-space:nowrap}
+.dm-vs-axis{color:var(--ink-2);white-space:nowrap}
+.dm-vs-val{font-weight:850;color:var(--ink)}
+.dm-vs-sub{font-weight:700;color:var(--ink-2)}
+.dm-vs-none{font-weight:700;color:var(--ink-3)}
+.dm-vs-tagcell{white-space:nowrap}
+.dm-vs-tag{display:inline-block;font-size:9.5px;font-weight:800;color:var(--ink-3);
+           background:var(--sunk);border-radius:999px;padding:2px 8px}
+/* 역산은 적정가가 아니라 요구 이익이다. 같은 칸의 값으로 읽히면 안 되므로 행을 가른다 */
+.dm-vs-ask td{background:var(--warn-soft)}
+.dm-vs-ask td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+@media (max-width:640px){
+  .dm-valsum-tbl{font-size:11.5px}
+  .dm-valsum-tbl td, .dm-valsum-tbl th{padding-left:9px;padding-right:8px}
 }
 
 /* ── 시간축 ── */
@@ -2270,8 +2301,11 @@ def render(data=None, judgment_dir='005930-삼성전자'):
 
     parts = [DM_CSS]
     parts.append('<div class="dm-wrap" id="dm-%s-root">' % _PX)
-    parts.append('<div class="dm-head"><h2 class="dm-title">무엇을 얼마로 가정했나</h2>'
-                  '<p class="dm-lede">%s</p></div>' % dmd.LEDE)
+    parts.append('<div class="dm-head"><h2 class="dm-title">무엇을 얼마로 가정했나</h2></div>')
+    # 값 요약표가 머리말보다 위다. 「지금 얼마로 보나」가 첫 질문이고, 머리말은 그 표를
+    # 읽고 나서야 뜻이 닿는다(열 배 벌어진 값이 표에 그대로 있다).
+    parts.append(_valsum_html())
+    parts.append('<p class="dm-lede">%s</p>' % dmd.LEDE)
     # 주인장 계산은 DCF 축 패널 안으로 옮겼다(_axis_html). 여기서 또 그리면 두 벌이 된다.
     # 드라이버 범위 표(_ranges_html)는 걷어냈다. 같은 내용이 각 드라이버 상세의
     # 「영향」 칸에 들어 있어 두 번 말하는 셈이었다.
@@ -2284,11 +2318,8 @@ def render(data=None, judgment_dir='005930-삼성전자'):
     parts.append(_axis_buttons_html())
     parts.append(_axis_panels_html())
     parts.append(_judgment_todo_html(_JUDGMENT_TODO, _JUDGMENT_ASOF))
-    parts.append(
-        '<details class="dm-past">'
-        '<summary class="dm-past-summary">%s</summary>'
-        '<div class="dm-past-body">%s</div>'
-        '</details>' % (dmd.TIMELINE_LABEL, _timeline_html()))
+    # 예전에는 같은 값 목록이 여기 접혀 있었다. 맨 위 요약표로 올렸으므로 뺀다 —
+    # 한 페이지에 같은 표가 두 벌 있으면 어느 쪽이 최신인지 세어 보게 된다.
     parts.append('</div>')
     # 모달과 그 데이터(dm-data)·JS는 걷어냈다. 값·근거·왜·영향·판정을 전부 지면에
     # 펼쳐 두었으므로 눌러서 열 것이 남지 않았다. 축 고르기 JS만 남는다.
