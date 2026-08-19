@@ -9,7 +9,12 @@
  */
 
 // /unified 는 파일을 지웠지만 옛 배포본이 캐시에 남을 수 있어 잠금을 유지한다
-const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy', '/admin']);
+//
+// 이 목록은 scripts/gen_site.py 의 PAGES 마지막 칸(잠금 여부)과 한 벌이다. 2026-08-19에
+// 어긋나 있었다 — /und-premium 과 /accountant 는 🔒로 표시돼 「비공개 자료」 아래에만
+// 늘어놓았는데 주소를 알면 비밀번호 없이 200으로 열렸다. 둘 다 유료 구독물 요약이다.
+const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy',
+                           '/admin', '/und-premium', '/accountant']);
 const COOKIE = 'ida_auth';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30일
 

@@ -694,20 +694,53 @@ TAB_JS = '''<script>
   });
   if(sbar) sbar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
-    sec=b.dataset.sec; apply();
+    sec=b.dataset.sec; apply(); mark();
     var first=document.querySelector('.isec:not([hidden])');
     if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
   });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「주제 고르기」로
+  // 돌아가지 않고 페이지째 나간다 — 잠긴 장에서는 「비공개 자료」로 튕겨 나간다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base=location.pathname + location.search;
+    var want = (sec===null) ? base : base + '#view-' + encodeURIComponent(sec);
+    if(want !== base + location.hash) history.pushState({sec:sec, kind:kind}, '', want);
+  }
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
+    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(history.state && history.state.sec){ history.back(); return; }
     sec=null; kind='all'; apply();
     if(sbar) sbar.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  window.addEventListener('popstate', function(e){
+    quiet=true;
+    var st=e.state, h=(location.hash||'').slice(1);
+    if(st && typeof st.sec !== 'undefined'){
+      sec=st.sec; kind=st.kind || 'all';
+    } else if(!h){
+      sec=null; kind='all';
+    } else if(h.indexOf('view-')===0){
+      sec=decodeURIComponent(h.slice(5));
+    } else {
+      var el=document.getElementById(decodeURIComponent(h));
+      var s2=el && el.closest ? el.closest('.isec') : null;
+      sec = s2 ? s2.dataset.sec : null;
+    }
+    apply();
+    // 주제 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange가
+    // 그 카드를 다시 열어 뒤로가기가 제자리로 튕긴다.
+    if(sec===null && location.hash){
+      history.replaceState({sec:null, kind:'all'}, '', location.pathname + location.search);
+    }
+    quiet=false;
   });
   // 카드 하나·갈래 하나를 지목한 주소로 들어온 사람. 첫 화면이 주제 고르기라 그냥 두면
   // 링크를 받은 사람이 타일 화면에 떨어진다 — 그 갈래를 펴고 카드를 열어 거기로 보낸다.
   function jump(el, smooth){
     var isec=el.closest('.isec'), det=el.closest('details.ins');
-    if(isec){ sec=isec.dataset.sec; kind='all'; apply(); }
+    if(isec){ sec=isec.dataset.sec; kind='all'; apply(); mark(); }
     if(det && !det.open) det.open=true;
     setTimeout(function(){
       (det||el).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
@@ -742,6 +775,8 @@ TAB_JS = '''<script>
   window.addEventListener('hashchange', function(){ fromHash(true); });
   apply();
   fromHash(false);
+  // 링크를 받고 들어온 사람의 첫 칸. 뒤로가기가 여기로 돌아온다
+  if(!history.state) history.replaceState({sec:null, kind:'all'}, '');
 })();
 </script>'''
 
