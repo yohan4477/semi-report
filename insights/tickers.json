@@ -8,6 +8,10 @@
   "code": "241560",
   "name": "두산밥캣"
  },
+ "sec-celltrion": {
+  "code": "068270",
+  "name": "셀트리온"
+ },
  "sec-cosmax": {
   "code": "192820",
   "name": "코스맥스"
@@ -37,6 +41,10 @@
  "sec-hugel": {
   "code": "145020",
   "name": "휴젤"
+ },
+ "sec-hwocean": {
+  "code": "042660",
+  "name": "한화오션"
  },
  "sec-hws": {
   "code": "272210",
@@ -74,10 +82,18 @@
   "code": "010130",
   "name": "고려아연"
  },
+ "sec-leeno": {
+  "code": "058470",
+  "name": "리노공업"
+ },
  "sec-lgcns": {
   "checked_by": "이름 대조",
   "code": "064400",
   "name": "LG씨엔에스"
+ },
+ "sec-lgd": {
+  "code": "034220",
+  "name": "LG디스플레이"
  },
  "sec-lge": {
   "code": "066570",
@@ -143,6 +159,10 @@
  "sec-skt": {
   "code": "017670",
   "name": "SK텔레콤"
+ },
+ "sec-tck": {
+  "code": "064760",
+  "name": "티씨케이"
  },
  "sec-wontech": {
   "code": "336570",
