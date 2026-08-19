@@ -619,6 +619,9 @@
   .vtop-all > summary::-webkit-details-marker{display:none}
   .vtop-all > summary::before{content:"▸ ";color:var(--ink-3)}
   .vtop-all[open] > summary::before{content:"▾ "}
+  /* 화살표만으로는 눌러서 펴는 자리인지 안 읽힌다. 말로 같이 적고 상태에 따라 바꾼다 */
+  .vtop-all > summary::after{content:" 펼치기";color:var(--ink-3);font-weight:700}
+  .vtop-all[open] > summary::after{content:" 접기"}
   .vtop-all > summary:hover{color:var(--accent)}
   .vtop-all .vtop-n{font-weight:700;color:var(--ink-3);margin-left:5px}
   .vtop-all .vtop-cols{margin-top:6px}
