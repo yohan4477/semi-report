@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-18",
+ "generated": "2026-08-19",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -2108,7 +2108,29 @@
    ],
    "date": "2026-08-17",
    "path": "content/understanding/회계사/[260817] DCF 내재가치 188만원, 주가보다 14.3% 위 - SK하이닉스 - 엘곰.md",
-   "hash": "09e53f1a5feb"
+   "hash": "6f705c2bf726"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-62만원-주가보다-169-위-코스맥스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-12",
+   "path": "content/understanding/회계사/[260812] DCF 내재가치 62만원, 주가보다 169% 위 - 코스맥스 - 엘곰.md",
+   "hash": "0e7239a9988d"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-85100원-주가보다-8792-위-실리콘투-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-13",
+   "path": "content/understanding/회계사/[260813] DCF 내재가치 85,100원, 주가보다 87~92% 위 - 실리콘투 - 엘곰.md",
+   "hash": "23709c54ff78"
   },
   {
    "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
