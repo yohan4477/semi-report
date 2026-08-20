@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 # 이선엽 시황 — 삼프로TV 유료 클럽 「이기는 투자사령부」 실시간 텍스트 시황 정리.
 # 유료 구독물이라 원문은 싣지 않고 요약만 올린다. 비공개(잠금) 페이지다.
-# 카드 하나가 하루가 아니라 넉 달 동안 이어진 판단 하나에 붙는다.
+# 카드 하나가 하루가 아니라 다섯 달 동안 이어진 판단 하나에 붙는다 — 섹션을 카드로
+# 쪼개지 않는다. 대신 카드마다 그 주제의 시간 흐름을 그림으로 맨 앞에 세우고(FLOWS),
+# 주제들이 하나로 합류하는 지도를 페이지 맨 위에 둔다(MERGE_SVG). 아래 「주제마다의
+# 시간 흐름」 대목을 먼저 읽는다.
 # 카드는 이 파일 CARDS에 적고 재실행하면 페이지가 다시 만들어진다.
 # 마크업과 CSS는 dash_common이 갖고 있다 — 첫 화면 규약도 그쪽 머리말에 있다.
 import os, sys
@@ -962,6 +965,153 @@ for _c in CARDS:
     _c.setdefault('scope', 'kr')
 
 
+# -- 주제마다의 시간 흐름 ----------------------------------------------
+# 이 사람 글은 매일 쓰는 시황이라 **언제 무슨 말을 했는지가 본체다.** 그래서 카드는 주제로
+# 묶되(섹션을 카드로 쪼개지 않는다), 카드마다 그 주제가 다섯 달 동안 어떻게 흘렀는지를
+# 그림 하나로 맨 앞에 세운다. 카드를 펴면 흐름부터 보이고 그다음이 논지다.
+# 그리고 그 주제들은 따로 놀지 않는다 -- 전부 금리와 수급을 거쳐 반도체 실적 하나로 합류한다.
+# 그 합류도를 페이지 맨 위(intro)에 둔다.
+# FLOWS의 키는 카드 제목 조각이다. 조각 하나가 카드 하나를 못 가리키면 생성이 멈춘다.
+FLOWS = {
+    '5월에 종전을 말했고': [
+        ('05-18', '재공격 어렵다'), ('05-20', '통과 선박 증가'), ('05-21', '종전 예고'),
+        ('05-22', '대만 카드 지목'), ('06-15', '합의가 나왔다'), ('07-24', '유가 재급등'),
+    ],
+    '해협이 막히면': [
+        ('05-14', '4.5% 선을 긋다'), ('05-15', '넘어서자 조정'), ('06-15', '종전으로 완화'),
+        ('07-24', '배럴 100달러'), ('08-14', '소비 둔화로 반전'),
+    ],
+    '물가 지표를 그가 읽는 법': [
+        ('05-12', '고용이 약하다'), ('06-12', '전월비를 보라'), ('06-19', '워시는 시간을 번다'),
+        ('07-15', '인상 확률 15%'), ('08-12', '동결 전망 55%'),
+    ],
+    '재무부가 장기금리에': [
+        ('08-02', '엔화를 산다'), ('08-11', '유가·금리 동반'), ('08-18', '10년물 4.6%대'),
+        ('08-19', '바이백 2배'), ('08-20', '시한은 11월 4일'),
+    ],
+    '외국인이 파는 이유가': [
+        ('05-04', '종목 한도 25%'), ('06-05', '펀드 비중 한도'), ('06-09', '하락에 매도 감소'),
+        ('06-19', '국민연금 55조'), ('07-14', '신흥국 펀드 29%'),
+    ],
+    '7월의 -27.5%': [
+        ('07-02', '메타 보도로 급락'), ('07-13', '-27.5% 서킷 7회'), ('07-14', '2분에 2조'),
+        ('07-15', 'ADR 괴리 51%'), ('07-16', '회복 지연 인정'),
+    ],
+    '레버리지가 걷히자': [
+        ('06-10', '변동을 키운다'), ('07-14', '강제 청산이 방아쇠'), ('08-02', '규제 시작'),
+        ('08-11', '거래 줄자 정상화'), ('08-12', '순환매가 전 업종'),
+    ],
+    '반등할수록 개인이 판다': [
+        ('07-03', '수급 주체 부재'), ('07-14', '개인이 홀로 방어'), ('08-03', '반등에 비중 축소'),
+        ('08-14', '매도는 ETF다'), ('08-18', '연기금도 판다'),
+    ],
+    '효율화 충격은 이번이': [
+        ('딥시크', '첫 번째 충격'), ('메타퀀트', '두 번째 충격'), ('07-02', '메타 컴퓨트'),
+        ('07-03', '변동 정점 판단'), ('07-13', '더 큰 폭락이 왔다'),
+    ],
+    '이익률 정점과': [
+        ('05-03', '27년 부족 그대로'), ('06-26', '5년 구속 계약'), ('07-15', 'ASML 상향'),
+        ('07-30', '리드타임 3년 반'), ('07-31', '아마존은 메모리값'),
+    ],
+    '주주환원이 바닥을': [
+        ('07-14', '23일 관전 포인트'), ('08-12', '파는 날 아니다'), ('08-18', '경쟁사는 100%'),
+        ('08-19', '40조·50% 이상'), ('08-20', '더 큰 악재면 퇴색'),
+    ],
+    '빅테크는 수익률보다': [
+        ('07-07', '생존이 먼저다'), ('07-23', 'CapEx 상향'), ('07-30', '잉여현금 오해'),
+        ('08-12', '5,000억 제휴'), ('08-14', '앤트로픽 2조'),
+    ],
+    '성과급이 백화점으로': [
+        ('05-14', '15%·30% 요구'), ('05-14', '백화점으로 간다'), ('05-20', '이익 추정 가능한가'),
+        ('05-21', '로봇을 앞당긴다'), ('06-02', '환율 1,528원'),
+    ],
+}
+
+
+def _wrap(s, n):
+    """긴 라벨을 최대 두 줄로 끊는다 — 되도록 띄어쓰기 자리에서 끊는다.
+
+    글자 수로만 자르면 「통과 선박이 는 / 다」처럼 어미가 잘려 뜻이 안 읽힌다."""
+    if len(s) <= n:
+        return [s]
+    cut = s.rfind(' ', 0, n + 1)
+    if cut < n // 2:            # 앞쪽에만 공백이 있으면 차라리 글자 수로 자른다
+        cut = n
+    head, tail = s[:cut].rstrip(), s[cut:].lstrip()
+    return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
+
+
+def flow_svg(stops):
+    """그 주제가 다섯 달 동안 어떻게 흘렀는지 -- 가로 한 줄에 정거장으로 찍는다.
+
+    색은 .uc-fig의 해부도 붓(organ·vessel)을 쓰지 않고 지면 토큰을 직접 받는다.
+    그 붓은 몸 그림 전용이라 여기 쓰면 뜻이 어긋난다."""
+    n = len(stops)
+    W, y = 640.0, 52.0
+    pad = W / (2 * n)
+    xs = [pad + (W - 2 * pad) * i / (n - 1) for i in range(n)]
+    wrap_at = max(6, int(52 / n))
+    h = ['<svg viewBox="0 0 640 112" role="img" aria-label="이 주제의 시간 흐름">']
+    h.append('<line x1="%.0f" y1="%.0f" x2="%.0f" y2="%.0f" stroke="var(--line)" '
+             'stroke-width="2"/>' % (xs[0], y, xs[-1], y))
+    for i, (d, t) in enumerate(stops):
+        x = xs[i]
+        last = (i == n - 1)
+        h.append('<circle cx="%.0f" cy="%.0f" r="%d" fill="%s"/>'
+                 % (x, y, 6 if last else 4, 'var(--accent)' if last else 'var(--ink-3)'))
+        h.append('<text x="%.0f" y="34" text-anchor="middle" class="t-sm" '
+                 'style="font-weight:850">%s</text>' % (x, d))
+        for j, line in enumerate(_wrap(t, wrap_at)):
+            h.append('<text x="%.0f" y="%d" text-anchor="middle" style="font-size:10.5px">%s</text>'
+                     % (x, 74 + j * 13, line))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+# 주제가 따로 놀지 않는다는 것을 한 장으로 보인다 -- 바깥 변수 셋이 금리와 수급을 거쳐
+# 반도체 실적 하나로 모인다. 카드 열셋이 이 그림의 어느 칸에 서는지가 페이지의 뼈대다.
+MERGE_SVG = (
+    '<svg viewBox="0 0 640 210" role="img" aria-label="주제들이 합류하는 곳">'
+    '<text x="67" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">바깥에서 오는 것</text>'
+    '<text x="320" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">값을 정하는 곳</text>'
+    '<text x="551" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">합류하는 곳</text>'
+    '<rect x="8" y="40" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="61" text-anchor="middle" class="t-lab">전쟁 · 유가</text>'
+    '<rect x="8" y="88" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="109" text-anchor="middle" class="t-lab">물가 · 연준</text>'
+    '<rect x="8" y="136" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="157" text-anchor="middle" class="t-lab">제도 · 한도</text>'
+    '<rect x="248" y="52" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="76" text-anchor="middle" class="t-lab">미국 10년물 금리</text>'
+    '<rect x="248" y="130" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="154" text-anchor="middle" class="t-lab">수급 · 조달 조건</text>'
+    '<rect x="470" y="86" width="162" height="44" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.2"/>'
+    '<text x="551" y="105" text-anchor="middle" class="t-lab">반도체 실적</text>'
+    '<text x="551" y="121" text-anchor="middle" class="t-sm">과 주주환원</text>'
+    '<path d="M126 57 L246 68" class="flow"/>'
+    '<path d="M126 105 L246 76" class="flow"/>'
+    '<path d="M126 153 L246 149" class="flow"/>'
+    '<path d="M126 111 L246 143" class="flow"/>'
+    '<path d="M320 90 L320 128" class="flow"/>'
+    '<path d="M392 74 L468 100" class="flow"/>'
+    '<path d="M392 148 L468 118" class="flow"/>'
+    '</svg>')
+
+
+def _attach_flows():
+    """FLOWS를 카드 맨 앞 그림으로 붙인다. 조각이 카드 하나를 못 가리키면 멈춘다."""
+    for frag, stops in FLOWS.items():
+        hits = [c for c in CARDS if frag in c['title']]
+        assert len(hits) == 1, ('흐름 조각이 카드 하나를 못 가리킨다: %r -- %d건' % (frag, len(hits)))
+        c = hits[0]
+        cap = ('이 주제가 <b>%s</b>에서 <b>%s</b>까지 흘러온 길. 마지막 점이 지금 자리다.'
+               % (stops[0][0], stops[-1][0]))
+        c['figs'] = [(0, '이 주제의 시간 흐름', flow_svg(stops), cap)]
+
+
+_attach_flows()
+
+
 HEADER = '''  <header>
     <p class="eyebrow">삼프로TV 유료 클럽 — 이기는 투자사령부</p>
     <h1>이선엽 시황</h1>
@@ -1006,6 +1156,19 @@ COURSE = [
                         '빅테크는 수익률보다', '성과급이 백화점으로'])),
 ]
 
+
+# 합류도를 읽는 순서보다 먼저 세운다. 주제 열셋이 따로 놀지 않는다는 것이 이 페이지의
+# 전제라, 그 전제를 그림 한 장으로 먼저 보이고 그다음에 어디서부터 읽을지를 준다.
+def merge_intro():
+    return ('<figure class="uc-fig"><p class="fig-title">주제는 하나로 합류한다</p>'
+            + MERGE_SVG
+            + '<figcaption>바깥에서 오는 변수 셋이 <b>미국 10년물 금리</b>와 <b>수급·조달 조건</b>을 '
+              '거쳐 결국 <b>반도체 실적과 주주환원</b> 하나로 모인다. 카드 열셋은 이 그림의 어느 칸에 '
+              '서느냐로 갈린다 — 카드를 펴면 그 주제가 다섯 달 동안 흘러온 길이 맨 앞에 나온다.'
+              '</figcaption></figure>')
+
+
 if __name__ == '__main__':
     dc.render(CARDS, '이선엽 시황', HEADER, FOOTER, OUT,
-              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS)
+              intro=merge_intro() + dc.course(CARDS, COURSE, COURSE_LEDE),
+              extra_css=dc.COURSE_CSS)
