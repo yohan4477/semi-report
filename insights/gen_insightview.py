@@ -4,6 +4,7 @@
 import io, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
+import merges
 import notes_lib as nl
 sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
 import ui_bits  # noqa: E402
@@ -131,15 +132,17 @@ def copy_btn(aid, cls):
             % (cls, nl.esc(aid)))
 
 
-def one(meta, body, tab, kind):
+def one(meta, body, tab, kind, cells=()):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
+    # 합류도에서 이 카드가 서는 칸. 지도 칸을 누르면 이 값으로 골라낸다(insights/merges.py)
+    cellattr = ' data-cell="%s"' % nl.esc(' '.join(cells)) if cells else ''
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
-    return ('<details class="ins" data-kind="%s"><summary><span class="cid">%s</span>'
+    return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s</h2>'
             '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
-            % (tab, nl.esc(kind), period(meta, src), roster(meta),
+            % (tab, cellattr, nl.esc(kind), period(meta, src), roster(meta),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                copy_btn(anchor(head), 'uc-copy'),
                nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
@@ -155,13 +158,17 @@ def cards():
     「수혜 기업」만 그 규칙에서 뺀다 — 누가 돈을 버는지는 클릭 없이 보여야 한다.
     """
     out, top, per, bysec, mix = [], [], {}, {}, {}
+    cidx = merges.cell_index()
+    seen_heads = set()
     for d, kind, tab in KINDS:
         got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
             meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
             meta.setdefault('headline', os.path.basename(p)[:-3])
+            seen_heads.add(meta['headline'])
             sid = meta.get('section', 'etc')
-            got.setdefault(sid, []).append(one(meta, body, tab, kind))
+            got.setdefault(sid, []).append(
+                one(meta, body, tab, kind, cidx.get(meta['headline'], ())))
             per[tab] = per.get(tab, 0) + 1
             bysec[sid] = bysec.get(sid, 0) + 1
             mix[(tab, sid)] = mix.get((tab, sid), 0) + 1
@@ -193,6 +200,9 @@ def cards():
                    '<span class="icnt">%d</span>%s</div>%s</section>'
                    % (TOPSEC, nl.esc(title), nl.esc(sub), len(top),
                       copy_btn('sec-' + TOPSEC, 'sec-copy'), ''.join(top)))
+    # 지도가 없는 글을 가리키면 여기서 멈춘다 — 검사기를 안 돌리고 푸시하는 길을 남기지 않는다
+    lost = sorted(h for h in merges.cell_index() if h not in seen_heads)
+    assert not lost, '합류도가 가리키는 글이 없다: %s' % lost
     return ''.join(out), tophtml, per, bysec, mix
 
 
@@ -294,6 +304,37 @@ COURSE_CSS = '''
   .course a:hover{border-bottom-color:var(--accent)}
 '''
 
+# 합류도. 타일 바로 위에 접힌 채로 서고, 열면 지도가 나온다.
+MRG_CSS = '''
+  .mrg{margin:0 0 14px;border:1px solid var(--line);border-radius:10px;
+    background:var(--card);padding:0 16px}
+  .mrg>summary{list-style:none;cursor:pointer;padding:13px 0;display:flex;
+    align-items:baseline;gap:10px;flex-wrap:wrap}
+  .mrg>summary::-webkit-details-marker{display:none}
+  .mrg>summary::after{content:"▾";margin-left:auto;color:var(--faint);font-size:12px}
+  .mrg[open]>summary::after{content:"▴"}
+  .mg-t{font-size:14px;font-weight:800;color:var(--ink)}
+  .mg-s{font-size:12px;color:var(--faint)}
+  .mg-b{padding:0 0 16px}
+  .mg-one+.mg-one{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .mg-h{margin:0 0 3px;font-size:13.5px;font-weight:800;color:var(--ink)}
+  .mg-l{margin:0 0 10px;font-size:12.5px;line-height:1.6;color:var(--sub)}
+  .mg-n{margin:14px 0 0;font-size:11.5px;line-height:1.6;color:var(--faint)}
+  .mg-b svg{width:100%;height:auto;display:block}
+  .m-col{font-size:11px;font-weight:850;fill:var(--faint);
+    letter-spacing:.02em;text-transform:none}
+  .m-lab{font-size:11.5px;font-weight:800;fill:var(--ink)}
+  .mflow{stroke:var(--line);stroke-width:1.4;fill:none}
+  .mdot{fill:var(--sub)}
+  .mcell{cursor:pointer}
+  .mcell rect{fill:var(--card);stroke:var(--sub);stroke-width:1.4;
+    transition:stroke .15s,fill .15s}
+  .mcell.is-merge rect{stroke:var(--accent);stroke-width:2.2}
+  .mcell:hover rect,.mcell:focus rect{fill:var(--soft);stroke:var(--accent)}
+  .mcell:focus{outline:none}
+  .mcell[aria-pressed="true"] rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
+'''
+
 COURSE_LEDE = ('글 %d편을 어디서부터 읽을지 정해 두었습니다. 앞 네 단계는 AI를 만들고 파는 쪽을 돈·모델·'
                '칩·전기 순으로 따라가고, 뒤는 그 바깥 조건과 부동산입니다. 제목을 누르면 그 글로 갑니다.')
 
@@ -392,6 +433,99 @@ def course():
     return ''.join(h)
 
 
+def _wrap2(s, n):
+    """라벨을 최대 두 줄로 — 되도록 띄어쓰기 자리에서 끊는다.
+
+    글자 수로만 자르면 어미가 잘려 뜻이 안 읽힌다(이선엽판에서 겪은 것)."""
+    if len(s) <= n:
+        return [s]
+    cut = s.rfind(' ', 0, n + 1)
+    if cut < n // 2:
+        cut = n
+    head, tail = s[:cut].rstrip(), s[cut:].lstrip()
+    return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
+
+
+# 열 셋의 자리(x, 폭, 칸 높이, 한 줄에 담을 글자 수). 좌표를 손으로 적지 않는다 —
+# 주제를 더할 때 칸 개수만 달라지고 자리는 여기서 다시 계산된다.
+_COLGEO = {'outer': (8, 118, 40, 9), 'price': (248, 144, 40, 11), 'merge': (470, 162, 48, 12)}
+_JX = 210.0           # 바깥 칸들이 한 번 모이는 자리 — 어느 바깥이 어느 값으로 가는지는
+                      # 주장한 적이 없다. 짝을 그리면 없는 인과를 그리는 것이 된다.
+
+
+def merge_svg(m):
+    """지도 한 장. 칸은 누를 수 있고, 누르면 그 칸에 배정된 카드만 남는다."""
+    rows = merges.cells(m)
+    bycol = {}
+    for cid, col, label, heads in rows:
+        bycol.setdefault(col, []).append((cid, label, heads))
+    tops, tot = {}, {}
+    for col, _t in merges.COLS:
+        _x, _w, bh, _n = _COLGEO[col]
+        k = len(bycol.get(col, []))
+        tot[col] = k * bh + (k - 1) * 14 if k else 0
+    span = max(tot.values())
+    cy = 44 + span / 2.0
+    H = int(44 + span + 20)
+    h = ['<svg viewBox="0 0 640 %d" role="group" aria-label="%s 합류도">'
+         % (H, nl.esc(m['title']))]
+    for col, title in merges.COLS:
+        x, w, _bh, _n = _COLGEO[col]
+        h.append('<text x="%.0f" y="22" text-anchor="middle" class="m-col">%s</text>'
+                 % (x + w / 2.0, nl.esc(title)))
+    for col, _title in merges.COLS:
+        x, w, bh, cw = _COLGEO[col]
+        items = bycol.get(col, [])
+        y0 = cy - tot[col] / 2.0
+        for i, (cid, label, heads) in enumerate(items):
+            y = y0 + i * (bh + 14)
+            tops[cid] = (x, y, w, bh)
+            lines = _wrap2(label, cw)
+            ty = y + bh / 2.0 - (len(lines) - 1) * 7 + 4
+            h.append('<g class="mcell%s" data-cell="%s" data-label="%s" role="button" '
+                     'tabindex="0" aria-label="%s — 글 %d편">'
+                     % (' is-merge' if col == 'merge' else '', nl.esc(cid),
+                        nl.esc(label), nl.esc(label), len(heads)))
+            h.append('<title>%s — 글 %d편</title>' % (nl.esc(label), len(heads)))
+            h.append('<rect x="%.0f" y="%.0f" width="%d" height="%d" rx="9"/>' % (x, y, w, bh))
+            for j, line in enumerate(lines):
+                h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="m-lab">%s</text>'
+                         % (x + w / 2.0, ty + j * 14, nl.esc(line)))
+            h.append('</g>')
+    ox, ow, obh, _n = _COLGEO['outer']
+    px, pw, pbh, _n2 = _COLGEO['price']
+    mx, _mw, mbh, _n3 = _COLGEO['merge']
+    for cid, _l, _h in bycol.get('outer', []):
+        _x, y, _w, bh = tops[cid]
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (ox + ow, y + bh / 2.0, _JX, cy))
+    for cid, _l, _h in bycol.get('price', []):
+        _x, y, _w, bh = tops[cid]
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (_JX, cy, px, y + bh / 2.0))
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (px + pw, y + bh / 2.0, mx, cy))
+    h.append('<circle class="mdot" cx="%.0f" cy="%.0f" r="3.5"/>' % (_JX, cy))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+def merge_layer():
+    """합류도 층. 접힌 채로 선다 — 첫 화면은 어느 장이든 섹션 타일이다."""
+    if not merges.MERGES:
+        return ''
+    h = ['<details class="mrg"><summary><span class="mg-t">합류도</span>'
+         '<span class="mg-s">주제 %d개 — 카드가 어디로 모이는지 먼저 보고 들어간다</span>'
+         '</summary><div class="mg-b">' % len(merges.MERGES)]
+    for m in merges.MERGES:
+        h.append('<div class="mg-one"><p class="mg-h">%s</p><p class="mg-l">%s</p>%s</div>'
+                 % (nl.esc(m['title']), nl.esc(m['lede']), merge_svg(m)))
+    h.append('<p class="mg-n">칸을 누르면 그 칸에 선 글만 남습니다. '
+             '가운데 점은 바깥 조건이 한 번 모이는 자리입니다. 어느 바깥이 어느 값으로 '
+             '가는지는 이 그림이 정하지 않습니다.</p></div></details>')
+    return ''.join(h)
+
+
 def sectiles(bysec, bykindsec):
     """주제를 네모 카드로 세운다 — 누르면 그 주제의 글만 펼쳐진다"""
     # 「수혜 기업」은 타일이 아니라 페이지 맨 위 고정 층이다(cards의 TOPSEC 참조).
@@ -445,13 +579,14 @@ def tabs(per):
 def build():
     body, top, per, bysec, mix = cards()
     n = sum(per.values())
-    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + COURSE_CSS)
+    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + COURSE_CSS + MRG_CSS)
                 # 읽는 순서가 카드 종류 설명보다 먼저다 — 처음 온 사람은 무엇이 있는지보다
                 # 어디부터 읽을지가 급하다
                 .replace('__GUIDE__', course() + guide(per))
                 .replace('__TOP__', top)
-                .replace('__TABS__', '<div class="tabbar">%s</div>%s'
-                         % (tabs(per), sectiles(bysec, mix)))
+                # 합류도는 타일 바로 위다 — 접혀 있으니 첫 화면은 여전히 타일이다
+                .replace('__TABS__', '<div class="tabbar">%s</div>%s%s'
+                         % (tabs(per), merge_layer(), sectiles(bysec, mix)))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
                 .replace('__TABJS__', TAB_JS + ui_bits.TOP_BTN))
@@ -659,28 +794,46 @@ TAB_JS = '''<script>
   if(!kbar) return;
   // 화면이 둘이다. 주제를 고르는 화면(sec===null)과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var kind='all', sec=null;
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 주제로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var mbar=document.querySelector('.mg-b');
+  var kind='all', sec=null, cell=null;
   var names={};
   if(sbar) sbar.querySelectorAll('button').forEach(function(b){
     var t=b.querySelector('.st-t');
     names[b.dataset.sec] = t ? t.textContent : b.dataset.sec;
   });
+  if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+    names[g.dataset.cell] = g.dataset.label || g.dataset.cell;
+  });
   function apply(){
-    var picking = (sec===null);
-    document.querySelectorAll('.isec').forEach(function(s2){
-      s2.hidden = picking || !((kind==='all' || s2.dataset.kind===kind) &&
-                               (sec==='all'  || s2.dataset.sec===sec));
+    var incell = (cell!==null);
+    var picking = (sec===null && !incell);
+    document.querySelectorAll('details.ins').forEach(function(d){
+      d.hidden = incell && (' '+(d.dataset.cell||'')+' ').indexOf(' '+cell+' ')<0;
     });
+    document.querySelectorAll('.isec').forEach(function(s2){
+      s2.hidden = incell
+        ? s2.querySelectorAll('details.ins:not([hidden])').length===0
+        : (picking || !((kind==='all' || s2.dataset.kind===kind) &&
+                        (sec==='all'  || s2.dataset.sec===sec)));
+    });
+    var tops=document.querySelector('.topsec');
+    if(tops) tops.hidden = incell &&
+      tops.querySelectorAll('details.ins:not([hidden])').length===0;
     document.querySelectorAll('.kgroup').forEach(function(g){
       g.hidden = g.querySelectorAll('.isec:not([hidden])').length===0;
+    });
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
     });
     if(sbar) sbar.hidden = !picking;
     if(back){
       back.hidden = picking;
       var now=back.querySelector('.sb-now');
-      if(now) now.textContent = picking ? '' : (names[sec]||'');
+      now && (now.textContent = picking ? '' : (names[incell ? cell : sec]||''));
     }
-    kbar.hidden = picking;
+    kbar.hidden = picking || incell;
     kbar.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.tab===kind));
     });
@@ -694,35 +847,58 @@ TAB_JS = '''<script>
   });
   if(sbar) sbar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
-    sec=b.dataset.sec; apply(); mark();
+    cell=null; sec=b.dataset.sec; apply(); mark();
     var first=document.querySelector('.isec:not([hidden])');
     if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
   });
+  function pickCell(g){
+    // 같은 칸을 다시 누르면 푼다 — 지도를 열어 둔 채로 되돌릴 길이 있어야 한다
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    sec=null; kind='all'; apply(); mark();
+    var first=document.querySelector('.topsec:not([hidden]), .isec:not([hidden])');
+    if(cell && first) first.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(!g) return;
+      pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
   // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「주제 고르기」로
   // 돌아가지 않고 페이지째 나간다 — 잠긴 장에서는 「비공개 자료」로 튕겨 나간다.
   var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
   function mark(){
     if(quiet) return;
     var base=location.pathname + location.search;
-    var want = (sec===null) ? base : base + '#view-' + encodeURIComponent(sec);
-    if(want !== base + location.hash) history.pushState({sec:sec, kind:kind}, '', want);
+    var want = base;
+    if(cell!==null) want = base + '#cell-' + encodeURIComponent(cell);
+    else if(sec!==null) want = base + '#view-' + encodeURIComponent(sec);
+    if(want !== base + location.hash)
+      history.pushState({sec:sec, kind:kind, cell:cell}, '', want);
   }
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
     // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(history.state && history.state.sec){ history.back(); return; }
-    sec=null; kind='all'; apply();
+    if(history.state && (history.state.sec || history.state.cell)){ history.back(); return; }
+    sec=null; cell=null; kind='all'; apply();
     if(sbar) sbar.scrollIntoView({behavior:'smooth', block:'start'});
   });
   window.addEventListener('popstate', function(e){
     quiet=true;
     var st=e.state, h=(location.hash||'').slice(1);
     if(st && typeof st.sec !== 'undefined'){
-      sec=st.sec; kind=st.kind || 'all';
+      sec=st.sec; kind=st.kind || 'all'; cell=(typeof st.cell==='undefined') ? null : st.cell;
     } else if(!h){
-      sec=null; kind='all';
+      sec=null; cell=null; kind='all';
+    } else if(h.indexOf('cell-')===0){
+      cell=decodeURIComponent(h.slice(5)); sec=null; kind='all';
     } else if(h.indexOf('view-')===0){
-      sec=decodeURIComponent(h.slice(5));
+      sec=decodeURIComponent(h.slice(5)); cell=null;
     } else {
       var el=document.getElementById(decodeURIComponent(h));
       var s2=el && el.closest ? el.closest('.isec') : null;
@@ -731,8 +907,9 @@ TAB_JS = '''<script>
     apply();
     // 주제 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange가
     // 그 카드를 다시 열어 뒤로가기가 제자리로 튕긴다.
-    if(sec===null && location.hash){
-      history.replaceState({sec:null, kind:'all'}, '', location.pathname + location.search);
+    if(sec===null && cell===null && location.hash){
+      history.replaceState({sec:null, kind:'all', cell:null}, '',
+                           location.pathname + location.search);
     }
     quiet=false;
   });
@@ -740,7 +917,7 @@ TAB_JS = '''<script>
   // 링크를 받은 사람이 타일 화면에 떨어진다 — 그 갈래를 펴고 카드를 열어 거기로 보낸다.
   function jump(el, smooth){
     var isec=el.closest('.isec'), det=el.closest('details.ins');
-    if(isec){ sec=isec.dataset.sec; kind='all'; apply(); mark(); }
+    if(isec){ cell=null; sec=isec.dataset.sec; kind='all'; apply(); mark(); }
     if(det && !det.open) det.open=true;
     setTimeout(function(){
       (det||el).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
@@ -748,6 +925,12 @@ TAB_JS = '''<script>
   }
   function fromHash(smooth){
     var id=(location.hash||'').slice(1); if(!id) return;
+    // 합류도 칸을 지목한 주소로 들어온 사람. 칸은 DOM 요소가 아니라 상태다
+    if(id.indexOf('cell-')===0){
+      cell=decodeURIComponent(id.slice(5)); sec=null; kind='all'; apply();
+      var mg=document.querySelector('.mrg'); if(mg) mg.open=true;
+      return;
+    }
     var el=document.getElementById(decodeURIComponent(id));
     if(el) jump(el, smooth);
   }
@@ -776,7 +959,7 @@ TAB_JS = '''<script>
   apply();
   fromHash(false);
   // 링크를 받고 들어온 사람의 첫 칸. 뒤로가기가 여기로 돌아온다
-  if(!history.state) history.replaceState({sec:null, kind:'all'}, '');
+  if(!history.state) history.replaceState({sec:null, kind:'all', cell:null}, '');
 })();
 </script>'''
 
