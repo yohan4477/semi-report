@@ -4,7 +4,7 @@
 import io, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
-import merges
+import axes
 import sources_rank as sr
 import notes_lib as nl
 sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
@@ -164,7 +164,7 @@ RANK_LEGEND = ('<p class="rkleg">%s 관측: 직접 재거나 현장에서 본 �
 def one(meta, body, tab, kind, cells=()):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
-    # 합류도에서 이 카드가 서는 칸. 지도 칸을 누르면 이 값으로 골라낸다(insights/merges.py)
+    # 이 카드가 서는 축의 칸. 글이 axis:/cell: 로 스스로 밝힌다(insights/axes.py)
     cellattr = ' data-cell="%s"' % nl.esc(' '.join(cells)) if cells else ''
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
@@ -189,17 +189,15 @@ def cards():
     「수혜 기업」만 그 규칙에서 뺀다 — 누가 돈을 버는지는 클릭 없이 보여야 한다.
     """
     out, top, per, bysec, mix = [], [], {}, {}, {}
-    cidx = merges.cell_index()
-    seen_heads = set()
     for d, kind, tab in KINDS:
         got = {}
         for p in sorted(glob.glob(os.path.join(d, '*.md')), reverse=True):
             meta, body = nl.parse_front(io.open(p, encoding='utf-8').read())
             meta.setdefault('headline', os.path.basename(p)[:-3])
-            seen_heads.add(meta['headline'])
             sid = meta.get('section', 'etc')
+            cellid = '%s:%s' % (meta.get('axis', ''), meta.get('cell', ''))
             got.setdefault(sid, []).append(
-                one(meta, body, tab, kind, cidx.get(meta['headline'], ())))
+                one(meta, body, tab, kind, (cellid,) if meta.get('cell') else ()))
             per[tab] = per.get(tab, 0) + 1
             bysec[sid] = bysec.get(sid, 0) + 1
             mix[(tab, sid)] = mix.get((tab, sid), 0) + 1
@@ -231,9 +229,6 @@ def cards():
                    '<span class="icnt">%d</span>%s</div>%s</section>'
                    % (TOPSEC, nl.esc(title), nl.esc(sub), len(top),
                       copy_btn('sec-' + TOPSEC, 'sec-copy'), ''.join(top)))
-    # 지도가 없는 글을 가리키면 여기서 멈춘다 — 검사기를 안 돌리고 푸시하는 길을 남기지 않는다
-    lost = sorted(h for h in merges.cell_index() if h not in seen_heads)
-    assert not lost, '합류도가 가리키는 글이 없다: %s' % lost
     return ''.join(out), tophtml, per, bysec, mix
 
 
@@ -484,86 +479,6 @@ def _wrap2(s, n):
     return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
 
 
-# 열 셋의 자리(x, 폭, 칸 높이, 한 줄에 담을 글자 수). 좌표를 손으로 적지 않는다 —
-# 주제를 더할 때 칸 개수만 달라지고 자리는 여기서 다시 계산된다.
-_COLGEO = {'outer': (8, 118, 40, 9), 'price': (248, 144, 40, 11), 'merge': (470, 162, 48, 12)}
-_JX = 210.0           # 바깥 칸들이 한 번 모이는 자리 — 어느 바깥이 어느 값으로 가는지는
-                      # 주장한 적이 없다. 짝을 그리면 없는 인과를 그리는 것이 된다.
-
-
-def merge_svg(m):
-    """지도 한 장. 칸은 누를 수 있고, 누르면 그 칸에 배정된 카드만 남는다."""
-    rows = merges.cells(m)
-    bycol = {}
-    for cid, col, label, heads in rows:
-        bycol.setdefault(col, []).append((cid, label, heads))
-    tops, tot = {}, {}
-    for col, _t in merges.COLS:
-        _x, _w, bh, _n = _COLGEO[col]
-        k = len(bycol.get(col, []))
-        tot[col] = k * bh + (k - 1) * 14 if k else 0
-    span = max(tot.values())
-    cy = 44 + span / 2.0
-    H = int(44 + span + 20)
-    h = ['<svg viewBox="0 0 640 %d" role="group" aria-label="%s 합류도">'
-         % (H, nl.esc(m['title']))]
-    for col, title in merges.COLS:
-        x, w, _bh, _n = _COLGEO[col]
-        h.append('<text x="%.0f" y="22" text-anchor="middle" class="m-col">%s</text>'
-                 % (x + w / 2.0, nl.esc(title)))
-    for col, _title in merges.COLS:
-        x, w, bh, cw = _COLGEO[col]
-        items = bycol.get(col, [])
-        y0 = cy - tot[col] / 2.0
-        for i, (cid, label, heads) in enumerate(items):
-            y = y0 + i * (bh + 14)
-            tops[cid] = (x, y, w, bh)
-            lines = _wrap2(label, cw)
-            ty = y + bh / 2.0 - (len(lines) - 1) * 7 + 4
-            h.append('<g class="mcell%s" data-cell="%s" data-label="%s" role="button" '
-                     'tabindex="0" aria-label="%s — 글 %d편">'
-                     % (' is-merge' if col == 'merge' else '', nl.esc(cid),
-                        nl.esc(label), nl.esc(label), len(heads)))
-            h.append('<title>%s — 글 %d편</title>' % (nl.esc(label), len(heads)))
-            h.append('<rect x="%.0f" y="%.0f" width="%d" height="%d" rx="9"/>' % (x, y, w, bh))
-            for j, line in enumerate(lines):
-                h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="m-lab">%s</text>'
-                         % (x + w / 2.0, ty + j * 14, nl.esc(line)))
-            h.append('</g>')
-    ox, ow, obh, _n = _COLGEO['outer']
-    px, pw, pbh, _n2 = _COLGEO['price']
-    mx, _mw, mbh, _n3 = _COLGEO['merge']
-    for cid, _l, _h in bycol.get('outer', []):
-        _x, y, _w, bh = tops[cid]
-        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
-                 % (ox + ow, y + bh / 2.0, _JX, cy))
-    for cid, _l, _h in bycol.get('price', []):
-        _x, y, _w, bh = tops[cid]
-        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
-                 % (_JX, cy, px, y + bh / 2.0))
-        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
-                 % (px + pw, y + bh / 2.0, mx, cy))
-    h.append('<circle class="mdot" cx="%.0f" cy="%.0f" r="3.5"/>' % (_JX, cy))
-    h.append('</svg>')
-    return ''.join(h)
-
-
-def merge_layer():
-    """합류도 층. 접힌 채로 선다 — 첫 화면은 어느 장이든 섹션 타일이다."""
-    if not merges.MERGES:
-        return ''
-    h = ['<details class="mrg"><summary><span class="mg-t">합류도</span>'
-         '<span class="mg-s">주제 %d개 — 카드가 어디로 모이는지 먼저 보고 들어간다</span>'
-         '</summary><div class="mg-b">' % len(merges.MERGES)]
-    for m in merges.MERGES:
-        h.append('<div class="mg-one"><p class="mg-h">%s</p><p class="mg-l">%s</p>%s</div>'
-                 % (nl.esc(m['title']), nl.esc(m['lede']), merge_svg(m)))
-    h.append('<p class="mg-n">칸을 누르면 그 칸에 선 글만 남습니다. '
-             '가운데 점은 바깥 조건이 한 번 모이는 자리입니다. 어느 바깥이 어느 값으로 '
-             '가는지는 이 그림이 정하지 않습니다.</p></div></details>')
-    return ''.join(h)
-
-
 def sectiles(bysec, bykindsec):
     """주제를 네모 카드로 세운다 — 누르면 그 주제의 글만 펼쳐진다"""
     # 「수혜 기업」은 타일이 아니라 페이지 맨 위 고정 층이다(cards의 TOPSEC 참조).
@@ -622,9 +537,8 @@ def build():
                 # 어디부터 읽을지가 급하다
                 .replace('__GUIDE__', course() + guide(per))
                 .replace('__TOP__', top)
-                # 합류도는 타일 바로 위다 — 접혀 있으니 첫 화면은 여전히 타일이다
-                .replace('__TABS__', '<div class="tabbar">%s</div>%s%s'
-                         % (tabs(per), merge_layer(), sectiles(bysec, mix)))
+                .replace('__TABS__', '<div class="tabbar">%s</div>%s'
+                         % (tabs(per), sectiles(bysec, mix)))
                 .replace('__CARDS__', body)
                 .replace('__N__', str(n))
                 .replace('__TABJS__', TAB_JS + ui_bits.TOP_BTN))

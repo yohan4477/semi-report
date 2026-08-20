@@ -41,7 +41,7 @@ CHECK = [
     ('읽히는가', ['insights/check_read.py']),
     ('숫자와 원문 대조', ['insights/check_cite.py']),
     ('시점', ['insights/check_fresh.py']),
-    ('합류도', ['insights/check_merge.py']),
+    ('축과 근거', ['insights/check_axes.py']),
 ]
 
 

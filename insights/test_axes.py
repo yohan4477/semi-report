@@ -26,3 +26,24 @@ def test_li_basis_returns_none_for_non_linkedin():
 def test_loop_path_is_under_insights():
     assert paths.LOOP == os.path.join(paths.ROOT, 'insights', 'loop')
     assert os.path.isdir(paths.LOOP)
+
+
+import axes
+
+
+def test_money_axis_has_six_loop_cells_and_two_outside():
+    rows = axes.cells('money')
+    loop = [r for r in rows if r[3] == 'loop']
+    out = [r for r in rows if r[3] == 'outside']
+    assert [r[0] for r in loop] == ['capital', 'chip', 'power', 'run', 'sell', 'back']
+    assert [r[0] for r in out] == ['money_cost', 'estate']
+
+
+def test_cell_of_returns_name_and_gloss():
+    name, gloss = axes.cell_of('money', 'capital')
+    assert name == '조달'
+    assert gloss
+
+
+def test_cell_of_unknown_is_none():
+    assert axes.cell_of('money', 'nope') is None
