@@ -4257,6 +4257,61 @@ def _top5_html():
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
 # 방법을 모르는 채 삼성전자 숫자부터 보게 된다. 방법 넷을 앞으로 뺀다.
 # 제목에 태그가 섞여 있어 조각으로 찾는다(dc.by_frag).
+# -- 합류도 -----------------------------------------------------------
+# 회사 카드 42곳이 따로 놀지 않는다는 것을 한 장으로 보인다. 회사마다 다른 회사를 다루지만
+# 끝에서 견주는 것은 같다 -- 모형이 낸 내재가치와 그날 주가다. 회사 밖 묶음 셋은 그 계산의
+# 서로 다른 자리로 들어간다: AI 설비투자는 분자(잉여현금흐름), 금리와 국채는 분모(할인율),
+# DCF 방법론은 두 자리를 세우는 규칙이다.
+#
+# 이 그림이 답하는 질문은 하나다 -- 회사 밖 글이 왜 회사 대시보드에 있나.
+MERGE_SVG = (
+    '<svg viewBox="0 0 640 210" role="img" aria-label="회사 밖 묶음이 회사 카드로 합류하는 곳">'
+    '<text x="67" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">회사 밖에서 오는 것</text>'
+    '<text x="320" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">한 식의 두 자리</text>'
+    '<text x="551" y="20" text-anchor="middle" class="t-sm" style="font-weight:850">합류하는 곳</text>'
+    '<rect x="8" y="40" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="61" text-anchor="middle" class="t-lab">AI 설비투자</text>'
+    '<rect x="8" y="88" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="109" text-anchor="middle" class="t-lab">미국 국채금리</text>'
+    '<rect x="8" y="136" width="118" height="34" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="157" text-anchor="middle" class="t-lab">DCF 방법론</text>'
+    '<rect x="248" y="52" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="70" text-anchor="middle" class="t-lab">분자 · 잉여현금흐름</text>'
+    '<text x="320" y="84" text-anchor="middle" class="t-sm">회사가 남기는 현금</text>'
+    '<rect x="248" y="130" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="148" text-anchor="middle" class="t-lab">분모 · 할인율</text>'
+    '<text x="320" y="162" text-anchor="middle" class="t-sm">무위험이자율이 바닥</text>'
+    '<rect x="470" y="86" width="162" height="44" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.2"/>'
+    '<text x="551" y="105" text-anchor="middle" class="t-lab">내재가치 대 주가</text>'
+    '<text x="551" y="121" text-anchor="middle" class="t-sm">회사 42곳의 괴리율</text>'
+    '<path d="M126 57 L246 68" class="flow"/>'
+    '<path d="M67 74 L67 86" class="flow"/>'
+    '<path d="M126 105 L246 145" class="flow"/>'
+    '<path d="M126 142 L246 82" class="flow"/>'
+    '<path d="M126 152 L246 158" class="flow"/>'
+    '<path d="M392 71 L468 100" class="flow"/>'
+    '<path d="M392 149 L468 118" class="flow"/>'
+    '</svg>')
+
+
+def merge_intro():
+    """합류도를 타일 위에 세운다. 관문이 아니다 -- 바로 아래에 회사 타일이 그대로 있다."""
+    return (dc.FIG_DEFS
+            + '<figure class="uc-fig"><p class="fig-title">회사 밖 두 묶음이 회사 카드 하나로 모인다</p>'
+            + MERGE_SVG
+            + '<figcaption>'
+              '<p>회사 카드 <b>42곳</b>은 저마다 다른 회사를 다루지만 끝에서 견주는 것은 같습니다. '
+              '모형이 낸 내재가치와 그날 주가입니다.</p>'
+              '<p>회사 밖 묶음 셋은 그 계산의 서로 다른 자리로 들어갑니다. '
+              '<b>AI 산업 13편</b>은 분자인 잉여현금흐름을 깎고, <b>금리와 국채 10편</b>은 분모인 '
+              '할인율을 올리며, 회사 밖 이야기 4편은 두 자리를 어떻게 세울지의 규칙입니다.</p>'
+              '<p>왼쪽에서 아래로 내려오는 화살표는 8월 7일 편이 낸 것입니다. '
+              '아마존·알파벳·메타·오라클 넷의 채권 발행이 1년 새 79% 늘었습니다. '
+              '설비투자에 쓸 돈을 국채와 같은 시장에서 빌린다는 뜻입니다.</p>'
+              '</figcaption></figure>')
+
+
+
 # -- 시간순 기록 -------------------------------------------------------
 # 회사 카드와 별개로, 날짜순으로 훑는 층을 하나 둔다. dc.render(top=...)에 넘겨
 # 카드 없는 고정 층(data-fixed)으로 세운다 — 타일 하나로 서고 회사 필터를 타지 않는다.
@@ -4418,6 +4473,7 @@ if __name__ == '__main__':
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               extra_css=VALUATION_CSS + LOG_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               pick_top=_top5_html(),
+              intro=merge_intro(),
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,
               top_sub='AI 설비투자와 미국 국채금리를 한 줄기로 — 언제 무슨 값이 나왔나',
               sec_top={
