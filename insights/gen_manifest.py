@@ -3,6 +3,9 @@ import os, re, io, json, hashlib, glob
 
 ROOT = r"C:\Users\y\semianalysis"
 BASES = [(os.path.join(ROOT, "content", "newsletter"), "semianalysis", "semi"),
+         # 팟캐스트는 뉴스레터와 코퍼스를 나눈다 — 대담이라 숫자의 무게가 다르고,
+         # 대시보드 ② 「뉴스레터 발행일순」에 섞이면 카드 이름과 안이 어긋난다
+         (os.path.join(ROOT, "content", "podcast"), "podcast", "pod"),
          (os.path.join(ROOT, "content", "understanding"), "understanding", "und"),
          # 링크드인은 월별 묶음 파일이다(scripts/gen_li_source.py 생성물).
          # 글마다 파일을 두면 400개가 넘고, 인용은 어차피 줄 번호로 간다
@@ -40,7 +43,7 @@ def strip_fm(text):
 def body_hash(text):
     return hashlib.sha1(strip_fm(text).encode('utf-8')).hexdigest()[:12]
 
-ABBR = {"semianalysis": "semi", "understanding": "und", "linkedin": "li"}
+ABBR = {"semianalysis": "semi", "podcast": "pod", "understanding": "und", "linkedin": "li"}
 
 
 def source_id(corpus, folder, filename):
