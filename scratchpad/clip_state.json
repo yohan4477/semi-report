@@ -376,5 +376,11 @@
   "file": "input/clippings\\Can AMD break the CUDA Moat AMD Advancing AI 2026.md",
   "chars": 82749,
   "flag": "OK"
+ },
+ "cerebrass-next-generation-cs-4-fast": {
+  "ok": true,
+  "file": "input/clippings\\Cerebras's Next Generation CS-4 Fast Just Got Faster.md",
+  "chars": 14084,
+  "flag": "OK"
  }
 }
