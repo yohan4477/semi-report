@@ -527,6 +527,9 @@
  "content/newsletter/ai_infra/business/[260722] 메타 인프라 팀에 필요한 문화 리셋.md#L222": {
   "sha1": "2401e4efd31e"
  },
+ "content/newsletter/ai_infra/business/[260722] 메타 인프라 팀에 필요한 문화 리셋.md#L257": {
+  "sha1": "7949f5c44bb0"
+ },
  "content/newsletter/ai_infra/business/[260722] 메타 인프라 팀에 필요한 문화 리셋.md#L284": {
   "sha1": "7f82b302783c"
  },
@@ -1187,8 +1190,17 @@
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L252": {
   "sha1": "9b1065ab5982"
  },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L298": {
+  "sha1": "c47cde6eeef7"
+ },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L299": {
+  "sha1": "97012d0c7938"
+ },
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L303": {
   "sha1": "cc071f3491bb"
+ },
+ "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L305": {
+  "sha1": "9501f3fcad5f"
  },
  "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md#L348": {
   "sha1": "ec0dc7cb78e7"
@@ -4271,6 +4283,9 @@
  "content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md#L11": {
   "sha1": "dd06496f2bf8"
  },
+ "content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md#L13": {
+  "sha1": "e64abb599ed8"
+ },
  "content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md#L35": {
   "sha1": "229bc0da8ede"
  },
@@ -4930,6 +4945,9 @@
  },
  "content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md#L17": {
   "sha1": "1f11ce41a4e3"
+ },
+ "content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md#L18": {
+  "sha1": "baece773fe80"
  },
  "content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md#L44": {
   "sha1": "5e6f41423a80"
