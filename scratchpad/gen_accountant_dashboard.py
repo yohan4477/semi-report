@@ -2493,7 +2493,7 @@ CARDS = [{
         ('필자 단서', '주당 값을 내지 않아 총액으로만 견준다. 괴리율도 원문에 숫자로 없어, 그가 낸 두 값을 나눈 것을 「주인장 계산」으로 표시했다.'),
     ],
     'note': ('유료 구독 글 요약입니다. 매수·매도 권유가 아닙니다. 원문에 종목코드가 없어 이름만 답니다. '
-             '주당 값이 원문에 없어 총액으로만 견줍니다 — 그래서 「지금 대비」 칸이 비어 있습니다.'),
+             '주당 값이 원문에 없어 총액으로만 견줍니다 — 그래서 「현재 시점」 칸이 비어 있습니다.'),
     'links': [('📄 요약 전문', blob(SUM + '[260118] DCF 주주가치 2.09조, 시총보다 66.6% 아래 - LG디스플레이 - 엘곰.md'), 'secondary')],
 }, {
     'section': SEC_RATES,
@@ -3285,41 +3285,23 @@ VALUATION_CSS = '''
   .vtop-note summary{cursor:pointer;font-weight:700;white-space:nowrap}
   .vtop-note summary:hover{color:var(--accent)}
   .vtop-note p{margin:3px 0 0;max-width:420px;line-height:1.35;text-align:left}
-  /* 칸을 minmax(0,1fr)로 못 박는다. 그냥 1fr이면 내용이 길 때 칸이 제 몫보다 넓어지고
-     그만큼 보드가 화면 밖으로 나간다 — 430px에서 19px 넘쳤다 */
-  .vtop-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-             gap:0 18px;margin-top:5px}
-  /* 좁은 화면에서도 두 칸을 좌우로 둔다 — 저평가와 고평가는 견주라고 나란히 세운 것이라
-     위아래로 쌓이면 한눈에 대조가 안 된다. 대신 글씨와 사이를 좁혀 두 칸이 들어가게 한다.
-     기준선을 640px에 두었더니 창을 줄이거나 확대율을 올린 화면에서 바로 쌓였다 */
+  /* 저평가와 고평가를 위아래로 쌓는다. 한 줄이 네 칸(이름·평가일·평가 시점·현재 시점)이라
+     좌우로 나누면 한 칸이 여덟 칸을 담게 되어 회사 이름부터 잘렸다 — 폰에서 한 글자로
+     줄었다. 쌓으면 각 칸이 폭을 통째로 쓴다. */
+  .vtop-cols{display:grid;grid-template-columns:1fr;margin-top:5px}
+  .vtop-col + .vtop-col{margin-top:9px}
   @media (max-width:700px){
-    .vtop-cols{gap:0 10px}
     .vtop-list a{font-size:10px}
     .vtop-v{font-size:10px}
+    .vtop-now{font-size:10px}
     .vtop-d{font-size:9px}
-    .vtop-list{gap:0 6px}
+    .vtop-list{gap:0 8px}
     .vtop-h{font-size:8.5px}
-  }
-  /* 폰에서는 두 칸을 위아래로 쌓는다. 한 칸에 세 열이라 좌우로 나누면 폭이 200px도 안 돼
-     회사 이름이 밀려난다. 쌓으면 각 칸이 폭을 통째로 쓴다 */
-  @media (max-width:520px){
-    .vtop-cols{grid-template-columns:1fr}
-    .vtop-col + .vtop-col{margin-top:9px}
   }
   .vtop-h{margin:0;font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
           white-space:nowrap}
   /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
   .vtop-hd > *{border-top:0 !important;padding-bottom:2px}
-  /* 전체 순위에는 「지금 대비」 칸이 하나 더 선다. 접힌 화면(최근 3개월 다섯 줄)은
-     좁게 두고 펼친 목록만 넓힌다 — 첫 화면 높이를 지키려는 것이다 */
-  .vtop-all .vtop-list{grid-template-columns:minmax(5.5em,max-content) max-content max-content max-content}
-  /* 펼친 순위는 한 줄에 네 칸이라, 좌우 두 칸으로 서면 좁은 화면에서 여덟 칸이 된다.
-     그러면 바닥을 준 이름 칸부터 넘쳐 회사 이름이 한 글자로 잘렸다(폰 화면에서 확인).
-     넓지 않으면 위아래로 쌓아 각 칸에 폭을 통째로 준다 — 접힌 보드(세 칸)는 그대로 둔다 */
-  @media (max-width:1000px){
-    .vtop-all .vtop-cols{grid-template-columns:1fr}
-    .vtop-all .vtop-col + .vtop-col{margin-top:10px}
-  }
   .vtop-now{font-variant-numeric:tabular-nums;font-size:10.5px;font-weight:800;
             justify-self:end;white-space:nowrap}
   .vtop-now.up{color:var(--risk)}
@@ -3328,15 +3310,18 @@ VALUATION_CSS = '''
   .vtop-src{margin:5px 0 0;font-size:9.5px;line-height:1.45;color:var(--ink-3)}
   .vtop-h2{font-size:9px;font-weight:800;letter-spacing:.03em;color:var(--ink-3);
            white-space:nowrap}
-  .vtop-hd .vtop-h2:nth-of-type(1){justify-self:end}
-  .vtop-hd .vtop-h2:nth-of-type(2){justify-self:start}
+  /* 칸 이름을 값과 같은 쪽에 붙인다. nth-of-type은 클래스가 아니라 span을 세므로
+     nth-child로 자리를 짚는다 — 첫 span은 「저평가」이고 그 뒤가 평가일·두 퍼센트다. */
+  .vtop-hd > span:nth-child(2){justify-self:start}
+  .vtop-hd > span:nth-child(3),
+  .vtop-hd > span:nth-child(4){justify-self:end}
   /* 격자를 목록 전체에 건다 — 줄마다 따로 세우면 이름 칸이 줄 안에서만 폭을 정해,
      짧은 이름은 자리를 남기고 긴 이름은 잘린다(2026-08-19에 「주성엔지…」로 잘렸다).
      목록에 걸면 열 줄이 칸을 공유해 이름 칸이 가장 긴 이름에 맞춰지고 나머지가 남는다.
      칸을 내용 폭으로 두고 왼쪽으로 몰아 숫자가 이름 옆에 붙게 한다 — 가운데를 1fr로 두면
      남는 폭을 다 먹어 이름과 값 사이가 245px까지 벌어졌다. */
   .vtop-list{display:grid;
-             grid-template-columns:minmax(5.5em,max-content) max-content max-content;
+             grid-template-columns:minmax(5.5em,max-content) max-content max-content max-content;
              justify-content:start;gap:0 14px;margin:0;padding:0;list-style:none}
   .vtop-list > li{display:contents}
   /* 회사 이름·값·날짜를 한 격자의 세 칸으로 세운다. flex로 양끝에 밀면 이름 길이에 따라
@@ -3349,12 +3334,13 @@ VALUATION_CSS = '''
                min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;
                white-space:nowrap}
   .vtop-list a:hover{color:var(--accent)}
-  /* 값과 날짜를 칸으로 세운다 — 회사 이름 길이가 제각각이라 flex로 밀면 값의 오른쪽 끝이
-     줄마다 어긋나 세로로 안 읽힌다. 폭을 못 박고 오른쪽으로 붙인다 */
+  /* 날짜와 두 퍼센트를 칸으로 세운다 — 회사 이름 길이가 제각각이라 flex로 밀면 값의
+     오른쪽 끝이 줄마다 어긋나 세로로 안 읽힌다. 폭을 못 박고 붙인다 */
   .vtop-r{display:contents}
-  /* 값은 오른쪽으로 붙여 자릿수를 맞추고, 날짜는 왼쪽으로 붙여 줄마다 시작이 맞게 한다 */
-  .vtop-v{justify-self:end}
+  /* 날짜는 이름 다음에 왼쪽으로 붙여 줄마다 시작이 맞게 하고, 두 퍼센트는 오른쪽으로
+     붙여 자릿수를 맞춘다 */
   .vtop-d{justify-self:start}
+  .vtop-v{justify-self:end}
   .vtop-v{font-variant-numeric:tabular-nums;font-size:11px;font-weight:850;white-space:nowrap}
   /* 평가일 — 값보다 작고 회색이다. 편마다 비교 시점이 다르므로 숫자 옆에 붙여 둔다 */
   .vtop-d{font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:700;color:var(--ink-3)}
@@ -3505,33 +3491,33 @@ def _top5_html():
 
     now_asof = _price_asof()
 
-    def _hd(side, wide=False):
-        # 칸 이름 줄. 날짜가 무엇의 날짜인지 밝힌다 — 평가를 올린 날이다. 견준 주가의
-        # 날짜는 이와 다를 수 있어(글보다 하루 이틀 앞선 종가를 쓰는 편이 있다) 배지에
-        # 마우스를 올리면 뜨는 설명에 따로 적는다. 「주가 기준일」이라 적으면 마지막
-        # 장마감 종가를 가리키는 말이 되어 뜻이 어긋난다.
-        tail = '<span class="vtop-h2">지금 대비</span>' if wide else ''
-        return ('<li class="vtop-hd%s"><span class="vtop-h">%s</span>'
-                '<span class="vtop-h2">괴리</span>'
-                '<span class="vtop-h2">평가 시점</span>%s</li>'
-                % (' vtop-w' if wide else '', side, tail))
+    def _hd(side):
+        # 칸 이름 줄 — 회사·평가일·평가 시점·현재 시점 넷이다. 날짜가 무엇의 날짜인지
+        # 밝힌다: 평가를 올린 날이다. 견준 주가의 날짜는 이와 다를 수 있어(글보다 하루
+        # 이틀 앞선 종가를 쓰는 편이 있다) 배지에 마우스를 올리면 뜨는 설명에 따로 적는다.
+        # 두 퍼센트는 견준 주가가 다르다 — 평가 시점은 그 글이 견준 주가, 현재 시점은
+        # 오늘 종가다. 그래서 칸 이름을 시점으로 갈라 둔다.
+        return ('<li class="vtop-hd"><span class="vtop-h">%s</span>'
+                '<span class="vtop-h2">평가일</span>'
+                '<span class="vtop-h2">평가 시점</span>'
+                '<span class="vtop-h2">현재 시점</span></li>' % side)
 
-    def _li(row, wide=False):
+    def _li(row):
         sid, name, text, tone, _v, day = row
-        # 평가일을 값 옆에 같이 둔다. 편마다 비교 시점이 다르니 숫자만 보면 서로 다른 날의
-        # 값을 나란히 견주게 된다. 값보다 작고 회색이라 숫자를 안 먹는다.
+        # 평가일을 이름 다음에 둔다. 편마다 비교 시점이 다르니 날짜 없이 보면 서로 다른
+        # 날의 값을 나란히 견주게 된다. 퍼센트보다 작고 회색이라 숫자를 안 먹는다.
         when = ('%02d.%02d.%02d' % (day.year % 100, day.month, day.day) if show_year
                 else '%02d.%02d' % (day.month, day.day))
-        tail = ''
-        if wide:
-            g = _now_gap(sid)
-            tail = ('<span class="vtop-now %s">%+.1f%%</span>'
-                    % ('up' if g >= 0 else 'down', g)) if g is not None else \
-                   '<span class="vtop-now flat">—</span>'
-        return ('<li%s><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
-                '<span class="vtop-v %s">%s</span>'
-                '<span class="vtop-d">%s</span>%s</span></li>'
-                % (' class="vtop-w"' if wide else '', sid, name, tone, text, when, tail))
+        # 현재 시점 — 필자 값을 오늘 종가와 다시 견준다. 시세나 주당 값이 없는 편은 —로 둔다.
+        g = _now_gap(sid)
+        now = ('<span class="vtop-now %s">%s%.1f%%</span>'
+               % ('up' if g >= 0 else 'down',
+                  '+' if g >= 0 else '−', abs(g))) if g is not None else (
+              '<span class="vtop-now flat">—</span>')
+        return ('<li><a class="kin-link" href="#%s">%s</a><span class="vtop-r">'
+                '<span class="vtop-d">%s</span>'
+                '<span class="vtop-v %s">%s</span>%s</span></li>'
+                % (sid, name, when, tone, text, now))
 
     # 제목과 「비교 시점·판정 기준」 안내를 한 줄에 같이 둔다. 안내는 접어 둔다(<details>) —
     # 내용은 지우지 않되(펴면 그대로 읽힌다), 기본 화면에서 두 줄을 먹지 않게 한다. 이 문장이
@@ -3542,16 +3528,13 @@ def _top5_html():
     allp, alln = _rank_rows(datetime.date(2026, 1, 1))
     more = ('<details class="vtop-all"><summary>2026년 평가 전부 보기 '
             '<span class="vtop-n">저평가 %d · 고평가 %d</span></summary>'
-            '<p class="vtop-src">「지금 대비」는 필자 값을 오늘 종가와 다시 견준 값이다 — '
-            '필자가 견준 주가는 그 글의 시점이라 앞의 괴리와 다르다. 시세 %s, 네이버 금융. '
-            '값을 안 내는 편과 총액으로만 낸 편은 이 칸이 비어 있다.</p>'
             '<div class="vtop-cols">'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '</div></details>'
-            % (len(allp), len(alln), now_asof,
-               _hd('저평가', True), ''.join(_li(r, True) for r in allp),
-               _hd('고평가', True), ''.join(_li(r, True) for r in alln)))
+            % (len(allp), len(alln),
+               _hd('저평가'), ''.join(_li(r) for r in allp),
+               _hd('고평가'), ''.join(_li(r) for r in alln)))
 
     return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
             '최근 3개월 평가에서 가장 벌어진 곳</h2>'
@@ -3562,9 +3545,13 @@ def _top5_html():
             '<div class="vtop-cols">'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
             '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
-            '</div>%s</section>'
+            '</div>'
+            '<p class="vtop-src">「평가 시점」은 필자가 그 글에서 적은 괴리율이고, '
+            '「현재 시점」은 같은 값을 오늘 종가와 다시 견준 값이다 — 그가 견준 주가는 '
+            '글의 시점이라 두 값이 다르다. 시세 %s, 네이버 금융. 값을 안 내는 편과 '
+            '총액으로만 낸 편은 현재 시점 칸이 비어 있다.</p>%s</section>'
             % (_hd('저평가'), ''.join(_li(r) for r in pos),
-               _hd('고평가'), ''.join(_li(r) for r in neg), more))
+               _hd('고평가'), ''.join(_li(r) for r in neg), now_asof, more))
 
 
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
