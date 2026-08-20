@@ -54,8 +54,10 @@ ALSO = {'estate': ('이 묶음의 %d장은 <a href="부동산 대시보드.html"
                    '같은 내용으로 나갑니다. 저쪽에서는 첫 화면 「통합 인사이트」 타일에 들어 있습니다.')}
 
 
-# (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다
-KINDS = ((paths.BRIEFS, '브리핑', 'brief'),
+# (디렉터리, 배지 이름, 탭 id) — 탭은 이 순서로 선다.
+# loop 가 맨 앞이다. 여덟 편이 다 서면 나머지 셋은 비고 탭도 사라진다
+KINDS = ((paths.LOOP, '고리', 'loop'),
+         (paths.BRIEFS, '브리핑', 'brief'),
          (paths.SYNTH, '교차 인사이트', 'cross'),
          (paths.THESES, '종합 판단', 'thesis'))
 

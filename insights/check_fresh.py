@@ -172,6 +172,7 @@ def main():
     today = datetime.date.today()
     notes = load_notes()
     files = sorted(glob.glob(os.path.join(paths.BRIEFS, '*.md')) +
+                   glob.glob(os.path.join(paths.LOOP, '*.md')) +
                    glob.glob(os.path.join(paths.SYNTH, '*.md')))
     for p in files:
         check(p, notes, today)

@@ -194,6 +194,7 @@ def main():
     except Exception:
         pass
     files = sorted(glob.glob(os.path.join(paths.BRIEFS, '*.md')) +
+                   glob.glob(os.path.join(paths.LOOP, '*.md')) +
                    glob.glob(os.path.join(paths.SYNTH, '*.md')))
     for p in files:
         check_file(p)

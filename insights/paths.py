@@ -13,3 +13,5 @@ SYNTH = os.path.join(HERE, 'synth')
 BRIEFS = os.path.join(HERE, 'briefs')
 THESES = os.path.join(HERE, 'theses')
 WORLD = os.path.join(HERE, 'world_path.txt')
+# 돈 고리 여덟 편. 교차 인사이트(어긋남 하나)와 절 구성이 달라 디렉터리를 가른다
+LOOP = os.path.join(HERE, 'loop')

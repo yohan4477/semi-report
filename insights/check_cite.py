@@ -102,6 +102,7 @@ def main():
     except Exception:
         pass
     files = sorted(glob.glob(os.path.join(paths.BRIEFS, '*.md')) +
+                   glob.glob(os.path.join(paths.LOOP, '*.md')) +
                    glob.glob(os.path.join(paths.SYNTH, '*.md')))
     for p in files:
         meta, _ = nl.parse_front(io.open(p, encoding='utf-8').read())

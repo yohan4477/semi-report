@@ -21,3 +21,8 @@ def test_li_basis_reads_the_block_the_line_belongs_to():
 
 def test_li_basis_returns_none_for_non_linkedin():
     assert nl.li_basis('content/newsletter/ai_infra/x.md', 10) is None
+
+
+def test_loop_path_is_under_insights():
+    assert paths.LOOP == os.path.join(paths.ROOT, 'insights', 'loop')
+    assert os.path.isdir(paths.LOOP)
