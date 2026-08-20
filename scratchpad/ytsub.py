@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# 유튜브 한국어 자막을 받아 중복을 걷어낸 전문 txt로 만든다.
-#   py -3.13 scratchpad/ytsub.py <영상ID>
+# 유튜브 자막을 받아 중복을 걷어낸 전문 txt로 만든다.
+#   py -3.13 scratchpad/ytsub.py <영상ID> [언어]
+# 언어 기본값은 ko(한국어 해설 영상). SemiAnalysis 팟캐스트처럼 영어면 en 을 준다.
 # 결과: scratchpad/yt_subs/<ID>.ko.vtt (원본) · scratchpad/yt_subs/<ID>.txt (전문)
 # 메타(업로드일·길이·제목)는 마지막 줄에 한 줄로 찍는다.
 import io, os, re, subprocess, sys
@@ -29,12 +30,12 @@ def vtt_to_text(path):
     return '\n'.join(lines)
 
 
-def main(vid):
+def main(vid, lang='ko'):
     os.makedirs(OUT, exist_ok=True)
     url = 'https://www.youtube.com/watch?v=' + vid
     cmd = ['py', '-3.13', '-m', 'yt_dlp', '--write-auto-sub', '--write-sub',
-           # ko-orig = 원본 한국어 음성 자막. ko는 번역본이라 뒤로 둔다
-           '--sub-lang', 'ko-orig,ko', '--sub-format', 'vtt',
+           # <lang>-orig = 원본 음성 자막. 접미사 없는 쪽은 번역본이라 뒤로 둔다
+           '--sub-lang', '%s-orig,%s' % (lang, lang), '--sub-format', 'vtt',
            '--skip-download', '--no-warnings',
            # --print은 기본이 simulate라 자막을 안 받는다 — --no-simulate로 되돌린다
            '--print', '%(upload_date)s|%(duration)s|%(title)s', '--no-simulate',
@@ -59,4 +60,4 @@ def main(vid):
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else 'ko'))
