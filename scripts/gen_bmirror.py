@@ -26,7 +26,11 @@ def extract(d):
         art = re.search(r'<a class="art" href="([^"]+)"', tail)
         arturl = art.group(1) if art else None
         artkind = ("yt" if arturl and ("youtube" in arturl or "youtu.be" in arturl) else ("nl" if arturl and "newsletter" in arturl else None))
-        rows.append({"typ": typ, "href": href, "sn": sn, "art": arturl, "artkind": artkind})
+        # 영상 신호에는 원문(YouTube) 말고 변환본 링크가 하나 더 붙는다.
+        # class="art tr" 로 구분한다 — 없는 카드가 대부분이라 None이 기본이다
+        trm = re.search(r'<a class="art tr" href="([^"]+)"', tail)
+        rows.append({"typ": typ, "href": href, "sn": sn, "art": arturl, "artkind": artkind,
+                     "tr": trm.group(1) if trm else None})
     return rows
 
 def nv(url, sn, ext=True, brief=False):
@@ -64,6 +68,7 @@ REL = {
 LI_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg>'
 YT_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#c00"/><path fill="#fff" d="M10 8.5l6 3.5-6 3.5z"/></svg>'
 NV_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#76b900"/><text x="12" y="15.5" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif">NV</text></svg>'
+CHK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#16a34a"/><path fill="#fff" d="M9.5 16.2 6 12.7l1.4-1.4 2.1 2.1 6.1-6.1 1.4 1.4z"/></svg>'
 def icon(t): return {"li": LI_SVG, "yt": YT_SVG, "nv": NV_SVG}[t]
 def cat_for(sn):
     if any(k in sn for k in ["프라임파워", "왕복엔진", "전력", "허가", "그리드", "Bloom", "스타게이트"]): return "power"
@@ -88,6 +93,9 @@ def render_row(r):
         k = r["artkind"]; lbl = "▶ YouTube" if k == "yt" else "▤ 뉴스레터 원문"
         cls = "ybadge" if k == "yt" else "nbadge"
         artb = '<a class="' + cls + '" href="' + r["art"] + '" target="_blank" rel="noopener">' + lbl + "</a>"
+    if r.get("tr"):
+        artb += ('<a class="art tr" href="' + r["tr"] + '" target="_blank" rel="noopener">'
+                 + CHK_SVG + "한글 해석본</a>")
     rel = REL.get(href); relb = ""
     if rel:
         links = "".join('<a href="' + u + ('" target="_blank" rel="noopener"' if u.startswith("http") else '"') + '><span class="rk">' + rk + "</span>" + why + "</a>" for u, rk, why in rel)
@@ -126,7 +134,6 @@ ds = ds[:start] + out + newnote + ds[note_end:]
 
 # ================= ② 뉴스레터 — 파일명 발행일 [YYMMDD] 기준 최근 N편 자동 =================
 SA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg>'
-CHK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#16a34a"/><path fill="#fff" d="M9.5 16.2 6 12.7l1.4-1.4 2.1 2.1 6.1-6.1 1.4 1.4z"/></svg>'
 
 def nl_cat(cats):
     s = cats.lower()
