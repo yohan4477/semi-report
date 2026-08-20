@@ -83,7 +83,7 @@ def srcbox(src):
 STALE_DAYS = {'biz': 120, 'chip': 180, 'model': 180, 'power': 365, 'winner': 120}
 
 
-def period(meta, src):
+def period(meta, src, body=''):
     """근거가 언제 것인지를 카드 겉면에 박는다.
 
     맞는 말이어도 옛날 이야기면 지금은 틀린 말일 수 있다. 그런데 as_of 는 내가 쓴 날짜라
@@ -96,6 +96,15 @@ def period(meta, src):
                            meta.get('_head', '').split('\nchecked:')[0]))
     used = [d for d in src if d.get('file') in cited] or src
     ds = sorted(re.findall(r'\[(\d{6})\]', ' '.join(d.get('base', '') for d in used)))
+    # 링크드인은 파일명이 [2608]처럼 월 단위라 위에서 안 잡힌다.
+    # 인용된 줄이 속한 게시물의 기준일을 대신 센다.
+    for ref in nl.cite_refs(body, src):
+        if not (ref.get('file') and ref.get('lines')):
+            continue
+        b = nl.li_basis(ref['file'], ref['lines'][0])
+        if b:
+            ds.append(b[2:4] + b[5:7] + b[8:10])
+    ds = sorted(ds)
     if not ds:
         return '<span class="asof">as_of %s</span>' % nl.esc(meta.get('as_of', ''))
     fmt = lambda s: '20%s.%s' % (s[:2], s[2:4])
@@ -160,7 +169,7 @@ def one(meta, body, tab, kind, cells=()):
     return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s</h2>'
             '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
-            % (tab, cellattr, nl.esc(kind), period(meta, src), roster(meta),
+            % (tab, cellattr, nl.esc(kind), period(meta, src, body), roster(meta),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                copy_btn(anchor(head), 'uc-copy'),
                nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))

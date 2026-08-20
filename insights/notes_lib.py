@@ -148,3 +148,30 @@ def md_body(body, sources, h='h2', cls='tsec', dot=None):
         p = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(b).replace('\n', ' '))
         out.append('<p>%s</p>' % link_cites(p, sources))
     return ''.join(out)
+
+
+LI_DIR = 'content/linkedin/'
+LI_BASIS = re.compile(r'^-\s*기준일\s*(\d{4}-\d{2}-\d{2})')
+
+
+def li_basis(rel_path, line_no):
+    """링크드인 원문에서 그 줄이 속한 게시물 블록의 기준일.
+
+    파일명이 [2608]처럼 월 단위라 파일명에서는 날짜를 못 뽑는다. 게시물마다
+    붙은 기준일 줄을 위로 거슬러 찾는다 — 게시일이 아니라 li_signal 이 정한
+    basis_date 다(뉴스레터 링크가 있으면 그 원문의 발행일)."""
+    p = (rel_path or '').replace('\\', '/')
+    if not p.startswith(LI_DIR):
+        return None
+    ap = abspath(p)
+    if not os.path.isfile(ap):
+        return None
+    found = None
+    with io.open(ap, encoding='utf-8', errors='replace') as f:
+        for i, line in enumerate(f, 1):
+            if i > line_no:
+                break
+            m = LI_BASIS.match(line.strip())
+            if m:
+                found = m.group(1)
+    return found
