@@ -269,13 +269,20 @@ NAV_JS = '''<script>
   var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
-  var only=null, picking=true, sect=null, q='';
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var only=null, picking=true, sect=null, q='', cell=null;
+  var mbar=document.querySelector('.mg-b');
   var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
   function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
   function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
   function apply(){
-    document.querySelectorAll('.ucard[data-scope]').forEach(function(c){
-      c.hidden = !(pick==='all' || c.dataset.scope===pick);
+    // 카드를 숨기는 조건이 둘이다 — 범위 탭(국내·해외)과 합류도 칸.
+    // 칸을 고르면 섹션을 가로질러 그 칸에 선 카드만 남는다.
+    document.querySelectorAll('.ucard').forEach(function(c){
+      var okScope = !c.dataset.scope || pick==='all' || c.dataset.scope===pick;
+      var okCell = !cell || (' '+(c.dataset.cells||'')+' ').indexOf(' '+cell+' ')!==-1;
+      c.hidden = !(okScope && okCell);
     });
     // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
     document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
@@ -300,7 +307,8 @@ NAV_JS = '''<script>
                    ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
                    : s.querySelectorAll('.ucard:not([hidden])').length;
       seen+=live;
-      s.hidden = picking || live===0 || (only && s.id!==only);
+      // 칸을 고른 화면에서는 카드가 남은 섹션만 선다. 섹션 하나를 고른 상태가 아니다.
+      s.hidden = cell ? live===0 : (picking || live===0 || (only && s.id!==only));
       var o=opt(s.id);
       if(o){
         // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
@@ -382,13 +390,18 @@ NAV_JS = '''<script>
     if(intro) intro.hidden = !picking;
     var roll2=document.querySelector('.rollup');
     if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    });
     if(back){
       back.hidden = picking;
       var now=back.querySelector('.sb-now');
       if(now){
         var cur = only ? opt(only) : opt('');
         var t = cur && cur.querySelector('.st-t');
-        now.textContent = picking ? '' : (t ? t.textContent : '');
+        var mg = cell && mbar ? mbar.querySelector('.mcell[data-cell="'+cell+'"]') : null;
+        now.textContent = picking ? ''
+          : (mg ? (mg.dataset.label || cell) : (t ? t.textContent : ''));
       }
     }
     box.querySelectorAll('button').forEach(function(b){
@@ -417,6 +430,7 @@ NAV_JS = '''<script>
   }
   function restore(st){
     quiet = true;
+    cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
     var id = (location.hash || '').slice(1);
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
@@ -443,8 +457,31 @@ NAV_JS = '''<script>
     sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
     apply();
   });
+  // 합류도 칸을 누르면 그 칸에 선 카드만 남는다. 같은 칸을 다시 누르면 푼다 —
+  // 지도를 열어 둔 채로 되돌릴 길이 있어야 한다.
+  function pickCell(g){
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    only=null; sect=null;
+    picking = !cell;
+    apply();
+    if(cell){
+      var first=document.querySelector('section[id]:not([hidden])');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(g) pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
+    cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
     if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
     if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
@@ -459,6 +496,7 @@ NAV_JS = '''<script>
   if(back) back.addEventListener('click', function(e){
     if(!e.target.closest('.sb-btn')) return;
     // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
     if(history.state && history.state.picking === false){ history.back(); return; }
     picking=true; only=null; apply();
     if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
@@ -594,6 +632,176 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
                     '<div class="sgrid">%s</div></div>' % (label, ''.join(cells)))
     return ('<div class="sec-pick">%s%s<div class="sectpick">%s</div>%s</div>%s'
             % (SEARCH_HTML, pick_top, ''.join(body), ''.join(panels), BACK))
+
+
+# ── 합류도 ────────────────────────────────────────────────────────────────
+# 섹션 타일은 카드를 주제별로 **나누는** 도구다. 합류도는 반대로, 주제를 **가로질러**
+# 카드 여럿이 한 곳으로 모인다는 것을 그림 한 장으로 보인다. 설계는
+# docs/superpowers/specs/2026-08-20-합류도-design.md, 원형은 insights/gen_insightview.py.
+#
+# 읽는 층이다 — 카드 본문은 한 글자도 안 고친다. 배정은 카드 제목 문자열로만 가리키고
+# 그 제목이 없으면 생성이 멈춘다. 열은 셋으로 고정한다(넷째 열을 열면 지도가 조직도가 된다).
+MERGE_COLS = (('outer', '바깥에서 오는 것'),
+              ('price', '값을 정하는 곳'),
+              ('merge', '합류하는 곳'))
+
+# 열 셋의 자리(x, 폭, 칸 높이, 한 줄에 담을 글자 수). 좌표를 손으로 적지 않는다 —
+# 주제를 더할 때 칸 개수만 달라지고 자리는 여기서 다시 계산된다.
+_MGEO = {'outer': (8, 118, 40, 9), 'price': (248, 144, 40, 11), 'merge': (470, 162, 48, 12)}
+_MJX = 210.0   # 바깥 칸들이 한 번 모이는 자리. 어느 바깥이 어느 값으로 가는지는
+               # 주장한 적이 없다 — 짝을 그리면 없는 인과를 그리는 것이 된다.
+
+
+def _mesc(s):
+    return ((s or '').replace('&', '&amp;').replace('<', '&lt;')
+            .replace('>', '&gt;').replace('"', '&quot;'))
+
+
+def _mwrap(s, n):
+    """칸 라벨을 두 줄까지만 접는다. 세 줄이 되면 칸 높이를 넘는다."""
+    if len(s) <= n:
+        return [s]
+    cut = s.rfind(' ', 0, n + 1)
+    if cut < n // 2:
+        cut = n
+    head, tail = s[:cut].rstrip(), s[cut:].lstrip()
+    return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
+
+
+def merge_cells(m):
+    """지도 한 장의 칸 목록 — [(칸 id, 열, 라벨, [카드 제목…])]."""
+    out = []
+    for col, _title in MERGE_COLS:
+        if col == 'merge':
+            label, titles = m['merge']
+            out.append(('%s-merge' % m['id'], col, label, titles))
+            continue
+        for i, (label, titles) in enumerate(m.get(col) or ()):
+            out.append(('%s-%s%d' % (m['id'], col, i), col, label, titles))
+    return out
+
+
+def merge_svg(m):
+    """지도 한 장. 칸은 누를 수 있고, 누르면 그 칸에 선 카드만 남는다."""
+    bycol = {}
+    for cid, col, label, titles in merge_cells(m):
+        bycol.setdefault(col, []).append((cid, label, titles))
+    tot = {}
+    for col, _t in MERGE_COLS:
+        _x, _w, bh, _n = _MGEO[col]
+        k = len(bycol.get(col, []))
+        tot[col] = k * bh + (k - 1) * 14 if k else 0
+    span = max(tot.values())
+    cy = 44 + span / 2.0
+    H = int(44 + span + 20)
+    h = ['<svg viewBox="0 0 640 %d" role="group" aria-label="%s 합류도">'
+         % (H, _mesc(m['title']))]
+    for col, title in MERGE_COLS:
+        x, w, _bh, _n = _MGEO[col]
+        h.append('<text x="%.0f" y="22" text-anchor="middle" class="m-col">%s</text>'
+                 % (x + w / 2.0, _mesc(title)))
+    tops = {}
+    for col, _title in MERGE_COLS:
+        x, w, bh, cw = _MGEO[col]
+        y0 = cy - tot[col] / 2.0
+        for i, (cid, label, titles) in enumerate(bycol.get(col, [])):
+            y = y0 + i * (bh + 14)
+            tops[cid] = (x, y, w, bh)
+            lines = _mwrap(label, cw)
+            ty = y + bh / 2.0 - (len(lines) - 1) * 7 + 4
+            h.append('<g class="mcell%s" data-cell="%s" data-label="%s" role="button" '
+                     'tabindex="0" aria-pressed="false" aria-label="%s — 카드 %d장">'
+                     % (' is-merge' if col == 'merge' else '', _mesc(cid),
+                        _mesc(label), _mesc(label), len(titles)))
+            h.append('<title>%s — 카드 %d장</title>' % (_mesc(label), len(titles)))
+            h.append('<rect x="%.0f" y="%.0f" width="%d" height="%d" rx="9"/>' % (x, y, w, bh))
+            for j, line in enumerate(lines):
+                h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="m-lab">%s</text>'
+                         % (x + w / 2.0, ty + j * 14, _mesc(line)))
+            h.append('</g>')
+    ox, ow, _obh, _n = _MGEO['outer']
+    px, pw, _pbh, _n2 = _MGEO['price']
+    mx, _mw, _mbh, _n3 = _MGEO['merge']
+    for cid, _l, _t in bycol.get('outer', []):
+        _x, y, _w, bh = tops[cid]
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (ox + ow, y + bh / 2.0, _MJX, cy))
+    for cid, _l, _t in bycol.get('price', []):
+        _x, y, _w, bh = tops[cid]
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (_MJX, cy, px, y + bh / 2.0))
+        h.append('<path class="mflow" d="M%.0f %.0f L%.0f %.0f"/>'
+                 % (px + pw, y + bh / 2.0, mx, cy))
+    h.append('<circle class="mdot" cx="%.0f" cy="%.0f" r="3.5"/>' % (_MJX, cy))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+def merge_layer(maps, cards):
+    """합류도 층을 만들고 카드에 c['cells']를 채운다.
+
+    접힌 채로 선다 — 첫 화면은 어느 장이든 섹션 타일이다(UI 규약 1). intro와 함께
+    타일 위에 두고, extra_css에 MERGE_CSS를 같이 넘긴다.
+
+    가리킨 제목이 카드에 없으면 여기서 멈춘다. 한 지도 안에서 같은 카드가 두 칸에 서는 것도
+    막는다 — 카드 하나가 바깥이면서 합류점일 수는 없다. 지도가 여럿이면 겹쳐 서도 된다."""
+    if not maps:
+        return ''
+    known = {c['title']: c for c in cards}
+    for c in cards:
+        c['cells'] = []
+    for m in maps:
+        seen = {}
+        assert m.get('merge') and m['merge'][1], '합류 칸이 비었다: %s' % m['id']
+        assert m.get('outer') or m.get('price'), '바깥·값 칸이 하나도 없다: %s' % m['id']
+        for cid, _col, label, titles in merge_cells(m):
+            assert titles, '빈 칸이 있다: %s / %s' % (m['id'], label)
+            for t in titles:
+                assert t in known, '합류도가 없는 카드를 가리킨다: %s' % t
+                assert t not in seen, ('한 지도에서 같은 카드가 두 칸에 섰다: %s (%s · %s)'
+                                       % (t, seen.get(t), label))
+                seen[t] = label
+                known[t]['cells'].append(cid)
+    h = ['<details class="mrg"><summary><span class="mg-t">합류도</span>'
+         '<span class="mg-s">주제 %d개 — 카드가 어디로 모이는지 먼저 보고 들어갑니다</span>'
+         '</summary><div class="mg-b">' % len(maps)]
+    for m in maps:
+        h.append('<div class="mg-one"><p class="mg-h">%s</p><p class="mg-l">%s</p>%s</div>'
+                 % (_mesc(m['title']), _mesc(m['lede']), merge_svg(m)))
+    h.append('<p class="mg-n">칸을 누르면 그 칸에 선 카드만 남습니다. 가운데 점은 바깥 조건이 '
+             '한 번 모이는 자리입니다 — 어느 바깥이 어느 값으로 가는지는 이 그림이 정하지 '
+             '않습니다.</p></div></details>')
+    return ''.join(h)
+
+
+MERGE_CSS = '''
+  .mrg{margin:0 0 14px;border:1px solid var(--line);border-radius:10px;
+    background:var(--surface);padding:0 16px}
+  .mrg>summary{list-style:none;cursor:pointer;padding:13px 0;display:flex;
+    align-items:baseline;gap:10px;flex-wrap:wrap}
+  .mrg>summary::-webkit-details-marker{display:none}
+  .mrg>summary::after{content:"\\25be";margin-left:auto;color:var(--ink-3);font-size:12px}
+  .mrg[open]>summary::after{content:"\\25b4"}
+  .mg-t{font-size:14px;font-weight:800;color:var(--ink)}
+  .mg-s{font-size:12px;color:var(--ink-3)}
+  .mg-b{padding:0 0 16px}
+  .mg-one+.mg-one{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .mg-h{margin:0 0 3px;font-size:13.5px;font-weight:800;color:var(--ink)}
+  .mg-l{margin:0 0 10px;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+  .mg-n{margin:14px 0 0;font-size:11.5px;line-height:1.6;color:var(--ink-3)}
+  .mg-b svg{width:100%;height:auto;display:block}
+  .m-col{font-size:11px;font-weight:850;fill:var(--ink-3);letter-spacing:.02em}
+  .m-lab{font-size:11.5px;font-weight:800;fill:var(--ink)}
+  .mflow{stroke:var(--line);stroke-width:1.4;fill:none}
+  .mdot{fill:var(--ink-2)}
+  .mcell{cursor:pointer}
+  .mcell rect{fill:var(--surface);stroke:var(--ink-2);stroke-width:1.4;
+    transition:stroke .15s,fill .15s}
+  .mcell.is-merge rect{stroke:var(--accent);stroke-width:2.2}
+  .mcell:hover rect,.mcell:focus rect{fill:var(--accent-soft);stroke:var(--accent)}
+  .mcell:focus{outline:none}
+  .mcell[aria-pressed="true"] rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.4}
+'''
 
 
 def layer(secs, lede):

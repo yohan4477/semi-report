@@ -268,7 +268,7 @@ def slim_html(c):
       slim_points    6~8개, 각 한두 문장
       slim_stats     4개
     """
-    h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    h = ['<div class="ucard is-fold"%s>' % _card_attrs(c)]
     # 접힌 상태는 지금까지와 같다 — 주제칩·제목·이 편에서 무엇을 알 수 있는지·화자와 날짜
     h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
     # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
@@ -324,12 +324,25 @@ def slim_html(c):
     return ''.join(h)
 
 
+def _card_attrs(c):
+    """카드 여는 태그에 붙는 표시들.
+
+    scope는 국내(kr)·국외(intl) 범위 필터용이고, cells는 합류도에서 이 카드가 서는 칸이다
+    (dash_common.merge_layer가 채운다). 둘 다 없으면 아무 표시도 안 붙는다."""
+    a = ''
+    if c.get('scope'):
+        a += ' data-scope="%s"' % c['scope']
+    if c.get('cells'):
+        a += ' data-cells="%s"' % ' '.join(c['cells'])
+    return a
+
+
 def card_html(c):
     # 슬림 필드를 갖춘 카드는 슬림으로, 아직 없는 카드는 지금까지의 형식 그대로 나간다
     if c.get('slim_points'):
         return slim_html(c)
     # scope는 국내(kr)·국외(intl) 필터용이다. 안 적은 카드는 필터와 무관하게 늘 보인다
-    h = ['<div class="ucard is-fold"%s>' % (' data-scope="%s"' % c['scope'] if c.get('scope') else '')]
+    h = ['<div class="ucard is-fold"%s>' % _card_attrs(c)]
     # 접힌 상태에서는 머리(주제칩·제목·화자/날짜)만 남고 uc-body는 감춘다
     h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
     # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
