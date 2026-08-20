@@ -3819,8 +3819,7 @@ VALUATION_CSS = '''
   /* 저평가와 고평가를 위아래로 쌓는다. 한 줄이 네 칸(이름·평가일·평가 시점·현재 시점)이라
      좌우로 나누면 한 칸이 여덟 칸을 담게 되어 회사 이름부터 잘렸다 — 폰에서 한 글자로
      줄었다. 쌓으면 각 칸이 폭을 통째로 쓴다. */
-  .vtop-cols{display:grid;grid-template-columns:1fr;margin-top:5px}
-  .vtop-col + .vtop-col{margin-top:9px}
+  .vtop-cols{margin-top:5px}
   @media (max-width:700px){
     .vtop-list a{font-size:10px}
     .vtop-v{font-size:10px}
@@ -3833,6 +3832,10 @@ VALUATION_CSS = '''
           white-space:nowrap}
   /* 칸 이름 줄 — 목록 격자 안에 있어 이름이 값 칸 위에 정확히 선다 */
   .vtop-hd > *{border-top:0 !important;padding-bottom:2px}
+  /* 고평가 쪽 이름 줄. 저평가 열 줄과 한 격자를 쓰므로 목록이 갈리는 자리를 선과
+     여백으로만 낸다 — 목록을 둘로 나누면 칸 폭이 목록마다 따로 정해져 두 표의 열이
+     어긋난다(이름 칸이 각 목록의 가장 긴 이름에 맞춰진다). */
+  .vtop-hd.vtop-hd2 > *{border-top:1px solid var(--line) !important;padding-top:11px}
   .vtop-now{font-variant-numeric:tabular-nums;font-size:10.5px;font-weight:800;
             justify-self:end;white-space:nowrap}
   .vtop-now.up{color:var(--risk)}
@@ -4022,16 +4025,18 @@ def _top5_html():
 
     now_asof = _price_asof()
 
-    def _hd(side):
+    def _hd(side, sep=False):
         # 칸 이름 줄 — 회사·평가일·평가 시점·현재 시점 넷이다. 날짜가 무엇의 날짜인지
         # 밝힌다: 평가를 올린 날이다. 견준 주가의 날짜는 이와 다를 수 있어(글보다 하루
         # 이틀 앞선 종가를 쓰는 편이 있다) 배지에 마우스를 올리면 뜨는 설명에 따로 적는다.
         # 두 퍼센트는 견준 주가가 다르다 — 평가 시점은 그 글이 견준 주가, 현재 시점은
         # 오늘 종가다. 그래서 칸 이름을 시점으로 갈라 둔다.
-        return ('<li class="vtop-hd"><span class="vtop-h">%s</span>'
+        # sep은 고평가 쪽이다 — 저평가 목록 바로 아래에 이어 서므로 선과 여백으로 가른다.
+        return ('<li class="vtop-hd%s"><span class="vtop-h">%s</span>'
                 '<span class="vtop-h2">평가일</span>'
                 '<span class="vtop-h2">평가 시점</span>'
-                '<span class="vtop-h2">현재 시점</span></li>' % side)
+                '<span class="vtop-h2">현재 시점</span></li>'
+                % (' vtop-hd2' if sep else '', side))
 
     def _li(row):
         sid, name, text, tone, _v, day = row
@@ -4059,13 +4064,11 @@ def _top5_html():
     allp, alln = _rank_rows(datetime.date(2026, 1, 1))
     more = ('<details class="vtop-all"><summary>2026년 평가 전부 보기 '
             '<span class="vtop-n">저평가 %d · 고평가 %d</span></summary>'
-            '<div class="vtop-cols">'
-            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
-            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
-            '</div></details>'
+            '<div class="vtop-cols"><ol class="vtop-list">%s%s%s%s</ol></div>'
+            '</details>'
             % (len(allp), len(alln),
                _hd('저평가'), ''.join(_li(r) for r in allp),
-               _hd('고평가'), ''.join(_li(r) for r in alln)))
+               _hd('고평가', True), ''.join(_li(r) for r in alln)))
 
     return ('<section class="vtop"><div class="vtop-head"><h2 class="vtop-t">주가 대비 밸류에이션 — '
             '최근 3개월 평가에서 가장 벌어진 곳</h2>'
@@ -4073,16 +4076,13 @@ def _top5_html():
             '<p>비교 시점은 편마다 다르다(종가·장중·장전·KRX 기준가·NXT가 섞여 있다). '
             '「저평가·고평가」는 모형이 낸 계산값이지 필자의 판정이 아니다 — 에이피알 편은 민감도 25칸이 '
             '전부 주가 위인데도 필자가 결론을 유보했다.</p></details></div>'
-            '<div class="vtop-cols">'
-            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
-            '<div class="vtop-col"><ol class="vtop-list">%s%s</ol></div>'
-            '</div>'
+            '<div class="vtop-cols"><ol class="vtop-list">%s%s%s%s</ol></div>'
             '<p class="vtop-src">「평가 시점」은 필자가 그 글에서 적은 괴리율이고, '
             '「현재 시점」은 같은 값을 오늘 종가와 다시 견준 값이다 — 그가 견준 주가는 '
             '글의 시점이라 두 값이 다르다. 시세 %s, 네이버 금융. 값을 안 내는 편과 '
             '총액으로만 낸 편은 현재 시점 칸이 비어 있다.</p>%s</section>'
             % (_hd('저평가'), ''.join(_li(r) for r in pos),
-               _hd('고평가'), ''.join(_li(r) for r in neg), now_asof, more))
+               _hd('고평가', True), ''.join(_li(r) for r in neg), now_asof, more))
 
 
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 회사별로 갈리지만 처음 오는 사람은 값을 매기는
