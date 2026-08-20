@@ -91,12 +91,17 @@ def li_excluded():
                if not s.get('usable'))
 
 
-def li_usable_dates():
+def li_usable_acts():
+    """쓸 수 있다고 분류된 게시물의 activity 번호.
+
+    날짜로 맞추면 안 된다 — li_signal 은 게시일을 UTC 로, gen_li_source 는 KST 로
+    뽑아서 한국 시각 00~09시 글은 두 파일의 날짜가 하루 어긋난다. 그러면 usable 인
+    글이 「배제됐다」로 잡힌다(2026-08-20). activity 번호는 양쪽이 같다."""
     p = os.path.join(paths.HERE, 'views', 'li_signals.json')
     if not os.path.isfile(p):
         return set()
     d = json.load(io.open(p, encoding='utf-8'))
-    return set(s.get('basis_date') for s in d.get('signals', []) if s.get('usable'))
+    return set(str(s.get('activity')) for s in d.get('signals', []) if s.get('usable'))
 
 
 def loop_files():
@@ -110,7 +115,7 @@ def old_files():
 
 def main():
     known = axes.all_cell_ids()
-    ok_dates = li_usable_dates()
+    ok_acts = li_usable_acts()
     seen_cell = {}
     merged = []
 
@@ -138,10 +143,11 @@ def main():
             if not f2.startswith(LI_DIR) or not ref.get('lines'):
                 continue
             b = nl.li_basis(f2, ref['lines'][0])
+            act = nl.li_activity(f2, ref['lines'][0])
             if not b:
                 add('FAIL', 'L2', where, '링크드인 인용의 기준일을 못 읽는다: L%d'
                     % ref['lines'][0])
-            elif b not in ok_dates:
+            elif act not in ok_acts:
                 add('FAIL', 'L1', where,
                     '배제된 링크드인 게시물을 인용했다: %s L%d' % (b, ref['lines'][0]))
 

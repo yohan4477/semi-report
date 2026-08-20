@@ -1121,6 +1121,9 @@
  "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L689": {
   "sha1": "b01a53b79ccb"
  },
+ "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md#L98": {
+  "sha1": "6505e761d473"
+ },
  "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md#L166": {
   "sha1": "1409bb8415e1"
  },
@@ -1334,6 +1337,9 @@
  "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L181": {
   "sha1": "3809200d479c"
  },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L182": {
+  "sha1": "180b4cb736e8"
+ },
  "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L183": {
   "sha1": "7b5fdcb05a2b"
  },
@@ -1351,6 +1357,9 @@
  },
  "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L466": {
   "sha1": "e5f53b838352"
+ },
+ "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L50": {
+  "sha1": "798034930232"
  },
  "content/newsletter/ai_infra/compute/[260609] DeepSeek V4 1.6T Day 0부터 Day 43까지 성능 변화 - Huawei, GB300 NVL72, MI355X, B200.md#L51": {
   "sha1": "4a1391ec1f41"
@@ -1381,6 +1390,9 @@
  },
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L46": {
   "sha1": "0a197fa4a304"
+ },
+ "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L47": {
+  "sha1": "d2d191a2092b"
  },
  "content/newsletter/ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md#L72": {
   "sha1": "da39a3ee5e6b"

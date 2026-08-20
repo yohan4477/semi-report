@@ -152,6 +152,7 @@ def md_body(body, sources, h='h2', cls='tsec', dot=None):
 
 LI_DIR = 'content/linkedin/'
 LI_BASIS = re.compile(r'^-\s*기준일\s*(\d{4}-\d{2}-\d{2})')
+LI_ACT = re.compile(r'urn:li:activity:(\d+)')
 
 
 def li_basis(rel_path, line_no):
@@ -172,6 +173,31 @@ def li_basis(rel_path, line_no):
             if i > line_no:
                 break
             m = LI_BASIS.match(line.strip())
+            if m:
+                found = m.group(1)
+    return found
+
+
+def li_activity(rel_path, line_no):
+    """링크드인 원문에서 그 줄이 속한 게시물 블록의 activity 번호.
+
+    기준일로 게시물을 가리키면 안 된다. 같은 날 글이 여럿이고, 무엇보다
+    li_signal 은 게시일을 UTC 로(urn_date), gen_li_source 는 KST 로(kst) 뽑는다.
+    한국 시각 00~09시 글은 두 파일의 날짜가 하루 어긋나, 멀쩡히 쓸 수 있는
+    게시물이 「배제됐다」로 잡힌다(2026-08-20, AMD 08-15 01:30 KST 글).
+    activity 번호는 두 파일이 같은 값을 쓰므로 이것으로 가리킨다."""
+    p = (rel_path or '').replace('\\', '/')
+    if not p.startswith(LI_DIR):
+        return None
+    ap = abspath(p)
+    if not os.path.isfile(ap):
+        return None
+    found = None
+    with io.open(ap, encoding='utf-8', errors='replace') as f:
+        for i, line in enumerate(f, 1):
+            if i > line_no:
+                break
+            m = LI_ACT.search(line)
             if m:
                 found = m.group(1)
     return found
