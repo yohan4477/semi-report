@@ -23,10 +23,23 @@ LAG_MAX = 15   # 이 날짜를 넘겨 올린 뉴스레터 홍보는 새 정보�
 # 배제 목록 — 여기 걸리면 근거로 못 쓴다. 걸리지 않으면 전부 인용 후보다.
 # 「수치가 있나」로 자동 판정하지 않는다. 기계가 「새 사실인가」를 못 가른다는 것을
 # 논평·서술 137건이 증명했다 — 밈과 InP 레이저 글이 같은 칸에 앉아 있었다.
-MEME = re.compile(r'밈\s*[—:-]|밈:|농담|풍자|짤')
-EVENT = re.compile(r'모임|컨퍼런스|콘퍼런스|행사|웨비나|구독|초청|등록에 승인')
+#
+# 라운드 2: 정규식이 한국어 표지만 잡아서 233건 중 약 13%가 새서 usable로 남았다 —
+# 게시물 원문(영어)이거나, 요지가 한국어라도 밈/패러디를 부르는 낱말이 달랐다(패러디·유머).
+# 아래 영어 대안은 실제 raw/linkedin_posts_raw.json·content/linkedin 원문에서 반복 확인된
+# 표현만 담았다 — has_video처럼 「형식이 영상·팟캐스트다」라는 이유만으로는 안 뺀다. AMD
+# MI355X InferenceX 비교(밈 영상 자막에 수치 주장)와 구글 TPU ICI 토폴로지 글은 여전히
+# usable이어야 한다 — 둘 다 이미 카드가 인용 중이다.
+MEME = re.compile(r'밈\s*[—:-]|[—:-]\s*밈\b|밈:|농담|풍자|짤|패러디|유머|업무 무관|실질 정보 없음')
+EVENT = re.compile(
+    r'모임|컨퍼런스|콘퍼런스|행사|웨비나|구독|초청|등록에 승인|참가 안내'
+    r'|fireside chat|join us (?:for|at)|we.?ll be (?:hosting|presenting|joining)'
+    r'|please register|register (?:at|here|now|below|to join)', re.I)
 HIRE = re.compile(r'채용|합류|모집|팔로우|계정을 열|구독을 권')
-BROADCAST = re.compile(r'팟캐스트|Podcast|에피소드|Ep\.|출연|방송 자막')
+# 채용 글은 실제 표본에서 전부 한국어 공고문(요지에 "채용 공고" 등)이라 영어 대안을
+# 추가할 근거가 없었다 — "career"·"apply" 등은 실제 usable 표본에서 무관한 문맥에만
+# 나왔다(예: "이 한 시간이 커리어에 도움" · "엔지니어링 재능을 apply했다").
+BROADCAST = re.compile(r'팟캐스트|Podcast|에피소드|Ep\.|출연|방송 자막|(?i:Episode\s*#?\d)')
 PAST = re.compile(r'작년|지난해|20(1\d|2[0-4])년|당시|그때|돌아보면|회고')
 
 
