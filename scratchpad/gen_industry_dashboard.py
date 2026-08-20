@@ -1973,6 +1973,79 @@ COURSE = [
      dc.by_frag(CARDS, ['반도체 룰이 바뀌었다', '공장을 다 갖고 있어서다', '피지컬 AI 전체가 막힌', '부품 생태계다', '10년 남았다'])),
 ]
 
+# -- 류상철 두 편의 합류도 -------------------------------------------
+# 한 사람이 금리(06-17)와 환율(07-24)을 연달아 했는데, 두 편이 같은 지표 하나에 도착한다.
+# 금리 편은 "미국 10년물 하나만 매일 확인하면 세계 경제 흐름을 대략 파악할 수 있다"로 맺고,
+# 환율 편은 원/달러를 이끄는 것이 달러 인덱스이고 그 달러 인덱스를 다시 미국 국채 수익률이
+# 이끈다고 맺는다. 그래서 합류점을 미국 10년물로 잡는다.
+#
+# 가운데 칸은 두 편에 같이 나오는 것이다. 그는 두 번 다 수급 설명을 기각한다.
+#
+# 화살표는 인과가 아니라 그의 논증이 지나간 길이다. 2026-08-20 회계사 장에서 원문에 없는
+# 인과를 화살표로 그렸다가 잡혔다 -- 그 뒤로 그림에도 화살표의 뜻을 캡션에 적는다.
+MERGE_RYU = (
+    '<svg viewBox="0 0 640 210" role="img" aria-label="류상철 두 편이 같은 지표로 모이는 곳">'
+    '<text x="67" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">두 편이 던진 물음</text>'
+    '<text x="320" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">두 편이 같이 딛는 것</text>'
+    '<text x="551" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">같이 도착하는 곳</text>'
+    '<rect x="8" y="52" width="118" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="72" text-anchor="middle" class="t-lab">금리와 주가</text>'
+    '<text x="67" y="87" text-anchor="middle" class="t-sm">06-17</text>'
+    '<rect x="8" y="118" width="118" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="67" y="138" text-anchor="middle" class="t-lab">엔화와 원화</text>'
+    '<text x="67" y="153" text-anchor="middle" class="t-sm">07-24</text>'
+    '<rect x="248" y="32" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="50" text-anchor="middle" class="t-lab">수급을 기각한다</text>'
+    '<text x="320" y="64" text-anchor="middle" class="t-sm">물량은 늘 같다</text>'
+    '<rect x="248" y="86" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="104" text-anchor="middle" class="t-lab">급할 때 값이 움직인다</text>'
+    '<text x="320" y="118" text-anchor="middle" class="t-sm">예상이 수요를 부른다</text>'
+    '<rect x="248" y="140" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="320" y="158" text-anchor="middle" class="t-lab">물가가 성장을 누른다</text>'
+    '<text x="320" y="172" text-anchor="middle" class="t-sm">가중치 1.5배</text>'
+    '<rect x="470" y="82" width="162" height="48" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.2"/>'
+    '<text x="551" y="104" text-anchor="middle" class="t-lab">미국 10년물 국채금리</text>'
+    '<text x="551" y="120" text-anchor="middle" class="t-sm">두 편이 같이 도착한다</text>'
+    '<path d="M126 62 L246 48" class="flow"/>'
+    '<path d="M126 74 L246 100" class="flow"/>'
+    '<path d="M126 86 L246 152" class="flow"/>'
+    '<path d="M126 126 L246 60" class="flow"/>'
+    '<path d="M126 140 L246 112" class="flow"/>'
+    '<path d="M392 52 L468 96" class="flow"/>'
+    '<path d="M392 106 L468 106" class="flow"/>'
+    '<path d="M392 158 L468 116" class="flow"/>'
+    '</svg>')
+
+RYU_CAP = (
+    '<p>류상철 국장 편은 둘입니다. <b>금리</b>(06-17)와 <b>환율</b>(07-24)인데, '
+    '두 편이 같은 지표 하나에 도착합니다. 미국 10년물 국채금리입니다. 금리 편은 그 하나만 '
+    '매일 확인하면 세계 경제 흐름을 대략 파악할 수 있다는 말로 맺습니다. 환율 편은 원/달러를 '
+    '이끄는 것이 달러 인덱스이고, 그 달러 인덱스를 다시 미국 국채 수익률이 이끈다고 맺습니다.</p>'
+    '<p>가운데 칸은 두 편에 같이 나오는 것입니다. 그는 두 번 다 <b>수급 설명을 기각</b>합니다. '
+    '사는 물량과 파는 물량은 언제나 같습니다. 값을 움직이는 것은 물량이 아닙니다. 급하게 사거나 '
+    '급하게 파는 쪽입니다. 금리 편은 여기에 물가를 얹습니다. 코로나 이후 통화결정 방정식에서 '
+    '물가 가중치가 성장의 <b>1.5배</b>입니다.</p>'
+    '<p>화살표는 인과를 뜻하지 않습니다. 그의 논증이 지나간 길입니다. 환율 전망(1,550원대에서 '
+    '1,400원대)은 본인이 개인 견해라고 선을 그었고, 경상수지와 환율의 상관이 약한 양(+)으로 '
+    '나오는 것은 스스로 완전히 설명하지 못한다고 인정합니다.</p>')
+
+
+def _attach_ryu():
+    """류상철 두 편에 같은 합류도를 카드 맨 앞 그림으로 붙인다.
+
+    페이지 맨 위 intro로 두지 않는다 -- 이 그림은 한 사람의 두 편에 대한 것이지
+    이 페이지 전체에 대한 것이 아니다. 카드 그림으로 두면 그 카드를 편 사람만 본다."""
+    for frag in ('금리를 올려도', '서학개미'):
+        hits = [c for c in CARDS if frag in c['title']]
+        assert len(hits) == 1, ('합류도 조각이 카드 하나를 못 가리킨다: %r -- %d건'
+                                % (frag, len(hits)))
+        hits[0]['figs'] = [(0, '두 편이 같은 지표 하나에 도착한다', MERGE_RYU, RYU_CAP)]
+
+
+_attach_ryu()
+
+
+
 if __name__ == '__main__':
     dc.render(CARDS, '산업/시장 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('finance', CARDS, '편'),
