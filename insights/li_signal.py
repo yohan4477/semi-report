@@ -7,8 +7,8 @@
 # 규칙
 #   1) 뉴스레터 링크가 있으면 기준일은 그 원문의 발행일이다. 게시일이 아니다.
 #   2) 시차가 LAG_MAX일을 넘으면 재홍보로 본다 — 새 정보가 아니므로 시간축에서 뺀다.
-#   3) 링크가 없으면 게시일을 정보 날짜로 인정하되, 수치가 박힌 자체 발화만 근거로 쓴다.
-#      밈·행사·팟캐스트·채용·과거 회고는 신호가 아니다.
+#   3) 링크가 없으면 게시일을 정보 날짜로 인정한다. 배제 목록(밈·행사·채용·방송·
+#      과거 회고)에 걸리지 않으면 전부 인용 후보다 — 「수치가 있나」로는 안 가른다.
 #   4) 재홍보와 행사·홍보는 시간축에서 빼되 **버리지는 않는다**(push=True).
 #      「몇 달 전 글을 지금 다시 민다」는 새 사실은 아니어도 지금 무엇을 밀고 있나의 신호다.
 #      이 축은 usable과 별개다 — 근거로 인용하지 않고, 무엇이 반복되는지를 볼 때만 쓴다.
@@ -20,16 +20,14 @@ CLIPS = os.path.join(ROOT, 'input', 'clippings')
 OUT = os.path.join(ROOT, 'insights', 'views', 'li_signals.json')
 LAG_MAX = 15   # 이 날짜를 넘겨 올린 뉴스레터 홍보는 새 정보로 세지 않는다
 
-NUM = re.compile(r'\d+(?:\.\d+)?\s?(?:GW|MW|kW|억|조|%|배|TB/s|GB|nm|kV|달러|\$|명)')
-# 제품·모델명끼리 우열을 매기는 주장 — 수치 단위가 없어도 판단 재료다.
-# 예: "MI355X의 vLLM이 B200의 vLLM보다 낫다" / "X outperforms Y" / "X beats Y"
-COMPARE = re.compile(
-    r'보다\s*(?:더\s*)?(?:낫다|나은|앞선다|앞섰다|앞서는|빠르다|빠른|빨랐다|우수하다|우세하다|우위)'
-    r'|is\s+(?:much\s+|far\s+)?better\s+than|outperforms?|outperformed'
-    r'|\bbeats?\b'
-    , re.I)
-PROMO = re.compile(r'팟캐스트|Podcast|에피소드|Ep\.|채용|합류|모집|컨퍼런스|콘퍼런스|행사|웨비나|구독|밈 —|밈-')
-PAST = re.compile(r'작년|지난해|20(1\d|2[0-4])년|당시|그때|돌아보면')
+# 배제 목록 — 여기 걸리면 근거로 못 쓴다. 걸리지 않으면 전부 인용 후보다.
+# 「수치가 있나」로 자동 판정하지 않는다. 기계가 「새 사실인가」를 못 가른다는 것을
+# 논평·서술 137건이 증명했다 — 밈과 InP 레이저 글이 같은 칸에 앉아 있었다.
+MEME = re.compile(r'밈\s*[—:-]|밈:|농담|풍자|짤')
+EVENT = re.compile(r'모임|컨퍼런스|콘퍼런스|행사|웨비나|구독|초청|등록에 승인')
+HIRE = re.compile(r'채용|합류|모집|팔로우|계정을 열|구독을 권')
+BROADCAST = re.compile(r'팟캐스트|Podcast|에피소드|Ep\.|출연|방송 자막')
+PAST = re.compile(r'작년|지난해|20(1\d|2[0-4])년|당시|그때|돌아보면|회고')
 
 
 def urn_date(aid):
@@ -58,6 +56,13 @@ def classify(text, slug, posted, pub, has_video=False):
     """게시물 하나의 자격 판정. 이 규칙은 여기 한 벌만 둔다 —
     scripts/gen_li_source.py도 이 함수를 부른다.
 
+    **배제 판정이다.** 배제 목록에 걸리지 않으면 전부 인용 후보다. 고를 사람은
+    글 쓰는 쪽이고, 기계는 배제된 줄을 인용하면 막는 일만 한다(check_axes L1).
+
+    has_video는 판정에 쓰지 않는다 — 영상 자막 속 사실(예: AMD MI355X InferenceX
+    주장)을 이미 카드가 인용하고 있어, 영상이라는 이유만으로 배제하면 안 된다.
+    호출부가 넘기므로 시그니처는 유지한다.
+
     반환: (kind, usable, basis_date, lag_days, push)
     """
     if slug:
@@ -67,16 +72,19 @@ def classify(text, slug, posted, pub, has_video=False):
         lag = (datetime.date.fromisoformat(posted) - datetime.date.fromisoformat(src)).days
         if lag > LAG_MAX:
             return '재홍보', False, src, lag, True
-        return '신규 발행 알림', True, src, lag, False
-    if PROMO.search(text) or has_video:
-        return '행사·홍보', False, posted, None, True
-    if NUM.search(text):
-        return '수치 있는 자체 발화', True, posted, None, False
-    if COMPARE.search(text):
-        return '제품 비교 주장', True, posted, None, False
+        # 원본 뉴스레터가 있으니 그쪽을 인용한다. 링크드인은 인용 대상이 아니다
+        return '신규 발행 알림', False, src, lag, False
+    if MEME.search(text):
+        return '밈·농담', False, posted, None, True
+    if EVENT.search(text):
+        return '행사·모임', False, posted, None, True
+    if HIRE.search(text):
+        return '채용·권유', False, posted, None, True
+    if BROADCAST.search(text):
+        return '방송·팟캐스트', False, posted, None, True
     if PAST.search(text):
         return '과거 회고', False, posted, None, False
-    return '논평·서술', False, posted, None, False
+    return '자체 발화', True, posted, None, False
 
 
 def build():
@@ -113,8 +121,8 @@ def build():
                  '없으면 게시일이다. usable=true인 것만 판단의 근거로 인용한다. '
                  'push=true는 새 사실은 아니지만 「지금 무엇을 다시 미나」를 보는 별도 축이다.'),
         'rule': {'lag_max_days': LAG_MAX,
-                 'usable_kinds': ['신규 발행 알림', '수치 있는 자체 발화', '제품 비교 주장'],
-                 'push_kinds': ['재홍보', '행사·홍보']},
+                 'usable_kinds': ['자체 발화'],
+                 'push_kinds': ['재홍보', '밈·농담', '행사·모임', '채용·권유', '방송·팟캐스트']},
         'generated_from': '대시보드/소셜 신호 히스토리.html',
         'counts': dict(collections.Counter(r['kind'] for r in rows)),
         'signals': rows,
