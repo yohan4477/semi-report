@@ -175,11 +175,11 @@ def one(meta, body, tab, kind, cells=()):
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
-            '%s%s<h2 id="%s">%s</h2>'
-            '<p class="sub">%s</p>%s</summary><div class="body">%s%s</div>%s</details>'
+            '%s%s<div class="hrow"><h2 id="%s">%s</h2>%s</div>'
+            '<p class="sub">%s</p></summary><div class="body">%s%s</div>%s</details>'
             % (tab, cellattr, nl.esc(kind), period(meta, src, body), roster(meta),
-               anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
-               copy_btn(anchor(head), 'uc-copy'),
+               anchor(head), nl.esc(head), copy_btn(anchor(head), 'uc-copy'),
+               nl.esc(meta.get('subhead', '')),
                minimap,
                nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))
                + (RANK_LEGEND if '|' in body else ''),
@@ -378,7 +378,7 @@ def loop_svg(axis_id, active=None, mini=False):
     n = len(loop)
     W = n * _BW + (n - 1) * _GAP
     top = 34                                   # 되돌아오는 곡선 자리
-    H = top + _BH + (0 if mini else 58)
+    H = top + _BH + (6 if mini else 58)   # 미니는 칸 밑선·풀이 글이 잘리던 자리
     h = ['<svg viewBox="0 0 %d %d" class="loopsvg%s" role="group" '
          'aria-label="%s">' % (W, H, ' is-mini' if mini else '', nl.esc(axis_id))]
     # 되돌아오는 곡선 — 마지막 칸 위에서 첫 칸 위로
@@ -525,6 +525,8 @@ CARD_CSS = r'''
   /* 근거가 오래된 카드는 겉면에서 바로 보이게 — 옛날 이야기를 지금 이야기로 읽지 않도록 */
   .asof.stale{color:#b45309;font-weight:600}
   .asof.stale::after{content:' · 오래됨'}
+  .hrow{display:flex;align-items:flex-start;gap:12px;clear:right}
+  .hrow h2{flex:1 1 auto;min-width:0}
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:6px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
   /* 받는 쪽·밀리는 쪽 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
@@ -672,7 +674,7 @@ CSS = r'''
         color:var(--sub);background:transparent;border:1px dashed var(--line);
         border-radius:6px;padding:4px 10px}
   .uc-copy:hover,.sec-copy:hover{color:var(--accent);border-color:var(--accent)}
-  .uc-copy{margin-top:9px}
+  .uc-copy{flex:0 0 auto;margin-top:8px}
   /* 주제 이름 옆에 "AI 판 / AI 밖"을 달아 둔다 — 스크롤 도중에도 어느 쪽인지 안다 */
   .igrp{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
         border:1px solid var(--line);border-radius:999px;padding:1px 7px}
