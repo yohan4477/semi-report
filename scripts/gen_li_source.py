@@ -35,7 +35,16 @@ JUNK = re.compile(r'^(피드 게시물 번호 \d+|SemiAnalysis|팔로워 [\d,]+�
 
 
 def kst(aid):
-    """activity id 상위 비트가 밀리초 타임스탬프다. 상대 표기를 환산하지 않는다."""
+    """activity id 상위 비트가 밀리초 타임스탬프다. 상대 표기를 환산하지 않는다.
+
+    **여기는 KST(+9h) 다. insights/li_signal.py 의 urn_date() 는 같은 id 를 UTC 로
+    읽는다.** 그래서 한국 시각 00~09시 글은 이 파일이 찍는 기준일과 li_signals.json
+    의 basis_date 가 하루 어긋난다. 한쪽만 고치면 두 파일을 날짜로 잇던 자리가
+    조용히 깨진다 — 고치려면 urn_date() 와 같이 고친다.
+
+    날짜로 게시물을 가리키지 않는 것이 더 안전하다. 기준일은 뉴스레터 링크가 있으면
+    그 원문 발행일이 되므로 애초에 게시물 식별자가 아니다. 게시물을 가리켜야 하면
+    activity 번호를 쓴다(notes_lib.li_activity)."""
     ms = int(aid) >> 22
     return datetime.datetime(1970, 1, 1) + datetime.timedelta(milliseconds=ms, hours=9)
 

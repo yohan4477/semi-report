@@ -44,7 +44,16 @@ PAST = re.compile(r'작년|지난해|20(1\d|2[0-4])년|당시|그때|돌아보�
 
 
 def urn_date(aid):
-    """activity id 상위 비트가 밀리초 타임스탬프 — 게시일을 추정 없이 얻는다"""
+    """activity id 상위 비트가 밀리초 타임스탬프 — 게시일을 추정 없이 얻는다.
+
+    **여기는 UTC 다. scripts/gen_li_source.py 의 kst() 는 같은 id 를 KST(+9h)로
+    읽는다.** 그래서 한국 시각 00~09시 글은 이 파일의 basis_date 와 원문 마크다운의
+    기준일이 하루 어긋난다. 한쪽만 고치면 두 파일을 날짜로 잇던 자리가 조용히
+    깨진다 — 고치려면 kst() 와 같이 고친다.
+
+    날짜로 게시물을 가리키지 않는 것이 더 안전하다. basis_date 는 뉴스레터 링크가
+    있으면 그 원문 발행일로 덮어써지므로 애초에 게시물 식별자가 아니다.
+    게시물을 가리켜야 하면 activity 번호를 쓴다(notes_lib.li_activity)."""
     return datetime.datetime.utcfromtimestamp((int(aid) >> 22) / 1000).strftime('%Y-%m-%d')
 
 
