@@ -175,7 +175,7 @@ def one(meta, body, tab, kind, cells=()):
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
-            '%s%s<div class="hrow"><h2 id="%s">%s</h2>%s</div>'
+            '%s%s<h2 id="%s">%s%s</h2>'
             '<p class="sub">%s</p></summary><div class="body">%s%s</div>%s</details>'
             % (tab, cellattr, nl.esc(kind), period(meta, src, body), roster(meta),
                anchor(head), nl.esc(head), copy_btn(anchor(head), 'uc-copy'),
@@ -525,8 +525,6 @@ CARD_CSS = r'''
   /* 근거가 오래된 카드는 겉면에서 바로 보이게 — 옛날 이야기를 지금 이야기로 읽지 않도록 */
   .asof.stale{color:#b45309;font-weight:600}
   .asof.stale::after{content:' · 오래됨'}
-  .hrow{display:flex;align-items:flex-start;gap:12px;clear:right}
-  .hrow h2{flex:1 1 auto;min-width:0}
   .ins h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.02em;line-height:1.36;margin:6px 0 2px}
   .ins .sub{font-size:var(--t-body);color:var(--faint);margin:3px 0 0}
   /* 받는 쪽·밀리는 쪽 명단 — 카드를 펴기 전에 회사 이름부터 읽힌다 */
@@ -674,7 +672,7 @@ CSS = r'''
         color:var(--sub);background:transparent;border:1px dashed var(--line);
         border-radius:6px;padding:4px 10px}
   .uc-copy:hover,.sec-copy:hover{color:var(--accent);border-color:var(--accent)}
-  .uc-copy{flex:0 0 auto;margin-top:8px}
+  .uc-copy{margin-left:8px;vertical-align:2px}
   /* 주제 이름 옆에 "AI 판 / AI 밖"을 달아 둔다 — 스크롤 도중에도 어느 쪽인지 안다 */
   .igrp{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
         border:1px solid var(--line);border-radius:999px;padding:1px 7px}
