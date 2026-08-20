@@ -166,14 +166,21 @@ def one(meta, body, tab, kind, cells=()):
     head = meta.get('headline') or ''
     # 이 카드가 서는 축의 칸. 글이 axis:/cell: 로 스스로 밝힌다(insights/axes.py)
     cellattr = ' data-cell="%s"' % nl.esc(' '.join(cells)) if cells else ''
+    # 이 글이 서는 축의 칸을 본문 맨 앞에 작게 다시 그린다 — 그 칸만 불이 켜진다.
+    minimap = ''
+    if meta.get('axis') and meta.get('cell'):
+        minimap = ('<div class="minimap">%s</div>'
+                   % loop_svg(meta['axis'], active='%s:%s' % (meta['axis'], meta['cell']),
+                              mini=True))
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
     return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s</h2>'
-            '<p class="sub">%s</p>%s</summary><div class="body">%s</div>%s</details>'
+            '<p class="sub">%s</p>%s</summary><div class="body">%s%s</div>%s</details>'
             % (tab, cellattr, nl.esc(kind), period(meta, src, body), roster(meta),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                copy_btn(anchor(head), 'uc-copy'),
+               minimap,
                nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))
                + (RANK_LEGEND if '|' in body else ''),
                srcbox(src)))
@@ -366,6 +373,19 @@ MRG_CSS = '''
   .rk-int{color:var(--sub)}
   .rk-rel{color:var(--faint)}
   .rkleg{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+
+  .axis{margin:0 0 20px;padding:16px;border:1px solid var(--line);border-radius:10px;
+    background:var(--card)}
+  .ax-t{margin:0 0 3px;font-size:15px;font-weight:850;color:var(--ink)}
+  .ax-l{margin:0 0 12px;font-size:12.5px;line-height:1.6;color:var(--sub)}
+  .loopsvg{width:100%;height:auto;display:block}
+  .loopsvg.is-mini{max-width:420px;margin:0 0 14px}
+  .lp-sub{font-size:9.5px;fill:var(--faint)}
+  .lp-back{stroke-dasharray:none}
+  .mcell.is-todo rect{stroke-dasharray:4 3;stroke:var(--faint)}
+  .mcell.is-off{opacity:.35}
+  .mcell.is-on rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
+  .minimap{margin:0 0 10px}
 '''
 
 COURSE_LEDE = ('글 %d편을 어디서부터 읽을지 정해 두었습니다. 앞 네 단계는 AI를 만들고 파는 쪽을 돈·모델·'
@@ -466,17 +486,90 @@ def course():
     return ''.join(h)
 
 
-def _wrap2(s, n):
-    """라벨을 최대 두 줄로 — 되도록 띄어쓰기 자리에서 끊는다.
+def written_cells():
+    """이미 글이 선 칸. 아직 안 쓴 칸은 점선으로 그린다."""
+    out = {}
+    for p in sorted(glob.glob(os.path.join(paths.LOOP, '*.md'))):
+        meta, _b = nl.parse_front(io.open(p, encoding='utf-8').read())
+        if meta.get('axis') and meta.get('cell'):
+            out['%s:%s' % (meta['axis'], meta['cell'])] = {
+                'head': meta.get('headline', ''), 'anchor': anchor(meta.get('headline', ''))}
+    return out
 
-    글자 수로만 자르면 어미가 잘려 뜻이 안 읽힌다(이선엽판에서 겪은 것)."""
-    if len(s) <= n:
-        return [s]
-    cut = s.rfind(' ', 0, n + 1)
-    if cut < n // 2:
-        cut = n
-    head, tail = s[:cut].rstrip(), s[cut:].lstrip()
-    return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
+
+_BW, _BH, _GAP = 96, 46, 14        # 칸 폭·높이·사이
+
+
+def loop_svg(axis_id, active=None, mini=False):
+    rows = axes.cells(axis_id)
+    loop = [r for r in rows if r[3] == 'loop']
+    out = [r for r in rows if r[3] == 'outside']
+    done = written_cells()
+    n = len(loop)
+    W = n * _BW + (n - 1) * _GAP
+    top = 34                                   # 되돌아오는 곡선 자리
+    H = top + _BH + (0 if mini else 58)
+    h = ['<svg viewBox="0 0 %d %d" class="loopsvg%s" role="group" '
+         'aria-label="%s">' % (W, H, ' is-mini' if mini else '', nl.esc(axis_id))]
+    # 되돌아오는 곡선 — 마지막 칸 위에서 첫 칸 위로
+    h.append('<path class="mflow lp-back" d="M%d %d C %d 2, %d 2, %d %d"/>'
+             % (W - _BW / 2, top, W - _BW / 2, _BW / 2, _BW / 2, top))
+    if not mini:
+        h.append('<text x="%d" y="12" text-anchor="middle" class="m-col">'
+                 '그 매출이 다시 조달을 정당화하나</text>' % (W / 2))
+    for i, (cid, name, gloss, _col) in enumerate(loop):
+        x = i * (_BW + _GAP)
+        key = '%s:%s' % (axis_id, cid)
+        got = done.get(key)
+        cls = 'mcell'
+        if active is not None:
+            cls += ' is-on' if key == active else ' is-off'
+        if not got:
+            cls += ' is-todo'
+        h.append('<g class="%s" data-cell="%s" data-label="%s" %s>'
+                 % (cls, nl.esc(key), nl.esc(name),
+                    '' if mini else 'role="button" tabindex="0"'))
+        h.append('<title>%s — %s</title>' % (nl.esc(name), nl.esc(gloss)))
+        h.append('<rect x="%d" y="%d" width="%d" height="%d" rx="9"/>'
+                 % (x, top, _BW, _BH))
+        h.append('<text x="%d" y="%d" text-anchor="middle" class="m-lab">%s</text>'
+                 % (x + _BW / 2, top + 20, nl.esc(name)))
+        h.append('<text x="%d" y="%d" text-anchor="middle" class="lp-sub">%s</text>'
+                 % (x + _BW / 2, top + 35, nl.esc(gloss if got else '아직 안 씀')))
+        h.append('</g>')
+        if i < n - 1:
+            h.append('<path class="mflow" d="M%d %d L%d %d"/>'
+                     % (x + _BW, top + _BH / 2, x + _BW + _GAP, top + _BH / 2))
+    if not mini:
+        h.append('<text x="0" y="%d" class="m-col">고리 밖</text>' % (top + _BH + 24))
+        for j, (cid, name, gloss, _col) in enumerate(out):
+            x = 58 + j * (_BW + _GAP)
+            key = '%s:%s' % (axis_id, cid)
+            got = done.get(key)
+            cls = 'mcell is-out' + ('' if got else ' is-todo')
+            h.append('<g class="%s" data-cell="%s" data-label="%s" role="button" '
+                     'tabindex="0"><title>%s</title>' % (cls, nl.esc(key),
+                                                         nl.esc(name), nl.esc(gloss)))
+            h.append('<rect x="%d" y="%d" width="%d" height="%d" rx="9"/>'
+                     % (x, top + _BH + 10, _BW, 28))
+            h.append('<text x="%d" y="%d" text-anchor="middle" class="m-lab">%s</text>'
+                     % (x + _BW / 2, top + _BH + 29, nl.esc(name)))
+            h.append('</g>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+def axis_layer():
+    """페이지 맨 위 한 장. 「지금 무슨 일이 벌어지는 중인가」를 말하는 자리다.
+
+    JS(TAB_JS)는 칸 클릭을 `.mg-b` 컨테이너에서 위임받는다(옛 합류도 프로토타입 이후
+    그대로다) — svg를 `.mg-b`로 감싸지 않으면 칸을 눌러도 아무 일도 안 일어난다.
+    """
+    a = axes.AXES[0]
+    return ('<section class="axis"><p class="ax-t">%s</p><p class="ax-l">%s</p>'
+            '<div class="mg-b">%s</div>'
+            '<p class="mg-n">칸을 누르면 그 편으로 갑니다.</p></section>'
+            % (nl.esc(a['title']), nl.esc(a['lede']), loop_svg(a['id'])))
 
 
 def sectiles(bysec, bykindsec):
@@ -533,9 +626,9 @@ def build():
     body, top, per, bysec, mix = cards()
     n = sum(per.values())
     html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + COURSE_CSS + MRG_CSS)
-                # 읽는 순서가 카드 종류 설명보다 먼저다 — 처음 온 사람은 무엇이 있는지보다
-                # 어디부터 읽을지가 급하다
-                .replace('__GUIDE__', course() + guide(per))
+                # 축 층이 맨 처음이다 — 지금 무슨 일이 벌어지는 중인지가 무엇이 있는지보다,
+                # 읽는 순서보다도 먼저 와야 한다. 카드 더미가 입구라는 지적에 답하는 자리다.
+                .replace('__GUIDE__', axis_layer() + course() + guide(per))
                 .replace('__TOP__', top)
                 .replace('__TABS__', '<div class="tabbar">%s</div>%s'
                          % (tabs(per), sectiles(bysec, mix)))
