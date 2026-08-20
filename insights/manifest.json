@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-19",
+ "generated": "2026-08-20",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -519,7 +519,7 @@
    ],
    "date": "2026-08-19",
    "path": "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md",
-   "hash": "64b722403d8a"
+   "hash": "63b6593045ca"
   },
   {
    "id": "semi:compute:엔비디아-GPU의-초고속-상호작용성-TileRT-InferenceX",
@@ -2068,6 +2068,17 @@
    "hash": "3a5d77ad03c0"
   },
   {
+   "id": "und:회계사:10년물-471-실적이-가려온-금리-압박이-드러났다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-01",
+   "path": "content/understanding/회계사/[260801] 美 10년물 4.71%, 실적이 가려온 금리 압박이 드러났다 - 엘곰.md",
+   "hash": "30f775bc6f1a"
+  },
+  {
    "id": "und:회계사:2분기-영업이익-89조-연환산-1890조-vs-시총-1768조-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2090,6 +2101,39 @@
    "hash": "93a3c8358b40"
   },
   {
+   "id": "und:회계사:30년물-금리-531로-19년-최고-브렌트유는-2주-만에-91달러-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-18",
+   "path": "content/understanding/회계사/[260818] 30년물 금리 5.31%로 19년來 최고, 브렌트유는 2주 만에 91달러 - 엘곰.md",
+   "hash": "b24ed580fa76"
+  },
+  {
+   "id": "und:회계사:30년물이-19년-만의-고점을-찍은-이유-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-19",
+   "path": "content/understanding/회계사/[260819] 30년물이 19년 만의 고점을 찍은 이유 - 엘곰.md",
+   "hash": "4a3b6ba2a1a5"
+  },
+  {
+   "id": "und:회계사:40조원-자사주-매입소각-급락-98를-반등-8로-되돌리다-SK하이닉스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-19",
+   "path": "content/understanding/회계사/[260819] 40조원 자사주 매입·소각, 급락 9.8%를 반등 8%로 되돌리다 - SK하이닉스 - 엘곰.md",
+   "hash": "770c8c1bc80a"
+  },
+  {
    "id": "und:회계사:8년-사이클을-통째로-넣은-DCF-주당-361000원-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2099,6 +2143,28 @@
    "date": "2026-07-16",
    "path": "content/understanding/회계사/[260716] 8년 사이클을 통째로 넣은 DCF, 주당 361,000원 - 삼성전자 - 엘곰.md",
    "hash": "28246f5a16b7"
+  },
+  {
+   "id": "und:회계사:AI-CAPEX가-잉여현금을-삼켰다-빅테크-채권발행-1년-새-79-늘었다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-07",
+   "path": "content/understanding/회계사/[260807] AI CAPEX가 잉여현금을 삼켰다, 빅테크 채권발행 1년 새 79% 늘었다 - 엘곰.md",
+   "hash": "f1ba218b5df7"
+  },
+  {
+   "id": "und:회계사:AI-매출-70가-오픈AI앤스로픽-두-곳에-걸려-있다-순환거래의-함정-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-14",
+   "path": "content/understanding/회계사/[260814] AI 매출 70%가 오픈AI·앤스로픽 두 곳에 걸려 있다, 순환거래의 함정 - 엘곰.md",
+   "hash": "38ceafe5b03d"
   },
   {
    "id": "und:회계사:DCF-결과-697조-시장가치의-143-주식가치-평가-4-삼성전자-엘곰",
@@ -2112,6 +2178,28 @@
    "hash": "d3f6a8620317"
   },
   {
+   "id": "und:회계사:DCF-공격-시나리오-109300원-PER-상대가치ISC-기준-126528원-리노공업-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-03-08",
+   "path": "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md",
+   "hash": "7ef140661564"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-105410원-주가보다-472-아래-티씨케이-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-01-27",
+   "path": "content/understanding/회계사/[260127] DCF 내재가치 105,410원, 주가보다 47.2% 아래 - 티씨케이 - 엘곰.md",
+   "hash": "a2c700ff6c5f"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-108915원-주가보다-411-아래-LS일렉트릭-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2121,6 +2209,50 @@
    "date": "2026-08-01",
    "path": "content/understanding/회계사/[260801] DCF 내재가치 108,915원, 주가보다 41.1% 아래 - LS일렉트릭 - 엘곰.md",
    "hash": "e29a3fee8125"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-10만-8천원-주가보다-46-위-LG-CNS-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-03",
+   "path": "content/understanding/회계사/[260703] DCF 내재가치 10만 8천원, 주가보다 46% 위 - LG CNS - 엘곰.md",
+   "hash": "095260eaa73a"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-1209445원-주가보다-648-아래-효성중공업-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-06-05",
+   "path": "content/understanding/회계사/[260605] DCF 내재가치 1,209,445원, 주가보다 64.8% 아래 - 효성중공업 - 엘곰.md",
+   "hash": "8d43d16414d9"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-12771원-주가보다-363-위-원텍-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-25",
+   "path": "content/understanding/회계사/[260525] DCF 내재가치 12,771원, 주가보다 36.3% 위 - 원텍 - 엘곰.md",
+   "hash": "1f8e48901b17"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-15만원-주가보다-49-위-SK텔레콤-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-25",
+   "path": "content/understanding/회계사/[260425] DCF 내재가치 15만원, 주가보다 49% 위 - SK텔레콤 - 엘곰.md",
+   "hash": "e3f602d81ba2"
   },
   {
    "id": "und:회계사:DCF-내재가치-188만원-주가보다-143-위-SK하이닉스-엘곰",
@@ -2145,6 +2277,28 @@
    "hash": "cd1ff3a9ef3f"
   },
   {
+   "id": "und:회계사:DCF-내재가치-35만원-주가보다-204-위-한국콜마-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-14",
+   "path": "content/understanding/회계사/[260714] DCF 내재가치 35만원, 주가보다 204% 위 - 한국콜마 - 엘곰.md",
+   "hash": "32106ad6fdfb"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-35만원-주가보다-92-위-네이버-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-09",
+   "path": "content/understanding/회계사/[260709] DCF 내재가치 35만원, 주가보다 92% 위 - 네이버 - 엘곰.md",
+   "hash": "d9a9dc3ee695"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-38만원-주가보다-1808-위-오리온-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2165,6 +2319,17 @@
    "date": "2026-08-09",
    "path": "content/understanding/회계사/[260809] DCF 내재가치 51,400원, 주가보다 59.8% 아래 - 주성엔지니어링 - 엘곰.md",
    "hash": "b71882265a91"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-558만원-주가보다-259-아래-HD현대일렉트릭-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-19",
+   "path": "content/understanding/회계사/[260819] DCF 내재가치 55.8만원, 주가보다 25.9% 아래 - HD현대일렉트릭 - 엘곰.md",
+   "hash": "a485baadd531"
   },
   {
    "id": "und:회계사:DCF-내재가치-57만원-주가보다-589-위-에이피알-엘곰",
@@ -2189,6 +2354,17 @@
    "hash": "9ae796e7ccbf"
   },
   {
+   "id": "und:회계사:DCF-내재가치-60만원-주가보다-530-아래-삼성전기-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-19",
+   "path": "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md",
+   "hash": "244365f79186"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-62만원-주가보다-169-위-코스맥스-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2200,6 +2376,50 @@
    "hash": "0e7239a9988d"
   },
   {
+   "id": "und:회계사:DCF-내재가치-650361원-주가보다-507-위-현대모비스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-06",
+   "path": "content/understanding/회계사/[260506] DCF 내재가치 650,361원, 주가보다 50.7% 위 - 현대모비스 - 엘곰.md",
+   "hash": "9363a5d68274"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-71만원-주가보다-70-아래-셀트리온-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-02-13",
+   "path": "content/understanding/회계사/[260213] DCF 내재가치 7.1만원, 주가보다 70% 아래 - 셀트리온 - 엘곰.md",
+   "hash": "faab9ee9db44"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-7만-7900원-주가보다-38-아래-한화오션-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-03-07",
+   "path": "content/understanding/회계사/[260307] DCF 내재가치 7만 7900원, 주가보다 38% 아래 - 한화오션 - 엘곰.md",
+   "hash": "5f963b7d24d1"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-82941원-주가보다-157-위-한화시스템-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-11",
+   "path": "content/understanding/회계사/[260711] DCF 내재가치 82,941원, 주가보다 15.7% 위 - 한화시스템 - 엘곰.md",
+   "hash": "10740cadaf00"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-85100원-주가보다-8792-위-실리콘투-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2209,6 +2429,72 @@
    "date": "2026-08-13",
    "path": "content/understanding/회계사/[260813] DCF 내재가치 85,100원, 주가보다 87~92% 위 - 실리콘투 - 엘곰.md",
    "hash": "23709c54ff78"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-96163원-주가와-014-차이-이수페타시스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-10",
+   "path": "content/understanding/회계사/[260710] DCF 내재가치 96,163원, 주가와 0.14% 차이 - 이수페타시스 - 엘곰.md",
+   "hash": "025e6e8dba8d"
+  },
+  {
+   "id": "und:회계사:DCF-적정주가-12만-4956원-주가보다-695-위-두산밥캣-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-08",
+   "path": "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md",
+   "hash": "933bc795c201"
+  },
+  {
+   "id": "und:회계사:DCF-적정주가-130만-5천원-주가가-239-웃돈다-고려아연-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-03-10",
+   "path": "content/understanding/회계사/[260310] DCF 적정주가 130만 5천원, 주가가 23.9% 웃돈다 - 고려아연 - 엘곰.md",
+   "hash": "b0427c683926"
+  },
+  {
+   "id": "und:회계사:DCF-적정주가-43만-5천원-주가보다-137-아래-HD현대중공업-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-11",
+   "path": "content/understanding/회계사/[260711] DCF 적정주가 43만 5천원, 주가보다 13.7% 아래 - HD현대중공업 - 엘곰.md",
+   "hash": "fdff5f043211"
+  },
+  {
+   "id": "und:회계사:DCF-주당가치-633700원-주가보다-49-위-현대자동차-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-23",
+   "path": "content/understanding/회계사/[260523] DCF 주당가치 633,700원, 주가보다 4.9% 위 - 현대자동차 - 엘곰.md",
+   "hash": "19a46be763b2"
+  },
+  {
+   "id": "und:회계사:DCF-주주가치-209조-시총보다-666-아래-LG디스플레이-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-01-18",
+   "path": "content/understanding/회계사/[260118] DCF 주주가치 2.09조, 시총보다 66.6% 아래 - LG디스플레이 - 엘곰.md",
+   "hash": "4c9db61d08d2"
   },
   {
    "id": "und:회계사:DCF-프레임워크-1-현금흐름은-어떻게-산정하나-엘곰",
@@ -2255,6 +2541,17 @@
    "hash": "f6574e041079"
   },
   {
+   "id": "und:회계사:FCF-배수-2165배로-낸-주주가치-746조-주가보다-69-아래-삼성물산-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-06-28",
+   "path": "content/understanding/회계사/[260628] FCF 배수 21.65배로 낸 주주가치 74.6조, 주가보다 6.9% 아래 - 삼성물산 - 엘곰.md",
+   "hash": "9b6b6402d41d"
+  },
+  {
    "id": "und:회계사:Forward-PER-5배-미만이-의미하는-것-삼성전자SK하이닉스-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2264,6 +2561,28 @@
    "date": "2026-08-10",
    "path": "content/understanding/회계사/[260810] Forward PER 5배 미만이 의미하는 것 - 삼성전자·SK하이닉스 - 엘곰.md",
    "hash": "798dd03164cb"
+  },
+  {
+   "id": "und:회계사:G7-국채금리-4-육박-일본-30년물은-사상-최고-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-18",
+   "path": "content/understanding/회계사/[260818] G7 국채금리 4% 육박, 일본 30년물은 사상 최고 - 엘곰.md",
+   "hash": "13797aece058"
+  },
+  {
+   "id": "und:회계사:OCF는-연-23인데-CAPEX는-연-70로-늘어난다-오라클은-이미-마이너스-전환-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-25",
+   "path": "content/understanding/회계사/[260725] OCF는 연 23%인데 CAPEX는 연 70%로 늘어난다, 오라클은 이미 마이너스 전환 - 엘곰.md",
+   "hash": "0522f43834b5"
   },
   {
    "id": "und:회계사:PEG-027로-본-저평가-Peter-Lynch-평가법-1-삼성전자-엘곰",
@@ -2321,6 +2640,61 @@
    "hash": "0756b72241dc"
   },
   {
+   "id": "und:회계사:금융여건지수-2주-만에-1996년-이후-최고-완화로-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-16",
+   "path": "content/understanding/회계사/[260816] 금융여건지수, 2주 만에 1996년 이후 최고 완화로 - 엘곰.md",
+   "hash": "3ab2b285d8e0"
+  },
+  {
+   "id": "und:회계사:기업가치-54조-5054억원이-요구하는-내재성장률은-연-2425다-삼성SDI-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-23",
+   "path": "content/understanding/회계사/[260523] 기업가치 54조 5,054억원이 요구하는 내재성장률은 연 24~25%다 - 삼성SDI - 엘곰.md",
+   "hash": "c2bb6421e2a3"
+  },
+  {
+   "id": "und:회계사:동결-확률-6580-그래도-인상-카드가-살아있던-이유-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-27",
+   "path": "content/understanding/회계사/[260727] 동결 확률 65~80%, 그래도 인상 카드가 살아있던 이유 - 엘곰.md",
+   "hash": "61052dbd8aa9"
+  },
+  {
+   "id": "und:회계사:매그니피센트-세븐-CAPEX-2340억-달러인데-주가는-제자리-반도체-FCF만-오른다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-12",
+   "path": "content/understanding/회계사/[260712] 매그니피센트 세븐 CAPEX 2340억 달러인데 주가는 제자리, 반도체 FCF만 오른다 - 엘곰.md",
+   "hash": "ad6b7fcffeaf"
+  },
+  {
+   "id": "und:회계사:매출-20-성장해도-FCF마진은-18에서-38로-눌린다-알파벳-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-16",
+   "path": "content/understanding/회계사/[260516] 매출 20%+ 성장해도 FCF마진은 18%에서 3~8%로 눌린다 - 알파벳 - 엘곰.md",
+   "hash": "12448f0da22c"
+  },
+  {
    "id": "und:회계사:멀티플을-가르는-것은-성장률이-아니라-이익-지속기간-삼성전자SK하이닉스-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2376,6 +2750,17 @@
    "hash": "85d6831069a2"
   },
   {
+   "id": "und:회계사:본업-DCF-277794원-로봇-프리미엄-132조원-LG전자-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-06-04",
+   "path": "content/understanding/회계사/[260604] 본업 DCF 277,794원, 로봇 프리미엄 13.2조원 - LG전자 - 엘곰.md",
+   "hash": "56b1ba1c55f6"
+  },
+  {
    "id": "und:회계사:부문-4개로-쪼갠-Simple-DCF-지분가치-501조-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2385,6 +2770,17 @@
    "date": "2025-04-30",
    "path": "content/understanding/회계사/[250430] 부문 4개로 쪼갠 Simple DCF, 지분가치 501조 - 엘곰.md",
    "hash": "473a5846aff4"
+  },
+  {
+   "id": "und:회계사:브렌트유-하루-7-급등-100달러-10년물-금리-471로-2025년-1월-최고-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-24",
+   "path": "content/understanding/회계사/[260724] 브렌트유 하루 7% 급등 100달러, 10년물 금리 4.71%로 2025년 1월來 최고 - 엘곰.md",
+   "hash": "4c8460844065"
   },
   {
    "id": "und:회계사:빅테크-DCF-성장률은-한-번에-꺾지-않고-서서히-낮춘다-엘곰",
@@ -2431,6 +2827,17 @@
    "hash": "885eeddf6ba8"
   },
   {
+   "id": "und:회계사:삼성전자-영업이익-1800-급증에도-주가는-7-빠졌다-CAPEX는-더-이상-성장지표가-아니다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-20",
+   "path": "content/understanding/회계사/[260720] 삼성전자 영업이익 1,800% 급증에도 주가는 7% 빠졌다, CAPEX는 더 이상 성장지표가 아니다 - 엘곰.md",
+   "hash": "62dbffcd1983"
+  },
+  {
    "id": "und:회계사:삼성전자와-SK하이닉스의-PBR비교의-시사점-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2473,6 +2880,105 @@
    "date": "2026-08-08",
    "path": "content/understanding/회계사/[260808] 시총 1,875억 달러가 요구하는 내재성장률은 9~12%다 - 샌디스크 - 엘곰.md",
    "hash": "cea2ff88c4a8"
+  },
+  {
+   "id": "und:회계사:시총-21조-825억원이-요구하는-내재성장률은-3646다-에코프로비엠-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-23",
+   "path": "content/understanding/회계사/[260523] 시총 21조 825억원이 요구하는 내재성장률은 36~46%다 - 에코프로비엠 - 엘곰.md",
+   "hash": "18dc3e5e26bb"
+  },
+  {
+   "id": "und:회계사:시총-291조원이-요구하는-NOPAT-성장률은-연-57다-한미반도체-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-03-15",
+   "path": "content/understanding/회계사/[260315] 시총 29.1조원이 요구하는 NOPAT 성장률은 연 57%다 - 한미반도체 - 엘곰.md",
+   "hash": "70217b9626e0"
+  },
+  {
+   "id": "und:회계사:시총-4조-2227억원이-요구하는-내재성장률은-연-12다-제주반도체-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-06-19",
+   "path": "content/understanding/회계사/[260619] 시총 4조 2,227억원이 요구하는 내재성장률은 연 12%다 - 제주반도체 - 엘곰.md",
+   "hash": "014187917a13"
+  },
+  {
+   "id": "und:회계사:시총-586조원이-요구하는-것은-성장이-아니라-FCF-연-4-22-하강이다-기아-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-09",
+   "path": "content/understanding/회계사/[260409] 시총 58.6조원이 요구하는 것은 성장이 아니라 FCF 연 -4~-22% 하강이다 - 기아 - 엘곰.md",
+   "hash": "7c499ae70017"
+  },
+  {
+   "id": "und:회계사:시총-62620조원이-요구하는-20292030년-FCF는-연-119조원이다-엘앤에프-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-03-28",
+   "path": "content/understanding/회계사/[260328] 시총 6.2620조원이 요구하는 2029~2030년 FCF는 연 1.19조원이다 - 엘앤에프 - 엘곰.md",
+   "hash": "b94bbd60c92f"
+  },
+  {
+   "id": "und:회계사:시총-75조원이-요구하는-내재성장률은-31다-삼성바이오로직스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-04-16",
+   "path": "content/understanding/회계사/[260416] 시총 75조원이 요구하는 내재성장률은 31%다 - 삼성바이오로직스 - 엘곰.md",
+   "hash": "6cf5669cd03c"
+  },
+  {
+   "id": "und:회계사:아마존-잉여현금흐름-1년-새-95-감소-알파벳은-자사주-대신-800억-달러-신주-발행-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-31",
+   "path": "content/understanding/회계사/[260731] 아마존 잉여현금흐름 1년 새 95% 감소, 알파벳은 자사주 대신 800억 달러 신주 발행 - 엘곰.md",
+   "hash": "be8f9b3bb346"
+  },
+  {
+   "id": "und:회계사:애저-성장률-3943로-가속-AI는-기존-소프트웨어를-잡아먹지-않았다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-30",
+   "path": "content/understanding/회계사/[260730] 애저 성장률 39%→43%로 가속, AI는 기존 소프트웨어를 잡아먹지 않았다 - 엘곰.md",
+   "hash": "584026da88ec"
+  },
+  {
+   "id": "und:회계사:앤스로픽-몸값-석-달-만에-3배-9650억-달러-오픈AI를-추월했다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-05-30",
+   "path": "content/understanding/회계사/[260530] 앤스로픽 몸값 석 달 만에 3배 9,650억 달러, 오픈AI를 추월했다 - 엘곰.md",
+   "hash": "03e8fe72d44b"
   },
   {
    "id": "und:회계사:어닝서프라이즈와-플러스-FCF-없인-주가는-안-오른다-AI-빅테크-엘곰",
@@ -2519,6 +3025,17 @@
    "hash": "4e827b70d90b"
   },
   {
+   "id": "und:회계사:채권-자경단-동결-속에서-30년물-금리를-527로-밀어올리다-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-02",
+   "path": "content/understanding/회계사/[260802] 채권 자경단, 동결 속에서 30년물 금리를 5.27%로 밀어올리다 - 엘곰.md",
+   "hash": "8cf0c828274c"
+  },
+  {
    "id": "und:회계사:총자본-364조-vs-시총-334조-PBR-1-밑으로-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2528,6 +3045,17 @@
    "date": "2024-10-26",
    "path": "content/understanding/회계사/[241026] 총자본 364조 vs 시총 334조, PBR 1 밑으로 - 삼성전자 - 엘곰.md",
    "hash": "8f84e2e3f46c"
+  },
+  {
+   "id": "und:회계사:클라우드-매출-82-늘었는데-주가는-밀렸다-CAPEX-1950억2050억-달러로-재상향-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-07-23",
+   "path": "content/understanding/회계사/[260723] 클라우드 매출 82% 늘었는데 주가는 밀렸다, CAPEX 1,950억~2,050억 달러로 재상향 - 엘곰.md",
+   "hash": "5cb5a10ec842"
   },
   {
    "id": "und:회계사:토큰-값이-아니라-회사-아키텍처가-AI-비용을-결정한다-AI-토크노믹스-엘곰",
@@ -2550,6 +3078,28 @@
    "date": "2026-04-17",
    "path": "content/understanding/회계사/[260417] 판매장려금이 핵심감사사항인 이유 - IFRS 15 변동대가 - 삼성전자 - 엘곰.md",
    "hash": "af13cd54ab15"
+  },
+  {
+   "id": "und:회계사:한국-전력기기-3사-시총-26배-PER-프리미엄은-3060-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-06-22",
+   "path": "content/understanding/회계사/[260622] 한국 전력기기 3사 시총 2.6배, PER 프리미엄은 30~60% - 엘곰.md",
+   "hash": "15102a8956ff"
+  },
+  {
+   "id": "und:회계사:해맥의-매파-발언-9월-인상-확률-517-한미-금리차-최대-125p-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-11",
+   "path": "content/understanding/회계사/[260811] 해맥의 매파 발언 — 9월 인상 확률 51.7%, 한미 금리차 최대 1.25%p - 엘곰.md",
+   "hash": "ea252b17d26b"
   }
  ]
 }
