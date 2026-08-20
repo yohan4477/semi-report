@@ -39,6 +39,14 @@ SOURCES = [
      {'market': OBS, 'energy': INT}, REL),
     ('content/understanding/권효재 대표', '권효재 · COR에너지인사이트 대표',
      {'energy': OBS, 'power': INT}, REL),
+    # 기자는 취재로 1차를 물어 온다 — 담당 영역에서는 관측이고 그 밖은 해석이다.
+    # 순위는 TIER 가 따로 매긴다(전 한국은행 국장 다음).
+    ('content/understanding/김상훈 기자', '김상훈 기자',
+     {'market': OBS, 'chip': INT}, REL),
+    ('content/understanding/백종훈 기자', '백종훈 기자',
+     {'chip': OBS}, REL),
+    ('content/understanding/손진석 기자', '손진석 기자',
+     {'market': OBS, 'energy': INT}, REL),
     # 공시를 직접 읽어 센다 — 3조 달러 오프발란스가 그렇게 나온 숫자다
     ('content/understanding/회계사', '엘곰 · 회계사',
      {'biz': INT}, REL),
@@ -54,6 +62,27 @@ SOURCES = [
 ]
 
 DEFAULT = REL
+
+# 우선순위 — 등급과 다른 축이다.
+# 등급(관측·해석·전달)은 그 숫자에서 얼마나 가까운가를 잰다.
+# 우선순위는 둘이 같은 것을 두고 부딪칠 때 누구를 먼저 두는가다.
+# 기자를 관측으로만 적으면 SemiAnalysis 와 같은 급이 되어 순서가 사라진다.
+# 숫자가 작을수록 앞선다. 표에 없으면 9다.
+TIER = {
+    'SemiAnalysis 뉴스레터': 1,
+    'SemiAnalysis 팟캐스트': 1,
+    'SemiAnalysis 게시물': 1,
+    '류상철 · 전 한국은행 국장': 1,
+    '김상훈 기자': 2,
+    '백종훈 기자': 2,
+    '손진석 기자': 2,
+}
+TIER_DEFAULT = 9
+
+
+def tier_of(path):
+    name, _bysec, _d = source_of(path)
+    return TIER.get(name, TIER_DEFAULT)
 
 
 def _norm(p):
