@@ -2160,55 +2160,68 @@ COURSE = [
 # 환율 편은 원/달러를 이끄는 것이 달러 인덱스이고 그 달러 인덱스를 다시 미국 국채 수익률이
 # 이끈다고 맺는다. 그래서 합류점을 미국 10년물로 잡는다.
 #
-# 가운데 칸은 두 편에 같이 나오는 것이다. 그는 두 번 다 수급 설명을 기각한다.
+# 가운데 칸이 합류점이고, 거기서 주식·채권 동조와 달러 인덱스 둘로 갈린다.
 #
-# 화살표는 인과가 아니라 그의 논증이 지나간 길이다. 2026-08-20 회계사 장에서 원문에 없는
-# 인과를 화살표로 그렸다가 잡혔다 -- 그 뒤로 그림에도 화살표의 뜻을 캡션에 적는다.
+# 화살표는 인과다. 그가 직접 인과로 말한다 -- 「원/달러를 이끄는 것이 달러 인덱스이고, 그
+# 달러 인덱스를 다시 미국 국채 수익률이 이끈다」. 회계사 장에서는 원문에 없는 인과를 그렸다가
+# 잡혔지만(2026-08-20) 여기는 반대다. 원문에 인과가 있는데 그것을 안 그리면 그림이 뜻을 잃는다.
+#
+# 점선은 그가 끊어 낸 경로다. 수급 기각은 사슬의 한 칸이 아니라 잘라 낸 가지라 점선과 X로 낸다.
 MERGE_RYU = (
-    '<svg viewBox="0 0 640 210" role="img" aria-label="류상철 두 편이 같은 지표로 모이는 곳">'
-    '<text x="67" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">두 편이 던진 물음</text>'
-    '<text x="320" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">두 편이 같이 딛는 것</text>'
-    '<text x="551" y="18" text-anchor="middle" class="t-sm" style="font-weight:850">같이 도착하는 곳</text>'
-    '<rect x="8" y="52" width="118" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
-    '<text x="67" y="72" text-anchor="middle" class="t-lab">금리와 주가</text>'
-    '<text x="67" y="87" text-anchor="middle" class="t-sm">06-17</text>'
-    '<rect x="8" y="118" width="118" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
-    '<text x="67" y="138" text-anchor="middle" class="t-lab">엔화와 원화</text>'
-    '<text x="67" y="153" text-anchor="middle" class="t-sm">07-24</text>'
-    '<rect x="248" y="32" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
-    '<text x="320" y="50" text-anchor="middle" class="t-lab">수급을 기각한다</text>'
-    '<text x="320" y="64" text-anchor="middle" class="t-sm">물량은 늘 같다</text>'
-    '<rect x="248" y="86" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
-    '<text x="320" y="104" text-anchor="middle" class="t-lab">급할 때 값이 움직인다</text>'
-    '<text x="320" y="118" text-anchor="middle" class="t-sm">예상이 수요를 부른다</text>'
-    '<rect x="248" y="140" width="144" height="38" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
-    '<text x="320" y="158" text-anchor="middle" class="t-lab">물가가 성장을 누른다</text>'
-    '<text x="320" y="172" text-anchor="middle" class="t-sm">가중치 1.5배</text>'
-    '<rect x="470" y="82" width="162" height="48" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.2"/>'
-    '<text x="551" y="104" text-anchor="middle" class="t-lab">미국 10년물 국채금리</text>'
-    '<text x="551" y="120" text-anchor="middle" class="t-sm">두 편이 같이 도착한다</text>'
-    '<path d="M126 62 L246 48" class="flow"/>'
-    '<path d="M126 74 L246 100" class="flow"/>'
-    '<path d="M126 86 L246 152" class="flow"/>'
-    '<path d="M126 126 L246 60" class="flow"/>'
-    '<path d="M126 140 L246 112" class="flow"/>'
-    '<path d="M392 52 L468 96" class="flow"/>'
-    '<path d="M392 106 L468 106" class="flow"/>'
-    '<path d="M392 158 L468 116" class="flow"/>'
+    '<svg viewBox="0 0 640 220" role="img" aria-label="류상철이 그린 인과 사슬">'
+    '<text x="70" y="16" text-anchor="middle" class="t-sm" style="font-weight:850">그가 든 원인</text>'
+    '<text x="292" y="16" text-anchor="middle" class="t-sm" style="font-weight:850">여기로 모인다</text>'
+    '<text x="542" y="16" text-anchor="middle" class="t-sm" style="font-weight:850">그다음 갈린다</text>'
+    '<rect x="8" y="34" width="124" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="70" y="54" text-anchor="middle" class="t-lab">물가</text>'
+    '<text x="70" y="69" text-anchor="middle" class="t-sm">성장의 1.5배</text>'
+    '<rect x="8" y="94" width="124" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="70" y="114" text-anchor="middle" class="t-lab">국채 수급구조</text>'
+    '<text x="70" y="129" text-anchor="middle" class="t-sm">발행 연 8%</text>'
+    '<rect x="8" y="162" width="124" height="42" rx="9" fill="none" stroke="var(--risk,#c2504a)" '
+    'stroke-width="1.4" stroke-dasharray="5 4"/>'
+    '<text x="70" y="181" text-anchor="middle" class="t-lab">서학개미·외국인</text>'
+    '<text x="70" y="195" text-anchor="middle" class="t-sm">그가 끊어 낸 경로</text>'
+    '<rect x="214" y="74" width="156" height="54" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.2"/>'
+    '<text x="292" y="96" text-anchor="middle" class="t-lab">미국 10년물</text>'
+    '<text x="292" y="113" text-anchor="middle" class="t-lab">국채금리</text>'
+    '<rect x="452" y="28" width="180" height="42" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="542" y="47" text-anchor="middle" class="t-lab">주식·채권 동조</text>'
+    '<text x="542" y="61" text-anchor="middle" class="t-sm">60·40이 깨진다</text>'
+    '<rect x="452" y="86" width="180" height="42" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="542" y="105" text-anchor="middle" class="t-lab">달러 인덱스</text>'
+    '<text x="542" y="119" text-anchor="middle" class="t-sm">유로 57% · 엔 13~14%</text>'
+    '<rect x="452" y="144" width="180" height="40" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.8"/>'
+    '<text x="542" y="163" text-anchor="middle" class="t-lab">원/달러</text>'
+    '<text x="542" y="177" text-anchor="middle" class="t-sm">약 1,480원</text>'
+    '<path d="M132 58 L212 92" class="flow"/>'
+    '<path d="M132 114 L212 108" class="flow"/>'
+    '<path d="M370 88 L450 52" class="flow"/>'
+    '<path d="M370 106 L450 106" class="flow"/>'
+    '<path d="M542 128 L542 142" class="flow"/>'
+    '<path d="M132 180 L438 176" class="flow" style="marker-end:none;stroke-dasharray:5 4;'
+    'stroke:var(--risk,#c2504a)"/>'
+    '<path d="M278 170 L292 184" stroke="var(--risk,#c2504a)" stroke-width="2.4" fill="none"/>'
+    '<path d="M292 170 L278 184" stroke="var(--risk,#c2504a)" stroke-width="2.4" fill="none"/>'
     '</svg>')
 
 RYU_CAP = (
-    '<p>류상철 국장 편은 둘입니다. <b>금리</b>(06-17)와 <b>환율</b>(07-24)인데, '
-    '두 편이 같은 지표 하나에 도착합니다. 미국 10년물 국채금리입니다. 금리 편은 그 하나만 '
-    '매일 확인하면 세계 경제 흐름을 대략 파악할 수 있다는 말로 맺습니다. 환율 편은 원/달러를 '
-    '이끄는 것이 달러 인덱스이고, 그 달러 인덱스를 다시 미국 국채 수익률이 이끈다고 맺습니다.</p>'
-    '<p>가운데 칸은 두 편에 같이 나오는 것입니다. 그는 두 번 다 <b>수급 설명을 기각</b>합니다. '
-    '사는 물량과 파는 물량은 언제나 같습니다. 값을 움직이는 것은 물량이 아닙니다. 급하게 사거나 '
-    '급하게 파는 쪽입니다. 금리 편은 여기에 물가를 얹습니다. 코로나 이후 통화결정 방정식에서 '
-    '물가 가중치가 성장의 <b>1.5배</b>입니다.</p>'
-    '<p>화살표는 인과를 뜻하지 않습니다. 그의 논증이 지나간 길입니다. 환율 전망(1,550원대에서 '
-    '1,400원대)은 본인이 개인 견해라고 선을 그었고, 경상수지와 환율의 상관이 약한 양(+)으로 '
-    '나오는 것은 스스로 완전히 설명하지 못한다고 인정합니다.</p>')
+    '<p>류상철 국장 편 둘은 <b>한 사슬</b>입니다. 금리 편(06-17)이 왼쪽과 가운데를, '
+    '환율 편(07-24)이 가운데와 오른쪽을 맡습니다. 두 편이 만나는 자리가 '
+    '<b>미국 10년물 국채금리</b>입니다.</p>'
+    '<p>사슬은 이렇게 갑니다. 코로나 이후 통화결정 방정식에서 물가 가중치가 성장의 '
+    '<b>1.5배</b>라 물가가 금리를 끕니다. 여기에 국채 수급구조가 겹칩니다. 최근 3년 발행 '
+    '잔액이 연 8% 늘었고 미국 부채가 G7 전체의 60%를 차지합니다. 20년 전에는 38%였습니다. '
+    '사던 쪽인 은행과 외국 중앙은행과 연준이 줄고 레버리지를 쓰는 수요가 그 자리를 채우면서 '
+    '변동성이 커집니다.</p>'
+    '<p>10년물에서 둘로 갈립니다. 공급 충격으로 물가가 오르는 국면에서는 주식과 채권이 같은 '
+    '방향으로 움직여 <b>60·40 포트폴리오</b>가 깨집니다. 다른 갈래는 달러입니다. 10년물이 '
+    '달러 인덱스를 끌고, 그 달러 인덱스가 원/달러를 끕니다. 달러 인덱스는 유로가 57%, 엔이 '
+    '13~14%를 차지하는 여섯 통화 바스켓입니다.</p>'
+    '<p>점선은 그가 <b>끊어 낸 경로</b>입니다. 원화 약세를 서학개미나 외국인 리밸런싱으로 '
+    '설명하는 방식인데, 사는 물량과 파는 물량은 언제나 같으므로 물량 자체는 값을 못 움직인다고 '
+    '봅니다. 다만 경상수지와 환율의 상관이 약한 양(+)으로 나오는 것은 스스로 완전히 설명하지 '
+    '못한다고 인정하고, 환율 전망(1,550원대에서 1,400원대)도 개인 견해라고 선을 그었습니다.</p>')
 
 
 def _attach_ryu():
@@ -2220,7 +2233,7 @@ def _attach_ryu():
         hits = [c for c in CARDS if frag in c['title']]
         assert len(hits) == 1, ('합류도 조각이 카드 하나를 못 가리킨다: %r -- %d건'
                                 % (frag, len(hits)))
-        hits[0]['figs'] = [(0, '두 편이 같은 지표 하나에 도착한다', MERGE_RYU, RYU_CAP)]
+        hits[0]['figs'] = [(0, '금리에서 환율까지 한 사슬로 이어진다', MERGE_RYU, RYU_CAP)]
 
 
 _attach_ryu()
