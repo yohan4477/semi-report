@@ -92,8 +92,11 @@ def esc(s):
     return (str(s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
-def link_cites(text, sources):
-    """(라벨 L123) → 원문 그 줄로 가는 각주. 서술과 근거를 한 클릭 거리에 둔다."""
+def link_cites(text, sources, dot=None):
+    """(라벨 L123) → 원문 그 줄로 가는 각주. 서술과 근거를 한 클릭 거리에 둔다.
+
+    dot 을 주면 각주 앞에 그 출처의 등급 표시를 붙인다(insights/sources_rank.py).
+    본문 전체에 붙이면 문장이 점으로 뒤덮여 안 읽힌다 — 근거표 안에서만 쓴다."""
     import urllib.parse
 
     def one(m):
@@ -102,12 +105,13 @@ def link_cites(text, sources):
         if not hit or not nums:
             return m.group(0)
         url = BLOB + urllib.parse.quote(hit['file'].replace('\\', '/')) + '#L' + nums[0]
-        return ('<a class="cite" href="%s" target="_blank" rel="noopener" title="%s">%s</a>'
+        pre = dot(hit['file']) if dot else ''
+        return (pre + '<a class="cite" href="%s" target="_blank" rel="noopener" title="%s">%s</a>'
                 % (url, esc(hit['base']), esc(m.group(2).replace(' ', ''))))
     return CITE.sub(one, text)
 
 
-def md_body(body, sources, h='h2', cls='tsec'):
+def md_body(body, sources, h='h2', cls='tsec', dot=None):
     """작은 마크다운만 — ##, 문단, **굵게**. 그 이상은 이 판에 필요 없다."""
     out = []
     for block in re.split(r'\n\s*\n', body.strip()):
@@ -126,7 +130,8 @@ def md_body(body, sources, h='h2', cls='tsec'):
                     if not all(set(c) <= set('-: ') for c in row)]   # 구분선 줄은 버린다
             if grid:
                 def cell(c):
-                    return link_cites(re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(c)), sources)
+                    return link_cites(re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', esc(c)),
+                                      sources, dot)
                 head = ''.join('<th>%s</th>' % cell(c) for c in grid[0])
                 rest = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % cell(c) for c in row)
                                for row in grid[1:])

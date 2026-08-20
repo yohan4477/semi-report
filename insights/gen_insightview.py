@@ -5,6 +5,7 @@ import io, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import merges
+import sources_rank as sr
 import notes_lib as nl
 sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
 import ui_bits  # noqa: E402
@@ -132,6 +133,23 @@ def copy_btn(aid, cls):
             % (cls, nl.esc(aid)))
 
 
+def rank_dot(section):
+    """근거표 각주 앞에 붙는 등급 표시. 문장 속 인용에는 안 붙인다 — 점으로 덮인다."""
+    def dot(f):
+        r = sr.rank_of(f, section)
+        name, _bysec, _d = sr.source_of(f)
+        return ('<span class="rkd rk-%s" title="%s — %s">%s</span>'
+                % (sr.SLUG[r], nl.esc(name or '분류 안 된 출처'), r, sr.MARK[r]))
+    return dot
+
+
+RANK_LEGEND = ('<p class="rkleg">%s 관측: 직접 재거나 현장에서 본 것 · '
+               '%s 해석: 1차 자료를 읽고 푸는 쪽 · %s 전달: 남의 말을 옮기는 쪽. '
+               '등급은 그 주제에 대해 누가 가까이 있었나를 뜻하며 어느 쪽이 옳은지를 '
+               '정하지 않습니다.</p>'
+               % (sr.MARK[sr.OBS], sr.MARK[sr.INT], sr.MARK[sr.REL]))
+
+
 def one(meta, body, tab, kind, cells=()):
     src = nl.sources_of(meta)
     head = meta.get('headline') or ''
@@ -145,7 +163,9 @@ def one(meta, body, tab, kind, cells=()):
             % (tab, cellattr, nl.esc(kind), period(meta, src), roster(meta),
                anchor(head), nl.esc(head), nl.esc(meta.get('subhead', '')),
                copy_btn(anchor(head), 'uc-copy'),
-               nl.md_body(body, src, 'h4', 'bsec'), srcbox(src)))
+               nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))
+               + (RANK_LEGEND if '|' in body else ''),
+               srcbox(src)))
 
 
 TOPSEC = 'winner'   # 타일을 고르기 전에도 보이는 층 — 첫 화면에서 바로 읽힌다
@@ -333,6 +353,13 @@ MRG_CSS = '''
   .mcell:hover rect,.mcell:focus rect{fill:var(--soft);stroke:var(--accent)}
   .mcell:focus{outline:none}
   .mcell[aria-pressed="true"] rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
+
+  /* 출처 등급 — 근거표 각주 앞 점 하나. 문장 속 인용에는 안 붙인다 */
+  .rkd{font-size:9px;margin-right:3px;vertical-align:1px;letter-spacing:0}
+  .rk-obs{color:var(--accent)}
+  .rk-int{color:var(--sub)}
+  .rk-rel{color:var(--faint)}
+  .rkleg{margin:6px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
 '''
 
 COURSE_LEDE = ('글 %d편을 어디서부터 읽을지 정해 두었습니다. 앞 네 단계는 AI를 만들고 파는 쪽을 돈·모델·'
