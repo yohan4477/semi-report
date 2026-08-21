@@ -4199,7 +4199,81 @@ FOOTER = (LEDE + META + '\n제3자 해설 아카이브 · 유료 구독 글 요�
 # 지도를 감싸는 회사 이름표 하나뿐인 CSS라 여기 둔다. 지도 자체의 CSS(DM_CSS)는
 # driver_map.render() 호출마다 실려 회사 수만큼 반복되지만(현재는 감수한다), 이 CSS는
 # render() 호출 한 번(extra_css)으로만 페이지에 실린다.
+# ─── 시간 흐름 그림 ────────────────────────────────────────────────────────
+# 「금리와 국채」 편 열 장은 8월 한 달을 하루 단위로 따라간 글이라, 카드를 차례로 읽기 전에
+# 무엇이 무엇을 불렀는지가 먼저 보여야 한다. 계보 장의 사슬틀과 같은 생각이되 클래스와 CSS는
+# 이 페이지 것으로 따로 둔다 — 저쪽은 .uc-fig 계열을 쓰고 이 페이지엔 그 CSS가 없다.
+# 글자 폭은 추측하지 않고 예산으로 막는다. 넘치면 페이지를 안 만든다.
+def _w(t):
+    w = 0.0
+    for ch in t:
+        if '가' <= ch <= '힣':
+            w += 11.2
+        elif ch == ' ':
+            w += 3.5
+        else:
+            w += 6.6
+    return w
+
+
+_FIG_COLS = ((30, 168), (214, 218), (440, 192))
+
+
+def _fit(where, texts):
+    for (x, budget), t in zip(_FIG_COLS, texts):
+        if t and _w(t) > budget:
+            raise AssertionError('%s — x=%d 칸 예산 %dpx를 넘는다(%.0fpx): %r'
+                                 % (where, x, budget, _w(t), t))
+
+
+def _chain(title, rows, note_l, note_r):
+    """세로 사슬 그림. rows = [(마디, 무엇이 일어났나, 그래서 다음이)]"""
+    _fit(title, ['', note_l, note_r])
+    for r in rows:
+        _fit(title, r)
+    H = 40 + len(rows) * 52
+    h = ['<svg class="acc-fig" viewBox="0 0 640 %d" role="img" aria-label="%s">' % (H, title)]
+    h.append('<text class="af-lab" x="18" y="20">%s</text>' % title)
+    h.append('<text class="af-sm" x="214" y="20">%s</text>' % note_l)
+    h.append('<text class="af-sm" x="440" y="20">%s</text>' % note_r)
+    for i, (name, did, why) in enumerate(rows):
+        y = 34 + i * 52
+        h.append('<rect x="18" y="%d" width="180" height="40" rx="8" class="af-box"/>' % y)
+        h.append('<text class="af-sm" x="30" y="%d">%s</text>' % (y + 25, name))
+        h.append('<text class="af-sm" x="214" y="%d">%s</text>' % (y + 25, did))
+        if why:
+            h.append('<text class="af-why" x="440" y="%d">%s</text>' % (y + 25, why))
+        if i < len(rows) - 1:
+            h.append('<path class="af-flow" d="M108 %d L 108 %d"/>' % (y + 40, y + 52))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+# 값은 전부 이 섹션 카드가 인용한 원문에서 온다. 그림용으로 다시 세지 않는다.
+FIG_RATES = _chain('금리가 옮겨 간 사흘', [
+    ('8-18 30년물 고점', '5.34% — 19년 만의 최고', '장기채 매수가 6월 말부터 끊겼다'),
+    ('8-19 재무부 개입', '바이백 회당 20억 → 최소 40억 달러', '재원은 신규 단기채 발행이다'),
+    ('8-20 금리 하락', '30년물 9bp 내려 5.18~5.20%', '할인율과 조달금리가 같이 내렸다'),
+    ('8-20 메모리 급등', 'SK하이닉스 +12% 삼성전자 +9%', '주주환원 재평가가 겹쳤다'),
+    ('8-20 크립토', '숏 14억 달러 하루 청산', ''),
+], note_l='무엇이 일어났나', note_r='그래서 다음이 이어졌다')
+
+FIG_RATES_CAP = ('<p class="acc-figcap">재무부가 되사기를 늘린 다음 날 값이 움직인 순서다. '
+                 '되사기는 이미 발행된 국채를 사들이는 조치라 신규 발행량을 줄이지 않는다 — '
+                 '아래 8-20 편이 그 한계를 따로 다룬다.</p>')
+
+
 VALUATION_CSS = '''
+  /* 섹션 머리 그림 — 스위치 없이 늘 서 있다(dash_common.render 의 sec_fig). */
+  .acc-figwrap{margin:14px 0 18px;padding:14px 12px 8px;border:1px solid var(--line);
+               border-radius:12px;background:var(--card,transparent);overflow-x:auto}
+  .acc-fig{display:block;width:100%;max-width:660px;height:auto}
+  .acc-fig .af-lab{font:800 13px/1.2 system-ui,sans-serif;fill:var(--ink)}
+  .acc-fig .af-sm{font:600 12px/1.2 system-ui,sans-serif;fill:var(--ink-2)}
+  .acc-fig .af-why{font:600 12px/1.2 system-ui,sans-serif;fill:var(--ink-3)}
+  .acc-fig .af-box{fill:none;stroke:var(--line);stroke-width:1.4}
+  .acc-fig .af-flow{stroke:var(--ink-3);stroke-width:1.4;fill:none}
+  .acc-figcap{margin:6px 2px 0;font-size:12px;line-height:1.6;color:var(--ink-3);max-width:66ch}
   .dm-co{margin:0 0 34px}
   .dm-co:last-child{margin-bottom:0}
   .dm-co-t{font-size:15px;font-weight:850;letter-spacing:-.01em;color:var(--ink);
@@ -4718,6 +4792,8 @@ if __name__ == '__main__':
     _log, _logn = log_html()
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               extra_css=VALUATION_CSS + LOG_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
+                                     + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),
               intro=merge_intro(),
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,

@@ -936,7 +936,9 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
-           sec_bottom=None, sec_groups=None, sec_badges=None, pick_top=''):
+           sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
+           sec_fig=None,
+           sw_labels=('밸류에이션', '개별 포스트', '◂ 회사 다시 고르기')):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -944,6 +946,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     intro는 타일 그리드 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않고
     접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다.
 
+    sec_fig = {섹션 id: HTML}. 스위치 없이 섹션 머리 바로 아래 늘 서 있는 층이다 —
+    그림처럼 고르는 대상이 아니라 그 섹션을 읽는 순서를 먼저 보여 주는 것에 쓴다.
+    sec_top 과 달리 「밸류에이션·개별 포스트」 버튼을 만들지 않는다.
     sec_top = {섹션 id: HTML}. 그 섹션 머리 바로 아래, 카드 앞에 들어간다. 한 회사를 여러 편으로
     평가한 것을 견주는 지도처럼 **그 섹션에만 해당하는** 층을 둘 자리다. 페이지 맨 위 롤업으로
     두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다.
@@ -970,7 +975,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
                     '<span class="sec-num">00</span><h2 class="sec-title">%s</h2>%s</div>%s</section>'
                     % (tid, top_n, top_title, sec_copy(tid), top))
     sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
-    unknown = [k for k in list(sec_top) + list(sec_bottom) if k not in secs]
+    sec_fig = sec_fig or {}
+    unknown = [k for k in list(sec_top) + list(sec_bottom) + list(sec_fig)
+               if k not in secs]
     assert not unknown, 'sec_top·sec_bottom에 없는 섹션 id가 있다: %s' % unknown
     for sid in order:
         (_, num, stitle, _sub), cs = secs[sid]
@@ -981,20 +988,20 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
         if lead:
             # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
             # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
-            lead = ('<div class="secsw" data-sec="%s" hidden>'
+            lead = ('<div class="secsw" data-sec="' + sid + '" hidden>'
                     # 맨 앞은 올라가는 길이다. 내용 버튼과 생김새를 갈라 놓는다 —
                     # 같은 모양이면 어느 쪽이 위로 가는 길인지 눌러 봐야 안다.
-                    '<button type="button" class="sw-up">◂ 회사 다시 고르기</button>'
-                    '<button type="button" class="sw-btn" data-view="val">밸류에이션</button>'
-                    '<button type="button" class="sw-btn" data-view="posts">개별 포스트'
+                    '<button type="button" class="sw-up">%s</button>'
+                    '<button type="button" class="sw-btn" data-view="val">%s</button>'
+                    '<button type="button" class="sw-btn" data-view="posts">%s'
                     ' <span class="sw-n">%d</span></button></div>'
                     '<div class="sec-lead sv-val" data-sec="%s" hidden>%s</div>'
-                    % (sid, len(cs), sid, lead))
+                    % (sw_labels[2], sw_labels[0], sw_labels[1], len(cs), sid, lead))
             cards_html = '<div class="sv-posts" data-sec="%s" hidden>%s</div>' % (sid, cards_html)
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
-                    '<h2 class="sec-title">%s</h2>%s</div>%s%s%s</section>'
-                    % (sid, num, stitle, sec_copy(sid), lead, cards_html,
-                       sec_bottom.get(sid, '')))
+                    '<h2 class="sec-title">%s</h2>%s</div>%s%s%s%s</section>'
+                    % (sid, num, stitle, sec_copy(sid), sec_fig.get(sid, ''), lead,
+                       cards_html, sec_bottom.get(sid, '')))
     # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
     page_css = css()
     if extra_css:
