@@ -44,6 +44,7 @@ D_TRN3 = blob(NL + 'ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다�
 D_VR = blob(NL + 'ai_infra/compute/[260723] 베라 루빈 NVL72 vs GB200 NVL72 - 추론 TCO·아키텍처 분석.md')
 D_BW = blob(NL + 'ai_infra/compute/[260401] Nvidia Blackwell 해부 - 텐서 코어, PTX 명령어, SASS, '
                  '플로어스위프, 수율.md')
+D_CBS = blob(NL + 'ai_infra/compute/[260513] 세레브라스 - 더 빠른 토큰을 주세요.md')
 
 SA = 'SemiAnalysis'
 
@@ -60,6 +61,8 @@ SEC_PREC = ('sec-prec', '05', '정밀도 — 비트를 깎아 온 순서',
             '16비트에서 3비트까지 내려온 길과, 같은 자리에서 약속을 못 지킨 갈래')
 SEC_SI = ('sec-si', '06', '실리콘 — 알고리즘이 칩에 요구한 것',
           '텐서 코어 다섯 세대가 무엇을 키우고 무엇을 떼어냈는지')
+SEC_SERVE = ('sec-serve', '07', '서빙 — 실행 단위를 바꿔 온 순서',
+             '커널을 하나씩 띄우던 방식을 없애기까지, 그리고 전용 칩과 갈린 지점')
 
 
 CARDS = [{
