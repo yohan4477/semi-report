@@ -12,6 +12,7 @@
 #
 # 재료는 scratchpad/lineage_nodes.json(추출 extract_lineage.py, 가지치기 prune_lineage.py).
 import os
+import re
 import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -1328,6 +1329,96 @@ COURSE = [
 ]
 
 
+# ── 시간순 기록 ────────────────────────────────────────────────────────────
+# 카드는 궤도로 묶여 있어서 「무엇이 무엇을 갈아치웠나」에는 답하지만 「언제 알았나」에는
+# 답하지 않는다. 회계사 대시보드의 「00 시간순 기록」과 같은 층을 하나 둔다 — 카드 없는
+# 고정 층(dc.render의 top)이라 타일 하나로 서고 궤도 필터를 타지 않는다.
+#
+# 축은 **원문 발행일**이다. 기법이 세상에 나온 해가 아니다 — 그 연도는 원문에 없고,
+# 없는 값을 내가 채워 넣으면 계보가 아니라 내 기억이 된다. 여기서 답하는 것은
+# 「SemiAnalysis가 이 갈아탐을 언제 어느 글에서 잡아냈나」다.
+#
+# 데이터는 따로 적지 않는다. CARDS의 meta[2] 날짜에서 바로 뽑으므로 카드를 더하면
+# 이 층이 따라온다. 원문이 여러 편인 카드는 날짜가 범위라 「06~08」처럼 걸친 달을 적는다.
+LOG_CSS = """
+  .tlog{margin:6px 0 0}
+  .tlog-m{margin:22px 0 6px;font-size:12px;font-weight:850;letter-spacing:.05em;color:var(--ink-3)}
+  .tlog-m:first-child{margin-top:6px}
+  .tlog ul{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--line)}
+  .tlog li{position:relative;padding:9px 0 9px 14px;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+  .tlog li::before{content:'';position:absolute;left:-21px;top:17px;width:7px;height:7px;
+    border-radius:50%;background:var(--ink-3);box-shadow:0 0 0 3px var(--paper)}
+  .tlog li.k::before{background:var(--accent);width:9px;height:9px;left:-22px}
+  .tlog .d{font-variant-numeric:tabular-nums;font-weight:850;color:var(--ink);margin-right:9px}
+  .tlog .ax{display:inline-block;font-size:10.5px;font-weight:850;padding:1px 7px;border-radius:4px;
+    margin-right:7px;vertical-align:1px;border:1px solid var(--line);color:var(--ink-3)}
+  .tlog .tt{font-weight:800;color:var(--ink)}
+  .tlog .gg{display:block;margin-top:2px}
+"""
+
+
+def _log_dates(raw):
+    """meta 날짜 문자열에서 (정렬키, 화면표시)를 뽑는다.
+
+    '2026-08-03'      → ('2026-08-03', '08-03')
+    '2026-06 · 08'    → ('2026-08',    '06~08')   앞의 연도를 뒤에 물려 읽는다
+    '2025-10 · 2026-07' → ('2026-07',  '10~07')
+    """
+    toks = re.findall(r'20\d\d-\d\d(?:-\d\d)?|(?<![-\d])\d\d(?![-\d])', raw)
+    if not toks:
+        return ('', '')
+    ym, out = None, []
+    for t in toks:
+        if t.startswith('20'):
+            ym = t[:7]
+            out.append(t)
+        elif ym:                       # '· 08' 처럼 달만 적힌 자리
+            out.append(ym[:5] + t)
+    if not out:
+        return ('', '')
+    last = max(out)
+    disp = last[5:] if len(out) == 1 else '%s~%s' % (min(out)[5:7], last[5:7])
+    return (last, disp)
+
+
+def log_html():
+    """위로 갈수록 최신이다. 새 갈아탐을 보러 오는 층이라 맨 위가 가장 최근 글이어야 한다."""
+    rows = []
+    for c in CARDS:
+        m = c.get('meta', [])
+        key, disp = _log_dates(str(m[2]) if len(m) > 2 else '')
+        if not key:
+            continue
+        rows.append((key, disp, c['section'][2].split(' — ')[0], c['title'], c['gain']))
+    rows.sort(key=lambda r: r[0])
+    n = len(rows)
+    h = ['<p class="ins-lede">카드 <b>%d장</b>을 원문이 나온 순서로 훑는 층입니다. '
+         '궤도 타일이 <b>무엇이 무엇을 갈아치웠나</b>를 답한다면 여기는 '
+         '<b>그 갈아탐을 언제 어느 글에서 잡아냈나</b>를 답합니다. 축은 기법이 세상에 나온 해가 '
+         '아니라 <b>원문 발행일</b>입니다 — 등장 연도는 원문에 없어 채워 넣지 않았습니다. '
+         '<b>위로 갈수록 최신</b>이고, 원문이 여러 편인 카드는 걸친 달을 <b>06~08</b>처럼 '
+         '적었습니다.</p>' % n, '<div class="tlog">']
+    cur = None
+    for key, disp, orbit, title, gain in reversed(rows):
+        ym = key[:7]
+        if ym != cur:
+            if cur is not None:
+                h.append('</ul>')
+            cnt = sum(1 for r in rows if r[0][:7] == ym)
+            h.append('<p class="tlog-m">%s년 %d월 · %d장</p><ul>'
+                     % (ym[:4], int(ym[5:7]), cnt))
+            cur = ym
+        h.append('<li><span class="d">%s</span><span class="ax">%s</span>'
+                 '<span class="tt">%s</span><span class="gg">%s</span></li>'
+                 % (disp, orbit, title, gain))
+    h.append('</ul></div>')
+    return ''.join(h), n
+
+
 if __name__ == '__main__':
+    _log, _logn = log_html()
     dc.render(CARDS, '알고리즘 계보', HEADER, FOOTER % (STAMP, len(CARDS)), OUT,
-              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS)
+              intro=dc.course(CARDS, COURSE, COURSE_LEDE),
+              extra_css=dc.COURSE_CSS + LOG_CSS,
+              top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,
+              top_sub='카드 30장을 원문이 나온 순서로 — 어느 갈아탐을 언제 잡아냈나')
