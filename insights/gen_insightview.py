@@ -377,16 +377,20 @@ def loop_svg(axis_id, active=None, mini=False):
     done = written_cells()
     n = len(loop)
     W = n * _BW + (n - 1) * _GAP
-    top = 34                                   # 되돌아오는 곡선 자리
+    # 축이 한 바퀴 도는지는 축이 정한다(axes.py 의 back). 순환이 아닌 축에 곡선을 그리면
+    # 있지도 않은 되먹임이 있는 것처럼 읽혀서, 곡선도 그 자리도 함께 뺀다.
+    back = axes.BY_ID.get(axis_id, {}).get('back')
+    top = 34 if back else 12                   # 되돌아오는 곡선 자리
     H = top + _BH + (6 if mini else 58)   # 미니는 칸 밑선·풀이 글이 잘리던 자리
     h = ['<svg viewBox="0 0 %d %d" class="loopsvg%s" role="group" '
          'aria-label="%s">' % (W, H, ' is-mini' if mini else '', nl.esc(axis_id))]
-    # 되돌아오는 곡선 — 마지막 칸 위에서 첫 칸 위로
-    h.append('<path class="mflow lp-back" d="M%d %d C %d 2, %d 2, %d %d"/>'
-             % (W - _BW / 2, top, W - _BW / 2, _BW / 2, _BW / 2, top))
-    if not mini:
-        h.append('<text x="%d" y="12" text-anchor="middle" class="m-col">'
-                 '그 매출이 다시 조달을 정당화하나</text>' % (W / 2))
+    if back:
+        # 되돌아오는 곡선 — 마지막 칸 위에서 첫 칸 위로
+        h.append('<path class="mflow lp-back" d="M%d %d C %d 2, %d 2, %d %d"/>'
+                 % (W - _BW / 2, top, W - _BW / 2, _BW / 2, _BW / 2, top))
+        if not mini:
+            h.append('<text x="%d" y="12" text-anchor="middle" class="m-col">'
+                     '%s</text>' % (W / 2, nl.esc(back)))
     for i, (cid, name, gloss, _col) in enumerate(loop):
         x = i * (_BW + _GAP)
         key = '%s:%s' % (axis_id, cid)
@@ -410,7 +414,7 @@ def loop_svg(axis_id, active=None, mini=False):
         if i < n - 1:
             h.append('<path class="mflow" d="M%d %d L%d %d"/>'
                      % (x + _BW, top + _BH / 2, x + _BW + _GAP, top + _BH / 2))
-    if not mini:
+    if out and not mini:
         h.append('<text x="0" y="%d" class="m-col">고리 밖</text>' % (top + _BH + 24))
         for j, (cid, name, gloss, _col) in enumerate(out):
             x = 58 + j * (_BW + _GAP)
