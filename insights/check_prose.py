@@ -94,6 +94,7 @@ def check_density(text, where, actor=True):
             add('WARN', where, 'P11',
                 '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
     check_vague(text, where)
+    check_naming(text, where)
     check_figure(text, where)
     check_dead(text, where)
     # 노트는 화면에 안 나오는 중간물이라 「쪽·자리」 밀도는 보지 않는다
@@ -209,6 +210,36 @@ def check_vague(text, where):
         if DEGREE.search(s) and not re.search(r'\d', s):
             add('WARN', where, 'P13',
                 '정도만 말하고 값이 없다 — 숫자를 대거나 무엇에 견줘 큰지 쓴다: %s…' % s[:44])
+
+
+# P17 — 같은 회사를 한 글에서 두 이름으로 부른 자리. 「엔비디아」와 「NVIDIA」가 같은
+# 화면에 섞이면 읽는 눈이 매번 같은 회사인지 판정해야 한다. 2026-08-21 소셜 신호
+# 히스토리에서 NVIDIA 26회 / 엔비디아 23회, Meta 10 / 메타 14로 갈려 있었다.
+#
+# 로마자를 전부 막지는 않는다. 제품·저장소·영문 제목(「NVIDIA/nvbmc-docs」, 「Meta
+# Compute: Everyone…」, Intel 18A)은 그대로 두는 게 맞다. 그래서 **로마자 뒤에 곧바로
+# 한글이 오는 자리**만 센다 — 「NVIDIA 경쟁자」·「Meta 인프라팀」처럼 한국어 문장에서
+# 회사를 부른 자리다. 그 글이 한글 표기도 쓰고 있으면 둘 중 하나로 맞춘다.
+NAMES = {'NVIDIA': '엔비디아', 'Nvidia': '엔비디아', 'Google': '구글', 'Meta': '메타',
+         'Anthropic': '앤트로픽', 'Intel': '인텔', 'Amazon': '아마존', 'Apple': '애플',
+         'Microsoft': '마이크로소프트', 'Samsung': '삼성전자', 'DeepSeek': '딥시크',
+         'Huawei': '화웨이', 'Qualcomm': '퀄컴', 'Broadcom': '브로드컴'}
+
+
+WORD = chr(92) + 'b%s' + chr(92) + 'b'   # \b...\b — 낱말 경계
+
+
+def check_naming(text, where):
+    """P17 — 한 글에서 같은 회사를 로마자와 한글로 섞어 부른 자리."""
+    for roman, hangul in NAMES.items():
+        if hangul not in text:
+            continue
+        hits = re.findall(WORD % roman + '(?=[ ]?[가-힣])', text)
+        if hits:
+            m = re.search('.{0,24}' + WORD % roman + '[ ]?[가-힣]{0,12}', text)
+            add('WARN', where, 'P17',
+                '「%s」와 「%s」를 섞어 쓴다(%d회) — 한글 표기로 맞춘다: %s'
+                % (roman, hangul, len(hits), (m.group(0) if m else '').strip()))
 
 
 def check_bold(raw, where):
