@@ -52,8 +52,38 @@ SA = 'SemiAnalysis'
 # 계보는 말로만 늘어놓으면 순서가 안 박힌다. 마디와 마디 사이에 무엇이 있어서
 # 다음이 필요해졌는지를 그림으로 세운다. 인라인 SVG만 쓰고 클래스는 card_lib 공용이다.
 
+def _w(t):
+    """글자 폭을 보수적으로 어림한다(11px 기준). 한글은 한 자가 거의 정사각이고 라틴은 절반쯤이다.
+
+    브라우저로 재 볼 수 없는 자리라 넘침을 눈으로 잡을 수가 없다. 그래서 어림값으로 칸
+    예산을 넘으면 생성을 세운다 — 넘친 그림이 조용히 배포되는 것보다 낫다."""
+    w = 0.0
+    for ch in t:
+        if '가' <= ch <= '힣':      # 한글 음절
+            w += 11.2
+        elif ch == ' ':
+            w += 3.5
+        else:
+            w += 6.6
+    return w
+
+
+# 칸이 시작하는 x 와 다음 칸까지의 예산. 넘으면 옆 칸을 침범하거나 640 밖으로 나간다.
+_COLS = ((30, 168), (214, 218), (440, 192))
+
+
+def _fit(where, texts):
+    for (x, budget), t in zip(_COLS, texts):
+        if t and _w(t) > budget:
+            raise AssertionError('%s — x=%d 칸 예산 %dpx 를 넘는다(%.0fpx): %r'
+                                 % (where, x, budget, _w(t), t))
+
+
 def _chain(title, rows, note_l='이 마디가 한 일', note_r='그래서 다음이 필요해졌다'):
     """세로 사슬 그림. rows = [(마디 이름, 한 일, 다음이 필요해진 이유)]"""
+    _fit(title, ['', note_l, note_r])             # 머리말은 가운데·오른쪽 자리에 선다
+    for r in rows:
+        _fit(title, r)
     H = 40 + len(rows) * 52
     h = ['<svg viewBox="0 0 640 %d" role="img" aria-label="%s">' % (H, title)]
     h.append('<text class="t-lab" x="18" y="20">%s</text>' % title)
@@ -70,6 +100,17 @@ def _chain(title, rows, note_l='이 마디가 한 일', note_r='그래서 다음
             h.append('<path class="flow" d="M108 %d L 108 %d"/>' % (y + 40, y + 52))
     h.append('</svg>')
     return ''.join(h)
+
+
+def _fit_svg(svg, name):
+    """사슬틀을 안 쓰는 그림도 같은 못을 박는다 — text 끝이 viewBox 밖으로 나가면 세운다."""
+    import re as _re
+    W = int(_re.search(r'viewBox="0 0 (\d+)', svg).group(1))
+    for x, t in _re.findall(r'<text class="t-\w+" x="(\d+)"[^>]*>([^<]*)</text>', svg):
+        end = int(x) + _w(t)
+        if end > W - 4:
+            raise AssertionError('%s — 글자가 viewBox %d 밖으로 나간다(%.0fpx): %r'
+                                 % (name, W, end, t))
 
 
 FIG_ATTN = _chain('어텐션 — 갈아탄 네 마디', [
@@ -129,6 +170,8 @@ FIG_RL = '''<svg viewBox="0 0 640 200" role="img" aria-label="생성기와 RL �
   <text class="t-sm" x="24" y="168">동기식 — 배치를 다 끝낼 때까지 서로 기다린다. 대규모에서 낭비가 커 실용적이지 않다</text>
   <text class="t-bad" x="24" y="188">PipelineRL — 롤아웃이 도는 중에 가중치를 밀어 넣는다. 대가는 정책 지연이다</text>
 </svg>'''
+
+_fit_svg(FIG_RL, '학습 고리')
 
 
 # ── 섹션 ──────────────────────────────────────────────────────────────────
