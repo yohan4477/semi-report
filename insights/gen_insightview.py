@@ -357,9 +357,15 @@ MRG_CSS = '''
 '''
 
 def written_cells():
-    """이미 글이 선 칸. 아직 안 쓴 칸은 점선으로 그린다."""
+    """이미 글이 선 칸. 아직 안 쓴 칸은 점선으로 그린다.
+
+    고리 편만 보던 자리다. 그런데 어느 글이 어느 칸에 서는지는 글이 자기 frontmatter 의
+    cell: 로 밝히는 것이고(axes.py), 거기 「고리 편만」이라는 단서는 없다. 교차 인사이트가
+    칸에 서 있는데도 「아직 안 씀」으로 그려지던 것을 고친다."""
     out = {}
-    for p in sorted(glob.glob(os.path.join(paths.LOOP, '*.md'))):
+    for p in sorted(glob.glob(os.path.join(paths.LOOP, '*.md'))
+                    + glob.glob(os.path.join(paths.SYNTH, '*.md'))
+                    + glob.glob(os.path.join(paths.BRIEFS, '*.md'))):
         meta, _b = nl.parse_front(io.open(p, encoding='utf-8').read())
         if meta.get('axis') and meta.get('cell'):
             out['%s:%s' % (meta['axis'], meta['cell'])] = {

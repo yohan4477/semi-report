@@ -151,6 +151,21 @@ def main():
                 add('FAIL', 'L1', where,
                     '배제된 링크드인 게시물을 인용했다: %s L%d' % (b, ref['lines'][0]))
 
+    # 고리 편만 보면 칸이 겹쳐도 안 걸린다. 교차·브리핑도 axis:/cell: 로 칸에 설 수 있으니
+    # 그 글들도 같은 A1·A2 를 받는다. 링크드인 검사(L1·L2)는 고리 편에만 건다.
+    for f in old_files():
+        where = os.path.basename(f)
+        meta, _b = nl.parse_front(io.open(f, encoding='utf-8').read())
+        aid, cid = meta.get('axis', ''), meta.get('cell', '')
+        if not (aid or cid):
+            continue
+        if (aid, cid) not in known:
+            add('FAIL', 'A1', where, '축에 없는 자리다: axis=%r cell=%r' % (aid, cid))
+        key = (aid, cid)
+        if key in seen_cell:
+            add('FAIL', 'A2', where, '%s 와 같은 칸에 두 편이 섰다' % seen_cell[key])
+        seen_cell[key] = where
+
     # A3 — 옛 글 41장이 정확히 한 번씩 흡수됐나. 명단은 ROSTER 고정이다.
     dup = sorted(h for h in set(merged) if merged.count(h) > 1)
     ghost = sorted(h for h in merged if h not in ROSTER)
