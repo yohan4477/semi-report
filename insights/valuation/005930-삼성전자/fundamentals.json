@@ -1,20 +1,12 @@
 {
   "ticker": "005930",
-  "fetched_at": "2026-08-19T17:05:29.952721+09:00",
+  "fetched_at": "2026-08-21T17:08:03.855205+09:00",
   "sources": [
     "https://m.stock.naver.com/api/stock/005930/finance/quarter",
     "https://m.stock.naver.com/api/stock/005930/finance/annual"
   ],
   "unit": "억원",
   "quarters": [
-    {
-      "key": "202503",
-      "label": "2025.03",
-      "consensus": false,
-      "revenue_100m": 791405,
-      "operating_profit_100m": 66853,
-      "net_income_100m": 82229
-    },
     {
       "key": "202506",
       "label": "2025.06",
@@ -50,10 +42,18 @@
     {
       "key": "202606",
       "label": "2026.06",
+      "consensus": false,
+      "revenue_100m": 1714995,
+      "operating_profit_100m": 894924,
+      "net_income_100m": 716245
+    },
+    {
+      "key": "202609",
+      "label": "2026.09",
       "consensus": true,
-      "revenue_100m": 1738644,
-      "operating_profit_100m": 850494,
-      "net_income_100m": 734933
+      "revenue_100m": 2067408,
+      "operating_profit_100m": 1139415,
+      "net_income_100m": 962798
     }
   ],
   "annuals": [
