@@ -34,6 +34,11 @@ D_IMAX = blob(NL + 'ai_infra/compute/[251009] InferenceMAX - 오픈소스 추론
 D_IX2 = blob(NL + 'ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md')
 D_AMD = blob(NL + 'ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md')
 D_TILE = blob(NL + 'ai_infra/compute/[260810] 엔비디아 GPU의 초고속 상호작용성 - TileRT InferenceX.md')
+D_RLSCALE = blob(NL + 'ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, '
+                      '데이터 스케일링.md')
+D_RLENV = blob(NL + 'ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 '
+                    '아키텍처.md')
+D_RLSYS = blob(NL + 'ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md')
 
 SA = 'SemiAnalysis'
 
@@ -44,6 +49,8 @@ SEC_MOE = ('sec-moe', '02', '전문가 — 켤 곳을 줄이고 옮길 것을 �
            '전문가를 잘게 쪼갤수록 통신이 병목이 되고, 그 통신을 다시 깎아 온 과정')
 SEC_DEC = ('sec-dec', '03', '디코딩 — 한 번에 몇 토큰을 내나',
            '한 스텝에 한 토큰이라는 규칙을 깬 방법과, 그 방법이 MoE에서 깎이는 이유')
+SEC_TRAIN = ('sec-train', '04', '학습 — 무엇으로 가르쳐 왔나',
+             '채점할 수 있는 것만 가르치던 데서 채점표를 만드는 산업까지, 그리고 채점표의 허점')
 
 
 CARDS = [{
