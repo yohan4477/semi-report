@@ -167,33 +167,6 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
 .cfsep{flex:none;width:1px;height:14px;background:var(--line);margin:0 3px}
 .morerow{font-size:12.5px;font-weight:700;color:var(--accent);padding:12px 0 4px;cursor:pointer;user-select:none}
 
-  /* 흐름 지도 */
-  .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
-  .ftile{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fff;cursor:pointer;
-    transition:border-color .15s,box-shadow .15s}
-  .ftile:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05)}
-  .fn{font-size:14.5px;font-weight:800;color:var(--ink);display:flex;align-items:baseline;gap:7px}
-  .fnum{font-size:11px;font-weight:800;color:var(--faint);letter-spacing:.04em}
-  .fg{margin-top:3px;font-size:11.5px;color:var(--faint);line-height:1.5}
-  .fm{margin-top:9px;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700}
-  .fc{color:var(--sub)}
-  .fr{color:var(--accent)}
-  .ftabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}
-  .ftab{font-size:12px;font-weight:750;padding:5px 10px;border-radius:999px;border:1px solid var(--line);
-    color:var(--sub);cursor:pointer;background:#fff}
-  .ftab.on{border-color:var(--accent);color:var(--accent);background:rgba(37,99,235,.06)}
-  .fcnt{margin:8px 0 4px;font-size:11.5px;color:var(--faint)}
-  .fev{border-top:1px solid var(--line);padding:11px 0}
-  .ftop{display:flex;align-items:flex-start;gap:8px;cursor:pointer}
-  .fd{flex:none;font-size:11.5px;font-weight:800;color:var(--faint);padding-top:1px;
-    font-variant-numeric:tabular-nums}
-  .ftop .lbl{flex:1;font-size:13px;line-height:1.55;color:var(--ink);font-weight:600}
-  .fcar{flex:none;color:var(--faint);font-size:12px}
-  .fents{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0 34px}
-  .ftag{font-size:11px;font-weight:750;padding:2px 7px;border-radius:999px;border:1px solid var(--line);cursor:pointer}
-  .fev.on{background:rgba(0,0,0,.015);border-radius:10px;padding:11px 8px}
-  .fev .tree{margin:9px 0 0 34px}
-  .fev .orig{display:inline-block;margin:8px 0 0 34px;font-size:11.5px;font-weight:700;color:var(--accent)}
   /* 한글은 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다 */
   body,h1,h2,h3{word-break:keep-all;overflow-wrap:break-word}
 </style>
@@ -207,7 +180,6 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
       <button data-lens="brief">브리핑</button>
       <button data-lens="ent">종목</button>
       <button data-lens="thesis">논제</button>
-      <button data-lens="flow">흐름</button>
     </div>
   </div>
   <div id="views"></div>
@@ -323,7 +295,6 @@ const groupOf={};GROUPS.forEach(([g,l])=>l.forEach(t=>groupOf[t]=g));
 const gOpen=new Set([...GROUPS.map(g=>g[0]),G_ETC]);
 
 const state={view:'home',lens:'brief',ent:null,th:null,dir:new Set(['+','-','0']),major:false,q:'',eq:'',chainSel:null,
-  fStep:null,fMonth:null,fOpen:new Set(),
   recent:(()=>{try{return JSON.parse(localStorage.getItem('tl_recent')||'[]')}catch(e){return[]}})(),
   moreG:new Set(),openG:gOpen};
 const views=document.getElementById('views');
@@ -463,77 +434,6 @@ function chainStrip(t){
     <div class="cflow">${nodes}</div><div class="cnote">${note}</div></div>`;
 }
 
-
-/* ---------- 흐름 지도 (사슬 단계 -> 시기 -> 신호 -> 영향) ----------
-   회계사 대시보드의 드라이버 지도와 같은 네 겹이다. 거기가 회사·연도·방법·값이면
-   여기는 사슬 단계·월·신호·그 신호가 무엇을 어디로 밀었나다. 첫 화면은 타일이고,
-   단계를 고르기 전에는 신호를 쏟지 않는다. */
-const FSTEPS=[...CHAIN,'전력',G_ETC];
-const FGLOSS={'파운드리·장비·소재':'웨이퍼에 새기는 쪽','메모리':'HBM과 D램','칩·컴퓨트':'가속기와 그 소프트웨어',
-  '네트워킹·서버·부품':'칩 밖에서 잇는 부품','클라우드·DC':'짓고 굴리는 쪽','AI 랩·모델':'토큰을 파는 쪽',
-  '전력':'꽂을 자리와 그 값','기타':'사슬에 못 붙인 신호'};
-function flatBr(bs){const out=[];(function w(a){(a||[]).forEach(b=>{out.push(b);w(b.k);});})(bs);return out;}
-function fStepOf(e){
-  const flat=flatBr(IMPACTS[e.idx]);
-  const c={};let best=null,bn=0;
-  flat.forEach(b=>{const g=groupOf[b.t];if(!g)return;
-    c[g]=(c[g]||0)+(b.m>=3?3:b.m>=2?2:1);
-    if(c[g]>bn){bn=c[g];best=g;}});
-  return best||G_ETC;
-}
-const fBucket={};
-EVENTS.forEach(e=>{if(!(IMPACTS[e.idx]||[]).length)return;
-  const s=fStepOf(e);(fBucket[s]=fBucket[s]||[]).push(e);});
-Object.values(fBucket).forEach(a=>a.sort((x,y)=>x.date<y.date?1:-1));
-function fMonths(step){return [...new Set((fBucket[step]||[]).map(e=>e.date.slice(0,7)))].sort().reverse();}
-function fTiles(){
-  let h='<div class="sec"><div class="cap">흐름 지도 — 사슬 단계부터 고른다 <span class="aib">영향 트리로 묶었어요</span></div>';
-  h+='<div class="fgrid">';
-  FSTEPS.forEach((s,i)=>{
-    const list=fBucket[s]||[];if(!list.length)return;
-    const rec=list.filter(e=>e.date.slice(0,10)>=recentK).length;
-    const net=list.slice(0,20).reduce((n,e)=>n+netOf(flatBr(IMPACTS[e.idx])),0);
-    const dd=net>0?'+':net<0?'-':'0';
-    h+='<div class="ftile" data-fs="'+esc(s)+'"><div class="fn"><span class="fnum">'+String(i+1).padStart(2,'0')+'</span>'+esc(CHAIN_SHORT[s]||s)+'</div>'
-      +'<div class="fg">'+esc(FGLOSS[s]||'')+'</div>'
-      +'<div class="fm"><span class="fc">'+list.length+'건</span>'+(rec?'<span class="fr">최근 2주 '+rec+'</span>':'')
-      +'<span class="'+cls(dd)+'">'+(net>0?'▲':net<0?'▼':'—')+' '+Math.abs(net)+'</span></div></div>';});
-  return h+'</div></div>';
-}
-function fStrip(step){
-  const nodes=CHAIN.map(c=>'<span class="cnode'+(c===step?' on':'')+'" data-fs="'+esc(c)+'">'+CHAIN_SHORT[c]+'</span>').join('<span class="carr">→</span>');
-  const side=['전력',G_ETC].filter(s=>(fBucket[s]||[]).length)
-    .map(s=>'<span class="cnode'+(s===step?' on':'')+'" data-fs="'+esc(s)+'">'+s+'</span>').join('');
-  return '<div class="cflow">'+nodes+'<span class="cfsep"></span>'+side+'</div>';
-}
-function fRow(e){
-  const bs=(IMPACTS[e.idx]||[]).filter(brShow);
-  const open=state.fOpen.has(e.idx);
-  const gly=bs.map(b=>'<span class="'+cls(b.d)+'">'+sym(b.d)+'</span>').slice(0,4).join('');
-  const head=flatBr(bs).slice(0,3).map(b=>'<span class="ftag '+cls(b.d)+'" data-ent="'+esc(b.t)+'">'+esc(b.t)+'</span>').join('');
-  let h='<div class="fev'+(open?' on':'')+'"><div class="ftop" data-fev="'+e.idx+'">'
-    +'<span class="fd">'+e.date.slice(5,10).replace('-','.')+'</span>'
-    +'<span class="lbl">'+esc(e.label)+'</span><span class="gly">'+gly+'</span>'
-    +'<span class="fcar">'+(open?'▴':'▾')+'</span></div>'
-    +'<div class="fents">'+head+'</div>';
-  if(open) h+='<div class="tree">'+bs.map(b=>nodeHtml(b,null)).join('')+'</div>'
-    +'<a class="orig" href="'+esc(e.url)+'" target="_blank" rel="noopener">원문 ↗</a>';
-  return h+'</div>';
-}
-function secFlow(){
-  if(!state.fStep) return fTiles();
-  const step=state.fStep, months=fMonths(step);
-  const m=months.includes(state.fMonth)?state.fMonth:months[0];
-  const list=(fBucket[step]||[]).filter(e=>e.date.slice(0,7)===m);
-  let h='<div class="sec"><div class="cap">'+esc(CHAIN_SHORT[step]||step)+' — '+esc(FGLOSS[step]||'')
-    +' <span style="float:right"><span class="cf" data-fs="">← 단계 고르기</span></span></div>';
-  h+=fStrip(step);
-  h+='<div class="ftabs">'+months.map(x=>'<span class="ftab'+(x===m?' on':'')+'" data-fm="'+x+'">'+x.slice(2).replace('-','.')+'</span>').join('')+'</div>';
-  h+='<div class="fcnt">'+list.length+'건 · 누르면 그 신호가 무엇을 어디로 밀었는지 펼쳐집니다</div>';
-  h+=list.map(fRow).join('');
-  return h+'</div>';
-}
-
 /* ---------- 엔티티 페이지 ---------- */
 function entPage(t){
   const a=ents[t],net=netOf(a);
@@ -615,7 +515,6 @@ function render(){
   if(state.view==='home'){title.textContent='Yomianalysis';
     if(state.lens==='brief')views.innerHTML=secSignals()+secFeed();
     else if(state.lens==='ent')views.innerHTML=secEnts();
-    else if(state.lens==='flow')views.innerHTML=secFlow();
     else views.innerHTML=secTheses();
     syncLens();}
   else if(state.view==='ent'){title.textContent=state.ent;views.innerHTML=entPage(state.ent);}
@@ -639,11 +538,6 @@ function bind(){
   views.querySelectorAll('.cf[data-cs]').forEach(el=>el.onclick=()=>{const v=el.dataset.cs;
     state.chainSel=v===''?null:v;state.moreG.clear();render();});
   views.querySelectorAll('.morerow[data-more]').forEach(el=>el.onclick=()=>{state.moreG.add(el.dataset.more);render();});
-  views.querySelectorAll('[data-fs]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
-    const v=el.dataset.fs;state.fStep=v===''?null:v;state.fMonth=null;state.fOpen.clear();render();scrollTo(0,0);});
-  views.querySelectorAll('.ftab[data-fm]').forEach(el=>el.onclick=()=>{state.fMonth=el.dataset.fm;state.fOpen.clear();render();});
-  views.querySelectorAll('.ftop[data-fev]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
-    const i=+el.dataset.fev;state.fOpen.has(i)?state.fOpen.delete(i):state.fOpen.add(i);render();});
   const eq=document.getElementById('eq');if(eq)eq.oninput=e=>{state.eq=e.target.value.trim().toLowerCase();
     render();const n=document.getElementById('eq');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}};
   const q=document.getElementById('q');if(q){q.oninput=e=>{state.q=e.target.value.trim().toLowerCase();
@@ -659,9 +553,7 @@ function syncLens(){document.querySelectorAll('#lens button').forEach(b=>
   b.classList.toggle('on',b.dataset.lens===state.lens));}
 document.querySelectorAll('#lens button').forEach(b=>b.onclick=()=>{
   state.lens=b.dataset.lens;state.view='home';state.ent=null;state.th=null;render();scrollTo(0,0);});
-document.getElementById('back').onclick=()=>{
-  if(state.view==='home'&&state.lens==='flow'&&state.fStep){state.fStep=null;state.fOpen.clear();render();return;}
-  state.view='home';state.ent=null;state.th=null;render();};
+document.getElementById('back').onclick=()=>{state.view='home';state.ent=null;state.th=null;render();};
 document.getElementById('stamp').textContent=`${maxDate.slice(0,10)} 기준`;
 render();
 </script>
