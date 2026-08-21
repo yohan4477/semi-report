@@ -46,12 +46,14 @@ def splice(path, anchor, block, indent=''):
 def main():
     notes = json.load(io.open(NOTES, encoding='utf-8'))
     counts = day_counts(io.open(HIST, encoding='utf-8').read())
-    # 최신 회차도 접어서 낸다(2026-08-21). 롤업은 첫 화면을 먹는 롤업이지 본문이 아니다 —
-    # 접어도 머리줄에 종류·헤드라인·기간·건수가 그대로 보이므로 무엇인지는 알 수 있다.
-    # 접힌 요약 한 줄(show_desc)은 계속 뺀다 — 헤드라인과 같은 말을 두 번 읽게 된다.
-    block = rl.build(notes, counts, unit='건', open_current=False, show_desc=False)
-    splice(HIST, '  <div class="tabbar">', block, '  ')
-    splice(DASH, '  <section id="social-section"', block, '  ')
+    # 두 장의 기본값이 다르다(2026-08-21).
+    #   · 소셜 신호 히스토리 — 접는다. 여기는 아카이브라 첫 화면이 타임라인이어야 한다
+    #   · SemiAnalysis 대시보드 — 펼친다. 여기서는 롤업이 그 주의 요지 노릇을 한다
+    # 접힌 요약 한 줄(show_desc)은 두 장 모두 뺀다 — 헤드라인과 같은 말을 두 번 읽게 된다.
+    splice(HIST, '  <div class="tabbar">',
+           rl.build(notes, counts, unit='건', open_current=False, show_desc=False), '  ')
+    splice(DASH, '  <section id="social-section"',
+           rl.build(notes, counts, unit='건', open_current=True, show_desc=False), '  ')
     print('reports: %d' % len(notes['reports']))
 
 
