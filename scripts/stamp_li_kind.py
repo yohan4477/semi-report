@@ -45,9 +45,12 @@ CSS = """/*TLOG-START*/
   border-radius:50%; background:var(--sub); box-shadow:0 0 0 3px var(--bg);}
 .day .row:not(:has(> .kind))::before{width:9px; height:9px; left:-22px; top:14px;
   background:var(--accent);}
-.row > .d{order:-2; flex:none; font-variant-numeric:tabular-nums; font-weight:850;
+.row > .d{order:-3; flex:none; font-variant-numeric:tabular-nums; font-weight:850;
   font-size:.82rem; color:var(--ink); margin-top:1px;}
-.row > .kind{order:-1; flex:none; font-size:.68rem; font-weight:850; letter-spacing:.02em;
+.day a.rowmain{flex-basis:100%;}
+.row > .tt{order:-1; flex:1 1 auto; min-width:0; font-size:.92rem; font-weight:800;
+  color:var(--ink); line-height:1.45; overflow-wrap:anywhere;}
+.row > .kind{order:-2; flex:none; font-size:.68rem; font-weight:850; letter-spacing:.02em;
   padding:1px 8px; border-radius:999px; border:1px solid var(--line); color:var(--sub);
   margin-top:2px; white-space:nowrap;}
 .row > .kind.k-뉴스레터{border-color:var(--accent); color:var(--accent);}
