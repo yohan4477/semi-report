@@ -170,7 +170,7 @@ def one(meta, body, tab, kind, cells=()):
     minimap = ''
     if meta.get('axis') and meta.get('cell'):
         minimap = ('<div class="minimap">%s</div>'
-                   % loop_svg(meta['axis'], active='%s:%s' % (meta['axis'], meta['cell']),
+                   % axis_svg(meta['axis'], active='%s:%s' % (meta['axis'], meta['cell']),
                               mini=True))
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
     # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
@@ -354,6 +354,26 @@ MRG_CSS = '''
   .mcell.is-off{opacity:.35}
   .mcell.is-on rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
   .minimap{margin:0 0 10px}
+
+  /* merge 축 — 인과선은 근거가 붙는다. 나머지 mflow(회색 실선)와 색으로 가른다 */
+  .causesvg,.flowsvg{width:100%;height:auto;display:block}
+  .ce{stroke:var(--accent);stroke-width:1.6}
+  .ce-sg{font-size:11px;font-weight:850;fill:var(--accent)}
+  .cz-t{margin:16px 0 6px;font-size:12px;font-weight:800;color:var(--faint);
+    text-transform:uppercase;letter-spacing:.04em}
+  .flow-dot{fill:var(--faint)}
+  .flow-dot-on{fill:var(--accent)}
+  .flow-stop{cursor:pointer}
+  .flow-stop text{fill:var(--sub)}
+  .flow-stop:hover text{fill:var(--accent)}
+
+  /* 축 탭 — 축이 둘 이상일 때만 선다 */
+  .axtabs{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+  .axtabs button{font:inherit;font-size:12.5px;font-weight:700;padding:6px 13px;
+    border:1px solid var(--line);border-radius:999px;background:transparent;
+    color:var(--sub);cursor:pointer}
+  .axtabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+  .ax-pane[hidden]{display:none}
 '''
 
 def written_cells():
@@ -439,17 +459,174 @@ def loop_svg(axis_id, active=None, mini=False):
     return ''.join(h)
 
 
+_CGEO = {'outer': (8, 128, 44, 10), 'price': (258, 150, 44, 11), 'merge': (486, 158, 56, 12)}
+_CCOLT = (('outer', '바깥에서 오는 것'), ('price', '값이 매겨지는 곳'), ('merge', '회사 안으로'))
+
+
+def _note_url(note, line=None):
+    """근거 노트로 가는 주소. edges는 줄 번호까지, flow는 노트 파일까지만 가리킨다."""
+    import urllib.parse
+    rel = 'insights/notes/%s' % note
+    url = nl.BLOB + urllib.parse.quote(rel)
+    return url + ('#L%d' % line if line else '')
+
+
+def _wrap2(s, n):
+    """칸 라벨을 두 줄까지만 접는다. loop_svg 쪽은 칸이 넓어 이 접기가 필요 없었다."""
+    if len(s) <= n:
+        return [s]
+    cut = s.rfind(' ', 0, n + 1)
+    if cut < n // 2:
+        cut = n
+    head, tail = s[:cut].rstrip(), s[cut:].lstrip()
+    return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
+
+
+def cause_svg(axis_id, active=None):
+    """합류(merge) 축 한 장. 바깥 → 값 → 회사 안으로, 근거가 있는 짝만 선을 긋는다.
+
+    설계 docs/superpowers/specs/2026-08-21-돈값-축-design.md 「인과선은 근거가 있는
+    것만 긋는다」. axes.edges_of()에 없는 짝은 나란히 있어도 선을 안 긋는다."""
+    rows = axes.cells(axis_id)
+    bycol = {}
+    for cid, name, gloss, col in rows:
+        bycol.setdefault(col, []).append((cid, name, gloss))
+    done = written_cells()
+    tot = {}
+    for col, _t in _CCOLT:
+        _x, _w, bh, _n = _CGEO[col]
+        k = len(bycol.get(col, []))
+        tot[col] = k * bh + (k - 1) * 16 if k else 0
+    span = max(tot.values()) if tot else 0
+    cy = 40 + span / 2.0
+    H = int(40 + span + 26)
+    W = 660
+    h = ['<svg viewBox="0 0 %d %d" class="causesvg" role="group" aria-label="%s">'
+         % (W, H, nl.esc(axis_id))]
+    for col, title in _CCOLT:
+        x, w, _bh, _n = _CGEO[col]
+        h.append('<text x="%.0f" y="16" text-anchor="middle" class="m-col">%s</text>'
+                 % (x + w / 2.0, nl.esc(title)))
+    tops = {}
+    for col, _title in _CCOLT:
+        x, w, bh, cw = _CGEO[col]
+        entries = bycol.get(col, [])
+        y0 = cy - tot[col] / 2.0
+        for i, (cid, name, gloss) in enumerate(entries):
+            y = y0 + i * (bh + 16)
+            tops[cid] = (x, y, w, bh)
+            key = '%s:%s' % (axis_id, cid)
+            got = done.get(key)
+            cls = 'mcell'
+            if col == 'merge':
+                cls += ' is-merge'
+            if active is not None:
+                cls += ' is-on' if key == active else ' is-off'
+            if not got:
+                cls += ' is-todo'
+            h.append('<g class="%s" data-cell="%s" data-label="%s" role="button" tabindex="0">'
+                     % (cls, nl.esc(key), nl.esc(name)))
+            h.append('<title>%s — %s</title>'
+                     % (nl.esc(name), nl.esc(gloss if got else '아직 안 씀')))
+            h.append('<rect x="%.0f" y="%.0f" width="%.0f" height="%.0f" rx="9"/>'
+                     % (x, y, w, bh))
+            lines = _wrap2(name, cw)
+            ty = y + bh / 2.0 - (len(lines) - 1) * 7 + 4
+            for j, line in enumerate(lines):
+                h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="m-lab">%s</text>'
+                         % (x + w / 2.0, ty + j * 14, nl.esc(line)))
+            h.append('</g>')
+    for src, dst, sign, why, note, line in axes.edges_of(axis_id):
+        if src not in tops or dst not in tops:
+            continue    # 검사기(A5)가 잡는다 — 그림은 조용히 건너뛴다
+        sx, sy, sw, sh_ = tops[src]
+        dx, dy, dw, dh_ = tops[dst]
+        if sx <= dx:
+            x1, y1 = sx + sw, sy + sh_ / 2.0
+            x2, y2 = dx, dy + dh_ / 2.0
+        else:
+            x1, y1 = sx, sy + sh_ / 2.0
+            x2, y2 = dx + dw, dy + dh_ / 2.0
+        mx, my = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+        h.append('<a href="%s" target="_blank" rel="noopener">' % _note_url(note, line))
+        h.append('<title>%s — %s L%d</title>' % (nl.esc(why), nl.esc(note), line))
+        h.append('<path class="mflow ce" data-why="%s" data-src="%s#L%d" '
+                 'd="M%.0f %.0f L%.0f %.0f"/>'
+                 % (nl.esc(why), nl.esc(note), line, x1, y1, x2, y2))
+        h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="ce-sg">%s</text>'
+                 % (mx, my - 4, nl.esc(sign)))
+        h.append('</a>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+def flow_svg(axis_id):
+    """그 축이 언제 그렇게 봤나 — 정거장은 견해만 세운다(사실 보도는 안 세운다).
+
+    scratchpad/gen_leesunyeop_dashboard.py의 flow_svg를 참고하되, 정거장이 노트를
+    가리킨다는 점이 다르다 — 점을 누르면 그 노트로 간다."""
+    stops = axes.flow_of(axis_id)
+    if not stops:
+        return ''
+    n = len(stops)
+    W, y = 640.0, 52.0
+    pad = W / (2 * n)
+    xs = [pad + (W - 2 * pad) * i / (n - 1) for i in range(n)] if n > 1 else [W / 2.0]
+    wrap_at = max(6, int(52 / n))
+    h = ['<svg viewBox="0 0 640 112" class="flowsvg" role="img" aria-label="언제 그렇게 봤나">']
+    if n > 1:
+        h.append('<line x1="%.0f" y1="%.0f" x2="%.0f" y2="%.0f" class="mflow"/>'
+                 % (xs[0], y, xs[-1], y))
+    for i, (d, label, note) in enumerate(stops):
+        x = xs[i]
+        last = (i == n - 1)
+        h.append('<a href="%s" target="_blank" rel="noopener" class="flow-stop">'
+                 % _note_url(note))
+        h.append('<title>%s — %s</title>' % (nl.esc(label), nl.esc(note)))
+        h.append('<circle cx="%.0f" cy="%.0f" r="%d" class="%s"/>'
+                 % (x, y, 6 if last else 4, 'flow-dot-on' if last else 'flow-dot'))
+        h.append('<text x="%.0f" y="34" text-anchor="middle" class="m-lab" '
+                 'style="font-size:10.5px">%s</text>' % (x, nl.esc(d)))
+        for j, line in enumerate(_wrap2(label, wrap_at)):
+            h.append('<text x="%.0f" y="%d" text-anchor="middle" class="lp-sub" '
+                     'style="font-size:10.5px">%s</text>' % (x, 74 + j * 13, nl.esc(line)))
+        h.append('</a>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+def axis_svg(axis_id, active=None, mini=False):
+    """모양별로 알맞은 렌더러로 넘긴다 — loop|line은 loop_svg, merge는 cause_svg."""
+    if axes.shape_of(axis_id) == 'merge':
+        return cause_svg(axis_id, active=active)
+    return loop_svg(axis_id, active=active, mini=mini)
+
+
 def axis_layer():
     """페이지 맨 위 한 장. 「지금 무슨 일이 벌어지는 중인가」를 말하는 자리다.
 
-    JS(TAB_JS)는 칸 클릭을 `.mg-b` 컨테이너에서 위임받는다(옛 합류도 프로토타입 이후
+    JS(TAB_JS)는 칸 클릭을 각 `.mg-b` 컨테이너에서 위임받는다(옛 합류도 프로토타입 이후
     그대로다) — svg를 `.mg-b`로 감싸지 않으면 칸을 눌러도 아무 일도 안 일어난다.
+    축이 둘 이상이면 축 탭으로 고른다. 기본은 첫 축이다.
     """
-    a = axes.AXES[0]
-    return ('<section class="axis"><p class="ax-t">%s</p><p class="ax-l">%s</p>'
-            '<div class="mg-b">%s</div>'
-            '<p class="mg-n">칸을 누르면 그 편으로 갑니다.</p></section>'
-            % (nl.esc(a['title']), nl.esc(a['lede']), loop_svg(a['id'])))
+    panes = []
+    tabs = []
+    for i, a in enumerate(axes.AXES):
+        aid = a['id']
+        tabs.append('<button type="button" data-axis="%s" aria-pressed="%s">%s</button>'
+                    % (nl.esc(aid), 'true' if i == 0 else 'false', nl.esc(a['title'])))
+        extra = ''
+        if axes.shape_of(aid) == 'merge':
+            fw = flow_svg(aid)
+            if fw:
+                extra = '<p class="cz-t">언제 그렇게 봤나</p>%s' % fw
+        panes.append('<div class="ax-pane" data-axis="%s"%s><p class="ax-t">%s</p>'
+                     '<p class="ax-l">%s</p><div class="mg-b">%s</div>%s'
+                     '<p class="mg-n">칸을 누르면 그 편으로 갑니다.</p></div>'
+                     % (nl.esc(aid), '' if i == 0 else ' hidden',
+                        nl.esc(a['title']), nl.esc(a['lede']), axis_svg(aid), extra))
+    tabbar = '<div class="axtabs">%s</div>' % ''.join(tabs) if len(axes.AXES) > 1 else ''
+    return '<section class="axis">%s%s</section>' % (tabbar, ''.join(panes))
 
 
 def sectiles(bysec, bykindsec):
@@ -722,15 +899,19 @@ TAB_JS = '''<script>
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
   // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 주제로 나누고,
   // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
-  var mbar=document.querySelector('.mg-b');
+  // 축이 둘 이상이면 축마다 .mg-b가 하나씩이다(안 보이는 축도 DOM에는 있다) — 전부에서
+  // 칸 클릭을 받는다.
+  var mbars=document.querySelectorAll('.mg-b');
   var kind='all', sec=null, cell=null;
   var names={};
   if(sbar) sbar.querySelectorAll('button').forEach(function(b){
     var t=b.querySelector('.st-t');
     names[b.dataset.sec] = t ? t.textContent : b.dataset.sec;
   });
-  if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
-    names[g.dataset.cell] = g.dataset.label || g.dataset.cell;
+  mbars.forEach(function(mbar){
+    mbar.querySelectorAll('.mcell').forEach(function(g){
+      names[g.dataset.cell] = g.dataset.label || g.dataset.cell;
+    });
   });
   function apply(){
     var incell = (cell!==null);
@@ -759,8 +940,10 @@ TAB_JS = '''<script>
     document.querySelectorAll('.kgroup').forEach(function(g){
       g.hidden = g.querySelectorAll('.isec:not([hidden])').length===0;
     });
-    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
-      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    mbars.forEach(function(mbar){
+      mbar.querySelectorAll('.mcell').forEach(function(g){
+        g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+      });
     });
     if(sbar) sbar.hidden = !picking;
     if(back){
@@ -812,7 +995,7 @@ TAB_JS = '''<script>
     var first=document.querySelector('.topsec:not([hidden]), .isec:not([hidden])');
     if(cell && first) first.scrollIntoView({behavior:'smooth', block:'start'});
   }
-  if(mbar){
+  mbars.forEach(function(mbar){
     mbar.addEventListener('click', function(e){
       var g=e.target.closest('.mcell'); if(!g) return;
       pickCell(g);
@@ -822,7 +1005,20 @@ TAB_JS = '''<script>
       var g=e.target.closest('.mcell'); if(!g) return;
       e.preventDefault(); pickCell(g);
     });
-  }
+  });
+  // 축 탭 — 축이 둘 이상일 때만 선다. 칸 고르기(cell)와 달리 히스토리에 안 쌓는다,
+  // 같은 층 안의 전환이라 관문이 아니다(UI 규약).
+  var axbar=document.querySelector('.axtabs');
+  if(axbar) axbar.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    var want=b.dataset.axis;
+    axbar.querySelectorAll('button').forEach(function(b2){
+      b2.setAttribute('aria-pressed', String(b2.dataset.axis===want));
+    });
+    document.querySelectorAll('.ax-pane').forEach(function(p){
+      p.hidden = (p.dataset.axis!==want);
+    });
+  });
   // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「주제 고르기」로
   // 돌아가지 않고 페이지째 나간다 — 잠긴 장에서는 「비공개 자료」로 튕겨 나간다.
   var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다

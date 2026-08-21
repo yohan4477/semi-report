@@ -47,3 +47,81 @@ def test_cell_of_returns_name_and_gloss():
 
 def test_cell_of_unknown_is_none():
     assert axes.cell_of('money', 'nope') is None
+
+
+# shape 없는 기존 축은 loop로 읽힌다
+def test_money_shape_defaults_to_loop():
+    assert axes.shape_of('money') == 'loop'
+
+
+def test_measure_shape_defaults_to_loop():
+    assert axes.shape_of('measure') == 'loop'
+
+
+def test_edges_of_and_flow_of_empty_for_axes_without_them():
+    assert axes.edges_of('money') == []
+    assert axes.flow_of('money') == []
+
+
+# 가짜 merge 축 — rates 축 자료는 별도 커밋에서 들어온다. 자료구조만 여기서 시험한다.
+_FAKE_MERGE = {
+    'id': 'zz_fake_merge',
+    'shape': 'merge',
+    'title': '가짜 합류 축',
+    'lede': '시험용',
+    'outer': [('a1', '바깥1', '바깥1 설명'), ('a2', '바깥2', '바깥2 설명')],
+    'price': [('p1', '값1', '값1 설명')],
+    'merge': ('m1', '합류', '합류 설명'),
+    'edges': [('a1', 'p1', '+', '근거 한 줄', '가짜노트.md', 3)],
+    'flow': [('01-01', '첫 정거장', '가짜노트.md')],
+}
+
+
+def _with_fake_axis():
+    axes.AXES.append(_FAKE_MERGE)
+    axes.BY_ID['zz_fake_merge'] = _FAKE_MERGE
+
+
+def _without_fake_axis():
+    if _FAKE_MERGE in axes.AXES:
+        axes.AXES.remove(_FAKE_MERGE)
+    axes.BY_ID.pop('zz_fake_merge', None)
+
+
+def test_merge_axis_cells_has_outer_price_merge_columns():
+    _with_fake_axis()
+    try:
+        rows = axes.cells('zz_fake_merge')
+        cols = [r[3] for r in rows]
+        assert cols == ['outer', 'outer', 'price', 'merge']
+        ids = [r[0] for r in rows]
+        assert ids == ['a1', 'a2', 'p1', 'm1']
+    finally:
+        _without_fake_axis()
+
+
+def test_merge_axis_cell_of_and_all_cell_ids():
+    _with_fake_axis()
+    try:
+        name, gloss = axes.cell_of('zz_fake_merge', 'm1')
+        assert name == '합류'
+        assert gloss
+        assert ('zz_fake_merge', 'm1') in axes.all_cell_ids()
+        assert ('zz_fake_merge', 'a1') in axes.all_cell_ids()
+    finally:
+        _without_fake_axis()
+
+
+def test_merge_axis_shape_edges_flow_helpers():
+    _with_fake_axis()
+    try:
+        assert axes.shape_of('zz_fake_merge') == 'merge'
+        assert axes.edges_of('zz_fake_merge') == [
+            ('a1', 'p1', '+', '근거 한 줄', '가짜노트.md', 3)]
+        assert axes.flow_of('zz_fake_merge') == [('01-01', '첫 정거장', '가짜노트.md')]
+    finally:
+        _without_fake_axis()
+
+
+def test_shape_of_unknown_axis_defaults_to_loop():
+    assert axes.shape_of('nope-no-such-axis') == 'loop'

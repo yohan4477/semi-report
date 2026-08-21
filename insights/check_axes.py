@@ -4,11 +4,18 @@
   A1  글이 밝힌 axis/cell 이 축에 없다
   A2  한 축 안에서 같은 글이 두 칸에 섰다
   A3  옛 글 41장이 여덟 편에 정확히 한 번씩 안 들어갔다 (이행 중에는 WARN)
+  A5  merge 축 edges 의 양끝이 그 축의 칸 id 가 아니다
+  A6  edges 의 근거 노트 파일이 없거나 그 줄이 파일 범위 밖이다
+  A7  merge 칸에 선 글이 하나도 없다(합류점이 없으면 축이 아니다)
+  A8  flow 정거장이 가리키는 노트 파일이 없다
+  A9  shape 가 loop·line·merge 중 하나가 아니다
   S1  충돌을 다루는 절이 있는데 「누가 더 가까이서 봤나」가 없다 (당분간 WARN)
   L1  배제된 링크드인 게시물의 줄을 인용했다
   L2  링크드인 인용의 기준일을 못 읽는다
 
   py -3.13 insights/check_axes.py
+
+  설계: docs/superpowers/specs/2026-08-21-돈값-축-design.md 「검사」절.
 """
 import glob
 import io
@@ -113,6 +120,54 @@ def old_files():
                   glob.glob(os.path.join(paths.SYNTH, '*.md')))
 
 
+def cells_with_articles():
+    """어느 (축, 칸)에 실제 글이 섰나. gen_insightview.written_cells()와 같은 글 목록을
+    본다(LOOP+SYNTH+BRIEFS) — 두 곳이 다른 명단을 보면 A7이 화면과 다른 판정을 낸다."""
+    out = set()
+    for f in loop_files() + old_files():
+        meta, _b = nl.parse_front(io.open(f, encoding='utf-8').read())
+        if meta.get('axis') and meta.get('cell'):
+            out.add((meta['axis'], meta['cell']))
+    return out
+
+
+def check_axis_shapes():
+    """A5~A9 — merge 축의 인과선·시간 흐름과, 모든 축의 shape 값."""
+    written = cells_with_articles()
+    for a in axes.AXES:
+        aid = a['id']
+        cell_ids = set(c for c, _n, _g, _col in axes.cells(aid))
+        shp = a.get('shape', 'loop')
+        if shp not in ('loop', 'line', 'merge'):
+            add('FAIL', 'A9', aid, 'shape 값이 loop·line·merge 가 아니다: %r' % shp)
+
+        merge_id = a['merge'][0] if shp == 'merge' and a.get('merge') else None
+
+        for e in a.get('edges', []):
+            src, dst = e[0], e[1]
+            if src not in cell_ids or dst not in cell_ids:
+                add('FAIL', 'A5', aid,
+                    '인과선 양끝이 이 축의 칸이 아니다: %r -> %r' % (src, dst))
+            note, line = e[4], e[5]
+            p = os.path.join(paths.NOTES, note)
+            if not os.path.isfile(p):
+                add('FAIL', 'A6', aid, '근거 노트가 없다: %s' % note)
+            else:
+                n = len(io.open(p, encoding='utf-8').read().split('\n'))
+                if not (1 <= line <= n):
+                    add('FAIL', 'A6', aid,
+                        '근거 줄이 파일 범위 밖이다: %s L%d(전체 %d줄)' % (note, line, n))
+
+        if merge_id is not None and (aid, merge_id) not in written:
+            add('FAIL', 'A7', aid, '합류 칸에 선 글이 하나도 없다: %s' % merge_id)
+
+        for stop in a.get('flow', []):
+            note = stop[2]
+            p = os.path.join(paths.NOTES, note)
+            if not os.path.isfile(p):
+                add('FAIL', 'A8', aid, '시간 흐름 정거장의 노트가 없다: %s' % note)
+
+
 def main():
     known = axes.all_cell_ids()
     ok_acts = li_usable_acts()
@@ -165,6 +220,8 @@ def main():
         if key in seen_cell:
             add('FAIL', 'A2', where, '%s 와 같은 칸에 두 편이 섰다' % seen_cell[key])
         seen_cell[key] = where
+
+    check_axis_shapes()
 
     # A3 — 옛 글 41장이 정확히 한 번씩 흡수됐나. 명단은 ROSTER 고정이다.
     dup = sorted(h for h in set(merged) if merged.count(h) > 1)
