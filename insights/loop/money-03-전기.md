@@ -53,6 +53,7 @@ sources:
   - {file: "content/understanding/언더스탠딩 백브리핑/중동산 기름, 미국산으로 대체가 어려운 이유.md", note: "정제 설비가 유종을 묶어 도입선을 못 바꾸게 한다"}
   - {file: "content/understanding/권효재 대표/호르무즈 막히자 10조 돈벼락 맞은 한국선사 (2부).md", note: "유가를 정하는 것이 실물 거래가 아니라는 대목과 운임"}
 checked:
+  - {file: "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md", why: "20년 보유 수익률과 출발 밸류에이션을 다루는 글이라 전기를 어디서 끌어오느냐와 겹치는 대목이 없다. AI 설비투자를 ROIC로 봐야 한다는 대목도 발전 설비 용량과 층이 다르다"}
   - {file: "content/newsletter/ai_infra/compute/[260810] 엔비디아 GPU의 초고속 상호작용성 - TileRT InferenceX.md", why: "같은 GPU에서 소프트웨어가 뽑아내는 속도를 재는 문서라 ④ 가동 편이 이미 썼다. 꽂을 자리가 있느냐와 층이 다르다"}
   - {file: "content/newsletter/ai_infra/compute/[260725] AMD는 CUDA 모트를 깰 수 있는가 - AMD Advancing AI 2026.md", why: "랙 조립 지연을 다루지만 그것은 AMD 제품의 조립 문제이고 ④ 가동 편 자리다. 이 편이 재는 것은 건물이 랙에 전력을 댈 수 있느냐다"}
   - {file: "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md", why: "클러스터가 땅값에 닿는 경로가 주제라 발전 설비 부지와 겹치는 대목이 없다"}
