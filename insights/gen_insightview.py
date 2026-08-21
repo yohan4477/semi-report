@@ -351,6 +351,8 @@ MRG_CSS = '''
   .lp-sub{font-size:9.5px;fill:var(--faint)}
   .lp-back{stroke-dasharray:none}
   .mcell.is-todo rect{stroke-dasharray:4 3;stroke:var(--faint)}
+  .mcell.is-plain{cursor:default}
+  .mcell.is-plain rect{stroke:var(--line)}
   .mcell.is-off{opacity:.35}
   .mcell.is-on rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
   .minimap{margin:0 0 10px}
@@ -482,7 +484,18 @@ def _wrap2(s, n):
     return [head, tail[:n + 2] + ('…' if len(tail) > n + 2 else '')]
 
 
-def cause_svg(axis_id, active=None):
+# 축 모양마다 그림이 약속하는 것이 다르다. 고리·직선은 칸마다 글이 서고, 합류는
+# 칸이 인과도의 마디라 선이 근거를 갖는다 — 캡션을 같게 두면 뒤엣것도 글을 기다리는
+# 자리처럼 읽힌다.
+CAPTION = {
+    'loop': '칸을 누르면 그 편으로 갑니다.',
+    'line': '칸을 누르면 그 편으로 갑니다.',
+    'merge': '선 위에 마우스를 올리면 그렇게 본 근거가, 누르면 그 원문 줄이 열립니다. '
+             '칸은 인과도의 마디이고 근거는 선이 갖습니다 — 글이 선 칸만 누를 수 있습니다.',
+}
+
+
+def cause_svg(axis_id, active=None, mini=False):
     """합류(merge) 축 한 장. 바깥 → 값 → 회사 안으로, 근거가 있는 짝만 선을 긋는다.
 
     설계 docs/superpowers/specs/2026-08-21-돈값-축-design.md 「인과선은 근거가 있는
@@ -517,17 +530,20 @@ def cause_svg(axis_id, active=None):
             tops[cid] = (x, y, w, bh)
             key = '%s:%s' % (axis_id, cid)
             got = done.get(key)
+            # 합류 축의 칸은 글이 서는 자리가 아니라 인과도의 마디다. 근거는 칸이 아니라
+            # 선이 갖는다(edges 의 노트). 글이 없다고 「아직 안 씀」을 찍으면 뒤에 글이
+            # 더 온다는 약속이 되므로, 여기서는 풀이를 그대로 두고 누를 수만 없게 한다.
             cls = 'mcell'
             if col == 'merge':
                 cls += ' is-merge'
             if active is not None:
                 cls += ' is-on' if key == active else ' is-off'
             if not got:
-                cls += ' is-todo'
-            h.append('<g class="%s" data-cell="%s" data-label="%s" role="button" tabindex="0">'
-                     % (cls, nl.esc(key), nl.esc(name)))
-            h.append('<title>%s — %s</title>'
-                     % (nl.esc(name), nl.esc(gloss if got else '아직 안 씀')))
+                cls += ' is-plain'
+            h.append('<g class="%s" data-cell="%s" data-label="%s"%s>'
+                     % (cls, nl.esc(key), nl.esc(name),
+                        ' role="button" tabindex="0"' if got else ''))
+            h.append('<title>%s — %s</title>' % (nl.esc(name), nl.esc(gloss)))
             h.append('<rect x="%.0f" y="%.0f" width="%.0f" height="%.0f" rx="9"/>'
                      % (x, y, w, bh))
             lines = _wrap2(name, cw)
@@ -536,6 +552,11 @@ def cause_svg(axis_id, active=None):
                 h.append('<text x="%.0f" y="%.0f" text-anchor="middle" class="m-lab">%s</text>'
                          % (x + w / 2.0, ty + j * 14, nl.esc(line)))
             h.append('</g>')
+    if mini:
+        # 카드 안 미니맵에는 인과선을 안 긋는다. 같은 인과를 카드마다 다시 주장하는
+        # 꼴이 되고, 이 카드가 대는 근거는 자기 본문의 인용이지 지도의 선이 아니다.
+        h.append('</svg>')
+        return ''.join(h)
     for src, dst, sign, why, note, line in axes.edges_of(axis_id):
         if src not in tops or dst not in tops:
             continue    # 검사기(A5)가 잡는다 — 그림은 조용히 건너뛴다
@@ -598,7 +619,7 @@ def flow_svg(axis_id):
 def axis_svg(axis_id, active=None, mini=False):
     """모양별로 알맞은 렌더러로 넘긴다 — loop|line은 loop_svg, merge는 cause_svg."""
     if axes.shape_of(axis_id) == 'merge':
-        return cause_svg(axis_id, active=active)
+        return cause_svg(axis_id, active=active, mini=mini)
     return loop_svg(axis_id, active=active, mini=mini)
 
 
@@ -622,9 +643,10 @@ def axis_layer():
                 extra = '<p class="cz-t">언제 그렇게 봤나</p>%s' % fw
         panes.append('<div class="ax-pane" data-axis="%s"%s><p class="ax-t">%s</p>'
                      '<p class="ax-l">%s</p><div class="mg-b">%s</div>%s'
-                     '<p class="mg-n">칸을 누르면 그 편으로 갑니다.</p></div>'
+                     '<p class="mg-n">%s</p></div>'
                      % (nl.esc(aid), '' if i == 0 else ' hidden',
-                        nl.esc(a['title']), nl.esc(a['lede']), axis_svg(aid), extra))
+                        nl.esc(a['title']), nl.esc(a['lede']), axis_svg(aid), extra,
+                        CAPTION[axes.shape_of(aid)]))
     tabbar = '<div class="axtabs">%s</div>' % ''.join(tabs) if len(axes.AXES) > 1 else ''
     return '<section class="axis">%s%s</section>' % (tabbar, ''.join(panes))
 
