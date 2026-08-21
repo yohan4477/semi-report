@@ -725,6 +725,15 @@ TAB_JS = '''<script>
   function apply(){
     var incell = (cell!==null);
     var picking = (sec===null && !incell);
+    // 주제를 바꿔도 고른 종류는 남는다. 새 주제에 그 종류가 없으면 조건이 하나도 안 맞아
+    // 빈 화면이 되므로, 그런 경우에만 「전체」로 되돌린다.
+    if(!picking && !incell && kind!=='all'){
+      var alive=false;
+      document.querySelectorAll('.isec').forEach(function(s2){
+        if(s2.dataset.kind===kind && (sec==='all' || s2.dataset.sec===sec)) alive=true;
+      });
+      if(!alive) kind='all';
+    }
     document.querySelectorAll('details.ins').forEach(function(d){
       d.hidden = incell && (' '+(d.dataset.cell||'')+' ').indexOf(' '+cell+' ')<0;
     });
@@ -749,7 +758,26 @@ TAB_JS = '''<script>
       var now=back.querySelector('.sb-now');
       now && (now.textContent = picking ? '' : (names[incell ? cell : sec]||''));
     }
+    // 탭 숫자는 지금 보고 있는 주제 안에서 다시 센다. 전역 집계를 걸어 두면 그 주제에
+    // 없는 종류에도 숫자가 찍히고, 눌렀을 때 조건이 하나도 안 맞아 빈 화면이 된다.
+    // 탭 막대는 주제를 고른 뒤에만 보이므로 전역 집계가 맞는 화면은 애초에 없다.
     kbar.hidden = picking || incell;
+    if(!kbar.hidden){
+      var cnt={}, kinds=0, tot=0;
+      document.querySelectorAll('.isec').forEach(function(s2){
+        if(sec!=='all' && s2.dataset.sec!==sec) return;
+        var k=s2.dataset.kind, n=s2.querySelectorAll('details.ins').length;
+        cnt[k]=(cnt[k]||0)+n; tot+=n;
+      });
+      for(var k2 in cnt){ if(cnt[k2]) kinds++; }
+      kbar.querySelectorAll('button').forEach(function(b){
+        var t=b.dataset.tab, n=(t==='all') ? tot : (cnt[t]||0);
+        b.hidden = (t!=='all' && !n);      // 없는 종류는 누를 수 없게 감춘다
+        var tn=b.querySelector('.tn'); if(tn) tn.textContent=n;
+      });
+      // 종류가 하나뿐인 주제에서는 고를 것이 없다 — 「전체」와 결과가 같은 탭만 남는다
+      kbar.hidden = kinds<2;
+    }
     kbar.querySelectorAll('button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.tab===kind));
     });
