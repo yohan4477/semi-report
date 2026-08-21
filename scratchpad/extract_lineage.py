@@ -11,7 +11,10 @@ sys.stdout.reconfigure(encoding='utf-8')
 ROOT = 'C:/Users/y/semianalysis'
 NL = ROOT + '/content/newsletter'
 
-DENS = re.compile('MLA|GQA|MQA|MoE|전문가 혼합|FP8|FP4|어텐션|양자화|디코딩|KV 캐시|라우팅', re.I)
+# 밀도 표지. RL 어휘를 뺐더니 강화학습 문서 3편이 통째로 탈락했다 — 학습 쪽 계보는
+# 어텐션·MoE 어휘를 안 쓴다. 궤도가 다르면 어휘도 다르다는 걸 놓친 실수다.
+DENS = re.compile('MLA|GQA|MQA|MoE|전문가 혼합|FP8|FP4|어텐션|양자화|디코딩|KV 캐시|라우팅'
+                  '|강화학습|롤아웃|온폴리시|오프폴리시|보상 해킹|사전학습|미드트레이닝', re.I)
 
 # 궤도별 표지. 절이 어느 궤도에 속하는지 이걸로 가른다.
 RAILS = [
@@ -21,6 +24,8 @@ RAILS = [
  ('prec', '정밀도',  'FP4|FP8|FP16|BF16|FP32|INT8|NVFP4|MXFP4|양자화|quantiz|희소|sparsit|정밀도'),
  ('si',   '실리콘',  '텐서 코어|텐서코어|tensor core|MMA|TMA|비동기|Volta|Turing|Ampere|Hopper|Blackwell|명령어|PTX|SASS'),
  ('serve','서빙',    '프리필|prefill|디코드 분리|disaggregat|배칭|batching|prefix 캐시|캐시 계층|스케줄'),
+ ('train','학습',    '강화학습|\\bRL\\b|롤아웃|rollout|온폴리시|오프폴리시|on-policy|off-policy|정책 지연|PipelineRL'
+                     '|보상|reward|사전학습|미드트레이닝|학습기|생성기|환경'),
 ]
 RAILS = [(k, ko, re.compile(p, re.I)) for k, ko, p in RAILS]
 
