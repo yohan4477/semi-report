@@ -114,13 +114,19 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
    ```
    This re-splices ①'s day-groups from the history's most recent 10 day-groups (3-source LI/YouTube/newsletter, direct-link badges, NVIDIA-first-party interleave, cluster "관련" expanders). The generator carries a small `NVROWS`/`REL` overlay for NVIDIA blog + nvidia-ai-infra rows and thematic cross-links — add new NVIDIA-first-party items or relations there, not in the HTML. Adjust the window number if the feed gets too long/short.
 
-3. **주간·월간 롤업 리포트** (히스토리 상단, 2026-08-13 신설). 산문은 판단이므로 **메인 세션 모델이 직접** `data/rollup_notes.json`에 새 항목 2개(`kind: week` / `kind: month`, 같은 `asof`)를 쓴다. 주간 = 최근 7일, 월간 = 최근 30일 창이고, 각 항목은 헤드(`h`) + 숫자·회사명이 박힌 근거(`b`) 3~5개다. 그 뒤:
+3. **행 라벨 — 재생성, 손대지 말 것** (2026-08-21 신설). 밈·채용·팟캐스트·뉴스레터 홍보가 실질 신호와 같은 무게로 늘어서면 걸러 읽을 수 없다. 히스토리를 고친 뒤 한 번 돌린다:
+   ```bash
+   PYTHONIOENCODING=utf-8 python scripts/stamp_li_kind.py
+   ```
+   각 행 **끝**에 `<span class="kind">`를 붙이고 CSS `order:-1`로 왼쪽에 그린다. `</a>` 바로 뒤에 넣으면 `gen_li_source.py`가 링크를 찾는 고정 창이 밀려 뉴스레터 slug가 잘린다. 라벨이 없는 줄이 실질 신호(`자체 발화`)다. 여러 번 돌려도 결과는 같다.
+
+4. **주간·월간 롤업 리포트** (히스토리 상단, 2026-08-13 신설). 산문은 판단이므로 **메인 세션 모델이 직접** `data/rollup_notes.json`에 새 항목 2개(`kind: week` / `kind: month`, 같은 `asof`)를 쓴다. 주간 = 최근 7일, 월간 = 최근 30일 창이고, 각 항목은 헤드(`h`) + 숫자·회사명이 박힌 근거(`b`) 3~5개다. 그 뒤:
    ```bash
    python scripts/gen_rollup.py
    ```
    최신 `asof`의 주간·월간 카드를 펼쳐 보여 주고 이전 회차는 `<details>`로 접어 누적한다(리포트 히스토리 유지). 건수·기간 메타는 히스토리 day 그룹에서 자동 계산하므로 손대지 말 것. 스플라이스 구간은 `<!--ROLLUP:START--> ~ <!--ROLLUP:END-->`.
 
-After all three, sanity-check tag balance (`<div>` open/close counts must match — the generators print them) before committing. Commit the history edit, the regenerated dashboard, and the rollup together.
+After all four, sanity-check tag balance (`<div>` open/close counts must match — the generators print them) before committing. Commit the history edit, the regenerated dashboard, and the rollup together.
 
 ## 6. Impact assessment → 대시보드/소스 타임라인.html
 
