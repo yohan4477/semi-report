@@ -214,62 +214,91 @@ TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>돈이 언제 들어오느
              '글로벌로 바꿔야 한다고 말하는 자리다.')
 
 
-# -- 조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다 ------------------------------
-# 이 편에서 가장 뒤집힌 대목이라 그림 한 장이 문장 여럿을 대신한다. 조건은 마셀러스가
-# 넷 다 앞서는데 허가는 걸프에만 났고, 그래서 결과가 갈렸다. 화자가 직접 인과로 말한다
-# (「허가가 안 나는 거예요. 지역 주민이 반대하고」).
+# -- 지도로 본 입지 --------------------------------------------------------
+# 좌우 두 칸으로 견주던 그림을 지도로 바꾼다. 이 대목은 「어디냐」가 내용이라
+# 상자를 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 동북부인데 수출 공장은
+# 남쪽 걸프에 몰려 있다는 것이 눈에 들어와야 나머지가 읽힌다.
 #
-# 조건 칸에 걸프의 장점(헨리 허브)도 적는다. 한쪽을 조건까지 나쁜 동네로 그리면
-# 「나쁜 데가 이겼다」가 되어 원문에 없는 이야기가 된다 -- 원문은 「좋은 데가 졌다」이다.
+# 국경선은 눈대중으로 그린 모식도다. 지도라고 하면 좌표를 믿게 되므로 그림 안에
+# 그렇게 적어 둔다. 지명과 사실은 자막에 있는 것만 올린다 -- 마셀러스·퍼미안·헨리
+# 허브·허리케인 지역·유럽까지 거리·하루 거리 수출항까지가 전부다. 배관이 어디로
+# 흐르는지는 자막에 없으므로 그리지 않는다.
 SITE_FIG = (
-    '<svg viewBox="0 0 640 384" role="img" '
-    'aria-label="마셀러스와 걸프 연안의 조건과 허가 대비">'
-    '<text x="8" y="14" class="t-sm">같은 사업을 두 동네에서 하려고 했다. 왼쪽이 졌다</text>'
-    '<text x="157" y="34" text-anchor="middle" class="t-lab">마셀러스 (동북부)</text>'
-    '<text x="483" y="34" text-anchor="middle" class="t-lab">걸프 연안 (텍사스·루이지애나)</text>'
-    '<text x="8" y="56" class="t-sm" style="font-weight:850">공장 짓기에 좋은 조건</text>'
-    '<rect x="8" y="64" width="298" height="108" rx="10" class="body"/>'
-    '<text x="24" y="88" class="good">+</text><text x="40" y="88">셰일 가스가 바로 옆에서 난다</text>'
-    '<text x="24" y="110" class="good">+</text><text x="40" y="110">유럽까지 실어 가기 가깝다</text>'
-    '<text x="24" y="132" class="good">+</text><text x="40" y="132">허리케인이 오지 않는다</text>'
-    '<text x="24" y="154" class="good">+</text><text x="40" y="154">배관을 쓰는 값이 싸다</text>'
-    '<rect x="334" y="64" width="298" height="108" rx="10" class="body"/>'
-    '<text x="350" y="88" class="t-bad">−</text>'
-    '<text x="366" y="88">해마다 허리케인이 지나간다</text>'
-    '<text x="350" y="110" class="t-bad">−</text><text x="366" y="110">유럽까지 멀다</text>'
-    '<text x="350" y="132" class="good">+</text>'
-    '<text x="366" y="132">가스 배관이 모이는 헨리 허브가 있다</text>'
-    '<text x="350" y="156" class="t-sm">사업자도 왼쪽으로 옮기고 싶어 하지만 옮기지 못한다</text>'
-    '<text x="8" y="198" class="t-sm" style="font-weight:850">그런데 허가가</text>'
-    '<rect x="8" y="206" width="298" height="72" rx="10" class="body" stroke-dasharray="6 4"/>'
-    '<text x="24" y="232" class="t-bad">✕</text>'
-    '<text x="44" y="232" class="t-lab">수출로 바꾸는 허가가 안 난다</text>'
-    '<text x="24" y="254" class="t-sm">주민이 반대했고 지방 정치인도 그편에 섰다</text>'
-    '<rect x="334" y="206" width="298" height="72" rx="10" class="body" '
+    '<svg viewBox="0 0 640 452" role="img" '
+    'aria-label="미국 지도 위에서 본 셰일 산지와 LNG 수출 공장의 자리">'
+    '<text x="8" y="14" class="t-sm">'
+    '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽에 몰렸다 (눈대중으로 그린 모식도다)</text>'
+    # 미국 본토 윤곽
+    '<path d="M96 112 L150 100 L205 96 L262 92 L320 90 L380 92 L430 100 L470 112 '
+    'L486 128 L500 150 L512 172 L508 196 L492 214 L476 232 L470 250 L458 268 '
+    'L448 254 L442 232 L412 240 L380 246 L350 244 L320 238 L300 244 L286 262 '
+    'L270 254 L252 236 L238 222 L214 214 L190 206 L168 214 L148 226 L132 214 '
+    'L120 186 L108 158 Z" class="body"/>'
+    # 마셀러스 — 가스가 먼저 터진 곳
+    '<circle cx="428" cy="142" r="17" class="cell"/>'
+    '<text x="428" y="146" text-anchor="middle" class="t-sm" '
+    'style="font-weight:800">가스</text>'
+    '<text x="396" y="118" class="t-lab" style="font-size:10.5px">마셀러스</text>'
+    '<text x="330" y="176" class="t-sm">셰일 가스가 미국에서 처음</text>'
+    '<text x="330" y="190" class="t-sm">크게 터진 곳이 여기다</text>'
+    # 대서양 수출항 — 하루 거리인데 못 쓴다
+    '<rect x="486" y="152" width="16" height="16" rx="3" class="fat"/>'
+    '<path d="M446 148 L482 156" class="lead-line"/>'
+    '<text x="508" y="150" class="t-sm">수출항이</text>'
+    '<text x="508" y="164" class="t-sm">하루 거리다</text>'
+    '<text x="508" y="184" class="t-bad" style="font-size:11px;font-weight:800">'
+    '✕ 허가가 안 난다</text>'
+    '<text x="508" y="200" class="t-sm">주민이 반대했다</text>'
+    # 퍼미안
+    '<circle cx="252" cy="212" r="12" class="cell"/>'
+    '<text x="252" y="216" text-anchor="middle" class="t-sm">가스</text>'
+    '<text x="212" y="196" class="t-sm">퍼미안</text>'
+    # 걸프 연안 — 공장이 몰린 자리
+    '<rect x="318" y="236" width="15" height="15" rx="3" class="fat"/>'
+    '<rect x="338" y="238" width="15" height="15" rx="3" class="fat"/>'
+    '<rect x="358" y="239" width="15" height="15" rx="3" class="fat"/>'
+    '<rect x="378" y="238" width="15" height="15" rx="3" class="fat"/>'
+    '<rect x="398" y="234" width="15" height="15" rx="3" class="fat"/>'
+    '<text x="300" y="230" text-anchor="end" class="t-lab" style="font-size:10.5px">'
+    '걸프 연안</text>'
+    '<text x="300" y="245" text-anchor="end" class="t-sm">헨리 허브</text>'
+    '<text x="330" y="278" class="good" style="font-size:11px;font-weight:800">'
+    '✓ 허가가 난다</text>'
+    '<text x="330" y="293" class="t-sm">100년 오일·가스 동네라 주민이 반긴다.</text>'
+    '<text x="330" y="307" class="t-sm">미국 LNG 수출 공장이 전부 여기 몰렸다</text>'
+    # 허리케인 — 걸프의 약점
+    '<path d="M600 300 Q500 300 430 262" class="flow"/>'
+    '<text x="604" y="296" class="t-bad" style="font-size:10.5px;font-weight:800">'
+    '허리케인</text>'
+    '<text x="604" y="312" class="t-sm">해마다 지나간다</text>'
+    # 유럽 방향
+    '<path d="M528 126 L616 116" class="flow"/>'
+    '<text x="540" y="112" class="t-sm">유럽까지는 위쪽이 훨씬 가깝다</text>'
+    # 아래 — 그래서 어떻게 됐나
+    '<rect x="8" y="330" width="308" height="112" rx="10" class="body" '
+    'stroke-dasharray="6 4"/>'
+    '<text x="24" y="354" class="t-lab">북동쪽 마셀러스</text>'
+    '<text x="24" y="376" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
+    '<text x="24" y="392" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
+    '<text x="24" y="414" class="t-bad" style="font-weight:800">'
+    '그런데 아직도 못 짓는다</text>'
+    '<text x="24" y="432" class="t-sm">수출항이 비어 있다</text>'
+    '<rect x="324" y="330" width="308" height="112" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="350" y="232" class="good">✓</text>'
-    '<text x="370" y="232" class="t-lab">허가가 난다</text>'
-    '<text x="350" y="254" class="t-sm">100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
-    '<path d="M157 278 L157 310" class="flow"/>'
-    '<path d="M483 278 L483 310" class="flow"/>'
-    '<text x="8" y="330" class="t-sm" style="font-weight:850">그래서 지금</text>'
-    '<rect x="8" y="318" width="298" height="64" rx="10" class="body" stroke-dasharray="6 4"/>'
-    '<text x="157" y="344" text-anchor="middle" class="t-bad" '
-    'style="font-size:12px;font-weight:800">아직도 못 짓는다</text>'
-    '<text x="157" y="364" text-anchor="middle" class="t-sm">'
-    '수출항이 하루 거리인데 비어 있다</text>'
-    '<rect x="334" y="318" width="298" height="64" rx="10" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="483" y="344" text-anchor="middle" class="t-lab" '
-    'style="font-size:12px">같은 사업이 줄줄이 들어선다</text>'
-    '<text x="483" y="364" text-anchor="middle" class="t-sm">'
-    '미국 LNG 수출 공장이 여기로 몰려 한 동네를 이뤘다</text>'
+    '<text x="340" y="354" class="t-lab">남쪽 걸프 연안</text>'
+    '<text x="340" y="376" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
+    '<text x="340" y="392" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
+    '<text x="340" y="414" class="t-lab" style="font-weight:800">'
+    '그런데도 여기만 지어진다</text>'
+    '<text x="340" y="432" class="t-sm">한 건이 되니 같은 사업이 줄줄이 들어섰다</text>'
     '</svg>')
 
-SITE_CAP = ('공장 짓기에 좋은 조건은 <b>왼쪽이 넷 다 앞선다</b>. 가스가 옆에서 나고 유럽에 '
-            '가깝고 허리케인도 없고 배관값도 싸다. 그런데 허가가 한쪽에만 났고 결과가 그대로 '
-            '갈렸다. 화자가 이 편에서 한국으로 끌어오는 문장이 여기서 나온다. 어떤 사업이 '
-            '되느냐 마느냐는 <b>공장 지을 자리 옆집이 찬성하느냐</b>에서 갈린다.')
+SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 어긋난다</b>. 셰일 가스가 미국에서 '
+            '처음 크게 터진 곳은 북동쪽 마셀러스이고 거기서 수출항까지는 하루 거리다. 그런데도 '
+            '수출 공장은 전부 남쪽 걸프 연안에 섰다. 허리케인이 지나가고 유럽에서도 먼 자리다. '
+            '가른 것은 거리도 가스도 아니고 허가였다. 화자가 이 편에서 한국으로 끌어오는 문장이 '
+            '여기서 나온다. 어떤 사업이 되느냐 마느냐는 <b>공장 지을 자리 옆집이 찬성하느냐</b>에서 '
+            '갈린다.')
 
 
 CARDS = [
@@ -941,7 +970,7 @@ CARDS = [
      'slim_stats': [('29배', '10년간 미국 LNG 수출 증가'), ('2.7 대 20달러', '미국 대 동북아 가스값'),
                     ('500조 원', '수출 설비 총투자·보조금 없음'), ('30개월', '벤처 글로벌 착공~첫 생산')],
      'figs': [(3, '가스가 들어오던 길로 나가게 됐다', PIVOT_FIG, PIVOT_CAP),
-              (4, '좋은 조건은 왼쪽인데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP),
+              (4, '가스가 나는 자리와 공장이 선 자리가 어긋난다', SITE_FIG, SITE_CAP),
               (6, '공장을 짓기 전에 종이부터 모은다', FUND_FIG, FUND_CAP),
               (7, '쪼갠 쪽은 30개월째부터 돈이 들어온다', TRAIN_FIG, TRAIN_CAP)],
      'oneliner': ('미국이 LNG 수출 1위가 된 동력을 자원이 아니라 제도에서 찾는다. 실패한 사업을 '
