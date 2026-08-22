@@ -135,7 +135,7 @@ python scripts/gen_site.py             # insight-dashboard.com 빌드 산출물
 `update_card_ledger.py`를 건너뛰면 NEW 배지가 안 붙는다. 배지 기준은 영상 업로드일이 아니라
 **카드가 사이트에 처음 올라온 날**이고, 그 날짜는 대장에만 있다.
 
-허브(`대시보드/Yomianalysis.html`)에 페이지를 새로 세운 경우에만 `python scripts/gen_hub.py`.
+페이지를 새로 세웠으면 `scripts/gen_site.py`의 `PAGES`에 한 줄 넣고 다시 돌린다.
 **리포트 한 편 때문에 페이지를 새로 만들지 않는다** — 주제 대시보드의 섹션으로 넣는다.
 
 ### 5. 커밋·푸시

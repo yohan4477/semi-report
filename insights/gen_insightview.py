@@ -1143,7 +1143,6 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">노트 45장을 가로질러</p>
   <h1>통합 인사이트</h1>
-  <div class="meta"><a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
 __GUIDE__
 __TOP__

@@ -256,7 +256,6 @@ TMPL = '''<meta charset="utf-8">
 <header>
   <p class="eyebrow">__EMOJI__ 추적</p>
   <h1>__TITLE__</h1>
-  <div class="meta"><a class="maplink" href="Yomianalysis.html">전체 입구 →</a></div>
 </header>
 <div class="body">__BODY__</div>
 __SIGS__

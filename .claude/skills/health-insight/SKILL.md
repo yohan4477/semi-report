@@ -137,5 +137,5 @@ if([...document.querySelectorAll('section[id]')].some(s=>s.hidden)) throw new Er
 
 ## 8. 페이지 밖에서 할 일
 
-- 허브 등록은 `scripts/gen_hub.py`의 TOPICS, 공개 사이트는 `scripts/gen_site.py`의 PAGES. 이미 들어가 있다
-- 카드를 늘리거나 고친 뒤 두 생성기를 다시 돌린다
+- 공개 사이트 등록은 `scripts/gen_site.py`의 PAGES. 이미 들어가 있다
+- 카드를 늘리거나 고친 뒤 생성기를 다시 돌린다

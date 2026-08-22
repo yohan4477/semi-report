@@ -4,13 +4,11 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 
 ## 대시보드 (GitHub Pages)
 
-**🧭 [Yomianalysis — 어디로 들어갈까](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/Yomianalysis.html)** ← 전체 입구. 여기만 북마크하면 됩니다. 생성: `py scripts/gen_hub.py`
-
 > 2026-08-09 정리: 19장에서 8장을 지우고 입구 1장을 더해 **12장**이 됐습니다. 지운 것(통합 인사이트·전력 인프라·기술 브리핑·파이프라인 현황·GPU 시뮬레이터 2종·목업 2종)의 내용은 원본 문서와 git 이력에 그대로 있습니다. 발행된 Artifact URL은 살아 있지만 더 갱신하지 않습니다. 같은 날 「인텔리전스 대시보드」는 담긴 게 전부 SemiAnalysis 코퍼스라 **SemiAnalysis 대시보드**로 이름을 바꿨습니다(URL은 그대로).
 
 ### 메인
 - 🧭 [SemiAnalysis 대시보드](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/SemiAnalysis%20%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C.html) — 소셜·영상 신호, 클러스터별 종합 판단, 기업 익스포저 매트릭스
-- 📊 [임팩트 타임라인 (Yomianalysis)](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
+- 📊 [임팩트 타임라인](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%8A%A4%20%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8.html) — 이벤트→영향→논제, 밸류체인 기반 종목 탐색 (브리핑·종목·논제 3렌즈)
 - 🗂️ [소셜 신호 히스토리](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html) — LinkedIn·YouTube 신호 전체 아카이브
 - 🧩 [통합 인사이트](https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%ED%86%B5%ED%95%A9%20%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8.html) — 판단을 먼저 읽고, 문장 옆 줄번호를 누르면 근거가 된 **원문 그 줄**로 갑니다
 
@@ -40,8 +38,8 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - `insights/` — 통합 인사이트 아키텍처: `manifest.json`(소스 인벤토리·발행일·다중태그·본문hash), `clusters/`(주제 클러스터 provenance md), `coverage.py`/`gen_manifest.py`/`validate_insights.py`/`refresh_provenance.py`(증분·전체 재합성 툴링), `taxonomy.json`
   - 노트 계통(아래 절 참조): `notes/`(문서 노트 md), `synth/`(교차 인사이트 md), `cites.json`(줄 해시 잠금), `check_notes.py`(N1~N7)·`check_prose.py`(P1~P7), `notes_lib.py`·`paths.py`(공용), `clusters/`·`coverage.py`(클러스터 계통), `figures/`
 - `대장/` — 크로스 도메인 숫자 대장
-- `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙). 입구는 `Yomianalysis.html`, 생성기는 `scripts/gen_hub.py`. `관리자 대시보드.html`은 허브에 없다 — 세 갈래(통합 인사이트 · 주제 대시보드 · SemiAnalysis)가 데이터를 어떻게 처리하는지 모은 룰 색인이고, 공개 사이트에서는 `/admin`으로 잠겨 나간다(`scripts/gen_admin.py`)
-- `scripts/` — `gen_hub.py`(입구), `gen_bmirror.py`(SemiAnalysis 대시보드 ① 미러 재생성), `gen_conceptmap_docs.py`
+- `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙). `관리자 대시보드.html`은 허브에 없다 — 세 갈래(통합 인사이트 · 주제 대시보드 · SemiAnalysis)가 데이터를 어떻게 처리하는지 모은 룰 색인이고, 공개 사이트에서는 `/admin`으로 잠겨 나간다(`scripts/gen_admin.py`)
+- `scripts/` — `gen_bmirror.py`(SemiAnalysis 대시보드 ① 미러 재생성), `gen_conceptmap_docs.py`, `gen_site.py`(공개 사이트 빌드)
 - `input/clippings/` — 변환 대기 원문 클리핑
 
 ## 원문 기반 노트 (2026-08-14 이행 완료)
