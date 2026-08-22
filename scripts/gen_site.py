@@ -384,11 +384,35 @@ def build_private() -> str:
 </style>''', 1)
 
 
+# 잠금 목록이 어긋나면 여기서 멈춘다.
+#
+# PAGES 의 잠금 칸과 functions/_middleware.js 의 PROTECTED 는 한 벌인데 손으로 맞춰 왔다.
+# 2026-08-19에 /und-premium 과 /accountant 가, 2026-08-23에 /leesunyeop 과 /lineage 가
+# 어긋나 유료 구독물 요약이 비밀번호 없이 열렸다. 같은 사고가 두 번 났으므로 사람이 아니라
+# 빌드가 막는다 -- 페이지를 새로 잠그면 미들웨어를 고치기 전까지 사이트가 만들어지지 않는다.
+def check_lock_parity():
+    js = (ROOT / 'functions' / '_middleware.js').read_text(encoding='utf-8')
+    m = re.search(r'const PROTECTED = new Set\(\[(.*?)\]\)', js, re.S)
+    assert m, 'functions/_middleware.js 에서 PROTECTED 목록을 못 찾았다'
+    guarded = set(re.findall(r"'/([^']+)'", m.group(1)))
+    want = {slug for _s, slug, *_r, locked in PAGES if locked} | {PRIVATE_SLUG}
+    missing = sorted(want - guarded)
+    assert not missing, (
+        '잠금이 새고 있다 -- PAGES 에서 잠근 페이지가 미들웨어에 없다: %s. '
+        "functions/_middleware.js 의 PROTECTED 에 '/%s' 를 넣는다"
+        % (', '.join('/' + s for s in missing), missing[0]))
+    stale = sorted(guarded - want - {'unified'})
+    if stale:
+        print('  ! 미들웨어가 막는데 PAGES 에 없는 주소: %s (지운 페이지면 그대로 둔다)'
+              % ', '.join('/' + s for s in stale))
+
+
 def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
 
+    check_lock_parity()
     ledger = load_ledger()
     for src, slug, _title, _emoji, _desc, locked in PAGES:
         up = parent_of(locked)
