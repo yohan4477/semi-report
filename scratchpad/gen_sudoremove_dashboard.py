@@ -4,7 +4,7 @@
 # 공개 웹 에세이(sudoremove.com)와 유튜브 해설이 같은 페이지에 선다.
 # 카드는 이 파일 CARDS에 적고 재실행하면 페이지가 다시 만들어진다.
 # 마크업·CSS·첫 화면 규약은 dash_common 머리말에 있다.
-import os, sys
+import io, os, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -21,10 +21,27 @@ PAPER = 'https://arxiv.org/abs/2603.08122'
 WHO_YT = 'sudoremove <b>JB · JC</b>'
 WHO_ESSAY = 'sudoremove <b>박종현</b>'
 
-SEC_MODEL = ('sec-model', '01', '모델과 회사',
-             '같은 데이터 병목을 서로 다른 자리에서 푸는 회사들')
-SEC_BASE = ('sec-base', '02', '피지컬 AI 기초 4강',
-            '용어의 층위, 범용화 조건, 그리고 데이터가 없다는 사실')
+# 섹션은 여기 한 곳에서만 정한다. 카드 파일은 문자열 id만 쓰고(예: 'sec-model')
+# 로더가 이 표로 푼다 — 카드 서른 장이 각자 섹션 튜플을 베껴 들고 있으면 번호가 어긋난다.
+SECTIONS = [
+    ('sec-base', '01', '피지컬 AI 기초',
+     '용어의 층위, 범용화 조건, 그리고 데이터가 없다는 사실'),
+    ('sec-model', '02', '모델과 회사',
+     '같은 데이터 병목을 서로 다른 자리에서 푸는 회사들'),
+    ('sec-world', '03', '월드모델',
+     '영상을 만드는 모델이 로봇의 훈련장이 되는 길'),
+    ('sec-hand', '04', '로봇 손과 하드웨어',
+     '모델이 아무리 좋아도 잡지 못하면 아무것도 안 된다'),
+    ('sec-biz', '05', '회사와 산업',
+     '누가 돈을 받고 누가 망했나'),
+    ('sec-field', '06', '현장과 실습',
+     '학회·전시장·해커톤에서 직접 보고 만져 본 기록'),
+]
+SEC = {s[0]: s for s in SECTIONS}
+SEC_ORDER = [s[0] for s in SECTIONS]
+
+SEC_MODEL = SEC['sec-model']
+SEC_BASE = SEC['sec-base']
 
 NOTE_YT = ('유튜브 자동 자막 전문을 <b>요약</b>한 카드입니다. 자동 인식이라 회사·모델 이름이 '
            '흔들리는 대목이 있어 영상 설명란과 논문으로 맞춰 적었습니다. 자막은 Sharpa를 '
@@ -157,6 +174,7 @@ CARDS = [{
             '한쪽은 다음 장면을 상상해 행동을 역산하고, 다른 쪽은 사람이 조종하기 어려운 '
             '동작만 강화학습으로 미리 구워 둡니다. 두 방법이 각각 어떤 숫자를 내놓았는지, '
             '그리고 무엇을 안 밝혔는지까지.',
+    'date': '2026-03-16',
     'meta': [WHO_YT, '2026-03-16', '23분', 'YouTube'],
     'links': [('▶ 원본 영상', VID, ''),
               ('📄 자막 기반 변환본',
@@ -268,6 +286,7 @@ CARDS = [{
     'title': 'Physical AI를 좁게 정의해야 하는 이유',
     'gain': '이 말을 넓게 쓰면 자율주행과 드론까지 들어와 10년 전 로보틱스와 구분이 안 됩니다. '
             '어디에 선을 그어야 하는지, 그 선을 언제 넘었는지.',
+    'date': '2026-03-19',
     'meta': ESSAY_META,
     'links': elinks('Physical AI의 정의',
                     'https://sudoremove.com/knowledge/essays/fundamentals/definition/'),
@@ -314,6 +333,7 @@ CARDS = [{
     'title': 'VLA · LBM · RFM은 같은 말이 아니다',
     'gain': '뒤섞여 쓰이는 세 단어의 층위를 갈라 놓습니다. 그리고 언어에서 통한 방법이 '
             '몸에서는 왜 그대로 안 통하는지.',
+    'date': '2026-03-19',
     'meta': ESSAY_META,
     'links': elinks('RFM & VLA란 무엇인가',
                     'https://sudoremove.com/knowledge/essays/fundamentals/what-is-rfm-vla/'),
@@ -352,6 +372,7 @@ CARDS = [{
     'title': '비전 AI가 걸어간 길을 로보틱스가 다시 걷는다',
     'gain': '과제별 특화 모델이 통합 모델로 수렴한 전례가 로봇에서 되풀이될 조건 셋. '
             '그리고 지금 어디까지 왔는지를 데이터셋 숫자로.',
+    'date': '2026-03-19',
     'meta': ESSAY_META,
     'links': elinks('Specialist에서 Generalist로',
                     'https://sudoremove.com/knowledge/essays/fundamentals/specialist-to-generalist/'),
@@ -399,6 +420,7 @@ CARDS = [{
     'title': '행동 데이터는 인터넷에 없다 — 이를 뚫으려는 다섯 경로',
     'gain': 'VLA가 LLM처럼 규모로 성능을 얻지 못하는 이유 셋과, 데이터를 모으려는 경로 다섯. '
             '테슬라가 조종자에게 건 신체 조건까지.',
+    'date': '2026-03-19',
     'meta': ESSAY_META,
     'links': elinks('Action Data Scaling 문제',
                     'https://sudoremove.com/knowledge/essays/fundamentals/scaling-problem/'),
@@ -444,6 +466,41 @@ CARDS = [{
     ],
     'note': NOTE_ESSAY,
 }]
+
+# ── 카드 파일 모으기 ──────────────────────────────────────────────────
+# 영상 하나 = 파일 하나(scratchpad/cards_sudo/<영상ID>.py 안의 CARD).
+# 서른 장을 이 파일 하나에 쌓으면 손을 못 댄다. 위 CARDS는 처음 다섯 장이고,
+# 나머지는 여기서 긁어 모은다. 카드 파일은 섹션을 문자열 id로만 적는다.
+import glob as _glob
+
+CARDS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cards_sudo')
+
+
+def load_extra():
+    out = []
+    for p in sorted(_glob.glob(os.path.join(CARDS_DIR, '*.py'))):
+        if os.path.basename(p).startswith('_'):
+            continue
+        ns = {}
+        exec(compile(io.open(p, encoding='utf-8').read(), p, 'exec'), ns)
+        c = ns.get('CARD')
+        assert isinstance(c, dict), '%s 에 CARD dict 가 없다' % p
+        assert c.get('date'), '%s 에 date 가 없다 — 섹션 안 정렬 기준이다' % p
+        sid = c['section']
+        assert sid in SEC, '%s 의 섹션 id를 모른다: %r' % (p, sid)
+        c['section'] = SEC[sid]
+        out.append(c)
+    return out
+
+
+def order(cards):
+    """섹션은 SEC_ORDER 순서로, 섹션 안은 업로드일 역순(최신이 위)."""
+    idx = {c['section'][0]: SEC_ORDER.index(c['section'][0]) for c in cards}
+    return sorted(cards, key=lambda c: (idx[c['section'][0]],
+                                        [-int(x) for x in (c.get('date') or '0-0-0').split('-')]))
+
+
+CARDS = order(CARDS + load_extra())
 
 HEADER = '''  <header>
     <p class="eyebrow">sudoremove — 로보틱스 · 피지컬 AI 해설</p>
