@@ -41,6 +41,81 @@ def elinks(name, url):
             ('🔗 원문(sudoremove.com)', url, 'secondary')]
 
 
+# ── 그림 ──────────────────────────────────────────────────────────────
+# 두 회사의 구조는 말로 읽으면 순서가 안 잡힌다. 무엇이 무엇을 먹어서 무엇을 내놓는지를
+# 상자와 화살표로만 그린다. 색은 .uc-fig 붓(card_lib.FIG_CSS)을 그대로 받는다.
+
+FIG_DVA = (
+    '<svg viewBox="0 0 640 300" role="img" '
+    'aria-label="VLA와 Rhoda DVA의 경로 대조">'
+    # 위 칸 — 지금까지의 VLA
+    '<rect x="6" y="22" width="628" height="96" rx="10" fill="none" '
+    'stroke="var(--line)" stroke-width="1.2"/>'
+    '<text x="20" y="42" class="t-sm" style="font-weight:850">VLA — 지금 보이는 것만 본다</text>'
+    '<rect x="26" y="54" width="160" height="48" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="106" y="74" text-anchor="middle" class="t-lab">지금 이미지 + 말</text>'
+    '<text x="106" y="90" text-anchor="middle" class="t-sm">한 장면</text>'
+    '<rect x="232" y="54" width="160" height="48" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="312" y="74" text-anchor="middle" class="t-lab">VLA 모델</text>'
+    '<text x="312" y="90" text-anchor="middle" class="t-sm">한 모델이 통째로</text>'
+    '<rect x="438" y="54" width="150" height="48" rx="8" fill="none" stroke="var(--line)" stroke-width="1.4"/>'
+    '<text x="513" y="82" text-anchor="middle" class="t-lab">관절 명령</text>'
+    '<path d="M188 78 L230 78" class="flow"/>'
+    '<path d="M394 78 L436 78" class="flow"/>'
+    # 아래 칸 — Rhoda
+    '<rect x="6" y="132" width="628" height="160" rx="10" fill="none" '
+    'stroke="var(--accent)" stroke-width="1.4" stroke-opacity=".55"/>'
+    '<text x="20" y="152" class="t-sm" style="font-weight:850">'
+    'Rhoda DVA — 지나간 장면을 전부 들고 다음 장면을 상상한다</text>'
+    '<rect x="26" y="164" width="164" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="108" y="186" text-anchor="middle" class="t-lab">지나간 프레임 전부</text>'
+    '<text x="108" y="202" text-anchor="middle" class="t-sm">KV 캐시</text>'
+    '<rect x="236" y="164" width="156" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="314" y="186" text-anchor="middle" class="t-lab">비디오 모델</text>'
+    '<text x="314" y="202" text-anchor="middle" class="t-sm">다음 프레임 예측</text>'
+    '<rect x="438" y="164" width="150" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="513" y="192" text-anchor="middle" class="t-lab">다음 프레임</text>'
+    '<path d="M190 187 L234 187" class="flow"/>'
+    '<path d="M392 187 L436 187" class="flow"/>'
+    '<path d="M513 210 L513 230" class="flow"/>'
+    '<rect x="26" y="232" width="164" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="108" y="260" text-anchor="middle" class="t-lab">로봇 실행</text>'
+    '<rect x="236" y="232" width="156" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="314" y="260" text-anchor="middle" class="t-lab">관절 명령</text>'
+    '<rect x="438" y="232" width="150" height="46" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.8"/>'
+    '<text x="513" y="252" text-anchor="middle" class="t-lab">인버스 다이내믹스</text>'
+    '<text x="513" y="268" text-anchor="middle" class="t-sm">장면에서 행동 역산</text>'
+    '<path d="M436 255 L394 255" class="flow"/>'
+    '<path d="M234 255 L192 255" class="flow"/>'
+    '<path d="M108 230 L108 212" class="flow" style="stroke-dasharray:5 4"/>'
+    '<text x="120" y="226" class="t-sm">새 프레임이 쌓인다</text>'
+    '</svg>')
+
+FIG_SHARPA = (
+    '<svg viewBox="0 0 640 270" role="img" '
+    'aria-label="Sharpa의 두 층 구조">'
+    '<rect x="210" y="16" width="220" height="46" rx="9" fill="none" stroke="var(--line)" stroke-width="1.5"/>'
+    '<text x="320" y="37" text-anchor="middle" class="t-lab">사람 조종자</text>'
+    '<text x="320" y="53" text-anchor="middle" class="t-sm">외골격 · 햅틱 · 발 페달 3개</text>'
+    '<path d="M272 62 L165 96" class="flow"/>'
+    '<path d="M370 62 L482 96" class="flow"/>'
+    '<rect x="20" y="100" width="250" height="66" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="145" y="122" text-anchor="middle" class="t-lab">위층 — VLA (모방학습)</text>'
+    '<text x="145" y="138" text-anchor="middle" class="t-sm">조종해 모은 데이터로 학습</text>'
+    '<text x="145" y="154" text-anchor="middle" class="t-sm">출력 하나가 「스킬 켜기」</text>'
+    '<rect x="390" y="100" width="230" height="66" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.8"/>'
+    '<text x="505" y="122" text-anchor="middle" class="t-lab">아래층 — 강화학습 스킬</text>'
+    '<text x="505" y="138" text-anchor="middle" class="t-sm">PPO · 아이작 랩</text>'
+    '<text x="505" y="154" text-anchor="middle" class="t-sm">쥐기 · 축 기준 돌리기</text>'
+    '<path d="M272 133 L388 133" class="flow"/>'
+    '<text x="330" y="126" text-anchor="middle" class="t-sm">스킬 켜기 신호</text>'
+    '<rect x="240" y="206" width="170" height="44" rx="9" fill="none" stroke="var(--line)" stroke-width="1.5"/>'
+    '<text x="325" y="233" text-anchor="middle" class="t-lab">로봇 손</text>'
+    '<path d="M145 166 L282 204" class="flow"/>'
+    '<path d="M505 166 L370 204" class="flow"/>'
+    '</svg>')
+
+
 CARDS = [{
     'section': SEC_MODEL,
     'topic': ('infra', '모델 아키텍처'),
@@ -81,6 +156,18 @@ CARDS = [{
         '<b>효과는 성공률보다 데이터 수율에서 크게 드러난다.</b> 순수 텔레오퍼레이션은 90회 중 31회만 '
         '학습에 쓸 수 있는데, 강화학습 정책을 켜면 89%가 쓸 만해진다. 사과 깎기 성공률 자체는 30%이고 '
         'π0 베이스라인은 0%다.',
+    ],
+    'figs': [
+        (3, 'Rhoda는 어디를 갈아 끼웠나', FIG_DVA,
+         '위 칸이 지금까지의 VLA다. 지금 이미지와 말을 한 모델에 넣어 관절 명령을 바로 낸다. '
+         '아래 칸이 Rhoda다. <b>비디오 모델</b>이 다음 장면을 그리고, <b>인버스 다이내믹스</b>가 '
+         '그 장면에서 행동을 거꾸로 계산한다. 실행한 결과가 프레임으로 다시 쌓여 다음 상상의 '
+         '재료가 되고, 그 누적분이 야바위를 푸는 기억이다.'),
+        (7, 'Sharpa는 어려운 동작만 떼어 아래층에 뒀다', FIG_SHARPA,
+         '한 사람이 두 층을 동시에 돌린다. 오른손으로 사과를 깎는 동작은 <b>위층 VLA</b>가 '
+         '흉내 내 배우고, 손가락으로는 조종이 안 되는 쥐기와 돌리기는 <b>아래층 강화학습 스킬</b>이 '
+         '맡는다. 발 페달이 그 스킬을 켜는 스위치이고, 페달을 누른 시점까지 위층이 배워 나중에는 '
+         '스스로 켠다. 이 구조가 조종 성공률을 <b>90회 중 31회에서 89%로</b> 끌어올렸다.'),
     ],
     'slim_stats': [('300년 / 11시간', 'Rhoda의 웹 비디오 사전학습량과 로봇 데이터량'),
                    ('90회 중 31회', '순수 텔레오퍼레이션으로 건진 학습 데이터'),

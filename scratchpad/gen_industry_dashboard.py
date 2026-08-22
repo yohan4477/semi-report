@@ -46,6 +46,65 @@ SEC_KR = ('sec-rate-kr', '11', '한국 — 금리·환율과 증시',
           '한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리')
 
 
+# -- 입지 갈림 도해 ---------------------------------------------------------
+# 이 편에서 가장 뒤집힌 대목이라 그림 한 장이 문장 여럿을 대신한다. 조건은 마셀러스가
+# 넷 다 앞서는데 허가는 걸프에만 났고, 그래서 결과가 갈렸다. 화살표는 인과다 --
+# 화자가 직접 인과로 말한다(「허가가 안 나는 거예요. 지역 주민이 반대하고」).
+#
+# 조건 칸에 걸프의 장점(헨리 허브)도 적는다. 한쪽을 조건까지 나쁜 동네로 그리면
+# 「나쁜 데가 이겼다」가 되어 원문에 없는 이야기가 된다 -- 원문은 「좋은 데가 졌다」이다.
+SITE_FIG = (
+    '<svg viewBox="0 0 640 372" role="img" '
+    'aria-label="마셀러스와 걸프 연안의 조건과 허가 대비">'
+    # 머리
+    '<text x="157" y="14" text-anchor="middle" class="t-lab">마셀러스 (동북부)</text>'
+    '<text x="483" y="14" text-anchor="middle" class="t-lab">걸프 연안 (텍사스·루이지애나)</text>'
+    # 1층 — 조건
+    '<text x="8" y="34" class="t-sm" style="font-weight:850;letter-spacing:.08em">조건</text>'
+    '<rect x="8" y="42" width="298" height="108" rx="10" class="body"/>'
+    '<text x="24" y="66" class="good">+</text><text x="40" y="66">셰일 가스 산지가 붙어 있다</text>'
+    '<text x="24" y="88" class="good">+</text><text x="40" y="88">유럽까지 더 가깝다</text>'
+    '<text x="24" y="110" class="good">+</text><text x="40" y="110">허리케인이 없다</text>'
+    '<text x="24" y="132" class="good">+</text><text x="40" y="132">배관 이용료가 싸다</text>'
+    '<rect x="334" y="42" width="298" height="108" rx="10" class="body"/>'
+    '<text x="350" y="66" class="t-bad">−</text><text x="366" y="66">허리케인이 지나간다</text>'
+    '<text x="350" y="88" class="t-bad">−</text><text x="366" y="88">유럽에서 멀다</text>'
+    '<text x="350" y="110" class="good">+</text>'
+    '<text x="366" y="110">가스 배관이 모이는 헨리 허브가 있다</text>'
+    '<text x="350" y="134" class="t-sm">사업자가 위험을 나누고 싶어도 옮길 수가 없다</text>'
+    # 2층 — 허가
+    '<text x="8" y="176" class="t-sm" style="font-weight:850;letter-spacing:.08em">허가</text>'
+    '<rect x="8" y="184" width="298" height="72" rx="10" class="body" stroke-dasharray="6 4"/>'
+    '<text x="24" y="210" class="t-bad">✕</text>'
+    '<text x="44" y="210" class="t-lab">수출 전환 허가가 안 난다</text>'
+    '<text x="24" y="232" class="t-sm">지역 주민이 반대하고 지방 정치인이 그편에 섰다</text>'
+    '<rect x="334" y="184" width="298" height="72" rx="10" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="350" y="210" class="good">✓</text>'
+    '<text x="370" y="210" class="t-lab">허가가 난다</text>'
+    '<text x="350" y="232" class="t-sm">100년 오일·가스 동네라 주민이 우호적, 지방 정부도 협조</text>'
+    # 내려가는 화살표
+    '<path d="M157 256 L157 288" class="flow"/>'
+    '<path d="M483 256 L483 288" class="flow"/>'
+    # 3층 — 결과
+    '<text x="8" y="308" class="t-sm" style="font-weight:850;letter-spacing:.08em">결과</text>'
+    '<rect x="8" y="296" width="298" height="64" rx="10" class="body" stroke-dasharray="6 4"/>'
+    '<text x="157" y="322" text-anchor="middle" class="t-bad" '
+    'style="font-size:12px;font-weight:800">지금도 안 된다</text>'
+    '<text x="157" y="342" text-anchor="middle" class="t-sm">수출항이 하루 거리인데 비어 있다</text>'
+    '<rect x="334" y="296" width="298" height="64" rx="10" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="483" y="322" text-anchor="middle" class="t-lab" '
+    'style="font-size:12px">사업 모델이 복제된다</text>'
+    '<text x="483" y="342" text-anchor="middle" class="t-sm">미국 LNG 수출 프로젝트가 여기로 몰려 클러스터가 됐다</text>'
+    '</svg>')
+
+SITE_CAP = ('조건은 <b>왼쪽이 넷 다 앞선다</b>. 가스 산지에 붙어 있고 유럽에 가깝고 허리케인도 '
+            '없고 배관값도 싸다. 그런데 허가가 한쪽에만 났고 결과가 그대로 갈렸다. '
+            '화자가 이 편에서 한국으로 끌어오는 문장이 여기서 나온다 — 어떤 사업이 되느냐 '
+            '안 되느냐는 <b>공장을 짓는 자리 옆집이 찬성하느냐</b>에서 갈린다.')
+
+
 CARDS = [
     {'section': SEC_POLICY,
      'topic': ('market', '산업 정책 · 제조 AI'),
@@ -714,6 +773,7 @@ CARDS = [
      ],
      'slim_stats': [('29배', '10년간 미국 LNG 수출 증가'), ('2.7 대 20달러', '미국 대 동북아 가스값'),
                     ('500조 원', '수출 설비 총투자·보조금 없음'), ('30개월', '벤처 글로벌 착공~첫 생산')],
+     'figs': [(4, '조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP)],
      'oneliner': ('미국이 LNG 수출 1위가 된 동력을 자원이 아니라 제도에서 찾는다. 실패한 사업을 '
                   '갈아탈 여지를 준 자본시장, 주민이 반대하지 않는 입지, 성공한 경쟁자를 베끼는 '
                   '유연함 셋이 10년 만에 판을 바꿨다는 것이다.'),
