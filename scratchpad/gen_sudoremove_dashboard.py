@@ -27,8 +27,12 @@ SEC_BASE = ('sec-base', '02', '피지컬 AI 기초 4강',
             '용어의 층위, 범용화 조건, 그리고 데이터가 없다는 사실')
 
 NOTE_YT = ('유튜브 자동 자막 전문을 <b>요약</b>한 카드입니다. 자동 인식이라 회사·모델 이름이 '
-           '흔들리는 대목이 있어 영상 설명란과 논문으로 맞춰 적었습니다. 숫자는 진행자가 말한 '
-           '것을 그대로 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.')
+           '흔들리는 대목이 있어 영상 설명란과 논문으로 맞춰 적었습니다. 자막은 Sharpa를 '
+           '「셰파」와 「샤파」로 번갈아 받아 적고 설명란 목차에도 Sherpa가 한 번 나오는데, '
+           '논문 링크 표기를 따라 <b>Sharpa</b>로 통일했습니다. 이 회사가 로봇 손을 만들어 왔다는 '
+           '것은 이 편이 아니라 같은 채널의 「로봇 손 직접 다 써보고 알려 드림」(2026-06-21)과 '
+           '「CES 로봇 리뷰」(2026-01-14)에서 다룹니다. 숫자는 진행자가 말한 것을 그대로 옮겼고 '
+           '따로 검증하지 않았습니다. 투자 추천이 아닙니다.')
 NOTE_ESSAY = ('sudoremove.com 공개 웹 에세이를 <b>요약</b>한 카드입니다. 원문 전문을 다시 싣지 '
               '않습니다. 숫자는 필자가 적은 것을 옮겼고 따로 검증하지 않았습니다. '
               '투자 추천이 아닙니다.')
@@ -44,6 +48,35 @@ def elinks(name, url):
 # ── 그림 ──────────────────────────────────────────────────────────────
 # 두 회사의 구조는 말로 읽으면 순서가 안 잡힌다. 무엇이 무엇을 먹어서 무엇을 내놓는지를
 # 상자와 화살표로만 그린다. 색은 .uc-fig 붓(card_lib.FIG_CSS)을 그대로 받는다.
+
+FIG_WHO = (
+    '<svg viewBox="0 0 640 250" role="img" '
+    'aria-label="Rhoda AI와 Sharpa는 서로 다른 회사다">'
+    '<rect x="160" y="14" width="320" height="46" rx="9" fill="none" '
+    'stroke="var(--ink-3)" stroke-width="1.5"/>'
+    '<text x="320" y="34" text-anchor="middle" class="t-lab">둘이 같이 걸린 병목</text>'
+    '<text x="320" y="50" text-anchor="middle" class="t-sm">로봇 데이터가 인터넷에 없다</text>'
+    '<path d="M280 60 L172 92" class="flow"/>'
+    '<path d="M360 60 L468 92" class="flow"/>'
+    '<rect x="20" y="96" width="280" height="134" rx="10" fill="none" '
+    'stroke="var(--accent)" stroke-width="1.6"/>'
+    '<text x="160" y="121" text-anchor="middle" class="t-lab">Rhoda AI</text>'
+    '<text x="160" y="139" text-anchor="middle" class="t-sm">스텔스에서 2026년 3월 등장</text>'
+    '<text x="160" y="155" text-anchor="middle" class="t-sm">조달 4억 5천만 달러</text>'
+    '<path d="M36 168 L284 168" stroke="var(--line)" stroke-width="1" fill="none"/>'
+    '<text x="160" y="190" text-anchor="middle" class="t-sm">다음 장면을 상상해</text>'
+    '<text x="160" y="206" text-anchor="middle" class="t-sm">행동을 거꾸로 계산</text>'
+    '<text x="160" y="222" text-anchor="middle" class="t-sm">논문 없음 · 데모만</text>'
+    '<rect x="340" y="96" width="280" height="134" rx="10" fill="none" '
+    'stroke="var(--accent)" stroke-width="1.6"/>'
+    '<text x="480" y="121" text-anchor="middle" class="t-lab">Sharpa</text>'
+    '<text x="480" y="139" text-anchor="middle" class="t-sm">로봇 손을 만드는 회사</text>'
+    '<text x="480" y="155" text-anchor="middle" class="t-sm">엔비디아 GTC 2026 부스</text>'
+    '<path d="M356 168 L604 168" stroke="var(--line)" stroke-width="1" fill="none"/>'
+    '<text x="480" y="190" text-anchor="middle" class="t-sm">어려운 동작만 미리 구워</text>'
+    '<text x="480" y="206" text-anchor="middle" class="t-sm">아래층에 둔다</text>'
+    '<text x="480" y="222" text-anchor="middle" class="t-sm">논문 MoDE-VLA</text>'
+    '</svg>')
 
 FIG_DVA = (
     '<svg viewBox="0 0 640 300" role="img" '
@@ -130,11 +163,12 @@ CARDS = [{
                blob(BASE + '[260316] Rhoda AI 비디오 액션 모델과 Sharpa 손안 조작.md'), 'secondary'),
               ('📎 Sharpa MoDE-VLA 논문', PAPER, 'secondary')],
     'slim_oneliner': (
-        'Rhoda AI는 VLA(Vision-Language-Action, 시각·언어·행동 통합 모델)로는 범용성에 못 닿는다고 '
-        '보고, 웹 비디오로 학습한 생성 모델이 다음 프레임을 예측하면 그 프레임을 역산해 관절 명령을 '
-        '뽑는 방식을 택했다. 같은 주 엔비디아 GTC 부스를 여는 Sharpa는 사과 깎기를 시연 과제로 걸고, '
-        '사람이 조종하기 가장 어려운 손안 조작만 강화학습 정책으로 미리 구워 발 페달에 붙였다. '
-        '진행자들은 어느 쪽이 맞는지 판정하지 않는다.'),
+        '<b>서로 다른 회사 둘</b>을 한 편에서 견준다. Rhoda AI는 스텔스에서 막 나온 로봇 회사이고, '
+        'Sharpa는 로봇 손을 만들어 온 회사다. Rhoda는 VLA(Vision-Language-Action, 시각·언어·행동 '
+        '통합 모델)로는 범용성에 못 닿는다고 보고, 웹 비디오로 학습한 생성 모델이 다음 프레임을 '
+        '예측하면 그 프레임을 역산해 관절 명령을 뽑는 방식을 택했다. Sharpa는 엔비디아 GTC 부스에서 '
+        '사과 깎기를 걸고, 사람이 조종하기 가장 어려운 손안 조작만 강화학습 정책으로 미리 구워 발 '
+        '페달에 붙였다. 진행자들은 어느 쪽이 맞는지 판정하지 않는다.'),
     'slim_points': [
         '<b>Rhoda의 학습량은 한쪽으로 심하게 쏠려 있다.</b> 웹 비디오 300년치로 사전학습한 다음 로봇 '
         '데이터는 11시간만 얹었다고 주장한다. 진행자들은 300년이라는 단위 자체가 이상하다고 먼저 짚는다.',
@@ -158,6 +192,10 @@ CARDS = [{
         'π0 베이스라인은 0%다.',
     ],
     'figs': [
+        (0, '두 회사는 무엇이 다른가', FIG_WHO,
+         '<b>Rhoda AI</b>와 <b>Sharpa</b>는 서로 다른 회사다. 데이터를 모을 길이 막혔다는 사정은 '
+         '같은데 푸는 자리가 갈린다. Rhoda는 학습 재료를 웹 비디오로 갈아 끼웠고, Sharpa는 사람이 '
+         '조종하다 실패하는 구간만 기계에 넘겼다. 아래 두 그림이 각각의 속을 연다.'),
         (3, 'Rhoda는 어디를 갈아 끼웠나', FIG_DVA,
          '위 칸이 지금까지의 VLA다. 지금 이미지와 말을 한 모델에 넣어 관절 명령을 바로 낸다. '
          '아래 칸이 Rhoda다. <b>비디오 모델</b>이 다음 장면을 그리고, <b>인버스 다이내믹스</b>가 '
