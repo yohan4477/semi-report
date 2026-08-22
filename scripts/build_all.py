@@ -21,6 +21,7 @@ BUILD = [
     ('언더스탠딩 프리미엄', ['scratchpad/gen_undpremium_dashboard.py']),
     ('이선엽 시황', ['scratchpad/gen_leesunyeop_dashboard.py']),
     ('건강 대시보드', ['scratchpad/gen_health_dashboard.py']),
+    ('수도리무브', ['scratchpad/gen_sudoremove_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
     # 링크드인은 원문 파일이 먼저 있어야 노트가 인용할 수 있다
     ('링크드인 원문', ['scripts/gen_li_source.py']),

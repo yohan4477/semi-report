@@ -1,0 +1,990 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수도리무브 — 로보틱스 · 피지컬 AI</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+          border:1px solid var(--line);border-radius:999px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
+     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:center}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
+  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">sudoremove — 로보틱스 · 피지컬 AI 해설</p>
+    <h1>수도리무브</h1>
+  </header>
+
+  
+
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">5</span></button><button class="stile" data-sec="sec-model" aria-pressed="false"><span class="st-num">01</span><span class="st-t">모델과 회사</span><span class="st-s">같은 데이터 병목을 서로 다른 자리에서 푸는 회사들</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-base" aria-pressed="false"><span class="st-num">02</span><span class="st-t">피지컬 AI 기초 4강</span><span class="st-s">용어의 층위, 범용화 조건, 그리고 데이터가 없다는 사실</span><span class="st-n cnt">4</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+
+  
+
+  <section id="sec-model"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">모델과 회사</h2><button type="button" class="sec-copy" data-anchor="sec-model">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic infra">모델 아키텍처</span><h2 id="card-Rhoda-AI는-VLA를-버렸고-Sharpa는-손안-조작만-따로-구웠다">Rhoda AI는 VLA를 버렸고 Sharpa는 손안 조작만 따로 구웠다</h2><p class="uc-gain">스텔스에서 나온 로봇 회사 둘이 같은 주에 공개한 방법을 나란히 놓고 봅니다. 한쪽은 다음 장면을 상상해 행동을 역산하고, 다른 쪽은 사람이 조종하기 어려운 동작만 강화학습으로 미리 구워 둡니다. 두 방법이 각각 어떤 숫자를 내놓았는지, 그리고 무엇을 안 밝혔는지까지.</p><div class="uc-meta"><span>sudoremove <b>JB · JC</b></span><span>2026-03-16</span><span>23분</span><span>YouTube</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">Rhoda AI는 VLA(Vision-Language-Action, 시각·언어·행동 통합 모델)로는 범용성에 못 닿는다고 보고, 웹 비디오로 학습한 생성 모델이 다음 프레임을 예측하면 그 프레임을 역산해 관절 명령을 뽑는 방식을 택했다. 같은 주 엔비디아 GTC 부스를 여는 Sharpa는 사과 깎기를 시연 과제로 걸고, 사람이 조종하기 가장 어려운 손안 조작만 강화학습 정책으로 미리 구워 발 페달에 붙였다. 진행자들은 어느 쪽이 맞는지 판정하지 않는다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>Rhoda의 학습량은 한쪽으로 심하게 쏠려 있다.</b> 웹 비디오 300년치로 사전학습한 다음 로봇 데이터는 11시간만 얹었다고 주장한다. 진행자들은 300년이라는 단위 자체가 이상하다고 먼저 짚는다.</li><li><b>다음 프레임을 시간 순서대로 하나씩 예측한다.</b> 보통의 비디오 생성은 정해진 길이의 영상을 양방향으로 만드는데, 이쪽은 지나간 프레임을 KV 캐시로 들고 가면서 LLM의 다음 토큰 예측처럼 다음 장면을 잇는다.</li><li><b>행동은 그 장면에서 거꾸로 계산해 나온다.</b> 예측한 프레임을 인버스 다이내믹스 모델(상태 변화로부터 그 변화를 만든 행동을 되짚는 모델)에 넣어 관절 명령으로 바꾸고, 비디오 모델과 번갈아 돌린다. 지금 실행하는 행동은 앞서 예측해 둔 것이다.</li><li><b>야바위 데모가 시각 기억의 증거로 나온다.</b> 컵 아래 물건을 감추고 섞는 작업은 지금 이미지만 보는 VLA로는 원리상 못 푼다. Rhoda 쪽은 지나간 프레임을 전부 들고 있어 어느 컵인지 기억한다.</li><li><b>말을 안 쓰고 영상이 프롬프트 구실을 한다.</b> 사람이 몸으로 한 번 보여 주면 로봇이 따라 한다. LLM의 퓨샷 프롬프팅에서 예시가 하던 일을 영상이 대신하는 셈이다.</li><li><b>Rhoda는 정량 지표를 하나도 안 냈다.</b> 모델 파라미터도 초당 프레임 수도 밝히지 않았고 데모만 공개했다. 진행자 한 명은 "그냥 정량적인 거는 이게 다였어"라고 말한다.</li><li><b>Sharpa는 손안 조작만 떼어 강화학습으로 풀었다.</b> PPO로 아이작 랩에서 학습한 정책 둘이 물체를 안정적으로 쥐는 것과 축을 기준으로 돌리는 것을 맡고, 조종자는 발 페달 세 개로 그 스킬을 켠다. 모방학습 단계에서 페달을 누른 시점까지 배워 VLA의 출력 하나가 스킬 켜기가 된다.</li><li><b>효과는 성공률보다 데이터 수율에서 크게 드러난다.</b> 순수 텔레오퍼레이션은 90회 중 31회만 학습에 쓸 수 있는데, 강화학습 정책을 켜면 89%가 쓸 만해진다. 사과 깎기 성공률 자체는 30%이고 π0 베이스라인은 0%다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">300년 / 11시간</div><div class="s-label">Rhoda의 웹 비디오 사전학습량과 로봇 데이터량</div></div><div class="stat"><div class="s-val">90회 중 31회</div><div class="s-label">순수 텔레오퍼레이션으로 건진 학습 데이터</div></div><div class="stat"><div class="s-val">89%</div><div class="s-label">강화학습 스킬을 켜고 조종했을 때의 수율</div></div><div class="stat"><div class="s-val">30% / 0%</div><div class="s-label">Sharpa 사과 깎기 성공률과 π0 베이스라인</div></div></div><p class="uc-quote">이게 정답이 아닐 수도 있죠. 근데 이게 됐다라는 걸 보여줬다는게 나는 굉장히 중요한 거 같아요.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">같은 채널 「Action Data Scaling 문제」</span>기초 4강은 데이터를 모으는 경로 다섯을 늘어놓고 <b>어느 것도 스케일 문제를 푼다고 입증되지 않았다</b>고 닫는다. Rhoda의 웹 비디오 사전학습은 그 경로 가운데 월드모델과 역동역학 모델을 쓰는 다섯 번째의 변형인데, 이번 편에서도 성공률 숫자가 나오지 않았다. 경로가 바뀐 것이지 입증이 된 것은 아니다.</li><li><span class="who">미국주식 사관학교 — VLA가 병목을 푸는 중이라는 전제</span><b>「로봇은 인건비가 아니라 설비투자 예산에서 팔린다」(2026-07-20)</b>는 VLA 모델과 영상 사전학습·시뮬레이션이 물리 데이터 부족을 <b>풀고 있다</b>는 전제 위에서 로봇 시장 규모를 추산한다. 이번 편의 두 회사는 그 전제에 각각 다르게 선다. Rhoda는 VLA로는 범용성에 못 닿는다며 아예 갈아탔고, Sharpa는 VLA를 쓰되 어려운 구간을 떼어냈다. 병목이 풀리는 중이라는 진술은 아직 방법이 정해지지 않았다는 뜻이기도 하다.</li><li><span class="who">성공률 30%를 어떻게 읽을 것인가</span>사과 깎기 성공 판정 기준이 논문 밖에서는 확인되지 않는다. 베이스라인이 0%라는 대비가 커 보여도 <b>실험 표가 하나뿐</b>이고, 진행자들도 GTC 부스에서 실제로 그 시연을 할지 확신하지 않는다.</li></ul></div><div class="side-note">유튜브 자동 자막 전문을 <b>요약</b>한 카드입니다. 자동 인식이라 회사·모델 이름이 흔들리는 대목이 있어 영상 설명란과 논문으로 맞춰 적었습니다. 숫자는 진행자가 말한 것을 그대로 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://youtu.be/-sa8-SxgrVU" target="_blank" rel="noopener">▶ 원본 영상</a><a class="secondary" href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%ED%94%BC%EC%A7%80%EC%BB%ACAI/%5B260316%5D%20Rhoda%20AI%20%EB%B9%84%EB%94%94%EC%98%A4%20%EC%95%A1%EC%85%98%20%EB%AA%A8%EB%8D%B8%EA%B3%BC%20Sharpa%20%EC%86%90%EC%95%88%20%EC%A1%B0%EC%9E%91.md" target="_blank" rel="noopener">📄 자막 기반 변환본</a><a class="secondary" href="https://arxiv.org/abs/2603.08122" target="_blank" rel="noopener">📎 Sharpa MoDE-VLA 논문</a><button type="button" class="uc-copy" data-anchor="card-Rhoda-AI는-VLA를-버렸고-Sharpa는-손안-조작만-따로-구웠다">링크 복사</button></div></div></div></section><section id="sec-base"><div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">피지컬 AI 기초 4강</h2><button type="button" class="sec-copy" data-anchor="sec-base">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic infra">용어 정의</span><h2 id="card-Physical-AI를-좁게-정의해야-하는-이유">Physical AI를 좁게 정의해야 하는 이유</h2><p class="uc-gain">이 말을 넓게 쓰면 자율주행과 드론까지 들어와 10년 전 로보틱스와 구분이 안 됩니다. 어디에 선을 그어야 하는지, 그 선을 언제 넘었는지.</p><div class="uc-meta"><span>sudoremove <b>박종현</b></span><span>2026-03-19</span><span>공개 웹 에세이</span><span>sudoremove.com</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">필자는 Physical AI를 "VLA(Vision-Language-Action, 시각·언어·행동 통합) 모델을 end-to-end로 써서 규칙 기반으로는 불가능했던 범용 물리 작업을 해내는 시스템"으로 좁게 잡자고 주장한다. 넓게 잡으면 이미 10년 전부터 있던 것들과 구분이 사라진다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>용어의 출처는 엔비디아다.</b> 젠슨 황이 GTC 2024에서 꺼냈고 "로보틱스의 ChatGPT 순간이 곧 온다"고 예고했다.</li><li><b>경계선은 2023년 7월 RT-2다.</b> 구글 딥마인드가 웹 데이터와 로봇 데이터를 함께 학습하며 로봇의 동작을 언어 토큰처럼 다뤘다. 학습에 없던 물체로의 일반화, 추론을 거친 명령 수행, 다단계 계획이 이때부터 열렸다.</li><li><b>증거는 예전엔 안 되던 작업이 된다는 것이다.</b> Physical Intelligence의 π0와 Figure의 Helix가 빨래 개기를 자율로 해냈다. 형태가 매번 달라지는 변형체라 로보틱스의 성배로 불리던 작업이다.</li><li><b>고전 로보틱스 진영도 넘어왔다.</b> 모듈형 구조와 MPC(모델 예측 제어)를 쓰던 보스턴 다이내믹스가 디퓨전 트랜스포머 기반 LBM(Large Behavior Model)을 만들고 있다.</li><li><b>이름만 바뀐 것이 아니라는 주장이다.</b> LLM·VLM 학습에서 넘어온 세계 지식을 물려받아, 명시적으로 프로그래밍하지 않은 새 물체도 다룬다는 점을 근거로 든다.</li></ul><p class="uc-label">고전 로보틱스와 Physical AI</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th></th><th>고전 로보틱스</th><th>Physical AI</th></tr></thead><tbody><tr><td>구조</td><td>모듈형(인지·계획·제어 분리)</td><td>end-to-end 단일 모델</td></tr><tr><td>동작 규정</td><td>규칙 기반</td><td>데이터 기반</td></tr><tr><td>적용 범위</td><td>도메인 한정</td><td>범용</td></tr><tr><td>사전 지식</td><td>없음(직접 설계)</td><td>LLM·VLM에서 상속</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">2024</div><div class="s-label">젠슨 황이 GTC에서 용어를 꺼낸 해</div></div><div class="stat"><div class="s-val">2023년 7월</div><div class="s-label">필자가 경계선으로 잡은 RT-2 공개 시점</div></div><div class="stat"><div class="s-val">1시간</div><div class="s-label">Figure AI가 무른 비닐 포장을 연속으로 다룬 시간</div></div></div><p class="uc-quote">로보틱스의 ChatGPT 순간이 곧 온다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">보스턴 다이내믹스의 전환을 어디까지 읽을 수 있나</span>한 회사의 구조 변경을 업계 전체의 패러다임 이동 신호로 읽는 것은 <b>필자의 해석</b>이다. 원문도 이를 추정으로 밝힌다.</li><li><span class="who">좁은 정의는 회사를 걸러 내는 잣대가 아니다</span>정의를 좁히면 자율주행과 드론이 빠지는데, 이 분류는 <b>기술 계보를 가르는 것</b>이지 어느 시장이 더 크다는 판단이 아니다. 같은 페이지의 다른 카드가 시장 규모를 다룰 때 이 선을 그대로 옮겨 쓰면 안 된다.</li></ul></div><div class="side-note">sudoremove.com 공개 웹 에세이를 <b>요약</b>한 카드입니다. 원문 전문을 다시 싣지 않습니다. 숫자는 필자가 적은 것을 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%ED%94%BC%EC%A7%80%EC%BB%ACAI/Physical%20AI%EC%9D%98%20%EC%A0%95%EC%9D%98.md" target="_blank" rel="noopener">📄 변환본</a><a class="secondary" href="https://sudoremove.com/knowledge/essays/fundamentals/definition/" target="_blank" rel="noopener">🔗 원문(sudoremove.com)</a><button type="button" class="uc-copy" data-anchor="card-Physical-AI를-좁게-정의해야-하는-이유">링크 복사</button></div></div></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic infra">용어 정의</span><h2 id="card-VLA-LBM-RFM은-같은-말이-아니다">VLA · LBM · RFM은 같은 말이 아니다</h2><p class="uc-gain">뒤섞여 쓰이는 세 단어의 층위를 갈라 놓습니다. 그리고 언어에서 통한 방법이 몸에서는 왜 그대로 안 통하는지.</p><div class="uc-meta"><span>sudoremove <b>박종현</b></span><span>2026-03-19</span><span>공개 웹 에세이</span><span>sudoremove.com</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">LLM에서 VLM으로, 다시 VLA로 이어지는 계보를 한 줄로 세우고 세 용어의 층위를 가른다. 언어에서 LLM이 해낸 범용화를 로봇의 몸에서 되풀이하려는 시도인데, 행동 데이터는 인터넷에 없다는 점이 그 경로를 막는다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>계보는 한 줄이다.</b> LLM(텍스트)에서 VLM(시각과 언어)으로, 다시 VLA(시각·언어·행동)로 이어진다. 최근에는 촉각을 더한 VTLA까지 나온다.</li><li><b>세 용어의 층위가 다르다.</b> VLA는 시각 인지·언어 지시·모터 동작을 한 모델에 넣은 것, LBM은 사실상 같은 것을 행동 출력 쪽에서 부르는 이름, RFM(Robot Foundation Model)은 그보다 위 개념으로 여러 환경과 여러 과제를 한 모델이 감당한다는 뜻이다.</li><li><b>특화형이 무너지는 지점이 있다.</b> 물체 형태가 매번 달라지는 빨래 개기, 쥐는 힘과 접촉 방식을 상황마다 조절해야 하는 무른 물건 다루기가 그렇다.</li><li><b>범용 로봇이 갖춰야 할 것은 세계 지식이다.</b> 물건은 떨어지고 물은 마르며 사람 말에는 생략된 맥락이 있다는 것을, 로봇이 별도 학습 없이 이미 알고 있어야 한다는 발상이다.</li><li><b>병목은 데이터의 존재 자체다.</b> 로봇이 물건을 집고 문을 열고 빨래를 개는 데이터는 인터넷에 없다. 텍스트를 인터넷 규모로 긁어 성공한 LLM의 경로를 그대로 밟을 수 없는 이유다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">3단계</div><div class="s-label">LLM에서 VLM을 거쳐 VLA로 이어지는 계보</div></div><div class="stat"><div class="s-val">VTLA</div><div class="s-label">촉각을 더해 최근 나온 네 번째 이름</div></div></div><p class="uc-quote">언어의 LLM을 몸에서 되풀이한다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">층위를 갈라도 회사들은 뒤섞어 쓴다</span>필자가 정리한 구분은 <b>읽는 사람을 위한 정리</b>이고, 제품 발표에서는 같은 모델을 LBM이라고도 RFM이라고도 부른다. 이름으로 기술을 가르려 하면 어긋난다.</li><li><span class="who">같은 채널 「Rhoda AI」 편</span>VLA를 계보의 도착점처럼 세워 두는 이 정리와 달리, 2026년 3월 편에서는 <b>VLA로는 범용성에 못 닿는다</b>며 비디오 생성으로 갈아탄 회사가 나온다. 계보가 한 줄이라는 서술은 다섯 달 만에 갈래를 하나 더 받았다.</li></ul></div><div class="side-note">sudoremove.com 공개 웹 에세이를 <b>요약</b>한 카드입니다. 원문 전문을 다시 싣지 않습니다. 숫자는 필자가 적은 것을 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%ED%94%BC%EC%A7%80%EC%BB%ACAI/RFM%20%26%20VLA%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80.md" target="_blank" rel="noopener">📄 변환본</a><a class="secondary" href="https://sudoremove.com/knowledge/essays/fundamentals/what-is-rfm-vla/" target="_blank" rel="noopener">🔗 원문(sudoremove.com)</a><button type="button" class="uc-copy" data-anchor="card-VLA-LBM-RFM은-같은-말이-아니다">링크 복사</button></div></div></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic infra">전환 조건</span><h2 id="card-비전-AI가-걸어간-길을-로보틱스가-다시-걷는다">비전 AI가 걸어간 길을 로보틱스가 다시 걷는다</h2><p class="uc-gain">과제별 특화 모델이 통합 모델로 수렴한 전례가 로봇에서 되풀이될 조건 셋. 그리고 지금 어디까지 왔는지를 데이터셋 숫자로.</p><div class="uc-meta"><span>sudoremove <b>박종현</b></span><span>2026-03-19</span><span>공개 웹 에세이</span><span>sudoremove.com</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">분류·검출·분할마다 따로 있던 비전 모델이 통합 VLM 하나로 수렴한 경로를 로보틱스가 그대로 밟고 있다고 본다. 그 전환을 떠받치는 조건으로 사전학습 VLM 백본, 교차 embodiment 데이터셋, 스케일링 법칙 셋을 든다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>특화형과 범용형의 차이가 환경에서 갈린다.</b> 특화형은 통제된 조건에서 성능이 높지만 환경이 조금만 달라져도 무너진다. 범용형은 학습에 없던 상황을 zero-shot(사전 예시 없이)이나 few-shot(예시 몇 개만으로) 처리한다.</li><li><b>조건 하나는 사전학습 VLM 백본이다.</b> PaliGemma·Qwen-VL·SmolVLM이 인터넷 규모 학습에서 얻은 상식을 이미 갖고 있어, 로봇이 기초부터 배울 필요가 없어졌다.</li><li><b>조건 둘은 교차 embodiment 데이터셋이다.</b> 서로 다른 로봇에서 모은 데이터를 함께 쓴다. Open X-Embodiment는 로봇 22종 이상, 과제 527개, 에피소드 100만 건을 넘는다.</li><li><b>조건 셋은 스케일링 법칙이다.</b> 모델이 커지고 데이터가 다양해질수록 일반화가 좋아진다는 LLM의 경험칙이 로봇에도 적용될 것으로 본다.</li><li><b>일반화 사례가 이미 나와 있다.</b> π0.5는 학습에 없던 환경에 적응하고, GR00T는 서로 다른 하드웨어를 오가며, SmolVLA는 4.5억 파라미터로 범용 수준의 성능을 낸다.</li><li><b>당분간의 절충은 파인튜닝이다.</b> 넓은 기반 모델에 과제별 미세조정을 얹어 특화형의 정밀도와 범용형의 유연성을 같이 가져간다. 웹 데이터·시뮬레이션·로봇 데이터를 함께 학습해 미세조정조차 필요 없게 만드는 것이 지향점이다.</li></ul><p class="uc-label">교차 embodiment 데이터셋</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>데이터셋</th><th>로봇 종류</th><th>과제 수</th><th>에피소드</th></tr></thead><tbody><tr><td>Open X-Embodiment</td><td>22종 이상</td><td>527</td><td>100만+</td></tr><tr><td>DROID</td><td>7종</td><td>500+</td><td>7만 6천</td></tr><tr><td>BridgeData V2</td><td>1종</td><td>13</td><td>6만</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">22종 · 527과제 · 100만+</div><div class="s-label">Open X-Embodiment 규모</div></div><div class="stat"><div class="s-val">7종 · 500+ · 7만 6천</div><div class="s-label">DROID 규모</div></div><div class="stat"><div class="s-val">4.5억</div><div class="s-label">SmolVLA 파라미터 수</div></div><div class="stat"><div class="s-val">15종</div><div class="s-label">데이터셋이 포괄하는 휴머노이드 설계 수</div></div></div><p class="uc-quote">비전 AI가 걸어간 길.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">전례가 있다는 것이 되풀이된다는 뜻은 아니다</span>비전 AI의 수렴을 로봇의 미래 지도로 쓰는 것이 이 글의 논법인데, 비전은 <b>인터넷에 이미 쌓인 이미지</b>로 스케일을 얻었다. 같은 채널의 4강이 못 박듯 행동 데이터는 그렇게 쌓여 있지 않다.</li><li><span class="who">에피소드 100만 건은 텍스트 규모가 아니다</span>Open X-Embodiment가 이 분야에서 가장 큰 축인데도 <b>100만 건 단위</b>다. LLM이 다룬 토큰 규모와 견주면 스케일링 법칙을 그대로 옮겨 붙일 근거가 아직 얇다.</li></ul></div><div class="side-note">sudoremove.com 공개 웹 에세이를 <b>요약</b>한 카드입니다. 원문 전문을 다시 싣지 않습니다. 숫자는 필자가 적은 것을 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%ED%94%BC%EC%A7%80%EC%BB%ACAI/Specialist%EC%97%90%EC%84%9C%20Generalist%EB%A1%9C.md" target="_blank" rel="noopener">📄 변환본</a><a class="secondary" href="https://sudoremove.com/knowledge/essays/fundamentals/specialist-to-generalist/" target="_blank" rel="noopener">🔗 원문(sudoremove.com)</a><button type="button" class="uc-copy" data-anchor="card-비전-AI가-걸어간-길을-로보틱스가-다시-걷는다">링크 복사</button></div></div></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic infra">데이터 병목</span><h2 id="card-행동-데이터는-인터넷에-없다-이를-뚫으려는-다섯-경로">행동 데이터는 인터넷에 없다 — 이를 뚫으려는 다섯 경로</h2><p class="uc-gain">VLA가 LLM처럼 규모로 성능을 얻지 못하는 이유 셋과, 데이터를 모으려는 경로 다섯. 테슬라가 조종자에게 건 신체 조건까지.</p><div class="uc-meta"><span>sudoremove <b>박종현</b></span><span>2026-03-19</span><span>공개 웹 에세이</span><span>sudoremove.com</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">행동 데이터가 인터넷에 없다는 사실, 실물 로봇을 돌려야 하는 평가 비용, 촉각 센싱과 하드웨어 제조의 미완성이 규모 확대를 막는다고 정리한다. 이를 뚫으려는 수집 경로 다섯을 늘어놓되 어느 쪽도 정답으로 판명되지 않았다고 닫는다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>막는 것 하나는 데이터가 없다는 사실이다.</b> 행동 데이터는 인터넷에 존재하지 않는다. 텍스트처럼 이미 쌓여 있는 것을 긁어오는 방식이 통하지 않고 물리적으로 직접 모아야 한다.</li><li><b>막는 것 둘은 평가 비용이다.</b> 실물 로봇을 돌려야 성능을 알 수 있고 하드웨어가 부서질 위험 때문에 자동 벤치마크를 못 돌린다. 개발 반복 속도가 여기서 직접 깎인다.</li><li><b>경로 하나는 텔레오퍼레이션이다.</b> 테슬라는 옵티머스 학습용 조종자를 시급 48달러에 뽑았고 키 170~180cm, 하루 7시간 이상 보행, 13kg 운반이라는 신체 조건을 걸었다. VR 장비를 오래 쓰면 피로와 멀미가 와서 조종 시간 자체가 한계다.</li><li><b>경로 둘은 UMI다.</b> 로봇 없이 사람이 들고 다니는 집게로 조작 데이터를 모으고, 그 데이터를 다른 로봇 플랫폼으로 옮긴다.</li><li><b>경로 셋은 시뮬레이션이다.</b> 엔비디아 Isaac GR00T가 합성 데이터를 만든다. 시뮬레이션과 현실의 차이를 메우는 것이 관건이다.</li><li><b>경로 넷은 커뮤니티다.</b> HuggingFace가 하드웨어와 소프트웨어를 오픈소스로 풀고 데이터·모델을 한곳에 모은다. SmolVLA가 그 가능성의 증거로 제시된다.</li><li><b>경로 다섯은 월드모델과 역동역학 모델이다.</b> 1X Technologies가 레이블 없는 영상에서 행동을 역으로 뽑아낸다. 인터넷에 쌓인 사람 행동 영상을 데이터원으로 바꾸려는 시도다.</li><li><b>결론은 미정이다.</b> 다섯 경로 가운데 어느 것도 규모 문제를 푼다고 입증되지 않았다.</li></ul><p class="uc-label">LLM과 VLA의 대조</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th></th><th>LLM</th><th>VLA</th></tr></thead><tbody><tr><td>데이터원</td><td>인터넷(사실상 무한)</td><td>실물 로봇 동작(제한)</td></tr><tr><td>수집 비용</td><td>낮음</td><td>높음</td></tr><tr><td>평가</td><td>자동</td><td>실물 로봇 필요</td></tr></tbody></table></div><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">시급 48달러</div><div class="s-label">테슬라 옵티머스 학습용 조종자 임금</div></div><div class="stat"><div class="s-val">170~180cm</div><div class="s-label">조종자 신체 조건 중 키</div></div><div class="stat"><div class="s-val">13kg</div><div class="s-label">조종자에게 요구한 운반 중량</div></div><div class="stat"><div class="s-val">5개</div><div class="s-label">필자가 정리한 데이터 수집 경로 수</div></div></div><p class="uc-quote">인터넷에 없는 데이터.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">같은 채널 「Rhoda AI」 편이 다섯 번째 경로를 밀고 나갔다</span>2026년 3월 편의 Rhoda AI는 <b>웹 비디오 300년치</b>로 사전학습하고 로봇 데이터를 11시간만 얹었다고 주장한다. 이 글이 미정으로 남긴 경로가 같은 달에 자금 4억 5천만 달러를 받아 제품이 됐다. 다만 성공률 숫자는 여전히 공개되지 않았다.</li><li><span class="who">조종자 조건은 채용 공고이지 병목의 크기가 아니다</span>시급 48달러와 신체 조건은 <b>한 회사의 채용 문서</b>에서 나온 값이다. 이것으로 산업 전체의 데이터 수집 단가를 추산하면 표본이 하나다.</li></ul></div><div class="side-note">sudoremove.com 공개 웹 에세이를 <b>요약</b>한 카드입니다. 원문 전문을 다시 싣지 않습니다. 숫자는 필자가 적은 것을 옮겼고 따로 검증하지 않았습니다. 투자 추천이 아닙니다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%ED%94%BC%EC%A7%80%EC%BB%ACAI/Action%20Data%20Scaling%20%EB%AC%B8%EC%A0%9C.md" target="_blank" rel="noopener">📄 변환본</a><a class="secondary" href="https://sudoremove.com/knowledge/essays/fundamentals/scaling-problem/" target="_blank" rel="noopener">🔗 원문(sudoremove.com)</a><button type="button" class="uc-copy" data-anchor="card-행동-데이터는-인터넷에-없다-이를-뚫으려는-다섯-경로">링크 복사</button></div></div></div></section>
+
+  <footer><p class="lede">로봇이 몸으로 하는 일을 학습으로 푸는 흐름을 따라가는 페이지입니다. 공개 웹 에세이와 유튜브 해설을 같이 담고, 원문은 싣지 않고 <b>요약과 대조만</b> 남깁니다. 카드마다 반론을 붙여 한 편만 읽고 결론이 나지 않게 했습니다.</p>    <div class="meta-row">
+      <span>정리일 <b>2026-08-23</b></span>
+      <span>수록 <b>5건</b></span>
+      <span>원문 기간 <b>2026-03-16 ~ 03-19</b></span>
+      <span>소스 <b>sudoremove.com · YouTube</b></span>
+    </div>
+제3자 해설 요약 아카이브 · 원문은 싣지 않습니다. 투자 추천이 아닙니다.
+  페이지 생성은 <code>scratchpad/gen_sudoremove_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).</footer>
+</div>
+<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script><script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
+  var back=document.querySelector('.sback');
+  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var only=null, picking=true, sect=null, q='', cell=null;
+  var mbar=document.querySelector('.mg-b');
+  var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
+  function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
+  function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
+  function apply(){
+    // 카드를 숨기는 조건이 둘이다 — 범위 탭(국내·해외)과 합류도 칸.
+    // 칸을 고르면 섹션을 가로질러 그 칸에 선 카드만 남는다.
+    document.querySelectorAll('.ucard').forEach(function(c){
+      var okScope = !c.dataset.scope || pick==='all' || c.dataset.scope===pick;
+      var okCell = !cell || (' '+(c.dataset.cells||'')+' ').indexOf(' '+cell+' ')!==-1;
+      c.hidden = !(okScope && okCell);
+    });
+    // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
+    document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
+      r.hidden = !(pick==='all' || r.dataset.scope===pick);
+    });
+    document.querySelectorAll('.rlold').forEach(function(o){
+      o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
+    });
+    // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
+    document.querySelectorAll('.rlrep').forEach(function(rep){
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;
+      var tagged=rep.querySelectorAll('.rll li[data-sec]');
+      tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
+      if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
+    });
+    var roll=document.querySelector('.rollup');
+    if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
+    var seen=0;
+    document.querySelectorAll('section[id]').forEach(function(s){
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
+      // 칸을 고른 화면에서는 카드가 남은 섹션만 선다. 섹션 하나를 고른 상태가 아니다.
+      s.hidden = cell ? live===0 : (picking || live===0 || (only && s.id!==only));
+      var o=opt(s.id);
+      if(o){
+        // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
+        // 이 표시를 보고 판단하므로, 검색 분기가 o.hidden을 다시 덮어써도 이 값은 남는다.
+        o.dataset.empty = live===0 ? '1' : '';
+        o.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
+      }
+    });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    // 「전체 보기」는 회사를 안 고른 채 전부 읽는 화면이다(picking=false, only=null).
+    // 갈래 버튼은 회사 하나를 고른 뒤에만 뜻이 있으므로 여기서는 글(.sv-posts)만 펴고
+    // 지도(.sv-val)는 접어 둔다 — 회사 스물둘의 지도를 한꺼번에 펴면 첫 카드에 닿기까지
+    // 스크롤이 수십 판이 된다. 이 갈래가 없던 동안 전체 보기에 제목만 나오고 카드가
+    // 통째로 안 나왔다.
+    var allView = !picking && !only;
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      if(allView){ l.hidden = !l.classList.contains('sv-posts'); return; }
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
+    });
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden) n += 1;
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
+    // 검색어가 있으면 섹터 층을 건너뛴다. 회사 타일 글자(.st-t)로만 맞추고, 카드 0편이라
+    // 이미 숨어 있던 타일(dataset.empty)은 글자가 맞아도 그대로 숨긴다.
+    if(q){
+      if(pickBox) pickBox.hidden = true;
+      box.querySelectorAll('.sectp').forEach(function(pn){ pn.hidden = false; });
+      var qn=0;
+      box.querySelectorAll('.stile[data-sec]').forEach(function(t){
+        if(!t.dataset.sec) return;   // 「전체 보기」 타일은 검색 대상이 아니다
+        var tt=t.querySelector('.st-t');
+        var match = t.dataset.empty!=='1' && norm(tt?tt.textContent:t.textContent).indexOf(q)!==-1;
+        t.hidden = !match;
+        if(match) qn++;
+      });
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = pn.querySelectorAll('.stile[data-sec]:not([hidden])').length===0;
+      });
+      if(sqn) sqn.textContent = qn + '곳';
+    } else if(sqn){
+      sqn.textContent = '';
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
+    box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
+    var roll2=document.querySelector('.rollup');
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    });
+    if(back){
+      back.hidden = picking;
+      var now=back.querySelector('.sb-now');
+      if(now){
+        var cur = only ? opt(only) : opt('');
+        var t = cur && cur.querySelector('.st-t');
+        var mg = cell && mbar ? mbar.querySelector('.mcell[data-cell="'+cell+'"]') : null;
+        now.textContent = picking ? ''
+          : (mg ? (mg.dataset.label || cell) : (t ? t.textContent : ''));
+      }
+    }
+    box.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String((b.dataset.sec||null)===only));
+    });
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; picking=true; apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
+  });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「타일 고르기」로
+  // 돌아가지 않고 대시보드 밖으로 나간다 — 섹션을 하나 열었을 뿐인데 페이지를 떠난다.
+  // 주소는 그 섹션을 지목한 주소와 같은 것을 쓴다(#섹션id). 「링크 복사」와 한 몸이다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base = location.pathname + location.search;
+    // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
+    var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
+  }
+  function restore(st){
+    quiet = true;
+    cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var id = (location.hash || '').slice(1);
+    if(st && typeof st.picking === 'boolean'){
+      picking = st.picking; only = st.sec || null;
+    } else if(!id){
+      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+    } else if(id === 'all'){
+      picking = false; only = null;
+    } else {
+      var el = document.getElementById(decodeURIComponent(id));
+      var sc = el && el.closest ? el.closest('section[id]') : null;
+      picking = false; only = sc ? sc.id : null;
+    }
+    if(!only) sect = null;
+    apply();
+    // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
+    // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
+    if(picking && location.hash){
+      history.replaceState({sec: null, picking: true}, '', location.pathname + location.search);
+    }
+    quiet = false;
+  }
+  if(sq) sq.addEventListener('input', function(){
+    q = norm(sq.value);
+    sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
+    apply();
+  });
+  // 합류도 칸을 누르면 그 칸에 선 카드만 남는다. 같은 칸을 다시 누르면 푼다 —
+  // 지도를 열어 둔 채로 되돌릴 길이 있어야 한다.
+  function pickCell(g){
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    only=null; sect=null;
+    picking = !cell;
+    apply();
+    if(cell){
+      var first=document.querySelector('section[id]:not([hidden])');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(g) pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
+  box.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
+    picking=false;
+    apply();
+    mark();
+    var sec = only ? document.getElementById(only) : null;
+    if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    else window.scrollTo({top:0, behavior:'smooth'});
+  });
+  if(back) back.addEventListener('click', function(e){
+    if(!e.target.closest('.sb-btn')) return;
+    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+    if(history.state && history.state.picking === false){ history.back(); return; }
+    picking=true; only=null; apply();
+    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  window.addEventListener('popstate', function(e){
+    restore(e.state);
+    var id=(location.hash||'').slice(1);
+    var el=id ? document.getElementById(decodeURIComponent(id)) : null;
+    if(el) el.scrollIntoView({block:'start'});
+    else box.scrollIntoView({block:'start'});
+  });
+  apply();
+  // 링크를 받고 들어온 사람의 첫 화면은 LINK_JS가 연다. 여기서는 히스토리 첫 칸만 표시해 둔다
+  history.replaceState({sec: null, picking: true}, '');
+})();
+</script><script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        var head=card.querySelector('.uc-head');
+        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1), true);
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script><script>
+(function(){
+  function show(sid, view){
+    var sw=document.querySelector('.secsw[data-sec="'+sid+'"]');
+    if(sw) sw.querySelectorAll('.sw-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.view===view));
+    });
+    var val=document.querySelector('.sv-val[data-sec="'+sid+'"]');
+    var posts=document.querySelector('.sv-posts[data-sec="'+sid+'"]');
+    if(val) val.hidden = view!=='val';
+    if(posts) posts.hidden = view!=='posts';
+  }
+  document.addEventListener('click', function(e){
+    if(e.target.closest('.sw-up')){
+      var back=document.querySelector('.sback .sb-btn');
+      if(back) back.click();
+      return;
+    }
+    var b=e.target.closest('.sw-btn'); if(!b) return;
+    show(b.closest('.secsw').dataset.sec, b.dataset.view);
+  });
+  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다
+  function fromHash(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;
+    var box=h.closest('.sv-posts'); if(box) show(box.dataset.sec, 'posts');
+  }
+  window.addEventListener('hashchange', fromHash);
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else { fromHash(); }
+})();
+</script>
+<style>
+  .ui-top{
+    position:fixed; z-index:9998;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(18px, env(safe-area-inset-bottom));
+    width:42px; height:42px; border-radius:999px; border:1px solid rgba(0,0,0,.12);
+    display:flex; align-items:center; justify-content:center;
+    font:700 17px/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    color:#33312c; background:rgba(255,255,255,.86); cursor:pointer;
+    box-shadow:0 4px 16px -4px rgba(0,0,0,.25);
+    -webkit-backdrop-filter:saturate(1.5) blur(12px); backdrop-filter:saturate(1.5) blur(12px);
+    opacity:0; pointer-events:none; transform:translateY(6px);
+    transition:opacity .2s ease, transform .3s cubic-bezier(.19,1,.22,1);
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .ui-top.is-on{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .ui-top:hover{ transform:translateY(-2px); }
+  .ui-top:active{ transform:translateY(0) scale(.94); transition-duration:.09s; }
+  .ui-top:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+  @media (prefers-color-scheme: dark){
+    .ui-top{ color:#ecead9; background:rgba(28,28,32,.86); border-color:rgba(255,255,255,.16);
+             box-shadow:0 4px 16px -4px rgba(0,0,0,.6); }
+  }
+  @media (prefers-contrast: more){
+    .ui-top{ background:#fff; color:#000; border:1.5px solid #000;
+             -webkit-backdrop-filter:none; backdrop-filter:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ui-top{ transition:opacity .15s ease; transform:none; }
+    .ui-top.is-on:hover{ transform:none; }
+  }
+  @media print{ .ui-top{ display:none; } }
+</style>
+<button class="ui-top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var b=document.querySelector('.ui-top'); if(!b) return;
+  var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
+  window.addEventListener('scroll', show, {passive:true});
+  b.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  show();
+})();
+</script>
+

@@ -19,6 +19,7 @@ OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buff
 import gen_realestate_dashboard as _re
 import gen_usa_dashboard as _usa
 import gen_industry_dashboard as _fin   # 금융 3장은 2026-08-17에 이 페이지로 합쳐졌다
+import gen_sudoremove_dashboard as _sudo
 
 SUBS = os.path.join(ROOT, 'scratchpad', 'yt_subs')
 STRIP = re.compile(r'<[^>]+>')
@@ -131,7 +132,7 @@ def check(card):
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else None
     fails = 0
-    cards = _re.CARDS + _usa.CARDS + _fin.CARDS
+    cards = _re.CARDS + _usa.CARDS + _fin.CARDS + _sudo.CARDS
     for c in cards:
         if not c.get('slim_points'):
             continue
