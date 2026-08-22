@@ -90,8 +90,8 @@ FIG_WHO = (
     '<text x="480" y="139" text-anchor="middle" class="t-sm">로봇 손을 만드는 회사</text>'
     '<text x="480" y="155" text-anchor="middle" class="t-sm">엔비디아 GTC 2026 부스</text>'
     '<path d="M356 168 L604 168" stroke="var(--line)" stroke-width="1" fill="none"/>'
-    '<text x="480" y="190" text-anchor="middle" class="t-sm">어려운 동작만 미리 구워</text>'
-    '<text x="480" y="206" text-anchor="middle" class="t-sm">아래층에 둔다</text>'
+    '<text x="480" y="190" text-anchor="middle" class="t-sm">어려운 동작을 반사로</text>'
+    '<text x="480" y="206" text-anchor="middle" class="t-sm">미리 구워 둔다</text>'
     '<text x="480" y="222" text-anchor="middle" class="t-sm">논문 MoDE-VLA</text>'
     '</svg>')
 
@@ -150,11 +150,11 @@ FIG_SHARPA = (
     '<path d="M272 62 L165 96" class="flow"/>'
     '<path d="M370 62 L482 96" class="flow"/>'
     '<rect x="20" y="100" width="250" height="66" rx="9" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
-    '<text x="145" y="122" text-anchor="middle" class="t-lab">위층 — 무엇을 할 차례인가</text>'
+    '<text x="145" y="122" text-anchor="middle" class="t-lab">판단 — 무엇을 할 차례인가</text>'
     '<text x="145" y="138" text-anchor="middle" class="t-sm">VLA · 조종 데이터를 흉내 내 배운다</text>'
     '<text x="145" y="154" text-anchor="middle" class="t-sm">출력 하나가 「스킬 켜기」</text>'
     '<rect x="390" y="100" width="230" height="66" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.8"/>'
-    '<text x="505" y="122" text-anchor="middle" class="t-lab">아래층 — 생각 없이 나가는 동작</text>'
+    '<text x="505" y="122" text-anchor="middle" class="t-lab">반사 — 몸에 익어 바로 나가는 동작</text>'
     '<text x="505" y="138" text-anchor="middle" class="t-sm">강화학습으로 미리 구워 둔 정책</text>'
     '<text x="505" y="154" text-anchor="middle" class="t-sm">쥐기 · 축 기준 돌리기</text>'
     '<path d="M272 133 L388 133" class="flow"/>'
@@ -222,11 +222,11 @@ CARDS = [{
          '아래 칸이 Rhoda다. <b>비디오 모델</b>이 다음 장면을 그리고, <b>인버스 다이내믹스</b>가 '
          '그 장면에서 행동을 거꾸로 계산한다. 실행한 결과가 프레임으로 다시 쌓여 다음 상상의 '
          '재료가 되고, 그 누적분이 야바위를 푸는 기억이다.'),
-        (7, 'Sharpa는 어려운 동작만 떼어 아래층에 뒀다', FIG_SHARPA,
-         '<b>위층은 계획, 아래층은 반사</b>다. 사람으로 치면 위층은 무엇을 할 차례인지 정하는 자리이고, '
-         '아래층은 숙달돼서 생각 없이 나가는 동작이다. 오른손으로 사과를 깎는 동작은 위층 VLA가 흉내 내 '
-         '배우고, 손가락으로는 조종이 안 되는 쥐기와 돌리기는 아래층 강화학습 정책이 맡는다. 발 페달이 '
-         '그 스킬을 켜는 스위치이고, 페달을 누른 시점까지 위층이 배워 나중에는 스스로 켠다. '
+        (7, 'Sharpa는 반사에 해당하는 동작만 떼어 냈다', FIG_SHARPA,
+         '사람이 몸 쓰는 방식을 그대로 옮겼다. <b>판단</b>은 무엇을 할 차례인지 정하는 몫이고, '
+         '<b>반사</b>는 숙달돼서 생각하지 않고 나가는 동작이다. 오른손으로 사과를 깎는 동작은 VLA가 '
+         '흉내 내 배우고, 손가락으로는 조종이 안 되는 쥐기와 돌리기는 강화학습 정책이 맡는다. 발 페달이 '
+         '그 정책을 켜는 스위치이고, 페달을 누른 시점까지 VLA가 배워 나중에는 스스로 켠다. '
          '이 구조가 조종 성공률을 <b>90회 중 31회에서 89%로</b> 끌어올렸다.'),
     ],
     'slim_stats': [('300년 / 11시간', 'Rhoda의 웹 비디오 사전학습량과 로봇 데이터량'),
@@ -247,7 +247,7 @@ CARDS = [{
         '<b>힘과 촉각은 뒤에서 주입한다.</b> π0 백본이 촉각 입력을 받지 않아, 액션 토큰이 나온 뒤에 '
         '관절 토크와 손끝 촉각 센서를 받는 작은 MoE 트랜스포머를 따로 학습해 잔차로 얹는다. '
         '진행자 한 명은 이 부분이 왜 필요한지 논문만으로는 모르겠다며 스킬 위계 쪽을 주된 기여로 본다.',
-        '<b>사람의 반사 동작에 견준다.</b> 숙달된 사람이 생각 없이 하는 동작을 아래층에 구워 둔 스킬로 '
+        '<b>사람의 반사 동작에 견준다.</b> 숙달된 사람이 생각하지 않고 하는 동작을 미리 구워 둔 스킬로 '
         '읽고, 손가락을 여섯 개 일곱 개로 늘리거나 전용 하드웨어를 붙여 사람이 못 하는 스킬을 만들 수도 '
         '있다는 상상까지 나아간다.',
     ],
@@ -258,7 +258,7 @@ CARDS = [{
     'table': ('두 접근의 대조',
               ['', 'Rhoda AI (DVA)', 'Sharpa (MoDE-VLA)'],
               [['행동을 만드는 경로', '다음 프레임 상상 후 역산', 'VLA 액션 토큰에 힘·촉각 잔차 주입'],
-               ['어려운 동작', '비디오 모델이 통째로 감당', '강화학습 스킬을 아래층에 구움'],
+               ['어려운 동작', '비디오 모델이 통째로 감당', '반사로 쓸 스킬을 미리 구움'],
                ['언어', '안 씀(영상이 프롬프트)', 'VLA 안에 있음'],
                ['데이터 병목을 푸는 자리', '웹 비디오 사전학습', '조종 수율 31/90에서 89%로'],
                ['공개된 정량 지표', '없음', '표 하나(30%, π0 0%)']]),
