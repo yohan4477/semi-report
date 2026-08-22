@@ -1,0 +1,988 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>용어사전</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+          border:1px solid var(--line);border-radius:999px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
+     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:center}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
+  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+  }
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">용어사전 — 읽다 막히는 말</p>
+    <h1>용어사전</h1>
+  </header>
+
+  
+
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-agent" aria-pressed="false"><span class="st-num">01</span><span class="st-t">AI 에이전트 · 실행 구조</span><span class="st-s">모델이 혼자 못 하는 일을 누가 대신 하나</span><span class="st-n cnt">1</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+
+  
+
+  <section id="sec-agent"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">AI 에이전트 · 실행 구조</h2><button type="button" class="sec-copy" data-anchor="sec-agent">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">AI 에이전트</span><h2 id="card-하네스-harness-모델과-컴퓨터-사이에-서는-실행-프로그램">하네스(harness) — 모델과 컴퓨터 사이에 서는 실행 프로그램</h2><p class="uc-gain">「클로드 코드가 파일을 고쳤다」고 할 때 실제로 파일을 고친 것이 무엇인지. 모델이 낸 글자가 터미널 명령이 되어 돌아오기까지 열두 번을 오간다.</p><div class="uc-meta"><span>용어 풀이</span><span>정리 2026-08-22</span><span>AI 에이전트</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">하네스는 AI 모델과 실제 컴퓨터 사이에 서서 모델이 뱉은 글자를 실행으로 바꾸는 프로그램이다. 모델은 다음에 올 토큰(한 번에 내놓는 글자 조각)을 이어 붙일 뿐 파일을 열지도 명령을 돌리지도 못한다. 그 글자를 셸에 던지고, 돌아온 로그를 모델이 읽을 크기로 줄여 다시 넣어 준다. 이 일을 맡은 프로그램이 하네스다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>모델은 글자만 낸다.</b> <code>pytest</code>라고 써 놓아도 그 자체로는 아무 일도 안 벌어진다. 답이 옳은지 그른지와 무관하게, 모델의 출력은 문서 한 조각이다.</li><li><b>하네스가 그 글자를 명령으로 집행한다.</b> 미리 약속한 표시(<code>EXEC:</code> 같은 접두어나 도구 호출 JSON)를 찾아내 셸과 파일 시스템에 실제로 던진다. 클로드 코드·커서·오픈 인터프리터가 전부 하네스다.</li></ul><figure class="uc-fig"><p class="fig-title">하네스가 도는 한 판</p><svg viewBox="0 0 680 682" role="img" aria-label="하네스가 사용자·모델·터미널 사이에서 열두 번 주고받는 순서"><rect class="body" x="6" y="8" width="108" height="34" rx="8"/><text class="t-lab" x="60" y="30" text-anchor="middle">사용자</text><line class="lead-line" x1="60" y1="46" x2="60" y2="672"/><rect class="body" x="160" y="8" width="180" height="34" rx="8"/><text class="t-lab" x="250" y="30" text-anchor="middle">하네스</text><line class="lead-line" x1="250" y1="46" x2="250" y2="672"/><rect class="body" x="372" y="8" width="136" height="34" rx="8"/><text class="t-lab" x="440" y="30" text-anchor="middle">AI 모델(LLM)</text><line class="lead-line" x1="440" y1="46" x2="440" y2="672"/><rect class="body" x="528" y="8" width="144" height="34" rx="8"/><text class="t-lab" x="600" y="30" text-anchor="middle">실제 환경(OS·터미널)</text><line class="lead-line" x1="600" y1="46" x2="600" y2="672"/><line class="flow" x1="67" y1="96" x2="243" y2="96"/><text class="t-sm" x="68" y="88">① 버그 고쳐 줘</text><line class="flow" x1="257" y1="146" x2="433" y2="146"/><text class="t-sm" x="258" y="138">② 프롬프트와 지금까지의 상태 전달</text><line class="flow" x1="433" y1="196" x2="257" y2="196"/><text class="t-sm" x="258" y="188">③ EXEC: pytest 실행 지시</text><line class="flow" x1="257" y1="246" x2="593" y2="246"/><text class="t-sm" x="258" y="238">④ 터미널에서 명령 실행</text><line class="flow" x1="593" y1="296" x2="257" y2="296"/><text class="t-sm" x="258" y="288">⑤ 실행 결과 · 에러 로그</text><line class="flow" x1="257" y1="346" x2="433" y2="346"/><text class="t-sm" x="258" y="338">⑥ 로그 줄여 에러만 전달</text><line class="flow" x1="433" y1="396" x2="257" y2="396"/><text class="t-sm" x="258" y="388">⑦ EXEC: patch app.py 지시</text><line class="flow" x1="257" y1="446" x2="593" y2="446"/><text class="t-sm" x="258" y="438">⑧ 코드 고치고 다시 테스트</text><line class="flow" x1="593" y1="496" x2="257" y2="496"/><text class="t-sm" x="258" y="488">⑨ 테스트 통과</text><line class="flow" x1="257" y1="546" x2="433" y2="546"/><text class="t-sm" x="258" y="538">⑩ 이걸로 끝났는지 확인</text><line class="flow" x1="433" y1="596" x2="257" y2="596"/><text class="t-sm" x="258" y="588">⑪ 버그 수정 완료</text><line class="flow" x1="243" y1="646" x2="67" y2="646"/><text class="t-sm" x="68" y="638">⑫ 최종 보고</text></svg><figcaption>요청 하나가 도는 순서다. 사용자와 모델은 서로 직접 말하지 않고, 모델과 터미널도 직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다.</figcaption></figure><ul class="uc-points"><li><b>한 번 오가고 끝나지 않는다.</b> 위 그림에서 ③~⑨가 실행 고리다. 테스트가 깨지면 로그가 모델로 돌아가고, 모델이 다음 명령을 내고, 하네스가 또 돌린다. 통과가 나올 때까지 이 고리를 반복하는 것이 에이전트라고 부르는 동작의 전부다.</li><li><b>결과를 그대로 넣지 않는다.</b> 컨텍스트 창(모델이 한 번에 볼 수 있는 글자 총량)이 정해져 있어 로그 수천 줄을 통째로 넘기면 앞서 넣어 둔 지시가 밀려 나간다. ⑥에서 하네스가 실패한 줄만 남기고 줄이는 이유다.</li><li><b>지금까지의 상태는 하네스가 들고 있다.</b> 모델은 요청과 요청 사이에 기억이 없다. 어느 디렉터리에 있는지, 무엇을 이미 고쳤는지, 쓸 수 있는 도구가 무엇인지를 요청마다 ②에서 다시 붙여 넣는다.</li><li><b>권한과 정지도 하네스가 쥔다.</b> 파일을 지우는 명령 앞에서 사용자에게 물어보고, 같은 실패가 되풀이되면 고리를 끊는다. 모델이 같아도 이 판단이 다르면 같은 과제의 완주율이 달라진다.</li><li><b>실무에서 「에이전트」라고 부르는 물건은 모델과 하네스를 합친 것이다.</b> GPT-5나 클로드 같은 모델 이름은 그중 한쪽만 가리킨다. 도구 성능을 견줄 때 모델 점수만 보면 나머지 절반을 빼고 세는 셈이다.</li></ul><div class="side-note"><code>EXEC:</code>는 설명을 위해 쓴 표시다. 실제 제품은 도구 호출(tool use) 규격에 맞춘 JSON을 주고받는 쪽이 많다. 순서와 역할 분담은 같다.</div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy" data-anchor="card-하네스-harness-모델과-컴퓨터-사이에-서는-실행-프로그램">링크 복사</button></div></div></div></section>
+
+  <footer><p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다.</p>    <div class="meta-row">
+      <span>정리일 <b>2026-08-22</b></span>
+      <span>수록 <b>1개</b></span>
+    </div>
+용어 풀이 · 카드 하나가 용어 하나입니다.
+  페이지 생성은 <code>scratchpad/gen_glossary.py</code>(공용 부품 <code>dash_common.py</code>).</footer>
+</div>
+<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script><script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
+  var back=document.querySelector('.sback');
+  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var only=null, picking=true, sect=null, q='', cell=null;
+  var mbar=document.querySelector('.mg-b');
+  var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
+  function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
+  function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
+  function apply(){
+    // 카드를 숨기는 조건이 둘이다 — 범위 탭(국내·해외)과 합류도 칸.
+    // 칸을 고르면 섹션을 가로질러 그 칸에 선 카드만 남는다.
+    document.querySelectorAll('.ucard').forEach(function(c){
+      var okScope = !c.dataset.scope || pick==='all' || c.dataset.scope===pick;
+      var okCell = !cell || (' '+(c.dataset.cells||'')+' ').indexOf(' '+cell+' ')!==-1;
+      c.hidden = !(okScope && okCell);
+    });
+    // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
+    document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
+      r.hidden = !(pick==='all' || r.dataset.scope===pick);
+    });
+    document.querySelectorAll('.rlold').forEach(function(o){
+      o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
+    });
+    // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
+    document.querySelectorAll('.rlrep').forEach(function(rep){
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;
+      var tagged=rep.querySelectorAll('.rll li[data-sec]');
+      tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
+      if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
+    });
+    var roll=document.querySelector('.rollup');
+    if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
+    var seen=0;
+    document.querySelectorAll('section[id]').forEach(function(s){
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
+      // 칸을 고른 화면에서는 카드가 남은 섹션만 선다. 섹션 하나를 고른 상태가 아니다.
+      s.hidden = cell ? live===0 : (picking || live===0 || (only && s.id!==only));
+      var o=opt(s.id);
+      if(o){
+        // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
+        // 이 표시를 보고 판단하므로, 검색 분기가 o.hidden을 다시 덮어써도 이 값은 남는다.
+        o.dataset.empty = live===0 ? '1' : '';
+        o.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
+      }
+    });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    // 「전체 보기」는 회사를 안 고른 채 전부 읽는 화면이다(picking=false, only=null).
+    // 갈래 버튼은 회사 하나를 고른 뒤에만 뜻이 있으므로 여기서는 글(.sv-posts)만 펴고
+    // 지도(.sv-val)는 접어 둔다 — 회사 스물둘의 지도를 한꺼번에 펴면 첫 카드에 닿기까지
+    // 스크롤이 수십 판이 된다. 이 갈래가 없던 동안 전체 보기에 제목만 나오고 카드가
+    // 통째로 안 나왔다.
+    var allView = !picking && !only;
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      if(allView){ l.hidden = !l.classList.contains('sv-posts'); return; }
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
+    });
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden) n += 1;
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
+    // 검색어가 있으면 섹터 층을 건너뛴다. 회사 타일 글자(.st-t)로만 맞추고, 카드 0편이라
+    // 이미 숨어 있던 타일(dataset.empty)은 글자가 맞아도 그대로 숨긴다.
+    if(q){
+      if(pickBox) pickBox.hidden = true;
+      box.querySelectorAll('.sectp').forEach(function(pn){ pn.hidden = false; });
+      var qn=0;
+      box.querySelectorAll('.stile[data-sec]').forEach(function(t){
+        if(!t.dataset.sec) return;   // 「전체 보기」 타일은 검색 대상이 아니다
+        var tt=t.querySelector('.st-t');
+        var match = t.dataset.empty!=='1' && norm(tt?tt.textContent:t.textContent).indexOf(q)!==-1;
+        t.hidden = !match;
+        if(match) qn++;
+      });
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = pn.querySelectorAll('.stile[data-sec]:not([hidden])').length===0;
+      });
+      if(sqn) sqn.textContent = qn + '곳';
+    } else if(sqn){
+      sqn.textContent = '';
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
+    box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
+    var roll2=document.querySelector('.rollup');
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    });
+    if(back){
+      back.hidden = picking;
+      var now=back.querySelector('.sb-now');
+      if(now){
+        var cur = only ? opt(only) : opt('');
+        var t = cur && cur.querySelector('.st-t');
+        var mg = cell && mbar ? mbar.querySelector('.mcell[data-cell="'+cell+'"]') : null;
+        now.textContent = picking ? ''
+          : (mg ? (mg.dataset.label || cell) : (t ? t.textContent : ''));
+      }
+    }
+    box.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String((b.dataset.sec||null)===only));
+    });
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; picking=true; apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
+  });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「타일 고르기」로
+  // 돌아가지 않고 대시보드 밖으로 나간다 — 섹션을 하나 열었을 뿐인데 페이지를 떠난다.
+  // 주소는 그 섹션을 지목한 주소와 같은 것을 쓴다(#섹션id). 「링크 복사」와 한 몸이다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base = location.pathname + location.search;
+    // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
+    var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
+  }
+  function restore(st){
+    quiet = true;
+    cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var id = (location.hash || '').slice(1);
+    if(st && typeof st.picking === 'boolean'){
+      picking = st.picking; only = st.sec || null;
+    } else if(!id){
+      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+    } else if(id === 'all'){
+      picking = false; only = null;
+    } else {
+      var el = document.getElementById(decodeURIComponent(id));
+      var sc = el && el.closest ? el.closest('section[id]') : null;
+      picking = false; only = sc ? sc.id : null;
+    }
+    if(!only) sect = null;
+    apply();
+    // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
+    // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
+    if(picking && location.hash){
+      history.replaceState({sec: null, picking: true}, '', location.pathname + location.search);
+    }
+    quiet = false;
+  }
+  if(sq) sq.addEventListener('input', function(){
+    q = norm(sq.value);
+    sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
+    apply();
+  });
+  // 합류도 칸을 누르면 그 칸에 선 카드만 남는다. 같은 칸을 다시 누르면 푼다 —
+  // 지도를 열어 둔 채로 되돌릴 길이 있어야 한다.
+  function pickCell(g){
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    only=null; sect=null;
+    picking = !cell;
+    apply();
+    if(cell){
+      var first=document.querySelector('section[id]:not([hidden])');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(g) pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
+  box.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
+    picking=false;
+    apply();
+    mark();
+    var sec = only ? document.getElementById(only) : null;
+    if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    else window.scrollTo({top:0, behavior:'smooth'});
+  });
+  if(back) back.addEventListener('click', function(e){
+    if(!e.target.closest('.sb-btn')) return;
+    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+    if(history.state && history.state.picking === false){ history.back(); return; }
+    picking=true; only=null; apply();
+    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  window.addEventListener('popstate', function(e){
+    restore(e.state);
+    var id=(location.hash||'').slice(1);
+    var el=id ? document.getElementById(decodeURIComponent(id)) : null;
+    if(el) el.scrollIntoView({block:'start'});
+    else box.scrollIntoView({block:'start'});
+  });
+  apply();
+  // 링크를 받고 들어온 사람의 첫 화면은 LINK_JS가 연다. 여기서는 히스토리 첫 칸만 표시해 둔다
+  history.replaceState({sec: null, picking: true}, '');
+})();
+</script><script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        var head=card.querySelector('.uc-head');
+        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1), true);
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script><script>
+(function(){
+  function show(sid, view){
+    var sw=document.querySelector('.secsw[data-sec="'+sid+'"]');
+    if(sw) sw.querySelectorAll('.sw-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.view===view));
+    });
+    var val=document.querySelector('.sv-val[data-sec="'+sid+'"]');
+    var posts=document.querySelector('.sv-posts[data-sec="'+sid+'"]');
+    if(val) val.hidden = view!=='val';
+    if(posts) posts.hidden = view!=='posts';
+  }
+  document.addEventListener('click', function(e){
+    if(e.target.closest('.sw-up')){
+      var back=document.querySelector('.sback .sb-btn');
+      if(back) back.click();
+      return;
+    }
+    var b=e.target.closest('.sw-btn'); if(!b) return;
+    show(b.closest('.secsw').dataset.sec, b.dataset.view);
+  });
+  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다
+  function fromHash(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;
+    var box=h.closest('.sv-posts'); if(box) show(box.dataset.sec, 'posts');
+  }
+  window.addEventListener('hashchange', fromHash);
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else { fromHash(); }
+})();
+</script>
+<style>
+  .ui-top{
+    position:fixed; z-index:9998;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(18px, env(safe-area-inset-bottom));
+    width:42px; height:42px; border-radius:999px; border:1px solid rgba(0,0,0,.12);
+    display:flex; align-items:center; justify-content:center;
+    font:700 17px/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    color:#33312c; background:rgba(255,255,255,.86); cursor:pointer;
+    box-shadow:0 4px 16px -4px rgba(0,0,0,.25);
+    -webkit-backdrop-filter:saturate(1.5) blur(12px); backdrop-filter:saturate(1.5) blur(12px);
+    opacity:0; pointer-events:none; transform:translateY(6px);
+    transition:opacity .2s ease, transform .3s cubic-bezier(.19,1,.22,1);
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .ui-top.is-on{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .ui-top:hover{ transform:translateY(-2px); }
+  .ui-top:active{ transform:translateY(0) scale(.94); transition-duration:.09s; }
+  .ui-top:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+  @media (prefers-color-scheme: dark){
+    .ui-top{ color:#ecead9; background:rgba(28,28,32,.86); border-color:rgba(255,255,255,.16);
+             box-shadow:0 4px 16px -4px rgba(0,0,0,.6); }
+  }
+  @media (prefers-contrast: more){
+    .ui-top{ background:#fff; color:#000; border:1.5px solid #000;
+             -webkit-backdrop-filter:none; backdrop-filter:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ui-top{ transition:opacity .15s ease; transform:none; }
+    .ui-top.is-on:hover{ transform:none; }
+  }
+  @media print{ .ui-top{ display:none; } }
+</style>
+<button class="ui-top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var b=document.querySelector('.ui-top'); if(!b) return;
+  var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
+  window.addEventListener('scroll', show, {passive:true});
+  b.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  show();
+})();
+</script>
+
