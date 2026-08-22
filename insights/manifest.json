@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-21",
+ "generated": "2026-08-22",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -76,7 +76,7 @@
    ],
    "date": "2026-08-01",
    "path": "content/linkedin/[2608] 링크드인 게시물.md",
-   "hash": "b1e750672912"
+   "hash": "2527ca185cc9"
   },
   {
    "id": "pod:semianalysis:Ep25-딜런-패텔-사내-AI-지출이-평평해진-이유와-보상-해킹-사고",
@@ -145,6 +145,18 @@
    "date": "2026-08-03",
    "path": "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md",
    "hash": "d134415b9052"
+  },
+  {
+   "id": "semi:ai_models:오픈-모델은-정말-따라잡고-있는가-세-시대로-본-오픈-클로즈드-격차",
+   "corpus": "semianalysis",
+   "folder": "ai_models",
+   "categories": [
+    "ai-models",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-21",
+   "path": "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md",
+   "hash": "766dd818728e"
   },
   {
    "id": "semi:business:AI-가치-포착-모델-랩으로의-이동",
