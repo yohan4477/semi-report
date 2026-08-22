@@ -46,206 +46,230 @@ SEC_KR = ('sec-rate-kr', '11', '한국 — 금리·환율과 증시',
           '한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리')
 
 
-# -- 체니에르 방향 전환 -------------------------------------------------------
-# 같은 설비에서 화살표만 뒤집힌다는 것이 이 회사 이야기의 전부다. 그런데 그 뒤집기가
-# 저절로 된 것이 아니라 관문 둘을 지났다 -- 면허를 바꿔 준 정부와, 회사가 아니라 사업
-# 모델을 보고 돈을 댄 자본. 설비 상자를 위아래에 같은 크기로 두 번 그려서 「같은 것」임을
-# 보이고, 그 사이에 좌초와 관문 둘을 끼운다.
-PIVOT_FIG = (
-    '<svg viewBox="0 0 640 286" role="img" '
-    'aria-label="체니에르가 수입 기지를 수출 기지로 뒤집은 경로">'
-    '<text x="8" y="26" class="t-sm" style="font-weight:850">2008</text>'
-    '<rect x="180" y="10" width="280" height="52" rx="10" class="body"/>'
-    '<text x="320" y="32" text-anchor="middle" class="t-lab">수입 기지</text>'
-    '<text x="320" y="50" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
-    '<path d="M96 36 L176 36" class="flow"/>'
-    '<text x="92" y="32" text-anchor="end" class="t-sm">해외 LNG</text>'
-    '<path d="M320 62 L320 80" class="flow"/>'
-    '<text x="320" y="98" text-anchor="middle" class="t-bad" '
-    'style="font-size:11px;font-weight:800">셰일 가스가 미국 안에서 나온다 · 가동 2년 만에 좌초</text>'
-    '<path d="M320 106 L320 122" class="flow"/>'
-    '<rect x="40" y="130" width="270" height="60" rx="10" class="body"/>'
-    '<text x="56" y="152" class="t-lab">관문 ① 미국 정부</text>'
-    '<text x="56" y="172" class="t-sm">수입 면허를 수출로 바꿔 준다 (2010, 조건부)</text>'
-    '<rect x="330" y="130" width="270" height="60" rx="10" class="body"/>'
-    '<text x="346" y="152" class="t-lab">관문 ② 블랙스톤</text>'
-    '<text x="346" y="172" class="t-sm">회사 규모 대신 사업 모델을 보고 댄다</text>'
-    '<path d="M320 190 L320 210" class="flow"/>'
-    '<text x="8" y="234" class="t-sm" style="font-weight:850">2016</text>'
-    '<rect x="180" y="216" width="280" height="52" rx="10" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="320" y="238" text-anchor="middle" class="t-lab">수출 기지</text>'
-    '<text x="320" y="256" text-anchor="middle" class="t-sm">같은 부두 · 같은 탱크</text>'
-    '<path d="M464 242 L552 242" class="flow"/>'
-    '<text x="556" y="238" class="t-lab" style="font-size:10.5px">세계로</text>'
-    '<text x="556" y="254" class="t-sm">200억 달러</text>'
-    '</svg>')
-
-PIVOT_CAP = ('설비는 그대로고 <b>화살표만 뒤집혔다</b>. 다만 그 뒤집기는 관문 둘을 지나야 '
-             '했다. 면허를 바꿔 준 정부와, 2년 만에 무너진 회사에 그래도 돈을 댄 '
-             '자본이다. 이 전환에 조달한 돈이 200억 달러 이상이고 올해 말이면 연 5천만 톤을 '
-             '내보내는 업체가 된다.')
-
-
-# -- 벤처 글로벌 조달 순환 ----------------------------------------------------
-# 화자가 「봉이 김선달 장사」라 부른 순서다. 종이 세 장이 서로를 담보하는데, 각각이
-# 성립한 이유가 따로 있다 -- 그래서 상자마다 「그때 조건」을 한 줄씩 붙인다. 조건을
-# 빼면 아이디어만 좋으면 되는 이야기가 되어 원문의 운을 지운다.
-FUND_FIG = (
-    '<svg viewBox="0 0 640 236" role="img" '
-    'aria-label="벤처 글로벌이 종이 세 장으로 자금을 맞춘 순서">'
-    '<rect x="8" y="34" width="190" height="128" rx="10" class="body"/>'
-    '<text x="24" y="58" class="t-lab">① 가계약</text>'
-    '<text x="24" y="80" class="t-sm">고객에게 아주 싸게</text>'
-    '<text x="24" y="96" class="t-sm">팔겠다고 먼저 맺는다</text>'
-    '<path d="M24 108 L182 108" class="lead-line"/>'
-    '<text x="24" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
-    '<text x="24" y="144" class="t-sm">내놓을 것이 값 하나였다</text>'
-    '<rect x="225" y="34" width="190" height="128" rx="10" class="body"/>'
-    '<text x="241" y="58" class="t-lab">② 발주서</text>'
-    '<text x="241" y="80" class="t-sm">그 계약을 들고 가서</text>'
-    '<text x="241" y="96" class="t-sm">설비를 발주한다</text>'
-    '<path d="M241 108 L399 108" class="lead-line"/>'
-    '<text x="241" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
-    '<text x="241" y="144" class="t-sm">유가 100→30, 재고 폭증</text>'
-    '<rect x="442" y="34" width="190" height="128" rx="10" class="body"/>'
-    '<text x="458" y="58" class="t-lab">③ 대출</text>'
-    '<text x="458" y="80" class="t-sm">둘을 들고 은행에 가</text>'
-    '<text x="458" y="96" class="t-sm">조건부로 빌린다</text>'
-    '<path d="M458 108 L616 108" class="lead-line"/>'
-    '<text x="458" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
-    '<text x="458" y="144" class="t-sm">금리 폭락, 대출처 마름</text>'
-    '<path d="M198 98 L221 98" class="flow"/>'
-    '<path d="M415 98 L438 98" class="flow"/>'
-    '<text x="209" y="26" text-anchor="middle" class="t-sm">이걸 들고</text>'
-    '<text x="426" y="26" text-anchor="middle" class="t-sm">둘을 들고</text>'
-    '<rect x="8" y="182" width="624" height="46" rx="10" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="320" y="211" text-anchor="middle" class="t-lab">'
-    '여기까지 종이 세 장. 착공 전에 이 회사가 가진 현물은 하나도 없다</text>'
-    '</svg>')
-
-FUND_CAP = ('예전 같으면 거대 에너지 회사가 <b>자기 돈</b>으로 짓던 설비다. 벤처 글로벌은 '
-            '순서를 바꿔 계약서로 발주서를 얻고 그 둘로 돈을 빌렸다. 다만 세 칸이 동시에 '
-            '성립한 것은 그해 조건 덕이 크다 — 재고가 쌓여 선수금 없이 원가에 주겠다는 '
-            '제조사와 대출처가 마른 은행이 같은 해에 있었다.')
-
-
-# -- 트레인 쪼개기 = 첫 현금 시점 -------------------------------------------
-# 「효율이 떨어지는데 왜 이겼나」는 그림 없이 안 잡힌다. 답이 효율이 아니라 시간축에
-# 있어서다 -- 같은 돈을 5년 뒤에 한꺼번에 받느냐, 30개월부터 조금씩 받느냐.
-# 그래서 대비가 아니라 **시간축 두 줄**로 그린다(입지 도해는 대비라 성격이 겹치지 않는다).
+# -- 체니에르, 가스가 들어오던 길로 내보낸다 ---------------------------------
+# 처음 그린 그림은 「화살표만 뒤집혔다」고 써 놓고 위아래 화살표를 둘 다 왼쪽에서
+# 오른쪽으로 그렸다. 말로만 뒤집고 그림은 안 뒤집혔으니 읽힐 리가 없었다.
+# 그래서 양 끝을 고정한다 -- 왼쪽이 늘 해외, 오른쪽이 늘 미국이다. 2008년 줄은
+# 왼쪽에서 오른쪽으로 흐르고 2016년 줄은 오른쪽에서 왼쪽으로 흐른다. 화살표가
+# 실제로 반대 방향을 가리켜야 뒤집혔다는 말이 눈에 보인다.
 #
-# 전쟁 표시를 30개월 자리에 세우는 것이 이 그림의 요점이다. 계단의 첫 칸이 하필 값이
-# 열 배가 된 때와 겹쳤다 -- 화자 자신이 운이라고 부르는 자리라 그림에서도 운으로 적는다.
-# 막대 길이는 개월 수에 비례한다(1개월 = 8px). 높이는 물량이 아니라 「그때까지 판 누적」의
-# 눈금이라 값을 적지 않는다 -- 원문에 회차별 물량이 없으므로 숫자를 지어내지 않는다.
-TRAIN_FIG = (
-    '<svg viewBox="0 0 640 250" role="img" '
-    'aria-label="대형 트레인과 쪼갠 트레인의 첫 현금 시점 비교">'
-    # 러우 전쟁 표시 -- 맨 뒤에 깔아 막대가 위에 오게 먼저 그린다
-    '<path d="M300 44 L300 210" class="lead-line"/>'
-    '<text x="306" y="40" class="t-bad" style="font-size:10.5px;font-weight:800">'
-    '러우 전쟁 · LNG값 10배</text>'
-    # 1줄 -- 기존 방식
-    '<text x="8" y="62" class="t-lab">기존 방식</text>'
-    '<text x="8" y="78" class="t-sm">초대형 트레인 3기</text>'
-    '<text x="8" y="93" class="t-sm">1기에 5조~10조 원</text>'
-    '<rect x="150" y="58" width="480" height="18" rx="4" class="body"/>'
-    '<text x="390" y="71" text-anchor="middle" class="t-sm">공사만 5년 — 그동안 들어오는 돈이 없다</text>'
-    '<path d="M630 76 L630 96" class="flow"/>'
-    '<text x="630" y="112" text-anchor="end" class="t-lab" style="font-size:10.5px">'
-    '여기서 한꺼번에</text>'
-    # 2줄 -- 벤처 글로벌
-    '<text x="8" y="150" class="t-lab">벤처 글로벌</text>'
-    '<text x="8" y="166" class="t-sm">소형 18기</text>'
-    '<text x="8" y="181" class="t-sm">(더 작게는 36기)</text>'
-    '<rect x="150" y="146" width="150" height="18" rx="4" class="body"/>'
-    '<text x="225" y="159" text-anchor="middle" class="t-sm">30개월</text>'
-    # 완성되는 대로 파는 계단
-    '<rect x="304" y="186" width="30" height="10" rx="2" class="fat"/>'
-    '<rect x="338" y="178" width="30" height="18" rx="2" class="fat"/>'
-    '<rect x="372" y="170" width="30" height="26" rx="2" class="fat"/>'
-    '<rect x="406" y="162" width="30" height="34" rx="2" class="fat"/>'
-    '<rect x="440" y="154" width="30" height="42" rx="2" class="fat"/>'
-    '<rect x="474" y="146" width="30" height="50" rx="2" class="fat"/>'
-    '<rect x="508" y="138" width="30" height="58" rx="2" class="fat"/>'
-    '<rect x="542" y="130" width="30" height="66" rx="2" class="fat"/>'
-    '<rect x="576" y="122" width="30" height="74" rx="2" class="fat"/>'
-    '<text x="455" y="214" text-anchor="middle" class="t-sm">'
-    '한 기가 끝나는 대로 팔아 다음 기 짓는 돈으로 돌린다</text>'
-    # 시간 눈금
-    '<path d="M150 232 L630 232" class="lead-line"/>'
-    '<text x="150" y="246" text-anchor="middle" class="t-sm">착공</text>'
-    '<text x="300" y="246" text-anchor="middle" class="t-sm">30개월</text>'
-    '<text x="630" y="246" text-anchor="end" class="t-sm">5년</text>'
+# 가운데 상자는 두 줄에 같은 자리·같은 크기·같은 부제로 둔다. 그것이 같은 건물이라는
+# 뜻이고 이 회사 이야기의 전부다. 사이에 낀 세 줄은 명사 라벨로 적지 않는다 --
+# 「관문 ①」 같은 말은 원문에 없는 내 조어였다. 누가 무엇을 했는지 문장으로 적는다.
+PIVOT_FIG = (
+    '<svg viewBox="0 0 640 336" role="img" '
+    'aria-label="체니에르가 가스를 들여오던 길로 내보내게 된 경로">'
+    # 위 줄 — 2008년, 해외에서 미국으로
+    '<text x="8" y="26" class="t-sm" style="font-weight:850">2008년 · 이렇게 하려고 지었다</text>'
+    '<rect x="8" y="36" width="140" height="50" rx="9" class="body"/>'
+    '<text x="78" y="58" text-anchor="middle" class="t-lab">해외</text>'
+    '<text x="78" y="75" text-anchor="middle" class="t-sm">카타르 · 호주</text>'
+    '<path d="M150 61 L220 61" class="flow"/>'
+    '<rect x="226" y="36" width="150" height="50" rx="9" class="body"/>'
+    '<text x="301" y="58" text-anchor="middle" class="t-lab">체니에르 기지</text>'
+    '<text x="301" y="75" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
+    '<path d="M378 61 L448 61" class="flow"/>'
+    '<rect x="454" y="36" width="178" height="50" rx="9" class="body"/>'
+    '<text x="543" y="58" text-anchor="middle" class="t-lab">미국</text>'
+    '<text x="543" y="75" text-anchor="middle" class="t-sm">여기에 판다</text>'
+    '<text x="8" y="108" class="t-bad" style="font-size:11px;font-weight:800">'
+    '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>'
+    # 가운데 — 그 사이에 누가 무엇을 했나
+    '<rect x="8" y="120" width="624" height="92" rx="10" class="body"/>'
+    '<text x="24" y="142" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>'
+    '<text x="24" y="164" class="t-sm">'
+    '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>'
+    '<text x="24" y="182" class="t-sm">'
+    '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>'
+    '<text x="24" y="200" class="t-sm">'
+    '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>'
+    # 아래 줄 — 2016년, 미국에서 해외로 (화살표가 반대다)
+    '<text x="8" y="242" class="t-sm" style="font-weight:850">'
+    '2016년 · 같은 건물에서 반대로 흐른다</text>'
+    '<rect x="8" y="252" width="140" height="50" rx="9" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="78" y="274" text-anchor="middle" class="t-lab">해외</text>'
+    '<text x="78" y="291" text-anchor="middle" class="t-sm">연 5천만 톤을 판다</text>'
+    '<path d="M220 277 L150 277" class="flow"/>'
+    '<rect x="226" y="252" width="150" height="50" rx="9" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="301" y="274" text-anchor="middle" class="t-lab">체니에르 기지</text>'
+    '<text x="301" y="291" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
+    '<path d="M448 277 L378 277" class="flow"/>'
+    '<rect x="454" y="252" width="178" height="50" rx="9" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="543" y="274" text-anchor="middle" class="t-lab">미국</text>'
+    '<text x="543" y="291" text-anchor="middle" class="t-sm">셰일 가스가 배관으로 온다</text>'
+    '<text x="8" y="326" class="t-sm">'
+    '가운데 상자는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>'
     '</svg>')
 
-TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>현금이 언제 도느냐</b>다. 다 지어야 파는 쪽은 5년을 '
-             '버텨야 하고, 한 기씩 파는 쪽은 30개월부터 들어온 돈으로 다음 기를 짓는다. '
-             '납품 의무가 18기를 다 채워야 생기는 계약이라 그 전에 나온 물량은 시장에 내다 팔 수 '
-             '있었고, 하필 <b>그 첫 칸이 값이 열 배가 된 때</b>와 겹쳤다 — 화자가 사명을 럭키 '
-             '글로벌로 바꿔야 한다고 말하는 자리다. 막대 높이는 누적을 보이는 눈금이지 물량이 '
-             '아니다(회차별 물량은 원문에 없다).')
+PIVOT_CAP = ('왼쪽이 해외, 오른쪽이 미국이다. 위 줄은 왼쪽에서 오른쪽으로 흐르고 아래 줄은 '
+             '오른쪽에서 왼쪽으로 흐른다. 가스가 <b>들어오던 길로 나가게</b> 됐다는 뜻이고, '
+             '그 사이에 새로 지은 건물은 없다. 대신 세 가지를 했다. 정부에 면허를 바꿔 '
+             '달라고 했고, 2년 만에 무너진 회사에 돈을 대준 곳을 찾았고, 그 계약서로 '
+             '200억 달러를 빌렸다.')
 
 
-# -- 입지 갈림 도해 ---------------------------------------------------------
+# -- 벤처 글로벌이 돈을 맞춘 순서 ---------------------------------------------
+# 화자가 「봉이 김선달 장사」라 부른 순서다. 종이 세 장이 서로를 담보하는데, 세 칸이
+# 동시에 성립한 데는 그해 사정이 있었다. 그래서 칸마다 「왜 됐나」를 한 문장으로 붙인다 --
+# 처음에는 「그때 조건」이라는 명사 라벨로 눌러 놨는데, 주어도 동사도 없어 읽어도 모른다.
+FUND_FIG = (
+    '<svg viewBox="0 0 640 250" role="img" '
+    'aria-label="벤처 글로벌이 계약서와 발주서로 자금을 맞춘 순서">'
+    '<text x="8" y="20" class="t-sm">공장을 짓기 전에 종이부터 모은다. 왼쪽에서 오른쪽 순서다</text>'
+    '<rect x="8" y="34" width="190" height="132" rx="10" class="body"/>'
+    '<text x="24" y="58" class="t-lab">1. 판매 계약</text>'
+    '<text x="24" y="80" class="t-sm">고객을 찾아가 아주 싸게</text>'
+    '<text x="24" y="96" class="t-sm">팔겠다고 먼저 약속한다</text>'
+    '<path d="M24 110 L182 110" class="lead-line"/>'
+    '<text x="24" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
+    '<text x="24" y="146" class="t-sm">업계 밖 사람이라 4년을</text>'
+    '<text x="24" y="160" class="t-sm">무시당한 끝이었다</text>'
+    '<rect x="225" y="34" width="190" height="132" rx="10" class="body"/>'
+    '<text x="241" y="58" class="t-lab">2. 설비 발주서</text>'
+    '<text x="241" y="80" class="t-sm">그 계약서를 들고 가서</text>'
+    '<text x="241" y="96" class="t-sm">제조사에 설비를 시킨다</text>'
+    '<path d="M241 110 L399 110" class="lead-line"/>'
+    '<text x="241" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
+    '<text x="241" y="146" class="t-sm">유가가 100달러에서 30달러로</text>'
+    '<text x="241" y="160" class="t-sm">떨어져 재고가 쌓여 있었다</text>'
+    '<rect x="442" y="34" width="190" height="132" rx="10" class="body"/>'
+    '<text x="458" y="58" class="t-lab">3. 은행 대출</text>'
+    '<text x="458" y="80" class="t-sm">계약서와 발주서를 들고</text>'
+    '<text x="458" y="96" class="t-sm">은행에 가서 돈을 빌린다</text>'
+    '<path d="M458 110 L616 110" class="lead-line"/>'
+    '<text x="458" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
+    '<text x="458" y="146" class="t-sm">금리가 떨어졌고 은행도</text>'
+    '<text x="458" y="160" class="t-sm">빌려줄 데가 없었다</text>'
+    '<path d="M198 100 L221 100" class="flow"/>'
+    '<path d="M415 100 L438 100" class="flow"/>'
+    '<rect x="8" y="186" width="624" height="46" rx="10" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="320" y="215" text-anchor="middle" class="t-lab">'
+    '여기까지 전부 종이다. 첫 삽을 뜨는 날까지 이 회사가 가진 설비는 없다</text>'
+    '</svg>')
+
+FUND_CAP = ('예전에는 거대 에너지 회사가 <b>자기 돈</b>으로 이런 설비를 지었다. 벤처 글로벌은 '
+            '순서를 바꿨다. 팔겠다는 약속을 먼저 받아 그것으로 설비를 시키고, 그 둘을 담보로 '
+            '돈을 빌렸다. 다만 세 칸이 한꺼번에 맞아떨어진 것은 그해 사정 덕이 크다. 재고가 '
+            '쌓여 선수금 없이 원가에 주겠다는 제조사와, 빌려줄 데가 마른 은행이 같은 해에 있었다.')
+
+
+# -- 쪼갠 쪽은 30개월째부터 돈이 들어온다 --------------------------------------
+# 「효율이 떨어지는데 왜 이겼나」는 그림 없이 안 잡힌다. 답이 효율이 아니라 시간축에
+# 있어서다 -- 같은 돈을 5년 뒤에 한꺼번에 받느냐, 30개월째부터 조금씩 받느냐.
+# 그래서 좌우 대비가 아니라 시간축 두 줄로 그린다(입지 도해가 좌우 대비라 겹치지 않는다).
+#
+# 전쟁 표시를 30개월 자리에 세우는 것이 요점이다. 계단 첫 칸이 하필 값이 열 배가 된 때와
+# 겹쳤다. 막대 길이는 개월 수에 비례한다(1개월 = 8px). 계단 높이는 그때까지 판 누적을
+# 보이는 눈금이라 값을 적지 않는다 -- 회차별 물량이 원문에 없으므로 숫자를 지어내지 않는다.
+TRAIN_FIG = (
+    '<svg viewBox="0 0 640 274" role="img" '
+    'aria-label="대형 트레인과 쪼갠 트레인의 첫 현금 시점 비교">'
+    '<text x="8" y="18" class="t-sm">가로축은 착공하고 나서 흐른 시간이다</text>'
+    '<path d="M300 56 L300 222" class="lead-line"/>'
+    '<text x="306" y="52" class="t-bad" style="font-size:10.5px;font-weight:800">'
+    '이때 러우 전쟁이 터져 LNG값이 열 배가 됐다</text>'
+    '<text x="8" y="76" class="t-lab">남들이 하던 방식</text>'
+    '<text x="8" y="92" class="t-sm">큰 설비 3기를 짓는다</text>'
+    '<text x="8" y="107" class="t-sm">1기에 5조~10조 원</text>'
+    '<rect x="150" y="70" width="480" height="18" rx="4" class="body"/>'
+    '<text x="390" y="83" text-anchor="middle" class="t-sm">'
+    '다 지어야 팔 수 있다. 5년 동안 들어오는 돈이 없다</text>'
+    '<path d="M630 88 L630 104" class="flow"/>'
+    '<text x="630" y="120" text-anchor="end" class="t-lab" style="font-size:10.5px">'
+    '5년째에 처음 돈이 들어온다</text>'
+    '<text x="8" y="164" class="t-lab">벤처 글로벌</text>'
+    '<text x="8" y="180" class="t-sm">작은 설비 18기로 쪼갠다</text>'
+    '<text x="8" y="195" class="t-sm">(더 작게는 36기)</text>'
+    '<rect x="150" y="158" width="150" height="18" rx="4" class="body"/>'
+    '<text x="225" y="171" text-anchor="middle" class="t-sm">30개월</text>'
+    '<rect x="304" y="198" width="30" height="10" rx="2" class="fat"/>'
+    '<rect x="338" y="190" width="30" height="18" rx="2" class="fat"/>'
+    '<rect x="372" y="182" width="30" height="26" rx="2" class="fat"/>'
+    '<rect x="406" y="174" width="30" height="34" rx="2" class="fat"/>'
+    '<rect x="440" y="166" width="30" height="42" rx="2" class="fat"/>'
+    '<rect x="474" y="158" width="30" height="50" rx="2" class="fat"/>'
+    '<rect x="508" y="150" width="30" height="58" rx="2" class="fat"/>'
+    '<rect x="542" y="142" width="30" height="66" rx="2" class="fat"/>'
+    '<rect x="576" y="134" width="30" height="74" rx="2" class="fat"/>'
+    '<text x="310" y="130" class="t-lab" style="font-size:10.5px">'
+    '30개월째부터 돈이 들어온다</text>'
+    '<text x="455" y="226" text-anchor="middle" class="t-sm">'
+    '한 기가 끝나면 그것부터 팔고, 그 돈으로 다음 기를 짓는다</text>'
+    '<text x="455" y="240" text-anchor="middle" class="t-sm">'
+    '막대가 높아지는 것은 그때까지 판 양이 쌓인다는 뜻이다</text>'
+    '<path d="M150 252 L630 252" class="lead-line"/>'
+    '<text x="150" y="262" text-anchor="middle" class="t-sm">착공</text>'
+    '<text x="300" y="262" text-anchor="middle" class="t-sm">30개월</text>'
+    '<text x="630" y="262" text-anchor="end" class="t-sm">5년</text>'
+    '</svg>')
+
+TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>돈이 언제 들어오느냐</b>다. 다 지어야 파는 쪽은 5년을 '
+             '버텨야 하고, 한 기씩 파는 쪽은 30개월째부터 들어온 돈으로 다음 기를 짓는다. '
+             '18기를 다 채워야 납품 의무가 생기는 계약이라 그 전에 나온 물량은 시장에 그냥 팔 수 '
+             '있었고, 하필 <b>그 첫 칸이 값이 열 배가 된 때</b>와 겹쳤다. 화자가 사명을 럭키 '
+             '글로벌로 바꿔야 한다고 말하는 자리다.')
+
+
+# -- 조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다 ------------------------------
 # 이 편에서 가장 뒤집힌 대목이라 그림 한 장이 문장 여럿을 대신한다. 조건은 마셀러스가
-# 넷 다 앞서는데 허가는 걸프에만 났고, 그래서 결과가 갈렸다. 화살표는 인과다 --
-# 화자가 직접 인과로 말한다(「허가가 안 나는 거예요. 지역 주민이 반대하고」).
+# 넷 다 앞서는데 허가는 걸프에만 났고, 그래서 결과가 갈렸다. 화자가 직접 인과로 말한다
+# (「허가가 안 나는 거예요. 지역 주민이 반대하고」).
 #
 # 조건 칸에 걸프의 장점(헨리 허브)도 적는다. 한쪽을 조건까지 나쁜 동네로 그리면
 # 「나쁜 데가 이겼다」가 되어 원문에 없는 이야기가 된다 -- 원문은 「좋은 데가 졌다」이다.
 SITE_FIG = (
-    '<svg viewBox="0 0 640 372" role="img" '
+    '<svg viewBox="0 0 640 384" role="img" '
     'aria-label="마셀러스와 걸프 연안의 조건과 허가 대비">'
-    # 머리
-    '<text x="157" y="14" text-anchor="middle" class="t-lab">마셀러스 (동북부)</text>'
-    '<text x="483" y="14" text-anchor="middle" class="t-lab">걸프 연안 (텍사스·루이지애나)</text>'
-    # 1층 — 조건
-    '<text x="8" y="34" class="t-sm" style="font-weight:850;letter-spacing:.08em">조건</text>'
-    '<rect x="8" y="42" width="298" height="108" rx="10" class="body"/>'
-    '<text x="24" y="66" class="good">+</text><text x="40" y="66">셰일 가스 산지가 붙어 있다</text>'
-    '<text x="24" y="88" class="good">+</text><text x="40" y="88">유럽까지 더 가깝다</text>'
-    '<text x="24" y="110" class="good">+</text><text x="40" y="110">허리케인이 없다</text>'
-    '<text x="24" y="132" class="good">+</text><text x="40" y="132">배관 이용료가 싸다</text>'
-    '<rect x="334" y="42" width="298" height="108" rx="10" class="body"/>'
-    '<text x="350" y="66" class="t-bad">−</text><text x="366" y="66">허리케인이 지나간다</text>'
-    '<text x="350" y="88" class="t-bad">−</text><text x="366" y="88">유럽에서 멀다</text>'
-    '<text x="350" y="110" class="good">+</text>'
-    '<text x="366" y="110">가스 배관이 모이는 헨리 허브가 있다</text>'
-    '<text x="350" y="134" class="t-sm">사업자가 위험을 나누고 싶어도 옮길 수가 없다</text>'
-    # 2층 — 허가
-    '<text x="8" y="176" class="t-sm" style="font-weight:850;letter-spacing:.08em">허가</text>'
-    '<rect x="8" y="184" width="298" height="72" rx="10" class="body" stroke-dasharray="6 4"/>'
-    '<text x="24" y="210" class="t-bad">✕</text>'
-    '<text x="44" y="210" class="t-lab">수출 전환 허가가 안 난다</text>'
-    '<text x="24" y="232" class="t-sm">지역 주민이 반대하고 지방 정치인이 그편에 섰다</text>'
-    '<rect x="334" y="184" width="298" height="72" rx="10" class="body" '
+    '<text x="8" y="14" class="t-sm">같은 사업을 두 동네에서 하려고 했다. 왼쪽이 졌다</text>'
+    '<text x="157" y="34" text-anchor="middle" class="t-lab">마셀러스 (동북부)</text>'
+    '<text x="483" y="34" text-anchor="middle" class="t-lab">걸프 연안 (텍사스·루이지애나)</text>'
+    '<text x="8" y="56" class="t-sm" style="font-weight:850">공장 짓기에 좋은 조건</text>'
+    '<rect x="8" y="64" width="298" height="108" rx="10" class="body"/>'
+    '<text x="24" y="88" class="good">+</text><text x="40" y="88">셰일 가스가 바로 옆에서 난다</text>'
+    '<text x="24" y="110" class="good">+</text><text x="40" y="110">유럽까지 실어 가기 가깝다</text>'
+    '<text x="24" y="132" class="good">+</text><text x="40" y="132">허리케인이 오지 않는다</text>'
+    '<text x="24" y="154" class="good">+</text><text x="40" y="154">배관을 쓰는 값이 싸다</text>'
+    '<rect x="334" y="64" width="298" height="108" rx="10" class="body"/>'
+    '<text x="350" y="88" class="t-bad">−</text>'
+    '<text x="366" y="88">해마다 허리케인이 지나간다</text>'
+    '<text x="350" y="110" class="t-bad">−</text><text x="366" y="110">유럽까지 멀다</text>'
+    '<text x="350" y="132" class="good">+</text>'
+    '<text x="366" y="132">가스 배관이 모이는 헨리 허브가 있다</text>'
+    '<text x="350" y="156" class="t-sm">사업자도 왼쪽으로 옮기고 싶어 하지만 옮기지 못한다</text>'
+    '<text x="8" y="198" class="t-sm" style="font-weight:850">그런데 허가가</text>'
+    '<rect x="8" y="206" width="298" height="72" rx="10" class="body" stroke-dasharray="6 4"/>'
+    '<text x="24" y="232" class="t-bad">✕</text>'
+    '<text x="44" y="232" class="t-lab">수출로 바꾸는 허가가 안 난다</text>'
+    '<text x="24" y="254" class="t-sm">주민이 반대했고 지방 정치인도 그편에 섰다</text>'
+    '<rect x="334" y="206" width="298" height="72" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="350" y="210" class="good">✓</text>'
-    '<text x="370" y="210" class="t-lab">허가가 난다</text>'
-    '<text x="350" y="232" class="t-sm">100년 오일·가스 동네라 주민이 우호적, 지방 정부도 협조</text>'
-    # 내려가는 화살표
-    '<path d="M157 256 L157 288" class="flow"/>'
-    '<path d="M483 256 L483 288" class="flow"/>'
-    # 3층 — 결과
-    '<text x="8" y="308" class="t-sm" style="font-weight:850;letter-spacing:.08em">결과</text>'
-    '<rect x="8" y="296" width="298" height="64" rx="10" class="body" stroke-dasharray="6 4"/>'
-    '<text x="157" y="322" text-anchor="middle" class="t-bad" '
-    'style="font-size:12px;font-weight:800">지금도 안 된다</text>'
-    '<text x="157" y="342" text-anchor="middle" class="t-sm">수출항이 하루 거리인데 비어 있다</text>'
-    '<rect x="334" y="296" width="298" height="64" rx="10" class="body" '
+    '<text x="350" y="232" class="good">✓</text>'
+    '<text x="370" y="232" class="t-lab">허가가 난다</text>'
+    '<text x="350" y="254" class="t-sm">100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
+    '<path d="M157 278 L157 310" class="flow"/>'
+    '<path d="M483 278 L483 310" class="flow"/>'
+    '<text x="8" y="330" class="t-sm" style="font-weight:850">그래서 지금</text>'
+    '<rect x="8" y="318" width="298" height="64" rx="10" class="body" stroke-dasharray="6 4"/>'
+    '<text x="157" y="344" text-anchor="middle" class="t-bad" '
+    'style="font-size:12px;font-weight:800">아직도 못 짓는다</text>'
+    '<text x="157" y="364" text-anchor="middle" class="t-sm">'
+    '수출항이 하루 거리인데 비어 있다</text>'
+    '<rect x="334" y="318" width="298" height="64" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="483" y="322" text-anchor="middle" class="t-lab" '
-    'style="font-size:12px">사업 모델이 복제된다</text>'
-    '<text x="483" y="342" text-anchor="middle" class="t-sm">미국 LNG 수출 프로젝트가 여기로 몰려 클러스터가 됐다</text>'
+    '<text x="483" y="344" text-anchor="middle" class="t-lab" '
+    'style="font-size:12px">같은 사업이 줄줄이 들어선다</text>'
+    '<text x="483" y="364" text-anchor="middle" class="t-sm">'
+    '미국 LNG 수출 공장이 여기로 몰려 한 동네를 이뤘다</text>'
     '</svg>')
 
-SITE_CAP = ('조건은 <b>왼쪽이 넷 다 앞선다</b>. 가스 산지에 붙어 있고 유럽에 가깝고 허리케인도 '
-            '없고 배관값도 싸다. 그런데 허가가 한쪽에만 났고 결과가 그대로 갈렸다. '
-            '화자가 이 편에서 한국으로 끌어오는 문장이 여기서 나온다 — 어떤 사업이 되느냐 '
-            '안 되느냐는 <b>공장을 짓는 자리 옆집이 찬성하느냐</b>에서 갈린다.')
+SITE_CAP = ('공장 짓기에 좋은 조건은 <b>왼쪽이 넷 다 앞선다</b>. 가스가 옆에서 나고 유럽에 '
+            '가깝고 허리케인도 없고 배관값도 싸다. 그런데 허가가 한쪽에만 났고 결과가 그대로 '
+            '갈렸다. 화자가 이 편에서 한국으로 끌어오는 문장이 여기서 나온다. 어떤 사업이 '
+            '되느냐 마느냐는 <b>공장 지을 자리 옆집이 찬성하느냐</b>에서 갈린다.')
 
 
 CARDS = [
@@ -916,10 +940,10 @@ CARDS = [
      ],
      'slim_stats': [('29배', '10년간 미국 LNG 수출 증가'), ('2.7 대 20달러', '미국 대 동북아 가스값'),
                     ('500조 원', '수출 설비 총투자·보조금 없음'), ('30개월', '벤처 글로벌 착공~첫 생산')],
-     'figs': [(3, '같은 설비에서 화살표만 뒤집혔다', PIVOT_FIG, PIVOT_CAP),
-              (4, '조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP),
-              (6, '종이 세 장이 서로를 담보한다', FUND_FIG, FUND_CAP),
-              (7, '쪼갠 쪽은 30개월부터 현금이 돈다', TRAIN_FIG, TRAIN_CAP)],
+     'figs': [(3, '가스가 들어오던 길로 나가게 됐다', PIVOT_FIG, PIVOT_CAP),
+              (4, '좋은 조건은 왼쪽인데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP),
+              (6, '공장을 짓기 전에 종이부터 모은다', FUND_FIG, FUND_CAP),
+              (7, '쪼갠 쪽은 30개월째부터 돈이 들어온다', TRAIN_FIG, TRAIN_CAP)],
      'oneliner': ('미국이 LNG 수출 1위가 된 동력을 자원이 아니라 제도에서 찾는다. 실패한 사업을 '
                   '갈아탈 여지를 준 자본시장, 주민이 반대하지 않는 입지, 성공한 경쟁자를 베끼는 '
                   '유연함 셋이 10년 만에 판을 바꿨다는 것이다.'),
