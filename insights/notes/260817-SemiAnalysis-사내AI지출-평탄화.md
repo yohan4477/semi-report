@@ -4,7 +4,7 @@ title: "Ep. 25 — DYLAN IS HERE, LIVE! (Dylan Patel & Jordan Nanos)"
 date: 2026-08-17
 corpus: pod
 lang: en
-actors: [SemiAnalysis, 딜런 패텔, 조던 나노스, 앤트로픽, OpenAI, 엔비디아, 브로드컴, 세레브라스]
+actors: [SemiAnalysis, 딜런 패텔, 조던 나노스, 앤트로픽, 오픈AI, 엔비디아, 브로드컴, 세레브라스]
 topics: [사내 AI 지출, 보상 해킹, 모델 미출시, 대체 가속기, 상호작용성]
 ---
 

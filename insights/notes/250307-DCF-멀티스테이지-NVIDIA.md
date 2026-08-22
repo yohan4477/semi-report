@@ -4,7 +4,7 @@ title: "빅테크 DCF는 3단계로 나눈다 — NVIDIA 내재가치는 주당 
 date: 2025-03-07
 corpus: third
 lang: ko
-actors: [엘곰, NVIDIA, SimplyWall.st, GuruFocus]
+actors: [엘곰, 엔비디아, Simply Wall St, GuruFocus]
 topics: [DCF, 멀티스테이지, 영구가치, FCFE]
 ---
 

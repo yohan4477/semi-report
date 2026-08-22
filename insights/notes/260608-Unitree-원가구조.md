@@ -4,7 +4,7 @@ title: "Unitree's Impossible Trajectory Is Still Overlooked"
 date: 2026-06-08
 corpus: semi
 lang: ko
-actors: [Unitree, BYD, DJI, 어질리티 로보틱스]
+actors: [유니트리, BYD, DJI, 어질리티 로보틱스]
 topics: [로봇, 액추에이터, 제조원가]
 ---
 

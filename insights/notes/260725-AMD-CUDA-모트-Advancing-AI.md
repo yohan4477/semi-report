@@ -4,7 +4,7 @@ title: "Can AMD break the CUDA Moat? AMD Advancing AI 2026"
 date: 2026-07-25
 corpus: semi
 lang: ko
-actors: [AMD, 엔비디아, Meta, Microsoft, Anthropic, OpenAI]
+actors: [AMD, 엔비디아, 메타, 마이크로소프트, 앤트로픽, 오픈AI]
 topics: [GPU소프트웨어스택, 랙설계, 추론]
 ---
 

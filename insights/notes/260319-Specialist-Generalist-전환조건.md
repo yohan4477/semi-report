@@ -4,7 +4,7 @@ title: "Specialist에서 Generalist로"
 date: 2026-03-19
 corpus: third
 lang: ko
-actors: [HuggingFace, 엔비디아, Physical Intelligence, 구글딥마인드, 보스턴 다이내믹스]
+actors: [HuggingFace, 엔비디아, Physical Intelligence, 구글 딥마인드, 보스턴 다이내믹스]
 topics: [범용로봇, 교차embodiment, VLM백본, 스케일링법칙, 파인튜닝]
 ---
 

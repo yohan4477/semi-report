@@ -4,7 +4,7 @@ title: "Forward PER 5배 미만이 의미하는 것 - 삼성전자·SK하이닉�
 date: 2026-08-10
 corpus: third
 lang: ko
-actors: [엘곰, 삼성전자, SK하이닉스, 마이크론, 아마존, 알파벳, 메타, MS]
+actors: [엘곰, 삼성전자, SK하이닉스, 마이크론, 아마존, 알파벳, 메타, 마이크로소프트]
 topics: [Forward PER, CAPEX, ROI 우려, 빅테크 실적]
 ---
 

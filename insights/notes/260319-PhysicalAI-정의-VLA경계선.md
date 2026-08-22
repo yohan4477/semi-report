@@ -4,7 +4,7 @@ title: "Physical AI의 정의"
 date: 2026-03-19
 corpus: third
 lang: ko
-actors: [엔비디아, 구글딥마인드, Physical Intelligence, Figure AI, 보스턴 다이내믹스]
+actors: [엔비디아, 구글 딥마인드, Physical Intelligence, Figure AI, 보스턴 다이내믹스]
 topics: [PhysicalAI, VLA, RT-2, 변형체조작, 용어정의]
 ---
 

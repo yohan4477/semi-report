@@ -5,6 +5,29 @@ import paths
 import notes_lib as nl
 
 MAXKB = 3.0
+
+# -- N9 : 회사 이름은 정본 하나로만 --------------------------------------
+# actors 는 문서를 회사로 잇는 열쇠다. 같은 회사가 「엔비디아」와 「NVIDIA」로 나뉘면
+# 교차 인사이트가 한 회사를 둘로 세고 둘 다 근거가 얇아진다. 2026-08-23에 노트에서
+# 갈라져 있던 25종을 합치고 이 검사를 걸었다. 표는 insights/actor_alias.json.
+ALIAS = {k: v for k, v in
+         json.load(io.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        'actor_alias.json'), encoding='utf-8')).items()
+         if not k.startswith('_')}
+
+
+def check_actors(path, meta):
+    out = []
+    raw = (meta.get('actors') or '').strip()
+    if not (raw.startswith('[') and raw.endswith(']')):
+        return out
+    for a in raw[1:-1].split(','):
+        a = a.strip().strip('"')
+        if a in ALIAS:
+            out.append(('FAIL', path, 'N9',
+                        'actors 에 별칭을 썼다 -- %s 는 %s 로 적는다' % (a, ALIAS[a])))
+    return out
+
 NUM = re.compile(r'\d')
 ROW = re.compile(r'^\s*-\s+(.+)$', re.M)
 
@@ -100,6 +123,8 @@ def check_file(path, text, lock):
         out.append(('WARN', path, 'N5',
                     '노트가 %.1fKB — %.0fKB를 넘으면 원문을 다시 읽는 편이 낫다'
                     % (len(text.encode('utf-8')) / 1024.0, MAXKB)))
+
+    out += check_actors(path, meta)
 
     m = re.search(r'^## 수치\s*\n(.*?)(?=\n## |\Z)', body, re.S | re.M)
     if m:
