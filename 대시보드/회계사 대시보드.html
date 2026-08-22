@@ -38910,6 +38910,15 @@
     var base = location.pathname + location.search;
     // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
     var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    // 카드를 지목한 주소로 들어온 사람의 주소는 덮지 않는다. LINK_JS가 그 카드를 열려고
+    // 타일을 대신 눌러 주는데, 그때 여기가 #card-… 를 #섹션id 로 갈아치웠다. 그래서 새로
+    // 고침하면 읽던 카드가 아니라 섹션 목록이 떴다(2026-08-23). 지금 주소가 이미 이 섹션
+    // 안을 가리키고 있으면 그대로 둔다 -- 주소가 안 바뀌니 히스토리도 안 쌓인다.
+    if(!picking && only && location.hash){
+      var cur=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      var host=cur && cur.closest('section');
+      if(host && host.id===only) want = base + location.hash;
+    }
     if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
   }
   function restore(st){

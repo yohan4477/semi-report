@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-22",
+ "generated": "2026-08-23",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -892,6 +892,17 @@
    "date": "2026-03-17",
    "path": "content/understanding/권효재 대표/대만 LNG 초비상, 한국만 여유로운 이유 (1부).md",
    "hash": "3a9943e75fbe"
+  },
+  {
+   "id": "und:권효재 대표:미국-LNG-수출이-세계-1위로-올라선-이유",
+   "corpus": "understanding",
+   "folder": "권효재 대표",
+   "categories": [
+    "권효재 대표"
+   ],
+   "date": "2026-08-20",
+   "path": "content/understanding/권효재 대표/미국 LNG 수출이 세계 1위로 올라선 이유.md",
+   "hash": "f7283d61b2b0"
   },
   {
    "id": "und:권효재 대표:미국-데이터센터-전력난-이걸로-뚫었다",
@@ -2258,6 +2269,28 @@
    "hash": "f7f873128898"
   },
   {
+   "id": "und:피지컬AI:DYNA-2-월드-액션-모델과-170년-휴먼-데이터",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-08-19",
+   "path": "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md",
+   "hash": "39cedb916889"
+  },
+  {
+   "id": "und:피지컬AI:GTC-앞두고-쏟아진-로봇-모델-다섯-편",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-03-15",
+   "path": "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md",
+   "hash": "b320020aa36f"
+  },
+  {
    "id": "und:피지컬AI:Physical-AI의-정의",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2280,6 +2313,17 @@
    "hash": "d4765d2b43b9"
   },
   {
+   "id": "und:피지컬AI:Rhoda-AI-비디오-액션-모델과-Sharpa-손안-조작",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-03-16",
+   "path": "content/understanding/피지컬AI/[260316] Rhoda AI 비디오 액션 모델과 Sharpa 손안 조작.md",
+   "hash": "977aeebdb00e"
+  },
+  {
    "id": "und:피지컬AI:Specialist에서-Generalist로",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2289,6 +2333,28 @@
    "date": "2026-03-19",
    "path": "content/understanding/피지컬AI/Specialist에서 Generalist로.md",
    "hash": "80ca49a5aa13"
+  },
+  {
+   "id": "und:피지컬AI:로봇-데이터-없이-학습한-세-회사의-차이",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-11-25",
+   "path": "content/understanding/피지컬AI/[251125] 로봇 데이터 없이 학습한 세 회사의 차이.md",
+   "hash": "f0b1dd41da2a"
+  },
+  {
+   "id": "und:피지컬AI:로봇-손-세-종-직접-비교",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-06-21",
+   "path": "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md",
+   "hash": "f43018c7aad3"
   },
   {
    "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",
