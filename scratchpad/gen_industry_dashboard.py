@@ -2338,7 +2338,111 @@ _attach_ryu()
 
 
 
+# -- 권효재 열 편을 시간순으로 -----------------------------------------------
+# 이 페이지의 카드는 주제로 갈라져 있어서 한 사람이 다섯 달 동안 무엇을 어떤 순서로 말했는지가
+# 안 보인다. 3월 에너지 3부작이 물량 단절을 말하고, 6월에 전기값으로 옮겨 가고, 8월에 그 설비를
+# 누가 지었나로 돌아오는 흐름이 섹션 넷에 흩어져 있다. 그래서 dc.render(top=...)에 넘기는
+# **카드 없는 고정 층**으로 하나 세운다 -- 타일 하나로 서고 국내·해외 필터를 타지 않는다.
+#
+# 표시는 둘뿐이다. 앞질러 말한 자리는 「예고」, 앞 편을 다시 든 자리는 「되짚음」.
+# 적중·빗나감은 달지 않는다 -- 판정은 검증 대장에서만 하고 여기서 사후로 붙이지 않는다.
+LOG_KWON = [
+ ('2026년 3월 — 물량이 끊기면 무슨 일이 벌어지나', [
+  ('03-15', '예고', '에너지 믹스',
+   '유가 급등락을 전쟁 탓으로만 보지 않는다. 수년간 화석연료 투자가 줄어 예정돼 있던 불안이고, '
+   '진짜 문제는 값이 아니라 <b>물량 단절</b>이라고 못 박는다. 이 문장이 뒤따르는 3부작의 전제가 된다.'),
+  ('03-17', '', '대만 LNG',
+   '「한국 LNG 9일치뿐」이라는 보도를 재고 약 500만 톤으로 반박한다. 위험한 쪽은 저장 능력과 '
+   '중동 의존도가 모두 최악인 대만이라고 지목한다. 한국이 미국에서 확보한 지분 액화 용량도 여기서 나온다.'),
+  ('03-18', '', '10조 돈벼락',
+   '봉쇄가 값을 어디로 옮기는지 한 회사로 보여 준다. 유조선 운임이 다섯 배 넘게 뛰자 위기 직전에 '
+   '중고 대형 유조선을 사 둔 한국 해운사가 반년 만에 10조 원대 수익을 앞두게 됐다.'),
+  ('03-19', '되짚음', '15억 인구',
+   '물량 단절의 끝을 인도·파키스탄에서 본다. 중동산 LPG가 끊기자 밥을 못 짓는 지경이 됐고 인도는 '
+   '해군으로 호송했다. 재생 전환 중에도 화석연료 안정 공급은 못 놓는다는 결론으로 3월을 닫는다.'),
+ ]),
+ ('2026년 5~6월 — 값이 전기로 옮겨 간다', [
+  ('05-03', '', '100년 자산',
+   '에너지를 공기·물과 함께 생존 조건으로 놓고, 90% 넘게 수입하면서 위기감이 없는 한국을 문제 삼는다. '
+   '재생 전환·에너지 안보·AI 수요가 겹치는 지금을 인프라 투자 시점으로 본다(특강 홍보 인터뷰다).'),
+  ('06-02', '예고', '이란 전쟁 오늘 끝나도',
+   '<b>해협이 오늘 뚫려도 유가 불안은 9월까지 간다</b>고 말한다. 재고 소진과 공급망 정상화에 '
+   '3~4개월이 걸린다는 것이 근거다. 전쟁의 끝과 값의 끝을 갈라 놓은 자리다.'),
+  ('06-03', '', '싼 전기 시대',
+   '이야기가 기름에서 전기로 넘어간다. 독일은 재생에너지 통합 시스템에, 프랑스는 국민 저축까지 끌어온 '
+   '원전에 각각 국가를 걸었고 둘 다 자국 밸류체인 완결이 목적이라고 읽는다.'),
+  ('06-22', '', '4년만에 3배',
+   '같은 이야기를 한국으로 가져온다. 정부 KGX 계획으로 재생에너지 용량이 2030년까지 약 3배가 되고, '
+   '삼성이 10년 만에 에너지 사업 조직을 다시 세운다.'),
+ ]),
+ ('2026년 7~8월 — 그 설비를 누가 짓나', [
+  ('07-24', '', '데이터센터 전력난',
+   'AI 데이터센터는 부하 변동이 커서 기존 전력망에 그냥 못 붙는다. 미국은 발전소를 옆에 직접 짓고 '
+   '그 사이를 AI가 실시간 조율하는 방식으로 뚫었다고 정리한다. 전기 부족이 설비 이야기로 바뀌는 지점이다.'),
+  ('08-20', '되짚음', '세계 1위로 올라선',
+   '3월에 「한국이 미국에서 확보한 물량」으로 지나갔던 그 설비를 <b>만든 쪽</b>으로 돌아온다. '
+   '미국 LNG 수출이 10년 만에 29배가 된 동력을 셰일 가스가 아니라 실패한 사업을 갈아탈 여지를 준 '
+   '자본시장과 반대하지 않는 주민에서 찾는다.'),
+ ]),
+]
+
+KWON_CSS = """
+  .klog{margin:6px 0 0}
+  .klog-m{margin:22px 0 6px;font-size:12px;font-weight:850;letter-spacing:.05em;color:var(--ink-3)}
+  .klog-m:first-child{margin-top:6px}
+  .klog ul{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--line)}
+  .klog li{position:relative;padding:10px 0 10px 14px;font-size:13.5px;line-height:1.65;color:var(--ink-2)}
+  .klog li::before{content:'';position:absolute;left:-21px;top:18px;width:7px;height:7px;
+    border-radius:50%;background:var(--ink-3);box-shadow:0 0 0 3px var(--paper)}
+  .klog li.k::before{background:var(--accent);width:9px;height:9px;left:-22px}
+  .klog .d{font-variant-numeric:tabular-nums;font-weight:850;color:var(--ink);margin-right:9px}
+  .klog .tag{display:inline-block;font-size:10.5px;font-weight:850;padding:1px 7px;border-radius:999px;
+    margin-right:7px;border:1px solid var(--line);color:var(--ink-3);vertical-align:1px}
+  .klog .tag.t-예고{border-color:var(--accent);color:var(--accent)}
+  .klog .tag.t-되짚음{border-color:var(--ink-3);color:var(--ink-3)}
+  .klog .kt{display:block;margin:2px 0 3px;font-weight:850;color:var(--ink);font-size:14px}
+"""
+
+
+def kwon_html():
+    """열 편을 오래된 것부터 아래로 읽게 낸다.
+
+    이선엽 시황의 「시간순 기록」은 최신이 맨 위인데, 저기는 어제 무슨 말을 했나를 보러 오는 층이다.
+    여기는 다르다 -- 한 사람의 판단이 3월 물량에서 6월 전기를 거쳐 8월 설비로 옮겨 간 경로가
+    내용이라, 거꾸로 내면 그 경로가 뒤집힌다. 그래서 위가 3월이다."""
+    n = sum(len(v) for _m, v in LOG_KWON)
+    h = ['<p class="ins-lede">권효재 COR에너지인사이트 대표 편 <b>%d장</b>을 발행순으로 '
+         '늘어놓은 층입니다. 주제 카드는 기름·전기·반도체로 갈라져 있어 한 사람의 생각이 '
+         '어떤 순서로 옮겨 갔는지가 안 보입니다. <b>위가 3월이고 아래로 갈수록 최근</b>이며, '
+         '제목을 누르면 그 카드가 열립니다. 앞질러 말한 자리에 <b>예고</b>, 앞 편을 다시 든 '
+         '자리에 <b>되짚음</b>을 답니다 — 맞았는지 틀렸는지는 여기서 판정하지 않습니다.</p>'
+         % n, '<div class="klog">']
+    for month, rows in LOG_KWON:
+        h.append('<p class="klog-m">%s · %d편</p><ul>' % (month, len(rows)))
+        for d, tag, frag, body in rows:
+            hits = [c for c in CARDS if frag in c['title']]
+            assert len(hits) == 1, ('시간순 조각이 카드 하나를 못 가리킨다: %r — %d건'
+                                    % (frag, len(hits)))
+            c = hits[0]
+            src = c['meta'][-1]
+            h.append('<li%s><span class="d">%s</span>%s'
+                     '<a class="kt kin-link" href="#%s">%s</a>%s <span class="t-sm">· %s</span></li>'
+                     % (' class="k"' if tag else '', d,
+                        '<span class="tag t-%s">%s</span>' % (tag, tag) if tag else '',
+                        dc.slug(c['title']), c['title'], body, src))
+        h.append('</ul>')
+    h.append('</div>')
+    return ''.join(h), n
+
+
+
 if __name__ == '__main__':
+    _kwon, _kn = kwon_html()
     dc.render(CARDS, '산업/시장 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('finance', CARDS, '편'),
-              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS)
+              intro=dc.course(CARDS, COURSE, COURSE_LEDE),
+              top=_kwon, top_id='sec-kwon',
+              top_title='권효재 대표 — 시간순으로 읽기',
+              top_sub='에너지 열 편이 3월 물량에서 8월 설비까지 옮겨 간 경로',
+              top_n=_kn,
+              extra_css=dc.COURSE_CSS + KWON_CSS)
