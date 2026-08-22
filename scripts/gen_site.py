@@ -20,6 +20,9 @@ GH = 'https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%
 
 # 공개 대상: 원본 파일명 -> (슬러그, 카드 제목, 이모지, 한 줄 설명, 잠금 여부)
 PAGES = [
+    # 용어사전은 처음 오는 사람이 먼저 짚는 장이다 — 잠그지 않고 맨 앞에 세운다
+    ('용어사전.html', 'glossary', '용어사전', '📚',
+     '읽다 막히는 말을 하나씩 — 카드 하나가 용어 하나이고 그 말이 도는 순서를 그림으로 같이 단다', False),
     ('통합 인사이트.html', 'unified', '통합 인사이트', '🧩',
      '노트 45장을 가로질러야 보이는 판단만 — 문서 한 편 요약은 싣지 않는다', True),
     ('SemiAnalysis 대시보드.html', 'semianalysis', 'SemiAnalysis', '📊',
