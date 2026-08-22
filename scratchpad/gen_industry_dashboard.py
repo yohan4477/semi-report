@@ -46,6 +46,91 @@ SEC_KR = ('sec-rate-kr', '11', '한국 — 금리·환율과 증시',
           '한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리')
 
 
+# -- 체니에르 방향 전환 -------------------------------------------------------
+# 같은 설비에서 화살표만 뒤집힌다는 것이 이 회사 이야기의 전부다. 그런데 그 뒤집기가
+# 저절로 된 것이 아니라 관문 둘을 지났다 -- 면허를 바꿔 준 정부와, 회사가 아니라 사업
+# 모델을 보고 돈을 댄 자본. 설비 상자를 위아래에 같은 크기로 두 번 그려서 「같은 것」임을
+# 보이고, 그 사이에 좌초와 관문 둘을 끼운다.
+PIVOT_FIG = (
+    '<svg viewBox="0 0 640 286" role="img" '
+    'aria-label="체니에르가 수입 기지를 수출 기지로 뒤집은 경로">'
+    '<text x="8" y="26" class="t-sm" style="font-weight:850">2008</text>'
+    '<rect x="180" y="10" width="280" height="52" rx="10" class="body"/>'
+    '<text x="320" y="32" text-anchor="middle" class="t-lab">수입 기지</text>'
+    '<text x="320" y="50" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
+    '<path d="M96 36 L176 36" class="flow"/>'
+    '<text x="92" y="32" text-anchor="end" class="t-sm">해외 LNG</text>'
+    '<path d="M320 62 L320 80" class="flow"/>'
+    '<text x="320" y="98" text-anchor="middle" class="t-bad" '
+    'style="font-size:11px;font-weight:800">셰일 가스가 미국 안에서 나온다 · 가동 2년 만에 좌초</text>'
+    '<path d="M320 106 L320 122" class="flow"/>'
+    '<rect x="40" y="130" width="270" height="60" rx="10" class="body"/>'
+    '<text x="56" y="152" class="t-lab">관문 ① 미국 정부</text>'
+    '<text x="56" y="172" class="t-sm">수입 면허를 수출로 바꿔 준다 (2010, 조건부)</text>'
+    '<rect x="330" y="130" width="270" height="60" rx="10" class="body"/>'
+    '<text x="346" y="152" class="t-lab">관문 ② 블랙스톤</text>'
+    '<text x="346" y="172" class="t-sm">회사 규모 대신 사업 모델을 보고 댄다</text>'
+    '<path d="M320 190 L320 210" class="flow"/>'
+    '<text x="8" y="234" class="t-sm" style="font-weight:850">2016</text>'
+    '<rect x="180" y="216" width="280" height="52" rx="10" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="320" y="238" text-anchor="middle" class="t-lab">수출 기지</text>'
+    '<text x="320" y="256" text-anchor="middle" class="t-sm">같은 부두 · 같은 탱크</text>'
+    '<path d="M464 242 L552 242" class="flow"/>'
+    '<text x="556" y="238" class="t-lab" style="font-size:10.5px">세계로</text>'
+    '<text x="556" y="254" class="t-sm">200억 달러</text>'
+    '</svg>')
+
+PIVOT_CAP = ('설비는 그대로고 <b>화살표만 뒤집혔다</b>. 다만 그 뒤집기는 관문 둘을 지나야 '
+             '했다. 면허를 바꿔 준 정부와, 2년 만에 무너진 회사에 그래도 돈을 댄 '
+             '자본이다. 이 전환에 조달한 돈이 200억 달러 이상이고 올해 말이면 연 5천만 톤을 '
+             '내보내는 업체가 된다.')
+
+
+# -- 벤처 글로벌 조달 순환 ----------------------------------------------------
+# 화자가 「봉이 김선달 장사」라 부른 순서다. 종이 세 장이 서로를 담보하는데, 각각이
+# 성립한 이유가 따로 있다 -- 그래서 상자마다 「그때 조건」을 한 줄씩 붙인다. 조건을
+# 빼면 아이디어만 좋으면 되는 이야기가 되어 원문의 운을 지운다.
+FUND_FIG = (
+    '<svg viewBox="0 0 640 236" role="img" '
+    'aria-label="벤처 글로벌이 종이 세 장으로 자금을 맞춘 순서">'
+    '<rect x="8" y="34" width="190" height="128" rx="10" class="body"/>'
+    '<text x="24" y="58" class="t-lab">① 가계약</text>'
+    '<text x="24" y="80" class="t-sm">고객에게 아주 싸게</text>'
+    '<text x="24" y="96" class="t-sm">팔겠다고 먼저 맺는다</text>'
+    '<path d="M24 108 L182 108" class="lead-line"/>'
+    '<text x="24" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
+    '<text x="24" y="144" class="t-sm">내놓을 것이 값 하나였다</text>'
+    '<rect x="225" y="34" width="190" height="128" rx="10" class="body"/>'
+    '<text x="241" y="58" class="t-lab">② 발주서</text>'
+    '<text x="241" y="80" class="t-sm">그 계약을 들고 가서</text>'
+    '<text x="241" y="96" class="t-sm">설비를 발주한다</text>'
+    '<path d="M241 108 L399 108" class="lead-line"/>'
+    '<text x="241" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
+    '<text x="241" y="144" class="t-sm">유가 100→30, 재고 폭증</text>'
+    '<rect x="442" y="34" width="190" height="128" rx="10" class="body"/>'
+    '<text x="458" y="58" class="t-lab">③ 대출</text>'
+    '<text x="458" y="80" class="t-sm">둘을 들고 은행에 가</text>'
+    '<text x="458" y="96" class="t-sm">조건부로 빌린다</text>'
+    '<path d="M458 108 L616 108" class="lead-line"/>'
+    '<text x="458" y="126" class="t-sm" style="font-weight:800">그때 조건</text>'
+    '<text x="458" y="144" class="t-sm">금리 폭락, 대출처 마름</text>'
+    '<path d="M198 98 L221 98" class="flow"/>'
+    '<path d="M415 98 L438 98" class="flow"/>'
+    '<text x="209" y="26" text-anchor="middle" class="t-sm">이걸 들고</text>'
+    '<text x="426" y="26" text-anchor="middle" class="t-sm">둘을 들고</text>'
+    '<rect x="8" y="182" width="624" height="46" rx="10" class="body" '
+    'stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="320" y="211" text-anchor="middle" class="t-lab">'
+    '여기까지 종이 세 장. 착공 전에 이 회사가 가진 현물은 하나도 없다</text>'
+    '</svg>')
+
+FUND_CAP = ('예전 같으면 거대 에너지 회사가 <b>자기 돈</b>으로 짓던 설비다. 벤처 글로벌은 '
+            '순서를 바꿔 계약서로 발주서를 얻고 그 둘로 돈을 빌렸다. 다만 세 칸이 동시에 '
+            '성립한 것은 그해 조건 덕이 크다 — 재고가 쌓여 선수금 없이 원가에 주겠다는 '
+            '제조사와 대출처가 마른 은행이 같은 해에 있었다.')
+
+
 # -- 트레인 쪼개기 = 첫 현금 시점 -------------------------------------------
 # 「효율이 떨어지는데 왜 이겼나」는 그림 없이 안 잡힌다. 답이 효율이 아니라 시간축에
 # 있어서다 -- 같은 돈을 5년 뒤에 한꺼번에 받느냐, 30개월부터 조금씩 받느냐.
@@ -831,7 +916,9 @@ CARDS = [
      ],
      'slim_stats': [('29배', '10년간 미국 LNG 수출 증가'), ('2.7 대 20달러', '미국 대 동북아 가스값'),
                     ('500조 원', '수출 설비 총투자·보조금 없음'), ('30개월', '벤처 글로벌 착공~첫 생산')],
-     'figs': [(4, '조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP),
+     'figs': [(3, '같은 설비에서 화살표만 뒤집혔다', PIVOT_FIG, PIVOT_CAP),
+              (4, '조건은 왼쪽이 앞서는데 허가는 오른쪽에만 났다', SITE_FIG, SITE_CAP),
+              (6, '종이 세 장이 서로를 담보한다', FUND_FIG, FUND_CAP),
               (7, '쪼갠 쪽은 30개월부터 현금이 돈다', TRAIN_FIG, TRAIN_CAP)],
      'oneliner': ('미국이 LNG 수출 1위가 된 동력을 자원이 아니라 제도에서 찾는다. 실패한 사업을 '
                   '갈아탈 여지를 준 자본시장, 주민이 반대하지 않는 입지, 성공한 경쟁자를 베끼는 '
