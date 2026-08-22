@@ -80,6 +80,11 @@ def _fit(where, texts):
                                  % (where, x, budget, _w(t), t))
 
 
+# 사슬 그림이 쓴 값을 그대로 지도에도 쓴다. 지도용으로 다시 적으면 그림과 지도가
+# 서로 다른 말을 하게 된다 — 값은 한 곳(_chain 호출부)에만 둔다.
+_CHAINS = {}
+
+
 def _chain(title, rows, note_l='이 마디가 한 일', note_r='그래서 다음이 필요해졌다'):
     """세로 사슬 그림. rows = [(마디 이름, 한 일, 다음이 필요해진 이유)]"""
     _fit(title, ['', note_l, note_r])             # 머리말은 가운데·오른쪽 자리에 선다
@@ -100,7 +105,9 @@ def _chain(title, rows, note_l='이 마디가 한 일', note_r='그래서 다음
         if i < len(rows) - 1:
             h.append('<path class="flow" d="M108 %d L 108 %d"/>' % (y + 40, y + 52))
     h.append('</svg>')
-    return ''.join(h)
+    svg = ''.join(h)
+    _CHAINS[svg] = (title, rows)
+    return svg
 
 
 def _fit_svg(svg, name):
@@ -1329,6 +1336,69 @@ COURSE = [
 ]
 
 
+
+# ── 궤도 지도 ──────────────────────────────────────────────────────────────
+# 회계사 대시보드의 세 겹(타일 → 버튼 둘 → 지도·카드)을 그대로 가져온다. 회사 자리에
+# 궤도를 두고, 궤도를 고르면 [계보 지도]와 [개별 카드] 버튼 둘만 보인다.
+#
+# 지도는 그 궤도의 카드를 **읽는 순서**로 세운 줄기다. 카드가 곧 계보의 한 마디이고,
+# 사슬 그림이 있는 카드는 그 아래에 마디를 한 겹 더 편다(_CHAINS). 마디 값은 그림이
+# 쓰는 값과 같은 것이다 — 지도용으로 다시 적지 않는다.
+#
+# 사슬이 없는 궤도(디코딩·학습·서빙)도 지도는 선다. 거기서는 카드 줄기까지가 지도다.
+# 없는 마디를 채워 넣지 않는다.
+LMAP_CSS = '''
+  .lmap{margin:2px 0 0}
+  .lmap-lede{font-size:13px;line-height:1.7;color:var(--ink-2);margin:0 0 14px}
+  .lm-step{position:relative;padding:0 0 16px 18px;border-left:2px solid var(--line)}
+  .lm-step:last-child{border-left-color:transparent;padding-bottom:0}
+  .lm-step::before{content:'';position:absolute;left:-6px;top:6px;width:9px;height:9px;
+    border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--paper)}
+  .lm-no{font-size:10.5px;font-weight:850;letter-spacing:.06em;color:var(--ink-3)}
+  .lm-t{font-size:14px;font-weight:800;color:var(--ink);margin:1px 0 3px}
+  .lm-g{font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+  .lm-chain{margin:8px 0 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .lm-row{display:grid;grid-template-columns:minmax(120px,1fr) minmax(150px,1.4fr) minmax(150px,1.4fr);
+    gap:10px;padding:7px 10px;font-size:12px;line-height:1.55;border-top:1px solid var(--line)}
+  .lm-row:first-child{border-top:none;background:var(--sunk);font-weight:850;color:var(--ink-3);
+    font-size:10.5px;letter-spacing:.04em}
+  .lm-n{font-weight:800;color:var(--ink)}
+  .lm-w{color:var(--risk,#c2504a)}
+  @media(max-width:640px){.lm-row{grid-template-columns:1fr;gap:2px}}
+'''
+
+
+def orbit_map_html(sid):
+    """궤도 하나의 계보 지도. 그 궤도 카드를 읽는 순서로 세우고, 사슬이 있으면 편다."""
+    cs = [c for c in CARDS if c['section'][0] == sid]
+    if not cs:
+        return ''
+    name = cs[0]['section'][2].split(' — ')[0]
+    nch = sum(1 for c in cs for f in c.get('figs', []) if f[2] in _CHAINS)
+    h = ['<div class="lmap"><p class="lmap-lede">',
+         '<b>%s</b> 궤도를 읽는 순서로 세운 줄기입니다. 카드 <b>%d장</b>이 마디이고, ' % (name, len(cs)),
+         ('그중 <b>%d장</b>은 그 안에서 갈아탄 마디까지 폅니다. ' % nch) if nch else '',
+         '펼쳐진 표의 값은 카드 안 사슬 그림이 쓰는 값과 같은 것입니다.</p>']
+    for i, c in enumerate(cs, 1):
+        h.append('<div class="lm-step"><div class="lm-no">%02d</div>'
+                 '<div class="lm-t">%s</div><div class="lm-g">%s</div>'
+                 % (i, c['title'], c.get('gain', '')))
+        for f in c.get('figs', []):
+            got = _CHAINS.get(f[2])
+            if not got:
+                continue
+            _title, rows = got
+            h.append('<div class="lm-chain"><div class="lm-row">'
+                     '<span>마디</span><span>이 마디가 한 일</span>'
+                     '<span>그래서 다음이 필요해졌다</span></div>')
+            for nm, did, why in rows:
+                h.append('<div class="lm-row"><span class="lm-n">%s</span><span>%s</span>'
+                         '<span class="lm-w">%s</span></div>' % (nm, did, why or '—'))
+            h.append('</div>')
+        h.append('</div>')
+    h.append('</div>')
+    return ''.join(h)
+
 # ── 시간순 기록 ────────────────────────────────────────────────────────────
 # 카드는 궤도로 묶여 있어서 「무엇이 무엇을 갈아치웠나」에는 답하지만 「언제 알았나」에는
 # 답하지 않는다. 회계사 대시보드의 「00 시간순 기록」과 같은 층을 하나 둔다 — 카드 없는
@@ -1417,8 +1487,11 @@ def log_html():
 
 if __name__ == '__main__':
     _log, _logn = log_html()
+    _secs = [SEC_ATTN, SEC_MOE, SEC_DEC, SEC_TRAIN, SEC_PREC, SEC_SI, SEC_SERVE]
     dc.render(CARDS, '알고리즘 계보', HEADER, FOOTER % (STAMP, len(CARDS)), OUT,
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
-              extra_css=dc.COURSE_CSS + LOG_CSS,
+              extra_css=dc.COURSE_CSS + LOG_CSS + LMAP_CSS,
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,
-              top_sub='카드 30장을 원문이 나온 순서로 — 어느 갈아탐을 언제 잡아냈나')
+              top_sub='카드 30장을 원문이 나온 순서로 — 어느 갈아탐을 언제 잡아냈나',
+              sec_top={s[0]: orbit_map_html(s[0]) for s in _secs},
+              sw_labels=('계보 지도', '개별 카드', '◂ 궤도 다시 고르기'))
