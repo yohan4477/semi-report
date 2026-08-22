@@ -216,81 +216,81 @@ TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>돈이 언제 들어오느
 
 # -- 지도로 본 입지 --------------------------------------------------------
 # 좌우 두 칸으로 견주던 그림을 지도로 바꾼다. 이 대목은 「어디냐」가 내용이라
-# 상자를 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 동북부인데 수출 공장은
-# 남쪽 걸프에 몰려 있다는 것이 눈에 들어와야 나머지가 읽힌다.
+# 상자를 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 북동쪽인데 수출 공장은
+# 남쪽 걸프에 몰려 있다는 어긋남이 눈에 들어와야 나머지가 읽힌다.
 #
-# 국경선은 눈대중으로 그린 모식도다. 지도라고 하면 좌표를 믿게 되므로 그림 안에
-# 그렇게 적어 둔다. 지명과 사실은 자막에 있는 것만 올린다 -- 마셀러스·퍼미안·헨리
-# 허브·허리케인 지역·유럽까지 거리·하루 거리 수출항까지가 전부다. 배관이 어디로
-# 흐르는지는 자막에 없으므로 그리지 않는다.
+# 처음에는 윤곽을 손으로 서른세 점 찍어 그렸다가 「너무 허접하다」는 말을 들었다.
+# 지금 윤곽은 실제 주 경계 자료를 앨버스 정적원추도법으로 옮긴 것이고, 굽는 절차는
+# scripts/make_us_map_path.py에 있다. 표시 위치도 위도·경도를 같은 식으로 옮겨
+# 찍었다 -- 마셀러스는 펜실베이니아 북부, 퍼미안은 서부 텍사스, 헨리 허브는
+# 루이지애나 이래스다.
+#
+# 지명과 사실은 자막에 있는 것만 올린다. 배관이 어디로 흐르는지는 자막에 없으므로
+# 그리지 않는다 -- 지도는 없는 사실을 얹기 쉬운 그릇이라 이 선을 지킨다.
+US_PATH = io.open(os.path.join(dc.ROOT, 'data', 'us_lower48_albers_path.txt'),
+                  encoding='utf-8').read().strip()
+
 SITE_FIG = (
-    '<svg viewBox="0 0 640 452" role="img" '
-    'aria-label="미국 지도 위에서 본 셰일 산지와 LNG 수출 공장의 자리">'
-    '<text x="8" y="14" class="t-sm">'
-    '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽에 몰렸다 (눈대중으로 그린 모식도다)</text>'
-    # 미국 본토 윤곽
-    '<path d="M96 112 L150 100 L205 96 L262 92 L320 90 L380 92 L430 100 L470 112 '
-    'L486 128 L500 150 L512 172 L508 196 L492 214 L476 232 L470 250 L458 268 '
-    'L448 254 L442 232 L412 240 L380 246 L350 244 L320 238 L300 244 L286 262 '
-    'L270 254 L252 236 L238 222 L214 214 L190 206 L168 214 L148 226 L132 214 '
-    'L120 186 L108 158 Z" class="body"/>'
-    # 마셀러스 — 가스가 먼저 터진 곳
-    '<circle cx="428" cy="142" r="17" class="cell"/>'
-    '<text x="428" y="146" text-anchor="middle" class="t-sm" '
-    'style="font-weight:800">가스</text>'
-    '<text x="396" y="118" class="t-lab" style="font-size:10.5px">마셀러스</text>'
-    '<text x="330" y="176" class="t-sm">셰일 가스가 미국에서 처음</text>'
-    '<text x="330" y="190" class="t-sm">크게 터진 곳이 여기다</text>'
-    # 대서양 수출항 — 하루 거리인데 못 쓴다
-    '<rect x="486" y="152" width="16" height="16" rx="3" class="fat"/>'
-    '<path d="M446 148 L482 156" class="lead-line"/>'
-    '<text x="508" y="150" class="t-sm">수출항이</text>'
-    '<text x="508" y="164" class="t-sm">하루 거리다</text>'
-    '<text x="508" y="184" class="t-bad" style="font-size:11px;font-weight:800">'
-    '✕ 허가가 안 난다</text>'
-    '<text x="508" y="200" class="t-sm">주민이 반대했다</text>'
-    # 퍼미안
-    '<circle cx="252" cy="212" r="12" class="cell"/>'
-    '<text x="252" y="216" text-anchor="middle" class="t-sm">가스</text>'
-    '<text x="212" y="196" class="t-sm">퍼미안</text>'
-    # 걸프 연안 — 공장이 몰린 자리
-    '<rect x="318" y="236" width="15" height="15" rx="3" class="fat"/>'
-    '<rect x="338" y="238" width="15" height="15" rx="3" class="fat"/>'
-    '<rect x="358" y="239" width="15" height="15" rx="3" class="fat"/>'
-    '<rect x="378" y="238" width="15" height="15" rx="3" class="fat"/>'
-    '<rect x="398" y="234" width="15" height="15" rx="3" class="fat"/>'
-    '<text x="300" y="230" text-anchor="end" class="t-lab" style="font-size:10.5px">'
-    '걸프 연안</text>'
-    '<text x="300" y="245" text-anchor="end" class="t-sm">헨리 허브</text>'
-    '<text x="330" y="278" class="good" style="font-size:11px;font-weight:800">'
-    '✓ 허가가 난다</text>'
-    '<text x="330" y="293" class="t-sm">100년 오일·가스 동네라 주민이 반긴다.</text>'
-    '<text x="330" y="307" class="t-sm">미국 LNG 수출 공장이 전부 여기 몰렸다</text>'
-    # 허리케인 — 걸프의 약점
-    '<path d="M600 300 Q500 300 430 262" class="flow"/>'
-    '<text x="604" y="296" class="t-bad" style="font-size:10.5px;font-weight:800">'
-    '허리케인</text>'
-    '<text x="604" y="312" class="t-sm">해마다 지나간다</text>'
-    # 유럽 방향
-    '<path d="M528 126 L616 116" class="flow"/>'
-    '<text x="540" y="112" class="t-sm">유럽까지는 위쪽이 훨씬 가깝다</text>'
+    '<svg viewBox="0 0 640 560" role="img" '
+    'aria-label="미국 지도에서 본 셰일 산지와 LNG 수출 공장의 자리">'
+    '<text x="8" y="16" class="t-sm">'
+    '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽 해안에 몰렸다</text>'
+    '<path d="' + US_PATH + '" class="body" style="stroke-width:.6"/>'
+    # 마셀러스 — 셰일 가스가 먼저 터진 곳
+    '<ellipse cx="505" cy="166" rx="38" ry="22" class="cell" opacity=".8"/>'
+    '<text x="505" y="136" text-anchor="middle" class="t-lab" '
+    'style="font-size:10.5px">마셀러스</text>'
+    '<path d="M466 118 L488 148" class="lead-line"/>'
+    '<text x="196" y="96" class="t-sm">'
+    '셰일 가스가 미국에서 처음 크게 터진 곳이 여기다</text>'
+    '<text x="196" y="114" class="t-bad" style="font-size:11px;font-weight:800">'
+    '수출항이 하루 거리인데 허가가 안 나 아직도 못 짓는다</text>'
+    '<rect x="533" y="199" width="12" height="12" rx="2" class="fat"/>'
+    '<text x="527" y="209" text-anchor="end" class="t-sm">수출항</text>'
+    # 퍼미안 — 가스가 나는 또 한 곳
+    '<circle cx="242" cy="317" r="10" class="cell" opacity=".8"/>'
+    '<text x="242" y="341" text-anchor="middle" class="t-sm">퍼미안</text>'
+    # 걸프 연안 — 수출 공장이 몰린 자리
+    '<rect x="295" y="372" width="12" height="12" rx="2" class="fat"/>'
+    '<rect x="321" y="356" width="12" height="12" rx="2" class="fat"/>'
+    '<rect x="339" y="344" width="12" height="12" rx="2" class="fat"/>'
+    '<rect x="393" y="347" width="12" height="12" rx="2" class="fat"/>'
+    '<circle cx="362" cy="340" r="9" fill="none" stroke="var(--accent)" stroke-width="2"/>'
+    '<path d="M372 341 L424 344" class="lead-line"/>'
+    '<text x="428" y="348" class="t-sm">헨리 허브</text>'
+    '<path d="M272 286 L318 342" class="lead-line"/>'
+    '<text x="56" y="262" class="t-lab" style="font-size:11px">'
+    '미국 LNG 수출 공장이 전부 여기 몰렸다</text>'
+    '<text x="56" y="281" class="t-sm">'
+    '100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
+    '<text x="56" y="297" class="t-sm">'
+    '허리케인이 지나가고 유럽에서도 먼데 그렇다</text>'
+    # 걸프의 약점과 유럽 방향
+    '<path d="M628 302 Q520 332 426 354" class="flow"/>'
+    '<text x="636" y="276" text-anchor="end" class="t-bad" '
+    'style="font-size:10.5px;font-weight:800">허리케인</text>'
+    '<text x="636" y="291" text-anchor="end" class="t-sm">해마다 지나간다</text>'
+    '<path d="M600 152 L634 140" class="flow"/>'
+    '<text x="636" y="130" text-anchor="end" class="t-sm">유럽 쪽</text>'
     # 아래 — 그래서 어떻게 됐나
-    '<rect x="8" y="330" width="308" height="112" rx="10" class="body" '
+    '<rect x="8" y="424" width="308" height="112" rx="10" class="body" '
     'stroke-dasharray="6 4"/>'
-    '<text x="24" y="354" class="t-lab">북동쪽 마셀러스</text>'
-    '<text x="24" y="376" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
-    '<text x="24" y="392" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
-    '<text x="24" y="414" class="t-bad" style="font-weight:800">'
+    '<text x="24" y="448" class="t-lab">북동쪽 마셀러스</text>'
+    '<text x="24" y="470" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
+    '<text x="24" y="486" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
+    '<text x="24" y="508" class="t-bad" style="font-weight:800">'
     '그런데 아직도 못 짓는다</text>'
-    '<text x="24" y="432" class="t-sm">수출항이 비어 있다</text>'
-    '<rect x="324" y="330" width="308" height="112" rx="10" class="body" '
+    '<text x="24" y="526" class="t-sm">수출항이 비어 있다</text>'
+    '<rect x="324" y="424" width="308" height="112" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="340" y="354" class="t-lab">남쪽 걸프 연안</text>'
-    '<text x="340" y="376" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
-    '<text x="340" y="392" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
-    '<text x="340" y="414" class="t-lab" style="font-weight:800">'
+    '<text x="340" y="448" class="t-lab">남쪽 걸프 연안</text>'
+    '<text x="340" y="470" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
+    '<text x="340" y="486" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
+    '<text x="340" y="508" class="t-lab" style="font-weight:800">'
     '그런데도 여기만 지어진다</text>'
-    '<text x="340" y="432" class="t-sm">한 건이 되니 같은 사업이 줄줄이 들어섰다</text>'
+    '<text x="340" y="526" class="t-sm">한 건이 되니 같은 사업이 줄줄이 들어섰다</text>'
+    '<text x="8" y="552" class="t-sm">'
+    '윤곽은 미국 주 경계 자료를 앨버스 정적원추도법으로 옮긴 것이다</text>'
     '</svg>')
 
 SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 어긋난다</b>. 셰일 가스가 미국에서 '
