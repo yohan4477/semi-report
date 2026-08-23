@@ -46,69 +46,174 @@ SEC_KR = ('sec-rate-kr', '11', '한국 — 금리·환율과 증시',
           '한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리')
 
 
-# -- 체니에르, 가스가 들어오던 길로 내보낸다 ---------------------------------
-# 처음 그린 그림은 「화살표만 뒤집혔다」고 써 놓고 위아래 화살표를 둘 다 왼쪽에서
-# 오른쪽으로 그렸다. 말로만 뒤집고 그림은 안 뒤집혔으니 읽힐 리가 없었다.
-# 그래서 양 끝을 고정한다 -- 왼쪽이 늘 해외, 오른쪽이 늘 미국이다. 2008년 줄은
-# 왼쪽에서 오른쪽으로 흐르고 2016년 줄은 오른쪽에서 왼쪽으로 흐른다. 화살표가
-# 실제로 반대 방향을 가리켜야 뒤집혔다는 말이 눈에 보인다.
+# -- 지도로 본 입지 --------------------------------------------------------
+# 좌우 두 칸으로 견주던 그림을 지도로 바꾼다. 이 대목은 「어디냐」가 내용이라 상자를
+# 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 북동쪽인데 수출 공장은 남쪽 걸프에
+# 몰려 있다는 어긋남이 눈에 들어와야 나머지가 읽힌다.
 #
-# 가운데 상자는 두 줄에 같은 자리·같은 크기·같은 부제로 둔다. 그것이 같은 건물이라는
-# 뜻이고 이 회사 이야기의 전부다. 사이에 낀 세 줄은 명사 라벨로 적지 않는다 --
-# 「관문 ①」 같은 말은 원문에 없는 내 조어였다. 누가 무엇을 했는지 문장으로 적는다.
-PIVOT_FIG = (
-    '<svg viewBox="0 0 640 336" role="img" '
-    'aria-label="체니에르가 가스를 들여오던 길로 내보내게 된 경로">'
-    # 위 줄 — 2008년, 해외에서 미국으로
-    '<text x="8" y="26" class="t-sm" style="font-weight:850">2008년 · 이렇게 하려고 지었다</text>'
-    '<rect x="8" y="36" width="140" height="50" rx="9" class="body"/>'
-    '<text x="78" y="58" text-anchor="middle" class="t-lab">해외</text>'
-    '<text x="78" y="75" text-anchor="middle" class="t-sm">카타르 · 호주</text>'
-    '<path d="M150 61 L220 61" class="flow"/>'
-    '<rect x="226" y="36" width="150" height="50" rx="9" class="body"/>'
-    '<text x="301" y="58" text-anchor="middle" class="t-lab">체니에르 기지</text>'
-    '<text x="301" y="75" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
-    '<path d="M378 61 L448 61" class="flow"/>'
-    '<rect x="454" y="36" width="178" height="50" rx="9" class="body"/>'
-    '<text x="543" y="58" text-anchor="middle" class="t-lab">미국</text>'
-    '<text x="543" y="75" text-anchor="middle" class="t-sm">여기에 판다</text>'
-    '<text x="8" y="108" class="t-bad" style="font-size:11px;font-weight:800">'
-    '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>'
-    # 가운데 — 그 사이에 누가 무엇을 했나
-    '<rect x="8" y="120" width="624" height="92" rx="10" class="body"/>'
-    '<text x="24" y="142" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>'
-    '<text x="24" y="164" class="t-sm">'
-    '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>'
-    '<text x="24" y="182" class="t-sm">'
-    '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>'
-    '<text x="24" y="200" class="t-sm">'
-    '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>'
-    # 아래 줄 — 2016년, 미국에서 해외로 (화살표가 반대다)
-    '<text x="8" y="242" class="t-sm" style="font-weight:850">'
-    '2016년 · 같은 건물에서 반대로 흐른다</text>'
-    '<rect x="8" y="252" width="140" height="50" rx="9" class="body" '
+# 여기까지 두 번 틀렸다. 처음에는 윤곽을 손으로 서른세 점 찍었고, 그다음에는 표시를
+# 위도·경도로 점 찍어 올렸는데 라벨 자리를 손으로 잡느라 그림과 어긋났다. 그래서 점을
+# 걷어내고 주를 통째로 칠한다 -- 칠하는 면이 곧 경계 자료라 어긋날 수가 없다. 지시선
+# 끝도 손으로 안 찍는다. 주마다 경계 상자 한가운데를 굽는 쪽에서 같이 내보낸다.
+#
+# 지명과 사실은 자막에 있는 것만 올린다. 배관이 어디로 흐르는지는 자막에 없으므로
+# 그리지 않는다 -- 지도는 없는 사실을 얹기 쉬운 그릇이라 이 선을 지킨다.
+_US = json.loads(io.open(os.path.join(dc.ROOT, 'data', 'us_lower48_albers.json'),
+                         encoding='utf-8').read())
+# 마셀러스가 깔린 두 주와 수출 공장이 몰린 두 주. 나머지는 바탕으로만 둔다
+_MARCELLUS = ('Pennsylvania', 'West Virginia')
+_GULF = ('Texas', 'Louisiana')
+_HL = set(_MARCELLUS) | set(_GULF)
+
+
+def _states(names):
+    return ''.join(_US['states'][n] for n in names if n in _US['states'])
+
+
+def _at(name):
+    return _US['center'][name]
+
+
+SITE_FIG = (
+    '<svg viewBox="0 0 640 596" role="img" '
+    'aria-label="미국 지도에서 본 셰일 산지와 LNG 수출 공장의 자리">'
+    '<text x="8" y="18" class="t-sm">'
+    '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽에 몰렸다</text>'
+    # 바탕 — 나머지 주
+    '<path d="' + _states([n for n in _US['states'] if n not in _HL])
+    + '" class="body" style="stroke-width:.6"/>'
+    # 마셀러스가 깔린 두 주
+    '<path d="' + _states(_MARCELLUS) + '" class="cell"/>'
+    # 수출 공장이 몰린 두 주
+    '<path d="' + _states(_GULF) + '" class="fat"/>'
+    # 마셀러스 설명 — 지시선 끝은 펜실베이니아 한가운데다
+    '<rect x="184" y="74" width="14" height="14" rx="3" class="cell"/>'
+    '<text x="206" y="86" class="t-lab" style="font-size:11px">'
+    '마셀러스 — 펜실베이니아·웨스트버지니아 일대</text>'
+    '<text x="206" y="106" class="t-sm">'
+    '셰일 가스가 미국에서 처음 크게 터진 곳이 여기다</text>'
+    '<text x="206" y="122" class="t-bad" style="font-size:11px;font-weight:800">'
+    '수출항이 하루 거리인데 허가가 안 나 아직도 못 짓는다</text>'
+    '<path d="M470 112 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Pennsylvania')) +
+    # 걸프 설명 — 지시선 끝은 루이지애나 한가운데다
+    '<rect x="40" y="386" width="14" height="14" rx="3" class="fat"/>'
+    '<text x="62" y="398" class="t-lab" style="font-size:11px">'
+    '걸프 연안 — 텍사스·루이지애나</text>'
+    '<text x="62" y="418" class="t-sm">'
+    '미국 LNG 수출 공장이 전부 여기 몰렸다. 헨리 허브도 여기다</text>'
+    '<text x="62" y="434" class="t-sm">'
+    '100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
+    '<text x="62" y="450" class="t-sm">'
+    '허리케인이 지나가고 유럽에서도 먼데 그렇다</text>'
+    '<path d="M300 400 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Louisiana')) +
+    # 유럽 방향 — 북동쪽이 가깝다는 말을 그림으로 받는다
+    '<path d="M600 150 L634 138" class="flow"/>'
+    '<text x="636" y="128" text-anchor="end" class="t-sm">유럽 쪽</text>'
+    # 아래 — 그래서 어떻게 됐나
+    '<rect x="8" y="470" width="308" height="104" rx="10" class="body" '
+    'stroke-dasharray="6 4"/>'
+    '<text x="24" y="494" class="t-lab">북동쪽</text>'
+    '<text x="24" y="516" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
+    '<text x="24" y="532" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
+    '<text x="24" y="556" class="t-bad" style="font-weight:800">'
+    '그런데 아직도 못 짓는다</text>'
+    '<rect x="324" y="470" width="308" height="104" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="78" y="274" text-anchor="middle" class="t-lab">해외</text>'
-    '<text x="78" y="291" text-anchor="middle" class="t-sm">연 5천만 톤을 판다</text>'
-    '<path d="M220 277 L150 277" class="flow"/>'
-    '<rect x="226" y="252" width="150" height="50" rx="9" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="301" y="274" text-anchor="middle" class="t-lab">체니에르 기지</text>'
-    '<text x="301" y="291" text-anchor="middle" class="t-sm">부두 · 탱크 · 부지</text>'
-    '<path d="M448 277 L378 277" class="flow"/>'
-    '<rect x="454" y="252" width="178" height="50" rx="9" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="543" y="274" text-anchor="middle" class="t-lab">미국</text>'
-    '<text x="543" y="291" text-anchor="middle" class="t-sm">셰일 가스가 배관으로 온다</text>'
-    '<text x="8" y="326" class="t-sm">'
-    '가운데 상자는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>'
+    '<text x="340" y="494" class="t-lab">남쪽</text>'
+    '<text x="340" y="516" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
+    '<text x="340" y="532" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
+    '<text x="340" y="556" class="t-lab" style="font-weight:800">'
+    '그런데도 여기만 지어진다</text>'
+    '<text x="8" y="590" class="t-sm">'
+    '주 경계는 미국 주 경계 자료를 앨버스 정적원추도법으로 옮긴 것이다</text>'
     '</svg>')
 
-PIVOT_CAP = ('왼쪽이 해외, 오른쪽이 미국이다. 위 줄은 왼쪽에서 오른쪽으로 흐르고 아래 줄은 '
-             '오른쪽에서 왼쪽으로 흐른다. 가스가 <b>들어오던 길로 나가게</b> 됐다는 뜻이고, '
-             '그 사이에 새로 지은 건물은 없다. 대신 세 가지를 했다. 정부에 면허를 바꿔 '
-             '달라고 했고, 2년 만에 무너진 회사에 돈을 대준 곳을 찾았고, 그 계약서로 '
-             '200억 달러를 빌렸다.')
+SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 어긋난다</b>. 셰일 가스가 미국에서 '
+            '처음 크게 터진 곳은 북동쪽이고 거기서 수출항까지는 하루 거리다. 그런데도 수출 '
+            '공장은 전부 남쪽 걸프 연안에 섰다. 허리케인이 지나가고 유럽에서도 먼 자리다. '
+            '가른 것은 거리도 가스도 아니고 허가였다. 화자가 이 편에서 한국으로 끌어오는 문장이 '
+            '여기서 나온다. 어떤 사업이 되느냐 마느냐는 <b>공장 지을 자리 옆집이 찬성하느냐</b>에서 '
+            '갈린다.')
+
+
+# -- 체니에르, 가스가 들어오던 길로 나간다 -----------------------------------
+# 처음 그린 그림은 「화살표만 뒤집혔다」고 써 놓고 위아래 화살표를 둘 다 왼쪽에서
+# 오른쪽으로 그렸다. 말로만 뒤집고 그림은 안 뒤집혔으니 읽힐 리가 없었다. 그래서 상자
+# 대신 지도를 두 번 놓는다 -- 같은 자리, 같은 나라, 화살표만 반대다.
+#
+# 지도는 입지 도해와 같은 자료·같은 도법을 쓰고 0.46배로 줄여 나란히 세운다. 화살표
+# 끝은 손으로 찍지 않는다. 굽는 쪽이 내보낸 루이지애나 한가운데를 기준으로 계산한다 --
+# 체니에르의 사빈패스가 루이지애나 남서쪽 해안이다.
+def _mini_defs():
+    """지도를 두 번 그리되 좌표는 한 벌만 싣는다.
+
+    같은 윤곽을 두 번 적으면 이 카드 하나가 36KB를 더 먹는다. defs에 한 번 두고
+    use로 두 번 부른다."""
+    return ('<defs><path id="usb" d="%s"/><path id="usla" d="%s"/></defs>'
+            % (_states([n for n in _US['states'] if n != 'Louisiana']),
+               _US['states']['Louisiana']))
+
+
+def _mini_map(dx, dy, k=0.46):
+    """미국 지도를 k배로 줄여 (dx, dy)에 놓는다. 루이지애나만 칠한다."""
+    g = ('<g transform="translate(%g %g) scale(%g)">'
+         '<use href="#usb" class="body" style="stroke-width:%.2f"/>'
+         '<use href="#usla" class="fat" style="stroke-width:%.2f"/></g>'
+         % (dx, dy, k, 0.6 / k, 1.0 / k))
+    cx, cy = _at('Louisiana')
+    return g, (dx + k * cx, dy + k * cy)
+
+
+def _pivot_svg():
+    left, (lx, ly) = _mini_map(8, 34)
+    right, (rx, ry) = _mini_map(338, 34)
+    h = ['<svg viewBox="0 0 640 402" role="img" '
+         'aria-label="체니에르 기지를 드나드는 가스 방향이 뒤집힌 것을 지도 둘로 보인 그림">',
+         '<text x="8" y="16" class="t-sm">'
+         '같은 자리, 같은 기지다. 화살표 방향만 반대다 (노란 곳이 루이지애나)</text>',
+         '<text x="8" y="32" class="t-lab" style="font-size:11px">'
+         '2008년 · 이렇게 하려고 지었다</text>',
+         '<text x="338" y="32" class="t-lab" style="font-size:11px">'
+         '2016년 · 같은 기지에서 반대로 흐른다</text>',
+         _mini_defs(), left, right]
+    # 2008 — 바다에서 들어와 미국 안으로
+    h += ['<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (lx + 95, ly + 45, lx + 16, ly + 9),
+          '<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (lx - 8, ly - 12, lx - 52, ly - 58),
+          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">해외에서 들여온다</text>'
+          % (lx + 100, ly + 62),
+          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">미국 안에 판다</text>'
+          % (lx - 46, ly - 64)]
+    # 2016 — 미국 안에서 나와 바다로
+    h += ['<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (rx - 52, ry - 58, rx - 8, ry - 12),
+          '<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (rx + 16, ry + 9, rx + 95, ry + 45),
+          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">셰일 가스가 배관으로 온다</text>'
+          % (rx - 46, ry - 64),
+          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">세계로 내보낸다</text>'
+          % (rx + 100, ry + 62)]
+    # 그 사이에 무슨 일이 있었나
+    h += ['<text x="8" y="264" class="t-bad" style="font-size:11px;font-weight:800">'
+          '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>',
+          '<rect x="8" y="276" width="624" height="92" rx="10" class="body"/>',
+          '<text x="24" y="298" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>',
+          '<text x="24" y="320" class="t-sm">'
+          '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>',
+          '<text x="24" y="338" class="t-sm">'
+          '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>',
+          '<text x="24" y="356" class="t-sm">'
+          '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>',
+          '<text x="8" y="392" class="t-sm">'
+          '기지는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>',
+          '</svg>']
+    return ''.join(h)
+
+
+PIVOT_FIG = _pivot_svg()
+
+PIVOT_CAP = ('지도 둘은 같은 나라 같은 자리다. 2008년에는 바다에서 들여와 미국 안에 팔려고 '
+             '지었고, 2016년에는 미국 안에서 받아 바다로 내보낸다. 가스가 <b>들어오던 길로 '
+             '나가게</b> 됐다는 뜻이고, 그 사이에 새로 지은 건물은 없다. 대신 세 가지를 했다. '
+             '정부에 면허를 바꿔 달라고 했고, 2년 만에 무너진 회사에 돈을 대준 곳을 찾았고, '
+             '그 계약서로 200억 달러를 빌렸다.')
 
 
 # -- 벤처 글로벌이 돈을 맞춘 순서 ---------------------------------------------
@@ -212,96 +317,6 @@ TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>돈이 언제 들어오느
              '18기를 다 채워야 납품 의무가 생기는 계약이라 그 전에 나온 물량은 시장에 그냥 팔 수 '
              '있었고, 하필 <b>그 첫 칸이 값이 열 배가 된 때</b>와 겹쳤다. 화자가 사명을 럭키 '
              '글로벌로 바꿔야 한다고 말하는 자리다.')
-
-
-# -- 지도로 본 입지 --------------------------------------------------------
-# 좌우 두 칸으로 견주던 그림을 지도로 바꾼다. 이 대목은 「어디냐」가 내용이라 상자를
-# 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 북동쪽인데 수출 공장은 남쪽 걸프에
-# 몰려 있다는 어긋남이 눈에 들어와야 나머지가 읽힌다.
-#
-# 여기까지 두 번 틀렸다. 처음에는 윤곽을 손으로 서른세 점 찍었고, 그다음에는 표시를
-# 위도·경도로 점 찍어 올렸는데 라벨 자리를 손으로 잡느라 그림과 어긋났다. 그래서 점을
-# 걷어내고 주를 통째로 칠한다 -- 칠하는 면이 곧 경계 자료라 어긋날 수가 없다. 지시선
-# 끝도 손으로 안 찍는다. 주마다 경계 상자 한가운데를 굽는 쪽에서 같이 내보낸다.
-#
-# 지명과 사실은 자막에 있는 것만 올린다. 배관이 어디로 흐르는지는 자막에 없으므로
-# 그리지 않는다 -- 지도는 없는 사실을 얹기 쉬운 그릇이라 이 선을 지킨다.
-_US = json.loads(io.open(os.path.join(dc.ROOT, 'data', 'us_lower48_albers.json'),
-                         encoding='utf-8').read())
-# 마셀러스가 깔린 두 주와 수출 공장이 몰린 두 주. 나머지는 바탕으로만 둔다
-_MARCELLUS = ('Pennsylvania', 'West Virginia')
-_GULF = ('Texas', 'Louisiana')
-_HL = set(_MARCELLUS) | set(_GULF)
-
-
-def _states(names):
-    return ''.join(_US['states'][n] for n in names if n in _US['states'])
-
-
-def _at(name):
-    return _US['center'][name]
-
-
-SITE_FIG = (
-    '<svg viewBox="0 0 640 596" role="img" '
-    'aria-label="미국 지도에서 본 셰일 산지와 LNG 수출 공장의 자리">'
-    '<text x="8" y="18" class="t-sm">'
-    '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽에 몰렸다</text>'
-    # 바탕 — 나머지 주
-    '<path d="' + _states([n for n in _US['states'] if n not in _HL])
-    + '" class="body" style="stroke-width:.6"/>'
-    # 마셀러스가 깔린 두 주
-    '<path d="' + _states(_MARCELLUS) + '" class="cell"/>'
-    # 수출 공장이 몰린 두 주
-    '<path d="' + _states(_GULF) + '" class="fat"/>'
-    # 마셀러스 설명 — 지시선 끝은 펜실베이니아 한가운데다
-    '<rect x="184" y="74" width="14" height="14" rx="3" class="cell"/>'
-    '<text x="206" y="86" class="t-lab" style="font-size:11px">'
-    '마셀러스 — 펜실베이니아·웨스트버지니아 일대</text>'
-    '<text x="206" y="106" class="t-sm">'
-    '셰일 가스가 미국에서 처음 크게 터진 곳이 여기다</text>'
-    '<text x="206" y="122" class="t-bad" style="font-size:11px;font-weight:800">'
-    '수출항이 하루 거리인데 허가가 안 나 아직도 못 짓는다</text>'
-    '<path d="M470 112 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Pennsylvania')) +
-    # 걸프 설명 — 지시선 끝은 루이지애나 한가운데다
-    '<rect x="40" y="386" width="14" height="14" rx="3" class="fat"/>'
-    '<text x="62" y="398" class="t-lab" style="font-size:11px">'
-    '걸프 연안 — 텍사스·루이지애나</text>'
-    '<text x="62" y="418" class="t-sm">'
-    '미국 LNG 수출 공장이 전부 여기 몰렸다. 헨리 허브도 여기다</text>'
-    '<text x="62" y="434" class="t-sm">'
-    '100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
-    '<text x="62" y="450" class="t-sm">'
-    '허리케인이 지나가고 유럽에서도 먼데 그렇다</text>'
-    '<path d="M300 400 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Louisiana')) +
-    # 유럽 방향 — 북동쪽이 가깝다는 말을 그림으로 받는다
-    '<path d="M600 150 L634 138" class="flow"/>'
-    '<text x="636" y="128" text-anchor="end" class="t-sm">유럽 쪽</text>'
-    # 아래 — 그래서 어떻게 됐나
-    '<rect x="8" y="470" width="308" height="104" rx="10" class="body" '
-    'stroke-dasharray="6 4"/>'
-    '<text x="24" y="494" class="t-lab">북동쪽</text>'
-    '<text x="24" y="516" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
-    '<text x="24" y="532" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
-    '<text x="24" y="556" class="t-bad" style="font-weight:800">'
-    '그런데 아직도 못 짓는다</text>'
-    '<rect x="324" y="470" width="308" height="104" rx="10" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="340" y="494" class="t-lab">남쪽</text>'
-    '<text x="340" y="516" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
-    '<text x="340" y="532" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
-    '<text x="340" y="556" class="t-lab" style="font-weight:800">'
-    '그런데도 여기만 지어진다</text>'
-    '<text x="8" y="590" class="t-sm">'
-    '주 경계는 미국 주 경계 자료를 앨버스 정적원추도법으로 옮긴 것이다</text>'
-    '</svg>')
-
-SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 어긋난다</b>. 셰일 가스가 미국에서 '
-            '처음 크게 터진 곳은 북동쪽이고 거기서 수출항까지는 하루 거리다. 그런데도 수출 '
-            '공장은 전부 남쪽 걸프 연안에 섰다. 허리케인이 지나가고 유럽에서도 먼 자리다. '
-            '가른 것은 거리도 가스도 아니고 허가였다. 화자가 이 편에서 한국으로 끌어오는 문장이 '
-            '여기서 나온다. 어떤 사업이 되느냐 마느냐는 <b>공장 지을 자리 옆집이 찬성하느냐</b>에서 '
-            '갈린다.')
 
 
 CARDS = [
