@@ -7,6 +7,13 @@
     "새 별칭을 만나면 여기에 한 줄 더한다. check_notes 의 N9 가 별칭 사용을 잡는다."
   ],
 
+  "_주의": [
+    "회사 이름과 보통명사가 같은 글자면 여기 넣지 않는다. 「피지컬 인텔리전스」는 회사 이름이기도",
+    "하고 판단 지능과 짝을 이루는 개념어이기도 하다. 2026-08-23에 이 항목을 넣었다가 개념어를",
+    "회사 이름으로 바꿔 뜻이 뒤집혔다. 회사를 가리킬 때는 Physical Intelligence 라고 적는 것으로",
+    "충분하고, 그 확인은 사람이 한다."
+  ],
+
   "NVIDIA": "엔비디아",
   "Nvidia": "엔비디아",
   "nVidia": "엔비디아",
@@ -34,8 +41,6 @@
   "LS ELECTRIC": "LS일렉트릭",
   "SimplyWall.st": "Simply Wall St",
 
-  "피지컬 인텔리전스": "Physical Intelligence",
-  "파이(PI)": "Physical Intelligence",
   "선데이 로보틱스": "Sunday Robotics",
   "제너럴리스트": "Generalist AI",
   "Generalist": "Generalist AI",
