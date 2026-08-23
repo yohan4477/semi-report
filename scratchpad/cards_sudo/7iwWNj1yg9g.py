@@ -19,7 +19,7 @@ CARD = {
               ('📎 RealWorld 핸드 갤러리', 'https://allhandsup.org/', 'secondary')],
     'slim_oneliner': (
         'RealWorld 하드웨어 엔지니어 맥스가 열 종 넘는 로봇 손(덱스터러스 핸드)을 직접 다뤄 본 경험으로 '
-        '좋은 손의 기준을 자유도(DOF, Degree of Freedom)·핑거팁 포스(손가락 끝 악력)·센싱 세 갈래로 '
+        '좋은 손의 기준을 자유도(DOF, Degree of Freedom)·핑거팁 포스(손가락 끝 악력)·센싱 세 방식로 '
         '정리하고, 우지(Wuji)·Sharpa(샤파)·테솔로(Tesollo)·알렉스(Alex) 네 손을 실측치로 견준다. '
         'Sharpa가 로봇 손을 만드는 회사라는 사실, 우지의 내구성 결함, 텐던 구동과 다이렉트 드라이브의 '
         '갈림까지 다룬다.'),
