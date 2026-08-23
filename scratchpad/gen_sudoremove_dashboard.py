@@ -114,7 +114,7 @@ def _ik(bx, by, tx, ty, l1, l2):
     return mx + uy * h, my - ux * h          # 법선 방향으로 h 만큼 — 위로 꺾인 쪽
 
 
-def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84, dash=False):
+def _arm(bx, by, tx, ty, col='var(--ink)', l1=84, l2=84):
     """어깨에서 손끝까지 두 마디 팔 + 관절 점 + 집게."""
     import math
     ex, ey = _ik(bx, by, tx, ty, l1, l2)
@@ -123,9 +123,8 @@ def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84, dash=False):
     gx, gy = math.cos(ang) * 9, math.sin(ang) * 9       # 집게 길이
     return ''.join([
         '<path d="M%.1f %.1f L%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" '
-        'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"%s/>'
-        % (bx, by, ex, ey, tx, ty, col,
-           ' stroke-dasharray="7 5"' if dash else ''),
+        'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+        % (bx, by, ex, ey, tx, ty, col),
         '<circle cx="%.1f" cy="%.1f" r="4.5" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
         % (bx, by, col),
         '<circle cx="%.1f" cy="%.1f" r="4" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
@@ -137,23 +136,26 @@ def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84, dash=False):
     ])
 
 
-def _cup(x, y, col='var(--ink-2)', dash=False):
-    d = ' stroke-dasharray="4 3"' if dash else ''
+def _cup(x, y, col='var(--ink-2)'):
     return ('<path d="M%d %d L%d %d L%d %d L%d %d Z" fill="none" stroke="%s" '
-            'stroke-width="2.5" stroke-linejoin="round"%s/>'
-            % (x, y, x + 4, y + 24, x + 22, y + 24, x + 26, y, col, d))
+            'stroke-width="2.5" stroke-linejoin="round"/>'
+            % (x, y, x + 4, y + 24, x + 22, y + 24, x + 26, y, col))
 
 
-def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink-2)', dash=False):
-    """책상 하나에 로봇 팔 하나. 좌표는 칸 왼쪽 위(ox,oy) 기준."""
-    out = [_r(ox, oy, w, h, 'var(--line)', 1.3)]
+def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink)', imagined=False):
+    """책상 하나에 로봇 팔 하나. 좌표는 칸 왼쪽 위(ox,oy) 기준.
+
+    점선은 쓰지 않는다. 모델이 그려 낸 장면은 칸 테두리를 강조색으로 둘러 말하고,
+    칸 안의 선은 실제 장면과 똑같이 그린다 — 팔은 진한 색, 물건은 흐린 색이다."""
+    fr = ('var(--accent)', 1.8) if imagined else ('var(--line)', 1.3)
+    out = [_r(ox, oy, w, h, fr[0], fr[1])]
     ty = oy + h - 34
     out.append('<path d="M%d %d L%d %d" fill="none" stroke="var(--line)" stroke-width="2.5"/>'
                % (ox + 12, ty, ox + w - 12, ty))
     if ghost:
-        out.append(_cup(ox + ghost[0], oy + ghost[1], 'var(--ink-3)', True))
-    out.append(_cup(ox + cup[0], oy + cup[1], col))
-    out.append(_arm(ox + 34, ty - 4, ox + hand[0], oy + hand[1], col, dash=dash))
+        out.append(_cup(ox + ghost[0], oy + ghost[1], 'var(--line)'))
+    out.append(_cup(ox + cup[0], oy + cup[1], 'var(--ink-3)'))
+    out.append(_arm(ox + 34, ty - 4, ox + hand[0], oy + hand[1], col))
     return ''.join(out)
 
 def _svg(w, h, label, body):
@@ -1198,7 +1200,7 @@ FIG_IDMSEQ = _svg(640, 384, '카메라가 찍은 장면과 모델이 그려 낸 
     _a(218, 96, 240, 150),
     _lt(14, 216, '모델이 그려 낸 장면 — 아직 일어나지 않았다'),
     _scene(14, 224, 200, 132, hand=(122, 54), cup=(132, 44), ghost=(146, 80),
-           col='var(--accent)', dash=True),
+           imagined=True),
     _a(218, 290, 240, 196),
     _box(242, 140, 132, 66, ['IDM', '두 장의 차이를', '관절 값으로'], 'var(--accent)', 1.8),
     _a(378, 150, 400, 96),
@@ -1208,33 +1210,15 @@ FIG_IDMSEQ = _svg(640, 384, '카메라가 찍은 장면과 모델이 그려 낸 
     _box(402, 250, 224, 78, ['어깨를 이만큼, 팔꿈치를 이만큼', '지금 로봇 팔로 간다',
                              '학습에 쌓이지 않는다'], 'var(--accent)', 1.8),
     _t(320, 352, '갈리는 것은 들어간 장면이 찍힌 것이냐 그려 낸 것이냐 하나뿐이다', 't-sm'),
-    _t(320, 374, '점선 팔과 흐린 컵이 모델이 그려 낸 자리다', 't-sm'),
+    _t(320, 374, '아래 칸의 주황 테두리가 모델이 그려 낸 장면이라는 표시다', 't-sm'),
 ]))
 
-
-# 시켜 보기 전에 결과를 미리 본다 — 월드모델 장면
-FIG_WMSCENE = _svg(640, 330, '실물을 돌리는 것과 그려 보는 것', ''.join([
-    _lt(14, 22, '지금까지 — 실물을 실제로 움직여야 안다'),
-    _scene(14, 30, 250, 150, hand=(150, 100), cup=(176, 92)),
-    _t(139, 196, '부서지면 다시 못 쓴다', 't-sm'),
-    _lt(376, 22, '월드모델 — 그려 보고 값을 낸다'),
-    _scene(376, 30, 250, 150, hand=(150, 62), cup=(160, 50), ghost=(176, 92),
-           col='var(--accent)', dash=True),
-    _t(501, 196, '점선은 그려 본 것이다', 't-sm'),
-    _a(501, 210, 501, 232),
-    '<path d="M392 262 L610 262" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/>',
-    '<path d="M501 252 L501 272" fill="none" stroke="var(--accent)" stroke-width="2.4"/>',
-    _t(501, 246, '상태가치', 't-lab'),
-    _t(429, 288, '0 이하 — 실패로 친다', 't-sm'),
-    _t(573, 288, '0 위 — 성공 쪽', 't-sm'),
-    _t(320, 318, '실물을 안 돌리고 후보를 가를 수 있으면 훨씬 많이 시험할 수 있다', 't-sm'),
-]))
 
 # 에어프라이어 문 하나로 편다 — 후보 셋을 상상시켜 점수로 줄을 세운다.
 # 문이 열린 그림·안 열린 그림은 과제를 보이려고 세운 예시다. 원문에 실패 장면 묘사는 없다.
-def _fryer(ox, oy, open_=False, col='var(--ink-2)', dash=False):
+def _fryer(ox, oy, open_=False, col='var(--ink-3)'):
     """조리기구 한 대. 열리면 서랍이 오른쪽으로 빠져나오고 몸통에 빈 칸이 남는다."""
-    d = ' stroke-dasharray="6 4"' if dash else ''
+    d = ''
     body = ('<rect x="%d" y="%d" width="64" height="52" rx="5" fill="none" stroke="%s" '
             'stroke-width="2.6"%s/>' % (ox, oy, col, d))
     if not open_:
@@ -1265,14 +1249,14 @@ def _wmpanel(ox, oy, hand, open_, ghost=False):
 
     색은 무엇이냐를 말하고 선은 실제냐 상상이냐를 말한다. 팔은 진한 색(상상이면 강조색),
     기구는 늘 흐린 회색이다 — 둘이 같은 색이면 어디까지가 팔인지 안 갈린다."""
-    arm_col = 'var(--accent)' if ghost else 'var(--ink)'
+    fr = ('var(--accent)', 1.8) if ghost else ('var(--line)', 1.3)
     ty = oy + 118
     return ''.join([
-        _r(ox, oy, 194, 132, 'var(--line)', 1.3),
+        _r(ox, oy, 194, 132, fr[0], fr[1]),
         '<path d="M%d %d L%d %d" fill="none" stroke="var(--line)" stroke-width="2.5"/>'
         % (ox + 10, ty, ox + 184, ty),
-        _fryer(ox + 76, ty - 56, open_, 'var(--ink-3)', ghost),
-        _arm(ox + 26, ty - 4, ox + hand[0], oy + hand[1], arm_col, l1=62, l2=62, dash=ghost),
+        _fryer(ox + 76, ty - 56, open_),
+        _arm(ox + 26, ty - 4, ox + hand[0], oy + hand[1], 'var(--ink)', l1=62, l2=62),
     ])
 
 
@@ -1330,60 +1314,27 @@ FIG_HIERSEQ = _svg(640, 214, '위층이 말로 시키고 아래층이 관절을 
 ]))
 
 
-# 컵 하나를 드는 두 장면으로 IDM 을 편다. 상자만 늘어놓으면 무엇이 빠졌는지가 안 보인다.
-FIG_IDM = _svg(640, 396, '영상 두 장에서 관절 움직임을 되짚는다', ''.join([
-    _lt(14, 22, '영상에 남은 것은 이 두 장뿐이다'),
-    _scene(14, 30, 250, 150, hand=(150, 106), cup=(176, 92)),
-    _t(139, 196, '첫 장면 — 컵 옆에 있다', 't-sm'),
-    _scene(376, 30, 250, 150, hand=(150, 62), cup=(160, 50), ghost=(176, 92),
-           col='var(--accent)'),
-    _t(501, 196, '다음 장면 — 컵을 들었다', 't-sm'),
-    _t(320, 92, '이 사이에', 't-lab'),
-    _t(320, 110, '무슨 관절 움직임이', 't-lab'),
-    _t(320, 128, '있었나', 't-lab'),
-    _t(320, 150, '영상은 안 적어 둔다', 't-sm'),
-    _a(139, 210, 292, 236), _a(501, 210, 348, 236),
-    _box(230, 238, 180, 52, ['IDM', '두 장을 견준다'], 'var(--accent)', 1.8),
-    _a(320, 292, 320, 312),
-    _box(150, 314, 340, 48, ['어깨를 이만큼, 팔꿈치를 이만큼'], 'var(--accent)', 1.8),
-    _t(320, 380, '사람이 컵 드는 영상도 마찬가지다 — 어깨를 몇 도 돌렸는지는 아무도 안 적었다', 't-sm'),
-    _t(320, 394, 'IDM 이 그 칸을 채우면 그 영상이 로봇 학습 재료가 된다', 't-sm'),
-]))
-
 def summary_layer():
     figs = [('관절까지 가는 네 갈래', FIG_ROUTE4,
              '갈래를 넷으로 묶은 것은 <b>우리 분류</b>다. 원문이 그렇게 나눈 것이 아니다. '
              '네 갈래는 <b>다음 관절 값을 무엇에서 뽑느냐</b>로 갈린다 — '
              '지금 화면에서 바로 뽑느냐, 그려 본 다음 장면에서 되짚느냐, 시켜 보기 전에 결과를 '
              '미리 재느냐, 미리 구워 둔 동작을 켜느냐.'),
-            ('역동역학 모델이 하는 일', FIG_IDM,
-             '로봇 팔이 컵을 드는 두 장면이다. 영상에 남는 것은 <b>이 두 장뿐</b>이고, 그 사이에 '
-             '어깨와 팔꿈치를 각각 얼마나 돌렸는지는 어디에도 안 적힌다. 그 빠진 칸을 되짚는 것이 '
-             'IDM(Inverse Dynamics Model, 역동역학 모델)이다. 사람이 컵을 드는 인터넷 영상도 사정이 '
-             '같아서, IDM 이 관절 값을 채워 넣으면 라벨 없던 영상이 그대로 로봇 학습 재료가 된다. '
-             'IDM 자체는 로봇으로 조금만 배우면 되는데 1X Technologies 는 <b>400시간</b>을 썼고, '
-             '그 하나로 사람 영상 <b>900시간</b>이 통째로 쓸 수 있는 재료가 됐다. 비디오 액션모델 '
-             '갈래가 이 부품 위에 선다.'),
             ('같은 IDM, 들어가는 장면만 다르다', FIG_IDMSEQ,
              '위 칸은 카메라가 찍은 장면이다. 사람이나 로봇이 실제로 컵을 들었고, 그 두 장 사이의 '
              '관절 움직임을 IDM 이 채워 넣는다 — 1X Technologies 는 사람 1인칭 영상 <b>900시간</b>을 '
              '이렇게 학습 재료로 바꿨고, 엔비디아 DreamGen 도 같은 방식으로 뽑은 의사(疑似) 액션으로 '
-             'VLA 를 학습시킨다. 아래 칸의 점선 팔은 아무도 움직이지 않았다. 모델이 <b>다음에 이렇게 '
+             'VLA 를 학습시킨다. 아래 칸은 아무도 움직이지 않은 장면이다 — 주황 테두리가 그 표시다. 모델이 <b>다음에 이렇게 '
              '될 것</b>이라고 그려 낸 장면이고, 그 그림에서 되짚은 관절 값은 학습에 쌓이지 않고 곧장 '
              '로봇 팔로 간다 — Rhoda AI 의 DVA 가 이쪽이다. 들어가는 장면이 찍힌 것이냐 그려 낸 '
              '것이냐만 다르고, IDM 이 하는 일과 나오는 관절 값은 두 칸이 같다.'),
-            ('월드모델 — 시켜 보기 전에 결과를 미리 본다', FIG_WMSCENE,
-             '왼쪽이 지금까지다. 정책 하나를 시험하려면 <b>실물 로봇을 실제로 움직여야</b> 하고, '
-             '부서질 위험 때문에 자동으로 많이 못 돌린다. 오른쪽이 월드모델이다 — 점선 팔은 '
-             '실제로 움직인 것이 아니라 모델이 <b>그려 본 것</b>이고, 그 끝에 '
-             '<b>상태가치</b>(state value — 그 장면이 과제를 끝낸 쪽에 얼마나 가까운지를 숫자 하나로 '
-             '매긴 값)가 나온다. 1X Technologies 는 이 값이 0 이하면 실패로 친다.'),
-            ('에어프라이어 서랍 하나로 보는 한 판', FIG_WMSEQ,
+            ('월드모델 — 시켜 보기 전에 결과를 미리 본다', FIG_WMSEQ,
              '「행동 후보」는 사람이 짠 동작 목록이 아니라 <b>학습 도중 저장해 둔 정책 여러 개</b>다. '
              '왼쪽 한 칸이 그 둘의 출발점이고 — 로봇이 조리기구 앞에 서 있고 서랍은 닫혀 있다 — '
              '후보마다 그 정책이 낼 행동을 1XWM 에 넣으면 모델이 <b>미래 1인칭 영상 4초</b>를 그린다. '
-             '오른쪽 두 칸이 그렇게 그려 낸 장면이다. 진한 선이 로봇 팔이고 흐린 선이 조리기구이며, '
-             '점선은 아무도 움직이지 않았다는 뜻이다. 1XWM 은 영상과 <b>상태가치</b>를 같은 표현에서 '
+             '오른쪽 두 칸이 그렇게 그려 낸 장면이고 주황 테두리가 그 표시다. 진한 선이 로봇 팔, '
+             '흐린 선이 조리기구다. 1XWM 은 영상과 <b>상태가치</b>(state value — 그 장면이 과제를 끝낸 '
+             '쪽에 얼마나 가까운지를 매긴 숫자)를 같은 표현에서 '
              '함께 내고 <b>0 이하면 실패로 친다</b>. 그림에 적은 +0.6·−0.2 와 서랍이 열리고 안 열리는 '
              '두 장면은 과제를 보이려고 든 예시다 — 원문이 밝힌 것은 0 이라는 경계뿐이다. '
              '살아남은 후보만 실물 로봇으로 확인하므로, 실물은 <b>마지막에 한 번</b>만 움직인다.'),
@@ -1408,7 +1359,7 @@ def summary_layer():
     h = ['<p class="ins-lede">카드 서른넷을 다 열지 않고도 이 페이지가 무엇을 다루는지 잡히게 '
          '하는 층입니다. 여기 실린 회사들은 서로 다른 것을 만드는 것처럼 보이지만 답하는 물음은 '
          '하나입니다 — <b>다음 순간 관절을 얼마씩 움직일지를 무엇에서 뽑을 것인가</b>. '
-         '그 답이 무엇으로 갈리는지를 그림 셋으로 폅니다.</p>']
+         '그 답이 무엇으로 갈리는지를 그림 여섯 장으로 폅니다.</p>']
     h.append(''.join(fig_html(f) for f in figs))
     h.append('<p class="ins-lede"><b>네 갈래를 한 줄로 줄이면 이렇습니다.</b> '
              'VLA(Vision-Language-Action, 시각·언어·행동 통합 모델)는 지금 보이는 화면과 말을 받아 '
