@@ -21,11 +21,12 @@ SEC_AGENT = ('sec-agent', '01', 'AI 에이전트 · 실행 구조',
 # 기둥 넷의 가로 위치. 하네스(B)가 가운데인 것이 이 그림의 요지다 — 사용자도 모델도
 # 서로에게 직접 말을 걸지 않고 전부 B를 거친다.
 #
-# viewBox 폭은 640이다. card_lib이 도해를 max-width 640으로 잡아 두어 그보다 넓게
-# 그리면 그 비율만큼 글자가 줄어든다. 번호가 안 보인다는 말이 여기서 나왔다.
+# viewBox 폭은 560이다. 도해는 카드 본문 폭에 맞춰 줄어드는데, 창이 좁으면 본문이
+# 460px 남짓까지 좁아진다(창 604px에서 재 봤다). 판을 좁게 그릴수록 그 축소가
+# 덜해 글자가 커진다 — 번호가 안 보인다는 말이 두 번 나온 자리다.
 # 번호는 라벨과 떼어 따로 세운다 — 아래 타입스크립트의 왼쪽 칸과 짝이라 눈에 먼저
 # 걸려야 한다.
-_A, _B, _C, _D = 58, 240, 420, 560
+_A, _B, _C, _D = 48, 198, 340, 485
 _MSGS = [
     (_A, _B, '①', '버그 고쳐 줘'),
     (_B, _C, '②', '프롬프트와 지금까지의 상태 전달'),
@@ -40,14 +41,14 @@ _MSGS = [
     (_C, _B, '⑪', '버그 수정 완료'),
     (_B, _A, '⑫', '최종 보고'),
 ]
-_HEADS = [(_A, 108, '사용자'), (_B, 176, '하네스'), (_C, 136, 'AI 모델(LLM)'),
-          (_D, 152, '실제 환경(OS·터미널)')]
+_HEADS = [(_A, 96, '사용자'), (_B, 140, '하네스'), (_C, 126, 'AI 모델(LLM)'),
+          (_D, 150, '실제 환경(OS·터미널)')]
 
 
 def _seq_svg():
     y0, step = 92, 46
     bottom = y0 + (len(_MSGS) - 1) * step + 24
-    h = ['<svg viewBox="0 0 640 %d" role="img" aria-label="하네스가 사용자·모델·터미널 '
+    h = ['<svg viewBox="0 0 560 %d" role="img" aria-label="하네스가 사용자·모델·터미널 '
          '사이에서 열두 번 주고받는 순서">' % (bottom + 10)]
     for cx, w, lab in _HEADS:
         h.append('<rect class="body" x="%d" y="6" width="%d" height="36" rx="8"/>'
@@ -60,7 +61,7 @@ def _seq_svg():
         h.append('<line class="flow" x1="%d" y1="%d" x2="%d" y2="%d"/>'
                  % (x1 + (7 if x2 > x1 else -7), y, x2 + (-7 if x2 > x1 else 7), y))
         h.append('<text x="%d" y="%d" class="t-no">%s</text>' % (x, y - 8, num))
-        h.append('<text x="%d" y="%d" class="t-msg">%s</text>' % (x + 24, y - 8, lab))
+        h.append('<text x="%d" y="%d" class="t-msg">%s</text>' % (x + 26, y - 8, lab))
     h.append('</svg>')
     return ''.join(h)
 
@@ -131,14 +132,18 @@ CODE_CSS = """
   .uc-code { margin:0; padding:13px 15px; background:var(--sunk);
     border:1px solid var(--line); border-radius:8px; overflow-x:auto;
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-size:12px; line-height:1.75; color:var(--ink); white-space:pre; }
+    font-size:12.5px; line-height:1.85; color:var(--ink); white-space:pre; }
   .uc-code .cd-c { color:var(--ink-3); }
-  .uc-code .cd-n { display:inline-block; width:3.1em; color:var(--accent-ink);
-    font-weight:700; letter-spacing:-.04em; }
+  /* 번호 칸. 동그라미 숫자는 고정폭 글꼴에서 대체 글리프로 떨어져 잘게 나온다 —
+     본문 글꼴로 되돌리고 키운다. 칸 폭은 px로 고정해야 코드 들여쓰기가 안 밀린다. */
+  .uc-code .cd-n { display:inline-block; width:42px; font-size:18px; line-height:1;
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    font-weight:800; color:var(--accent-ink);
+    letter-spacing:-.02em; vertical-align:baseline; }
   .uc-fig text.t-head { font-size:13px; font-weight:800; fill:var(--ink); }
-  .uc-fig text.t-no { font-size:15px; font-weight:800; fill:var(--accent-ink); }
-  .uc-fig text.t-msg { font-size:12.5px; fill:var(--ink-2); }
-  @media (max-width:640px) { .uc-code { font-size:11px; padding:11px 12px; } }
+  .uc-fig text.t-no { font-size:19px; font-weight:800; fill:var(--accent-ink); }
+  .uc-fig text.t-msg { font-size:13.5px; fill:var(--ink-2); }
+  @media (max-width:640px) { .uc-code { padding:11px 10px; } }
 """
 
 
