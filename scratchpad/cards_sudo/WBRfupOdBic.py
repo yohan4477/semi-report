@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-layer',
+    'section': 'sec-model',
     'date': '2025-08-28',
     'topic': ('infra', '전신 제어와 LBM'),
     'title': '보스턴 다이내믹스는 MPC 위에 LBM을 얹어 아틀라스의 다리까지 움직였다',

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-vla',
+    'section': 'sec-model',
     'date': '2025-03-05',
     'topic': ('infra', 'VLA · 휴머노이드 전신 제어'),
     'title': 'Figure AI가 처음 낸 VLA, Helix — 그리퍼 7 자유도를 전신 35 자유도로 밀어올렸다',

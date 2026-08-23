@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-layer',
+    'section': 'sec-model',
     'date': '2026-08-12',
     'topic': ('infra', '하니스 오케스트레이션'),
     'title': '구글 딥마인드는 임바디드 리즈닝으로 VLA를 하니스해 판단과 반사를 갈랐다',

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 CARD = {
-    'section': 'sec-video',
+    'section': 'sec-world',
     'date': '2025-07-09',
     'topic': ('infra', '월드모델 정의'),
     'title': '월드모델은 액션을 넣으면 성공확률까지 낸다 — 1X는 그걸로 실물 로봇 평가를 대신한다',

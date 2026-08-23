@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-vla',
+    'section': 'sec-model',
     'date': '2026-07-21',
     'topic': ('infra', '로봇 데이터 수집'),
     'title': 'Sunday Robotics는 데모 대신 「솔브」로 처음 보는 집 빨래 개기 99.1%를 냈다',

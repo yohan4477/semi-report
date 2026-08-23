@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-video',
+    'section': 'sec-model',
     'date': '2026-08-19',
     'topic': ('infra', '휴먼 데이터 스케일링'),
     'title': 'Dyna-2는 로봇 데이터 없이 사람 영상 170년으로 제로샷 전이를 보였다',

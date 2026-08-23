@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 CARD = {
-    'section': 'sec-video',
+    'section': 'sec-model',
     'date': '2026-03-15',
     'topic': ('infra', '월드모델 · VLA · 비디오액션모델'),
     'title': 'GTC 열흘 전 엔비디아가 흘린 논문 다섯 편, 월드모델과 액션모델로 갈렸다',

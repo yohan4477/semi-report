@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-vla',
+    'section': 'sec-model',
     'date': '2026-08-04',
     'topic': ('infra', 'VLA와 로봇 제어'),
     'title': '앤트로픽 LLM은 로봇 관절을 직접 내면 5%, 액션모델을 도구로 부르면 42%였다',

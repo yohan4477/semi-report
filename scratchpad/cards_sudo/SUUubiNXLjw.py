@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-vla',
+    'section': 'sec-model',
     'date': '2026-02-05',
     'topic': ('infra', '온몸 제어 · 로코매니퓰레이션'),
     'title': 'Figure Helix 02는 균형마저 강화학습 없이 이미테이션 러닝으로 풀었다',
