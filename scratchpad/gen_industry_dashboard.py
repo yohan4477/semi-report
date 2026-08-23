@@ -275,53 +275,70 @@ FUND_CAP = ('예전에는 거대 에너지 회사가 <b>자기 돈</b>으로 이
 
 # -- 쪼갠 쪽은 30개월째부터 돈이 들어온다 --------------------------------------
 # 「효율이 떨어지는데 왜 이겼나」는 그림 없이 안 잡힌다. 답이 효율이 아니라 시간축에
-# 있어서다 -- 같은 돈을 5년 뒤에 한꺼번에 받느냐, 30개월째부터 조금씩 받느냐.
-# 그래서 좌우 대비가 아니라 시간축 두 줄로 그린다(입지 도해가 좌우 대비라 겹치지 않는다).
+# 있어서다 -- 같은 돈을 5년 뒤에 한꺼번에 받느냐, 30개월째부터 계속 받느냐.
 #
-# 전쟁 표시를 30개월 자리에 세우는 것이 요점이다. 계단 첫 칸이 하필 값이 열 배가 된 때와
-# 겹쳤다. 막대 길이는 개월 수에 비례한다(1개월 = 8px). 계단 높이는 그때까지 판 누적을
-# 보이는 눈금이라 값을 적지 않는다 -- 회차별 물량이 원문에 없으므로 숫자를 지어내지 않는다.
+# 처음에는 계단 막대로 그렸다가 「너무 허접하다」는 말을 들었다. 원인은 그림 솜씨가
+# 아니라 막대 높이였다. 회차별 물량이 원문에 없는데 계단을 그려 놓으니 눈은 수치로
+# 읽는데 근거가 없었다. 없는 값을 그리면 어떻게 다듬어도 허술해 보인다.
+#
+# 그래서 높이를 없앤다. 시간축 하나에 상태 둘만 둔다 -- 회색은 공사 중이라 돈이 안 들어오는
+# 구간, 강조색은 돈이 들어오는 구간. 이 둘은 자막에 있는 사실이다(착공 30개월 만에 첫 물량,
+# 업계 통상 5년, 한 기가 끝나는 대로 팔아 다음 기를 지었다). 얼마가 들어오는지는 안 그린다.
+_TR_X0, _TR_X1, _TR_M = 120.0, 610.0, 66.0        # 왼쪽 끝, 오른쪽 끝, 그릴 개월 수
+
+
+def _tx(month):
+    return _TR_X0 + (_TR_X1 - _TR_X0) * month / _TR_M
+
+
+def _bar(m0, m1, y, h, cls, label=''):
+    x0, x1 = _tx(m0), _tx(m1)
+    s = ('<rect x="%.0f" y="%.0f" width="%.0f" height="%.0f" rx="4" class="%s"/>'
+         % (x0, y, x1 - x0, h, cls))
+    if label:
+        s += ('<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">%s</text>'
+              % ((x0 + x1) / 2, y + h / 2 + 4, label))
+    return s
+
+
 TRAIN_FIG = (
-    '<svg viewBox="0 0 640 274" role="img" '
-    'aria-label="대형 트레인과 쪼갠 트레인의 첫 현금 시점 비교">'
-    '<text x="8" y="18" class="t-sm">가로축은 착공하고 나서 흐른 시간이다</text>'
-    '<path d="M300 56 L300 222" class="lead-line"/>'
-    '<text x="306" y="52" class="t-bad" style="font-size:10.5px;font-weight:800">'
-    '이때 러우 전쟁이 터져 LNG값이 열 배가 됐다</text>'
-    '<text x="8" y="76" class="t-lab">남들이 하던 방식</text>'
-    '<text x="8" y="92" class="t-sm">큰 설비 3기를 짓는다</text>'
-    '<text x="8" y="107" class="t-sm">1기에 5조~10조 원</text>'
-    '<rect x="150" y="70" width="480" height="18" rx="4" class="body"/>'
-    '<text x="390" y="83" text-anchor="middle" class="t-sm">'
-    '다 지어야 팔 수 있다. 5년 동안 들어오는 돈이 없다</text>'
-    '<path d="M630 88 L630 104" class="flow"/>'
-    '<text x="630" y="120" text-anchor="end" class="t-lab" style="font-size:10.5px">'
-    '5년째에 처음 돈이 들어온다</text>'
-    '<text x="8" y="164" class="t-lab">벤처 글로벌</text>'
-    '<text x="8" y="180" class="t-sm">작은 설비 18기로 쪼갠다</text>'
-    '<text x="8" y="195" class="t-sm">(더 작게는 36기)</text>'
-    '<rect x="150" y="158" width="150" height="18" rx="4" class="body"/>'
-    '<text x="225" y="171" text-anchor="middle" class="t-sm">30개월</text>'
-    '<rect x="304" y="198" width="30" height="10" rx="2" class="fat"/>'
-    '<rect x="338" y="190" width="30" height="18" rx="2" class="fat"/>'
-    '<rect x="372" y="182" width="30" height="26" rx="2" class="fat"/>'
-    '<rect x="406" y="174" width="30" height="34" rx="2" class="fat"/>'
-    '<rect x="440" y="166" width="30" height="42" rx="2" class="fat"/>'
-    '<rect x="474" y="158" width="30" height="50" rx="2" class="fat"/>'
-    '<rect x="508" y="150" width="30" height="58" rx="2" class="fat"/>'
-    '<rect x="542" y="142" width="30" height="66" rx="2" class="fat"/>'
-    '<rect x="576" y="134" width="30" height="74" rx="2" class="fat"/>'
-    '<text x="310" y="130" class="t-lab" style="font-size:10.5px">'
-    '30개월째부터 돈이 들어온다</text>'
-    '<text x="455" y="226" text-anchor="middle" class="t-sm">'
-    '한 기가 끝나면 그것부터 팔고, 그 돈으로 다음 기를 짓는다</text>'
-    '<text x="455" y="240" text-anchor="middle" class="t-sm">'
-    '막대가 높아지는 것은 그때까지 판 양이 쌓인다는 뜻이다</text>'
-    '<path d="M150 252 L630 252" class="lead-line"/>'
-    '<text x="150" y="262" text-anchor="middle" class="t-sm">착공</text>'
-    '<text x="300" y="262" text-anchor="middle" class="t-sm">30개월</text>'
-    '<text x="630" y="262" text-anchor="end" class="t-sm">5년</text>'
-    '</svg>')
+    '<svg viewBox="0 0 640 300" role="img" '
+    'aria-label="공사 기간과 돈이 들어오기 시작하는 시점을 두 줄로 견준 그림">'
+    '<text x="8" y="16" class="t-sm">'
+    '가로축은 착공하고 흐른 시간이다. 회색은 돈이 안 들어오는 구간, 파랑은 들어오는 구간</text>'
+    # 눈금선 — 해마다 하나
+    + ''.join('<path d="M%.0f 70 L%.0f 238" class="lead-line"/>' % (_tx(m), _tx(m))
+              for m in (12, 24, 36, 48, 60))
+    # 러우 전쟁 — 30개월 자리
+    + '<path d="M%.0f 62 L%.0f 238" stroke="var(--fig-bad,#c2504a)" stroke-width="1.2" '
+      'stroke-dasharray="5 4" fill="none"/>' % (_tx(30), _tx(30))
+    + '<text x="%.0f" y="56" class="t-bad" style="font-size:10.5px;font-weight:800">'
+      '여기서 러우 전쟁이 터져 LNG값이 열 배가 됐다</text>' % (_tx(30) - 4)
+    # 첫째 줄 — 남들이 하던 방식
+    + '<text x="8" y="92" class="t-lab" style="font-size:11px">남들이 하던 방식</text>'
+    + '<text x="8" y="108" class="t-sm">큰 설비 3기</text>'
+    + '<text x="8" y="123" class="t-sm">1기에 5조~10조 원</text>'
+    + _bar(0, 60, 84, 34, 'body', '다 지어야 판다. 5년 동안 들어오는 돈이 없다')
+    + _bar(60, 66, 84, 34, 'fat')
+    + '<text x="%.0f" y="136" text-anchor="end" class="t-sm">여기서 처음 들어온다</text>'
+      % (_TR_X1 + 2)
+    # 둘째 줄 — 벤처 글로벌
+    + '<text x="8" y="176" class="t-lab" style="font-size:11px">벤처 글로벌</text>'
+    + '<text x="8" y="192" class="t-sm">작은 설비 18기</text>'
+    + '<text x="8" y="207" class="t-sm">(더 작게는 36기)</text>'
+    + _bar(0, 30, 168, 34, 'body', '30개월')
+    + _bar(30, 66, 168, 34, 'fat', '한 기가 끝나는 대로 팔아 다음 기를 짓는다')
+    + '<text x="%.0f" y="220" class="t-sm">여기서부터 계속 들어온다</text>' % (_tx(30) + 4)
+    # 가로축
+    + '<path d="M%.0f 238 L%.0f 238" stroke="var(--line)" stroke-width="1.2" fill="none"/>'
+      % (_TR_X0, _TR_X1)
+    + ''.join('<text x="%.0f" y="254" text-anchor="middle" class="t-sm">%s</text>'
+              % (_tx(m), lab)
+              for m, lab in ((0, '착공'), (12, '1년'), (24, '2년'), (36, '3년'),
+                             (48, '4년'), (60, '5년')))
+    + '<text x="8" y="280" class="t-sm">'
+      '얼마가 들어오는지는 그리지 않았다. 회차별 물량이 이 편에 나오지 않는다</text>'
+    + '</svg>')
 
 TRAIN_CAP = ('쪼갠 이유는 효율이 아니라 <b>돈이 언제 들어오느냐</b>다. 다 지어야 파는 쪽은 5년을 '
              '버텨야 하고, 한 기씩 파는 쪽은 30개월째부터 들어온 돈으로 다음 기를 짓는다. '
