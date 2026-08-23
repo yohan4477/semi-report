@@ -5,6 +5,7 @@
   py -3.13 scratchpad/verify_cards.py --all        커밋 안 된 카드 전부
 
 check_slim 이 안 보는 구멍을 메운다. 실제로 새어 나간 것들이라 하나씩 이유가 있다.
+  N2  제목·gain 의 숫자가 자막에 없다 — 화면에서 제일 먼저 읽히는데 아무도 안 봤다
   Q1  quote 필드가 자막에 없다 — check_slim 은 slim 안 따옴표만 본다. 지어낸 문장이 나갔다
   Q2  자동 자막이 뭉갠 말을 인용했다 (텔레업 같은 오인식)
   A1  카드 본문이 회사 별칭을 쓴다 — insights/actor_alias.json 의 왼쪽 이름
@@ -36,6 +37,15 @@ GARBLED = ['텔레업', '텔레오션', '텔레오프', '올카 핸드', '셰파
 TRANSLATIONESE = ['위층', '아래층', '되어진', '를 가진다', '에 있어서', '~에 대한 ']
 VAGUE = re.compile(r'(중요하다|주목된다|필요하다|기대된다|할 것으로 보인다|살펴봐야 한다)[.,]')
 STRIP = re.compile(r'<[^>]+>')
+NUM = re.compile(r'\d[\d,\.]*')
+# 흔한 서수·연도 조각은 표기가 갈려 잡아도 소용이 없다
+SKIP_NUM = {'1', '2', '3', '4', '5', '10', '100'}
+# 「Figure 03」·「Helix 02」·「CoRL 2025」처럼 이름에 붙은 숫자와 연도는 잰 값이 아니다
+# 한글은 넣지 않는다 — 「약 1,000명」의 「약 1」까지 먹어 「000」이 남았다
+NAME_NUM = re.compile(r'[A-Za-z][A-Za-z]*[ -]?\d[\dA-Za-z.]*')
+# 날짜를 통째로 먼저 걷는다. 연도만 지우면 「-11-25」가 남아 잰 값처럼 보인다
+DATE = re.compile(r'(19|20)\d\d[-.]\d\d?([-.]\d\d?)?')
+YEAR = re.compile(r'(19|20)\d\d')
 
 
 def norm(t):
@@ -78,6 +88,31 @@ def check(vid):
     text = body_of(c)
     subp = os.path.join(SUBS, vid + '.txt')
     sub = norm(io.open(subp, encoding='utf-8').read()) if os.path.exists(subp) else ''
+
+    # N2 : 제목과 gain 에 든 숫자가 자막에 있는가. 화면에서 제일 먼저 읽히는 자리인데
+    # check_slim 은 slim 필드만 본다 — 2026-08-23에 제목에 없는 팀 수가 박힌 채 나갈 뻔했다.
+    # 합본 카드가 있어 링크에 걸린 편 전부의 자막을 합쳐서 본다.
+    allsub = sub
+    for _lab, url, _cls in (c.get('links') or ()):
+        if 'youtu' not in url:
+            continue
+        other = os.path.join(SUBS, url.rstrip('/').rsplit('/', 1)[-1] + '.txt')
+        if os.path.exists(other):
+            allsub += norm(io.open(other, encoding='utf-8').read())
+    if allsub:
+        head = STRIP.sub('', (c.get('title') or '') + ' ' + (c.get('gain') or ''))
+        # 잰 값만 남긴다. 제품 이름 속 숫자(Figure 03 · Helix 02 · CoRL 2025)와 연도는
+        # 진행자가 소리 내어 읽지 않아 자막에 없는 게 정상이다
+        head = DATE.sub(' ', head)
+        head = NAME_NUM.sub(' ', head)
+        head = YEAR.sub(' ', head)
+        for n in set(NUM.findall(head)):
+            flat = n.replace(',', '').replace('.', '')
+            if flat in SKIP_NUM or len(flat) < 2:
+                continue
+            if norm(n) in allsub or norm(n.split('.')[0]) in allsub:
+                continue
+            warn.append('N2 제목·gain 의 숫자 "%s" 를 자막에서 못 찾았다 — 지어낸 값이 아닌지 본다' % n)
 
     q = STRIP.sub('', c.get('quote') or '').strip()
     if not q:

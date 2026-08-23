@@ -11,7 +11,8 @@
     "회사 이름과 보통명사가 같은 글자면 여기 넣지 않는다. 「피지컬 인텔리전스」는 회사 이름이기도",
     "하고 판단 지능과 짝을 이루는 개념어이기도 하다. 2026-08-23에 이 항목을 넣었다가 개념어를",
     "회사 이름으로 바꿔 뜻이 뒤집혔다. 회사를 가리킬 때는 Physical Intelligence 라고 적는 것으로",
-    "충분하고, 그 확인은 사람이 한다."
+    "충분하고, 그 확인은 사람이 한다. 같은 이유로 「제너럴리스트」(스페셜리스트와 짝을 이루는 개념),",
+    "「Generalist」, 「Figure」(보통명사)도 뺐다. 회사를 가리킬 때는 Generalist AI · Figure AI 로 적는다."
   ],
 
   "NVIDIA": "엔비디아",
@@ -42,8 +43,6 @@
   "SimplyWall.st": "Simply Wall St",
 
   "선데이 로보틱스": "Sunday Robotics",
-  "제너럴리스트": "Generalist AI",
-  "Generalist": "Generalist AI",
   "샤파": "Sharpa",
   "허깅페이스": "HuggingFace",
   "Hugging Face": "HuggingFace",
@@ -53,7 +52,6 @@
   "Dyna Robotics": "DYNA Robotics",
   "1X": "1X Technologies",
   "피규어": "Figure AI",
-  "Figure": "Figure AI",
   "보스턴다이내믹스": "보스턴 다이내믹스",
   "보스톤 다이나믹스": "보스턴 다이내믹스",
   "우지": "Wuji",
