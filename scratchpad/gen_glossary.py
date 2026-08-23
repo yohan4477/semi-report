@@ -75,50 +75,58 @@ FIG_SEQ = (2, '하네스가 도는 한 판',
 
 # ── 코드 블록 ────────────────────────────────────────────────────────────────
 # 도해가 「누가 누구에게」를 보여 준다면 코드는 「그래서 무엇을 되풀이하나」를 보여 준다.
-# 주석에 붙인 번호는 위 시퀀스 도해의 번호와 같은 자리를 가리킨다. 도해 쪽 회색 줄도
-# 여기 있는 글자를 그대로 옮긴 것이라 한쪽을 고치면 다른 쪽도 같이 고친다.
-def _code(src, mark):
-    """코드 한 덩어리를 <pre>로. 주석만 흐린 색으로 갈라 둔다."""
+# 둘을 잇는 것이 번호다. 코드 왼쪽 칸에 도해의 화살표 번호를 세워 두고, 도해 쪽에도
+# 같은 줄의 글자를 그대로 옮겨 적는다 — 한쪽을 고치면 다른 쪽도 같이 고쳐야 한다.
+#
+# 각 줄은 `번호|코드` 꼴로 적는다. 번호가 없는 줄은 `|`만 남긴다. 코드 안에도 `|`가
+# 나오므로(유니언 타입) 맨 앞 하나에서만 자른다.
+def _code(src):
+    """코드 한 덩어리를 <pre>로. 왼쪽에 도해 번호 칸을 세우고 주석은 흐리게 갈라 둔다."""
     out = []
     for line in src.strip('\n').split('\n'):
-        i = line.find(mark)
+        num, _, body = line.partition('|')
+        i = body.find('//')
         if i < 0:
-            out.append(_html.escape(line, quote=False))
+            code = _html.escape(body, quote=False)
         else:
-            out.append(_html.escape(line[:i], quote=False)
-                       + '<span class="cd-c">%s</span>' % _html.escape(line[i:], quote=False))
+            code = (_html.escape(body[:i], quote=False)
+                    + '<span class="cd-c">%s</span>' % _html.escape(body[i:], quote=False))
+        out.append('<span class="cd-n">%s</span>%s' % (num.strip(), code))
     return '<pre class="uc-code">%s</pre>' % '\n'.join(out)
 
 
+# 왼쪽 칸의 번호는 위 도해의 화살표다. ⑦~⑩은 새 줄이 아니라 ②~⑥을 한 바퀴 더 도는
+# 것이라 칸에 적지 않는다 — 도해에서 그 자리에 ↻를 달아 둔 이유다.
 _TS = r"""
-type Msg = { role: "user" | "assistant" | "tool"; text: string };
-
-async function harness(ask: string) {
-  // 상태는 하네스가 들고 있다. 모델은 요청과 요청 사이에 아무것도 기억하지 않는다
-  const state: Msg[] = [{ role: "user", text: RULES + "\n" + ask }];   // ①
-
-  while (true) {
-    const reply = await model.complete(state, TOOLS);   // ② 상태를 통째로 보낸다
-    state.push({ role: "assistant", text: reply.text });
-
-    // 모델이 낸 것은 글자뿐이다. 도구 호출도 실행이 아니라 JSON 한 조각이다
-    if (reply.toolCalls.length === 0) return reply.text;   // ⑫ 부를 도구가 없으면 끝
-
-    for (const call of reply.toolCalls) {              // ③ ⑦ 모델이 적어 보낸 명령
-      if (risky(call)) await askUser(call);            // 지우는 명령 앞에서 멈춘다
-      const log = await runInShell(call);              // ④ ⑧ 셸에 실제로 던진다
-      state.push({ role: "tool", text: shrink(log) }); // ⑤ ⑥ ⑨ 실패한 줄만 남긴다
-    }
-    if (stuckOnSameError(state)) return "같은 실패가 되풀이돼 멈춥니다";
-  }
-}
+ |type Msg = { role: "user" | "assistant" | "tool"; text: string };
+ |
+ |async function harness(ask: string) {
+ |  // 상태는 하네스가 들고 있다. 모델은 요청과 요청 사이에 아무것도 기억하지 않는다
+①|  const state: Msg[] = [{ role: "user", text: RULES + "\n" + ask }];
+ |
+ |  while (true) {
+②|    const reply = await model.complete(state, TOOLS);   // 상태를 통째로 보낸다
+ |    state.push({ role: "assistant", text: reply.text });
+ |
+ |    // 모델이 낸 것은 글자뿐이다. 도구 호출도 실행이 아니라 JSON 한 조각이다
+⑪⑫|    if (reply.toolCalls.length === 0) return reply.text;
+ |
+③|    for (const call of reply.toolCalls) {          // 모델이 적어 보낸 명령
+ |      if (risky(call)) await askUser(call);        // 지우는 명령 앞에서 멈춘다
+④⑤|      const log = await runInShell(call);          // 셸에 실제로 던진다
+⑥|      state.push({ role: "tool", text: shrink(log) });  // 실패한 줄만 남긴다
+ |    }
+ |    if (stuckOnSameError(state)) return "같은 실패가 되풀이돼 멈춥니다";
+ |  }
+ |}
 """
 
 FIG_TS = (6, '같은 고리를 타입스크립트로',
-          _code(_TS, '//'),
-          '실제 하네스의 뼈대다. 상태를 담은 배열 하나, 모델을 부르는 줄 하나, 셸에 던지는 '
-          '줄 하나. 로그를 깎는 것도(shrink) 권한을 묻는 것도(askUser) 모델이 아니라 이 함수 '
-          '안에 있다.')
+          _code(_TS),
+          '실제 하네스의 뼈대다. 왼쪽 칸의 번호가 위 도해의 화살표 번호다 — ①에서 요청을 '
+          '상태에 담고, ②에서 모델을 부르고, ③~⑥에서 도구 호출을 하나씩 돌린 뒤, 부를 것이 '
+          '없으면 ⑪⑫에서 빠져나온다. ⑦~⑩은 ②~⑥을 한 바퀴 더 도는 자리라 새로 나오는 줄이 없다. '
+          '로그를 깎는 것도(shrink) 권한을 묻는 것도(askUser) 모델이 아니라 이 함수 안에 있다.')
 
 
 CODE_CSS = """
@@ -127,6 +135,8 @@ CODE_CSS = """
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:12px; line-height:1.75; color:var(--ink); white-space:pre; }
   .uc-code .cd-c { color:var(--ink-3); }
+  .uc-code .cd-n { display:inline-block; width:3.1em; color:var(--accent-ink);
+    font-weight:700; letter-spacing:-.04em; }
   .t-code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:10.5px; fill:var(--ink-3); letter-spacing:-.01em; }
   @media (max-width:640px) { .uc-code { font-size:11px; padding:11px 12px; } }
