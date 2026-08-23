@@ -1232,19 +1232,31 @@ FIG_WMSCENE = _svg(640, 330, '실물을 돌리는 것과 그려 보는 것', ''.
 # 에어프라이어 문 하나로 편다 — 후보 셋을 상상시켜 점수로 줄을 세운다.
 # 문이 열린 그림·안 열린 그림은 과제를 보이려고 세운 예시다. 원문에 실패 장면 묘사는 없다.
 def _fryer(ox, oy, open_=False, col='var(--ink-2)', dash=False):
-    """작은 조리기구 한 대. 문이 열리면 앞면이 아래로 젖혀진다."""
+    """조리기구 한 대. 열리면 서랍이 오른쪽으로 빠져나오고 몸통에 빈 칸이 남는다."""
     d = ' stroke-dasharray="6 4"' if dash else ''
-    out = ['<rect x="%d" y="%d" width="62" height="48" rx="5" fill="none" stroke="%s" '
-           'stroke-width="2.6"%s/>' % (ox, oy, col, d)]
-    if open_:
-        out.append('<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="3" '
-                   'stroke-linecap="round"%s/>' % (ox + 4, oy + 44, ox + 40, oy + 66, col, d))
-        out.append('<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="2.6" '
-                   'stroke-linecap="round"%s/>' % (ox + 40, oy + 66, ox + 52, oy + 60, col, d))
-    else:
-        out.append('<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="3" '
-                   'stroke-linecap="round"%s/>' % (ox + 4, oy + 38, ox + 58, oy + 38, col, d))
-    return ''.join(out)
+    body = ('<rect x="%d" y="%d" width="64" height="52" rx="5" fill="none" stroke="%s" '
+            'stroke-width="2.6"%s/>' % (ox, oy, col, d))
+    if not open_:
+        return body + ''.join([
+            # 앞면에 서랍이 꽉 차 있다
+            '<rect x="%d" y="%d" width="52" height="36" rx="3" fill="none" stroke="%s" '
+            'stroke-width="2.2"%s/>' % (ox + 6, oy + 9, col, d),
+            # 손잡이 — 오른쪽 세로 막대
+            '<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="3.4" '
+            'stroke-linecap="round"%s/>' % (ox + 50, oy + 17, ox + 50, oy + 37, col, d),
+        ])
+    return body + ''.join([
+        # 몸통에 남은 빈 칸
+        '<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="1.6"%s/>'
+        % (ox + 8, oy + 20, ox + 30, oy + 20, col, d),
+        '<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="1.6"%s/>'
+        % (ox + 8, oy + 32, ox + 30, oy + 32, col, d),
+        # 빠져나온 서랍 — 몸통 바깥에 통째로 선다. 몸통 선과 겹치면 무엇이 서랍인지 안 갈린다
+        '<rect x="%d" y="%d" width="52" height="36" rx="3" fill="none" stroke="%s" '
+        'stroke-width="2.6"%s/>' % (ox + 58, oy + 9, col, d),
+        '<path d="M%d %d L%d %d" fill="none" stroke="%s" stroke-width="3.4" '
+        'stroke-linecap="round"%s/>' % (ox + 104, oy + 17, ox + 104, oy + 37, col, d),
+    ])
 
 
 def _wmpanel(ox, oy, hand, open_, ghost=False):
@@ -1255,25 +1267,25 @@ def _wmpanel(ox, oy, hand, open_, ghost=False):
         _r(ox, oy, 194, 132, 'var(--line)', 1.3),
         '<path d="M%d %d L%d %d" fill="none" stroke="var(--line)" stroke-width="2.5"/>'
         % (ox + 10, ty, ox + 184, ty),
-        _fryer(ox + 112, ty - 52, open_, col, ghost),
+        _fryer(ox + 76, ty - 56, open_, col, ghost),
         _arm(ox + 26, ty - 4, ox + hand[0], oy + hand[1], col, l1=62, l2=62, dash=ghost),
     ])
 
 
 FIG_WMSEQ = _svg(640, 452, '같은 자리에서 후보 둘을 상상시켜 상태가치로 가른다', ''.join([
     _lt(14, 102, '지금 — 문이 닫혀 있다'),
-    _wmpanel(14, 110, hand=(90, 92), open_=False),
+    _wmpanel(14, 110, hand=(126, 78), open_=False),
     _t(111, 262, '실제로 찍힌 장면', 't-sm'),
     _a(212, 150, 254, 100), _a(212, 202, 254, 284),
 
     _lt(262, 22, '후보 A 를 넣고 상상한 4초 뒤'),
-    _wmpanel(262, 30, hand=(126, 74), open_=True, ghost=True),
+    _wmpanel(262, 30, hand=(180, 80), open_=True, ghost=True),
     _t(359, 182, '점선 — 문이 열렸다', 't-sm'),
     _a(458, 96, 476, 96),
     _box(478, 64, 148, 64, ['0 위', '실물에서 확인'], 'var(--accent)', 1.8),
 
     _lt(262, 206, '후보 B 를 넣고 상상한 4초 뒤'),
-    _wmpanel(262, 214, hand=(88, 96), open_=False, ghost=True),
+    _wmpanel(262, 214, hand=(126, 78), open_=False, ghost=True),
     _t(359, 366, '점선 — 문이 그대로다', 't-sm'),
     _a(458, 280, 476, 280),
     _box(478, 248, 148, 64, ['0 이하', '버린다'], 'var(--accent)', 1.8),
