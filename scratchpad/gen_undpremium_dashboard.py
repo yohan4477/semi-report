@@ -543,4 +543,5 @@ COURSE = [
 
 if __name__ == '__main__':
     dc.render(CARDS, '언더스탠딩 프리미엄', HEADER, FOOTER, OUT,
-              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS)
+              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS,
+              newest_first=True)

@@ -2722,4 +2722,4 @@ if __name__ == '__main__':
               top_title='권효재 대표 — 시간순으로 읽기',
               top_sub='에너지 열 편이 3월 물량에서 8월 설비까지 옮겨 간 경로',
               top_n=_kn,
-              extra_css=dc.COURSE_CSS + KWON_CSS)
+              extra_css=dc.COURSE_CSS + KWON_CSS, newest_first=True)

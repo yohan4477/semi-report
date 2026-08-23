@@ -1322,4 +1322,4 @@ if __name__ == '__main__':
               intro=merge_intro() + folded_course(),
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_n,
               top_sub='원문 100편을 날짜순으로 — 언제 무슨 말을 했나',
-              extra_css=dc.COURSE_CSS + LOG_CSS)
+              extra_css=dc.COURSE_CSS + LOG_CSS, newest_first=True)

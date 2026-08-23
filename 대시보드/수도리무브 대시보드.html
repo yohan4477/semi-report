@@ -599,7 +599,7 @@
   var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
-  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  var pick = 'all';   // 범위 탭이 있든 없든 처음 화면은 전체다
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
   // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,

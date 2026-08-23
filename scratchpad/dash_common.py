@@ -142,12 +142,17 @@ def _card(c, dup=False):
     return h
 
 
-def sections(cards):
+def sections(cards, newest_first=False):
     """카드를 섹션별로 묶는다 — CARDS에 적힌 순서가 곧 화면 순서다.
 
     c['also'] = [섹션, …]이면 그 섹션에도 같은 카드가 선다. 마이크론과 SK하이닉스를 같이
     다룬 글은 두 회사 어느 쪽을 눌러도 나와야 한다. 두 번째 자리부터는 앵커(id)를 떼고
-    낸다 — 같은 id가 문서에 둘이면 링크가 어디로 갈지 정해지지 않는다."""
+    낸다 — 같은 id가 문서에 둘이면 링크가 어디로 갈지 정해지지 않는다.
+
+    newest_first=True면 **섹션 안에서만** 원문이 매체에 올라간 날의 역순으로 다시 세운다.
+    글이 쌓이는 아카이브에서는 맨 위가 가장 최근 글이어야 한다. 섹션 차례는 건드리지 않는다 —
+    섹션은 주제를 나눈 것이라 날짜와 무관하고, 여기까지 날짜로 흔들면 주제 배치가 매주 바뀐다.
+    meta에 날짜가 없는 카드(연재 기간만 적은 것 등)는 그 섹션 맨 뒤로 가되 서로의 차례는 지킨다."""
     secs, order = {}, []
     for c in cards:
         for i, sec in enumerate([c['section']] + list(c.get('also') or ())):
@@ -156,13 +161,19 @@ def sections(cards):
                 secs[sid] = (sec, [])
                 order.append(sid)
             secs[sid][1].append((c, i > 0))
+    if newest_first:
+        for sid in order:
+            sec, cs = secs[sid]
+            # 날짜가 없으면 빈 문자열 — 내림차순에서 저절로 맨 뒤에 선다. 파이썬 sort는
+            # 안정 정렬이라 날짜가 같거나 둘 다 없는 카드는 CARDS에 적힌 차례를 지킨다.
+            secs[sid] = (sec, sorted(cs, key=lambda t: upload_date(t[0]) or '', reverse=True))
     return secs, order
 
 
 SCOPE_TABS = '''<div class="scope-tabs">
-    <button data-pick="kr" aria-pressed="true">🇰🇷 국내 <span class="cnt">%d</span></button>
+    <button data-pick="kr" aria-pressed="false">🇰🇷 국내 <span class="cnt">%d</span></button>
     <button data-pick="intl" aria-pressed="false">🌍 해외 <span class="cnt">%d</span></button>
-    <button data-pick="all" aria-pressed="false">전체 <span class="cnt">%d</span></button>
+    <button data-pick="all" aria-pressed="true">전체 <span class="cnt">%d</span></button>
   </div>'''
 
 FOLD_JS = '''<script>
@@ -266,7 +277,7 @@ NAV_JS = '''<script>
   var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
   var box=document.querySelector('.sec-pick'); if(!box) return;
   var back=document.querySelector('.sback');
-  var pick = tabs? 'kr' : 'all';   // 범위 탭이 없는 페이지는 늘 전체
+  var pick = 'all';   // 범위 탭이 있든 없든 처음 화면은 전체다
   // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
   // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
   // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
@@ -946,7 +957,7 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
-           sec_fig=None,
+           sec_fig=None, newest_first=False,
            sw_labels=('밸류에이션', '개별 포스트', '◂ 회사 다시 고르기')):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
@@ -963,15 +974,19 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다.
 
     pick_top은 검색창 다음·타일 격자 앞에 서는 조각이다(sec_picker에 그대로 넘긴다). rollup과
-    달리 타일과 한 컨테이너(.sec-pick) 안에 있어 회사를 고르면 같이 접힌다."""
-    secs, order = sections(cards)
+    달리 타일과 한 컨테이너(.sec-pick) 안에 있어 회사를 고르면 같이 접힌다.
+
+    newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
+    세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다."""
+    secs, order = sections(cards, newest_first)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
     # 카드가 없는 층(통합 인사이트·밸류에이션 지도)도 타일 하나로 선다. id를 바꿀 수 있게 둔다 —
     # 한 저장소에 성격이 다른 고정 층이 여럿이라 sec-cross 하나로는 안 된다.
     tid = top_id or XSEC
     extra = (tid, top_title, top_sub, top_n) if top else None
-    nav = sec_picker(secs, order, (kr if scoped else len(cards)) + top_n, extra,
+    # 처음 화면이 「전체」라 타일에 적히는 수도 전체다(JS가 범위를 바꿀 때 다시 센다)
+    nav = sec_picker(secs, order, len(cards) + top_n, extra,
                      groups=sec_groups, badges=sec_badges, pick_top=pick_top)
     tabs = ''
     if scoped:

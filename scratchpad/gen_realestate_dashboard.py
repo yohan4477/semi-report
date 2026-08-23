@@ -1794,4 +1794,4 @@ if __name__ == '__main__':
               rollup=dc.rollup_for('realestate', CARDS, '편'),
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
               top=top, extra_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS + dc.COURSE_CSS,
-              top_n=_n, top_sub=XSUB)
+              top_n=_n, top_sub=XSUB, newest_first=True)

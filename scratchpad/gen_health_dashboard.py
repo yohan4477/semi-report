@@ -2255,4 +2255,4 @@ if __name__ == '__main__':
     intro = dc.course(CARDS, COURSE, COURSE_LEDE) + dc.merge_layer(MERGES, CARDS)
     dc.render(CARDS, '건강 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('health', CARDS, '편'),
-              intro=intro, extra_css=dc.COURSE_CSS + dc.MERGE_CSS)
+              intro=intro, extra_css=dc.COURSE_CSS + dc.MERGE_CSS, newest_first=True)
