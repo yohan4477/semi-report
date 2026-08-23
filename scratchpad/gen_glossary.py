@@ -21,47 +21,46 @@ SEC_AGENT = ('sec-agent', '01', 'AI 에이전트 · 실행 구조',
 # 기둥 넷의 가로 위치. 하네스(B)가 가운데인 것이 이 그림의 요지다 — 사용자도 모델도
 # 서로에게 직접 말을 걸지 않고 전부 B를 거친다.
 #
-# 화살표마다 회색 한 줄을 더 단다 — 아래 타입스크립트의 어느 줄이 그 화살표를 내는지다.
-# 그림과 코드가 서로 다른 이름을 쓰면 둘을 잇지 못한다. 여기 적는 글자는 _TS 에 있는
-# 글자를 그대로 옮긴 것이고, ↻ 는 고리를 돌며 같은 줄이 다시 불리는 자리다.
-_A, _B, _C, _D = 60, 250, 440, 600
+# viewBox 폭은 640이다. card_lib이 도해를 max-width 640으로 잡아 두어 그보다 넓게
+# 그리면 그 비율만큼 글자가 줄어든다. 번호가 안 보인다는 말이 여기서 나왔다.
+# 번호는 라벨과 떼어 따로 세운다 — 아래 타입스크립트의 왼쪽 칸과 짝이라 눈에 먼저
+# 걸려야 한다.
+_A, _B, _C, _D = 58, 240, 420, 560
 _MSGS = [
-    (_A, _B, '① 버그 고쳐 줘', 'const state: Msg[] = [...]'),
-    (_B, _C, '② 프롬프트와 지금까지의 상태 전달', 'await model.complete(state, TOOLS)'),
-    (_C, _B, '③ EXEC: pytest 실행 지시', 'reply.toolCalls'),
-    (_B, _D, '④ 터미널에서 명령 실행', 'const log = await runInShell(call)'),
-    (_D, _B, '⑤ 실행 결과 · 에러 로그', '↳ log'),
-    (_B, _C, '⑥ 로그 줄여 에러만 전달', 'state.push({ ..., text: shrink(log) })'),
-    (_C, _B, '⑦ EXEC: patch app.py 지시', '↻ reply.toolCalls'),
-    (_B, _D, '⑧ 코드 고치고 다시 테스트', '↻ runInShell(call)'),
-    (_D, _B, '⑨ 테스트 통과', '↳ log'),
-    (_B, _C, '⑩ 이걸로 끝났는지 확인', '↻ model.complete(state, TOOLS)'),
-    (_C, _B, '⑪ 버그 수정 완료', 'reply.toolCalls.length === 0'),
-    (_B, _A, '⑫ 최종 보고', 'return reply.text'),
+    (_A, _B, '①', '버그 고쳐 줘'),
+    (_B, _C, '②', '프롬프트와 지금까지의 상태 전달'),
+    (_C, _B, '③', 'EXEC: pytest 실행 지시'),
+    (_B, _D, '④', '터미널에서 명령 실행'),
+    (_D, _B, '⑤', '실행 결과 · 에러 로그'),
+    (_B, _C, '⑥', '로그 줄여 에러만 전달'),
+    (_C, _B, '⑦', 'EXEC: patch app.py 지시'),
+    (_B, _D, '⑧', '코드 고치고 다시 테스트'),
+    (_D, _B, '⑨', '테스트 통과'),
+    (_B, _C, '⑩', '이걸로 끝났는지 확인'),
+    (_C, _B, '⑪', '버그 수정 완료'),
+    (_B, _A, '⑫', '최종 보고'),
 ]
-_HEADS = [(_A, 108, '사용자'), (_B, 180, '하네스'), (_C, 136, 'AI 모델(LLM)'),
-          (_D, 144, '실제 환경(OS·터미널)')]
+_HEADS = [(_A, 108, '사용자'), (_B, 176, '하네스'), (_C, 136, 'AI 모델(LLM)'),
+          (_D, 152, '실제 환경(OS·터미널)')]
 
 
 def _seq_svg():
-    y0, step = 96, 50
-    bottom = y0 + (len(_MSGS) - 1) * step + 26
-    h = ['<svg viewBox="0 0 680 %d" role="img" aria-label="하네스가 사용자·모델·터미널 '
-         '사이에서 열두 번 주고받는 순서. 화살표마다 타입스크립트의 어느 줄인지 같이 '
-         '적었다">' % (bottom + 10)]
+    y0, step = 92, 46
+    bottom = y0 + (len(_MSGS) - 1) * step + 24
+    h = ['<svg viewBox="0 0 640 %d" role="img" aria-label="하네스가 사용자·모델·터미널 '
+         '사이에서 열두 번 주고받는 순서">' % (bottom + 10)]
     for cx, w, lab in _HEADS:
-        h.append('<rect class="body" x="%d" y="8" width="%d" height="34" rx="8"/>'
+        h.append('<rect class="body" x="%d" y="6" width="%d" height="36" rx="8"/>'
                  % (cx - w // 2, w))
-        h.append('<text x="%d" y="30" class="t-lab" text-anchor="middle">%s</text>' % (cx, lab))
+        h.append('<text x="%d" y="30" class="t-head" text-anchor="middle">%s</text>' % (cx, lab))
         h.append('<line class="lead-line" x1="%d" y1="46" x2="%d" y2="%d"/>' % (cx, cx, bottom))
-    for i, (x1, x2, lab, code) in enumerate(_MSGS):
+    for i, (x1, x2, num, lab) in enumerate(_MSGS):
         y = y0 + i * step
+        x = min(x1, x2) + 8
         h.append('<line class="flow" x1="%d" y1="%d" x2="%d" y2="%d"/>'
                  % (x1 + (7 if x2 > x1 else -7), y, x2 + (-7 if x2 > x1 else 7), y))
-        if code:
-            h.append('<text x="%d" y="%d" class="t-code">%s</text>'
-                     % (min(x1, x2) + 8, y - 24, _html.escape(code, quote=False)))
-        h.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (min(x1, x2) + 8, y - 8, lab))
+        h.append('<text x="%d" y="%d" class="t-no">%s</text>' % (x, y - 8, num))
+        h.append('<text x="%d" y="%d" class="t-msg">%s</text>' % (x + 24, y - 8, lab))
     h.append('</svg>')
     return ''.join(h)
 
@@ -69,9 +68,8 @@ def _seq_svg():
 FIG_SEQ = (2, '하네스가 도는 한 판',
            _seq_svg(),
            '요청 하나가 도는 순서다. 사용자와 모델은 서로 직접 말하지 않고, 모델과 터미널도 '
-           '직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다. 화살표 위 회색 글은 아래 '
-           '타입스크립트의 그 줄이다 — ↻는 고리를 한 바퀴 더 돌며 같은 줄이 다시 불리는 자리, '
-           '↳는 앞 줄의 <code>await</code>가 실행 결과를 되받는 자리다.')
+           '직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다. 줄 앞의 번호는 아래 '
+           '타입스크립트의 왼쪽 칸에 그대로 다시 나온다 — 그 화살표를 내는 코드가 어느 줄인지다.')
 
 # ── 코드 블록 ────────────────────────────────────────────────────────────────
 # 도해가 「누가 누구에게」를 보여 준다면 코드는 「그래서 무엇을 되풀이하나」를 보여 준다.
@@ -137,8 +135,9 @@ CODE_CSS = """
   .uc-code .cd-c { color:var(--ink-3); }
   .uc-code .cd-n { display:inline-block; width:3.1em; color:var(--accent-ink);
     font-weight:700; letter-spacing:-.04em; }
-  .t-code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-size:10.5px; fill:var(--ink-3); letter-spacing:-.01em; }
+  .uc-fig text.t-head { font-size:13px; font-weight:800; fill:var(--ink); }
+  .uc-fig text.t-no { font-size:15px; font-weight:800; fill:var(--accent-ink); }
+  .uc-fig text.t-msg { font-size:12.5px; fill:var(--ink-2); }
   @media (max-width:640px) { .uc-code { font-size:11px; padding:11px 12px; } }
 """
 
