@@ -227,50 +227,93 @@ PIVOT_CAP = ('지도 둘은 같은 세계다. 2008년에는 바다 건너에서 
              '그 계약서로 200억 달러를 빌렸다.')
 
 
-# -- 벤처 글로벌이 돈을 맞춘 순서 ---------------------------------------------
-# 화자가 「봉이 김선달 장사」라 부른 순서다. 종이 세 장이 서로를 담보하는데, 세 칸이
-# 동시에 성립한 데는 그해 사정이 있었다. 그래서 칸마다 「왜 됐나」를 한 문장으로 붙인다 --
-# 처음에는 「그때 조건」이라는 명사 라벨로 눌러 놨는데, 주어도 동사도 없어 읽어도 모른다.
-FUND_FIG = (
-    '<svg viewBox="0 0 640 250" role="img" '
-    'aria-label="벤처 글로벌이 계약서와 발주서로 자금을 맞춘 순서">'
-    '<text x="8" y="20" class="t-sm">공장을 짓기 전에 종이부터 모은다. 왼쪽에서 오른쪽 순서다</text>'
-    '<rect x="8" y="34" width="190" height="132" rx="10" class="body"/>'
-    '<text x="24" y="58" class="t-lab">1. 판매 계약</text>'
-    '<text x="24" y="80" class="t-sm">고객을 찾아가 아주 싸게</text>'
-    '<text x="24" y="96" class="t-sm">팔겠다고 먼저 약속한다</text>'
-    '<path d="M24 110 L182 110" class="lead-line"/>'
-    '<text x="24" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
-    '<text x="24" y="146" class="t-sm">업계 밖 사람이라 4년을</text>'
-    '<text x="24" y="160" class="t-sm">무시당한 끝이었다</text>'
-    '<rect x="225" y="34" width="190" height="132" rx="10" class="body"/>'
-    '<text x="241" y="58" class="t-lab">2. 설비 발주서</text>'
-    '<text x="241" y="80" class="t-sm">그 계약서를 들고 가서</text>'
-    '<text x="241" y="96" class="t-sm">제조사에 설비를 시킨다</text>'
-    '<path d="M241 110 L399 110" class="lead-line"/>'
-    '<text x="241" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
-    '<text x="241" y="146" class="t-sm">유가가 100달러에서 30달러로</text>'
-    '<text x="241" y="160" class="t-sm">떨어져 재고가 쌓여 있었다</text>'
-    '<rect x="442" y="34" width="190" height="132" rx="10" class="body"/>'
-    '<text x="458" y="58" class="t-lab">3. 은행 대출</text>'
-    '<text x="458" y="80" class="t-sm">계약서와 발주서를 들고</text>'
-    '<text x="458" y="96" class="t-sm">은행에 가서 돈을 빌린다</text>'
-    '<path d="M458 110 L616 110" class="lead-line"/>'
-    '<text x="458" y="128" class="t-sm" style="font-weight:800">왜 이게 먹혔나</text>'
-    '<text x="458" y="146" class="t-sm">금리가 떨어졌고 은행도</text>'
-    '<text x="458" y="160" class="t-sm">빌려줄 데가 없었다</text>'
-    '<path d="M198 100 L221 100" class="flow"/>'
-    '<path d="M415 100 L438 100" class="flow"/>'
-    '<rect x="8" y="186" width="624" height="46" rx="10" class="body" '
-    'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="320" y="215" text-anchor="middle" class="t-lab">'
-    '여기까지 전부 종이다. 첫 삽을 뜨는 날까지 이 회사가 가진 설비는 없다</text>'
-    '</svg>')
+# -- 공장을 짓기 전에 종이부터 모은다 ------------------------------------------
+# 화자가 「봉이 김선달 장사」라 부른 순서다. 처음에는 상자 셋을 나란히 놓았는데
+# 「도해 봐도 이해 안 간다」는 말을 들었다. 셋이 정지 화면으로 읽혀서다 -- 무엇을
+# 보여 주고 무엇을 받아 냈는지가 없으면 이 순서는 그냥 회사 소개 셋이 된다.
+#
+# 그래서 교환으로 다시 짠다. 줄마다 상대가 있고, 손에 든 것이 있고, 받아 낸 것이 있다.
+# 그리고 한 줄에서 받아 낸 것이 다음 줄에서 손에 든 것이 된다 -- 그 되먹임이 이 이야기의
+# 전부다. 첫 줄에서 손에 든 것은 아무것도 아니고, 마지막 줄에서 받아 낸 것이 공사비다.
+#
+# 「왜 줬나」를 줄마다 한 줄씩 붙인다. 그해 사정을 빼면 아이디어만 좋으면 되는 이야기가
+# 되어 원문의 운이 지워진다.
+_FD_COLS = (8, 150, 162, 390, 402, 632)          # 상대·손에 든 것·받아 낸 것 칸의 좌우
+
+
+def _fund_row(y, who, have, got, why):
+    x0, x1, x2, x3, x4, x5 = _FD_COLS
+    h = 46
+    s = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="body"/>'
+         % (x0, y, x1 - x0, h),
+         '<text x="%d" y="%d" text-anchor="middle" class="t-lab">%s</text>'
+         % ((x0 + x1) // 2, y + 28, who),
+         '<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="body"/>'
+         % (x2, y, x3 - x2, h)]
+    for i, line in enumerate(have):
+        s.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (x2 + 14, y + 20 + i * 16, line))
+    s.append('<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="body" '
+             'stroke="var(--accent)" stroke-width="2"/>' % (x4, y, x5 - x4, h))
+    for i, line in enumerate(got):
+        s.append('<text x="%d" y="%d" class="%s">%s</text>'
+                 % (x4 + 14, y + 20 + i * 16, 't-lab' if i == 0 else 't-sm', line))
+    s.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (x2, y + h + 18, why))
+    return ''.join(s)
+
+
+def _fund_link(y_from, y_to):
+    """받아 낸 것에서 다음 줄 손에 든 것으로 내려가는 갈고리."""
+    _x0, _x1, x2, _x3, x4, x5 = _FD_COLS
+    a, b = (x4 + x5) // 2, (x2 + 40)
+    return ('<path d="M%d %d L%d %d L%d %d L%d %d" fill="none" '
+            'stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="4 4" '
+            'marker-end="url(#fdarw)"/>'
+            % (a, y_from, a, y_from + 14, b, y_from + 14, b, y_to))
+
+
+def _fund_svg():
+    y1, y2, y3 = 74, 168, 262
+    h = ['<svg viewBox="0 0 640 402" role="img" '
+         'aria-label="판매 계약서와 발주서로 공사비를 빌린 순서">',
+         '<defs><marker id="fdarw" viewBox="0 0 10 10" refX="8" refY="5" '
+         'markerWidth="5" markerHeight="5" orient="auto-start-reverse">'
+         '<path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>',
+         '<text x="8" y="18" class="t-sm">'
+         '가진 것은 아이디어뿐이다. 공장도 돈도 없다</text>',
+         '<text x="8" y="40" class="t-sm" style="font-weight:850">한 줄에서 받아 낸 것이 '
+         '다음 줄에서 손에 드는 것이 된다</text>',
+         '<text x="%d" y="62" class="t-sm" style="font-weight:850">누구에게</text>' % _FD_COLS[0],
+         '<text x="%d" y="62" class="t-sm" style="font-weight:850">손에 든 것</text>' % _FD_COLS[2],
+         '<text x="%d" y="62" class="t-sm" style="font-weight:850">받아 낸 것</text>' % _FD_COLS[4],
+         _fund_row(y1, '고객',
+                   ['아무것도 없다.', '싸게 팔겠다는 조건뿐이다'],
+                   ['판매 계약서'],
+                   '왜 줬나 — 업계 밖 사람이라 4년을 무시당한 끝이다. 값을 낮춰 부른 것이 통했다'),
+         _fund_link(y1 + 46, y2),
+         _fund_row(y2, '제조사',
+                   ['방금 받은 판매 계약서'],
+                   ['설비 발주서'],
+                   '왜 줬나 — 유가가 100달러에서 30달러로 떨어져 취소된 발주가 재고로 쌓여 있었다'),
+         _fund_link(y2 + 46, y3),
+         _fund_row(y3, '은행',
+                   ['판매 계약서와', '설비 발주서 둘'],
+                   ['공사비'],
+                   '왜 줬나 — 금리가 떨어졌고 은행도 빌려줄 데가 마른 참이었다'),
+         '<rect x="8" y="344" width="624" height="44" rx="10" class="body" '
+         'stroke="var(--accent)" stroke-width="2"/>',
+         '<text x="320" y="371" text-anchor="middle" class="t-lab">'
+         '그제서야 첫 삽을 뜬다. 여기까지 이 회사가 낸 돈은 없다</text>',
+         '</svg>']
+    return ''.join(h)
+
+
+FUND_FIG = _fund_svg()
 
 FUND_CAP = ('예전에는 거대 에너지 회사가 <b>자기 돈</b>으로 이런 설비를 지었다. 벤처 글로벌은 '
-            '순서를 바꿨다. 팔겠다는 약속을 먼저 받아 그것으로 설비를 시키고, 그 둘을 담보로 '
-            '돈을 빌렸다. 다만 세 칸이 한꺼번에 맞아떨어진 것은 그해 사정 덕이 크다. 재고가 '
-            '쌓여 선수금 없이 원가에 주겠다는 제조사와, 빌려줄 데가 마른 은행이 같은 해에 있었다.')
+            '순서를 바꿨다. 팔겠다는 약속을 먼저 받아 그 종이로 설비를 시키고, 그 둘을 담보로 '
+            '돈을 빌렸다. 화자가 <b>봉이 김선달 장사</b>라 부르는 대목이다. 다만 세 줄이 '
+            '한꺼번에 맞아떨어진 것은 그해 사정 덕이 크다. 재고가 쌓여 선수금 없이 원가에 '
+            '주겠다는 제조사와, 빌려줄 데가 마른 은행이 같은 해에 있었다.')
 
 
 # -- 쪼갠 쪽은 30개월째부터 돈이 들어온다 --------------------------------------

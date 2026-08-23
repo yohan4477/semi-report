@@ -2269,6 +2269,17 @@
    "hash": "f7f873128898"
   },
   {
+   "id": "und:피지컬AI:CES-부스에서-만진-아틀라스와-Sharpa",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-01-14",
+   "path": "content/understanding/피지컬AI/[260114] CES 부스에서 만진 아틀라스와 Sharpa.md",
+   "hash": "e1bb587be03f"
+  },
+  {
    "id": "und:피지컬AI:DYNA-2-월드-액션-모델과-170년-휴먼-데이터",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2278,6 +2289,17 @@
    "date": "2026-08-19",
    "path": "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md",
    "hash": "39cedb916889"
+  },
+  {
+   "id": "und:피지컬AI:Figure-03과-1X-네오-손-병목",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-10-18",
+   "path": "content/understanding/피지컬AI/[251018] Figure 03과 1X 네오, 손 병목.md",
+   "hash": "72e3a62064da"
   },
   {
    "id": "und:피지컬AI:Figure-Helix-첫-공개",
@@ -2412,6 +2434,17 @@
    "hash": "f43018c7aad3"
   },
   {
+   "id": "und:피지컬AI:아틀라스-LBM-데뷔",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-08-28",
+   "path": "content/understanding/피지컬AI/[250828] 아틀라스 LBM 데뷔.md",
+   "hash": "928e00001804"
+  },
+  {
    "id": "und:피지컬AI:앤트로픽과-Physical-Intelligence의-로보틱스",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2432,6 +2465,17 @@
    "date": "2026-01-22",
    "path": "content/understanding/피지컬AI/[260122] 엔비디아 GPU 전략과 1X 월드모델.md",
    "hash": "a6aa43f349a8"
+  },
+  {
+   "id": "und:피지컬AI:예약판매-뒤에서-끊긴-자금줄",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-11-10",
+   "path": "content/understanding/피지컬AI/[251110] 예약판매 뒤에서 끊긴 자금줄.md",
+   "hash": "eef7534d09db"
   },
   {
    "id": "und:피지컬AI:월드모델과-비디오-생성모델이-갈리는-지점",
