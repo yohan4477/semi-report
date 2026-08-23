@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-model',
+    'section': 'sec-vla',
     'date': '2026-05-18',
     'topic': ('infra', '오픈웨이트 범위'),
     'title': 'RLDX-1은 가중치·코드·데이터 비율은 열었지만 어블레이션은 열지 않았다',

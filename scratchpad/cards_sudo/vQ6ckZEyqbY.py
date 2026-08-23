@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 CARD = {
-    'section': 'sec-model',
+    'section': 'sec-vla',
     'date': '2025-11-25',
     'topic': ('infra', '로봇 데이터 수집'),
     'title': "'로봇 데이터 없이'는 Sunday Robotics·Generalist AI에만 맞는 말이다",

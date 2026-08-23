@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-world',
+    'section': 'sec-video',
     'date': '2026-07-22',
     'topic': ('infra', '월드모델 · 에이전트 훈련장'),
     'title': 'General Intuition은 MIRA를 영상 아닌 에이전트 훈련장이라 부른다',

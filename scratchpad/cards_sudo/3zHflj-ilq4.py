@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-world',
+    'section': 'sec-video',
     'date': '2026-01-22',
     'topic': ('infra', 'GPU 판매전략과 비디오모델'),
     'title': '엔비디아가 비디오모델을 밀자 1X가 그걸로 로봇을 실제로 구동했다',

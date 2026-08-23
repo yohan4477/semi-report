@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 CARD = {
-    'section': 'sec-model',
+    'section': 'sec-vla',
     'date': '2025-06-10',
     'topic': ('infra', '휴먼 영상 학습과 액션 데이터 병목'),
     'title': 'Figure Helix는 2025년 6월에도 물류 한 과제에 상체만 썼고 온몸 균형은 다루지 않았다',
