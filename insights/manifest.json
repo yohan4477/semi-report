@@ -2313,6 +2313,17 @@
    "hash": "d4765d2b43b9"
   },
   {
+   "id": "und:피지컬AI:RLDX-1이-연-것과-안-연-것",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-05-18",
+   "path": "content/understanding/피지컬AI/[260518] RLDX-1이 연 것과 안 연 것.md",
+   "hash": "a7302bb7704e"
+  },
+  {
    "id": "und:피지컬AI:Rhoda-AI-비디오-액션-모델과-Sharpa-손안-조작",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2335,6 +2346,28 @@
    "hash": "80ca49a5aa13"
   },
   {
+   "id": "und:피지컬AI:Sunday-Robotics-ACT-2-프리뷰",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-07-21",
+   "path": "content/understanding/피지컬AI/[260721] Sunday Robotics ACT-2 프리뷰.md",
+   "hash": "71624a5c7c71"
+  },
+  {
+   "id": "und:피지컬AI:Whole-Body-Control-시대의-시작",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-02-05",
+   "path": "content/understanding/피지컬AI/[260205] Whole-Body Control 시대의 시작.md",
+   "hash": "5c7bb74f40bf"
+  },
+  {
    "id": "und:피지컬AI:로봇-데이터-없이-학습한-세-회사의-차이",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2343,7 +2376,7 @@
    ],
    "date": "2025-11-25",
    "path": "content/understanding/피지컬AI/[251125] 로봇 데이터 없이 학습한 세 회사의 차이.md",
-   "hash": "f0b1dd41da2a"
+   "hash": "6b03da248ddf"
   },
   {
    "id": "und:피지컬AI:로봇-손-세-종-직접-비교",
@@ -2355,6 +2388,28 @@
    "date": "2026-06-21",
    "path": "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md",
    "hash": "f43018c7aad3"
+  },
+  {
+   "id": "und:피지컬AI:앤트로픽과-Physical-Intelligence의-로보틱스",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-08-04",
+   "path": "content/understanding/피지컬AI/[260804] 앤트로픽과 Physical Intelligence의 로보틱스.md",
+   "hash": "f158162910eb"
+  },
+  {
+   "id": "und:피지컬AI:제미나이-로보틱스-2의-하니스-구조",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-08-12",
+   "path": "content/understanding/피지컬AI/[260812] 제미나이 로보틱스 2의 하니스 구조.md",
+   "hash": "9fc051207458"
   },
   {
    "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",
