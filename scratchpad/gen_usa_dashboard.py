@@ -13,7 +13,7 @@ import dash_common as dc
 OUT = os.path.join(dc.ROOT, '대시보드', '미국주식 사관학교 대시보드.html')
 blob = dc.blob
 
-STAMP = '2026-08-17'
+STAMP = '2026-08-23'
 SUM = 'content/understanding/미국주식 사관학교/'
 
 

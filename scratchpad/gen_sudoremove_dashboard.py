@@ -114,7 +114,7 @@ def _ik(bx, by, tx, ty, l1, l2):
     return mx + uy * h, my - ux * h          # 법선 방향으로 h 만큼 — 위로 꺾인 쪽
 
 
-def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84):
+def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84, dash=False):
     """어깨에서 손끝까지 두 마디 팔 + 관절 점 + 집게."""
     import math
     ex, ey = _ik(bx, by, tx, ty, l1, l2)
@@ -123,8 +123,9 @@ def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84):
     gx, gy = math.cos(ang) * 9, math.sin(ang) * 9       # 집게 길이
     return ''.join([
         '<path d="M%.1f %.1f L%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" '
-        'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
-        % (bx, by, ex, ey, tx, ty, col),
+        'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"%s/>'
+        % (bx, by, ex, ey, tx, ty, col,
+           ' stroke-dasharray="7 5"' if dash else ''),
         '<circle cx="%.1f" cy="%.1f" r="4.5" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
         % (bx, by, col),
         '<circle cx="%.1f" cy="%.1f" r="4" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
@@ -143,7 +144,7 @@ def _cup(x, y, col='var(--ink-2)', dash=False):
             % (x, y, x + 4, y + 24, x + 22, y + 24, x + 26, y, col, d))
 
 
-def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink-2)'):
+def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink-2)', dash=False):
     """책상 하나에 로봇 팔 하나. 좌표는 칸 왼쪽 위(ox,oy) 기준."""
     out = [_r(ox, oy, w, h, 'var(--line)', 1.3)]
     ty = oy + h - 34
@@ -152,7 +153,7 @@ def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink-2)'):
     if ghost:
         out.append(_cup(ox + ghost[0], oy + ghost[1], 'var(--ink-3)', True))
     out.append(_cup(ox + cup[0], oy + cup[1], col))
-    out.append(_arm(ox + 34, ty - 4, ox + hand[0], oy + hand[1], col))
+    out.append(_arm(ox + 34, ty - 4, ox + hand[0], oy + hand[1], col, dash=dash))
     return ''.join(out)
 
 def _svg(w, h, label, body):
@@ -728,8 +729,8 @@ FIG_DVA = (
     '<rect x="236" y="232" width="156" height="46" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>'
     '<text x="314" y="260" text-anchor="middle" class="t-lab">관절 명령</text>'
     '<rect x="438" y="232" width="150" height="46" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.8"/>'
-    '<text x="513" y="252" text-anchor="middle" class="t-lab">인버스 다이내믹스</text>'
-    '<text x="513" y="268" text-anchor="middle" class="t-sm">장면에서 행동 역산</text>'
+    '<text x="513" y="252" text-anchor="middle" class="t-lab">IDM</text>'
+    '<text x="513" y="268" text-anchor="middle" class="t-sm">관절 값을 되짚는다</text>'
     '<path d="M436 255 L394 255" class="flow"/>'
     '<path d="M234 255 L192 255" class="flow"/>'
     '<path d="M108 230 L108 212" class="flow" style="stroke-dasharray:5 4"/>'
@@ -789,8 +790,9 @@ CARDS = [{
         '양방향으로 만드는데, 이쪽은 지나간 프레임을 KV 캐시로 들고 가면서 LLM의 다음 토큰 예측처럼 '
         '다음 장면을 잇는다.',
         '<b>행동은 그 장면에서 거꾸로 계산해 나온다.</b> 비디오 모델은 그림만 그릴 줄 알지 관절은 '
-        '모른다. 인버스 다이내믹스 모델(지금 장면과 다음 장면 두 장을 받아 그 사이를 만든 관절 '
-        '움직임을 되짚는 모델)이 그 차이를 관절 명령으로 옮기고, 두 모델이 번갈아 돌아간다. '
+        '모른다. IDM(Inverse Dynamics Model, 역동역학 모델 — 지금 장면과 다음 장면 두 장을 받아 '
+        '그 사이를 만든 관절 움직임을 되짚는다)이 그 차이를 관절 명령으로 옮기고, 두 모델이 '
+        '번갈아 돌아간다. '
         '지금 실행하는 행동은 앞서 예측해 둔 것이다.',
         '<b>야바위 데모가 시각 기억의 증거로 나온다.</b> 컵 아래 물건을 감추고 섞는 작업은 지금 이미지만 '
         '보는 VLA로는 원리상 못 푼다. Rhoda 쪽은 지나간 프레임을 전부 들고 있어 어느 컵인지 기억한다.',
@@ -814,7 +816,7 @@ CARDS = [{
          '조종하다 실패하는 구간만 기계에 넘겼다. 아래 두 그림이 각각의 속을 연다.'),
         (3, 'Rhoda는 어디를 갈아 끼웠나', FIG_DVA,
          '위 칸이 지금까지의 VLA다. 지금 이미지와 말을 한 모델에 넣어 관절 명령을 바로 낸다. '
-         '아래 칸이 Rhoda다. <b>비디오 모델</b>이 다음 장면을 그리고, <b>인버스 다이내믹스</b>가 '
+         '아래 칸이 Rhoda다. <b>비디오 모델</b>이 다음 장면을 그리고, <b>IDM</b>이 '
          '그 장면에서 행동을 거꾸로 계산한다. 실행한 결과가 프레임으로 다시 쌓여 다음 상상의 '
          '재료가 되고, 그 누적분이 야바위를 푸는 기억이다.'),
         (7, 'Sharpa는 반사에 해당하는 동작만 떼어 냈다', FIG_SHARPA,
@@ -1098,7 +1100,7 @@ FIG_ROUTE4 = _svg(640, 344, '로봇이 관절을 움직이기까지 가는 네 �
     _a(166, 138, 192, 138),
     _box(194, 112, 152, 52, ['다음 장면 예측'], 'var(--accent)', 1.8),
     _a(348, 138, 372, 138),
-    _box(374, 112, 122, 52, ['역산'], 'var(--accent)', 1.8),
+    _box(374, 112, 122, 52, ['IDM'], 'var(--accent)', 1.8),
     _a(498, 138, 522, 138),
     _box(524, 112, 102, 52, ['관절']),
     _lt(14, 186, '월드모델 — 시켜 보기 전에 결과를 미리 본다'),
@@ -1187,8 +1189,15 @@ def _seq(heads, msgs, w=640, y0=None, step=48):
             h.append('<text class="t-sm" x="%d" y="47" text-anchor="middle">%s</text>' % (cx, sub))
         h.append('<line class="lead-line" x1="%d" y1="%d" x2="%d" y2="%d"/>'
                  % (cx, 62 if sub else 46, cx, bottom))
-    for i, (x1, x2, lab) in enumerate(msgs):
+    for i, m in enumerate(msgs):
         y = y0 + i * step
+        if isinstance(m, str):        # 판 이름 — 가로로 한 줄 긋고 그 위에 적는다
+            h.append('<line class="lead-line" x1="14" y1="%d" x2="%d" y2="%d"/>'
+                     % (y - 4, w - 14, y - 4))
+            h.append('<text class="t-sm" x="14" y="%d" style="font-weight:850">%s</text>'
+                     % (y - 13, m))
+            continue
+        x1, x2, lab = m
         if x1 == x2:      # 제자리에서 도는 단계
             h.append('<path class="flow" fill="none" d="M%d %d L%d %d L%d %d L%d %d"/>'
                      % (x1 + 7, y - 9, x1 + 42, y - 9, x1 + 42, y + 9, x1 + 9, y + 9))
@@ -1205,14 +1214,36 @@ _V, _I, _P, _R = 66, 244, 414, 568
 FIG_IDMSEQ = _seq(
     [(_V, 122, '영상', '장면만 있다'),
      (_I, 96, 'IDM', ''),
-     (_P, 128, '로봇 정책', '학습되는 모델'),
+     (_P, 152, '모델', '정책 · 비디오 모델'),
      (_R, 132, '로봇 팔', '실제로 움직인다')],
-    [(_V, _I, '① 앞뒤 장면 두 장을 넘긴다'),
+    ['학습할 때 — 라벨 없는 영상을 재료로 바꾼다',
+     (_V, _I, '① 앞뒤 장면 두 장'),
      (_I, _I, '② 차이를 되짚는다'),
      (_I, _V, '③ 관절 값을 붙여 돌려준다'),
-     (_V, _P, '④ 이제 학습 재료가 된다'),
-     (_P, _R, '⑤ 관절 명령을 낸다'),
-     (_R, _V, '⑥ 움직인 결과가 다시 쌓인다')])
+     (_V, _P, '④ 학습 재료가 된다'),
+     '돌릴 때 — 그린 장면을 관절 명령으로 바꾼다',
+     (_P, _I, '⑤ 그린 다음 장면을 넘긴다'),
+     (_I, _R, '⑥ 관절 명령으로 바꿔 보낸다')])
+
+
+
+# 시켜 보기 전에 결과를 미리 본다 — 월드모델 장면
+FIG_WMSCENE = _svg(640, 330, '실물을 돌리는 것과 그려 보는 것', ''.join([
+    _lt(14, 22, '지금까지 — 실물을 실제로 움직여야 안다'),
+    _scene(14, 30, 250, 150, hand=(150, 100), cup=(176, 92)),
+    _t(139, 196, '부서지면 다시 못 쓴다', 't-sm'),
+    _lt(376, 22, '월드모델 — 그려 보고 값을 낸다'),
+    _scene(376, 30, 250, 150, hand=(150, 62), cup=(160, 50), ghost=(176, 92),
+           col='var(--accent)', dash=True),
+    _t(501, 196, '점선은 그려 본 것이다', 't-sm'),
+    _a(501, 210, 501, 232),
+    '<path d="M392 262 L610 262" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/>',
+    '<path d="M501 252 L501 272" fill="none" stroke="var(--accent)" stroke-width="2.4"/>',
+    _t(501, 246, '상태가치', 't-lab'),
+    _t(429, 288, '0 이하 — 실패로 친다', 't-sm'),
+    _t(573, 288, '0 위 — 성공 쪽', 't-sm'),
+    _t(320, 318, '실물을 안 돌리고 후보를 가를 수 있으면 훨씬 많이 시험할 수 있다', 't-sm'),
+]))
 
 # 컵 하나를 드는 두 장면으로 IDM 을 편다. 상자만 늘어놓으면 무엇이 빠졌는지가 안 보인다.
 FIG_IDM = _svg(640, 396, '영상 두 장에서 관절 움직임을 되짚는다', ''.join([
@@ -1248,11 +1279,19 @@ def summary_layer():
              'IDM 자체는 로봇으로 조금만 배우면 되는데 1X Technologies 는 <b>400시간</b>을 썼고, '
              '그 하나로 사람 영상 <b>900시간</b>이 통째로 쓸 수 있는 재료가 됐다. 비디오 액션모델 '
              '갈래가 이 부품 위에 선다.'),
-            ('IDM 이 도는 한 판', FIG_IDMSEQ,
-             '위 그림이 <b>무엇이 빠졌나</b>라면 이 그림은 <b>그것이 어떻게 채워지나</b>다. '
-             '기둥 넷이 여섯 번 주고받는다. ②가 IDM 이 제자리에서 하는 일이고, ③에서 관절 값이 '
-             '붙는 순간 왼쪽 기둥의 영상이 학습 재료로 바뀐다. ⑥이 이 판을 고리로 만든다 — '
-             '로봇이 움직인 결과가 다시 영상으로 쌓여 ①로 돌아간다.'),
+            ('IDM 이 서는 두 자리', FIG_IDMSEQ,
+             '위 그림이 <b>무엇이 빠졌나</b>라면 이 그림은 <b>그것이 어디에 쓰이나</b>다. 같은 부품이 '
+             '판을 갈아 두 번 선다. 학습할 때는 라벨 없는 영상에 관절 값을 붙여 <b>모델이 배울 재료</b>로 '
+             '바꾸고(1X Technologies 가 이 방식이다), 돌릴 때는 비디오 모델이 그린 다음 장면을 '
+             '<b>로봇 팔에 보낼 관절 명령</b>으로 바꾼다(Rhoda AI 의 DVA 가 이쪽이다). '
+             '가운데 기둥을 「모델」이라 적은 것은 받는 쪽이 회사마다 달라서다 — Rhoda AI 는 언어가 '
+             '들어가지 않아 VLA 가 아니다.'),
+            ('시켜 보기 전에 결과를 미리 본다', FIG_WMSCENE,
+             '왼쪽이 지금까지다. 정책 하나를 시험하려면 <b>실물 로봇을 실제로 움직여야</b> 하고, '
+             '부서질 위험 때문에 자동으로 많이 못 돌린다. 오른쪽이 월드모델이다 — 점선 팔은 '
+             '실제로 움직인 것이 아니라 모델이 <b>그려 본 것</b>이고, 그 끝에 '
+             '<b>상태가치</b>라는 숫자가 나온다. 1X Technologies 는 이 값이 0 이하면 실패로 친다. '
+             '값이 나오면 실물을 안 돌리고도 후보를 가를 수 있다.'),
             ('갈래마다 어느 회사가 서 있나', FIG_FIRMS,
              '구글 딥마인드와 Figure AI 는 두 줄에 걸친다. 위계형이 VLA 를 대신하는 것이 아니라 '
              '<b>VLA 안을 두 층으로 나눈 것</b>이라 그렇다. 엔비디아는 모델을 파는 쪽이 아니라 '
@@ -1268,8 +1307,9 @@ def summary_layer():
     h.append(''.join(fig_html(f) for f in figs))
     h.append('<p class="ins-lede"><b>네 갈래를 한 줄로 줄이면 이렇습니다.</b> '
              'VLA(Vision-Language-Action, 시각·언어·행동 통합 모델)는 지금 보이는 화면과 말을 받아 '
-             '관절 값을 곧바로 뽑습니다. 비디오 액션모델은 다음 장면을 먼저 그리고 인버스 다이내믹스 '
-             '모델(장면 두 장의 차이를 관절 움직임으로 되짚는 모델)로 행동을 계산합니다. 월드모델은 '
+             '관절 값을 곧바로 뽑습니다. 비디오 액션모델은 다음 장면을 먼저 그리고 '
+             'IDM(Inverse Dynamics Model, 역동역학 모델 — 장면 두 장의 차이를 관절 움직임으로 '
+             '되짚는다)으로 행동을 계산합니다. 월드모델은 '
              '관절을 직접 내지 않고, 어떤 행동을 넣으면 무엇이 벌어질지를 미리 보여 줘 후보를 고르게 '
              '합니다. 위계형은 판단하는 쪽과 몸에 익어 바로 나가는 쪽을 나눠, 어려운 동작만 미리 구워 '
              '둡니다.</p>')
