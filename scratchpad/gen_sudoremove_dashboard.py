@@ -1173,57 +1173,39 @@ FIG_UNITS = _svg(640, 350, '데이터를 저마다 다른 단위로 센다', ''.
 
 
 
-# ── 시퀀스 도해 ───────────────────────────────────────────────────────
-# 기둥을 세우고 가로 화살표로 주고받는 순서를 적는다. 용어사전 장의 하네스 도해와 같은 문법이다.
-# 자기 자신에게 보내는 줄(제자리에서 계산하는 단계)은 갈고리로 그린다.
-def _seq(heads, msgs, w=640, y0=None, step=48):
-    y0 = y0 or 108
-    bottom = y0 + (len(msgs) - 1) * step + 30
-    h = ['<svg viewBox="0 0 %d %d" role="img" aria-label="%s">'
-         % (w, bottom + 14, '주고받는 순서')]
-    for cx, bw, lab, sub in heads:
-        h.append('<rect class="body" x="%d" y="8" width="%d" height="%d" rx="8"/>'
-                 % (cx - bw // 2, bw, 50 if sub else 34))
-        h.append('<text class="t-lab" x="%d" y="30" text-anchor="middle">%s</text>' % (cx, lab))
-        if sub:
-            h.append('<text class="t-sm" x="%d" y="47" text-anchor="middle">%s</text>' % (cx, sub))
-        h.append('<line class="lead-line" x1="%d" y1="%d" x2="%d" y2="%d"/>'
-                 % (cx, 62 if sub else 46, cx, bottom))
-    for i, m in enumerate(msgs):
-        y = y0 + i * step
-        if isinstance(m, str):        # 판 이름 — 가로로 한 줄 긋고 그 위에 적는다
-            h.append('<line class="lead-line" x1="14" y1="%d" x2="%d" y2="%d"/>'
-                     % (y - 4, w - 14, y - 4))
-            h.append('<text class="t-sm" x="14" y="%d" style="font-weight:850">%s</text>'
-                     % (y - 13, m))
-            continue
-        x1, x2, lab = m
-        if x1 == x2:      # 제자리에서 도는 단계
-            h.append('<path class="flow" fill="none" d="M%d %d L%d %d L%d %d L%d %d"/>'
-                     % (x1 + 7, y - 9, x1 + 42, y - 9, x1 + 42, y + 9, x1 + 9, y + 9))
-            h.append('<text class="t-sm" x="%d" y="%d">%s</text>' % (x1 + 52, y + 4, lab))
-        else:
-            h.append('<line class="flow" x1="%d" y1="%d" x2="%d" y2="%d"/>'
-                     % (x1 + (7 if x2 > x1 else -7), y, x2 + (-7 if x2 > x1 else 7), y))
-            h.append('<text class="t-sm" x="%d" y="%d">%s</text>' % (min(x1, x2) + 8, y - 9, lab))
-    h.append('</svg>')
-    return ''.join(h)
+# ── 같은 부품이 두 줄에 선다 ─────────────────────────────────────────
+# 기둥·생명선 문법은 걷어냈다 — 무엇을 주고받는지가 라벨로만 남아 안 읽혔다.
+# 줄마다 「받은 것 → IDM → 나온 것 → 그걸 쓰는 쪽」 넷을 상자로 세운다.
+def _chain(y, cells):
+    """가로 사슬 한 줄. cells = [(x, w, [줄들], 강조?)]"""
+    out = []
+    for i, (x, w, lines, hot) in enumerate(cells):
+        out.append(_box(x, y, w, 60, lines,
+                        'var(--accent)' if hot else 'var(--ink-3)', 1.8 if hot else 1.5))
+        if i:
+            px = cells[i - 1][0] + cells[i - 1][1]
+            out.append(_a(px + 2, y + 30, x - 2, y + 30))
+    return ''.join(out)
 
 
-_V, _I, _P, _R = 66, 244, 414, 568
-FIG_IDMSEQ = _seq(
-    [(_V, 122, '영상', '장면만 있다'),
-     (_I, 96, 'IDM', ''),
-     (_P, 152, '모델', '판마다 다른 쪽이다'),
-     (_R, 132, '로봇 팔', '실제로 움직인다')],
-    ['학습할 때 — 모델은 배우는 쪽이다 (VLA · 정책)',
-     (_V, _I, '① 앞뒤 장면 두 장'),
-     (_I, _I, '② 차이를 되짚는다'),
-     (_I, _P, '③ 장면에 관절 값을 붙여 넘긴다'),
-     '돌릴 때 — 모델은 장면을 그리는 쪽이다 (비디오 모델)',
-     (_P, _I, '④ 그린 다음 장면을 넘긴다'),
-     (_I, _R, '⑤ 관절 명령으로 바꿔 보낸다')])
+_C = [14, 198, 314, 490]      # 상자 왼쪽 x 넷
+_W = [168, 100, 160, 136]     # 상자 폭 넷
 
+FIG_IDMSEQ = _svg(640, 250, '같은 IDM 이 학습할 때와 돌릴 때 두 줄에 선다', ''.join([
+    _lt(14, 22, '학습할 때 — 라벨 없는 영상을 배울 재료로 바꾼다'),
+    _chain(32, [
+        (_C[0], _W[0], ['사람이 찍은 영상', '장면만 있고', '관절 값이 없다'], False),
+        (_C[1], _W[1], ['IDM', '두 장을', '견준다'], True),
+        (_C[2], _W[2], ['장면 + 관절 값', '짝지은 데이터'], True),
+        (_C[3], _W[3], ['정책이 배운다', 'VLA'], False)]),
+    _lt(14, 138, '돌릴 때 — 그려 본 장면을 관절 명령으로 바꾼다'),
+    _chain(148, [
+        (_C[0], _W[0], ['비디오 모델', '다음 장면을', '그린다'], False),
+        (_C[1], _W[1], ['IDM', '그 장면을', '되짚는다'], True),
+        (_C[2], _W[2], ['관절 명령', '어깨 · 팔꿈치 각도'], True),
+        (_C[3], _W[3], ['로봇 팔이', '움직인다'], False)]),
+    _t(320, 232, '가운데 두 칸이 두 줄에서 같다 — 같은 IDM 이고, 오른쪽에 서는 상대만 바뀐다', 't-sm'),
+]))
 
 
 # 시켜 보기 전에 결과를 미리 본다 — 월드모델 장면
@@ -1279,12 +1261,12 @@ def summary_layer():
              '그 하나로 사람 영상 <b>900시간</b>이 통째로 쓸 수 있는 재료가 됐다. 비디오 액션모델 '
              '갈래가 이 부품 위에 선다.'),
             ('IDM 이 서는 두 자리', FIG_IDMSEQ,
-             '위 그림이 <b>무엇이 빠졌나</b>라면 이 그림은 <b>그것이 어디에 쓰이나</b>다. 같은 IDM 이 '
-             '판을 갈아 두 번 선다. 앞판에서는 라벨 없는 영상에 관절 값을 붙여 <b>정책이 배울 재료</b>를 '
-             '만든다 — 엔비디아 DreamGen 이 이렇게 뽑은 의사(疑似) 액션으로 VLA 를 학습시키고, '
-             '1X Technologies 는 사람 1인칭 영상 <b>900시간</b>을 이 방식으로 재료로 바꿨다. '
-             '뒷판에서는 비디오 모델이 그린 다음 장면을 <b>로봇 팔에 보낼 관절 명령</b>으로 바꾼다 '
-             '— Rhoda AI 의 DVA 가 이쪽이고, 언어가 들어가지 않아 VLA 라 부르지 않는다.'),
+             '위 그림이 <b>무엇이 빠졌나</b>라면 이 그림은 <b>그것이 어디에 쓰이나</b>다. 두 줄 모두 '
+             '가운데가 IDM 이고 오른쪽에 서는 상대만 다르다. 윗줄은 <b>학습</b>이다 — 관절 값을 붙인 '
+             '데이터로 정책을 학습시킨다. 엔비디아 DreamGen 이 이렇게 뽑은 의사(疑似) 액션으로 VLA 를 '
+             '학습시키고, 1X Technologies 는 사람 1인칭 영상 <b>900시간</b>을 이 방식으로 재료로 바꿨다. '
+             '아랫줄은 <b>실행</b>이다 — 비디오 모델이 그린 다음 장면을 관절 명령으로 바꿔 로봇 팔에 '
+             '보낸다. Rhoda AI 의 DVA 가 이쪽이고, 언어가 들어가지 않아 VLA 라 부르지 않는다.'),
             ('시켜 보기 전에 결과를 미리 본다', FIG_WMSCENE,
              '왼쪽이 지금까지다. 정책 하나를 시험하려면 <b>실물 로봇을 실제로 움직여야</b> 하고, '
              '부서질 위험 때문에 자동으로 많이 못 돌린다. 오른쪽이 월드모델이다 — 점선 팔은 '

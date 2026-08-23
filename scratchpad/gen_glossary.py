@@ -20,20 +20,24 @@ SEC_AGENT = ('sec-agent', '01', 'AI 에이전트 · 실행 구조',
 # ── 하네스 시퀀스 도해 ───────────────────────────────────────────────────────
 # 기둥 넷의 가로 위치. 하네스(B)가 가운데인 것이 이 그림의 요지다 — 사용자도 모델도
 # 서로에게 직접 말을 걸지 않고 전부 B를 거친다.
+#
+# 화살표마다 회색 한 줄을 더 단다 — 아래 타입스크립트의 어느 줄이 그 화살표를 내는지다.
+# 그림과 코드가 서로 다른 이름을 쓰면 둘을 잇지 못한다. 여기 적는 글자는 _TS 에 있는
+# 글자를 그대로 옮긴 것이고, ↻ 는 고리를 돌며 같은 줄이 다시 불리는 자리다.
 _A, _B, _C, _D = 60, 250, 440, 600
 _MSGS = [
-    (_A, _B, '① 버그 고쳐 줘'),
-    (_B, _C, '② 프롬프트와 지금까지의 상태 전달'),
-    (_C, _B, '③ EXEC: pytest 실행 지시'),
-    (_B, _D, '④ 터미널에서 명령 실행'),
-    (_D, _B, '⑤ 실행 결과 · 에러 로그'),
-    (_B, _C, '⑥ 로그 줄여 에러만 전달'),
-    (_C, _B, '⑦ EXEC: patch app.py 지시'),
-    (_B, _D, '⑧ 코드 고치고 다시 테스트'),
-    (_D, _B, '⑨ 테스트 통과'),
-    (_B, _C, '⑩ 이걸로 끝났는지 확인'),
-    (_C, _B, '⑪ 버그 수정 완료'),
-    (_B, _A, '⑫ 최종 보고'),
+    (_A, _B, '① 버그 고쳐 줘', 'const state: Msg[] = [...]'),
+    (_B, _C, '② 프롬프트와 지금까지의 상태 전달', 'const reply = await model.complete(state, TOOLS)'),
+    (_C, _B, '③ EXEC: pytest 실행 지시', 'reply.toolCalls'),
+    (_B, _D, '④ 터미널에서 명령 실행', 'const log = await runInShell(call)'),
+    (_D, _B, '⑤ 실행 결과 · 에러 로그', '↳ log'),
+    (_B, _C, '⑥ 로그 줄여 에러만 전달', 'state.push({ ..., text: shrink(log) })'),
+    (_C, _B, '⑦ EXEC: patch app.py 지시', '↻ reply.toolCalls'),
+    (_B, _D, '⑧ 코드 고치고 다시 테스트', '↻ runInShell(call)'),
+    (_D, _B, '⑨ 테스트 통과', '↳ log'),
+    (_B, _C, '⑩ 이걸로 끝났는지 확인', '↻ model.complete(state, TOOLS)'),
+    (_C, _B, '⑪ 버그 수정 완료', 'reply.toolCalls.length === 0'),
+    (_B, _A, '⑫ 최종 보고', 'return reply.text'),
 ]
 _HEADS = [(_A, 108, '사용자'), (_B, 180, '하네스'), (_C, 136, 'AI 모델(LLM)'),
           (_D, 144, '실제 환경(OS·터미널)')]
@@ -43,17 +47,21 @@ def _seq_svg():
     y0, step = 96, 50
     bottom = y0 + (len(_MSGS) - 1) * step + 26
     h = ['<svg viewBox="0 0 680 %d" role="img" aria-label="하네스가 사용자·모델·터미널 '
-         '사이에서 열두 번 주고받는 순서">' % (bottom + 10)]
+         '사이에서 열두 번 주고받는 순서. 화살표마다 타입스크립트의 어느 줄인지 같이 '
+         '적었다">' % (bottom + 10)]
     for cx, w, lab in _HEADS:
         h.append('<rect class="body" x="%d" y="8" width="%d" height="34" rx="8"/>'
                  % (cx - w // 2, w))
-        h.append('<text class="t-lab" x="%d" y="30" text-anchor="middle">%s</text>' % (cx, lab))
+        h.append('<text x="%d" y="30" class="t-lab" text-anchor="middle">%s</text>' % (cx, lab))
         h.append('<line class="lead-line" x1="%d" y1="46" x2="%d" y2="%d"/>' % (cx, cx, bottom))
-    for i, (x1, x2, lab) in enumerate(_MSGS):
+    for i, (x1, x2, lab, code) in enumerate(_MSGS):
         y = y0 + i * step
         h.append('<line class="flow" x1="%d" y1="%d" x2="%d" y2="%d"/>'
                  % (x1 + (7 if x2 > x1 else -7), y, x2 + (-7 if x2 > x1 else 7), y))
-        h.append('<text class="t-sm" x="%d" y="%d">%s</text>' % (min(x1, x2) + 8, y - 8, lab))
+        if code:
+            h.append('<text x="%d" y="%d" class="t-code">%s</text>'
+                     % (min(x1, x2) + 8, y - 24, _html.escape(code, quote=False)))
+        h.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (min(x1, x2) + 8, y - 8, lab))
     h.append('</svg>')
     return ''.join(h)
 
@@ -61,12 +69,14 @@ def _seq_svg():
 FIG_SEQ = (2, '하네스가 도는 한 판',
            _seq_svg(),
            '요청 하나가 도는 순서다. 사용자와 모델은 서로 직접 말하지 않고, 모델과 터미널도 '
-           '직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다.')
-
+           '직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다. 화살표 위 회색 글은 아래 '
+           '타입스크립트의 그 줄이다 — ↻는 고리를 한 바퀴 더 돌며 같은 줄이 다시 불리는 자리, '
+           '↳는 앞 줄의 <code>await</code>가 값을 받아 오는 자리다.')
 
 # ── 코드 블록 ────────────────────────────────────────────────────────────────
 # 도해가 「누가 누구에게」를 보여 준다면 코드는 「그래서 무엇을 되풀이하나」를 보여 준다.
-# 주석에 붙인 번호는 위 시퀀스 도해의 번호와 같은 자리를 가리킨다.
+# 주석에 붙인 번호는 위 시퀀스 도해의 번호와 같은 자리를 가리킨다. 도해 쪽 회색 줄도
+# 여기 있는 글자를 그대로 옮긴 것이라 한쪽을 고치면 다른 쪽도 같이 고친다.
 def _code(src, mark):
     """코드 한 덩어리를 <pre>로. 주석만 흐린 색으로 갈라 둔다."""
     out = []
@@ -79,28 +89,6 @@ def _code(src, mark):
                        + '<span class="cd-c">%s</span>' % _html.escape(line[i:], quote=False))
     return '<pre class="uc-code">%s</pre>' % '\n'.join(out)
 
-
-_PSEUDO = """
-상태 ← [지시문, 쓸 수 있는 도구 목록, 지금 디렉터리]   # 하네스가 들고 있는 것
-상태 ← 상태 + 사용자 요청                              # ① "버그 고쳐 줘"
-
-무한 반복 {
-    답 ← 모델을 부른다(상태 전체)                       # ② 매번 처음부터 다시 넣는다
-    상태 ← 상태 + 답
-
-    만약 답에 도구 호출이 없으면 {
-        사용자에게 답을 보여 주고 끝낸다                 # ⑫ 여기서만 고리를 빠져나온다
-    }
-
-    답에 든 도구 호출마다 {
-        위험한 명령이면 사용자에게 먼저 묻는다            # 권한을 쥐는 자리
-        결과 ← 터미널에서 실제로 돌린다                  # ④ ⑧ 여기서 처음 실행된다
-        상태 ← 상태 + 줄인 결과                         # ⑤ ⑥ ⑨ 로그를 깎아 넣는다
-    }
-
-    같은 실패가 되풀이되면 고리를 끊는다
-}
-"""
 
 _TS = r"""
 type Msg = { role: "user" | "assistant" | "tool"; text: string };
@@ -126,12 +114,6 @@ async function harness(ask: string) {
 }
 """
 
-FIG_PSEUDO = (3, '고리를 말로 옮기면',
-              _code(_PSEUDO, '#'),
-              '위 그림의 열두 줄이 하는 일은 반복문 하나다. 모델을 부르고, 돌아온 글자에 '
-              '도구 호출이 있으면 돌리고, 그 결과를 상태 뒤에 붙여 다시 부른다. 도구 호출이 '
-              '없는 답이 나오는 순간에만 빠져나온다.')
-
 FIG_TS = (6, '같은 고리를 타입스크립트로',
           _code(_TS, '//'),
           '실제 하네스의 뼈대다. 상태를 담은 배열 하나, 모델을 부르는 줄 하나, 셸에 던지는 '
@@ -145,6 +127,8 @@ CODE_CSS = """
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:12px; line-height:1.75; color:var(--ink); white-space:pre; }
   .uc-code .cd-c { color:var(--ink-3); }
+  .t-code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:10.5px; fill:var(--ink-3); letter-spacing:-.01em; }
   @media (max-width:640px) { .uc-code { font-size:11px; padding:11px 12px; } }
 """
 
@@ -165,7 +149,7 @@ CARDS = [
          '<b>권한과 정지도 하네스가 쥔다.</b> 파일을 지우는 명령 앞에서 사용자에게 물어보고, 같은 실패가 되풀이되면 고리를 끊는다. 모델이 같아도 이 판단이 다르면 같은 과제의 완주율이 달라진다.',
          '<b>실무에서 「에이전트」라고 부르는 물건은 모델과 하네스를 합친 것이다.</b> GPT-5나 클로드 같은 모델 이름은 그중 한쪽만 가리킨다. 도구 성능을 견줄 때 모델 점수만 보면 나머지 절반을 빼고 세는 셈이다.',
      ],
-     'figs': [FIG_SEQ, FIG_PSEUDO, FIG_TS],
+     'figs': [FIG_SEQ, FIG_TS],
      'note': '<code>EXEC:</code>는 설명을 위해 쓴 표시다. 실제 제품은 도구 호출(tool use) 규격에 맞춘 JSON을 주고받는 쪽이 많다. 순서와 역할 분담은 같다. 코드 두 조각도 뼈대만 남긴 것이다 — 실제 하네스에는 답을 한 글자씩 받아 보여 주는 처리, 끊긴 요청을 다시 부르는 처리, 오래된 대화를 요약해 넣는 처리가 더 붙는다.',
      'links': [],
     },
