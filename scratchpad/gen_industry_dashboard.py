@@ -51,16 +51,16 @@ SEC_KR = ('sec-rate-kr', '11', '한국 — 금리·환율과 증시',
 # 나란히 놓아서는 안 잡힌다 -- 셰일 가스가 나는 데가 북동쪽인데 수출 공장은 남쪽 걸프에
 # 몰려 있다는 어긋남이 눈에 들어와야 나머지가 읽힌다.
 #
-# 여기까지 두 번 틀렸다. 처음에는 윤곽을 손으로 서른세 점 찍었고, 그다음에는 표시를
-# 위도·경도로 점 찍어 올렸는데 라벨 자리를 손으로 잡느라 그림과 어긋났다. 그래서 점을
-# 걷어내고 주를 통째로 칠한다 -- 칠하는 면이 곧 경계 자료라 어긋날 수가 없다. 지시선
-# 끝도 손으로 안 찍는다. 주마다 경계 상자 한가운데를 굽는 쪽에서 같이 내보낸다.
+# 여기까지 세 번 틀렸다. 손으로 서른세 점 찍어 그렸고, 표시를 위도·경도로 점 찍었다가
+# 라벨 자리가 어긋났고, 설명을 지도 위에 얹었더니 안 읽혔다. 그래서 지금은 이렇게 한다.
 #
-# 지명과 사실은 자막에 있는 것만 올린다. 배관이 어디로 흐르는지는 자막에 없으므로
-# 그리지 않는다 -- 지도는 없는 사실을 얹기 쉬운 그릇이라 이 선을 지킨다.
+#   지도 판에는 그림만 둔다. 글자는 한 자도 얹지 않는다.
+#   무엇이 무슨 색인지는 지도 아래 범례가 말하고, 판단은 그 아래 상자 둘이 말한다.
+#
+# 칠하는 면이 곧 경계 자료라 어긋날 수가 없다. 지명과 사실은 자막에 있는 것만 올린다.
+# 배관이 어디로 흐르는지는 자막에 없으므로 그리지 않는다.
 _US = json.loads(io.open(os.path.join(dc.ROOT, 'data', 'us_lower48_albers.json'),
                          encoding='utf-8').read())
-# 마셀러스가 깔린 두 주와 수출 공장이 몰린 두 주. 나머지는 바탕으로만 둔다
 _MARCELLUS = ('Pennsylvania', 'West Virginia')
 _GULF = ('Texas', 'Louisiana')
 _HL = set(_MARCELLUS) | set(_GULF)
@@ -74,56 +74,45 @@ def _at(name):
     return _US['center'][name]
 
 
+def _key(x, y, cls, text):
+    """범례 한 칸 — 색 딱지 하나와 그 뜻. 지도 밖에서만 쓴다."""
+    return ('<rect x="%.0f" y="%.0f" width="13" height="13" rx="3" class="%s"/>'
+            '<text x="%.0f" y="%.0f" class="t-sm">%s</text>'
+            % (x, y, cls, x + 20, y + 11, text))
+
+
 SITE_FIG = (
-    '<svg viewBox="0 0 640 596" role="img" '
-    'aria-label="미국 지도에서 본 셰일 산지와 LNG 수출 공장의 자리">'
+    '<svg viewBox="0 0 640 640" role="img" '
+    'aria-label="미국 지도에서 셰일 산지와 LNG 수출 공장이 선 자리">'
     '<text x="8" y="18" class="t-sm">'
     '가스가 나는 데는 북동쪽인데, 수출 공장은 남쪽에 몰렸다</text>'
-    # 바탕 — 나머지 주
     '<path d="' + _states([n for n in _US['states'] if n not in _HL])
     + '" class="body" style="stroke-width:.6"/>'
-    # 마셀러스가 깔린 두 주
     '<path d="' + _states(_MARCELLUS) + '" class="cell"/>'
-    # 수출 공장이 몰린 두 주
     '<path d="' + _states(_GULF) + '" class="fat"/>'
-    # 마셀러스 설명 — 지시선 끝은 펜실베이니아 한가운데다
-    '<rect x="184" y="74" width="14" height="14" rx="3" class="cell"/>'
-    '<text x="206" y="86" class="t-lab" style="font-size:11px">'
-    '마셀러스 — 펜실베이니아·웨스트버지니아 일대</text>'
-    '<text x="206" y="106" class="t-sm">'
-    '셰일 가스가 미국에서 처음 크게 터진 곳이 여기다</text>'
-    '<text x="206" y="122" class="t-bad" style="font-size:11px;font-weight:800">'
-    '수출항이 하루 거리인데 허가가 안 나 아직도 못 짓는다</text>'
-    '<path d="M470 112 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Pennsylvania')) +
-    # 걸프 설명 — 지시선 끝은 루이지애나 한가운데다
-    '<rect x="40" y="386" width="14" height="14" rx="3" class="fat"/>'
-    '<text x="62" y="398" class="t-lab" style="font-size:11px">'
-    '걸프 연안 — 텍사스·루이지애나</text>'
-    '<text x="62" y="418" class="t-sm">'
-    '미국 LNG 수출 공장이 전부 여기 몰렸다. 헨리 허브도 여기다</text>'
-    '<text x="62" y="434" class="t-sm">'
-    '100년 오일·가스 동네라 주민도 지방 정부도 반긴다</text>'
-    '<text x="62" y="450" class="t-sm">'
-    '허리케인이 지나가고 유럽에서도 먼데 그렇다</text>'
-    '<path d="M300 400 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Louisiana')) +
-    # 유럽 방향 화살표는 뺐다. 공용 .flow 는 1.6px 회색이라 지도 위에서 지시선과
-    # 구분이 안 된다. 같은 내용이 설명 줄에 있고, 바다 건너 방향은 세계지도 쪽에서 받는다
-    # 아래 — 그래서 어떻게 됐나
-    '<rect x="8" y="470" width="308" height="104" rx="10" class="body" '
+    # 범례 — 지도 밖이다
+    + _key(8, 458, 'cell', '마셀러스 — 펜실베이니아·웨스트버지니아')
+    + _key(330, 458, 'fat', '걸프 연안 — 텍사스·루이지애나')
+    # 판단 — 그 아래 상자 둘
+    + '<rect x="8" y="486" width="308" height="126" rx="10" class="body" '
     'stroke-dasharray="6 4"/>'
-    '<text x="24" y="494" class="t-lab">북동쪽</text>'
-    '<text x="24" y="516" class="t-sm">가스가 옆에서 나고, 수출항이 하루 거리고,</text>'
-    '<text x="24" y="532" class="t-sm">허리케인도 없고, 유럽에도 가깝다</text>'
-    '<text x="24" y="556" class="t-bad" style="font-weight:800">'
-    '그런데 아직도 못 짓는다</text>'
-    '<rect x="324" y="470" width="308" height="104" rx="10" class="body" '
+    '<text x="24" y="510" class="t-lab">북동쪽이 조건은 낫다</text>'
+    '<text x="24" y="532" class="t-sm">셰일 가스가 바로 옆에서 나고</text>'
+    '<text x="24" y="548" class="t-sm">수출항이 하루 거리다</text>'
+    '<text x="24" y="564" class="t-sm">허리케인도 없고 유럽에도 가깝다</text>'
+    '<text x="24" y="590" class="t-bad" style="font-weight:800">'
+    '그런데 허가가 안 나 아직도 못 짓는다</text>'
+    '<text x="24" y="606" class="t-sm">주민이 반대했고 지방 정치인도 그편에 섰다</text>'
+    '<rect x="324" y="486" width="308" height="126" rx="10" class="body" '
     'stroke="var(--accent)" stroke-width="2"/>'
-    '<text x="340" y="494" class="t-lab">남쪽</text>'
-    '<text x="340" y="516" class="t-sm">허리케인이 지나가고 유럽에서 멀다.</text>'
-    '<text x="340" y="532" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
-    '<text x="340" y="556" class="t-lab" style="font-weight:800">'
-    '그런데도 여기만 지어진다</text>'
-    '<text x="8" y="590" class="t-sm">'
+    '<text x="340" y="510" class="t-lab">남쪽은 조건이 못하다</text>'
+    '<text x="340" y="532" class="t-sm">허리케인이 해마다 지나가고</text>'
+    '<text x="340" y="548" class="t-sm">유럽에서 멀다</text>'
+    '<text x="340" y="564" class="t-sm">옮기고 싶어 하는 사업자도 있다</text>'
+    '<text x="340" y="590" class="t-lab" style="font-weight:800">'
+    '그런데도 여기에만 지어진다</text>'
+    '<text x="340" y="606" class="t-sm">100년 오일·가스 동네라 주민이 반긴다</text>'
+    '<text x="8" y="634" class="t-sm">'
     '주 경계는 미국 주 경계 자료를 앨버스 정적원추도법으로 옮긴 것이다</text>'
     '</svg>')
 
@@ -136,16 +125,13 @@ SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 
 
 
 # -- 체니에르, 가스가 들어오던 길로 나간다 -----------------------------------
-# 세 번 고쳤다. 처음에는 상자 두 줄로 그려 놓고 「화살표만 뒤집혔다」고 썼는데 위아래
-# 화살표가 둘 다 같은 방향이었다. 다음에는 미국 지도 둘로 바꿨는데 바다 건너 오가는
-# 이야기를 한 나라 안에서 그리니 어디서 와서 어디로 가는지가 없었다. 그래서 세계지도다.
+# 네 번 고쳤다. 상자 두 줄로 그려 놓고 「화살표만 뒤집혔다」고 썼는데 위아래 화살표가 둘 다
+# 같은 방향이었고, 미국 지도 둘로 바꿨더니 바다 건너 오가는 이야기에 바다가 없었고,
+# 세계지도로 바꿨더니 설명을 지도 위에 얹어 안 읽혔다.
 #
-# 화살표는 굵게, 강조색으로, 머리를 크게 단다. 공용 .flow 는 지도 위에서 안 읽힌다 --
-# 1.6px 회색 선이라 지시선과 구분이 안 되고, 마커도 6px 회색이다. 이 그림 전용 마커를
-# svg 안에 따로 둔다(defs 는 그림마다 하나여야 해서 id 앞에 lng 를 붙였다).
-#
-# 값 라벨은 자막에 있는 숫자다. 미국 2.7달러, 동북아·유럽 20달러 이상. 가스가 왜 그쪽으로
-# 흐르는지가 그 격차라, 방향 화살표에 값을 같이 달면 화살표가 근거를 갖는다.
+# 지금은 입지 지도와 같은 규칙이다 -- 지도 판에는 그림만, 글자는 지도 밖 범례로.
+# 카타르·호주는 점으로만 찍는다. 그때 수출 1등이라 자리를 보이는 것이고 미국이 그 둘에서
+# 사오려 했다는 말은 자막에 없다. 그래서 화살표로 잇지 않고, 그 사실을 범례에 적는다.
 _W = json.loads(io.open(os.path.join(dc.ROOT, 'data', 'world_robinson.json'),
                         encoding='utf-8').read())
 _US_C = 'United States of America'
@@ -168,29 +154,23 @@ def _world(dx, dy, hot=()):
 
 
 def _arw(dx, dy, a, b, bend=-26):
-    """a 에서 b 로 가는 굵은 화살표. 가운데를 bend 만큼 띄워 바다 위로 휘게 한다."""
+    """a 에서 b 로 가는 화살표. 가운데를 bend 만큼 띄워 바다 위로 휘게 한다."""
     (x1, y1), (x2, y2) = a, b
     mx, my = (x1 + x2) / 2, (y1 + y2) / 2 + bend
     return ('<path d="M%.0f %.0f Q%.0f %.0f %.0f %.0f" class="lngflow"/>'
             % (dx + x1, dy + y1, dx + mx, dy + my, dx + x2, dy + y2))
 
 
-def _dot(dx, dy, p, label, anchor='middle', off=-10):
-    x, y = p
-    return ('<circle cx="%.0f" cy="%.0f" r="4" class="cell"/>'
-            '<text x="%.0f" y="%.0f" text-anchor="%s" class="t-sm">%s</text>'
-            % (dx + x, dy + y, dx + x, dy + y + off, anchor, label))
+def _pin(dx, dy, p):
+    return '<circle cx="%.0f" cy="%.0f" r="4" class="cell"/>' % (dx + p[0], dy + p[1])
 
 
 def _pivot_svg():
-    gulf = _wat('-93.9,29.7')
-    atl = _wat('-40,25')
-    qat = _wat('51.5,25.3')
-    aus = _wat('134,-25')
-    eur = _wat('5,50')
-    kor = _wat('128,36')
-    TOP, BOT = 42, 318
-    h = ['<svg viewBox="0 0 640 690" role="img" '
+    gulf, atl = _wat('-93.9,29.7'), _wat('-40,25')
+    qat, aus = _wat('51.5,25.3'), _wat('134,-25')
+    eur, kor = _wat('5,50'), _wat('128,36')
+    TOP, BOT = 40, 374          # 두 지도 판의 위쪽 여백. 나머지 좌표는 여기서 잰다
+    h = ['<svg viewBox="0 0 640 738" role="img" '
          'aria-label="세계지도 둘로 본 미국 LNG의 방향 전환">',
          '<defs><marker id="lngarw" viewBox="0 0 10 10" refX="8" refY="5" '
          'markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">'
@@ -198,41 +178,41 @@ def _pivot_svg():
          '<style>.lngflow{fill:none;stroke:var(--accent);stroke-width:1.8;'
          'stroke-linecap:round;marker-end:url(#lngarw)}</style>',
          '<text x="8" y="16" class="t-sm">'
-         '노란 곳이 미국이다. 같은 기지인데 화살표가 반대로 돈다</text>',
-         '<text x="8" y="36" class="t-lab" style="font-size:11px">'
+         '같은 기지인데 화살표가 반대로 돈다. 글자는 지도 밖에 뒀다</text>',
+         '<text x="8" y="34" class="t-lab" style="font-size:11px">'
          '2008년 · 들여오려고 지었다</text>',
+         # 지도 판 — 그림만
          _world(12, TOP, hot=(_US_C,)),
          _arw(12, TOP, atl, gulf, bend=22),
-         '<text x="%.0f" y="%.0f" class="t-sm">해외 어딘가에서 배로 들여온다</text>'
-         % (12 + atl[0] + 10, TOP + atl[1] + 30),
-         _dot(12, TOP, qat, '카타르 · 그때 수출 1등'),
-         _dot(12, TOP, aus, '호주 · 그때 수출 1등'),
-         '<text x="8" y="%.0f" class="t-sm">'
-         '카타르·호주는 자리만 찍었다. 화살표로 안 잇는다 '
-         '— 미국이 그 둘에서 사오려 했다는 말은 이 편에 없다</text>' % (TOP + 232),
-         '<text x="8" y="290" class="t-bad" style="font-size:11px;font-weight:800">'
-         '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>',
-         '<text x="8" y="312" class="t-lab" style="font-size:11px">'
-         '2016년 · 같은 기지에서 반대로 나간다</text>',
+         _pin(12, TOP, qat), _pin(12, TOP, aus),
+         # 범례 — 지도 밖
+         _key(8, 282, 'fat', '노란 나라가 미국이다. 화살표가 그 기지로 들어온다'),
+         '<circle cx="15" cy="308" r="5" class="cell"/>'
+         '<text x="28" y="312" class="t-sm">'
+         '파란 점 둘은 카타르와 호주다. 그때 수출 1등이라 자리만 찍었다</text>',
+         '<text x="28" y="328" class="t-sm">'
+         '미국이 그 둘에서 사오려 했다는 말은 이 편에 없어 화살표로 잇지 않는다</text>',
+         '<text x="8" y="%.0f" class="t-bad" style="font-size:11px;font-weight:800">'
+         '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>'
+         % (BOT - 28),
+         '<text x="8" y="%.0f" class="t-lab" style="font-size:11px">'
+         '2016년 · 같은 기지에서 반대로 나간다</text>' % (BOT - 8),
          _world(12, BOT, hot=(_US_C,)),
          _arw(12, BOT, gulf, eur, bend=-30),
          _arw(12, BOT, gulf, kor, bend=-46),
-         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
-         '유럽 · 20달러 넘는다</text>' % (12 + eur[0] + 6, BOT + eur[1] - 12),
-         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
-         '동북아 · 20달러 넘는다</text>' % (12 + kor[0] - 4, BOT + kor[1] - 14),
-         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
-         '미국 2.7달러</text>' % (12 + gulf[0] - 6, BOT + gulf[1] + 26),
-         '<rect x="8" y="562" width="624" height="92" rx="10" class="body"/>',
-         '<text x="24" y="584" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>',
-         '<text x="24" y="606" class="t-sm">'
-         '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>',
-         '<text x="24" y="624" class="t-sm">'
-         '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>',
-         '<text x="24" y="642" class="t-sm">'
-         '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>',
-         '<text x="8" y="678" class="t-sm">'
-         '기지는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>',
+         _key(8, BOT + 238, 'fat', '화살표 둘이 미국에서 유럽으로, 동북아로 나간다'),
+         '<text x="28" y="%.0f" class="t-sm">'
+         '그쪽으로 도는 이유는 값이다. 미국이 2.7달러인데 유럽과 동북아는 20달러가 넘는다'
+         '</text>' % (BOT + 278),
+         '<rect x="8" y="%.0f" width="624" height="54" rx="10" class="body"/>' % (BOT + 292),
+         '<text x="24" y="%.0f" class="t-sm" style="font-weight:850">'
+         '그 사이에 한 일 셋 — 면허, 자본, 계약</text>' % (BOT + 314),
+         '<text x="24" y="%.0f" class="t-sm">'
+         '2010년 수출 면허로 바꿔 받고, 2012년 블랙스톤이 돈을 대고, '
+         '그 계약서로 200억 달러를 빌렸다</text>' % (BOT + 334),
+         '<text x="8" y="%.0f" class="t-sm">'
+         '기지는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>'
+         % (BOT + 362),
          '</svg>']
     return ''.join(h)
 
