@@ -170,7 +170,7 @@ def _pivot_svg():
     qat, aus = _wat('51.5,25.3'), _wat('134,-25')
     eur, kor = _wat('5,50'), _wat('128,36')
     TOP, BOT = 40, 374          # 두 지도 판의 위쪽 여백. 나머지 좌표는 여기서 잰다
-    h = ['<svg viewBox="0 0 640 738" role="img" '
+    h = ['<svg viewBox="0 0 640 750" role="img" '
          'aria-label="세계지도 둘로 본 미국 LNG의 방향 전환">',
          '<defs><marker id="lngarw" viewBox="0 0 10 10" refX="8" refY="5" '
          'markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">'
@@ -262,18 +262,21 @@ def _fund_row(y, who, have, got, why):
 
 
 def _fund_link(y_from, y_to):
-    """받아 낸 것에서 다음 줄 손에 든 것으로 내려가는 갈고리."""
+    """받아 낸 것에서 다음 줄 손에 든 것으로 내려가는 갈고리.
+
+    가로로 꺾는 자리를 「왜 줬나」 줄보다 아래로 내린다. 처음에는 줄 바로 밑에서 꺾어
+    글자를 가로질렀다 -- 글자끼리만 검사하고 선은 안 봐서 놓쳤다(2026-08-23)."""
     _x0, _x1, x2, _x3, x4, x5 = _FD_COLS
-    a, b = (x4 + x5) // 2, (x2 + 40)
+    a, b, mid = (x4 + x5) // 2, (x2 + 40), y_from + 32
     return ('<path d="M%d %d L%d %d L%d %d L%d %d" fill="none" '
             'stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="4 4" '
             'marker-end="url(#fdarw)"/>'
-            % (a, y_from, a, y_from + 14, b, y_from + 14, b, y_to))
+            % (a, y_from, a, mid, b, mid, b, y_to))
 
 
 def _fund_svg():
-    y1, y2, y3 = 74, 168, 262
-    h = ['<svg viewBox="0 0 640 402" role="img" '
+    y1, y2, y3 = 74, 176, 278
+    h = ['<svg viewBox="0 0 640 418" role="img" '
          'aria-label="판매 계약서와 발주서로 공사비를 빌린 순서">',
          '<defs><marker id="fdarw" viewBox="0 0 10 10" refX="8" refY="5" '
          'markerWidth="5" markerHeight="5" orient="auto-start-reverse">'
@@ -288,20 +291,20 @@ def _fund_svg():
          _fund_row(y1, '고객',
                    ['아무것도 없다.', '싸게 팔겠다는 조건뿐이다'],
                    ['판매 계약서'],
-                   '왜 줬나 — 업계 밖 사람이라 4년을 무시당한 끝이다. 값을 낮춰 부른 것이 통했다'),
+                   '왜 줬나 — 4년을 무시당한 끝이다. 값을 낮춰 부른 것이 통했다'),
          _fund_link(y1 + 46, y2),
          _fund_row(y2, '제조사',
                    ['방금 받은 판매 계약서'],
                    ['설비 발주서'],
-                   '왜 줬나 — 유가가 100달러에서 30달러로 떨어져 취소된 발주가 재고로 쌓여 있었다'),
+                   '왜 줬나 — 유가가 100달러에서 30달러로 떨어져 재고가 쌓였다'),
          _fund_link(y2 + 46, y3),
          _fund_row(y3, '은행',
                    ['판매 계약서와', '설비 발주서 둘'],
                    ['공사비'],
-                   '왜 줬나 — 금리가 떨어졌고 은행도 빌려줄 데가 마른 참이었다'),
-         '<rect x="8" y="344" width="624" height="44" rx="10" class="body" '
+                   '왜 줬나 — 금리가 떨어졌고 은행도 빌려줄 데가 말랐다'),
+         '<rect x="8" y="360" width="624" height="44" rx="10" class="body" '
          'stroke="var(--accent)" stroke-width="2"/>',
-         '<text x="320" y="371" text-anchor="middle" class="t-lab">'
+         '<text x="320" y="387" text-anchor="middle" class="t-lab">'
          '그제서야 첫 삽을 뜬다. 여기까지 이 회사가 낸 돈은 없다</text>',
          '</svg>']
     return ''.join(h)
@@ -350,7 +353,9 @@ TRAIN_FIG = (
     '<text x="8" y="16" class="t-sm">'
     '가로축은 착공하고 흐른 시간이다. 회색은 돈이 안 들어오는 구간, 파랑은 들어오는 구간</text>'
     # 눈금선 — 해마다 하나
-    + ''.join('<path d="M%.0f 70 L%.0f 238" class="lead-line"/>' % (_tx(m), _tx(m))
+    # 눈금선을 막대 높이까지 그으면 막대 바탕이 반투명이라 글자를 가로지른다.
+    # 축 옆 짧은 눈금으로 줄인다
+    + ''.join('<path d="M%.0f 230 L%.0f 240" class="lead-line"/>' % (_tx(m), _tx(m))
               for m in (12, 24, 36, 48, 60))
     # 러우 전쟁 — 30개월 자리
     + '<path d="M%.0f 62 L%.0f 238" stroke="var(--fig-bad,#c2504a)" stroke-width="1.2" '
@@ -361,7 +366,8 @@ TRAIN_FIG = (
     + '<text x="8" y="92" class="t-lab" style="font-size:11px">남들이 하던 방식</text>'
     + '<text x="8" y="108" class="t-sm">큰 설비 3기</text>'
     + '<text x="8" y="123" class="t-sm">1기에 5조~10조 원</text>'
-    + _bar(0, 60, 84, 34, 'body', '다 지어야 판다. 5년 동안 들어오는 돈이 없다')
+    + _bar(0, 60, 84, 34, 'body')
+    + '<text x="%.0f" y="105" text-anchor="middle" class="t-sm">다 지어야 판다. 5년간 돈이 없다</text>' % _tx(45)
     + _bar(60, 66, 84, 34, 'fat')
     + '<text x="%.0f" y="136" text-anchor="end" class="t-sm">여기서 처음 들어온다</text>'
       % (_TR_X1 + 2)
@@ -370,7 +376,8 @@ TRAIN_FIG = (
     + '<text x="8" y="192" class="t-sm">작은 설비 18기</text>'
     + '<text x="8" y="207" class="t-sm">(더 작게는 36기)</text>'
     + _bar(0, 30, 168, 34, 'body', '30개월')
-    + _bar(30, 66, 168, 34, 'fat', '한 기가 끝나는 대로 팔아 다음 기를 짓는다')
+    + _bar(30, 66, 168, 34, 'fat')
+    + '<text x="%.0f" y="189" text-anchor="middle" class="t-sm">한 기가 끝나는 대로 팔아 다음 기를 짓는다</text>' % _tx(49)
     + '<text x="%.0f" y="220" class="t-sm">여기서부터 계속 들어온다</text>' % (_tx(30) + 4)
     # 가로축
     + '<path d="M%.0f 238 L%.0f 238" stroke="var(--line)" stroke-width="1.2" fill="none"/>'
