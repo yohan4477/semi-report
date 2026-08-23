@@ -607,7 +607,7 @@ async function harness(ask: string) {
     }
     if (stuckOnSameError(state)) return "같은 실패가 되풀이돼 멈춥니다";
   }
-}</pre><figcaption>실제 하네스의 뼈대다. 상태를 담은 배열 하나, 모델을 부르는 줄 하나, 셸에 던지는 줄 하나. 로그를 깎는 것도(shrink) 권한을 묻는 것도(askUser) 모델이 아니라 이 함수 안에 있다.</figcaption></figure><ul class="uc-points"><li><b>실무에서 「에이전트」라고 부르는 물건은 모델과 하네스를 합친 것이다.</b> GPT-5나 클로드 같은 모델 이름은 그중 한쪽만 가리킨다. 도구 성능을 견줄 때 모델 점수만 보면 나머지 절반을 빼고 세는 셈이다.</li></ul><div class="side-note"><code>EXEC:</code>는 설명을 위해 쓴 표시다. 실제 제품은 도구 호출(tool use) 규격에 맞춘 JSON을 주고받는 쪽이 많다. 순서와 역할 분담은 같다.</div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy" data-anchor="card-하네스-harness-모델과-컴퓨터-사이에-서는-실행-프로그램">링크 복사</button></div></div></div></section>
+}</pre><figcaption>실제 하네스의 뼈대다. 상태를 담은 배열 하나, 모델을 부르는 줄 하나, 셸에 던지는 줄 하나. 로그를 깎는 것도(shrink) 권한을 묻는 것도(askUser) 모델이 아니라 이 함수 안에 있다.</figcaption></figure><ul class="uc-points"><li><b>실무에서 「에이전트」라고 부르는 물건은 모델과 하네스를 합친 것이다.</b> GPT-5나 클로드 같은 모델 이름은 그중 한쪽만 가리킨다. 도구 성능을 견줄 때 모델 점수만 보면 나머지 절반을 빼고 세는 셈이다.</li></ul><div class="side-note"><code>EXEC:</code>는 설명을 위해 쓴 표시다. 실제 제품은 도구 호출(tool use) 규격에 맞춘 JSON을 주고받는 쪽이 많다. 순서와 역할 분담은 같다. 코드 두 조각도 뼈대만 남긴 것이다 — 실제 하네스에는 답을 한 글자씩 받아 보여 주는 처리, 끊긴 요청을 다시 부르는 처리, 오래된 대화를 요약해 넣는 처리가 더 붙는다.</div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy" data-anchor="card-하네스-harness-모델과-컴퓨터-사이에-서는-실행-프로그램">링크 복사</button></div></div></div></section>
 
   <footer><p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다.</p>    <div class="meta-row">
       <span>정리일 <b>2026-08-22</b></span>
