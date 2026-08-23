@@ -99,6 +99,62 @@ def _box(x, y, w, h, lines, st='var(--ink-3)', sw=1.5):
     return ''.join(out)
 
 
+
+# 로봇 팔을 그리는 부품. 관절 각도를 손으로 어림하면 팔이 컵에 안 닿는다 —
+# 손끝이 갈 자리를 정하고 팔꿈치는 역기구학으로 푼다(insight-figure 규칙 2).
+def _ik(bx, by, tx, ty, l1, l2):
+    """어깨(bx,by)에서 손끝(tx,ty)까지 두 마디로 갈 때 팔꿈치 자리. 팔꿈치는 위로 꺾는다."""
+    import math
+    dx, dy = tx - bx, ty - by
+    d = min(math.hypot(dx, dy), l1 + l2 - 0.01)
+    a = (d * d + l1 * l1 - l2 * l2) / (2 * d)
+    h = math.sqrt(max(l1 * l1 - a * a, 0))
+    ux, uy = dx / d, dy / d
+    mx, my = bx + ux * a, by + uy * a
+    return mx + uy * h, my - ux * h          # 법선 방향으로 h 만큼 — 위로 꺾인 쪽
+
+
+def _arm(bx, by, tx, ty, col='var(--ink-2)', l1=84, l2=84):
+    """어깨에서 손끝까지 두 마디 팔 + 관절 점 + 집게."""
+    import math
+    ex, ey = _ik(bx, by, tx, ty, l1, l2)
+    ang = math.atan2(ty - ey, tx - ex)
+    px, py = -math.sin(ang) * 7, math.cos(ang) * 7      # 집게 벌어지는 쪽
+    gx, gy = math.cos(ang) * 9, math.sin(ang) * 9       # 집게 길이
+    return ''.join([
+        '<path d="M%.1f %.1f L%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" '
+        'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+        % (bx, by, ex, ey, tx, ty, col),
+        '<circle cx="%.1f" cy="%.1f" r="4.5" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
+        % (bx, by, col),
+        '<circle cx="%.1f" cy="%.1f" r="4" fill="var(--paper)" stroke="%s" stroke-width="2.5"/>'
+        % (ex, ey, col),
+        '<path d="M%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" stroke-width="3" '
+        'stroke-linecap="round"/>' % (tx + px, ty + py, tx + px + gx, ty + py + gy, col),
+        '<path d="M%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" stroke-width="3" '
+        'stroke-linecap="round"/>' % (tx - px, ty - py, tx - px + gx, ty - py + gy, col),
+    ])
+
+
+def _cup(x, y, col='var(--ink-2)', dash=False):
+    d = ' stroke-dasharray="4 3"' if dash else ''
+    return ('<path d="M%d %d L%d %d L%d %d L%d %d Z" fill="none" stroke="%s" '
+            'stroke-width="2.5" stroke-linejoin="round"%s/>'
+            % (x, y, x + 4, y + 24, x + 22, y + 24, x + 26, y, col, d))
+
+
+def _scene(ox, oy, w, h, hand, cup, ghost=None, col='var(--ink-2)'):
+    """책상 하나에 로봇 팔 하나. 좌표는 칸 왼쪽 위(ox,oy) 기준."""
+    out = [_r(ox, oy, w, h, 'var(--line)', 1.3)]
+    ty = oy + h - 34
+    out.append('<path d="M%d %d L%d %d" fill="none" stroke="var(--line)" stroke-width="2.5"/>'
+               % (ox + 12, ty, ox + w - 12, ty))
+    if ghost:
+        out.append(_cup(ox + ghost[0], oy + ghost[1], 'var(--ink-3)', True))
+    out.append(_cup(ox + cup[0], oy + cup[1], col))
+    out.append(_arm(ox + 34, ty - 4, ox + hand[0], oy + hand[1], col))
+    return ''.join(out)
+
 def _svg(w, h, label, body):
     return ('<svg viewBox="0 0 %d %d" role="img" aria-label="%s">%s</svg>'
             % (w, h, label, body))
@@ -1113,28 +1169,69 @@ FIG_UNITS = _svg(640, 350, '데이터를 저마다 다른 단위로 센다', ''.
 
 
 
-# 화살표만 반대로 — 「IDM」 설명 그림. 세 카드가 이 부품에 기대는데 이름만 나온다.
-FIG_IDM = _svg(640, 292, '역동역학 모델이 하는 일', ''.join([
-    _lt(14, 22, '같은 두 칸을 놓고 화살표만 뒤집는다'),
-    _box(14, 30, 250, 52, ['관절 움직임', '팔을 이만큼 돌렸다']),
-    _a(266, 56, 306, 56),
-    _box(308, 30, 250, 52, ['장면 변화', '손이 저기로 갔다']),
-    _t(596, 60, '정방향', 't-sm'),
-    _box(14, 96, 250, 52, ['관절 움직임', '팔을 이만큼 돌렸다'], 'var(--accent)', 1.8),
-    _a(306, 122, 266, 122),
-    _box(308, 96, 250, 52, ['장면 변화', '손이 저기로 갔다'], 'var(--accent)', 1.8),
-    _t(596, 118, 'IDM', 't-lab'),
-    _t(596, 134, '역방향', 't-sm'),
-    _lt(14, 180, '그래서 라벨 없는 영상이 학습 재료가 된다'),
-    _box(14, 190, 150, 56, ['인터넷 영상', '장면만 있다']),
-    _a(166, 218, 186, 218),
-    _box(188, 190, 130, 56, ['IDM 이 되짚는다'], 'var(--accent)', 1.8),
-    _a(320, 218, 340, 218),
-    _box(342, 190, 150, 56, ['관절 값이 붙는다'], 'var(--accent)', 1.8),
-    _a(494, 218, 514, 218),
-    _box(516, 190, 110, 56, ['학습 데이터']),
-    _t(320, 270, 'IDM 자체는 로봇으로 조금만 배운다 — 1X Technologies 는 400시간을 썼다', 't-sm'),
-    _t(320, 288, '그 하나로 사람 영상 900시간이 통째로 쓸 수 있는 재료가 된다', 't-sm'),
+
+
+# ── 시퀀스 도해 ───────────────────────────────────────────────────────
+# 기둥을 세우고 가로 화살표로 주고받는 순서를 적는다. 용어사전 장의 하네스 도해와 같은 문법이다.
+# 자기 자신에게 보내는 줄(제자리에서 계산하는 단계)은 갈고리로 그린다.
+def _seq(heads, msgs, w=640, y0=None, step=48):
+    y0 = y0 or 108
+    bottom = y0 + (len(msgs) - 1) * step + 30
+    h = ['<svg viewBox="0 0 %d %d" role="img" aria-label="%s">'
+         % (w, bottom + 14, '주고받는 순서')]
+    for cx, bw, lab, sub in heads:
+        h.append('<rect class="body" x="%d" y="8" width="%d" height="%d" rx="8"/>'
+                 % (cx - bw // 2, bw, 50 if sub else 34))
+        h.append('<text class="t-lab" x="%d" y="30" text-anchor="middle">%s</text>' % (cx, lab))
+        if sub:
+            h.append('<text class="t-sm" x="%d" y="47" text-anchor="middle">%s</text>' % (cx, sub))
+        h.append('<line class="lead-line" x1="%d" y1="%d" x2="%d" y2="%d"/>'
+                 % (cx, 62 if sub else 46, cx, bottom))
+    for i, (x1, x2, lab) in enumerate(msgs):
+        y = y0 + i * step
+        if x1 == x2:      # 제자리에서 도는 단계
+            h.append('<path class="flow" fill="none" d="M%d %d L%d %d L%d %d L%d %d"/>'
+                     % (x1 + 7, y - 9, x1 + 42, y - 9, x1 + 42, y + 9, x1 + 9, y + 9))
+            h.append('<text class="t-sm" x="%d" y="%d">%s</text>' % (x1 + 52, y + 4, lab))
+        else:
+            h.append('<line class="flow" x1="%d" y1="%d" x2="%d" y2="%d"/>'
+                     % (x1 + (7 if x2 > x1 else -7), y, x2 + (-7 if x2 > x1 else 7), y))
+            h.append('<text class="t-sm" x="%d" y="%d">%s</text>' % (min(x1, x2) + 8, y - 9, lab))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+_V, _I, _P, _R = 66, 244, 414, 568
+FIG_IDMSEQ = _seq(
+    [(_V, 122, '영상', '장면만 있다'),
+     (_I, 96, 'IDM', ''),
+     (_P, 128, '로봇 정책', '학습되는 모델'),
+     (_R, 132, '로봇 팔', '실제로 움직인다')],
+    [(_V, _I, '① 앞뒤 장면 두 장을 넘긴다'),
+     (_I, _I, '② 차이를 되짚는다'),
+     (_I, _V, '③ 관절 값을 붙여 돌려준다'),
+     (_V, _P, '④ 이제 학습 재료가 된다'),
+     (_P, _R, '⑤ 관절 명령을 낸다'),
+     (_R, _V, '⑥ 움직인 결과가 다시 쌓인다')])
+
+# 컵 하나를 드는 두 장면으로 IDM 을 편다. 상자만 늘어놓으면 무엇이 빠졌는지가 안 보인다.
+FIG_IDM = _svg(640, 396, '영상 두 장에서 관절 움직임을 되짚는다', ''.join([
+    _lt(14, 22, '영상에 남은 것은 이 두 장뿐이다'),
+    _scene(14, 30, 250, 150, hand=(150, 106), cup=(176, 92)),
+    _t(139, 196, '첫 장면 — 컵 옆에 있다', 't-sm'),
+    _scene(376, 30, 250, 150, hand=(150, 62), cup=(160, 50), ghost=(176, 92),
+           col='var(--accent)'),
+    _t(501, 196, '다음 장면 — 컵을 들었다', 't-sm'),
+    _t(320, 92, '이 사이에', 't-lab'),
+    _t(320, 110, '무슨 관절 움직임이', 't-lab'),
+    _t(320, 128, '있었나', 't-lab'),
+    _t(320, 150, '영상은 안 적어 둔다', 't-sm'),
+    _a(139, 210, 292, 236), _a(501, 210, 348, 236),
+    _box(230, 238, 180, 52, ['IDM', '두 장을 견준다'], 'var(--accent)', 1.8),
+    _a(320, 292, 320, 312),
+    _box(150, 314, 340, 48, ['어깨를 이만큼, 팔꿈치를 이만큼'], 'var(--accent)', 1.8),
+    _t(320, 380, '사람이 컵 드는 영상도 마찬가지다 — 어깨를 몇 도 돌렸는지는 아무도 안 적었다', 't-sm'),
+    _t(320, 394, 'IDM 이 그 칸을 채우면 그 영상이 로봇 학습 재료가 된다', 't-sm'),
 ]))
 
 def summary_layer():
@@ -1144,11 +1241,18 @@ def summary_layer():
              '지금 화면에서 바로 뽑느냐, 그려 본 다음 장면에서 되짚느냐, 시켜 보기 전에 결과를 '
              '미리 재느냐, 미리 구워 둔 동작을 켜느냐.'),
             ('역동역학 모델이 하는 일', FIG_IDM,
-             '위 두 줄은 <b>같은 두 칸에 화살표만 뒤집은 것</b>이다. 아래로 내려간 쪽이 '
-             'IDM(Inverse Dynamics Model, 역동역학 모델)이고, 장면 두 장을 받아 그 사이에 무슨 '
-             '행동이 있었는지를 되짚는다. 이것이 필요한 이유는 인터넷 영상에 <b>장면만 있고 관절 값이 '
-             '없기</b> 때문이다. 사람이 컵을 드는 영상이 아무리 많아도 어깨를 몇 도 돌렸는지는 적혀 '
-             '있지 않다. 아래 줄이 그 빈칸을 채우는 순서이고, 비디오 액션모델 갈래가 이 부품 위에 선다.'),
+             '로봇 팔이 컵을 드는 두 장면이다. 영상에 남는 것은 <b>이 두 장뿐</b>이고, 그 사이에 '
+             '어깨와 팔꿈치를 각각 얼마나 돌렸는지는 어디에도 안 적힌다. 그 빠진 칸을 되짚는 것이 '
+             'IDM(Inverse Dynamics Model, 역동역학 모델)이다. 사람이 컵을 드는 인터넷 영상도 사정이 '
+             '같아서, IDM 이 관절 값을 채워 넣으면 라벨 없던 영상이 그대로 로봇 학습 재료가 된다. '
+             'IDM 자체는 로봇으로 조금만 배우면 되는데 1X Technologies 는 <b>400시간</b>을 썼고, '
+             '그 하나로 사람 영상 <b>900시간</b>이 통째로 쓸 수 있는 재료가 됐다. 비디오 액션모델 '
+             '갈래가 이 부품 위에 선다.'),
+            ('IDM 이 도는 한 판', FIG_IDMSEQ,
+             '위 그림이 <b>무엇이 빠졌나</b>라면 이 그림은 <b>그것이 어떻게 채워지나</b>다. '
+             '기둥 넷이 여섯 번 주고받는다. ②가 IDM 이 제자리에서 하는 일이고, ③에서 관절 값이 '
+             '붙는 순간 왼쪽 기둥의 영상이 학습 재료로 바뀐다. ⑥이 이 판을 고리로 만든다 — '
+             '로봇이 움직인 결과가 다시 영상으로 쌓여 ①로 돌아간다.'),
             ('갈래마다 어느 회사가 서 있나', FIG_FIRMS,
              '구글 딥마인드와 Figure AI 는 두 줄에 걸친다. 위계형이 VLA 를 대신하는 것이 아니라 '
              '<b>VLA 안을 두 층으로 나눈 것</b>이라 그렇다. 엔비디아는 모델을 파는 쪽이 아니라 '
