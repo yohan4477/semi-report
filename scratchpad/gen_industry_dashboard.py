@@ -193,9 +193,9 @@ def _pivot_svg():
     h = ['<svg viewBox="0 0 640 690" role="img" '
          'aria-label="세계지도 둘로 본 미국 LNG의 방향 전환">',
          '<defs><marker id="lngarw" viewBox="0 0 10 10" refX="8" refY="5" '
-         'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
+         'markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">'
          '<path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>',
-         '<style>.lngflow{fill:none;stroke:var(--accent);stroke-width:3.2;'
+         '<style>.lngflow{fill:none;stroke:var(--accent);stroke-width:1.8;'
          'stroke-linecap:round;marker-end:url(#lngarw)}</style>',
          '<text x="8" y="16" class="t-sm">'
          '노란 곳이 미국이다. 같은 기지인데 화살표가 반대로 돈다</text>',
@@ -203,12 +203,13 @@ def _pivot_svg():
          '2008년 · 들여오려고 지었다</text>',
          _world(12, TOP, hot=(_US_C,)),
          _arw(12, TOP, atl, gulf, bend=22),
-         '<text x="%.0f" y="%.0f" class="t-sm">해외에서 배로 들여온다</text>'
+         '<text x="%.0f" y="%.0f" class="t-sm">해외 어딘가에서 배로 들여온다</text>'
          % (12 + atl[0] + 10, TOP + atl[1] + 30),
-         _dot(12, TOP, qat, '카타르'),
-         _dot(12, TOP, aus, '호주'),
-         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
-         '그때 수출 1등은 이 둘이었다</text>' % (12 + (qat[0] + aus[0]) / 2, TOP + 218),
+         _dot(12, TOP, qat, '카타르 · 그때 수출 1등'),
+         _dot(12, TOP, aus, '호주 · 그때 수출 1등'),
+         '<text x="8" y="%.0f" class="t-sm">'
+         '카타르·호주는 자리만 찍었다. 화살표로 안 잇는다 '
+         '— 미국이 그 둘에서 사오려 했다는 말은 이 편에 없다</text>' % (TOP + 232),
          '<text x="8" y="290" class="t-bad" style="font-size:11px;font-weight:800">'
          '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>',
          '<text x="8" y="312" class="t-lab" style="font-size:11px">'
