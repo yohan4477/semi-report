@@ -90,8 +90,11 @@ def check(vid):
         elif r < 0.8:
             warn.append('Q1 quote 가 자막과 조금 다르다 (유사도 %.2f)' % r)
 
+    # note 는 표기가 왜 흔들리는지 밝히는 자리다 — 거기서 오인식 표기를 인용하는 것은 맞다.
+    # 나머지 본문에 그대로 실리는 것만 잡는다.
+    text_nonote = text.replace(STRIP.sub('', c.get('note') or ''), ' ')
     for g in GARBLED:
-        if g in text:
+        if g in text_nonote:
             bad.append('Q2 자막 오인식을 그대로 실었다: %s' % g)
     # 별칭을 한 번도 안 쓰기는 어렵다 — 「Rhoda의 300년」처럼 줄여 부르는 자리가 있다.
     # 정본이 그 카드 안에 한 번이라도 나오면 독자가 잇는 데 문제가 없으니 넘어간다.
