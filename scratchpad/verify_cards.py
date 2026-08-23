@@ -110,6 +110,16 @@ def check(vid):
             bad.append('T1 영어 구조 직역: %s' % t)
     for m in VAGUE.finditer(text):
         warn.append('T2 일반론으로 닫는 문장: …%s' % text[max(0, m.start() - 26):m.end()])
+    # L1 : 변환본 링크가 실제 파일을 가리키는가. 파일 이름을 고치면서 링크를 안 고쳐
+    # 깨진 채로 나간 적이 있다(2026-08-23). 주소를 풀어서 저장소 안에 있는지 본다
+    import urllib.parse
+    for _lab, url, _cls in (c.get('links') or ()):
+        if 'blob/main/' not in url:
+            continue
+        rel = urllib.parse.unquote(url.split('blob/main/', 1)[1])
+        if not os.path.isfile(os.path.join(ROOT, rel.replace('/', os.sep))):
+            bad.append('L1 변환본 링크가 가리키는 파일이 없다: %s' % rel)
+
     if c.get('figs'):
         bad.append('F1 카드 파일이 figs 를 들고 있다 — 생성기 EXTRA_FIGS 로 옮긴다')
     for k in ('section', 'date', 'title', 'gain', 'meta', 'links', 'quote', 'clash', 'note'):

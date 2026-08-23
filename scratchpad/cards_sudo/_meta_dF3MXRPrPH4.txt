@@ -1,0 +1,9 @@
+{
+  "id": "dF3MXRPrPH4",
+  "title": "CORL 2025, Humanoids 2025 참여 전에 국내외 로봇 근황 정리했습니다",
+  "date": "20250926",
+  "dur": 1308,
+  "views": 1503,
+  "desc": "#physicalai AI #CORL #Humanoids \n##국내외 로봇 근황 정리, CORL, Humanoids\n\n챕터\n--- \n00:00 intro\n00:30 chapter 1 국내 로봇 근황\n08:32 chapter 2 해외 로봇 근황\n15:05 chapter 3 CORL, Humanoids 2025 서울 개최\n17:15 chapter 4 정리겸 와글와글: 로봇과 손 그리고 병목, input에 촉각을 넣는 법\n\nRelated link\n---\nFigure AI GO-Big 프로젝트 글\nhttps://www.figure.ai/news/project-go-big\n\nK-Scale Labs 유투브 채널\nhttps://www.youtube.com/@kscalelabs\n\n리얼월드 데모 링크드인 원본영상\nhttps://www.linkedin.com/posts/rlwrld_rlwrld-openai-physicalai-activity-7372193963568582656-KGUM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAYS-rABw7dwq1iKpOXtMhQev4pQSz1WO7M\n\nKAIST Humanoid v0.5 - 문워킹 로봇 원본 영상\nhttps://www.youtube.com/watch?v=ytWO7lldN4c\n\nthehumanoid 회사 구인구직 페이지\nhttps://thehumanoid.ai/careers/\n\nCORL 2025 홈페이지\nhttps://www.corl.org/\n\nHumanoids 2025 홈페이지\nhttps://2025humanoids.org/\n\nFeaturing: JB, JC  \nEdited by: Lonzi",
+  "chars": 14513
+}

@@ -6839,6 +6839,27 @@
  "content/understanding/피지컬AI/[250828] 아틀라스 LBM 데뷔.md#L62": {
   "sha1": "b2a9421b25d4"
  },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L34": {
+  "sha1": "b2436e26f6aa"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L43": {
+  "sha1": "91a77d61191a"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L45": {
+  "sha1": "252bfe8318dc"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L50": {
+  "sha1": "1b16218be6a6"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L73": {
+  "sha1": "d680a0dfbe53"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L74": {
+  "sha1": "47480dcd09a7"
+ },
+ "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L76": {
+  "sha1": "d8200240b0a9"
+ },
  "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L22": {
   "sha1": "a3d54c65c748"
  },
@@ -6922,6 +6943,27 @@
  },
  "content/understanding/피지컬AI/[251125] 로봇 데이터 없이 학습한 세 회사의 차이.md#L46": {
   "sha1": "6f7be8784be5"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L12": {
+  "sha1": "b0b0c56c9a95"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L16": {
+  "sha1": "327eb5f04438"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L19": {
+  "sha1": "9272e090e79a"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L22": {
+  "sha1": "eefd1d5fb7f1"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L23": {
+  "sha1": "4fa07a2be0ee"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L24": {
+  "sha1": "73dff993157b"
+ },
+ "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L26": {
+  "sha1": "094ef77c1089"
  },
  "content/understanding/피지컬AI/[260114] CES 부스에서 만진 아틀라스와 Sharpa.md#L12": {
   "sha1": "c887beb5755d"
@@ -7073,6 +7115,33 @@
  "content/understanding/피지컬AI/[260316] Rhoda AI 비디오 액션 모델과 Sharpa 손안 조작.md#L42": {
   "sha1": "6cbbb91ed4e6"
  },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L13": {
+  "sha1": "a1aa5329ae2c"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L16": {
+  "sha1": "466eca0a6f7e"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L21": {
+  "sha1": "f25f38f44967"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L26": {
+  "sha1": "a22bedd7ff29"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L27": {
+  "sha1": "814407f8e8d5"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L28": {
+  "sha1": "d5dc7d033866"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L29": {
+  "sha1": "ad0b82a42125"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L36": {
+  "sha1": "ee7f3600b4a1"
+ },
+ "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md#L47": {
+  "sha1": "4059c54d3e4a"
+ },
  "content/understanding/피지컬AI/[260518] RLDX-1이 연 것과 안 연 것.md#L10": {
   "sha1": "f3c1d81dafef"
  },
@@ -7096,6 +7165,48 @@
  },
  "content/understanding/피지컬AI/[260518] RLDX-1이 연 것과 안 연 것.md#L41": {
   "sha1": "87605bba23d5"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L13": {
+  "sha1": "056a2a4ba41a"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L14": {
+  "sha1": "7788a22a1463"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L26": {
+  "sha1": "a610a1fec6b2"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L29": {
+  "sha1": "5e1f9d62f05a"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L35": {
+  "sha1": "3be847a4e92c"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L42": {
+  "sha1": "09c233810146"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L45": {
+  "sha1": "bcee989455cc"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L13": {
+  "sha1": "056a2a4ba41a"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L14": {
+  "sha1": "7788a22a1463"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L26": {
+  "sha1": "a610a1fec6b2"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L29": {
+  "sha1": "5e1f9d62f05a"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L35": {
+  "sha1": "3be847a4e92c"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L42": {
+  "sha1": "09c233810146"
+ },
+ "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 피규어AI 길.md#L45": {
+  "sha1": "bcee989455cc"
  },
  "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md#L106": {
   "sha1": "c95bb5f6d18e"
@@ -7132,6 +7243,39 @@
  },
  "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md#L83": {
   "sha1": "d85f3ffb6a08"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L12": {
+  "sha1": "beeda34ce4ab"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L18": {
+  "sha1": "352cc5fe9768"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L19": {
+  "sha1": "293a2f695cd3"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L20": {
+  "sha1": "8ad8a39a1954"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L21": {
+  "sha1": "fa527420fe49"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L22": {
+  "sha1": "c6612abb76dd"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L26": {
+  "sha1": "814f62c06a5a"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L34": {
+  "sha1": "0cf116844f24"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L40": {
+  "sha1": "37d75da35b1b"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L41": {
+  "sha1": "bdfcb5328f31"
+ },
+ "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L44": {
+  "sha1": "122c746d88ea"
  },
  "content/understanding/피지컬AI/[260721] Sunday Robotics ACT-2 프리뷰.md#L11": {
   "sha1": "016e30d9ec9f"

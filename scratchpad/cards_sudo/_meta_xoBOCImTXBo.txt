@@ -1,0 +1,9 @@
+{
+  "id": "xoBOCImTXBo",
+  "title": "엔비디아 발표 속 한국 로보틱스 회사, 다 정리했습니다",
+  "date": "20260702",
+  "dur": 1201,
+  "views": 3074,
+  "desc": "#NVIDIA #휴머노이드 #한국로봇\n\nNVIDIA가 Unitree H2 Plus와 Sharpa Hand, Jetson Thor를 묶은 레퍼런스 휴머노이드를 새로 내놨습니다.\n\n그 와중에 한국 로보틱스 회사들은 엔비디아와 어떤 관계로 이 생태계에 올라타고 있는지 — WIRobotics의 ALLEX, Rainbow Robotics, Holiday Robotics, DIDEN Robotics를 하나씩 따라가 봤습니다.\n\nSamsung Research의 Shallow-π 데모와 Boston Dynamics Atlas, 그리고 삼성에서 현대로 이어지는 로봇 AI 인력 이동까지\n\n오늘은 엔비디아가 GTC 타이베이에서 보여준 휴머노이드 전략과, 그 안에에한국 회사들, 그리고 그들에 연관 관계에 대해 알아봅시다.\n\n## 챕터\n\n0:00 NVIDIA의 깐부, 한국 로보틱스\n0:08 GTC 휴머노이드 군단\n0:48 GTC의 한국 회사들\n1:32 NVIDIA 레퍼런스 휴머노이드 전략\n3:02 Isaac GR00T 레퍼런스 하드웨어와 가격\n5:18 NVIDIA 표준 올라타기 — MuJoCo vs Isaac Sim\n7:36 WIRobotics ALLEX\n8:12 DIDEN Robotics와 KAIST 휴머노이드\n8:44 Rainbow Robotics와 Samsung Shallow-π\n10:56 권정현 부사장 현대차행, 인재 이탈\n12:38 Boston Dynamics Atlas와 라보나 킥\n15:31 Holiday Robotics의 손\n16:57 한국 로보틱스, 이거 잘한다\n19:03 쿠키\n\n---\n\n## 관련 링크\n\n- NVIDIA Isaac GR00T (레퍼런스 휴머노이드 플랫폼): https://developer.nvidia.com/isaac/gr00t\n- NVIDIA Isaac GR00T 레퍼런스 휴머노이드 발표: https://nvidianews.nvidia.com/news/nvidia-open-humanoid-robot-reference-design\n- WIRobotics ALLEX: https://corp.wirobotics.com/en/product/allex\n- Rainbow Robotics RB-Y1: https://www.rainbow-robotics.com/rby1\n- Holiday Robotics: https://holiday-robotics.com/\n- DIDEN Robotics: https://www.didenrobotics.com/\n- Shallow-π (Samsung Research, arXiv): https://arxiv.org/abs/2601.20262\n\n---\n\nFeaturing: JB, JC\nEdit by Lonzi",
+  "chars": 12048
+}

@@ -87,10 +87,23 @@ def hits(svg):
     return bad
 
 
+# 도해를 가진 생성기를 여기 적는다. 빠뜨리면 그 장은 검사를 통째로 안 받는다 —
+# 2026-08-23에 수도리무브 도해 서른 장이 이 목록에 없어서 한 번도 안 걸러졌다.
+GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard']
+
+
+def all_figs():
+    import importlib
+    out = []
+    for name in GENERATORS:
+        mod = importlib.import_module(name)
+        out += [(c['title'], f) for c in mod.CARDS for f in c.get('figs', ())]
+    return out
+
+
 def main():
-    import gen_industry_dashboard as fin
     want = sys.argv[1] if len(sys.argv) > 1 else None
-    figs = [(c['title'], f) for c in fin.CARDS for f in c.get('figs', ())]
+    figs = all_figs()
     fails = 0
     for _card, (_anchor, title, svg, _cap) in figs:
         if want and want not in title:
