@@ -2,6 +2,7 @@
 # 용어사전 — 이 저장소 글을 읽다 막히는 말을 한 장에 모은다.
 # 카드 하나가 용어 하나다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지까지 그린다.
 # 마크업과 CSS는 dash_common이 갖고 있다 — 첫 화면 규약도 그쪽 머리말에 있다.
+import html as _html
 import os, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -63,6 +64,91 @@ FIG_SEQ = (2, '하네스가 도는 한 판',
            '직접 닿지 않는다. 열두 줄이 전부 가운데 기둥을 거친다.')
 
 
+# ── 코드 블록 ────────────────────────────────────────────────────────────────
+# 도해가 「누가 누구에게」를 보여 준다면 코드는 「그래서 무엇을 되풀이하나」를 보여 준다.
+# 주석에 붙인 번호는 위 시퀀스 도해의 번호와 같은 자리를 가리킨다.
+def _code(src, mark):
+    """코드 한 덩어리를 <pre>로. 주석만 흐린 색으로 갈라 둔다."""
+    out = []
+    for line in src.strip('\n').split('\n'):
+        i = line.find(mark)
+        if i < 0:
+            out.append(_html.escape(line, quote=False))
+        else:
+            out.append(_html.escape(line[:i], quote=False)
+                       + '<span class="cd-c">%s</span>' % _html.escape(line[i:], quote=False))
+    return '<pre class="uc-code">%s</pre>' % '\n'.join(out)
+
+
+_PSEUDO = """
+상태 ← [지시문, 쓸 수 있는 도구 목록, 지금 디렉터리]   # 하네스가 들고 있는 것
+상태 ← 상태 + 사용자 요청                              # ① "버그 고쳐 줘"
+
+무한 반복 {
+    답 ← 모델을 부른다(상태 전체)                       # ② 매번 처음부터 다시 넣는다
+    상태 ← 상태 + 답
+
+    만약 답에 도구 호출이 없으면 {
+        사용자에게 답을 보여 주고 끝낸다                 # ⑫ 여기서만 고리를 빠져나온다
+    }
+
+    답에 든 도구 호출마다 {
+        위험한 명령이면 사용자에게 먼저 묻는다            # 권한을 쥐는 자리
+        결과 ← 터미널에서 실제로 돌린다                  # ④ ⑧ 여기서 처음 실행된다
+        상태 ← 상태 + 줄인 결과                         # ⑤ ⑥ ⑨ 로그를 깎아 넣는다
+    }
+
+    같은 실패가 되풀이되면 고리를 끊는다
+}
+"""
+
+_TS = r"""
+type Msg = { role: "user" | "assistant" | "tool"; text: string };
+
+async function harness(ask: string) {
+  // 상태는 하네스가 들고 있다. 모델은 요청과 요청 사이에 아무것도 기억하지 않는다
+  const state: Msg[] = [{ role: "user", text: RULES + "\n" + ask }];   // ①
+
+  while (true) {
+    const reply = await model.complete(state, TOOLS);   // ② 상태를 통째로 보낸다
+    state.push({ role: "assistant", text: reply.text });
+
+    // 모델이 낸 것은 글자뿐이다. 도구 호출도 실행이 아니라 JSON 한 조각이다
+    if (reply.toolCalls.length === 0) return reply.text;   // ⑫ 부를 도구가 없으면 끝
+
+    for (const call of reply.toolCalls) {              // ③ ⑦ 모델이 적어 보낸 명령
+      if (risky(call)) await askUser(call);            // 지우는 명령 앞에서 멈춘다
+      const log = await runInShell(call);              // ④ ⑧ 셸에 실제로 던진다
+      state.push({ role: "tool", text: shrink(log) }); // ⑤ ⑥ ⑨ 실패한 줄만 남긴다
+    }
+    if (stuckOnSameError(state)) return "같은 실패가 되풀이돼 멈춥니다";
+  }
+}
+"""
+
+FIG_PSEUDO = (3, '고리를 말로 옮기면',
+              _code(_PSEUDO, '#'),
+              '위 그림의 열두 줄이 하는 일은 반복문 하나다. 모델을 부르고, 돌아온 글자에 '
+              '도구 호출이 있으면 돌리고, 그 결과를 상태 뒤에 붙여 다시 부른다. 도구 호출이 '
+              '없는 답이 나오는 순간에만 빠져나온다.')
+
+FIG_TS = (6, '같은 고리를 타입스크립트로',
+          _code(_TS, '//'),
+          '실제 하네스의 뼈대다. 상태를 담은 배열 하나, 모델을 부르는 줄 하나, 셸에 던지는 '
+          '줄 하나. 로그를 깎는 것도(shrink) 권한을 묻는 것도(askUser) 모델이 아니라 이 함수 '
+          '안에 있다.')
+
+
+CODE_CSS = """
+  .uc-code { margin:0; padding:13px 15px; background:var(--sunk);
+    border:1px solid var(--line); border-radius:8px; overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px; line-height:1.75; color:var(--ink); white-space:pre; }
+  .uc-code .cd-c { color:var(--ink-3); }
+  @media (max-width:640px) { .uc-code { font-size:11px; padding:11px 12px; } }
+"""
+
+
 CARDS = [
     {'section': SEC_AGENT,
      'topic': ('market', 'AI 에이전트'),
@@ -79,7 +165,7 @@ CARDS = [
          '<b>권한과 정지도 하네스가 쥔다.</b> 파일을 지우는 명령 앞에서 사용자에게 물어보고, 같은 실패가 되풀이되면 고리를 끊는다. 모델이 같아도 이 판단이 다르면 같은 과제의 완주율이 달라진다.',
          '<b>실무에서 「에이전트」라고 부르는 물건은 모델과 하네스를 합친 것이다.</b> GPT-5나 클로드 같은 모델 이름은 그중 한쪽만 가리킨다. 도구 성능을 견줄 때 모델 점수만 보면 나머지 절반을 빼고 세는 셈이다.',
      ],
-     'figs': [FIG_SEQ],
+     'figs': [FIG_SEQ, FIG_PSEUDO, FIG_TS],
      'note': '<code>EXEC:</code>는 설명을 위해 쓴 표시다. 실제 제품은 도구 호출(tool use) 규격에 맞춘 JSON을 주고받는 쪽이 많다. 순서와 역할 분담은 같다.',
      'links': [],
     },
@@ -102,4 +188,4 @@ FOOTER = (LEDE + META + '\n용어 풀이 · 카드 하나가 용어 하나입니
           '  페이지 생성은 <code>scratchpad/gen_glossary.py</code>(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '용어사전', HEADER, FOOTER, OUT)
+    dc.render(CARDS, '용어사전', HEADER, FOOTER, OUT, extra_css=CODE_CSS)

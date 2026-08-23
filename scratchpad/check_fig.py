@@ -89,7 +89,7 @@ def hits(svg):
 
 # 도해를 가진 생성기를 여기 적는다. 빠뜨리면 그 장은 검사를 통째로 안 받는다 —
 # 2026-08-23에 수도리무브 도해 서른 장이 이 목록에 없어서 한 번도 안 걸러졌다.
-GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard']
+GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard', 'gen_glossary']
 
 
 def all_figs():
