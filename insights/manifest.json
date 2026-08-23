@@ -2280,6 +2280,17 @@
    "hash": "39cedb916889"
   },
   {
+   "id": "und:피지컬AI:Figure-Helix-첫-공개",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-03-05",
+   "path": "content/understanding/피지컬AI/[250305] Figure Helix 첫 공개.md",
+   "hash": "99cc6d486c14"
+  },
+  {
    "id": "und:피지컬AI:GTC-앞두고-쏟아진-로봇-모델-다섯-편",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2289,6 +2300,17 @@
    "date": "2026-03-15",
    "path": "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md",
    "hash": "b320020aa36f"
+  },
+  {
+   "id": "und:피지컬AI:General-Intuition-MIRA는-훈련장이다",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-07-22",
+   "path": "content/understanding/피지컬AI/[260722] General Intuition MIRA는 훈련장이다.md",
+   "hash": "225499c008ef"
   },
   {
    "id": "und:피지컬AI:Physical-AI의-정의",
@@ -2401,6 +2423,28 @@
    "hash": "f158162910eb"
   },
   {
+   "id": "und:피지컬AI:엔비디아-GPU-전략과-1X-월드모델",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-01-22",
+   "path": "content/understanding/피지컬AI/[260122] 엔비디아 GPU 전략과 1X 월드모델.md",
+   "hash": "a6aa43f349a8"
+  },
+  {
+   "id": "und:피지컬AI:월드모델과-비디오-생성모델이-갈리는-지점",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-07-09",
+   "path": "content/understanding/피지컬AI/[250709] 월드모델과 비디오 생성모델이 갈리는 지점.md",
+   "hash": "3e971e76c121"
+  },
+  {
    "id": "und:피지컬AI:제미나이-로보틱스-2의-하니스-구조",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2410,6 +2454,17 @@
    "date": "2026-08-12",
    "path": "content/understanding/피지컬AI/[260812] 제미나이 로보틱스 2의 하니스 구조.md",
    "hash": "9fc051207458"
+  },
+  {
+   "id": "und:피지컬AI:헬릭스-물류-데모와-옵티머스-싱글-뉴럴넷",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-06-10",
+   "path": "content/understanding/피지컬AI/[250610] 헬릭스 물류 데모와 옵티머스 싱글 뉴럴넷.md",
+   "hash": "e0f1a26e6c96"
   },
   {
    "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",

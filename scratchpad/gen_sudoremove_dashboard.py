@@ -788,10 +788,23 @@ def load_extra():
 
 
 def order(cards):
-    """섹션은 SEC_ORDER 순서로, 섹션 안은 업로드일 역순(최신이 위)."""
+    """섹션은 SEC_ORDER 순서로, 섹션 안은 업로드일 역순(최신이 위).
+
+    섹션 번호는 여기서 다시 매긴다 — SECTIONS 에는 아직 카드가 없는 칸도 있어서, 적어 둔
+    번호를 그대로 쓰면 화면에 01·02·04 처럼 구멍이 뚫린다. 카드가 있는 섹션만 세어 붙인다."""
     idx = {c['section'][0]: SEC_ORDER.index(c['section'][0]) for c in cards}
-    return sorted(cards, key=lambda c: (idx[c['section'][0]],
-                                        [-int(x) for x in (c.get('date') or '0-0-0').split('-')]))
+    cards = sorted(cards, key=lambda c: (idx[c['section'][0]],
+                                         [-int(x) for x in (c.get('date') or '0-0-0').split('-')]))
+    seen, num = {}, 0
+    for c in cards:
+        sid = c['section'][0]
+        if sid not in seen:
+            num += 1
+            sec = list(c['section'])
+            sec[1] = '%02d' % num
+            seen[sid] = tuple(sec)
+        c['section'] = seen[sid]
+    return cards
 
 
 CARDS = order(CARDS + load_extra())

@@ -106,9 +106,8 @@ SITE_FIG = (
     '<text x="62" y="450" class="t-sm">'
     '허리케인이 지나가고 유럽에서도 먼데 그렇다</text>'
     '<path d="M300 400 L%.0f %.0f" class="lead-line"/>' % tuple(_at('Louisiana')) +
-    # 유럽 방향 — 북동쪽이 가깝다는 말을 그림으로 받는다
-    '<path d="M600 150 L634 138" class="flow"/>'
-    '<text x="636" y="128" text-anchor="end" class="t-sm">유럽 쪽</text>'
+    # 유럽 방향 화살표는 뺐다. 공용 .flow 는 1.6px 회색이라 지도 위에서 지시선과
+    # 구분이 안 된다. 같은 내용이 설명 줄에 있고, 바다 건너 방향은 세계지도 쪽에서 받는다
     # 아래 — 그래서 어떻게 됐나
     '<rect x="8" y="470" width="308" height="104" rx="10" class="body" '
     'stroke-dasharray="6 4"/>'
@@ -137,81 +136,112 @@ SITE_CAP = ('지도에서 <b>가스가 나는 자리와 공장이 선 자리가 
 
 
 # -- 체니에르, 가스가 들어오던 길로 나간다 -----------------------------------
-# 처음 그린 그림은 「화살표만 뒤집혔다」고 써 놓고 위아래 화살표를 둘 다 왼쪽에서
-# 오른쪽으로 그렸다. 말로만 뒤집고 그림은 안 뒤집혔으니 읽힐 리가 없었다. 그래서 상자
-# 대신 지도를 두 번 놓는다 -- 같은 자리, 같은 나라, 화살표만 반대다.
+# 세 번 고쳤다. 처음에는 상자 두 줄로 그려 놓고 「화살표만 뒤집혔다」고 썼는데 위아래
+# 화살표가 둘 다 같은 방향이었다. 다음에는 미국 지도 둘로 바꿨는데 바다 건너 오가는
+# 이야기를 한 나라 안에서 그리니 어디서 와서 어디로 가는지가 없었다. 그래서 세계지도다.
 #
-# 지도는 입지 도해와 같은 자료·같은 도법을 쓰고 0.46배로 줄여 나란히 세운다. 화살표
-# 끝은 손으로 찍지 않는다. 굽는 쪽이 내보낸 루이지애나 한가운데를 기준으로 계산한다 --
-# 체니에르의 사빈패스가 루이지애나 남서쪽 해안이다.
-def _mini_defs():
-    """지도를 두 번 그리되 좌표는 한 벌만 싣는다.
-
-    같은 윤곽을 두 번 적으면 이 카드 하나가 36KB를 더 먹는다. defs에 한 번 두고
-    use로 두 번 부른다."""
-    return ('<defs><path id="usb" d="%s"/><path id="usla" d="%s"/></defs>'
-            % (_states([n for n in _US['states'] if n != 'Louisiana']),
-               _US['states']['Louisiana']))
+# 화살표는 굵게, 강조색으로, 머리를 크게 단다. 공용 .flow 는 지도 위에서 안 읽힌다 --
+# 1.6px 회색 선이라 지시선과 구분이 안 되고, 마커도 6px 회색이다. 이 그림 전용 마커를
+# svg 안에 따로 둔다(defs 는 그림마다 하나여야 해서 id 앞에 lng 를 붙였다).
+#
+# 값 라벨은 자막에 있는 숫자다. 미국 2.7달러, 동북아·유럽 20달러 이상. 가스가 왜 그쪽으로
+# 흐르는지가 그 격차라, 방향 화살표에 값을 같이 달면 화살표가 근거를 갖는다.
+_W = json.loads(io.open(os.path.join(dc.ROOT, 'data', 'world_robinson.json'),
+                        encoding='utf-8').read())
+_US_C = 'United States of America'
 
 
-def _mini_map(dx, dy, k=0.46):
-    """미국 지도를 k배로 줄여 (dx, dy)에 놓는다. 루이지애나만 칠한다."""
-    g = ('<g transform="translate(%g %g) scale(%g)">'
-         '<use href="#usb" class="body" style="stroke-width:%.2f"/>'
-         '<use href="#usla" class="fat" style="stroke-width:%.2f"/></g>'
-         % (dx, dy, k, 0.6 / k, 1.0 / k))
-    cx, cy = _at('Louisiana')
-    return g, (dx + k * cx, dy + k * cy)
+def _wat(key):
+    return _W['at'][key]
+
+
+def _world(dx, dy, hot=()):
+    """세계지도 한 장. hot 에 든 나라만 칠한다."""
+    base = ''.join(v for k, v in _W['c'].items() if k not in hot)
+    g = ['<g transform="translate(%g %g)">' % (dx, dy),
+         '<path d="%s" class="body" style="stroke-width:.5"/>' % base]
+    for k in hot:
+        if k in _W['c']:
+            g.append('<path d="%s" class="fat" style="stroke-width:.8"/>' % _W['c'][k])
+    g.append('</g>')
+    return ''.join(g)
+
+
+def _arw(dx, dy, a, b, bend=-26):
+    """a 에서 b 로 가는 굵은 화살표. 가운데를 bend 만큼 띄워 바다 위로 휘게 한다."""
+    (x1, y1), (x2, y2) = a, b
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2 + bend
+    return ('<path d="M%.0f %.0f Q%.0f %.0f %.0f %.0f" class="lngflow"/>'
+            % (dx + x1, dy + y1, dx + mx, dy + my, dx + x2, dy + y2))
+
+
+def _dot(dx, dy, p, label, anchor='middle', off=-10):
+    x, y = p
+    return ('<circle cx="%.0f" cy="%.0f" r="4" class="cell"/>'
+            '<text x="%.0f" y="%.0f" text-anchor="%s" class="t-sm">%s</text>'
+            % (dx + x, dy + y, dx + x, dy + y + off, anchor, label))
 
 
 def _pivot_svg():
-    left, (lx, ly) = _mini_map(8, 34)
-    right, (rx, ry) = _mini_map(338, 34)
-    h = ['<svg viewBox="0 0 640 402" role="img" '
-         'aria-label="체니에르 기지를 드나드는 가스 방향이 뒤집힌 것을 지도 둘로 보인 그림">',
+    gulf = _wat('-93.9,29.7')
+    atl = _wat('-40,25')
+    qat = _wat('51.5,25.3')
+    aus = _wat('134,-25')
+    eur = _wat('5,50')
+    kor = _wat('128,36')
+    TOP, BOT = 42, 318
+    h = ['<svg viewBox="0 0 640 690" role="img" '
+         'aria-label="세계지도 둘로 본 미국 LNG의 방향 전환">',
+         '<defs><marker id="lngarw" viewBox="0 0 10 10" refX="8" refY="5" '
+         'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
+         '<path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>',
+         '<style>.lngflow{fill:none;stroke:var(--accent);stroke-width:3.2;'
+         'stroke-linecap:round;marker-end:url(#lngarw)}</style>',
          '<text x="8" y="16" class="t-sm">'
-         '같은 자리, 같은 기지다. 화살표 방향만 반대다 (노란 곳이 루이지애나)</text>',
-         '<text x="8" y="32" class="t-lab" style="font-size:11px">'
-         '2008년 · 이렇게 하려고 지었다</text>',
-         '<text x="338" y="32" class="t-lab" style="font-size:11px">'
-         '2016년 · 같은 기지에서 반대로 흐른다</text>',
-         _mini_defs(), left, right]
-    # 2008 — 바다에서 들어와 미국 안으로
-    h += ['<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (lx + 95, ly + 45, lx + 16, ly + 9),
-          '<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (lx - 8, ly - 12, lx - 52, ly - 58),
-          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">해외에서 들여온다</text>'
-          % (lx + 100, ly + 62),
-          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">미국 안에 판다</text>'
-          % (lx - 46, ly - 64)]
-    # 2016 — 미국 안에서 나와 바다로
-    h += ['<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (rx - 52, ry - 58, rx - 8, ry - 12),
-          '<path d="M%.0f %.0f L%.0f %.0f" class="flow"/>' % (rx + 16, ry + 9, rx + 95, ry + 45),
-          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">셰일 가스가 배관으로 온다</text>'
-          % (rx - 46, ry - 64),
-          '<text x="%.0f" y="%.0f" text-anchor="end" class="t-sm">세계로 내보낸다</text>'
-          % (rx + 100, ry + 62)]
-    # 그 사이에 무슨 일이 있었나
-    h += ['<text x="8" y="264" class="t-bad" style="font-size:11px;font-weight:800">'
-          '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>',
-          '<rect x="8" y="276" width="624" height="92" rx="10" class="body"/>',
-          '<text x="24" y="298" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>',
-          '<text x="24" y="320" class="t-sm">'
-          '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>',
-          '<text x="24" y="338" class="t-sm">'
-          '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>',
-          '<text x="24" y="356" class="t-sm">'
-          '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>',
-          '<text x="8" y="392" class="t-sm">'
-          '기지는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>',
-          '</svg>']
+         '노란 곳이 미국이다. 같은 기지인데 화살표가 반대로 돈다</text>',
+         '<text x="8" y="36" class="t-lab" style="font-size:11px">'
+         '2008년 · 들여오려고 지었다</text>',
+         _world(12, TOP, hot=(_US_C,)),
+         _arw(12, TOP, atl, gulf, bend=22),
+         '<text x="%.0f" y="%.0f" class="t-sm">해외에서 배로 들여온다</text>'
+         % (12 + atl[0] + 10, TOP + atl[1] + 30),
+         _dot(12, TOP, qat, '카타르'),
+         _dot(12, TOP, aus, '호주'),
+         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
+         '그때 수출 1등은 이 둘이었다</text>' % (12 + (qat[0] + aus[0]) / 2, TOP + 218),
+         '<text x="8" y="290" class="t-bad" style="font-size:11px;font-weight:800">'
+         '✕ 가동 2년 만에 미국 안에서 셰일 가스가 터졌다. 들여올 이유가 사라졌다</text>',
+         '<text x="8" y="312" class="t-lab" style="font-size:11px">'
+         '2016년 · 같은 기지에서 반대로 나간다</text>',
+         _world(12, BOT, hot=(_US_C,)),
+         _arw(12, BOT, gulf, eur, bend=-30),
+         _arw(12, BOT, gulf, kor, bend=-46),
+         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
+         '유럽 · 20달러 넘는다</text>' % (12 + eur[0] + 6, BOT + eur[1] - 12),
+         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
+         '동북아 · 20달러 넘는다</text>' % (12 + kor[0] - 4, BOT + kor[1] - 14),
+         '<text x="%.0f" y="%.0f" text-anchor="middle" class="t-sm">'
+         '미국 2.7달러</text>' % (12 + gulf[0] - 6, BOT + gulf[1] + 26),
+         '<rect x="8" y="562" width="624" height="92" rx="10" class="body"/>',
+         '<text x="24" y="584" class="t-sm" style="font-weight:850">그 사이에 한 일 셋</text>',
+         '<text x="24" y="606" class="t-sm">'
+         '1. 2010년, 미국 정부에 가서 수입 면허를 수출 면허로 바꿔 달라고 해 승인을 받는다</text>',
+         '<text x="24" y="624" class="t-sm">'
+         '2. 2012년, 블랙스톤이 돈을 댄다. 물어본 것은 하나였다. 이 가스를 사갈 데가 있느냐</text>',
+         '<text x="24" y="642" class="t-sm">'
+         '3. 그렇게 맺은 판매 계약서를 담보로 200억 달러를 빌려 공사를 시작한다</text>',
+         '<text x="8" y="678" class="t-sm">'
+         '기지는 2008년에 지은 그 건물이다. 부두도 탱크도 새로 짓지 않았다</text>',
+         '</svg>']
     return ''.join(h)
 
 
 PIVOT_FIG = _pivot_svg()
 
-PIVOT_CAP = ('지도 둘은 같은 나라 같은 자리다. 2008년에는 바다에서 들여와 미국 안에 팔려고 '
-             '지었고, 2016년에는 미국 안에서 받아 바다로 내보낸다. 가스가 <b>들어오던 길로 '
-             '나가게</b> 됐다는 뜻이고, 그 사이에 새로 지은 건물은 없다. 대신 세 가지를 했다. '
+PIVOT_CAP = ('지도 둘은 같은 세계다. 2008년에는 바다 건너에서 들여와 미국 안에 팔려고 지었고, '
+             '2016년에는 그 기지에서 유럽과 동북아로 내보낸다. 가스가 <b>들어오던 길로 나가게</b> '
+             '됐다는 뜻이고, 그 사이에 새로 지은 건물은 없다. 화살표가 저쪽으로 도는 이유는 값이다. '
+             '미국 2.7달러, 동북아와 유럽은 20달러가 넘는다. 대신 그 사이에 세 가지를 했다. '
              '정부에 면허를 바꿔 달라고 했고, 2년 만에 무너진 회사에 돈을 대준 곳을 찾았고, '
              '그 계약서로 200억 달러를 빌렸다.')
 
