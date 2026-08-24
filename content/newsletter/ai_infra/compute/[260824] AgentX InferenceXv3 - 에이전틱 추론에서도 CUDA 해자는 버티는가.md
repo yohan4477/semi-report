@@ -295,6 +295,72 @@ FlashInfer GDN 체크포인트로 순환 상태(recurrent state)까지 프리픽
 스케줄러 레벨에서는 프리필 우선 결정이 반복돼 디코드가 굶주리는 문제를 프리필 이후 디코드 라운드를 강제하는 방식으로 고쳤다.
 그 결과 DeepSeek V4 Pro에서 출력 처리량 141%↑·p99 토큰 간 지연 97.3%↓를 얻은 대신 TTFT 중앙값이 36.5초에서 59초로 늘어나는 트레이드오프도 함께 드러났다.
 
+### vLLM PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#43447](https://github.com/vllm-project/vllm/pull/43447) | 선택적 보존 — 짧게 쓰고 버리는 슬라이딩 윈도우가 긴 맥락 체크포인트를 밀어내지 못하게 희소 리플레이 경계를 보존 | 동시 요청 14개·맥락 100만 토큰에서 프리픽스 캐시 적중률 95% 이상 |
+| [#44774](https://github.com/vllm-project/vllm/pull/44774) | 같은 도달성(reachability) 정책을 Mooncake 오프로드 경로에도 적용 | — |
+| [#45444](https://github.com/vllm-project/vllm/pull/45444) | 도달 불가능한 슬라이딩 윈도우 조회를 제거 | — |
+| [#42258](https://github.com/vllm-project/vllm/pull/42258) | 재사용될 일이 없는 슬라이딩 윈도우 블록의 오프로드를 중단 | — |
+| [#44082](https://github.com/vllm-project/vllm/pull/44082) | 추측 디코딩용 lookahead 블록을 보존 프리픽스 안에 유지 | — |
+| [#37160](https://github.com/vllm-project/vllm/pull/37160) | 하이브리드 모델 CPU KV 오프로드의 기반이 되는 범용 SimpleCPU 커넥터를 최초 도입 | — |
+| [#40549](https://github.com/vllm-project/vllm/pull/40549) | SimpleCPU 커넥터를 ROCm에서도 쓸 수 있게 활성화 | — |
+| [#42296](https://github.com/vllm-project/vllm/pull/42296) | SimpleCPU 커넥터를 DeepSeek-V4 하이브리드 어텐션까지 확장 | 출력 처리량 +81.7%, 평균 종단간 지연 -46.6%(프리픽스가 HBM에서 밀려나 매번 다시 계산하던 것 대비) |
+| [#42828](https://github.com/vllm-project/vllm/pull/42828) | Mooncake에도 동등한 하이브리드 메모리 할당 지원을 추가 | — |
+| [#51052](https://github.com/vllm-project/vllm/pull/51052) | Kimi-K3의 conv+ssm 순환 상태를 어텐션 KV와 함께 MoRI-IO로 옮겨, 분리형 서빙(1P1D)에서 디코드 측이 초기화되지 않은 순환 상태로 시작하는 문제를 방지(대기 중인 변경) | — |
+| [#41289](https://github.com/vllm-project/vllm/pull/41289) | 동일한 전송이 이미 진행 중이면 저장을 건너뛰어, 프리픽스를 공유하는 동시 세션이 비용을 한 번만 치르게 함 | — |
+| [#46412](https://github.com/vllm-project/vllm/pull/46412) | 저장이 새로 생성된 KV 구간만 다루게 해, 세션이 히스토리를 늘릴 때마다 프리픽스 전체를 다시 쓰지 않고 차분만 쓰게 함 | — |
+| [#46906](https://github.com/vllm-project/vllm/pull/46906) | 저장이 같은 블록이 여전히 HBM에 있는지에 더 이상 의존하지 않게 해, 이미 예약된 작업이 축출(eviction)로 폐기되지 않게 함 | — |
+| [#45659](https://github.com/vllm-project/vllm/pull/45659) | 스케줄러 경로의 캐시 조회를 비동기화해 커넥터가 스텝의 임계 경로에서 벗어나게 함 | — |
+| [#45969](https://github.com/vllm-project/vllm/pull/45969) | 조회 키를 압축된 제로카피(zero-copy) 방식으로 바꿈 | — |
+| [#45971](https://github.com/vllm-project/vllm/pull/45971) | 수신 측 로딩을 병렬화 | — |
+| [#46188](https://github.com/vllm-project/vllm/pull/46188) | Mooncake 키 문자열을 미리 만들어둠 | — |
+| [#44103](https://github.com/vllm-project/vllm/pull/44103) | 하이브리드 캐시 그룹별로 캐시 이벤트를 따로 발행 | — |
+| [#45371](https://github.com/vllm-project/vllm/pull/45371) | 분산 컨텍스트 저장의 간격 배치(stride)를 올바르게 계산 | — |
+| [#46855](https://github.com/vllm-project/vllm/pull/46855) | 분산 컨텍스트·프리필 상황에서 조회 프리픽스를 올바르게 계산 | — |
+| [#45340](https://github.com/vllm-project/vllm/pull/45340) | 컨텍스트 병렬 회계(accounting)를 고쳐 캐시 소유권을 샤딩된 토큰 구간과 맞춤 | — |
+| [#49069](https://github.com/vllm-project/vllm/pull/49069) | 추측 디코딩 상태가 병합된 Mooncake 그룹 전체에 전파되게 함 | — |
+| [#49071](https://github.com/vllm-project/vllm/pull/49071) | 추측 디코딩 상태가 SimpleCPU 코디네이터를 거쳐서도 전파되게 해, 반복 턴 캐시가 EAGLE(추측 디코딩 방식) 상태를 조용히 잃는 것을 방지 | — |
+| [#51183](https://github.com/vllm-project/vllm/pull/51183) | Kimi-K3의 KDA 디코드 결과를 레이어 출력 버퍼에 직접 기록해 KDA 레이어당 디바이스 복사 1회를 제거 | — |
+| [#51714](https://github.com/vllm-project/vllm/pull/51714) | 범용 경로 대신 AITER(AMD의 GPU 커널 라이브러리) 희소 MLA 디코드 커널을 선택 | AgentX 출력 처리량 +5.22%, 토큰 간 지연 대폭 감소 |
+| [#51713](https://github.com/vllm-project/vllm/pull/51713) | 풀그래프 어텐션 프로젝션을 튜닝된 AITER GEMM(행렬곱 연산) 경로로 라우팅 | 저동시성 고정 시퀀스에서 +2.3%(에이전틱 트레이스에서는 캐시·스케줄링 변동에 묻힘) |
+| [#52882](https://github.com/vllm-project/vllm/pull/52882) | DeepSeek V4 C4A 셀렉터의 ROCm top-k 병목을 gfx950 하이브리드 AITER/네이티브 경로로 교체 — 짧고 중간 길이 컨텍스트는 AITER로, 긴 컨텍스트는 그래프 세이프 튜닝 네이티브 폴백으로 라우팅(대기 중인 변경) | 종단간 셀렉터 속도 1.21\~1.76배, 디코드 커널 기하평균 1.2\~2.9배(84개 형태 매트릭스 기준) |
+
+### SGLang PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#26907](https://github.com/sgl-project/sglang/pull/26907) | 페이지가 윈도우를 벗어나는 즉시 선제적으로 해제해, 죽은 윈도우 상태가 더 이상 쓸 수 없는 페이지를 계속 붙들지 않게 함 | — |
+| [#27210](https://github.com/sgl-project/sglang/pull/27210) | 컴퓨트 락(진행 중인 요청이 한 번에 쥘 수 있는 풀의 양)을 윈도우 하나로 상한 | — |
+| [#29369](https://github.com/sgl-project/sglang/pull/29369) | 쓸모를 다한 유효기간 지난 전체 KV 항목을 제거 | — |
+| [#34565](https://github.com/sgl-project/sglang/pull/34565) | 프리픽스에서 갈라져 나온(fork) 요청이 분기점의 슬라이딩 윈도우 상태를 다시 만들지 않고 물려받게 보존(진행 중인 작업) | — |
+| [#30339](https://github.com/sgl-project/sglang/pull/30339) | ROCm 링 캐시(슬롯을 재사용하는 순환 버퍼)가 아직 참조 중인 옛 내용을 덮어써 틀린 출력을 내던 정합성 버그를 수정 | — |
+| [#29417](https://github.com/sgl-project/sglang/pull/29417) | HiCache가 값비싼 전체 어텐션 캐시만 옮기고, 값싼 슬라이딩 윈도우 꼬리는 돌아올 때 재구성하는 비대칭 전략을 도입 | — |
+| [#28534](https://github.com/sgl-project/sglang/pull/28534) | AMD에서 단계적 라이트백(staged write-back)을 적용해 캐시 이동이 엔진을 막지 않게 함 | — |
+| [#29735](https://github.com/sgl-project/sglang/pull/29735) | FlashInfer GDN 체크포인트로 순환 상태(recurrent state)까지 프리픽스 재사용에 참여시킴 | 처리량 초당 GPU당 47,771 → 53,004토큰, 캐시 적중률 92.4% |
+| [#30255](https://github.com/sgl-project/sglang/pull/30255) | 컨텍스트 길이를 컴파일 대상이 아니라 런타임 스칼라 값으로 전달해, 매 요청마다 커널을 새로 컴파일하던 것을 없앰 | AgentX 동시성 384 출력 처리량 +26.75%, 평균 TTFT -36.25% |
+| [#30365](https://github.com/sgl-project/sglang/pull/30365) | 스텝마다 반복되던 디바이스→호스트 시퀀스 길이 동기화를 제거해 디코드 버블을 없앰 | — |
+| [#34888](https://github.com/sgl-project/sglang/pull/34888) | GB300에서 혼합 길이 디코드 배치가 겪는 지연을 줄이려 TRTLLM MHA 디코드 배치를 KV 길이순으로 정렬된 그룹으로 쪼갬(진행 중인 작업) | — |
+| [#35017](https://github.com/sgl-project/sglang/pull/35017) | 프리필 뒤에 디코드 라운드를 강제하는 설정 가능한 디코드 간격을 추가해, 특정 랭크가 프리필 우선 결정을 계속 이기며 다른 랭크의 배치가 대기하는 문제를 줄임 | AgentX DSv4 Pro에서 출력 처리량 +141%, p99 토큰 간 지연 -97.3%(대신 TTFT 중앙값이 36.5초→59초로 증가) |
+| [#26091](https://github.com/sgl-project/sglang/pull/26091) | DP 캐시 어피니티를 추가해 세션이 해당 캐시를 쥔 랭크에 고정되게 함 | — |
+| [#26245](https://github.com/sgl-project/sglang/pull/26245) | 분리형 서빙 양쪽(프리필·디코드)이 일관되게 캐시 위치를 반영하도록 DP 인지 프리필·디코드 라우팅을 구현 | — |
+| [#26293](https://github.com/sgl-project/sglang/pull/26293) | 캐시 균형을 라우팅 신호로 반영해 어피니티가 한 워커에만 몰리지 않게 함 | — |
+| [#26387](https://github.com/sgl-project/sglang/pull/26387) | 하이브리드 캐시 이벤트를 radix-cache(접두사 트리 기반 캐시) 인지형으로 만듦 | — |
+| [#26579](https://github.com/sgl-project/sglang/pull/26579) | 하이브리드 캐시 이벤트를 슬라이딩 윈도우 인지형으로 만듦 | — |
+| [#30461](https://github.com/sgl-project/sglang/pull/30461) | 분리형 서빙에서 드래프트 윈도우(추측 디코딩용 상태) 전송이 프리필→디코드 경계를 온전히 넘도록 수정 | — |
+| [#30497](https://github.com/sgl-project/sglang/pull/30497) | 고동시성 온라인 디코딩에 오버랩 스케줄링을 추가 | — |
+| [#31294](https://github.com/sgl-project/sglang/pull/31294) | 아무 효과 없던 EAGLE 재정규화를 제거 | — |
+| [#33662](https://github.com/sgl-project/sglang/pull/33662) | EAGLE 프리필 도중 발생하던 호스트 동기화를 없앰 | — |
+| [#32042](https://github.com/sgl-project/sglang/pull/32042) | 요청이 취소·재개될 수 있는 상황에서도 오버랩이 안전하도록 자원 리스(lease) 방식 스케줄링을 진행(진행 중인 작업) | — |
+| [#32196](https://github.com/sgl-project/sglang/pull/32196) | 데이터 병렬 그래프 메타데이터 버그를 수정(진행 중인 작업) | — |
+| [#30545](https://github.com/sgl-project/sglang/pull/30545) | 스테이징 버퍼에 radix-cache 지원을 추가해, 캐시된 전송을 전송 그리드에 맞춰 쪼개고 디코드 측이 기대하는 오프셋에 정확히 배치 | 12만 7,500토큰 공유 프리픽스 테스트에서 정답 128개 중 2개→128개로 정합성 회복, 사용자당 출력 처리량 +9.6%(GPU당 총처리량은 거의 그대로) |
+| [#35070](https://github.com/sgl-project/sglang/pull/35070) | 디코드 측 PREBUILT 배치가 모델 forward를 아예 타지 않는데도 모든 전송 프롬프트를 CUDA 입력 텐서로 펼쳐 복사하던 불필요한 전송을 제거 | 사용자당 출력 처리량 +18.0%, GPU당 디코드 처리량 +12.7%(AgentX GB300) |
+| [#35071](https://github.com/sgl-project/sglang/pull/35071) | 프리필 DP 랭크 부트스트랩 조회를 디코드 스케줄러의 임계 경로 밖으로 옮겨, 결과 소비 시점에 동기적으로 치르던 HTTP 왕복을 오버랩 | 같은 배포에서 사용자당 출력 처리량 추가 +1.36% |
+| [#30762](https://github.com/sgl-project/sglang/pull/30762) | UMBP(통합 메모리 블록 풀)에 DeepSeek-V4용 다중 풀 지원을 추가(진행 중인 작업) | — |
+| [#32368](https://github.com/sgl-project/sglang/pull/32368) | MoRI를 통해 통합 KV HiSparse 상태를 유지(진행 중인 작업) | — |
+| [#34216](https://github.com/sgl-project/sglang/pull/34216) | 디코드가 눈에 보이는 콘텐츠 없이 종료될 때도 프리필이 소유한 토큰을 보존(진행 중인 작업) | — |
+
 ---
 
 ## 6. TensorRT-LLM·AMD ATOM·AITER 최적화
