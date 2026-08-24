@@ -27,7 +27,10 @@ PAGES = [
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
-         os.path.join(ROOT, 'scratchpad', 'company_facts_B.md')]
+         os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
+         # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
+         os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_A.md'),
+         os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_B.md')]
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

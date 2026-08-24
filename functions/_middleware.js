@@ -18,7 +18,7 @@
 // PAGES 의 잠금 칸을 대조해서 어긋나면 멈춘다.
 const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy',
                            '/admin', '/und-premium', '/accountant', '/lineage',
-                           '/leesunyeop']);
+                           '/leesunyeop', '/report']);
 const COOKIE = 'ida_auth';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30일
 
