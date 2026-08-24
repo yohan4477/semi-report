@@ -24,6 +24,11 @@ PAGES = [
      os.path.join(ROOT, 'content', 'understanding', '피지컬AI')),
 ]
 
+# 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
+# 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
+EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
+         os.path.join(ROOT, 'scratchpad', 'company_facts_B.md')]
+
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '2023', '2024', '2025', '2026', '0'}
@@ -39,6 +44,9 @@ def corpus(d):
     for f in sorted(os.listdir(d)):
         if f.endswith('.md'):
             out.append(io.open(os.path.join(d, f), encoding='utf-8').read())
+    for f in EXTRA:
+        if os.path.exists(f):
+            out.append(io.open(f, encoding='utf-8').read())
     return norm('\n'.join(out))
 
 
