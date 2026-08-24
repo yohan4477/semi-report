@@ -19,9 +19,12 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# (페이지, 층 id, 재료 폴더) — 한 페이지에 성격이 다른 리포트 층이 여럿이면 층마다 재료가 다르다.
 PAGES = [
-    (os.path.join(ROOT, '대시보드', '통합 보고서.html'),
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-report',
      os.path.join(ROOT, 'content', 'understanding', '피지컬AI')),
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-biz',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
@@ -44,19 +47,20 @@ def norm(t):
 
 def corpus(d):
     out = []
-    for f in sorted(os.listdir(d)):
-        if f.endswith('.md'):
-            out.append(io.open(os.path.join(d, f), encoding='utf-8').read())
+    for base, _dirs, files in os.walk(d):
+        for f in sorted(files):
+            if f.endswith('.md'):
+                out.append(io.open(os.path.join(base, f), encoding='utf-8').read())
     for f in EXTRA:
         if os.path.exists(f):
             out.append(io.open(f, encoding='utf-8').read())
     return norm('\n'.join(out))
 
 
-def body(html):
-    """보고서 층의 글자만 — 태그와 스크립트를 걷는다."""
+def body(html, sec):
+    """그 층의 글자만 — 태그와 스크립트를 걷는다."""
     h = io.open(html, encoding='utf-8').read()
-    i = h.find('id="sec-report"')
+    i = h.find('id="%s"' % sec)
     if i < 0:
         return ''
     seg = h[i:h.find('</section>', i)]
@@ -66,11 +70,14 @@ def body(html):
 
 def main():
     bad = 0
-    for page, src_dir in PAGES:
+    for page, sec, src_dir in PAGES:
         if not os.path.exists(page):
             print('건너뜀 — 파일이 없다: %s' % page)
             continue
-        text, src = body(page), corpus(src_dir)
+        text, src = body(page, sec), corpus(src_dir)
+        if not text.strip():
+            print('건너뜀 — 층이 아직 없다: %s' % sec)
+            continue
         nums = []
         for m in re.finditer(r'\d[\d,\.]*', text):
             v = m.group(0).rstrip('.')
@@ -85,7 +92,7 @@ def main():
             return bool(re.search(r'\(\$\s?[\d,\.]+\s?[MB]?\)', c))
 
         miss = [(v, c) for v, c in nums if not sourced(v, c)]
-        name = os.path.basename(page)
+        name = os.path.basename(page) + ' / ' + sec
         for v, c in miss:
             print('확인 필요 %s — 원문에서 못 찾은 값 %s: …%s…'
                   % (name, v, ' '.join(c.split())))

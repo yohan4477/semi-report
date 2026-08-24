@@ -560,6 +560,15 @@ SEARCH_HTML = ('<div class="ssearch"><input type="search" class="sq" '
                '<span class="sq-n"></span></div>')
 
 
+def _as_tops(x):
+    """고정 층 인자를 목록으로 편다. 튜플 하나로 준 예전 호출도 그대로 받는다."""
+    if not x:
+        return []
+    if isinstance(x, tuple):
+        return [x]
+    return list(x)
+
+
 def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_top=''):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
@@ -573,12 +582,14 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
              '<span class="st-num">✦</span><span class="st-t">전체 보기</span>'
              '<span class="st-s">모든 섹션을 한 줄로</span>'
              '<span class="st-n cnt">%d</span></button>' % total]
-    if extra:
-        xid, xtitle, xsub, xn = extra
+    # extra 는 (sid, 이름, 설명, 편수) 하나이거나 그런 튜플의 목록이다. 성격이 다른 고정 층이
+    # 둘 이상이면 타일도 그만큼 선다 — 하나로 합치면 타일 이름이 안에 든 글과 어긋난다.
+    for i, x in enumerate(_as_tops(extra)):
+        xid, xtitle, xsub, xn = x[:4]
         tiles.append('<button class="stile" data-sec="%s" aria-pressed="false">'
-                     '<span class="st-num">00</span><span class="st-t">%s</span>'
+                     '<span class="st-num">%02d</span><span class="st-t">%s</span>'
                      '<span class="st-s">%s</span><span class="st-n cnt">%d</span></button>'
-                     % (xid, xtitle, snip(xsub), xn))
+                     % (xid, i, xtitle, snip(xsub), xn))
     def _gap(sid):
         # badges = {섹션 id: (표시할 값, up|down|flat, 마우스를 올리면 뜨는 기준)}
         b = (badges or {}).get(sid)
@@ -954,7 +965,7 @@ def sec_copy(sid):
 XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
 
 
-def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
+def render(cards, title, header, footer, out, rollup='', top='', extra_css='', tops=None,
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
@@ -962,6 +973,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
+
+    tops = [(sid, 제목, 설명, 편수, html), …]. 카드 없는 고정 층이 둘 이상인 장에서 쓴다.
+    top= 하나로는 성격이 다른 글 둘을 한 타일에 밀어 넣게 되어 타일 이름이 안과 어긋난다.
+    top= 와 같이 주면 top 이 맨 앞에 선다.
 
     intro는 타일 그리드 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않고
     접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다.
@@ -984,20 +999,25 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
     # 카드가 없는 층(통합 인사이트·밸류에이션 지도)도 타일 하나로 선다. id를 바꿀 수 있게 둔다 —
     # 한 저장소에 성격이 다른 고정 층이 여럿이라 sec-cross 하나로는 안 된다.
     tid = top_id or XSEC
-    extra = (tid, top_title, top_sub, top_n) if top else None
+    # tops = [(sid, 제목, 설명, 편수, html), …]. 성격이 다른 고정 층이 둘 이상인 장에서 쓴다 —
+    # 로봇 보고서와 AI 비즈니스 리포트를 한 타일에 넣으면 타일 이름이 안과 어긋난다.
+    layers = list(tops or [])
+    if top:
+        layers.insert(0, (tid, top_title, top_sub, top_n, top))
+    extra = [l[:4] for l in layers] or None
     # 처음 화면이 「전체」라 타일에 적히는 수도 전체다(JS가 범위를 바꿀 때 다시 센다)
-    nav = sec_picker(secs, order, len(cards) + top_n, extra,
+    nav = sec_picker(secs, order, len(cards) + sum(l[3] for l in layers), extra,
                      groups=sec_groups, badges=sec_badges, pick_top=pick_top)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
     body = []
-    if top:
+    for i, (lid, ltitle, _lsub, ln, lhtml) in enumerate(layers):
         # 카드가 없는 섹션이라 data-fixed로 표시한다 — 국내·해외 범위 필터도 타지 않는다
         # data-n은 이 층이 몇 편을 담고 있는지다. 카드가 없으니 세어 볼 수가 없다.
         body.append('<section id="%s" data-fixed="1" data-n="%d"><div class="sec-head">'
-                    '<span class="sec-num">00</span><h2 class="sec-title">%s</h2>%s</div>%s</section>'
-                    % (tid, top_n, top_title, sec_copy(tid), top))
+                    '<span class="sec-num">%02d</span><h2 class="sec-title">%s</h2>%s</div>%s</section>'
+                    % (lid, ln, i, ltitle, sec_copy(lid), lhtml))
     sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
     sec_fig = sec_fig or {}
     unknown = [k for k in list(sec_top) + list(sec_bottom) + list(sec_fig)
@@ -1042,9 +1062,9 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='',
             + FOLD_JS + NAV_JS + LINK_JS + SW_JS + ui_bits.TOP_BTN + '\n')
     check_labels(cards)
     check_links(cards)
-    check_ui(html, bool(top))
+    check_ui(html, bool(layers))
     io.open(out, 'w', encoding='utf-8').write(html)
-    print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + bool(top), out))
+    print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + len(layers), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
     return html
 
