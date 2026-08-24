@@ -49,15 +49,15 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 27 |
+| ai-infra/compute | 28 |
 | ai-infra/memory | 9 |
-| ai-infra/networking | 11 |
+| ai-infra/networking | 12 |
 | ai-infra/business | 19 |
 | ai-infra/power | 11 |
 | ai-infra/cooling | 3 |
 | ai-infra/construction | 3 |
 | ai-models/rl | 4 |
-| ai-models/agents | 3 |
+| ai-models/agents | 4 |
 | ai-models | 3 |
 | robotics | 1 |
 | semiconductors | 3 |
@@ -101,6 +101,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 ## 버전 히스토리
 
 - v1.0 (2026-07-04): 초기 카테고리 체계 수립 — ai-models, ai-infra(power/cooling/compute/memory), robotics
+- (2026-08-24) [260824] AgentX InferenceXv3(에이전틱 추론에서도 CUDA 해자는 버티는가) 신규 변환 완료 — ai-infra/compute 27→28, ai-infra/networking 11→12, ai-models/agents 3→4. SemiAnalysis가 300만 달러를 들여 만든 세계 최초 완전 오픈소스 멀티턴 에이전틱 코딩 추론 벤치마크 AgentX 1.0(1M 맥락) 공개, DeepSeek V4 Pro·Kimi K3·MiniMax M3·Qwen3.5·GLM 5.3 다섯 프론티어 모델에서 GB300/GB200/B300/B200 대 MI355X 실측 비교, 이 벤치마크가 이끌어낸 vLLM·SGLang·TensorRT-LLM·AMD ATOM·AITER·Dynamo·LMCache·Mooncake 상류 50개+ PR(하이브리드 어텐션 캐시 보존·CPU/DRAM KV 오프로드·컨텍스트 병렬화·라우팅 어피니티), 300만 달러 트레이스 데이터셋 수집·익명화·DAG 리플레이 방법론, 모델 수명주기 전체를 적분한 성능 비교(TTFI·소프트웨어 개선속도·누적 토큰생성)까지 전체 11개 섹션 완료. 하드웨어·벤더 비교 축은 compute, 분산 추론 시스템(KV 전송·PD 분리·컨텍스트 병렬화) 축은 networking, 에이전틱 벤치마크 방법론 자체는 ai-models/agents로 3중 분류
   - 기존 5개 문서를 소급 분류한 결과 전부 ai-infra/power(전력 시스템)에 해당, 냉각 시스템(Part 2)만 유일하게 ai-infra/cooling 추가 해당 — 현재 코퍼스가 전력 인프라에 편중되어 있음을 확인
 - (2026-08-17) [260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도 신규 변환 완료 — ai-infra/compute 24→25. 데이터센터 CPU 40년사(PC→닷컴→가상화·클라우드→AI 헤드노드/클라우드 네이티브→RL·에이전트 시대), 인텔 메시 인터커넥트의 EMIB·Foveros Direct 분리형 패키징 진화와 클리어워터 포레스트 실패, AMD 중앙집중형 I/O 다이 진화, 2026년 세대(인텔 다이아몬드 래피즈·AMD 베니스) 아키텍처, ARM 진영 전체(엔비디아 Grace·Vera, AWS 그래비톤5, MS 코발트 200, 구글 액시온, 암페어원과 소프트뱅크 인수, ARM 피닉스, 화웨이 쿤펑), 2028년까지 로드맵(AMD 베라노·플로렌스, 인텔 코랄 래피즈, ARM 베놈, 퀄컴 SD2), 블루필드-4 컨텍스트 메모리 스토리지, DRAM 공급난과 향후 CPU 트렌드까지 전체 19개 섹션 완료. 하드웨어 아키텍처·산업 로드맵이 중심인 순수 컴퓨트 문서로 ai-infra/compute 단일 분류, 컴퓨트 통합 리포트 §3 문서별 요약에 추가
 
