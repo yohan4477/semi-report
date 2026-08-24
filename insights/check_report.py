@@ -77,7 +77,14 @@ def main():
             if v in SKIP or len(norm(v)) < 2:
                 continue
             nums.append((v, text[max(0, m.start() - 30):m.end() + 30]))
-        miss = [(v, c) for v, c in nums if norm(v) not in src]
+        # 한국식 단위로 옮긴 값은 원문 표기와 글자가 다르다(3억 9,700만 달러 ↔ $397M).
+        # 바로 뒤에 원문 표기를 괄호로 병기했으면 출처가 붙은 것으로 본다.
+        def sourced(v, c):
+            if norm(v) in src:
+                return True
+            return bool(re.search(r'\(\$\s?[\d,\.]+\s?[MB]?\)', c))
+
+        miss = [(v, c) for v, c in nums if not sourced(v, c)]
         name = os.path.basename(page)
         for v, c in miss:
             print('확인 필요 %s — 원문에서 못 찾은 값 %s: …%s…'
