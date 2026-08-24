@@ -12,7 +12,7 @@ import _agent_report as ar
 
 OUT = os.path.join(dc.ROOT, '대시보드', '용어사전.html')
 
-STAMP = '2026-08-22'
+STAMP = '2026-08-24'
 
 SEC_AGENT = ('sec-agent', '01', 'AI 에이전트 · 실행 구조',
              '모델이 혼자 못 하는 일을 누가 대신 하나')
@@ -178,10 +178,11 @@ HEADER = '''  <header>
 
 META = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
-      <span>수록 <b>%d개</b></span>
+      <span>용어 <b>%d개</b></span>
+      <span>보고서 <b>1편</b> · 절 <b>11개</b></span>
     </div>''' % (STAMP, len(CARDS))
 
-LEDE = '''<p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다.</p>'''
+LEDE = '''<p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다. 맨 앞 타일에는 그 말들이 한 판에서 어떻게 맞물리는지를 이은 보고서가 한 편 서 있습니다.</p>'''
 
 FOOTER = (LEDE + META + '\n용어 풀이 · 카드 하나가 용어 하나입니다.\n'
           '  페이지 생성은 <code>scratchpad/gen_glossary.py</code>(공용 부품 <code>dash_common.py</code>).')
