@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-23",
+ "generated": "2026-08-24",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -370,6 +370,19 @@
    "date": "2025-12-04",
    "path": "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md",
    "hash": "dc2574593d87"
+  },
+  {
+   "id": "semi:compute:AgentX-InferenceXv3-에이전틱-추론에서도-CUDA-해자는-버티는가",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking",
+    "ai-models/agents"
+   ],
+   "date": "2026-08-24",
+   "path": "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md",
+   "hash": "97e6307656bf"
   },
   {
    "id": "semi:compute:CFET-1000개와-SK하이닉스-차세대-낸드-IEDM-2025-총정리",
@@ -1178,6 +1191,17 @@
    "date": "2026-06-01",
    "path": "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md",
    "hash": "ce606b5d1fb6"
+  },
+  {
+   "id": "und:미국주식 사관학교:국채가-밀리는-동안-지방채는-물량이-안-늘었다-고금리-뉴노멀에서-남는-채권-셋",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-23",
+   "path": "content/understanding/미국주식 사관학교/[260823] 국채가 밀리는 동안 지방채는 물량이 안 늘었다 - 고금리 뉴노멀에서 남는 채권 셋.md",
+   "hash": "19b569c9f76d"
   },
   {
    "id": "und:미국주식 사관학교:금값-4200달러-잣대를-바꾸면-비싼-값이-아니다-인플레이션경제규모통화량으로-다시-잰-금-시세",
@@ -2258,6 +2282,28 @@
    "hash": "bd02a82d80ac"
   },
   {
+   "id": "und:피지컬AI:2026년-예측-와글와글",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-01-10",
+   "path": "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md",
+   "hash": "11076fbca622"
+  },
+  {
+   "id": "und:피지컬AI:AI-로보틱스-코리아-데모룸과-액션-데이터-스케일링",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-08-17",
+   "path": "content/understanding/피지컬AI/[250817] AI 로보틱스 코리아 데모룸과 액션 데이터 스케일링.md",
+   "hash": "bb8d9e687bdc"
+  },
+  {
    "id": "und:피지컬AI:Action-Data-Scaling-문제",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2280,6 +2326,17 @@
    "hash": "e1bb587be03f"
   },
   {
+   "id": "und:피지컬AI:CoRL-2025-현장에서-로봇들-써봄",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-10-07",
+   "path": "content/understanding/피지컬AI/[251007] CoRL 2025 현장에서 로봇들 써봄.md",
+   "hash": "c224deb64663"
+  },
+  {
    "id": "und:피지컬AI:DYNA-2-월드-액션-모델과-170년-휴먼-데이터",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2299,7 +2356,7 @@
    ],
    "date": "2025-10-18",
    "path": "content/understanding/피지컬AI/[251018] Figure 03과 1X 네오, 손 병목.md",
-   "hash": "72e3a62064da"
+   "hash": "d2b2024c674f"
   },
   {
    "id": "und:피지컬AI:Figure-Helix-첫-공개",
@@ -2311,6 +2368,17 @@
    "date": "2025-03-05",
    "path": "content/understanding/피지컬AI/[250305] Figure Helix 첫 공개.md",
    "hash": "99cc6d486c14"
+  },
+  {
+   "id": "und:피지컬AI:GPT-54와-Figure-리모컨-데모",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-03-18",
+   "path": "content/understanding/피지컬AI/[260318] GPT 5.4와 Figure 리모컨 데모.md",
+   "hash": "5558198acb13"
   },
   {
    "id": "und:피지컬AI:GTC-앞두고-쏟아진-로봇-모델-다섯-편",
@@ -2333,6 +2401,17 @@
    "date": "2026-07-22",
    "path": "content/understanding/피지컬AI/[260722] General Intuition MIRA는 훈련장이다.md",
    "hash": "225499c008ef"
+  },
+  {
+   "id": "und:피지컬AI:LeRobot-한-갈래를-네-편으로-본-것",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-06-26",
+   "path": "content/understanding/피지컬AI/[250626] LeRobot 한 갈래를 네 편으로 본 것.md",
+   "hash": "7240846c8a8c"
   },
   {
    "id": "und:피지컬AI:Physical-AI의-정의",
@@ -2412,6 +2491,28 @@
    "hash": "5c7bb74f40bf"
   },
   {
+   "id": "und:피지컬AI:로보스트레티지가-여는-Figure-AI-길",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-06-02",
+   "path": "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md",
+   "hash": "40733920c065"
+  },
+  {
+   "id": "und:피지컬AI:로보티즈-워크숍과-VLA-네-교훈",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-08-22",
+   "path": "content/understanding/피지컬AI/[250822] 로보티즈 워크숍과 VLA 네 교훈.md",
+   "hash": "025274f897c1"
+  },
+  {
    "id": "und:피지컬AI:로봇-데이터-없이-학습한-세-회사의-차이",
    "corpus": "understanding",
    "folder": "피지컬AI",
@@ -2432,6 +2533,28 @@
    "date": "2026-06-21",
    "path": "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md",
    "hash": "f43018c7aad3"
+  },
+  {
+   "id": "und:피지컬AI:로봇-판세와-액추에이터-병목",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2025-09-26",
+   "path": "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md",
+   "hash": "0ffea3821001"
+  },
+  {
+   "id": "und:피지컬AI:르로봇-바이매뉴얼-해커톤",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-02-13",
+   "path": "content/understanding/피지컬AI/[260213] 르로봇 바이매뉴얼 해커톤.md",
+   "hash": "3dcea82cd12b"
   },
   {
    "id": "und:피지컬AI:물리-노동이-다음이라는-신호들",
@@ -2476,6 +2599,17 @@
    "date": "2026-01-22",
    "path": "content/understanding/피지컬AI/[260122] 엔비디아 GPU 전략과 1X 월드모델.md",
    "hash": "a6aa43f349a8"
+  },
+  {
+   "id": "und:피지컬AI:엔비디아-GTC와-한국-로보틱스-넷",
+   "corpus": "understanding",
+   "folder": "피지컬AI",
+   "categories": [
+    "피지컬AI"
+   ],
+   "date": "2026-07-02",
+   "path": "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md",
+   "hash": "3fc47871e06f"
   },
   {
    "id": "und:피지컬AI:예약판매-뒤에서-끊긴-자금줄",
@@ -2575,6 +2709,17 @@
    "date": "2026-05-03",
    "path": "content/understanding/회계사/[260503] 304% 오른 뒤에도 61% 저평가라는 계산 - 삼성전자 내재가치 - 엘곰.md",
    "hash": "93a3c8358b40"
+  },
+  {
+   "id": "und:회계사:30년물-534-일본이-엔을-방어하면-미-국채가-매물로-나온다-미국-국채-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-23",
+   "path": "content/understanding/회계사/[260823] 30년물 5.34%, 일본이 엔을 방어하면 미 국채가 매물로 나온다 - 미국 국채 - 엘곰.md",
+   "hash": "2741cf7008e1"
   },
   {
    "id": "und:회계사:30년물-금리-531로-19년-최고-브렌트유는-2주-만에-91달러-엘곰",
@@ -2742,6 +2887,17 @@
    "hash": "6f705c2bf726"
   },
   {
+   "id": "und:회계사:DCF-내재가치-1894539원-주가보다-304-아래-효성중공업-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-22",
+   "path": "content/understanding/회계사/[260822] DCF 내재가치 1,894,539원, 주가보다 30.4% 아래 - 효성중공업 - 엘곰.md",
+   "hash": "2d36966c76ab"
+  },
+  {
    "id": "und:회계사:DCF-내재가치-26만원-주가보다-192-위-삼성SDS-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -2795,6 +2951,17 @@
    "date": "2026-08-09",
    "path": "content/understanding/회계사/[260809] DCF 내재가치 51,400원, 주가보다 59.8% 아래 - 주성엔지니어링 - 엘곰.md",
    "hash": "b71882265a91"
+  },
+  {
+   "id": "und:회계사:DCF-내재가치-518300원-주가보다-45-위-현대모비스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-23",
+   "path": "content/understanding/회계사/[260823] DCF 내재가치 518,300원, 주가보다 4.5% 위 - 현대모비스 - 엘곰.md",
+   "hash": "b668bea869dd"
   },
   {
    "id": "und:회계사:DCF-내재가치-558만원-주가보다-259-아래-HD현대일렉트릭-엘곰",
@@ -3138,6 +3305,17 @@
    "hash": "c2bb6421e2a3"
   },
   {
+   "id": "und:회계사:달리오가-금-1015를-권했다-매년-새로-팔아야-할-국채가-12조-달러다-자산배분-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-22",
+   "path": "content/understanding/회계사/[260822] 달리오가 금 10~15%를 권했다, 매년 새로 팔아야 할 국채가 12조 달러다 - 자산배분 - 엘곰.md",
+   "hash": "533bc6d665d4"
+  },
+  {
    "id": "und:회계사:동결-확률-6580-그래도-인상-카드가-살아있던-이유-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3215,6 +3393,17 @@
    "hash": "58e5af72a856"
   },
   {
+   "id": "und:회계사:바이백을-두-배로-늘렸지만-효과는-하루였다-30년물은-528로-되돌아왔다-미국-국채-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-22",
+   "path": "content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md",
+   "hash": "ca49aedf265d"
+  },
+  {
    "id": "und:회계사:바이백을-두-배로-늘리자-30년물이-9bp-내렸다-미-재무부-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3235,6 +3424,17 @@
    "date": "2024-06-30",
    "path": "content/understanding/회계사/[240630] 반도체만 떼어봐야 하는 이유, HBM과 파운드리 - 주식가치 평가 2 - 삼성전자 - 엘곰.md",
    "hash": "85d6831069a2"
+  },
+  {
+   "id": "und:회계사:버핏지표-238로-사상-최고-그런데-버핏은-14분기-만에-사들였다-투자심리-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-21",
+   "path": "content/understanding/회계사/[260821] 버핏지표 238%로 사상 최고, 그런데 버핏은 14분기 만에 사들였다 - 투자심리 - 엘곰.md",
+   "hash": "9ab45a12059c"
   },
   {
    "id": "und:회계사:본업-DCF-277794원-로봇-프리미엄-132조원-LG전자-엘곰",
@@ -3259,6 +3459,28 @@
    "hash": "473a5846aff4"
   },
   {
+   "id": "und:회계사:부여일은-숫자가-정해졌나가-아니라-정하는-방식이-객관적인가로-갈린다-주식기준보상-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-21",
+   "path": "content/understanding/회계사/[260821] 부여일은 숫자가 정해졌나가 아니라 정하는 방식이 객관적인가로 갈린다 - 주식기준보상 - 엘곰.md",
+   "hash": "7ac772592fcf"
+  },
+  {
+   "id": "und:회계사:부칙에-못을-안-박아-2009년-세금을-되돌릴-길이-남았다-계약해제-경정청구-방구퐁",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-22",
+   "path": "content/understanding/회계사/[260822] 부칙에 못을 안 박아 2009년 세금을 되돌릴 길이 남았다 - 계약해제 경정청구 - 방구퐁.md",
+   "hash": "55e73c6866c9"
+  },
+  {
    "id": "und:회계사:브렌트유-하루-7-급등-100달러-10년물-금리-471로-2025년-1월-최고-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3268,6 +3490,17 @@
    "date": "2026-07-24",
    "path": "content/understanding/회계사/[260724] 브렌트유 하루 7% 급등 100달러, 10년물 금리 4.71%로 2025년 1월來 최고 - 엘곰.md",
    "hash": "4c8460844065"
+  },
+  {
+   "id": "und:회계사:비트코인-48시간에-18-올라-77600달러-방아쇠는-국채-바이백이었다-크립토-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-21",
+   "path": "content/understanding/회계사/[260821] 비트코인 48시간에 18% 올라 77,600달러, 방아쇠는 국채 바이백이었다 - 크립토 - 엘곰.md",
+   "hash": "86d045d7b313"
   },
   {
    "id": "und:회계사:빅테크-DCF-성장률은-한-번에-꺾지-않고-서서히-낮춘다-엘곰",
@@ -3545,6 +3778,17 @@
    "hash": "4460ead95cd8"
   },
   {
+   "id": "und:회계사:엔비디아-컨센서스-매출-9148억-달러-이제-속도가-아니라-지속가능성을-증명해야-한다-엔비디아-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-22",
+   "path": "content/understanding/회계사/[260822] 엔비디아 컨센서스 매출 914.8억 달러, 이제 속도가 아니라 지속가능성을 증명해야 한다 - 엔비디아 - 엘곰.md",
+   "hash": "82e1f119ea50"
+  },
+  {
    "id": "und:회계사:이익은-부풀고-부채는-숨고-수요는-순환한다-AI-투자-리스크-다섯-가지-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3565,6 +3809,17 @@
    "date": "2026-08-19",
    "path": "content/understanding/회계사/[260819] 점유율 7% 삼성 파운드리가 4·5나노 가격을 최대 15% 올렸다 - 삼성 파운드리 - 엘곰.md",
    "hash": "dcaa66f9455c"
+  },
+  {
+   "id": "und:회계사:준비금으로-적은-한-줄-때문에-82억-환급이-막혔다-비영리법인-배당금-방구퐁",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-23",
+   "path": "content/understanding/회계사/[260823] 준비금으로 적은 한 줄 때문에 82억 환급이 막혔다 - 비영리법인 배당금 - 방구퐁.md",
+   "hash": "31cc575ee3c8"
   },
   {
    "id": "und:회계사:채권-자경단-동결-속에서-30년물-금리를-527로-밀어올리다-엘곰",
@@ -3589,6 +3844,17 @@
    "hash": "8f84e2e3f46c"
   },
   {
+   "id": "und:회계사:코스피200-야간선물-229-미국은-올랐는데-삼성전자는-애프터마켓에서-반납했다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-24",
+   "path": "content/understanding/회계사/[260824] 코스피200 야간선물 -2.29%, 미국은 올랐는데 삼성전자는 애프터마켓에서 반납했다 - 시황 - 엘곰.md",
+   "hash": "2d14a7293890"
+  },
+  {
    "id": "und:회계사:클라우드-매출-82-늘었는데-주가는-밀렸다-CAPEX-1950억2050억-달러로-재상향-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3609,6 +3875,17 @@
    "date": "2026-08-13",
    "path": "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md",
    "hash": "d9222fe26c17"
+  },
+  {
+   "id": "und:회계사:퇴사-조항이-계약서에-없어도-근무조건은-있다-넷을-봐야-한다-주식기준보상-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-24",
+   "path": "content/understanding/회계사/[260824] 퇴사 조항이 계약서에 없어도 근무조건은 있다, 넷을 봐야 한다 - 주식기준보상 - 엘곰.md",
+   "hash": "a100a4ad38da"
   },
   {
    "id": "und:회계사:판매장려금이-핵심감사사항인-이유-IFRS-15-변동대가-삼성전자-엘곰",
