@@ -1,9 +1,9 @@
 {
   "ticker": "005930",
-  "fetched_at": "2026-08-21T17:08:03.855205+09:00",
+  "fetched_at": "2026-08-24T17:11:57.969995+09:00",
   "source": "https://m.stock.naver.com/api/stock/005930/basic",
-  "close": 281500,
-  "change": 10500,
-  "as_of": "2026-08-21T16:10:20+09:00",
+  "close": 257000,
+  "change": 24500,
+  "as_of": "2026-08-24T16:10:19+09:00",
   "market_status": "CLOSE"
 }
