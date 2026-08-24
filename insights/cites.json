@@ -1514,6 +1514,87 @@
  "content/newsletter/ai_infra/compute/[260810] 엔비디아 GPU의 초고속 상호작용성 - TileRT InferenceX.md#L88": {
   "sha1": "9c370c424b9e"
  },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L110": {
+  "sha1": "847abb5d25d7"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L111": {
+  "sha1": "41d6b7a85736"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L148": {
+  "sha1": "fade1cb3f92d"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L151": {
+  "sha1": "efff48d5e0f7"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L187": {
+  "sha1": "1795a32f45f5"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L189": {
+  "sha1": "27e6fd7dff65"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L191": {
+  "sha1": "eb73888d6cbf"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L212": {
+  "sha1": "8889646fec2e"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L239": {
+  "sha1": "a23d7a026c3c"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L240": {
+  "sha1": "e3b9ec2d57aa"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L329": {
+  "sha1": "a497382bf4cf"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L76": {
+  "sha1": "393e1c15bbbf"
+ },
+ "content/newsletter/ai_infra/compute/[260819] 세레브라스 차세대 CS-4 - 빠른 게 더 빨라졌다.md#L77": {
+  "sha1": "897acb7122c4"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L126": {
+  "sha1": "0b04379ff5c8"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L269": {
+  "sha1": "6bf197854d52"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L271": {
+  "sha1": "50c4cd543ce6"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L369": {
+  "sha1": "287e76b59173"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L370": {
+  "sha1": "f2cc1ab4d44d"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L48": {
+  "sha1": "e7e9cd24a300"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L50": {
+  "sha1": "ca83c217756c"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L51": {
+  "sha1": "0caa95da190e"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L570": {
+  "sha1": "34fd57d4ab52"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L572": {
+  "sha1": "d9353a17d7ba"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L640": {
+  "sha1": "d263ff98f262"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L641": {
+  "sha1": "323f1654ec60"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L642": {
+  "sha1": "5e9a13812819"
+ },
+ "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L693": {
+  "sha1": "8ba8cbfb1b08"
+ },
  "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L125": {
   "sha1": "43e801df5275"
  },
@@ -2680,6 +2761,45 @@
  },
  "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L408": {
   "sha1": "7ac300486a3c"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L122": {
+  "sha1": "4315fa3bb8bc"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L123": {
+  "sha1": "6625f82a56b3"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L160": {
+  "sha1": "9784c9a98363"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L161": {
+  "sha1": "fc13b4238aac"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L190": {
+  "sha1": "7a4da9b04df5"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L193": {
+  "sha1": "02c27cd2f254"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L237": {
+  "sha1": "23f4569a2d5a"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L238": {
+  "sha1": "7594138f1a22"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L266": {
+  "sha1": "c49c9452f59d"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L269": {
+  "sha1": "affe8ec48840"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L313": {
+  "sha1": "013c5a6870bb"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L314": {
+  "sha1": "42fb8f5cab24"
+ },
+ "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L46": {
+  "sha1": "c44b7ef74c67"
  },
  "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L174": {
   "sha1": "4bd194d9364c"
