@@ -405,6 +405,58 @@ MiniMax-M3의 짧은 쿼리에서 인덱스를 잘못 읽어 비유한(non-finit
 ATOM은 이와 별개로 라우터(ATOMesh)에 KV 생애주기 이벤트·다중 노드 프리필-디코드 라우팅·세션 고정 데이터병렬 라우팅을 추가했다.
 대화가 그 상태를 쥔 정상 워커로 돌아가면서도, 방치된 세션이 클러스터를 영구히 불균형하게 만들지 않도록 유휴 배정은 만료시키는 절충을 택했다.
 
+### TensorRT-LLM PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#17462](https://github.com/NVIDIA/TensorRT-LLM/pull/17462) | 경계 인식 증분 토큰화 — 렌더링된 텍스트의 공통 프리픽스를 찾아 토큰 하나를 되돌린 뒤 바뀐 접미사만 다시 토큰화해, 매 턴마다 대화 전체를 재토큰화하던 낭비를 없앰 | Qwen3.5 트레이스 전환 1,087건에서 전량 토큰화와 정확히 일치, 평균 처리시간 185.1ms → 11.3ms |
+| [#16231](https://github.com/NVIDIA/TensorRT-LLM/pull/16231) | 채팅 템플릿 렌더링을 입력 처리 풀로 옮겨, 긴 템플릿이 메인 요청 루프를 가로막지 않게 함 | — |
+| [#17518](https://github.com/NVIDIA/TensorRT-LLM/pull/17518) | MiniMax-M3의 분리형 KV 전송이 프리필·디코드 헤드 레이아웃 불일치로 수천 개의 작은 전송 조각으로 쪼개지던 것을, 다중 풀 매핑 교정과 청크형 NIXL(GPU 간 KV 전송 라이브러리) 바운스 경로로 재사용 가능한 아레나에 합침 | 요청 임계 KV p99 지연 26.74초 → 125ms(동시성 5), 10.15초 → 288ms(동시성 40) |
+| [#17428](https://github.com/NVIDIA/TensorRT-LLM/pull/17428) | 스케줄링이 정체돼도 완료된 전송을 회수하는 논블로킹 컨텍스트 전송 폴링을 도입해, 끝난 KV 블록이 계속 고정되어 새 작업 admission을 막는 피드백 루프를 끊음 | — |
+| [#16734](https://github.com/NVIDIA/TensorRT-LLM/pull/16734) | DeepSeek-V4 컨텍스트 희소 어텐션 메타데이터의 암묵적 디바이스 스칼라 동기화를 없애, 호스트 측 카운트를 파이썬 정수로 그대로 전달(GB300 분리형 컨텍스트 워커) | 스텝당 cudaStreamSynchronize를 유발하던 4바이트 디바이스 읽기 18회 제거 |
+| [#17473](https://github.com/NVIDIA/TensorRT-LLM/pull/17473) | MiniMax-M3용 컨텍스트 그래프 프로듀서 — 안정적인 희소 프로듀서는 캡처하고 요청 의존적 어텐션은 즉시 실행 방식으로 남겨둠 | AgentX 테스트에서 사용자당 출력 처리량 +12.58% |
+| [#16876](https://github.com/NVIDIA/TensorRT-LLM/pull/16876) | KV 인지 라우팅 경로의 할당·변환 작업을 줄이는 네이티브 KV 이벤트 생성 변경(진행 중인 작업) | — |
+| [#17316](https://github.com/NVIDIA/TensorRT-LLM/pull/17316) | MiniMax-M3의 MXFP8 오토튜닝에 CuTeDSL 후보를 추가해 커널 후보군을 넓힘 | 저동시성 집계 구간에서 GPU당 출력 처리량 약 +7\~10% |
+| [#17105](https://github.com/NVIDIA/TensorRT-LLM/pull/17105) | 손상된 split-K MoE 전략을 오토튜너 후보군에서 제거 | 이전에는 AgentX 실행 7건 중 5건을 충돌시켰으나, 이후 매칭 실행 7건에서 충돌 0건 |
+| [#17285](https://github.com/NVIDIA/TensorRT-LLM/pull/17285) | MiniMax-M3의 레거시 희소 어텐션 경로가 q_len ≤ 32에서 블록 인덱스 스트라이드(간격)를 무시해 잘못된 KV 페이지를 골라 비유한(non-finite) 값을 내던 것을, 스트라이드를 그대로 존중하도록 수정 | GB300에서 매칭된 전체 AgentX 5쌍이 서빙 오류 0건·비유한 마커 0건으로 완주 |
+| [#16279](https://github.com/NVIDIA/TensorRT-LLM/pull/16279) | 완료 중인 요청과 새로 admission된 요청이 동시에 슬롯을 필요로 하는 과도기를 처리하도록 시퀀스 슬롯 여유분과 슬롯 인덱스 버퍼 크기를 일관되게 조정 | — |
+| [#17278](https://github.com/NVIDIA/TensorRT-LLM/pull/17278) | 어텐션 데이터 병렬(attention-DP)의 더미 요청 버그를 수정 | 이전엔 대부분의 셀이 몇 분 안에 죽었는데, 수정 뒤 Qwen3.5 분리형 셀 9개가 계속 살아남음 |
+| [#15727](https://github.com/NVIDIA/TensorRT-LLM/pull/15727) | 파이프라인형 KV 전송 — 프리필 청크가 완료되는 즉시 전송을 시작해, 전송이 프리필 연산과 겹치고 마지막 청크만 임계 경로에 남게 함 | — |
+| [#17526](https://github.com/NVIDIA/TensorRT-LLM/pull/17526) | 매번 프롬프트 전체의 블록 목록을 다시 만드는 대신 현재 청크에 속한 블록 ID만 조회 | 128,000토큰 프롬프트를 1,024토큰 청크로 나눌 때, 4,096개 목록을 한 번만 만드는 것과 레이어 그룹마다 128번 다시 만드는 것의 차이를 없앰 |
+
+### ATOM PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#1640](https://github.com/ROCm/ATOM/pull/1640) | DeepSeek-V4 페이지형 슬라이딩 윈도우 어텐션에 희소 체크포인트 보존을 도입해, 선택된 윈도우 꼬리를 살려둬 분기·리플레이 요청이 쓸모 있는 경계에서 재개하게 함 | 동시성 48에서 실제 프리픽스 적중률 5.6% → 96.45%, 슬라이딩 윈도우 게이트에서의 손실 91.35% → 0.16% |
+| [#902](https://github.com/ROCm/ATOM/pull/902) | 프리풀(free-pool) 적중이 공유 캐시 항목을 파괴하던 것을 막음 | — |
+| [#939](https://github.com/ROCm/ATOM/pull/939) | 지연 출력(deferred-output) 버그를 고쳐 기본 스케줄러 모드에서 프리픽스 해싱을 복원 — 반복되는 긴 프롬프트가 캐시 토큰 0개였던 상태에서 완전한 프리픽스 블록 전체를 재사용하는 상태로 바뀜 | — |
+| [#1345](https://github.com/ROCm/ATOM/pull/1345) | 프리픽스 적중 프리필이 범용 경로로 폴백하지 않고 최적화된 싱크(sink) 어텐션 커널에 계속 머물게 함 | — |
+| [#1771](https://github.com/ROCm/ATOM/pull/1771) | 순환·압축기 상태(주변 토큰으로 재구성 불가능한 상태)에 콘텐츠 주소 지정 체크포인트 생애주기를 부여하고, 체크포인트를 토큰 간격을 두고 남기는 방식으로 무조건 발행 시의 손실을 없앰 | 512개 생성 토큰을 재사용하고 2토큰 접미사만 새로 계산한 사례 확인, 무조건 발행 시 손실이던 처리량 -17.5%(재방문 없는 트래픽)를 간격 조정으로 회피 |
+| [#1318](https://github.com/ROCm/ATOM/pull/1318) | Standalone LMCache 오프로드 — CPU에서 프리픽스를 다시 불러오는 경로를 도입 | 32,000토큰 프리픽스를 CPU에서 재로드하는 데 약 0.32초(같은 것을 재계산하면 약 2.5초, 8배 격차) |
+| [#1406](https://github.com/ROCm/ATOM/pull/1406) | vLLM의 다중 커넥터 설계를 그대로 가져와, 프리필 워커가 KV를 원격 디코드 워커로 보내는 동시에 같은 프리픽스를 CPU에도 저장(양쪽 소비자가 끝날 때까지 블록을 해제하지 않음) | — |
+| [#1725](https://github.com/ROCm/ATOM/pull/1725) | CPU에서 복원된 블록을 GPU 프리픽스 인덱스에 다시 등록해, 다음 턴이 이미 HBM에 있는 프리픽스를 버스 너머로 또 가져오는 낭비를 제거 | — |
+| [#1807](https://github.com/ROCm/ATOM/pull/1807) | 비동기 저장 순서·패킹된 KV 형상·정렬 안 된 핸드오프·원격 요청 회계를 한꺼번에 수정 | 2라운드·2,638요청 검증에서 재로드 손상 0건 |
+| [#1737](https://github.com/ROCm/ATOM/pull/1737) | DeepSeek-V4의 혼합 FP8·BF16 캐시 레이아웃 양쪽 버퍼를 모두 전송 | — |
+| [#1331](https://github.com/ROCm/ATOM/pull/1331) | EAGLE 분리형 서빙에서 드래프트 모델의 독립된 KV 캐시를 타깃 캐시와 함께 이동 | — |
+| [#1647](https://github.com/ROCm/ATOM/pull/1647) | 원격 KV admission과 배압(backpressure) 제어 — 디코드 측이 감당 못 할 만큼의 대기 전송을 받아들이지 못하게 막음 | — |
+| [#1220](https://github.com/ROCm/ATOM/pull/1220) | 프리필 컨텍스트 병렬화(PCP) 적용 | 평균 TTFT -35\~43%, 6만 4천 토큰 입력에서 총처리량 최대 +49% |
+| [#1701](https://github.com/ROCm/ATOM/pull/1701) | 디코드 컨텍스트 병렬화(DCP)를 프리픽스 캐싱·청크형 프리필·FP8 KV와 함께 쓸 수 있게 호환 처리 | — |
+| [#1746](https://github.com/ROCm/ATOM/pull/1746) | DCP를 MTP(멀티토큰 예측)까지 확장 | — |
+| [#1911](https://github.com/ROCm/ATOM/pull/1911) | 배치 1 MLA 디코드에서 커널의 자체 분할(split) 계산을 덮어쓰지 않게 해, gfx950의 CU 256개 중 16개에만 묶여 있던 KV 워크를 CU 수만큼 나누게 함(아직 열려 있는 변경) | — |
+| [#1552](https://github.com/ROCm/ATOM/pull/1552) | 청크형 파이프라인 프리필 — 반복되는 텐서 병렬 집합 통신을 스트리밍 레이어 단계 핸드오프로 대체 | GLM-5.2 고부하: 출력 처리량 2배, TTFT 중앙값 28.6초 → 8.7초, 프리필 GPU당 보유 KV 블록 수 3.68배 |
+
+### AITER PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#3728](https://github.com/ROCm/aiter/pull/3728) | 프리필 컨텍스트 병렬(PCP)이 필요로 하는 쿼리 샤딩 차원을 제공하는 프로세스 그룹을 추가하고, 13만 1,000토큰 넘는 프롬프트를 위해 결합 커널(fused-kernel) 행 인덱싱을 확장 | — |
+| [#3267](https://github.com/ROCm/aiter/pull/3267) | 디코드 컨텍스트 병렬화(DCP) — 이미 있는 텐서 병렬 GPU들에 KV를 샤딩해, 캐시 전체를 랭크마다 복제하지 않고도 더 긴 시퀀스·더 큰 배치를 수용 | — |
+| [#2893](https://github.com/ROCm/aiter/pull/2893) | 4GB 넘는 배치 프리필용 런타임 64비트 디스패치를 추가 | — |
+| [#4474](https://github.com/ROCm/aiter/pull/4474) | 2GB 넘는 구간에 64비트 MLA 오프셋을 적용 | — |
+| [#4680](https://github.com/ROCm/aiter/pull/4680) | DeepSeek-V4 통합 캐시 경로 전반에 64비트 주소 지정을 적용 — 32비트 오프셋은 한 캐시 풀이 그 경계를 넘으면 에러 없이 조용히 계산이 틀어짐 | 약 1억 5천만 행 규모 풀에서 잘못된 행을 읽고 쓰는 사고를 방지 |
+| [#3459](https://github.com/ROCm/aiter/pull/3459) | DeepSeek-V4 디코드에 64헤드·128헤드 MTP 패킹 전용 영속(persistent) MLA 커널을 추가(일반 디코드와 추측 검증이 실제로 만드는 헤드 수에 맞춘 전용 경로) | — |
+
 ---
 
 ## 7. Dynamo·LMCache·Mooncake 최적화와 그 밖의 개선
