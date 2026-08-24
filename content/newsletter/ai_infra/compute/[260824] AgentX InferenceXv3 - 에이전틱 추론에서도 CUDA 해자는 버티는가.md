@@ -318,5 +318,117 @@ TensorRT-LLM은 이 외에도 커널 선택 오류를 다수 잡아냈다 — �
 
 ---
 
-*작성 진행률: 약 55% 완료*
-*업데이트: 전체 11개 섹션 중 1\~6장(서론\~TensorRT-LLM/ATOM/AITER 최적화) 작성 완료*
+## 7. Dynamo·LMCache·Mooncake 최적화와 그 밖의 개선
+
+**📌 핵심:**
+- Dynamo 라우터는 생성 토큰 수가 아니라 살아있는 프리픽스의 개수·길이에 비례해 일이 늘어나는 구조라, 캐시 소유권을 "공유 블록 체인"에서 "아레나 단위 소유 카운트"를 거쳐 "백엔드별 요청 리스"로 단순화하며 vLLM 백엔드 AgentX 재생 시간을 23.7%, SGLang을 22.0% 단축했고 피크 메모리도 함께 낮췄다
+- 요청 경로 자체도 뜯어고쳤다 — MessagePack 요청 페이로드 전환으로 처리량 8.1%↑·평균 TTFT 9.7%↓, 정적 로깅 필터로 프런트엔드 처리량이 초당 932건에서 1,133건으로, 응답당 한 번만 지표를 반영하는 변경이 프런트엔드 CPU 시간을 약 절반으로 줄이는 등 "매 토큰마다 반복되던 작은 낭비"를 겹겹이 제거했다
+- LMCache(다양한 추론 엔진 아래에서 재사용 가능한 KV 청크를 프리픽스 해시로 저장하는 오픈소스 레이어)는 청크 단위 외부 캐시 로딩으로 동시성 32에서 옛 방식이 28건 만에 멈추던 걸 120건까지 완주시켰고, Mooncake는 AMD RDMA 등록 경로(HIP dmabuf)와 ROCm 휠 배포를 새로 만들어 AMD 하드웨어에서도 상류 이미지에 바로 설치해 GPU\~패브릭 간 KV를 직접 옮길 수 있게 됐다
+- 결론: MiniMax-M3의 day-0 검증에서는 순수 소프트웨어 버그 3건이 확인됐다 — 헤드 비율 검증 오류로 gsm8k 점수가 0이 나오거나, gfx942의 FP8 인코딩(e4m3fnuz)을 잘못 읽어 K·V 값이 계산 전에 손상되던 것, AMD 모델 파일에 EAGLE3 인터페이스가 빠져 추측 디코딩이 아예 초기화 단계에서 멈추던 것을 모두 고쳐 MI355X gsm8k 점수가 정상화됐다
+
+---
+
+```mermaid
+flowchart TD
+    Dynamo["Dynamo 라우터 최적화"] --> Own["소유권 표현 단순화<br/>공유블록체인 → 리스 방식"]
+    Own --> Result["재생시간 vLLM -23.7%<br/>SGLang -22.0%, 피크메모리↓"]
+
+    style Result fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    LMCache["LMCache"] --> Chunk["청크단위 외부캐시 로딩<br/>동시성32: 28건 데드락 → 120건 완주"]
+    Mooncake["Mooncake"] --> ROCm["HIP dmabuf RDMA +<br/>ROCm 휠 배포 신설"]
+    ROCm --> Install["AMD도 상류 이미지에<br/>바로 설치 가능해짐"]
+
+    style Chunk fill:#f0fdf4,stroke:#16a34a
+    style Install fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    M3Bugs["MiniMax-M3 day-0 버그 3건"] --> HeadRatio["헤드비율 검증오류<br/>→ gsm8k 점수 0"]
+    M3Bugs --> FP8["gfx942 FP8 인코딩 오독<br/>→ K·V 값 손상"]
+    M3Bugs --> Eagle["AMD모델 EAGLE3 미구현<br/>→ 추측디코딩 초기화 실패"]
+    HeadRatio --> Fixed["세 건 모두 수정<br/>MI355X gsm8k 정상화"]
+
+    style M3Bugs fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Fixed fill:#f0fdf4,stroke:#16a34a
+```
+
+이 모든 개선의 공통점은 "더 긴 어텐션"이 아니라 계속 자라나는 세션 상태를 보존·이동·라우팅·재구성·반복 처리하는 새로운 최적화 표면이 열렸다는 점이다. 옛 고정 길이 매트릭스는 프롬프트 하나를 만들어 프리필 한 번, 디코드 한 번 하고 버리는 구조라 턴 간 캐시 생존·반복 토큰화·세션 어피니티·오프로드 왕래·스케줄러 정체 같은 것을 애초에 측정하지 못했는데, AgentX가 이런 비용을 충분히 크게 드러내 vLLM·SGLang·TensorRT-LLM·ATOM·AITER·Dynamo·LMCache 전반의 상류 개선을 이끌어냈다.
+
+---
+
+## 8. AgentX 방법론 - 300만 달러 데이터셋과 트레이스 리플레이어
+
+**📌 핵심:**
+- SemiAnalysis는 클로드 코드·OpenAI Codex 등으로 향하는 HTTP 요청을 가로채는 프록시를 만들어 사내 직원들의 실제 사용 트래픽을 모았다 — 현재까지 세션 8,000개 이상, 요청 340만 건, 토큰 6,100억 개(총 300만 달러 이상 상당)를 수집했고, 그중 393세션 대표 부분집합을 AgentX v1.0용으로 공개했다
+- 직원 프라이버시 보호를 위해 요청 내용을 64토큰 블록으로 나눠 각 블록을 세션 단위 체인 해시로 치환한다 — 원본 프롬프트·소스코드·도구 결과는 전혀 남지 않지만 일치하는 프리픽스는 그대로 일치하는 해시 프리픽스로 남아, 재생 시 실제 코딩 데이터셋의 토큰으로 채워 넣어도 원래의 맥락 성장·KV 재사용 패턴은 보존된다
+- 정제된 데이터셋의 입력 길이(ISL) 중앙값은 14만 2천 토큰, 출력 길이(OSL) 중앙값은 444토큰, 턴 사이 지연(주로 도구 사용 시간) 중앙값은 3.84초이며, 세션의 약 44%(175개)에 서브에이전트가 최소 1개 있고 서브에이전트 1,697개의 중앙값 실행 시간은 2.27분이다 — 리플레이는 Nvidia의 벤더 중립 HTTP 리플레이 도구 AIPerf(SemiAnalysis 자체 포크)를 써서 각 세션을 방향성 비순환 그래프(DAG)로 표현해 서브에이전트의 동시 실행·메인 에이전트 합류까지 재현한다
+- 결론: 재현성을 위해 워밍업 2단계(대화 진행률 25\~75% 지점 재구성 → 레인마다 10개 요청 추가)를 거친 뒤 1시간 동안 측정하고, 유휴 5분을 넘긴 스트림은 끊어(앤트로픽 기본 KV 캐시 TTL 5분과 동일 기준) 벤치마크가 무한정 늘어지지 않게 하며, 추측 디코딩은 합성 데이터가 왜곡을 만들지 않도록 실제 코딩 트레이스(SPEED-Bench)에서 측정한 평균 수락 길이(acceptance length)를 그대로 적용해 공정성을 맞춘다
+
+---
+
+```mermaid
+flowchart TD
+    Collect["프록시로 직원 실사용<br/>트래픽 수집"] --> Scale["세션 8,000+·요청 340만 건<br/>토큰 6,100억(300만 달러+ 상당)"]
+    Scale --> Subset["대표 393세션을<br/>AgentX v1.0으로 공개"]
+
+    style Scale fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Privacy["프라이버시 보호"] --> Hash["요청을 64토큰 블록 단위<br/>세션체인 해시로 치환"]
+    Hash --> Preserve["원문은 안 남지만<br/>프리픽스 일치 패턴은 보존"]
+    Preserve --> Refill["재생 시 실제 코딩<br/>토큰으로 재충전"]
+
+    style Preserve fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    DataProfile["정제 데이터셋 프로필"] --> ISL["ISL 중앙값 14.2만 토큰"]
+    DataProfile --> OSL["OSL 중앙값 444토큰"]
+    DataProfile --> Sub["서브에이전트 있는 세션 44%<br/>(175개, 중앙값 4개/세션)"]
+
+    style DataProfile fill:#eff6ff,stroke:#3b82f6
+```
+
+```mermaid
+flowchart TD
+    Replay["측정 절차"] --> Warmup["워밍업 2단계<br/>(25~75% 지점 재구성 + 레인당 10요청)"]
+    Warmup --> Profile["1시간 측정<br/>유휴 5분 초과 스트림 절단"]
+    Profile --> SpecDec["추측디코딩은 SPEED-Bench<br/>실측 수락길이로 벤더중립 보정"]
+
+    style Warmup fill:#eff6ff,stroke:#3b82f6
+```
+
+새로 만든 시각화 도구도 이번 AgentX의 성과다 — 각 데이터 포인트를 클릭하면 어떤 설정(추측 디코딩·분리형 서빙·KV 오프로드 등)이 그 점을 만들었는지, CI 증빙과 함께 볼 수 있고, KV 캐시 이용률·요청 큐 깊이·프리픽스 캐시 적중률을 대화별·워커별 타임라인과 대화 하나의 구조를 보여주는 화염그래프(flamegraph)까지 제공한다.
+
+---
+
+## 9. InferenceX/AgentX 다음 단계
+
+**📌 핵심:**
+- v1.0.x 소규모 버그 수정은 계속하되, v1.1 하네스에서는 SSD/NVMe KV 오프로드를 추가해 DRAM보다 더 큰 작업셋을 감당함으로써 Pareto 곡선의 고처리량 구간을 더 넓힐 계획이다
+- 다음 데이터셋은 요청을 하나의 연속된 해시 ID 리스트로 뭉치지 않고 시스템 지시·사용자/어시스턴트 메시지·도구 호출·도구 결과의 경계를 그대로 보존해, 라우터가 재사용률 낮은 도구 트래픽을 전담 프리필 워커로 보내거나 긴 도구 호출 동안 프리픽스를 유지하는 등 하네스만 아는 정보를 활용하는 서빙 기법까지 평가할 수 있게 할 계획이다
+- 결론: 소프트웨어·하드웨어 스택별 "지능당 줄(Joule)" 효율까지 비교할 수 있도록 세밀한 전력 원격측정 데이터도 함께 수집하고 있다
+
+---
+
+```mermaid
+flowchart TD
+    NextGen["v1.1 하네스 계획"] --> NVMe["SSD/NVMe KV 오프로드<br/>추가 → 고처리량 구간 확장"]
+    NextGen --> Structure["요청 경계(시스템·사용자·<br/>도구호출·도구결과) 보존"]
+    NextGen --> Power["세밀한 전력 원격측정<br/>→ 지능당 줄(Joule) 비교"]
+
+    style NextGen fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+---
+
+*작성 진행률: 약 78% 완료*
+*업데이트: 전체 11개 섹션 중 1\~9장(서론\~다음 단계) 작성 완료*
