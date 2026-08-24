@@ -65,6 +65,13 @@ The feed is infinite-scroll: call this after each `window.scrollBy(0, 2600)` + ~
 
 Diff against the existing dashboard by checking whether the numeric activity ID (the trailing digits of the urn) already appears anywhere in `대시보드/소셜 신호 히스토리.html` — if not, it's new.
 
+**대장도 함께 본다 (2026-08-24 신설).** 채용 공고는 히스토리에 남기지 않고 `data/li_excluded.json`에 활동 ID만 적어 둔다. 그래서 히스토리만 대조하면 이미 걷어낸 공고가 매번 「새 글」로 되살아난다. 신규 판별은 **두 곳 모두**에 없을 때만 새 글이다:
+```python
+known = set(re.findall(r'activity:(\d+)', open(HIST, encoding='utf-8').read()))
+known |= {r['id'] for r in json.load(open('data/li_excluded.json', encoding='utf-8'))}
+```
+채용 글이 새로 잡히면 그냥 평소대로 히스토리에 넣어라 — 아래 5-3의 `stamp_li_kind.py`가 행을 걷어내고 대장에 적는 일을 알아서 한다.
+
 ## 3. Get the EXACT timestamp — don't trust the relative-time label
 
 LinkedIn only shows fuzzy labels ("1개월 전", "2주 전") past the first few days, which is why older LinkedIn signal used to get excluded from date-sorted lists. **The activity URN itself is a Snowflake-style ID that encodes the exact millisecond timestamp** — no scraping of hover-tooltips or hidden attributes needed (checked: there is no `title`/`aria-label` with a precise date on these elements, the ID is the only source):
@@ -119,6 +126,8 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
    PYTHONIOENCODING=utf-8 python scripts/stamp_li_kind.py
    ```
    각 행 **끝**에 `<span class="kind">`를 붙이고 CSS `order:-1`로 왼쪽에 그린다. `</a>` 바로 뒤에 넣으면 `gen_li_source.py`가 링크를 찾는 고정 창이 밀려 뉴스레터 slug가 잘린다. 라벨이 없는 줄이 실질 신호(`자체 발화`)다. 여러 번 돌려도 결과는 같다.
+
+   **채용은 라벨이 아니라 제외다 (2026-08-24 변경).** 밈·팟캐스트·뉴스레터·재홍보는 라벨을 달아 남기지만, 채용 공고는 같은 실행에서 행을 통째로 걷어내고 `data/li_excluded.json`에 `{id, date, kind, sn}`을 적는다. 대장에 적는 것이 핵심이다 — 2단계 신규 판별이 히스토리와 대장 **양쪽**을 보므로, 대장이 없으면 지운 공고가 매번 새 글로 되살아난다. 행이 다 빠져 머리만 남은 날짜 그룹과 `.stamp` 줄의 `LinkedIn N건` 숫자도 같은 스크립트가 맞춘다. 판정은 `HIRE` 정규식(`채용 공고|채용한다는|모집한다는|뽑는다는 공고|채용한다고`) — 새 표현이 새면 여기에 더한다.
 
 4. **주간·월간 롤업 리포트** (히스토리 상단, 2026-08-13 신설). 산문은 판단이므로 **메인 세션 모델이 직접** `data/rollup_notes.json`에 새 항목 2개(`kind: week` / `kind: month`, 같은 `asof`)를 쓴다. 주간 = 최근 7일, 월간 = 최근 30일 창이고, 각 항목은 헤드(`h`) + 숫자·회사명이 박힌 근거(`b`) 3~5개다. 그 뒤:
    ```bash

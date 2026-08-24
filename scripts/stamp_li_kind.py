@@ -18,12 +18,13 @@ gen_li_source.py 가 링크를 찾는 고정 창(seg[:2000])이 밀려 뉴스레
 사용: PYTHONIOENCODING=utf-8 python scripts/stamp_li_kind.py
 linkedin-update 로 새 글을 넣은 뒤 돌린다.
 """
-import io, os, re, sys
+import io, json, os, re, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'insights'))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import li_signal as ls
 
 HIST = os.path.join('대시보드', '소셜 신호 히스토리.html')
+LEDGER = os.path.join('data', 'li_excluded.json')
 
 # 라벨은 카드 첫머리의 표지로만 붙인다. li_signal 의 배제 정규식을 그대로 쓰면 안 된다 —
 # 그쪽은 인용 자격을 가리려고 넓게 걸어 둔 것이라, 「구독자에게 답을 줬다」가 행사로,
@@ -76,8 +77,55 @@ def label(text, kind):
     return None
 
 
+def drop_hires(s):
+    """채용 공고 행을 히스토리에서 뺀다.
+
+    뺀 활동 ID 는 대장(data/li_excluded.json)에 반드시 남긴다 — linkedin-update 는
+    「이 ID 가 히스토리에 있나」로 새 글을 가리므로, 대장이 없으면 지운 공고를
+    다음 실행 때마다 새 글로 다시 잡아 넣는다.
+    """
+    led = []
+    if os.path.exists(LEDGER):
+        led = json.loads(io.open(LEDGER, encoding='utf-8').read())
+    known = set(r['id'] for r in led)
+    dropped = []
+
+    def one(m):
+        head, href, tail, close = m.groups()
+        sn = re.search(r'<span class="sn">(.*?)</span>', head, re.S)
+        text = ls.clean(sn.group(1)) if sn else ''
+        if not (HIRE.search(text) or 'k-채용' in tail):
+            return m.group(0)
+        aid = re.search(r'activity:(\d+)', href)
+        if aid and aid.group(1) not in known:
+            known.add(aid.group(1))
+            led.append({'id': aid.group(1), 'date': ls.urn_date(aid.group(1)),
+                        'kind': '채용', 'sn': text})
+        dropped.append(1)
+        return ''
+
+    s = ROW.sub(one, s)
+
+    # 행이 다 빠져 머리만 남은 날짜 그룹은 그 그룹만 걷어낸다(뒤따르는 내용은 남긴다)
+    parts = s.split('<div class="day">')
+    out = [parts[0]]
+    for seg in parts[1:]:
+        e = re.match(r'^<h3>\d{4}-\d\d-\d\d</h3></div>', seg)
+        if e:
+            out.append(seg[e.end():])
+            continue
+        out.append('<div class="day">' + seg)
+    s = ''.join(out)
+
+    led.sort(key=lambda r: r['id'])
+    io.open(LEDGER, 'w', encoding='utf-8').write(
+        json.dumps(led, ensure_ascii=False, indent=1) + chr(10))
+    return s, len(dropped), len(led)
+
+
 def main():
     s = io.open(HIST, encoding='utf-8').read()
+    s, ndrop, nled = drop_hires(s)
     pub = ls.publish_dates()
     s = re.sub(r'<p class="tlog-m">[^<]*</p>', '', s)
     n, days = {}, 0
@@ -124,10 +172,13 @@ def main():
     s = ''.join(out)
     s = re.sub('/[*]TLOG-START[*]/.*?/[*]TLOG-END[*]/' + chr(10) + '?', '', s, flags=re.S)
     s = s.replace('</style>', CSS + '\n</style>', 1)
+    cnt = len(re.findall(r'class="rowmain" href="https://www\.linkedin\.com', s))
+    s = re.sub(r'LinkedIn \d+건', 'LinkedIn %d건' % cnt, s)
     io.open(HIST, 'w', encoding='utf-8').write(s)
-    print('날짜 그룹 %d · 월 머리 %d · 라벨 %d개 · %s'
-          % (days, len(seen), sum(n.values()),
+    print('날짜 그룹 %d · 월 머리 %d · LinkedIn %d건 · 라벨 %d개 · %s'
+          % (days, len(seen), cnt, sum(n.values()),
              ' '.join('%s %d' % kv for kv in sorted(n.items()))))
+    print('채용 제외 %d행 · 대장 누적 %d건 (%s)' % (ndrop, nled, LEDGER))
 
 
 if __name__ == '__main__':
