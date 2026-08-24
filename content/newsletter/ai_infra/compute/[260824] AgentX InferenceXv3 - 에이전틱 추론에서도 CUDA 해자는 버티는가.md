@@ -69,9 +69,12 @@ flowchart TD
     style Chips fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 ```
 
-이 벤치마크는 오픈소스치고 이례적으로 스택 대부분을 공개한다 — 프런트엔드, 여러 1티어 AI 랩의 컴퓨트 확보 계획팀이 이미 쓰고 있는 공개 REST API 데이터베이스, GitHub Actions CI 증빙, 로그, 모든 데이터 포인트에 대한 정확도 검증까지 전부 열려 있다. 벤치마크 설정은 recipes.vllm.ai와 SGLang 쿡북의 상류(upstream) 이미지를 그대로 따라가, 실제 고객이 체감하는 성능을 측정하지 벤치마크용으로 특별 튜닝된(benchmax'ed) 이미지를 측정하지 않는다. 3\~4주 안에 AMD·Nvidia 최신 결과를 담은 후속 업데이트 기사가 나올 예정이다.
+이 벤치마크는 오픈소스치고 이례적으로 스택 대부분을 공개한다 — 프런트엔드, 여러 1티어 AI 랩의 컴퓨트 확보 계획팀이 이미 쓰고 있는 공개 REST API 데이터베이스, GitHub Actions CI 증빙, 로그, 모든 데이터 포인트에 대한 정확도 검증까지 전부 열려 있다.
+벤치마크 설정은 recipes.vllm.ai와 SGLang 쿡북의 상류(upstream) 이미지를 그대로 따라가, 실제 고객이 체감하는 성능을 측정하지 벤치마크용으로 특별 튜닝된(benchmax'ed) 이미지를 측정하지 않는다.
+3\~4주 안에 AMD·Nvidia 최신 결과를 담은 후속 업데이트 기사가 나올 예정이다.
 
-이번 릴리스는 Inferact/vLLM, RedHat/llm-d, RadixArk/SGLang, LMCache/TensorMesh, Weka, Mooncake 관리팀, AMD, Nvidia, Anthropic 직원, GitHub 등 다수 오픈소스 파트너의 기여로 완성됐고, 메타·마이크로소프트·오라클·OpenAI·미니맥스·문샷 Kimi·알리바바 Qwen·즈푸 GLM도 이 오픈소스 이니셔티브를 지지한다고 공개적으로 밝혔다.
+이번 릴리스는 Inferact/vLLM, RedHat/llm-d, RadixArk/SGLang, LMCache/TensorMesh, Weka, Mooncake 관리팀, AMD, Nvidia, Anthropic 직원, GitHub 등 다수 오픈소스 파트너의 기여로 완성됐다.
+메타·마이크로소프트·오라클·OpenAI·미니맥스·문샷 Kimi·알리바바 Qwen·즈푸 GLM도 이 오픈소스 이니셔티브를 지지한다고 공개적으로 밝혔다.
 
 ---
 
@@ -146,7 +149,9 @@ flowchart TD
     style After fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
 ```
 
-AMD 분산추론(DI)팀은 6개월간 8k1k 시나리오를 개선했지만 아직 실전 워크로드엔 부족하다 — 1xDEP8+1xDEP8 분리형 구성은 고처리량 구간에서 소폭 개선에 그치고 저지연 구간에서는 오히려 더 나빠지며, SGLang의 `--enable-prefill-delayer`(동시 요청 64 이상에서 프리필을 최대 30 순전파까지 미뤄 배치를 더 채우는 옵션)와 청크 프리필 크기 확대(8,192→65,536)가 처리량은 올리지만 p90 TTFT를 크게 악화시킨다. 종단간 지연 기준으로는 ATOM MI355X가 B200 vLLM을 이기지만(B300·B200 SGLang은 못 이김), ATOM은 미완성 기능이 많아 알리바바 소규모 광고 사업부 한 곳 외엔 중국·서구 어느 AI 랩도 상용에 쓰지 않는다 — Qwen 본진도 ATOM을 쓰지 않는다.
+AMD 분산추론(DI)팀은 6개월간 8k1k 시나리오를 개선했지만 아직 실전 워크로드엔 부족하다 — 1xDEP8+1xDEP8 분리형 구성은 고처리량 구간에서 소폭 개선에 그치고 저지연 구간에서는 오히려 더 나빠진다.
+SGLang의 `--enable-prefill-delayer`(동시 요청 64 이상에서 프리필을 최대 30 순전파까지 미뤄 배치를 더 채우는 옵션)와 청크 프리필 크기 확대(8,192→65,536)가 처리량은 올리지만 p90 TTFT를 크게 악화시킨다.
+종단간 지연 기준으로는 ATOM MI355X가 B200 vLLM을 이기지만(B300·B200 SGLang은 못 이김), ATOM은 미완성 기능이 많아 알리바바 소규모 광고 사업부 한 곳 외엔 중국·서구 어느 AI 랩도 상용에 쓰지 않는다 — Qwen 본진도 ATOM을 쓰지 않는다.
 
 엔비디아 쪽 최강 조합은 GB300 Dynamo TRTLLM과 GB200 Dynamo vLLM으로, 둘 다 PD 분리(프리필-디코드 분리)로 합리적 상호작용성에서 높은 처리량을 뽑고, GB300은 wide-EP(DEP32) 디코드 구성까지 더해 프론티어 중간 구간 처리량을 끌어올린다. GB300은 더 높은 동시성을 달성하는 만큼 서브에이전트 트래픽·콜드 프리필도 늘어 TTFT가 더 민감하게 반응한다.
 
@@ -430,5 +435,94 @@ flowchart TD
 
 ---
 
-*작성 진행률: 약 78% 완료*
-*업데이트: 전체 11개 섹션 중 1\~9장(서론\~다음 단계) 작성 완료*
+## 10. 모델 수명주기 전체로 본 성능 - 적분 관점
+
+**📌 핵심:**
+- 출시일 스냅숏 하나만 보면 불완전하다 — 소프트웨어 스택은 출시 후에도 계속 개선되므로, "오늘 GPU가 토큰을 몇 개 뽑는가"가 아니라 "모델이 나온 날부터 은퇴할 때까지 총 몇 개를 뽑을 수 있었는가"(=시간에 따른 처리량 곡선 아래 면적, 적분값)로 봐야 진짜 실력이 드러난다는 게 이 장의 핵심 개념
+- Kimi K2.5 사례(2월\~8월 측정)에서 MI355X는 최고점(4,081 tok/s/GPU, 7월)으로 B200 최고점을 앞섰지만, 적분값은 B200이 GPU당 538억 토큰으로 MI355X의 352억 토큰을 크게 앞섰다 — B200이 2월에 먼저 출발해 6개월간 3,800대 처리량을 꾸준히 유지한 것이 나중에 더 높은 숫자를 찍은 것보다 누적으로 더 값졌기 때문
+- 반면 MiniMax M3 사례는 정반대다 — 양사가 같은 날 출발했는데 MI355X가 3주 만에 8.1배(1,072→8,662 tok/s/GPU), B200이 4.7배(1,890→8,945) 개선하며 적분값이 MI355X 427억 대 B200 424억으로 사실상 동률이 됐다(다만 상호작용성 기준을 더 엄격하게 잡으면 B200이 다시 앞선다)
+- 결론: 2026년 8월 젠슨 황의 컴퓨트엑스 발표를 재현한 자체 분석에서, DeepSeek V4 8k1k·10MW 전력예산·1주 램프업 가정 시 매출을 극대화하는 선택은 GB300이었다 — GB300은 B200/B300보다 첫 프로덕션 준비(TTFI)가 1주일 늦었지만 소프트웨어 개선 속도가 빨라 누적 매출을 금세 따라잡았고 MW당 마진(Δ$/W)은 MI355X의 2배를 넘었다
+
+---
+
+```mermaid
+flowchart TD
+    Concept["수명주기 적분 개념"] --> Snapshot["출시일 스냅숏은<br/>불완전한 그림"]
+    Concept --> Integral["처리량 곡선 아래 면적<br/>= t0(생산가능 시점)부터<br/>t1(측정 종료)까지 누적 토큰"]
+
+    style Integral fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    K25["Kimi K2.5 사례(2~8월)"] --> Peak["MI355X 최고점 승리<br/>(4,081 tok/s/GPU, 7월)"]
+    K25 --> Sum["누적 적분은 B200 승리<br/>538억 vs 352억 토큰/GPU"]
+    Sum --> Why["B200이 2월 먼저 출발해<br/>6개월간 3,800대 유지한 게 더 값짐"]
+
+    style Sum fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    M3case["MiniMax M3 사례(동시 출발)"] --> AMDgain["MI355X 3주 8.1배 개선<br/>(1,072→8,662)"]
+    M3case --> NVgain["B200 3주 4.7배 개선<br/>(1,890→8,945)"]
+    AMDgain --> Tie["적분값 사실상 동률<br/>427억 vs 424억 토큰/GPU"]
+    NVgain --> Tie
+
+    style Tie fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Revenue["10MW·1주 램프업<br/>매출 극대화 분석<br/>(DeepSeek V4 8k1k)"] --> GB300win["GB300이 매출 최대<br/>TTFI는 1주 늦었지만<br/>소프트웨어 개선 속도로 역전"]
+    GB300win --> MarginW["MW당 마진(Δ$/W)<br/>MI355X의 2배+"]
+
+    style GB300win fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+GLM 5 FP8 사례는 세 번째 유형을 보여준다 — B200이 3월 20일 초당 GPU당 670토큰으로 시작해 4월 18일 1,335토큰으로 두 배가 됐고, MI355X는 4월 8일 665토큰(B200 출시 수치와 거의 동일)으로 시작해 5월 1일 954토큰에 그쳤다. 적분값은 B200 157억, B300 153억, MI355X 103억 토큰으로, 두 플랫폼 모두 5월 초 이후엔 개선이 멈췄는데 이는 모델이 후속작에 밀려나면서 소프트웨어 성숙 전에 손을 놓는 흔한 패턴이라고 저자들은 설명한다. 세 사례를 종합하면 "특정 날짜의 최고 수치", "생산 준비가 언제 됐는가", "수명주기 전체 적분값"은 서로 다른 세 가지 우위이며 한 플랫폼이 이 셋을 다 가질 필요는 없다.
+
+---
+
+## 11. 단일 턴(8k1k) 성능 - 시간에 따른 개선
+
+**📌 핵심:**
+- AgentX가 이제 주력 시나리오가 됐지만, 옛 고정 길이(8k1k) 성능 이력은 소프트웨어가 성숙하는 궤적과 속도를 보여주는 데 여전히 유용하다 — Kimi K2.X는 2월 18일부터 8월 7일까지 60건의 제출이 이어지며 계속 개선됐고, 이 기간 MI355X ATOM은 달러당 총토큰 기준으로 B300 vLLM과 상당히 경쟁력 있는 수준까지 따라붙었다
+- AMD MI355X는 ROCm·PyTorch·ATOM 갱신에 이어 FP4 MoE 백엔드·경량 전문가 라우팅·올리듀스 개선으로 디코드 중 MoE 커널 시간과 TP 통신을 줄였고, MI325X는 vLLM ROCm v0.16→v0.18 업그레이드 이후 v0.21 이미지 갱신으로 8k1k 처리량이 1.9\~2.6배, TTFT 중앙값이 43\~53% 개선됐다(트레이드오프가 아니라 순수 커널·통신 이득)
+- 엔비디아는 v0.20.2에서 깨져 있던 MXINT4 인터페이스를 고치고 FlashInfer의 TRT-LLM MXINT4 커널로 MoE 레이어를 옮기면서 v0.15.1 대비 8k/1k 처리량이 8\~28% 오르고 TTFT 중앙값이 20\~37% 줄었으며, 이후 DEP8(데이터병렬 8개로 어텐션·KV캐시를 돌리며 MoE 전문가는 같은 8장 B200에 샤딩)이 동시성 512에서 초당 GPU당 6,140토큰·TTFT 1.15초를 기록해 기존 TP8/TEP8(약 3,900토큰·약 50초)를 크게 앞섰다
+- 결론: Qwen3.5는 정식 출시 전에 vLLM·SGLang 지원이 먼저 병합된 day-0 모델로 총 1,028개 데이터포인트가 쌓였고, GLM 5는 25 tok/s/user에서 MI355X가 B200의 94%까지 따라붙었지만 75 tok/s/user 같은 엄격한 상호작용성 기준에서는 68%로 격차가 벌어져 — MI355X는 처리량 중심, B200은 반응성 중심 배치에서 각각 강점이 갈렸다
+
+---
+
+```mermaid
+flowchart TD
+    K2X["Kimi K2.X (2~8월, 60건 제출)"] --> MIprog["MI355X ATOM:<br/>B300 vLLM과 대등한<br/>달러당 총토큰 수준까지 추격"]
+    K2X --> MI325["MI325X: v0.18→v0.21<br/>처리량 1.9~2.6배<br/>TTFT -43~53%"]
+
+    style MI325 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Nv["엔비디아 개선 이력"] --> V20["v0.20.2: MXINT4 인터페이스<br/>수정 → 처리량 +8~28%<br/>TTFT -20~37%"]
+    Nv --> DEP8["DEP8 (2026-08 신규)<br/>동시성512: 6,140 tok/s/GPU<br/>TTFT 1.15초 (TP8 대비 대폭 개선)"]
+
+    style DEP8 fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    GLM5["GLM 5 (MI355X vs B200)"] --> T25["25 tok/s/user:<br/>MI355X = B200의 94%"]
+    GLM5 --> T75["75 tok/s/user:<br/>MI355X = B200의 68%"]
+    T75 --> Gap["처리량 지향 배치에선 근접<br/>반응성 지향 배치에선 격차 확대"]
+
+    style T25 fill:#f0fdf4,stroke:#16a34a
+    style T75 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+```
+
+GLM 5에서 AMD는 초기 결과 대비 약 4.8배 개선(두 차례 큰 레시피 전환 덕분, 벤더 중 최대 상대 개선폭)을 이뤘고 엔비디아도 비슷한 4.68배를 개선해 TP4 전환 이후 정체기에 들어섰다. MiniMax M3 8k1k는 6월 12일부터 8월 4일까지 이어졌고, 은퇴 시점 기준 GB300이 Dynamo-vLLM MTP 분리형 구성으로 단독 선두였지만, 상위권 결과 중 세 곳은 어떤 실사용 배치도 받아들이지 않을 만큼 TTFT 중앙값이 나빠 처리량 순위와 실사용 순위가 크게 달랐다는 점도 함께 확인됐다.
+
+---
+
+*작성 진행률: 100% 완료*
+*업데이트: 전체 11개 섹션(서론, 에이전틱 워크로드 정의, 모델별 성능, 업계 파급력, vLLM·SGLang 최적화, TensorRT-LLM·ATOM·AITER 최적화, Dynamo·LMCache·Mooncake 최적화, AgentX 방법론, 다음 단계, 수명주기 적분 성능, 단일 턴 성능) 작성 완료*
