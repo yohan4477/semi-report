@@ -108,7 +108,8 @@ SEC_SCNT = ('sec-scnt', '21', '삼성물산',
 SEC_JEJU = ('sec-jeju', '22', '제주반도체 080220',
             '2026년 재무제표 분석·역산 한 편 — 출발점을 어느 해로 잡느냐가 결론을 통째로 바꾼다')
 SEC_HYO = ('sec-hyosung', '23', '효성중공업 298040',
-           '2026년 DCF 한 편 — 괴리를 만든 것이 성장률이 아니라 크는 기간이라고 짚는다')
+           '2026년 DCF 두 편 — 여든 날 사이에 계산값이 121만원에서 189만원으로 올랐는데 '
+           '주가가 더 올라 괴리는 −64.8%에서 −30.4%로 좁혀졌다')
 SEC_LGE = ('sec-lge', '24', 'LG전자 066570',
            '2026년 DCF·멀티플 두 편 — 같은 글 안에서 로봇 프리미엄이 40조와 13조로 갈린다')
 SEC_WT = ('sec-wontech', '25', '원텍 336570',
@@ -124,7 +125,8 @@ SEC_GOOGL = ('sec-googl', '29', '알파벳',
 SEC_BOB = ('sec-bobcat', '30', '두산밥캣',
            '2026년 DCF 한 편 — 요약 타일과 연도별 표의 합이 25억원 어긋난다')
 SEC_MOB = ('sec-mobis', '31', '현대모비스',
-           '2026년 DCF 한 편 — 클리핑 1,150자 뒤에 슬라이드 열네 장이 있었다')
+           '2026년 DCF 두 편 — 같은 필자가 넉 달 만에 65.0만원에서 51.8만원으로 값을 내렸고, '
+           '그사이 주가는 43.2만원에서 49.6만원으로 올랐다')
 SEC_SKT = ('sec-skt', '32', 'SK텔레콤 017670',
            '2026년 DCF 한 편 — 괴리를 장부에 안 잡힌 소송으로 설명한다')
 SEC_SBL = ('sec-sbl', '33', '삼성바이오로직스',
@@ -159,8 +161,19 @@ SEC_ETC = ('sec-etc', '45', '회사 밖 이야기',
 
 SEC_BIO = ('sec-bio', '46', '바이오·제약',
            '회사 값이 아니라 임상 결과가 주가를 옮긴 사례 — mRNA 항암 3상 한 편')
-SEC_CRYPTO = ('sec-crypto', '47', '크립토',
-              '국채 바이백과 규제 법안이 코인 가격에 닿는 경로를 다룬 글 한 편')
+SEC_CRYPTO = ('sec-crypto', '48', '크립토',
+              '국채 바이백과 규제 법안이 코인 가격에 닿는 경로를 다룬 글 — 재무부가 장기채를 '
+              '되사겠다고 하자 48시간 만에 18%가 오른 사례가 여기 있다')
+
+# 값을 매기는 글이 아니라 장부에 언제 무엇을 적느냐를 다룬 글이다. 회사 이름이 아니라
+# 조건과 날짜가 주인공이라 회사 섹션 어디에도 못 들어간다.
+SEC_ACC = ('sec-acc', '46', '회계기준과 세무',
+           '어느 칸에 적느냐가 몇 년 뒤 세금과 비용을 가른 사례 — 주식기준보상 부여일 둘, '
+           '대법원 판례 둘')
+
+# 하루짜리 시황이다. 값을 매기지 않고 그날 무엇이 무엇을 밀었는지만 적는다.
+SEC_MKT = ('sec-mkt', '47', '증시 시황',
+           '미국이 오른 날 한국이 왜 밀리는지를 정규장 뒤 신호로 읽은 글')
 
 
 CARDS = [{
@@ -4051,7 +4064,7 @@ SEC_BADGES = {
     'sec-naver':      ('+92%',     'up',   '2026-07-09 NXT 종가 185,400원 대비 · DCF 약 354,800원'),
     'sec-lgcns':      ('+46%',     'up',   '2026-07-03 종가 74,200원 대비 · DCF 약 108,400원'),
     'sec-scnt':       ('−6.9%',    'down', '2026-06-28 시세 494,500원 대비 · 배수 460,177원'),
-    'sec-hyosung':    ('−64.8%',   'down', '2026-06-05 KRX 3,437,000원 대비 · DCF 1,209,445원'),
+    'sec-hyosung':    ('−30.4%',   'down', '2026-08-22 평가 · 8월 21일 종가 2,721,000원 대비 · DCF 1,894,539원'),
     'sec-lge':        ('−22.6%',   'down', '2026-06-04 장전 359,000원 대비 · 본업 DCF 277,794원'),
     'sec-wontech':    ('+36.3%',   'up',   '2026-05-25 평가 · 5월 22일 주가 9,370원 대비 · DCF 12,771원'),
     'sec-ecopro':     ('역산',      'flat', '2026-05-23 · 값을 내지 않고 시총 21조 825억원이 요구하는 성장률 36~46%를 되짚는다'),
@@ -4059,7 +4072,7 @@ SEC_BADGES = {
     'sec-hmc':        ('+4.9%',    'up',   '2026-05-23 602,000원 대비 · DCF 633,700원(주당끼리는 +5.3%)'),
     'sec-googl':      ('값 없음',   'flat', '2026-05-16 · 성장 경로와 할인율 가정만 세우고 적정주가를 내지 않는다'),
     'sec-bobcat':     ('+69.5%',   'up',   '2026-05-08 평가 · 4월 26일 시장가격 73,700원 대비 · DCF 124,956원'),
-    'sec-mobis':      ('+50.7%',   'up',   '2026-05-06 431,500원 대비 · DCF 650,361원'),
+    'sec-mobis':      ('+4.5%',    'up',   '2026-08-23 평가 · 8월 21일 종가 496,000원 대비 · DCF 518,300원'),
     'sec-skt':        ('+49%',     'up',   '2026-04-25 평가 · 4월 24일 주가 100,000원 대비 · DCF 149,108원'),
     'sec-sbl':        ('역산',      'flat', '2026-04-16 · 값을 내지 않고 시총 75조원이 요구하는 성장률 연 31%를 되짚는다'),
     'sec-kia':        ('+0.3%',    'up',   '2026-04-09 시총 58.6조원 대비 · 강한 정상화 시나리오 58.7조원'),
@@ -4080,7 +4093,8 @@ SEC_ORDER = [SEC_SS, SEC_HY, SEC_CM, SEC_S2, SEC_OR, SEC_HG, SEC_JS, SEC_SD, SEC
              SEC_HYO, SEC_LGE, SEC_WT, SEC_ECO, SEC_SDI,
              SEC_HMC, SEC_GOOGL, SEC_BOB, SEC_MOB, SEC_SKT,
              SEC_SBL, SEC_KIA, SEC_LNF, SEC_HANMI, SEC_KZ,
-             SEC_LEENO, SEC_HWO, SEC_CT, SEC_TCK, SEC_LGD, SEC_RATES, SEC_AI, SEC_BIO, SEC_CRYPTO, SEC_ETC]
+             SEC_LEENO, SEC_HWO, SEC_CT, SEC_TCK, SEC_LGD, SEC_RATES, SEC_AI, SEC_BIO, SEC_CRYPTO,
+             SEC_ACC, SEC_MKT, SEC_ETC]
 
 # 타일은 묶음으로 갈라 세운다. 회사가 아홉이 되자 한 줄에 국내 제조사와 나스닥 상장사가
 # 섞여, 어느 시장 이야기인지가 타일 이름을 하나씩 읽어야 알 수 있었다.
@@ -4106,7 +4120,7 @@ SEC_GROUPS = [
                           '무거워지는 중인데, 할인율 근거의 촘촘함은 편마다 다르다',
          [SEC_SDS[0], SEC_LGCNS[0], SEC_NAVER[0]]),
         ('전력기기', '변압기·배전 세 곳 — 셋 다 데이터센터 전력 수요를 논거로 깔고, 셋 다 '
-                    '계산값이 주가에 못 닿는다. 폭은 −25.9%에서 −64.8%까지 벌어진다',
+                    '계산값이 주가에 못 닿는다. 폭은 −25.9%에서 −41.1%까지 벌어진다',
          [SEC_LS[0], SEC_HDEL[0], SEC_HYO[0]]),
         ('전자부품', 'MLCC 한 곳과 AI 서버용 초고다층 기판 한 곳 — 같은 필자가 베타를 '
                     '1.395513과 0.976으로 잡아 할인율이 11.10%와 8.81%로 갈린다',
@@ -4162,6 +4176,11 @@ SEC_GROUPS = [
         ('바이오·크립토', '값 매기는 글이 아니라 사건이 가격을 옮긴 사례 둘 — mRNA 항암 3상과 '
                         '숏스퀴즈. 지도도 배지도 없다',
          [SEC_BIO[0], SEC_CRYPTO[0]]),
+        ('회계기준·세무', '주식기준보상을 언제 얼마로 잡느냐, 이미 낸 세금을 어느 해로 되돌리느냐 '
+                        '— 회사가 아니라 장부의 칸을 다룬 글이다',
+         [SEC_ACC[0]]),
+        ('증시 시황', '그날 하루를 정규장이 아니라 애프터마켓과 야간선물로 읽은 글',
+         [SEC_MKT[0]]),
     ]),
 ]
 _n = len(CARDS)
@@ -4439,8 +4458,8 @@ SEC_INTRINSIC = {
     'sec-semco': 599679, 'sec-kolmar': 352520, 'sec-hdhi': 435000,
     'sec-hws': 82941, 'sec-isu': 96163, 'sec-naver': 354800,
     'sec-lgcns': 108400, 'sec-scnt': 460177, 'sec-hmc': 633700,
-    'sec-mobis': 650361, 'sec-bobcat': 124956, 'sec-skt': 149108,
-    'sec-hyosung': 1209445, 'sec-lge': 277794, 'sec-wontech': 12771,
+    'sec-mobis': 518300, 'sec-bobcat': 124956, 'sec-skt': 149108,
+    'sec-hyosung': 1894539, 'sec-lge': 277794, 'sec-wontech': 12771,
     'sec-kzinc': 1305033, 'sec-leeno': 62010, 'sec-hwocean': 77900,
     'sec-celltrion': 71000, 'sec-tck': 105410,
 }
@@ -4843,7 +4862,7 @@ if __name__ == '__main__':
                                    driver_map.render(dmd_scnt, judgment_dir=None)),
                   'sec-jeju': _val('밸류에이션 — 2026년 재무제표 분석·역산 한 편',
                                    driver_map.render(dmd_jeju, judgment_dir=None)),
-                  'sec-hyosung': _val('밸류에이션 — 2026년 DCF 한 편',
+                  'sec-hyosung': _val('밸류에이션 — 2026년 DCF 두 편',
                                       driver_map.render(dmd_hyosung, judgment_dir=None)),
                   'sec-lge': _val('밸류에이션 — 2026년 DCF·멀티플 한 편',
                                   driver_map.render(dmd_lge, judgment_dir=None)),
@@ -4859,7 +4878,7 @@ if __name__ == '__main__':
                                     driver_map.render(dmd_googl, judgment_dir=None)),
                   'sec-bobcat': _val('밸류에이션 — 2026년 DCF 한 편',
                                      driver_map.render(dmd_bobcat, judgment_dir=None)),
-                  'sec-mobis': _val('밸류에이션 — 2026년 DCF 한 편',
+                  'sec-mobis': _val('밸류에이션 — 2026년 DCF 두 편',
                                     driver_map.render(dmd_mobis, judgment_dir=None)),
                   'sec-skt': _val('밸류에이션 — 2026년 DCF 한 편',
                                   driver_map.render(dmd_skt, judgment_dir=None)),
