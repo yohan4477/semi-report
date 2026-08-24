@@ -98,6 +98,15 @@ HOOK_EVENTS = sorted((_US.get('hooks') or {}).keys())
 _MCP = _settings(os.path.join(HOME, '.claude.json')).get('mcpServers') or {}
 MCP = sorted(_MCP.keys())
 
+def _count(d, suffix='.md'):
+    p = os.path.join(*d)
+    return len([f for f in os.listdir(p) if f.endswith(suffix)]) if os.path.isdir(p) else 0
+
+
+N_AGENT_REPO = _count((ROOT, '.claude', 'agents'))
+N_AGENT_USER = _count((HOME, '.claude', 'agents'))
+N_CMD_REPO = _count((ROOT, '.claude', 'commands'))
+
 _ALLOW = 0
 for _p in ('.claude/settings.json', '.claude/settings.local.json'):
     _ALLOW += len((_settings(os.path.join(ROOT, _p)).get('permissions') or {}).get('allow') or [])
@@ -111,4 +120,6 @@ if __name__ == '__main__':
     print('플러그인', ENABLED)
     print('caveman', CAVEMAN)
     print('superpowers', SUPERPOWERS)
+    print('서브에이전트 저장소 %d / 사용자 %d · 슬래시 명령 저장소 %d'
+          % (N_AGENT_REPO, N_AGENT_USER, N_CMD_REPO))
     print('훅 이벤트', HOOK_EVENTS, '| MCP', MCP, '| 허용규칙', N_ALLOW)
