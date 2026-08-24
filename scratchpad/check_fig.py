@@ -14,6 +14,7 @@
   선에 깔림      가로선·세로선이 글자 상자를 지난다
   가로 넘침      viewBox 밖으로 나간다
   세로 넘침      viewBox 아래로 나간다
+  칸 밖으로 삐짐  글자가 제가 든 네모보다 넓다
 
 글자 폭은 한 글자 9px로 어림한다. 실제 렌더링과 다르지만 겹침을 잡기에는 넉넉하다.
 """
@@ -33,6 +34,7 @@ ASC, DESC = 9.0, 3.0    # 글자 상자의 위·아래 여유. 두 줄 라벨이
 TEXT = re.compile(r'<text x="(-?[\d.]+)" y="(-?[\d.]+)"([^>]*)>([^<]*)<')
 VIEW = re.compile(r'viewBox="0 0 ([\d.]+) ([\d.]+)"')
 PATH = re.compile(r'<path d="([^"]+)"([^>]*)/>')
+RECT = re.compile(r'<rect x="(-?[\d.]+)" y="(-?[\d.]+)" width="([\d.]+)" height="([\d.]+)"')
 MOVE = re.compile(r'[ML](-?[\d.]+)[ ,](-?[\d.]+)')
 
 
@@ -46,6 +48,15 @@ def boxes(svg):
         w = len(txt) * CH
         x0 = x - w / 2 if 'middle' in attr else (x - w if 'end' in attr else x)
         out.append((x0, x0 + w, y - ASC, y + DESC, txt))
+    return out
+
+
+def rects(svg):
+    """네모 하나하나. (x0, x1, y0, y1)"""
+    out = []
+    for m in RECT.finditer(svg):
+        x, y, w, h = (float(m.group(i)) for i in (1, 2, 3, 4))
+        out.append((x, x + w, y, y + h))
     return out
 
 
@@ -79,6 +90,14 @@ def hits(svg):
             a, b = bs[i], bs[j]
             if a[0] < b[1] and b[0] < a[1] and a[2] < b[3] and b[2] < a[3]:
                 bad.append('글자끼리 겹침  %s | %s' % (a[4][:18], b[4][:18]))
+    # 글자가 제가 든 네모보다 넓으면 옆 칸을 침범한다. 26px 짜리 칸에 「남는 용량」을
+    # 넣었다가 걸렸다(2026-08-24) — 겹침 검사만으로는 이게 안 잡힌다.
+    for x0, x1, y0, y1, txt in bs:
+        cx = (x0 + x1) / 2
+        for rx0, rx1, ry0, ry1 in rects(svg):
+            if rx0 <= cx <= rx1 and ry0 <= (y0 + y1) / 2 <= ry1:
+                if x0 < rx0 - 2 or x1 > rx1 + 2:
+                    bad.append('칸 밖으로 삐짐 칸 %.0f..%.0f  %s' % (rx0, rx1, txt[:28]))
     for sx0, sx1, sy0, sy1 in segments(svg):
         for x0, x1, y0, y1, txt in bs:
             if sx0 < x1 and x0 < sx1 and sy0 < y1 and y0 < sy1:
@@ -89,7 +108,8 @@ def hits(svg):
 
 # 도해를 가진 생성기를 여기 적는다. 빠뜨리면 그 장은 검사를 통째로 안 받는다 —
 # 2026-08-23에 수도리무브 도해 서른 장이 이 목록에 없어서 한 번도 안 걸러졌다.
-GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard', 'gen_glossary']
+GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard', 'gen_glossary',
+              'gen_report_dashboard']
 
 
 def all_figs():
@@ -97,7 +117,7 @@ def all_figs():
     out = []
     for name in GENERATORS:
         mod = importlib.import_module(name)
-        out += [(c['title'], f) for c in mod.CARDS for f in c.get('figs', ())]
+        out += [(c['title'], f) for c in getattr(mod, 'CARDS', ()) for f in c.get('figs', ())]
         # 카드가 아니라 보고서 층에 실린 도해. 이름을 REPORT_FIGS 로 둔 것은
         # 수도리무브 생성기가 EXTRA_FIGS 를 다른 뜻으로 이미 쓰고 있어서다.
         # 카드가 아니라 보고서 층에 실린 도해. CARDS만 걷으면 검사를 통째로 빠져나간다 —
