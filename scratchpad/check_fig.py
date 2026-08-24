@@ -98,6 +98,11 @@ def all_figs():
     for name in GENERATORS:
         mod = importlib.import_module(name)
         out += [(c['title'], f) for c in mod.CARDS for f in c.get('figs', ())]
+        # 카드가 아니라 보고서 층에 실린 도해. 이름을 REPORT_FIGS 로 둔 것은
+        # 수도리무브 생성기가 EXTRA_FIGS 를 다른 뜻으로 이미 쓰고 있어서다.
+        # 카드가 아니라 보고서 층에 실린 도해. CARDS만 걷으면 검사를 통째로 빠져나간다 —
+        # 4장짜리 에이전트 보고서가 그렇게 한 번도 안 걸러질 뻔했다(2026-08-24).
+        out += [(name, f) for f in getattr(mod, 'REPORT_FIGS', ())]
     return out
 
 

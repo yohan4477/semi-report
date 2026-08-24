@@ -8,6 +8,7 @@ import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import _agent_report as ar
 
 OUT = os.path.join(dc.ROOT, '대시보드', '용어사전.html')
 
@@ -185,5 +186,26 @@ LEDE = '''<p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸
 FOOTER = (LEDE + META + '\n용어 풀이 · 카드 하나가 용어 하나입니다.\n'
           '  페이지 생성은 <code>scratchpad/gen_glossary.py</code>(공용 부품 <code>dash_common.py</code>).')
 
+# 보고서 층 도해는 카드에 안 붙어 있다. check_fig 가 걷어 가도록 여기 내놓는다.
+REPORT_FIGS = [(0,) + f for f in ar.FIGS]
+
+
+# 보고서 층 표지. 통합 보고서 장에서 쓰는 것과 같은 모양이다 — 한 장에 성격이 다른
+# 글이 둘 서므로 어디서 끊기는지가 보여야 한다.
+REP_CSS = """
+  .rep-head{margin:8px 0 18px;padding:18px 20px;border:1px solid var(--line);
+            border-left:5px solid var(--accent);border-radius:12px;
+            background:var(--accent-soft)}
+  .rep-head .rn{display:block;font-size:11px;font-weight:850;letter-spacing:.08em;
+                color:var(--accent-ink)}
+  .rep-head h2{margin:6px 0 8px;font-size:21px;line-height:1.35}
+  .rep-head .rm{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .rep-head .rm b{color:var(--ink)}
+"""
+
 if __name__ == '__main__':
-    dc.render(CARDS, '용어사전', HEADER, FOOTER, OUT, extra_css=CODE_CSS)
+    dc.render(CARDS, '용어사전', HEADER, FOOTER, OUT,
+              top=ar.report_html(FIG_SEQ[1:], STAMP), top_id='sec-agentrep',
+              top_title='보고서 — 하네스 위에 무엇이 얹히나',
+              top_sub='스킬·슬래시 명령·서브에이전트·훅·MCP가 각각 어느 줄에 꽂히나', top_n=1,
+              extra_css=CODE_CSS + REP_CSS)
