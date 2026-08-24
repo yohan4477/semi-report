@@ -502,6 +502,66 @@ flowchart TD
 옛 고정 길이 매트릭스는 프롬프트 하나를 만들어 프리필 한 번, 디코드 한 번 하고 버리는 구조라 턴 간 캐시 생존·반복 토큰화·세션 어피니티·오프로드 왕래·스케줄러 정체를 애초에 측정하지 못했다.
 AgentX가 이런 비용을 충분히 크게 드러내 vLLM·SGLang·TensorRT-LLM·ATOM·AITER·Dynamo·LMCache 전반의 상류 개선을 이끌어냈다.
 
+### Dynamo PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#10540](https://github.com/ai-dynamo/dynamo/pull/10540) | 조회(lookup) 핫 패스의 작업량을 줄임 | — |
+| [#10836](https://github.com/ai-dynamo/dynamo/pull/10836) | 중복된 접미사 무효화(invalidation)를 없앰 | — |
+| [#11095](https://github.com/ai-dynamo/dynamo/pull/11095) | KV 매칭·등록·소유권·종료 시 참조 해제를 일괄 처리(batch)로 묶음 | 동시성 512에서 출력 처리량 중앙값 +22.2% |
+| [#11503](https://github.com/ai-dynamo/dynamo/pull/11503) | 캐시 소유권 표현을 "공유 블록 체인" 방식으로 시작(단순화 1단계) | — |
+| [#11508](https://github.com/ai-dynamo/dynamo/pull/11508) | 공유 블록 체인을 "아레나 단위 소유 카운트"로 단순화(2단계) | — |
+| [#12329](https://github.com/ai-dynamo/dynamo/pull/12329) | 아레나 단위 소유 카운트를 다시 "백엔드별 요청 리스"로 단순화(3단계, 최종 리스 방식) | AgentX 재생 시간 vLLM 백엔드 -23.7%, SGLang -22.0%, 피크 메모리도 함께 감소 |
+| [#10521](https://github.com/ai-dynamo/dynamo/pull/10521) | 버킷형 만료 가지치기 — 추적 대상 전체에 비례해 스캔하던 방식을 대체 | 고부하(high-churn) AgentX 처리량 +13.7% |
+| [#10676](https://github.com/ai-dynamo/dynamo/pull/10676) | 델타(변경분)만 처리하는 접미사 정리 | 같은 시간창에서 저장·제거 이벤트를 약 28배 더 많이 처리 |
+| [#11644](https://github.com/ai-dynamo/dynamo/pull/11644) | 압축된 프롬프트 경로 | 프런트엔드 CPU -35.3%, 꼬리(tail) TTFT 대폭 개선 |
+| [#10645](https://github.com/ai-dynamo/dynamo/pull/10645) | 과부하 상태를 매번 재계산하지 않고 증분으로 추적 | — |
+| [#12158](https://github.com/ai-dynamo/dynamo/pull/12158) | 라우팅 점수에 활성 디코드 요청을 반영해, 디코드를 오래 물고 있는 워커가 큐 깊이만 볼 때보다 더 비싸 보이게 함(의도된 트레이드오프) | 보고된 튜닝 지점에서 AgentX 지연 중앙값 개선(작은 처리량 손실을 대가로) |
+| [#13447](https://github.com/ai-dynamo/dynamo/pull/13447) | 위 트레이드오프를 밀어붙인 새 에이전틱 라우터 프리셋 — 프리픽스 겹침 가중치 2, 프리필 부하 가중치 4, 활성 디코드 요청 가중치 64(진행 중인 작업) | 8×H200 AgentX 실행에서 완주 출력 처리량 +8.26%(기본 비용함수 대비), 실행 단위 p95 TTFT -43.1%, p95 토큰 간 지연 -22.6%, 완주 트레젝토리 1건 추가 |
+| [#10437](https://github.com/ai-dynamo/dynamo/pull/10437) | MessagePack(이진 직렬화 포맷) 요청 페이로드로 전환 | 처리량 +8.1%, 평균 TTFT -9.7% |
+| [#11104](https://github.com/ai-dynamo/dynamo/pull/11104) | 파이썬으로 직접 트랜스코딩해, 중간 값 트리 단계를 아예 제거 | — |
+| [#11539](https://github.com/ai-dynamo/dynamo/pull/11539) | MessagePack 이벤트 페이로드를 복사하지 않음 | — |
+| [#11574](https://github.com/ai-dynamo/dynamo/pull/11574) | 수신된 ZeroMQ(경량 메시징 라이브러리) 프레임을 복사하지 않음 | — |
+| [#11569](https://github.com/ai-dynamo/dynamo/pull/11569) | 토큰마다 토큰 간 지연 지표 계산 오버헤드 전체를 치르지 않게 함 | — |
+| [#10433](https://github.com/ai-dynamo/dynamo/pull/10433) | 채팅 스트리밍 핫 패스를 단축 | — |
+| [#11820](https://github.com/ai-dynamo/dynamo/pull/11820) | 정적 로깅 필터로 공유 스팬 매처(span-matcher) 락을 제거(경합 지점 해소) | 프런트엔드 처리량 초당 932건 → 1,133건 |
+| [#12161](https://github.com/ai-dynamo/dynamo/pull/12161) | 더 단순한 위치 기반 radix 버킷(접두사 트리 버킷) | 32워커 실행에서 모커(mocker)의 피크 메모리 -5.51GiB |
+| [#12999](https://github.com/ai-dynamo/dynamo/pull/12999) | 스트리밍되는 청크마다 누적 카운터를 갱신하는 대신, 역토큰화 지표를 응답당 한 번만 반영(진행 중인 작업) | 매칭된 진단 프로파일에서 프런트엔드 CPU 시간 약 절반으로 감소 |
+
+### LMCache PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#3382](https://github.com/LMCache/LMCache/pull/3382) | 청크 단위 외부 캐시 로딩 — 요청마다 전체 로드분을 한 번에 예약하던 방식 대신 청크 단위로 예약해, 로드가 서로 겹쳐 흐르게 함 | 동시성 32에서 옛 방식은 28건 만에 교착(deadlock), 새 방식은 120건 완주 / 동시성 48에서는 KV 풀 98.5% 참에도 계속 동작 |
+| [#3635](https://github.com/LMCache/LMCache/pull/3635) | DeepSeek-V4 하이브리드 그룹에서 쓸모 있는 부분만 저장 | 토큰당 저장량 거의 20분의 1로 감소 |
+| [#3869](https://github.com/LMCache/LMCache/pull/3869) | 슬라이딩 윈도우 프리페치가 다시 읽히지 않을 윈도우 상태 대신 살아있는 윈도우만 로드 | — |
+| [#3908](https://github.com/LMCache/LMCache/pull/3908) | 객체 그룹당 네이티브 전송 호출 1회로 통합해, 스테이징 복사·커널 실행마다 반복되던 파이썬 락 핸드오프를 제거 | — |
+| [#4524](https://github.com/LMCache/LMCache/pull/4524) | 슬라이딩 윈도우·순환 상태 청크를 공유하는 요청 중 하나가 다른 요청의 읽기 락을 해제해버리던 하이브리드 락 회계 버그를 수정(진행 중인 작업) | — |
+| [#3092](https://github.com/LMCache/LMCache/pull/3092) | CUDA 전용 flashinfer 의존을 없애려 Triton 기반 블록 희소 어텐션 백엔드를 새로 구현(ROCm 감지 시 자동 라우팅) | — |
+| [#3101](https://github.com/LMCache/LMCache/pull/3101) | CUDA 빌드·경량 이미지를 그대로 반영한 ROCm Dockerfile | — |
+| [#3843](https://github.com/LMCache/LMCache/pull/3843) | NVIDIA cuFile로만 닿던 GDS L1 슬랩 파일 계층을 ROCm의 hipFile로도 쓸 수 있게 확장 | — |
+| [#4273](https://github.com/LMCache/LMCache/pull/4273) | gfx942·gfx950용 사전 빌드 휠을 배포(소스 빌드 대신 설치 가능하게) | MI350X에서 KV 전송 커널 테스트 56개 전부 통과 |
+| [#4363](https://github.com/LMCache/LMCache/pull/4363) | 바인드 마운트된 저장소를 git safe directory로 표시하는 한 줄짜리 후속 수정(CI 전용 문제 해결) | — |
+| [#3561](https://github.com/LMCache/LMCache/pull/3561) | DCP(디코드 컨텍스트 병렬화) 인지 CPU 오프로드 — 각 랭크가 KV의 일부만 쥐는 상황에서 조각을 모아 저장하고 로드 후 다시 분배 | 검증에서 CPU 적중 이벤트 3만 건 이상 기록, 단일 요청 로드가 수십만 토큰까지 도달 |
+
+### Mooncake PR 대장
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#2225](https://github.com/kvcache-ai/Mooncake/pull/2225) | HIP dmabuf 등록 경로를 추가해 기존 CUDA dmabuf 경로를 AMD에도 대응(GPU-direct RDMA를 AMD에서도 가능하게 함) | — |
+| [#3184](https://github.com/kvcache-ai/Mooncake/pull/3184) | ROCm 휠·CI·릴리스 경로를 신설해 mooncake-transfer-engine-rocm을 PyPI에 배포 | — |
+| [#3338](https://github.com/kvcache-ai/Mooncake/pull/3338) | 셀프호스팅 2노드 MI350X 외부 프리필·디코드 계층을 추가해 ROCm 분리형 경로를 실제 하드웨어에서 검증(진행 중인 작업) | — |
+
+### 그 밖의 개선 PR 대장
+
+원문 "Other Optimizations" 절에서 다룬 MiniMax-M3 day-0 정합성 버그 3건이다 — 성능이 아니라 정확성 문제였다.
+
+| PR | 고친 것 | 측정된 효과 |
+|---|---|---|
+| [#45879](https://github.com/vllm-project/vllm/pull/45879) | NixlConnector(vLLM의 KV 전송 커넥터)의 핸드셰이크가 SPLIT 영역 block_len을 프리필-디코드 TP(텐서 병렬) 비율에 비례한다고 잘못 가정하던 것을, 실제 랭크당 KV 헤드 비율로 검증하도록 수정 | 검증 실패로 KV가 전혀 옮겨지지 않아 gsm8k 점수 0이 나오던 문제 해결 |
+| [#45720](https://github.com/vllm-project/vllm/pull/45720) | MiniMax-M3의 희소 어텐션 백엔드가 gfx942의 FP8 인코딩(e4m3fnuz)을 float8_e4m3fn으로 잘못 읽어 K·V 값이 커널 진입 전에 손상되던 것을, 플랫폼 dtype 그대로 캐시를 읽도록 수정(프리필·디코드 래퍼 양쪽) | — |
+| [#45546](https://github.com/vllm-project/vllm/pull/45546) | AMD 모델 파일에 EAGLE3 인터페이스가 빠져 ROCm에서 추측 디코딩이 엔진 초기화 단계부터 막히던 것을, NVIDIA 모델과 동등하게 맞춰 해결 | MI355X gsm8k 점수가 EAGLE3 미적용 MI355X 실행·B200과 일치 |
+
 ---
 
 ## 8. AgentX 방법론 - 300만 달러 데이터셋과 트레이스 리플레이어
