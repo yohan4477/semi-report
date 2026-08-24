@@ -203,5 +203,120 @@ Qwen3.5는 GatedDeltaNet(MIT·엔비디아 리서치가 개발, 상태 저장 �
 
 ---
 
-*작성 진행률: 약 27% 완료*
-*업데이트: 전체 11개 섹션 중 1\~3장(서론, 에이전틱 워크로드 정의, 모델별 성능) 작성 완료*
+## 4. 업계 파급력 - 분산 추론 생태계와 50개+ 상류 PR
+
+**📌 핵심:**
+- AgentX가 첫 몇 달 만에 만든 가장 큰 성과는 벤치마크 수치 자체가 아니라, 이를 기준점 삼아 실전 에이전틱 워크로드를 최적화한 50개 이상의 상류(upstream) 코드 개선(PR)이다 — KV 캐시 생애주기·하이브리드 어텐션 캐시 정확성·CPU 오프로드·전송 진행 상태·라우팅 적합성·토큰화·스케줄러 장부까지 전 구간을 건드렸다
+- SemiAnalysis는 AMD 소프트웨어 개발팀과 수년간 협업하며 개발 원칙 현대화를 도왔는데, 이번 AgentX 작업이 AMD 오픈소스를 에이전틱 워크로드에서 "일급(first class)"에 가깝게 끌어올리는 데 결정적이었다
+- 분산 추론 스택은 라우터(요청을 워커로 분배) → 추론 엔진(vLLM·SGLang 등, 실제 연산+외부 KV 캐시 매니저 연결) → KV 캐시 매니저·전송 엔진(Mooncake·NIXL 등, GPU\~CPU\~원격노드 간 실제 데이터 이동)의 3단 구조이며, Dynamo·llm-d·AMD Infera 같은 플랫폼이 이 구성요소들을 묶어 쿠버네티스 위에서 배포 가능한 하나의 시스템으로 패키징한다
+- 결론: 컨텍스트 병렬화(긴 입력·캐시를 여러 GPU에 쪼개 나누는 기법)는 엔비디아 리서치가 상당 부분 발명했는데, vLLM 지원 매트릭스에서 AMD 백엔드는 전부 미지원 상태라 CUDA 해자의 일부를 이룬다 — 다만 아래 5\~7장에서 보듯 AMD 진영도 빠르게 따라붙고 있다
+
+---
+
+```mermaid
+flowchart TD
+    Stack["분산 추론 스택 3단 구조"] --> Router["① 라우터/프런트엔드<br/>(vLLM router·llm-d router·<br/>SGLang gateway·ATOM Mesh)"]
+    Router --> Engine["② 추론 엔진<br/>(vLLM·SGLang·TensorRT-LLM·ATOM)"]
+    Engine --> KVMgr["③ KV 캐시 매니저·전송엔진<br/>(Mooncake·NIXL·LMCache)"]
+
+    style Stack fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    Package["패키징 플랫폼"] --> Dynamo["엔비디아 Dynamo"]
+    Package --> LLMD["llm-d"]
+    Package --> Infera["AMD Infera"]
+    Dynamo --> K8s["쿠버네티스 위에서<br/>컨테이너 묶음으로 배포·조율"]
+
+    style K8s fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    CP["컨텍스트 병렬화<br/>(PCP=프리필용, DCP=디코드용)"] --> Origin["대부분 엔비디아 리서치가 발명"]
+    CP --> Gap["vLLM 지원매트릭스:<br/>AMD 백엔드 전부 미지원"]
+    Gap --> Moat["CUDA 해자의 한 축<br/>(단, 5~7장에서 AMD 추격 확인)"]
+
+    style Gap fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+```
+
+한 예로 현재 AgentX 결과에 쓰이는 단순 배치는 vLLM과 같은 노드에서 Mooncake를 함께 돌리는 방식이다 — 각 vLLM 워커가 Mooncake Store 클라이언트를 내장해 호스트 DRAM 일부를 외부 KV 캐시 풀에 내주고, 재사용 가능한 KV 블록을 GPU 메모리로 불러오거나 새로 계산한 블록을 호스트 메모리에 저장한다. 한 배포 안에서 Mooncake Store로 재사용 블록을 DRAM에 내리는 동시에, NIXL로 프리필-디코드 GPU 사이의 요청별 KV를 직접 옮기는 식으로 여러 전송 경로가 공존할 수 있다.
+
+---
+
+## 5. 컨텍스트 병렬화와 vLLM·SGLang 최적화
+
+**📌 핵심:**
+- 8k처럼 짧은 고정 길이 요청은 나눌 것도 별로 없고 TTFT도 이미 짧아 컨텍스트 병렬화의 이점을 살릴 수 없다 — 긴 맥락에서만 프리필 병렬화(PCP, 연산 집약적인 프리필을 여러 랭크에 쪼개 처리)와 디코드 병렬화(DCP, 메모리 대역폭에 묶인 디코드를 KV 샤드별로 병렬 스캔)가 진가를 발휘한다
+- vLLM에서 가장 큰 개선은 하이브리드 어텐션 프리픽스 캐싱이다 — 슬라이딩 윈도우(짧게 쓰고 버리는 최근 맥락 캐시)가 긴 맥락 체크포인트를 밀어내지 못하게 막는 "선택적 보존" 기법이 동시 요청 14개·맥락 100만 토큰까지 프리픽스 캐시 적중률 95% 이상을 기록했고, DeepSeek-V4 하이브리드 어텐션용 CPU 오프로드 확장은 출력 처리량 81.7% 증가·평균 종단간 지연 46.6% 감소를 냈다
+- SGLang은 슬라이딩 윈도우와 프리픽스가 같은 메모리 풀을 두고 경쟁하는 문제를 세 가지 각도로 풀었고(선제적 페이지 해제·컴퓨트 락 상한·유효기간 지난 항목 제거), 맥락 길이를 컴파일 대상이 아니라 런타임 변수로 처리해 AgentX 동시성 384에서 출력 처리량 26.75% 증가·평균 TTFT 36.25% 감소를 달성했다
+- 결론: SGLang의 DP 캐시 어피니티(세션을 해당 캐시를 쥔 랭크에 고정 배정)와 라우팅 정확성 개선은 실측으로 정확도 문제까지 드러냈다 — 12만 7,500토큰 공유 프리픽스 테스트에서 정답 "니들"을 128개 중 2개만 찾던 것을 128개 전부 찾도록 고쳤고, 이 수정이 GB300에서 사용자당 출력 처리량 9.6%↑, 이어진 후속 수정이 사용자당 처리량 18.0%↑·GPU당 디코드 처리량 12.7%↑까지 이끌었다
+
+---
+
+```mermaid
+flowchart TD
+    VLLMFix["vLLM 핵심 개선"] --> Retention["선택적 보존<br/>동시 14요청·맥락 1M에서<br/>프리픽스 적중률 95%+"]
+    VLLMFix --> Offload["DeepSeek-V4 하이브리드<br/>CPU 오프로드 확장<br/>처리량 +81.7%·지연 -46.6%"]
+
+    style Offload fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    SGLangFix["SGLang 핵심 개선"] --> Window["슬라이딩윈도우 vs 프리픽스<br/>메모리 경쟁 3중 해소"]
+    SGLangFix --> Runtime["맥락 길이 런타임 변수화<br/>동시성 384: 처리량 +26.75%<br/>TTFT -36.25%"]
+    SGLangFix --> Affinity["DP 캐시 어피니티<br/>127.5k 프리픽스 정확도<br/>2/128 → 128/128"]
+
+    style Affinity fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Runtime fill:#f0fdf4,stroke:#16a34a
+```
+
+SGLang은 또한 HiCache(자체 오프로딩 기능)에서 전체 어텐션 캐시만 옮기고 슬라이딩 윈도우 꼬리는 되돌아올 때 재구성하는 비대칭 전략을 쓰고, FlashInfer GDN 체크포인트로 순환 상태(recurrent state)까지 프리픽스 재사용에 참여시켜 처리량을 초당 GPU당 47,771에서 53,004토큰(캐시 적중률 92.4%)으로 끌어올렸다. 스케줄러 레벨에서는 프리필 우선 결정이 반복돼 디코드가 굶주리는 문제를 프리필 이후 디코드 라운드를 강제하는 방식으로 고쳐, DeepSeek V4 Pro에서 출력 처리량 141%↑·p99 토큰 간 지연 97.3%↓를 얻은 대신 TTFT 중앙값이 36.5초에서 59초로 늘어나는 트레이드오프도 함께 드러났다.
+
+---
+
+## 6. TensorRT-LLM·AMD ATOM·AITER 최적화
+
+**📌 핵심:**
+- TensorRT-LLM은 매 턴마다 대화 전체를 다시 토큰화하는 낭비를 없애는 "경계 인식 증분 토큰화"를 도입해 Qwen3.5 트레이스 1,087건 전환에서 전량 정확도를 유지하며 평균 처리시간을 185.1ms에서 11.3ms로 줄였고, MiniMax-M3의 분리형 KV 전송 조각화 문제(수천 개의 작은 전송으로 쪼개지던 것)를 정리해 동시성 5에서 KV 지연 p99를 26.74초→125ms, 동시성 40에서 10.15초→288ms로 단축했다
+- AMD ATOM 엔진은 원래 단일 턴 전용으로 설계돼 있었는데, 슬라이딩 윈도우 꼬리를 살려두는 희소 체크포인트 보존을 도입해 동시성 48에서 실제 프리픽스 적중률을 5.6%→96.45%로 끌어올렸다(9건 중 9건이 캐시는 있는데 윈도우 게이트에서 버려지고 있었다는 뜻) — 다만 체크포인트를 무조건 남기면 재방문 없는 트래픽에서 처리량이 17.5% 깎여, 토큰 간격을 두고 남기는 식으로 이 손실을 없앴다
+- ATOM의 청크형 파이프라인 프리필은 GLM-5.2 고부하 조건에서 출력 처리량 2배, TTFT 중앙값 28.6초→8.7초, 프리필 GPU 한 대가 보유하는 KV 블록 수 3.68배 증가라는 가장 완결된 성과를 냈고, 프리필 컨텍스트 병렬화(PCP)는 입력 6만 4천 토큰에서 평균 TTFT 35\~43%↓·총처리량 최대 49%↑를 기록했다
+- 결론: 저수준 커널(AITER)에서는 대형 KV 캐시 풀이 32비트 오프셋 한계(약 1억 5천만 행을 넘으면 주소가 조용히 틀어지는 문제)를 실제로 노출시켜, DeepSeek-V4 통합 캐시 경로 전체에 64비트 주소 지정을 적용해 잘못된 행을 읽고 쓰는 사고를 막았다
+
+---
+
+```mermaid
+flowchart TD
+    TRT["TensorRT-LLM 핵심 개선"] --> Token["경계인식 증분 토큰화<br/>185.1ms → 11.3ms"]
+    TRT --> KVfix["M3 분리형 KV 전송 정리<br/>p99 지연 26.74초 → 125ms<br/>(동시성 5)"]
+
+    style Token fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style KVfix fill:#f0fdf4,stroke:#16a34a
+```
+
+```mermaid
+flowchart TD
+    ATOM["AMD ATOM 핵심 개선"] --> Checkpoint["희소 체크포인트 보존<br/>적중률 5.6% → 96.45%<br/>(동시성 48)"]
+    ATOM --> Pipeline["청크형 파이프라인 프리필<br/>GLM-5.2: 처리량 2배<br/>TTFT 28.6초 → 8.7초"]
+    ATOM --> PCPgain["프리필 컨텍스트 병렬화<br/>TTFT -35~43%, 처리량 +49%<br/>(64k 입력)"]
+
+    style Pipeline fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+```
+
+```mermaid
+flowchart TD
+    AITER["AITER 저수준 커널"] --> Addr["32비트 오프셋 한계<br/>(1.5억 행 넘으면 주소 오류)"]
+    Addr --> Fix64["DeepSeek-V4 통합 캐시<br/>전체 64비트 주소 지정 적용"]
+
+    style Addr fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style Fix64 fill:#f0fdf4,stroke:#16a34a
+```
+
+TensorRT-LLM은 이 외에도 커널 선택 오류를 다수 잡아냈다 — 손상된 split-K MoE 전략이 AgentX 실행 7건 중 5건을 충돌시킨 것을 제거해 이후 7건 매칭 실행에서 충돌 0건을 만들었고, MiniMax-M3의 짧은 쿼리에서 인덱스를 잘못 읽어 비유한(non-finite) 출력을 내던 버그를 고쳐 GB300에서 서빙 오류·비유한 마커 0건을 확인했다. ATOM은 이와 별개로 라우터(ATOMesh)에 KV 생애주기 이벤트·다중 노드 프리필-디코드 라우팅·세션 고정 데이터병렬 라우팅을 추가해, 대화가 그 상태를 쥔 정상 워커로 돌아가면서도 방치된 세션이 클러스터를 영구히 불균형하게 만들지 않도록 유휴 배정은 만료시키는 절충을 택했다.
+
+---
+
+*작성 진행률: 약 55% 완료*
+*업데이트: 전체 11개 섹션 중 1\~6장(서론\~TensorRT-LLM/ATOM/AITER 최적화) 작성 완료*
