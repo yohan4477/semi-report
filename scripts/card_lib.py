@@ -424,10 +424,11 @@ def card_html(c):
     # 번호글 카드 — 핵심 포인트로 요약하지 않고 한 생각에 번호 하나로 죽 늘어놓는다.
     # 요약을 또 요약하면 「누가 무엇을」이 빠지므로, 이 형식에서는 points를 아예 안 만든다.
     if c.get('post'):
-        h.append('<ol class="uc-post">%s</ol>'
-                 % ''.join('<li>%s</li>' % t for t in c['post']))
+        # 판단이 맨 위에 선다. 번호 일흔 개를 지나야 결론이 나오면 아무도 안 읽는다
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
+        h.append('<ol class="uc-post">%s</ol>'
+                 % ''.join('<li>%s</li>' % t for t in c['post']))
         h.append(_links_html(c))
         h.append('</div></div>')
         return ''.join(h)

@@ -158,8 +158,8 @@ POST_CSS = '''
               width:30px;text-align:right;font-variant-numeric:tabular-nums;
               font-weight:800;font-size:.82rem;line-height:1.98;color:var(--ink-3)}
   .uc-post>li:last-child{margin-bottom:0}
-  /* 한줄 코멘트 — 글쓴이의 판단이 한 줄로 서는 자리 */
-  .uc-verdict{margin:18px 0 0;padding:13px 15px;border-radius:12px;
+  /* 한줄 코멘트 — 글쓴이의 판단이 한 줄로 서는 자리. 번호글 위에 선다 */
+  .uc-verdict{margin:14px 0 4px;padding:13px 15px;border-radius:12px;
               border:1px solid var(--line);background:var(--sunk,rgba(127,127,127,.06));
               font-size:.93rem;line-height:1.65;color:var(--ink)}
   .uc-verdict b{color:var(--ink-3);font-size:.78rem;letter-spacing:.04em;margin-right:6px}
@@ -171,7 +171,8 @@ POST_CSS = '''
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 다른 장과 달리 <b>핵심 포인트로 갈라 쓰지 않고</b> '
          '한 생각에 번호 하나를 매겨 순서대로 늘어놓았습니다 — 발표는 앞의 말이 뒤에 걸리는 '
-         '글이라 조각으로 나누면 그 걸림이 사라집니다. 맨 끝의 「한줄 코멘트」가 이 글의 판단입니다.</p>'
+         '글이라 조각으로 나누면 그 걸림이 사라집니다. 맨 위의 「한줄 코멘트」가 이 글의 판단이고, '
+         '그 아래 번호가 거기까지 가는 걸음입니다.</p>'
          '<p>자막 전문에서 옮겼고, 발표자가 자기 회사를 파는 대목은 그렇다고 밝혀 두었습니다. '
          '숫자는 발표에 나온 것만 싣습니다.</p>')
 
