@@ -201,7 +201,7 @@ TMPL = r'''<meta charset="utf-8">
         __LABELS__
       </g>
     </svg>
-    <div class="nav"><button id="prev" aria-label="이전 클러스터">‹</button><button id="next" aria-label="다음 클러스터">›</button></div>
+    <div class="nav"><button id="next" aria-label="다음 클러스터">›</button></div>
   </div>
   <div class="rail" role="tablist" aria-label="인사이트 클러스터">
 __CHIPS__
@@ -251,7 +251,6 @@ __STEPS__
       if(e.key==='ArrowLeft'){e.preventDefault();select(i-1,true);}
     });
   });
-  document.getElementById('prev').addEventListener('click',function(){ select(cur-1); });
   document.getElementById('next').addEventListener('click',function(){ select(cur+1); });
   select(0);
   // 묶음 하나를 지목한 주소(#sec-…)로 들어온 사람. 탭을 눌러 그 묶음을 편다 —
