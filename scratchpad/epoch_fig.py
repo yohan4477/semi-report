@@ -414,9 +414,13 @@ def fig_tpu_stack():
         ('대상 자산', '구글 TPU 시스템', ['1GW 이상을 브로드컴과 함께 개발해', '배치하는 중이다'], False),
         ('임차인', '앤트로픽', ['이 리스가 사업의 고정 수요다'], False),
     ]
-    body, tops, bottom = stack(rows)
+    # 첫 칸 아래는 글자 두 줄이 들어가야 해서 도랑을 넓게 잡는다
+    body, tops, bottom = stack(rows, gap0=60)
     o += body
-    o += pair(tops, 0, ('cash', '랙 배치에 맞춰 16회로 나눠 인출한다'), ('cash', '이자와 원금'))
+    # 한 줄로는 판 왼쪽을 넘는다 — 두 줄로 내린다
+    o += pair(tops, 0, ('cash', '랙 배치에 맞춰'), ('cash', '이자와 원금'), dy=12)
+    o.append(lab(DOWN - 8, tops[0][0] + tops[0][1] + 30, '16회로 나눠 인출한다',
+                 cash=True, anchor='end', fs=13))
     o += down_only(tops, 1, 'svc', '사서 보유한다')
     o += down_only(tops, 2, 'svc', '5년 리스로 빌려준다')
     o += left_rail(tops, 3, 1, '5년 확약 리스료')
@@ -956,14 +960,15 @@ def fig_calibration():
                 continue
             o.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s" fill-opacity=".8"/>'
                      % (fx(ax), fy(ay), cols[name]))
-    o.append(lab(40, 320, '가로가 실제 처리량, 세로가 모형이 내놓은 처리량이다(둘 다 초당 토큰). '
-                          '점선 위에 놓이면 둘이 같다는 뜻이다', fs=13))
-    o.append(lab(40, 336, '보정 전에는 점이 죄다 점선 위쪽에 있다 — 모형이 낙관적이다. '
-                          '연산 효율 65%, 대역폭 효율 30%,', fs=13))
-    o.append(lab(40, 352, '토큰당 지연 5밀리초를 넣으면 점들이 점선에 붙는다', fs=13))
-    o.append(lab(40, 372, '점이 겹쳐 그려져 있어 111건이 다 갈라지지는 않는다 — 여기 찍힌 것은 '
-                          '왼쪽 47곳, 오른쪽 36곳이다', fs=13))
-    return svg(384, ''.join(o))
+    for i, t in enumerate(('가로가 실제 처리량, 세로가 모형이 내놓은 처리량이다(둘 다 초당 토큰).',
+                           '점선 위에 놓이면 둘이 같다는 뜻이다',
+                           '보정 전에는 점이 죄다 점선 위쪽에 있다 — 모형이 낙관적이다.',
+                           '연산 효율 65%, 대역폭 효율 30%, 토큰당 지연 5밀리초를 넣으면 '
+                           '점들이 점선에 붙는다',
+                           '점이 겹쳐 그려져 있어 111건이 다 갈라지지는 않는다 —',
+                           '여기 찍힌 것은 왼쪽 47곳, 오른쪽 36곳이다')):
+        o.append(lab(40, 320 + 18 * i, t, fs=13))
+    return svg(320 + 18 * 5 + 14, ''.join(o))
 
 
 
@@ -1227,9 +1232,9 @@ def fig_openweight_gap():
     o.append(lab(X0, Y + 62, 'GLM 5.2의 사이버 능력은 오푸스 4.5와 4.6 사이에 있고, 그 둘은 '
                              '4~7개월 앞서', fs=13))
     o.append(lab(X0, Y + 78, '나온 모델이다. 오픈웨이트는 아직 이번 사고 수준에 못 미친다', fs=13))
-    o.append(lab(X0, Y + 98, '다만 미소스와 GPT-5.6 Sol이 추세를 끊고 뛴 터라, 이 격차가 앞으로도 '
-                             '같을지는 모른다', fs=13))
-    return svg(Y + 110, ''.join(o))
+    o.append(lab(X0, Y + 98, '다만 미소스와 GPT-5.6 Sol이 추세를 끊고 뛴 터라,', fs=13))
+    o.append(lab(X0, Y + 116, '이 격차가 앞으로도 같을지는 모른다', fs=13))
+    return svg(Y + 128, ''.join(o))
 
 
 

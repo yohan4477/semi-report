@@ -251,7 +251,9 @@ def fig_onet_sa():
         o.append('<text x="%d" y="%.1f" class="t-sm">%s</text>' % (X1 + 30, y + 4, ef.esc(text)))
     y6 = fy(6.15)
     o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
-             '자동화된 AI 연구자·엔지니어?</text>' % (X1 + 30, y6 + 4, BLUE))
+             '자동화된</text>' % (X1 + 30, y6 - 5, BLUE))
+    o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
+             'AI 연구자·엔지니어?</text>' % (X1 + 30, y6 + 13, BLUE))
     o.append(ef.lab(96, 118, '2023년까지는 실측이다', fs=13))
     o.append(ef.lab(96, 134, '거기서부터 5년을 늘였다', fs=13))
     o.append(ef.lab(16, Y1 + 40, '실선은 2023년까지 실측, 점선은 거기서 늘인 5년, 회색 면은 '

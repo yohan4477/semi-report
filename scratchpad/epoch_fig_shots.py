@@ -51,18 +51,21 @@ def rule(y):
             'fill="none"/>' % (SX + 16, y, SX + SW - 16, y))
 
 
-def rows(y, lines, step=17, x=TX, cls='t-sm'):
+def rows(y, lines, step=19, x=TX, cls='t-sm'):
     """목록 여러 줄. 마지막 줄의 기준선을 함께 돌려준다."""
     o = []
     for s in lines:
-        o.append(txt(x, y, line_fit(s, 10, SX + SW - 8 - x), cls))
+        o.append(txt(x, y, line_fit(s, 13.5, SX + SW - 8 - x), cls))
         y += step
     return o, y - step
 
 
 def notes(y, lines):
-    return [ef.lab(SX, y + 16 * i, line_fit(s, 9.5, 624 - SX), fs=13)
-            for i, s in enumerate(lines)]
+    """판 아래 주석. 폭을 넘는 줄은 잘라서 다음 줄로 내린다."""
+    flat = []
+    for s in lines:
+        flat += ef.wrap_lines(s, 636 - SX, 13)
+    return [ef.lab(SX, y + 18 * i, t, fs=13) for i, t in enumerate(flat)]
 
 
 # ── ① 딥시크 데이터센터 직무 공고 ────────────────────────────────────────

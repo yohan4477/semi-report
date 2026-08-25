@@ -123,6 +123,20 @@ def under_panel(svg):
     return bad
 
 
+
+def overflow(svg):
+    """판 밖으로 나간 글자. check_fig 는 한 글자 9px 로 어림해 13.5px 한글을 못 잡는다."""
+    m = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
+    vw, vh = (float(m.group(1)), float(m.group(2))) if m else (640.0, 1e9)
+    bad = []
+    for x0, x1, y0, y1, txt in textboxes(svg):
+        if x0 < -1 or x1 > vw + 1:
+            bad.append('판을 넘음 %.0f..%.0f  %s' % (x0, x1, txt[:30]))
+        if y1 > vh + 1:
+            bad.append('판 아래로 넘음 y=%.0f  %s' % (y1, txt[:30]))
+    return bad
+
+
 def seg_hits_box(p0, p1, box):
     """선분이 글자 상자를 지나는가. 선분을 잘게 끊어 점으로 본다."""
     x0, x1, y0, y1 = box[:4]
@@ -157,6 +171,7 @@ def hits(svg):
                 continue
             bad.append('동그라미에 깔림 (%.0f,%.0f,r%.1f)  %s' % (cx, cy, r, b[4][:30]))
     bad += under_panel(svg)
+    bad += overflow(svg)
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i], boxes[j]
