@@ -27,18 +27,28 @@ text-anchor를 **태그 속성에서** 읽는데, 이 장 글자는 본문과 �
 
 # ── 판을 짜는 작은 부품 ────────────────────────────────────────────────
 # 자리를 손으로 찍으면 반드시 어긋난다. 칸 폭·줄 간격을 계산해서 내보낸다.
-LH = 24          # 상자 안 줄 간격
-CHW = 15.5       # 15px 한글 한 글자 실제 폭 어림. 칸 폭을 이걸로 잡는다
+LH = 24          # 상자 안 줄 간격(작도 좌표)
+CHW = 15.5       # 15px 한글 한 글자 실제 폭. 브라우저에서 재어 얻은 값이다
 PAD = 6          # 칸 좌우 여백. 글자를 키우려고 최소로 둔다
+
+# 판을 얼마로 내보내나. 데스크톱에서 카드 안 그림 자리는 776px이다
+# (.wrap 840 − .ucard 좌우 26×2 − .uc-fig 좌우 6×2). viewBox 폭을 그 값에 맞추면
+# 데스크톱에서 배율이 1이 되어 **15px 글자가 그대로 15px로 그려진다** — 본문
+# 번호글(.95rem ≈ 15.2px)과 같은 크기다. 640으로 내보내던 때는 배율이 0.82라
+# 같은 15px이 12.3px로 줄어 「그림 글자만 작다」는 지적을 받았다(2026-08-26).
+AUTHOR = 640.0   # 아래 그림들이 좌표를 적는 공간
+CANVAS = 776.0   # 실제로 내보내는 공간
+S = CANVAS / AUTHOR
 
 
 def box(x, y, w, h, lines, cls='fig-box', tcls='fig-b'):
-    """네모 하나와 그 안에 세로로 가운데 맞춘 글줄들."""
-    out = ['  <rect x="%g" y="%g" width="%g" height="%g" rx="9" class="%s"/>' % (x, y, w, h, cls)]
-    cx, n = x + w / 2, len(lines)
-    top = y + h / 2 - (n - 1) * LH / 2 + 5
+    """네모 하나와 그 안에 세로로 가운데 맞춘 글줄들. 좌표는 작도 공간으로 적는다."""
+    out = ['  <rect x="%g" y="%g" width="%g" height="%g" rx="9" class="%s"/>'
+           % (x * S, y * S, w * S, h * S, cls)]
+    cx, n = (x + w / 2) * S, len(lines)
+    top = (y + h / 2) * S - (n - 1) * LH / 2 + 5
     for i, t in enumerate(lines):
-        assert len(t) * CHW <= w - PAD, '칸(%g)보다 넓은 글: %r' % (w, t)
+        assert len(t) * CHW <= w * S - PAD, '칸(%g)보다 넓은 글: %r' % (w * S, t)
         out.append('  <text x="%g" y="%g" text-anchor="middle" class="%s">%s</text>'
                    % (cx, top + i * LH, tcls, t))
     return out
@@ -46,41 +56,44 @@ def box(x, y, w, h, lines, cls='fig-box', tcls='fig-b'):
 
 def label(x, y, w, t, tcls='fig-hd'):
     """칸 위에 세우는 열 이름. 네모 없이 글자만."""
-    assert len(t) * CHW <= w, '칸(%g)보다 넓은 열 이름: %r' % (w, t)
-    return ['  <text x="%g" y="%g" text-anchor="middle" class="%s">%s</text>' % (x + w / 2, y, tcls, t)]
+    assert len(t) * CHW <= w * S, '칸(%g)보다 넓은 열 이름: %r' % (w * S, t)
+    return ['  <text x="%g" y="%g" text-anchor="middle" class="%s">%s</text>'
+            % ((x + w / 2) * S, y * S, tcls, t)]
 
 
 def arrow(x1, x2, y, t='', back=False):
     """가로 화살표. t는 선 위에 붙는다. back이면 머리가 왼쪽에 달린다."""
     head = 'marker-start="url(#aieArwL)"' if back else 'marker-end="url(#aieArw)"'
     out = ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" %s/>'
-           % (x1, y, x2, y, head)]
+           % (x1 * S, y * S, x2 * S, y * S, head)]
     if t:
-        assert len(t) * CHW <= (x2 - x1) + 24, '화살표(%g)보다 넓은 말: %r' % (x2 - x1, t)
+        assert len(t) * CHW <= (x2 - x1) * S + 24, '화살표(%g)보다 넓은 말: %r' % ((x2 - x1) * S, t)
         out.append('  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
-                   % ((x1 + x2) / 2, y - 10, t))
+                   % ((x1 + x2) / 2 * S, y * S - 10, t))
     return out
 
 
 def down(x, y1, y2):
     """세로 화살표."""
     return ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" marker-end="url(#aieArw)"/>'
-            % (x, y1, x, y2)]
+            % (x * S, y1 * S, x * S, y2 * S)]
 
 
 def legend(items, y):
     """판 아래 색 딱지. items = [(클래스, 말)]"""
     out, x = [], 0
     for cls, t in items:
-        out.append('  <rect x="%g" y="%g" width="13" height="13" rx="3" class="fig-box %s"/>' % (x, y, cls))
-        out.append('  <text x="%g" y="%g" class="fig-lg">%s</text>' % (x + 21, y + 11, t))
-        x += 25 + len(t) * 15.5 + 24
-    assert x <= 680, '범례가 판보다 넓다'
+        out.append('  <rect x="%g" y="%g" width="13" height="13" rx="3" class="fig-box %s"/>'
+                   % (x, y * S, cls))
+        out.append('  <text x="%g" y="%g" class="fig-lg">%s</text>' % (x + 21, y * S + 11, t))
+        x += 25 + len(t) * 13.5 + 26
+    assert x <= CANVAS, '범례가 판보다 넓다'
     return out
 
 
 def svg(h, parts, alt):
-    head = ('<svg class="epoch" viewBox="0 0 640 %g" role="img" aria-label="%s">\n'
+    """h는 작도 공간 높이. 내보낼 때 CANVAS 배로 늘린다."""
+    head = ('<svg class="epoch" viewBox="0 0 776 %g" role="img" aria-label="%s">\n'
             '  <defs>\n'
             '    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"\n'
             '            markerWidth="7" markerHeight="7" orient="auto-start-reverse">\n'
@@ -90,7 +103,7 @@ def svg(h, parts, alt):
             '            markerWidth="7" markerHeight="7">\n'
             '      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>\n'
             '    </marker>\n'
-            '  </defs>\n' % (h, alt))
+            '  </defs>\n' % (h * S, alt))
     return head + '\n'.join(parts) + '\n</svg>'
 
 
