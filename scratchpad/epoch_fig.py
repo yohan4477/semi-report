@@ -922,20 +922,39 @@ def fig_cn_chips():
     return svg(y + 24, ''.join(o))
 
 
-def fig_cn_revenue():
-    """파는 방식이 다른 이유는 매출이 어디서 나오느냐에 있다."""
-    o = [lab(16, 24, '무엇을 팔아 버는지가 어떤 영업 인력을 뽑는지로 이어진다', fs=9.5)]
-    rows = [('미니맥스 · 개인 대상', 70, '70% — 동반자 앱과 영상 생성', False),
-            ('미니맥스 · 기업 대상', 30, '30%', False),
-            ('Z.ai · 고객 인프라 구동', 73.7, '73.7% — 손이 가장 많이 가는 B2B', True)]
-    body, bottom = barh(rows, 100, (0, 25, 50, 75, 100), '해당 회사 매출에서 차지하는 비중(%)',
-                        x0=180, x1=420, y=52, bh=26, step=40)
-    o += body
-    o.append(lab(180, bottom + 6, 'Z.ai 공고는 대부분 B2B 영업이고, 미니맥스·문샷 공고는 대부분 '
-                                  '마케팅이다', fs=9.5))
-    o.append(lab(180, bottom + 22, '해외 매출 비중도 갈린다 — 미니맥스 73%, Z.ai 9.8%(둘 다 2025년)',
+def fig_cn_gtm():
+    """회사별 고객확보 직무 구성. 값은 원문 도해에 적힌 그대로다."""
+    X0, X1 = 150, 590
+    o = [lab(16, 24, '각 회사의 영업·고객확보 직무 구성 (2026-06-23 기준)', fs=9.5)]
+    o.append(swatch(16, 44, 'B2B 영업'))
+    o.append('<rect x="170" y="34" width="14" height="11" rx="2" '
+             'fill="var(--fig-body,rgba(127,127,127,.32))" stroke="var(--ink-3)" '
+             'stroke-width="1"/>')
+    o.append(lab(190, 44, '광고·성장·마케팅', fs=9.5))
+    rows = [('Z.ai', 83, 17), ('미니맥스', 24, 76), ('문샷', 17, 83)]
+    y = 62
+    for name, b2b, mkt in rows:
+        w1 = int((X1 - X0) * b2b / 100.0)
+        o.append('<rect x="%d" y="%d" width="%d" height="44" fill="var(--fig-good,#2f8f6b)"/>'
+                 % (X0, y, w1))
+        o.append('<rect x="%d" y="%d" width="%d" height="44" '
+                 'fill="var(--fig-body,rgba(127,127,127,.32))"/>' % (X0 + w1, y, X1 - X0 - w1))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '
+                 'style="font-weight:850">%s</text>' % (X0 - 12, y + 28, esc(name)))
+        for val, cx, fill in ((b2b, X0 + w1 // 2, '#fff'),
+                              (mkt, X0 + w1 + (X1 - X0 - w1) // 2, 'var(--ink)')):
+            o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+                     'style="font-weight:850;fill:%s">%d%%</text>' % (cx, y + 28, fill, val))
+        y += 54
+    ax, bottom = xaxis(X0, X1, y - 4, (0, 25, 50, 75, 100), 100,
+                       '그 회사 영업·고객확보 직무에서 차지하는 비중(%)')
+    o.append(ax)
+    o.append(lab(16, bottom + 6, '매출 구조가 이 차이를 설명한다 — 미니맥스는 매출의 70%가 개인 대상 '
+                                 '앱에서 나오고,', fs=9.5))
+    o.append(lab(16, bottom + 22, 'Z.ai는 73.7%가 고객 인프라 위에서 모델을 돌려 주는 방식에서 나온다',
                  fs=9.5))
     return svg(bottom + 34, ''.join(o))
+
 
 
 def fig_cn_hubs():
@@ -956,14 +975,14 @@ def fig_cn_hubs():
 
 
 def fig_cn_map():
-    """자리가 내용인 그림이라 지도로 그린다.
+    """원문대로 도시별 공고 수에 비례한 버블 지도.
 
-    나라 윤곽과 도시 좌표는 손으로 찍지 않는다 — data/world_robinson.json에서
-    가져와 중국 경계 상자에 맞춰 한 번 더 옮긴다(insight-figure 규칙 2).
-    동그라미 크기는 값이 아니다. 원문에 도시별 공고 수가 없어서, 크기로 무엇을
-    말하면 없는 값을 그리는 셈이 된다. 몫은 글자로만 적는다."""
+    나라 윤곽과 도시 좌표는 data/world_robinson.json에서 가져와 중국 경계 상자에
+    맞춰 옮긴다 — 손으로 찍은 자리가 없다(insight-figure 규칙 2).
+    버블 넓이가 공고 수에 비례하고, 그 수는 원문 도해에 적힌 값 그대로다."""
     import io as _io
     import json
+    import math
     import os
     import re as _re
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -972,7 +991,7 @@ def fig_cn_map():
     pts = [(float(a), float(b)) for a, b in _re.findall(r'(-?[\d.]+) (-?[\d.]+)', path)]
     x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts)
     y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts)
-    BX, BY, BW_, BH = 24, 56, 400, 300
+    BX, BY, BW_, BH = 150, 52, 400, 300
     k = min(BW_ / (x1 - x0), BH / (y1 - y0))
     ox = BX + (BW_ - (x1 - x0) * k) / 2
     oy = BY + (BH - (y1 - y0) * k) / 2
@@ -981,46 +1000,76 @@ def fig_cn_map():
         return ox + (px - x0) * k, oy + (py - y0) * k
     moved = _re.sub(r'(-?[\d.]+) (-?[\d.]+)',
                     lambda m: '%.1f %.1f' % tx(float(m.group(1)), float(m.group(2))), path)
-    o = [lab(16, 24, '위치가 적힌 공고가 어느 도시에 있나', fs=9.5)]
+    o = [lab(16, 24, '도시별 공고 수. 동그라미 넓이가 공고 수에 비례한다', fs=9.5)]
     o.append('<path d="%s" fill="var(--fig-body,rgba(127,127,127,.16))" '
              'stroke="var(--ink-3)" stroke-width="1"/>' % moved)
-    cities = [('116.4,39.9', '베이징', '63%', 470, 100),
-              ('121.5,31.2', '상하이', None, 470, 208),
-              ('120.2,30.3', '항저우', None, 470, 244)]
-    for key, name, share, lx, ly in cities:
+    RK = 26.0 / math.sqrt(715)          # 가장 큰 도시를 반지름 26으로 놓고 넓이 비례
+    cities = [('116.4,39.9', '베이징', 715, 'r'), ('121.5,31.2', '상하이', 312, 'r'),
+              ('120.2,30.3', '항저우', 309, 'rb'), ('114.1,22.5', '선전', 80, 'r'),
+              ('113.3,23.1', '광저우', 71, 'l'), ('104.1,30.6', '청두', 7, 'l'),
+              ('113.1,41', '울란차브', 2, 'l')]
+    for key, name, n, side in cities:
         cx, cy = tx(*d['at'][key])
-        o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-good,#2f8f6b)"/>' % (cx, cy))
-        # 지시선 끝은 잰 좌표에 그대로 건다 — 눈으로 어림하지 않는다
-        o.append('<path d="M%.1f %.1f L%d %d" class="lead-line"/>' % (cx, cy, lx - 6, ly - 4))
-        o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (lx, ly, esc(name)))
-        if share:
-            o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:850;'
-                     'fill:var(--fig-good,#2f8f6b)">%s</text>' % (lx, ly + 16, esc(share)))
-    # 두 도시는 이 배율에서 거의 붙는다 — 몫도 원문이 둘을 갈라 주지 않는다
-    o.append('<path d="M466 200 L460 200 L460 252 L466 252" fill="none" '
-             'stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append('<text x="470" y="266" class="t-sm" style="font-weight:850;'
-             'fill:var(--fig-good,#2f8f6b)">둘을 합쳐 30%</text>')
-    o.append(lab(16, 378, '동그라미 크기는 값이 아니다 — 원문에 도시별 공고 수가 없어 크기로는 아무것도 '
-                          '말하지 않는다', fs=9.5))
-    o.append(lab(16, 394, '세 곳을 합치면 93%다. 나머지 7%는 다른 도시에 흩어져 있다', fs=9.5))
+        r = max(2.0, RK * math.sqrt(n))
+        o.append('<circle cx="%.1f" cy="%.1f" r="%.1f" fill="var(--fig-good,#2f8f6b)" '
+                 'fill-opacity=".72" stroke="var(--fig-good,#2f8f6b)" stroke-width="1"/>'
+                 % (cx, cy, r))
+        if side == 'l':
+            ax, an = cx - r - 8, 'end'
+        else:
+            ax, an = cx + r + 8, 'start'
+        ay = cy + (16 if side == 'rb' else -4)
+        o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="%s" '
+                 'style="font-weight:850">%s</text>' % (ax, ay, an, esc(name)))
+        o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="%s">%d</text>'
+                 % (ax, ay + 14, an, n))
+    # 크기 범례 — 원문과 같은 세 자리
+    o.append('<text x="16" y="250" class="t-lab">공고 수</text>')
+    ly = 330
+    for n in (600, 200, 50):
+        r = RK * math.sqrt(n)
+        o.append('<circle cx="60" cy="%.1f" r="%.1f" fill="none" stroke="var(--ink-3)" '
+                 'stroke-width="1"/>' % (ly - r, r))
+        o.append('<path d="M60 %.1f L104 %.1f" stroke="var(--ink-3)" stroke-width="1" '
+                 'stroke-dasharray="3 3" fill="none"/>' % (ly - 2 * r, ly - 2 * r))
+        o.append('<text x="108" y="%.1f" class="t-sm t-axis">%d</text>' % (ly - 2 * r + 4, n))
+    o.append(lab(16, 378, '위치가 적힌 공고의 93%가 베이징·항저우·상하이 가운데 하나 이상이고 '
+                          '베이징만 63%다', fs=9.5))
+    o.append(lab(16, 394, '이름을 안 단 작은 점들은 그 밖의 도시다', fs=9.5))
     return svg(406, ''.join(o))
 
+
 def fig_cn_experience():
-    """요구 경력이 세 배 넘게 차이 난다. 제도가 그 차이를 밀어준다."""
-    o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균', fs=9.5)]
-    rows = [('미국 랩', 5.5, '5.5년', False), ('중국 회사', 1.6, '1.6년', True)]
-    body, bottom = barh(rows, 6, (0, 2, 4, 6), '요구 최소 경력(년)',
-                        x0=150, x1=420, y=56, bh=30, step=46)
-    o += body
-    o.append(lab(150, bottom + 6, '열 개 회사의 공고 1,258건에서 잰 값이다(2026-06-23 기준)', fs=9.5))
-    o.append(lab(150, bottom + 22, '중국 정부는 캠퍼스 채용을 졸업생 취업의 주 경로로 삼으라고 하고, '
-                                   '교육부는', fs=9.5))
-    o.append(lab(150, bottom + 38, '「구직 졸업생마다 최소 5개 공고」를 내건 캠페인을 되풀이한다', fs=9.5))
-    o.append(lab(150, bottom + 54, '중국 랩 엔지니어링 직무의 20% 가까이가 캠퍼스 대상이고, 미국에서 '
-                                   '경력 연수로', fs=9.5))
-    o.append(lab(150, bottom + 70, '거르는 방식은 법에 걸릴 수 있다', fs=9.5))
-    return svg(bottom + 82, ''.join(o))
+    """회사별 요구 최소 경력 평균. 값은 원문 도해에 적힌 그대로다."""
+    o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균 (2026-06-23 기준)', fs=9.5)]
+    o.append(swatch(16, 44, '미국'))
+    o.append('<rect x="96" y="34" width="14" height="11" rx="2" '
+             'fill="var(--fig-bad,#c2504a)" stroke="none"/>')
+    o.append(lab(116, 44, '중국', fs=9.5))
+    rows = [('앤트로픽', 6.5, True), ('오픈AI', 5.9, True), ('딥마인드', 4.7, True),
+            ('xAI', 3.3, True), ('딥시크', 3.1, False), ('지푸(Z.ai)', 2.4, False),
+            ('알리바바 큐원', 2.1, False), ('문샷', 1.8, False), ('미니맥스', 1.4, False),
+            ('바이트댄스 시드', 0.3, False)]
+    X0, X1 = 150, 500
+    y = 60
+    for name, v, us in rows:
+        bw_ = max(2, int((X1 - X0) * v / 7.0))
+        fill = ('var(--fig-good,#2f8f6b)' if us else 'var(--fig-bad,#c2504a)')
+        o.append('<rect x="%d" y="%d" width="%d" height="22" rx="3" fill="%s"/>'
+                 % (X0, y, bw_, fill))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '
+                 'style="font-weight:850">%s</text>' % (X0 - 10, y + 16, esc(name)))
+        o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (X0 + bw_ + 8, y + 16, v))
+        y += 28
+    ax, bottom = xaxis(X0, X1, y + 2, (0, 1, 2, 3, 4, 5, 6, 7), 7, '요구 최소 경력(년)')
+    o.append(ax)
+    o.append(lab(16, bottom + 6, '열 개 회사의 공고 1,258건에서 잰 값이다. 미국 랩 평균 5.5년, '
+                                 '중국 회사 평균 1.6년', fs=9.5))
+    o.append(lab(16, bottom + 22, '중국 정부는 캠퍼스 채용을 졸업생 취업의 주 경로로 삼으라고 하고, '
+                                  '중국 랩', fs=9.5))
+    o.append(lab(16, bottom + 38, '엔지니어링 직무의 20% 가까이가 캠퍼스 대상이다', fs=9.5))
+    return svg(bottom + 50, ''.join(o))
+
 
 
 
@@ -1496,7 +1545,7 @@ FIGS = {
     'openweight_gap': fig_openweight_gap,
     # AI를 만드는 노동 편
     'cn_chips': fig_cn_chips,
-    'cn_revenue': fig_cn_revenue,
+    'cn_gtm': fig_cn_gtm,
     'cn_hubs': fig_cn_hubs,
     'cn_experience': fig_cn_experience,
     'cn_map': fig_cn_map,
@@ -1536,7 +1585,7 @@ FIG_SRC = {
     'supply_growth': 'crunch',
     'two_skills': 'cyber', 'eci_lead': 'cyber', 'cyscenario': 'cyber', 'cve_spike': 'cyber',
     'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
-    'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn', 'cn_map': 'cn',
+    'cn_chips': 'cn', 'cn_gtm': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn', 'cn_map': 'cn',
     'onet_proxy': 'onet', 'onet_grain': 'onet', 'onet_run': 'onet', 'onet_scale': 'onet',
     'capital_ladder': 'agi', 'control_kinds': 'agi', 'why_control': 'agi',
     'cash_or_kind': 'agi',
