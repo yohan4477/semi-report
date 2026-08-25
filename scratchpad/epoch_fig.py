@@ -276,9 +276,13 @@ def yaxis(x, y0, y1, ticks, vmax, title, fmt='%g', x1=None):
 
 
 
-def swatch(x, y, text, key=True):
-    fill = ('class="bx-key"' if key else
-            'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" stroke-width="1"')
+def swatch(x, y, text, key=True, solid=None):
+    """색 딱지. solid 를 주면 그 색으로 꽉 채운다 — 원문 범례가 그렇다."""
+    if solid:
+        fill = 'fill="%s"' % solid
+    else:
+        fill = ('class="bx-key"' if key else
+                'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" stroke-width="1"')
     return ('<rect x="%d" y="%d" width="14" height="11" rx="2" %s/>' % (x, y - 10, fill)
             + lab(x + 20, y, text, fs=13))
 
@@ -1096,11 +1100,11 @@ def fig_eci_lead():
     """원문대로 공개일 대 Cyber-ECI 산점도. 점 자리는 원문 그림에서 뽑았다."""
     d = figdata()['cyber_eci']
     o = [lab(16, 24, '사이버 벤치마크 약 15개를 합친 Cyber-ECI를 모델 공개일 위에 놓았다', fs=13)]
-    o.append(swatch(16, 46, '프런티어 모델(공개 시점 최고)'))
+    o.append(swatch(16, 46, '프런티어 모델(공개 시점 최고)', solid='var(--fig-good,#2f8f6b)'))
     o.append('<circle cx="270" cy="42" r="5" fill="var(--fig-body,rgba(127,127,127,.30))" '
              'stroke="var(--ink-3)" stroke-width="1"/>')
     o.append(lab(282, 46, '그 밖의 모델', fs=13))
-    X0, X1, Y0, Y1 = 96, 356, 66, 300
+    X0, X1, Y0, Y1 = 70, 430, 66, 300
     LO, HI = 135.0, 175.0
     gx0, gx1 = d['grid_x'][0], d['grid_x'][-1]
 
@@ -1136,6 +1140,16 @@ def fig_eci_lead():
             ax, ay = ax + (bx - ax) * t, Y1
         o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
                  'stroke-dasharray="6 4" fill="none"/>' % (ax, ay, bx, by))
+    # 원문은 프런티어 점을 계단으로 잇는다 — 그때까지의 최고가 언제 갈아치워지는지가
+    # 이 그림의 요지다. 점만 찍으면 「언제 갱신됐나」가 안 보인다
+    front = sorted(d['points'].get('teal', ()))
+    if len(front) >= 2:
+        dd = ['M%.1f %.1f' % (fx(front[0][0]), fy(front[0][1]))]
+        for i in range(1, len(front)):
+            dd.append('L%.1f %.1f' % (fx(front[i][0]), fy(front[i - 1][1])))
+            dd.append('L%.1f %.1f' % (fx(front[i][0]), fy(front[i][1])))
+        o.append('<path d="%s" fill="none" stroke="var(--fig-good,#2f8f6b)" stroke-width="2.4" '
+                 'stroke-linejoin="round"/>' % ' '.join(dd))
     for cx, cy in d['points'].get('gray', ()):
         o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-body,rgba(127,127,127,.30))" '
                  'stroke="var(--ink-3)" stroke-width="1"/>' % (fx(cx), fy(cy)))
@@ -1145,19 +1159,43 @@ def fig_eci_lead():
     for cx, cy in d['points'].get('blue', ()):
         o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-blue,#2f6fd0)"/>'
                  % (fx(cx), fy(cy)))
-    notes = [('미소스 프리뷰(4월)', '6.8개월', '3.4~12.6', True),
-             ('미소스 프리뷰(초기)', '3.0개월', '1.6~5.1', True),
-             ('GPT-5.5', '2.5개월', '0.7~5.2', False)]
-    ny = 96
-    for name, mo, ci, key in notes:
-        col = 'var(--fig-good,#2f8f6b)' if key else 'var(--fig-blue,#2f6fd0)'
-        o.append('<text x="448" y="%d" class="t-sm" '
-                 'style="font-weight:850;fill:%s">%s</text>' % (ny, col, esc(name)))
-        o.append('<text x="448" y="%d" class="t-sm" style="fill:%s">%s 앞섰다</text>'
-                 % (ny + 17, col, esc(mo)))
-        o.append('<text x="448" y="%d" class="t-sm t-axis">90%% 구간 %s</text>'
-                 % (ny + 35, esc(ci)))
-        ny += 66
+        # 원문은 추세선에 「Pre-Mythos trend」 이름표를 굽은 지시선으로 단다.
+        # 화살촉은 추세선 위의 점에 정확히 닿아야 한다 — 어림으로 찍으면 허공을
+        # 가리킨다(2026-08-25에 27px 떠 있었다)
+        lx, ly = X0 + 14, Y0 + 70
+        t_ = 0.42
+        tx_, ty_ = ax + (bx - ax) * t_, ay + (by - ay) * t_
+        o.append('<path d="M%.1f %.1f Q%.1f %.1f %.1f %.1f" fill="none" '
+                 'stroke="var(--ink-3)" stroke-width="1" marker-end="url(#fig-arrow)"/>'
+                 % (lx + int(w('미소스 이전 추세', 13)) + 8, ly + 4,
+                    (lx + tx_) / 2 + 20, ty_ - 44, tx_, ty_))
+        o.append(lab(lx, ly, '미소스 이전 추세', fs=13))
+    # 원문은 이름표를 그 점 옆에 붙인다 — 오른쪽에 표로 몰아 두면 어느 점 이야기인지
+    # 눈이 못 잇는다. 위 둘은 점 왼쪽에 오른쪽 맞춤, GPT-5.5 는 점 아래에 굽은 지시선
+    TEAL, BLUE = 'var(--fig-good,#2f8f6b)', 'var(--fig-blue,#2f6fd0)'
+    for (px_, pv), name, mo, ci in (((849, 169.9), '미소스 프리뷰(4월)', '6.8개월', '3.4~12.6'),
+                                    ((848, 162.3), '미소스 프리뷰(초기)', '3.0개월', '1.6~5.1')):
+        tx_, ty_ = fx(px_) - 12, fy(pv)
+        o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="end" '
+                 'style="font-weight:850;fill:%s">%s</text>' % (tx_, ty_ - 4, TEAL, esc(name)))
+        o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="end" style="fill:%s">'
+                 '%s 앞섰다 · 90%% 구간 %s</text>' % (tx_, ty_ + 14, TEAL, esc(mo), esc(ci)))
+    gx_, gv = 879, 162.4
+    bx_, by_ = fx(gx_), fy(gv)
+    # 화살촉은 그림 안에 따로 둔다 — fig-arrow-a 는 강조색 고정이라 파란 선에 청록
+    # 머리가 달린다. 끝점은 점의 아래 테두리(반지름 5)에 맞춘다
+    o.append('<defs><marker id="eci-blue" viewBox="0 0 10 10" refX="9" refY="5" '
+             'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
+             '<path d="M0 0 L10 5 L0 10 z" fill="%s"/></marker></defs>' % BLUE)
+    o.append('<path d="M%.1f %.1f Q%.1f %.1f %.1f %.1f" fill="none" stroke="%s" '
+             'stroke-width="1.4" marker-end="url(#eci-blue)"/>'
+             % (bx_ + 15, by_ + 50, bx_ + 19, by_ + 22, bx_ + 2, by_ + 8, BLUE))
+    o.append('<text x="%.1f" y="%.1f" class="t-sm" '
+             'style="font-weight:850;fill:%s">GPT-5.5</text>' % (bx_ + 8, by_ + 62, BLUE))
+    o.append('<text x="%.1f" y="%.1f" class="t-sm" style="fill:%s">'
+             '2.5개월 앞섰다</text>' % (bx_ + 8, by_ + 80, BLUE))
+    o.append('<text x="%.1f" y="%.1f" class="t-sm t-axis">90%% 구간 0.7~5.2</text>'
+             % (bx_ + 8, by_ + 98))
     o.append(lab(16, Y1 + 44, '점선이 2025년 초부터 이어진 추세다. 앞선 정도는 원문이 90% 구간과 '
                               '함께 적어 둔 값이다', fs=13))
     o.append(lab(16, Y1 + 60, '초기 판본과 4월 판본이 갈리는 것이 회의론이 나온 까닭 하나다 — '

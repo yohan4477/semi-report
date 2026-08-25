@@ -292,6 +292,12 @@ def fig_onet_sc():
         o.append(_axis([(x, Y1), (x, Y1 + 5)]))
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%d</text>'
                  % (x, Y1 + 22, yr))
+    # 원문은 곡선 아래를 옅게 채운다 — 「분포」라는 것이 면으로 읽혀야 한다
+    for pts, color in ((SC_NIKOLA, GOOD), (SC_ELI, BLUE)):
+        area = ('M%.1f %.1f ' % (fx(pts[0][0]), fy(0))
+                + ' '.join('L%.1f %.1f' % (fx(a), fy(b)) for a, b in pts)
+                + ' L%.1f %.1f Z' % (fx(pts[-1][0]), fy(0)))
+        o.append('<path d="%s" fill="%s" fill-opacity=".14" stroke="none"/>' % (area, color))
     for pts, color in ((SC_NIKOLA, GOOD), (SC_ELI, BLUE)):
         o.append(_series([(fx(a), fy(b)) for a, b in pts], color))
     # 중앙값 — 날짜는 원문에 인쇄된 값이고, 세로 자리는 그 날짜에서 곡선을 읽은 것이다
