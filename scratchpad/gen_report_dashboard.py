@@ -893,6 +893,38 @@ FIG_MAP = _svg(640, 396, '로봇 한 대의 층마다 두 보고서가 무엇을
 
 
 REPORT_CSS = _biz_part3.TABLE_CSS + """
+  /* 알파벳 편 머리 결론 — 스크롤 없이 한 화면에 들어가야 한다.
+     표 둘로는 캡션·헤더까지 스무 줄이 넘어 첫 화면을 넘겼다. 값만 남긴 격자로 바꾼다.
+     배경 토큰은 --card 가 없는 장이 있어(통합 보고서가 그렇다) --surface 로 되짚는다. */
+  .vhero{margin:6px 0 20px;padding:14px 16px;border:1px solid var(--line);
+         border-radius:12px;background:var(--card,var(--surface,#fff))}
+  .vhero .vh-l{font-size:11px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
+               text-transform:uppercase;margin:0 0 8px}
+  .vhero .vh-say{margin:0 0 12px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+  .vhero .vh-say b{color:var(--accent)}
+  .vh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
+  .vh-c{padding:9px 10px;border:1px solid var(--line);border-radius:9px;text-align:center}
+  .vh-c.now{border-color:var(--accent);background:var(--accent-soft)}
+  .vh-c .k{display:block;font-size:10.5px;font-weight:850;color:var(--ink-3);
+           letter-spacing:.04em}
+  .vh-c .v{display:block;font-size:19px;font-weight:850;line-height:1.25;margin-top:3px;
+           font-variant-numeric:tabular-nums;color:var(--ink)}
+  .vh-c .d{display:block;font-size:11.5px;font-weight:800;margin-top:1px;color:var(--ink-2);
+           font-variant-numeric:tabular-nums}
+  .vh-rev{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+  .vh-r{padding:8px 10px;border:1px dashed var(--line);border-radius:9px}
+  .vh-r .k{display:block;font-size:10.5px;font-weight:850;color:var(--ink-3);
+           letter-spacing:.04em;margin-bottom:2px}
+  .vh-r .t{display:block;font-size:12.5px;line-height:1.5;color:var(--ink)}
+  .vh-r .t b{font-variant-numeric:tabular-nums}
+  .vh-foot{margin:0;font-size:11.5px;line-height:1.55;color:var(--ink-2)}
+  .vh-foot a{font-weight:800}
+  @media(max-width:640px){
+    .vh-grid{grid-template-columns:repeat(2,1fr)}
+    .vh-rev{grid-template-columns:1fr}
+    .vh-c .v{font-size:17px}
+  }
+
   /* 보고서 표지 — 한 층에 글이 둘이라 어디서 끊기는지가 보여야 한다.
      번호·제목·바탕·기간을 한 덩이로 세우고, 다음 보고서 앞에 굵은 선을 둔다. */
   .rep-head{margin:8px 0 18px;padding:18px 20px;border:1px solid var(--line);
