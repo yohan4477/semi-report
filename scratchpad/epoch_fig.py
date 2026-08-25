@@ -80,6 +80,84 @@ def svg(h, body):
             % (h, body))
 
 
+# ── 그래프 부품 — 막대·띠 ────────────────────────────────────────────────
+# 눈금값은 t-axis로 표시한다. 축의 눈금이지 원문에서 가져온 값이 아니라서
+# 값 대조에서 뺀다(맨 아래 num_check). 막대 길이는 원문에 있는 값만 쓴다.
+def xaxis(x0, x1, y, ticks, vmax, title, fmt='%g'):
+    o = ['<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+         % (x0, y, x1 + 14, y)]
+    for v in ticks:
+        tx = x0 + int((x1 - x0) * v / float(vmax))
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+                 % (tx, y, tx, y + 5))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (tx, y + 18, fmt % v))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" style="font-weight:800">%s</text>'
+             % ((x0 + x1) // 2, y + 34, esc(title)))
+    return ''.join(o), y + 45
+
+
+def yaxis(x, y0, y1, ticks, vmax, title, fmt='%g'):
+    o = ['<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+         % (x, y0 - 8, x, y1)]
+    for v in ticks:
+        ty = y1 - int((y1 - y0) * v / float(vmax))
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+                 % (x - 5, ty, x, ty))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end">%s</text>'
+                 % (x - 9, ty + 4, fmt % v))
+    o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:800">%s</text>'
+             % (x - 40, y0 - 16, esc(title)))
+    return ''.join(o)
+
+
+def swatch(x, y, text, key=True):
+    fill = ('class="bx-key"' if key else
+            'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" stroke-width="1"')
+    return ('<rect x="%d" y="%d" width="14" height="11" rx="2" %s/>' % (x, y - 10, fill)
+            + lab(x + 20, y, text, fs=9.5))
+
+
+def barh(rows, vmax, ticks, title, x0=150, x1=452, y=52, bh=24, step=34):
+    """가로 막대. rows = [(라벨, 값, 오른쪽 글자, 강조)]. 라벨은 축 왼쪽에 오른쪽 맞춤."""
+    o = []
+    for name, val, note, key in rows:
+        bw_ = max(2, int((x1 - x0) * val / float(vmax)))
+        fill = ('fill="var(--fig-good,#2f8f6b)"' if key
+                else 'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" '
+                     'stroke-width="1"')
+        assert w(name, 10) < x0 - 16, '막대 라벨이 축을 넘는다: %s' % name
+        o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" %s/>' % (x0, y, bw_, bh, fill))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" style="font-weight:850">%s</text>'
+                 % (x0 - 10, y + bh - 8, esc(name)))
+        assert x0 + bw_ + 10 + w(note, 10) < 638, '막대 옆 값이 판을 넘는다: %s' % note
+        o.append(lab(x0 + bw_ + 10, y + bh - 8, note, fs=10))
+        y += step
+    ax, bottom = xaxis(x0, x1, y - step + bh + 8, ticks, vmax, title)
+    return o + [ax], bottom
+
+
+def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
+    """세로 막대. rows = [(x라벨, 값, 막대 위 글자, 강조)]."""
+    o = [yaxis(x0, y0, y1, ticks, vmax, ytitle)]
+    x = x0 + 40
+    for name, val, note, key in rows:
+        h = max(2, int((y1 - y0) * val / float(vmax)))
+        fill = ('fill="var(--fig-good,#2f8f6b)"' if key
+                else 'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" '
+                     'stroke-width="1"')
+        o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" %s/>'
+                 % (x, y1 - h, bw_, h, fill))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+                 'style="font-weight:850">%s</text>' % (x + bw_ // 2, y1 - h - 8, esc(note)))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (x + bw_ // 2, y1 + 17, esc(name)))
+        x += step
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (x0, y1, x - step + bw_ + 30, y1))
+    return o, y1 + 28
+
+
 # ── ① 두 칸 대조 — 컴퓨트와 데이터센터가 같은 구조다 ─────────────────────
 def fig_two_columns():
     LX, RX, BW = 16, 344, 280
@@ -305,8 +383,103 @@ def fig_tranches():
     return svg(ay + 45, ''.join(o))
 
 
+# ══ 「프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다」(2026-05-20) ══════════
+def fig_world_share():
+    """세계 AI 컴퓨트에서 각자가 쥔 몫. 값은 원문 도해의 H100 환산치를 그대로 쓴다."""
+    o = [swatch(16, 24, '전업 프런티어 랩'), swatch(190, 24, '소유 전체(용도가 섞여 있다)', key=False)]
+    rows = [('그 밖의 전부', 700, '약 700만 · 44%', False),
+            ('구글', 400, '약 400만 · 25%', False),
+            ('메타', 180, '약 180만 · 11%', False),
+            ('오픈AI', 170, '약 170만 · 11%', True),
+            ('앤트로픽', 100, '약 100만 · 6%', True),
+            ('xAI', 70, '약 70만 · 4%', True)]
+    body, bottom = barh(rows, 800, (0, 200, 400, 600, 800), 'H100 환산 보유량(만 장)')
+    return svg(bottom, ''.join(o + body))
+
+
+def fig_growth_2025():
+    """2025년 한 해 증가율. 원문 도해는 로그 선그래프인데, 세계 총량의 연도별 값이
+    원문에 없어 선을 그리면 없는 좌표를 지어내게 된다. 원문에 있는 증가율로만 그린다."""
+    o = []
+    rows = [('세계 전체', 3.3, '3.3배', False), ('오픈AI', 4.6, '4.6배', True)]
+    body, bottom = barv(rows, 5, (0, 1, 2, 3, 4, 5), '2025년 배수', x0=150, bw_=90, step=170)
+    return svg(bottom, ''.join(o + body))
+
+
+def fig_openai_power():
+    o = []
+    rows = [('2023년 말', 0.2, '0.2GW', True), ('2024년 말', 0.6, '0.6GW', True),
+            ('2025년 말', 1.9, '1.9GW', True)]
+    body, bottom = barv(rows, 2, (0, 0.5, 1, 1.5, 2), '데이터센터 전력 용량(GW)')
+    return svg(bottom, ''.join(o + body))
+
+
+def fig_openai_chips():
+    """원문 도해는 엔비디아 세대별 스택 막대인데 세대별 수치가 원문에 없다.
+    그래서 스택을 쌓지 않고, 원문에 있는 연도별 H100 환산 총량만 그린다."""
+    o = []
+    rows = [('2023년 말', 10, '10만', True), ('2024년 말', 40, '40만', True),
+            ('2025년 말', 170, '170만', True)]
+    body, bottom = barv(rows, 200, (0, 50, 100, 150, 200), 'H100 환산 보유량(만 장)')
+    return svg(bottom, ''.join(o + body))
+
+
+def fig_deepmind_share():
+    """구글 ML 컴퓨트를 100%로 놓은 띠. 확정된 경계는 절반 하나뿐이라
+    딥마인드 구간의 양 끝은 점선으로 둔다 — 원문도 그 자리를 톱니로 흐려 놨다."""
+    X0, X1, Y, H = 40, 600, 96, 62
+    half = (X0 + X1) // 2
+    o = [lab(16, 24, '구글 ML 컴퓨트를 100%로 놓았다. 딥마인드 몫의 양 끝은 원문도 확정하지 않는다',
+             fs=9.5)]
+    o.append('<text x="%d" y="72" class="t-role" text-anchor="middle">구글 클라우드 — 절반가량</text>'
+             % ((X0 + half) // 2))
+    o.append('<text x="%d" y="72" class="t-role" text-anchor="middle">나머지 구글 — 절반가량</text>'
+             % ((half + X1) // 2))
+    # 확정된 경계는 절반 하나뿐이다
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink)" stroke-width="1.6" fill="none"/>'
+             % (half, Y - 8, half, Y + H + 8))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">50%%</text>'
+             % (half, Y - 14))
+    segs = [(X0, 168, False), (X0 + 168, half - X0 - 168, True),
+            (half, 150, True), (half + 150, X1 - half - 150, False)]
+    for sx, sw_, key in segs:
+        fill = ('fill="var(--fig-good,#2f8f6b)" opacity=".55"' if key
+                else 'fill="var(--fig-body,rgba(127,127,127,.28))"')
+        o.append('<rect x="%d" y="%d" width="%d" height="%d" %s/>' % (sx, Y, sw_, H, fill))
+    for bx in (X0 + 168, half + 150):
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1.4" '
+                 'stroke-dasharray="4 3" fill="none"/>' % (bx, Y, bx, Y + H))
+    labs = [((X0 + X0 + 168) // 2, '외부 고객용', '클라우드 컴퓨트'),
+            ((X0 + 168 + half) // 2, '제미나이', '기업용 추론'),
+            ((half + half + 150) // 2, '연구개발과', '그 밖의 추론'),
+            ((half + 150 + X1) // 2, '추천 시스템 등', '내부 용도')]
+    for cx, l1, l2 in labs:
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle">%s</text>' % (cx, Y + H + 20, l1))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle">%s</text>' % (cx, Y + H + 34, l2))
+    o.append(swatch(X0, Y + H + 62, '딥마인드 관련'))
+    o.append(swatch(X0 + 150, Y + H + 62, '딥마인드와 무관', key=False))
+    return svg(Y + H + 78, ''.join(o))
+
+
+SRC = {
+    'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
+    'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
+}
+
+# 그림 이름 -> (그리는 함수, 값을 대조할 원문)
 FIGS = {
     'two_columns': fig_two_columns,
+    'world_share': fig_world_share,
+    'growth_2025': fig_growth_2025,
+    'openai_power': fig_openai_power,
+    'openai_chips': fig_openai_chips,
+    'deepmind_share': fig_deepmind_share,
+}
+
+FIG_SRC = {
+    'two_columns': 'fin', 'tpu_stack': 'fin', 'tranches': 'fin', 'lake_mariner': 'fin',
+    'world_share': 'labs', 'growth_2025': 'labs', 'openai_power': 'labs',
+    'openai_chips': 'labs', 'deepmind_share': 'labs',
     'tpu_stack': fig_tpu_stack,
     'tranches': fig_tranches,
     'lake_mariner': fig_lake_mariner,
@@ -323,17 +496,18 @@ if __name__ == '__main__':
     import check_fig
     from card_lib import FIG_CSS, FIG_DEFS
     import re
-    src = io.open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                               'content', 'epoch',
-                               '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md'),
-                  encoding='utf-8').read()
-    srcn = re.sub(r'[\s,]', '', src)
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    srcs = {k: re.sub(r'[\s,]', '',
+                      io.open(os.path.join(root, 'content', 'epoch', v), encoding='utf-8').read())
+            for k, v in SRC.items()}
 
-    def num_check(svg_):
+    def num_check(svg_, key):
         """그림 글자의 숫자가 원문에 있는지 전수 대조한다(insight-figure 규칙 1).
 
-        축 눈금(t-axis)은 뺀다 — 0·80·160은 원문에서 가져온 값이 아니라 자를 읽는 눈금이다.
-        막대 길이가 주장이고, 그 길이의 근거인 금액은 막대 옆 라벨에 따로 적혀 대조를 받는다."""
+        축 눈금·항목 이름(t-axis)은 뺀다 — 0·80·160이나 「2024년 말」은 원문에서
+        가져온 값이 아니라 자를 읽는 눈금이다. 막대 길이가 주장이고, 그 길이의 근거인
+        값은 막대 옆 라벨에 따로 적혀 이 대조를 받는다."""
+        srcn = srcs[FIG_SRC[key]]
         nums = {n for t in re.findall(r'<text[^>]*>([^<]*)<',
                                       re.sub(r'<text[^>]*t-axis[^>]*>[^<]*</text>', '', svg_))
                 for n in re.findall(r'\d[\d,\.]*', t)}
@@ -343,7 +517,7 @@ if __name__ == '__main__':
     parts = []
     for k, fn in FIGS.items():
         s = fn()
-        miss = num_check(s)
+        miss = num_check(s, k)
         if miss:
             bad += len(miss)
             print('FAIL %s 원문에 없는 값: %s' % (k, ', '.join(miss)))
