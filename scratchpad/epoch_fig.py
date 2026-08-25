@@ -972,12 +972,116 @@ def fig_cn_experience():
     return svg(bottom + 82, ''.join(o))
 
 
+
+# ══ 「AI 연구 자동화를 재려면 직무 목록부터」(2026-06-17) ═════════════════════
+def fig_onet_proxy():
+    """지금 늘이는 선 둘과, 정작 알고 싶은 것. 원문 도해 둘은 남의 그래프라
+    좌표가 원문에 없다. 그래서 무엇을 재고 무엇이 빠지는지를 구조로 그린다."""
+    o = [lab(16, 24, 'AI 타임라인 예측이 실제로 늘이는 선과, 그 선이 못 재는 것', fs=9.5)]
+    cols = [(8, '투입을 늘인다', ['실효 컴퓨트를 5년 뒤까지 늘여',
+                            'AI 연구가 자동화되는 지점을 잡는다'],
+             '얼마면 되는지는 감으로 정한다',
+             ['세계 최고 연구자와 맞먹는 컴퓨트가', '얼마인지 대는 근거가 없다']),
+            (336, '과제 길이를 늘인다', ['숙련된 사람이 얼마나 걸리는 일까지',
+                                  'AI가 해내는지를 재고 늘인다'],
+             '연구의 복잡성이 빠진다',
+             ['작은 GPT-2 파인튜닝과, 성공 기준도', '없이 100만 줄을 다루며 프로젝트',
+              '다섯을 굴리는 일은 다른 일이다'])]
+    bottoms = []
+    for x, name, what, verdict, why in cols:
+        s1, h1 = box(x, 44, 296, name, what)
+        o.append(s1)
+        o.append(arrow('svc', [(x + 148, 44 + h1), (x + 148, 44 + h1 + 26)]))
+        s2, h2 = box(x, 44 + h1 + 26, 296, verdict, why)
+        o.append(s2)
+        bottoms.append(44 + h1 + 26 + h2)
+    y = max(bottoms) + 30
+    s3, h3 = box(8, y, 624, '정작 알고 싶은 것', ['AI가 AI 연구를 얼마나 대신하나'], key=True)
+    o.append(s3)
+    for x in (156, 484):
+        o.append(arrow('cond', [(x, y - 26), (x, y)]))
+    o.append(lab(16, y + h3 + 18, '재기 쉬운 것만 늘이면 벤치마크 점수가 올라도 그 향상이 일의 어느 '
+                                  '부분을 덮는지 알 수 없다', fs=9.5))
+    return svg(y + h3 + 30, ''.join(o))
+
+
+def fig_onet_grain():
+    """알갱이가 얼마나 다른가. 과제 수가 곧 잘게 쪼갠 정도다."""
+    o = [lab(16, 24, '같은 일을 몇 개의 과제로 쪼개 놓았나', fs=9.5)]
+    rows = [('AI R&D 전용 목록', 60, '60개 넘는 과제 · 6개 범주', True),
+            ('O*NET 「컴퓨터·정보 연구 과학자」', 15, '15개 과제', False)]
+    body, bottom = barh(rows, 70, (0, 20, 40, 60), '적혀 있는 과제 수',
+                        x0=250, x1=430, y=56, bh=30, step=46)
+    o += body
+    o.append(lab(16, bottom + 8, 'O*NET은 미국 직업 약 1,000개를 담은 표준 데이터셋인데, 이 직업의 첫 '
+                                 '과제가', fs=9.5))
+    o.append(lab(16, bottom + 24, '「컴퓨터 하드웨어와 소프트웨어를 수반하는 해법을 만들기 위해 문제를 '
+                                  '분석한다」다', fs=9.5))
+    o.append(lab(16, bottom + 40, 'AI 엔지니어가 하는 거의 모든 일이 여기 들어가고, 이것이 O*NET에서 '
+                                  '가장 잘게 쪼갠 서술이다', fs=9.5))
+    return svg(bottom + 52, ''.join(o))
+
+
+def fig_onet_run():
+    """범주 하나가 어떻게 생겼나. 입력과 출력이 있고 아래로 갈린다."""
+    o = [lab(16, 24, '6개 범주 가운데 4번 「Run」을 예로 든 짜임', fs=9.5)]
+    s1, h1 = box(16, 46, 268, '입력', ['받침 구조와 인프라를 갖춘 벤치마크'])
+    s2, h2 = box(356, 46, 268, '출력', ['최종 결과 한 벌'])
+    o += [s1, s2]
+    o.append(arrow('svc', [(284, 46 + h1 // 2), (356, 46 + h1 // 2)]))
+    y = 46 + h1 + 26
+    s3, h3 = box(16, y, 608, '4. Run — 돌린다', ['학습을 돌리고 시스템을 배포하는 자리'], key=True)
+    o.append(s3)
+    y2 = y + h3 + 24
+    subs = [('4.1 실행 감시', ['학습·강화학습·평가 실행을', '지켜보다가 문제가 생기면',
+                          '정상 궤도로 되돌린다']),
+            ('4.2 하드웨어 인프라 운영', ['큰 클러스터를 건강하고', '잘 쓰이고 빨리 복구되게',
+                                 '유지한다']),
+            ('4.3 추론 신뢰성 엔지니어링', ['운영 서빙을 안정적이고', '성능 있고 복구 가능하게',
+                                   '유지한다'])]
+    hh = 0
+    for i, (name, lines) in enumerate(subs):
+        x = 16 + i * 206
+        s_, hh = box(x, y2, 192, name, lines)
+        o.append(s_)
+        o.append(arrow('svc', [(x + 96, y + h3), (x + 96, y2)]))
+    o.append(lab(16, y2 + hh + 18, '이 아래에 과제가 하나씩 적히고, 과제마다 지금 AI가 얼마나 '
+                                   '대신하는지를 0~5로 매긴다', fs=9.5))
+    return svg(y2 + hh + 30, ''.join(o))
+
+
+def fig_onet_scale():
+    """0~5 등급 사다리. 사람이 무엇을 하고 있느냐로 갈린다."""
+    o = [lab(16, 24, '과제마다 지금 AI가 얼마나 대신하는지를 매긴 자', fs=9.5)]
+    steps = [('0', '안 쓴다', ['AI가 보태는 것이 없다']),
+             ('1', '미미하다', ['검색·브레인스토밍·글다듬기에 가끔 편할 뿐',
+                            '일하는 방식도 하는 사람도 안 바뀐다']),
+             ('2', '거든다', ['일부에서 속도나 질이 뚜렷이 나아지지만',
+                           '사람이 몰고 전부 검토한다']),
+             ('3', '협업한다', ['사람이 가까이 지시하는 가운데 AI가 큰 덩어리를 하고',
+                            '판단과 이어 붙이기는 사람이 한다']),
+             ('4', '이끈다', ['큰 요청 하나로 대부분을 끝까지 하고',
+                           '사람은 감독·교정·승인한다']),
+             ('5', '자율이다', ['사람이 거의 또는 전혀 관여하지 않고 끝까지 간다'])]
+    y = 44
+    for num, name, lines in steps:
+        s_, h = box(64, y, 570, name, lines, key=(num in ('4', '5')))
+        o.append('<text x="40" y="%d" class="t-lab" text-anchor="middle">%s</text>' % (y + 22, num))
+        o.append(s_)
+        y += h + 10
+    o.append(lab(16, y + 12, '필자들이 매긴 값이고 주관적이라고 먼저 적는다. 이 자가 좋아지면 '
+                             '자동화된 과제 비율을', fs=9.5))
+    o.append(lab(16, y + 28, '시간에 따라 늘여 볼 수 있다는 것이 이 작업의 목적이다', fs=9.5))
+    return svg(y + 40, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
     'cyber': '[260611] 미소스의 사이버 능력은 부풀려졌나.md',
     'hf': '[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md',
     'cn': '[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md',
+    'onet': '[260617] AI 연구 자동화를 재려면 직무 목록부터 있어야 한다.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -1015,6 +1119,10 @@ FIGS = {
     'cn_revenue': fig_cn_revenue,
     'cn_hubs': fig_cn_hubs,
     'cn_experience': fig_cn_experience,
+    'onet_proxy': fig_onet_proxy,
+    'onet_grain': fig_onet_grain,
+    'onet_run': fig_onet_run,
+    'onet_scale': fig_onet_scale,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -1034,6 +1142,7 @@ FIG_SRC = {
     'two_skills': 'cyber', 'eci_lead': 'cyber', 'cyscenario': 'cyber', 'cve_spike': 'cyber',
     'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
     'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn',
+    'onet_proxy': 'onet', 'onet_grain': 'onet', 'onet_run': 'onet', 'onet_scale': 'onet',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
