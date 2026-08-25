@@ -314,10 +314,17 @@ def _box(kind, head, lines):
             % (kind, head, ''.join('<span>%s</span>' % t for t in lines)))
 
 
-def _msg(t, back=False):
-    """칸과 칸 사이에 오가는 것 하나. back이면 화살표가 왼쪽을 가리킨다."""
-    return ('<div class="rf-msg%s"><em>%s</em><i aria-hidden="true">%s</i></div>'
-            % (' is-back' if back else '', t, '←' if back else '→'))
+def _msg(who, t, back=False):
+    """칸과 칸 사이에 오가는 것 하나.
+
+    **보내는 쪽 이름을 말 안에 박는다.** 라벨만 가운데 띄워 놓으면 누가 하는 말인지가
+    화살촉 방향에만 걸리고, 사용자는 둘 다 하네스가 하는 말로 읽었다. 이 발표는
+    「모델이 제안하고 하네스가 결정한다」가 요점이라 그 오독이 주장을 뒤집는다.
+    선은 받는 쪽에 화살촉이 붙고, 칸이 세로로 쌓이면 선을 숨기고 이름만 남긴다."""
+    line = '<i class="rf-track%s" aria-hidden="true"></i>' % (' is-back' if back else '')
+    lab = '<em><b>%s</b><span>%s</span></em>' % (who, t)
+    return ('<div class="rf-msg%s">%s</div>'
+            % (' is-back' if back else '', (line + lab) if back else (lab + line)))
 
 
 def _pair(cap, left, msgs, right):
@@ -338,11 +345,12 @@ _STATE_4 = ['지금 몇 단계인가', '다음은 무엇인가', '레슨이 끝�
 _R_STATE = ('<div class="rfig">'
             + _pair('전부 모델에 맡길 때',
                     _box('empty', '하네스', ['아무것도 안 쥠']),
-                    [_msg('전부 다 해 줘')],
+                    [_msg('하네스가 넘긴다', '전부 다 해 줘')],
                     _box('model', '모델', _STATE_4 + ['무슨 말을 할까']))
             + _pair('하네스가 흐름을 쥘 때',
                     _box('harness', '하네스', _STATE_4),
-                    [_msg('이 한 가지만 하고'), _msg('결과 (제안일 뿐)', True)],
+                    [_msg('하네스가 시킨다', '이 한 가지만 하고 결과를 줘'),
+                     _msg('모델이 돌려준다', '결과 하나. 제안일 뿐이다', True)],
                     _box('model', '모델', ['이번 단계의 말 하나']))
             + _legend([('harness', '하네스가 쥔 것'), ('model', '모델이 쥔 것')])
             + '</div>')

@@ -276,11 +276,22 @@ POST_CSS = '''
   .rfig .rf-empty b,.rfig .rf-empty span{color:var(--ink-3)}
   .rfig .rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal);border-width:1.6px}
   .rfig .rf-model{background:var(--sunk,rgba(127,127,127,.10))}
-  .rfig .rf-msgs{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:12px}
-  .rfig .rf-msg{display:flex;flex-direction:column;align-items:center;gap:1px}
-  .rfig .rf-msg em{font-style:normal;font-size:.95rem;font-weight:700;line-height:1.4;
-                   color:var(--ink-3);text-align:center}
-  .rfig .rf-msg i{font-style:normal;font-size:1.15rem;line-height:1;color:var(--epoch-teal)}
+  .rfig .rf-msgs{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;
+                 justify-content:center;gap:18px}
+  .rfig .rf-msg{display:flex;align-items:center;gap:9px}
+  .rfig .rf-msg em{flex:0 0 auto;font-style:normal;font-size:.95rem;line-height:1.45;color:var(--ink-3)}
+  .rfig .rf-msg em b{display:block;font-weight:800;color:var(--ink-2)}
+  .rfig .rf-msg em span{display:block;font-weight:600}
+  .rfig .rf-msg.is-back em{text-align:right}
+  /* 선은 받는 쪽 끝에 화살촉이 붙는다. 방향이 글자에도 선에도 있어야 안 헷갈린다 —
+     라벨만 가운데 띄워 두면 둘 다 하네스가 하는 말로 읽힌다 */
+  .rfig .rf-track{flex:1 1 auto;min-width:32px;height:0;align-self:center;position:relative;
+                  border-top:2px solid var(--epoch-teal)}
+  .rfig .rf-track::after{content:'';position:absolute;top:-6px;right:-1px;width:0;height:0;
+                  border-top:6px solid transparent;border-bottom:6px solid transparent;
+                  border-left:9px solid var(--epoch-teal)}
+  .rfig .rf-track.is-back::after{right:auto;left:-1px;border-left:0;
+                  border-right:9px solid var(--epoch-teal)}
   .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
   .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
@@ -297,9 +308,12 @@ POST_CSS = '''
   .rfig .rf-what{font-size:.95rem;line-height:1.7;color:var(--ink-2)}
   @container (max-width:430px){
     .rfig .rf-pair{flex-direction:column;align-items:stretch}
-    .rfig .rf-msgs{flex-direction:row;justify-content:center;gap:20px}
-    .rfig .rf-msg i{transform:rotate(90deg)}
-    .rfig .rf-msg.is-back i{transform:rotate(-90deg)}
+    /* 칸이 세로로 쌓이면 선은 뜻을 잃는다. 선을 숨기고 이름만 남긴다 —
+       「하네스가 시킨다」·「모델이 돌려준다」가 글자에 이미 들어 있다 */
+    .rfig .rf-msgs{gap:12px}
+    .rfig .rf-track{display:none}
+    .rfig .rf-msg{justify-content:center}
+    .rfig .rf-msg em,.rfig .rf-msg.is-back em{text-align:center}
     .rfig .rf-seq>li{flex-direction:column;gap:2px}
   }
   /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
