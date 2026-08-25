@@ -19,6 +19,10 @@
   note     곁다리 메모
   links    [(라벨, 주소, 클래스)]
 선택 키
+  post     번호글 본문. 있으면 핵심 포인트·표·숫자·인용 대신 이것만 나간다.
+           메르 블로그처럼 한 생각에 번호 하나를 매겨 죽 늘어놓는 형식이고,
+           문장을 쪼개 읽는 장(AI Engineer)에서 쓴다. verdict가 마지막 한 줄이다.
+  verdict  post 카드의 「한줄 코멘트」. post 없이는 쓰지 않는다
   scope    'kr' | 'intl'   국내·해외 탭이 있는 페이지에서만
   table    (표 제목, [머리], [[행]])
   lead_table  같은 형식. 본문 맨 위(한 줄 요약보다 앞)에 놓는다. 여러 편을 묶은
@@ -383,6 +387,15 @@ def _card_attrs(c):
     return a
 
 
+def _links_html(c):
+    """카드 발치의 링크 줄 — 지금까지의 형식과 번호글 형식이 같은 마크업을 쓴다."""
+    return ('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
+            % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
+                       % (('class="%s" ' % cls) if cls else '', url, lab)
+                       for lab, url, cls in (c.get('links') or ())),
+               copy_btn(c)))
+
+
 def card_html(c):
     # 슬림 필드를 갖춘 카드는 슬림으로, 아직 없는 카드는 지금까지의 형식 그대로 나간다
     if c.get('slim_points'):
@@ -408,6 +421,16 @@ def card_html(c):
         h.append(tbl_html(c['lead_table']))
     if c.get('oneliner'):
         h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
+    # 번호글 카드 — 핵심 포인트로 요약하지 않고 한 생각에 번호 하나로 죽 늘어놓는다.
+    # 요약을 또 요약하면 「누가 무엇을」이 빠지므로, 이 형식에서는 points를 아예 안 만든다.
+    if c.get('post'):
+        h.append('<ol class="uc-post">%s</ol>'
+                 % ''.join('<li>%s</li>' % t for t in c['post']))
+        if c.get('verdict'):
+            h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
+        h.append(_links_html(c))
+        h.append('</div></div>')
+        return ''.join(h)
     h.append('<p class="uc-label">핵심 포인트</p>')
     h.append(points_html(c['points'], c.get('figs', ())))
     if c.get('table'):
@@ -431,11 +454,7 @@ def card_html(c):
                  '<div class="kin-g"><ol>%s</ol></div></div>'
                  % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (a, t)
                            for t, a in c['related']))
-    h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
-             % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
-                        % (('class="%s" ' % cls) if cls else '', url, lab)
-                        for lab, url, cls in (c.get('links') or ())),
-                copy_btn(c)))
+    h.append(_links_html(c))
     h.append('</div></div>')
     return ''.join(h)
 

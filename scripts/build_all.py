@@ -24,6 +24,7 @@ BUILD = [
     ('수도리무브', ['scratchpad/gen_sudoremove_dashboard.py']),
     ('메르 인사이트', ['scratchpad/gen_mer_dashboard.py']),
     ('Epoch AI 대시보드', ['scratchpad/gen_epoch_dashboard.py']),
+    ('AI Engineer 대시보드', ['scratchpad/gen_aie_dashboard.py']),
     ('통합 보고서', ['scratchpad/gen_report_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
     # 링크드인은 원문 파일이 먼저 있어야 노트가 인용할 수 있다

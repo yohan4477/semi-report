@@ -1129,7 +1129,10 @@ def check_labels(cards):
         # 「라벨에만 있는 회사」는 카드 본문까지 보고 판단한다. 파일명만 보면 「DS 영업이익률」처럼
         # 회사 이름이 제목에 안 든 글이 걸린다. 반대로 「좁혔다」 판정은 파일명만 본다 —
         # 본문은 비교 대상으로 다른 회사를 스칠 뿐인데 그것까지 세면 전부 걸린다.
-        body_src = src + ' ' + (c.get('oneliner') or '') + ' ' + ' '.join(c.get('points') or ())
+        body_src = (src + ' ' + (c.get('oneliner') or '') + ' '
+                    + ' '.join(c.get('points') or ())
+                    # 번호글 카드는 points가 없다 — 본문이 post에 들어 있다
+                    + ' ' + ' '.join(c.get('post') or ()))
         title = c.get('title', '')
         named = [n for n in ACTORS if n in label]
         alien = [n for n in named if n not in body_src and n not in title]
