@@ -955,6 +955,57 @@ def fig_cn_hubs():
     return svg(bottom + 50, ''.join(o))
 
 
+def fig_cn_map():
+    """자리가 내용인 그림이라 지도로 그린다.
+
+    나라 윤곽과 도시 좌표는 손으로 찍지 않는다 — data/world_robinson.json에서
+    가져와 중국 경계 상자에 맞춰 한 번 더 옮긴다(insight-figure 규칙 2).
+    동그라미 크기는 값이 아니다. 원문에 도시별 공고 수가 없어서, 크기로 무엇을
+    말하면 없는 값을 그리는 셈이 된다. 몫은 글자로만 적는다."""
+    import io as _io
+    import json
+    import os
+    import re as _re
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    d = json.load(_io.open(os.path.join(root, 'data', 'world_robinson.json'), encoding='utf-8'))
+    path = d['c']['China']
+    pts = [(float(a), float(b)) for a, b in _re.findall(r'(-?[\d.]+) (-?[\d.]+)', path)]
+    x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts)
+    y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts)
+    BX, BY, BW_, BH = 24, 56, 400, 300
+    k = min(BW_ / (x1 - x0), BH / (y1 - y0))
+    ox = BX + (BW_ - (x1 - x0) * k) / 2
+    oy = BY + (BH - (y1 - y0) * k) / 2
+
+    def tx(px, py):
+        return ox + (px - x0) * k, oy + (py - y0) * k
+    moved = _re.sub(r'(-?[\d.]+) (-?[\d.]+)',
+                    lambda m: '%.1f %.1f' % tx(float(m.group(1)), float(m.group(2))), path)
+    o = [lab(16, 24, '위치가 적힌 공고가 어느 도시에 있나', fs=9.5)]
+    o.append('<path d="%s" fill="var(--fig-body,rgba(127,127,127,.16))" '
+             'stroke="var(--ink-3)" stroke-width="1"/>' % moved)
+    cities = [('116.4,39.9', '베이징', '63%', 470, 100),
+              ('121.5,31.2', '상하이', None, 470, 208),
+              ('120.2,30.3', '항저우', None, 470, 244)]
+    for key, name, share, lx, ly in cities:
+        cx, cy = tx(*d['at'][key])
+        o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-good,#2f8f6b)"/>' % (cx, cy))
+        # 지시선 끝은 잰 좌표에 그대로 건다 — 눈으로 어림하지 않는다
+        o.append('<path d="M%.1f %.1f L%d %d" class="lead-line"/>' % (cx, cy, lx - 6, ly - 4))
+        o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (lx, ly, esc(name)))
+        if share:
+            o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:850;'
+                     'fill:var(--fig-good,#2f8f6b)">%s</text>' % (lx, ly + 16, esc(share)))
+    # 두 도시는 이 배율에서 거의 붙는다 — 몫도 원문이 둘을 갈라 주지 않는다
+    o.append('<path d="M466 200 L460 200 L460 252 L466 252" fill="none" '
+             'stroke="var(--ink-3)" stroke-width="1"/>')
+    o.append('<text x="470" y="266" class="t-sm" style="font-weight:850;'
+             'fill:var(--fig-good,#2f8f6b)">둘을 합쳐 30%</text>')
+    o.append(lab(16, 378, '동그라미 크기는 값이 아니다 — 원문에 도시별 공고 수가 없어 크기로는 아무것도 '
+                          '말하지 않는다', fs=9.5))
+    o.append(lab(16, 394, '세 곳을 합치면 93%다. 나머지 7%는 다른 도시에 흩어져 있다', fs=9.5))
+    return svg(406, ''.join(o))
+
 def fig_cn_experience():
     """요구 경력이 세 배 넘게 차이 난다. 제도가 그 차이를 밀어준다."""
     o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균', fs=9.5)]
@@ -1448,6 +1499,7 @@ FIGS = {
     'cn_revenue': fig_cn_revenue,
     'cn_hubs': fig_cn_hubs,
     'cn_experience': fig_cn_experience,
+    'cn_map': fig_cn_map,
     'onet_proxy': fig_onet_proxy,
     'onet_grain': fig_onet_grain,
     'onet_run': fig_onet_run,
@@ -1484,7 +1536,7 @@ FIG_SRC = {
     'supply_growth': 'crunch',
     'two_skills': 'cyber', 'eci_lead': 'cyber', 'cyscenario': 'cyber', 'cve_spike': 'cyber',
     'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
-    'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn',
+    'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn', 'cn_map': 'cn',
     'onet_proxy': 'onet', 'onet_grain': 'onet', 'onet_run': 'onet', 'onet_scale': 'onet',
     'capital_ladder': 'agi', 'control_kinds': 'agi', 'why_control': 'agi',
     'cash_or_kind': 'agi',
