@@ -417,6 +417,25 @@ def post_html(items, figs=()):
     return ''.join(h)
 
 
+def report_html(blocks):
+    """보고서 형식 본문 — 번호글 대신 절 제목·문단·그림이 섞여 흐른다.
+
+    blocks = [('h', 제목) | ('p', 문단) | ('fig', (제목, svg, 캡션))].
+    번호글은 한 생각에 번호 하나라 논지가 앞뒤로 걸리는 발표에는 맞았지만,
+    구조를 설명하는 발표는 「그림을 보고 그 아래 설명을 읽는」 순서가 더 빨리 읽힌다.
+    """
+    h = ['<div class="uc-rep">']
+    for kind, val in blocks:
+        if kind == 'h':
+            h.append('<h3>%s</h3>' % val)
+        elif kind == 'fig':
+            h.append(fig_html(val))
+        else:
+            h.append('<p>%s</p>' % val)
+    h.append('</div>')
+    return ''.join(h)
+
+
 def _links_html(c):
     """카드 발치의 링크 줄 — 지금까지의 형식과 번호글 형식이 같은 마크업을 쓴다."""
     return ('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
@@ -453,6 +472,13 @@ def card_html(c):
         h.append('<p class="uc-oneliner">%s</p>' % c['oneliner'])
     # 번호글 카드 — 핵심 포인트로 요약하지 않고 한 생각에 번호 하나로 죽 늘어놓는다.
     # 요약을 또 요약하면 「누가 무엇을」이 빠지므로, 이 형식에서는 points를 아예 안 만든다.
+    if c.get('report'):
+        if c.get('verdict'):
+            h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
+        h.append(report_html(c['report']))
+        h.append(_links_html(c))
+        h.append('</div></div>')
+        return ''.join(h)
     if c.get('post'):
         # 판단이 맨 위에 선다. 번호 일흔 개를 지나야 결론이 나오면 아무도 안 읽는다
         if c.get('verdict'):

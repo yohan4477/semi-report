@@ -106,6 +106,46 @@ def parse(path):
     return meta, items, verdict
 
 
+H_RE = re.compile(r'^##\s+(.*)$')
+FIG_RE = re.compile(r'^\[\[fig:([a-z0-9_-]+)\]\]$')
+BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
+
+
+def parse_report(path, vid):
+    """보고서 형식 md 한 편 → (프런트매터, 블록 목록, 한줄 코멘트).
+
+    번호글과 달리 절 제목(`## `)·문단·그림 부름(`[[fig:이름]]`)이 섞여 흐른다.
+    그림은 `aie_figs.RFIGS[영상ID][이름]`에서 꺼낸다 — 이름이 없으면 생성을 멈춘다.
+    """
+    raw = io.open(path, encoding='utf-8').read().replace('\r\n', '\n')
+    meta, body = front(raw)
+    have = aie_figs.RFIGS.get(vid, {})
+    blocks, verdict, used = [], '', set()
+    for para in re.split(r'\n\s*\n', body):
+        t = ' '.join(para.split()).strip()
+        if not t:
+            continue
+        m = VERDICT_RE.match(t)
+        if m:
+            verdict = esc(m.group(1))
+            continue
+        m = H_RE.match(t)
+        if m:
+            blocks.append(('h', esc(m.group(1))))
+            continue
+        m = FIG_RE.match(t)
+        if m:
+            key = m.group(1)
+            assert key in have, '%s — 그림 %r가 aie_figs.RFIGS에 없다' % (os.path.basename(path), key)
+            blocks.append(('fig', have[key]))
+            used.add(key)
+            continue
+        blocks.append(('p', BOLD_RE.sub(r'<b>\1</b>', esc(t))))
+    for key in sorted(set(have) - used):
+        print('  ! %s — 그림 %r를 본문에서 안 부른다' % (os.path.basename(path), key))
+    return meta, blocks, verdict
+
+
 def vid_of(url):
     return (url or '').rsplit('/', 1)[-1].split('?')[0]
 
@@ -116,9 +156,16 @@ def build():
         if not fn.endswith('.md'):
             continue
         path = os.path.join(SRC_DIR, fn)
-        meta, items, verdict = parse(path)
+        # 형식이 둘이다. 논지가 앞뒤로 걸리는 발표는 번호글로, 구조를 설명하는
+        # 발표는 그림을 앞세운 보고서로 간다. 어느 쪽인지는 프런트매터가 정한다.
+        head_meta, _ = front(io.open(path, encoding='utf-8').read().replace('\r\n', '\n'))
+        is_report = head_meta.get('format') == 'report'
+        if is_report:
+            meta, items, verdict = parse_report(path, vid_of(head_meta.get('source', '')))
+        else:
+            meta, items, verdict = parse(path)
         # 덜 된 글은 화면에 올리지 않는다 — 번호글이나 한줄 코멘트가 비면 건너뛰고 적어 둔다
-        why = ('번호글 없음' if not items else
+        why = (('본문 없음' if is_report else '번호글 없음') if not items else
                '한줄 코멘트 없음' if not verdict else
                'section 열쇠말이 SEC에 없다: %r' % meta.get('section') if meta.get('section') not in SEC else
                'gain 없음' if not meta.get('gain') else '')
@@ -135,11 +182,11 @@ def build():
                      '발표 %s' % meta.get('date', ''),
                      dur_ko(meta.get('dur', '')),
                      meta.get('channel', 'AI Engineer')],
-            'post': items,
+            ('report' if is_report else 'post'): items,
             'verdict': verdict,
             # 번호글은 한 줄에 한 생각이라 전체가 어떻게 맞물리는지가 안 잡힌다.
             # 그 한 장을 aie_figs가 갖고 있고 영상 ID로 붙인다.
-            'figs': aie_figs.FIGS.get(vid_of(meta.get('source', '')), ()),
+            'figs': () if is_report else aie_figs.FIGS.get(vid_of(meta.get('source', '')), ()),
             'links': [('번호글 전문 ↗', dc.blob(REL % fn), ''),
                       ('발표 영상 ↗', meta.get('source', ''), '')],
             '_date': meta.get('date', ''),
@@ -171,12 +218,20 @@ POST_CSS = '''
     .uc-post>li{padding-left:30px}
     .uc-post>li::before{width:23px}
   }
+  /* 보고서 — 절 제목과 문단이 섞여 흐른다. 번호글과 같은 카드 안에서 쓴다 */
+  .uc-rep{margin:14px 0 0}
+  .uc-rep h3{margin:26px 0 10px;font-size:1.02rem;line-height:1.45;font-weight:800;
+             color:var(--ink);letter-spacing:-.01em}
+  .uc-rep h3:first-child{margin-top:4px}
+  .uc-rep p{margin:0 0 13px;font-size:.95rem;line-height:1.78;color:var(--ink-2)}
+  .uc-rep p:last-child{margin-bottom:0}
+  .uc-rep .uc-fig{margin:18px 0}
 ''' + aie_figs.FIG_CSS
 
-INTRO = ('<p>발표 한 편이 카드 한 장입니다. 다른 장과 달리 <b>핵심 포인트로 갈라 쓰지 않고</b> '
-         '한 생각에 번호 하나를 매겨 순서대로 늘어놓았습니다 — 발표는 앞의 말이 뒤에 걸리는 '
-         '글이라 조각으로 나누면 그 걸림이 사라집니다. 맨 위의 「한줄 코멘트」가 이 글의 판단이고, '
-         '그 아래 번호가 거기까지 가는 걸음입니다.</p>'
+INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '
+         '굴러가는 발표는 <b>한 생각에 번호 하나</b>를 매겨 늘어놓고, 구조를 설명하는 발표는 '
+         '<b>그림을 앞세운 보고서</b>로 씁니다. 어느 쪽이든 맨 위의 「한줄 코멘트」가 판단이고 '
+         '그 아래가 거기까지 가는 걸음입니다.</p>'
          '<p>자막 전문에서 옮겼고, 발표자가 자기 회사를 파는 대목은 그렇다고 밝혀 두었습니다. '
          '숫자는 발표에 나온 것만 싣습니다.</p>')
 
