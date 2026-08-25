@@ -130,6 +130,8 @@ def reflow(lines, bw, fs=13.5):
 #   안쪽 여백  PAD 12 하나로 왼쪽·오른쪽·줄바꿈 한도를 다 잡는다. 6이던 때는
 #             글자가 왼쪽 테두리에 붙고 오른쪽만 넉넉해 좌우가 어긋나 보였다
 #             (2026-08-25). 새 상자는 이름이 bw-24 안에 들어와야 한다
+#   열 맞춤   한 열에 나란히 서는 상자는 even() 으로 그린다. 줄 수가 달라 아래끝이
+#             들쭉날쭉하면 열로 안 읽힌다. box() 를 곧장 부르면 안 맞는다
 #             글자를 키우면 상자도 같이 넓혀야 한다 — 폭은 w()가 재고,
 #             긴 설명 줄은 wrap_lines() 가 폭에 맞춰 자른다
 #   색        원문 팔레트를 토큰으로 들여왔다 — svg.epoch 가 물린다(card_lib.FIG_CSS).
@@ -139,16 +141,17 @@ def reflow(lines, bw, fs=13.5):
 
 
 # ── 부품 ──────────────────────────────────────────────────────────────
-def box(x, y, bw, name, lines, key=False, wrap=False, flow=True):
+def box(x, y, bw, name, lines, key=False, wrap=False, flow=True, h=None):
     """상자 하나. 이름 한 줄 + 설명 여러 줄. 높이는 줄 수가 정한다.
 
     설명은 그 주체가 하는 동사로 쓴다(규칙 5). 숫자는 이 상자 안에만 산다.
     이름(굵은 줄)과 첫 설명 줄 사이는 25 띄운다 — 붙여 놓으면 한 덩어리로 읽힌다.
     줄바꿈은 reflow() 가 폭을 재서 다시 잡는다 — 손으로 끊은 자리는 참고만 한다.
-    끊은 자리를 반드시 지켜야 하면 flow=False."""
+    끊은 자리를 반드시 지켜야 하면 flow=False.
+    h 를 주면 그 높이로 그린다 — 한 열에 나란히 선 상자는 even() 이 높이를 맞춘다."""
     if flow:
         lines = reflow(lines, bw)
-    h = 33 + 19 * len(lines) + 4
+    h = max(h or 0, 33 + 19 * len(lines) + 4)
     cls = 'bx-wrap' if wrap else ('bx-key' if key else 'bx')
     o = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="%s"/>' % (x, y, bw, h, cls)]
     assert w(name, 16) < bw - PAD * 2, '상자 이름이 넘친다: %s' % name
@@ -158,6 +161,21 @@ def box(x, y, bw, name, lines, key=False, wrap=False, flow=True):
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>'
                  % (x + PAD, y + 47 + 19 * i, esc(ln)))
     return ''.join(o), h
+
+
+def even(specs):
+    """한 열에 나란히 서는 상자들 — 가장 높은 것에 높이를 맞춘다.
+
+    줄 수가 다르면 상자 아래끝이 들쭉날쭉해 열로 안 읽힌다(2026-08-25).
+    specs = [(x, y, bw, 이름, [설명], 강조)] . 돌려주는 것은 (그림 조각들, 높이)."""
+    hs = [box(*sp[:5], key=sp[5] if len(sp) > 5 else False)[1] for sp in specs]
+    top = max(hs)
+    out = []
+    for sp in specs:
+        s_, _ = box(*sp[:5], key=sp[5] if len(sp) > 5 else False, h=top)
+        out.append(s_)
+    return out, top
+
 
 
 def arrow(kind, pts):
@@ -319,15 +337,9 @@ def fig_two_columns():
             ('svc', '빌려준다', '빌려준다')]
     y = 76
     for i, (rl, left, right) in enumerate(rows):
-        lh_, rh_ = None, None
-        for x, (name, lines, key) in ((LX, left), (RX, right)):
-            s, hh = box(x, y, BW, name, lines, key)
-            o.append(s)
-            if x == LX:
-                lh_ = hh
-            else:
-                rh_ = hh
-        h = max(lh_, rh_)
+        parts, h = even([(x, y, BW, nm, ls, ky)
+                         for x, (nm, ls, ky) in ((LX, left), (RX, right))])
+        o += parts
         o.append(role(320, y + 22, rl))
         if i < 3:
             kind, lname, rname = edge[i]
@@ -1203,10 +1215,11 @@ def fig_cyber_chain():
              ('익스플로잇 개발', ['사람이 만든 최선보다', '안정적인 사례가 나왔다'], 'ExploitBench'),
              ('권한 상승', ['서로 다른 익스플로잇을', '이어 붙인다'], 'ExploitGym'),
              ('망 장악', ['모의 기업망을 일관되게', '완전히 장악했다'], '영국 AISI 사이버 레인지')]
+    parts, h = even([(X0 + i * (W + GAP), 48, W, name, wrap_lines(' '.join(lines), W))
+                     for i, (name, lines, _b) in enumerate(steps)])
     for i, (name, lines, bench) in enumerate(steps):
         x = X0 + i * (W + GAP)
-        s_, h = box(x, 48, W, name, wrap_lines(' '.join(lines), W))
-        o.append(s_)
+        o.append(parts[i])
         o.append('<text x="%d" y="%d" class="t-role" text-anchor="middle">%s</text>'
                  % (x + W // 2, 48 + h + 18, esc(bench)))
         if i < len(steps) - 1:
@@ -1433,15 +1446,14 @@ def fig_onet_proxy():
              '연구의 복잡성이 빠진다',
              ['작은 GPT-2 파인튜닝과, 성공 기준도', '없이 100만 줄을 다루며 프로젝트',
               '다섯을 굴리는 일은 다른 일이다'])]
-    bottoms = []
-    for x, name, what, verdict, why in cols:
-        s1, h1 = box(x, 44, 300, name, what)
-        o.append(s1)
-        o.append(arrow('svc', [(x + 150, 44 + h1), (x + 150, 44 + h1 + 26)]))
-        s2, h2 = box(x, 44 + h1 + 26, 296, verdict, why)
-        o.append(s2)
-        bottoms.append(44 + h1 + 26 + h2)
-    y = max(bottoms) + 30
+    top, h1 = even([(x, 44, 300, name, what) for x, name, what, _v, _w in cols])
+    o += top
+    y2 = 44 + h1 + 26
+    low, h2 = even([(x, y2, 300, verdict, why) for x, _n, _wt, verdict, why in cols])
+    o += low
+    for x, _n, _wt, _v, _w in cols:
+        o.append(arrow('svc', [(x + 150, 44 + h1), (x + 150, y2)]))
+    y = y2 + h2 + 30
     s3, h3 = box(8, y, 624, '정작 알고 싶은 것', ['AI가 AI 연구를 얼마나 대신하나'], key=True)
     o.append(s3)
     for x in (156, 484):
@@ -1587,22 +1599,24 @@ def fig_why_control():
     chain = [('산업혁명', ['도시화와 문해력이', '큰 무리의 파업을', '쉽게 만들었다']),
              ('이해가 맞물렸다', ['노동자에게 기술과', '노동조건을 주는 것이', '엘리트에게도 값졌다']),
              ('민주주의와 복지국가', ['그 위에서 자리를 잡았다'])]
-    x = 8
     W = 200
-    for i, (name, lines) in enumerate(chain):
-        s_, h = box(x, 46, W, name, lines)
-        o.append(s_)
+    parts, h = even([(8 + i * (W + 12), 46, W, name, lines)
+                     for i, (name, lines) in enumerate(chain)])
+    for i, part in enumerate(parts):
+        x = 8 + i * (W + 12)
+        o.append(part)
         if i < 2:
             o.append(arrow('svc', [(x + W, 46 + h // 2), (x + W + 12, 46 + h // 2)]))
-        x += W + 12
-    y2 = 46 + 26 + 45 + 8 + 26
-    s1, h1 = box(8, y2, 306, '그 조건이 사라지면', ['노동이 값어치를 잃으면 국가가 시민을 계속',
-                                          '부양할 이유도, 기업이 국가에 매일 이유도',
-                                          '함께 약해진다'])
-    s2, h2 = box(328, y2, 306, '그래서 나온 것이 정지 스위치다', ['로봇이 모든 일을 하게 되면,',
-                                                     '파업으로 노동을 멈추듯',
-                                                     '자본을 멈출 수 있게 한다'], key=True)
-    o += [s1, s2]
+    y2 = 46 + h + 26
+    pair2, h1 = even([
+        (8, y2, 306, '그 조건이 사라지면', ['노동이 값어치를 잃으면 국가가 시민을 계속',
+                                    '부양할 이유도, 기업이 국가에 매일 이유도', '함께 약해진다'],
+         False),
+        (328, y2, 306, '그래서 나온 것이 정지 스위치다', ['로봇이 모든 일을 하게 되면,',
+                                              '파업으로 노동을 멈추듯',
+                                              '자본을 멈출 수 있게 한다'], True)])
+    h2 = h1
+    o += pair2
     o.append(arrow('cond', [(160, y2 - 26), (160, y2)]))
     o.append(arrow('svc', [(314, y2 + h1 // 2), (328, y2 + h1 // 2)]))
     y3 = y2 + max(h1, h2) + 24
@@ -1630,14 +1644,14 @@ def fig_cash_or_kind():
                         '부당한 정치·경제 영향력을 쥔다']),
                ('규모의 경제', ['큰 투자자만 사모 기업에', '들어갈 수 있다면 자산운용이',
                           '자연독점이 된다. 정지 스위치도', '국가가 더 빨리 붙인다'])]
-    x = 8
     W = 208
-    hh = 0
-    for name, lines in reasons:
-        s_, hh = box(x, y, W, name, wrap_lines(' '.join(lines), W), key=True)
-        o.append(s_)
+    specs = [(8 + i * (W + 4), y, W, name, wrap_lines(' '.join(lines), W), True)
+             for i, (name, lines) in enumerate(reasons)]
+    parts, hh = even(specs)
+    for i, part in enumerate(parts):
+        x = 8 + i * (W + 4)
+        o.append(part)
         o.append(arrow('cond', [(x + W // 2, y - 26), (x + W // 2, y)]))
-        x += W + 4
     o.append(lab(16, y + hh + 20, '셋 다 「그래도 현물로 주자」는 쪽의 근거다. 어떻게 저울질할지는 '
                                   '전환이 실제로 시작될 때', fs=13))
     o.append(lab(16, y + hh + 36, '우리 모두가 정할 몫이라고 필자들은 적는다', fs=13))
@@ -1810,15 +1824,14 @@ def fig_eci_why():
             (326, '설명 B · 밑에 깔린 인자가 있다', ['사람의 IQ처럼 일반 능력 인자가',
                                           '하나 있어서 그것이 한꺼번에',
                                           '올라간다'], True)]
-    for x, name, lines, key in cols:
-        s_, h = box(x, 44, 308, name, lines, key=key)
-        o.append(s_)
-    y = 44 + 26 + 45 + 8 + 26
+    parts, h = even([(x, 44, 308, name, lines, key) for x, name, lines, key in cols])
+    o += parts
+    y = 44 + h + 26
     s_, h = box(8, y, 626, '설명 B라면 그 인자가 무엇인가 — 단서 둘',
                 ['포화되기 전까지 METR 시간지평의 로그값이 ECI와 크게 상관됐다',
                  '또는 ECI 상승의 상당 부분이 일관된 추론을 유지하는 최대 문맥 길이에서 온다'])
     o.append(s_)
-    o.append(arrow('cond', [(480, 44 + 79), (480, y)]))
+    o.append(arrow('cond', [(480, 44 + h), (480, y)]))
     o.append(lab(16, y + h + 18, 'ECI 증가 추세는 AI 능력 성장이 빨라졌는지를 잡는 데 쓸모가 있다. '
                                  '그 인자가', fs=13))
     o.append(lab(16, y + h + 34, '실제 영향으로 곧장 옮겨지는 양이라고 말할 수 있으면, 가속을 해석하기 '
@@ -1834,11 +1847,8 @@ def fig_bench_hard():
             (326, '비용', ['현실적인 규모로 하려면 GPU가 많이 든다',
                          '그만한 자원을 벤치마크용으로 대는 것은',
                          '규모에 따라 비싸거나 아예 불가능하다'], True)]
-    hh = 0
-    for x, name, lines, key in cols:
-        s_, hh2 = box(x, 44, 308, name, lines, key=key)
-        o.append(s_)
-        hh = max(hh, hh2)
+    parts, hh = even([(x, 44, 308, name, lines, key) for x, name, lines, key in cols])
+    o += parts
     y = 44 + hh + 24
     s_, h = box(8, y, 626, '그래서 벤치마크 묶음이 갖춰지면 얻는 것',
                 ['AI 연구개발 자동화의 선행 지표가 된다 — 어떤 형태의 자동화는 폭주하는 능력 성장,',
