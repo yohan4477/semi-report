@@ -216,7 +216,8 @@ def build():
             # 번호글은 한 줄에 한 생각이라 전체가 어떻게 맞물리는지가 안 잡힌다.
             # 그 한 장을 aie_figs가 갖고 있고 영상 ID로 붙인다.
             'figs': () if is_report else aie_figs.FIGS.get(vid_of(meta.get('source', '')), ()),
-            'links': [('번호글 전문 ↗', dc.blob(REL % fn), ''),
+            'links': [('%s 전문 ↗' % ('보고서' if is_report else '번호글'),
+                       dc.blob(REL % fn), ''),
                       ('발표 영상 ↗', meta.get('source', ''), '')],
             '_date': meta.get('date', ''),
         })
@@ -255,11 +256,21 @@ POST_CSS = '''
   .uc-rep p{margin:0 0 13px;font-size:.95rem;line-height:1.78;color:var(--ink-2)}
   .uc-rep p:last-child{margin-bottom:0}
   .uc-rep .uc-fig{margin:18px 0}
-  /* 판을 776px 고정으로 둔다. svg.epoch 기본값(width:100%)대로 두면 판이 화면 폭을
-     따라 스케일되면서 판 안 글자만 본문과 어긋난다 — 넓으면 크고 좁으면 작다.
-     좁은 화면에서는 줄이지 말고 그림만 가로로 스크롤한다 */
-  .ucard .uc-fig{overflow-x:auto}
-  .ucard .uc-fig svg.epoch{width:776px;max-width:none;margin:0 auto}
+  /* 판은 520px까지만 넓힌다. 자리가 그보다 넓으면 배율이 1이라 판 안 글자가
+     본문과 같은 .95rem으로 그려지고, 좁으면 판이 줄어든다. 어느 쪽이든 옆으로
+     스크롤하지 않는다 — 776으로 내보내던 때는 창이 조금만 좁아도 밀렸다 */
+  .ucard .uc-fig svg.epoch{width:100%;max-width:520px;margin:0 auto}
+  /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
+     층은 굵기와 색으로만 가른다 — 크기로 가르면 자리마다 값이 갈린다 */
+  .ucard .uc-fig .fig-title{font-size:.95rem;letter-spacing:0;text-transform:none}
+  .ucard .uc-fig figcaption{font-size:.95rem;line-height:1.78}
+  .uc-rep .uc-label{font-size:.95rem;letter-spacing:0;text-transform:none}
+  .ucard .uc-verdict{font-size:.95rem}
+  .uc-rep .tbl-wrap{overflow-x:visible}
+  .uc-rep .uc-tbl{font-size:.95rem;min-width:0}
+  .uc-rep .uc-tbl th{font-size:.95rem;letter-spacing:0;text-transform:none}
+  /* 설명 칸까지 굵게 두면 표만 본문보다 무겁게 읽힌다 */
+  .uc-rep .uc-tbl td:nth-child(2){font-weight:400;color:var(--ink-2)}
 ''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '
