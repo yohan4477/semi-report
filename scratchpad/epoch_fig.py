@@ -32,8 +32,13 @@ def esc(s):
 #   투명도    겹쳐 찍는 표식 .8 · 같은 색을 흐리게 쓴 면 .55
 #   면을 대신하는 굵은 호 6, 겹쳐 읽히게 투명도 .38 (덮는 범위처럼 면이 아닌데
 #             면으로 읽혀야 하는 자리에만)
-#   글자      상자 이름 t-lab 11.5 · 설명과 값 t-sm 10 · 역할 라벨과 주석 9.5
-#             막대 옆 값 라벨은 10, 판 아래 주석은 9.5
+#   글자      상자 이름 t-lab 14 · 설명과 값 t-sm 12 · 역할 라벨과 주석 11.5
+#             막대 옆 값 라벨은 12, 판 아래 주석은 11.5
+#             2026-08-25에 한 단 올렸다. 그전에는 11.5/10/9.5였는데, 640 판이
+#             카드 안에서 640에 묶여 있어 10px 글자가 10px 그대로 나왔다. 판을
+#             카드 너비까지 늘이고(card_lib의 svg.epoch max-width:100%) 글자를
+#             1.2배 키워 프런트 산문과 비슷한 크기로 읽히게 했다.
+#             글자를 키우면 상자도 같이 넓혀야 한다 — 폭은 w()가 잰다
 #   색        원문 팔레트를 토큰으로 들여왔다 — svg.epoch 가 물린다(card_lib.FIG_CSS).
 #             --fig-good 이 Epoch 청록, --fig-blue/amber/violet 이 파랑·주황·보라로
 #             바뀌어 나온다. 자홍 --epoch-pink 와 산호 --epoch-coral 은 직접 부른다
@@ -45,15 +50,15 @@ def box(x, y, bw, name, lines, key=False, wrap=False):
     """상자 하나. 이름 한 줄 + 설명 여러 줄. 높이는 줄 수가 정한다.
 
     설명은 그 주체가 하는 동사로 쓴다(규칙 5). 숫자는 이 상자 안에만 산다."""
-    h = 26 + 15 * len(lines) + 8
+    h = 27 + 17 * len(lines) + 5
     cls = 'bx-wrap' if wrap else ('bx-key' if key else 'bx')
     o = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="%s"/>' % (x, y, bw, h, cls)]
-    assert w(name, 11.5) < bw - 22, '상자 이름이 넘친다: %s' % name
-    o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (x + 11, y + 20, esc(name)))
+    assert w(name, 14) < bw - 14, '상자 이름이 넘친다: %s' % name
+    o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (x + 7, y + 21, esc(name)))
     for i, ln in enumerate(lines):
-        assert w(ln, 10) < bw - 22, '설명 줄이 상자를 넘는다(%d px): %s' % (bw, ln)
+        assert w(ln, 12) < bw - 14, '설명 줄이 상자를 넘는다(%d px): %s' % (bw, ln)
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>'
-                 % (x + 11, y + 38 + 15 * i, esc(ln)))
+                 % (x + 7, y + 40 + 17 * i, esc(ln)))
     return ''.join(o), h
 
 
@@ -63,7 +68,7 @@ def arrow(kind, pts):
     return '<path d="%s" class="flow-%s"/>' % (d, kind)
 
 
-def lab(x, y, s, cash=False, anchor='start', fs=10):
+def lab(x, y, s, cash=False, anchor='start', fs=12):
     """선 위 글자 — 오가는 것의 이름. 색은 그 선의 색을 따른다(규칙 6)."""
     cls = 't-cash' if cash else 't-sm'
     a = '' if anchor == 'start' else ' text-anchor="%s"' % anchor
@@ -89,8 +94,8 @@ def legend(y=22):
     o, x = [], 16
     for kind, text in items:
         o.append(arrow(kind, [(x, y - 4), (x + 20, y - 4)]))
-        o.append(lab(x + 26, y, text, cash=(kind == 'cash'), fs=9.5))
-        x += 26 + int(w(text, 9.5)) + 20
+        o.append(lab(x + 26, y, text, cash=(kind == 'cash'), fs=11.5))
+        x += 26 + int(w(text, 11.5)) + 18
     assert x < 645, '범례가 판을 넘는다: %d' % x
     return ''.join(o)
 
@@ -138,7 +143,7 @@ def swatch(x, y, text, key=True):
     fill = ('class="bx-key"' if key else
             'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" stroke-width="1"')
     return ('<rect x="%d" y="%d" width="14" height="11" rx="2" %s/>' % (x, y - 10, fill)
-            + lab(x + 20, y, text, fs=9.5))
+            + lab(x + 20, y, text, fs=11.5))
 
 
 def barh(rows, vmax, ticks, title, x0=150, x1=452, y=52, bh=24, step=34):
@@ -149,12 +154,12 @@ def barh(rows, vmax, ticks, title, x0=150, x1=452, y=52, bh=24, step=34):
         fill = ('fill="var(--fig-good,#2f8f6b)"' if key
                 else 'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" '
                      'stroke-width="1"')
-        assert w(name, 10) < x0 - 16, '막대 라벨이 축을 넘는다: %s' % name
+        assert w(name, 12) < x0 - 10, '막대 라벨이 축을 넘는다: %s' % name
         o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" %s/>' % (x0, y, bw_, bh, fill))
         o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" style="font-weight:850">%s</text>'
                  % (x0 - 10, y + bh - 8, esc(name)))
-        assert x0 + bw_ + 10 + w(note, 10) < 638, '막대 옆 값이 판을 넘는다: %s' % note
-        o.append(lab(x0 + bw_ + 10, y + bh - 8, note, fs=10))
+        assert x0 + bw_ + 8 + w(note, 12) < 638, '막대 옆 값이 판을 넘는다: %s' % note
+        o.append(lab(x0 + bw_ + 10, y + bh - 8, note, fs=12))
         y += step
     ax, bottom = xaxis(x0, x1, y - step + bh + 8, ticks, vmax, title)
     return o + [ax], bottom
@@ -183,7 +188,7 @@ def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
 
 # ── ① 두 칸 대조 — 컴퓨트와 데이터센터가 같은 구조다 ─────────────────────
 def fig_two_columns():
-    LX, RX, BW = 8, 360, 272
+    LX, RX, BW = 4, 352, 284
     lcx, rcx = LX + BW // 2, RX + BW // 2
     o = [legend()]
     o.append(head(lcx, 48, '컴퓨트'))
@@ -230,7 +235,7 @@ def fig_two_columns():
             kind, lname, rname = edge[i]
             for cx, nm in ((lcx, lname), (rcx, rname)):
                 o.append(arrow(kind, [(cx, y + h), (cx, y + h + 26)]))
-                o.append(lab(cx + 9, y + h + 18, nm, cash=(kind == 'cash'), fs=9.5))
+                o.append(lab(cx + 9, y + h + 18, nm, cash=(kind == 'cash'), fs=11.5))
         y += h + 26
     bottom = y - 26
     # 벤더 지원은 옆 레일로 돌린다 — 가운데를 가로지르면 아래 화살표와 엉킨다(규칙 7)
@@ -241,9 +246,9 @@ def fig_two_columns():
 
 
 # ── 한 줄 세로 스택 공용 — 빌려주는 곳 위, 갚는 곳 아래 ────────────────────
-X, BW = 120, 300
+X, BW = 112, 316
 CX = X + BW // 2
-DOWN, UP, RAIL = X + 105, X + 195, 70     # 내려가는 선·올라가는 선·바깥 레일
+DOWN, UP, RAIL = X + 110, X + 206, 64     # 내려가는 선·올라가는 선·바깥 레일
 
 
 def wrap(x, y, ww, h, title):
@@ -279,15 +284,15 @@ def pair(tops, i, down, up, y2=None, dy=14):
     dk, dt = down
     uk, ut = up
     return [arrow(dk, [(DOWN, y1), (DOWN, y2)]),
-            lab(DOWN - 8, my, dt, cash=(dk == 'cash'), anchor='end', fs=9.5),
+            lab(DOWN - 8, my, dt, cash=(dk == 'cash'), anchor='end', fs=11.5),
             arrow(uk, [(UP, y2), (UP, y1)]),
-            lab(UP + 8, my, ut, cash=(uk == 'cash'), fs=9.5)]
+            lab(UP + 8, my, ut, cash=(uk == 'cash'), fs=11.5)]
 
 
 def down_only(tops, i, kind, text):
     y1, y2 = tops[i][0] + tops[i][1], tops[i + 1][0]
     return [arrow(kind, [(CX, y1), (CX, y2)]),
-            lab(CX + 9, (y1 + y2) // 2 + 4, text, cash=(kind == 'cash'), fs=9.5)]
+            lab(CX + 9, (y1 + y2) // 2 + 4, text, cash=(kind == 'cash'), fs=11.5)]
 
 
 def left_rail(tops, src, dst, label):
@@ -295,14 +300,15 @@ def left_rail(tops, src, dst, label):
     sy = tops[src][0] + tops[src][1] // 2
     dy = tops[dst][0] + tops[dst][1] // 2
     return [arrow('cash', [(X, sy), (RAIL, sy), (RAIL, dy), (X, dy)]),
-            lab(X - 8, dy - 9, label, cash=True, anchor='end', fs=9.5)]
+            lab(X - 8, dy - 9, label, cash=True, anchor='end', fs=11.5)]
 
 
 def side(y, role_, name, lines, ty, endx=X + BW):
     """오른쪽에 세우는 조건부 지원 상자. 선은 상자 밖에서 시작해 가로로만 간다."""
-    s_, h = box(470, y, 164, name, lines)
-    return ['<text x="472" y="%d" class="t-role">%s</text>' % (y - 6, esc(role_)),
-            s_, arrow('cond', [(470, ty), (endx, ty)])], h
+    s_, h = box(458, y, 176, name, lines)
+    return ['<text x="634" y="%d" class="t-role" text-anchor="end">%s</text>'
+            % (y - 7, esc(role_)),
+            s_, arrow('cond', [(458, ty), (endx, ty)])], h
 
 
 # ── ② 한 줄 세로 스택 — TPU 자금 한 바퀴 ────────────────────────────────
@@ -353,7 +359,7 @@ def fig_lake_mariner():
     o += pair(tops, 2, ('svc', '완공된 만큼 빌려준다'), ('cash', '넘어온 용량의 임대료'), dy=27)
     o += pair(tops, 3, ('svc', '용량과 배치·운영 서비스'), ('cash', '용량과 서비스 값'))
     ex = X + BW + 14
-    sb1, h1 = side(wy, '준공 지원', '테라울프', ['부지·전력·인허가를 마련하고', '건물 준공을 책임진다'],
+    sb1, h1 = side(wy, '준공 지원', '테라울프', ['부지·전력·인허가를', '마련하고 건물', '준공을 책임진다'],
                    wy + 24, ex)
     o += sb1
     sb2, h2 = side(wy + 150, '신용 지원', '구글', ['플루이드스택이', '임대료를 멈추면',
@@ -374,10 +380,10 @@ def fig_tranches():
     o = []
     # 범례 — 흐름도가 아니라 색 두 벌이다
     o.append('<rect x="16" y="14" width="14" height="11" rx="2" class="bx-key"/>')
-    o.append(lab(36, 24, '브로드컴이 손실을 떠안는다', fs=9.5))
+    o.append(lab(36, 24, '브로드컴이 손실을 떠안는다', fs=11.5))
     o.append('<rect x="210" y="14" width="14" height="11" rx="2" '
              'fill="var(--fig-body,rgba(127,127,127,.16))" stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append(lab(230, 24, '아무도 떠안지 않는다', fs=9.5))
+    o.append(lab(230, 24, '아무도 떠안지 않는다', fs=11.5))
     y = 56
     for name, val, note, key in bars:
         bw_ = int((XMAX - X0) * val / VMAX)
@@ -387,7 +393,7 @@ def fig_tranches():
         o.append('<rect x="%d" y="%d" width="%d" height="30" rx="3" %s/>' % (X0, y, bw_, fill))
         o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '
                  'style="font-weight:850">%s</text>' % (X0 - 10, y + 20, name))
-        o.append(lab(X0 + bw_ + 10, y + 20, note, fs=10))
+        o.append(lab(X0 + bw_ + 10, y + 20, note, fs=12))
         y += 46
     ay = y + 4
     # 세로 격자선은 두지 않는다 — 막대 옆 값 라벨을 가로질러 글자가 선에 깔린다
@@ -412,7 +418,7 @@ def fig_funding_mix():
     X0, X1, VMAX = 30, 590, 500.0          # 억 달러
     Y, H = 92, 40
     o = [lab(16, 24, '2025년 11월에 발표한 미국 인프라 투자 계획과, 그 뒤 공시로 확인되는 부채',
-             fs=9.5)]
+             fs=11.5)]
 
     def px(v):
         return X0 + int((X1 - X0) * v / VMAX)
@@ -432,22 +438,22 @@ def fig_funding_mix():
     o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
              'style="font-weight:850">데이터센터 152억</text>' % ((px(345) + px(497)) // 2, Y + 25))
     o.append(lab(X0, Y + H + 30, '앤트로픽이 앞에 내놓은 현금은 없다 — 둘 다 기관투자자가 빌려준 '
-                                 '돈이고, 리스료와 임대료로 갚는다', fs=9.5))
+                                 '돈이고, 리스료와 임대료로 갚는다', fs=11.5))
     return svg(Y + H + 44, ''.join(o))
 
 
 def fig_revenue_jump():
     """구조가 짜인 시점과 매출이 뛴 시점이 다르다. 그래서 이 사례가 시험이 된다."""
-    o = [lab(16, 24, '앤트로픽 연환산 매출. 부채는 대부분 왼쪽 시점에 맞춰 짜였다', fs=9.5)]
+    o = [lab(16, 24, '앤트로픽 연환산 매출. 부채는 대부분 왼쪽 시점에 맞춰 짜였다', fs=11.5)]
     rows = [('2025년 말\n(투자 계획 발표)', 90, '90억 달러', False),
             ('2026년 5월', 470, '470억 달러', True)]
     body, bottom = barv([(a.replace('\n', ' '), b, c, d) for a, b, c, d in rows],
                         500, (0, 100, 200, 300, 400, 500), '연환산 매출(억 달러)',
                         x0=130, bw_=90, step=180)
     o += body
-    o.append(lab(130, bottom + 16, '발표 당시에는 90억 달러가 안 됐다', fs=9.5))
+    o.append(lab(130, bottom + 16, '발표 당시에는 90억 달러가 안 됐다', fs=11.5))
     o.append(lab(130, bottom + 32, '투자자가 빌려준 근거는 이미 번 돈이 아니라 앞으로 낼 '
-                                   '리스료였다', fs=9.5))
+                                   '리스료였다', fs=11.5))
     return svg(bottom + 44, ''.join(o))
 
 
@@ -455,7 +461,7 @@ def fig_draw_schedule():
     """돈은 한꺼번에 나가지 않는다. 랙이 오는 만큼만 나눠 인출한다."""
     X0, X1, VMAX = 130, 580, 345.0
     Y, H = 76, 36
-    o = [lab(16, 24, '345억 달러 확약분 가운데 언제까지 얼마가 나가나', fs=9.5)]
+    o = [lab(16, 24, '345억 달러 확약분 가운데 언제까지 얼마가 나가나', fs=11.5)]
 
     def px(v):
         return X0 + int((X1 - X0) * v / VMAX)
@@ -469,34 +475,34 @@ def fig_draw_schedule():
     o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
              'style="font-weight:850;fill:#fff">2027년 여름까지 240억 달러</text>'
              % ((X0 + px(240)) // 2, Y + 23))
-    o.append(lab(px(240) + 10, Y - 6, '남는 몫은 그 뒤에 나간다', fs=9.5))
+    o.append(lab(px(240) + 10, Y - 6, '남는 몫은 그 뒤에 나간다', fs=11.5))
     o.append(arrow('cash', [(X0, Y + H + 18), (px(240), Y + H + 18)]))
-    o.append(lab(X0, Y + H + 36, '랙이 배치되는 대로 1년 남짓에 걸쳐 약 16회로 나눠 인출한다', fs=9.5))
-    o.append(lab(X0, Y + H + 52, '담보로 잡힌 장비의 양과 나간 돈을 맞춰 두는 장치다', fs=9.5))
+    o.append(lab(X0, Y + H + 36, '랙이 배치되는 대로 1년 남짓에 걸쳐 약 16회로 나눠 인출한다', fs=11.5))
+    o.append(lab(X0, Y + H + 52, '담보로 잡힌 장비의 양과 나간 돈을 맞춰 두는 장치다', fs=11.5))
     o.append(lab(X0, Y + H + 68, '브로드컴이 지는 노출도 같은 속도로 커졌다가 상환이 시작되면 '
-                                 '줄어든다', fs=9.5))
+                                 '줄어든다', fs=11.5))
     return svg(Y + H + 80, ''.join(o))
 
 
 def fig_rate_ladder():
     """같은 빌드아웃인데 금리가 셋으로 갈린다. 무엇이 받쳐 주느냐가 값을 가른다."""
-    o = [lab(16, 24, '같은 빌드아웃에 붙은 금리. 누가 손실을 떠안느냐가 값을 가른다', fs=9.5)]
+    o = [lab(16, 24, '같은 빌드아웃에 붙은 금리. 누가 손실을 떠안느냐가 값을 가른다', fs=11.5)]
     rows = [('컴퓨트 A2 선순위', 5.75, '5.75% — 브로드컴이 떠안는다', True),
             ('레이크 매리너 부채', 7.75, '7.75% — 구글이 임대료를 낸다', True),
             ('컴퓨트 B 후순위', 8.5, '8.5% — 아무도 안 떠안는다', False)]
     body, bottom = barh(rows, 10, (0, 2, 4, 6, 8, 10), '연 이율(%)', x0=170, x1=420, y=52)
     o += body
     o.append(lab(170, bottom + 6, 'A1 선순위는 국채 수익률에 1.0%p를 얹는 방식이라 이 자에 '
-                                  '올리지 않았다', fs=9.5))
-    o.append(lab(170, bottom + 22, '레이크 매리너는 지원이 붙었는데도 7.75%다', fs=9.5))
+                                  '올리지 않았다', fs=11.5))
+    o.append(lab(170, bottom + 22, '레이크 매리너는 지원이 붙었는데도 7.75%다', fs=11.5))
     o.append(lab(170, bottom + 38, '공사 지연 가능성과 지원에 붙은 조건·한도가 값에 들어 있다',
-                 fs=9.5))
+                 fs=11.5))
     return svg(bottom + 50, ''.join(o))
 
 
 def fig_five_sites():
     """다섯 사업장. 하나의 거대 거래가 아니라 같은 구조를 다섯 번 되풀이했다."""
-    o = [lab(16, 24, '개발사와 지역을 바꿔 가며 같은 방식이 다섯 번 되풀이됐다', fs=9.5)]
+    o = [lab(16, 24, '개발사와 지역을 바꿔 가며 같은 방식이 다섯 번 되풀이됐다', fs=11.5)]
     rows = [('메리디언 아크', 430, '430MW · 57.00억 달러', True),
             ('레이크 매리너', 378, '378MW · 32.00억 달러', True),
             ('리버 벤드', 245, '245MW · 32.50억 달러', True),
@@ -507,17 +513,17 @@ def fig_five_sites():
                         x0=120, x1=270, y=52, bh=22, step=32)
     o += body
     o.append(lab(120, bottom + 6, '스폰서는 차례로 Next Frontier·플루이드스택 합작, 테라울프,',
-                 fs=9.5))
-    o.append(lab(120, bottom + 22, 'Hut 8, Cipher, 플루이드스택 합작이다', fs=9.5))
+                 fs=11.5))
+    o.append(lab(120, bottom + 22, 'Hut 8, Cipher, 플루이드스택 합작이다', fs=11.5))
     o.append(lab(120, bottom + 38, '다섯 곳을 합치면 1,428MW, 프로젝트 부채 151.83억 달러다',
-                 fs=9.5))
+                 fs=11.5))
     return svg(bottom + 50, ''.join(o))
 
 
 def fig_delivery():
     """준공은 한 번에 끝나지 않는다. 임대료도 그만큼씩 늘어난다."""
     X0, X1, VMAX = 120, 560, 400.0
-    o = [lab(16, 24, '레이크 매리너에서 이 거래가 빌려주는 378MW가 언제 들어오나', fs=9.5)]
+    o = [lab(16, 24, '레이크 매리너에서 이 거래가 빌려주는 378MW가 언제 들어오나', fs=11.5)]
     steps = [('2026년 7월', 42, 42, '42MW 가동'),
              ('2026년 10월', 42, 210, '168MW 더 들어온다'),
              ('2027년 3월', 210, 378, '다시 168MW')]
@@ -533,14 +539,14 @@ def fig_delivery():
                      'fill="var(--fig-good,#2f8f6b)" opacity=".55"/>' % (X0, y, px(base) - X0))
         o.append('<rect x="%d" y="%d" width="%d" height="28" rx="3" '
                  'fill="var(--fig-good,#2f8f6b)"/>' % (px(base), y, px(top) - px(base)))
-        o.append(lab(px(top) + 10, y + 20, note, fs=10))
+        o.append(lab(px(top) + 10, y + 20, note, fs=12))
         y += 42
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, y - 8, X1 + 14, y - 8))
     o.append(lab(X0, y + 12, '옅은 몫이 이미 들어온 용량, 진한 몫이 그때 새로 들어오는 용량이다',
-                 fs=9.5))
-    o.append(lab(X0, y + 28, '플루이드스택은 건물이 인도되는 대로 임대료를 내기 시작한다', fs=9.5))
-    o.append(lab(X0, y + 44, '2026년 7월 기준 실적은 42MW뿐이고 나머지는 예정이다', fs=9.5))
+                 fs=11.5))
+    o.append(lab(X0, y + 28, '플루이드스택은 건물이 인도되는 대로 임대료를 내기 시작한다', fs=11.5))
+    o.append(lab(X0, y + 44, '2026년 7월 기준 실적은 42MW뿐이고 나머지는 예정이다', fs=11.5))
     return svg(y + 56, ''.join(o))
 
 
@@ -589,7 +595,7 @@ def fig_openai_line():
 
     def px_(i):
         return X0 + (X1 - X0) * i / 8.0
-    o = [lab(16, 24, 'H100 환산 누적 칩 수 (세로 자는 로그)', fs=9.5)]
+    o = [lab(16, 24, 'H100 환산 누적 칩 수 (세로 자는 로그)', fs=11.5)]
     o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, Y0 - 8, X0, Y1, X1 + 14, Y1))
     for v, t in ((1e5, '10만'), (1e6, '100만'), (1e7, '1000만')):
@@ -620,15 +626,15 @@ def fig_openai_line():
              'fill:var(--fig-blue,#2f6fd0)">세계 총계</text>' % (X1 + 8, py(world[8]) - 8))
     o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;'
              'fill:var(--fig-good,#2f8f6b)">오픈AI</text>' % (X1 + 8, py(oa[8]) + 4))
-    o.append(lab(px_(5), py(world[5]) + 22, '2025년 3.3배', fs=10))
+    o.append(lab(px_(5), py(world[5]) + 22, '2025년 3.3배', fs=12))
     # 선 위에 얹으면 글자가 선에 깔린다 — 오픈AI 선은 오르막이라 아래로 내린다
     o.append('<text x="%.1f" y="%.1f" class="t-cash" style="font-size:10px">2025년 4.6배</text>'
              % (px_(5) + 6, py(oa[5]) + 24))
     o.append(lab(16, Y1 + 44, '세계 총계는 Epoch의 칩 판매 자료를 한 분기 당겨 누적한 값이다. '
-                              '2024-Q4 앞이 점선인 것은', fs=9.5))
-    o.append(lab(16, Y1 + 60, '옛 자료, 특히 엔비디아가 아닌 칩의 자료가 성글기 때문이다', fs=9.5))
+                              '2024-Q4 앞이 점선인 것은', fs=11.5))
+    o.append(lab(16, Y1 + 60, '옛 자료, 특히 엔비디아가 아닌 칩의 자료가 성글기 때문이다', fs=11.5))
     o.append(lab(16, Y1 + 80, '오픈AI는 2023-Q4 · 2024-Q4 · 2025-Q4 세 곳만 표식이고 그 사이는 '
-                              '이어 그은 선이다', fs=9.5))
+                              '이어 그은 선이다', fs=11.5))
     return svg(Y1 + 92, ''.join(o))
 
 
@@ -644,15 +650,15 @@ def fig_openai_power():
 def fig_openai_chips():
     """원문대로 엔비디아 세대별로 쌓은 막대. 구간 값은 원문 그림에서 읽었다."""
     d = figdata()['by_chip']
-    o = [lab(16, 24, '오픈AI 보유량을 엔비디아 세대별로 쌓았다 (H100 환산 누적)', fs=9.5)]
+    o = [lab(16, 24, '오픈AI 보유량을 엔비디아 세대별로 쌓았다 (H100 환산 누적)', fs=11.5)]
     gens = [('Ampere', '앰페어', 'var(--fig-blue,#2f6fd0)'),
             ('Hopper', '호퍼', 'var(--fig-good,#2f8f6b)'),
             ('Blackwell', '블랙웰', 'var(--fig-amber,#d68a1e)')]
     x = 16
     for _k, name, col in gens:
         o.append('<rect x="%d" y="34" width="14" height="11" rx="2" fill="%s"/>' % (x, col))
-        o.append(lab(x + 20, 44, name, fs=9.5))
-        x += 24 + int(w(name, 9.5)) + 26
+        o.append(lab(x + 20, 44, name, fs=11.5))
+        x += 24 + int(w(name, 11.5)) + 22
     X0, Y0, Y1, VMAX = 130, 66, 300, 1800.0
     o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, Y0 - 8, X0, Y1, 600, Y1))
@@ -683,9 +689,9 @@ def fig_openai_chips():
         o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">(%dMW)</text>'
                  % (bx + BW_ // 2, Y1 + 33, bar['mw']))
     o.append(lab(16, Y1 + 56, '2025년에 블랙웰이 107만으로 대부분을 차지하고 호퍼가 62만, 앰페어는 '
-                              '2만까지 줄었다', fs=9.5))
+                              '2만까지 줄었다', fs=11.5))
     o.append(lab(16, Y1 + 72, '전력이 3배 늘 때 계산 능력이 4배 넘게 느는 것은 칩이 해마다 전력당 '
-                              '성능이 좋아지기 때문이다', fs=9.5))
+                              '성능이 좋아지기 때문이다', fs=11.5))
     return svg(Y1 + 84, ''.join(o))
 
 
@@ -696,7 +702,7 @@ def fig_deepmind_share():
     X0, X1, Y, H = 40, 600, 96, 62
     half = (X0 + X1) // 2
     o = [lab(16, 24, '구글 ML 컴퓨트를 100%로 놓았다. 딥마인드 몫의 양 끝은 원문도 확정하지 않는다',
-             fs=9.5)]
+             fs=11.5)]
     o.append('<text x="%d" y="72" class="t-role" text-anchor="middle">구글 클라우드 — 절반가량</text>'
              % ((X0 + half) // 2))
     o.append('<text x="%d" y="72" class="t-role" text-anchor="middle">나머지 구글 — 절반가량</text>'
@@ -749,7 +755,7 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
         keys.append((name, key))
     o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
              % (x0 + pw // 2, y0 + ph + 17, esc(xlab)))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 26, esc(ylab)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 46, esc(ylab)))
     # 계열 이름은 선 위에 얹지 않는다 — 오르막 선이 글자 자리를 지나며 올라온다.
     # 판 위쪽에 색 딱지로 내놓는다(insight-figure 규칙 3과 같은 뜻이다)
     kx = x0
@@ -760,37 +766,37 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
                  % (kx, y0 - 11, kx + 18, y0 - 11, col, dash))
         o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:850;fill:%s">%s</text>'
                  % (kx + 24, y0 - 7, col, esc(name)))
-        kx += 24 + int(w(name, 10)) + 26
+        kx += 24 + int(w(name, 12)) + 22
     return o
 
 
 def fig_prefill_decode():
     """프리필은 연산이, 디코드는 대역폭이 발목을 잡는다. 두 판의 세로 눈금이 다르다."""
-    o = [lab(16, 24, 'GB200 NVL72 한 대에 8,000:1,000 요청을 올렸을 때. 두 판의 세로 자가 다르다',
-             fs=9.5)]
-    o += _panel(60, 74, 240, 150, '프리필', 1000, 1000,
+    o = [lab(16, 19, 'GB200 NVL72 한 대에 8,000:1,000 요청을 올렸을 때. 두 판의 세로 자가 다르다',
+             fs=11.5)]
+    o += _panel(60, 88, 240, 150, '프리필', 1000, 1000,
                 [('연산', 1.0, 0, True), ('데이터 이동', 0.0005, 0.9, False)],
                 '밀리초(최대 1000)', '배치 크기 B (0 → 1000)')
-    o += _panel(370, 74, 240, 150, '디코드', 1400, 1000,
+    o += _panel(370, 88, 240, 150, '디코드', 1400, 1000,
                 [('연산', 0.3, 0, False), ('데이터 이동', 0.5, 868, True)],
                 '밀리초(최대 1400)', '배치 크기 B (0 → 1000)')
-    o.append(lab(60, 268, '프리필 — 연산 1B, 데이터 이동 0.9 + 0.0005B', fs=9.5))
-    o.append(lab(60, 284, '디코드 — 연산 0.3B, 데이터 이동 868 + 0.5B', fs=9.5))
-    o.append(lab(60, 300, '초록이 그 단계를 붙잡는 쪽이다', fs=9.5))
-    return svg(312, ''.join(o))
+    o.append(lab(60, 288, '프리필 — 연산 1B, 데이터 이동 0.9 + 0.0005B', fs=11.5))
+    o.append(lab(60, 306, '디코드 — 연산 0.3B, 데이터 이동 868 + 0.5B', fs=11.5))
+    o.append(lab(60, 324, '초록이 그 단계를 붙잡는 쪽이다', fs=11.5))
+    return svg(336, ''.join(o))
 
 
 def fig_chunked_prefill():
     """노는 자원을 다음 요청의 프리필이 채운다. 칸 길이는 시간 비율이 아니다."""
     X0, SLOT, N = 116, 96, 4
-    o = [lab(16, 24, '칸은 순서를 보이는 자리이고 길이는 시간 비율이 아니다', fs=9.5)]
-    o.append(swatch(300, 24, '프리필'))
-    o.append('<rect x="400" y="14" width="14" height="11" rx="2" '
+    o = [lab(16, 24, '칸은 순서를 보이는 자리이고 길이는 시간 비율이 아니다', fs=11.5)]
+    o.append(swatch(344, 24, '프리필'))
+    o.append('<rect x="434" y="14" width="14" height="11" rx="2" '
              'fill="var(--fig-cell,#8fb0d8)" stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append(lab(420, 24, '디코드', fs=9.5))
-    o.append('<rect x="480" y="14" width="14" height="11" rx="2" fill="url(#fig-hatch-wide)" '
+    o.append(lab(454, 24, '디코드', fs=11.5))
+    o.append('<rect x="518" y="14" width="14" height="11" rx="2" fill="url(#fig-hatch-wide)" '
              'stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append(lab(500, 24, '노는 자리', fs=9.5))
+    o.append(lab(538, 24, '노는 자리', fs=11.5))
 
     def blocks(y, title, lanes):
         out = ['<text x="16" y="%d" class="t-lab">%s</text>' % (y - 10, esc(title))]
@@ -815,7 +821,7 @@ def fig_chunked_prefill():
     o += blocks(210, '청크 프리필을 쓸 때', [('연산', ['p', 'p', 'p', 'p']),
                                       ('대역폭', ['.', 'd', 'd', 'd'])])
     o.append(arrow('svc', [(X0 + SLOT * 2, 190), (X0 + SLOT * 2, 214)]))
-    o.append(lab(X0 + SLOT * 2 + 9, 206, '노는 연산을 다음 요청의 프리필이 채운다', fs=9.5))
+    o.append(lab(X0 + SLOT * 2 + 9, 206, '노는 연산을 다음 요청의 프리필이 채운다', fs=11.5))
     return svg(300, ''.join(o))
 
 
@@ -823,14 +829,14 @@ def fig_calibration():
     """원문대로 보정 전후 산점도 둘. 점 자리는 원문 그림에서 뽑았다."""
     import math
     d = figdata()['calib']
-    o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5·K2.6 실험 111건과 견준 것', fs=9.5)]
+    o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5·K2.6 실험 111건과 견준 것', fs=11.5)]
     cols = {'B200': 'var(--fig-blue,#2f6fd0)', 'B300': 'var(--fig-violet,#8b6fc8)',
             'GB200': 'var(--fig-good,#2f8f6b)', 'H200': 'var(--epoch-coral,#FD6438)'}
     x = 16
     for name, col in cols.items():
         o.append('<circle cx="%d" cy="42" r="5" fill="%s"/>' % (x + 5, col))
-        o.append(lab(x + 15, 46, name, fs=9.5))
-        x += 15 + int(w(name, 9.5)) + 24
+        o.append(lab(x + 15, 46, name, fs=11.5))
+        x += 15 + int(w(name, 11.5)) + 20
     LO, HI = 30.0, 3e4
     for pi, (key, title) in enumerate((('uncal', '보정 전'), ('cal', '보정 후'))):
         PX0 = 40 + pi * 320
@@ -858,12 +864,12 @@ def fig_calibration():
             o.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s" fill-opacity=".8"/>'
                      % (fx(ax), fy(ay), cols[name]))
     o.append(lab(40, 320, '가로가 실제 처리량, 세로가 모형이 내놓은 처리량이다(둘 다 초당 토큰). '
-                          '점선 위에 놓이면 둘이 같다는 뜻이다', fs=9.5))
+                          '점선 위에 놓이면 둘이 같다는 뜻이다', fs=11.5))
     o.append(lab(40, 336, '보정 전에는 점이 죄다 점선 위쪽에 있다 — 모형이 낙관적이다. '
-                          '연산 효율 65%, 대역폭 효율 30%,', fs=9.5))
-    o.append(lab(40, 352, '토큰당 지연 5밀리초를 넣으면 점들이 점선에 붙는다', fs=9.5))
+                          '연산 효율 65%, 대역폭 효율 30%,', fs=11.5))
+    o.append(lab(40, 352, '토큰당 지연 5밀리초를 넣으면 점들이 점선에 붙는다', fs=11.5))
     o.append(lab(40, 372, '점이 겹쳐 그려져 있어 111건이 다 갈라지지는 않는다 — 여기 찍힌 것은 '
-                          '왼쪽 47곳, 오른쪽 36곳이다', fs=9.5))
+                          '왼쪽 47곳, 오른쪽 36곳이다', fs=11.5))
     return svg(384, ''.join(o))
 
 
@@ -876,7 +882,7 @@ def fig_supply_growth():
 
     def py(v):
         return Y1 - (Y1 - Y0) * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
-    o = [lab(16, 24, '세계 블랙웰 전체가 Kimi K2.6을 돌린다고 놓았을 때', fs=9.5)]
+    o = [lab(16, 24, '세계 블랙웰 전체가 Kimi K2.6을 돌린다고 놓았을 때', fs=11.5)]
     o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, Y0 - 8, X0, Y1, X1 + 10, Y1))
     for v, t in ((1e8, '1억'), (1e10, '100억'), (1e12, '1조'), (1e14, '100조')):
@@ -906,10 +912,10 @@ def fig_supply_growth():
                  % (X0, py(start), X1, py(end), cls))
         # 범례는 판 아래로 내린다 — 판 위에 글자를 얹지 않는다(규칙 3)
         o.append('<path d="M16 %d L44 %d" %s fill="none"/>' % (ly - 4, ly - 4, cls))
-        o.append(lab(52, ly, '%s — %s' % (name, note), fs=9.5))
+        o.append(lab(52, ly, '%s — %s' % (name, note), fs=11.5))
         ly += 17
     o.append(lab(52, ly + 4, '세로 자는 로그다 — 곧은 선이 해마다 같은 배수라는 뜻이고, '
-                             '이 기울기가 3.4배다', fs=9.5))
+                             '이 기울기가 3.4배다', fs=11.5))
     return svg(ly + 16, ''.join(o))
 
 
@@ -917,7 +923,7 @@ def fig_supply_growth():
 # ══ 「미소스의 사이버 능력은 부풀려졌나」(2026-06-11) ═══════════════════════
 def fig_two_skills():
     """공격이 성립하려면 둘 다 있어야 하는데, 이 글의 판정은 둘이 다르다."""
-    o = [lab(16, 24, '앤트로픽은 둘 다 도약했다고 했다. 공개 증거의 판정은 갈린다', fs=9.5)]
+    o = [lab(16, 24, '앤트로픽은 둘 다 도약했다고 했다. 공개 증거의 판정은 갈린다', fs=11.5)]
     cols = [(8, '취약점 발견', ['코드에서 약한 자리를 찾는다',
                              '버퍼 오버플로처럼 메모리를',
                              '망가뜨릴 수 있는 줄을 짚는다'],
@@ -939,18 +945,18 @@ def fig_two_skills():
     o.append(role(320, 62, '무엇인가'))
     o.append(role(320, 172, '판정'))
     o.append(lab(16, 268, '둘 다 있어야 공격이 성립한다 — 약점을 찾고, 그 약점으로 원하는 일을 '
-                          '하게 만든다', fs=9.5))
+                          '하게 만든다', fs=11.5))
     return svg(282, ''.join(o))
 
 
 def fig_eci_lead():
     """원문대로 공개일 대 Cyber-ECI 산점도. 점 자리는 원문 그림에서 뽑았다."""
     d = figdata()['cyber_eci']
-    o = [lab(16, 24, '사이버 벤치마크 약 15개를 합친 Cyber-ECI를 모델 공개일 위에 놓았다', fs=9.5)]
+    o = [lab(16, 24, '사이버 벤치마크 약 15개를 합친 Cyber-ECI를 모델 공개일 위에 놓았다', fs=11.5)]
     o.append(swatch(16, 46, '프런티어 모델(공개 시점 최고)'))
     o.append('<circle cx="270" cy="42" r="5" fill="var(--fig-body,rgba(127,127,127,.30))" '
              'stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append(lab(282, 46, '그 밖의 모델', fs=9.5))
+    o.append(lab(282, 46, '그 밖의 모델', fs=11.5))
     X0, X1, Y0, Y1 = 96, 356, 66, 300
     LO, HI = 135.0, 175.0
     gx0, gx1 = d['grid_x'][0], d['grid_x'][-1]
@@ -980,9 +986,13 @@ def fig_eci_lead():
         slope = sum((a - mx) * (b - my) for a, b in pre) / den
         def trend(px_):
             return my + slope * (px_ - mx)
+        # 추세선이 판 아래로 빠지면 가로축 눈금 글자를 덮는다. 판 안에서만 긋는다
+        ax, ay, bx, by = X0 + 4, fy(trend(gx0)), X1 + 10, fy(trend(gx1 + 40))
+        if ay > Y1 and ay != by:
+            t = (ay - Y1) / (ay - by)
+            ax, ay = ax + (bx - ax) * t, Y1
         o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
-                 'stroke-dasharray="6 4" fill="none"/>'
-                 % (X0 + 4, fy(trend(gx0)), X1 + 10, fy(trend(gx1 + 40))))
+                 'stroke-dasharray="6 4" fill="none"/>' % (ax, ay, bx, by))
     for cx, cy in d['points'].get('gray', ()):
         o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-body,rgba(127,127,127,.30))" '
                  'stroke="var(--ink-3)" stroke-width="1"/>' % (fx(cx), fy(cy)))
@@ -1006,16 +1016,16 @@ def fig_eci_lead():
                  % (ny + 29, esc(ci)))
         ny += 58
     o.append(lab(16, Y1 + 44, '점선이 2025년 초부터 이어진 추세다. 앞선 정도는 원문이 90% 구간과 '
-                              '함께 적어 둔 값이다', fs=9.5))
+                              '함께 적어 둔 값이다', fs=11.5))
     o.append(lab(16, Y1 + 60, '초기 판본과 4월 판본이 갈리는 것이 회의론이 나온 까닭 하나다 — '
-                              '초기 판본은 GPT-5.5와 가깝다', fs=9.5))
+                              '초기 판본은 GPT-5.5와 가깝다', fs=11.5))
     return svg(Y1 + 72, ''.join(o))
 
 
 
 def fig_cyscenario():
     """포화되지 않은 벤치마크에서는 차이가 보인다. 값은 원문 부록 그대로."""
-    o = [lab(16, 24, 'Irregular의 CyScenarioBench — 종단 과제를 끝까지 해낸 비율', fs=9.5)]
+    o = [lab(16, 24, 'Irregular의 CyScenarioBench — 종단 과제를 끝까지 해낸 비율', fs=11.5)]
     rows = [('미소스 5', 36.7, '36.7%', True),
             ('미소스 프리뷰', 29.2, '29.2%', True),
             ('GPT-5.5', 26, '26%', False),
@@ -1028,24 +1038,24 @@ def fig_cyscenario():
                         x0=150, x1=470, y=48, bh=20, step=27)
     o += body
     o.append(lab(150, bottom + 6, '초기 비교에 쓰인 벤치마크 다수가 이미 만점에 가까워 차이가 '
-                                  '안 보였다', fs=9.5))
+                                  '안 보였다', fs=11.5))
     return svg(bottom + 18, ''.join(o))
 
 
 def fig_cve_spike():
     """찾아낸 취약점이 급증했다. 다만 능력 때문인지 돈 때문인지는 이 그림이 못 가른다."""
-    o = [lab(16, 24, '21개 주요 조직의 고위험·치명 CVE — 2025년 평균을 기준선으로 놓았을 때', fs=9.5)]
+    o = [lab(16, 24, '21개 주요 조직의 고위험·치명 CVE — 2025년 평균을 기준선으로 놓았을 때', fs=11.5)]
     rows = [('4월', 142, '기준선보다 142% 많다', True),
             ('5월', 262, '기준선보다 262% 많다', True)]
     body, bottom = barh(rows, 300, (0, 100, 200, 300), '기준선 대비 증가(%)',
                         x0=110, x1=390, y=56, bh=30, step=46)
     o += body
     o.append(lab(110, bottom + 6, '미소스 프리뷰 공개 시점과 겹친다. 다만 프로젝트 글래스윙에 최대 '
-                                  '1억 달러어치', fs=9.5))
+                                  '1억 달러어치', fs=11.5))
     o.append(lab(110, bottom + 22, 'API 크레딧이 붙어 있어, 찾는 데 쓴 돈이 늘어난 결과일 수도 있다',
-                 fs=9.5))
+                 fs=11.5))
     o.append(lab(110, bottom + 38, '취약점은 공개 기록까지 시간이 걸려 이 수는 더 늘 것으로 본다',
-                 fs=9.5))
+                 fs=11.5))
     return svg(bottom + 50, ''.join(o))
 
 
@@ -1054,7 +1064,7 @@ def fig_hf_incident():
     """순서가 내용이다 — 무엇을 하려다, 무엇을 거쳐, 어디에 닿았나."""
     X, BW = 100, 340
     cx = X + BW // 2
-    o = [lab(16, 24, '오픈AI가 밝힌 사고 경로', fs=9.5)]
+    o = [lab(16, 24, '오픈AI가 밝힌 사고 경로', fs=11.5)]
     rows = [('시킨 일', '사이버보안 벤치마크', ['점수를 올리는 것이 과제였다'], False),
             ('모델이 고른 것', '부정행위', ['과제를 푸는 대신 채점 쪽을 건드리기로 했다'], True),
             ('거쳐 간 곳', '오픈AI와 허깅페이스 시스템',
@@ -1073,16 +1083,16 @@ def fig_hf_incident():
     o.append(sb)
     o.append(arrow('cond', [(462, 84), (X + BW, 84)]))
     o.append(lab(16, bottom + 20, '필자가 놀랍다고 보는 자리는 능력이 아니라 선택이다 — '
-                                  '벤치마크 점수 하나 때문에', fs=9.5))
-    o.append(lab(16, bottom + 36, '이 경로를 골랐다는 것', fs=9.5))
+                                  '벤치마크 점수 하나 때문에', fs=11.5))
+    o.append(lab(16, bottom + 36, '이 경로를 골랐다는 것', fs=11.5))
     return svg(bottom + 48, ''.join(o))
 
 
 def fig_cyber_chain():
     """능력 사슬. 각 칸을 실제로 보인 벤치마크 이름을 아래에 단다."""
-    X0, W, GAP = 16, 146, 10
+    X0, W, GAP = 6, 152, 5
     o = [lab(16, 24, '공격은 이 순서로 이어진다. 각 칸을 프런티어 모델이 해낸다는 것을 보인 평가',
-             fs=9.5)]
+             fs=11.5)]
     steps = [('취약점을 찾는다', ['실제 코드에서', '새 제로데이가 나왔다'], 'FrontierCyber'),
              ('익스플로잇을 만든다', ['사람이 만든 최선보다', '안정적인 사례가 나왔다'], 'ExploitBench'),
              ('권한을 끌어올린다', ['서로 다른 익스플로잇을', '이어 붙인다'], 'ExploitGym'),
@@ -1096,15 +1106,15 @@ def fig_cyber_chain():
         if i < len(steps) - 1:
             o.append(arrow('svc', [(x + W, 48 + h // 2), (x + W + GAP, 48 + h // 2)]))
     o.append(lab(16, 148, '허깅페이스 사고도 같은 순서였다 — 취약점 셋을 엮어 접근 권한을 '
-                          '단계적으로 끌어올렸다', fs=9.5))
-    o.append(lab(16, 164, 'CyScenarioBench는 이 사슬 전체를 한 과제로 낸다', fs=9.5))
+                          '단계적으로 끌어올렸다', fs=11.5))
+    o.append(lab(16, 164, 'CyScenarioBench는 이 사슬 전체를 한 과제로 낸다', fs=11.5))
     return svg(176, ''.join(o))
 
 
 def fig_openweight_gap():
     """오픈웨이트가 얼마나 뒤에 있나. 시간으로 잰다."""
     X0, X1 = 130, 560
-    o = [lab(16, 24, '영국 AI 보안연구소와 Irregular가 매긴 오픈웨이트 모델의 자리', fs=9.5)]
+    o = [lab(16, 24, '영국 AI 보안연구소와 Irregular가 매긴 오픈웨이트 모델의 자리', fs=11.5)]
     Y = 82
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, Y, X1 + 12, Y))
@@ -1116,12 +1126,12 @@ def fig_openweight_gap():
         o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
                  'style="font-weight:850">%s</text>' % (x, Y - 14, esc(name)))
     o.append('<path d="M%d %d L%d %d" class="flow-cond"/>' % (X0 + 150, Y + 22, X1, Y + 22))
-    o.append(lab((X0 + 150 + X1) // 2, Y + 40, '4~7개월', anchor='middle', fs=10))
+    o.append(lab((X0 + 150 + X1) // 2, Y + 40, '4~7개월', anchor='middle', fs=12))
     o.append(lab(X0, Y + 62, 'GLM 5.2의 사이버 능력은 오푸스 4.5와 4.6 사이에 있고, 그 둘은 '
-                             '4~7개월 앞서', fs=9.5))
-    o.append(lab(X0, Y + 78, '나온 모델이다. 오픈웨이트는 아직 이번 사고 수준에 못 미친다', fs=9.5))
+                             '4~7개월 앞서', fs=11.5))
+    o.append(lab(X0, Y + 78, '나온 모델이다. 오픈웨이트는 아직 이번 사고 수준에 못 미친다', fs=11.5))
     o.append(lab(X0, Y + 98, '다만 미소스와 GPT-5.6 Sol이 추세를 끊고 뛴 터라, 이 격차가 앞으로도 '
-                             '같을지는 모른다', fs=9.5))
+                             '같을지는 모른다', fs=11.5))
     return svg(Y + 110, ''.join(o))
 
 
@@ -1129,7 +1139,7 @@ def fig_openweight_gap():
 # ══ 「중국 AI 채용공고 1,604건에서 읽은 것」(2026-06-24) ═════════════════════
 def fig_cn_chips():
     """국산 칩이 어디까지 들어왔나. 자리마다 답이 다르다."""
-    o = [lab(16, 24, '채용공고에서 읽은, 국산 칩이 실제로 쓰이는 자리', fs=9.5)]
+    o = [lab(16, 24, '채용공고에서 읽은, 국산 칩이 실제로 쓰이는 자리', fs=11.5)]
     rows = [('추론', '자주 쓴다', ['바이트댄스는 같은 회사 안에서', 'CUDA 최적화 직무와 어센드·캠브리콘',
                               '우대 직무를 함께 낸다'], True),
             ('큰 모델 사후학습', '가끔 쓴다', ['필자들의 어림이고', '공고가 못 박아 주지는 않는다'], True),
@@ -1144,19 +1154,19 @@ def fig_cn_chips():
         o.append(s_)
         y += h + 12
     o.append(lab(16, y + 12, '공고는 「무엇을 쓰는지」는 알려 주지만 「얼마나 쓰는지」는 알려 주지 '
-                             '않는다', fs=9.5))
+                             '않는다', fs=11.5))
     return svg(y + 24, ''.join(o))
 
 
 def fig_cn_gtm():
     """회사별 고객확보 직무 구성. 값은 원문 도해에 적힌 그대로다."""
     X0, X1 = 150, 590
-    o = [lab(16, 24, '각 회사의 영업·고객확보 직무 구성 (2026-06-23 기준)', fs=9.5)]
+    o = [lab(16, 24, '각 회사의 영업·고객확보 직무 구성 (2026-06-23 기준)', fs=11.5)]
     o.append(swatch(16, 44, 'B2B 영업'))
     o.append('<rect x="170" y="34" width="14" height="11" rx="2" '
              'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" '
              'stroke-width="1"/>')
-    o.append(lab(190, 44, '광고·성장·마케팅', fs=9.5))
+    o.append(lab(190, 44, '광고·성장·마케팅', fs=11.5))
     rows = [('Z.ai', 83, 17), ('미니맥스', 24, 76), ('문샷', 17, 83)]
     y = 62
     for name, b2b, mkt in rows:
@@ -1176,9 +1186,9 @@ def fig_cn_gtm():
                        '그 회사 영업·고객확보 직무에서 차지하는 비중(%)')
     o.append(ax)
     o.append(lab(16, bottom + 6, '매출 구조가 이 차이를 설명한다 — 미니맥스는 매출의 70%가 개인 대상 '
-                                 '앱에서 나오고,', fs=9.5))
+                                 '앱에서 나오고,', fs=11.5))
     o.append(lab(16, bottom + 22, 'Z.ai는 73.7%가 고객 인프라 위에서 모델을 돌려 주는 방식에서 나온다',
-                 fs=9.5))
+                 fs=11.5))
     return svg(bottom + 34, ''.join(o))
 
 
@@ -1186,17 +1196,17 @@ def fig_cn_gtm():
 def fig_cn_hubs():
     """중국도 몰려 있지만 미국만큼은 아니다. 원문 도해는 도시별 버블 지도인데
     도시별 공고 수가 원문에 없어 버블 크기를 그릴 수 없다. 원문에 있는 집중도만 견준다."""
-    o = [lab(16, 24, '위치가 적힌 공고가 어디에 몰려 있나', fs=9.5)]
+    o = [lab(16, 24, '위치가 적힌 공고가 어디에 몰려 있나', fs=11.5)]
     rows = [('미국 프런티어 랩', 85, '85% — 샌프란시스코 한 곳', False),
             ('중국 6개 회사', 93, '93% — 베이징·항저우·상하이 세 곳', True),
             ('그중 베이징만', 63, '63%', True)]
     body, bottom = barh(rows, 100, (0, 25, 50, 75, 100), '해당 범위에 든 공고 비중(%)',
                         x0=170, x1=400, y=52, bh=26, step=40)
     o += body
-    o.append(lab(170, bottom + 6, '중국은 세 도시를 합쳐야 93%인데 미국은 한 도시가 85%다', fs=9.5))
+    o.append(lab(170, bottom + 6, '중국은 세 도시를 합쳐야 93%인데 미국은 한 도시가 85%다', fs=11.5))
     o.append(lab(170, bottom + 22, '성마다 자기 지역 기업을 밀어 주는 경쟁과, 상하이·저장·베이징 '
-                                   '명문대의 인력이', fs=9.5))
-    o.append(lab(170, bottom + 38, '허브를 여럿으로 만든 것으로 필자들은 본다', fs=9.5))
+                                   '명문대의 인력이', fs=11.5))
+    o.append(lab(170, bottom + 38, '허브를 여럿으로 만든 것으로 필자들은 본다', fs=11.5))
     return svg(bottom + 50, ''.join(o))
 
 
@@ -1226,7 +1236,7 @@ def fig_cn_map():
         return ox + (px - x0) * k, oy + (py - y0) * k
     moved = _re.sub(r'(-?[\d.]+) (-?[\d.]+)',
                     lambda m: '%.1f %.1f' % tx(float(m.group(1)), float(m.group(2))), path)
-    o = [lab(16, 24, '도시별 공고 수. 동그라미 넓이가 공고 수에 비례한다', fs=9.5)]
+    o = [lab(16, 24, '도시별 공고 수. 동그라미 넓이가 공고 수에 비례한다', fs=11.5)]
     o.append('<path d="%s" fill="var(--fig-body,rgba(127,127,127,.16))" '
              'stroke="var(--ink-3)" stroke-width="1"/>' % moved)
     RK = 26.0 / math.sqrt(715)          # 가장 큰 도시를 반지름 26으로 놓고 넓이 비례
@@ -1260,18 +1270,18 @@ def fig_cn_map():
                  'stroke-dasharray="6 4" fill="none"/>' % (ly - 2 * r, ly - 2 * r))
         o.append('<text x="108" y="%.1f" class="t-sm t-axis">%d</text>' % (ly - 2 * r + 4, n))
     o.append(lab(16, 378, '위치가 적힌 공고의 93%가 베이징·항저우·상하이 가운데 하나 이상이고 '
-                          '베이징만 63%다', fs=9.5))
-    o.append(lab(16, 394, '이름을 안 단 작은 점들은 그 밖의 도시다', fs=9.5))
+                          '베이징만 63%다', fs=11.5))
+    o.append(lab(16, 394, '이름을 안 단 작은 점들은 그 밖의 도시다', fs=11.5))
     return svg(406, ''.join(o))
 
 
 def fig_cn_experience():
     """회사별 요구 최소 경력 평균. 값은 원문 도해에 적힌 그대로다."""
-    o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균 (2026-06-23 기준)', fs=9.5)]
+    o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균 (2026-06-23 기준)', fs=11.5)]
     o.append(swatch(16, 44, '미국'))
     o.append('<rect x="96" y="34" width="14" height="11" rx="2" '
              'fill="var(--epoch-pink,#E03C8F)" stroke="none"/>')
-    o.append(lab(116, 44, '중국', fs=9.5))
+    o.append(lab(116, 44, '중국', fs=11.5))
     rows = [('앤트로픽', 6.5, True), ('오픈AI', 5.9, True), ('딥마인드', 4.7, True),
             ('xAI', 3.3, True), ('딥시크', 3.1, False), ('지푸(Z.ai)', 2.4, False),
             ('알리바바 큐원', 2.1, False), ('문샷', 1.8, False), ('미니맥스', 1.4, False),
@@ -1290,10 +1300,10 @@ def fig_cn_experience():
     ax, bottom = xaxis(X0, X1, y + 2, (0, 1, 2, 3, 4, 5, 6, 7), 7, '요구 최소 경력(년)')
     o.append(ax)
     o.append(lab(16, bottom + 6, '열 개 회사의 공고 1,258건에서 잰 값이다. 미국 랩 평균 5.5년, '
-                                 '중국 회사 평균 1.6년', fs=9.5))
+                                 '중국 회사 평균 1.6년', fs=11.5))
     o.append(lab(16, bottom + 22, '중국 정부는 캠퍼스 채용을 졸업생 취업의 주 경로로 삼으라고 하고, '
-                                  '중국 랩', fs=9.5))
-    o.append(lab(16, bottom + 38, '엔지니어링 직무의 20% 가까이가 캠퍼스 대상이다', fs=9.5))
+                                  '중국 랩', fs=11.5))
+    o.append(lab(16, bottom + 38, '엔지니어링 직무의 20% 가까이가 캠퍼스 대상이다', fs=11.5))
     return svg(bottom + 50, ''.join(o))
 
 
@@ -1303,7 +1313,7 @@ def fig_cn_experience():
 def fig_onet_proxy():
     """지금 늘이는 선 둘과, 정작 알고 싶은 것. 원문 도해 둘은 남의 그래프라
     좌표가 원문에 없다. 그래서 무엇을 재고 무엇이 빠지는지를 구조로 그린다."""
-    o = [lab(16, 24, 'AI 타임라인 예측이 실제로 늘이는 선과, 그 선이 못 재는 것', fs=9.5)]
+    o = [lab(16, 24, 'AI 타임라인 예측이 실제로 늘이는 선과, 그 선이 못 재는 것', fs=11.5)]
     cols = [(8, '투입을 늘인다', ['실효 컴퓨트를 5년 뒤까지 늘여',
                             'AI 연구가 자동화되는 지점을 잡는다'],
              '얼마면 되는지는 감으로 정한다',
@@ -1327,30 +1337,30 @@ def fig_onet_proxy():
     for x in (156, 484):
         o.append(arrow('cond', [(x, y - 26), (x, y)]))
     o.append(lab(16, y + h3 + 18, '재기 쉬운 것만 늘이면 벤치마크 점수가 올라도 그 향상이 일의 어느 '
-                                  '부분을 덮는지 알 수 없다', fs=9.5))
+                                  '부분을 덮는지 알 수 없다', fs=11.5))
     return svg(y + h3 + 30, ''.join(o))
 
 
 def fig_onet_grain():
     """알갱이가 얼마나 다른가. 과제 수가 곧 잘게 쪼갠 정도다."""
-    o = [lab(16, 24, '같은 일을 몇 개의 과제로 쪼개 놓았나', fs=9.5)]
+    o = [lab(16, 24, '같은 일을 몇 개의 과제로 쪼개 놓았나', fs=11.5)]
     rows = [('AI R&D 전용 목록', 60, '60개 넘는 과제 · 6개 범주', True),
             ('O*NET 「컴퓨터·정보 연구 과학자」', 15, '15개 과제', False)]
     body, bottom = barh(rows, 70, (0, 20, 40, 60), '적혀 있는 과제 수',
                         x0=250, x1=430, y=56, bh=30, step=46)
     o += body
     o.append(lab(16, bottom + 8, 'O*NET은 미국 직업 약 1,000개를 담은 표준 데이터셋인데, 이 직업의 첫 '
-                                 '과제가', fs=9.5))
+                                 '과제가', fs=11.5))
     o.append(lab(16, bottom + 24, '「컴퓨터 하드웨어와 소프트웨어를 수반하는 해법을 만들기 위해 문제를 '
-                                  '분석한다」다', fs=9.5))
+                                  '분석한다」다', fs=11.5))
     o.append(lab(16, bottom + 40, 'AI 엔지니어가 하는 거의 모든 일이 여기 들어가고, 이것이 O*NET에서 '
-                                  '가장 잘게 쪼갠 서술이다', fs=9.5))
+                                  '가장 잘게 쪼갠 서술이다', fs=11.5))
     return svg(bottom + 52, ''.join(o))
 
 
 def fig_onet_run():
     """범주 하나가 어떻게 생겼나. 입력과 출력이 있고 아래로 갈린다."""
-    o = [lab(16, 24, '6개 범주 가운데 4번 「Run」을 예로 든 짜임', fs=9.5)]
+    o = [lab(16, 24, '6개 범주 가운데 4번 「Run」을 예로 든 짜임', fs=11.5)]
     s1, h1 = box(16, 46, 268, '입력', ['받침 구조와 인프라를 갖춘 벤치마크'])
     s2, h2 = box(356, 46, 268, '출력', ['최종 결과 한 벌'])
     o += [s1, s2]
@@ -1367,18 +1377,18 @@ def fig_onet_run():
                                    '유지한다'])]
     hh = 0
     for i, (name, lines) in enumerate(subs):
-        x = 16 + i * 206
-        s_, hh = box(x, y2, 192, name, lines)
+        x = 8 + i * 209
+        s_, hh = box(x, y2, 202, name, lines)
         o.append(s_)
-        o.append(arrow('svc', [(x + 96, y + h3), (x + 96, y2)]))
+        o.append(arrow('svc', [(x + 101, y + h3), (x + 101, y2)]))
     o.append(lab(16, y2 + hh + 18, '이 아래에 과제가 하나씩 적히고, 과제마다 지금 AI가 얼마나 '
-                                   '대신하는지를 0~5로 매긴다', fs=9.5))
+                                   '대신하는지를 0~5로 매긴다', fs=11.5))
     return svg(y2 + hh + 30, ''.join(o))
 
 
 def fig_onet_scale():
     """0~5 등급 사다리. 사람이 무엇을 하고 있느냐로 갈린다."""
-    o = [lab(16, 24, '과제마다 지금 AI가 얼마나 대신하는지를 매긴 자', fs=9.5)]
+    o = [lab(16, 24, '과제마다 지금 AI가 얼마나 대신하는지를 매긴 자', fs=11.5)]
     steps = [('0', '안 쓴다', ['AI가 보태는 것이 없다']),
              ('1', '미미하다', ['검색·브레인스토밍·글다듬기에 가끔 편할 뿐',
                             '일하는 방식도 하는 사람도 안 바뀐다']),
@@ -1396,8 +1406,8 @@ def fig_onet_scale():
         o.append(s_)
         y += h + 10
     o.append(lab(16, y + 12, '필자들이 매긴 값이고 주관적이라고 먼저 적는다. 이 자가 좋아지면 '
-                             '자동화된 과제 비율을', fs=9.5))
-    o.append(lab(16, y + 28, '시간에 따라 늘여 볼 수 있다는 것이 이 작업의 목적이다', fs=9.5))
+                             '자동화된 과제 비율을', fs=11.5))
+    o.append(lab(16, y + 28, '시간에 따라 늘여 볼 수 있다는 것이 이 작업의 목적이다', fs=11.5))
     return svg(y + 40, ''.join(o))
 
 
@@ -1405,7 +1415,7 @@ def fig_onet_scale():
 # ══ 「AGI 이후 자본을 누가 쥐게 할 것인가」(2026-06-09) ══════════════════════
 def fig_capital_ladder():
     """통제의 사다리. 위로 갈수록 개인이 자본을 직접 쥔다."""
-    o = [lab(16, 24, '재분배 방안들을 「개인이 자본을 얼마나 쥐는가」 한 축에 세우면', fs=9.5)]
+    o = [lab(16, 24, '재분배 방안들을 「개인이 자본을 얼마나 쥐는가」 한 축에 세우면', fs=11.5)]
     steps = [('기본자본 + 정지 스위치', ['설비를 직접 지시하거나 멈추거나 파괴할 수 있다'], True),
              ('기본자본(UBC)', ['시민이 직접 의결권을 행사하고',
                             '국가를 거치지 않고 배당을 받는다'], True),
@@ -1423,10 +1433,10 @@ def fig_capital_ladder():
     bottom = y - 12
     # 통제 축은 판 바깥 왼쪽에 세운다 — 글자를 눕히지 않고 양 끝에만 적는다
     o.append(arrow('cash', [(56, bottom), (56, 46)]))
-    o.append(lab(16, 40, '자본을 직접 쥔다', cash=True, fs=9.5))
-    o.append(lab(16, bottom + 14, '자본을 못 쥔다', fs=9.5))
+    o.append(lab(16, 40, '자본을 직접 쥔다', cash=True, fs=11.5))
+    o.append(lab(16, bottom + 14, '자본을 못 쥔다', fs=11.5))
     o.append(lab(96, bottom + 30, '기본서비스(UBS)는 이 축이 아니라 「무엇에 쓸지까지 정해 준다」는 '
-                                  '다른 축에 있다', fs=9.5))
+                                  '다른 축에 있다', fs=11.5))
     return svg(bottom + 42, ''.join(o))
 
 
@@ -1439,7 +1449,7 @@ def fig_control_kinds():
             ('국가를 거치지 않는다', ['—', '—', 'O', 'O']),
             ('설비를 직접 멈춘다', ['—', '—', '—', 'O'])]
     X0, CW = 220, 100
-    o = [lab(16, 24, '「통제」는 한 덩어리가 아니라 이런 것들의 묶음이다', fs=9.5)]
+    o = [lab(16, 24, '「통제」는 한 덩어리가 아니라 이런 것들의 묶음이다', fs=11.5)]
     for i, c in enumerate(cols):
         o.append('<text x="%d" y="46" class="t-sm" text-anchor="middle" '
                  'style="font-weight:850">%s</text>' % (X0 + i * CW + CW // 2, esc(c)))
@@ -1456,14 +1466,14 @@ def fig_control_kinds():
                      % (X0 + i * CW + CW // 2, y + 20, fill, esc(cell)))
         y += 36
     o.append(lab(16, y + 12, '다만 대주주로서 지배권을 적극 행사하는 국부펀드가, 흩어진 기본자본보다 '
-                             '시민에게', fs=9.5))
-    o.append(lab(16, y + 28, '더 큰 통제를 줄 수도 있다 — 통제는 한 축으로 줄 세워지지 않는다', fs=9.5))
+                             '시민에게', fs=11.5))
+    o.append(lab(16, y + 28, '더 큰 통제를 줄 수도 있다 — 통제는 한 축으로 줄 세워지지 않는다', fs=11.5))
     return svg(y + 40, ''.join(o))
 
 
 def fig_why_control():
     """왜 통제가 문제인가. 민주주의를 떠받쳤던 조건이 사라지면."""
-    o = [lab(16, 24, '기본소득이 깨지기 쉽다고 보는 논변의 뼈대', fs=9.5)]
+    o = [lab(16, 24, '기본소득이 깨지기 쉽다고 보는 논변의 뼈대', fs=11.5)]
     chain = [('산업혁명', ['도시화와 문해력이', '큰 무리의 파업을', '쉽게 만들었다']),
              ('이해가 맞물렸다', ['노동자에게 기술과', '노동조건을 주는 것이', '엘리트에게도 값졌다']),
              ('민주주의와 복지국가', ['그 위에서 자리를 잡았다'])]
@@ -1498,7 +1508,7 @@ def fig_why_control():
 
 def fig_cash_or_kind():
     """현금이냐 현물이냐. 현물로 주자는 근거 셋."""
-    o = [lab(16, 24, '국가가 자본을 사 줘야 하나, 현금을 주고 알아서 사게 할 것인가', fs=9.5)]
+    o = [lab(16, 24, '국가가 자본을 사 줘야 하나, 현금을 주고 알아서 사게 할 것인가', fs=11.5)]
     s0, h0 = box(8, 44, 626, '현금으로 주면', ['사람들은 채권을, 무의결권 주식을, 조금 더 비싼 '
                                         '의결권 주식을, 또는 가족농장 같은',
                                         '생산 단위를 살 수 있다. 아무 자본도 안 사고 다음 수표를 '
@@ -1508,19 +1518,19 @@ def fig_cash_or_kind():
     reasons = [('행동 편향', ['너무 적게 저축하거나', '잘못 투자할 수 있다']),
                ('외부효과', ['통제가 집중되면 사회에 해롭다', '가장 부유한 이들이 부당한',
                         '정치·경제 영향력을 쥔다']),
-               ('규모의 경제', ['큰 투자자만 사모 기업에 들어갈 수', '있다면 자산운용이 자연독점이 된다',
-                          '정지 스위치도 국가가 더 빨리 붙인다'])]
+               ('규모의 경제', ['큰 투자자만 사모 기업에 들어갈', '수 있다면 자산운용이 자연독점이',
+                          '된다. 정지 스위치도 국가가', '더 빨리 붙인다'])]
     x = 8
-    W = 202
+    W = 206
     hh = 0
     for name, lines in reasons:
         s_, hh = box(x, y, W, name, lines, key=True)
         o.append(s_)
         o.append(arrow('cond', [(x + W // 2, y - 26), (x + W // 2, y)]))
-        x += W + 10
+        x += W + 4
     o.append(lab(16, y + hh + 20, '셋 다 「그래도 현물로 주자」는 쪽의 근거다. 어떻게 저울질할지는 '
-                                  '전환이 실제로 시작될 때', fs=9.5))
-    o.append(lab(16, y + hh + 36, '우리 모두가 정할 몫이라고 필자들은 적는다', fs=9.5))
+                                  '전환이 실제로 시작될 때', fs=11.5))
+    o.append(lab(16, y + hh + 36, '우리 모두가 정할 몫이라고 필자들은 적는다', fs=11.5))
     return svg(y + hh + 48, ''.join(o))
 
 
@@ -1528,7 +1538,7 @@ def fig_cash_or_kind():
 # ══ 「AI 미래론에서 빠진 절반」(2026-07-07) ═════════════════════════════════
 def fig_missing_half():
     """주장은 두 반쪽인데 한쪽만 따져 왔다."""
-    o = [lab(16, 24, '「자동화 몇 년 뒤 나노기술과 다이슨 군집」이라는 주장의 두 반쪽', fs=9.5)]
+    o = [lab(16, 24, '「자동화 몇 년 뒤 나노기술과 다이슨 군집」이라는 주장의 두 반쪽', fs=11.5)]
     cols = [(8, '① AI가 얼마나 좋아지나', ['AI 연구를 전부 자동화하면 아주 빠르게',
                                     '좋아져 사람 전문가를 한참 앞지른다'],
              '많이 따졌다', ['필자들의 실증 작업에 비추어', '꽤 그럴듯하다고 본다'], True),
@@ -1546,14 +1556,14 @@ def fig_missing_half():
         bottoms.append(44 + h1 + 26 + h2)
     y = max(bottoms) + 18
     o.append(lab(16, y, 'AI가 무엇이든 할 수 있는 게 아니라면, 걸리는 시간은 그 기술이 얼마나 '
-                        '어려운지에 좌우된다', fs=9.5))
-    o.append(lab(16, y + 16, '누구에게든 도끼보다 핵무기를 만드는 일이 훨씬 어렵다', fs=9.5))
+                        '어려운지에 좌우된다', fs=11.5))
+    o.append(lab(16, y + 16, '누구에게든 도끼보다 핵무기를 만드는 일이 훨씬 어렵다', fs=11.5))
     return svg(y + 28, ''.join(o))
 
 
 def fig_three_steps():
     """제안하는 절차 셋. 가정을 명시하는 것이 이 방법의 핵심이다."""
-    o = [lab(16, 24, '빠진 절반을 메우려면 이 순서로 한다', fs=9.5)]
+    o = [lab(16, 24, '빠진 절반을 메우려면 이 순서로 한다', fs=11.5)]
     steps = [('① 기술을 구체적으로 정의한다',
               ['자기복제 성간 탐사선이라면 — 새 항성계에 착륙해',
                '현지 재료로 자기 복사본을 만들고, 그 복사본을',
@@ -1575,36 +1585,36 @@ def fig_three_steps():
         y += h + 24
     bottom = y - 24
     o.append(lab(16, bottom + 18, '가장 가까운 선행 작업이 탐색적 공학인데, 거기에 AI 가정을 '
-                                  '명시해 붙이는 것이', fs=9.5))
-    o.append(lab(16, bottom + 34, '이 제안의 차이다', fs=9.5))
+                                  '명시해 붙이는 것이', fs=11.5))
+    o.append(lab(16, bottom + 34, '이 제안의 차이다', fs=11.5))
     o.append(lab(16, bottom + 54, '필자들이 아는 공개 사례는 하나뿐이다 — 로봇 노동이 풍부한 경제가 '
-                                  '지을 최소 태양광', fs=9.5))
-    o.append(lab(16, bottom + 70, '시스템은 몇 주 단위로 두 배가 된다는 연구', fs=9.5))
+                                  '지을 최소 태양광', fs=11.5))
+    o.append(lab(16, bottom + 70, '시스템은 몇 주 단위로 두 배가 된다는 연구', fs=11.5))
     return svg(bottom + 82, ''.join(o))
 
 
 def fig_foresight():
     """탐색적 공학이 통한 사례 둘. 얼마나 앞섰나를 햇수로 잰다."""
-    o = [lab(16, 24, '「미래는 너무 불확실하다」는 반론에 필자들이 든 사례', fs=9.5)]
+    o = [lab(16, 24, '「미래는 너무 불확실하다」는 반론에 필자들이 든 사례', fs=11.5)]
     rows = [('치올콥스키 → 첫 우주 로켓', 41, '1903년 논증, 41년 뒤 실현', True),
             ('클라크 → 정지궤도 통신위성', 19, '약 19년 앞섰다', True)]
     body, bottom = barh(rows, 45, (0, 15, 30, 45), '논증이 실현보다 앞선 햇수',
                         x0=230, x1=440, y=52, bh=28, step=44)
     o += body
     o.append(lab(16, bottom + 8, '치올콥스키는 로켓 운동 방정식을 세워, 액체 수소·산소라면 지구 중력을 '
-                                 '벗어날 만큼', fs=9.5))
+                                 '벗어날 만큼', fs=11.5))
     o.append(lab(16, bottom + 24, '빠르게 분사되고 화약 같은 고체 연료로는 안 된다고 계산했다. '
-                                  '클라크는 적도 위 고정된 자리에', fs=9.5))
-    o.append(lab(16, bottom + 40, '위성 셋을 두어 신호를 거의 전 지구에 중계하는 구상을 냈다', fs=9.5))
+                                  '클라크는 적도 위 고정된 자리에', fs=11.5))
+    o.append(lab(16, bottom + 40, '위성 셋을 두어 신호를 거의 전 지구에 중계하는 구상을 냈다', fs=11.5))
     o.append(lab(16, bottom + 60, '필자들은 이 사례가 논지를 보이려고 고른 것이고, 실패한 시도를 다 '
-                                  '볼 수 있다면 그림이', fs=9.5))
-    o.append(lab(16, bottom + 76, '훨씬 덜 장밋빛일 수 있다고 스스로 적는다', fs=9.5))
+                                  '볼 수 있다면 그림이', fs=11.5))
+    o.append(lab(16, bottom + 76, '훨씬 덜 장밋빛일 수 있다고 스스로 적는다', fs=11.5))
     return svg(bottom + 88, ''.join(o))
 
 
 def fig_billion_ais():
     """초지능을 몰라도 쓸 수 있는 논법. 어느 쪽으로 나와도 얻는 것이 있다."""
-    o = [lab(16, 24, '「초지능이 어떻게 생겼는지 모르는데 어떻게 따지나」에 대한 답', fs=9.5)]
+    o = [lab(16, 24, '「초지능이 어떻게 생겼는지 모르는데 어떻게 따지나」에 대한 답', fs=11.5)]
     s0, h0 = box(160, 44, 320, '거의 모든 인지 과제에서 최고 전문가 이상인',
                  ['AI가 10억 개 있다고 놓는다'], key=True)
     o.append(s0)
@@ -1618,9 +1628,9 @@ def fig_billion_ais():
     o.append(arrow('svc', [(330, 44 + h0), (481, y)]))
     bottom = y + max(h1, h2)
     o.append(lab(16, bottom + 18, '이미 같은 논법을 쓰고 있다 — 초지능을 몰라도 「AI가 사람 능력에 '
-                                  '맞먹기만 해도」로 놓고', fs=9.5))
+                                  '맞먹기만 해도」로 놓고', fs=11.5))
     o.append(lab(16, bottom + 34, '세계 GDP가 연 30% 넘게 자란다는 논변이 나왔다. 그 분석을 한 것은 '
-                                  '몇 사람뿐이다', fs=9.5))
+                                  '몇 사람뿐이다', fs=11.5))
     return svg(bottom + 46, ''.join(o))
 
 
@@ -1628,7 +1638,7 @@ def fig_billion_ais():
 # ══ 「벤치마크가 답을 도울 수 있는 큰 물음 아홉」(2026-08-14) ═══════════════
 def fig_nine_questions():
     """아홉이 두 갈래로 갈린다 — 경제적 영향과 능력의 근본 동인."""
-    o = [lab(16, 24, '앞의 넷은 경제적 영향에, 뒤의 다섯은 능력의 근본 동인에 걸려 있다', fs=9.5)]
+    o = [lab(16, 24, '앞의 넷은 경제적 영향에, 뒤의 다섯은 능력의 근본 동인에 걸려 있다', fs=11.5)]
     groups = [('경제적 영향', [('①', 'AI가 내 일을 할 수 있나'),
                           ('②', '영향이 클 영역에서 진전이 있나'),
                           ('③', '선두와 후발의 격차가 일정한가'),
@@ -1648,13 +1658,13 @@ def fig_nine_questions():
             y += h + 8
         x += 320
     o.append(lab(16, 58 + 5 * 42 + 8, 'Epoch의 벤치마크 작업이 무엇을 답하려고 하는지를 필자가 '
-                                      '직접 적은 목록이다', fs=9.5))
+                                      '직접 적은 목록이다', fs=11.5))
     return svg(58 + 5 * 42 + 22, ''.join(o))
 
 
 def fig_scope_ladder():
     """좁은 과제에서 열린 직무로. 벤치마크가 어디까지 올라왔나."""
-    o = [lab(16, 24, '벤치마크가 재는 일이 얼마나 넓어졌나', fs=9.5)]
+    o = [lab(16, 24, '벤치마크가 재는 일이 얼마나 넓어졌나', fs=11.5)]
     steps = [('Andon Café', ['AI 에이전트가 소유하고 운영하는 진짜 카페다',
                              '필자가 가장 좋아하는 것으로 꼽는다'], True),
              ('Remote Labor Index', ['프리랜싱 플랫폼의 실제 프로젝트를 가져와',
@@ -1670,18 +1680,18 @@ def fig_scope_ladder():
         y += h + 10
     bottom = y - 10
     o.append(arrow('cash', [(56, bottom), (56, 46)]))
-    o.append(lab(16, 40, '열린 직무', cash=True, fs=9.5))
-    o.append(lab(16, bottom + 14, '좁은 과제', fs=9.5))
+    o.append(lab(16, 40, '열린 직무', cash=True, fs=11.5))
+    o.append(lab(16, bottom + 14, '좁은 과제', fs=11.5))
     o.append(lab(96, bottom + 32, 'Epoch 설문에서 사람들은 일에 AI를 쓸 때 아직 대부분 과제의 '
-                                  '일부에만 쓴다', fs=9.5))
+                                  '일부에만 쓴다', fs=11.5))
     o.append(lab(96, bottom + 48, '이것이 바뀌면 노동시장 충격도 모델 개발사의 매출 성장도 '
-                                  '달라진다', fs=9.5))
+                                  '달라진다', fs=11.5))
     return svg(bottom + 60, ''.join(o))
 
 
 def fig_eci_why():
     """점수가 다 같이 오르는 이유가 둘 중 어느 쪽이냐로 해석이 갈린다."""
-    o = [lab(16, 24, '이름상 다른 영역끼리도 벤치마크 점수가 크게 상관된다 — 왜?', fs=9.5)]
+    o = [lab(16, 24, '이름상 다른 영역끼리도 벤치마크 점수가 크게 상관된다 — 왜?', fs=11.5)]
     cols = [(8, '설명 A · 깊은 이유가 없다', ['회사들이 모든 출시에서 넓은 영역의',
                                      '개선을 보이려 애쓸 뿐이고,',
                                      '그 작업은 영역마다 독립적이다'], False),
@@ -1698,15 +1708,15 @@ def fig_eci_why():
     o.append(s_)
     o.append(arrow('cond', [(480, 44 + 79), (480, y)]))
     o.append(lab(16, y + h + 18, 'ECI 증가 추세는 AI 능력 성장이 빨라졌는지를 잡는 데 쓸모가 있다. '
-                                 '그 인자가', fs=9.5))
+                                 '그 인자가', fs=11.5))
     o.append(lab(16, y + h + 34, '실제 영향으로 곧장 옮겨지는 양이라고 말할 수 있으면, 가속을 해석하기 '
-                                 '더 쉬워진다', fs=9.5))
+                                 '더 쉬워진다', fs=11.5))
     return svg(y + h + 46, ''.join(o))
 
 
 def fig_bench_hard():
     """AI 연구개발을 벤치마크로 재기 어려운 이유 둘."""
-    o = [lab(16, 24, '⑤번 물음이 특히 어려운 이유', fs=9.5)]
+    o = [lab(16, 24, '⑤번 물음이 특히 어려운 이유', fs=11.5)]
     cols = [(8, '현실성', ['가장 중요한 AI 연구는 프런티어 회사',
                         '안에서 일어나고, 밖에서는 잘 안 보인다'], True),
             (326, '비용', ['현실적인 규모로 하려면 GPU가 많이 든다',

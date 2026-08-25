@@ -44,7 +44,7 @@ FIG_CSS = '''
   .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
           --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
           --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
-  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
           background:var(--fig-bg,rgba(127,127,127,.05))}
   .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
   .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
@@ -64,6 +64,9 @@ FIG_CSS = '''
   /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
      날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
      밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
   .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
                     --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
   .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
@@ -89,15 +92,15 @@ FIG_CSS = '''
                      marker-end:url(#fig-arrow)}
   .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
   /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
-  .uc-fig text.t-role{font-size:9.5px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  .uc-fig text.t-role{font-size:11.5px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
   /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
   .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
   .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
   .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
                    stroke-width:1;stroke-dasharray:3 3}
-  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
-  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
-  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:13px}
+  .uc-fig text.t-lab{font-size:14px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:12px;fill:var(--ink-3)}
   .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;

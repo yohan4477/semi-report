@@ -221,7 +221,7 @@ def fig_onet_sa():
 
     def fy(lg):
         return Y1 - (Y1 - Y0) * (lg - LO) / (HI - LO)
-    o = [ef.lab(16, 20, '「Situational Awareness」가 늘인 선 — 세로 자는 로그다', fs=9.5)]
+    o = [ef.lab(16, 20, '「Situational Awareness」가 늘인 선 — 세로 자는 로그다', fs=11.5)]
     o.append('<text x="16" y="42" class="t-sm" style="font-weight:800">'
              '실효 컴퓨트 (2023년 GPT-4 = 1)</text>')
     o.append(_axis([(X0, Y0 - 6), (X0, Y1), (X1 + 10, Y1)]))
@@ -252,13 +252,13 @@ def fig_onet_sa():
     y6 = fy(6.15)
     o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
              '자동화된 AI 연구자·엔지니어?</text>' % (X1 + 30, y6 + 4, BLUE))
-    o.append(ef.lab(96, 118, '2023년까지는 실측이다', fs=9.5))
-    o.append(ef.lab(96, 134, '거기서부터 5년을 늘였다', fs=9.5))
+    o.append(ef.lab(96, 118, '2023년까지는 실측이다', fs=11.5))
+    o.append(ef.lab(96, 134, '거기서부터 5년을 늘였다', fs=11.5))
     o.append(ef.lab(16, Y1 + 40, '실선은 2023년까지 실측, 점선은 거기서 늘인 5년, 회색 면은 '
-                                 '2028년 폭이', fs=9.5))
+                                 '2028년 폭이', fs=11.5))
     o.append(ef.lab(16, Y1 + 56, '10⁴배에서 10⁷배 사이라는 뜻이다. 얼마의 컴퓨트가 '
-                                 '세계 최고 연구자와', fs=9.5))
-    o.append(ef.lab(16, Y1 + 72, '맞먹는지를 대는 근거는 이 그림 어디에도 없다', fs=9.5))
+                                 '세계 최고 연구자와', fs=11.5))
+    o.append(ef.lab(16, Y1 + 72, '맞먹는지를 대는 근거는 이 그림 어디에도 없다', fs=11.5))
     return ef.svg(Y1 + 84, ''.join(o))
 
 
@@ -277,7 +277,7 @@ def fig_onet_sc():
 
     def fy(v):
         return Y1 - (Y1 - Y0) * v / VMAX
-    o = [ef.lab(16, 20, '초인 코더가 언제 오나 — AI 2027 이 시간지평을 늘여 뽑은 분포', fs=9.5)]
+    o = [ef.lab(16, 20, '초인 코더가 언제 오나 — AI 2027 이 시간지평을 늘여 뽑은 분포', fs=11.5)]
     o.append('<text x="16" y="42" class="t-sm" style="font-weight:800">확률밀도</text>')
     o.append(_axis([(X0, Y0 - 6), (X0, Y1), (X1 + 10, Y1)]))
     for v in (0.00, 0.05, 0.10, 0.15, 0.20):
@@ -300,7 +300,7 @@ def fig_onet_sc():
     o.append('<text x="%.1f" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
              '니콜라</text>' % (fx(2026.5) + 6, fy(0.2188) - 10, GOOD))
     o.append('<text x="%.1f" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
-             '엘라이</text>' % (fx(2027.9), fy(0.070) + 4, BLUE))
+             '엘라이</text>' % (fx(2027.9), fy(0.070) + 34, BLUE))
     # 오른쪽 — 원문 그림에 인쇄돼 있던 분위수를 그대로 옮긴 표
     ty = 60
     for name, p10, p50, p90, _m in SC_QUANT:
@@ -309,13 +309,13 @@ def fig_onet_sc():
             o.append('<text x="440" y="%d" class="t-sm t-axis">%s</text>' % (ty + 20 + i * 16, k))
             o.append('<text x="480" y="%d" class="t-sm">%s</text>' % (ty + 20 + i * 16, v))
         ty += 96
-    o.append(ef.lab(436, 250, '점은 50% 자리다', fs=9.5))
+    o.append(ef.lab(436, 250, '점은 50% 자리다', fs=11.5))
     o.append(ef.lab(16, Y1 + 40, '두 예보자가 「AI가 초인 코더가 되는 해」에 매긴 확률이다. '
-                                 '가운데값은 2027년으로', fs=9.5))
+                                 '가운데값은 2027년으로', fs=11.5))
     o.append(ef.lab(16, Y1 + 56, '거의 같은데 90% 자리가 2033년과 2039년으로 여섯 해 벌어진다 — '
-                                 '이 폭이', fs=9.5))
+                                 '이 폭이', fs=11.5))
     o.append(ef.lab(16, Y1 + 72, '벤치마크가 연구의 복잡성을 못 담는 데서 온다는 것이 이 글의 '
-                                 '문제 제기다', fs=9.5))
+                                 '문제 제기다', fs=11.5))
     return ef.svg(Y1 + 84, ''.join(o))
 
 
@@ -355,7 +355,7 @@ def fig_onet_tasks15():
 
     원문 그림이 목록이라 목록으로 둔다. 첫 줄만 붉게 두는 것은 원문의 주장 때문이다 —
     「AI 엔지니어가 하는 거의 모든 일이 여기 들어간다」."""
-    o = [ef.lab(16, 20, 'O*NET 「컴퓨터·정보 연구 과학자」에 적혀 있는 과제 15개', fs=9.5)]
+    o = [ef.lab(16, 20, 'O*NET 「컴퓨터·정보 연구 과학자」에 적혀 있는 과제 15개', fs=11.5)]
     y = 46
     for i, t in enumerate(TASKS15, 1):
         key = (i == 1)
@@ -372,7 +372,7 @@ def fig_onet_tasks15():
              '첫 줄이 이 데이터셋에서 가장 잘게 쪼갠 서술이다 — AI 엔지니어가 하는 거의 '
              '모든 일이 여기 든다</text>' % y)
     o.append(ef.lab(16, y + 16, 'O*NET 은 미국 경제의 직업 약 1,000개를 담은 표준 데이터셋인데, '
-                                '알갱이가 이만큼 굵다', fs=9.5))
+                                '알갱이가 이만큼 굵다', fs=11.5))
     return ef.svg(y + 28, ''.join(o))
 
 
@@ -398,7 +398,7 @@ def fig_onet_six():
     """6개 범주. 원문은 도넛인데 원 위에 글자를 눕히면 읽히지 않아 고리로 폈다.
 
     범주 이름·번호·예시 문장은 원문 그림에 적힌 그대로다."""
-    o = [ef.lab(16, 20, 'AI R&D 전용 O*NET 의 6개 범주 — 실험 하나가 도는 한 바퀴', fs=9.5)]
+    o = [ef.lab(16, 20, 'AI R&D 전용 O*NET 의 6개 범주 — 실험 하나가 도는 한 바퀴', fs=11.5)]
     LX, RX, BW = 8, 332, 300
     lcx, rcx = LX + BW // 2, RX + BW // 2
     ys = [56, 154, 252]
@@ -415,9 +415,9 @@ def fig_onet_six():
     o.append(ef.arrow('svc', [(lcx, bot), (lcx, bot + 26), (rcx, bot + 26), (rcx, bot)]))
     o.append(ef.arrow('svc', [(rcx, ys[0]), (rcx, 34), (lcx, 34), (lcx, ys[0])]))
     o.append(ef.lab(16, bot + 46, '결정에서 시작해 알리는 데서 끝나고, 알린 결과가 다음 결정으로 '
-                                  '돌아온다', fs=9.5))
+                                  '돌아온다', fs=11.5))
     o.append(ef.lab(16, bot + 62, '이 여섯 아래에 하위 범주가 있고, 그 아래에 60개 넘는 과제가 '
-                                  '적힌다', fs=9.5))
+                                  '적힌다', fs=11.5))
     return ef.svg(bot + 74, ''.join(o))
 
 
@@ -437,7 +437,7 @@ def fig_onet_sample():
 
     입력·출력 줄과 과제 문장, 그리고 과제 앞에 붙은 자동화 등급 숫자([4]·[3]·[2])까지
     원문 그림에 적힌 그대로 옮겼다."""
-    o = [ef.lab(16, 20, '과제 목록 한 쪽 — 6개 범주 가운데 4번 아래 하위 범주 하나', fs=9.5)]
+    o = [ef.lab(16, 20, '과제 목록 한 쪽 — 6개 범주 가운데 4번 아래 하위 범주 하나', fs=11.5)]
     y = 44
     s, h = ef.box(8, y, 626, '4. 돌린다 RUN',
                   ['입력 — 만들어 둔 학습 잡, 평가 묶음, 또는 돌아가는 시스템',
@@ -453,7 +453,7 @@ def fig_onet_sample():
     o.append(s)
     y += h + 28
     o.append('<text x="34" y="%d" class="t-role" text-anchor="middle">등급</text>' % (y - 8))
-    o.append(ef.lab(72, y - 8, '과제', fs=9.5))
+    o.append(ef.lab(72, y - 8, '과제', fs=11.5))
     for grade, name, ex in RUN_TASKS:
         s, h = ef.box(60, y, 574, name, [ex])
         o.append('<text x="34" y="%d" class="t-lab" text-anchor="middle">%s</text>'
@@ -461,9 +461,9 @@ def fig_onet_sample():
         o.append(s)
         y += h + 12
     o.append(ef.lab(16, y + 10, '왼쪽 숫자는 지금 AI 가 그 과제를 얼마나 대신하는지를 매긴 0~5 '
-                                '등급이다 — 4 는 이끈다,', fs=9.5))
+                                '등급이다 — 4 는 이끈다,', fs=11.5))
     o.append(ef.lab(16, y + 26, '3 은 협업한다, 2 는 거든다. 필자들이 매긴 값이고 주관적이라고 '
-                                '먼저 적어 두었다', fs=9.5))
+                                '먼저 적어 두었다', fs=11.5))
     return ef.svg(y + 38, ''.join(o))
 
 
@@ -474,18 +474,18 @@ def fig_onet_expect():
     원문은 세로로 긴 판인데 640px 가로에 맞추느라 자리를 다시 잡았다. 상자 이름
     여덟(초기화 모델 둘·모델 X·체크포인트 #0~#3·배포 모델)과 선 위 글자, 실선·점선의
     구분은 원문 그대로다. 원문에 없는 상자나 화살표는 넣지 않았다."""
-    o = [ef.lab(16, 20, '기대 — 두 칸이면 끝난다', fs=9.5)]
+    o = [ef.lab(16, 20, '기대 — 두 칸이면 끝난다', fs=11.5)]
     s1, h1 = ef.box(8, 32, 150, '초기화 모델', [])
     s2, _ = ef.box(482, 32, 150, '배포 모델', [])
     o += [s1, s2]
     my = 32 + h1 // 2
     o.append(ef.arrow('svc', [(158, my), (300, my)]))
-    o.append(ef.lab(186, my - 6, '사전학습', fs=9.5))
+    o.append(ef.lab(186, my - 6, '사전학습', fs=11.5))
     o.append('<circle cx="316" cy="%d" r="3" fill="var(--ink-3)"/>' % my)
     o.append(ef.arrow('svc', [(332, my), (482, my)]))
-    o.append(ef.lab(360, my - 6, '사후학습', fs=9.5))
+    o.append(ef.lab(360, my - 6, '사후학습', fs=11.5))
     o.append(_axis([(8, 92), (632, 92)]))
-    o.append(ef.lab(16, 112, '실제 — 어느 하나도 그 두 칸에 얌전히 들어가지 않는다', fs=9.5))
+    o.append(ef.lab(16, 112, '실제 — 어느 하나도 그 두 칸에 얌전히 들어가지 않는다', fs=11.5))
 
     B = 124                                   # 실제 판이 시작하는 자리
     o2 = []
@@ -496,67 +496,67 @@ def fig_onet_expect():
     spine = 62
     # 모델 X → 체크포인트 #0
     o2.append(ef.arrow('svc', [(265, B + 34), (265, B + 86)]))
-    o2.append(ef.lab(272, B + 56, '데이터 품질을 채점하도록', fs=9.5))
-    o2.append(ef.lab(272, B + 70, '파인튜닝한다', fs=9.5))
+    o2.append(ef.lab(272, B + 56, '데이터 품질을', fs=11.5))
+    o2.append(ef.lab(272, B + 70, '채점하도록 파인튜닝한다', fs=11.5))
     cp0, _ = ef.box(190, B + 86, 150, '체크포인트 #0', [])
     o2.append(cp0)
     # 체크포인트 #0 ⇢ 사전학습 데이터 거르기
     o2.append(ef.arrow('cond', [(190, B + 103), (70, B + 103), (70, B + 60), (66, B + 60)]))
-    o2.append(ef.lab(66, B + 118, '사전학습 데이터를 거른다', fs=9.5))
-    o2.append(ef.lab(68, B + 46, '사전학습', fs=9.5))
+    o2.append(ef.lab(70, B + 132, '사전학습 데이터를 거른다', fs=11.5))
+    o2.append(ef.lab(68, B + 46, '사전학습', fs=11.5))
     # 왼쪽 등뼈 — 초기화 모델에서 내려오며 세 번 갈린다
     o2.append(ef.arrow('svc', [(spine, B + 34), (spine, B + 150)]))
     o2.append('<circle cx="%d" cy="%d" r="3" fill="var(--ink-3)"/>' % (spine, B + 150))
     o2.append(ef.arrow('svc', [(spine, B + 168), (190, B + 168)]))
-    o2.append(ef.lab(96, B + 162, 'SFT + RL', fs=9.5))
+    o2.append(ef.lab(96, B + 162, 'SFT + RL', fs=11.5))
     cp1, _ = ef.box(190, B + 151, 150, '체크포인트 #1', [])
     o2.append(cp1)
     o2.append(ef.arrow('svc', [(spine, B + 150), (spine, B + 240)]))
-    o2.append(ef.lab(68, B + 200, '계속 사전학습', fs=9.5))
+    o2.append(ef.lab(68, B + 200, '계속 사전학습', fs=11.5))
     o2.append('<circle cx="%d" cy="%d" r="3" fill="var(--ink-3)"/>' % (spine, B + 240))
     o2.append(ef.arrow('svc', [(spine, B + 258), (190, B + 258)]))
-    o2.append(ef.lab(72, B + 252, 'SFT', fs=9.5))
+    o2.append(ef.lab(72, B + 252, 'SFT', fs=11.5))
     o2.append('<circle cx="126" cy="%d" r="3" fill="var(--ink-3)"/>' % (B + 258))
-    o2.append(ef.lab(160, B + 252, 'RL', fs=9.5))
+    o2.append(ef.lab(160, B + 252, 'RL', fs=11.5))
     cp3, _ = ef.box(190, B + 241, 150, '체크포인트 #3', [])
     o2.append(cp3)
     o2.append(ef.arrow('svc', [(spine, B + 240), (spine, B + 330), (190, B + 330)]))
-    o2.append(ef.lab(68, B + 294, 'RL', fs=9.5))
+    o2.append(ef.lab(68, B + 294, 'RL', fs=11.5))
     cp2, _ = ef.box(190, B + 313, 150, '체크포인트 #2', [])
     o2.append(cp2)
     # 체크포인트 #1 ⇢ RL 검증자
     o2.append(ef.arrow('cond', [(265, B + 185), (265, B + 220), (145, B + 220),
                                 (145, B + 254)]))
-    o2.append(ef.lab(155, B + 214, 'RL 검증자로 쓴다', fs=9.5))
+    o2.append(ef.lab(155, B + 214, 'RL 검증자로 쓴다', fs=11.5))
     # 체크포인트 #2 ⇢ 합성 SFT 데이터
     o2.append(ef.arrow('cond', [(265, B + 313), (265, B + 294), (100, B + 294),
                                 (100, B + 262)]))
-    o2.append(ef.lab(108, B + 288, '합성 SFT 데이터를 만든다', fs=9.5))
+    o2.append(ef.lab(108, B + 288, '합성 SFT 데이터를 만든다', fs=11.5))
     # 체크포인트 #3 ⇢ 교사
     o2.append(ef.arrow('cond', [(340, B + 258), (380, B + 258), (380, B + 80),
                                 (541, B + 80)]))
-    o2.append(ef.lab(386, B + 74, '교사', fs=9.5))
+    o2.append(ef.lab(430, B + 74, '교사', fs=11.5))
     # 오른쪽 — 증류하고 도메인별 RL 을 붙였다가 가중치를 병합한다
     o2.append(ef.arrow('svc', [(545, B + 34), (545, B + 96)]))
-    o2.append(ef.lab(538, B + 52, '교사 체크포인트 #3 에서', anchor='end', fs=9.5))
-    o2.append(ef.lab(538, B + 66, '증류한다', anchor='end', fs=9.5))
+    o2.append(ef.lab(538, B + 52, '교사 체크포인트 #3 에서', anchor='end', fs=11.5))
+    o2.append(ef.lab(538, B + 66, '증류한다', anchor='end', fs=11.5))
     o2.append('<circle cx="545" cy="%d" r="3" fill="var(--ink-3)"/>' % (B + 96))
     o2.append(ef.arrow('svc', [(545, B + 96), (482, B + 96), (482, B + 150)]))
     o2.append(ef.arrow('svc', [(545, B + 96), (608, B + 96), (608, B + 150)]))
-    o2.append(ef.lab(476, B + 122, 'RL 도메인 A', anchor='end', fs=9.5))
-    o2.append(ef.lab(604, B + 122, 'RL 도메인 B', anchor='end', fs=9.5))
+    o2.append(ef.lab(476, B + 122, 'RL 도메인 A', anchor='end', fs=11.5))
+    o2.append(ef.lab(604, B + 122, 'RL 도메인 B', anchor='end', fs=11.5))
     o2.append(ef.arrow('cond', [(482, B + 150), (608, B + 150)]))
-    o2.append(ef.lab(508, B + 144, '가중치 병합', fs=9.5))
+    o2.append(ef.lab(508, B + 144, '가중치 병합', fs=11.5))
     o2.append(ef.arrow('svc', [(545, B + 150), (545, B + 182)]))
     dep, hd = ef.box(470, B + 182, 150, '배포 모델', [])
     o2.append(dep)
     bot = B + 347
     o.append(''.join(o2))
     o.append(ef.lab(16, bot + 22, '실선은 학습 단계, 점선은 다른 모델이 만들어 준 것을 끌어다 '
-                                  '쓰는 자리다', fs=9.5))
+                                  '쓰는 자리다', fs=11.5))
     o.append(ef.lab(16, bot + 38, '「실험 코드 쓰기」 같은 과제가 이 여러 자리에 되풀이돼서, '
-                                  '사전학습·사후학습으로', fs=9.5))
-    o.append(ef.lab(16, bot + 54, '가르는 분류는 접었다', fs=9.5))
+                                  '사전학습·사후학습으로', fs=11.5))
+    o.append(ef.lab(16, bot + 54, '가르는 분류는 접었다', fs=11.5))
     return ef.svg(bot + 66, ''.join(o))
 
 

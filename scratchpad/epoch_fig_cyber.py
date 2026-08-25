@@ -239,7 +239,7 @@ def _key(x, y, color, text):
     """색 범례 한 칸 — 네모와 글자. 흐름도 범례가 아니라 계열 색이다."""
     return ('<rect x="%d" y="%d" width="14" height="11" rx="2" fill="%s" '
             'stroke="var(--ink-3)" stroke-width="1"/>' % (x, y - 9, color)
-            + lab(x + 20, y, text, fs=9.5))
+            + lab(x + 20, y, text, fs=11.5))
 
 
 def _axline(x1, y1, x2, y2):
@@ -294,7 +294,7 @@ def fig_cve_spike():
               '치명도 같은 두 달에 55건 → 96건 → 141건으로 늘었다',
               '공개 절차와 등급 기준, 공개 주기가 기업마다 크게 달라 회사끼리 그대로 견주지는 못한다',
               '대상은 AWS·아파치·애플·시스코·구글·리눅스·마이크로소프트·모질라·엔비디아 등 21곳이다'):
-        o.append(lab(16, ny, s, fs=9.5))
+        o.append(lab(16, ny, s, fs=11.5))
         ny += 16
     return svg(ny - 4, ''.join(o))
 
@@ -333,7 +333,7 @@ def fig_cyber_prog():
              % (px(ta), py(tav), px(tb), py(tbv)))
     o.append('<path d="M210 295 L210 264" stroke="var(--ink-3)" stroke-width="1" '
              'fill="none"/>')
-    o.append(lab(180, 306, '미토스 프리뷰 이전 추세', fs=9.5))
+    o.append(lab(180, 306, '미토스 프리뷰 이전 추세', fs=11.5))
     for m, v in CP_GRAY:
         o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="%s" stroke="var(--ink-3)" '
                  'stroke-width="1"/>' % (px(m), py(v), GRAY))
@@ -365,7 +365,7 @@ def fig_cyber_prog():
               '셋 다 같은 시점 추세선 값보다 9점 넘게 높다',
               'GLM-5.2는 점이 아니라 구간이다. Irregular과 영국 AISI의 발언을 근거로',
               'Opus 4.5(154.0)와 Opus 4.6(159.4) 사이로 원문이 어림한 값이다'):
-        o.append(lab(16, ny, s, fs=9.5))
+        o.append(lab(16, ny, s, fs=11.5))
         ny += 16
     return svg(ny - 4, ''.join(o))
 

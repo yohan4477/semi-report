@@ -44,10 +44,10 @@ def fontsize(at):
         return float(m.group(1))
     cls = attr(at, 'class', '') or ''
     if 't-lab' in cls:
-        return 11.5
+        return 14.0
     if 't-role' in cls:
-        return 9.5
-    return 10.0
+        return 11.5
+    return 12.0
 
 
 def textboxes(svg):
