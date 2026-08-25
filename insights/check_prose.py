@@ -94,6 +94,7 @@ def check_density(text, where, actor=True):
             add('WARN', where, 'P11',
                 '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
     check_vague(text, where)
+    check_money(text, where)
     check_naming(text, where)
     check_figure(text, where)
     check_dead(text, where)
@@ -190,6 +191,21 @@ INGEST = re.compile(r'(?<![가-힣])(먹|마시)으?면')
 # 정도만 말하고 값을 안 대는 주장. 같은 문장에 숫자가 있으면 통과시킨다.
 DEGREE = re.compile(r'(훨씬|크게|상당히|대폭|급격히)\s*[가-힣]{0,4}?'
                     r'(늘|줄|올라|떨어|커지|작아지|높아|낮아|많아|적어)')
+
+
+# P18 — 「돈·자금·신용을 대다」. 매끄럽게 읽히는데 무엇을 하는지가 빠진다. 빌려주는 것인지,
+# 내는 것인지, 부도 뒤에만 떠안겠다고 약속만 하는 것인지가 전부 「댄다」로 뭉개진다.
+# 2026-08-25에 Epoch 파이낸싱 도해가 다섯 칸 모두 「…을 댄다」로 나가서 사용자가
+# 「뭘 댄다는 거야」로 잡아냈다. 「근거를 대다」·「이름을 대다」는 대상이 아니다 —
+# 그건 밝힌다는 뜻이라 오히려 구체적이다.
+MONEY_VAGUE = re.compile(r'(자금|돈|현금|신용|비용|자본|실탄)(?:을|를)\s*대(?:다|고|는|며|ㄴ다|어|었|야)')
+
+
+def check_money(text, where):
+    """P18 — 돈을 「댄다」로 뭉갠 자리."""
+    for m in MONEY_VAGUE.finditer(text or ''):
+        add('WARN', where, 'P18',
+            '「%s」 — 무엇을 하는지로 쓴다: 빌려준다·낸다·건다·마련한다' % m.group(0))
 
 
 def check_vague(text, where):
