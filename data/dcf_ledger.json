@@ -1,0 +1,101 @@
+{
+ "_읽는 법": "DCF 대장. 노트 제목에서 뽑고 원문과 대조한 값만 둔다. 새 평가 편이 들어오면 rows에 한 줄 더한다.",
+ "rows": [
+  {
+   "date": "2026-05-06",
+   "company": "현대모비스",
+   "value": "650,361원",
+   "gap": 50.7,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260506] DCF 내재가치 650,361원, 주가보다 50.7% 위 - 현대모비스 - 엘곰.md"
+  },
+  {
+   "date": "2026-06-05",
+   "company": "효성중공업",
+   "value": "1,209,445원",
+   "gap": 64.8,
+   "dir": "아래",
+   "src": "content/understanding/회계사/[260605] DCF 내재가치 1,209,445원, 주가보다 64.8% 아래 - 효성중공업 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-01",
+   "company": "LS일렉트릭",
+   "value": "108,915원",
+   "gap": 41.1,
+   "dir": "아래",
+   "src": "content/understanding/회계사/[260801] DCF 내재가치 108,915원, 주가보다 41.1% 아래 - LS일렉트릭 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-04",
+   "company": "삼성SDS",
+   "value": "26만원",
+   "gap": 19.2,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260804] DCF 내재가치 26만원, 주가보다 19.2% 위 - 삼성SDS - 엘곰.md"
+  },
+  {
+   "date": "2026-08-09",
+   "company": "주성엔지니어링",
+   "value": "51,400원",
+   "gap": 59.8,
+   "dir": "아래",
+   "src": "content/understanding/회계사/[260809] DCF 내재가치 51,400원, 주가보다 59.8% 아래 - 주성엔지니어링 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-09",
+   "company": "휴젤",
+   "value": "58만원",
+   "gap": 113.0,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260809] DCF 내재가치 58만원, 주가보다 113% 위 - 휴젤 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-11",
+   "company": "오리온",
+   "value": "38만원",
+   "gap": 180.8,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-12",
+   "company": "코스맥스",
+   "value": "62만원",
+   "gap": 169.0,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260812] DCF 내재가치 62만원, 주가보다 169% 위 - 코스맥스 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-17",
+   "company": "SK하이닉스",
+   "value": "188만원",
+   "gap": 14.3,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260817] DCF 내재가치 188만원, 주가보다 14.3% 위 - SK하이닉스 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-19",
+   "company": "HD현대일렉트릭",
+   "value": "55.8만원",
+   "gap": 25.9,
+   "dir": "아래",
+   "src": "content/understanding/회계사/[260819] DCF 내재가치 55.8만원, 주가보다 25.9% 아래 - HD현대일렉트릭 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-22",
+   "company": "효성중공업",
+   "value": "1,894,539원",
+   "gap": 30.4,
+   "dir": "아래",
+   "src": "content/understanding/회계사/[260822] DCF 내재가치 1,894,539원, 주가보다 30.4% 아래 - 효성중공업 - 엘곰.md"
+  },
+  {
+   "date": "2026-08-23",
+   "company": "현대모비스",
+   "value": "518,300원",
+   "gap": 4.5,
+   "dir": "위",
+   "src": "content/understanding/회계사/[260823] DCF 내재가치 518,300원, 주가보다 4.5% 위 - 현대모비스 - 엘곰.md"
+  }
+ ]
+}

@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 import _figs_0825 as figs0825
 import _fig_rates as fig_rates
+import _fig_dcf as fig_dcf
 import driver_map
 import driver_map_data_hynix as dmd_hynix
 import driver_map_data_cosmax as dmd_cosmax
@@ -179,6 +180,35 @@ SEC_MKT = ('sec-mkt', '47', '증시 시황',
 
 
 CARDS = [{
+    'section': SEC_ETC,
+    'topic': ('market', 'DCF 대장 · 누적 기록'),
+    'title': '내재가치가 주가에서 얼마나 떨어져 있나 — 평가 열두 편 대장',
+    'figs': [fig_dcf.FIG],
+    'gain': '회사별 카드에 흩어져 있던 평가 결과를 한 줄에 놓고 본다. 같은 회사를 다시 계산했을 때 값이 어디로 옮겨갔는지도 여기서 드러난다.',
+    'meta': ['엘곰 <b>회계사</b> 여러 편 종합', '갱신 2026-08-25', '누적 카드 · 새 평가마다 갱신', '네이버 프리미엄'],
+    'oneliner': ('평가 한 편은 그 회사 카드 안에만 남는다. 이 카드는 결과만 뽑아 주가와의 거리 순으로 세운다. '
+                 '값은 전부 원문이 낸 것이고 여기서 다시 계산하지 않는다. 눈금도 이 대장에 실제로 적힌 최저·최고 '
+                 '두 값만 세웠다.'),
+    'points': [
+        '<b>같은 회사를 두 번 계산한 곳이 둘이다.</b> 현대모비스는 주가보다 <b>50.7% 위</b>(2026-05-06)에서 <b>4.5% 위</b>(2026-08-23)로 내려왔고, 효성중공업은 <b>64.8% 아래</b>(2026-06-05)에서 <b>30.4% 아래</b>(2026-08-22)로 올라왔다. 둘 다 주가 쪽으로 붙은 셈인데, 값이 움직인 이유는 계산 가정과 주가가 같이 바뀐 결과라 한쪽으로 돌릴 수 없다.',
+        '<b>괴리 폭이 자릿수로 갈린다.</b> 오리온 <b>180.8% 위</b>부터 효성중공업 <b>30.4% 아래</b>까지다. 같은 필자가 같은 방법으로 냈는데 이만큼 벌어진다는 것은, 방법이 아니라 넣은 가정이 값을 정한다는 뜻이다.',
+        '<b>「위」와 「아래」는 방향만 같고 성격이 다르다.</b> 주가보다 위라는 것은 계산이 싸다고 본다는 뜻이고, 아래라는 것은 지금 주가가 계산으로는 설명되지 않는다는 뜻이다. 뒤쪽은 무엇을 더 얹어야 주가가 서는지를 원문이 따로 역산해 둔 편이 많다.',
+        '<b>비교 시점이 편마다 다르다.</b> 종가·장중·장전 가운데 무엇과 견줬는지가 편마다 갈려, 이 대장의 괴리율도 같은 잣대로 잰 값이 아니다. 회사별 타일의 배지 툴팁에 그 기준이 적혀 있다.',
+        '<b>갱신 방법.</b> 새 평가 편이 들어오면 <code>data/dcf_ledger.json</code>의 rows에 평가일·회사·값·괴리·원문 경로를 한 줄 더하고 생성기를 다시 돌린다. 그림과 표가 같이 갱신된다.',
+    ],
+    'table': fig_dcf.table(),
+    'stats': [('12편', '이 대장에 든 평가. 8월분 열 편과 재계산된 두 회사의 이전 값'),
+              ('+180.8%', '가장 큰 괴리. 오리온, 2026-08-11'),
+              ('−64.8% → −30.4%', '효성중공업이 두 번째 계산에서 좁힌 거리'),
+              ('+50.7% → +4.5%', '현대모비스가 두 번째 계산에서 좁힌 거리')],
+    'quote': '시장가격이 이론적 적정가치에 비교적 근접해 있다',
+    'clash': [('같은 잣대가 아니다', '괴리율의 비교 대상 주가가 편마다 종가·장중·장전으로 갈린다. 순서를 매길 때 이 차이가 섞여 들어간다.'),
+              ('값이 움직인 이유를 이 대장은 모른다', '재계산에서 값이 바뀐 것은 가정이 바뀐 결과일 수도, 주가가 움직인 결과일 수도 있다. 어느 쪽이 얼마인지는 두 원문을 나란히 놓고 읽어야 나온다.'),
+              ('역산 편은 빠져 있다', '값을 내지 않고 시총이 요구하는 성장률을 되짚는 편(샌디스크·기아 등)은 괴리율이 없어 이 대장에 들어가지 않는다. 그 편들을 빼고 세면 화면이 「값을 낸 편」 쪽으로 기운다.')],
+    'note': '재료는 <code>data/dcf_ledger.json</code>에 있고 값은 전부 원문이 낸 것이다. 평가 시점 기준이며 투자 판단 근거가 아니다.',
+    'links': [('📄 현대모비스 8월 편', blob(SUM + '[260823] DCF 내재가치 518,300원, 주가보다 4.5% 위 - 현대모비스 - 엘곰.md'), 'secondary'),
+              ('📄 효성중공업 8월 편', blob(SUM + '[260822] DCF 내재가치 1,894,539원, 주가보다 30.4% 아래 - 효성중공업 - 엘곰.md'), 'secondary')],
+}, {
     'section': SEC_ETC,
     'topic': ('market', 'DCF 방법론 · 성장률 하강 경로'),
     'title': '성장률은 한 번에 꺾지 않고 서서히 낮춘다',
@@ -4372,7 +4402,7 @@ CARDS = [{
 }]
 
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
-assert len(CARDS) == 112, '카드 수가 달라졌다'
+assert len(CARDS) == 113, '카드 수가 달라졌다'
 
 
 
@@ -5196,7 +5226,7 @@ if __name__ == '__main__':
     _log, _logn = log_html()
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               newest_first=True,
-              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + fig_rates.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
                                      + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),
