@@ -3360,6 +3360,17 @@
    "hash": "12448f0da22c"
   },
   {
+   "id": "und:회계사:매파-회의록이-나온-날-달러가-072-내렸다-FOMC-회의록-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-24",
+   "path": "content/understanding/회계사/[260824] 매파 회의록이 나온 날 달러가 0.72% 내렸다 - FOMC 회의록 - 엘곰.md",
+   "hash": "624895c25c33"
+  },
+  {
    "id": "und:회계사:멀티플을-가르는-것은-성장률이-아니라-이익-지속기간-삼성전자SK하이닉스-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3919,6 +3930,17 @@
    "date": "2026-06-22",
    "path": "content/understanding/회계사/[260622] 한국 전력기기 3사 시총 2.6배, PER 프리미엄은 30~60% - 엘곰.md",
    "hash": "eea6df19cdd6"
+  },
+  {
+   "id": "und:회계사:한국은-전날-이미-312-빠졌다-마이크론-58를-오늘-또-반영할-필요는-없다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-25",
+   "path": "content/understanding/회계사/[260825] 한국은 전날 이미 3.12% 빠졌다, 마이크론 -5.8%를 오늘 또 반영할 필요는 없다 - 시황 - 엘곰.md",
+   "hash": "7eabaaf4f88a"
   },
   {
    "id": "und:회계사:해맥의-매파-발언-9월-인상-확률-517-한미-금리차-최대-125p-엘곰",
