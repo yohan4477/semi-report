@@ -38,6 +38,12 @@ RECT = re.compile(r'<rect x="(-?[\d.]+)" y="(-?[\d.]+)" width="([\d.]+)" height=
 MOVE = re.compile(r'[ML](-?[\d.]+)[ ,](-?[\d.]+)')
 
 
+LINE = re.compile('<line x1="(-?[0-9.]+)" y1="(-?[0-9.]+)" x2="(-?[0-9.]+)" y2="(-?[0-9.]+)"')
+# AI Engineer 도해는 글자가 19px다(다른 장은 9px 어림). 한 벌로 재면 폭을 절반으로
+# 어림해 겹침을 놓친다. 글자 붓 이름으로 골라 잰다.
+CLASS_CH = {"fig-b": 19.5, "fig-st": 19.5, "fig-hd": 15.0, "fig-e": 15.0, "fig-lg": 15.0}
+
+
 def boxes(svg):
     """글자 하나하나의 상자. (x0, x1, y0, y1, 글)"""
     out = []
@@ -45,9 +51,14 @@ def boxes(svg):
         x, y, attr, txt = float(m.group(1)), float(m.group(2)), m.group(3), m.group(4)
         if not txt.strip():
             continue
-        w = len(txt) * CH
+        ch, asc, desc = CH, ASC, DESC
+        for cls, cw in CLASS_CH.items():
+            if 'class="' + cls + '"' in attr:
+                ch, asc, desc = cw, cw * 0.77, cw * 0.3
+                break
+        w = len(txt) * ch
         x0 = x - w / 2 if 'middle' in attr else (x - w if 'end' in attr else x)
-        out.append((x0, x0 + w, y - ASC, y + DESC, txt))
+        out.append((x0, x0 + w, y - asc, y + desc, txt))
     return out
 
 
@@ -72,6 +83,12 @@ def segments(svg):
         for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
             if abs(y1 - y2) < 0.5 or abs(x1 - x2) < 0.5:
                 out.append((min(x1, x2), max(x1, x2), min(y1, y2), max(y1, y2)))
+    # <line>도 센다. AI Engineer 도해는 화살표와 생명선을 전부 <line>으로 그려서
+    # <path>만 보던 동안 선이 글자를 가로질러도 통과했다.
+    for m in LINE.finditer(svg):
+        x1, y1, x2, y2 = (float(v) for v in m.groups())
+        if abs(y1 - y2) < 0.5 or abs(x1 - x2) < 0.5:
+            out.append((min(x1, x2), max(x1, x2), min(y1, y2), max(y1, y2)))
     return out
 
 
@@ -143,6 +160,13 @@ def all_figs():
         # 카드가 아니라 보고서 층에 실린 도해. CARDS만 걷으면 검사를 통째로 빠져나간다 —
         # 4장짜리 에이전트 보고서가 그렇게 한 번도 안 걸러질 뻔했다(2026-08-24).
         out += [(name, f) for f in getattr(mod, 'REPORT_FIGS', ())]
+    # AI Engineer 도해는 생성기가 아니라 aie_figs가 들고 있고, 카드가 아니라
+    # 글의 프런트매터가 어느 그림을 부를지 정한다. GENERATORS로는 안 걸린다.
+    aie = importlib.import_module('aie_figs')
+    for vid, items in getattr(aie, 'FIGS', {}).items():
+        out += [(vid, f) for f in items]
+    for vid, named in getattr(aie, 'RFIGS', {}).items():
+        out += [(vid, (0,) + f) for f in named.values()]
     return out
 
 

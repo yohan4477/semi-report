@@ -420,7 +420,7 @@ def post_html(items, figs=()):
 def report_html(blocks):
     """보고서 형식 본문 — 번호글 대신 절 제목·문단·그림이 섞여 흐른다.
 
-    blocks = [('h', 제목) | ('p', 문단) | ('fig', (제목, svg, 캡션))].
+    blocks = [('h', 제목) | ('p', 문단) | ('fig', (제목, svg, 캡션)) | ('tbl', 표)].
     번호글은 한 생각에 번호 하나라 논지가 앞뒤로 걸리는 발표에는 맞았지만,
     구조를 설명하는 발표는 「그림을 보고 그 아래 설명을 읽는」 순서가 더 빨리 읽힌다.
     """
@@ -430,6 +430,8 @@ def report_html(blocks):
             h.append('<h3>%s</h3>' % val)
         elif kind == 'fig':
             h.append(fig_html(val))
+        elif kind == 'tbl':
+            h.append(tbl_html(val))
         else:
             h.append('<p>%s</p>' % val)
     h.append('</div>')

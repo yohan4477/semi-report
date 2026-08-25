@@ -109,6 +109,32 @@ def parse(path):
 H_RE = re.compile(r'^##\s+(.*)$')
 FIG_RE = re.compile(r'^\[\[fig:([a-z0-9_-]+)\]\]$')
 BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
+BOLD_TO = '<b>\1</b>'
+
+
+def _table(para):
+    """마크다운 표 한 덩어리 → (제목, 머리, 행들).
+
+    목록을 상자로 그리지 않기로 하면서 생긴 자리다. 이름과 한 줄 설명이 짝지어
+    늘어서는 것은 그림이 아니라 표다 — 도해는 무엇을 주고 무엇을 받는지가 보일 때만 쓴다.
+    """
+    cap, head, rows = '', [], []
+    for line in para.strip().splitlines():
+        line = line.strip()
+        if line.startswith('표:'):
+            cap = esc(line[2:].strip())
+            continue
+        if not line.startswith('|'):
+            continue
+        cells = [BOLD_RE.sub(BOLD_TO, esc(c.strip())) for c in line.strip('|').split('|')]
+        if all(set(c) <= set('-: ') for c in cells):
+            continue            # |---|---| 구분줄
+        if head:
+            rows.append(cells)
+        else:
+            head = cells
+    assert head and rows, '표에 머리나 행이 없다: %r' % para[:40]
+    return cap, head, rows
 
 
 def parse_report(path, vid):
@@ -128,6 +154,9 @@ def parse_report(path, vid):
         m = VERDICT_RE.match(t)
         if m:
             verdict = esc(m.group(1))
+            continue
+        if para.lstrip().startswith('|') or para.lstrip().startswith('표:'):
+            blocks.append(('tbl', _table(para)))
             continue
         m = H_RE.match(t)
         if m:
