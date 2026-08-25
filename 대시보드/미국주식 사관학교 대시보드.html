@@ -448,28 +448,14 @@
      검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
   .stile[hidden]{display:none}
   .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
-  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-           border:1px dashed var(--line);border-radius:999px;background:transparent;
-           color:var(--ink-3)}
-  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
   .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
-  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;
-          background:var(--card,var(--surface,#fff));color:var(--ink)}
-  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
-     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
   .secsw{display:block;margin:14px 0 4px}
-  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
   .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
-  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
-         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
-  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
      같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
      인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
@@ -515,7 +501,11 @@
 
   /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
      색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
-  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
           background:var(--fig-bg,rgba(127,127,127,.05))}
   .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
   .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
@@ -531,6 +521,20 @@
   .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
   /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
   .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
@@ -539,14 +543,35 @@
   .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
-  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
-  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
-  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
   .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
-            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 
   .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
@@ -587,7 +612,7 @@
   .uc-fig .bad-box  { fill:var(--fig-bad-bg,rgba(194,80,74,.12));
     stroke:var(--fig-bad,#c2504a); stroke-width:1.4; }
 </style>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
 <div class="wrap">
   <header>
     <p class="eyebrow">카레라 — 제3자 해설 아카이브</p>
@@ -596,7 +621,7 @@
 
   <details class="intro" open><summary><span class="in-t">처음 오셨다면</span><span class="in-s">카드 59장을 여섯 단계로</span></summary><div class="in-b"><p class="in-lede">카드 59장을 어디서부터 읽을지 정해 두었습니다. 앞 두 단계는 매일 나오는 숫자와 시장 움직임이고, 3~4단계는 그 돈이 AI와 반도체로 흘러가는 경로입니다. 마지막은 종목을 고르는 틀입니다. 제목을 누르면 그 카드가 열립니다.</p><div class="csteps"><div class="cstep"><p class="cs-h"><span class="cs-n">1</span>매일 나오는 숫자부터</p><p class="cs-why">환율과 물가와 금리다. 뒤에 나오는 종목 이야기가 결국 이 숫자 위에서 움직인다.</p><div class="course"><ol><li><a class="kin-link" href="#card-원달러-10-급락-걷힌-것은-웃돈이지-몸통이-아니다">원달러 10% 급락, 걷힌 것은 웃돈이지 몸통이 아니다</a></li><li><a class="kin-link" href="#card-7월-고용은-무너진-게-아니라-왜곡됐다-그래서-CPI는-격차로-읽는다">7월 고용은 무너진 게 아니라 왜곡됐다, 그래서 CPI는 격차로 읽는다</a></li><li><a class="kin-link" href="#card-7월-물가는-유가가-눌러-잡힌-것이고-매달-반드시-내는-항목은-전부-올랐다">7월 물가는 유가가 눌러 잡힌 것이고, 매달 반드시 내는 항목은 전부 올랐다</a></li><li><a class="kin-link" href="#card-인상-소나기를-정통으로-맞는-자리는-장기채가-아니라-중기채다">인상 소나기를 정통으로 맞는 자리는 장기채가 아니라 중기채다</a></li><li><a class="kin-link" href="#card-기준금리는-내렸는데-10년물은-그대로다-물타기는-TLT가-아니라-단기채로">기준금리는 내렸는데 10년물은 그대로다 — 물타기는 TLT가 아니라 단기채로</a></li><li><a class="kin-link" href="#card-인하-논쟁-물가가-안-죽었다-대-안-내리면-경기가-먼저-깨진다">인하 논쟁 — 물가가 안 죽었다 대 안 내리면 경기가 먼저 깨진다</a></li><li><a class="kin-link" href="#card-같은-25bp인데-효과가-다르다-한국은-올리면-크고-일본은-올려도-작다">같은 25bp인데 효과가 다르다 — 한국은 올리면 크고 일본은 올려도 작다</a></li><li><a class="kin-link" href="#card-금값-4-200달러-잣대를-바꾸면-비싼-값이-아니다">금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다</a></li><li><a class="kin-link" href="#card-재무부가-되사기를-두-배로-늘렸는데-하루-만에-되돌아왔다">재무부가 되사기를 두 배로 늘렸는데 하루 만에 되돌아왔다</a></li><li><a class="kin-link" href="#card-SK하이닉스-미국-상장에서-재평가의-발목을-잡는-건-환율이다">SK하이닉스 미국 상장에서 재평가의 발목을 잡는 건 환율이다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">2</span>시장이 왜 이렇게 움직였나</p><p class="cs-why">누가 사고 누가 파는지다. 지수를 움직인 것이 실적이 아닐 때가 많다.</p><div class="course"><ol><li><a class="kin-link" href="#card-내부자는-21년-만에-가장-안-사는데-기관은-다시-기술주로-갔다">내부자는 21년 만에 가장 안 사는데 기관은 다시 기술주로 갔다</a></li><li><a class="kin-link" href="#card-숏커버링-연료는-6월에-다-썼고-AI는-결과에서-원인이-됐다">숏커버링 연료는 6월에 다 썼고, AI는 결과에서 원인이 됐다</a></li><li><a class="kin-link" href="#card-한국-반도체가-미국-반도체의-잣대가-됐다">한국 반도체가 미국 반도체의 잣대가 됐다</a></li><li><a class="kin-link" href="#card-논리적으로-반대인-두-베팅이-동시에-맞았던-이유">논리적으로 반대인 두 베팅이 동시에 맞았던 이유</a></li><li><a class="kin-link" href="#card-국민연금-매도폭탄은-국채로-흡수된다">국민연금 매도폭탄은 국채로 흡수된다</a></li><li><a class="kin-link" href="#card-무엇으로-찌르든-터졌을-풍선">무엇으로 찌르든 터졌을 풍선</a></li><li><a class="kin-link" href="#card-스페이스X-상장이-테슬라에서-빼앗는-건-실적이-아니라-희소성이다">스페이스X 상장이 테슬라에서 빼앗는 건 실적이 아니라 희소성이다</a></li><li><a class="kin-link" href="#card-상장이-지수를-흔드는-자리는-공모가-아니라-인덱스의-강제-매수다">상장이 지수를 흔드는 자리는 공모가 아니라 인덱스의 강제 매수다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">3</span>AI에 돈이 어떻게 도나</p><p class="cs-why">누구 돈으로 도는지, 그 고리가 어디서 끊기는지다. 이 회차의 가장 큰 논쟁이 여기 있다.</p><div class="course"><ol><li><a class="kin-link" href="#card-AI-관련주-최대-리스크는-순환금융-그-고리-밖에-있는-기업들">AI 관련주 최대 리스크는 순환금융, 그 고리 밖에 있는 기업들</a></li><li><a class="kin-link" href="#card-마이클-버리-반도체에서-순환금융으로-포지션을-옮겼다">마이클 버리, 반도체에서 순환금융으로 포지션을 옮겼다</a></li><li><a class="kin-link" href="#card-벌어서-40원-쓰던-것이-60원이-된다-빌려-쓴-쪽만-현금이-는다">벌어서 40원 쓰던 것이 60원이 된다, 빌려 쓴 쪽만 현금이 는다</a></li><li><a class="kin-link" href="#card-오픈AI가-앤트로픽에-매출로-역전당했다-처음부터-어디를-팠느냐의-차이">오픈AI가 앤트로픽에 매출로 역전당했다, 처음부터 어디를 팠느냐의 차이</a></li><li><a class="kin-link" href="#card-사과가-안-팔리는-것과-사과-가게가-하나-는-것은-다르다">사과가 안 팔리는 것과 사과 가게가 하나 는 것은 다르다</a></li><li><a class="kin-link" href="#card-돈이-없어서가-아니라-AI-컴퓨팅이-모자라서다">돈이 없어서가 아니라 AI 컴퓨팅이 모자라서다</a></li><li><a class="kin-link" href="#card-브로드컴이-빠진-건-수요-곡선이-아니라-가격표였다">브로드컴이 빠진 건 수요 곡선이 아니라 가격표였다</a></li><li><a class="kin-link" href="#card-S-1을-열면-매출은-스타링크인데-돈은-전부-AI로-흐른다">S-1을 열면 매출은 스타링크인데 돈은 전부 AI로 흐른다</a></li><li><a class="kin-link" href="#card-성공한-작업당-비용이-새-지표가-된다">성공한 작업당 비용이 새 지표가 된다</a></li><li><a class="kin-link" href="#card-코딩에서-밀린-구글이-실은-유튜브로-다음-판을-준비한다">코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다</a></li><li><a class="kin-link" href="#card-클로드가-90분-만에-전-세계에서-꺼졌다">클로드가 90분 만에 전 세계에서 꺼졌다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">4</span>반도체와 전기</p><p class="cs-why">그 돈이 실제로 도착하는 곳이다. 메모리와 전력에서 누가 돈을 버는지 따라간다.</p><div class="course"><ol><li><a class="kin-link" href="#card-엔비디아와-AMD의-메모리-치킨게임-누가-이겨도-HBM이-남는다">엔비디아와 AMD의 메모리 치킨게임, 누가 이겨도 HBM이 남는다</a></li><li><a class="kin-link" href="#card-SK하이닉스는-HBM-1등이라-상승분을-덜-받았다">SK하이닉스는 HBM 1등이라 상승분을 덜 받았다</a></li><li><a class="kin-link" href="#card-설비를-50-늘려도-HBM은-50-안-나온다-마이클-버리-반박">설비를 50% 늘려도 HBM은 50% 안 나온다 — 마이클 버리 반박</a></li><li><a class="kin-link" href="#card-없으면-AI가-멈추는-마이크론이-마벨의-8분의-1-값에-거래된다">없으면 AI가 멈추는 마이크론이 마벨의 8분의 1 값에 거래된다</a></li><li><a class="kin-link" href="#card-엔비디아만-3-오른-이유-전용-칩은-정해진-땅을-나눠-가질-뿐이다">엔비디아만 3% 오른 이유 — 전용 칩은 정해진 땅을 나눠 가질 뿐이다</a></li><li><a class="kin-link" href="#card-CXMT는-딥시크와-다르다-수요-충격이-아니라-공급-충격이다">CXMT는 딥시크와 다르다 — 수요 충격이 아니라 공급 충격이다</a></li><li><a class="kin-link" href="#card-다이-하나가-열셋을-함께-버린다">다이 하나가 열셋을 함께 버린다</a></li><li><a class="kin-link" href="#card-애플이-중국산-D램을-두드린-건-값-깎기용-지렛대였고-그마저-빗나갔다">애플이 중국산 D램을 두드린 건 값 깎기용 지렛대였고, 그마저 빗나갔다</a></li><li><a class="kin-link" href="#card-애플이-40년-만에-값을-올렸다-아이폰은-피한-게-아니라-미룬-것이다">애플이 40년 만에 값을 올렸다 — 아이폰은 피한 게 아니라 미룬 것이다</a></li><li><a class="kin-link" href="#card-광통신과-포토닉스-입문-CPO-OCS와-밸류체인-다섯-층">광통신과 포토닉스 입문, CPO·OCS와 밸류체인 다섯 층</a></li><li><a class="kin-link" href="#card-전력회사는-돈을-쓸수록-번다-1조-4천억-달러-공사판의-구조">전력회사는 돈을 쓸수록 번다, 1조 4천억 달러 공사판의 구조</a></li><li><a class="kin-link" href="#card-데이터센터-60곳이-동시에-빠지자-3-1GW가-30초-만에-사라졌다">데이터센터 60곳이 동시에 빠지자 3.1GW가 30초 만에 사라졌다</a></li><li><a class="kin-link" href="#card-원자력주는-이익이-줄어-빠진-게-아니라-배수가-줄어-빠졌다">원자력주는 이익이 줄어 빠진 게 아니라 배수가 줄어 빠졌다</a></li><li><a class="kin-link" href="#card-재무가-튼튼한-순서와-전환이-빠른-순서가-반대다">재무가 튼튼한 순서와 전환이 빠른 순서가 반대다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">5</span>스페이스X 상장</p><p class="cs-why">한 회사를 여러 각도로 본 연작이다. 같은 회사에 값이 왜 그렇게 벌어지는지 보인다.</p><div class="course"><ol><li><a class="kin-link" href="#card-상장-전에-32억-달러가-먼저-값을-매겼고-두-시장이-170달러에서-만났다">상장 전에 32억 달러가 먼저 값을 매겼고, 두 시장이 170달러에서 만났다</a></li><li><a class="kin-link" href="#card-스페이스X는-어떤-회사로-보느냐에-따라-값이-35배-갈린다">스페이스X는 어떤 회사로 보느냐에 따라 값이 35배 갈린다</a></li><li><a class="kin-link" href="#card-상장-일주일-본주는-올랐는데-대리-종목들은-빠졌다">상장 일주일, 본주는 올랐는데 대리 종목들은 빠졌다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">6</span>고르는 틀</p><p class="cs-why">개별 종목이 아니라 방법이다. 앞을 읽고 오면 왜 이 틀이 필요한지 붙는다.</p><div class="course"><ol><li><a class="kin-link" href="#card-병목이-이사를-가면-협상력도-옮겨간다-전력형과-메모리형을-가르는-법">병목이 이사를 가면 협상력도 옮겨간다, 전력형과 메모리형을 가르는 법</a></li><li><a class="kin-link" href="#card-채권이-주식을-지켜주던-20년은-예외였다-갈림길은-물가-3">채권이 주식을 지켜주던 20년은 예외였다 — 갈림길은 물가 3%</a></li><li><a class="kin-link" href="#card-집이-안-팔릴수록-유리한-채권-MBS와-장기채는-공급-방향이-반대다">집이 안 팔릴수록 유리한 채권 — MBS와 장기채는 공급 방향이 반대다</a></li><li><a class="kin-link" href="#card-DIVO의-옵션-명세는-운용사의-종목별-판단이-드러나는-자리다">DIVO의 옵션 명세는 운용사의 종목별 판단이 드러나는 자리다</a></li><li><a class="kin-link" href="#card-배당이-가장-낮은-우선주가-오히려-가장-세다">배당이 가장 낮은 우선주가 오히려 가장 세다</a></li><li><a class="kin-link" href="#card-엔화를-지운-펀드가-알고-보니-엔화-약세에-세-겹으로-걸려-있다">엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다</a></li><li><a class="kin-link" href="#card-가진-주식의-70-85-는-그대로-오르게-둔다">가진 주식의 70~85%는 그대로 오르게 둔다</a></li><li><a class="kin-link" href="#card-빅테크-하나-없는-모멘텀-ETF가-나스닥을-앞질렀다">빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다</a></li><li><a class="kin-link" href="#card-가격이-논리를-만든다-마이크론의-여기쯤-선">가격이 논리를 만든다 — 마이크론의 「여기쯤」 선</a></li><li><a class="kin-link" href="#card-로봇은-인건비가-아니라-설비투자-예산에서-팔린다">로봇은 인건비가 아니라 설비투자 예산에서 팔린다</a></li><li><a class="kin-link" href="#card-버크셔가-14개-분기-만에-샀다-고른-건-힘든-업종의-1등뿐이다">버크셔가 14개 분기 만에 샀다, 고른 건 힘든 업종의 1등뿐이다</a></li><li><a class="kin-link" href="#card-재료가-전부-정크인데-맨-위층은-AAA를-받는다">재료가 전부 정크인데 맨 위층은 AAA를 받는다</a></li><li><a class="kin-link" href="#card-국채가-밀리는-동안-지방채는-물량이-안-늘었다">국채가 밀리는 동안 지방채는 물량이 안 늘었다</a></li></ol></div></div></div></div></details>
 
-  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">59</span></button><button class="stile" data-sec="sec-market" aria-pressed="false"><span class="st-num">01</span><span class="st-t">시장 국면 · 수급</span><span class="st-s">누가 무엇을 보고 사고파는지, 그래서 지수가 왜 이렇게 흔들리는지</span><span class="st-n cnt">8</span></button><button class="stile" data-sec="sec-macro" aria-pressed="false"><span class="st-num">02</span><span class="st-t">환율 · 지표 · 연준</span><span class="st-s">환율과 고용·물가에서 무엇이 일회성이고 무엇이 구조인지</span><span class="st-n cnt">11</span></button><button class="stile" data-sec="sec-aicycle" aria-pressed="false"><span class="st-num">03</span><span class="st-t">AI 자본 사이클 · 리스크</span><span class="st-s">AI에 들어간 돈이 어떻게 돌고, 무엇을 기준으로 값을 매기게 되는지</span><span class="st-n cnt">13</span></button><button class="stile" data-sec="sec-hardware" aria-pressed="false"><span class="st-num">04</span><span class="st-t">반도체 · 전력 · 광통신</span><span class="st-s">AI를 실제로 굴리는 물건들 — 메모리와 전력망, 광통신, 그리고 원자력</span><span class="st-n cnt">13</span></button><button class="stile" data-sec="sec-method" aria-pressed="false"><span class="st-num">05</span><span class="st-t">고르는 틀 · 방법론</span><span class="st-s">공개 자료로 남의 판단을 읽고, 하락이 어디서 왔는지 가르는 방법</span><span class="st-n cnt">14</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">59</span></button><button class="stile" data-sec="sec-market" aria-pressed="false"><span class="st-num">01</span><span class="st-t">시장 국면 · 수급</span><span class="st-s">누가 무엇을 보고 사고파는지, 그래서 지수가 왜 이렇게 흔들리는지</span><span class="st-n cnt">8</span></button><button class="stile" data-sec="sec-macro" aria-pressed="false"><span class="st-num">02</span><span class="st-t">환율 · 지표 · 연준</span><span class="st-s">환율과 고용·물가에서 무엇이 일회성이고 무엇이 구조인지</span><span class="st-n cnt">11</span></button><button class="stile" data-sec="sec-aicycle" aria-pressed="false"><span class="st-num">03</span><span class="st-t">AI 자본 사이클 · 리스크</span><span class="st-s">AI에 들어간 돈이 어떻게 돌고, 무엇을 기준으로 값을 매기게 되는지</span><span class="st-n cnt">13</span></button><button class="stile" data-sec="sec-hardware" aria-pressed="false"><span class="st-num">04</span><span class="st-t">반도체 · 전력 · 광통신</span><span class="st-s">AI를 실제로 굴리는 물건들 — 메모리와 전력망, 광통신, 그리고 원자력</span><span class="st-n cnt">13</span></button><button class="stile" data-sec="sec-method" aria-pressed="false"><span class="st-num">05</span><span class="st-t">고르는 틀 · 방법론</span><span class="st-s">공개 자료로 남의 판단을 읽고, 하락이 어디서 왔는지 가르는 방법</span><span class="st-n cnt">14</span></button></div><div class="sback" hidden><span class="sb-now"></span></div>
 
   <div class="rollup"><details class="rlrep"><summary class="rlhd"><span class="rlk">주간 리포트</span><span class="rlttl"><span class="rlt">이번 주 세 편 — 예금 대신 둘 자리, 국채를 사주던 쪽, 그리고 그래서 무슨 채권을 드나</span><span class="rld">정크 대출로 만든 AAA가 성립하는 이유와 그 값이 뒤집힌 틈, 재무부 되사기가 하루를 못 간 사정, 그리고 고금리가 굳는다는 전제에서 남는 채권 셋.</span></span><span class="rlmeta">08-18~08-24 · 3편</span></summary><ol class="rll"><li data-sec="sec-method"><span class="rlh">정크 등급 대출을 층으로 쌓으면 맨 위는 AAA가 된다</span><span class="rlb">CLO(대출채권담보부증권)는 신용등급이 낮은 기업 대출 수백 건을 한 바구니에 담고 들어온 이자를 맨 위층부터 채운다(8/19). 아래층이 완충재라서 재료가 전부 정크여도 맨 위는 AAA를 받고, 1990년대 초 이후 AAA부터 A등급까지 원금 손실이 난 적은 없다. JAAA는 그 맨 위층만 담아 최근 12개월 분배 수익률 <b>5.34%</b>를 냈다. 같은 기간 전체 채권시장 ETF는 2.36%, 7~10년 국채 ETF는 마이너스 1.4%였다. 이번 편의 본론은 값이 뒤집힌 것이다. 위층에게 안전한 3-1 구조(재투자 3년·논콜 1년)가 원래 비싸야 하는데, 2024년에 5-2로 쏟아진 사상 최대 물량이 지금 만료되면서 3-1이 5-2와 비슷하거나 더 싸졌다. 야누스 헨더슨은 값을 더 치르지 않고 그쪽으로 갈아탔다.</span></li><li data-sec="sec-macro"><span class="rlh">재무부가 되사기를 두 배로 늘렸는데 효과가 하루를 못 갔다</span><span class="rlb">30년물 금리가 2002년 이후 최고 수준에 닿자 재무부가 8월 19일 장기 국채 바이백 한도를 회당 20억 달러에서 <b>40억 달러</b>로 올렸다(8/21). 발표 당일 10bp 가까이 내렸다가 다음 날 그대로 되돌아왔다. 되사기는 매주 열려도 한 번에 한 만기 구간만 처리해 장기 두 구간은 한 달에 한 번쯤 돌아오고, 두 달 전체로 100~200억 달러다. 국채 시장은 32조 달러이고 국가부채는 40조 달러를 넘겼다. 더 무거운 지적은 사주는 쪽이 바뀌었다는 것이다. 값을 안 따지고 사던 외국 중앙은행이 물러난 자리를 값을 보는 민간이 채워, 공급이 소화량을 넘으면 사지 않고 버틴다. 그래서 필자는 예전 금리로 돌아간다는 기대의 전제 자체가 약해졌다고 보고 장기채 대신 중기·단기채 쪽을 든다. 다만 베이시스 트레이드 유동성이 줄고 있다는 근거는 증거가 보인다는 수준으로만 적혀 있다.</span></li><li data-sec="sec-macro"><span class="rlh">국채가 밀리는 동안 지방채는 물량이 안 늘었다</span><span class="rlb">8월 21일 편이 장기채를 피하라는 데서 끝났다면 이 편은 그럼 무엇을 드느냐를 고른다(8/23). 거르는 기준은 듀레이션 하나이고, 그렇게 남는 것이 단기채·우선주·지방채 셋이다. 회사채는 스프레드가 얇아 위험을 더 지는 값을 못 받는다는 이유로 빠진다. 필자가 첫째로 꼽는 지방채의 근거는 세제보다 공급이다. 2015~2025년 국채 발행 잔액이 13.2조에서 30.3조 달러로 <b>130%</b> 느는 동안 지방채는 3.9조에서 4.4조 달러, <b>13%</b>만 늘었다. 주 정부는 법으로 균형예산이 의무이고 리비뉴 본드는 갚을 수익원이 있어야 발행되기 때문이다. 세금까지 떼면 국채 4.2%가 최고 세율 구간에서 2.5%로 줄고 면세인 지방채 3.6%는 그대로 남는다. 다만 듀레이션을 유일한 기준으로 세워놓고 정작 지방채 ETF의 듀레이션은 밝히지 않았고, 세제 혜택은 미국 납세자 이야기다.</span></li></ol></details><details class="rlold"><summary>지난 리포트 2편 ▾</summary><details class="rlrep"><summary class="rlhd"><span class="rlk">월간 리포트</span><span class="rlttl"><span class="rlt">한 달 사이 바뀐 것 — AI가 종목에서 환경으로, 그리고 그 값이 국채와 소비자 기기로 넘어갔다</span><span class="rld">AI 투자 규모가 물가·금리를 미는 원인이 된 지점, 사라진 브레이크, 서로 돈을 대주는 구조, 메모리 폭등이 소비자 기기 장부에 도착한 일, 그리고 고금리가 길어질 때 무엇으로 회사를 고르는가.</span></span><span class="rlmeta">07-22~08-21 · 18편</span></summary><ol class="rll"><li data-sec="sec-market"><span class="rlh">AI가 방정식의 결과에서 원인으로 옮겨갔다</span><span class="rlb">예전엔 금리와 경기가 정해지면 AI 주식이 따라 움직였는데, 이제 AI 투자 규모가 전기요금·칩값·금리를 밀어 환경 자체를 만든다는 진단이다(7/26). 연준 회의록도 견조한 AI 투자가 물가 압력을 길게 끌 수 있다고 적었다. 같은 편에서 상승의 연료가 무엇이었는지도 드러난다 — 큰손들의 지수 하락 베팅이 6월 초 22만 계약에서 월말 <b>3.7만 계약</b>으로 줄었고, 그 되사기가 사상 최고가를 만들었다. 지금은 하락 베팅이 1년 중 두 번째로 적어 그 연료가 없다. 7월 23일 빅테크 시가총액 8,000억 달러가 하루에 날아간 것도 실적이 아니라 알파벳의 CAPEX 2,050억 달러 계획이 방아쇠였다.</span></li><li data-sec="sec-market"><span class="rlh">내부자와 기관이 반대로 움직이는 동안 시장에서 브레이크가 빠졌다</span><span class="rlb">7월 기준 내부자 매수가 매도보다 많았던 미국 상장사가 <b>14.8%</b>(대형주는 3.2%)로 최소 21년 만의 최저인데, 기관은 방어 자세를 접고 다시 기술주로 들어왔다(8/2). 내부자가 산 세 섹터(필수소비재·소재·유틸리티)에서는 오히려 기관 자금이 빠졌다. 필자의 설명은 보는 대상이 다르다는 것이다 — 내부자는 자기 회사의 1~2년 뒤를, 기관은 다음 분기 성과와 수급을 본다. 7월 31일 코스피 17.91% 폭등도 펀더멘털이 아니라 4배 레버리지를 쓰던 헤지펀드(운용자산 450억 달러)의 청산이 끝나 <b>강제로 팔 사람이 사라졌다</b>는 판단에서 나왔다. 가치를 보는 쪽이 빠진 시장은 위아래 모두 과하게 움직인다.</span></li><li data-sec="sec-aicycle"><span class="rlh">8월 들어 경계 대상이 하나 늘었다 — 서로 돈을 대주는 구조</span><span class="rlb">순환금융은 공급자가 고객에게 돈을 빌려주고 고객은 그 돈으로 그 공급자 제품을 사는 구조다 — 엔비디아가 오픈AI 데이터센터 임대료 2,500억 달러를 보증하고 GPU 구매용 3,500억 달러 파이낸싱을 검토하는 식, 구글이 앤트로픽 데이터센터 다섯 곳 임대료를 보증해 사실상 350억 달러를 빌려준 것도 같은 형태다. 이렇게 얽힌 거래가 8,000억 달러를 넘겼다는 게 8월 7일 글의 진단이고, 핵심 위험은 부도가 아니라 <b>같은 돈이 한 바퀴 돌 때마다 여러 회사 장부에 매출로 겹쳐 잡히는 것</b>이다. 이틀 앞선 8월 5일 글은 마이클 버리가 섞인 베팅을 정리하고 AI 버블 핵심에 대한 하락 베팅만 남긴 채 만기를 2027년까지 민 것을 「방향 확신은 유지, 시점은 틀렸다고 인정」으로 읽었다.</span></li><li data-sec="sec-aicycle"><span class="rlh">구조 자체는 닷컴 때와 같고, 다른 점은 두 가지다</span><span class="rlb">선례는 닷컴 통신장비 버블이다 — 루슨트 81억, 노텔 31억, 시스코 24억 달러를 고객에게 빌려줬고 2001년 수요가 부풀려졌다는 게 드러나며 무너졌다. 다른 점으로 필자가 든 건 둘이다: 그때는 고객이 생기기도 전에 설비부터 깔았지만 지금은 추론 수요가 이미 있는 상태의 점유율 싸움이고, 엔비디아는 빚이 아니라 벌어들인 현금(잉여현금흐름 970억 달러)으로 하고 있다(8/7).</span></li><li data-sec="sec-aicycle"><span class="rlh">국제결제은행이 지목한 문제는 값을 매길 바깥 기준이 없다는 것</span><span class="rlb">서로 돈을 돌리니 지분·부채·공급계약이 따로따로 나오지만 합치면 한 덩어리다. 가치를 재볼 외부 신호가 없어 <b>자기들끼리 정한 가격이 유일한 기준</b>이 된다는 지적이다(8/7).</span></li><li data-sec="sec-hardware"><span class="rlh">원자력은 값이 아니라 배수가 빠졌다</span><span class="rlb">원자력 관련주가 도매금으로 빠지는 동안 우라늄 장기 계약가는 파운드당 <b>93달러</b>(18년 만의 최고)에서 97달러로 올랐고, 전력회사들은 고정가로 세 자릿수까지 받아들이며 물량을 묶고 있다(7/24). 공급은 카자톰프롬 10% 감산과 니제르 생산 중단으로 막혀 있고, 월마트가 원전에서 176MW를 15년씩 두 번 받기로 하는 등 수요는 빅테크 밖에서도 나온다. 그래서 하락의 성격을 <b>이익이 줄어 빠졌나 PER이 줄어 빠졌나</b>로 갈라야 한다는 것이다. 매출이 0인 오클로·뉴스케일은 애초에 기준선이 없고, 카메코는 원자재 회사라 PER이 안 내려갔다.</span></li><li data-sec="sec-hardware"><span class="rlh">메모리 값이 파는 쪽 호재에서 사는 쪽 원가로 넘어왔다</span><span class="rlb">한 달 전 이 대시보드의 메모리 이야기는 전부 파는 쪽이었다 — HBM 1등이라 상승분을 덜 받은 SK하이닉스(7/29), 엔비디아와 AMD가 뭘 하든 HBM 수요는 남는다는 진단(8/3). 8월 중순에 같은 사이클이 사는 쪽 장부에서 나타났다. 삼성전자·SK하이닉스·마이크론이 생산 능력을 HBM으로 돌리면서 일반 D램이 말랐고, 애플의 매출총이익률이 49.3%에서 48.1%로 내렸다(8/16). 여기서 읽을 것은 애플이 위태롭다는 게 아니라 그 반대다 — 부품 원가가 38% 뛰어도 대당 이익을 499달러로 지킬 수 있다면, 값을 올려 받을 여지가 아직 남아 있다는 뜻이다. 사이클이 언제 꺾이는지에 대해서는 마이크론의 미국 2000억 달러·히로시마 96억 달러 투자와 시장조사기관들의 2027년 회복 전망이 유일한 좌표다.</span></li><li data-sec="sec-macro"><span class="rlh">고금리 장기화가 종목을 고르는 기준으로 올라섰다</span><span class="rlb">한 달 전에는 AI 투자가 금리를 미는 원인이라는 진단이었는데, 이달 말에는 그 금리가 무엇을 고를지 정하는 자리까지 왔다. 버크셔의 2분기 매수는 고금리가 약한 회사를 솎아내는 산업에서 끝까지 버틸 1등만 담는 방식이었고(8/17), CLO 편은 그 금리가 길게 유지된다는 전제 위에서 예금 대신 둘 자리를 찾는다(8/19). 8월 21일 편은 그 전제의 근거를 국채 쪽에서 확인한다 — 국가부채 40조 달러와 AI 회사채 발행이 같은 지갑을 놓고 다투는 동안 값을 안 따지고 사주던 외국 중앙은행이 물러나, 금리를 정하는 변수가 연준 밖으로 나갔다는 것이다. 세 편을 겹치면 기준금리가 3.5~3.75%에 묶여 있어도 장기 금리는 따로 움직이고, 그 위에서 살아남는 회사를 고르는 문제가 남는다.</span></li></ol></details><details class="rlrep"><summary class="rlhd"><span class="rlk">주간 리포트</span><span class="rlttl"><span class="rlt">이번 주 네 편 — 남의 명세, 가려진 물가, 메모리 값을 떠안은 쪽, 그리고 힘든 업종의 1등</span><span class="rld">커버드콜 ETF 명세로 운용사 판단 읽기, 7월 물가에서 유가가 눌러 가려진 것, 메모리 폭등이 애플 실적을 실제로 얼마나 깎는지, 그리고 버크셔가 14개 분기 만에 현금을 헌 자리.</span></span><span class="rlmeta">08-11~08-17 · 4편</span></summary><ol class="rll"><li data-sec="sec-method"><span class="rlh">커버드콜 ETF의 옵션 명세를 관점 지도로 쓰자는 제안</span><span class="rlb">DIVO는 옵션을 상시로 걸지 않고 프리미엄이 두둑할 때, 크게 오를 것 같지 않은 종목에만 건다(8/12). 그래서 매일 공개되는 보유 명세에서 <b>매도 계약 수 × 100 ÷ 보유 주식 수</b>를 계산하면 종목별로 상승 여지를 어떻게 보는지 드러난다는 것이다. 8월 12일 자로는 마이크로소프트 약 87%, 셰브론 약 51%, 애그니코이글마인즈 약 42%, 마라톤페트롤리엄 약 15%였고 나머지 우량주는 열려 있었다. 다만 안 걸린 종목이 낙관 신호인지 프리미엄이 얇아서인지는 명세로 갈리지 않는다. 필자 본인이 검증이 필요한 아이디어라고 단서를 달았다.</span></li><li data-sec="sec-macro"><span class="rlh">7월 물가는 유가가 눌러 잡힌 것이고, 매달 내는 항목은 전부 올랐다</span><span class="rlb">CPI 0.1%, PPI 0.0%로 헤드라인은 얌전했지만 그 숫자를 만든 건 에너지다(8/14). 비중 7.4%인 에너지가 1.5% 내리며 지수를 약 <b>0.11%p</b> 눌렀고 휘발유 -2.9%가 주도했다. 반대로 비중 35%인 주거비는 0.1% 오르는 것만으로 헤드라인 상승분의 3분의 2를 차지했고, 안을 열면 실제 임대료가 0.1%→0.3%, 자가주거비가 0.2%→0.3%로 커졌다. 전체가 눌린 건 같은 항목의 호텔·모텔 숙박비가 2.8% 빠져 상쇄해서다. 의료 서비스는 -0.1%에서 +0.6%로 돌아서며 근원 물가를 0.0%에서 0.2%로 끌어올렸고 — 병원비·진료비가 계단식으로 갱신되는 성격이다 — 항공료는 유가가 눌린 달에 오히려 0.2%에서 <b>2.2%</b>로 뛰었다. 필자의 걱정은 8월이다. 8월 중순까지의 평균 유가가 7월과 거의 같고 7월 저점 70달러 초반보다 높은 80달러 초반에서 널뛰어, 눌러주던 힘이 사라지거나 반대로 바뀔 수 있다. 8월 CPI는 9월 11일, 9월 FOMC 직전 연준이 받는 마지막 물가 지표다.</span></li><li data-sec="sec-hardware"><span class="rlh">메모리 폭등이 드디어 사는 쪽 장부에 도착했다 — 그런데 대당 이익은 안 줄었다</span><span class="rlb">애플이 중국 CXMT(창신메모리) D램을 시험한 게 절박함의 신호냐는 질문에 필자는 <b>긴급하지만 절박하지는 않다</b>고 답한다(8/16). 매출총이익률은 3월 49.3%에서 6월 48.1%로 내렸고 부품 원가에서 메모리·저장장치 비중이 9%에서 27%로 커졌으며, 공급사 재고가 2~4주치까지 떨어져 맥 스튜디오·맥 미니 배송이 5개월 밀린 적도 있다. 그런데 대당 계산을 하면 그림이 달라진다 — 아이폰 18 프로는 부품 원가 800달러에 1,299달러(IDC 전망)로 이익률 38.4%, 전작은 580달러에 1,099달러로 47.2%였다. 비율은 9%p 빠졌지만 <b>대당 이익은 519달러에서 499달러로 4%도 줄지 않는다</b>. 이번 주의 다른 발견은 지렛대가 안 먹혔다는 것이다. CXMT는 화웨이·샤오미 장기계약에 텐센트 30억·바이트댄스 70억 달러가 걸려 있어 미국에 안 팔아도 되고, EUV를 못 써 원가가 한국 업체보다 30% 넘게 높아 깎아줄 수도 없다.</span></li><li data-sec="sec-hardware"><span class="rlh">다만 이 계산의 숫자는 대부분 애플이 낸 것이 아니다</span><span class="rlb">부품 원가 580달러는 여러 추정의 중간값, 1,299달러는 IDC 전망, 상승률 38%는 시장에 도는 추정치다. 셋 중 하나만 어긋나도 대당 이익 499달러가 흔들린다. 대당 이익 방어도 200달러를 얹어 판매량이 안 줄어야 성립하는데 물량 감소는 계산에 들어 있지 않다.</span></li><li data-sec="sec-method"><span class="rlh">버크셔가 14개 분기 만에 샀는데, 고른 곳이 항공사와 주택 건설사다</span><span class="rlb">2분기 13F에서 대기 현금이 3,974억 달러에서 <b>3,655억 달러</b>로 줄었다(8/17). 알파벳 지분을 거의 두 배로 늘리고 유상증자에 100억 달러를 넣는 동안 은행주는 8개 분기 연속 팔았다. 눈에 띄는 건 델타항공을 44%(약 16억 달러) 늘리고 레나를 30%가량 담고 테일러 모리슨을 68억 달러에 통째로 산 대목이다. 필자는 이를 업종 전망이 아니라 하나의 기준으로 읽는다 — 고금리가 길어지면 약한 회사부터 무너지고 그 수요를 1등이 가져간다는 것이다. 항공에서는 스피릿항공이 5월 구제금융에 실패해 운항을 멈췄고, 주택에서는 연 6.7%짜리 대출 탓에 3~4%에 묶인 집주인이 매물을 내놓지 않아 신축으로 수요가 몰린다. 다만 13F는 분기말 보유를 나중에 알리는 서류라 지금도 같은 포지션인지는 알 수 없고, 레나의 평균 판매가격은 1년 전보다 6.7% 떨어져 실적 바닥은 확인되지 않았다.</span></li></ol></details></details></div>
 
@@ -809,9 +834,17 @@
     }
     if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
   }
+  // 섹터를 펴는 것도 화면 하나다. 주소에는 안 실리지만 상태로 한 칸 쌓아 두어야
+  // 기기 뒤로가기가 섹터 고르기로 돌아온다 — 안 쌓으면 페이지째 나간다.
+  function markSect(){
+    if(quiet) return;
+    history.pushState({sec: null, picking: true, sect: sect}, '',
+                      location.pathname + location.search);
+  }
   function restore(st){
     quiet = true;
     cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var stSect = (st && st.sect) || null;
     var id = (location.hash || '').slice(1);
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
@@ -824,7 +857,7 @@
       var sc = el && el.closest ? el.closest('section[id]') : null;
       picking = false; only = sc ? sc.id : null;
     }
-    if(!only) sect = null;
+    if(!only) sect = stSect;
     apply();
     // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
     // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
@@ -863,8 +896,7 @@
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
-    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
-    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); markSect(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
     if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
@@ -873,15 +905,6 @@
     var sec = only ? document.getElementById(only) : null;
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
-  });
-  if(back) back.addEventListener('click', function(e){
-    if(!e.target.closest('.sb-btn')) return;
-    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
-    if(history.state && history.state.picking === false){ history.back(); return; }
-    picking=true; only=null; apply();
-    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
-    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   window.addEventListener('popstate', function(e){
     restore(e.state);
@@ -970,11 +993,6 @@
     if(posts) posts.hidden = view!=='posts';
   }
   document.addEventListener('click', function(e){
-    if(e.target.closest('.sw-up')){
-      var back=document.querySelector('.sback .sb-btn');
-      if(back) back.click();
-      return;
-    }
     var b=e.target.closest('.sw-btn'); if(!b) return;
     show(b.closest('.secsw').dataset.sec, b.dataset.view);
   });

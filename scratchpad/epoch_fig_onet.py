@@ -362,18 +362,18 @@ def fig_onet_tasks15():
         o.append('<circle cx="20" cy="%d" r="3" fill="%s"/>' % (y - 4, BAD if key else GOOD))
         o.append('<text x="30" y="%d" class="t-sm t-axis">%d</text>' % (y, i))
         cls = 't-bad' if key else 't-sm'
-        for j, line in enumerate(_wrap(t, 560)):
-            o.append('<text x="54" y="%d" class="%s" style="font-size:10px">%s</text>'
-                     % (y + j * 15, cls, ef.esc(line)))
+        for j, line in enumerate(ef.wrap_lines(t, 584)):
+            o.append('<text x="54" y="%d" class="%s">%s</text>'
+                     % (y + j * 19, cls, ef.esc(line)))
             last = j
-        y += 15 * (last + 1) + 6
+        y += 19 * (last + 1) + 8
     y += 8
-    o.append('<text x="16" y="%d" class="t-bad" style="font-size:9.5px">'
+    o.append('<text x="16" y="%d" class="t-bad">'
              '첫 줄이 이 데이터셋에서 가장 잘게 쪼갠 서술이다 — AI 엔지니어가 하는 거의 '
              '모든 일이 여기 든다</text>' % y)
-    o.append(ef.lab(16, y + 16, 'O*NET 은 미국 경제의 직업 약 1,000개를 담은 표준 데이터셋인데, '
+    o.append(ef.lab(16, y + 20, 'O*NET 은 미국 경제의 직업 약 1,000개를 담은 표준 데이터셋인데, '
                                 '알갱이가 이만큼 굵다', fs=13))
-    return ef.svg(y + 28, ''.join(o))
+    return ef.svg(y + 32, ''.join(o))
 
 
 # ══ ④ AI R&D O*NET 의 6개 범주 ═══════════════════════════════════════════
@@ -502,8 +502,8 @@ def fig_onet_expect():
     o2.append(cp0)
     # 체크포인트 #0 ⇢ 사전학습 데이터 거르기
     o2.append(ef.arrow('cond', [(190, B + 103), (70, B + 103), (70, B + 60), (66, B + 60)]))
-    o2.append(ef.lab(70, B + 132, '사전학습 데이터를 거른다', fs=13))
-    o2.append(ef.lab(68, B + 46, '사전학습', fs=13))
+    o2.append(ef.lab(70, B + 142, '사전학습 데이터를 거른다', fs=13))
+    o2.append(ef.lab(68, B + 54, '사전학습', fs=13))
     # 왼쪽 등뼈 — 초기화 모델에서 내려오며 세 번 갈린다
     o2.append(ef.arrow('svc', [(spine, B + 34), (spine, B + 150)]))
     o2.append('<circle cx="%d" cy="%d" r="3" fill="var(--ink-3)"/>' % (spine, B + 150))
@@ -529,9 +529,9 @@ def fig_onet_expect():
                                 (145, B + 254)]))
     o2.append(ef.lab(155, B + 214, 'RL 검증자로 쓴다', fs=13))
     # 체크포인트 #2 ⇢ 합성 SFT 데이터
-    o2.append(ef.arrow('cond', [(265, B + 313), (265, B + 294), (100, B + 294),
+    o2.append(ef.arrow('cond', [(265, B + 313), (265, B + 302), (100, B + 302),
                                 (100, B + 262)]))
-    o2.append(ef.lab(108, B + 288, '합성 SFT 데이터를 만든다', fs=13))
+    o2.append(ef.lab(108, B + 294, '합성 SFT 데이터를 만든다', fs=13))
     # 체크포인트 #3 ⇢ 교사
     o2.append(ef.arrow('cond', [(340, B + 258), (380, B + 258), (380, B + 80),
                                 (541, B + 80)]))

@@ -685,8 +685,9 @@ def sectiles(bysec, bykindsec):
                          '<span class="st-mix">%s</span></button>'
                          % (sid, num, nl.esc(title), nl.esc(sub), bysec[sid], nl.esc(mix)))
     # 주제를 고르면 타일은 사라지고 카드만 남는다. 돌아올 길이 필요하다.
-    back = ('<div class="sback" hidden><button type="button" class="sb-btn">← 주제 다시 고르기</button>'
-            '<span class="sb-now"></span></div>')
+    # 되돌아가는 길은 기기 뒤로가기 하나다 — 화면 안에 되돌아가는 버튼을 두지 않는다.
+    # 남는 것은 지금 어느 주제를 보고 있는지 알리는 이름표뿐이다.
+    back = '<div class="sback" hidden><span class="sb-now"></span></div>'
     return '<div class="sgrid">%s</div>%s' % (''.join(tiles), back)
 
 
@@ -816,12 +817,9 @@ CSS = r'''
   .itabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
   .itabs .tn{margin-left:6px;font-variant-numeric:tabular-nums;opacity:.7}
   /* 주제 타일 — 누르면 그 주제의 글만 펼쳐진다 */
-  /* 카드 화면에서 주제 고르는 화면으로 돌아가는 줄 — 지금 어느 주제를 보는지도 여기 적는다 */
+  /* 지금 어느 주제를 보고 있는지 적는 줄. 되돌아가는 길은 기기 뒤로가기가 갖는다 */
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
-  .sb-btn{font:inherit;font-size:var(--t-meta);cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink)}
-  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:700}
   .sgrid[hidden]{display:none}
   .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
@@ -1053,13 +1051,6 @@ TAB_JS = '''<script>
     if(want !== base + location.hash)
       history.pushState({sec:sec, kind:kind, cell:cell}, '', want);
   }
-  if(back) back.addEventListener('click', function(e){
-    if(!e.target.closest('.sb-btn')) return;
-    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(history.state && (history.state.sec || history.state.cell)){ history.back(); return; }
-    sec=null; cell=null; kind='all'; apply();
-    if(sbar) sbar.scrollIntoView({behavior:'smooth', block:'start'});
-  });
   window.addEventListener('popstate', function(e){
     quiet=true;
     var st=e.state, h=(location.hash||'').slice(1);

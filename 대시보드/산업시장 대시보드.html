@@ -448,28 +448,14 @@
      검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
   .stile[hidden]{display:none}
   .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
-  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-           border:1px dashed var(--line);border-radius:999px;background:transparent;
-           color:var(--ink-3)}
-  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
   .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
-  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;
-          background:var(--card,var(--surface,#fff));color:var(--ink)}
-  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
-     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
   .secsw{display:block;margin:14px 0 4px}
-  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
   .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
-  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
-         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
-  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
      같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
      인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
@@ -515,7 +501,11 @@
 
   /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
      색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
-  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
           background:var(--fig-bg,rgba(127,127,127,.05))}
   .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
   .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
@@ -531,6 +521,20 @@
   .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
   /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
   .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
@@ -539,14 +543,35 @@
   .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
-  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
-  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
-  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
   .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
-            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 
   .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
@@ -588,7 +613,7 @@
   .klog .tag.t-되짚음{border-color:var(--ink-3);color:var(--ink-3)}
   .klog .kt{display:block;margin:2px 0 3px;font-weight:850;color:var(--ink);font-size:14px}
 </style>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
 <div class="wrap">
   <header>
     <p class="eyebrow">산업 · 시장 — 제3자 해설 아카이브</p>
@@ -603,7 +628,7 @@
     <button data-pick="all" aria-pressed="true">전체 <span class="cnt">32</span></button>
   </div>
 
-  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">42</span></button><button class="stile" data-sec="sec-kwon" aria-pressed="false"><span class="st-num">00</span><span class="st-t">권효재 대표 — 시간순으로 읽기</span><span class="st-s">에너지 열 편이 3월 물량에서 8월 설비까지 옮겨 간 경로</span><span class="st-n cnt">10</span></button><button class="stile" data-sec="sec-policy" aria-pressed="false"><span class="st-num">01</span><span class="st-t">산업 정책 · 제조업</span><span class="st-s">정부가 무엇을 밀고 무엇을 막나. 제조업에 AI를 붙이는 일과 그 시한</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-ai" aria-pressed="false"><span class="st-num">02</span><span class="st-t">AI · 데이터센터 전력</span><span class="st-s">데이터센터가 먹는 전력을 어디서 끌어오나, 그 전력이 어디서 막히나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-physical" aria-pressed="false"><span class="st-num">03</span><span class="st-t">피지컬 AI · 로봇</span><span class="st-s">공장과 로봇으로 내려온 AI. 학습에 쓸 제조 데이터를 누가 쥐고 있나</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-renew" aria-pressed="false"><span class="st-num">04</span><span class="st-t">재생에너지 · 원전 · 소재</span><span class="st-s">재생에너지로 넘어가는 값을 누가 치르나. 태양광·원전과 그 소재</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-oilsupply" aria-pressed="false"><span class="st-num">04</span><span class="st-t">원유 · 가스 수급</span><span class="st-s">기름과 가스가 어디서 나와 어디로 가나. 그 길을 누가 뚫고 무엇이 막나</span><span class="st-n cnt">5</span></button><button class="stile" data-sec="sec-war" aria-pressed="false"><span class="st-num">05</span><span class="st-t">중동 전쟁 · 지정학</span><span class="st-s">전쟁이 유가를 어떻게 끌어올리나, 끝나도 남는 것은 무엇인가</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-semi" aria-pressed="false"><span class="st-num">06</span><span class="st-t">반도체 · 메모리</span><span class="st-s">반도체 수급과 값을 정하는 규칙이 어떻게 바뀌었나</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-rate-us" aria-pressed="false"><span class="st-num">07</span><span class="st-t">미국 — 금리와 시장</span><span class="st-s">장기 국채 금리가 무엇을 누르나. 그 값 위에서 돈을 굴리는 쪽은 무엇을 보나</span><span class="st-n cnt">5</span></button><button class="stile" data-sec="sec-rate-cn" aria-pressed="false"><span class="st-num">09</span><span class="st-t">중국 — 설계된 금리</span><span class="st-s">금리를 시장이 정하지 않는 나라에서 AI 투자 조달비용이 어디까지 내려가나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-jp" aria-pressed="false"><span class="st-num">08</span><span class="st-t">일본 — 국채와 재정</span><span class="st-s">빚이 1경을 넘는데 왜 더 늘리나. 그 국채를 파는 일이 왜 미국 문제가 되나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-eu" aria-pressed="false"><span class="st-num">10</span><span class="st-t">유럽 — 에너지값과 재정 규율</span><span class="st-s">싼 에너지와 큰 시장과 남의 군대에 기댄 값이 어떤 숫자로 돌아오나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-em" aria-pressed="false"><span class="st-num">11</span><span class="st-t">신흥국 — 환율과 자본 이탈</span><span class="st-s">돈이 빠져나갈 때 환율이 먼저 무너지나, 금리가 먼저 무너지나</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-rate-kr" aria-pressed="false"><span class="st-num">11</span><span class="st-t">한국 — 금리·환율과 증시</span><span class="st-s">한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리</span><span class="st-n cnt">3</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">42</span></button><button class="stile" data-sec="sec-kwon" aria-pressed="false"><span class="st-num">00</span><span class="st-t">권효재 대표 — 시간순으로 읽기</span><span class="st-s">에너지 열 편이 3월 물량에서 8월 설비까지 옮겨 간 경로</span><span class="st-n cnt">10</span></button><button class="stile" data-sec="sec-policy" aria-pressed="false"><span class="st-num">01</span><span class="st-t">산업 정책 · 제조업</span><span class="st-s">정부가 무엇을 밀고 무엇을 막나. 제조업에 AI를 붙이는 일과 그 시한</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-ai" aria-pressed="false"><span class="st-num">02</span><span class="st-t">AI · 데이터센터 전력</span><span class="st-s">데이터센터가 먹는 전력을 어디서 끌어오나, 그 전력이 어디서 막히나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-physical" aria-pressed="false"><span class="st-num">03</span><span class="st-t">피지컬 AI · 로봇</span><span class="st-s">공장과 로봇으로 내려온 AI. 학습에 쓸 제조 데이터를 누가 쥐고 있나</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-renew" aria-pressed="false"><span class="st-num">04</span><span class="st-t">재생에너지 · 원전 · 소재</span><span class="st-s">재생에너지로 넘어가는 값을 누가 치르나. 태양광·원전과 그 소재</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-oilsupply" aria-pressed="false"><span class="st-num">04</span><span class="st-t">원유 · 가스 수급</span><span class="st-s">기름과 가스가 어디서 나와 어디로 가나. 그 길을 누가 뚫고 무엇이 막나</span><span class="st-n cnt">5</span></button><button class="stile" data-sec="sec-war" aria-pressed="false"><span class="st-num">05</span><span class="st-t">중동 전쟁 · 지정학</span><span class="st-s">전쟁이 유가를 어떻게 끌어올리나, 끝나도 남는 것은 무엇인가</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-semi" aria-pressed="false"><span class="st-num">06</span><span class="st-t">반도체 · 메모리</span><span class="st-s">반도체 수급과 값을 정하는 규칙이 어떻게 바뀌었나</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-rate-us" aria-pressed="false"><span class="st-num">07</span><span class="st-t">미국 — 금리와 시장</span><span class="st-s">장기 국채 금리가 무엇을 누르나. 그 값 위에서 돈을 굴리는 쪽은 무엇을 보나</span><span class="st-n cnt">5</span></button><button class="stile" data-sec="sec-rate-cn" aria-pressed="false"><span class="st-num">09</span><span class="st-t">중국 — 설계된 금리</span><span class="st-s">금리를 시장이 정하지 않는 나라에서 AI 투자 조달비용이 어디까지 내려가나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-jp" aria-pressed="false"><span class="st-num">08</span><span class="st-t">일본 — 국채와 재정</span><span class="st-s">빚이 1경을 넘는데 왜 더 늘리나. 그 국채를 파는 일이 왜 미국 문제가 되나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-eu" aria-pressed="false"><span class="st-num">10</span><span class="st-t">유럽 — 에너지값과 재정 규율</span><span class="st-s">싼 에너지와 큰 시장과 남의 군대에 기댄 값이 어떤 숫자로 돌아오나</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-rate-em" aria-pressed="false"><span class="st-num">11</span><span class="st-t">신흥국 — 환율과 자본 이탈</span><span class="st-s">돈이 빠져나갈 때 환율이 먼저 무너지나, 금리가 먼저 무너지나</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-rate-kr" aria-pressed="false"><span class="st-num">11</span><span class="st-t">한국 — 금리·환율과 증시</span><span class="st-s">한국 돈값과 환율이 무엇으로 움직이나. 수급 탓으로 설명되지 않는 자리</span><span class="st-n cnt">3</span></button></div><div class="sback" hidden><span class="sb-now"></span></div>
 
   <div class="rollup"><details class="rlrep"><summary class="rlhd"><span class="rlk">주간 리포트</span><span class="rlttl"><span class="rlt">돈·학습·공장·부품 — 값을 누가 설계하고 누가 걸었나</span><span class="rld">AI·반도체는 2% 중반에 빌리고, 학습은 수출통제 밖에서 하고 답만 들고 오고, 제조 데이터는 이미 공장에 쌓여 있고, 로봇 부품은 주문만 하면 나온다. 여섯 편이 중국이 값을 안 치르는 자리를 네 층에서 짚고, 미국 LNG 한 편이 같은 판을 국가 대신 민간 금융으로 깐 반대편 사례로 붙는다. 마지막 한 편은 그 값이 한국 메모리 사이클로 돌아오는 경로다.</span></span><span class="rlmeta">08-14~08-20 · 7편</span></summary><ol class="rll"><li data-sec="sec-rate-cn"><span class="rlh">중국은 금리를 시장에 맡기지 않고 산업별로 설계한다</span><span class="rlb">언더스탠딩 김상훈 기자는 라이프자산운용 배문성 이사의 진단을 받아 중국 통화정책의 구조를 뜯는다. 2022년 4월 인민은행이 예금 금리 산정 방식까지 10년물 국채 수익률과 1년물 LPR에 묶으면서 기준금리가 대출 하나에서 예금·대출 둘로 늘었다. 여기에 <b>재대출</b>이라는 창구를 얹어 AI·반도체·에너지에는 1일물 역레포 금리에 은행 마진만 붙이라고 한다 — 기자가 추정한 수준이 2% 중반, 규모가 200조~300조 원이다. 같은 시기 미국 AI 기업은 6~8%에 빌린다.</span></li><li data-sec="sec-rate-cn"><span class="rlh">청구서는 은행의 순이자마진으로 온다</span><span class="rlb">중국 은행 순이자마진이 역대 최저 1.4%다. 과거 저금리 국면에도 2%는 넘었다. 다만 시중은행 대부분이 국유라 넘어져도 잘라 내면 번지지 않는다는 것이 기자의 설명이고, 그래서 값을 언제 어떤 형태로 치를지는 이 편에서도 답이 나오지 않는다. 한국이 1970년대에 같은 정책을 썼을 때는 돈이 은행 대신 사채로 새 1972년 8·3 조치까지 갔다 — 상대가 개인이 아니라 국유 기관이라는 점이 갈림길이다.</span></li><li data-sec="sec-rate-cn"><span class="rlh">칩을 막아도 학습은 밖에서 하고 답만 들고 온다</span><span class="rlb">김상훈 기자의 8월 16일 편은 수출통제에 뚫린 구멍을 셋으로 정리한다. <b>밀수</b>는 대만 물류센터에서 일련번호 스티커를 떼어 껍데기 서버에 붙여 감사에 대비하는 고전적 수법이고(기소된 건이 2년간 25억 달러어치), <b>원격 접속</b>은 컴퓨팅 파워를 빌려 쓰는 것이라 수출통제 범주에 넣기 어려우며, <b>증류</b>는 GPU가 아예 필요 없다. 엔비디아가 판 GPU 약 2천만 개 중 미국이 80%·중국이 5% 남짓인데 모델은 계속 나오는 이유다.</span></li><li data-sec="sec-physical"><span class="rlh">제조 데이터는 이미 중국 공장에 쌓여 있다</span><span class="rlb">김녹원 딥엑스 대표 편(8/19)은 피지컬 AI의 학습 데이터가 인터넷이 아니라 <b>공장 안</b>에 있다는 데서 출발한다. 미국에는 그 공장이 없고 중국에는 있다. 같은 주 박형근 HMG경영연구원 실장 편은 같은 사실에서 반대 결론으로 간다 — 미국이 <b>몸체가 없으니</b> 한국과 손잡을 수밖에 없다는 것이다. 두 편 다 미국에 제조 기반이 없다는 데서 시작해 갈라진다.</span></li><li data-sec="sec-physical"><span class="rlh">로봇의 병목은 지능이 아니라 부품이었다</span><span class="rlb">박형근 실장 2부작(8/17·8/18)이 짚는 병목은 소프트웨어가 아니다. 관절 감속기는 일본에 거의 전량 의존하다 대체하려던 참에 중국이 치고 올라왔고, 선전에서는 주문만 하면 부품이 나오는데 국내에는 그 생태계가 없다. 가장 어려운 부품이 직경 2cm급 손가락 구동기다. 테슬라 쪽 답은 로봇을 잘 만드는 것이 아니라 <b>공정 난이도 자체를 낮추는</b> 것이었다 — 모듈 블록으로 조립하면 휴머노이드가 굳이 필요 없다.</span></li><li data-sec="sec-semi"><span class="rlh">그 값이 한국 메모리 사이클로 돌아온다</span><span class="rlb">박세익 체슬리투자자문 대표 편(8/14)은 이번 급락을 사이클의 반복으로 읽는다 — 사상 최대 실적에 증설 발표가 겹치면 그 무렵이 꼭지다. 다만 이번 사이클에는 처음 보는 변수가 붙었다. 지금까지 급락 뒤 회복이 가능했던 것은 삼성·하이닉스·마이크론이 암묵적으로 공급을 조절했기 때문인데, <b>창신과 양쯔는 그 공조 바깥에 있다.</b> 실제로 이번 낙폭의 수급 방아쇠도 창신메모리 상장이었다.</span></li><li data-sec="sec-oilsupply"><span class="rlh">미국은 같은 판을 국가가 아니라 민간 금융으로 깔았다</span><span class="rlb">권효재 COR에너지인사이트 대표 편(8/20)은 미국 LNG 수출이 10년 만에 <b>29배</b>가 되어 세계 1위가 된 경로를 뜯는다. 들어간 자본은 500조 원 이상인데 정부 보조금은 사실상 없었고, 수출량의 3분의 2를 오일 메이저가 아닌 벤처 두 곳이 만든다. 앞의 네 층이 중국 국가가 값을 설계해 내려 주는 이야기라면 이 편은 그 반대편 사례다 — 파산 직전 회사의 <b>사업 모델만 보고</b> 블랙스톤이 돈을 댔고, 업계 경험이 없는 뱅커 둘이 액화 설비를 18개로 쪼개 30개월 만에 물량을 냈다. 다만 화자 자신이 러우 전쟁이라는 운을 인정하므로, 제도만으로 이 결과를 읽어낼 수 있는지는 열려 있다.</span></li><li><span class="rlh">앞선 미국·일본 편과 한 줄로 이어진다</span><span class="rlb">직전 한 달의 편들은 미국이 장기 금리를 지키려 동맹국 자산까지 붙드는 이야기였다. 이 편은 같은 금리를 아예 정책 도구로 쓰는 나라를 다룬다. 한쪽은 금리를 <b>시장 변수</b>로 방어하고, 다른 쪽은 <b>설정값</b>으로 쓴다. 그래서 AI 투자 경쟁을 조달비용으로 환산하면 격차가 성장률 격차보다 크게 벌어진다.</span></li><li><span class="rlh">네 층을 겹치면 원가가 어디까지 내려가는지는 안 나온다</span><span class="rlb">금리 편은 조달비용을 2% 중반으로 누르고, 수출통제 편은 학습 비용을 상당 부분 치르지 않고, 피지컬 AI 두 편은 데이터와 부품을 이미 갖고 있다고 말한다. <b>싼 돈</b>과 <b>안 낸 값</b>과 <b>가진 것</b>이 겹친다. 다만 어느 층이 얼마나 큰지를 가르는 숫자는 여섯 편 어디에도 없다.</span></li></ol></details><details class="rlrep"><summary class="rlhd"><span class="rlk">월간 리포트</span><span class="rlttl"><span class="rlt">미국 10년물 하나가 나라마다 다른 청구서로 돌아온다 — 한 달 열한 편</span><span class="rld">환율을 「누가 얼마 팔았다」로 설명하면 왜 앞뒤가 안 맞는지에서 시작해, 같은 미국 장기 금리가 일본에서는 국채 매도로, 신흥국에서는 자본 이탈로, 한국에서는 반도체 낙폭으로 청구되는 한 달.</span></span><span class="rlmeta">07-15~08-13 · 11편</span></summary><ol class="rll"><li data-sec="sec-rate-kr"><span class="rlh">엔저도 원화 약세도 「누가 얼마 팔았다」로는 앞뒤가 안 맞는다</span><span class="rlb">일본은 금리를 -0.1%에서 1%까지 올렸는데 엔화는 38년 만의 최저다(7/24 업로드). 류상철 전 한국은행 국장은 엔저 설명도 원화 약세 설명도 수급으로는 성립하지 않는다고 데이터로 짚고, 원/달러를 움직이는 건 국내 물량이 아니라 <b>미국 국채 수익률이 만든 달러 자체의 값</b>이라고 정리했다. 6월 17일 편에서 그가 이제 금리를 끄는 게 성장이 아니라 물가라고 본 것과 한 줄로 이어진다.</span></li><li data-sec="sec-rate-jp"><span class="rlh">일본은 그 달러값을 막으려다 미국 국채를 팔았고, 미국이 팔지 말라고 했다</span><span class="rlb">김상훈 기자 편(8/6)이 7월 31일 미일 공동 개입의 속을 뜯는다. 일본은 엔화를 사려면 세계 1위로 보유한 미국 국채 <b>1조 2천억 달러</b>를 팔아 달러를 만들어야 하는데, 그 매도가 미국 장기 금리를 밀어 올린다. 이자비용이 GDP에서 미국은 3.4%, 부채가 GDP의 200%인 일본은 0.4%라 더 아픈 쪽이 미국이다. 그래서 개입의 무게는 환율이 아니라 <b>팔지 말고 FIMA 레포에 맡기라</b>는 쪽에 있다.</span></li><li data-sec="sec-rate-jp"><span class="rlh">같은 개입을 일본 쪽은 재무성의 승리로 읽는다</span><span class="rlb">이창민 한국외대 교수 편(8/11)은 방향이 반대다. 일본은행이 엔저를 막을 카드가 없으니 달러가 많은 쪽을 끌어들여야 한다는 이야기가 내부에서 계속 있었고, 개입이 성사되자 일본에서는 재무성의 승리로 평가한다는 것이다. 두 설명이 양립할 수는 있지만 <b>누가 아쉬웠는가</b>의 무게가 정반대다. 이 편이 전하는 적극재정파의 논리는 총부채 210%가 아니라 정부 금융자산을 뺀 <b>순부채 67%</b>로 보자는 것이고, 금리 인상 시점도 기업 설비투자의 GDP 비율이 20%가 된 뒤(지금 17%)로 잡는다.</span></li><li data-sec="sec-rate-em"><span class="rlh">재정 규율을 흔들자 신흥국에서는 통화가 먼저 무너졌다</span><span class="rlb">박팀장 편(7/15)의 인도네시아는 26년 1분기 성장률 5.1%로 3년 내 최고인데 루피아만 97~98년 외환위기 수준을 넘었다. MSCI가 주식 시장의 가격 형성 자체를 의심했고, 97년 뒤 법으로 박은 재정적자 3% 룰이 흔들렸고, 대통령이 만든 두 번째 국부펀드가 외국계 은행에 무담보 대출을 요청했다. 일본 편의 적극재정파가 재정 목표를 스스로 채운 족쇄라며 지운 것과 같은 종류의 결정인데 결과가 정반대다 — <b>준기축통화와 신흥국 통화의 차이</b>이고, 이창민 교수가 원화로는 같은 방식을 쓸 수 없다고 못 박은 이유이기도 하다.</span></li><li data-sec="sec-rate-eu"><span class="rlh">유럽에서는 그 청구서가 전기요금으로 왔다</span><span class="rlb">손진석 기자 편(7/27)이 독일만 2년 연속 역성장한 이유를 짚는다. 전쟁 직전 천연가스의 55%를 러시아에 의존했고, 지금 가정용 전기요금이 프랑스보다 약 45% 비싸다 — 주력이 화학·기계·철강·자동차라 전기를 많이 쓴다. 그 앞에는 탈원전이 있었고, 되돌리려 계산해 보니 새로 짓는 것 이상의 돈과 시간이 든다는 결과가 나왔다. 파이낸셜타임스가 <b>삼중 의존</b>이라 부른 나머지 둘은 중국 시장과 미국 안보다.</span></li><li data-sec="sec-rate-kr"><span class="rlh">같은 반도체 급락인데 한국만 더 깊었던 이유는 종목이 아니라 구조였다</span><span class="rlb">이선엽 AFW파트너스 대표는 8월 12일 편에서 한국의 낙폭이 유독 컸던 원인을 <b>시장 구조</b>로 짚었다. 두 기업이 시가총액의 50%를 넘고, 종목 레버리지 상품이 값이 내릴수록 더 팔아야 하며, 외국인 거래의 70~80%가 조건이 걸린 기계 주문이라 매도가 매도를 부르는데 멈추는 장치가 없었다는 것이다. 그가 지금 값을 끄는 변수로 든 것도 <b>미국 국채 10년물</b>이고, 필요하다고 본 선은 4.5% 이하다.</span></li><li data-sec="sec-rate-us"><span class="rlh">역사에서는 금리가 방향을 튼 자리마다 그 방향의 승자가 먼저 무너졌다</span><span class="rlb">박소연 신영증권 이사 편(8/6)은 신간을 놓고 1873년 철도채, 2차 대전의 일드 커브 컨트롤(3개월물 0.375%·20년물 2.5%)과 그 뒤 18~20% 물가, 1965년의 50bp와 뒤이은 다우 25% 하락, 볼커의 21%, LTCM의 한 달을 잇는다. 다만 방아쇠와 원인은 다르다 — 철도채는 정부의 4% 수익 보증이, LTCM은 25~30배 레버리지가 먼저 있었다. 결론은 <b>배팅 크기</b>다.</span></li><li data-sec="sec-semi"><span class="rlh">그 창의 끝에 애플이 중국 메모리를 쓰겠다는 요청이 놓인다</span><span class="rlb">백종훈 기자 편(8/13)이 다루는 것은 월스트리트저널의 8월 9일 보도다. 창신메모리는 미국 국방수권법상 중국군 연계 기업 명단에 2025년 지정돼 있는데, 그 제재의 취지가 미국 군과 연방정부의 거래 금지라 민간이 벌크로 사서 조립하는 것은 걸리지 않는다. 애플은 늘 맞춤형으로 주문하니 걸릴 소지가 있다는 것이 변호사들의 설명이다. 이 편이 불안해하는 대목은 불허가 아니라 <b>일부 허용</b>이다 — 애플은 공장 이전 요구도 관세도 예외를 받아 왔다.</span></li><li><span class="rlh">돈값 바깥의 세 편도 같은 창에 있다</span><span class="rlb">권효재 COR에너지인사이트 대표의 미국 데이터센터 전력난 편(7/24), 빌 애크먼 편(7/29), 김정관 산업통상부 장관 편(8/12)이 같은 기간에 들어간다. 앞의 편들이 <b>돈을 얼마에 빌리나</b>를 다뤘다면 이 셋은 그 돈이 어디로 들어가는가 — 전력, 운용, 제조 전환 — 쪽이다.</span></li></ol></details></div>
 
@@ -814,9 +839,17 @@
     }
     if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
   }
+  // 섹터를 펴는 것도 화면 하나다. 주소에는 안 실리지만 상태로 한 칸 쌓아 두어야
+  // 기기 뒤로가기가 섹터 고르기로 돌아온다 — 안 쌓으면 페이지째 나간다.
+  function markSect(){
+    if(quiet) return;
+    history.pushState({sec: null, picking: true, sect: sect}, '',
+                      location.pathname + location.search);
+  }
   function restore(st){
     quiet = true;
     cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var stSect = (st && st.sect) || null;
     var id = (location.hash || '').slice(1);
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
@@ -829,7 +862,7 @@
       var sc = el && el.closest ? el.closest('section[id]') : null;
       picking = false; only = sc ? sc.id : null;
     }
-    if(!only) sect = null;
+    if(!only) sect = stSect;
     apply();
     // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
     // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
@@ -868,8 +901,7 @@
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
-    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
-    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); markSect(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
     if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
@@ -878,15 +910,6 @@
     var sec = only ? document.getElementById(only) : null;
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
-  });
-  if(back) back.addEventListener('click', function(e){
-    if(!e.target.closest('.sb-btn')) return;
-    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
-    if(history.state && history.state.picking === false){ history.back(); return; }
-    picking=true; only=null; apply();
-    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
-    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   window.addEventListener('popstate', function(e){
     restore(e.state);
@@ -975,11 +998,6 @@
     if(posts) posts.hidden = view!=='posts';
   }
   document.addEventListener('click', function(e){
-    if(e.target.closest('.sw-up')){
-      var back=document.querySelector('.sback .sb-btn');
-      if(back) back.click();
-      return;
-    }
     var b=e.target.closest('.sw-btn'); if(!b) return;
     show(b.closest('.secsw').dataset.sec, b.dataset.view);
   });

@@ -448,28 +448,14 @@
      검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
   .stile[hidden]{display:none}
   .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
-  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-           border:1px dashed var(--line);border-radius:999px;background:transparent;
-           color:var(--ink-3)}
-  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
   .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
-  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;
-          background:var(--card,var(--surface,#fff));color:var(--ink)}
-  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
-     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
   .secsw{display:block;margin:14px 0 4px}
-  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
   .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
-  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
-         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
-  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
      같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
      인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
@@ -515,7 +501,11 @@
 
   /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
      색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
-  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
           background:var(--fig-bg,rgba(127,127,127,.05))}
   .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
   .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
@@ -531,6 +521,20 @@
   .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
   /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
   .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
@@ -539,14 +543,35 @@
   .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
-  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
-  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
-  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
   .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
-            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 
   .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
@@ -600,7 +625,7 @@
   .mcell:focus{outline:none}
   .mcell[aria-pressed="true"] rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.4}
 </style>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
 <div class="wrap">
   <header>
     <p class="eyebrow">건강 — 제3자 해설 아카이브</p>
@@ -609,7 +634,7 @@
 
   <details class="intro" open><summary><span class="in-t">처음 오셨다면</span><span class="in-s">카드 20장을 일곱 단계로</span></summary><div class="in-b"><p class="in-lede">카드 20장을 어디서부터 읽을지 정해 두었습니다. 앞 두 단계는 오늘 저녁 식탁에서 바로 쓰는 이야기고, 뒤로 갈수록 몸속에서 벌어지는 일로 들어갑니다. 제목을 누르면 그 카드가 열립니다.</p><div class="csteps"><div class="cstep"><p class="cs-h"><span class="cs-n">1</span>오늘 저녁부터</p><p class="cs-why">무엇을 뺄지 고르기 전에 얼마나 먹는지부터 본다. 밥과 과일과 단백질 순으로 읽는다.</p><div class="course"><ol><li><a class="kin-link" href="#card-밥-빵-종류가-문제가-아니라-얼마나-많이-먹느냐가-문제다">밥·빵 종류가 문제가 아니라 얼마나 많이 먹느냐가 문제다</a></li><li><a class="kin-link" href="#card-같은-열량이면-과일이-밀가루보다-나쁘다-과당은-간만-받는다">같은 열량이면 과일이 밀가루보다 나쁘다. 과당은 간만 받는다</a></li><li><a class="kin-link" href="#card-단백질은-노인이-더-먹어야-하는데-우리나라는-거꾸로-간다">단백질은 노인이 더 먹어야 하는데 우리나라는 거꾸로 간다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">2</span>몸무게와 잠</p><p class="cs-why">둘 다 병이 생기기 전에 손댈 수 있는 자리다. 체중은 쌓아 두는 쪽이고 잠은 씻어 내는 쪽이다.</p><div class="course"><ol><li><a class="kin-link" href="#card-이미-가진-살은-빼려-애쓰지-않는다-영양제는-대부분-필요-없다">이미 가진 살은 빼려 애쓰지 않는다. 영양제는 대부분 필요 없다</a></li><li><a class="kin-link" href="#card-뇌는-깊은-잠에서만-씻긴다">뇌는 깊은 잠에서만 씻긴다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">3</span>왜 그렇게 되는가</p><p class="cs-why">앞 다섯 장의 이유가 여기 있다. 과잉 칼로리에서 만성 염증으로, 지방산에서 당뇨로 이어지는 경로다.</p><div class="course"><ol><li><a class="kin-link" href="#card-염증은-나쁜-게-아니다-과하게-먹는-것이-만성-염증을-만든다">염증은 나쁜 게 아니다. 과하게 먹는 것이 만성 염증을 만든다</a></li><li><a class="kin-link" href="#card-당뇨는-포도당이-넘쳐서-생기는-병이-아니다-지방산이-신호를-막는다">당뇨는 포도당이 넘쳐서 생기는 병이 아니다. 지방산이 신호를 막는다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">4</span>내가 몇 단계인지 알기</p><p class="cs-why">검사 숫자로 자기 위치를 읽는 법이다. 손상됐는데 못 느끼는 경우가 흔해서 신호를 가리는 법을 같이 둔다.</p><div class="course"><ol><li><a class="kin-link" href="#card-의사를-만나기-전에-내가-몇-단계인지-안다">의사를 만나기 전에 내가 몇 단계인지 안다</a></li><li><a class="kin-link" href="#card-통증은-믿을-만한-알람이-아니다">통증은 믿을 만한 알람이 아니다</a></li><li><a class="kin-link" href="#card-전조증상은-하나뿐이다-그리고-시간이-곧-치료다">전조증상은 하나뿐이다. 그리고 시간이 곧 치료다</a></li><li><a class="kin-link" href="#card-뇌출혈은-뇌경색과-다른-병이다-막을-수-있는-건-다음-출혈뿐이다">뇌출혈은 뇌경색과 다른 병이다. 막을 수 있는 건 다음 출혈뿐이다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">5</span>갑자기 죽는 일</p><p class="cs-why">앞 단계를 그냥 두면 어디로 가는지다. 병 셋을 먼저 보고, 뇌가 버티는 시간과 그날의 방아쇠를 읽는다.</p><div class="course"><ol><li><a class="kin-link" href="#card-멀쩡하던-사람이-갑자기-죽는-일은-병-세-개가-전부다">멀쩡하던 사람이 갑자기 죽는 일은 병 세 개가 전부다</a></li><li><a class="kin-link" href="#card-골든타임-4분은-뇌가-버티는-시간이다">골든타임 4분은 뇌가 버티는 시간이다</a></li><li><a class="kin-link" href="#card-장전되지-않은-몸은-방아쇠를-당겨도-터지지-않는다">장전되지 않은 몸은 방아쇠를 당겨도 터지지 않는다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">6</span>약은 어디까지 왔나</p><p class="cs-why">먹는 약이 왜 작아야 하는지에서 시작해, 비만약이 술과 담배까지 줄인다는 임상까지 간다.</p><div class="course"><ol><li><a class="kin-link" href="#card-먹는-약은-900달톤을-넘지-못한다">먹는 약은 900달톤을 넘지 못한다</a></li><li><a class="kin-link" href="#card-덜-먹게-하는-약이-술과-담배까지-줄이는-이유">덜 먹게 하는 약이 술과 담배까지 줄이는 이유</a></li><li><a class="kin-link" href="#card-근거는-관찰에서-임상으로-막-넘어왔다">근거는 관찰에서 임상으로 막 넘어왔다</a></li><li><a class="kin-link" href="#card-미국은-이미-대실험-중이고-짝퉁-약이-같이-돈다">미국은 이미 대실험 중이고, 짝퉁 약이 같이 돈다</a></li></ol></div></div><div class="cstep"><p class="cs-h"><span class="cs-n">7</span>더 깊이</p><p class="cs-why">2025년 노벨생리의학상 해설과 뇌 이야기다. 앞을 읽고 오면 훨씬 잘 붙는다.</p><div class="course"><ol><li><a class="kin-link" href="#card-면역을-말리는-세포가-있다-암이-그-세포를-구슬린다">면역을 말리는 세포가 있다. 암이 그 세포를 구슬린다</a></li><li><a class="kin-link" href="#card-도파민은-쾌락이-아니라-희망의-물질이다">도파민은 쾌락이 아니라 희망의 물질이다</a></li></ol></div></div></div></div></details><details class="mrg"><summary><span class="mg-t">합류도</span><span class="mg-s">주제 1개 — 카드가 어디로 모이는지 먼저 보고 들어갑니다</span></summary><div class="mg-b"><div class="mg-one"><p class="mg-h">과잉 칼로리에서 혈관 사건까지</p><p class="mg-l">많이 먹어 남은 에너지가 염증과 지방산을 거쳐 혈관을 굳히고, 굳은 혈관에서 뇌졸중·심근경색·급사가 난다. 카드 열한 장이 그 한 줄의 앞뒤다.</p><svg viewBox="0 0 640 212" role="group" aria-label="과잉 칼로리에서 혈관 사건까지 합류도"><text x="67" y="22" text-anchor="middle" class="m-col">바깥에서 오는 것</text><text x="320" y="22" text-anchor="middle" class="m-col">값을 정하는 곳</text><text x="551" y="22" text-anchor="middle" class="m-col">합류하는 곳</text><g class="mcell" data-cell="vessel-outer0" data-label="먹는 양과 종류" role="button" tabindex="0" aria-pressed="false" aria-label="먹는 양과 종류 — 카드 2장"><title>먹는 양과 종류 — 카드 2장</title><rect x="8" y="44" width="118" height="40" rx="9"/><text x="67" y="68" text-anchor="middle" class="m-lab">먹는 양과 종류</text></g><g class="mcell" data-cell="vessel-outer1" data-label="몸무게와 잠" role="button" tabindex="0" aria-pressed="false" aria-label="몸무게와 잠 — 카드 2장"><title>몸무게와 잠 — 카드 2장</title><rect x="8" y="98" width="118" height="40" rx="9"/><text x="67" y="122" text-anchor="middle" class="m-lab">몸무게와 잠</text></g><g class="mcell" data-cell="vessel-outer2" data-label="그날의 방아쇠" role="button" tabindex="0" aria-pressed="false" aria-label="그날의 방아쇠 — 카드 1장"><title>그날의 방아쇠 — 카드 1장</title><rect x="8" y="152" width="118" height="40" rx="9"/><text x="67" y="176" text-anchor="middle" class="m-lab">그날의 방아쇠</text></g><g class="mcell" data-cell="vessel-price0" data-label="몸속에서 벌어지는 일" role="button" tabindex="0" aria-pressed="false" aria-label="몸속에서 벌어지는 일 — 카드 2장"><title>몸속에서 벌어지는 일 — 카드 2장</title><rect x="248" y="71" width="144" height="40" rx="9"/><text x="320" y="95" text-anchor="middle" class="m-lab">몸속에서 벌어지는 일</text></g><g class="mcell" data-cell="vessel-price1" data-label="숫자로 재는 내 단계" role="button" tabindex="0" aria-pressed="false" aria-label="숫자로 재는 내 단계 — 카드 2장"><title>숫자로 재는 내 단계 — 카드 2장</title><rect x="248" y="125" width="144" height="40" rx="9"/><text x="320" y="149" text-anchor="middle" class="m-lab">숫자로 재는 내 단계</text></g><g class="mcell is-merge" data-cell="vessel-merge" data-label="혈관에서 사건이 나느냐" role="button" tabindex="0" aria-pressed="false" aria-label="혈관에서 사건이 나느냐 — 카드 4장"><title>혈관에서 사건이 나느냐 — 카드 4장</title><rect x="470" y="94" width="162" height="48" rx="9"/><text x="551" y="122" text-anchor="middle" class="m-lab">혈관에서 사건이 나느냐</text></g><path class="mflow" d="M126 64 L210 118"/><path class="mflow" d="M126 118 L210 118"/><path class="mflow" d="M126 172 L210 118"/><path class="mflow" d="M210 118 L248 91"/><path class="mflow" d="M392 91 L470 118"/><path class="mflow" d="M210 118 L248 145"/><path class="mflow" d="M392 145 L470 118"/><circle class="mdot" cx="210" cy="118" r="3.5"/></svg></div><p class="mg-n">칸을 누르면 그 칸에 선 카드만 남습니다. 가운데 점은 바깥 조건이 한 번 모이는 자리입니다 — 어느 바깥이 어느 값으로 가는지는 이 그림이 정하지 않습니다.</p></div></details>
 
-  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">20</span></button><button class="stile" data-sec="sec-inflam" aria-pressed="false"><span class="st-num">01</span><span class="st-t">염증과 면역</span><span class="st-s">염증이 뭔지, 음식을 과하게 먹으면 왜 만성이 되는지, 그리고 암이 면역을 어떻게…</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-diabetes" aria-pressed="false"><span class="st-num">02</span><span class="st-t">당뇨</span><span class="st-s">지방산이 신호를 막아 생기는 병, 그리고 과당이 다른 당과 갈라지는 지점</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-eat" aria-pressed="false"><span class="st-num">03</span><span class="st-t">먹는 것</span><span class="st-s">무엇을 먹느냐보다 얼마나 먹게 되느냐, 그리고 단백질은 누가 더 먹어야 하는지</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-stage" aria-pressed="false"><span class="st-num">04</span><span class="st-t">내 단계 알기</span><span class="st-s">의사를 만나기 전에 스스로 확인하는 방법, 그리고 유일한 전조증상</span><span class="st-n cnt">4</span></button><button class="stile" data-sec="sec-weight" aria-pressed="false"><span class="st-num">05</span><span class="st-t">몸무게와 약</span><span class="st-s">살이 자산이 되는 경우, 그리고 영양제·스타틴·다이어트 약을 보는 눈</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-sudden" aria-pressed="false"><span class="st-num">06</span><span class="st-t">갑자기 죽는 일</span><span class="st-s">멀쩡하던 사람이 한 시간 안에 죽는 병 셋, 뇌가 버티는 4분, 그리고 그날…</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-glp1" aria-pressed="false"><span class="st-num">07</span><span class="st-t">비만약과 중독</span><span class="st-s">덜 먹게 하는 약이 왜 갈망까지 줄이는지, 근거는 어디까지 왔고 무엇이 위험한지</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-brain" aria-pressed="false"><span class="st-num">08</span><span class="st-t">뇌 · 마음 · 수면</span><span class="st-s">뇌가 씻기는 시간대, 그리고 의욕과 만족을 정하는 물질</span><span class="st-n cnt">2</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">20</span></button><button class="stile" data-sec="sec-inflam" aria-pressed="false"><span class="st-num">01</span><span class="st-t">염증과 면역</span><span class="st-s">염증이 뭔지, 음식을 과하게 먹으면 왜 만성이 되는지, 그리고 암이 면역을 어떻게…</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-diabetes" aria-pressed="false"><span class="st-num">02</span><span class="st-t">당뇨</span><span class="st-s">지방산이 신호를 막아 생기는 병, 그리고 과당이 다른 당과 갈라지는 지점</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-eat" aria-pressed="false"><span class="st-num">03</span><span class="st-t">먹는 것</span><span class="st-s">무엇을 먹느냐보다 얼마나 먹게 되느냐, 그리고 단백질은 누가 더 먹어야 하는지</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-stage" aria-pressed="false"><span class="st-num">04</span><span class="st-t">내 단계 알기</span><span class="st-s">의사를 만나기 전에 스스로 확인하는 방법, 그리고 유일한 전조증상</span><span class="st-n cnt">4</span></button><button class="stile" data-sec="sec-weight" aria-pressed="false"><span class="st-num">05</span><span class="st-t">몸무게와 약</span><span class="st-s">살이 자산이 되는 경우, 그리고 영양제·스타틴·다이어트 약을 보는 눈</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-sudden" aria-pressed="false"><span class="st-num">06</span><span class="st-t">갑자기 죽는 일</span><span class="st-s">멀쩡하던 사람이 한 시간 안에 죽는 병 셋, 뇌가 버티는 4분, 그리고 그날…</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-glp1" aria-pressed="false"><span class="st-num">07</span><span class="st-t">비만약과 중독</span><span class="st-s">덜 먹게 하는 약이 왜 갈망까지 줄이는지, 근거는 어디까지 왔고 무엇이 위험한지</span><span class="st-n cnt">3</span></button><button class="stile" data-sec="sec-brain" aria-pressed="false"><span class="st-num">08</span><span class="st-t">뇌 · 마음 · 수면</span><span class="st-s">뇌가 씻기는 시간대, 그리고 의욕과 만족을 정하는 물질</span><span class="st-n cnt">2</span></button></div><div class="sback" hidden><span class="sb-now"></span></div>
 
   
 
@@ -1685,9 +1710,17 @@
     }
     if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
   }
+  // 섹터를 펴는 것도 화면 하나다. 주소에는 안 실리지만 상태로 한 칸 쌓아 두어야
+  // 기기 뒤로가기가 섹터 고르기로 돌아온다 — 안 쌓으면 페이지째 나간다.
+  function markSect(){
+    if(quiet) return;
+    history.pushState({sec: null, picking: true, sect: sect}, '',
+                      location.pathname + location.search);
+  }
   function restore(st){
     quiet = true;
     cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var stSect = (st && st.sect) || null;
     var id = (location.hash || '').slice(1);
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
@@ -1700,7 +1733,7 @@
       var sc = el && el.closest ? el.closest('section[id]') : null;
       picking = false; only = sc ? sc.id : null;
     }
-    if(!only) sect = null;
+    if(!only) sect = stSect;
     apply();
     // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
     // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
@@ -1739,8 +1772,7 @@
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
-    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
-    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); markSect(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
     if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
@@ -1749,15 +1781,6 @@
     var sec = only ? document.getElementById(only) : null;
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
-  });
-  if(back) back.addEventListener('click', function(e){
-    if(!e.target.closest('.sb-btn')) return;
-    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
-    if(history.state && history.state.picking === false){ history.back(); return; }
-    picking=true; only=null; apply();
-    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
-    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   window.addEventListener('popstate', function(e){
     restore(e.state);
@@ -1846,11 +1869,6 @@
     if(posts) posts.hidden = view!=='posts';
   }
   document.addEventListener('click', function(e){
-    if(e.target.closest('.sw-up')){
-      var back=document.querySelector('.sback .sb-btn');
-      if(back) back.click();
-      return;
-    }
     var b=e.target.closest('.sw-btn'); if(!b) return;
     show(b.closest('.secsw').dataset.sec, b.dataset.view);
   });

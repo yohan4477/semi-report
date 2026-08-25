@@ -89,6 +89,40 @@ def circles(svg):
     return out
 
 
+
+RECT = re.compile(r'<rect x="(-?[\d.]+)" y="(-?[\d.]+)" width="([\d.]+)" height="([\d.]+)"([^>]*)/>')
+
+
+def panels(svg):
+    """글자를 담는 네모 — 상자와 색 딱지. 판을 덮는 큰 면은 뺀다."""
+    out = []
+    for m in RECT.finditer(svg):
+        x, y, wd, ht = (float(m.group(i)) for i in (1, 2, 3, 4))
+        if wd < 20 or ht < 20:
+            continue
+        out.append((x, x + wd, y, y + ht))
+    return out
+
+
+def under_panel(svg):
+    """제 상자 밖 글자가 남의 상자에 걸쳤나.
+
+    상자가 글자보다 늦게 그려지면 글자가 그 아래로 숨는다. 상자가 높아졌는데
+    아래 주석 자리를 고정해 뒀을 때 이렇게 된다(2026-08-25). 제 상자 안에
+    통째로 든 글자는 정상이다 — 걸친 것만 잡는다."""
+    bad = []
+    ps = panels(svg)
+    for x0, x1, y0, y1, txt in textboxes(svg):
+        for rx0, rx1, ry0, ry1 in ps:
+            if x1 <= rx0 or rx1 <= x0 or y1 <= ry0 or ry1 <= y0:
+                continue
+            if rx0 - 1 <= x0 and x1 <= rx1 + 1 and ry0 - 1 <= y0 and y1 <= ry1 + 1:
+                continue
+            bad.append('상자에 걸침 (%.0f..%.0f, %.0f..%.0f)  %s'
+                       % (rx0, rx1, ry0, ry1, txt[:30]))
+    return bad
+
+
 def seg_hits_box(p0, p1, box):
     """선분이 글자 상자를 지나는가. 선분을 잘게 끊어 점으로 본다."""
     x0, x1, y0, y1 = box[:4]
@@ -122,6 +156,7 @@ def hits(svg):
             if r >= 20 and x0 >= cx - r and x1 <= cx + r and y0 >= cy - r and y1 <= cy + r:
                 continue
             bad.append('동그라미에 깔림 (%.0f,%.0f,r%.1f)  %s' % (cx, cy, r, b[4][:30]))
+    bad += under_panel(svg)
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i], boxes[j]

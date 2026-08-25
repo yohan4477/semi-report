@@ -49,28 +49,14 @@ PICK_CSS = '''
      검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
   .stile[hidden]{display:none}
   .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
-  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-           border:1px dashed var(--line);border-radius:999px;background:transparent;
-           color:var(--ink-3)}
-  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
   .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
   .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
   .sback[hidden]{display:none}
-  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
-          border:1px solid var(--line);border-radius:999px;
-          background:var(--card,var(--surface,#fff));color:var(--ink)}
-  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
   .sb-now{font-weight:800;font-size:13.5px}
   /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
-  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
-     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
   .secsw{display:block;margin:14px 0 4px}
-  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
   .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
   .secsw[hidden]{display:none}
-  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
-         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
-  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
   /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
      같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
      인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
@@ -121,7 +107,7 @@ def css():
     out = src[src.find('<style'):src.find('</style>') + 8]
     # 원본에 이미 표준 CSS가 들어가 있으면(에너지 페이지 전환 이후) 두 번 붙이지 않는다
     out = out if '.uc-gain{' in out else out.replace('</style>', EXTRA_CSS)
-    if '.sb-btn{' not in out:
+    if '.sback{' not in out:
         out = out.replace('</style>', PICK_CSS)
     # 물려받은 CSS에 표준 규칙이 이미 구워져 있으면 위에서 EXTRA_CSS가 안 붙는다 —
     # 그림 규칙은 그때도 있어야 한다. 없으면 검은 덩어리로만 그려진다.
@@ -269,7 +255,7 @@ LINK_JS = """<script>
 })();
 </script>"""
 
-SW_JS = '<script>\n(function(){\n  function show(sid, view){\n    var sw=document.querySelector(\'.secsw[data-sec="\'+sid+\'"]\');\n    if(sw) sw.querySelectorAll(\'.sw-btn\').forEach(function(b){\n      b.setAttribute(\'aria-pressed\', String(b.dataset.view===view));\n    });\n    var val=document.querySelector(\'.sv-val[data-sec="\'+sid+\'"]\');\n    var posts=document.querySelector(\'.sv-posts[data-sec="\'+sid+\'"]\');\n    if(val) val.hidden = view!==\'val\';\n    if(posts) posts.hidden = view!==\'posts\';\n  }\n  document.addEventListener(\'click\', function(e){\n    if(e.target.closest(\'.sw-up\')){\n      var back=document.querySelector(\'.sback .sb-btn\');\n      if(back) back.click();\n      return;\n    }\n    var b=e.target.closest(\'.sw-btn\'); if(!b) return;\n    show(b.closest(\'.secsw\').dataset.sec, b.dataset.view);\n  });\n  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다\n  function fromHash(){\n    var id=(location.hash||\'\').slice(1); if(!id) return;\n    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;\n    var box=h.closest(\'.sv-posts\'); if(box) show(box.dataset.sec, \'posts\');\n  }\n  window.addEventListener(\'hashchange\', fromHash);\n  if(document.readyState===\'loading\'){\n    document.addEventListener(\'DOMContentLoaded\', fromHash);\n  } else { fromHash(); }\n})();\n</script>'
+SW_JS = '<script>\n(function(){\n  function show(sid, view){\n    var sw=document.querySelector(\'.secsw[data-sec="\'+sid+\'"]\');\n    if(sw) sw.querySelectorAll(\'.sw-btn\').forEach(function(b){\n      b.setAttribute(\'aria-pressed\', String(b.dataset.view===view));\n    });\n    var val=document.querySelector(\'.sv-val[data-sec="\'+sid+\'"]\');\n    var posts=document.querySelector(\'.sv-posts[data-sec="\'+sid+\'"]\');\n    if(val) val.hidden = view!==\'val\';\n    if(posts) posts.hidden = view!==\'posts\';\n  }\n  document.addEventListener(\'click\', function(e){\n    var b=e.target.closest(\'.sw-btn\'); if(!b) return;\n    show(b.closest(\'.secsw\').dataset.sec, b.dataset.view);\n  });\n  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다\n  function fromHash(){\n    var id=(location.hash||\'\').slice(1); if(!id) return;\n    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;\n    var box=h.closest(\'.sv-posts\'); if(box) show(box.dataset.sec, \'posts\');\n  }\n  window.addEventListener(\'hashchange\', fromHash);\n  if(document.readyState===\'loading\'){\n    document.addEventListener(\'DOMContentLoaded\', fromHash);\n  } else { fromHash(); }\n})();\n</script>'
 
 
 NAV_JS = '''<script>
@@ -448,9 +434,17 @@ NAV_JS = '''<script>
     }
     if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
   }
+  // 섹터를 펴는 것도 화면 하나다. 주소에는 안 실리지만 상태로 한 칸 쌓아 두어야
+  // 기기 뒤로가기가 섹터 고르기로 돌아온다 — 안 쌓으면 페이지째 나간다.
+  function markSect(){
+    if(quiet) return;
+    history.pushState({sec: null, picking: true, sect: sect}, '',
+                      location.pathname + location.search);
+  }
   function restore(st){
     quiet = true;
     cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var stSect = (st && st.sect) || null;
     var id = (location.hash || '').slice(1);
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
@@ -463,7 +457,7 @@ NAV_JS = '''<script>
       var sc = el && el.closest ? el.closest('section[id]') : null;
       picking = false; only = sc ? sc.id : null;
     }
-    if(!only) sect = null;
+    if(!only) sect = stSect;
     apply();
     // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
     // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
@@ -502,8 +496,7 @@ NAV_JS = '''<script>
   box.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
     cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
-    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
-    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); markSect(); window.scrollTo({top:0}); return; }
     only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
     if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
     picking=false;
@@ -512,15 +505,6 @@ NAV_JS = '''<script>
     var sec = only ? document.getElementById(only) : null;
     if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
     else window.scrollTo({top:0, behavior:'smooth'});
-  });
-  if(back) back.addEventListener('click', function(e){
-    if(!e.target.closest('.sb-btn')) return;
-    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
-    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
-    if(history.state && history.state.picking === false){ history.back(); return; }
-    picking=true; only=null; apply();
-    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
-    box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   window.addEventListener('popstate', function(e){
     restore(e.state);
@@ -548,16 +532,23 @@ def snip(text, limit=46):
     return cut.rstrip(' ,·') + '…'
 
 
-BACK = ('<div class="sback" hidden><button type="button" class="sb-btn">← 이전</button>'
-        '<span class="sb-now"></span></div>')
+# 되돌아가는 길은 기기 뒤로가기 하나다 — 화면 안에 「← 이전」을 두지 않는다.
+# 남는 것은 지금 어느 자리인지 알리는 이름표뿐이다.
+BACK = '<div class="sback" hidden><span class="sb-now"></span></div>'
 
 # 회사 검색창 — 타일 격자 바로 위, 같은 .sec-pick 컨테이너 안에 둔다. box.hidden = !picking를
 # 같이 타게 하려는 것이다(타일 고르는 화면에만 있으면 된다). 관문이 아니다 — 아무것도 막지
 # 않고 바로 아래에 타일이 그대로 있다. NAV_JS가 입력을 받아 섹터 층을 건너뛰고 회사 타일만
 # 글자로 거른다.
-SEARCH_HTML = ('<div class="ssearch"><input type="search" class="sq" '
-               'placeholder="회사 이름이나 종목코드로 찾기" aria-label="회사 찾기">'
-               '<span class="sq-n"></span></div>')
+def search_html(ph='회사 이름이나 종목코드로 찾기'):
+    """검색창. 무엇을 찾는 장인지에 따라 안내 문구가 달라진다 — 회사 목록이 아닌 장에서
+    「종목코드로 찾기」가 서 있으면 그 장이 무엇을 담았는지 잘못 알린다."""
+    return ('<div class="ssearch"><input type="search" class="sq" '
+            'placeholder="%s" aria-label="찾기">'
+            '<span class="sq-n"></span></div>' % ph)
+
+
+SEARCH_HTML = search_html()
 
 
 def _as_tops(x):
@@ -569,7 +560,8 @@ def _as_tops(x):
     return list(x)
 
 
-def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_top=''):
+def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_top='',
+               search_ph=''):
     """섹션을 네모 타일로 세운다 — 무엇이 몇 편 들었는지 접지 않고 보여 준다.
 
     extra는 카드가 아닌 섹션(통합 인사이트 등)을 맨 앞 타일로 세운다: (sid, 이름, 설명, 편수).
@@ -612,7 +604,7 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
     if not groups:
         tiles.extend(_tile(sid) for sid in order)
         return ('<div class="sec-pick sgrid">%s%s%s</div>%s'
-                % (SEARCH_HTML, pick_top, ''.join(tiles), BACK))
+                % (search_html(search_ph) if search_ph else SEARCH_HTML, pick_top, ''.join(tiles), BACK))
 
     # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음 안이
     # (섹터, 설명, [sid…]) 꼴이면 섹터 타일이 한 겹 더 선다. 묶음·섹터에 안 들어간
@@ -635,7 +627,7 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
             body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
                         '<div class="sgrid">%s</div></div>' % (label, inner))
         return ('<div class="sec-pick">%s%s%s</div>%s'
-                % (SEARCH_HTML, pick_top, ''.join(body), BACK))
+                % (search_html(search_ph) if search_ph else SEARCH_HTML, pick_top, ''.join(body), BACK))
 
     # 섹터 타일은 그 섹터에 든 섹션 id를 달고 다닌다 — 회사 수를 세는 것도, 눌렀을 때
     # 어느 회사를 펼지도 이 목록 하나로 정해진다.
@@ -656,13 +648,12 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
             inner = ''.join(_tile(sid) for sid in order if sid in members)
             panels.append('<div class="sectp" data-sect="%s" hidden>'
                           '<div class="sectp-head">'
-                          '<button type="button" class="sect-up">◂ 섹터 다시 고르기</button>'
                           '<span class="sectp-t">%s</span></div>'
                           '<div class="sgrid">%s</div></div>' % (sect_id, name, inner))
         body.append('<div class="sgrp"><p class="sgrp-t">%s</p>'
                     '<div class="sgrid">%s</div></div>' % (label, ''.join(cells)))
     return ('<div class="sec-pick">%s%s<div class="sectpick">%s</div>%s</div>%s'
-            % (SEARCH_HTML, pick_top, ''.join(body), ''.join(panels), BACK))
+            % (search_html(search_ph) if search_ph else SEARCH_HTML, pick_top, ''.join(body), ''.join(panels), BACK))
 
 
 # ── 합류도 ────────────────────────────────────────────────────────────────
@@ -966,10 +957,11 @@ XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹
 
 
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='', tops=None,
+           search_ph='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
-           sw_labels=('밸류에이션', '개별 포스트', '◂ 회사 다시 고르기')):
+           sw_labels=('밸류에이션', '개별 포스트')):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -1007,7 +999,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
     extra = [l[:4] for l in layers] or None
     # 처음 화면이 「전체」라 타일에 적히는 수도 전체다(JS가 범위를 바꿀 때 다시 센다)
     nav = sec_picker(secs, order, len(cards) + sum(l[3] for l in layers), extra,
-                     groups=sec_groups, badges=sec_badges, pick_top=pick_top)
+                     groups=sec_groups, badges=sec_badges, pick_top=pick_top,
+                     search_ph=search_ph)
     tabs = ''
     if scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
@@ -1033,14 +1026,11 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
             # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
             # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
             lead = ('<div class="secsw" data-sec="' + sid + '" hidden>'
-                    # 맨 앞은 올라가는 길이다. 내용 버튼과 생김새를 갈라 놓는다 —
-                    # 같은 모양이면 어느 쪽이 위로 가는 길인지 눌러 봐야 안다.
-                    '<button type="button" class="sw-up">%s</button>'
                     '<button type="button" class="sw-btn" data-view="val">%s</button>'
                     '<button type="button" class="sw-btn" data-view="posts">%s'
                     ' <span class="sw-n">%d</span></button></div>'
                     '<div class="sec-lead sv-val" data-sec="%s" hidden>%s</div>'
-                    % (sw_labels[2], sw_labels[0], sw_labels[1], len(cs), sid, lead))
+                    % (sw_labels[0], sw_labels[1], len(cs), sid, lead))
             cards_html = '<div class="sv-posts" data-sec="%s" hidden>%s</div>' % (sid, cards_html)
         body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2>%s</div>%s%s%s%s</section>'
@@ -1157,7 +1147,7 @@ def check_labels(cards):
 # 이 규약이 깨진 채로 페이지가 나가면 대시보드마다 첫 화면이 달라진다. 2026-08-17에 부동산만
 # 관문 버튼이 하나 더 생겨 그렇게 됐다. 사람이 눈으로 지키지 말고 여기서 막는다.
 def check_ui(html, has_top):
-    must = [('sec-pick', '섹션 타일'), ('class="sback"', '「← 이전」 버튼'),
+    must = [('sec-pick', '섹션 타일'), ('class="sback"', '현재 자리 이름표'),
             ('class="stile is-all"', '전체 보기 타일')]
     for key, name in must:
         assert key in html, 'UI 규약 위반: %s이 없다' % name

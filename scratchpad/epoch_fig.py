@@ -39,6 +39,32 @@ def wrap_lines(text, bw, fs=13.5):
     return out
 
 
+def _new_item(ln):
+    """새 항목이 시작되는 줄인가 — 앞줄과 이어 붙이면 안 되는 자리."""
+    return ln.startswith(('입력', '출력', '예:', '예 ', '왼쪽', '오른쪽')) or ' — ' in ln[:14]
+
+
+def reflow(lines, bw, fs=13.5):
+    """손으로 끊어 놓은 설명 줄을 상자 폭에 맞춰 다시 감는다.
+
+    글자 크기를 올릴 때마다 예전 줄바꿈 자리가 어긋난다. 짧은 줄이 여럿 남아
+    상자 오른쪽이 비고, 「글을 더 쓸 수 있는데 왜 비었나」가 된다(2026-08-25).
+
+    문장이 끝난 자리와 새 항목이 시작되는 자리는 그대로 둔다 — 「입력 —」과
+    「출력 —」을 한 줄로 붙이면 두 항목이 한 항목으로 읽힌다."""
+    out, buf = [], ''
+    for ln in lines:
+        if buf and (_new_item(ln) or buf.rstrip().endswith(('다', '다.'))):
+            out += wrap_lines(buf, bw, fs)
+            buf = ln
+        else:
+            buf = ln if not buf else buf + ' ' + ln
+    if buf:
+        out += wrap_lines(buf, bw, fs)
+    return out
+
+
+
 
 # ── 이 장 도해의 한 벌 ────────────────────────────────────────────────────
 # 47장이 한 화면에서 이어 읽히려면 같은 역할에 같은 값을 써야 한다. 새 그림도 이대로 쓴다.
@@ -58,8 +84,11 @@ def wrap_lines(text, bw, fs=13.5):
 #             640 판이 카드 안에서 640에 묶여 있어 10px 글자가 10px 그대로 나왔다.
 #             판을 카드 너비까지 늘이고(card_lib의 svg.epoch max-width:100%) 글자를
 #             카드 산문(16px)과 같은 자리에 올렸다.
+#             가장 작은 글자가 13이다. 카드 캡션(12.5px)보다 작아지면 안 된다 —
+#             판 배율이 1.21이라 13이 15.7px 로 나온다
 #   줄 간격   같은 자리에 쌓는 글자는 17 이상 띄운다. t-sm 상자 높이가 14.1이라
 #             14로 쌓으면 검사기에 걸린다. 가로축 눈금은 축에서 22 내린다
+#             상자 이름과 첫 설명 줄 사이는 25 — 붙이면 한 덩어리로 읽힌다
 #             글자를 키우면 상자도 같이 넓혀야 한다 — 폭은 w()가 재고,
 #             긴 설명 줄은 wrap_lines() 가 폭에 맞춰 자른다
 #   색        원문 팔레트를 토큰으로 들여왔다 — svg.epoch 가 물린다(card_lib.FIG_CSS).
@@ -69,11 +98,16 @@ def wrap_lines(text, bw, fs=13.5):
 
 
 # ── 부품 ──────────────────────────────────────────────────────────────
-def box(x, y, bw, name, lines, key=False, wrap=False):
+def box(x, y, bw, name, lines, key=False, wrap=False, flow=True):
     """상자 하나. 이름 한 줄 + 설명 여러 줄. 높이는 줄 수가 정한다.
 
-    설명은 그 주체가 하는 동사로 쓴다(규칙 5). 숫자는 이 상자 안에만 산다."""
-    h = 28 + 19 * len(lines) + 4
+    설명은 그 주체가 하는 동사로 쓴다(규칙 5). 숫자는 이 상자 안에만 산다.
+    이름(굵은 줄)과 첫 설명 줄 사이는 25 띄운다 — 붙여 놓으면 한 덩어리로 읽힌다.
+    줄바꿈은 reflow() 가 폭을 재서 다시 잡는다 — 손으로 끊은 자리는 참고만 한다.
+    끊은 자리를 반드시 지켜야 하면 flow=False."""
+    if flow:
+        lines = reflow(lines, bw)
+    h = 33 + 19 * len(lines) + 4
     cls = 'bx-wrap' if wrap else ('bx-key' if key else 'bx')
     o = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="%s"/>' % (x, y, bw, h, cls)]
     assert w(name, 16) < bw - 12, '상자 이름이 넘친다: %s' % name
@@ -81,7 +115,7 @@ def box(x, y, bw, name, lines, key=False, wrap=False):
     for i, ln in enumerate(lines):
         assert w(ln, 13.5) < bw - 12, '설명 줄이 상자를 넘는다(%d px): %s' % (bw, ln)
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>'
-                 % (x + 6, y + 42 + 19 * i, esc(ln)))
+                 % (x + 6, y + 47 + 19 * i, esc(ln)))
     return ''.join(o), h
 
 
@@ -651,7 +685,7 @@ def fig_openai_line():
              'fill:var(--fig-good,#2f8f6b)">오픈AI</text>' % (X1 + 8, py(oa[8]) + 4))
     o.append(lab(px_(5), py(world[5]) + 22, '2025년 3.3배', fs=13.5))
     # 선 위에 얹으면 글자가 선에 깔린다 — 오픈AI 선은 오르막이라 아래로 내린다
-    o.append('<text x="%.1f" y="%.1f" class="t-cash" style="font-size:10px">2025년 4.6배</text>'
+    o.append('<text x="%.1f" y="%.1f" class="t-cash">2025년 4.6배</text>'
              % (px_(5) + 6, py(oa[5]) + 24))
     o.append(lab(16, Y1 + 44, '세계 총계는 Epoch의 칩 판매 자료를 한 분기 당겨 누적한 값이다. '
                               '2024-Q4 앞이 점선인 것은', fs=13))
@@ -959,17 +993,20 @@ def fig_two_skills():
              '추세보다 7개월 앞섰다',
              ['Cyber-ECI가 뚜렷하게 뛴다', '앤트로픽 자체 분석도',
               '같은 방향을 가리킨다'], True)]
+    bot, vy = 44, 0
     for x, name, what, verdict, why, key in cols:
         s1, h1 = box(x, 44, 272, name, what)
         o.append(s1)
         o.append(arrow('svc', [(x + 136, 44 + h1), (x + 136, 44 + h1 + 26)]))
         s2, h2 = box(x, 44 + h1 + 26, 272, verdict, why, key=key)
         o.append(s2)
+        bot = max(bot, 44 + h1 + 26 + h2)
+        vy = max(vy, 44 + h1 + 26)
     o.append(role(320, 62, '무엇인가'))
-    o.append(role(320, 172, '판정'))
-    o.append(lab(16, 268, '둘 다 있어야 공격이 성립한다 — 약점을 찾고, 그 약점으로 원하는 일을 '
-                          '하게 만든다', fs=13))
-    return svg(282, ''.join(o))
+    o.append(role(320, vy + 18, '판정'))
+    o.append(lab(16, bot + 22, '둘 다 있어야 공격이 성립한다 — 약점을 찾고, 그 약점으로 원하는 일을 '
+                               '하게 만든다', fs=13))
+    return svg(bot + 34, ''.join(o))
 
 
 def fig_eci_lead():
@@ -1676,6 +1713,7 @@ def fig_nine_questions():
                              ('⑧', '강화학습이 얼마나 일반화되나'),
                              ('⑨', '새 생각을 낼 수 있나')], True)]
     x = 8
+    bot = 58
     for title, items, key in groups:
         o.append('<text x="%d" y="46" class="t-lab">%s</text>' % (x + 4, esc(title)))
         y = 58
@@ -1683,10 +1721,11 @@ def fig_nine_questions():
             s_, h = box(x, y, 312, '%s %s' % (num, q), [], key=key)
             o.append(s_)
             y += h + 8
+        bot = max(bot, y)
         x += 320
-    o.append(lab(16, 58 + 5 * 42 + 8, 'Epoch의 벤치마크 작업이 무엇을 답하려고 하는지를 필자가 '
-                                      '직접 적은 목록이다', fs=13))
-    return svg(58 + 5 * 42 + 22, ''.join(o))
+    o.append(lab(16, bot + 14, 'Epoch의 벤치마크 작업이 무엇을 답하려고 하는지를 필자가 '
+                               '직접 적은 목록이다', fs=13))
+    return svg(bot + 26, ''.join(o))
 
 
 def fig_scope_ladder():

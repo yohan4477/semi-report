@@ -1494,4 +1494,4 @@ if __name__ == '__main__':
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,
               top_sub='카드 30장을 원문이 나온 순서로 — 어느 갈아탐을 언제 잡아냈나',
               sec_top={s[0]: orbit_map_html(s[0]) for s in _secs},
-              sw_labels=('계보 지도', '개별 카드', '◂ 궤도 다시 고르기'))
+              sw_labels=('계보 지도', '개별 카드'))
