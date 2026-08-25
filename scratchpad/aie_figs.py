@@ -20,15 +20,16 @@
 늘어놨다가 글자가 안 보인다는 지적을 받고 고쳤다(2026-08-26).
 
 배치는 `scratchpad/check_fig.py`가 검사한다. 그 검사기는 한 글자를 9px로 어림하고
-text-anchor를 **태그 속성에서** 읽는데, 이 장 글자는 13px이라 9px 어림으로는 넉넉해
-보이는 칸이 실제로는 넘친다. 그래서 아래 헬퍼가 13.5px로 따로 재고 넘치면 멈춘다.
+text-anchor를 **태그 속성에서** 읽는데, 이 장 글자는 본문과 같은 15px이라 9px
+어림으로는 넉넉해 보이는 칸이 실제로는 넘친다. 아래 헬퍼가 15.5px로 따로 재고
+넘치면 멈춘다. 칸 좌우 여백도 6px까지 줄여 글자에 자리를 몰아준다.
 """
 
 # ── 판을 짜는 작은 부품 ────────────────────────────────────────────────
 # 자리를 손으로 찍으면 반드시 어긋난다. 칸 폭·줄 간격을 계산해서 내보낸다.
-LH = 20          # 상자 안 줄 간격
-CHW = 13.5       # 13px 한글 한 글자 실제 폭 어림. 칸 폭을 이걸로 잡는다
-PAD = 16         # 칸 좌우 여백
+LH = 24          # 상자 안 줄 간격
+CHW = 15.5       # 15px 한글 한 글자 실제 폭 어림. 칸 폭을 이걸로 잡는다
+PAD = 6          # 칸 좌우 여백. 글자를 키우려고 최소로 둔다
 
 
 def box(x, y, w, h, lines, cls='fig-box', tcls='fig-b'):
@@ -72,7 +73,7 @@ def legend(items, y):
     for cls, t in items:
         out.append('  <rect x="%g" y="%g" width="13" height="13" rx="3" class="fig-box %s"/>' % (x, y, cls))
         out.append('  <text x="%g" y="%g" class="fig-lg">%s</text>' % (x + 21, y + 11, t))
-        x += 25 + len(t) * 12 + 28
+        x += 25 + len(t) * 15.5 + 24
     assert x <= 680, '범례가 판보다 넓다'
     return out
 
@@ -192,11 +193,11 @@ _P2B_CAP = ('발표자가 든 두 사례다. <b>환경의 사소한 버릇을 �
 
 _DCOLS = [(0, 216, 'fig-box fig-stage'), (228, 412, 'fig-box fig-agent')]
 _D_ROWS = [
-    [['자기증류'], ['모델이 스스로 만든 답에서 새 행동을 심음', '아직 좁은 범위만 성공']],
-    [['자동화된 데이터 파이프라인'], ['대량의 트레이스를 훑어 실패 사례를 골라 먹임', '지금은 사람이 손으로 함']],
-    [['정성적 피드백 흡수'], ['점수 대신 글로 된 반응만 남는 자리에서', '그것만으로 모델을 고침']],
+    [['자기증류'], ['모델이 스스로 만든 답에서', '새 행동을 심음', '아직 좁은 범위만 성공']],
+    [['자동화된', '데이터 파이프라인'], ['대량의 트레이스를 훑어', '실패 사례를 골라 다시 먹임', '지금은 사람이 손으로 함']],
+    [['정성적', '피드백 흡수'], ['점수 대신 글로 된 반응만 남는 자리에서', '그것만으로 모델을 고침']],
 ]
-_q, _qbot = rows(_D_ROWS, _DCOLS, y0=6, rh=66, gap=16, arrows=False)
+_q, _qbot = rows(_D_ROWS, _DCOLS, y0=6, rh=92, gap=16, arrows=False)
 _P2C = svg(_qbot + 10, _q,
            '통제를 놓은 자리를 메우는 연구 방향 셋 — 자기증류, 자동화된 데이터 파이프라인, 정성적 피드백 흡수')
 
@@ -214,12 +215,13 @@ FIG_CSS = """
   .uc-fig .fig-outside{fill:var(--surface,#fff);stroke-dasharray:4 3}
   .uc-fig .fig-bad{fill:var(--surface,#fff);stroke:var(--epoch-coral);stroke-width:1.6}
   .uc-fig .fig-tag{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
-  .uc-fig .fig-tag-t{fill:var(--ink-3);font-size:13px;font-weight:800}
-  .uc-fig .fig-st{fill:var(--ink);font-size:13px;font-weight:800}
-  .uc-fig .fig-hd{fill:var(--ink-3);font-size:12px;font-weight:800;letter-spacing:.04em}
-  .uc-fig .fig-b{fill:var(--ink);font-size:13px;font-weight:650}
-  .uc-fig .fig-e{fill:var(--ink-3);font-size:11px;font-weight:700}
-  .uc-fig .fig-lg{fill:var(--ink-3);font-size:11.5px;font-weight:650}
+  .uc-fig .fig-tag-t{fill:var(--ink-3);font-size:14px;font-weight:800}
+  .uc-fig .fig-st{fill:var(--ink);font-size:15px;font-weight:800}
+  .uc-fig .fig-hd{fill:var(--ink-3);font-size:13px;font-weight:800;letter-spacing:.04em}
+  /* 본문 번호글이 .95rem(약 15px)이다. 그림 글자도 같은 크기로 둔다 */
+  .uc-fig .fig-b{fill:var(--ink);font-size:15px;font-weight:650}
+  .uc-fig .fig-e{fill:var(--ink-3);font-size:12.5px;font-weight:700}
+  .uc-fig .fig-lg{fill:var(--ink-3);font-size:13px;font-weight:650}
   .uc-fig .fig-arw{stroke:var(--epoch-teal);stroke-width:1.8;fill:none}
 """
 
