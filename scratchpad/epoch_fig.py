@@ -160,7 +160,7 @@ def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
 
 # ── ① 두 칸 대조 — 컴퓨트와 데이터센터가 같은 구조다 ─────────────────────
 def fig_two_columns():
-    LX, RX, BW = 16, 344, 280
+    LX, RX, BW = 8, 360, 272
     lcx, rcx = LX + BW // 2, RX + BW // 2
     o = [legend()]
     o.append(head(lcx, 48, '컴퓨트'))
@@ -183,10 +183,10 @@ def fig_two_columns():
         ('임차인',
          ('앤트로픽', ['5년 리스를 확약했다', '리스료가 이자와 원금을 갚는다'], False),
          ('플루이드스택', ['초기 10년 리스를 맺었다', '임대료가 이자와 원금을 갚는다'], False)),
-        ('공급자 지원',
-         ('브로드컴', ['앤트로픽이 지급을 멈추면', '선순위 채무 300억 달러를 받친다',
-                   '보도된 최대 노출은 290억 달러'], False),
-         ('구글', ['플루이드스택이 멈추면 그 임대료를 받친다', '밀린 임대료를 대신 내거나',
+        ('손실 부담',
+         ('브로드컴', ['앤트로픽이 지급을 멈추면', '선순위 채무 300억 달러의 손실을',
+                   '대신 떠안는다. 최대 290억 달러'], False),
+         ('구글', ['플루이드스택이 임대료를 멈추면', '밀린 임대료를 대신 내거나',
                  '리스를 넘겨받는다'], False)),
     ]
     edge = [('cash', '부채 인출', '부채 인출'), ('svc', '사서 보유', '짓고 보유'),
@@ -351,10 +351,10 @@ def fig_tranches():
     o = []
     # 범례 — 흐름도가 아니라 색 두 벌이다
     o.append('<rect x="16" y="14" width="14" height="11" rx="2" class="bx-key"/>')
-    o.append(lab(36, 24, '브로드컴이 받쳐 준다', fs=9.5))
-    o.append('<rect x="192" y="14" width="14" height="11" rx="2" '
+    o.append(lab(36, 24, '브로드컴이 손실을 떠안는다', fs=9.5))
+    o.append('<rect x="210" y="14" width="14" height="11" rx="2" '
              'fill="var(--fig-body,rgba(127,127,127,.16))" stroke="var(--ink-3)" stroke-width="1"/>')
-    o.append(lab(212, 24, '받쳐 주지 않는다', fs=9.5))
+    o.append(lab(230, 24, '아무도 떠안지 않는다', fs=9.5))
     y = 56
     for name, val, note, key in bars:
         bw_ = int((XMAX - X0) * val / VMAX)
@@ -381,6 +381,142 @@ def fig_tranches():
     o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
              'style="font-weight:800">트랜치 크기(억 달러)</text>' % ((X0 + XMAX) // 2, ay + 34))
     return svg(ay + 45, ''.join(o))
+
+
+# ══ 파이낸싱 편에 더 넣는 도해 ═════════════════════════════════════════════
+def fig_funding_mix():
+    """발표한 투자 계획과 공시로 확인되는 부채. 두 조각의 길이가 곧 조달 금액이다."""
+    X0, X1, VMAX = 30, 590, 500.0          # 억 달러
+    Y, H = 92, 40
+    o = [lab(16, 24, '2025년 11월에 발표한 미국 인프라 투자 계획과, 그 뒤 공시로 확인되는 부채',
+             fs=9.5)]
+
+    def px(v):
+        return X0 + int((X1 - X0) * v / VMAX)
+    # 발표한 계획 500억 달러 — 기준선
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink)" stroke-width="1.6" fill="none"/>'
+             % (px(500), Y - 22, px(500), Y + H + 10))
+    o.append('<text x="%d" y="%d" class="t-lab" text-anchor="end">계획 500억 달러</text>'
+             % (px(500), Y - 28))
+    o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" '
+             'fill="var(--fig-good,#2f8f6b)"/>' % (X0, Y, px(345) - X0, H))
+    o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" '
+             'fill="var(--fig-good,#2f8f6b)" opacity=".45"/>' % (px(345), Y, px(497) - px(345), H))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+             'style="font-weight:850;fill:#fff">TPU 345억 달러</text>' % ((X0 + px(345)) // 2, Y + 25))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+             'style="font-weight:850">데이터센터 152억</text>' % ((px(345) + px(497)) // 2, Y + 25))
+    o.append(lab(X0, Y + H + 30, '앤트로픽이 앞에 내놓은 현금은 없다 — 둘 다 기관투자자가 빌려준 '
+                                 '돈이고, 리스료와 임대료로 갚는다', fs=9.5))
+    return svg(Y + H + 44, ''.join(o))
+
+
+def fig_revenue_jump():
+    """구조가 짜인 시점과 매출이 뛴 시점이 다르다. 그래서 이 사례가 시험이 된다."""
+    o = [lab(16, 24, '앤트로픽 연환산 매출. 부채는 대부분 왼쪽 시점에 맞춰 짜였다', fs=9.5)]
+    rows = [('2025년 말\n(투자 계획 발표)', 90, '90억 달러', False),
+            ('2026년 5월', 470, '470억 달러', True)]
+    body, bottom = barv([(a.replace('\n', ' '), b, c, d) for a, b, c, d in rows],
+                        500, (0, 100, 200, 300, 400, 500), '연환산 매출(억 달러)',
+                        x0=130, bw_=90, step=180)
+    o += body
+    o.append(lab(130, bottom + 16, '발표 당시에는 90억 달러가 안 됐다', fs=9.5))
+    o.append(lab(130, bottom + 32, '투자자가 빌려준 근거는 이미 번 돈이 아니라 앞으로 낼 '
+                                   '리스료였다', fs=9.5))
+    return svg(bottom + 44, ''.join(o))
+
+
+def fig_draw_schedule():
+    """돈은 한꺼번에 나가지 않는다. 랙이 오는 만큼만 나눠 인출한다."""
+    X0, X1, VMAX = 130, 580, 345.0
+    Y, H = 76, 36
+    o = [lab(16, 24, '345억 달러 확약분 가운데 언제까지 얼마가 나가나', fs=9.5)]
+
+    def px(v):
+        return X0 + int((X1 - X0) * v / VMAX)
+    o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" '
+             'fill="var(--fig-good,#2f8f6b)"/>' % (X0, Y, px(240) - X0, H))
+    o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" '
+             'fill="var(--fig-body,rgba(127,127,127,.28))" stroke="var(--ink-3)" '
+             'stroke-width="1"/>' % (px(240), Y, px(345) - px(240), H))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '
+             'style="font-weight:850">확약 345억 달러</text>' % (X0 - 10, Y + 23))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+             'style="font-weight:850;fill:#fff">2027년 여름까지 240억 달러</text>'
+             % ((X0 + px(240)) // 2, Y + 23))
+    o.append(lab(px(240) + 10, Y - 6, '남는 몫은 그 뒤에 나간다', fs=9.5))
+    o.append(arrow('cash', [(X0, Y + H + 18), (px(240), Y + H + 18)]))
+    o.append(lab(X0, Y + H + 36, '랙이 배치되는 대로 1년 남짓에 걸쳐 약 16회로 나눠 인출한다', fs=9.5))
+    o.append(lab(X0, Y + H + 52, '담보로 잡힌 장비의 양과 나간 돈을 맞춰 두는 장치다', fs=9.5))
+    o.append(lab(X0, Y + H + 68, '브로드컴이 지는 노출도 같은 속도로 커졌다가 상환이 시작되면 '
+                                 '줄어든다', fs=9.5))
+    return svg(Y + H + 80, ''.join(o))
+
+
+def fig_rate_ladder():
+    """같은 빌드아웃인데 금리가 셋으로 갈린다. 무엇이 받쳐 주느냐가 값을 가른다."""
+    o = [lab(16, 24, '같은 빌드아웃에 붙은 금리. 누가 손실을 떠안느냐가 값을 가른다', fs=9.5)]
+    rows = [('컴퓨트 A2 선순위', 5.75, '5.75% — 브로드컴이 떠안는다', True),
+            ('레이크 매리너 부채', 7.75, '7.75% — 구글이 임대료를 낸다', True),
+            ('컴퓨트 B 후순위', 8.5, '8.5% — 아무도 안 떠안는다', False)]
+    body, bottom = barh(rows, 10, (0, 2, 4, 6, 8, 10), '연 이율(%)', x0=170, x1=420, y=52)
+    o += body
+    o.append(lab(170, bottom + 6, 'A1 선순위는 국채 수익률에 1.0%p를 얹는 방식이라 이 자에 '
+                                  '올리지 않았다', fs=9.5))
+    o.append(lab(170, bottom + 22, '레이크 매리너는 지원이 붙었는데도 7.75%다', fs=9.5))
+    o.append(lab(170, bottom + 38, '공사 지연 가능성과 지원에 붙은 조건·한도가 값에 들어 있다',
+                 fs=9.5))
+    return svg(bottom + 50, ''.join(o))
+
+
+def fig_five_sites():
+    """다섯 사업장. 하나의 거대 거래가 아니라 같은 구조를 다섯 번 되풀이했다."""
+    o = [lab(16, 24, '개발사와 지역을 바꿔 가며 같은 방식이 다섯 번 되풀이됐다', fs=9.5)]
+    rows = [('메리디언 아크', 430, '430MW · 57.00억 달러', True),
+            ('레이크 매리너', 378, '378MW · 32.00억 달러', True),
+            ('리버 벤드', 245, '245MW · 32.50억 달러', True),
+            ('바버 레이크', 207, '207MW · 17.33억 달러', True),
+            ('애버내시', 168, '168MW · 13.00억 달러', True)]
+    body, bottom = barh(rows, 500, (0, 100, 200, 300, 400, 500),
+                        '크리티컬 IT 부하(MW) — 서버에 실제로 공급되는 전력 용량',
+                        x0=120, x1=270, y=52, bh=22, step=32)
+    o += body
+    o.append(lab(120, bottom + 6, '스폰서는 차례로 Next Frontier·플루이드스택 합작, 테라울프,',
+                 fs=9.5))
+    o.append(lab(120, bottom + 22, 'Hut 8, Cipher, 플루이드스택 합작이다', fs=9.5))
+    o.append(lab(120, bottom + 38, '다섯 곳을 합치면 1,428MW, 프로젝트 부채 151.83억 달러다',
+                 fs=9.5))
+    return svg(bottom + 50, ''.join(o))
+
+
+def fig_delivery():
+    """준공은 한 번에 끝나지 않는다. 임대료도 그만큼씩 늘어난다."""
+    X0, X1, VMAX = 120, 560, 400.0
+    o = [lab(16, 24, '레이크 매리너에서 이 거래가 빌려주는 378MW가 언제 들어오나', fs=9.5)]
+    steps = [('2026년 7월', 42, 42, '42MW 가동'),
+             ('2026년 10월', 42, 210, '168MW 더 들어온다'),
+             ('2027년 3월', 210, 378, '다시 168MW')]
+    y = 60
+
+    def px(v):
+        return X0 + int((X1 - X0) * v / VMAX)
+    for when, base, top, note in steps:
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end" '
+                 'style="font-weight:850">%s</text>' % (X0 - 10, y + 21, when))
+        if base:
+            o.append('<rect x="%d" y="%d" width="%d" height="28" rx="3" '
+                     'fill="var(--fig-good,#2f8f6b)" opacity=".35"/>' % (X0, y, px(base) - X0))
+        o.append('<rect x="%d" y="%d" width="%d" height="28" rx="3" '
+                 'fill="var(--fig-good,#2f8f6b)"/>' % (px(base), y, px(top) - px(base)))
+        o.append(lab(px(top) + 10, y + 20, note, fs=10))
+        y += 42
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, y - 8, X1 + 14, y - 8))
+    o.append(lab(X0, y + 12, '옅은 몫이 이미 들어온 용량, 진한 몫이 그때 새로 들어오는 용량이다',
+                 fs=9.5))
+    o.append(lab(X0, y + 28, '플루이드스택은 건물이 인도되는 대로 임대료를 내기 시작한다', fs=9.5))
+    o.append(lab(X0, y + 44, '2026년 7월 기준 실적은 42MW뿐이고 나머지는 예정이다', fs=9.5))
+    return svg(y + 56, ''.join(o))
 
 
 # ══ 「프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다」(2026-05-20) ══════════
@@ -614,29 +750,46 @@ SRC = {
 }
 
 # 그림 이름 -> (그리는 함수, 값을 대조할 원문)
+# 그림 이름 -> 그리는 함수. **새 그림을 여기 안 넣으면 자기검사를 통째로 빠져나간다** —
+# 2026-08-25에 딕셔너리가 패치로 잘려 아홉 장이 값 대조를 안 받고 지나갔다.
 FIGS = {
+    # 파이낸싱 편
     'two_columns': fig_two_columns,
+    'tpu_stack': fig_tpu_stack,
+    'tranches': fig_tranches,
+    'lake_mariner': fig_lake_mariner,
+    'funding_mix': fig_funding_mix,
+    'revenue_jump': fig_revenue_jump,
+    'draw_schedule': fig_draw_schedule,
+    'rate_ladder': fig_rate_ladder,
+    'five_sites': fig_five_sites,
+    'delivery': fig_delivery,
+    # 세계 컴퓨트의 분배 편
     'world_share': fig_world_share,
     'growth_2025': fig_growth_2025,
     'openai_power': fig_openai_power,
     'openai_chips': fig_openai_chips,
     'deepmind_share': fig_deepmind_share,
+    # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
     'calibration': fig_calibration,
     'supply_growth': fig_supply_growth,
 }
 
+# 그림마다 값을 대조할 원문
 FIG_SRC = {
     'two_columns': 'fin', 'tpu_stack': 'fin', 'tranches': 'fin', 'lake_mariner': 'fin',
+    'funding_mix': 'fin', 'revenue_jump': 'fin', 'draw_schedule': 'fin', 'rate_ladder': 'fin',
+    'five_sites': 'fin', 'delivery': 'fin',
     'world_share': 'labs', 'growth_2025': 'labs', 'openai_power': 'labs',
     'openai_chips': 'labs', 'deepmind_share': 'labs',
     'prefill_decode': 'crunch', 'chunked_prefill': 'crunch', 'calibration': 'crunch',
     'supply_growth': 'crunch',
-    'tpu_stack': fig_tpu_stack,
-    'tranches': fig_tranches,
-    'lake_mariner': fig_lake_mariner,
 }
+
+assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
+
 
 if __name__ == '__main__':
     import io

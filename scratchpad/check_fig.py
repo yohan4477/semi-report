@@ -75,6 +75,20 @@ def segments(svg):
     return out
 
 
+def rect_edges(svg):
+    """네모의 네 변도 선으로 센다.
+
+    segments()가 <path>만 봐서, 상자 테두리나 묶음 컨테이너 위에 얹힌 글자를 놓쳤다.
+    2026-08-25에 두 칸 대조의 역할 라벨이 양쪽 칸 테두리를 물고 있었는데 검사기가
+    통과시켰다. 사람이 눈으로 지키지 말고 여기서 막는다."""
+    out = []
+    for m in RECT.finditer(svg):
+        x, y, w, h = [float(v) for v in m.groups()]
+        out += [(x, x + w, y, y), (x, x + w, y + h, y + h),
+                (x, x, y, y + h), (x + w, x + w, y, y + h)]
+    return out
+
+
 def hits(svg):
     bad = []
     bs = boxes(svg)
@@ -102,6 +116,12 @@ def hits(svg):
         for x0, x1, y0, y1, txt in bs:
             if sx0 < x1 and x0 < sx1 and sy0 < y1 and y0 < sy1:
                 bad.append('선에 깔림 (%.0f,%.0f)-(%.0f,%.0f)  %s'
+                           % (sx0, sy0, sx1, sy1, txt[:28]))
+    for sx0, sx1, sy0, sy1 in rect_edges(svg):
+        for x0, x1, y0, y1, txt in bs:
+            # 글자가 제가 든 상자 안에 있는 것은 정상이다 — 테두리를 물었을 때만 잡는다
+            if sx0 - 1 < x1 and x0 < sx1 + 1 and sy0 - 1 < y1 and y0 < sy1 + 1:
+                bad.append('네모 테두리에 깔림 (%.0f,%.0f)-(%.0f,%.0f)  %s'
                            % (sx0, sy0, sx1, sy1, txt[:28]))
     return bad
 
