@@ -297,15 +297,35 @@ POST_CSS = '''
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
   .rfig .rf-sw.rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal)}
   .rfig .rf-sw.rf-model{background:var(--sunk,rgba(127,127,127,.10))}
-  /* 걸음을 아래로 세운 판. 레인을 옆으로 벌리면 좁은 자리에서 순서가 무너진다 */
-  .rfig .rf-seq{list-style:none;margin:0;padding:0;counter-reset:rs}
-  .rfig .rf-seq>li{counter-increment:rs;display:flex;align-items:baseline;gap:10px;
-                   padding:11px 0 11px 34px;position:relative;border-bottom:1px solid var(--line)}
-  .rfig .rf-seq>li:last-child{border-bottom:0}
-  .rfig .rf-seq>li::before{content:counter(rs);position:absolute;left:0;top:11px;width:22px;
-                   text-align:center;font-size:.95rem;font-weight:800;color:var(--epoch-teal)}
-  .rfig .rf-who{flex:0 0 auto;font-size:.95rem;font-weight:800;color:var(--ink);white-space:nowrap}
-  .rfig .rf-what{font-size:.95rem;line-height:1.7;color:var(--ink-2)}
+  /* 시퀀스 판. 레인이 열이고 걸음이 행이다. SVG로 그리면 좁은 화면에서 글자까지
+     같이 줄어서 CSS 그리드로 짠다 — 여기 글자도 본문과 같은 .95rem 고정이다 */
+  .rfig .rq{display:grid;grid-template-columns:repeat(3,1fr);column-gap:0;
+            align-items:center;position:relative}
+  .rfig .rq-actor{align-self:start;text-align:center;font-size:.95rem;font-weight:800;
+            color:var(--ink);border:1px solid var(--ink-3);border-radius:9px;padding:9px 4px;
+            margin:0 4px;background:var(--surface,#fff)}
+  .rfig .rq-actor.rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal);border-width:1.6px}
+  .rfig .rq-actor.rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  .rfig .rq-actor.rf-human{background:var(--epoch-keybg)}
+  /* 생명선 — 레인 한가운데로 내려가는 점선. 걸음 뒤에 깔린다 */
+  .rfig .rq-life{width:0;justify-self:center;align-self:stretch;
+            border-left:1px dashed var(--ink-3);opacity:.5}
+  .rfig .rq-lab{grid-column:1/-1;margin:16px 0 5px;font-size:.95rem;line-height:1.6;color:var(--ink-3)}
+  .rfig .rq-lab b{font-weight:800;color:var(--ink-2);margin-right:8px}
+  .rfig .rq-lab span{font-weight:600}
+  /* 보내는 레인 한가운데에서 받는 레인 한가운데까지. 두 열을 걸친 칸에서
+     양옆을 25%씩 미는 것이 정확히 그 자리다 */
+  .rfig .rq-arrow{height:0;margin:2px 25% 10px;border-top:2px solid var(--epoch-teal);
+            position:relative;align-self:center}
+  .rfig .rq-arrow::after{content:'';position:absolute;top:-6px;right:-1px;width:0;height:0;
+            border-top:6px solid transparent;border-bottom:6px solid transparent;
+            border-left:9px solid var(--epoch-teal)}
+  .rfig .rq-arrow.is-back::after{right:auto;left:-1px;border-left:0;
+            border-right:9px solid var(--epoch-teal)}
+  /* 자기 호출 — 레인 위에 얹히는 처리 칸. 하네스가 저 혼자 하는 걸음이다 */
+  .rfig .rq-self{height:18px;width:64%;justify-self:center;margin:2px 0 10px;
+            border:2px solid var(--epoch-teal);border-radius:6px;
+            background:var(--epoch-wrapbg)}
   @container (max-width:430px){
     .rfig .rf-pair{flex-direction:column;align-items:stretch}
     /* 칸이 세로로 쌓이면 선은 뜻을 잃는다. 선을 숨기고 이름만 남긴다 —
@@ -314,7 +334,9 @@ POST_CSS = '''
     .rfig .rf-track{display:none}
     .rfig .rf-msg{justify-content:center}
     .rfig .rf-msg em,.rfig .rf-msg.is-back em{text-align:center}
-    .rfig .rf-seq>li{flex-direction:column;gap:2px}
+    /* 레인 이름이 좁아지면 줄바꿈으로 버틴다. 열을 접으면 시퀀스가 아니게 된다 */
+    .rfig .rq-actor{padding:8px 2px;margin:0 2px}
+    .rfig .rq-lab{margin-top:14px}
   }
   /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
      층은 굵기와 색으로만 가른다 — 크기로 가르면 자리마다 값이 갈린다 */
