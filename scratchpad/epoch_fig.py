@@ -899,11 +899,85 @@ def fig_openweight_gap():
     return svg(Y + 110, ''.join(o))
 
 
+
+# ══ 「중국 AI 채용공고 1,604건에서 읽은 것」(2026-06-24) ═════════════════════
+def fig_cn_chips():
+    """국산 칩이 어디까지 들어왔나. 자리마다 답이 다르다."""
+    o = [lab(16, 24, '채용공고에서 읽은, 국산 칩이 실제로 쓰이는 자리', fs=9.5)]
+    rows = [('추론', '자주 쓴다', ['바이트댄스는 같은 회사 안에서', 'CUDA 최적화 직무와 어센드·캠브리콘',
+                              '우대 직무를 함께 낸다'], True),
+            ('큰 모델 사후학습', '가끔 쓴다', ['필자들의 어림이고', '공고가 못 박아 주지는 않는다'], True),
+            ('작은 모델 학습', '해냈다', ['Z.ai가 GLM-Image를 국산 칩만으로', '처음부터 끝까지 학습했다',
+                                    '160억 파라미터, 최대 모델의 1/10~1/100'], True),
+            ('큰 모델 사전학습', '드물다', ['여기까지는 아직 못 왔다는 것이', '필자들의 판단이다'], False)]
+    y = 46
+    for role_, verdict, why, key in rows:
+        o.append('<text x="18" y="%d" class="t-sm" text-anchor="start" '
+                 'style="font-weight:850">%s</text>' % (y + 20, esc(role_)))
+        s_, h = box(180, y, 454, verdict, why, key=key)
+        o.append(s_)
+        y += h + 12
+    o.append(lab(16, y + 12, '공고는 「무엇을 쓰는지」는 알려 주지만 「얼마나 쓰는지」는 알려 주지 '
+                             '않는다', fs=9.5))
+    return svg(y + 24, ''.join(o))
+
+
+def fig_cn_revenue():
+    """파는 방식이 다른 이유는 매출이 어디서 나오느냐에 있다."""
+    o = [lab(16, 24, '무엇을 팔아 버는지가 어떤 영업 인력을 뽑는지로 이어진다', fs=9.5)]
+    rows = [('미니맥스 · 개인 대상', 70, '70% — 동반자 앱과 영상 생성', False),
+            ('미니맥스 · 기업 대상', 30, '30%', False),
+            ('Z.ai · 고객 인프라 구동', 73.7, '73.7% — 손이 가장 많이 가는 B2B', True)]
+    body, bottom = barh(rows, 100, (0, 25, 50, 75, 100), '해당 회사 매출에서 차지하는 비중(%)',
+                        x0=180, x1=420, y=52, bh=26, step=40)
+    o += body
+    o.append(lab(180, bottom + 6, 'Z.ai 공고는 대부분 B2B 영업이고, 미니맥스·문샷 공고는 대부분 '
+                                  '마케팅이다', fs=9.5))
+    o.append(lab(180, bottom + 22, '해외 매출 비중도 갈린다 — 미니맥스 73%, Z.ai 9.8%(둘 다 2025년)',
+                 fs=9.5))
+    return svg(bottom + 34, ''.join(o))
+
+
+def fig_cn_hubs():
+    """중국도 몰려 있지만 미국만큼은 아니다. 원문 도해는 도시별 버블 지도인데
+    도시별 공고 수가 원문에 없어 버블 크기를 그릴 수 없다. 원문에 있는 집중도만 견준다."""
+    o = [lab(16, 24, '위치가 적힌 공고가 어디에 몰려 있나', fs=9.5)]
+    rows = [('미국 프런티어 랩', 85, '85% — 샌프란시스코 한 곳', False),
+            ('중국 6개 회사', 93, '93% — 베이징·항저우·상하이 세 곳', True),
+            ('그중 베이징만', 63, '63%', True)]
+    body, bottom = barh(rows, 100, (0, 25, 50, 75, 100), '해당 범위에 든 공고 비중(%)',
+                        x0=170, x1=400, y=52, bh=26, step=40)
+    o += body
+    o.append(lab(170, bottom + 6, '중국은 세 도시를 합쳐야 93%인데 미국은 한 도시가 85%다', fs=9.5))
+    o.append(lab(170, bottom + 22, '성마다 자기 지역 기업을 밀어 주는 경쟁과, 상하이·저장·베이징 '
+                                   '명문대의 인력이', fs=9.5))
+    o.append(lab(170, bottom + 38, '허브를 여럿으로 만든 것으로 필자들은 본다', fs=9.5))
+    return svg(bottom + 50, ''.join(o))
+
+
+def fig_cn_experience():
+    """요구 경력이 세 배 넘게 차이 난다. 제도가 그 차이를 밀어준다."""
+    o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균', fs=9.5)]
+    rows = [('미국 랩', 5.5, '5.5년', False), ('중국 회사', 1.6, '1.6년', True)]
+    body, bottom = barh(rows, 6, (0, 2, 4, 6), '요구 최소 경력(년)',
+                        x0=150, x1=420, y=56, bh=30, step=46)
+    o += body
+    o.append(lab(150, bottom + 6, '열 개 회사의 공고 1,258건에서 잰 값이다(2026-06-23 기준)', fs=9.5))
+    o.append(lab(150, bottom + 22, '중국 정부는 캠퍼스 채용을 졸업생 취업의 주 경로로 삼으라고 하고, '
+                                   '교육부는', fs=9.5))
+    o.append(lab(150, bottom + 38, '「구직 졸업생마다 최소 5개 공고」를 내건 캠페인을 되풀이한다', fs=9.5))
+    o.append(lab(150, bottom + 54, '중국 랩 엔지니어링 직무의 20% 가까이가 캠퍼스 대상이고, 미국에서 '
+                                   '경력 연수로', fs=9.5))
+    o.append(lab(150, bottom + 70, '거르는 방식은 법에 걸릴 수 있다', fs=9.5))
+    return svg(bottom + 82, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
     'cyber': '[260611] 미소스의 사이버 능력은 부풀려졌나.md',
     'hf': '[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md',
+    'cn': '[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -936,6 +1010,11 @@ FIGS = {
     'hf_incident': fig_hf_incident,
     'cyber_chain': fig_cyber_chain,
     'openweight_gap': fig_openweight_gap,
+    # AI를 만드는 노동 편
+    'cn_chips': fig_cn_chips,
+    'cn_revenue': fig_cn_revenue,
+    'cn_hubs': fig_cn_hubs,
+    'cn_experience': fig_cn_experience,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -954,6 +1033,7 @@ FIG_SRC = {
     'supply_growth': 'crunch',
     'two_skills': 'cyber', 'eci_lead': 'cyber', 'cyscenario': 'cyber', 'cve_spike': 'cyber',
     'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
+    'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
