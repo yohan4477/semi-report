@@ -17,6 +17,7 @@ import io, os, re, sys
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import aie_figs                 # noqa: E402  번호글에 끼우는 도해
 
 OUT = os.path.join(dc.ROOT, '대시보드', 'AI Engineer 대시보드.html')
 SRC_DIR = os.path.join(dc.ROOT, 'content', 'understanding', 'AI Engineer')
@@ -136,6 +137,9 @@ def build():
                      meta.get('channel', 'AI Engineer')],
             'post': items,
             'verdict': verdict,
+            # 번호글은 한 줄에 한 생각이라 전체가 어떻게 맞물리는지가 안 잡힌다.
+            # 그 한 장을 aie_figs가 갖고 있고 영상 ID로 붙인다.
+            'figs': aie_figs.FIGS.get(vid_of(meta.get('source', '')), ()),
             'links': [('번호글 전문 ↗', dc.blob(REL % fn), ''),
                       ('발표 영상 ↗', meta.get('source', ''), '')],
             '_date': meta.get('date', ''),
@@ -167,7 +171,7 @@ POST_CSS = '''
     .uc-post>li{padding-left:30px}
     .uc-post>li::before{width:23px}
   }
-'''
+''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 다른 장과 달리 <b>핵심 포인트로 갈라 쓰지 않고</b> '
          '한 생각에 번호 하나를 매겨 순서대로 늘어놓았습니다 — 발표는 앞의 말이 뒤에 걸리는 '

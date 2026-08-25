@@ -387,6 +387,36 @@ def _card_attrs(c):
     return a
 
 
+def post_html(items, figs=()):
+    """번호글 — figs가 있으면 지정한 번호 뒤에서 끊고 그림을 낀다.
+
+    figs = [(anchor, 제목, svg, 캡션)]. anchor는 몇 번째 번호 뒤에 놓을지(1부터).
+    목록을 여러 덩어리로 쪼개도 번호는 이어져야 하므로 덩어리마다 counter-reset을
+    앞까지의 개수로 박는다. 안 박으면 그림 뒤에서 번호가 1로 되돌아간다.
+    """
+    def block(chunk, done):
+        return ('<ol class="uc-post" style="counter-reset:mp %d">%s</ol>'
+                % (done, ''.join('<li>%s</li>' % t for t in chunk)))
+    if not figs:
+        return block(items, 0)
+    at = {}
+    for anchor, title, svg, cap in figs:
+        at.setdefault(min(max(int(anchor), 0), len(items)), []).append((title, svg, cap))
+    h, chunk, done = [], [], 0
+    for f in at.get(0, ()):
+        h.append(fig_html(f))
+    for i, t in enumerate(items, 1):
+        chunk.append(t)
+        if i in at:
+            h.append(block(chunk, done))
+            done, chunk = i, []
+            for f in at[i]:
+                h.append(fig_html(f))
+    if chunk:
+        h.append(block(chunk, done))
+    return ''.join(h)
+
+
 def _links_html(c):
     """카드 발치의 링크 줄 — 지금까지의 형식과 번호글 형식이 같은 마크업을 쓴다."""
     return ('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
@@ -427,8 +457,7 @@ def card_html(c):
         # 판단이 맨 위에 선다. 번호 일흔 개를 지나야 결론이 나오면 아무도 안 읽는다
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
-        h.append('<ol class="uc-post">%s</ol>'
-                 % ''.join('<li>%s</li>' % t for t in c['post']))
+        h.append(post_html(c['post'], c.get('figs', ())))
         h.append(_links_html(c))
         h.append('</div></div>')
         return ''.join(h)
