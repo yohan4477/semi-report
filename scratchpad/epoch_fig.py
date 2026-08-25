@@ -85,8 +85,12 @@ def fig_two_columns():
     LX, RX, BW = 16, 344, 280
     lcx, rcx = LX + BW // 2, RX + BW // 2
     o = [legend()]
-    o.append(head(lcx, 52, '컴퓨트'))
-    o.append(head(rcx, 52, '데이터센터'))
+    o.append(head(lcx, 48, '컴퓨트'))
+    o.append(head(rcx, 48, '데이터센터'))
+    o.append('<text x="%d" y="62" class="t-sm" text-anchor="middle">장비 부채 345억 달러</text>'
+             % lcx)
+    o.append('<text x="%d" y="62" class="t-sm" text-anchor="middle">'
+             '한 예로 든 레이크 매리너 32억 달러</text>' % rcx)
     rows = [
         ('대는 쪽',
          ('기관투자자', ['아폴로 운용 펀드가 주도하고', '블랙스톤·글로벌 은행이 참여한다',
@@ -102,14 +106,14 @@ def fig_two_columns():
          ('앤트로픽', ['5년 리스를 확약했다', '리스료가 이자와 원금을 갚는다'], False),
          ('플루이드스택', ['초기 10년 리스를 맺었다', '임대료가 이자와 원금을 갚는다'], False)),
         ('벤더 지원',
-         ('브로드컴', ['앤트로픽이 지급을 멈추면', '300억 달러 손실을 떠안는다',
+         ('브로드컴', ['앤트로픽이 지급을 멈추면', '선순위 채무 300억 달러를 받친다',
                    '보도된 최대 노출은 290억 달러'], False),
-         ('구글', ['플루이드스택이 임대료를 멈추면', '밀린 임대료를 대신 내거나',
+         ('구글', ['플루이드스택이 멈추면 그 임대료를 받친다', '밀린 임대료를 대신 내거나',
                  '리스를 넘겨받는다'], False)),
     ]
     edge = [('cash', '부채 인출', '부채 인출'), ('svc', '사서 보유', '짓고 보유'),
             ('svc', '빌려준다', '빌려준다')]
-    y = 68
+    y = 76
     for i, (rl, left, right) in enumerate(rows):
         lh_, rh_ = None, None
         for x, (name, lines, key) in ((LX, left), (RX, right)):
@@ -285,13 +289,20 @@ def fig_tranches():
         o.append(lab(X0 + bw_ + 10, y + 20, note, fs=10))
         y += 46
     ay = y + 4
+    # 세로 격자선은 두지 않는다 — 막대 옆 값 라벨을 가로질러 글자가 선에 깔린다
+    # (check_fig가 잡는다). 눈금과 축 제목만으로 축은 읽힌다.
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (X0, ay, XMAX + 12, ay))
-    # 눈금 숫자는 달지 않는다 — 0·80·160 같은 눈금값은 원문에 없는 수다(규칙 1).
-    # 막대 길이가 비교를 말하고, 값은 막대 옆 라벨이 말한다.
-    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle">막대 길이는 트랜치 금액이다</text>'
-             % ((X0 + XMAX) // 2, ay + 18))
-    return svg(ay + 30, ''.join(o))
+             % (X0, ay, XMAX + 14, ay))
+    # 눈금값은 축의 눈금이지 원문에서 가져온 값이 아니다 — t-axis로 표시해 값 대조에서 뺀다
+    for v in (0, 80, 160, 240):
+        tx = X0 + int((XMAX - X0) * v / VMAX)
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+                 % (tx, ay, tx, ay + 5))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%d</text>'
+                 % (tx, ay + 18, v))
+    o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+             'style="font-weight:800">트랜치 크기(억 달러)</text>' % ((X0 + XMAX) // 2, ay + 34))
+    return svg(ay + 45, ''.join(o))
 
 
 FIGS = {
@@ -311,17 +322,38 @@ if __name__ == '__main__':
         os.path.abspath(__file__))), 'scripts'))
     import check_fig
     from card_lib import FIG_CSS, FIG_DEFS
+    import re
+    src = io.open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                               'content', 'epoch',
+                               '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md'),
+                  encoding='utf-8').read()
+    srcn = re.sub(r'[\s,]', '', src)
+
+    def num_check(svg_):
+        """그림 글자의 숫자가 원문에 있는지 전수 대조한다(insight-figure 규칙 1).
+
+        축 눈금(t-axis)은 뺀다 — 0·80·160은 원문에서 가져온 값이 아니라 자를 읽는 눈금이다.
+        막대 길이가 주장이고, 그 길이의 근거인 금액은 막대 옆 라벨에 따로 적혀 대조를 받는다."""
+        nums = {n for t in re.findall(r'<text[^>]*>([^<]*)<',
+                                      re.sub(r'<text[^>]*t-axis[^>]*>[^<]*</text>', '', svg_))
+                for n in re.findall(r'\d[\d,\.]*', t)}
+        return [n for n in nums if len(n.replace(',', '')) >= 2 and n.replace(',', '') not in srcn]
+
     bad = 0
     parts = []
     for k, fn in FIGS.items():
         s = fn()
+        miss = num_check(s)
+        if miss:
+            bad += len(miss)
+            print('FAIL %s 원문에 없는 값: %s' % (k, ', '.join(miss)))
         hits = check_fig.hits(s)
         if hits:
             bad += len(hits)
             for h in hits:
                 print('FAIL %s %s' % (k, h))
         parts.append('<figure class="uc-fig"><p class="fig-title">%s</p>%s</figure>' % (k, s))
-    print('배치 FAIL %d건' % bad)
+    print('FAIL %d건 (배치 + 값 대조)' % bad)
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_epochfig.html')
     io.open(out, 'w', encoding='utf-8').write(
         '<!doctype html><meta charset="utf-8"><style>body{background:#fff;color:#1a2233;'
