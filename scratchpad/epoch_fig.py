@@ -461,9 +461,156 @@ def fig_deepmind_share():
     return svg(Y + H + 78, ''.join(o))
 
 
+# ══ 「컴퓨트 크런치가 오고 있나」(2026-05-25) ═══════════════════════════════
+def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
+    """작은 선그래프 한 판. lines = [(이름, 기울기, 절편, 강조)] — 원문 식 그대로다."""
+    o = ['<text x="%d" y="%d" class="t-lab" text-anchor="middle">%s</text>'
+         % (x0 + pw // 2, y0 - 26, esc(title))]
+    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (x0, y0, x0, y0 + ph, x0 + pw, y0 + ph))
+    for name, slope, base, key in lines:
+        pts = []
+        for i in range(2):
+            bx = xmax * i
+            v = slope * bx + base
+            pts.append((x0 + int(pw * bx / float(xmax)),
+                        y0 + ph - int(ph * min(v, ymax) / float(ymax))))
+        cls = ('stroke="var(--fig-good,#2f8f6b)" stroke-width="2.2"' if key
+               else 'stroke="var(--ink-3)" stroke-width="2.2" stroke-dasharray="6 4"')
+        o.append('<path d="M%d %d L%d %d" %s fill="none"/>'
+                 % (pts[0][0], pts[0][1], pts[1][0], pts[1][1], cls))
+        # 선 끝이 판 위쪽이면 글자를 아래로 내린다 — 안 그러면 선 위에 얹힌다
+        ly = pts[1][1] + 16 if pts[1][1] < y0 + ph / 2 else pts[1][1] - 10
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" style="font-weight:850;'
+                 'fill:%s">%s</text>' % (x0 + pw - 4, ly,
+                                         'var(--fig-good,#2f8f6b)' if key else 'var(--ink-3)',
+                                         esc(name)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+             % (x0 + pw // 2, y0 + ph + 17, esc(xlab)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 10, esc(ylab)))
+    return o
+
+
+def fig_prefill_decode():
+    """프리필은 연산이, 디코드는 대역폭이 발목을 잡는다. 두 판의 세로 눈금이 다르다."""
+    o = [lab(16, 24, 'GB200 NVL72 한 대에 8,000:1,000 요청을 올렸을 때. 두 판의 세로 자가 다르다',
+             fs=9.5)]
+    o += _panel(60, 74, 240, 150, '프리필', 1000, 1000,
+                [('연산', 1.0, 0, True), ('데이터 이동', 0.0005, 0.9, False)],
+                '밀리초(최대 1000)', '배치 크기 B (0 → 1000)')
+    o += _panel(370, 74, 240, 150, '디코드', 1400, 1000,
+                [('연산', 0.3, 0, False), ('데이터 이동', 0.5, 868, True)],
+                '밀리초(최대 1400)', '배치 크기 B (0 → 1000)')
+    o.append(lab(60, 268, '프리필 — 연산 1B, 데이터 이동 0.9 + 0.0005B', fs=9.5))
+    o.append(lab(60, 284, '디코드 — 연산 0.3B, 데이터 이동 868 + 0.5B', fs=9.5))
+    o.append(lab(60, 300, '초록이 그 단계를 붙잡는 쪽이다', fs=9.5))
+    return svg(312, ''.join(o))
+
+
+def fig_chunked_prefill():
+    """노는 자원을 다음 요청의 프리필이 채운다. 칸 길이는 시간 비율이 아니다."""
+    X0, SLOT, N = 116, 96, 4
+    o = [lab(16, 24, '칸은 순서를 보이는 자리이고 길이는 시간 비율이 아니다', fs=9.5)]
+    o.append(swatch(300, 24, '프리필'))
+    o.append('<rect x="400" y="14" width="14" height="11" rx="2" '
+             'fill="var(--fig-cell,#8fb0d8)" stroke="var(--ink-3)" stroke-width="1"/>')
+    o.append(lab(420, 24, '디코드', fs=9.5))
+    o.append('<rect x="480" y="14" width="14" height="11" rx="2" fill="url(#fig-hatch-wide)" '
+             'stroke="var(--ink-3)" stroke-width="1"/>')
+    o.append(lab(500, 24, '노는 자리', fs=9.5))
+
+    def blocks(y, title, lanes):
+        out = ['<text x="16" y="%d" class="t-lab">%s</text>' % (y - 10, esc(title))]
+        for li, (lane, cells) in enumerate(lanes):
+            ly = y + li * 40
+            out.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '
+                       'style="font-weight:850">%s</text>' % (X0 - 10, ly + 20, esc(lane)))
+            for ci, kind in enumerate(cells):
+                cx = X0 + ci * SLOT
+                if kind == 'p':
+                    f = 'fill="var(--fig-good,#2f8f6b)"'
+                elif kind == 'd':
+                    f = 'fill="var(--fig-cell,#8fb0d8)"'
+                else:
+                    f = 'fill="url(#fig-hatch-wide)" stroke="var(--ink-3)" stroke-width="1"'
+                out.append('<rect x="%d" y="%d" width="%d" height="28" rx="3" %s/>'
+                           % (cx + 3, ly, SLOT - 6, f))
+        return out
+
+    o += blocks(80, '그냥 돌릴 때', [('연산', ['p', '.', '.', '.']),
+                                 ('대역폭', ['.', 'd', 'd', 'd'])])
+    o += blocks(210, '청크 프리필을 쓸 때', [('연산', ['p', 'p', 'p', 'p']),
+                                      ('대역폭', ['.', 'd', 'd', 'd'])])
+    o.append(arrow('svc', [(X0 + SLOT * 2, 190), (X0 + SLOT * 2, 214)]))
+    o.append(lab(X0 + SLOT * 2 + 9, 206, '노는 연산을 다음 요청의 프리필이 채운다', fs=9.5))
+    return svg(300, ''.join(o))
+
+
+def fig_calibration():
+    """이론값은 낙관적이라 실측으로 깎는다. 깎는 계수 셋과 그 결과."""
+    o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5 실험 111건에 맞춰 깎은 값', fs=9.5)]
+    rows = [('이론값', 64, '초당 64만 토큰', False), ('보정값', 40, '초당 40만 토큰', True)]
+    body, bottom = barh(rows, 70, (), 'GB200 NVL72 한 대의 출력 처리량', x0=110, x1=420, y=56,
+                        bh=30, step=46)
+    o += body
+    y = bottom + 6
+    for t in ['연산 효율 65% — 큰 행렬 곱에서도 표기 성능을 다 못 쓴다',
+              '대역폭 효율 30% — 칩 사이 통신 시간까지 여기에 들어간다',
+              '토큰당 지연 5밀리초 — 통신·커널 스케줄링·라우팅 불균형']:
+        o.append(lab(110, y, t, fs=9.5))
+        y += 16
+    return svg(y + 4, ''.join(o))
+
+
+def fig_supply_growth():
+    """문맥 길이별 토큰 공급이 해마다 3.4배로 는다. 시작값과 증가율은 원문에 있다."""
+    import math
+    X0, X1, Y0, Y1 = 92, 600, 60, 226
+    LO, HI = 1e8, 1e14            # 세로 자의 아래위 (로그)
+
+    def py(v):
+        return Y1 - (Y1 - Y0) * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
+    o = [lab(16, 24, '세계 블랙웰 전체가 Kimi K2.6을 돌린다고 놓았을 때', fs=9.5)]
+    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y0 - 8, X0, Y1, X1 + 10, Y1))
+    for v, t in ((1e8, '1억'), (1e10, '100억'), (1e12, '1조'), (1e14, '100조')):
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end">%s</text>'
+                 % (X0 - 8, py(v) + 4, t))
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+                 % (X0 - 5, py(v), X0, py(v)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>'
+             % (X0 - 44, Y0 - 16, '초당 출력 토큰'))
+    for i, yr in enumerate((2026, 2029, 2032)):
+        tx = X0 + int((X1 - X0) * i / 2.0)
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%d</text>'
+                 % (tx, Y1 + 17, yr))
+    series = [('입력 8,000토큰', 20e9, '2026년 초당 200억 토큰에서 시작', 'key'),
+              ('입력 25,000토큰', 6e9, '2026년 초당 60억 토큰에서 시작', 'solid'),
+              ('입력 128,000토큰', 0.5e9, '2026년 초당 5억 토큰에서 시작', 'dash')]
+    ly = Y1 + 40
+    for name, start, note, style in series:
+        end = start * (3.4 ** 6)
+        if style == 'key':
+            cls = 'stroke="var(--fig-good,#2f8f6b)" stroke-width="2.4"'
+        elif style == 'solid':
+            cls = 'stroke="var(--ink-3)" stroke-width="2.4"'
+        else:
+            cls = 'stroke="var(--ink-3)" stroke-width="2.4" stroke-dasharray="6 4"'
+        o.append('<path d="M%d %d L%d %d" %s fill="none"/>'
+                 % (X0, py(start), X1, py(end), cls))
+        # 범례는 판 아래로 내린다 — 판 위에 글자를 얹지 않는다(규칙 3)
+        o.append('<path d="M16 %d L44 %d" %s fill="none"/>' % (ly - 4, ly - 4, cls))
+        o.append(lab(52, ly, '%s — %s' % (name, note), fs=9.5))
+        ly += 17
+    o.append(lab(52, ly + 4, '세로 자는 로그다 — 곧은 선이 해마다 같은 배수라는 뜻이고, '
+                             '이 기울기가 3.4배다', fs=9.5))
+    return svg(ly + 16, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
+    'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
 # 그림 이름 -> (그리는 함수, 값을 대조할 원문)
@@ -474,12 +621,18 @@ FIGS = {
     'openai_power': fig_openai_power,
     'openai_chips': fig_openai_chips,
     'deepmind_share': fig_deepmind_share,
+    'prefill_decode': fig_prefill_decode,
+    'chunked_prefill': fig_chunked_prefill,
+    'calibration': fig_calibration,
+    'supply_growth': fig_supply_growth,
 }
 
 FIG_SRC = {
     'two_columns': 'fin', 'tpu_stack': 'fin', 'tranches': 'fin', 'lake_mariner': 'fin',
     'world_share': 'labs', 'growth_2025': 'labs', 'openai_power': 'labs',
     'openai_chips': 'labs', 'deepmind_share': 'labs',
+    'prefill_decode': 'crunch', 'chunked_prefill': 'crunch', 'calibration': 'crunch',
+    'supply_growth': 'crunch',
     'tpu_stack': fig_tpu_stack,
     'tranches': fig_tranches,
     'lake_mariner': fig_lake_mariner,
