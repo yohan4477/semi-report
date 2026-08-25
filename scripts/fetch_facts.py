@@ -40,6 +40,13 @@ CONCEPTS = {
     'lease_amortization': ['FinanceLeaseRightOfUseAssetAmortization'],
     'capex': ['PaymentsToAcquirePropertyPlantAndEquipment'],
     'ocf': ['NetCashProvidedByUsedInOperatingActivities'],
+    # 영업 밖 손익. R3이 EBIT을 쓰기 전에 걷어내라는 자리다.
+    # 알파벳은 보유 지분(앤트로픽·스페이스X 등)을 공정가치로 다시 재 순이익에 태운다 —
+    # 2026년 2분기 한 분기에 990억 달러가 들어왔다. 현금이 아니라 평가액이다.
+    # 이걸 안 빼면 실효세율도 순이익도 DCF에 못 쓴다.
+    'nonoperating': ['NonoperatingIncomeExpense'],
+    'equity_fv_gain': ['EquitySecuritiesFvNiGainLoss'],
+    'cash_taxes_paid': ['IncomeTaxesPaidNet', 'IncomeTaxesPaid'],
     'cash': ['CashAndCashEquivalentsAtCarryingValue'],
     'st_investments': ['ShortTermInvestments', 'MarketableSecuritiesCurrent'],
     'lt_debt': ['LongTermDebtNoncurrent', 'LongTermDebt'],
@@ -105,15 +112,118 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
     return out
 
 
+# 기간 값(손익계산서·현금흐름표)과 시점 값(재무상태표)을 가른다.
+#
+# 기간 값만 TTM이 뜻을 갖는다. 재무상태표 항목은 어느 시점의 잔액이라 열두 달을
+# 더하면 안 된다 — 현금 잔액 넷을 더한 값은 아무것도 아니다. 시점 값은 가장 최근
+# 것 하나를 그대로 쓴다.
+#
+# 10-Q는 손익도 현금흐름도 **회계연도 시작부터 누적**을 함께 낸다. 4분기는 10-Q가
+# 아예 없어(10-K가 연간으로만 낸다) 분기 넷을 이어 붙이는 방법이 막힌다 —
+# 2026-08-26에 손익 TTM이 통째로 빈 원인이 이것이었다. 그래서 기간 값은 전부
+# 「직전 연간 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
+FLOW = ('revenue', 'ebit', 'net_income', 'tax_expense', 'pretax_income',
+        'dna', 'lease_amortization', 'capex', 'ocf',
+        'nonoperating', 'equity_fv_gain', 'cash_taxes_paid')
+
+
+def quarters(facts, tags, kind):
+    """10-Q에서 분기 값을 뽑는다. kind로 기간 성격을 가른다.
+
+    **손익계산서와 현금흐름표는 10-Q에서 기간 잡는 법이 다르다.** 손익은 그 분기만
+    담고(약 90일), 현금흐름은 회계연도 시작부터 누적이다(1분기 90일 · 2분기 180일 ·
+    3분기 270일). 둘을 같은 방식으로 더하면 현금흐름이 배로 잡힌다.
+
+      kind='flow'  분기 값(80~100일)만 받는다 — 손익계산서용
+      kind='cum'   누적 값을 그대로 받는다 — 현금흐름표용. 기간 일수를 함께 남긴다
+    """
+    out = {}
+    for tag in tags:
+        node = facts.get('facts', {}).get('us-gaap', {}).get(tag)
+        if not node:
+            continue
+        for x in node.get('units', {}).get('USD', []):
+            if x.get('form') != '10-Q' or 'start' not in x:
+                continue
+            days = (datetime.strptime(x['end'], '%Y-%m-%d')
+                    - datetime.strptime(x['start'], '%Y-%m-%d')).days
+            if kind == 'flow' and not (80 <= days <= 100):
+                continue
+            if kind == 'cum' and days < 80:
+                continue
+            key = (x['start'], x['end'])
+            prev = out.get(key)
+            if prev is None or x.get('filed', '') >= prev['filed']:
+                out[key] = dict(start=x['start'], end=x['end'], val=x['val'],
+                                days=days, filed=x.get('filed', ''), tag=tag)
+    return out
+
+
+def ttm(facts, name, tags, annual):
+    """최근 12개월 값. 기준연도가 낡는 것을 막는다.
+
+    왜 필요한가: 10-K는 회계연도가 끝나야 나온다. 알파벳 FY2025는 2025-12-31에
+    끝났는데 주가는 2026-08-25다 — 237일 사이에 두 분기가 지났다. 그 사이 영업이익률이
+    32.0%에서 34.1%로 올랐다. FY2025로 DCF를 돌리면 이미 지난 이야기를 할인하게 된다.
+
+    손익은 최근 네 분기를 더한다. 현금흐름은 누적 보고라 더할 수 없어
+    「직전 회계연도 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
+    """
+    if name in FLOW:
+        cum = quarters(facts, tags, 'cum')
+        if not cum:
+            return None
+        cur = max(cum.values(), key=lambda x: x['end'])
+        # 최근 분기가 직전 회계연도보다 뒤인지 본다. 어떤 태그는 옛날에만 10-Q로
+        # 나오고 요즘은 10-K에만 실린다 — IncomeTaxesPaid가 그렇다. 그때 여기서
+        # 막지 않으면 2016년 분기를 붙잡아 TTM이라 부르게 된다(2026-08-26에 납부세금이
+        # 실제로 그렇게 계산돼 실효세율이 1.2%로 나왔다).
+        newest_annual = max(annual.get(name, {}), default=None)
+        if newest_annual and cur['end'] <= annual[name][newest_annual]['end']:
+            return None
+        fy = cur['end'][:4]
+        # 작년 같은 기간(일수가 같은 누적 구간)을 찾는다.
+        prior = [x for x in cum.values()
+                 if x['end'][:4] == str(int(fy) - 1) and abs(x['days'] - cur['days']) <= 10]
+        last_fy = annual.get(name, {}).get(str(int(fy) - 1))
+        if not prior or not last_fy:
+            return None
+        p = max(prior, key=lambda x: x['end'])
+        return dict(val=last_fy['val'] + cur['val'] - p['val'],
+                    window='%s 연간 + %s~%s − %s~%s' % (
+                        int(fy) - 1, cur['start'], cur['end'], p['start'], p['end']),
+                    end=cur['end'], method='누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다')
+    # 시점 값(재무상태표). 가장 최근 잔액 하나를 그대로 쓴다 — 더하지 않는다.
+    latest = None
+    for tag in tags:
+        node = facts.get('facts', {}).get('us-gaap', {}).get(tag)
+        if not node:
+            continue
+        for x in node.get('units', {}).get('USD', []):
+            if 'start' in x or x.get('form') not in ('10-Q', '10-K'):
+                continue
+            if latest is None or (x['end'], x.get('filed', '')) > (latest['end'], latest['filed']):
+                latest = dict(end=x['end'], val=x['val'], filed=x.get('filed', ''), tag=tag)
+    if latest is None:
+        return None
+    return dict(val=latest['val'], window=latest['end'], end=latest['end'],
+                method='시점 값이라 최근 잔액 하나를 쓴다')
+
+
 def sec_facts(ticker):
     cik = CIKS[ticker]
     raw = get('https://data.sec.gov/api/xbrl/companyfacts/CIK%s.json' % cik)
     facts = json.loads(raw)
-    out = {'entity': facts.get('entityName'), 'cik': cik, 'concepts': {}}
+    out = {'entity': facts.get('entityName'), 'cik': cik, 'concepts': {}, 'ttm': {}}
     for name, tags in CONCEPTS.items():
         got = annuals(facts, tags)
         if got:
             out['concepts'][name] = {str(k): v for k, v in sorted(got.items())}
+    # 최근 12개월. 10-K가 나온 뒤 지난 분기를 담아 기준연도가 낡는 것을 막는다.
+    for name, tags in CONCEPTS.items():
+        got = ttm(facts, name, tags, out['concepts'])
+        if got:
+            out['ttm'][name] = got
     # 주식수. dei의 EntityCommonStockSharesOutstanding을 먼저 보되, 없는 회사가 있다 —
     # 알파벳의 dei에는 EntityPublicFloat 하나뿐이다. 그때는 us-gaap 쪽으로 내려간다.
     #
