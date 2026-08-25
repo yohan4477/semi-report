@@ -61,14 +61,14 @@ def rows(y, lines, step=17, x=TX, cls='t-sm'):
 
 
 def notes(y, lines):
-    return [ef.lab(SX, y + 16 * i, line_fit(s, 9.5, 624 - SX), fs=11.5)
+    return [ef.lab(SX, y + 16 * i, line_fit(s, 9.5, 624 - SX), fs=13)
             for i, s in enumerate(lines)]
 
 
 # ── ① 딥시크 데이터센터 직무 공고 ────────────────────────────────────────
 def cn_shot_dc():
     """스타트업이 자체 데이터센터를 짓기 시작했다는 증거로 원문이 실은 공고 화면."""
-    o = [ef.lab(SX, 22, '딥시크가 채용 사이트에 올린 공고 화면. 글자는 한국어로 옮겼다', fs=11.5)]
+    o = [ef.lab(SX, 22, '딥시크가 채용 사이트에 올린 공고 화면. 글자는 한국어로 옮겼다', fs=13)]
     o.append(screen(34, 346))
     o.append(txt(TX, 66, 'IDC 설계기획 엔지니어', 't-lab', fs=15))
     o.append('<rect x="502" y="48" width="100" height="28" rx="14" fill="%s"/>' % GOOD)
@@ -102,7 +102,7 @@ def cn_shot_dc():
 # ── ② Z.ai 미국 시장 개척 직무 공고 ──────────────────────────────────────
 def cn_shot_bd():
     """누구에게 파는가가 적힌 공고. 표적은 포춘 글로벌 500대 기업이다."""
-    o = [ef.lab(SX, 22, 'Z.ai(지푸)가 올린 미국 시장 개척 직무 공고 화면', fs=11.5)]
+    o = [ef.lab(SX, 22, 'Z.ai(지푸)가 올린 미국 시장 개척 직무 공고 화면', fs=13)]
     o.append(screen(34, 182))
     o.append(txt(TX, 66, 'Business Development—America', 't-lab', fs=15))
     o.append(txt(TX, 90, '베이징 · 정규직 · 인터넷 / 전자 / 온라인게임', 't-sm t-axis'))
@@ -128,7 +128,7 @@ def cn_shot_agent():
 
     그래서 영어로 적힌 말은 옮기지 않고 그대로 둔다 — 옮기면 이 그림의 요지가 사라진다."""
     o = [ef.lab(SX, 22, '딥시크 「Agent Harness R&D Engineer」 공고 화면. 영어로 적힌 말은 '
-                        '원문 그대로 뒀다', fs=11.5)]
+                        '원문 그대로 뒀다', fs=13)]
     o.append(screen(34, 340))
     o.append(sec(62, '팀 사명'))
     o.append('<rect x="%d" y="76" width="252" height="34" rx="8" class="bx-key"/>' % TX)
@@ -160,7 +160,7 @@ def cn_shot_agent():
 # ── ④ 미국 고용평등위원회 안내문 ─────────────────────────────────────────
 def cn_shot_law():
     """경력 연수로 지원자를 거르면 법에 걸릴 수 있다는 대목."""
-    o = [ef.lab(SX, 22, '미국 고용평등위원회(EEOC)가 낸 안내문 화면', fs=11.5)]
+    o = [ef.lab(SX, 22, '미국 고용평등위원회(EEOC)가 낸 안내문 화면', fs=13)]
     o.append(screen(34, 222))
     o.append(txt(TX, 66, 'Job Advertisements — 채용 광고', 't-lab', fs=15))
     o.append(rule(86))
@@ -216,12 +216,12 @@ def clarke_sat():
     # 범례 — 선 세 벌의 뜻을 판 위쪽에서 밝힌다
     o.append('<path d="M16 18 L36 18" fill="none" stroke="%s" stroke-width="3" '
              'marker-end="url(#fig-arrow-a)"/>' % GOOD)
-    o.append(ef.lab(42, 22, '지상에서 올라간 신호를 위성이 내려 쏜다', fs=11.5))
-    o.append(ef.arrow('svc', [(280, 18), (300, 18)]))
-    o.append(ef.lab(306, 22, '위성끼리 신호를 넘긴다', fs=11.5))
+    o.append(ef.lab(42, 22, '지상에서 올라간 신호를 위성이 내려 쏜다', fs=13))
+    o.append(ef.arrow('svc', [(310, 18), (330, 18)]))
+    o.append(ef.lab(336, 22, '위성끼리 신호를 넘긴다', fs=13))
     o.append('<path d="M16 36 L36 36" fill="none" stroke="%s" stroke-width="6" '
              'opacity=".38" stroke-linecap="round"/>' % GOOD)
-    o.append(ef.lab(42, 40, '위성 하나가 덮는 범위 — 반구 하나', fs=11.5))
+    o.append(ef.lab(42, 40, '위성 하나가 덮는 범위 — 반구 하나', fs=13))
     # 정지궤도 — 값이 아니라 기준선이라 점선 1.2다
     o.append('<ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="none" stroke="var(--ink-3)" '
              'stroke-width="1.8" stroke-dasharray="6 4"/>' % (EX, EY, ORX, ORY))

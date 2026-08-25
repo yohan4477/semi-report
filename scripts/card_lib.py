@@ -92,15 +92,15 @@ FIG_CSS = '''
                      marker-end:url(#fig-arrow)}
   .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
   /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
-  .uc-fig text.t-role{font-size:11.5px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
   /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
   .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
   .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
   .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
                    stroke-width:1;stroke-dasharray:3 3}
-  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:13px}
-  .uc-fig text.t-lab{font-size:14px;font-weight:700;fill:var(--ink)}
-  .uc-fig text.t-sm{font-size:12px;fill:var(--ink-3)}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
   .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;

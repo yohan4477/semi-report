@@ -239,7 +239,7 @@ def _key(x, y, color, text):
     """색 범례 한 칸 — 네모와 글자. 흐름도 범례가 아니라 계열 색이다."""
     return ('<rect x="%d" y="%d" width="14" height="11" rx="2" fill="%s" '
             'stroke="var(--ink-3)" stroke-width="1"/>' % (x, y - 9, color)
-            + lab(x + 20, y, text, fs=11.5))
+            + lab(x + 20, y, text, fs=13))
 
 
 def _axline(x1, y1, x2, y2):
@@ -268,7 +268,7 @@ def fig_cve_spike():
                  % (X0 - 9, py(v) + 4, v))
     for k in range(5):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%d</text>'
-                 % (px(12 * k), Y1 + 18, 2022 + k))
+                 % (px(12 * k), Y1 + 22, 2022 + k))
     # 두 계열 — 표식이 53개라 선 위 표식은 조밀한 쪽 값(3.4)을 쓴다
     for vals, col in ((CVE_CRIT, BAD), (CVE_HIGH, AMBER)):
         pts = ' '.join('%.1f,%.1f' % (px(i), py(v)) for i, v in enumerate(vals))
@@ -282,7 +282,7 @@ def fig_cve_spike():
              'stroke-dasharray="6 4" fill="none"/>' % (mx, 84, mx, Y1))
     o.append('<text x="%.1f" y="100" class="t-sm" text-anchor="end" '
              'style="font-weight:800">미토스 프리뷰 공개</text>' % (mx - 6))
-    o.append('<text x="%.1f" y="114" class="t-sm t-axis" text-anchor="end">'
+    o.append('<text x="%.1f" y="118" class="t-sm t-axis" text-anchor="end">'
              '(2026년 4월)</text>' % (mx - 6))
     o.append('<text x="%.1f" y="%.1f" class="t-sm" style="font-weight:850;fill:%s">'
              '%d건</text>' % (X1 + 8, py(CVE_HIGH[-1]) + 4, AMBER, CVE_HIGH[-1]))
@@ -294,7 +294,7 @@ def fig_cve_spike():
               '치명도 같은 두 달에 55건 → 96건 → 141건으로 늘었다',
               '공개 절차와 등급 기준, 공개 주기가 기업마다 크게 달라 회사끼리 그대로 견주지는 못한다',
               '대상은 AWS·아파치·애플·시스코·구글·리눅스·마이크로소프트·모질라·엔비디아 등 21곳이다'):
-        o.append(lab(16, ny, s, fs=11.5))
+        o.append(lab(16, ny, s, fs=13))
         ny += 16
     return svg(ny - 4, ''.join(o))
 
@@ -323,17 +323,17 @@ def fig_cyber_prog():
     for m, t in ((0, '2025/04'), (4, '2025/08'), (8, '2025/12'), (12, '2026/04'),
                  (16, '2026/08')):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
-                 % (px(m), Y1 + 18, t))
+                 % (px(m), Y1 + 22, t))
     o.append('<text x="%.1f" y="%d" class="t-sm" text-anchor="middle" '
-             'style="font-weight:800">공개일</text>' % ((X0 + X1) / 2, Y1 + 36))
+             'style="font-weight:800">공개일</text>' % ((X0 + X1) / 2, Y1 + 42))
     # 미토스 프리뷰 이전 모델로 그은 추세선 — 추세선이라 1.2 점선이다
     (ta, tav), (tb, tbv) = CP_TREND
     o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
              'stroke-dasharray="6 4" fill="none"/>'
              % (px(ta), py(tav), px(tb), py(tbv)))
-    o.append('<path d="M210 295 L210 264" stroke="var(--ink-3)" stroke-width="1" '
+    o.append('<path d="M210 292 L210 264" stroke="var(--ink-3)" stroke-width="1" '
              'fill="none"/>')
-    o.append(lab(180, 306, '미토스 프리뷰 이전 추세', fs=11.5))
+    o.append(lab(180, 308, '미토스 프리뷰 이전 추세', fs=13))
     for m, v in CP_GRAY:
         o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="%s" stroke="var(--ink-3)" '
                  'stroke-width="1"/>' % (px(m), py(v), GRAY))
@@ -365,7 +365,7 @@ def fig_cyber_prog():
               '셋 다 같은 시점 추세선 값보다 9점 넘게 높다',
               'GLM-5.2는 점이 아니라 구간이다. Irregular과 영국 AISI의 발언을 근거로',
               'Opus 4.5(154.0)와 Opus 4.6(159.4) 사이로 원문이 어림한 값이다'):
-        o.append(lab(16, ny, s, fs=11.5))
+        o.append(lab(16, ny, s, fs=13))
         ny += 16
     return svg(ny - 4, ''.join(o))
 
