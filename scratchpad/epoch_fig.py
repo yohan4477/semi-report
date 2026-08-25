@@ -1075,6 +1075,129 @@ def fig_onet_scale():
     return svg(y + 40, ''.join(o))
 
 
+
+# ══ 「AGI 이후 자본을 누가 쥐게 할 것인가」(2026-06-09) ══════════════════════
+def fig_capital_ladder():
+    """통제의 사다리. 위로 갈수록 개인이 자본을 직접 쥔다."""
+    o = [lab(16, 24, '재분배 방안들을 「개인이 자본을 얼마나 쥐는가」 한 축에 세우면', fs=9.5)]
+    steps = [('기본자본 + 정지 스위치', ['설비를 직접 지시하거나 멈추거나 파괴할 수 있다'], True),
+             ('기본자본(UBC)', ['시민이 직접 의결권을 행사하고',
+                            '국가를 거치지 않고 배당을 받는다'], True),
+             ('국부펀드(SWF)', ['국가가 주주로서 지배권을 행사하고',
+                            '기업이 옮겨 가도 배당을 받는다'], True),
+             ('기본소득(UBI)', ['정책결정자를 뽑을 권리까지다',
+                            '과세와 규제는 그 정책결정자가 한다'], False),
+             ('자선 균형', ['부유한 소유자들의 협조 조건에 이전이 딸려 있을 뿐이다',
+                        '필자들이 아는 한 이것에 기대자는 제안은 없다'], False)]
+    y = 46
+    for name, lines, key in steps:
+        s_, h = box(96, y, 538, name, lines, key=key)
+        o.append(s_)
+        y += h + 12
+    bottom = y - 12
+    # 통제 축은 판 바깥 왼쪽에 세운다 — 글자를 눕히지 않고 양 끝에만 적는다
+    o.append(arrow('cash', [(56, bottom), (56, 46)]))
+    o.append(lab(16, 40, '자본을 직접 쥔다', cash=True, fs=9.5))
+    o.append(lab(16, bottom + 14, '자본을 못 쥔다', fs=9.5))
+    o.append(lab(96, bottom + 30, '기본서비스(UBS)는 이 축이 아니라 「무엇에 쓸지까지 정해 준다」는 '
+                                  '다른 축에 있다', fs=9.5))
+    return svg(bottom + 42, ''.join(o))
+
+
+def fig_control_kinds():
+    """통제가 무엇으로 이루어져 있나. 방안마다 갖는 것이 다르다."""
+    cols = ['기본소득', '국부펀드', '기본자본', '+ 정지 스위치']
+    rows = [('정책결정자를 뽑는다', ['O', 'O', 'O', 'O']),
+            ('주주로서 의결한다', ['—', '국가가', '본인이', '본인이']),
+            ('기업이 옮겨도 배당을 받는다', ['—', 'O', 'O', 'O']),
+            ('국가를 거치지 않는다', ['—', '—', 'O', 'O']),
+            ('설비를 직접 멈춘다', ['—', '—', '—', 'O'])]
+    X0, CW = 220, 100
+    o = [lab(16, 24, '「통제」는 한 덩어리가 아니라 이런 것들의 묶음이다', fs=9.5)]
+    for i, c in enumerate(cols):
+        o.append('<text x="%d" y="46" class="t-sm" text-anchor="middle" '
+                 'style="font-weight:850">%s</text>' % (X0 + i * CW + CW // 2, esc(c)))
+    y = 58
+    for name, cells in rows:
+        o.append('<rect x="16" y="%d" width="618" height="30" rx="4" '
+                 'fill="var(--fig-body,rgba(127,127,127,.10))"/>' % y)
+        o.append('<text x="28" y="%d" class="t-sm" style="font-weight:850">%s</text>'
+                 % (y + 20, esc(name)))
+        for i, cell in enumerate(cells):
+            fill = ('var(--fig-good,#2f8f6b)' if cell != '—' else 'var(--ink-3)')
+            o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+                     'style="font-weight:850;fill:%s">%s</text>'
+                     % (X0 + i * CW + CW // 2, y + 20, fill, esc(cell)))
+        y += 36
+    o.append(lab(16, y + 12, '다만 대주주로서 지배권을 적극 행사하는 국부펀드가, 흩어진 기본자본보다 '
+                             '시민에게', fs=9.5))
+    o.append(lab(16, y + 28, '더 큰 통제를 줄 수도 있다 — 통제는 한 축으로 줄 세워지지 않는다', fs=9.5))
+    return svg(y + 40, ''.join(o))
+
+
+def fig_why_control():
+    """왜 통제가 문제인가. 민주주의를 떠받쳤던 조건이 사라지면."""
+    o = [lab(16, 24, '기본소득이 깨지기 쉽다고 보는 논변의 뼈대', fs=9.5)]
+    chain = [('산업혁명', ['도시화와 문해력이', '큰 무리의 파업을', '쉽게 만들었다']),
+             ('이해가 맞물렸다', ['노동자에게 기술과', '노동조건을 주는 것이', '엘리트에게도 값졌다']),
+             ('민주주의와 복지국가', ['그 위에서 자리를 잡았다'])]
+    x = 8
+    W = 200
+    for i, (name, lines) in enumerate(chain):
+        s_, h = box(x, 46, W, name, lines)
+        o.append(s_)
+        if i < 2:
+            o.append(arrow('svc', [(x + W, 46 + h // 2), (x + W + 12, 46 + h // 2)]))
+        x += W + 12
+    y2 = 46 + 26 + 45 + 8 + 26
+    s1, h1 = box(8, y2, 306, '그 조건이 사라지면', ['노동이 값어치를 잃으면 국가가 시민을 계속',
+                                          '부양할 이유도, 기업이 국가에 매일 이유도',
+                                          '함께 약해진다'])
+    s2, h2 = box(328, y2, 306, '그래서 나온 것이 정지 스위치다', ['로봇이 모든 일을 하게 되면,',
+                                                     '파업으로 노동을 멈추듯',
+                                                     '자본을 멈출 수 있게 한다'], key=True)
+    o += [s1, s2]
+    o.append(arrow('cond', [(160, y2 - 26), (160, y2)]))
+    o.append(arrow('svc', [(314, y2 + h1 // 2), (328, y2 + h1 // 2)]))
+    y3 = y2 + max(h1, h2) + 24
+    s3, h3 = box(8, y3, 626, '반론', ['지금도 거의 모든 선진국이 노동 가치가 높다고 여겨지지 않는 '
+                                  '집단에 큰 이전을 유지한다',
+                                  '빈곤층·장애인·특히 노인이 그렇다. 부유한 시민 한 명이 탈세하면 '
+                                  '나머지가 자기 세금으로',
+                                  '떠받치는 법체계로 그를 강제한다 — 그런 균형이 무한히 이어지지 '
+                                  '말라는 법은 없다'])
+    o.append(s3)
+    return svg(y3 + h3 + 12, ''.join(o))
+
+
+def fig_cash_or_kind():
+    """현금이냐 현물이냐. 현물로 주자는 근거 셋."""
+    o = [lab(16, 24, '국가가 자본을 사 줘야 하나, 현금을 주고 알아서 사게 할 것인가', fs=9.5)]
+    s0, h0 = box(8, 44, 626, '현금으로 주면', ['사람들은 채권을, 무의결권 주식을, 조금 더 비싼 '
+                                        '의결권 주식을, 또는 가족농장 같은',
+                                        '생산 단위를 살 수 있다. 아무 자본도 안 사고 다음 수표를 '
+                                        '믿을 수도 있다'])
+    o.append(s0)
+    y = 44 + h0 + 26
+    reasons = [('행동 편향', ['너무 적게 저축하거나', '잘못 투자할 수 있다']),
+               ('외부효과', ['통제가 집중되면 사회에 해롭다', '가장 부유한 이들이 부당한',
+                        '정치·경제 영향력을 쥔다']),
+               ('규모의 경제', ['큰 투자자만 사모 기업에 들어갈 수', '있다면 자산운용이 자연독점이 된다',
+                          '정지 스위치도 국가가 더 빨리 붙인다'])]
+    x = 8
+    W = 202
+    hh = 0
+    for name, lines in reasons:
+        s_, hh = box(x, y, W, name, lines, key=True)
+        o.append(s_)
+        o.append(arrow('cond', [(x + W // 2, y - 26), (x + W // 2, y)]))
+        x += W + 10
+    o.append(lab(16, y + hh + 20, '셋 다 「그래도 현물로 주자」는 쪽의 근거다. 어떻게 저울질할지는 '
+                                  '전환이 실제로 시작될 때', fs=9.5))
+    o.append(lab(16, y + hh + 36, '우리 모두가 정할 몫이라고 필자들은 적는다', fs=9.5))
+    return svg(y + hh + 48, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
@@ -1082,6 +1205,7 @@ SRC = {
     'hf': '[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md',
     'cn': '[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md',
     'onet': '[260617] AI 연구 자동화를 재려면 직무 목록부터 있어야 한다.md',
+    'agi': '[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -1123,6 +1247,11 @@ FIGS = {
     'onet_grain': fig_onet_grain,
     'onet_run': fig_onet_run,
     'onet_scale': fig_onet_scale,
+    # AGI 이후의 경제 편
+    'capital_ladder': fig_capital_ladder,
+    'control_kinds': fig_control_kinds,
+    'why_control': fig_why_control,
+    'cash_or_kind': fig_cash_or_kind,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -1143,6 +1272,8 @@ FIG_SRC = {
     'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
     'cn_chips': 'cn', 'cn_revenue': 'cn', 'cn_hubs': 'cn', 'cn_experience': 'cn',
     'onet_proxy': 'onet', 'onet_grain': 'onet', 'onet_run': 'onet', 'onet_scale': 'onet',
+    'capital_ladder': 'agi', 'control_kinds': 'agi', 'why_control': 'agi',
+    'cash_or_kind': 'agi',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
