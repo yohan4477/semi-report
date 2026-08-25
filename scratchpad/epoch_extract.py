@@ -240,22 +240,30 @@ def do_by_chip():
     return out
 
 
-def do_cyber_eci(name, ylo, yhi, key):
-    """Cyber-ECI 산점도. 세로는 ECI, 가로는 공개일이다."""
+def do_cyber_eci(name, ylo, yhi, key, y_top=None, per_line=10.0):
+    """Cyber-ECI 산점도. 세로는 ECI, 가로는 공개일이다.
+
+    자는 격자 간격에서 뽑는다. 찾은 격자가 몇 줄이냐로 나누면 안 된다 —
+    맨 아래 줄이 상자 밖으로 잘리면 자가 통째로 어긋난다. 2026-08-25에 그래서
+    cybereci 의 모든 점이 33% 눌려 있었다(회색 점 하나가 축 아래로 빠져 있었다)."""
     _, px, (W, H) = load(name)
-    gy = gridlines(px, (110, 330, 950, 960), 'y')
+    gy = gridlines(px, (110, 330, 950, 1010), 'y')
     gx = gridlines(px, (110, 330, 950, 940), 'x')
+    # 점을 훑는 상자는 격자보다 넓게 잡는다 — 첫 눈금 왼쪽에도 점이 있다.
+    # 좁게 잡았다가 cybereci 의 맨 왼쪽 점 하나를 통째로 빠뜨렸다(2026-08-25)
+    box = (50, 330, 1010, 1030)
     assert len(gy) >= 2, gy
-    step = (yhi - ylo) / (len(gy) - 1)
+    gap = (gy[-1] - gy[0]) / float(len(gy) - 1)
+    top = yhi if y_top is None else y_top
 
     def fy(y):
-        return yhi - (y - gy[0]) * step / ((gy[-1] - gy[0]) / (len(gy) - 1))
+        return top - (y - gy[0]) * per_line / gap
     colors = {'teal': (26, 178, 160), 'pink': (226, 62, 140), 'blue': (30, 90, 230),
               'gray': (200, 200, 200)}
     pts = {}
     for cname, c in colors.items():
         got = []
-        for bx, by, n in round_blobs(px, (110, 330, 950, 940), c, rlo=7, rhi=14):
+        for bx, by, n in round_blobs(px, box, c, rlo=7, rhi=14):
             got.append([round(bx), round(fy(by), 1)])
         pts[cname] = sorted(got)
     out = {'grid_y': gy, 'grid_x': gx, 'y_lo': ylo, 'y_hi': yhi, 'points': pts}

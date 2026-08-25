@@ -1106,23 +1106,26 @@ def fig_eci_lead():
     o.append(lab(282, 46, '그 밖의 모델', fs=13))
     X0, X1, Y0, Y1 = 70, 430, 66, 300
     LO, HI = 135.0, 175.0
-    gx0, gx1 = d['grid_x'][0], d['grid_x'][-1]
+    # 가로 자는 눈금이 아니라 자료 전체에 맞춘다 — 첫 눈금 왼쪽에도 점이 있어서,
+    # 눈금 둘만으로 자를 세우면 그 점이 판 밖으로 나간다
+    allx = [a for v in d['points'].values() for a, _b in v] + list(d['grid_x'])
+    xlo, xhi = min(allx) - 18, max(allx) + 18
 
     def fy(v):
         return Y1 - (Y1 - Y0) * (v - LO) / (HI - LO)
 
     def fx(px_):
-        return X0 + (X1 - X0) * (px_ - gx0) / float(gx1 - gx0)
+        return X0 + (X1 - X0) * (px_ - xlo) / float(xhi - xlo)
     o.append(grid_h(X0, X1 + 14, [fy(v) for v in (135, 145, 155, 165, 175)]))
-    o.append(grid_v(Y0, Y1, [fx(gx0 + (gx1 - gx0) * i / 3.0) for i in range(4)]))
+    o.append(grid_v(Y0, Y1, [fx(g) for g in d['grid_x']]))
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (X0, Y1, X1 + 14, Y1))
     for v in (135, 145, 155, 165, 175):
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%d</text>'
                  % (X0 - 8, fy(v) + 4, v))
-    for i, t in enumerate(('2025/04', '2025/08', '2025/12', '2026/04')):
+    for g, t in zip(d['grid_x'], ('2025/04', '2025/08', '2025/12', '2026/04')):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
-                 % (fx(gx0 + (gx1 - gx0) * i / 3.0), Y1 + 22, t))
+                 % (fx(g), Y1 + 22, t))
     # 미소스 이전 추세 — 눈으로 긋지 않고, 미소스 앞의 프런티어 점으로 최소제곱을 낸다
     pre = [(cx, cy) for cx, cy in d['points'].get('teal', ()) if cx < 780]
     if len(pre) >= 2:
@@ -1134,7 +1137,7 @@ def fig_eci_lead():
         def trend(px_):
             return my + slope * (px_ - mx)
         # 추세선이 판 아래로 빠지면 가로축 눈금 글자를 덮는다. 판 안에서만 긋는다
-        ax, ay, bx, by = X0 + 4, fy(trend(gx0)), X1 + 10, fy(trend(gx1 + 40))
+        ax, ay, bx, by = X0 + 4, fy(trend(xlo)), X1 + 10, fy(trend(xhi))
         if ay > Y1 and ay != by:
             t = (ay - Y1) / (ay - by)
             ax, ay = ax + (bx - ax) * t, Y1
@@ -1162,7 +1165,7 @@ def fig_eci_lead():
         # 원문은 추세선에 「Pre-Mythos trend」 이름표를 굽은 지시선으로 단다.
         # 화살촉은 추세선 위의 점에 정확히 닿아야 한다 — 어림으로 찍으면 허공을
         # 가리킨다(2026-08-25에 27px 떠 있었다)
-        lx, ly = X0 + 14, Y0 + 70
+        lx, ly = X0 + 14, Y0 + 118
         t_ = 0.42
         tx_, ty_ = ax + (bx - ax) * t_, ay + (by - ay) * t_
         o.append('<path d="M%.1f %.1f Q%.1f %.1f %.1f %.1f" fill="none" '
@@ -1173,14 +1176,17 @@ def fig_eci_lead():
     # 원문은 이름표를 그 점 옆에 붙인다 — 오른쪽에 표로 몰아 두면 어느 점 이야기인지
     # 눈이 못 잇는다. 위 둘은 점 왼쪽에 오른쪽 맞춤, GPT-5.5 는 점 아래에 굽은 지시선
     TEAL, BLUE = 'var(--fig-good,#2f8f6b)', 'var(--fig-blue,#2f6fd0)'
-    for (px_, pv), name, mo, ci in (((849, 169.9), '미소스 프리뷰(4월)', '6.8개월', '3.4~12.6'),
-                                    ((848, 162.3), '미소스 프리뷰(초기)', '3.0개월', '1.6~5.1')):
+    # 자리는 뽑아 둔 점 자료에서 그대로 가져온다 — 손으로 박아 두면 자료가 바뀔 때
+    # 이름표만 옛 자리에 남는다
+    tealpts = sorted(d['points'].get('teal', ()))
+    for (px_, pv), name, mo, ci in ((tealpts[-1], '미소스 프리뷰(4월)', '6.8개월', '3.4~12.6'),
+                                    (tealpts[-2], '미소스 프리뷰(초기)', '3.0개월', '1.6~5.1')):
         tx_, ty_ = fx(px_) - 12, fy(pv)
         o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="end" '
                  'style="font-weight:850;fill:%s">%s</text>' % (tx_, ty_ - 4, TEAL, esc(name)))
         o.append('<text x="%.1f" y="%.1f" class="t-sm" text-anchor="end" style="fill:%s">'
                  '%s 앞섰다 · 90%% 구간 %s</text>' % (tx_, ty_ + 14, TEAL, esc(mo), esc(ci)))
-    gx_, gv = 879, 162.4
+    gx_, gv = d['points']['blue'][0]
     bx_, by_ = fx(gx_), fy(gv)
     # 화살촉은 그림 안에 따로 둔다 — fig-arrow-a 는 강조색 고정이라 파란 선에 청록
     # 머리가 달린다. 끝점은 점의 아래 테두리(반지름 5)에 맞춘다
