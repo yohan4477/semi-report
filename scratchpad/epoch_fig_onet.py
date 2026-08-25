@@ -402,31 +402,65 @@ SIX = [
 ]
 
 
-def fig_onet_six():
-    """6개 범주. 원문은 도넛인데 원 위에 글자를 눕히면 읽히지 않아 고리로 폈다.
+SIX_COLOR = ['#B39CE6', '#8BDFFE', '#FFCE7F', '#8ADE82', '#FCA693', '#70EFD2']
+# 원문 도넛에서 뽑은 여섯 칸 색이다(o-net.webp, 중심 600,450 · 반지름 170에서 잼).
+# 1 보라 · 2 하늘 · 3 주황 · 4 초록 · 5 산호 · 6 청록, 위에서 시계 방향으로 60도씩.
 
-    범주 이름·번호·예시 문장은 원문 그림에 적힌 그대로다."""
+
+def _ring(cx, cy, r0, r1, a0, a1, fill):
+    """도넛 한 칸. 각도는 도(度), 0이 위쪽이고 시계 방향이다."""
+    import math
+
+    def pt(r, a):
+        rad = math.radians(a - 90)
+        return cx + r * math.cos(rad), cy + r * math.sin(rad)
+    big = 1 if (a1 - a0) % 360 > 180 else 0
+    x0, y0 = pt(r1, a0)
+    x1, y1 = pt(r1, a1)
+    x2, y2 = pt(r0, a1)
+    x3, y3 = pt(r0, a0)
+    return ('<path d="M%.1f %.1f A%.1f %.1f 0 %d 1 %.1f %.1f L%.1f %.1f '
+            'A%.1f %.1f 0 %d 0 %.1f %.1f Z" fill="%s" stroke="none"/>'
+            % (x0, y0, r1, r1, big, x1, y1, x2, y2, r0, r0, big, x3, y3, fill))
+
+
+def fig_onet_six():
+    """6개 범주. 원문 그대로 도넛으로 그린다.
+
+    원문은 칸마다 아이콘을 넣는데 아이콘은 옮길 수 없어 번호를 넣는다. 범주
+    이름·번호·예시 문장은 원문 그림에 적힌 그대로다."""
+    import math
     o = [ef.lab(16, 20, 'AI R&D 전용 O*NET 의 6개 범주 — 실험 하나가 도는 한 바퀴', fs=13)]
-    LX, RX, BW = 8, 332, 300
-    lcx, rcx = LX + BW // 2, RX + BW // 2
-    ys = [56, 154, 252]
-    order = [(LX, 0, 0), (LX, 1, 1), (LX, 2, 2), (RX, 2, 3), (RX, 1, 4), (RX, 0, 5)]
-    hh = 0
-    for x, row, idx in order:
+    CX, CY, R0, R1 = 320, 232, 53, 92
+    # 여섯 칸 — 위에서 시계 방향으로 20도씩 밀려 시작한다(원문에서 잰 자리)
+    for i in range(6):
+        o.append(_ring(CX, CY, R0, R1, 20 + i * 60, 80 + i * 60, SIX_COLOR[i]))
+    for i in range(6):
+        a = math.radians(50 + i * 60 - 90)
+        mx, my = CX + 72 * math.cos(a), CY + 72 * math.sin(a)
+        o.append('<circle cx="%.1f" cy="%.1f" r="15" fill="#fff" stroke="%s" '
+                 'stroke-width="2"/>' % (mx, my, SIX_COLOR[i]))
+        o.append('<text x="%.1f" y="%.1f" class="t-lab" text-anchor="middle">%d</text>'
+                 % (mx, my + 6, i + 1))
+    # 글 여섯 칸 — 오른쪽에 1·2·3, 왼쪽에 6·5·4. 원문이 놓은 자리 그대로다
+    LX, RX, BW = 8, 436, 196
+    ys = [46, 158, 270]
+    for idx, (x, row) in enumerate([(RX, 0), (RX, 1), (RX, 2),
+                                    (LX, 2), (LX, 1), (LX, 0)]):
         name, lines = SIX[idx]
-        s, hh = ef.box(x, ys[row], BW, name, lines, key=(idx in (0, 5)))
-        o.append(s)
-    bot = ys[2] + hh
-    for i in (0, 1):
-        o.append(ef.arrow('svc', [(lcx, ys[i] + hh), (lcx, ys[i + 1])]))
-        o.append(ef.arrow('svc', [(rcx, ys[i + 1]), (rcx, ys[i] + hh)]))
-    o.append(ef.arrow('svc', [(lcx, bot), (lcx, bot + 26), (rcx, bot + 26), (rcx, bot)]))
-    o.append(ef.arrow('svc', [(rcx, ys[0]), (rcx, 34), (lcx, 34), (lcx, ys[0])]))
-    o.append(ef.lab(16, bot + 46, '결정에서 시작해 알리는 데서 끝나고, 알린 결과가 다음 결정으로 '
-                                  '돌아온다', fs=13))
-    o.append(ef.lab(16, bot + 62, '이 여섯 아래에 하위 범주가 있고, 그 아래에 60개 넘는 과제가 '
+        y = ys[row]
+        o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (x, y, ef.esc(name)))
+        o.append('<path d="M%d %d L%d %d" stroke="%s" stroke-width="2" fill="none"/>'
+                 % (x, y + 8, x + BW, y + 8, SIX_COLOR[idx]))
+        for j, ln in enumerate(ef.wrap_lines(' '.join(lines), BW + 12)):
+            o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (x, y + 28 + 19 * j,
+                                                                    ef.esc(ln)))
+    bot = ys[2] + 28 + 19 * 4
+    o.append(ef.lab(16, bot + 8, '결정에서 시작해 알리는 데서 끝나고, 알린 결과가 다음 결정으로 '
+                                 '돌아온다', fs=13))
+    o.append(ef.lab(16, bot + 26, '이 여섯 아래에 하위 범주가 있고, 그 아래에 60개 넘는 과제가 '
                                   '적힌다', fs=13))
-    return ef.svg(bot + 74, ''.join(o))
+    return ef.svg(bot + 38, ''.join(o))
 
 
 # ══ ⑤ 과제 목록의 한 쪽 — 4.1 실행 감시 ═════════════════════════════════

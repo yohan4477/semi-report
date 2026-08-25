@@ -1345,12 +1345,12 @@ def fig_cn_gtm():
     """회사별 고객확보 직무 구성. 값은 원문 도해에 적힌 그대로다."""
     X0, X1 = 150, 590
     o = [lab(16, 24, '각 회사의 영업·고객확보 직무 구성 (2026-06-23 기준)', fs=13)]
-    o.append(swatch(16, 44, 'B2B 영업'))
+    o.append(swatch(16, 44, 'B2B 영업', solid='var(--fig-good,#2f8f6b)'))
     o.append('<rect x="170" y="34" width="14" height="11" rx="2" '
              'fill="var(--fig-body,rgba(127,127,127,.30))" stroke="var(--ink-3)" '
              'stroke-width="1"/>')
     o.append(lab(190, 44, '광고·성장·마케팅', fs=13))
-    rows = [('Z.ai', 83, 17), ('미니맥스', 24, 76), ('문샷', 17, 83)]
+    rows = [('미니맥스', 24, 76), ('문샷', 17, 83), ('Z.ai', 83, 17)]
     y = 62
     for name, b2b, mkt in rows:
         w1 = int((X1 - X0) * b2b / 100.0)
@@ -1366,7 +1366,7 @@ def fig_cn_gtm():
                      'style="font-weight:850;fill:%s">%d%%</text>' % (cx, y + 28, fill, val))
         y += 54
     ax, bottom = xaxis(X0, X1, y - 4, (0, 25, 50, 75, 100), 100,
-                       '그 회사 영업·고객확보 직무에서 차지하는 비중(%)')
+                       '그 회사 영업·고객확보 직무에서 차지하는 비중', fmt='%g%%')
     o.append(ax)
     o.append(lab(16, bottom + 6, '매출 구조가 이 차이를 설명한다 — 미니맥스는 매출의 70%가 개인 대상 '
                                  '앱에서 나오고,', fs=13))

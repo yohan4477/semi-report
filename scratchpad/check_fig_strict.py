@@ -165,9 +165,9 @@ def hits(svg):
             ny = min(max(cy, y0), y1)
             if (nx - cx) ** 2 + (ny - cy) ** 2 >= (r + PAD) ** 2:
                 continue
-            # 큰 동그라미 안에 글자가 통째로 들어 있으면 그 동그라미의 이름표다
-            # (지구·행성처럼 판 노릇을 하는 자리). 깔린 것이 아니다
-            if r >= 20 and x0 >= cx - r and x1 <= cx + r and y0 >= cy - r and y1 <= cy + r:
+            # 동그라미 안에 글자가 통째로 들어 있으면 그 동그라미의 이름표다
+            # (지구·행성, 도넛 칸 번호처럼 판 노릇을 하는 자리). 깔린 것이 아니다
+            if r >= 12 and x0 >= cx - r and x1 <= cx + r and y0 >= cy - r and y1 <= cy + r:
                 continue
             bad.append('동그라미에 깔림 (%.0f,%.0f,r%.1f)  %s' % (cx, cy, r, b[4][:30]))
     bad += under_panel(svg)
