@@ -260,6 +260,48 @@ POST_CSS = '''
      본문과 같은 .95rem으로 그려지고, 좁으면 판이 줄어든다. 어느 쪽이든 옆으로
      스크롤하지 않는다 — 776으로 내보내던 때는 창이 조금만 좁아도 밀렸다 */
   .ucard .uc-fig svg.epoch{width:100%;max-width:520px;margin:0 auto}
+  /* HTML로 짠 판(.rfig). SVG는 판이 줄면 글자도 같이 줄어 본문과 어긋난다 —
+     휴대폰에서 자리가 300px이면 520 판이 0.6배가 되고 글자가 9px로 앉았다.
+     여기서는 글자가 본문과 같은 .95rem으로 고정이고, 좁아지면 칸이 아래로 쌓인다.
+     기준은 화면 폭이 아니라 카드 안 자리다 — 그래서 컨테이너 질의를 쓴다 */
+  .uc-fig .rfig{container-type:inline-size;margin:2px 0}
+  .rfig .rf-row + .rf-row{margin-top:20px}
+  .rfig .rf-cap{margin:0 0 10px;font-size:.95rem;font-weight:800;color:var(--ink-3)}
+  .rfig .rf-pair{display:flex;align-items:stretch;gap:10px}
+  .rfig .rf-box{flex:1 1 0;min-width:0;border:1px solid var(--ink-3);border-radius:10px;
+                padding:12px 10px;background:var(--surface,#fff);text-align:center}
+  .rfig .rf-box b{display:block;font-size:.95rem;font-weight:800;color:var(--ink);margin-bottom:5px}
+  .rfig .rf-box span{display:block;font-size:.95rem;line-height:1.7;color:var(--ink)}
+  .rfig .rf-empty{border-style:dashed}
+  .rfig .rf-empty b,.rfig .rf-empty span{color:var(--ink-3)}
+  .rfig .rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal);border-width:1.6px}
+  .rfig .rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  .rfig .rf-msgs{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .rfig .rf-msg{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .rfig .rf-msg em{font-style:normal;font-size:.95rem;font-weight:700;line-height:1.4;
+                   color:var(--ink-3);text-align:center}
+  .rfig .rf-msg i{font-style:normal;font-size:1.15rem;line-height:1;color:var(--epoch-teal)}
+  .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
+  .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
+  .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
+  .rfig .rf-sw.rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal)}
+  .rfig .rf-sw.rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  /* 걸음을 아래로 세운 판. 레인을 옆으로 벌리면 좁은 자리에서 순서가 무너진다 */
+  .rfig .rf-seq{list-style:none;margin:0;padding:0;counter-reset:rs}
+  .rfig .rf-seq>li{counter-increment:rs;display:flex;align-items:baseline;gap:10px;
+                   padding:11px 0 11px 34px;position:relative;border-bottom:1px solid var(--line)}
+  .rfig .rf-seq>li:last-child{border-bottom:0}
+  .rfig .rf-seq>li::before{content:counter(rs);position:absolute;left:0;top:11px;width:22px;
+                   text-align:center;font-size:.95rem;font-weight:800;color:var(--epoch-teal)}
+  .rfig .rf-who{flex:0 0 auto;font-size:.95rem;font-weight:800;color:var(--ink);white-space:nowrap}
+  .rfig .rf-what{font-size:.95rem;line-height:1.7;color:var(--ink-2)}
+  @container (max-width:430px){
+    .rfig .rf-pair{flex-direction:column;align-items:stretch}
+    .rfig .rf-msgs{flex-direction:row;justify-content:center;gap:20px}
+    .rfig .rf-msg i{transform:rotate(90deg)}
+    .rfig .rf-msg.is-back i{transform:rotate(-90deg)}
+    .rfig .rf-seq>li{flex-direction:column;gap:2px}
+  }
   /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
      층은 굵기와 색으로만 가른다 — 크기로 가르면 자리마다 값이 갈린다 */
   .ucard .uc-fig .fig-title{font-size:.95rem;letter-spacing:0;text-transform:none}
