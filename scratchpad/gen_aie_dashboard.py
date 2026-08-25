@@ -255,6 +255,11 @@ POST_CSS = '''
   .uc-rep p{margin:0 0 13px;font-size:.95rem;line-height:1.78;color:var(--ink-2)}
   .uc-rep p:last-child{margin-bottom:0}
   .uc-rep .uc-fig{margin:18px 0}
+  /* 판을 776px 고정으로 둔다. svg.epoch 기본값(width:100%)대로 두면 판이 화면 폭을
+     따라 스케일되면서 판 안 글자만 본문과 어긋난다 — 넓으면 크고 좁으면 작다.
+     좁은 화면에서는 줄이지 말고 그림만 가로로 스크롤한다 */
+  .ucard .uc-fig{overflow-x:auto}
+  .ucard .uc-fig svg.epoch{width:776px;max-width:none;margin:0 auto}
 ''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '

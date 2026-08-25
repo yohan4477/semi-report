@@ -15,20 +15,23 @@
 
 **칸은 글자에 맞춰 잰다.** 폭을 손으로 정하면 글자 양옆에 빈자리가 남고 그만큼
 글자를 못 키운다. `w_of()`가 가장 긴 줄에 여백 2px만 더해 폭을 낸다. 남는
-자리는 칸 사이 틈으로 간다. 글자는 19px — 본문 번호글(.95rem ≈ 15px)보다 크다.
+자리는 칸 사이 틈으로 간다.
 
-판은 776으로 내보낸다. 데스크톱에서 카드 안 그림 자리가 776px이라
-(.wrap 840 − .ucard 26×2 − .uc-fig 6×2) 배율이 1이 되어 19px이 19px로 그려진다.
+**글자 크기는 본문과 같다.** 판 안 글자도 그 아래 설명도 전부 `.95rem`이다.
+전에는 그림을 19px로 키웠는데, `svg.epoch`가 `width:100%`라 판이 화면 폭을 따라
+늘었다 줄었다 하면서 글자도 같이 스케일됐다 — 넓은 화면에서는 본문보다 크고
+좁은 화면에서는 본문보다 작았다. 그래서 판을 776px 고정으로 내보내고
+(좁으면 그림만 가로로 스크롤한다) 글자를 본문과 같은 값으로 맞춘다.
+배율이 늘 1이라 `.95rem`이 화면에서도 `.95rem`으로 그려진다.
 
-배치는 `scratchpad/check_fig.py`가 보고, 브라우저에서 getBBox로 다시 잰다.
-그 검사기는 한 글자를 9px로 어림하므로 19px 글자는 못 잡는다 — 아래 헬퍼가
-19.5px로 따로 재고 넘치면 생성이 멈춘다.
+배치는 `scratchpad/check_fig.py`가 본다. 그 검사기는 붓 이름(fig-b·fig-st…)으로
+글자 폭을 갈라 재므로 이 장 도해도 제대로 걸린다.
 """
 
 W = 776.0        # 내보내는 판 폭
-CHW = 19.5       # 19px 한글 한 글자 폭. 브라우저에서 재어 얻었다
+CHW = 15.6       # .95rem(15.2px) 한글 한 글자 폭. 본문 글자와 같은 값이다
 PAD = 2          # 칸 좌우 여백. 글자에 자리를 다 준다
-LH = 28          # 줄 간격
+LH = 23          # 줄 간격
 GAP = 16         # 칸 사이 틈
 
 
@@ -82,7 +85,7 @@ def legend(items, y):
     for cls, t in items:
         out.append('  <rect x="%g" y="%g" width="14" height="14" rx="3" class="fig-box %s"/>' % (x, y, cls))
         out.append('  <text x="%g" y="%g" class="fig-lg">%s</text>' % (x + 22, y + 12, t))
-        x += 22 + len(t) * 15 + 30
+        x += 22 + len(t) * CHW + 30
     assert x <= W, '범례가 판보다 넓다'
     return out
 
@@ -310,11 +313,13 @@ FIG_CSS = """
   .uc-fig .fig-outside{fill:var(--surface,#fff);stroke-dasharray:4 3}
   .uc-fig .fig-bad{fill:var(--surface,#fff);stroke:var(--epoch-coral);stroke-width:1.6}
   /* 글자는 19px. 본문 번호글(.95rem)보다 크게 둔다 — 그림이 먼저 읽혀야 한다 */
-  .uc-fig .fig-b{fill:var(--ink);font-size:19px;font-weight:600}
-  .uc-fig .fig-st{fill:var(--ink);font-size:19px;font-weight:800}
-  .uc-fig .fig-hd{fill:var(--ink-3);font-size:15px;font-weight:800;letter-spacing:.04em}
-  .uc-fig .fig-e{fill:var(--ink-3);font-size:15px;font-weight:700}
-  .uc-fig .fig-lg{fill:var(--ink-3);font-size:15px;font-weight:650}
+  /* 판 안 글자는 전부 본문과 같은 .95rem이다. 굵기로만 층을 가른다 —
+     크기로 가르면 판이 화면 폭에 따라 스케일될 때 본문과 어긋난다 */
+  .uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+  .uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+  .uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:800}
+  .uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+  .uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:650}
   .uc-fig .fig-arw{stroke:var(--epoch-teal);stroke-width:2;fill:none}
 """
 
@@ -357,7 +362,8 @@ def lifeline(x, y1, y2):
 # 발표의 주장 전부가 이 한 장이다. 같은 네 가지를 위에서는 모델이 쥐고 있고
 # 아래에서는 셋이 하네스로 넘어가 있다. 상자가 옮겨 다니는 것이 요점이라
 # 좌우가 아니라 위아래로 놓는다 — 눈이 같은 자리를 두 번 보게 된다.
-_SB = 220.0                      # 네 상자 폭을 하나로 맞춘다
+_SB = float(w_of(['지금 몇 단계인가'], ['이번 단계의 말 하나'],
+                ['(아무것도 안 쥠)']))   # 네 상자 폭을 하나로 맞춘다
 _SLX, _SRX = 70.0, W - 70 - _SB
 _R_STATE = svg(452,
     head(0, 22, W, '전부 모델에 맡길 때')
