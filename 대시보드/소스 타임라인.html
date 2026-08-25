@@ -32,9 +32,6 @@ body.sub .lens{display:none}
 #hub{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
 #hub:hover{text-decoration:underline}
 body.sub #hub{display:none}
-#back{display:none;border:none;background:var(--panel);width:34px;height:34px;border-radius:50%;font-size:17px;
-  cursor:pointer;color:var(--ink);line-height:1}
-body.sub #back{display:block}
 
 .sec{background:var(--panel);border-radius:24px;margin:12px 12px 0;padding:22px 20px 14px}
 .sec .cap{font-size:13px;font-weight:700;color:var(--faint);margin-bottom:14px;letter-spacing:-.2px}
@@ -174,7 +171,7 @@ input#eq{width:100%;padding:9px 14px;font-size:13.5px}
 <body>
 <div id="app">
   <div id="head">
-    <div id="top"><button id="back">‹</button><h1 id="title">Yomianalysis</h1>
+    <div id="top"><h1 id="title">Yomianalysis</h1>
       <span class="stamp" id="stamp"></span></div>
     <div class="lens" id="lens">
       <button data-lens="brief">브리핑</button>
@@ -522,14 +519,25 @@ function render(){
     requestAnimationFrame(drawBranch);}
   bind();
 }
+// 주체·논제 화면은 홈 위에 얹히는 층이다. 한 칸 쌓아야 기기 뒤로가기가 홈으로 돌아온다.
+function pushView(){
+  try{history.pushState({v:state.view,ent:state.ent,th:state.th,lens:state.lens},'');}catch(e){}
+}
+window.addEventListener('popstate',ev=>{
+  const st=ev.state;
+  if(st&&st.v){state.view=st.v;state.ent=st.ent||null;state.th=st.th||null;
+    if(st.lens)state.lens=st.lens;}
+  else{state.view='home';state.ent=null;state.th=null;}
+  render();scrollTo(0,0);
+});
 function openEnt(t){
   state.recent=[t,...state.recent.filter(x=>x!==t)].slice(0,6);
   try{localStorage.setItem('tl_recent',JSON.stringify(state.recent))}catch(e){}
-  state.view='ent';state.ent=t;render();scrollTo(0,0);}
+  state.view='ent';state.ent=t;render();pushView();scrollTo(0,0);}
 function bind(){
   views.querySelectorAll('[data-ent]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();openEnt(el.dataset.ent);});
   views.querySelectorAll('[data-th]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();
-    state.view='th';state.th=el.dataset.th;render();scrollTo(0,0);});
+    state.view='th';state.th=el.dataset.th;render();pushView();scrollTo(0,0);});
   views.querySelectorAll('.ghead').forEach(el=>el.onclick=()=>{const g=el.dataset.g;
     state.openG.has(g)?state.openG.delete(g):state.openG.add(g);render();});
   views.querySelectorAll('.chip[data-d]').forEach(el=>el.onclick=()=>{const d=el.dataset.d;
@@ -552,9 +560,11 @@ function bindPartial(root){
 function syncLens(){document.querySelectorAll('#lens button').forEach(b=>
   b.classList.toggle('on',b.dataset.lens===state.lens));}
 document.querySelectorAll('#lens button').forEach(b=>b.onclick=()=>{
-  state.lens=b.dataset.lens;state.view='home';state.ent=null;state.th=null;render();scrollTo(0,0);});
-document.getElementById('back').onclick=()=>{state.view='home';state.ent=null;state.th=null;render();};
+  state.lens=b.dataset.lens;state.view='home';state.ent=null;state.th=null;render();
+  try{history.replaceState({v:'home',ent:null,th:null,lens:state.lens},'');}catch(e){}
+  scrollTo(0,0);});
 document.getElementById('stamp').textContent=`${maxDate.slice(0,10)} 기준`;
+try{history.replaceState({v:'home',ent:null,th:null,lens:state.lens},'');}catch(e){}
 render();
 </script>
 </body>
