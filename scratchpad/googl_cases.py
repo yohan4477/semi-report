@@ -173,9 +173,22 @@ def write_facts():
     L.append('- 실무 도구 보수적 상한 10년 성장 20%')
     eq = dcf.value(base, WACC, CASES['Base']['g'], NET_DEBT, SHARES)['equity']
     L.append('- Base 비영업자산 반영 주당 %.0f' % ((eq + 131.5) / SHARES))
-    for r in (0.09, 0.10, 0.11):
+    for r in (0.09, 0.095, 0.10, 0.105, 0.11):
         L.append('- 역산 요구성장률 (할인율 %.1f%%) %.2f%%'
                  % (r * 100, dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT) * 100))
+    for name, c2 in CASES.items():
+        ir = dcf.implied_discount_rate([r[3] for r in path(c2)], c2['g'], MCAP, NET_DEBT)
+        L.append('- %s 경로 내재 할인율 %.2f%% (우리 할인율 대비 %.2f%%p 낮다)'
+                 % (name, ir * 100, (WACC - ir) * 100))
+    g10 = dcf.implied_growth(FCF0, 0.10, 0.0275, 10, MCAP, NET_DEBT)
+    f10 = FCF0 * (1 + g10) ** 10
+    last = path(CASES['Base'])[-1][3]
+    L += ['- 10년 뒤 요구 잉여현금흐름 %s' % two(f10),
+          '- 지금의 %.1f배' % (f10 / FCF0),
+          '- Base 경로 마지막 해 잉여현금흐름 %s' % two(last),
+          '- 두 값의 차이 %s' % two(f10 - last),
+          '- 내재 시장위험프리미엄 3.3%',
+          '- 위험 대가 3.80%p']
     L += ['', '## 회계사 판 필자가 알파벳에 쓴 값 (2026-05-16 편)', '',
           '- 2026~2028 매출 성장률 20~22%',
           '- 그 구간 잉여현금흐름 마진 3~8%',
