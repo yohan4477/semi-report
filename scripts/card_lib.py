@@ -64,6 +64,22 @@ FIG_CSS = '''
   .uc-fig .cut{stroke-width:2.4}
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:1.8;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:9.5px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
   .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
   .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
   .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
@@ -71,7 +87,8 @@ FIG_CSS = '''
   @media (prefers-color-scheme:dark){
     .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
-            --fig-fat:#c9a63f;--fig-cell:#5d7ba3}
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 '''
 
@@ -189,6 +206,8 @@ FIG_DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="tr
             # 페이지 변수(--ink-3)를 직접 박는다
             '<marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" '
             'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker>'
+            '<marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" '
+            'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker>'
             '<pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" '
             'patternTransform="rotate(45)">'
             '<line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" '
