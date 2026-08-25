@@ -304,7 +304,7 @@ def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
 
 # ── ① 두 칸 대조 — 컴퓨트와 데이터센터가 같은 구조다 ─────────────────────
 def fig_two_columns():
-    LX, RX, BW = 4, 352, 284
+    LX, RX, BW = 24, 366, 250
     lcx, rcx = LX + BW // 2, RX + BW // 2
     o = [legend()]
     o.append(head(lcx, 48, '컴퓨트'))
@@ -336,7 +336,9 @@ def fig_two_columns():
     edge = [('cash', '부채 인출', '부채 인출'), ('svc', '사서 보유', '짓고 보유'),
             ('svc', '빌려준다', '빌려준다')]
     y = 76
+    tops = []
     for i, (rl, left, right) in enumerate(rows):
+        tops.append(y)
         parts, h = even([(x, y, BW, nm, ls, ky)
                          for x, (nm, ls, ky) in ((LX, left), (RX, right))])
         o += parts
@@ -349,9 +351,13 @@ def fig_two_columns():
         y += h + 26
     bottom = y - 26
     # 벤더 지원은 옆 레일로 돌린다 — 가운데를 가로지르면 아래 화살표와 엉킨다(규칙 7)
-    o.append(arrow('cond', [(LX, bottom - 30), (6, bottom - 30), (6, 97), (LX, 97)]))
+    # 벤더 지원은 옆 레일로 돌린다. 기둥은 상자에서 14 떨어뜨린다 — 붙여 놓으면
+    # 점선이 상자 테두리를 타고 내려가 선인지 테두리인지 구분이 안 된다(2026-08-25)
+    o.append(arrow('cond', [(LX - 6, bottom - 30), (10, bottom - 30),
+                            (10, tops[0] + 21), (LX - 6, tops[0] + 21)]))
     # 브로드컴은 선순위 채무를, 구글은 임대료를 받친다 — 가리키는 자리가 다르다
-    o.append(arrow('cond', [(RX + BW, bottom - 30), (634, bottom - 30), (634, 429), (RX + BW, 429)]))
+    o.append(arrow('cond', [(RX + BW + 6, bottom - 30), (634, bottom - 30),
+                            (634, tops[3] + 31), (RX + BW + 6, tops[3] + 31)]))
     return svg(bottom + 12, ''.join(o))
 
 
@@ -409,7 +415,7 @@ def left_rail(tops, src, dst, label):
     """멀리 떨어진 두 칸을 판 바깥 왼쪽으로 잇는다(규칙 7). 글자는 눕히지 않는다."""
     sy = tops[src][0] + tops[src][1] // 2
     dy = tops[dst][0] + tops[dst][1] // 2
-    return [arrow('cash', [(X, sy), (RAIL, sy), (RAIL, dy), (X, dy)]),
+    return [arrow('cash', [(X - 6, sy), (RAIL, sy), (RAIL, dy), (X - 6, dy)]),
             lab(X - 8, dy - 9, label, cash=True, anchor='end', fs=13)]
 
 
@@ -418,7 +424,7 @@ def side(y, role_, name, lines, ty, endx=X + BW):
     s_, h = box(458, y, 176, name, lines)
     return ['<text x="634" y="%d" class="t-role" text-anchor="end">%s</text>'
             % (y - 7, esc(role_)),
-            s_, arrow('cond', [(458, ty), (endx, ty)])], h
+            s_, arrow('cond', [(452, ty), (endx, ty)])], h
 
 
 # ── ② 한 줄 세로 스택 — TPU 자금 한 바퀴 ────────────────────────────────
