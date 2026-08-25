@@ -5,8 +5,13 @@
 # 메르 블로그처럼 **한 생각에 번호 하나**를 매겨 죽 늘어놓는다. 발표는 논지가 앞에서 뒤로
 # 굴러가는 글이라, 조각으로 갈라 놓으면 「그래서 앞의 것이 뒤에 어떻게 걸리나」가 사라진다.
 #
-# 본문은 이 파일에 적지 않는다. `content/understanding/AI Engineer/*.md` 한 편이 카드 한 장이고,
-# 이 파일은 그 글을 어느 섹션에 세우고 접힌 채로 뭐라고 소개할지(gain)만 정한다.
+# 카드 목록을 이 파일에 적지 않는다. `content/understanding/AI Engineer/*.md` 한 편이
+# 카드 한 장이고, 어느 섹션에 설지·주제칩·gain 까지 전부 그 글의 프런트매터에 있다.
+# 글을 새로 넣고 이 파일을 다시 돌리면 카드가 는다.
+#
+# 프런트매터 필수 키
+#   title date source speaker org channel dur section topic gain
+#   section 은 아래 SEC 의 열쇠말 하나다. 없는 열쇠말을 적으면 생성이 멈춘다.
 import io, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -19,44 +24,25 @@ REL = 'content/understanding/AI Engineer/%s'
 
 STAMP = '2026-08-26'
 
-SEC_AGENT = ('sec-agent', '01', '에이전트 만들기 · 운영',
-             '데모에서 운영으로 넘어갈 때 무엇이 먼저 깨지나. 붙잡는 쪽이 만든 장치들')
-SEC_TRAIN = ('sec-train', '02', '모델 훈련 · 후속 학습',
-             '배포한 뒤에도 모델이 더 배우게 하려면 무엇을 모아야 하나')
-SEC_EVAL = ('sec-eval', '03', '평가 · 결과물 품질',
-            '정답이 없는 일을 어떻게 채점하나. 취향을 숫자로 바꾸는 자리')
-
-
-# 글 한 편이 카드 한 장. body는 md에서 읽는다 — 여기에는 자리와 소개만 적는다.
-POSTS = [
-    {'file': '2025-04-01-블룸버그-에이전트-확장.md',
-     'section': SEC_AGENT,
-     'topic': ('market', '에이전트 · 운영'),
-     'vid': 'b2GqTDWtg6s'},
-    {'file': '2026-07-31-일하면서-배우는-에이전트.md',
-     'section': SEC_TRAIN,
-     'topic': ('tech', '포스트트레이닝 · 강화학습'),
-     'vid': 'k35LeKZEhiE'},
-    {'file': '2026-07-31-AI-슬롭을-끝내는-법.md',
-     'section': SEC_EVAL,
-     'topic': ('tech', '평가 · 보상 모델'),
-     'vid': 'lCBf9slCanI'},
-]
-
-# 접힌 채로 고르는 기준. 글이 무엇을 알려 주는지를 사람이 쓴다 — 첫 문단을 잘라 쓰지 않는다.
-GAIN = {
-    'b2GqTDWtg6s': '리서치 애널리스트용 에이전트를 400명·50개 팀이 매일 고쳐 내보내며 겪은 것. '
-                   '「최근 5개 분기」에서 글자 하나가 빠져 월간 값이 분기 값으로 나간 사고, 위에서 '
-                   '에이전트를 바꾸면 아래가 흔들린다고 미리 가정하고 방어막부터 치는 순서, '
-                   '가드레일을 언제 팀마다 두지 말고 수평으로 떼어낼지.',
-    'k35LeKZEhiE': '훈련 스택이 쥐고 있던 것을 한 겹씩 바깥으로 내주는 순서. 한 턴짜리 문답에서 '
-                   '합성 환경으로, 남의 하니스로, 배포 뒤 자기개선으로 넘어갈 때마다 무엇을 놓고 '
-                   '무엇을 얻나. 네트워크 탓에 도구 호출 10%가 실패하자 모델이 답을 점점 짧게 '
-                   '내놓은 사례가 왜 리워드 해킹과 같은 문제인지도 나온다.',
-    'lCBf9slCanI': '디자인·글쓰기·성격처럼 정답이 없는 일을 채점할 수 있는 것으로 쪼개는 방법. '
-                   '수학에서는 여러 답의 평균이 정답에 가까워지는데 취향에서는 그 평균이 슬롭이 되는 '
-                   '이유와, 전문가끼리 판단이 갈릴 때 그것을 나쁜 데이터로 버릴지 좋은 데이터로 남길지 '
-                   '가르는 기준.',
+# 섹션은 「무엇을 만드는 이야기인가」로 가른다. 회사로 가르지 않는다 —
+# 같은 회사가 훈련 이야기도 하고 제품 이야기도 하는데 회사로 묶으면 그게 한 칸에 뭉친다.
+SEC = {
+    'agent':   ('sec-agent', '01', '에이전트 만들기 · 운영',
+                '데모에서 운영으로 넘어갈 때 무엇이 먼저 깨지나. 붙잡는 쪽이 만든 장치들'),
+    'code':    ('sec-code', '02', '코딩 에이전트 · 개발 도구',
+                '코드를 대신 쓰는 쪽이 무엇에서 막히나. 사람이 어디까지 쥐고 있어야 하나'),
+    'rag':     ('sec-rag', '03', '검색 · 컨텍스트 · 기억',
+                '모델에 무엇을 얼마나 넣어 주나. 찾아오는 일과 기억하는 일이 갈리는 자리'),
+    'train':   ('sec-train', '04', '모델 훈련 · 후속 학습',
+                '배포한 뒤에도 모델이 더 배우게 하려면 무엇을 모아야 하나'),
+    'eval':    ('sec-eval', '05', '평가 · 결과물 품질',
+                '정답이 없는 일을 어떻게 채점하나. 취향을 숫자로 바꾸는 자리'),
+    'infra':   ('sec-infra', '06', '서빙 · 비용 · 인프라',
+                '토큰을 싸게 많이 내보내는 일. 지연과 값이 부딪히는 자리'),
+    'voice':   ('sec-voice', '07', '음성 · 멀티모달',
+                '말로 주고받는 것이 글로 주고받는 것과 어디서 갈리나'),
+    'product': ('sec-product', '08', '제품 · 조직 · 도입',
+                '만든 것을 회사 안에 어떻게 들이나. 조직이 먼저 바뀌는 대목'),
 }
 
 VERDICT_RE = re.compile(r'^한줄\s*코멘트[.,]?\s*(.+)$')
@@ -84,6 +70,15 @@ def esc(s):
     return (s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
+def dur_ko(s):
+    """길이 표기를 한 벌로 맞춘다 — 「16:30」도 「18분 20초」도 들어온다."""
+    m = re.match(r'^(\d+):(\d{2})$', (s or '').strip())
+    if not m:
+        return s or ''
+    mm, ss = int(m.group(1)), int(m.group(2))
+    return '%d분 %d초' % (mm, ss) if ss else '%d분' % mm
+
+
 def parse(path):
     """번호글 md 한 편 → (프런트매터, 번호글 목록, 한줄 코멘트)."""
     raw = io.open(path, encoding='utf-8').read().replace('\r\n', '\n')
@@ -107,42 +102,49 @@ def parse(path):
             expect = n
         items.append(esc(m.group(2)))
         expect += 1
-    assert items, '번호글이 하나도 없다: %s' % path
-    assert verdict, '한줄 코멘트가 없다: %s' % path
     return meta, items, verdict
 
 
-def dur_ko(s):
-    """길이 표기를 한 벌로 맞춘다 — 「16:30」도 「18분 20초」도 들어온다."""
-    m = re.match(r'^(\d+):(\d{2})$', (s or '').strip())
-    if not m:
-        return s or ''
-    mm, ss = int(m.group(1)), int(m.group(2))
-    return '%d분 %d초' % (mm, ss) if ss else '%d분' % mm
+def vid_of(url):
+    return (url or '').rsplit('/', 1)[-1].split('?')[0]
 
 
 def build():
-    cards = []
-    for p in POSTS:
-        path = os.path.join(SRC_DIR, p['file'])
+    cards, bad = [], []
+    for fn in sorted(os.listdir(SRC_DIR)):
+        if not fn.endswith('.md'):
+            continue
+        path = os.path.join(SRC_DIR, fn)
         meta, items, verdict = parse(path)
-        url = meta.get('source') or ('https://youtu.be/' + p['vid'])
-        dur = dur_ko(meta.get('dur', ''))
+        # 덜 된 글은 화면에 올리지 않는다 — 번호글이나 한줄 코멘트가 비면 건너뛰고 적어 둔다
+        why = ('번호글 없음' if not items else
+               '한줄 코멘트 없음' if not verdict else
+               'section 열쇠말이 SEC에 없다: %r' % meta.get('section') if meta.get('section') not in SEC else
+               'gain 없음' if not meta.get('gain') else '')
+        if why:
+            bad.append((fn, why))
+            continue
         cards.append({
-            'section': p['section'],
-            'topic': p['topic'],
-            'title': meta.get('title') or p['file'][:-3],
-            'gain': GAIN.get(p['vid'], ''),
+            'section': SEC[meta['section']],
+            'topic': ('market' if meta['section'] in ('product', 'infra') else 'tech',
+                      meta.get('topic') or SEC[meta['section']][2]),
+            'title': meta.get('title') or fn[:-3],
+            'gain': meta['gain'],
             'meta': ['%s <b>%s</b>' % (meta.get('speaker', ''), meta.get('org', '')),
                      '발표 %s' % meta.get('date', ''),
-                     dur,
+                     dur_ko(meta.get('dur', '')),
                      meta.get('channel', 'AI Engineer')],
             'post': items,
             'verdict': verdict,
-            'links': [('번호글 전문 ↗', dc.blob(REL % p['file']), ''),
-                      ('발표 영상 ↗', url, '')],
+            'links': [('번호글 전문 ↗', dc.blob(REL % fn), ''),
+                      ('발표 영상 ↗', meta.get('source', ''), '')],
+            '_date': meta.get('date', ''),
         })
-        print('  %-46s 번호 %2d개' % (p['file'][:46], len(items)))
+    cards.sort(key=lambda c: c['_date'], reverse=True)
+    print('  카드 %d장' % len(cards))
+    for fn, why in bad:
+        print('  ! 건너뜀 %s — %s' % (fn, why))
+    assert cards, '올릴 글이 하나도 없다'
     return cards
 
 
