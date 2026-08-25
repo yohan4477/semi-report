@@ -8,8 +8,31 @@
 산식은 docs/valuation-rulebook.md 의 R1~R28 을 그대로 쓴다. 계산기는
 insights/dcf.py 이고 삼성전자 재현 테스트를 통과한 것이다. 입력값만 미국 회사로 갈았다.
 """
+import json
+import os
+
 import _val_fig
 import dash_common as dc
+import googl_cases as gc
+
+# 표에 들어갈 숫자를 손으로 옮기지 않는다. 억 단위 표기가 본문과 사실표에서 어긋나
+# check_report 가 세 번 걸렸다 — 같은 계산에서 뽑아 쓰면 어긋날 자리가 없어진다.
+_RF = gc.d['risk_free']['rate']
+_BETA = gc.d['beta']['beta']
+_MRP = 0.046
+
+
+def _eok(v):
+    """10억 달러 값을 「N억 달러」 표기로. 본문이 쓰는 단위에 맞춘다."""
+    return format(int(round(v * 10)), ',') + '억 달러'
+
+# 종가와 그 기준일은 박아 두지 않는다. scripts/fetch_facts.py 가 다시 뜨면 이 값이
+# 바뀌는데, 본문에 박아 두면 어디를 고쳐야 하는지 사람이 찾아야 한다.
+_FACTS = json.load(open(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'insights', 'valuation', 'GOOGL', 'facts.json'), encoding='utf-8'))
+PRICE = _FACTS['market']['price']
+PRICE_DAY = _FACTS['market']['as_of'][:10]
 
 HEAD4 = ('<hr class="rep-cut">'
          '<div class="rep-head"><span class="rn">보고서 ④</span>'
@@ -30,8 +53,8 @@ def report4_html(sec, p, fig):
                     ('후한 BULL', '261달러', '−25%')):
         h_.append('<div class="vh-c"><span class="k">%s</span>'
                   '<span class="v">%s</span><span class="d">%s</span></div>' % (k, v, d))
-    h_ += ['<div class="vh-c now"><span class="k">현재가 08-25</span>'
-           '<span class="v">346.96달러</span><span class="d">종가</span></div>',
+    h_ += ['<div class="vh-c now"><span class="k">최신 종가</span>'
+           '<span class="v">%.2f달러</span><span class="d">%s</span></div>' % (PRICE, PRICE_DAY),
            '</div>',
            '<div class="vh-rev">',
            '<div class="vh-r"><span class="k">역산 ① 할인율을 되돌리면</span>'
@@ -75,7 +98,7 @@ def report4_html(sec, p, fig):
       '않으면 영구가치가 낙관적으로 나온다는 것입니다.')
 
     # ── 2 ────────────────────────────────────────────────────────
-    sec('2. 말부터 가른다')
+    sec('2. 용어부터 푼다')
     p('<b>잉여현금흐름</b>(FCF, Free Cash Flow)은 영업으로 들어온 현금에서 설비투자를 뺀 '
       '금액입니다. 회계상 이익과 다릅니다. <b>가중평균자본비용</b>(WACC, Weighted Average '
       'Cost of Capital)은 그 현금을 지금 가치로 되돌릴 때 쓰는 할인율입니다. '
@@ -233,6 +256,70 @@ def report4_html(sec, p, fig):
       '달러가 10년 뒤 <b>5,235억 달러</b>가 되어야 합니다. 지금의 9.8배입니다. 우리 중간 '
       '경로는 같은 해에 2,442억 달러를 그립니다. <b>차이가 2,793억 달러</b>이고, 이 금액이 '
       '우리 모델과 시장 사이에 벌어진 간격의 크기입니다.')
+    p('여기서 한 걸음 더 갑니다. <b>되돌린 할인율과 성장률을 드라이버로 다시 풀면</b> '
+      '시장이 무엇을 얼마로 보고 있는지가 숫자로 나옵니다.')
+
+    p('<b>할인율을 베타와 위험 대가로 풉니다.</b> 우리가 쓴 할인율은 무위험수익률 4.70%에 '
+      '베타 1.149와 시장위험프리미엄 4.6%를 곱해 얹은 것입니다. 시장이 쓰는 할인율이 '
+      '나오려면 이 둘 중 하나가 달라져야 합니다.')
+    h_ = ['<div class="biz-tw"><table class="biz-t">',
+          '<caption>내재 할인율이 나오려면 베타나 위험 대가가 얼마여야 하나 — '
+          '무위험수익률 %.2f%%는 고정입니다.</caption>' % (_RF * 100),
+          '<thead><tr><th>경로</th><th>내재 할인율</th>'
+          '<th>위험 대가를 %.1f%%로 두면<br>베타가</th>'
+          '<th>베타를 실측 %.3f로 두면<br>위험 대가가</th></tr></thead><tbody>'
+          % (_MRP * 100, _BETA)]
+    for label, key in (('보수 Bear', 'Bear'), ('중간 Base', 'Base'), ('후한 Bull', 'Bull')):
+        c = gc.CASES[key]
+        ir = gc.dcf.implied_discount_rate([x[3] for x in gc.path(c)], c['g'],
+                                          gc.MCAP, gc.NET_DEBT)
+        h_.append('<tr><td>%s</td><td>%.2f%%</td><td><b>%.3f</b></td>'
+                  '<td><b>%.2f%%</b></td></tr>'
+                  % (label, ir * 100, (ir - _RF) / _MRP, (ir - _RF) / _BETA * 100))
+    h_.append('</tbody></table></div>')
+    p(''.join(h_))
+    p('실측 베타는 1.149입니다. 시장이 우리 중간 경로를 그리고 있다면 알파벳 주가가 지수보다 '
+      '<b>덜</b> 출렁인다고 보는 셈인데, 지난 2년 실제 움직임은 그 반대였습니다. 보수 경로에서 '
+      '나온 위험 대가 0.61%는 주식을 국채보다 아주 조금 더 위험하게 보는 값이라 현실적이지 '
+      '않습니다. <b>할인율 쪽으로는 이 간격이 잘 설명되지 않습니다.</b>')
+
+    p('<b>성장률은 매출과 마진으로 풉니다.</b> 2035년에 잉여현금흐름 5,235억 달러가 나오려면 '
+      '매출과 마진이 짝을 이뤄야 합니다. 둘 중 하나를 고정하면 나머지가 정해집니다.')
+    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
+    _f10 = gc.FCF0 * (1 + _g10) ** 10
+    _rev35 = gc.path(gc.CASES['Base'])[-1][1]
+    _need_m = _f10 / _rev35                      # 매출을 우리 경로로 두면 필요한 마진
+    h_ = ['<div class="biz-tw"><table class="biz-t">',
+          '<caption>2035년 잉여현금흐름 %s를 만드는 조합 — '
+          '우리 중간 경로는 매출 %s에 마진 %.1f%%입니다.</caption>'
+          % (_eok(_f10), _eok(_rev35), gc.CASES['Base']['m3'] * 100),
+          '<thead><tr><th>잉여현금흐름 마진</th><th>필요한 2035년 매출</th>'
+          '<th>우리 경로 대비</th><th>매출 연평균 성장률</th></tr></thead><tbody>']
+    for m, note in ((gc.CASES['Base']['m3'], ' <span style="color:var(--ink-3)">우리 영구 단계</span>'),
+                    (0.25, ''), (0.30, ''), (_need_m, '')):
+        need = _f10 / m
+        h_.append('<tr><td>%.1f%%%s</td><td>%s%s%s</td><td>%.2f배</td><td>%.1f%%</td></tr>'
+                  % (m * 100, note,
+                     '<b>' if m == gc.CASES['Base']['m3'] else '', _eok(need),
+                     '</b>' if m == gc.CASES['Base']['m3'] else '',
+                     need / _rev35, ((need / gc.REV0) ** 0.1 - 1) * 100))
+    h_.append('</tbody></table></div>')
+    p(''.join(h_))
+    _m3 = gc.CASES['Base']['m3']
+    _need_rev = _f10 / _m3
+    p('맨 아랫줄이 뜻하는 바가 분명합니다. <b>매출을 우리 경로 그대로 두면 알파벳이 2035년에 '
+      '매출의 %.1f%%를 현금으로 남겨야 합니다.</b> 최근 12개월 실적이 %.1f%%이고 우리가 영구 '
+      '단계에 쓴 값이 %.1f%%입니다. 반대로 마진을 %.1f%%로 두면 매출이 <b>%s</b>여야 하고, '
+      '이는 최근 12개월 %s에서 <b>10년간 매년 %.1f%%씩</b> 늘어야 나오는 금액입니다. '
+      '우리 중간 경로의 매출 성장률은 %.1f%%입니다.'
+      % (_need_m * 100, gc.MARGIN0 * 100, _m3 * 100, _m3 * 100, _eok(_need_rev),
+         _eok(gc.REV0), ((_need_rev / gc.REV0) ** 0.1 - 1) * 100,
+         ((_rev35 / gc.REV0) ** 0.1 - 1) * 100))
+    p('<b>결국 시장이 사고 있는 것은 둘 중 하나이거나 그 사이입니다.</b> 알파벳이 2035년에 '
+      '지금의 <b>%.1f배</b> 매출을 올리거나, 지금의 <b>%.1f배</b> 비율을 현금으로 '
+      '남기거나입니다. 절 5의 반도체 판매가 그 둘 중 어느 쪽을 만드는지가 이 평가의 갈림길입니다.'
+      % (_need_rev / gc.REV0, _need_m / gc.MARGIN0))
+
     p('두 방향이 같은 곳을 가리킵니다. <b>시장은 우리보다 이 현금흐름을 덜 위험하게 보거나, '
       '우리보다 훨씬 가파른 증가를 기다리고 있습니다.</b> 절 6과 절 7에서 짚은 회계 문제들이 '
       '해소되고 절 5의 반도체 판매가 수주 잔고대로 실현되는 조합이라면 그 기대가 맞을 수 '

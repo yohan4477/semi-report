@@ -62,38 +62,41 @@ def path(c):
     return rows
 
 
-print('기준 (TTM %s) 매출 %.1fB · FCF %.1fB · 마진 %.1f%% · 순현금 %.1fB'
-      % (t['revenue']['end'], REV0, FCF0, MARGIN0 * 100, -NET_DEBT))
-print('주가 $%.2f · 시총 %.0fB · 주식수 %.3fB · WACC %.0f%%\n' % (PRICE, MCAP, SHARES, WACC * 100))
+def report():
+    """콘솔로 결과를 찍는다. import 하는 쪽(_val_googl.py)이 값만 쓰도록 함수에 넣었다 —
+    모듈을 읽는 것만으로 표가 쏟아지면 보고서 생성 로그가 뒤덮인다."""
+    print('기준 (TTM %s) 매출 %.1fB · FCF %.1fB · 마진 %.1f%% · 순현금 %.1fB'
+          % (t['revenue']['end'], REV0, FCF0, MARGIN0 * 100, -NET_DEBT))
+    print('주가 $%.2f · 시총 %.0fB · 주식수 %.3fB · WACC %.0f%%\n' % (PRICE, MCAP, SHARES, WACC * 100))
 
-print('%-6s %7s %7s %7s %8s %9s %8s %7s' % ('케이스', 'P1성장', 'P1마진', 'P3마진', '영구g', '주당가치', '괴리', 'TV비중'))
-out = {}
-for name, c in CASES.items():
-    rows = path(c)
-    fcfs = [r[3] for r in rows]
-    v = dcf.value(fcfs, WACC, c['g'], NET_DEBT, SHARES)
-    ps = v['per_share']
-    tv_share = v['tv_share']
-    out[name] = (v, rows)
-    print('%-6s %6.1f%% %6.1f%% %6.1f%% %7.2f%% %8.0f%s %7.0f%% %6.0f%%'
-          % (name, c['g1'] * 100, c['m1'] * 100, c['m3'] * 100, c['g'] * 100,
-             ps, '$', (ps / PRICE - 1) * 100, tv_share * 100))
+    print('%-6s %7s %7s %7s %8s %9s %8s %7s' % ('케이스', 'P1성장', 'P1마진', 'P3마진', '영구g', '주당가치', '괴리', 'TV비중'))
+    out = {}
+    for name, c in CASES.items():
+        rows = path(c)
+        fcfs = [r[3] for r in rows]
+        v = dcf.value(fcfs, WACC, c['g'], NET_DEBT, SHARES)
+        ps = v['per_share']
+        tv_share = v['tv_share']
+        out[name] = (v, rows)
+        print('%-6s %6.1f%% %6.1f%% %6.1f%% %7.2f%% %8.0f%s %7.0f%% %6.0f%%'
+              % (name, c['g1'] * 100, c['m1'] * 100, c['m3'] * 100, c['g'] * 100,
+                 ps, '$', (ps / PRICE - 1) * 100, tv_share * 100))
 
-v = out['Base'][0]
-print('\nBase 희석주식 기준 주당 $%.0f' % (v['equity'] / SHARES_DIL))
-print('\nBase 연도별 경로')
-print('%6s %9s %7s %8s' % ('연도', '매출B', '마진', 'FCF B'))
-for y, rev, m, f in out['Base'][1]:
-    print('%6d %9.0f %6.1f%% %8.0f' % (y, rev, m * 100, f))
+    v = out['Base'][0]
+    print('\nBase 희석주식 기준 주당 $%.0f' % (v['equity'] / SHARES_DIL))
+    print('\nBase 연도별 경로')
+    print('%6s %9s %7s %8s' % ('연도', '매출B', '마진', 'FCF B'))
+    for y, rev, m, f in out['Base'][1]:
+        print('%6d %9.0f %6.1f%% %8.0f' % (y, rev, m * 100, f))
 
-print('\n민감도 (Base 경로, WACC × 영구성장률) — 주당 $')
-fcfs = [r[3] for r in out['Base'][1]]
-rs = [0.09, 0.095, 0.10, 0.105, 0.11]
-gs = [0.0175, 0.0225, 0.0275, 0.0325, 0.0375]
-print('%8s' % 'WACC\g' + ''.join('%8.2f%%' % (g * 100) for g in gs))
-grid = dcf.sensitivity(fcfs, rs, gs, NET_DEBT, SHARES)   # {(r, g): per_share}
-for r in rs:
-    print('%7.1f%%' % (r * 100) + ''.join('%9.0f' % grid[(r, g)] for g in gs))
+    print('\n민감도 (Base 경로, WACC × 영구성장률) — 주당 $')
+    fcfs = [r[3] for r in out['Base'][1]]
+    rs = [0.09, 0.095, 0.10, 0.105, 0.11]
+    gs = [0.0175, 0.0225, 0.0275, 0.0325, 0.0375]
+    print('%8s' % 'WACC\g' + ''.join('%8.2f%%' % (g * 100) for g in gs))
+    grid = dcf.sensitivity(fcfs, rs, gs, NET_DEBT, SHARES)   # {(r, g): per_share}
+    for r in rs:
+        print('%7.1f%%' % (r * 100) + ''.join('%9.0f' % grid[(r, g)] for g in gs))
 
 
 def write_facts():
@@ -194,6 +197,23 @@ def write_facts():
           '- 그 구간 잉여현금흐름 마진 3~8%',
           '- 적정주가 계산 없음',
           '- TTM 실측 잉여현금흐름 마진 11.9%']
+    RF, BETA, MRP = d['risk_free']['rate'], d['beta']['beta'], 0.046
+    L += ['', '## 역산을 드라이버로 되돌린 값', '']
+    for name, c2 in CASES.items():
+        ir = dcf.implied_discount_rate([r[3] for r in path(c2)], c2['g'], MCAP, NET_DEBT)
+        L.append('- %s 할인율 %.2f%% -> 시장위험프리미엄 4.6%% 고정시 베타 %.3f · '
+                 '베타 %.3f 고정시 시장위험프리미엄 %.2f%%'
+                 % (name, ir * 100, (ir - RF) / MRP, BETA, (ir - RF) / BETA * 100))
+    g10 = dcf.implied_growth(FCF0, 0.10, 0.0275, 10, MCAP, NET_DEBT)
+    f10 = FCF0 * (1 + g10) ** 10
+    rev35 = path(CASES['Base'])[-1][1]
+    base_cagr = (rev35 / REV0) ** 0.1 - 1
+    L.append('- 우리 Base 2035 매출 %s · 매출 연평균 성장률 %.1f%%' % (two(rev35), base_cagr * 100))
+    for m in (0.17, 0.20, 0.25, 0.30, 0.364):
+        need = f10 / m
+        L.append('- 잉여현금흐름 마진 %.1f%% 이면 2035 매출 %s 필요 · 우리 경로의 %.2f배 · '
+                 '매출 연평균 성장률 %.1f%%'
+                 % (m * 100, two(need), need / rev35, ((need / REV0) ** 0.1 - 1) * 100))
     L.append('- 근거 원문 발행일 시차 252일 · 가장 오래된 편 271일')
     p = os.path.join(root, 'scratchpad', 'googl_facts.md')
     io.open(p, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
@@ -201,4 +221,5 @@ def write_facts():
 
 
 if __name__ == '__main__':
+    report()
     print('\n사실표 ->', write_facts())
