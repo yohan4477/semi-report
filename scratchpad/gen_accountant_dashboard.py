@@ -7,6 +7,7 @@ import calendar, datetime, io, json, os, re, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import _figs_0825 as figs0825
 import driver_map
 import driver_map_data_hynix as dmd_hynix
 import driver_map_data_cosmax as dmd_cosmax
@@ -3989,6 +3990,7 @@ CARDS = [{
     'section': SEC_RATES,
     'topic': ('market', '금리 · 엔화 방어'),
     'title': '30년물 5.34%, 일본이 엔을 방어하면 미 국채가 매물로 나온다',
+    'figs': [figs0825.FIG_CHAIN],
     'gain': '재무부 바이백이 왜 순부채를 못 줄이는지, 그리고 일본의 엔화 방어가 왜 미 국채 매도로 이어질 수 있는지.',
     'meta': ['엘곰 <b>회계사</b>', '업로드 2026-08-23', '유료 텍스트', '네이버 프리미엄'],
     'oneliner': ('앞 편([260822])이 바이백이 왜 하루를 못 갔는지를 다뤘다면 이 편은 그 개입이 왜 구조적으로 '
@@ -4022,6 +4024,7 @@ CARDS = [{
     'section': SEC_RATES,
     'topic': ('market', '금리 · 재무부 개입 효과'),
     'title': '바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다',
+    'figs': [figs0825.FIG_DAYS],
     'gain': '재무부가 바이백을 늘렸는데 왜 하루 만에 금리가 원상복귀했는지, 그리고 화폐화가 왜 인플레이션의 전제조건인지.',
     'meta': ['엘곰 <b>회계사</b>', '업로드 2026-08-22', '유료 텍스트', '네이버 프리미엄'],
     'oneliner': ('미국 재무부가 장기 국채 바이백 규모를 회당 20억 달러에서 40억 달러로 두 배 늘린다고 '
@@ -5161,7 +5164,7 @@ if __name__ == '__main__':
     _log, _logn = log_html()
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               newest_first=True,
-              extra_css=VALUATION_CSS + LOG_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
                                      + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),

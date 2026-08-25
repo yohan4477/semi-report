@@ -9,6 +9,7 @@ import io, os, sys
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import _figs_0825 as figs0825
 
 OUT = os.path.join(dc.ROOT, '대시보드', '미국주식 사관학교 대시보드.html')
 blob = dc.blob
@@ -2741,6 +2742,7 @@ CARDS = [{
     'section': SEC_METHOD,
     'topic': ('method', '고르는 틀 · 방법론'),
     'title': '재료가 전부 정크인데 맨 위층은 AAA를 받는다',
+    'figs': [figs0825.FIG_TRANCHE],
     'gain': 'CLO가 어떻게 정크 대출로 최고 등급을 만드는지, 그리고 JAAA 운용사가 이번에 무엇을 바꿔서 더 안전해졌는지.',
     'meta': ['카레라 <b>미국주식 사관학교</b>', '발행 2026-08-19', '네이버 프리미엄(유료 텍스트)', '미국주식 사관학교'],
     'oneliner': ('CLO(collateralized loan obligation, 대출채권담보부증권)는 위험한 기업 대출 수백 건을 한 바구니에 담고 '
@@ -2941,5 +2943,5 @@ COURSE = [
 if __name__ == '__main__':
     dc.render(CARDS, '미국주식 사관학교 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('usa', CARDS, '편'),
-              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS,
+              intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS + figs0825.FIG_CSS,
               newest_first=True)
