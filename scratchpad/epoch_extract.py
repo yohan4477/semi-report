@@ -196,6 +196,14 @@ def do_openai_line():
             y = cand[0] if prev is None else min(cand, key=lambda v: abs(v - prev))
             prev = y
             out.append(round(fy(y)))
+        # 누적치는 줄어들 수 없다. 줄어들면 그 자리에서 라벨 글자를 선으로 잘못
+        # 읽은 것이다 — 양옆을 로그로 이어 메운다(2026-08-25에 오픈AI 6번째가
+        # 549427 다음 505866 으로 내려앉아 있었다)
+        for i in range(1, len(out) - 1):
+            if out[i] and out[i - 1] and out[i + 1] and out[i] < out[i - 1]:
+                fixed = round((out[i - 1] * out[i + 1]) ** 0.5)
+                print('    ! %d번째가 뒤로 갔다 %s -> %s' % (i, out[i], fixed))
+                out[i] = fixed
         return out
     out = {'grid_y': gy, 'grid_x': gx, 'world': series(blue), 'openai': series(teal)}
     print('  openai-line 세로격자%s / 세계%s' % (gy, out['world']))

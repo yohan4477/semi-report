@@ -203,12 +203,23 @@ FIG_SRC = {'<그림 이름>': '<키>'}      # 이 그림을 어느 원문과 대
 ```bash
 PYTHONIOENCODING=utf-8 python scratchpad/epoch_fig.py         # 배치 + 값 대조, 미리보기 HTML
 PYTHONIOENCODING=utf-8 python scratchpad/check_fig_strict.py  # 사선·polyline·동그라미에 깔린 글자
+PYTHONIOENCODING=utf-8 python scratchpad/check_epoch_data.py  # 뽑아 둔 점이 원문 인쇄값과 맞나
 PYTHONIOENCODING=utf-8 python scratchpad/gen_epoch_dashboard.py
 PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py
 PYTHONIOENCODING=utf-8 python insights/check_prose.py
 PYTHONIOENCODING=utf-8 python scripts/update_card_ledger.py
 PYTHONIOENCODING=utf-8 python scripts/gen_site.py
 ```
+
+**배치 검사기 셋 다 통과해도 자료가 틀릴 수 있다.** 2026-08-25에 cybereci 의 세로 자가
+33% 눌려 있었고 맨 왼쪽 점 하나가 빠져 있었는데, 배치 검사는 전부 FAIL 0 이었다. 원인은
+격자선을 훑는 상자가 맨 아래 줄을 잘랐고(그래서 「찾은 줄 수 - 1」로 나눈 한 칸이 틀렸다),
+점을 훑는 상자가 첫 눈금 왼쪽을 안 봤다는 것이다.
+
+**그래서 원문이 그림에 인쇄해 둔 값으로 되짚는다.** 자가 맞으면 그 값이 뽑은 자료에서
+그대로 나온다 — cyberprog 에 같은 고침을 걸면 169.6·172.2·171.2 가 나오고, 그게 원문
+그림에 적혀 있는 값이다. `check_epoch_data.py` 가 그 대조를 자동으로 한다. 새 도해에서
+값을 뽑으면 요약본의 「원문 도해에서 읽은 값」에 적고 이 검사기에 한 줄 더한다.
 
 **`check_fig` 만으로는 모자란다.** 그 자는 `<path>` 의 가로·세로 선분과 `<rect>` 테두리만
 센다 — 사선·`<polyline>`·`<circle>` 에 깔린 글자를 놓친다. 2026-08-25에 사용자가 눈으로
