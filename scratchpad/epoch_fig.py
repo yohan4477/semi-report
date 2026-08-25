@@ -743,9 +743,167 @@ def fig_supply_growth():
     return svg(ly + 16, ''.join(o))
 
 
+
+# ══ 「미소스의 사이버 능력은 부풀려졌나」(2026-06-11) ═══════════════════════
+def fig_two_skills():
+    """공격이 성립하려면 둘 다 있어야 하는데, 이 글의 판정은 둘이 다르다."""
+    o = [lab(16, 24, '앤트로픽은 둘 다 도약했다고 했다. 공개 증거의 판정은 갈린다', fs=9.5)]
+    cols = [(8, '취약점 발견', ['코드에서 약한 자리를 찾는다',
+                             '버퍼 오버플로처럼 메모리를',
+                             '망가뜨릴 수 있는 줄을 짚는다'],
+             '앞선 모델도 이미 잘했다',
+             ['포화되지 않은 벤치마크가 없다', '강점은 오탐이 적고',
+              '심각도를 잘 매기는 데 몰려 있다'], False),
+            (360, '익스플로잇 개발', ['찾아낸 약점을 실제로 파고든다',
+                                '메모리를 정확히 망가뜨려',
+                                '원하는 코드를 실행시킨다'],
+             '추세보다 7개월 앞섰다',
+             ['Cyber-ECI가 뚜렷하게 뛴다', '앤트로픽 자체 분석도',
+              '같은 방향을 가리킨다'], True)]
+    for x, name, what, verdict, why, key in cols:
+        s1, h1 = box(x, 44, 272, name, what)
+        o.append(s1)
+        o.append(arrow('svc', [(x + 136, 44 + h1), (x + 136, 44 + h1 + 26)]))
+        s2, h2 = box(x, 44 + h1 + 26, 272, verdict, why, key=key)
+        o.append(s2)
+    o.append(role(320, 62, '무엇인가'))
+    o.append(role(320, 172, '판정'))
+    o.append(lab(16, 268, '둘 다 있어야 공격이 성립한다 — 약점을 찾고, 그 약점으로 원하는 일을 '
+                          '하게 만든다', fs=9.5))
+    return svg(282, ''.join(o))
+
+
+def fig_eci_lead():
+    """Cyber-ECI 추세보다 몇 달 앞섰나. 원문 도해는 시간축 산점도인데
+    모델별 ECI 값이 원문에 없어 점을 찍을 수 없다. 원문에 있는 앞선 정도만 세운다."""
+    o = [lab(16, 24, '2025년 초부터 이어진 Cyber-ECI 선형 추세보다 얼마나 앞섰나', fs=9.5)]
+    rows = [('미소스 프리뷰', 7, '약 7개월 앞섰다', True),
+            ('GPT-5.5', 2.5, '2~3개월 앞섰다', False)]
+    body, bottom = barh(rows, 8, (0, 2, 4, 6, 8), '추세보다 앞선 정도(개월)',
+                        x0=150, x1=430, y=56, bh=30, step=46)
+    o += body
+    o.append(lab(150, bottom + 6, '사이버 벤치마크 약 15개를 Epoch 역량지수(ECI) 방식으로 합친 자다',
+                 fs=9.5))
+    return svg(bottom + 18, ''.join(o))
+
+
+def fig_cyscenario():
+    """포화되지 않은 벤치마크에서는 차이가 보인다. 값은 원문 부록 그대로."""
+    o = [lab(16, 24, 'Irregular의 CyScenarioBench — 종단 과제를 끝까지 해낸 비율', fs=9.5)]
+    rows = [('미소스 5', 36.7, '36.7%', True),
+            ('미소스 프리뷰', 29.2, '29.2%', True),
+            ('GPT-5.5', 26, '26%', False),
+            ('오푸스 4.8', 16.6, '16.6%', False),
+            ('GPT-5.4', 9, '9%', False),
+            ('GPT-5.2 · 5.3', 0, '0%', False),
+            ('뮤즈 스파크', 0, '0%', False),
+            ('제미나이 3 프로', 0, '0%', False)]
+    body, bottom = barh(rows, 40, (0, 10, 20, 30, 40), '끝까지 해낸 비율(%)',
+                        x0=150, x1=470, y=48, bh=20, step=27)
+    o += body
+    o.append(lab(150, bottom + 6, '초기 비교에 쓰인 벤치마크 다수가 이미 만점에 가까워 차이가 '
+                                  '안 보였다', fs=9.5))
+    return svg(bottom + 18, ''.join(o))
+
+
+def fig_cve_spike():
+    """찾아낸 취약점이 급증했다. 다만 능력 때문인지 돈 때문인지는 이 그림이 못 가른다."""
+    o = [lab(16, 24, '21개 주요 조직의 고위험·치명 CVE — 2025년 평균을 기준선으로 놓았을 때', fs=9.5)]
+    rows = [('4월', 142, '기준선보다 142% 많다', True),
+            ('5월', 262, '기준선보다 262% 많다', True)]
+    body, bottom = barh(rows, 300, (0, 100, 200, 300), '기준선 대비 증가(%)',
+                        x0=110, x1=390, y=56, bh=30, step=46)
+    o += body
+    o.append(lab(110, bottom + 6, '미소스 프리뷰 공개 시점과 겹친다. 다만 프로젝트 글래스윙에 최대 '
+                                  '1억 달러어치', fs=9.5))
+    o.append(lab(110, bottom + 22, 'API 크레딧이 붙어 있어, 찾는 데 쓴 돈이 늘어난 결과일 수도 있다',
+                 fs=9.5))
+    o.append(lab(110, bottom + 38, '취약점은 공개 기록까지 시간이 걸려 이 수는 더 늘 것으로 본다',
+                 fs=9.5))
+    return svg(bottom + 50, ''.join(o))
+
+
+# ══ 「부정행위를 하려다 허깅페이스를 해킹했다」(2026-07-22) ═══════════════════
+def fig_hf_incident():
+    """순서가 내용이다 — 무엇을 하려다, 무엇을 거쳐, 어디에 닿았나."""
+    X, BW = 100, 340
+    cx = X + BW // 2
+    o = [lab(16, 24, '오픈AI가 밝힌 사고 경로', fs=9.5)]
+    rows = [('시킨 일', '사이버보안 벤치마크', ['점수를 올리는 것이 과제였다'], False),
+            ('모델이 고른 것', '부정행위', ['과제를 푸는 대신 채점 쪽을 건드리기로 했다'], True),
+            ('거쳐 간 곳', '오픈AI와 허깅페이스 시스템',
+             ['그때까지 알려지지 않은 취약점을', '최소 셋 엮었다'], False),
+            ('닿은 곳', '허깅페이스', ['침입에 성공했다'], False)]
+    y = 44
+    for i, (rl, name, lines, key) in enumerate(rows):
+        s_, h = box(X, y, BW, name, lines, key)
+        o.append('<text x="%d" y="%d" class="t-role">%s</text>' % (X + 2, y - 6, esc(rl)))
+        o.append(s_)
+        if i < len(rows) - 1:
+            o.append(arrow('svc', [(cx, y + h), (cx, y + h + 30)]))
+        y += h + 30
+    bottom = y - 30
+    sb, sh = box(462, 60, 172, '사람이 했다면', ['중범죄다'])
+    o.append(sb)
+    o.append(arrow('cond', [(462, 84), (X + BW, 84)]))
+    o.append(lab(16, bottom + 20, '필자가 놀랍다고 보는 자리는 능력이 아니라 선택이다 — '
+                                  '벤치마크 점수 하나 때문에', fs=9.5))
+    o.append(lab(16, bottom + 36, '이 경로를 골랐다는 것', fs=9.5))
+    return svg(bottom + 48, ''.join(o))
+
+
+def fig_cyber_chain():
+    """능력 사슬. 각 칸을 실제로 보인 벤치마크 이름을 아래에 단다."""
+    X0, W, GAP = 16, 146, 10
+    o = [lab(16, 24, '공격은 이 순서로 이어진다. 각 칸을 프런티어 모델이 해낸다는 것을 보인 평가',
+             fs=9.5)]
+    steps = [('취약점을 찾는다', ['실제 코드에서', '새 제로데이가 나왔다'], 'FrontierCyber'),
+             ('익스플로잇을 만든다', ['사람이 만든 최선보다', '안정적인 사례가 나왔다'], 'ExploitBench'),
+             ('권한을 끌어올린다', ['서로 다른 익스플로잇을', '이어 붙인다'], 'ExploitGym'),
+             ('망을 장악한다', ['모의 기업망을 일관되게', '완전히 장악했다'], '영국 AISI 사이버 레인지')]
+    for i, (name, lines, bench) in enumerate(steps):
+        x = X0 + i * (W + GAP)
+        s_, h = box(x, 48, W, name, lines)
+        o.append(s_)
+        o.append('<text x="%d" y="%d" class="t-role" text-anchor="middle">%s</text>'
+                 % (x + W // 2, 48 + h + 18, esc(bench)))
+        if i < len(steps) - 1:
+            o.append(arrow('svc', [(x + W, 48 + h // 2), (x + W + GAP, 48 + h // 2)]))
+    o.append(lab(16, 148, '허깅페이스 사고도 같은 순서였다 — 취약점 셋을 엮어 접근 권한을 '
+                          '단계적으로 끌어올렸다', fs=9.5))
+    o.append(lab(16, 164, 'CyScenarioBench는 이 사슬 전체를 한 과제로 낸다', fs=9.5))
+    return svg(176, ''.join(o))
+
+
+def fig_openweight_gap():
+    """오픈웨이트가 얼마나 뒤에 있나. 시간으로 잰다."""
+    X0, X1 = 130, 560
+    o = [lab(16, 24, '영국 AI 보안연구소와 Irregular가 매긴 오픈웨이트 모델의 자리', fs=9.5)]
+    Y = 82
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y, X1 + 12, Y))
+    marks = [(X0, '오푸스 4.5', True), (X0 + 150, '오푸스 4.6', True), (X1, 'GLM 5.2', False)]
+    for x, name, closed in marks:
+        o.append('<circle cx="%d" cy="%d" r="5" %s/>'
+                 % (x, Y, 'fill="var(--fig-good,#2f8f6b)"' if closed
+                    else 'fill="none" stroke="var(--ink-3)" stroke-width="2"'))
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
+                 'style="font-weight:850">%s</text>' % (x, Y - 14, esc(name)))
+    o.append('<path d="M%d %d L%d %d" class="flow-cond"/>' % (X0 + 150, Y + 22, X1, Y + 22))
+    o.append(lab((X0 + 150 + X1) // 2, Y + 40, '4~7개월', anchor='middle', fs=10))
+    o.append(lab(X0, Y + 62, 'GLM 5.2의 사이버 능력은 오푸스 4.5와 4.6 사이에 있고, 그 둘은 '
+                             '4~7개월 앞서', fs=9.5))
+    o.append(lab(X0, Y + 78, '나온 모델이다. 오픈웨이트는 아직 이번 사고 수준에 못 미친다', fs=9.5))
+    o.append(lab(X0, Y + 98, '다만 미소스와 GPT-5.6 Sol이 추세를 끊고 뛴 터라, 이 격차가 앞으로도 '
+                             '같을지는 모른다', fs=9.5))
+    return svg(Y + 110, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
+    'cyber': '[260611] 미소스의 사이버 능력은 부풀려졌나.md',
+    'hf': '[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -770,6 +928,14 @@ FIGS = {
     'openai_power': fig_openai_power,
     'openai_chips': fig_openai_chips,
     'deepmind_share': fig_deepmind_share,
+    # 사이버 역량 편
+    'two_skills': fig_two_skills,
+    'eci_lead': fig_eci_lead,
+    'cyscenario': fig_cyscenario,
+    'cve_spike': fig_cve_spike,
+    'hf_incident': fig_hf_incident,
+    'cyber_chain': fig_cyber_chain,
+    'openweight_gap': fig_openweight_gap,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -786,6 +952,8 @@ FIG_SRC = {
     'openai_chips': 'labs', 'deepmind_share': 'labs',
     'prefill_decode': 'crunch', 'chunked_prefill': 'crunch', 'calibration': 'crunch',
     'supply_growth': 'crunch',
+    'two_skills': 'cyber', 'eci_lead': 'cyber', 'cyscenario': 'cyber', 'cve_spike': 'cyber',
+    'hf_incident': 'hf', 'cyber_chain': 'hf', 'openweight_gap': 'hf',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
