@@ -21,7 +21,10 @@ from openpyxl import Workbook   # noqa: E402
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side  # noqa: E402
 from openpyxl.utils import get_column_letter  # noqa: E402
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '알파벳 DCF.xlsx')
+# scratchpad 는 통째로 무시되는 자리라 여기 두면 보고서에서 링크를 못 건다.
+# facts.json 옆에 둔다 — 같은 회사의 같은 계산에 쓰인 것들이다.
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                   'insights', 'valuation', 'GOOGL', '알파벳 DCF.xlsx')
 
 HEAD = Font(bold=True, color='FFFFFF')
 HEAD_BG = PatternFill('solid', fgColor='2F4858')
