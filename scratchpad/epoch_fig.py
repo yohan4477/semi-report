@@ -1298,6 +1298,109 @@ def fig_billion_ais():
     return svg(bottom + 46, ''.join(o))
 
 
+
+# ══ 「벤치마크가 답을 도울 수 있는 큰 물음 아홉」(2026-08-14) ═══════════════
+def fig_nine_questions():
+    """아홉이 두 갈래로 갈린다 — 경제적 영향과 능력의 근본 동인."""
+    o = [lab(16, 24, '앞의 넷은 경제적 영향에, 뒤의 다섯은 능력의 근본 동인에 걸려 있다', fs=9.5)]
+    groups = [('경제적 영향', [('①', 'AI가 내 일을 할 수 있나'),
+                          ('②', '영향이 클 영역에서 진전이 있나'),
+                          ('③', '선두와 후발의 격차가 일정한가'),
+                          ('④', '왜 점수가 다 상관되나')], False),
+              ('능력의 근본 동인', [('⑤', 'AI가 AI 연구를 할 수 있나'),
+                             ('⑥', '그때그때 배울 수 있나'),
+                             ('⑦', '추론을 늘리면 얼마나 돌아오나'),
+                             ('⑧', '강화학습이 얼마나 일반화되나'),
+                             ('⑨', '새 생각을 낼 수 있나')], True)]
+    x = 8
+    for title, items, key in groups:
+        o.append('<text x="%d" y="46" class="t-lab">%s</text>' % (x + 4, esc(title)))
+        y = 58
+        for num, q in items:
+            s_, h = box(x, y, 312, '%s %s' % (num, q), [], key=key)
+            o.append(s_)
+            y += h + 8
+        x += 320
+    o.append(lab(16, 58 + 5 * 42 + 8, 'Epoch의 벤치마크 작업이 무엇을 답하려고 하는지를 필자가 '
+                                      '직접 적은 목록이다', fs=9.5))
+    return svg(58 + 5 * 42 + 22, ''.join(o))
+
+
+def fig_scope_ladder():
+    """좁은 과제에서 열린 직무로. 벤치마크가 어디까지 올라왔나."""
+    o = [lab(16, 24, '벤치마크가 재는 일이 얼마나 넓어졌나', fs=9.5)]
+    steps = [('Andon Café', ['AI 에이전트가 소유하고 운영하는 진짜 카페다',
+                             '필자가 가장 좋아하는 것으로 꼽는다'], True),
+             ('Remote Labor Index', ['프리랜싱 플랫폼의 실제 프로젝트를 가져와',
+                                     '사람이 AI 산출물과 사람 기준작을 견준다'], True),
+             ('MirrorCode', ['큰 소프트웨어 패키지를 처음부터 구현하게 한다',
+                             '다만 매우 구조화된 환경이다'], True),
+             ('지금까지의 대부분', ['버그 고치기, 수학 풀기, 보고서 쓰기 같은',
+                             '좁게 정의된 과제'], False)]
+    y = 46
+    for name, lines, key in steps:
+        s_, h = box(96, y, 538, name, lines, key=key)
+        o.append(s_)
+        y += h + 10
+    bottom = y - 10
+    o.append(arrow('cash', [(56, bottom), (56, 46)]))
+    o.append(lab(16, 40, '열린 직무', cash=True, fs=9.5))
+    o.append(lab(16, bottom + 14, '좁은 과제', fs=9.5))
+    o.append(lab(96, bottom + 32, 'Epoch 설문에서 사람들은 일에 AI를 쓸 때 아직 대부분 과제의 '
+                                  '일부에만 쓴다', fs=9.5))
+    o.append(lab(96, bottom + 48, '이것이 바뀌면 노동시장 충격도 모델 개발사의 매출 성장도 '
+                                  '달라진다', fs=9.5))
+    return svg(bottom + 60, ''.join(o))
+
+
+def fig_eci_why():
+    """점수가 다 같이 오르는 이유가 둘 중 어느 쪽이냐로 해석이 갈린다."""
+    o = [lab(16, 24, '이름상 다른 영역끼리도 벤치마크 점수가 크게 상관된다 — 왜?', fs=9.5)]
+    cols = [(8, '설명 A · 깊은 이유가 없다', ['회사들이 모든 출시에서 넓은 영역의',
+                                     '개선을 보이려 애쓸 뿐이고,',
+                                     '그 작업은 영역마다 독립적이다'], False),
+            (326, '설명 B · 밑에 깔린 인자가 있다', ['사람의 IQ처럼 일반 능력 인자가',
+                                          '하나 있어서 그것이 한꺼번에',
+                                          '올라간다'], True)]
+    for x, name, lines, key in cols:
+        s_, h = box(x, 44, 308, name, lines, key=key)
+        o.append(s_)
+    y = 44 + 26 + 45 + 8 + 26
+    s_, h = box(8, y, 626, '설명 B라면 그 인자가 무엇인가 — 단서 둘',
+                ['포화되기 전까지 METR 시간지평의 로그값이 ECI와 크게 상관됐다',
+                 '또는 ECI 상승의 상당 부분이 일관된 추론을 유지하는 최대 문맥 길이에서 온다'])
+    o.append(s_)
+    o.append(arrow('cond', [(480, 44 + 79), (480, y)]))
+    o.append(lab(16, y + h + 18, 'ECI 증가 추세는 AI 능력 성장이 빨라졌는지를 잡는 데 쓸모가 있다. '
+                                 '그 인자가', fs=9.5))
+    o.append(lab(16, y + h + 34, '실제 영향으로 곧장 옮겨지는 양이라고 말할 수 있으면, 가속을 해석하기 '
+                                 '더 쉬워진다', fs=9.5))
+    return svg(y + h + 46, ''.join(o))
+
+
+def fig_bench_hard():
+    """AI 연구개발을 벤치마크로 재기 어려운 이유 둘."""
+    o = [lab(16, 24, '⑤번 물음이 특히 어려운 이유', fs=9.5)]
+    cols = [(8, '현실성', ['가장 중요한 AI 연구는 프런티어 회사',
+                        '안에서 일어나고, 밖에서는 잘 안 보인다'], True),
+            (326, '비용', ['현실적인 규모로 하려면 GPU가 많이 든다',
+                         '그만한 자원을 벤치마크용으로 대는 것은',
+                         '규모에 따라 비싸거나 아예 불가능하다'], True)]
+    hh = 0
+    for x, name, lines, key in cols:
+        s_, hh2 = box(x, 44, 308, name, lines, key=key)
+        o.append(s_)
+        hh = max(hh, hh2)
+    y = 44 + hh + 24
+    s_, h = box(8, y, 626, '그래서 벤치마크 묶음이 갖춰지면 얻는 것',
+                ['AI 연구개발 자동화의 선행 지표가 된다 — 어떤 형태의 자동화는 폭주하는 능력 성장,',
+                 '곧 지능 폭발로 이어진다는 것이 이 물음이 고전이 된 이유다'])
+    o.append(s_)
+    for x in (162, 480):
+        o.append(arrow('svc', [(x, 44 + hh), (x, y)]))
+    return svg(y + h + 12, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
@@ -1307,6 +1410,7 @@ SRC = {
     'onet': '[260617] AI 연구 자동화를 재려면 직무 목록부터 있어야 한다.md',
     'agi': '[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md',
     'fut': '[260707] AI 미래론에서 빠진 절반.md',
+    'bench': '[260814] 벤치마크가 답을 도울 수 있는 큰 물음 아홉.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -1357,6 +1461,11 @@ FIGS = {
     'three_steps': fig_three_steps,
     'foresight': fig_foresight,
     'billion_ais': fig_billion_ais,
+    # 평가와 벤치마크 편
+    'nine_questions': fig_nine_questions,
+    'scope_ladder': fig_scope_ladder,
+    'eci_why': fig_eci_why,
+    'bench_hard': fig_bench_hard,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -1380,6 +1489,8 @@ FIG_SRC = {
     'capital_ladder': 'agi', 'control_kinds': 'agi', 'why_control': 'agi',
     'cash_or_kind': 'agi',
     'missing_half': 'fut', 'three_steps': 'fut', 'foresight': 'fut', 'billion_ais': 'fut',
+    'nine_questions': 'bench', 'scope_ladder': 'bench', 'eci_why': 'bench',
+    'bench_hard': 'bench',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
