@@ -519,6 +519,24 @@ def fig_delivery():
     return svg(y + 56, ''.join(o))
 
 
+# ── 원문 도해에서 읽어 둔 값 ──────────────────────────────────────────────
+# scratchpad/epoch_extract.py 가 원본 이미지에서 뽑아 data/epoch_fig_data.json 에
+# 굽는다. 점과 막대의 자리를 눈으로 어림해 옮기지 않기 위한 것이다.
+_FIGDATA = None
+
+
+def figdata():
+    global _FIGDATA
+    if _FIGDATA is None:
+        import io as _io
+        import json
+        import os
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        _FIGDATA = json.load(_io.open(os.path.join(root, 'data', 'epoch_fig_data.json'),
+                                      encoding='utf-8'))
+    return _FIGDATA
+
+
 # ══ 「프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다」(2026-05-20) ══════════
 def fig_world_share():
     """세계 AI 컴퓨트에서 각자가 쥔 몫. 값은 원문 도해의 H100 환산치를 그대로 쓴다."""
@@ -533,13 +551,60 @@ def fig_world_share():
     return svg(bottom, ''.join(o + body))
 
 
-def fig_growth_2025():
-    """2025년 한 해 증가율. 원문 도해는 로그 선그래프인데, 세계 총량의 연도별 값이
-    원문에 없어 선을 그리면 없는 좌표를 지어내게 된다. 원문에 있는 증가율로만 그린다."""
-    o = []
-    rows = [('세계 전체', 3.3, '3.3배', False), ('오픈AI', 4.6, '4.6배', True)]
-    body, bottom = barv(rows, 5, (0, 1, 2, 3, 4, 5), '2025년 배수', x0=150, bw_=90, step=170)
-    return svg(bottom, ''.join(o + body))
+def fig_openai_line():
+    """원문대로 로그 선그래프. 값은 원문 그림에서 읽어 둔 것이다."""
+    import math
+    d = figdata()['openai_line']
+    world, oa = d['world'], d['openai']
+    X0, X1, Y0, Y1 = 96, 560, 62, 300
+    LO, HI = 1e5, 3e7
+
+    def py(v):
+        return Y1 - (Y1 - Y0) * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
+
+    def px_(i):
+        return X0 + (X1 - X0) * i / 8.0
+    o = [lab(16, 24, 'H100 환산 누적 칩 수 (세로 자는 로그)', fs=9.5)]
+    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y0 - 8, X0, Y1, X1 + 14, Y1))
+    for v, t in ((1e5, '10만'), (1e6, '100만'), (1e7, '1000만')):
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
+                 % (X0 - 8, py(v) + 4, t))
+        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
+                 'fill="none"/>' % (X0 - 5, py(v), X0, py(v)))
+    for i, t in ((0, '2023-Q4'), (4, '2024-Q4'), (8, '2025-Q4')):
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (px_(i), Y1 + 18, t))
+    # 세계 총계 — 2024-Q4 앞은 원문도 점선이다(옛 자료가 성글다)
+    for a, b, dash in ((0, 4, True), (4, 8, False)):
+        pts = ' '.join('%.1f,%.1f' % (px_(i), py(world[i])) for i in range(a, b + 1))
+        o.append('<polyline points="%s" fill="none" stroke="var(--fig-blue,#2f6fd0)" '
+                 'stroke-width="2.4"%s/>' % (pts, ' stroke-dasharray="6 5"' if dash else ''))
+    for i in range(9):
+        o.append('<circle cx="%.1f" cy="%.1f" r="4" fill="var(--fig-blue,#2f6fd0)"/>'
+                 % (px_(i), py(world[i])))
+    # 오픈AI — 표식은 세 곳뿐이고 그 사이는 곧은 선이다
+    mk = [0, 4, 8]
+    pts = ' '.join('%.1f,%.1f' % (px_(i), py(oa[i])) for i in mk)
+    o.append('<polyline points="%s" fill="none" stroke="var(--fig-good,#2f8f6b)" '
+             'stroke-width="2.4"/>' % pts)
+    for i in mk:
+        o.append('<circle cx="%.1f" cy="%.1f" r="4" fill="var(--fig-good,#2f8f6b)"/>'
+                 % (px_(i), py(oa[i])))
+    o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;'
+             'fill:var(--fig-blue,#2f6fd0)">세계 총계</text>' % (X1 + 8, py(world[8]) - 8))
+    o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;'
+             'fill:var(--fig-good,#2f8f6b)">오픈AI</text>' % (X1 + 8, py(oa[8]) + 4))
+    o.append(lab(px_(5), py(world[5]) + 22, '2025년 3.3배', fs=10))
+    o.append('<text x="%.1f" y="%.1f" class="t-cash" style="font-size:10px">2025년 4.6배</text>'
+             % (px_(5), py(oa[5]) - 12))
+    o.append(lab(16, Y1 + 44, '세계 총계는 Epoch의 칩 판매 자료를 한 분기 당겨 누적한 값이다. '
+                              '2024-Q4 앞이 점선인 것은', fs=9.5))
+    o.append(lab(16, Y1 + 60, '옛 자료, 특히 엔비디아가 아닌 칩의 자료가 성글기 때문이다', fs=9.5))
+    o.append(lab(16, Y1 + 80, '오픈AI는 2023-Q4 · 2024-Q4 · 2025-Q4 세 곳만 표식이고 그 사이는 '
+                              '이어 그은 선이다', fs=9.5))
+    return svg(Y1 + 92, ''.join(o))
+
 
 
 def fig_openai_power():
@@ -551,13 +616,52 @@ def fig_openai_power():
 
 
 def fig_openai_chips():
-    """원문 도해는 엔비디아 세대별 스택 막대인데 세대별 수치가 원문에 없다.
-    그래서 스택을 쌓지 않고, 원문에 있는 연도별 H100 환산 총량만 그린다."""
-    o = []
-    rows = [('2023년 말', 10, '10만', True), ('2024년 말', 40, '40만', True),
-            ('2025년 말', 170, '170만', True)]
-    body, bottom = barv(rows, 200, (0, 50, 100, 150, 200), 'H100 환산 보유량(만 장)')
-    return svg(bottom, ''.join(o + body))
+    """원문대로 엔비디아 세대별로 쌓은 막대. 구간 값은 원문 그림에서 읽었다."""
+    d = figdata()['by_chip']
+    o = [lab(16, 24, '오픈AI 보유량을 엔비디아 세대별로 쌓았다 (H100 환산 누적)', fs=9.5)]
+    gens = [('Ampere', '앰페어', 'var(--fig-blue,#2f6fd0)'),
+            ('Hopper', '호퍼', 'var(--fig-good,#2f8f6b)'),
+            ('Blackwell', '블랙웰', 'var(--fig-amber,#d68a1e)')]
+    x = 16
+    for _k, name, col in gens:
+        o.append('<rect x="%d" y="34" width="14" height="11" rx="2" fill="%s"/>' % (x, col))
+        o.append(lab(x + 20, 44, name, fs=9.5))
+        x += 24 + int(w(name, 9.5)) + 26
+    X0, Y0, Y1, VMAX = 130, 66, 300, 1800.0
+    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y0 - 8, X0, Y1, 600, Y1))
+    for v in (0, 500, 1000, 1500):
+        ty = Y1 - (Y1 - Y0) * v / VMAX
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s만</text>'
+                 % (X0 - 8, ty + 4, v // 10 if v else 0))
+        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
+                 'fill="none"/>' % (X0 - 5, ty, X0, ty))
+    BW_, STEP = 96, 150
+    for i, bar in enumerate(d['bars']):
+        bx = X0 + 40 + i * STEP
+        base = 0
+        for key, _name, col in gens:
+            v = bar['seg'].get(key)
+            if not v:
+                continue
+            y_top = Y1 - (Y1 - Y0) * (base + v) / VMAX
+            h = (Y1 - Y0) * v / VMAX
+            o.append('<rect x="%d" y="%.1f" width="%d" height="%.1f" fill="%s"/>'
+                     % (bx, y_top, BW_, h, col))
+            base += v
+        o.append('<text x="%d" y="%.1f" class="t-sm" text-anchor="middle" '
+                 'style="font-weight:850">%d만</text>'
+                 % (bx + BW_ // 2, Y1 - (Y1 - Y0) * base / VMAX - 8, round(base / 10)))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%d년</text>'
+                 % (bx + BW_ // 2, Y1 + 18, bar['year']))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">(%dMW)</text>'
+                 % (bx + BW_ // 2, Y1 + 33, bar['mw']))
+    o.append(lab(16, Y1 + 56, '2025년에 블랙웰이 107만으로 대부분을 차지하고 호퍼가 62만, 앰페어는 '
+                              '2만까지 줄었다', fs=9.5))
+    o.append(lab(16, Y1 + 72, '전력이 3배 늘 때 계산 능력이 4배 넘게 느는 것은 칩이 해마다 전력당 '
+                              '성능이 좋아지기 때문이다', fs=9.5))
+    return svg(Y1 + 84, ''.join(o))
+
 
 
 def fig_deepmind_share():
@@ -683,19 +787,52 @@ def fig_chunked_prefill():
 
 
 def fig_calibration():
-    """이론값은 낙관적이라 실측으로 깎는다. 깎는 계수 셋과 그 결과."""
-    o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5 실험 111건에 맞춰 깎은 값', fs=9.5)]
-    rows = [('이론값', 64, '초당 64만 토큰', False), ('보정값', 40, '초당 40만 토큰', True)]
-    body, bottom = barh(rows, 70, (), 'GB200 NVL72 한 대의 출력 처리량', x0=110, x1=420, y=56,
-                        bh=30, step=46)
-    o += body
-    y = bottom + 6
-    for t in ['연산 효율 65% — 큰 행렬 곱에서도 표기 성능을 다 못 쓴다',
-              '대역폭 효율 30% — 칩 사이 통신 시간까지 여기에 들어간다',
-              '토큰당 지연 5밀리초 — 통신·커널 스케줄링·라우팅 불균형']:
-        o.append(lab(110, y, t, fs=9.5))
-        y += 16
-    return svg(y + 4, ''.join(o))
+    """원문대로 보정 전후 산점도 둘. 점 자리는 원문 그림에서 뽑았다."""
+    import math
+    d = figdata()['calib']
+    o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5·K2.6 실험 111건과 견준 것', fs=9.5)]
+    cols = {'B200': 'var(--fig-blue,#2f6fd0)', 'B300': 'var(--fig-violet,#8b6fc8)',
+            'GB200': 'var(--fig-good,#2f8f6b)', 'H200': 'var(--fig-bad,#c2504a)'}
+    x = 16
+    for name, col in cols.items():
+        o.append('<circle cx="%d" cy="42" r="5" fill="%s"/>' % (x + 5, col))
+        o.append(lab(x + 15, 46, name, fs=9.5))
+        x += 15 + int(w(name, 9.5)) + 24
+    LO, HI = 30.0, 3e4
+    for pi, (key, title) in enumerate((('uncal', '보정 전'), ('cal', '보정 후'))):
+        PX0 = 40 + pi * 320
+        PY0, PW, PH = 92, 250, 190
+
+        def fx(v):
+            return PX0 + PW * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
+
+        def fy(v):
+            return PY0 + PH - PH * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
+        o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (PX0, PY0 - 10, esc(title)))
+        o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" '
+                 'fill="none"/>' % (PX0, PY0, PX0, PY0 + PH, PX0 + PW, PY0 + PH))
+        # 이론값과 실측이 같으면 이 대각선 위에 놓인다
+        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+                 'stroke-dasharray="5 4" fill="none"/>' % (fx(LO), fy(LO), fx(HI), fy(HI)))
+        for v, t in ((1e2, '10²'), (1e3, '10³'), (1e4, '10⁴')):
+            o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                     % (fx(v), PY0 + PH + 16, t))
+            o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
+                     % (PX0 - 6, fy(v) + 4, t))
+        for name, ax, ay in d[key]['points']:
+            if not (LO <= ax <= HI and LO <= ay <= HI):
+                continue
+            o.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s" fill-opacity=".8"/>'
+                     % (fx(ax), fy(ay), cols[name]))
+    o.append(lab(40, 320, '가로가 실제 처리량, 세로가 모형이 내놓은 처리량이다(둘 다 초당 토큰). '
+                          '점선 위에 놓이면 둘이 같다는 뜻이다', fs=9.5))
+    o.append(lab(40, 336, '보정 전에는 점이 죄다 점선 위쪽에 있다 — 모형이 낙관적이다. '
+                          '연산 효율 65%, 대역폭 효율 30%,', fs=9.5))
+    o.append(lab(40, 352, '토큰당 지연 5밀리초를 넣으면 점들이 점선에 붙는다', fs=9.5))
+    o.append(lab(40, 372, '점이 겹쳐 그려져 있어 111건이 다 갈라지지는 않는다 — 여기 찍힌 것은 '
+                          '왼쪽 47곳, 오른쪽 36곳이다', fs=9.5))
+    return svg(384, ''.join(o))
+
 
 
 def fig_supply_growth():
@@ -774,17 +911,73 @@ def fig_two_skills():
 
 
 def fig_eci_lead():
-    """Cyber-ECI 추세보다 몇 달 앞섰나. 원문 도해는 시간축 산점도인데
-    모델별 ECI 값이 원문에 없어 점을 찍을 수 없다. 원문에 있는 앞선 정도만 세운다."""
-    o = [lab(16, 24, '2025년 초부터 이어진 Cyber-ECI 선형 추세보다 얼마나 앞섰나', fs=9.5)]
-    rows = [('미소스 프리뷰', 7, '약 7개월 앞섰다', True),
-            ('GPT-5.5', 2.5, '2~3개월 앞섰다', False)]
-    body, bottom = barh(rows, 8, (0, 2, 4, 6, 8), '추세보다 앞선 정도(개월)',
-                        x0=150, x1=430, y=56, bh=30, step=46)
-    o += body
-    o.append(lab(150, bottom + 6, '사이버 벤치마크 약 15개를 Epoch 역량지수(ECI) 방식으로 합친 자다',
-                 fs=9.5))
-    return svg(bottom + 18, ''.join(o))
+    """원문대로 공개일 대 Cyber-ECI 산점도. 점 자리는 원문 그림에서 뽑았다."""
+    d = figdata()['cyber_eci']
+    o = [lab(16, 24, '사이버 벤치마크 약 15개를 합친 Cyber-ECI를 모델 공개일 위에 놓았다', fs=9.5)]
+    o.append(swatch(16, 46, '프런티어 모델(공개 시점 최고)'))
+    o.append('<circle cx="270" cy="42" r="6" fill="var(--fig-body,rgba(127,127,127,.45))" '
+             'stroke="var(--ink-3)" stroke-width="1"/>')
+    o.append(lab(282, 46, '그 밖의 모델', fs=9.5))
+    X0, X1, Y0, Y1 = 96, 356, 66, 300
+    LO, HI = 135.0, 175.0
+    gx0, gx1 = d['grid_x'][0], d['grid_x'][-1]
+
+    def fy(v):
+        return Y1 - (Y1 - Y0) * (v - LO) / (HI - LO)
+
+    def fx(px_):
+        return X0 + (X1 - X0) * (px_ - gx0) / float(gx1 - gx0)
+    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y0 - 8, X0, Y1, X1 + 14, Y1))
+    for v in (135, 145, 155, 165, 175):
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%d</text>'
+                 % (X0 - 8, fy(v) + 4, v))
+        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
+                 'fill="none"/>' % (X0 - 5, fy(v), X0, fy(v)))
+    for i, t in enumerate(('2025/04', '2025/08', '2025/12', '2026/04')):
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (fx(gx0 + (gx1 - gx0) * i / 3.0), Y1 + 18, t))
+    # 미소스 이전 추세 — 눈으로 긋지 않고, 미소스 앞의 프런티어 점으로 최소제곱을 낸다
+    pre = [(cx, cy) for cx, cy in d['points'].get('teal', ()) if cx < 780]
+    if len(pre) >= 2:
+        n = len(pre)
+        mx = sum(a for a, _ in pre) / n
+        my = sum(b for _, b in pre) / n
+        den = sum((a - mx) ** 2 for a, _ in pre) or 1.0
+        slope = sum((a - mx) * (b - my) for a, b in pre) / den
+        def trend(px_):
+            return my + slope * (px_ - mx)
+        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+                 'stroke-dasharray="6 4" fill="none"/>'
+                 % (X0 + 4, fy(trend(gx0)), X1 + 10, fy(trend(gx1 + 40))))
+    for cx, cy in d['points'].get('gray', ()):
+        o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--fig-body,rgba(127,127,127,.45))" '
+                 'stroke="var(--ink-3)" stroke-width="1"/>' % (fx(cx), fy(cy)))
+    for cx, cy in d['points'].get('teal', ()):
+        o.append('<circle cx="%.1f" cy="%.1f" r="5.5" fill="var(--fig-good,#2f8f6b)"/>'
+                 % (fx(cx), fy(cy)))
+    for cx, cy in d['points'].get('blue', ()):
+        o.append('<circle cx="%.1f" cy="%.1f" r="5.5" fill="var(--fig-blue,#2f6fd0)"/>'
+                 % (fx(cx), fy(cy)))
+    notes = [('미소스 프리뷰(4월)', '6.8개월', '3.4~12.6', True),
+             ('미소스 프리뷰(초기)', '3.0개월', '1.6~5.1', True),
+             ('GPT-5.5', '2.5개월', '0.7~5.2', False)]
+    ny = 96
+    for name, mo, ci, key in notes:
+        col = 'var(--fig-good,#2f8f6b)' if key else 'var(--fig-blue,#2f6fd0)'
+        o.append('<text x="380" y="%d" class="t-sm" '
+                 'style="font-weight:850;fill:%s">%s</text>' % (ny, col, esc(name)))
+        o.append('<text x="380" y="%d" class="t-sm" style="fill:%s">%s 앞섰다</text>'
+                 % (ny + 15, col, esc(mo)))
+        o.append('<text x="380" y="%d" class="t-sm t-axis">90%% 구간 %s</text>'
+                 % (ny + 29, esc(ci)))
+        ny += 58
+    o.append(lab(16, Y1 + 44, '점선이 2025년 초부터 이어진 추세다. 앞선 정도는 원문이 90% 구간과 '
+                              '함께 적어 둔 값이다', fs=9.5))
+    o.append(lab(16, Y1 + 60, '초기 판본과 4월 판본이 갈리는 것이 회의론이 나온 까닭 하나다 — '
+                              '초기 판본은 GPT-5.5와 가깝다', fs=9.5))
+    return svg(Y1 + 72, ''.join(o))
+
 
 
 def fig_cyscenario():
@@ -1531,7 +1724,7 @@ FIGS = {
     'delivery': fig_delivery,
     # 세계 컴퓨트의 분배 편
     'world_share': fig_world_share,
-    'growth_2025': fig_growth_2025,
+    'openai_line': fig_openai_line,
     'openai_power': fig_openai_power,
     'openai_chips': fig_openai_chips,
     'deepmind_share': fig_deepmind_share,
@@ -1579,7 +1772,7 @@ FIG_SRC = {
     'two_columns': 'fin', 'tpu_stack': 'fin', 'tranches': 'fin', 'lake_mariner': 'fin',
     'funding_mix': 'fin', 'revenue_jump': 'fin', 'draw_schedule': 'fin', 'rate_ladder': 'fin',
     'five_sites': 'fin', 'delivery': 'fin',
-    'world_share': 'labs', 'growth_2025': 'labs', 'openai_power': 'labs',
+    'world_share': 'labs', 'openai_line': 'labs', 'openai_power': 'labs',
     'openai_chips': 'labs', 'deepmind_share': 'labs',
     'prefill_decode': 'crunch', 'chunked_prefill': 'crunch', 'calibration': 'crunch',
     'supply_growth': 'crunch',
