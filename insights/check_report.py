@@ -25,6 +25,11 @@ PAGES = [
      os.path.join(ROOT, 'content', 'understanding', '피지컬AI')),
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-biz',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 알파벳 밸류에이션 층. 재료가 둘이다 — 산업 판단은 뉴스레터에서 오고 재무 숫자는
+    # SEC 제출서류에서 온다. 후자는 JSON 이라 이 검사기가 못 읽으므로 googl_facts.md 로
+    # 떨어뜨려 EXTRA 에 넣는다. 그 파일은 scratchpad/googl_cases.py 가 다시 쓴다.
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-val',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
@@ -33,7 +38,9 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
          os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_A.md'),
-         os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_B.md')]
+         os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_B.md'),
+         # 알파벳 밸류에이션의 재무 숫자와 우리 계산 결과
+         os.path.join(ROOT, 'scratchpad', 'googl_facts.md')]
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

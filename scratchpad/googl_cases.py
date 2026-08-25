@@ -7,7 +7,7 @@ FCF가 CapEx로 눌린 값이라(TTM 마진 11.9%) 그 눌린 값에 성장률�
 
 마진은 구간 안에서 선형으로 옮긴다. R12가 성장률을 한 해에 안 꺾는 것과 같은 이유다.
 """
-import json, os, sys
+import io, json, os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'insights'))
 import dcf
 
@@ -94,3 +94,98 @@ print('%8s' % 'WACC\g' + ''.join('%8.2f%%' % (g * 100) for g in gs))
 grid = dcf.sensitivity(fcfs, rs, gs, NET_DEBT, SHARES)   # {(r, g): per_share}
 for r in rs:
     print('%7.1f%%' % (r * 100) + ''.join('%9.0f' % grid[(r, g)] for g in gs))
+
+
+def write_facts():
+    """check_report 가 대조할 사실표를 뽑는다.
+
+    검사기는 .md 만 읽는다. 값의 원천은 SEC 제출서류(facts.json)와 이 파일의 계산인데
+    둘 다 JSON·파이썬이라 그대로는 대조가 안 된다. 그래서 쓰인 값을 글자로 떨어뜨린다 —
+    사람이 손으로 옮기면 본문과 어긋나므로 계산 결과에서 바로 만든다.
+    """
+    def two(v):
+        """10억 달러 값을 두 단위로 낸다.
+
+        본문은 「4,459억 달러」로 쓰고 이 표는 445.9로 쓰면 검사기가 둘을 못 잇는다.
+        같은 값을 두 표기로 적어 어느 쪽으로 써도 대조되게 한다.
+
+        억 단위는 정확한 값과 반올림한 값을 함께 적는다. 본문은 억 단위로 반올림해
+        쓰지만(1,490억) 실제 값은 1,489.5억이라 한 쪽만 적으면 대조가 안 된다.
+        반대로 반올림만 적으면 시가총액 41,940.5억이 41,941로 올라가 「4조 1,940억」과
+        어긋난다. 둘 다 같은 값이고 자릿수만 다르다."""
+        e = v * 10
+        return '%.1f (%s억 · %s억)' % (v, format(e, ',.1f'), format(int(round(e)), ','))
+
+    L = ['# 알파벳 밸류에이션 사실표 — 기계 대조용',
+         '',
+         '자동 생성이다. `python scratchpad/googl_cases.py` 가 다시 쓴다. 손으로 고치지 않는다.',
+         '', '## SEC 제출서류에서 받은 값', '']
+    c, tt = d['sec']['concepts'], t
+    for k, name in (('revenue', '매출'), ('ebit', '영업이익'), ('ocf', '영업현금흐름'),
+                    ('capex', '설비투자'), ('dna', '감가상각비'),
+                    ('pretax_income', '세전이익'), ('tax_expense', '세금비용'),
+                    ('nonoperating', '영업 밖 손익'), ('equity_fv_gain', '지분 평가이익'),
+                    ('cash_taxes_paid', '납부세금')):
+        if k in c and '2025' in c[k]:
+            L.append('- FY2025 %s %s' % (name, two(c[k]['2025']['val'] / B)))
+        if k in tt:
+            L.append('- TTM %s %s' % (name, two(tt[k]['val'] / B)))
+    L += ['- TTM 잉여현금흐름 %s' % two(FCF0),
+          '- FY2025 잉여현금흐름 %s' % two(c['ocf']['2025']['val'] / B - c['capex']['2025']['val'] / B),
+          '- TTM 영업이익률 %.1f%%' % (t['ebit']['val'] / t['revenue']['val'] * 100),
+          '- FY2025 영업이익률 %.1f%%' % (c['ebit']['2025']['val'] / c['revenue']['2025']['val'] * 100),
+          '- TTM 설비투자 대비 감가상각 배수 %.2f' % (t['capex']['val'] / t['dna']['val']),
+          '- 순현금 %s' % two(-NET_DEBT),
+          '- 주가 %.2f' % PRICE,
+          '- 시가총액 %s' % two(MCAP),
+          '- 발행주식수 %.3f' % SHARES,
+          '- 무위험수익률 %.2f%%' % (d['risk_free']['rate'] * 100),
+          '- 베타 %.3f' % d['beta']['beta'],
+          '- 베타 관측일수 %d' % d['beta']['n_days'],
+          '- 비상장 지분 장부금액 %s' % two(124.3),
+          '- 장기 투자자산 %s' % two(131.5),
+          '', '## 2026년 2분기 (10-Q)', '',
+          '- 매출 %s' % two(119.8), '- 영업이익 %s' % two(40.8),
+          '- 순이익 %s' % two(112.2), '- 영업 밖 손익 %s' % two(98.0),
+          '- 지분 평가이익 %s' % two(99.0),
+          '', '## 우리가 돌린 계산', '',
+          '- 할인율 %.1f%%' % (WACC * 100),
+          '- 시장위험프리미엄 4.6%',
+          '- 자기자본비용 9.99%',
+          '- 세율 후보 16.7% / 18.4% / 20.7%',
+          '- 명시적 기간 %d년 (구간 %d년 + %d년)' % (P1_YEARS + P2_YEARS, P1_YEARS, P2_YEARS),
+          '- 민감도 할인율 축 9.0% 9.5% 10.0% 10.5% 11.0%',
+          '- 민감도 영구성장률 축 1.75% 2.25% 2.75% 3.25% 3.75%',
+          '- 매출의 94%가 순이익으로 남은 분기',
+          '- 잉여현금흐름 27% 감소',
+          '- 기준연도와 주가 기준일 시차 237일']
+    for name, c2 in CASES.items():
+        v = dcf.value([r[3] for r in path(c2)], WACC, c2['g'], NET_DEBT, SHARES)
+        L.append('- %s 주당가치 %.0f · 매출성장 %.1f%% · 구간끝마진 %.1f%% · 영구마진 %.1f%% '
+                 '· 영구성장 %.2f%% · 영구가치비중 %.0f%% · 현재가 대비 %.0f%%'
+                 % (name, v['per_share'], c2['g1'] * 100, c2['m1'] * 100, c2['m3'] * 100,
+                    c2['g'] * 100, v['tv_share'] * 100, (v['per_share'] / PRICE - 1) * 100))
+    base = [r[3] for r in path(CASES['Base'])]
+    g25 = dcf.sensitivity(base, [0.09, 0.095, 0.10, 0.105, 0.11],
+                          [0.0175, 0.0225, 0.0275, 0.0325, 0.0375], NET_DEBT, SHARES)
+    L.append('- 민감도 최고 %.0f · 최저 %.0f' % (max(g25.values()), min(g25.values())))
+    L.append('- 비영업자산 반영 시 주당 가산 %.1f' % (131.5 / SHARES))
+    L.append('- 실무 도구 보수적 상한 10년 성장 20%')
+    eq = dcf.value(base, WACC, CASES['Base']['g'], NET_DEBT, SHARES)['equity']
+    L.append('- Base 비영업자산 반영 주당 %.0f' % ((eq + 131.5) / SHARES))
+    for r in (0.09, 0.10, 0.11):
+        L.append('- 역산 요구성장률 (할인율 %.1f%%) %.2f%%'
+                 % (r * 100, dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT) * 100))
+    L += ['', '## 회계사 판 필자가 알파벳에 쓴 값 (2026-05-16 편)', '',
+          '- 2026~2028 매출 성장률 20~22%',
+          '- 그 구간 잉여현금흐름 마진 3~8%',
+          '- 적정주가 계산 없음',
+          '- TTM 실측 잉여현금흐름 마진 11.9%']
+    L.append('- 근거 원문 발행일 시차 252일 · 가장 오래된 편 271일')
+    p = os.path.join(root, 'scratchpad', 'googl_facts.md')
+    io.open(p, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
+    return p
+
+
+if __name__ == '__main__':
+    print('\n사실표 ->', write_facts())
