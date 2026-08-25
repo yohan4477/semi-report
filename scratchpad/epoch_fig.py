@@ -106,6 +106,9 @@ def reflow(lines, bw, fs=13.5):
 #
 #   선 굵기   데이터 계열 2.4 · 기준선과 추세선 1.2(점선) · 축과 눈금 1
 #             확정된 경계 1.6(다른 것과 성격이 다른 굵은 실선일 때만)
+#   눈금선    가로 격자 1.2 · #E4E4E4 (grid_h·grid_v). 원본 1026px 폭에서 2px
+#             #E4E4E4 을 재서 옮겼다. 세로 축선은 두지 않는다 — 원문이 축선 대신
+#             격자로 눈금을 읽힌다. 가로 막대(barh)는 원문에도 격자가 없다
 #   점선      6 4 하나. 흐름도의 조건부 지원선만 CSS(.flow-cond)의 5 4를 따로 쓴다
 #   표식      산점도 점 5 · 조밀한 산점도 3.4 · 선그래프 위 표식 4
 #             목록 머리표와 선이 갈리는 점 3
@@ -241,18 +244,36 @@ def xaxis(x0, x1, y, ticks, vmax, title, fmt='%g'):
     return ''.join(o), y + 52
 
 
-def yaxis(x, y0, y1, ticks, vmax, title, fmt='%g'):
-    o = ['<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-         % (x, y0 - 8, x, y1)]
-    for v in ticks:
-        ty = y1 - int((y1 - y0) * v / float(vmax))
-        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-                 % (x - 5, ty, x, ty))
+def grid_h(x0, x1, ys):
+    """가로 격자 — 원문 도해가 세로 축선 대신 이것으로 눈금을 읽힌다.
+
+    자료보다 먼저 부른다(뒤에 깔려야 한다). class="grid" 는 검사기가 잇는 선으로
+    세지 않는 표시다 — 격자는 무엇과 무엇을 잇는 선이 아니다."""
+    return ''.join('<path class="grid" d="M%.1f %.1f L%.1f %.1f"/>' % (x0, y, x1, y)
+                   for y in ys)
+
+
+def grid_v(y0, y1, xs):
+    """세로 격자. 산점도처럼 가로 자도 읽어야 하는 판에서만 쓴다."""
+    return ''.join('<path class="grid" d="M%.1f %.1f L%.1f %.1f"/>' % (x, y0, x, y1)
+                   for x in xs)
+
+
+def yaxis(x, y0, y1, ticks, vmax, title, fmt='%g', x1=None):
+    """세로 자 — 축선과 눈금 표시를 두지 않고 가로 격자로 읽힌다(원문 방식).
+
+    x1 을 주면 거기까지 격자를 긋는다. 안 주면 눈금 글자만 단다."""
+    o = []
+    ys = [y1 - int((y1 - y0) * v / float(vmax)) for v in ticks]
+    if x1 is not None:
+        o.append(grid_h(x, x1, ys))
+    for v, ty in zip(ticks, ys):
         o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end">%s</text>'
                  % (x - 9, ty + 4, fmt % v))
     o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:800">%s</text>'
              % (x - 40, y0 - 16, esc(title)))
     return ''.join(o)
+
 
 
 def swatch(x, y, text, key=True):
@@ -283,7 +304,8 @@ def barh(rows, vmax, ticks, title, x0=150, x1=452, y=52, bh=24, step=34):
 
 def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
     """세로 막대. rows = [(x라벨, 값, 막대 위 글자, 강조)]."""
-    o = [yaxis(x0, y0, y1, ticks, vmax, ytitle)]
+    xend = x0 + 40 + (len(rows) - 1) * step + bw_ + 30
+    o = [yaxis(x0, y0, y1, ticks, vmax, ytitle, x1=xend)]
     x = x0 + 40
     for name, val, note, key in rows:
         h = max(2, int((y1 - y0) * val / float(vmax)))
@@ -298,7 +320,7 @@ def barv(rows, vmax, ticks, ytitle, x0=96, y0=54, y1=210, bw_=64, step=118):
                  % (x + bw_ // 2, y1 + 17, esc(name)))
         x += step
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (x0, y1, x - step + bw_ + 30, y1))
+             % (x0, y1, xend, y1))
     return o, y1 + 28
 
 
@@ -716,13 +738,12 @@ def fig_openai_line():
     def px_(i):
         return X0 + (X1 - X0) * i / 8.0
     o = [lab(16, 24, 'H100 환산 누적 칩 수 (세로 자는 로그)', fs=13)]
-    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (X0, Y0 - 8, X0, Y1, X1 + 14, Y1))
+    o.append(grid_h(X0, X1 + 14, [py(v) for v in (1e5, 1e6, 1e7)]))
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y1, X1 + 14, Y1))
     for v, t in ((1e5, '10만'), (1e6, '100만'), (1e7, '1000만')):
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
                  % (X0 - 8, py(v) + 4, t))
-        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
-                 'fill="none"/>' % (X0 - 5, py(v), X0, py(v)))
     for i, t in ((0, '2023-Q4'), (4, '2024-Q4'), (8, '2025-Q4')):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                  % (px_(i), Y1 + 22, t))
@@ -780,14 +801,11 @@ def fig_openai_chips():
         o.append(lab(x + 20, 44, name, fs=13))
         x += 22 + int(w(name, 13)) + 20
     X0, Y0, Y1, VMAX = 130, 66, 300, 1800.0
-    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (X0, Y0 - 8, X0, Y1, 600, Y1))
+    o.append(grid_h(X0, 600, [Y1 - (Y1 - Y0) * v / VMAX for v in (0, 500, 1000, 1500)]))
     for v in (0, 500, 1000, 1500):
         ty = Y1 - (Y1 - Y0) * v / VMAX
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s만</text>'
                  % (X0 - 8, ty + 4, v // 10 if v else 0))
-        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
-                 'fill="none"/>' % (X0 - 5, ty, X0, ty))
     BW_, STEP = 96, 150
     for i, bar in enumerate(d['bars']):
         bx = X0 + 40 + i * STEP
@@ -968,8 +986,10 @@ def fig_calibration():
         def fy(v):
             return PY0 + PH - PH * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
         o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (PX0, PY0 - 10, esc(title)))
-        o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" '
-                 'fill="none"/>' % (PX0, PY0, PX0, PY0 + PH, PX0 + PW, PY0 + PH))
+        o.append(grid_h(PX0, PX0 + PW, [fy(v) for v in (1e2, 1e3, 1e4)]))
+        o.append(grid_v(PY0, PY0 + PH, [fx(v) for v in (1e2, 1e3, 1e4)]))
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" '
+                 'fill="none"/>' % (PX0, PY0 + PH, PX0 + PW, PY0 + PH))
         # 이론값과 실측이 같으면 이 대각선 위에 놓인다
         o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
                  'stroke-dasharray="6 4" fill="none"/>' % (fx(LO), fy(LO), fx(HI), fy(HI)))
@@ -1004,13 +1024,12 @@ def fig_supply_growth():
     def py(v):
         return Y1 - (Y1 - Y0) * (math.log10(v) - math.log10(LO)) / (math.log10(HI) - math.log10(LO))
     o = [lab(16, 24, '세계 블랙웰 전체가 Kimi K2.6을 돌린다고 놓았을 때', fs=13)]
-    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (X0, Y0 - 8, X0, Y1, X1 + 10, Y1))
+    o.append(grid_h(X0, X1 + 10, [py(v) for v in (1e8, 1e10, 1e12, 1e14)]))
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y1, X1 + 10, Y1))
     for v, t in ((1e8, '1억'), (1e10, '100억'), (1e12, '1조'), (1e14, '100조')):
         o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end">%s</text>'
                  % (X0 - 8, py(v) + 4, t))
-        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-                 % (X0 - 5, py(v), X0, py(v)))
     o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>'
              % (X0 - 44, Y0 - 16, '초당 출력 토큰'))
     for i, yr in enumerate((2026, 2029, 2032)):
@@ -1090,13 +1109,13 @@ def fig_eci_lead():
 
     def fx(px_):
         return X0 + (X1 - X0) * (px_ - gx0) / float(gx1 - gx0)
-    o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
-             % (X0, Y0 - 8, X0, Y1, X1 + 14, Y1))
+    o.append(grid_h(X0, X1 + 14, [fy(v) for v in (135, 145, 155, 165, 175)]))
+    o.append(grid_v(Y0, Y1, [fx(gx0 + (gx1 - gx0) * i / 3.0) for i in range(4)]))
+    o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+             % (X0, Y1, X1 + 14, Y1))
     for v in (135, 145, 155, 165, 175):
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%d</text>'
                  % (X0 - 8, fy(v) + 4, v))
-        o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--ink-3)" stroke-width="1" '
-                 'fill="none"/>' % (X0 - 5, fy(v), X0, fy(v)))
     for i, t in enumerate(('2025/04', '2025/08', '2025/12', '2026/04')):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                  % (fx(gx0 + (gx1 - gx0) * i / 3.0), Y1 + 22, t))

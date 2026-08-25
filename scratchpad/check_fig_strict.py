@@ -68,7 +68,7 @@ def segments(svg):
     """사선까지 포함한 모든 선분. 나라 윤곽처럼 점이 아주 많은 것은 뺀다."""
     segs = []
     for d, at in PATH.findall(svg):
-        if 'class="body"' in at or 'bx-wrap' in at:
+        if 'class="body"' in at or 'bx-wrap' in at or 'class="grid"' in at:
             continue
         pts = [(float(a), float(b)) for a, b in MOVE.findall(d)]
         if len(pts) > 40:

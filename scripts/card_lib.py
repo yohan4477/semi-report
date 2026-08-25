@@ -67,6 +67,10 @@ FIG_CSS = '''
   /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
      안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
   .uc-fig svg.epoch{max-width:100%}
+  /* 눈금선 — Epoch 원문에서 뽑은 값이다. 원본 1026px 폭에서 #E4E4E4 2px 였고,
+     640 판으로 줄이면 1.2px 이 된다. 자료보다 먼저 깔아 뒤에 둔다 */
+  .uc-fig{--epoch-grid:#E4E4E4}
+  .uc-fig .grid{fill:none;stroke:var(--epoch-grid);stroke-width:1.2}
   .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
                     --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
   .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
@@ -110,6 +114,7 @@ FIG_CSS = '''
             --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
             --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
             --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --epoch-grid:rgba(255,255,255,.13);
             --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 '''

@@ -224,10 +224,10 @@ def fig_onet_sa():
     o = [ef.lab(16, 20, '「Situational Awareness」가 늘인 선 — 세로 자는 로그다', fs=13)]
     o.append('<text x="16" y="42" class="t-sm" style="font-weight:800">'
              '실효 컴퓨트 (2023년 GPT-4 = 1)</text>')
-    o.append(_axis([(X0, Y0 - 6), (X0, Y1), (X1 + 10, Y1)]))
+    o.append(ef.grid_h(X0, X1 + 10, [fy(e) for e in range(-6, 7, 2)]))
+    o.append(_axis([(X0, Y1), (X1 + 10, Y1)]))
     for e in range(-6, 7, 2):
         y = fy(e)
-        o.append(_axis([(X0 - 5, y), (X0, y)]))
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
                  % (X0 - 9, y + 4, _pow10(e)))
     for yr in (2018, 2020, 2022, 2024, 2026, 2028):
@@ -281,10 +281,10 @@ def fig_onet_sc():
         return Y1 - (Y1 - Y0) * v / VMAX
     o = [ef.lab(16, 20, '초인 코더가 언제 오나 — AI 2027 이 시간지평을 늘여 뽑은 분포', fs=13)]
     o.append('<text x="16" y="42" class="t-sm" style="font-weight:800">확률밀도</text>')
-    o.append(_axis([(X0, Y0 - 6), (X0, Y1), (X1 + 10, Y1)]))
+    o.append(ef.grid_h(X0, X1 + 10, [fy(v) for v in (0.00, 0.05, 0.10, 0.15, 0.20)]))
+    o.append(_axis([(X0, Y1), (X1 + 10, Y1)]))
     for v in (0.00, 0.05, 0.10, 0.15, 0.20):
         y = fy(v)
-        o.append(_axis([(X0 - 5, y), (X0, y)]))
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%.2f</text>'
                  % (X0 - 9, y + 4, v))
     for yr in (2025, 2027, 2029, 2031, 2033, 2035):

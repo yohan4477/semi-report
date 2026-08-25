@@ -260,10 +260,9 @@ def fig_cve_spike():
 
     o = [_key(16, 22, AMBER, '고위험(High)'), _key(146, 22, BAD, '치명(Critical)')]
     o.append('<text x="16" y="44" class="t-sm" style="font-weight:800">월별 CVE 건수</text>')
-    o.append(_axline(X0, 54, X0, Y1))
+    o.append(ef.grid_h(X0, X1 + 14, [py(v) for v in (0, 300, 600, 900)]))
     o.append(_axline(X0, Y1, X1 + 14, Y1))
     for v in (0, 300, 600, 900):
-        o.append(_axline(X0 - 5, py(v), X0, py(v)))
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%d</text>'
                  % (X0 - 9, py(v) + 4, v))
     for k in range(5):
@@ -314,10 +313,10 @@ def fig_cyber_prog():
          _key(215, 22, BLUE, 'Zhipu AI'), _key(319, 22, GRAY, '그 밖의 모델')]
     o.append('<text x="16" y="44" class="t-sm" style="font-weight:800">'
              'Cyber ECI — 사이버 공격 능력 점수</text>')
-    o.append(_axline(X0, 52, X0, Y1))
+    o.append(ef.grid_h(X0, X1 + 14, [py(v) for v in (140, 150, 160, 170, 180)]))
+    o.append(ef.grid_v(Y0, Y1, [px(m) for m in (0, 4, 8, 12, 16)]))
     o.append(_axline(X0, Y1, X1 + 14, Y1))
     for v in (140, 150, 160, 170, 180):
-        o.append(_axline(X0 - 5, py(v), X0, py(v)))
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%d</text>'
                  % (X0 - 9, py(v) + 4, v))
     for m, t in ((0, '2025/04'), (4, '2025/08'), (8, '2025/12'), (12, '2026/04'),
