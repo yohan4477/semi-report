@@ -22,6 +22,7 @@ BUILD = [
     ('이선엽 시황', ['scratchpad/gen_leesunyeop_dashboard.py']),
     ('건강 대시보드', ['scratchpad/gen_health_dashboard.py']),
     ('수도리무브', ['scratchpad/gen_sudoremove_dashboard.py']),
+    ('메르 인사이트', ['scratchpad/gen_mer_dashboard.py']),
     ('Epoch AI 대시보드', ['scratchpad/gen_epoch_dashboard.py']),
     ('통합 보고서', ['scratchpad/gen_report_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),

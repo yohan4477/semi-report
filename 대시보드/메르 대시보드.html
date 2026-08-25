@@ -1,0 +1,1096 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>메르 인사이트</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sect-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+           border:1px dashed var(--line);border-radius:999px;background:transparent;
+           color:var(--ink-3)}
+  .sect-up:hover{border-color:var(--accent);color:var(--accent)}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-btn{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 13px;
+          border:1px solid var(--line);border-radius:999px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sb-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  /* 올라가는 길이 한 줄을 갖고, 내용 버튼은 그 아래 줄에 선다 — 성격이 다른 버튼이
+     한 줄에 섞이면 어느 쪽이 위로 가는 길인지 눈이 먼저 못 가른다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-up{display:flex;width:fit-content;margin:0 0 9px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  .sw-up{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:11px 15px;
+         border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--ink-3)}
+  .sw-up:hover{border-color:var(--accent);color:var(--accent)}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:1.8;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:9.5px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:11px}
+  .uc-fig text.t-lab{font-size:11.5px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:10px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
+  }
+
+  .mfix{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+  .mfix-d{flex:0 0 74px;font-size:12px;font-weight:800;color:var(--ink-3);
+          font-variant-numeric:tabular-nums;padding-top:2px}
+  .mfix-k{display:inline-block;font-size:10.5px;font-weight:850;color:var(--ink-3);
+          border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-right:6px}
+  .mfix-ar{color:var(--ink-3);margin:0 4px}
+  .mfix-w{margin:5px 0 0;font-size:13px;line-height:1.6;color:var(--ink-2)}
+  .mfix-s{margin:4px 0 0;font-size:11.5px;color:var(--ink-3)}
+  .mact{border-top:1px solid var(--line);padding:12px 0}
+  .mact-t{margin:0 0 6px;font-size:13.5px;font-weight:850;color:var(--ink)}
+  .mact-t span{font-size:11px;font-weight:700;color:var(--ink-3);margin-left:6px}
+  .mact ul{list-style:none;margin:0;padding:0}
+  .mact li{display:flex;gap:10px;align-items:baseline;padding:3px 0;font-size:12.5px;
+           color:var(--ink-2);line-height:1.5}
+  .mact-d{flex:0 0 58px;color:var(--ink-3);font-weight:700;font-variant-numeric:tabular-nums}
+  .mact-r{margin-left:auto;font-size:10.5px;font-weight:800;color:var(--ink-3)}
+  .uc-fig .mermap{border:0;padding:0;background:transparent}
+  .mc-who{font-size:11.5px;font-weight:700;color:var(--ink-3);margin-left:4px}
+
+  /* Epoch AI 도해에서 뽑은 규칙 — 연회색 판, 흰 카드, 얇은 테두리, 큰 여백.
+     선은 두 색뿐이다(돈=청록, 나머지=회색). 글씨 크기는 넷으로 고정한다. */
+  .mermap{margin:18px 0;border-radius:16px;padding:26px 26px 20px;
+          background:var(--map-bg,#f6f7f8);border:0}
+  .mermap h3{margin:0 0 8px;font-size:20px;font-weight:700;color:var(--ink,#16202e);
+             line-height:1.35;letter-spacing:-.01em}
+  .mermap .mp-sub{margin:0 0 18px;font-size:14px;color:var(--ink-3,#6b7280);line-height:1.55}
+  .mermap .mp-legend{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;font-weight:500;
+                     color:var(--ink-2,#374151);margin:0 0 18px;align-items:center}
+  .mermap .mp-legend span{display:inline-flex;align-items:center;gap:8px}
+  .mermap .mp-legend svg{width:30px;height:10px;display:block}
+  .mermap .mp-note{margin:18px 2px 0;font-size:12px;color:var(--ink-3,#6b7280);line-height:1.6}
+  .mermap .mp-brand{display:flex;justify-content:space-between;align-items:center;
+                    margin:10px 2px 0;font-size:11.5px;font-weight:700;color:var(--ink-3,#9aa3ae);
+                    letter-spacing:.02em}
+  .mermap .mp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .mermap svg{display:block;width:100%;height:auto}
+  .mermap .mp-group{fill:var(--teal-soft,#d7f5ef);stroke:none}
+  .mermap .mp-gname{fill:var(--ink-2,#374151);font-size:11px;font-weight:600}
+  .mermap .mp-card{fill:var(--card,#fff);stroke:var(--map-line,#e5e7eb);stroke-width:1}
+  .mermap .mp-card.on{fill:var(--teal-fill,#5fe3c8);stroke:none}
+  .mermap .mp-rowlab{fill:var(--ink-3,#9aa3ae);font-size:10.5px;font-weight:700;letter-spacing:.08em}
+  .mermap .mp-kickbg{fill:var(--map-bg,#f6f7f8)}
+  .mermap .mp-kick{fill:var(--ink-3,#9aa3ae);font-size:10px;font-weight:600;letter-spacing:.1em}
+  .mermap .mp-name{fill:var(--ink,#111827);font-size:17px;font-weight:650}
+  .mermap .mp-desc{fill:var(--ink-2,#4b5563);font-size:13px}
+  .mermap .mp-flow{fill:none;stroke:var(--map-gray,#b9bfc7);stroke-width:1.5;
+                   marker-end:url(#mp-a)}
+  .mermap .mp-flow.cash{stroke:var(--teal,#0fa38f);stroke-width:1.7;marker-end:url(#mp-ac)}
+  .mermap .mp-flow.cond{stroke-dasharray:5 4}
+  .mermap .mp-lab{fill:var(--ink-3,#8b939d);font-size:12.5px;font-weight:500}
+  .mermap .mp-lab.cash{fill:var(--teal,#0fa38f)}
+  @media (prefers-color-scheme:dark){
+    .mermap{--map-bg:rgba(127,127,127,.07);--map-line:rgba(255,255,255,.16);
+            --card:rgba(255,255,255,.04);--teal-soft:rgba(15,163,143,.18);
+            --teal-fill:rgba(15,163,143,.42);--map-gray:#7f8792}
+  }
+
+  .merflow{margin:14px 0;border:1px solid var(--line);border-radius:12px;
+           background:var(--fig-bg,rgba(127,127,127,.05));padding:12px 12px 8px}
+  .merflow-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .merflow svg{display:block;height:auto}
+  .merflow .mf-lane{fill:var(--ink-3);font-size:11px;font-weight:800}
+  .merflow .mf-lane-bg{fill:var(--sunk,rgba(127,127,127,.06))}
+  .merflow .mf-date{fill:var(--ink-3);font-size:10.5px;font-weight:700}
+  .merflow .mf-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 4}
+  .merflow .mf-box{fill:var(--card,var(--surface,#fff));stroke:var(--line);stroke-width:1.2}
+  .merflow .mf-box.ev{stroke:var(--ink-3);stroke-width:1.6}
+  .merflow .mf-box.vd{fill:var(--accent-soft,rgba(127,127,127,.10));stroke:var(--ink-3)}
+  .merflow .mf-box.wt{stroke-dasharray:4 3}
+  .merflow .mf-box.rk{stroke:var(--risk,#c2504a)}
+  .merflow .mf-box.d2{stroke-width:1;opacity:.94}
+  .merflow .mf-t{fill:var(--ink-2);font-size:11.5px;font-weight:650}
+  .merflow .mf-t.sm{fill:var(--ink-2);font-size:10.5px;font-weight:600}
+  .merflow .mf-r{fill:var(--ink);font-size:11.5px;font-weight:850}
+  .merflow .mf-r.sm{font-size:11px}
+  .merflow .mf-a{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-linejoin:round;
+                 marker-end:url(#mf-ar)}
+  .merflow .mf-a.up{stroke-dasharray:5 3}
+  .merflow .mf-a.ct{stroke:var(--risk,#c2504a);stroke-dasharray:2 3}
+  .merflow .mf-elab{fill:var(--ink-3);font-size:9.5px;font-weight:600}
+  .merflow .mf-elab-bg{fill:var(--fig-bg,rgba(127,127,127,.05));stroke:none;opacity:.92}
+  .merflow figcaption{margin:8px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3)}
+  .merflow .mf-key{margin:0 0 8px;font-size:10.5px;color:var(--ink-3);display:flex;
+                   gap:12px;flex-wrap:wrap;font-weight:700}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">메르의 블로그 — 사슬로 읽는 6개월</p>
+    <h1>메르 인사이트</h1>
+  </header>
+
+  
+
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="주체나 사슬 이름으로 찾기" aria-label="찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">83</span></button><button class="stile" data-sec="sec-fix" aria-pressed="false"><span class="st-num">00</span><span class="st-t">고친 자리</span><span class="st-s">메르가 제 판단을 뒤집은 대목</span><span class="st-n cnt">51</span></button><button class="stile" data-sec="sec-actor" aria-pressed="false"><span class="st-num">01</span><span class="st-t">주체별 보기</span><span class="st-s">같은 쪽이 6개월 동안 무엇을 했나</span><span class="st-n cnt">24</span></button><button class="stile" data-sec="sec-ai" aria-pressed="false"><span class="st-num">05</span><span class="st-t">AI · 전력</span><span class="st-s">자본지출을 무엇으로 대나. 순환금융과 전력 병목이 같이 걸린다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-comm" aria-pressed="false"><span class="st-num">06</span><span class="st-t">원자재 · 에너지</span><span class="st-s">자원을 쥔 쪽이 그것을 무기로 쓸 때 무엇이 어떻게 번지나</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-fx" aria-pressed="false"><span class="st-num">02</span><span class="st-t">환율 · 물가 · 중앙은행</span><span class="st-s">원화와 엔화를 지키려고 무엇을 했나. 개입의 재원이 어디서 나오는지가 요점이다</span><span class="st-n cnt">2</span></button><button class="stile" data-sec="sec-krx" aria-pressed="false"><span class="st-num">03</span><span class="st-t">국장 수급 · 제도</span><span class="st-s">누가 사고 누가 파나. 국민연금 리밸런싱과 외국인 매도가 겹치는 자리</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-rate" aria-pressed="false"><span class="st-num">01</span><span class="st-t">미국 금리 · 재무부</span><span class="st-s">장기금리가 왜 안 잡히나. 재무부가 꺼낸 카드와 그 부작용을 따라간다</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-semi" aria-pressed="false"><span class="st-num">04</span><span class="st-t">반도체</span><span class="st-s">증설·기술·중국 추격. 값이 아니라 만들 수 있는가로 갈리는 이야기</span><span class="st-n cnt">2</span></button></div><div class="sback" hidden><button type="button" class="sb-btn">← 이전</button><span class="sb-now"></span></div>
+
+  
+
+  <section id="sec-fix" data-fixed="1" data-n="51"><div class="sec-head"><span class="sec-num">00</span><h2 class="sec-title">고친 자리</h2><button type="button" class="sec-copy" data-anchor="sec-fix">링크 복사</button></div><p class="xl-lede">메르가 제 판단을 고치거나(A/S) 스스로 어긋난 대목 51개입니다. 블로그를 차례로 읽어서는 안 보이고 사슬로 엮어야 드러납니다.</p><div class="mfix"><div class="mfix-d">2026.08.24</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>외국인 7월 3주차 순매수 전환</b> <span class="mfix-ar">→</span> <b>외국인 한달 5,156억원 순매수</b><p class="mfix-w">3주차부터 시작된 순매수 전환이 한달간 5,156억원 순매수로 이어졌다</p><p class="mfix-s">원화는 왜 강해지고 있을까? A/S · <a href="https://blog.naver.com/ranto28/224386666279">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.24</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>수출기업에 환전 압박</b> <span class="mfix-ar">→</span> <b>수출기업 보유달러 마저 환전</b><p class="mfix-w">6월에 시작한 압박이 8월 국세청 단계까지 이어지며 실제로 먹혔다</p><p class="mfix-s">원화는 왜 강해지고 있을까? A/S · <a href="https://blog.naver.com/ranto28/224386666279">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.24</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>SK하이닉스 300억달러 유입 예고</b> <span class="mfix-ar">→</span> <b>SK하이닉스 ADR 대금 완료</b><p class="mfix-w">예고했던 SK하이닉스 자금 유입이 8월 기준으로 다 들어와 마무리됐다</p><p class="mfix-s">원화는 왜 강해지고 있을까? A/S · <a href="https://blog.naver.com/ranto28/224386666279">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.24</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>일본자금 환노출로 전환</b> <span class="mfix-ar">→</span> <b>강세요인 5개중 2개 소진</b><p class="mfix-w">환노출로 들어온 일본 WGBI자금은 8월에도 남은 강세요인으로 재확인된다</p><p class="mfix-s">원화는 왜 강해지고 있을까? A/S · <a href="https://blog.naver.com/ranto28/224386666279">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.24</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>현금서비스로 주담대 갚기</b> <span class="mfix-ar">→</span> <b>8/22 JP모건도 같은 비유</b><p class="mfix-w">같은 비유를 JP모건이 신용카드로 주담대 갚기라고 표현한 것을 근거로 덧댄다</p><p class="mfix-s">재미있는 중복, 재무부의 바이백은 성공할 수있나? A/S · <a href="https://blog.naver.com/ranto28/224388064734">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.21</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>8/20 베센트 구두개입</b> <span class="mfix-ar">→</span> <b>수급을 못 바꾸는 규모</b><p class="mfix-w">시장을 만들어 주겠다고 했지만 시장 규모에 견주면 금액이 작다</p><p class="mfix-s">베센트의 바이백에 비트코인 가격이 오르는 비밀 · <a href="https://blog.naver.com/ranto28/224385169198">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.21</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>단기채 확대 = 스텔스 QE</b> <span class="mfix-ar">→</span> <b>RRP 고갈</b><p class="mfix-w">그때는 RRP가 흡수해 줬지만 지금은 바닥이라 준비금을 직접 빨아들인다</p><p class="mfix-s">베센트의 바이백에 비트코인 가격이 오르는 비밀 · <a href="https://blog.naver.com/ranto28/224385169198">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.21</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>물량보다 큰 심리효과</b> <span class="mfix-ar">→</span> <b>수급을 못 바꾸는 규모</b><p class="mfix-w">심리효과가 크다던 판단을 사흘 뒤 효과가 오래가지 않았다고 고친다</p><p class="mfix-s">베센트의 바이백에 비트코인 가격이 오르는 비밀 · <a href="https://blog.naver.com/ranto28/224385169198">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.20</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>물량 축소로 금리 하락</b> <span class="mfix-ar">→</span> <b>물량보다 큰 심리효과</b><p class="mfix-w">실제 매입량보다 받쳐준다는 신호가 크게 먹힌다고 스스로 무게를 옮긴다</p><p class="mfix-s">미국국채 구하기, 재무부의 바이백은 성공할 수 있을까? · <a href="https://blog.naver.com/ranto28/224384006179">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.20</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>베센트 카드 셋은 속도조절뿐</b> <span class="mfix-ar">→</span> <b>8/19 바이백 한도 두 배로</b><p class="mfix-w">속도조절뿐이라던 카드 중 바이백을 실제로 두 배로 키운 것이 이 발표다</p><p class="mfix-s">미국국채 구하기, 재무부의 바이백은 성공할 수 있을까? · <a href="https://blog.naver.com/ranto28/224384006179">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.19</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>밸류·이익 두 갈래 충격</b> <span class="mfix-ar">→</span> <b>고금리 속 기술주 신고가</b><p class="mfix-w">같은 글에서 금리가 유일한 원인은 아니라며 2026년 신고가를 반례로 든다</p><p class="mfix-s">미국국채금리가 오른다고 AI성장주와 기술주 주가가 왜 내릴까? · <a href="https://blog.naver.com/ranto28/224382901516">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.18</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>원인은 재무부 밖</b> <span class="mfix-ar">→</span> <b>빅테크가 국채 수요 잠식</b><p class="mfix-w">본편이 장기 요인만 다뤘다며 단기 수급 요인 둘을 뒤에 덧댄 글이다</p><p class="mfix-s">미국국채 금리가 끝없이 오르는 이유는?  빠른 A/S · <a href="https://blog.naver.com/ranto28/224381744094">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.18</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>물량 흡수와 유동성</b> <span class="mfix-ar">→</span> <b>워시의 QE 반대 이력</b><p class="mfix-w">장기금리를 실제로 잡는 도구인데 지금 연준의장이 그 도구를 혐오한다</p><p class="mfix-s">미국국채 금리가 끝없이 오르는 이유는? · <a href="https://blog.naver.com/ranto28/224381241715">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.17</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>실질금리 마이너스, 인상 여력</b> <span class="mfix-ar">→</span> <b>한은 추가 금리인상 압력</b><p class="mfix-w">실질금리 마이너스에 이어 가계대출발 물가압력까지 겹치며 추가인상 필요성이 더 커진다</p><p class="mfix-s">한국 CPI의 비밀 (feat 한국은행은 금리를 추가인상 할까?) · <a href="https://blog.naver.com/ranto28/224380392566">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.13</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>MP, 100% 미국산 자석 공개</b> <span class="mfix-ar">→</span> <b>디스프로슘, 여전히 중국산</b><p class="mfix-w">100% 美산이라 자랑했지만 정작 핵심 중희토류인 디스프로슘은 여전히 중국산이다</p><p class="mfix-s">미국과 중국의 희토류 전쟁 근황 · <a href="https://blog.naver.com/ranto28/224376637342">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.13</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 대일 희토류 수출통제</b> <span class="mfix-ar">→</span> <b>중국, 중희토류 수출허가제</b><p class="mfix-w">1월 일본을 겨눴던 통제가 사실은 작년 4월부터 시행 중이던 중희토류 허가제의 연장선이었음을 뒷글이 짚어준다</p><p class="mfix-s">미국과 중국의 희토류 전쟁 근황 · <a href="https://blog.naver.com/ranto28/224376637342">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.11</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>목표비중 20.8%로 상향</b> <span class="mfix-ar">→</span> <b>한도 28.8%까지 확대</b><p class="mfix-w">6월 말 글에서 확인한 목표 상향 조치를 8월 외전에서 자국 편향 이론으로 다시 짚는다</p><p class="mfix-s">외국인들이 국장을 던지는 비밀 외전 (feat 국민연금) · <a href="https://blog.naver.com/ranto28/224374142133">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.11</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>리밸런싱 속도 규칙 완화</b> <span class="mfix-ar">→</span> <b>회의록 4년 비공개</b><p class="mfix-w">속도 규칙 변경은 SNS로 알렸지만 정작 한도 상향의 근거인 회의록은 비공개로 남겼다</p><p class="mfix-s">외국인들이 국장을 던지는 비밀 외전 (feat 국민연금) · <a href="https://blog.naver.com/ranto28/224374142133">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.11</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>변동성이 부른 외국인 이탈</b> <span class="mfix-ar">→</span> <b>자국주식은 위험 겹침</b><p class="mfix-w">외국인은 변동성이 커지자 국장 비중을 줄이는데 국민연금은 반대로 자국주식 한도를 올려 위험을 더 안는다</p><p class="mfix-s">외국인들이 국장을 던지는 비밀 외전 (feat 국민연금) · <a href="https://blog.naver.com/ranto28/224374142133">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.10</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>zHBM은 아직 컨셉 모델</b> <span class="mfix-ar">→</span> <b>조합되면 괴물급 두뇌</b><p class="mfix-w">컨셉에 머문 삼성과 달리 SK는 2027년 상용화 로드맵이 있어 조합의 현실성은 아직 이르다</p><p class="mfix-s">삼성전자 vs SK하이닉스 연합군의 Next HBM 전쟁 · <a href="https://blog.naver.com/ranto28/224372898270">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.09</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 중희토류 정제 독점</b> <span class="mfix-ar">→</span> <b>콩고, 구리·코발트 수출차단</b><p class="mfix-w">정제를 중국에 내준 나라들 다음으로, 원광을 쥔 나라가 아예 수출을 틀어막는 사례가 나왔다</p><p class="mfix-s">구리와 코발트 가격이 갑자기 왜 오를까? · <a href="https://blog.naver.com/ranto28/224371746030">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.09</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>골드만삭스, 구리생산 17%↓ 전망</b> <span class="mfix-ar">→</span> <b>구리값, 사상최고치 근접</b><p class="mfix-w">5월에 예견됐던 구리 공급 차질 전망이 8월 콩고발 수출금지까지 겹치며 사상최고치로 이어진다</p><p class="mfix-s">구리와 코발트 가격이 갑자기 왜 오를까? · <a href="https://blog.naver.com/ranto28/224371746030">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.05</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>위험자산 동반 매도</b> <span class="mfix-ar">→</span> <b>낮은 확률, 큰 피해</b><p class="mfix-w">피해는 크지만 아직 청산 조짐이 없다며 확률을 스스로 낮춰 잡는다</p><p class="mfix-s">미일의 엔화 공동개입에 엔 캐리 청산 이야기가 나오는 이유는? · <a href="https://blog.naver.com/ranto28/224367760426">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.04</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>오늘 일본 재무상 발표</b> <span class="mfix-ar">→</span> <b>8/4 공동개입 공식 인정</b><p class="mfix-w">예고한 발표가 나와 공동개입이 공식 인정됐다</p><p class="mfix-s">미국과 일본, 엔화 공동개입 A/S · <a href="https://blog.naver.com/ranto28/224366873842">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.04</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>매도 대신 담보 대출</b> <span class="mfix-ar">→</span> <b>베센트가 FIMA 확대 권고</b><p class="mfix-w">FIMA를 쓸 것 같다던 예상이 베센트의 공식 권고로 확인됐다</p><p class="mfix-s">미국과 일본, 엔화 공동개입 A/S · <a href="https://blog.naver.com/ranto28/224366873842">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.04</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>FIMA로 연준 장부 팽창</b> <span class="mfix-ar">→</span> <b>한시 팽창이라 워시 수용</b><p class="mfix-w">장부를 줄이겠다는 연준의장의 신념과 반대 방향인데 한시적이라 넘어갈 수 있다</p><p class="mfix-s">미국과 일본, 엔화 공동개입 A/S · <a href="https://blog.naver.com/ranto28/224366873842">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.01</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>전액 선반영이면 효과 제한</b> <span class="mfix-ar">→</span> <b>환율 1,550→1,435원</b><p class="mfix-w">효과가 제한적일 수 있다던 우려와 달리 7월말 환율은 1,435원까지 더 밀렸다</p><p class="mfix-s">원화는 왜 강해지고 있을까? · <a href="https://blog.naver.com/ranto28/224363874833">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.08.01</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>상반기 외국인 1,102억달러 순유출</b> <span class="mfix-ar">→</span> <b>외국인 7월 3주차 순매수 전환</b><p class="mfix-w">상반기 내내 순유출이던 외국인이 7월 3주차부터 순매수로 돌아선다</p><p class="mfix-s">원화는 왜 강해지고 있을까? · <a href="https://blog.naver.com/ranto28/224363874833">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.28</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>삼성·SK 인력까지 영입</b> <span class="mfix-ar">→</span> <b>삼성 기술유출 6~7년 선고</b><p class="mfix-w">인력 유출 정황이 결국 기소·선고로 구체화됐다</p><p class="mfix-s">오늘 상장하는 중국 CXMT(창신메모리)는 어떤 기업인가? 2 · <a href="https://blog.naver.com/ranto28/224358951791">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.28</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>D램 점유율 7.7%로 상승</b> <span class="mfix-ar">→</span> <b>HBM은 2세대 격차</b><p class="mfix-w">D램 점유율은 올라도 HBM은 여전히 2세대 격차로 안 좁혀진다</p><p class="mfix-s">오늘 상장하는 중국 CXMT(창신메모리)는 어떤 기업인가? 2 · <a href="https://blog.naver.com/ranto28/224358951791">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.27</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>증설이 경쟁사 진입 억제</b> <span class="mfix-ar">→</span> <b>지분 42%가 국가자본</b><p class="mfix-w">경쟁자 증설을 억제한다던 판단과 달리 국가자본이 미는 CXMT는 개의치 않고 몸집을 키웠다</p><p class="mfix-s">오늘 상장하는 중국 CXMT(창신메모리)는 어떤 기업인가? 1 · <a href="https://blog.naver.com/ranto28/224358943114">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.21</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>값싼 용량 확장 대안</b> <span class="mfix-ar">→</span> <b>HBM은 못 대체, 보완재</b><p class="mfix-w">값싸게 늘려도 초고대역폭이 필요한 자리는 여전히 HBM 몫으로 남는다</p><p class="mfix-s">삼성전자와 SK하이닉스가준비하는 CXL이 뭘까? · <a href="https://blog.naver.com/ranto28/224351546006">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.20</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>회사채 250억달러 흥행</b> <span class="mfix-ar">→</span> <b>며칠만에 6.65%→7.3%</b><p class="mfix-w">발행 당시 스프레드를 낮출 만큼 인기였던 채권이 며칠 만에 금리가 치솟아 정반대로 움직였다</p><p class="mfix-s">스페이스X발 회사채 폭락사태 정리 (feat 일론 머스크) · <a href="https://blog.naver.com/ranto28/224350983804">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.16</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>굳어진 미국 프리미엄</b> <span class="mfix-ar">→</span> <b>7/29 이후 상호전환 추진</b><p class="mfix-w">프리미엄이 유지된다던 전제를 예탁원의 상호전환 추진이 바꾼다</p><p class="mfix-s">미장 SK하이닉스 ADR이 과하게 비싼게 해소되나?(feat 7월 29일 · <a href="https://blog.naver.com/ranto28/224348032230">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.16</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>국장 매수·미국 매도</b> <span class="mfix-ar">→</span> <b>지배구조가 막는 추가 발행</b><p class="mfix-w">전환은 열려도 신주는 더 못 찍어 물량이 늘어나는 데는 한계가 있다</p><p class="mfix-s">미장 SK하이닉스 ADR이 과하게 비싼게 해소되나?(feat 7월 29일 · <a href="https://blog.naver.com/ranto28/224348032230">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.13</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>한쪽만 열린 차익거래</b> <span class="mfix-ar">→</span> <b>쌀 때만 일어나는 반납</b><p class="mfix-w">댓글 질문에 답해 반납이 언제 일어나는지를 다음 글에서 덧댄다</p><p class="mfix-s">SK하이닉스의 미국 ADR주식이 국장 본주보다 비싼 이유 A/S · <a href="https://blog.naver.com/ranto28/224345322649">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.12</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>중국, 반도체용 헬륨 수출차단</b> <span class="mfix-ar">→</span> <b>메르, 헬륨진범은 러시아</b><p class="mfix-w">중국이 무기화했다는 보도와 달리 실제로는 수입 의존국인 중국이 재수출을 줄인 것뿐이다</p><p class="mfix-s">중국이 반도체에 사용되는 헬륨을 수출금지한 속사정 · <a href="https://blog.naver.com/ranto28/224343061316">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.12</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 대일 희토류 수출통제</b> <span class="mfix-ar">→</span> <b>중국, 반도체용 헬륨 수출차단</b><p class="mfix-w">희토류·텅스텐에 이어 이번엔 헬륨까지 수출을 끊는다는 보도가 나왔다</p><p class="mfix-s">중국이 반도체에 사용되는 헬륨을 수출금지한 속사정 · <a href="https://blog.naver.com/ranto28/224343061316">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.08</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>12차 전기본에 24.7GW 공백</b> <span class="mfix-ar">→</span> <b>한빛 신규 2기로 2.8GW 확보</b><p class="mfix-w">24.7GW 공백을 메울 구체안으로 한빛 신규 2기가 뒤에 나온다</p><p class="mfix-s">삼성전자등 반도체 메가 프로젝트 근황 A/S (feat 물은 괜찮을까?) · <a href="https://blog.naver.com/ranto28/224339365503">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.06</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>SK하이닉스 300억달러 유입 예고</b> <span class="mfix-ar">→</span> <b>SK하이닉스 물량 선반영 관측</b><p class="mfix-w">예고했던 SK하이닉스 자금 유입이 실제 환율 하락 관측으로 이어진다</p><p class="mfix-s">SK하이닉스 상장으로 인한 환율안정 효과가 이미 끝났나? · <a href="https://blog.naver.com/ranto28/224336319183">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.06</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>조달금 국내 유입</b> <span class="mfix-ar">→</span> <b>환율 12.5원 내려 1,530원</b><p class="mfix-w">들어올 것이라던 달러가 실제로 환율을 12.5원 끌어내린 것으로 관측됐다</p><p class="mfix-s">SK하이닉스 상장으로 인한 환율안정 효과가 이미 끝났나? · <a href="https://blog.naver.com/ranto28/224336319183">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.02</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>TAA까지 쓰면 13조원</b> <span class="mfix-ar">→</span> <b>대신증권 21.4조원 추정</b><p class="mfix-w">직접 계산한 13조원 추정을 증권사 리포트의 21조 4천억원 수치로 검증한다</p><p class="mfix-s">국민연금이 국장을 어떻게 팔것인지 답이 나온듯한 (feat 리밸런싱) · <a href="https://blog.naver.com/ranto28/224333132194">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.07.02</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>대신증권 21.4조원 추정</b> <span class="mfix-ar">→</span> <b>SAA만 쓰면 17조원</b><p class="mfix-w">증권사 추정 초과분이 실제 폭락 이후 손실을 반영해 17조원으로 다시 줄어든다</p><p class="mfix-s">오늘 하락으로 국민연금 리밸런싱이 끝났을까? · <a href="https://blog.naver.com/ranto28/224334353467">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.06.29</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>코스피 8,200 분기점</b> <span class="mfix-ar">→</span> <b>국장·미장 비중 동조</b><p class="mfix-w">코스피 단일 기준이던 판단에 미장 변수를 더해 정교화한다</p><p class="mfix-s">7월에 국민연금은 국내주식을 어느정도 처분할까? 빠른 A/S · <a href="https://blog.naver.com/ranto28/224330181744">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.06.29</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>코스피·S&P 공동 8,200</b> <span class="mfix-ar">→</span> <b>역방향이면 매도액 확대</b><p class="mfix-w">반대로 국장만 오르고 미장이 빠지면 매도액이 더 커질 수 있다고 스스로 반례를 든다</p><p class="mfix-s">7월에 국민연금은 국내주식을 어느정도 처분할까? 빠른 A/S · <a href="https://blog.naver.com/ranto28/224330181744">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.06.22</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 텅스텐 등 수출통제</b> <span class="mfix-ar">→</span> <b>중국, 대일 희토류 수출통제</b><p class="mfix-w">1년 전 텅스텐으로 시작한 수출통제가 이번엔 희토류로 번져 일본을 겨눴다</p><p class="mfix-s">삼성전자와 SK하이닉스가 긴급 공급망 점검을 하는 이유 · <a href="https://blog.naver.com/ranto28/224322350093">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.06.17</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>잉여현금 하루 2.6억달러</b> <span class="mfix-ar">→</span> <b>250억달러 회사채, 5년만</b><p class="mfix-w">현금이 넘치는 기업이 회사채까지 발행해 시장이 의아해한다</p><p class="mfix-s">엔비디아는 돈을 왜 빌릴까? · <a href="https://blog.naver.com/ranto28/224318349554">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.05.25</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 황산 수출 실제중단</b> <span class="mfix-ar">→</span> <b>미국 불안, 대체불가 디스프로슘</b><p class="mfix-w">황산 카드에 이어 다음 자원 전선이 대체 불가능한 희토류로 옮겨간다</p><p class="mfix-s">호주, 중국과 희토류 전쟁을 시작하나? (feat 디스프로슘) · <a href="https://blog.naver.com/ranto28/224295450341">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.05.25</div><div class="mfix-b"><span class="mfix-k">어긋난다</span> <b>호주, 중국계 지분 강제매각</b> <span class="mfix-ar">→</span> <b>중국, 중희토류 정제 독점</b><p class="mfix-w">채굴 지분은 막아도 정제·분리 단계는 여전히 중국이 쥐고 있어 근본 해법이 못 된다</p><p class="mfix-s">호주, 중국과 희토류 전쟁을 시작하나? (feat 디스프로슘) · <a href="https://blog.naver.com/ranto28/224295450341">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.05.03</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 황산 수출금지 예고</b> <span class="mfix-ar">→</span> <b>중국, 황산 수출 실제중단</b><p class="mfix-w">예고됐던 5월 1일 수출금지가 실제로 발효됐다는 후속 확인이다</p><p class="mfix-s">중국의 황산수출 금지가 일으키는 나비효과 A/S · <a href="https://blog.naver.com/ranto28/224273477400">원문</a></p></div></div><div class="mfix"><div class="mfix-d">2026.04.14</div><div class="mfix-b"><span class="mfix-k">고쳤다</span> <b>중국, 텅스텐 등 수출통제</b> <span class="mfix-ar">→</span> <b>중국, 황산 수출금지 예고</b><p class="mfix-w">작년 텅스텐 카드에 이어 이번엔 황산을 수출통제 카드로 다시 꺼냈다</p><p class="mfix-s">중국의 황산 수출금지가 일으키는 나비효과? (feat 비료, 구리,니켈) · <a href="https://blog.naver.com/ranto28/224250398767">원문</a></p></div></div></section><section id="sec-actor" data-fixed="1" data-n="24"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">주체별 보기</h2><button type="button" class="sec-copy" data-anchor="sec-actor">링크 복사</button></div><p class="xl-lede">주제가 아니라 <b>행위자</b>로 자른 축입니다. 주체 24곳, 마디가 셋 이상인 곳만 세웠습니다.</p><div class="mact"><h3 class="mact-t">국민연금 <span>17</span></h3><ul><li><span class="mact-d">26.06.29</span> 목표비중 20.8%로 상향<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.29</span> SAA 3%p→6%p 확대<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.29</span> 목표대로면 157조원 매도<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.29</span> SAA 적용시 49조원<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.29</span> TAA까지 쓰면 13조원<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.29</span> 국장·미장 비중 동조<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.29</span> 국내비중 29.5%→28.8%<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.02</span> 리밸런싱 속도 규칙 완화<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.02</span> 하루한도 4분의1로 축소<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.02</span> 57조 완판까지 2027년<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.02</span> 평가손실 40조원<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.02</span> SAA만 쓰면 17조원<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">미 재무부 <span>14</span></h3><ul><li><span class="mact-d">26.08.03</span> 7/31 베센트 메모 노출<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.04</span> 베센트가 FIMA 확대 권고<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.18</span> 베센트 카드 셋은 속도조절뿐<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.18</span> 원인은 재무부 밖<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.18</span> 만기만 바꾸는 스왑<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.20</span> 8/19 바이백 한도 두 배로<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.20</span> 1.4% 부채를 3.795%로 교체<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.20</span> 11월 4일 이후 출구전략<span class="mact-r">관전포인트</span></li><li><span class="mact-d">26.08.21</span> 단기채 확대 = 스텔스 QE<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.21</span> 11월 4일 분기발행계획<span class="mact-r">관전포인트</span></li><li><span class="mact-d">26.08.24</span> 총량 유지, 만기만 단축<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.25</span> 8/24 TGA로 바이백 검토<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">엔비디아 <span>11</span></h3><ul><li><span class="mact-d">26.06.17</span> 잉여현금 하루 2.6억달러<span class="mact-r">배경</span></li><li><span class="mact-d">26.06.17</span> 250억달러 회사채, 5년만<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.17</span> 쓰고도 현금 190억 증가<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.17</span> 오픈AI 투자는 실제로 축소<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.17</span> 채권 가격표 첫 확정<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.28</span> 무한 돈복사식 순환금융<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.28</span> 오하이오 데이터센터 보증<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.28</span> 누적 투자 5,400억달러<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.12</span> 구조는 같고 등장인물만 교체<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.12</span> 재판매 보증하면 위험 전이<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.19</span> 8월 26일 엔비디아 실적<span class="mact-r">관전포인트</span></li></ul></div><div class="mact"><h3 class="mact-t">삼성전자·SK하이닉스 <span>11</span></h3><ul><li><span class="mact-d">26.06.30</span> 광주 팹 4기, 800조원 계획<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.30</span> 팹+데이터센터 전력 7.3GW<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.30</span> 광주 팹 2032~2035년 가동<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.08</span> 용수 재활용률 격차<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.08</span> 재활용 50% 넘으면 비용 급증<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.21</span> CXL, PCIe로 메모리 확장<span class="mact-r">배경</span></li><li><span class="mact-d">26.07.21</span> 값싼 용량 확장 대안<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.21</span> HBM은 못 대체, 보완재<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.08</span> 삼성·하이닉스 시총 3분의1<span class="mact-r">배경</span></li><li><span class="mact-d">26.08.10</span> 속도 대 용량, 다른 접근<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.10</span> 결합하면 3D 메모리 샌드위치<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">외환당국 <span>9</span></h3><ul><li><span class="mact-d">26.06.28</span> 환시개입으로 속도조절<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.28</span> 부담금 면제 연장 검토<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.28</span> 수출기업에 환전 압박<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.28</span> 안전장치 풀며 환율 방어<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.01</span> 외환보유 6개월간 361억↓<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.01</span> 역대 최대 순거래 감소<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.01</span> 2022년 사례는 다른 상황<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.01</span> 무역흑자 속 외환보유고 정체<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.06</span> SK하이닉스 물량 선반영 관측<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">수출기업 <span>7</span></h3><ul><li><span class="mact-d">26.07.01</span> SK하이닉스 300억달러 유입 예고<span class="mact-r">관전포인트</span></li><li><span class="mact-d">26.07.06</span> 선물환 매도로 미리 반영<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.06</span> 선반영 규모 현물시장급<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.24</span> 수출기업 보유달러 마저 환전<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.24</span> SK하이닉스 ADR 대금 완료<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.24</span> 4분기 배당·자사주 역송금<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.24</span> 대미투자용 달러수요 변수<span class="mact-r">관전포인트</span></li></ul></div><div class="mact"><h3 class="mact-t">외국인 투자자 <span>7</span></h3><ul><li><span class="mact-d">26.08.01</span> 상반기 외국인 1,102억달러 순유출<span class="mact-r">배경</span></li><li><span class="mact-d">26.08.01</span> 외국인 7월 3주차 순매수 전환<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.01</span> 일본자금 환노출로 전환<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.08</span> 변동성 커지면 VaR 팽창<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.08</span> 매도가능액 3,200→1,270억<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.08</span> 변동성이 부른 외국인 이탈<span class="mact-r">한줄 코멘트</span></li><li><span class="mact-d">26.08.24</span> 외국인 한달 5,156억원 순매수<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">SK하이닉스 <span>6</span></h3><ul><li><span class="mact-d">26.06.25</span> 7/10 나스닥 ADR 상장 의결<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.25</span> 조달금 국내 유입<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.06</span> 상장 지연 시 인도 의무<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.08</span> 청주 M15X 국산 초순수 첫 공급<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.21</span> SK, CXL 3.2 샘플만 공개<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.10</span> SK, 샌디스크·구글과 HBF 개발<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">CXMT <span>6</span></h3><ul><li><span class="mact-d">26.07.27</span> 키몬다 특허 7천건 인수<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.27</span> 삼성·SK 인력까지 영입<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.28</span> DDR5 24Gb 양산 성공<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.28</span> D램 점유율 7.7%로 상승<span class="mact-r">사건</span></li><li><span class="mact-d">26.07.28</span> HBM은 2세대 격차<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.28</span> AI 메모리 슈퍼사이클로 매출 폭증<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">xAI <span>5</span></h3><ul><li><span class="mact-d">26.06.13</span> 콜로서스 122일 만의 기적<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.13</span> 가스터빈 35기로 421MW<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.13</span> 발전시설 주경계 이전<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.13</span> 이동식 설비로 인허가 회피<span class="mact-r">부작용</span></li><li><span class="mact-d">26.06.13</span> 벌금보다 큰 선점 이익<span class="mact-r">한줄 코멘트</span></li></ul></div><div class="mact"><h3 class="mact-t">오픈AI <span>5</span></h3><ul><li><span class="mact-d">26.07.28</span> 약한 고리는 오픈AI 재무<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.28</span> 연 800억~1천억 약정 부담<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.12</span> 담보는 장식, 신용이 핵심<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.12</span> 구글 6% 오픈AI는 15%<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.12</span> take-or-pay도 파산엔 구멍<span class="mact-r">부작용</span></li></ul></div><div class="mact"><h3 class="mact-t">일론 머스크 <span>5</span></h3><ul><li><span class="mact-d">26.08.15</span> 1테라와트, 미국 발전량급<span class="mact-r">배경</span></li><li><span class="mact-d">26.08.15</span> TSMC의 70%를 한 공장에서<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.15</span> EUV를 FEL로 대체 시도<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.15</span> ASML 20대값이면 FEL 건설<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.15</span> ERL로 전기 재활용<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">중국 <span>5</span></h3><ul><li><span class="mact-d">26.04.14</span> 중국, 황산 수출금지 예고<span class="mact-r">사건</span></li><li><span class="mact-d">26.05.03</span> 중국, 황산 수출 실제중단<span class="mact-r">사건</span></li><li><span class="mact-d">26.05.25</span> 중국, 중희토류 정제 독점<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.22</span> 중국, 대일 희토류 수출통제<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.13</span> 중국, 중희토류 수출허가제<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">환율시장 <span>4</span></h3><ul><li><span class="mact-d">26.07.01</span> 원화 약세가 진짜 원인<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.06</span> 환율 12.5원 하락, 1,530원<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.01</span> 환율 1,550→1,435원<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.01</span> 달러 아닌 원화가 강세 주역<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">한국은행 <span>4</span></h3><ul><li><span class="mact-d">26.08.01</span> 한은 기준금리 2.75%로 인상<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.01</span> 실질금리 마이너스, 인상 여력<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.17</span> 금융당국과 한은 엇박자<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.17</span> 한은 추가 금리인상 압력<span class="mact-r">한줄 코멘트</span></li></ul></div><div class="mact"><h3 class="mact-t">구글 <span>3</span></h3><ul><li><span class="mact-d">26.06.07</span> 구글 847억달러 유상증자<span class="mact-r">사건</span></li><li><span class="mact-d">26.06.07</span> 설비투자 2년 연속 2배<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.06.07</span> 부채 대신 자본으로 조달<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">채권 유통시장 <span>3</span></h3><ul><li><span class="mact-d">26.07.20</span> 며칠만에 6.65%→7.3%<span class="mact-r">부작용</span></li><li><span class="mact-d">26.07.20</span> 듀레이션 계산 9.3% 하락<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.07.20</span> 채권시장은 xAI 손실 부정적<span class="mact-r">부작용</span></li></ul></div><div class="mact"><h3 class="mact-t">미국 <span>3</span></h3><ul><li><span class="mact-d">26.03.18</span> 우방국 공급망에 상동광산<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.05.25</span> 미국 불안, 대체불가 디스프로슘<span class="mact-r">배경</span></li><li><span class="mact-d">26.08.09</span> 미국, 콩고와 핵심광물 협정<span class="mact-r">사건</span></li></ul></div><div class="mact"><h3 class="mact-t">금융당국 <span>3</span></h3><ul><li><span class="mact-d">26.08.08</span> 예탁금 1천만→3천만원<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.17</span> 가계대출 총량 두 배 확대<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.17</span> 신용 확대가 집값 상방압력<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">일본 재무성 <span>3</span></h3><ul><li><span class="mact-d">26.08.03</span> 일본 단독 개입 무효<span class="mact-r">배경</span></li><li><span class="mact-d">26.08.03</span> 달러를 어디서 구하나가 핵심<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.03</span> 오늘 일본 재무상 발표<span class="mact-r">관전포인트</span></li></ul></div><div class="mact"><h3 class="mact-t">미국채 시장 <span>3</span></h3><ul><li><span class="mact-d">26.08.03</span> 국채 매도가 부르는 금리 상승<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.18</span> 30년물 5.25%, 19년 최고<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.21</span> 수급을 못 바꾸는 규모<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">연준 <span>3</span></h3><ul><li><span class="mact-d">26.08.04</span> FIMA로 연준 장부 팽창<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.18</span> 돈을 찍는 매수<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.18</span> 물량 흡수와 유동성<span class="mact-r">메커니즘</span></li></ul></div><div class="mact"><h3 class="mact-t">연준 워시 <span>3</span></h3><ul><li><span class="mact-d">26.08.04</span> 한시 팽창이라 워시 수용<span class="mact-r">메커니즘</span></li><li><span class="mact-d">26.08.18</span> 워시의 QT+인하는 역효과<span class="mact-r">부작용</span></li><li><span class="mact-d">26.08.18</span> 워시의 QE 반대 이력<span class="mact-r">배경</span></li></ul></div><div class="mact"><h3 class="mact-t">삼성전자 <span>3</span></h3><ul><li><span class="mact-d">26.07.21</span> 삼성, CXL 3.2 연내 양산<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.10</span> 삼성 zHBM, HBM5 대비 8배<span class="mact-r">사건</span></li><li><span class="mact-d">26.08.10</span> zHBM은 아직 컨셉 모델<span class="mact-r">부작용</span></li></ul></div></section><section id="sec-ai"><div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">AI · 전력</h2><button type="button" class="sec-copy" data-anchor="sec-ai">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">AI 자본지출의 순환금융과 전력 병목</span><h2 id="card-엔비디아가-보증을-서야-오픈AI가-돈을-빌리고-그-돈이-다시-엔비디아-매출로-돌아온다">엔비디아가 보증을 서야 오픈AI가 돈을 빌리고, 그 돈이 다시 엔비디아 매출로 돌아온다</h2><p class="uc-gain">빅테크는 자본을 미리 쌓고, 월가는 금융사를 거쳐 오픈AI에 돈을 댄다. 오픈AI는 그 돈으로 빅테크의 클라우드를 쓰고, 빅테크는 그 돈으로 다시 엔비디아 GPU를 산다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 7편</span><span>2026-06-07 ~ 2026-08-15</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">빅테크는 자본을 미리 쌓고, 월가는 금융사를 거쳐 오픈AI에 돈을 댄다. 오픈AI는 그 돈으로 빅테크의 클라우드를 쓰고, 빅테크는 그 돈으로 다시 엔비디아 GPU를 산다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>엔비디아가 보증을 서야 오픈AI가 돈을 빌리고, 그 돈이 다시 엔비디아 매출로 돌아온다</h3><div class="mp-sub"><div>빅테크는 자본을 미리 쌓고, 월가는 금융사를 거쳐 오픈AI에 돈을 댄다.</div><div>오픈AI는 그 돈으로 빅테크의 클라우드를 쓰고, 빅테크는 그 돈으로 다시 엔비디아 GPU를 산다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 1124 866" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M290,460 L415,460"/><path class="mp-flow cash" d="M160,228 L320,228 L320,715 L540,715"/><path class="mp-flow cond" d="M527,526 L527,717"/><path class="mp-flow cash" d="M580,718 L960,718 L960,231"/><path class="mp-flow cash" d="M818,160 L693,160 L693,460"/><rect class="mp-kickbg" x="18" y="79" width="136" height="14" rx="3"/><text class="mp-kick" x="22" y="91">기관자금을 모아 대주는 쪽</text><rect class="mp-card" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">월가·금융권</text><text class="mp-desc" x="38" y="158">아폴로·블랙스톤 등 여섯 곳이</text><text class="mp-desc" x="38" y="176">5,000억달러 조성</text><text class="mp-desc" x="38" y="194">담보(GPU)보다 세입자 신용이</text><text class="mp-desc" x="38" y="212">대출조건을 가른다</text><rect class="mp-kickbg" x="818" y="79" width="111" height="14" rx="3"/><text class="mp-kick" x="822" y="91">자본지출을 늘리는 쪽</text><rect class="mp-card" x="820" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="838" y="134">빅테크</text><text class="mp-desc" x="838" y="158">구글 AI설비투자 2024년</text><text class="mp-desc" x="838" y="176">525억→2026년 1,900억달러</text><text class="mp-desc" x="838" y="194">847억달러 유상증자로 선제 자금</text><text class="mp-desc" x="838" y="212">확보</text><rect class="mp-kickbg" x="18" y="379" width="138" height="14" rx="3"/><text class="mp-kick" x="22" y="391">GPU 의존 탈피를 노리는 쪽</text><rect class="mp-card" x="20" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="434">머스크 진영</text><text class="mp-desc" x="38" y="458">가스터빈으로 전력 병목을 직접</text><text class="mp-desc" x="38" y="476">뚫었다</text><text class="mp-desc" x="38" y="494">EUV를 FEL로 대체해 테라팹을 지으려</text><text class="mp-desc" x="38" y="512">한다</text><rect class="mp-kickbg" x="418" y="379" width="81" height="14" rx="3"/><text class="mp-kick" x="422" y="391">보증을 서는 쪽</text><rect class="mp-card on" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">엔비디아</text><text class="mp-desc" x="438" y="458">2,500억달러 보증+3,500억달러</text><text class="mp-desc" x="438" y="476">칩구매 지원 논의</text><text class="mp-desc" x="438" y="494">GPU 재판매가치 보증 시 위험이</text><text class="mp-desc" x="438" y="512">스스로에게 돌아온다</text><rect class="mp-kickbg" x="418" y="699" width="106" height="14" rx="3"/><text class="mp-kick" x="422" y="711">돈을 빌리고 쓰는 쪽</text><rect class="mp-card" x="420" y="720" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="754">오픈AI</text><text class="mp-desc" x="438" y="778">1달러 벌 때 1.22달러를 쓴다</text><text class="mp-desc" x="438" y="796">HSBC 추정 2030년까지 2,070억달러</text><text class="mp-desc" x="438" y="814">추가 조달 필요</text><text class="mp-lab" x="337" y="451">① 탈피 시도</text><text class="mp-lab cash" x="371" y="690">② 대출 5,000억달러</text><text class="mp-lab" x="543" y="621">③ 보증·투자(부도 시</text><text class="mp-lab" x="543" y="635">이행)</text><text class="mp-lab cash" x="715" y="709">④ 클라우드 이용료</text><text class="mp-lab cash" x="722" y="151">⑤ GPU 구매</text></svg></div><p class="mp-note">이 그림은 2026년 6월 7일~8월 15일 사이 메르 블로그 일곱 편을 바탕으로 한다. 오라클은 빅테크에 포함해 그렸다.</p><p class="mp-note">엔비디아·월가 5000억달러 금융동맹은 2026년 8월 기준 논의 단계다. 실제 금리·계약조건은 아직 확정되지 않았다.</p><p class="mp-note">출처 — 메르의 블로그 일곱 편(2026-06-07 ~ 08-15). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>선점형 자금 확보.</b> 구글은 지금 당장 급하지 않아도 조달비용이 오르기 전에 미리 확보하려는 움직임으로 볼 수 있다. <span class="mc-who">메르의 판단 · 06/07</span></li><li><b>벌금보다 큰 선점 이익.</b> 소송비용과 벌금을 내더라도 경쟁사보다 1년 먼저 가동한 이익이 훨씬 크다는 계산이다. <span class="mc-who">xAI · 06/13</span></li><li><b>미리 싸게 빌리는 전략.</b> 시장이 미친듯이 빌려주려 할 때 미리 빌려, GPU 판매회사에서 AI 생태계 운영자로 넘어가는 전환에 쓸 자금을 쟁여둔다. <span class="mc-who">메르의 판단 · 06/17</span></li><li><b>채권시장은 xAI 손실 부정적.</b> 채권시장은 막대한 지출계획과 xAI의 누적손실로 2029년까지 마이너스 현금흐름이 예상되는 것을 부정적으로 본다. <span class="mc-who">채권 유통시장 · 07/20</span></li><li><b>뒤끝 남을 조달.</b> 좋은 조건으로 자금 조달에는 성공했지만 채권투자자 손실이 커져, 회사채 조달이 힘들어지면 주주에게 손을 벌려야 한다. <span class="mc-who">메르의 판단 · 07/20</span></li><li><b>약한 고리는 오픈AI 재무.</b> 오픈AI는 1달러 벌 때 1.22달러를 쓰는 구조로, HSBC는 2030년까지 최소 2,070억달러를 추가 조달해야 버틴다고 본다. <span class="mc-who">오픈AI · 07/28</span></li><li><b>세 질문으로 수렴.</b> AI가 인프라 투자를 정당화할 만큼 벌 수 있는지, 오픈AI가 그때까지 자금을 계속 댈 수 있는지, GPU를 덜 써도 되는 효율혁신이 나올지로 좁혀진다. <span class="mc-who">메르의 판단 · 07/28</span></li><li><b>재판매 보증하면 위험 전이.</b> 엔비디아가 GPU의 재판매 가치까지 보증할 경우 위험이 수요자에서 엔비디아 쪽으로 옮겨갈 가능성이 생긴다. <span class="mc-who">엔비디아 · 08/12</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">800억→847억달러</div><div class="s-label">구글 847억달러 유상증자</div></div><div class="stat"><div class="s-val">525억달러</div><div class="s-label">2024년</div></div><div class="stat"><div class="s-val">914억달러</div><div class="s-label">2025년</div></div><div class="stat"><div class="s-val">1,900억달러</div><div class="s-label">2026년</div></div><div class="stat"><div class="s-val">585억달러</div><div class="s-label">임대약정</div></div><div class="stat"><div class="s-val">2,000억달러</div><div class="s-label">상장 3사 2천억달러 조달</div></div></div><p class="uc-quote">구글에게 지금 당장 필요한 자금은 아니지만, 저렴할때 미리 확보하려는 움직임으로 볼 수가 있다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">잉여현금 하루 2.6억달러 → 250억달러 회사채, 5년만</span>어긋난다. 현금이 넘치는 기업이 회사채까지 발행해 시장이 의아해한다</li><li><span class="who">회사채 250억달러 흥행 → 며칠만에 6.65%→7.3%</span>어긋난다. 발행 당시 스프레드를 낮출 만큼 인기였던 채권이 며칠 만에 금리가 치솟아 정반대로 움직였다</li></ul></div><div class="side-note">이 그림은 2026년 6월 7일~8월 15일 사이 메르 블로그 일곱 편을 바탕으로 한다. 오라클은 빅테크에 포함해 그렸다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224308296478" target="_blank" rel="noopener">▶ 원문 구글 초대형 유상증자의 속사정(feat </a><a class="secondary" href="https://blog.naver.com/ranto28/224313393861" target="_blank" rel="noopener">▶ 원문 일론 머스크가 만드는 데이터센터가 기적적</a><a class="secondary" href="https://blog.naver.com/ranto28/224318349554" target="_blank" rel="noopener">▶ 원문 엔비디아는 돈을 왜 빌릴까?</a><a class="secondary" href="https://blog.naver.com/ranto28/224350983804" target="_blank" rel="noopener">▶ 원문 스페이스X발 회사채 폭락사태 정리 (fe</a><button type="button" class="uc-copy" data-anchor="card-엔비디아가-보증을-서야-오픈AI가-돈을-빌리고-그-돈이-다시-엔비디아-매출로-돌아온다">링크 복사</button></div></div></div></section><section id="sec-comm"><div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">원자재 · 에너지</h2><button type="button" class="sec-copy" data-anchor="sec-comm">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">중국의 자원 무기화와 세계의 대응</span><h2 id="card-중국이-텅스텐부터-희토류까지-자원을-무기로-쓰자-각국이-대체-공급망으로-맞선다">중국이 텅스텐부터 희토류까지 자원을 무기로 쓰자, 각국이 대체 공급망으로 맞선다</h2><p class="uc-gain">중국은 관세 보복과 대만 발언을 빌미로 텅스텐·황산·헬륨·희토류를 잇달아 수출통제로 묶는다. 일본·한국·미국·자원 보유국은 각자 대체 광산과 가격보장으로 맞대응한다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 9편</span><span>2026-03-17 ~ 2026-08-13</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">중국은 관세 보복과 대만 발언을 빌미로 텅스텐·황산·헬륨·희토류를 잇달아 수출통제로 묶는다. 일본·한국·미국·자원 보유국은 각자 대체 광산과 가격보장으로 맞대응한다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>중국이 텅스텐부터 희토류까지 자원을 무기로 쓰자, 각국이 대체 공급망으로 맞선다</h3><div class="mp-sub"><div>중국은 관세 보복과 대만 발언을 빌미로 텅스텐·황산·헬륨·희토류를 잇달아 수출통제로 묶는다.</div><div>일본·한국·미국·자원 보유국은 각자 대체 광산과 가격보장으로 맞대응한다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 724 866" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow svc" d="M290,160 L415,160"/><path class="mp-flow svc" d="M580,226 L580,397"/><path class="mp-flow svc" d="M580,526 L580,717"/><path class="mp-flow svc" d="M418,780 L293,780 L293,460"/><path class="mp-flow svc" d="M127,400 L127,229"/><rect class="mp-kickbg" x="18" y="79" width="116" height="14" rx="3"/><text class="mp-kick" x="22" y="91">자원을 무기로 쓰는 쪽</text><rect class="mp-card on" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">중국</text><text class="mp-desc" x="38" y="158">텅스텐·황산·헬륨·희토류를 잇달아</text><text class="mp-desc" x="38" y="176">수출통제</text><text class="mp-desc" x="38" y="194">중희토류 분리·정제는 세계 98% 독점</text><rect class="mp-kickbg" x="418" y="79" width="45" height="14" rx="3"/><text class="mp-kick" x="422" y="91">첫 타깃</text><rect class="mp-card" x="420" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="134">일본</text><text class="mp-desc" x="438" y="158">1/6 수출통제로 WF6 텅스텐분말 공급</text><text class="mp-desc" x="438" y="176">중단</text><text class="mp-desc" x="438" y="194">미나미토리섬 해저 희토류 채굴로</text><text class="mp-desc" x="438" y="212">반격</text><rect class="mp-kickbg" x="18" y="379" width="71" height="14" rx="3"/><text class="mp-kick" x="22" y="391">원료를 쥔 쪽</text><rect class="mp-card" x="20" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="434">자원 보유국</text><text class="mp-desc" x="38" y="458">호주, 중국계 자본의 채굴권 지분</text><text class="mp-desc" x="38" y="476">강제매각</text><text class="mp-desc" x="38" y="494">콩고, 구리·코발트 정광 수출 즉각</text><text class="mp-desc" x="38" y="512">차단</text><rect class="mp-kickbg" x="418" y="379" width="85" height="14" rx="3"/><text class="mp-kick" x="422" y="391">관찰자이자 대안</text><rect class="mp-card" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">한국</text><text class="mp-desc" x="438" y="458">텅스텐분말 전량 중국 의존, 사드</text><text class="mp-desc" x="438" y="476">전례 우려</text><text class="mp-desc" x="438" y="494">상동광산 재가동으로 세계 3위권 노림</text><rect class="mp-kickbg" x="418" y="699" width="91" height="14" rx="3"/><text class="mp-kick" x="422" y="711">동맹망을 짜는 쪽</text><rect class="mp-card" x="420" y="720" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="754">미국</text><text class="mp-desc" x="438" y="778">MP머티리얼즈에 kg당 110달러 하한</text><text class="mp-desc" x="438" y="796">보장</text><text class="mp-desc" x="438" y="814">콩고·호주와 핵심광물 접근권 협정</text><text class="mp-lab" x="304" y="151">① 광물 수출통제</text><text class="mp-lab" x="596" y="311">② WF6 텅스텐분말</text><text class="mp-lab" x="596" y="325">공급중단 파급</text><text class="mp-lab" x="596" y="621">③ 텅스텐 공급</text><text class="mp-lab" x="232" y="811">④ 핵심광물 접근권 협정·투자</text><text class="mp-lab" x="143" y="314">⑤ 정제는 여전히 중국행</text></svg></div><p class="mp-note">이 그림은 2026년 3월 17일~8월 13일 사이 벌어진 개별 사례를 한데 모은 것이다. 호주·콩고의 조치는 중국이 벌인 일이 아니라 각국 정부가 자국 자원을 지키려 내린 별개의 결정이다.</p><p class="mp-note">상동광산의 세계 3위권 진입, 중희토류 디스프로슘 완전 확보 등은 아직 계획·전망 단계다. 실제 값은 나오지 않았다.</p><p class="mp-note">출처 — 메르의 블로그 아홉 편(2026-03-17 ~ 08-13). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>텅스텐, 반도체 배선 소재.</b> 밀도가 높아 관통탄·로켓엔진에 쓰이던 텅스텐은 고온에서 발열하는 DRAM·낸드의 배선 플러그를 채우는 데도 쓰인다. <span class="mc-who">반도체업계 · 03/17</span></li><li><b>중국, 텅스텐 등 수출통제.</b> 2025년 2월 4일 중국 상무부가 텅스텐·몰리브덴 등 5개 핵심광물을 수출통제 리스트에 올렸다. 미국의 10% 추가관세에 대한 보복이었다. <span class="mc-who">중국 상무부 · 03/18</span></li><li><b>중국, 황산 수출금지 예고.</b> 중국이 2026년 5월 1일부터 황산 수출을 금지하겠다고 발표했다. <span class="mc-who">중국 · 04/14</span></li><li><b>중국, 황산 수출 실제중단.</b> 예고대로 중국이 황산 수출을 실제로 중단했다. 중국은 2025년 세계 황 수출의 23%를 차지했다. <span class="mc-who">중국 · 05/03</span></li><li><b>호주, 중국계 지분 강제매각.</b> 2026년 5월 18일 호주 재무부장관이 노던미네랄스에 얽힌 중국 연계 투자자 6곳에 14일 안에 지분 전량을 처분하라고 명령했다. <span class="mc-who">호주 재무부 · 05/25</span></li><li><b>중국, 대일 희토류 수출통제.</b> 2026년 1월 6일 중국이 일본에 희토류 등 전략광물의 수출통제 조치를 시행했다. 다카이치 총리의 대만 유사시 자위대 개입 시사 발언이 계기였다. <span class="mc-who">중국 · 06/22</span></li><li><b>상동광산, 세계 3위권 재가동.</b> 3월 17일 재가동한 상동광산이 연 2,500톤을 생산하면 러시아를 제치고 한국이 세계 3위 텅스텐 생산국이 될 수 있다. <span class="mc-who">상동광산 · 06/22</span></li><li><b>중국, 반도체용 헬륨 수출차단.</b> 2026년 7월 10일 중국 상무부와 관세청이 반도체 공정 핵심소재인 헬륨의 수출을 금지했다. <span class="mc-who">중국 상무부 · 07/12</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">280억원</div><div class="s-label">알몬티, 상동광산 280억 인수</div></div><div class="stat"><div class="s-val">5개</div><div class="s-label">핵심광물</div></div><div class="stat"><div class="s-val">2026-05-01</div><div class="s-label">시행일</div></div><div class="stat"><div class="s-val">300만톤</div><div class="s-label">칠레 연 수입</div></div><div class="stat"><div class="s-val">150만톤</div><div class="s-label">對중국</div></div><div class="stat"><div class="s-val">45톤</div><div class="s-label">니켈 1톤당 황산</div></div></div><p class="uc-quote">트럼프가 호르무즈해협을 봉쇄해서 중국의 에너지 수입을 방해하니, 중국이 트럼프의 표밭인 미국농부들의 비료가격을 공격하는 반격이 하나의 축임.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">중국, 텅스텐 등 수출통제 → 중국, 대일 희토류 수출통제</span>고쳤다. 1년 전 텅스텐으로 시작한 수출통제가 이번엔 희토류로 번져 일본을 겨눴다</li><li><span class="who">중국, 텅스텐 등 수출통제 → 중국, 황산 수출금지 예고</span>고쳤다. 작년 텅스텐 카드에 이어 이번엔 황산을 수출통제 카드로 다시 꺼냈다</li><li><span class="who">중국, 황산 수출금지 예고 → 중국, 황산 수출 실제중단</span>고쳤다. 예고됐던 5월 1일 수출금지가 실제로 발효됐다는 후속 확인이다</li><li><span class="who">중국, 황산 수출 실제중단 → 미국 불안, 대체불가 디스프로슘</span>고쳤다. 황산 카드에 이어 다음 자원 전선이 대체 불가능한 희토류로 옮겨간다</li><li><span class="who">호주, 중국계 지분 강제매각 → 중국, 중희토류 정제 독점</span>어긋난다. 채굴 지분은 막아도 정제·분리 단계는 여전히 중국이 쥐고 있어 근본 해법이 못 된다</li><li><span class="who">중국, 중희토류 정제 독점 → 콩고, 구리·코발트 수출차단</span>고쳤다. 정제를 중국에 내준 나라들 다음으로, 원광을 쥔 나라가 아예 수출을 틀어막는 사례가 나왔다</li></ul></div><div class="side-note">이 그림은 2026년 3월 17일~8월 13일 사이 벌어진 개별 사례를 한데 모은 것이다. 호주·콩고의 조치는 중국이 벌인 일이 아니라 각국 정부가 자국 자원을 지키려 내린 별개의 결정이다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224219840267" target="_blank" rel="noopener">▶ 원문 한국에도 세계 탑급 전략금속 광산이 있다</a><a class="secondary" href="https://blog.naver.com/ranto28/224219843486" target="_blank" rel="noopener">▶ 원문 세계 탑급 전략금속(텅스텐,몰리브덴)광산</a><a class="secondary" href="https://blog.naver.com/ranto28/224250398767" target="_blank" rel="noopener">▶ 원문 중국의 황산 수출금지가 일으키는 나비효과</a><a class="secondary" href="https://blog.naver.com/ranto28/224273477400" target="_blank" rel="noopener">▶ 원문 중국의 황산수출 금지가 일으키는 나비효과</a><button type="button" class="uc-copy" data-anchor="card-중국이-텅스텐부터-희토류까지-자원을-무기로-쓰자-각국이-대체-공급망으로-맞선다">링크 복사</button></div></div></div></section><section id="sec-fx"><div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">환율 · 물가 · 중앙은행</h2><button type="button" class="sec-copy" data-anchor="sec-fx">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">미일 엔화 공동개입과 엔 캐리</span><h2 id="card-미일-엔화-공동개입과-엔-캐리">미일 엔화 공동개입과 엔 캐리</h2><p class="uc-gain">이 사슬이 어떻게 굴러가는지</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 3편</span><span>2026-08-03 ~ 2026-08-05</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">미일 엔화 공동개입과 엔 캐리</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>매도 대신 담보 대출.</b> 미국은 ESF(재무부 외환안정기금, 2025년 말 436억달러)로 엔을 사주고, 일본은 FIMA 레포창구로 뉴욕 연준에 맡긴 국채를 담보로 달러를 빌린다. 국가별 한도는 600억달러이고 일본이 쓴 적은 없다. <span class="mc-who">미·일 공조 · 08/03</span></li><li><b>8/4 공동개입 공식 인정.</b> 일본 재무성이 7월 31일 미국과 공동으로 엔화 매입 개입을 했다고 공식 인정하고, 필요하면 추가 공동 개입도 주저하지 않겠다고 밝혔다. 베센트도 같은 취지로 엑스에 적었다. <span class="mc-who">미·일 공조 · 08/04</span></li><li><b>위험자산 동반 매도.</b> 변동성이 커지면 캐리와 무관한 펀드도 위험관리모델에서 포지션을 줄이라는 신호를 받아 위험자산 전반이 같이 팔린다. <span class="mc-who">위험자산 전반 · 08/05</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">350억달러</div><div class="s-label">4/30</div></div><div class="stat"><div class="s-val">730억달러</div><div class="s-label">5월까지</div></div><div class="stat"><div class="s-val">외환보유액 771억달러 감소</div><div class="s-label">일본 단독 개입 무효</div></div><div class="stat"><div class="s-val">50억~100억달러</div><div class="s-label">엔 매입</div></div><div class="stat"><div class="s-val">589억달러</div><div class="s-label">일본 하루</div></div><div class="stat"><div class="s-val">164엔→158엔</div><div class="s-label">7/31 베센트 메모 노출</div></div></div><p class="uc-quote">미국 정부가 엔화에 공식적으로 개입했다는 것 자체가 헤지펀드에게는 큰 압박이 될 것 같다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">오늘 일본 재무상 발표 → 8/4 공동개입 공식 인정</span>고쳤다. 예고한 발표가 나와 공동개입이 공식 인정됐다</li><li><span class="who">매도 대신 담보 대출 → 베센트가 FIMA 확대 권고</span>고쳤다. FIMA를 쓸 것 같다던 예상이 베센트의 공식 권고로 확인됐다</li><li><span class="who">FIMA로 연준 장부 팽창 → 한시 팽창이라 워시 수용</span>어긋난다. 장부를 줄이겠다는 연준의장의 신념과 반대 방향인데 한시적이라 넘어갈 수 있다</li><li><span class="who">위험자산 동반 매도 → 낮은 확률, 큰 피해</span>어긋난다. 피해는 크지만 아직 청산 조짐이 없다며 확률을 스스로 낮춰 잡는다</li></ul></div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224366267736" target="_blank" rel="noopener">▶ 원문 미국과 일본이 엔화환율에 공동으로 개입했</a><a class="secondary" href="https://blog.naver.com/ranto28/224366873842" target="_blank" rel="noopener">▶ 원문 미국과 일본, 엔화 공동개입 A/S</a><a class="secondary" href="https://blog.naver.com/ranto28/224367760426" target="_blank" rel="noopener">▶ 원문 미일의 엔화 공동개입에 엔 캐리 청산 이</a><button type="button" class="uc-copy" data-anchor="card-미일-엔화-공동개입과-엔-캐리">링크 복사</button></div></div></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">원화는 왜 강해지고 있을까 — 환율 방어와 한은</span><h2 id="card-정부의-방어가-안-먹히자-한국은행-금리인상과-외국인-자금이-원화를-끌어올렸다">정부의 방어가 안 먹히자 한국은행 금리인상과 외국인 자금이 원화를 끌어올렸다</h2><p class="uc-gain">기재부·한국은행은 스무딩개입·압박·안전장치 완화로 버텼지만 6개월간 외환보유 361억달러가 줄었다. 결국 한국은행이 금리를 올렸고, 수출기업 환전과 일본 WGBI 자금이 겹치며 환율은 7월초 1,550원에서 8월 1,430원대까지 내렸다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 6편</span><span>2026-06-28 ~ 2026-08-24</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">기재부·한국은행은 스무딩개입·압박·안전장치 완화로 버텼지만 6개월간 외환보유 361억달러가 줄었다. 결국 한국은행이 금리를 올렸고, 수출기업 환전과 일본 WGBI 자금이 겹치며 환율은 7월초 1,550원에서 8월 1,430원대까지 내렸다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>정부의 방어가 안 먹히자 한국은행 금리인상과 외국인 자금이 원화를 끌어올렸다</h3><div class="mp-sub"><div>기재부·한국은행은 스무딩개입·압박·안전장치 완화로 버텼지만 6개월간 외환보유 361억달러가 줄었다.</div><div>결국 한국은행이 금리를 올렸고, 수출기업 환전과 일본 WGBI 자금이 겹치며 환율은 7월초 1,550원에서 8월 1,430원대까지 내렸다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 1124 866" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M290,160 L415,160 L415,440"/><path class="mp-flow svc" d="M818,160 L693,160 L693,440"/><path class="mp-flow cash" d="M290,760 L415,760 L415,460"/><path class="mp-flow cash" d="M818,780 L693,780 L693,480"/><path class="mp-flow svc" d="M418,480 L293,480 L293,800"/><rect class="mp-kickbg" x="18" y="79" width="101" height="14" rx="3"/><text class="mp-kick" x="22" y="91">환율을 방어하는 쪽</text><rect class="mp-card" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">외환당국</text><text class="mp-desc" x="38" y="158">스무딩오퍼레이션·불법외환거래 조사</text><text class="mp-desc" x="38" y="176">외환건전성부담금 면제 연장 검토</text><rect class="mp-kickbg" x="818" y="79" width="91" height="14" rx="3"/><text class="mp-kick" x="822" y="91">금리를 정하는 쪽</text><rect class="mp-card" x="820" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="838" y="134">한국은행</text><text class="mp-desc" x="838" y="158">기준금리 2.50%→2.75%, 3년반만의</text><text class="mp-desc" x="838" y="176">인상</text><text class="mp-desc" x="838" y="194">가계대출발 물가압력에 추가인상</text><text class="mp-desc" x="838" y="212">압력↑</text><rect class="mp-kickbg" x="418" y="379" width="91" height="14" rx="3"/><text class="mp-kick" x="422" y="391">값이 매겨지는 곳</text><rect class="mp-card on" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">환율시장</text><text class="mp-desc" x="438" y="458">7월초 1,550원→7월말 1,435원</text><text class="mp-desc" x="438" y="476">메르는 8말 9초를 강세 피크로 본다</text><rect class="mp-kickbg" x="18" y="699" width="106" height="14" rx="3"/><text class="mp-kick" x="22" y="711">달러를 쥐고 있던 쪽</text><rect class="mp-card" x="20" y="720" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="754">수출기업</text><text class="mp-desc" x="38" y="778">미국에 쌓아둔 보유달러를 상당수준</text><text class="mp-desc" x="38" y="796">환전</text><text class="mp-desc" x="38" y="814">4분기 배당·자사주 역송금이 변수로</text><text class="mp-desc" x="38" y="832">남는다</text><rect class="mp-kickbg" x="818" y="699" width="71" height="14" rx="3"/><text class="mp-kick" x="822" y="711">들고 나는 쪽</text><rect class="mp-card" x="820" y="720" width="268" height="126" rx="10"/><text class="mp-name" x="838" y="754">외국인 자금</text><text class="mp-desc" x="838" y="778">상반기 국장에서 1,102억달러 순유출</text><text class="mp-desc" x="838" y="796">일본 WGBI자금은 환노출로 유입 지속</text><text class="mp-lab cash" x="305" y="137">① 스무딩개입·압박으로</text><text class="mp-lab cash" x="305" y="151">달러 공급</text><text class="mp-lab" x="675" y="137">② 기준금리 인상으로</text><text class="mp-lab" x="675" y="151">캐리 유인 축소</text><text class="mp-lab cash" x="304" y="751">③ 보유달러 환전</text><text class="mp-lab cash" x="675" y="797">④ WGBI</text><text class="mp-lab cash" x="675" y="811">환노출·매도중단으로</text><text class="mp-lab" x="245" y="457">⑤ 강세 지속시</text><text class="mp-lab" x="245" y="471">배당·자사주 역송금 확대</text></svg></div><p class="mp-note">이 그림은 2026년 6월 28일~8월 24일 사이 원화 강세를 만든 요인을 한 판에 모은 것이다. 다섯 요인은 동시에 작동한 게 아니라 시기마다 비중이 달랐고, 메르는 8월 24일 기준 다섯 요인 중 둘(수출기업 환전·SK하이닉스 ADR)이 이미 끝났다고 봤다.</p><p class="mp-note">4분기 삼성전자·SK하이닉스 배당과 자사주 소각에 따른 역송금의 정확한 규모, 대미투자 집행 시점의 달러 수요는 아직 확정된 숫자가 없다.</p><p class="mp-note">출처 — 메르의 블로그 여섯 편(2026-06-28~08-24). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>환율 1,500원대 고착.</b> 원달러 환율이 1,500원대에서 내려오지 않아, 외환당국(기재부·한국은행)이 스무딩오퍼레이션·외환건전성 부담금 면제 연장·외환 공동검사로 시장 안정에 나섰다. <span class="mc-who">원달러 환율시장 · 06/28</span></li><li><b>물밑에서 긴박한 방어전.</b> 조용해 보여도 물속에서는 환율을 잡기 위한 긴박한 움직임이 진행 중이며, 안전장치까지 풀면서 하는 대응은 다소 위험해 보인다는 판단이다. <span class="mc-who">메르의 판단 · 06/28</span></li><li><b>역대 최대 순거래 감소.</b> 2025년 4분기 -225억달러는 한국은행 역사상 최대 기록이다. 2위는 2022년 3분기 -175억달러, 3위는 2022년 2분기 -154억달러였다. <span class="mc-who">외환당국 · 07/01</span></li><li><b>한은 금리인상이 유일한 해법.</b> 외환당국의 개입은 대일밴드나 소염진통제 같은 것이라, 판단을 잘못해 치료 타이밍을 놓치면 병을 키울 수 있다. 결국 한국은행이 금리인상으로 치료해야 하는 상황이 됐다. <span class="mc-who">메르의 판단 · 07/01</span></li><li><b>전액 선반영이면 효과 제한.</b> 선물환 매도를 전액 한 번에 했다면 남은 효과는 생각보다 약할 수 있고, 나눠서 했다면 그 이유가 궁금하다는 유보적 결론이다. <span class="mc-who">메르의 판단 · 07/06</span></li><li><b>환율 1,550→1,435원.</b> 7월초 1,550원을 넘던 원달러 환율이 7월말 1,435원까지 내렸다. <span class="mc-who">환율시장 · 08/01</span></li><li><b>다양한 요인의 원화 강세.</b> 외국인 매도세 진정, 정부의 환전 압박, 한은 금리인상, 일본 WGBI 자금의 환노출 전환, SK하이닉스 상장대금까지 여러 요인이 겹쳐 원화를 끌어올리고 있다는 결론이다. <span class="mc-who">메르의 판단 · 08/01</span></li><li><b>가계대출 총량 두 배 확대.</b> 8월 13일 부동산 금융 종합대책에서 은행별 가계대출 총량 증가율 목표를 1.5%에서 3.0%로 올렸다. 이주비·중도금·잔금대출은 총량관리에서 아예 빼서 별도 관리한다. <span class="mc-who">금융당국 · 08/17</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">부담금 요율 0.5% 이하</div><div class="s-label">부담금 면제 연장 검토</div></div><div class="stat"><div class="s-val">1~6월</div><div class="s-label">면제 적용 2026년</div></div><div class="stat"><div class="s-val">2025년 4분기 -225억달러</div><div class="s-label">외환보유 6개월간 361억↓</div></div><div class="stat"><div class="s-val">2026년 1분기 -136억달러</div><div class="s-label">외환보유 6개월간 361억↓</div></div><div class="stat"><div class="s-val">6개월 합계 -361억달러</div><div class="s-label">외환보유 6개월간 361억↓</div></div><div class="stat"><div class="s-val">1위)</div><div class="s-label">2025년 4분기 -225억달러(역대</div></div></div><p class="uc-quote">조용한 것 같아도, 물속에서는 환율을 잡기위한 긴박한 움직임들이 진행되고 있다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">SK하이닉스 300억달러 유입 예고 → SK하이닉스 물량 선반영 관측</span>고쳤다. 예고했던 SK하이닉스 자금 유입이 실제 환율 하락 관측으로 이어진다</li><li><span class="who">전액 선반영이면 효과 제한 → 환율 1,550→1,435원</span>고쳤다. 효과가 제한적일 수 있다던 우려와 달리 7월말 환율은 1,435원까지 더 밀렸다</li><li><span class="who">상반기 외국인 1,102억달러 순유출 → 외국인 7월 3주차 순매수 전환</span>어긋난다. 상반기 내내 순유출이던 외국인이 7월 3주차부터 순매수로 돌아선다</li><li><span class="who">실질금리 마이너스, 인상 여력 → 한은 추가 금리인상 압력</span>고쳤다. 실질금리 마이너스에 이어 가계대출발 물가압력까지 겹치며 추가인상 필요성이 더 커진다</li><li><span class="who">외국인 7월 3주차 순매수 전환 → 외국인 한달 5,156억원 순매수</span>고쳤다. 3주차부터 시작된 순매수 전환이 한달간 5,156억원 순매수로 이어졌다</li><li><span class="who">수출기업에 환전 압박 → 수출기업 보유달러 마저 환전</span>고쳤다. 6월에 시작한 압박이 8월 국세청 단계까지 이어지며 실제로 먹혔다</li></ul></div><div class="side-note">이 그림은 2026년 6월 28일~8월 24일 사이 원화 강세를 만든 요인을 한 판에 모은 것이다. 다섯 요인은 동시에 작동한 게 아니라 시기마다 비중이 달랐고, 메르는 8월 24일 기준 다섯 요인 중 둘(수출기업 환전·SK하이닉스 ADR)이 이미 끝났다고 봤다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224325245303" target="_blank" rel="noopener">▶ 원문 환율을 잡기위해 하고있는 일들</a><a class="secondary" href="https://blog.naver.com/ranto28/224332562925" target="_blank" rel="noopener">▶ 원문 한국은행의 시장개입 내용과 환율 근황</a><a class="secondary" href="https://blog.naver.com/ranto28/224336319183" target="_blank" rel="noopener">▶ 원문 SK하이닉스 상장으로 인한 환율안정 효과</a><a class="secondary" href="https://blog.naver.com/ranto28/224363874833" target="_blank" rel="noopener">▶ 원문 원화는 왜 강해지고 있을까?</a><button type="button" class="uc-copy" data-anchor="card-정부의-방어가-안-먹히자-한국은행-금리인상과-외국인-자금이-원화를-끌어올렸다">링크 복사</button></div></div></div></section><section id="sec-krx"><div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">국장 수급 · 제도</h2><button type="button" class="sec-copy" data-anchor="sec-krx">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">국민연금이 국내주식 한도를 올리는 사이 외국인·</span><h2 id="card-국민연금이-국내주식-한도를-올리는-사이-외국인-연기금은-변동성을-이유로-국장을-던진다">국민연금이 국내주식 한도를 올리는 사이 외국인·연기금은 변동성을 이유로 국장을 던진다</h2><p class="uc-gain">국민연금은 목표비중과 SAA·TAA 한도를 올려 초과분을 팔지 않고 안고 간다. 외국인·연기금은 VKOSPI로 커진 변동성 탓에 VaR와 샤프지수가 나빠져 비중을 줄인다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 7편</span><span>2026-06-29 ~ 2026-08-11</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">국민연금은 목표비중과 SAA·TAA 한도를 올려 초과분을 팔지 않고 안고 간다. 외국인·연기금은 VKOSPI로 커진 변동성 탓에 VaR와 샤프지수가 나빠져 비중을 줄인다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>국민연금이 국내주식 한도를 올리는 사이 외국인·연기금은 변동성을 이유로 국장을 던진다</h3><div class="mp-sub"><div>국민연금은 목표비중과 SAA·TAA 한도를 올려 초과분을 팔지 않고 안고 간다.</div><div>외국인·연기금은 VKOSPI로 커진 변동성 탓에 VaR와 샤프지수가 나빠져 비중을 줄인다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 724 556" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M127,226 L127,397"/><path class="mp-flow cash" d="M418,460 L293,460"/><path class="mp-flow svc" d="M418,160 L293,160"/><rect class="mp-kickbg" x="18" y="79" width="81" height="14" rx="3"/><text class="mp-kick" x="22" y="91">한도를 올린 쪽</text><rect class="mp-card on" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">국민연금</text><text class="mp-desc" x="38" y="158">목표비중 14.9%→20.8%, SAA</text><text class="mp-desc" x="38" y="176">3%p→6%p로 확대</text><text class="mp-desc" x="38" y="194">실제비중 29.4~29.5%, 초과분은 안</text><text class="mp-desc" x="38" y="212">팔고 한도로 흡수</text><rect class="mp-kickbg" x="418" y="79" width="91" height="14" rx="3"/><text class="mp-kick" x="422" y="91">추정치를 대는 쪽</text><rect class="mp-card" x="420" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="134">증권사</text><text class="mp-desc" x="438" y="158">대신증권 21.4조원, 신영증권 74조원</text><text class="mp-desc" x="438" y="176">추정</text><text class="mp-desc" x="438" y="194">코스피 가정에 따라 추정폭이 갈림</text><rect class="mp-kickbg" x="18" y="379" width="75" height="14" rx="3"/><text class="mp-kick" x="22" y="391">흔들리는 무대</text><rect class="mp-card" x="20" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="434">국장 지표</text><text class="mp-desc" x="38" y="458">코스피 -7.89%, VKOSPI 30.6→93.8</text><text class="mp-desc" x="38" y="476">단일종목 레버리지가 변동성을 증폭</text><rect class="mp-kickbg" x="418" y="379" width="116" height="14" rx="3"/><text class="mp-kick" x="422" y="391">변동성 보고 던지는 쪽</text><rect class="mp-card" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">외국인·연기금</text><text class="mp-desc" x="438" y="458">VaR·샤프지수 모두 변동성이 크면</text><text class="mp-desc" x="438" y="476">나빠짐</text><text class="mp-desc" x="438" y="494">연초부터 국장 이탈 흐름</text><text class="mp-lab cash" x="143" y="311">① 초과분 매도</text><text class="mp-lab cash" x="320" y="451">② 초과 매도</text><text class="mp-lab" x="313" y="151">③ 추정치 제공</text></svg></div><p class="mp-note">이 그림은 2026년 6월 29일~8월 11일 사이의 상태다. 국민연금의 비중 상향과 외국인·연기금의 변동성 회피는 서로를 겨냥한 결정이 아니라 각자의 논리로 나온 것이다.</p><p class="mp-note">국민연금이 실제로 얼마를 팔지, 한도 상향의 근거가 무엇인지는 회의록이 공개되는 2030년 전까지 확인할 수 없다.</p><p class="mp-note">출처 — 메르의 블로그 일곱 편(2026-06-29 ~ 08-11). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>TAA까지 쓰면 13조원.</b> TAA 2%p까지 풀로 가동해 28.8%까지 허용하면 실제 매도 필요액은 13조원 정도로 줄어든다는 저자 추정이다. <span class="mc-who">국민연금 · 06/29</span></li><li><b>코스피 8,200 분기점.</b> TAA까지 쓴다는 가정에서 코스피가 8,200을 넘으면 리밸런싱 매도물량이 나오고 밑돌면 필요없어진다. <span class="mc-who">코스피 · 06/29</span></li><li><b>코스피·S&P 공동 8,200.</b> 코스피 8,200과 S&P500 8,200 둘 중 하나만 닿아도 국민연금 리밸런싱이 없어진다는 계산이다. <span class="mc-who">메르의 판단 · 06/29</span></li><li><b>리밸런싱 속도 규칙 완화.</b> 국민연금공단 이사장이 SNS에서 리밸런싱이 폭탄이 되지 않는다고 밝혔고, 5월 기금운용위원회에서 바뀐 속도 규칙이 기사로 드러났다. <span class="mc-who">국민연금 · 07/02</span></li><li><b>57조 완판까지 2027년.</b> SAA만 쓰고 TAA는 안 쓴다면 57조0600억원을 하루 2,250억원씩 팔아야 해서 2027년 8월까지 매일 매도가 이어진다. <span class="mc-who">국민연금 · 07/02</span></li><li><b>SAA만 쓰면 17조원.</b> TAA를 안 쓰고 SAA까지만 허용하면 17조원만 더 팔면 되고, 코스피가 7,400까지 내려가면 리밸런싱이 저절로 끝난다. <span class="mc-who">국민연금 · 07/02</span></li><li><b>폭락이 리밸런싱 대체.</b> 주가 폭락으로 평가손실이 나면서 매도로 채워야 할 초과분 자체가 자연히 줄었다. <span class="mc-who">메르의 판단 · 07/02</span></li><li><b>변동성 커지면 VaR 팽창.</b> 변동성이 커지면 위험 지표인 VaR가 부풀어, 받아놓은 위험예산 한도를 맞추려면 보유 물량을 줄여야 한다. <span class="mc-who">외국인 투자자 · 08/08</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">14.9%→20.8%</div><div class="s-label">목표비중</div></div><div class="stat"><div class="s-val">3%p→6%p</div><div class="s-label">SAA</div></div><div class="stat"><div class="s-val">157조원</div><div class="s-label">목표대로면 157조원 매도</div></div><div class="stat"><div class="s-val">49조원</div><div class="s-label">SAA 적용시 49조원</div></div><div class="stat"><div class="s-val">13조원</div><div class="s-label">TAA까지 쓰면 13조원</div></div><div class="stat"><div class="s-val">8,200</div><div class="s-label">코스피</div></div></div><p class="uc-quote">국민연금이 한도를 올렸기 때문에 리벨런싱 매도물량은 많이 줄어들었다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">코스피 8,200 분기점 → 국장·미장 비중 동조</span>고쳤다. 코스피 단일 기준이던 판단에 미장 변수를 더해 정교화한다</li><li><span class="who">코스피·S&P 공동 8,200 → 역방향이면 매도액 확대</span>어긋난다. 반대로 국장만 오르고 미장이 빠지면 매도액이 더 커질 수 있다고 스스로 반례를 든다</li><li><span class="who">TAA까지 쓰면 13조원 → 대신증권 21.4조원 추정</span>고쳤다. 직접 계산한 13조원 추정을 증권사 리포트의 21조 4천억원 수치로 검증한다</li><li><span class="who">대신증권 21.4조원 추정 → SAA만 쓰면 17조원</span>고쳤다. 증권사 추정 초과분이 실제 폭락 이후 손실을 반영해 17조원으로 다시 줄어든다</li><li><span class="who">목표비중 20.8%로 상향 → 한도 28.8%까지 확대</span>고쳤다. 6월 말 글에서 확인한 목표 상향 조치를 8월 외전에서 자국 편향 이론으로 다시 짚는다</li><li><span class="who">리밸런싱 속도 규칙 완화 → 회의록 4년 비공개</span>어긋난다. 속도 규칙 변경은 SNS로 알렸지만 정작 한도 상향의 근거인 회의록은 비공개로 남겼다</li></ul></div><div class="side-note">이 그림은 2026년 6월 29일~8월 11일 사이의 상태다. 국민연금의 비중 상향과 외국인·연기금의 변동성 회피는 서로를 겨냥한 결정이 아니라 각자의 논리로 나온 것이다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224329357905" target="_blank" rel="noopener">▶ 원문 7월에 국민연금은 국내주식을 어느정도 처</a><a class="secondary" href="https://blog.naver.com/ranto28/224330181744" target="_blank" rel="noopener">▶ 원문 7월에 국민연금은 국내주식을 어느정도 처</a><a class="secondary" href="https://blog.naver.com/ranto28/224333132194" target="_blank" rel="noopener">▶ 원문 국민연금이 국장을 어떻게 팔것인지 답이 </a><a class="secondary" href="https://blog.naver.com/ranto28/224334353467" target="_blank" rel="noopener">▶ 원문 오늘 하락으로 국민연금 리밸런싱이 끝났을</a><button type="button" class="uc-copy" data-anchor="card-국민연금이-국내주식-한도를-올리는-사이-외국인-연기금은-변동성을-이유로-국장을-던진다">링크 복사</button></div></div></div></section><section id="sec-rate"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">미국 금리 · 재무부</h2><button type="button" class="sec-copy" data-anchor="sec-rate">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">미국 장기국채 금리와 재무부의 대응</span><h2 id="card-베센트가-카드를-다-꺼냈는데-장기금리는-계속-오른다">베센트가 카드를 다 꺼냈는데 장기금리는 계속 오른다</h2><p class="uc-gain">재무부는 헌 장기채를 되사고 그 돈을 단기채로 마련한다. 사주던 손은 줄고 빅테크가 그 돈을 가져간다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 7편</span><span>2026-08-18 ~ 2026-08-25</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">재무부는 헌 장기채를 되사고 그 돈을 단기채로 마련한다. 사주던 손은 줄고 빅테크가 그 돈을 가져간다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>베센트가 카드를 다 꺼냈는데 장기금리는 계속 오른다</h3><div class="mp-sub"><div>재무부는 헌 장기채를 되사고 그 돈을 단기채로 마련한다.</div><div>사주던 손은 줄고 빅테크가 그 돈을 가져간다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 1124 866" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M527,526 L527,717"/><path class="mp-flow cash" d="M580,720 L580,529"/><path class="mp-flow cash" d="M160,228 L160,715 L560,715"/><path class="mp-flow cash" d="M818,160 L784,160 L784,68 L293,68 L293,160"/><path class="mp-flow svc" d="M580,718 L960,718 L960,231"/><rect class="mp-kickbg" x="18" y="79" width="55" height="14" rx="3"/><text class="mp-kick" x="22" y="91">사주던 쪽</text><rect class="mp-card" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">사주던 손</text><text class="mp-desc" x="38" y="158">중·일·영 보유분 한 달 610억달러↓</text><text class="mp-desc" x="38" y="176">연기금·보험사는 재원이 한정돼 있다</text><rect class="mp-kickbg" x="418" y="79" width="71" height="14" rx="3"/><text class="mp-kick" x="422" y="91">돈을 찍는 쪽</text><rect class="mp-card" x="420" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="134">연준</text><text class="mp-desc" x="438" y="158">워시는 대차대조표 축소가 소신</text><text class="mp-desc" x="438" y="176">QE를 안 하니 장기물은 시장 몫</text><rect class="mp-kickbg" x="818" y="79" width="101" height="14" rx="3"/><text class="mp-kick" x="822" y="91">자금을 가져가는 쪽</text><rect class="mp-card" x="820" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="838" y="134">기업·기술주</text><text class="mp-desc" x="838" y="158">8월 회사채 발행 1,452억달러</text><text class="mp-desc" x="838" y="176">금리는 밸류와 이익 양쪽을 깎는다</text><rect class="mp-kickbg" x="418" y="379" width="71" height="14" rx="3"/><text class="mp-kick" x="422" y="391">빚을 내는 쪽</text><rect class="mp-card on" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">미 재무부</text><text class="mp-desc" x="438" y="458">회당 바이백 한도 20억→40억달러</text><text class="mp-desc" x="438" y="476">장기채를 사려고 단기채를 찍는다</text><rect class="mp-kickbg" x="418" y="699" width="91" height="14" rx="3"/><text class="mp-kick" x="422" y="711">값이 매겨지는 곳</text><rect class="mp-card" x="420" y="720" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="754">국채 시장</text><text class="mp-desc" x="438" y="778">10년물 4.7% · 30년물 5.25%</text><text class="mp-desc" x="438" y="796">월가는 바이백을 부정적으로 본다</text><text class="mp-lab cash" x="408" y="621">① 헌 장기채 매입</text><text class="mp-lab cash" x="596" y="624">② 단기채로 갈아탄 빚</text><text class="mp-lab cash" x="318" y="706">③ 보유분 매도</text><text class="mp-lab cash" x="455" y="59">④ 더 높은 금리로 자금 흡수</text><text class="mp-lab" x="700" y="709">⑤ 조달비용·할인율 상승</text></svg></div><p class="mp-note">이 그림은 2026년 8월 18~25일 사이의 상태다. 재무부와 연준은 법적으로 별개이고, 연준은 이 판에서 아무 것도 하지 않는 쪽으로 그려져 있다.</p><p class="mp-note">11월 4일 분기발행계획에서 단기채 비중을 늘리는지가 다음 갈림길이다. 그 뒤 값은 아직 없다.</p><p class="mp-note">출처 — 메르의 블로그 일곱 편(2026-08-18 ~ 08-25). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>베센트의 카드 소진.</b> 재무부 손으로는 속도만 늦출 수 있고, 장기금리를 실제로 잡는 도구인 QE는 지금 연준의장이 쓰지 않는다. <span class="mc-who">메르의 판단 · 08/18</span></li><li><b>빅테크가 국채 수요 잠식.</b> 국채를 사주던 연기금·보험사의 재원은 한정돼 있다. 수익률이 더 좋은 빅테크 채권을 사면 국채를 덜 사고, 재무부는 금리를 더 얹어야 한다. 메타는 국채보다 1.2%를 더 주겠다고 하다 1.4%까지 올렸다. <span class="mc-who">연기금·보험사 · 08/18</span></li><li><b>밸류·이익 두 갈래 충격.</b> 하나는 곧바로 오는 밸류에이션 충격이고, 다른 하나는 서서히 스며드는 차입비용 상승분의 이익 충격이다. <span class="mc-who">메르의 판단 · 08/19</span></li><li><b>8/19 바이백 한도 두 배로.</b> 1회당 상한을 최대 20억달러에서 최소 40억달러로 바꿨다. 대상은 잔존만기 10~20년물과 20~30년물이고 9월 9일부터 11월 4일까지 한시 적용이다. <span class="mc-who">미 재무부 · 08/20</span></li><li><b>현금서비스로 주담대 갚기.</b> 단기적으로 장기채 금리는 내려가지만 빚의 성격만 나빠진다. 좋은 정책이 아니다. <span class="mc-who">메르의 판단 · 08/20</span></li><li><b>단기채 확대 = 스텔스 QE.</b> 연준이 QE를 하지 않아도 재무부가 단기채 비중을 늘리는 것만으로 유동성이 늘어난다. TBAC는 단기채 비중을 15~20%로 권고해 왔는데 2025년 중반 20%를 넘었고 2027년 25%가 예상된다. <span class="mc-who">미 재무부 · 08/21</span></li><li><b>11월 4일 분기발행계획.</b> 단기채 비중을 늘리느냐가 핵심이다. 늘리면 유동성이 풀려 증시·비트코인이 먼저 반응할 수 있고, RRP가 없는 만큼 발작 위험도 같이 커진다. <span class="mc-who">미 재무부 · 08/21</span></li><li><b>총량 유지, 만기만 단축.</b> 장기국채를 사려면 그만큼 다른 국채를 찍어야 하고 지금 찍는 것은 1년 이내 단기채다. 부채 총량도 재정적자도 그대로인 채 구조만 짧아진다. <span class="mc-who">미 재무부 · 08/24</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">4.7%</div><div class="s-label">10년물</div></div><div class="stat"><div class="s-val">5.25%</div><div class="s-label">30년물</div></div><div class="stat"><div class="s-val">380억달러</div><div class="s-label">분기 바이백 한도</div></div><div class="stat"><div class="s-val">1.9조달러</div><div class="s-label">2026년 적자</div></div><div class="stat"><div class="s-val">2.4조달러</div><div class="s-label">2027~2036 평균</div></div><div class="stat"><div class="s-val">3,050억달러</div><div class="s-label">스테이블코인 시총</div></div></div><p class="uc-quote">장기국채금리가 오르고 있는데, 베센트는 잡을 카드가 없음.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">원인은 재무부 밖 → 빅테크가 국채 수요 잠식</span>고쳤다. 본편이 장기 요인만 다뤘다며 단기 수급 요인 둘을 뒤에 덧댄 글이다</li><li><span class="who">밸류·이익 두 갈래 충격 → 고금리 속 기술주 신고가</span>어긋난다. 같은 글에서 금리가 유일한 원인은 아니라며 2026년 신고가를 반례로 든다</li><li><span class="who">물량 축소로 금리 하락 → 물량보다 큰 심리효과</span>고쳤다. 실제 매입량보다 받쳐준다는 신호가 크게 먹힌다고 스스로 무게를 옮긴다</li><li><span class="who">베센트 카드 셋은 속도조절뿐 → 8/19 바이백 한도 두 배로</span>고쳤다. 속도조절뿐이라던 카드 중 바이백을 실제로 두 배로 키운 것이 이 발표다</li><li><span class="who">8/20 베센트 구두개입 → 수급을 못 바꾸는 규모</span>어긋난다. 시장을 만들어 주겠다고 했지만 시장 규모에 견주면 금액이 작다</li><li><span class="who">단기채 확대 = 스텔스 QE → RRP 고갈</span>어긋난다. 그때는 RRP가 흡수해 줬지만 지금은 바닥이라 준비금을 직접 빨아들인다</li></ul></div><div class="side-note">이 그림은 2026년 8월 18~25일 사이의 상태다. 재무부와 연준은 법적으로 별개이고, 연준은 이 판에서 아무 것도 하지 않는 쪽으로 그려져 있다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224381744094" target="_blank" rel="noopener">▶ 원문 미국국채 금리가 끝없이 오르는 이유는? </a><a class="secondary" href="https://blog.naver.com/ranto28/224381241715" target="_blank" rel="noopener">▶ 원문 미국국채 금리가 끝없이 오르는 이유는?</a><a class="secondary" href="https://blog.naver.com/ranto28/224382901516" target="_blank" rel="noopener">▶ 원문 미국국채금리가 오른다고 AI성장주와 기술</a><a class="secondary" href="https://blog.naver.com/ranto28/224384006179" target="_blank" rel="noopener">▶ 원문 미국국채 구하기, 재무부의 바이백은 성공</a><button type="button" class="uc-copy" data-anchor="card-베센트가-카드를-다-꺼냈는데-장기금리는-계속-오른다">링크 복사</button></div></div></div></section><section id="sec-semi"><div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">반도체</h2><button type="button" class="sec-copy" data-anchor="sec-semi">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">반도체 증설·CXL·CXMT가 만든 삼성 vs </span><h2 id="card-전력이-증설을-묶는-사이-국가자본을-업은-CXMT가-삼성-SK를-HBM-경쟁으로-몬다">전력이 증설을 묶는 사이 국가자본을 업은 CXMT가 삼성·SK를 HBM 경쟁으로 몬다</h2><p class="uc-gain">삼성전자와 SK하이닉스는 800조원을 광주 팹에 넣지만 전력망은 24.7GW가 비어 있다. 그 사이 국가자본을 업은 CXMT가 D램 점유율을 두 배 가까이 올리며 삼성·SK를 HBM 차세대 경쟁으로 몰아붙인다.</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 6편</span><span>2026-06-30 ~ 2026-08-10</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">삼성전자와 SK하이닉스는 800조원을 광주 팹에 넣지만 전력망은 24.7GW가 비어 있다. 그 사이 국가자본을 업은 CXMT가 D램 점유율을 두 배 가까이 올리며 삼성·SK를 HBM 차세대 경쟁으로 몰아붙인다.</p><p class="uc-label">핵심 포인트</p><figure class="uc-fig"><p class="fig-title">누가 누구에게 무엇을</p><figure class="mermap"><h3>전력이 증설을 묶는 사이 국가자본을 업은 CXMT가 삼성·SK를 HBM 경쟁으로 몬다</h3><div class="mp-sub"><div>삼성전자와 SK하이닉스는 800조원을 광주 팹에 넣지만 전력망은 24.7GW가 비어 있다.</div><div>그 사이 국가자본을 업은 CXMT가 D램 점유율을 두 배 가까이 올리며 삼성·SK를 HBM 차세대 경쟁으로 몰아붙인다.</div></div><div class="mp-legend"><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M0,5 L24,5"/></svg> 돈이 흐른다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow " d="M0,5 L24,5"/></svg> 물건·용역·의무가 간다</span><span><svg viewBox="0 0 30 10"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cond" d="M0,5 L24,5"/></svg> 조건부 지원(부도 뒤에만)</span><span>①②③ 일어난 차례</span></div><div class="mp-scroll"><svg viewBox="0 0 1124 556" role="img"><defs><marker id="mp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker><marker id="mp-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--good,#12a884)"/></marker></defs><path class="mp-flow cash" d="M418,160 L293,160"/><path class="mp-flow svc" d="M527,226 L527,397"/><path class="mp-flow svc" d="M690,460 L815,460 L815,160"/><rect class="mp-kickbg" x="18" y="79" width="91" height="14" rx="3"/><text class="mp-kick" x="22" y="91">증설을 묶는 병목</text><rect class="mp-card" x="20" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="38" y="134">전력·용수</text><text class="mp-desc" x="38" y="158">팹 4기 수요 6.3GW, 데이터센터 합쳐</text><text class="mp-desc" x="38" y="176">7.3GW</text><text class="mp-desc" x="38" y="194">12차 전기본 전에는 24.7GW가 계획에</text><text class="mp-desc" x="38" y="212">없다</text><rect class="mp-kickbg" x="418" y="79" width="65" height="14" rx="3"/><text class="mp-kick" x="422" y="91">속도로 승부</text><rect class="mp-card" x="420" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="134">삼성전자</text><text class="mp-desc" x="438" y="158">zHBM, HBM5 대비 8배 속도·3배</text><text class="mp-desc" x="438" y="176">효율을 노린다</text><text class="mp-desc" x="438" y="194">前 부장급 등 기술유출로 6~7년</text><text class="mp-desc" x="438" y="212">선고가 나왔다</text><rect class="mp-kickbg" x="818" y="79" width="75" height="14" rx="3"/><text class="mp-kick" x="822" y="91">용량으로 승부</text><rect class="mp-card" x="820" y="100" width="268" height="126" rx="10"/><text class="mp-name" x="838" y="134">SK하이닉스</text><text class="mp-desc" x="838" y="158">샌디스크·구글과 HBF 개발, 2027년</text><text class="mp-desc" x="838" y="176">양산 목표</text><text class="mp-desc" x="838" y="194">청주 M15X에 국산 초순수를 처음</text><text class="mp-desc" x="838" y="212">받았다</text><rect class="mp-kickbg" x="418" y="379" width="121" height="14" rx="3"/><text class="mp-kick" x="422" y="391">국가자본이 미는 추격자</text><rect class="mp-card on" x="420" y="400" width="268" height="126" rx="10"/><text class="mp-name" x="438" y="434">CXMT</text><text class="mp-desc" x="438" y="458">지분 42%가 국가자본, D램 점유율</text><text class="mp-desc" x="438" y="476">4.1%→7.7%</text><text class="mp-desc" x="438" y="494">HBM은 2세대 뒤졌지만 매출은 전년비</text><text class="mp-desc" x="438" y="512">719% 늘었다</text><text class="mp-lab cash" x="309" y="151">① 800조원 증설</text><text class="mp-lab" x="543" y="311">② 인력·특허 유출</text><text class="mp-lab" x="717" y="491">③ D램 점유율 잠식</text></svg></div><p class="mp-note">이 그림은 2026년 6월 30일~8월 10일 메르 블로그 여섯 편을 기준으로 한 상태다. CXMT는 삼성·SK와 직접 거래 관계가 아니라 경쟁 관계이며, 화살표는 실제 대금 결제가 아니라 자금·인력의 이동과 시장압력을 나타낸다. &#x27;전력·용수&#x27;는 한국전력·한빛원전·지자체 등 여러 공급 주체를 묶은 이름이다.</p><p class="mp-note">24.7GW는 11차 전기본의 신규 발전량과 발표된 수요를 메르가 대조해 낸 공백이고, zHBM의 상용화 시점은 아직 정해지지 않았다.</p><p class="mp-note">출처 — 메르의 블로그 여섯 편(2026-06-30~08-10). 숫자는 원문 인용 대조를 통과한 것만 실었다.</p><div class="mp-brand"><span>메르의 블로그 · 인사이트 대시보드</span><span>원문 대조 완료</span></div></figure></figure><ul class="uc-points"><li><b>광주 팹 4기, 800조원 계획.</b> 당초 삼성 6기·SK 4기이던 계획이 조정돼, 팹 4기(삼성 2기, SK 2기)를 800조원 예산으로 짓는 안으로 발표됐다. <span class="mc-who">삼성전자·SK하이닉스 · 06/30</span></li><li><b>이번엔 전기가 핵심.</b> 돈보다 전기 조달 방법이 이번 메가 프로젝트의 체크포인트가 됐지만, 정부 발표엔 구체적 방법이 빠져 있다. <span class="mc-who">메르의 판단 · 06/30</span></li><li><b>증설이 경쟁사 진입 억제.</b> 완공 시점에 수요가 바뀔 위험은 있지만, 800조원 규모의 증설 자체가 경쟁자의 진입을 망설이게 하는 효과도 있다. <span class="mc-who">메르의 판단 · 07/08</span></li><li><b>한빛 신규 2기로 2.8GW 확보.</b> 한빛원전은 6기가 가동중이지만 8기를 지을 부지가 이미 확보돼 있어, 신규 2기(2.8GW)면 광주팹 수요 6.3GW의 상당 부분을 메울 수 있다. <span class="mc-who">한빛원전 · 07/08</span></li><li><b>값싼 용량 확장 대안.</b> D램 물량이 비싸고 부족한 상황에서, CXL은 값싸게 용량을 늘릴 수 있다는 것이 강점이다. <span class="mc-who">삼성전자·SK하이닉스 · 07/21</span></li><li><b>컨트롤러 자체개발이 분기점.</b> 컨트롤러까지 직접 만들어 CXL로 돈을 버는지, 마진 일부를 외부 업체에 내주는지가 CXL이 메모리 3사에 플러스냐 마이너스냐를 가른다. <span class="mc-who">메르의 판단 · 07/21</span></li><li><b>지분 42%가 국가자본.</b> 최대주주 허페이징후이집전(21.67%)·창신집성(11.71%)·국가반도체산업투자펀드(8.73%) 모두 국가자본이라 1~3대 주주 합산이 42.11%다. <span class="mc-who">허페이시 정부 · 07/27</span></li><li><b>D램 점유율 7.7%로 상승.</b> CXMT의 글로벌 D램 점유율은 2025년 1분기 4.1%에서 2026년 1분기 7.7%로 뛰어 삼성·SK·마이크론에 이은 4위가 됐다. <span class="mc-who">CXMT · 07/28</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">2기</div><div class="s-label">삼성 2기·SK</div></div><div class="stat"><div class="s-val">800조원</div><div class="s-label">예산</div></div><div class="stat"><div class="s-val">6.3GW</div><div class="s-label">팹 수요</div></div><div class="stat"><div class="s-val">7.3GW</div><div class="s-label">데이터센터 포함</div></div><div class="stat"><div class="s-val">6GW</div><div class="s-label">11차 전기본 신규</div></div><div class="stat"><div class="s-val">24.7GW</div><div class="s-label">공백</div></div></div><p class="uc-quote">이번에는 "무슨 돈으로" 가 아니라 "전기는 어떻게"가 핵심 체크포인트가 될 것 같음.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">12차 전기본에 24.7GW 공백 → 한빛 신규 2기로 2.8GW 확보</span>고쳤다. 24.7GW 공백을 메울 구체안으로 한빛 신규 2기가 뒤에 나온다</li><li><span class="who">값싼 용량 확장 대안 → HBM은 못 대체, 보완재</span>어긋난다. 값싸게 늘려도 초고대역폭이 필요한 자리는 여전히 HBM 몫으로 남는다</li><li><span class="who">증설이 경쟁사 진입 억제 → 지분 42%가 국가자본</span>어긋난다. 경쟁자 증설을 억제한다던 판단과 달리 국가자본이 미는 CXMT는 개의치 않고 몸집을 키웠다</li><li><span class="who">삼성·SK 인력까지 영입 → 삼성 기술유출 6~7년 선고</span>고쳤다. 인력 유출 정황이 결국 기소·선고로 구체화됐다</li><li><span class="who">D램 점유율 7.7%로 상승 → HBM은 2세대 격차</span>어긋난다. D램 점유율은 올라도 HBM은 여전히 2세대 격차로 안 좁혀진다</li><li><span class="who">zHBM은 아직 컨셉 모델 → 조합되면 괴물급 두뇌</span>어긋난다. 컨셉에 머문 삼성과 달리 SK는 2027년 상용화 로드맵이 있어 조합의 현실성은 아직 이르다</li></ul></div><div class="side-note">이 그림은 2026년 6월 30일~8월 10일 메르 블로그 여섯 편을 기준으로 한 상태다. CXMT는 삼성·SK와 직접 거래 관계가 아니라 경쟁 관계이며, 화살표는 실제 대금 결제가 아니라 자금·인력의 이동과 시장압력을 나타낸다. '전력·용수'는 한국전력·한빛원전·지자체 등 여러 공급 주체를 묶은 이름이다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224330803298" target="_blank" rel="noopener">▶ 원문 반도체 메가 프로젝트 근황 (feat 삼</a><a class="secondary" href="https://blog.naver.com/ranto28/224339365503" target="_blank" rel="noopener">▶ 원문 삼성전자등 반도체 메가 프로젝트 근황 A</a><a class="secondary" href="https://blog.naver.com/ranto28/224351546006" target="_blank" rel="noopener">▶ 원문 삼성전자와 SK하이닉스가준비하는 CXL이</a><a class="secondary" href="https://blog.naver.com/ranto28/224358943114" target="_blank" rel="noopener">▶ 원문 오늘 상장하는 중국 CXMT(창신메모리)</a><button type="button" class="uc-copy" data-anchor="card-전력이-증설을-묶는-사이-국가자본을-업은-CXMT가-삼성-SK를-HBM-경쟁으로-몬다">링크 복사</button></div></div></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">SK하이닉스 나스닥 ADR 상장이 만든 것들</span><h2 id="card-SK하이닉스-나스닥-ADR-상장이-만든-것들">SK하이닉스 나스닥 ADR 상장이 만든 것들</h2><p class="uc-gain">이 사슬이 어떻게 굴러가는지</p><div class="uc-meta"><span>메르 <b>ranto28</b></span><span>원문 6편</span><span>2026-06-25 ~ 2026-08-02</span><span>네이버 블로그</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">SK하이닉스 나스닥 ADR 상장이 만든 것들</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>7/10 나스닥 ADR 상장 의결.</b> 6월 24일 이사회가 ADR 발행을 의결했다. 3자배정 유상증자로 전체 주식의 2.5%를 발행해 300억달러(45조원)를 조달하고, ADR 1주는 원주 0.1주다. 3월 비공개 신청 때 140억달러였던 규모가 주가 급등으로 두 배가 됐다. <span class="mc-who">SK하이닉스 · 06/25</span></li><li><b>선물환이 달러를 선공급.</b> 기업이 선물환을 팔면 은행이 받아 외국은행에서 단기달러를 빌려 현물시장에 판다. 실제 달러는 7월 15일에 오지만 시장에 풀리는 시점은 계약한 날이다. 한국 현물시장 하루 거래가 324억달러라 290억달러는 하루치와 맞먹는다. <span class="mc-who">은행·선물환 · 07/06</span></li><li><b>한쪽만 열린 차익거래.</b> ADR을 취소해 한국 본주로 바꾸는 길은 열려 있는데, 국내 본주를 ADR로 바꾸는 길이 제도로 막혀 있다. 값을 좁혀 줄 거래가 한 방향으로만 가능하다. <span class="mc-who">한국 당국 · 07/13</span></li><li><b>굳어진 미국 프리미엄.</b> 발행 통로가 잠겨 있으니 미국 ADR이 한국 본주보다 싸지기 어렵고, 같거나 비싼 상태가 일반적이 된다. <span class="mc-who">미장 투자자 · 07/13</span></li><li><b>7/29 이후 상호전환 추진.</b> 7월 15일 한국 예탁원이 언론 취재에 7월 29일 이후 상호전환을 추진한다고 확인했다. 막혀 있던 본주→ADR 방향을 TSMC 수준으로 풀어주겠다는 뜻이다. <span class="mc-who">한국 예탁원 · 07/16</span></li><li><b>2분 만에 960계좌 청산.</b> 장 시작 2분 뒤인 8시 2분경 960개 계좌 5,740만달러가 기계적으로 청산됐다. 유지증거금을 남기고 끊겨 실제 손실은 1,730만달러 정도로 알려졌다. 하루 거래대금 15억달러가 넘고 한국 투자자 비중이 높은 시장이다. <span class="mc-who">온체인 계좌 · 08/02</span></li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">2.5%</div><div class="s-label">발행</div></div><div class="stat"><div class="s-val">300억달러(45조원)</div><div class="s-label">조달</div></div><div class="stat"><div class="s-val">0.1주</div><div class="s-label">ADR 1주 = 원주</div></div><div class="stat"><div class="s-val">20.5%</div><div class="s-label">SK스퀘어 지분</div></div><div class="stat"><div class="s-val">20%</div><div class="s-label">유지 요건</div></div><div class="stat"><div class="s-val">1,530원</div><div class="s-label">환율 −12.5원 →</div></div></div><p class="uc-quote">이런 발행통로가 잠겨있다보니, 미장 ADR이 국장 본주에 비해서 같거나 비싼 경우가 일반적이 되는 것이다.</p><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who">조달금 국내 유입 → 환율 12.5원 내려 1,530원</span>고쳤다. 들어올 것이라던 달러가 실제로 환율을 12.5원 끌어내린 것으로 관측됐다</li><li><span class="who">한쪽만 열린 차익거래 → 쌀 때만 일어나는 반납</span>고쳤다. 댓글 질문에 답해 반납이 언제 일어나는지를 다음 글에서 덧댄다</li><li><span class="who">굳어진 미국 프리미엄 → 7/29 이후 상호전환 추진</span>고쳤다. 프리미엄이 유지된다던 전제를 예탁원의 상호전환 추진이 바꾼다</li><li><span class="who">국장 매수·미국 매도 → 지배구조가 막는 추가 발행</span>어긋난다. 전환은 열려도 신주는 더 못 찍어 물량이 늘어나는 데는 한계가 있다</li></ul></div><div class="uc-links" style="margin-top:16px;"><a href="https://blog.naver.com/ranto28/224326515853" target="_blank" rel="noopener">▶ 원문 SK하이닉스가 7월 10일 나스닥에 상장</a><a class="secondary" href="https://blog.naver.com/ranto28/224336319183" target="_blank" rel="noopener">▶ 원문 SK하이닉스 상장으로 인한 환율안정 효과</a><a class="secondary" href="https://blog.naver.com/ranto28/224344934129" target="_blank" rel="noopener">▶ 원문 미장에 SK하이닉스는 15%이상 올랐는데</a><a class="secondary" href="https://blog.naver.com/ranto28/224345322649" target="_blank" rel="noopener">▶ 원문 SK하이닉스의 미국 ADR주식이 국장 본</a><button type="button" class="uc-copy" data-anchor="card-SK하이닉스-나스닥-ADR-상장이-만든-것들">링크 복사</button></div></div></div></section>
+
+  <footer><p class="lede">메르의 블로그 글 50편에서 사슬 8개를 뽑았습니다. 마디마다 원문 구절을 달아 대조했고, 대조를 통과한 값만 화면에 올렸습니다. 판단은 메르의 것이고 여기서는 그것을 사실과 갈라 표시합니다.</p><div class="meta-row"><span>수집 <b>364편</b></span><span>사슬 <b>8개</b></span><span>마디 <b>278</b> · 화살표 <b>274</b></span><span>소스 <b>blog.naver.com/ranto28</b></span></div>
+제3자 해설 요약 아카이브 · 원문은 싣지 않습니다. 투자 추천이 아닙니다.
+  페이지 생성은 <code>scratchpad/gen_mer_dashboard.py</code></footer>
+</div>
+<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script><script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
+  var back=document.querySelector('.sback');
+  var pick = 'all';   // 범위 탭이 있든 없든 처음 화면은 전체다
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var only=null, picking=true, sect=null, q='', cell=null;
+  var mbar=document.querySelector('.mg-b');
+  var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
+  function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
+  function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
+  function apply(){
+    // 카드를 숨기는 조건이 둘이다 — 범위 탭(국내·해외)과 합류도 칸.
+    // 칸을 고르면 섹션을 가로질러 그 칸에 선 카드만 남는다.
+    document.querySelectorAll('.ucard').forEach(function(c){
+      var okScope = !c.dataset.scope || pick==='all' || c.dataset.scope===pick;
+      var okCell = !cell || (' '+(c.dataset.cells||'')+' ').indexOf(' '+cell+' ')!==-1;
+      c.hidden = !(okScope && okCell);
+    });
+    // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
+    document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
+      r.hidden = !(pick==='all' || r.dataset.scope===pick);
+    });
+    document.querySelectorAll('.rlold').forEach(function(o){
+      o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
+    });
+    // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
+    document.querySelectorAll('.rlrep').forEach(function(rep){
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;
+      var tagged=rep.querySelectorAll('.rll li[data-sec]');
+      tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
+      if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
+    });
+    var roll=document.querySelector('.rollup');
+    if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
+    var seen=0;
+    document.querySelectorAll('section[id]').forEach(function(s){
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
+      // 칸을 고른 화면에서는 카드가 남은 섹션만 선다. 섹션 하나를 고른 상태가 아니다.
+      s.hidden = cell ? live===0 : (picking || live===0 || (only && s.id!==only));
+      var o=opt(s.id);
+      if(o){
+        // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
+        // 이 표시를 보고 판단하므로, 검색 분기가 o.hidden을 다시 덮어써도 이 값은 남는다.
+        o.dataset.empty = live===0 ? '1' : '';
+        o.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
+      }
+    });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    // 「전체 보기」는 회사를 안 고른 채 전부 읽는 화면이다(picking=false, only=null).
+    // 갈래 버튼은 회사 하나를 고른 뒤에만 뜻이 있으므로 여기서는 글(.sv-posts)만 펴고
+    // 지도(.sv-val)는 접어 둔다 — 회사 스물둘의 지도를 한꺼번에 펴면 첫 카드에 닿기까지
+    // 스크롤이 수십 판이 된다. 이 갈래가 없던 동안 전체 보기에 제목만 나오고 카드가
+    // 통째로 안 나왔다.
+    var allView = !picking && !only;
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      if(allView){ l.hidden = !l.classList.contains('sv-posts'); return; }
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
+    });
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden) n += 1;
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
+    // 검색어가 있으면 섹터 층을 건너뛴다. 회사 타일 글자(.st-t)로만 맞추고, 카드 0편이라
+    // 이미 숨어 있던 타일(dataset.empty)은 글자가 맞아도 그대로 숨긴다.
+    if(q){
+      if(pickBox) pickBox.hidden = true;
+      box.querySelectorAll('.sectp').forEach(function(pn){ pn.hidden = false; });
+      var qn=0;
+      box.querySelectorAll('.stile[data-sec]').forEach(function(t){
+        if(!t.dataset.sec) return;   // 「전체 보기」 타일은 검색 대상이 아니다
+        var tt=t.querySelector('.st-t');
+        var match = t.dataset.empty!=='1' && norm(tt?tt.textContent:t.textContent).indexOf(q)!==-1;
+        t.hidden = !match;
+        if(match) qn++;
+      });
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = pn.querySelectorAll('.stile[data-sec]:not([hidden])').length===0;
+      });
+      if(sqn) sqn.textContent = qn + '곳';
+    } else if(sqn){
+      sqn.textContent = '';
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
+    box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
+    var roll2=document.querySelector('.rollup');
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    });
+    if(back){
+      back.hidden = picking;
+      var now=back.querySelector('.sb-now');
+      if(now){
+        var cur = only ? opt(only) : opt('');
+        var t = cur && cur.querySelector('.st-t');
+        var mg = cell && mbar ? mbar.querySelector('.mcell[data-cell="'+cell+'"]') : null;
+        now.textContent = picking ? ''
+          : (mg ? (mg.dataset.label || cell) : (t ? t.textContent : ''));
+      }
+    }
+    box.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String((b.dataset.sec||null)===only));
+    });
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; picking=true; apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
+  });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「타일 고르기」로
+  // 돌아가지 않고 대시보드 밖으로 나간다 — 섹션을 하나 열었을 뿐인데 페이지를 떠난다.
+  // 주소는 그 섹션을 지목한 주소와 같은 것을 쓴다(#섹션id). 「링크 복사」와 한 몸이다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base = location.pathname + location.search;
+    // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
+    var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    // 카드를 지목한 주소로 들어온 사람의 주소는 덮지 않는다. LINK_JS가 그 카드를 열려고
+    // 타일을 대신 눌러 주는데, 그때 여기가 #card-… 를 #섹션id 로 갈아치웠다. 그래서 새로
+    // 고침하면 읽던 카드가 아니라 섹션 목록이 떴다(2026-08-23). 지금 주소가 이미 이 섹션
+    // 안을 가리키고 있으면 그대로 둔다 -- 주소가 안 바뀌니 히스토리도 안 쌓인다.
+    if(!picking && only && location.hash){
+      var cur=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      var host=cur && cur.closest('section');
+      if(host && host.id===only) want = base + location.hash;
+    }
+    if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
+  }
+  function restore(st){
+    quiet = true;
+    cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var id = (location.hash || '').slice(1);
+    if(st && typeof st.picking === 'boolean'){
+      picking = st.picking; only = st.sec || null;
+    } else if(!id){
+      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+    } else if(id === 'all'){
+      picking = false; only = null;
+    } else {
+      var el = document.getElementById(decodeURIComponent(id));
+      var sc = el && el.closest ? el.closest('section[id]') : null;
+      picking = false; only = sc ? sc.id : null;
+    }
+    if(!only) sect = null;
+    apply();
+    // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
+    // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
+    if(picking && location.hash){
+      history.replaceState({sec: null, picking: true}, '', location.pathname + location.search);
+    }
+    quiet = false;
+  }
+  if(sq) sq.addEventListener('input', function(){
+    q = norm(sq.value);
+    sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
+    apply();
+  });
+  // 합류도 칸을 누르면 그 칸에 선 카드만 남는다. 같은 칸을 다시 누르면 푼다 —
+  // 지도를 열어 둔 채로 되돌릴 길이 있어야 한다.
+  function pickCell(g){
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    only=null; sect=null;
+    picking = !cell;
+    apply();
+    if(cell){
+      var first=document.querySelector('section[id]:not([hidden])');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(g) pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
+  box.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
+    if(b.classList.contains('sect-up')){ sect=null; apply(); window.scrollTo({top:0}); return; }
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); window.scrollTo({top:0}); return; }
+    only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
+    picking=false;
+    apply();
+    mark();
+    var sec = only ? document.getElementById(only) : null;
+    if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    else window.scrollTo({top:0, behavior:'smooth'});
+  });
+  if(back) back.addEventListener('click', function(e){
+    if(!e.target.closest('.sb-btn')) return;
+    // 「← 이전」과 브라우저 뒤로가기가 같은 곳으로 가야 한다. 쌓아 둔 칸이 있으면 그걸 쓴다.
+    if(cell){ cell=null; picking=true; apply(); box.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+    if(history.state && history.state.picking === false){ history.back(); return; }
+    picking=true; only=null; apply();
+    if(location.hash) history.pushState({sec:null, picking:true}, '', location.pathname + location.search);
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  window.addEventListener('popstate', function(e){
+    restore(e.state);
+    var id=(location.hash||'').slice(1);
+    var el=id ? document.getElementById(decodeURIComponent(id)) : null;
+    if(el) el.scrollIntoView({block:'start'});
+    else box.scrollIntoView({block:'start'});
+  });
+  apply();
+  // 링크를 받고 들어온 사람의 첫 화면은 LINK_JS가 연다. 여기서는 히스토리 첫 칸만 표시해 둔다
+  history.replaceState({sec: null, picking: true}, '');
+})();
+</script><script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        var head=card.querySelector('.uc-head');
+        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1), true);
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script><script>
+(function(){
+  function show(sid, view){
+    var sw=document.querySelector('.secsw[data-sec="'+sid+'"]');
+    if(sw) sw.querySelectorAll('.sw-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.view===view));
+    });
+    var val=document.querySelector('.sv-val[data-sec="'+sid+'"]');
+    var posts=document.querySelector('.sv-posts[data-sec="'+sid+'"]');
+    if(val) val.hidden = view!=='val';
+    if(posts) posts.hidden = view!=='posts';
+  }
+  document.addEventListener('click', function(e){
+    if(e.target.closest('.sw-up')){
+      var back=document.querySelector('.sback .sb-btn');
+      if(back) back.click();
+      return;
+    }
+    var b=e.target.closest('.sw-btn'); if(!b) return;
+    show(b.closest('.secsw').dataset.sec, b.dataset.view);
+  });
+  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다
+  function fromHash(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;
+    var box=h.closest('.sv-posts'); if(box) show(box.dataset.sec, 'posts');
+  }
+  window.addEventListener('hashchange', fromHash);
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else { fromHash(); }
+})();
+</script>
+<style>
+  .ui-top{
+    position:fixed; z-index:9998;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(18px, env(safe-area-inset-bottom));
+    width:42px; height:42px; border-radius:999px; border:1px solid rgba(0,0,0,.12);
+    display:flex; align-items:center; justify-content:center;
+    font:700 17px/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    color:#33312c; background:rgba(255,255,255,.86); cursor:pointer;
+    box-shadow:0 4px 16px -4px rgba(0,0,0,.25);
+    -webkit-backdrop-filter:saturate(1.5) blur(12px); backdrop-filter:saturate(1.5) blur(12px);
+    opacity:0; pointer-events:none; transform:translateY(6px);
+    transition:opacity .2s ease, transform .3s cubic-bezier(.19,1,.22,1);
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .ui-top.is-on{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .ui-top:hover{ transform:translateY(-2px); }
+  .ui-top:active{ transform:translateY(0) scale(.94); transition-duration:.09s; }
+  .ui-top:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+  @media (prefers-color-scheme: dark){
+    .ui-top{ color:#ecead9; background:rgba(28,28,32,.86); border-color:rgba(255,255,255,.16);
+             box-shadow:0 4px 16px -4px rgba(0,0,0,.6); }
+  }
+  @media (prefers-contrast: more){
+    .ui-top{ background:#fff; color:#000; border:1.5px solid #000;
+             -webkit-backdrop-filter:none; backdrop-filter:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ui-top{ transition:opacity .15s ease; transform:none; }
+    .ui-top.is-on:hover{ transform:none; }
+  }
+  @media print{ .ui-top{ display:none; } }
+</style>
+<button class="ui-top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var b=document.querySelector('.ui-top'); if(!b) return;
+  var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
+  window.addEventListener('scroll', show, {passive:true});
+  b.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  show();
+})();
+</script>
+
