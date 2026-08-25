@@ -45,25 +45,59 @@ HEAD4 = ('<hr class="rep-cut">'
 def report4_html(sec, p, fig):
     """절 1~10. 기준연도·순이익 오염·세미 근거·케이스 셋·판정."""
 
+    _vals = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.WACC,
+                             gc.CASES[n]['g'], gc.NET_DEBT, gc.SHARES)
+             for n in ('Bear', 'Base', 'Bull')}
+    _ir = {n: gc.dcf.implied_discount_rate([x[3] for x in gc.path(gc.CASES[n])],
+                                          gc.CASES[n]['g'], gc.MCAP, gc.NET_DEBT)
+           for n in ('Bear', 'Base', 'Bull')}
+    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
+    _f10 = gc.FCF0 * (1 + _g10) ** 10
+    _rev35 = gc.path(gc.CASES['Base'])[-1][1]
+    _need_m = _f10 / _rev35
+    _need_rev = _f10 / gc.CASES['Base']['m3']
+
+    def _ln(a, b, sub=False):
+        return ('<div class="vh-ln%s"><span class="a">%s</span>'
+                '<span class="b">%s</span></div>' % (' sub' if sub else '', a, b))
+
     h_ = ['<div class="vhero">',
           '<p class="vh-l">결론</p>',
-          '<p class="vh-say">현금흐름 할인법으로 세운 <b>세 경로가 모두 현재가 아래</b>입니다.</p>',
-          '<div class="vh-grid">']
-    for k, v, d in (('보수 BEAR', '131달러', '−62%'), ('중간 BASE', '185달러', '−47%'),
-                    ('후한 BULL', '261달러', '−25%')):
-        h_.append('<div class="vh-c"><span class="k">%s</span>'
-                  '<span class="v">%s</span><span class="d">%s</span></div>' % (k, v, d))
-    h_ += ['<div class="vh-c now"><span class="k">최신 종가</span>'
-           '<span class="v">%.2f달러</span><span class="d">%s</span></div>' % (PRICE, PRICE_DAY),
-           '</div>',
-           '<div class="vh-rev">',
-           '<div class="vh-r"><span class="k">역산 ① 할인율을 되돌리면</span>'
-           '<span class="t"><b>5.40~8.50%</b> — 우리가 쓴 <b>10.0%</b>보다 낮습니다. '
-           '시장은 이 현금흐름을 덜 위험하게 봅니다.</span></div>',
-           '<div class="vh-r"><span class="k">역산 ② 성장률을 되돌리면</span>'
-           '<span class="t">잉여현금흐름이 <b>10년 내리 25.67%</b>씩 늘어야 합니다. '
-           '<b>533억</b>이 10년 뒤 <b>5,235억 달러</b>입니다.</span></div>',
-           '</div>',
+          '<p class="vh-say">축이 둘입니다. 최신 종가 <b>%.2f달러</b>(%s) 기준.</p>'
+          % (PRICE, PRICE_DAY),
+          '<div class="vh2">']
+
+    # ── 축 ① DCF
+    ax = ['<div class="vh-ax"><span class="k">축 ① 현금흐름 할인법 · 우리가 값을 낸다</span>',
+          '<div class="top">']
+    for n, lab in (('Bear', '보수'), ('Base', '중간'), ('Bull', '후한')):
+        ax.append('<div><span class="n">%s %s</span><span class="p">%.0f</span>'
+                  '<span class="g">%+.0f%%</span></div>'
+                  % (lab, n.upper(), _vals[n]['per_share'],
+                     (_vals[n]['per_share'] / PRICE - 1) * 100))
+    ax.append('</div>')
+    ax.append(_ln('출발점 · 최근 12개월 잉여현금흐름', _eok(gc.FCF0)))
+    ax.append(_ln('그 매출 대비 마진', '%.1f%%' % (gc.MARGIN0 * 100), sub=True))
+    ax.append(_ln('할인율 · 세 경로 공통', '%.1f%%' % (gc.WACC * 100)))
+    ax.append('</div>')
+    h_ += ax
+
+    # ── 축 ② 역산
+    ax = ['<div class="vh-ax rev"><span class="k">축 ② 역산 · 시장가를 받으려면</span>',
+          _ln('할인율이 이만큼 낮아야 한다', '%.2f~%.2f%%' % (_ir['Bear'] * 100, _ir['Bull'] * 100)),
+          _ln('베타로 풀면 (실측 %.3f)' % _BETA,
+              '%.3f~%.3f' % ((_ir['Bear'] - _RF) / _MRP, (_ir['Bull'] - _RF) / _MRP), sub=True),
+          _ln('위험 대가로 풀면 (우리 %.1f%%)' % (_MRP * 100),
+              '%.2f~%.2f%%' % ((_ir['Bear'] - _RF) / _BETA * 100,
+                               (_ir['Bull'] - _RF) / _BETA * 100), sub=True),
+          _ln('2035년 잉여현금흐름이 이만큼', _eok(_f10)),
+          _ln('마진으로 풀면 (지금 %.1f%%)' % (gc.MARGIN0 * 100),
+              '%.1f%%' % (_need_m * 100), sub=True),
+          _ln('매출로 풀면 (우리 경로의 %.2f배)' % (_need_rev / _rev35),
+              _eok(_need_rev), sub=True),
+          '</div>']
+    h_ += ax
+    h_ += ['</div>',
            '<p class="vh-foot">가정은 <b>우리가 정한 것</b>입니다. 투자 추천이 아닙니다. '
            '<a href="%s">📊 계산 전체 엑셀</a></p>'
            % dc.blob('insights/valuation/GOOGL/알파벳 DCF.xlsx'),

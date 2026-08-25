@@ -893,14 +893,39 @@ FIG_MAP = _svg(640, 396, '로봇 한 대의 층마다 두 보고서가 무엇을
 
 
 REPORT_CSS = _biz_part3.TABLE_CSS + """
+  /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
+     놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다. */
+  .vh2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
+  .vh-ax{padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+  .vh-ax.rev{border-color:var(--accent);background:var(--accent-soft)}
+  .vh-ax > .k{display:block;font-size:10.5px;font-weight:850;letter-spacing:.05em;
+              color:var(--ink-3);margin-bottom:7px}
+  .vh-ax .top{display:flex;gap:6px;margin-bottom:7px}
+  .vh-ax .top div{flex:1;text-align:center;padding:5px 2px;border:1px solid var(--line);
+                  border-radius:7px;background:var(--card,var(--surface,#fff))}
+  .vh-ax .top .n{display:block;font-size:10px;font-weight:850;color:var(--ink-3)}
+  .vh-ax .top .p{display:block;font-size:16px;font-weight:850;color:var(--ink);
+                 font-variant-numeric:tabular-nums;line-height:1.3}
+  .vh-ax .top .g{display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);
+                 font-variant-numeric:tabular-nums}
+  .vh-ln{display:flex;justify-content:space-between;gap:8px;padding:2px 0;
+         font-size:11.5px;line-height:1.45;border-top:1px dashed var(--line)}
+  .vh-ln:first-of-type{border-top:0}
+  .vh-ln .a{color:var(--ink-2);white-space:nowrap}
+  .vh-ln .b{color:var(--ink);font-weight:800;text-align:right;
+            font-variant-numeric:tabular-nums}
+  .vh-ln.sub .a{padding-left:9px;color:var(--ink-3);font-weight:400}
+  .vh-ln.sub .b{font-weight:700}
+  @media(max-width:560px){ .vh2{grid-template-columns:1fr} }
+
   /* 알파벳 편 머리 결론 — 스크롤 없이 한 화면에 들어가야 한다.
      표 둘로는 캡션·헤더까지 스무 줄이 넘어 첫 화면을 넘겼다. 값만 남긴 격자로 바꾼다.
      배경 토큰은 --card 가 없는 장이 있어(통합 보고서가 그렇다) --surface 로 되짚는다. */
-  .vhero{margin:6px 0 20px;padding:14px 16px;border:1px solid var(--line);
+  .vhero{margin:6px 0 18px;padding:11px 13px;border:1px solid var(--line);
          border-radius:12px;background:var(--card,var(--surface,#fff))}
   .vhero .vh-l{font-size:11px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
                text-transform:uppercase;margin:0 0 8px}
-  .vhero .vh-say{margin:0 0 12px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+  .vhero .vh-say{margin:0 0 9px;font-size:13.5px;line-height:1.5;color:var(--ink)}
   .vhero .vh-say b{color:var(--accent)}
   .vh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
   .vh-c{padding:9px 10px;border:1px solid var(--line);border-radius:9px;text-align:center}
