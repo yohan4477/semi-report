@@ -1198,6 +1198,106 @@ def fig_cash_or_kind():
     return svg(y + hh + 48, ''.join(o))
 
 
+
+# ══ 「AI 미래론에서 빠진 절반」(2026-07-07) ═════════════════════════════════
+def fig_missing_half():
+    """주장은 두 반쪽인데 한쪽만 따져 왔다."""
+    o = [lab(16, 24, '「자동화 몇 년 뒤 나노기술과 다이슨 군집」이라는 주장의 두 반쪽', fs=9.5)]
+    cols = [(8, '① AI가 얼마나 좋아지나', ['AI 연구를 전부 자동화하면 아주 빠르게',
+                                    '좋아져 사람 전문가를 한참 앞지른다'],
+             '많이 따졌다', ['필자들의 실증 작업에 비추어', '꽤 그럴듯하다고 본다'], True),
+            (336, '② 그 기술이 얼마나 어렵나', ['유능한 AI가 충분하면 몇 년 만에',
+                                       '공상과학급 기술을 만든다는 전제'],
+             '거의 아무도 안 따졌다', ['다이슨 구·나노기술·생물무기가', '얼마나 어려운지를 계산한 글이',
+                                '드물다'], False)]
+    bottoms = []
+    for x, name, what, verdict, why, key in cols:
+        s1, h1 = box(x, 44, 296, name, what)
+        o.append(s1)
+        o.append(arrow('svc', [(x + 148, 44 + h1), (x + 148, 44 + h1 + 26)]))
+        s2, h2 = box(x, 44 + h1 + 26, 296, verdict, why, key=key)
+        o.append(s2)
+        bottoms.append(44 + h1 + 26 + h2)
+    y = max(bottoms) + 18
+    o.append(lab(16, y, 'AI가 무엇이든 할 수 있는 게 아니라면, 걸리는 시간은 그 기술이 얼마나 '
+                        '어려운지에 좌우된다', fs=9.5))
+    o.append(lab(16, y + 16, '누구에게든 도끼보다 핵무기를 만드는 일이 훨씬 어렵다', fs=9.5))
+    return svg(y + 28, ''.join(o))
+
+
+def fig_three_steps():
+    """제안하는 절차 셋. 가정을 명시하는 것이 이 방법의 핵심이다."""
+    o = [lab(16, 24, '빠진 절반을 메우려면 이 순서로 한다', fs=9.5)]
+    steps = [('① 기술을 구체적으로 정의한다',
+              ['자기복제 성간 탐사선이라면 — 새 항성계에 착륙해',
+               '현지 재료로 자기 복사본을 만들고, 그 복사본을',
+               '광속의 상당 비율로 다시 쏘아 보내는 기계']),
+             ('② AI에 대한 가정을 명시한다',
+              ['원격 근로자를 그대로 대체하되 H100 한 장만큼의',
+               '실행 컴퓨트가 필요하다고 놓는 식이다. 몇 개인지,',
+               '얼마나 빠른지, 어떤 구동장치를 쓰는지도 정한다']),
+             ('③ 걸리는 시간과 자원을 추정한다',
+              ['그 AI가 그 기술을 만드는 데 얼마나 걸릴지,',
+               '무슨 자원이 필요할지를 따진다. 가정을 바꿔 가며',
+               '결론이 어떻게 달라지는지도 본다'])]
+    y = 46
+    for i, (name, lines) in enumerate(steps):
+        s_, h = box(16, y, 618, name, lines, key=(i == 1))
+        o.append(s_)
+        if i < 2:
+            o.append(arrow('svc', [(325, y + h), (325, y + h + 24)]))
+        y += h + 24
+    bottom = y - 24
+    o.append(lab(16, bottom + 18, '가장 가까운 선행 작업이 탐색적 공학인데, 거기에 AI 가정을 '
+                                  '명시해 붙이는 것이', fs=9.5))
+    o.append(lab(16, bottom + 34, '이 제안의 차이다', fs=9.5))
+    o.append(lab(16, bottom + 54, '필자들이 아는 공개 사례는 하나뿐이다 — 로봇 노동이 풍부한 경제가 '
+                                  '지을 최소 태양광', fs=9.5))
+    o.append(lab(16, bottom + 70, '시스템은 몇 주 단위로 두 배가 된다는 연구', fs=9.5))
+    return svg(bottom + 82, ''.join(o))
+
+
+def fig_foresight():
+    """탐색적 공학이 통한 사례 둘. 얼마나 앞섰나를 햇수로 잰다."""
+    o = [lab(16, 24, '「미래는 너무 불확실하다」는 반론에 필자들이 든 사례', fs=9.5)]
+    rows = [('치올콥스키 → 첫 우주 로켓', 41, '1903년 논증, 41년 뒤 실현', True),
+            ('클라크 → 정지궤도 통신위성', 19, '약 19년 앞섰다', True)]
+    body, bottom = barh(rows, 45, (0, 15, 30, 45), '논증이 실현보다 앞선 햇수',
+                        x0=230, x1=440, y=52, bh=28, step=44)
+    o += body
+    o.append(lab(16, bottom + 8, '치올콥스키는 로켓 운동 방정식을 세워, 액체 수소·산소라면 지구 중력을 '
+                                 '벗어날 만큼', fs=9.5))
+    o.append(lab(16, bottom + 24, '빠르게 분사되고 화약 같은 고체 연료로는 안 된다고 계산했다. '
+                                  '클라크는 적도 위 고정된 자리에', fs=9.5))
+    o.append(lab(16, bottom + 40, '위성 셋을 두어 신호를 거의 전 지구에 중계하는 구상을 냈다', fs=9.5))
+    o.append(lab(16, bottom + 60, '필자들은 이 사례가 논지를 보이려고 고른 것이고, 실패한 시도를 다 '
+                                  '볼 수 있다면 그림이', fs=9.5))
+    o.append(lab(16, bottom + 76, '훨씬 덜 장밋빛일 수 있다고 스스로 적는다', fs=9.5))
+    return svg(bottom + 88, ''.join(o))
+
+
+def fig_billion_ais():
+    """초지능을 몰라도 쓸 수 있는 논법. 어느 쪽으로 나와도 얻는 것이 있다."""
+    o = [lab(16, 24, '「초지능이 어떻게 생겼는지 모르는데 어떻게 따지나」에 대한 답', fs=9.5)]
+    s0, h0 = box(160, 44, 320, '거의 모든 인지 과제에서 최고 전문가 이상인',
+                 ['AI가 10억 개 있다고 놓는다'], key=True)
+    o.append(s0)
+    y = 44 + h0 + 30
+    s1, h1 = box(8, y, 310, '할 수 있다고 나오면',
+                 ['훨씬 똑똑한 AI 10억 개도 당연히 할 수 있다.', '위쪽은 이것으로 닫힌다'])
+    s2, h2 = box(326, y, 310, '못 한다고 나오면',
+                 ['쟁점이 좁혀진다. 논쟁이 더 구체적인', '능력으로 옮겨 간다'])
+    o += [s1, s2]
+    o.append(arrow('svc', [(320, 44 + h0), (163, y)]))
+    o.append(arrow('svc', [(330, 44 + h0), (481, y)]))
+    bottom = y + max(h1, h2)
+    o.append(lab(16, bottom + 18, '이미 같은 논법을 쓰고 있다 — 초지능을 몰라도 「AI가 사람 능력에 '
+                                  '맞먹기만 해도」로 놓고', fs=9.5))
+    o.append(lab(16, bottom + 34, '세계 GDP가 연 30% 넘게 자란다는 논변이 나왔다. 그 분석을 한 것은 '
+                                  '몇 사람뿐이다', fs=9.5))
+    return svg(bottom + 46, ''.join(o))
+
+
 SRC = {
     'fin': '[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md',
     'labs': '[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md',
@@ -1206,6 +1306,7 @@ SRC = {
     'cn': '[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md',
     'onet': '[260617] AI 연구 자동화를 재려면 직무 목록부터 있어야 한다.md',
     'agi': '[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md',
+    'fut': '[260707] AI 미래론에서 빠진 절반.md',
     'crunch': '[260525] 컴퓨트 크런치가 오고 있나.md',
 }
 
@@ -1252,6 +1353,10 @@ FIGS = {
     'control_kinds': fig_control_kinds,
     'why_control': fig_why_control,
     'cash_or_kind': fig_cash_or_kind,
+    'missing_half': fig_missing_half,
+    'three_steps': fig_three_steps,
+    'foresight': fig_foresight,
+    'billion_ais': fig_billion_ais,
     # 토큰 공급과 수요 편
     'prefill_decode': fig_prefill_decode,
     'chunked_prefill': fig_chunked_prefill,
@@ -1274,6 +1379,7 @@ FIG_SRC = {
     'onet_proxy': 'onet', 'onet_grain': 'onet', 'onet_run': 'onet', 'onet_scale': 'onet',
     'capital_ladder': 'agi', 'control_kinds': 'agi', 'why_control': 'agi',
     'cash_or_kind': 'agi',
+    'missing_half': 'fut', 'three_steps': 'fut', 'foresight': 'fut', 'billion_ais': 'fut',
 }
 
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
