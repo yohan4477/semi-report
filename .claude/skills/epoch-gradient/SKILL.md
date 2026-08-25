@@ -126,6 +126,21 @@ FIG_SRC = {'<그림 이름>': '<키>'}      # 이 그림을 어느 원문과 대
 
 읽어 낸 값은 요약본 md에 **「원문 도해에서 읽은 값」** 절로 적어 둔다. 값 대조가 그 절을 본다.
 
+### 색은 원문 팔레트를 토큰으로 쓴다
+
+`epoch_fig.svg()` 가 `<svg class="epoch">` 를 달면 `card_lib.FIG_CSS` 의 Epoch 팔레트가
+물린다 — 청록 `#00A5A6` · 자홍 `#E03C8F` · 파랑 `#0058DC` · 주황 `#EA8D00` · 산호 `#FD6438` ·
+보라 `#B187F0`. 값은 원본 PNG에서 뽑았다.
+
+**날색(#hex)으로 박지 않는다.** 어두운 화면에서 같은 계열의 밝은 색으로 바뀌어야 판이 읽힌다.
+자홍과 산호는 `var(--epoch-pink,…)`·`var(--epoch-coral,…)` 로 직접 부르고, 나머지는
+`--fig-good`/`--fig-blue`/`--fig-amber`/`--fig-violet` 를 쓰면 `svg.epoch` 가 갈아 끼운다.
+**회사나 사람을 가르는 색으로 `--fig-bad`(빨강)를 쓰지 않는다** — 이 저장소에서 빨강은
+「나쁨」이라 한쪽만 나쁜 것처럼 읽힌다.
+
+선 굵기와 표식 크기도 원문을 재서 맞췄다(원본 1026px 폭에서 계열선 5px → 640 기준 3.1).
+나머지 한 벌은 `epoch_fig.py` 머리의 표에 있다.
+
 ### 지키는 것 넷
 
 1. **원문에 없는 값을 그리지 않는다.** 막대 길이·칸 개수·선의 좌표가 전부 값으로 읽힌다.
@@ -179,13 +194,18 @@ FIG_SRC = {'<그림 이름>': '<키>'}      # 이 그림을 어느 원문과 대
 ## 6. 검사 — 통과 못 하면 푸시하지 않는다
 
 ```bash
-PYTHONIOENCODING=utf-8 python scratchpad/epoch_fig.py     # 배치 + 값 대조, 미리보기 HTML
+PYTHONIOENCODING=utf-8 python scratchpad/epoch_fig.py         # 배치 + 값 대조, 미리보기 HTML
+PYTHONIOENCODING=utf-8 python scratchpad/check_fig_strict.py  # 사선·polyline·동그라미에 깔린 글자
 PYTHONIOENCODING=utf-8 python scratchpad/gen_epoch_dashboard.py
 PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py
 PYTHONIOENCODING=utf-8 python insights/check_prose.py
 PYTHONIOENCODING=utf-8 python scripts/update_card_ledger.py
 PYTHONIOENCODING=utf-8 python scripts/gen_site.py
 ```
+
+**`check_fig` 만으로는 모자란다.** 그 자는 `<path>` 의 가로·세로 선분과 `<rect>` 테두리만
+센다 — 사선·`<polyline>`·`<circle>` 에 깔린 글자를 놓친다. 2026-08-25에 사용자가 눈으로
+잡아낸 자리가 그것이었다. `check_fig_strict.py` 를 같이 돌린다.
 
 `epoch_fig.py`는 `scratchpad/_epochfig.html`을 남긴다. **눈으로 확인한다** — 검사기는 겹침만 보고
 「읽히는가」는 못 본다. 화면 없이 볼 때는 헤드리스 크롬으로 찍는다.
