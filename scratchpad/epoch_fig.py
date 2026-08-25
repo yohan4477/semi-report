@@ -34,7 +34,9 @@ def esc(s):
 #             면으로 읽혀야 하는 자리에만)
 #   글자      상자 이름 t-lab 11.5 · 설명과 값 t-sm 10 · 역할 라벨과 주석 9.5
 #             막대 옆 값 라벨은 10, 판 아래 주석은 9.5
-#   색        강조 --fig-good · 대비 --fig-bad · 계열 --fig-blue/amber/violet
+#   색        원문 팔레트를 토큰으로 들여왔다 — svg.epoch 가 물린다(card_lib.FIG_CSS).
+#             --fig-good 이 Epoch 청록, --fig-blue/amber/violet 이 파랑·주황·보라로
+#             바뀌어 나온다. 자홍 --epoch-pink 와 산호 --epoch-coral 은 직접 부른다
 #             회색 면은 채움 rgba(127,127,127,.30), 지면 .16 두 가지뿐
 
 
@@ -94,8 +96,11 @@ def legend(y=22):
 
 
 def svg(h, body):
-    return ('<svg viewBox="0 0 640 %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
-            % (h, body))
+    """이 장 도해는 svg.epoch 를 단다 — Epoch 원문 팔레트를 물리는 표시다.
+
+    색을 날것으로 박지 않고 토큰으로 두는 이유는 다크모드다. 정의는 card_lib.FIG_CSS."""
+    return ('<svg class="epoch" viewBox="0 0 640 %d" role="img" '
+            'xmlns="http://www.w3.org/2000/svg">%s</svg>' % (h, body))
 
 
 # ── 그래프 부품 — 막대·띠 ────────────────────────────────────────────────
@@ -599,7 +604,7 @@ def fig_openai_line():
     for a, b, dash in ((0, 4, True), (4, 8, False)):
         pts = ' '.join('%.1f,%.1f' % (px_(i), py(world[i])) for i in range(a, b + 1))
         o.append('<polyline points="%s" fill="none" stroke="var(--fig-blue,#2f6fd0)" '
-                 'stroke-width="2.4"%s/>' % (pts, ' stroke-dasharray="6 4"' if dash else ''))
+                 'stroke-width="3"%s/>' % (pts, ' stroke-dasharray="6 4"' if dash else ''))
     for i in range(9):
         o.append('<circle cx="%.1f" cy="%.1f" r="4" fill="var(--fig-blue,#2f6fd0)"/>'
                  % (px_(i), py(world[i])))
@@ -607,7 +612,7 @@ def fig_openai_line():
     mk = [0, 4, 8]
     pts = ' '.join('%.1f,%.1f' % (px_(i), py(oa[i])) for i in mk)
     o.append('<polyline points="%s" fill="none" stroke="var(--fig-good,#2f8f6b)" '
-             'stroke-width="2.4"/>' % pts)
+             'stroke-width="3"/>' % pts)
     for i in mk:
         o.append('<circle cx="%.1f" cy="%.1f" r="4" fill="var(--fig-good,#2f8f6b)"/>'
                  % (px_(i), py(oa[i])))
@@ -708,7 +713,7 @@ def fig_deepmind_share():
                 else 'fill="var(--fig-body,rgba(127,127,127,.30))"')
         o.append('<rect x="%d" y="%d" width="%d" height="%d" %s/>' % (sx, Y, sw_, H, fill))
     for bx in (X0 + 168, half + 150):
-        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1.2" '
+        o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1.8" '
                  'stroke-dasharray="6 4" fill="none"/>' % (bx, Y, bx, Y + H))
     labs = [((X0 + X0 + 168) // 2, '외부 고객용', '클라우드 컴퓨트'),
             ((X0 + 168 + half) // 2, '제미나이', '기업용 추론'),
@@ -737,8 +742,8 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
             v = slope * bx + base
             pts.append((x0 + int(pw * bx / float(xmax)),
                         y0 + ph - int(ph * min(v, ymax) / float(ymax))))
-        cls = ('stroke="var(--fig-good,#2f8f6b)" stroke-width="2.4"' if key
-               else 'stroke="var(--ink-3)" stroke-width="2.4" stroke-dasharray="6 4"')
+        cls = ('stroke="var(--fig-good,#2f8f6b)" stroke-width="3"' if key
+               else 'stroke="var(--ink-3)" stroke-width="3" stroke-dasharray="6 4"')
         o.append('<path d="M%d %d L%d %d" %s fill="none"/>'
                  % (pts[0][0], pts[0][1], pts[1][0], pts[1][1], cls))
         keys.append((name, key))
@@ -751,7 +756,7 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
     for name, key in keys:
         col = 'var(--fig-good,#2f8f6b)' if key else 'var(--ink-3)'
         dash = '' if key else ' stroke-dasharray="6 4"'
-        o.append('<path d="M%d %d L%d %d" stroke="%s" stroke-width="2.4"%s fill="none"/>'
+        o.append('<path d="M%d %d L%d %d" stroke="%s" stroke-width="3"%s fill="none"/>'
                  % (kx, y0 - 11, kx + 18, y0 - 11, col, dash))
         o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:850;fill:%s">%s</text>'
                  % (kx + 24, y0 - 7, col, esc(name)))
@@ -820,7 +825,7 @@ def fig_calibration():
     d = figdata()['calib']
     o = [lab(16, 24, 'SemiAnalysis InferenceX의 Kimi K2.5·K2.6 실험 111건과 견준 것', fs=9.5)]
     cols = {'B200': 'var(--fig-blue,#2f6fd0)', 'B300': 'var(--fig-violet,#8b6fc8)',
-            'GB200': 'var(--fig-good,#2f8f6b)', 'H200': 'var(--fig-bad,#c2504a)'}
+            'GB200': 'var(--fig-good,#2f8f6b)', 'H200': 'var(--epoch-coral,#FD6438)'}
     x = 16
     for name, col in cols.items():
         o.append('<circle cx="%d" cy="42" r="5" fill="%s"/>' % (x + 5, col))
@@ -840,7 +845,7 @@ def fig_calibration():
         o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" '
                  'fill="none"/>' % (PX0, PY0, PX0, PY0 + PH, PX0 + PW, PY0 + PH))
         # 이론값과 실측이 같으면 이 대각선 위에 놓인다
-        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
                  'stroke-dasharray="6 4" fill="none"/>' % (fx(LO), fy(LO), fx(HI), fy(HI)))
         for v, t in ((1e2, '10²'), (1e3, '10³'), (1e4, '10⁴')):
             o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
@@ -892,11 +897,11 @@ def fig_supply_growth():
     for name, start, note, style in series:
         end = start * (3.4 ** 6)
         if style == 'key':
-            cls = 'stroke="var(--fig-good,#2f8f6b)" stroke-width="2.4"'
+            cls = 'stroke="var(--fig-good,#2f8f6b)" stroke-width="3"'
         elif style == 'solid':
-            cls = 'stroke="var(--ink-3)" stroke-width="2.4"'
+            cls = 'stroke="var(--ink-3)" stroke-width="3"'
         else:
-            cls = 'stroke="var(--ink-3)" stroke-width="2.4" stroke-dasharray="6 4"'
+            cls = 'stroke="var(--ink-3)" stroke-width="3" stroke-dasharray="6 4"'
         o.append('<path d="M%d %d L%d %d" %s fill="none"/>'
                  % (X0, py(start), X1, py(end), cls))
         # 범례는 판 아래로 내린다 — 판 위에 글자를 얹지 않는다(규칙 3)
@@ -975,7 +980,7 @@ def fig_eci_lead():
         slope = sum((a - mx) * (b - my) for a, b in pre) / den
         def trend(px_):
             return my + slope * (px_ - mx)
-        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
                  'stroke-dasharray="6 4" fill="none"/>'
                  % (X0 + 4, fy(trend(gx0)), X1 + 10, fy(trend(gx1 + 40))))
     for cx, cy in d['points'].get('gray', ()):
@@ -1107,7 +1112,7 @@ def fig_openweight_gap():
     for x, name, closed in marks:
         o.append('<circle cx="%d" cy="%d" r="5" %s/>'
                  % (x, Y, 'fill="var(--fig-good,#2f8f6b)"' if closed
-                    else 'fill="none" stroke="var(--ink-3)" stroke-width="1.2"'))
+                    else 'fill="none" stroke="var(--ink-3)" stroke-width="1.8"'))
         o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
                  'style="font-weight:850">%s</text>' % (x, Y - 14, esc(name)))
     o.append('<path d="M%d %d L%d %d" class="flow-cond"/>' % (X0 + 150, Y + 22, X1, Y + 22))
@@ -1265,7 +1270,7 @@ def fig_cn_experience():
     o = [lab(16, 24, '기술직 공고가 요구하는 최소 경력의 평균 (2026-06-23 기준)', fs=9.5)]
     o.append(swatch(16, 44, '미국'))
     o.append('<rect x="96" y="34" width="14" height="11" rx="2" '
-             'fill="var(--fig-bad,#c2504a)" stroke="none"/>')
+             'fill="var(--epoch-pink,#E03C8F)" stroke="none"/>')
     o.append(lab(116, 44, '중국', fs=9.5))
     rows = [('앤트로픽', 6.5, True), ('오픈AI', 5.9, True), ('딥마인드', 4.7, True),
             ('xAI', 3.3, True), ('딥시크', 3.1, False), ('지푸(Z.ai)', 2.4, False),
@@ -1275,7 +1280,7 @@ def fig_cn_experience():
     y = 60
     for name, v, us in rows:
         bw_ = max(2, int((X1 - X0) * v / 7.0))
-        fill = ('var(--fig-good,#2f8f6b)' if us else 'var(--fig-bad,#c2504a)')
+        fill = ('var(--fig-good,#2f8f6b)' if us else 'var(--epoch-pink,#E03C8F)')
         o.append('<rect x="%d" y="%d" width="%d" height="22" rx="3" fill="%s"/>'
                  % (X0, y, bw_, fill))
         o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" '

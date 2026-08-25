@@ -194,7 +194,7 @@ def _series(pts, color, dash=False, wd=2.4):
 
 BLUE = 'var(--fig-blue,#2f6fd0)'
 GOOD = 'var(--fig-good,#2f8f6b)'
-BAD = 'var(--fig-bad,#c2504a)'
+BAD = 'var(--epoch-pink,#E03C8F)'
 # 사람·계열을 가르는 색으로는 --fig-bad 를 쓰지 않는다 — 이 저장소에서 빨강은
 # 「나쁨」이라 한쪽 예보자만 틀린 것처럼 읽힌다. 계열은 파랑으로 가른다.
 BLUE = 'var(--fig-blue,#2f6fd0)'
@@ -239,7 +239,7 @@ def fig_onet_sa():
     o.append('<path d="M%.1f %.1f L%.1f %.1f L%.1f %.1f Z" fill="rgba(127,127,127,.30)" '
              'stroke="none"/>' % (fx(2023), fy(0.01), fx(2028), fy(SA_CONE[1]),
                                   fx(2028), fy(SA_CONE[0])))
-    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
              'stroke-dasharray="6 4" fill="none"/>' % (X0, fy(0), X1, fy(0)))
     o.append(_series([(fx(a), fy(b)) for a, b in SA_SOLID], BLUE))
     o.append(_series([(fx(a), fy(b)) for a, b in SA_DASH], BLUE, dash=True))

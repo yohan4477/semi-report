@@ -40,6 +40,10 @@ import rollup_lib as _rl
 FIG_CSS = '''
   /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
      색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
   .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;
           background:var(--fig-bg,rgba(127,127,127,.05))}
   .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
@@ -57,6 +61,15 @@ FIG_CSS = '''
   .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
   .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
   /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
 
   .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
   /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
@@ -69,9 +82,9 @@ FIG_CSS = '''
   /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
      조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
      (흑백 인쇄·색각 이상에서도 남는다) */
-  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:1.8;
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
                      marker-end:url(#fig-arrow-a)}
-  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
   .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
                      marker-end:url(#fig-arrow)}
   .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
@@ -91,6 +104,9 @@ FIG_CSS = '''
             --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
             --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
             --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
             --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 '''

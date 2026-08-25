@@ -225,11 +225,11 @@ def _extract():
 
 
 # ══ ③ 그린다 ═══════════════════════════════════════════════════════════════
-AMBER = 'var(--fig-amber,#d68a1e)'
-BAD = 'var(--fig-bad,#c2504a)'
+AMBER = 'var(--epoch-coral,#FD6438)'
+BAD = 'var(--epoch-pink,#E03C8F)'
 # 회사를 가르는 색으로는 --fig-bad 를 쓰지 않는다 — 이 저장소에서 빨강은 「나쁨」이라
 # 앤트로픽만 나쁜 것처럼 읽힌다. 원문의 자홍에 가장 가까운 보라를 쓴다.
-VIOLET = 'var(--fig-violet,#8b6fc8)'
+VIOLET = 'var(--epoch-pink,#E03C8F)'
 GOOD = 'var(--fig-good,#2f8f6b)'
 BLUE = 'var(--fig-blue,#2f6fd0)'
 GRAY = 'rgba(127,127,127,.30)'
@@ -272,13 +272,13 @@ def fig_cve_spike():
     # 두 계열 — 표식이 53개라 선 위 표식은 조밀한 쪽 값(3.4)을 쓴다
     for vals, col in ((CVE_CRIT, BAD), (CVE_HIGH, AMBER)):
         pts = ' '.join('%.1f,%.1f' % (px(i), py(v)) for i, v in enumerate(vals))
-        o.append('<polyline points="%s" fill="none" stroke="%s" stroke-width="2.4" '
+        o.append('<polyline points="%s" fill="none" stroke="%s" stroke-width="3" '
                  'stroke-linejoin="round"/>' % (pts, col))
         for i, v in enumerate(vals):
             o.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s"/>' % (px(i), py(v), col))
     # 미토스 프리뷰가 공개된 자리 — 기준선이라 1.2 점선이다
     mx = px(CVE_MARK)
-    o.append('<path d="M%.1f %d L%.1f %d" stroke="var(--ink-3)" stroke-width="1.2" '
+    o.append('<path d="M%.1f %d L%.1f %d" stroke="var(--ink-3)" stroke-width="1.8" '
              'stroke-dasharray="6 4" fill="none"/>' % (mx, 84, mx, Y1))
     o.append('<text x="%.1f" y="100" class="t-sm" text-anchor="end" '
              'style="font-weight:800">미토스 프리뷰 공개</text>' % (mx - 6))
@@ -328,7 +328,7 @@ def fig_cyber_prog():
              'style="font-weight:800">공개일</text>' % ((X0 + X1) / 2, Y1 + 36))
     # 미토스 프리뷰 이전 모델로 그은 추세선 — 추세선이라 1.2 점선이다
     (ta, tav), (tb, tbv) = CP_TREND
-    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.2" '
+    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="var(--ink-3)" stroke-width="1.8" '
              'stroke-dasharray="6 4" fill="none"/>'
              % (px(ta), py(tav), px(tb), py(tbv)))
     o.append('<path d="M210 295 L210 264" stroke="var(--ink-3)" stroke-width="1" '
@@ -339,10 +339,10 @@ def fig_cyber_prog():
                  'stroke-width="1"/>' % (px(m), py(v), GRAY))
     # GLM-5.2는 점이 아니라 구간이다 — 원문도 세로 막대로 그렸다
     gm, glo, ghi = CP_GLM
-    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="%s" stroke-width="2.4" fill="none"/>'
+    o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="%s" stroke-width="3" fill="none"/>'
              % (px(gm), py(glo), px(gm), py(ghi), BLUE))
     for v in (glo, ghi):
-        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="%s" stroke-width="2.4" '
+        o.append('<path d="M%.1f %.1f L%.1f %.1f" stroke="%s" stroke-width="3" '
                  'fill="none"/>' % (px(gm) - 6, py(v), px(gm) + 6, py(v), BLUE))
     o.append('<text x="%.1f" y="250" class="t-sm" text-anchor="middle" '
              'style="font-weight:850;fill:%s">GLM-5.2</text>' % (px(gm), BLUE))

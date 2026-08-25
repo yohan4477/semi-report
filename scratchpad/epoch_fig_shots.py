@@ -206,7 +206,7 @@ def _beam(sx, sy, deg, up):
         a, b = (gx, gy), (sx - dx / d * 11, sy - dy / d * 11)
     else:
         a, b = (sx, sy), (gx, gy)
-    return ('<path d="M%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" stroke-width="2.4" '
+    return ('<path d="M%.1f %.1f L%.1f %.1f" fill="none" stroke="%s" stroke-width="3" '
             'marker-end="url(#fig-arrow-a)"/>' % (a[0], a[1], b[0], b[1], GOOD))
 
 
@@ -214,7 +214,7 @@ def clarke_sat():
     pos = [_on(ORX, ORY, d) for d in SATS]
     o = []
     # 범례 — 선 세 벌의 뜻을 판 위쪽에서 밝힌다
-    o.append('<path d="M16 18 L36 18" fill="none" stroke="%s" stroke-width="2.4" '
+    o.append('<path d="M16 18 L36 18" fill="none" stroke="%s" stroke-width="3" '
              'marker-end="url(#fig-arrow-a)"/>' % GOOD)
     o.append(ef.lab(42, 22, '지상에서 올라간 신호를 위성이 내려 쏜다', fs=9.5))
     o.append(ef.arrow('svc', [(268, 18), (288, 18)]))
@@ -224,7 +224,7 @@ def clarke_sat():
     o.append(ef.lab(42, 40, '위성 하나가 덮는 범위 — 반구 하나', fs=9.5))
     # 정지궤도 — 값이 아니라 기준선이라 점선 1.2다
     o.append('<ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="none" stroke="var(--ink-3)" '
-             'stroke-width="1.2" stroke-dasharray="6 4"/>' % (EX, EY, ORX, ORY))
+             'stroke-width="1.8" stroke-dasharray="6 4"/>' % (EX, EY, ORX, ORY))
     # 지구
     o.append('<circle cx="%d" cy="%d" r="%d" fill="var(--fig-body,rgba(127,127,127,.30))" '
              'stroke="var(--ink-3)" stroke-width="1"/>' % (EX, EY, ER))
