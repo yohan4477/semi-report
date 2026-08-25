@@ -8,6 +8,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 import _figs_0825 as figs0825
+import _fig_rates as fig_rates
 import driver_map
 import driver_map_data_hynix as dmd_hynix
 import driver_map_data_cosmax as dmd_cosmax
@@ -3985,6 +3986,37 @@ CARDS = [{
     ],
     'note': '유료 구독 글 요약입니다. 2026년 8월 20일 시점의 값이라 이후 값과 무관하며 투자 권유가 아닙니다.',
     'links': [('📄 요약 전문', blob(SUM + '[260820] 숏 14억 달러가 청산되며 비트코인이 7만 달러를 되찾았다 - 크립토 - 엘곰.md'), 'secondary')],
+}, # ---- 누적 카드: 새 원문이 들어올 때마다 data/rates_timeline.json 에 한 줄 더한다 ----
+{
+    'section': SEC_RATES,
+    'topic': ('market', '금리 · 누적 기록'),
+    'title': '미 장기금리 — 값이 적힌 날만 모은 타임라인',
+    'figs': [fig_rates.FIG],
+    'gain': '그날그날 다른 카드에 흩어져 있던 30년물·10년물 값을 한 줄에 놓고 본다. 같은 날을 두 원문이 다르게 적은 자리도 여기서 드러난다.',
+    'meta': ['엘곰 <b>회계사</b> 여러 편 종합', '갱신 2026-08-25', '누적 카드 · 새 원문마다 갱신', '네이버 프리미엄'],
+    'oneliner': ('금리 편은 하루에 한 장씩 쌓이는데 값은 매번 그 카드 안에만 남는다. 이 카드는 그 값만 '
+                 '뽑아 날짜 순으로 세운다. 원문에 적힌 값만 찍고, 하루 사이 값이 없으므로 점을 선으로 잇지 '
+                 '않는다. 되사기 확대를 발표한 날에 세로선을 세워 개입이 어느 자리에 들어갔는지 보이게 했다.'),
+    'points': [
+        '<b>개입은 하루를 못 넘겼다.</b> 발표 당일 30년물이 <b>5.18~5.20%</b>까지 내려갔다가 다음 날 <b>5.25%</b>, 그다음 날 <b>5.28%</b>로 되올랐다. 10년물도 <b>4.65%</b>에서 <b>4.73%</b>로 같은 방향이었다.',
+        '<b>같은 날 값이 원문마다 다르다.</b> 8월 18일 30년물을 한 편은 <b>5.31%</b>로, 다른 편은 <b>5.34%</b>로 적는다. 어느 쪽이 종가이고 어느 쪽이 장중 고점인지는 두 원문 어디에도 없다. 그래서 이 표는 하나를 고르지 않고 둘 다 남긴다.',
+        '<b>구간으로만 적힌 값은 구간으로 둔다.</b> 8월 19일 30년물은 <b>5.18~5.20%</b>라고만 적혀 있어 가운데 값을 만들어 넣지 않고 막대로 그렸다.',
+        '<b>10년물 한 칸은 하한이다.</b> 금요일 값은 원문에 「4.73% 이상」으로 적혀 있다. 표에는 4.73%로 넣었지만 그보다 높았을 수 있다.',
+        '<b>갱신 방법.</b> 새 금리 편이 들어오면 <code>data/rates_timeline.json</code>의 rows에 날짜·값·출처 줄번호를 한 줄 더하고 생성기를 다시 돌린다. 그림과 표가 같이 갱신된다.',
+    ],
+    'table': fig_rates.table(),
+    'stats': [('5.34%', '이 기간 30년물 최고. 19년 만의 고점으로 적힌 값'),
+              ('5.18~5.20%', '되사기 확대 발표 직후. 구간으로만 적혀 있다'),
+              ('9bp', '발표 직후 30년물 하락 폭. 다음 날 되돌아왔다'),
+              ('4.65 → 4.73%', '같은 나흘 10년물의 되돌림')],
+    'quote': '타이타닉호 갑판의자를 재배치하는 격',
+    'clash': [('값이 갈리는 날이 있다', '8월 18일 30년물이 5.31%와 5.34%로 두 편에서 다르게 적힌다. 종가·장중 고점 구분이 원문에 없어 이 카드도 판정하지 않는다.'),
+              ('날짜가 요일로만 적힌 편이 있다', '[260822] 편은 화·수·목·금으로만 적고 날짜를 쓰지 않는다. 같은 주 다른 편의 날짜와 맞춰 놓은 것이라 요일-날짜 대응이 틀리면 이 표도 같이 틀린다.'),
+              ('빈 날은 값이 없다는 뜻이다', '주말과 원문이 없는 날은 아예 빠져 있다. 그 사이에 금리가 어떻게 움직였는지는 이 재료로 알 수 없다.')],
+    'note': '값은 전부 원문에 적힌 것만 옮겼고 재료는 <code>data/rates_timeline.json</code>에 있다. 값의 시점은 각 원문 발행일 기준이며 투자 판단 근거가 아니다.',
+    'links': [('📄 8월 18일 편', blob(SUM + '[260818] 30년물 금리 5.31%로 19년來 최고, 브렌트유는 2주 만에 91달러 - 엘곰.md'), 'secondary'),
+              ('📄 8월 20일 편', blob(SUM + '[260820] 바이백을 두 배로 늘리자 30년물이 9bp 내렸다 - 미 재무부 - 엘곰.md'), 'secondary'),
+              ('📄 8월 22일 편', blob(SUM + '[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md'), 'secondary')],
 }, # ---- 2026-08-24 새 카드 ----
 {
     'section': SEC_RATES,
@@ -4340,7 +4372,7 @@ CARDS = [{
 }]
 
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
-assert len(CARDS) == 111, '카드 수가 달라졌다'
+assert len(CARDS) == 112, '카드 수가 달라졌다'
 
 
 
@@ -5164,7 +5196,7 @@ if __name__ == '__main__':
     _log, _logn = log_html()
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               newest_first=True,
-              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + fig_rates.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
                                      + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),
