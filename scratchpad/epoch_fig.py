@@ -11,6 +11,8 @@
 """
 
 
+PAD = 12        # 상자 안쪽 여백. 왼쪽·오른쪽·줄바꿈 한도가 모두 이 값을 쓴다
+
 # 글자 한 벌의 실제 폭 — 크롬에서 getComputedTextLength 로 재서 옮겼다(2026-08-25).
 # 어림값(라틴 일괄 0.55)으로는 띄어쓰기를 0.55로 잡아 한 줄에 20~30px씩 덜 넣었고,
 # 그만큼 상자 오른쪽이 비었다. 반대로 「」와 — 는 1.0 으로 잡아 넘칠 뻔했다.
@@ -48,7 +50,7 @@ def wrap_lines(text, bw, fs=13.5):
 
     글자를 키우면 예전에 한 줄로 들어가던 문장이 넘친다. 손으로 다시 감는 대신
     폭을 재서 자른다 — box() 의 assert 와 같은 자로 잰다."""
-    lim = bw - 12
+    lim = bw - PAD * 2
     out, cur = [], ''
     for word in text.split(' '):
         trial = word if not cur else cur + ' ' + word
@@ -89,7 +91,7 @@ def reflow(lines, bw, fs=13.5):
         groups.append(buf)
     if len(groups) > 1 and not any(_new_item(g) for g in groups):
         one = ' · '.join(groups)
-        if w(one, fs) < bw - 12:
+        if w(one, fs) < bw - PAD * 2:
             return [one]
     out = []
     for g in groups:
@@ -125,6 +127,9 @@ def reflow(lines, bw, fs=13.5):
 #   줄 간격   같은 자리에 쌓는 글자는 17 이상 띄운다. t-sm 상자 높이가 14.1이라
 #             14로 쌓으면 검사기에 걸린다. 가로축 눈금은 축에서 22 내린다
 #             상자 이름과 첫 설명 줄 사이는 25 — 붙이면 한 덩어리로 읽힌다
+#   안쪽 여백  PAD 12 하나로 왼쪽·오른쪽·줄바꿈 한도를 다 잡는다. 6이던 때는
+#             글자가 왼쪽 테두리에 붙고 오른쪽만 넉넉해 좌우가 어긋나 보였다
+#             (2026-08-25). 새 상자는 이름이 bw-24 안에 들어와야 한다
 #             글자를 키우면 상자도 같이 넓혀야 한다 — 폭은 w()가 재고,
 #             긴 설명 줄은 wrap_lines() 가 폭에 맞춰 자른다
 #   색        원문 팔레트를 토큰으로 들여왔다 — svg.epoch 가 물린다(card_lib.FIG_CSS).
@@ -146,12 +151,12 @@ def box(x, y, bw, name, lines, key=False, wrap=False, flow=True):
     h = 33 + 19 * len(lines) + 4
     cls = 'bx-wrap' if wrap else ('bx-key' if key else 'bx')
     o = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" class="%s"/>' % (x, y, bw, h, cls)]
-    assert w(name, 16) < bw - 12, '상자 이름이 넘친다: %s' % name
-    o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (x + 6, y + 22, esc(name)))
+    assert w(name, 16) < bw - PAD * 2, '상자 이름이 넘친다: %s' % name
+    o.append('<text x="%d" y="%d" class="t-lab">%s</text>' % (x + PAD, y + 22, esc(name)))
     for i, ln in enumerate(lines):
-        assert w(ln, 13.5) < bw - 12, '설명 줄이 상자를 넘는다(%d px): %s' % (bw, ln)
+        assert w(ln, 13.5) < bw - PAD * 2, '설명 줄이 상자를 넘는다(%d px): %s' % (bw, ln)
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>'
-                 % (x + 6, y + 47 + 19 * i, esc(ln)))
+                 % (x + PAD, y + 47 + 19 * i, esc(ln)))
     return ''.join(o), h
 
 
@@ -1194,10 +1199,10 @@ def fig_cyber_chain():
     X0, W, GAP = 6, 152, 5
     o = [lab(16, 24, '공격은 이 순서로 이어진다. 각 칸을 프런티어 모델이 해낸다는 것을 보인 평가',
              fs=13)]
-    steps = [('취약점 찾는다', ['실제 코드에서', '새 제로데이가 나왔다'], 'FrontierCyber'),
-             ('익스플로잇 만든다', ['사람이 만든 최선보다', '안정적인 사례가 나왔다'], 'ExploitBench'),
-             ('권한 끌어올린다', ['서로 다른 익스플로잇을', '이어 붙인다'], 'ExploitGym'),
-             ('망 장악한다', ['모의 기업망을 일관되게', '완전히 장악했다'], '영국 AISI 사이버 레인지')]
+    steps = [('취약점 발견', ['실제 코드에서', '새 제로데이가 나왔다'], 'FrontierCyber'),
+             ('익스플로잇 개발', ['사람이 만든 최선보다', '안정적인 사례가 나왔다'], 'ExploitBench'),
+             ('권한 상승', ['서로 다른 익스플로잇을', '이어 붙인다'], 'ExploitGym'),
+             ('망 장악', ['모의 기업망을 일관되게', '완전히 장악했다'], '영국 AISI 사이버 레인지')]
     for i, (name, lines, bench) in enumerate(steps):
         x = X0 + i * (W + GAP)
         s_, h = box(x, 48, W, name, wrap_lines(' '.join(lines), W))
