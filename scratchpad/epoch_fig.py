@@ -27,8 +27,11 @@ def esc(s):
 #             확정된 경계 1.6(다른 것과 성격이 다른 굵은 실선일 때만)
 #   점선      6 4 하나. 흐름도의 조건부 지원선만 CSS(.flow-cond)의 5 4를 따로 쓴다
 #   표식      산점도 점 5 · 조밀한 산점도 3.4 · 선그래프 위 표식 4
+#             목록 머리표와 선이 갈리는 점 3
 #             (버블 지도는 넓이가 값이라 크기가 제각각인 것이 맞다)
 #   투명도    겹쳐 찍는 표식 .8 · 같은 색을 흐리게 쓴 면 .55
+#   면을 대신하는 굵은 호 6, 겹쳐 읽히게 투명도 .38 (덮는 범위처럼 면이 아닌데
+#             면으로 읽혀야 하는 자리에만)
 #   글자      상자 이름 t-lab 11.5 · 설명과 값 t-sm 10 · 역할 라벨과 주석 9.5
 #             막대 옆 값 라벨은 10, 판 아래 주석은 9.5
 #   색        강조 --fig-good · 대비 --fig-bad · 계열 --fig-blue/amber/violet
@@ -613,8 +616,9 @@ def fig_openai_line():
     o.append('<text x="%d" y="%.1f" class="t-sm" style="font-weight:850;'
              'fill:var(--fig-good,#2f8f6b)">오픈AI</text>' % (X1 + 8, py(oa[8]) + 4))
     o.append(lab(px_(5), py(world[5]) + 22, '2025년 3.3배', fs=10))
+    # 선 위에 얹으면 글자가 선에 깔린다 — 오픈AI 선은 오르막이라 아래로 내린다
     o.append('<text x="%.1f" y="%.1f" class="t-cash" style="font-size:10px">2025년 4.6배</text>'
-             % (px_(5), py(oa[5]) - 12))
+             % (px_(5) + 6, py(oa[5]) + 24))
     o.append(lab(16, Y1 + 44, '세계 총계는 Epoch의 칩 판매 자료를 한 분기 당겨 누적한 값이다. '
                               '2024-Q4 앞이 점선인 것은', fs=9.5))
     o.append(lab(16, Y1 + 60, '옛 자료, 특히 엔비디아가 아닌 칩의 자료가 성글기 때문이다', fs=9.5))
@@ -725,6 +729,7 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
          % (x0 + pw // 2, y0 - 26, esc(title))]
     o.append('<path d="M%d %d L%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
              % (x0, y0, x0, y0 + ph, x0 + pw, y0 + ph))
+    keys = []
     for name, slope, base, key in lines:
         pts = []
         for i in range(2):
@@ -736,15 +741,21 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
                else 'stroke="var(--ink-3)" stroke-width="2.4" stroke-dasharray="6 4"')
         o.append('<path d="M%d %d L%d %d" %s fill="none"/>'
                  % (pts[0][0], pts[0][1], pts[1][0], pts[1][1], cls))
-        # 선 끝이 판 위쪽이면 글자를 아래로 내린다 — 안 그러면 선 위에 얹힌다
-        ly = pts[1][1] + 16 if pts[1][1] < y0 + ph / 2 else pts[1][1] - 10
-        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end" style="font-weight:850;'
-                 'fill:%s">%s</text>' % (x0 + pw - 4, ly,
-                                         'var(--fig-good,#2f8f6b)' if key else 'var(--ink-3)',
-                                         esc(name)))
+        keys.append((name, key))
     o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
              % (x0 + pw // 2, y0 + ph + 17, esc(xlab)))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 10, esc(ylab)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 26, esc(ylab)))
+    # 계열 이름은 선 위에 얹지 않는다 — 오르막 선이 글자 자리를 지나며 올라온다.
+    # 판 위쪽에 색 딱지로 내놓는다(insight-figure 규칙 3과 같은 뜻이다)
+    kx = x0
+    for name, key in keys:
+        col = 'var(--fig-good,#2f8f6b)' if key else 'var(--ink-3)'
+        dash = '' if key else ' stroke-dasharray="6 4"'
+        o.append('<path d="M%d %d L%d %d" stroke="%s" stroke-width="2.4"%s fill="none"/>'
+                 % (kx, y0 - 11, kx + 18, y0 - 11, col, dash))
+        o.append('<text x="%d" y="%d" class="t-sm" style="font-weight:850;fill:%s">%s</text>'
+                 % (kx + 24, y0 - 7, col, esc(name)))
+        kx += 24 + int(w(name, 10)) + 26
     return o
 
 
@@ -982,11 +993,11 @@ def fig_eci_lead():
     ny = 96
     for name, mo, ci, key in notes:
         col = 'var(--fig-good,#2f8f6b)' if key else 'var(--fig-blue,#2f6fd0)'
-        o.append('<text x="380" y="%d" class="t-sm" '
+        o.append('<text x="448" y="%d" class="t-sm" '
                  'style="font-weight:850;fill:%s">%s</text>' % (ny, col, esc(name)))
-        o.append('<text x="380" y="%d" class="t-sm" style="fill:%s">%s 앞섰다</text>'
+        o.append('<text x="448" y="%d" class="t-sm" style="fill:%s">%s 앞섰다</text>'
                  % (ny + 15, col, esc(mo)))
-        o.append('<text x="380" y="%d" class="t-sm t-axis">90%% 구간 %s</text>'
+        o.append('<text x="448" y="%d" class="t-sm t-axis">90%% 구간 %s</text>'
                  % (ny + 29, esc(ci)))
         ny += 58
     o.append(lab(16, Y1 + 44, '점선이 2025년 초부터 이어진 추세다. 앞선 정도는 원문이 90% 구간과 '
@@ -1725,6 +1736,17 @@ SRC = {
 }
 
 # 그림 이름 -> (그리는 함수, 값을 대조할 원문)
+# 원문 도해를 한 벌씩 나눠 그린 곁 모듈. 한 파일에 마흔 장을 넣으면 손대기가 어려워
+# 편별로 갈랐다. FIGS·FIG_SRC는 여기서 합쳐 한 곳에서만 검사한다.
+# 곁 모듈이 이 파일을 되불러오므로, 이 파일을 직접 실행할 때는 __main__ 을 먼저
+# 'epoch_fig' 이름으로 등록해 둔다. 안 그러면 이 파일이 두 번 로드되면서
+# 「partially initialized module」 로 죽는다.
+import sys as _sys
+_sys.modules.setdefault('epoch_fig', _sys.modules[__name__])
+import epoch_fig_cyber as _cy      # noqa: E402
+import epoch_fig_onet as _on       # noqa: E402
+import epoch_fig_shots as _sh      # noqa: E402
+
 # 그림 이름 -> 그리는 함수. **새 그림을 여기 안 넣으면 자기검사를 통째로 빠져나간다** —
 # 2026-08-25에 딕셔너리가 패치로 잘려 아홉 장이 값 대조를 안 받고 지나갔다.
 FIGS = {
@@ -1804,6 +1826,17 @@ FIG_SRC = {
     'bench_hard': 'bench',
 }
 
+# 곁 모듈이 그린 것들을 합친다. 이름이 겹치면 어느 쪽이 그린 것인지 헷갈리므로 막는다
+for _mod, _src in ((_cy, {'cve_spike': 'cyber', 'cyber_prog': 'hf'}),
+                   (_on, {k: 'onet' for k in ('onet_sa', 'onet_sc', 'onet_tasks15',
+                                              'onet_six', 'onet_sample', 'onet_expect')}),
+                   (_sh, {'cn_shot_dc': 'cn', 'cn_shot_bd': 'cn', 'cn_shot_agent': 'cn',
+                          'cn_shot_law': 'cn', 'clarke_sat': 'fut'})):
+    for _k, _fn in _mod.FIGS.items():
+        assert _k not in FIGS or _mod is _cy, '그림 이름이 겹친다: %s' % _k
+        FIGS[_k] = _fn
+    FIG_SRC.update(_src)
+
 assert set(FIGS) == set(FIG_SRC), '값을 대조할 원문이 없는 그림: %s' % (set(FIGS) ^ set(FIG_SRC))
 
 
@@ -1833,6 +1866,9 @@ if __name__ == '__main__':
         nums = {n for t in re.findall(r'<text[^>]*>([^<]*)<',
                                       re.sub(r'<text[^>]*t-axis[^>]*>[^<]*</text>', '', svg_))
                 for n in re.findall(r'\d[\d,\.]*', t)}
+        # 「7. 비용을 …」의 7. 은 목록 번호이지 값이 아니다 — 끝의 마침표를 떼고 센다.
+        # 한 자리 수는 원래 안 본다(연도의 일부나 목록 번호가 대부분이라).
+        nums = {n.rstrip('.') for n in nums}
         return [n for n in nums if len(n.replace(',', '')) >= 2 and n.replace(',', '') not in srcn]
 
     bad = 0
