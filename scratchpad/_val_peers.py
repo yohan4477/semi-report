@@ -86,7 +86,20 @@ def row(t):
                 fcf=fcf, fcf_m=(fcf / rev if (fcf is not None and rev) else None),
                 capex=cap, dna=dna, cd=(cap / dna if (cap and dna) else None),
                 nopat=nopat, beta=beta, ke=ke, mcap=mcap, net_cash=-net_debt,
-                cash_tr=cash_tr, req_fcf=req(fcf), req_nopat=req(nopat))
+                cash_tr=cash_tr, req_fcf=req(fcf), req_nopat=req(nopat),
+                **_levels(fcf, nopat, rev, req(fcf), req(nopat)))
+
+
+def _levels(fcf, nopat, rev, rf_, rn_):
+    """요구 성장률이 10년 뒤 어떤 금액을 뜻하는지. 가정을 더 넣지 않는 순수 산술이다."""
+    def grow(base, g):
+        return base * (1 + g) ** YEARS if (base and g and base > 0) else None
+    f10, n10 = grow(fcf, rf_), grow(nopat, rn_)
+    return dict(fcf10=f10, nopat10=n10,
+                fcf_x=(f10 / fcf if f10 else None),
+                nopat_x=(n10 / nopat if n10 else None),
+                fcf10_rev=(f10 / rev if (f10 and rev) else None),
+                nopat10_rev=(n10 / rev if (n10 and rev) else None))
 
 
 def rows():
@@ -122,6 +135,11 @@ def write_facts():
               % n(r['req_nopat'] and r['req_nopat'] * 100, '%.2f%%')]
         if r['req_fcf'] and r['req_nopat']:
             L.append('- 두 기준 차이 %.1f%%포인트' % ((r['req_fcf'] - r['req_nopat']) * 100))
+        L += ['- 10년 뒤 요구 잉여현금흐름 %s · 지금의 %s · 지금 매출의 %s'
+              % (n(r['fcf10'], '%.0f'), n(r['fcf_x'], '%.1f배'), n(r['fcf10_rev'], '%.1f배')),
+              '- 10년 뒤 요구 NOPAT %s · 지금의 %s · 지금 매출의 %s'
+              % (n(r['nopat10'], '%.0f'), n(r['nopat_x'], '%.1f배'),
+                 n(r['nopat10_rev'], '%.1f배'))]
         L.append('')
     p2 = os.path.join(_root, 'scratchpad', 'peers_facts.md')
     io.open(p2, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
