@@ -315,7 +315,6 @@ POST_CSS = '''
   .rfig .rq-lab{margin:16px 2px 5px;font-size:.95rem;line-height:1.6;font-weight:600;
             color:var(--ink-2);text-align:left}
   .rfig .rq-lab.is-back{text-align:right}
-  .rfig .rq-lab.is-mid{text-align:center}
   /* 보내는 레인 한가운데에서 받는 레인 한가운데까지. 두 열을 걸친 칸에서
      양옆을 25%씩 미는 것이 정확히 그 자리다 */
   .rfig .rq-arrow{height:0;margin:2px 25% 10px;border-top:2px solid var(--epoch-teal);
@@ -325,10 +324,11 @@ POST_CSS = '''
             border-left:9px solid var(--epoch-teal)}
   .rfig .rq-arrow.is-back::after{right:auto;left:-1px;border-left:0;
             border-right:9px solid var(--epoch-teal)}
-  /* 자기 호출 — 레인 위에 얹히는 처리 칸. 하네스가 저 혼자 하는 걸음이다 */
-  .rfig .rq-self{height:18px;width:64%;justify-self:center;margin:2px 0 10px;
-            border:2px solid var(--epoch-teal);border-radius:6px;
-            background:var(--epoch-wrapbg)}
+  /* 자기 호출 — 하네스가 저 혼자 하는 걸음이다. 벌어지는 일을 칸 안에 적는다.
+     빈 칸을 두고 글을 그 위에 얹으면 그 칸이 무엇을 하는 자리인지가 안 보인다 */
+  .rfig .rq-self{justify-self:center;max-width:76%;margin:16px 0 10px;padding:11px 14px;
+            border:2px solid var(--epoch-teal);border-radius:9px;background:var(--epoch-wrapbg);
+            font-size:.95rem;line-height:1.6;font-weight:600;color:var(--ink-2);text-align:center}
   @container (max-width:430px){
     .rfig .rf-pair{flex-direction:column;align-items:stretch}
     /* 칸이 세로로 쌓이면 선은 뜻을 잃는다. 선을 숨기고 이름만 남긴다 —

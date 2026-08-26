@@ -390,17 +390,20 @@ def _seq(actors, steps):
                    % (i, last + 1))
     row = 2
     for frm, to, what in steps:
-        # 자기 호출은 한 열뿐이라 말을 얹으면 글자가 눌린다. 그때만 판 폭을 다 쓴다
-        span = '1/-1' if frm == to else '%d/%d' % (min(frm, to), max(frm, to) + 1)
-        side = 'is-mid' if frm == to else ('is-back' if to < frm else '')
-        out.append('<p class="rq-lab %s" style="grid-column:%s;grid-row:%d">%s</p>'
-                   % (side, span, row, what))
         if frm == to:
-            out.append('<i class="rq-self" style="grid-column:%d;grid-row:%d"></i>'
-                       % (frm, row + 1))
+            # 자기 호출은 말을 칸 밖에 얹지 않는다. 빈 칸 위에 글이 떠 있으면
+            # 그 칸이 무엇을 하는 자리인지가 안 보인다 — 벌어지는 일을 칸 안에 적는다.
+            # 열을 다 걸치고 가운데에 세우면 가운데 레인 위에 앉는다(레인이 셋, 폭이 같다).
+            assert frm * 2 == len(actors) + 1, '가운데 레인이 아닌 자기 호출은 자리를 다시 재야 한다'
+            out.append('<p class="rq-self" style="grid-column:1/-1;grid-row:%d/%d">%s</p>'
+                       % (row, row + 2, what))
         else:
+            span = '%d/%d' % (min(frm, to), max(frm, to) + 1)
+            back = ' is-back' if to < frm else ''
+            out.append('<p class="rq-lab%s" style="grid-column:%s;grid-row:%d">%s</p>'
+                       % (back, span, row, what))
             out.append('<i class="rq-arrow%s" style="grid-column:%s;grid-row:%d"></i>'
-                       % (' is-back' if to < frm else '', span, row + 1))
+                       % (back, span, row + 1))
         row += 2
     return '<div class="rfig"><div class="rq">%s</div></div>' % ''.join(out)
 
