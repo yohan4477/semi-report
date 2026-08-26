@@ -146,7 +146,7 @@ def _mark(text, names):
     return text
 
 
-def _table(para):
+def _table(para, names=()):
     """마크다운 표 한 덩어리 → (제목, 머리, 행들).
 
     목록을 상자로 그리지 않기로 하면서 생긴 자리다. 이름과 한 줄 설명이 짝지어
@@ -160,7 +160,8 @@ def _table(para):
             continue
         if not line.startswith('|'):
             continue
-        cells = [BOLD_RE.sub(BOLD_TO, esc(c.strip())) for c in line.strip('|').split('|')]
+        cells = [_mark(BOLD_RE.sub(BOLD_TO, esc(c.strip())), names)
+                 for c in line.strip('|').split('|')]
         if all(set(c) <= set('-: ') for c in cells):
             continue            # |---|---| 구분줄
         if head:
@@ -201,7 +202,7 @@ def parse_report(path, vid, figs=None):
             verdict = esc(m.group(1))
             continue
         if para.lstrip().startswith('|') or para.lstrip().startswith('표:'):
-            blocks.append(('tbl', _table(para)))
+            blocks.append(('tbl', _table(para, names)))
             continue
         m = H_RE.match(t)
         if m:
@@ -217,7 +218,10 @@ def parse_report(path, vid, figs=None):
         blocks.append(('p', _mark(BOLD_RE.sub(BOLD_TO, esc(t)), names)))
     if terms:
         # 선언만 하고 본문에서 한 번도 안 짚은 용어는 아래 설명만 떠 있게 된다
-        body_html = ' '.join(v for k, v in blocks if k == 'p')
+        # 표는 (제목, 머리, 행들)이다. 머리 칸에서 용어를 처음 짚는 경우가 있어 셋 다 본다
+        body_html = ' '.join(
+            v if k == 'p' else ' '.join([v[0]] + list(v[1]) + [c for r in v[2] for c in r])
+            for k, v in blocks if k in ('p', 'tbl'))
         for n, _ in terms:
             if ('>%s</span>' % n) not in body_html:
                 print('  ! %s — 용어 %r를 본문에서 안 짚는다' % (os.path.basename(path), n))
