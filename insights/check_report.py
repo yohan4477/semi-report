@@ -40,7 +40,9 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_B.md'),
          # 알파벳 밸류에이션의 재무 숫자와 우리 계산 결과
-         os.path.join(ROOT, 'scratchpad', 'googl_facts.md')]
+         os.path.join(ROOT, 'scratchpad', 'googl_facts.md'),
+         # 빅테크 여섯 비교의 계산 결과
+         os.path.join(ROOT, 'scratchpad', 'peers_facts.md')]
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

@@ -18,6 +18,7 @@ import _biz_part4  # noqa: E402
 import _biz_fig  # noqa: E402
 import _val_googl  # noqa: E402
 import _val_fig  # noqa: E402
+import _val_peers_text  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1035,6 +1036,16 @@ def report4_html():
     return ''.join(h)
 
 
+def report5_html():
+    """빅테크 여섯 비교. 알파벳 편과 같은 타일에 이어 붙인다 — 물음이 같은 판이다."""
+    h = [_val_peers_text.HEAD5]
+    sec = lambda t: h.append('<h3>%s</h3>' % t)
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _val_peers_text.report5_html(sec, p, fig)
+    return ''.join(h)
+
+
 HEAD1 = ('<div class="rep-head"><span class="rn">보고서 ①</span>'
          '<h2 id="rep-model">로보틱스 모델 — 관절 값을 어디서 뽑나</h2>'
          '<p class="rm">바탕 <b>수도리무브 35편</b> · 원문 기간 <b>2025-03 ~ 2026-08</b> · '
@@ -1065,8 +1076,8 @@ LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 �
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
-      <span>보고서 <b>4편</b></span>
-      <span>절 <b>44개</b></span>
+      <span>보고서 <b>5편</b></span>
+      <span>절 <b>50개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -1094,6 +1105,7 @@ if __name__ == '__main__':
               top_sub='보고서 둘 — 수도리무브 35편과 SemiAnalysis 4편',
               tops=[('sec-biz', 'AI 비즈니스 — 밸류체인', 'SemiAnalysis 30편 — 번 돈은 층마다 '
                      '누구에게 남나', 1, report3_html()),
-                    ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis 4편 — '
-                     '알파벳을 회계사 판 잣대로 재면 얼마인가', 1, report4_html())],
+                    ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
+                     '알파벳을 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 2,
+                     report4_html() + report5_html())],
               extra_css=REPORT_CSS)
