@@ -1,0 +1,1185 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>언더스탠딩 보고서</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  /* 눈금선 — Epoch 원문에서 뽑은 값이다. 원본 1026px 폭에서 #E4E4E4 2px 였고,
+     640 판으로 줄이면 1.2px 이 된다. 자료보다 먼저 깔아 뒤에 둔다 */
+  .uc-fig{--epoch-grid:#E4E4E4}
+  .uc-fig .grid{fill:none;stroke:var(--epoch-grid);stroke-width:1.2}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --epoch-grid:rgba(255,255,255,.13);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
+  }
+
+  /* 번호글 — 한 생각에 번호 하나. 번호를 왼쪽에 떼어 놓고 글을 들여 쓴다 */
+  .uc-post{list-style:none;margin:14px 0 0;padding:0;counter-reset:mp}
+  .uc-post>li{counter-increment:mp;position:relative;padding:0 0 0 38px;margin:0 0 13px;
+              font-size:.95rem;line-height:1.72;color:var(--ink-2)}
+  .uc-post>li::before{content:counter(mp) ".";position:absolute;left:0;top:0;
+              width:30px;text-align:right;font-variant-numeric:tabular-nums;
+              font-weight:800;font-size:.82rem;line-height:1.98;color:var(--ink-3)}
+  .uc-post>li:last-child{margin-bottom:0}
+  /* 한줄 코멘트 — 글쓴이의 판단이 한 줄로 서는 자리. 번호글 위에 선다 */
+  .uc-verdict{margin:14px 0 4px;padding:13px 15px;border-radius:12px;
+              border:1px solid var(--line);background:var(--sunk,rgba(127,127,127,.06));
+              font-size:.93rem;line-height:1.65;color:var(--ink)}
+  .uc-verdict b{color:var(--ink-3);font-size:.78rem;letter-spacing:.04em;margin-right:6px}
+  @media (max-width:520px){
+    .uc-post>li{padding-left:30px}
+    .uc-post>li::before{width:23px}
+  }
+  /* 보고서 — 절 제목과 문단이 섞여 흐른다. 번호글과 같은 카드 안에서 쓴다 */
+  .uc-rep{margin:14px 0 0}
+  .uc-rep h3{margin:26px 0 10px;font-size:1.02rem;line-height:1.45;font-weight:800;
+             color:var(--ink);letter-spacing:-.01em}
+  .uc-rep h3:first-child{margin-top:4px}
+  .uc-rep p{margin:0 0 13px;font-size:.95rem;line-height:1.78;color:var(--ink-2)}
+  .uc-rep p:last-child{margin-bottom:0}
+  .uc-rep .uc-fig{margin:18px 0}
+  /* 판은 520px까지만 넓힌다. 자리가 그보다 넓으면 배율이 1이라 판 안 글자가
+     본문과 같은 .95rem으로 그려지고, 좁으면 판이 줄어든다. 어느 쪽이든 옆으로
+     스크롤하지 않는다 — 776으로 내보내던 때는 창이 조금만 좁아도 밀렸다 */
+  .ucard .uc-fig svg.epoch{width:100%;max-width:520px;margin:0 auto}
+  /* HTML로 짠 판(.rfig). SVG는 판이 줄면 글자도 같이 줄어 본문과 어긋난다 —
+     휴대폰에서 자리가 300px이면 520 판이 0.6배가 되고 글자가 9px로 앉았다.
+     여기서는 글자가 본문과 같은 .95rem으로 고정이고, 좁아지면 칸이 아래로 쌓인다.
+     기준은 화면 폭이 아니라 카드 안 자리다 — 그래서 컨테이너 질의를 쓴다 */
+  .uc-fig .rfig{container-type:inline-size;margin:2px 0}
+  .rfig .rf-row + .rf-row{margin-top:20px}
+  .rfig .rf-cap{margin:0 0 10px;font-size:.95rem;font-weight:800;color:var(--ink-3)}
+  .rfig .rf-pair{display:flex;align-items:stretch;gap:10px}
+  .rfig .rf-box{flex:1 1 0;min-width:0;border:1px solid var(--ink-3);border-radius:10px;
+                padding:12px 10px;background:var(--surface,#fff);text-align:center}
+  .rfig .rf-box b{display:block;font-size:.95rem;font-weight:800;color:var(--ink);margin-bottom:5px}
+  .rfig .rf-box span{display:block;font-size:.95rem;line-height:1.7;color:var(--ink)}
+  .rfig .rf-empty{border-style:dashed}
+  .rfig .rf-empty b,.rfig .rf-empty span{color:var(--ink-3)}
+  .rfig .rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal);border-width:1.6px}
+  .rfig .rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  .rfig .rf-msgs{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;
+                 justify-content:center;gap:18px}
+  .rfig .rf-msg{display:flex;align-items:center;gap:9px}
+  .rfig .rf-msg em{flex:0 0 auto;font-style:normal;font-size:.95rem;line-height:1.45;color:var(--ink-3)}
+  .rfig .rf-msg em b{display:block;font-weight:800;color:var(--ink-2)}
+  .rfig .rf-msg em span{display:block;font-weight:600}
+  .rfig .rf-msg.is-back em{text-align:right}
+  /* 선은 받는 쪽 끝에 화살촉이 붙는다. 방향이 글자에도 선에도 있어야 안 헷갈린다 —
+     라벨만 가운데 띄워 두면 둘 다 하네스가 하는 말로 읽힌다 */
+  .rfig .rf-track{flex:1 1 auto;min-width:32px;height:0;align-self:center;position:relative;
+                  border-top:2px solid var(--epoch-teal)}
+  .rfig .rf-track::after{content:'';position:absolute;top:-6px;right:-1px;width:0;height:0;
+                  border-top:6px solid transparent;border-bottom:6px solid transparent;
+                  border-left:9px solid var(--epoch-teal)}
+  .rfig .rf-track.is-back::after{right:auto;left:-1px;border-left:0;
+                  border-right:9px solid var(--epoch-teal)}
+  /* 흐름 판 — 칸을 늘어놓고 사이마다 화살표. 좁아지면 아래로 쌓인다 */
+  .rfig .rf-chain{display:flex;align-items:stretch;gap:7px}
+  .rfig .rf-step{flex:0 0 auto;align-self:center;width:0;height:0;
+            border-top:6px solid transparent;border-bottom:6px solid transparent;
+            border-left:9px solid var(--epoch-teal)}
+  /* 칸을 잇는 것이 이름을 가진 것(프로토콜 등)일 때 화살표 위에 붙인다 */
+  .rfig .rf-link{flex:0 0 auto;align-self:center;display:flex;flex-direction:column;
+            align-items:center;gap:3px}
+  .rfig .rf-link em{font-style:normal;font-size:.95rem;font-weight:700;color:var(--ink-3);
+            white-space:nowrap}
+  .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
+  .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
+  .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
+  .rfig .rf-sw.rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal)}
+  .rfig .rf-sw.rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  /* 시퀀스 판. 레인이 열이고 걸음이 행이다. SVG로 그리면 좁은 화면에서 글자까지
+     같이 줄어서 CSS 그리드로 짠다 — 여기 글자도 본문과 같은 .95rem 고정이다 */
+  .rfig .rq{display:grid;grid-template-columns:repeat(3,1fr);column-gap:0;
+            align-items:center;position:relative}
+  .rfig .rq-actor{align-self:start;text-align:center;font-size:.95rem;font-weight:800;
+            color:var(--ink);border:1px solid var(--ink-3);border-radius:9px;padding:9px 4px;
+            margin:0 4px;background:var(--surface,#fff)}
+  .rfig .rq-actor.rf-harness{background:var(--epoch-wrapbg);border-color:var(--epoch-teal);border-width:1.6px}
+  .rfig .rq-actor.rf-model{background:var(--sunk,rgba(127,127,127,.10))}
+  .rfig .rq-actor.rf-human{background:var(--epoch-keybg)}
+  /* 생명선 — 레인 한가운데로 내려가는 점선. 걸음 뒤에 깔린다 */
+  .rfig .rq-life{width:0;justify-self:center;align-self:stretch;
+            border-left:1px dashed var(--ink-3);opacity:.5}
+  /* 말은 제 화살표 바로 위에 같은 열을 걸치고 앉는다. 보내는 쪽으로 붙여
+     어느 레인에서 나온 말인지 자리로 보이게 한다 */
+  .rfig .rq-lab{margin:16px 2px 5px;font-size:.95rem;line-height:1.6;font-weight:600;
+            color:var(--ink-2);text-align:left}
+  .rfig .rq-lab.is-back{text-align:right}
+  /* 보내는 레인 한가운데에서 받는 레인 한가운데까지. 두 열을 걸친 칸에서
+     양옆을 25%씩 미는 것이 정확히 그 자리다 */
+  .rfig .rq-arrow{height:0;margin:2px 25% 10px;border-top:2px solid var(--epoch-teal);
+            position:relative;align-self:center}
+  .rfig .rq-arrow::after{content:'';position:absolute;top:-6px;right:-1px;width:0;height:0;
+            border-top:6px solid transparent;border-bottom:6px solid transparent;
+            border-left:9px solid var(--epoch-teal)}
+  .rfig .rq-arrow.is-back::after{right:auto;left:-1px;border-left:0;
+            border-right:9px solid var(--epoch-teal)}
+  /* 자기 호출 — 하네스가 저 혼자 하는 걸음이다. 벌어지는 일을 칸 안에 적는다.
+     빈 칸을 두고 글을 그 위에 얹으면 그 칸이 무엇을 하는 자리인지가 안 보인다 */
+  .rfig .rq-self{justify-self:center;max-width:76%;margin:16px 0 10px;padding:11px 14px;
+            border:2px solid var(--epoch-teal);border-radius:9px;background:var(--epoch-wrapbg);
+            font-size:.95rem;line-height:1.6;font-weight:600;color:var(--ink-2);text-align:center}
+  @container (max-width:430px){
+    .rfig .rf-pair,.rfig .rf-chain{flex-direction:column;align-items:stretch}
+    .rfig .rf-step{align-self:center;border-left:6px solid transparent;
+            border-right:6px solid transparent;border-top:9px solid var(--epoch-teal);
+            border-bottom:0}
+    /* 칸이 세로로 쌓이면 선은 뜻을 잃는다. 선을 숨기고 이름만 남긴다 —
+       「하네스가 시킨다」·「모델이 돌려준다」가 글자에 이미 들어 있다 */
+    .rfig .rf-msgs{gap:12px}
+    .rfig .rf-track{display:none}
+    .rfig .rf-msg{justify-content:center}
+    .rfig .rf-msg em,.rfig .rf-msg.is-back em{text-align:center}
+    /* 레인 이름이 좁아지면 줄바꿈으로 버틴다. 열을 접으면 시퀀스가 아니게 된다 */
+    .rfig .rq-actor{padding:8px 2px;margin:0 2px}
+    .rfig .rq-lab{margin-top:14px}
+  }
+  /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
+     층은 굵기와 색으로만 가른다 — 크기로 가르면 자리마다 값이 갈린다 */
+  .ucard .uc-fig .fig-title{font-size:.95rem;letter-spacing:0;text-transform:none}
+  .ucard .uc-fig figcaption{font-size:.95rem;line-height:1.78}
+  .uc-rep .uc-label{font-size:.95rem;letter-spacing:0;text-transform:none}
+  .ucard .uc-verdict{font-size:.95rem}
+  .uc-rep .tbl-wrap{overflow-x:visible}
+  .uc-rep .uc-tbl{font-size:.95rem;min-width:0}
+  .uc-rep .uc-tbl th{font-size:.95rem;letter-spacing:0;text-transform:none}
+  /* 설명 칸까지 굵게 두면 표만 본문보다 무겁게 읽힌다 */
+  .uc-rep .uc-tbl td:nth-child(2){font-weight:400;color:var(--ink-2)}
+  /* 첫 칸이 안 접히면 좁은 자리에서 표가 카드 밖으로 밀린다 —
+     「매달린 툴 호출」 한 칸 때문에 표가 311px로 벌어졌다 */
+  .uc-rep .uc-tbl td:first-child{white-space:normal}
+  /* 좁은 자리에서는 표가 칸 여백만으로도 넘친다. 세 열짜리 표가 295px 자리에서
+     300px로 벌어졌다 — 여백을 조이고 긴 낱말도 끊는다. 기준은 화면이 아니라
+     카드 안 자리라 .uc-rep 을 컨테이너로 삼는다 */
+  .uc-rep{container-type:inline-size}
+  @container (max-width:430px){
+    .uc-rep .uc-tbl th,.uc-rep .uc-tbl td{padding:8px 7px}
+    .uc-rep .uc-tbl{word-break:break-word}
+  }
+
+  .uc-fig .fig-box{fill:var(--surface,#fff);stroke:var(--ink-3);stroke-width:1.2}
+  .uc-fig .fig-human{fill:var(--epoch-keybg)}
+  .uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal);stroke-width:1.6}
+  .uc-fig .fig-stage{fill:var(--sunk,rgba(127,127,127,.10))}
+  .uc-fig .fig-inside{fill:var(--epoch-keybg)}
+  .uc-fig .fig-outside{fill:var(--surface,#fff);stroke-dasharray:4 3}
+  .uc-fig .fig-bad{fill:var(--surface,#fff);stroke:var(--epoch-coral);stroke-width:1.6}
+  /* 글자는 19px. 본문 번호글(.95rem)보다 크게 둔다 — 그림이 먼저 읽혀야 한다 */
+  /* 판 안 글자는 전부 본문과 같은 .95rem이다. 굵기로만 층을 가른다 —
+     크기로 가르면 판이 화면 폭에 따라 스케일될 때 본문과 어긋난다 */
+  .uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+  .uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+  .uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:800}
+  .uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+  .uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:650}
+  .uc-fig .fig-arw{stroke:var(--epoch-teal);stroke-width:2;fill:none}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">언더스탠딩 — 장편 방송 보고서</p>
+    <h1>언더스탠딩 보고서</h1>
+    <p class="lede">한두 시간짜리 방송 한 편을 <b>보고서</b>로 옮겨 담습니다. 무엇을 근거로 그렇게 봤는지가 남습니다.</p>
+    <div class="meta-row">
+      <span>정리일 <b>2026-08-26</b></span>
+      <span>수록 <b>1편</b></span>
+      <span>소스 <b>youtube.com/@understanding.</b></span>
+    </div>
+  </header>
+
+  <p>방송 한 편이 카드 한 장입니다. 한두 시간짜리 이야기를 <b>절로 나눈 보고서</b>로 옮겨 담습니다. 맨 위의 「한줄 코멘트」가 판단이고 그 아래가 거기까지 가는 걸음입니다.</p><p>자막 전문에서 옮겼습니다. 숫자는 방송에 나온 것만 싣고, 출연자의 전망과 이미 벌어진 일은 문장에서 갈라 둡니다. 종목 추천이 아닙니다.</p>
+
+  <div class="sec-pick sgrid"><div class="ssearch"><input type="search" class="sq" placeholder="회사 이름이나 종목코드로 찾기" aria-label="찾기"><span class="sq-n"></span></div><button class="stile is-all" data-sec="" aria-pressed="true"><span class="st-num">✦</span><span class="st-t">전체 보기</span><span class="st-s">모든 섹션을 한 줄로</span><span class="st-n cnt">1</span></button><button class="stile" data-sec="sec-macro" aria-pressed="false"><span class="st-num">01</span><span class="st-t">물가 · 금리 · 통화</span><span class="st-s">무엇이 물가를 밀어 올리고, 그것이 금리와 환율을 어디로 미는가</span><span class="st-n cnt">1</span></button></div><div class="sback" hidden><span class="sb-now"></span></div>
+
+  
+
+  <section id="sec-macro"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">물가 · 금리 · 통화</h2><button type="button" class="sec-copy" data-anchor="sec-macro">링크 복사</button></div><div class="ucard is-fold"><div class="uc-head" role="button" tabindex="0" aria-expanded="false"><span class="uc-topic market">인플레이션 사이클 · 자산배분</span><h2 id="card-물가-신호를-무시하면-10년이-녹는다-사이클의-어느-자리에-서-있나">물가 신호를 무시하면 10년이 녹는다 — 사이클의 어느 자리에 서 있나</h2><p class="uc-gain">신환종은 어빙 피셔의 화폐착각(명목금리에 속아 실질수익을 놓치는 현상) 계산을 실제 세후 수익률까지 넣어, 명목금리 4%인 한국 국채(세후 실질수익률 1.384%)가 명목금리 2%인 일본 국채(1.692%)보다 실은 덜 남는다는 것을 보여준다. 1970년대 두 차례 오일쇼크와 2020년대를 나란히 놓고, 아서 번즈가 금리를 13%까지 올렸다가 바로 내린 것과 폴 볼커가 1979년 10월 20%까지 밀어붙인 것의 차이가 능력이 아니라 사회적 공감대였다고 짚는다. 브라질은 1990~93년 물가상승률이 1,000%를 넘겼다가 1990년대 인플레이션 타게팅으로 10% 밑으로 눌렀고, 한국은 김재익 수석의 긴축으로 물가가 28%대에서 82~83년 2~7%대로 떨어지며 3저 호황의 발판을 놓았다. 이 사이클을 배경으로 신환종은 2026~2030년 AI 구축·디지털자산·지정학 리쇼어링이 물가를 다시 끈적하게 만들 것으로 보고, 성장자산 40~50%·위기방어자산 20%·인컴자산 30%로 짜는 분산을 권한다.</p><div class="uc-meta"><span>신환종 <b>한국투자증권</b></span><span>방송 2026-08-24</span><span>1시간 38분 15초</span><span>언더스탠딩</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-verdict"><b>한줄 코멘트.</b> 이 방송에서 가장 값나가는 대목은 AI가 만든다는 미래의 디플레이션이 아니라, AI를 짓는 지금 몇 년이 오히려 물가를 밀어 올린다는 신환종의 진단이다. 데이터센터를 짓는 데 들어가는 돈과 자원, 스테이블코인이 화폐 유통속도를 높이는 방식, 토큰화가 부동산처럼 묶인 자산을 유동화하는 방식까지 셋을 같은 방향(물가 상승)으로 모아 놓은 논리는 촘촘하다. 다만 그 결론이 채권 비중을 늘리라는 처방으로 끝난다는 점은 채권 애널리스트의 입에서 나온 말이라는 걸 감안하고 들어야 한다.</p><div class="uc-rep"><h3>1. 인플레이션 사이클이 자산배분의 기준이다</h3><p>신환종은 "SP500(S&amp;P500)을 사면 꾸준히 우상향할 거라고 생각하는데 천만에"라는 말로 방송을 연다. 1970년대와 2000~2010년을 예로 들며, 잘못 투자하면 10년 동안 거의 무너진다고 경고한다.</p><p>그가 자산배분의 기준으로 삼는 것은 인플레이션과 금리 사이클이다. 인플레이션 초기(물가가 오르기 시작하고 금리도 같이 오르는 국면)에는 채권이나 예금에 넣는 것이 손해다. 금리가 계속 오르는데 낮은 금리로 묶여버리기 때문이다. 반대로 인플레이션이 정점에 가까워져 금리가 7~8%까지 올라온 국면에서는 채권을 사야 한다고 그는 말한다. 이때 저축은행이 5.5% 특판 예금으로 손님을 끄는 것을 그는 "호구"를 모으는 행위라고 부른다 — 금리가 가장 어려울 때 낮은 확정금리로 돈을 묶어주는 셈이기 때문이다. 정점에서는 30년물처럼 긴 채권을 사야 한다는 것이 그의 조언이다.</p><p>이후 정부가 금리를 내리며 물가가 빠지는 디스인플레이션 국면에서는 거액 자산가와 연기금이 자산의 60~70% 이상을 확정금리 채권에 넣어 둔다고 그는 설명한다. 고금리를 다시 보기 어렵기 때문에 이때 확보해 둔 확정 수익으로 이후 경기침체·디플레이션 국면에서 위험자산(주식·대체투자·금)을 사들이는 것이 자산배분의 기본 틀이라는 것이다. 그가 드는 근거는 단순하다 — 주식 투자의 평균 수익률이 연 6~7~8%에 불과한데, 국채가 5~6~7%를 준다면 굳이 무리해서 위험자산을 살 이유가 없다는 것이다.</p><figure class="uc-fig"><p class="fig-title">인플레이션 사이클과 살 자리</p><div class="rfig"><div class="rf-chain"><div class="rf-box rf-model"><b>① 인플레이션 초기</b><span>금리가 계속 오른다 · 채권·예금에 묶으면 손해</span></div><i class="rf-step" aria-hidden="true"></i><div class="rf-box rf-harness"><b>② 정점</b><span>금리 7~8% · 30년물처럼 긴 채권을 산다</span></div><i class="rf-step" aria-hidden="true"></i><div class="rf-box rf-model"><b>③ 디스인플레이션</b><span>금리를 내린다 · 확정금리 채권을 60~70%까지</span></div><i class="rf-step" aria-hidden="true"></i><div class="rf-box rf-model"><b>④ 경기침체·디플레이션</b><span>확보한 확정 수익으로 주식·대체투자·금을 산다</span></div></div></div><figcaption>신환종이 자산배분의 기준으로 삼는 순환이다. <b>사야 할 자리는 ②다</b> — 금리가 가장 높을 때 긴 채권으로 확정 수익을 잡아 두고, 그 수익으로 ④에서 위험자산을 산다. 근거는 단순하다. 주식 장기 평균이 연 6~7~8%인데 국채가 5~6~7%를 준다면 무리해서 위험자산을 살 이유가 없다는 것이다.</figcaption></figure><h3>2. 어빙 피셔, 최고의 경제학자도 사이클 앞에서는 진다</h3><p>신환종은 어빙 피셔(Irving Fisher)를 소개한다. 명목금리는 실질금리에 인플레이션을 더한 값이라는 피셔 방정식과, 통화량(M)에 유통속도(V)를 곱하면 물가(P)와 거래량(Q)의 곱과 같다는 화폐수량방정식(MV=PQ)을 만든 사람이다. 대공황 직전 미국에서 케인즈와 비교할 것도 없는 최고의 경제학자로 꼽혔다고 그는 전한다.</p><p>그런 피셔가 1929년 9월 강의에서 "주식 시장은 절대 더 떨어지지 않는다, 고원에 올라왔다"고 말했고, 바로 다음 달인 10월부터 대공황이 시작됐다. 레버리지를 크게 쓰고 있던 피셔는 이 발언 하나로 역사에서 지워지다시피 했고, 이후 남은 평생 책을 써서 갚아야 할 만큼 크게 망했다고 신환종은 말한다.</p><p>그럼에도 피셔가 남긴 개념들은 지금도 쓰인다며 신환종이 든 예가 그의 책 「화폐 착각(Money Illusion)」에 나오는 사고실험이다. 일본에서 일하는 철수는 물가상승률이 0%인 나라에서 명목금리 2%짜리 국채에 1천만 원을 투자한다. 세전 이자는 20만 원이고, 세금은 명목금리에만 매겨지므로 세후 실질수익률은 1.692%가 된다. 한국에서 일하는 영이는 물가상승률 2%인 나라에서 명목금리 4%짜리 국채에 같은 1천만 원을 투자한다. 세전 이자는 40만 원으로 철수보다 많아 보이지만, 물가 2%를 걷어내면 실질로 남는 이자는 철수와 같은 20만 원이다. 그런데 세금은 여기서도 명목금리(4%)에만 매겨지기 때문에, 세후 실질수익률은 1.384%로 오히려 철수보다 낮아진다.</p><p>신환종은 두 사람에게 어디서 일할지 물으면 대부분 명목금리가 높은 한국을 고른다고 말한다. 실제로는 더 적게 남는데도 명목의 숫자가 큰 쪽에 쏠리는 것, 이것이 피셔가 말한 화폐 착각이다.</p><h3>3. 70년대 데자뷔 — 오일쇼크는 방아쇠였을 뿐</h3><p>신환종은 브리지워터(Bridgewater)의 레이 달리오가 제기한 "혹시 지금이 그때와 같은 거 아니야(데자뷔)"라는 문제의식을 소개한다. 1970년대는 1973년 1차 오일쇼크와 1979년 이란 혁명발 2차 오일쇼크로 두 번의 인플레이션 파동을 겪었다. 지금은 코로나와 러시아-우크라이나 전쟁이 같은 자리에 놓인다는 것이다.</p><p>케인지안(케인즈주의) 해석은 오일쇼크를 외부 충격으로 본다. 산업의 석유 의존도가 높았던 탓에 공급망이 흔들리며 물가가 튀었다는 것이다. 신환종은 다른 해석도 함께 짚는다. 통화주의 입장에서는 진짜 원인이 오일쇼크 이전, 1960년대 베트남 전쟁과 린든 존슨 대통령의 "위대한 사회" 정책이 이미 만들어 놓은 과도한 통화량이라는 것이다. 여기에 전쟁으로 통화유통속도까지 빨라지면서 MV가 급격히 불어났고, 오일쇼크는 이미 쌓여 있던 압력을 터뜨린 방아쇠에 불과했다는 논리다.</p><p>지금 상황도 마찬가지라고 신환종은 본다. 좌파냐 우파냐가 중요한 게 아니라, 코로나 이후 누가 집권하든 막대한 재정지출을 준비하는 시대가 됐다는 것이다. 재정적자 규모 자체가 2020년 이전과는 완전히 다르다는 점을 그는 강조한다.</p><h3>4. 아서 번즈와 볼커 — 같은 처방, 다른 사회</h3><p>신환종이 이날 가장 공들여 대비시킨 두 인물이 아서 번즈와 폴 볼커다. 둘 다 미국 연방준비제도(연준) 의장으로 인플레이션과 싸웠지만 결과가 갈렸다.</p><p class="uc-label">아서 번즈와 폴 볼커</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>항목</th><th>아서 번즈 (1970년대 초반)</th><th>폴 볼커 (1979년~)</th></tr></thead><tbody><tr><td>최고 금리</td><td>13%까지 인상 후 곧바로 인하</td><td>14~16%까지 올렸다 내렸다가 다시 20%까지 인상, 유지</td></tr><tr><td>인상 방식</td><td>점진적</td><td>1979년 10월 6일 토요일 밤 기습 인상</td></tr><tr><td>언론·여론</td><td>뉴욕타임즈·LA타임즈 사설, 제임스 토빈(노벨 경제학자)이 "과도한 긴축, 경기침체를 부를 것"이라 비판</td><td>뉴욕타임즈가 다음 날 "인플레이션이란 중병을 고치기 위한 극단적인 충격요법"이라 평가</td></tr><tr><td>사회적 배경</td><td>여전히 케인지안 컨센서스, 고통을 감내할 공감대 없음</td><td>10년에 걸친 실패 끝에 "물가부터 잡자"는 공감대 형성</td></tr></tbody></table></div><p>신환종은 번즈가 무능해서 실패한 게 아니라고 강조한다. 그가 금리를 13%까지 올렸을 때 시장은 여전히 케인지안이었고, 지금 경기침체인데 금리를 이렇게 올리는 게 맞느냐는 반발에 밀려 이내 내릴 수밖에 없었다는 것이다. 반면 볼커가 기습적으로 20%까지 밀어붙였을 때는 이미 10년 동안 미국을 괴롭힌 인플레이션이 사람들의 생각을 바꿔 놓은 뒤였다. 신환종은 "볼커가 뛰어나서 잡은 게 아니라 생각의 전환이 인플레이션을 잡은 것"이라고 말한다.</p><p>볼커의 긴축으로 당선된 레이건은 임금-물가 스파이럴(노조가 물가 상승분만큼 임금 인상을 자동으로 요구하던 구조)을 깨는 데도 성공했고, 이 성공이 이후 40년 신자유주의·통화주의 시대의 출발점이 됐다고 신환종은 정리한다.</p><h3>5. 독일·일본·중남미 — 잡은 나라, 못 잡은 나라</h3><p>신환종은 미국 바깥의 사례도 비교한다. 독일 중앙은행 분데스방크는 1973년 물가가 급등하자 곧바로 기준금리를 올렸고, 경기침체를 감수하면서도 뚝심 있게 밀어붙여 물가를 3%대까지 낮췄다. 이 신뢰가 이후 마르크화가 달러 다음가는 제2의 기축·안전자산 통화로 부상하는 배경이 됐다고 그는 설명한다. 일본은 종신고용 관행 덕분에 임금 상승을 억누르며 비교적 부드럽게 넘어갔고, 영국은 대응에 실패해 1975년 IMF 구제금융을 받았다.</p><p>미국은 독일과 달리 물가가 5%대에서 잘 내려가지 않는 상태가 이어졌는데, 신환종은 이를 "끈적끈적한 인플레이션"이라 부른다 — 실제로 자신이 쓴 책의 원제목이 「스티키 인플레이션」이었다고 밝힌다. 2차 오일쇼크(1979년 이란 혁명)가 1차 충격이 채 가라앉기도 전에 겹치면서 기대 인플레이션 자체를 꺾지 못한 것이 미국의 핵심 문제였다고 그는 짚는다.</p><p>신흥국 쪽에서는 오일머니의 순환이 위기를 키웠다. 1970년대 오일머니는 씨티·UBS 같은 서방 은행을 거쳐 변동금리로 동유럽과 중남미에 재대출됐다. 1980년대 초 볼커가 금리를 20%씩 올리자 달러가 강세로 돌아섰고 변동금리 대출 이자가 폭등하면서 중남미가 차례로 외채 위기에 빠졌다. 정부가 발권력에 의존해 돈을 풀면서 브라질은 1990~93년경 물가상승률이 1,000%를 넘는 하이퍼인플레이션을 겪었다.</p><p>이 국가들이 물가를 10% 밑으로 되돌린 것은 1990년대 중반이다. 신환종은 1994~95년 브라질 재무장관이 된 카르도소가 인플레이션 타게팅(물가상승률을 3~5.5~6%대 밴드로 못박고 벗어나면 금리를 자동으로 올리는 제도, 신흥국 중 가장 먼저 도입)과 재정 지출 상한을 못박는 재정 책임 제도를 도입한 것을 핵심 전환점으로 든다. 이후 약 35년째 두 자릿수 밑을 유지하고 있으며, 이 신뢰가 2000년대 신흥국(브릭스) 채권이 글로벌 채권시장에 편입되는 계기였다고 신환종은 말한다 — 원자재 가격 상승 때문이 아니라는 것이다.</p><figure class="uc-fig"><p class="fig-title">같은 오일쇼크, 갈린 결말</p><div class="rfig"><div class="rf-row"><p class="rf-cap">독일 — 즉시 올렸다</p><div class="rf-pair"><div class="rf-box rf-harness"><b>분데스방크</b><span>1973년 물가 급등에 곧바로 금리 인상</span><span>경기침체를 감수하고 유지</span></div><div class="rf-msgs"><div class="rf-msg"><em><b>남은 것</b><span>물가 3%대까지 내려옴</span></em><i class="rf-track" aria-hidden="true"></i></div></div><div class="rf-box rf-harness"><b>마르크화</b><span>달러 다음가는 안전자산 통화로</span></div></div></div><div class="rf-row"><p class="rf-cap">미국 — 두 번째 충격이 겹쳤다</p><div class="rf-pair"><div class="rf-box rf-empty"><b>연준</b><span>1973년 1차 오일쇼크</span><span>1979년 이란 혁명발 2차 오일쇼크</span></div><div class="rf-msgs"><div class="rf-msg"><em><b>남은 것</b><span>물가가 5%대에서 안 내려감</span></em><i class="rf-track" aria-hidden="true"></i></div></div><div class="rf-box rf-empty"><b>기대 인플레이션</b><span>꺾이지 않음</span></div></div></div><div class="rf-row"><p class="rf-cap">브라질 — 뒤늦게 제도로 잡았다</p><div class="rf-pair"><div class="rf-box rf-empty"><b>1980년대 외채위기</b><span>볼커의 20% 인상 뒤 달러 강세</span><span>변동금리 대출 이자가 폭등</span></div><div class="rf-msgs"><div class="rf-msg"><em><b>1990~93년</b><span>물가상승률 1,000% 넘김</span></em><i class="rf-track" aria-hidden="true"></i></div><div class="rf-msg"><em><b>1994~95년</b><span>인플레이션 타게팅 · 재정 책임 제도</span></em><i class="rf-track" aria-hidden="true"></i></div></div><div class="rf-box rf-harness"><b>그 뒤 약 35년</b><span>두 자릿수 밑 유지</span></div></div></div><div class="rf-legend"><span><i class="rf-sw rf-harness"></i>물가를 잡은 자리</span><span><i class="rf-sw rf-empty"></i>못 잡은 자리</span></div></div><figcaption>세 나라가 같은 오일쇼크를 맞았다. <b>갈린 것은 충격의 크기가 아니라 언제 올렸고 얼마나 버텼나였다.</b> 독일은 1973년에 바로 올려 3%대로 내렸고, 미국은 2차 충격이 겹치며 기대 인플레이션을 못 꺾었다. 브라질은 1,000%를 겪은 뒤에야 제도로 못박아 잡았다.</figcaption></figure><h3>6. 한국의 1980년 — 김재익과 3저 호황</h3><p>신환종은 자신의 어머니에게 직접 물어봤다며 한국의 1970년대 오일쇼크를 짚는다. 당시 한국의 물가상승률은 28%에 달했다. 1차 오일쇼크 때는 중동 건설 붐 덕에 해외에서 달러가 들어오며 성장 자체는 나쁘지 않았지만, 2차 오일쇼크 때는 사정이 여의치 않았다고 그는 전한다.</p><p>물가를 잡지 못한 채 1979~80년 부마항쟁과 신군부 등장 같은 정치적 격변이 이어졌다. 전두환 정부에서 경제수석을 맡은 김재익이 볼커식 긴축(통화량 축소, 임금 동결, 농산물 수매가 억제)을 강하게 밀어붙였고, 그 결과 물가상승률은 82~83년 2~7%대로 빠르게 떨어졌다. 신환종은 이 급락이 이후 저유가·저금리·저달러가 겹친 "3저 호황"의 발판이 됐다고 본다. 다만 그는 물가를 못 잡았어도 3저 호황이 왔을지는 단정하기 어렵다며, 잡지 못했다면 물가 상승이 훨씬 오래 지속되며 다른 문제들이 많았을 것이라는 정도로 정리한다.</p><h3>7. 80년대는 채권의 시대였다 — 금융공학이 태어난 자리</h3><p>볼커가 금리를 20%까지 올린 뒤 금리가 계속 내려오면서, 신환종은 1980년대 최고의 자산이 주식이 아니라 채권이었다고 강조한다. 20%씩 오갔던 금리가 쭉 내려오는 동안 채권 가격은 반대로 계속 올랐고, 이 흐름은 1993년까지 이어졌다. 1993년 클린턴이 재정지출 확대 방침을 세우자 채권시장 참가자들("채권 자경단")의 반발로 정책을 재정적자 축소·증세 쪽으로 바꿨고, 이듬해인 1994년 그린스펀이 기준금리를 3%에서 6%로 올리면서 이른바 "채권 대학살"이 벌어졌다고 그는 설명한다. 이후 주도권은 주식으로 넘어간다.</p><p>이 시기에 지금 금융의 원형이 만들어졌다고 신환종은 짚는다. 하이일드(정크본드) 시장을 키운 인물은 드렉셀 버넘 램버트의 마이클 밀켄이다. 그는 트리플B 이하 투기등급 회사채 약 1천 개를 묶으면 10%가 부도나더라도 나머지 900개가 국채금리+스프레드(5~7%)로 벌어들이는 수익이 주식 투자보다 낫다는 것을 발견했고, 한 해 보너스로 5,500억 원(약 5억 달러)을 받았다. 이후 내부자 정보를 이용한 M&amp;A·주식거래로 감옥에 갔지만, 하이일드 시장 자체는 이후 다시 정비돼 지금도 중요한 자산군으로 남아 있다.</p><p>레버리지 바이아웃(LBO, 인수 대상 회사의 자산을 담보로 빌린 돈으로 회사를 사들이는 방식)이 늘면서 투자등급이던 회사가 투기등급으로 떨어지는 "추락천사(fallen angel)"가 흔해졌고, 이 채권들도 정크본드 시장에 합류했다. 라이언 핑크(훗날 블랙록 창업자)는 모기지 채권을 등급별로 나눠 파는 CMO(트랜치 구조의 모기지담보부증권) 구조를 만들었다. 은행과 증권사의 겸업을 막던 법이 약 70년 만에 풀리면서 은행들이 다시 주식·채권·보험을 함께 취급하게 됐고, 주 경계를 넘는 지점 설립 규제도 철폐되면서 JP모건체이스 같은 초대형 은행이 등장했다. 신환종은 이 80년대 금융공학의 발전이 결국 2008년 금융위기로 이어지는 토대가 됐다고 정리한다.</p><p>S&amp;P500 자체의 움직임도 이 흐름과 맞물린다. 1970년대는 횡보하며 실질로는 손실이었고, 1983년부터 1999년 닷컴버블까지는 크게 올랐다. 1999년부터 2009년까지는 다시 횡보·하락했고, 2011년 이후 초저금리로 연기금 자금이 주식·사모펀드(PE)·사모대출(PC) 쪽으로 몰리면서 다시 크게 올랐다고 신환종은 설명한다.</p><h3>8. 2026~2030년, 왜 다시 끈적해지는가</h3><p>신환종은 지금이 인플레이션 상승기 중에서 "야구로 치면 7회초 정도"에 와 있다고 본다. 진행자가 "남은 기간이 4~5년이냐"고 묻자 그는 그렇게 길게 보지는 않는다며, 올해 하반기(2026년)와 내년(2027년)까지는 인플레이션이 오르는 쪽으로 가다가 내년 중반이나 후반쯤 변곡점이 올 것 같다고 답한다. CPI 구성과 정부 대응이 1970년대와 달라진 데다, 사람들이 그때를 기억하기 때문에 고통을 감내하더라도 어느 정도 대응할 수 있으리라는 이유를 든다.</p><p>물가 수준 자체도 구간이 바뀌었다고 그는 짚는다. 2000~2010년은 인플레이션 4%·성장 3%, 2010년대는 성장 2%·물가 1%의 저물가 시대였다. 지금은 물가와 성장률 모두 2.5~3% 안팎을 오가는 구간으로 올라와 있고, 이 수준에서 고착화되는 게 신환종이 말하는 "스티키"의 의미다.</p><p>그는 앞으로 3~5년, 특히 2026~2030년 구간이 오히려 인플레이션 상승 요인이 많다고 본다. 첫째는 AI다. AI가 결국 생산성 혁명으로 디플레이션 시대를 연다는 낙관론(일런 머스크류)에 대해 신환종은 "아직 먼 얘기"라며, 데이터센터를 짓는 과정 자체가 자금과 자원을 끌어들이는 인플레이션 압력이라고 본다. 둘째는 디지털자산의 활성화다. 스테이블코인 등을 통해 송금이 순간적으로 이뤄지면 화폐유통속도(MV=PQ의 V)가 빨라지고, 이는 전체 통화량 효과를 키워 인플레이션 상승 요인이 된다는 것이다. 셋째는 토큰화(부동산 같은 묶인 자산을 잘게 쪼개 파는 방식)다. 파크원 같은 건물을 수만 명이 나눠 갖게 되면 유동성이 커지고, 이 역시 화폐 회전 속도를 높여 인플레이션 요인으로 작용한다고 신환종은 본다. 넷째는 지정학이다. 중국 중심의 값싼 생산 구조에서 벗어나 미국·베트남 등으로 공장을 옮기는 리쇼어링, 그리고 ESG 요구가 모두 생산 비용을 높이는 방향이라고 그는 짚는다.</p><p>지금 미국 국채 10년물 금리는 4.75%, 30년물은 5.3% 안팎이다. 신환종은 이 숫자가 부담스러워 보여도, 과거 10%대·8%대에서 내려온 자리이며 최근 15년의 초저금리가 오히려 예외였다고 말한다. 재정적자 축소도 쉽지 않다고 본다. 미국은 여전히 GDP 대비 -5~-6%대 재정적자를 내고 있고, 재정이 탄탄하던 독일조차 방위비 확대로 재정적자로 돌아섰다. 부채가 많은 정부 입장에서 인플레이션을 어느 정도 용인하는 것이 부채의 실질가치를 깎는 손쉬운 방법이라는 점도 그는 지적한다.</p><figure class="uc-fig"><p class="fig-title">2026~2030년, 왜 다시 끈적해지나</p><div class="rfig"><div class="rf-row"><p class="rf-cap">2026~2030년 신환종이 꼽은 넷</p><div class="rf-pair"><div class="rf-box rf-model"><b>무엇이 늘어나나</b><span>AI 데이터센터 구축</span><span>지정학 리쇼어링과 ESG 요구</span><span>스테이블코인 송금</span><span>부동산 등 자산 토큰화</span></div><div class="rf-msgs"><div class="rf-msg"><em><b>첫째 길</b><span>생산·건설 비용을 높인다</span></em><i class="rf-track" aria-hidden="true"></i></div><div class="rf-msg"><em><b>둘째 길</b><span>화폐유통속도(MV=PQ의 V)를 높인다</span></em><i class="rf-track" aria-hidden="true"></i></div></div><div class="rf-box rf-harness"><b>물가·성장 모두 2.5~3%</b><span>2000~2010년 물가 4%·성장 3%</span><span>2010년대 물가 1%·성장 2%</span><span>10년물 4.75% · 30년물 5.3%</span></div></div></div></div><figcaption>넷이 같은 방향인 이유가 길 둘로 갈린다. <b>AI 구축과 리쇼어링은 비용 쪽, 스테이블코인과 토큰화는 속도 쪽이다.</b> 신환종은 AI가 생산성으로 물가를 낮추는 것은 아직 먼 얘기이고 짓는 몇 년이 먼저 온다고 봤다. 오른쪽 숫자가 지금 서 있는 자리다 — 2010년대의 물가 1%가 예외였다는 것이 그의 주장이다.</figcaption></figure><h3>9. 지금 무엇을 사야 하나 — 분산과 경고</h3><p>신환종은 인플레이션에서 돈을 버는 쪽은 결국 "돈을 빌린 사람"이라고 말한다. 반대로 임금이 물가를 따라가지 못하는 쪽은 진다. 그가 든 예가 스타벅스다 — 지난 7년 사이 스타벅스 커피 가격은 36% 올랐는데 같은 기간 임금은 20% 오르는 데 그쳤다. 그는 여기에 더해, 2022년 인플레이션 국면에서 애플 같은 대기업들이 인건비 상승분을 넘어서는 수준으로 가격을 올린 사례("애플이 하는 치플레이션")를 들며, 삼성·SK하이닉스의 메모리 가격이 오르면 다른 업체들도 그 명분으로 가격을 더 올리는 구조가 이미 시작됐다고 본다.</p><p>부동산은 이 사이클에서 꾸준한 자산이라고 신환종은 말한다. 지난 100년 미국 자산의 중위 수익률을 보면 금·원자재·부동산이 승자였고 채권·주식이 1970년대의 패자였는데, 그중에서도 부동산은 "엄청난 승자도 엄청난 패자도 아닌" 자산이었다는 것이다. 금리가 오르고 매수세가 줄어도 신규 주택을 짓는 원가 자체가 높아진 상태라, 기존 주택 가격이 크게 밀리지 않고 버텨준다는 것이 그 이유다.</p><p>구체적인 배분으로 신환종은 성장자산(AI 전환·메모리 관련) 40~50%, 위기방어자산 20%, 인컴자산(미국 30년물을 대체할 배당·크레딧 채권) 30%를 제시한다.</p><p class="uc-label">신환종이 제시한 자산배분</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>구분</th><th>비중</th><th>내용</th></tr></thead><tbody><tr><td>성장자산</td><td>40~50%</td><td>AI 전환 기대, 메모리 업체 등</td></tr><tr><td>위기방어자산</td><td>20%</td><td>신용위기·경기침체 대비</td></tr><tr><td>인컴자산</td><td>30%</td><td>미국 30년물을 대체할 배당·크레딧 채권</td></tr></tbody></table></div><p>그는 2022년과 1970년대처럼 주식과 채권이 함께 빠지는 국면에서는 전통적인 60대 40 포트폴리오가 작동하지 않는다고 강조한다. 채권도 사이클 초반이 아니라 인플레이션이 중후반으로 넘어갈 때부터 비중을 늘리고, 쿠폰이 낮을 때가 아니라 높을 때 사서 확보해 두라고 조언한다.</p><p>마지막으로 그는 두 번의 경고 사례를 든다. 1929년 대공황과 2008년 금융위기 모두 인플레이션 국면에서 갑자기 디플레이션으로 급반전한 경우다. 1921년 무렵 JP모건의 한 이코노미스트가 고객들에게 "1920년대는 인플레이션의 시대"라며 차입 투자를 권했고, 이후 개인과 기업이 대거 레버리지를 일으켜 투자한 것이 대공황을 더 크게 키운 원인이 됐다고 신환종은 말한다. 인플레이션 국면에서는 돈을 빌린 사람이 이기지만, 갑자기 디플레이션으로 바뀌면 순위가 완전히 뒤집힌다는 것이다. 지금은 2008년 이후 은행 자본 규제가 훨씬 타이트해져 그런 급반전이 쉽지 않아 보인다고 그는 판단하면서도, 코로나 같은 외부 충격이나 신용위기 가능성에 대비해 한쪽에 자산을 몰아넣지 말라는 것이 그의 결론이다.</p></div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/understanding/%EC%96%B8%EB%8D%94%EC%8A%A4%ED%83%A0%EB%94%A9%20%EB%B3%B4%EA%B3%A0%EC%84%9C/2026-08-24-%EB%AC%BC%EA%B0%80-%EC%8B%A0%ED%98%B8%EB%A5%BC-%EB%AC%B4%EC%8B%9C%ED%95%98%EB%A9%B4-10%EB%85%84%EC%9D%B4-%EB%85%B9%EB%8A%94%EB%8B%A4.md" target="_blank" rel="noopener">보고서 전문 ↗</a><a href="https://youtu.be/vAvJB5fqXOE" target="_blank" rel="noopener">방송 영상 ↗</a><button type="button" class="uc-copy" data-anchor="card-물가-신호를-무시하면-10년이-녹는다-사이클의-어느-자리에-서-있나">링크 복사</button></div></div></div></section>
+
+  <footer>언더스탠딩 방송 정리 아카이브 · 원문 영상 링크를 카드마다 답니다. 종목 추천이 아닙니다.
+  페이지 생성은 <code>scratchpad/gen_undreport_dashboard.py</code>(공용 부품 <code>dash_common.py</code>, 보고서 파서 <code>gen_aie_dashboard.py</code>).</footer>
+</div>
+<script>
+(function(){
+  function toggle(card){
+    var open=card.classList.toggle('is-open');
+    var head=card.querySelector('.uc-head');
+    if(head) head.setAttribute('aria-expanded', String(open));
+    if(!open){
+      var top=card.getBoundingClientRect().top;
+      if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
+    }
+  }
+  document.addEventListener('click', function(e){
+    var head=e.target.closest('.uc-head');
+    if(head) toggle(head.closest('.ucard'));
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var head=e.target.closest('.uc-head');
+    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+  });
+})();
+</script><script>
+(function(){
+  var tabs=document.querySelector('.scope-tabs');   // 범위 탭은 국내·해외가 섞인 페이지에만 있다
+  var box=document.querySelector('.sec-pick'); if(!box) return;
+  var back=document.querySelector('.sback');
+  var pick = 'all';   // 범위 탭이 있든 없든 처음 화면은 전체다
+  // 화면이 둘이다. 주제를 고르는 화면과 그 주제의 카드를 읽는 화면.
+  // 한 화면에 타일과 카드를 같이 두면 무엇을 보고 있는지 흐려진다.
+  // 합류도 칸을 고른 상태(cell)는 세 번째 화면이다. 타일은 카드를 주제별로 나누고,
+  // 칸은 주제를 가로질러 고른다 — 둘이 동시에 걸리면 나중 것이 앞의 것을 푼다.
+  var only=null, picking=true, sect=null, q='', cell=null;
+  var mbar=document.querySelector('.mg-b');
+  var sq=document.querySelector('.ssearch .sq'), sqn=document.querySelector('.ssearch .sq-n');
+  function norm(s){ return (s||'').replace(/\s+/g,' ').trim().toLowerCase(); }
+  function opt(id){ return box.querySelector('button[data-sec="'+id+'"]'); }
+  function apply(){
+    // 카드를 숨기는 조건이 둘이다 — 범위 탭(국내·해외)과 합류도 칸.
+    // 칸을 고르면 섹션을 가로질러 그 칸에 선 카드만 남는다.
+    document.querySelectorAll('.ucard').forEach(function(c){
+      var okScope = !c.dataset.scope || pick==='all' || c.dataset.scope===pick;
+      var okCell = !cell || (' '+(c.dataset.cells||'')+' ').indexOf(' '+cell+' ')!==-1;
+      c.hidden = !(okScope && okCell);
+    });
+    // 롤업 리포트도 범위를 따른다 — 국내를 고르면 국내 리포트만 남는다
+    document.querySelectorAll('.rlrep[data-scope]').forEach(function(r){
+      r.hidden = !(pick==='all' || r.dataset.scope===pick);
+    });
+    document.querySelectorAll('.rlold').forEach(function(o){
+      o.hidden = o.querySelectorAll('.rlrep:not([hidden])').length===0;
+    });
+    // 섹션을 고르면 롤업 리포트도 그 섹션 항목만 남긴다(섹션 표시가 없는 항목은 늘 보인다)
+    document.querySelectorAll('.rlrep').forEach(function(rep){
+      if(!rep.hasAttribute('data-scope')) rep.hidden = false;
+      var tagged=rep.querySelectorAll('.rll li[data-sec]');
+      tagged.forEach(function(li){ li.hidden = !!only && li.dataset.sec!==only; });
+      if(only && tagged.length && !rep.querySelectorAll('.rll li:not([hidden])').length) rep.hidden = true;
+    });
+    var roll=document.querySelector('.rollup');
+    if(roll) roll.hidden = roll.querySelectorAll('.rlrep:not([hidden])').length===0;
+    var seen=0;
+    document.querySelectorAll('section[id]').forEach(function(s){
+      // 카드가 없는 섹션(통합 인사이트)은 교차 카드로 센다. 범위 탭은 타지 않는다
+      var live = s.hasAttribute('data-fixed')
+                   ? (s.dataset.n ? parseInt(s.dataset.n, 10) : s.querySelectorAll('.ins').length)
+                   : s.querySelectorAll('.ucard:not([hidden])').length;
+      seen+=live;
+      // 칸을 고른 화면에서는 카드가 남은 섹션만 선다. 섹션 하나를 고른 상태가 아니다.
+      s.hidden = cell ? live===0 : (picking || live===0 || (only && s.id!==only));
+      var o=opt(s.id);
+      if(o){
+        // 카드가 0편이라 원래 숨어 있던 타일은 검색해도 나오면 안 된다. 아래 검색 분기가
+        // 이 표시를 보고 판단하므로, 검색 분기가 o.hidden을 다시 덮어써도 이 값은 남는다.
+        o.dataset.empty = live===0 ? '1' : '';
+        o.hidden = live===0;
+        var c=o.querySelector('.cnt'); if(c) c.textContent=live;
+      }
+    });
+    // 섹션 전용 층은 그 섹션을 고른 동안만 보인다. 갈래가 둘인 섹션은 버튼 줄만 먼저 펴고
+    // 안쪽(지도·카드)은 사람이 고른 뒤에 편다.
+    document.querySelectorAll('.secsw').forEach(function(w){
+      w.hidden = !only || w.dataset.sec!==only;
+      if(w.hidden) w.querySelectorAll('.sw-btn').forEach(function(b){
+        b.setAttribute('aria-pressed','false');
+      });
+    });
+    // 「전체 보기」는 회사를 안 고른 채 전부 읽는 화면이다(picking=false, only=null).
+    // 갈래 버튼은 회사 하나를 고른 뒤에만 뜻이 있으므로 여기서는 글(.sv-posts)만 펴고
+    // 지도(.sv-val)는 접어 둔다 — 회사 스물둘의 지도를 한꺼번에 펴면 첫 카드에 닿기까지
+    // 스크롤이 수십 판이 된다. 이 갈래가 없던 동안 전체 보기에 제목만 나오고 카드가
+    // 통째로 안 나왔다.
+    var allView = !picking && !only;
+    document.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){
+      if(allView){ l.hidden = !l.classList.contains('sv-posts'); return; }
+      var sw = document.querySelector('.secsw[data-sec="'+l.dataset.sec+'"]');
+      if(!sw){ l.hidden = !only || l.dataset.sec!==only; return; }
+      // 갈래가 있는 섹션은 버튼이 정한다. 섹션을 떠나면 둘 다 접는다.
+      if(!only || l.dataset.sec!==only) l.hidden = true;
+    });
+    // 섹터 타일의 수는 그 안에 든 회사 수다. 카드 수를 합치면 한 회사를 여러 편으로 평가한
+    // 섹터가 회사 많은 섹터처럼 보인다. 범위 탭에 걸려 숨은 회사는 빼고 세고, 하나도 안 남으면
+    // 섹터째 숨긴다.
+    box.querySelectorAll('.stile[data-secs]').forEach(function(t){
+      var n=0;
+      t.dataset.secs.split(',').forEach(function(id){
+        var o=box.querySelector('.sectp .stile[data-sec="'+id+'"]');
+        if(o && !o.hidden) n += 1;
+      });
+      t.hidden = n===0;
+      var c2=t.querySelector('.cnt'); if(c2) c2.textContent=n;
+    });
+    // 범위 탭이나 빈 섹션 때문에 타일이 다 숨은 묶음은 이름만 남지 않게 같이 숨긴다
+    box.querySelectorAll('.sgrp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.stile:not([hidden])').length===0;
+    });
+    // 화면은 셋이다 — 섹터 고르기, 그 섹터의 회사 고르기, 고른 회사 읽기.
+    var pickBox=box.querySelector('.sectpick');
+    if(pickBox){
+      pickBox.hidden = !!sect;
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = !sect || pn.dataset.sect!==sect;
+      });
+    }
+    // 검색어가 있으면 섹터 층을 건너뛴다. 회사 타일 글자(.st-t)로만 맞추고, 카드 0편이라
+    // 이미 숨어 있던 타일(dataset.empty)은 글자가 맞아도 그대로 숨긴다.
+    if(q){
+      if(pickBox) pickBox.hidden = true;
+      box.querySelectorAll('.sectp').forEach(function(pn){ pn.hidden = false; });
+      var qn=0;
+      box.querySelectorAll('.stile[data-sec]').forEach(function(t){
+        if(!t.dataset.sec) return;   // 「전체 보기」 타일은 검색 대상이 아니다
+        var tt=t.querySelector('.st-t');
+        var match = t.dataset.empty!=='1' && norm(tt?tt.textContent:t.textContent).indexOf(q)!==-1;
+        t.hidden = !match;
+        if(match) qn++;
+      });
+      box.querySelectorAll('.sectp').forEach(function(pn){
+        pn.hidden = pn.querySelectorAll('.stile[data-sec]:not([hidden])').length===0;
+      });
+      if(sqn) sqn.textContent = qn + '곳';
+    } else if(sqn){
+      sqn.textContent = '';
+    }
+    var all=opt(''); if(all){ var ac=all.querySelector('.cnt'); if(ac) ac.textContent=seen; }
+    box.hidden = !picking;
+    // 읽는 순서 안내는 첫 화면에만 둔다 — 섹션을 고르고 나면 그 섹션을 읽을 차례다
+    var intro=document.querySelector('.intro');
+    if(intro) intro.hidden = !picking;
+    var roll2=document.querySelector('.rollup');
+    if(roll2 && picking) roll2.hidden = false;   // 주제 고르는 화면에서는 롤업을 그대로 둔다
+    if(mbar) mbar.querySelectorAll('.mcell').forEach(function(g){
+      g.setAttribute('aria-pressed', String(g.dataset.cell===cell));
+    });
+    if(back){
+      back.hidden = picking;
+      var now=back.querySelector('.sb-now');
+      if(now){
+        var cur = only ? opt(only) : opt('');
+        var t = cur && cur.querySelector('.st-t');
+        var mg = cell && mbar ? mbar.querySelector('.mcell[data-cell="'+cell+'"]') : null;
+        now.textContent = picking ? ''
+          : (mg ? (mg.dataset.label || cell) : (t ? t.textContent : ''));
+      }
+    }
+    box.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String((b.dataset.sec||null)===only));
+    });
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button');
+    if(!b) return;
+    pick=b.dataset.pick; only=null; picking=true; apply();
+    window.scrollTo({top:0});   // 목록이 통째로 바뀌므로 맨 위에서 다시 읽게 한다
+  });
+  // 화면이 바뀌면 히스토리에도 한 칸 쌓는다. 안 쌓으면 브라우저 뒤로가기가 「타일 고르기」로
+  // 돌아가지 않고 대시보드 밖으로 나간다 — 섹션을 하나 열었을 뿐인데 페이지를 떠난다.
+  // 주소는 그 섹션을 지목한 주소와 같은 것을 쓴다(#섹션id). 「링크 복사」와 한 몸이다.
+  var quiet=false;                       // 뒤로가기로 되돌리는 중에는 다시 쌓지 않는다
+  function mark(){
+    if(quiet) return;
+    var base = location.pathname + location.search;
+    // 타일 고르기 화면은 주소에 #이 없다. 섹션을 고르면 그 섹션 주소, 「전체 보기」는 #all.
+    var want = picking ? base : base + '#' + encodeURIComponent(only || 'all');
+    // 카드를 지목한 주소로 들어온 사람의 주소는 덮지 않는다. LINK_JS가 그 카드를 열려고
+    // 타일을 대신 눌러 주는데, 그때 여기가 #card-… 를 #섹션id 로 갈아치웠다. 그래서 새로
+    // 고침하면 읽던 카드가 아니라 섹션 목록이 떴다(2026-08-23). 지금 주소가 이미 이 섹션
+    // 안을 가리키고 있으면 그대로 둔다 -- 주소가 안 바뀌니 히스토리도 안 쌓인다.
+    if(!picking && only && location.hash){
+      var cur=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      var host=cur && cur.closest('section');
+      if(host && host.id===only) want = base + location.hash;
+    }
+    if(want !== base + location.hash) history.pushState({sec: only, picking: picking}, '', want);
+  }
+  // 섹터를 펴는 것도 화면 하나다. 주소에는 안 실리지만 상태로 한 칸 쌓아 두어야
+  // 기기 뒤로가기가 섹터 고르기로 돌아온다 — 안 쌓으면 페이지째 나간다.
+  function markSect(){
+    if(quiet) return;
+    history.pushState({sec: null, picking: true, sect: sect}, '',
+                      location.pathname + location.search);
+  }
+  function restore(st){
+    quiet = true;
+    cell = null;        // 히스토리에는 섹션만 쌓는다 — 되돌아오면 칸 선택은 풀린다
+    var stSect = (st && st.sect) || null;
+    var id = (location.hash || '').slice(1);
+    if(st && typeof st.picking === 'boolean'){
+      picking = st.picking; only = st.sec || null;
+    } else if(!id){
+      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+    } else if(id === 'all'){
+      picking = false; only = null;
+    } else {
+      var el = document.getElementById(decodeURIComponent(id));
+      var sc = el && el.closest ? el.closest('section[id]') : null;
+      picking = false; only = sc ? sc.id : null;
+    }
+    if(!only) sect = stSect;
+    apply();
+    // 타일 고르기로 돌아왔으면 주소의 #도 지운다. 남겨 두면 뒤이어 뜨는 hashchange를 받은
+    // LINK_JS가 그 카드를 다시 열어 버려 뒤로가기가 제자리로 튕긴다.
+    if(picking && location.hash){
+      history.replaceState({sec: null, picking: true}, '', location.pathname + location.search);
+    }
+    quiet = false;
+  }
+  if(sq) sq.addEventListener('input', function(){
+    q = norm(sq.value);
+    sect = null;      // 검색어를 넣거나 지우면 섹터 고르기부터 다시 시작한다
+    apply();
+  });
+  // 합류도 칸을 누르면 그 칸에 선 카드만 남는다. 같은 칸을 다시 누르면 푼다 —
+  // 지도를 열어 둔 채로 되돌릴 길이 있어야 한다.
+  function pickCell(g){
+    cell = (g.dataset.cell===cell) ? null : g.dataset.cell;
+    only=null; sect=null;
+    picking = !cell;
+    apply();
+    if(cell){
+      var first=document.querySelector('section[id]:not([hidden])');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  if(mbar){
+    mbar.addEventListener('click', function(e){
+      var g=e.target.closest('.mcell'); if(g) pickCell(g);
+    });
+    mbar.addEventListener('keydown', function(e){
+      if(e.key!=='Enter' && e.key!==' ') return;
+      var g=e.target.closest('.mcell'); if(!g) return;
+      e.preventDefault(); pickCell(g);
+    });
+  }
+  box.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    cell=null;                      // 타일과 칸은 같은 자리를 쓴다 — 나중 것이 앞의 것을 푼다
+    if(b.dataset.sect){ sect=b.dataset.sect; apply(); markSect(); window.scrollTo({top:0}); return; }
+    only = b.dataset.sec || null;   // 전체 보기 타일이면 only=null 로 전부 편다
+    if(!only) sect=null;            // 전체 보기에서 돌아오면 섹터 고르는 화면부터
+    picking=false;
+    apply();
+    mark();
+    var sec = only ? document.getElementById(only) : null;
+    if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    else window.scrollTo({top:0, behavior:'smooth'});
+  });
+  window.addEventListener('popstate', function(e){
+    restore(e.state);
+    var id=(location.hash||'').slice(1);
+    var el=id ? document.getElementById(decodeURIComponent(id)) : null;
+    if(el) el.scrollIntoView({block:'start'});
+    else box.scrollIntoView({block:'start'});
+  });
+  apply();
+  // 링크를 받고 들어온 사람의 첫 화면은 LINK_JS가 연다. 여기서는 히스토리 첫 칸만 표시해 둔다
+  history.replaceState({sec: null, picking: true}, '');
+})();
+</script><script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        var head=card.querySelector('.uc-head');
+        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1), true);
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script><script>
+(function(){
+  function show(sid, view){
+    var sw=document.querySelector('.secsw[data-sec="'+sid+'"]');
+    if(sw) sw.querySelectorAll('.sw-btn').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.view===view));
+    });
+    var val=document.querySelector('.sv-val[data-sec="'+sid+'"]');
+    var posts=document.querySelector('.sv-posts[data-sec="'+sid+'"]');
+    if(val) val.hidden = view!=='val';
+    if(posts) posts.hidden = view!=='posts';
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('.sw-btn'); if(!b) return;
+    show(b.closest('.secsw').dataset.sec, b.dataset.view);
+  });
+  // 카드를 지목한 주소로 들어오면 그 카드가 든 갈래를 펴 준다
+  function fromHash(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var h=document.getElementById(decodeURIComponent(id)); if(!h) return;
+    var box=h.closest('.sv-posts'); if(box) show(box.dataset.sec, 'posts');
+  }
+  window.addEventListener('hashchange', fromHash);
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', fromHash);
+  } else { fromHash(); }
+})();
+</script>
+<style>
+  .ui-top{
+    position:fixed; z-index:9998;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(18px, env(safe-area-inset-bottom));
+    width:42px; height:42px; border-radius:999px; border:1px solid rgba(0,0,0,.12);
+    display:flex; align-items:center; justify-content:center;
+    font:700 17px/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    color:#33312c; background:rgba(255,255,255,.86); cursor:pointer;
+    box-shadow:0 4px 16px -4px rgba(0,0,0,.25);
+    -webkit-backdrop-filter:saturate(1.5) blur(12px); backdrop-filter:saturate(1.5) blur(12px);
+    opacity:0; pointer-events:none; transform:translateY(6px);
+    transition:opacity .2s ease, transform .3s cubic-bezier(.19,1,.22,1);
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .ui-top.is-on{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .ui-top:hover{ transform:translateY(-2px); }
+  .ui-top:active{ transform:translateY(0) scale(.94); transition-duration:.09s; }
+  .ui-top:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+  @media (prefers-color-scheme: dark){
+    .ui-top{ color:#ecead9; background:rgba(28,28,32,.86); border-color:rgba(255,255,255,.16);
+             box-shadow:0 4px 16px -4px rgba(0,0,0,.6); }
+  }
+  @media (prefers-contrast: more){
+    .ui-top{ background:#fff; color:#000; border:1.5px solid #000;
+             -webkit-backdrop-filter:none; backdrop-filter:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ui-top{ transition:opacity .15s ease; transform:none; }
+    .ui-top.is-on:hover{ transform:none; }
+  }
+  @media print{ .ui-top{ display:none; } }
+</style>
+<button class="ui-top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var b=document.querySelector('.ui-top'); if(!b) return;
+  var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
+  window.addEventListener('scroll', show, {passive:true});
+  b.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  show();
+})();
+</script>
+
