@@ -894,14 +894,14 @@ FIG_MAP = _svg(640, 396, '로봇 한 대의 층마다 두 보고서가 무엇을
 
 REPORT_CSS = _biz_part3.TABLE_CSS + """
   /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
-     놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다. */
+     놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다.
+     두 판은 배경도 테두리도 같다 — 한쪽에 강조색을 깔면 그쪽이 결론처럼 읽힌다.
+     가르는 것은 제목(DCF · Reverse-DCF)이지 색이 아니다. */
   .vh2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
   .vh-ax{padding:8px 10px;border:1px solid var(--line);border-radius:10px}
-  .vh-ax.rev{border-color:var(--accent);background:var(--accent-soft)}
   .vh-ax > .k{display:block;margin-bottom:7px}
   .vh-ax > .k .en{display:block;font-size:15px;font-weight:850;letter-spacing:.01em;
                   color:var(--ink);line-height:1.2}
-  .vh-ax.rev > .k .en{color:var(--accent)}
   .vh-ax > .k .ko{display:block;font-size:11px;font-weight:700;color:var(--ink-3);
                   line-height:1.4;margin-top:2px}
   .vh-ax .top{display:flex;gap:6px;margin-bottom:7px}
