@@ -112,6 +112,40 @@ BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
 BOLD_TO = '<b>\1</b>'
 
 
+def _terms(para):
+    """용어 덩어리 → [(이름, 설명)].
+
+    괄호로 풀던 것을 여기로 내렸다. 본문 한복판에 설명을 끼우면 문장이 길어지고
+    읽는 눈이 한 번 끊긴다. 본문에는 별표 표시만 남기고 설명은 글 아래에 모은다.
+    """
+    out = []
+    for line in para.strip().splitlines():
+        line = line.strip()
+        if not line.startswith('*'):
+            continue
+        name, _, desc = line[1:].partition('—')
+        name, desc = name.strip(), desc.strip()
+        assert name and desc, '용어 줄이 「*이름 — 설명」 꼴이 아니다: %r' % line
+        out.append((esc(name), BOLD_RE.sub(BOLD_TO, esc(desc))))
+    assert out, '용어 덩어리가 비었다'
+    return out
+
+
+def _mark(text, names):
+    """본문 속 별표 표시를 용어 표시로 바꾼다.
+
+    선언한 이름만 바꾼다. 그래야 뒤에 붙는 조사가 표시 안으로 딸려 들어가지 않고,
+    선언 안 한 별표는 아래 assert에 걸린다."""
+    # 검사가 먼저다. 치환한 결과 안에도 별표가 들어가므로 뒤에 재면 내가 넣은 것을 잡는다
+    for m in re.finditer('[*]([^ *]+)', text):
+        tail = text[m.start() + 1:]
+        assert any(tail.startswith(n) for n in names),             '용어로 선언 안 한 별표가 있다: %r' % m.group(0)
+    for name in sorted(names, key=len, reverse=True):
+        text = re.sub('[*]' + re.escape(name),
+                      '<span class="rf-term"><i>*</i>%s</span>' % name, text)
+    return text
+
+
 def _table(para):
     """마크다운 표 한 덩어리 → (제목, 머리, 행들).
 
@@ -149,7 +183,16 @@ def parse_report(path, vid, figs=None):
     meta, body = front(raw)
     have = (aie_figs.RFIGS if figs is None else figs).get(vid, {})
     blocks, verdict, used = [], '', set()
-    for para in re.split(r'\n\s*\n', body):
+    paras = re.split(r'\n\s*\n', body)
+    # 용어는 본문보다 먼저 읽는다 — 이름을 알아야 본문의 별표를 제대로 짚는다
+    terms = []
+    for para in paras:
+        if para.strip().startswith('용어'):
+            terms = _terms(para)
+    names = [n for n, _ in terms]
+    for para in paras:
+        if para.strip().startswith('용어'):
+            continue
         t = ' '.join(para.split()).strip()
         if not t:
             continue
@@ -171,7 +214,14 @@ def parse_report(path, vid, figs=None):
             blocks.append(('fig', have[key]))
             used.add(key)
             continue
-        blocks.append(('p', BOLD_RE.sub(r'<b>\1</b>', esc(t))))
+        blocks.append(('p', _mark(BOLD_RE.sub(BOLD_TO, esc(t)), names)))
+    if terms:
+        # 선언만 하고 본문에서 한 번도 안 짚은 용어는 아래 설명만 떠 있게 된다
+        body_html = ' '.join(v for k, v in blocks if k == 'p')
+        for n, _ in terms:
+            if ('>%s</span>' % n) not in body_html:
+                print('  ! %s — 용어 %r를 본문에서 안 짚는다' % (os.path.basename(path), n))
+        blocks.append(('terms', terms))
     for key in sorted(set(have) - used):
         print('  ! %s — 그림 %r를 본문에서 안 부른다' % (os.path.basename(path), key))
     return meta, blocks, verdict
@@ -367,6 +417,17 @@ POST_CSS = '''
   .ucard .uc-fig .fig-title{font-size:.95rem;letter-spacing:0;text-transform:none}
   .ucard .uc-fig figcaption{font-size:.95rem;line-height:1.78}
   .uc-rep .uc-label{font-size:.95rem;letter-spacing:0;text-transform:none}
+  /* 용어 — 본문에는 별표 표시만 남기고 설명은 글 아래에 모은다.
+     괄호로 풀면 문장이 길어지고 읽는 눈이 그 자리에서 한 번 끊긴다 */
+  .uc-rep .rf-term{font-weight:700;color:var(--ink)}
+  .uc-rep .rf-term i{font-style:normal;font-weight:800;color:var(--epoch-teal);margin-right:1px}
+  .uc-rep .rf-terms{margin:26px 0 0;padding:14px 15px;border-radius:12px;
+            border:1px solid var(--line);background:var(--sunk,rgba(127,127,127,.06))}
+  .uc-rep .rf-terms dl{margin:0}
+  .uc-rep .rf-terms dt{margin:12px 0 2px;font-size:.95rem;font-weight:800;color:var(--ink)}
+  .uc-rep .rf-terms dl>dt:first-of-type{margin-top:0}
+  .uc-rep .rf-terms dt i{font-style:normal;color:var(--epoch-teal);margin-right:2px}
+  .uc-rep .rf-terms dd{margin:0;font-size:.95rem;line-height:1.7;color:var(--ink-2)}
   .ucard .uc-verdict{font-size:.95rem}
   .uc-rep .tbl-wrap{overflow-x:visible}
   .uc-rep .uc-tbl{font-size:.95rem;min-width:0}

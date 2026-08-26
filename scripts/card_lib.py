@@ -432,6 +432,9 @@ def report_html(blocks):
             h.append(fig_html(val))
         elif kind == 'tbl':
             h.append(tbl_html(val))
+        elif kind == 'terms':
+            h.append('<div class="rf-terms"><p class="uc-label">용어</p><dl>%s</dl></div>'
+                     % ''.join('<dt><i>*</i>%s</dt><dd>%s</dd>' % t for t in val))
         else:
             h.append('<p>%s</p>' % val)
     h.append('</div>')
