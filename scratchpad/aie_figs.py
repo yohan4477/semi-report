@@ -338,15 +338,20 @@ def _legend(items):
             % ''.join('<span><i class="rf-sw rf-%s"></i>%s</span>' % (k, t) for k, t in items))
 
 
-def _chain(items, mark=None):
+def _chain(items, mark=None, links=None):
     """무엇이 무엇을 거쳐 가나. 칸을 늘어놓고 사이마다 화살표를 둔다.
 
     items = [(머리, 아래 설명)]. mark를 주면 그 번째 칸(1부터)만 붓을 달리해
-    「여기가 끝이다」를 표시한다. 자리가 좁아지면 옆이 아니라 아래로 쌓인다."""
+    「여기가 끝이다」를 표시한다. links를 주면 칸 사이 화살표에 이름을 붙인다 —
+    두 칸을 잇는 것이 프로토콜처럼 이름을 가진 것일 때 쓴다.
+    자리가 좁아지면 옆이 아니라 아래로 쌓인다."""
+    links = list(links or [])
     out = []
     for i, (head, sub) in enumerate(items, 1):
         if i > 1:
-            out.append('<i class="rf-step" aria-hidden="true"></i>')
+            lab = links[i - 2] if len(links) >= i - 1 else ''
+            out.append('<div class="rf-link"><em>%s</em><i class="rf-step" aria-hidden="true"></i></div>'
+                       % lab if lab else '<i class="rf-step" aria-hidden="true"></i>')
         kind = 'harness' if mark == i else 'model'
         out.append('<div class="rf-box rf-%s"><b>%s</b><span>%s</span></div>' % (kind, head, sub))
     return '<div class="rfig"><div class="rf-chain">%s</div></div>' % ''.join(out)
@@ -454,8 +459,35 @@ _H_PROOF_CAP = ('증명은 주장이 아니라 사슬이다. <b>툴 결과는 �
                 '영수증은 마지막 칸에서 끝나야 한다.')
 
 
+# ══ 코덱스 하니스 뒤편 (shRR1e2HXMk) ═══════════════════════════════════
+
+_CX_PROTO = _chain([('UI', '메시지를 보낸다'),
+                    ('하니스', '컨텍스트를 조립하고 도구를 부른다'),
+                    ('추론', '모델이 답한다')],
+                   mark=2, links=['앱 서버', '리스폰시스 API'])
+
+_CX_PROTO_CAP = ('메시지 한 통이 지나는 길이다. <b>둘 다 남이 갈아 끼울 수 있게 열어 뒀다</b>고 발표자는 말한다. '
+                 '앞쪽은 자기 UI를 코덱스 하니스 위에 올리는 자리이고, 뒤쪽은 리스폰시스 API를 따르는 다른 '
+                 '모델 제공자를 꽂는 자리다. 오픈AI가 만든 것을 쓰라는 이야기이기도 하다.')
+
+_CX_REVIEW = _seq([('코덱스', 'harness'), ('오토 리뷰', 'model'), ('사람', 'human')],
+                  [(1, 2, '하려는 도구 호출과 대화 기록을 넘긴다'),
+                   (2, 2, '사용자 권한과 위험 분류로 판단한다'),
+                   (2, 1, '괜찮으면 자동으로 승인한다'),
+                   (2, 3, '아니면 사람에게 올라간다')])
+
+_CX_REVIEW_CAP = ('샌드박스가 막아선 행동을 사람 대신 판단하는 장치다. '
+                  '<b>오토 리뷰는 따로 돌고, 읽기 권한만 갖고, 다른 서브에이전트를 못 띄운다.</b> '
+                  '맥락이 판단을 가른다 — 지우라고 시킨 파일이면 괜찮고, 시키지 않은 .git 폴더면 아니다. '
+                  '다만 발표는 자동 승인 쪽만 설명하고 승인이 안 났을 때를 따로 다루지 않는다.')
+
+
 # 보고서 형식 카드가 부르는 판. 열쇠는 영상 ID, 값은 {이름: (제목, 마크업, 캡션)}.
 RFIGS = {
+    'shRR1e2HXMk': {
+        'proto':  ('메시지 한 통이 지나는 길', _CX_PROTO, _CX_PROTO_CAP),
+        'review': ('위험한 행동을 누가 판단하나', _CX_REVIEW, _CX_REVIEW_CAP),
+    },
     'BInpv7lGp1o': {
         'blueprint': ('하니스 청사진', _H_BLUEPRINT, _H_BLUEPRINT_CAP),
         'proof':     ('증명의 사슬', _H_PROOF, _H_PROOF_CAP),

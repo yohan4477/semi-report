@@ -297,6 +297,11 @@ POST_CSS = '''
   .rfig .rf-step{flex:0 0 auto;align-self:center;width:0;height:0;
             border-top:6px solid transparent;border-bottom:6px solid transparent;
             border-left:9px solid var(--epoch-teal)}
+  /* 칸을 잇는 것이 이름을 가진 것(프로토콜 등)일 때 화살표 위에 붙인다 */
+  .rfig .rf-link{flex:0 0 auto;align-self:center;display:flex;flex-direction:column;
+            align-items:center;gap:3px}
+  .rfig .rf-link em{font-style:normal;font-size:.95rem;font-weight:700;color:var(--ink-3);
+            white-space:nowrap}
   .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
   .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
