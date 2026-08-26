@@ -372,6 +372,18 @@ def _fan(ins, rest):
     return '<div class="rfig"><div class="rf-chain">%s</div></div>' % ''.join(out)
 
 
+def _fanout(head, sub, outs):
+    """하나가 여럿으로 갈리는 판. _fan의 반대다.
+
+    같은 것이 두 갈래로 쓰인다는 것이 내용일 때 쓴다 — 일렬로 그리면 「갈린다」가 안 보인다."""
+    stack = ('<div class="rf-stack">%s</div>'
+             % ''.join('<div class="rf-box rf-model"><b>%s</b><span>%s</span></div>' % o
+                       for o in outs))
+    return ('<div class="rfig"><div class="rf-chain">'
+            '<div class="rf-box rf-harness"><b>%s</b><span>%s</span></div>'
+            '<i class="rf-step" aria-hidden="true"></i>%s</div></div>' % (head, sub, stack))
+
+
 # ── 상태가 어디에 있나 ──────────────────────────────────────────────
 # 발표의 주장 전부가 이 한 장이다. 같은 네 가지를 위에서는 모델이 쥐고 있고
 # 아래에서는 셋이 하네스로 넘어가 있다. 위아래로 겹쳐 놓아 같은 자리를 두 번 보게 한다.
@@ -713,8 +725,32 @@ _AP_SPLIT_CAP = ('발표자가 둘을 가르는 자리다. <b>닿는 것과 쓸 
                  '도구에 닿아도 어떻게 쓰는지 모르면 소용이 없다는 뜻이라, 둘을 함께 놓아야 한다고 말한다.')
 
 
+# ══ MCP는 어디로 가나 (v3Fr2JR47KA) ═══════════════════════════════════
+
+_MF_SPLIT = _fanout('MCP 서버 하나', '앱과 도구를 함께 실어 보낸다',
+                    [('사람', '앱으로 만진다'),
+                     ('모델', '도구로 만진다')])
+
+_MF_SPLIT_CAP = ('발표가 내다보는 자리다. <b>같은 서버가 사람용 화면과 모델용 도구를 함께 낸다.</b> '
+                 '지금까지 도구만 내보내던 것을 앱까지 싣는 쪽으로 넓히겠다는 이야기다.')
+
+_MF_CALL = ('<div class="rfig">'
+            + _pair('도구를 부르는 두 방식',
+                    _box('model', '왕복', ['하나 부르고 결과 받고', '말하고 또 부른다']),
+                    [],
+                    _box('harness', '묶어서', ['실행 환경 안에서 스크립트로', '여러 호출을 한 번에 엮는다']))
+            + '</div>')
+
+_MF_CALL_CAP = ('발표가 든 두 방식이다. <b>왕복은 부를 때마다 모델을 한 번씩 거친다.</b> '
+                '실행 환경을 주면 모델이 스크립트를 써서 여러 호출을 한 번에 엮으므로 그 왕복이 사라진다.')
+
+
 # 보고서 형식 카드가 부르는 판. 열쇠는 영상 ID, 값은 {이름: (제목, 마크업, 캡션)}.
 RFIGS = {
+    'v3Fr2JR47KA': {
+        'split': ('서버 하나가 두 갈래로 쓰인다', _MF_SPLIT, _MF_SPLIT_CAP),
+        'call':  ('도구를 부르는 두 방식', _MF_CALL, _MF_CALL_CAP),
+    },
     'aqW68Is_Kj4': {
         'window': ('컨텍스트 창을 다루는 손 셋', _AP_WINDOW, _AP_WINDOW_CAP),
         'split':  ('MCP와 스킬은 다른 것을 준다', _AP_SPLIT, _AP_SPLIT_CAP),
