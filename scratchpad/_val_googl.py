@@ -68,7 +68,8 @@ def report4_html(sec, p, fig):
           '<div class="vh2">']
 
     # ── 축 ① DCF
-    ax = ['<div class="vh-ax"><span class="k">축 ① 현금흐름 할인법 · 우리가 값을 낸다</span>',
+    ax = ['<div class="vh-ax"><span class="k"><span class="en">DCF</span>'
+          '<span class="ko">가정을 넣어 값을 낸다</span></span>',
           '<div class="top">']
     for n, lab in (('Bear', '보수'), ('Base', '중간'), ('Bull', '후한')):
         ax.append('<div><span class="n">%s %s</span><span class="p">%.0f</span>'
@@ -83,7 +84,8 @@ def report4_html(sec, p, fig):
     h_ += ax
 
     # ── 축 ② 역산
-    ax = ['<div class="vh-ax rev"><span class="k">축 ② 역산 · 시장가를 받으려면</span>',
+    ax = ['<div class="vh-ax rev"><span class="k"><span class="en">Reverse-DCF</span>'
+          '<span class="ko">시장가를 정답으로 놓고 되돌린다</span></span>',
           _ln('할인율이 이만큼 낮아야 한다', '%.2f~%.2f%%' % (_ir['Bear'] * 100, _ir['Bull'] * 100)),
           _ln('베타로 풀면 (실측 %.3f)' % _BETA,
               '%.3f~%.3f' % ((_ir['Bear'] - _RF) / _MRP, (_ir['Bull'] - _RF) / _MRP), sub=True),

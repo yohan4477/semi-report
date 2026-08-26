@@ -898,8 +898,12 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   .vh2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
   .vh-ax{padding:8px 10px;border:1px solid var(--line);border-radius:10px}
   .vh-ax.rev{border-color:var(--accent);background:var(--accent-soft)}
-  .vh-ax > .k{display:block;font-size:10.5px;font-weight:850;letter-spacing:.05em;
-              color:var(--ink-3);margin-bottom:7px}
+  .vh-ax > .k{display:block;margin-bottom:7px}
+  .vh-ax > .k .en{display:block;font-size:15px;font-weight:850;letter-spacing:.01em;
+                  color:var(--ink);line-height:1.2}
+  .vh-ax.rev > .k .en{color:var(--accent)}
+  .vh-ax > .k .ko{display:block;font-size:11px;font-weight:700;color:var(--ink-3);
+                  line-height:1.4;margin-top:2px}
   .vh-ax .top{display:flex;gap:6px;margin-bottom:7px}
   .vh-ax .top div{flex:1;text-align:center;padding:5px 2px;border:1px solid var(--line);
                   border-radius:7px;background:var(--card,var(--surface,#fff))}
