@@ -79,89 +79,13 @@ a{color:#2563eb}</style>
 <p>자동으로 넘어가지 않으면 위 링크를 누르세요.</p>
 '''
 
-# 대시보드마다 CSS 변수 이름이 달라서(--ink/--paper vs --sub/--card) 버튼은 색을 자기가 들고 간다.
-# 클래스는 ida- 접두어로 격리한다.
-HOME_BTN = '''
+# NEW 배지는 대시보드마다 CSS 변수 이름이 달라서(--ink/--paper vs --sub/--card)
+# 색을 자기가 들고 간다. 클래스는 ida- 접두어로 격리한다.
+#
+# 여기 「← 이전」 버튼이 둘 있었다. 머리글 인라인 링크(.ida-top)와 떠 있는 알약(.ida-home)이다.
+# 2026-08-26에 걷어냈다 — 되돌아가는 길은 기기 뒤로가기 하나로 둔다.
+BADGE_BITS = '''
 <style>
-  /* 나가는 길은 처음부터 보여야 한다 — 제목 위에 놓는 인라인 링크 */
-  .ida-top {
-    display:inline-flex; align-items:center; gap:6px; margin:0 0 14px;
-    font:600 .8rem/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    letter-spacing:.012em; text-decoration:none; color:currentColor; opacity:.6;
-    transition:opacity .2s ease, transform .34s cubic-bezier(.19,1,.22,1);
-    -webkit-tap-highlight-color:transparent;
-  }
-  .ida-top:hover { opacity:1; transform:translateX(-2px); }
-  .ida-top:active { opacity:.45; transition-duration:.09s; }
-  .ida-top:focus-visible { outline:2px solid currentColor; outline-offset:3px; border-radius:4px; }
-
-  /* 스크롤로 머리글이 밀려난 뒤에만 뜬다 — 헤더를 가리지 않으려고 */
-  .ida-home {
-    position:fixed; z-index:9999;
-    left:max(16px, env(safe-area-inset-left)); top:max(14px, env(safe-area-inset-top));
-    opacity:0; pointer-events:none; transform:translateY(-6px);
-    display:inline-flex; align-items:center; gap:7px;
-    padding:9px 14px 9px 12px; border-radius:999px;
-    /* 작은 글씨는 tracking을 살짝 벌려야 읽힌다 */
-    font:600 .82rem/1 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    letter-spacing:.012em;
-    text-decoration:none; color:#33312c;
-    background:rgba(255,255,255,.82); border:1px solid rgba(0,0,0,.11);
-    box-shadow:0 4px 16px -4px rgba(0,0,0,.22);
-    -webkit-backdrop-filter:saturate(1.5) blur(14px); backdrop-filter:saturate(1.5) blur(14px);
-    /* 놓았을 때 감속하듯 — 임계감쇠 스프링에 가까운 곡선 */
-    transition:transform .34s cubic-bezier(.19,1,.22,1),
-               box-shadow .34s cubic-bezier(.19,1,.22,1),
-               opacity .22s ease;
-    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
-  }
-  .ida-home.is-on { opacity:1; pointer-events:auto; transform:translateY(0); }
-  .ida-home.is-on:hover { transform:translateY(-1px); box-shadow:0 8px 22px -6px rgba(0,0,0,.3); }
-  /* 피드백은 누르는 순간에. 뗄 때까지 기다리면 죽은 느낌이 난다 */
-  .ida-home.is-on:active {
-    transform:translateY(0) scale(.955);
-    transition-duration:.09s; transition-timing-function:ease-out;
-  }
-  .ida-home:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
-  .ida-home .ida-arrow { font-size:.95em; opacity:.62; }
-  @media (prefers-color-scheme: dark) {
-    .ida-home {
-      color:#ecead9; background:rgba(28,28,32,.82);
-      border-color:rgba(255,255,255,.15); box-shadow:0 4px 16px -4px rgba(0,0,0,.55);
-    }
-  }
-  /* 투명도를 줄이는 사용자에겐 유리 대신 불투명 판 */
-  @media (prefers-reduced-transparency: reduce) {
-    .ida-home { background:#fff; -webkit-backdrop-filter:none; backdrop-filter:none; }
-    @media (prefers-color-scheme: dark) { .ida-home { background:#1c1c20; } }
-  }
-  @media (prefers-contrast: more) {
-    .ida-home {
-      background:#fff; color:#000; border:1.5px solid #000;
-      -webkit-backdrop-filter:none; backdrop-filter:none;
-    }
-    @media (prefers-color-scheme: dark) { .ida-home { background:#000; color:#fff; border-color:#fff; } }
-  }
-  /* 움직임을 줄여도 피드백 자체는 남긴다 — 이동 대신 명암으로 */
-  @media (prefers-reduced-motion: reduce) {
-    .ida-home { transition:opacity .15s ease; transform:none; }
-    .ida-home.is-on { transform:none; }
-    .ida-home.is-on:hover { transform:none; }
-    .ida-home.is-on:active { transform:none; opacity:.65; }
-    .ida-top:hover { transform:none; }
-  }
-  /* 좁은 화면에서는 위쪽이 sticky 섹션 선택기 자리라 겹친다 — 아래로 내린다.
-     머리글 인라인 링크가 이미 처음부터 보이므로 발견성은 그쪽이 맡는다 */
-  @media (max-width: 760px) {
-    .ida-home {
-      top:auto; bottom:max(16px, env(safe-area-inset-bottom));
-      transform:translateY(6px);
-    }
-    .ida-home.is-on { transform:translateY(0); }
-    .ida-home.is-on:hover { transform:translateY(0); }
-  }
-  @media print { .ida-home, .ida-top { display:none; } }
-
   /* NEW 배지 — 영상 업로드일이 아니라 사이트에 올라온 날 기준 */
   .ida-new {
     display:inline-block; vertical-align:.14em; margin-right:6px;
@@ -179,7 +103,6 @@ HOME_BTN = '''
   }
   @media print { .ida-new { display:none; } }
 </style>
-<a class="ida-home" href="__PARENT__" aria-label="상위 화면으로"><span class="ida-arrow" aria-hidden="true">←</span>이전</a>
 <script>
 /* 배지는 보는 시점 기준으로 스스로 만료된다 — 재배포를 안 해도 일주일이 지나면 사라진다 */
 (function () {
@@ -189,34 +112,16 @@ HOME_BTN = '''
     if (!(now - since < WINDOW)) el.remove();
   });
 })();
-
-/* 머리글의 인라인 링크가 화면에서 사라지면 고정 버튼이 그 역할을 넘겨받는다 */
-(function () {
-  var pill = document.querySelector('.ida-home');
-  var anchor = document.querySelector('.ida-top');
-  if (!pill) return;
-  if (!anchor) { pill.classList.add('is-on'); return; }
-  if (!('IntersectionObserver' in window)) { pill.classList.add('is-on'); return; }
-  new IntersectionObserver(function (entries) {
-    pill.classList.toggle('is-on', !entries[0].isIntersecting);
-  }, { rootMargin: '-8px 0px 0px 0px' }).observe(anchor);
-})();
 </script>
 '''
 
-# 머리글 링크는 문서 맨 앞 컨테이너 바로 안쪽에 꽂는다 (대시보드마다 header 또는 main)
-TOP_LINK = '<a class="ida-top" href="__PARENT__"><span aria-hidden="true">←</span>이전</a>\n'
-TOP_ANCHOR = re.compile(r'(<(?:header|main)\b[^>]*>)')
 
-# 나가는 길은 한 칸씩만 올라간다. 잠긴 대시보드는 「비공개 자료」를 거쳐 들어오므로 그리로
-# 돌아가야 하고, 공개 대시보드는 첫 화면이 바로 위다. 전에는 어디서 눌러도 「메인」이라
-# 이름으로 /까지 튀어서, 비공개 자료에서 들어온 사람은 비밀번호 화면을 다시 지나야 했다.
-def parent_of(locked: bool) -> str:
-    return '/' + PRIVATE_SLUG if locked else '/'
-
-LEDGER = ROOT / 'data' / 'site_card_first_seen.json'
+# NEW 배지가 붙어 있는 날수와, 배지를 꽂을 카드 제목을 찾는 자리
 NEW_DAYS = 7
 H2_CARD = re.compile(r'(<h2 id="(card-[^"]+)"[^>]*>)')
+
+# 카드가 사이트에 처음 올라온 날. NEW 배지가 이 값을 본다
+LEDGER = ROOT / 'data' / 'site_card_first_seen.json'
 
 
 def load_ledger() -> dict:
@@ -424,16 +329,10 @@ def main():
 
     check_lock_parity()
     ledger = load_ledger()
-    for src, slug, _title, _emoji, _desc, locked in PAGES:
-        up = parent_of(locked)
+    for src, slug, _title, _emoji, _desc, _locked in PAGES:
         html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
         html, fresh = mark_new(html, ledger.get(slug, {}))
-        top = TOP_LINK.replace('__PARENT__', up)
-        html, hit = TOP_ANCHOR.subn(lambda m: m.group(1) + top, html, count=1)
-        if not hit:
-            print(f'  ! {src}: header/main을 못 찾아 머리글 링크를 넣지 못했다')
-        (OUT / f'{slug}.html').write_text(html + HOME_BTN.replace('__PARENT__', up),
-                                          encoding='utf-8')
+        (OUT / f'{slug}.html').write_text(html + BADGE_BITS, encoding='utf-8')
         badge = f'  NEW {len(fresh)}' if fresh else ''
         print(f'  {src}  ->  {slug}.html{badge}')
 
