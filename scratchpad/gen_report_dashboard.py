@@ -917,8 +917,8 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   .vh-ln{display:flex;justify-content:space-between;gap:8px;padding:2px 0;
          font-size:11.5px;line-height:1.45;border-top:1px dashed var(--line)}
   .vh-ln:first-of-type{border-top:0}
-  .vh-ln .a{color:var(--ink-2);white-space:nowrap}
-  .vh-ln .b{color:var(--ink);font-weight:800;text-align:right;
+  .vh-ln .a{color:var(--ink-2);min-width:0}
+  .vh-ln .b{color:var(--ink);font-weight:800;text-align:right;white-space:nowrap;
             font-variant-numeric:tabular-nums}
   .vh-ln.sub .a{padding-left:9px;color:var(--ink-3);font-weight:400}
   .vh-ln.sub .b{font-weight:700}

@@ -80,28 +80,30 @@ def report4_html(sec, p, fig):
                   % (lab, n.upper(), _vals[n]['per_share'],
                      (_vals[n]['per_share'] / PRICE - 1) * 100))
     ax.append('</div>')
-    ax.append(_ln('출발점 · 최근 12개월 잉여현금흐름', _eok(gc.FCF0)))
-    ax.append(_ln('그 매출 대비 마진', '%.1f%%' % (gc.MARGIN0 * 100), sub=True))
-    ax.append(_ln('할인율 · 세 경로 공통', '%.1f%%' % (gc.WACC * 100)))
+    ax.append(_ln('최근 12개월 잉여현금흐름', _eok(gc.FCF0)))
+    ax.append(_ln('그 매출 대비 현금 비율', '%.1f%%' % (gc.MARGIN0 * 100), sub=True))
+    ax.append(_ln('할인율 (세 경로 공통)', '%.1f%%' % (gc.WACC * 100)))
     ax.append('</div>')
     h_ += ax
 
     # ── 축 ② 역산
     ax = ['<div class="vh-ax rev"><span class="k"><span class="en">Reverse-DCF</span>'
           '<span class="ko">시장가를 정답으로 놓고 되돌린다</span></span>',
-          '<p class="lead">시장가가 맞으려면 <b>둘 중 하나</b>여야 합니다 — 알파벳이 '
-          '실측보다 덜 출렁이거나, 지금의 <b>%.1f배</b>를 현금으로 남기거나.</p>'
-          % (_need_m / gc.MARGIN0),
-          _ln('할인율이 이만큼 낮아야 한다', '%.2f~%.2f%%' % (_ir['Bear'] * 100, _ir['Bull'] * 100)),
-          _ln('베타로 풀면 (실측 %.3f)' % _BETA,
+          '<p class="lead">시장가가 맞으려면 <b>둘 중 하나</b>여야 합니다. 알파벳 주가가 '
+          '지수보다 덜 움직이거나 — 베타(지수가 1%% 움직일 때 주가가 몇 %% 움직이는지)가 '
+          '지금 <b>%.3f</b>인데 <b>%.3f 이하</b>여야 합니다. 아니면 <b>2035년</b>에 매출의 '
+          '<b>%.1f%%</b>를 잉여현금흐름으로 남겨야 합니다 — 지금은 %.1f%%입니다.</p>'
+          % (_BETA, (_ir['Bull'] - _RF) / _MRP, _need_m * 100, gc.MARGIN0 * 100),
+          _ln('할인율이 이만큼 낮아야', '%.2f~%.2f%%' % (_ir['Bear'] * 100, _ir['Bull'] * 100)),
+          _ln('베타 (지금 %.3f)' % _BETA,
               '%.3f~%.3f' % ((_ir['Bear'] - _RF) / _MRP, (_ir['Bull'] - _RF) / _MRP), sub=True),
-          _ln('위험 대가로 풀면 (우리 %.1f%%)' % (_MRP * 100),
+          _ln('시장위험프리미엄 (우리 %.1f%%)' % (_MRP * 100),
               '%.2f~%.2f%%' % ((_ir['Bear'] - _RF) / _BETA * 100,
                                (_ir['Bull'] - _RF) / _BETA * 100), sub=True),
-          _ln('2035년 잉여현금흐름이 이만큼', _eok(_f10)),
-          _ln('마진으로 풀면 (지금 %.1f%%)' % (gc.MARGIN0 * 100),
+          _ln('2035년 잉여현금흐름', _eok(_f10)),
+          _ln('매출 대비 현금 비율 (지금 %.1f%%)' % (gc.MARGIN0 * 100),
               '%.1f%%' % (_need_m * 100), sub=True),
-          _ln('매출로 풀면 (우리 경로의 %.2f배)' % (_need_rev / _rev35),
+          _ln('또는 매출이 (우리 경로의 %.2f배)' % (_need_rev / _rev35),
               _eok(_need_rev), sub=True),
           '</div>']
     h_ += ax
