@@ -1,0 +1,2086 @@
+{
+ "ticker": "AMZN",
+ "fetched_at": "2026-08-26T01:12:17.912123+00:00",
+ "sec": {
+  "entity": "AMAZON COM INC",
+  "cik": "0001018724",
+  "concepts": {
+   "revenue": {
+    "2018": {
+     "end": "2018-12-31",
+     "val": 232887000000,
+     "filed": "2019-02-01",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 280522000000,
+     "filed": "2020-01-31",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 386064000000,
+     "filed": "2021-02-03",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 469822000000,
+     "filed": "2022-02-04",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 513983000000,
+     "filed": "2023-02-03",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 574785000000,
+     "filed": "2024-02-02",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 637959000000,
+     "filed": "2025-02-07",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 716924000000,
+     "filed": "2026-02-06",
+     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "start": "2025-01-01"
+    }
+   },
+   "ebit": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 1129000000,
+     "filed": "2010-01-29",
+     "tag": "OperatingIncomeLoss",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 1406000000,
+     "filed": "2011-01-28",
+     "tag": "OperatingIncomeLoss",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 862000000,
+     "filed": "2012-02-01",
+     "tag": "OperatingIncomeLoss",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 676000000,
+     "filed": "2013-01-30",
+     "tag": "OperatingIncomeLoss",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 745000000,
+     "filed": "2014-01-31",
+     "tag": "OperatingIncomeLoss",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 178000000,
+     "filed": "2015-01-30",
+     "tag": "OperatingIncomeLoss",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 2233000000,
+     "filed": "2016-01-29",
+     "tag": "OperatingIncomeLoss",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 4186000000,
+     "filed": "2017-02-10",
+     "tag": "OperatingIncomeLoss",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 4106000000,
+     "filed": "2018-02-02",
+     "tag": "OperatingIncomeLoss",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 12421000000,
+     "filed": "2019-02-01",
+     "tag": "OperatingIncomeLoss",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 14541000000,
+     "filed": "2020-01-31",
+     "tag": "OperatingIncomeLoss",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 22899000000,
+     "filed": "2021-02-03",
+     "tag": "OperatingIncomeLoss",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 24879000000,
+     "filed": "2022-02-04",
+     "tag": "OperatingIncomeLoss",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 12248000000,
+     "filed": "2023-02-03",
+     "tag": "OperatingIncomeLoss",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 36852000000,
+     "filed": "2024-02-02",
+     "tag": "OperatingIncomeLoss",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 68593000000,
+     "filed": "2025-02-07",
+     "tag": "OperatingIncomeLoss",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 79975000000,
+     "filed": "2026-02-06",
+     "tag": "OperatingIncomeLoss",
+     "start": "2025-01-01"
+    }
+   },
+   "net_income": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 902000000,
+     "filed": "2010-01-29",
+     "tag": "NetIncomeLoss",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 1152000000,
+     "filed": "2011-01-28",
+     "tag": "NetIncomeLoss",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 631000000,
+     "filed": "2012-02-01",
+     "tag": "NetIncomeLoss",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": -39000000,
+     "filed": "2013-01-30",
+     "tag": "NetIncomeLoss",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 274000000,
+     "filed": "2014-01-31",
+     "tag": "NetIncomeLoss",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": -241000000,
+     "filed": "2015-01-30",
+     "tag": "NetIncomeLoss",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 596000000,
+     "filed": "2016-01-29",
+     "tag": "NetIncomeLoss",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 2371000000,
+     "filed": "2017-02-10",
+     "tag": "NetIncomeLoss",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 3033000000,
+     "filed": "2018-02-02",
+     "tag": "NetIncomeLoss",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 10073000000,
+     "filed": "2019-02-01",
+     "tag": "NetIncomeLoss",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 11588000000,
+     "filed": "2020-01-31",
+     "tag": "NetIncomeLoss",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 21331000000,
+     "filed": "2021-02-03",
+     "tag": "NetIncomeLoss",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 33364000000,
+     "filed": "2022-02-04",
+     "tag": "NetIncomeLoss",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": -2722000000,
+     "filed": "2023-02-03",
+     "tag": "NetIncomeLoss",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 30425000000,
+     "filed": "2024-02-02",
+     "tag": "NetIncomeLoss",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 59248000000,
+     "filed": "2025-02-07",
+     "tag": "NetIncomeLoss",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 77670000000,
+     "filed": "2026-02-06",
+     "tag": "NetIncomeLoss",
+     "start": "2025-01-01"
+    }
+   },
+   "tax_expense": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 253000000,
+     "filed": "2010-01-29",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 352000000,
+     "filed": "2011-01-28",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 291000000,
+     "filed": "2012-02-01",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 428000000,
+     "filed": "2013-01-30",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 161000000,
+     "filed": "2014-01-31",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 167000000,
+     "filed": "2015-01-30",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 950000000,
+     "filed": "2016-01-29",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 1425000000,
+     "filed": "2017-02-10",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 769000000,
+     "filed": "2018-02-02",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 1197000000,
+     "filed": "2019-02-01",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 2374000000,
+     "filed": "2020-01-31",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 2863000000,
+     "filed": "2021-02-03",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 4791000000,
+     "filed": "2022-02-04",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": -3217000000,
+     "filed": "2023-02-03",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 7120000000,
+     "filed": "2024-02-02",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 9265000000,
+     "filed": "2025-02-07",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 19087000000,
+     "filed": "2026-02-06",
+     "tag": "IncomeTaxExpenseBenefit",
+     "start": "2025-01-01"
+    }
+   },
+   "dna": {
+    "2010": {
+     "end": "2010-12-31",
+     "val": 552000000,
+     "filed": "2011-01-28",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 1034000000,
+     "filed": "2012-02-01",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 1653000000,
+     "filed": "2013-01-30",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 2460000000,
+     "filed": "2014-01-31",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 3616000000,
+     "filed": "2015-01-30",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 4949000000,
+     "filed": "2016-01-29",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 6362000000,
+     "filed": "2017-02-10",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 11478000000,
+     "filed": "2018-02-02",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 15341000000,
+     "filed": "2019-02-01",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 21789000000,
+     "filed": "2020-01-31",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 25251000000,
+     "filed": "2021-02-03",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 34296000000,
+     "filed": "2022-02-04",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 41921000000,
+     "filed": "2023-02-03",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 48663000000,
+     "filed": "2024-02-02",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 52795000000,
+     "filed": "2025-02-07",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 65756000000,
+     "filed": "2026-02-06",
+     "tag": "DepreciationDepletionAndAmortization",
+     "start": "2025-01-01"
+    }
+   },
+   "lease_amortization": {
+    "2019": {
+     "end": "2019-12-31",
+     "val": 10094000000,
+     "filed": "2020-01-31",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 8452000000,
+     "filed": "2021-02-03",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 9857000000,
+     "filed": "2022-02-04",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 6097000000,
+     "filed": "2023-02-03",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 5899000000,
+     "filed": "2024-02-02",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 3866000000,
+     "filed": "2025-02-07",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 3284000000,
+     "filed": "2026-02-06",
+     "tag": "FinanceLeaseRightOfUseAssetAmortization",
+     "start": "2025-01-01"
+    }
+   },
+   "capex": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 373000000,
+     "filed": "2010-01-29",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 979000000,
+     "filed": "2011-01-28",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 1811000000,
+     "filed": "2012-02-01",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 3785000000,
+     "filed": "2013-01-30",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 3444000000,
+     "filed": "2014-01-31",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 4893000000,
+     "filed": "2015-01-30",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 4589000000,
+     "filed": "2016-01-29",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 6737000000,
+     "filed": "2017-02-10",
+     "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "start": "2016-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 13427000000,
+     "filed": "2019-02-01",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 16861000000,
+     "filed": "2020-01-31",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 40140000000,
+     "filed": "2021-02-03",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 61053000000,
+     "filed": "2022-02-04",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 63645000000,
+     "filed": "2023-02-03",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 52729000000,
+     "filed": "2024-02-02",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 82999000000,
+     "filed": "2025-02-07",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 131819000000,
+     "filed": "2026-02-06",
+     "tag": "PaymentsToAcquireProductiveAssets",
+     "start": "2025-01-01"
+    }
+   },
+   "ocf": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 3293000000,
+     "filed": "2010-01-29",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 3495000000,
+     "filed": "2011-01-28",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 3903000000,
+     "filed": "2012-02-01",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 4180000000,
+     "filed": "2013-01-30",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 5475000000,
+     "filed": "2014-01-31",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 6842000000,
+     "filed": "2015-01-30",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 11920000000,
+     "filed": "2016-01-29",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 16443000000,
+     "filed": "2017-02-10",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 18434000000,
+     "filed": "2018-02-02",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 30723000000,
+     "filed": "2019-02-01",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 38514000000,
+     "filed": "2020-01-31",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 66064000000,
+     "filed": "2021-02-03",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 46327000000,
+     "filed": "2022-02-04",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 46752000000,
+     "filed": "2023-02-03",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 84946000000,
+     "filed": "2024-02-02",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 115877000000,
+     "filed": "2025-02-07",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 139514000000,
+     "filed": "2026-02-06",
+     "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2025-01-01"
+    }
+   },
+   "nonoperating": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 32000000,
+     "filed": "2010-01-29",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 91000000,
+     "filed": "2011-01-28",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 72000000,
+     "filed": "2012-02-01",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": -132000000,
+     "filed": "2013-01-30",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": -239000000,
+     "filed": "2014-01-31",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": -289000000,
+     "filed": "2015-01-30",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": -665000000,
+     "filed": "2016-01-29",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": -294000000,
+     "filed": "2017-02-10",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": -300000000,
+     "filed": "2018-02-02",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": -1160000000,
+     "filed": "2019-02-01",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": -565000000,
+     "filed": "2020-01-31",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 1279000000,
+     "filed": "2021-02-03",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 13272000000,
+     "filed": "2022-02-04",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": -18184000000,
+     "filed": "2023-02-03",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 705000000,
+     "filed": "2024-02-02",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 21000000,
+     "filed": "2025-02-07",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 17336000000,
+     "filed": "2026-02-06",
+     "tag": "NonoperatingIncomeExpense",
+     "start": "2025-01-01"
+    }
+   },
+   "equity_fv_gain": {
+    "2018": {
+     "end": "2018-12-31",
+     "val": 145000000,
+     "filed": "2019-02-01",
+     "tag": "EquitySecuritiesFvNiGainLoss",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 231000000,
+     "filed": "2020-01-31",
+     "tag": "EquitySecuritiesFvNiGainLoss",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 833000000,
+     "filed": "2021-02-03",
+     "tag": "EquitySecuritiesFvNiGainLoss",
+     "start": "2020-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 1200000000,
+     "filed": "2026-02-06",
+     "tag": "EquitySecuritiesFvNiGainLoss",
+     "start": "2025-01-01"
+    }
+   },
+   "cash_taxes_paid": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 48000000,
+     "filed": "2010-01-29",
+     "tag": "IncomeTaxesPaid",
+     "start": "2009-01-01"
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 75000000,
+     "filed": "2011-01-28",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2010-01-01"
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 33000000,
+     "filed": "2012-02-01",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2011-01-01"
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 112000000,
+     "filed": "2013-01-30",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 169000000,
+     "filed": "2014-01-31",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 177000000,
+     "filed": "2015-01-30",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 273000000,
+     "filed": "2016-01-29",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 412000000,
+     "filed": "2017-02-10",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 957000000,
+     "filed": "2018-02-02",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 1184000000,
+     "filed": "2019-02-01",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": -881000000,
+     "filed": "2020-01-31",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 1713000000,
+     "filed": "2021-02-03",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 3688000000,
+     "filed": "2022-02-04",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 6035000000,
+     "filed": "2023-02-03",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 11179000000,
+     "filed": "2024-02-02",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 12308000000,
+     "filed": "2025-02-07",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 8295000000,
+     "filed": "2026-02-06",
+     "tag": "IncomeTaxesPaidNet",
+     "start": "2025-01-01"
+    }
+   },
+   "cash": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 3444000000,
+     "filed": "2010-01-29",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 3777000000,
+     "filed": "2011-01-28",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 5269000000,
+     "filed": "2012-02-01",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 8084000000,
+     "filed": "2013-01-30",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 8658000000,
+     "filed": "2014-01-31",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 14557000000,
+     "filed": "2015-01-30",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 15890000000,
+     "filed": "2016-01-29",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 19334000000,
+     "filed": "2017-02-10",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 20522000000,
+     "filed": "2018-02-02",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 31750000000,
+     "filed": "2019-02-01",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 36092000000,
+     "filed": "2020-01-31",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 42122000000,
+     "filed": "2021-02-03",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 36220000000,
+     "filed": "2022-02-04",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 53888000000,
+     "filed": "2023-02-03",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 73387000000,
+     "filed": "2024-02-02",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 78779000000,
+     "filed": "2025-02-07",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 86810000000,
+     "filed": "2026-02-06",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    }
+   },
+   "st_investments": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 2922000000,
+     "filed": "2010-01-29",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 4985000000,
+     "filed": "2011-01-28",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 4307000000,
+     "filed": "2012-02-01",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 3364000000,
+     "filed": "2013-01-30",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 3789000000,
+     "filed": "2014-01-31",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 2859000000,
+     "filed": "2015-01-30",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 3918000000,
+     "filed": "2016-01-29",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 6647000000,
+     "filed": "2017-02-10",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 10464000000,
+     "filed": "2018-02-02",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 9500000000,
+     "filed": "2019-02-01",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 18929000000,
+     "filed": "2020-01-31",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 42274000000,
+     "filed": "2021-02-03",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 59829000000,
+     "filed": "2022-02-04",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 16138000000,
+     "filed": "2023-02-03",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 13393000000,
+     "filed": "2024-02-02",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 22423000000,
+     "filed": "2025-02-07",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 36219000000,
+     "filed": "2026-02-06",
+     "tag": "MarketableSecuritiesCurrent",
+     "start": null
+    }
+   },
+   "lt_debt": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 109000000,
+     "filed": "2010-01-29",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 184000000,
+     "filed": "2011-01-28",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 255000000,
+     "filed": "2012-02-01",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 3084000000,
+     "filed": "2013-01-30",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 3191000000,
+     "filed": "2014-01-31",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 8265000000,
+     "filed": "2015-01-30",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 8235000000,
+     "filed": "2016-01-29",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 7694000000,
+     "filed": "2017-02-10",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 24743000000,
+     "filed": "2018-02-02",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 23495000000,
+     "filed": "2019-02-01",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 23414000000,
+     "filed": "2020-01-31",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 31816000000,
+     "filed": "2021-02-03",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 48744000000,
+     "filed": "2022-02-04",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 67150000000,
+     "filed": "2023-02-03",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 58314000000,
+     "filed": "2024-02-02",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 52623000000,
+     "filed": "2025-02-07",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 65648000000,
+     "filed": "2026-02-06",
+     "tag": "LongTermDebtNoncurrent",
+     "start": null
+    }
+   },
+   "st_debt": {
+    "2011": {
+     "end": "2011-12-31",
+     "val": 129000000,
+     "filed": "2012-02-01",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 579000000,
+     "filed": "2013-01-30",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 753000000,
+     "filed": "2014-01-31",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 1520000000,
+     "filed": "2015-01-30",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 238000000,
+     "filed": "2016-01-29",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 1056000000,
+     "filed": "2017-02-10",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 100000000,
+     "filed": "2018-02-02",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 1371000000,
+     "filed": "2019-02-01",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 1307000000,
+     "filed": "2020-01-31",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 1155000000,
+     "filed": "2021-02-03",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 1491000000,
+     "filed": "2022-02-04",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 2999000000,
+     "filed": "2023-02-03",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 8494000000,
+     "filed": "2024-02-02",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 5017000000,
+     "filed": "2025-02-07",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 2748000000,
+     "filed": "2026-02-06",
+     "tag": "LongTermDebtCurrent",
+     "start": null
+    }
+   },
+   "receivables": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 988000000,
+     "filed": "2010-01-29",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 1587000000,
+     "filed": "2011-01-28",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 2571000000,
+     "filed": "2012-02-01",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 3364000000,
+     "filed": "2013-01-30",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 4767000000,
+     "filed": "2014-01-31",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 5612000000,
+     "filed": "2015-01-30",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 6423000000,
+     "filed": "2016-01-29",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 8339000000,
+     "filed": "2017-02-10",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 13164000000,
+     "filed": "2018-02-02",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 16677000000,
+     "filed": "2019-02-01",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 20816000000,
+     "filed": "2020-01-31",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 24542000000,
+     "filed": "2021-02-03",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 32891000000,
+     "filed": "2022-02-04",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 42360000000,
+     "filed": "2023-02-03",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 52253000000,
+     "filed": "2024-02-02",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 55451000000,
+     "filed": "2025-02-07",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 67729000000,
+     "filed": "2026-02-06",
+     "tag": "AccountsReceivableNetCurrent",
+     "start": null
+    }
+   },
+   "inventory": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 2171000000,
+     "filed": "2010-01-29",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 3202000000,
+     "filed": "2011-01-28",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 4992000000,
+     "filed": "2012-02-01",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 6031000000,
+     "filed": "2013-01-30",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 7411000000,
+     "filed": "2014-01-31",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 8299000000,
+     "filed": "2015-01-30",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 10243000000,
+     "filed": "2016-01-29",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 11461000000,
+     "filed": "2017-02-10",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 16047000000,
+     "filed": "2018-02-02",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 17174000000,
+     "filed": "2019-02-01",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 20497000000,
+     "filed": "2020-01-31",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 23795000000,
+     "filed": "2021-02-03",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 32640000000,
+     "filed": "2022-02-04",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 34405000000,
+     "filed": "2023-02-03",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 33318000000,
+     "filed": "2024-02-02",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 34214000000,
+     "filed": "2025-02-07",
+     "tag": "InventoryNet",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 38325000000,
+     "filed": "2026-02-06",
+     "tag": "InventoryNet",
+     "start": null
+    }
+   },
+   "payables": {
+    "2009": {
+     "end": "2009-12-31",
+     "val": 5605000000,
+     "filed": "2010-01-29",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2010": {
+     "end": "2010-12-31",
+     "val": 8051000000,
+     "filed": "2011-01-28",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-12-31",
+     "val": 11145000000,
+     "filed": "2012-02-01",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2012": {
+     "end": "2012-12-31",
+     "val": 13318000000,
+     "filed": "2013-01-30",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 15133000000,
+     "filed": "2014-01-31",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 16459000000,
+     "filed": "2015-01-30",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 20397000000,
+     "filed": "2016-01-29",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 25309000000,
+     "filed": "2017-02-10",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 34616000000,
+     "filed": "2018-02-02",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 38192000000,
+     "filed": "2019-02-01",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 47183000000,
+     "filed": "2020-01-31",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 72539000000,
+     "filed": "2021-02-03",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 78664000000,
+     "filed": "2022-02-04",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 79600000000,
+     "filed": "2023-02-03",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 84981000000,
+     "filed": "2024-02-02",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 94363000000,
+     "filed": "2025-02-07",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 121909000000,
+     "filed": "2026-02-06",
+     "tag": "AccountsPayableCurrent",
+     "start": null
+    }
+   }
+  },
+  "ttm": {
+   "revenue": {
+    "val": 775680000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "ebit": {
+    "val": 93712000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "net_income": {
+    "val": 135281000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "tax_expense": {
+    "val": 39615000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "dna": {
+    "val": 73637000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "lease_amortization": {
+    "val": 3009000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "capex": {
+    "val": 173028000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "ocf": {
+    "val": 161403000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "nonoperating": {
+    "val": 81754000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "equity_fv_gain": {
+    "val": 1200000000,
+    "window": "2025 회계연도 (뒤에 분기 보고 없음)",
+    "end": "2025-12-31",
+    "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
+   },
+   "cash_taxes_paid": {
+    "val": 6635000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
+   "cash": {
+    "val": 78213000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "st_investments": {
+    "val": 44775000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "lt_debt": {
+    "val": 128894000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "st_debt": {
+    "val": 3330000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "receivables": {
+    "val": 88092000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "inventory": {
+    "val": 38184000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   },
+   "payables": {
+    "val": 147440000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+   }
+  },
+  "shares_outstanding": {
+   "val": 10734920870,
+   "end": "2026-01-28",
+   "tag": "EntityCommonStockSharesOutstanding",
+   "ns": "dei"
+  },
+  "shares_diluted": {
+   "val": 10827000000,
+   "end": "2025-12-31",
+   "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+   "ns": "us-gaap"
+  },
+  "shares_basic": {
+   "val": 10656000000,
+   "end": "2025-12-31",
+   "tag": "WeightedAverageNumberOfSharesOutstandingBasic",
+   "ns": "us-gaap"
+  }
+ },
+ "market": {
+  "price": 261.06,
+  "currency": "USD",
+  "as_of": "2026-08-25T20:00:01+00:00",
+  "market_cap": 2802458442322.2,
+  "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
+  "shares_basis": "발행주식수",
+  "source": "query1.finance.yahoo.com/v8/finance/chart"
+ },
+ "beta": {
+  "beta": 1.4006791072408942,
+  "n_days": 500,
+  "start": "2024-08-26",
+  "end": "2026-08-25",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "risk_free": {
+  "rate": 0.047,
+  "date": "2026-08-24",
+  "series": "DGS10 (US 10Y)"
+ }
+}

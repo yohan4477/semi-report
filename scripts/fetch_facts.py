@@ -38,7 +38,13 @@ CONCEPTS = {
     'dna': ['DepreciationDepletionAndAmortization', 'DepreciationAmortizationAndAccretionNet',
             'Depreciation'],
     'lease_amortization': ['FinanceLeaseRightOfUseAssetAmortization'],
-    'capex': ['PaymentsToAcquirePropertyPlantAndEquipment'],
+    # 회사마다 태그가 다르다. 엔비디아와 아마존은 최근 연도를
+    # PaymentsToAcquireProductiveAssets 로 내고 옛 연도만 PP&E 로 낸다 —
+    # 후보를 합치지 않으면 최근 설비투자가 통째로 비고, 아마존은 설비투자가
+    # 감가상각의 0.10배라는 말이 안 되는 값이 나온다.
+    'capex': ['PaymentsToAcquirePropertyPlantAndEquipment',
+              'PaymentsToAcquireProductiveAssets',
+              'PaymentsToAcquireOtherPropertyPlantAndEquipment'],
     'ocf': ['NetCashProvidedByUsedInOperatingActivities'],
     # 영업 밖 손익. R3이 EBIT을 쓰기 전에 걷어내라는 자리다.
     # 알파벳은 보유 지분(앤트로픽·스페이스X 등)을 공정가치로 다시 재 순이익에 태운다 —
@@ -104,11 +110,13 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
                         - datetime.strptime(x['start'], '%Y-%m-%d')).days
                 if days < 300:  # 분기·반기 값은 버린다
                     continue
+            rec = dict(end=x['end'], val=x['val'], filed=x.get('filed', ''), tag=tag,
+                       start=x.get('start'))
             prev = out.get(fy)
             if prev is None:
-                out[fy] = dict(end=x['end'], val=x['val'], filed=x.get('filed', ''), tag=tag)
+                out[fy] = rec
             elif prev['tag'] == tag and x.get('filed', '') >= prev['filed']:
-                out[fy] = dict(end=x['end'], val=x['val'], filed=x.get('filed', ''), tag=tag)
+                out[fy] = rec
     return out
 
 
@@ -173,6 +181,27 @@ def ttm(facts, name, tags, annual):
         cum = quarters(facts, tags, 'cum')
         if not cum:
             return None
+        # 누적 구간은 **회계연도 첫날에서 시작한 것만** 받는다.
+        #
+        # 어떤 회사는 10-Q에 최근 12개월 구간을 따로 싣는다. 그것을 「올해 누적」으로
+        # 잡으면 연간에 더하고 엉뚱한 구간을 빼게 되어 값이 통째로 틀어진다 —
+        # 아마존이 2026-08-26에 잉여현금흐름 -14B 라는 계산 착오를 냈다.
+        # 회계연도 첫날은 직전 연간 기록의 시작일에서 가져온다.
+        # 월·일을 정확히 맞추지 않는다. 엔비디아와 애플은 52/53주 회계연도라 시작일이
+        # 해마다 하루이틀 움직인다 — 정확히 맞추면 그 회사만 분기가 통째로 걸러진다.
+        # 대신 「직전 회계연도가 끝난 직후에 시작하는가」로 본다.
+        ends = sorted(r['end'] for r in annual.get(name, {}).values())
+        if ends:
+            def _fresh(v):
+                st = datetime.strptime(v['start'], '%Y-%m-%d')
+                for e in ends:
+                    gap = (st - datetime.strptime(e, '%Y-%m-%d')).days
+                    if 0 <= gap <= 10:
+                        return True
+                return False
+            cum = {k: v for k, v in cum.items() if _fresh(v)}
+            if not cum:
+                return None
         cur = max(cum.values(), key=lambda x: x['end'])
         # 최근 분기가 직전 회계연도보다 뒤인지 본다. 어떤 태그는 옛날에만 10-Q로
         # 나오고 요즘은 10-K에만 실린다 — IncomeTaxesPaid가 그렇다. 그때 여기서
@@ -220,8 +249,18 @@ def sec_facts(ticker):
         if got:
             out['concepts'][name] = {str(k): v for k, v in sorted(got.items())}
     # 최근 12개월. 10-K가 나온 뒤 지난 분기를 담아 기준연도가 낡는 것을 막는다.
+    #
+    # 회계연도 말이 최근인 회사(마이크로소프트는 6월 말)는 10-K 자체가 이미 최근
+    # 12개월이라 더할 분기가 없다. 그때 TTM 을 비우면 그 회사만 기준연도가 통째로
+    # 사라지므로 직전 연간을 그대로 쓰고 창에 그 사실을 적는다.
     for name, tags in CONCEPTS.items():
         got = ttm(facts, name, tags, out['concepts'])
+        if not got and name in FLOW:
+            ann = out['concepts'].get(name, {})
+            if ann:
+                fy = max(ann)
+                got = dict(val=ann[fy]['val'], window='%s 회계연도 (뒤에 분기 보고 없음)' % fy,
+                           end=ann[fy]['end'], method='회계연도 말이 최근이라 연간이 곧 최근 12개월')
         if got:
             out['ttm'][name] = got
     # 주식수. dei의 EntityCommonStockSharesOutstanding을 먼저 보되, 없는 회사가 있다 —
@@ -304,7 +343,13 @@ def build(ticker):
     px = price(ticker)
     idx = price('%5EGSPC')
     sec = sec_facts(ticker)
-    shares = (sec.get('shares_outstanding') or {}).get('val')
+    # 메타는 us-gaap 에도 dei 에도 발행주식수가 없다(EntityPublicFloat 하나뿐).
+    # 그때는 희석 가중평균으로 시총을 내고 어느 것을 썼는지 적는다 — 안 그러면
+    # 그 회사만 시가총액이 통째로 빈다.
+    _sh = sec.get('shares_outstanding') or sec.get('shares_diluted') or {}
+    shares = _sh.get('val')
+    shares_basis = ('발행주식수' if sec.get('shares_outstanding') else
+                    '희석 가중평균(발행주식수가 공시에 없다)')
     doc = {
         'ticker': ticker,
         'fetched_at': now,
@@ -313,7 +358,8 @@ def build(ticker):
             'price': px['price'], 'currency': px['currency'],
             'as_of': px['market_time'],
             'market_cap': (px['price'] * shares) if shares else None,
-            'market_cap_note': '주가 × SEC 보고 주식수. 야후 시총을 받지 않는다',
+            'market_cap_note': '주가 × %s. 야후 시총을 받지 않는다' % shares_basis,
+            'shares_basis': shares_basis,
             'source': 'query1.finance.yahoo.com/v8/finance/chart',
         },
         'beta': beta(px['series'], idx['series']),
