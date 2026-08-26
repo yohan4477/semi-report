@@ -893,6 +893,23 @@ FIG_MAP = _svg(640, 396, '로봇 한 대의 층마다 두 보고서가 무엇을
 
 
 REPORT_CSS = _biz_part3.TABLE_CSS + """
+  /* 연도별 경로표. 재무 모형은 왼쪽에서 오른쪽으로 읽으므로 연도를 가로축에 둔다
+     (회계사 대시보드 규칙 3절). 열 폭은 colgroup 에만 준다 — th 에도 주면 둘을 합쳐
+     계산해 첫 열 글자가 다음 열과 포개진다. 좁은 화면에서는 표만 가로로 스크롤한다. */
+  .yt-wrap{overflow-x:auto;margin:2px 0 6px;-webkit-overflow-scrolling:touch}
+  .yt{border-collapse:collapse;table-layout:fixed;font-size:11.5px;
+      font-variant-numeric:tabular-nums;min-width:100%}
+  .yt th,.yt td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right;
+                white-space:nowrap}
+  .yt thead th{font-size:10.5px;font-weight:850;color:var(--ink-3);
+               border-bottom:1.5px solid var(--ink-3)}
+  .yt th[scope="row"]{text-align:left;font-weight:800;color:var(--ink-2);
+                      position:sticky;left:0;background:var(--card,var(--surface,#fff))}
+  /* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 */
+  .yt .cut{border-left:2px solid var(--ink-3)}
+  .yt tr.hi td,.yt tr.hi th[scope="row"]{font-weight:850;color:var(--ink)}
+  .yt-memo{margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--ink-3)}
+
   /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
      놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다.
      두 판은 배경도 테두리도 같다 — 한쪽에 강조색을 깔면 그쪽이 결론처럼 읽힌다.

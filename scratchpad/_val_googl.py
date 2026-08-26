@@ -273,6 +273,48 @@ def report4_html(sec, p, fig):
     fig(('케이스 셋이 모두 현재가 아래에 선다', _val_fig.FIG_CASE,
          '세 값은 <b>우리가 돌린 계산</b>입니다. 계산기는 <code>insights/dcf.py</code>이고 '
          '경로는 <code>scratchpad/googl_cases.py</code>에 있습니다.'))
+    _rows = gc.path(gc.CASES['Base'])
+    _cut = gc.P1_YEARS          # 구간이 갈리는 자리(2028|2029)
+
+    def _cells(vals, fmt):
+        return ''.join('<td%s>%s</td>'
+                       % (' class="cut"' if i == _cut else '', fmt % v)
+                       for i, v in enumerate(vals))
+
+    _grow, _prev = [], gc.REV0
+    for _y, rev, _m, _f in _rows:
+        _grow.append((rev / _prev - 1) * 100)
+        _prev = rev
+    _disc = [1 / (1 + gc.WACC) ** i for i in range(1, len(_rows) + 1)]
+
+    h_ = ['<div class="yt-wrap"><table class="yt">',
+          '<colgroup><col style="width:104px">',
+          ''.join('<col style="width:74px">' for _ in _rows), '</colgroup>',
+          '<thead><tr><th></th>',
+          ''.join('<th%s>%d</th>' % (' class="cut"' if i == _cut else '', r[0])
+                  for i, r in enumerate(_rows)),
+          '</tr></thead><tbody>',
+          '<tr><th scope="row">매출 성장률</th>%s</tr>' % _cells(_grow, '%.1f%%'),
+          '<tr><th scope="row">매출</th>%s</tr>' % _cells([r[1] for r in _rows], '%.0f'),
+          '<tr><th scope="row">FCF마진</th>%s</tr>'
+          % _cells([r[2] * 100 for r in _rows], '%.1f%%'),
+          '<tr class="hi"><th scope="row">잉여현금흐름</th>%s</tr>'
+          % _cells([r[3] for r in _rows], '%.0f'),
+          '<tr><th scope="row">할인계수</th>%s</tr>' % _cells(_disc, '%.4f'),
+          '<tr class="hi"><th scope="row">현재가치</th>%s</tr>'
+          % _cells([r[3] * d for r, d in zip(_rows, _disc)], '%.0f'),
+          '</tbody></table></div>']
+    p(''.join(h_))
+    p('<p class="yt-memo">가운데 경로(Base)입니다. 단위는 10억 달러이고 할인율은 %.1f%%입니다. '
+      '세로선이 구간 경계입니다 — 왼쪽 3년은 설비투자로 마진이 눌린 구간이고, 오른쪽 7년은 '
+      '성장률이 %.1f%%에서 %.1f%%로 내려앉고 마진이 %.1f%%에서 %.1f%%로 올라오는 구간입니다. '
+      '현재가치를 다 더하면 %s이고, 여기에 영구가치와 순현금이 붙어 주당 %.0f달러가 됩니다.</p>'
+      % (gc.WACC * 100, gc.CASES['Base']['g1'] * 100, gc.CASES['Base']['g2'] * 100,
+         gc.CASES['Base']['m1'] * 100, gc.CASES['Base']['m3'] * 100,
+         _eok(sum(r[3] * d for r, d in zip(_rows, _disc))),
+         gc.dcf.value([r[3] for r in _rows], gc.WACC, gc.CASES['Base']['g'],
+                      gc.NET_DEBT, gc.SHARES)['per_share']))
+
     p('결과는 주당 <b>131달러 · 185달러 · 261달러</b>입니다. 세 경로 모두 영구가치가 전체의 '
       '61%에서 66%를 차지합니다. 회계사 판의 규칙이 영구가치가 절반을 넘는다고 적은 그대로입니다.')
     p('할인율과 영구성장률을 각각 다섯 단계로 흔든 스물다섯 칸도 냈습니다. 가장 후한 칸은 '

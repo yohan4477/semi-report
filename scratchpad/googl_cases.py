@@ -215,6 +215,24 @@ def write_facts():
         L.append('- 잉여현금흐름 마진 %.1f%% 이면 2035 매출 %s 필요 · 우리 경로의 %.2f배 · '
                  '매출 연평균 성장률 %.1f%%'
                  % (m * 100, two(need), need / rev35, ((need / REV0) ** 0.1 - 1) * 100))
+    L += ['', '## 우리 Base 경로 연도별', '']
+    for y, rev, m, f in path(CASES['Base']):
+        L.append('- %d 매출 %s · 잉여현금흐름 마진 %.1f%% · 잉여현금흐름 %s'
+                 % (y, two(rev), m * 100, two(f)))
+    _prev = REV0
+    for y, rev, m, f in path(CASES['Base']):
+        L.append('- %d 매출 성장률 %.1f%%' % (y, (rev / _prev - 1) * 100))
+        _prev = rev
+    # 본문 연도표는 10억 달러를 정수로 반올림해 찍는다. 사실표가 소수를 적으면
+    # 220.9 와 221 이 안 이어져 check_report 가 걸린다 — 표가 찍는 형태로 같이 적는다.
+    _rows = path(CASES['Base'])
+    _disc = [1 / (1 + WACC) ** i for i in range(1, len(_rows) + 1)]
+    for (y, rev, m, f), dsc in zip(_rows, _disc):
+        L.append('- %d 표기값 매출 %.0f · 잉여현금흐름 %.0f · 할인계수 %.4f · 현재가치 %.0f'
+                 % (y, rev, f, dsc, f * dsc))
+    _pv = sum(f * dsc for (_y, _r, _m, f), dsc in zip(_rows, _disc))
+    L.append('- 명시적 기간 현재가치 합 %s' % two(_pv))
+
     # 필자 엘곰의 가정을 그대로 돌린 결과. 같은 회사를 두 잣대로 잰 값이라 본문이
     # 나란히 놓는다. 계산은 scratchpad/googl_elgom.py 가 한다.
     import googl_elgom as el
