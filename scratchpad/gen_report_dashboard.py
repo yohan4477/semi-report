@@ -1049,7 +1049,7 @@ META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
       <span>보고서 <b>4편</b></span>
-      <span>절 <b>43개</b></span>
+      <span>절 <b>44개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW

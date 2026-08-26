@@ -215,6 +215,37 @@ def write_facts():
         L.append('- 잉여현금흐름 마진 %.1f%% 이면 2035 매출 %s 필요 · 우리 경로의 %.2f배 · '
                  '매출 연평균 성장률 %.1f%%'
                  % (m * 100, two(need), need / rev35, ((need / REV0) ** 0.1 - 1) * 100))
+    # 필자 엘곰의 가정을 그대로 돌린 결과. 같은 회사를 두 잣대로 잰 값이라 본문이
+    # 나란히 놓는다. 계산은 scratchpad/googl_elgom.py 가 한다.
+    import googl_elgom as el
+    L += ['', '## 필자 엘곰 가정 그대로 돌린 결과 (260516)', '',
+          '- Phase 1 2026~2028 매출 20~22% · 잉여현금흐름 마진 3~8%',
+          '- Phase 2 2029~2031 매출 15~18% · 잉여현금흐름 마진 12~18%',
+          '- Phase 3 2032~2035 매출 10~13% · 잉여현금흐름 마진 20~25%',
+          '- 할인율 8.5% Bull · 9.5% Base · 10.5% Bear',
+          '- 영구성장률 3~4%',
+          '- 기준연도 FY2025 매출 %s' % two(el.REV0)]
+    for name in el.ORDER:
+        v = el.value(name)
+        L.append('- 엘곰 %s 주당 %.0f달러 · 현재가 대비 %.0f%% · 영구가치 비중 %.0f%%'
+                 % (name, v['per_share'], (v['per_share'] / el.PRICE - 1) * 100,
+                    v['tv_share'] * 100))
+    er = el.path(1)
+    L += ['- 엘곰 Base 2035 잉여현금흐름 %s' % two(er[-1][3]),
+          '- 엘곰 Base 2035 매출 %s' % two(er[-1][1]),
+          '- 엘곰 Phase 3 마진 가운데값 22.5%']
+
+    # 우리 Base 에서 가정을 하나씩 그의 것으로 갈아 끼운 기여도
+    _bf = [x[3] for x in path(CASES['Base'])]
+    _mine = dcf.value(_bf, WACC, 0.0275, NET_DEBT, SHARES)['per_share']
+    _sw = [('할인율 9.5%', dcf.value(_bf, 0.095, 0.0275, NET_DEBT, SHARES)['per_share']),
+           ('영구성장률 3.75%', dcf.value(_bf, WACC, 0.0375, NET_DEBT, SHARES)['per_share'])]
+    _mf = [rev * (0.225 if i >= 6 else m) for i, (_y, rev, m, _f) in enumerate(path(CASES['Base']))]
+    _sw.append(('후반 마진 22.5%', dcf.value(_mf, WACC, 0.0275, NET_DEBT, SHARES)['per_share']))
+    _sw.append(('셋 다', dcf.value(_mf, 0.095, 0.0375, NET_DEBT, SHARES)['per_share']))
+    L.append('- 우리 Base 주당 %.0f달러' % _mine)
+    for lab, val in _sw:
+        L.append('- %s 로 갈면 주당 %.0f달러 · 차이 %+.0f달러' % (lab, val, val - _mine))
     L.append('- 근거 원문 발행일 시차 252일 · 가장 오래된 편 271일')
     p = os.path.join(root, 'scratchpad', 'googl_facts.md')
     io.open(p, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
