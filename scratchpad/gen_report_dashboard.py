@@ -22,6 +22,7 @@ import _val_fig  # noqa: E402
 import _val_peers_text  # noqa: E402
 import _val_labs  # noqa: E402
 import _val_chips  # noqa: E402
+import _val_infra  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1099,6 +1100,16 @@ def report7_html():
     return fold_report(_val_chips.HEAD7, ''.join(h))
 
 
+def report8_html():
+    """GPU 인프라·서빙 회사 비교. 회사가 아니라 값·원가·자금 셋으로 견준다."""
+    h = []
+    sec = lambda t: h.append('<h3>%s</h3>' % t)
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _val_infra.report8_html(sec, p, fig)
+    return fold_report(_val_infra.HEAD8, ''.join(h))
+
+
 HEAD1 = ('<div class="rep-head"><span class="rn">보고서 ①</span>'
          '<h2 id="rep-model">로보틱스 모델 — 관절 값을 어디서 뽑나</h2>'
          '<p class="rm">바탕 <b>수도리무브 35편</b> · 원문 기간 <b>2025-03 ~ 2026-08</b> · '
@@ -1129,8 +1140,8 @@ LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 �
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
-      <span>보고서 <b>7편</b></span>
-      <span>절 <b>64개</b></span>
+      <span>보고서 <b>8편</b></span>
+      <span>절 <b>72개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -1161,7 +1172,7 @@ if __name__ == '__main__':
                     ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
                      '알파벳을 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 2,
                      report4_html() + report5_html()),
-                    ('sec-ai', 'AI 회사 — 모델과 칩', 'SemiAnalysis 11편 — 모델 회사를 '
-                     '가르는 것과 엔비디아 해자가 얇아지는 자리', 2,
-                     report6_html() + report7_html())],
+                    ('sec-ai', 'AI 회사 — 모델·칩·인프라', 'SemiAnalysis 15편 — 모델 회사를 '
+                     '가르는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
+                     report6_html() + report7_html() + report8_html())],
               extra_css=REPORT_CSS)
