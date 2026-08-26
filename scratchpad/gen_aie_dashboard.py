@@ -280,6 +280,9 @@ POST_CSS = '''
   .rfig .rf-model{background:var(--sunk,rgba(127,127,127,.10))}
   .rfig .rf-msgs{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;
                  justify-content:center;gap:18px}
+  /* 오가는 말이 없는 대비 판에서는 가운데가 늘면 안 된다 — 두 칸 사이에
+     139px짜리 빈 곳이 생겼다. 비었으면 자리를 안 차지하게 둔다 */
+  .rfig .rf-msgs:empty{flex:0 0 18px}
   .rfig .rf-msg{display:flex;align-items:center;gap:9px}
   .rfig .rf-msg em{flex:0 0 auto;font-style:normal;font-size:.95rem;line-height:1.45;color:var(--ink-3)}
   .rfig .rf-msg em b{display:block;font-weight:800;color:var(--ink-2)}
