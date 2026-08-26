@@ -26,6 +26,47 @@ def report5_html(sec, p, fig):
     rs = pr.rows()
     by = {r['t']: r for r in rs}
 
+    by0 = {r['t']: r for r in rs}
+    gap = lambda r: ((r['req_fcf'] - r['req_nopat']) * 100
+                     if (r['req_fcf'] and r['req_nopat']) else None)
+    _o = [by0[t] for t in ('GOOGL', 'MSFT', 'META', 'NVDA', 'AAPL')]
+
+    def _ln2(a_, b_, sub=False):
+        return ('<div class="vh-ln%s"><span class="a">%s</span>'
+                '<span class="b">%s</span></div>' % (' sub' if sub else '', a_, b_))
+
+    h0 = ['<div class="vhero">', '<p class="vh-l">결론</p>',
+          '<p class="vh-say">여섯을 같은 잣대로 재면 <b>설비투자가 먹는 몫</b>에서 '
+          '갈립니다. 데이터센터를 직접 짓는 넷과 그러지 않는 둘이 서로 다른 자리에 '
+          '섭니다.</p>',
+          '<div class="vh2">',
+          '<div class="vh-ax"><span class="k"><span class="en">Structure</span>'
+          '<span class="ko">설비투자가 이익을 얼마나 갉아먹나</span></span>',
+          '<p class="lead">잉여현금흐름 기준과 NOPAT 기준의 요구 성장률 차이입니다. '
+          '클수록 설비투자가 크게 먹습니다.</p>']
+    for r in _o:
+        g_ = gap(r)
+        h0.append(_ln2(r['name'], ('%.1f%%p' % g_) if g_ is not None else '—'))
+    h0.append(_ln2('아마존', '계산 안 섬'))
+    h0.append('</div>')
+
+    h0 += ['<div class="vh-ax"><span class="k"><span class="en">Reverse-DCF</span>'
+           '<span class="ko">10년 뒤 얼마를 남겨야 하나</span></span>',
+           '<p class="lead">시가총액이 요구하는 10년 뒤 잉여현금흐름을 '
+           '<b>지금 매출</b>과 견줍니다.</p>',
+           _ln2('넷은 지금 매출 수준', '%s~%s'
+                % (_num(by0['META']['fcf10_rev'], '%.1f배'),
+                   _num(by0['GOOGL']['fcf10_rev'], '%.1f배'))),
+           _ln2('알파벳 · MS · 메타 · 애플', '', sub=True),
+           _ln2('엔비디아만 자릿수가 다름',
+                _num(by0['NVDA']['fcf10_rev'], '%.1f배')),
+           _ln2('마진 %s이라 메울 여지가 없다' % _pct(by0['NVDA']['fcf_m']), '', sub=True),
+           _ln2('아마존은 기준 자체가 음수', _num(by0['AMZN']['fcf'])),
+           '</div>', '</div>',
+           '<p class="vh-foot">회사마다 성장 경로를 세우지 않았으므로 <b>적정주가를 내지 '
+           '않습니다</b>. 투자 추천이 아닙니다.</p>', '</div>']
+    p(''.join(h0))
+
     p('앞 편이 알파벳 한 곳을 열두 절로 팠다면, 이 편은 반대입니다. <b>빅테크 여섯을 같은 '
       '산식에 넣어 어디가 어떻게 다른지만</b> 봅니다. 재무 숫자는 여섯 곳 모두 미국 '
       '증권거래위원회(SEC) 제출서류에서 직접 받았습니다.')

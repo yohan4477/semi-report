@@ -35,8 +35,8 @@ _FACTS = json.load(open(os.path.join(
 PRICE = _FACTS['market']['price']
 PRICE_DAY = _FACTS['market']['as_of'][:10]
 
-HEAD4 = ('<hr class="rep-cut">'
-         '<div class="rep-head"><span class="rn">보고서 ④</span>'
+# 타일의 첫 요소라 앞에 구분선을 두지 않는다 — 위에 가를 것이 없다.
+HEAD4 = ('<div class="rep-head"><span class="rn">보고서 ④</span>'
          '<h2 id="rep-val">알파벳 — 회계사 판 잣대로 재면 얼마인가</h2>'
          '<p class="rm">바탕 <b>SEC 제출서류 + SemiAnalysis 4편 + 회계사 1편</b> · '
          '원문 기간 <b>2025-11 ~ 2026-08</b> · 주가 기준일 <b>2026-08-25</b><br>'

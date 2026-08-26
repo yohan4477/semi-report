@@ -1053,7 +1053,9 @@ def foldable(html):
     parts = re.split(r'(<h3>.*?</h3>)', html)
     if len(parts) < 3:
         return html
-    out = [parts[0]]                      # 첫 h3 앞(보고서 표지)은 접지 않는다
+    # 첫 h3 앞(표지와 결론)은 접지 않는다. 펴기 버튼은 그 뒤, 절 목록 바로 위에 둔다 —
+    # 보고서 제목보다 위에 두면 무슨 글의 버튼인지 모르는 채로 먼저 보인다.
+    out = [parts[0], FOLD_BAR]
     for i in range(1, len(parts), 2):
         title = parts[i][4:-5]
         body = parts[i + 1] if i + 1 < len(parts) else ''
@@ -1162,5 +1164,5 @@ if __name__ == '__main__':
                      '누구에게 남나', 1, report3_html()),
                     ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
                      '알파벳을 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 2,
-                     FOLD_BAR + report4_html() + report5_html() + FOLD_JS)],
+                     report4_html() + report5_html() + FOLD_JS)],
               extra_css=REPORT_CSS)
