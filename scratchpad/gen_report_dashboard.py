@@ -904,9 +904,9 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
                   color:var(--ink);line-height:1.2}
   .vh-ax > .k .ko{display:block;font-size:11px;font-weight:700;color:var(--ink-3);
                   line-height:1.4;margin-top:2px}
-  .vh-ax .lead{margin:0 0 7px;font-size:12px;line-height:1.5;color:var(--ink)}
+  .vh-ax .lead{margin:0 0 6px;font-size:11.5px;line-height:1.45;color:var(--ink)}
   .vh-ax .lead b{font-weight:850}
-  .vh-ax .top{display:flex;gap:6px;margin-bottom:7px}
+  .vh-ax .top{display:flex;gap:6px;margin-bottom:6px}
   .vh-ax .top div{flex:1;text-align:center;padding:5px 2px;border:1px solid var(--line);
                   border-radius:7px;background:var(--card,var(--surface,#fff))}
   .vh-ax .top .n{display:block;font-size:10px;font-weight:850;color:var(--ink-3)}
@@ -914,8 +914,8 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
                  font-variant-numeric:tabular-nums;line-height:1.3}
   .vh-ax .top .g{display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);
                  font-variant-numeric:tabular-nums}
-  .vh-ln{display:flex;justify-content:space-between;gap:8px;padding:2px 0;
-         font-size:11.5px;line-height:1.45;border-top:1px dashed var(--line)}
+  .vh-ln{display:flex;justify-content:space-between;gap:7px;padding:1px 0;
+         font-size:11px;line-height:1.4;border-top:1px dashed var(--line)}
   .vh-ln:first-of-type{border-top:0}
   .vh-ln .a{color:var(--ink-2);min-width:0}
   .vh-ln .b{color:var(--ink);font-weight:800;text-align:right;white-space:nowrap;
@@ -931,7 +931,7 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
          border-radius:12px;background:var(--card,var(--surface,#fff))}
   .vhero .vh-l{font-size:11px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
                text-transform:uppercase;margin:0 0 8px}
-  .vhero .vh-say{margin:0 0 10px;font-size:14px;line-height:1.55;color:var(--ink)}
+  .vhero .vh-say{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:var(--ink)}
   .vhero .vh-say b{color:var(--accent)}
   .vh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
   .vh-c{padding:9px 10px;border:1px solid var(--line);border-radius:9px;text-align:center}
