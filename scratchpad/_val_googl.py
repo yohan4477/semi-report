@@ -63,13 +63,16 @@ def report4_html(sec, p, fig):
 
     h_ = ['<div class="vhero">',
           '<p class="vh-l">결론</p>',
-          '<p class="vh-say">축이 둘입니다. 최신 종가 <b>%.2f달러</b>(%s) 기준.</p>'
-          % (PRICE, PRICE_DAY),
+          '<p class="vh-say"><b>우리 잣대로는 지금 주가 %.2f달러(%s)를 못 받칩니다.</b> '
+          '축 둘이 같은 곳을 가리킵니다.</p>' % (PRICE, PRICE_DAY),
           '<div class="vh2">']
 
     # ── 축 ① DCF
     ax = ['<div class="vh-ax"><span class="k"><span class="en">DCF</span>'
           '<span class="ko">가정을 넣어 값을 낸다</span></span>',
+          '<p class="lead">세 경로 모두 현재가 아래입니다. 가장 후한 경로도 '
+          '<b>%.0f%% 낮습니다.</b></p>'
+          % abs((_vals['Bull']['per_share'] / PRICE - 1) * 100),
           '<div class="top">']
     for n, lab in (('Bear', '보수'), ('Base', '중간'), ('Bull', '후한')):
         ax.append('<div><span class="n">%s %s</span><span class="p">%.0f</span>'
@@ -86,6 +89,9 @@ def report4_html(sec, p, fig):
     # ── 축 ② 역산
     ax = ['<div class="vh-ax rev"><span class="k"><span class="en">Reverse-DCF</span>'
           '<span class="ko">시장가를 정답으로 놓고 되돌린다</span></span>',
+          '<p class="lead">시장가가 맞으려면 <b>둘 중 하나</b>여야 합니다 — 알파벳이 '
+          '실측보다 덜 출렁이거나, 지금의 <b>%.1f배</b>를 현금으로 남기거나.</p>'
+          % (_need_m / gc.MARGIN0),
           _ln('할인율이 이만큼 낮아야 한다', '%.2f~%.2f%%' % (_ir['Bear'] * 100, _ir['Bull'] * 100)),
           _ln('베타로 풀면 (실측 %.3f)' % _BETA,
               '%.3f~%.3f' % ((_ir['Bear'] - _RF) / _MRP, (_ir['Bull'] - _RF) / _MRP), sub=True),

@@ -209,6 +209,7 @@ def write_facts():
     rev35 = path(CASES['Base'])[-1][1]
     base_cagr = (rev35 / REV0) ** 0.1 - 1
     L.append('- 우리 Base 2035 매출 %s · 매출 연평균 성장률 %.1f%%' % (two(rev35), base_cagr * 100))
+    L.append('- 필요 마진이 지금 마진의 %.2f배' % ((f10 / rev35) / MARGIN0))
     for m in (0.17, 0.20, 0.25, 0.30, 0.364):
         need = f10 / m
         L.append('- 잉여현금흐름 마진 %.1f%% 이면 2035 매출 %s 필요 · 우리 경로의 %.2f배 · '
