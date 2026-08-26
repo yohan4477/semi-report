@@ -137,15 +137,17 @@ def _table(para):
     return cap, head, rows
 
 
-def parse_report(path, vid):
+def parse_report(path, vid, figs=None):
     """보고서 형식 md 한 편 → (프런트매터, 블록 목록, 한줄 코멘트).
 
     번호글과 달리 절 제목(`## `)·문단·그림 부름(`[[fig:이름]]`)이 섞여 흐른다.
-    그림은 `aie_figs.RFIGS[영상ID][이름]`에서 꺼낸다 — 이름이 없으면 생성을 멈춘다.
+    그림은 `figs[영상ID][이름]`에서 꺼낸다 — 이름이 없으면 생성을 멈춘다.
+    figs를 안 주면 `aie_figs.RFIGS`를 쓴다. 다른 장이 이 파서를 빌려 쓸 때
+    자기 그림 사전을 넘긴다 — 언더스탠딩 보고서 장이 그렇게 쓴다.
     """
     raw = io.open(path, encoding='utf-8').read().replace('\r\n', '\n')
     meta, body = front(raw)
-    have = aie_figs.RFIGS.get(vid, {})
+    have = (aie_figs.RFIGS if figs is None else figs).get(vid, {})
     blocks, verdict, used = [], '', set()
     for para in re.split(r'\n\s*\n', body):
         t = ' '.join(para.split()).strip()
@@ -368,6 +370,14 @@ POST_CSS = '''
   /* 첫 칸이 안 접히면 좁은 자리에서 표가 카드 밖으로 밀린다 —
      「매달린 툴 호출」 한 칸 때문에 표가 311px로 벌어졌다 */
   .uc-rep .uc-tbl td:first-child{white-space:normal}
+  /* 좁은 자리에서는 표가 칸 여백만으로도 넘친다. 세 열짜리 표가 295px 자리에서
+     300px로 벌어졌다 — 여백을 조이고 긴 낱말도 끊는다. 기준은 화면이 아니라
+     카드 안 자리라 .uc-rep 을 컨테이너로 삼는다 */
+  .uc-rep{container-type:inline-size}
+  @container (max-width:430px){
+    .uc-rep .uc-tbl th,.uc-rep .uc-tbl td{padding:8px 7px}
+    .uc-rep .uc-tbl{word-break:break-word}
+  }
 ''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '
