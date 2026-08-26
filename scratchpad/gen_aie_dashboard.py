@@ -109,7 +109,9 @@ def parse(path):
 H_RE = re.compile(r'^##\s+(.*)$')
 FIG_RE = re.compile(r'^\[\[fig:([a-z0-9_-]+)\]\]$')
 BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
-BOLD_TO = '<b>\1</b>'
+# 역참조는 raw 문자열이라야 한다. 따옴표 안의 \1은 8진 이스케이프라
+# 제어문자 하나가 되고, 굵게 표시한 글이 통째로 사라진다(87곳이 그렇게 먹혔다)
+BOLD_TO = r'<b>\1</b>'
 
 
 def _terms(para):
