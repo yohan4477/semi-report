@@ -307,6 +307,9 @@ POST_CSS = '''
             align-items:center;gap:3px}
   .rfig .rf-link em{font-style:normal;font-size:.95rem;font-weight:700;color:var(--ink-3);
             white-space:nowrap}
+  /* 여럿이 하나로 모이는 판에서 왼쪽에 쌓이는 입구들 */
+  .rfig .rf-stack{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:6px}
+  .rfig .rf-stack .rf-box{flex:0 0 auto;padding:8px}
   .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
   .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
