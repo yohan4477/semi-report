@@ -30,6 +30,10 @@ PAGES = [
     # 떨어뜨려 EXTRA 에 넣는다. 그 파일은 scratchpad/googl_cases.py 가 다시 쓴다.
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-val',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 모델 회사·칩 회사 정성 비교. 재무제표가 없는 회사가 대부분이라 값이 전부
+    # 뉴스레터에서 온다.
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-ai',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
