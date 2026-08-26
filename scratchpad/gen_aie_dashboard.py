@@ -292,6 +292,11 @@ POST_CSS = '''
                   border-left:9px solid var(--epoch-teal)}
   .rfig .rf-track.is-back::after{right:auto;left:-1px;border-left:0;
                   border-right:9px solid var(--epoch-teal)}
+  /* 흐름 판 — 칸을 늘어놓고 사이마다 화살표. 좁아지면 아래로 쌓인다 */
+  .rfig .rf-chain{display:flex;align-items:stretch;gap:7px}
+  .rfig .rf-step{flex:0 0 auto;align-self:center;width:0;height:0;
+            border-top:6px solid transparent;border-bottom:6px solid transparent;
+            border-left:9px solid var(--epoch-teal)}
   .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
   .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
@@ -330,7 +335,10 @@ POST_CSS = '''
             border:2px solid var(--epoch-teal);border-radius:9px;background:var(--epoch-wrapbg);
             font-size:.95rem;line-height:1.6;font-weight:600;color:var(--ink-2);text-align:center}
   @container (max-width:430px){
-    .rfig .rf-pair{flex-direction:column;align-items:stretch}
+    .rfig .rf-pair,.rfig .rf-chain{flex-direction:column;align-items:stretch}
+    .rfig .rf-step{align-self:center;border-left:6px solid transparent;
+            border-right:6px solid transparent;border-top:9px solid var(--epoch-teal);
+            border-bottom:0}
     /* 칸이 세로로 쌓이면 선은 뜻을 잃는다. 선을 숨기고 이름만 남긴다 —
        「하네스가 시킨다」·「모델이 돌려준다」가 글자에 이미 들어 있다 */
     .rfig .rf-msgs{gap:12px}
@@ -352,6 +360,9 @@ POST_CSS = '''
   .uc-rep .uc-tbl th{font-size:.95rem;letter-spacing:0;text-transform:none}
   /* 설명 칸까지 굵게 두면 표만 본문보다 무겁게 읽힌다 */
   .uc-rep .uc-tbl td:nth-child(2){font-weight:400;color:var(--ink-2)}
+  /* 첫 칸이 안 접히면 좁은 자리에서 표가 카드 밖으로 밀린다 —
+     「매달린 툴 호출」 한 칸 때문에 표가 311px로 벌어졌다 */
+  .uc-rep .uc-tbl td:first-child{white-space:normal}
 ''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '
