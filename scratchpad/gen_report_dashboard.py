@@ -5,6 +5,7 @@
 # 여기는 그 답들을 이어 붙인 한 편이다. 그림은 원본 생성기에서 가져다 쓴다 —
 # 여기서 다시 그리면 한쪽만 고쳐지는 사고가 난다.
 import os
+import re
 import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -894,6 +895,22 @@ FIG_MAP = _svg(640, 396, '로봇 한 대의 층마다 두 보고서가 무엇을
 
 
 REPORT_CSS = _biz_part3.TABLE_CSS + """
+  /* 절 접기. 제목을 눌러 편다. 절이 스물이 넘는 장에서 목차 노릇을 한다. */
+  .rsec{border-top:1px solid var(--line)}
+  .rsec > summary{list-style:none;cursor:pointer;padding:2px 0 2px 22px;position:relative}
+  .rsec > summary::-webkit-details-marker{display:none}
+  .rsec > summary::before{content:"▸";position:absolute;left:4px;top:50%;
+                          transform:translateY(-50%);color:var(--ink-3);font-size:12px}
+  .rsec[open] > summary::before{content:"▾";color:var(--accent)}
+  .rsec > summary h3{margin:8px 0}
+  .rsec > summary:hover h3{color:var(--accent)}
+  .rsec-b{padding-bottom:6px}
+  .foldbar{display:flex;gap:6px;margin:0 0 10px}
+  .foldbar .fold-all{font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;
+                     padding:4px 10px;border:1px solid var(--line);border-radius:999px;
+                     background:var(--card,var(--surface,#fff));color:var(--ink-2)}
+  .foldbar .fold-all:hover{border-color:var(--ink-3);color:var(--ink)}
+
   /* 연도별 경로표. 재무 모형은 왼쪽에서 오른쪽으로 읽으므로 연도를 가로축에 둔다
      (회계사 대시보드 규칙 3절). 열 폭은 colgroup 에만 준다 — th 에도 주면 둘을 합쳐
      계산해 첫 열 글자가 다음 열과 포개진다. 좁은 화면에서는 표만 가로로 스크롤한다. */
@@ -1023,6 +1040,44 @@ def report3_html():
     return ''.join(h)
 
 
+def foldable(html):
+    """<h3> 절마다 <details> 로 감싸 제목을 누르면 펴지게 한다.
+
+    절이 스물이 넘어 한 판에 다 펴 두면 18,000픽셀이 넘는다. 제목만 훑고 필요한
+    절만 여는 길을 낸다. 자바스크립트를 안 쓴다 — details/summary 가 브라우저 기본
+    기능이라 스크립트가 죽어도 내용이 남는다.
+
+    「이어 읽기」는 규칙이 지키라는 것이라(2026-08-24 에 카드 분할을 되돌린 이력)
+    절 목록 위에 「모두 펴기」를 둔다. 한 번 누르면 예전처럼 통으로 읽힌다.
+    """
+    parts = re.split(r'(<h3>.*?</h3>)', html)
+    if len(parts) < 3:
+        return html
+    out = [parts[0]]                      # 첫 h3 앞(보고서 표지)은 접지 않는다
+    for i in range(1, len(parts), 2):
+        title = parts[i][4:-5]
+        body = parts[i + 1] if i + 1 < len(parts) else ''
+        out.append('<details class="rsec"><summary><h3>%s</h3></summary>'
+                   '<div class="rsec-b">%s</div></details>' % (title, body))
+    return ''.join(out)
+
+
+FOLD_BAR = ('<div class="foldbar">'
+            '<button type="button" class="fold-all" data-open="1">모두 펴기</button>'
+            '<button type="button" class="fold-all" data-open="0">모두 접기</button>'
+            '</div>')
+
+FOLD_JS = """<script>
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('.fold-all');
+  if (!b) return;
+  var open = b.dataset.open === '1';
+  var root = b.closest('section') || document;
+  root.querySelectorAll('details.rsec').forEach(function (d) { d.open = open; });
+});
+</script>"""
+
+
 def report4_html():
     """미국 빅테크 밸류에이션 — 알파벳. 앞의 셋과 성격이 다르다.
 
@@ -1033,7 +1088,7 @@ def report4_html():
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
     _val_googl.report4_html(sec, p, fig)
-    return ''.join(h)
+    return foldable(''.join(h))
 
 
 def report5_html():
@@ -1043,7 +1098,7 @@ def report5_html():
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
     _val_peers_text.report5_html(sec, p, fig)
-    return ''.join(h)
+    return foldable(''.join(h))
 
 
 HEAD1 = ('<div class="rep-head"><span class="rn">보고서 ①</span>'
@@ -1107,5 +1162,5 @@ if __name__ == '__main__':
                      '누구에게 남나', 1, report3_html()),
                     ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
                      '알파벳을 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 2,
-                     report4_html() + report5_html())],
+                     FOLD_BAR + report4_html() + report5_html() + FOLD_JS)],
               extra_css=REPORT_CSS)
