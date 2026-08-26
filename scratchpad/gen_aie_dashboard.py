@@ -310,9 +310,12 @@ POST_CSS = '''
   /* 생명선 — 레인 한가운데로 내려가는 점선. 걸음 뒤에 깔린다 */
   .rfig .rq-life{width:0;justify-self:center;align-self:stretch;
             border-left:1px dashed var(--ink-3);opacity:.5}
-  .rfig .rq-lab{grid-column:1/-1;margin:16px 0 5px;font-size:.95rem;line-height:1.6;color:var(--ink-3)}
-  .rfig .rq-lab b{font-weight:800;color:var(--ink-2);margin-right:8px}
-  .rfig .rq-lab span{font-weight:600}
+  /* 말은 제 화살표 바로 위에 같은 열을 걸치고 앉는다. 보내는 쪽으로 붙여
+     어느 레인에서 나온 말인지 자리로 보이게 한다 */
+  .rfig .rq-lab{margin:16px 2px 5px;font-size:.95rem;line-height:1.6;font-weight:600;
+            color:var(--ink-2);text-align:left}
+  .rfig .rq-lab.is-back{text-align:right}
+  .rfig .rq-lab.is-mid{text-align:center}
   /* 보내는 레인 한가운데에서 받는 레인 한가운데까지. 두 열을 걸친 칸에서
      양옆을 25%씩 미는 것이 정확히 그 자리다 */
   .rfig .rq-arrow{height:0;margin:2px 25% 10px;border-top:2px solid var(--epoch-teal);

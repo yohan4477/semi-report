@@ -369,12 +369,15 @@ _R_STATE_CAP = ('발표의 주장 전부가 이 한 장이다. <b>네 가지 중
 
 _ACTORS = [('학생', 'human'), ('하네스', 'harness'), ('모델', 'model')]
 
-# (보내는 레인, 받는 레인, 누가 누구에게, 무엇을) — 레인은 1부터. 둘이 같으면 자기 호출
-_STEPS = [(1, 2, '학생 → 하네스', '학생이 답을 말함'),
-          (2, 3, '하네스 → 모델', '이 단계에 필요한 입력만 넘긴다'),
-          (3, 2, '모델 → 하네스', '행동 하나의 결과를 돌려준다'),
-          (2, 2, '하네스', '결과를 검증하고 상태를 다음으로 넘긴다'),
-          (2, 1, '하네스 → 학생', '다음 말과 화이트보드')]
+# (보내는 레인, 받는 레인, 무엇을) — 레인은 1부터. 둘이 같으면 자기 호출.
+#
+# **누가 누구에게인지는 안 적는다.** 레인과 화살표가 이미 말하고 있어서 「학생 → 하네스」를
+# 덧붙이면 같은 말이 두 번 된다. 말은 제 화살표 바로 위에 얹어 자리로 묶는다.
+_STEPS = [(1, 2, '학생이 답을 말함'),
+          (2, 3, '이 단계에 필요한 입력만 넘긴다'),
+          (3, 2, '행동 하나의 결과를 돌려준다'),
+          (2, 2, '결과를 검증하고 상태를 다음으로 넘긴다'),
+          (2, 1, '다음 말과 화이트보드')]
 
 
 def _seq(actors, steps):
@@ -386,15 +389,18 @@ def _seq(actors, steps):
         out.append('<i class="rq-life" style="grid-column:%d;grid-row:2/%d"></i>'
                    % (i, last + 1))
     row = 2
-    for frm, to, who, what in steps:
-        out.append('<p class="rq-lab" style="grid-row:%d"><b>%s</b><span>%s</span></p>'
-                   % (row, who, what))
+    for frm, to, what in steps:
+        # 자기 호출은 한 열뿐이라 말을 얹으면 글자가 눌린다. 그때만 판 폭을 다 쓴다
+        span = '1/-1' if frm == to else '%d/%d' % (min(frm, to), max(frm, to) + 1)
+        side = 'is-mid' if frm == to else ('is-back' if to < frm else '')
+        out.append('<p class="rq-lab %s" style="grid-column:%s;grid-row:%d">%s</p>'
+                   % (side, span, row, what))
         if frm == to:
             out.append('<i class="rq-self" style="grid-column:%d;grid-row:%d"></i>'
                        % (frm, row + 1))
         else:
-            out.append('<i class="rq-arrow%s" style="grid-column:%d/%d;grid-row:%d"></i>'
-                       % (' is-back' if to < frm else '', min(frm, to), max(frm, to) + 1, row + 1))
+            out.append('<i class="rq-arrow%s" style="grid-column:%s;grid-row:%d"></i>'
+                       % (' is-back' if to < frm else '', span, row + 1))
         row += 2
     return '<div class="rfig"><div class="rq">%s</div></div>' % ''.join(out)
 
