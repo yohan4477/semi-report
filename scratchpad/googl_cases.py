@@ -249,6 +249,16 @@ def write_facts():
                  % (name, v['per_share'], (v['per_share'] / el.PRICE - 1) * 100,
                     v['tv_share'] * 100))
     er = el.path(1)
+    _ed = [1 / (1 + el.CASES['Base'][1]) ** i for i in range(1, len(er) + 1)]
+    for (y, rev, m, f), dsc in zip(er, _ed):
+        L.append('- 엘곰 %d 표기값 매출 %.0f · 잉여현금흐름 %.0f · 할인계수 %.4f · 현재가치 %.0f'
+                 % (y, rev, f, dsc, f * dsc))
+    _eprev = el.REV0
+    for y, rev, m, f in er:
+        L.append('- 엘곰 %d 매출 성장률 %.1f%% · 마진 %.1f%%' % (y, (rev / _eprev - 1) * 100, m * 100))
+        _eprev = rev
+    L.append('- 엘곰 Base 명시적 기간 현재가치 합 %s'
+             % two(sum(f * dsc for (_y, _r, _m, f), dsc in zip(er, _ed))))
     L += ['- 엘곰 Base 2035 잉여현금흐름 %s' % two(er[-1][3]),
           '- 엘곰 Base 2035 매출 %s' % two(er[-1][1]),
           '- 엘곰 Phase 3 마진 가운데값 22.5%']

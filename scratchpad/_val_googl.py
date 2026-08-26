@@ -43,6 +43,44 @@ HEAD4 = ('<hr class="rep-cut">'
          '한국 회사에 쓰던 현금흐름 할인법을 알파벳에 그대로 대면 어디서 깨지는지를 봅니다.</p></div>')
 
 
+
+def _ytable(rows, rev0, wacc, cuts):
+    """연도별 경로표. 연도를 가로축에 둔다 — 회계사 대시보드 규칙 3절.
+
+    rows  = [(연도, 매출, FCF마진, FCF), ...]
+    cuts  = 세로선을 세울 열 번호 집합(0부터). 구간은 선으로만 가른다.
+
+    §8(우리 경로)과 §9(필자 경로)가 이 함수 하나를 쓴다. 표를 두 벌 쓰면 한쪽만
+    고쳐지고 비교가 어긋난다.
+    """
+    disc = [1 / (1 + wacc) ** i for i in range(1, len(rows) + 1)]
+    grow, prev = [], rev0
+    for _y, rev, _m, _f in rows:
+        grow.append((rev / prev - 1) * 100)
+        prev = rev
+
+    def cells(vals, fmt):
+        return ''.join('<td%s>%s</td>' % (' class="cut"' if i in cuts else '', fmt % v)
+                       for i, v in enumerate(vals))
+
+    h = ['<div class="yt-wrap"><table class="yt">',
+         '<colgroup><col style="width:104px">',
+         ''.join('<col style="width:74px">' for _ in rows), '</colgroup>',
+         '<thead><tr><th></th>',
+         ''.join('<th%s>%d</th>' % (' class="cut"' if i in cuts else '', r[0])
+                 for i, r in enumerate(rows)),
+         '</tr></thead><tbody>',
+         '<tr><th scope="row">매출 성장률</th>%s</tr>' % cells(grow, '%.1f%%'),
+         '<tr><th scope="row">매출</th>%s</tr>' % cells([r[1] for r in rows], '%.0f'),
+         '<tr><th scope="row">FCF마진</th>%s</tr>' % cells([r[2] * 100 for r in rows], '%.1f%%'),
+         '<tr class="hi"><th scope="row">잉여현금흐름</th>%s</tr>' % cells([r[3] for r in rows], '%.0f'),
+         '<tr><th scope="row">할인계수</th>%s</tr>' % cells(disc, '%.4f'),
+         '<tr class="hi"><th scope="row">현재가치</th>%s</tr>'
+         % cells([r[3] * d for r, d in zip(rows, disc)], '%.0f'),
+         '</tbody></table></div>']
+    return ''.join(h), sum(r[3] * d for r, d in zip(rows, disc))
+
+
 def report4_html(sec, p, fig):
     """절 1~12. 기준연도·순이익 오염·세미 근거·세 경로·필자 잣대·역산·판정."""
 
@@ -274,44 +312,14 @@ def report4_html(sec, p, fig):
          '세 값은 <b>우리가 돌린 계산</b>입니다. 계산기는 <code>insights/dcf.py</code>이고 '
          '경로는 <code>scratchpad/googl_cases.py</code>에 있습니다.'))
     _rows = gc.path(gc.CASES['Base'])
-    _cut = gc.P1_YEARS          # 구간이 갈리는 자리(2028|2029)
-
-    def _cells(vals, fmt):
-        return ''.join('<td%s>%s</td>'
-                       % (' class="cut"' if i == _cut else '', fmt % v)
-                       for i, v in enumerate(vals))
-
-    _grow, _prev = [], gc.REV0
-    for _y, rev, _m, _f in _rows:
-        _grow.append((rev / _prev - 1) * 100)
-        _prev = rev
-    _disc = [1 / (1 + gc.WACC) ** i for i in range(1, len(_rows) + 1)]
-
-    h_ = ['<div class="yt-wrap"><table class="yt">',
-          '<colgroup><col style="width:104px">',
-          ''.join('<col style="width:74px">' for _ in _rows), '</colgroup>',
-          '<thead><tr><th></th>',
-          ''.join('<th%s>%d</th>' % (' class="cut"' if i == _cut else '', r[0])
-                  for i, r in enumerate(_rows)),
-          '</tr></thead><tbody>',
-          '<tr><th scope="row">매출 성장률</th>%s</tr>' % _cells(_grow, '%.1f%%'),
-          '<tr><th scope="row">매출</th>%s</tr>' % _cells([r[1] for r in _rows], '%.0f'),
-          '<tr><th scope="row">FCF마진</th>%s</tr>'
-          % _cells([r[2] * 100 for r in _rows], '%.1f%%'),
-          '<tr class="hi"><th scope="row">잉여현금흐름</th>%s</tr>'
-          % _cells([r[3] for r in _rows], '%.0f'),
-          '<tr><th scope="row">할인계수</th>%s</tr>' % _cells(_disc, '%.4f'),
-          '<tr class="hi"><th scope="row">현재가치</th>%s</tr>'
-          % _cells([r[3] * d for r, d in zip(_rows, _disc)], '%.0f'),
-          '</tbody></table></div>']
-    p(''.join(h_))
+    _tb, _pv = _ytable(_rows, gc.REV0, gc.WACC, {gc.P1_YEARS})
+    p(_tb)
     p('<p class="yt-memo">가운데 경로(Base)입니다. 단위는 10억 달러이고 할인율은 %.1f%%입니다. '
       '세로선이 구간 경계입니다 — 왼쪽 3년은 설비투자로 마진이 눌린 구간이고, 오른쪽 7년은 '
       '성장률이 %.1f%%에서 %.1f%%로 내려앉고 마진이 %.1f%%에서 %.1f%%로 올라오는 구간입니다. '
       '현재가치를 다 더하면 %s이고, 여기에 영구가치와 순현금이 붙어 주당 %.0f달러가 됩니다.</p>'
       % (gc.WACC * 100, gc.CASES['Base']['g1'] * 100, gc.CASES['Base']['g2'] * 100,
-         gc.CASES['Base']['m1'] * 100, gc.CASES['Base']['m3'] * 100,
-         _eok(sum(r[3] * d for r, d in zip(_rows, _disc))),
+         gc.CASES['Base']['m1'] * 100, gc.CASES['Base']['m3'] * 100, _eok(_pv),
          gc.dcf.value([r[3] for r in _rows], gc.WACC, gc.CASES['Base']['g'],
                       gc.NET_DEBT, gc.SHARES)['per_share']))
 
@@ -346,6 +354,22 @@ def report4_html(sec, p, fig):
       % (' · '.join('<b>%.0f달러</b>' % _ev[n]['per_share'] for n in el.ORDER),
          abs((_ev['Base']['per_share'] / PRICE - 1) * 100),
          (_ev['Bull']['per_share'] / PRICE - 1) * 100))
+
+    _er = el.path(1)                      # 필자 가운데 경로
+    _ew = el.CASES['Base'][1]             # 그가 쓴 할인율 9.5%
+    _etb, _epv = _ytable(_er, el.REV0, _ew, {3, 6})
+    p(_etb)
+    p('<p class="yt-memo">필자 가운데 경로입니다. 절 8 의 표와 <b>같은 형식</b>이라 줄을 '
+      '나란히 견주면 됩니다. 단위는 10억 달러, 할인율은 %.1f%%, 기준연도는 그가 쓴 '
+      '2025 회계연도(매출 %s)입니다. 세로선 둘이 그가 나눈 세 구간의 경계입니다. '
+      '현재가치를 다 더하면 %s이고 주당 %.0f달러가 됩니다.</p>'
+      % (_ew * 100, _eok(el.REV0), _eok(_epv), _ev['Base']['per_share']))
+    p('두 표는 <b>마진</b>에서 갈립니다. 앞 3년은 그가 우리보다 마진을 <b>낮게</b> '
+      '봅니다 — 그의 5.5%%와 우리 11.0~11.6%%입니다. 그런데 2032년부터 뒤집혀 그가 '
+      '<b>22.5%%</b>를 쓰는 동안 우리는 %.1f%%까지만 올립니다. 잉여현금흐름이 2035년에 '
+      '그의 표에서는 %s, 우리 표에서는 %s입니다.'
+      % (gc.CASES['Base']['m3'] * 100, _eok(_er[-1][3]),
+         _eok(gc.path(gc.CASES['Base'])[-1][3])))
 
     p('어느 가정이 이 차이를 만드는지 하나씩 갈아 끼워 봤습니다. 우리 가운데 경로에서 '
       '출발해 그의 값을 하나만 넣고 나머지는 그대로 둡니다.')
