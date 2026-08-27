@@ -417,6 +417,44 @@ def post_html(items, figs=()):
     return ''.join(h)
 
 
+def debate_html(d):
+    """쟁점 카드 본문 — 진행자와 화자를 갈라 낸다.
+
+    화자 블록은 인용이고 진행자 블록은 판단이다. 같은 모양으로 내보내면
+    자료구조로 갈라 놓은 것이 화면에서 도로 붙는다.
+    """
+    h = []
+    h.append('<div class="uc-mod"><span class="uc-mod-tag">진행자</span>')
+    h.append('<h3>물음</h3>%s' % d['moderator'].get('물음', ''))
+    h.append('</div>')
+    for f in d.get('figs', ()):
+        h.append(f)
+    for v in d['voices']:
+        rel = v['stance'] if v['stance'] == '단독' else '%s ↔ %s' % (
+            v['stance'], v['against'])
+        h.append('<div class="uc-voice">')
+        h.append('<div class="uc-voice-head"><b>%s</b>'
+                 '<span class="uc-voice-when">%s</span>'
+                 '<span class="uc-voice-src">「%s」</span>'
+                 '<span class="uc-stance is-%s">%s</span></div>'
+                 % (v['actor'], v['said'], v['title'], v['stance'], rel))
+        if v.get('claim'):
+            h.append('<p class="uc-voice-claim">%s</p>' % v['claim'])
+        h.append(v['body'])
+        h.append('</div>')
+    if d.get('silent'):
+        h.append('<div class="uc-silent"><h3>답하지 않은 화자</h3><ul>')
+        for s in d['silent']:
+            h.append('<li><b>%s</b> — %s</li>' % (s['actor'], s['why']))
+        h.append('</ul></div>')
+    h.append('<div class="uc-mod"><span class="uc-mod-tag">진행자</span>')
+    h.append('<h3>갈리는 자리</h3>%s' % d['moderator'].get('갈리는 자리', ''))
+    h.append('<h3>무엇을 보면 갈리나</h3>%s'
+             % d['moderator'].get('무엇을 보면 갈리나', ''))
+    h.append('</div>')
+    return ''.join(h)
+
+
 def report_html(blocks):
     """보고서 형식 본문 — 번호글 대신 절 제목·문단·그림이 섞여 흐른다.
 
@@ -481,6 +519,13 @@ def card_html(c):
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
         h.append(report_html(c['report']))
+        h.append(_links_html(c))
+        h.append('</div></div>')
+        return ''.join(h)
+    if c.get('debate'):
+        if c.get('verdict'):
+            h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
+        h.append(debate_html(c['debate']))
         h.append(_links_html(c))
         h.append('</div></div>')
         return ''.join(h)
