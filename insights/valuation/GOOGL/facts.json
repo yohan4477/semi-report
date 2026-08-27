@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T13:14:25.195394+00:00",
+ "fetched_at": "2026-08-27T14:04:13.712850+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -1022,6 +1022,143 @@
      "start": null
     }
    },
+   "lt_investments": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 5183000000,
+     "filed": "2016-02-11",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 5878000000,
+     "filed": "2017-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7813000000,
+     "filed": "2018-02-06",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 13859000000,
+     "filed": "2019-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 13078000000,
+     "filed": "2020-02-04",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 20703000000,
+     "filed": "2021-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 29549000000,
+     "filed": "2022-02-02",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 30492000000,
+     "filed": "2023-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 31008000000,
+     "filed": "2024-01-31",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 37982000000,
+     "filed": "2025-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 68687000000,
+     "filed": "2026-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    }
+   },
+   "nonmarketable_equity": {
+    "2018": {
+     "end": "2018-12-31",
+     "val": 12275000000,
+     "filed": "2019-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 11353000000,
+     "filed": "2020-02-04",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 18893000000,
+     "filed": "2021-02-03",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 27571000000,
+     "filed": "2022-02-02",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 28529000000,
+     "filed": "2023-02-03",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 28766000000,
+     "filed": "2024-01-31",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 35531000000,
+     "filed": "2025-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 64094000000,
+     "filed": "2026-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    }
+   },
    "guarantee_max": {
     "2025": {
      "end": "2025-12-31",
@@ -1602,6 +1739,20 @@
     "tag": "CashAndCashEquivalentsAtCarryingValue",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
+   "lt_investments": {
+    "val": 131461000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "OtherLongTermInvestments",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "nonmarketable_equity": {
+    "val": 124259000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
    "guarantee_max": {
     "val": 7600000000,
     "window": "2026-06-30",
@@ -1688,51 +1839,51 @@
   }
  },
  "market": {
-  "price": 342.0,
+  "price": 340.245,
   "currency": "USD",
-  "as_of": "2026-08-26T20:00:01+00:00",
-  "market_cap": 4134096000000.0,
+  "as_of": "2026-08-27T14:04:11+00:00",
+  "market_cap": 4112881560000.0,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.3640303782803203,
+  "beta": 1.364317499721575,
   "n_days": 252,
   "window": "52주",
-  "start": "2025-08-25",
-  "end": "2026-08-26",
+  "start": "2025-08-26",
+  "end": "2026-08-27",
   "index": "^GSPC",
   "freq": "daily"
  },
  "beta_grid": {
   "52주 일간": {
-   "beta": 1.3640303782803203,
+   "beta": 1.364317499721575,
    "n": 252
   },
   "52주 주간": {
-   "beta": 2.37474817901057,
+   "beta": 1.568348243941459,
    "n": 50
   },
   "52주 월간": {
-   "beta": 1.8300428677528662,
+   "beta": 1.664122392983974,
    "n": 12
   },
   "2년 일간": {
-   "beta": 1.14906335736687,
+   "beta": 1.1478105250781607,
    "n": 504
   },
   "2년 주간": {
-   "beta": 1.04751059699678,
+   "beta": 1.0960302943149816,
    "n": 100
   },
   "2년 월간": {
-   "beta": 1.6247121367267003,
+   "beta": 1.564545626899257,
    "n": 24
   },
   "5년 일간": {
-   "beta": 1.2649534816573553,
-   "n": 1253
+   "beta": 1.2646847008020865,
+   "n": 1254
   },
   "5년 주간": {
    "beta": 1.16380176167963,
@@ -1745,21 +1896,21 @@
  },
  "lookback": [
   {
-   "asof": "2026-05-27",
-   "price": 388.8299865722656,
-   "market_cap": 4700.176877685547,
+   "asof": "2026-05-28",
+   "price": 390.1300048828125,
+   "market_cap": 4715.891499023437,
    "fcf_known": 73.266,
    "fcf_period": "2025-12-31",
-   "multiple": 64.15222446544846,
+   "multiple": 64.3667116946938,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2026-02-25",
-   "price": 312.8999938964844,
-   "market_cap": 3782.335126220703,
+   "asof": "2026-02-26",
+   "price": 307.3800048828125,
+   "market_cap": 3715.6094990234374,
    "fcf_known": 73.266,
    "fcf_period": "2025-12-31",
-   "multiple": 51.62469803484157,
+   "multiple": 50.71396690174757,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
@@ -1772,30 +1923,30 @@
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2025-08-27",
-   "price": 207.47999572753906,
-   "market_cap": 2508.0181883544924,
+   "asof": "2025-08-28",
+   "price": 211.63999938964844,
+   "market_cap": 2558.3043126220705,
    "fcf_known": 72.764,
    "fcf_period": "2024-12-31",
-   "multiple": 34.46784382874076,
+   "multiple": 35.15892903938858,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2025-05-28",
-   "price": 172.36000061035156,
-   "market_cap": 2083.48768737793,
+   "asof": "2025-05-29",
+   "price": 171.86000061035156,
+   "market_cap": 2077.4436873779296,
    "fcf_known": 72.764,
    "fcf_period": "2024-12-31",
-   "multiple": 28.63349578607457,
+   "multiple": 28.55043273291641,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2025-02-26",
-   "price": 172.72999572753906,
-   "market_cap": 2087.9601883544924,
+   "asof": "2025-02-27",
+   "price": 168.5,
+   "market_cap": 2036.828,
    "fcf_known": 72.764,
    "fcf_period": "2024-12-31",
-   "multiple": 28.694961634248976,
+   "multiple": 27.99224891429828,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
@@ -1808,57 +1959,57 @@
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2024-08-28",
-   "price": 162.85000610351562,
-   "market_cap": 1968.5308737792968,
+   "asof": "2024-08-29",
+   "price": 161.77999877929688,
+   "market_cap": 1955.5966252441406,
    "fcf_known": 69.495,
    "fcf_period": "2023-12-31",
-   "multiple": 28.32622309201089,
+   "multiple": 28.140105406779487,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2024-05-29",
-   "price": 175.89999389648438,
-   "market_cap": 2126.2791262207033,
+   "asof": "2024-05-30",
+   "price": 172.11000061035156,
+   "market_cap": 2080.4656873779295,
    "fcf_known": 69.495,
    "fcf_period": "2023-12-31",
-   "multiple": 30.596145423709665,
+   "multiple": 29.93691182643254,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2024-02-28",
-   "price": 136.3800048828125,
-   "market_cap": 1648.5614990234376,
+   "asof": "2024-02-29",
+   "price": 138.4600067138672,
+   "market_cap": 1673.7045611572266,
    "fcf_known": 69.495,
    "fcf_period": "2023-12-31",
-   "multiple": 23.722015958319844,
+   "multiple": 24.08381266504391,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2023-11-29",
-   "price": 134.99000549316406,
-   "market_cap": 1631.7591864013673,
+   "asof": "2023-11-30",
+   "price": 132.52999877929688,
+   "market_cap": 1602.0226252441407,
    "fcf_known": 60.01,
    "fcf_period": "2022-12-31",
-   "multiple": 27.1914545309343,
+   "multiple": 26.695927766107996,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2023-08-30",
-   "price": 135.8800048828125,
-   "market_cap": 1642.5174990234375,
+   "asof": "2023-08-31",
+   "price": 136.1699981689453,
+   "market_cap": 1646.022937866211,
    "fcf_known": 60.01,
    "fcf_period": "2022-12-31",
-   "multiple": 27.370729862080278,
+   "multiple": 27.42914410708567,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   },
   {
-   "asof": "2023-05-31",
-   "price": 122.87000274658203,
-   "market_cap": 1485.2525932006836,
+   "asof": "2023-06-01",
+   "price": 123.72000122070312,
+   "market_cap": 1495.5273747558595,
    "fcf_known": 60.01,
    "fcf_period": "2022-12-31",
-   "multiple": 24.75008487253264,
+   "multiple": 24.921302695481746,
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   }
  ],
@@ -2059,7 +2210,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T13:14:30.568883+00:00",
+  "fetched_at": "2026-08-27T14:04:19.286532+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

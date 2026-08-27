@@ -610,13 +610,18 @@ def report4_html(sec, p, fig):
       % (PRICE, _vals['Bull']['per_share'], gc.wacc_of('Bull') * 100,
          (_ir['Bull'] or 0) * 100))
     _base_ps = _vals['Base']['per_share']
-    _add = 131.5 / gc.SHARES
+    # 값을 박아 두지 않는다. 태그가 이제 있다 — OtherLongTermInvestments 와
+    # EquitySecuritiesWithoutReadilyDeterminableFairValueAmount 이고, 뒤는 앞에 포함된다.
+    _lt = gc.t['lt_investments']['val'] / gc.B
+    _nm = gc.t['nonmarketable_equity']['val'] / gc.B
+    _add = _lt / gc.SHARES
     p('빠진 자산이 있는지도 확인했습니다. 알파벳이 들고 있는 비상장 지분의 장부 금액은 '
-      '2026년 6월 30일 기준 1,243억 달러이고 장기 투자자산 전체는 1,315억 달러입니다. '
+      '%s 기준 %s이고 장기 투자자산 전체는 %s입니다. '
       '이 금액을 영업과 무관한 자산으로 통째로 더해도 주당 <b>%.1f달러</b>가 붙을 뿐입니다. '
       '중간 경로가 %.0f달러에서 %.0f달러가 되어 현재가 대비 차이가 %.0f%%에서 %.0f%%로 줄 '
       '뿐입니다. <b>보유 지분은 이 차이의 설명이 되지 못합니다.</b>'
-      % (_add, _base_ps, _base_ps + _add,
+      % (gc.t['lt_investments']['end'], _eok(_nm), _eok(_lt),
+         _add, _base_ps, _base_ps + _add,
          abs((_base_ps / PRICE - 1) * 100), abs(((_base_ps + _add) / PRICE - 1) * 100)))
     p('<b>간격의 대부분은 배수 하나에서 옵니다.</b> 영구가치는 마지막 해 잉여현금흐름에 '
       '(1+영구성장률)/(할인율−영구성장률)을 곱해 만듭니다. 우리 값을 넣으면 <b>%.1f배</b>'

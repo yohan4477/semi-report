@@ -141,13 +141,21 @@ def v2_period_aligned(out):
         # 값이 한 해 낡은 채 실렸던 것이 그 사고였다. 받아만 두고 안 쓰는 태그(구매약정
         # 따위)까지 막으면 공시 주기가 결함으로 둔갑한다 — 리스 때 한 번 겪었다.
         used = set(GROUPS[1][1])
+        unused_stale = []
         for k, x in tt.items():
             if not (isinstance(x, dict) and (x.get('stale_days') or 0) > DATE_TOL):
                 continue
-            lv = 'FAIL' if k in used else 'WARN'
-            out.append((lv, 'V2', '%s %s 가 기준일보다 %d일 낡았다%s'
-                        % (adjust.NAMES[t], k, x['stale_days'],
-                           '' if lv == 'FAIL' else ' — 계산에 안 쓰는 값이다')))
+            if k in used:
+                out.append(('FAIL', 'V2', '%s %s 가 기준일보다 %d일 낡았다'
+                            % (adjust.NAMES[t], k, x['stale_days'])))
+            else:
+                unused_stale.append(k)
+        # 안 쓰는 값이 낡은 것은 공시 주기 차이다. 회사마다 한 줄로 접는다 —
+        # 줄줄이 세우면 없어지지 않는 경고가 쌓여 진짜 경고를 덮는다.
+        if unused_stale:
+            out.append(('INFO', 'V2', '%s 안 쓰는 값 %d개가 낡았다(%s)'
+                        % (adjust.NAMES[t], len(unused_stale),
+                           '·'.join(sorted(unused_stale)))))
 
 
 # 모듈 최상단에서 대문자 이름에 소수 리터럴을 바로 붙인 자리. 계산에서 온 값은
@@ -174,14 +182,24 @@ def v3_no_bare_constants(out):
 
 
 def v4_unmeasured(out):
-    """미측정으로 남은 줄을 센다. 막지는 않고 보이게만 한다."""
-    seen = {}
+    """**아직 안 잰** 줄만 센다. 「불가」는 안 센다.
+
+    둘을 섞으면 표가 영영 안 줄어드는 할 일 목록이 된다. 공시가 안 갈라 못 재는 것을
+    못 잰다고 확정하는 것도 결과이고, 그런 줄은 경고가 아니라 기록이다.
+    """
+    seen, blocked = {}, {}
     for t in adjust.TICKERS:
         for r in adjust.rows(t):
             if r['state'] == adjust.UNMEASURED:
-                seen.setdefault(r['key'], r['name'])
-    for k, name in sorted(seen.items()):
-        out.append(('WARN', 'V4', '아직 안 쟀다: %s (%s)' % (name, k)))
+                seen.setdefault(r['key'], set()).add(adjust.NAMES[t])
+            elif r['state'] == adjust.BLOCKED:
+                blocked.setdefault(r['key'], set()).add(adjust.NAMES[t])
+    for k, who in sorted(seen.items()):
+        out.append(('WARN', 'V4', '아직 안 쟀다: %s — %d곳(%s)'
+                    % (k, len(who), '·'.join(sorted(who)))))
+    if blocked:
+        out.append(('INFO', 'V4', '공시로 못 재는 것으로 닫은 줄 %d종 · %d곳'
+                    % (len(blocked), sum(len(v) for v in blocked.values()))))
 
 
 def main():
@@ -200,9 +218,14 @@ def main():
         print('%s [%s] %s' % (lv, code, msg))
     f = sum(1 for x in out if x[0] == 'FAIL')
     w = sum(1 for x in out if x[0] == 'WARN')
-    n = sum(len(adjust.rows(t)) for t in adjust.TICKERS)
-    print('\n요약: 회사 %d곳 / 조정 %d줄 / FAIL %d / WARN %d'
-          % (len(adjust.TICKERS), n, f, w))
+    i_ = sum(1 for x in out if x[0] == 'INFO')
+    _rows = [r for t in adjust.TICKERS for r in adjust.rows(t)]
+    _st = ' · '.join(
+        '%s %d' % (k, sum(1 for r in _rows if r['state'] == k))
+        for k in (adjust.APPLIED, adjust.SKIPPED, adjust.UNMEASURED, adjust.BLOCKED))
+    n = len(_rows)
+    print('\n요약: 회사 %d곳 / 조정 %d줄 (%s) / FAIL %d / WARN %d / INFO %d'
+          % (len(adjust.TICKERS), n, _st, f, w, i_))
     return 1 if f else 0
 
 

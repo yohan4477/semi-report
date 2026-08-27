@@ -69,6 +69,11 @@ CONCEPTS = {
     #   장기 구매약정: 받을 물건·용역이 맞물려 있어 빚이 아니다. 다만 크기와 증가 속도가
     #     우리가 그리는 설비투자 경로와 어긋나는지를 본다.
     # 둘 다 값을 받아 조정 표에 미적용으로 세운다. 안 받으면 표에 줄조차 못 세운다.
+    # 장기 투자자산 둘. **대체 후보로 안 묶는다** — 알파벳은 비시장성 지분 1,243억이
+    # 장기 투자자산 1,315억 **안에** 든다. 포함 관계라 사슬로 두면 큰 것 자리에 작은 것이
+    # 들어앉고, 더하면 같은 돈을 두 번 센다.
+    'lt_investments': ['OtherLongTermInvestments'],
+    'nonmarketable_equity': ['EquitySecuritiesWithoutReadilyDeterminableFairValueAmount'],
     'guarantee_max': ['GuaranteeObligationsMaximumExposure'],
     # 구매약정 태그 셋을 **대체 후보로 묶지 않는다.** 알파벳은 2026-03-31 한 날에
     # Unrecorded 75.6B 와 LongTerm 232.7B 를 함께 낸다 — 같은 것의 다른 이름이 아니라

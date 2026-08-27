@@ -36,9 +36,14 @@ NAMES = {'GOOGL': '알파벳', 'MSFT': '마이크로소프트', 'NVDA': '엔비�
 # 미적용 판단이 이 비중을 넘으면 본문에 문장으로 밝혀야 한다. 룰북 W9 가 정한 선이다.
 THRESHOLD = 0.20
 
-# 상태 셋. 「미측정」과 「미적용」을 가르는 것이 중요하다 — 앞은 값을 모르는 것이고
-# 뒤는 값을 알면서 안 쓴 것이다. 섞으면 모르는 것이 정한 것으로 읽힌다.
-APPLIED, SKIPPED, UNMEASURED = '적용', '미적용', '미측정'
+# 상태 넷. 가르는 이유가 각각 다르다.
+#   적용   값을 알고 모형에 넣었다
+#   미적용 값을 알면서 안 넣었다. 왜 안 넣는지가 근거 칸에 있다
+#   미측정 **아직** 안 쟀다. 재면 잴 수 있다 — 열린 일이다
+#   불가   재봤는데 공시로 못 잰다. **닫힌 일이다**
+# 「미측정」과 「불가」를 안 가르면 표가 영영 안 줄어드는 할 일 목록이 된다. 못 재는
+# 것을 못 잰다고 확정하는 것도 결과다.
+APPLIED, SKIPPED, UNMEASURED, BLOCKED = '적용', '미적용', '미측정', '불가'
 
 
 def _facts(t):
@@ -94,7 +99,7 @@ def rows(t):
          - datetime.strptime(_pre_end, '%Y-%m-%d')).days) <= 10)
     if fv and pre and tax and not _aligned:
         out.append(_row(
-            'equity_fv_tax', '지분 평가익을 세전이익에서 안 뺀 실효세율을 쓴다', UNMEASURED,
+            'equity_fv_tax', '지분 평가익을 세전이익에서 안 뺀 실효세율을 쓴다', BLOCKED,
             '할인율의 부채 절세효과', 'none', 'R3',
             value=None, shown='기간이 %s 대 %s 로 어긋난다' % (_fv_end, _pre_end),
             note='평가익 태그가 최근 기간에 안 나온다. 다른 기간의 값을 빼면 안 되므로 '
@@ -146,11 +151,25 @@ def rows(t):
     out += _useful_life(t)
 
     # ── 7. 순부채 정의 ────────────────────────────────────────────
+    lt, nm = v('lt_investments'), v('nonmarketable_equity')
+    _ltv = lt if (lt is not None and not tt['lt_investments'].get('stale_days')) else None
+    _nmv = nm if (nm is not None and not tt['nonmarketable_equity'].get('stale_days')) else None
+    # 둘은 포함 관계다 — 알파벳은 비시장성 지분이 장기 투자자산 안에 든다. 더하지 않고
+    # 넓은 쪽이 최신이면 그것을, 아니면 좁은 쪽을 쓴다.
+    _wide = _ltv if _ltv is not None else _nmv
+    _lab = '장기 투자자산' if _ltv is not None else '비시장성 지분'
     out.append(_row(
-        'net_debt_lt', '순부채에서 장기 투자자산을 안 뺀다', UNMEASURED,
-        '주당가치', 'none', 'W6',
-        value=None, shown='태그를 안 받는다',
-        note='현금·유동 시장성증권까지만 뺀다. 비유동 투자자산은 받지 않아 크기를 모른다'))
+        'net_debt_lt', '순부채에서 장기 투자자산을 안 뺀다',
+        SKIPPED if _wide is not None else BLOCKED,
+        '주당가치', 'sec' if _wide is not None else 'none', 'W6',
+        value=_wide, unit='억 달러',
+        shown=('%s %.0f억 달러' % (_lab, _wide * 10)) if _wide is not None
+              else '최신 태그가 없다',
+        note=('현금과 유동 시장성증권까지만 뺀다. 이 금액은 영업과 무관한 자산이라 '
+              '더하자는 주장이 서지만, 팔 수 있는 값이 장부가와 다르고 팔면 세금이 '
+              '붙어 그대로 못 더한다. 크기를 밝히고 안 넣는다')
+             if _wide is not None else
+             '두 태그 모두 손익 기준일에 최신 값이 없다'))
 
     # ── 8·9. 우리가 고른 상수 ─────────────────────────────────────
     out.append(_row(
@@ -211,7 +230,8 @@ _OBSERVED = {
         ('royalty_once', '일회성으로 인식했을 수 있는 로열티를 기준연도에서 안 뺀다',
          '기준 매출과 이익률',
          '[260528] 앤트로픽 성장과 베드락 믹스 L432',
-         '필자는 가능성으로 적었고 공시가 따로 가르지 않는다. 크기를 모르므로 안 뺀다'),
+         '필자가 가능성으로 적었고 공시가 매출을 그렇게 안 가른다. 재봤고 못 재는 것으로 '
+         '닫는다 — 회사가 항목을 새로 가르기 전에는 방법이 없다'),
     ],
     'NVDA': [
     ],
@@ -258,7 +278,7 @@ def _useful_life(t):
                     abs(eps), '붙었다' if eps > 0 else '깎였다'))
     return [_row('useful_life',
                  '서버 내용연수가 회사마다 다른 것을 배수 비교에서 안 고른다',
-                 SKIPPED if life else UNMEASURED,
+                 SKIPPED if life else BLOCKED,
                  '상대가치 축의 선행 주가수익비율', 'sec' if life else 'none', 'W10',
                  shown=life or '공시 안 함', note=note)]
 
@@ -301,7 +321,7 @@ def _offbs(d, t, fcf):
     if rawp:
         last = rawp[-1]
         out.append(_row(
-            'purchase_commit', '장기 구매약정을 순부채에 안 넣는다', UNMEASURED,
+            'purchase_commit', '장기 구매약정을 순부채에 안 넣는다', BLOCKED,
             '순부채', 'sec', 'W11',
             shown='%s 값이라 잔액이 아니다' % last['kind'],
             note='가장 최근 관측은 %s~%s 에 %.0f억 달러다. start 가 붙은 %s 값이라 '
@@ -335,7 +355,7 @@ def _gross_trace(d, t):
     delta = (last['margin'] - first['margin']) * 100
     return [_row(
         'rev_gross', '완제품 시스템 판매가 총액으로 섞인 매출을 그대로 쓴다',
-        UNMEASURED, '기준 매출과 성장 경로', 'semi', 'W11',
+        BLOCKED, '기준 매출과 성장 경로', 'semi', 'W11',
         value=delta, unit='%포인트',
         shown='매출총이익률 %.1f%% → %.1f%% (%+.1f%%포인트)'
               % (first['margin'] * 100, last['margin'] * 100, delta),
@@ -349,8 +369,8 @@ def _gross_trace(d, t):
 
 
 def _observed(t):
-    return [_row(k, name, UNMEASURED, affects, 'semi', 'W11',
-                 shown='안 쟀다', note='%s — %s' % (src, note))
+    return [_row(k, name, BLOCKED, affects, 'semi', 'W11',
+                 shown='공시로 못 잰다', note='%s — %s' % (src, note))
             for k, name, affects, src, note in _OBSERVED.get(t, [])]
 
 
