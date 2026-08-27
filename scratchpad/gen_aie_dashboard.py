@@ -65,6 +65,14 @@ TRACKS = {
         ('사람과 함께', '어디서 사람이 끼어들고 무엇을 보여 주나',
          ['fmZWvE7yDZo', 'HN-F-OQe6j0', 'ClWD8OEYgp8', 'iQ5xldZ9StU']),
     ],
+    'rag': [
+        ('먼저 읽을 것', '언제 그래프가 값을 하고 언제 안 하나',
+         ['LLuKshphGOE', '-tgQa8Fzf80']),
+        ('무엇을 담나', '사실 말고 지난 판단과 기억을 넣으면 무엇이 달라지나',
+         ['Q0VkgCyNVUg', 'B9h9ovW5H9U']),
+        ('만든 뒤에 남는 일', '재지 않으면 무엇이 잘못됐는지도 모른다',
+         ['ROfHHJmumcc', 'c5qJHr3DnT4']),
+    ],
     'eval': [
         ('먼저 읽을 것', '왜 재나, 그리고 어디까지 온 판인가',
          ['FB-MLPhL9Ms', 'a4BV0gGmXgA', 'nxokqOq1imY', 'Ubwb6NzegyA']),
