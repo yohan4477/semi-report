@@ -91,7 +91,9 @@ def row(t):
                 capex=cap, dna=dna, cd=(cap / dna if (cap and dna) else None),
                 nopat=nopat, beta=beta, ke=ke, mcap=mcap, net_cash=-net_debt,
                 cash_tr=cash_tr, req_fcf=req(fcf), req_nopat=req(nopat),
-                sbc=sbc, fcf_sbc=fcf_sbc,
+                sbc=sbc, fcf_sbc=fcf_sbc, req_fcf_sbc=req(fcf_sbc),
+                mult=(mcap / fcf if (fcf and fcf > 0) else None),
+                mult_sbc=(mcap / fcf_sbc if (fcf_sbc and fcf_sbc > 0) else None),
                 sbc_share=(sbc / fcf if (sbc is not None and fcf and fcf > 0) else None),
                 **_levels(fcf, nopat, rev, req(fcf), req(nopat)))
 
@@ -137,6 +139,43 @@ def bias_rows():
                         beta=d['beta']['beta'], ke=ke,
                         gap=(now / ours) if now else None,
                         inside=bool(lb) and min(lb) <= ours <= max(lb)))
+    return out
+
+
+# 순위가 잣대를 바꾸면 얼마나 흔들리나. 절 8이 이 잣대에 남긴 유일한 쓰임이 「회사끼리
+# 견주기」였으므로, 그 쓰임이 성립하는지는 **순위의 안정성**으로만 답할 수 있다.
+#
+# 축 넷을 쓴다 — 배수와 요구 성장률 각각에 대해 주식보상을 두고 잰 것과 빼고 잰 것.
+# 넷 다에서 자리가 같은 회사는 잣대가 가를 수 있는 회사이고, 자리가 바뀌는 회사는
+# 못 가르는 회사다.
+_AXES = (('배수', 'mult', False), ('배수(주식보상 뺀 값)', 'mult_sbc', False),
+         ('요구 성장률', 'req_fcf', False),
+         ('요구 성장률(주식보상 뺀 값)', 'req_fcf_sbc', False))
+
+
+def rankings():
+    """축마다 「싼 순서」를 낸다. 값이 없는 회사는 그 축에서 빠진다."""
+    rs = rows()
+    out = []
+    for label, key, rev in _AXES:
+        ok = [r for r in rs if r.get(key) is not None]
+        out.append(dict(label=label, key=key,
+                        order=[r['name'] for r in
+                               sorted(ok, key=lambda r: r[key], reverse=rev)]))
+    return out
+
+
+def rank_stability():
+    """회사마다 축 넷에서 몇 번째였나. 자리 폭이 곧 못 가르는 정도다."""
+    rk = rankings()
+    out = []
+    for r in rows():
+        pos = [a['order'].index(r['name']) + 1 for a in rk if r['name'] in a['order']]
+        out.append(dict(name=r['name'], t=r['t'], seen=len(pos),
+                        best=min(pos) if pos else None,
+                        worst=max(pos) if pos else None,
+                        spread=(max(pos) - min(pos)) if pos else None,
+                        fixed=bool(pos) and len(set(pos)) == 1))
     return out
 
 
@@ -237,6 +276,21 @@ def write_facts():
           '- 최고가 최저의 %.1f배' % (max(_sh)[0] / min(_sh)[0]),
           '- 여섯 합계 주식보상비용 %.1f' % sum(x['sbc'] for x in _sb),
           '- 여섯 합계 주식보상비용 %.0f억 달러' % (sum(x['sbc'] for x in _sb) * 10),
+          '']
+    L += ['## 잣대를 바꾸면 순위가 흔들리나', '']
+    for a in rankings():
+        L.append('- %s 싼 순서 %s' % (a['label'], ' > '.join(a['order'])))
+    for x in rank_stability():
+        if x['seen']:
+            L.append('- %s 축 %d개에서 %d등~%d등 · 자리 폭 %d%s'
+                     % (x['name'], x['seen'], x['best'], x['worst'], x['spread'],
+                        ' (안 흔들린다)' if x['fixed'] else ''))
+        else:
+            L.append('- %s 어느 축에도 안 나온다(잉여현금흐름 0 이하)' % x['name'])
+    _st = [x for x in rank_stability() if x['seen']]
+    L += ['- 자리가 한 번도 안 바뀐 회사 %d곳' % sum(1 for x in _st if x['fixed']),
+          '- 자리 폭이 가장 큰 곳 %s %d' % (max(_st, key=lambda x: x['spread'])['name'],
+                                     max(x['spread'] for x in _st)),
           '']
     p2 = os.path.join(_root, 'scratchpad', 'peers_facts.md')
     io.open(p2, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
