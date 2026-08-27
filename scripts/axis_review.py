@@ -31,14 +31,20 @@ def render(res, rc):
            '  축 [%s] %s — %s' % (res['axis'], res['shape'],
                                  ' / '.join(c['id'] for c in res['cells']) or '(칸 없음)')]
     for c in res['cells']:
-        out.append('    %-14s %d장' % (c['id'], c['n']))
+        out.append('    %s  %d장' % (c['id'], c['n']))
 
-    out.append('  겹침 %d · 빈칸 %d · 잔여 %d장(%d%%) · 쏠림 %s배'
-               % (len(res['overlap']), len(res['empty']),
-                  len(res['residual']), res['residual_pct'], res['skew']))
+    if 'overlap_declared' in res:
+        # 선언된 축은 칸이 카드 자신의 section 에서 나오니 빈칸·잔여가 구조상 늘 0이다.
+        # 겹침도 사람이 선언한 것이라 이름이 다르다 — 쓸모 있는 수는 이 둘뿐이다
+        out.append('  선언된 다중 배치 %d · 쏠림 %s배'
+                   % (len(res['overlap_declared']), res['skew']))
+    else:
+        out.append('  겹침 %d · 빈칸 %d · 잔여 %d장(%d%%) · 쏠림 %s배'
+                   % (len(res['overlap']), len(res['empty']),
+                      len(res['residual']), res['residual_pct'], res['skew']))
 
     if len(res['placement']) != res['cards']:
-        out.append('  주의 — 배치 %d 대 카드 %d. 제목이 겹친다. 위 숫자 넷이 그만큼 적게 나왔다'
+        out.append('  주의 — 배치 %d 대 카드 %d. 제목이 겹친다. 위 숫자들이 실제와 어긋나 있다'
                    % (len(res['placement']), res['cards']))
 
     for o in res['overlap']:
@@ -58,7 +64,7 @@ def render(res, rc):
     out.append('  배치')
     for title in sorted(res['placement']):
         cells = res['placement'][title]
-        out.append('    %-40s %s' % (title[:40], ', '.join(cells) or '(없음)'))
+        out.append('    %s  %s' % (title, ', '.join(cells) or '(없음)'))
     return '\n'.join(out)
 
 
@@ -87,7 +93,8 @@ def main(argv):
             with io.open(path, encoding='utf-8') as f:
                 axis = al.parse_axis(json.load(f))
         except ValueError as e:
-            print('축 정의 파일이 JSON 이 아니다: %s — %s' % (path, e))
+            print('축 정의 파일을 읽을 수 없다 — JSON 이 아니거나 구조가 어긋났다: %s — %s'
+                 % (path, e))
             return 1
         res = al.review(cards, axis)
     else:

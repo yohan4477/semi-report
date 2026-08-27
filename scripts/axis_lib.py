@@ -16,8 +16,11 @@ import sys
 
 CARDS_RE = re.compile(r'^CARDS\s*=', re.M)
 GEN_DIRS = ('scratchpad', 'insights', 'scripts')
-# 낱말을 찾을 필드. stats·table 은 숫자라 잡음이고 links 는 경로라 파일명이 걸린다
-TEXT_KEYS = ('title', 'oneliner', 'gain', 'points', 'quote', 'note', 'clash')
+# 낱말을 찾을 필드. stats·table 은 숫자라 잡음이고 links 는 경로라 파일명이 걸린다.
+# meta 는 뺀다 — 필자·업로드일이 들어 있어 이름·연도가 엉뚱하게 걸린다.
+# slim_oneliner·slim_points 는 oneliner·points 대신 쓰는 카드(건강·Epoch·계보 등)의 본문이다
+TEXT_KEYS = ('title', 'oneliner', 'slim_oneliner', 'gain', 'points', 'slim_points',
+             'quote', 'note', 'clash')
 
 
 def card_modules(root):
@@ -65,11 +68,27 @@ def card_id(card):
 
 
 def parse_axis(obj):
-    """축 정의를 정규화한다. 사람이 적은 shape 는 버리고 칸에서 계산한 값을 넣는다."""
+    """축 정의를 정규화한다. 사람이 적은 shape 는 버리고 칸에서 계산한 값을 넣는다.
+
+    사람이 직접 쓴 JSON 이 이 도구의 주 입력이라 내용이 어긋나면 ValueError 로
+    알린다 — 트레이스백 대신 무엇이 잘못됐는지 한국어로 짚는다.
+    """
+    if not isinstance(obj, dict):
+        raise ValueError('축 정의는 객체(object)여야 하는데 %s 다' % type(obj).__name__)
     cells = []
     for c in obj.get('cells') or ():
+        if not isinstance(c, dict):
+            raise ValueError('칸은 객체(object)여야 하는데 %r 다' % (c,))
+        if 'id' not in c:
+            raise ValueError('칸에 id 가 없다: %r' % (c,))
         cid = c['id']
-        words = [w.lower() for w in ([cid] + list(c.get('words') or ()))]
+        if not isinstance(cid, str):
+            raise ValueError('칸 id 는 문자열이어야 하는데 %r 다' % (cid,))
+        raw_words = list(c.get('words') or ())
+        for w in raw_words:
+            if not isinstance(w, str):
+                raise ValueError('칸 %r 의 낱말은 문자열이어야 하는데 %r 다' % (cid, w))
+        words = [w.lower() for w in ([cid] + raw_words)]
         seen, uniq = set(), []
         for w in words:
             if w not in seen:
@@ -132,9 +151,12 @@ def _tally(cells, placement):
     return counts, placed
 
 
-def review(cards, axis):
-    """넷을 센다 — 겹침·빈칸·잔여·쏠림. 아무것도 던지지 않는다."""
-    placement = place(cards, axis)
+def _summarize(cards, axis, placement):
+    """review 와 declared_review 가 공유하는 집계. overlap 의 이름은 호출부가 정한다.
+
+    여기서는 겹치는 카드를 'overlap' 에 담아 돌려준다 — review 는 그대로 쓰고
+    declared_review 는 'overlap_declared' 로 옮기고 'overlap' 을 비운다.
+    """
     counts, placed = _tally(axis['cells'], placement)
     residual = sorted(t for t, hits in placement.items() if not hits)
     total = len(cards)
@@ -152,6 +174,12 @@ def review(cards, axis):
         'skew': round(max(placed) / min(placed), 1) if placed else 0,
         'placement': placement,
     }
+
+
+def review(cards, axis):
+    """넷을 센다 — 겹침·빈칸·잔여·쏠림. 아무것도 던지지 않는다."""
+    placement = place(cards, axis)
+    return _summarize(cards, axis, placement)
 
 
 def _sec_id(sec):
@@ -183,20 +211,7 @@ def declared_review(cards):
     """섹션 축의 집계. 겹침은 사람이 선언한 것이므로 이름을 달리 단다."""
     axis = declared_axis(cards)
     placement = declared_place(cards)
-    counts, placed = _tally(axis['cells'], placement)
-    return {
-        'axis': axis['name'],
-        'shape': axis['shape'],
-        'cards': len(cards),
-        'cells': [{'id': cell['id'], 'n': counts[cell['id']]}
-                  for cell in axis['cells']],
-        'overlap': [],
-        'overlap_declared': [{'card': t, 'cells': hits}
-                             for t, hits in sorted(placement.items())
-                             if len(hits) > 1],
-        'empty': [cell['id'] for cell in axis['cells'] if not counts[cell['id']]],
-        'residual': sorted(t for t, hits in placement.items() if not hits),
-        'residual_pct': 0,
-        'skew': round(max(placed) / min(placed), 1) if placed else 0,
-        'placement': placement,
-    }
+    res = _summarize(cards, axis, placement)
+    res['overlap_declared'] = res['overlap']
+    res['overlap'] = []
+    return res

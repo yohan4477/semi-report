@@ -1,6 +1,8 @@
 import os
 import sys
 
+import pytest
+
 sys.path.insert(0, os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 
@@ -68,6 +70,23 @@ def test_card_text_survives_missing_fields():
     assert al.card_text({'title': '제목뿐'}) == '제목뿐'
 
 
+def test_card_text_includes_slim_fields():
+    c = {'title': '슬림 카드', 'slim_oneliner': '슬림 한줄평이다',
+         'slim_points': ('슬림 요점 하나', '슬림 요점 둘')}
+    t = al.card_text(c)
+    assert '슬림 한줄평이다' in t
+    assert '슬림 요점 하나' in t
+    assert '슬림 요점 둘' in t
+
+
+def test_card_text_on_real_health_card_is_not_starved():
+    cards = al.load_cards(ROOT, 'gen_health_dashboard')
+    slim_cards = [c for c in cards if c.get('slim_oneliner') and not c.get('oneliner')]
+    assert slim_cards
+    for c in slim_cards:
+        assert len(al.card_text(c)) > 3 * len(c.get('title', ''))
+
+
 def test_card_id_is_the_title():
     assert al.card_id(CARD) == '강남 재건축은 왜 안 되나'
 
@@ -93,6 +112,26 @@ def test_parse_axis_overwrites_human_written_shape():
     a = al.parse_axis({'name': 'x', 'shape': '수식',
                        'cells': [{'id': 'a'}, {'id': 'b'}]})
     assert a['shape'] == '목록'
+
+
+def test_parse_axis_rejects_non_dict_input():
+    with pytest.raises(ValueError):
+        al.parse_axis([1, 2])
+
+
+def test_parse_axis_rejects_non_dict_cell():
+    with pytest.raises(ValueError):
+        al.parse_axis({'cells': [1, 2]})
+
+
+def test_parse_axis_rejects_cell_without_id():
+    with pytest.raises(ValueError):
+        al.parse_axis({'cells': [{'words': ['a']}]})
+
+
+def test_parse_axis_rejects_non_string_word():
+    with pytest.raises(ValueError):
+        al.parse_axis({'cells': [{'id': 'a', 'words': [3]}]})
 
 
 def test_shape_list_when_no_relations():
@@ -337,3 +376,18 @@ def test_main_reports_missing_axis_file(capsys):
     out = capsys.readouterr().out
     assert rc == 1
     assert '축 정의 파일이 없다' in out
+
+
+@pytest.mark.parametrize('bad_json', [
+    '{"cells":[{"words":["a"]}]}',
+    '[1,2]',
+    '{"cells":[{"id":"a","words":[3]}]}',
+    '{"cells":[1,2]}',
+])
+def test_main_reports_malformed_axis_without_traceback(capsys, tmp_path, bad_json):
+    path = tmp_path / 'bad_axis.json'
+    path.write_text(bad_json, encoding='utf-8')
+    rc = ar.main(['axis_review.py', 'gen_epoch_dashboard', '--axis', str(path)])
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert '축 정의 파일을 읽을 수 없다' in out
