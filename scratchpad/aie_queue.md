@@ -40,6 +40,20 @@ rag 한 편만 남았다. 사실표가 있다. 이것을 끝내면 rag 섹션이
 | product | NKwIX3CiRgU | 없음 | 생성AI 에이전트, 데이터 … |
 | product | fgkXEIbZpGc | 없음 | 프롬프트 하나로 앱을 … |
 
+## 자막을 가로질러 찾기
+
+받아 둔 자막 1,152편 전부를 한 번에 뒤진다. 한 편을 쓰기 전에 **같은 이야기를 한
+다른 발표가 있는지 여기서 먼저 본다** — 카드끼리 겹치는 것은 쓰고 나서는 못 고친다.
+
+```bash
+py -3.13 scratchpad/aie_find.py "context graph" --per 1
+py -3.13 scratchpad/aie_find.py "eval" --org OpenAI --count
+py -3.13 scratchpad/aie_find.py --list --org Neo4j --limit 0
+```
+
+편마다 카드 상태(`보고서`·`번호글`·`카드없음`)와 사실표 유무(`+표`)가 함께 나온다.
+`--status todo` 로 아직 안 옮긴 것만, `--and A,B` 로 두 낱말이 다 나오는 편만 거른다.
+
 ## 한 편을 처리하는 순서
 
 1. **사실표가 없으면 먼저 위임한다.** sonnet 하위 에이전트에 한 편씩, 한 번에 셋까지.
