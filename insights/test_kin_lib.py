@@ -179,8 +179,8 @@ def test_neighbors_find_nothing_when_every_card_says_the_same():
 # ── 실제 자료 ─────────────────────────────────────────────────
 
 def test_neighbors_work_on_a_real_dashboard():
-    import axis_lib as al
-    cards = al.load_cards(ROOT, 'gen_health_dashboard')
-    got = kl.neighbors(cards, al.card_id(cards[0]))
+    import cards as cd
+    cards = cd.load_cards(ROOT, 'gen_health_dashboard')
+    got = kl.neighbors(cards, cd.card_id(cards[0]))
     assert got['rows'], '실제 카드에서 이웃이 하나도 안 나온다'
     assert all(0.0 < r['score'] <= 1.0 for r in got['rows'])

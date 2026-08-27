@@ -40,7 +40,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import axis_lib as al  # noqa: E402
+import cards as cd  # noqa: E402
 
 # 한글·라틴·숫자만 남긴다. 문장부호는 조각 경계일 뿐 내용이 아니다
 TOKEN = re.compile(r'[0-9a-z가-힣]+')
@@ -89,7 +89,7 @@ def similarity(a, b, weight):
 
 
 def profiles_of(cards):
-    return {al.card_id(c): grams(al.card_text(c)) for c in cards}
+    return {cd.card_id(c): grams(cd.card_text(c)) for c in cards}
 
 
 def related_titles(card):
@@ -106,7 +106,7 @@ def neighbors(cards, title, top=12):
     declared_missing 이 있는 쪽도 값어치가 있다 — 사람이 이어 뒀는데 점수가 못 찾은
     것이라, 글끼리의 관계가 낱말이 아니라 논리에 있다는 뜻이다.
     """
-    by_title = {al.card_id(c): c for c in cards}
+    by_title = {cd.card_id(c): c for c in cards}
     src = by_title.get(title)
     empty = {'title': title, 'section': None, 'shown': 0,
              'declared': 0, 'declared_in_top': 0, 'declared_missing': [],
@@ -119,7 +119,7 @@ def neighbors(cards, title, top=12):
     mine = prof.get(title, set())
     declared = related_titles(src)
     kin = set(declared)
-    sec = al._sec_id(src.get('section'))
+    sec = cd.section_id(src.get('section'))
 
     rows = []
     for t, gs in prof.items():
@@ -131,7 +131,7 @@ def neighbors(cards, title, top=12):
         rows.append({
             'title': t,
             'score': round(score, 3),
-            'same_section': al._sec_id(by_title[t].get('section')) == sec,
+            'same_section': cd.section_id(by_title[t].get('section')) == sec,
             'in_related': t in kin,
         })
     rows.sort(key=lambda r: (-r['score'], r['title']))

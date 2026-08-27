@@ -15,7 +15,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-import axis_lib as al  # noqa: E402
+import cards as cd  # noqa: E402
 import kin_lib as kl  # noqa: E402
 
 TOP = 12
@@ -24,10 +24,10 @@ TOP = 12
 def all_cards(root, only=None):
     """모듈 하나로 좁히면 그 대시보드 안에서만 이웃을 찾는다. 기본은 전부."""
     out = []
-    for m, _ in al.card_modules(root):
+    for m, _ in cd.card_modules(root):
         if only and m != only:
             continue
-        for c in al.load_cards(root, m):
+        for c in cd.load_cards(root, m):
             out.append((m, c))
     return out
 
@@ -69,7 +69,7 @@ def main(argv):
             print('--in 뒤에 생성기 이름이 있어야 한다')
             return 1
         only = argv[at]
-        known = [m for m, _ in al.card_modules(ROOT)]
+        known = [m for m, _ in cd.card_modules(ROOT)]
         if only not in known:
             print('그런 생성기가 없다: %s' % only)
             print('모듈:', ', '.join(known))
@@ -85,7 +85,7 @@ def main(argv):
 
     pairs = all_cards(ROOT, only)
     cards = [c for _, c in pairs]
-    where = {al.card_id(c): m for m, c in pairs}
+    where = {cd.card_id(c): m for m, c in pairs}
 
     if title not in where:
         print('그런 제목의 카드가 없다: %s' % title)
