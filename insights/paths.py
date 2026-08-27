@@ -7,6 +7,9 @@ ROOT = os.path.dirname(HERE)
 MAN = os.path.join(HERE, 'manifest.json')
 NOTES = os.path.join(HERE, 'notes')
 CITES = os.path.join(HERE, 'cites.json')
+# 개체 사전은 사람이 검토해 커밋하고, 색인은 그것으로 만든 생성물이다
+ENTITIES = os.path.join(HERE, 'entities.json')
+INDEX = os.path.join(HERE, 'index.json')
 TRACKS = os.path.join(HERE, 'tracks')
 SYNTH = os.path.join(HERE, 'synth')
 # 판단까지는 아닌 주제 브리핑. 통합 인사이트에서 인사이트보다 앞에 선다

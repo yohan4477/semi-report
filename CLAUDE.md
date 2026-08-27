@@ -39,6 +39,7 @@ PYTHONIOENCODING=utf-8 python insights/check_read.py    # 읽히는가
 PYTHONIOENCODING=utf-8 python insights/check_cite.py    # 인용한 줄에 그 숫자가 있나
 PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야기인가
 PYTHONIOENCODING=utf-8 python insights/check_report.py  # 보고서 숫자가 원문에 있나
+PYTHONIOENCODING=utf-8 python insights/check_index.py   # 색인 주소가 맞나, 색인이 낡지 않았나
 PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부르는 파일이 추적되나
 PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나

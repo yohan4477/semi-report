@@ -31,6 +31,7 @@ BUILD = [
     ('링크드인 원문', ['scripts/gen_li_source.py']),
     ('링크드인 신호 자격', ['insights/li_signal.py']),
     ('소스 매니페스트', ['insights/gen_manifest.py']),
+    ('개체 색인', ['insights/gen_index.py']),
     ('통합 인사이트', ['insights/gen_insightview.py']),
     ('추적 · 일론 머스크', ['insights/gen_entity_board.py', 'musk']),
     ('인사이트 지도', ['insights/gen_map.py']),
@@ -46,6 +47,7 @@ CHECK = [
     ('숫자와 원문 대조', ['insights/check_cite.py']),
     ('시점', ['insights/check_fresh.py']),
     ('축과 근거', ['insights/check_axes.py']),
+    ('개체 색인', ['insights/check_index.py']),
     # 도해 배치는 눈으로 보고 두 번 놓쳤다 — 글자끼리 겹침과 선에 깔림 둘 다
     ('도해 배치', ['scratchpad/check_fig.py']),
     # 추적된 코드가 추적 안 된 파일을 부르면 이 컴퓨터에서만 돈다
