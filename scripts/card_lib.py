@@ -417,6 +417,73 @@ def post_html(items, figs=()):
     return ''.join(h)
 
 
+# 쟁점 카드(insights/debate_lib.py가 파싱하는 자료구조) 전용 CSS. 진행자 블록(uc-mod)은
+# 판단이고 화자 블록(uc-voice)은 인용이다 — 같은 모양으로 그리면 자료구조로 갈라 놓은 것이
+# 화면에서 도로 붙는다. 색만으로 갈라도 안 된다 — 관계 배지(uc-stance)는 색맹·흑백 인쇄에서도
+# 갈려야 하니 테두리 선 종류(실선·점선·파선)와 모양(각짐·둥긂)까지 같이 바꾼다.
+#
+# 쟁점 카드는 지금 insights/gen_insightview.py(통합 인사이트) 한 곳에서만 그려진다.
+# 그 페이지의 팔레트는 insights/style.py의 BASE라 --card·--sub·--faint·--accent·--accent2·
+# --soft·--sunk만 물려 쓴다(원래 scripts/dash_base_css.html의 --surface·--ink-2·--ink-3·
+# --accent-ink·--accent-soft와 각각 같은 값이라 이름만 바꿔 옮겼다). 그 팔레트엔 관계 배지의
+# 빨강·초록·주황이 없어 --dbt-* 로 따로 둔다 — 값은 dash_base_css.html의 --risk·--good·--warn과
+# 같다.
+DEBATE_CSS = '''
+  :root{--dbt-risk:#dc2626;--dbt-risk-soft:#fdeaea;--dbt-good:#16a34a;--dbt-good-soft:#e8f6ec;
+        --dbt-warn:#d97706;--dbt-warn-soft:#fdf1df}
+  @media (prefers-color-scheme:dark){:root{--dbt-risk:#f87171;--dbt-risk-soft:#3a1a1a;
+        --dbt-good:#5ecb84;--dbt-good-soft:#173323;--dbt-warn:#f0a44e;--dbt-warn-soft:#3a2c17}}
+  /* 진행자 — 판단. 배경을 깔고 왼쪽에 굵은 선을 세워 화자 인용과 한눈에 갈린다 */
+  .uc-mod{margin:16px 0;padding:13px 16px 11px;background:var(--sunk);
+          border-left:4px solid var(--accent);border-radius:0 10px 10px 0}
+  .uc-mod-tag{display:inline-block;font-size:10.5px;font-weight:850;letter-spacing:.07em;
+              text-transform:uppercase;color:var(--accent2);background:var(--soft);
+              padding:2px 9px;border-radius:999px;margin:0 0 8px}
+  .uc-mod h3{margin:14px 0 5px;font-size:12px;font-weight:800;color:var(--faint);
+             letter-spacing:.03em}
+  .uc-mod h3:first-of-type{margin-top:0}
+  .uc-mod p{margin:0 0 6px;font-size:.9rem;line-height:1.65;color:var(--ink)}
+  .uc-mod p:last-child{margin-bottom:0}
+  /* 화자 — 인용. 진행자와 달리 배경은 카드 바탕과 같고 얇은 테두리로만 상자를 친다.
+     왼쪽 굵은 선이 없다는 것 자체가 「이건 판단이 아니다」라는 표시다 */
+  .uc-voice{margin:14px 0;padding:13px 16px;background:var(--card);
+            border:1px solid var(--line);border-radius:10px}
+  .uc-voice-head{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 6px}
+  .uc-voice-head b{font-size:.9rem;font-weight:800;color:var(--ink)}
+  .uc-voice-when{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .uc-voice-src{font-size:12px;color:var(--sub)}
+  .uc-voice-claim{margin:0 0 8px;font-size:.86rem;font-weight:700;font-style:italic;
+                  color:var(--sub)}
+  .uc-voice p{margin:0 0 6px;font-size:.86rem;line-height:1.65;color:var(--sub)}
+  .uc-voice p:last-child{margin-bottom:0}
+  /* 관계 배지 — 넷이 저마다 다른 테두리 선·모양·앞머리 글자를 갖는다. 색을 지워도
+     (흑백 인쇄·고대비 모드) 넷이 서로 갈린다 */
+  .uc-stance{display:inline-flex;align-items:center;font-size:10.5px;font-weight:850;
+             padding:2px 8px;line-height:1.5;white-space:nowrap;letter-spacing:.01em}
+  .uc-stance.is-충돌{border-radius:3px;border:1.5px solid var(--dbt-risk);
+                     background:var(--dbt-risk-soft);color:var(--dbt-risk)}
+  .uc-stance.is-충돌::before{content:"⇄ "}
+  .uc-stance.is-동의{border-radius:999px;border:1.5px solid var(--dbt-good);
+                     background:var(--dbt-good-soft);color:var(--dbt-good)}
+  .uc-stance.is-동의::before{content:"= "}
+  .uc-stance.is-결다름{border-radius:6px;border:1.5px dashed var(--dbt-warn);
+                       background:var(--dbt-warn-soft);color:var(--dbt-warn)}
+  .uc-stance.is-결다름::before{content:"≠ "}
+  .uc-stance.is-단독{border-radius:6px;border:1.5px dotted var(--line);
+                     background:transparent;color:var(--faint)}
+  .uc-stance.is-단독::before{content:"• "}
+  /* 답하지 않은 화자 — 발언이 아니라 빈자리라 화자 상자와 같은 실선이 아니라
+     파선 테두리를 쓴다. 상자 모양 자체로 「말이 없다」를 표시한다 */
+  .uc-silent{margin:14px 0;padding:12px 16px;border:1px dashed var(--line);border-radius:10px}
+  .uc-silent h3{margin:0 0 7px;font-size:12px;font-weight:800;color:var(--faint);
+               letter-spacing:.03em}
+  .uc-silent ul{margin:0;padding-left:18px}
+  .uc-silent li{font-size:.83rem;line-height:1.6;color:var(--sub);margin-bottom:4px}
+  .uc-silent li:last-child{margin-bottom:0}
+  .uc-silent li b{color:var(--ink)}
+'''
+
+
 def debate_html(d):
     """쟁점 카드 본문 — 진행자와 화자를 갈라 낸다.
 

@@ -1,15 +1,17 @@
 # 🧩 통합 인사이트 — 노트를 통째로 읽고 교차에서 나온 판단만 싣는다.
 # 카드를 모아 두는 페이지가 아니라, 문서 여러 편을 가로질러야 보이는 것만 남긴다.
 # 문장 옆 줄번호를 누르면 근거가 된 원문 그 줄로 간다.
-import io, os, re, sys, glob, datetime
+import io, math, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import axes
 import angles_layer
 import sources_rank as sr
 import notes_lib as nl
+import debate_lib as dl
 sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
 import ui_bits  # noqa: E402
+import card_lib  # noqa: E402
 
 OUT = os.path.join(paths.ROOT, '대시보드', '통합 인사이트.html')
 
@@ -60,6 +62,7 @@ ALSO = {'estate': ('이 묶음의 %d장은 <a href="부동산 대시보드.html"
 KINDS = ((paths.LOOP, '고리', 'loop'),
          (paths.BRIEFS, '브리핑', 'brief'),
          (paths.SYNTH, '교차 인사이트', 'cross'),
+         (paths.DEBATE, '쟁점', 'debate'),
          (paths.THESES, '종합 판단', 'thesis'))
 
 
@@ -162,19 +165,179 @@ RANK_LEGEND = ('<p class="rkleg">%s 관측: 직접 재거나 현장에서 본 �
                % (sr.MARK[sr.OBS], sr.MARK[sr.INT], sr.MARK[sr.REL]))
 
 
+# ── 쟁점(insights/debate/*.md) ───────────────────────────────────────────
+# 쟁점은 다른 종류(고리·브리핑·교차 인사이트·종합 판단)와 절 구성이 다르다 — 화자 말은
+# 인용이고 진행자 말은 판단이라, 마크다운을 그대로 흘리면 그 구분이 화면에서 도로 붙는다.
+# 그래서 one()이 아니라 여기서 따로 card_lib.debate_html로 그린다. 예전에는 전용
+# 대시보드(scratchpad/gen_debate.py, 2026-08-27~28에 되돌림)가 이 일을 했다 — rel_svg를
+# 포함해 그 로직을 그대로 옮긴다.
+SILENT_RE = re.compile(r'^[-*][ \t]*(.+?)[ \t]*—[ \t]*(.+?)[ \t]*$')
+
+# 관계 종류 셋 — 선 모양으로 가른다(색으로만 가르지 않는다). 값은 빈 문자열이면 실선이다.
+# 단독은 이 표에 없다 — 단독은 선이 없다(against가 없으므로 애초에 선을 안 그린다).
+STANCE_DASH = {'충돌': '', '동의': '2 5', '결다름': '9 5'}
+STANCE_ORDER = ('충돌', '동의', '결다름')
+
+
+def _dtrim(t, n):
+    t = t or ''
+    return t if len(t) <= n else t[:n] + '…'
+
+
+def rel_svg(voices):
+    """화자 발언 사이 관계 하나를 그림 하나로. 노드는 화자가 아니라 발언이다 — 같은
+    화자의 다른 글도 각각 딴 점으로 놓는다. 나르는 것은 관계 종류(충돌·동의·결다름·
+    단독) 하나뿐이다 — 노드 사이 거리·선 굵기·노드 크기에는 뜻을 싣지 않는다.
+
+    좌표는 손으로 안 찍는다. n개 발언을 원 위에 12시부터 시계 방향으로 고르게
+    놓고(각도만 계산), 이름표는 그 각도를 따라 원 밖으로 낸다. 이름표를 원 반지름
+    R보다 더 먼 반지름 Rl(>R)에서 시작하게 하면, 두 발언을 잇는 현(弦)은 언제나
+    반지름 R 안쪽에만 머물러(원은 볼록) 이름표 글자를 절대 지나지 않는다 —
+    좌표를 눈으로 맞추지 않고 이 성질로 겹침을 원천 차단한다.
+
+    카드 본문(card_lib.debate_html)이 이 문자열을 그대로 끼워 넣는다 — .uc-fig 붓을 못
+    받으므로 색은 전부 인라인 style로 CSS 변수를 직접 문다(insights/style.py의 BASE에
+    있는 --ink·--sub·--faint·--line·--card·--sunk만 쓴다).
+    """
+    n = max(len(voices), 1)
+    keys = [dl.voice_key(v) for v in voices]
+    cx, cy, R, Rl, r_node = 410, 240, 130, 195, 5
+    vw, vh = 820, 520
+    pts = []
+    for i in range(n):
+        ang = math.radians(-90 + i * 360.0 / n)
+        dx, dy = math.cos(ang), math.sin(ang)
+        pts.append((cx + R * dx, cy + R * dy, cx + Rl * dx, cy + Rl * dy, dx, dy))
+
+    # against가 다른 발언의 voice_key와 같으면 잇는다. 같은 짝을 두 번 안 긋는다 —
+    # 08-20 두 글처럼 서로가 서로를 against로 적어도 선은 하나다.
+    edges = {}
+    for i, v in enumerate(voices):
+        against = (v.get('against') or '').strip()
+        stance = v.get('stance', '')
+        if not against or stance not in STANCE_DASH or against not in keys:
+            continue
+        j = keys.index(against)
+        if j != i:
+            edges.setdefault(frozenset((i, j)), stance)
+
+    h = ['<div style="margin:16px 0;border:1px solid var(--line);border-radius:12px;'
+         'padding:14px 10px 10px;background:var(--sunk)">',
+         '<svg viewBox="0 0 %d %d" style="display:block;width:100%%;height:auto;'
+         'max-width:640px;margin:0 auto" xmlns="http://www.w3.org/2000/svg">' % (vw, vh)]
+
+    for pair, stance in edges.items():
+        i, j = tuple(pair)
+        dash = STANCE_DASH[stance]
+        h.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" '
+                 'style="stroke:var(--faint);stroke-width:1.8"%s/>'
+                 % (pts[i][0], pts[i][1], pts[j][0], pts[j][1],
+                    ' stroke-dasharray="%s"' % dash if dash else ''))
+
+    for i, v in enumerate(voices):
+        nx, ny, lx, ly, dx, dy = pts[i]
+        h.append('<circle cx="%.1f" cy="%.1f" r="%d" '
+                  'style="fill:var(--card);stroke:var(--faint);stroke-width:2"/>'
+                  % (nx, ny, r_node))
+        if dx > 0.35:
+            anchor_a = 'start'
+        elif dx < -0.35:
+            anchor_a = 'end'
+        else:
+            anchor_a = 'middle'
+        # 위쪽 발언은 두 줄을 더 위로 밀어 올린다 — 그래도 항상 화자·날짜 줄이
+        # 제목 줄보다 위에 온다(읽는 순서가 사분면마다 뒤집히지 않는다)
+        if dy < -0.35:
+            y_actor, y_title = ly - 14, ly
+        else:
+            y_actor, y_title = ly, ly + 14
+        actor_line = '%s %s' % (_dtrim(v['actor'], 10), v['said'][5:])
+        title_line = '「%s」' % _dtrim(v.get('title', ''), 12)
+        h.append('<text x="%.1f" y="%.1f" text-anchor="%s" '
+                  'style="fill:var(--ink);font-size:12.5px;font-weight:700">%s</text>'
+                  % (lx, y_actor, anchor_a, actor_line))
+        h.append('<text x="%.1f" y="%.1f" text-anchor="%s" '
+                  'style="fill:var(--faint);font-size:11.5px">%s</text>'
+                  % (lx, y_title, anchor_a, title_line))
+        if v.get('stance') == '단독':
+            y_tag = y_title + 14 if dy >= -0.35 else y_actor - 14
+            h.append('<text x="%.1f" y="%.1f" text-anchor="%s" '
+                      'style="fill:var(--faint);font-size:10.5px">단독</text>'
+                      % (lx, y_tag, anchor_a))
+
+    # 범례 — 이 그림에 실제로 쓰인 관계 종류만 낸다. 선 모양이 먼저고 색은 거들 뿐이다.
+    used = [s for s in STANCE_ORDER if s in edges.values()]
+    lx0, ly0 = 40, vh - 31
+    for stance in used:
+        dash = STANCE_DASH[stance]
+        h.append('<line x1="%d" y1="%d" x2="%d" y2="%d" '
+                  'style="stroke:var(--faint);stroke-width:1.8"%s/>'
+                  % (lx0, ly0, lx0 + 30, ly0,
+                     ' stroke-dasharray="%s"' % dash if dash else ''))
+        tx = lx0 + 40
+        h.append('<text x="%d" y="%d" style="fill:var(--sub);font-size:12px">%s</text>'
+                  % (tx, ly0 + 4, stance))
+        lx0 = tx + len(stance) * 13 + 34
+    h.append('</svg></div>')
+    return ''.join(h)
+
+
+def silent_of(sec):
+    out = []
+    for line in sec.split('\n'):
+        m = SILENT_RE.match(line)
+        if m:
+            out.append({'actor': m.group(1), 'why': m.group(2)})
+    return out
+
+
+def debate_body_html(meta, body, src):
+    """쟁점 카드 본문 — insights/debate_lib.py로 절을 나누고 진행자·화자를 갈라
+    card_lib.debate_html에 넘긴다. scratchpad/gen_debate.py의 card_of()를 그대로 옮겼다.
+
+    figs에는 rel_svg를 넘긴다 — 관계도는 진행자 「물음」 바로 뒤에 선다
+    (card_lib.debate_html이 그 자리에 놓는다)."""
+    secs = dl.split_sections(body)
+    raw_voices = dl.parse_voices(secs.get('발언', ''))
+    voices = []
+    for v in raw_voices:
+        v2 = dict(v)
+        v2['body'] = nl.md_body(v2['body'], src)
+        voices.append(v2)
+    mod = {k: nl.md_body(secs.get(k, ''), src) for k in dl.MODERATOR}
+    d = {'question': meta.get('question', ''),
+         'moderator': mod,
+         'voices': voices,
+         'silent': silent_of(secs.get('답하지 않은 화자', '')),
+         'figs': (rel_svg(raw_voices),)}
+    return card_lib.debate_html(d)
+
+
 def one(meta, body, tab, kind, cells=()):
     src = nl.sources_of(meta)
-    head = meta.get('headline') or ''
+    is_debate = (tab == 'debate')
+    # 쟁점 frontmatter는 headline이 아니라 question을 제목으로 쓴다 — 자료구조가 다르다
+    # (docs/superpowers/specs/2026-08-27-쟁점-토론의-장-design.md)
+    head = (meta.get('question') if is_debate else meta.get('headline')) or ''
     # 이 카드가 서는 축의 칸. 글이 axis:/cell: 로 스스로 밝힌다(insights/axes.py)
     cellattr = ' data-cell="%s"' % nl.esc(' '.join(cells)) if cells else ''
     # 이 글이 서는 축의 칸을 본문 맨 앞에 작게 다시 그린다 — 그 칸만 불이 켜진다.
+    # 쟁점은 axis:/cell:을 쓰지 않는다.
     minimap = ''
-    if meta.get('axis') and meta.get('cell'):
+    if not is_debate and meta.get('axis') and meta.get('cell'):
         minimap = ('<div class="minimap">%s</div>'
                    % axis_svg(meta['axis'], active='%s:%s' % (meta['axis'], meta['cell']),
                               mini=True))
+    # 쟁점은 진행자(판단)와 화자(인용)를 갈라 그려야 한다 — 일반 경로(nl.md_body)로
+    # 흘리면 그 구분이 사라진다.
+    if is_debate:
+        body_html = debate_body_html(meta, body, src)
+    else:
+        body_html = (nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))
+                     + (RANK_LEGEND if '|' in body else ''))
     # 두 명단이 제목보다 위다. 이 카드를 여는 이유가 「그래서 누가 받나」라서
-    # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다).
+    # 회사 이름이 제목보다 먼저 눈에 들어와야 한다(2026-08-18에 올렸다). roster()는
+    # winners·losers가 없는 쟁점에서는 빈 문자열을 낸다.
     return ('<details class="ins" data-kind="%s"%s><summary><span class="cid">%s</span>'
             '%s%s<h2 id="%s">%s%s</h2>'
             '<p class="sub">%s</p></summary><div class="body">%s%s</div>%s</details>'
@@ -182,8 +345,7 @@ def one(meta, body, tab, kind, cells=()):
                anchor(head), nl.esc(head), copy_btn(anchor(head), 'uc-copy'),
                nl.esc(meta.get('subhead', '')),
                minimap,
-               nl.md_body(body, src, 'h4', 'bsec', rank_dot(meta.get('section', 'etc')))
-               + (RANK_LEGEND if '|' in body else ''),
+               body_html,
                srcbox(src)))
 
 
@@ -707,7 +869,7 @@ def build():
     body, top, per, bysec, mix = cards()
     n = sum(per.values())
     html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + MRG_CSS
-                         + angles_layer.CSS)
+                         + angles_layer.CSS + card_lib.DEBATE_CSS)
                 # 축 층이 맨 처음이다 — 지금 무슨 일이 벌어지는 중인지가 무엇이 있는지보다
                 # 먼저 와야 한다. 카드 더미가 입구라는 지적에 답하는 자리다. 어디서부터
                 # 읽을지는 이 합류도가 말해 준다 — 따로 두던 「처음 오셨다면」 목록은 걷어냈다.
