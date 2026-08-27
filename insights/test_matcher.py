@@ -68,8 +68,9 @@ def test_result_is_deterministic():
 CURSOR = [
     {'canonical': '커서', 'type': '제품',
      'ko': ['커서'], 'en': ['Cursor'],
-     'deny': ['가 커서', '이 커서', '보다 커서', '배 커서', '배나 커서',
-              '훨씬 커서', '워낙 커서', '만큼 커서']},
+     'deny': ['워낙 커서', '너무 커서', '훨씬 커서', '매우 커서', '더 커서',
+              '보다 커서', '배 커서', '배나 커서', '만큼 커서',
+              '가 커서 ', '이 커서 ']},
 ]
 CURSOR_RULES = mt.compile_rules(CURSOR)
 
@@ -86,3 +87,15 @@ def test_deny_with_a_leading_word_keeps_the_real_mention():
     assert mt.find('커서가 이 표현을 쓰기 시작했다', CURSOR_RULES) == ['커서']
     assert mt.find('스페이스X의 커서(Cursor) 인수', CURSOR_RULES) == ['커서']
     assert mt.find('딥시크, 커서', CURSOR_RULES) == ['커서']
+
+
+def test_deny_keeps_a_mention_right_after_a_subject_particle():
+    # 「…가 커서」를 통째로 막으면 이 줄이 사라진다. 뒤 공백까지 넣어 가른다 —
+    # 서술어(크다)는 뒤에 절이 이어져 공백이 오고, 진짜 언급은 조사나 괄호가 온다.
+    assert mt.find('SpaceXAI가 커서(Cursor) 인수 이후', CURSOR_RULES) == ['커서']
+    assert mt.find('사용자가 커서를 업데이트하지 않아도', CURSOR_RULES) == ['커서']
+
+
+def test_deny_still_blocks_the_predicate_after_a_subject_particle():
+    assert mt.find('CRAH 보다 용량이 커서 표준이 됐다', CURSOR_RULES) == []
+    assert mt.find('차이가 커서 순환기내과에서는', CURSOR_RULES) == []
