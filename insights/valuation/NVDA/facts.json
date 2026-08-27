@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T02:14:17.972320+00:00",
+ "fetched_at": "2026-08-27T03:12:50.205324+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -1154,6 +1154,13 @@
      "filed": "2025-02-26",
      "tag": "MarketableSecuritiesCurrent",
      "start": null
+    },
+    "2026": {
+     "end": "2026-01-25",
+     "val": 20427000000,
+     "filed": "2026-02-25",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
     }
    },
    "lt_debt": {
@@ -1701,43 +1708,50 @@
     "val": 22443000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
-    "val": 49122000000,
-    "window": "2025-10-26",
-    "end": "2025-10-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "val": 41000000000,
+    "window": "2026-07-26",
+    "end": "2026-07-26",
+    "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 32366000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_debt": {
     "val": 1000000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 63059000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "inventory": {
     "val": 31575000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "InventoryNet",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 15059000000,
     "window": "2026-07-26",
     "end": "2026-07-26",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_outstanding": {
@@ -1834,7 +1848,7 @@
     "growth": 0.45029998
    }
   ],
-  "fetched_at": "2026-08-27T02:14:22.426492+00:00",
+  "fetched_at": "2026-08-27T03:12:54.801488+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

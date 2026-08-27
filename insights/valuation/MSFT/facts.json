@@ -1,6 +1,6 @@
 {
  "ticker": "MSFT",
- "fetched_at": "2026-08-27T02:14:26.759629+00:00",
+ "fetched_at": "2026-08-27T03:12:58.662199+00:00",
  "sec": {
   "entity": "MICROSOFT CORPORATION",
   "cik": "0000789019",
@@ -1241,6 +1241,20 @@
     }
    },
    "st_investments": {
+    "2010": {
+     "end": "2010-06-30",
+     "val": 12526000000,
+     "filed": "2010-07-30",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2011": {
+     "end": "2011-06-30",
+     "val": 24053000000,
+     "filed": "2011-07-28",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
     "2019": {
      "end": "2019-06-30",
      "val": 122463000000,
@@ -1954,43 +1968,50 @@
     "val": 20935000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
     "val": 55908000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "ShortTermInvestments",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 31067000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_debt": {
     "val": 9227000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 80876000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "inventory": {
     "val": 1397000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "InventoryNet",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 42416000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_outstanding": {
@@ -2087,7 +2108,7 @@
     "growth": 0.1934
    }
   ],
-  "fetched_at": "2026-08-27T02:14:31.115651+00:00",
+  "fetched_at": "2026-08-27T03:13:03.010426+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

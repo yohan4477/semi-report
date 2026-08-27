@@ -1,6 +1,6 @@
 {
  "ticker": "META",
- "fetched_at": "2026-08-27T02:14:31.120139+00:00",
+ "fetched_at": "2026-08-27T03:13:03.014426+00:00",
  "sec": {
   "entity": "Meta Platforms, Inc.",
   "cik": "0001326801",
@@ -1208,6 +1208,34 @@
      "tag": "MarketableSecuritiesCurrent",
      "start": null
     },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 9746000000,
+     "filed": "2019-01-31",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 12803000000,
+     "filed": "2020-01-30",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 12826000000,
+     "filed": "2021-01-28",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 3352000000,
+     "filed": "2022-02-03",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
     "2022": {
      "end": "2022-12-31",
      "val": 26057000000,
@@ -1524,31 +1552,36 @@
     "val": 15462000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
     "val": 74798000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "MarketableSecuritiesCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 83664000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 21752000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 15889000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_diluted": {
@@ -1601,45 +1634,45 @@
    {
     "period": "0q",
     "end": "2026-09-30",
-    "revenue": 63314922190,
+    "revenue": 63314915800,
     "revenue_low": 61702000000,
     "revenue_high": 65278000000,
     "analysts": 47,
-    "eps": 6.76256,
-    "growth": -0.039
+    "eps": 6.60716,
+    "growth": -0.043899998
    },
    {
     "period": "+1q",
     "end": "2026-12-31",
-    "revenue": 73667127690,
+    "revenue": 73644898800,
     "revenue_low": 71681000000,
     "revenue_high": 75897000000,
     "analysts": 45,
-    "eps": 8.23063,
-    "growth": -0.0635
+    "eps": 8.22495,
+    "growth": -0.0626
    },
    {
     "period": "0y",
     "end": "2026-12-31",
-    "revenue": 254185499680,
+    "revenue": 254182758280,
     "revenue_low": 251307000000,
     "revenue_high": 262015562550,
     "analysts": 55,
-    "eps": 31.73427,
-    "growth": 0.0499
+    "eps": 31.56019,
+    "growth": 0.0507
    },
    {
     "period": "+1y",
     "end": "2027-12-31",
-    "revenue": 305390799590,
+    "revenue": 305380811980,
     "revenue_low": 282196000000,
     "revenue_high": 346162925620,
     "analysts": 57,
-    "eps": 33.92838,
-    "growth": 0.113800004
+    "eps": 33.9228,
+    "growth": 0.117
    }
   ],
-  "fetched_at": "2026-08-27T02:14:35.759069+00:00",
+  "fetched_at": "2026-08-27T03:13:07.891250+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T02:14:22.430004+00:00",
+ "fetched_at": "2026-08-27T03:12:54.804487+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -865,6 +865,27 @@
     }
    },
    "st_investments": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 7900000000,
+     "filed": "2016-02-11",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 13066000000,
+     "filed": "2017-02-03",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 19486000000,
+     "filed": "2018-02-06",
+     "tag": "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue",
+     "start": null
+    },
     "2018": {
      "end": "2018-12-31",
      "val": 92439000000,
@@ -1325,43 +1346,50 @@
     "val": 55911000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
     "val": 186563000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "MarketableSecuritiesCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 98165000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_debt": {
     "val": 1999000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 69175000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "inventory": {
     "val": 9991000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "InventoryNet",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 20258000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_outstanding": {
@@ -1458,7 +1486,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T02:14:26.755619+00:00",
+  "fetched_at": "2026-08-27T03:12:58.658200+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

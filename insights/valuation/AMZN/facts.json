@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-27T02:14:35.764179+00:00",
+ "fetched_at": "2026-08-27T03:13:07.894249+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -2003,43 +2003,50 @@
     "val": 78213000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
     "val": 44775000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "MarketableSecuritiesCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 128894000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_debt": {
     "val": 3330000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 88092000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "inventory": {
     "val": 38184000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "InventoryNet",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 147440000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_outstanding": {
@@ -2136,7 +2143,7 @@
     "growth": -0.1671
    }
   ],
-  "fetched_at": "2026-08-27T02:14:40.915977+00:00",
+  "fetched_at": "2026-08-27T03:13:12.143931+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

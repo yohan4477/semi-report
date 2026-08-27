@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "fetched_at": "2026-08-27T02:14:40.920488+00:00",
+ "fetched_at": "2026-08-27T03:13:12.149941+00:00",
  "sec": {
   "entity": "Apple Inc.",
   "cik": "0000320193",
@@ -1876,43 +1876,50 @@
     "val": 39544000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
     "val": 22855000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "MarketableSecuritiesCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "lt_debt": {
     "val": 71340000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtNoncurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_debt": {
     "val": 11007000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "LongTermDebtCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "receivables": {
     "val": 31398000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsReceivableNetCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "inventory": {
     "val": 11092000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "InventoryNet",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "payables": {
     "val": 64525000000,
     "window": "2026-06-27",
     "end": "2026-06-27",
-    "method": "시점 값이라 최근 잔액 하나를 쓴다"
+    "tag": "AccountsPayableCurrent",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    }
   },
   "shares_outstanding": {
@@ -2009,7 +2016,7 @@
     "growth": 0.0809
    }
   ],
-  "fetched_at": "2026-08-27T02:14:45.457424+00:00",
+  "fetched_at": "2026-08-27T03:13:16.760705+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
