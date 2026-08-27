@@ -379,6 +379,59 @@ def beta(stock_series, index_series, window=None):
                 index='^GSPC', freq='daily')
 
 
+def lookback(facts, tags_ocf, tags_capex, price_series, shares, years=(1, 2)):
+    """해마다 되돌아본 배수. 「그때 알 수 있던 것만」으로 자른다.
+
+    예측을 채점하려는 것이 아니다. AI 국면처럼 규모가 바뀌는 자리는 어느 모형도 못
+    잡으므로 적중률은 뜻이 없다. 여기서 재는 것은 **시장이 실적의 몇 배를 내고
+    있었나** 하나다. 할인율도 성장 가정도 안 들어가는 산수라 국면과 무관하게 읽힌다.
+
+    사후 정보를 막는 장치가 `filed` 다. 그 날짜까지 제출된 서류만 본다 — 2024년
+    8월에 우리가 알 수 있던 잉여현금흐름은 2024-01 에 끝난 회계연도 것이다.
+    """
+    def annual_upto(tags, asof):
+        best = None
+        for tag in tags:
+            node = facts.get('facts', {}).get('us-gaap', {}).get(tag)
+            if not node:
+                continue
+            for x in node.get('units', {}).get('USD', []):
+                if 'start' not in x or x.get('filed', '9999') > asof:
+                    continue
+                days = (datetime.strptime(x['end'], '%Y-%m-%d')
+                        - datetime.strptime(x['start'], '%Y-%m-%d')).days
+                if not (330 <= days <= 400):
+                    continue
+                if best is None or x['end'] > best['end']:
+                    best = x
+        return best
+
+    px = {datetime.fromtimestamp(t, timezone.utc).date().isoformat(): c
+          for t, c in price_series}
+    if not px or not shares:
+        return None
+    today = max(px)
+    out = []
+    for back in years:
+        asof = '%d%s' % (int(today[:4]) - back, today[4:])
+        days = [k for k in sorted(px) if k <= asof]
+        if not days:
+            continue
+        ocf = annual_upto(tags_ocf, asof)
+        cap = annual_upto(tags_capex, asof)
+        if not ocf or not cap:
+            continue
+        fcf = (ocf['val'] - cap['val']) / 1e9
+        p = px[days[-1]]
+        mcap = p * shares / 1e9
+        out.append(dict(asof=days[-1], price=p, market_cap=mcap,
+                        fcf_known=fcf, fcf_period=ocf['end'],
+                        multiple=(mcap / fcf) if fcf else None,
+                        note='그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 '
+                             '그대로 곱한 근사다 — 그때 주식수가 아니다'))
+    return out or None
+
+
 def beta_grid(stock_series, index_series):
     """창 셋 x 수익률 간격 셋. 어느 조합으로 재도 얼마가 나오는지를 남긴다.
 
@@ -483,6 +536,8 @@ def build(ticker):
     px = price(ticker)
     idx = price('%5EGSPC')
     sec = sec_facts(ticker)
+    facts_raw = json.loads(get('https://data.sec.gov/api/xbrl/companyfacts/CIK%s.json'
+                              % CIKS[ticker]))
     # 메타는 us-gaap 에도 dei 에도 발행주식수가 없다(EntityPublicFloat 하나뿐).
     # 그때는 희석 가중평균으로 시총을 내고 어느 것을 썼는지 적는다 — 안 그러면
     # 그 회사만 시가총액이 통째로 빈다.
@@ -508,6 +563,9 @@ def build(ticker):
         # 가장 낮았다. 구간을 늘리면 베타가 올라가고 할인율도 따라 올라간다.
         'beta': beta(px['series'], idx['series'], window=252),
         'beta_grid': beta_grid(px['series'], idx['series']),
+        # 되돌아본 배수. 예측 채점이 아니라 「시장이 실적의 몇 배를 냈나」다.
+        'lookback': lookback(facts_raw, CONCEPTS['ocf'], CONCEPTS['capex'],
+                             px['series'], shares),
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),

@@ -530,6 +530,33 @@ def report6_html(sec, p, fig):
       % (nc.WACC_BASE * 100, (nc.WACC_BASE - 0.0275) * 100,
          nc.tv_multiple(nc.CASES['Base']['g']), 1.0275 / (0.10 - 0.0275),
          nc.price_multiple()))
+    _lb = sorted(nc.d.get('lookback') or [], key=lambda r: r['asof'])
+    if _lb:
+        _o = _lb[0]
+        p('<b>그 40배를 시간축에 놓으면 방향이 달라 보입니다.</b> 할인율도 성장 가정도 '
+          '안 쓰는 대조입니다. 그때 제출돼 있던 서류만으로 시가총액이 잉여현금흐름의 몇 '
+          '배였는지를 셉니다.')
+        p('<div class="yt-wrap"><table class="yt">'
+          '<thead><tr><th>기준일</th><th>종가</th><th>그때 알 수 있던 잉여현금흐름</th>'
+          '<th>배수</th></tr></thead><tbody>%s'
+          '<tr class="hi"><th scope="row">%s</th><td>%.2f달러</td><td>%s</td>'
+          '<td>%.1f배</td></tr></tbody></table></div>'
+          % (''.join('<tr><th scope="row">%s</th><td>%.2f달러</td><td>%s</td>'
+                     '<td>%.0f배</td></tr>'
+                     % (r['asof'], r['price'], _eok(r['fcf_known']), r['multiple'])
+                     for r in _lb),
+             nc.PRICE_DAY, nc.PRICE, _eok(nc.FCF0), nc.price_multiple()))
+        p('<b>주가는 %.0f%% 올랐는데 배수는 %.0f배에서 %.1f배로 내려왔습니다.</b> '
+          '잉여현금흐름이 같은 기간에 %.1f배가 됐기 때문입니다. 이 회사는 지금까지 '
+          '실적으로 배수를 눌러 왔습니다. 그러니 40배 하나만 놓고 방향을 읽으면 '
+          '틀립니다.'
+          % ((nc.PRICE / _o['price'] - 1) * 100, _o['multiple'],
+             nc.price_multiple(), nc.FCF0 / _o['fcf_known']))
+        p('여기서 이 보고서가 못 하는 말을 한 번 더 적어 둡니다. <b>2024년 8월에 %.0f배를 '
+          '내던 시장이 옳았는지 우리 잣대가 옳았는지는 그때도 지금도 가릴 수 없습니다.</b> '
+          '가려면 앞으로 몇 해의 실적이 필요하고, 그것은 예측입니다. 이 보고서는 예측을 '
+          '하지 않습니다. 지금 값이 무엇을 요구하는지만 적습니다.' % _o['multiple'])
+
     p('거꾸로 물으면 이렇습니다. 우리 Base 경로가 맞다고 치고 지금 주가가 나오려면 '
       '할인율이 <b>%.2f%%</b>여야 합니다. 미국 10년 국채 %.2f%% 위로 %.2f%%포인트입니다. '
       '<b>시장은 엔비디아 주식에 국채보다 %.2f%%포인트 높은 수익률만 요구하고 있는 '
