@@ -20,6 +20,8 @@ import _biz_fig  # noqa: E402
 import _val_googl  # noqa: E402
 import _val_fig  # noqa: E402
 import _val_peers_text  # noqa: E402
+import _val_nvda  # noqa: E402
+import _val_nvda_fig  # noqa: E402
 import _val_labs  # noqa: E402
 import _val_chips  # noqa: E402
 import _val_infra  # noqa: E402
@@ -1081,33 +1083,46 @@ def report5_html():
 
 
 def report6_html():
+    """엔비디아 밸류에이션. 알파벳 편과 같은 잣대에 규칙 하나가 더 붙는다.
+
+    룰북 R15 다 — 사이클 산업은 한 사이클을 통째로 명시적 기간에 담는다. 그래서
+    성장 경로를 선형으로 내리지 않고 해마다 적는다."""
+    h = []
+    sec = lambda t: h.append('<h3>%s</h3>' % t)
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _val_nvda.report6_html(sec, p, fig)
+    return fold_report(_val_nvda.HEAD6, ''.join(h))
+
+
+def report7_html():
     """모델 회사 정성 비교. 재무제표가 없는 회사가 대부분이라 축 넷으로 견준다."""
     h = []
     sec = lambda t: h.append('<h3>%s</h3>' % t)
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_labs.report6_html(sec, p, fig)
-    return fold_report(_val_labs.HEAD6, ''.join(h))
+    _val_labs.report7_html(sec, p, fig)
+    return fold_report(_val_labs.HEAD7, ''.join(h))
 
 
-def report7_html():
+def report8_html():
     """칩·시스템 회사 정성 비교. 성능이 아니라 소프트웨어·공급·마진으로 견준다."""
     h = []
     sec = lambda t: h.append('<h3>%s</h3>' % t)
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_chips.report7_html(sec, p, fig)
-    return fold_report(_val_chips.HEAD7, ''.join(h))
+    _val_chips.report8_html(sec, p, fig)
+    return fold_report(_val_chips.HEAD8, ''.join(h))
 
 
-def report8_html():
+def report9_html():
     """GPU 인프라·서빙 회사 비교. 회사가 아니라 값·원가·자금 셋으로 견준다."""
     h = []
     sec = lambda t: h.append('<h3>%s</h3>' % t)
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_infra.report8_html(sec, p, fig)
-    return fold_report(_val_infra.HEAD8, ''.join(h))
+    _val_infra.report9_html(sec, p, fig)
+    return fold_report(_val_infra.HEAD9, ''.join(h))
 
 
 HEAD1 = ('<div class="rep-head"><span class="rn">보고서 ①</span>'
@@ -1131,7 +1146,7 @@ HEADER = '''  <header>
 
 LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 장은 그 답들을 이어 붙입니다. '
         '지금 실린 것은 로봇을 다룬 보고서 둘, <b>AI 비즈니스 밸류체인</b> 리포트 한 편, '
-        '그리고 <b>알파벳 밸류에이션</b> 한 편입니다. '
+        '그리고 <b>밸류에이션</b> 세 편입니다. '
         '로봇 보고서의 원본 카드는 <a href="수도리무브 대시보드.html">수도리무브 대시보드</a>에, '
         '밸류체인 리포트의 원문은 SemiAnalysis 뉴스레터 변환본에 있습니다. '
         '밸류에이션 편만 성격이 다릅니다 — 원문이 낸 값을 엮은 것이 아니라 '
@@ -1140,8 +1155,8 @@ LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 �
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
-      <span>보고서 <b>8편</b></span>
-      <span>절 <b>72개</b></span>
+      <span>보고서 <b>9편</b></span>
+      <span>절 <b>85개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -1159,7 +1174,11 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '보증선까지는 다 갖고, 넘긴 만큼만 나눈다', _biz_fig.FIG_BACKSTOP, ''),
                (0, '기준연도를 어디로 잡느냐가 잉여현금흐름을 뒤집는다', _val_fig.FIG_BASE, ''),
                (0, '세전이익의 절반이 장사 밖에서 왔다', _val_fig.FIG_NI, ''),
-               (0, '케이스 셋이 모두 현재가 아래에 선다', _val_fig.FIG_CASE, '')]
+               (0, '케이스 셋이 모두 현재가 아래에 선다', _val_fig.FIG_CASE, ''),
+               (0, '영업이익률이 두 번 무너졌다', _val_nvda_fig.FIG_CYCLE, ''),
+               (0, '세후영업이익과 잉여현금흐름 사이가 벌어진다', _val_nvda_fig.FIG_FUNNEL, ''),
+               (0, '엔비디아 케이스 셋이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
+               (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, '')]
 
 
 if __name__ == '__main__':
@@ -1170,9 +1189,9 @@ if __name__ == '__main__':
               tops=[('sec-biz', 'AI 비즈니스 — 밸류체인', 'SemiAnalysis 30편 — 번 돈은 층마다 '
                      '누구에게 남나', 1, report3_html()),
                     ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
-                     '알파벳을 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 2,
-                     report4_html() + report5_html()),
+                     '알파벳과 엔비디아를 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 3,
+                     report4_html() + report5_html() + report6_html()),
                     ('sec-ai', 'AI 회사 — 모델·칩·인프라', 'SemiAnalysis 15편 — 모델 회사를 '
                      '가르는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
-                     report6_html() + report7_html() + report8_html())],
+                     report7_html() + report8_html() + report9_html())],
               extra_css=REPORT_CSS)

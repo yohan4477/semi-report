@@ -8,7 +8,7 @@
 값이 아니라 판단을 비교하는 글이므로, 어느 원문에서 온 판단인지를 줄마다 밝힌다.
 """
 
-HEAD6 = ('<div class="rep-head"><span class="rn">보고서 ⑥</span>'
+HEAD7 = ('<div class="rep-head"><span class="rn">보고서 ⑦</span>'
          '<h2 id="rep-labs">모델 회사 여섯 — 무엇이 이들을 가르나</h2>'
          '<p class="rm">바탕 <b>SemiAnalysis 6편</b> · 원문 기간 <b>2026-05 ~ 2026-08</b> · '
          '유료 뉴스레터 원문<br>'
@@ -54,7 +54,7 @@ LABS = [
 ]
 
 
-def report6_html(sec, p, fig):
+def report7_html(sec, p, fig):
     p('앞의 두 편은 미국 증권거래위원회 제출서류가 바탕이었습니다. 이 편은 다릅니다 — '
       '<b>겨루는 회사 대부분이 비상장이라 재무제표가 없습니다.</b> 앤트로픽은 2026년 '
       '6월에야 비공개로 기업공개를 신청했고 오픈AI는 2027년으로 미룬다는 보도가 '

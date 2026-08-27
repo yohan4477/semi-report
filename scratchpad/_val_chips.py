@@ -6,8 +6,8 @@
 줄마다 밝힌다.
 """
 
-HEAD7 = ('<hr class="rep-cut">'
-         '<div class="rep-head"><span class="rn">보고서 ⑦</span>'
+HEAD8 = ('<hr class="rep-cut">'
+         '<div class="rep-head"><span class="rn">보고서 ⑧</span>'
          '<h2 id="rep-chips">칩·시스템 여섯 — 엔비디아의 해자는 어디가 얇은가</h2>'
          '<p class="rm">바탕 <b>SemiAnalysis 6편</b> · 원문 기간 <b>2025-11 ~ 2026-08</b> · '
          '유료 뉴스레터 원문<br>'
@@ -51,7 +51,7 @@ CHIPS = [
 
 
 
-def report7_html(sec, p, fig):
+def report8_html(sec, p, fig):
     p('앞 편이 모델을 만드는 회사를 봤다면 이 편은 <b>그 모델을 돌릴 물건을 만드는 '
       '회사</b>를 봅니다. 물음은 「누가 더 빠른가」가 아니라 <b>「엔비디아가 가진 것을 '
       '무엇이 갉아먹는가」</b>입니다. 성능은 그 물음에 닿는 한 가지 기준으로만 '

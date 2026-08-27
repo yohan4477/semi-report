@@ -11,8 +11,8 @@
 가리키지 않는다. 그 성격을 표 캡션과 마지막 절에 그대로 적는다.
 """
 
-HEAD8 = ('<hr class="rep-cut">'
-         '<div class="rep-head"><span class="rn">보고서 ⑧</span>'
+HEAD9 = ('<hr class="rep-cut">'
+         '<div class="rep-head"><span class="rn">보고서 ⑨</span>'
          '<h2 id="rep-infra">GPU 인프라·서빙 — 시간당 가격은 원가가 아니다</h2>'
          '<p class="rm">바탕 <b>SemiAnalysis 4편</b> · 원문 기간 <b>2026-04 ~ 2026-07</b> · '
          '유료 뉴스레터 원문<br>'
@@ -35,7 +35,7 @@ TIERS = [
 ]
 
 
-def report8_html(sec, p, fig):
+def report9_html(sec, p, fig):
     p('앞의 두 편 사이에 낀 층이 있습니다. 모델을 만드는 회사도 아니고 칩을 만드는 회사도 '
       '아닌, <b>그 칩을 사서 빌려주고 토큰으로 바꿔 파는 회사들</b>입니다. 네오클라우드와 '
       '토큰 서비스 업체가 여기 섭니다.')
