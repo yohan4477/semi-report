@@ -1,0 +1,15 @@
+{
+  "name": "insight-pipeline",
+  "version": "0.1.0",
+  "description": "원문 한 편을 각도로 가르고(structure A), 큰 물음을 쪼개고(structure B), 개체 이름으로 코퍼스 917편을 뒤지고(entity-search), 쌓인 노트에서 교차 인사이트를 쓴다(insight-review). 셋이 insights/entities.json 정본 하나를 공유한다.",
+  "author": {
+    "name": "johnn8n"
+  },
+  "keywords": [
+    "structure",
+    "entity-search",
+    "insight",
+    "korean"
+  ],
+  "skills": "./skills/"
+}
