@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-25",
+ "generated": "2026-08-27",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -10,7 +10,7 @@
    ],
    "date": "2026-02-01",
    "path": "content/linkedin/[2602] 링크드인 게시물.md",
-   "hash": "f6cfa0caa30d"
+   "hash": "a2ac2865f970"
   },
   {
    "id": "li:root:2603-링크드인-게시물",
@@ -21,7 +21,7 @@
    ],
    "date": "2026-03-01",
    "path": "content/linkedin/[2603] 링크드인 게시물.md",
-   "hash": "d3d0eaf4bf98"
+   "hash": "d7f8e5cd2740"
   },
   {
    "id": "li:root:2604-링크드인-게시물",
@@ -32,7 +32,7 @@
    ],
    "date": "2026-04-01",
    "path": "content/linkedin/[2604] 링크드인 게시물.md",
-   "hash": "4639db10e5fa"
+   "hash": "50f1c78785d7"
   },
   {
    "id": "li:root:2605-링크드인-게시물",
@@ -43,7 +43,7 @@
    ],
    "date": "2026-05-01",
    "path": "content/linkedin/[2605] 링크드인 게시물.md",
-   "hash": "be5e65f03357"
+   "hash": "a01ce0d58dd0"
   },
   {
    "id": "li:root:2606-링크드인-게시물",
@@ -54,7 +54,7 @@
    ],
    "date": "2026-06-01",
    "path": "content/linkedin/[2606] 링크드인 게시물.md",
-   "hash": "b27e0a3e9488"
+   "hash": "9108a4828d7c"
   },
   {
    "id": "li:root:2607-링크드인-게시물",
@@ -65,7 +65,7 @@
    ],
    "date": "2026-07-01",
    "path": "content/linkedin/[2607] 링크드인 게시물.md",
-   "hash": "632cbdc1de2b"
+   "hash": "690fc5ef6831"
   },
   {
    "id": "li:root:2608-링크드인-게시물",
@@ -76,7 +76,7 @@
    ],
    "date": "2026-08-01",
    "path": "content/linkedin/[2608] 링크드인 게시물.md",
-   "hash": "2527ca185cc9"
+   "hash": "8a30ca251232"
   },
   {
    "id": "pod:semianalysis:Ep25-딜런-패텔-사내-AI-지출이-평평해진-이유와-보상-해킹-사고",
@@ -90,6 +90,19 @@
    "date": "2026-08-17",
    "path": "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md",
    "hash": "dea955b1209a"
+  },
+  {
+   "id": "pod:semianalysis:Ep26-로버트-보스웰-PJM이-요금-납부자-120억-달러를-더-쓰게-만든-모델링-오류",
+   "corpus": "podcast",
+   "folder": "semianalysis",
+   "categories": [
+    "power/power-market",
+    "ai-infra/power",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-20",
+   "path": "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md",
+   "hash": "3c34b9ea89e4"
   },
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
@@ -571,6 +584,19 @@
    "hash": "490b60431ae6"
   },
   {
+   "id": "semi:compute:오픈AI-할라페뇨-엔비디아-블랙웰보다-낫다",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-25",
+   "path": "content/newsletter/ai_infra/compute/[260825] 오픈AI 할라페뇨 - 엔비디아 블랙웰보다 낫다.md",
+   "hash": "4a6d30fed78f"
+  },
+  {
    "id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
    "corpus": "semianalysis",
    "folder": "construction",
@@ -872,6 +898,897 @@
    "date": "2026-01-08",
    "path": "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md",
    "hash": "1d9a69f87091"
+  },
+  {
+   "id": "und:AI Engineer:2024-08-26-프롬프트-엔지니어링의-원칙",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md",
+   "hash": "8b87d88dca95"
+  },
+  {
+   "id": "und:AI Engineer:2025-04-01-블룸버그-에이전트-확장",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md",
+   "hash": "15e1770c3178"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-AI-레드팀-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md",
+   "hash": "966a0161362d"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-그래프RAG로-컨텍스트-창-짜기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md",
+   "hash": "601c6d631a72"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-그래프와-벡터를-섞은-검색",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md",
+   "hash": "1bddbb3d7e5c"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-기기-위에서-도는-파운드리-로컬",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md",
+   "hash": "171ebf57c18e"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-내보낼-수-있는-에이전트-만들기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md",
+   "hash": "74cc426b2271"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-더-큰-모델보다-데이터-플라이휠",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md",
+   "hash": "fccbb522c6ce"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-데이터가-차이를-만든다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md",
+   "hash": "7a688a06e66c"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md",
+   "hash": "201642e01467"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-새로운-코드는-명세다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md",
+   "hash": "323c22115171"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-스트랜즈-에이전트-SDK",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-스트랜즈-에이전트-SDK.md",
+   "hash": "51feb9809872"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-애저로-에이전트를-채점하기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md",
+   "hash": "7df3e84b465b"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-에이전트로-앱을-만든다는-것",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md",
+   "hash": "8dc9cbad0fd6"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-에이전트에서-정말-어려운-부분",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md",
+   "hash": "53031ad28523"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-원격-MCP를-내보내며-배운-것",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md",
+   "hash": "40a83c45ac2f"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-음성-AI를-규모로-내보내기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md",
+   "hash": "bed19537146b"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-제미나이가-더-깊이-생각하는-법",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md",
+   "hash": "df93fff377f2"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-추론의-파레토-경계를-밀어내기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md",
+   "hash": "0e43ba82cbb0"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-클라우드-규모로-에이전트-굴리기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md",
+   "hash": "8917c76ae51e"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-클로드-코드와-에이전트-코딩의-진화",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md",
+   "hash": "c7bd02905235"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-평가에서-비싸게-배운-다섯",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md",
+   "hash": "0a3de91c1505"
+  },
+  {
+   "id": "und:AI Engineer:2025-08-26-현장에서-쓰는-MCP",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-08-26-현장에서-쓰는-MCP.md",
+   "hash": "123fb0decfb7"
+  },
+  {
+   "id": "und:AI Engineer:2025-11-26-그래프로-컨텍스트를-잇기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-11-26-그래프로-컨텍스트를-잇기.md",
+   "hash": "6133e60f80a7"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-다음-모델에도-버티는-코딩-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md",
+   "hash": "fd8e8909b933"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-에이전트-강화-파인튜닝",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md",
+   "hash": "ff2f454d7ba6"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-에이전트-말고-스킬을-만들어라",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md",
+   "hash": "75bbff1738c3"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-에이전트를-위해-바뀌는-클로드-API",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md",
+   "hash": "2728d5ea21cb"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-제미나이-시대의-만들기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md",
+   "hash": "77117f66ff96"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-중력을-거스르다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md",
+   "hash": "5953b9f85795"
+  },
+  {
+   "id": "und:AI Engineer:2025-12-26-프롬프트-러닝이-잘-먹히는-이유",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md",
+   "hash": "cc8df54dcf4c"
+  },
+  {
+   "id": "und:AI Engineer:2026-04-26-MCP는-어디로-가나",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-04-26-MCP는-어디로-가나.md",
+   "hash": "f432fb9ee05f"
+  },
+  {
+   "id": "und:AI Engineer:2026-04-26-이미지와-영상-생성-모델을-키우기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md",
+   "hash": "7aab5ea09842"
+  },
+  {
+   "id": "und:AI Engineer:2026-04-26-젬마-딥마인드의-오픈-모델",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md",
+   "hash": "08c48bdf426e"
+  },
+  {
+   "id": "und:AI Engineer:2026-04-26-코드-모드-말은-코드가-한다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md",
+   "hash": "65e6f1592b9f"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md",
+   "hash": "71dc367bb950"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-VS-Code에서-에이전트-굴리기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md",
+   "hash": "84fda6a86b52"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-개발자-한-명과-스무-개의-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md",
+   "hash": "0d19c4c06c19"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-게이트웨이-하나면-된다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md",
+   "hash": "3198b85d6e86"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-딥마인드가-에이전트를-굴리는-법",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md",
+   "hash": "2354c49dd083"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-무엇이든-무엇으로-멀티모달-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md",
+   "hash": "ec0c57a2239a"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-생성AI는-데이터-과학자의-것인가",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md",
+   "hash": "09a157a31d49"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-에이전트에-맞춰-깃허브를-넓히기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md",
+   "hash": "cea3119ac887"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-엣지에서-AI를-빠르게",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md",
+   "hash": "3b59512377af"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-제미나이-나노-온디바이스",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md",
+   "hash": "3eb8625dc092"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-커버리지-너머의-기능-테스트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md",
+   "hash": "9b768a040bf0"
+  },
+  {
+   "id": "und:AI Engineer:2026-05-26-평가-플랫폼-만들기가-어려운-이유",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-05-26-평가-플랫폼-만들기가-어려운-이유.md",
+   "hash": "e872b37cde7a"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md",
+   "hash": "113f24dd2380"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-관측과-평가와-실험을-한-판에",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-관측과-평가와-실험을-한-판에.md",
+   "hash": "8990c5dc6531"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-문서가-아니라-결정의-흔적이-필요하다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md",
+   "hash": "c5589f8b7974"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-시니어가-에이전트에서-막히는-이유",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md",
+   "hash": "ea53ca29b4ca"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-에이전트-관측은-무엇이-다른가",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-에이전트-관측은-무엇이-다른가.md",
+   "hash": "2da70bb2603f"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-에이전트-평가를-모두에게",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md",
+   "hash": "3431eae96a0a"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md",
+   "hash": "bb0c5e0e5ea3"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-제미나이-오디오-스택",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md",
+   "hash": "5e90da91af34"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-텍스트-디퓨전",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md",
+   "hash": "5c548b14b508"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-평가가-다음-연산-부품이-된다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-평가가-다음-연산-부품이-된다.md",
+   "hash": "8f675403858c"
+  },
+  {
+   "id": "und:AI Engineer:2026-06-26-평가를-굴리는-단계들",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-06-26-평가를-굴리는-단계들.md",
+   "hash": "d7d2e3057460"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-AI-엔지니어링의-황금기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md",
+   "hash": "27d5b51a0485"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-LLM에게-운전대를-주지-마라",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md",
+   "hash": "99723f7a9e84"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-기기-위에서-프런티어-수준을-낸다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-기기-위에서-프런티어-수준을-낸다.md",
+   "hash": "8c0fd4dd695a"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-긴-호흡의-작업을-맡길-때",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md",
+   "hash": "7e29195317cc"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md",
+   "hash": "b01687ae880d"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-명세로-이끄는-개발",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md",
+   "hash": "f4420d97e0be"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-모델로-소스코드를-지키기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md",
+   "hash": "6d5a2e8f57f1"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-벡터만으로는-기억이-안-된다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-벡터만으로는-기억이-안-된다.md",
+   "hash": "9f1654f6718f"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-신호에서-PR까지-스스로-고치는-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-신호에서-PR까지-스스로-고치는-에이전트.md",
+   "hash": "77f624c1ba9b"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-운영에서-터진-에이전트-다시-재현하기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md",
+   "hash": "775d3103f48e"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-코드를-쓰다가-시스템을-설계하는-일로",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md",
+   "hash": "c56a8b200aae"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-페이블-현장-안내서",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md",
+   "hash": "8b751e990e6e"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-26-평가-없이-스킬을-내보내지-마라",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md",
+   "hash": "0afda0addcd4"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-29-모델-200만-개를-녹지-않고-내보내기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md",
+   "hash": "7537c63afbb6"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-31-AI-슬롭을-끝내는-법",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-31-AI-슬롭을-끝내는-법.md",
+   "hash": "d644be9dbf69"
+  },
+  {
+   "id": "und:AI Engineer:2026-07-31-일하면서-배우는-에이전트",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md",
+   "hash": "5bb1c3d11b1a"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-05-실패한-것은-에이전트가-아니라-하니스다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md",
+   "hash": "ba042468912b"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-12-개인용-앱을-안전하게-바이브-코딩하기",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-12-개인용-앱을-안전하게-바이브-코딩하기.md",
+   "hash": "8149e07c7493"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-12-실시간-멀티플레이어와-자동화",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-12-실시간-멀티플레이어와-자동화.md",
+   "hash": "581dac753c7f"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-12-코덱스-하니스-뒤편",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md",
+   "hash": "00a304ca95e2"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-21-에이전트는-바뀌었는데-평가는-그대로다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md",
+   "hash": "777e63fd58f0"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-23-토큰을-누가-다-썼나",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md",
+   "hash": "81734c4a80a7"
+  },
+  {
+   "id": "und:AI Engineer:2026-08-23-토큰이-아니라-예산을-준다",
+   "corpus": "understanding",
+   "folder": "AI Engineer",
+   "categories": [
+    "AI Engineer"
+   ],
+   "date": null,
+   "path": "content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md",
+   "hash": "608792a7f717"
   },
   {
    "id": "und:root:대기-목록",
@@ -1325,6 +2242,17 @@
    "hash": "9024149330fd"
   },
   {
+   "id": "und:미국주식 사관학교:메타가-메모리-대란에서-혼자-웃는-이유-버려질-서버에서-헌-D램을-거의-공짜로-건진다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-26",
+   "path": "content/understanding/미국주식 사관학교/[260826] 메타가 메모리 대란에서 혼자 웃는 이유 - 버려질 서버에서 헌 D램을 거의 공짜로 건진다.md",
+   "hash": "83263b6f449f"
+  },
+  {
    "id": "und:미국주식 사관학교:무엇으로-찌르든-터졌을-풍선-나스닥-5-급락의-진짜-원인",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -1697,6 +2625,17 @@
    "date": "2026-07-05",
    "path": "content/understanding/미국주식 사관학교/[260705] 한국 반도체가 미국 반도체의 잣대가 됐다 - SK하이닉스 상장이 만드는 폐순환 고리.md",
    "hash": "3f30903f06ba"
+  },
+  {
+   "id": "und:미국주식 사관학교:헤지펀드는-반도체를-팔고-뮤추얼펀드는-사들인다-둘이-함께-산-것은-전력과-금융이었다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-24",
+   "path": "content/understanding/미국주식 사관학교/[260824] 헤지펀드는 반도체를 팔고 뮤추얼펀드는 사들인다 - 둘이 함께 산 것은 전력과 금융이었다.md",
+   "hash": "4a51a77aca64"
   },
   {
    "id": "und:미국주식 사관학교:힘든-업종의-1등만-산다-버크셔-2분기-매수-리스트가-걸어놓은-논리",
@@ -2249,6 +3188,17 @@
    "hash": "5bae4bc2871f"
   },
   {
+   "id": "und:언더스탠딩 보고서:2026-08-24-물가-신호를-무시하면-10년이-녹는다",
+   "corpus": "understanding",
+   "folder": "언더스탠딩 보고서",
+   "categories": [
+    "언더스탠딩 보고서"
+   ],
+   "date": null,
+   "path": "content/understanding/언더스탠딩 보고서/2026-08-24-물가-신호를-무시하면-10년이-녹는다.md",
+   "hash": "094ca6e8667b"
+  },
+  {
    "id": "und:이선엽 대표:260503-260820-이기는-투자사령부-실시간-시황",
    "corpus": "understanding",
    "folder": "이선엽 대표",
@@ -2764,6 +3714,17 @@
    "date": "2026-08-19",
    "path": "content/understanding/회계사/[260819] 40조원 자사주 매입·소각, 급락 9.8%를 반등 8%로 되돌리다 - SK하이닉스 - 엘곰.md",
    "hash": "770c8c1bc80a"
+  },
+  {
+   "id": "und:회계사:6월-22일-이후-소프트웨어가-24-오르고-반도체가-24-빠졌다-업종-로테이션-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-25",
+   "path": "content/understanding/회계사/[260825] 6월 22일 이후 소프트웨어가 24% 오르고 반도체가 24% 빠졌다 - 업종 로테이션 - 엘곰.md",
+   "hash": "f1efaa3447c4"
   },
   {
    "id": "und:회계사:8년-사이클을-통째로-넣은-DCF-주당-361000원-삼성전자-엘곰",
@@ -3360,6 +4321,17 @@
    "hash": "12448f0da22c"
   },
   {
+   "id": "und:회계사:매출도-가이던스도-넘겼는데-시간외-주가는-5에서-1로-꺼졌다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-27",
+   "path": "content/understanding/회계사/[260827] 매출도 가이던스도 넘겼는데 시간외 주가는 5%에서 1%로 꺼졌다 - 시황 - 엘곰.md",
+   "hash": "f282127d4c4f"
+  },
+  {
    "id": "und:회계사:매파-회의록이-나온-날-달러가-072-내렸다-FOMC-회의록-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3635,6 +4607,28 @@
    "hash": "40bbd0cfc339"
   },
   {
+   "id": "und:회계사:순환금융이-가린-실수요는-응용-소프트웨어-계층에서-드러난다-AI-거품-논쟁-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-27",
+   "path": "content/understanding/회계사/[260827] 순환금융이 가린 실수요는 응용 소프트웨어 계층에서 드러난다 - AI 거품 논쟁 - 엘곰.md",
+   "hash": "ede86880c647"
+  },
+  {
+   "id": "und:회계사:시선은-성장률이-아니라-총마진-75와-대차대조표로-옮겨갔다-엔비디아-실적-관전-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-26",
+   "path": "content/understanding/회계사/[260826] 시선은 성장률이 아니라 총마진 75%와 대차대조표로 옮겨갔다 - 엔비디아 실적 관전 - 엘곰.md",
+   "hash": "7725d699ee41"
+  },
+  {
    "id": "und:회계사:시총-1290조가-요구하는-영업이익은-61조다-DCF-역산으로-본-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -3787,6 +4781,17 @@
    "date": "2024-08-30",
    "path": "content/understanding/회계사/[240830] 엔비디아, TSMC, 삼성전자, SK하이닉스의 투자지표, 재무지표 비교 (using Yahoofinance stock comparison) - 엘곰.md",
    "hash": "27a1ebcfd73d"
+  },
+  {
+   "id": "und:회계사:엔비디아-실적-전날-외국인-매수보다-매도-진정을-봐야-한다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-26",
+   "path": "content/understanding/회계사/[260826] 엔비디아 실적 전날, 외국인 매수보다 매도 진정을 봐야 한다 - 시황 - 엘곰.md",
+   "hash": "4b01c4c81544"
   },
   {
    "id": "und:회계사:엔비디아-점유율-90대에서-70대로-내려가도-매출은-65-늘었다-엘곰",
