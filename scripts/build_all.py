@@ -47,6 +47,7 @@ CHECK = [
     ('숫자와 원문 대조', ['insights/check_cite.py']),
     ('시점', ['insights/check_fresh.py']),
     ('축과 근거', ['insights/check_axes.py']),
+    ('개체 색인', ['insights/check_index.py']),
     # 도해 배치는 눈으로 보고 두 번 놓쳤다 — 글자끼리 겹침과 선에 깔림 둘 다
     ('도해 배치', ['scratchpad/check_fig.py']),
 ]

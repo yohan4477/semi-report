@@ -35,6 +35,7 @@ PYTHONIOENCODING=utf-8 python insights/check_read.py    # 읽히는가
 PYTHONIOENCODING=utf-8 python insights/check_cite.py    # 인용한 줄에 그 숫자가 있나
 PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야기인가
 PYTHONIOENCODING=utf-8 python insights/check_report.py  # 보고서 숫자가 원문에 있나
+PYTHONIOENCODING=utf-8 python insights/check_index.py   # 색인 주소가 맞나, 색인이 낡지 않았나
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
