@@ -90,11 +90,25 @@ BRANCH = {'label': '자금 조달', 'terms': ['리스', 'SPV'],
           'deny': ['애널리스트', '리스크']}
 
 
-def test_weigh_reports_documents_and_weight():
+def test_weigh_reports_documents():
     got = ev.weigh(DOCS, BRANCH)
     assert got['label'] == '자금 조달'
     assert got['docs'] == 2
-    assert got['weight'] > 0
+
+
+def test_weigh_gives_no_single_ranking_number():
+    """무게를 내면 「이 순으로 파라」로 읽힌다. 그러면 맹점이 꼴찌로 간다."""
+    got = ev.weigh(DOCS, BRANCH)
+    assert 'weight' not in got
+    assert 'score' not in got
+
+
+def test_weigh_shows_how_much_one_term_carried_the_branch():
+    got = ev.weigh(DOCS, BRANCH)
+    assert got['widest'] == '리스'
+    assert got['widest_share'] == 1.0        # 2편 중 2편이 「리스」로 걸렸다
+    # 「리스」는 4편 중 2편 → idf = log(2) ≈ 0.693. 흔할수록 0 에 가깝다
+    assert abs(got['widest_idf'] - 0.693) < 0.01
 
 
 def test_weigh_shows_each_term_separately():
@@ -129,9 +143,9 @@ def test_weigh_carries_addresses_so_the_claim_can_be_checked():
 def test_weigh_of_a_branch_nothing_supports_is_empty_not_an_error():
     got = ev.weigh(DOCS, {'label': '빈 가지', 'terms': ['없는말'], 'deny': []})
     assert got['docs'] == 0
-    assert got['weight'] == 0
     assert got['hits'] == []
     assert got['widest'] is None
+    assert got['widest_share'] == 0.0
 
 
 def test_weigh_is_deterministic():

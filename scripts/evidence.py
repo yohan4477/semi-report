@@ -18,6 +18,19 @@
 그리고 낱말별 문서 수를 따로 낸다. 253 이 「리스」 하나로 부푼 것을 그 줄이 드러낸다 —
 가지 하나가 흔한 낱말 한 개에 업혀 있는지는 합계만 봐서는 안 보인다.
 
+**이것은 순위 신호가 아니다.** 여기서 나오는 문서 수는 「이 가지를 평가할 자료가
+있나」이지 「이 가지가 답의 얼마를 먹나」가 아니다. 둘은 상관없다 — 시간당 단가가
+14편에만 나와도 회수를 결정하는 것은 그것일 수 있다.
+
+MBB 가 가지를 쳐낼 때 보는 것은 임팩트·불확실성·실행난이도이고 자료량은 기준에 없다.
+오히려 자료가 적은 가지가 불확실한 가지이므로, 근거가 얇다고 순위를 내리면 판단
+기준을 정확히 뒤집는 것이 된다. 그래서 이 파일은 무게를 매기지 않고 정렬도 하지 않는다.
+한때 `weight` 를 냈다가 지웠다 — 그 숫자가 있으면 「이 순으로 파라」로 읽히고,
+그러면 많이 쓴 가지가 위로 오면서 맹점이 꼴찌로 간다.
+
+`widest_share` 와 `widest_idf` 는 근거의 품질을 밝히는 값이다. 한 가지가 흔한 낱말
+하나에 업혀 있으면(예: 자금 조달 200편의 대부분이 「부채」) 그 개수를 믿으면 안 된다.
+
 읽기 전용이다. 아무것도 쓰지 않는다.
 """
 import glob
@@ -102,21 +115,17 @@ def weigh(docs, branch):
         hit_docs |= seen
 
     by_term = {p['term']: p for p in per}
-    weight = 0.0
-    for rel, text in docs:
-        for t in terms:
-            if any(line_hits(ln, t, deny) for ln in text.split('\n')):
-                weight += by_term[t]['idf']
-
     widest = max(per, key=lambda p: (p['docs'], p['term']))['term'] if per else None
     if widest and by_term[widest]['docs'] == 0:
         widest = None
 
+    n = len(hit_docs)
     return {
         'label': branch.get('label', ''),
-        'docs': len(hit_docs),
-        'weight': round(weight, 3),
+        'docs': n,
         'widest': widest,
+        'widest_share': round(by_term[widest]['docs'] / float(n), 2) if widest and n else 0.0,
+        'widest_idf': by_term[widest]['idf'] if widest else 0.0,
         'terms': per,
         'hits': sorted(hits),
     }
