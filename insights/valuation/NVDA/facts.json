@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T01:05:43.212911+00:00",
+ "fetched_at": "2026-08-27T02:14:17.972320+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -1790,5 +1790,52 @@
   "rate": 0.0464,
   "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
+ },
+ "consensus": {
+  "periods": [
+   {
+    "period": "0q",
+    "end": "2026-10-31",
+    "revenue": 104434313520,
+    "revenue_low": 102315000000,
+    "revenue_high": 110085100000,
+    "analysts": 27,
+    "eps": 2.34,
+    "growth": 0.8
+   },
+   {
+    "period": "+1q",
+    "end": "2027-01-31",
+    "revenue": 118902053480,
+    "revenue_low": 111238000000,
+    "revenue_high": 133803000000,
+    "analysts": 26,
+    "eps": 2.6525,
+    "growth": 0.6373
+   },
+   {
+    "period": "0y",
+    "end": "2027-01-31",
+    "revenue": 397012036470,
+    "revenue_low": 386255500000,
+    "revenue_high": 413115000000,
+    "analysts": 27,
+    "eps": 9.05163,
+    "growth": 0.8976
+   },
+   {
+    "period": "+1y",
+    "end": "2028-01-31",
+    "revenue": 573640800830,
+    "revenue_low": 416398000000,
+    "revenue_high": 838039000000,
+    "analysts": 55,
+    "eps": 13.12766,
+    "growth": 0.45029998
+   }
+  ],
+  "fetched_at": "2026-08-27T02:14:22.426492+00:00",
+  "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
+  "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
 }

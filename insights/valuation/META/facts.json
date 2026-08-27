@@ -1,6 +1,6 @@
 {
  "ticker": "META",
- "fetched_at": "2026-08-27T01:05:51.880405+00:00",
+ "fetched_at": "2026-08-27T02:14:31.120139+00:00",
  "sec": {
   "entity": "Meta Platforms, Inc.",
   "cik": "0001326801",
@@ -1595,5 +1595,52 @@
   "rate": 0.0464,
   "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
+ },
+ "consensus": {
+  "periods": [
+   {
+    "period": "0q",
+    "end": "2026-09-30",
+    "revenue": 63314922190,
+    "revenue_low": 61702000000,
+    "revenue_high": 65278000000,
+    "analysts": 47,
+    "eps": 6.76256,
+    "growth": -0.039
+   },
+   {
+    "period": "+1q",
+    "end": "2026-12-31",
+    "revenue": 73667127690,
+    "revenue_low": 71681000000,
+    "revenue_high": 75897000000,
+    "analysts": 45,
+    "eps": 8.23063,
+    "growth": -0.0635
+   },
+   {
+    "period": "0y",
+    "end": "2026-12-31",
+    "revenue": 254185499680,
+    "revenue_low": 251307000000,
+    "revenue_high": 262015562550,
+    "analysts": 55,
+    "eps": 31.73427,
+    "growth": 0.0499
+   },
+   {
+    "period": "+1y",
+    "end": "2027-12-31",
+    "revenue": 305390799590,
+    "revenue_low": 282196000000,
+    "revenue_high": 346162925620,
+    "analysts": 57,
+    "eps": 33.92838,
+    "growth": 0.113800004
+   }
+  ],
+  "fetched_at": "2026-08-27T02:14:35.759069+00:00",
+  "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
+  "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
 }

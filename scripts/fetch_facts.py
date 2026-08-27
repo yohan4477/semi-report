@@ -9,7 +9,7 @@ insights/valuation/<티커>/facts.json 에 조회 시각과 함께 떨어뜨린�
 베타는 야후가 주는 값을 받지 않고 주가 시계열을 ^GSPC에 회귀해 직접 낸다 —
 산출 구간·주기가 안 밝혀진 값은 감사가 안 된다.
 """
-import json, os, sys, time, urllib.request, urllib.error
+import json, os, sys, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timezone
 
 UA = 'insight-dashboard yohan4477@gmail.com'
@@ -357,6 +357,65 @@ def rf():
     return None
 
 
+def consensus(ticker):
+    """야후에서 애널리스트 매출·주당순이익 추정치를 받는다. basis 는 consensus 다.
+
+    이 장의 basis 넷(sec·semi·mkt·ours)에 다섯째를 더하는 값이다. 우리 가정이
+    보수적이라 값이 낮게 나오는지, 아니면 시장 기대 자체가 우리보다 훨씬 높은지를
+    독자가 직접 가르려면 「남들은 얼마로 보나」가 같은 화면에 있어야 한다.
+
+    이 엔드포인트는 쿠키와 crumb 을 요구한다. 못 받으면 None 을 돌려주고 값을
+    비운다 — 컨센서스가 없다고 나머지 계산이 멈추면 안 된다.
+
+    받는 구간은 넷이다. 이번 분기(0q) · 다음 분기(+1q) · 이번 회계연도(0y) ·
+    다음 회계연도(+1y). 그 뒤는 야후가 안 준다. 두 해까지만 앵커로 쓰고 그 뒤는
+    우리가 내린다.
+    """
+    import http.cookiejar
+    ua = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'}
+    cj = http.cookiejar.CookieJar()
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+
+    def _g(u):
+        return op.open(urllib.request.Request(u, headers=ua), timeout=40).read().decode('utf-8', 'replace')
+
+    try:
+        try:
+            _g('https://fc.yahoo.com')          # 쿠키만 받는다. 404 여도 쿠키는 남는다
+        except urllib.error.HTTPError:
+            pass
+        crumb = _g('https://query1.finance.yahoo.com/v1/test/getcrumb').strip()
+        if not crumb:
+            return None
+        raw = _g('https://query2.finance.yahoo.com/v10/finance/quoteSummary/%s'
+                 '?modules=earningsTrend&crumb=%s' % (ticker, urllib.parse.quote(crumb)))
+        trend = json.loads(raw)['quoteSummary']['result'][0]['earningsTrend']['trend']
+    except Exception:
+        return None
+
+    out = []
+    for t in trend:
+        rev = t.get('revenueEstimate') or {}
+        eps = t.get('earningsEstimate') or {}
+        if rev.get('avg', {}).get('raw') is None:
+            continue
+        out.append(dict(
+            period=t.get('period'), end=t.get('endDate'),
+            revenue=rev['avg']['raw'],
+            revenue_low=rev.get('low', {}).get('raw'),
+            revenue_high=rev.get('high', {}).get('raw'),
+            analysts=rev.get('numberOfAnalysts', {}).get('raw'),
+            eps=eps.get('avg', {}).get('raw'),
+            growth=t.get('growth', {}).get('raw')))
+    if not out:
+        return None
+    return dict(periods=out, fetched_at=datetime.now(timezone.utc).isoformat(),
+                source='query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend',
+                note='애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · '
+                     '0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다')
+
+
 def build(ticker):
     now = datetime.now(timezone.utc).isoformat()
     px = price(ticker)
@@ -386,6 +445,8 @@ def build(ticker):
         'beta': beta(px['series'], idx['series'], window=252),
         'beta_2y': beta(px['series'], idx['series']),
         'risk_free': rf(),
+        # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
+        'consensus': consensus(ticker),
     }
     d = os.path.join(OUT, ticker)
     os.makedirs(d, exist_ok=True)

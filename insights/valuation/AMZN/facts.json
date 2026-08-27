@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-27T01:05:54.456262+00:00",
+ "fetched_at": "2026-08-27T02:14:35.764179+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -2092,5 +2092,52 @@
   "rate": 0.0464,
   "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
+ },
+ "consensus": {
+  "periods": [
+   {
+    "period": "0q",
+    "end": "2026-09-30",
+    "revenue": 202153635130,
+    "revenue_low": 199369000000,
+    "revenue_high": 207675000000,
+    "analysts": 48,
+    "eps": 1.95348,
+    "growth": -0.00090000004
+   },
+   {
+    "period": "+1q",
+    "end": "2026-12-31",
+    "revenue": 243944715340,
+    "revenue_low": 234241000000,
+    "revenue_high": 255934000000,
+    "analysts": 45,
+    "eps": 2.44316,
+    "growth": 0.2451
+   },
+   {
+    "period": "0y",
+    "end": "2026-12-31",
+    "revenue": 828185897360,
+    "revenue_low": 815866000000,
+    "revenue_high": 841977000000,
+    "analysts": 56,
+    "eps": 12.4927,
+    "growth": 0.7399
+   },
+   {
+    "period": "+1y",
+    "end": "2027-12-31",
+    "revenue": 946577158660,
+    "revenue_low": 898023000000,
+    "revenue_high": 992145100000,
+    "analysts": 60,
+    "eps": 10.48206,
+    "growth": -0.1671
+   }
+  ],
+  "fetched_at": "2026-08-27T02:14:40.915977+00:00",
+  "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
+  "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
 }

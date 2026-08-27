@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "fetched_at": "2026-08-27T01:05:57.044771+00:00",
+ "fetched_at": "2026-08-27T02:14:40.920488+00:00",
  "sec": {
   "entity": "Apple Inc.",
   "cik": "0000320193",
@@ -1965,5 +1965,52 @@
   "rate": 0.0464,
   "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
+ },
+ "consensus": {
+  "periods": [
+   {
+    "period": "0q",
+    "end": "2026-09-30",
+    "revenue": 113550860190,
+    "revenue_low": 112137000000,
+    "revenue_high": 117219700000,
+    "analysts": 28,
+    "eps": 1.97656,
+    "growth": 0.070300005
+   },
+   {
+    "period": "+1q",
+    "end": "2026-12-31",
+    "revenue": 154432499960,
+    "revenue_low": 132850061129,
+    "revenue_high": 170414000000,
+    "analysts": 20,
+    "eps": 2.90859,
+    "growth": 0.0156
+   },
+   {
+    "period": "0y",
+    "end": "2026-09-30",
+    "revenue": 477683718840,
+    "revenue_low": 471800000000,
+    "revenue_high": 483750000000,
+    "analysts": 36,
+    "eps": 8.81249,
+    "growth": 0.18290001
+   },
+   {
+    "period": "+1y",
+    "end": "2027-09-30",
+    "revenue": 525003468150,
+    "revenue_low": 483496000000,
+    "revenue_high": 594863000000,
+    "analysts": 39,
+    "eps": 9.53127,
+    "growth": 0.0809
+   }
+  ],
+  "fetched_at": "2026-08-27T02:14:45.457424+00:00",
+  "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
+  "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
 }

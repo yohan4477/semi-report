@@ -85,6 +85,50 @@ CASES = {
 }
 ORDER = ('Bear', 'Base', 'Bull')
 
+# ── 넷째 경로 — 컨센서스 ────────────────────────────────────────────
+# 「우리 가정이 보수적이라 값이 낮게 나오는가」를 독자가 직접 가르게 하는 자리다.
+# 야후가 주는 애널리스트 추정치는 회계연도 둘까지다(0y·+1y). 우리 표는 최근
+# 12개월에서 한 해씩 굴린 창이라 회계연도와 반년 어긋나므로, 이웃한 두 회계연도를
+# 평균해 우리 창에 맞춘다. 그 뒤로는 컨센서스가 없으므로 Base 경로를 그대로 잇는다.
+# 마진도 Base 와 같게 둔다 — 이 케이스가 묻는 것은 매출 하나다.
+CONS = d.get('consensus')
+
+
+def _cons_fy():
+    """컨센서스 회계연도 매출 둘. (이번 회계연도, 다음 회계연도) 단위는 10억 달러."""
+    if not CONS:
+        return None
+    got = {p['period']: p for p in CONS['periods']}
+    if '0y' not in got or '+1y' not in got:
+        return None
+    return got['0y']['revenue'] / B, got['+1y']['revenue'] / B
+
+
+def _cons_rows():
+    """컨센서스 케이스의 연도별 (성장률, 마진). 못 받으면 None."""
+    fy = _cons_fy()
+    if not fy:
+        return None
+    y1 = (fy[0] + fy[1]) / 2          # 우리 1년차 창이 두 회계연도에 걸친다
+    base = CASES['Base']['rows']
+    rows = [((y1 / REV0) - 1, base[0][1]),
+            (CONS_Y2, base[1][1])] + list(base[2:])
+    return rows
+
+
+# 2년차는 컨센서스가 안 준다. 다음 회계연도 성장률 45.0% 에서 우리가 내린 값이고,
+# 이 한 칸만 우리 가정이다. 본문이 그렇게 밝힌다.
+CONS_Y2 = 0.30
+CONS_NAME = '컨센서스'
+
+
+def cons_case():
+    rows = _cons_rows()
+    if not rows:
+        return None
+    return dict(g=CASES['Base']['g'], rows=rows,
+                why='애널리스트 평균 추정치를 1년차에 그대로 넣고, 그 뒤는 Base 경로를 잇는다')
+
 # 감도표 축. 할인율은 우리 값을 가운데 두고 ±2%포인트를 1%포인트씩 흔든다.
 SENS_R = [round(WACC + x, 6) for x in (-0.02, -0.01, 0.0, 0.01, 0.02)]
 SENS_G = [0.0175, 0.0225, 0.0275, 0.0325, 0.0375]
@@ -125,12 +169,12 @@ def path(case):
 
 
 def value(name):
-    case = CASES[name]
+    case = CASES[name] if name in CASES else cons_case()
     return dcf.value([r[3] for r in path(case)], WACC, case['g'], NET_DEBT, SHARES)
 
 
 def implied_r(name):
-    case = CASES[name]
+    case = CASES[name] if name in CASES else cons_case()
     return dcf.implied_discount_rate([r[3] for r in path(case)], case['g'], MCAP, NET_DEBT)
 
 
@@ -283,8 +327,35 @@ def write_facts():
           '- 회계연도 2027년 2분기 실적 매출 %s' % _two(GUIDE_Q2),
           '- 회계연도 2027년 3분기 가이던스 %s' % _two(GUIDE_Q3),
           '- 3분기 가이던스를 네 배로 늘린 값 %s' % _two(GUIDE_Q3 * 4),
-          '- 그 값이 최근 12개월 대비 %.0f%%' % ((GUIDE_Q3 * 4 / REV0 - 1) * 100),
-          '', '## 역산 — 시장가를 정답으로 놓으면', '']
+          '- 그 값이 최근 12개월 대비 %.0f%%' % ((GUIDE_Q3 * 4 / REV0 - 1) * 100)]
+
+    if cons_case():
+        _cc = cons_case()
+        _cv = value(CONS_NAME)
+        _fy = _cons_fy()
+        L += ['', '## 애널리스트 컨센서스 (야후, %s 조회)' % CONS['fetched_at'][:10], '']
+        for q in CONS['periods']:
+            L.append('- %s %s 매출 %s · 애널리스트 %d명%s'
+                     % (q['period'], q['end'][:10], _two(q['revenue'] / B), q['analysts'],
+                        (' · 성장률 %.1f%%' % (q['growth'] * 100)) if q.get('growth') else ''))
+        L += ['- 이번 회계연도와 다음 회계연도 평균 %s' % _two(sum(_fy) / 2),
+              '- 그 값이 최근 12개월 대비 %.1f%%' % ((sum(_fy) / 2 / REV0 - 1) * 100),
+              '- 우리 Base 1년차 매출 %s' % _two(path(CASES['Base'])[0][1]),
+              '- 컨센서스가 우리 Base 1년차보다 %s 많다'
+              % _two(sum(_fy) / 2 - path(CASES['Base'])[0][1]),
+              '- 컨센서스 2년차 성장률 %.0f%%' % (CONS_Y2 * 100),
+              '- 컨센서스 케이스 주당가치 %.0f · 현재가 대비 %.0f%% · 영구가치비중 %.0f%% · '
+              '내재 할인율 %.2f%%'
+              % (_cv['per_share'], (_cv['per_share'] / PRICE - 1) * 100,
+                 _cv['tv_share'] * 100, (implied_r(CONS_NAME) or 0) * 100),
+              '- 컨센서스 케이스가 Base 보다 주당 %.0f달러 높다'
+              % (_cv['per_share'] - value('Base')['per_share']),
+              '- 컨센서스 10년째 매출 %s · 잉여현금흐름 %s'
+              % (_two(path(_cc)[-1][1]), _two(path(_cc)[-1][3]))]
+        for y, rev, m, f in path(_cc)[:3]:
+            L.append('- 컨센서스 %d 매출 %s · 잉여현금흐름 %s' % (y, _two(rev), _two(f)))
+
+    L += ['', '## 역산 — 시장가를 정답으로 놓으면', '']
     for r in (WACC, 0.12, 0.10):
         g10 = dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT)
         f10 = FCF0 * (1 + g10) ** 10

@@ -97,6 +97,8 @@ FIG_FUNNEL = _svg(W, 232, '세후영업이익과 잉여현금흐름 사이가 �
 
 _C_X, _C_MAXW = 96, 452
 _CV = {n: nc.value(n)['per_share'] for n in nc.ORDER}
+if nc.cons_case():
+    _CV[nc.CONS_NAME] = nc.value(nc.CONS_NAME)['per_share']
 _C_MAXV = 240.0
 
 
@@ -113,17 +115,22 @@ def _cbar(y, name, v, accent=False):
 
 _PRICE_X = _C_X + int(round(nc.PRICE / _C_MAXV * _C_MAXW))
 
-FIG_CASE = _svg(W, 216, '케이스 셋이 모두 현재가 아래에 선다', ''.join([
-    _lt(40, 34, '주당가치 (달러) — 우리가 돌린 세 경로'),
-    _cbar(52, 'Bear', _CV['Bear']),
-    _cbar(84, 'Base', _CV['Base']),
-    _cbar(116, 'Bull', _CV['Bull'], accent=True),
-    '<path d="M%d 44 V148" stroke="var(--accent)" stroke-width="2" '
-    'stroke-dasharray="5 4" fill="none"/>' % _PRICE_X,
-    _lt(40, 176, '점선은 %s 종가 %.2f달러다' % (nc.PRICE_DAY, nc.PRICE), bold=False),
-    _lt(40, 196, '가장 후한 Bull 도 %.0f%% 아래에 선다'
-        % abs((_CV['Bull'] / nc.PRICE - 1) * 100), bold=False),
-]))
+_C_ROWS = [('Bear', False), ('Base', False), ('Bull', True)] + (
+    [(nc.CONS_NAME, False)] if nc.cons_case() else [])
+_C_BOT = 52 + 32 * len(_C_ROWS)
+
+FIG_CASE = _svg(W, _C_BOT + 100, '경로 넷이 모두 현재가 아래에 선다', ''.join(
+    [_lt(40, 34, '주당가치 (달러) — 우리 세 경로와 애널리스트 컨센서스')]
+    + [_cbar(52 + 32 * i, n, _CV[n], accent=hot) for i, (n, hot) in enumerate(_C_ROWS)]
+    + ['<path d="M%d 44 V%d" stroke="var(--accent)" stroke-width="2" '
+       'stroke-dasharray="5 4" fill="none"/>' % (_PRICE_X, _C_BOT),
+       _lt(40, _C_BOT + 28, '점선은 %s 종가 %.2f달러다' % (nc.PRICE_DAY, nc.PRICE), bold=False),
+       _lt(40, _C_BOT + 48, '컨센서스 막대는 애널리스트 %d명·%d명의 회계연도 매출 추정치를 '
+           '1년차에 넣은 것이다'
+           % (nc._cons_fy() and [q['analysts'] for q in nc.CONS['periods'] if q['period'] == '0y'][0],
+              [q['analysts'] for q in nc.CONS['periods'] if q['period'] == '+1y'][0]), bold=False),
+       _lt(40, _C_BOT + 68, '가장 후한 Bull 도 %.0f%% 아래에 선다'
+           % abs((_CV['Bull'] / nc.PRICE - 1) * 100), bold=False)]))
 
 
 # ── 도해 ④ 시장가가 요구하는 현금 ───────────────────────────────

@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T01:05:46.119062+00:00",
+ "fetched_at": "2026-08-27T02:14:22.430004+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -1414,5 +1414,52 @@
   "rate": 0.0464,
   "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
+ },
+ "consensus": {
+  "periods": [
+   {
+    "period": "0q",
+    "end": "2026-09-30",
+    "revenue": 127081092080,
+    "revenue_low": 123409000000,
+    "revenue_high": 134908000000,
+    "analysts": 40,
+    "eps": 3.00586,
+    "growth": 0.0468
+   },
+   {
+    "period": "+1q",
+    "end": "2026-12-31",
+    "revenue": 141085716630,
+    "revenue_low": 135389700000,
+    "revenue_high": 158818481540,
+    "analysts": 36,
+    "eps": 3.33268,
+    "growth": 0.1834
+   },
+   {
+    "period": "0y",
+    "end": "2026-12-31",
+    "revenue": 497864285580,
+    "revenue_low": 489824800000,
+    "revenue_high": 519817939360,
+    "analysts": 51,
+    "eps": 20.59812,
+    "growth": 0.90489995
+   },
+   {
+    "period": "+1y",
+    "end": "2027-12-31",
+    "revenue": 608939800170,
+    "revenue_low": 480338000000,
+    "revenue_high": 674435000000,
+    "analysts": 53,
+    "eps": 14.83929,
+    "growth": -0.2807
+   }
+  ],
+  "fetched_at": "2026-08-27T02:14:26.755619+00:00",
+  "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
+  "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
 }
