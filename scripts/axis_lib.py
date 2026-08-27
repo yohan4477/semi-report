@@ -122,14 +122,20 @@ def place(cards, axis):
     return out
 
 
-def review(cards, axis):
-    """넷을 센다 — 겹침·빈칸·잔여·쏠림. 아무것도 던지지 않는다."""
-    placement = place(cards, axis)
-    counts = {cell['id']: 0 for cell in axis['cells']}
+def _tally(cells, placement):
+    """칸마다 카드가 몇 장인지 센다. review 와 declared_review 가 같은 셈을 쓴다."""
+    counts = {cell['id']: 0 for cell in cells}
     for hits in placement.values():
         for cid in hits:
             counts[cid] += 1
     placed = [n for n in counts.values() if n]
+    return counts, placed
+
+
+def review(cards, axis):
+    """넷을 센다 — 겹침·빈칸·잔여·쏠림. 아무것도 던지지 않는다."""
+    placement = place(cards, axis)
+    counts, placed = _tally(axis['cells'], placement)
     residual = sorted(t for t, hits in placement.items() if not hits)
     total = len(cards)
     return {
@@ -177,11 +183,7 @@ def declared_review(cards):
     """섹션 축의 집계. 겹침은 사람이 선언한 것이므로 이름을 달리 단다."""
     axis = declared_axis(cards)
     placement = declared_place(cards)
-    counts = {cell['id']: 0 for cell in axis['cells']}
-    for hits in placement.values():
-        for cid in hits:
-            counts[cid] += 1
-    placed = [n for n in counts.values() if n]
+    counts, placed = _tally(axis['cells'], placement)
     return {
         'axis': axis['name'],
         'shape': axis['shape'],
