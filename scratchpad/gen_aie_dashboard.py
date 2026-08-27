@@ -201,7 +201,10 @@ def parse_report(path, vid, figs=None):
             continue
         m = VERDICT_RE.match(t)
         if m:
-            verdict = esc(m.group(1))
+            # 굵게는 여기서도 먹여야 한다. esc만 거치면 별표가 글자 그대로 화면에 나간다
+            verdict = BOLD_RE.sub(BOLD_TO, esc(m.group(1)))
+            # 용어 표시는 안 거친다. 남은 별표가 있으면 그대로 나가므로 멈춘다
+            assert '*' not in verdict, '한줄 코멘트에 별표가 남았다 — 용어는 본문에서 짚는다'
             continue
         if para.lstrip().startswith('|') or para.lstrip().startswith('표:'):
             blocks.append(('tbl', _table(para, names)))
