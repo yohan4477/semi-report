@@ -51,22 +51,35 @@ GROUPS = [
 LOOSE = ('cash_taxes_paid', 'equity_fv_gain', 'nonoperating',
          'lease_amortization')
 
-# 미적용 항목이 본문에 나왔는지 볼 때 찾을 말. 표의 key 마다 하나씩 둔다.
-# 이름 전체가 아니라 핵심 낱말만 본다 — 문장을 어떻게 쓰든 이 말은 들어가야 한다.
+# 미적용 항목이 본문에 나왔는지 볼 때 찾을 말. 표의 key 마다 후보 여럿을 두고
+# 하나라도 있으면 통과다.
+#
+# **짧은 낱말을 쓰지 않는다.** 「리스」로 뒀더니 「애널리스트」에 열네 번 걸려 오탐으로
+# 통과했다. 진짜 언급은 한 번뿐이었다. 다른 말에 안 묻히는 길이로 잡는다.
 MENTION = {
-    'sbc': '주식보상',
-    'lease': '리스',
-    'capex_split': '유지 설비투자',
-    'equity_fv_tax': '평가익',
-    'useful_life': '내용연수',
-    'net_debt_lt': '장기 투자자산',
+    'sbc': ('주식보상',),
+    'lease': ('리스자산', '금융리스', '리스 상각'),
+    'capex_split': ('유지 설비투자', '유지분과 성장분'),
+    'equity_fv_tax': ('지분 평가익', '평가익을'),
+    'useful_life': ('내용연수',),
+    'net_debt_lt': ('장기 투자자산',),
 }
 
+# 밸류에이션 절만 본다. 네 절짜리 문서에서 다른 절의 언급이 게이트를 통과시키면
+# 「그 값을 쓴 자리에 밝혔다」가 아니라 「어딘가에 그 말이 있다」가 된다.
+SECTION = 'sec-val'
 
-def _text(path):
+
+def _text(path, section=None):
     if not os.path.exists(path):
         return ''
     h = io.open(path, encoding='utf-8').read()
+    if section:
+        m = re.search(r'id="%s"' % re.escape(section), h)
+        if not m:
+            return ''
+        end = h.find('</section>', m.start())
+        h = h[m.start():end if end > 0 else len(h)]
     return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', h))
 
 
@@ -74,11 +87,13 @@ def v1_material_disclosed(txt, out):
     """임계를 넘은 미적용 항목은 본문에 문장으로 있어야 한다 (룰북 W9)."""
     for t in adjust.TICKERS:
         for r in adjust.material(t):
-            word = MENTION.get(r['key'])
-            if word and word not in txt:
+            words = MENTION.get(r['key'])
+            if words and not any(w in txt for w in words):
                 out.append(('FAIL', 'V1',
-                            '%s %s가 잉여현금흐름의 %.0f%%인데 본문에 「%s」가 없다'
-                            % (adjust.NAMES[t], r['name'], r['share'] * 100, word)))
+                            '%s %s가 잉여현금흐름의 %.0f%%인데 밸류에이션 절에 '
+                            '「%s」가 없다'
+                            % (adjust.NAMES[t], r['name'], r['share'] * 100,
+                               '」·「'.join(words))))
 
 
 def v2_period_aligned(out):
@@ -163,10 +178,11 @@ def v4_unmeasured(out):
 
 
 def main():
-    txt = _text(DASH)
+    txt = _text(DASH, SECTION)
     out = []
     if not txt:
-        out.append(('FAIL', 'V1', '통합 보고서.html 을 못 읽었다'))
+        out.append(('FAIL', 'V1',
+                    '통합 보고서.html 의 %s 절을 못 읽었다' % SECTION))
     else:
         v1_material_disclosed(txt, out)
     v2_period_aligned(out)
