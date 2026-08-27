@@ -65,6 +65,18 @@ TRACKS = {
         ('사람과 함께', '어디서 사람이 끼어들고 무엇을 보여 주나',
          ['fmZWvE7yDZo', 'HN-F-OQe6j0', 'ClWD8OEYgp8', 'iQ5xldZ9StU']),
     ],
+    'eval': [
+        ('먼저 읽을 것', '왜 재나, 그리고 어디까지 온 판인가',
+         ['FB-MLPhL9Ms', 'a4BV0gGmXgA', 'nxokqOq1imY', 'Ubwb6NzegyA']),
+        ('채점을 어떻게 짜나', '정답이 없는 일에 점수를 붙이는 법',
+         ['6d60zVdcCV4', 'lCBf9slCanI', '0vphxNt4wyk', 'FWEInOtngmM']),
+        ('자취를 보는 일', '내보낸 뒤에 남는 기록으로 무엇을 하나',
+         ['XBaznoTRDFI', 'JsCCrBF7F1g', '_fQ7Z_Wfouk', '9HbzAWnKbo4']),
+        ('값을 줄이는 일', '작은 것으로 같은 데까지 가기',
+         ['pP_dSNz_EdQ', 'fWXJM-J0ZB8']),
+        ('안전과 명세', '두드려 보고, 지킬 것을 글로 못 박기',
+         ['JhJKgRAmfIU', 'J4vPq2i0QzE', '8rABwKRsec4']),
+    ],
 }
 
 # 영상 ID -> (섹션 열쇠말, 갈래 차례, 갈래 안 차례). 카드를 세우는 열쇠이자 검사용이다.
