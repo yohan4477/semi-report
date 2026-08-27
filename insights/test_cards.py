@@ -114,3 +114,34 @@ def test_section_id_passes_a_bare_string_through():
 def test_section_id_of_nothing_is_none():
     assert cd.section_id(None) is None
     assert cd.section_id(()) == ()
+
+
+def test_debate_card_separates_moderator_from_voices():
+    import sys, os
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'scripts'))
+    import card_lib
+
+    h = card_lib.debate_html({
+        'question': '무엇이 먼저인가?',
+        'moderator': {'물음': '<p>두 글이 반대로 놓는다.</p>',
+                      '갈리는 자리': '<p>금리 수준이 임계다.</p>',
+                      '무엇을 보면 갈리나': '<p>청약배수를 본다.</p>'},
+        'voices': [{'actor': '엘곰', 'said': '2026-08-20', 'title': '바이백',
+                    'stance': '단독', 'against': '',
+                    'claim': '투자가 금리를 정한다',
+                    'body': '<p>발행이 경쟁한다.</p>'}],
+        'silent': [{'actor': 'SemiAnalysis', 'why': '다룬 글이 없다'}],
+        'figs': (),
+    })
+    assert 'uc-mod' in h
+    assert 'uc-voice' in h
+    # 화자 이름·날짜·관계가 다 보인다
+    assert '엘곰' in h and '2026-08-20' in h and 'is-단독' in h
+    # 답하지 않은 화자도 화면에 선다
+    assert 'SemiAnalysis' in h and '다룬 글이 없다' in h
+    # 진행자 블록이 화자 블록보다 앞에 선다 — 물음이 먼저다
+    assert h.index('uc-mod') < h.index('uc-voice')
+    # 진행자 절 셋이 다 나온다
+    for k in ('물음', '갈리는 자리', '무엇을 보면 갈리나'):
+        assert k in h
