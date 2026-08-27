@@ -191,6 +191,9 @@ def build():
             o.append('</table></div>')
         o.append('</details>')
 
+    o.append('<p class="note">가로지르는 것만 추린 요약은 '
+             '<a href="통합 인사이트.html">통합 인사이트</a>의 각도 층에 있다. '
+             '이 장은 항목 전체를 각도별로 펼친 쪽이다.</p>')
     o.append('<p class="note">생성물이다. 고칠 것은 <code>scratchpad/gen_angles_dashboard.py</code> 와 '
              '<code>insights/angles/*.md</code> 다. 카드 대시보드가 아니라 카드 규약을 따르지 않는다.</p>')
     o.append('</div>')

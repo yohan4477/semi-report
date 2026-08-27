@@ -100,5 +100,9 @@ def layer(root):
              '이 구분이 없으면 합칠 때 추정이 사실로 굳는다 — %s</p>'
              % (tot, fact, tot - fact,
                 ' · '.join('%s %d' % (k, v) for k, v in kinds.most_common())))
+    # 여기는 가로지르는 것만 싣는다. 항목 전체는 각도 지도가 갖는다 —
+    # 사이트 빌드가 상대 링크를 슬러그나 github.io 절대 주소로 바꾼다(gen_site.rewrite_links)
+    o.append('<p class="sub"><a href="각도 지도.html">각도 지도에서 항목 %d개를 각도별로 본다 →</a></p>'
+             % tot)
     o.append('</details>')
     return ''.join(o)
