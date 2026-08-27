@@ -9,12 +9,14 @@
   X6  times.json 의 가리키는 때가 있을 수 없는 값이다
   X7  times.json 의 주소가 index.json 에 없다
   X8  times.json 이 index.json 보다 낡았다
+  X9  색인이 읽을 줄 모르는 갈래의 파일이 코퍼스 자리에 있다 (WARN)
 
 X1 이 첫째다. 나머지 넷은 틀린 주소를 잡지만 X1 만이 없는 자료를 잡는다.
 새 원문이 들어왔는데 색인을 안 돌리면 조회가 에러 없이 그럴듯한 답을 낸다.
 
   py -3.13 insights/check_index.py
 """
+import glob
 import io
 import json
 import os
@@ -88,6 +90,23 @@ def check(root, rows, idx, actors, tmap=None, meta=None):
                 out.append(('FAIL', 'X6',
                             '%s 의 가리키는 때가 있을 수 없다: %d (쓴 날 %s)'
                             % (addr, t, utter or '모름')))
+
+    # X9 — 코퍼스 자리에 있는데 색인이 못 읽는 갈래. FAIL 이 아닌 까닭은
+    # input/clippings 아래에 이미지나 메모가 섞여 드는 것이 정상이기 때문이다.
+    # 그래도 조용히 넘기지는 않는다 — 색인이 안 보는 원문이 는다는 신호다.
+    unread = set()
+    for parts in gi.CORPUS:
+        # 무늬의 끝(*.md)을 *로 바꿔 그 자리의 파일을 전부 본다. 확장자 무늬
+        # 그대로 훑으면 못 읽는 갈래는 애초에 안 걸려 검사가 아무것도 못 잡는다
+        wild = tuple(parts[:-1]) + ('*',)
+        for q in glob.glob(os.path.join(root, *wild), recursive=True):
+            if not os.path.isfile(q):
+                continue
+            rel = os.path.relpath(q, root).replace(os.sep, '/')
+            if not sl.known(rel):
+                unread.add(rel)
+    for rel in sorted(unread):
+        out.append(('WARN', 'X9', '색인이 못 읽는 갈래다: %s' % rel))
 
     known = set(el.alias_index(rows).values())
     for a in sorted(actors - known):

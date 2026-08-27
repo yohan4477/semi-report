@@ -120,3 +120,18 @@ def test_x8_fires_when_times_is_older_than_the_index(tmp_path):
     out = ci.check(root, ROWS, idx, {'엔비디아'}, stale, META1)
     assert 'X8' in _rules(out)
     assert all(lvl == 'FAIL' for lvl, r, _ in out if r == 'X8')
+
+
+def test_x9_warns_about_a_kind_we_cannot_read(tmp_path):
+    root, idx, tmap = _idx_and_times(tmp_path)
+    d = tmp_path / 'input' / 'clippings'
+    d.mkdir(parents=True)
+    io.open(str(d / '메모.txt'), 'w', encoding='utf-8').write('엔비디아\n')
+    out = ci.check(root, ROWS, idx, {'엔비디아'}, tmap, META1)
+    assert 'X9' in _rules(out)
+    assert all(lvl == 'WARN' for lvl, r, _ in out if r == 'X9')
+
+
+def test_x9_is_quiet_when_every_file_is_readable(tmp_path):
+    root, idx, tmap = _idx_and_times(tmp_path)
+    assert 'X9' not in _rules(ci.check(root, ROWS, idx, {'엔비디아'}, tmap, META1))
