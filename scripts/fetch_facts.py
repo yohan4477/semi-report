@@ -210,17 +210,29 @@ def ttm(facts, name, tags, annual):
         newest_annual = max(annual.get(name, {}), default=None)
         if newest_annual and cur['end'] <= annual[name][newest_annual]['end']:
             return None
-        fy = cur['end'][:4]
-        # 작년 같은 기간(일수가 같은 누적 구간)을 찾는다.
+        # 더할 연간은 **누적 구간이 시작되기 직전에 끝난 회계연도**다. 연도 이름에서
+        # 1을 빼면 안 된다 — 엔비디아는 회계연도가 1월에 끝나서 2026-01-25 에 끝난
+        # 연간이 '2026'으로 들어가는데, 2026-07-26 누적에서 1을 빼면 한 해 낡은
+        # 2025-01-26 연간을 더하게 된다. 2026-08-27에 엔비디아 최근 12개월 매출이
+        # 3,030억이 아니라 2,175억으로 나온 원인이 이것이다.
+        cur_start = datetime.strptime(cur['start'], '%Y-%m-%d')
+        base = [(k, v) for k, v in annual.get(name, {}).items()
+                if 0 <= (cur_start - datetime.strptime(v['end'], '%Y-%m-%d')).days <= 10]
+        if not base:
+            return None
+        fy, last_fy = max(base, key=lambda kv: kv[1]['end'])
+        # 작년 같은 기간(일수가 같고 한 해 전에 끝난 누적 구간)을 찾는다. 여기서도
+        # 연도 이름을 쓰지 않고 끝난 날의 간격으로 고른다.
+        cur_end = datetime.strptime(cur['end'], '%Y-%m-%d')
         prior = [x for x in cum.values()
-                 if x['end'][:4] == str(int(fy) - 1) and abs(x['days'] - cur['days']) <= 10]
-        last_fy = annual.get(name, {}).get(str(int(fy) - 1))
-        if not prior or not last_fy:
+                 if abs(x['days'] - cur['days']) <= 10
+                 and 330 <= (cur_end - datetime.strptime(x['end'], '%Y-%m-%d')).days <= 400]
+        if not prior:
             return None
         p = max(prior, key=lambda x: x['end'])
         return dict(val=last_fy['val'] + cur['val'] - p['val'],
                     window='%s 연간 + %s~%s − %s~%s' % (
-                        int(fy) - 1, cur['start'], cur['end'], p['start'], p['end']),
+                        fy, cur['start'], cur['end'], p['start'], p['end']),
                     end=cur['end'], method='누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다')
     # 시점 값(재무상태표). 가장 최근 잔액 하나를 그대로 쓴다 — 더하지 않는다.
     latest = None
