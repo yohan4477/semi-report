@@ -188,6 +188,14 @@ def write_facts():
           '- 무위험수익률 %.2f%%' % (d['risk_free']['rate'] * 100),
           '- 베타 %.3f' % d['beta']['beta'],
           '- 베타 관측일수 %d' % d['beta']['n_days'],
+          '- 베타 창 %s · 시작 %s · 끝 %s'
+          % (d['beta']['window'], d['beta']['start'], d['beta']['end'])]
+    # 아홉 칸 격자. 본문이 「창을 늘리면 어느 쪽으로 가나」를 값으로 말하므로 대조 대상이다
+    _g = {k: v['beta'] for k, v in d['beta_grid'].items() if v}
+    L += ['- 베타 격자 %s %.3f' % (k, v) for k, v in sorted(_g.items())]
+    L += ['- 베타 격자 최저 %.3f · 최고 %.3f' % (min(_g.values()), max(_g.values())),
+          '- 우리 베타는 아홉 칸 중 낮은 쪽에서 %d번째'
+          % (sorted(_g.values()).index(d['beta']['beta']) + 1),
           '- 비상장 지분 장부금액 %s' % two(124.3),
           '- 장기 투자자산 %s' % two(131.5),
           '', '## 2026년 2분기 (10-Q)', '',

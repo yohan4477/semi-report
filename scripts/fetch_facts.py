@@ -10,7 +10,7 @@ insights/valuation/<티커>/facts.json 에 조회 시각과 함께 떨어뜨린�
 산출 구간·주기가 안 밝혀진 값은 감사가 안 된다.
 """
 import json, os, sys, time, urllib.error, urllib.parse, urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 UA = 'insight-dashboard yohan4477@gmail.com'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,6 +30,10 @@ CIKS = {
 CONCEPTS = {
     'revenue': ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues'],
     'ebit': ['OperatingIncomeLoss'],
+    # 매출원가. 매출총이익률의 분모가 아니라 분자를 만든다.
+    # 완제품을 총액으로 팔면 매출과 원가가 같이 뛰어 이 비율이 눌린다 — SemiAnalysis 가
+    # 알파벳 클라우드 매출에 시스템 판매가 섞였다고 본 것을 연결에서 확인할 유일한 흔적이다.
+    'cost_of_revenue': ['CostOfRevenue', 'CostOfGoodsAndServicesSold'],
     'net_income': ['NetIncomeLoss'],
     'tax_expense': ['IncomeTaxExpenseBenefit'],
     'pretax_income': ['IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest'],
@@ -46,6 +50,11 @@ CONCEPTS = {
               'PaymentsToAcquireProductiveAssets',
               'PaymentsToAcquireOtherPropertyPlantAndEquipment'],
     'ocf': ['NetCashProvidedByUsedInOperatingActivities'],
+    # 주식보상비용. 현금이 안 나가므로 영업현금흐름에 도로 더해져 있다 — 곧 우리
+    # 잉여현금흐름이 그만큼 부풀어 있다는 뜻이다. 회사가 주식을 새로 찍어 임직원에게
+    # 주는 것이라 주주에게는 지분이 묽어지는 실제 비용이다. 회계 선택이 우리 값에
+    # 얼마나 오는지 재려면 이 값이 있어야 한다.
+    'sbc': ['ShareBasedCompensation', 'AllocatedShareBasedCompensationExpense'],
     # 영업 밖 손익. R3이 EBIT을 쓰기 전에 걷어내라는 자리다.
     # 알파벳은 보유 지분(앤트로픽·스페이스X 등)을 공정가치로 다시 재 순이익에 태운다 —
     # 2026년 2분기 한 분기에 990억 달러가 들어왔다. 현금이 아니라 평가액이다.
@@ -54,6 +63,32 @@ CONCEPTS = {
     'equity_fv_gain': ['EquitySecuritiesFvNiGainLoss'],
     'cash_taxes_paid': ['IncomeTaxesPaidNet', 'IncomeTaxesPaid'],
     'cash': ['CashAndCashEquivalentsAtCarryingValue'],
+    # 재무제표 밖 약속 둘. 순부채에 **안 더한다** — 아래 두 가지가 성격이 다르다.
+    #   보증 최대노출: 발동해야 돈이 나가는 우발채무다. 「최대」라 기대손실이 아니다.
+    #     엔비디아는 2025-10-26 9억 달러에서 2026-07-26 1,085억 달러로 뛰었다.
+    #   장기 구매약정: 받을 물건·용역이 맞물려 있어 빚이 아니다. 다만 크기와 증가 속도가
+    #     우리가 그리는 설비투자 경로와 어긋나는지를 본다.
+    # 둘 다 값을 받아 조정 표에 미적용으로 세운다. 안 받으면 표에 줄조차 못 세운다.
+    # 장기 투자자산 둘. **대체 후보로 안 묶는다** — 알파벳은 비시장성 지분 1,243억이
+    # 장기 투자자산 1,315억 **안에** 든다. 포함 관계라 사슬로 두면 큰 것 자리에 작은 것이
+    # 들어앉고, 더하면 같은 돈을 두 번 센다.
+    'lt_investments': ['OtherLongTermInvestments'],
+    'nonmarketable_equity': ['EquitySecuritiesWithoutReadilyDeterminableFairValueAmount'],
+    # 매도가능 채무증권의 미실현손익. 아마존은 앤트로픽 전환사채 80억 달러를 여기
+    # 담았고 평가익이 손익계산서가 아니라 기타포괄손익으로 간다 — 순이익에 안 잡히므로
+    # 우리 계산에도 안 온다. 크기를 밝히려면 값이 있어야 한다.
+    'afs_unrealized': ['DebtSecuritiesAvailableForSaleUnrealizedGainLoss'],
+    'guarantee_max': ['GuaranteeObligationsMaximumExposure'],
+    # 구매약정 태그 셋을 **대체 후보로 묶지 않는다.** 알파벳은 2026-03-31 한 날에
+    # Unrecorded 75.6B 와 LongTerm 232.7B 를 함께 낸다 — 같은 것의 다른 이름이 아니라
+    # 범위가 다른 개념이다. 사슬로 두면 큰 개념 자리에 작은 개념이 조용히 들어앉는다.
+    # 엔비디아 재무상태표 태그 단절과 같은 사고를 설계로 넣는 셈이라 셋을 따로 받는다.
+    # 이 태그는 **잔액이 아니라 기간 값**이다. 알파벳은 start=2026-01-01 로 낸다 —
+    # 회계연도 시작부터의 누적이라 707.0B 는 「남아 있는 약정」이 아니라 상반기에
+    # 쌓인 금액이다. 잔액으로 읽으면 자릿수째로 틀린다. 그래서 FLOW 로 분류한다.
+    'purchase_long': ['LongTermPurchaseCommitmentAmount'],
+    'purchase_unrecorded': ['UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount'],
+    'purchase_obligation': ['PurchaseObligation'],
     # 엔비디아는 2025-10-26 뒤로 MarketableSecuritiesCurrent 를 안 쓴다. 뒤의 둘이
     # 그 자리를 잇는다 — 만기 1년 이내 공정가치가 재무상태표의 유동 시장성증권이다.
     'st_investments': ['ShortTermInvestments', 'MarketableSecuritiesCurrent',
@@ -134,7 +169,8 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
 # 2026-08-26에 손익 TTM이 통째로 빈 원인이 이것이었다. 그래서 기간 값은 전부
 # 「직전 연간 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
 FLOW = ('revenue', 'ebit', 'net_income', 'tax_expense', 'pretax_income',
-        'dna', 'lease_amortization', 'capex', 'ocf',
+        'cost_of_revenue', 'dna', 'lease_amortization', 'capex', 'ocf', 'sbc',
+        'purchase_long',
         'nonoperating', 'equity_fv_gain', 'cash_taxes_paid')
 
 
@@ -379,6 +415,63 @@ def beta(stock_series, index_series, window=None):
                 index='^GSPC', freq='daily')
 
 
+def lookback(facts, tags_ocf, tags_capex, price_series, shares, quarters=13):
+    """해마다 되돌아본 배수. 「그때 알 수 있던 것만」으로 자른다.
+
+    예측을 채점하려는 것이 아니다. AI 국면처럼 규모가 바뀌는 자리는 어느 모형도 못
+    잡으므로 적중률은 뜻이 없다. 여기서 재는 것은 **시장이 실적의 몇 배를 내고
+    있었나** 하나다. 할인율도 성장 가정도 안 들어가는 산수라 국면과 무관하게 읽힌다.
+
+    사후 정보를 막는 장치가 `filed` 다. 그 날짜까지 제출된 서류만 본다 — 2024년
+    8월에 우리가 알 수 있던 잉여현금흐름은 2024-01 에 끝난 회계연도 것이다.
+    """
+    def annual_upto(tags, asof):
+        best = None
+        for tag in tags:
+            node = facts.get('facts', {}).get('us-gaap', {}).get(tag)
+            if not node:
+                continue
+            for x in node.get('units', {}).get('USD', []):
+                if 'start' not in x or x.get('filed', '9999') > asof:
+                    continue
+                days = (datetime.strptime(x['end'], '%Y-%m-%d')
+                        - datetime.strptime(x['start'], '%Y-%m-%d')).days
+                if not (330 <= days <= 400):
+                    continue
+                if best is None or x['end'] > best['end']:
+                    best = x
+        return best
+
+    px = {datetime.fromtimestamp(t, timezone.utc).date().isoformat(): c
+          for t, c in price_series}
+    if not px or not shares:
+        return None
+    today = datetime.strptime(max(px), '%Y-%m-%d')
+    out = []
+    for i in range(1, quarters + 1):
+        # 분기 간격으로 뒤로 간다. 달력 달을 세지 않고 91일씩 물러난다 —
+        # 회사마다 회계연도 끝이 달라 달을 맞춰도 어차피 같은 자리가 아니다.
+        asof = (today - timedelta(days=91 * i)).date().isoformat()
+        days = [k for k in sorted(px) if k <= asof]
+        if not days:
+            continue
+        ocf = annual_upto(tags_ocf, asof)
+        cap = annual_upto(tags_capex, asof)
+        if not ocf or not cap:
+            continue
+        fcf = (ocf['val'] - cap['val']) / 1e9
+        p = px[days[-1]]
+        mcap = p * shares / 1e9
+        out.append(dict(asof=days[-1], price=p, market_cap=mcap,
+                        fcf_known=fcf, fcf_period=ocf['end'],
+                        # 잉여현금흐름이 0 이하면 배수가 뜻을 잃는다. 아마존이
+                        # 설비투자가 영업현금흐름을 넘긴 분기에 -1,181배를 냈다.
+                        multiple=(mcap / fcf) if fcf > 0 else None,
+                        note='그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 '
+                             '그대로 곱한 근사다 — 그때 주식수가 아니다'))
+    return out or None
+
+
 def beta_grid(stock_series, index_series):
     """창 셋 x 수익률 간격 셋. 어느 조합으로 재도 얼마가 나오는지를 남긴다.
 
@@ -478,11 +571,73 @@ def consensus(ticker):
                      '0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다')
 
 
+def raw_facts(facts, tags, limit=8):
+    """태그의 원자료를 그대로 남긴다. 최근 12개월 값을 못 만들 때 쓰는 자리다.
+
+    **왜 두나.** 알파벳의 장기 구매약정은 10-Q 누적으로만 나온다. 연간 기저가 없어
+    기간 값 경로가 아무것도 못 만들고, 그러면 공시가 분명히 낸 값이 우리 파일에서
+    통째로 사라진다. 못 쓰는 것과 없는 것은 다르다 — 없어지면 표에 줄조차 못 세운다.
+
+    기간인지 시점인지도 함께 남긴다. 잔액으로 오해하면 자릿수째로 틀리는 항목이 있다.
+    """
+    out = []
+    for t in tags:
+        u = facts.get('facts', {}).get('us-gaap', {}).get(t, {})
+        for x in u.get('units', {}).get('USD', []):
+            out.append(dict(tag=t, start=x.get('start'), end=x['end'], val=x['val'],
+                            form=x.get('form'), filed=x.get('filed'),
+                            kind='기간' if x.get('start') else '시점'))
+    out.sort(key=lambda x: (x['end'], x['val']))
+    return out[-limit:]
+
+
+def gross_margin(facts, tags_rev, tags_cor, quarters=12):
+    """분기 매출총이익률 계열.
+
+    **왜 두나.** 완제품을 총액으로 팔면 매출과 매출원가가 같이 뛰어 이 비율이 눌린다.
+    SemiAnalysis 는 알파벳 클라우드 매출에 TPU 시스템 판매가 섞였다고 봤는데(260807
+    GCP 편), 공시가 그 금액을 따로 안 내므로 크기는 못 잰다. **연결에서 남을 흔적은
+    이 비율 하나뿐이다.** 눌리지 않으면 「없다」가 아니라 「연결 규모에 견줘 작거나
+    마진이 높다」는 뜻이고, 그 구분을 본문이 밝혀야 한다.
+
+    손익계산서는 10-Q 에서 그 분기만 담는다(약 90일). 4분기는 10-Q 가 없어 빠진다 —
+    메우려고 연간에서 셋을 빼지 않는다. 빠진 분기를 채우는 것이 아니라 추세를 보는
+    계열이다.
+
+    회사가 태그를 갈아타는 일이 있어(알파벳은 2025-03 뒤로 매출 태그를 바꿨다) 후보를
+    순서대로 이어 붙이고 어느 태그에서 왔는지 함께 남긴다.
+    """
+    def q(tags):
+        out = {}
+        for t in tags:
+            u = facts.get('facts', {}).get('us-gaap', {}).get(t, {})
+            for x in u.get('units', {}).get('USD', []):
+                if not (x.get('start') and x.get('end')):
+                    continue
+                d = (datetime.strptime(x['end'], '%Y-%m-%d')
+                     - datetime.strptime(x['start'], '%Y-%m-%d')).days
+                if 80 <= d <= 100:
+                    out.setdefault(x['end'], (t, x['val']))
+        return out
+    rev, cor = q(tags_rev), q(tags_cor)
+    ks = sorted(set(rev) & set(cor))[-quarters:]
+    out = []
+    for k in ks:
+        (rt, r), (ct, c) = rev[k], cor[k]
+        if not r:
+            continue
+        out.append(dict(end=k, revenue=r, cost=c, margin=(r - c) / r,
+                        rev_tag=rt, cost_tag=ct))
+    return out
+
+
 def build(ticker):
     now = datetime.now(timezone.utc).isoformat()
     px = price(ticker)
     idx = price('%5EGSPC')
     sec = sec_facts(ticker)
+    facts_raw = json.loads(get('https://data.sec.gov/api/xbrl/companyfacts/CIK%s.json'
+                              % CIKS[ticker]))
     # 메타는 us-gaap 에도 dei 에도 발행주식수가 없다(EntityPublicFloat 하나뿐).
     # 그때는 희석 가중평균으로 시총을 내고 어느 것을 썼는지 적는다 — 안 그러면
     # 그 회사만 시가총액이 통째로 빈다.
@@ -508,6 +663,21 @@ def build(ticker):
         # 가장 낮았다. 구간을 늘리면 베타가 올라가고 할인율도 따라 올라간다.
         'beta': beta(px['series'], idx['series'], window=252),
         'beta_grid': beta_grid(px['series'], idx['series']),
+        # 되돌아본 배수. 예측 채점이 아니라 「시장이 실적의 몇 배를 냈나」다.
+        'lookback': lookback(facts_raw, CONCEPTS['ocf'], CONCEPTS['capex'],
+                             px['series'], shares),
+        # 분기 매출총이익률. 총액 인식이 연결에 남기는 유일한 흔적이다
+        'gross_margin': gross_margin(facts_raw, CONCEPTS['revenue'],
+                                     CONCEPTS['cost_of_revenue']),
+        # 최근 12개월 값을 못 만드는 항목의 원자료. 못 쓰는 것과 없는 것은 다르다
+        'raw': {'purchase_long': raw_facts(facts_raw, CONCEPTS['purchase_long']),
+                # 보증 최대노출은 시점 값이라 최근 하나만 최근 12개월 자리에 남는다.
+                # 엔비디아는 세 분기 만에 9억에서 1,085억 달러로 뛰었다 — 그 뜀 자체가
+                # 본문이 말할 내용이라 이력을 남긴다
+                'guarantee_max': raw_facts(facts_raw, CONCEPTS['guarantee_max']),
+                # 매도가능 채무증권 미실현손익. 아마존은 기간 값으로 내서 최근 12개월
+                # 자리에 안 남는다 — 원자료로 둔다
+                'afs_unrealized': raw_facts(facts_raw, CONCEPTS['afs_unrealized'])},
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),

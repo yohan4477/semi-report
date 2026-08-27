@@ -1163,3 +1163,27 @@ def check_ui(html, has_top):
     assert at > 0, 'UI 규약 위반: 섹션 타일을 못 찾았다'
     assert '<section id=' not in html[:at], \
         'UI 규약 위반: 섹션 타일보다 먼저 나오는 본문 섹션이 있다'
+
+
+def josa(word, pair='은는'):
+    """받침에 맞는 조사를 골라 붙인다.
+
+    회사 이름을 계산에서 뽑아 문장에 끼우면 「알파벳는·애플는」이 나온다. 이름이
+    상수일 때는 손으로 맞췄지만 순위표에서 뽑아 쓰면 그럴 수가 없다.
+
+    pair 는 받침 있을 때·없을 때 순서다. 「으로/로」는 글자 수가 달라 짝을 표로 둔다 —
+    한 글자씩 자르면 「알파벳으」가 나온다.
+    """
+    forms = {'은는': ('은', '는'), '이가': ('이', '가'), '을를': ('을', '를'),
+             '과와': ('과', '와'), '으로로': ('으로', '로'), '아야': ('아', '야')}
+    has, no = forms.get(pair, (pair[0], pair[-1]))
+    if not word:
+        return word
+    ch = word[-1]
+    if not ('가' <= ch <= '힣'):
+        return word + no
+    jong = (ord(ch) - 0xAC00) % 28
+    # 「으로」는 ㄹ 받침이 예외다 — 「서울로」지 「서울으로」가 아니다
+    if pair == '으로로' and jong == 8:
+        return word + '로'
+    return word + (has if jong else no)

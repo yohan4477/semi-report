@@ -517,6 +517,20 @@ def write_facts():
             L.append('- %s 평균 배수 %.1f배 · 함의 주가 %.0f달러 · 현재가 대비 %.0f%%'
                      % (lab, avg, px, (px / PRICE - 1) * 100))
 
+    _lb = d.get('lookback') or []
+    if _lb:
+        L += ['', '## 되돌아본 배수 — 할인율을 안 쓰는 대조', '']
+        for r in _lb:
+            L.append('- %s 종가 %.2f · 시가총액 %s · 그때 알 수 있던 잉여현금흐름 %s '
+                     '(%s 종료) · 시가총액이 그 %.0f배'
+                     % (r['asof'], r['price'], _two(r['market_cap']),
+                        _two(r['fcf_known']), r['fcf_period'], r['multiple']))
+        _old = min(_lb, key=lambda r: r['asof'])
+        L += ['- 지금 배수 %.1f배' % price_multiple(),
+              '- %s 이후 주가 %.0f%%' % (_old['asof'], (PRICE / _old['price'] - 1) * 100),
+              '- 같은 기간 잉여현금흐름 %.1f배' % (FCF0 / _old['fcf_known']),
+              '- 배수가 %.0f배에서 %.1f배로' % (_old['multiple'], price_multiple())]
+
     L += ['', '## 할인율 축 — 같은 주가를 만드는 짝', '']
     for r, g, f in rate_growth_pairs():
         L.append('- 할인율 %.2f%% 이면 10년 균등 성장률 %.2f%% · 10년 뒤 잉여현금흐름 %s'

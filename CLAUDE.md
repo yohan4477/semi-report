@@ -24,6 +24,8 @@
 
 **카드에 도해(그림)를 붙이거나 고치기 전에는 `insight-figure` 스킬을 연다.** 도해는 「없는 값을 그렸다」로 무너진다 — 막대 높이도 아이콘 개수도 수치로 읽히는데 원문에 그 수가 없는 일이 잦다. 배치는 `scratchpad/check_fig.py`가 검사한다.
 
+**큰 물음을 받아 어디부터 파야 할지 정할 때는 `case-structure` 스킬을 연다.** 「왜 이렇게 됐나」·「어디부터 봐야 하나」를 물었을 때 쓴다. MBB 케이스 인터뷰식으로 물음을 벼리고 컷 후보를 세우고 임팩트×불확실성으로 팔 데를 고른다 — 자료가 많은 가지부터 파면 이미 판 데로 또 가고 맹점이 꼴찌로 간다. 카드를 분류하는 일이 아니다.
+
 건강 인사이트(🩺)는 규칙이 다르다 — 카드 단위가 영상이 아니라 주제이고 본문에 해부도가 들어간다. 카드를 쓰거나 그림을 고치기 전에 `health-insight` 스킬을 연다.
 
 ## 검사기
@@ -36,9 +38,14 @@ PYTHONIOENCODING=utf-8 python insights/check_cite.py    # 인용한 줄에 그 �
 PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야기인가
 PYTHONIOENCODING=utf-8 python insights/check_report.py  # 보고서 숫자가 원문에 있나
 PYTHONIOENCODING=utf-8 python insights/check_index.py   # 색인 주소가 맞나, 색인이 낡지 않았나
+PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부르는 파일이 추적되나
+PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
+PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
+
+앞의 여섯은 산문만 본다. 밸류에이션 결함 다섯(최근 12개월 기저 오지정·재무상태표 날짜 혼합·박아 둔 할인율·부호 뒤집힘·주식보상 가산)이 그 사이로 새어 나갔고 검사기가 잡은 것은 없었다. `check_val`이 그 자리를 막는다 — 판단은 `insights/valuation/adjust.py` 표에 줄로 세우고, 검사기는 그 표를 읽을 뿐 판단을 더하지 않는다.
 
 콘솔이 cp949라 파이썬 실행에 `PYTHONIOENCODING=utf-8`을 붙인다.
 

@@ -45,6 +45,8 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'semi_robot_facts_B.md'),
          # 알파벳 밸류에이션의 재무 숫자와 우리 계산 결과
          os.path.join(ROOT, 'scratchpad', 'googl_facts.md'),
+         # 원문 사실과 모형 입력 사이에 낀 판단 — insights/valuation/adjust.py 가 쓴다
+         os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
          os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')]

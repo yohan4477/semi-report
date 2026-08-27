@@ -1,6 +1,6 @@
 {
  "ticker": "MSFT",
- "fetched_at": "2026-08-27T03:15:55.201687+00:00",
+ "fetched_at": "2026-08-27T14:04:19.295043+00:00",
  "sec": {
   "entity": "MICROSOFT CORPORATION",
   "cik": "0000789019",
@@ -195,6 +195,127 @@
      "val": 155237000000,
      "filed": "2026-07-29",
      "tag": "OperatingIncomeLoss",
+     "start": "2025-07-01"
+    }
+   },
+   "cost_of_revenue": {
+    "2010": {
+     "end": "2010-06-30",
+     "val": 12395000000,
+     "filed": "2010-07-30",
+     "tag": "CostOfRevenue",
+     "start": "2009-07-01"
+    },
+    "2011": {
+     "end": "2011-06-30",
+     "val": 15577000000,
+     "filed": "2011-07-28",
+     "tag": "CostOfRevenue",
+     "start": "2010-07-01"
+    },
+    "2012": {
+     "end": "2012-06-30",
+     "val": 17530000000,
+     "filed": "2012-07-26",
+     "tag": "CostOfRevenue",
+     "start": "2011-07-01"
+    },
+    "2013": {
+     "end": "2013-06-30",
+     "val": 20249000000,
+     "filed": "2013-07-30",
+     "tag": "CostOfRevenue",
+     "start": "2012-07-01"
+    },
+    "2014": {
+     "end": "2014-06-30",
+     "val": 26934000000,
+     "filed": "2014-07-31",
+     "tag": "CostOfRevenue",
+     "start": "2013-07-01"
+    },
+    "2015": {
+     "end": "2015-06-30",
+     "val": 33038000000,
+     "filed": "2015-07-31",
+     "tag": "CostOfRevenue",
+     "start": "2014-07-01"
+    },
+    "2016": {
+     "end": "2016-06-30",
+     "val": 32780000000,
+     "filed": "2016-07-28",
+     "tag": "CostOfRevenue",
+     "start": "2015-07-01"
+    },
+    "2017": {
+     "end": "2017-06-30",
+     "val": 34261000000,
+     "filed": "2017-08-02",
+     "tag": "CostOfRevenue",
+     "start": "2016-07-01"
+    },
+    "2018": {
+     "end": "2018-06-30",
+     "val": 38353000000,
+     "filed": "2018-08-03",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2017-07-01"
+    },
+    "2019": {
+     "end": "2019-06-30",
+     "val": 42910000000,
+     "filed": "2019-08-01",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2018-07-01"
+    },
+    "2020": {
+     "end": "2020-06-30",
+     "val": 46078000000,
+     "filed": "2020-07-30",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2019-07-01"
+    },
+    "2021": {
+     "end": "2021-06-30",
+     "val": 52232000000,
+     "filed": "2021-07-29",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2020-07-01"
+    },
+    "2022": {
+     "end": "2022-06-30",
+     "val": 62650000000,
+     "filed": "2022-07-28",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2021-07-01"
+    },
+    "2023": {
+     "end": "2023-06-30",
+     "val": 65863000000,
+     "filed": "2023-07-27",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2022-07-01"
+    },
+    "2024": {
+     "end": "2024-06-30",
+     "val": 74114000000,
+     "filed": "2024-07-30",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2023-07-01"
+    },
+    "2025": {
+     "end": "2025-06-30",
+     "val": 87831000000,
+     "filed": "2025-07-30",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2024-07-01"
+    },
+    "2026": {
+     "end": "2026-06-30",
+     "val": 106374000000,
+     "filed": "2026-07-29",
+     "tag": "CostOfGoodsAndServicesSold",
      "start": "2025-07-01"
     }
    },
@@ -877,6 +998,127 @@
      "start": "2025-07-01"
     }
    },
+   "sbc": {
+    "2010": {
+     "end": "2010-06-30",
+     "val": 1891000000,
+     "filed": "2010-07-30",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2009-07-01"
+    },
+    "2011": {
+     "end": "2011-06-30",
+     "val": 2166000000,
+     "filed": "2011-07-28",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2010-07-01"
+    },
+    "2012": {
+     "end": "2012-06-30",
+     "val": 2244000000,
+     "filed": "2012-07-26",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2011-07-01"
+    },
+    "2013": {
+     "end": "2013-06-30",
+     "val": 2406000000,
+     "filed": "2013-07-30",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2012-07-01"
+    },
+    "2014": {
+     "end": "2014-06-30",
+     "val": 2446000000,
+     "filed": "2014-07-31",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2013-07-01"
+    },
+    "2015": {
+     "end": "2015-06-30",
+     "val": 2574000000,
+     "filed": "2015-07-31",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2014-07-01"
+    },
+    "2016": {
+     "end": "2016-06-30",
+     "val": 2668000000,
+     "filed": "2016-07-28",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2015-07-01"
+    },
+    "2017": {
+     "end": "2017-06-30",
+     "val": 3266000000,
+     "filed": "2017-08-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-07-01"
+    },
+    "2018": {
+     "end": "2018-06-30",
+     "val": 3940000000,
+     "filed": "2018-08-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-07-01"
+    },
+    "2019": {
+     "end": "2019-06-30",
+     "val": 4652000000,
+     "filed": "2019-08-01",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-07-01"
+    },
+    "2020": {
+     "end": "2020-06-30",
+     "val": 5289000000,
+     "filed": "2020-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-07-01"
+    },
+    "2021": {
+     "end": "2021-06-30",
+     "val": 6118000000,
+     "filed": "2021-07-29",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-07-01"
+    },
+    "2022": {
+     "end": "2022-06-30",
+     "val": 7502000000,
+     "filed": "2022-07-28",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-07-01"
+    },
+    "2023": {
+     "end": "2023-06-30",
+     "val": 9611000000,
+     "filed": "2023-07-27",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-07-01"
+    },
+    "2024": {
+     "end": "2024-06-30",
+     "val": 10734000000,
+     "filed": "2024-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-07-01"
+    },
+    "2025": {
+     "end": "2025-06-30",
+     "val": 11974000000,
+     "filed": "2025-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-07-01"
+    },
+    "2026": {
+     "end": "2026-06-30",
+     "val": 12405000000,
+     "filed": "2026-07-29",
+     "tag": "ShareBasedCompensation",
+     "start": "2025-07-01"
+    }
+   },
    "nonoperating": {
     "2010": {
      "end": "2010-06-30",
@@ -1237,6 +1479,64 @@
      "val": 20935000000,
      "filed": "2026-07-29",
      "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    }
+   },
+   "nonmarketable_equity": {
+    "2019": {
+     "end": "2019-06-30",
+     "val": 1200000000,
+     "filed": "2019-08-01",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-06-30",
+     "val": 1400000000,
+     "filed": "2020-07-30",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-06-30",
+     "val": 3300000000,
+     "filed": "2021-07-29",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-06-30",
+     "val": 3800000000,
+     "filed": "2022-07-28",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-06-30",
+     "val": 4200000000,
+     "filed": "2023-07-27",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-06-30",
+     "val": 3900000000,
+     "filed": "2024-07-30",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-06-30",
+     "val": 2900000000,
+     "filed": "2025-07-30",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2026": {
+     "end": "2026-06-30",
+     "val": 12400000000,
+     "filed": "2026-07-29",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
      "start": null
     }
    },
@@ -1910,6 +2210,12 @@
     "end": "2026-06-30",
     "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
    },
+   "cost_of_revenue": {
+    "val": 106374000000,
+    "window": "2026 회계연도 (뒤에 분기 보고 없음)",
+    "end": "2026-06-30",
+    "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
+   },
    "net_income": {
     "val": 133749000000,
     "window": "2026 회계연도 (뒤에 분기 보고 없음)",
@@ -1952,6 +2258,12 @@
     "end": "2026-06-30",
     "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
    },
+   "sbc": {
+    "val": 12405000000,
+    "window": "2026 회계연도 (뒤에 분기 보고 없음)",
+    "end": "2026-06-30",
+    "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
+   },
    "nonoperating": {
     "val": 10697000000,
     "window": "2026 회계연도 (뒤에 분기 보고 없음)",
@@ -1969,6 +2281,13 @@
     "window": "2026-06-30",
     "end": "2026-06-30",
     "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "nonmarketable_equity": {
+    "val": 12400000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
@@ -2034,51 +2353,51 @@
   }
  },
  "market": {
-  "price": 496.37,
+  "price": 500.585,
   "currency": "USD",
-  "as_of": "2026-08-26T20:00:01+00:00",
-  "market_cap": 3685818015367.67,
+  "as_of": "2026-08-27T14:04:17+00:00",
+  "market_cap": 3717116689612.235,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 0.9704644643901722,
+  "beta": 0.9731739335288873,
   "n_days": 252,
   "window": "52주",
-  "start": "2025-08-25",
-  "end": "2026-08-26",
+  "start": "2025-08-26",
+  "end": "2026-08-27",
   "index": "^GSPC",
   "freq": "daily"
  },
  "beta_grid": {
   "52주 일간": {
-   "beta": 0.9704644643901722,
+   "beta": 0.9731739335288873,
    "n": 252
   },
   "52주 주간": {
-   "beta": 1.4310468493210637,
+   "beta": 2.0802004667722476,
    "n": 50
   },
   "52주 월간": {
-   "beta": 1.7212964787366662,
+   "beta": 1.928732396608599,
    "n": 12
   },
   "2년 일간": {
-   "beta": 0.9680273978875571,
+   "beta": 0.9662278423332161,
    "n": 504
   },
   "2년 주간": {
-   "beta": 1.2885011629754108,
+   "beta": 1.0219076131641383,
    "n": 100
   },
   "2년 월간": {
-   "beta": 1.5324643062570042,
+   "beta": 1.8009292236072014,
    "n": 24
   },
   "5년 일간": {
-   "beta": 1.148046952465982,
-   "n": 1253
+   "beta": 1.148141328032298,
+   "n": 1254
   },
   "5년 주간": {
    "beta": 1.0701755413969116,
@@ -2088,6 +2407,227 @@
    "beta": 1.117825489683184,
    "n": 59
   }
+ },
+ "lookback": [
+  {
+   "asof": "2026-05-28",
+   "price": 426.989990234375,
+   "market_cap": 3170.633596686997,
+   "fcf_known": 71.611,
+   "fcf_period": "2025-06-30",
+   "multiple": 44.275789985993725,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2026-02-26",
+   "price": 401.7200012207031,
+   "market_cap": 2982.9901437089065,
+   "fcf_known": 71.611,
+   "fcf_period": "2025-06-30",
+   "multiple": 41.65547393150363,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-11-26",
+   "price": 485.5,
+   "market_cap": 3605.1023358805,
+   "fcf_known": 71.611,
+   "fcf_period": "2025-06-30",
+   "multiple": 50.342857045432964,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-08-28",
+   "price": 509.6400146484375,
+   "market_cap": 3784.355112805879,
+   "fcf_known": 71.611,
+   "fcf_period": "2025-06-30",
+   "multiple": 52.846002887906586,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-05-29",
+   "price": 458.67999267578125,
+   "market_cap": 3405.9491514255606,
+   "fcf_known": 74.071,
+   "fcf_period": "2024-06-30",
+   "multiple": 45.982221806450035,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-02-27",
+   "price": 392.5299987792969,
+   "market_cap": 2914.749362517843,
+   "fcf_known": 74.071,
+   "fcf_period": "2024-06-30",
+   "multiple": 39.35074945009306,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-11-27",
+   "price": 422.989990234375,
+   "market_cap": 3140.931414722997,
+   "fcf_known": 74.071,
+   "fcf_period": "2024-06-30",
+   "multiple": 42.40433387861643,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-08-29",
+   "price": 413.1199951171875,
+   "market_cap": 3067.6413169843736,
+   "fcf_known": 74.071,
+   "fcf_period": "2024-06-30",
+   "multiple": 41.41487649666366,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-05-30",
+   "price": 414.6700134277344,
+   "market_cap": 3079.1510484612227,
+   "fcf_known": 59.475,
+   "fcf_period": "2023-06-30",
+   "multiple": 51.772190810613246,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-02-29",
+   "price": 413.6400146484375,
+   "market_cap": 3071.502745669879,
+   "fcf_known": 59.475,
+   "fcf_period": "2023-06-30",
+   "multiple": 51.64359387423084,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-11-30",
+   "price": 378.9100036621094,
+   "market_cap": 2813.6134691879697,
+   "fcf_known": 59.475,
+   "fcf_period": "2023-06-30",
+   "multiple": 47.307498431071366,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-08-31",
+   "price": 327.760009765625,
+   "market_cap": 2433.796862645253,
+   "fcf_known": 59.475,
+   "fcf_period": "2023-06-30",
+   "multiple": 40.92134279353095,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-06-01",
+   "price": 332.5799865722656,
+   "market_cap": 2469.5878196885274,
+   "fcf_known": 65.149,
+   "fcf_period": "2022-06-30",
+   "multiple": 37.906764795906724,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  }
+ ],
+ "gross_margin": [
+  {
+   "end": "2022-09-30",
+   "revenue": 50122000000,
+   "cost": 15452000000,
+   "margin": 0.691712222177886,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2022-12-31",
+   "revenue": 52747000000,
+   "cost": 17488000000,
+   "margin": 0.6684550780139155,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-03-31",
+   "revenue": 52857000000,
+   "cost": 16128000000,
+   "margin": 0.6948748510131109,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-09-30",
+   "revenue": 56517000000,
+   "cost": 16302000000,
+   "margin": 0.7115558150644938,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-12-31",
+   "revenue": 62020000000,
+   "cost": 19623000000,
+   "margin": 0.6836020638503708,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-03-31",
+   "revenue": 61858000000,
+   "cost": 18505000000,
+   "margin": 0.7008471014258463,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-09-30",
+   "revenue": 65585000000,
+   "cost": 20099000000,
+   "margin": 0.6935427308073493,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-12-31",
+   "revenue": 69632000000,
+   "cost": 21799000000,
+   "margin": 0.6869399126838235,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-03-31",
+   "revenue": 70066000000,
+   "cost": 21919000000,
+   "margin": 0.6871663859789342,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-09-30",
+   "revenue": 77673000000,
+   "cost": 24043000000,
+   "margin": 0.6904587179586213,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-12-31",
+   "revenue": 81273000000,
+   "cost": 25978000000,
+   "margin": 0.6803612515841669,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2026-03-31",
+   "revenue": 82886000000,
+   "cost": 26828000000,
+   "margin": 0.6763265207634582,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  }
+ ],
+ "raw": {
+  "purchase_long": [],
+  "guarantee_max": []
  },
  "risk_free": {
   "rate": 0.0464,
@@ -2137,7 +2677,7 @@
     "growth": 0.1934
    }
   ],
-  "fetched_at": "2026-08-27T03:15:59.759374+00:00",
+  "fetched_at": "2026-08-27T14:04:24.543193+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

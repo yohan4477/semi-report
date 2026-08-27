@@ -17,11 +17,8 @@ import _biz_part2  # noqa: E402
 import _biz_part3  # noqa: E402
 import _biz_part4  # noqa: E402
 import _biz_fig  # noqa: E402
-import _val_googl  # noqa: E402
-import _val_fig  # noqa: E402
-import _val_peers_text  # noqa: E402
-import _val_nvda  # noqa: E402
-import _val_nvda_fig  # noqa: E402
+import _val_report
+import _val_peers_fig  # noqa: E402
 import _val_labs  # noqa: E402
 import _val_chips  # noqa: E402
 import _val_infra  # noqa: E402
@@ -1059,40 +1056,20 @@ def fold_report(head, body):
             '<div class="rrep-b">%s</div></details>' % (head, body))
 
 
-def report4_html():
-    """미국 빅테크 밸류에이션 — 알파벳. 앞의 셋과 성격이 다르다.
+def report_val_html():
+    """미국 빅테크 밸류에이션 — 한 편.
 
-    보고서 ①~③은 원문이 낸 값을 우리가 엮은 것이고 이 편은 우리가 값을 낸다. 그래서
-    절마다 값의 출처를 밝히고 마지막 절에 우리가 안 한 것을 적는다."""
+    앞서 세 편(알파벳·빅테크 여섯·엔비디아)으로 나뉘어 서른여섯 절이었다. 절 순서가
+    물음이 아니라 계산 순서여서 결론이 맨 뒤에 묻혔다. 2026-08-27 에 여섯 절 한 편으로
+    다시 썼다 — 결론 먼저, 회사별로, 방법론은 맨 뒤.
+    """
     h = []
     sec = lambda t: h.append('<h3>%s</h3>' % t)
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_googl.report4_html(sec, p, fig)
-    return fold_report(_val_googl.HEAD4, ''.join(h))
-
-
-def report5_html():
-    """빅테크 여섯 비교. 알파벳 편과 같은 타일에 이어 붙인다 — 물음이 같은 판이다."""
-    h = []
-    sec = lambda t: h.append('<h3>%s</h3>' % t)
-    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
-    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_peers_text.report5_html(sec, p, fig)
-    return fold_report(_val_peers_text.HEAD5, ''.join(h))
-
-
-def report6_html():
-    """엔비디아 밸류에이션. 알파벳 편과 같은 잣대에 규칙 하나가 더 붙는다.
-
-    룰북 R15 다 — 사이클 산업은 한 사이클을 통째로 명시적 기간에 담는다. 그래서
-    성장 경로를 선형으로 내리지 않고 해마다 적는다."""
-    h = []
-    sec = lambda t: h.append('<h3>%s</h3>' % t)
-    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
-    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _val_nvda.report6_html(sec, p, fig)
-    return fold_report(_val_nvda.HEAD6, ''.join(h))
+    _val_report.report_html(sec, p, fig)
+    return fold_report(_val_report.HEAD % _val_report.gc.t['revenue']['end'],
+                       ''.join(h))
 
 
 def report7_html():
@@ -1173,14 +1150,10 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '돈이 안 드는 층이 성능을 정한다', _biz_fig.FIG_ENGINE, ''),
                (0, '임대는 만기로 세 구간이고 구간마다 다른 고객을 만난다', _biz_fig.FIG_LEASE, ''),
                (0, '보증선까지는 다 갖고, 넘긴 만큼만 나눈다', _biz_fig.FIG_BACKSTOP, ''),
-               (0, '기준연도를 어디로 잡느냐가 잉여현금흐름을 뒤집는다', _val_fig.FIG_BASE, ''),
-               (0, '세전이익의 절반이 장사 밖에서 왔다', _val_fig.FIG_NI, ''),
-               (0, _val_fig._C_TITLE, _val_fig.FIG_CASE, ''),
-               (0, '영업이익률이 두 번 무너졌다', _val_nvda_fig.FIG_CYCLE, ''),
-               (0, '세후영업이익과 잉여현금흐름 사이가 벌어진다', _val_nvda_fig.FIG_FUNNEL, ''),
-               (0, '경로 넷이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
-               (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, ''),
-               (0, '비교 대상을 어떻게 고르느냐가 결론을 가른다', _val_nvda_fig.FIG_MULT, '')]
+               # 밸류에이션 편을 한 편으로 다시 쓰면서(2026-08-27) 그 편이 실제로
+               # 쓰는 둘만 남긴다. 안 실리는 도해를 목록에 두면 목록이 거짓말을 한다.
+               (0, '같은 잣대인데 기대는 정도가 회사마다 다르다', _val_peers_fig.FIG_SBC, ''),
+               (0, '우리 배수가 시장 범위 안에 든 회사가 없다', _val_peers_fig.FIG_BIAS, '')]
 
 
 if __name__ == '__main__':
@@ -1192,7 +1165,7 @@ if __name__ == '__main__':
                      '누구에게 남나', 1, report3_html()),
                     ('sec-val', '미국 빅테크 밸류에이션', 'SEC 제출서류 + SemiAnalysis — '
                      '알파벳과 엔비디아를 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 3,
-                     report4_html() + report5_html() + report6_html()),
+                     report_val_html()),
                     ('sec-ai', 'AI 회사 — 모델·칩·인프라', 'SemiAnalysis 15편 — 모델 회사를 '
                      '가르는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
                      report7_html() + report8_html() + report9_html())],

@@ -50,6 +50,10 @@ CHECK = [
     ('개체 색인', ['insights/check_index.py']),
     # 도해 배치는 눈으로 보고 두 번 놓쳤다 — 글자끼리 겹침과 선에 깔림 둘 다
     ('도해 배치', ['scratchpad/check_fig.py']),
+    # 추적된 코드가 추적 안 된 파일을 부르면 이 컴퓨터에서만 돈다
+    ('의존 추적', ['scripts/check_deps.py']),
+    # 앞의 것들은 전부 산문만 본다. 밸류에이션 결함 다섯이 그 사이로 새어 나갔다
+    ('숫자 파이프라인', ['insights/check_val.py']),
 ]
 
 

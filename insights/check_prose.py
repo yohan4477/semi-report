@@ -72,7 +72,7 @@ def load_glossary():
             if not k.startswith('_')}
 
 
-def check_density(text, where, actor=True):
+def check_density(text, where, actor=True, claims=False):
     """P8~P11 — 낱말이 아니라 밀도를 본다.
 
     금지어를 세던 자리를 대신한다. 2026-08-17 건강 대시보드를 쓰면서 드러난 것들이다.
@@ -95,6 +95,11 @@ def check_density(text, where, actor=True):
                 '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
     check_vague(text, where)
     check_money(text, where)
+    # P19 는 우리가 쓴 화면에만 댄다. 노트와 제3자 요약본에 대면 필자의
+    # 전칭 주장까지 끌고 와 110건이 쏟아진다 — 읽을 자리를 좁히는 검사가
+    # 넓히는 검사가 되어 버린다.
+    if claims:
+        check_all_claims(text, where)
     check_naming(text, where)
     check_figure(text, where)
     check_dead(text, where)
@@ -206,6 +211,34 @@ def check_money(text, where):
     for m in MONEY_VAGUE.finditer(text or ''):
         add('WARN', where, 'P18',
             '「%s」 — 무엇을 하는지로 쓴다: 빌려준다·낸다·건다·마련한다' % m.group(0))
+
+
+# P19 — 전칭 주장. 「전부·모두·하나도·어떤 …도」로 묶은 문장은 예외가 하나만 나와도
+# 거짓이 된다. 그런데 이 판의 값은 계산에서 나오고 문장은 사람이 쓰므로, 계산이 바뀌면
+# 문장만 옛 주장을 들고 남는다. 2026-08-27에 알파벳 편이 「세 경로 모두 현재가
+# 아래입니다」를 내보냈는데 그때 가장 후한 경로는 현재가 위였다. 절댓값으로 찍는 코드라
+# +2%가 「2% 낮습니다」로 뒤집혀 나갔고 검사기 여섯이 전부 통과시켰다.
+#
+# 이 규칙은 그 문장을 **자동으로 반증하지 못한다.** 값과 주장을 잇는 것은 사람만 할 수
+# 있다. 대신 전칭 주장이 든 자리를 모아 보여 준다 — 계산을 고친 뒤 이 목록만 다시 읽으면
+# 같은 사고가 안 난다. 잡는 검사가 아니라 읽을 자리를 좁히는 검사다.
+ALL_CLAIM = re.compile(r'(전부|모두|하나도|한 곳도|어느 [가-힣]+도|어떤 [가-힣]+도)')
+# 잡으려는 것은 **우리가 낸 값을 시장가와 견준 전칭 주장** 하나다. 「이익은 거의 전부
+# 인프라 층이 가져갔다」 같은 문장까지 끌어오면 읽을 자리를 좁히는 검사가 넓히는 검사가
+# 된다. 그래서 시장가를 가리키는 말이 같은 문장에 있을 때만 센다.
+VERDICT = re.compile(r'(현재가|현재 주가|지금 주가|시가총액|시장가)')
+
+
+def check_all_claims(text, where):
+    """P19 — 전칭 주장이 든 문장 목록. 계산이 바뀌면 여기부터 다시 읽는다."""
+    for s in sentences(text):
+        m = ALL_CLAIM.search(s)
+        if not m or not VERDICT.search(s):
+            continue
+        if not re.search(r'\d', s):
+            continue          # 값이 없는 전칭은 이 사고의 대상이 아니다
+        add('WARN', where, 'P19',
+            '전칭 주장이다 — 계산을 고쳤으면 이 문장을 다시 읽는다: %s…' % s[:52])
 
 
 def check_vague(text, where):
@@ -458,7 +491,7 @@ def check_dashboards(gloss):
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)
-        check_density(body, where)
+        check_density(body, where, claims=True)
         check_length(body, where)
         check_translationese(body, where)
         # 볼드는 태그를 떼기 전 원본에서 센다
@@ -496,6 +529,21 @@ def main():
         check_translationese(body, where)
         if not (meta or {}).get('headline'):
             add('FAIL', where, 'P7', 'headline 없음 — 카드에 제목이 안 붙는다')
+
+    # 쟁점은 화자 발언과 진행자 절로 나뉘어 절 구성이 인사이트와 다르다.
+    # 문체·용어·길이·번역투만 보고, question 만 필수로 건다
+    debates = sorted(glob.glob(os.path.join(paths.DEBATE, '*.md')))
+    for p in debates:
+        where = os.path.basename(p)
+        raw = io.open(p, encoding='utf-8').read()
+        body = strip_refs(raw)
+        meta, _ = parse_synth(raw)
+        check_density(body, where)
+        check_glossary(body, where, gloss)
+        check_length(body, where)
+        check_translationese(body, where)
+        if not (meta or {}).get('question'):
+            add('FAIL', where, 'P7', 'question 없음 — 카드에 물음이 안 붙는다')
 
     # 돈 고리 여덟 편. 절 순서를 강제하지 않는다 — 그 틀이 카드 41장의 문제였다.
     # 문체·용어·길이·번역투만 보고, headline 만 필수로 건다.
@@ -536,8 +584,8 @@ def main():
     # 「WARN 5건 초과 → humanize-korean」 줄은 2026-08-17에 걷어냈다. 다섯 장이 상시
     # 초과 상태라 늘 켜져 있었고, 늘 켜진 신호는 신호가 아니다. 윤문을 부를 계기는
     # 개별 규칙(P8~P11)이 무엇을 몇 개 잡았는지로 판단한다.
-    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
-          % (len(files), len(loops), len(notes), len(dashes), fails, warns))
+    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
+          % (len(files), len(loops), len(notes), len(debates), len(dashes), fails, warns))
     return 1 if fails else 0
 
 

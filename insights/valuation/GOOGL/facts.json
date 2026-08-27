@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T03:15:50.907301+00:00",
+ "fetched_at": "2026-08-27T14:04:13.712850+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -160,6 +160,85 @@
      "val": 129039000000,
      "filed": "2026-02-05",
      "tag": "OperatingIncomeLoss",
+     "start": "2025-01-01"
+    }
+   },
+   "cost_of_revenue": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 28164000000,
+     "filed": "2016-02-11",
+     "tag": "CostOfRevenue",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 35138000000,
+     "filed": "2017-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 45583000000,
+     "filed": "2018-02-06",
+     "tag": "CostOfRevenue",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 59549000000,
+     "filed": "2019-02-05",
+     "tag": "CostOfRevenue",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 71896000000,
+     "filed": "2020-02-04",
+     "tag": "CostOfRevenue",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 84732000000,
+     "filed": "2021-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 110939000000,
+     "filed": "2022-02-02",
+     "tag": "CostOfRevenue",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 126203000000,
+     "filed": "2023-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 133332000000,
+     "filed": "2024-01-31",
+     "tag": "CostOfRevenue",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 146306000000,
+     "filed": "2025-02-05",
+     "tag": "CostOfRevenue",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 162535000000,
+     "filed": "2026-02-05",
+     "tag": "CostOfRevenue",
      "start": "2025-01-01"
     }
    },
@@ -569,6 +648,85 @@
      "start": "2025-01-01"
     }
    },
+   "sbc": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 5203000000,
+     "filed": "2016-02-11",
+     "tag": "ShareBasedCompensation",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 6703000000,
+     "filed": "2017-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7679000000,
+     "filed": "2018-02-06",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 9353000000,
+     "filed": "2019-02-05",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 10794000000,
+     "filed": "2020-02-04",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 12991000000,
+     "filed": "2021-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 15376000000,
+     "filed": "2022-02-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 19362000000,
+     "filed": "2023-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 22460000000,
+     "filed": "2024-01-31",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 22785000000,
+     "filed": "2025-02-05",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 24953000000,
+     "filed": "2026-02-05",
+     "tag": "ShareBasedCompensation",
+     "start": "2025-01-01"
+    }
+   },
    "nonoperating": {
     "2015": {
      "end": "2015-12-31",
@@ -861,6 +1019,226 @@
      "val": 30708000000,
      "filed": "2026-02-05",
      "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "start": null
+    }
+   },
+   "lt_investments": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 5183000000,
+     "filed": "2016-02-11",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 5878000000,
+     "filed": "2017-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7813000000,
+     "filed": "2018-02-06",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 13859000000,
+     "filed": "2019-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 13078000000,
+     "filed": "2020-02-04",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 20703000000,
+     "filed": "2021-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 29549000000,
+     "filed": "2022-02-02",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 30492000000,
+     "filed": "2023-02-03",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 31008000000,
+     "filed": "2024-01-31",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 37982000000,
+     "filed": "2025-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 68687000000,
+     "filed": "2026-02-05",
+     "tag": "OtherLongTermInvestments",
+     "start": null
+    }
+   },
+   "nonmarketable_equity": {
+    "2018": {
+     "end": "2018-12-31",
+     "val": 12275000000,
+     "filed": "2019-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 11353000000,
+     "filed": "2020-02-04",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 18893000000,
+     "filed": "2021-02-03",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 27571000000,
+     "filed": "2022-02-02",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 28529000000,
+     "filed": "2023-02-03",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 28766000000,
+     "filed": "2024-01-31",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 35531000000,
+     "filed": "2025-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 64094000000,
+     "filed": "2026-02-05",
+     "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+     "start": null
+    }
+   },
+   "guarantee_max": {
+    "2025": {
+     "end": "2025-12-31",
+     "val": 5700000000,
+     "filed": "2026-02-05",
+     "tag": "GuaranteeObligationsMaximumExposure",
+     "start": null
+    }
+   },
+   "purchase_unrecorded": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 1700000000,
+     "filed": "2016-02-11",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 2500000000,
+     "filed": "2017-02-03",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    }
+   },
+   "purchase_obligation": {
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7200000000,
+     "filed": "2018-02-06",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 7400000000,
+     "filed": "2019-02-05",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 5700000000,
+     "filed": "2020-02-04",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 10700000000,
+     "filed": "2021-02-03",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 12300000000,
+     "filed": "2023-02-03",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 10600000000,
+     "filed": "2024-01-31",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 8800000000,
+     "filed": "2025-02-05",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 7700000000,
+     "filed": "2026-02-05",
+     "tag": "PurchaseObligation",
      "start": null
     }
    },
@@ -1282,6 +1660,12 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "cost_of_revenue": {
+    "val": 174349000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "net_income": {
     "val": 244205000000,
     "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
@@ -1324,6 +1708,12 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "sbc": {
+    "val": 28653000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "nonoperating": {
     "val": 151641000000,
     "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
@@ -1348,6 +1738,43 @@
     "end": "2026-06-30",
     "tag": "CashAndCashEquivalentsAtCarryingValue",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "lt_investments": {
+    "val": 131461000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "OtherLongTermInvestments",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "nonmarketable_equity": {
+    "val": 124259000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "guarantee_max": {
+    "val": 7600000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "purchase_unrecorded": {
+    "val": 75600000000,
+    "window": "2026-03-31",
+    "end": "2026-03-31",
+    "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-06-30 에 이 항목이 없어 91일 낡은 잔액을 쓴다",
+    "stale_days": 91
+   },
+   "purchase_obligation": {
+    "val": 7700000000,
+    "window": "2025-12-31",
+    "end": "2025-12-31",
+    "tag": "PurchaseObligation",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-06-30 에 이 항목이 없어 181일 낡은 잔액을 쓴다",
+    "stale_days": 181
    },
    "st_investments": {
     "val": 186563000000,
@@ -1412,51 +1839,51 @@
   }
  },
  "market": {
-  "price": 342.0,
+  "price": 340.245,
   "currency": "USD",
-  "as_of": "2026-08-26T20:00:01+00:00",
-  "market_cap": 4134096000000.0,
+  "as_of": "2026-08-27T14:04:11+00:00",
+  "market_cap": 4112881560000.0,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.3640303782803203,
+  "beta": 1.364317499721575,
   "n_days": 252,
   "window": "52주",
-  "start": "2025-08-25",
-  "end": "2026-08-26",
+  "start": "2025-08-26",
+  "end": "2026-08-27",
   "index": "^GSPC",
   "freq": "daily"
  },
  "beta_grid": {
   "52주 일간": {
-   "beta": 1.3640303782803203,
+   "beta": 1.364317499721575,
    "n": 252
   },
   "52주 주간": {
-   "beta": 2.37474817901057,
+   "beta": 1.568348243941459,
    "n": 50
   },
   "52주 월간": {
-   "beta": 1.8300428677528662,
+   "beta": 1.664122392983974,
    "n": 12
   },
   "2년 일간": {
-   "beta": 1.14906335736687,
+   "beta": 1.1478105250781607,
    "n": 504
   },
   "2년 주간": {
-   "beta": 1.04751059699678,
+   "beta": 1.0960302943149816,
    "n": 100
   },
   "2년 월간": {
-   "beta": 1.6247121367267003,
+   "beta": 1.564545626899257,
    "n": 24
   },
   "5년 일간": {
-   "beta": 1.2649534816573553,
-   "n": 1253
+   "beta": 1.2646847008020865,
+   "n": 1254
   },
   "5년 주간": {
    "beta": 1.16380176167963,
@@ -1466,6 +1893,274 @@
    "beta": 1.2273298608046415,
    "n": 59
   }
+ },
+ "lookback": [
+  {
+   "asof": "2026-05-28",
+   "price": 390.1300048828125,
+   "market_cap": 4715.891499023437,
+   "fcf_known": 73.266,
+   "fcf_period": "2025-12-31",
+   "multiple": 64.3667116946938,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2026-02-26",
+   "price": 307.3800048828125,
+   "market_cap": 3715.6094990234374,
+   "fcf_known": 73.266,
+   "fcf_period": "2025-12-31",
+   "multiple": 50.71396690174757,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-11-26",
+   "price": 319.95001220703125,
+   "market_cap": 3867.555747558594,
+   "fcf_known": 72.764,
+   "fcf_period": "2024-12-31",
+   "multiple": 53.152049743810046,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-08-28",
+   "price": 211.63999938964844,
+   "market_cap": 2558.3043126220705,
+   "fcf_known": 72.764,
+   "fcf_period": "2024-12-31",
+   "multiple": 35.15892903938858,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-05-29",
+   "price": 171.86000061035156,
+   "market_cap": 2077.4436873779296,
+   "fcf_known": 72.764,
+   "fcf_period": "2024-12-31",
+   "multiple": 28.55043273291641,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2025-02-27",
+   "price": 168.5,
+   "market_cap": 2036.828,
+   "fcf_known": 72.764,
+   "fcf_period": "2024-12-31",
+   "multiple": 27.99224891429828,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-11-27",
+   "price": 169.22999572753906,
+   "market_cap": 2045.6521883544922,
+   "fcf_known": 69.495,
+   "fcf_period": "2023-12-31",
+   "multiple": 29.43596213187268,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-08-29",
+   "price": 161.77999877929688,
+   "market_cap": 1955.5966252441406,
+   "fcf_known": 69.495,
+   "fcf_period": "2023-12-31",
+   "multiple": 28.140105406779487,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-05-30",
+   "price": 172.11000061035156,
+   "market_cap": 2080.4656873779295,
+   "fcf_known": 69.495,
+   "fcf_period": "2023-12-31",
+   "multiple": 29.93691182643254,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2024-02-29",
+   "price": 138.4600067138672,
+   "market_cap": 1673.7045611572266,
+   "fcf_known": 69.495,
+   "fcf_period": "2023-12-31",
+   "multiple": 24.08381266504391,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-11-30",
+   "price": 132.52999877929688,
+   "market_cap": 1602.0226252441407,
+   "fcf_known": 60.01,
+   "fcf_period": "2022-12-31",
+   "multiple": 26.695927766107996,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-08-31",
+   "price": 136.1699981689453,
+   "market_cap": 1646.022937866211,
+   "fcf_known": 60.01,
+   "fcf_period": "2022-12-31",
+   "multiple": 27.42914410708567,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  },
+  {
+   "asof": "2023-06-01",
+   "price": 123.72000122070312,
+   "market_cap": 1495.5273747558595,
+   "fcf_known": 60.01,
+   "fcf_period": "2022-12-31",
+   "multiple": 24.921302695481746,
+   "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
+  }
+ ],
+ "gross_margin": [
+  {
+   "end": "2022-09-30",
+   "revenue": 69092000000,
+   "cost": 31158000000,
+   "margin": 0.5490360678515602,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-03-31",
+   "revenue": 69787000000,
+   "cost": 30612000000,
+   "margin": 0.5613509679453194,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-06-30",
+   "revenue": 74604000000,
+   "cost": 31916000000,
+   "margin": 0.5721945204010509,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-09-30",
+   "revenue": 76693000000,
+   "cost": 33229000000,
+   "margin": 0.5667270806983689,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-03-31",
+   "revenue": 80539000000,
+   "cost": 33712000000,
+   "margin": 0.5814201815269621,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-06-30",
+   "revenue": 84742000000,
+   "cost": 35507000000,
+   "margin": 0.5809987963465578,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-09-30",
+   "revenue": 88268000000,
+   "cost": 36474000000,
+   "margin": 0.5867811664476368,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-03-31",
+   "revenue": 90234000000,
+   "cost": 36361000000,
+   "margin": 0.5970365937451515,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-06-30",
+   "revenue": 96428000000,
+   "cost": 39039000000,
+   "margin": 0.5951487119923674,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-09-30",
+   "revenue": 102346000000,
+   "cost": 41369000000,
+   "margin": 0.5957927031833193,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-03-31",
+   "revenue": 109896000000,
+   "cost": 41271000000,
+   "margin": 0.6244540292640315,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-06-30",
+   "revenue": 119796000000,
+   "cost": 45943000000,
+   "margin": 0.6164896991552306,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  }
+ ],
+ "raw": {
+  "purchase_long": [
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2026-01-01",
+    "end": "2026-03-31",
+    "val": 232700000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2026-01-01",
+    "end": "2026-06-30",
+    "val": 707000000000,
+    "form": "10-Q",
+    "filed": "2026-07-23",
+    "kind": "기간"
+   }
+  ],
+  "guarantee_max": [
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2025-12-31",
+    "val": 5700000000,
+    "form": "10-K",
+    "filed": "2026-02-05",
+    "kind": "시점"
+   },
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2026-03-31",
+    "val": 9000000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "시점"
+   },
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2026-06-30",
+    "val": 7600000000,
+    "form": "10-Q",
+    "filed": "2026-07-23",
+    "kind": "시점"
+   }
+  ]
  },
  "risk_free": {
   "rate": 0.0464,
@@ -1515,7 +2210,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T03:15:55.197831+00:00",
+  "fetched_at": "2026-08-27T14:04:19.286532+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
