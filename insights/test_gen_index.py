@@ -87,3 +87,137 @@ def test_index_holds_addresses_not_text(tmp_path):
     for addr in idx['엔비디아']:
         assert '#L' in addr
         assert '샀다' not in addr
+
+
+def _read(root, rel):
+    return io.open(os.path.join(root, rel.replace('/', os.sep)),
+                   encoding='utf-8').read()
+
+
+def _write(root, rel, text):
+    io.open(os.path.join(root, rel.replace('/', os.sep)), 'w',
+            encoding='utf-8').write(text)
+
+
+def test_file_hashes_gives_one_digest_per_file(tmp_path):
+    root = _mkcorpus(tmp_path)
+    got = gi.file_hashes(root, gi.corpus_files(root))
+    assert sorted(got) == ['content/sub/a.md', 'content/sub/b.md']
+    assert got['content/sub/a.md'] != got['content/sub/b.md']
+
+
+def test_file_hashes_change_only_for_the_touched_file(tmp_path):
+    root = _mkcorpus(tmp_path)
+    files = gi.corpus_files(root)
+    before = gi.file_hashes(root, files)
+    _write(root, 'content/sub/a.md', _read(root, 'content/sub/a.md') + '또.\n')
+    after = gi.file_hashes(root, files)
+    assert after['content/sub/a.md'] != before['content/sub/a.md']
+    assert after['content/sub/b.md'] == before['content/sub/b.md']
+
+
+def test_fingerprint_is_derived_from_the_per_file_hashes(tmp_path):
+    root = _mkcorpus(tmp_path)
+    files = gi.corpus_files(root)
+    assert gi.fingerprint(root, files) == gi.fingerprint_of(
+        gi.file_hashes(root, files))
+
+
+def test_entities_hash_tracks_the_dictionary(tmp_path):
+    other = ROWS + [{'canonical': '마이크론', 'type': '회사',
+                     'ko': ['마이크론'], 'en': [], 'deny': []}]
+    assert gi.entities_hash(ROWS) == gi.entities_hash(list(ROWS))
+    assert gi.entities_hash(ROWS) != gi.entities_hash(other)
+
+
+def test_build_records_what_it_needs_to_go_incremental(tmp_path):
+    root = _mkcorpus(tmp_path)
+    idx = gi.build(root, ROWS, gi.corpus_files(root))
+    stat = idx['_meta']['files_stat']
+    assert sorted(stat) == ['content/sub/a.md', 'content/sub/b.md']
+    assert stat['content/sub/a.md'][1] == 3          # 줄 수
+    assert idx['_meta']['entities_hash'] == gi.entities_hash(ROWS)
+
+
+def test_incremental_matches_a_full_rebuild_after_an_edit(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    _write(root, 'content/sub/b.md',
+           'Lam Research holds share.\n엔비디아도 왔다.\n')
+    files = gi.corpus_files(root)
+    assert gi.build(root, ROWS, files, old) == gi.build(root, ROWS, files)
+
+
+def test_incremental_matches_a_full_rebuild_after_a_new_file(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    _write(root, 'content/sub/d.md', '엔비디아가 또 샀다.\n')
+    files = gi.corpus_files(root)
+    assert gi.build(root, ROWS, files, old) == gi.build(root, ROWS, files)
+
+
+def test_incremental_matches_a_full_rebuild_after_a_deletion(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    os.remove(os.path.join(root, 'content', 'sub', 'b.md'))
+    files = gi.corpus_files(root)
+    assert gi.build(root, ROWS, files, old) == gi.build(root, ROWS, files)
+
+
+def test_incremental_reads_only_the_changed_file(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    _write(root, 'content/sub/b.md', 'Lam Research holds share.\n엔비디아.\n')
+    seen = []
+    real = gi.scan
+
+    def spy(r, rows, files):
+        seen.extend(files)
+        return real(r, rows, files)
+
+    gi.scan = spy
+    try:
+        gi.build(root, ROWS, gi.corpus_files(root), old)
+    finally:
+        gi.scan = real
+    assert seen == ['content/sub/b.md']
+
+
+def test_a_changed_dictionary_forces_a_full_rebuild(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    rows = ROWS + [{'canonical': '마이크론', 'type': '회사',
+                    'ko': ['첫 줄'], 'en': [], 'deny': []}]
+    seen = []
+    real = gi.scan
+
+    def spy(r, r2, files):
+        seen.extend(files)
+        return real(r, r2, files)
+
+    gi.scan = spy
+    try:
+        idx = gi.build(root, rows, gi.corpus_files(root), old)
+    finally:
+        gi.scan = real
+    assert seen == ['content/sub/a.md', 'content/sub/b.md']
+    assert idx['마이크론'] == ['content/sub/a.md#L1']
+
+
+def test_incremental_drops_a_hit_that_the_edit_removed(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    assert '램리서치' in old
+    _write(root, 'content/sub/a.md', '첫 줄이다.\n엔비디아가 샀다.\n엔비디아.\n')
+    _write(root, 'content/sub/b.md', '아무 회사도 없다.\n')
+    idx = gi.build(root, ROWS, gi.corpus_files(root), old)
+    assert '램리서치' not in idx
+    assert idx['엔비디아'] == ['content/sub/a.md#L2', 'content/sub/a.md#L3']
+
+
+def test_incremental_keeps_line_count_in_sync(tmp_path):
+    root = _mkcorpus(tmp_path)
+    old = gi.build(root, ROWS, gi.corpus_files(root))
+    _write(root, 'content/sub/b.md', 'Lam Research.\n또.\n또.\n')
+    idx = gi.build(root, ROWS, gi.corpus_files(root), old)
+    assert idx['_meta']['lines'] == 6
