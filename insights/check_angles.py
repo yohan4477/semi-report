@@ -29,6 +29,7 @@ TAG_RE = re.compile(r'\[([^\[\]\n]*?·[^\[\]\n]*?)\]')
 SEP_RE = re.compile(r'^\|[\s:|-]+\|$')
 # 표가 아닌 절 — 여기엔 꼬리표를 안 단다
 NO_TAG_HEADS = ('## 시계열', '## 잔여', '## 다음 글이 채울 자리')
+NO_TAG_HEADS_NAMES = tuple(h[3:] for h in NO_TAG_HEADS)
 
 
 def _cells(line):
@@ -60,8 +61,33 @@ def rows(text):
     return out
 
 
+def angle_gap(text):
+    """절 제목과 frontmatter 의 각도 이름이 어긋난 자리 — 띄어쓰기만 달라도 안 붙는다.
+
+    붙이는 열쇠는 frontmatter 인데 사람은 절 제목을 보고 이름을 짓는다. 그래서 절은
+    「경쟁사 행동」인데 frontmatter 는 「경쟁사행동」인 파일이 셋 있었다. 공백을 지운
+    꼴로 견주되 제목의 띄어쓰기는 그대로 둔다 — 읽는 쪽은 띄운 것이 낫다.
+    """
+    out = []
+    m = re.search(r'^angles: \[(.+?)\]', text, re.M)
+    if not m:
+        return [(1, 'frontmatter 에 angles: 가 없다')]
+    fm = {x.strip().replace(' ', ''): x.strip() for x in m.group(1).split(',')}
+    for i, line in enumerate(text.split('\n'), 1):
+        if not line.startswith('## '):
+            continue
+        head = line[3:].strip()
+        if head in NO_TAG_HEADS_NAMES:
+            continue
+        if head.replace(' ', '') not in fm:
+            out.append((i, '절 「%s」 가 frontmatter 의 angles 에 없다' % head))
+    return out
+
+
 def check(text, canon, alias):
     msgs = []
+    for ln, msg in angle_gap(text):
+        msgs.append(('FAIL', 'A6', ln, msg))
     for ln, target, when, kind, raw in rows(text):
         if target is None:
             msgs.append(('FAIL', 'A4', ln,
