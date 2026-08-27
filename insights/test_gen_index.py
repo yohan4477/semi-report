@@ -221,3 +221,60 @@ def test_incremental_keeps_line_count_in_sync(tmp_path):
     _write(root, 'content/sub/b.md', 'Lam Research.\n또.\n또.\n')
     idx = gi.build(root, ROWS, gi.corpus_files(root), old)
     assert idx['_meta']['lines'] == 6
+
+
+def _mkwide(tmp_path):
+    import json as _json
+    c = tmp_path / 'content' / 'sub'
+    c.mkdir(parents=True)
+    io.open(str(c / 'a.md'), 'w', encoding='utf-8').write('엔비디아가 샀다.\n')
+    e = tmp_path / 'input' / 'clippings'
+    e.mkdir(parents=True)
+    io.open(str(e / 'Deep Dive.md'), 'w', encoding='utf-8').write(
+        'NVIDIA ships Blackwell.\n램리서치도 나온다.\n')
+    m = e / 'mer'
+    m.mkdir()
+    io.open(str(m / '111.json'), 'w', encoding='utf-8').write(_json.dumps(
+        {'no': '111', 'date': '2024-04-03',
+         'text': '머리말.\n엔비디아 이야기.\n끝.'}, ensure_ascii=False))
+    io.open(str(e / '메모.txt'), 'w', encoding='utf-8').write('엔비디아\n')
+    return str(tmp_path)
+
+
+def test_corpus_takes_all_three_kinds(tmp_path):
+    got = gi.corpus_files(_mkwide(tmp_path))
+    assert got == ['content/sub/a.md',
+                   'input/clippings/Deep Dive.md',
+                   'input/clippings/mer/111.json']
+
+
+def test_corpus_leaves_out_kinds_we_cannot_read(tmp_path):
+    for p in gi.corpus_files(_mkwide(tmp_path)):
+        assert not p.endswith('.txt')
+
+
+def test_corpus_does_not_take_clipping_md_as_a_mer_file(tmp_path):
+    got = gi.corpus_files(_mkwide(tmp_path))
+    assert got.count('input/clippings/Deep Dive.md') == 1
+
+
+def test_build_indexes_a_clipping_json_by_its_text_lines(tmp_path):
+    root = _mkwide(tmp_path)
+    idx = gi.build(root, ROWS, gi.corpus_files(root))
+    # 영문 클리핑 1줄의 NVIDIA 도 같은 정본에 걸린다
+    assert idx['엔비디아'] == ['content/sub/a.md#L1',
+                            'input/clippings/Deep Dive.md#L1',
+                            'input/clippings/mer/111.json#L2']
+
+
+def test_build_indexes_an_english_clipping(tmp_path):
+    root = _mkwide(tmp_path)
+    idx = gi.build(root, ROWS, gi.corpus_files(root))
+    assert 'input/clippings/Deep Dive.md#L1' in idx['엔비디아']
+    assert idx['램리서치'] == ['input/clippings/Deep Dive.md#L2']
+
+
+def test_meta_line_count_uses_body_lines_not_physical_lines(tmp_path):
+    root = _mkwide(tmp_path)
+    idx = gi.build(root, ROWS, gi.corpus_files(root))
+    assert idx['_meta']['lines'] == 6

@@ -30,10 +30,22 @@ import paths  # noqa: E402
 import source_lines as sl  # noqa: E402
 
 
+# 훑을 자리. 사람이 읽고 고치는 표다 — 갈래를 늘리려면 여기에 한 줄 더한다.
+# source_lines 가 읽을 줄 아는 확장자만 남는다.
+CORPUS = (
+    ('content', '**', '*.md'),
+    ('input', 'clippings', '*.md'),
+    ('input', 'clippings', 'mer', '*.json'),
+)
+
+
 def corpus_files(root):
-    pat = os.path.join(root, 'content', '**', '*.md')
-    out = [os.path.relpath(p, root).replace(os.sep, '/')
-           for p in glob.glob(pat, recursive=True)]
+    out = set()
+    for parts in CORPUS:
+        for p in glob.glob(os.path.join(root, *parts), recursive=True):
+            rel = os.path.relpath(p, root).replace(os.sep, '/')
+            if sl.known(rel):
+                out.add(rel)
     return sorted(out)
 
 
