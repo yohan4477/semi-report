@@ -63,6 +63,23 @@ CONCEPTS = {
     'equity_fv_gain': ['EquitySecuritiesFvNiGainLoss'],
     'cash_taxes_paid': ['IncomeTaxesPaidNet', 'IncomeTaxesPaid'],
     'cash': ['CashAndCashEquivalentsAtCarryingValue'],
+    # 재무제표 밖 약속 둘. 순부채에 **안 더한다** — 아래 두 가지가 성격이 다르다.
+    #   보증 최대노출: 발동해야 돈이 나가는 우발채무다. 「최대」라 기대손실이 아니다.
+    #     엔비디아는 2025-10-26 9억 달러에서 2026-07-26 1,085억 달러로 뛰었다.
+    #   장기 구매약정: 받을 물건·용역이 맞물려 있어 빚이 아니다. 다만 크기와 증가 속도가
+    #     우리가 그리는 설비투자 경로와 어긋나는지를 본다.
+    # 둘 다 값을 받아 조정 표에 미적용으로 세운다. 안 받으면 표에 줄조차 못 세운다.
+    'guarantee_max': ['GuaranteeObligationsMaximumExposure'],
+    # 구매약정 태그 셋을 **대체 후보로 묶지 않는다.** 알파벳은 2026-03-31 한 날에
+    # Unrecorded 75.6B 와 LongTerm 232.7B 를 함께 낸다 — 같은 것의 다른 이름이 아니라
+    # 범위가 다른 개념이다. 사슬로 두면 큰 개념 자리에 작은 개념이 조용히 들어앉는다.
+    # 엔비디아 재무상태표 태그 단절과 같은 사고를 설계로 넣는 셈이라 셋을 따로 받는다.
+    # 이 태그는 **잔액이 아니라 기간 값**이다. 알파벳은 start=2026-01-01 로 낸다 —
+    # 회계연도 시작부터의 누적이라 707.0B 는 「남아 있는 약정」이 아니라 상반기에
+    # 쌓인 금액이다. 잔액으로 읽으면 자릿수째로 틀린다. 그래서 FLOW 로 분류한다.
+    'purchase_long': ['LongTermPurchaseCommitmentAmount'],
+    'purchase_unrecorded': ['UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount'],
+    'purchase_obligation': ['PurchaseObligation'],
     # 엔비디아는 2025-10-26 뒤로 MarketableSecuritiesCurrent 를 안 쓴다. 뒤의 둘이
     # 그 자리를 잇는다 — 만기 1년 이내 공정가치가 재무상태표의 유동 시장성증권이다.
     'st_investments': ['ShortTermInvestments', 'MarketableSecuritiesCurrent',
@@ -144,6 +161,7 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
 # 「직전 연간 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
 FLOW = ('revenue', 'ebit', 'net_income', 'tax_expense', 'pretax_income',
         'cost_of_revenue', 'dna', 'lease_amortization', 'capex', 'ocf', 'sbc',
+        'purchase_long',
         'nonoperating', 'equity_fv_gain', 'cash_taxes_paid')
 
 
@@ -544,6 +562,26 @@ def consensus(ticker):
                      '0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다')
 
 
+def raw_facts(facts, tags, limit=8):
+    """태그의 원자료를 그대로 남긴다. 최근 12개월 값을 못 만들 때 쓰는 자리다.
+
+    **왜 두나.** 알파벳의 장기 구매약정은 10-Q 누적으로만 나온다. 연간 기저가 없어
+    기간 값 경로가 아무것도 못 만들고, 그러면 공시가 분명히 낸 값이 우리 파일에서
+    통째로 사라진다. 못 쓰는 것과 없는 것은 다르다 — 없어지면 표에 줄조차 못 세운다.
+
+    기간인지 시점인지도 함께 남긴다. 잔액으로 오해하면 자릿수째로 틀리는 항목이 있다.
+    """
+    out = []
+    for t in tags:
+        u = facts.get('facts', {}).get('us-gaap', {}).get(t, {})
+        for x in u.get('units', {}).get('USD', []):
+            out.append(dict(tag=t, start=x.get('start'), end=x['end'], val=x['val'],
+                            form=x.get('form'), filed=x.get('filed'),
+                            kind='기간' if x.get('start') else '시점'))
+    out.sort(key=lambda x: (x['end'], x['val']))
+    return out[-limit:]
+
+
 def gross_margin(facts, tags_rev, tags_cor, quarters=12):
     """분기 매출총이익률 계열.
 
@@ -622,6 +660,12 @@ def build(ticker):
         # 분기 매출총이익률. 총액 인식이 연결에 남기는 유일한 흔적이다
         'gross_margin': gross_margin(facts_raw, CONCEPTS['revenue'],
                                      CONCEPTS['cost_of_revenue']),
+        # 최근 12개월 값을 못 만드는 항목의 원자료. 못 쓰는 것과 없는 것은 다르다
+        'raw': {'purchase_long': raw_facts(facts_raw, CONCEPTS['purchase_long']),
+                # 보증 최대노출은 시점 값이라 최근 하나만 최근 12개월 자리에 남는다.
+                # 엔비디아는 세 분기 만에 9억에서 1,085억 달러로 뛰었다 — 그 뜀 자체가
+                # 본문이 말할 내용이라 이력을 남긴다
+                'guarantee_max': raw_facts(facts_raw, CONCEPTS['guarantee_max'])},
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),

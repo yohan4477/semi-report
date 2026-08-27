@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-27T12:49:40.344539+00:00",
+ "fetched_at": "2026-08-27T13:14:43.066042+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -1461,6 +1461,78 @@
      "start": null
     }
    },
+   "purchase_unrecorded": {
+    "2014": {
+     "end": "2014-12-31",
+     "val": 1434000000,
+     "filed": "2015-01-30",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 1782000000,
+     "filed": "2016-01-29",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 1710000000,
+     "filed": "2017-02-10",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 24200000000,
+     "filed": "2018-02-02",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 22193000000,
+     "filed": "2019-02-01",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 19988000000,
+     "filed": "2020-01-31",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 16486000000,
+     "filed": "2021-02-03",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 34902000000,
+     "filed": "2022-02-04",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 34776000000,
+     "filed": "2023-02-03",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 35484000000,
+     "filed": "2024-02-02",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    }
+   },
    "st_investments": {
     "2009": {
      "end": "2009-12-31",
@@ -2260,6 +2332,14 @@
     "tag": "CashAndCashEquivalentsAtCarryingValue",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
+   "purchase_unrecorded": {
+    "val": 32408000000,
+    "window": "2024-06-30",
+    "end": "2024-06-30",
+    "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-06-30 에 이 항목이 없어 730일 낡은 잔액을 쓴다",
+    "stale_days": 730
+   },
    "st_investments": {
     "val": 44775000000,
     "window": "2026-06-30",
@@ -2595,6 +2675,10 @@
    "cost_tag": "CostOfGoodsAndServicesSold"
   }
  ],
+ "raw": {
+  "purchase_long": [],
+  "guarantee_max": []
+ },
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -2643,7 +2727,7 @@
     "growth": -0.1671
    }
   ],
-  "fetched_at": "2026-08-27T12:49:46.482111+00:00",
+  "fetched_at": "2026-08-27T13:14:49.742293+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

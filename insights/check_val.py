@@ -137,10 +137,17 @@ def v2_period_aligned(out):
                                 '쓰는 자리에서 기간을 맞춰 본다'
                                 % (adjust.NAMES[t], k,
                                    (b - datetime.strptime(e, '%Y-%m-%d')).days)))
+        # 낡은 잔액은 **계산에 들어가는 것만** 막는다. 순현금·운전자본에 들어가는 시점
+        # 값이 한 해 낡은 채 실렸던 것이 그 사고였다. 받아만 두고 안 쓰는 태그(구매약정
+        # 따위)까지 막으면 공시 주기가 결함으로 둔갑한다 — 리스 때 한 번 겪었다.
+        used = set(GROUPS[1][1])
         for k, x in tt.items():
-            if isinstance(x, dict) and (x.get('stale_days') or 0) > DATE_TOL:
-                out.append(('FAIL', 'V2', '%s %s 가 기준일보다 %d일 낡았다'
-                            % (adjust.NAMES[t], k, x['stale_days'])))
+            if not (isinstance(x, dict) and (x.get('stale_days') or 0) > DATE_TOL):
+                continue
+            lv = 'FAIL' if k in used else 'WARN'
+            out.append((lv, 'V2', '%s %s 가 기준일보다 %d일 낡았다%s'
+                        % (adjust.NAMES[t], k, x['stale_days'],
+                           '' if lv == 'FAIL' else ' — 계산에 안 쓰는 값이다')))
 
 
 # 모듈 최상단에서 대문자 이름에 소수 리터럴을 바로 붙인 자리. 계산에서 온 값은

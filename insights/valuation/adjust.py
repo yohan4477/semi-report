@@ -172,6 +172,7 @@ def rows(t):
     out += _consts(t)
     out += _observed(t)
     out += _gross_trace(d, t)
+    out += _offbs(d, t, fcf)
 
     for r in out:
         r['ticker'] = t
@@ -215,17 +216,60 @@ _OBSERVED = {
          '기준 매출과 이익률',
          '[260528] 앤트로픽 성장과 베드락 믹스 L432',
          '필자는 가능성으로 적었고 공시가 따로 가르지 않는다. 크기를 모르므로 안 뺀다'),
-        ('offbs_guarantee', '재무제표 밖 신용 보증을 순부채에 안 넣는다', '순부채',
-         '[251128] TPUv7 L117',
-         '임차인이 임대료를 못 낼 때 대신 내겠다는 약속이다. 발동 전에는 재무상태표에 '
-         '안 잡히고 우리 순부채에도 안 들어간다'),
     ],
     'NVDA': [
-        ('offbs_backstop', '우발채무로 남은 백스톱을 순부채에 안 넣는다', '순부채',
-         '[260706] 엔비디아 GPU 부채 백스톱 L468',
-         '발동 전까지 대차대조표 밖에 있다. 발동하면 우리 순부채가 그만큼 늘어난다'),
     ],
 }
+
+
+# 재무제표 밖에 있는 약속. 순부채에 **안 더한다** — 더하면 두 번 틀린다.
+#   보증 최대노출은 「최대」다. 발동해야 돈이 나가고, 기대손실이 아니다.
+#   구매약정은 받을 물건·용역이 맞물려 있어 빚이 아니다.
+# 그래도 줄은 세운다. 우리가 순현금 회사라고 부르는 근거가 재무상태표 안쪽만 본 것이라면,
+# 바깥에 얼마가 있는지는 적어 두어야 그 말의 뜻이 정해진다.
+_OFFBS_SRC = {
+    'GOOGL': '[251128] TPUv7 L117 — 임차인이 임대료를 못 낼 때 대신 내겠다는 약속',
+    'NVDA': '[260706] 엔비디아 GPU 부채 백스톱 L468 — 발동 전까지 대차대조표 밖에 있다',
+}
+
+
+def _offbs(d, t, fcf):
+    tt = d['sec']['ttm']
+    out = []
+    g = tt.get('guarantee_max')
+    if g:
+        net_cash = -((tt.get('lt_debt', {}).get('val', 0)
+                      + tt.get('st_debt', {}).get('val', 0)
+                      - tt.get('cash', {}).get('val', 0)
+                      - tt.get('st_investments', {}).get('val', 0)) / B)
+        out.append(_row(
+            'offbs_guarantee', '보증 최대노출을 순부채에 안 넣는다', SKIPPED,
+            '순부채', 'sec', 'W11',
+            value=-g['val'] / B, unit='억 달러',
+            shown='%.0f억 달러 (%s 기준)' % (-g['val'] / B * 10, g['end']),
+            note='%s. 「최대」라 기대손실이 아니고 발동해야 돈이 나가므로 더하지 않는다. '
+                 '다만 우리가 더하는 순현금 %.0f억 달러의 %.1f배다'
+                 % (_OFFBS_SRC.get(t, '공시 주석'), net_cash * 10,
+                    (g['val'] / B) / net_cash if net_cash > 0 else 0)))
+    # 구매약정. 알파벳은 이 태그를 잔액이 아니라 기간 값으로 낸다 — 자릿수째로 오해할
+    # 자리라 값을 안 쓰고 왜 못 쓰는지만 남긴다.
+    # 최근 12개월 값이 안 만들어지는 항목이라 원자료를 본다. concepts 를 보면
+    # 연간 기저가 없는 회사가 통째로 빠진다 — 알파벳이 그랬다.
+    rawp = (d.get('raw') or {}).get('purchase_long') or []
+    if rawp:
+        last = rawp[-1]
+        out.append(_row(
+            'purchase_commit', '장기 구매약정을 순부채에 안 넣는다', UNMEASURED,
+            '순부채', 'sec', 'W11',
+            shown='%s 값이라 잔액이 아니다' % last['kind'],
+            note='가장 최근 관측은 %s~%s 에 %.0f억 달러다. start 가 붙은 %s 값이라 '
+                 '「남아 있는 약정」이 아니라 그 구간에 쌓인 금액이고, 잔액처럼 더하면 '
+                 '자릿수째로 틀린다. 관측이 %d건뿐이라 최근 12개월 값도 못 만든다. '
+                 '주석을 읽지 않아 무엇을 담는 수치인지도 아직 모른다'
+                 % (last['start'], last['end'], last['val'] / B * 10, last['kind'],
+                    len(rawp))))
+    return out
+
 
 
 # 총액 인식이 연결에 남기는 흔적을 실제로 찾아본 줄. 알파벳만 대상이다 —

@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T12:49:34.907319+00:00",
+ "fetched_at": "2026-08-27T13:14:37.134804+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -1277,6 +1277,66 @@
      "start": null
     }
    },
+   "purchase_unrecorded": {
+    "2025": {
+     "end": "2025-01-26",
+     "val": 7600000000,
+     "filed": "2025-02-26",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2026": {
+     "end": "2026-01-25",
+     "val": 22700000000,
+     "filed": "2026-02-25",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    }
+   },
+   "purchase_obligation": {
+    "2020": {
+     "end": "2020-01-26",
+     "val": 186000000,
+     "filed": "2020-02-20",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2021": {
+     "end": "2021-01-31",
+     "val": 317000000,
+     "filed": "2021-02-26",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-01-30",
+     "val": 10296000000,
+     "filed": "2022-03-18",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-01-29",
+     "val": 8063000000,
+     "filed": "2023-02-24",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-01-28",
+     "val": 20707000000,
+     "filed": "2024-02-21",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-01-26",
+     "val": 45079000000,
+     "filed": "2025-02-26",
+     "tag": "PurchaseObligation",
+     "start": null
+    }
+   },
    "st_investments": {
     "2010": {
      "end": "2011-01-30",
@@ -1951,6 +2011,29 @@
     "tag": "CashAndCashEquivalentsAtCarryingValue",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
+   "guarantee_max": {
+    "val": 108500000000,
+    "window": "2026-07-26",
+    "end": "2026-07-26",
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "purchase_unrecorded": {
+    "val": 22700000000,
+    "window": "2026-01-25",
+    "end": "2026-01-25",
+    "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-07-26 에 이 항목이 없어 182일 낡은 잔액을 쓴다",
+    "stale_days": 182
+   },
+   "purchase_obligation": {
+    "val": 45774000000,
+    "window": "2025-07-27",
+    "end": "2025-07-27",
+    "tag": "PurchaseObligation",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-07-26 에 이 항목이 없어 364일 낡은 잔액을 쓴다",
+    "stale_days": 364
+   },
    "st_investments": {
     "val": 41000000000,
     "window": "2026-07-26",
@@ -2286,6 +2369,29 @@
    "cost_tag": "CostOfRevenue"
   }
  ],
+ "raw": {
+  "purchase_long": [],
+  "guarantee_max": [
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2025-10-26",
+    "val": 860000000,
+    "form": "10-Q",
+    "filed": "2025-11-19",
+    "kind": "시점"
+   },
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2026-07-26",
+    "val": 108500000000,
+    "form": "10-Q",
+    "filed": "2026-08-26",
+    "kind": "시점"
+   }
+  ]
+ },
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -2334,7 +2440,7 @@
     "growth": 0.45029998
    }
   ],
-  "fetched_at": "2026-08-27T12:49:40.333291+00:00",
+  "fetched_at": "2026-08-27T13:14:43.055444+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

@@ -1,6 +1,6 @@
 {
  "ticker": "META",
- "fetched_at": "2026-08-27T12:49:46.492612+00:00",
+ "fetched_at": "2026-08-27T13:14:49.754334+00:00",
  "sec": {
   "entity": "Meta Platforms, Inc.",
   "cik": "0001326801",
@@ -1365,6 +1365,45 @@
      "start": null
     }
    },
+   "purchase_long": {
+    "2022": {
+     "end": "2022-12-31",
+     "val": 10340000000,
+     "filed": "2023-02-02",
+     "tag": "LongTermPurchaseCommitmentAmount",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 15120000000,
+     "filed": "2024-02-02",
+     "tag": "LongTermPurchaseCommitmentAmount",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 24970000000,
+     "filed": "2025-01-30",
+     "tag": "LongTermPurchaseCommitmentAmount",
+     "start": "2024-01-01"
+    }
+   },
+   "purchase_unrecorded": {
+    "2024": {
+     "end": "2024-12-31",
+     "val": 34120000000,
+     "filed": "2025-01-30",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 103770000000,
+     "filed": "2026-01-29",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    }
+   },
    "st_investments": {
     "2012": {
      "end": "2012-12-31",
@@ -1760,11 +1799,24 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "purchase_long": {
+    "val": 24970000000,
+    "window": "2024 회계연도 (뒤에 분기 보고 없음)",
+    "end": "2024-12-31",
+    "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
+   },
    "cash": {
     "val": 15462000000,
     "window": "2026-06-30",
     "end": "2026-06-30",
     "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "purchase_unrecorded": {
+    "val": 278990000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
    "st_investments": {
@@ -2082,6 +2134,83 @@
    "cost_tag": "CostOfRevenue"
   }
  ],
+ "raw": {
+  "purchase_long": [
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2022-01-01",
+    "end": "2022-09-30",
+    "val": 8640000000,
+    "form": "10-Q",
+    "filed": "2022-10-27",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2022-01-01",
+    "end": "2022-12-31",
+    "val": 10340000000,
+    "form": "10-K",
+    "filed": "2023-02-02",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2023-01-01",
+    "end": "2023-03-31",
+    "val": 12220000000,
+    "form": "10-Q",
+    "filed": "2023-04-27",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2023-01-01",
+    "end": "2023-06-30",
+    "val": 12270000000,
+    "form": "10-Q",
+    "filed": "2023-07-27",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2023-01-01",
+    "end": "2023-09-30",
+    "val": 13750000000,
+    "form": "10-Q",
+    "filed": "2023-10-26",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2023-01-01",
+    "end": "2023-12-31",
+    "val": 15120000000,
+    "form": "10-K",
+    "filed": "2024-02-02",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2024-01-01",
+    "end": "2024-03-31",
+    "val": 15920000000,
+    "form": "10-Q",
+    "filed": "2024-04-25",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2024-01-01",
+    "end": "2024-12-31",
+    "val": 24970000000,
+    "form": "10-K",
+    "filed": "2025-01-30",
+    "kind": "기간"
+   }
+  ],
+  "guarantee_max": []
+ },
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -2130,7 +2259,7 @@
     "growth": 0.117
    }
   ],
-  "fetched_at": "2026-08-27T12:49:51.577605+00:00",
+  "fetched_at": "2026-08-27T13:14:55.394572+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T12:49:24.085309+00:00",
+ "fetched_at": "2026-08-27T13:14:25.195394+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -1022,6 +1022,89 @@
      "start": null
     }
    },
+   "guarantee_max": {
+    "2025": {
+     "end": "2025-12-31",
+     "val": 5700000000,
+     "filed": "2026-02-05",
+     "tag": "GuaranteeObligationsMaximumExposure",
+     "start": null
+    }
+   },
+   "purchase_unrecorded": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 1700000000,
+     "filed": "2016-02-11",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 2500000000,
+     "filed": "2017-02-03",
+     "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+     "start": null
+    }
+   },
+   "purchase_obligation": {
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7200000000,
+     "filed": "2018-02-06",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 7400000000,
+     "filed": "2019-02-05",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 5700000000,
+     "filed": "2020-02-04",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 10700000000,
+     "filed": "2021-02-03",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 12300000000,
+     "filed": "2023-02-03",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 10600000000,
+     "filed": "2024-01-31",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 8800000000,
+     "filed": "2025-02-05",
+     "tag": "PurchaseObligation",
+     "start": null
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 7700000000,
+     "filed": "2026-02-05",
+     "tag": "PurchaseObligation",
+     "start": null
+    }
+   },
    "st_investments": {
     "2015": {
      "end": "2015-12-31",
@@ -1519,6 +1602,29 @@
     "tag": "CashAndCashEquivalentsAtCarryingValue",
     "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
    },
+   "guarantee_max": {
+    "val": 7600000000,
+    "window": "2026-06-30",
+    "end": "2026-06-30",
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일과 같은 날이다"
+   },
+   "purchase_unrecorded": {
+    "val": 75600000000,
+    "window": "2026-03-31",
+    "end": "2026-03-31",
+    "tag": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-06-30 에 이 항목이 없어 91일 낡은 잔액을 쓴다",
+    "stale_days": 91
+   },
+   "purchase_obligation": {
+    "val": 7700000000,
+    "window": "2025-12-31",
+    "end": "2025-12-31",
+    "tag": "PurchaseObligation",
+    "method": "시점 값이라 잔액 하나를 쓴다. 손익 기준일 2026-06-30 에 이 항목이 없어 181일 낡은 잔액을 쓴다",
+    "stale_days": 181
+   },
    "st_investments": {
     "val": 186563000000,
     "window": "2026-06-30",
@@ -1854,6 +1960,57 @@
    "cost_tag": "CostOfRevenue"
   }
  ],
+ "raw": {
+  "purchase_long": [
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2026-01-01",
+    "end": "2026-03-31",
+    "val": 232700000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "기간"
+   },
+   {
+    "tag": "LongTermPurchaseCommitmentAmount",
+    "start": "2026-01-01",
+    "end": "2026-06-30",
+    "val": 707000000000,
+    "form": "10-Q",
+    "filed": "2026-07-23",
+    "kind": "기간"
+   }
+  ],
+  "guarantee_max": [
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2025-12-31",
+    "val": 5700000000,
+    "form": "10-K",
+    "filed": "2026-02-05",
+    "kind": "시점"
+   },
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2026-03-31",
+    "val": 9000000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "시점"
+   },
+   {
+    "tag": "GuaranteeObligationsMaximumExposure",
+    "start": null,
+    "end": "2026-06-30",
+    "val": 7600000000,
+    "form": "10-Q",
+    "filed": "2026-07-23",
+    "kind": "시점"
+   }
+  ]
+ },
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -1902,7 +2059,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T12:49:29.634292+00:00",
+  "fetched_at": "2026-08-27T13:14:30.568883+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
