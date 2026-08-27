@@ -69,3 +69,69 @@ def test_card_text_survives_missing_fields():
 
 def test_card_id_is_the_title():
     assert al.card_id(CARD) == '강남 재건축은 왜 안 되나'
+
+
+def test_parse_axis_fills_defaults():
+    a = al.parse_axis({'name': '지역', 'cells': [{'id': '서울', 'words': ['강남']}]})
+    assert a['name'] == '지역'
+    assert a['cells'][0]['id'] == '서울'
+    assert a['cells'][0]['words'] == ['서울', '강남']
+
+
+def test_parse_axis_adds_id_to_words_when_absent():
+    a = al.parse_axis({'name': '지역', 'cells': [{'id': '인천'}]})
+    assert '인천' in a['cells'][0]['words']
+
+
+def test_parse_axis_lowercases_words():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': 'HBM', 'words': ['HBM3E']}]})
+    assert a['cells'][0]['words'] == ['hbm', 'hbm3e']
+
+
+def test_parse_axis_overwrites_human_written_shape():
+    a = al.parse_axis({'name': 'x', 'shape': '수식',
+                       'cells': [{'id': 'a'}, {'id': 'b'}]})
+    assert a['shape'] == '목록'
+
+
+def test_shape_list_when_no_relations():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': 'a'}, {'id': 'b'}]})
+    assert al.shape_of(a) == '목록'
+
+
+def test_shape_line_when_every_cell_has_order():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': 'a', 'order': 1},
+                                              {'id': 'b', 'order': 2}]})
+    assert al.shape_of(a) == '선'
+
+
+def test_shape_list_when_order_is_partial():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': 'a', 'order': 1},
+                                              {'id': 'b'}]})
+    assert al.shape_of(a) == '목록'
+
+
+def test_shape_tree_when_a_cell_has_parent():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': '수도권'},
+                                              {'id': '서울', 'parent': '수도권'}]})
+    assert al.shape_of(a) == '나무'
+
+
+def test_shape_chain_when_cells_feed_forward():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': '매물', 'feeds': '계약'},
+                                              {'id': '계약', 'feeds': '등기'},
+                                              {'id': '등기'}]})
+    assert al.shape_of(a) == '사슬'
+
+
+def test_shape_loop_when_last_feeds_first():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': '조달', 'feeds': '칩'},
+                                              {'id': '칩', 'feeds': '매출'},
+                                              {'id': '매출', 'feeds': '조달'}]})
+    assert al.shape_of(a) == '고리'
+
+
+def test_shape_formula_when_a_cell_has_op():
+    a = al.parse_axis({'name': 'x', 'cells': [{'id': '매출', 'op': '×'},
+                                              {'id': '단가'}, {'id': '수량'}]})
+    assert al.shape_of(a) == '수식'

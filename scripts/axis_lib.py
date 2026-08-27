@@ -60,3 +60,49 @@ def card_text(card):
 
 def card_id(card):
     return card.get('title', '')
+
+
+
+
+def parse_axis(obj):
+    """축 정의를 정규화한다. 사람이 적은 shape 는 버리고 칸에서 계산한 값을 넣는다."""
+    cells = []
+    for c in obj.get('cells') or ():
+        cid = c['id']
+        words = [w.lower() for w in ([cid] + list(c.get('words') or ()))]
+        seen, uniq = set(), []
+        for w in words:
+            if w not in seen:
+                seen.add(w)
+                uniq.append(w)
+        cell = {'id': cid, 'words': uniq}
+        for k in ('order', 'parent', 'feeds', 'op'):
+            if c.get(k) is not None:
+                cell[k] = c[k]
+        cells.append(cell)
+    axis = {'name': obj.get('name', ''), 'cells': cells}
+    axis['shape'] = shape_of(axis)
+    return axis
+
+
+def shape_of(axis):
+    """형은 고르는 것이 아니라 칸 사이 관계에서 읽힌다.
+
+    고리를 사슬보다 먼저 본다 — 고리는 사슬의 특수한 꼴이라 뒤에 보면 사슬로 읽힌다.
+    """
+    cells = axis.get('cells') or []
+    if not cells:
+        return '목록'
+    ids = [c['id'] for c in cells]
+    feeds = {c['id']: c.get('feeds') for c in cells if c.get('feeds')}
+    if feeds and feeds.get(ids[-1]) == ids[0]:
+        return '고리'
+    if any(c.get('op') for c in cells):
+        return '수식'
+    if feeds:
+        return '사슬'
+    if any(c.get('parent') for c in cells):
+        return '나무'
+    if all(c.get('order') is not None for c in cells):
+        return '선'
+    return '목록'
