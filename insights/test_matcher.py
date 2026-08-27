@@ -61,3 +61,28 @@ def test_result_is_deterministic():
     line = 'NVIDIA 와 Lam Research 가 메타를 만났다'
     assert mt.find(line, RULES) == mt.find(line, RULES)
     assert mt.find(line, RULES) == ['램리서치', '메타', '엔비디아']
+
+
+# 짧은 한글 이름이 흔한 서술어와 겹치는 자리. deny 에 개체 이름만 넣으면 못 막지만
+# 앞말을 붙인 구를 넣으면 _denied 가 그 자리를 걸러 낸다 — 새 장치가 필요 없다.
+CURSOR = [
+    {'canonical': '커서', 'type': '제품',
+     'ko': ['커서'], 'en': ['Cursor'],
+     'deny': ['가 커서', '이 커서', '보다 커서', '배 커서', '배나 커서',
+              '훨씬 커서', '워낙 커서', '만큼 커서']},
+]
+CURSOR_RULES = mt.compile_rules(CURSOR)
+
+
+def test_deny_with_a_leading_word_blocks_the_predicate():
+    assert mt.find('차이가 커서 순환기내과에서는', CURSOR_RULES) == []
+    assert mt.find('분자량이 커서 맛이 없다', CURSOR_RULES) == []
+    assert mt.find('아마존보다 커서 외부 고객에게', CURSOR_RULES) == []
+    assert mt.find('20배나 커서 전력 낭비', CURSOR_RULES) == []
+    assert mt.find('워낙 커서, 오픈AI와', CURSOR_RULES) == []
+
+
+def test_deny_with_a_leading_word_keeps_the_real_mention():
+    assert mt.find('커서가 이 표현을 쓰기 시작했다', CURSOR_RULES) == ['커서']
+    assert mt.find('스페이스X의 커서(Cursor) 인수', CURSOR_RULES) == ['커서']
+    assert mt.find('딥시크, 커서', CURSOR_RULES) == ['커서']
