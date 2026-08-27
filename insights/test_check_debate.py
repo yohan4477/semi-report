@@ -126,3 +126,20 @@ def test_d8_flags_malformed_voice_heading():
 
 def test_d8_silent_on_two_well_formed_voices():
     assert 'D8' not in rules(cd.check('x.md', HEAD + BODY_TWO_OK, TODAY))
+
+
+def test_d1_passes_with_decimal_point():
+    """소수점이 든 정상 문장에 D1이 안 뜬다."""
+    decimal_body = BODY_OK.replace(
+        '회사채 발행이 매수 여력을 두고 경쟁한다 ([260820] 바이백을 두 배로 L17).',
+        '발표 직후 30년물은 9bp 내려 5.18~5.20%대가 됐다 ([260820] 바이백을 두 배로 L21).')
+    assert 'D1' not in rules(no_d7(cd.check('x.md', HEAD + decimal_body, TODAY)))
+
+
+def test_d1_detects_after_decimal_sentence():
+    """소수점 정상 문장 뒤에 인용 없는 문장이 있으면 D1이 뜬다."""
+    bad = BODY_OK.replace(
+        '회사채 발행이 매수 여력을 두고 경쟁한다 ([260820] 바이백을 두 배로 L17).',
+        '발표 직후 30년물은 9bp 내려 5.18~5.20%대가 됐다 ([260820] 바이백을 두 배로 L21).\n'
+        '이 설명이 더 그럴듯하다.')
+    assert 'D1' in rules(no_d7(cd.check('x.md', HEAD + bad, TODAY)))
