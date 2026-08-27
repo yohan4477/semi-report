@@ -226,3 +226,52 @@ def test_review_never_raises_on_bad_axis():
     r = al.review([_card('아무거나')], al.parse_axis({'name': '빈 축', 'cells': []}))
     assert r['cells'] == []
     assert r['residual_pct'] == 100
+
+
+def _sc(title, sec, also=None):
+    c = {'title': title, 'section': (sec, 'x', sec)}
+    if also:
+        c['also'] = [(a, 'x', a) for a in also]
+    return c
+
+
+def test_declared_axis_builds_cells_from_sections():
+    cards = [_sc('가', '서울'), _sc('나', '경기'), _sc('다', '서울')]
+    a = al.declared_axis(cards)
+    assert [c['id'] for c in a['cells']] == ['서울', '경기']
+    assert a['name'] == '섹션'
+
+
+def test_declared_axis_includes_also_sections():
+    a = al.declared_axis([_sc('가', '서울', also=['경기'])])
+    assert [c['id'] for c in a['cells']] == ['서울', '경기']
+
+
+def test_declared_place_reads_section_not_words():
+    got = al.declared_place([_sc('강남 이야기', '지방')])
+    assert got['강남 이야기'] == ['지방']
+
+
+def test_declared_place_includes_also():
+    got = al.declared_place([_sc('가', '서울', also=['경기'])])
+    assert got['가'] == ['경기', '서울']
+
+
+def test_declared_review_has_no_residual():
+    r = al.declared_review([_sc('가', '서울'), _sc('나', '경기')])
+    assert r['residual'] == []
+    assert r['residual_pct'] == 0
+
+
+def test_declared_review_names_overlap_as_declared():
+    r = al.declared_review([_sc('가', '서울', also=['경기'])])
+    assert r['overlap_declared'] == [{'card': '가', 'cells': ['경기', '서울']}]
+    assert r['overlap'] == []
+
+
+def test_declared_review_on_real_dashboard():
+    cards = al.load_cards(ROOT, 'gen_epoch_dashboard')
+    r = al.declared_review(cards)
+    assert r['cards'] == 10
+    assert r['residual'] == []
+    assert sum(c['n'] for c in r['cells']) >= 10

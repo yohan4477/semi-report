@@ -146,3 +146,55 @@ def review(cards, axis):
         'skew': round(max(placed) / min(placed), 1) if placed else 0,
         'placement': placement,
     }
+
+
+def _sec_id(sec):
+    return sec[0] if isinstance(sec, (list, tuple)) and sec else sec
+
+
+def declared_axis(cards):
+    """섹션이 이미 축이다. 카드에 적힌 차례가 곧 칸의 차례다."""
+    ids, seen = [], set()
+    for c in cards:
+        for sec in [c.get('section')] + list(c.get('also') or ()):
+            sid = _sec_id(sec)
+            if sid is not None and sid not in seen:
+                seen.add(sid)
+                ids.append(sid)
+    return parse_axis({'name': '섹션', 'cells': [{'id': i} for i in ids]})
+
+
+def declared_place(cards):
+    """선언된 배치는 낱말로 안 정한다. section 과 also 를 그대로 읽는다."""
+    out = {}
+    for c in cards:
+        secs = [c.get('section')] + list(c.get('also') or ())
+        out[card_id(c)] = sorted({_sec_id(s) for s in secs if _sec_id(s) is not None})
+    return out
+
+
+def declared_review(cards):
+    """섹션 축의 집계. 겹침은 사람이 선언한 것이므로 이름을 달리 단다."""
+    axis = declared_axis(cards)
+    placement = declared_place(cards)
+    counts = {cell['id']: 0 for cell in axis['cells']}
+    for hits in placement.values():
+        for cid in hits:
+            counts[cid] += 1
+    placed = [n for n in counts.values() if n]
+    return {
+        'axis': axis['name'],
+        'shape': axis['shape'],
+        'cards': len(cards),
+        'cells': [{'id': cell['id'], 'n': counts[cell['id']]}
+                  for cell in axis['cells']],
+        'overlap': [],
+        'overlap_declared': [{'card': t, 'cells': hits}
+                             for t, hits in sorted(placement.items())
+                             if len(hits) > 1],
+        'empty': [cell['id'] for cell in axis['cells'] if not counts[cell['id']]],
+        'residual': sorted(t for t, hits in placement.items() if not hits),
+        'residual_pct': 0,
+        'skew': round(max(placed) / min(placed), 1) if placed else 0,
+        'placement': placement,
+    }
