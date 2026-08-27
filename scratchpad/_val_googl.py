@@ -105,12 +105,19 @@ def report4_html(sec, p, fig):
     h_ = ['<div class="vhero">',
           '<p class="vh-l">결론</p>',
           '<p class="vh-say"><b>우리 잣대로는 지금 주가 %.2f달러(%s)를 못 받칩니다.</b> '
-          '축 둘이 같은 곳을 가리킵니다.</p>' % (PRICE, PRICE_DAY),
+          '가장 후한 경로만 위로 올라가는데, 그 경로는 할인율이 역산 수준에 '
+          '닿아 판정에 못 씁니다.</p>' % (PRICE, PRICE_DAY),
           '<div class="vh2">']
 
     # ── 축 ① DCF
     ax = ['<div class="vh-ax"><span class="k"><span class="en">DCF</span>'
           '<span class="ko">가정을 넣어 값을 낸다</span></span>',
+          '<p class="lead">보수와 중간 경로가 현재가 아래입니다. 후한 경로는 '
+          '<b>%+.0f%%</b>인데 할인율 %.2f%%가 현재가를 정당화하는 %.2f%%보다 낮아 '
+          '스스로 서지 못합니다.</p>'
+          % ((_vals['Bull']['per_share'] / PRICE - 1) * 100,
+             gc.wacc_of('Bull') * 100, (_ir['Bull'] or 0) * 100)
+          if gc.band_is_circular('Bull') else
           '<p class="lead">세 경로 모두 현재가 아래입니다. 가장 후한 경로도 '
           '<b>%.0f%% 낮습니다.</b></p>'
           % abs((_vals['Bull']['per_share'] / PRICE - 1) * 100),
@@ -340,7 +347,7 @@ def report4_html(sec, p, fig):
       '마진, 2029~2035년에 성장률이 내려앉는 자리, 그리고 영구 단계의 마진입니다. '
       '보수적인 경로는 성장률 14.0%에 영구 마진 15.0%를, 중간 경로는 17.5%와 17.0%를, '
       '후한 경로는 21.0%와 19.0%를 씁니다.')
-    fig(('케이스 셋이 모두 현재가 아래에 선다', _val_fig.FIG_CASE,
+    fig((_val_fig._C_TITLE, _val_fig.FIG_CASE,
          '세 값은 <b>우리가 돌린 계산</b>입니다. 계산기는 <code>insights/dcf.py</code>이고 '
          '경로는 <code>scratchpad/googl_cases.py</code>에 있습니다.'))
     _rows = gc.path(gc.CASES['Base'])
@@ -596,8 +603,12 @@ def report4_html(sec, p, fig):
     # ── 11 ──────────────────────────────────────────────────────────
     sec('11. 판정 — 우리 잣대로는 현재가를 못 받친다')
     p('가정을 넣어 값을 낸 절 8도, 그의 잣대로 잰 절 9도, 시가총액에서 가정을 되돌린 '
-      '절 10도 같은 곳을 가리킵니다. '
-      '<b>우리가 세운 어떤 가정 조합도 지금 주가 %.2f달러를 정당화하지 못합니다.</b>' % PRICE)
+      '절 10도 같은 곳을 가리킵니다. <b>보수와 중간 경로는 지금 주가 %.2f달러를 '
+      '정당화하지 못합니다.</b> 후한 경로는 주당 %.0f달러로 현재가 위에 서지만, 그 경로에 '
+      '준 할인율 %.2f%%가 현재가를 정당화하는 %.2f%%보다 낮습니다. 회계사 판이 「역산 '
+      '수준」이라 부르며 배제하는 자리라 판정에 쓰지 않습니다.'
+      % (PRICE, _vals['Bull']['per_share'], gc.wacc_of('Bull') * 100,
+         (_ir['Bull'] or 0) * 100))
     _base_ps = _vals['Base']['per_share']
     _add = 131.5 / gc.SHARES
     p('빠진 자산이 있는지도 확인했습니다. 알파벳이 들고 있는 비상장 지분의 장부 금액은 '

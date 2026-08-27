@@ -1146,7 +1146,8 @@ HEADER = '''  <header>
 
 LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 장은 그 답들을 이어 붙입니다. '
         '지금 실린 것은 로봇을 다룬 보고서 둘, <b>AI 비즈니스 밸류체인</b> 리포트 한 편, '
-        '그리고 <b>밸류에이션</b> 세 편입니다. '
+        '그리고 <b>밸류에이션</b> 세 편입니다. 밸류에이션 편은 현금흐름 할인법과 '
+        '비교 회사 배수를 나란히 놓습니다. 둘이 반대를 가리키는 자리도 그대로 싣습니다. '
         '로봇 보고서의 원본 카드는 <a href="수도리무브 대시보드.html">수도리무브 대시보드</a>에, '
         '밸류체인 리포트의 원문은 SemiAnalysis 뉴스레터 변환본에 있습니다. '
         '밸류에이션 편만 성격이 다릅니다 — 원문이 낸 값을 엮은 것이 아니라 '
@@ -1156,7 +1157,7 @@ META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
       <span>보고서 <b>9편</b></span>
-      <span>절 <b>85개</b></span>
+      <span>절 <b>86개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -1174,10 +1175,10 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '보증선까지는 다 갖고, 넘긴 만큼만 나눈다', _biz_fig.FIG_BACKSTOP, ''),
                (0, '기준연도를 어디로 잡느냐가 잉여현금흐름을 뒤집는다', _val_fig.FIG_BASE, ''),
                (0, '세전이익의 절반이 장사 밖에서 왔다', _val_fig.FIG_NI, ''),
-               (0, '케이스 셋이 모두 현재가 아래에 선다', _val_fig.FIG_CASE, ''),
+               (0, _val_fig._C_TITLE, _val_fig.FIG_CASE, ''),
                (0, '영업이익률이 두 번 무너졌다', _val_nvda_fig.FIG_CYCLE, ''),
                (0, '세후영업이익과 잉여현금흐름 사이가 벌어진다', _val_nvda_fig.FIG_FUNNEL, ''),
-               (0, '엔비디아 케이스 셋이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
+               (0, '경로 넷이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
                (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, ''),
                (0, '비교 대상을 어떻게 고르느냐가 결론을 가른다', _val_nvda_fig.FIG_MULT, '')]
 

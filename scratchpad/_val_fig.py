@@ -13,7 +13,9 @@ import googl_cases as gc
 
 # 도해에도 값을 박지 않는다. 종가가 바뀌면 그림 속 점선과 숫자가 본문과 어긋난다 —
 # 2026-08-27 에 엔비디아 실적으로 여섯을 다시 뜨자 이 그림만 옛 종가를 들고 있었다.
-_CV = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.WACC,
+# 할인율은 케이스마다 다르다(R29). 여기서 gc.WACC 하나로 돌리면 그림만 옛 값을
+# 들고 본문과 어긋난다 — 2026-08-27에 실제로 그랬다.
+_CV = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.wacc_of(n),
                        gc.CASES[n]['g'], gc.NET_DEBT, gc.SHARES)['per_share']
        for n in ('Bear', 'Base', 'Bull')}
 
@@ -100,7 +102,7 @@ FIG_NI = _svg(W, 216, '세전이익의 절반이 장사 밖에서 왔다', ''.jo
 # ── 도해 ③ 케이스 셋과 현재가 ───────────────────────────────────
 # 순위 막대. 우리가 돌린 세 경로와 시장가를 같은 눈금에 둔다.
 
-_C_X, _C_MAXV, _C_MAXW = 96, 360.0, 468
+_C_X, _C_MAXV, _C_MAXW = 96, 400.0, 460
 
 
 def _cbar(y, name, v, note, accent=False):
@@ -116,7 +118,12 @@ def _cbar(y, name, v, note, accent=False):
 
 _PRICE_X = _C_X + int(round(gc.PRICE / _C_MAXV * _C_MAXW))
 
-FIG_CASE = _svg(W, 216, '케이스 셋이 모두 현재가 아래에 선다', ''.join([
+# 제목을 박지 않는다. 가장 후한 경로가 현재가 위로 올라가면 「모두 아래」가 거짓이 된다.
+_C_TITLE = ('케이스 셋이 모두 현재가 아래에 선다'
+            if max(_CV.values()) < gc.PRICE else
+            '가장 후한 경로만 현재가 위에 선다')
+
+FIG_CASE = _svg(W, 216, _C_TITLE, ''.join([
     _lt(40, 34, '주당가치 (달러) — 우리가 돌린 세 경로'),
     _cbar(52, 'Bear', _CV['Bear'], '%.0f' % _CV['Bear']),
     _cbar(84, 'Base', _CV['Base'], '%.0f' % _CV['Base']),
@@ -126,6 +133,9 @@ FIG_CASE = _svg(W, 216, '케이스 셋이 모두 현재가 아래에 선다', ''
     'stroke-dasharray="5 4" fill="none"/>' % _PRICE_X,
     _lt(40, 176, '점선은 %s 종가 %.2f달러다' % (gc.d['market']['as_of'][:10], gc.PRICE),
         bold=False),
-    _lt(40, 196, '가장 후한 Bull 도 %.0f%% 아래에 선다'
-        % abs((_CV['Bull'] / gc.PRICE - 1) * 100), bold=False),
+    _lt(40, 196, ('가장 후한 Bull 도 %.0f%% 아래에 선다'
+                  % abs((_CV['Bull'] / gc.PRICE - 1) * 100))
+        if _CV['Bull'] < gc.PRICE else
+        ('가장 후한 Bull 만 %.0f%% 위에 서는데, 그 경로는 할인율이 역산 수준에 닿았다'
+         % ((_CV['Bull'] / gc.PRICE - 1) * 100)), bold=False),
 ]))

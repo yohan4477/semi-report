@@ -62,9 +62,9 @@ def report6_html(sec, p, fig):
     # ── 결론 상자 ──────────────────────────────────────────────────
     h_ = ['<div class="vhero">',
           '<p class="vh-l">결론</p>',
-          '<p class="vh-say"><b>우리 잣대로는 지금 주가 %.2f달러(%s)를 못 받칩니다.</b> '
-          '알파벳 편과 같은 축 둘이 여기서도 같은 곳을 가리킵니다.</p>'
-          % (nc.PRICE, nc.PRICE_DAY),
+          '<p class="vh-say"><b>현금흐름 할인법으로는 지금 주가 %.2f달러(%s)가 안 '
+          '나옵니다. 그런데 비교 회사 배수로 재면 반대로 나옵니다.</b> 축 셋 가운데 둘이 '
+          '한쪽을, 하나가 다른 쪽을 가리킵니다.</p>' % (nc.PRICE, nc.PRICE_DAY),
           '<div class="vh2">']
 
     ax = ['<div class="vh-ax"><span class="k"><span class="en">DCF</span>'
@@ -104,6 +104,13 @@ def report6_html(sec, p, fig):
           '</div>']
     h_ += ax
 
+    _im0 = nc.implied_by_multiple()
+    if _im0:
+        h_.append('<p class="vh-say" style="margin-top:14px">비교 회사 선행 배수로 재면 '
+                  '<b>%.0f~%.0f달러</b>가 나옵니다. 엔비디아 자신의 배수가 %.1f배로 '
+                  '여섯 중 가장 낮습니다. 절 10이 이 축을 답니다.</p>'
+                  % (min(px for _l, _a, px in _im0[2]),
+                     max(px for _l, _a, px in _im0[2]), _im0[1]))
     h_ += ['</div>',
            '<p class="vh-foot">가정은 <b>우리가 정한 것</b>입니다. 투자 추천이 아닙니다. '
            '<a href="%s">📄 계산 전체</a></p>' % dc.blob('scratchpad/nvda_cases.py'),
@@ -319,7 +326,7 @@ def report6_html(sec, p, fig):
       % (nc.tv_multiple(nc.CASES['Base']['g']), nc.tv_multiple(nc.CASES['Base']['g']),
          (1 + gcs.CASES['Base']['g']) / (gcs.WACC - gcs.CASES['Base']['g']),
          nc.price_multiple()))
-    fig(('케이스 셋이 모두 현재가 아래에 선다', nf.FIG_CASE,
+    fig(('경로 넷이 모두 현재가 아래에 선다', nf.FIG_CASE,
          '막대는 우리가 돌린 세 경로의 주당가치이고 점선은 %s 종가입니다. '
          '가정은 우리가 정한 것입니다.' % nc.PRICE_DAY))
 
@@ -498,9 +505,10 @@ def report6_html(sec, p, fig):
             ('할인율만 10%로', _v(_rows, 0.10, 0.0275)),
             ('거기에 영구성장률 3.5%', _v(_rows, 0.10, 0.035)),
             ('거기에 조정 두 해 제거', _v(_flat, 0.10, 0.035))]
-    p('세 경로가 현재가보다 %.0f%%에서 %.0f%% 낮습니다. 알파벳 편도 같은 잣대에서 '
-      '아래로 나왔습니다. <b>재는 회사마다 아래로 나오면 그 잣대는 「비싸다」를 못 '
-      '말합니다.</b> 무엇이 값을 누르는지를 먼저 셉니다.'
+    p('세 경로가 현재가보다 %.0f%%에서 %.0f%% 낮습니다. 그런데 절 10의 상대가치 축은 '
+      '같은 회사를 현재가 위로 놓습니다. <b>같은 회사가 잣대에 따라 반대로 읽힙니다.</b> '
+      '어느 쪽이 맞는지 정하기 전에, 현금흐름 할인법 안에서 무엇이 값을 누르는지부터 '
+      '셉니다.'
       % (abs((v['Bull']['per_share'] / nc.PRICE - 1) * 100),
          abs((v['Bear']['per_share'] / nc.PRICE - 1) * 100)))
     p('<div class="yt-wrap"><table class="yt">'
