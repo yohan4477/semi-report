@@ -530,6 +530,21 @@ def main():
         if not (meta or {}).get('headline'):
             add('FAIL', where, 'P7', 'headline 없음 — 카드에 제목이 안 붙는다')
 
+    # 쟁점은 화자 발언과 진행자 절로 나뉘어 절 구성이 인사이트와 다르다.
+    # 문체·용어·길이·번역투만 보고, question 만 필수로 건다
+    debates = sorted(glob.glob(os.path.join(paths.DEBATE, '*.md')))
+    for p in debates:
+        where = os.path.basename(p)
+        raw = io.open(p, encoding='utf-8').read()
+        body = strip_refs(raw)
+        meta, _ = parse_synth(raw)
+        check_density(body, where)
+        check_glossary(body, where, gloss)
+        check_length(body, where)
+        check_translationese(body, where)
+        if not (meta or {}).get('question'):
+            add('FAIL', where, 'P7', 'question 없음 — 카드에 물음이 안 붙는다')
+
     # 돈 고리 여덟 편. 절 순서를 강제하지 않는다 — 그 틀이 카드 41장의 문제였다.
     # 문체·용어·길이·번역투만 보고, headline 만 필수로 건다.
     loops = sorted(glob.glob(os.path.join(paths.LOOP, '*.md')))
@@ -569,8 +584,8 @@ def main():
     # 「WARN 5건 초과 → humanize-korean」 줄은 2026-08-17에 걷어냈다. 다섯 장이 상시
     # 초과 상태라 늘 켜져 있었고, 늘 켜진 신호는 신호가 아니다. 윤문을 부를 계기는
     # 개별 규칙(P8~P11)이 무엇을 몇 개 잡았는지로 판단한다.
-    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
-          % (len(files), len(loops), len(notes), len(dashes), fails, warns))
+    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
+          % (len(files), len(loops), len(notes), len(debates), len(dashes), fails, warns))
     return 1 if fails else 0
 
 
