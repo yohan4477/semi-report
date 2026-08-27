@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T07:28:53.178770+00:00",
+ "fetched_at": "2026-08-27T12:49:24.085309+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -160,6 +160,85 @@
      "val": 129039000000,
      "filed": "2026-02-05",
      "tag": "OperatingIncomeLoss",
+     "start": "2025-01-01"
+    }
+   },
+   "cost_of_revenue": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 28164000000,
+     "filed": "2016-02-11",
+     "tag": "CostOfRevenue",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 35138000000,
+     "filed": "2017-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 45583000000,
+     "filed": "2018-02-06",
+     "tag": "CostOfRevenue",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 59549000000,
+     "filed": "2019-02-05",
+     "tag": "CostOfRevenue",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 71896000000,
+     "filed": "2020-02-04",
+     "tag": "CostOfRevenue",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 84732000000,
+     "filed": "2021-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 110939000000,
+     "filed": "2022-02-02",
+     "tag": "CostOfRevenue",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 126203000000,
+     "filed": "2023-02-03",
+     "tag": "CostOfRevenue",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 133332000000,
+     "filed": "2024-01-31",
+     "tag": "CostOfRevenue",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 146306000000,
+     "filed": "2025-02-05",
+     "tag": "CostOfRevenue",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 162535000000,
+     "filed": "2026-02-05",
+     "tag": "CostOfRevenue",
      "start": "2025-01-01"
     }
    },
@@ -1361,6 +1440,12 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "cost_of_revenue": {
+    "val": 174349000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "net_income": {
     "val": 244205000000,
     "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
@@ -1671,6 +1756,104 @@
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   }
  ],
+ "gross_margin": [
+  {
+   "end": "2022-09-30",
+   "revenue": 69092000000,
+   "cost": 31158000000,
+   "margin": 0.5490360678515602,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-03-31",
+   "revenue": 69787000000,
+   "cost": 30612000000,
+   "margin": 0.5613509679453194,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-06-30",
+   "revenue": 74604000000,
+   "cost": 31916000000,
+   "margin": 0.5721945204010509,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-09-30",
+   "revenue": 76693000000,
+   "cost": 33229000000,
+   "margin": 0.5667270806983689,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-03-31",
+   "revenue": 80539000000,
+   "cost": 33712000000,
+   "margin": 0.5814201815269621,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-06-30",
+   "revenue": 84742000000,
+   "cost": 35507000000,
+   "margin": 0.5809987963465578,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-09-30",
+   "revenue": 88268000000,
+   "cost": 36474000000,
+   "margin": 0.5867811664476368,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-03-31",
+   "revenue": 90234000000,
+   "cost": 36361000000,
+   "margin": 0.5970365937451515,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-06-30",
+   "revenue": 96428000000,
+   "cost": 39039000000,
+   "margin": 0.5951487119923674,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-09-30",
+   "revenue": 102346000000,
+   "cost": 41369000000,
+   "margin": 0.5957927031833193,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-03-31",
+   "revenue": 109896000000,
+   "cost": 41271000000,
+   "margin": 0.6244540292640315,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-06-30",
+   "revenue": 119796000000,
+   "cost": 45943000000,
+   "margin": 0.6164896991552306,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  }
+ ],
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -1719,7 +1902,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T07:28:58.503510+00:00",
+  "fetched_at": "2026-08-27T12:49:29.634292+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T07:29:56.284867+00:00",
+ "fetched_at": "2026-08-27T12:49:34.907319+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -230,6 +230,120 @@
      "val": 130387000000,
      "filed": "2026-02-25",
      "tag": "OperatingIncomeLoss",
+     "start": "2025-01-27"
+    }
+   },
+   "cost_of_revenue": {
+    "2010": {
+     "end": "2011-01-30",
+     "val": 2134219000,
+     "filed": "2011-03-16",
+     "tag": "CostOfRevenue",
+     "start": "2010-02-01"
+    },
+    "2011": {
+     "end": "2012-01-29",
+     "val": 1941413000,
+     "filed": "2012-03-13",
+     "tag": "CostOfRevenue",
+     "start": "2011-01-31"
+    },
+    "2012": {
+     "end": "2013-01-27",
+     "val": 2053816000,
+     "filed": "2013-03-12",
+     "tag": "CostOfRevenue",
+     "start": "2012-01-30"
+    },
+    "2013": {
+     "end": "2014-01-26",
+     "val": 1862399000,
+     "filed": "2014-03-13",
+     "tag": "CostOfRevenue",
+     "start": "2013-01-28"
+    },
+    "2015": {
+     "end": "2015-01-25",
+     "val": 2082030000,
+     "filed": "2015-03-12",
+     "tag": "CostOfRevenue",
+     "start": "2014-01-27"
+    },
+    "2016": {
+     "end": "2016-01-31",
+     "val": 2199000000,
+     "filed": "2016-03-17",
+     "tag": "CostOfRevenue",
+     "start": "2015-01-26"
+    },
+    "2017": {
+     "end": "2017-01-29",
+     "val": 2847000000,
+     "filed": "2017-03-01",
+     "tag": "CostOfRevenue",
+     "start": "2016-02-01"
+    },
+    "2018": {
+     "end": "2018-01-28",
+     "val": 3892000000,
+     "filed": "2018-02-28",
+     "tag": "CostOfRevenue",
+     "start": "2017-01-30"
+    },
+    "2019": {
+     "end": "2019-01-27",
+     "val": 4545000000,
+     "filed": "2019-02-21",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2018-01-29"
+    },
+    "2020": {
+     "end": "2020-01-26",
+     "val": 4150000000,
+     "filed": "2020-02-20",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2019-01-28"
+    },
+    "2021": {
+     "end": "2021-01-31",
+     "val": 6279000000,
+     "filed": "2021-02-26",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2020-01-27"
+    },
+    "2022": {
+     "end": "2022-01-30",
+     "val": 9439000000,
+     "filed": "2022-03-18",
+     "tag": "CostOfRevenue",
+     "start": "2021-02-01"
+    },
+    "2023": {
+     "end": "2023-01-29",
+     "val": 11618000000,
+     "filed": "2023-02-24",
+     "tag": "CostOfRevenue",
+     "start": "2022-01-31"
+    },
+    "2024": {
+     "end": "2024-01-28",
+     "val": 16621000000,
+     "filed": "2024-02-21",
+     "tag": "CostOfRevenue",
+     "start": "2023-01-30"
+    },
+    "2025": {
+     "end": "2025-01-26",
+     "val": 32639000000,
+     "filed": "2025-02-26",
+     "tag": "CostOfRevenue",
+     "start": "2024-01-29"
+    },
+    "2026": {
+     "end": "2026-01-25",
+     "val": 62475000000,
+     "filed": "2026-02-25",
+     "tag": "CostOfRevenue",
      "start": "2025-01-27"
     }
    },
@@ -1770,6 +1884,12 @@
     "end": "2026-07-26",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "cost_of_revenue": {
+    "val": 76729000000,
+    "window": "2026 연간 + 2026-01-26~2026-07-26 − 2025-01-27~2025-07-27",
+    "end": "2026-07-26",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "net_income": {
     "val": 192880000000,
     "window": "2026 연간 + 2026-01-26~2026-07-26 − 2025-01-27~2025-07-27",
@@ -2068,6 +2188,104 @@
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   }
  ],
+ "gross_margin": [
+  {
+   "end": "2022-10-30",
+   "revenue": 5931000000,
+   "cost": 2754000000,
+   "margin": 0.5356600910470409,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-04-30",
+   "revenue": 7192000000,
+   "cost": 2544000000,
+   "margin": 0.646273637374861,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-07-30",
+   "revenue": 13507000000,
+   "cost": 4045000000,
+   "margin": 0.7005256533649219,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2023-10-29",
+   "revenue": 18120000000,
+   "cost": 4720000000,
+   "margin": 0.739514348785872,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-04-28",
+   "revenue": 26044000000,
+   "cost": 5638000000,
+   "margin": 0.7835201965903855,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-07-28",
+   "revenue": 30040000000,
+   "cost": 7466000000,
+   "margin": 0.7514647137150466,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2024-10-27",
+   "revenue": 35082000000,
+   "cost": 8926000000,
+   "margin": 0.7455675275069836,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-04-27",
+   "revenue": 44062000000,
+   "cost": 17394000000,
+   "margin": 0.6052380736235304,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-07-27",
+   "revenue": 46743000000,
+   "cost": 12890000000,
+   "margin": 0.724236784117408,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2025-10-26",
+   "revenue": 57006000000,
+   "cost": 15157000000,
+   "margin": 0.7341157071185489,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-04-26",
+   "revenue": 81615000000,
+   "cost": 20458000000,
+   "margin": 0.749335293757275,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  },
+  {
+   "end": "2026-07-26",
+   "revenue": 96221000000,
+   "cost": 24079000000,
+   "margin": 0.7497531723844068,
+   "rev_tag": "Revenues",
+   "cost_tag": "CostOfRevenue"
+  }
+ ],
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -2116,7 +2334,7 @@
     "growth": 0.45029998
    }
   ],
-  "fetched_at": "2026-08-27T07:30:02.296838+00:00",
+  "fetched_at": "2026-08-27T12:49:40.333291+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

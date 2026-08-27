@@ -30,6 +30,10 @@ CIKS = {
 CONCEPTS = {
     'revenue': ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues'],
     'ebit': ['OperatingIncomeLoss'],
+    # 매출원가. 매출총이익률의 분모가 아니라 분자를 만든다.
+    # 완제품을 총액으로 팔면 매출과 원가가 같이 뛰어 이 비율이 눌린다 — SemiAnalysis 가
+    # 알파벳 클라우드 매출에 시스템 판매가 섞였다고 본 것을 연결에서 확인할 유일한 흔적이다.
+    'cost_of_revenue': ['CostOfRevenue', 'CostOfGoodsAndServicesSold'],
     'net_income': ['NetIncomeLoss'],
     'tax_expense': ['IncomeTaxExpenseBenefit'],
     'pretax_income': ['IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest'],
@@ -139,7 +143,7 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
 # 2026-08-26에 손익 TTM이 통째로 빈 원인이 이것이었다. 그래서 기간 값은 전부
 # 「직전 연간 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
 FLOW = ('revenue', 'ebit', 'net_income', 'tax_expense', 'pretax_income',
-        'dna', 'lease_amortization', 'capex', 'ocf', 'sbc',
+        'cost_of_revenue', 'dna', 'lease_amortization', 'capex', 'ocf', 'sbc',
         'nonoperating', 'equity_fv_gain', 'cash_taxes_paid')
 
 
@@ -540,6 +544,46 @@ def consensus(ticker):
                      '0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다')
 
 
+def gross_margin(facts, tags_rev, tags_cor, quarters=12):
+    """분기 매출총이익률 계열.
+
+    **왜 두나.** 완제품을 총액으로 팔면 매출과 매출원가가 같이 뛰어 이 비율이 눌린다.
+    SemiAnalysis 는 알파벳 클라우드 매출에 TPU 시스템 판매가 섞였다고 봤는데(260807
+    GCP 편), 공시가 그 금액을 따로 안 내므로 크기는 못 잰다. **연결에서 남을 흔적은
+    이 비율 하나뿐이다.** 눌리지 않으면 「없다」가 아니라 「연결 규모에 견줘 작거나
+    마진이 높다」는 뜻이고, 그 구분을 본문이 밝혀야 한다.
+
+    손익계산서는 10-Q 에서 그 분기만 담는다(약 90일). 4분기는 10-Q 가 없어 빠진다 —
+    메우려고 연간에서 셋을 빼지 않는다. 빠진 분기를 채우는 것이 아니라 추세를 보는
+    계열이다.
+
+    회사가 태그를 갈아타는 일이 있어(알파벳은 2025-03 뒤로 매출 태그를 바꿨다) 후보를
+    순서대로 이어 붙이고 어느 태그에서 왔는지 함께 남긴다.
+    """
+    def q(tags):
+        out = {}
+        for t in tags:
+            u = facts.get('facts', {}).get('us-gaap', {}).get(t, {})
+            for x in u.get('units', {}).get('USD', []):
+                if not (x.get('start') and x.get('end')):
+                    continue
+                d = (datetime.strptime(x['end'], '%Y-%m-%d')
+                     - datetime.strptime(x['start'], '%Y-%m-%d')).days
+                if 80 <= d <= 100:
+                    out.setdefault(x['end'], (t, x['val']))
+        return out
+    rev, cor = q(tags_rev), q(tags_cor)
+    ks = sorted(set(rev) & set(cor))[-quarters:]
+    out = []
+    for k in ks:
+        (rt, r), (ct, c) = rev[k], cor[k]
+        if not r:
+            continue
+        out.append(dict(end=k, revenue=r, cost=c, margin=(r - c) / r,
+                        rev_tag=rt, cost_tag=ct))
+    return out
+
+
 def build(ticker):
     now = datetime.now(timezone.utc).isoformat()
     px = price(ticker)
@@ -575,6 +619,9 @@ def build(ticker):
         # 되돌아본 배수. 예측 채점이 아니라 「시장이 실적의 몇 배를 냈나」다.
         'lookback': lookback(facts_raw, CONCEPTS['ocf'], CONCEPTS['capex'],
                              px['series'], shares),
+        # 분기 매출총이익률. 총액 인식이 연결에 남기는 유일한 흔적이다
+        'gross_margin': gross_margin(facts_raw, CONCEPTS['revenue'],
+                                     CONCEPTS['cost_of_revenue']),
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),

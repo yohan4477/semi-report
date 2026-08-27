@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "fetched_at": "2026-08-27T07:30:18.626619+00:00",
+ "fetched_at": "2026-08-27T12:49:51.585603+00:00",
  "sec": {
   "entity": "Apple Inc.",
   "cik": "0000320193",
@@ -181,6 +181,127 @@
      "val": 133050000000,
      "filed": "2025-10-31",
      "tag": "OperatingIncomeLoss",
+     "start": "2024-09-29"
+    }
+   },
+   "cost_of_revenue": {
+    "2009": {
+     "end": "2009-09-26",
+     "val": 23397000000,
+     "filed": "2009-10-27",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2008-09-28"
+    },
+    "2010": {
+     "end": "2010-09-25",
+     "val": 39541000000,
+     "filed": "2010-10-27",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2009-09-27"
+    },
+    "2011": {
+     "end": "2011-09-24",
+     "val": 64431000000,
+     "filed": "2011-10-26",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2010-09-26"
+    },
+    "2012": {
+     "end": "2012-09-29",
+     "val": 87846000000,
+     "filed": "2012-10-31",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2011-09-25"
+    },
+    "2013": {
+     "end": "2013-09-28",
+     "val": 106606000000,
+     "filed": "2013-10-30",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2012-09-30"
+    },
+    "2014": {
+     "end": "2014-09-27",
+     "val": 112258000000,
+     "filed": "2014-10-27",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2013-09-29"
+    },
+    "2015": {
+     "end": "2015-09-26",
+     "val": 140089000000,
+     "filed": "2015-10-28",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2014-09-28"
+    },
+    "2016": {
+     "end": "2016-09-24",
+     "val": 131376000000,
+     "filed": "2016-10-26",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2015-09-27"
+    },
+    "2017": {
+     "end": "2017-09-30",
+     "val": 141048000000,
+     "filed": "2017-11-03",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2016-09-25"
+    },
+    "2018": {
+     "end": "2018-09-29",
+     "val": 163756000000,
+     "filed": "2018-11-05",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2017-10-01"
+    },
+    "2019": {
+     "end": "2019-09-28",
+     "val": 161782000000,
+     "filed": "2019-10-31",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2018-09-30"
+    },
+    "2020": {
+     "end": "2020-09-26",
+     "val": 169559000000,
+     "filed": "2020-10-30",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2019-09-29"
+    },
+    "2021": {
+     "end": "2021-09-25",
+     "val": 212981000000,
+     "filed": "2021-10-29",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2020-09-27"
+    },
+    "2022": {
+     "end": "2022-09-24",
+     "val": 223546000000,
+     "filed": "2022-10-28",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2021-09-26"
+    },
+    "2023": {
+     "end": "2023-09-30",
+     "val": 214137000000,
+     "filed": "2023-11-03",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2022-09-25"
+    },
+    "2024": {
+     "end": "2024-09-28",
+     "val": 210352000000,
+     "filed": "2024-11-01",
+     "tag": "CostOfGoodsAndServicesSold",
+     "start": "2023-10-01"
+    },
+    "2025": {
+     "end": "2025-09-27",
+     "val": 220960000000,
+     "filed": "2025-10-31",
+     "tag": "CostOfGoodsAndServicesSold",
      "start": "2024-09-29"
     }
    },
@@ -1945,6 +2066,12 @@
     "end": "2026-06-27",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "cost_of_revenue": {
+    "val": 239700000000,
+    "window": "2025 연간 + 2025-09-28~2026-06-27 − 2024-09-29~2025-06-28",
+    "end": "2026-06-27",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "net_income": {
     "val": 128930000000,
     "window": "2025 연간 + 2025-09-28~2026-06-27 − 2024-09-29~2025-06-28",
@@ -2243,6 +2370,104 @@
    "note": "그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 그대로 곱한 근사다 — 그때 주식수가 아니다"
   }
  ],
+ "gross_margin": [
+  {
+   "end": "2022-12-31",
+   "revenue": 117154000000,
+   "cost": 66822000000,
+   "margin": 0.42962254809908323,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-04-01",
+   "revenue": 94836000000,
+   "cost": 52860000000,
+   "margin": 0.44261672782487665,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-07-01",
+   "revenue": 81797000000,
+   "cost": 45384000000,
+   "margin": 0.44516302553883397,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2023-12-30",
+   "revenue": 119575000000,
+   "cost": 64720000000,
+   "margin": 0.4587497386577462,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-03-30",
+   "revenue": 90753000000,
+   "cost": 48482000000,
+   "margin": 0.46578074554009236,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-06-29",
+   "revenue": 85777000000,
+   "cost": 46099000000,
+   "margin": 0.462571551814589,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2024-12-28",
+   "revenue": 124300000000,
+   "cost": 66025000000,
+   "margin": 0.4688254223652454,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-03-29",
+   "revenue": 95359000000,
+   "cost": 50492000000,
+   "margin": 0.47050619238876246,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-06-28",
+   "revenue": 94036000000,
+   "cost": 50318000000,
+   "margin": 0.4649070568718363,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2025-12-27",
+   "revenue": 143756000000,
+   "cost": 74525000000,
+   "margin": 0.4815868555051615,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2026-03-28",
+   "revenue": 111184000000,
+   "cost": 56403000000,
+   "margin": 0.4927057850050367,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  },
+  {
+   "end": "2026-06-27",
+   "revenue": 109417000000,
+   "cost": 54647000000,
+   "margin": 0.500562069879452,
+   "rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+   "cost_tag": "CostOfGoodsAndServicesSold"
+  }
+ ],
  "risk_free": {
   "rate": 0.0464,
   "date": "2026-08-25",
@@ -2291,7 +2516,7 @@
     "growth": 0.0809
    }
   ],
-  "fetched_at": "2026-08-27T07:30:23.617426+00:00",
+  "fetched_at": "2026-08-27T12:49:57.226592+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
