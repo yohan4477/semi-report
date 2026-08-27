@@ -32,6 +32,7 @@ BUILD = [
     ('링크드인 신호 자격', ['insights/li_signal.py']),
     ('소스 매니페스트', ['insights/gen_manifest.py']),
     ('개체 색인', ['insights/gen_index.py']),
+    ('가리키는 때', ['insights/gen_times.py']),
     ('통합 인사이트', ['insights/gen_insightview.py']),
     ('추적 · 일론 머스크', ['insights/gen_entity_board.py', 'musk']),
     ('인사이트 지도', ['insights/gen_map.py']),
