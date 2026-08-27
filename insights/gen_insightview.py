@@ -5,6 +5,7 @@ import io, os, re, sys, glob, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths, style
 import axes
+import angles_layer
 import sources_rank as sr
 import notes_lib as nl
 sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
@@ -705,11 +706,13 @@ def tabs(per):
 def build():
     body, top, per, bysec, mix = cards()
     n = sum(per.values())
-    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + MRG_CSS)
+    html = (TMPL.replace('__CSS__', style.BASE + KIND_CSS + CARD_CSS + CSS + MRG_CSS
+                         + angles_layer.CSS)
                 # 축 층이 맨 처음이다 — 지금 무슨 일이 벌어지는 중인지가 무엇이 있는지보다
                 # 먼저 와야 한다. 카드 더미가 입구라는 지적에 답하는 자리다. 어디서부터
                 # 읽을지는 이 합류도가 말해 준다 — 따로 두던 「처음 오셨다면」 목록은 걷어냈다.
-                .replace('__GUIDE__', axis_layer() + guide(per))
+                .replace('__GUIDE__', axis_layer() + angles_layer.layer(paths.ROOT)
+                         + guide(per))
                 .replace('__TOP__', top)
                 .replace('__TABS__', '<div class="tabbar">%s</div>%s'
                          % (tabs(per), sectiles(bysec, mix)))
