@@ -68,10 +68,27 @@ def main(argv):
         print('모듈:', ', '.join(m for m, _ in al.card_modules(ROOT)))
         return 1
     module = argv[1]
+    known = [m for m, _ in al.card_modules(ROOT)]
+    if module not in known:
+        print('그런 생성기가 없다: %s' % module)
+        print('있는 것:', ', '.join(known))
+        return 1
     cards = al.load_cards(ROOT, module)
     if '--axis' in argv:
-        with io.open(argv[argv.index('--axis') + 1], encoding='utf-8') as f:
-            axis = al.parse_axis(json.load(f))
+        at = argv.index('--axis') + 1
+        if at >= len(argv):
+            print('--axis 뒤에 축 정의 파일 경로가 있어야 한다')
+            return 1
+        path = argv[at]
+        if not os.path.isfile(path):
+            print('축 정의 파일이 없다: %s' % path)
+            return 1
+        try:
+            with io.open(path, encoding='utf-8') as f:
+                axis = al.parse_axis(json.load(f))
+        except ValueError as e:
+            print('축 정의 파일이 JSON 이 아니다: %s — %s' % (path, e))
+            return 1
         res = al.review(cards, axis)
     else:
         axis = al.declared_axis(cards)

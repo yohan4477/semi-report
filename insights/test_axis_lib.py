@@ -323,3 +323,17 @@ def test_render_warns_when_placement_count_differs_from_cards():
     res = al.review([_card('같은 제목'), _card('같은 제목')], axis)
     text = ar.render(res, ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
     assert '제목이 겹친다' in text
+
+
+def test_main_reports_unknown_module_without_traceback(capsys):
+    rc = ar.main(['axis_review.py', 'gen_없는대시보드'])
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert '그런 생성기가 없다' in out
+
+
+def test_main_reports_missing_axis_file(capsys):
+    rc = ar.main(['axis_review.py', 'gen_epoch_dashboard', '--axis', 'no_such_axis.json'])
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert '축 정의 파일이 없다' in out
