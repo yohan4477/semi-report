@@ -115,3 +115,22 @@ def test_find_keeps_a_far_but_plausible_year():
 def test_find_is_deterministic():
     line = '2018년과 2028년, 그리고 작년'
     assert tm.find(line, '2024-09-27') == tm.find(line, '2024-09-27')
+
+
+def test_computed_ignores_a_duration_that_runs_into_another_word():
+    # 「20년 전력공급 계약」은 20년짜리 계약이지 20년 전이 아니다
+    assert tm.computed('MS 와 20년 전력공급 계약을 맺었다', 2026) == []
+    # 「10~20년 뒤처짐」도 뒤가 아니라 뒤처지다이다
+    assert tm.computed('IT 인프라가 10~20년 뒤처짐', 2026) == []
+
+
+def test_computed_still_reads_offsets_followed_by_a_particle():
+    assert tm.computed('3년 전에는', 2026) == [2023]
+    assert tm.computed('3년 전이다', 2026) == [2023]
+    assert tm.computed('10년 뒤면', 2026) == [2036]
+    assert tm.computed('5년 후까지', 2026) == [2031]
+    assert tm.computed('3년 전보다', 2026) == [2023]
+
+
+def test_computed_still_reads_an_offset_followed_by_a_space():
+    assert tm.computed('10~20년 뒤 서서히 사라진다', 2026) == [2046]

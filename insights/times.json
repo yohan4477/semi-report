@@ -2,7 +2,7 @@
 "_meta": {
 "built": "2026-08-28",
 "index_fingerprint": "a67df49f61ae0a660d5dd40b4ac39a4cd56d3515",
-"lines": 1857
+"lines": 1850
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -1150,16 +1150,6 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L193": {
-"how": "계산",
-"t": "2020",
-"tense": "회고"
-},
-"content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L230": {
-"how": "계산",
-"t": "2020",
-"tense": "회고"
-},
 "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L373": {
 "how": "명시",
 "t": "2023",
@@ -1469,16 +1459,6 @@
 "how": "계산",
 "t": "2026",
 "tense": "현재"
-},
-"content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md#L608": {
-"how": "계산",
-"t": "2024",
-"tense": "회고"
-},
-"content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md#L614": {
-"how": "계산",
-"t": "2024",
-"tense": "회고"
 },
 "content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md#L83": {
 "how": "명시",
@@ -3722,11 +3702,6 @@
 "how": "명시",
 "t": "2025",
 "tense": "현재"
-},
-"content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L418": {
-"how": "계산",
-"t": "2045",
-"tense": "전망"
 },
 "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L484": {
 "how": "명시",
@@ -6418,11 +6393,6 @@
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L98": {
-"how": "계산",
-"t": "2006",
-"tense": "회고"
-},
 "content/understanding/권효재 대표/삼성까지 뛰어들었다 4년만에 3배 급증할 에너지 시장.md#L37": {
 "how": "명시",
 "t": "2030",
@@ -7449,11 +7419,6 @@
 ],
 "t": "2030",
 "tense": "전망"
-},
-"content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L107": {
-"how": "계산",
-"t": "2006",
-"tense": "회고"
 },
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L117": {
 "how": "명시",
