@@ -1,6 +1,6 @@
 {
  "ticker": "META",
- "fetched_at": "2026-08-27T06:56:32.422745+00:00",
+ "fetched_at": "2026-08-27T07:30:13.327816+00:00",
  "sec": {
   "entity": "Meta Platforms, Inc.",
   "cik": "0001326801",
@@ -856,6 +856,106 @@
      "start": "2025-01-01"
     }
    },
+   "sbc": {
+    "2012": {
+     "end": "2012-12-31",
+     "val": 1572000000,
+     "filed": "2013-02-01",
+     "tag": "ShareBasedCompensation",
+     "start": "2012-01-01"
+    },
+    "2013": {
+     "end": "2013-12-31",
+     "val": 906000000,
+     "filed": "2014-01-31",
+     "tag": "ShareBasedCompensation",
+     "start": "2013-01-01"
+    },
+    "2014": {
+     "end": "2014-12-31",
+     "val": 1786000000,
+     "filed": "2015-01-29",
+     "tag": "ShareBasedCompensation",
+     "start": "2014-01-01"
+    },
+    "2015": {
+     "end": "2015-12-31",
+     "val": 2960000000,
+     "filed": "2016-01-28",
+     "tag": "ShareBasedCompensation",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 3218000000,
+     "filed": "2017-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 3723000000,
+     "filed": "2018-02-01",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 4152000000,
+     "filed": "2019-01-31",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 4836000000,
+     "filed": "2020-01-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 6536000000,
+     "filed": "2021-01-28",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 9164000000,
+     "filed": "2022-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 11992000000,
+     "filed": "2023-02-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 14027000000,
+     "filed": "2024-02-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 16690000000,
+     "filed": "2025-01-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 20427000000,
+     "filed": "2026-01-29",
+     "tag": "ShareBasedCompensation",
+     "start": "2025-01-01"
+    }
+   },
    "nonoperating": {
     "2012": {
      "end": "2012-12-31",
@@ -1530,6 +1630,12 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "sbc": {
+    "val": 25136000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "nonoperating": {
     "val": 598000000,
     "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
@@ -1820,7 +1926,7 @@
     "growth": 0.117
    }
   ],
-  "fetched_at": "2026-08-27T06:56:37.519300+00:00",
+  "fetched_at": "2026-08-27T07:30:18.615117+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

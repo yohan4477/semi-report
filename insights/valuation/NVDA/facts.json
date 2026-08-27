@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T06:56:14.921573+00:00",
+ "fetched_at": "2026-08-27T07:29:56.284867+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -753,6 +753,120 @@
      "val": 102718000000,
      "filed": "2026-02-25",
      "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2025-01-27"
+    }
+   },
+   "sbc": {
+    "2010": {
+     "end": "2011-01-30",
+     "val": 100353000,
+     "filed": "2011-03-16",
+     "tag": "ShareBasedCompensation",
+     "start": "2010-02-01"
+    },
+    "2011": {
+     "end": "2012-01-29",
+     "val": 136354000,
+     "filed": "2012-03-13",
+     "tag": "ShareBasedCompensation",
+     "start": "2011-01-31"
+    },
+    "2012": {
+     "end": "2013-01-27",
+     "val": 136662000,
+     "filed": "2013-03-12",
+     "tag": "ShareBasedCompensation",
+     "start": "2012-01-30"
+    },
+    "2013": {
+     "end": "2014-01-26",
+     "val": 136295000,
+     "filed": "2014-03-13",
+     "tag": "ShareBasedCompensation",
+     "start": "2013-01-28"
+    },
+    "2015": {
+     "end": "2015-01-25",
+     "val": 157841000,
+     "filed": "2015-03-12",
+     "tag": "ShareBasedCompensation",
+     "start": "2014-01-27"
+    },
+    "2016": {
+     "end": "2016-01-31",
+     "val": 204000000,
+     "filed": "2016-03-17",
+     "tag": "ShareBasedCompensation",
+     "start": "2015-01-26"
+    },
+    "2017": {
+     "end": "2017-01-29",
+     "val": 247000000,
+     "filed": "2017-03-01",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-02-01"
+    },
+    "2018": {
+     "end": "2018-01-28",
+     "val": 391000000,
+     "filed": "2018-02-28",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-01-30"
+    },
+    "2019": {
+     "end": "2019-01-27",
+     "val": 557000000,
+     "filed": "2019-02-21",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-01-29"
+    },
+    "2020": {
+     "end": "2020-01-26",
+     "val": 844000000,
+     "filed": "2020-02-20",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-01-28"
+    },
+    "2021": {
+     "end": "2021-01-31",
+     "val": 1397000000,
+     "filed": "2021-02-26",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-01-27"
+    },
+    "2022": {
+     "end": "2022-01-30",
+     "val": 2004000000,
+     "filed": "2022-03-18",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-02-01"
+    },
+    "2023": {
+     "end": "2023-01-29",
+     "val": 2709000000,
+     "filed": "2023-02-24",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-01-31"
+    },
+    "2024": {
+     "end": "2024-01-28",
+     "val": 3549000000,
+     "filed": "2024-02-21",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-01-30"
+    },
+    "2025": {
+     "end": "2025-01-26",
+     "val": 4737000000,
+     "filed": "2025-02-26",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-01-29"
+    },
+    "2026": {
+     "end": "2026-01-25",
+     "val": 6386000000,
+     "filed": "2026-02-25",
+     "tag": "ShareBasedCompensation",
      "start": "2025-01-27"
     }
    },
@@ -1692,6 +1806,12 @@
     "end": "2026-07-26",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "sbc": {
+    "val": 7241000000,
+    "window": "2026 연간 + 2026-01-26~2026-07-26 − 2025-01-27~2025-07-27",
+    "end": "2026-07-26",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "nonoperating": {
     "val": 32164000000,
     "window": "2026 연간 + 2026-01-26~2026-07-26 − 2025-01-27~2025-07-27",
@@ -1996,7 +2116,7 @@
     "growth": 0.45029998
    }
   ],
-  "fetched_at": "2026-08-27T06:56:21.054839+00:00",
+  "fetched_at": "2026-08-27T07:30:02.296838+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

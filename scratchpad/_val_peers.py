@@ -55,6 +55,10 @@ def row(t):
 
     rev, eb, ocf, cap, dna = v('revenue'), v('ebit'), v('ocf'), v('capex'), v('dna')
     fcf = (ocf - cap) if (ocf is not None and cap is not None) else None
+    # 주식보상비용. 현금이 안 나가 영업현금흐름에 도로 더해져 있으므로 위의 잉여현금흐름
+    # 안에 이미 들어 있다. 빼는 것이 옳은지는 판단이라 여기서 정하지 않고 값만 남긴다.
+    sbc = v('sbc')
+    fcf_sbc = (fcf - sbc) if (fcf is not None and sbc is not None) else None
     net_debt = ((tt.get('lt_debt', {}).get('val', 0) + tt.get('st_debt', {}).get('val', 0)
                  - tt.get('cash', {}).get('val', 0)
                  - tt.get('st_investments', {}).get('val', 0)) / B)
@@ -87,6 +91,8 @@ def row(t):
                 capex=cap, dna=dna, cd=(cap / dna if (cap and dna) else None),
                 nopat=nopat, beta=beta, ke=ke, mcap=mcap, net_cash=-net_debt,
                 cash_tr=cash_tr, req_fcf=req(fcf), req_nopat=req(nopat),
+                sbc=sbc, fcf_sbc=fcf_sbc,
+                sbc_share=(sbc / fcf if (sbc is not None and fcf and fcf > 0) else None),
                 **_levels(fcf, nopat, rev, req(fcf), req(nopat)))
 
 
@@ -131,6 +137,27 @@ def bias_rows():
                         beta=d['beta']['beta'], ke=ke,
                         gap=(now / ours) if now else None,
                         inside=bool(lb) and min(lb) <= ours <= max(lb)))
+    return out
+
+
+def sbc_rows():
+    """현금이 안 나가는 항목 하나가 우리 기준값을 얼마나 들어 올리나.
+
+    우리 잉여현금흐름은 영업현금흐름에서 설비투자를 뺀 값이다. 영업현금흐름에는
+    주식보상비용이 비현금 항목으로 도로 더해져 있다 — 회사가 임직원에게 새로 찍은
+    주식을 주므로 현금은 안 나가지만 주주 지분은 묽어진다.
+
+    여기서 빼야 하는지를 정하지 않는다. 두 값을 나란히 내고 **회사마다 벌어지는 폭이
+    얼마나 다른지**를 보인다. 폭이 고르면 회사끼리 견줄 때 상쇄되지만, 열 배 넘게
+    다르면 우리가 잣대에 남겨 둔 단 하나의 쓰임(회사 간 비교)이 그만큼 흔들린다.
+    """
+    out = []
+    for r in rows():
+        f, sb, adj, mc = r['fcf'], r['sbc'], r['fcf_sbc'], r['mcap']
+        out.append(dict(t=r['t'], name=r['name'], fcf=f, sbc=sb, adj=adj,
+                        share=r['sbc_share'],
+                        mult=(mc / f) if (f and f > 0) else None,
+                        mult_adj=(mc / adj) if (adj and adj > 0) else None))
     return out
 
 
@@ -189,6 +216,27 @@ def write_facts():
              min(x['gap'] for x in _bb if x['gap']),
              max((x for x in _bb if x['gap']), key=lambda x: x['gap'])['name'],
              max(x['gap'] for x in _bb if x['gap'])),
+          '']
+    L += ['## 현금 아닌 것에 우리 기준값이 얼마나 기대나 — 주식보상비용', '']
+    _sb = sbc_rows()
+    for r in _sb:
+        L.append('- %s 잉여현금흐름 %.1f · 주식보상비용 %.1f · 잉여현금흐름 대비 %s · '
+                 '빼고 남는 값 %.1f'
+                 % (r['name'], r['fcf'], r['sbc'],
+                    ('%.1f%%' % (r['share'] * 100)) if r['share'] else
+                    '잴 수 없음(잉여현금흐름 0 이하)', r['adj']))
+        if r['mult'] and r['mult_adj']:
+            L.append('- %s 지금 시장 배수 %.0f배 · 빼고 재면 %.0f배'
+                     % (r['name'], r['mult'], r['mult_adj']))
+        # 본문 표는 억 달러로 찍는다. 대조가 자릿수까지 붙게 같은 단위도 함께 적는다.
+        L.append('- %s 억 달러 표기 · 잉여현금흐름 %.0f억 달러 · 주식보상비용 %.0f억 달러'
+                 % (r['name'], r['fcf'] * 10, r['sbc'] * 10))
+    _sh = [(x['share'], x['name']) for x in _sb if x['share']]
+    L += ['- 잉여현금흐름 대비 비중 최저 %s %.1f%% · 최고 %s %.1f%%'
+          % (min(_sh)[1], min(_sh)[0] * 100, max(_sh)[1], max(_sh)[0] * 100),
+          '- 최고가 최저의 %.1f배' % (max(_sh)[0] / min(_sh)[0]),
+          '- 여섯 합계 주식보상비용 %.1f' % sum(x['sbc'] for x in _sb),
+          '- 여섯 합계 주식보상비용 %.0f억 달러' % (sum(x['sbc'] for x in _sb) * 10),
           '']
     p2 = os.path.join(_root, 'scratchpad', 'peers_facts.md')
     io.open(p2, 'w', encoding='utf-8').write('\n'.join(L) + '\n')

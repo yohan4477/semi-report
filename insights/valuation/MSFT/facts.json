@@ -1,6 +1,6 @@
 {
  "ticker": "MSFT",
- "fetched_at": "2026-08-27T06:56:26.887896+00:00",
+ "fetched_at": "2026-08-27T07:30:02.311351+00:00",
  "sec": {
   "entity": "MICROSOFT CORPORATION",
   "cik": "0000789019",
@@ -874,6 +874,127 @@
      "val": 182935000000,
      "filed": "2026-07-29",
      "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2025-07-01"
+    }
+   },
+   "sbc": {
+    "2010": {
+     "end": "2010-06-30",
+     "val": 1891000000,
+     "filed": "2010-07-30",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2009-07-01"
+    },
+    "2011": {
+     "end": "2011-06-30",
+     "val": 2166000000,
+     "filed": "2011-07-28",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2010-07-01"
+    },
+    "2012": {
+     "end": "2012-06-30",
+     "val": 2244000000,
+     "filed": "2012-07-26",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2011-07-01"
+    },
+    "2013": {
+     "end": "2013-06-30",
+     "val": 2406000000,
+     "filed": "2013-07-30",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2012-07-01"
+    },
+    "2014": {
+     "end": "2014-06-30",
+     "val": 2446000000,
+     "filed": "2014-07-31",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2013-07-01"
+    },
+    "2015": {
+     "end": "2015-06-30",
+     "val": 2574000000,
+     "filed": "2015-07-31",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2014-07-01"
+    },
+    "2016": {
+     "end": "2016-06-30",
+     "val": 2668000000,
+     "filed": "2016-07-28",
+     "tag": "AllocatedShareBasedCompensationExpense",
+     "start": "2015-07-01"
+    },
+    "2017": {
+     "end": "2017-06-30",
+     "val": 3266000000,
+     "filed": "2017-08-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-07-01"
+    },
+    "2018": {
+     "end": "2018-06-30",
+     "val": 3940000000,
+     "filed": "2018-08-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-07-01"
+    },
+    "2019": {
+     "end": "2019-06-30",
+     "val": 4652000000,
+     "filed": "2019-08-01",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-07-01"
+    },
+    "2020": {
+     "end": "2020-06-30",
+     "val": 5289000000,
+     "filed": "2020-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-07-01"
+    },
+    "2021": {
+     "end": "2021-06-30",
+     "val": 6118000000,
+     "filed": "2021-07-29",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-07-01"
+    },
+    "2022": {
+     "end": "2022-06-30",
+     "val": 7502000000,
+     "filed": "2022-07-28",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-07-01"
+    },
+    "2023": {
+     "end": "2023-06-30",
+     "val": 9611000000,
+     "filed": "2023-07-27",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-07-01"
+    },
+    "2024": {
+     "end": "2024-06-30",
+     "val": 10734000000,
+     "filed": "2024-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-07-01"
+    },
+    "2025": {
+     "end": "2025-06-30",
+     "val": 11974000000,
+     "filed": "2025-07-30",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-07-01"
+    },
+    "2026": {
+     "end": "2026-06-30",
+     "val": 12405000000,
+     "filed": "2026-07-29",
+     "tag": "ShareBasedCompensation",
      "start": "2025-07-01"
     }
    },
@@ -1952,6 +2073,12 @@
     "end": "2026-06-30",
     "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
    },
+   "sbc": {
+    "val": 12405000000,
+    "window": "2026 회계연도 (뒤에 분기 보고 없음)",
+    "end": "2026-06-30",
+    "method": "회계연도 말이 최근이라 연간이 곧 최근 12개월"
+   },
    "nonoperating": {
     "val": 10697000000,
     "window": "2026 회계연도 (뒤에 분기 보고 없음)",
@@ -2256,7 +2383,7 @@
     "growth": 0.1934
    }
   ],
-  "fetched_at": "2026-08-27T06:56:32.412230+00:00",
+  "fetched_at": "2026-08-27T07:30:07.998563+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

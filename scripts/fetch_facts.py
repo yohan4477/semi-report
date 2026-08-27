@@ -46,6 +46,11 @@ CONCEPTS = {
               'PaymentsToAcquireProductiveAssets',
               'PaymentsToAcquireOtherPropertyPlantAndEquipment'],
     'ocf': ['NetCashProvidedByUsedInOperatingActivities'],
+    # 주식보상비용. 현금이 안 나가므로 영업현금흐름에 도로 더해져 있다 — 곧 우리
+    # 잉여현금흐름이 그만큼 부풀어 있다는 뜻이다. 회사가 주식을 새로 찍어 임직원에게
+    # 주는 것이라 주주에게는 지분이 묽어지는 실제 비용이다. 회계 선택이 우리 값에
+    # 얼마나 오는지 재려면 이 값이 있어야 한다.
+    'sbc': ['ShareBasedCompensation', 'AllocatedShareBasedCompensationExpense'],
     # 영업 밖 손익. R3이 EBIT을 쓰기 전에 걷어내라는 자리다.
     # 알파벳은 보유 지분(앤트로픽·스페이스X 등)을 공정가치로 다시 재 순이익에 태운다 —
     # 2026년 2분기 한 분기에 990억 달러가 들어왔다. 현금이 아니라 평가액이다.
@@ -134,7 +139,7 @@ def annuals(facts, tags, ns='us-gaap', unit='USD'):
 # 2026-08-26에 손익 TTM이 통째로 빈 원인이 이것이었다. 그래서 기간 값은 전부
 # 「직전 연간 + 올해 누적 − 작년 같은 기간 누적」으로 만든다.
 FLOW = ('revenue', 'ebit', 'net_income', 'tax_expense', 'pretax_income',
-        'dna', 'lease_amortization', 'capex', 'ocf',
+        'dna', 'lease_amortization', 'capex', 'ocf', 'sbc',
         'nonoperating', 'equity_fv_gain', 'cash_taxes_paid')
 
 

@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T06:56:21.065251+00:00",
+ "fetched_at": "2026-08-27T07:28:53.178770+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -566,6 +566,85 @@
      "val": 164713000000,
      "filed": "2026-02-05",
      "tag": "NetCashProvidedByUsedInOperatingActivities",
+     "start": "2025-01-01"
+    }
+   },
+   "sbc": {
+    "2015": {
+     "end": "2015-12-31",
+     "val": 5203000000,
+     "filed": "2016-02-11",
+     "tag": "ShareBasedCompensation",
+     "start": "2015-01-01"
+    },
+    "2016": {
+     "end": "2016-12-31",
+     "val": 6703000000,
+     "filed": "2017-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2016-01-01"
+    },
+    "2017": {
+     "end": "2017-12-31",
+     "val": 7679000000,
+     "filed": "2018-02-06",
+     "tag": "ShareBasedCompensation",
+     "start": "2017-01-01"
+    },
+    "2018": {
+     "end": "2018-12-31",
+     "val": 9353000000,
+     "filed": "2019-02-05",
+     "tag": "ShareBasedCompensation",
+     "start": "2018-01-01"
+    },
+    "2019": {
+     "end": "2019-12-31",
+     "val": 10794000000,
+     "filed": "2020-02-04",
+     "tag": "ShareBasedCompensation",
+     "start": "2019-01-01"
+    },
+    "2020": {
+     "end": "2020-12-31",
+     "val": 12991000000,
+     "filed": "2021-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2020-01-01"
+    },
+    "2021": {
+     "end": "2021-12-31",
+     "val": 15376000000,
+     "filed": "2022-02-02",
+     "tag": "ShareBasedCompensation",
+     "start": "2021-01-01"
+    },
+    "2022": {
+     "end": "2022-12-31",
+     "val": 19362000000,
+     "filed": "2023-02-03",
+     "tag": "ShareBasedCompensation",
+     "start": "2022-01-01"
+    },
+    "2023": {
+     "end": "2023-12-31",
+     "val": 22460000000,
+     "filed": "2024-01-31",
+     "tag": "ShareBasedCompensation",
+     "start": "2023-01-01"
+    },
+    "2024": {
+     "end": "2024-12-31",
+     "val": 22785000000,
+     "filed": "2025-02-05",
+     "tag": "ShareBasedCompensation",
+     "start": "2024-01-01"
+    },
+    "2025": {
+     "end": "2025-12-31",
+     "val": 24953000000,
+     "filed": "2026-02-05",
+     "tag": "ShareBasedCompensation",
      "start": "2025-01-01"
     }
    },
@@ -1324,6 +1403,12 @@
     "end": "2026-06-30",
     "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
    },
+   "sbc": {
+    "val": 28653000000,
+    "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
+    "end": "2026-06-30",
+    "method": "누적 보고라 직전 연간에 올해 누적을 더하고 작년 같은 기간을 뺀다"
+   },
    "nonoperating": {
     "val": 151641000000,
     "window": "2025 연간 + 2026-01-01~2026-06-30 − 2025-01-01~2025-06-30",
@@ -1634,7 +1719,7 @@
     "growth": -0.2807
    }
   ],
-  "fetched_at": "2026-08-27T06:56:26.879424+00:00",
+  "fetched_at": "2026-08-27T07:28:58.503510+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }
