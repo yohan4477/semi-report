@@ -74,3 +74,87 @@ def test_render_shows_cut_count(tmp_path):
 def test_render_shows_index_date(tmp_path):
     text = q.render(q.lookup(_mkroot(tmp_path), IDX, '램리서치'))
     assert '2026-08-27' in text
+
+
+TMAP = {
+    '_meta': {'built': '2026-08-28', 'index_fingerprint': 'abc123', 'lines': 1},
+    'content/a.md#L2': {'t': '1965', 'how': '명시', 'tense': '회고'},
+}
+META = {'content/a.md': {'date': '2024-09-27', 'section': 'biz'}}
+TODAY = '2026-08-28'
+
+
+def test_stale_limit_uses_the_shared_table():
+    assert q.stale_limit('biz') == 120
+    assert q.stale_limit('power') == 365
+    assert q.stale_limit('') == 180
+
+
+def test_lookup_attaches_the_recorded_time(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap=TMAP, meta=META, today=TODAY)
+    row = r['rows'][0]
+    assert row['tense'] == '회고'
+    assert row['t'] == '1965'
+    assert row['how'] == '명시'
+    assert row['utter'] == '2024-09-27'
+
+
+def test_lookup_inherits_the_utterance_date_when_no_time_recorded(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap={'_meta': {}}, meta=META, today=TODAY)
+    row = r['rows'][0]
+    assert row['how'] == '상속'
+    assert row['t'] == '2024'
+    assert row['tense'] == '현재'
+
+
+def test_lookup_never_marks_a_retrospect_line_stale(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap=TMAP, meta=META, today=TODAY)
+    assert r['rows'][0]['stale'] is False
+
+
+def test_lookup_marks_an_old_present_line_stale(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap={'_meta': {}}, meta=META, today=TODAY)
+    assert r['rows'][0]['stale'] is True
+
+
+def test_lookup_keeps_a_recent_present_line_fresh(tmp_path):
+    meta = {'content/a.md': {'date': '2026-08-01', 'section': 'biz'}}
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap={'_meta': {}}, meta=meta, today=TODAY)
+    assert r['rows'][0]['stale'] is False
+
+
+def test_lookup_counts_tenses_in_the_receipt(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                 tmap=TMAP, meta=META, today=TODAY)
+    assert r['tense_counts'] == {'회고': 1}
+
+
+def test_lookup_without_times_behaves_as_before(tmp_path):
+    r = q.lookup(_mkroot(tmp_path), IDX, '램리서치')
+    assert r['rows'][0]['addr'] == 'content/a.md#L2'
+    assert r['total'] == 1
+
+
+def test_render_shows_tense_and_year(tmp_path):
+    text = q.render(q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                             tmap=TMAP, meta=META, today=TODAY))
+    assert '회고' in text
+    assert '1965' in text
+    assert '명시' in text
+
+
+def test_render_marks_a_stale_line(tmp_path):
+    text = q.render(q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                             tmap={'_meta': {}}, meta=META, today=TODAY))
+    assert '낡음' in text
+
+
+def test_render_receipt_reports_tense_counts(tmp_path):
+    text = q.render(q.lookup(_mkroot(tmp_path), IDX, '램리서치',
+                             tmap=TMAP, meta=META, today=TODAY))
+    assert '회고 1' in text
