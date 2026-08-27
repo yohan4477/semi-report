@@ -46,6 +46,63 @@ SEC = {
                 '만든 것을 회사 안에 어떻게 들이나. 조직이 먼저 바뀌는 대목'),
 }
 
+# 한 섹션에 서른 장이 넘으면 목록이 아니라 벽이 된다. 갈래로 나누고 읽는 차례를 정해
+# 섹션 머리에 세운다 — 카드 자체도 이 차례대로 선다(날짜순이 아니다).
+# {섹션 열쇠말: [(갈래 이름, 한 줄, [영상 ID …]), …]}. 목록에 없는 카드는 갈래 뒤에 날짜순으로 붙는다.
+TRACKS = {
+    'agent': [
+        ('먼저 읽을 것', '무엇이 먼저 깨지고, 왜 모델 탓이 아닌가',
+         ['m24UKZomm7k', 'BInpv7lGp1o', 'R30col3UPUg', '3_gYbhABcAE']),
+        ('하네스와 상태', '한 번의 부름을 넘어가는 것을 무엇이 쥐고 있나',
+         ['shRR1e2HXMk', '8txf05vVVl4', 'j_TKDweOsYE', '9QebvrrY3KY',
+          'aqW68Is_Kj4', 'CEvIs9y1uog', '9fubhllmsBU', 'pMggiOb18tc']),
+        ('도구와 연결', '무엇을 쥐여 주나. 도구를 몇 개까지 두나',
+         ['WJjInLeaJjo', '0n3MKk7r60w', 'RkVILz06y08', 'v3Fr2JR47KA',
+          '_xIwFcnHqp4', 'Q3NreEAdKMc', 'VGN22pPpb-8']),
+        ('운영에서 지키는 것', '권한·사고·규모. 터진 뒤에 무엇을 할 수 있나',
+         ['rbjWzZK2LU0', 'Lc8zRh9muoY', '7gujZrJ9L5I', 'GdvKNwMcfd0',
+          'abvQEhvRI_c', 'HT4l0DeP69I', 'b2GqTDWtg6s', '6lTxD_oUjXQ']),
+        ('사람과 함께', '어디서 사람이 끼어들고 무엇을 보여 주나',
+         ['fmZWvE7yDZo', 'HN-F-OQe6j0', 'ClWD8OEYgp8', 'iQ5xldZ9StU']),
+    ],
+}
+
+# 영상 ID -> (섹션 열쇠말, 갈래 차례, 갈래 안 차례). 카드를 세우는 열쇠이자 검사용이다.
+TRACK_POS = {vid: (sec, ti, vi)
+             for sec, tl in TRACKS.items()
+             for ti, (_lab, _sub, vids) in enumerate(tl)
+             for vi, vid in enumerate(vids)}
+
+
+KO_NUM = {2: '둘', 3: '셋', 4: '넷', 5: '다섯', 6: '여섯', 7: '일곱'}
+
+
+def read_guide(sec_key, cards):
+    """섹션 머리에 서는 「읽는 차례」. 갈래 이름과 그 안의 차례를 카드 앵커로 잇는다.
+
+    안내만 두고 카드는 날짜순으로 두면 차례를 짚어 줘도 아래에서 찾아야 한다.
+    그래서 카드도 이 차례로 세운다 — 여기 적힌 순서가 곧 화면 순서다."""
+    by_vid = {c['_vid']: c for c in cards}
+    out, n = [], 0
+    for lab, sub, vids in TRACKS[sec_key]:
+        got = [by_vid[v] for v in vids if v in by_vid]
+        if not got:
+            continue
+        n += len(got)
+        items = ''.join('<li><a href="#%s">%s</a></li>'
+                        % (dc.slug(c['title']), esc(c['title'].split(' — ')[0]))
+                        for c in got)
+        out.append('<li><b>%s</b><span>%s</span><ol>%s</ol></li>' % (lab, esc(sub), items))
+    miss = [c for c in cards if c['_vid'] not in TRACK_POS]
+    tail = ('<p class="rd-tail">아직 갈래에 안 넣은 %d편은 아래 맨 뒤에 날짜순으로 붙어 있습니다.</p>'
+            % len(miss)) if miss else ''
+    return ('<details class="rd-guide" open><summary class="rd-sum">읽는 차례 — 갈래 %s</summary>'
+            '<p class="rd-lede">%d편입니다. <b>카드도 이 차례로 서 있습니다</b> — '
+            '위에서부터 읽으면 앞이 뒤를 받칩니다.</p>'
+            '<ol class="rd-tracks">%s</ol>%s</details>'
+            % (KO_NUM[len(TRACKS[sec_key])], n, ''.join(out), tail))
+
+
 VERDICT_RE = re.compile(r'^한줄\s*코멘트[.,]?\s*(.+)$')
 NUM_RE = re.compile(r'^(\d{1,3})\.\s+(.*)$')
 
@@ -281,8 +338,18 @@ def build():
                        dc.blob(REL % fn), ''),
                       ('발표 영상 ↗', meta.get('source', ''), '')],
             '_date': meta.get('date', ''),
+            '_vid': vid_of(meta.get('source', '')),
+            '_sec': meta['section'],
         })
     cards.sort(key=lambda c: c['_date'], reverse=True)
+    # 섹션 차례는 SEC에 적은 번호다. 날짜로 두면 섹션 순서가 새 글이 들어올 때마다 바뀐다.
+    cards.sort(key=lambda c: (c['section'][1],
+                              TRACK_POS.get(c['_vid'], ('', 99, 99))[1:]))
+    for key in TRACKS:
+        listed = {v for _l, _s, vs in TRACKS[key] for v in vs}
+        have = {c['_vid'] for c in cards if c['_sec'] == key}
+        ghost = listed - have
+        assert not ghost, '갈래에 없는 영상 ID가 적혀 있다: %s' % sorted(ghost)
     print('  카드 %d장' % len(cards))
     for fn, why in bad:
         print('  ! 건너뜀 %s — %s' % (fn, why))
@@ -463,6 +530,29 @@ POST_CSS = '''
     .uc-rep .uc-tbl th,.uc-rep .uc-tbl td{padding:8px 7px}
     .uc-rep .uc-tbl{word-break:break-word}
   }
+
+  /* 읽는 차례 — 섹션 머리 바로 아래. 갈래 이름과 그 안의 순서를 카드 앵커로 잇는다 */
+  .rd-guide{margin:0 0 22px;padding:16px 18px;border:1px solid var(--line);
+            border-radius:14px;background:var(--sunk,rgba(127,127,127,.05))}
+  .rd-sum{cursor:pointer;font-size:.95rem;color:var(--ink);list-style:none}
+  .rd-sum::-webkit-details-marker{display:none}
+  .rd-sum::before{content:'▾ ';color:var(--epoch-teal)}
+  .rd-guide:not([open]) .rd-sum::before{content:'▸ '}
+  .rd-lede{margin:10px 0 14px;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+  .rd-tracks{list-style:none;margin:0;padding:0;display:grid;gap:14px;
+             grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .rd-tracks>li{counter-increment:rt;min-width:0}
+  .rd-tracks{counter-reset:rt}
+  .rd-tracks>li>b{display:block;font-size:.95rem;color:var(--ink)}
+  .rd-tracks>li>b::before{content:counter(rt) ". ";color:var(--epoch-teal);
+                          font-variant-numeric:tabular-nums}
+  .rd-tracks>li>span{display:block;margin:2px 0 7px;font-size:.85rem;
+                     line-height:1.5;color:var(--ink-3)}
+  .rd-tracks ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+  .rd-tracks ol li{padding:0 0 0 10px;margin:0 0 5px;font-size:.88rem;line-height:1.5}
+  .rd-tracks ol a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent}
+  .rd-tracks ol a:hover{color:var(--epoch-teal);border-bottom-color:var(--epoch-teal)}
+  .rd-tail{margin:13px 0 0;font-size:.85rem;color:var(--ink-3)}
 ''' + aie_figs.FIG_CSS
 
 INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입니다. 논지가 앞의 말에서 뒤의 말로 '
@@ -488,4 +578,6 @@ if __name__ == '__main__':
               '  페이지 생성은 <code>scratchpad/gen_aie_dashboard.py</code>'
               '(공용 부품 <code>dash_common.py</code>).')
     dc.render(CARDS, 'AI Engineer', HEADER, FOOTER, OUT,
-              extra_css=POST_CSS, intro=INTRO, newest_first=True)
+              extra_css=POST_CSS, intro=INTRO,
+              sec_fig={SEC[k][0]: read_guide(k, [c for c in CARDS if c['_sec'] == k])
+                       for k in TRACKS})
