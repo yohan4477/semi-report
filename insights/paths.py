@@ -15,3 +15,6 @@ THESES = os.path.join(HERE, 'theses')
 WORLD = os.path.join(HERE, 'world_path.txt')
 # 돈 고리 여덟 편. 교차 인사이트(어긋남 하나)와 절 구성이 달라 디렉터리를 가른다
 LOOP = os.path.join(HERE, 'loop')
+# 쟁점 — 같은 물음에 화자들이 갈린 자리. 화자 말은 인용이고 진행자 말은 판단이라
+# 절 구성이 교차 인사이트와 다르다
+DEBATE = os.path.join(HERE, 'debate')
