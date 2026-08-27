@@ -1,6 +1,6 @@
 {
  "ticker": "NVDA",
- "fetched_at": "2026-08-27T00:23:22.620364+00:00",
+ "fetched_at": "2026-08-27T01:05:43.212911+00:00",
  "sec": {
   "entity": "NVIDIA CORP",
   "cik": "0001045810",
@@ -1769,8 +1769,18 @@
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
+  "beta": 1.9012806937714404,
+  "n_days": 252,
+  "window": "52주",
+  "start": "2025-08-25",
+  "end": "2026-08-26",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "beta_2y": {
   "beta": 1.9592301207112341,
   "n_days": 500,
+  "window": "2년",
   "start": "2024-08-27",
   "end": "2026-08-26",
   "index": "^GSPC",

@@ -39,7 +39,18 @@ CASES = {
     'Bull': dict(g1=0.21, m1=0.13, g2=0.060, m3=0.19, g=0.0325,
                  why='TPU 시스템 판매가 수주 잔고대로 실현되고 CapEx 압축이 2028년에 풀린다'),
 }
-WACC = 0.10
+# 할인율을 박아 두지 않는다. 본문이 「국채 금리에 베타와 시장위험프리미엄을 곱해
+# 얹었다」고 적는데 값이 0.10 으로 고정돼 있으면 그 문장이 계산과 어긋난다 —
+# 2026-08-27에 베타 창을 52주로 바꾸자 실제로 어긋났다. 룰북 R17·R18 그대로 낸다.
+RF = d['risk_free']['rate']
+BETA = d['beta']['beta']
+MRP = 0.046
+KD_PRE = 0.045
+TAXR = t['tax_expense']['val'] / t['pretax_income']['val']
+KE = RF + BETA * MRP
+DEBT = (t['lt_debt']['val'] + t['st_debt']['val']) / B
+DEBT_W = DEBT / (DEBT + MCAP)
+WACC = KE * (1 - DEBT_W) + KD_PRE * (1 - TAXR) * DEBT_W
 
 
 def lerp(a, b, i, n):
@@ -153,6 +164,9 @@ def write_facts():
           '- 지분 평가이익 %s' % two(99.0),
           '', '## 우리가 돌린 계산', '',
           '- 할인율 %.1f%%' % (WACC * 100),
+          '- 할인율 %.2f%%' % (WACC * 100),
+          '- 자기자본비용 %.2f%%' % (KE * 100),
+          '- 부채 비중 %.2f%%' % (DEBT_W * 100),
           '- 시장위험프리미엄 4.6%',
           '- 자기자본비용 9.99%',
           '- 세율 후보 16.7% / 18.4% / 20.7%',
@@ -172,18 +186,21 @@ def write_facts():
     g25 = dcf.sensitivity(base, [0.09, 0.095, 0.10, 0.105, 0.11],
                           [0.0175, 0.0225, 0.0275, 0.0325, 0.0375], NET_DEBT, SHARES)
     L.append('- 민감도 최고 %.0f · 최저 %.0f' % (max(g25.values()), min(g25.values())))
+    L.append('- 영구가치 배수 %.1f배 · 그 분모 %.2f%%포인트'
+             % ((1 + CASES['Base']['g']) / (WACC - CASES['Base']['g']),
+                (WACC - CASES['Base']['g']) * 100))
     L.append('- 비영업자산 반영 시 주당 가산 %.1f' % (131.5 / SHARES))
     L.append('- 실무 도구 보수적 상한 10년 성장 20%')
     eq = dcf.value(base, WACC, CASES['Base']['g'], NET_DEBT, SHARES)['equity']
     L.append('- Base 비영업자산 반영 주당 %.0f' % ((eq + 131.5) / SHARES))
-    for r in (0.09, 0.095, 0.10, 0.105, 0.11):
+    for r in (0.09, 0.095, 0.10, 0.105, 0.11, WACC):
         L.append('- 역산 요구성장률 (할인율 %.1f%%) %.2f%%'
                  % (r * 100, dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT) * 100))
     for name, c2 in CASES.items():
         ir = dcf.implied_discount_rate([r[3] for r in path(c2)], c2['g'], MCAP, NET_DEBT)
         L.append('- %s 경로 내재 할인율 %.2f%% (우리 할인율 대비 %.2f%%p 낮다)'
                  % (name, ir * 100, (WACC - ir) * 100))
-    g10 = dcf.implied_growth(FCF0, 0.10, 0.0275, 10, MCAP, NET_DEBT)
+    g10 = dcf.implied_growth(FCF0, WACC, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     last = path(CASES['Base'])[-1][3]
     L += ['- 10년 뒤 요구 잉여현금흐름 %s' % two(f10),
@@ -205,13 +222,14 @@ def write_facts():
                  '베타 %.3f 고정시 시장위험프리미엄 %.2f%% · 무위험수익률 위 위험대가 %.2f%%포인트'
                  % (name, ir * 100, (ir - RF) / MRP, BETA, (ir - RF) / BETA * 100,
                     (ir - RF) * 100))
-    g10 = dcf.implied_growth(FCF0, 0.10, 0.0275, 10, MCAP, NET_DEBT)
+    g10 = dcf.implied_growth(FCF0, WACC, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     rev35 = path(CASES['Base'])[-1][1]
     base_cagr = (rev35 / REV0) ** 0.1 - 1
     L.append('- 우리 Base 2035 매출 %s · 매출 연평균 성장률 %.1f%%' % (two(rev35), base_cagr * 100))
     L.append('- 필요 마진이 지금 마진의 %.2f배' % ((f10 / rev35) / MARGIN0))
-    for m in (0.17, 0.20, 0.25, 0.30, 0.364):
+    _need_m = f10 / rev35
+    for m in (0.17, 0.20, 0.25, 0.30, _need_m):
         need = f10 / m
         L.append('- 잉여현금흐름 마진 %.1f%% 이면 2035 매출 %s 필요 · 우리 경로의 %.2f배 · '
                  '매출 연평균 성장률 %.1f%%'

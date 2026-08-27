@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-27T00:23:51.999554+00:00",
+ "fetched_at": "2026-08-27T01:05:54.456262+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -2071,8 +2071,18 @@
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
+  "beta": 1.4527881754896168,
+  "n_days": 252,
+  "window": "52주",
+  "start": "2025-08-25",
+  "end": "2026-08-26",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "beta_2y": {
   "beta": 1.4010069604951374,
   "n_days": 500,
+  "window": "2년",
   "start": "2024-08-27",
   "end": "2026-08-26",
   "index": "^GSPC",

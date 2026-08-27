@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-27T00:23:43.082215+00:00",
+ "fetched_at": "2026-08-27T01:05:46.119062+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -1393,8 +1393,18 @@
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
+  "beta": 1.3640303782803203,
+  "n_days": 252,
+  "window": "52주",
+  "start": "2025-08-25",
+  "end": "2026-08-26",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "beta_2y": {
   "beta": 1.1497772787770097,
   "n_days": 500,
+  "window": "2년",
   "start": "2024-08-27",
   "end": "2026-08-26",
   "index": "^GSPC",

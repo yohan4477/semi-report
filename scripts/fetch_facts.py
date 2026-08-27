@@ -315,15 +315,22 @@ def price(ticker, rng='2y'):
     )
 
 
-def beta(stock_series, index_series):
+def beta(stock_series, index_series, window=None):
     """일간 수익률을 지수에 회귀한 기울기. 공분산/분산으로 낸다.
 
     날짜(초 단위 타임스탬프)가 맞는 날만 짝지어 쓴다 — 휴장일이 어긋나면
     수익률이 한 칸씩 밀려 베타가 엉뚱하게 나온다.
+
+    window 는 쓸 거래일 수다. 룰북 R17 이 삼성전자에 52주 베타를 썼으므로
+    기본값을 252일로 두고 부른다. 2년치로 재면 엔비디아 베타가 1.96 인데
+    52주로 재면 다른 값이 나온다 — 어느 구간으로 쟀는지가 할인율을 통째로
+    움직이므로 창을 값과 함께 남긴다.
     """
     a = dict(stock_series)
     b = dict(index_series)
     days = sorted(set(a) & set(b))
+    if window:
+        days = days[-(window + 1):]
     if len(days) < 60:
         return None
     rs, ri = [], []
@@ -334,7 +341,7 @@ def beta(stock_series, index_series):
     ms, mi = sum(rs) / n, sum(ri) / n
     cov = sum((x - ms) * (y - mi) for x, y in zip(rs, ri)) / (n - 1)
     var = sum((y - mi) ** 2 for y in ri) / (n - 1)
-    return dict(beta=cov / var, n_days=n,
+    return dict(beta=cov / var, n_days=n, window='52주' if window else '2년',
                 start=datetime.fromtimestamp(days[0], timezone.utc).date().isoformat(),
                 end=datetime.fromtimestamp(days[-1], timezone.utc).date().isoformat(),
                 index='^GSPC', freq='daily')
@@ -374,7 +381,10 @@ def build(ticker):
             'shares_basis': shares_basis,
             'source': 'query1.finance.yahoo.com/v8/finance/chart',
         },
-        'beta': beta(px['series'], idx['series']),
+        # 룰북 R17 이 쓴 창은 52주다. 2년치도 함께 남겨 어느 창이 얼마나
+        # 다른 값을 내는지 감사할 수 있게 한다.
+        'beta': beta(px['series'], idx['series'], window=252),
+        'beta_2y': beta(px['series'], idx['series']),
         'risk_free': rf(),
     }
     d = os.path.join(OUT, ticker)

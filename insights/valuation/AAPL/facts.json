@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "fetched_at": "2026-08-27T00:23:54.889009+00:00",
+ "fetched_at": "2026-08-27T01:05:57.044771+00:00",
  "sec": {
   "entity": "Apple Inc.",
   "cik": "0000320193",
@@ -1944,8 +1944,18 @@
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
+  "beta": 0.7332999594041457,
+  "n_days": 252,
+  "window": "52주",
+  "start": "2025-08-25",
+  "end": "2026-08-26",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "beta_2y": {
   "beta": 1.108035085554891,
   "n_days": 500,
+  "window": "2년",
   "start": "2024-08-27",
   "end": "2026-08-26",
   "index": "^GSPC",

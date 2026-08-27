@@ -1,6 +1,6 @@
 {
  "ticker": "MSFT",
- "fetched_at": "2026-08-27T00:23:46.154435+00:00",
+ "fetched_at": "2026-08-27T01:05:48.701106+00:00",
  "sec": {
   "entity": "MICROSOFT CORPORATION",
   "cik": "0000789019",
@@ -2022,8 +2022,18 @@
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
+  "beta": 0.9704644643901722,
+  "n_days": 252,
+  "window": "52주",
+  "start": "2025-08-25",
+  "end": "2026-08-26",
+  "index": "^GSPC",
+  "freq": "daily"
+ },
+ "beta_2y": {
   "beta": 0.9672349201750501,
   "n_days": 500,
+  "window": "2년",
   "start": "2024-08-27",
   "end": "2026-08-26",
   "index": "^GSPC",
