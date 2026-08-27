@@ -53,6 +53,7 @@ import driver_map_data_hwocean as dmd_hwocean
 import driver_map_data_celltrion as dmd_celltrion
 import driver_map_data_tck as dmd_tck
 import driver_map_data_lgd as dmd_lgd
+import _cards_0827
 
 OUT = os.path.join(dc.ROOT, '대시보드', '회계사 대시보드.html')
 blob = dc.blob
@@ -4473,8 +4474,12 @@ CARDS = [{
     'links': [('📄 요약 전문', blob(SUM + '[260821] 버핏지표 238%로 사상 최고, 그런데 버핏은 14분기 만에 사들였다 - 투자심리 - 엘곰.md'), 'secondary')],
 }]
 
+# 엘곰 08-25~08-27 다섯 편은 별도 모듈에 있다. 이 파일이 이미 5천 줄이라 새 카드는 밖에서 붙인다.
+CARDS += _cards_0827.cards(SEC_AI, SEC_MKT, blob, SUM)
+
+
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
-assert len(CARDS) == 115, '카드 수가 달라졌다'
+assert len(CARDS) == 120, '카드 수가 달라졌다'
 
 
 
