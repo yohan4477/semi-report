@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-27T14:04:29.519536+00:00",
+ "fetched_at": "2026-08-27T14:35:23.236796+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -1512,6 +1512,15 @@
      "start": null
     }
    },
+   "afs_unrealized": {
+    "2025": {
+     "end": "2025-12-31",
+     "val": 39500000000,
+     "filed": "2026-02-06",
+     "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+     "start": "2025-01-01"
+    }
+   },
    "purchase_unrecorded": {
     "2014": {
      "end": "2014-12-31",
@@ -2461,16 +2470,16 @@
   }
  },
  "market": {
-  "price": 257.09,
+  "price": 256.93,
   "currency": "USD",
-  "as_of": "2026-08-27T14:04:28+00:00",
-  "market_cap": 2759840806468.3,
+  "as_of": "2026-08-27T14:35:21+00:00",
+  "market_cap": 2758123219129.1,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.4496279918350459,
+  "beta": 1.4484764228983409,
   "n_days": 252,
   "window": "52주",
   "start": "2025-08-26",
@@ -2480,7 +2489,7 @@
  },
  "beta_grid": {
   "52주 일간": {
-   "beta": 1.4496279918350459,
+   "beta": 1.4484764228983409,
    "n": 252
   },
   "52주 주간": {
@@ -2488,11 +2497,11 @@
    "n": 50
   },
   "52주 월간": {
-   "beta": 1.9239474758344548,
+   "beta": 1.9222411344067212,
    "n": 12
   },
   "2년 일간": {
-   "beta": 1.3976196648617025,
+   "beta": 1.3972608909203261,
    "n": 504
   },
   "2년 주간": {
@@ -2500,11 +2509,11 @@
    "n": 100
   },
   "2년 월간": {
-   "beta": 1.8070206391904198,
+   "beta": 1.8057930276346301,
    "n": 24
   },
   "5년 일간": {
-   "beta": 1.5087012808935454,
+   "beta": 1.5085653252839661,
    "n": 1254
   },
   "5년 주간": {
@@ -2735,7 +2744,63 @@
  ],
  "raw": {
   "purchase_long": [],
-  "guarantee_max": []
+  "guarantee_max": [],
+  "afs_unrealized": [
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2025-01-01",
+    "end": "2025-09-30",
+    "val": 18800000000,
+    "form": "10-Q",
+    "filed": "2025-10-31",
+    "kind": "기간"
+   },
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "val": 39500000000,
+    "form": "10-K",
+    "filed": "2026-02-06",
+    "kind": "기간"
+   },
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "val": 39500000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "기간"
+   },
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "val": 39500000000,
+    "form": "10-Q",
+    "filed": "2026-07-31",
+    "kind": "기간"
+   },
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2026-01-01",
+    "end": "2026-03-31",
+    "val": 36300000000,
+    "form": "10-Q",
+    "filed": "2026-04-30",
+    "kind": "기간"
+   },
+   {
+    "tag": "DebtSecuritiesAvailableForSaleUnrealizedGainLoss",
+    "start": "2026-01-01",
+    "end": "2026-06-30",
+    "val": 92000000000,
+    "form": "10-Q",
+    "filed": "2026-07-31",
+    "kind": "기간"
+   }
+  ]
  },
  "risk_free": {
   "rate": 0.0464,
@@ -2785,7 +2850,7 @@
     "growth": -0.1671
    }
   ],
-  "fetched_at": "2026-08-27T14:04:34.117445+00:00",
+  "fetched_at": "2026-08-27T14:35:28.600794+00:00",
   "source": "query2.finance.yahoo.com/v10/finance/quoteSummary earningsTrend",
   "note": "애널리스트 평균 추정치. 0q 이번 분기 · +1q 다음 분기 · 0y 이번 회계연도 · +1y 다음 회계연도. 그 뒤는 안 준다"
  }

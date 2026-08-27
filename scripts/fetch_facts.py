@@ -74,6 +74,10 @@ CONCEPTS = {
     # 들어앉고, 더하면 같은 돈을 두 번 센다.
     'lt_investments': ['OtherLongTermInvestments'],
     'nonmarketable_equity': ['EquitySecuritiesWithoutReadilyDeterminableFairValueAmount'],
+    # 매도가능 채무증권의 미실현손익. 아마존은 앤트로픽 전환사채 80억 달러를 여기
+    # 담았고 평가익이 손익계산서가 아니라 기타포괄손익으로 간다 — 순이익에 안 잡히므로
+    # 우리 계산에도 안 온다. 크기를 밝히려면 값이 있어야 한다.
+    'afs_unrealized': ['DebtSecuritiesAvailableForSaleUnrealizedGainLoss'],
     'guarantee_max': ['GuaranteeObligationsMaximumExposure'],
     # 구매약정 태그 셋을 **대체 후보로 묶지 않는다.** 알파벳은 2026-03-31 한 날에
     # Unrecorded 75.6B 와 LongTerm 232.7B 를 함께 낸다 — 같은 것의 다른 이름이 아니라
@@ -670,7 +674,10 @@ def build(ticker):
                 # 보증 최대노출은 시점 값이라 최근 하나만 최근 12개월 자리에 남는다.
                 # 엔비디아는 세 분기 만에 9억에서 1,085억 달러로 뛰었다 — 그 뜀 자체가
                 # 본문이 말할 내용이라 이력을 남긴다
-                'guarantee_max': raw_facts(facts_raw, CONCEPTS['guarantee_max'])},
+                'guarantee_max': raw_facts(facts_raw, CONCEPTS['guarantee_max']),
+                # 매도가능 채무증권 미실현손익. 아마존은 기간 값으로 내서 최근 12개월
+                # 자리에 안 남는다 — 원자료로 둔다
+                'afs_unrealized': raw_facts(facts_raw, CONCEPTS['afs_unrealized'])},
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),

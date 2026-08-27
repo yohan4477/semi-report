@@ -277,6 +277,23 @@ def write_facts():
           '- 여섯 합계 주식보상비용 %.1f' % sum(x['sbc'] for x in _sb),
           '- 여섯 합계 주식보상비용 %.0f억 달러' % (sum(x['sbc'] for x in _sb) * 10),
           '']
+    # 본문이 찍는 표기를 그대로 한 번 더 적는다. 자릿수가 다르면 check_report 가
+    # 못 찾는다 — 요구 성장률은 소수 한 자리, 금액은 억 달러다.
+    L += ['## 본문 표기 그대로', '']
+    for r in rows():
+        L.append('- %s 시가총액 %.0f억 달러 · 잉여현금흐름 %.0f억 달러'
+                 % (r['name'], r['mcap'] * 10, r['fcf'] * 10))
+        if r['req_fcf']:
+            L.append('- %s 요구 성장률 %.1f%% · 주식보상 빼고 재면 %.1f%%'
+                     % (r['name'], r['req_fcf'] * 100,
+                        (r['req_fcf_sbc'] or 0) * 100))
+        for k in ('purchase_unrecorded', 'guarantee_max', 'nonmarketable_equity',
+                  'lt_debt', 'st_debt'):
+            v = _facts(r['t'])['sec']['ttm'].get(k)
+            if v:
+                L.append('- %s %s %.0f억 달러' % (r['name'], k, v['val'] / B * 10))
+    L += ['']
+
     L += ['## 잣대를 바꾸면 순위가 흔들리나', '']
     for a in rankings():
         L.append('- %s 싼 순서 %s' % (a['label'], ' > '.join(a['order'])))
