@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 
 import axis_lib as al  # noqa: E402
+import axis_review as ar  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -275,3 +276,50 @@ def test_declared_review_on_real_dashboard():
     assert r['cards'] == 10
     assert r['residual'] == []
     assert sum(c['n'] for c in r['cells']) >= 10
+
+
+def test_receipt_carries_module_and_hash():
+    axis = al.parse_axis({'name': 'x', 'cells': [{'id': 'a'}]})
+    r = ar.receipt(ROOT, 'gen_epoch_dashboard', axis)
+    assert r['dashboard'] == 'gen_epoch_dashboard'
+    assert len(r['hash']) == 8
+    assert r['axis']['cells'][0]['id'] == 'a'
+
+
+def test_render_shows_counts_and_shape():
+    axis = al.parse_axis(REGION)
+    res = al.review([_card('강남 것'), _card('무관')], axis)
+    text = ar.render(res, ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
+    assert '지역' in text
+    assert '목록' in text
+    assert '빈칸' in text
+    assert '잔여' in text
+
+
+def test_render_names_declared_overlap_differently():
+    res = al.declared_review([_sc('가', '서울', also=['경기'])])
+    axis = al.declared_axis([_sc('가', '서울', also=['경기'])])
+    text = ar.render(res, ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
+    assert '선언된 다중 배치' in text
+
+
+def test_render_includes_placement_receipt():
+    axis = al.parse_axis(REGION)
+    res = al.review([_card('강남 것')], axis)
+    text = ar.render(res, ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
+    assert '배치' in text
+    assert '강남 것' in text
+
+
+def test_render_says_empty_cell_needs_human_judgement():
+    axis = al.parse_axis(REGION)
+    text = ar.render(al.review([_card('강남 것')], axis),
+                     ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
+    assert '아직 안 쓴 것인지' in text
+
+
+def test_render_warns_when_placement_count_differs_from_cards():
+    axis = al.parse_axis(REGION)
+    res = al.review([_card('같은 제목'), _card('같은 제목')], axis)
+    text = ar.render(res, ar.receipt(ROOT, 'gen_epoch_dashboard', axis))
+    assert '제목이 겹친다' in text
