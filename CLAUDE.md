@@ -35,9 +35,12 @@ PYTHONIOENCODING=utf-8 python insights/check_read.py    # 읽히는가
 PYTHONIOENCODING=utf-8 python insights/check_cite.py    # 인용한 줄에 그 숫자가 있나
 PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야기인가
 PYTHONIOENCODING=utf-8 python insights/check_report.py  # 보고서 숫자가 원문에 있나
+PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
+
+앞의 여섯은 산문만 본다. 밸류에이션 결함 다섯(최근 12개월 기저 오지정·재무상태표 날짜 혼합·박아 둔 할인율·부호 뒤집힘·주식보상 가산)이 그 사이로 새어 나갔고 검사기가 잡은 것은 없었다. `check_val`이 그 자리를 막는다 — 판단은 `insights/valuation/adjust.py` 표에 줄로 세우고, 검사기는 그 표를 읽을 뿐 판단을 더하지 않는다.
 
 콘솔이 cp949라 파이썬 실행에 `PYTHONIOENCODING=utf-8`을 붙인다.
 
