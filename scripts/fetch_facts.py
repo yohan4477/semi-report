@@ -10,7 +10,7 @@ insights/valuation/<티커>/facts.json 에 조회 시각과 함께 떨어뜨린�
 산출 구간·주기가 안 밝혀진 값은 감사가 안 된다.
 """
 import json, os, sys, time, urllib.error, urllib.parse, urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 UA = 'insight-dashboard yohan4477@gmail.com'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -379,7 +379,7 @@ def beta(stock_series, index_series, window=None):
                 index='^GSPC', freq='daily')
 
 
-def lookback(facts, tags_ocf, tags_capex, price_series, shares, years=(1, 2)):
+def lookback(facts, tags_ocf, tags_capex, price_series, shares, quarters=13):
     """해마다 되돌아본 배수. 「그때 알 수 있던 것만」으로 자른다.
 
     예측을 채점하려는 것이 아니다. AI 국면처럼 규모가 바뀌는 자리는 어느 모형도 못
@@ -410,10 +410,12 @@ def lookback(facts, tags_ocf, tags_capex, price_series, shares, years=(1, 2)):
           for t, c in price_series}
     if not px or not shares:
         return None
-    today = max(px)
+    today = datetime.strptime(max(px), '%Y-%m-%d')
     out = []
-    for back in years:
-        asof = '%d%s' % (int(today[:4]) - back, today[4:])
+    for i in range(1, quarters + 1):
+        # 분기 간격으로 뒤로 간다. 달력 달을 세지 않고 91일씩 물러난다 —
+        # 회사마다 회계연도 끝이 달라 달을 맞춰도 어차피 같은 자리가 아니다.
+        asof = (today - timedelta(days=91 * i)).date().isoformat()
         days = [k for k in sorted(px) if k <= asof]
         if not days:
             continue
@@ -426,7 +428,9 @@ def lookback(facts, tags_ocf, tags_capex, price_series, shares, years=(1, 2)):
         mcap = p * shares / 1e9
         out.append(dict(asof=days[-1], price=p, market_cap=mcap,
                         fcf_known=fcf, fcf_period=ocf['end'],
-                        multiple=(mcap / fcf) if fcf else None,
+                        # 잉여현금흐름이 0 이하면 배수가 뜻을 잃는다. 아마존이
+                        # 설비투자가 영업현금흐름을 넘긴 분기에 -1,181배를 냈다.
+                        multiple=(mcap / fcf) if fcf > 0 else None,
                         note='그 날짜까지 제출된 서류만 썼다. 주식수는 최근 값을 '
                              '그대로 곱한 근사다 — 그때 주식수가 아니다'))
     return out or None

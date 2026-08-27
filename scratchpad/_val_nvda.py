@@ -530,7 +530,10 @@ def report6_html(sec, p, fig):
       % (nc.WACC_BASE * 100, (nc.WACC_BASE - 0.0275) * 100,
          nc.tv_multiple(nc.CASES['Base']['g']), 1.0275 / (0.10 - 0.0275),
          nc.price_multiple()))
-    _lb = sorted(nc.d.get('lookback') or [], key=lambda r: r['asof'])
+    # 되돌아본 점이 분기마다 열세 개다. 본문에 다 실으면 표가 글을 덮으므로
+    # 한 해 간격만 고른다 — 나머지는 사실표와 보고서 ⑤가 쓴다.
+    _all = sorted(nc.d.get('lookback') or [], key=lambda r: r['asof'])
+    _lb = [r for i, r in enumerate(reversed(_all)) if i % 4 == 3][::-1]
     if _lb:
         _o = _lb[0]
         p('<b>그 40배를 시간축에 놓으면 방향이 달라 보입니다.</b> 할인율도 성장 가정도 '

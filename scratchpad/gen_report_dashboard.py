@@ -20,6 +20,7 @@ import _biz_fig  # noqa: E402
 import _val_googl  # noqa: E402
 import _val_fig  # noqa: E402
 import _val_peers_text  # noqa: E402
+import _val_peers_fig  # noqa: E402
 import _val_nvda  # noqa: E402
 import _val_nvda_fig  # noqa: E402
 import _val_labs  # noqa: E402
@@ -1180,7 +1181,8 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '세후영업이익과 잉여현금흐름 사이가 벌어진다', _val_nvda_fig.FIG_FUNNEL, ''),
                (0, '경로 넷이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
                (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, ''),
-               (0, '비교 대상을 어떻게 고르느냐가 결론을 가른다', _val_nvda_fig.FIG_MULT, '')]
+               (0, '비교 대상을 어떻게 고르느냐가 결론을 가른다', _val_nvda_fig.FIG_MULT, ''),
+               (0, '우리 배수가 시장 범위 안에 든 회사가 없다', _val_peers_fig.FIG_BIAS, '')]
 
 
 if __name__ == '__main__':

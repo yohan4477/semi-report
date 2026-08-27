@@ -106,6 +106,34 @@ def rows():
     return [row(t) for t in TICKERS]
 
 
+def bias_rows():
+    """구조적 편향을 재는 줄. 예측 채점이 아니라 배수 둘의 거리다.
+
+    우리 잣대의 영구가치 배수는 (1+g)/(r-g) 하나로 정해진다. 그 값이 지난 3년 동안
+    시장이 실제로 낸 배수 범위 안에 든 적이 있는가를 본다. 한 번도 없으면 그것은
+    예측이 틀린 것이 아니라 잣대가 구조적으로 낮은 것이다.
+
+    시장 배수는 facts.json 의 lookback 이 준다 — 그때 제출돼 있던 서류만으로 낸
+    값이라 사후 정보가 안 섞인다.
+    """
+    out = []
+    for t in TICKERS:
+        d = _facts(t)
+        tt = d['sec']['ttm']
+        fcf = (tt['ocf']['val'] - tt['capex']['val']) / 1e9
+        mcap = d['market']['market_cap'] / 1e9
+        now = (mcap / fcf) if fcf > 0 else None
+        lb = [r['multiple'] for r in (d.get('lookback') or []) if r.get('multiple')]
+        ke = d['risk_free']['rate'] + d['beta']['beta'] * 0.046
+        ours = (1 + 0.0275) / (ke - 0.0275)
+        out.append(dict(t=t, name=NAMES[t], now=now, lo=min(lb) if lb else None,
+                        hi=max(lb) if lb else None, n=len(lb), ours=ours,
+                        beta=d['beta']['beta'], ke=ke,
+                        gap=(now / ours) if now else None,
+                        inside=bool(lb) and min(lb) <= ours <= max(lb)))
+    return out
+
+
 def write_facts():
     """check_report 가 대조할 사실표. 본문이 찍는 형태 그대로 적는다."""
     L = ['# 빅테크 여섯 비교 사실표 — 기계 대조용', '',
@@ -141,6 +169,27 @@ def write_facts():
               % (n(r['nopat10'], '%.0f'), n(r['nopat_x'], '%.1f배'),
                  n(r['nopat10_rev'], '%.1f배'))]
         L.append('')
+    L += ['## 구조적 편향 — 우리 배수와 시장 배수', '']
+    for b in bias_rows():
+        L.append('- %s 우리 영구가치 배수 %.1f배 · 지금 시장 배수 %s · 지난 3년 시장 범위 '
+                 '%.0f~%.0f배 · 관측 %d개 · 우리 배수가 그 범위 안인가 %s'
+                 % (b['name'], b['ours'],
+                    ('%.0f배' % b['now']) if b['now'] else '없음(잉여현금흐름 0 이하)',
+                    b['lo'], b['hi'], b['n'], '그렇다' if b['inside'] else '아니다'))
+        if b['gap']:
+            L.append('- %s 지금 시장 배수가 우리 배수의 %.1f배' % (b['name'], b['gap']))
+    _bb = bias_rows()
+    L += ['- 우리 배수 최저 %.1f배 · 최고 %.1f배'
+          % (min(x['ours'] for x in _bb), max(x['ours'] for x in _bb)),
+          '- 시장 범위 최저 %.0f배 · 최고 %.0f배'
+          % (min(x['lo'] for x in _bb), max(x['hi'] for x in _bb)),
+          '- 우리 배수가 시장 범위 안에 든 회사 %d곳' % sum(1 for x in _bb if x['inside']),
+          '- 거리가 가장 작은 곳 %s %.1f배 · 가장 큰 곳 %s %.1f배'
+          % (min((x for x in _bb if x['gap']), key=lambda x: x['gap'])['name'],
+             min(x['gap'] for x in _bb if x['gap']),
+             max((x for x in _bb if x['gap']), key=lambda x: x['gap'])['name'],
+             max(x['gap'] for x in _bb if x['gap'])),
+          '']
     p2 = os.path.join(_root, 'scratchpad', 'peers_facts.md')
     io.open(p2, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
     return p2
