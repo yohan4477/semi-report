@@ -26,7 +26,7 @@
 
 건강 인사이트(🩺)는 규칙이 다르다 — 카드 단위가 영상이 아니라 주제이고 본문에 해부도가 들어간다. 카드를 쓰거나 그림을 고치기 전에 `health-insight` 스킬을 연다.
 
-## 검사기는 여섯이다
+## 검사기
 
 ```bash
 PYTHONIOENCODING=utf-8 python insights/check_notes.py   # 노트·인용 무결성
@@ -37,7 +37,7 @@ PYTHONIOENCODING=utf-8 python insights/check_fresh.py   # 아직 지금 이야�
 PYTHONIOENCODING=utf-8 python insights/check_report.py  # 보고서 숫자가 원문에 있나
 ```
 
-FAIL 0이어야 푸시한다. **앞의 셋만 돌리지 않는다** — 2026-08-15에 그렇게 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
+FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
 
 콘솔이 cp949라 파이썬 실행에 `PYTHONIOENCODING=utf-8`을 붙인다.
 
