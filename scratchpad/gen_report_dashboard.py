@@ -1178,7 +1178,8 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '영업이익률이 두 번 무너졌다', _val_nvda_fig.FIG_CYCLE, ''),
                (0, '세후영업이익과 잉여현금흐름 사이가 벌어진다', _val_nvda_fig.FIG_FUNNEL, ''),
                (0, '엔비디아 케이스 셋이 모두 현재가 아래에 선다', _val_nvda_fig.FIG_CASE, ''),
-               (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, '')]
+               (0, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', _val_nvda_fig.FIG_NEED, ''),
+               (0, '비교 대상을 어떻게 고르느냐가 결론을 가른다', _val_nvda_fig.FIG_MULT, '')]
 
 
 if __name__ == '__main__':

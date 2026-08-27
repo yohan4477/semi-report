@@ -37,7 +37,7 @@ def _sens_table():
          ''.join('<th>%.2f%%</th>' % (g * 100) for g in nc.SENS_G),
          '</tr></thead><tbody>']
     for r in nc.SENS_R:
-        cls = ' class="hi"' if abs(r - nc.WACC) < 1e-9 else ''
+        cls = ' class="hi"' if abs(r - nc.WACC_BASE) < 1e-9 else ''
         h.append('<tr%s><th scope="row">%.2f%%</th>%s</tr>'
                  % (cls, r * 100,
                     ''.join('<td>%.0f</td>' % grid[(r, g)] for g in nc.SENS_G)))
@@ -49,7 +49,7 @@ def report6_html(sec, p, fig):
     """절 1~11. 사이클·기준기간·현금 격차·세미 근거·세 경로·필자 잣대·역산·판정."""
     v = {n: nc.value(n) for n in nc.ORDER}
     ir = {n: nc.implied_r(n) for n in nc.ORDER}
-    g10 = nc.dcf.implied_growth(nc.FCF0, nc.WACC, 0.0275, 10, nc.MCAP, nc.NET_DEBT)
+    g10 = nc.dcf.implied_growth(nc.FCF0, nc.WACC_BASE, 0.0275, 10, nc.MCAP, nc.NET_DEBT)
     f10 = nc.FCF0 * (1 + g10) ** 10
     base_rows = nc.path(nc.CASES['Base'])
     rev10 = base_rows[-1][1]
@@ -81,7 +81,8 @@ def report6_html(sec, p, fig):
     ax.append('</div>')
     ax.append(_ln('최근 12개월 잉여현금흐름', _eok(nc.FCF0)))
     ax.append(_ln('그 매출 대비 현금 비율', '%.1f%%' % (nc.MARGIN0 * 100), sub=True))
-    ax.append(_ln('할인율 (세 경로 공통)', '%.2f%%' % (nc.WACC * 100)))
+    ax.append(_ln('할인율 (보수·기준·공격)', '%.2f · %.2f · %.2f%%'
+                  % tuple(nc.wacc_of(n) * 100 for n in nc.ORDER)))
     ax.append('</div>')
     h_ += ax
 
@@ -256,10 +257,21 @@ def report6_html(sec, p, fig):
       % (_eok(nc.GUIDE_Q3 * 4), (nc.GUIDE_Q3 * 4 / nc.REV0 - 1) * 100))
     p('세 경로 모두 <b>10년</b>이고 그 안에 내려가는 구간이 한 번씩 들어갑니다. 매출 '
       '성장률과 잉여현금흐름 마진을 해마다 따로 적었습니다. 성장률을 선형으로 내리는 방식은 '
-      '「몇 해 뒤에 한 번 꺾이고 다시 오른다」를 못 그리기 때문입니다. 할인율은 세 경로가 '
-      '%.2f%%로 같고 영구성장률만 %.2f%%·%.2f%%·%.2f%%로 다릅니다.'
-      % (nc.WACC * 100, nc.CASES['Bear']['g'] * 100,
-         nc.CASES['Base']['g'] * 100, nc.CASES['Bull']['g'] * 100))
+      '「몇 해 뒤에 한 번 꺾이고 다시 오른다」를 못 그리기 때문입니다.')
+    p('<b>할인율도 경로마다 다르게 줍니다.</b> 회계사 판의 필자가 리노공업 편(2026년 3월 '
+      '8일)에서 쓴 방식입니다. 그는 보수 9.5%%·기준 8.5%%·공격 7.5%%로 구간을 나누고 '
+      '근거를 순현금·고마진·높은 자본수익률로 적었습니다. 엔비디아도 셋 다 해당합니다. '
+      '우리는 그 폭을 비율로 옮겨 자본자산가격결정모형이 낸 %.2f%%를 보수 자리에 두고 '
+      '기준은 그 89%%인 <b>%.2f%%</b>, 공격은 79%%인 <b>%.2f%%</b>로 잡았습니다. '
+      '영구성장률은 %.2f%%·%.2f%%·%.2f%%입니다.'
+      % (nc.WACC * 100, nc.wacc_of('Base') * 100, nc.wacc_of('Bull') * 100,
+         nc.CASES['Bear']['g'] * 100, nc.CASES['Base']['g'] * 100,
+         nc.CASES['Bull']['g'] * 100))
+    p('같은 편에 가드가 하나 붙어 있습니다. 그는 현재 주가를 정당화하는 할인율을 '
+      '<b>「역산 수준」</b>이라 부르고 시나리오에서 뺐습니다. 우리 구간이 그 선을 넘으면 '
+      '값이 스스로 서는 것이 아니라 주가가 자기를 정당화하는 것이 됩니다. 엔비디아는 세 '
+      '경로 모두 그 선 위에 있습니다. 알파벳 편은 가장 후한 경로가 그 선에 닿아서, 그쪽 '
+      '본문이 그렇게 밝힙니다.')
     for n, lab in (('Bear', '보수'), ('Base', '중간'), ('Bull', '후한')):
         p('<b>%s(%s).</b> %s. 10년째 매출이 %s이고 그해 잉여현금흐름은 %s입니다. '
           '주당 <b>%.0f달러</b>가 나옵니다.'
@@ -291,7 +303,7 @@ def report6_html(sec, p, fig):
     p('Base 경로를 연도별로 폅니다. 세로선이 구간을 가릅니다. 왼쪽 세 해가 상승, '
       '가운데 두 해가 조정, 오른쪽 다섯 해가 회복과 성숙입니다. 표의 2027년은 최근 12개월에서 '
       '한 해 뒤 12개월이라 엔비디아 회계연도 2027년과 반년 어긋납니다.')
-    tbl, pv = _val_googl._ytable(base_rows, nc.REV0, nc.WACC, {3, 5})
+    tbl, pv = _val_googl._ytable(base_rows, nc.REV0, nc.wacc_of('Base'), {3, 5})
     p(tbl)
     p('명시적 기간 열 해의 현재가치를 더하면 %s입니다. 여기에 영구가치의 현재가치를 더하고 '
       '순현금 %s를 더한 뒤 주식수 %.1f억 주로 나누면 주당 <b>%.0f달러</b>가 나옵니다. '
@@ -302,7 +314,7 @@ def report6_html(sec, p, fig):
       '(1+영구성장률)/(할인율−영구성장률)을 곱해 만듭니다. 우리 값을 넣으면 '
       '<b>%.1f배</b>입니다. 마지막 해에 번 현금의 %.1f배로 그 뒤의 영원을 사는 셈입니다. '
       '알파벳 편은 같은 계산에서 %.1f배였습니다. 그런데 시장은 지금 엔비디아를 최근 '
-      '12개월 잉여현금흐름의 <b>%.1f배</b>에 사고 있습니다. 절 9와 절 10이 이 두 배수의 '
+      '12개월 잉여현금흐름의 <b>%.1f배</b>에 사고 있습니다. 절 9와 절 11이 이 두 배수의 '
       '간격을 다룹니다.'
       % (nc.tv_multiple(nc.CASES['Base']['g']), nc.tv_multiple(nc.CASES['Base']['g']),
          (1 + gcs.CASES['Base']['g']) / (gcs.WACC - gcs.CASES['Base']['g']),
@@ -334,20 +346,20 @@ def report6_html(sec, p, fig):
          nc.dcf.value(nc.EL_REST, nc.EL['rate'], nc.EL['g'], 0.0, nc.EL['shares'])['per_share'],
          abs((nc.dcf.value(nc.EL_REST, nc.EL['rate'], nc.EL['g'], 0.0,
                            nc.EL['shares'])['per_share'] / nc.PRICE - 1) * 100),
-         nc.WACC * 100,
-         nc.dcf.value(nc.EL_REST, nc.WACC, nc.EL['g'], 0.0, nc.EL['shares'])['per_share'],
+         nc.WACC_BASE * 100,
+         nc.dcf.value(nc.EL_REST, nc.WACC_BASE, nc.EL['g'], 0.0, nc.EL['shares'])['per_share'],
          (nc.dcf.implied_discount_rate(nc.EL_REST, nc.EL['g'], nc.MCAP, 0.0) or 0) * 100))
     p('차이가 어디서 나는지는 분명합니다. 그가 옮긴 모형은 할인율을 %.2f%%로 잡았고 우리는 '
       '%.2f%%를 씁니다. 그 모형은 자기자본에 귀속되는 현금흐름을 쓰므로 할인율이 낮게 나올 '
       '이유가 있고, 또 예측 기간에 내려가는 구간이 없습니다. 열 칸이 모두 오릅니다. '
       '사이클을 담으라는 규칙을 대면 그 표는 그대로 쓸 수 없습니다.'
-      % (nc.EL['rate'] * 100, nc.WACC * 100))
+      % (nc.EL['rate'] * 100, nc.WACC_BASE * 100))
 
     # ── 9 ──────────────────────────────────────────────────────────
     sec('9. 거꾸로 재기 — 시장은 무엇을 가정하고 있나')
     fig(('시장가는 10년 뒤 현금을 여덟 배로 요구한다', nf.FIG_NEED,
          '맨 아래 막대는 %s 시가총액에서 되돌린 값입니다. 우리 할인율 %.2f%%와 영구성장률 '
-         '2.75%%를 고정하고 계산했습니다.' % (nc.PRICE_DAY, nc.WACC * 100)))
+         '2.75%%를 고정하고 계산했습니다.' % (nc.PRICE_DAY, nc.WACC_BASE * 100)))
     p('할인율부터 세웁니다. 무위험수익률은 미국 10년 국채 <b>%.2f%%</b>(%s 기준)이고, '
       '시장위험프리미엄은 알파벳 편과 같은 %.1f%%를 씁니다. 베타 %.2f를 곱하면 자기자본비용이 '
       '%.2f%%입니다. 엔비디아는 순현금 회사라 부채 비중이 %.2f%%밖에 안 되므로 할인율은 '
@@ -365,7 +377,7 @@ def report6_html(sec, p, fig):
       '얼마여야 하는지 되돌리면 %.2f%%에서 %.2f%%입니다. 가장 후한 Bull 경로에서도 우리 '
       '할인율보다 %.2f%%포인트 낮습니다. 그 할인율이 나오려면 베타가 %.2f여야 하는데, '
       '실제 관측값은 %.2f입니다.'
-      % (ir['Bear'] * 100, ir['Bull'] * 100, (nc.WACC - ir['Bull']) * 100,
+      % (ir['Bear'] * 100, ir['Bull'] * 100, (nc.wacc_of('Bull') - ir['Bull']) * 100,
          (ir['Bull'] - nc.RF) / nc.MRP, nc.BETA))
     p('가정 둘을 동시에 흔들어 봅니다. 할인율을 우리 값 위아래로 2%%포인트, 영구성장률을 '
       '1.75%%에서 3.75%%까지 흔든 스물다섯 칸입니다.')
@@ -388,9 +400,9 @@ def report6_html(sec, p, fig):
       '<thead><tr><th>할인율</th><th>필요한 10년 성장률</th><th>10년 뒤 잉여현금흐름</th>'
       '</tr></thead><tbody>%s</tbody></table></div>'
       % ''.join('<tr%s><th scope="row">%.2f%%%s</th><td>%.2f%%</td><td>%s</td></tr>'
-                % (' class="hi"' if abs(r - nc.WACC) < 1e-4 else '', r * 100,
+                % (' class="hi"' if abs(r - nc.WACC_BASE) < 1e-4 else '', r * 100,
                    ' <span style="color:var(--ink-3)">우리 값</span>'
-                   if abs(r - nc.WACC) < 1e-4 else '', g * 100, _eok(f))
+                   if abs(r - nc.WACC_BASE) < 1e-4 else '', g * 100, _eok(f))
                 for r, g, f in _pairs))
     p('우리는 맨 아래 줄에 서 있습니다. 시장이 어느 줄에 서 있는지는 주가만 봐서는 '
       '모릅니다. 이 보고서가 할 수 있는 말은 <b>「관측 베타를 그대로 쓰면 열 해 동안 '
@@ -412,8 +424,62 @@ def report6_html(sec, p, fig):
           '올라갑니다.</b> 짧게 재서 값이 낮게 나온 것이 아닙니다.'
           % (min(_bs), max(_bs), nc.BETA))
 
+    _tu = nc.terminal_uplift()
+    if _tu:
+        p('<b>셋째 방향, 영구 현금흐름만 올려 봅니다.</b> 명시적 기간 열 해를 그대로 두고 '
+          '마지막 해 현금흐름만 키우면 얼마여야 하는지입니다. %s가 나옵니다. 우리 Base '
+          '경로 마지막 해의 <b>%.1f배</b>입니다. 할인율만 조정하는 방식, 성장률만 조정하는 '
+          '방식과 함께 세 방향이 모두 같은 크기의 간격을 가리킵니다.'
+          % (_eok(_tu[0]), _tu[1]))
+
     # ── 10 ─────────────────────────────────────────────────────────
-    sec('10. 판정 — 우리 잣대가 요구하는 수익률이 시장보다 높다')
+    sec('10. 다른 잣대로 재면 — 비교 회사 배수')
+    _im = nc.implied_by_multiple()
+    if _im:
+        _eps, _own, _gr = _im
+        p('여기까지는 현금흐름 할인법 하나로 왔습니다. 회계사 판의 필자는 리노공업 편에서 '
+          '이 자리에 <b>상대가치법</b>을 나란히 세웠습니다. 앞으로 벌 현금을 지금 값으로 '
+          '당기는 대신, 비슷한 회사들이 이익의 몇 배에 팔리는지를 보고 같은 배수를 대는 '
+          '방법입니다. 그리고 그 편의 핵심은 결과가 아니라 <b>비교 대상을 어떻게 '
+          '고르느냐가 결론을 가른다</b>는 것이었습니다.')
+        p('<b>선행 주가수익비율</b>(다음 회계연도 추정 주당순이익으로 나눈 주가)로 견줍니다. '
+          '엔비디아는 %.1f배입니다. 같은 판에 있는 회사들은 이렇습니다.' % _own)
+        p('<div class="yt-wrap"><table class="yt">'
+          '<thead><tr><th>회사</th><th>선행 배수</th><th>회계연도말</th><th>애널리스트</th>'
+          '</tr></thead><tbody>%s</tbody></table></div>'
+          % ''.join('<tr%s><th scope="row">%s</th><td>%.1f배</td><td>%s</td><td>%d명</td></tr>'
+                    % (' class="hi"' if tk == 'NVDA' else '', name, per, end[:7], na)
+                    for tk, name, per, end, na in nc.multiple_rows()))
+        p('<b>엔비디아가 가장 낮습니다.</b> AMD가 %.1f배, TSMC가 %.1f배, 브로드컴이 '
+          '%.1f배인데 엔비디아는 %.1f배입니다. 마이크론 %.1f배는 성격이 다릅니다. 메모리는 '
+          '이익이 크게 오르내려서 이익이 정점에 있을 때 배수가 낮게 찍힙니다.'
+          % (dict((x[0], x[2]) for x in nc.multiple_rows())['AMD'],
+             dict((x[0], x[2]) for x in nc.multiple_rows())['TSM'],
+             dict((x[0], x[2]) for x in nc.multiple_rows())['AVGO'], _own,
+             dict((x[0], x[2]) for x in nc.multiple_rows())['MU']))
+        fig(('비교 대상을 어떻게 고르느냐가 결론을 가른다', nf.FIG_MULT,
+             '엔비디아 차기 추정 주당순이익 %.2f달러에 묶음별 평균 배수를 댄 값입니다. '
+             '주가와 추정치는 %s 기준입니다.' % (_eps, nc.PRICE_DAY)))
+        p('묶음을 바꿔 가며 그 배수를 엔비디아 추정 주당순이익 %.2f달러에 대면 이렇게 '
+          '나옵니다. AMD 하나로 좁히면 %.0f달러, 브로드컴과 TSMC 둘이면 %.0f달러, 셋을 '
+          '평균하면 %.0f달러입니다. <b>어느 묶음을 골라도 현재가 위입니다.</b>'
+          % (_eps, _gr[0][2], _gr[1][2], _gr[2][2]))
+        p('<b>두 잣대가 반대를 가리킵니다.</b> 현금흐름 할인법은 현재가가 %.0f%% 높다고 '
+          '하고, 상대가치법은 %.0f%%에서 %.0f%% 낮다고 합니다. 필자는 리노공업에서 같은 '
+          '일을 만났고 <b>두 결론 사이의 간극을 좁히려 하지 않았습니다.</b> 서로 다른 '
+          '물음에 답한 것이기 때문입니다. 현금흐름 할인법은 「미래 현금을 얼마나 오래 '
+          '얼마나 빨리 키워야 하는가」를 묻고, 상대가치법은 「시장이 이미 어떤 회사에 '
+          '견주어 값을 매기고 있는가」를 묻습니다.'
+          % (abs((v['Base']['per_share'] / nc.PRICE - 1) * 100),
+             abs((_gr[1][2] / nc.PRICE - 1) * 100),
+             abs((_gr[0][2] / nc.PRICE - 1) * 100)))
+        p('상대가치법이 답을 못 하는 자리도 분명합니다. 비교 회사들의 배수가 다 함께 높으면 '
+          '이 방법은 그것을 못 잡습니다. 기준점이 시장 자신이기 때문입니다. 그래서 이 축은 '
+          '「엔비디아가 같은 판에서 어디쯤인가」까지만 말하고, 「그 판 전체가 맞는가」는 '
+          '현금흐름 할인법 쪽이 답합니다.')
+
+    # ── 10 ─────────────────────────────────────────────────────────
+    sec('11. 판정 — 두 잣대가 반대를 가리킨다')
     # 가정을 하나씩 풀어 어느 것이 값을 미는지 센다. 숫자를 손으로 적지 않는다 —
     # 「왜 이렇게 낮게 나오나」는 이 사다리 없이는 답이 안 된다.
     _rows = nc.CASES['Base']['rows']
@@ -426,9 +492,9 @@ def report6_html(sec, p, fig):
         return nc.dcf.value(f, r, g, nc.NET_DEBT, nc.SHARES)['per_share']
 
     _flat = [(0.0, m) if gr < 0 else (gr, m) for gr, m in _rows]
-    _lad = [('지금 Base', _v(_rows, nc.WACC, 0.0275)),
+    _lad = [('지금 Base', _v(_rows, nc.wacc_of('Base'), 0.0275)),
             ('매출을 애널리스트 컨센서스로', nc.value(nc.CONS_NAME)['per_share']
-             if nc.cons_case() else _v(_rows, nc.WACC, 0.0275)),
+             if nc.cons_case() else _v(_rows, nc.wacc_of('Base'), 0.0275)),
             ('할인율만 10%로', _v(_rows, 0.10, 0.0275)),
             ('거기에 영구성장률 3.5%', _v(_rows, 0.10, 0.035)),
             ('거기에 조정 두 해 제거', _v(_flat, 0.10, 0.035))]
@@ -453,7 +519,7 @@ def report6_html(sec, p, fig):
       '만들어 배수를 <b>%.1f배</b>로 누릅니다. 할인율이 10%%면 같은 자리가 %.1f배가 '
       '됩니다. 그리고 시장은 지금 최근 12개월 잉여현금흐름의 <b>%.1f배</b>를 내고 '
       '있습니다.'
-      % (nc.WACC * 100, (nc.WACC - 0.0275) * 100,
+      % (nc.WACC_BASE * 100, (nc.WACC_BASE - 0.0275) * 100,
          nc.tv_multiple(nc.CASES['Base']['g']), 1.0275 / (0.10 - 0.0275),
          nc.price_multiple()))
     p('거꾸로 물으면 이렇습니다. 우리 Base 경로가 맞다고 치고 지금 주가가 나오려면 '
@@ -462,7 +528,7 @@ def report6_html(sec, p, fig):
       '셈입니다.</b> 우리는 베타 %.2f를 그대로 써서 %.2f%%포인트를 요구합니다. '
       '이 간격이 이 보고서 결과의 대부분입니다.'
       % (ir['Base'] * 100, nc.RF * 100, (ir['Base'] - nc.RF) * 100,
-         (ir['Base'] - nc.RF) * 100, nc.BETA, (nc.WACC - nc.RF) * 100))
+         (ir['Base'] - nc.RF) * 100, nc.BETA, (nc.WACC_BASE - nc.RF) * 100))
     p('그래서 이 결과를 「엔비디아가 비싸다」로 읽으면 틀립니다. 정확한 문장은 '
       '<b>자본자산가격결정모형(CAPM)으로 낸 요구수익률을 그대로 쓰면 지금 주가가 안 '
       '나온다</b>입니다. 뱅크오브아메리카는 목표주가 350달러를 내면서 동종업계 대비 '
@@ -475,7 +541,7 @@ def report6_html(sec, p, fig):
       '못 하는 말입니다.')
 
     # ── 11 ─────────────────────────────────────────────────────────
-    sec('11. 우리가 검증하지 않은 것')
+    sec('12. 우리가 검증하지 않은 것')
     p('<b>경로는 우리가 정했습니다.</b> 해마다 적은 성장률과 마진은 SEC 제출서류에 있는 값이 '
       '아니고 SemiAnalysis 원문에 있는 값도 아닙니다. 원문에서 가져온 것은 방향에 관한 '
       '판단이고 숫자는 우리가 골랐습니다. 다른 사람이 다른 숫자를 넣으면 다른 값이 나옵니다.')

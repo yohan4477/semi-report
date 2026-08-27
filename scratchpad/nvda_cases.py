@@ -51,6 +51,37 @@ DEBT = (t['lt_debt']['val'] + t['st_debt']['val']) / B
 DEBT_W = DEBT / (DEBT + MCAP)
 WACC = KE * (1 - DEBT_W) + KD_PRE * (1 - TAXR) * DEBT_W
 
+# 케이스마다 할인율을 다르게 준다. 회계사 판의 필자가 리노공업 편(2026-03-08)에서
+# 쓴 방식이다 — 보수 9.5% · 기준 8.5% · 공격 7.5% 로 구간화하고, 근거를 순현금 ·
+# 고마진 · 높은 자본수익률로 적었다. 현재가를 정당화하는 6%대 후반은 「역산 수준」
+# 이라 배제했다.
+#
+# 우리는 그 폭을 비율로 옮긴다. 자본자산가격결정모형이 낸 값을 보수 자리에 두고,
+# 기준은 그 89%, 공격은 79% 다. 룰북이 비워 둔 칸(W3)을 채우는 것이라 「필자 룰
+# 아님」으로 표시한다 — 산식이 아니라 실례에서 옮긴 값이다.
+BAND = {'Bear': 1.0, 'Base': 8.5 / 9.5, 'Bull': 7.5 / 9.5}
+
+
+def wacc_of(name):
+    """케이스 이름에 맞는 할인율. 모르는 이름은 기준 자리로 본다."""
+    return WACC * BAND.get(name, BAND['Base'])
+
+
+WACC_BASE = WACC * BAND['Base']     # 기준 경로 할인율. 본문이 가장 자주 부른다
+
+def band_is_circular(name):
+    """그 케이스의 할인율이 「역산 수준」에 닿았나.
+
+    필자가 리노공업 편에서 세운 가드다. 현재 주가를 정당화하는 할인율(6%대 후반)을
+    「역산 수준」이라 부르고 시나리오에서 배제했다. 우리 구간이 그 선을 넘으면 값이
+    스스로 서는 것이 아니라 주가가 자기를 정당화하는 것이므로 본문이 그렇게 밝힌다.
+    """
+    ir = dcf.implied_discount_rate([r[3] for r in path(CASES[name])],
+                                   CASES[name]['g'], MCAP, NET_DEBT)
+    return bool(ir) and wacc_of(name) <= ir
+
+
+
 YEAR0 = 2027   # 표의 첫 열. 최근 12개월(2026-07 종료)에서 한 해 뒤 12개월이다
 
 # 해마다 (매출 성장률, 잉여현금흐름 마진). 열 해가 한 사이클이다 —
@@ -130,7 +161,7 @@ def cons_case():
                 why='애널리스트 평균 추정치를 1년차에 그대로 넣고, 그 뒤는 Base 경로를 잇는다')
 
 # 감도표 축. 할인율은 우리 값을 가운데 두고 ±2%포인트를 1%포인트씩 흔든다.
-SENS_R = [round(WACC + x, 6) for x in (-0.02, -0.01, 0.0, 0.01, 0.02)]
+SENS_R = [round(WACC_BASE + x, 6) for x in (-0.02, -0.01, 0.0, 0.01, 0.02)]
 SENS_G = [0.0175, 0.0225, 0.0275, 0.0325, 0.0375]
 
 # 필자 엘곰이 옮긴 SimplyWall.st 2단계 FCFE 모형(2025-03-07 편).
@@ -150,7 +181,7 @@ def tv_multiple(g, r=None):
     마지막 해 현금흐름의 열 배 아래로 그 뒤 영원을 사는 셈인데, 시장은 지금 잉여
     현금흐름의 마흔 배를 낸다. 할인율과 영구성장률을 따로 말하면 이 사실이 안 보인다.
     """
-    r = WACC if r is None else r
+    r = WACC_BASE if r is None else r
     return (1 + g) / (r - g)
 
 
@@ -170,7 +201,7 @@ def path(case):
 
 def value(name):
     case = CASES[name] if name in CASES else cons_case()
-    return dcf.value([r[3] for r in path(case)], WACC, case['g'], NET_DEBT, SHARES)
+    return dcf.value([r[3] for r in path(case)], wacc_of(name), case['g'], NET_DEBT, SHARES)
 
 
 def implied_r(name):
@@ -189,6 +220,7 @@ def report():
           % (PRICE, PRICE_DAY, MCAP, -NET_DEBT, SHARES))
     print('Ke %.2f%% (Rf %.2f%% + 베타 %.3f x MRP %.1f%%) · 부채비중 %.2f%% · WACC %.2f%%\n'
           % (KE * 100, RF * 100, BETA, MRP * 100, DEBT_W * 100, WACC * 100))
+    print('케이스별 할인율 ' + ' · '.join('%s %.2f%%' % (n, wacc_of(n) * 100) for n in ORDER))
 
     print('%-6s %9s %8s %8s %9s %8s %7s' % ('케이스', '주당가치', '괴리', 'TV비중',
                                             '10년매출', '10년FCF', '내재r'))
@@ -205,7 +237,7 @@ def report():
         print('%6d %9.0f %7.1f%% %8.0f' % (y, rev, m * 100, f))
 
     print('\n역산 — 시장가를 정답으로 놓으면')
-    for r in (WACC, 0.12, 0.10):
+    for r in (WACC_BASE, 0.12, 0.10):
         g10 = dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT)
         print('  할인율 %.2f%% -> 10년 균등 성장률 %.2f%% · 10년 뒤 잉여현금흐름 %.0fB (지금의 %.1f배)'
               % (r * 100, g10 * 100, FCF0 * (1 + g10) ** 10, (1 + g10) ** 10))
@@ -237,12 +269,86 @@ def rate_growth_pairs():
     """
     ir = implied_r('Base') or 0.06
     out = []
-    for r in sorted({round(ir, 4), 0.08, 0.10, 0.12, round(WACC, 4)}):
+    for r in sorted({round(ir, 4), 0.08, 0.10, 0.12, round(WACC_BASE, 4), round(WACC, 4)}):
         g = dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT)
         if g is None:
             continue
         out.append((r, g, FCF0 * (1 + g) ** 10))
     return out
+
+
+def terminal_uplift(name='Base'):
+    """역산 셋째 방식 — 영구 현금흐름을 얼마나 올려야 지금 주가가 나오나.
+
+    필자가 리노공업 편에서 쓴 셋째 축이다. 할인율만 조정하는 방식과 성장만 조정하는
+    방식에 더해, 명시적 기간은 그대로 두고 마지막 해 현금흐름만 올려 본다.
+
+    돌려주는 것은 (필요한 마지막 해 잉여현금흐름, 우리 경로 대비 배수).
+    """
+    rows = path(CASES[name])
+    r, g = wacc_of(name), CASES[name]['g']
+    fcfs = [x[3] for x in rows]
+    n = len(fcfs)
+    pv_exp = dcf.pv_explicit(fcfs, r)
+    target_ev = MCAP + NET_DEBT
+    need_pv_tv = target_ev - pv_exp
+    if need_pv_tv <= 0:
+        return None
+    need_tv = need_pv_tv * (1 + r) ** n
+    need_last = need_tv * (r - g) / (1 + g)
+    return need_last, need_last / fcfs[-1]
+
+
+def multiples():
+    """상대가치 재료. scripts/fetch_multiples.py 가 떠 둔 파일을 읽는다."""
+    fp = os.path.join(root, 'insights/valuation/_multiples.json')
+    if not os.path.exists(fp):
+        return None
+    return json.load(open(fp, encoding='utf-8'))
+
+
+def multiple_rows():
+    """(티커, 이름, 선행 주가수익비율, 회계연도말, 애널리스트 수). 배수 없는 곳은 뺀다."""
+    m = multiples()
+    if not m:
+        return []
+    out = []
+    for t, name in m['names'].items():
+        r = m['rows'].get(t, {})
+        ny = r.get('next_year') or {}
+        if ny.get('fwd_per'):
+            out.append((t, name, ny['fwd_per'], ny['end'], ny['analysts']))
+    return sorted(out, key=lambda x: -x[2])
+
+
+def implied_by_multiple():
+    """비교 회사 배수를 엔비디아 추정 주당순이익에 대면 주가가 얼마인가.
+
+    필자가 리노공업 편에서 한 것과 같다 — 비교 대상을 어떻게 고르느냐가 결론을
+    가른다는 것을 보이려고 묶음별로 낸다.
+    """
+    m = multiples()
+    if not m:
+        return None
+    eps = ((m['rows'].get('NVDA') or {}).get('next_year') or {}).get('eps')
+    if not eps:
+        return None
+    per = {t: v for t, _n, v, _e, _a in multiple_rows()}
+    # 라벨은 짧게 둔다. 도해 왼쪽 자리가 좁아 길면 판 밖으로 나간다 —
+    # 어느 회사가 든 묶음인지는 본문이 적는다.
+    groups = [('AMD 하나', ['AMD']),
+              ('브로드컴·TSMC', ['AVGO', 'TSM']),
+              ('성장 비교군 셋', ['AMD', 'AVGO', 'TSM']),
+              ('메모리까지 넷', ['AMD', 'AVGO', 'TSM', 'MU']),
+              ('인텔까지 다섯', ['AMD', 'AVGO', 'TSM', 'MU', 'INTC'])]
+    out = []
+    for lab, ts in groups:
+        vs = [per[t] for t in ts if t in per]
+        if not vs:
+            continue
+        avg = sum(vs) / len(vs)
+        out.append((lab, avg, avg * eps))
+    return eps, per.get('NVDA'), out
 
 
 def beta_grid_rows():
@@ -319,7 +425,12 @@ def write_facts():
           '- 시장위험프리미엄 %.1f%%' % (MRP * 100),
           '- 세전 타인자본비용 %.1f%%' % (KD_PRE * 100),
           '- 부채 비중 %.2f%%' % (DEBT_W * 100),
-          '- 할인율 %.2f%%' % (WACC * 100),
+          '- 자본자산가격결정모형이 낸 할인율 %.2f%%' % (WACC * 100),
+          '- 케이스별 할인율 보수 %.2f%% · 기준 %.2f%% · 공격 %.2f%%'
+          % tuple(wacc_of(n) * 100 for n in ORDER),
+          '- 할인율 %.2f%%' % (WACC_BASE * 100),
+          '- 기준 자리가 자본자산가격결정모형 값의 %.0f%%' % (BAND['Base'] * 100),
+          '- 공격 자리가 그 값의 %.0f%%' % (BAND['Bull'] * 100),
           '- 명시적 기간 10년',
           '- 민감도 할인율 축 %s' % ' '.join('%.2f%%' % (r * 100) for r in SENS_R),
           '- 민감도 영구성장률 축 %s' % ' '.join('%.2f%%' % (g * 100) for g in SENS_G)]
@@ -334,7 +445,7 @@ def write_facts():
                     _two(rows[-1][1]), _two(rows[-1][3]),
                     ((rows[-1][1] / REV0) ** 0.1 - 1) * 100, (implied_r(name) or 0) * 100))
     base = path(CASES['Base'])
-    disc = [1 / (1 + WACC) ** i for i in range(1, len(base) + 1)]
+    disc = [1 / (1 + WACC_BASE) ** i for i in range(1, len(base) + 1)]
     for (y, rev, m, f), ds in zip(base, disc):
         L.append('- %d 표기값 매출 %.0f · 잉여현금흐름 %.0f · 할인계수 %.4f · 현재가치 %.0f'
                  % (y, rev, f, ds, f * ds))
@@ -352,8 +463,8 @@ def write_facts():
     L += ['- 영구가치 배수 Bear %.1f배 · Base %.1f배 · Bull %.1f배'
           % tuple(tv_multiple(CASES[n]['g']) for n in ORDER),
           '- 시장이 내는 배수 %.1f배' % price_multiple(),
-          '- 영구가치 배수의 분모 %.2f%%포인트' % ((WACC - CASES['Base']['g']) * 100),
-          '- 우리가 요구하는 무위험수익률 위 위험 대가 %.2f%%포인트' % ((WACC - RF) * 100),
+          '- 영구가치 배수의 분모 %.2f%%포인트' % ((WACC_BASE - CASES['Base']['g']) * 100),
+          '- 우리가 요구하는 무위험수익률 위 위험 대가 %.2f%%포인트' % ((WACC_BASE - RF) * 100),
           '- 알파벳 편 영구가치 배수 %.1f배' % _googl_tv(),
           '- 할인율 10%% 자리의 영구가치 배수 %.1f배' % (1.0275 / (0.10 - 0.0275)),
           '- 회계연도 2027년 2분기 실적 매출 %s' % _two(GUIDE_Q2),
@@ -387,6 +498,25 @@ def write_facts():
         for y, rev, m, f in path(_cc)[:3]:
             L.append('- 컨센서스 %d 매출 %s · 잉여현금흐름 %s' % (y, _two(rev), _two(f)))
 
+    _tu = terminal_uplift()
+    if _tu:
+        L += ['', '## 역산 셋째 — 영구 현금흐름을 얼마나 올려야 하나', '',
+              '- 마지막 해 잉여현금흐름이 %s 여야 한다' % _two(_tu[0]),
+              '- 우리 Base 경로 마지막 해의 %.2f배' % _tu[1]]
+    _im = implied_by_multiple()
+    if _im:
+        _eps, _own, _gr = _im
+        L += ['', '## 상대가치 축 — 비교 회사 선행 배수', '']
+        # 반복 변수를 t 로 두면 모듈 전역 t(최근 12개월 표)를 가려 함수가 통째로
+        # 깨진다. 파이썬이 함수 안 대입을 보고 그 이름을 지역으로 잡기 때문이다.
+        for tk, name, per, end, na in multiple_rows():
+            L.append('- %s(%s) 선행 주가수익비율 %.1f배 · 회계연도말 %s · 애널리스트 %d명'
+                     % (name, tk, per, end, na))
+        L.append('- 엔비디아 차기 추정 주당순이익 %.2f달러' % _eps)
+        for lab, avg, px in _gr:
+            L.append('- %s 평균 배수 %.1f배 · 함의 주가 %.0f달러 · 현재가 대비 %.0f%%'
+                     % (lab, avg, px, (px / PRICE - 1) * 100))
+
     L += ['', '## 할인율 축 — 같은 주가를 만드는 짝', '']
     for r, g, f in rate_growth_pairs():
         L.append('- 할인율 %.2f%% 이면 10년 균등 성장률 %.2f%% · 10년 뒤 잉여현금흐름 %s'
@@ -403,12 +533,12 @@ def write_facts():
               % (sum(1 for x in _bs if x < BETA), sum(1 for x in _bs if x > BETA))]
 
     L += ['', '## 역산 — 시장가를 정답으로 놓으면', '']
-    for r in (WACC, 0.12, 0.10):
+    for r in (WACC_BASE, 0.12, 0.10):
         g10 = dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT)
         f10 = FCF0 * (1 + g10) ** 10
         L.append('- 할인율 %.2f%% 이면 10년 균등 성장률 %.2f%% · 10년 뒤 잉여현금흐름 %s · '
                  '지금의 %.1f배' % (r * 100, g10 * 100, _two(f10), f10 / FCF0))
-    g10 = dcf.implied_growth(FCF0, WACC, 0.0275, 10, MCAP, NET_DEBT)
+    g10 = dcf.implied_growth(FCF0, WACC_BASE, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     rev10 = base[-1][1]
     L.append('- 요구 잉여현금흐름을 우리 Base 10년째 매출로 나눈 마진 %.1f%%' % (f10 / rev10 * 100))
@@ -422,7 +552,7 @@ def write_facts():
         if ir:
             L.append('- %s 경로 내재 할인율 %.2f%% · 우리 할인율보다 %.2f%%포인트 낮다 · '
                      '그 할인율이 나오려면 베타가 %.3f 여야 한다'
-                     % (name, ir * 100, (WACC - ir) * 100, (ir - RF) / MRP))
+                     % (name, ir * 100, (wacc_of(name) - ir) * 100, (ir - RF) / MRP))
     L += ['', '## 필자 엘곰이 엔비디아에 쓴 값 (2025-03-07 편)', '',
           '- 방법 2단계 FCFE',
           '- 할인율 %.2f%%' % (EL['rate'] * 100),
@@ -441,7 +571,7 @@ def write_facts():
              % (_two(127.386), _two(FCF0), _two(abs(FCF0 - 127.386))))
     L.append('- 엘곰 2026 칸 %s · 실제 FY2026 잉여현금흐름 %s'
              % (_two(98.643), _two(c['ocf']['2026']['val'] / B - c['capex']['2026']['val'] / B)))
-    for r in (EL['rate'], WACC):
+    for r in (EL['rate'], WACC_BASE):
         v = dcf.value(EL_REST, r, EL['g'], 0.0, EL['shares'])
         L.append('- 엘곰 남은 경로(2028~2034)를 할인율 %.2f%% 로 재면 주당 %.0f · 현재가 대비 %.0f%%'
                  % (r * 100, v['per_share'], (v['per_share'] / PRICE - 1) * 100))

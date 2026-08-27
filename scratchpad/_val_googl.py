@@ -84,13 +84,15 @@ def _ytable(rows, rev0, wacc, cuts):
 def report4_html(sec, p, fig):
     """절 1~12. 기준연도·순이익 오염·세미 근거·세 경로·필자 잣대·역산·판정."""
 
-    _vals = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.WACC,
+    # 케이스마다 할인율이 다르다. 필자가 리노공업 편에서 쓴 방식이다 — 자세한 것은
+    # googl_cases.BAND 주석에 적었다.
+    _vals = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.wacc_of(n),
                              gc.CASES[n]['g'], gc.NET_DEBT, gc.SHARES)
              for n in ('Bear', 'Base', 'Bull')}
     _ir = {n: gc.dcf.implied_discount_rate([x[3] for x in gc.path(gc.CASES[n])],
                                           gc.CASES[n]['g'], gc.MCAP, gc.NET_DEBT)
            for n in ('Bear', 'Base', 'Bull')}
-    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
+    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC_BASE, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
     _f10 = gc.FCF0 * (1 + _g10) ** 10
     _rev35 = gc.path(gc.CASES['Base'])[-1][1]
     _need_m = _f10 / _rev35
@@ -121,7 +123,7 @@ def report4_html(sec, p, fig):
     ax.append('</div>')
     ax.append(_ln('최근 12개월 잉여현금흐름', _eok(gc.FCF0)))
     ax.append(_ln('그 매출 대비 현금 비율', '%.1f%%' % (gc.MARGIN0 * 100), sub=True))
-    ax.append(_ln('할인율 (세 경로 공통)', '%.1f%%' % (gc.WACC * 100)))
+    ax.append(_ln('할인율 (세 경로 공통)', '%.1f%%' % (gc.WACC_BASE * 100)))
     ax.append('</div>')
     h_ += ax
 
@@ -329,7 +331,7 @@ def report4_html(sec, p, fig):
       '갈리지 않기 때문입니다. 할인율은 미국 10년 국채 금리 %.2f%%에 베타 %.3f와 '
       '시장위험프리미엄 %.1f%%를 곱해 얹은 값입니다. 알파벳이 순현금 회사라 '
       '가중평균자본비용이 자기자본비용에 거의 붙습니다.'
-      % (gc.WACC * 100, _RF * 100, _BETA, _MRP * 100))
+      % (gc.WACC_BASE * 100, _RF * 100, _BETA, _MRP * 100))
     p('경로는 <b>매출에 잉여현금흐름 마진을 곱해</b> 만듭니다. 지금 잉여현금흐름에 직접 '
       '성장률을 곱하지 않은 이유는 그 값이 설비투자로 눌려 있기 때문입니다. 눌린 값을 '
       '성장시키면 그 눌림이 영원히 이어지는 모델이 됩니다. 회계사 판의 규칙도 출발점을 '
@@ -342,15 +344,15 @@ def report4_html(sec, p, fig):
          '세 값은 <b>우리가 돌린 계산</b>입니다. 계산기는 <code>insights/dcf.py</code>이고 '
          '경로는 <code>scratchpad/googl_cases.py</code>에 있습니다.'))
     _rows = gc.path(gc.CASES['Base'])
-    _tb, _pv = _ytable(_rows, gc.REV0, gc.WACC, {gc.P1_YEARS})
+    _tb, _pv = _ytable(_rows, gc.REV0, gc.WACC_BASE, {gc.P1_YEARS})
     p(_tb)
     p('<p class="yt-memo">가운데 경로(Base)입니다. 단위는 10억 달러이고 할인율은 %.1f%%입니다. '
       '세로선이 구간 경계입니다 — 왼쪽 3년은 설비투자로 마진이 눌린 구간이고, 오른쪽 7년은 '
       '성장률이 %.1f%%에서 %.1f%%로 내려앉고 마진이 %.1f%%에서 %.1f%%로 올라오는 구간입니다. '
       '현재가치를 다 더하면 %s이고, 여기에 영구가치와 순현금이 붙어 주당 %.0f달러가 됩니다.</p>'
-      % (gc.WACC * 100, gc.CASES['Base']['g1'] * 100, gc.CASES['Base']['g2'] * 100,
+      % (gc.WACC_BASE * 100, gc.CASES['Base']['g1'] * 100, gc.CASES['Base']['g2'] * 100,
          gc.CASES['Base']['m1'] * 100, gc.CASES['Base']['m3'] * 100, _eok(_pv),
-         gc.dcf.value([r[3] for r in _rows], gc.WACC, gc.CASES['Base']['g'],
+         gc.dcf.value([r[3] for r in _rows], gc.WACC_BASE, gc.CASES['Base']['g'],
                       gc.NET_DEBT, gc.SHARES)['per_share']))
 
     p('결과는 주당 <b>131달러 · 185달러 · 261달러</b>입니다. 세 경로 모두 영구가치가 전체의 '
@@ -404,15 +406,15 @@ def report4_html(sec, p, fig):
     p('어느 가정이 이 차이를 만드는지 하나씩 갈아 끼워 봤습니다. 우리 가운데 경로에서 '
       '출발해 그의 값을 하나만 넣고 나머지는 그대로 둡니다.')
     _bf = [x[3] for x in gc.path(gc.CASES['Base'])]
-    _mine = gc.dcf.value(_bf, gc.WACC, 0.0275, gc.NET_DEBT, gc.SHARES)['per_share']
+    _mine = gc.dcf.value(_bf, gc.WACC_BASE, 0.0275, gc.NET_DEBT, gc.SHARES)['per_share']
     _mf = [rev * (0.225 if i >= 6 else m)
            for i, (_y, rev, m, _f) in enumerate(gc.path(gc.CASES['Base']))]
-    _rows = [('할인율 %.1f%% → %.1f%%' % (gc.WACC * 100, 9.5),
+    _rows = [('할인율 %.1f%% → %.1f%%' % (gc.WACC_BASE * 100, 9.5),
               gc.dcf.value(_bf, 0.095, 0.0275, gc.NET_DEBT, gc.SHARES)['per_share']),
              ('영구성장률 2.75% → 3.75%',
-              gc.dcf.value(_bf, gc.WACC, 0.0375, gc.NET_DEBT, gc.SHARES)['per_share']),
+              gc.dcf.value(_bf, gc.WACC_BASE, 0.0375, gc.NET_DEBT, gc.SHARES)['per_share']),
              ('2032년 이후 마진 17.0% → 22.5%',
-              gc.dcf.value(_mf, gc.WACC, 0.0275, gc.NET_DEBT, gc.SHARES)['per_share']),
+              gc.dcf.value(_mf, gc.WACC_BASE, 0.0275, gc.NET_DEBT, gc.SHARES)['per_share']),
              ('셋 다',
               gc.dcf.value(_mf, 0.095, 0.0375, gc.NET_DEBT, gc.SHARES)['per_share'])]
     h_ = ['<div class="biz-tw"><table class="biz-t">',
@@ -486,11 +488,18 @@ def report4_html(sec, p, fig):
       '우리 값이 틀렸을 가능성을 우리 값 밖에서 재는 장치입니다.')
     p('<b>첫째 방향, 우리 경로를 고정하고 할인율을 되돌립니다.</b> 지금 시가총액 %s를 '
       '정당화하는 할인율은 보수적 경로에서 <b>%.2f%%</b>, 중간 경로에서 <b>%.2f%%</b>, '
-      '후한 경로에서 <b>%.2f%%</b>입니다. 우리가 쓴 %.1f%%보다 각각 %.2f%%포인트, '
-      '%.2f%%포인트, %.2f%%포인트 낮습니다.'
+      '후한 경로에서 <b>%.2f%%</b>입니다. 경로마다 우리가 쓴 할인율이 다르므로 각각과 '
+      '견주면 %.2f%%포인트, %.2f%%포인트, %.2f%%포인트 낮습니다.'
       % (_eok(gc.MCAP), _ir['Bear'] * 100, _ir['Base'] * 100, _ir['Bull'] * 100,
-         gc.WACC * 100, (gc.WACC - _ir['Bear']) * 100,
-         (gc.WACC - _ir['Base']) * 100, (gc.WACC - _ir['Bull']) * 100))
+         (gc.wacc_of('Bear') - _ir['Bear']) * 100,
+         (gc.wacc_of('Base') - _ir['Base']) * 100,
+         (gc.wacc_of('Bull') - _ir['Bull']) * 100))
+    if gc.band_is_circular('Bull'):
+        p('<b>후한 경로는 여기서 스스로 서지 못합니다.</b> 우리가 그 경로에 준 할인율 '
+          '%.2f%%가 현재가를 정당화하는 %.2f%%보다 낮습니다. 회계사 판의 필자는 이런 '
+          '값을 「역산 수준」이라 부르고 시나리오에서 뺐습니다. 그 경로의 주당가치는 '
+          '값이 스스로 선 것이 아니라 주가가 자기를 정당화한 것이라, 판정에 쓰지 '
+          '않습니다.' % (gc.wacc_of('Bull') * 100, _ir['Bull'] * 100))
     p('할인율이 낮다는 것은 그 현금흐름을 덜 위험하게 본다는 뜻입니다. 후한 경로에서 나온 '
       '%.2f%%는 알파벳의 무위험수익률 %.2f%%에 위험 대가를 %.2f%%포인트만 얹은 값입니다. '
       '베타 %.3f를 그대로 두면 시장위험프리미엄이 %.2f%% 수준이어야 나오는 숫자입니다. '
@@ -498,14 +507,14 @@ def report4_html(sec, p, fig):
       % (_ir['Bull'] * 100, _RF * 100, (_ir['Bull'] - _RF) * 100, _BETA,
          (_ir['Bull'] - _RF) / _BETA * 100, _MRP * 100))
     _rq = {r: gc.dcf.implied_growth(gc.FCF0, r, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
-           for r in (0.09, gc.WACC, 0.11)}
+           for r in (0.09, gc.WACC_BASE, 0.11)}
     p('<b>둘째 방향, 할인율을 고정하고 성장률을 되돌립니다.</b> 영구성장률을 2.75%%로 '
       '두고 명시적 기간을 10년으로 잡으면, 할인율 %.1f%%에서 잉여현금흐름이 <b>10년 내리 '
       '매년 %.2f%%씩</b> 늘어야 지금 시가총액이 설명됩니다. 할인율을 9.0%%로 낮추면 요구치가 '
       '%.2f%%로 내려가고 11.0%%로 올리면 %.2f%%로 올라갑니다. 회계사 판이 참고값으로 든 '
       '실무 도구의 보수적 상한은 10년 성장 단계에 20%%입니다. 어느 할인율을 넣어도 요구 '
       '성장률이 그 상한 밖에 있습니다.'
-      % (gc.WACC * 100, _rq[gc.WACC] * 100, _rq[0.09] * 100, _rq[0.11] * 100))
+      % (gc.WACC_BASE * 100, _rq[gc.WACC_BASE] * 100, _rq[0.09] * 100, _rq[0.11] * 100))
     _base35 = gc.path(gc.CASES['Base'])[-1][3]
     p('그 성장률이 무엇을 뜻하는지 금액으로 옮기면 이렇습니다. 지금 잉여현금흐름 %s가 '
       '10년 뒤 <b>%s</b>가 되어야 합니다. 지금의 %.1f배입니다. 우리 중간 경로는 같은 해에 '
@@ -544,7 +553,7 @@ def report4_html(sec, p, fig):
     p('<b>성장률은 매출과 마진으로 풉니다.</b> 2035년에 잉여현금흐름 %s가 나오려면 '
       '매출과 마진이 짝을 이뤄야 합니다. 둘 중 하나를 고정하면 나머지가 정해집니다.'
       % _eok(_f10))
-    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
+    _g10 = gc.dcf.implied_growth(gc.FCF0, gc.WACC_BASE, 0.0275, 10, gc.MCAP, gc.NET_DEBT)
     _f10 = gc.FCF0 * (1 + _g10) ** 10
     _rev35 = gc.path(gc.CASES['Base'])[-1][1]
     _need_m = _f10 / _rev35                      # 매출을 우리 경로로 두면 필요한 마진
@@ -604,9 +613,9 @@ def report4_html(sec, p, fig):
       '정합니다. 절 10에서 되돌린 내재 할인율은 %.2f%%였습니다. <b>우리가 요구하는 '
       '수익률이 시장이 요구하는 것보다 %.2f%%포인트 높다</b>는 뜻이고, 엔비디아 편 절 '
       '10이 같은 자리를 더 팝니다.'
-      % ((1 + gc.CASES['Base']['g']) / (gc.WACC - gc.CASES['Base']['g']),
-         gc.WACC * 100, (gc.WACC - gc.CASES['Base']['g']) * 100,
-         _ir['Base'] * 100, (gc.WACC - _ir['Base']) * 100))
+      % ((1 + gc.CASES['Base']['g']) / (gc.WACC_BASE - gc.CASES['Base']['g']),
+         gc.WACC_BASE * 100, (gc.WACC_BASE - gc.CASES['Base']['g']) * 100,
+         _ir['Base'] * 100, (gc.WACC_BASE - _ir['Base']) * 100))
     p('그러면 남는 설명은 하나입니다. TPU 완제품 판매가 설비투자를 팔 물건으로 바꾸어 '
       '마진 회복을 우리가 그린 것보다 훨씬 빨리 앞당기는 경로입니다. 그것이 실제로 '
       '벌어지는지가 이 회사 평가에서 남은 유일한 쟁점이고, SemiAnalysis가 계속 지켜보는 '

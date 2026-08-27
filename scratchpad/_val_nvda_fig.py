@@ -136,7 +136,7 @@ FIG_CASE = _svg(W, _C_BOT + 100, '경로 넷이 모두 현재가 아래에 선�
 # ── 도해 ④ 시장가가 요구하는 현금 ───────────────────────────────
 # 순위 막대 셋. 지금 · 우리 Base 10년째 · 시장가를 받치는 데 필요한 금액.
 
-_G10 = nc.dcf.implied_growth(nc.FCF0, nc.WACC, 0.0275, 10, nc.MCAP, nc.NET_DEBT)
+_G10 = nc.dcf.implied_growth(nc.FCF0, nc.WACC_BASE, 0.0275, 10, nc.MCAP, nc.NET_DEBT)
 _NEED = nc.FCF0 * (1 + _G10) ** 10
 _BASE10 = nc.path(nc.CASES['Base'])[-1][3]
 
@@ -161,9 +161,49 @@ def _nbar(i, name, v, hot):
 
 FIG_NEED = _svg(W, 226, '시장가는 10년 뒤 현금을 여덟 배로 요구한다', ''.join(
     [_lt(40, 34, '10년 뒤 잉여현금흐름 — 할인율 %.2f%%, 영구성장률 2.75%% 기준'
-         % (nc.WACC * 100))]
+         % (nc.WACC_BASE * 100))]
     + [_nbar(i, n, v, hot) for i, (n, v, hot) in enumerate(_N_ROWS)]
     + [_lt(40, 190, '맨 아래는 %s 시가총액을 정당화하려면 얼마가 필요한지를 되돌린 값이다 — '
                     '해마다 %.1f%%씩 열 해다' % (nc.PRICE_DAY, _G10 * 100), bold=False),
        _lt(40, 210, '지금의 %.1f배이고 우리 Base 경로 마지막 해의 %.1f배다'
            % (_NEED / nc.FCF0, _NEED / _BASE10), bold=False)]))
+
+
+# ── 도해 ⑤ 상대가치 축 ──────────────────────────────────────────
+# 순위 막대. 비교 회사 묶음을 어떻게 고르느냐에 따라 함의 주가가 어디까지 벌어지는지를
+# 보인다. 회계사 판의 필자가 리노공업 편에서 세운 축이고, 값은 우리가 뜬 컨센서스다.
+
+_IM = nc.implied_by_multiple()
+
+if _IM:
+    _M_EPS, _M_OWN, _M_GR = _IM
+    _MX, _MW = 176, 268
+    _MMAX = max(px for _l, _a, px in _M_GR)
+
+    def _mbar2(i, lab, avg, px):
+        y = 56 + i * 34
+        w = int(round(px / _MMAX * _MW))
+        return ''.join([
+            '<text x="%d" y="%d" text-anchor="end" class="t-sm">%s</text>'
+            % (_MX - 12, y + 16, lab),
+            '<rect x="%d" y="%d" width="%d" height="21" fill="var(--ink-3)" opacity="0.42"/>'
+            % (_MX, y, w),
+            '<text x="%d" y="%d" class="t-sm">%.0f달러 · %.1f배</text>'
+            % (_MX + w + 8, y + 16, px, avg),
+        ])
+
+    _M_PX = _MX + int(round(nc.PRICE / _MMAX * _MW))
+    _M_BOT = 56 + 34 * len(_M_GR)
+
+    FIG_MULT = _svg(W, _M_BOT + 82, '비교 대상을 어떻게 고르느냐가 결론을 가른다', ''.join(
+        [_lt(40, 34, '엔비디아 차기 추정 주당순이익 %.2f달러에 비교 회사 배수를 댄 값'
+             % _M_EPS)]
+        + [_mbar2(i, lab, avg, px) for i, (lab, avg, px) in enumerate(_M_GR)]
+        + ['<path d="M%d 48 V%d" stroke="var(--accent)" stroke-width="2" '
+           'stroke-dasharray="5 4" fill="none"/>' % (_M_PX, _M_BOT),
+           _lt(40, _M_BOT + 26, '점선은 %s 종가 %.2f달러다. 엔비디아 자신의 선행 배수는 '
+               '%.1f배다' % (nc.PRICE_DAY, nc.PRICE, _M_OWN), bold=False),
+           _lt(40, _M_BOT + 46, '회계연도 끝이 회사마다 달라 같은 달을 재는 것이 아니다',
+               bold=False)]))
+else:
+    FIG_MULT = None

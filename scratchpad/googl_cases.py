@@ -52,6 +52,38 @@ DEBT = (t['lt_debt']['val'] + t['st_debt']['val']) / B
 DEBT_W = DEBT / (DEBT + MCAP)
 WACC = KE * (1 - DEBT_W) + KD_PRE * (1 - TAXR) * DEBT_W
 
+# 케이스마다 할인율을 다르게 준다. 회계사 판의 필자가 리노공업 편(2026-03-08)에서
+# 쓴 방식이다 — 보수 9.5% · 기준 8.5% · 공격 7.5% 로 구간화하고, 근거를 순현금 ·
+# 고마진 · 높은 자본수익률로 적었다. 현재가를 정당화하는 6%대 후반은 「역산 수준」
+# 이라 배제했다.
+#
+# 우리는 그 폭을 비율로 옮긴다. 자본자산가격결정모형이 낸 값을 보수 자리에 두고,
+# 기준은 그 89%, 공격은 79% 다. 룰북이 비워 둔 칸(W3)을 채우는 것이라 「필자 룰
+# 아님」으로 표시한다 — 산식이 아니라 실례에서 옮긴 값이다.
+BAND = {'Bear': 1.0, 'Base': 8.5 / 9.5, 'Bull': 7.5 / 9.5}
+
+
+def wacc_of(name):
+    """케이스 이름에 맞는 할인율. 모르는 이름은 기준 자리로 본다."""
+    return WACC * BAND.get(name, BAND['Base'])
+
+
+ORDER = ('Bear', 'Base', 'Bull')
+WACC_BASE = WACC * BAND['Base']     # 기준 경로 할인율. 본문이 가장 자주 부른다
+
+def band_is_circular(name):
+    """그 케이스의 할인율이 「역산 수준」에 닿았나.
+
+    필자가 리노공업 편에서 세운 가드다. 현재 주가를 정당화하는 할인율(6%대 후반)을
+    「역산 수준」이라 부르고 시나리오에서 배제했다. 우리 구간이 그 선을 넘으면 값이
+    스스로 서는 것이 아니라 주가가 자기를 정당화하는 것이므로 본문이 그렇게 밝힌다.
+    """
+    ir = dcf.implied_discount_rate([r[3] for r in path(CASES[name])],
+                                   CASES[name]['g'], MCAP, NET_DEBT)
+    return bool(ir) and wacc_of(name) <= ir
+
+
+
 
 def lerp(a, b, i, n):
     """구간 안에서 a에서 b로 선형 이동. i는 1부터 n까지."""
@@ -85,7 +117,7 @@ def report():
     for name, c in CASES.items():
         rows = path(c)
         fcfs = [r[3] for r in rows]
-        v = dcf.value(fcfs, WACC, c['g'], NET_DEBT, SHARES)
+        v = dcf.value(fcfs, wacc_of(name), c['g'], NET_DEBT, SHARES)
         ps = v['per_share']
         tv_share = v['tv_share']
         out[name] = (v, rows)
@@ -163,8 +195,15 @@ def write_facts():
           '- 순이익 %s' % two(112.2), '- 영업 밖 손익 %s' % two(98.0),
           '- 지분 평가이익 %s' % two(99.0),
           '', '## 우리가 돌린 계산', '',
-          '- 할인율 %.1f%%' % (WACC * 100),
-          '- 할인율 %.2f%%' % (WACC * 100),
+          '- 자본자산가격결정모형이 낸 할인율 %.2f%%' % (WACC * 100),
+          '- 케이스별 할인율 보수 %.2f%% · 기준 %.2f%% · 공격 %.2f%%'
+          % tuple(wacc_of(n) * 100 for n in ORDER),
+          '- 할인율 %.1f%%' % (WACC_BASE * 100),
+          '- 할인율 %.2f%%' % (WACC_BASE * 100),
+          '- 기준 자리가 자본자산가격결정모형 값의 %.0f%%' % (BAND['Base'] * 100),
+          '- 공격 자리가 그 값의 %.0f%%' % (BAND['Bull'] * 100),
+          '- 가장 후한 경로가 역산 수준에 닿았나 %s'
+          % ('그렇다' if band_is_circular('Bull') else '아니다'),
           '- 자기자본비용 %.2f%%' % (KE * 100),
           '- 부채 비중 %.2f%%' % (DEBT_W * 100),
           '- 시장위험프리미엄 4.6%',
@@ -177,7 +216,7 @@ def write_facts():
           '- 잉여현금흐름 27% 감소',
           '- 기준연도와 주가 기준일 시차 237일']
     for name, c2 in CASES.items():
-        v = dcf.value([r[3] for r in path(c2)], WACC, c2['g'], NET_DEBT, SHARES)
+        v = dcf.value([r[3] for r in path(c2)], wacc_of(name), c2['g'], NET_DEBT, SHARES)
         L.append('- %s 주당가치 %.0f · 매출성장 %.1f%% · 구간끝마진 %.1f%% · 영구마진 %.1f%% '
                  '· 영구성장 %.2f%% · 영구가치비중 %.0f%% · 현재가 대비 %.0f%%'
                  % (name, v['per_share'], c2['g1'] * 100, c2['m1'] * 100, c2['m3'] * 100,
@@ -187,20 +226,20 @@ def write_facts():
                           [0.0175, 0.0225, 0.0275, 0.0325, 0.0375], NET_DEBT, SHARES)
     L.append('- 민감도 최고 %.0f · 최저 %.0f' % (max(g25.values()), min(g25.values())))
     L.append('- 영구가치 배수 %.1f배 · 그 분모 %.2f%%포인트'
-             % ((1 + CASES['Base']['g']) / (WACC - CASES['Base']['g']),
-                (WACC - CASES['Base']['g']) * 100))
+             % ((1 + CASES['Base']['g']) / (WACC_BASE - CASES['Base']['g']),
+                (WACC_BASE - CASES['Base']['g']) * 100))
     L.append('- 비영업자산 반영 시 주당 가산 %.1f' % (131.5 / SHARES))
     L.append('- 실무 도구 보수적 상한 10년 성장 20%')
-    eq = dcf.value(base, WACC, CASES['Base']['g'], NET_DEBT, SHARES)['equity']
+    eq = dcf.value(base, WACC_BASE, CASES['Base']['g'], NET_DEBT, SHARES)['equity']
     L.append('- Base 비영업자산 반영 주당 %.0f' % ((eq + 131.5) / SHARES))
-    for r in (0.09, 0.095, 0.10, 0.105, 0.11, WACC):
+    for r in (0.09, 0.095, 0.10, 0.105, 0.11, WACC, WACC_BASE):
         L.append('- 역산 요구성장률 (할인율 %.1f%%) %.2f%%'
                  % (r * 100, dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT) * 100))
     for name, c2 in CASES.items():
         ir = dcf.implied_discount_rate([r[3] for r in path(c2)], c2['g'], MCAP, NET_DEBT)
         L.append('- %s 경로 내재 할인율 %.2f%% (우리 할인율 대비 %.2f%%p 낮다)'
-                 % (name, ir * 100, (WACC - ir) * 100))
-    g10 = dcf.implied_growth(FCF0, WACC, 0.0275, 10, MCAP, NET_DEBT)
+                 % (name, ir * 100, (wacc_of(name) - ir) * 100))
+    g10 = dcf.implied_growth(FCF0, WACC_BASE, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     last = path(CASES['Base'])[-1][3]
     L += ['- 10년 뒤 요구 잉여현금흐름 %s' % two(f10),
@@ -222,7 +261,7 @@ def write_facts():
                  '베타 %.3f 고정시 시장위험프리미엄 %.2f%% · 무위험수익률 위 위험대가 %.2f%%포인트'
                  % (name, ir * 100, (ir - RF) / MRP, BETA, (ir - RF) / BETA * 100,
                     (ir - RF) * 100))
-    g10 = dcf.implied_growth(FCF0, WACC, 0.0275, 10, MCAP, NET_DEBT)
+    g10 = dcf.implied_growth(FCF0, WACC_BASE, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     rev35 = path(CASES['Base'])[-1][1]
     base_cagr = (rev35 / REV0) ** 0.1 - 1
@@ -245,7 +284,7 @@ def write_facts():
     # 본문 연도표는 10억 달러를 정수로 반올림해 찍는다. 사실표가 소수를 적으면
     # 220.9 와 221 이 안 이어져 check_report 가 걸린다 — 표가 찍는 형태로 같이 적는다.
     _rows = path(CASES['Base'])
-    _disc = [1 / (1 + WACC) ** i for i in range(1, len(_rows) + 1)]
+    _disc = [1 / (1 + WACC_BASE) ** i for i in range(1, len(_rows) + 1)]
     for (y, rev, m, f), dsc in zip(_rows, _disc):
         L.append('- %d 표기값 매출 %.0f · 잉여현금흐름 %.0f · 할인계수 %.4f · 현재가치 %.0f'
                  % (y, rev, f, dsc, f * dsc))
@@ -284,11 +323,11 @@ def write_facts():
 
     # 우리 Base 에서 가정을 하나씩 그의 것으로 갈아 끼운 기여도
     _bf = [x[3] for x in path(CASES['Base'])]
-    _mine = dcf.value(_bf, WACC, 0.0275, NET_DEBT, SHARES)['per_share']
+    _mine = dcf.value(_bf, WACC_BASE, 0.0275, NET_DEBT, SHARES)['per_share']
     _sw = [('할인율 9.5%', dcf.value(_bf, 0.095, 0.0275, NET_DEBT, SHARES)['per_share']),
-           ('영구성장률 3.75%', dcf.value(_bf, WACC, 0.0375, NET_DEBT, SHARES)['per_share'])]
+           ('영구성장률 3.75%', dcf.value(_bf, WACC_BASE, 0.0375, NET_DEBT, SHARES)['per_share'])]
     _mf = [rev * (0.225 if i >= 6 else m) for i, (_y, rev, m, _f) in enumerate(path(CASES['Base']))]
-    _sw.append(('후반 마진 22.5%', dcf.value(_mf, WACC, 0.0275, NET_DEBT, SHARES)['per_share']))
+    _sw.append(('후반 마진 22.5%', dcf.value(_mf, WACC_BASE, 0.0275, NET_DEBT, SHARES)['per_share']))
     _sw.append(('셋 다', dcf.value(_mf, 0.095, 0.0375, NET_DEBT, SHARES)['per_share']))
     L.append('- 우리 Base 주당 %.0f달러' % _mine)
     for lab, val in _sw:

@@ -1,0 +1,141 @@
+{
+ "fetched_at": "2026-08-27T03:42:07.488608+00:00",
+ "names": {
+  "NVDA": "엔비디아",
+  "AMD": "AMD",
+  "AVGO": "브로드컴",
+  "TSM": "TSMC",
+  "MU": "마이크론",
+  "INTC": "인텔"
+ },
+ "rows": {
+  "NVDA": {
+   "ticker": "NVDA",
+   "price": 209.66,
+   "as_of": "2026-08-26T20:00:00+00:00",
+   "this_year": {
+    "end": "2027-01-31",
+    "eps": 9.05163,
+    "analysts": 27,
+    "revenue": 397012036470,
+    "growth": 0.8976,
+    "fwd_per": 23.16267898709956
+   },
+   "next_year": {
+    "end": "2028-01-31",
+    "eps": 13.12766,
+    "analysts": 55,
+    "revenue": 573640800830,
+    "growth": 0.45029998,
+    "fwd_per": 15.970858477443809
+   }
+  },
+  "AMD": {
+   "ticker": "AMD",
+   "price": 480.93,
+   "as_of": "2026-08-26T20:00:01+00:00",
+   "this_year": {
+    "end": "2026-12-31",
+    "eps": 7.56794,
+    "analysts": 46,
+    "revenue": 50813933620,
+    "growth": 0.8149,
+    "fwd_per": 63.548336799710356
+   },
+   "next_year": {
+    "end": "2027-12-31",
+    "eps": 15.45073,
+    "analysts": 51,
+    "revenue": 87387870460,
+    "growth": 1.0416,
+    "fwd_per": 31.1266846291405
+   }
+  },
+  "AVGO": {
+   "ticker": "AVGO",
+   "price": 355.59,
+   "as_of": "2026-08-26T20:00:01+00:00",
+   "this_year": {
+    "end": "2026-10-31",
+    "eps": 11.62853,
+    "analysts": 44,
+    "revenue": 106067070660,
+    "growth": 0.7051,
+    "fwd_per": 30.579101571737784
+   },
+   "next_year": {
+    "end": "2027-10-31",
+    "eps": 19.49103,
+    "analysts": 49,
+    "revenue": 173288640610,
+    "growth": 0.6761,
+    "fwd_per": 18.243776752690852
+   }
+  },
+  "TSM": {
+   "ticker": "TSM",
+   "price": 417.69,
+   "as_of": "2026-08-26T20:00:02+00:00",
+   "this_year": {
+    "end": "2026-12-31",
+    "eps": 16.89809,
+    "analysts": 39,
+    "revenue": 5435176569510,
+    "growth": 0.58669996,
+    "fwd_per": 24.718178208306384
+   },
+   "next_year": {
+    "end": "2027-12-31",
+    "eps": 21.78127,
+    "analysts": 39,
+    "revenue": 7291242192840,
+    "growth": 0.289,
+    "fwd_per": 19.176567757527454
+   }
+  },
+  "MU": {
+   "ticker": "MU",
+   "price": 938.4,
+   "as_of": "2026-08-26T20:00:01+00:00",
+   "this_year": {
+    "end": "2026-08-31",
+    "eps": 73.40044,
+    "analysts": 40,
+    "revenue": 129715361400,
+    "growth": 7.8540998,
+    "fwd_per": 12.784664506098327
+   },
+   "next_year": {
+    "end": "2027-08-31",
+    "eps": 155.02524,
+    "analysts": 43,
+    "revenue": 240323154000,
+    "growth": 1.112,
+    "fwd_per": 6.053207851831095
+   }
+  },
+  "INTC": {
+   "ticker": "INTC",
+   "price": 88.24,
+   "as_of": "2026-08-26T20:00:01+00:00",
+   "this_year": {
+    "end": "2026-12-31",
+    "eps": 1.5129,
+    "analysts": 39,
+    "revenue": 62993527030,
+    "growth": 2.6021,
+    "fwd_per": 58.3250710555886
+   },
+   "next_year": {
+    "end": "2027-12-31",
+    "eps": 2.04013,
+    "analysts": 45,
+    "revenue": 71220796210,
+    "growth": 0.34849998,
+    "fwd_per": 43.252145696597765
+   }
+  }
+ },
+ "source": "query1.finance.yahoo.com chart + quoteSummary earningsTrend",
+ "note": "선행 주가수익비율은 다음 회계연도 추정 주당순이익 기준이다. 회사마다 회계연도 끝이 달라 같은 달을 재지 않는다"
+}
