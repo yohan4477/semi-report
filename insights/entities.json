@@ -1,0 +1,4630 @@
+[
+ {
+  "canonical": "1X Technologies",
+  "deny": [],
+  "en": [
+   "1X Technologies",
+   "1X"
+  ],
+  "ko": [
+   "1X Technologies"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "AMD",
+  "deny": [],
+  "en": [
+   "AMD"
+  ],
+  "ko": [
+   "AMD"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "AMSC",
+  "deny": [],
+  "en": [
+   "AMSC"
+  ],
+  "ko": [
+   "AMSC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "ARM",
+  "deny": [],
+  "en": [
+   "ARM"
+  ],
+  "ko": [
+   "ARM"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "ASML",
+  "deny": [],
+  "en": [
+   "ASML"
+  ],
+  "ko": [
+   "ASML"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "AWS",
+  "deny": [],
+  "en": [
+   "AWS"
+  ],
+  "ko": [
+   "AWS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Agility Robotics",
+  "deny": [],
+  "en": [
+   "Agility Robotics"
+  ],
+  "ko": [
+   "Agility Robotics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Ai2",
+  "deny": [],
+  "en": [
+   "Ai2"
+  ],
+  "ko": [
+   "Ai2"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Apptronik",
+  "deny": [],
+  "en": [
+   "Apptronik"
+  ],
+  "ko": [
+   "Apptronik"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "BEA",
+  "deny": [],
+  "en": [
+   "BEA"
+  ],
+  "ko": [
+   "BEA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "BLS",
+  "deny": [],
+  "en": [
+   "BLS"
+  ],
+  "ko": [
+   "BLS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "BMW",
+  "deny": [],
+  "en": [
+   "BMW"
+  ],
+  "ko": [
+   "BMW"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "BYD",
+  "deny": [],
+  "en": [
+   "BYD"
+  ],
+  "ko": [
+   "BYD"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Bitdeer",
+  "deny": [],
+  "en": [
+   "Bitdeer"
+  ],
+  "ko": [
+   "Bitdeer"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Bloom Energy",
+  "deny": [],
+  "en": [
+   "Bloom Energy"
+  ],
+  "ko": [
+   "Bloom Energy"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Boom Supersonic",
+  "deny": [],
+  "en": [
+   "Boom Supersonic"
+  ],
+  "ko": [
+   "Boom Supersonic"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Boston Dynamics",
+  "deny": [],
+  "en": [
+   "Boston Dynamics"
+  ],
+  "ko": [
+   "Boston Dynamics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "CATL",
+  "deny": [],
+  "en": [
+   "CATL"
+  ],
+  "ko": [
+   "CATL"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "CPF",
+  "deny": [],
+  "en": [
+   "CPF"
+  ],
+  "ko": [
+   "CPF"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "CXMT",
+  "deny": [],
+  "en": [
+   "CXMT"
+  ],
+  "ko": [
+   "CXMT"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Citizens",
+  "deny": [],
+  "en": [
+   "Citizens"
+  ],
+  "ko": [
+   "Citizens"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "CleanSpark",
+  "deny": [],
+  "en": [
+   "CleanSpark"
+  ],
+  "ko": [
+   "CleanSpark"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Comfort Systems",
+  "deny": [],
+  "en": [
+   "Comfort Systems"
+  ],
+  "ko": [
+   "Comfort Systems"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Core Scientific",
+  "deny": [],
+  "en": [
+   "Core Scientific"
+  ],
+  "ko": [
+   "Core Scientific"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Cosmos Policy",
+  "deny": [],
+  "en": [
+   "Cosmos Policy"
+  ],
+  "ko": [
+   "Cosmos Policy"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Crusoe",
+  "deny": [],
+  "en": [
+   "Crusoe"
+  ],
+  "ko": [
+   "Crusoe"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "D.R. 호턴",
+  "deny": [],
+  "en": [
+   "D.R. 호턴"
+  ],
+  "ko": [
+   "D.R. 호턴"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DIVO",
+  "deny": [],
+  "en": [
+   "DIVO"
+  ],
+  "ko": [
+   "DIVO"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DJI",
+  "deny": [],
+  "en": [
+   "DJI"
+  ],
+  "ko": [
+   "DJI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DL이앤씨",
+  "deny": [],
+  "en": [
+   "DL이앤씨"
+  ],
+  "ko": [
+   "DL이앤씨"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DYNA Robotics",
+  "deny": [],
+  "en": [
+   "DYNA Robotics"
+  ],
+  "ko": [
+   "DYNA Robotics",
+   "다이나 로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Decart",
+  "deny": [],
+  "en": [
+   "Decart"
+  ],
+  "ko": [
+   "Decart"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Delta Electronics",
+  "deny": [],
+  "en": [
+   "Delta Electronics"
+  ],
+  "ko": [
+   "Delta Electronics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DreamDojo",
+  "deny": [],
+  "en": [
+   "DreamDojo"
+  ],
+  "ko": [
+   "DreamDojo"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "DreamZero",
+  "deny": [],
+  "en": [
+   "DreamZero"
+  ],
+  "ko": [
+   "DreamZero"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "E3",
+  "deny": [],
+  "en": [
+   "E3"
+  ],
+  "ko": [
+   "E3"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "EDF",
+  "deny": [],
+  "en": [
+   "EDF"
+  ],
+  "ko": [
+   "EDF"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "EPRI",
+  "deny": [],
+  "en": [
+   "EPRI"
+  ],
+  "ko": [
+   "EPRI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "ERCOT",
+  "deny": [],
+  "en": [
+   "ERCOT"
+  ],
+  "ko": [
+   "ERCOT"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "EgoScale",
+  "deny": [],
+  "en": [
+   "EgoScale"
+  ],
+  "ko": [
+   "EgoScale"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "FERC",
+  "deny": [],
+  "en": [
+   "FERC"
+  ],
+  "ko": [
+   "FERC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "FPT스마트클라우드",
+  "deny": [],
+  "en": [
+   "FPT스마트클라우드"
+  ],
+  "ko": [
+   "FPT스마트클라우드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Fauna Robotics",
+  "deny": [],
+  "en": [
+   "Fauna Robotics"
+  ],
+  "ko": [
+   "Fauna Robotics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Fidelity",
+  "deny": [],
+  "en": [
+   "Fidelity"
+  ],
+  "ko": [
+   "Fidelity"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Figure AI",
+  "deny": [],
+  "en": [
+   "Figure AI"
+  ],
+  "ko": [
+   "Figure AI",
+   "피규어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Firmus",
+  "deny": [],
+  "en": [
+   "Firmus"
+  ],
+  "ko": [
+   "Firmus"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GE",
+  "deny": [],
+  "en": [
+   "GE"
+  ],
+  "ko": [
+   "GE"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GE Vernova",
+  "deny": [],
+  "en": [
+   "GE Vernova"
+  ],
+  "ko": [
+   "GE Vernova"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GLM-5",
+  "deny": [],
+  "en": [
+   "GLM-5"
+  ],
+  "ko": [
+   "GLM-5"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GS",
+  "deny": [],
+  "en": [
+   "GS"
+  ],
+  "ko": [
+   "GS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GS건설",
+  "deny": [],
+  "en": [
+   "GS건설"
+  ],
+  "ko": [
+   "GS건설"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Galaxea AI",
+  "deny": [],
+  "en": [
+   "Galaxea AI"
+  ],
+  "ko": [
+   "Galaxea AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "General Intuition",
+  "deny": [],
+  "en": [
+   "General Intuition"
+  ],
+  "ko": [
+   "General Intuition"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Generalist AI",
+  "deny": [],
+  "en": [
+   "Generalist AI"
+  ],
+  "ko": [
+   "Generalist AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Genpact",
+  "deny": [],
+  "en": [
+   "Genpact"
+  ],
+  "ko": [
+   "Genpact"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Grok",
+  "deny": [],
+  "en": [
+   "Grok"
+  ],
+  "ko": [
+   "Grok"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Groq",
+  "deny": [],
+  "en": [
+   "Groq"
+  ],
+  "ko": [
+   "Groq"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "GuruFocus",
+  "deny": [],
+  "en": [
+   "GuruFocus"
+  ],
+  "ko": [
+   "GuruFocus"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "HDB",
+  "deny": [],
+  "en": [
+   "HDB"
+  ],
+  "ko": [
+   "HDB"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "HD현대미포",
+  "deny": [],
+  "en": [
+   "HD현대미포"
+  ],
+  "ko": [
+   "HD현대미포"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "HD현대일렉트릭",
+  "deny": [],
+  "en": [
+   "HD현대일렉트릭"
+  ],
+  "ko": [
+   "HD현대일렉트릭"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "HD현대중공업",
+  "deny": [],
+  "en": [
+   "HD현대중공업"
+  ],
+  "ko": [
+   "HD현대중공업"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "HuggingFace",
+  "deny": [],
+  "en": [
+   "HuggingFace",
+   "Hugging Face"
+  ],
+  "ko": [
+   "HuggingFace",
+   "허깅페이스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "ICAP",
+  "deny": [],
+  "en": [
+   "ICAP"
+  ],
+  "ko": [
+   "ICAP"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "IEA",
+  "deny": [],
+  "en": [
+   "IEA"
+  ],
+  "ko": [
+   "IEA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "IMEC",
+  "deny": [],
+  "en": [
+   "IMEC"
+  ],
+  "ko": [
+   "IMEC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "IMM",
+  "deny": [],
+  "en": [
+   "IMM"
+  ],
+  "ko": [
+   "IMM"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Invesco",
+  "deny": [],
+  "en": [
+   "Invesco"
+  ],
+  "ko": [
+   "Invesco"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Itron",
+  "deny": [],
+  "en": [
+   "Itron"
+  ],
+  "ko": [
+   "Itron"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "JASM",
+  "deny": [],
+  "en": [
+   "JASM"
+  ],
+  "ko": [
+   "JASM"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "JEPI",
+  "deny": [],
+  "en": [
+   "JEPI"
+  ],
+  "ko": [
+   "JEPI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "JEPQ",
+  "deny": [],
+  "en": [
+   "JEPQ"
+  ],
+  "ko": [
+   "JEPQ"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Jurrien Timmer",
+  "deny": [],
+  "en": [
+   "Jurrien Timmer"
+  ],
+  "ko": [
+   "Jurrien Timmer"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "K-Scale Labs",
+  "deny": [],
+  "en": [
+   "K-Scale Labs"
+  ],
+  "ko": [
+   "K-Scale Labs"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "KB증권",
+  "deny": [],
+  "en": [
+   "KB증권"
+  ],
+  "ko": [
+   "KB증권"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "KLA코퍼레이션",
+  "deny": [],
+  "en": [
+   "KLA코퍼레이션"
+  ],
+  "ko": [
+   "KLA코퍼레이션"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Keel",
+  "deny": [],
+  "en": [
+   "Keel"
+  ],
+  "ko": [
+   "Keel"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LA",
+  "deny": [],
+  "en": [
+   "LA"
+  ],
+  "ko": [
+   "LA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LG",
+  "deny": [],
+  "en": [
+   "LG"
+  ],
+  "ko": [
+   "LG"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LG CNS",
+  "deny": [],
+  "en": [
+   "LG CNS"
+  ],
+  "ko": [
+   "LG CNS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LG디스플레이",
+  "deny": [],
+  "en": [
+   "LG디스플레이"
+  ],
+  "ko": [
+   "LG디스플레이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LG전자",
+  "deny": [],
+  "en": [
+   "LG전자"
+  ],
+  "ko": [
+   "LG전자"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LH",
+  "deny": [],
+  "en": [
+   "LH"
+  ],
+  "ko": [
+   "LH"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LS일렉트릭",
+  "deny": [],
+  "en": [
+   "LS일렉트릭",
+   "LS ELECTRIC"
+  ],
+  "ko": [
+   "LS일렉트릭"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "LTCM",
+  "deny": [],
+  "en": [
+   "LTCM"
+  ],
+  "ko": [
+   "LTCM"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Lightmatter",
+  "deny": [],
+  "en": [
+   "Lightmatter"
+  ],
+  "ko": [
+   "Lightmatter"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "MARA",
+  "deny": [],
+  "en": [
+   "MARA"
+  ],
+  "ko": [
+   "MARA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "MSCI",
+  "deny": [],
+  "en": [
+   "MSCI"
+  ],
+  "ko": [
+   "MSCI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "MarketDesk",
+  "deny": [],
+  "en": [
+   "MarketDesk"
+  ],
+  "ko": [
+   "MarketDesk"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Mitsubishi Power",
+  "deny": [],
+  "en": [
+   "Mitsubishi Power"
+  ],
+  "ko": [
+   "Mitsubishi Power"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Modal",
+  "deny": [],
+  "en": [
+   "Modal"
+  ],
+  "ko": [
+   "Modal"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Moonshot",
+  "deny": [],
+  "en": [
+   "Moonshot"
+  ],
+  "ko": [
+   "Moonshot"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "NASA",
+  "deny": [],
+  "en": [
+   "NASA"
+  ],
+  "ko": [
+   "NASA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "NERC",
+  "deny": [],
+  "en": [
+   "NERC"
+  ],
+  "ko": [
+   "NERC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "NRG Energy",
+  "deny": [],
+  "en": [
+   "NRG Energy"
+  ],
+  "ko": [
+   "NRG Energy"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Nebius",
+  "deny": [],
+  "en": [
+   "Nebius"
+  ],
+  "ko": [
+   "Nebius"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "PJM",
+  "deny": [],
+  "en": [
+   "PJM"
+  ],
+  "ko": [
+   "PJM"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Physical Intelligence",
+  "deny": [],
+  "en": [
+   "Physical Intelligence"
+  ],
+  "ko": [
+   "Physical Intelligence"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Prime Intellect",
+  "deny": [],
+  "en": [
+   "Prime Intellect"
+  ],
+  "ko": [
+   "Prime Intellect"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "QTS",
+  "deny": [],
+  "en": [
+   "QTS"
+  ],
+  "ko": [
+   "QTS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "QYLD",
+  "deny": [],
+  "en": [
+   "QYLD"
+  ],
+  "ko": [
+   "QYLD"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Qwen",
+  "deny": [],
+  "en": [
+   "Qwen"
+  ],
+  "ko": [
+   "Qwen"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "RBC",
+  "deny": [],
+  "en": [
+   "RBC"
+  ],
+  "ko": [
+   "RBC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "RLWRLD",
+  "deny": [],
+  "en": [
+   "RLWRLD"
+  ],
+  "ko": [
+   "RLWRLD"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "RealWorld",
+  "deny": [],
+  "en": [
+   "RealWorld"
+  ],
+  "ko": [
+   "RealWorld",
+   "리얼월드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Rhoda AI",
+  "deny": [],
+  "en": [
+   "Rhoda AI",
+   "로다 AI",
+   "Rhoda"
+  ],
+  "ko": [
+   "Rhoda AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Rivian",
+  "deny": [],
+  "en": [
+   "Rivian"
+  ],
+  "ko": [
+   "Rivian"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "RoboStrategy",
+  "deny": [],
+  "en": [
+   "RoboStrategy"
+  ],
+  "ko": [
+   "RoboStrategy"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SH",
+  "deny": [],
+  "en": [
+   "SH"
+  ],
+  "ko": [
+   "SH"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SK",
+  "deny": [],
+  "en": [
+   "SK"
+  ],
+  "ko": [
+   "SK"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SK온",
+  "deny": [],
+  "en": [
+   "SK온"
+  ],
+  "ko": [
+   "SK온"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SK이노베이션",
+  "deny": [],
+  "en": [
+   "SK이노베이션"
+  ],
+  "ko": [
+   "SK이노베이션"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SK텔레콤",
+  "deny": [],
+  "en": [
+   "SK텔레콤"
+  ],
+  "ko": [
+   "SK텔레콤"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SK하이닉스",
+  "deny": [],
+  "en": [
+   "SK하이닉스"
+  ],
+  "ko": [
+   "SK하이닉스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SMIC",
+  "deny": [],
+  "en": [
+   "SMIC"
+  ],
+  "ko": [
+   "SMIC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SONIC",
+  "deny": [],
+  "en": [
+   "SONIC"
+  ],
+  "ko": [
+   "SONIC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SPYI",
+  "deny": [],
+  "en": [
+   "SPYI"
+  ],
+  "ko": [
+   "SPYI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "STRC",
+  "deny": [],
+  "en": [
+   "STRC"
+  ],
+  "ko": [
+   "STRC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "STRF",
+  "deny": [],
+  "en": [
+   "STRF"
+  ],
+  "ko": [
+   "STRF"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SambaNova",
+  "deny": [],
+  "en": [
+   "SambaNova"
+  ],
+  "ko": [
+   "SambaNova"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SemiAnalysis",
+  "deny": [],
+  "en": [
+   "SemiAnalysis"
+  ],
+  "ko": [
+   "SemiAnalysis"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "SharonAI",
+  "deny": [],
+  "en": [
+   "SharonAI"
+  ],
+  "ko": [
+   "SharonAI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Sharpa",
+  "deny": [],
+  "en": [
+   "Sharpa"
+  ],
+  "ko": [
+   "Sharpa",
+   "샤파"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Siemens Energy",
+  "deny": [],
+  "en": [
+   "Siemens Energy"
+  ],
+  "ko": [
+   "Siemens Energy"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Simply Wall St",
+  "deny": [],
+  "en": [
+   "Simply Wall St",
+   "SimplyWall.st"
+  ],
+  "ko": [
+   "Simply Wall St"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Solar Turbines",
+  "deny": [],
+  "en": [
+   "Solar Turbines"
+  ],
+  "ko": [
+   "Solar Turbines"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Stellantis",
+  "deny": [],
+  "en": [
+   "Stellantis"
+  ],
+  "ko": [
+   "Stellantis"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Sunday Robotics",
+  "deny": [],
+  "en": [
+   "Sunday Robotics"
+  ],
+  "ko": [
+   "Sunday Robotics",
+   "선데이 로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Surge",
+  "deny": [],
+  "en": [
+   "Surge"
+  ],
+  "ko": [
+   "Surge"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "TSMC",
+  "deny": [],
+  "en": [
+   "TSMC"
+  ],
+  "ko": [
+   "TSMC"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "TeraWulf",
+  "deny": [],
+  "en": [
+   "TeraWulf"
+  ],
+  "ko": [
+   "TeraWulf"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Tesollo",
+  "deny": [],
+  "en": [
+   "Tesollo"
+  ],
+  "ko": [
+   "Tesollo",
+   "테솔로"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Thinking Machines Lab",
+  "deny": [],
+  "en": [
+   "Thinking Machines Lab"
+  ],
+  "ko": [
+   "Thinking Machines Lab"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "UAE",
+  "deny": [],
+  "en": [
+   "UAE"
+  ],
+  "ko": [
+   "UAE"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "UBS",
+  "deny": [],
+  "en": [
+   "UBS"
+  ],
+  "ko": [
+   "UBS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "UnitedHealth",
+  "deny": [],
+  "en": [
+   "UnitedHealth"
+  ],
+  "ko": [
+   "UnitedHealth"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Vertiv",
+  "deny": [],
+  "en": [
+   "Vertiv"
+  ],
+  "ko": [
+   "Vertiv"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "WIRobotics",
+  "deny": [],
+  "en": [
+   "WIRobotics"
+  ],
+  "ko": [
+   "WIRobotics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Walden Robotics",
+  "deny": [],
+  "en": [
+   "Walden Robotics"
+  ],
+  "ko": [
+   "Walden Robotics"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Wuji",
+  "deny": [],
+  "en": [
+   "Wuji"
+  ],
+  "ko": [
+   "Wuji",
+   "우지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "Xylem",
+  "deny": [],
+  "en": [
+   "Xylem"
+  ],
+  "ko": [
+   "Xylem"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "iShares",
+  "deny": [],
+  "en": [
+   "iShares"
+  ],
+  "ko": [
+   "iShares"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "slime",
+  "deny": [],
+  "en": [
+   "slime"
+  ],
+  "ko": [
+   "slime"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "xAI",
+  "deny": [],
+  "en": [
+   "xAI"
+  ],
+  "ko": [
+   "xAI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "경실련",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "경실련"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "고려아연",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "고려아연"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "골드만삭스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "골드만삭스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "구글",
+  "deny": [],
+  "en": [
+   "Google"
+  ],
+  "ko": [
+   "구글"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "구글 딥마인드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "구글 딥마인드",
+   "구글딥마인드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "구글클라우드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "구글클라우드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "국민연금",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "국민연금"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "국세청",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "국세청"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "국토교통부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "국토교통부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "국토부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "국토부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "금융감독원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "금융감독원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "기금운용위원회",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "기금운용위원회"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "기아",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "기아"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "기획재정부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "기획재정부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "기후에너지부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "기후에너지부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "김녹원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "김녹원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "김상훈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "김상훈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "김시덕",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "김시덕"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "김정관",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "김정관"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "김종율",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "김종율"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "나스닥",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "나스닥"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "내셔널그리드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "내셔널그리드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "네비우스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "네비우스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "네이버",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "네이버"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "넥스트에라",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "넥스트에라"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "넵비우스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "넵비우스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "노보노디스크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "노보노디스크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "노암 샤지어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "노암 샤지어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "뉴욕",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "뉴욕"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "다난타라",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "다난타라"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "다리오 아모데이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "다리오 아모데이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "대만",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "대만"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "대신증권",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "대신증권"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "데이터독",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "데이터독"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "덴소",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "덴소"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "델",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "델"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "델타일렉트로닉스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "델타일렉트로닉스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "델타항공",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "델타항공"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "도미니언에너지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "도미니언에너지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "도요타",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "도요타"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "도쿄",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "도쿄"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "도쿄일렉트론",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "도쿄일렉트론"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "도쿄증권거래소",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "도쿄증권거래소"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "독일",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "독일"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "두산로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "두산로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "두산밥캣",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "두산밥캣"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "두산에너빌리티",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "두산에너빌리티"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "둔촌주공",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "둔촌주공"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "듀크에너지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "듀크에너지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "디든로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "디든로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "딜런 패텔",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "딜런 패텔"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "딥마인드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "딥마인드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "딥시크",
+  "deny": [],
+  "en": [
+   "DeepSeek"
+  ],
+  "ko": [
+   "딥시크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "딥엑스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "딥엑스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "라피더스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "라피더스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "램리서치",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "램리서치"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "러시아",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "러시아"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "레나",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "레나"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "레이 달리오",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "레이 달리오"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "레인보우로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "레인보우로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "로버트 보스웰",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "로버트 보스웰"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "로보시지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "로보시지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "로보티즈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "로보티즈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "루멘텀",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "루멘텀"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "류상철",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "류상철"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "리노공업",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "리노공업"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "립부 탄",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "립부 탄"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마거릿 리드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마거릿 리드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마두로",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마두로"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마벨",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마벨"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이크로소프트",
+  "deny": [],
+  "en": [
+   "Microsoft",
+   "MS"
+  ],
+  "ko": [
+   "마이크로소프트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이크론",
+  "deny": [],
+  "en": [
+   "Micron"
+  ],
+  "ko": [
+   "마이크론"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이크론테크놀로지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마이크론테크놀로지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이클 버리",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마이클 버리"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이클 세일러",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마이클 세일러"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "마이클버리",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "마이클버리"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "매릴린 워링",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "매릴린 워링"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "머크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "머크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "메가뱅크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "메가뱅크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "메타",
+  "deny": [],
+  "en": [
+   "Meta"
+  ],
+  "ko": [
+   "메타"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "모간스탠리",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "모간스탠리"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "모더나",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "모더나"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "무디스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "무디스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "문샷",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "문샷"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미 재무부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미 재무부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국 상무부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국 상무부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국 재무부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국 재무부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국 정부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국 정부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국노동통계국",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국노동통계국"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국석유회사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국석유회사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국셰일업체",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국셰일업체"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미국재무부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미국재무부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미디어텍",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미디어텍"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미래에셋증권",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "미래에셋증권"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "미쓰비시UFJ",
+  "deny": [],
+  "en": [
+   "미쓰비시UFJ"
+  ],
+  "ko": [
+   "미쓰비시UFJ"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "바이트댄스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "바이트댄스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "박상준",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "박상준"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "박세익",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "박세익"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "박소연",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "박소연"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "박팀장",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "박팀장"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "박형근",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "박형근"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "방구퐁",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "방구퐁"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "배문성",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "배문성"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "백종훈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "백종훈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "뱅크오브아메리카",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "뱅크오브아메리카"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "버크셔 해서웨이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "버크셔 해서웨이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "버크셔해서웨이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "버크셔해서웨이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "벅셔해서웨이에너지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "벅셔해서웨이에너지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "베스 킨디그",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "베스 킨디그"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "베스 해맥",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "베스 해맥"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "벤처글로벌",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "벤처글로벌"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "보스턴 다이내믹스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "보스턴 다이내믹스",
+   "보스턴다이내믹스",
+   "보스톤 다이나믹스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "부동산114",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "부동산114"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "브로드컴",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "브로드컴"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "블랙록",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "블랙록"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "블랙스톤",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "블랙스톤"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "비스트라",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "비스트라"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "빌애크먼",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "빌애크먼"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "사라 프라이어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "사라 프라이어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "사모운용사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "사모운용사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "사우디",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "사우디"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "산업통상부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "산업통상부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "산제이 스리바스타바",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "산제이 스리바스타바"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼성"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성SDI",
+  "deny": [],
+  "en": [
+   "삼성SDI"
+  ],
+  "ko": [
+   "삼성SDI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성SDS",
+  "deny": [],
+  "en": [
+   "삼성SDS"
+  ],
+  "ko": [
+   "삼성SDS"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성물산",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼성물산"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성바이오로직스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼성바이오로직스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성전기",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼성전기"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼성전자",
+  "deny": [],
+  "en": [
+   "Samsung"
+  ],
+  "ko": [
+   "삼성전자"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼익가든맨션",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼익가든맨션"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "삼표그룹",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "삼표그룹"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "샌디스크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "샌디스크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "생명보험사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "생명보험사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "서던컴퍼니",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "서던컴퍼니"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "서울",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "서울"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "서울시",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "서울시"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "석유회사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "석유회사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "성상현",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "성상현"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "세레브라스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "세레브라스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "세제발전심의위원회",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "세제발전심의위원회"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "셀레스티얼AI",
+  "deny": [],
+  "en": [
+   "셀레스티얼AI"
+  ],
+  "ko": [
+   "셀레스티얼AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "셀트리온",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "셀트리온"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "셰브론",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "셰브론"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "소니",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "소니"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "소프트뱅크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "소프트뱅크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "손진석",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "손진석"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "솔브레인",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "솔브레인"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "순다 피차이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "순다 피차이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "쉐브론",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "쉐브론"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "슈퍼마이크로컴퓨터",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "슈퍼마이크로컴퓨터"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스노우플레이크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "스노우플레이크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스웨덴",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "스웨덴"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스케일AI",
+  "deny": [],
+  "en": [
+   "스케일AI"
+  ],
+  "ko": [
+   "스케일AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스타링크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "스타링크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스트래티지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "스트래티지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스티브아이스먼",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "스티브아이스먼"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "스페이스X",
+  "deny": [],
+  "en": [
+   "스페이스X",
+   "SpaceX"
+  ],
+  "ko": [
+   "스페이스X"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "시노코",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "시노코"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "시놉시스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "시놉시스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "시에나",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "시에나"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "시추에이셔널어웨어니스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "시추에이셔널어웨어니스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "시타델",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "시타델"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "신보성",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "신보성"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "신한지주",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "신한지주"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "신현송",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "신현송"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "실리콘투",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "실리콘투"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "싱가포르",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "싱가포르"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아리스타",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아리스타"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아마존",
+  "deny": [],
+  "en": [
+   "Amazon"
+  ],
+  "ko": [
+   "아마존"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아마존웹서비스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아마존웹서비스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아메리칸일렉트릭파워",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아메리칸일렉트릭파워"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아실",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아실"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아크로리버파크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아크로리버파크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아폴로",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아폴로"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "아폴로 글로벌 매니지먼트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "아폴로 글로벌 매니지먼트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "알리바바",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "알리바바"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "알파벳",
+  "deny": [],
+  "en": [
+   "Alphabet"
+  ],
+  "ko": [
+   "알파벳"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "암젠",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "암젠"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "암페어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "암페어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "애플",
+  "deny": [],
+  "en": [
+   "Apple"
+  ],
+  "ko": [
+   "애플"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "앤트로픽",
+  "deny": [],
+  "en": [
+   "Anthropic"
+  ],
+  "ko": [
+   "앤트로픽",
+   "앤스로픽"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "앱트로닉",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "앱트로닉"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "야누스 헨더슨",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "야누스 헨더슨"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "어질리티 로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "어질리티 로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "어플라이드 머티리얼즈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "어플라이드 머티리얼즈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "엄태영",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "엄태영"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에드 야데니",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에드 야데니"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에버코어 ISI",
+  "deny": [],
+  "en": [
+   "에버코어 ISI"
+  ],
+  "ko": [
+   "에버코어 ISI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에이로봇",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에이로봇"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에이피알",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에이피알"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에코스타",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에코스타"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에코프로CnG",
+  "deny": [],
+  "en": [
+   "에코프로CnG"
+  ],
+  "ko": [
+   "에코프로CnG"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에코프로머티리얼즈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에코프로머티리얼즈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에코프로비엠",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "에코프로비엠"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "에포크AI",
+  "deny": [],
+  "en": [
+   "에포크AI"
+  ],
+  "ko": [
+   "에포크AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "엔비디아",
+  "deny": [],
+  "en": [
+   "NVIDIA"
+  ],
+  "ko": [
+   "엔비디아"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "엘곰",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "엘곰"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "엘앤에프",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "엘앤에프"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "연방준비제도",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "연방준비제도"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "연준",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "연준"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "오라클",
+  "deny": [],
+  "en": [
+   "Oracle"
+  ],
+  "ko": [
+   "오라클"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "오리온",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "오리온"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "오세훈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "오세훈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "오클로",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "오클로"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "오픈AI",
+  "deny": [],
+  "en": [
+   "오픈AI",
+   "OpenAI"
+  ],
+  "ko": [
+   "오픈AI"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "우버",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "우버"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "워런 버핏",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "워런 버핏"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "워런버핏",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "워런버핏"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "원텍",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "원텍"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "월마트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "월마트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "웨스턴디지털",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "웨스턴디지털"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "웨이모",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "웨이모"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "위로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "위로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "유니트리",
+  "deny": [],
+  "en": [
+   "Unitree"
+  ],
+  "ko": [
+   "유니트리"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "유선종",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "유선종"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "윤태화",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "윤태화"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이관옥",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이관옥"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이라크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이라크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이란",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이란"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이레인",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이레인"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이선엽",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이선엽"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이수페타시스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이수페타시스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이장원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이장원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이재명 정부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이재명 정부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "이창민",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "이창민"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "인도",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "인도"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "인도네시아",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "인도네시아"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "인민은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "인민은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "인엔아웃",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "인엔아웃"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "인텔",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "인텔"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일라이릴리",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일라이릴리"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일론 머스크",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일론 머스크"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일본",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일본"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일본 정부",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일본 정부"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일본외환당국",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일본외환당국"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "일본은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "일본은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "장순원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "장순원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "정원오",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "정원오"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "제이미 다이먼",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "제이미 다이먼"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "제주반도체",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "제주반도체"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "조던 나노스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "조던 나노스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "존 윌리엄스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "존 윌리엄스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "존 점퍼",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "존 점퍼"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "주성엔지니어링",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "주성엔지니어링"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "줄런트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "줄런트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "중국",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "중국"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "중국 인민은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "중국 인민은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "즈푸",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "즈푸"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "지멘스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "지멘스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "지멘스 EDA",
+  "deny": [],
+  "en": [
+   "지멘스 EDA",
+   "지멘스EDA"
+  ],
+  "ko": [
+   "지멘스 EDA"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "체니에르",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "체니에르"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "최도영",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "최도영"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "최상희",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "최상희"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "카레라",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "카레라"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "카메코",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "카메코"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "카운터포인트리서치",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "카운터포인트리서치"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "카자톰프롬",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "카자톰프롬"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "카타르",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "카타르"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "캐나다",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "캐나다"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "캐터필러",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "캐터필러"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "캠브리콘",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "캠브리콘"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "커서",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "커서"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "컨스텔레이션",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "컨스텔레이션"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "케빈 워시",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "케빈 워시"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "케빈워시",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "케빈워시"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "케이던스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "케이던스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코닝",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코닝"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코스맥스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코스맥스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코스피",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코스피"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코어42",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코어42"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코어위브",
+  "deny": [],
+  "en": [
+   "CoreWeave"
+  ],
+  "ko": [
+   "코어위브"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코인베이스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코인베이스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코히런트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코히런트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "코히어런트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "코히어런트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "쿠웨이트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "쿠웨이트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "퀄컴",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "퀄컴"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "크라켄",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "크라켄"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "크레스트몬트 리서치",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "크레스트몬트 리서치"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "클라우드플레어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "클라우드플레어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "키옥시아",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "키옥시아"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "탈렌에너지",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "탈렌에너지"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "테슬라",
+  "deny": [],
+  "en": [
+   "Tesla"
+  ],
+  "ko": [
+   "테슬라"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "텔아비브증권거래소",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "텔아비브증권거래소"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "토요타 리서치 인스티튜트",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "토요타 리서치 인스티튜트"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "토지주택연구원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "토지주택연구원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "톨브라더스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "톨브라더스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "튀르키예 중앙은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "튀르키예 중앙은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "트럼프",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "트럼프"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "트렌드포스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "트렌드포스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "티씨케이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "티씨케이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "파월인더스트리스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "파월인더스트리스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "파키스탄",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "파키스탄"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "팔란티어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "팔란티어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "패브리넷",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "패브리넷"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "퍼싱스퀘어",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "퍼싱스퀘어"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "폭스콘",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "폭스콘"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "폴란드 국립은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "폴란드 국립은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "프랑스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "프랑스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "하마드 후세인",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "하마드 후세인"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "하이퍼스케일러",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "하이퍼스케일러"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국가스공사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국가스공사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국부동산원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국부동산원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국은행",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국은행"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국전력공사",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국전력공사"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한국콜마",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한국콜마"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한미반도체",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한미반도체"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한빛원전",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한빛원전"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한수원",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한수원"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한화시스템",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한화시스템"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "한화오션",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "한화오션"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "헤그세스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "헤그세스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "혁명수비대",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "혁명수비대"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대모비스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대모비스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대자동차",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대자동차"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대중공업",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대중공업"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대차",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대차"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대카드",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대카드"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "현대캐피탈",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "현대캐피탈"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "홀리데이로보틱스",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "홀리데이로보틱스"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "화낙",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "화낙"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "화웨이",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "화웨이"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "화이자",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "화이자"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "효성중공업",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "효성중공업"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "후티",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "후티"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "휴 짐버",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "휴 짐버"
+  ],
+  "type": "미정"
+ },
+ {
+  "canonical": "휴젤",
+  "deny": [],
+  "en": [],
+  "ko": [
+   "휴젤"
+  ],
+  "type": "미정"
+ }
+]
