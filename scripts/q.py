@@ -18,6 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'insights'))
 import check_fresh  # noqa: E402  신선도 표를 복제하지 않고 그대로 쓴다
 import paths  # noqa: E402
+import source_lines as sl  # noqa: E402
 import times  # noqa: E402,F401  때 판정 규칙의 소유자를 밝힌다
 import utterance as ut  # noqa: E402
 
@@ -57,14 +58,7 @@ def _time_of(addr, tmap, meta, today):
 
 
 def read_line(root, rel, num):
-    full = os.path.join(root, rel.replace('/', os.sep))
-    if not os.path.isfile(full):
-        return ''
-    with io.open(full, encoding='utf-8', errors='replace') as f:
-        for n, line in enumerate(f, 1):
-            if n == num:
-                return line.strip()
-    return ''
+    return sl.line_at(root, rel, num)
 
 
 def lookup(root, idx, name, cap=CAP, tmap=None, meta=None, today=None):

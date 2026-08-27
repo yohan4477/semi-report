@@ -25,13 +25,9 @@ import entities_lib as el  # noqa: E402
 import gen_entities as ge  # noqa: E402
 import gen_index as gi  # noqa: E402
 import paths  # noqa: E402
+import source_lines as sl  # noqa: E402
 import times  # noqa: E402
 import utterance as ut  # noqa: E402
-
-
-def _line_count(path):
-    with io.open(path, encoding='utf-8', errors='replace') as f:
-        return sum(1 for _ in f)
 
 
 def check(root, rows, idx, actors, tmap=None, meta=None):
@@ -56,7 +52,7 @@ def check(root, rows, idx, actors, tmap=None, meta=None):
                 out.append(('FAIL', 'X3', '%s 가 없는 파일을 가리킨다: %s' % (name, addr)))
                 continue
             if rel not in counts:
-                counts[rel] = _line_count(full)
+                counts[rel] = sl.count(root, rel)
             if not num.isdigit() or int(num) < 1 or int(num) > counts[rel]:
                 out.append(('FAIL', 'X4',
                             '%s 의 줄 번호가 범위 밖이다: %s (파일 %d 줄)'

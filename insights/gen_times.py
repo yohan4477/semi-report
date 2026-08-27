@@ -18,6 +18,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths  # noqa: E402
+import source_lines as sl  # noqa: E402
 import times  # noqa: E402
 import utterance as ut  # noqa: E402
 
@@ -41,17 +42,13 @@ def build(root, idx, meta):
         utter = ut.date_of(meta, rel)
         if not utter:
             continue
-        full = os.path.join(root, rel.replace('/', os.sep))
-        if not os.path.isfile(full):
-            continue
         nums = by[rel]
-        with io.open(full, encoding='utf-8', errors='replace') as f:
-            for n, line in enumerate(f, 1):
-                if n not in nums:
-                    continue
-                got = times.find(line, utter)
-                if got:
-                    hits['%s#L%d' % (rel, n)] = got
+        for n, line in enumerate(sl.lines(root, rel), 1):
+            if n not in nums:
+                continue
+            got = times.find(line, utter)
+            if got:
+                hits['%s#L%d' % (rel, n)] = got
     out = {'_meta': {
         'built': datetime.date.today().isoformat(),
         'index_fingerprint': (idx.get('_meta') or {}).get('fingerprint', ''),

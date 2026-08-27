@@ -27,6 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import entities_lib as el  # noqa: E402
 import matcher as mt  # noqa: E402
 import paths  # noqa: E402
+import source_lines as sl  # noqa: E402
 
 
 def corpus_files(root):
@@ -70,16 +71,14 @@ def scan(root, rows, files):
     """그 파일들만 훑는다. -> (개체 -> 주소 목록, 파일 -> 줄 수)"""
     rules = mt.compile_rules(rows)
     hits = {}
-    lines = {}
+    counts = {}
     for rel in files:
-        n = 0
-        with io.open(os.path.join(root, rel.replace('/', os.sep)),
-                     encoding='utf-8', errors='replace') as f:
-            for n, line in enumerate(f, 1):
-                for c in mt.find(line, rules):
-                    hits.setdefault(c, []).append('%s#L%d' % (rel, n))
-        lines[rel] = n
-    return hits, lines
+        got = sl.lines(root, rel)
+        counts[rel] = len(got)
+        for n, line in enumerate(got, 1):
+            for c in mt.find(line, rules):
+                hits.setdefault(c, []).append('%s#L%d' % (rel, n))
+    return hits, counts
 
 
 def _reusable(old, ehash):
