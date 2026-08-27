@@ -83,3 +83,68 @@ def test_date_of_falls_back_for_a_file_absent_from_manifest(tmp_path):
 def test_section_of_is_empty_for_unknown_file(tmp_path):
     meta = ut.load('.', _mkmanifest(tmp_path))
     assert ut.section_of(meta, 'content/b/없다.md') == ''
+
+
+import json as _json
+
+
+def _mkclips(tmp_path):
+    d = tmp_path / 'input' / 'clippings'
+    d.mkdir(parents=True)
+    io.open(str(d / 'Deep Dive.md'), 'w', encoding='utf-8').write(
+        '---\ntitle: "Deep Dive"\nsource: "https://x"\n'
+        'published: 2026-08-16\ncreated: 2026-08-17\n---\n본문.\n')
+    io.open(str(d / 'No Published.md'), 'w', encoding='utf-8').write(
+        '---\ntitle: "No Published"\ncreated: 2026-08-17\n---\n본문.\n')
+    io.open(str(d / 'Bare.md'), 'w', encoding='utf-8').write('머리말 없다.\n')
+    m = d / 'mer'
+    m.mkdir()
+    io.open(str(m / '111.json'), 'w', encoding='utf-8').write(_json.dumps(
+        {'no': '111', 'date': '2024-04-03', 'text': '본문.'},
+        ensure_ascii=False))
+    io.open(str(m / '222.json'), 'w', encoding='utf-8').write(
+        _json.dumps({'no': '222', 'text': '본문.'}, ensure_ascii=False))
+    io.open(str(tmp_path / 'insights_manifest.json'), 'w',
+            encoding='utf-8').write(_json.dumps(
+                {'generated': '2026-08-28', 'sources': []}))
+    return str(tmp_path), str(tmp_path / 'insights_manifest.json')
+
+
+def test_clipping_date_prefers_published(tmp_path):
+    root, _ = _mkclips(tmp_path)
+    assert ut.clipping_date(root, 'input/clippings/Deep Dive.md') == '2026-08-16'
+
+
+def test_clipping_date_falls_back_to_created(tmp_path):
+    root, _ = _mkclips(tmp_path)
+    assert ut.clipping_date(
+        root, 'input/clippings/No Published.md') == '2026-08-17'
+
+
+def test_clipping_date_is_empty_without_frontmatter(tmp_path):
+    root, _ = _mkclips(tmp_path)
+    assert ut.clipping_date(root, 'input/clippings/Bare.md') == ''
+
+
+def test_clipping_date_reads_the_json_date(tmp_path):
+    root, _ = _mkclips(tmp_path)
+    assert ut.clipping_date(
+        root, 'input/clippings/mer/111.json') == '2024-04-03'
+
+
+def test_clipping_date_is_empty_when_the_json_has_none(tmp_path):
+    root, _ = _mkclips(tmp_path)
+    assert ut.clipping_date(root, 'input/clippings/mer/222.json') == ''
+
+
+def test_load_fills_clipping_dates(tmp_path):
+    root, man = _mkclips(tmp_path)
+    meta = ut.load(root, man)
+    assert meta['input/clippings/Deep Dive.md']['date'] == '2026-08-16'
+    assert meta['input/clippings/mer/111.json']['date'] == '2024-04-03'
+
+
+def test_clippings_have_no_freshness_section(tmp_path):
+    root, man = _mkclips(tmp_path)
+    meta = ut.load(root, man)
+    assert meta['input/clippings/Deep Dive.md']['section'] == ''

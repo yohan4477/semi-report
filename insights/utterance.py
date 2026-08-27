@@ -10,6 +10,7 @@ SECTION 은 판단이다. check_fresh 의 STALE_DAYS 는 biz·chip·model·power
 매니페스트의 categories 는 주제 폴더 이름이라 둘을 손으로 이어야 한다.
 표를 여기 한 곳에 두고 코드는 표를 읽기만 한다.
 """
+import glob
 import io
 import json
 import os
@@ -18,6 +19,10 @@ import re
 NAME_ISO = re.compile(r'(20\d{2})-(\d{2})-(\d{2})')
 NAME_6 = re.compile(r'\[(\d{2})(\d{2})(\d{2})\]')
 NAME_4 = re.compile(r'\[(\d{2})(\d{2})\]')
+FM_PUBLISHED = re.compile(r'^published:\s*(\d{4}-\d{2}-\d{2})\s*$', re.M)
+FM_CREATED = re.compile(r'^created:\s*(\d{4}-\d{2}-\d{2})\s*$', re.M)
+JSON_DATE = re.compile(r'"date"\s*:\s*"(\d{4}-\d{2}-\d{2})"')
+CLIPS = ('input/clippings/*.md', 'input/clippings/mer/*.json')
 
 SECTION = {
     # 값과 물량 — 분기면 뒤집힌다
@@ -63,6 +68,24 @@ def name_date(rel):
     return ''
 
 
+def clipping_date(root, rel):
+    """클리핑의 쓴 날. 영문은 frontmatter, 메르는 JSON 의 date.
+
+    JSON 을 통째로 파싱하지 않고 앞 2,000자만 정규식으로 본다. 메르 364편을
+    조회 한 번마다 json.load 하면 2.8MB를 파싱하는데 date 키는 text 앞에 온다.
+    """
+    path = os.path.join(root, rel.replace('/', os.sep))
+    if not os.path.isfile(path):
+        return ''
+    with io.open(path, encoding='utf-8', errors='replace') as f:
+        head = f.read(2000)
+    if rel.lower().endswith('.json'):
+        m = JSON_DATE.search(head)
+        return m.group(1) if m else ''
+    m = FM_PUBLISHED.search(head) or FM_CREATED.search(head)
+    return m.group(1) if m else ''
+
+
 def section_for(categories):
     for c in (categories or []):
         if c in SECTION:
@@ -83,6 +106,13 @@ def load(root, manifest_path=None):
             'date': str(s.get('date') or '') or name_date(rel),
             'section': section_for(s.get('categories')),
         }
+    # 클리핑은 매니페스트에 없다. 갈래도 없어 기본 신선도(180일)로 떨어진다
+    for pat in CLIPS:
+        for q in glob.glob(os.path.join(root, pat.replace('/', os.sep))):
+            rel = os.path.relpath(q, root).replace(os.sep, '/')
+            if rel in out:
+                continue
+            out[rel] = {'date': clipping_date(root, rel), 'section': ''}
     return out
 
 
