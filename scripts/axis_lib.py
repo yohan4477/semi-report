@@ -106,3 +106,43 @@ def shape_of(axis):
     if all(c.get('order') is not None for c in cells):
         return '선'
     return '목록'
+
+
+def place(cards, axis):
+    """카드를 칸에 넣는다. 오직 card_text 와 축의 낱말로만 정한다.
+
+    c['also'] 를 안 본다 — 그건 사람이 선언한 다중 배치라 계산이 만든 겹침과 다르다.
+    """
+    out = {}
+    for c in cards:
+        text = card_text(c)
+        hit = sorted({cell['id'] for cell in axis['cells']
+                      if any(w in text for w in cell['words'])})
+        out[card_id(c)] = hit
+    return out
+
+
+def review(cards, axis):
+    """넷을 센다 — 겹침·빈칸·잔여·쏠림. 아무것도 던지지 않는다."""
+    placement = place(cards, axis)
+    counts = {cell['id']: 0 for cell in axis['cells']}
+    for hits in placement.values():
+        for cid in hits:
+            counts[cid] += 1
+    placed = [n for n in counts.values() if n]
+    residual = sorted(t for t, hits in placement.items() if not hits)
+    total = len(cards)
+    return {
+        'axis': axis.get('name', ''),
+        'shape': axis.get('shape') or shape_of(axis),
+        'cards': total,
+        'cells': [{'id': cell['id'], 'n': counts[cell['id']]}
+                  for cell in axis['cells']],
+        'overlap': [{'card': t, 'cells': hits}
+                    for t, hits in sorted(placement.items()) if len(hits) > 1],
+        'empty': [cell['id'] for cell in axis['cells'] if not counts[cell['id']]],
+        'residual': residual,
+        'residual_pct': round(100 * len(residual) / total) if total else 0,
+        'skew': round(max(placed) / min(placed), 1) if placed else 0,
+        'placement': placement,
+    }

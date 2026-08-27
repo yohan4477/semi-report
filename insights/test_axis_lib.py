@@ -135,3 +135,94 @@ def test_shape_formula_when_a_cell_has_op():
     a = al.parse_axis({'name': 'x', 'cells': [{'id': '매출', 'op': '×'},
                                               {'id': '단가'}, {'id': '수량'}]})
     assert al.shape_of(a) == '수식'
+
+
+REGION = {'name': '지역', 'cells': [
+    {'id': '서울', 'words': ['서울', '강남']},
+    {'id': '경기', 'words': ['경기', '분당']},
+    {'id': '인천', 'words': ['인천']},
+]}
+
+
+def _card(title, body=''):
+    return {'title': title, 'oneliner': body, 'section': ('s', 'x', 'S')}
+
+
+def test_place_puts_card_in_matching_cell():
+    axis = al.parse_axis(REGION)
+    got = al.place([_card('강남 재건축')], axis)
+    assert got['강남 재건축'] == ['서울']
+
+
+def test_place_matches_on_body_not_just_title():
+    axis = al.parse_axis(REGION)
+    got = al.place([_card('무제', '분당 이야기다')], axis)
+    assert got['무제'] == ['경기']
+
+
+def test_place_returns_empty_list_for_unmatched_card():
+    axis = al.parse_axis(REGION)
+    assert al.place([_card('아무 데도 안 걸림')], axis)['아무 데도 안 걸림'] == []
+
+
+def test_place_records_two_cells_when_card_matches_both():
+    axis = al.parse_axis(REGION)
+    got = al.place([_card('강남과 분당 비교')], axis)
+    assert got['강남과 분당 비교'] == ['경기', '서울']
+
+
+def test_review_counts_cells():
+    axis = al.parse_axis(REGION)
+    r = al.review([_card('강남 것'), _card('서울 것'), _card('분당 것')], axis)
+    assert r['cards'] == 3
+    assert {c['id']: c['n'] for c in r['cells']} == {'서울': 2, '경기': 1, '인천': 0}
+
+
+def test_review_reports_empty_cell():
+    axis = al.parse_axis(REGION)
+    # 카드 하나가 서울에만 걸리니 경기와 인천이 빈다. 빈칸은 축에 적힌 차례로 나온다
+    assert al.review([_card('강남 것')], axis)['empty'] == ['경기', '인천']
+
+
+def test_review_reports_overlap():
+    axis = al.parse_axis(REGION)
+    r = al.review([_card('강남과 분당')], axis)
+    assert r['overlap'] == [{'card': '강남과 분당', 'cells': ['경기', '서울']}]
+
+
+def test_review_does_not_count_also_as_overlap():
+    axis = al.parse_axis(REGION)
+    c = _card('강남 것')
+    c['also'] = [('경기', 'x', '경기')]
+    assert al.review([c], axis)['overlap'] == []
+
+
+def test_review_reports_residual_and_pct():
+    axis = al.parse_axis(REGION)
+    r = al.review([_card('강남 것'), _card('무관한 것')], axis)
+    assert r['residual'] == ['무관한 것']
+    assert r['residual_pct'] == 50
+
+
+def test_review_reports_skew_ignoring_empty_cells():
+    axis = al.parse_axis(REGION)
+    cards = [_card('강남 %d' % i) for i in range(4)] + [_card('분당 하나')]
+    assert al.review(cards, axis)['skew'] == 4.0
+
+
+def test_review_skew_is_zero_when_nothing_placed():
+    axis = al.parse_axis(REGION)
+    assert al.review([_card('무관')], axis)['skew'] == 0
+
+
+def test_review_carries_shape_and_full_placement():
+    axis = al.parse_axis(REGION)
+    r = al.review([_card('강남 것'), _card('무관')], axis)
+    assert r['shape'] == '목록'
+    assert r['placement'] == {'강남 것': ['서울'], '무관': []}
+
+
+def test_review_never_raises_on_bad_axis():
+    r = al.review([_card('아무거나')], al.parse_axis({'name': '빈 축', 'cells': []}))
+    assert r['cells'] == []
+    assert r['residual_pct'] == 100
