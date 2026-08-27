@@ -225,6 +225,38 @@ def _googl_tv():
     return (1 + gcs.CASES['Base']['g']) / (gcs.WACC - gcs.CASES['Base']['g'])
 
 
+PAIR_R = None   # 표에 세울 할인율 축. 아래에서 채운다
+
+
+def rate_growth_pairs():
+    """같은 주가를 만드는 (할인율, 10년 균등 성장률) 짝.
+
+    역산에는 미지수가 둘인데 방정식이 하나다. 주가 하나로는 「할인율이 낮다」와
+    「성장 기대가 크다」를 못 가른다. 값 하나를 골라 「시장이 틀렸다」고 쓰는 대신
+    선을 통째로 싣는다 — 독자가 자기 할인율을 골라 읽는다.
+    """
+    ir = implied_r('Base') or 0.06
+    out = []
+    for r in sorted({round(ir, 4), 0.08, 0.10, 0.12, round(WACC, 4)}):
+        g = dcf.implied_growth(FCF0, r, 0.0275, 10, MCAP, NET_DEBT)
+        if g is None:
+            continue
+        out.append((r, g, FCF0 * (1 + g) ** 10))
+    return out
+
+
+def beta_grid_rows():
+    """베타 격자를 (창, 간격, 베타, 관측수) 로 편다. 없으면 빈 목록."""
+    g = d.get('beta_grid') or {}
+    rows = []
+    for w in ('52주', '2년', '5년'):
+        for i in ('일간', '주간', '월간'):
+            k = '%s %s' % (w, i)
+            if k in g:
+                rows.append((w, i, g[k]['beta'], g[k]['n']))
+    return rows
+
+
 def _two(v):
     """10억 달러 값을 두 표기로 낸다. 본문이 「억 달러」로 쓰므로 둘 다 적어야 대조된다."""
     e = v * 10
@@ -354,6 +386,21 @@ def write_facts():
               % (_two(path(_cc)[-1][1]), _two(path(_cc)[-1][3]))]
         for y, rev, m, f in path(_cc)[:3]:
             L.append('- 컨센서스 %d 매출 %s · 잉여현금흐름 %s' % (y, _two(rev), _two(f)))
+
+    L += ['', '## 할인율 축 — 같은 주가를 만드는 짝', '']
+    for r, g, f in rate_growth_pairs():
+        L.append('- 할인율 %.2f%% 이면 10년 균등 성장률 %.2f%% · 10년 뒤 잉여현금흐름 %s'
+                 % (r * 100, g * 100, _two(f)))
+    if beta_grid_rows():
+        L += ['', '## 베타 격자 — 창과 간격을 바꾸면', '']
+        for w, i, bt, n in beta_grid_rows():
+            L.append('- %s %s 베타 %.3f · 관측 %d개 · 그 베타로 낸 자기자본비용 %.2f%%'
+                     % (w, i, bt, n, (RF + bt * MRP) * 100))
+        _bs = [x[2] for x in beta_grid_rows()]
+        L += ['- 격자 최저 %.3f · 최고 %.3f' % (min(_bs), max(_bs)),
+              '- 우리가 쓰는 값 %.3f' % BETA,
+              '- 격자에서 우리 값보다 낮은 칸 %d개 · 높은 칸 %d개'
+              % (sum(1 for x in _bs if x < BETA), sum(1 for x in _bs if x > BETA))]
 
     L += ['', '## 역산 — 시장가를 정답으로 놓으면', '']
     for r in (WACC, 0.12, 0.10):

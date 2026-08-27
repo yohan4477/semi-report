@@ -329,7 +329,7 @@ def sec_facts(ticker):
     return out
 
 
-def price(ticker, rng='2y'):
+def price(ticker, rng='5y'):
     """야후 chart에서 현재가와 종가 시계열을 받는다."""
     url = ('https://query1.finance.yahoo.com/v8/finance/chart/%s'
            '?range=%s&interval=1d' % (ticker, rng))
@@ -377,6 +377,36 @@ def beta(stock_series, index_series, window=None):
                 start=datetime.fromtimestamp(days[0], timezone.utc).date().isoformat(),
                 end=datetime.fromtimestamp(days[-1], timezone.utc).date().isoformat(),
                 index='^GSPC', freq='daily')
+
+
+def beta_grid(stock_series, index_series):
+    """창 셋 x 수익률 간격 셋. 어느 조합으로 재도 얼마가 나오는지를 남긴다.
+
+    간격은 거래일을 건너뛰어 만든다 — 일간은 1, 주간은 5, 월간은 21이다. 달력으로
+    자르지 않는 이유는 휴장일이 회사마다 다르지 않아서다. 지수와 짝지은 날만 쓰므로
+    두 계열이 같은 날에 서 있다.
+    """
+    a, b = dict(stock_series), dict(index_series)
+    days = sorted(set(a) & set(b))
+    out = {}
+    for wlab, win in (('52주', 253), ('2년', 505), ('5년', len(days))):
+        dd = days[-win:]
+        if len(dd) < 60:
+            continue
+        for ilab, step in (('일간', 1), ('주간', 5), ('월간', 21)):
+            pts = dd[::step]
+            if len(pts) < 13:
+                continue
+            rs = [a[c] / a[p] - 1 for p, c in zip(pts, pts[1:])]
+            ri = [b[c] / b[p] - 1 for p, c in zip(pts, pts[1:])]
+            n = len(rs)
+            ms, mi = sum(rs) / n, sum(ri) / n
+            var = sum((y - mi) ** 2 for y in ri) / (n - 1)
+            if not var:
+                continue
+            cov = sum((x - ms) * (y - mi) for x, y in zip(rs, ri)) / (n - 1)
+            out['%s %s' % (wlab, ilab)] = dict(beta=cov / var, n=n)
+    return out or None
 
 
 def rf():
@@ -472,10 +502,12 @@ def build(ticker):
             'shares_basis': shares_basis,
             'source': 'query1.finance.yahoo.com/v8/finance/chart',
         },
-        # 룰북 R17 이 쓴 창은 52주다. 2년치도 함께 남겨 어느 창이 얼마나
-        # 다른 값을 내는지 감사할 수 있게 한다.
+        # 룰북 R17 이 쓴 창은 52주다. 창과 수익률 간격을 바꾼 아홉 칸도 함께 남긴다 —
+        # 「짧은 구간이라 베타가 과장된 것 아니냐」는 물음에 값으로 답하려면 그 격자가
+        # 파일에 있어야 한다. 2026-08-27에 엔비디아로 재 보니 52주 일간이 아홉 중 거의
+        # 가장 낮았다. 구간을 늘리면 베타가 올라가고 할인율도 따라 올라간다.
         'beta': beta(px['series'], idx['series'], window=252),
-        'beta_2y': beta(px['series'], idx['series']),
+        'beta_grid': beta_grid(px['series'], idx['series']),
         'risk_free': rf(),
         # 애널리스트 추정치. 못 받으면 None 이고 그때는 컨센서스 케이스를 안 세운다.
         'consensus': consensus(ticker),
