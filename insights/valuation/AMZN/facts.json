@@ -1,6 +1,6 @@
 {
  "ticker": "AMZN",
- "fetched_at": "2026-08-26T01:12:17.912123+00:00",
+ "fetched_at": "2026-08-27T00:08:12.011522+00:00",
  "sec": {
   "entity": "AMAZON COM INC",
   "cik": "0001018724",
@@ -2062,25 +2062,25 @@
   }
  },
  "market": {
-  "price": 261.06,
+  "price": 260.28,
   "currency": "USD",
-  "as_of": "2026-08-25T20:00:01+00:00",
-  "market_cap": 2802458442322.2,
+  "as_of": "2026-08-26T20:00:01+00:00",
+  "market_cap": 2794085204043.5996,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.4006791072408942,
+  "beta": 1.4010069604951374,
   "n_days": 500,
-  "start": "2024-08-26",
-  "end": "2026-08-25",
+  "start": "2024-08-27",
+  "end": "2026-08-26",
   "index": "^GSPC",
   "freq": "daily"
  },
  "risk_free": {
-  "rate": 0.047,
-  "date": "2026-08-24",
+  "rate": 0.0464,
+  "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
  }
 }

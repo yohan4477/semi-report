@@ -1,6 +1,6 @@
 {
  "ticker": "GOOGL",
- "fetched_at": "2026-08-26T01:12:10.738552+00:00",
+ "fetched_at": "2026-08-27T00:08:04.153340+00:00",
  "sec": {
   "entity": "Alphabet Inc.",
   "cik": "0001652044",
@@ -1384,25 +1384,25 @@
   }
  },
  "market": {
-  "price": 346.96,
+  "price": 342.0,
   "currency": "USD",
-  "as_of": "2026-08-25T20:00:01+00:00",
-  "market_cap": 4194052479999.9995,
+  "as_of": "2026-08-26T20:00:01+00:00",
+  "market_cap": 4134096000000.0,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.1493186734701706,
+  "beta": 1.1497772787770097,
   "n_days": 500,
-  "start": "2024-08-26",
-  "end": "2026-08-25",
+  "start": "2024-08-27",
+  "end": "2026-08-26",
   "index": "^GSPC",
   "freq": "daily"
  },
  "risk_free": {
-  "rate": 0.047,
-  "date": "2026-08-24",
+  "rate": 0.0464,
+  "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
  }
 }

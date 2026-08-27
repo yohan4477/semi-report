@@ -202,8 +202,9 @@ def write_facts():
     for name, c2 in CASES.items():
         ir = dcf.implied_discount_rate([r[3] for r in path(c2)], c2['g'], MCAP, NET_DEBT)
         L.append('- %s 할인율 %.2f%% -> 시장위험프리미엄 4.6%% 고정시 베타 %.3f · '
-                 '베타 %.3f 고정시 시장위험프리미엄 %.2f%%'
-                 % (name, ir * 100, (ir - RF) / MRP, BETA, (ir - RF) / BETA * 100))
+                 '베타 %.3f 고정시 시장위험프리미엄 %.2f%% · 무위험수익률 위 위험대가 %.2f%%포인트'
+                 % (name, ir * 100, (ir - RF) / MRP, BETA, (ir - RF) / BETA * 100,
+                    (ir - RF) * 100))
     g10 = dcf.implied_growth(FCF0, 0.10, 0.0275, 10, MCAP, NET_DEBT)
     f10 = FCF0 * (1 + g10) ** 10
     rev35 = path(CASES['Base'])[-1][1]

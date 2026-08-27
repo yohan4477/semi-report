@@ -1,6 +1,6 @@
 {
  "ticker": "MSFT",
- "fetched_at": "2026-08-26T01:12:13.102139+00:00",
+ "fetched_at": "2026-08-27T00:08:06.715910+00:00",
  "sec": {
   "entity": "MICROSOFT CORPORATION",
   "cik": "0000789019",
@@ -2013,25 +2013,25 @@
   }
  },
  "market": {
-  "price": 491.71,
+  "price": 496.37,
   "currency": "USD",
-  "as_of": "2026-08-25T20:00:01+00:00",
-  "market_cap": 3651214973379.61,
+  "as_of": "2026-08-26T20:00:01+00:00",
+  "market_cap": 3685818015367.67,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 0.967391042526907,
+  "beta": 0.9672349201750501,
   "n_days": 500,
-  "start": "2024-08-26",
-  "end": "2026-08-25",
+  "start": "2024-08-27",
+  "end": "2026-08-26",
   "index": "^GSPC",
   "freq": "daily"
  },
  "risk_free": {
-  "rate": 0.047,
-  "date": "2026-08-24",
+  "rate": 0.0464,
+  "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
  }
 }

@@ -1,6 +1,6 @@
 {
  "ticker": "META",
- "fetched_at": "2026-08-26T01:12:20.799644+00:00",
+ "fetched_at": "2026-08-27T00:08:14.953946+00:00",
  "sec": {
   "entity": "Meta Platforms, Inc.",
   "cik": "0001326801",
@@ -1565,25 +1565,25 @@
   }
  },
  "market": {
-  "price": 570.05,
+  "price": 576.14,
   "currency": "USD",
-  "as_of": "2026-08-25T20:00:01+00:00",
-  "market_cap": 1467308700000.0,
+  "as_of": "2026-08-26T20:00:01+00:00",
+  "market_cap": 1482984360000.0,
   "market_cap_note": "주가 × 희석 가중평균(발행주식수가 공시에 없다). 야후 시총을 받지 않는다",
   "shares_basis": "희석 가중평균(발행주식수가 공시에 없다)",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.4179817579071008,
+  "beta": 1.4178878249482059,
   "n_days": 500,
-  "start": "2024-08-26",
-  "end": "2026-08-25",
+  "start": "2024-08-27",
+  "end": "2026-08-26",
   "index": "^GSPC",
   "freq": "daily"
  },
  "risk_free": {
-  "rate": 0.047,
-  "date": "2026-08-24",
+  "rate": 0.0464,
+  "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
  }
 }

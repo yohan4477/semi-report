@@ -9,6 +9,13 @@
 손으로 찍지 않는다(규칙 2). 판 위에는 막대만 두고 숫자는 막대 밖에 세운다(규칙 3).
 """
 import gen_sudoremove_dashboard as sudo
+import googl_cases as gc
+
+# 도해에도 값을 박지 않는다. 종가가 바뀌면 그림 속 점선과 숫자가 본문과 어긋난다 —
+# 2026-08-27 에 엔비디아 실적으로 여섯을 다시 뜨자 이 그림만 옛 종가를 들고 있었다.
+_CV = {n: gc.dcf.value([x[3] for x in gc.path(gc.CASES[n])], gc.WACC,
+                       gc.CASES[n]['g'], gc.NET_DEBT, gc.SHARES)['per_share']
+       for n in ('Bear', 'Base', 'Bull')}
 
 _svg, _box, _a, _lt, _t, _r = (sudo._svg, sudo._box, sudo._a,
                                sudo._lt, sudo._t, sudo._r)
@@ -107,16 +114,18 @@ def _cbar(y, name, v, note, accent=False):
     ])
 
 
-_PRICE_X = _C_X + int(round(346.96 / _C_MAXV * _C_MAXW))
+_PRICE_X = _C_X + int(round(gc.PRICE / _C_MAXV * _C_MAXW))
 
 FIG_CASE = _svg(W, 216, '케이스 셋이 모두 현재가 아래에 선다', ''.join([
     _lt(40, 34, '주당가치 (달러) — 우리가 돌린 세 경로'),
-    _cbar(52, 'Bear', 131, '131'),
-    _cbar(84, 'Base', 185, '185'),
-    _cbar(116, 'Bull', 261, '261', accent=True),
+    _cbar(52, 'Bear', _CV['Bear'], '%.0f' % _CV['Bear']),
+    _cbar(84, 'Base', _CV['Base'], '%.0f' % _CV['Base']),
+    _cbar(116, 'Bull', _CV['Bull'], '%.0f' % _CV['Bull'], accent=True),
     # 현재가 세로선. 막대와 같은 눈금이라 자리를 계산해서 건다
     '<path d="M%d 44 V148" stroke="var(--accent)" stroke-width="2" '
     'stroke-dasharray="5 4" fill="none"/>' % _PRICE_X,
-    _lt(40, 176, '점선은 2026-08-25 종가 346.96달러다', bold=False),
-    _lt(40, 196, '가장 후한 Bull 도 25% 아래에 선다', bold=False),
+    _lt(40, 176, '점선은 %s 종가 %.2f달러다' % (gc.d['market']['as_of'][:10], gc.PRICE),
+        bold=False),
+    _lt(40, 196, '가장 후한 Bull 도 %.0f%% 아래에 선다'
+        % abs((_CV['Bull'] / gc.PRICE - 1) * 100), bold=False),
 ]))

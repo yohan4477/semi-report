@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "fetched_at": "2026-08-26T01:12:23.164350+00:00",
+ "fetched_at": "2026-08-27T00:08:18.503943+00:00",
  "sec": {
   "entity": "Apple Inc.",
   "cik": "0000320193",
@@ -1935,25 +1935,25 @@
   }
  },
  "market": {
-  "price": 309.9,
+  "price": 313.45,
   "currency": "USD",
-  "as_of": "2026-08-25T20:00:01+00:00",
-  "market_cap": 4579191794700.0,
+  "as_of": "2026-08-26T20:00:00+00:00",
+  "market_cap": 4631647847850.0,
   "market_cap_note": "주가 × 발행주식수. 야후 시총을 받지 않는다",
   "shares_basis": "발행주식수",
   "source": "query1.finance.yahoo.com/v8/finance/chart"
  },
  "beta": {
-  "beta": 1.1082661506359068,
+  "beta": 1.108035085554891,
   "n_days": 500,
-  "start": "2024-08-26",
-  "end": "2026-08-25",
+  "start": "2024-08-27",
+  "end": "2026-08-26",
   "index": "^GSPC",
   "freq": "daily"
  },
  "risk_free": {
-  "rate": 0.047,
-  "date": "2026-08-24",
+  "rate": 0.0464,
+  "date": "2026-08-25",
   "series": "DGS10 (US 10Y)"
  }
 }
