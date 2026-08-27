@@ -338,7 +338,7 @@ def _legend(items):
             % ''.join('<span><i class="rf-sw rf-%s"></i>%s</span>' % (k, t) for k, t in items))
 
 
-def _chain(items, mark=None, links=None):
+def _chain(items, mark=None, links=None, loop=None):
     """무엇이 무엇을 거쳐 가나. 칸을 늘어놓고 사이마다 화살표를 둔다.
 
     items = [(머리, 아래 설명)]. mark를 주면 그 번째 칸(1부터)만 붓을 달리해
@@ -354,7 +354,11 @@ def _chain(items, mark=None, links=None):
                        % lab if lab else '<i class="rf-step" aria-hidden="true"></i>')
         kind = 'harness' if mark == i else 'model'
         out.append('<div class="rf-box rf-%s"><b>%s</b><span>%s</span></div>' % (kind, head, sub))
-    return '<div class="rfig"><div class="rf-chain">%s</div></div>' % ''.join(out)
+    body = '<div class="rf-chain">%s</div>' % ''.join(out)
+    # 마지막이 처음으로 돌아가는 것이 내용일 때. 직선으로만 그리면 돈다는 것이 안 보인다
+    if loop:
+        body += '<div class="rf-loop"><em>%s</em></div>' % loop
+    return '<div class="rfig">%s</div>' % body
 
 
 def _fan(ins, rest):
@@ -806,8 +810,24 @@ _GM_SCOPE_CAP = ('권한이 모자랄 때 무너지지 않게 하는 순서다. 
                  '허락이 오면 멈춰 있던 호출이 그대로 이어진다.')
 
 
+# ══ 시니어가 에이전트에서 막히는 이유 (3_gYbhABcAE) ═══════════════════
+
+_SR_LOOP = _chain([('시킨다', '무엇을 하길 바라는지 적는다'),
+                   ('돌린다', '실제로 굴려 본다'),
+                   ('본다', '무엇을 하는지 지켜본다'),
+                   ('고친다', '프롬프트나 도구를 손본다')],
+                  mark=3, loop='다시 돌린다')
+
+_SR_LOOP_CAP = ('만드는 일의 모양이 바뀌었다는 것이 이 발표의 출발점이다. '
+                '<b>예전에는 명세에서 배포까지 한 줄로 끝났고 지금은 돈다.</b> '
+                '셋째 걸음이 새로 생긴 자리다 — 무엇을 하는지 지켜보는 일이 만드는 일 안에 들어왔다.')
+
+
 # 보고서 형식 카드가 부르는 판. 열쇠는 영상 ID, 값은 {이름: (제목, 마크업, 캡션)}.
 RFIGS = {
+    '3_gYbhABcAE': {
+        'loop': ('만드는 일이 도는 모양', _SR_LOOP, _SR_LOOP_CAP),
+    },
     '0n3MKk7r60w': {
         'tokens': ('컨텍스트를 줄인 세 걸음', _GM_TOKENS, _GM_TOKENS_CAP),
         'scope':  ('권한이 모자랄 때', _GM_SCOPE, _GM_SCOPE_CAP),

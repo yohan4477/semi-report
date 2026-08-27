@@ -366,6 +366,15 @@ POST_CSS = '''
   /* 여럿이 하나로 모이는 판에서 왼쪽에 쌓이는 입구들 */
   .rfig .rf-stack{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:6px}
   .rfig .rf-stack .rf-box{flex:0 0 auto;padding:8px}
+  /* 마지막 칸이 처음으로 돌아가는 표시. 판 아래를 가로지르는 선과 왼쪽 화살촉 */
+  .rfig .rf-loop{position:relative;margin:9px 0 2px;height:0;
+            border-top:2px dashed var(--epoch-teal)}
+  .rfig .rf-loop::after{content:'';position:absolute;top:-6px;left:-1px;width:0;height:0;
+            border-top:6px solid transparent;border-bottom:6px solid transparent;
+            border-right:9px solid var(--epoch-teal)}
+  .rfig .rf-loop em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+            padding:0 8px;background:var(--surface,#fff);font-style:normal;
+            font-size:.95rem;font-weight:700;color:var(--ink-3);white-space:nowrap}
   .rfig .rf-legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px}
   .rfig .rf-legend span{display:flex;align-items:center;gap:7px;font-size:.95rem;color:var(--ink-3)}
   .rfig .rf-sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--ink-3);flex:0 0 auto}
