@@ -9,11 +9,13 @@ import io, os, re, sys
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
+import _figs_0825 as figs0825
+import _cards_re_0827
 
 OUT = os.path.join(dc.ROOT, '대시보드', '부동산 대시보드.html')
 blob = dc.blob
 
-STAMP = '2026-08-14'
+STAMP = '2026-08-27'
 SUM = 'content/understanding/부동산/'
 
 # 섹션 번호는 by_upload_desc가 다시 매긴다 — 여기 숫자는 자리표시용이다
@@ -1663,6 +1665,12 @@ CARDS = [{
 }]
 
 
+# 08-27 처리분 다섯은 별도 모듈에 있다 — 이 파일이 이미 1,800줄이라 밖에서 붙인다.
+# SEC_FIN은 그 모듈이 정의한다(주택금융·선분양·가계부채).
+SEC_FIN = _cards_re_0827.SEC_FIN
+CARDS += _cards_re_0827.cards(SEC_SUPPLY, SEC_LEASE, blob, SUM)
+
+
 def upload_date(card):
     """카드 meta의 '업로드 2026-08-04'에서 날짜를 뽑는다 — 정렬 기준을 따로 적지 않는다"""
     for m in card['meta']:
@@ -1673,7 +1681,8 @@ def upload_date(card):
 
 
 # 섹션 순서는 손으로 정한다. 여기 없는 섹션은 뒤에 붙고 그들끼리는 최신 편 순이다
-SEC_ORDER = ['sec-cluster', 'sec-tax', 'sec-supply', 'sec-lease', 'sec-fight', 'sec-build']
+SEC_ORDER = ['sec-cluster', 'sec-tax', 'sec-fin', 'sec-supply', 'sec-lease',
+             'sec-fight', 'sec-build']
 
 
 def by_upload_desc(cards):
@@ -1754,15 +1763,21 @@ COURSE = [
       '부모가 준 전세금까지 타고 올라간다',
       '시골집 하나에 세금 8억']),
     ('전세라는 제도',
-     '목돈을 맡기고 사는 임대차는 한국에만 있다. 그 돈이 어디에 묶이는지, 떼이면 누가 얼마를 '
-     '물어주는지, 20년짜리 공공 전세는 만기에 어떻게 되는지 차례로 본다.',
-     ['전세와 거래세가 시장을 잠근다',
+     '목돈을 맡기고 사는 임대차는 한국에만 있다. 그 돈이 집 짓는 자금으로 어떻게 쓰이는지, '
+     '어디에 묶이는지, 떼이면 누가 얼마를 물어주는지, 20년짜리 공공 전세는 만기에 어떻게 '
+     '되는지 차례로 본다.',
+     ['선분양·전세로 쌓아 올린 2천조원 가계부채',
+      '전세와 거래세가 시장을 잠근다',
       '전세사기 3분의 1 보장법',
+      '이삿날 하루의 구멍을 40년간 못 막은 이유',
       '20년 장기전세, 첫 만기가 온다']),
     ('집이 얼마나 나오나',
      '같은 해 서울 입주 물량이 세는 기준에 따라 4천 호도 되고 3만 호도 된다. 숫자를 먼저 '
      '의심하고, 그다음에 그 물량이 어떤 집인지 본다.',
      ['같은 서울, 같은 해인데 4천 호와 3만 호',
+      '오피스엔 63빌딩 20채를 지어줬는데 아파트엔 왜 안 되나',
+      '빌라에 10평 더 얹어도 사는 사람이 없다',
+      '용산공원에 청년주택을 지을 수 있나',
       '3억 4천만 원짜리 마곡 아파트',
       '4.2평 아파트를 짓는 이유',
       '상가·오피스를 집으로 바꾸기']),
@@ -1793,5 +1808,6 @@ if __name__ == '__main__':
     dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT,
               rollup=dc.rollup_for('realestate', CARDS, '편'),
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
-              top=top, extra_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS + dc.COURSE_CSS,
+              top=top, extra_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS + dc.COURSE_CSS
+              + figs0825.FIG_CSS,
               top_n=_n, top_sub=XSUB, newest_first=True)
