@@ -77,6 +77,16 @@ TRACKS = {
         ('안전과 명세', '두드려 보고, 지킬 것을 글로 못 박기',
          ['JhJKgRAmfIU', 'J4vPq2i0QzE', '8rABwKRsec4']),
     ],
+    'infra': [
+        ('먼저 읽을 것', '무엇이 값과 속도를 정하나',
+         ['Y2qc0UhDSnc', 'GJX19pNhmSw', 'lyL5QhgIOxc']),
+        ('기기 위로 내리기', '밖으로 안 보내고 그 자리에서 돌리기',
+         ['owH1f0N-keY', '_gVFUEdhCyI', 'Lm8BLHkxiAo', 'l614N5W60ls']),
+        ('도구를 잇는 바닥', '무엇을 어디로 어떻게 흘려보내나',
+         ['CD6R4Wf3jnY', '0NHCyq8bBcM']),
+        ('실행 자리를 바꾼다', '도는 자리와 만드는 방식 자체를 다시 짜기',
+         ['SKDJo2CopRs', 'RmS5s6Wbin4', 'r305-aQTaU0']),
+    ],
 }
 
 # 영상 ID -> (섹션 열쇠말, 갈래 차례, 갈래 안 차례). 카드를 세우는 열쇠이자 검사용이다.
