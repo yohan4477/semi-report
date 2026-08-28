@@ -17,7 +17,9 @@ def test_finds_korean_alias_with_particle():
 
 
 def test_finds_english_alias_case_insensitively():
+    # 원문이 NVIDIA·Nvidia 를 섞어 쓴다. 가리면 Nvidia 표기를 통째로 잃는다
     assert mt.find('nvidia bought HBM', RULES) == ['엔비디아']
+    assert mt.find('Nvidia bought HBM', RULES) == ['엔비디아']
 
 
 def test_english_alias_needs_word_boundary():
@@ -68,8 +70,9 @@ def test_result_is_deterministic():
 CURSOR = [
     {'canonical': '커서', 'type': '제품',
      'ko': ['커서'], 'en': ['Cursor'],
-     'deny': ['가 커서', '이 커서', '보다 커서', '배 커서', '배나 커서',
-              '훨씬 커서', '워낙 커서', '만큼 커서']},
+     'deny': ['워낙 커서', '너무 커서', '훨씬 커서', '매우 커서', '더 커서',
+              '보다 커서', '배 커서', '배나 커서', '만큼 커서',
+              '가 커서 ', '이 커서 ']},
 ]
 CURSOR_RULES = mt.compile_rules(CURSOR)
 
@@ -86,3 +89,42 @@ def test_deny_with_a_leading_word_keeps_the_real_mention():
     assert mt.find('커서가 이 표현을 쓰기 시작했다', CURSOR_RULES) == ['커서']
     assert mt.find('스페이스X의 커서(Cursor) 인수', CURSOR_RULES) == ['커서']
     assert mt.find('딥시크, 커서', CURSOR_RULES) == ['커서']
+
+
+def test_deny_keeps_a_mention_right_after_a_subject_particle():
+    # 「…가 커서」를 통째로 막으면 이 줄이 사라진다. 뒤 공백까지 넣어 가른다 —
+    # 서술어(크다)는 뒤에 절이 이어져 공백이 오고, 진짜 언급은 조사나 괄호가 온다.
+    assert mt.find('SpaceXAI가 커서(Cursor) 인수 이후', CURSOR_RULES) == ['커서']
+    assert mt.find('사용자가 커서를 업데이트하지 않아도', CURSOR_RULES) == ['커서']
+
+
+def test_deny_still_blocks_the_predicate_after_a_subject_particle():
+    assert mt.find('CRAH 보다 용량이 커서 표준이 됐다', CURSOR_RULES) == []
+    assert mt.find('차이가 커서 순환기내과에서는', CURSOR_RULES) == []
+
+
+# 짧은 영문 별칭은 대소문자를 가린다. 종목 기호와 약칭은 대문자로 쓰이는데
+# 소문자까지 받으면 Fed 가 「keep them fed with data」의 fed 에 걸린다.
+SHORTCASE = [
+    {'canonical': '도쿄일렉트론', 'type': '회사', 'ko': ['도쿄일렉트론'],
+     'en': ['Tokyo Electron', 'TEL'], 'deny': []},
+]
+SHORTCASE_RULES = mt.compile_rules(SHORTCASE)
+
+
+def test_a_short_alias_that_is_a_common_word_belongs_out_of_the_dictionary():
+    # Fed 를 별칭으로 두면 「keep them fed with data」가 연준으로 잡힌다.
+    # 규칙으로 못 가른다 — 사전에서 빼는 것이 답이다.
+    with_fed = mt.compile_rules(
+        [{'canonical': '연준', 'type': '회사', 'ko': ['연준'],
+          'en': ['Fed'], 'deny': []}])
+    assert mt.find('keep them fed with data', with_fed) == ['연준']
+    without = mt.compile_rules(
+        [{'canonical': '연준', 'type': '회사', 'ko': ['연준'],
+          'en': [], 'deny': []}])
+    assert mt.find('keep them fed with data', without) == []
+
+
+def test_english_alias_matches_either_case():
+    assert mt.find('tokyo electron ships', SHORTCASE_RULES) == ['도쿄일렉트론']
+    assert mt.find('Tokyo Electron ships', SHORTCASE_RULES) == ['도쿄일렉트론']
