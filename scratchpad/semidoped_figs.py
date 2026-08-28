@@ -82,6 +82,7 @@ def _domain():
 
     말로 적은 것을 그림이 되풀이하지 않는다. 안쪽이 세 배 빠르다는 것은 글씨가 아니라
     **선 굵기 3 대 1**로 보인다(600 ÷ 200 = 3, 원문 두 값에서 나온 비율이다).
+    굵기는 2.4 와 0.8 이다 — 비만 지키면 되므로 눈에 부담이 없는 쪽으로 낮춘다.
 
     칩을 128개 그리지 않는다. 세 개와 말줄임으로 두어 개수가 뜻이 되지 않게 한다 —
     앞 판은 상자를 넷 그려 놓고 「개수가 아니다」라는 변명을 판 위에 적었다.
@@ -104,28 +105,28 @@ def _domain():
                      % (cx + 26))
             # 선은 x·y 축에 평행하게만 간다. 곧장 못 가면 꺾어서 간다 —
             # 칩에서 수직으로 내려 공통 가로 버스에 붙는다(check_fig F6)
-            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
+            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" '
                      'fill="none"/>' % (cx + 26, cx + 26))
         # 가로 버스와 스위치로 내려가는 한 줄
-        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
+        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" '
                  'fill="none"/>' % (x0 + 52, x0 + 188))
-        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
+        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" '
                  'fill="none"/>' % (x0 + 120, x0 + 120))
         o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
         o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
                  'Tomahawk 6 스위치</text>' % (x0 + 120))
     # 작은 묶음끼리는 스위치를 거쳐 붙는다. 앞 판은 이 선을 상자 아래 허공에 그어
     # 어디에도 안 닿았다 — 스위치와 스위치를 잇는다
-    o.append('<path d="M242 146 L362 146" stroke="var(--ink-3)" stroke-width="1.2" '
+    o.append('<path d="M242 146 L362 146" stroke="var(--ink-3)" stroke-width="0.8" '
              'fill="none"/>')
     o.append('<text x="302" y="140" class="fg fg-s" text-anchor="middle">ESUN</text>')
     o.append('<text x="302" y="100" class="fg fg-s" text-anchor="middle">⋯</text>')
     # 굵기 범례 — 판 위가 아니라 판 아래
-    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
+    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" '
              'fill="none"/>')
     o.append('<text x="102" y="236" class="fg fg-s">작은 묶음 안 — 칩 하나가 초당 '
              '600기가비트</text>')
-    o.append('<path d="M348 232 L400 232" stroke="var(--ink-3)" stroke-width="1.2" '
+    o.append('<path d="M348 232 L400 232" stroke="var(--ink-3)" stroke-width="0.8" '
              'fill="none"/>')
     o.append('<text x="410" y="236" class="fg fg-s">묶음끼리 — 칩 하나가 초당 '
              '200기가비트</text>')
