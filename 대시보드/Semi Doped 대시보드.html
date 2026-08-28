@@ -586,6 +586,14 @@
 .fg-l { stroke: var(--line); stroke-width: 1.2; fill: none; }
 .fg-d { stroke: var(--ink-3); stroke-width: 1.2; fill: none; stroke-dasharray: 3 3; }
 
+/* 한줄 코멘트가 머리다. 그 아래를 한 칸 들여써서 나머지가 그 머리에 딸린 것으로
+   보이게 한다 — 나란히 서면 코멘트가 여러 문단 중 하나로 읽힌다 */
+.uc-body > .uc-verdict { margin-bottom:12px; }
+.uc-body > .uc-rep { margin-left:14px; padding-left:14px;
+  border-left:2px solid var(--line); }
+@media (max-width:520px) {
+  .uc-body > .uc-rep { margin-left:6px; padding-left:10px; }
+}
 /* 목차 — 번호가 ①②③ 이라 불릿을 쓰지 않는다. 마커가 둘이면 어느 쪽이 항목인지
    흐려지고, 들여쓰기만 두 번 먹는다. 줄 간격도 본문만큼 벌리지 않는다 —
    목차는 읽는 글이 아니라 한눈에 훑는 표다 */
