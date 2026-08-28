@@ -25,6 +25,9 @@ BUILD = [
     ('메르 인사이트', ['scratchpad/gen_mer_dashboard.py']),
     ('Epoch AI 대시보드', ['scratchpad/gen_epoch_dashboard.py']),
     ('Semi Doped 대시보드', ['scratchpad/gen_semidoped_dashboard.py']),
+    # 각도 지도는 insights/angles/*.md 를 읽는다 — 각도를 새로 뽑으면 여기서 다시 깔린다.
+    # 빌드 목록에 없어서 2026-08-29에 새 각도 한 편이 지도에 안 실린 채로 있었다
+    ('각도 지도', ['scratchpad/gen_angles_dashboard.py']),
     ('AI Engineer 대시보드', ['scratchpad/gen_aie_dashboard.py']),
     ('통합 보고서', ['scratchpad/gen_report_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
