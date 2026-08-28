@@ -331,10 +331,10 @@ def report_html():
       '<b>서른다섯 편</b>을 그 물음 하나로 꿰어 정리한 것입니다. 아래 섹션의 카드가 영상 한 편씩을 '
       '답한다면, 여기서는 그 답들을 이어 붙입니다.')
 
-    sec('1. 방식은 넷이고, 가르는 축은 하나다')
+    sec('1. 방식은 넷이고, 나누는 축은 하나다')
     fig(('관절까지 가는 네 가지 길', sudo.FIG_ROUTE4,
          '넷으로 묶은 것은 <b>우리 분류</b>입니다. 원문이 그렇게 나눈 것이 아닙니다.'))
-    p('넷을 가르는 축은 <b>관절 값을 어디서 뽑느냐</b> 하나입니다. 지금 보이는 화면에서 곧바로 '
+    p('넷을 나누는 축은 <b>관절 값을 어디서 뽑느냐</b> 하나입니다. 지금 보이는 화면에서 곧바로 '
       '뽑으면 VLA(Vision-Language-Action, 시각·언어·행동 통합 모델)이고, 다음 장면을 먼저 그린 뒤 '
       '그 두 장면의 차이에서 관절 값을 거꾸로 계산하면 비디오 액션모델입니다. 관절을 직접 내지 않고 어떤 행동이 어떻게 끝날지를 '
       '미리 보여 주면 월드모델입니다. 무엇을 할지 정하는 층과 그 말을 관절 값으로 만드는 층을 '
@@ -488,7 +488,7 @@ def report_html():
       '가장 어려웠던 과제인 비닐봉지 묶기 성공률을 <b>44%</b>로 그대로 공개했고, 그 시연에는 한 짝에 '
       '5만 달러인 Sharpa 손이 쓰였습니다.')
     p('쪼갠다는 것만으로는 이 방식이 아닙니다. Physical Intelligence 의 π0.5 도 「방 정리해줘」를 '
-      '하위 작업으로 쪼개지만 그 일을 한 모델 안에서 하므로 VLA 방식입니다. 가르는 것은 쪼개느냐가 '
+      '하위 작업으로 쪼개지만 그 일을 한 모델 안에서 하므로 VLA 방식입니다. 나누는 것은 쪼개느냐가 '
       '아니라 <b>층이 서로 다른 주기로 따로 도느냐</b>입니다.')
 
     p('Sharpa 는 2024년 싱가포르에서 라이다 회사 Hesai 경영진 셋이 세운 곳이고, 22 자유도 손 '
@@ -608,7 +608,7 @@ def report2_html():
 
     sec('2. 자율은 레벨로 나뉜다')
     fig(('자율 레벨 다섯과 2025년 7월 기준 위치', FIG_LEVELS,
-         'SemiAnalysis 가 세운 분류입니다. 레벨을 가르는 선은 「기술로 가능한가」가 아니라 '
+         'SemiAnalysis 가 세운 분류입니다. 레벨을 나누는 선은 「기술로 가능한가」가 아니라 '
          '<b>상업적으로 성립하는가</b>에 그어져 있습니다.'))
     p('L0 은 미리 짜 둔 동작만 합니다. 우리(cage) 안에 갇혀 있고 사람이 들어와도 동작을 계속하기 '
       '때문에, 안전은 로봇이 아니라 울타리와 비상정지 버튼이 맡습니다. 자동차 공장은 보통 <b>공장당 '
@@ -682,7 +682,7 @@ def report2_html():
       'ANYbotics 는 <b>2,700만 달러 미만</b>, DEEP Robotics 는 40여 개국에 약 <b>600건</b>을 '
       '배치했습니다. 월 1만 달러 요금을 놓고 계산한 시장 규모는 반도체 팹이 연 <b>3억 9,700만 '
       '달러</b>($397M), 데이터센터가 연 <b>2억 4,700만 달러</b>($247M)입니다. 값이 아니라 <b>규격</b>이 판매를 '
-      '가르는 자리도 있습니다 — 폭발성 가스가 있는 구역에 들어가려면 방폭 인증이 필요한데 '
+      '나누는 자리도 있습니다 — 폭발성 가스가 있는 구역에 들어가려면 방폭 인증이 필요한데 '
       '<b>최대 2년</b>이 걸리고 그동안 하드웨어 설계가 묶입니다. ANYbotics 만 그 등급을 밟고 '
       '있습니다(2025년 10월 기준).')
 
@@ -929,7 +929,7 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
                border-bottom:1.5px solid var(--ink-3)}
   .yt th[scope="row"]{text-align:left;font-weight:800;color:var(--ink-2);
                       position:sticky;left:0;background:var(--card,var(--surface,#fff))}
-  /* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 */
+  /* 구간은 선으로만 나눈다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 */
   .yt .cut{border-left:2px solid var(--ink-3)}
   .yt tr.hi td,.yt tr.hi th[scope="row"]{font-weight:850;color:var(--ink)}
   .yt-memo{margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--ink-3)}
@@ -937,7 +937,7 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
      놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다.
      두 판은 배경도 테두리도 같다 — 한쪽에 강조색을 깔면 그쪽이 결론처럼 읽힌다.
-     가르는 것은 제목(DCF · Reverse-DCF)이지 색이 아니다. */
+     나누는 것은 제목(DCF · Reverse-DCF)이지 색이 아니다. */
   .vh2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
   .vh-ax{padding:8px 10px;border:1px solid var(--line);border-radius:10px}
   .vh-ax > .k{display:block;margin-bottom:7px}
@@ -1053,7 +1053,14 @@ def report_fund_html():
     왔고, 대상이 여러 편에 걸친 자리만 절로 세웠다. 메타가 세 편에서 서로 다른 위치에
     선다는 것은 사람이 읽어 찾은 것이 아니라 대상으로 묶어 나온 것이다."""
     h = [_fund_part1.HEAD_FUND]
-    sec = lambda t: h.append('<h3>%s</h3>' % t)
+    # 절마다 id 를 단다 — 층 목차가 앵커로 걸리려면 필요하다. 번호는 절 제목 앞의
+    # 숫자와 같아야 목차와 본문이 어긋나지 않는다
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="fund-%d">%s</h3>' % (n[0], title))
+
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
     _fund_part1.report_fund(sec, p, fig)
@@ -1184,7 +1191,7 @@ if __name__ == '__main__':
                      '알파벳과 엔비디아를 회계사 판 잣대로 재고, 빅테크 여섯을 나란히 놓는다', 3,
                      report_val_html()),
                     ('sec-ai', 'AI 회사 — 모델·칩·인프라', 'SemiAnalysis 15편 — 모델 회사를 '
-                     '가르는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
+                     '나누는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
                      report7_html() + report8_html() + report9_html()),
                     ('sec-fund', 'AI 인프라 자금조달', 'SemiAnalysis 4편 — 돈은 어디서 '
                      '막히고 같은 회사가 어느 자리에 서나', 1, report_fund_html())],
