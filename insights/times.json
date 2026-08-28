@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-08-28",
-"index_fingerprint": "6d2f850fd6d4381154f725abec2846ce7b43febb",
-"lines": 3082
+"index_fingerprint": "fd1bfd1ca8cd1292c5a006f856b79bf2c05e6f62",
+"lines": 3087
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6249,6 +6249,31 @@
 "how": "계산",
 "t": "2025",
 "tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L28": {
+"how": "계산",
+"t": "2012",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L55": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L74": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L23": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L53": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
 },
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L90": {
 "how": "계산",
