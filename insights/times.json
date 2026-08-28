@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-08-28",
-"index_fingerprint": "fd1bfd1ca8cd1292c5a006f856b79bf2c05e6f62",
-"lines": 3087
+"index_fingerprint": "3a162f3401284cdab40b03622244ee915a57b151",
+"lines": 3117
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6250,6 +6250,110 @@
 "t": "2025",
 "tense": "회고"
 },
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L16": {
+"how": "명시",
+"span": [
+"1980",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L20": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L70": {
+"how": "명시",
+"t": "1980",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-05-29-huawei-tau.md#L16": {
+"how": "명시",
+"t": "2031",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-05-29-huawei-tau.md#L47": {
+"how": "명시",
+"t": "2031",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-12-computex-optics-power.md#L29": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L28": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L40": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L57": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L112": {
+"how": "명시",
+"t": "2040",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L29": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L61": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L67": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L73": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L75": {
+"how": "명시",
+"t": "2040",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L95": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L24": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L30": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L38": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L61": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L28": {
 "how": "계산",
 "t": "2012",
@@ -6264,6 +6368,64 @@
 "how": "명시",
 "t": "2028",
 "tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L24": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L47": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L54": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L66": {
+"how": "명시",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L73": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L18": {
+"how": "명시",
+"span": [
+"2024",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L39": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L49": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L68": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-08-11-china-optical-ban.md#L76": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
 },
 "content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L23": {
 "how": "명시",
