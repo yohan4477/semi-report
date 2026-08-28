@@ -37,7 +37,7 @@ def _cells(line):
 
 
 def rows(text):
-    """표 행과 꼬리표를 한 꼴로 돌려준다 — (줄번호, 대상, 때, 성격, 원문)."""
+    """표 행과 꼬리표를 한 꼴로 돌려준다 — (줄번호, 대상, 때, 성격, 원문, 출처)."""
     out = []
     skip = False
     for i, line in enumerate(text.split('\n'), 1):
@@ -48,16 +48,16 @@ def rows(text):
         if line.startswith('|') and not SEP_RE.match(line):
             c = _cells(line)
             if len(c) == 6 and c[0] != '대상':
-                out.append((i, c[0], c[3], c[5], line))
+                out.append((i, c[0], c[3], c[5], line, c[4]))
             continue
         for body in TAG_RE.findall(line):
             # 구분자는 ` · ` 다. 가운뎃점만으로 쪼개면 이름 안에 점이 든 대상
             # (「즈푸·미니맥스」)이 두 칸으로 갈려 칸 수가 안 맞는다
             f = [x.strip() for x in body.split(' · ')]
             if len(f) == 4:
-                out.append((i, f[0], f[1], f[3], line))
+                out.append((i, f[0], f[1], f[3], line, f[2]))
             else:
-                out.append((i, None, None, None, line))
+                out.append((i, None, None, None, line, None))
     return out
 
 
@@ -88,7 +88,12 @@ def check(text, canon, alias):
     msgs = []
     for ln, msg in angle_gap(text):
         msgs.append(('FAIL', 'A6', ln, msg))
-    for ln, target, when, kind, raw in rows(text):
+    # A8 — 저자 논지 절. 2026-08-28 실험에서 교차 카드 주장 문단의 부품 넷 중
+    # 넷째를 각도 밖에서 세워야 했다. 항목만 남기면 「무엇을 주장했나」가 사라진다
+    if '## 저자 논지' not in text:
+        msgs.append(('WARN', 'A8', 1,
+                     '「저자 논지」 절이 없다 — 이 글이 세운 주장을 한 문단으로 남긴다'))
+    for ln, target, when, kind, raw, src in rows(text):
         if target is None:
             msgs.append(('FAIL', 'A4', ln,
                          '꼬리표 칸이 넷이 아니다 — [대상 · 때 · §출처 · 성격]: %s'
@@ -109,6 +114,16 @@ def check(text, canon, alias):
             msgs.append(('WARN', 'A2', ln,
                          '대상 "%s" 가 사전에 없다 — 개체면 entities.json 에 넣고, '
                          '집합명이면 그대로 둔다' % target))
+    # A7 — 출처에 줄 번호가 없는 항목. 2026-08-28 실험에서 원문 열람 여덟 번 중
+    # 여섯 번이 오직 줄 번호를 얻으려는 것이었다. 뽑을 때 적어 두면 그 여섯이 사라진다.
+    # 항목마다 내면 지금은 100%에 떠서 A2 신호를 덮는다 — 파일당 한 줄로 접는다
+    all_rows = [r for r in rows(text) if r[5]]
+    no_line = [r for r in all_rows if 'L' not in r[5]]
+    if no_line:
+        msgs.append(('WARN', 'A7', 1,
+                     '출처에 줄 번호가 없는 항목 %d/%d — 「§4 L153」 꼴로 적으면 '
+                     '교차 카드를 쓸 때 원문을 다시 안 열어도 된다'
+                     % (len(no_line), len(all_rows))))
     return msgs
 
 
