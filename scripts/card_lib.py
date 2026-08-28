@@ -525,7 +525,7 @@ def debate_html(d):
 
 
 # 글 전체를 한 축으로 가르는 단계. check_struct S3 의 STAGE 와 같은 다섯이다
-STAGE_NODES = ('목표', '구조', '공정', '성과', '한계')
+STAGE_NODES = ('목표', '시도', '성과', '한계')
 
 
 def toc_html(groups):
@@ -540,7 +540,7 @@ def toc_html(groups):
     """
     nodes = [(g if len(g) == 3 else (g[0], '', g[1]))[0] for g in groups]
     # 마디가 글의 단계면 그 자체가 사슬이다 — 세로로 쌓기만 하면 사슬인 줄 모른다.
-    # 맨 위에 목표 → 구조 → 공정 → 성과 → 한계 를 한 줄로 걸어 순서를 먼저 보인다
+    # 맨 위에 목표 → 시도 → 성과 → 한계 를 한 줄로 걸어 순서를 먼저 보인다
     chain = ''
     if set(nodes) <= set(STAGE_NODES) and len(nodes) > 2:
         chain = ('<p class="tg-chain">%s</p>'

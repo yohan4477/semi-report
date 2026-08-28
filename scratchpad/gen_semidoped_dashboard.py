@@ -173,11 +173,11 @@ JAL = {
         ('raw', angles(JAL_ANGLES)),
         ('toc', [
             ('목표', '대비', [('①', '무엇을 재기로 했나')]),
-            ('구조', '부분 나눔', [
+            ('시도', '부분 나눔', [
                 ('칩 안', [('②', '메모리를 어떻게 붙였나'),
                           ('③', '왜 프리필·디코드 칩을 안 나눴나')]),
-                ('칩 사이', [('④', '칩 몇 개가 한 덩어리로 도나')])]),
-            ('공정', '시간 흐름', [('⑤', '9개월이 어떻게 나왔나')]),
+                ('칩 사이', [('④', '칩 몇 개가 한 덩어리로 도나')]),
+                ('만든 법', [('⑤', '9개월이 어떻게 나왔나')])]),
             ('성과', '대비', [
                 ('잰 것', [('⑥', '재 보니 무엇이 나왔나')]),
                 ('못 잰 것', [('⑦', '무엇이 아직 안 재졌나')])]),
@@ -287,7 +287,7 @@ CSS = '''
   font-size:.72rem; font-weight:700; color:var(--ink-3); opacity:.8; }
 .uc-rep .uc-toc li.tg-ax > ul { display:inline-block; vertical-align:top;
   width:calc(100% - 4em); }
-/* 목차 맨 위 사슬 — 목표 → 구조 → 공정 → 성과 → 한계 */
+/* 목차 맨 위 사슬 — 목표 → 시도 → 성과 → 한계 */
 .uc-rep .uc-toc .tg-chain { margin:0 0 8px; padding:0 0 7px;
   border-bottom:1px solid var(--line); font-size:.78rem; line-height:1.6; }
 .uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
