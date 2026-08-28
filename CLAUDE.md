@@ -60,9 +60,12 @@ PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
 PYTHONIOENCODING=utf-8 python insights/check_angles.py  # 각도 — 대상이 사전 정본인가, 성격이 여덟에 드나
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
+PYTHONIOENCODING=utf-8 python insights/check_struct.py # 구조 — 앞머리·목차·물음 절·성격 열이 서 있나
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
+
+`check_struct`가 구조 규칙을 기계가 보는 자리다. 그전까지 구조는 스킬(`doc-structure`)과 이 문서의 문장에만 있었다 — 스킬은 열어야 걸리고 문장은 어겨도 아무도 안 봤다. 실제로 Semi Doped 카드 스물일곱 장이 목차도 축도 없이 검사기 열셋을 전부 통과했다. 지금 게이트로 세운 장은 `STRICT` 에 적은 것뿐이고 나머지 장은 같은 것을 보되 WARN 으로만 센다 — AI Engineer 68편은 이 규칙보다 먼저 쓰였고 소급은 그 장의 규칙 문서를 고치는 일과 함께 한다.
 
 앞의 여섯은 산문만 본다. 밸류에이션 결함 다섯(최근 12개월 기저 오지정·재무상태표 날짜 혼합·박아 둔 할인율·부호 뒤집힘·주식보상 가산)이 그 사이로 새어 나갔고 검사기가 잡은 것은 없었다. `check_val`이 그 자리를 막는다 — 판단은 `insights/valuation/adjust.py` 표에 줄로 세우고, 검사기는 그 표를 읽을 뿐 판단을 더하지 않는다.
 
