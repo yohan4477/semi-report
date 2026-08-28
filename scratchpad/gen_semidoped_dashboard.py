@@ -173,12 +173,14 @@ JAL = {
         ('raw', angles(JAL_ANGLES)),
         ('toc', [
             ('목표', '대비', [('①', '무엇을 재기로 했나')]),
-            ('구조', '부분 나눔', [('②', '메모리를 어떻게 붙였나'),
-                               ('③', '왜 프리필·디코드 칩을 안 나눴나'),
-                               ('④', '칩 몇 개가 한 덩어리로 도나')]),
-            ('성과', '대비', [('⑤', '재 보니 무엇이 나왔나'),
-                            ('⑥', '무엇이 아직 안 재졌나')]),
-            ('공정', '시간 흐름', [('⑦', '9개월이 어떻게 나왔나')]),
+            ('구조', '부분 나눔', [
+                ('칩 안', [('②', '메모리를 어떻게 붙였나'),
+                          ('③', '왜 프리필·디코드 칩을 안 나눴나')]),
+                ('칩 사이', [('④', '칩 몇 개가 한 덩어리로 도나')])]),
+            ('공정', '시간 흐름', [('⑤', '9개월이 어떻게 나왔나')]),
+            ('성과', '대비', [
+                ('잰 것', [('⑥', '재 보니 무엇이 나왔나')]),
+                ('못 잰 것', [('⑦', '무엇이 아직 안 재졌나')])]),
             ('한계', '', [('⑧', '이 편이 밝히지 않은 것')]),
         ]),
 
@@ -217,14 +219,20 @@ JAL = {
                  '안쪽 겹은 칩당 초당 600기가비트, 바깥 겹은 초당 200기가비트다. 랙 수는 '
                  '원문에 없고 128 과 2,048 을 나눈 진행자 어림이다.')),
 
-        ('h', '⑤ 재 보니 무엇이 나왔나'),
+        ('h', '⑤ 9개월이 어떻게 나왔나'),
+        ('p', '첫 RTL(회로를 글로 적은 설계) 작성부터 테이프아웃까지 <b>9개월</b>이다. 통상 '
+              '2~3년 걸리는 일이다. 초기 RTL 을 GPT-3급 모델로 짰고 이후 모델이 좋아지면서 '
+              '더 나은 것으로 바꿨다는 것이 진행자 전언이다. 진행자들은 첫 칩을 보통 '
+              '버리는 셈 치는데 오픈AI 는 1호부터 세게 나왔다고 본다.'),
+
+        ('h', '⑥ 재 보니 무엇이 나왔나'),
         ('p', '잰 도구는 SemiAnalysis 의 <b>Inference X</b>다. 파워를 정규화해 공개 비교했고, '
               '소형부터 대형까지 여러 오픈 모델을 돌려 시스템 전체가 사용자에게 주는 것을 '
               '본다는 이유를 댔다. 나온 것은 셋이다. DeepSeek R1(6,710억 파라미터)에서 파레토 '
               '프론티어를 새로 그었고, GPT-OSS(1,200억)에서 <b>사용자당 초당 1,000토큰 이상</b>을 '
               '냈으며, 700W 로 GB200 약 1,200W 보다 훨씬 적게 먹었다.'),
 
-        ('h', '⑥ 무엇이 아직 안 재졌나'),
+        ('h', '⑦ 무엇이 아직 안 재졌나'),
         ('p', '셋 남는다. 벤치마크의 입출력이 8K·1K 로 짧아 100만 토큰급 긴 문맥은 아직 안 '
               '나왔고, agentic 워크로드는 테스트하지 않아 별도 AgentX 로 재겠다고 했다. '
               '견준 상대도 세대가 다르다 — 할라페뇨는 HBM4 를 쓰고 블랙웰·MI355 는 HBM3E 다. '
@@ -238,12 +246,6 @@ JAL = {
                   ['긴 문맥', '100만 토큰급 미공개', '2026-08 · 안 나온 값'],
                   ['agentic 부하', 'AgentX 로 재겠다', '2026-08 · 계획'],
                   ['견준 상대', 'HBM4 대 HBM3E', '2026-08 · 진행자 지적']])),
-
-        ('h', '⑦ 9개월이 어떻게 나왔나'),
-        ('p', '첫 RTL(회로를 글로 적은 설계) 작성부터 테이프아웃까지 <b>9개월</b>이다. 통상 '
-              '2~3년 걸리는 일이다. 초기 RTL 을 GPT-3급 모델로 짰고 이후 모델이 좋아지면서 '
-              '더 나은 것으로 바꿨다는 것이 진행자 전언이다. 진행자들은 첫 칩을 보통 '
-              '버리는 셈 치는데 오픈AI 는 1호부터 세게 나왔다고 본다.'),
 
         ('h', '⑧ 이 편이 밝히지 않은 것'),
         ('p', '스펙 상당수가 진행자 추측이다. CPU 가 x86 계열 Turin 급인지, 공정이 TSMC N3 '
@@ -260,9 +262,34 @@ JAL = {
 CARDS = [JAL]
 
 CSS = '''
-/* 목차 맨 위 사슬 — 목표 → 구조 → 성과 → 공정 → 한계 */
-.uc-rep .uc-toc .tg-chain { margin:0 0 10px; padding:0 0 9px;
-  border-bottom:1px solid var(--line); font-size:.8rem; line-height:1.9; }
+/* 목차 — 번호가 ①②③ 이라 불릿을 쓰지 않는다. 마커가 둘이면 어느 쪽이 항목인지
+   흐려지고, 들여쓰기만 두 번 먹는다. 줄 간격도 본문만큼 벌리지 않는다 —
+   목차는 읽는 글이 아니라 한눈에 훑는 표다 */
+.uc-rep .uc-toc { margin:2px 0 18px; padding:10px 12px; border:1px solid var(--line);
+  border-radius:8px; background:var(--surface); }
+.uc-rep .uc-toc .uc-label { margin:0 0 7px; }
+.uc-rep .uc-toc .tg { display:flex; gap:10px; align-items:baseline; padding:3px 0; }
+.uc-rep .uc-toc .tg-k { flex:0 0 4.6em; font-size:.82rem; font-weight:800;
+  line-height:1.5; color:var(--ink); }
+.uc-rep .uc-toc .tg-f { flex:0 0 4.6em; font-size:.7rem; font-weight:700;
+  line-height:1.75; color:var(--ink-3); opacity:.72; }
+.uc-rep .uc-toc ul { flex:1; margin:0; padding:0; list-style:none; }
+.uc-rep .uc-toc li { font-size:.84rem; line-height:1.5; color:var(--ink-2);
+  padding:1px 0; }
+.uc-rep .uc-toc li b { color:var(--ink); font-weight:700; margin-right:4px; }
+@media (max-width:520px) {
+  .uc-rep .uc-toc .tg { display:block; }
+  .uc-rep .uc-toc .tg-f { display:inline-block; margin-left:6px; }
+}
+/* 목차 안의 축 — 절이 셋을 넘는 마디는 그 안에서 한 번 더 갈린다 */
+.uc-rep .uc-toc li.tg-ax { padding:1px 0 2px; }
+.uc-rep .uc-toc li.tg-ax > span { display:inline-block; min-width:3.6em;
+  font-size:.72rem; font-weight:700; color:var(--ink-3); opacity:.8; }
+.uc-rep .uc-toc li.tg-ax > ul { display:inline-block; vertical-align:top;
+  width:calc(100% - 4em); }
+/* 목차 맨 위 사슬 — 목표 → 구조 → 공정 → 성과 → 한계 */
+.uc-rep .uc-toc .tg-chain { margin:0 0 8px; padding:0 0 7px;
+  border-bottom:1px solid var(--line); font-size:.78rem; line-height:1.6; }
 .uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
 .uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
 /* 각도 상자 — 접혀 있다. 눌러야 펴진다 */
