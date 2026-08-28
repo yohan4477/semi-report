@@ -22,6 +22,9 @@ import _val_peers_fig  # noqa: E402
 import _val_labs  # noqa: E402
 import _val_chips  # noqa: E402
 import _val_infra  # noqa: E402
+# 자금조달 층은 재료가 카드가 아니라 insights/angles/ 다 — 각도로 가른 뒤 대상이
+# 여러 편에 걸친 자리만 절로 세운다
+import _fund_part1  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1043,6 +1046,20 @@ def report3_html():
     return ''.join(h)
 
 
+def report_fund_html():
+    """AI 인프라 자금조달 — 한 편. 재료가 각도 파일이다.
+
+    앞의 넷과 다른 점은 재료다. 카드나 변환본이 아니라 insights/angles/ 의 각도 네 편에서
+    왔고, 대상이 여러 편에 걸친 자리만 절로 세웠다. 메타가 세 편에서 서로 다른 위치에
+    선다는 것은 사람이 읽어 찾은 것이 아니라 대상으로 묶어 나온 것이다."""
+    h = [_fund_part1.HEAD_FUND]
+    sec = lambda t: h.append('<h3>%s</h3>' % t)
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _fund_part1.report_fund(sec, p, fig)
+    return ''.join(h)
+
+
 def fold_report(head, body):
     """보고서 하나를 접는다. **제목을 누르면 그 보고서가 통째로 나온다.**
 
@@ -1168,5 +1185,7 @@ if __name__ == '__main__':
                      report_val_html()),
                     ('sec-ai', 'AI 회사 — 모델·칩·인프라', 'SemiAnalysis 15편 — 모델 회사를 '
                      '가르는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
-                     report7_html() + report8_html() + report9_html())],
+                     report7_html() + report8_html() + report9_html()),
+                    ('sec-fund', 'AI 인프라 자금조달', 'SemiAnalysis 4편 — 돈은 어디서 '
+                     '막히고 같은 회사가 어느 자리에 서나', 1, report_fund_html())],
               extra_css=REPORT_CSS)

@@ -22,7 +22,7 @@
 
 **원문에서 이름을 찾을 때는 grep 이 아니라 `entity-search`.** 개체 이름 하나로 917편을 가로질러 줄 주소를 준다 — 별칭과 영문 표기를 사전이 알고, 답에 영수증(색인 판·본 줄·잘린 개수)이 붙는다. 이름을 모르고 개념만 아는 물음은 못 찾는다.
 **Epoch AI 글(epoch.ai/gradient-updates)은 `epoch-gradient`.** 링크 하나만 와도 요약본·도해·카드·검사·푸시까지 그 스킬의 순서대로 간다 — 원문 그림은 PNG로 싣지 않고 전부 한국어 인라인 SVG로 다시 그린다.
-**카드 여러 장을 한 물음으로 꿴 글(`대시보드/통합 보고서.html`)을 쓰거나 고칠 때는 `insight-report`.**
+**카드 여러 장을 한 물음으로 꿴 글(`대시보드/통합 보고서.html`)을 쓰거나 고칠 때는 `insight-report`.** 새 층은 카드가 아니라 **각도에서 세운다** — `structure` A 로 가르고, 대상으로 묶어 여러 편에 걸친 주체만 남기고, 그 주체가 편마다 어느 자리에 서는지를 절로 만든다. 2026-08-28 자금조달 층(`sec-fund`)이 그 첫 실물이다.
 
 **카드에 도해(그림)를 붙이거나 고치기 전에는 `insight-figure` 스킬을 연다.** 도해는 「없는 값을 그렸다」로 무너진다 — 막대 높이도 아이콘 개수도 수치로 읽히는데 원문에 그 수가 없는 일이 잦다. 배치는 `scratchpad/check_fig.py`가 검사한다.
 
@@ -54,6 +54,7 @@ PYTHONIOENCODING=utf-8 python insights/check_index.py   # 색인 주소가 맞�
 PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부르는 파일이 추적되나
 PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
+PYTHONIOENCODING=utf-8 python insights/check_angles.py  # 각도 — 대상이 사전 정본인가, 성격이 여덟에 드나
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.

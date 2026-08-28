@@ -22,4 +22,7 @@ WORLD = os.path.join(HERE, 'world_path.txt')
 LOOP = os.path.join(HERE, 'loop')
 # 쟁점 — 같은 물음에 화자들이 갈린 자리. 화자 말은 인용이고 진행자 말은 판단이라
 # 절 구성이 교차 인사이트와 다르다
+# 각도 — 원문 한 편을 여러 글과 합칠 수 있는 꼴로 가른 것. 대상·때가 붙는 열쇠다
+ANGLES = os.path.join(HERE, 'angles')
+
 DEBATE = os.path.join(HERE, 'debate')

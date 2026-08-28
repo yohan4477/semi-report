@@ -34,6 +34,10 @@ PAGES = [
     # 뉴스레터에서 온다.
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-ai',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 자금조달 층. 재료가 각도 파일이지만 각도의 값은 전부 뉴스레터 네 편에서 온 것이라
+    # 대조 대상은 같다 — 각도를 거쳐 온 값이 원문에 없으면 각도가 틀린 것이다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-fund',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
