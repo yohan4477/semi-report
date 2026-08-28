@@ -450,6 +450,21 @@ FIGRULES = [
 
 
 CSS = r'''
+  /* 접는 절 — 쓰는 법 둘만 펴 두고 지도·실험은 눌러야 펴진다 */
+  .fold{margin:20px 0 0;border:1px solid var(--line);border-radius:var(--r);
+        background:var(--card);box-shadow:var(--shadow)}
+  .fold>summary{cursor:pointer;list-style:none;padding:13px 16px;display:flex;
+       align-items:baseline;gap:9px;font-size:var(--t-body);font-weight:850;color:var(--ink)}
+  .fold>summary::-webkit-details-marker{display:none}
+  .fold>summary::before{content:"▸";color:var(--faint);font-size:11px}
+  .fold[open]>summary::before{content:"▾"}
+  .fold[open]>summary{border-bottom:1px solid var(--line)}
+  .fold>summary span{font-size:var(--t-lbl);font-weight:700;color:var(--faint);
+       font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .fold>:not(summary){margin-left:16px;margin-right:16px}
+  .fold>:last-child{margin-bottom:16px}
+  .fold .lane:first-of-type{border-top:0;padding-top:6px;margin-top:6px}
+
   /* 자주 하는 오류 — 증상 하나가 줄 하나다 */
   .mk{margin:16px 0 0;border:1px solid var(--line);border-radius:var(--r);
       background:var(--card);box-shadow:var(--shadow);overflow:hidden}
@@ -599,39 +614,9 @@ def main():
                '<h1>데이터 처리 지도</h1>'
                '</header>')
 
-    out.append('<h3 class="sec">세 갈래가 함께 지키는 것</h3><div class="common">')
-    for lbl, word, desc in COMMON:
-        out.append('<div class="cm"><b>%s</b><span class="w">%s</span><p>%s</p></div>' % (lbl, word, desc))
-    out.append('</div>')
-
-    out.append('<div class="lg">')
-    for k, nm in KIND_NAME:
-        out.append('<span style="--k:%s"><i></i>%s</span>' % (KIND_COLOR[k], nm))
-    out.append('</div>')
-
-    out.append('<div class="jump">')
-    for key, emo, name, one, _src, stages in LANES:
-        out.append('<a href="#%s" style="--ac:%s"><span class="t">%s %s</span>'
-                   '<span class="s">단계 %d</span></a>'
-                   % (key, ACCENT[key], emo, name, len(stages) + 1))
-    for key, date, emo, title, _q, _c, _t, stages, _v in EXPERIMENTS:
-        out.append('<a href="#%s" style="--ac:#7c3aed"><span class="t">%s %s</span>'
-                   '<span class="s">실험 · %s</span></a>' % (key, emo, title, date))
-    out.append('</div>')
-
-    for key, emo, name, one, rule_src, stages in LANES:
-        out.append('<section class="lane" id="%s" style="--ac:%s">' % (key, ACCENT[key]))
-        out.append('<div class="lh"><span class="em">%s</span><h2>%s</h2>'
-                   '<span class="rl">%s</span>%s</div>'
-                   % (emo, name, rule_src, ui_bits.copy_btn(key)))
-        out.append('<p class="one">%s</p>' % one)
-        for j, st in enumerate(stages + [TAIL]):
-            if j:
-                out.append('<div class="arw" aria-hidden="true">▼</div>')
-            out.append(stage_html(*st))
-        out.append('</section>')
-
-    out.append('<h3 class="sec">자주 하는 오류</h3>')
+    # 펴 두는 것은 쓰는 법 둘뿐이다. 나머지는 접는다 — 지도와 실험은 찾아서 보는
+    # 것이고 쓰는 법은 쓰는 동안 계속 보는 것이라, 같은 무게로 세우면 매번 스크롤한다.
+    out.append('<h3 class="sec">보고서 작성법 — 자주 하는 오류</h3>')
     out.append('<p class="lede2">실제로 났던 것만 적는다. 옆의 표는 그 오류를 무엇이 잡는지이고, '
                '거기 <b>사람만</b>이라고 적힌 줄이 이 표에서 가장 비싸다 — 기계가 안 보는 자리라 '
                '같은 오류가 되풀이된다.</p>')
@@ -645,7 +630,39 @@ def main():
     for group, one, rows in FIGRULES:
         out.append(mistake_html(group, one, rows, ('왜 생겼나', '어떻게 한다')))
 
-    out.append('<h3 class="sec">실험 — 체계를 바꾸기 전에 재 본 것</h3>')
+    out.append('<details class="fold"><summary>세 갈래가 함께 지키는 것'
+               '<span>%d</span></summary><div class="common">' % len(COMMON))
+    for lbl, word, desc in COMMON:
+        out.append('<div class="cm"><b>%s</b><span class="w">%s</span><p>%s</p></div>' % (lbl, word, desc))
+    out.append('</div></details>')
+
+    out.append('<details class="fold"><summary>데이터 처리 지도 — 갈래 %d'
+               '<span>흐름도</span></summary>' % len(LANES))
+    out.append('<div class="lg">')
+    for k, nm in KIND_NAME:
+        out.append('<span style="--k:%s"><i></i>%s</span>' % (KIND_COLOR[k], nm))
+    out.append('</div>')
+    out.append('<div class="jump">')
+    for key, emo, name, one, _src, stages in LANES:
+        out.append('<a href="#%s" style="--ac:%s"><span class="t">%s %s</span>'
+                   '<span class="s">단계 %d</span></a>'
+                   % (key, ACCENT[key], emo, name, len(stages) + 1))
+    out.append('</div>')
+    for key, emo, name, one, rule_src, stages in LANES:
+        out.append('<section class="lane" id="%s" style="--ac:%s">' % (key, ACCENT[key]))
+        out.append('<div class="lh"><span class="em">%s</span><h2>%s</h2>'
+                   '<span class="rl">%s</span>%s</div>'
+                   % (emo, name, rule_src, ui_bits.copy_btn(key)))
+        out.append('<p class="one">%s</p>' % one)
+        for j, st in enumerate(stages + [TAIL]):
+            if j:
+                out.append('<div class="arw" aria-hidden="true">▼</div>')
+            out.append(stage_html(*st))
+        out.append('</section>')
+    out.append('</details>')
+
+    out.append('<details class="fold"><summary>실험 — 체계를 바꾸기 전에 재 본 것'
+               '<span>%d</span></summary>' % len(EXPERIMENTS))
     out.append('<p class="lede2">측정값을 남긴다. 무엇을 조건으로 걸었고, 그 조건 안에서 무엇이 안 되었는지가 다음 회차의 근거다.</p>')
     for key, date, emo, title, q, cond, tiles, stages, verdict in EXPERIMENTS:
         out.append('<section class="xp" id="%s" style="--ac:#7c3aed">' % key)
@@ -662,10 +679,8 @@ def main():
             out.append(stage_html(*st))
         out.append('<p class="verdict">%s</p>' % verdict)
         out.append('</section>')
+    out.append('</details>')
 
-    out.append('<footer><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
-               '<code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. '
-               'insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>')
     out.append(ui_bits.COPY_JS)
     out.append('</main></body></html>')
 
