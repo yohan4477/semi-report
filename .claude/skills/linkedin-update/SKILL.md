@@ -119,6 +119,9 @@ Real catches: a "two-buttons" meme; a partner-deprecation notice with exact date
    ```bash
    python scripts/gen_bmirror.py 10
    ```
+
+   **① 은 주 단위 띠로 갈린다 (2026-08-28 신설).** 생성기가 가장 최근 날짜에서 7일씩 끊어 띠를 만들고, 띠 머리(`.wkh`)에 범위·건수와 **그 주의 요지**를 얹는다. 요지는 새로 쓰지 않고 `data/rollup_notes.json` 의 주간 롤업 제목을 가져오는데, **롤업 주 창의 끝일과 띠 끝일이 같을 때만** 붙는다. 그러니 순서가 있다 — 아래 4의 롤업을 먼저 쓰고 그다음에 이 생성기를 돌린다. 롤업이 없으면 띠 머리에 범위와 건수만 남는다(오류 아님). 가장 최근 띠만 펼쳐 두고 나머지 띠는 접는다.
+
    This re-splices ①'s day-groups from the history's most recent 10 day-groups (3-source LI/YouTube/newsletter, direct-link badges, NVIDIA-first-party interleave, cluster "관련" expanders). The generator carries a small `NVROWS`/`REL` overlay for NVIDIA blog + nvidia-ai-infra rows and thematic cross-links — add new NVIDIA-first-party items or relations there, not in the HTML. Adjust the window number if the feed gets too long/short.
 
 3. **행 라벨 — 재생성, 손대지 말 것** (2026-08-21 신설). 밈·채용·팟캐스트·뉴스레터 홍보가 실질 신호와 같은 무게로 늘어서면 걸러 읽을 수 없다. 히스토리를 고친 뒤 한 번 돌린다:

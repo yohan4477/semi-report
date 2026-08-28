@@ -223,6 +223,16 @@
   .moreb{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:9px 0 2px;cursor:pointer;font-family:inherit;}
   .moreb .car{font-size:.6rem;}
   .moreb[aria-expanded="true"] .car{transform:rotate(180deg);}
+  /* 주 단위 띠 머리 — ① 신호를 7일씩 끊어 범위·건수·그 주 요지를 얹는다 */
+  .wkh{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;
+    margin:18px 0 7px; padding:8px 11px; border:1px solid var(--line);
+    border-left:3px solid var(--accent); border-radius:9px; background:var(--accent-soft);}
+  .wkh:first-of-type{margin-top:0;}
+  .wkr{font-size:.75rem; font-weight:800; letter-spacing:.03em; color:var(--accent);
+    font-variant-numeric:tabular-nums;}
+  .wkn{font-size:.69rem; font-weight:700; color:var(--sub);}
+  .wkt{flex:1 1 100%; font-size:.81rem; font-weight:600; color:var(--ink); line-height:1.5;}
+  .wkh + .day{margin-top:0;}
   .moredays{display:none;}
   .moredays.open{display:block;}
 
@@ -278,6 +288,7 @@
       <a class="more" href="https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/%EC%86%8C%EC%85%9C%20%EC%8B%A0%ED%98%B8%20%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC.html" target="_blank" rel="noopener">전체 보기 ↗</a>
       </span>
     </div>
+    <div class="wkh" data-c="compute memory model power"><span class="wkr">08-22 ~ 08-28</span><span class="wkn">22건</span><span class="wkt">AMD는 자체 추론 엔진에 엔지니어 20명을 묶었고, 세레브라스는 남의 HBM과 짝을 지었다</span></div>
     <div class="day">
       <h3>08-28</h3>
       <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498892426598629376/" target="_blank" rel="noopener">세레브라스 CS-4가 손댄 곳은 웨이퍼 밖으로 나가는 길이다.</a></div><div class="d">WSE-3는 웨이퍼 안 SRAM 대역폭은 압도적인데 SRAM이 <b>44GB</b>뿐이라 큰 모델은 웨이퍼 여러 장에 흩어지고, 장이 늘 때마다 좁은 입출력 경로를 건너는 트래픽이 늘었다. 긴 문맥은 KV 캐시가 부풀어 웨이퍼 수를 더 밀어 올린다. CS-4는 클록이 2배 오르면서 웨이퍼 밖 입출력이 <b>1.2Tb/s에서 2.4Tb/s</b>로 늘고, 세레브라스 전용 입출력을 표준 이더넷으로 바꿔 주는 현장 교체형 FPGA NIC(웨이퍼 I/O 모듈)이 새로 붙는다 — 섀시를 다시 설계하지 않고 네트워크만 갈아 끼울 수 있다는 뜻이다. 그래서 열리는 것이 이종 분리 추론이다. 웨이퍼는 디코드(토큰을 한 개씩 뽑는 단계) 기계여서 연산이 몰리는 프리필(입력을 한꺼번에 읽는 단계)에는 약한데, 이제 HBM을 단 <b>AMD·트레이니엄</b>과 짝지어 프리필-디코드나 어텐션-FFN을 나눠 맡길 수 있다. 44GB 한도를 우회하는 길이다.</div><a class="nbadge" href="https://newsletter.semianalysis.com/p/cerebrass-next-generation-cs-4-fast" target="_blank" rel="noopener">▤ 뉴스레터 원문</a></div></div>
@@ -291,7 +302,7 @@
       <div class="sig" data-c="compute"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498545703879835648/" target="_blank" rel="noopener">기판에 여유가 없다.</a></div><div class="d"><b>2026년 물량이 전부 예약</b>됐고 공급사 여섯 곳 모두 리드타임이 <b>12~14개월</b>이다. 새 ASIC·GPU 세대가 나올 때마다 바디 크기가 9,000~14,000mm²까지, 층수가 20~24층까지 커져 한 장이 라인을 점유하는 시간이 늘어난 탓이다. 리드타임이 12개월을 넘자 고객은 <b>2029년</b> 너머까지 가는 캐파 약정을 요구하고, 2군 공급사 일부는 남은 캐파를 경쟁 입찰에 부치기 시작했다 — SemiAnalysis는 이것을 현물 가격과 마진이 기판 업체 쪽으로 기운 신호로 읽고 ABF 기판 공급망 강세 전망을 재확인했다. 재료도 빡빡하다. T-glass는 ABF 기판에 쓰는 두꺼운 제품과 BT 기판에 쓰는 얇은 제품 양쪽에서 수요가 강하고 TSMC조차 CoWoS 수율과 신뢰성에 미치는 영향을 짚었는데, 공급이 닛토보 한 곳에서 <b>다섯 곳 이상</b>으로 늘고 있다 — 중국 벤더가 공격적으로 들어왔다. 기판용 CCL은 거의 레조낙 한 곳에서만 나와 또 하나의 병목인데, EMC가 진전을 보여 이르면 <b>2026년 4분기</b> 출하가 시작되고 2027년에 기판용 CCL 캐파를 100% 늘릴 계획이다.</div></div></div>
       <div class="sig" data-c="memory"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498454359320543234/" target="_blank" rel="noopener">알리바바 Qwen 팀이 Qwen3.8-Flash-Next를 냈다.</a></div><div class="d">다음 모델인 Qwen4에 쓸 아키텍처 개선을 미리 얹었다는 점을 SemiAnalysis가 짚는다. 셋이다. ① <b>510억 파라미터</b>짜리 N-gram 임베딩을 표에서 찾아 쓰는 방식이라 연산이 거의 안 늘고, 그래서 임베딩 표를 더 느리고 값싼 DRAM 계층으로 내려보낼 수 있다 ② 게이티드 레지듀얼(Gated Residual) — 키미의 AttentionRes, 딥시크의 mHC처럼 중국 연구소들이 잔차 연결(층을 건너뛰어 입력을 그대로 더해 주는 통로)을 손보는 흐름에 함께 놓는다 ③ Qwen 희소 어텐션(QSA) — 라이트닝 인덱서로 마이크로블록 단위에서 문맥을 골라낸다. 가중치까지 함께 공개해 이 셋이 서로 맞물린다는 것을 보였다고 평가했다.</div></div></div>
     </div>
-    <button class="moreb" aria-expanded="false" data-n="27"><span class="car">▾</span> <span class="mtxt">더 보기 · 나머지 27개 신호</span></button>
+    <button class="moreb" aria-expanded="false" data-n="15" data-lbl="이 주 나머지 15개 신호"><span class="car">▾</span> <span class="mtxt">이 주 나머지 15개 신호</span></button>
     <div class="moredays">
     <div class="day">
       <h3>08-26</h3>
@@ -323,6 +334,10 @@
       <div class="sig" data-c="power"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7496672777916174337/" target="_blank" rel="noopener">파운드리(반도체 위탁생산) 2분기 매출이 <b>545억 달러</b>로 사상 최대인데, 늘어난 것은 공장이 아니라 값이다.</a></div><div class="d">물량은 전년 대비 <b>6%</b>만 늘었고 나머지는 N2와 첨단 패키징의 선단 인상, 그리고 코로나 이후 처음 나온 성숙 노드 전면 인상이 채웠다. TSMC 매출에서 HPC(고성능 컴퓨팅)가 <b>66%</b>로 기록을 세우고 스마트폰은 22%로 내려앉았다. 업계 총이익 301억 달러 가운데 <b>90%</b>를 TSMC가 가져가는데 매출 점유율은 73.8%다. TSMC를 뺀 나머지의 성장률이 2025년 3%에서 2026년 <b>14%</b>로 뛴 것도 물량이 아니라 인상 덕이다. TSMC 자체는 매출 402억 달러, 매출총이익률 67.7%, 영업이익률이 처음으로 <b>60%</b>를 넘었고 3분기 전망은 615억 달러(+34%)다. 병목은 여전히 N3이라 대만·애리조나·일본에 N3 팹 3곳을 새로 세우고 N5 설비를 돌려 쓴다. 애리조나 투자 약속은 <b>2,650억 달러</b>로 커졌고 1단계는 이미 흑자다. 삼성 파운드리 2nm 수주는 두 배가 됐다 — TSMC가 매진이라 고객이 두 번째 공급처를 찾는다는 뜻이고, HBM4 베이스 다이가 SF4 물량을 받친다. 성숙 노드에서는 삼성과 TSMC가 8인치 웨이퍼 설비를 접는 사이 AI가 PMIC(전력관리칩)와 실리콘 커패시터 수요를 같은 특수 팹으로 끌어와 3년 이어진 가격 하락이 끝났다. DB하이텍 영업이익률이 인상으로 <b>6%p</b> 올랐고 UMC는 7월부터 약 10%를 올렸다. 인텔 파운드리는 분기 영업손실을 <b>3억 4,800만 달러</b> 줄이고 외부 매출을 2억 9,300만 달러(+68%)로 올렸으며, 8월 11일 200억 달러 증자로 자본 문제를 덮고 2028년 14A 양산 자금을 확보했다. 테슬라·스페이스X의 텍사스 테라팹은 <b>1,190억 달러</b> 4단계 계획으로 로직·메모리·패키징을 한 지붕에 넣는다.</div></div></div>
       <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7496608096878764032/" target="_blank" rel="noopener">오픈 웨이트 모델(가중치를 공개해 누구나 받아 쓰는 모델)이 프런티어를 따라잡는 데 걸리는 시간이 세대마다 <b>절반</b>으로 줄었다고 측정했다.</a></div><div class="d">한 벤치마크로 전 기간을 재지 않은 것이 방법의 출발점이다. 벤치마크는 만들어진 시대의 산물이라 모델들이 올라타 포화되면 버려지므로, 초기 스케일링(2022~2024)·추론(2024~2025)·에이전트 세 시대로 끊고 각 시대의 문제로 따로 재서 그 시대 최고점을 100으로 정규화했다. 1기에서 라마-2-70B는 <b>39.9</b>, GPT-3.5 터보는 75.7이었고 격차를 지우는 데 2024년 7월 라마-3.1-405B(86)까지 걸렸다. 그 시대 마지막 프런티어인 GPT-4o(95.5)는 2024년 12월 딥시크 V3(<b>94.1</b>)가 따라붙었다. 2기는 o1이 벤치마크와 격차를 함께 되돌렸는데 딥시크 R1이 곧바로 간격을 좁혔다. 지금 문제가 되는 것은 GLM 5.3과 Kimi K3가 앤트로픽을 연환산 매출 <b>650억 달러</b>로 밀어 올린 코딩·에이전트 작업을 실제로 해낸다는 점이다. 모델 계층이 상품화되면 프런티어 연구소 마진이 무너진다는 우려가 여기서 나온다. 점수는 Prime Intellect 평가 스택으로 직접 돌렸고, 오픈 모델은 출시 당시 vLLM 버전·하드웨어·샘플링 설정 그대로 서빙했다.</div><a class="nbadge" href="https://lnkd.in/eNwyebid" target="_blank" rel="noopener">▤ 뉴스레터 원문</a></div></div>
     </div>
+    </div>
+    <div class="wkh" data-c="compute memory model power"><span class="wkr">08-15 ~ 08-21</span><span class="wkn">12건</span><span class="wkt">계통운영자가 데이터센터 대기열을 직접 심사하기 시작했다</span></div>
+    <button class="moreb" aria-expanded="false" data-n="12" data-lbl="펼치기 · 신호 12개"><span class="car">▾</span> <span class="mtxt">펼치기 · 신호 12개</span></button>
+    <div class="moredays">
     <div class="day">
       <h3>08-21</h3>
       <div class="sig" data-c="model"><span class="srci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.2H4.7V19h2.4zM5.9 4.8a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM19.3 13.4c0-2.9-1.6-4.4-3.7-4.4-1.7 0-2.4 1-2.8 1.6V9.2h-2.4V19h2.4v-5.2c0-1.4.6-2.2 1.8-2.2 1.1 0 1.6.8 1.6 2.2V19h2.4z"/></svg></span><div><div class="t"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7496370688321306624/" target="_blank" rel="noopener">미국 전기 소비자에게 <b>120억 달러</b>를 더 걷은 PJM 용량경매를 다룬 Weekly 26회 클립이다.</a></div><div class="d">인용한 대목은 거버넌스다 — 회원이 다섯 그룹으로 나뉘고 그 위에 이사회, 다시 위에 FERC(연방에너지규제위원회)가 있으며 유틸리티마다 자체 지배구조가 겹쳐, 누가 결정했는지를 짚기 어렵다. 이사회는 회원의 최선 이익을 대표했다고 말하고 책임은 넘어간다. 영상 전편은 경매 설계로 들어간다 — 감가상각이 끝난 기존 발전소까지 전 계통을 대상으로 경매를 돌려 단가 인상분이 전체 물량에 곱해지고, 낙찰 뒤 인도까지 <b>1~2년</b>뿐이라 새 발전소가 들어올 수 없다. 1년 내내 여름 조건으로 발전 효율을 잡고 동파 보강도 반영하지 않아, 이미 확보한 공급을 낮게 계산한다. 2028~29년 부족분을 <b>6.8GW</b>로 잡았지만 두 가지를 반영하면 <b>3GW</b>라는 게 SemiAnalysis 모델이다. 9~10월 긴급경매는 2042년까지 가는 계약을 MW일당 상한 <b>555달러</b>, 15년 최대 <b>210억 달러</b>로 묶는데, 그 부담을 질 데이터센터가 나타나지 않으면 기존 요금 납부자가 떠안는다.</div><a class="ybadge" href="https://www.youtube.com/watch?v=pO097ci0aWk" target="_blank" rel="noopener">▶ YouTube</a></div></div>
@@ -480,6 +495,20 @@
       const anyVisible = Array.from(rows).some(r => r.style.display !== 'none');
       day.style.display = anyVisible ? '' : 'none';
     });
+    // 주 띠 — 그 띠에 남은 신호가 없으면 머리와 접기 단추까지 같이 감춘다
+    let band = null, seen = 0;
+    const flush = () => { if (band) band.style.display = seen ? '' : 'none'; };
+    Array.from(socialSection.children).forEach(el => {
+      if (el.classList.contains('wkh')) { flush(); band = el; seen = 0; return; }
+      if (el.classList.contains('moreb')) {
+        const list = el.nextElementSibling;
+        const n = list ? Array.from(list.querySelectorAll('.sig')).filter(r => r.style.display !== 'none').length : 0;
+        el.style.display = n ? '' : 'none';
+        seen += n; return;
+      }
+      seen += Array.from(el.querySelectorAll('.sig')).filter(r => r.style.display !== 'none').length;
+    });
+    flush();
   }));
 </script>
 <script>
@@ -596,7 +625,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCoMod
 
 document.querySelectorAll('.relb').forEach(function(b){b.addEventListener('click',function(){var list=b.parentElement.querySelector('.rell');var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(list)list.classList.toggle('open',!open);});});
 
-document.querySelectorAll('.moreb').forEach(function(b){var m=b.nextElementSibling,n=b.dataset.n,t=b.querySelector('.mtxt');b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(m)m.classList.toggle('open',!open);if(t)t.textContent=open?('더 보기 · 나머지 '+n+'개 신호'):'접기';});});
+document.querySelectorAll('.moreb').forEach(function(b){var m=b.nextElementSibling,n=b.dataset.n,t=b.querySelector('.mtxt');b.addEventListener('click',function(){var open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));if(m)m.classList.toggle('open',!open);if(t)t.textContent=open?(b.dataset.lbl||('더 보기 · 나머지 '+n+'개 신호')):'접기';});});
 
 (function(){
   function mark(){

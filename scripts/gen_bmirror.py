@@ -3,7 +3,7 @@
 # 히스토리 최근 N일 day-group을 자동 파싱 → ① 재생성(LI/YT/뉴스레터 3소스 + NVIDIA 1차 인터리브 + 클러스터 관련 펼침).
 # 사용: python scripts/gen_bmirror.py [일수(기본 14)]
 # linkedin-update로 히스토리 갱신 후 이 스크립트를 돌리면 ①이 자동 동기됨.
-import io, sys, re, os, glob, urllib.parse
+import io, sys, re, os, glob, json, datetime, urllib.parse
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 HIST = r"대시보드\소셜 신호 히스토리.html"
 DASH = r"대시보드\SemiAnalysis 대시보드.html"
@@ -106,26 +106,87 @@ def render_row(r):
             '<div><div class="t"><a href="' + href + '"' + at + ">" + title + "</a>" + brief_badge + "</div>" + dline + artb + relb + "</div></div>")
 
 days = all_days()[:DAYS_WINDOW]
-VISIBLE_ROWS = 6  # 이 행수를 채우는 날짜까지만 기본 노출, 나머지는 "더 보기"로 접음
+VISIBLE_ROWS = 6  # 가장 최근 주 안에서 이 행수를 채우는 날짜까지만 펼쳐 두고 나머지는 접는다
 def day_html(d, rows):
     return '    <div class="day">\n      <h3>' + d[5:] + '</h3>\n      ' + "\n      ".join(render_row(r) for r in rows) + "\n    </div>\n"
-visible, hidden, shown = "", "", 0
-hidden_rows = 0
+
+# ── 주 단위 띠 ────────────────────────────────────────────────────────────
+# 날짜만 평평하게 늘어서면 「이번 주에 무엇이 있었나」를 세로로 다 읽어야 안다.
+# 가장 최근 날짜에서 7일씩 끊어 띠를 만들고, 띠 머리에 범위·건수·그 주의 요지를 얹는다.
+# 요지는 판단이라 여기서 새로 쓰지 않는다 — 주간 롤업(data/rollup_notes.json)의 제목을
+# 가져온다. 롤업 주 창의 끝일과 띠 끝일이 같을 때만 붙고, 없으면 범위와 건수만 남는다.
+def _d(t):
+    y, m, dd = t.split("-")
+    return datetime.date(int(y), int(m), int(dd))
+
+def week_titles():
+    try:
+        reports = json.load(open(os.path.join("data", "rollup_notes.json"), encoding="utf-8"))["reports"]
+    except Exception:
+        return {}
+    out_ = {}
+    for r in reports:
+        if r.get("kind") == "week" and r.get("to"):
+            out_[r["to"]] = r.get("title", "")   # 끝일이 겹치면 나중 회차가 이긴다
+    return out_
+
+WKT = week_titles()
+anchor = _d(days[0]) if days else None
+
+def band_head(start, end, n, cats):
+    t = WKT.get(end.isoformat(), "")
+    tspan = '<span class="wkt">' + t + "</span>" if t else ""
+    return ('    <div class="wkh" data-c="' + " ".join(sorted(cats)) + '">'
+            '<span class="wkr">' + start.strftime("%m-%d") + " ~ " + end.strftime("%m-%d") + "</span>"
+            '<span class="wkn">' + str(n) + "건</span>" + tspan + "</div>\n")
+
+bands = []
 for d in days:
     rows = extract(d) + NVROWS.get(d, [])
-    if not rows: continue
-    if shown < VISIBLE_ROWS:
-        visible += day_html(d, rows); shown += len(rows)
+    if not rows:
+        continue
+    k = (anchor - _d(d)).days // 7
+    while len(bands) <= k:
+        bands.append(None)
+    if bands[k] is None:
+        end = anchor - datetime.timedelta(days=7 * k)
+        bands[k] = {"end": end, "start": end - datetime.timedelta(days=6), "days": []}
+    bands[k]["days"].append((d, rows))
+bands = [b for b in bands if b]
+
+def foldb(n, label, body):
+    return ('    <button class="moreb" aria-expanded="false" data-n="' + str(n)
+            + '" data-lbl="' + label + '"><span class="car">▾</span> '
+            '<span class="mtxt">' + label + '</span></button>\n'
+            '    <div class="moredays">\n' + body + '    </div>\n')
+
+out = ""
+for bi, b in enumerate(bands):
+    n = sum(len(rows) for _, rows in b["days"])
+    cats = {cat_for(r["sn"]) for _, rows in b["days"] for r in rows}
+    out += band_head(b["start"], b["end"], n, cats)
+    if bi == 0:
+        shown, vis, hid, hidn = 0, "", "", 0
+        for d, rows in b["days"]:
+            if shown < VISIBLE_ROWS:
+                vis += day_html(d, rows)
+                shown += len(rows)
+            else:
+                hid += day_html(d, rows)
+                hidn += len(rows)
+        out += vis
+        if hid:
+            out += foldb(hidn, "이 주 나머지 " + str(hidn) + "개 신호", hid)
     else:
-        hidden += day_html(d, rows); hidden_rows += len(rows)
-out = visible
-if hidden:
-    out += ('    <button class="moreb" aria-expanded="false" data-n="' + str(hidden_rows)
-            + '"><span class="car">▾</span> <span class="mtxt">더 보기 · 나머지 ' + str(hidden_rows)
-            + '개 신호</span></button>\n    <div class="moredays">\n' + hidden + '    </div>\n')
+        out += foldb(n, "펼치기 · 신호 " + str(n) + "개",
+                     "".join(day_html(d, rows) for d, rows in b["days"]))
 
 ds = open(DASH, encoding="utf-8").read()
-start = ds.find('    <div class="day">\n      <h3>')
+# ① 블록의 시작 — 띠 머리(.wkh)가 있으면 그것이 먼저다. 날짜 div만 찾으면 옛 띠 머리가 남는다
+sec_i = ds.find("<h2>\u2460 \uc18c\uc15c")
+cands = [x for x in (ds.find('    <div class="wkh"', sec_i),
+                     ds.find('    <div class="day">\n      <h3>', sec_i)) if x != -1]
+start = min(cands) if cands else -1
 note_i = ds.find('    <div class="note" data-c="compute memory power model">', start)
 assert start != -1 and note_i != -1, (start, note_i)
 note_end = ds.find("</div>", note_i) + len("</div>")
