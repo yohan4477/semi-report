@@ -522,6 +522,22 @@ def debate_html(d):
     return ''.join(h)
 
 
+def toc_html(groups):
+    """목차 — 절을 줄 단위로 세우되 **어느 구조에 속하는지**를 함께 보인다.
+
+    groups = [(구조 갈래, [(번호, 절 제목), …]), …].
+    한 문단에 가운뎃점으로 이어 붙이면 절이 일곱만 넘어도 벽이 된다. 그리고 구조 이름만
+    앞줄에 적어 두면 어느 절이 그 구조에 드는지는 여전히 독자가 맞춰야 한다 — 갈래별로
+    묶어야 구조가 목차에서 실제로 보인다.
+    """
+    h = ['<div class="uc-toc"><p class="uc-label">목차</p>']
+    for form, items in groups:
+        h.append('<div class="tg"><span class="tg-k">%s</span><ul>%s</ul></div>'
+                 % (form, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
+    h.append('</div>')
+    return ''.join(h)
+
+
 def report_html(blocks):
     """보고서 형식 본문 — 번호글 대신 절 제목·문단·그림이 섞여 흐른다.
 
@@ -537,6 +553,8 @@ def report_html(blocks):
             h.append(fig_html(val))
         elif kind == 'tbl':
             h.append(tbl_html(val))
+        elif kind == 'toc':
+            h.append(toc_html(val))
         elif kind == 'terms':
             h.append('<div class="rf-terms"><p class="uc-label">용어</p><dl>%s</dl></div>'
                      % ''.join('<dt><i>*</i>%s</dt><dd>%s</dd>' % t for t in val))

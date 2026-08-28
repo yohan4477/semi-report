@@ -44,9 +44,12 @@ CIRCLE = '①②③④⑤⑥⑦⑧⑨⑩'
 CARD = re.compile(r'<div class="ucard[^"]*"[^>]*>(.*?)(?=<div class="ucard|<footer|\Z)', re.S)
 TITLE = re.compile(r'<h2 id="[^"]*">(.*?)</h2>', re.S)
 VERDICT = re.compile(r'<p class="uc-verdict">(.*?)</p>', re.S)
-REP = re.compile(r'<div class="uc-rep">(.*?)</div>\s*(?:<div class="uc-links"|</div>)', re.S)
+# 본문 안에 <div> 가 겹쳐 있다(목차 상자·그림). 링크 줄이 늘 뒤에 오니 거기까지 자른다
+REP = re.compile(r'<div class="uc-rep">(.*?)(?:<div class="uc-links"|\Z)', re.S)
 H3 = re.compile(r'<h3>(.*?)</h3>', re.S)
 FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
+TOCBOX = re.compile(r'^\s*<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
+TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
 TAG = re.compile(r'<[^>]+>')
 
@@ -88,21 +91,21 @@ def check_card(where, body):
     if missing:
         add('FAIL', at, 'S1', '앞머리에 %s 이(가) 없다' % '·'.join(m.rstrip('.') for m in missing))
 
-    # S2 목차와 그 첫 줄의 구조
-    mp = FIRST_P.search(rep)
-    toc = txt(mp.group(1)) if mp else ''
-    if '목차.' not in toc:
-        add('FAIL', at, 'S2', 'report 첫 블록이 목차가 아니다')
-        toc = ''
-    elif not toc.startswith('구조.'):
-        add('FAIL', at, 'S2', '목차 첫 줄이 「구조.」가 아니다')
+    # S2 목차 — report 첫 블록이 갈래별 목차 상자여야 한다.
+    # 한 문단에 가운뎃점으로 이어 붙인 옛 꼴(<p>목차. ① … · ② …)도 여기서 걸린다.
+    mbox = TOCBOX.search(rep)
+    toc = txt(mbox.group(1)) if mbox else ''
+    forms_used = [txt(f) for f in TG.findall(mbox.group(1))] if mbox else []
+    if not mbox:
+        mp = FIRST_P.search(rep)
+        first = txt(mp.group(1)) if mp else ''
+        add('FAIL', at, 'S2',
+            '목차가 갈래별 상자가 아니다%s' % (' — 한 문단으로 이어 붙였다' if '목차' in first else ''))
 
-    # S3 갈래가 일곱 안인가
-    if toc.startswith('구조.'):
-        head = toc.split('목차.')[0]
-        named = [f for f in FORMS if f in head]
-        if not named:
-            add('FAIL', at, 'S3', '구조 갈래가 정해진 일곱에 없다: %s' % head[:40])
+    # S3 갈래가 일곱(과 한계) 안인가
+    for f in forms_used:
+        if f != '한계' and f not in FORMS:
+            add('FAIL', at, 'S3', '구조 갈래가 정해진 일곱에 없다: %s' % f)
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
