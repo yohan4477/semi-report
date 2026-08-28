@@ -91,7 +91,7 @@ FIG_CSS = '''
   .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
   .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
   /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
-     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 나눈다
      (흑백 인쇄·색각 이상에서도 남는다) */
   .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
                      marker-end:url(#fig-arrow-a)}
@@ -529,17 +529,24 @@ def toc_html(groups):
 
     groups = [(대상의 마디, 글의 꼴, [(번호, 절 제목), …]), …].
 
+    단원(왼쪽 칸)은 「1. 2. 3.」으로 번호가 붙고 그 아래 절은 ①②③이다. 번호는
+    이 함수가 붙이므로 groups 에는 적지 않는다.
+
     구조가 둘이라 열도 둘이다. 왼쪽은 **다루는 것이 실제로 어떤 마디로 되어 있는가**
     (수 체계·실리콘 면적·쿼터랙), 그 옆은 **그 마디를 어떤 꼴로 썼는가**(대비·인과 사슬).
     마디만 적으면 글이 어떻게 굴러가는지 안 보이고, 꼴만 적으면 무엇을 다루는 글인지가
     안 보인다. 옛 두 칸 꼴(마디 없이 꼴만)도 그대로 받는다.
     """
     h = ['<div class="uc-toc"><p class="uc-label">목차</p>']
-    for g in groups:
+    for i, g in enumerate(groups, 1):
         node, form, items = g if len(g) == 3 else (g[0], '', g[1])
         tag = '<span class="tg-f">%s</span>' % form if form else ''
-        h.append('<div class="tg"><span class="tg-k">%s</span>%s<ul>%s</ul></div>'
-                 % (node, tag, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
+        # 단원 번호는 「1.」, 그 아래 절은 ①. 층이 둘이라 기호도 둘이어야 한 줄에
+        # 층위가 섞이지 않는다. 번호는 사람이 적지 않는다 — 마디를 넣고 빼면
+        # 손으로 적은 번호가 그때부터 어긋난다.
+        h.append('<div class="tg"><span class="tg-n">%d.</span>'
+                 '<span class="tg-k">%s</span>%s<ul>%s</ul></div>'
+                 % (i, node, tag, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
     h.append('</div>')
     return ''.join(h)
 
