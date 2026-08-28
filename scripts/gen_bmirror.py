@@ -106,15 +106,15 @@ def render_row(r):
             '<div><div class="t"><a href="' + href + '"' + at + ">" + title + "</a>" + brief_badge + "</div>" + dline + artb + relb + "</div></div>")
 
 days = all_days()[:DAYS_WINDOW]
-VISIBLE_ROWS = 6  # 가장 최근 주 안에서 이 행수를 채우는 날짜까지만 펼쳐 두고 나머지는 접는다
-def day_html(d, rows):
-    return '    <div class="day">\n      <h3>' + d[5:] + '</h3>\n      ' + "\n      ".join(render_row(r) for r in rows) + "\n    </div>\n"
+VISIBLE_ROWS = 12  # 가장 최근 주에서 이 행수까지 펼쳐 두고 나머지는 접는다
 
-# ── 주 단위 띠 ────────────────────────────────────────────────────────────
-# 날짜만 평평하게 늘어서면 「이번 주에 무엇이 있었나」를 세로로 다 읽어야 안다.
-# 가장 최근 날짜에서 7일씩 끊어 띠를 만들고, 띠 머리에 범위·건수·그 주의 요지를 얹는다.
-# 요지는 판단이라 여기서 새로 쓰지 않는다 — 주간 롤업(data/rollup_notes.json)의 제목을
-# 가져온다. 롤업 주 창의 끝일과 띠 끝일이 같을 때만 붙고, 없으면 범위와 건수만 남는다.
+# ── 시간순 기록 층 ────────────────────────────────────────────────────────
+# 「이선엽 시황 대시보드」의 시간순 기록과 같은 꼴이다 — 세로 레일이 서고 그 위에 날짜
+# 줄이 얹힌다. 카드가 「무엇을 말했나」라면 이 층은 「언제 말했나」다.
+# 머리는 달이 아니라 주다. 미러 창이 2주쯤이라 달 머리로는 섹션이 하나뿐이 안 나온다.
+# 가장 최근 날짜에서 7일씩 끊고, 머리에 범위·건수와 그 주의 요지를 얹는다.
+# 요지는 판단이라 여기서 새로 쓰지 않고 주간 롤업(data/rollup_notes.json) 제목을
+# 끝일이 같을 때만 가져온다. 없으면 범위와 건수만 남는다.
 def _d(t):
     y, m, dd = t.split("-")
     return datetime.date(int(y), int(m), int(dd))
@@ -133,60 +133,73 @@ def week_titles():
 WKT = week_titles()
 anchor = _d(days[0]) if days else None
 
-def band_head(start, end, n, cats):
-    t = WKT.get(end.isoformat(), "")
-    tspan = '<span class="wkt">' + t + "</span>" if t else ""
-    return ('    <div class="wkh" data-c="' + " ".join(sorted(cats)) + '">'
-            '<span class="wkr">' + start.strftime("%m-%d") + " ~ " + end.strftime("%m-%d") + "</span>"
-            '<span class="wkn">' + str(n) + "건</span>" + tspan + "</div>\n")
+def li_html(d, rows, mark_day=True):
+    out_ = ""
+    for i, r in enumerate(rows):
+        sig = render_row(r)                       # <div class="sig" …>…</div>
+        dt = d[5:] if (mark_day and i == 0) else ""
+        cls = ' class="sig nd"' if (mark_day and i == 0) else ' class="sig"'
+        sig = sig.replace('<div class="sig"', "<li" + cls, 1)
+        sig = sig[: sig.rfind("</div>")] + "</li>"
+        sig = sig.replace('><span class="srci">', '><span class="dt">' + dt + '</span><span class="srci">', 1)
+        out_ += "      " + sig + "\n"
+    return out_
 
-bands = []
-for d in days:
-    rows = extract(d) + NVROWS.get(d, [])
-    if not rows:
-        continue
-    k = (anchor - _d(d)).days // 7
-    while len(bands) <= k:
-        bands.append(None)
-    if bands[k] is None:
-        end = anchor - datetime.timedelta(days=7 * k)
-        bands[k] = {"end": end, "start": end - datetime.timedelta(days=6), "days": []}
-    bands[k]["days"].append((d, rows))
-bands = [b for b in bands if b]
+def week_head(start, end, n):
+    t = WKT.get(end.isoformat(), "")
+    tspan = '<span class="tlw">' + t + "</span>" if t else ""
+    return ('    <p class="tlog-m">' + start.strftime("%m-%d") + " ~ " + end.strftime("%m-%d")
+            + ' <span class="tln">' + str(n) + "건</span>" + tspan + "</p>\n")
 
 def foldb(n, label, body):
     return ('    <button class="moreb" aria-expanded="false" data-n="' + str(n)
             + '" data-lbl="' + label + '"><span class="car">▾</span> '
             '<span class="mtxt">' + label + '</span></button>\n'
-            '    <div class="moredays">\n' + body + '    </div>\n')
+            '    <ul class="moredays">\n' + body + '    </ul>\n')
 
-out = ""
-for bi, b in enumerate(bands):
-    n = sum(len(rows) for _, rows in b["days"])
-    cats = {cat_for(r["sn"]) for _, rows in b["days"] for r in rows}
-    out += band_head(b["start"], b["end"], n, cats)
-    if bi == 0:
+weeks = []
+for d in days:
+    rows = extract(d) + NVROWS.get(d, [])
+    if not rows:
+        continue
+    k = (anchor - _d(d)).days // 7
+    while len(weeks) <= k:
+        weeks.append(None)
+    if weeks[k] is None:
+        end = anchor - datetime.timedelta(days=7 * k)
+        weeks[k] = {"end": end, "start": end - datetime.timedelta(days=6), "days": []}
+    weeks[k]["days"].append((d, rows))
+weeks = [w for w in weeks if w]
+
+out = '    <div class="tlog">\n'
+for wi, w in enumerate(weeks):
+    n = sum(len(rows) for _, rows in w["days"])
+    out += week_head(w["start"], w["end"], n)
+    if wi == 0:
         shown, vis, hid, hidn = 0, "", "", 0
-        for d, rows in b["days"]:
+        for d, rows in w["days"]:
             if shown < VISIBLE_ROWS:
-                vis += day_html(d, rows)
+                vis += li_html(d, rows)
                 shown += len(rows)
             else:
-                hid += day_html(d, rows)
+                hid += li_html(d, rows)
                 hidn += len(rows)
-        out += vis
+        out += "    <ul>\n" + vis + "    </ul>\n"
         if hid:
             out += foldb(hidn, "이 주 나머지 " + str(hidn) + "개 신호", hid)
     else:
         out += foldb(n, "펼치기 · 신호 " + str(n) + "개",
-                     "".join(day_html(d, rows) for d, rows in b["days"]))
+                     "".join(li_html(d, rows) for d, rows in w["days"]))
+out += "    </div>\n"
 
 ds = open(DASH, encoding="utf-8").read()
-# ① 블록의 시작 — 띠 머리(.wkh)가 있으면 그것이 먼저다. 날짜 div만 찾으면 옛 띠 머리가 남는다
+# ① 블록의 시작 — 시간순 기록 층 한 덩어리다
 sec_i = ds.find("<h2>\u2460 \uc18c\uc15c")
-cands = [x for x in (ds.find('    <div class="wkh"', sec_i),
-                     ds.find('    <div class="day">\n      <h3>', sec_i)) if x != -1]
-start = min(cands) if cands else -1
+start = ds.find('    <div class="tlog">', sec_i)
+if start == -1:   # 옛 꼴(주 띠·날짜 그룹)에서 처음 갈아탈 때
+    cands = [x for x in (ds.find('    <div class="wkh"', sec_i),
+                         ds.find('    <div class="day">', sec_i)) if x != -1]
+    start = min(cands) if cands else -1
 note_i = ds.find('    <div class="note" data-c="compute memory power model">', start)
 assert start != -1 and note_i != -1, (start, note_i)
 note_end = ds.find("</div>", note_i) + len("</div>")
