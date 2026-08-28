@@ -15,6 +15,7 @@ CLAUDE.md 「글은 기본이 구조다」는 지금까지 스킬(`doc-structure
   S1  앞머리에 물음·바탕·축 셋이 다 있나              FAIL
   S2  목차가 있고 그 첫 줄이 「구조.」인가              FAIL
   S3  마디가 본문의 말이거나, 무엇으로 갈랐는지 밝혔나    FAIL
+  S3c 레벨 1 을 무슨 기준으로 갈랐는지 적었나            FAIL
   S4  절 제목이 물음인가                            FAIL
   S5  목차의 번호와 실제 절 번호가 맞나                FAIL
   S6  견주는 표에 「언제 것 · 성격」 열이 있나           FAIL
@@ -153,10 +154,18 @@ def check_card(where, body):
             add('FAIL', at, 'S3', '본문에 안 나오는 마디다 — 대상의 마디를 대거나 '
                 '무엇으로 갈랐는지를 목차에 밝힌다: %s' % f)
 
-    # S3b 마디 옆 칸은 글의 꼴이다. 마디만 있으면 글이 어떻게 굴러가는지가 안 보인다
+    # S3b 마디 옆 칸은 그 마디의 자식을 무슨 기준으로 갈랐는지다. 마디만 있으면
+    # 무슨 기준으로 나뉜 자식인지가 안 보인다
     shapes = [txt(x) for x in TF.findall(mbox.group(1))] if mbox else []
     if mbox and not shapes:
         add('FAIL', at, 'S3b', '목차에 글의 꼴 칸이 없다 — 마디와 꼴 둘 다 세운다')
+
+    # S3c 레벨 1 도 기준이 있어야 한다. **한 레벨에 기준은 하나다** — 마디들이 무슨
+    # 기준으로 갈렸는지를 안 적으면 기준이 섞여도 아무도 모른다. 「대비」라 적어 놓고
+    # 대비의 항이 아닌 것을 같은 층에 둔 적이 있다(2026-08-29)
+    if mbox and not axis:
+        add('FAIL', at, 'S3c', '레벨 1 을 무슨 기준으로 갈랐는지가 없다 — '
+            "('toc', (기준, 갈래목록)) 로 적는다")
     for sh in shapes:
         if sh not in SHAPE_WORDS:
             add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
