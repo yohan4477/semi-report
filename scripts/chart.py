@@ -68,11 +68,16 @@ def to_inline(fig, alt, cls='fg-plot'):
     return re.sub(r'\s+', ' ', s).replace('> <', '><')
 
 
-def frontier(f, x0, x1, xlabel, ylabel, alt, notes=(), n=200, size=(6.4, 2.4)):
+def frontier(f, x0, x1, xlabel, ylabel, alt, notes=(), box=(), n=200, size=(6.4, 2.6)):
     """맞바꿈 곡선 하나. f(x) 로 모양을 주고 눈금은 달지 않는다.
 
-    notes = [(x비율, y비율, 글, 굵게)] — 판 안에 앉히는 곁글. 비율이라 판을
-    늘려도 자리가 안 어긋난다.
+    축 이름은 **재는 것만** 짧게 단다(「엔드투엔드 지연」). 어느 쪽이 큰지와 곡선을
+    어떻게 읽는지는 `box` 로 준다 — 오른쪽 위 빈 자리에 상자로 앉는다. 축 이름에
+    다 적으면 이름이 길어져 가로축이 판보다 넓어지고 세로축은 돌아누운 채 잘린다.
+
+    맞바꿈 곡선은 왼쪽 위에서 오른쪽 아래로 내려가므로 오른쪽 위가 늘 빈다.
+
+    notes = [(x비율, y비율, 글, 굵게)] — 판 안에 따로 앉히는 곁글.
     """
     xs = [x0 + (x1 - x0) * i / float(n - 1) for i in range(n)]
     ys = [f(x) for x in xs]
@@ -90,6 +95,11 @@ def frontier(f, x0, x1, xlabel, ylabel, alt, notes=(), n=200, size=(6.4, 2.4)):
         ax.spines[side].set_linewidth(1.0)
     ax.set_xlabel(xlabel, color=INK, fontsize=11, labelpad=5)
     ax.set_ylabel(ylabel, color=INK, fontsize=11, labelpad=5)
+    if box:
+        ax.text(0.985, 0.95, chr(10).join(box), transform=ax.transAxes, color=SUB,
+                fontsize=10.5, ha='right', va='top', linespacing=1.5,
+                bbox=dict(boxstyle='square,pad=0.55', facecolor='none',
+                          edgecolor=LINE, linewidth=1.0))
     for fx, fy, text, bold in notes:
         ax.text(fx, fy, text, transform=ax.transAxes, color=INK if bold else SUB,
                 fontsize=10.5, fontweight='bold' if bold else 'normal',
