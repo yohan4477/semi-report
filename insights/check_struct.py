@@ -25,6 +25,7 @@ CLAUDE.md 「글은 기본이 구조다」는 지금까지 스킬(`doc-structure
   S10 절 제목 하나가 물음 하나인가                   FAIL
   S11 절이 셋을 넘는 마디에 축이 있나                 FAIL
   S12 나열을 열었으면 항목에 ①②③ 이 붙었나            FAIL
+  S13 도해가 그 절의 글보다 앞에 섰나                 FAIL
 """
 import glob
 import io
@@ -242,6 +243,16 @@ def check_card(where, body):
         if got < want:
             add('FAIL', at, 'S12', '%d 이라 열고 번호는 %d 개다 — ①②③ 을 단다: %s'
                 % (want, got, t[max(0, m.start() - 12):m.end() + 26]))
+
+    # S13 도해는 그 절의 글보다 앞에 선다. 그림을 보고 그 아래 설명을 읽는 순서가
+    # 빠르다 — 글을 먼저 읽으면 머릿속에 세운 그림과 판 위의 그림을 맞춰 보느라 한 번
+    # 더 읽게 된다
+    for sec in re.split(r'<h3>', rep)[1:]:
+        pi = sec.find('<p>')
+        fi = sec.find('<figure')
+        if fi >= 0 and 0 <= pi < fi:
+            add('FAIL', at, 'S13', '도해가 글 뒤에 있다 — 절 제목 바로 뒤로 올린다: %s'
+                % txt(sec[:sec.find('</h3>')])[:34])
 
     # S6 견주는 표에 성격 열
     for th in TBL_HEAD.findall(rep):
