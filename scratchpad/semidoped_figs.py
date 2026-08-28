@@ -513,6 +513,78 @@ def fig_rare():
 RARE = fig_rare()
 
 
+# ── ㉒ 메모리가 굵어진 넉 달 ────────────────────────────────────────────
+# x 좌표는 달에서 계산한다. 점을 선으로 잇지 않는다 — 사이의 값이 없다.
+_MEM = [(4, '4월 · 삼성 HBM4 완판', 1), (5, '5월 · 낸드 값 오름', 0),
+        (6, '6월 · HBM4E 샘플', 1), (7, '7월 · 이익 250배', 0),
+        (8, '8월 · 낸드 310억 달러', 1)]
+
+
+def _mx(month):
+    return 80 + (month - 4) * 108
+
+
+def fig_memtime():
+    h = ['<svg viewBox="0 0 600 170" role="img" aria-label="4월부터 8월까지 메모리 쪽에서 '
+         '나온 발표를 달마다 하나씩 짚은 연표">']
+    h.append('<line class="thin" x1="60" y1="110" x2="570" y2="110"/>')
+    for m, lab, above in _MEM:
+        x = _mx(m)
+        h.append('<circle cx="%d" cy="110" r="6" class="good-box"/>' % x)
+        h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x, 88 if above else 140, lab))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+MEMTIME = fig_memtime()
+
+
+# ── ㉓ 넉 달 사이에 발표된 금액 ─────────────────────────────────────────
+# 막대 길이가 곧 억 달러 값이다. 성격이 다른 돈이라 라벨에 무엇인지 함께 적는다.
+_MONEY = [(105, '1,050억 달러 · 보증'), (104, '1,040억 달러 · 수주잔고'),
+          (25, '250억 달러 · 조달'), (20, '200억 달러 · 증자'),
+          (19, '190억 달러 · 임차'), (12.9, '129억 달러 · 인수'),
+          (10, '100억 달러 · 약정')]
+
+
+def fig_money():
+    h = ['<svg viewBox="0 0 600 260" role="img" aria-label="넉 달 사이에 발표된 금액을 '
+         '성격과 함께 늘어놓은 막대">']
+    h.append('<text x="200" y="30" class="t-head">넉 달 사이에 발표된 금액</text>')
+    for i, (val, lab) in enumerate(_MONEY):
+        y = 50 + i * 30
+        h.append('<text x="188" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 4, lab))
+        h.append('<rect x="200" y="%d" width="%.1f" height="18" rx="4" class="mid-box"/>'
+                 % (y - 9, val * 3.5))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+MONEY = fig_money()
+
+
+# ── ㉔ 중국이 스스로 대게 된 것 ─────────────────────────────────────────
+_CN = [('DRAM', 'DDR5 수율 90%'), ('NAND', '점유율 14%'),
+       ('파운드리', '분기 30억 달러 첫 돌파'), ('노광 장비', '이머전 DUV 양산 발표')]
+
+
+def fig_cn():
+    h = ['<svg viewBox="0 0 600 265" role="img" aria-label="중국이 자체 공급을 발표한 '
+         '네 갈래와 각각의 수치">']
+    for i, (lab, state) in enumerate(_CN):
+        y = 40 + i * 55
+        h.append('<rect x="120" y="%d" width="360" height="44" rx="8" class="mid-box"/>' % y)
+        h.append('<text x="138" y="%d" class="t-step">%s</text>' % (y + 28, lab))
+        h.append('<text x="462" y="%d" class="t-sub" text-anchor="end">%s</text>'
+                 % (y + 28, state))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+CN = fig_cn()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
