@@ -525,7 +525,7 @@ def debate_html(d):
 def angles_html(items):
     """각도 — 이 편이 어떤 각도로 뽑혔는지를 목차와 **따로** 밝힌다.
 
-    items = [(각도 이름, 절로 세웠나)] 또는 [이름, …].
+    items = [(각도 이름, 절로 세웠나, [(물음, [(축, 값), …]), …])].
 
     목차는 「이 카드가 무엇을 어떤 순서로 말하나」이고, 각도는 「원문이 어떤 마디로
     뽑혔나」다. 둘이 같지 않다 — 각도 파일에는 있는데 카드에서 절로 안 세운 것이 늘
@@ -544,8 +544,15 @@ def angles_html(items):
         kids = []
         for s in subs:
             q, parts = s if isinstance(s, tuple) else (s, ())
-            body = ('<span class="ag-i">%s</span>'
-                    % '</span><span class="ag-i">'.join(parts)) if parts else ''
+            # 구성요소도 축으로 가른다. 물음만 MECE 하게 쪼개고 그 아래를 사실 자루로
+            # 두면, 한 물음 안에서 무엇과 무엇이 겹치는지가 안 보인다. (축, 값) 으로
+            # 적으면 축이 겹치는 것도 빠진 축도 눈에 걸린다.
+            rows = []
+            for p in parts:
+                ax, val = p if isinstance(p, tuple) else ('', p)
+                rows.append('<li>%s<span class="ag-v">%s</span></li>'
+                            % ('<span class="ag-ax">%s</span>' % ax if ax else '', val))
+            body = '<ul class="ag-p">%s</ul>' % ''.join(rows) if rows else ''
             kids.append('<li><span class="ag-q">%s</span>%s</li>' % (q, body))
         sub = '<ul class="ag-sub">%s</ul>' % ''.join(kids) if kids else ''
         li.append('<li class="%s"><span class="ag-1">%s</span>%s</li>'

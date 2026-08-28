@@ -56,6 +56,10 @@ TOCBOX = re.compile(r'<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
 ANGBOX = re.compile(r'<div class="uc-angles">(.*?)</div>', re.S)
 # 나무로 그리면서 L1 이름이 <span class="ag-1"> 안으로 들어갔다. 가지는 빼고 줄기만 읽는다
 ANGLI = re.compile(r'<li class="ag-(on|off)"><span class="ag-1">(.*?)</span>', re.S)
+# 물음 하나와 그 아래 구성요소 묶음
+AGQ = re.compile(r'<span class="ag-q">(.*?)</span>(?:<ul class="ag-p">(.*?)</ul>)?', re.S)
+AGROW = re.compile(r'<li>(?:<span class="ag-ax">(.*?)</span>)?<span class="ag-v">(.*?)</span></li>',
+                   re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
@@ -161,6 +165,26 @@ def check_card(where, body):
             if not same:
                 add('WARN', at, 'S9', '각도 목록이 어느 각도 파일과도 안 맞는다: %s'
                     % ' · '.join(named[:5]))
+
+    # S10 한 물음 아래 구성요소가 축으로 갈렸나. 물음만 MECE 하게 쪼개고 그 아래를
+    # 사실 자루로 두면 무엇과 무엇이 겹치는지가 안 보인다. 축 이름이 있어야 겹친 축도
+    # 빠진 축도 눈에 걸린다. 같은 축이 한 물음에 두 번 나오면 그건 안 가른 것이다
+    if mang:
+        for mq in AGQ.finditer(mang.group(1)):
+            q = txt(mq.group(1))
+            rows = AGROW.findall(mq.group(2))
+            if not rows:
+                continue
+            axes = [txt(a) for a, _ in rows if a]
+            bare = len(rows) - len(axes)
+            if bare:
+                add('WARN', at, 'S10', '구성요소에 축 이름이 없다(%d개) — 「%s」' % (bare, q))
+            dup = {a for a in axes if axes.count(a) > 1}
+            if dup:
+                add('FAIL', at, 'S10', '한 물음에 같은 축이 두 번 — 「%s」의 %s'
+                    % (q, ' · '.join(sorted(dup))))
+            if len(rows) == 1:
+                add('WARN', at, 'S10', '구성요소가 하나뿐이다 — 갈린 게 아니다: 「%s」' % q)
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
