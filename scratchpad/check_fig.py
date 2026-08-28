@@ -15,6 +15,7 @@
   가로 넘침      viewBox 밖으로 나간다
   세로 넘침      viewBox 아래로 나간다
   칸 밖으로 삐짐  글자가 제가 든 네모보다 넓다
+  선이 붕 떴다   선 끝이 어느 네모에도 안 닿는다 (fig_layout 으로 그린 도해만)
 
 글자 폭은 한 글자 9px로 어림한다. 실제 렌더링과 다르지만 겹침을 잡기에는 넉넉하다.
 """
@@ -106,8 +107,45 @@ def rect_edges(svg):
     return out
 
 
-def hits(svg):
+ENDPT = re.compile(r'<path d="M(-?[\d.]+)[ ,](-?[\d.]+)([^"]*)"')
+LAST = re.compile(r'[ML](-?[\d.]+)[ ,](-?[\d.]+)(?!.*[ML])', re.S)
+
+
+def loose_ends(svg, tol=2.0):
+    """선 끝이 어느 네모 변에도 안 닿는 것을 센다.
+
+    검사기가 여태 안 보던 자리다 — 겹침만 재느라, 화살표가 상자에서 몇 픽셀 떠 있어도
+    FAIL 0 이 나왔다. 좌표를 손으로 찍던 옛 도해까지 소급해 막으면 전 장이 빨개지므로
+    `fig_layout` 이 붙이는 `data-fig-layout="1"` 이 있는 도해만 본다.
+    """
+    if 'data-fig-layout="1"' not in svg:
+        return []
+    rs = [(x, y, x1, y1) for x, x1, y, y1 in rects(svg)]
     bad = []
+    for m in PATH.finditer(svg):
+        d, attr = m.group(1), m.group(2)
+        # 잇는 선만 본다. 화살촉은 marker 안 좌표계라 판 좌표로 재면 늘 (0,0) 이다
+        if not any(('class="%s"' % c) in attr for c in ('fl-l', 'fl-a', 'fl-d')):
+            continue
+        pts = [(float(a), float(b)) for a, b in MOVE.findall(d)]
+        if len(pts) < 2:
+            continue
+        for px, py in (pts[0], pts[-1]):
+            on = False
+            for rx, ry, rx1, ry1 in rs:
+                inx = rx - tol <= px <= rx1 + tol
+                iny = ry - tol <= py <= ry1 + tol
+                if inx and iny and (abs(px - rx) <= tol or abs(px - rx1) <= tol
+                                    or abs(py - ry) <= tol or abs(py - ry1) <= tol):
+                    on = True
+                    break
+            if not on:
+                bad.append('선이 붕 떴다 (%.0f,%.0f)' % (px, py))
+    return bad
+
+
+def hits(svg):
+    bad = loose_ends(svg)
     bs = boxes(svg)
     vm = VIEW.search(svg)
     vw, vh = (float(vm.group(1)), float(vm.group(2))) if vm else (640.0, 1e9)
