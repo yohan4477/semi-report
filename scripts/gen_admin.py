@@ -450,6 +450,19 @@ FIGRULES = [
 
 
 CSS = r'''
+  /* 묶음 상자 — 이름만 보이고 눌러야 규칙이 펴진다 */
+  details.mk>summary.mh{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;
+       align-items:baseline;gap:4px 9px}
+  details.mk>summary.mh::-webkit-details-marker{display:none}
+  details.mk>summary.mh::before{content:"▸";color:var(--faint);font-size:11px;flex:none}
+  details.mk[open]>summary.mh::before{content:"▾"}
+  details.mk>summary.mh b{flex:0 1 auto}
+  details.mk>summary.mh span{flex:1 1 100%;margin-left:17px}
+  details.mk>summary.mh i{font-style:normal;font-size:var(--t-lbl);font-weight:700;
+       color:var(--faint);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  details.mk:not([open])>summary.mh{border-bottom:0}
+  .fold.lead>summary{font-size:var(--t-h2);letter-spacing:-.02em}
+
   /* 접는 절 — 쓰는 법 둘만 펴 두고 지도·실험은 눌러야 펴진다 */
   .fold{margin:20px 0 0;border:1px solid var(--line);border-radius:var(--r);
         background:var(--card);box-shadow:var(--shadow)}
@@ -595,7 +608,9 @@ def stage_html(stg, kind, note, nodes, rules):
 
 
 def mistake_html(group, one, rows, labels=('난 일', '처방')):
-    o = ['<div class="mk"><div class="mh"><b>%s</b><span>%s</span></div>' % (group, one)]
+    # 묶음마다 접는다. 규칙 스물둘을 한 번에 펴 두면 필요한 한 줄까지 스크롤이 길다
+    o = ['<details class="mk"><summary class="mh"><b>%s</b><span>%s</span>'
+         '<i>%d</i></summary>' % (group, one, len(rows))]
     for sym, by, case, fix in rows:
         none = ' data-none="1"' if '사람' in by else ''
         o.append('<div class="mr"><p class="rt"><b>%s</b>'
@@ -603,7 +618,7 @@ def mistake_html(group, one, rows, labels=('난 일', '처방')):
                  '<dl><dt>%s</dt><dd><div class="mk-case">%s</div></dd>'
                  '<dt>%s</dt><dd class="fix">%s</dd></dl></div>'
                  % (sym, none, by, labels[0], case, labels[1], fix))
-    o.append('</div>')
+    o.append('</details>')
     return ''.join(o)
 
 
@@ -616,19 +631,23 @@ def main():
 
     # 펴 두는 것은 쓰는 법 둘뿐이다. 나머지는 접는다 — 지도와 실험은 찾아서 보는
     # 것이고 쓰는 법은 쓰는 동안 계속 보는 것이라, 같은 무게로 세우면 매번 스크롤한다.
-    out.append('<h3 class="sec">보고서 작성법 — 자주 하는 오류</h3>')
+    out.append('<details class="fold lead" open><summary>보고서 작성법 — 자주 하는 오류'
+               '<span>%d</span></summary>' % sum(len(r) for _g, _o, r in MISTAKES))
     out.append('<p class="lede2">실제로 났던 것만 적는다. 옆의 표는 그 오류를 무엇이 잡는지이고, '
                '거기 <b>사람만</b>이라고 적힌 줄이 이 표에서 가장 비싸다 — 기계가 안 보는 자리라 '
                '같은 오류가 되풀이된다.</p>')
     for group, one, rows in MISTAKES:
         out.append(mistake_html(group, one, rows))
+    out.append('</details>')
 
-    out.append('<h3 class="sec">도해 작성법</h3>')
+    out.append('<details class="fold lead" open><summary>도해 작성법'
+               '<span>%d</span></summary>' % sum(len(r) for _g, _o, r in FIGRULES))
     out.append('<p class="lede2">그림에서만 나는 오류는 글 검사기가 안 잡는다. '
                '길이도 개수도 수치로 읽히는데 그 수가 원문에 없는 일이 잦고, 손으로 찍은 '
                '좌표는 상자를 옮기는 순간 어긋난다.</p>')
     for group, one, rows in FIGRULES:
         out.append(mistake_html(group, one, rows, ('왜 생겼나', '어떻게 한다')))
+    out.append('</details>')
 
     out.append('<details class="fold"><summary>세 갈래가 함께 지키는 것'
                '<span>%d</span></summary><div class="common">' % len(COMMON))
