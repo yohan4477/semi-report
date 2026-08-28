@@ -22,6 +22,14 @@ FIG_CSS = '''
 .fg-c { stroke: var(--accent); stroke-width: 1.2; fill: none; }
 '''
 
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))), 'scripts'))
+
+import chart  # noqa: E402
+
 
 def _box(x, y, w, h, label, sub='', hi=False):
     """상자 하나. 글자는 상자 안 가운데 두 줄로 앉힌다."""
@@ -43,10 +51,8 @@ def _criteria():
     값을 그리지 않는다. 원문에 든 것은 「무엇을 잣대로 골랐나」뿐이라 막대도 눈금도
     쓸 수 없다. 상자와 화살표로만 어느 쪽을 골랐는지 보인다.
 
-    마지막 칸은 파레토 곡선이다. 오픈AI 가 수치 하나를 안 내고 곡선으로 낸다고 했으니
-    그 곡선을 글로 적지 않고 그린다 — 다만 **축에 수를 달지 않는다**. 원문에 점도 눈금도
-    없어서 곡선의 자리는 값이 아니고, 모양이 말하는 것은 하나다: 한쪽을 낮추면 다른
-    쪽이 올라간다.
+    곡선은 이 판에 안 그린다. 파레토 곡선은 그림 한 장을 따로 받는다(`_pareto`) —
+    한 그림은 하나만 말한다.
 
     상자 사이 띠를 32픽셀로 벌려 글자를 그 안에 앉힌다. 앞 판은 띠가 12픽셀뿐이라
     글자가 아래 상자 테두리에 깔렸다 — check_fig 가 잡았다.
@@ -55,7 +61,7 @@ def _criteria():
     Y1, GAP, BH = 44, 32, 46
     y2 = Y1 + BH + GAP
     y3 = y2 + BH + 14
-    H = y3 + 6 + 96 + 34        # 곡선 판(96) + 가로축 이름 자리
+    H = y3 + 12
     o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
          'aria-label="잣대가 무엇에서 무엇으로 바뀌었나">' % (W, H)]
     o.append('<text x="20" y="24" class="fg">전 — 칩을 파는 회사가 정할 때</text>')
@@ -69,21 +75,6 @@ def _criteria():
     o.append('<path d="M485 %g L485 %g" class="fg-d"/>' % (Y1 + BH + 3, mid - 9))
     o.append('<path d="M485 %g L485 %g" class="fg-d"/>' % (mid + 5, y2 - 3))
     o.append('<text x="497" y="%g" class="fg fg-s">둘은 같이 못 낮춘다</text>' % (mid + 4))
-    # 파레토 곡선 — 값이 아니라 모양만 그린다. 원문에 점도 눈금도 없으므로 축에 수를
-    # 달지 않는다. 곡선이 말하는 것은 하나다: 한쪽을 낮추면 다른 쪽이 올라간다
-    px, py, pw, ph = 360, y3 + 6, 250, 96
-    base = py + ph
-    o.append('<path d="M%g %g L%g %g" class="fg-l"/>' % (px, py, px, base))
-    o.append('<path d="M%g %g L%g %g" class="fg-l"/>' % (px, base, px + pw, base))
-    o.append('<path d="M%g %g Q%g %g %g %g" class="fg-c"/>'
-             % (px + 26, py + 8, px + 26, base - 10, px + pw - 22, base - 10))
-    o.append('<text x="%g" y="%g" class="fg fg-s">에너지</text>' % (px + 6, py - 4))
-    o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="end">지연</text>'
-             % (px + pw, base + 16))
-    o.append('<text x="%g" y="%g" class="fg fg-s">이 선 위의 점만 낼 수 있다</text>'
-             % (px + 74, py + 26))
-    o.append('<text x="%g" y="%g" class="fg fg-s">왼쪽 아래가 좋다</text>'
-             % (px + 30, base - 26))
     o.append('<path d="M270 %g L352 %g" class="fg-l" marker-end="url(#fgA)"/>'
              % (Y1 + BH / 2.0, Y1 + BH / 2.0))
     o.append('<defs><marker id="fgA" markerWidth="8" markerHeight="8" refX="7" refY="4" '
@@ -94,6 +85,23 @@ def _criteria():
     o.append('<text x="20" y="%g" class="fg fg-s">돈에서 사람 경험으로</text>' % (y2 + 28))
     o.append('</svg>')
     return ''.join(o)
+
+
+def _pareto():
+    """파레토 곡선 — 두 잣대를 같이 낮출 수 없다.
+
+    손으로 path 를 적지 않는다. 곡선을 눈으로 맞추면 모양이 식에서 나온 것이 아니게 되고,
+    축·여백이 그림마다 달라진다. `scripts/chart.py` 가 matplotlib 으로 뽑는다.
+
+    **축에 수를 달지 않는다.** 원문에 점도 눈금도 없어서 곡선의 자리는 값이 아니다.
+    모양이 말하는 것은 하나다 — 한쪽을 낮추면 다른 쪽이 올라간다.
+    """
+    return chart.frontier(
+        lambda x: 1.0 / x, 1.0, 4.0,
+        '엔드투엔드 지연이 길어진다', '요청당 전기를 더 쓴다',
+        '두 잣대를 같이 낮출 수 없다',
+        notes=[(0.28, 0.82, '이 선 위의 점만 낼 수 있다', True),
+               (0.10, 0.14, '왼쪽 아래로 갈수록 좋다', False)])
 
 
 def _domain():
@@ -207,5 +215,6 @@ def _numa():
 
 
 CRITERIA = _criteria()
+PARETO = _pareto()
 DOMAIN = _domain()
 NUMA = _numa()
