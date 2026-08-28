@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""주간·월간 롤업 리포트를 소셜 히스토리와 SemiAnalysis 대시보드 상단에 스플라이스한다.
+"""주간·월간 롤업 리포트를 소셜 신호 히스토리 상단에 스플라이스한다.
 
 - 산문은 data/rollup_notes.json (사람이 씀, 판단이라 자동 생성 금지)
 - 기간은 **링크드인 게시 시각**(URN 역산) 기준, 건수는 히스토리 day 그룹에서 계산
-- 두 페이지 모두 <!--ROLLUP:START--> ~ <!--ROLLUP:END--> 사이만 갈아끼운다
+- <!--ROLLUP:START--> ~ <!--ROLLUP:END--> 사이만 갈아끼운다
 - 렌더러·CSS는 scripts/rollup_lib.py 공용 (금융·미국주식 사관학교 대시보드와 한 벌)
 
 사용: python scripts/gen_rollup.py
@@ -52,8 +52,9 @@ def main():
     # 접힌 요약 한 줄(show_desc)은 두 장 모두 뺀다 — 헤드라인과 같은 말을 두 번 읽게 된다.
     splice(HIST, '  <div class="tabbar">',
            rl.build(notes, counts, unit='건', open_current=False, show_desc=False), '  ')
-    splice(DASH, '  <section id="social-section"',
-           rl.build(notes, counts, unit='건', open_current=True, show_desc=False), '  ')
+    # SemiAnalysis 대시보드에는 붙이지 않는다 (2026-08-28). ① 이 각도 섹션으로 갈리면서
+    # 섹션마다 그 각도의 요지가 붙었고, 그 위에 주간·월간 롤업까지 얹으면 같은 주를
+    # 두 번 요약해 읽게 된다. 롤업 아카이브는 소셜 신호 히스토리 한 장에만 남긴다.
     print('reports: %d' % len(notes['reports']))
 
 

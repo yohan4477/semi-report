@@ -106,32 +106,29 @@ def render_row(r):
             '<div><div class="t"><a href="' + href + '"' + at + ">" + title + "</a>" + brief_badge + "</div>" + dline + artb + relb + "</div></div>")
 
 days = all_days()[:DAYS_WINDOW]
-VISIBLE_ROWS = 12  # 가장 최근 주에서 이 행수까지 펼쳐 두고 나머지는 접는다
+VISIBLE_ROWS = 3   # 각도마다 이 행수까지 펼쳐 두고 나머지는 접는다
 
-# ── 시간순 기록 층 ────────────────────────────────────────────────────────
-# 「이선엽 시황 대시보드」의 시간순 기록과 같은 꼴이다 — 세로 레일이 서고 그 위에 날짜
-# 줄이 얹힌다. 카드가 「무엇을 말했나」라면 이 층은 「언제 말했나」다.
-# 머리는 달이 아니라 주다. 미러 창이 2주쯤이라 달 머리로는 섹션이 하나뿐이 안 나온다.
-# 가장 최근 날짜에서 7일씩 끊고, 머리에 범위·건수와 그 주의 요지를 얹는다.
-# 요지는 판단이라 여기서 새로 쓰지 않고 주간 롤업(data/rollup_notes.json) 제목을
-# 끝일이 같을 때만 가져온다. 없으면 범위와 건수만 남는다.
-def _d(t):
-    y, m, dd = t.split("-")
-    return datetime.date(int(y), int(m), int(dd))
+# ── 각도 섹션 ─────────────────────────────────────────────────────────────
+# 신호를 물음으로 가른다. 클러스터 탭(컴퓨트·메모리·전력)은 **대상**으로 묶는 축이라
+# 같은 엔비디아 글이 성능 실측이든 배포 도구든 한 칸에 들어간다. 각도는 그 위에
+# 「무엇을 묻는 글인가」를 얹는다 — 가르는 절차는 structure 스킬 A 레인이다.
+# 판단이라 여기서 만들지 않고 data/li_angles.json 을 읽는다. 줄 안은 시간순이다.
+ANGLES_PATH = os.path.join("data", "li_angles.json")
 
-def week_titles():
+def load_angles():
     try:
-        reports = json.load(open(os.path.join("data", "rollup_notes.json"), encoding="utf-8"))["reports"]
-    except Exception:
-        return {}
-    out_ = {}
-    for r in reports:
-        if r.get("kind") == "week" and r.get("to"):
-            out_[r["to"]] = r.get("title", "")   # 끝일이 겹치면 나중 회차가 이긴다
-    return out_
+        j = json.load(open(ANGLES_PATH, encoding="utf-8"))
+        return j["angles"], j["map"]
+    except Exception as e:
+        print("각도 파일을 못 읽었다 — 시간순 한 덩어리로 낸다:", e)
+        return [], {}
 
-WKT = week_titles()
-anchor = _d(days[0]) if days else None
+ANGLE_DEFS, ANGLE_MAP = load_angles()
+UNSORTED = {"key": "etc", "name": "미분류", "lede": "각도가 아직 안 붙은 줄 — data/li_angles.json 에 넣는다"}
+
+def aid_of(href):
+    m = re.search(r"activity:(\d+)", href)
+    return m.group(1) if m else href
 
 def li_html(d, rows, mark_day=True):
     out_ = ""
@@ -145,52 +142,59 @@ def li_html(d, rows, mark_day=True):
         out_ += "      " + sig + "\n"
     return out_
 
-def week_head(start, end, n):
-    t = WKT.get(end.isoformat(), "")
-    tspan = '<span class="tlw">' + t + "</span>" if t else ""
-    return ('    <p class="tlog-m">' + start.strftime("%m-%d") + " ~ " + end.strftime("%m-%d")
-            + ' <span class="tln">' + str(n) + "건</span>" + tspan + "</p>\n")
-
 def foldb(n, label, body):
     return ('    <button class="moreb" aria-expanded="false" data-n="' + str(n)
             + '" data-lbl="' + label + '"><span class="car">▾</span> '
             '<span class="mtxt">' + label + '</span></button>\n'
             '    <ul class="moredays">\n' + body + '    </ul>\n')
 
-weeks = []
+# 날짜 → 행. 같은 각도 안에서도 날짜 머리를 그대로 살린다
+bydate = []
 for d in days:
     rows = extract(d) + NVROWS.get(d, [])
-    if not rows:
-        continue
-    k = (anchor - _d(d)).days // 7
-    while len(weeks) <= k:
-        weeks.append(None)
-    if weeks[k] is None:
-        end = anchor - datetime.timedelta(days=7 * k)
-        weeks[k] = {"end": end, "start": end - datetime.timedelta(days=6), "days": []}
-    weeks[k]["days"].append((d, rows))
-weeks = [w for w in weeks if w]
+    if rows:
+        bydate.append((d, rows))
 
-out = '    <div class="tlog">\n'
-for wi, w in enumerate(weeks):
-    n = sum(len(rows) for _, rows in w["days"])
-    out += week_head(w["start"], w["end"], n)
-    if wi == 0:
-        shown, vis, hid, hidn = 0, "", "", 0
-        for d, rows in w["days"]:
-            if shown < VISIBLE_ROWS:
-                vis += li_html(d, rows)
-                shown += len(rows)
-            else:
-                hid += li_html(d, rows)
-                hidn += len(rows)
-        out += "    <ul>\n" + vis + "    </ul>\n"
-        if hid:
-            out += foldb(hidn, "이 주 나머지 " + str(hidn) + "개 신호", hid)
-    else:
-        out += foldb(n, "펼치기 · 신호 " + str(n) + "개",
-                     "".join(li_html(d, rows) for d, rows in w["days"]))
-out += "    </div>\n"
+buckets, unknown = {}, []
+for d, rows in bydate:
+    for r in rows:
+        k = ANGLE_MAP.get(aid_of(r["href"]))
+        if k is None:
+            k = "etc"
+            unknown.append(aid_of(r["href"]))
+        buckets.setdefault(k, []).append((d, r))
+
+out = ""
+defs = list(ANGLE_DEFS) + ([UNSORTED] if buckets.get("etc") else [])
+if not defs:                      # 각도 파일이 없으면 예전처럼 시간순 한 덩어리
+    defs = [{"key": "etc", "name": "시간순", "lede": ""}]
+    buckets = {"etc": [(d, r) for d, rows in bydate for r in rows]}
+for a in defs:
+    items = buckets.get(a["key"]) or []
+    if not items:
+        continue
+    cats = " ".join(sorted({cat_for(r["sn"]) for _, r in items}))
+    lede = '<span class="tlw">' + a["lede"] + "</span>" if a.get("lede") else ""
+    out += ('    <p class="tlog-m" data-c="' + cats + '">' + a["name"]
+            + ' <span class="tln">' + str(len(items)) + "건</span>" + lede + "</p>\n")
+    vis = hid = ""
+    shown = 0
+    prev = None
+    for d, r in items:
+        html = li_html(d, [r], mark_day=(d != prev))
+        prev = d
+        if shown < VISIBLE_ROWS:
+            vis += html
+            shown += 1
+        else:
+            hid += html
+    out += "    <ul>\n" + vis + "    </ul>\n"
+    if hid:
+        n = len(items) - shown
+        out += foldb(n, "이 각도 나머지 " + str(n) + "개 신호", hid)
+out = '    <div class="tlog">\n' + out + "    </div>\n"
+if unknown:
+    print("각도 없는 신호 %d건 — data/li_angles.json 에 넣는다: %s" % (len(unknown), ", ".join(unknown[:8])))
 
 ds = open(DASH, encoding="utf-8").read()
 # ① 블록의 시작 — 시간순 기록 층 한 덩어리다
