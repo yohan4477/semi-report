@@ -21,7 +21,7 @@ sources:
   - {file: "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md", note: "층을 더 쌓는 길과 통로를 넓히는 길이 갈리는 자리"}
   - {file: "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md", note: "베이스 다이를 로직 공정으로 바꾼 결과와 그 바탕 공정의 수율"}
   - {file: "content/understanding/미국주식 사관학교/[260715] 광통신·포토닉스 입문 - CPO·OCS와 밸류체인 다섯 층.md", note: "광 연결이 어느 층에서 매출로 잡히는지 나눈다"}
-  - {file: "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 가르는 법.md", note: "엔비디아가 광부품 공급선에 직접 넣은 돈"}
+  - {file: "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 나누는 법.md", note: "엔비디아가 광부품 공급선에 직접 넣은 돈"}
   - {file: "content/linkedin/[2608] 링크드인 게시물.md", note: "구글 TPU 연결망이 다음 세대에 어디로 가는지 짚은 자리. 원문이 소문이라 밝혔다"}
   - {file: "content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md", note: "웨이퍼 배정과 수급 격차를 HBM 기준으로 잰다"}
   - {file: "content/newsletter/ai_infra/compute/[260313] AI 실리콘 대란 - TSMC N3부터 메모리까지.md", note: "감산 시나리오별로 풀리는 물량과, HBM·D램 사이 마진이 뒤집힌 자리"}

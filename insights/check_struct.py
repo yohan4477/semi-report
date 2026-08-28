@@ -51,21 +51,8 @@ VERDICT = re.compile(r'<p class="uc-verdict">(.*?)</p>', re.S)
 REP = re.compile(r'<div class="uc-rep">(.*?)(?:<div class="uc-links"|\Z)', re.S)
 H3 = re.compile(r'<h3>(.*?)</h3>', re.S)
 FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
-# 목차는 첫 절보다 앞에 있으면 된다 — 그 앞에 각도 상자가 설 수 있다
+# 목차는 첫 절보다 앞에 있으면 된다
 TOCBOX = re.compile(r'<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
-ANGBOX = re.compile(r'<div class="uc-angles">(.*?)</div>', re.S)
-# 나무로 그리면서 L1 이름이 <span class="ag-1"> 안으로 들어갔다. 가지는 빼고 줄기만 읽는다
-ANGLI = re.compile(r'<li class="ag-(on|off)"><span class="ag-1">(.*?)</span>', re.S)
-# 물음 하나와 그 아래 구성요소 묶음
-AGQ = re.compile(r'<span class="ag-q">(.*?)</span>(?:<span class="ag-sh">(.*?)</span>)?'
-                 r'(?:<span class="ag-eq">(.*?)</span>)?'
-                 r'(?:<ul class="ag-p">(.*?)</ul>)?', re.S)
-# 식을 항으로 자른다. = 로 좌우를 나누고 + − × ÷ 로 항을 쪼갠다
-EQCUT = re.compile(r'[=+−×÷→∝≈]|[-]')
-AGROW = re.compile(r'<li>(?:<span class="ag-ax">(.*?)</span>)?<span class="ag-v">(.*?)</span>', re.S)
-# 잎이면서 값이 아직 여럿을 담고 있는 항 — 자식 <ul> 이 안 붙은 <li>
-AGLEAF = re.compile(r'<span class="ag-v">(.*?)</span></li>', re.S)
-AGSH = re.compile(r'<span class="ag-sh">(.*?)</span>', re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
@@ -78,19 +65,6 @@ CLOSE = re.compile(r'(나|가|인가|는가|을까|ㄹ까)$')
 DRAWER = ('여러 가지', '기타', '그 밖', '정리', '요약', '개요')
 LIMIT = ('한계', '밝히지 않', '안 밝힌', '못 밝힌', '검증되지', '남는 물음')
 
-def load_angles():
-    """각도 파일의 angles 목록 — 카드가 밝힌 각도와 대조할 정본."""
-    out = {}
-    for p in glob.glob(os.path.join(paths.ROOT, 'insights', 'angles', '*.md')):
-        t = io.open(p, encoding='utf-8').read()
-        m = re.search(r'^angles:\s*\[(.*?)\]\s*$', t, re.M)
-        if m:
-            names = [x.strip() for x in m.group(1).split(',') if x.strip()]
-            out[os.path.basename(p)] = [n for n in names if n != '저자 논지']
-    return out
-
-
-ANGLES = load_angles()
 rows = []
 
 
@@ -154,68 +128,6 @@ def check_card(where, body):
     for sh in shapes:
         if sh not in SHAPE_WORDS:
             add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
-
-    # S9 각도를 목차와 따로 밝혔나. 그리고 그 목록이 각도 파일과 같은가 —
-    # 카드가 각도 일부만 절로 세우는 것은 정상이지만, 어떤 각도가 있었는지는 밝혀야 한다
-    mang = ANGBOX.search(rep)
-    if not mang:
-        add('FAIL', at, 'S9', '각도를 밝힌 자리가 없다 — 목차와 따로 세운다')
-    else:
-        # 하위 각도는 각도 파일 프런트매터에 없다(L1 만 적는다) — 떼고 견준다
-        named = [txt(re.sub(r'<span class="ag-sub">.*?</span>', '', m[1], flags=re.S))
-                 for m in ANGLI.findall(mang.group(1))]
-        if not named:
-            add('FAIL', at, 'S9', '각도 목록이 비어 있다')
-        elif ANGLES:
-            same = [a for a in ANGLES.values() if set(a) == set(named)]
-            if not same:
-                add('WARN', at, 'S9', '각도 목록이 어느 각도 파일과도 안 맞는다: %s'
-                    % ' · '.join(named[:5]))
-
-    # S10 한 물음 아래 구성요소가 축으로 갈렸나. 물음만 MECE 하게 쪼개고 그 아래를
-    # 사실 자루로 두면 무엇과 무엇이 겹치는지가 안 보인다. 축 이름이 있어야 겹친 축도
-    # 빠진 축도 눈에 걸린다. 같은 축이 한 물음에 두 번 나오면 그건 안 가른 것이다
-    if mang:
-        for mq in AGQ.finditer(mang.group(1)):
-            q = txt(mq.group(1))
-            shape = txt(mq.group(2) or '')
-            eq = txt(mq.group(3) or '')
-            rows = AGROW.findall(mq.group(4) or '')
-            if not rows:
-                continue
-            axes = [txt(a) for a, _ in rows if a]
-            bare = len(rows) - len(axes)
-            if bare:
-                add('WARN', at, 'S10', '구성요소에 축 이름이 없다(%d개) — 「%s」' % (bare, q))
-            dup = {a for a in axes if axes.count(a) > 1}
-            if dup:
-                add('FAIL', at, 'S10', '한 물음에 같은 축이 두 번 — 「%s」의 %s'
-                    % (q, ' · '.join(sorted(dup))))
-            if len(rows) == 1:
-                add('WARN', at, 'S10', '구성요소가 하나뿐이다 — 갈린 게 아니다: 「%s」' % q)
-
-            # S11 식을 세웠으면 그 항이 축으로 서 있어야 한다. 「a = 가 + 나 + 다」로
-            # 적어 놓고 축이 딴것이면 무엇을 더해 그 값이 나왔는지가 다시 사라진다
-            if eq and '=' in eq:
-                terms = [t.strip() for t in EQCUT.split(eq) if t.strip()]
-                axjoin = ' '.join(axes)
-                miss = [t for t in terms if len(t) > 1 and t not in axjoin]
-                if miss:
-                    add('WARN', at, 'S11', '식의 항이 축에 없다 — 「%s」의 %s'
-                        % (q, ' · '.join(miss[:3])))
-                if len(terms) < 2:
-                    add('FAIL', at, 'S11', '식에 항이 하나뿐이다 — 「%s」' % q)
-
-            # S12 꼴은 목차와 같은 일곱을 쓴다. 요소를 쪼개는 방법을 새로 만들지 않는다
-            if shape and shape not in SHAPE_WORDS:
-                add('FAIL', at, 'S12', '요소의 꼴이 정해진 일곱에 없다: %s' % shape)
-            # S13 깊이를 미리 정하지 않는다. 의미 있게 쪼개지는 동안 계속 쪼갠다 —
-            # 잎인데 값이 아직 가운뎃점으로 여럿을 이어 붙였으면 한 층 덜 판 것이다
-            for leaf in AGLEAF.findall(mq.group(4) or ''):
-                v = txt(leaf)
-                if v.count(' · ') >= 2:
-                    add('WARN', at, 'S13', '잎이 아직 여럿을 담았다 — 한 층 더 판다: 「%s」의 %s'
-                        % (q, v[:40]))
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
