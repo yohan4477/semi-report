@@ -195,7 +195,9 @@ def check_card(where, body):
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
     for h in heads:
-        bare = h.lstrip(CIRCLE).strip()
+        # 제목 앞에 노드 이름이 설 수 있다(「낳은 설계 ① 대역폭을 …」). 번호 뒤부터가 물음이다
+        cut = max((h.rfind(ch) for ch in CIRCLE), default=-1)
+        bare = (h[cut + 1:] if cut >= 0 else h).strip()
         # S10 제목 하나에 물음이 둘이면 절이 둘이다. 「무엇으로 쟀고 무엇이 안 재졌나」는
         # 한 절에 두 물음을 담아 놓은 것이고, 그 안에서 무엇이 답인지가 흐려진다
         if len(ASK.findall(bare)) > 1 and re.search(r'(고|며|이며|또)\s', bare):
@@ -208,12 +210,19 @@ def check_card(where, body):
         if not (ASK.search(bare) or CLOSE.search(bare)):
             add('FAIL', at, 'S4', '물음이 아니다: %s' % bare)
 
-    # S5 목차 번호와 실제 절 번호
-    if toc:
-        want = [c for c in CIRCLE if c in toc]
-        got = [h[0] for h in heads if h and h[0] in CIRCLE]
+    # S5 목차 번호와 실제 절 번호. **노드가 바뀌면 번호가 ① 부터 다시 시작하므로**
+    # 겹치는 번호를 걷어 내면 안 된다 — 나온 차례 그대로 견준다
+    if toc and mbox:
+        want = [txt(x) for x in TGLI.findall(mbox.group(1))]
+        want = [w for w in want if w and w[0] in CIRCLE]
+        got = []
+        for h in heads:
+            hit = [ch for ch in h if ch in CIRCLE]
+            if hit:
+                got.append(hit[0])
         if want != got:
-            add('FAIL', at, 'S5', '목차 %d개 · 절 %d개로 어긋난다' % (len(want), len(got)))
+            add('FAIL', at, 'S5', '목차 번호와 절 번호가 어긋난다 — 목차 %s · 절 %s'
+                % (''.join(want), ''.join(got)))
 
     # S12 나열을 열었으면 항목에 ①②③ 이 붙어야 한다. 「셋 남는다」로 열고 번호 없이
     # 이어 붙이면 어디까지가 한 항목인지가 문장 안에서 흐려진다
