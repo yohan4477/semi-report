@@ -107,11 +107,12 @@ def _domain():
         o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
         o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
                  'Tomahawk 6 스위치</text>' % (x0 + 120))
-    o.append('<text x="292" y="118" class="fg fg-s">⋯</text>')
-    # 바깥 겹을 잇는 얇은 선 — 굵기가 곧 속도 차이다
-    o.append('<path d="M274 190 L366 190" stroke="var(--ink-3)" stroke-width="1.2" '
+    # 작은 묶음끼리는 스위치를 거쳐 붙는다. 앞 판은 이 선을 상자 아래 허공에 그어
+    # 어디에도 안 닿았다 — 스위치와 스위치를 잇는다
+    o.append('<path d="M242 146 L362 146" stroke="var(--ink-3)" stroke-width="1.2" '
              'fill="none"/>')
-    o.append('<text x="320" y="184" class="fg fg-s" text-anchor="middle">ESUN</text>')
+    o.append('<text x="302" y="140" class="fg fg-s" text-anchor="middle">ESUN</text>')
+    o.append('<text x="302" y="100" class="fg fg-s" text-anchor="middle">⋯</text>')
     # 굵기 범례 — 판 위가 아니라 판 아래
     o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="3.5" '
              'fill="none"/>')

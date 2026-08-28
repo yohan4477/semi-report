@@ -148,7 +148,22 @@ def text_hits(svg, strict=True):
     return bad
 
 
+def unreadable(svg):
+    """글자가 있는데 좌표를 못 읽는 꼴인가.
+
+    <text> 는 있는데 x 를 단 것이 하나도 없으면 배치를 잴 수 없다. 그런 SVG 를
+    「FAIL 0건」으로 넘기면 검사기가 있는 척만 하는 것이다.
+    """
+    n = svg.count('<text')
+    if not n:
+        return False
+    return len(re.findall(r'<text[^>]*\sx=', svg)) == 0
+
+
 def hits(svg, strict=True):
+    if unreadable(svg):
+        return ['배치를 못 읽는 꼴이다 — 좌표가 <text> 에 없다(mermaid 등). '
+                '좌표를 풀어 주거나 손으로 그린다']
     bad = text_hits(svg, strict)
     bs = boxes(svg)
     vm = VIEW.search(svg)
