@@ -179,10 +179,17 @@ CARDS = [{
                 '셋으로 나눴다. 가장 오래 남는 대목은 성능 수치가 아닌 <b>기준을 총소유비용 대신 '
                 '마지막 토큰까지의 지연과 요청당 에너지로 잡았다</b>는 발표다.'),
     'report': [
-        ('angles', [('설계기준', True), ('벤치마크', True), ('전력효율', True),
-                    ('메모리대역폭', True), ('메모리배치', True),
-                    ('스케일업도메인', True), ('파트너', False), ('개발일정', True),
-                    ('로드맵', False), ('프레이밍', False)]),
+        ('angles', [
+            ('설계기준', True, ['무엇을 재나', '누가 정하나']),
+            ('벤치마크', True, ['무엇으로 쟀나', '무엇이 안 재졌나', '무엇이 나왔나',
+                              '견준 자가 맞나']),
+            ('전력효율', True, []),
+            ('메모리대역폭', True, ['얼마가 있나', '왜 다 못 쓰나']),
+            ('메모리배치', True, []),
+            ('스케일업도메인', True, ['안쪽 겹', '바깥 겹', '얼마나 큰가']),
+            ('파트너', False, []), ('개발일정', True, []),
+            ('로드맵', False, []), ('프레이밍', False, []),
+        ]),
         ('toc', [
             ('설계 기준', '대비', [('①', '무엇을 기준으로 설계했다고 말하나')]),
             ('테이프아웃 일정', '시간 흐름', [('②', '아홉 달이 무슨 뜻인가')]),
@@ -2252,6 +2259,10 @@ TOC_CSS = """
     font-weight:700; }
   .uc-rep .uc-angles li.ag-on::before { content:"● "; font-size:.6em;
     vertical-align:.24em; }
+  /* 하위 각도 — L1 알약 안에 한 줄 아래로. L1 과 같은 크기면 층이 뭉갠다 */
+  .uc-rep .uc-angles li { display:inline-block; }
+  .uc-rep .uc-angles .ag-sub { display:block; margin-top:2px; font-size:.68rem;
+    font-weight:400; color:var(--ink-3); opacity:.85; }
   .uc-rep .uc-angles .ag-note { margin:7px 0 0; font-size:.74rem; color:var(--ink-3); }
   /* 글의 꼴 — 마디 옆에 작게. 대상의 마디와 같은 무게로 보이면 안 된다 */
   .uc-rep .uc-toc .tg-f { flex:0 0 4.6em; font-size:.72rem; font-weight:700;

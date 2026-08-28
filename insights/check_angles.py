@@ -28,6 +28,9 @@ KINDS = ('사실', '계획', '전망', '추정', '가정', '발언', '제안', '
 TAG_RE = re.compile(r'\[([^\[\]\n]*?·[^\[\]\n]*?)\]')
 SEP_RE = re.compile(r'^\|[\s:|-]+\|$')
 # 표가 아닌 절 — 여기엔 꼬리표를 안 단다
+# 한 각도에 행이 이만큼 넘으면 하위 각도(###)로 갈라야 한다 — 안 그러면 성격이 다른
+# 것이 한 표에 섞인다. 스킬 레인 A 「각도는 세 층이다」가 그 규칙이다
+SUB_AT = 6
 NO_TAG_HEADS = ('## 시계열', '## 잔여', '## 다음 글이 채울 자리')
 NO_TAG_HEADS_NAMES = tuple(h[3:] for h in NO_TAG_HEADS)
 
@@ -88,6 +91,34 @@ def check(text, canon, alias):
     msgs = []
     for ln, msg in angle_gap(text):
         msgs.append(('FAIL', 'A6', ln, msg))
+    # A9 — 층. 어느 층이든 묶음 하나에 행이 여섯을 넘는데 그 아래 층이 없으면 성격이
+    # 다른 것이 한 표에 섞인다. 층 수를 고정하지 않으므로 ##·###·#### 를 같은 자로 잰다.
+    # 스킬 레인 A 「각도는 층이다 — 층 수를 미리 정하지 않는다」
+    open_heads = []          # [(층, 이름, 줄, 직속 행 수, 아래 층 개수)]
+
+    def close(depth):
+        while open_heads and open_heads[-1][0] >= depth:
+            lvl, name, ln0, nrow, nsub = open_heads.pop()
+            if nrow > SUB_AT and not nsub:
+                msgs.append(('WARN', 'A9', ln0,
+                             '%s 「%s」 에 행이 %d개인데 아래 층이 없다 — %s 로 한 층 더 판다'
+                             % ('각도' if lvl == 2 else '하위 각도', name, nrow,
+                                '#' * (lvl + 1))))
+
+    for i, line in enumerate(text.split('\n'), 1):
+        m = re.match(r'^(#{2,5}) (.+)$', line)
+        if m:
+            depth, name = len(m.group(1)), m.group(2).strip()
+            close(depth)
+            if open_heads:
+                open_heads[-1][4] += 1
+            if not (depth == 2 and (name in NO_TAG_HEADS_NAMES or name == '저자 논지')):
+                open_heads.append([depth, name, i, 0, 0])
+            continue
+        if open_heads and line.startswith('|') and not SEP_RE.match(line):
+            if _cells(line)[0] != '대상':
+                open_heads[-1][3] += 1
+    close(0)
     # A8 — 저자 논지 절. 2026-08-28 실험에서 교차 카드 주장 문단의 부품 넷 중
     # 넷째를 각도 밖에서 세워야 했다. 항목만 남기면 「무엇을 주장했나」가 사라진다
     if '## 저자 논지' not in text:

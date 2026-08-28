@@ -150,7 +150,9 @@ def check_card(where, body):
     if not mang:
         add('FAIL', at, 'S9', '각도를 밝힌 자리가 없다 — 목차와 따로 세운다')
     else:
-        named = [txt(m[1]) for m in ANGLI.findall(mang.group(1))]
+        # 하위 각도는 각도 파일 프런트매터에 없다(L1 만 적는다) — 떼고 견준다
+        named = [txt(re.sub(r'<span class="ag-sub">.*?</span>', '', m[1], flags=re.S))
+                 for m in ANGLI.findall(mang.group(1))]
         if not named:
             add('FAIL', at, 'S9', '각도 목록이 비어 있다')
         elif ANGLES:

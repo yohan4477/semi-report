@@ -534,11 +534,19 @@ def angles_html(items):
     """
     li = []
     for it in items:
-        name, used = it if isinstance(it, tuple) else (it, False)
-        li.append('<li class="%s">%s</li>' % ('ag-on' if used else 'ag-off', name))
+        if isinstance(it, tuple):
+            name, used = it[0], it[1]
+            subs = it[2] if len(it) > 2 else ()
+        else:
+            name, used, subs = it, False, ()
+        sub = ('<span class="ag-sub">%s</span>'
+               % ' · '.join(subs)) if subs else ''
+        li.append('<li class="%s">%s%s</li>'
+                  % ('ag-on' if used else 'ag-off', name, sub))
     return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag">%s</ul>'
             '<p class="ag-note">점이 찍힌 것이 이 카드가 절로 세운 각도다. '
-            '나머지는 각도 파일에만 있다.</p></div>' % ''.join(li))
+            '아래 작은 글씨는 각도 파일의 하위 각도이고, 나머지는 각도 파일에만 '
+            '있다.</p></div>' % ''.join(li))
 
 
 def toc_html(groups):
