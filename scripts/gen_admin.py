@@ -226,7 +226,81 @@ COMMON = [
      '콘솔이 cp949라 파이썬 실행에 붙인다.'),
 ]
 
+# 실험 — 체계를 바꾸기 전에 재 본 것. 결론이 아니라 측정값을 남긴다.
+# (키, 날짜, 이모지, 제목, 물음, 조건, [측정 타일], [단계], 판정)
+EXPERIMENTS = [
+ ('exp-angles', '2026-08-28', '🧪', '각도만으로 교차 카드가 서나',
+  '<b>insights/angles/</b> 의 각도 파일만으로 교차 인사이트 카드 한 장을 쓸 수 있나 — 노트 349장을 각도가 대신할 수 있나.',
+  '재료는 <code>insights/angles/*.md</code> 뿐. <code>insights/notes/</code>를 열지 않는다. 원문은 열되 <b>몇 번 열었고 무엇을 확인하러 열었는지</b>를 전부 센다 — 그 횟수가 측정값이다.',
+  [('원문 열람', '8회 · 파일 5편', '그중 <b>6회는 오직 줄 번호</b>를 얻으려는 것이었다. 사실 자체는 각도에 다 있었다.'),
+   ('위임', '1회 · sonnet', '<code>check_fresh</code> F1이 물은 인접 문서 2편 판정. 메인 컨텍스트를 원문 덩어리로 오염시키지 않으려고 뗐다.'),
+   ('검사기', '10종 FAIL 0', '<code>check_cite</code> 확인필요도 이 카드에는 0건이다.'),
+   ('못 채운 자리', '3', '줄 번호 · 저자 논지 · 사실의 격(도해인지 산문인지).')],
+  [
+   ('결과 ① 인용은 선다 — 줄 번호가 각도 밖에 있을 뿐', 'gate',
+    '각도는 절까지만 준다',
+    [('각도가 주는 주소', '§2 · §3'),
+     ('검사기가 요구하는 주소', '(제미나이는 끝났어도 L153)')],
+    ['절차가 이렇게 됐다 — ① 각도에서 인용할 값을 고른다 ② 그 값 문자열로 원문을 grep 해 줄 번호를 얻는다 ③ <code>(라벨 L153)</code> 꼴로 단다.',
+     '값이 유일한 문자열이면(1,200억 · 848억 7,500만) grep 한 번에 걸린다. <b>값이 없는 항목은 더 비쌌다</b> — 쿠리안 발언·거래 상대 목록은 키워드로 더듬어야 했다.',
+     '각도 항목에 <code>§4 · L198</code> 꼴로 줄까지 적어 두면 <b>원문 열람 6회 중 4회가 없어진다</b>.']),
+
+   ('결과 ② 저자의 논지는 안 선다', 'work',
+    '각도는 항목 목록이라 「무엇을 주장했나」가 안 남는다',
+    [('각도로 채운 부품', '쌍의 양쪽 · 어긋남의 주체 · 양쪽의 값'),
+     ('각도 밖에서 세운 부품', '이 카드가 정하는 것')],
+    ['집필 계약의 <b>주장 문단 부품 넷</b> 중 셋은 각도로 채워졌고 넷째는 재료가 없었다.',
+     '260807 각도는 「GCP가 수혜자」라고 적지만 <b>「그 수혜가 앤트로픽 한 곳에 걸려 있다」</b>는 260706과 붙여야 나온다 — 각도끼리 붙이는 일은 각도가 안 해 준다.']),
+
+   ('결과 ③ 사실의 격이 안 적힌다', 'gate',
+    '도해 전용 값이 산문 사실과 같은 줄에 있다',
+    [('문제의 값', 'TPU 출하량의 20%+ 가 앤트로픽으로'),
+     ('원문에서의 자리', '260807 L109 — mermaid 도해 안')],
+    ['각도 끝의 「도해와 용어 정리는 본문의 재표현」이라는 문장이 <b>이 건에서 틀렸다</b>. 산문에는 같은 수가 없다.',
+     '원문을 안 열었으면 도해 전용 값을 산문 근거로 썼을 것이다. 카드의 <b>아직 모르는 것</b> 절에 그대로 적었다.',
+     '각도 항목의 성격 칸에 <b>「도해」를 하나 더 두면</b> 이 자리가 기계에 걸린다.']),
+
+   ('결과 ④ 인접 문서 판정은 각도 코퍼스 밖이다', 'gate',
+    'check_fresh F1 · 각도 14편은 260807에서 끊긴다',
+    [('F1이 물은 문서', '260822 엔비디아 · 260816 애플 CXMT'),
+     ('닫은 방법', 'frontmatter checked: 에 why 두 줄')],
+    ['각도 안에서는 이 게이트를 닫을 방법이 없다 — 그 두 편에 대응하는 각도가 없다.',
+     '원문 둘을 열어야 했고, 그 열람을 <b>서브에이전트로 뺐다</b>. 판정은 둘 다 무관 — 260822는 하이퍼스케일러 자체 칩을 한 줄 스칠 뿐 구글 TPU 구매자 구성을 다루지 않는다.']),
+
+   ('결과 ⑤ 쌍을 고르는 일은 각도가 더 낫다', 'work',
+    'scratchpad/angle_join.py',
+    [('한 화면에 나온 것', '구글 = 편 5 · 항목 36 · 각도 15종'),
+     ('걸린 시간', '쌍 후보 고르기 5분 미만')],
+    ['<b>여러 편에 걸친 대상 25종</b>을 항목 수 순으로 세워 주므로 어긋남 후보가 눈에 먼저 든다.',
+     '노트 349장으로 같은 일을 하면 이 단계가 훨씬 무겁다. <b>각도의 값은 여기에 있다.</b>']),
+
+   ('판정 · 다음 조치', 'gen',
+    '각도는 고르는 데 빠르고 세우는 데 둘이 모자란다',
+    [('산출물', 'insights/synth/cross-2026-08-28-구글이-파는-TPU를-사는-곳.md'),
+     ('재료', 'insights/angles/ 14편 · 노트 0장')],
+    ['각도 항목에 <b>줄 번호 칸</b>을 넣는다 — 원문 열람의 4분의 3이 사라진다.',
+     '편마다 <b>「저자 논지」 절</b>을 하나 둔다 — 주장 문단의 넷째 부품이 각도 안에서 선다.',
+     '성격 칸에 <b>「도해」</b>를 더한다 — 도해 전용 값이 산문 근거로 새는 자리를 막는다.',
+     '셋을 넣기 전까지 교차 카드는 <b>각도만으로 쓰지 않는다</b>. 인용과 논지 두 자리에서 원문이 필요하다.']),
+  ],
+  '각도는 「무엇을 쓸지」를 고르는 데는 노트보다 빠르고, 「그것으로 카드를 세우는」 데는 줄 번호와 저자 논지 둘이 모자란다.'),
+]
+
+
 CSS = r'''
+  /* 실험 — 체계를 바꾸기 전에 재 본 것 */
+  .xp{margin:22px 0 0;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--ac);
+      border-radius:0 12px 12px 0;background:var(--card);box-shadow:var(--shadow)}
+  .xh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 11px;margin:0 0 6px}
+  .xh .em{font-size:20px;line-height:1}
+  .xh h2{font-size:var(--t-h2);font-weight:850;letter-spacing:-.025em;margin:0;color:var(--ink)}
+  .xh .dt{font-size:var(--t-lbl);font-weight:700;color:var(--ac);
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .xp .q{margin:0 0 4px;font-size:var(--t-body);color:var(--ink);max-width:70ch}
+  .xp .cond{margin:0 0 12px;font-size:var(--t-meta);color:var(--sub);max-width:70ch}
+  .xp .verdict{margin:14px 0 0;padding:11px 13px;border-radius:10px;background:var(--sunk);
+               border:1px solid var(--line);font-size:var(--t-body);font-weight:800;color:var(--ink)}
+
   .lede2{color:var(--sub);font-size:var(--t-body);margin:10px 0 0;max-width:70ch}
   .common{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:18px 0 0}
   .cm{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:12px 14px;box-shadow:var(--shadow)}
@@ -343,6 +417,9 @@ def main():
         out.append('<a href="#%s" style="--ac:%s"><span class="t">%s %s</span>'
                    '<span class="s">단계 %d</span></a>'
                    % (key, ACCENT[key], emo, name, len(stages) + 1))
+    for key, date, emo, title, _q, _c, _t, stages, _v in EXPERIMENTS:
+        out.append('<a href="#%s" style="--ac:#7c3aed"><span class="t">%s %s</span>'
+                   '<span class="s">실험 · %s</span></a>' % (key, emo, title, date))
     out.append('</div>')
 
     for key, emo, name, one, rule_src, stages in LANES:
@@ -357,6 +434,24 @@ def main():
             out.append(stage_html(*st))
         out.append('</section>')
 
+    out.append('<h3 class="sec">실험 — 체계를 바꾸기 전에 재 본 것</h3>')
+    out.append('<p class="lede2">측정값을 남긴다. 무엇을 조건으로 걸었고, 그 조건 안에서 무엇이 안 되었는지가 다음 회차의 근거다.</p>')
+    for key, date, emo, title, q, cond, tiles, stages, verdict in EXPERIMENTS:
+        out.append('<section class="xp" id="%s" style="--ac:#7c3aed">' % key)
+        out.append('<div class="xh"><span class="em">%s</span><h2>%s</h2><span class="dt">%s</span></div>'
+                   % (emo, title, date))
+        out.append('<p class="q">%s</p><p class="cond">%s</p>' % (q, cond))
+        out.append('<div class="common">')
+        for lbl, word, desc in tiles:
+            out.append('<div class="cm"><b>%s</b><span class="w">%s</span><p>%s</p></div>' % (lbl, word, desc))
+        out.append('</div>')
+        for j, st in enumerate(stages):
+            if j:
+                out.append('<div class="arw" aria-hidden="true">▼</div>')
+            out.append(stage_html(*st))
+        out.append('<p class="verdict">%s</p>' % verdict)
+        out.append('</section>')
+
     out.append('<footer><p class="lede">대시보드는 세 갈래로 나뉘고 갈래마다 소스·집필 룰·검사기가 다르다. 룰 문서를 다 읽지 않고도 <b>어느 룰이 어느 단계에 걸리는지</b> 보라고 만든 장이다.</p><p class="lede2">갈래마다 흐름도 한 장이다. 원문이 어디로 들어와 무엇을 거쳐 어느 화면으로 나가는지 위에서 아래로 읽고, 상자 안에 그 단계에서만 걸리는 룰이 있다.</p><div class="meta"><span>룰 원본 · README.md · CLAUDE.md · LINKEDIN_RULES.md · .claude/skills/</span><span>생성 · scripts/gen_admin.py</span></div>이 장은 룰의 원본이 아니라 <b>색인</b>이다. 룰이 바뀌면 원본 문서를 먼저 고치고 '
                '<code>scripts/gen_admin.py</code>의 <code>LANES</code>를 맞춘 뒤 다시 만든다. '
                'insight-dashboard.com에서는 <code>/admin</code>으로 잠겨 나간다.</footer>')
@@ -366,7 +461,8 @@ def main():
     with io.open(OUT, 'w', encoding='utf-8') as f:
         f.write('\n'.join(out))
     n = sum(len(l[5]) + 1 for l in LANES)
-    print('관리자 대시보드 — 갈래 %d · 단계 %d  ->  %s' % (len(LANES), n, os.path.basename(OUT)))
+    print('관리자 대시보드 — 갈래 %d · 단계 %d · 실험 %d  ->  %s'
+          % (len(LANES), n, len(EXPERIMENTS), os.path.basename(OUT)))
 
 
 if __name__ == '__main__':

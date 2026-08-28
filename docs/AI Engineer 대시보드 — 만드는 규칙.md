@@ -7,6 +7,9 @@
 **본보기는 `content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md` 다.**
 아래 규칙은 대부분 그 카드에서 되읽은 것이다.
 
+**이 문서는 이 장의 형식과 검증을 맡는다.** 글을 세우는 법(물음·축·목차·비교표·한계)은
+`doc-structure` 가 정본이고 여기 다시 적지 않는다 — 두 곳에 적히면 한쪽이 낡는다.
+
 앞선 문서를 전제로 한다.
 - `doc-structure` 스킬 — 앞머리 셋·절=물음·비교표·한계
 - `insight-figure` 스킬 — 없는 값 금지·좌표 계산·판 위 글자 금지·검사기
@@ -115,8 +118,11 @@ report 꼴   본문 줄 하나에 [[fig:이름]] — aie_figs.RFIGS[영상ID][�
 PYTHONIOENCODING=utf-8 python scratchpad/gen_aie_dashboard.py
 PYTHONIOENCODING=utf-8 python insights/check_prose.py    # P19 번역투 포함
 PYTHONIOENCODING=utf-8 python insights/check_read.py
-PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py
+PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py       # 도해 배치
+PYTHONIOENCODING=utf-8 python insights/check_figval.py      # 도해 값이 원문에 있나
 ```
+
+**카드 본문은 원문 md 를 그대로 렌더링하므로 값이 새로 생길 자리가 없다.** 값을 지어낼 수 있는 곳은 손으로 짠 도해뿐이라 `check_figval` 이 그 자리를 본다. 첫 실행에서 「Opus 4.5·4.8」을 잡았다 — 원문은 「한 판 아래 → 다음 판 → 지금 판」으로만 적는데 도해가 판 번호를 붙였다. 지금은 확인 필요만 세고 FAIL 은 안 낸다.
 
 대시보드 HTML을 손으로 고치지 않는다. 고칠 것은 원문 md 와 생성기다.
 
