@@ -69,9 +69,10 @@ def _criteria():
              % (Y1 + BH / 2.0, Y1 + BH / 2.0))
     o.append('<defs><marker id="fgA" markerWidth="8" markerHeight="8" refX="7" refY="4" '
              'orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker></defs>')
-    o.append('<text x="20" y="%g" class="fg fg-s">잣대가 돈에서</text>' % (y2 + 6))
-    o.append('<text x="20" y="%g" class="fg fg-s">사람이 겪는 것으로</text>' % (y2 + 22))
-    o.append('<text x="20" y="%g" class="fg fg-s">옮겼다</text>' % (y2 + 38))
+    # 한 줄에 한 뜻. 앞 판은 이 말을 세 줄로 잘라 「잣대가 돈에서 / 사람이 겪는 것으로 /
+    # 옮겼다」로 세웠고, 한 줄씩은 아무 뜻이 없었다 — check_fig 가 잡았다
+    o.append('<text x="20" y="%g" class="fg fg-s">잣대가 바뀌었다</text>' % (y2 + 10))
+    o.append('<text x="20" y="%g" class="fg fg-s">돈에서 사람 경험으로</text>' % (y2 + 28))
     o.append('</svg>')
     return ''.join(o)
 

@@ -20,6 +20,10 @@ CLAUDE.md 「글은 기본이 구조다」는 지금까지 스킬(`doc-structure
   S6  견주는 표에 「언제 것 · 성격」 열이 있나           FAIL
   S7  마지막 절이 한계인가                           WARN
   S8  절이 여덟을 넘나                              WARN
+  S9  단계 사슬이 정해진 차례대로 섰나                FAIL
+  S10 절 제목 하나가 물음 하나인가                   FAIL
+  S11 절이 셋을 넘는 마디에 축이 있나                 FAIL
+  S12 나열을 열었으면 항목에 ①②③ 이 붙었나            FAIL
 """
 import glob
 import io
@@ -58,6 +62,11 @@ FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
 # 목차는 첫 절보다 앞에 있으면 된다
 TOCBOX = re.compile(r'<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
+# 목차 안 축 상자와 잎
+TGAX = re.compile(r'<li class="tg-ax">', re.S)
+TGLI = re.compile(r'<li><b>(.*?)</b>', re.S)
+# 나열을 여는 말 — 뒤에 ①②③ 이 와야 한다
+OPEN_LIST = re.compile(r'(둘이다|셋이다|넷이다|둘 남는다|셋 남는다|넷 남는다|둘로 나뉜다|셋으로 나뉜다)')
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
 TAG = re.compile(r'<[^>]+>')
@@ -148,10 +157,33 @@ def check_card(where, body):
         if sh not in SHAPE_WORDS:
             add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
 
+    # S9 단계 사슬이 정해진 차례대로 섰나. 목표 → 시도 → 성과 → 한계 는 순서가 뜻이다 —
+    # 성과가 시도 앞에 서면 만들기 전에 재는 셈인데, 앞 판이 그렇게 서 있었다
+    if stage:
+        want = [x for x in STAGE if x in forms_used]
+        if forms_used != want:
+            add('FAIL', at, 'S9', '단계 차례가 어긋난다 — %s 로 세운다: %s'
+                % (' → '.join(want), ' → '.join(forms_used)))
+
+    # S11 절이 셋을 넘는 마디에는 축이 있어야 한다. 축 없이 늘어놓으면 층위가 다른
+    # 절이 나란히 선다 — 「칩 안」 일과 「칩 사이」 일이 같은 들여쓰기로 섰다
+    if mbox:
+        for blk in re.findall(r'<div class="tg">(.*?)</div>', mbox.group(1), re.S):
+            name = txt(TG.search(blk).group(1)) if TG.search(blk) else '?'
+            if name == '한계':
+                continue
+            if len(TGLI.findall(blk)) > 3 and not TGAX.search(blk):
+                add('FAIL', at, 'S11', '절이 넷을 넘는데 축이 없다 — 한 층 더 판다: %s'
+                    % name)
+
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
     for h in heads:
         bare = h.lstrip(CIRCLE).strip()
+        # S10 제목 하나에 물음이 둘이면 절이 둘이다. 「무엇으로 쟀고 무엇이 안 재졌나」는
+        # 한 절에 두 물음을 담아 놓은 것이고, 그 안에서 무엇이 답인지가 흐려진다
+        if len(ASK.findall(bare)) > 1 and re.search(r'(고|며|이며|또)\s', bare):
+            add('FAIL', at, 'S10', '절 제목에 물음이 둘이다 — 절을 나눈다: %s' % bare)
         if any(d in bare for d in DRAWER):
             add('FAIL', at, 'S4', '서랍 제목이다 — 물음으로 바꾼다: %s' % bare)
             continue
@@ -166,6 +198,21 @@ def check_card(where, body):
         got = [h[0] for h in heads if h and h[0] in CIRCLE]
         if want != got:
             add('FAIL', at, 'S5', '목차 %d개 · 절 %d개로 어긋난다' % (len(want), len(got)))
+
+    # S12 나열을 열었으면 항목에 ①②③ 이 붙어야 한다. 「셋 남는다」로 열고 번호 없이
+    # 이어 붙이면 어디까지가 한 항목인지가 문장 안에서 흐려진다
+    for p in re.findall(r'<p>(.*?)</p>', rep, re.S):
+        t = txt(p)
+        m = OPEN_LIST.search(t)
+        if not m:
+            continue
+        # 「셋」이라 열었으면 번호도 셋이어야 한다. 하나만 있어도 통과시키면 ① 만 남고
+        # ②③ 이 빠진 문단이 그대로 나간다
+        want = {'둘': 2, '셋': 3, '넷': 4}[m.group(1)[0]]
+        got = sum(1 for c in CIRCLE[:want] if c in t[m.end():])
+        if got < want:
+            add('FAIL', at, 'S12', '%d 이라 열고 번호는 %d 개다 — ①②③ 을 단다: %s'
+                % (want, got, t[max(0, m.start() - 12):m.end() + 26]))
 
     # S6 견주는 표에 성격 열
     for th in TBL_HEAD.findall(rep):

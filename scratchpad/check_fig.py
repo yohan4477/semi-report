@@ -106,8 +106,50 @@ def rect_edges(svg):
     return out
 
 
-def hits(svg):
+# 판 위에서 쓰면 안 되는 줄임말. 단위는 풀어 적는다 — 도해는 본문의 각주가 아니라
+# 그 자체로 읽혀야 한다
+SHORT = re.compile(r'\d\s*(Gb|GB|Tb|TB|Mb|MB|kW|MW|GHz|MHz|㎿|㎾)\b')
+# 문장이 끊긴 줄. **격조사로 끝나면** 그 줄만으로는 아무 뜻이 없다 —
+# 「기준이 운영자 / 셈에서 사용자 / 경험으로 옮겼다」가 그랬다.
+# 「~고」·「~며」로 끝나는 줄은 절이 끝난 자리라 잡지 않는다
+CUT = re.compile(r'(이|가|을|를|의|에|에서|으로|로|와|과|보다|부터|까지|에게|한테)$')
+# 이 장은 규칙을 세우며 다시 그리는 중이라 줄임말도 FAIL 로 막는다.
+# 나머지 장은 이 규칙보다 먼저 그려졌으니 세기만 한다
+STRICT_FIG = ('오픈AI 할라페뇨',)
+
+
+def text_hits(svg, strict=True):
+    """글자 자체를 본다 — 줄임말과 잘린 줄."""
     bad = []
+    items = [(float(m.group(1)), float(m.group(2)), m.group(3).strip())
+             for m in re.finditer(r'<text[^>]*x="([-\d.]+)"[^>]*y="([-\d.]+)"[^>]*>([^<]*)<',
+                                  svg)]
+    if strict:
+        for _x, _y, t in items:
+            if SHORT.search(t):
+                bad.append('줄임말을 판 위에 썼다 — 풀어 적는다: %s' % t[:32])
+    # 같은 x 에 16~24픽셀 간격으로 이어 선 줄들이 조사로 끝나면 문장을 자른 것이다
+    by_x = {}
+    for x, y, t in items:
+        by_x.setdefault(round(x), []).append((y, t))
+    # 두 줄짜리 라벨은 정상이다 — 주어를 위에 술어를 아래에 두는 것은 흔한 배치다.
+    # 잘린 것은 **세 줄 이상이 격조사로 이어지는** 경우다. 「기준이 운영자 / 셈에서
+    # 사용자 / 경험으로 옮겼다」가 그랬고, 그때 한 줄씩은 아무 뜻이 없었다
+    if strict:
+        for _x, rows in by_x.items():
+            rows.sort()
+            for i in range(len(rows) - 2):
+                (y0, t0), (y1, t1), (y2, t2) = rows[i], rows[i + 1], rows[i + 2]
+                if not (12 <= y1 - y0 <= 24 and 12 <= y2 - y1 <= 24):
+                    continue
+                if CUT.search(t0) and CUT.search(t1):
+                    bad.append('한 문장을 세 줄로 잘랐다 — 한 줄에 한 뜻: %s / %s / %s'
+                               % (t0[:16], t1[:16], t2[:16]))
+    return bad
+
+
+def hits(svg, strict=True):
+    bad = text_hits(svg, strict)
     bs = boxes(svg)
     vm = VIEW.search(svg)
     vw, vh = (float(vm.group(1)), float(vm.group(2))) if vm else (640.0, 1e9)
@@ -155,6 +197,13 @@ def all_figs():
     for name in GENERATORS:
         mod = importlib.import_module(name)
         out += [(c['title'], f) for c in getattr(mod, 'CARDS', ()) for f in c.get('figs', ())]
+        # 보고서 꼴 카드는 그림을 figs 키가 아니라 report 블록 안에 둔다. 여기를 안 걷어서
+        # 상자 테두리에 깔린 글자가 그대로 나갔다(2026-08-29 할라페뇨). anchor 자리는
+        # 보고서 꼴에 없으므로 0 을 채운다
+        for c in getattr(mod, 'CARDS', ()):
+            for kind, val in c.get('report', ()):
+                if kind == 'fig':
+                    out.append((c['title'], (0,) + tuple(val)))
         # 카드가 아니라 보고서 층에 실린 도해. 이름을 REPORT_FIGS 로 둔 것은
         # 수도리무브 생성기가 EXTRA_FIGS 를 다른 뜻으로 이미 쓰고 있어서다.
         # 카드가 아니라 보고서 층에 실린 도해. CARDS만 걷으면 검사를 통째로 빠져나간다 —
@@ -177,7 +226,7 @@ def main():
     for _card, (_anchor, title, svg, _cap) in figs:
         if want and want not in title:
             continue
-        bad = hits(svg)
+        bad = hits(svg, any(k in _card for k in STRICT_FIG))
         print('%s %s' % ('FAIL' if bad else 'OK  ', title), file=OUT)
         for b in bad:
             print('       ! %s' % b, file=OUT)
