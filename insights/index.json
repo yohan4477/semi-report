@@ -11906,11 +11906,11 @@
 157
 ],
 "content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
-"3155cae743312377b4dee41e8849d878896efbe7",
+"5d052f914fd5992e818c198c8b41a2e52c8b7c88",
 115
 ],
 "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md": [
-"07e368266d4b791857c5cdfbe5cc7c5dd05cabb6",
+"d2b6353f58ca983062722096d968c1320cb53cbc",
 89
 ],
 "content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md": [
@@ -11922,7 +11922,7 @@
 109
 ],
 "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md": [
-"9ea89b5f3ed083a78a99c87a9919982a5cbc3b4a",
+"ce544c21015117e68041a7a6f88b69b99b158110",
 102
 ],
 "content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md": [
@@ -11938,7 +11938,7 @@
 77
 ],
 "content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md": [
-"ead30059273fda459d8b508d4899e01c017122dc",
+"7c3917b1ff6a0d045ba912ebd093b431e952b5cc",
 97
 ],
 "content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md": [
@@ -11954,7 +11954,7 @@
 71
 ],
 "content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md": [
-"521df5de64176c9068cabd091feda89917f79575",
+"96ca8840d274f49acb57fcb9379faf74f5ff6bb9",
 91
 ],
 "content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md": [
@@ -11978,7 +11978,7 @@
 146
 ],
 "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md": [
-"c19422db331a95c6265059cff92c6aae2396a126",
+"62ac253d5f83db73ed1f430fff3ec335ca73dcff",
 108
 ],
 "content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md": [
@@ -11990,7 +11990,7 @@
 156
 ],
 "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md": [
-"a5e413f9778978f394ca7ff43c64822dbb7a190b",
+"ab5387537884a40a6f399c0dd14a788fa0fe924a",
 111
 ],
 "content/understanding/AI Engineer/2025-08-26-현장에서-쓰는-MCP.md": [
@@ -11998,15 +11998,15 @@
 68
 ],
 "content/understanding/AI Engineer/2025-11-26-그래프로-컨텍스트를-잇기.md": [
-"6f869552f78dd69b252db6b9000ebf3634641da1",
+"752b8c235826b0ad552291dc58420fc0723bae6a",
 98
 ],
 "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md": [
-"1f921ae0d6970f5daf08e8879a1ca105667deddf",
+"d4f7d81fdb3f8984c7b7ea91a816dec6c39d2994",
 104
 ],
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md": [
-"14242568107fcf7cfe09a80b786e1812c43a1803",
+"49ce47b4714b32edce64853dec4a3bcdb4cf05e2",
 124
 ],
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md": [
@@ -12014,7 +12014,7 @@
 81
 ],
 "content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md": [
-"403d0c25cc75f5f2aba33968438283d242e81fca",
+"40d91a8049f3b40202a17e4c8726a12262ee610c",
 78
 ],
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md": [
@@ -12034,7 +12034,7 @@
 78
 ],
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md": [
-"6a553eb0cd56b5c2af9b931302d3fba038b7e401",
+"ec59d02adb0e08339798f2e83c3d46d42610bece",
 194
 ],
 "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md": [
@@ -12050,7 +12050,7 @@
 128
 ],
 "content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md": [
-"64ae1b2a4e4d658f08f06b4730b71ea3ce296bf0",
+"d87fa2464b43f257a70cdc159ef72e85a3b91a2c",
 91
 ],
 "content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md": [
@@ -12070,7 +12070,7 @@
 110
 ],
 "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md": [
-"e0a6a99b57ff84192997b9a2a04b4158cde78280",
+"d4d222b69b60079cf4d68c83b4abda47fa3b8531",
 144
 ],
 "content/understanding/AI Engineer/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md": [
@@ -12098,7 +12098,7 @@
 68
 ],
 "content/understanding/AI Engineer/2026-06-26-관측과-평가와-실험을-한-판에.md": [
-"4090b73f1a99ae0cee807701452096e4909b5d9b",
+"c3a663ce8d132231a0db87deabf07315327d28e2",
 104
 ],
 "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md": [
@@ -12110,15 +12110,15 @@
 79
 ],
 "content/understanding/AI Engineer/2026-06-26-에이전트-관측은-무엇이-다른가.md": [
-"c132ce912736919edd70a1183f9c81fbdbe83ef8",
+"7df964c90c781d84e344a039eafe8ab0304dac41",
 101
 ],
 "content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md": [
-"f11c8f21aeda1491fd8d7fb537cd61d1b17bb8de",
+"a2723b3c0e22662d7692bdb790dd37f7af647d5b",
 115
 ],
 "content/understanding/AI Engineer/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md": [
-"8ceafd45d011a67f2afee7f3ae79b5377d4b8f9f",
+"a39212420e38b875a917e4fe812971367d1529e1",
 67
 ],
 "content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md": [
@@ -12134,11 +12134,11 @@
 96
 ],
 "content/understanding/AI Engineer/2026-06-26-평가를-굴리는-단계들.md": [
-"84e0c51911a9cbe9f6bdbf02cafd8930e5cb605a",
+"197cd61460b24ca89c2776d08aa5fad3414a7180",
 112
 ],
 "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md": [
-"f4b726ac16d11ea48498380b57ad010ea5e3ccab",
+"37d67358ab8aa887397de71e3aa77521b928e16e",
 80
 ],
 "content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md": [
@@ -12150,7 +12150,7 @@
 122
 ],
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md": [
-"b37026f11e8e34d38d166e80948691f6b2ee87e7",
+"007e4904f7d9ec22c8cb9670f24ce410d9c7e6d5",
 86
 ],
 "content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md": [
@@ -12186,15 +12186,15 @@
 106
 ],
 "content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md": [
-"f04b7d0d892dc0702a9f98b3134c06bdd8928d70",
+"4ec28b76a3643fbe4427b2e9aa18048212b030db",
 110
 ],
 "content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md": [
-"40070c8bf01f860a324dbcfee5196c15603e3180",
+"bba56d6753d1ddfc15792fde50712c3c2d4a3f6f",
 113
 ],
 "content/understanding/AI Engineer/2026-07-31-AI-슬롭을-끝내는-법.md": [
-"50e92a9f5036c714d1af2a49db1be4365d061859",
+"377f9cecad44da810a255e25b7a1d51b8ecea57d",
 92
 ],
 "content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md": [
@@ -12214,7 +12214,7 @@
 92
 ],
 "content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md": [
-"7c64aa905301595aa11f997da5b4b9abfe9ea946",
+"1240cc37d11d5dd06f3ddcb5e3b1bd384ff18b4a",
 109
 ],
 "content/understanding/AI Engineer/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md": [
@@ -12226,7 +12226,7 @@
 114
 ],
 "content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md": [
-"204858558928aafebc0e97c9707fab4b3dd96c8f",
+"20cf02cf7130d48b1f2782f883988611f5af7e4d",
 143
 ],
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md": [
@@ -12250,7 +12250,7 @@
 143
 ],
 "content/understanding/Semi Doped/2026-07-16-picojool-yuen.md": [
-"07dffc7f16ded05839b6684915eec01865635197",
+"24f99fc958df96f78e521436e6bc911398e8b475",
 165
 ],
 "content/understanding/Semi Doped/2026-07-25-datacenter-interconnects.md": [
@@ -13090,7 +13090,7 @@
 125
 ],
 "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md": [
-"48c186d60e1e976f42f865b33145a1885d25f9a6",
+"33c4f3d47e5ecdf9bdad7d60773b271d388e7071",
 160
 ],
 "content/understanding/회계사/[260310] DCF 적정주가 130만 5천원, 주가가 23.9% 웃돈다 - 고려아연 - 엘곰.md": [
@@ -13138,7 +13138,7 @@
 142
 ],
 "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md": [
-"b5813f3001c7e564806f700273f2214e88611d3e",
+"5b33bf845818271d6b7d12d40ae9484ff8dc8c73",
 147
 ],
 "content/understanding/회계사/[260509] ROE 61% 대 40%, 유동비율 12.26 대 2.90 - 마이크론과 SK하이닉스 - 엘곰.md": [
@@ -13206,11 +13206,11 @@
 172
 ],
 "content/understanding/회계사/[260711] DCF 내재가치 82,941원, 주가보다 15.7% 위 - 한화시스템 - 엘곰.md": [
-"070dc01638195deeff783cb27a7475495711cd04",
+"eb1a045bb3ca053b81c030e08e2e8c77abc6b10b",
 206
 ],
 "content/understanding/회계사/[260711] DCF 적정주가 43만 5천원, 주가보다 13.7% 아래 - HD현대중공업 - 엘곰.md": [
-"79c005788ef5baba29de4be836abe633b6a5c5d5",
+"bd18a1ea9e6650dda84b638c1684fb8628296d23",
 148
 ],
 "content/understanding/회계사/[260712] 매그니피센트 세븐 CAPEX 2340억 달러인데 주가는 제자리, 반도체 FCF만 오른다 - 엘곰.md": [
@@ -13226,7 +13226,7 @@
 111
 ],
 "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md": [
-"fa85eede740b2b9ab178c6caaec653dd18278752",
+"0a91a3183c71798dd5bf32681e1c2dcb90db33d7",
 184
 ],
 "content/understanding/회계사/[260720] 삼성전자 영업이익 1,800% 급증에도 주가는 7% 빠졌다, CAPEX는 더 이상 성장지표가 아니다 - 엘곰.md": [
@@ -13322,7 +13322,7 @@
 112
 ],
 "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md": [
-"3f116bc31496cdefeba005dfd5469da44700398b",
+"9eeb436326f074d273c5544afad832e4c58627b3",
 36
 ],
 "content/understanding/회계사/[260814] AI 매출 70%가 오픈AI·앤스로픽 두 곳에 걸려 있다, 순환거래의 함정 - 엘곰.md": [
@@ -13374,11 +13374,11 @@
 168
 ],
 "content/understanding/회계사/[260819] 점유율 7% 삼성 파운드리가 4·5나노 가격을 최대 15% 올렸다 - 삼성 파운드리 - 엘곰.md": [
-"84ffc9b2fe57c60db35746980a8049b893c35fc4",
+"d0a3424dba6c31d02c923387c21a28d247e565c0",
 33
 ],
 "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md": [
-"172987251aed1cc5b90808ad4bd07f2414b3be6d",
+"47de8bfd0e35f6aea4e73bbb8397a639841b2e90",
 37
 ],
 "content/understanding/회계사/[260820] 바이백을 두 배로 늘리자 30년물이 9bp 내렸다 - 미 재무부 - 엘곰.md": [
@@ -13386,7 +13386,7 @@
 37
 ],
 "content/understanding/회계사/[260820] 삼성전자 100조 배당·SK하이닉스 40조 소각, 기준은 둘 다 FCF의 50% - 삼성전자·SK하이닉스 - 엘곰.md": [
-"08410bbc7edfdab8a323b1ea9a295b903654b9d8",
+"44a2dd49f2b340458608227aea8692c6e3e7cb6a",
 40
 ],
 "content/understanding/회계사/[260820] 삼성전자 9%·SK하이닉스 12% 급등, 자사주 소각에 30년물 하락이 겹쳤다 - 삼성전자·SK하이닉스 - 엘곰.md": [
@@ -13410,11 +13410,11 @@
 54
 ],
 "content/understanding/회계사/[260821] 비트코인 48시간에 18% 올라 77,600달러, 방아쇠는 국채 바이백이었다 - 크립토 - 엘곰.md": [
-"0f5d0e810aa77373d272774b0171274c9d91ef92",
+"f227f55ef95a42471c8e9ac0b9abcd15e4929bc4",
 69
 ],
 "content/understanding/회계사/[260822] DCF 내재가치 1,894,539원, 주가보다 30.4% 아래 - 효성중공업 - 엘곰.md": [
-"9bb5f53ef59b675775d67bc695b86b5a15ce06b7",
+"230a7435206ddd206a794ce332c64f76fc0ad9dd",
 142
 ],
 "content/understanding/회계사/[260822] 달리오가 금 10~15%를 권했다, 매년 새로 팔아야 할 국채가 12조 달러다 - 자산배분 - 엘곰.md": [
@@ -13422,11 +13422,11 @@
 68
 ],
 "content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md": [
-"cc4576994f975de9229be8f07d335dff681ea1fa",
+"342f3d0dc7f297a121f4d1ca4658da04d92307ff",
 62
 ],
 "content/understanding/회계사/[260822] 부칙에 못을 안 박아 2009년 세금을 되돌릴 길이 남았다 - 계약해제 경정청구 - 방구퐁.md": [
-"2c93764e89564a15d788c3b60d060b0da5fd0249",
+"b17a533e7a04939d7733caa435e2e9b21c14a138",
 80
 ],
 "content/understanding/회계사/[260822] 엔비디아 컨센서스 매출 914.8억 달러, 이제 속도가 아니라 지속가능성을 증명해야 한다 - 엔비디아 - 엘곰.md": [
@@ -13438,7 +13438,7 @@
 63
 ],
 "content/understanding/회계사/[260823] DCF 내재가치 518,300원, 주가보다 4.5% 위 - 현대모비스 - 엘곰.md": [
-"5179857dd3ddb5bf7037d4e8ad158a225be807cf",
+"5c1efd1fc9020880dfcf9634634ee9706acbbceb",
 121
 ],
 "content/understanding/회계사/[260823] 준비금으로 적은 한 줄 때문에 82억 환급이 막혔다 - 비영리법인 배당금 - 방구퐁.md": [
@@ -15238,7 +15238,7 @@
 213
 ]
 },
-"fingerprint": "8a3a3ddf192124f07bf671b6ddc2c4adb1ddb865",
+"fingerprint": "3ea16895597d14f896b6eb75bd292de9fb3836a4",
 "lines": 164503
 },
 "iShares": [

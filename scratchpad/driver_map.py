@@ -295,7 +295,7 @@ def _drivers_table_html(dids):
                    '<tr><th scope="row">왜</th><td class="dm-dvt-why">%s</td></tr>'
                    % (cls, name, val, basis, why))
     # table-layout:fixed는 첫 행으로 열 폭을 정하는데 첫 행이 colspan=2라 폭을 못 읽고
-    # 반반으로 갈랐다. colgroup으로 못 박는다(2026-08-19 화면에서 첫 열이 절반이었다).
+    # 반반으로 나눴다. colgroup으로 못 박는다(2026-08-19 화면에서 첫 열이 절반이었다).
     return ('<div class="dm-dvt-wrap"><table class="dm-dvt">'
             '<colgroup><col class="dm-dvt-c1"><col></colgroup>'
             '<tbody>%s</tbody></table></div>' % ''.join(out))
@@ -337,7 +337,7 @@ def _driver_table_html(ax):
 
     한 방법에 글이 여럿인 축이 있다. 재무제표(그때)는 여섯 편, 멀티플은 세 편이다.
     전에는 갈래(이익 수준·재투자…)로만 묶어서, 2024년 글의 값과 2026년 글의 값이
-    한 줄기로 섞였다. 글이 둘 이상이면 날짜 탭으로 가른다 — 한 탭이 한 편이다.
+    한 줄기로 섞였다. 글이 둘 이상이면 날짜 탭으로 나눈다 — 한 탭이 한 편이다.
 
     갈래는 값마다 작은 꼬리표로 남긴다. 묶음 축이 아니라 표시로 내린 것이다."""
     by_doc = {}
@@ -441,7 +441,7 @@ HOWTO = {
             '역산은 적정가를 내지 않는다. 「이 가격이 요구하는 이익」이 현실적인지는 사람이 판단한다.'),
     'stmt': ('재무제표 분석',
              '손익계산서·재무상태표·현금흐름표에서 마진, 자본 효율, 부채, 운전자본 같은 지표를 뽑아 '
-             '회사의 지금 상태를 잰다. 값을 매기는 방법이 아니라 값을 매기기 전에 재는 자다.',
+             '회사의 지금 상태를 잰다. 값을 정하는 방법이 아니라 값을 정하기 전에 재는 자다.',
              '지표는 대개 최근 12개월이나 최근 분기 값이다. 사이클 꼭대기에서 잰 수익성은 그 자체로 '
              '미래를 말해 주지 않는다.'),
     'mult': ('멀티플',
@@ -929,7 +929,7 @@ def _valsum_html():
 
     축 패널을 열기 전에 「지금 유효한 값이 얼마냐」에 먼저 답하는 자리다. 최신이 맨
     위다 — 축 안 날짜 탭이 최신을 왼쪽에 두는 것과 같은 순서다. 역산(kind='ask')은
-    적정가를 내지 않으므로 값 칸에 요구 이익을 적고 행을 경고톤으로 가른다."""
+    적정가를 내지 않으므로 값 칸에 요구 이익을 적고 행을 경고톤으로 나눈다."""
     rows = []
     for date, axid, kind, v1, v2, tag, by in reversed(dmd.TIMELINE):
         no, name = _AXIS_LOOKUP.get(axid, ('—', axid))
@@ -1024,7 +1024,7 @@ DM_CSS = '''<style>
 .dm-scenario-tbl td:first-child{font-weight:800}
 .dm-sc-gap--low{color:var(--risk);font-weight:800}
 .dm-sc-gap--high{color:var(--good);font-weight:800}
-/* 시장 행은 시나리오가 아니라 시장이 깔고 있는 값이다 — 굵은 위 경계선으로 가른다 */
+/* 시장 행은 시나리오가 아니라 시장이 깔고 있는 값이다 — 굵은 위 경계선으로 나눈다 */
 .dm-sc-market{border-top:2px solid var(--ink);background:var(--sunk)}
 .dm-sc-market td{font-weight:800;border-bottom:0}
 .dm-scenario-note{font-size:11.5px;line-height:1.55;color:var(--ink-3);margin:10px 0 0;max-width:70ch}
@@ -1221,7 +1221,7 @@ DM_CSS = '''<style>
 .dm-vs-tbl th{text-align:right}
 .dm-vs-tbl th:first-child{text-align:left}
 .dm-vs-win{color:var(--ink);font-weight:850}
-/* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
+/* 구간은 선으로만 나눈다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
    컨센서스든 필자가 깐 것이든 같은 표의 같은 줄이다. 경계만 또렷하면 된다. */
 .dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
 /* 연도 열은 폭을 같게 잡는다. 값 길이에 따라 칸이 들쭉날쭉하면 경사가 안 읽힌다 */
@@ -1230,7 +1230,7 @@ DM_CSS = '''<style>
 .dm-ep-wide{table-layout:fixed;width:max-content;min-width:100%}
 .dm-ep-wide col.dm-ep-mt{width:104px}
 .dm-ep-wide col.dm-ep-yr{width:98px}
-/* 구간은 선으로만 가른다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
+/* 구간은 선으로만 나눈다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 —
    컨센서스든 필자가 깐 것이든 같은 표의 같은 줄이다. 경계만 또렷하면 된다. */
 .dm-ep-bcut{border-left:2px solid var(--ink-3) !important}
 .dm-ep-wide th[scope="row"]{position:sticky;left:0;z-index:2;background:var(--surface);
@@ -1505,7 +1505,7 @@ DM_CSS = '''<style>
 .dm-vs-tagcell{white-space:nowrap}
 .dm-vs-tag{display:inline-block;font-size:9.5px;font-weight:800;color:var(--ink-3);
            background:var(--sunk);border-radius:999px;padding:2px 8px}
-/* 역산은 적정가가 아니라 요구 이익이다. 같은 칸의 값으로 읽히면 안 되므로 행을 가른다 */
+/* 역산은 적정가가 아니라 요구 이익이다. 같은 칸의 값으로 읽히면 안 되므로 행을 나눈다 */
 .dm-vs-ask td{background:var(--warn-soft)}
 .dm-vs-ask td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
 @media (max-width:640px){
@@ -1534,7 +1534,7 @@ DM_CSS = '''<style>
 .dm-tl-hint{margin:8px 0 22px;font-size:11px;color:var(--ink-3)}
 /* 인용 행에 세로 바를 달았더니 같은 경고색이 역산(배경)과 인용(바) 두 뜻으로
    쓰여 헷갈렸다. 표가 된 뒤로는 「계산」 칸의 배지가 그 일을 하므로 바를 뗀다 */
-/* 역산 행 — 값이 아니라 「이 가격이 요구하는 것」이라 배경과 세로 바로 가른다 */
+/* 역산 행 — 값이 아니라 「이 가격이 요구하는 것」이라 배경과 세로 바로 나눈다 */
 .dm-tl-ask td{background:var(--warn-soft)}
 .dm-tl-ask td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
 .dm-tl-ask:hover td{background:var(--warn-soft)}
@@ -2063,7 +2063,7 @@ DM_JS = '''<script>
 DVTAB_JS = '''<script>
 (function(){
   // 방법 안에서 글을 고르는 탭. 한 방법에 글이 여럿인 축(재무제표 여섯 편,
-  // 멀티플 세 편)에서 값이 어느 글 것인지 섞이지 않게 가른다.
+  // 멀티플 세 편)에서 값이 어느 글 것인지 섞이지 않게 나눈다.
   document.addEventListener('click', function(e){
     var t = e.target.closest && e.target.closest('.dm-dvtab');
     if(!t) return;

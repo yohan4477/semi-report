@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """자금조달 층이 바탕 각도 열네 편을 다 실었나 — 편마다 고유한 말로 센다."""
+import os
+if not os.path.exists('대시보드/통합 보고서.html'):
+    raise SystemExit('건너뜀 — 통합 보고서 화면이 없다. 생성기를 돌리면 다시 생긴다')
 import io, re
 h = io.open('대시보드/통합 보고서.html', encoding='utf-8').read()
 i = h.index('id="sec-fund"')
