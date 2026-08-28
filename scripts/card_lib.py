@@ -539,13 +539,15 @@ def angles_html(items):
             subs = it[2] if len(it) > 2 else ()
         else:
             name, used, subs = it, False, ()
+        # 하위는 물음 이름이 아니라 **그 안에 무엇이 들었나**를 적는다. 「무엇으로 쟀나」만
+        # 걸어 두면 각도를 폈을 때 아무것도 안 보인다 — 구성요소를 그대로 내건다
         sub = ('<span class="ag-sub">%s</span>'
                % ' · '.join(subs)) if subs else ''
         li.append('<li class="%s">%s%s</li>'
                   % ('ag-on' if used else 'ag-off', name, sub))
     return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag">%s</ul>'
             '<p class="ag-note">점이 찍힌 것이 이 카드가 절로 세운 각도다. '
-            '아래 작은 글씨는 각도 파일의 하위 각도이고, 나머지는 각도 파일에만 '
+            '아래 작은 글씨가 그 각도에 든 것이고, 점 없는 각도는 각도 파일에만 '
             '있다.</p></div>' % ''.join(li))
 
 
