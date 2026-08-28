@@ -174,9 +174,15 @@ for a in defs:
     if not items:
         continue
     cats = " ".join(sorted({cat_for(r["sn"]) for _, r in items}))
-    lede = '<span class="tlw">' + a["lede"] + "</span>" if a.get("lede") else ""
-    out += ('    <p class="tlog-m" data-c="' + cats + '">' + a["name"]
-            + ' <span class="tln">' + str(len(items)) + "건</span>" + lede + "</p>\n")
+    # 머리 = 물음 · 꼴 · 식 · 축. 꼴은 글의 꼴 일곱, 식은 부분 나눔을 숫자로 적을 수
+    # 있을 때만 선다 — 규칙은 CLAUDE.md 「각도 아래 물음, 물음 아래 축」이다.
+    sh = '<span class="ag-sh">' + a["shape"] + "</span>" if a.get("shape") else ""
+    eq = '<span class="ag-eq">' + a["eq"] + "</span>" if a.get("eq") else ""
+    ax = "".join('<li><span class="ag-ax">' + k + '</span><span class="ag-v">' + v + "</span></li>"
+                 for k, v in a.get("axes", []))
+    axh = '<ul class="ag-p">' + ax + "</ul>" if ax else ""
+    out += ('    <p class="tlog-m" data-c="' + cats + '"><span class="ag-q">' + a["name"] + "</span>"
+            + sh + '<span class="tln">' + str(len(items)) + "건</span>" + eq + axh + "</p>\n")
     vis = hid = ""
     shown = 0
     prev = None
