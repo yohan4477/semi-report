@@ -522,6 +522,96 @@ def debate_html(d):
     return ''.join(h)
 
 
+SHAPES = ('시간 흐름', '대비', '층위', '인과 사슬', '부분 나눔', '조건 갈림',
+          '문제와 처방')
+
+
+def _ag_rows(parts):
+    """항을 재귀로 그린다. (축, 값) 또는 (축, 값, [자식 …])."""
+    out = []
+    for p in parts:
+        if not isinstance(p, tuple):
+            ax, val, kids = '', p, ()
+        else:
+            ax, val, kids = (list(p) + ['', ()])[:3]
+        sub = '<ul class="ag-p">%s</ul>' % _ag_rows(kids) if kids else ''
+        out.append('<li>%s<span class="ag-v">%s</span>%s</li>'
+                   % ('<span class="ag-ax">%s</span>' % ax if ax else '', val, sub))
+    return ''.join(out)
+
+
+def angles_html(items):
+    """각도 — 이 편이 어떤 각도로 뽑혔는지를 목차와 **따로** 밝힌다.
+
+    items = [(각도 이름, 절로 세웠나, [(물음, [(축, 값), …]), …])].
+
+    목차는 「이 카드가 무엇을 어떤 순서로 말하나」이고, 각도는 「원문이 어떤 마디로
+    뽑혔나」다. 둘이 같지 않다 — 각도 파일에는 있는데 카드에서 절로 안 세운 것이 늘
+    있고(고객·창업이력 같은 것), 그것을 감추면 카드가 원문 전부를 담은 것처럼 읽힌다.
+    절로 세운 것에 점을 찍어 갈라 보인다.
+    """
+    li = []
+    for it in items:
+        if isinstance(it, tuple):
+            name, used = it[0], it[1]
+            subs = it[2] if len(it) > 2 else ()
+        else:
+            name, used, subs = it, False, ()
+        # 하위는 (물음, 꼴, 식, [항 …]). 물음만 걸면 펴도 아무것도 안 보이고, 항만
+        # 걸면 어느 각으로 본 것인지가 사라진다. 층을 나무로 그려 둘 다 남긴다.
+        #
+        # 꼴을 다는 이유. 축 이름만 붙인 항은 라벨 붙은 평평한 목록이지 구조가 아니다 —
+        # 항끼리 아무 관계가 없으면 무엇이 무엇에서 나왔는지가 안 남는다. 꼴은 **목차에
+        # 쓰는 글의 꼴 일곱을 그대로** 쓴다(시간 흐름·대비·층위·인과 사슬·부분 나눔·
+        # 조건 갈림·문제와 처방). 요소를 쪼개는 방법을 새로 만들지 않는다.
+        #
+        # 식은 넷째 꼴이 아니라 **부분 나눔을 숫자로 적은 것**이다 — 나뉜 부분이 더하거나
+        # 곱해 원래 값이 되면 그렇게 쓴다: 600kW = 48V × 12,500A.
+        # 깊이는 내용이 정한다. 항이 항을 품으면 그대로 한 층 더 내려간다.
+        kids = []
+        for s in subs:
+            q, shape, eq, parts = (list(s) + ['', '', ()])[:4]
+            # 옛 꼴 (물음, [항 …]) 과 (물음, 식, [항 …]) 도 아직 받는다 — 다른 장 소급이 남았다
+            if isinstance(shape, (list, tuple)):
+                shape, eq, parts = '', '', shape
+            elif isinstance(eq, (list, tuple)):
+                eq, parts = ('', eq) if shape in SHAPES else (shape, eq)
+                if parts is not eq:
+                    shape = '' if eq else shape
+            body = '<ul class="ag-p">%s</ul>' % _ag_rows(parts) if parts else ''
+            eqh = '<span class="ag-eq">%s</span>' % eq if eq else ''
+            sh = '<span class="ag-sh">%s</span>' % shape if shape else ''
+            kids.append('<li><span class="ag-q">%s</span>%s%s%s</li>'
+                        % (q, sh, eqh, body))
+        sub = '<ul class="ag-sub">%s</ul>' % ''.join(kids) if kids else ''
+        li.append('<li class="%s"><span class="ag-1">%s</span>%s</li>'
+                  % ('ag-on' if used else 'ag-off', name, sub))
+    return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag-tree">%s</ul>'
+            '<p class="ag-note">굵은 줄기가 이 카드가 절로 세운 각도다. 가지는 그 각도 안에서 '
+            '갈리는 물음이고 그 아래가 거기 든 것이다. 흐린 줄기는 각도 파일에만 '
+            '있다.</p></div>' % ''.join(li))
+
+
+def toc_html(groups):
+    """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
+
+    groups = [(대상의 마디, 글의 꼴, [(번호, 절 제목), …]), …].
+
+    구조가 둘이라 열도 둘이다. 왼쪽은 **다루는 것이 실제로 어떤 마디로 되어 있는가**
+    (수 체계·실리콘 면적·쿼터랙), 그 옆은 **그 마디를 어떤 꼴로 썼는가**(대비·인과 사슬).
+    마디만 적으면 글이 어떻게 굴러가는지 안 보이고, 꼴만 적으면 무엇을 다루는 글인지가
+    안 보인다. 옛 두 칸 꼴(마디 없이 꼴만)도 그대로 받는다.
+    """
+    h = ['<div class="uc-toc"><p class="uc-label">목차</p>']
+    for g in groups:
+        node, form, items = g if len(g) == 3 else (g[0], '', g[1])
+        tag = '<span class="tg-f">%s</span>' % form if form else ''
+        h.append('<div class="tg"><span class="tg-k">%s</span>%s<ul>%s</ul></div>'
+                 % (node, tag, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
+    h.append('</div>')
+    return ''.join(h)
+
+
 def report_html(blocks):
     """보고서 형식 본문 — 번호글 대신 절 제목·문단·그림이 섞여 흐른다.
 
@@ -537,6 +627,10 @@ def report_html(blocks):
             h.append(fig_html(val))
         elif kind == 'tbl':
             h.append(tbl_html(val))
+        elif kind == 'angles':
+            h.append(angles_html(val))
+        elif kind == 'toc':
+            h.append(toc_html(val))
         elif kind == 'terms':
             h.append('<div class="rf-terms"><p class="uc-label">용어</p><dl>%s</dl></div>'
                      % ''.join('<dt><i>*</i>%s</dt><dd>%s</dd>' % t for t in val))

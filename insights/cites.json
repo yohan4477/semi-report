@@ -8,8 +8,14 @@
  "content/linkedin/[2608] 링크드인 게시물.md#L331": {
   "sha1": "96ca18516078"
  },
+ "content/linkedin/[2608] 링크드인 게시물.md#L347": {
+  "sha1": "2799f5184f71"
+ },
  "content/linkedin/[2608] 링크드인 게시물.md#L403": {
   "sha1": "6d8fdd96e8d2"
+ },
+ "content/linkedin/[2608] 링크드인 게시물.md#L435": {
+  "sha1": "71d4b1c9d8d4"
  },
  "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L106": {
   "sha1": "46553832b2e1"
@@ -362,6 +368,9 @@
  "content/newsletter/ai_infra/business/[260702] 메타 컴퓨트 - 모두가 네오클라우드가 되고 싶어한다.md#L150": {
   "sha1": "98ca465d7a35"
  },
+ "content/newsletter/ai_infra/business/[260702] 메타 컴퓨트 - 모두가 네오클라우드가 되고 싶어한다.md#L186": {
+  "sha1": "a9b3dfa61c9b"
+ },
  "content/newsletter/ai_infra/business/[260702] 메타 컴퓨트 - 모두가 네오클라우드가 되고 싶어한다.md#L188": {
   "sha1": "ca38d219fe14"
  },
@@ -437,6 +446,9 @@
  "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L534": {
   "sha1": "4e264b883ada"
  },
+ "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L101": {
+  "sha1": "aec72465fe5a"
+ },
  "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L154": {
   "sha1": "b90b6db2b46a"
  },
@@ -452,11 +464,17 @@
  "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L226": {
   "sha1": "e9484709ff5d"
  },
+ "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L277": {
+  "sha1": "dd3f127ed07c"
+ },
  "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L302": {
   "sha1": "6adff4ae762e"
  },
  "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L303": {
   "sha1": "3ab29f320b4f"
+ },
+ "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L305": {
+  "sha1": "38719c68a20a"
  },
  "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L340": {
   "sha1": "98357a71f5d8"
@@ -3217,6 +3235,54 @@
  },
  "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L98": {
   "sha1": "c9e261ab8a6d"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L100": {
+  "sha1": "2a4628913fae"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L105": {
+  "sha1": "654e952d0fa0"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L110": {
+  "sha1": "f13ca27faa46"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L117": {
+  "sha1": "4b91c367090c"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L119": {
+  "sha1": "a86f124bb685"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L131": {
+  "sha1": "0f33315ff787"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L135": {
+  "sha1": "629b06cf153e"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L137": {
+  "sha1": "4e6841b421db"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L145": {
+  "sha1": "53652244c069"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L41": {
+  "sha1": "2a14ce8e00b3"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L43": {
+  "sha1": "d728ef15b629"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L50": {
+  "sha1": "45333cd3d0e1"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L51": {
+  "sha1": "e098ada65f86"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L62": {
+  "sha1": "476c8dae63c1"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L74": {
+  "sha1": "cea9f851022b"
+ },
+ "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L93": {
+  "sha1": "05b30b294b16"
  },
  "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L104": {
   "sha1": "70acaeddbd34"
@@ -10422,7 +10488,7 @@
   "sha1": "187f174a28d1"
  },
  "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md#L152": {
-  "sha1": "cfac453cf5a7"
+  "sha1": "00298ce5d347"
  },
  "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md#L160": {
   "sha1": "ddb79ae0edb6"
@@ -10455,7 +10521,7 @@
   "sha1": "bc7834efa506"
  },
  "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md#L7": {
-  "sha1": "11adac9e19cf"
+  "sha1": "760a969d6f57"
  },
  "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md#L75": {
   "sha1": "df572c7ae1b6"
@@ -11235,7 +11301,7 @@
   "sha1": "20ab9cb53581"
  },
  "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md#L23": {
-  "sha1": "cfdbae77ba65"
+  "sha1": "f65df3a35662"
  },
  "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md#L25": {
   "sha1": "4d582cec68a7"
@@ -12660,7 +12726,7 @@
   "sha1": "790a2f638d51"
  },
  "content/understanding/회계사/[260711] DCF 내재가치 82,941원, 주가보다 15.7% 위 - 한화시스템 - 엘곰.md#L31": {
-  "sha1": "beae502cb726"
+  "sha1": "d5ce4d969d70"
  },
  "content/understanding/회계사/[260711] DCF 내재가치 82,941원, 주가보다 15.7% 위 - 한화시스템 - 엘곰.md#L35": {
   "sha1": "eb7d3f811277"
@@ -13143,10 +13209,10 @@
   "sha1": "c2ff68ab57a1"
  },
  "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md#L180": {
-  "sha1": "ab1ff730d6a4"
+  "sha1": "739ef5b2871a"
  },
  "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md#L21": {
-  "sha1": "1a17d342a744"
+  "sha1": "3d855c25db37"
  },
  "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md#L23": {
   "sha1": "88da8a60a42f"
@@ -14382,7 +14448,7 @@
   "sha1": "9be85e84047c"
  },
  "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L7": {
-  "sha1": "9140a8a3d127"
+  "sha1": "315c657f9c09"
  },
  "content/understanding/회계사/[260814] AI 매출 70%가 오픈AI·앤스로픽 두 곳에 걸려 있다, 순환거래의 함정 - 엘곰.md#L13": {
   "sha1": "849cbbba088d"
@@ -15003,10 +15069,10 @@
   "sha1": "31d2d74a63e2"
  },
  "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md#L37": {
-  "sha1": "e84c072f1b46"
+  "sha1": "3513315601c4"
  },
  "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md#L7": {
-  "sha1": "9c16671b59b9"
+  "sha1": "1c37831c55d2"
  },
  "content/understanding/회계사/[260820] 바이백을 두 배로 늘리자 30년물이 9bp 내렸다 - 미 재무부 - 엘곰.md#L13": {
   "sha1": "741399d98c64"
@@ -15033,7 +15099,7 @@
   "sha1": "087515ad2b74"
  },
  "content/understanding/회계사/[260820] 삼성전자 100조 배당·SK하이닉스 40조 소각, 기준은 둘 다 FCF의 50% - 삼성전자·SK하이닉스 - 엘곰.md#L24": {
-  "sha1": "effcae42a64a"
+  "sha1": "ec19f9729af7"
  },
  "content/understanding/회계사/[260820] 삼성전자 100조 배당·SK하이닉스 40조 소각, 기준은 둘 다 FCF의 50% - 삼성전자·SK하이닉스 - 엘곰.md#L28": {
   "sha1": "aab771d9a621"
