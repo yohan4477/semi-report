@@ -524,11 +524,10 @@ def debate_html(d):
 
 
 
-# 글 전체를 한 축으로 가르는 단계 — **이 목록이 정본이다.**
-# check_struct 의 STAGE 가 이걸 가져다 쓴다(S3 이 이름을, S9 가 차례를 본다).
-# 차례가 뜻이다: 무엇을 노렸고 → 그래서 무엇을 했고 → 그래서 무엇이 나왔고 →
-# 무엇을 아직 모르나. 넷을 통째로 쓰거나 아예 안 쓰거나 둘 중 하나다
-STAGE_NODES = ('목표', '시도', '성과', '한계')
+# 마디 이름을 목록으로 두지 않는다. 한때 「목표·시도·성과·한계」를 닫힌 넷으로 박고
+# 검사기로 강제했는데, 그러면 모든 카드가 그 넷으로 굽힌다 — 구조를 글에서 찾는 게
+# 아니라 틀에 밀어 넣는 것이다. 마디는 글이 준 대로 열고, 그 마디들이 순서를 갖는
+# 것이면 카드가 axis 로 그렇게 밝힌다.
 
 
 def _toc_items(items):
@@ -553,11 +552,15 @@ def _toc_items(items):
     return ''.join(out)
 
 
-def toc_html(groups):
+def toc_html(groups, axis=''):
     """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
 
     groups = [(마디, 글의 꼴, [항목 …]), …].
     항목은 잎 (번호, 축, 물음) 이거나 가지 (축, [항목 …]) 다. 깊이 제한이 없다.
+
+    axis 는 **마디를 무엇으로 갈랐는지**다. 대상의 부분으로 갈랐으면 비워 두고, 글이
+    굴러가는 차례로 갈랐으면 그 축 이름을 적는다(예: '글의 단계'). 축을 적으면 마디가
+    순서를 갖는다는 뜻이라 맨 위에 사슬을 걸고, 마디 이름이 본문에 없어도 된다.
 
     구조가 둘이라 열도 둘이다. 왼쪽은 **다루는 것이 실제로 어떤 마디로 되어 있는가**
     (수 체계·실리콘 면적·쿼터랙), 그 옆은 **그 마디를 어떤 꼴로 썼는가**(대비·인과 사슬).
@@ -565,13 +568,15 @@ def toc_html(groups):
     안 보인다. 옛 두 칸 꼴(마디 없이 꼴만)도 그대로 받는다.
     """
     nodes = [(g if len(g) == 3 else (g[0], '', g[1]))[0] for g in groups]
-    # 마디가 글의 단계면 그 자체가 사슬이다 — 세로로 쌓기만 하면 사슬인 줄 모른다.
-    # 맨 위에 목표 → 시도 → 성과 → 한계 를 한 줄로 걸어 순서를 먼저 보인다
+    # 마디가 순서를 갖는 것이면 세로로 쌓기만 해서는 사슬인 줄 모른다. 맨 위에 한 줄로
+    # 걸어 차례를 먼저 보인다. **무엇이 먼저인지는 그 글이 안다** — 여기서 정해진 차례와
+    # 견주지 않고 카드가 적어 준 차례 그대로 건다
     chain = ''
-    if set(nodes) <= set(STAGE_NODES) and len(nodes) > 2:
+    if axis and len(nodes) > 2:
         chain = ('<p class="tg-chain">%s</p>'
                  % ' <i>→</i> '.join('<b>%s</b>' % n for n in nodes))
-    h = ['<div class="uc-toc"><p class="uc-label">목차</p>', chain]
+    ax = ' data-axis="%s"' % axis if axis else ''
+    h = ['<div class="uc-toc"%s><p class="uc-label">목차</p>' % ax, chain]
     for g in groups:
         node, form, items = g if len(g) == 3 else (g[0], '', g[1])
         tag = '<span class="tg-f">%s</span>' % form if form else ''
@@ -597,7 +602,9 @@ def report_html(blocks):
         elif kind == 'tbl':
             h.append(tbl_html(val))
         elif kind == 'toc':
-            h.append(toc_html(val))
+            # ('toc', 갈래목록) 또는 ('toc', (무엇으로 갈랐나, 갈래목록))
+            h.append(toc_html(val[1], val[0]) if isinstance(val, tuple)
+                     else toc_html(val))
         elif kind == 'raw':
             # 카드마다 다른 층(접히는 각도 상자 같은 것)을 그대로 끼운다
             h.append(val)
