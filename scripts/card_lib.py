@@ -522,6 +522,25 @@ def debate_html(d):
     return ''.join(h)
 
 
+def angles_html(items):
+    """각도 — 이 편이 어떤 각도로 뽑혔는지를 목차와 **따로** 밝힌다.
+
+    items = [(각도 이름, 절로 세웠나)] 또는 [이름, …].
+
+    목차는 「이 카드가 무엇을 어떤 순서로 말하나」이고, 각도는 「원문이 어떤 마디로
+    뽑혔나」다. 둘이 같지 않다 — 각도 파일에는 있는데 카드에서 절로 안 세운 것이 늘
+    있고(고객·창업이력 같은 것), 그것을 감추면 카드가 원문 전부를 담은 것처럼 읽힌다.
+    절로 세운 것에 점을 찍어 갈라 보인다.
+    """
+    li = []
+    for it in items:
+        name, used = it if isinstance(it, tuple) else (it, False)
+        li.append('<li class="%s">%s</li>' % ('ag-on' if used else 'ag-off', name))
+    return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag">%s</ul>'
+            '<p class="ag-note">점이 찍힌 것이 이 카드가 절로 세운 각도다. '
+            '나머지는 각도 파일에만 있다.</p></div>' % ''.join(li))
+
+
 def toc_html(groups):
     """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
 
@@ -557,6 +576,8 @@ def report_html(blocks):
             h.append(fig_html(val))
         elif kind == 'tbl':
             h.append(tbl_html(val))
+        elif kind == 'angles':
+            h.append(angles_html(val))
         elif kind == 'toc':
             h.append(toc_html(val))
         elif kind == 'terms':

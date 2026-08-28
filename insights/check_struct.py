@@ -51,7 +51,10 @@ VERDICT = re.compile(r'<p class="uc-verdict">(.*?)</p>', re.S)
 REP = re.compile(r'<div class="uc-rep">(.*?)(?:<div class="uc-links"|\Z)', re.S)
 H3 = re.compile(r'<h3>(.*?)</h3>', re.S)
 FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
-TOCBOX = re.compile(r'^\s*<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
+# 목차는 첫 절보다 앞에 있으면 된다 — 그 앞에 각도 상자가 설 수 있다
+TOCBOX = re.compile(r'<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
+ANGBOX = re.compile(r'<div class="uc-angles">(.*?)</div>', re.S)
+ANGLI = re.compile(r'<li class="ag-(on|off)">(.*?)</li>', re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
@@ -64,6 +67,19 @@ CLOSE = re.compile(r'(나|가|인가|는가|을까|ㄹ까)$')
 DRAWER = ('여러 가지', '기타', '그 밖', '정리', '요약', '개요')
 LIMIT = ('한계', '밝히지 않', '안 밝힌', '못 밝힌', '검증되지', '남는 물음')
 
+def load_angles():
+    """각도 파일의 angles 목록 — 카드가 밝힌 각도와 대조할 정본."""
+    out = {}
+    for p in glob.glob(os.path.join(paths.ROOT, 'insights', 'angles', '*.md')):
+        t = io.open(p, encoding='utf-8').read()
+        m = re.search(r'^angles:\s*\[(.*?)\]\s*$', t, re.M)
+        if m:
+            names = [x.strip() for x in m.group(1).split(',') if x.strip()]
+            out[os.path.basename(p)] = [n for n in names if n != '저자 논지']
+    return out
+
+
+ANGLES = load_angles()
 rows = []
 
 
@@ -127,6 +143,21 @@ def check_card(where, body):
     for sh in shapes:
         if sh not in SHAPE_WORDS:
             add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
+
+    # S9 각도를 목차와 따로 밝혔나. 그리고 그 목록이 각도 파일과 같은가 —
+    # 카드가 각도 일부만 절로 세우는 것은 정상이지만, 어떤 각도가 있었는지는 밝혀야 한다
+    mang = ANGBOX.search(rep)
+    if not mang:
+        add('FAIL', at, 'S9', '각도를 밝힌 자리가 없다 — 목차와 따로 세운다')
+    else:
+        named = [txt(m[1]) for m in ANGLI.findall(mang.group(1))]
+        if not named:
+            add('FAIL', at, 'S9', '각도 목록이 비어 있다')
+        elif ANGLES:
+            same = [a for a in ANGLES.values() if set(a) == set(named)]
+            if not same:
+                add('WARN', at, 'S9', '각도 목록이 어느 각도 파일과도 안 맞는다: %s'
+                    % ' · '.join(named[:5]))
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]

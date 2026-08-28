@@ -68,6 +68,10 @@ CARDS = [{
                 '가장 오래 남는 대목은 로그 연산 자체가 아닌 <b>그것이 비워 준 자리</b>다 — '
                 '곱셈기가 덧셈기가 되면 그 면적이 SRAM 과 HBM 으로 간다.'),
     'report': [
+        ('angles', [('연산방식', True), ('실리콘배분', True), ('스케일업패브릭', True),
+                    ('시스템구성', True), ('냉각과설치', False), ('양산일정', True),
+                    ('고객', False), ('소프트웨어', True), ('창업이력', False),
+                    ('프레이밍', False)]),
         ('toc', [
             ('연산 방식', '문제와 처방', [('①', '무엇을 바꿨나'), ('②', '어려운 쪽은 왜 덧셈인가')]),
             ('실리콘 배분', '인과 사슬', [('③', '비워 낸 자리에 무엇을 넣었나')]),
@@ -2226,6 +2230,18 @@ TOC_CSS = """
   .uc-rep .uc-toc .tg:first-of-type { border-top:0; padding-top:2px; }
   .uc-rep .uc-toc .tg-k { flex:0 0 7.2em; font-size:.82rem; font-weight:800;
     line-height:1.7; color:var(--ink-3); letter-spacing:.01em; }
+  /* 각도 — 목차와 따로 선다. 원문이 어떤 마디로 뽑혔나이지 카드가 무엇을 말하나가 아니다 */
+  .uc-rep .uc-angles { margin:2px 0 14px; }
+  .uc-rep .uc-angles .uc-label { margin:0 0 7px; }
+  .uc-rep .uc-angles ul.ag { display:flex; flex-wrap:wrap; gap:6px;
+    margin:0; padding:0; list-style:none; }
+  .uc-rep .uc-angles li { font-size:.78rem; line-height:1.5; padding:3px 9px;
+    border:1px solid var(--line); border-radius:999px; color:var(--ink-3); }
+  .uc-rep .uc-angles li.ag-on { color:var(--ink); border-color:var(--ink-3);
+    font-weight:700; }
+  .uc-rep .uc-angles li.ag-on::before { content:"● "; font-size:.6em;
+    vertical-align:.24em; }
+  .uc-rep .uc-angles .ag-note { margin:7px 0 0; font-size:.74rem; color:var(--ink-3); }
   /* 글의 꼴 — 마디 옆에 작게. 대상의 마디와 같은 무게로 보이면 안 된다 */
   .uc-rep .uc-toc .tg-f { flex:0 0 4.6em; font-size:.72rem; font-weight:700;
     line-height:2; color:var(--ink-3); opacity:.72; letter-spacing:.02em; }
