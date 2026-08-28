@@ -213,6 +213,76 @@ def fig_cpu():
 CPU_ROLES = fig_cpu()
 
 
+# ── ⑨ 광원 파장 ────────────────────────────────────────────────────────
+# 막대 길이가 곧 나노미터 값이다(1nm = 1px). EUV 가 얼마나 뚝 떨어지는지가 요점이다.
+_WAVE = [('i-line 365nm', 365), ('KrF 248nm', 248), ('ArF 193nm', 193), ('EUV 13.5nm', 13.5)]
+
+
+def fig_wave():
+    h = ['<svg viewBox="0 0 600 225" role="img" aria-label="i-line 부터 EUV 까지 광원 '
+         '파장이 짧아진 폭">']
+    h.append('<text x="150" y="32" class="t-head">광원 파장 — 짧을수록 가는 선을 그린다</text>')
+    for i, (lab, nm) in enumerate(_WAVE):
+        y = 64 + i * 45
+        cls = 'good-box' if lab.startswith('EUV') else 'mid-box'
+        h.append('<text x="138" y="%d" class="t-step" text-anchor="end">%s</text>' % (y + 5, lab))
+        h.append('<rect x="150" y="%d" width="%.1f" height="26" rx="5" class="%s"/>'
+                 % (y - 13, nm, cls))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+WAVE = fig_wave()
+
+
+# ── ⑩ 층이 셋이냐 둘이냐 ───────────────────────────────────────────────
+def fig_layers():
+    h = ['<svg viewBox="0 0 600 190" role="img" aria-label="CoWoS 의 세 층과 EMIB 의 '
+         '두 층을 나란히 둔 그림">']
+    h.append('<text x="160" y="34" class="t-head" text-anchor="middle">CoWoS-L — 층 셋</text>')
+    for y, lab in ((50, '다이 · HBM'), (94, '실리콘 인터포저'), (138, '기판')):
+        h.append('<rect x="60" y="%d" width="200" height="34" rx="6" class="mid-box"/>' % y)
+        h.append('<text x="160" y="%d" class="t-sub" text-anchor="middle">%s</text>' % (y + 22, lab))
+    h.append('<text x="440" y="34" class="t-head" text-anchor="middle">EMIB — 층 둘</text>')
+    h.append('<rect x="340" y="50" width="200" height="34" rx="6" class="mid-box"/>')
+    h.append('<text x="440" y="72" class="t-sub" text-anchor="middle">다이 · HBM</text>')
+    h.append('<rect x="340" y="94" width="200" height="78" rx="6" class="mid-box"/>')
+    h.append('<rect x="390" y="100" width="100" height="24" rx="4" class="good-box"/>')
+    h.append('<text x="440" y="116" class="t-sub" text-anchor="middle">브리지</text>')
+    h.append('<text x="440" y="152" class="t-sub" text-anchor="middle">기판</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+LAYERS = fig_layers()
+
+
+# ── ⑪ 레티클 한 장의 몇 배까지 담나 ────────────────────────────────────
+# 막대 길이가 곧 배수다(1배 = 8px). 「약 40배」는 목표치라고 원문이 밝힌 값이다.
+_RETICLE = [('CoWoS 1세대', 3.3, '3.3배'), ('지금 세대', 5.5, '5.5배'),
+            ('다음 세대', 9.5, '9.5배'), ('웨이퍼 한 장(목표)', 40, '약 40배'),
+            ('EMIB 지금(추정)', 8, '8배'), ('EMIB 2028', 12, '12배 이상')]
+
+
+def fig_reticle():
+    h = ['<svg viewBox="0 0 600 235" role="img" aria-label="패키징 방식별로 레티클 한 장의 '
+         '몇 배까지 담는지">']
+    h.append('<text x="190" y="30" class="t-head">레티클 한 장의 몇 배까지 담나</text>')
+    for i, (lab, mult, val) in enumerate(_RETICLE):
+        y = 60 + i * 30
+        cls = 'good-box' if lab.startswith('EMIB') else 'mid-box'
+        w = mult * 8
+        h.append('<text x="178" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 4, lab))
+        h.append('<rect x="190" y="%d" width="%.1f" height="18" rx="4" class="%s"/>'
+                 % (y - 9, w, cls))
+        h.append('<text x="%.0f" y="%d" class="t-sub">%s</text>' % (190 + w + 10, y + 4, val))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+RETICLE = fig_reticle()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
@@ -235,7 +305,10 @@ ALL = [('곱셈을 덧셈으로 바꾸고 되돌아오는 자리', LOG_MATH),
        ('같은 1.6테라비트를 채우는 세 조합', LANES),
        ('메모리 네 층', TIERS),
        ('스케일업 도메인 두 겹', DOMAIN),
-       ('천재 옆에 비서를 몇 명 두나', CPU_ROLES)]
+       ('천재 옆에 비서를 몇 명 두나', CPU_ROLES),
+       ('광원 파장', WAVE),
+       ('층이 셋이냐 둘이냐', LAYERS),
+       ('레티클 한 장의 몇 배까지 담나', RETICLE)]
 
 if __name__ == '__main__':
     import sys
