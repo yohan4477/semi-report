@@ -51,6 +51,9 @@ PAGES = [
      '사슬로 읽는 6개월 — 누가 무엇을 해서 어디로 번졌나, 그리고 무엇을 고쳤나', False),
     ('Epoch AI 대시보드.html', 'epoch', 'Epoch AI', '📐',
      'AI 컴퓨트의 돈과 물리 제약 — 프런티어 랩이 계산 자원을 어떤 돈으로 사는지', False),
+    # 매체가 전문을 무료로 푼다(구독 벽 없음) — 요약만 싣고 잠그지 않는다
+    ('Semi Doped 대시보드.html', 'semidoped', 'Semi Doped', '🎙️',
+     '칩을 만드는 사람이 나와 앉아 설계를 말하는 팟캐스트 — 추론 하드웨어·패브릭·메모리', False),
     # AI Engineer 컨퍼런스 발표 — 카드 안이 번호글이라 다른 장과 읽는 결이 다르다
     ('AI Engineer 대시보드.html', 'ai-engineer', 'AI Engineer', '🛠️',
      '에이전트를 실제로 굴려 본 사람들의 발표 — 한 편을 번호글로 옮겼다', False),

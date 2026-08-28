@@ -11371,7 +11371,7 @@
 "_meta": {
 "built": "2026-08-28",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 917,
+"files": 918,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -12092,6 +12092,10 @@
 "content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md": [
 "204858558928aafebc0e97c9707fab4b3dd96c8f",
 143
+],
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md": [
+"b54c05c19edf40310e695f04de6e3bbe41db69f8",
+83
 ],
 "content/understanding/_대기 목록.md": [
 "65c9c4a6933318c00d54b5571b582429cdf058d6",
@@ -15042,8 +15046,8 @@
 213
 ]
 },
-"fingerprint": "eaabbbf0acf00306ced8056e9ec381cc54dcb0ed",
-"lines": 163014
+"fingerprint": "a57ab62af6c761bf46a27f77359157ad0552c3ff",
+"lines": 163097
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -17419,6 +17423,7 @@
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L295",
 "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md#L23",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L72",
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md#L50",
 "content/understanding/_대기 목록.md#L17",
 "content/understanding/_대기 목록.md#L22",
 "content/understanding/_대기 목록.md#L39",
@@ -25385,6 +25390,7 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L733",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L782",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L118",
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md#L56",
 "content/understanding/미국주식 사관학교/[260429] 오픈AI가 앤트로픽에 매출로 역전당했다 - 처음부터 어디를 팠느냐의 차이.md#L30",
 "content/understanding/미국주식 사관학교/[260525] 상장이 지수를 흔드는 자리는 공모가 아니라 강제 매수다.md#L72",
 "content/understanding/미국주식 사관학교/[260605] 브로드컴 급락은 거품이 아니라 가격표 문제다 - 수요 곡선과 밸류에이션을 가른다.md#L1",
@@ -29704,6 +29710,7 @@
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L133",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L143",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L273",
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md#L34",
 "content/understanding/미국주식 사관학교/[260720] 로봇은 인건비가 아니라 설비투자 예산에서 팔린다 - 구글과 테슬라의 로봇 두뇌 경쟁.md#L85",
 "content/understanding/박형근 실장/[260818] 휴머노이드의 병목은 지능이 아니라 부품 생태계다 (2부작 · 2부) - 박형근.md#L13",
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L11",
@@ -45389,6 +45396,8 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L875",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L876",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L637",
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md#L50",
+"content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md#L60",
 "content/understanding/권효재 대표/지금 에너지 투자 놓치면 100년 자산 버리는 겁니다.md#L120",
 "content/understanding/김녹원 대표/[260819] 중국이 피지컬 AI에서 앞선 이유는 공장을 다 갖고 있어서다 - 김녹원.md#L79",
 "content/understanding/김상훈 기자/[260816] 칩을 막아도 학습은 밖에서 하고 답만 들고 온다 - 수출통제에 뚫린 구멍 셋 - 김상훈.md#L13",
