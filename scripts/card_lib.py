@@ -528,10 +528,33 @@ def debate_html(d):
 STAGE_NODES = ('목표', '시도', '성과', '한계')
 
 
+def _toc_items(items):
+    """목차 항목을 재귀로 그린다. 깊이를 미리 정하지 않는다.
+
+    가지는 (축, [항목 …]) 이고 잎은 (번호, 축, 물음) 이다. 축을 괄호로 앞세우면
+    같은 층에 선 것들이 무슨 기준으로 갈렸는지가 제목을 읽기 전에 걸린다 —
+    「어떻게 붙였나」와 「어떻게 몰았나」는 나란히 두면 무슨 축인지 모르지만
+    (메모리)·(연산)을 앞세우면 칩 안을 둘로 가른 것이 바로 보인다.
+    """
+    out = []
+    for it in items:
+        if len(it) == 2 and isinstance(it[1], (list, tuple)):
+            out.append('<li class="tg-ax"><span>(%s)</span><ul>%s</ul></li>'
+                       % (it[0], _toc_items(it[1])))
+        elif len(it) == 3:
+            num, ax, title = it
+            axh = '<span class="tg-a">(%s)</span> ' % ax if ax else ''
+            out.append('<li><b>%s</b> %s%s</li>' % (num, axh, title))
+        else:
+            out.append('<li><b>%s</b> %s</li>' % it)
+    return ''.join(out)
+
+
 def toc_html(groups):
     """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
 
-    groups = [(마디, 글의 꼴, [(번호, 절 제목) 또는 (축, [(번호, 절 제목), …]), …]), …].
+    groups = [(마디, 글의 꼴, [항목 …]), …].
+    항목은 잎 (번호, 축, 물음) 이거나 가지 (축, [항목 …]) 다. 깊이 제한이 없다.
 
     구조가 둘이라 열도 둘이다. 왼쪽은 **다루는 것이 실제로 어떤 마디로 되어 있는가**
     (수 체계·실리콘 면적·쿼터랙), 그 옆은 **그 마디를 어떤 꼴로 썼는가**(대비·인과 사슬).
@@ -549,17 +572,8 @@ def toc_html(groups):
     for g in groups:
         node, form, items = g if len(g) == 3 else (g[0], '', g[1])
         tag = '<span class="tg-f">%s</span>' % form if form else ''
-        # 절이 셋을 넘으면 그 안에도 축이 있어야 한다. 항목을 (축, [(번호, 제목)…]) 로
-        # 적으면 한 층 더 판다 — 축 없이 나란히 두면 층위가 다른 절이 섞인다
-        li = []
-        for it in items:
-            if isinstance(it[1], (list, tuple)) and it[1] and isinstance(it[1][0], tuple):
-                li.append('<li class="tg-ax"><span>%s</span><ul>%s</ul></li>'
-                          % (it[0], ''.join('<li><b>%s</b> %s</li>' % x for x in it[1])))
-            else:
-                li.append('<li><b>%s</b> %s</li>' % it)
         h.append('<div class="tg"><span class="tg-k">%s</span>%s<ul>%s</ul></div>'
-                 % (node, tag, ''.join(li)))
+                 % (node, tag, _toc_items(items)))
     h.append('</div>')
     return ''.join(h)
 
