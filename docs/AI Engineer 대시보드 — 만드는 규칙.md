@@ -118,8 +118,11 @@ report 꼴   본문 줄 하나에 [[fig:이름]] — aie_figs.RFIGS[영상ID][�
 PYTHONIOENCODING=utf-8 python scratchpad/gen_aie_dashboard.py
 PYTHONIOENCODING=utf-8 python insights/check_prose.py    # P19 번역투 포함
 PYTHONIOENCODING=utf-8 python insights/check_read.py
-PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py
+PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py       # 도해 배치
+PYTHONIOENCODING=utf-8 python insights/check_figval.py      # 도해 값이 원문에 있나
 ```
+
+**카드 본문은 원문 md 를 그대로 렌더링하므로 값이 새로 생길 자리가 없다.** 값을 지어낼 수 있는 곳은 손으로 짠 도해뿐이라 `check_figval` 이 그 자리를 본다. 첫 실행에서 「Opus 4.5·4.8」을 잡았다 — 원문은 「한 판 아래 → 다음 판 → 지금 판」으로만 적는데 도해가 판 번호를 붙였다. 지금은 확인 필요만 세고 FAIL 은 안 낸다.
 
 대시보드 HTML을 손으로 고치지 않는다. 고칠 것은 원문 md 와 생성기다.
 

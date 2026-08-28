@@ -59,6 +59,7 @@ PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부
 PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
 PYTHONIOENCODING=utf-8 python insights/check_angles.py  # 각도 — 대상이 사전 정본인가, 성격이 여덟에 드나
+PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
