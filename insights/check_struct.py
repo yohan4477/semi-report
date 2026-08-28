@@ -60,6 +60,8 @@ CIRCLE = '①②③④⑤⑥⑦⑧⑨⑩'
 CARD = re.compile(r'<div class="ucard[^"]*"[^>]*>(.*?)(?=<div class="ucard|<footer|\Z)', re.S)
 TITLE = re.compile(r'<h2 id="[^"]*">(.*?)</h2>', re.S)
 VERDICT = re.compile(r'<p class="uc-verdict">(.*?)</p>', re.S)
+# 앞머리 상자 안에 <div> 가 겹쳐 있다. 목차 상자 앞까지 자른다
+LEAD = re.compile(r'<div class="uc-lead">(.*?)(?=<div class="uc-toc"|<h3>|\Z)', re.S)
 # 본문 안에 <div> 가 겹쳐 있다(목차 상자·그림). 링크 줄이 늘 뒤에 오니 거기까지 자른다
 REP = re.compile(r'<div class="uc-rep">(.*?)(?:<div class="uc-links"|\Z)', re.S)
 H3 = re.compile(r'<h3>(.*?)</h3>', re.S)
@@ -107,10 +109,12 @@ def check_card(where, body):
     rep = mr.group(1)
     at = '%s · %s' % (where, title[:34])
 
-    # S1 앞머리 — 물음·바탕·축
+    # S1 앞머리 — 물음·바탕·축. 한줄 코멘트에 다 넣으면 그게 한 줄이 아니므로,
+    # 셋은 본문 맨 위 앞머리 상자에 서도 된다. 둘 중 어디에 있든 있기만 하면 된다
     mv = VERDICT.search(body)
-    v = txt(mv.group(1)) if mv else ''
-    missing = [w for w in ('물음.', '바탕.', '축.') if w not in v]
+    ml = LEAD.search(rep)
+    v = (txt(mv.group(1)) if mv else '') + ' ' + (txt(ml.group(1)) if ml else '')
+    missing = [w for w in ('물음', '바탕', '축') if w not in v]
     if missing:
         add('FAIL', at, 'S1', '앞머리에 %s 이(가) 없다' % '·'.join(m.rstrip('.') for m in missing))
 

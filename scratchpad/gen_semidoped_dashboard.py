@@ -52,13 +52,20 @@ JAL = {
               ('원문(Semi Doped)',
                'https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling',
                'ghost')],
-    'verdict': ('<b>물음.</b> 모델을 파는 회사가 칩을 만들면 설계 잣대가 어디로 옮겨 가나. '
-                '<b>바탕.</b> Semi Doped 2026-08-27 한 편. 오픈AI 가 Hot Chips 에서 '
-                '할라페뇨를 발표한 지 열두 시간이 안 돼 녹음한 전사본이고, 진행자 둘이 '
-                '슬라이드를 순서대로 읽는다. <b>축.</b> 잣대가 바뀌었다 → 그래서 이렇게 '
-                '지었다 → 그래서 이만큼 나왔다 → 그런데 이건 못 믿는다, 인과 사슬로 '
-                '나눴다.'),
+    # 한줄 코멘트는 결론만. 접힌 카드에서 먼저 보이는 자리라 여기 있어야 하는 것은
+    # 이 편을 읽고 남는 한 문장이다. 물음·바탕·축은 펼친 뒤 맨 위 앞머리 상자로 간다
+    'verdict': ('모델을 파는 회사가 칩을 만들자 설계 잣대가 데이터센터 운영자가 치르는 '
+                '돈에서 사용자가 겪는 시간과 전기로 옮겼고, 메모리·연산·연결 설계가 '
+                '전부 그 잣대에서 나왔다.'),
     'report': [
+        ('lead', [
+            ('물음', '모델을 파는 회사가 칩을 만들면 설계 잣대가 어디로 옮겨 가나'),
+            ('바탕', 'Semi Doped 2026-08-27 한 편. 오픈AI 가 Hot Chips 에서 할라페뇨를 '
+                     '발표한 지 열두 시간이 안 돼 녹음한 전사본이고, 진행자 둘이 슬라이드를 '
+                     '순서대로 읽는다'),
+            ('축', '잣대가 바뀌었다 → 그래서 이렇게 지었다 → 그래서 이만큼 나왔다 → '
+                   '그런데 이건 못 믿는다. 인과 사슬로 나눴다'),
+        ]),
         # 뿌리를 인과 사슬로 가른다 — 잣대가 바뀌었다, 그래서 이렇게 지었다, 그래서
         # 이만큼 나왔다, 그런데 이건 못 믿는다. 노드마다 방법은 하나다
         ('toc', ('인과 사슬', [
@@ -188,6 +195,17 @@ CSS = '''
   border-left:2px solid var(--line); }
 @media (max-width:520px) {
   .uc-body > .uc-rep { margin-left:6px; padding-left:10px; }
+}
+/* 앞머리 — 물음·바탕·축. 글을 여는 자리라 목차보다 먼저 선다 */
+.uc-rep .uc-lead { margin:0 0 14px; padding:0 0 12px;
+  border-bottom:1px solid var(--line); }
+.uc-rep .uc-lead > div { display:flex; gap:10px; align-items:baseline; padding:2px 0; }
+.uc-rep .uc-lead .ld-k { flex:0 0 3.2em; font-size:.74rem; font-weight:800;
+  color:var(--ink-3); letter-spacing:.02em; }
+.uc-rep .uc-lead .ld-v { flex:1; font-size:.86rem; line-height:1.6; color:var(--ink-2); }
+@media (max-width:520px) {
+  .uc-rep .uc-lead > div { display:block; }
+  .uc-rep .uc-lead .ld-k { margin-bottom:2px; }
 }
 /* 절 제목 앞의 노드 이름 — 번호가 노드마다 다시 시작하므로 어느 노드의 몇째인지를
    제목이 스스로 말해야 한다 */

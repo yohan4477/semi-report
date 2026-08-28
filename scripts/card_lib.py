@@ -605,6 +605,12 @@ def report_html(blocks):
             # ('toc', 갈래목록) 또는 ('toc', (무엇으로 갈랐나, 갈래목록))
             h.append(toc_html(val[1], val[0]) if isinstance(val, tuple)
                      else toc_html(val))
+        elif kind == 'lead':
+            # 앞머리 — 물음·바탕·축. 한줄 코멘트가 결론만 담게 되면서 이 셋이 갈 자리가
+            # 없어졌다. 글을 여는 자리이므로 본문 맨 위, 목차보다 앞에 선다
+            h.append('<div class="uc-lead">%s</div>'
+                     % ''.join('<div><span class="ld-k">%s</span>'
+                               '<span class="ld-v">%s</span></div>' % t for t in val))
         elif kind == 'raw':
             # 카드마다 다른 층(접히는 각도 상자 같은 것)을 그대로 끼운다
             h.append(val)
