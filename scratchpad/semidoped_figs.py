@@ -324,6 +324,195 @@ def fig_wafer3():
 WAFER3 = fig_wafer3()
 
 
+# ── ⑭ 레티클 84장이 한 칩이 된다 ───────────────────────────────────────
+# 칸 개수가 곧 값이다 — 원문의 "84 reticles". 12×7 로 정확히 84칸을 그린다.
+def fig_wse():
+    h = ['<svg viewBox="0 0 600 270" role="img" aria-label="레티클 84장을 이어 붙여 '
+         '한 칩으로 쓰는 웨이퍼 스케일 엔진">']
+    h.append('<text x="300" y="28" class="t-head" text-anchor="middle">웨이퍼 스케일 엔진</text>')
+    for r in range(7):
+        for c in range(12):
+            h.append('<rect x="%d" y="%d" width="36" height="26" rx="3" class="good-box"/>'
+                     % (72 + c * 38, 40 + r * 28))
+    h.append('<text x="300" y="258" class="t-sub" text-anchor="middle">레티클 84장 = 한 칩</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+WSE = fig_wse()
+
+
+# ── ⑮ 나란히 놓느냐 위아래로 쌓느냐 ────────────────────────────────────
+# 값은 접속 피치(약 1.5마이크론)와 「트랜지스터 두 배」뿐이다. 층수를 더 그리지 않는다 —
+# 몇 단까지 쌓을 수 있는지는 진행자가 모른다고 밝혔다.
+def fig_fold():
+    h = ['<svg viewBox="0 0 600 230" role="img" aria-label="로직 칩 둘을 나란히 놓는 것과 '
+         '위아래로 쌓는 것을 견준 그림">']
+    h.append('<text x="165" y="60" class="t-head" text-anchor="middle">나란히 놓으면</text>')
+    h.append('<rect x="60" y="90" width="100" height="50" rx="6" class="mid-box"/>')
+    h.append('<rect x="170" y="90" width="100" height="50" rx="6" class="mid-box"/>')
+    h.append('<text x="165" y="170" class="t-sub" text-anchor="middle">면적이 두 배</text>')
+    h.append('<text x="450" y="40" class="t-head" text-anchor="middle">위아래로 쌓으면</text>')
+    h.append('<rect x="380" y="64" width="140" height="44" rx="6" class="good-box"/>')
+    h.append('<rect x="380" y="112" width="140" height="44" rx="6" class="good-box"/>')
+    h.append('<text x="450" y="180" class="t-sub" text-anchor="middle">같은 면적에 두 배</text>')
+    h.append('<text x="450" y="202" class="t-sub" text-anchor="middle">접속 피치 약 1.5μm</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FOLD = fig_fold()
+
+
+# ── ⑯ PCIe 세대별 전송 속도 ────────────────────────────────────────────
+# 막대 길이가 곧 GT/s 값이다(1GT/s = 2.5px).
+_PCIE = [('Gen5 · NRZ', 32, '32 GT/s'), ('Gen6 · PAM4', 64, '64 GT/s'),
+         ('Gen7 · PAM4', 128, '128 GT/s')]
+
+
+def fig_pcie():
+    h = ['<svg viewBox="0 0 600 200" role="img" aria-label="PCIe 세대별 초당 전송 속도">']
+    h.append('<text x="190" y="36" class="t-head">PCIe 세대별 전송 속도</text>')
+    for i, (lab, gt, val) in enumerate(_PCIE):
+        y = 70 + i * 50
+        cls = 'good-box' if lab.startswith('Gen6') else 'mid-box'
+        w = gt * 2.5
+        h.append('<text x="178" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 5, lab))
+        h.append('<rect x="190" y="%d" width="%.1f" height="26" rx="5" class="%s"/>'
+                 % (y - 13, w, cls))
+        h.append('<text x="%.0f" y="%d" class="t-val">%s</text>' % (190 + w + 10, y + 5, val))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+PCIE = fig_pcie()
+
+
+# ── ⑰ 네트워킹 세 층 ───────────────────────────────────────────────────
+# 띠 길이를 거리로 읽히지 않게 셋을 같은 폭으로 둔다 — 랙 높이와 20~50마일을
+# 같은 자로 그릴 수는 없다. 거리는 글자로만 적는다.
+_NET = [('스케일업', '랙 하나 안(높이 6~7피트)'), ('스케일아웃', '랙 여럿에 걸쳐'),
+        ('스케일어크로스', '캠퍼스 사이 20~50마일')]
+
+
+def fig_net():
+    h = ['<svg viewBox="0 0 600 230" role="img" aria-label="스케일업·스케일아웃·'
+         '스케일어크로스 세 층이 각각 어디까지를 가리키나">']
+    for i, (lab, where) in enumerate(_NET):
+        y = 50 + i * 60
+        cls = 'good-box' if i == 0 else 'mid-box'
+        h.append('<rect x="140" y="%d" width="320" height="44" rx="8" class="%s"/>' % (y, cls))
+        h.append('<text x="158" y="%d" class="t-step">%s</text>' % (y + 28, lab))
+        h.append('<text x="442" y="%d" class="t-sub" text-anchor="end">%s</text>'
+                 % (y + 28, where))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+NET = fig_net()
+
+
+# ── ⑱ 사고가 무엇으로 남았나 ───────────────────────────────────────────
+_ACC = [('금 간 실리콘 조각', '도핑과 p-n 접합'),
+        ('주머니 속 녹은 초콜릿', '전자레인지'),
+        ('금과 알루미늄이 섞임', '고온 강제 시험'),
+        ('상온에서 멈춘 레이저', '빨간 LED')]
+
+
+def fig_accident():
+    h = ['<svg viewBox="0 0 600 260" role="img" aria-label="사고나 불량으로 시작한 것이 '
+         '무엇으로 남았는지 넷을 짝지은 그림">']
+    for i, (before, after) in enumerate(_ACC):
+        y = 40 + i * 55
+        h.append('<rect x="40" y="%d" width="230" height="44" rx="8" class="mid-box"/>' % y)
+        h.append('<text x="155" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (y + 28, before))
+        h.append('<line class="flow" x1="272" y1="%d" x2="328" y2="%d"/>' % (y + 22, y + 22))
+        h.append('<rect x="330" y="%d" width="230" height="44" rx="8" class="good-box"/>' % y)
+        h.append('<text x="445" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (y + 28, after))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+ACCIDENT = fig_accident()
+
+
+# ── ⑲ 먼저 한 사람의 자취 ──────────────────────────────────────────────
+# x 좌표는 연도에서 계산한다. 손으로 찍지 않는다.
+_YEARS = [(1922, '1922 결정에서 빛', 1), (1925, '1925 특허', 0),
+          (1947, '1947 트랜지스터', 1), (1995, '1995 복제 성공', 0),
+          (2007, '2007 학계 인정', 1)]
+
+
+def _yx(year):
+    return 60 + (year - 1920) * (500.0 / 90)
+
+
+def fig_timeline():
+    h = ['<svg viewBox="0 0 600 170" role="img" aria-label="1922년 결정 발광부터 2007년 '
+         '학계 인정까지의 연표">']
+    h.append('<text x="60" y="40" class="t-head">먼저 한 사람의 자취</text>')
+    h.append('<line class="thin" x1="55" y1="110" x2="570" y2="110"/>')
+    for year, lab, above in _YEARS:
+        x = _yx(year)
+        h.append('<circle cx="%.0f" cy="110" r="6" class="good-box"/>' % x)
+        h.append('<text x="%.0f" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x, 88 if above else 140, lab))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+TIMELINE = fig_timeline()
+
+
+# ── ⑳ 값을 내려 죽이고, 산 쪽이 되갚는다 ───────────────────────────────
+_WAR = ['칩을 팔던 회사가 완제품을 원가 아래로 낸다',
+        '칩을 사다 붙이던 조립업체가 무너진다',
+        '살아남은 쪽이 칩 회사를 사들인다',
+        '다음 판에서 값으로 되갚는다']
+
+
+def fig_pricewar():
+    h = ['<svg viewBox="0 0 600 250" role="img" aria-label="칩 회사가 값을 내려 조립업체를 '
+         '무너뜨리고, 살아남은 쪽이 칩 회사를 사들여 되갚는 네 단계">']
+    for i, step in enumerate(_WAR):
+        y = 30 + i * 55
+        cls = 'bad-box' if i == 1 else 'mid-box'
+        h.append('<rect x="60" y="%d" width="480" height="44" rx="8" class="%s"/>' % (y, cls))
+        h.append('<text x="78" y="%d" class="t-step">%s</text>' % (y + 28, step))
+        if i < len(_WAR) - 1:
+            h.append('<line class="flow" x1="100" y1="%d" x2="100" y2="%d"/>' % (y + 46, y + 53))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+PRICEWAR = fig_pricewar()
+
+
+# ── ㉑ 세계 희토류에서 중국이 차지하는 몫 ───────────────────────────────
+# 막대 길이가 곧 퍼센트다(1% = 3.6px).
+_RARE = [('채굴', 70, '약 70%'), ('정제', 90, '약 90%')]
+
+
+def fig_rare():
+    h = ['<svg viewBox="0 0 600 170" role="img" aria-label="세계 희토류 채굴과 정제에서 '
+         '중국이 차지하는 몫">']
+    h.append('<text x="180" y="36" class="t-head">세계 희토류에서 중국이 차지하는 몫</text>')
+    for i, (lab, pct, val) in enumerate(_RARE):
+        y = 70 + i * 60
+        w = pct * 3.6
+        h.append('<text x="168" y="%d" class="t-step" text-anchor="end">%s</text>' % (y + 5, lab))
+        h.append('<rect x="180" y="%d" width="%.1f" height="28" rx="5" class="bad-box"/>'
+                 % (y - 14, w))
+        h.append('<text x="%.0f" y="%d" class="t-val">%s</text>' % (180 + w + 10, y + 5, val))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+RARE = fig_rare()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
@@ -351,7 +540,11 @@ ALL = [('곱셈을 덧셈으로 바꾸고 되돌아오는 자리', LOG_MATH),
        ('층이 셋이냐 둘이냐', LAYERS),
        ('레티클 한 장의 몇 배까지 담나', RETICLE),
        ('광트랜시버 시장 몫', SHARE),
-       ('같은 비트에 드는 웨이퍼', WAFER3)]
+       ('같은 비트에 드는 웨이퍼', WAFER3),
+       ('레티클 84장', WSE),
+       ('나란히냐 쌓기냐', FOLD),
+       ('PCIe 세대별 속도', PCIE),
+       ('네트워킹 세 층', NET)]
 
 if __name__ == '__main__':
     import sys
