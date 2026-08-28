@@ -205,7 +205,11 @@ def v4_unmeasured(out):
 def main():
     txt = _text(DASH, SECTION)
     out = []
-    if not txt:
+    if not os.path.exists(DASH):
+        # 2026-08-28에 통합 보고서 화면을 걷었다. 원본과 생성기는 남아 있으니
+        # 다시 만들면 이 검사도 되살아난다 — 화면이 없는 것을 결함으로 세지 않는다
+        print('건너뜀 — 통합 보고서 화면이 없다. scratchpad/gen_report_dashboard.py 를 돌리면 생긴다')
+    elif not txt:
         out.append(('FAIL', 'V1',
                     '통합 보고서.html 의 %s 절을 못 읽었다' % SECTION))
     else:
