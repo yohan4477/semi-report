@@ -78,31 +78,49 @@ def _criteria():
 
 
 def _domain():
-    """칩 몇 개가 한 덩어리로 도나 — 묶는 단위가 두 단계다.
+    """칩을 묶는 두 단계 — 겹이 겹을 품는다.
 
-    칩을 128개 그리지 않는다. 개수를 그리면 그 개수가 주장이 된다. 묶음 둘과 그 사이를
-    잇는 속도만 남긴다.
+    말로 적은 것을 그림이 되풀이하지 않는다. 안쪽이 세 배 빠르다는 것은 글씨가 아니라
+    **선 굵기 3 대 1**로 보인다(600 ÷ 200 = 3, 원문 두 값에서 나온 비율이다).
+
+    칩을 128개 그리지 않는다. 세 개와 말줄임으로 두어 개수가 뜻이 되지 않게 한다 —
+    앞 판은 상자를 넷 그려 놓고 「개수가 아니다」라는 변명을 판 위에 적었다.
     """
-    W, H = 640, 226
+    W, H = 640, 262
     o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
          'aria-label="칩을 묶는 두 단계">' % (W, H)]
-    o.append('<rect x="16" y="16" width="608" height="194" rx="10" class="fg-b"/>')
-    o.append('<text x="32" y="38" class="fg">큰 묶음 — 칩 최대 2,048개</text>')
-    o.append('<text x="32" y="56" class="fg fg-s">칩 하나가 초당 200기가비트로 붙는다</text>')
-    for i in range(4):
-        x = 36 + i * 146
-        o.append('<rect x="%g" y="74" width="130" height="62" rx="8" class="fg-b" '
-                 'style="stroke:var(--accent);stroke-width:2"/>' % x)
-        o.append('<text x="%g" y="100" class="fg" text-anchor="middle">작은 묶음</text>'
-                 % (x + 65))
-        o.append('<text x="%g" y="117" class="fg fg-s" text-anchor="middle">'
-                 '칩 128개</text>' % (x + 65))
-    o.append('<text x="320" y="158" class="fg fg-s" text-anchor="middle">'
-             '작은 묶음 안에서는 칩 하나가 초당 600기가비트로 붙는다</text>')
-    o.append('<text x="320" y="178" class="fg fg-s" text-anchor="middle">'
-             '여기 그린 상자 넷은 그림일 뿐 개수를 뜻하지 않는다</text>')
-    o.append('<text x="320" y="198" class="fg fg-s" text-anchor="middle">'
-             '칩 128개가 한 랙이면 2,048개는 약 16랙 — 진행자가 나눠 본 값이다</text>')
+    # 바깥 겹
+    o.append('<rect x="16" y="34" width="608" height="176" rx="10" class="fg-b"/>')
+    o.append('<text x="30" y="24" class="fg">큰 묶음 — 칩 최대 2,048개</text>')
+    # 안쪽 겹 둘 + 말줄임
+    for k, x0 in enumerate((34, 330)):
+        o.append('<rect x="%g" y="52" width="240" height="118" rx="8" class="fg-b" '
+                 'style="stroke:var(--accent);stroke-width:2"/>' % x0)
+        o.append('<text x="%g" y="70" class="fg fg-s">작은 묶음 — 칩 128개</text>' % (x0 + 12))
+        for i in range(3):
+            cx = x0 + 24 + i * 68
+            o.append('<rect x="%g" y="80" width="52" height="24" rx="4" class="fg-b"/>' % cx)
+            o.append('<text x="%g" y="96" class="fg fg-s" text-anchor="middle">칩</text>'
+                     % (cx + 26))
+            o.append('<path d="M%g 104 L%g 132" stroke="var(--accent)" stroke-width="3.5" '
+                     'fill="none"/>' % (cx + 26, x0 + 120))
+        o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
+        o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
+                 'Tomahawk 6 스위치</text>' % (x0 + 120))
+    o.append('<text x="292" y="118" class="fg fg-s">⋯</text>')
+    # 바깥 겹을 잇는 얇은 선 — 굵기가 곧 속도 차이다
+    o.append('<path d="M274 190 L366 190" stroke="var(--ink-3)" stroke-width="1.2" '
+             'fill="none"/>')
+    o.append('<text x="320" y="184" class="fg fg-s" text-anchor="middle">ESUN</text>')
+    # 굵기 범례 — 판 위가 아니라 판 아래
+    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="3.5" '
+             'fill="none"/>')
+    o.append('<text x="102" y="236" class="fg fg-s">작은 묶음 안 — 칩 하나가 초당 '
+             '600기가비트</text>')
+    o.append('<path d="M348 232 L400 232" stroke="var(--ink-3)" stroke-width="1.2" '
+             'fill="none"/>')
+    o.append('<text x="410" y="236" class="fg fg-s">묶음끼리 — 칩 하나가 초당 '
+             '200기가비트</text>')
     o.append('</svg>')
     return ''.join(o)
 
