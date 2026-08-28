@@ -37,7 +37,7 @@ def _box(x, y, w, h, label, sub='', hi=False):
 
 
 def _criteria():
-    """칩을 고르는 잣대가 어디로 옮겼나.
+    """잣대가 무엇에서 무엇으로 바뀌었나.
 
     값을 그리지 않는다. 원문에 든 것은 「무엇을 잣대로 골랐나」뿐이라 막대도 눈금도
     쓸 수 없다. 상자와 화살표로만 어느 쪽을 골랐는지 보인다.
@@ -51,9 +51,9 @@ def _criteria():
     y3 = y2 + BH + 14
     H = y3 + 40 + 12
     o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
-         'aria-label="칩을 고르는 잣대가 어디로 옮겼나">' % (W, H)]
-    o.append('<text x="20" y="24" class="fg">칩을 파는 회사는</text>')
-    o.append('<text x="360" y="24" class="fg">칩을 쓰는 오픈AI 는</text>')
+         'aria-label="잣대가 무엇에서 무엇으로 바뀌었나">' % (W, H)]
+    o.append('<text x="20" y="24" class="fg">전 — 칩을 파는 회사가 정할 때</text>')
+    o.append('<text x="360" y="24" class="fg">후 — 모델을 파는 회사가 정할 때</text>')
     o.append(_box(20, Y1, 250, BH, '총소유비용을 본다', '칩을 사서 굴리는 데 드는 돈'))
     o.append(_box(360, Y1, 250, BH, '① 엔드투엔드 지연',
                   '질문을 넣고 마지막 글자가 나올 때까지', hi=True))
