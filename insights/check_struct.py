@@ -54,7 +54,8 @@ FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
 # 목차는 첫 절보다 앞에 있으면 된다 — 그 앞에 각도 상자가 설 수 있다
 TOCBOX = re.compile(r'<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
 ANGBOX = re.compile(r'<div class="uc-angles">(.*?)</div>', re.S)
-ANGLI = re.compile(r'<li class="ag-(on|off)">(.*?)</li>', re.S)
+# 나무로 그리면서 L1 이름이 <span class="ag-1"> 안으로 들어갔다. 가지는 빼고 줄기만 읽는다
+ANGLI = re.compile(r'<li class="ag-(on|off)"><span class="ag-1">(.*?)</span>', re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)

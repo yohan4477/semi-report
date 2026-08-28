@@ -539,15 +539,20 @@ def angles_html(items):
             subs = it[2] if len(it) > 2 else ()
         else:
             name, used, subs = it, False, ()
-        # 하위는 물음 이름이 아니라 **그 안에 무엇이 들었나**를 적는다. 「무엇으로 쟀나」만
-        # 걸어 두면 각도를 폈을 때 아무것도 안 보인다 — 구성요소를 그대로 내건다
-        sub = ('<span class="ag-sub">%s</span>'
-               % ' · '.join(subs)) if subs else ''
-        li.append('<li class="%s">%s%s</li>'
+        # 하위는 (물음, [구성요소 …]) — 물음만 걸면 펴도 아무것도 안 보이고, 구성요소만
+        # 걸면 어느 각으로 본 것인지가 사라진다. 층을 나무로 그려 둘 다 남긴다.
+        kids = []
+        for s in subs:
+            q, parts = s if isinstance(s, tuple) else (s, ())
+            body = ('<span class="ag-i">%s</span>'
+                    % '</span><span class="ag-i">'.join(parts)) if parts else ''
+            kids.append('<li><span class="ag-q">%s</span>%s</li>' % (q, body))
+        sub = '<ul class="ag-sub">%s</ul>' % ''.join(kids) if kids else ''
+        li.append('<li class="%s"><span class="ag-1">%s</span>%s</li>'
                   % ('ag-on' if used else 'ag-off', name, sub))
-    return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag">%s</ul>'
-            '<p class="ag-note">점이 찍힌 것이 이 카드가 절로 세운 각도다. '
-            '아래 작은 글씨가 그 각도에 든 것이고, 점 없는 각도는 각도 파일에만 '
+    return ('<div class="uc-angles"><p class="uc-label">각도</p><ul class="ag-tree">%s</ul>'
+            '<p class="ag-note">굵은 줄기가 이 카드가 절로 세운 각도다. 가지는 그 각도 안에서 '
+            '갈리는 물음이고 그 아래가 거기 든 것이다. 흐린 줄기는 각도 파일에만 '
             '있다.</p></div>' % ''.join(li))
 
 
