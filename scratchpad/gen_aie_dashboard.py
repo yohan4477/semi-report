@@ -25,7 +25,7 @@ REL = 'content/understanding/AI Engineer/%s'
 
 STAMP = '2026-08-26'
 
-# 섹션은 「무엇을 만드는 이야기인가」로 가른다. 회사로 가르지 않는다 —
+# 섹션은 「무엇을 만드는 이야기인가」로 나눈다. 회사로 나누지 않는다 —
 # 같은 회사가 훈련 이야기도 하고 제품 이야기도 하는데 회사로 묶으면 그게 한 칸에 뭉친다.
 SEC = {
     'agent':   ('sec-agent', '01', '에이전트 만들기 · 운영',
@@ -528,7 +528,7 @@ POST_CSS = '''
     .rfig .rq-lab{margin-top:14px}
   }
   /* 카드 안 글자는 한 값이다. 본문·판·판 제목·캡션·표까지 전부 .95rem이고
-     층은 굵기와 색으로만 가른다 — 크기로 가르면 자리마다 값이 갈린다 */
+     층은 굵기와 색으로만 나눈다 — 크기로 가르면 자리마다 값이 갈린다 */
   .ucard .uc-fig .fig-title{font-size:.95rem;letter-spacing:0;text-transform:none}
   .ucard .uc-fig figcaption{font-size:.95rem;line-height:1.78}
   .uc-rep .uc-label{font-size:.95rem;letter-spacing:0;text-transform:none}

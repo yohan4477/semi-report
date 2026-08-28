@@ -41,7 +41,7 @@ SECTIONS = (('winner', 'winner', '수혜 기업과 위기에 빠진 기업', '�
             # 아래 둘은 제3자 코퍼스가 들어오며 생겼다. 위 넷에 억지로 밀어 넣으면
             # 원유·해협·환율 이야기가 칩 이야기와 섞여 어느 것도 안 읽힌다.
             ('energy', 'macro', '에너지 · 원자재', '유가와 해협, LNG 비축, 에너지 안보'),
-            ('market', 'macro', '금리 · 환율 · 시장', '돈값과 환율, 수급과 포지션, 값이 매겨지는 방식'),
+            ('market', 'macro', '금리 · 환율 · 시장', '돈값과 환율, 수급과 포지션, 값이 정해지는 방식'),
             # 부동산은 한 칸에 다 넣으니 「공급」과 「세금」과 「재건축」이 섞여
             # 어느 것도 안 읽혔다. 갈래 셋으로 나눈다 — 짓는 쪽, 멈추는 쪽, 값 매기는 쪽
             ('estate_supply', 'estate', '공급 · 공사비', '무엇을 짓고 있나, 짓는 값은 왜 올랐나'),
@@ -173,7 +173,7 @@ RANK_LEGEND = ('<p class="rkleg">%s 관측: 직접 재거나 현장에서 본 �
 # 포함해 그 로직을 그대로 옮긴다.
 SILENT_RE = re.compile(r'^[-*][ \t]*(.+?)[ \t]*—[ \t]*(.+?)[ \t]*$')
 
-# 관계 종류 셋 — 선 모양으로 가른다(색으로만 가르지 않는다). 값은 빈 문자열이면 실선이다.
+# 관계 종류 셋 — 선 모양으로 나눈다(색으로만 가르지 않는다). 값은 빈 문자열이면 실선이다.
 # 단독은 이 표에 없다 — 단독은 선이 없다(against가 없으므로 애초에 선을 안 그린다).
 STANCE_DASH = {'충돌': '', '동의': '2 5', '결다름': '9 5'}
 STANCE_ORDER = ('충돌', '동의', '결다름')
@@ -520,7 +520,7 @@ MRG_CSS = '''
   .mcell.is-on rect{fill:var(--soft);stroke:var(--accent);stroke-width:2.4}
   .minimap{margin:0 0 10px}
 
-  /* merge 축 — 인과선은 근거가 붙는다. 나머지 mflow(회색 실선)와 색으로 가른다 */
+  /* merge 축 — 인과선은 근거가 붙는다. 나머지 mflow(회색 실선)와 색으로 나눈다 */
   .causesvg,.flowsvg{width:100%;height:auto;display:block}
   .ce{stroke:var(--accent);stroke-width:1.6}
   .ce-sg{font-size:11px;font-weight:850;fill:var(--accent)}
@@ -1003,7 +1003,7 @@ CSS = r'''
         color:var(--ink);font-variant-numeric:tabular-nums}
   .st-mix{margin-top:5px;font-size:var(--t-lbl);color:var(--sub)}
   .stile.is-all .st-t{color:var(--accent)}
-  /* 가로지르는 층 — 격자 한 줄을 통째로 쓰고 위아래로 선을 그어 주제 타일과 급을 가른다 */
+  /* 가로지르는 층 — 격자 한 줄을 통째로 쓰고 위아래로 선을 그어 주제 타일과 급을 나눈다 */
   .stile.is-top{grid-column:1/-1;border-color:var(--accent);border-left-width:3px;
         background:var(--soft, var(--card))}
   .stile.is-top .st-num{color:var(--accent)}
