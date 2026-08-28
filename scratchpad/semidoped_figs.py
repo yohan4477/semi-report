@@ -98,18 +98,18 @@ def _domain():
                  'style="stroke:var(--accent);stroke-width:2"/>' % x0)
         o.append('<text x="%g" y="70" class="fg fg-s">작은 묶음 — 칩 128개</text>' % (x0 + 12))
         for i in range(3):
-            cx = x0 + 24 + i * 68
+            cx = x0 + 26 + i * 68        # 칩 가운데 = cx + 26 → x0+52 · x0+120 · x0+188
             o.append('<rect x="%g" y="80" width="52" height="24" rx="4" class="fg-b"/>' % cx)
             o.append('<text x="%g" y="96" class="fg fg-s" text-anchor="middle">칩</text>'
                      % (cx + 26))
             # 선은 x·y 축에 평행하게만 간다. 곧장 못 가면 꺾어서 간다 —
             # 칩에서 수직으로 내려 공통 가로 버스에 붙는다(check_fig F6)
-            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="3.5" '
+            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
                      'fill="none"/>' % (cx + 26, cx + 26))
         # 가로 버스와 스위치로 내려가는 한 줄
-        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="3.5" '
-                 'fill="none"/>' % (x0 + 50, x0 + 190))
-        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="3.5" '
+        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
+                 'fill="none"/>' % (x0 + 52, x0 + 188))
+        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
                  'fill="none"/>' % (x0 + 120, x0 + 120))
         o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
         o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
@@ -121,7 +121,7 @@ def _domain():
     o.append('<text x="302" y="140" class="fg fg-s" text-anchor="middle">ESUN</text>')
     o.append('<text x="302" y="100" class="fg fg-s" text-anchor="middle">⋯</text>')
     # 굵기 범례 — 판 위가 아니라 판 아래
-    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="3.5" '
+    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" '
              'fill="none"/>')
     o.append('<text x="102" y="236" class="fg fg-s">작은 묶음 안 — 칩 하나가 초당 '
              '600기가비트</text>')
