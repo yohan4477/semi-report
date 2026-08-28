@@ -287,7 +287,115 @@ EXPERIMENTS = [
 ]
 
 
+# 자주 하는 오류 — 실제로 났던 것만 적는다. 안 난 오류는 여기 안 온다.
+# (묶음, 한 줄, [(증상, 잡는 것, 실제로 난 일, 처방)])
+# 「잡는 것」이 사람이면 검사기가 없다는 뜻이고, 그 줄이 이 표에서 가장 비싸다.
+MISTAKES = [
+ ('말이 빠진다', '누가 무엇을 했는지가 문장에서 사라진다. 읽히기는 매끄러워서 교정에서 안 걸린다.', [
+  ('은유가 주어 자리에 선다', 'check_prose P14',
+   '2026-08-18 「돈이 도는 자리가 다이 바깥의 메모리로 옮겨 간다」. 그 앞에 쓴 「값을 받는 자리」를 고치라는 지적을 받고 다른 은유로 바꿨다.',
+   '움직이는 것을 이름으로 댄다. 매출인지 주문인지 이익인지, 누구 것인지. 은유를 다른 은유로 바꾸는 것은 수정이 아니다.'),
+  ('주체를 「~하는 쪽」으로 가린다', 'check_prose P15',
+   '2026-08-18 글 38편에 「쪽」이 쌓여 있었다. 한 문장에서는 자연스러운데 글 전체에서 행위자가 없어진다.',
+   '회사·기관 이름을 댄다. 1천자당 허용치를 넘으면 이름으로 되돌린다.'),
+  ('「돈을 댄다」로 뭉갠다', 'check_prose P18',
+   '2026-08-25 Epoch 파이낸싱 도해가 다섯 칸 모두 「…을 댄다」로 나갔다.',
+   '빌려준다·낸다·건다·마련한다 중에서 고른다. 빌려주는 것인지 내는 것인지 부도 뒤에만 떠안는 약속인지가 다르다.'),
+  ('조건절에 목적어가 없다', 'check_prose P12',
+   '2026-08-17 「GLP-1은 먹으면 나오는 호르몬이다」. 무엇을 먹으면인지가 없다.',
+   '조건을 밝힌다. 무엇을 먹는지·무엇이 오르면인지를 조건절 안에 넣는다.'),
+  ('회사를 대명사로 가리킨다', '사람만',
+   '검사기가 없다. 한 문단에 회사가 둘 이상이면 「이 회사」가 어느 쪽인지 독자가 판정해야 한다.',
+   '이름을 되풀이한다. 되풀이가 지겨우면 문장을 나눈다.'),
+ ]),
+ ('원문에 없는 것이 들어간다', '가장 자주 나고 가장 티가 안 난다. 검사기가 절반만 잡는다.', [
+  ('인용한 줄에 그 숫자가 없다', 'check_cite C1',
+   '숫자는 맞는데 그 줄이 아닌 경우가 남는다. 68,928달러가 배선 값인지 백플레인 값인지는 기계가 모른다.',
+   '확인 필요로 뜨면 원문 줄을 연다. 줄을 못 대는 문장은 뺀다.'),
+  ('도해가 없는 값을 그린다', 'check_figval 은 글자만 · 도형 개수는 사람만',
+   '2026-08-29 스케일업 도해가 「여럿」을 상자 넷으로 그렸다. 원문에 넷이라는 수가 없다. 앞서 배 열 척·세 척을 그린 적도 있다.',
+   '막대 높이도 아이콘 개수도 상자 개수도 값이다. 셀 수 없으면 세지 않고 상태 둘로 바꾼다.'),
+  ('반례를 안 대고 갈래가 있다고 쓴다', '사람만',
+   '2026-08-29 「GPU 에서는 프리필과 디코드를 다른 칩에 맡기는 길이 있다」로 썼다. 원문은 그렇게 돌리는 곳을 대지 않는다.',
+   '원문이 반례를 안 댔으면 그 사실을 한계 절에 적는다. 이름을 지어 넣지 않는다.'),
+  ('근거 없이 단정한다', 'check_read R9 · R10',
+   '첫 문단에 인용이 하나도 없는 카드가 나왔다.',
+   '원문 줄을 대거나 그 문장을 뺀다.'),
+  ('계산을 고쳤는데 전칭 주장이 남는다', 'check_prose P19',
+   '2026-08-27 알파벳 편에서 숫자를 고친 뒤 「세 경로 모두」라는 문장만 옛 주장을 들고 남았다.',
+   '수를 고치면 그 수를 근거로 삼은 문장을 전부 다시 읽는다.'),
+ ]),
+ ('숫자가 맥락 없이 선다', '값은 맞는데 무엇에서 무엇까지인지가 없어 독자가 못 쓴다.', [
+  ('기준 구간을 안 붙인다', '사람만',
+   '2026-08-29 카드 제목이 「9개월이 어떻게 나왔나」였다. 첫 RTL 작성부터 테이프아웃까지라는 양 끝이 빠졌다.',
+   '기간에는 시작과 끝, 비율에는 분모, 금액에는 시점을 붙인다.'),
+  ('정도만 말하고 값이 없다', 'check_prose P13',
+   '「크게 늘었다」·「훨씬 싸다」가 숫자 없이 나간다.',
+   '숫자를 대거나 무엇에 견줘 큰지 쓴다.'),
+  ('공표치와 추정치가 같은 무게로 읽힌다', 'check_struct S6',
+   '표의 나란함이 오픈AI 확인 값과 진행자 어림을 같은 값으로 보이게 만든다.',
+   '견주는 표에 「언제 것 · 성격」 열을 둔다.'),
+  ('기저와 시점이 섞인다', 'check_val V1~V4',
+   '최근 12개월 기저 오지정·재무상태표 날짜 혼합·박아 둔 할인율·부호 뒤집힘·주식보상 가산 다섯이 산문 검사기 여섯을 그대로 통과했다.',
+   '판단은 insights/valuation/adjust.py 표에 줄로 세운다. 검사기는 그 표를 읽을 뿐이다.'),
+ ]),
+ ('구조 없이 나열한다', '항목은 다 있는데 목차가 없어 목록으로 읽힌다.', [
+  ('앞머리가 없다', 'check_struct S1',
+   '물음·바탕·축 셋 중 하나만 빠져도 독자가 무엇을 읽는 중인지 모른다.',
+   '앞머리에 물음 하나, 재료 몇 편과 기간, 묶음 둘셋을 적는다.'),
+  ('목차를 한 문단에 이어 붙인다', 'check_struct S2',
+   '가운뎃점으로 이으면 절이 일곱만 넘어도 벽이 된다.',
+   '갈래별 상자로 세운다. 왼쪽에 마디, 오른쪽에 절.'),
+  ('마디 자리에 글의 꼴을 적는다', 'check_struct S3 · S3b',
+   '「대비」·「인과 사슬」은 마디가 아니라 꼴이다. 마디를 못 찾겠으면 그 글은 아직 대상을 이해 못 한 것이다.',
+   '마디는 원문이 다루는 것 안에서 찾는다. 꼴은 옆 칸에 따로 적는다.'),
+  ('절 제목이 서랍이다', 'check_struct S4',
+   '「여러 가지」·「정리」는 물음이 아니라 칸이다.',
+   '제목이 물음을 답하게 쓴다. 「A와 B」는 두 절이다.'),
+  ('단원과 절에 같은 번호를 쓴다', '사람만',
+   '2026-08-29 목차 한 줄에서 무엇이 단원이고 무엇이 절인지가 사라졌다.',
+   '단원은 1. 2. 3., 그 아래 절은 ①②③. 단원 번호는 card_lib.toc_html 이 붙인다.'),
+ ]),
+ ('검사를 안 받고 나간다', '규칙이 있어도 그 글이 검사 대상 목록에 없으면 아무도 안 본다.', [
+  ('검사기를 일부만 돌린다', '사람만',
+   '2026-08-15 앞의 셋만 돌리고 푸시해서 check_fresh FAIL 3건과 check_cite 확인필요 6건이 그대로 나갔다.',
+   'CLAUDE.md 검사기 절에 있는 것을 전부 돌린다. build_all.py 한 방으로 돌린다.'),
+  ('생성기가 목록에 없어 통째로 안 걸린다', '사람만',
+   '2026-08-23 수도리무브 도해 서른 장, 2026-08-29 Semi Doped 도해 둘이 그랬다. 뒤엣것은 도해를 카드의 figs 가 아니라 본문 안에 넣어서였다.',
+   '새 생성기·새 자리를 만들면 검사기의 수집 목록을 같이 고친다.'),
+  ('검사기가 자기 자신을 센다', '사람만',
+   '2026-08-29 목차 상자가 본문 노릇을 해서, 본문에 한 번도 안 나오는 마디가 통과했다.',
+   '대조하는 자리에서 대조 대상을 먼저 뺀다.'),
+  ('눈으로 보고 안 겹친다고 보고한다', 'check_fig',
+   '두 번 틀렸다. 글자끼리만 재서 범례를 놓쳤고, 그다음에는 선을 안 봐서 갈고리가 글줄을 가로지르는 것을 놓쳤다. 선이 상자에서 떨어진 것도 검사기가 안 보고 있었다.',
+   '기계가 세게 한다. 검사기가 안 보는 자리를 찾으면 규칙을 하나 더 넣는다.'),
+ ]),
+]
+
+
 CSS = r'''
+  /* 자주 하는 오류 — 증상 하나가 줄 하나다 */
+  .mk{margin:16px 0 0;border:1px solid var(--line);border-radius:var(--r);
+      background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+  .mk>.mh{padding:12px 15px;border-bottom:1px solid var(--line);background:var(--sunk)}
+  .mk>.mh b{display:block;font-size:var(--t-body);font-weight:850;color:var(--ink)}
+  .mk>.mh span{display:block;margin:3px 0 0;font-size:var(--t-meta);color:var(--sub)}
+  .mr{padding:12px 15px;border-top:1px solid var(--line)}
+  .mr:first-of-type{border-top:0}
+  .mr>.rt{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;margin:0 0 6px}
+  .mr>.rt b{font-size:var(--t-body);font-weight:800;color:var(--ink)}
+  .mr>.rt .by{font-size:var(--t-lbl);font-weight:700;padding:1px 7px;border-radius:20px;
+              border:1px solid var(--line);color:var(--sub);
+              font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .mr>.rt .by[data-none="1"]{border-color:#ea580c;color:#9a3412;background:#fff7ed}
+  .mr dl{display:grid;grid-template-columns:5.4em 1fr;gap:4px 10px;margin:0}
+  .mr dt{font-size:var(--t-lbl);font-weight:800;color:var(--faint);letter-spacing:.04em}
+  .mr dd{margin:0;font-size:var(--t-meta);color:var(--sub);max-width:74ch}
+  .mr dd.fix{color:var(--ink)}
+  @media (prefers-color-scheme:dark){
+    .mr>.rt .by[data-none="1"]{border-color:#c2410c;color:#fdba74;background:#2a1509}
+  }
+  @media (max-width:640px){ .mr dl{grid-template-columns:1fr} .mr dt{margin-top:6px} }
   /* 실험 — 체계를 바꾸기 전에 재 본 것 */
   .xp{margin:22px 0 0;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--ac);
       border-radius:0 12px 12px 0;background:var(--card);box-shadow:var(--shadow)}
@@ -395,6 +503,19 @@ def stage_html(stg, kind, note, nodes, rules):
                '<ul>%s</ul>' % r if r else ''))
 
 
+def mistake_html(group, one, rows):
+    o = ['<div class="mk"><div class="mh"><b>%s</b><span>%s</span></div>' % (group, one)]
+    for sym, by, case, fix in rows:
+        none = ' data-none="1"' if '사람' in by else ''
+        o.append('<div class="mr"><p class="rt"><b>%s</b>'
+                 '<span class="by"%s>%s</span></p>'
+                 '<dl><dt>난 일</dt><dd><div class="mk-case">%s</div></dd>'
+                 '<dt>처방</dt><dd class="fix">%s</dd></dl></div>'
+                 % (sym, none, by, case, fix))
+    o.append('</div>')
+    return ''.join(o)
+
+
 def main():
     out = [HEAD % (style.BASE, CSS)]
     out.append('<header>'
@@ -433,6 +554,13 @@ def main():
                 out.append('<div class="arw" aria-hidden="true">▼</div>')
             out.append(stage_html(*st))
         out.append('</section>')
+
+    out.append('<h3 class="sec">자주 하는 오류</h3>')
+    out.append('<p class="lede2">실제로 났던 것만 적는다. 옆의 표는 그 오류를 무엇이 잡는지이고, '
+               '거기 <b>사람만</b>이라고 적힌 줄이 이 표에서 가장 비싸다 — 기계가 안 보는 자리라 '
+               '같은 오류가 되풀이된다.</p>')
+    for group, one, rows in MISTAKES:
+        out.append(mistake_html(group, one, rows))
 
     out.append('<h3 class="sec">실험 — 체계를 바꾸기 전에 재 본 것</h3>')
     out.append('<p class="lede2">측정값을 남긴다. 무엇을 조건으로 걸었고, 그 조건 안에서 무엇이 안 되었는지가 다음 회차의 근거다.</p>')
