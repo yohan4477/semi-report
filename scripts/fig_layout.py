@@ -27,6 +27,7 @@ PAD_X = 14.0         # 상자 좌우 여백
 PAD_Y = 12.0         # 상자 위아래 여백
 GAP_X = 28.0         # 칸 사이 가로 틈. 화살표가 지나는 자리다
 GAP_Y = 26.0         # 줄 사이 세로 틈
+CHECK_CH = 9.0       # `check_fig` 가 한 글자를 이만큼으로 어림한다
 
 CSS = '''
 .fl { font: 600 12px/1.35 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
@@ -44,7 +45,9 @@ def text_w(s, fs=FS):
     """글줄 폭. 한글은 글자 크기만큼, 라틴·숫자는 그 55%로 잰다.
 
     `check_fig` 는 한 글자 9px 로 어림하는데 한글 12px 는 실제로 12px 다.
-    9 로 재서 칸을 잡으면 검사기는 통과하고 화면에서는 삐져나간다.
+    9 로 재서 칸을 잡으면 검사기는 통과하고 화면에서는 삐져나간다. 거꾸로 라틴·숫자는
+    검사기가 더 넓게 보므로, 둘 중 넓은 쪽을 쓴다 — 안 그러면 화면은 멀쩡한데
+    검사기가 「칸 밖으로 삐짐」을 낸다.
     """
     w = 0.0
     for ch in s:
@@ -54,7 +57,7 @@ def text_w(s, fs=FS):
             w += fs
         else:
             w += fs * 0.55
-    return w
+    return max(w, len(s) * CHECK_CH)
 
 
 class Box(object):

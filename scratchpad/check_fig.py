@@ -155,6 +155,13 @@ def all_figs():
     for name in GENERATORS:
         mod = importlib.import_module(name)
         out += [(c['title'], f) for c in getattr(mod, 'CARDS', ()) for f in c.get('figs', ())]
+        # 보고서 꼴 카드는 도해를 figs 가 아니라 report 본문 안에 ('fig', (제목, svg, 캡션))
+        # 으로 넣는다. figs 만 걷던 동안 Semi Doped 도해 둘이 한 번도 안 걸러졌고,
+        # 선이 상자에서 떨어진 채로 나갔다(2026-08-29).
+        for c in getattr(mod, 'CARDS', ()):
+            for kind, val in c.get('report', ()):
+                if kind == 'fig':
+                    out.append((c['title'], (0, val[0], val[1], val[2] if len(val) > 2 else '')))
         # 카드가 아니라 보고서 층에 실린 도해. 이름을 REPORT_FIGS 로 둔 것은
         # 수도리무브 생성기가 EXTRA_FIGS 를 다른 뜻으로 이미 쓰고 있어서다.
         # 카드가 아니라 보고서 층에 실린 도해. CARDS만 걷으면 검사를 통째로 빠져나간다 —
