@@ -655,6 +655,73 @@ def fig_power():
 POWER = fig_power()
 
 
+# ── ㉘ 같은 600킬로와트를 보낼 때 전류 ──────────────────────────────────
+# 막대 길이가 곧 암페어 값이다. 750A 가 눈에 안 띄게 작은 것이 이 그림의 요점이다.
+_CURRENT = [('48V 로 600kW', 12500, '12,500A'), ('800V 로 600kW', 750, '750A')]
+
+
+def fig_current():
+    h = ['<svg viewBox="0 0 600 190" role="img" aria-label="같은 600킬로와트를 48볼트로 '
+         '보낼 때와 800볼트로 보낼 때의 전류">']
+    h.append('<text x="190" y="36" class="t-head">같은 600킬로와트를 보낼 때 전류</text>')
+    for i, (lab, amp, val) in enumerate(_CURRENT):
+        y = 70 + i * 60
+        cls = 'bad-box' if i == 0 else 'good-box'
+        w = amp * (330.0 / 12500)
+        h.append('<text x="178" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 5, lab))
+        h.append('<rect x="190" y="%d" width="%.1f" height="28" rx="5" class="%s"/>'
+                 % (y - 14, w, cls))
+        h.append('<text x="%.0f" y="%d" class="t-val">%s</text>' % (190 + w + 10, y + 5, val))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+CURRENT = fig_current()
+
+
+# ── ㉙ 캡엑스가 늘어난 이유 하나 ────────────────────────────────────────
+# 띠 길이가 곧 억 달러 값이다(1,900억 = 420px). 250억은 그중 부품값 상승분이다.
+def fig_capex():
+    h = ['<svg viewBox="0 0 600 175" role="img" aria-label="한 회사의 2026년 설비투자 '
+         '1,900억 달러 가운데 부품값 상승분 250억 달러">']
+    h.append('<text x="120" y="44" class="t-head">캡엑스가 늘어난 이유 하나</text>')
+    h.append('<rect x="120" y="70" width="420" height="44" rx="8" class="mid-box"/>')
+    h.append('<rect x="485" y="70" width="55" height="44" rx="8" class="bad-box"/>')
+    h.append('<text x="300" y="128" class="t-sub" text-anchor="middle">'
+             '2026년 설비투자 1,900억 달러</text>')
+    h.append('<text x="470" y="152" class="t-sub" text-anchor="middle">'
+             '그중 부품값 250억</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+CAPEX = fig_capex()
+
+
+# ── ㉚ 가장 먼 두 칩 사이 홉 수 ─────────────────────────────────────────
+# 막대 길이가 곧 홉 수다(1홉 = 20px).
+_HOPS = [('3D 토러스', 16, '16홉'), ('Boardfly', 7, '7홉')]
+
+
+def fig_hops():
+    h = ['<svg viewBox="0 0 600 165" role="img" aria-label="3D 토러스와 Boardfly 에서 가장 '
+         '먼 두 칩 사이의 홉 수">']
+    h.append('<text x="200" y="36" class="t-head">가장 먼 두 칩 사이 홉 수</text>')
+    for i, (lab, hop, val) in enumerate(_HOPS):
+        y = 70 + i * 55
+        cls = 'mid-box' if i == 0 else 'good-box'
+        w = hop * 20
+        h.append('<text x="188" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 4, lab))
+        h.append('<rect x="200" y="%d" width="%d" height="26" rx="5" class="%s"/>'
+                 % (y - 13, w, cls))
+        h.append('<text x="%d" y="%d" class="t-val">%s</text>' % (200 + w + 10, y + 4, val))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+HOPS = fig_hops()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
