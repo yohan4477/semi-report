@@ -577,7 +577,7 @@ HEAD = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>관리자 — 데이터 처리 지도</title>
+<title>관리자 보드</title>
 <style>%s%s</style>
 </head><body><main class="wrap">
 '''
@@ -611,7 +611,7 @@ def main():
     out = [HEAD % (style.BASE, CSS)]
     out.append('<header>'
                '<p class="eyebrow">관리자 · 비공개</p>'
-               '<h1>데이터 처리 지도</h1>'
+               '<h1>관리자 보드</h1>'
                '</header>')
 
     # 펴 두는 것은 쓰는 법 둘뿐이다. 나머지는 접는다 — 지도와 실험은 찾아서 보는
