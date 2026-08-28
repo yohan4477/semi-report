@@ -2,7 +2,7 @@
 "_meta": {
 "built": "2026-08-28",
 "index_fingerprint": "98a21097f693c15e17dfb275981dbfdfb5274dfd",
-"lines": 3075
+"lines": 3082
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -1704,6 +1704,11 @@
 "t": "2027",
 "tense": "전망"
 },
+"content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md#L740": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
 "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md#L811": {
 "how": "명시",
 "t": "2027",
@@ -1963,6 +1968,15 @@
 "how": "명시",
 "t": "2028",
 "tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md#L330": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
 },
 "content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md#L344": {
 "how": "명시",
@@ -3400,6 +3414,11 @@
 "tense": "회고"
 },
 "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L446": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L672": {
 "how": "계산",
 "t": "2026",
 "tense": "현재"
@@ -5692,6 +5711,15 @@
 "t": "2018",
 "tense": "회고"
 },
+"content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L195": {
+"how": "명시",
+"span": [
+"2025",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L197": {
 "how": "명시",
 "t": "2020",
@@ -7441,6 +7469,11 @@
 "tense": "현재"
 },
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L25": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L51": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
@@ -15438,6 +15471,11 @@
 "t": "2026",
 "tense": "현재"
 },
+"input/clippings/mer/224317198846.json#L100": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
 "input/clippings/mer/224317198846.json#L11": {
 "how": "명시",
 "t": "2024",
@@ -17174,6 +17212,11 @@
 "tense": "현재"
 },
 "input/clippings/mer/224366267736.json#L19": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224366267736.json#L31": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
