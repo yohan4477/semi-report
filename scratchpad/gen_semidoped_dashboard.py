@@ -260,6 +260,11 @@ JAL = {
 CARDS = [JAL]
 
 CSS = '''
+/* 목차 맨 위 사슬 — 목표 → 구조 → 성과 → 공정 → 한계 */
+.uc-rep .uc-toc .tg-chain { margin:0 0 10px; padding:0 0 9px;
+  border-bottom:1px solid var(--line); font-size:.8rem; line-height:1.9; }
+.uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
+.uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
 /* 각도 상자 — 접혀 있다. 눌러야 펴진다 */
 .uc-rep details.sa { margin:2px 0 16px; padding:0; border:1px solid var(--line);
   border-radius:8px; background:var(--surface); }

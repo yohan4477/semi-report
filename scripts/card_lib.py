@@ -524,6 +524,10 @@ def debate_html(d):
 
 
 
+# 글 전체를 한 축으로 가르는 단계. check_struct S3 의 STAGE 와 같은 다섯이다
+STAGE_NODES = ('목표', '구조', '성과', '공정', '한계')
+
+
 def toc_html(groups):
     """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
 
@@ -534,7 +538,14 @@ def toc_html(groups):
     마디만 적으면 글이 어떻게 굴러가는지 안 보이고, 꼴만 적으면 무엇을 다루는 글인지가
     안 보인다. 옛 두 칸 꼴(마디 없이 꼴만)도 그대로 받는다.
     """
-    h = ['<div class="uc-toc"><p class="uc-label">목차</p>']
+    nodes = [(g if len(g) == 3 else (g[0], '', g[1]))[0] for g in groups]
+    # 마디가 글의 단계면 그 자체가 사슬이다 — 세로로 쌓기만 하면 사슬인 줄 모른다.
+    # 맨 위에 목표 → 구조 → 성과 → 공정 → 한계 를 한 줄로 걸어 순서를 먼저 보인다
+    chain = ''
+    if set(nodes) <= set(STAGE_NODES) and len(nodes) > 2:
+        chain = ('<p class="tg-chain">%s</p>'
+                 % ' <i>→</i> '.join('<b>%s</b>' % n for n in nodes))
+    h = ['<div class="uc-toc"><p class="uc-label">목차</p>', chain]
     for g in groups:
         node, form, items = g if len(g) == 3 else (g[0], '', g[1])
         tag = '<span class="tg-f">%s</span>' % form if form else ''
