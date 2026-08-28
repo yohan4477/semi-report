@@ -543,7 +543,14 @@ def angles_html(items):
         # 걸면 어느 각으로 본 것인지가 사라진다. 층을 나무로 그려 둘 다 남긴다.
         kids = []
         for s in subs:
-            q, parts = s if isinstance(s, tuple) else (s, ())
+            # (물음, [(축, 값)…]) 또는 (물음, 식, [(항, 값)…]).
+            # 식이 서면 축 이름이 그 식의 항이 된다 — 「랙 전력 = 시스템 전력 × 대수」로
+            # 적어야 무엇을 곱하고 무엇을 더해 그 값이 나왔는지가 남는다.
+            eq = ''
+            if isinstance(s, tuple) and len(s) > 2:
+                q, eq, parts = s[0], s[1], s[2]
+            else:
+                q, parts = s if isinstance(s, tuple) else (s, ())
             # 구성요소도 축으로 가른다. 물음만 MECE 하게 쪼개고 그 아래를 사실 자루로
             # 두면, 한 물음 안에서 무엇과 무엇이 겹치는지가 안 보인다. (축, 값) 으로
             # 적으면 축이 겹치는 것도 빠진 축도 눈에 걸린다.
@@ -553,7 +560,8 @@ def angles_html(items):
                 rows.append('<li>%s<span class="ag-v">%s</span></li>'
                             % ('<span class="ag-ax">%s</span>' % ax if ax else '', val))
             body = '<ul class="ag-p">%s</ul>' % ''.join(rows) if rows else ''
-            kids.append('<li><span class="ag-q">%s</span>%s</li>' % (q, body))
+            eqh = '<span class="ag-eq">%s</span>' % eq if eq else ''
+            kids.append('<li><span class="ag-q">%s</span>%s%s</li>' % (q, eqh, body))
         sub = '<ul class="ag-sub">%s</ul>' % ''.join(kids) if kids else ''
         li.append('<li class="%s"><span class="ag-1">%s</span>%s</li>'
                   % ('ag-on' if used else 'ag-off', name, sub))

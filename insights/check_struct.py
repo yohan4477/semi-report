@@ -57,7 +57,10 @@ ANGBOX = re.compile(r'<div class="uc-angles">(.*?)</div>', re.S)
 # 나무로 그리면서 L1 이름이 <span class="ag-1"> 안으로 들어갔다. 가지는 빼고 줄기만 읽는다
 ANGLI = re.compile(r'<li class="ag-(on|off)"><span class="ag-1">(.*?)</span>', re.S)
 # 물음 하나와 그 아래 구성요소 묶음
-AGQ = re.compile(r'<span class="ag-q">(.*?)</span>(?:<ul class="ag-p">(.*?)</ul>)?', re.S)
+AGQ = re.compile(r'<span class="ag-q">(.*?)</span>(?:<span class="ag-eq">(.*?)</span>)?'
+                 r'(?:<ul class="ag-p">(.*?)</ul>)?', re.S)
+# 식을 항으로 자른다. = 로 좌우를 나누고 + − × ÷ 로 항을 쪼갠다
+EQCUT = re.compile(r'[=+−×÷→∝≈]|[-]')
 AGROW = re.compile(r'<li>(?:<span class="ag-ax">(.*?)</span>)?<span class="ag-v">(.*?)</span></li>',
                    re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
@@ -172,7 +175,8 @@ def check_card(where, body):
     if mang:
         for mq in AGQ.finditer(mang.group(1)):
             q = txt(mq.group(1))
-            rows = AGROW.findall(mq.group(2))
+            eq = txt(mq.group(2) or '')
+            rows = AGROW.findall(mq.group(3))
             if not rows:
                 continue
             axes = [txt(a) for a, _ in rows if a]
@@ -185,6 +189,18 @@ def check_card(where, body):
                     % (q, ' · '.join(sorted(dup))))
             if len(rows) == 1:
                 add('WARN', at, 'S10', '구성요소가 하나뿐이다 — 갈린 게 아니다: 「%s」' % q)
+
+            # S11 식을 세웠으면 그 항이 축으로 서 있어야 한다. 「a = 가 + 나 + 다」로
+            # 적어 놓고 축이 딴것이면 무엇을 더해 그 값이 나왔는지가 다시 사라진다
+            if eq:
+                terms = [t.strip() for t in EQCUT.split(eq) if t.strip()]
+                axjoin = ' '.join(axes)
+                miss = [t for t in terms if len(t) > 1 and t not in axjoin]
+                if miss:
+                    add('WARN', at, 'S11', '식의 항이 축에 없다 — 「%s」의 %s'
+                        % (q, ' · '.join(miss[:3])))
+                if len(terms) < 2:
+                    add('FAIL', at, 'S11', '식에 항이 하나뿐이다 — 「%s」' % q)
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
