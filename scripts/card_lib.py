@@ -522,6 +522,24 @@ def debate_html(d):
     return ''.join(h)
 
 
+SHAPES = ('시간 흐름', '대비', '층위', '인과 사슬', '부분 나눔', '조건 갈림',
+          '문제와 처방')
+
+
+def _ag_rows(parts):
+    """항을 재귀로 그린다. (축, 값) 또는 (축, 값, [자식 …])."""
+    out = []
+    for p in parts:
+        if not isinstance(p, tuple):
+            ax, val, kids = '', p, ()
+        else:
+            ax, val, kids = (list(p) + ['', ()])[:3]
+        sub = '<ul class="ag-p">%s</ul>' % _ag_rows(kids) if kids else ''
+        out.append('<li>%s<span class="ag-v">%s</span>%s</li>'
+                   % ('<span class="ag-ax">%s</span>' % ax if ax else '', val, sub))
+    return ''.join(out)
+
+
 def angles_html(items):
     """각도 — 이 편이 어떤 각도로 뽑혔는지를 목차와 **따로** 밝힌다.
 
@@ -539,29 +557,32 @@ def angles_html(items):
             subs = it[2] if len(it) > 2 else ()
         else:
             name, used, subs = it, False, ()
-        # 하위는 (물음, [구성요소 …]) — 물음만 걸면 펴도 아무것도 안 보이고, 구성요소만
+        # 하위는 (물음, 꼴, 식, [항 …]). 물음만 걸면 펴도 아무것도 안 보이고, 항만
         # 걸면 어느 각으로 본 것인지가 사라진다. 층을 나무로 그려 둘 다 남긴다.
+        #
+        # 꼴을 다는 이유. 축 이름만 붙인 항은 라벨 붙은 평평한 목록이지 구조가 아니다 —
+        # 항끼리 아무 관계가 없으면 무엇이 무엇에서 나왔는지가 안 남는다. 꼴은 **목차에
+        # 쓰는 글의 꼴 일곱을 그대로** 쓴다(시간 흐름·대비·층위·인과 사슬·부분 나눔·
+        # 조건 갈림·문제와 처방). 요소를 쪼개는 방법을 새로 만들지 않는다.
+        #
+        # 식은 넷째 꼴이 아니라 **부분 나눔을 숫자로 적은 것**이다 — 나뉜 부분이 더하거나
+        # 곱해 원래 값이 되면 그렇게 쓴다: 600kW = 48V × 12,500A.
+        # 깊이는 내용이 정한다. 항이 항을 품으면 그대로 한 층 더 내려간다.
         kids = []
         for s in subs:
-            # (물음, [(축, 값)…]) 또는 (물음, 식, [(항, 값)…]).
-            # 식이 서면 축 이름이 그 식의 항이 된다 — 「랙 전력 = 시스템 전력 × 대수」로
-            # 적어야 무엇을 곱하고 무엇을 더해 그 값이 나왔는지가 남는다.
-            eq = ''
-            if isinstance(s, tuple) and len(s) > 2:
-                q, eq, parts = s[0], s[1], s[2]
-            else:
-                q, parts = s if isinstance(s, tuple) else (s, ())
-            # 구성요소도 축으로 가른다. 물음만 MECE 하게 쪼개고 그 아래를 사실 자루로
-            # 두면, 한 물음 안에서 무엇과 무엇이 겹치는지가 안 보인다. (축, 값) 으로
-            # 적으면 축이 겹치는 것도 빠진 축도 눈에 걸린다.
-            rows = []
-            for p in parts:
-                ax, val = p if isinstance(p, tuple) else ('', p)
-                rows.append('<li>%s<span class="ag-v">%s</span></li>'
-                            % ('<span class="ag-ax">%s</span>' % ax if ax else '', val))
-            body = '<ul class="ag-p">%s</ul>' % ''.join(rows) if rows else ''
+            q, shape, eq, parts = (list(s) + ['', '', ()])[:4]
+            # 옛 꼴 (물음, [항 …]) 과 (물음, 식, [항 …]) 도 아직 받는다 — 다른 장 소급이 남았다
+            if isinstance(shape, (list, tuple)):
+                shape, eq, parts = '', '', shape
+            elif isinstance(eq, (list, tuple)):
+                eq, parts = ('', eq) if shape in SHAPES else (shape, eq)
+                if parts is not eq:
+                    shape = '' if eq else shape
+            body = '<ul class="ag-p">%s</ul>' % _ag_rows(parts) if parts else ''
             eqh = '<span class="ag-eq">%s</span>' % eq if eq else ''
-            kids.append('<li><span class="ag-q">%s</span>%s%s</li>' % (q, eqh, body))
+            sh = '<span class="ag-sh">%s</span>' % shape if shape else ''
+            kids.append('<li><span class="ag-q">%s</span>%s%s%s</li>'
+                        % (q, sh, eqh, body))
         sub = '<ul class="ag-sub">%s</ul>' % ''.join(kids) if kids else ''
         li.append('<li class="%s"><span class="ag-1">%s</span>%s</li>'
                   % ('ag-on' if used else 'ag-off', name, sub))
