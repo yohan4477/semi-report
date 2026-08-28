@@ -283,6 +283,47 @@ def fig_reticle():
 RETICLE = fig_reticle()
 
 
+# ── ⑫ 광트랜시버 시장에서 중국이 쥔 몫 ─────────────────────────────────
+# 띠 길이가 곧 점유율이다. 27%는 로이터 기사 값, 34%는 일부 애널리스트 상향치다.
+def fig_share():
+    h = ['<svg viewBox="0 0 600 185" role="img" aria-label="글로벌 광트랜시버 시장에서 '
+         '중국계가 쥔 몫과 그 안에서 한 회사가 쥔 몫">']
+    h.append('<text x="60" y="34" class="t-head">글로벌 광트랜시버 시장</text>')
+    h.append('<rect x="60" y="52" width="480" height="44" rx="6" class="mid-box"/>')
+    h.append('<rect x="60" y="52" width="240" height="44" rx="6" class="bad-box"/>')
+    h.append('<rect x="60" y="52" width="130" height="44" rx="6" class="good-box"/>')
+    h.append('<line class="thin" x1="60" y1="108" x2="300" y2="108"/>')
+    h.append('<text x="180" y="126" class="t-sub" text-anchor="middle">중국계 합산 약 50%</text>')
+    h.append('<text x="420" y="126" class="t-sub" text-anchor="middle">중국 밖</text>')
+    h.append('<text x="125" y="150" class="t-sub" text-anchor="middle">이노라이트 27%</text>')
+    h.append('<text x="125" y="170" class="t-sub" text-anchor="middle">(상향 추정 34%)</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+SHARE = fig_share()
+
+
+# ── ⑬ 같은 비트를 만드는 데 드는 웨이퍼 ────────────────────────────────
+# 원 개수가 곧 값이다 — "You need three wafers of DRAM to make the equivalent
+# number of bits in HBM." 진행자가 어림이라고 밝힌 값이라 캡션에 그렇게 적는다.
+def fig_wafer3():
+    h = ['<svg viewBox="0 0 600 200" role="img" aria-label="같은 비트를 만드는 데 드는 '
+         '웨이퍼가 DRAM 한 장이면 HBM 은 세 장">']
+    h.append('<text x="150" y="40" class="t-head" text-anchor="middle">DRAM</text>')
+    h.append('<circle cx="150" cy="110" r="42" class="mid-box"/>')
+    h.append('<text x="150" y="180" class="t-sub" text-anchor="middle">웨이퍼 1장</text>')
+    h.append('<text x="420" y="40" class="t-head" text-anchor="middle">HBM · 같은 비트</text>')
+    for cx in (330, 420, 510):
+        h.append('<circle cx="%d" cy="110" r="42" class="good-box"/>' % cx)
+    h.append('<text x="420" y="180" class="t-sub" text-anchor="middle">웨이퍼 3장</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+WAFER3 = fig_wafer3()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
@@ -308,7 +349,9 @@ ALL = [('곱셈을 덧셈으로 바꾸고 되돌아오는 자리', LOG_MATH),
        ('천재 옆에 비서를 몇 명 두나', CPU_ROLES),
        ('광원 파장', WAVE),
        ('층이 셋이냐 둘이냐', LAYERS),
-       ('레티클 한 장의 몇 배까지 담나', RETICLE)]
+       ('레티클 한 장의 몇 배까지 담나', RETICLE),
+       ('광트랜시버 시장 몫', SHARE),
+       ('같은 비트에 드는 웨이퍼', WAFER3)]
 
 if __name__ == '__main__':
     import sys
