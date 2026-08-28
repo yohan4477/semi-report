@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-08-28",
-"index_fingerprint": "406094b2163b817501d611e23abb7f27192823ba",
-"lines": 3105
+"index_fingerprint": "3a162f3401284cdab40b03622244ee915a57b151",
+"lines": 3117
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6279,6 +6279,11 @@
 "t": "2031",
 "tense": "전망"
 },
+"content/understanding/Semi Doped/2026-06-12-computex-optics-power.md#L29": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L28": {
 "how": "명시",
 "t": "2010",
@@ -6292,6 +6297,61 @@
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L57": {
 "how": "명시",
 "t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L112": {
+"how": "명시",
+"t": "2040",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L29": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L61": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L67": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L73": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L75": {
+"how": "명시",
+"t": "2040",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L95": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L24": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L30": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L38": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L61": {
+"how": "명시",
+"t": "2027",
 "tense": "전망"
 },
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L28": {

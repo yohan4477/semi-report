@@ -585,6 +585,76 @@ def fig_cn():
 CN = fig_cn()
 
 
+# ── ㉕ 옆에 붙이느냐 위에 쌓느냐 ────────────────────────────────────────
+# 레인 수(약 2,000 → 최대 약 10만)는 진행자 어림값이다. 캡션에 그렇게 적는다.
+def fig_hbc():
+    h = ['<svg viewBox="0 0 600 230" role="img" aria-label="메모리를 연산 다이 옆에 붙이는 '
+         '지금 방식과 위에 쌓는 방식을 견준 그림">']
+    h.append('<text x="160" y="70" class="t-head" text-anchor="middle">지금 — 옆에 붙인다</text>')
+    h.append('<rect x="60" y="110" width="120" height="60" rx="7" class="mid-box"/>')
+    h.append('<text x="120" y="145" class="t-sub" text-anchor="middle">XPU</text>')
+    h.append('<rect x="190" y="110" width="70" height="60" rx="7" class="mid-box"/>')
+    h.append('<text x="225" y="145" class="t-sub" text-anchor="middle">HBM</text>')
+    h.append('<text x="160" y="200" class="t-sub" text-anchor="middle">옆면으로 약 2,000레인</text>')
+
+    h.append('<text x="445" y="64" class="t-head" text-anchor="middle">쌓으면 — 면 전체</text>')
+    h.append('<rect x="360" y="84" width="170" height="50" rx="7" class="good-box"/>')
+    h.append('<text x="445" y="114" class="t-sub" text-anchor="middle">메모리</text>')
+    h.append('<rect x="360" y="140" width="170" height="50" rx="7" class="good-box"/>')
+    h.append('<text x="445" y="170" class="t-sub" text-anchor="middle">XPU</text>')
+    h.append('<text x="445" y="215" class="t-sub" text-anchor="middle">최대 약 10만 레인</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+HBC = fig_hbc()
+
+
+# ── ㉖ 매출총이익률 넉 분기 ─────────────────────────────────────────────
+# 막대 길이가 곧 퍼센트다(1% = 4px).
+_MARGIN = [('4분기 전', 45), ('3분기 전', 56), ('2분기 전', 75), ('직전 분기', 85)]
+
+
+def fig_margin():
+    h = ['<svg viewBox="0 0 600 195" role="img" aria-label="메모리 회사 매출총이익률이 넉 '
+         '분기 만에 45%에서 85%로 오른 막대">']
+    h.append('<text x="200" y="34" class="t-head">매출총이익률 넉 분기</text>')
+    for i, (lab, pct) in enumerate(_MARGIN):
+        y = 60 + i * 35
+        cls = 'good-box' if i == len(_MARGIN) - 1 else 'mid-box'
+        h.append('<text x="188" y="%d" class="t-sub" text-anchor="end">%s</text>' % (y + 4, lab))
+        h.append('<rect x="200" y="%d" width="%d" height="22" rx="4" class="%s"/>'
+                 % (y - 11, pct * 4, cls))
+        h.append('<text x="%d" y="%d" class="t-val">%d%%</text>' % (200 + pct * 4 + 10, y + 4, pct))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+MARGIN = fig_margin()
+
+
+# ── ㉗ 전기가 랙에 닿기까지 ─────────────────────────────────────────────
+# 소재가 어디서 갈리는지만 그린다. 변환 효율이나 손실은 원문에 수치가 없다.
+def fig_power():
+    h = ['<svg viewBox="0 0 600 170" role="img" aria-label="중전압 그리드에서 800볼트를 '
+         '거쳐 48볼트·12볼트로 내려오는 전력 변환 사슬">']
+    h.append('<text x="205" y="64" class="t-sub" text-anchor="middle">실리콘카바이드</text>')
+    h.append('<text x="395" y="64" class="t-sub" text-anchor="middle">실리콘</text>')
+    for x, w, lab, cls in ((40, 140, '중전압 그리드', 'mid-box'),
+                           (230, 140, '800V', 'good-box'),
+                           (420, 140, '48V · 12V', 'mid-box')):
+        h.append('<rect x="%d" y="80" width="%d" height="56" rx="8" class="%s"/>' % (x, w, cls))
+        h.append('<text x="%d" y="114" class="t-step" text-anchor="middle">%s</text>'
+                 % (x + w // 2, lab))
+    h.append('<line class="flow" x1="182" y1="108" x2="228" y2="108"/>')
+    h.append('<line class="flow" x1="372" y1="108" x2="418" y2="108"/>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+POWER = fig_power()
+
+
 FIG_CSS = """
   .uc-fig text.t-head { font-size:11.5px; font-weight:800; fill:var(--ink-3);
     letter-spacing:.04em; }
