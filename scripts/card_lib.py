@@ -523,17 +523,21 @@ def debate_html(d):
 
 
 def toc_html(groups):
-    """목차 — 절을 줄 단위로 세우되 **어느 구조에 속하는지**를 함께 보인다.
+    """목차 — 절을 줄로 세우고 **구조 둘을 함께** 보인다.
 
-    groups = [(구조 갈래, [(번호, 절 제목), …]), …].
-    한 문단에 가운뎃점으로 이어 붙이면 절이 일곱만 넘어도 벽이 된다. 그리고 구조 이름만
-    앞줄에 적어 두면 어느 절이 그 구조에 드는지는 여전히 독자가 맞춰야 한다 — 갈래별로
-    묶어야 구조가 목차에서 실제로 보인다.
+    groups = [(대상의 마디, 글의 꼴, [(번호, 절 제목), …]), …].
+
+    구조가 둘이라 열도 둘이다. 왼쪽은 **다루는 것이 실제로 어떤 마디로 되어 있는가**
+    (수 체계·실리콘 면적·쿼터랙), 그 옆은 **그 마디를 어떤 꼴로 썼는가**(대비·인과 사슬).
+    마디만 적으면 글이 어떻게 굴러가는지 안 보이고, 꼴만 적으면 무엇을 다루는 글인지가
+    안 보인다. 옛 두 칸 꼴(마디 없이 꼴만)도 그대로 받는다.
     """
     h = ['<div class="uc-toc"><p class="uc-label">목차</p>']
-    for form, items in groups:
-        h.append('<div class="tg"><span class="tg-k">%s</span><ul>%s</ul></div>'
-                 % (form, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
+    for g in groups:
+        node, form, items = g if len(g) == 3 else (g[0], '', g[1])
+        tag = '<span class="tg-f">%s</span>' % form if form else ''
+        h.append('<div class="tg"><span class="tg-k">%s</span>%s<ul>%s</ul></div>'
+                 % (node, tag, ''.join('<li><b>%s</b> %s</li>' % it for it in items)))
     h.append('</div>')
     return ''.join(h)
 

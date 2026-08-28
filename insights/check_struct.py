@@ -32,8 +32,11 @@ import paths  # noqa: E402
 
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 
-# CLAUDE.md 가 일곱으로 고정한 갈래. 이름이 매번 달라지면 글끼리 대조가 안 된다
-FORMS = ('시간 흐름', '대비', '층위', '인과 사슬', '부분 나눔', '조건 갈림', '문제와 처방')
+# 글의 꼴을 적는 말 — 목차 왼쪽 칸에 오면 안 된다. 그건 내가 글을 어떻게 늘어놓았는지이지
+# 다루는 것이 어떤 마디로 되어 있는가가 아니다. 마디 이름은 원문 안에서 찾는다.
+SHAPE_WORDS = ('시간 흐름', '대비', '층위', '인과 사슬', '부분 나눔', '조건 갈림',
+               '문제와 처방')
+BAD_NODE = SHAPE_WORDS + ('서론', '본론', '결론', '배경', '개요')
 
 # 규칙을 게이트로 세운 장. 나머지 장은 같은 것을 보되 WARN 으로만 센다 —
 # AI Engineer 68편은 이 규칙보다 먼저 쓰였고 그 장의 규칙 문서가 따로 있다.
@@ -50,6 +53,7 @@ H3 = re.compile(r'<h3>(.*?)</h3>', re.S)
 FIRST_P = re.compile(r'^\s*<p>(.*?)</p>', re.S)
 TOCBOX = re.compile(r'^\s*<div class="uc-toc">(.*?)(?=<h3>|\Z)', re.S)
 TG = re.compile(r'<span class="tg-k">(.*?)</span>', re.S)
+TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
 TAG = re.compile(r'<[^>]+>')
 
@@ -102,10 +106,27 @@ def check_card(where, body):
         add('FAIL', at, 'S2',
             '목차가 갈래별 상자가 아니다%s' % (' — 한 문단으로 이어 붙였다' if '목차' in first else ''))
 
-    # S3 갈래가 일곱(과 한계) 안인가
+    # S3 왼쪽 칸은 대상의 마디다.
+    # ① 글의 꼴을 적는 말이면 걸린다. ② 본문에 한 번도 안 나오는 말이면 걸린다 —
+    # 대상의 마디라면 본문에서 그 말로 이야기하고 있어야 한다.
+    body_txt = txt(rep)
     for f in forms_used:
-        if f != '한계' and f not in FORMS:
-            add('FAIL', at, 'S3', '구조 갈래가 정해진 일곱에 없다: %s' % f)
+        if f == '한계':
+            continue
+        if f in BAD_NODE:
+            add('FAIL', at, 'S3', '글의 꼴을 마디로 적었다 — 대상의 마디를 댄다: %s' % f)
+            continue
+        core = max(f.split(), key=len)
+        if core not in body_txt:
+            add('FAIL', at, 'S3', '본문에 안 나오는 마디다: %s' % f)
+
+    # S3b 마디 옆 칸은 글의 꼴이다. 마디만 있으면 글이 어떻게 굴러가는지가 안 보인다
+    shapes = [txt(x) for x in TF.findall(mbox.group(1))] if mbox else []
+    if mbox and not shapes:
+        add('FAIL', at, 'S3b', '목차에 글의 꼴 칸이 없다 — 마디와 꼴 둘 다 세운다')
+    for sh in shapes:
+        if sh not in SHAPE_WORDS:
+            add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
 
     # S4 절 제목이 물음인가
     heads = [txt(h) for h in H3.findall(rep)]
