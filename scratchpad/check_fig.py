@@ -166,6 +166,29 @@ ENDPT = re.compile(r'<path d="M(-?[\d.]+)[ ,](-?[\d.]+)([^"]*)"')
 LAST = re.compile(r'[ML](-?[\d.]+)[ ,](-?[\d.]+)(?!.*[ML])', re.S)
 
 
+def slanted(svg):
+    """비스듬한 선을 센다. 선은 x·y 축에 평행하게만 간다.
+
+    곧장 못 가면 꺾어서 간다. 비스듬한 선은 어느 상자에서 나와 어디로 드는지가 눈에
+    안 잡히고, 가로·세로만 재는 「선에 깔림」 검사도 통째로 빠져나간다. 지도 윤곽처럼
+    점이 많은 path 와 marker 안 화살촉은 대상이 아니다."""
+    bad = []
+    for m in PATH.finditer(svg):
+        d, attr = m.group(1), m.group(2)
+        if 'markerWidth' in attr or 'fill="var(--ink-3)"' in attr:
+            continue
+        pts = [(float(a), float(b)) for a, b in MOVE.findall(d)]
+        if len(pts) > 12:
+            continue
+        if len(pts) == 3 and pts[0] == (0.0, 0.0):
+            continue                       # 화살촉
+        for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+            if abs(ax - bx) > 0.5 and abs(ay - by) > 0.5:
+                bad.append('선이 비스듬하다 (%.0f,%.0f)-(%.0f,%.0f) — 꺾어서 간다'
+                           % (ax, ay, bx, by))
+    return bad
+
+
 def loose_ends(svg, tol=2.0):
     """선 끝이 어느 네모 변에도 안 닿는 것을 센다.
 
@@ -211,6 +234,8 @@ def hits(svg, strict=True):
         return ['배치를 못 읽는 꼴이다 — 좌표가 <text> 에 없다(mermaid 등). '
                 '좌표를 풀어 주거나 손으로 그린다']
     bad = text_hits(svg, strict) + loose_ends(svg)
+    if strict or 'data-fig-layout="1"' in svg:
+        bad += slanted(svg)
     bs = boxes(svg)
     vm = VIEW.search(svg)
     vw, vh = (float(vm.group(1)), float(vm.group(2))) if vm else (640.0, 1e9)

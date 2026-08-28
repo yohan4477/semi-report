@@ -102,8 +102,15 @@ def _domain():
             o.append('<rect x="%g" y="80" width="52" height="24" rx="4" class="fg-b"/>' % cx)
             o.append('<text x="%g" y="96" class="fg fg-s" text-anchor="middle">칩</text>'
                      % (cx + 26))
-            o.append('<path d="M%g 104 L%g 132" stroke="var(--accent)" stroke-width="3.5" '
-                     'fill="none"/>' % (cx + 26, x0 + 120))
+            # 선은 x·y 축에 평행하게만 간다. 곧장 못 가면 꺾어서 간다 —
+            # 칩에서 수직으로 내려 공통 가로 버스에 붙는다(check_fig F6)
+            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="3.5" '
+                     'fill="none"/>' % (cx + 26, cx + 26))
+        # 가로 버스와 스위치로 내려가는 한 줄
+        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="3.5" '
+                 'fill="none"/>' % (x0 + 50, x0 + 190))
+        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="3.5" '
+                 'fill="none"/>' % (x0 + 120, x0 + 120))
         o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
         o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
                  'Tomahawk 6 스위치</text>' % (x0 + 120))
@@ -149,8 +156,10 @@ def _numa():
             o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">가속기</text>'
                      % (x0 + 55, y + 21))
             if k == 0:
-                o.append('<path d="M%g %g L%g 116" class="fg-l" marker-end="url(#fgN)"/>'
-                         % (x0 + 98, y + 17, x0 + 176))
+                # 가로로 나가 공통 세로 줄에 붙고, 거기서 메모리로 한 번 꺾어 든다
+                o.append('<path d="M%g %g L%g %g L%g 116 L%g 116" class="fg-l" '
+                         'marker-end="url(#fgN)"/>'
+                         % (x0 + 98, y + 17, x0 + 140, y + 17, x0 + 140, x0 + 176))
             else:
                 o.append('<rect x="%g" y="%g" width="88" height="34" rx="6" class="fg-b" '
                          'style="stroke:var(--accent);stroke-width:2"/>' % (x0 + 176, y))
