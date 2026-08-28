@@ -34,6 +34,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths  # noqa: E402
 
+sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
+import card_lib  # noqa: E402
+
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 
 # 글의 꼴을 적는 말 — 목차 왼쪽 칸에 오면 안 된다. 그건 내가 글을 어떻게 늘어놓았는지이지
@@ -44,7 +47,9 @@ BAD_NODE = SHAPE_WORDS + ('서론', '본론', '결론', '배경', '개요')
 # 글 전체를 한 축으로 가르는 단계. 대상의 마디 대신 이걸 쓸 수 있다 —
 # 다만 통째로 써야 한다. 목표만 단계 이름이고 나머지가 대상의 마디면
 # 목차 한 줄에 층위가 둘 섞인다
-STAGE = ('목표', '시도', '성과', '한계')
+# 굽는 쪽과 재는 쪽이 같은 목록을 봐야 한다. 따로 박아 두면 한쪽만 고쳐도 아무도
+# 모른다 — 정본은 card_lib 이고 여기서는 가져다 쓴다
+STAGE = card_lib.STAGE_NODES
 
 # 규칙을 게이트로 세운 장. 나머지 장은 같은 것을 보되 WARN 으로만 센다 —
 # AI Engineer 68편은 이 규칙보다 먼저 쓰였고 그 장의 규칙 문서가 따로 있다.
