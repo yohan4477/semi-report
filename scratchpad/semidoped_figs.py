@@ -107,5 +107,56 @@ def _domain():
     return ''.join(o)
 
 
+def _numa():
+    """HBM 을 같이 쓸 때와 조각내 전담시킬 때.
+
+    가속기를 셋 그리지만 그 수는 원문에 없다 — 「가속기마다」라는 말만 있다. 그래서
+    개수가 뜻이 되지 않게 판 아래에 적어 둔다. 대역폭 숫자도 안 쓴다. 이 그림이
+    말하는 것은 양이 아니라 **기다림이 생기는 자리**다.
+    """
+    W, H = 640, 260
+    o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
+         'aria-label="메모리를 같이 쓸 때와 조각내 전담시킬 때">' % (W, H)]
+    o.append('<defs><marker id="fgN" markerWidth="8" markerHeight="8" refX="7" refY="4" '
+             'orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker></defs>')
+    for k, (x0, head) in enumerate(((16, '전 — 한 덩어리를 같이 쓴다'),
+                                    (336, '후 — 조각내 하나씩 맡긴다'))):
+        o.append('<text x="%g" y="24" class="fg">%s</text>' % (x0 + 8, head))
+        o.append('<rect x="%g" y="34" width="288" height="176" rx="10" class="fg-b"/>' % x0)
+        for i in range(3):
+            y = 48 + i * 46
+            o.append('<rect x="%g" y="%g" width="86" height="34" rx="6" class="fg-b"/>'
+                     % (x0 + 12, y))
+            o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">가속기</text>'
+                     % (x0 + 55, y + 21))
+            if k == 0:
+                o.append('<path d="M%g %g L%g 116" class="fg-l" marker-end="url(#fgN)"/>'
+                         % (x0 + 98, y + 17, x0 + 176))
+            else:
+                o.append('<rect x="%g" y="%g" width="88" height="34" rx="6" class="fg-b" '
+                         'style="stroke:var(--accent);stroke-width:2"/>' % (x0 + 176, y))
+                o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">'
+                         '메모리 조각</text>' % (x0 + 220, y + 21))
+                o.append('<path d="M%g %g L%g %g" class="fg-l" marker-end="url(#fgN)"/>'
+                         % (x0 + 98, y + 17, x0 + 172, y + 17))
+        if k == 0:
+            o.append('<rect x="%g" y="82" width="88" height="68" rx="6" class="fg-b"/>'
+                     % (x0 + 176))
+            o.append('<text x="%g" y="112" class="fg fg-s" text-anchor="middle">메모리</text>'
+                     % (x0 + 220))
+            o.append('<text x="%g" y="128" class="fg fg-s" text-anchor="middle">한 덩어리</text>'
+                     % (x0 + 220))
+            o.append('<text x="%g" y="188" class="fg fg-s" text-anchor="middle">'
+                     '남이 읽는 동안 내 차례가 밀린다</text>' % (x0 + 144))
+        else:
+            o.append('<text x="%g" y="188" class="fg fg-s" text-anchor="middle">'
+                     '길이 따로라 기다릴 일이 없다</text>' % (x0 + 144))
+    o.append('<text x="320" y="238" class="fg fg-s" text-anchor="middle">'
+             '가속기를 셋 그렸지만 그 수는 발표에 없다. 「가속기마다」라는 말만 있다</text>')
+    o.append('</svg>')
+    return ''.join(o)
+
+
 CRITERIA = _criteria()
 DOMAIN = _domain()
+NUMA = _numa()
