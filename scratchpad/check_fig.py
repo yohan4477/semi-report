@@ -177,6 +177,10 @@ def slanted(svg):
         d, attr = m.group(1), m.group(2)
         if 'markerWidth' in attr or 'fill="var(--ink-3)"' in attr:
             continue
+        # 값의 모양을 그린 곡선(fg-c)은 이 규칙 대상이 아니다. 축에 평행해야 하는 것은
+        # 상자와 상자를 잇는 선이고, 곡선은 잇는 선이 아니라 그 자체가 내용이다
+        if 'class="fg-c"' in attr:
+            continue
         pts = [(float(a), float(b)) for a, b in MOVE.findall(d)]
         if len(pts) > 12:
             continue
