@@ -62,6 +62,7 @@ CARD = re.compile(r'<div class="ucard[^"]*"[^>]*>(.*?)(?=<div class="ucard|<foot
 TITLE = re.compile(r'<h2 id="[^"]*">(.*?)</h2>', re.S)
 VERDICT = re.compile(r'<p class="uc-verdict">(.*?)</p>', re.S)
 # 앞머리 상자 안에 <div> 가 겹쳐 있다. 목차 상자 앞까지 자른다
+META = re.compile(r'<div class="uc-meta">(.*?)</div>', re.S)
 LEAD = re.compile(r'<div class="uc-lead">(.*?)(?=<div class="uc-toc"|<h3>|\Z)', re.S)
 # 본문 안에 <div> 가 겹쳐 있다(목차 상자·그림). 링크 줄이 늘 뒤에 오니 거기까지 자른다
 REP = re.compile(r'<div class="uc-rep">(.*?)(?:<div class="uc-links"|\Z)', re.S)
@@ -110,14 +111,26 @@ def check_card(where, body):
     rep = mr.group(1)
     at = '%s · %s' % (where, title[:34])
 
-    # S1 앞머리 — 물음·바탕·축. 한줄 코멘트에 다 넣으면 그게 한 줄이 아니므로,
-    # 셋은 본문 맨 위 앞머리 상자에 서도 된다. 둘 중 어디에 있든 있기만 하면 된다
+    # S1 앞머리 셋 — 물음·바탕·축. 한 상자에 몰아 적을 필요는 없다. 카드가 이미
+    # 그 셋을 다른 자리에 세우고 있으면 그것으로 친다. 앞머리 상자에 또 적으면
+    # 같은 말이 화면에 두 번 선다(2026-08-30 할라페뇨).
+    #
+    #   물음  제목 · 한줄 코멘트 · 앞머리 상자 중 아무 데나
+    #   바탕  메타 줄(날짜·매체·녹음 조건) 또는 앞머리 상자
+    #   축    목차 상자의 data-axis 또는 앞머리 상자
     mv = VERDICT.search(body)
     ml = LEAD.search(rep)
-    v = (txt(mv.group(1)) if mv else '') + ' ' + (txt(ml.group(1)) if ml else '')
-    missing = [w for w in ('물음', '바탕', '축') if w not in v]
+    mm = META.search(body)
+    lead = (txt(mv.group(1)) if mv else '') + ' ' + (txt(ml.group(1)) if ml else '')
+    have = {
+        '물음': ('물음' in lead) or bool(ASK.search(title)) or bool(CLOSE.search(title)),
+        '바탕': ('바탕' in lead) or bool(mm and re.search(r'20\d\d', txt(mm.group(1)))),
+        '축': ('축' in lead) or bool(AXIS.search(rep)),
+    }
+    missing = [w for w, ok in have.items() if not ok]
     if missing:
-        add('FAIL', at, 'S1', '앞머리에 %s 이(가) 없다' % '·'.join(m.rstrip('.') for m in missing))
+        add('FAIL', at, 'S1', '앞머리 셋 중 %s 이(가) 어디에도 없다'
+            % '·'.join(missing))
 
     # S2 목차 — report 첫 블록이 갈래별 목차 상자여야 한다.
     # 한 문단에 가운뎃점으로 이어 붙인 옛 꼴(<p>목차. ① … · ② …)도 여기서 걸린다.
