@@ -290,7 +290,69 @@ EXPERIMENTS = [
 # 자주 하는 오류 — 실제로 났던 것만 적는다. 안 난 오류는 여기 안 온다.
 # (묶음, 한 줄, [(증상, 잡는 것, 실제로 난 일, 처방)])
 # 「잡는 것」이 사람이면 검사기가 없다는 뜻이고, 그 줄이 이 표에서 가장 비싸다.
+# 보고서 쓰는 절차 — 오류 목록만 있으면 「하지 마라」만 남고 「무엇부터 하라」가 없다.
+# 단계마다 무엇을 정하는지, 무엇을 쓰는지, 그 자리에서 자주 나는 오류를 함께 둔다.
+# (번호, 이름, 한 줄, [무엇을 정하나], [쓰는 것], [오류 묶음 이름])
+STAGES = [
+ ('1', '무엇을 다룰지 고른다',
+  '원문 한 편에서 주제를 뽑는다. 이 단계의 산출은 물음 하나다 — 절 목록이 아니다.',
+  ['이 편이 답하는 물음 하나를 문장으로 적는다',
+   '그 물음에 답할 재료가 원문 안에 있는지 먼저 본다',
+   '카드를 어느 섹션에 둘지 정한다 — 원문이 여러 주체를 다루면 라벨을 넓힌다'],
+  ['structure 스킬 A — 원문 각도', 'entity-search — 이름으로 원문 줄 찾기',
+   'dash_common.check_labels()'],
+  ['고르는 자리']),
+ ('2', '원문을 뜯는다',
+  '사실·값·저자 논지를 줄 번호와 함께 꺼낸다. 이 단계에서 원문을 다 열어 두면 뒤에서 다시 안 연다.',
+  ['값은 줄 번호와 함께 적는다 — 나중에 grep 으로 다시 찾으면 그만큼 시간이 든다',
+   '저자가 무엇을 주장했는지를 사실과 따로 적는다',
+   '도해 안에만 있는 값은 표시해 둔다 — 산문 근거로 새는 자리다',
+   '원문이 안 댄 것(반례·출처·기간)을 그때 적어 둔다'],
+  ['insight-note 스킬', 'content/**/*.md 원문', 'insights/notes/'],
+  ['원문에 없는 것이 들어간다']),
+ ('3', '무엇을 쓸지 고른다',
+  '뜯은 것 중 무엇을 절로 세우고 무엇을 버릴지 정한다. 버린 것은 한계 절에 이름을 남긴다.',
+  ['마디를 찾는다 — 다루는 것이 실제로 어떤 부분으로 되어 있나',
+   '마디마다 글의 꼴을 고른다(시간 흐름·대비·인과 사슬 …)',
+   '절마다 물음을 하나씩 붙인다. 「A와 B」는 두 절이다',
+   '안 세운 마디를 한계 절에 적는다 — 안 적으면 카드가 원문 전부인 것처럼 읽힌다'],
+  ['doc-structure 스킬', 'structure 스킬 B — 케이스 구조'],
+  ['구조 없이 나열한다']),
+ ('4', '보고서를 세운다',
+  '앞머리·목차·절·표·도해를 짓는다. 도해는 이 단계 안에 든다 — 아래 도해 작성법이 그 자리다.',
+  ['앞머리에 물음·바탕·축을 적는다',
+   '목차를 갈래별 상자로 세운다 — 단원은 1. 그 아래 절은 ①',
+   '견주는 것이 둘 이상이면 산문이 아니라 표. 열에 「언제 것 · 성격」을 둔다',
+   '말로만 가는 절에 도해를 붙인다',
+   '마지막 절은 한계다'],
+  ['card_lib.toc_html / report_html', 'insight-figure 스킬', 'fig_layout · chart.py'],
+  ['말이 빠진다', '숫자가 맥락 없이 선다']),
+ ('5', '다 쓰고 검토한다',
+  '쓰는 동안에는 안 보인다. 절마다 원문으로 돌아가고, 글 전체를 한 번 통으로 읽고, 검사기를 전부 돌린다.',
+  ['절마다 원문 줄을 다시 연다 — 값이 그 줄에 있나, 원문이 안 한 말을 했나, '
+   '낱말을 바꿔 뜻이 좁아지지 않았나',
+   '흐름을 본다 — 도해가 그것을 설명하는 문단보다 앞서 있나, 절 순서가 사슬대로인가',
+   '중복을 본다 — 같은 개념을 두 절에서 다시 정의하고 있나',
+   '한 마디 안에서 축이 둘로 갈리지 않았나',
+   '검사기를 전부 돌린다. 일부만 돌리지 않는다'],
+  ['CLAUDE.md 검사기 절', 'build_all.py'],
+  ['검사를 안 받고 나간다']),
+]
+
 MISTAKES = [
+ ('고르는 자리', '무엇을 쓸지 정하는 단계에서 어긋나면 뒤에서 아무리 고쳐도 안 낫는다.', [
+  ('카드를 다른 회사 이름 아래 둔다', 'dash_common.check_labels()',
+   '삼성전자·SK하이닉스 공동 원문을 「SK하이닉스」 섹션에 넣으면 카드 제목과 안이 어긋난다. '
+   '섹션을 먼저 세우고 카드를 거기 맞추는 순서가 사고의 원인이다.',
+   '원문이 여러 주체를 다루면 라벨을 넓히거나(「반도체 3사」) 주제 라벨로 바꾼다.'),
+  ('주제를 물음으로 안 적는다', '사람만',
+   '「할라페뇨 정리」처럼 대상만 적어 두면 무엇을 답하는 글인지가 없어서, 뜯은 것을 '
+   '전부 넣게 되고 절이 열을 넘는다.',
+   '이 편이 답하는 물음 하나를 문장으로 먼저 적는다. 그 물음에 안 걸리는 재료는 버린다.'),
+  ('원문이 못 답하는 물음을 잡는다', '사람만',
+   '재료가 없는 물음을 잡으면 뒤에서 원문에 없는 말로 메우게 된다.',
+   '물음을 정한 자리에서 원문에 답이 있는지 먼저 본다. 없으면 물음을 바꾼다.'),
+ ]),
  ('말이 빠진다', '누가 무엇을 했는지가 문장에서 사라진다. 읽히기는 매끄러워서 교정에서 안 걸린다.', [
   ('은유가 주어 자리에 선다', 'check_prose P14',
    '2026-08-18 「돈이 도는 자리가 다이 바깥의 메모리로 옮겨 간다」. 그 앞에 쓴 「값을 받는 자리」를 고치라는 지적을 받고 다른 은유로 바꿨다.',
@@ -372,6 +434,11 @@ MISTAKES = [
    '쓰는 동안에는 셋 다 매끄럽게 읽혔다.',
    '마지막에 절마다 원문 줄을 다시 연다. 값이 그 줄에 있나, 원문이 안 한 말을 했나, '
    '원문 낱말을 바꿔 뜻이 좁아지지 않았나 셋을 본다.'),
+  ('흐름과 중복을 안 보고 넘긴다', '사람만',
+   '2026-08-29 할라페뇨 카드에서 넷이 한꺼번에 나왔다 — 도해가 그것을 설명하는 문단보다 '
+   '두 문단 앞서 있었고, 결과 절이 앞 절에서 정의한 파레토 곡선을 다시 정의했고, '
+   '마디 이름과 본문 용어가 갈렸고, 한 마디 안에서 성능과 기간의 축이 달랐다.',
+   '다 쓰고 한 번 통으로 읽는다. 도해 자리 · 같은 개념의 재정의 · 마디 안의 축 하나 셋을 본다.'),
   ('눈으로 보고 안 겹친다고 보고한다', 'check_fig',
    '두 번 틀렸다. 글자끼리만 재서 범례를 놓쳤고, 그다음에는 선을 안 봐서 갈고리가 글줄을 가로지르는 것을 놓쳤다. 선이 상자에서 떨어진 것도 검사기가 안 보고 있었다.',
    '기계가 세게 한다. 검사기가 안 보는 자리를 찾으면 규칙을 하나 더 넣는다.'),
@@ -476,6 +543,32 @@ FIGRULES = [
 
 
 CSS = r'''
+  /* 절차 한 단계 */
+  .stg{margin:14px 0 0;border:1px solid var(--line);border-radius:var(--r);
+       background:var(--card);box-shadow:var(--shadow)}
+  .stg>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;
+       align-items:baseline;gap:4px 10px;padding:12px 15px}
+  .stg>summary::-webkit-details-marker{display:none}
+  .stg[open]>summary{border-bottom:1px solid var(--line)}
+  .stg .sn{flex:none;width:1.5em;font-weight:850;color:var(--ac);
+       font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .stg .st{font-size:var(--t-body);font-weight:850;color:var(--ink)}
+  .stg .so{flex:1 1 100%;margin-left:1.5em;font-size:var(--t-meta);color:var(--sub)}
+  .stg summary i{font-style:normal;font-size:var(--t-lbl);font-weight:700;
+       color:var(--faint);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .sgrid{display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:12px 15px 4px}
+  .slab{margin:0 0 5px;font-size:var(--t-lbl);font-weight:800;letter-spacing:.05em;
+        color:var(--faint)}
+  .sgrid ul{margin:0;padding:0;list-style:none}
+  .sgrid li{position:relative;padding:0 0 5px 11px;font-size:var(--t-meta);color:var(--sub)}
+  .sgrid li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;
+       border-radius:50%;background:var(--line)}
+  .sgrid .suse li{padding-left:0}
+  .sgrid .suse li::before{display:none}
+  .sgrid code{font-size:.9em;color:var(--ink)}
+  .stg .mk{margin:8px 15px 12px}
+  @media (max-width:640px){ .sgrid{grid-template-columns:1fr} }
+
   /* 묶음 상자 — 이름만 보이고 눌러야 규칙이 펴진다 */
   details.mk>summary.mh{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;
        align-items:baseline;gap:4px 9px}
@@ -633,6 +726,24 @@ def stage_html(stg, kind, note, nodes, rules):
                '<ul>%s</ul>' % r if r else ''))
 
 
+def stage_block(num, name, one, does, uses, groups):
+    """절차 한 단계. 무엇을 정하는지 · 무엇을 쓰는지 · 그 자리 오류를 한 상자에 둔다."""
+    by = {g: (o, r) for g, o, r in MISTAKES}
+    n = sum(len(by[g][1]) for g in groups if g in by)
+    o = ['<details class="stg"><summary><span class="sn">%s</span>'
+         '<span class="st">%s</span><span class="so">%s</span>'
+         '<i>오류 %d</i></summary>' % (num, name, one, n)]
+    o.append('<div class="sgrid"><div><p class="slab">무엇을 정하나</p><ul>%s</ul></div>'
+             '<div><p class="slab">쓰는 것</p><ul class="suse">%s</ul></div></div>'
+             % (''.join('<li>%s</li>' % d for d in does),
+                ''.join('<li><code>%s</code></li>' % u for u in uses)))
+    for g in groups:
+        if g in by:
+            o.append(mistake_html(g, by[g][0], by[g][1]))
+    o.append('</details>')
+    return ''.join(o)
+
+
 def mistake_html(group, one, rows, labels=('난 일', '처방')):
     # 묶음마다 접는다. 규칙 스물둘을 한 번에 펴 두면 필요한 한 줄까지 스크롤이 길다
     o = ['<details class="mk"><summary class="mh"><b>%s</b><span>%s</span>'
@@ -657,13 +768,15 @@ def main():
 
     # 펴 두는 것은 쓰는 법 둘뿐이다. 나머지는 접는다 — 지도와 실험은 찾아서 보는
     # 것이고 쓰는 법은 쓰는 동안 계속 보는 것이라, 같은 무게로 세우면 매번 스크롤한다.
-    out.append('<details class="fold lead" open><summary>보고서 작성법 — 자주 하는 오류'
-               '<span>%d</span></summary>' % sum(len(r) for _g, _o, r in MISTAKES))
-    out.append('<p class="lede2">실제로 났던 것만 적는다. 옆의 표는 그 오류를 무엇이 잡는지이고, '
-               '거기 <b>사람만</b>이라고 적힌 줄이 이 표에서 가장 비싸다 — 기계가 안 보는 자리라 '
-               '같은 오류가 되풀이된다.</p>')
-    for group, one, rows in MISTAKES:
-        out.append(mistake_html(group, one, rows))
+    out.append('<details class="fold lead" open><summary>보고서 쓰는 절차'
+               '<span>단계 %d · 오류 %d</span></summary>'
+               % (len(STAGES), sum(len(r) for _g, _o, r in MISTAKES)))
+    out.append('<p class="lede2">원문 한 편이 카드 한 장이 되기까지 다섯 단계다. 단계마다 '
+               '무엇을 정하는지, 무엇을 쓰는지, 그 자리에서 자주 나는 오류를 같이 둔다. '
+               '오류 옆의 표는 그것을 무엇이 잡는지이고, <b>사람만</b>이라고 적힌 줄이 가장 '
+               '비싸다 — 기계가 안 보는 자리라 같은 오류가 되풀이된다.</p>')
+    for st in STAGES:
+        out.append(stage_block(*st))
     out.append('</details>')
 
     out.append('<details class="fold lead" open><summary>도해 작성법'
