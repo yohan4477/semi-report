@@ -19,14 +19,20 @@ CLAUDE.md 「글은 기본이 구조다」는 지금까지 스킬(`doc-structure
   S4  절 제목이 물음인가                            FAIL
   S5  목차의 번호와 실제 절 번호가 맞나                FAIL
   S6  견주는 표에 「언제 것 · 성격」 열이 있나           FAIL
-  S7  마지막 절이 한계인가                           WARN
-  S8  절이 여덟을 넘나                              WARN
+  S7  마지막 절이 한계인가                           FAIL
+  S8  절이 여덟을 넘나                              FAIL
   S9  차례로 갈랐다면 마디가 실제로 차례를 이루나        FAIL
   S10 절 제목 하나가 물음 하나인가                   FAIL
   S11 절이 셋을 넘는 마디에 축이 있나                 FAIL
   S12 나열을 열었으면 항목에 ①②③ 이 붙었나            FAIL
   S13 도해가 그 절의 글보다 앞에 섰나                 FAIL
+
+FAIL 은 게이트에 올린 장(`STRICT`)에서만 난다. 나머지 장은 줄을 뱉지 않고 **빚**으로
+장별 한 줄만 센다 — 전에는 전부 WARN 으로 찍어서 529줄이 매번 흘렀고 아무도 안 고쳤다.
+안 읽히는 경고는 규칙이 아니라 소음이다. 그 장의 꼴에 아예 안 맞는 규칙은 `SKIP` 에
+적어 세지도 않는다.
 """
+import collections
 import glob
 import io
 import os
@@ -52,10 +58,20 @@ BAD_NODE = SHAPE_WORDS + ('서론', '본론', '결론', '배경', '개요')
 # 그것이 적혀 있는지와 그 안에서 앞뒤가 맞는지만 본다
 AXIS = re.compile(r'<div class="uc-toc" data-axis="(.*?)"', re.S)
 
-# 규칙을 게이트로 세운 장. 나머지 장은 같은 것을 보되 WARN 으로만 센다 —
+# 규칙을 게이트로 세운 장. 나머지 장은 같은 것을 보되 빚으로만 센다 —
 # AI Engineer 68편은 이 규칙보다 먼저 쓰였고 그 장의 규칙 문서가 따로 있다.
 # 소급은 그 문서를 고치는 일과 함께 한다.
 STRICT = ('Semi Doped 대시보드.html',)
+
+# 규칙이 안 맞는 장에 대고 세지 않는다. 2026-08-30 에 WARN 이 529건이었고 그중 513건이
+# AI Engineer 한 장이었다 — 그 장은 카드가 번호글이라 목차 상자도 물음 제목도 없다.
+# 안 읽히는 경고는 규칙이 아니라 소음이다. 장마다 안 볼 규칙을 여기서 정한다.
+SKIP = {
+    # 번호글이다. 그 장의 규칙 문서가 따로 있다 — docs/AI Engineer 대시보드 — 만드는 규칙.md
+    'AI Engineer 대시보드.html': {'S2', 'S4', 'S10'},
+    # 번호 소제목으로 흐르는 리포트다. 같은 이유로 목차 상자와 물음 제목을 안 본다
+    '언더스탠딩 보고서 대시보드.html': {'S2', 'S4', 'S10'},
+}
 
 CIRCLE = '①②③④⑤⑥⑦⑧⑨⑩'
 CARD = re.compile(r'<div class="ucard[^"]*"[^>]*>(.*?)(?=<div class="ucard|<footer|\Z)', re.S)
@@ -90,11 +106,22 @@ LIMIT = ('한계', '밝히지 않', '안 밝힌', '못 밝힌', '검증되지', 
 rows = []
 
 
+debt = collections.Counter()      # (장, 규칙) -> 건수
+
+
 def add(kind, where, code, msg):
-    # 게이트로 세운 장이 아니면 FAIL 을 WARN 으로 낮춘다
-    if kind == 'FAIL' and not where.startswith(STRICT):
-        kind = 'WARN'
-    rows.append((kind, where, code, msg))
+    """게이트로 세운 장은 FAIL, 나머지 장은 줄을 안 뱉고 빚으로만 센다.
+
+    전에는 나머지를 전부 WARN 으로 찍었다. 529줄이 매번 흘러가는데 아무도 안 고쳤다 —
+    그건 규칙이 제가 옳은지 모른다는 뜻이다. 지금은 장별 한 줄로 남기고, 고칠 것은
+    그 장을 게이트에 올릴 때 FAIL 로 만난다."""
+    for chapter, skip in SKIP.items():
+        if where.startswith(chapter) and code in skip:
+            return
+    if where.startswith(STRICT):
+        rows.append(('FAIL', where, code, msg))
+    else:
+        debt[(where.split(' · ')[0], code)] += 1
 
 
 def txt(s):
@@ -300,8 +327,16 @@ def main():
     for kind, at, code, msg in rows:
         print('%s %s [%s] %s' % (kind, at, code, msg), file=OUT)
     fail = sum(1 for r in rows if r[0] == 'FAIL')
-    warn = len(rows) - fail
-    print('\n요약: report 카드 %d장 / FAIL %d / WARN %d' % (n, fail, warn), file=OUT)
+    if debt:
+        print(file=OUT)
+        print('빚 — 게이트에 안 올린 장. 그 장을 손볼 때 함께 갚는다', file=OUT)
+        by = collections.defaultdict(list)
+        for (where, code), cnt in sorted(debt.items()):
+            by[where].append('%s %d' % (code, cnt))
+        for where in sorted(by):
+            print('  %-30s %s' % (where[:28], ' · '.join(by[where])), file=OUT)
+    print('\n요약: report 카드 %d장 / FAIL %d / 빚 %d건'
+          % (n, fail, sum(debt.values())), file=OUT)
     return 1 if fail else 0
 
 
