@@ -1,7 +1,7 @@
 # 문체 게이트 — 인사이트 문장이 읽히는 한국어인지 검사한다. 윤문은 하지 않는다.
 # 설계: docs/superpowers/specs/2026-07-30-스킬-분할-구조화-design.md ④
 # 규칙이 이미 스펙 문체 절에 표로 있어 결정론적으로 검사할 수 있다 — 에이전트 호출 0회.
-import os, io, re, json, glob, sys
+import os, io, re, json, glob, sys, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths
 import notes_lib as nl
@@ -85,14 +85,17 @@ def check_density(text, where, actor=True, claims=False):
     if dash > len(paras) * 0.5:
         add('WARN', where, 'P8',
             'em dash가 %d개 (문단 %d개) — 쉼표·괄호·문장 분리로 바꾼다' % (dash, len(paras)))
+    # P9 는 2026-08-30 에 절대 횟수에서 밀도로 바꿨다. 「문서당 2회」로 재니 52편이
+    # 걸렸는데, 밀도로 보면 0.48~0.97/1천자로 고르다 — 규칙이 대구가 아니라 문서
+    # 길이를 재고 있었다. 문체를 잡는 것이 아니라 튀는 자리만 잡는다
     contrast = len(re.findall(r'[가-힣]\s*(?:가|이)\s+아니라', text))
-    if contrast > 2:
+    per1k = contrast / (len(text) / 1000.0) if len(text) > 1500 else 0
+    if per1k > CONTRAST_PER_1K:
         add('WARN', where, 'P9',
-            '「A가 아니라 B」 대구가 %d회 — 문서당 2회까지다' % contrast)
-    for s in sentences(text):
-        if s.count(',') >= 4:
-            add('WARN', where, 'P11',
-                '한 문장에 절이 %d개 — 논지 하나만 남기고 끊는다: %s…' % (s.count(',') + 1, s[:40]))
+            '「A가 아니라 B」 대구가 %d회(1천자당 %.1f) — %.1f까지다'
+            % (contrast, per1k, CONTRAST_PER_1K))
+    # P11(한 문장 속 쉼표 개수)은 2026-08-30 에 걷었다. 531건이 한 번도 안 고쳐졌고,
+    # 길이는 P3 이 이미 잰다 — 같은 것을 두 번 재면 둘 다 안 믿게 된다.
     check_vague(text, where)
     check_money(text, where)
     # P19 는 우리가 쓴 화면에만 댄다. 노트와 제3자 요약본에 대면 필자의
@@ -368,7 +371,10 @@ def check_glossary(text, where, gloss):
 TRANSLATIONESE = ['에 대한', '되어진', '로 인해', '에 있어서', '라고 할 수 있다']
 SECTION_ORDER = ['주장', '그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거',
                  '조건 충돌', '아직 모르는 것', '검토 후 무관']
-MAXLEN = 160
+# 2026-08-30 에 160 에서 올렸다. 걸린 103건의 중앙값이 176자였다 — 문턱이 문체보다
+# 짧으면 검사기가 매번 같은 소리를 하고 아무도 안 고친다. 실제로 숨이 차는 자리만 남긴다
+CONTRAST_PER_1K = 1.2   # 지금 글의 최고치가 0.97 이다. 그 위로 튀는 자리만 잡는다
+MAXLEN = 200
 
 
 def check_length(text, where):
@@ -622,14 +628,28 @@ def main():
 
     dashes = check_dashboards(gloss)
 
+    # FAIL 은 줄로 낸다. WARN 은 장별 한 줄로 접는다 — 2026-08-30 에 826줄이 흘렀고
+    # 아무도 안 고쳤다. 무엇이 어디에 몇 개인지는 남기고, 낱낱은 --all 로 본다.
+    show_all = '--all' in sys.argv
     for level, where, rule, msg in findings:
-        print('%s %s [%s] %s' % (level, where, rule, msg))
+        if level == 'FAIL' or show_all:
+            print('%s %s [%s] %s' % (level, where, rule, msg))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
     warns = len(findings) - fails
+    if warns and not show_all:
+        debt = collections.Counter((f[1], f[2]) for f in findings if f[0] != 'FAIL')
+        by = collections.defaultdict(list)
+        for (where, rule), cnt in sorted(debt.items()):
+            by[where].append('%s %d' % (rule, cnt))
+        print()
+        print('빚 — 낱낱은 --all. 그 글을 손볼 때 함께 갚는다')
+        for where in sorted(by, key=lambda w: -sum(int(x.split()[1]) for x in by[w])):
+            print('  %-34s %s' % (where[:32], ' · '.join(sorted(by[where]))))
     # 「WARN 5건 초과 → humanize-korean」 줄은 2026-08-17에 걷어냈다. 다섯 장이 상시
     # 초과 상태라 늘 켜져 있었고, 늘 켜진 신호는 신호가 아니다. 윤문을 부를 계기는
     # 개별 규칙(P8~P11)이 무엇을 몇 개 잡았는지로 판단한다.
-    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 / FAIL %d / WARN %d'
+    print()
+    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 / FAIL %d / 빚 %d건'
           % (len(files), len(loops), len(notes), len(debates), len(dashes), fails, warns))
     return 1 if fails else 0
 
