@@ -20,9 +20,12 @@
 소급해 막지는 않는다.
 """
 
-FS = 12.0            # 판 안 글자 크기. 카드 도해의 .fg 와 같다
-FS_S = 11.0          # 둘째 줄
-LH = 16.0            # 줄 간격
+# 판 안 글자는 본문과 같은 크기로 둔다. 판이 width:100% 라 카드 슬롯보다 넓게 잡으면
+# 화면에서 배율이 1 아래로 내려가 글자가 본문보다 작아진다 — 판을 좁게(520) 잡고
+# 글자를 본문 크기(.95rem ≈ 15.2px)로 맞춘다. aie_figs 가 같은 이유로 그렇게 한다
+FS = 15.2            # 판 안 글자 크기 = 본문과 같다
+FS_S = 13.5          # 둘째 줄
+LH = 20.0            # 줄 간격
 PAD_X = 14.0         # 상자 좌우 여백
 PAD_Y = 12.0         # 상자 위아래 여백
 GAP_X = 28.0         # 칸 사이 가로 틈. 화살표가 지나는 자리다
@@ -30,9 +33,9 @@ GAP_Y = 26.0         # 줄 사이 세로 틈
 CHECK_CH = 9.0       # `check_fig` 가 한 글자를 이만큼으로 어림한다
 
 CSS = '''
-.fl { font: 600 12px/1.35 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
+.fl { font: 600 15.2px/1.35 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
   fill: var(--ink-2); }
-.fl-s { font-weight: 400; font-size: 11px; fill: var(--ink-3); }
+.fl-s { font-weight: 400; font-size: 13.5px; fill: var(--ink-3); }
 .fl-b { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
 .fl-bh { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
 .fl-l { stroke: var(--line); stroke-width: 1.4; fill: none; }
@@ -114,11 +117,15 @@ class Box(object):
 class Plate(object):
     """판 하나. 칸을 격자로 놓고, 선은 놓인 상자에서 뽑는다."""
 
-    def __init__(self, width=640.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid=''):
+    def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
+                 stretch=True):
         self.W = float(width)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
+        # 칸을 판 끝까지 늘린다. 글자에 맞춰 재기만 하면 짧은 이름이 든 줄은 가운데
+        # 조금만 차지하고 양옆이 크게 빈다 — 그 빈자리 때문에 글자가 더 작아 보인다
+        self.stretch = stretch
         self.rows = []
         self.notes = []             # 판 아래 한 줄 설명
         self.links = []
@@ -173,6 +180,10 @@ class Plate(object):
         total = sum(ws) + gap * (ncol - 1)
         if total > self.W:
             raise AssertionError('판(%g)보다 넓다: %g' % (self.W, total))
+        if self.stretch and total < self.W:
+            extra = (self.W - total) / float(ncol)
+            ws = [w + extra for w in ws]
+            total = self.W
         xs, x = [], (self.W - total) / 2.0
         for w in ws:
             xs.append(x)
@@ -184,10 +195,18 @@ class Plate(object):
             two = any(c and c[1] for c in r)
             h = PAD_Y * 2 + LH + (LH if two else 0)
             line = []
+            # 한 칸만 든 줄은 판을 가로질러 세운다. 안 그러면 그 줄만 반쪽에 몰려
+            # 오른쪽이 통째로 비고, 빈자리 때문에 글자가 더 작아 보인다
+            filled = [c for c in range(ncol) if c < len(r) and r[c]]
+            wide = len(filled) == 1 and ncol > 1
             for c in range(ncol):
                 cell = r[c] if c < len(r) else None
-                line.append(Box(xs[c], y, ws[c], h, cell[0], cell[1], cell[2],
-                                (len(placed), c)) if cell else None)
+                if not cell:
+                    line.append(None)
+                    continue
+                bx, bw = (xs[0], xs[-1] + ws[-1] - xs[0]) if wide else (xs[c], ws[c])
+                line.append(Box(bx, y, bw, h, cell[0], cell[1], cell[2],
+                                (len(placed), c)))
             placed.append(line)
             y += h + gy
         self._placed = placed
