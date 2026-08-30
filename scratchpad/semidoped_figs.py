@@ -29,7 +29,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))), 'scripts'))
 
 import chart  # noqa: E402
-from fig_layout import Plate  # noqa: E402
+from fig_layout import CSS as PLATE_CSS, Plate  # noqa: E402
+
+# Plate 로 그린 도해의 붓을 같이 내보낸다. 안 실으면 상자가 검게 찍힌다 —
+# SVG 는 class 를 못 찾으면 채우기 기본값을 검정으로 둔다(2026-08-31)
+FIG_CSS = FIG_CSS + PLATE_CSS
 
 
 def _box(x, y, w, h, label, sub='', hi=False):
