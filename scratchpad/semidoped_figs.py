@@ -268,3 +268,28 @@ def _cores():
 
 AGENT_FLOW = _agent_flow()
 CORES = _cores()
+
+def _before_after():
+    """전과 후 — 에이전트가 도는 자리와 그 뒤에 붙는 랙.
+
+    괄호로 적던 아스키 도식을 상자로 바꿨다. 열이 전과 후이고 아래로 흐른다.
+    마지막 줄 오른쪽 상자가 새로 생긴 칸이라 강조색으로 둔다.
+    """
+    p = Plate()
+    p.head('전', '후')
+    p.row(('사람이 앉은 노트북', '앉아 있을 때만 돈다'),
+          ('클라우드 가상머신', '꺼도 계속 돈다'))
+    p.row(('에이전트 하니스', '직접 깔고 관리한다'),
+          ('에이전트 여럿', '한 번 로그인해 나눠 쓴다'))
+    p.row('GPU 랙', 'GPU 랙')
+    p.row(None, ('에이전틱 CPU 랙', '이 칸이 새로 생긴다', True))
+    for i in range(3):
+        p.connect(p.at(i, 0), p.at(i + 1, 0)) if i < 2 else None
+    p.connect(p.at(0, 1), p.at(1, 1))
+    p.connect(p.at(1, 1), p.at(2, 1))
+    p.connect(p.at(2, 1), p.at(3, 1))
+    return p.render('전과 후 — 에이전트가 도는 자리')
+
+
+
+BEFORE_AFTER = _before_after()

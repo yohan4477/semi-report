@@ -127,6 +127,7 @@ class Plate(object):
         # 조금만 차지하고 양옆이 크게 빈다 — 그 빈자리 때문에 글자가 더 작아 보인다
         self.stretch = stretch
         self.rows = []
+        self.labels = {}            # 줄 왼쪽에 세우는 이름(전·후 같은 것)
         self.notes = []             # 판 아래 한 줄 설명
         self.links = []
         self.heads = []             # 열 이름
@@ -135,6 +136,14 @@ class Plate(object):
     # ---- 짓기 ------------------------------------------------------------
     def head(self, *names):
         self.heads = list(names)
+        self._placed = None
+
+    def label(self, i, text):
+        """줄 왼쪽 도랑에 세우는 이름. 「전·후」처럼 줄 전체를 가리키는 말이다.
+
+        칸 안에 넣으면 상자 하나를 이름에 쓰게 되고, 판 아래로 내리면 어느 줄 이야기인지가
+        사라진다. 이름이 하나라도 있으면 왼쪽에 도랑을 내고 칸은 그만큼 오른쪽에서 시작한다."""
+        self.labels[i] = text
         self._placed = None
 
     def row(self, *cells):
@@ -180,11 +189,12 @@ class Plate(object):
         total = sum(ws) + gap * (ncol - 1)
         if total > self.W:
             raise AssertionError('판(%g)보다 넓다: %g' % (self.W, total))
-        if self.stretch and total < self.W:
-            extra = (self.W - total) / float(ncol)
+        gut = (max(text_w(t) for t in self.labels.values()) + 12) if self.labels else 0.0
+        if self.stretch and total < self.W - gut:
+            extra = (self.W - gut - total) / float(ncol)
             ws = [w + extra for w in ws]
-            total = self.W
-        xs, x = [], (self.W - total) / 2.0
+            total = self.W - gut
+        xs, x = [], gut + (self.W - gut - total) / 2.0
         for w in ws:
             xs.append(x)
             x += w + gap
@@ -294,10 +304,14 @@ class Plate(object):
             for c, name in enumerate(self.heads):
                 o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
                          % (self._xs[c] + self._ws[c] / 2.0, self.top + 4, name))
-        for line in placed:
+        for i, line in enumerate(placed):
             for b in line:
                 if b:
                     o += b.svg()
+            if i in self.labels:
+                first = next(b for b in line if b)
+                o.append('<text x="0" y="%g" class="fl">%s</text>'
+                         % (first.cy + 5, self.labels[i]))
         if self.mid and len(self._xs) > 1:
             gx = (self._xs[0] + self._ws[0] + self._xs[1]) / 2.0
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
