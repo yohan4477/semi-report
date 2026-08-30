@@ -254,7 +254,8 @@ MONEY_VAGUE = re.compile(r'(자금|돈|현금|신용|비용|자본|실탄)(?:을
 def check_money(text, where):
     """P18 — 돈을 「댄다」로 뭉갠 자리."""
     for m in MONEY_VAGUE.finditer(text or ''):
-        add('WARN', where, 'P18',
+        # 2026-08-30 에 빚 열셋을 다 갚고 게이트로 올렸다
+        add('FAIL', where, 'P18',
             '「%s」 — 무엇을 하는지로 쓴다: 빌려준다·낸다·건다·마련한다' % m.group(0))
 
 
@@ -275,14 +276,18 @@ VERDICT = re.compile(r'(현재가|현재 주가|지금 주가|시가총액|시�
 
 
 def check_all_claims(text, where):
-    """P19 — 전칭 주장이 든 문장 목록. 계산이 바뀌면 여기부터 다시 읽는다."""
+    """P19 — 전칭 주장이 든 문장 목록. 계산이 바뀌면 여기부터 다시 읽는다.
+
+    이건 결함이 아니라 목록이라 빚으로 세지 않는다(INFO). 「25칸 전부가 현재 주가를
+    웃돈다」는 격자를 실제로 세어 쓴 문장이고, 고칠 것이 없다 — 고칠 수 없는 것을
+    빚으로 세면 빚 숫자가 뜻을 잃는다. 낱낱은 --all 로 본다."""
     for s in sentences(text):
         m = ALL_CLAIM.search(s)
         if not m or not VERDICT.search(s):
             continue
         if not re.search(r'\d', s):
             continue          # 값이 없는 전칭은 이 사고의 대상이 아니다
-        add('WARN', where, 'P19',
+        add('INFO', where, 'P19',
             '전칭 주장이다 — 계산을 고쳤으면 이 문장을 다시 읽는다: %s…' % s[:52])
 
 
@@ -368,7 +373,10 @@ def check_glossary(text, where, gloss):
                 % (term, term, plain, plain))
 
 
-TRANSLATIONESE = ['에 대한', '되어진', '로 인해', '에 있어서', '라고 할 수 있다']
+# 「에 대한」은 2026-08-30 에 뺐다. P4 32건 중 30건이 이것이었고, 그중에는 종합대책
+# 문구처럼 고칠 수 없는 인용도 들어 있었다 — 고칠 수 없는 자리를 잡는 규칙은
+# 갚을 수 없는 빚만 쌓는다. 남긴 넷은 우리말에서 쓸 자리가 없는 것들이다
+TRANSLATIONESE = ['되어진', '로 인해', '에 있어서', '라고 할 수 있다']
 SECTION_ORDER = ['주장', '그래서 무엇이 달라지나', '되돌릴 수 없는 지점', '근거',
                  '조건 충돌', '아직 모르는 것', '검토 후 무관']
 # 2026-08-30 에 160 에서 올렸다. 걸린 103건의 중앙값이 176자였다 — 문턱이 문체보다
@@ -386,10 +394,20 @@ def check_length(text, where):
             add('WARN', where, 'P3', 'em dash가 2개 이상 — 문장을 끊는다: %s…' % s[:40])
 
 
+QUOTE_SPAN = re.compile(r'"[^"]{0,400}"|「[^」]{0,400}」|“[^”]{0,400}”')
+
+
 def check_translationese(text, where):
+    """번역투 낱말. 인용 안은 보지 않는다.
+
+    2026-08-30 에 남은 건이 인용이었다 — 종합대책 문구와 발표 슬라이드 문구다.
+    고칠 수 없는 자리를 잡으면 갚을 수 없는 빚만 쌓인다."""
+    bare = QUOTE_SPAN.sub(' ', text)
     for pat in TRANSLATIONESE:
-        if pat in text:
-            add('WARN', where, 'P4', '번역투 "%s"' % pat)
+        if pat in bare:
+            # 2026-08-30 에 빚을 다 갚고 게이트로 올렸다. 남은 넷은 우리말에서 쓸
+            # 자리가 없는 낱말이라 새로 들어오면 그 자리에서 막는다
+            add('FAIL', where, 'P4', '번역투 "%s"' % pat)
 
 
 def shingles(s):
@@ -635,9 +653,11 @@ def main():
         if level == 'FAIL' or show_all:
             print('%s %s [%s] %s' % (level, where, rule, msg))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
-    warns = len(findings) - fails
+    infos = sum(1 for f in findings if f[0] == 'INFO')
+    warns = len(findings) - fails - infos
     if warns and not show_all:
-        debt = collections.Counter((f[1], f[2]) for f in findings if f[0] != 'FAIL')
+        debt = collections.Counter((f[1], f[2]) for f in findings
+                                   if f[0] not in ('FAIL', 'INFO'))
         by = collections.defaultdict(list)
         for (where, rule), cnt in sorted(debt.items()):
             by[where].append('%s %d' % (rule, cnt))
@@ -649,8 +669,10 @@ def main():
     # 초과 상태라 늘 켜져 있었고, 늘 켜진 신호는 신호가 아니다. 윤문을 부를 계기는
     # 개별 규칙(P8~P11)이 무엇을 몇 개 잡았는지로 판단한다.
     print()
-    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 / FAIL %d / 빚 %d건'
-          % (len(files), len(loops), len(notes), len(debates), len(dashes), fails, warns))
+    print('요약: 인사이트 %d건 / 고리 %d편 / 노트 %d장 / 쟁점 %d장 / 대시보드 %d장 '
+          '/ FAIL %d / 빚 %d건 / 다시 읽을 문장 %d개'
+          % (len(files), len(loops), len(notes), len(debates), len(dashes),
+             fails, warns, infos))
     return 1 if fails else 0
 
 
