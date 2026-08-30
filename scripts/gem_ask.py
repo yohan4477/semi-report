@@ -20,6 +20,39 @@ from playwright.sync_api import sync_playwright
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8')
 
 
+
+def clipboard():
+    """윈도 클립보드를 읽는다. 표준 라이브러리로만 — tkinter 가 들고 있다."""
+    import tkinter
+    r = tkinter.Tk()
+    r.withdraw()
+    try:
+        return r.clipboard_get()
+    finally:
+        r.destroy()
+
+
+def copy_via_button(pg):
+    """답 밑의 「복사」 버튼을 눌러 마크다운 그대로 가져온다.
+
+    화면 글자를 긁으면(inner_text) 표가 줄바꿈으로 뭉개지고 제목 층위가 사라진다.
+    버튼이 넣어 주는 것은 마크다운이라 표와 목록이 그대로 남는다.
+    """
+    for sel in ('button[aria-label*="복사"]', 'button[data-test-id="copy-button"]',
+                'copy-button button', 'button[aria-label*="Copy"]'):
+        try:
+            btn = pg.locator(sel).last
+            if btn.count() and btn.is_visible():
+                btn.click()
+                pg.wait_for_timeout(900)
+                t = clipboard()
+                if t and len(t) > 80:
+                    return t
+        except Exception:
+            continue
+    return None
+
+
 def ask(prompt, dest, timeout=300):
     with sync_playwright() as pw:
         b = pw.chromium.connect_over_cdp('http://127.0.0.1:9222')
@@ -51,8 +84,9 @@ def ask(prompt, dest, timeout=300):
             else:
                 still = 0
             last = cur
-        io.open(dest, 'w', encoding='utf-8').write(last)
-        print('받은 글자 %d · %s' % (len(last), dest), file=OUT)
+        text = copy_via_button(pg) or last
+        io.open(dest, 'w', encoding='utf-8').write(text)
+        print('받은 글자 %d · %s' % (len(text), dest), file=OUT)
         pg.close()
 
 
