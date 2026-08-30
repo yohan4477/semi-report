@@ -36,60 +36,21 @@ from fig_layout import CSS as PLATE_CSS, Plate  # noqa: E402
 FIG_CSS = FIG_CSS + PLATE_CSS
 
 
-def _box(x, y, w, h, label, sub='', hi=False):
-    """상자 하나. 글자는 상자 안 가운데 두 줄로 앉힌다."""
-    cx = x + w / 2.0
-    o = ['<rect x="%g" y="%g" width="%g" height="%g" rx="6" class="fg-b"%s/>'
-         % (x, y, w, h, ' style="stroke:var(--accent);stroke-width:2"' if hi else '')]
-    ty = y + h / 2.0 + (0 if not sub else -5)
-    o.append('<text x="%g" y="%g" class="fg" text-anchor="middle">%s</text>'
-             % (cx, ty + 4, label))
-    if sub:
-        o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">%s</text>'
-                 % (cx, ty + 19, sub))
-    return ''.join(o)
-
-
 def _criteria():
-    """잣대가 무엇에서 무엇으로 바뀌었나.
+    """잣대가 무엇에서 무엇으로 바뀌었나 — 전과 후를 열로 놓는다.
 
-    값을 그리지 않는다. 원문에 든 것은 「무엇을 잣대로 골랐나」뿐이라 막대도 눈금도
-    쓸 수 없다. 상자와 화살표로만 어느 쪽을 골랐는지 보인다.
-
-    곡선은 이 판에 안 그린다. 파레토 곡선은 그림 한 장을 따로 받는다(`_pareto`) —
-    한 그림은 하나만 말한다.
-
-    상자 사이 띠를 32픽셀로 벌려 글자를 그 안에 앉힌다. 앞 판은 띠가 12픽셀뿐이라
-    글자가 아래 상자 테두리에 깔렸다 — check_fig 가 잡았다.
+    손으로 좌표를 찍던 판을 걷고 `Plate` 로 다시 세웠다. 값은 안 그린다 — 원문에 든 것은
+    「무엇을 잣대로 골랐나」뿐이라 막대도 눈금도 쓸 수 없다. 왼쪽 한 칸, 오른쪽 두 칸이
+    그 자체로 「하나였던 것이 둘로 늘었다」를 말한다.
     """
-    W = 640
-    Y1, GAP, BH = 44, 32, 46
-    y2 = Y1 + BH + GAP
-    y3 = y2 + BH + 14
-    H = y3 + 12
-    o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
-         'aria-label="잣대가 무엇에서 무엇으로 바뀌었나">' % (W, H)]
-    o.append('<text x="20" y="24" class="fg">전 — 칩을 파는 회사가 정할 때</text>')
-    o.append('<text x="360" y="24" class="fg">후 — 모델을 파는 회사가 정할 때</text>')
-    o.append(_box(20, Y1, 250, BH, '총소유비용을 본다', '칩을 사서 굴리는 데 드는 돈'))
-    o.append(_box(360, Y1, 250, BH, '① 엔드투엔드 지연',
-                  '질문을 넣고 마지막 글자가 나올 때까지', hi=True))
-    o.append(_box(360, y2, 250, BH, '② 요청당 전기에너지',
-                  '한 번 답하는 데 쓰는 전기', hi=True))
-    mid = Y1 + BH + GAP / 2.0
-    o.append('<path d="M485 %g L485 %g" class="fg-d"/>' % (Y1 + BH + 3, mid - 9))
-    o.append('<path d="M485 %g L485 %g" class="fg-d"/>' % (mid + 5, y2 - 3))
-    o.append('<text x="497" y="%g" class="fg fg-s">둘은 같이 못 낮춘다</text>' % (mid + 4))
-    o.append('<path d="M270 %g L352 %g" class="fg-l" marker-end="url(#fgA)"/>'
-             % (Y1 + BH / 2.0, Y1 + BH / 2.0))
-    o.append('<defs><marker id="fgA" markerWidth="8" markerHeight="8" refX="7" refY="4" '
-             'orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker></defs>')
-    # 한 줄에 한 뜻. 앞 판은 이 말을 세 줄로 잘라 「잣대가 돈에서 / 사람이 겪는 것으로 /
-    # 옮겼다」로 세웠고, 한 줄씩은 아무 뜻이 없었다 — check_fig 가 잡았다
-    o.append('<text x="20" y="%g" class="fg fg-s">잣대가 바뀌었다</text>' % (y2 + 10))
-    o.append('<text x="20" y="%g" class="fg fg-s">돈에서 사람 경험으로</text>' % (y2 + 28))
-    o.append('</svg>')
-    return ''.join(o)
+    p = Plate()
+    p.head('전 — 칩을 파는 회사가 정할 때', '후 — 모델을 파는 회사가 정할 때')
+    p.row(('총소유비용', '칩을 사서 굴리는 데 드는 돈'),
+          ('엔드투엔드 지연', '마지막 글자가 나올 때까지', True))
+    p.row(None, ('요청당 전기에너지', '한 번 답하는 데 쓰는 전기', True))
+    p.connect(p.at(0, 1), p.at(1, 1), '둘은 같이 못 낮춘다', 'd')
+    p.note('돈을 치르는 쪽에서 시간을 겪는 쪽으로 잣대가 옮겼다')
+    return p.render('잣대가 무엇에서 무엇으로 바뀌었나')
 
 
 def _pareto():
@@ -118,111 +79,34 @@ def _pareto():
 def _domain():
     """칩을 묶는 두 단계 — 겹이 겹을 품는다.
 
-    안쪽과 바깥을 **색으로** 가른다(강조색은 묶음 안, 회색은 묶음끼리). 한때 굵기 3 대 1
-    로 속도 차이를 보였는데, 그 그림만 선이 다른 도해보다 굵어져 한 장에서 다음 장으로
-    넘어갈 때 굵기가 뜻을 갖는 것처럼 읽혔다. 선 굵기는 어느 도해에서나 1.2 로 같고,
-    600 과 200 이라는 수는 판 아래 범례에 글자로 남는다.
-
-    칩을 128개 그리지 않는다. 세 개와 말줄임으로 두어 개수가 뜻이 되지 않게 한다 —
-    앞 판은 상자를 넷 그려 놓고 「개수가 아니다」라는 변명을 판 위에 적었다.
+    칩을 128개 그리지 않는다. 상자 개수도 값이라 겹 하나에 상자 하나만 두고, 여럿이
+    모인다는 것은 선 위의 말로 적는다. 안쪽과 바깥은 색으로 나눈다.
     """
-    W, H = 640, 262
-    o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
-         'aria-label="칩을 묶는 두 단계">' % (W, H)]
-    # 바깥 겹
-    o.append('<rect x="16" y="34" width="608" height="176" rx="10" class="fg-b"/>')
-    o.append('<text x="30" y="24" class="fg">큰 묶음 — 칩 최대 2,048개</text>')
-    # 안쪽 겹 둘 + 말줄임
-    for k, x0 in enumerate((34, 330)):
-        o.append('<rect x="%g" y="52" width="240" height="118" rx="8" class="fg-b" '
-                 'style="stroke:var(--accent);stroke-width:2"/>' % x0)
-        o.append('<text x="%g" y="70" class="fg fg-s">작은 묶음 — 칩 128개</text>' % (x0 + 12))
-        for i in range(3):
-            cx = x0 + 26 + i * 68        # 칩 가운데 = cx + 26 → x0+52 · x0+120 · x0+188
-            o.append('<rect x="%g" y="80" width="52" height="24" rx="4" class="fg-b"/>' % cx)
-            o.append('<text x="%g" y="96" class="fg fg-s" text-anchor="middle">칩</text>'
-                     % (cx + 26))
-            # 선은 x·y 축에 평행하게만 간다. 곧장 못 가면 꺾어서 간다 —
-            # 칩에서 수직으로 내려 공통 가로 버스에 붙는다(check_fig F6)
-            o.append('<path d="M%g 104 L%g 120" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" '
-                     'fill="none"/>' % (cx + 26, cx + 26))
-        # 가로 버스와 스위치로 내려가는 한 줄
-        o.append('<path d="M%g 120 L%g 120" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" '
-                 'fill="none"/>' % (x0 + 52, x0 + 188))
-        o.append('<path d="M%g 120 L%g 132" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" '
-                 'fill="none"/>' % (x0 + 120, x0 + 120))
-        o.append('<rect x="%g" y="132" width="176" height="28" rx="5" class="fg-b"/>' % (x0 + 32))
-        o.append('<text x="%g" y="150" class="fg fg-s" text-anchor="middle">'
-                 'Tomahawk 6 스위치</text>' % (x0 + 120))
-    # 작은 묶음끼리는 스위치를 거쳐 붙는다. 앞 판은 이 선을 상자 아래 허공에 그어
-    # 어디에도 안 닿았다 — 스위치와 스위치를 잇는다
-    o.append('<path d="M242 146 L362 146" stroke="var(--ink-3)" stroke-width="1.2" '
-             'fill="none"/>')
-    o.append('<text x="302" y="140" class="fg fg-s" text-anchor="middle">ESUN</text>')
-    o.append('<text x="302" y="100" class="fg fg-s" text-anchor="middle">⋯</text>')
-    # 굵기 범례 — 판 위가 아니라 판 아래
-    o.append('<path d="M40 232 L92 232" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" '
-             'fill="none"/>')
-    o.append('<text x="102" y="236" class="fg fg-s">작은 묶음 안 — 칩 하나가 초당 '
-             '600기가비트</text>')
-    o.append('<path d="M348 232 L400 232" stroke="var(--ink-3)" stroke-width="1.2" '
-             'fill="none"/>')
-    o.append('<text x="410" y="236" class="fg fg-s">묶음끼리 — 칩 하나가 초당 '
-             '200기가비트</text>')
-    o.append('</svg>')
-    return ''.join(o)
+    p = Plate()
+    p.row(('작은 묶음 — 칩 128개', '칩 하나가 초당 600기가비트', True))
+    p.row(('큰 묶음 — 최대 2,048칩', '칩 하나가 초당 200기가비트'))
+    p.connect(p.at(0, 0), p.at(1, 0), '작은 묶음이 여럿 모인다')
+    p.note('붙이는 장치는 브로드컴 Tomahawk 6 이고 규약은 ESUN 이다')
+    p.note('128칩이 한 랙이면 2,048칩은 약 열여섯 랙 — 진행자가 두 수를 나눠 본 값이다')
+    return p.render('칩을 묶는 두 단계')
 
 
 def _numa():
     """HBM 을 같이 쓸 때와 조각내 전담시킬 때.
 
-    가속기를 셋 그리지만 그 수는 원문에 없다 — 「가속기마다」라는 말만 있다. 그래서
-    개수가 뜻이 되지 않게 판 아래에 적어 둔다. 대역폭 숫자도 안 쓴다. 이 그림이
-    말하는 것은 양이 아니라 **기다림이 생기는 자리**다.
+    대역폭 숫자는 그리지 않는다. 이 그림이 말하는 것은 양이 아니라 **기다림이 생기는
+    자리**다. 가속기 수도 안 그린다 — 원문에는 「가속기마다」라는 말만 있다.
     """
-    W, H = 640, 260
-    o = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
-         'aria-label="메모리를 같이 쓸 때와 조각내 전담시킬 때">' % (W, H)]
-    o.append('<defs><marker id="fgN" markerWidth="8" markerHeight="8" refX="7" refY="4" '
-             'orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker></defs>')
-    for k, (x0, head) in enumerate(((16, '전 — 한 덩어리를 같이 쓴다'),
-                                    (336, '후 — 조각내 하나씩 맡긴다'))):
-        o.append('<text x="%g" y="24" class="fg">%s</text>' % (x0 + 8, head))
-        o.append('<rect x="%g" y="34" width="288" height="176" rx="10" class="fg-b"/>' % x0)
-        for i in range(3):
-            y = 48 + i * 46
-            o.append('<rect x="%g" y="%g" width="86" height="34" rx="6" class="fg-b"/>'
-                     % (x0 + 12, y))
-            o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">가속기</text>'
-                     % (x0 + 55, y + 21))
-            if k == 0:
-                # 가로로 나가 공통 세로 줄에 붙고, 거기서 메모리로 한 번 꺾어 든다
-                o.append('<path d="M%g %g L%g %g L%g 116 L%g 116" class="fg-l" '
-                         'marker-end="url(#fgN)"/>'
-                         % (x0 + 98, y + 17, x0 + 140, y + 17, x0 + 140, x0 + 176))
-            else:
-                o.append('<rect x="%g" y="%g" width="88" height="34" rx="6" class="fg-b" '
-                         'style="stroke:var(--accent);stroke-width:2"/>' % (x0 + 176, y))
-                o.append('<text x="%g" y="%g" class="fg fg-s" text-anchor="middle">'
-                         '메모리 조각</text>' % (x0 + 220, y + 21))
-                o.append('<path d="M%g %g L%g %g" class="fg-l" marker-end="url(#fgN)"/>'
-                         % (x0 + 98, y + 17, x0 + 172, y + 17))
-        if k == 0:
-            o.append('<rect x="%g" y="82" width="88" height="68" rx="6" class="fg-b"/>'
-                     % (x0 + 176))
-            o.append('<text x="%g" y="112" class="fg fg-s" text-anchor="middle">메모리</text>'
-                     % (x0 + 220))
-            o.append('<text x="%g" y="128" class="fg fg-s" text-anchor="middle">한 덩어리</text>'
-                     % (x0 + 220))
-            o.append('<text x="%g" y="188" class="fg fg-s" text-anchor="middle">'
-                     '남이 읽는 동안 내 차례가 밀린다</text>' % (x0 + 144))
-        else:
-            o.append('<text x="%g" y="188" class="fg fg-s" text-anchor="middle">'
-                     '길이 따로라 기다릴 일이 없다</text>' % (x0 + 144))
-    o.append('<text x="320" y="238" class="fg fg-s" text-anchor="middle">'
-             '가속기를 셋 그렸지만 그 수는 발표에 없다. 「가속기마다」라는 말만 있다</text>')
-    o.append('</svg>')
-    return ''.join(o)
+    p = Plate()
+    p.head('전 — 한 덩어리를 같이 쓴다', '후 — 조각내 하나씩 맡긴다')
+    p.row(('가속기 여럿', '한 곳을 같이 읽는다'),
+          ('가속기마다 하나', '제 조각만 읽는다', True))
+    p.row(('HBM 한 덩어리', '남이 읽는 동안 뒤로 밀린다'),
+          ('HBM 조각과 전용 버스', '기다릴 일이 없다', True))
+    p.connect(p.at(0, 0), p.at(1, 0), '차례를 기다린다')
+    p.connect(p.at(0, 1), p.at(1, 1), '바로 닿는다')
+    p.note('대역폭 총량은 둘이 같다. 달라지는 것은 값이 언제 손에 닿느냐다')
+    return p.render('메모리를 같이 쓸 때와 조각내 전담시킬 때')
 
 
 CRITERIA = _criteria()

@@ -1,0 +1,758 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오픈AI 할라페뇨 — 모델을 파는 회사가 칩을 만들면 기준이 어디로 가나 · Semi Doped 대시보드</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  /* 눈금선 — Epoch 원문에서 뽑은 값이다. 원본 1026px 폭에서 #E4E4E4 2px 였고,
+     640 판으로 줄이면 1.2px 이 된다. 자료보다 먼저 깔아 뒤에 둔다 */
+  .uc-fig{--epoch-grid:#E4E4E4}
+  .uc-fig .grid{fill:none;stroke:var(--epoch-grid);stroke-width:1.2}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --epoch-grid:rgba(255,255,255,.13);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
+  }
+
+.fg { font: 600 12px/1.35 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
+  fill: var(--ink-2); }
+.fg-s { font-weight: 400; font-size: 11px; fill: var(--ink-3); }
+.fg-b { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+.fg-l { stroke: var(--line); stroke-width: 1.2; fill: none; }
+.fg-d { stroke: var(--ink-3); stroke-width: 1.2; fill: none; stroke-dasharray: 3 3; }
+.fg-c { stroke: var(--accent); stroke-width: 1.2; fill: none; }
+
+.fl { font: 600 15.2px/1.35 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
+  fill: var(--ink-2); }
+.fl-s { font-weight: 400; font-size: 13.5px; fill: var(--ink-3); }
+.fl-b { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+.fl-bh { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.fl-l { stroke: var(--line); stroke-width: 1.4; fill: none; }
+.fl-d { stroke: var(--ink-3); stroke-width: 1.2; fill: none; stroke-dasharray: 3 3; }
+.fl-a { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+
+/* 밸류체인 도식 — 칸이 어디로 옮겨 가는지 두 줄로 */
+.uc-rep pre.vc { margin:12px 0; padding:12px 14px; border:1px solid var(--line);
+  border-radius:8px; background:var(--surface); overflow-x:auto;
+  font: 400 .74rem/1.9 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--ink-2); }
+
+/* 다른 각도 상자 — 카드 발치에 접어 둔다 */
+.uc-rep details.ang { margin:18px 0 0; border:1px solid var(--line); border-radius:8px;
+  background:var(--surface); }
+.uc-rep details.ang > summary { cursor:pointer; padding:10px 13px; font-size:.8rem;
+  font-weight:800; color:var(--ink-2); list-style:none; }
+.uc-rep details.ang > summary::-webkit-details-marker { display:none; }
+.uc-rep details.ang > summary::before { content:"▸ "; color:var(--ink-3); }
+.uc-rep details.ang[open] > summary::before { content:"▾ "; }
+.uc-rep details.ang > summary span { font-weight:400; color:var(--ink-3); font-size:.72rem; }
+.uc-rep .ang-s { padding:0 13px 8px; }
+.uc-rep .ang-h { margin:0 0 4px; font-size:.78rem; font-weight:800; color:var(--ink); }
+.uc-rep .ang-h i { font-style:normal; font-weight:400; font-size:.72rem; color:var(--ink-3);
+  margin-left:7px; }
+.uc-rep .ang-s ul { margin:0; padding:0 0 0 14px; }
+.uc-rep .ang-s li { font-size:.78rem; line-height:1.7; color:var(--ink-2); margin:0 0 4px; }
+.uc-rep .ang-m { margin:0; padding:10px 13px; border-top:1px solid var(--line);
+  font-size:.78rem; line-height:1.7; color:var(--ink-2); }
+/* 한줄 코멘트가 머리다. 그 아래를 한 칸 들여써서 나머지가 그 머리에 딸린 것으로
+   보이게 한다 — 나란히 서면 코멘트가 여러 문단 중 하나로 읽힌다 */
+.uc-body > .uc-verdict { margin-bottom:12px; }
+/* 딱지 뒤에서 줄을 바꾼다 — 딱지와 글이 한 문장처럼 붙어 읽히지 않게 */
+.uc-body > .uc-verdict > b:first-child { display:block; margin-bottom:5px;
+  font-size:.74rem; color:var(--ink-3); letter-spacing:.02em; }
+.uc-body > .uc-rep { margin-left:14px; padding-left:14px;
+  border-left:2px solid var(--line); }
+@media (max-width:520px) {
+  .uc-body > .uc-rep { margin-left:6px; padding-left:10px; }
+}
+/* 절 제목 앞의 노드 이름 — 번호가 노드마다 다시 시작하므로 어느 노드의 몇째인지를
+   제목이 스스로 말해야 한다 */
+.uc-rep h3 .h-node { display:block; font-size:.72rem; font-weight:700; line-height:1.6;
+  color:var(--ink-3); opacity:.8; letter-spacing:.02em; }
+/* 목차 — 번호가 ①②③ 이라 불릿을 쓰지 않는다. 마커가 둘이면 어느 쪽이 항목인지
+   흐려지고, 들여쓰기만 두 번 먹는다. 줄 간격도 본문만큼 벌리지 않는다 —
+   목차는 읽는 글이 아니라 한눈에 훑는 표다 */
+.uc-rep .uc-toc { margin:2px 0 18px; padding:10px 12px; border:1px solid var(--line);
+  border-radius:8px; background:var(--surface); }
+.uc-rep .uc-toc .uc-label { margin:0 0 7px; }
+.uc-rep .uc-toc .tg { display:flex; gap:10px; align-items:baseline; padding:3px 0; }
+.uc-rep .uc-toc .tg-k { flex:0 0 4.6em; font-size:.82rem; font-weight:800;
+  line-height:1.5; color:var(--ink); }
+.uc-rep .uc-toc .tg-f { flex:0 0 4.6em; font-size:.7rem; font-weight:700;
+  line-height:1.75; color:var(--ink-3); opacity:.72; }
+.uc-rep .uc-toc ul { flex:1; margin:0; padding:0; list-style:none; }
+.uc-rep .uc-toc li { font-size:.84rem; line-height:1.5; color:var(--ink-2);
+  padding:1px 0; }
+.uc-rep .uc-toc li b { color:var(--ink); font-weight:700; margin-right:4px; }
+@media (max-width:520px) {
+  .uc-rep .uc-toc .tg { display:block; }
+  .uc-rep .uc-toc .tg-f { display:inline-block; margin-left:6px; }
+}
+/* 목차 안의 축 — 절이 셋을 넘는 마디는 그 안에서 한 번 더 갈린다 */
+.uc-rep .uc-toc li.tg-ax { padding:1px 0 2px; }
+.uc-rep .uc-toc li.tg-ax > span { display:block; font-size:.72rem;
+  font-weight:700; color:var(--ink-3); opacity:.85; }
+.uc-rep .uc-toc li.tg-ax > ul { margin:0 0 0 10px; }
+.uc-rep .uc-toc .tg-a { font-size:.74rem; font-weight:700; color:var(--ink-3);
+  opacity:.85; }
+/* 목차 맨 위 사슬 — 목표 → 시도 → 성과 → 한계 */
+.uc-rep .uc-toc .tg-chain { margin:0 0 8px; padding:0 0 7px;
+  border-bottom:1px solid var(--line); font-size:.78rem; line-height:1.6; }
+.uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
+.uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<div class="wrap">
+<a class="pback" href="../Semi Doped 대시보드.html#sd-infer">← Semi Doped 대시보드</a>
+<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><h2 id="card-오픈AI-할라페뇨-모델을-파는-회사가-칩을-만들면-기준이-어디로-가나">오픈AI 할라페뇨 — 모델을 파는 회사가 칩을 만들면 기준이 어디로 가나</h2><p class="uc-gain">모델을 파는 회사가 칩을 만들자 평가지표가 총소유비용에서 사용자가 겪는 시간과 전기로 옮겼다는 것. 그 평가지표가 메모리·연산·연결에서 각각 어떤 설계를 낳았는지, 그래서 무엇이 나왔고 무엇을 아직 못 믿는지.</p><div class="uc-meta"><span>Austin · Vik Sekar <b>Semi Doped 공동 진행</b></span><span>업로드 2026-08-27</span><span>게스트 없음</span><span>발표 12시간 뒤 녹음</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-verdict"><b>한줄 코멘트.</b> 모델을 파는 회사가 칩을 만들자 설계 평가지표가 데이터센터 운영자가 치르는 돈에서 사용자가 겪는 시간과 전기로 옮겼고, 메모리·연산·연결 설계가 전부 그 평가지표에서 나왔다.</p><div class="uc-rep"><div class="uc-toc" data-axis="보는 눈 둘과 합침"><p class="uc-label">목차</p><p class="tg-chain"><b>전략 뷰</b> <i>→</i> <b>기술 뷰</b> <i>→</i> <b>합친 뷰</b> <i>→</i> <b>못 믿을 것</b></p><div class="tg"><span class="tg-n">1.</span><span class="tg-k">전략 뷰</span><span class="tg-f">대비</span><ul><li><b>①</b> <span class="tg-a">(잣대)</span> 무엇을 재기로 했나</li><li><b>②</b> <span class="tg-a">(셈)</span> 무엇을 얻으려고 직접 만드나</li><li><b>③</b> <span class="tg-a">(리스크)</span> 무엇이 이 판단을 깨나</li></ul></div><div class="tg"><span class="tg-n">2.</span><span class="tg-k">기술 뷰</span><span class="tg-f">부분 나눔</span><ul><li><b>①</b> <span class="tg-a">(메모리)</span> 대역폭을 깔고도 왜 못 쓰나</li><li><b>②</b> <span class="tg-a">(연산)</span> 왜 한 칩에 몰았나</li><li><b>③</b> <span class="tg-a">(연결과 성과)</span> 무엇으로 묶어 얼마를 냈나</li></ul></div><div class="tg"><span class="tg-n">3.</span><span class="tg-k">합친 뷰</span><span class="tg-f">인과 사슬</span><ul><li><b>①</b> <span class="tg-a">(한 문장)</span> 두 눈을 합치면 무엇이 남나</li></ul></div><div class="tg"><span class="tg-n">4.</span><span class="tg-k">못 믿을 것</span><span class="tg-f">부분 나눔</span><ul><li><b>①</b> 이 편이 밝히지 않은 것</li></ul></div></div><p><b>핵심 테제.</b> 모델을 파는 회사가 칩을 만들자 설계 잣대가 데이터센터 운영자가 치르는 돈에서 <b>사용자가 겪는 시간과 전기</b>로 옮겼고, 메모리·연산·연결의 모든 선택이 그 잣대 하나에서 나왔다.</p><h3><span class="h-node">전략 뷰</span> ① 무엇을 재기로 했나</h3><figure class="uc-fig"><p class="fig-title">평가지표가 무엇에서 무엇으로 바뀌었나</p><svg viewBox="0 0 520 226" width="100%" data-fig-layout="1" role="img" aria-label="잣대가 무엇에서 무엇으로 바뀌었나"><defs><marker id="flA" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker><marker id="flAa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/></marker></defs><text x="119.5" y="20" class="fl fl-s" text-anchor="middle">전 — 칩을 파는 회사가 정할 때</text><text x="393.5" y="20" class="fl fl-s" text-anchor="middle">후 — 모델을 파는 회사가 정할 때</text><rect x="0" y="36" width="239" height="64" rx="6" class="fl-b"/><text x="119.5" y="66" class="fl" text-anchor="middle">총소유비용</text><text x="119.5" y="81" class="fl fl-s" text-anchor="middle">칩을 사서 굴리는 데 드는 돈</text><rect x="267" y="36" width="253" height="64" rx="6" class="fl-bh"/><text x="393.5" y="66" class="fl" text-anchor="middle">엔드투엔드 지연</text><text x="393.5" y="81" class="fl fl-s" text-anchor="middle">마지막 글자가 나올 때까지</text><rect x="0" y="130" width="520" height="64" rx="6" class="fl-bh"/><text x="260" y="160" class="fl" text-anchor="middle">요청당 전기에너지</text><text x="260" y="175" class="fl fl-s" text-anchor="middle">한 번 답하는 데 쓰는 전기</text><path d="M393.5 100 L393.5 115 L260 115 L260 130" class="fl-d" marker-end="url(#flA)"/><text x="402.5" y="119" class="fl fl-s" text-anchor="start">둘은 같이 못 낮춘다</text><text x="260" y="212" class="fl fl-s" text-anchor="middle">돈을 치르는 쪽에서 시간을 겪는 쪽으로 잣대가 옮겼다</text></svg><figcaption>왼쪽 한 칸, 오른쪽 두 칸이다. 오른쪽 둘을 잇는 점선은 그 둘이 서로 밀어낸다는 표시다.</figcaption></figure><p><b>전.</b> 칩을 파는 회사가 평가지표를 정했다. 원문은 <b>상업 실리콘 벤더</b>가 통상 총소유비용을 앞세운다고만 하고 회사 이름은 대지 않는다. 그 돈을 치르는 것은 챗을 쓰는 사람이 아니라 데이터센터를 운영하는 회사다.</p><p><b>후.</b> 오픈AI 는 지표 둘을 앞세웠다. ① <b>엔드투엔드 지연</b> — 질문을 넣고 마지막 글자가 나올 때까지 걸리는 시간 ② <b>요청당 전기에너지</b> — 한 번 답하는 데 쓰는 전기. 둘 다 사람이 앉아서 겪는 것이다.</p><p>왜 오픈AI 만 이렇게 재나. <b>고객이 다르기 때문이다.</b> 칩을 파는 회사의 고객은 그 칩을 사서 굴리는 회사이고 치르는 것은 돈이다. 오픈AI 의 고객은 챗을 쓰는 사람이고 치르는 것은 기다리는 시간이다. 진행자 Austin 이 이 발표에서 가장 특이한 자리로 짚은 것도 그것이다 — 모델랩이 최종 사용자를 위해 설계한다는 것. <b>재는 값이 바뀐 것이 아니라 재는 사람이 바뀌었다.</b></p><figure class="uc-fig"><p class="fig-title">두 지표를 같이 낮출 수 없다</p><svg class="fg-plot" width="100%" role="img" aria-label="두 잣대를 같이 낮출 수 없다" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 376.693086 163.620836" xmlns="http://www.w3.org/2000/svg" version="1.1"><defs><style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style></defs><g id="figure_1"><g id="patch_1"><path d="M 0 163.620836 L 376.693086 163.620836 L 376.693086 0 L 0 0 L 0 163.620836 z " style="fill: none"/></g><g id="axes_1"><g id="patch_2"><path d="M 18.133086 145.584 L 375.253086 145.584 L 375.253086 1.44 L 18.133086 1.44 L 18.133086 145.584 z " style="fill: none"/></g><g id="matplotlib.axis_1"><g id="text_1"><text style="font-size: 11px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; text-anchor: middle; fill: var(--ink-2)" x="196.693086" y="159.978688" transform="rotate(-0 196.693086 159.978688)">엔드투엔드 지연</text></g></g><g id="matplotlib.axis_2"><g id="text_2"><text style="font-size: 11px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; text-anchor: middle; fill: var(--ink-2)" x="10.930938" y="73.512" transform="rotate(-90 10.930938 73.512)">요청당 전기</text></g></g><g id="line2d_1"><path d="M 30.887372 15.389419 L 34.091966 19.925816 L 38.898858 26.253453 L 43.705749 32.070339 L 48.512641 37.435915 L 53.319532 42.400743 L 58.126424 47.008103 L 62.933316 51.295261 L 67.740207 55.294475 L 72.547099 59.033812 L 77.35399 62.537806 L 83.763179 66.880565 L 90.172368 70.887109 L 96.581557 74.595029 L 102.990746 78.036512 L 109.399934 81.23928 L 115.809123 84.227336 L 123.820609 87.69204 L 131.832095 90.888854 L 139.843581 93.847692 L 147.855067 96.594173 L 157.46885 99.6405 L 167.082634 102.445267 L 176.696417 105.036112 L 187.912497 107.819649 L 199.128578 110.375738 L 211.946955 113.05264 L 224.765333 115.500911 L 239.186008 118.016726 L 253.606682 120.312 L 269.629654 122.637277 L 287.254924 124.95776 L 306.48249 127.244903 L 325.710057 129.312773 L 346.53992 131.340289 L 349.744515 131.634581 L 349.744515 131.634581 " clip-path="url(#pffe204ce98)" style="fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round"/></g><g id="patch_3"><path d="M 18.133086 145.584 L 18.133086 1.44 " style="fill: none; stroke: var(--line); stroke-linejoin: miter; stroke-linecap: square"/></g><g id="patch_4"><path d="M 18.133086 145.584 L 375.253086 145.584 " style="fill: none; stroke: var(--line); stroke-linejoin: miter; stroke-linecap: square"/></g><g id="text_3"><g id="patch_5"><path d="M 191.583317 77.4222 L 375.671286 77.4222 L 375.671286 2.8722 L 191.583317 2.8722 L 191.583317 77.4222 z " style="fill: none; stroke: var(--line); stroke-linejoin: miter"/></g><text style="font-size: 10.5px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; fill: var(--ink-3)" transform="translate(197.358317 20.585208)">가로축 — 오른쪽일수록 오래 걸린다</text><text style="font-size: 10.5px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; fill: var(--ink-3)" transform="translate(228.858317 36.335208)">세로축 — 위일수록 많이 쓴다</text><text style="font-size: 10.5px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; fill: var(--ink-3)" transform="translate(242.747848 52.044192)">이 선 위의 점만 낼 수 있다</text><text style="font-size: 10.5px; font-family: -apple-system,'Segoe UI','Malgun Gothic',sans-serif; fill: var(--ink-3)" transform="translate(253.822067 67.794192)">왼쪽 아래로 갈수록 좋다</text></g></g></g><defs><clipPath id="pffe204ce98"><rect x="18.133086" y="1.44" width="357.12" height="144.144"/></clipPath></defs></svg> <figcaption>축에 눈금이 없다 — 원문에 점도 눈금도 없어서 자리는 값이 아니고 모양만 뜻이 있다.</figcaption></figure><p>두 값은 같이 낮출 수 없다. 빨리 내려면 전기를 더 쓰고, 아끼려면 느려진다. 그래서 수치 하나를 내지 않고 <b>파레토 곡선</b>(어느 한쪽을 포기하지 않고는 더 나아질 수 없는 지점들을 이은 선)으로만 보이겠다고 했다.</p><h3><span class="h-node">전략 뷰</span> ② 무엇을 얻으려고 직접 만드나</h3><p>값을 한 수로 묶는 자리도 나온다. 진행자 Vik 는 <b>tokens per joule</b>(전기 1줄로 내는 토큰 수)을 궁극적인 소유비용 지표로 든다. 지연과 전기를 따로 보던 것을 하나로 접는 셈인데, 발표가 그 수를 낸 것은 아니다.</p><p>만드는 값도 나온다. 테이프아웃과 초기 양산에 어림 <b>1억 달러</b>가 든다는 어림이 나오고, 이 고정비를 제 트래픽으로만 갚을지 남에게 빌려주어 나눠 갚을지가 뒤에 나오는 갈림의 뿌리다. 이 칩은 제 모델만 돌리도록 좁히지 않았다 — GPT-OSS 같은 작은 모델부터 Kimi K2.5 같은 다른 꼴까지 돌아간다고 보였고, 이 칩으로 Doom 을 돌렸다는 말도 나온다.</p><p>진행자들이 여기서 갈린다. 한쪽은 <b>왜 굳이 범용성을 보였나</b>를 묻는다 — 제 모델에만 맞춰 좁히면 Cerebras 급까지 갈 수 있다는 것이다. 다른 쪽은 자리를 판다. 인텔이 처음엔 제 몫으로만 쓰던 팹을 나중에 열어 비용을 나눈 길, 뉴클라우드를 통해 기업에 빌려주는 길, 아마존이 트레이니엄으로 하듯 제 모델을 싸게 서비스로 파는 길 셋을 든다. <b>판매 계획은 발표에 없다 — 여기까지가 진행자 추론이다.</b></p><h3><span class="h-node">전략 뷰</span> ③ 무엇이 이 판단을 깨나</h3><p class="uc-label">이 편의 판단을 흔드는 자리</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>무엇</th><th>지금 상태</th><th>언제 것 · 성격</th></tr></thead><tbody><tr><td>세대가 맞춰진 비교</td><td>할라페뇨만 HBM4, 견준 상대는 HBM3E</td><td>2026-08 · 진행자가 스스로 불공평하다고 말한다</td></tr><tr><td>긴 문맥</td><td>8K 넣고 1K 받기로만 쟀다</td><td>2026-08 · 100만 토큰급은 미공개</td></tr><tr><td>에이전트 워크로드</td><td>안 쟀다. AgentX 로 재겠다고만</td><td>2026-08 · 발표와 진행자 전언</td></tr><tr><td>확인 안 된 사양</td><td>CPU·공정·HBM 공급사가 모두 추측</td><td>2026-08 · 진행자가 추측이라고 못박음</td></tr><tr><td>다음 세대</td><td>2세대 테이프아웃 근접, 3세대 구상 중</td><td>2026-08 · 로드맵 슬라이드</td></tr></tbody></table></div><p>값도 아직 안 풀렸다. 1억 달러라는 수도 진행자 어림이고, 그 돈을 어떻게 갚을지는 발표가 말하지 않는다.</p><h3><span class="h-node">기술 뷰</span> ① 대역폭을 깔고도 왜 못 쓰나</h3><figure class="uc-fig"><p class="fig-title">메모리를 같이 쓸 때와 조각내 전담시킬 때</p><svg viewBox="0 0 520 226" width="100%" data-fig-layout="1" role="img" aria-label="메모리를 같이 쓸 때와 조각내 전담시킬 때"><defs><marker id="flA" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker><marker id="flAa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/></marker></defs><text x="124" y="20" class="fl fl-s" text-anchor="middle">전 — 한 덩어리를 같이 쓴다</text><text x="398" y="20" class="fl fl-s" text-anchor="middle">후 — 조각내 하나씩 맡긴다</text><rect x="0" y="36" width="248" height="64" rx="6" class="fl-b"/><text x="124" y="66" class="fl" text-anchor="middle">가속기 여럿</text><text x="124" y="81" class="fl fl-s" text-anchor="middle">한 곳을 같이 읽는다</text><rect x="276" y="36" width="244" height="64" rx="6" class="fl-bh"/><text x="398" y="66" class="fl" text-anchor="middle">가속기마다 하나</text><text x="398" y="81" class="fl fl-s" text-anchor="middle">제 조각만 읽는다</text><rect x="0" y="130" width="248" height="64" rx="6" class="fl-b"/><text x="124" y="160" class="fl" text-anchor="middle">HBM 한 덩어리</text><text x="124" y="175" class="fl fl-s" text-anchor="middle">남이 읽는 동안 뒤로 밀린다</text><rect x="276" y="130" width="244" height="64" rx="6" class="fl-bh"/><text x="398" y="160" class="fl" text-anchor="middle">HBM 조각과 전용 버스</text><text x="398" y="175" class="fl fl-s" text-anchor="middle">기다릴 일이 없다</text><path d="M124 100 L124 130" class="fl-l" marker-end="url(#flA)"/><text x="133" y="119" class="fl fl-s" text-anchor="start">차례를 기다린다</text><path d="M398 100 L398 130" class="fl-l" marker-end="url(#flA)"/><text x="407" y="119" class="fl fl-s" text-anchor="start">바로 닿는다</text><text x="260" y="212" class="fl fl-s" text-anchor="middle">대역폭 총량은 둘이 같다. 달라지는 것은 값이 언제 손에 닿느냐다</text></svg><figcaption>대역폭 숫자는 그리지 않았다 — 이 그림이 말하는 것은 양이 아니라 기다림이다. 가속기를 셋 그렸지만 그 수는 원문에 없다.</figcaption></figure><p><b>있는 것.</b> HBM4 가 초당 읽어 내는 양을 칩 128개치 합치면 약 <b>1페타바이트</b>다. 진행자 셈으로 1조 파라미터 모델을 FP4(값 하나를 4비트로 줄여 담는 방식)로 담으면 약 0.5테라바이트니, 읽어 내는 속도만 보면 초당 약 <b>2,000토큰</b>이 나와야 한다.</p><p><b>못 쓰는 이유.</b> 실제로는 거기 못 미친다. 대역폭은 <b>한꺼번에 얼마나 많이</b> 실어 나르는지를 말하지, 그 값이 <b>언제</b> 연산기 손에 닿는지는 말하지 않는다. 오픈AI 가 짚은 것이 둘이다 — ① <b>데이터가 늦게 온다</b>(operands arrive late) ② <b>차례를 기다린다</b>. HBM 한 덩어리를 이웃 가속기와 같이 쓰면 남이 읽는 동안 내 요청이 뒤로 밀린다.</p><p><b>그래서 무엇이 나왔나.</b> 이 틈이 Cerebras·Groq 처럼 HBM 대신 SRAM(칩 안에 붙여 둔 빠른 저장소)에 모델을 얹는 칩이 나온 이유다. Cerebras 는 그 방식으로 초당 약 4,000토큰을 낸다고 진행자가 전하는데, 본인이 이 편의 논의 밖이라고 못박은 수다. 발표에서 나온 문장이 이 절을 그대로 요약한다 — <b>show flops don&#39;t matter. It&#39;s how many flops you actually deliver</b>(겉으로 보이는 연산량이 아니라 실제로 내주는 연산량이 중요하다, Chris).</p><p><b>솔루션.</b> 가속기마다 HBM 을 조각내 하나씩 전담시키고 그 조각으로 가는 전용 버스를 따로 깔았다. NUMA(비균일 메모리 접근 — 멀티코어 CPU 에서 코어마다 메모리를 전담시키던 방식)를 그대로 가져온 것이다. 대역폭 숫자를 키우는 대신 기다림을 없앴다. 평가지표가 지연이니 그쪽을 잡는다.</p><h3><span class="h-node">기술 뷰</span> ② 연산을 왜 한 칩에 몰았나</h3><p>추론은 단계가 둘이다. ① <b>프리필</b>은 질문을 한꺼번에 읽는다 ② <b>디코드</b>는 토큰을 하나씩 내놓는다. 단계마다 필요한 것이 달라 GPU 에서는 둘을 역할별로 나눠 세우는 방법이 있고 그 편이 유리해 보인다. <b>프리필은 연산이 모자라고 디코드는 메모리가 모자란다</b>는 것이 업계에서 쓰는 말인데, 원문은 「필요한 것이 다르다」까지만 말하고 이 이름을 쓰지 않는다.</p><p>무슨 비율인지부터 말한다. 요청 하나를 처리하는 데 드는 일 가운데 프리필이 가져가는 몫과 디코드가 가져가는 몫이다. 문서 한 장을 넣고 한 줄로 요약시키면 프리필이 여덟에 디코드가 둘쯤 되고, 한 줄 물어 긴 글을 받으면 둘에 여덟으로 뒤집힌다 — <b>비율은 예시이고 원문에 없다</b>.</p><p>갈림은 여기다. <b>그 몫이 늘 같으면</b> 전담으로 세우는 편이 낫고, <b>요청마다 달라지면</b> 한쪽이 논다. 실제가 뒤쪽이라 칩 하나에 둘 다 넣고 어느 쪽에도 치우치지 않게 맞춘 뒤, 그 순간 안 쓰는 회로는 전원을 끊는다. 슬라이드 문구가 그 셈을 그대로 말한다 — <b>dark silicon is cheaper than idle accelerators</b>. 이것도 요청당 전기에너지를 평가지표로 놓아야 나온다.</p><p>무엇을 넣고 뺄지는 <b>회한 요인</b>으로 정했다. 기능 하나를 더 넣는 데 드는 값과, 수요가 있는데 그 기능이 없어 놓치는 값을 같이 보고 고른다는 것이다. 칩 아키텍트 Ravi 는 놓쳐서 잃는 쪽이 대체로 더 크다고 말한다.</p><h3><span class="h-node">기술 뷰</span> ③ 무엇으로 묶어 얼마를 냈나</h3><figure class="uc-fig"><p class="fig-title">칩을 묶는 두 단계</p><svg viewBox="0 0 520 224" width="100%" data-fig-layout="1" role="img" aria-label="칩을 묶는 두 단계"><defs><marker id="flA" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker><marker id="flAa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/></marker></defs><rect x="0" y="16" width="520" height="64" rx="6" class="fl-bh"/><text x="260" y="46" class="fl" text-anchor="middle">작은 묶음 — 칩 128개</text><text x="260" y="61" class="fl fl-s" text-anchor="middle">칩 하나가 초당 600기가비트</text><rect x="0" y="110" width="520" height="64" rx="6" class="fl-b"/><text x="260" y="140" class="fl" text-anchor="middle">큰 묶음 — 최대 2,048칩</text><text x="260" y="155" class="fl fl-s" text-anchor="middle">칩 하나가 초당 200기가비트</text><path d="M260 80 L260 110" class="fl-l" marker-end="url(#flA)"/><text x="269" y="99" class="fl fl-s" text-anchor="start">작은 묶음이 여럿 모인다</text><text x="260" y="192" class="fl fl-s" text-anchor="middle">붙이는 장치는 브로드컴 Tomahawk 6 이고 규약은 ESUN 이다</text><text x="260" y="210" class="fl fl-s" text-anchor="middle">128칩이 한 랙이면 2,048칩은 약 열여섯 랙 — 진행자가 두 수를 나눠 본 값이다</text></svg><figcaption>안쪽과 바깥은 색으로 나눈다. 칩을 셋만 그리고 말줄임을 둔 것은 개수가 뜻이 되지 않게 하려는 것이다.</figcaption></figure><p>겹이 둘이다 — ① <b>작은 묶음</b>은 칩 128개이고 그 안에서 칩 하나가 초당 600기가비트로 붙는다 ② <b>큰 묶음</b>은 최대 2,048개까지 가고 이 바깥 구간은 초당 200기가비트다. 붙이는 장치는 브로드컴 Tomahawk 6 이고 규약은 ESUN — AMD 쪽 UALink 와는 다른 진영이다. 128개가 한 랙이면 2,048개는 약 열여섯 랙인데, 이 랙 수는 발표에 없고 진행자가 두 수를 나눠 본 값이다.</p><p>잰 도구는 SemiAnalysis 의 <b>Inference X</b>다. 재는 값이 둘인데 ① <b>처리량</b>은 그 시스템이 초당 몇 토큰을 내놓는지고 ② <b>응답성</b>은 사용자 한 사람이 초당 몇 토큰을 받는지다. 여기서도 파레토 곡선을 쓰는데 <b>축이 ① 절의 곡선과 다르다</b> — 거기는 지연과 전기였고 여기는 처리량과 응답성이다.</p><p class="uc-label">견준 주체별로 무엇이 나왔나</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>무엇을 견줬나</th><th>할라페뇨</th><th>GB200(블랙웰)</th><th>MI355</th><th>언제 것 · 성격</th></tr></thead><tbody><tr><td>전력</td><td>700W</td><td>약 1,200W</td><td>안 나왔다</td><td>2026-08 · GB200 값은 진행자 어림</td></tr><tr><td>메모리 세대</td><td>HBM4</td><td>HBM3E</td><td>HBM3E</td><td>2026-08 · 진행자가 짚은 불공평</td></tr><tr><td>DeepSeek R1 6,710억</td><td>같은 응답성에서 토큰을 더 내고 응답성 한계도 더 갔다</td><td>그전까지의 한계선 — 값은 안 나왔다</td><td>안 나왔다</td><td>2026-08 · 발표 슬라이드</td></tr><tr><td>GPT-OSS 1,200억</td><td>사용자당 초당 1,000토큰 이상</td><td>이 구간에 못 간다</td><td>안 나왔다</td><td>2026-08 · 발표 슬라이드와 진행자 판단</td></tr></tbody></table></div><p>표 밖 조건 둘이다. ① 같은 벤치마크에서 8K 를 넣고 1K 를 받는 길이로 쟀고, 그 밖의 길이는 안 쟀다 ② 견준 상대의 세대가 다르다. 이 구간을 통상 GPU 가 못 가는 <b>SRAM 영역</b>이라 부르는데, 그 말이 발표 것인지 진행자 것인지는 원문에서 안 갈린다.</p><h3><span class="h-node">합친 뷰</span> ① 두 눈을 합치면 무엇이 남나</h3><p>두 뷰는 서로 다른 말을 하지 않는다. <b>초점이 다를 뿐이다</b> — 전략 쪽은 잣대가 바뀌면 무엇을 사고 무엇을 만드는지가 달라진다고 읽고, 기술 쪽은 그 잣대가 메모리와 연산과 연결에서 각각 어떤 선택을 낳았는지를 읽는다. 다만 <b>벤치마크를 대하는 태도가 갈린다</b> — 전략 쪽은 이겼다는 결과를 먼저 세우고, 기술 쪽은 세대가 다른 상대와 견줬다는 조건을 먼저 세운다.</p><p><b>9개월이 이 편에서 가장 멀리 가는 사실이다.</b> 첫 RTL 작성부터 테이프아웃까지 9개월이고 통상 2~3년 걸리는 일이다. 초기 RTL 을 GPT-3급 모델로 짰다는 전언이 붙고, 진행자는 사람과 노하우는 있었지만 AI 도구를 처음부터 갖추지 못한 팀들(d-Matrix · Reiner Pope)을 대조군으로 든다. 반도체의 진입장벽 넷 — 큰 팀·큰 돈·긴 기간·노하우 — 중 하나가 짧아졌다는 뜻인데, <b>진입장벽이라는 말은 이 카드가 붙인 것이다.</b></p><p>그래서 지켜볼 것이 셋이다. ① 차세대 GPU 와 <b>같은 세대에서 다시 견줬을 때</b>도 곡선이 바깥에 있는가 ② 긴 문맥과 에이전트 워크로드에서 <b>같은 수가 나오는가</b> ③ 1억 달러짜리 고정비를 <b>제 트래픽으로 갚는지 남에게 빌려주는지</b>. 셋 다 이 편이 답하지 않는다.</p><h3><span class="h-node">못 믿을 것</span> ① 이 편이 밝히지 않은 것</h3><p>스펙 상당수는 진행자 추측이다. CPU 가 x86 계열 Turin 급인지, 공정이 TSMC N3 변형인지, HBM 이 삼성 것인지는 오픈AI 가 확인한 것이 아니다. 삼성 HBM4 가 SK하이닉스보다 핀당 빠를 수 있다는 대목은 진행자 본인이 전적으로 추측이라고 못박았다. 셀레스티카가 시스템 설계 파트너라는 것도 추정이고, 테이프아웃과 초기 양산에 약 1억 달러가 든다는 말과 랙 열여섯도 확정치가 아닌 어림이다.</p><p>다른 모델에 같은 원문을 세 각도로 물어 받은 답에서 <b>안 가져온 것</b>이 있다. 13.4 PFLOPs · MXFP4 · 216GiB · 15.4TB/s · TBT · GB300 · Gluon · MoE · KV 캐시 · SRAM 핀닝 · PCIe · RoCEv2 · 지속 전력 550W · kW당 1.5~1.9배. <b>원문에 없다</b> — 그중 여섯은 그 답이 스스로 「회차에 실제로 나온 내용」이라고 적은 것이라, 표시를 믿지 않고 전부 대조했다.</p><p>이 카드가 절로 세우지 않은 마디도 남는다. 발표자 셋이 누구인지, 무엇을 뺄지가 가장 어려운 결정이었다는 설계 태도, 앤트로픽이 아직 자체 칩이 없다는 지적, 칩 이름과 행사 이름이 겹친 우연.</p><p><b>뷰 셋으로 나눈 것은 이 카드가 정한 틀이다.</b> 원문은 슬라이드를 순서대로 훑는 한 줄기 대화이고 전략과 기술로 갈라 말하지 않는다. 평가지표를 등뼈로 세운 것도 이 카드의 읽기다 — 원문에서 그 이야기는 세 줄이다.</p></div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-27-openai-jalapeno.md" target="_blank" rel="noopener">요약본</a><a class="ghost" href="https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling" target="_blank" rel="noopener">원문(Semi Doped)</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>
+
+  <footer><p>생성물이다. 고칠 것은 <code>scratchpad/gen_semidoped_dashboard.py</code> 다. 원문은 <a href="https://daily.semidoped.com">daily.semidoped.com</a>.</p></footer>
+</div>
+<script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
+      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
+      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
+      if(tile) tile.click();
+      else {
+        var all=document.querySelector('.stile.is-all');
+        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
+      }
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        // head.click()으로 미루지 않는다 — 카드마다 파일이 따로 있는 장에서는 머리가
+        // data-href를 달고 있어 클릭이 그 페이지로 이동해 버린다(FOLD_JS). 여기서는
+        // 목록 페이지 안에서 그 자리 펼침만 하면 된다 — 직접 편다.
+        card.classList.add('is-open');
+        var head=card.querySelector('.uc-head');
+        if(head && head.getAttribute('role')==='button') head.setAttribute('aria-expanded', 'true');
+        var caret=card.querySelector('.uc-caret');
+        if(caret && caret.getAttribute('role')==='button') caret.setAttribute('aria-expanded', 'true');
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      var href=a.getAttribute('href') || '';
+      // 카드마다 파일이 따로 있는 장에서는 이 링크가 진짜 다른 문서를 가리킨다 —
+      // 그때는 기본 이동에 맡긴다. #으로 시작하는 옛 앵커 링크만 여기서 대신 연다.
+      if(href.charAt(0) === '#'){
+        e.preventDefault();
+        jump(href.slice(1), true);
+      }
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    // 세 갈래다 — data-href(카드 단독 페이지를 가리키는 상대 주소) > data-anchor(같은 문서 안
+    // 앵커) > 아무 표도 없으면(카드 단독 페이지 자신의 「링크 복사」) 지금 이 주소 그대로.
+    var url;
+    if(b.dataset.href){
+      url = new URL(b.dataset.href, location.href).href;
+    } else if(b.dataset.anchor){
+      url = location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    } else {
+      url = location.origin + location.pathname;
+    }
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script>
