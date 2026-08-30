@@ -105,3 +105,29 @@ def frontier(f, x0, x1, xlabel, ylabel, alt, notes=(), box=(), n=200, size=(6.4,
                 fontsize=10.5, fontweight='bold' if bold else 'normal',
                 ha='left', va='center')
     return to_inline(fig, alt)
+
+
+def bars(items, xlabel, alt, note='', size=(6.4, 2.4)):
+    """가로 막대. items = [(이름, 값)] — 값은 **원문에 있는 수만** 넣는다.
+
+    막대 길이는 그 자체가 주장이라, 원문에 없는 수를 넣으면 그림이 없는 값을 말한다.
+    눈금은 남긴다 — 이 그림은 모양이 아니라 크기를 보이는 것이라 자리가 곧 값이다.
+    """
+    names = [n for n, _ in items][::-1]
+    vals = [v for _, v in items][::-1]
+    fig, ax = plt.subplots(figsize=size)
+    ax.barh(range(len(vals)), vals, height=0.62, color=ACCENT)
+    ax.set_yticks(range(len(vals)))
+    ax.set_yticklabels(names, fontsize=10.5, color=INK)
+    ax.set_xlabel(xlabel, color=INK, fontsize=11, labelpad=5)
+    ax.tick_params(axis='x', colors=SUB, labelsize=10)
+    for side in ('top', 'right', 'left'):
+        ax.spines[side].set_visible(False)
+    ax.spines['bottom'].set_color(LINE)
+    for i, v in enumerate(vals):
+        ax.text(v + max(vals) * 0.015, i, '%g' % v, va='center', fontsize=10.5, color=SUB)
+    ax.set_xlim(0, max(vals) * 1.16)
+    if note:
+        ax.text(0.995, -0.34, note, transform=ax.transAxes, color=SUB,
+                fontsize=10, ha='right', va='top')
+    return to_inline(fig, alt)

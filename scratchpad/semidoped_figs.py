@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))), 'scripts'))
 
 import chart  # noqa: E402
+from fig_layout import Plate  # noqa: E402
 
 
 def _box(x, y, w, h, label, sub='', hi=False):
@@ -224,3 +225,42 @@ CRITERIA = _criteria()
 PARETO = _pareto()
 DOMAIN = _domain()
 NUMA = _numa()
+
+
+def _agent_flow():
+    """일이 어디로 가나 — 요청 하나가 지나는 자리.
+
+    좌표를 손으로 안 찍는다. `scripts/fig_layout.py` 의 Plate 가 글자에서 칸을 내고
+    선은 상자의 변에서 뽑는다. 원문의 비유(천재·비서)를 상자 이름에 그대로 쓴다.
+    """
+    p = Plate(640)
+    p.row(('에이전트 요청', '사람이 시킨 일'))
+    p.row(('클라우드 VM', '범용 CPU 위에서 돈다'))
+    p.row(('GPU — 천재', '박사학위를 다 가진 쪽', True),
+          ('에이전틱 CPU 랙', '컴파일·검색·조회를 맡는다'))
+    p.row(('호스트 노드 CPU — 비서', '천재를 쉬지 않게 먹인다'), None)
+    p.connect(p.at(0, 0), p.at(1, 0))
+    # 갈래마다 이름을 달면 칸 사이 틈보다 이름이 넓어 상자 테두리를 문다(check_fig).
+    # 갈래가 무엇인지는 상자 이름이 이미 말하므로 선은 비워 둔다
+    p.connect(p.at(1, 0), p.at(2, 0))
+    p.connect(p.at(1, 0), p.at(2, 1))
+    p.connect(p.at(2, 0), p.at(3, 0))
+    p.note('연산은 왼쪽으로, 컴파일·검색 같은 여분 일은 오른쪽으로 간다')
+    p.note('천재와 비서는 원문의 비유를 그대로 쓴 것이다')
+    return p.render('일이 어디로 가나')
+
+
+def _cores():
+    """코어 수 — 원문에 나온 수만 막대로 세운다.
+
+    막대 길이가 곧 주장이라 없는 수는 못 넣는다. 다섯 다 원문에 있는 값이다.
+    """
+    return chart.bars(
+        [('호스트 CPU 예시', 88), ('사무실 비유', 128), ('AMD', 256),
+         ('인텔', 288), ('에이전틱으로 늘린다면', 512)],
+        '코어 수', '코어 수 다섯 사례',
+        note='다섯 다 진행자가 예로 든 수다. 제품 사양표가 아니다')
+
+
+AGENT_FLOW = _agent_flow()
+CORES = _cores()
