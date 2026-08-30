@@ -61,6 +61,7 @@ PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말
 PYTHONIOENCODING=utf-8 python insights/check_angles.py  # 각도 — 대상이 사전 정본인가, 성격이 여덟에 드나
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 PYTHONIOENCODING=utf-8 python insights/check_struct.py # 구조 — 앞머리·목차·물음 절·성격 열이 서 있나
+PYTHONIOENCODING=utf-8 python insights/check_frame.py # 프레임 — 남의 모델이 준 틀에서 원문 밖 주장이 카드로 샜나
 ```
 
 FAIL 0이어야 푸시한다. **일부만 돌리지 않는다 — 여기 있는 것을 전부 돌린다.** 2026-08-15에 앞의 셋만 돌리고 푸시해서 `check_fresh` FAIL 3건과 `check_cite` 확인필요 6건이 그대로 나갔다.
@@ -162,6 +163,9 @@ F3   한 문장을 세 줄로 잘랐나              한 줄씩은 아무 뜻이
 - **회계·금융은 돈이 움직이는 순서로.** 조문 번호와 용어를 늘어놓지 않는다. 언제 장부에 잡히고 언제 정산되는지, 어긋나면 어느 숫자가 움직이는지를 문장으로 쓴다 — `korean-readability` 「1-B」
 - 문체·이해도 규칙은 `korean-readability` 스킬
 - **「번역투 고쳐」에 재작성으로 답하지 않는다.** 먼저 표지를 재고(스킬 §6-1), 걸린 표지가 든 문장만 고친다. 문단 통째 재작성은 빈 수사를 없던 주장으로 바꾼다 — 논리구조가 망가지는 원인이 이것이다
+
+- **다른 모델에게 각도를 바꿔 물어 온 답은 재료가 아니라 프레임 후보다.** `insights/frames/*.md` 에 원본 그대로 두고, 카드로는 **원문이 받쳐 주는 것만** 옮긴다. 안 가져온 것은 `named:` 에 적어 카드에서 이름만 댄다. 2026-08-30 에 전략 판은 각주 셋이 없는 인용이었고 기술 판은 사양의 대부분이 원문 밖이었다 — 해법(SRAM 핀닝 대 NUMA)과 망(RoCEv2 대 ESUN)은 원문과 반대였다. `check_frame` F2 가 그 유출을 막는다
+- **유료 원문은 밖으로 안 보낸다.** 다른 모델에 물을 때는 링크나 우리 요약본만 준다
 
 ## 작업 관례
 

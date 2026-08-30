@@ -38,6 +38,22 @@ def blob(p):
 
 
 
+
+def angles_box(sections, merged, checked):
+    """다른 모델에게 각도를 바꿔 물어 받은 답을 카드 발치에 접어 둔다.
+
+    두 각도(전략·기술)를 따로 적고 마지막에 통합 메시지를 둔다. 각 줄은 이 원문이
+    받쳐 주는 것만 남긴 것이고, 원본은 `insights/frames/` 에 있다. 원문 밖 주장이
+    카드로 새지 않았는지는 `insights/check_frame.py` 가 F2 로 본다."""
+    o = ['<details class="ang"><summary>다른 각도로 물어 본 것 '
+         '<span>%s</span></summary>' % checked]
+    for name, one, rows in sections:
+        o.append('<div class="ang-s"><p class="ang-h">%s<i>%s</i></p><ul>%s</ul></div>'
+                 % (name, one, ''.join('<li>%s</li>' % r for r in rows)))
+    o.append('<p class="ang-m"><b>통합.</b> %s</p></details>' % merged)
+    return ''.join(o)
+
+
 JAL = {
     'id': 'sd-jalapeno',
     'section': ('sd-infer', '01', '추론 하드웨어',
@@ -247,6 +263,31 @@ JAL = {
               '어디에 남나.</b> 이 물음에 이 편은 답하지 않는다 — 앤트로픽은 아직 자체 칩이 '
               '없고, 오픈AI 도 2세대는 테이프아웃 근처, 3세대는 구상 중이다.'),
 
+        ('raw', angles_box(
+            [('전략 각도',
+              '컨설턴트에게 물었을 때 더해진 것 — 원문이 받쳐 주는 것만 남겼다',
+              ['<b>고객이 다르면 재는 값이 다르다.</b> 칩을 파는 회사의 고객은 그 칩을 '
+               '굴리는 회사이고 치르는 것은 돈이다. 오픈AI 의 고객은 챗을 쓰는 사람이고 '
+               '치르는 것은 기다리는 시간이다.',
+               '<b>고정비를 누가 갚나.</b> 테이프아웃과 초기 양산 어림 1억 달러를 제 '
+               '트래픽으로 갚을지, 남에게 빌려주어 나눠 갚을지가 두 길의 차이다.',
+               '<b>9개월은 진입장벽 이야기다.</b> 큰 팀·큰 돈·긴 기간·노하우 넷 중 '
+               '하나가 짧아졌다.']),
+             ('기술 각도',
+              '엔지니어에게 물었을 때 더해진 것 — 대부분은 원문 밖이라 뺐다',
+              ['<b>단계마다 병목이 다르다.</b> 프리필은 연산이 모자라고 디코드는 메모리가 '
+               '모자란다. 원문은 「필요한 것이 다르다」까지만 말하고 이 이름을 안 쓴다 — '
+               '업계 상식이고 이 편의 내용이 아니다.',
+               '<b>안 가져온 것.</b> 온칩 SRAM 에 KV 캐시를 핀닝한다는 설명, PCIe·RoCEv2 '
+               '네트워크, 컴파일러 이름, 지속 전력 550W, kW당 1.5~1.9배. 원문에 없고 '
+               '앞의 둘은 원문과 반대다 — 원문의 해법은 HBM 을 조각내 전담시키는 NUMA 이고 '
+               '망은 Tomahawk 6·ESUN 스케일업이다.'])],
+            '두 각도가 같은 곳을 가리킨다 — <b>이 편의 값은 칩의 최고 성능이 아니라 '
+            '「누가 무엇을 재느냐가 바뀌었다」에 있다.</b> 전략 쪽은 고객이 바뀌어서라고 '
+            '읽고, 기술 쪽은 재는 값이 이론 대역폭에서 실제로 내주는 처리량으로 옮겨서라고 '
+            '읽는다. 원문이 둘 다 받쳐 준다.',
+            '원문 밖 주장 57개 · 카드에 샌 것 0')),
+
         ('h', '<span class="h-node">못 믿을 것</span> ① 이 편이 밝히지 않은 것'),
         ('p', '못 잰 범위가 셋이다. ① 벤치마크의 입출력이 8K·1K 로 짧아 100만 토큰급 긴 '
               '문맥에서 어떤지는 아직 안 나왔다 ② agentic 워크로드는 테스트하지 않아 별도 '
@@ -276,6 +317,23 @@ JAL = {
 CARDS = [JAL]
 
 CSS = '''
+/* 다른 각도 상자 — 카드 발치에 접어 둔다 */
+.uc-rep details.ang { margin:18px 0 0; border:1px solid var(--line); border-radius:8px;
+  background:var(--surface); }
+.uc-rep details.ang > summary { cursor:pointer; padding:10px 13px; font-size:.8rem;
+  font-weight:800; color:var(--ink-2); list-style:none; }
+.uc-rep details.ang > summary::-webkit-details-marker { display:none; }
+.uc-rep details.ang > summary::before { content:"▸ "; color:var(--ink-3); }
+.uc-rep details.ang[open] > summary::before { content:"▾ "; }
+.uc-rep details.ang > summary span { font-weight:400; color:var(--ink-3); font-size:.72rem; }
+.uc-rep .ang-s { padding:0 13px 8px; }
+.uc-rep .ang-h { margin:0 0 4px; font-size:.78rem; font-weight:800; color:var(--ink); }
+.uc-rep .ang-h i { font-style:normal; font-weight:400; font-size:.72rem; color:var(--ink-3);
+  margin-left:7px; }
+.uc-rep .ang-s ul { margin:0; padding:0 0 0 14px; }
+.uc-rep .ang-s li { font-size:.78rem; line-height:1.7; color:var(--ink-2); margin:0 0 4px; }
+.uc-rep .ang-m { margin:0; padding:10px 13px; border-top:1px solid var(--line);
+  font-size:.78rem; line-height:1.7; color:var(--ink-2); }
 /* 한줄 코멘트가 머리다. 그 아래를 한 칸 들여써서 나머지가 그 머리에 딸린 것으로
    보이게 한다 — 나란히 서면 코멘트가 여러 문단 중 하나로 읽힌다 */
 .uc-body > .uc-verdict { margin-bottom:12px; }
