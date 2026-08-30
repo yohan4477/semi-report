@@ -64,11 +64,16 @@ PAGES = [
      '삼프로TV 유료 클럽의 실시간 텍스트 시황 — 원문은 싣지 않고 요약만', True),
     ('회계사 대시보드.html', 'accountant', '20년차 회계사가 남긴 모든 것', '🧮',
      'DCF 방법론과 기업별 평가 — 유료 구독 글이라 요약만 싣는다', True),
-    ('관리자 대시보드.html', 'admin', '관리자', '🛠️',
-     '세 갈래가 데이터를 어떻게 처리하는지 — 소스·집필 룰·검사기 색인', True),
+    # 잠겨 있지만 첫 화면에 칸을 세운다(INDEX_LOCKED) — 쓰는 동안 계속 여는 장이다
+    ('관리자 대시보드.html', 'admin', '관리자 보드', '⚙️',
+     '보고서 쓰는 절차 다섯과 도해 작성법 — 자주 하는 오류를 무엇이 잡는지까지', True),
 ]
 
 SLUGS = {src: slug for src, slug, *_ in PAGES}
+
+# 잠겨 있어도 첫 화면에 칸을 세우는 장. 「비공개 자료」 묶음 뒤에 있으면 두 걸음이라
+# 매번 목록을 지나쳐야 한다. 칸을 눌러도 그 장 자체가 비밀번호를 묻는다
+INDEX_LOCKED = {'admin'}
 
 # 접힌 주소 -> 지금 그 내용이 있는 주소. 페이지를 합쳐도 이미 나간 링크는 살려 둔다.
 # 금융 인사이트는 2026-08-17에 산업/시장 인사이트로 흡수됐다.
@@ -178,15 +183,18 @@ def _card(slug: str, title: str, emoji: str, desc: str, locked: bool) -> str:
 
 # 잠긴 대시보드는 첫 화면에 늘어놓지 않는다. 「비공개 자료」 한 칸으로 묶고
 # 비밀번호를 통과한 뒤 그 안에서 고르게 한다. /private 도 미들웨어가 막는다.
+# 예외는 INDEX_LOCKED — 쓰는 동안 계속 여는 장은 첫 화면에 칸을 세운다. 잠금은 그대로다.
 PRIVATE_SLUG = 'private'
 
 
 def build_index() -> str:
     cards = '\n'.join(
-        _card(slug, title, emoji, desc, False)
-        for _, slug, title, emoji, desc, locked in PAGES if not locked
+        _card(slug, title, emoji, desc, locked)
+        for _, slug, title, emoji, desc, locked in PAGES
+        if not locked or slug in INDEX_LOCKED
     )
-    n = sum(1 for *_, locked in PAGES if locked)
+    n = sum(1 for _, slug, *_rest, locked in PAGES
+            if locked and slug not in INDEX_LOCKED)
     if n:
         cards += '\n' + _card(PRIVATE_SLUG, '비공개 자료', '🔒',
                               f'구독 매체를 정리한 대시보드 {n}장 — 비밀번호가 필요합니다', True)
