@@ -120,6 +120,9 @@ JAL = {
               '없는 지점들을 이은 선)으로만 보이겠다고 했다.'),
 
         ('h', '<span class="h-node">전략 뷰</span> ② 무엇을 얻으려고 직접 만드나'),
+        ('fig', ('누가 무엇을 맡나', figs.VALUE_CHAIN,
+                 '강조한 칸만 발표에 나온다. 공정과 시스템 조립은 진행자가 추측이라고 '
+                 '못박은 자리라 상자 안에 그 성격을 적었다.')),
         ('p', '값을 한 수로 묶는 자리도 나온다. 진행자 Vik 는 <b>tokens per joule</b>(전기 1줄로 '
               '내는 토큰 수)을 궁극적인 소유비용 지표로 든다. 지연과 전기를 따로 보던 것을 하나로 '
               '접는 셈인데, 발표가 그 수를 낸 것은 아니다.'),
@@ -192,9 +195,9 @@ JAL = {
               'Ravi 는 놓쳐서 잃는 쪽이 대체로 더 크다고 말한다.'),
 
         ('h', '<span class="h-node">기술 뷰</span> ③ 무엇으로 묶어 얼마를 냈나'),
-        ('fig', ('칩을 묶는 두 단계', figs.DOMAIN,
-                 '안쪽과 바깥은 색으로 나눈다. 칩을 셋만 그리고 말줄임을 둔 것은 개수가 뜻이 되지 '
-                 '않게 하려는 것이다.')),
+        ('fig', ('칩 하나에서 2,048칩까지', figs.DOMAIN,
+                 '층과 그 사이 속도만 원문에 있다. 다른 모델이 이 도식에 붙였던 사양'
+                 '(13.4 PFLOPS · 216GiB · 15.4TB/s)은 원문에 없어 안 적었다.')),
         ('p', '겹이 둘이다 — ① <b>작은 묶음</b>은 칩 128개이고 그 안에서 칩 하나가 초당 600기가비트로 '
               '붙는다 ② <b>큰 묶음</b>은 최대 2,048개까지 가고 이 바깥 구간은 초당 200기가비트다. '
               '붙이는 장치는 브로드컴 Tomahawk 6 이고 규약은 ESUN — AMD 쪽 UALink 와는 다른 '
@@ -507,6 +510,7 @@ def main():
     dc.check_links(CARDS)
     dc.check_labels(CARDS)
     dc.render(CARDS, 'Semi Doped 대시보드', HEADER, FOOTER, OUT,
+              page_slug='semidoped',
               extra_css=figs.FIG_CSS + CSS, newest_first=True)
 
 

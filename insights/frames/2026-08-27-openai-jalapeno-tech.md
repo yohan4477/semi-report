@@ -5,7 +5,7 @@ model: Gemini (CDP 크롬 · playwright · 복사 버튼)
 asked: 기술 내용을 일곱 갈래로 (설계 지표 · 대역폭 · 프리필/디코드 · 스케일업 · 벤치마크 · 9개월)
 date: 2026-08-31
 used: 프리필=연산 바운드 · 디코드=메모리 바운드 (업계 상식으로 표시하고 인용)
-named: 550W · 1.5~1.9배 · RoCEv2 · PCIe · SRAM 핀닝 · TBT · MXFP4 · GiB HBM4 (안 가져왔다고 카드에 이름만 댄 것) · GB300 · 15.4TB/s · 216GiB · 13.4 PFLOPs · MoE · KV 캐시
+named: 550W · 1.5~1.9배 · RoCEv2 · PCIe · SRAM 핀닝 · TBT · MXFP4 · GiB HBM4 (안 가져왔다고 카드에 이름만 댄 것) · GB300 · 15.4TB/s · 216GiB · 13.4 PFLOPs · MoE · KV 캐시 · PFLOPS · 15.4TB/s
 ---
 
 이 파일은 **미검증 원본**이다. `insights/check_frame.py` 로 원문과 대조한 뒤,
