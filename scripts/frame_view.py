@@ -240,7 +240,9 @@ def _one_plate(block):
 
 
 def _plate(rows, notes, ncol, subout=False):
-    p = fig_layout.Plate(subout=subout)
+    # 판 위아래 여백을 좁힌다. 받은 도식은 카드 본문 사이에 끼는 그림이라 판 자체가
+    # 여백을 크게 물면 글과 그림 사이가 벌어져 한 덩어리로 안 읽힌다
+    p = fig_layout.Plate(subout=subout, top=4.0, gap_y=14.0)
     for r in rows:
         p.row(*(list(r) + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
