@@ -111,28 +111,22 @@ def head_html(date, en_title):
 def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
     """뷰 하나가 카드 한 장이다. 회차 하나에 카드 둘이 한 섹션에 선다.
 
-    카드 앞면에 세우는 글도 받은 답에서 뽑는다 — 꼬리에 요약·제언이 붙어 오면 그
-    첫 문단을, 안 붙어 오면 답의 첫 문단을 쓴다. 뽑아 올린 문단은 몸에서 걷는다.
+    받은 글을 상자에 나눠 담지 않는다 — 카드 안에 상자를 하나 더 그리면 쓸 폭이 줄고
+    카드 속 카드처럼 읽힌다. 몸은 한 덩어리로 흐르고, 앞면에 세울 첫 줄글만 위로 뽑는다.
     """
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
-    summ, rest = frame_view.split_summary(md)
-    if summ:
-        sp = _paras(summ)
-        # 제목 줄(**[요약 및 컨설턴트 제언]**)만 있는 첫 문단은 앞면에 세우지 않는다
-        i = 1 if len(sp) > 1 and len(sp[0]) < 40 else 0
-        front, top_md = sp[i], (chr(10) * 2).join(sp[:i] + sp[i + 1:])
-    else:
-        # 꼬리에 요약이 안 붙어 온 뷰. 몸의 첫 줄글을 앞면에 세운다
-        front, top_md = _first_prose(rest), ''
-        rp = _paras(rest)
-        # 그 줄글이 첫 제목 앞(앞머리)에 있으면 몸에서 걷는다. 제목 아래 문단은 안 걷는다 —
-        # 빼면 그 제목이 자기 글을 잃는다
-        # 굵은 글씨 표시를 걷고 견준다 — front 는 원본 줄이라 별표가 남아 있다
-        if (front and rp and not rp[0].lstrip().startswith('#')
-                and plain(front) in plain(rp[0])):
-            rest = (chr(10) * 2).join(rp[1:])
-    top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(top_md)) if top_md else ''
+    front = _first_prose(md)
+    rp = _paras(md)
+    # 앞면에 세운 줄글은 몸에서 걷는다. 맨 앞 두 문단 안에 있을 때만 — 제목 아래 문단을
+    # 빼면 그 제목이 자기 글을 잃는다. 굵은 글씨 제목 한 줄(**…요약**)이 먼저 서고 그
+    # 다음 문단이 줄글인 판이 많아 첫 문단만 보면 못 걷는다
+    cut = None
+    for i, para in enumerate(rp[:2]):
+        if front and plain(front) in plain(para) and not para.lstrip().startswith('#'):
+            cut = i
+            break
+    rest = (chr(10) * 2).join(rp[:cut] + rp[cut + 1:]) if cut is not None else md
     return {
         'id': 'sd-%s-%s' % (slug, kind),
         'section': ('sd-%s' % slug, num, ep_title,
@@ -152,8 +146,7 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
                   ('원문(Semi Doped)', url, 'ghost')],
         # 앞면에 세운 문단을 한줄 코멘트로 또 세우지 않는다
         'verdict': '',
-        'report': [('raw', top + '<div class="fv-b">%s</div>'
-                    % frame_view.to_html(rest))],
+        'report': [('raw', '<div class="fv-b">%s</div>' % frame_view.to_html(rest))],
     }
 
 
@@ -238,13 +231,6 @@ h1 a.h-home:hover { text-decoration:underline; }
 /* 회차에 붙는 줄 — 섹션 머리 아래 한 줄 */
 .sd-meta { margin:0 0 14px; font-size:.76rem; line-height:1.7; color:var(--ink-3); }
 .sd-meta b { color:var(--ink-2); font-weight:700; }
-/* 받은 글 꼬리의 요약·제언을 여기로 올린다 — 뷰 카드에서 먼저 읽히는 자리 */
-.uc-rep .vc-sum { margin:12px 14px 0; padding:10px 12px; border-left:3px solid var(--ink-3);
-  border-radius:0 6px 6px 0; background:var(--sunk); }
-.uc-rep .vc-sum p { margin:6px 0; font-size:.82rem; line-height:1.75; color:var(--ink-2); }
-.uc-rep .vc-sum p.fv-h { margin:0 0 4px; font-weight:800; color:var(--ink); }
-.uc-rep .vc-sum ul { margin:6px 0; padding-left:18px; }
-.uc-rep .vc-sum li { font-size:.82rem; line-height:1.75; color:var(--ink-2); }
 '''
 
 # 제목을 누르면 이 장으로 온다. 파일 이름으로 걸면 gen_site 가 공개 주소(/semidoped)로
