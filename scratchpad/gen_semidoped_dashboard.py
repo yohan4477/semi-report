@@ -126,7 +126,14 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
         if front and plain(front) in plain(para) and not para.lstrip().startswith('#'):
             cut = i
             break
-    rest = (chr(10) * 2).join(rp[:cut] + rp[cut + 1:]) if cut is not None else md
+    # 걷은 문단 자리만 원문에서 도려낸다. 문단으로 쪼갰다 다시 이으면 조각마다 strip 이
+    # 걸려 **도식 줄의 들여쓰기가 사라진다** — 칸 정렬이 무너져 표가 표로 안 읽힌다
+    # (2026-08-31 「폐쇄형 대 개방형」 표가 그렇게 아스키로 떨어졌다)
+    rest = md
+    if cut is not None:
+        at = md.find(rp[cut])
+        if at >= 0:
+            rest = (md[:at] + md[at + len(rp[cut]):]).strip()
     return {
         'id': 'sd-%s-%s' % (slug, kind),
         'section': ('sd-%s' % slug, num, ep_title,

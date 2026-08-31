@@ -1212,10 +1212,11 @@ def _ascii_pre(block):
     base_wide, base_narrow = 0.72 * 16.0, 0.62 * 16.0
     fs_wide = min(base_wide, (520.0 - 24.0) / (max_cols * _MONO_COL_EM))
     fs_narrow = min(base_narrow, (340.0 - 24.0) / (max_cols * _MONO_COL_EM))
-    # 9px 아래로는 안 내린다 — 이 장이 이미 쓰는 가장 작은 글자(.62rem≈9.92px)
-    # 언저리다. 그 밑으로 줄이면 글자를 지운 것과 다를 바 없이 안 읽힌다.
-    # 그래도 다 안 들어가는 줄은 `.fv-pre` 의 overflow-x:auto 로 마저 스크롤한다
-    fs_wide, fs_narrow = max(fs_wide, 9.0), max(fs_narrow, 9.0)
+    # 10.5px 아래로는 안 내린다. 9px 로 두었더니 화면에서 못 읽었다 — 폭에 맞추려고
+    # 글자를 줄이는 일과 글자를 지우는 일이 그 크기에서 갈리지 않는다(2026-08-31 실험).
+    # 넓은 화면 기본이 11.52px 이라 바닥을 그보다 높이 잡으면 줄이는 장치가 통째로
+    # 무력해진다. 다 안 들어가는 줄은 `.fv-pre` 의 overflow-x:auto 로 마저 스크롤한다
+    fs_wide, fs_narrow = max(fs_wide, 10.5), max(fs_narrow, 10.5)
     if fs_wide >= base_wide - 0.05 and fs_narrow >= base_narrow - 0.05:
         return '<pre class="fv-pre">%s</pre>' % esc
     _ASCII_SEQ[0] += 1
@@ -1229,6 +1230,96 @@ def _ascii_pre(block):
     return style + '<pre class="fv-pre %s">%s</pre>' % (cls, esc)
 
 
+def _cmp_table(block):
+    """두 갈래를 견주는 표를 <table> 로. 표가 아니면 None.
+
+    「[ 폐쇄형 ] ◀━▶ [ 개방형 ]」 아래로 「행 이름 · 값 · 값」이 줄 맞춰 오는 꼴이다.
+    칸은 공백으로 자르지 않는다 — 값이 길면 칸 사이 공백이 하나만 남아 자르는 자가
+    무너진다(2026-08-31). 머리 줄의 대괄호가 선 **칸 위치**로 자른다.
+    """
+    lines = [ln.rstrip() for ln in block.split(chr(10))
+             if ln.strip() and ln.strip() != 'text']
+    if len(lines) < 4:
+        return None
+    top = next((k for k, ln in enumerate(lines) if len(_BOX.findall(ln)) == 2), None)
+    if top is None:
+        return None
+    head = lines[top]
+    # 머리 줄에서 두 이름이 시작하는 칸을 잡는다
+    cuts, cells = [], _cells(head)
+    for m in _BOX.finditer(head):
+        cuts.append(cells[m.start()][1] if m.start() < len(cells) else 0)
+    if len(cuts) != 2 or cuts[0] < 2:
+        return None
+    names = [t.strip() for t in _BOX.findall(head)]
+
+    def _gaps(c):
+        """그 줄에서 공백이 두 칸 이상 이어지는 자리(시작 칸) 목록."""
+        out, run = [], None
+        for ch, a, _b in c:
+            if ch == ' ':
+                run = a if run is None else run
+            else:
+                if run is not None and a - run >= 2:
+                    out.append(run)
+                run = None
+        return out
+
+    def cut(ln):
+        """머리 줄의 칸 위치에 **가장 가까운 공백 자리**에서 자른다.
+
+        머리 칸 위치로 곧장 자르면 값이 머리보다 넓을 때 낱말이 두 칸에 걸쳐 갈린다
+        (「오직 자사 내부 모델 인프라로만 / 활용   엔터프라이즈…」). 값의 경계는
+        값이 만든 공백에 있다.
+        """
+        c = _cells(ln)
+        gs = _gaps(c)
+        # 값이 길면 칸 사이가 공백 한 칸으로 붙어 온다(「독점적 성능 막대한 칩」).
+        # 그런 줄은 머리 줄의 칸 위치로 자른다 — 없는 공백을 기다리면 표가 통째로 무너진다
+        singles = [a for ch, a, _b in c if ch == ' ']
+        b1 = min(gs, key=lambda g: abs(g - cuts[0])) if gs else cuts[0]
+        later = [g for g in gs if g > b1]
+        if later:
+            b2 = min(later, key=lambda g: abs(g - cuts[1]))
+        else:
+            # 두 칸 공백이 없으면 한 칸 공백 중 머리 칸에 가장 가까운 자리에서 자른다.
+            # 칸 위치로 곧장 자르면 낱말 가운데가 갈린다(「독점 / 적 성능」)
+            far = [a for a in singles if a > b1 + 1]
+            b2 = min(far, key=lambda g: abs(g - cuts[1])) if far else cuts[1]
+        if b2 <= b1:
+            return []
+        out = ['', '', '']
+        for ch, a, _b in c:
+            out[0 if a < b1 else (1 if a < b2 else 2)] += ch
+        return [x.strip() for x in out]
+
+    rows, tail = [], []
+    for ln in lines[top + 1:]:
+        if _BOX.search(ln) and not rows:
+            return None
+        # 꼬리 문단(▶ 로 여는 줄)이 나오기 전까지가 표다. 한 줄이 안 갈렸다고 그 뒤를
+        # 통째로 꼬리로 넘기면 표가 두 줄만 남는다
+        is_tail = bool(tail) or _BOX.search(ln) or ln.strip()[:1] in ('▶', '*', '·')
+        cs = [] if is_tail else cut(ln)
+        if cs and all(cs):
+            rows.append(cs)
+        else:
+            tail.append(ln.strip())
+    if len(rows) < 2:
+        return None
+    title = [re.sub(r'[┌┐└┘│─]', ' ', ln).strip()
+             for ln in lines[:top]]
+    title = [t for t in title if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 3]
+    h = '<tr><th></th><th scope="col">%s</th><th scope="col">%s</th></tr>' % (
+        _inline(names[0]), _inline(names[1]))
+    b = ''.join('<tr><th scope="row">%s</th><td>%s</td><td>%s</td></tr>'
+                % tuple(_inline(c) for c in r) for r in rows)
+    cap = ''.join('<p class="fig-title">%s</p>' % _inline(t.strip('[]').strip())
+                  for t in title)
+    note = ('<p>%s</p>' % _inline(' '.join(tail))) if tail else ''
+    return '%s<table>%s<tbody>%s</tbody></table>%s' % (cap, '<thead>%s</thead>' % h, b, note)
+
+
 def _block_html(block):
     """도식 덩어리 하나를 판·글·아스키 중 하나로.
 
@@ -1238,6 +1329,10 @@ def _block_html(block):
     # 이모지는 여기 하나뿐인 문턱에서 지운다 — 판·아스키 어느 길로 가든,
     # 이 함수를 지난 뒤로는 이모지가 없다고 믿을 수 있다
     block = _denorm_emoji(block)
+    # 두 갈래를 견주는 표는 판이 아니라 표다 — 좌우로 갈라 나란히 보여야 뜻이 산다
+    tbl = _cmp_table(block)
+    if tbl and _kept(block, tbl):
+        return tbl
     if _is_list(block):
         groups = _groups(block)
         # 머리가 둘 이상이면 단계다 — 머리마다 상자 하나를 치고 딸린 줄을 그 안에 넣는다.
