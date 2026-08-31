@@ -322,8 +322,26 @@
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
 </details>
-<details class="fold"><summary>실험 — 체계를 바꾸기 전에 재 본 것<span>1</span></summary>
+<details class="fold"><summary>실험 — 체계를 바꾸기 전에 재 본 것<span>2</span></summary>
 <p class="lede2">측정값을 남긴다. 무엇을 조건으로 걸었고, 그 조건 안에서 무엇이 안 되었는지가 다음 회차의 근거다.</p>
+<section class="xp" id="exp-opus-gemini" style="--ac:#7c3aed">
+<div class="xh"><span class="em">⚖️</span><h2>같은 프롬프트에 오푸스는 다르게 답하나</h2><span class="dt">2026-08-31</span></div>
+<p class="q">뷰를 받아 오는 자리에 <b>제미나이 3.1 Pro</b> 대신 <b>클로드 오푸스 5</b>를 세우면 무엇이 달라지나 — 길이·구조·도해·원문 밖 주장.</p><p class="cond">할라페뇨 회차 하나(2026-08-27)로 뷰 둘을 각각 받았다. 프롬프트는 <code>scripts/prompts/{strategy,tech}.txt</code> 그대로, 회차 전문 50KB 를 같이 보냈다. 오푸스 쪽에는 저장소 규칙(CLAUDE.md·문체 규칙)을 <b>따르지 말라</b>고 못 박았다 — 안 그러면 조건이 달라 비교가 안 된다. 답은 <code>insights/frames/exp/</code> 에 두었다(검사기가 보는 자리 밖).</p>
+<div class="common">
+<div class="cm"><b>길이</b><span class="w">2.6~3.9배</span><p>경영전략 3,776자 대 9,785자 · 기술 3,511자 대 13,560자.</p></div>
+<div class="cm"><b>절</b><span class="w">3배 이상</span><p>경영전략 4 대 13 · 기술 6 대 20. 오푸스는 절을 잘게 쪼갠다.</p></div>
+<div class="cm"><b>도해</b><span class="w">3개 대 12~15개</span><p>오푸스가 훨씬 많이 그린다. 표(마크다운)도 오푸스만 쓴다 — 26줄·59줄.</p></div>
+<div class="cm"><b>판으로 굽힘</b><span class="w">50% 대 30%</span><p>제미나이 도해 6개 중 3개, 오푸스 27개 중 8개가 SVG 판이 된다.</p></div>
+</div>
+<div class="fs" data-kind="work"><p class="sh"><b>측정 ① 오푸스가 길고 잘게 쓴다</b><i>같은 프롬프트인데 분량이 세 배다</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">경영전략</span><span class="ns">3,776자 · 절 4  →  9,785자 · 절 13</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">기술</span><span class="ns">3,511자 · 절 6  →  13,560자 · 절 20</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">표</span><span class="ns">0줄  →  26줄 · 59줄</span></div></div><ul><li>카드 하나에 담기는 양이 달라진다 — 지금 카드 꼴(펼치면 한 덩어리)로는 오푸스 답이 길다.</li><li>오푸스는 마크다운 표를 쓴다. 제미나이는 안 썼다. 표는 <code>frame_view</code> 가 이미 굽는다.</li></ul></div>
+<div class="arw" aria-hidden="true">▼</div>
+<div class="fs" data-kind="gate"><p class="sh"><b>측정 ② 도해는 많은데 판으로 덜 구워진다</b><i>아스키가 넓어 우리 파서가 못 읽는다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">제미나이</span><span class="ns">도해 6개 · 판 3 · 아스키 3</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">오푸스</span><span class="ns">도해 27개 · 판 8 · 아스키 19</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">최장 줄</span><span class="ns">53~78칸 (판 폭 520 을 넘긴다)</span></div></div><ul><li>오푸스 도해는 좌우 대조·막대·중첩 테두리를 즐겨 쓴다. 줄이 길어 판을 못 만들고 아스키로 남는다.</li><li>아스키로 남아도 글자는 안 잃는다(<code>_kept</code>). 다만 그림이 문단과 안 붙는다 — 그 자리가 이 실험의 값이다.</li></ul></div>
+<div class="arw" aria-hidden="true">▼</div>
+<div class="fs" data-kind="gate"><p class="sh"><b>측정 ③ 원문 밖 수치는 둘 다 나온다</b><i>길이에 비례해 늘어난다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">제미나이</span><span class="ns">경영전략 1 · 기술 3</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">오푸스</span><span class="ns">경영전략 2 · 기술 7</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">보기</span><span class="ns">0.5TB · 1,000W · 100만</span></div></div><ul><li>세는 방법이 거칠다 — 목록 번호(「10.」)나 반올림한 값이 섞인다. 절대값이 아니라 <b>둘을 같은 자로 잰 비교</b>로만 읽어야 한다.</li><li>판정은 <code>check_frame</code> 이 한다. 이 실험 파일은 그 검사기가 보는 자리 밖에 두었다.</li></ul></div>
+<div class="arw" aria-hidden="true">▼</div>
+<div class="fs" data-kind="src"><p class="sh"><b>측정 ④ 이모지는 조건이 달랐다</b><i>제미나이 답이 먼저, 금지 줄이 나중이다</i></p><div class="fnn"><div class="fn" style="--nc:#8892a3"><span class="nn">제미나이 경영전략</span><span class="ns">이모지 13개</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">제미나이 기술</span><span class="ns">0개</span></div><div class="fn" style="--nc:#8892a3"><span class="nn">오푸스</span><span class="ns">둘 다 0개</span></div></div><ul><li>제미나이 경영전략 답은 프롬프트에 「이모지는 쓰지 않는다」가 들어가기 <b>전</b>에 받은 것이다. 같은 조건이 아니므로 이 칸은 비교가 아니라 기록이다.</li></ul></div>
+<p class="verdict">측정만 남긴다. 모델을 바꿀지는 이 값으로 못 정한다 — 회차 하나·뷰 둘이고, 카드 꼴(분량)과 파서(도해 폭)가 결과를 함께 정하기 때문이다. 다음에 잴 것은 둘이다: ① 오푸스 답을 그대로 카드에 실었을 때 읽히는가 ② 도해 폭을 프롬프트로 제한하면 판으로 굽는 비율이 올라가는가.</p>
+</section>
 <section class="xp" id="exp-angles" style="--ac:#7c3aed">
 <div class="xh"><span class="em">🧪</span><h2>각도만으로 교차 카드가 서나</h2><span class="dt">2026-08-28</span></div>
 <p class="q"><b>insights/angles/</b> 의 각도 파일만으로 교차 인사이트 카드 한 장을 쓸 수 있나 — 노트 349장을 각도가 대신할 수 있나.</p><p class="cond">재료는 <code>insights/angles/*.md</code> 뿐. <code>insights/notes/</code>를 열지 않는다. 원문은 열되 <b>몇 번 열었고 무엇을 확인하러 열었는지</b>를 전부 센다 — 그 횟수가 측정값이다.</p>
