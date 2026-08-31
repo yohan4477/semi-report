@@ -53,10 +53,11 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-infra/compute | 29 |
 | ai-infra/memory | 9 |
 | ai-infra/networking | 13 |
-| ai-infra/business | 20 |
+| ai-infra/business | 21 |
 | ai-infra/power | 11 |
 | ai-infra/cooling | 3 |
 | ai-infra/construction | 3 |
+| ai-infra/security | 1 |
 | ai-models/rl | 4 |
 | ai-models/agents | 4 |
 | ai-models | 3 |
@@ -100,6 +101,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 <!-- 2026-08-17: [260810] 엔비디아 GPU의 초고속 상호작용성(TileRT InferenceX) 신규 변환 완료 — ai-infra/compute 25→26. GPU HBM 대역폭 루프라인(64TB/s)과 실제 상호작용성 사이 격차가 대역폭이 아니라 커널 실행 지연시간에서 온다는 진단, TileRT의 지속형 엔진 커널(모델 전체를 정적 컴파일해 GPU에 상주시키는 방식)이 CUDA 그래프와 다른 이유, 타일·워프·GPU 단위 특화(GLM-5.1 희소 인덱서 전담 GPU 사례), vLLM과의 PD 분리형 결합(MultiConnector API·Mooncake/NIXL), InferenceX 실측(8k/1k 340 tok/s/user·GB300 NVL72 대비 1.9배, 1k/1k 494.2 tok/s/user), 세레브라스·Groq·SambaNova 데이터플로우 칩과의 비교(하드웨어 데이터플로우 vs 소프트웨어 데이터플로우, PD 비율 유동성이라는 GPU 함대의 구조적 강점), 정적 AoT 컴파일이 낳는 좁은 모델 카탈로그·TileOPs 완화 노력, AgentX 에이전틱 벤치마크·배치 크기 확장 계획, 백만 출력 토큰당 비용 분석(FP8 동일정밀도 비교 61% 저렴+3.1배 빠름)까지 전체 12개 섹션 완료. InferenceX v2·InferenceMAX와 자매 문서로 상호작용성·처리량·분리형 서빙 용어를 동일하게 사용, 컴퓨트 통합 리포트 문서별 요약에 추가 -->
 
 ## 버전 히스토리
+
+- (2026-08-31) `ai-infra/security` 신규 하위 카테고리 신설 + [260830] Most Neoclouds Suck At Security(네오클라우드 대다수는 보안이 엉망이다) 신규 변환 완료 — ai-infra/security 0→1, ai-infra/business 20→21. CVE 분기별 실측(엔비디아 드라이버·CUDA·PyTorch·K8s·Docker는 변화 없음, Glasswing 참여 조직만 유의미한 급증)으로 "AI가 사이버보안을 근본적으로 바꿨다"는 서사를 데이터로 반박, 오픈AI 학습 모델이 허깅페이스 인프라를 연쇄 침해한 실제 보안 사고 전말, 임베고·버그바운티 생태계 비교(네오클라우드 중 유료 버그바운티는 Together 하나뿐), ClusterMAX 3.0 테스트(25개 공급자·32개 클러스터)에서 실증한 5가지 침해 패턴(vCluster 공유 K8s發 크로스테넌트 RCE, 멀티테넌트 Grafana의 God-level Prometheus 키, InfiniBand 보안 키(P_Key·M_Key·SA_Key 등) 오설정, NVIDIAscape 컨테이너 탈옥, BlueField DPU RShim 관리채널 노출), 폐쇄형 모델의 보안 PoC 가드레일이 방어 연구를 오픈 모델로 떠미는 역설, 엔비디아·AMD·칩 스타트업이 네오클라우드가 될 때 지는 보안·금융 조달 함의까지 전체 10개 섹션 완료. 기존 `ai-infra` 하위 카테고리 어디에도 없던 "멀티테넌트 인프라 보안 운영" 축이라 신설, 세레브라스·샘바노바 등 칩 스타트업의 네오클라우드화 금융 조달 논증이 ai-infra/business와도 겹쳐 이중 분류. business·security 모두 아직 통합 리포트가 없어 리포트 갱신은 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용)
 
 - v1.0 (2026-07-04): 초기 카테고리 체계 수립 — ai-models, ai-infra(power/cooling/compute/memory), robotics
 - (2026-08-24) [260824] AgentX InferenceXv3(에이전틱 추론에서도 CUDA 해자는 버티는가) 신규 변환 완료 — ai-infra/compute 27→28, ai-infra/networking 11→12, ai-models/agents 3→4. SemiAnalysis가 300만 달러를 들여 만든 세계 최초 완전 오픈소스 멀티턴 에이전틱 코딩 추론 벤치마크 AgentX 1.0(1M 맥락) 공개, DeepSeek V4 Pro·Kimi K3·MiniMax M3·Qwen3.5·GLM 5.3 다섯 프론티어 모델에서 GB300/GB200/B300/B200 대 MI355X 실측 비교, 이 벤치마크가 이끌어낸 vLLM·SGLang·TensorRT-LLM·AMD ATOM·AITER·Dynamo·LMCache·Mooncake 상류 50개+ PR(하이브리드 어텐션 캐시 보존·CPU/DRAM KV 오프로드·컨텍스트 병렬화·라우팅 어피니티), 300만 달러 트레이스 데이터셋 수집·익명화·DAG 리플레이 방법론, 모델 수명주기 전체를 적분한 성능 비교(TTFI·소프트웨어 개선속도·누적 토큰생성)까지 전체 11개 섹션 완료. 하드웨어·벤더 비교 축은 compute, 분산 추론 시스템(KV 전송·PD 분리·컨텍스트 병렬화) 축은 networking, 에이전틱 벤치마크 방법론 자체는 ai-models/agents로 3중 분류
