@@ -49,7 +49,9 @@ def _bracketize(block):
     """
     out = []
     for ln in block.split(chr(10)):
-        if any(c in ln for c in _BAR) and not _BOX.search(ln):
+        # 막대가 둘 이상이라야 상자 줄이다. 하나뿐이면 「│ (작업 지시 …)」처럼
+        # 이음 선 옆에 붙은 라벨이라 상자로 세우면 없던 칸이 하나 생긴다
+        if sum(ln.count(c) for c in _BAR) >= 2 and not _BOX.search(ln):
             cells = [c.strip(' ─═-+') for c in re.split(r'[%s]' % re.escape(_BAR), ln)]
             cells = [c for c in cells if len(re.findall(r'[가-힣A-Za-z0-9]', c)) >= 2]
             if cells:

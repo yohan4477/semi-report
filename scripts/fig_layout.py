@@ -63,14 +63,34 @@ def text_w(s, fs=FS):
     return max(w, len(s) * CHECK_CH)
 
 
+def wrap(s, width, fs=FS_S):
+    """글줄을 폭에 맞춰 나눈다. 낱말 사이에서만 자른다.
+
+    상자 안에 설명을 넣으려면 폭이 아니라 높이로 늘려야 한다 — 폭으로 늘리면 두 칸짜리
+    줄이 판을 넘어 세로 사슬로 떨어진다.
+    """
+    out, cur = [], ''
+    for w in s.split(' '):
+        cand = (cur + ' ' + w).strip()
+        if cur and text_w(cand, fs) > width:
+            out.append(cur)
+            cur = w
+        else:
+            cur = cand
+    if cur:
+        out.append(cur)
+    return out
+
+
 class Box(object):
     """놓인 상자 하나. 변 위의 점을 준다 — 좌표는 여기서만 나온다."""
 
     def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None, subout=False):
         self.x, self.y, self.w, self.h = x, y, w, h
         self.label, self.sub, self.hi = label, sub, hi
-        # subout 이면 부제를 상자 밖 아래에 깐다. 부제가 길어 상자를 넓히면 두 칸짜리
-        # 줄이 판을 넘어 세로 사슬로 떨어진다 — 글자를 지우지 않고 폭만 피한다
+        # subout 이면 부제를 상자 **안**에 여러 줄로 깐다. 폭이 아니라 높이로 늘린다 —
+        # 폭으로 늘리면 두 칸짜리 줄이 판을 넘어 세로 사슬로 떨어진다. 상자 안에 두는
+        # 이유는 포함 관계다: 그 설명은 그 상자가 하는 일이다
         self.subout = subout
         self.rc = rc                # (줄, 칸). 판을 다시 놓아도 링크를 찾아온다
 
@@ -107,10 +127,13 @@ class Box(object):
         o = ['<rect x="%g" y="%g" width="%g" height="%g" rx="6" class="%s"/>'
              % (self.x, self.y, self.w, self.h, cls)]
         if self.sub and self.subout:
+            lines = wrap(self.sub, self.w - 2 * PAD_X)
+            y = self.y + PAD_Y + LH - 6
             o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
-                     % (self.cx, self.cy + 4, self.label))
-            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                     % (self.cx, self.y1 + 14, self.sub))
+                     % (self.cx, y, self.label))
+            for i, ln in enumerate(lines):
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
+                         % (self.cx, y + 18 + i * 17, ln))
         elif self.sub:
             o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
                      % (self.cx, self.cy - 2, self.label))
@@ -213,7 +236,16 @@ class Plate(object):
         for r in self.rows:
             two = any(c and c[1] for c in r) and not self.subout
             h = PAD_Y * 2 + LH + (LH if two else 0)
-            below = 18.0 if (self.subout and any(c and c[1] for c in r)) else 0.0
+            if self.subout:
+                # 상자 안에 깐 설명 줄만큼 키를 키운다. 열 폭이 이미 정해져 있어
+                # 몇 줄이 될지 여기서 셀 수 있다
+                deep = 0
+                for c in range(ncol):
+                    cell = r[c] if c < len(r) else None
+                    if cell and cell[1]:
+                        deep = max(deep, len(wrap(cell[1], ws[c] - 2 * PAD_X)))
+                h += 17 * deep + (6 if deep else 0)
+            below = 0.0
             line = []
             # 한 칸만 든 줄은 판을 가로질러 세운다. 안 그러면 그 줄만 반쪽에 몰려
             # 오른쪽이 통째로 비고, 빈자리 때문에 글자가 더 작아 보인다
