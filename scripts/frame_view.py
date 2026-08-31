@@ -193,7 +193,9 @@ def _rows_of(block):
             t = _ARROW.sub('', ln).strip(' |/+<>←↑↓▲▼').strip(' \_—-─═│')
             if len(re.findall(r'[가-힣A-Za-z]', t)) >= 4:
                 # 한 줄에 캡션 셋을 나란히 쓴 것이 온다 — 넓은 공백을 가운뎃점으로
-                notes.append(re.sub(r'\s{2,}', ' · ', t)[:70])
+                # 자르지 않는다. 자른 자리에서 뒷말이 사라진다 — 판 폭에
+                # 맞춰 나누는 일은 fig_layout 이 한다
+                notes.append(re.sub(r'\s{2,}', ' · ', t))
     if not rows or sum(len(r) for r in rows) < 2:
         return None
     return rows, notes[:6]

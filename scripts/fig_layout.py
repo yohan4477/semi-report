@@ -366,9 +366,12 @@ class Plate(object):
             o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind)
         y = self._bottom
         for n in self.notes:
-            y += 18
-            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                     % (self.W / 2.0, y, n))
+            # 각주도 판 폭에 맞춰 나눈다. 한 줄로 두면 긴 한 줄 평이 판 밖으로 나가거나,
+            # 잘라 담으면 뒷말이 사라진다 — 2026-08-31 에 「…이득이다!」가 그렇게 없어졌다
+            for ln in wrap(n, self.W - 8):
+                y += 18
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
+                         % (self.W / 2.0, y, ln))
         h = y + self.bottom
         return ('<svg viewBox="0 0 %g %g" width="100%%" data-fig-layout="1" role="img" '
                 'aria-label="%s">%s%s</svg>' % (self.W, h, alt, self.DEFS, ''.join(o)))
