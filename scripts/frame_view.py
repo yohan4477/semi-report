@@ -18,9 +18,63 @@
 import io
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fig_layout  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FRAMES = os.path.join(ROOT, 'insights', 'frames')
+
+
+# 아스키 도식을 상자로 굽는다. 그대로 두면 폭이 넘치고 글꼴이 바뀌면 선이 어긋난다 —
+# 상자는 판 폭에 맞춰 서고 다크모드 색도 따라온다. 못 읽는 꼴이면 아스키 그대로 둔다.
+_BOX = re.compile(r'\[([^\]\[]+)\]')
+_ARROW = re.compile(r'(-->|→|▶|=>|=+>)')
+
+
+def _rows_of(block):
+    """줄마다 [ ... ] 를 뽑아 상자 줄로 만든다. 못 뽑으면 None."""
+    rows, notes = [], []
+    for ln in block.split(chr(10)):
+        toks = _BOX.findall(ln)
+        if toks:
+            parts = _BOX.split(ln)
+            cells = []
+            for i, t in enumerate(toks):
+                tail = parts[2 * i + 2] if 2 * i + 2 < len(parts) else ''
+                tail = _ARROW.sub(' ', tail).strip(' |/\_·—-+')
+                cells.append((t.strip(), tail[:34]))
+            rows.append(cells)
+        else:
+            t = _ARROW.sub('', ln).strip(' |/\_+—-=<>←↑↓▲▼')
+            if len(re.findall(r'[가-힣A-Za-z]', t)) >= 4:
+                notes.append(t[:60])
+    if not rows or sum(len(r) for r in rows) < 2:
+        return None
+    return rows, notes[:3]
+
+
+def boxes(block):
+    """도식 한 덩어리를 판 하나로. 못 읽으면 None."""
+    got = _rows_of(block)
+    if not got:
+        return None
+    rows, notes = got
+    ncol = max(len(r) for r in rows)
+    if ncol > 3:
+        return None                 # 한 줄에 넷을 넘으면 판에 안 들어간다
+    p = fig_layout.Plate()
+    for r in rows:
+        p.row(*([(n, sub) for n, sub in r] + [None] * (ncol - len(r))))
+    for i in range(len(rows) - 1):
+        p.connect(p.at(i, 0), p.at(i + 1, 0))
+    for ri, r in enumerate(rows):
+        for c in range(1, len(r)):
+            p.connect(p.at(ri, c - 1), p.at(ri, c))
+    for n in notes:
+        p.note(n)
+    return p.render('받은 글의 도식')
 
 
 def _inline(s):
@@ -49,8 +103,13 @@ def to_html(md):
             while j < len(lines) and not lines[j].strip().startswith('```'):
                 buf.append(lines[j])
                 j += 1
-            out.append('<pre class="fv-pre">%s</pre>'
-                       % '\n'.join(buf).replace('&', '&amp;').replace('<', '&lt;'))
+            block = '\n'.join(buf)
+            try:
+                svg = boxes(block)
+            except Exception:
+                svg = None
+            out.append(svg if svg else '<pre class="fv-pre">%s</pre>'
+                       % block.replace('&', '&amp;').replace('<', '&lt;'))
             i = j + 1
             continue
         if ln.lstrip().startswith('|') and '|' in ln[1:]:
