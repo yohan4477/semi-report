@@ -85,7 +85,8 @@ def wrap(s, width, fs=FS_S):
 class Box(object):
     """놓인 상자 하나. 변 위의 점을 준다 — 좌표는 여기서만 나온다."""
 
-    def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None, subout=False):
+    def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None, subout=False,
+                 fs=FS, fs_s=FS_S):
         self.x, self.y, self.w, self.h = x, y, w, h
         self.label, self.sub, self.hi = label, sub, hi
         # subout 이면 부제를 상자 **안**에 여러 줄로 깐다. 폭이 아니라 높이로 늘린다 —
@@ -93,6 +94,10 @@ class Box(object):
         # 이유는 포함 관계다: 그 설명은 그 상자가 하는 일이다
         self.subout = subout
         self.rc = rc                # (줄, 칸). 판을 다시 놓아도 링크를 찾아온다
+        # 글자 크기는 판마다 다를 수 있다(카드 본문에 낀 판은 본문 크기로 줄인다).
+        # CSS 클래스(.fl · .fl-s)는 다른 장도 같이 쓰므로 고치지 않고, 여기서만
+        # 인라인 font-size 로 덮어쓴다 — weight·line-height·색은 클래스 그대로 남는다
+        self.fs, self.fs_s = fs, fs_s
 
     @property
     def cx(self):
@@ -126,22 +131,28 @@ class Box(object):
         cls = 'fl-bh' if self.hi else 'fl-b'
         o = ['<rect x="%g" y="%g" width="%g" height="%g" rx="6" class="%s"/>'
              % (self.x, self.y, self.w, self.h, cls)]
+        # font-size 만 인라인으로 덮는다 — .fl/.fl-s 의 weight·line-height·색은 그대로 쓴다
+        fa = ' style="font-size:%gpx"' % self.fs
+        fsa = ' style="font-size:%gpx"' % self.fs_s
         if self.sub and self.subout:
+            # 줄바꿈 자리는 늘 기본 폭 계산(FS_S)과 맞춘다 — _layout() 이 상자 키를
+            # 그 계산으로 이미 정했다. 여기서 작은 글자 폭으로 다시 접으면 줄 수가
+            # 달라져 정해 둔 키보다 글이 넘치거나 아래가 빈다
             lines = wrap(self.sub, self.w - 2 * PAD_X)
             y = self.y + (self.h - LH) / 2.0 + LH - 12
-            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
-                     % (self.cx, y, self.label))
+            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle"%s>%s</text>'
+                     % (self.cx, y, fa, self.label))
             for i, ln in enumerate(lines):
-                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                         % (self.cx, y + 18 + i * 17, ln))
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                         % (self.cx, y + 18 + i * 17, fsa, ln))
         elif self.sub:
-            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
-                     % (self.cx, self.cy - 2, self.label))
-            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                     % (self.cx, self.cy + 13, self.sub))
+            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle"%s>%s</text>'
+                     % (self.cx, self.cy - 2, fa, self.label))
+            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                     % (self.cx, self.cy + 13, fsa, self.sub))
         else:
-            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
-                     % (self.cx, self.cy + 4, self.label))
+            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle"%s>%s</text>'
+                     % (self.cx, self.cy + 4, fa, self.label))
         return o
 
 
@@ -149,12 +160,16 @@ class Plate(object):
     """판 하나. 칸을 격자로 놓고, 선은 놓인 상자에서 뽑는다."""
 
     def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
-                 stretch=True, subout=False, pad_y=PAD_Y, bottom=14.0):
+                 stretch=True, subout=False, pad_y=PAD_Y, bottom=14.0,
+                 fs=FS, fs_s=FS_S):
         self.W = float(width)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
         self.subout = subout        # 부제를 상자 안에 여러 줄로 깐다(폭 계산에서 뺀다)
+        # 다른 장(회계사·메르 등)은 이 판을 기본 크기(15.2/13.5)로 쓰므로 모듈 상수는
+        # 그대로 두고, 카드 본문에 낀 판만 호출하는 쪽에서 작은 크기를 넘긴다
+        self.fs, self.fs_s = fs, fs_s
         # 상자 안 위아래 여백과 판 아래 여백. 받은 도식을 굽는 판은 글 사이에 끼므로
         # 좁게 준다 — 손으로 그리는 판은 기본값 그대로다
         self.pad_y = float(pad_y)
@@ -207,6 +222,12 @@ class Plate(object):
             return self._placed
         if not self.rows:
             raise AssertionError('줄이 없다')
+        # 칸 폭·틈은 늘 기본 크기(FS·FS_S)로 잰다 — fs·fs_s 는 그려지는 글자만
+        # 줄이지 칸 크기는 안 줄인다. 폭 계산까지 작은 글자로 다시 재면 원래는
+        # 안 들어가던 도식이 「더 좁게 잰 폭 덕에 들어간다」는 이유만으로 판이 되어
+        # 아스키로 남아야 할 넷 중 하나가 판으로 넘어간다 — 2026-08-31 에 「다이어그램
+        # 1: 유휴 자산」이 그렇게 넘어갔다. 칸이 넉넉해 보여도 그 여백은 원래 더 큰
+        # 글자를 위해 잡아 둔 자리라 안전하다
         ncol = max(len(r) for r in self.rows)
         ws = []
         for c in range(ncol):
@@ -262,7 +283,8 @@ class Plate(object):
                     continue
                 bx, bw = (xs[0], xs[-1] + ws[-1] - xs[0]) if wide else (xs[c], ws[c])
                 line.append(Box(bx, y, bw, h, cell[0], cell[1], cell[2],
-                                (len(placed), c), self.subout))
+                                (len(placed), c), self.subout,
+                                fs=self.fs, fs_s=self.fs_s))
             placed.append(line)
             y += h + below + gy
         self._placed = placed
@@ -306,6 +328,7 @@ class Plate(object):
     def _link_svg(self, a, b, label, kind):
         cls = {'l': 'fl-l', 'a': 'fl-a', 'd': 'fl-d'}[kind]
         mk = 'url(#flAa)' if kind == 'a' else 'url(#flA)'
+        fsa = ' style="font-size:%gpx"' % self.fs_s
         if a.x1 <= b.x - 4 or b.x1 <= a.x - 4:          # 좌우로 떨어져 있다
             fwd = a.x1 <= b.x - 4
             p0 = a.port('r' if fwd else 'l')
@@ -331,8 +354,8 @@ class Plate(object):
             lx, ly, anchor = p0[0] + 9, (p0[1] + p1[1]) / 2.0 + 4, 'start'
         o = ['<path d="%s" class="%s" marker-end="%s"/>' % (d, cls, mk)]
         if label:
-            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="%s">%s</text>'
-                     % (lx, ly, anchor, label))
+            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="%s"%s>%s</text>'
+                     % (lx, ly, anchor, fsa, label))
         return o
 
     # ---- 내보내기 --------------------------------------------------------
@@ -346,22 +369,24 @@ class Plate(object):
     def render(self, alt):
         placed = self._layout()
         o = []
+        fa = ' style="font-size:%gpx"' % self.fs
+        fsa = ' style="font-size:%gpx"' % self.fs_s
         if self.heads:
             for c, name in enumerate(self.heads):
-                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                         % (self._xs[c] + self._ws[c] / 2.0, self.top + 4, name))
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                         % (self._xs[c] + self._ws[c] / 2.0, self.top + 4, fsa, name))
         for i, line in enumerate(placed):
             for b in line:
                 if b:
                     o += b.svg()
             if i in self.labels:
                 first = next(b for b in line if b)
-                o.append('<text x="0" y="%g" class="fl">%s</text>'
-                         % (first.cy + 5, self.labels[i]))
+                o.append('<text x="0" y="%g" class="fl"%s>%s</text>'
+                         % (first.cy + 5, fa, self.labels[i]))
         if self.mid and len(self._xs) > 1:
             gx = (self._xs[0] + self._ws[0] + self._xs[1]) / 2.0
-            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                     % (gx, self.top + (20.0 if self.heads else 0.0) - 6, self.mid))
+            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                     % (gx, self.top + (20.0 if self.heads else 0.0) - 6, fsa, self.mid))
         for (ra, ca), (rb, cb), label, kind in self.links:
             o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind)
         y = self._bottom
@@ -370,8 +395,8 @@ class Plate(object):
             # 잘라 담으면 뒷말이 사라진다 — 2026-08-31 에 「…이득이다!」가 그렇게 없어졌다
             for ln in wrap(n, self.W - 8):
                 y += 18
-                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
-                         % (self.W / 2.0, y, ln))
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                         % (self.W / 2.0, y, fsa, ln))
         h = y + self.bottom
         return ('<svg viewBox="0 0 %g %g" width="100%%" data-fig-layout="1" role="img" '
                 'aria-label="%s">%s%s</svg>' % (self.W, h, alt, self.DEFS, ''.join(o)))

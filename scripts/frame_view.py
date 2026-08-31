@@ -178,7 +178,11 @@ def _rows_of(block):
                 cells.append((head[:20], ''))     # 「Core 1 ── [ … ]」의 왼쪽
             for i, t in enumerate(toks):
                 tail = parts[2 * i + 2] if 2 * i + 2 < len(parts) else ''
-                tail = _ARROW.sub(' ', tail).strip(' |/·+').strip(' \_—-─═│')
+                tail = _ARROW.sub(' ', tail)
+                # 상자 사이를 잇던 선 조각이 설명에 붙어 온다 —
+                # 「┼── (트래픽 경합)」처럼 판에 그대로 섰다
+                tail = re.sub(r'[─-╿]+', ' ', tail)
+                tail = tail.strip(' |/·+<>←↑→↓▲▼').strip()
                 cells.append((t.strip(), tail))
             rows.append(cells)
         else:
@@ -237,7 +241,7 @@ def _narrow_plate(block):
         return None
     for kw in ({'subout': True}, {}):
         try:
-            return _plate([[c] for c in cells], notes, 1, **kw)
+            return _plate([[c] for c in cells], notes, 1, width=340.0, **kw)
         except AssertionError:
             continue
     return None
@@ -297,11 +301,13 @@ def _one_plate(block):
         return None
 
 
-def _plate(rows, notes, ncol, subout=False):
+def _plate(rows, notes, ncol, subout=False, width=520.0):
     # 판 위아래 여백을 좁힌다. 받은 도식은 카드 본문 사이에 끼는 그림이라 판 자체가
-    # 여백을 크게 물면 글과 그림 사이가 벌어져 한 덩어리로 안 읽힌다
-    p = fig_layout.Plate(subout=subout, top=2.0, gap_y=10.0,
-                         pad_y=8.0, bottom=4.0)
+    # 여백을 크게 물면 글과 그림 사이가 벌어져 한 덩어리로 안 읽힌다.
+    # 글자 크기도 기본값(15.2/13.5, 다른 장과 공용)이 아니라 카드 본문 크기(13.4/12)로
+    # 준다 — 이 판은 카드 글 사이에 끼는 그림이라 본문보다 커 보이면 그림만 튄다
+    p = fig_layout.Plate(width=width, subout=subout, top=2.0, gap_y=10.0,
+                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0)
     for r in rows:
         p.row(*(list(r) + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
@@ -426,6 +432,34 @@ def _kept(block, html):
     return True
 
 
+_TITLE_ONLY = re.compile(r'^\[[^\[\]]+\]$')
+
+
+def _split_title(block):
+    """맨 앞줄이 대괄호 하나뿐이면 그 글을 판 제목으로 뗀다. (제목, 나머지).
+
+    「[다이어그램 3: 할라페뇨 스케일 업 네트워크 구조]」처럼 도식 첫 줄에 제목만
+    얹어 오는 판이 있다. 그대로 두면 상자를 짤 때 그 줄이 칸 하나로 구워져 안 쓰는
+    자리가 하나 생긴다 — 상자에서 빼 판 위에 한 줄로 세운다. 여러 줄 틀(┌│└)에
+    제목만 든 판도 같은 꼴이라 먼저 풀어서 본다. 뒤에 다른 상자가 없으면 이 한 줄이
+    도식의 전부인 것이니 제목이 아니라 그대로 남긴다.
+    """
+    body = _unframe(block)
+    lines = body.split(chr(10))
+    i = 0
+    while i < len(lines) and not lines[i].strip():
+        i += 1
+    if i >= len(lines):
+        return '', block
+    t = lines[i].strip()
+    if not _TITLE_ONLY.match(t):
+        return '', block
+    rest = chr(10).join(lines[:i] + lines[i + 1:])
+    if not _BOX.search(rest):
+        return '', block
+    return t.strip('[]').strip(), rest
+
+
 def _block_html(block):
     """도식 덩어리 하나를 판·글·아스키 중 하나로.
 
@@ -488,24 +522,62 @@ def _block_html(block):
             two = '<div class="fv-two">%s%s</div>' % tuple(plates)
             if _kept(block, two):
                 return two
+    # 원래 글 그대로 먼저 구워 본다. 여기서 실패하면 아스키로 남을 덩어리다 —
+    # 제목을 떼는 손질이 실패작을 판으로 되살리면 안 된다(아스키로 남은 넷은
+    # 그대로 둔다는 규칙). 성공했을 때만 제목 줄을 상자에서 빼는 손질을 시도한다
     try:
         svg = boxes(block)
     except Exception:
         svg = None
     if svg and not _kept(block, svg):
         svg = None                  # 낱말을 흘린 판은 안 쓴다
+    title = ''
     if svg:
-        # 넓은 화면과 좁은 화면에 다른 판을 낸다. 같은 판을 줄이면 글자가 깨알이 된다
+        # 첫 줄이 「[다이어그램 N: …]」 같은 제목 한 줄이면 상자에서 떼고 판 위에
+        # 세운다. 뗀 채로 못 구우면(폭 계산이 그 줄에 기대는 판도 있다) 방금 구운
+        # 판을 그대로 쓴다 — 제목이 상자 하나로 남는 채가 안전한 대안이다
+        t, body = _split_title(block)
+        if t:
+            try:
+                svg2 = boxes(body)
+            except Exception:
+                svg2 = None
+            # 뗀 제목은 판 밖 <p> 로 나가니, 낱말 검사는 그 문단까지 합쳐서 본다 —
+            # svg2 만 보면 제목 낱말이 거기 없다는 이유로 늘 걸린다
+            head2 = '<p class="fig-title">%s</p>' % _inline(t)
+            if svg2 and _kept(block, head2 + svg2):
+                svg, title = svg2, t
+    if svg:
+        head = '<p class="fig-title">%s</p>' % _inline(title) if title else ''
+        # 넓은 화면과 좁은 화면에 다른 판을 낸다. 같은 판을 줄이면 글자가 깨알이 된다.
+        # 제목을 뗀 판이면 낱말 검사도 head 를 합쳐서 본다 — head 를 빼면 제목
+        # 낱말이 small 어디에도 없다는 이유로 늘 걸려 좁은 화면 판을 못 쓴다
         try:
-            small = _narrow_plate(block)
+            small = _narrow_plate(body if title else block)
         except Exception:
             small = None
-        if small and small != svg and _kept(block, small):
-            return ('<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
+        if small and small != svg and _kept(block, head + small):
+            return (head + '<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
                     % (svg, small))
-        return svg
+        return head + svg
     return ('<pre class="fv-pre">%s</pre>'
             % block.replace('&', '&amp;').replace('<', '&lt;'))
+
+
+def _place(out, html):
+    """판(또는 표)이면 바로 앞 문단 한 개와 자리를 바꾼다.
+
+    받은 글은 설명 문단 다음에 도식이 오는 순서로 온다 — 규칙은 그림을 먼저 보고
+    그 아래 설명을 읽는 순서다. 판이나 표를 만들었을 때만 바꾼다. 제목 문단(fv-h)은
+    그 판의 이름표라 판보다 앞자리를 지킨다 — `<p>`(class 없는)만 문단으로 본다.
+    아스키·목록으로 남은 도식은 순서를 그대로 둔다 — 글로 나온 것이라 원래 자리가 맞다.
+    """
+    is_fig = html.startswith('<table') or '<svg' in html
+    if is_fig and out and re.match(r'^<p>.*</p>$', out[-1], re.S):
+        out[-1], para = html, out[-1]
+        out.append(para)
+        return
+    out.append(html)
 
 
 def to_html(md):
@@ -521,13 +593,13 @@ def to_html(md):
                 buf.append(lines[j])
                 j += 1
             block = '\n'.join(buf)
-            out.append(_block_html(block))
+            _place(out, _block_html(block))
             i = j + 1
             continue
         j = _dia_span(lines, i)
         if j > i:
             block = chr(10).join(lines[i:j])
-            out.append(_block_html(block))
+            _place(out, _block_html(block))
             i = j
             continue
         if ln.lstrip().startswith('|') and '|' in ln[1:]:
@@ -536,7 +608,7 @@ def to_html(md):
                 rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')])
                 i += 1
             if len(rows) >= 3:
-                out.append(_table(rows))
+                _place(out, _table(rows))
             continue
         m = re.match(r'\s*(#{1,6})\s+(.*)', ln)
         if m:
@@ -617,6 +689,8 @@ CSS = fig_layout.CSS + '''
 .uc-rep .fv-b th, .uc-rep .fv-b td { border:1px solid var(--line); padding:6px 8px;
   text-align:left; vertical-align:top; color:var(--ink-2); }
 .uc-rep .fv-b th { background:var(--sunk); color:var(--ink); font-weight:800; }
+.uc-rep svg[data-fig-layout] { max-width:520px; margin:10px auto; display:block; }
+.uc-rep .fig-mo svg[data-fig-layout] { max-width:340px; }
 .uc-rep .fig-mo { display:none; }
 @media (max-width:640px) {
   .uc-rep .fig-pc { display:none; }
