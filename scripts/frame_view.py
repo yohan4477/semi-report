@@ -828,11 +828,67 @@ def _split_cols(block):
     # 세 칸이면 가른다. 모든 줄에서 비어 있어야 하는 조건이 세서 헛나누지 않는다 —
     # 넷으로 잡았더니 틈이 세 칸인 판(할라페뇨 기술 뷰)이 통째로 아스키로 떨어졌다
     cand = [(a, b) for a, b in runs if b - a + 1 >= 3 and a > 6 and b < width - 6]
-    if not cand:
+    if cand:
+        a, b = max(cand, key=lambda r: r[1] - r[0])
+        left = chr(10).join(''.join(ch for ch, s, e in cs if e <= a + 1) for cs in grid)
+        right = chr(10).join(''.join(ch for ch, s, e in cs if s > b) for cs in grid)
+        if _BOX.search(left) and _BOX.search(right):
+            return left, right
+    # 모든 줄에서 똑같이 비어 있는 자리가 없는 판이다 — 아래 단(사람이 사는
+    # 낱말을 넣은 줄, 「하이퍼스케일러 · AI 랩  ← 이 사람이」)이 위 단(머리
+    # 줄)보다 넓어 경계 자리를 침범하면 전 줄에서 안 비니 위 방법이 못 가른다
+    # (2026-08-27 「판매사 모델 대 수직 통합 모델」). 머리 줄의 대괄호 둘 사이
+    # 가운데를 기준 칸으로 잡고, 줄마다 그 칸에 가장 가까운 큰 공백에서 가른다
+    # — 표 한 줄을 자르는 것과 같은 이치다(`_row_cut`)
+    # 이 블록 전체의 대괄호가 정확히 두 무리(왼쪽 열·오른쪽 열)로 뭉치는지부터
+    # 본다 — 안 그러면 「대괄호 둘 있는 줄 아무거나」에 걸려, 한 사슬 안에서
+    # 상자 둘이 이웃한 줄(「A ──> [B] ──> [C]」)까지 좌우 두 판으로 잘못 가른다.
+    # 2026-08-24 그록봇 다이아몬드 그림이 그렇게 낱말 한가운데서 갈렸다
+    # (「AI 워크로드 (Grok bo | t 아키텍처 적용)]」)
+    all_cols = []
+    for ln in lines:
+        cs = _cells(ln)
+        for m in _BOX.finditer(ln):
+            if m.start() < len(cs):
+                all_cols.append(cs[m.start()][1])
+    if len(all_cols) < 2:
         return None
-    a, b = max(cand, key=lambda r: r[1] - r[0])
-    left = chr(10).join(''.join(ch for ch, s, e in cs if e <= a + 1) for cs in grid)
-    right = chr(10).join(''.join(ch for ch, s, e in cs if s > b) for cs in grid)
+    bands = []
+    for x in sorted(set(all_cols)):
+        if bands and x - bands[-1][-1] <= 8:
+            bands[-1].append(x)
+        else:
+            bands.append([x])
+    if len(bands) != 2:
+        return None
+    c0, c1 = bands[0][0], bands[1][0]
+    if c1 - c0 < 6:
+        return None
+    # 두 무리 사이 틈에 선 문자가 양쪽 다 걸치는 줄이 있으면 좌우가 진짜로
+    # 이어진 그림이다 — 나란한 두 판이 아니라 한 판 안에서 상자 둘이 선으로
+    # 붙은 것(팬인 등)이다. 그런 줄이 있으면 안 가른다(2026-08-27 「연산기
+    # A·B·C → 공유 풀」이 이 틈에 걸친 선 때문에 대괄호가 두 무리로 보였다)
+    wire = set('─│┌┐└┘├┤┬┴┼→←↑↓▲▼◀▶═║')
+    mid = (c0 + c1) // 2
+    for ln in lines:
+        cs = _cells(ln)
+        left_hit = any(c0 <= a < mid and ch in wire for ch, a, _e in cs)
+        right_hit = any(mid <= a < c1 and ch in wire for ch, a, _e in cs)
+        if left_hit and right_hit:
+            return None
+    target = (c0 + c1) // 2
+    left_lines, right_lines = [], []
+    for cs in grid:
+        if not cs:
+            left_lines.append('')
+            right_lines.append('')
+            continue
+        gaps = _gaps(cs)
+        cut = min(gaps, key=lambda g: abs(g - target)) if gaps else target
+        left_lines.append(''.join(ch for ch, s, e in cs if e <= cut))
+        right_lines.append(''.join(ch for ch, s, e in cs if s >= cut))
+    left = chr(10).join(left_lines)
+    right = chr(10).join(right_lines)
     if _BOX.search(left) and _BOX.search(right):
         return left, right
     return None
@@ -1230,94 +1286,307 @@ def _ascii_pre(block):
     return style + '<pre class="fv-pre %s">%s</pre>' % (cls, esc)
 
 
-def _cmp_table(block):
-    """두 갈래를 견주는 표를 <table> 로. 표가 아니면 None.
+# 판도 표도 못 되는 도식의 마지막 수단(글로 풀기)이 걷어 내는 순수 장식 문자.
+# 실제 낱말이 하나도 안 섞인 토큰(공백으로 둘러싸인)만 지운다 — 「24~36개월」의
+# '~'는 숫자에 붙어 있어 안 걸린다(토큰 경계 조건)
+_DECOR_TOK = re.compile(
+    r'(?<!\S)[│║|\-─═<>\^v\+~▲▼◀▶→←↑↓┌┐└┘├┤┬┴┼•·*]+(?!\S)')
 
-    「[ 폐쇄형 ] ◀━▶ [ 개방형 ]」 아래로 「행 이름 · 값 · 값」이 줄 맞춰 오는 꼴이다.
-    칸은 공백으로 자르지 않는다 — 값이 길면 칸 사이 공백이 하나만 남아 자르는 자가
-    무너진다(2026-08-31). 머리 줄의 대괄호가 선 **칸 위치**로 자른다.
+
+def _prose_list(block):
+    """표도 판도 못 되는 도식(축·눈금 있는 산점도, 문단 딸린 나무 가지 등)을
+    불릿 글로 푼다. 새 구조(이음·칸·차례)를 짓지 않는다 — 순수 장식 줄·토큰만
+    걷고, 남는 줄을 받은 순서 그대로 한 줄에 한 항목씩 옮길 뿐이다.
     """
-    lines = [ln.rstrip() for ln in block.split(chr(10))
-             if ln.strip() and ln.strip() != 'text']
+    items = []
+    for ln in block.split(chr(10)):
+        t = ln.strip()
+        if not t or t == 'text':
+            continue
+        t = _DECOR_TOK.sub(' ', t)
+        t = re.sub(r'\s{2,}', ' — ', t).strip(' —')
+        # 「[제목]」처럼 조각 전체가 대괄호 한 겹으로 싸였으면 벗긴다 — 불릿
+        # 글머리에 마크다운 대괄호가 그대로 남으면 제목이 아니라 코드처럼 읽힌다
+        t = ' — '.join(seg[1:-1].strip() if re.match(r'^\[[^\[\]]+\]$', seg) else seg
+                       for seg in t.split(' — '))
+        if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 2:
+            items.append(t)
+    if len(items) < 2:
+        return None
+    return '<ul>%s</ul>' % ''.join('<li>%s</li>' % _inline(x) for x in items)
+
+
+_GAP2 = re.compile(r'( {2,})')
+# 표 줄 사이에 낀 순수 장식 줄 — 칸을 가르는 대시 한 줄(구분선)이거나, 그림
+# 문자(세로줄·화살표)만 있고 실제 글자는 없는 줄(흐름도의 「|」·「v」 같은 이음
+# 표시). 표에서는 낱말이 없으니 칸으로 못 자르고, 억지로 넣으면 화살표 조각이
+# 옆 칸에 섞여 든다(2026-08-27 「상용 실리콘 업체 대 모델 랩」이 그렇게 깨졌다)
+_SEP_LINE = re.compile(r'^[─═\-│║|<>\^v\+=~▲▼◀▶→←↑↓┌┐└┘├┤┬┴┼\s]+$')
+
+
+def _segs(ln):
+    """줄을 큰 공백(두 칸 이상)으로 가른 조각들. [(글, 시작 칸)].
+
+    표 머리를 대괄호가 아니라 큰 공백만으로 가르는 판이 있다(「가진 정보
+    쓸 수 있는 수」). `_cells` 로 칸을 재 문자 인덱스를 표시 칸으로 옮긴다.
+    """
+    cells = _cells(ln)
+    idx2col = [a for ch, a, b in cells]
+    out, pos = [], 0
+    for piece in _GAP2.split(ln):
+        if piece and not piece.isspace():
+            s = pos + (len(piece) - len(piece.lstrip()))
+            col = idx2col[s] if s < len(idx2col) else (idx2col[-1] + 1 if idx2col else 0)
+            out.append((piece.strip(), col))
+        pos += len(piece)
+    return out
+
+
+def _gaps(cells):
+    """그 줄에서 공백이 두 칸 이상 이어지는 자리(시작 칸) 목록."""
+    out, run = [], None
+    for ch, a, _b in cells:
+        if ch == ' ':
+            run = a if run is None else run
+        else:
+            if run is not None and a - run >= 2:
+                out.append(run)
+            run = None
+    return out
+
+
+def _header_cols(ln):
+    """이 줄이 표 머리인가. (이름 목록, 그 이름이 시작하는 칸 목록) 또는 None.
+
+    대괄호가 **정확히 둘**이면 그 자리로(옛 길 — 셋 이상은 상자 여럿이 한 줄에
+    선 그래프 줄이지 표 머리가 아니다. 「[가속기] [가속기] [가속기] [가속기]」를
+    표로 읽으면 상자 그림이 깨진다). 대괄호가 없어도 큰 공백으로 2~3 조각으로
+    갈리고 각 조각이 짧으면(문장이 아니라 이름이면), 그리고 그 줄에 그림
+    문자(│┌┐└┘├┤┬┴┼▲▼◀▶→←↑↓)가 없으면 머리로 본다 — 있으면 표가 아니라
+    상자·화살표 그림이다.
+    """
+    boxes = _BOX.findall(ln)
+    if len(boxes) == 2:
+        cells = _cells(ln)
+        cuts = [cells[m.start()][1] for m in _BOX.finditer(ln) if m.start() < len(cells)]
+        return [t.strip() for t in boxes], cuts
+    if len(boxes) > 2 or (set(ln) & (_DRAW | set('▲▼|^*+'))):
+        return None
+    segs = _segs(ln)
+    if 2 <= len(segs) <= 3 and all(
+            len(re.findall(r'[가-힣A-Za-z0-9]', s[0])) <= 26 for s in segs):
+        return [s[0] for s in segs], [s[1] for s in segs]
+    return None
+
+
+def _row_cut(ln, bounds):
+    """줄을 bounds(오름차순 칸 목록) 자리 가까이서 len(bounds)+1 칸으로 자른다.
+
+    칸 위치로 곧장 자르면 값이 머리보다 넓을 때 낱말이 두 칸에 걸쳐 갈린다
+    (「오직 자사 내부 모델 인프라로만 / 활용   엔터프라이즈…」). 값의 경계는
+    값이 만든 공백에 있다 — 두 칸 공백 중 그 자리에 가장 가까운 곳에서 자르고,
+    없으면 한 칸 공백, 그마저 없으면 최후 수단으로 칸 위치 그대로 쓴다.
+    자리를 못 찾아 뒤로 갈수록 앞으로 가면(겹치면) None(이 줄은 못 갈랐다).
+    """
+    c = _cells(ln)
+    if not c:
+        return None
+    line_max = c[-1][2]
+    # 줄 맨 앞 들여쓰기(2 칸 이상)도 `_gaps` 에는 틈으로 잡힌다 — 진짜 칸
+    # 경계가 아니니 뺀다
+    gs = [g for g in _gaps(c) if g > 1]
+    singles = [a for ch, a, _b in c if ch == ' ']
+    TOL = 6   # 이 칸 안에 공백 후보가 없으면 안 믿는다 — 엉뚱하게 가까운
+              # 딴 낱말 사이 틈을 이 자리의 경계로 삼지 않는다
+    picked, prev = [], None
+    if len(gs) == len(bounds):
+        # 이 줄에 진짜 이음매(두 칸 공백)가 필요한 수만큼 정확히 있다 — 머리
+        # 칸 자리에 가장 가까운 것을 고르지 않고 왼→오 차례 그대로 쓴다.
+        # 「가장 가까운 자리」로 고르면 이름 길이가 짧은 줄에서 전체가 왼쪽으로
+        # 밀려 뒤 칸의 틈이 앞 칸 경계보다 머리 칸에 더 가까워지는 일이 있다
+        # (2026-08-27 「문제·선택·근거」 표의 「어떻게 보고하나」 행이 그렇게
+        # 둘째 틈을 첫 경계로 잘못 골라 통째로 깨졌다)
+        picked = list(gs)
+    else:
+        for i, target in enumerate(bounds):
+            # 이 줄의 글이 애초에 그 칸 근처까지도 안 뻗는다 — 남는 자리를
+            # 억지로 채우면 엉뚱하게 가까운 공백(딴 낱말 사이 틈)을 경계로
+            # 집어 온다. 줄 끝 바로 뒤에 경계를 둬 이 칸엔 아무것도 안 떨어지게
+            # 한다(2026-08-27 「(토큰 사용 통계 없음)」이 엉뚱한 칸으로 갔다)
+            if target >= line_max - TOL:
+                b = line_max + 1
+            else:
+                lo = 1 if prev is None else prev + 1
+                cand = [g for g in gs if g >= lo]
+                b = min(cand, key=lambda g: abs(g - target)) if cand else None
+                if b is not None and abs(b - target) > TOL:
+                    b = None
+                if b is None:
+                    far = [a for a in singles if a >= lo and a > 1]
+                    b1 = min(far, key=lambda g: abs(g - target)) if far else None
+                    b = b1 if (b1 is not None and abs(b1 - target) <= TOL) else target
+            if prev is not None and b <= prev:
+                return None
+            picked.append(b)
+            prev = b
+    out = [''] * (len(bounds) + 1)
+    for ch, a, _b in c:
+        idx = 0
+        for b in picked:
+            if a >= b:
+                idx += 1
+            else:
+                break
+        out[idx] += ch
+    return [x.strip() for x in out]
+
+
+def _gap_table(block):
+    """대괄호 표든 대괄호 없는 표든 — 큰 공백으로 칸이 갈리는 표를 <table> 로.
+
+    「[ 폐쇄형 ] ◀━▶ [ 개방형 ]」처럼 대괄호 머리도, 「가진 정보    쓸 수 있는
+    수」처럼 대괄호 없이 큰 공백으로만 갈린 머리도 받는다. 머리 이름 수와 몸
+    첫 줄의 조각 수를 견줘 **줄 이름 칸이 따로 있는지**를 정한다 — 있으면(줄
+    이름 + 값들) 머리 칸 그대로 자르고, 없으면(칸마다 이름이 다 있음) 첫 칸을
+    빼고 자른다. 한 항목이 줄을 여러 줄 쓰면(다음 줄이 같은 항목의 이어지는
+    값이면, 빈 줄로 갈린 한 덩이) 그 조각들을 합친다. 표가 아니면 None.
+    """
+    lines = [ln.rstrip() for ln in block.split(chr(10)) if ln.strip() != 'text']
     if len(lines) < 4:
         return None
-    top = next((k for k, ln in enumerate(lines) if len(_BOX.findall(ln)) == 2), None)
-    if top is None:
+    # 아스키 테두리 상자(+---+ 틀)가 있으면 표가 아니라 상자 그림이다 —
+    # `_unframe`+그래프 길이 이미 그 꼴을 다룬다. 여기서 「| 글 |」 줄을 표
+    # 칸으로 읽으면 테두리 파이프가 값에 섞여 든다(2026-08-24 「에이전트 AI
+    # 패러다임」 조직도가 그렇게 깨졌다) — 그 길에 맡기고 물러선다
+    if any(re.match(r'^\s*\+[-+]+\+\s*$', ln) for ln in lines):
         return None
-    head = lines[top]
-    # 머리 줄에서 두 이름이 시작하는 칸을 잡는다
-    cuts, cells = [], _cells(head)
-    for m in _BOX.finditer(head):
-        cuts.append(cells[m.start()][1] if m.start() < len(cells) else 0)
-    if len(cuts) != 2 or cuts[0] < 2:
-        return None
-    names = [t.strip() for t in _BOX.findall(head)]
-
-    def _gaps(c):
-        """그 줄에서 공백이 두 칸 이상 이어지는 자리(시작 칸) 목록."""
-        out, run = [], None
-        for ch, a, _b in c:
-            if ch == ' ':
-                run = a if run is None else run
-            else:
-                if run is not None and a - run >= 2:
-                    out.append(run)
-                run = None
-        return out
-
-    def cut(ln):
-        """머리 줄의 칸 위치에 **가장 가까운 공백 자리**에서 자른다.
-
-        머리 칸 위치로 곧장 자르면 값이 머리보다 넓을 때 낱말이 두 칸에 걸쳐 갈린다
-        (「오직 자사 내부 모델 인프라로만 / 활용   엔터프라이즈…」). 값의 경계는
-        값이 만든 공백에 있다.
-        """
-        c = _cells(ln)
-        gs = _gaps(c)
-        # 값이 길면 칸 사이가 공백 한 칸으로 붙어 온다(「독점적 성능 막대한 칩」).
-        # 그런 줄은 머리 줄의 칸 위치로 자른다 — 없는 공백을 기다리면 표가 통째로 무너진다
-        singles = [a for ch, a, _b in c if ch == ' ']
-        b1 = min(gs, key=lambda g: abs(g - cuts[0])) if gs else cuts[0]
-        later = [g for g in gs if g > b1]
-        if later:
-            b2 = min(later, key=lambda g: abs(g - cuts[1]))
+    for top, head in enumerate(lines):
+        if not head.strip() or _SEP_LINE.match(head):
+            continue
+        hc = _header_cols(head)
+        if not hc:
+            continue
+        names, cuts = hc
+        body = lines[top + 1:]
+        first_data = next((ln for ln in body if ln.strip() and not _SEP_LINE.match(ln)), '')
+        first_n = len(_segs(first_data))
+        if first_n == len(names) + 1 and cuts[0] >= 2:
+            bounds, ncol, has_label = cuts, len(names) + 1, True
+        elif first_n >= len(names) and len(cuts) >= 2:
+            bounds, ncol, has_label = cuts[1:], len(names), False
         else:
-            # 두 칸 공백이 없으면 한 칸 공백 중 머리 칸에 가장 가까운 자리에서 자른다.
-            # 칸 위치로 곧장 자르면 낱말 가운데가 갈린다(「독점 / 적 성능」)
-            far = [a for a in singles if a > b1 + 1]
-            b2 = min(far, key=lambda g: abs(g - cuts[1])) if far else cuts[1]
-        if b2 <= b1:
-            return []
-        out = ['', '', '']
-        for ch, a, _b in c:
-            out[0 if a < b1 else (1 if a < b2 else 2)] += ch
-        return [x.strip() for x in out]
+            continue
 
-    rows, tail = [], []
-    for ln in lines[top + 1:]:
-        if _BOX.search(ln) and not rows:
+        def merge(grp):
+            merged = [''] * ncol
+            hit = False
+            for gln in grp:
+                cs = _row_cut(gln, bounds)
+                if cs is None:
+                    continue
+                hit = True
+                for i, v in enumerate(cs):
+                    if v:
+                        merged[i] = (merged[i] + ' ' + v).strip() if merged[i] else v
+            need = ncol - 1 if has_label else ncol
+            if hit and sum(bool(x) for x in merged) >= need and merged[-1]:
+                return merged
             return None
-        # 꼬리 문단(▶ 로 여는 줄)이 나오기 전까지가 표다. 한 줄이 안 갈렸다고 그 뒤를
-        # 통째로 꼬리로 넘기면 표가 두 줄만 남는다
-        is_tail = bool(tail) or _BOX.search(ln) or ln.strip()[:1] in ('▶', '*', '·')
-        cs = [] if is_tail else cut(ln)
-        if cs and all(cs):
-            rows.append(cs)
-        else:
-            tail.append(ln.strip())
-    if len(rows) < 2:
-        return None
-    title = [re.sub(r'[┌┐└┘│─]', ' ', ln).strip()
-             for ln in lines[:top]]
-    title = [t for t in title if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 3]
-    h = '<tr><th></th><th scope="col">%s</th><th scope="col">%s</th></tr>' % (
-        _inline(names[0]), _inline(names[1]))
-    b = ''.join('<tr><th scope="row">%s</th><td>%s</td><td>%s</td></tr>'
-                % tuple(_inline(c) for c in r) for r in rows)
-    cap = ''.join('<p class="fig-title">%s</p>' % _inline(t.strip('[]').strip())
-                  for t in title)
-    note = ('<p>%s</p>' % _inline(' '.join(tail))) if tail else ''
-    return '%s<table>%s<tbody>%s</tbody></table>%s' % (cap, '<thead>%s</thead>' % h, b, note)
+
+        def flush_group(grp):
+            """모인 줄들을 행 목록으로. 촘촘한 표(줄마다 한 행, 사이에 빈 줄이
+            없는 「타겟 고객 …」류)와 값이 줄을 걸쳐 이어지는 표(「Nvidia …」
+            류)를 가른다.
+
+            그룹 첫 줄보다 훨씬 더 들여쓴 줄이 섞여 있으면(「OpenAI …」 다음에
+            훨씬 안으로 들어간 「워크로드 분포 …」가 오는 꼴) 그 줄은 새 행이
+            아니라 이어지는 값이다 — 줄마다 따로 갈라도 우연히 칸 수가 맞아
+            떨어져 각자 완성된 행처럼 보일 수 있다(2026-08-27 「가진 정보」
+            표에서 「워크로드 분포」가 그렇게 독립된 행으로 떨어졌다). 그런
+            줄이 하나도 없을 때만 줄마다 따로 갈라 본다 — 다들 온전하면 그
+            수만큼 행으로 내고, 아니면 그룹 전체를 합쳐 한 행으로 낸다.
+            """
+            if len(grp) > 1:
+                base = len(grp[0]) - len(grp[0].lstrip())
+                if any(len(g) - len(g.lstrip()) > base + 2 for g in grp[1:]):
+                    m = merge(grp)
+                    return [m] if m else []
+            per_line = [merge([g]) for g in grp]
+            if per_line and all(per_line):
+                return per_line
+            m = merge(grp)
+            return [m] if m else []
+
+        rows, tail, group, stop = [], [], [], False
+        for ln in body:
+            if stop:
+                if ln.strip():
+                    tail.append(ln.strip())
+                continue
+            # 세로 이음 문자(│▲▼◀▶ 등, 흐름도의 「다음 단계로」 표시)가 낀 줄은
+            # 글이 섞여 있어도(「TCO」·「고객이므로」) 표 칸이 아니다 — 두 갈래가
+            # 나란히 선 흐름도지 표가 아니다(`_split_cols`/그래프 길이 맡을 자리).
+            # 여기서 억지로 칸에 넣으면 이음 문자가 값에 섞여 든다(2026-08-27
+            # 「판매사 모델 대 수직 통합 모델」이 그렇게 깨졌다) — 이 줄은 버리고
+            # 낱말 안전망(`_kept`)이 이 표 자체를 통째로 되돌리게 둔다
+            # ◀▶ 는 여기서 뺀다 — 「▶ 시사점: …」처럼 결론 문단을 여는 표시로
+            # 이미 쓰는 문자다(꼬리 문단 판정, 아래에서 본다). 여기 넣으면 그
+            # 문단이 꼬리로 못 가고 통째로 사라진다(2026-08-27 「예상되는 다음
+            # 수」가 그렇게 없어졌다)
+            if set(ln) & set('│║┌┐└┘├┤┬┴┼▲▼'):
+                if group:
+                    rs = flush_group(group)
+                    if rs:
+                        rows.extend(rs)
+                    elif rows:
+                        stop = True
+                    group = []
+                continue
+            if not ln.strip() or _SEP_LINE.match(ln):
+                # 빈 줄과 장식 줄(구분선)은 똑같이 「이 행은 여기까지」다 —
+                # 장식 줄만 건너뛰고 다음 글줄을 같은 행에 이어 붙이면 흐름도의
+                # 다음 단계가 이전 단계와 한 칸에 뭉친다
+                if group:
+                    rs = flush_group(group)
+                    if rs:
+                        rows.extend(rs)
+                    elif rows:
+                        stop = True
+                    group = []
+                continue
+            if rows and (_BOX.search(ln) or ln.strip()[:1] in ('▶', '*', '·')):
+                stop = True
+                tail.append(ln.strip())
+                continue
+            # 새 줄(=이 이음의 첫 줄)에 큰 공백 자리가 하나도 없으면 표 칸이
+            # 아니라 그냥 딸린 산문이다 — 억지로 자르면 (「같은 팀 구성인데
+            # 도구만 없던 경우」처럼) 한 문장이 두 칸에 걸쳐 갈리거나, 관계
+            # 없는 문단이 표의 한 행처럼 서게 된다(2026-08-27)
+            if not group and rows and not _gaps(_cells(ln)):
+                stop = True
+                tail.append(ln.strip())
+                continue
+            group.append(ln)
+        if not stop and group:
+            rows.extend(flush_group(group))
+        if len(rows) < 2:
+            continue
+        title = [re.sub(r'[┌┐└┘│─]', ' ', ln).strip() for ln in lines[:top]]
+        title = [t for t in title if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 3]
+        head_cells = ([''] + names) if has_label else names
+        h = '<tr>' + ''.join(
+            '<th scope="col">%s</th>' % _inline(n.strip('[]').strip()) if n else '<th></th>'
+            for n in head_cells) + '</tr>'
+        b = ''.join('<tr>' + ''.join(
+            ('<th scope="row">%s</th>' % _inline(v)) if (has_label and i == 0)
+            else ('<td>%s</td>' % _inline(v)) for i, v in enumerate(r)) + '</tr>'
+            for r in rows)
+        cap = ''.join('<p class="fig-title">%s</p>' % _inline(t.strip('[]').strip())
+                      for t in title)
+        note = ('<p>%s</p>' % _inline(' '.join(tail))) if tail else ''
+        return '%s<table>%s<tbody>%s</tbody></table>%s' % (
+            cap, '<thead>%s</thead>' % h, b, note)
+    return None
 
 
 def _block_html(block):
@@ -1330,7 +1599,7 @@ def _block_html(block):
     # 이 함수를 지난 뒤로는 이모지가 없다고 믿을 수 있다
     block = _denorm_emoji(block)
     # 두 갈래를 견주는 표는 판이 아니라 표다 — 좌우로 갈라 나란히 보여야 뜻이 산다
-    tbl = _cmp_table(block)
+    tbl = _gap_table(block)
     if tbl and _kept(block, tbl):
         return tbl
     if _is_list(block):
@@ -1427,6 +1696,12 @@ def _block_html(block):
             return (head + '<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
                     % (svg, small))
         return head + svg
+    # 표도 판도 못 되는 도식(축·눈금이 있는 산점도, 문단 딸린 나무 가지 등)의
+    # 마지막 수단 — 불릿 글로 푼다. 새 이음·칸·차례를 짓지 않는다: 장식 문자만
+    # 걷고 남은 줄을 받은 순서 그대로 한 줄에 한 항목씩 옮길 뿐이다
+    prose = _prose_list(block)
+    if prose and _kept(block, prose):
+        return prose
     return _ascii_pre(block)
 
 
