@@ -1489,6 +1489,7 @@ if __name__ == '__main__':
     _log, _logn = log_html()
     _secs = [SEC_ATTN, SEC_MOE, SEC_DEC, SEC_TRAIN, SEC_PREC, SEC_SI, SEC_SERVE]
     dc.render(CARDS, '알고리즘 계보', HEADER, FOOTER % (STAMP, len(CARDS)), OUT,
+              page_slug='lineage',
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
               extra_css=dc.COURSE_CSS + LOG_CSS + LMAP_CSS,
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_logn,

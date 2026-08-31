@@ -1182,6 +1182,7 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
 
 if __name__ == '__main__':
     dc.render([], '통합 보고서', HEADER, FOOTER, OUT,
+              page_slug='report',
               top=(TOC + MAP + report_html() + report2_html()), top_id='sec-report',
               top_title='로봇 — 모델과 산업', top_n=2,
               top_sub='보고서 둘 — 수도리무브 35편과 SemiAnalysis 4편',

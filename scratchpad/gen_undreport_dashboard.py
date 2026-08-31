@@ -30,7 +30,7 @@ REL = 'content/understanding/언더스탠딩 보고서/%s'
 
 STAMP = '2026-08-26'
 
-# 섹션은 「무엇을 재는 이야기인가」로 가른다. 출연자로 가르지 않는다 —
+# 섹션은 「무엇을 재는 이야기인가」로 나눈다. 출연자로 가르지 않는다 —
 # 같은 사람이 금리 이야기도 하고 산업 이야기도 하는데 사람으로 묶으면 그게 한 칸에 뭉친다.
 SEC = {
     'macro':  ('sec-macro', '01', '물가 · 금리 · 통화',
@@ -115,4 +115,5 @@ if __name__ == '__main__':
               '  페이지 생성은 <code>scratchpad/gen_undreport_dashboard.py</code>'
               '(공용 부품 <code>dash_common.py</code>, 보고서 파서 <code>gen_aie_dashboard.py</code>).')
     dc.render(CARDS, '언더스탠딩 보고서', HEADER, FOOTER, OUT,
+              page_slug='und-report',
               extra_css=aie.POST_CSS, intro=INTRO, newest_first=True)

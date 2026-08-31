@@ -161,13 +161,39 @@ def mark_new(html: str, book: dict) -> tuple:
     return H2_CARD.sub(repl, html), hits
 
 
-def rewrite_links(html: str) -> str:
-    """상대 .html 링크를 슬러그(사이트 내) 또는 github.io 절대 URL(사이트 밖)로."""
+def rewrite_links(html: str, own_slug: str = '') -> str:
+    """상대 .html 링크를 슬러그(사이트 내) 또는 github.io 절대 URL(사이트 밖)로.
+
+    own_slug는 지금 처리 중인 파일이 카드 단독 페이지(대시보드/<슬러그>/*.html)일 때만
+    준다 — 그 안의 형제 카드 링크(디렉터리 없는 card-*.html — kin·related)를 같은
+    슬러그 아래 주소로 붙이는 데 쓴다.
+    """
+    from urllib.parse import quote
+
+    # 목록 페이지 카드 머리·「링크 복사」— data-href="<슬러그>/<카드슬러그>.html".
+    # 슬러그는 scripts/gen_site.py의 PAGES 슬러그와 이미 같은 ASCII라 SLUGS 사전을
+    # 거치지 않고 그대로 쓴다(카드 단독 페이지 자체 render()가 그렇게 이름을 짓는다).
+    html = re.sub(r'data-href="([^"/:]+)/([^"/:]+)\.html"',
+                  lambda m: 'data-href="/%s/%s"' % (m.group(1), m.group(2)), html)
+
+    # 카드 단독 페이지의 「← 장」 링크 — href="../<대시보드 파일명>.html#<섹션id>".
+    # 사이트에서 장 주소는 /<슬러그>(확장자·슬래시 없음)라 상대 경로를 그대로 못 쓴다.
+    def _pback(m):
+        fn = m.group(1) + '.html'
+        anchor = m.group(2)
+        if fn in SLUGS:
+            return 'href="/%s#%s"' % (SLUGS[fn], anchor)
+        return 'href="%s#%s"' % (GH + quote(fn), anchor)
+    html = re.sub(r'href="\.\./([^"/:]+)\.html#([^"]*)"', _pback, html)
+
     def repl(m):
         target = m.group(1)
         if target in SLUGS:
             return f'href="/{SLUGS[target]}"'
-        from urllib.parse import quote
+        if own_slug:
+            # 카드 단독 페이지 안에서 형제 카드를 가리키는 링크(디렉터리 없이 파일명만) —
+            # 같은 슬러그 아래 주소로 붙인다. 이 장에는 그 밖의 디렉터리 없는 상대 링크가 없다.
+            return f'href="/{own_slug}/{target[:-5]}"'
         return f'href="{GH}{quote(target)}" target="_blank" rel="noopener"'
 
     return re.sub(r'href="([^"/:]+\.html)"', repl, html)
@@ -335,6 +361,13 @@ def check_lock_parity():
     if stale:
         print('  ! 미들웨어가 막는데 PAGES 에 없는 주소: %s (지운 페이지면 그대로 둔다)'
               % ', '.join('/' + s for s in stale))
+    # 「카드 한 장 = 파일 한 장」(2026-08-31) 뒤로 잠긴 장 밑에 글 페이지 주소
+    # (/semianalysis/card-…)가 생겼다. PROTECTED가 정확히 일치만 보면(.has(path)) 그
+    # 안쪽 글 페이지가 비밀번호 없이 열린다 — 같은 검사기가 그 규칙 자체도 본다.
+    assert 'function isProtected' in js and '.startsWith(p + \'/\')' in js, (
+        '미들웨어가 접두어 매칭이 아니라 정확히 일치만 본다 -- 잠긴 장 밑 글 페이지가 '
+        '비밀번호 없이 열린다. PROTECTED.has(path) 대신 path===p || path.startsWith(p+\'/\') '
+        '접두어 매칭으로 바꾼다')
 
 
 def main():
@@ -344,12 +377,29 @@ def main():
 
     check_lock_parity()
     ledger = load_ledger()
+    total_pages = 0
     for src, slug, _title, _emoji, _desc, _locked in PAGES:
         html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
         html, fresh = mark_new(html, ledger.get(slug, {}))
         (OUT / f'{slug}.html').write_text(html + BADGE_BITS, encoding='utf-8')
         badge = f'  NEW {len(fresh)}' if fresh else ''
         print(f'  {src}  ->  {slug}.html{badge}')
+
+        # 「카드 한 장 = 파일 한 장」(2026-08-31) — 그 장에 딸린 글 페이지가 있으면
+        # site/<슬러그>/ 아래로 같이 낸다. 잠금은 functions/_middleware.js가 경로
+        # 접두어로 본다 — 여기서 따로 잠글 필요가 없다. NEW 배지·index는 안 붙인다.
+        card_dir = SRC / slug
+        if card_dir.is_dir():
+            out_dir = OUT / slug
+            out_dir.mkdir(parents=True, exist_ok=True)
+            n = 0
+            for f in sorted(card_dir.glob('*.html')):
+                page_html = rewrite_links(f.read_text(encoding='utf-8'), own_slug=slug)
+                (out_dir / f.name).write_text(page_html, encoding='utf-8')
+                n += 1
+            if n:
+                print(f'    글 페이지 {n}장  ->  {slug}/')
+                total_pages += n
 
     for old, (slug, title) in REDIRECTS.items():
         (OUT / f'{old}.html').write_text(REDIRECT_PAGE % {'slug': slug, 'title': title},
@@ -359,7 +409,7 @@ def main():
     (OUT / 'index.html').write_text(build_index(), encoding='utf-8')
     (OUT / f'{PRIVATE_SLUG}.html').write_text(build_private(), encoding='utf-8')
     (OUT / '.nojekyll').write_text('', encoding='utf-8')
-    print(f'\n{len(PAGES) + len(REDIRECTS) + 2} files -> {OUT}')
+    print(f'\n{len(PAGES) + len(REDIRECTS) + 2} files + 글 페이지 {total_pages}장 -> {OUT}')
 
 
 if __name__ == '__main__':

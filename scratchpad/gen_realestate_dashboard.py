@@ -1806,6 +1806,7 @@ COURSE = [
 if __name__ == '__main__':
     top, _n = dc.layer(iv.export_sections('estate'), XLEDE)
     dc.render(CARDS, '부동산 인사이트', HEADER, FOOTER, OUT,
+              page_slug='realestate',
               rollup=dc.rollup_for('realestate', CARDS, '편'),
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
               top=top, extra_css=iv.KIND_CSS + iv.CARD_CSS + iv.EXPORT_CSS + dc.COURSE_CSS

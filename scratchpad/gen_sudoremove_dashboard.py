@@ -1749,4 +1749,5 @@ FOOTER = (LEDE + META + '\n제3자 해설 요약 아카이브 · 원문은 싣�
           '(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '수도리무브 — 로보틱스 · 피지컬 AI', HEADER, FOOTER, OUT)
+    dc.render(CARDS, '수도리무브 — 로보틱스 · 피지컬 AI', HEADER, FOOTER, OUT,
+              page_slug='sudoremove')

@@ -612,6 +612,7 @@ if __name__ == '__main__':
               '  페이지 생성은 <code>scratchpad/gen_aie_dashboard.py</code>'
               '(공용 부품 <code>dash_common.py</code>).')
     dc.render(CARDS, 'AI Engineer', HEADER, FOOTER, OUT,
+              page_slug='ai-engineer',
               extra_css=POST_CSS, intro=INTRO,
               sec_fig={SEC[k][0]: read_guide(k, [c for c in CARDS if c['_sec'] == k])
                        for k in TRACKS})

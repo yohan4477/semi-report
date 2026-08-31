@@ -5335,6 +5335,7 @@ if __name__ == '__main__':
     # 지도는 그 회사 섹션 안, 카드 앞에 선다. 「전체 보기」에서는 접혀 있다(.sec-lead).
     _log, _logn = log_html()
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
+              page_slug='accountant',
               newest_first=True,
               extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES

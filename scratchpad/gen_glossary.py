@@ -206,6 +206,7 @@ REP_CSS = """
 
 if __name__ == '__main__':
     dc.render(CARDS, '용어사전', HEADER, FOOTER, OUT,
+              page_slug='glossary',
               top=ar.report_html(FIG_SEQ[1:], STAMP), top_id='sec-agentrep',
               top_title='보고서 — 하네스 위에 무엇이 얹히나',
               top_sub='스킬·슬래시 명령·서브에이전트·훅·MCP가 각각 어느 줄에 꽂히나', top_n=1,

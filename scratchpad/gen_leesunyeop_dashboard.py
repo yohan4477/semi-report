@@ -1331,6 +1331,7 @@ def folded_course():
 if __name__ == '__main__':
     _log, _n = log_html()
     dc.render(CARDS, '이선엽 시황', HEADER, FOOTER, OUT,
+              page_slug='leesunyeop',
               intro=merge_intro() + folded_course(),
               top=_log, top_id='sec-log', top_title='시간순 기록', top_n=_n,
               top_sub='원문 100편을 날짜순으로 — 언제 무슨 말을 했나',

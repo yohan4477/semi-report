@@ -2896,6 +2896,7 @@ def kwon_html():
 if __name__ == '__main__':
     _kwon, _kn = kwon_html()
     dc.render(CARDS, '산업/시장 인사이트', HEADER, FOOTER, OUT,
+              page_slug='understanding',
               rollup=dc.rollup_for('finance', CARDS, '편'),
               intro=dc.course(CARDS, COURSE, COURSE_LEDE),
               top=_kwon, top_id='sec-kwon',

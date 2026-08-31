@@ -27,6 +27,17 @@ function normalize(pathname) {
   return p === '' ? '/' : p;
 }
 
+// 「카드 한 장 = 파일 한 장」(2026-08-31) 뒤로 잠긴 장 밑에 글 페이지 주소가 생겼다
+// (/semianalysis/card-…). PROTECTED가 정확히 일치하는 경로만 막으면 그 안쪽 글 페이지는
+// 비밀번호 없이 열린다 — 유료 원문 요약이 새는 것과 같은 사고다. 그래서 그 장 경로로
+// **시작하는** 모든 경로를 같이 막는다.
+function isProtected(path) {
+  for (const p of PROTECTED) {
+    if (path === p || path.startsWith(p + '/')) return true;
+  }
+  return false;
+}
+
 async function tokenFor(password) {
   const bytes = new TextEncoder().encode('ida.v1:' + password);
   const digest = await crypto.subtle.digest('SHA-256', bytes);
@@ -131,7 +142,7 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const path = normalize(url.pathname);
 
-  if (!PROTECTED.has(path)) return next();
+  if (!isProtected(path)) return next();
 
   const password = env.SITE_PASSWORD;
   if (!password) {

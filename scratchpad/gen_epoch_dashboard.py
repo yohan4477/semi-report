@@ -1330,4 +1330,5 @@ if __name__ == '__main__':
     dc.check_links(CARDS)
     dc.check_labels(CARDS)
     dc.render(CARDS, 'Epoch AI — AI 컴퓨트의 돈과 물리 제약', HEADER, FOOTER, OUT,
+              page_slug='epoch',
               sec_bottom={'sec-fin': DC_TABLE, 'sec-token': TOKEN_TABLE, 'sec-work': CN_TABLE}, newest_first=True)

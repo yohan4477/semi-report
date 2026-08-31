@@ -205,6 +205,10 @@ EXTRA_CSS = '''
   .ucard.is-fold:not(.is-open) .uc-body{display:none}
   .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
   .ucard.is-fold:not(.is-open){padding-bottom:16px}
+  /* 카드 단독 페이지 머리 — 「← 장」으로 돌아가는 줄 하나뿐이다 */
+  .pback{display:inline-block;margin:0 0 18px;font-size:.86rem;font-weight:700;
+         color:var(--accent-ink,var(--accent));text-decoration:none}
+  .pback:hover{text-decoration:underline}
 ''' + FIG_CSS + '''
 ''' + _rl.CSS + '''</style>'''
 
@@ -300,13 +304,56 @@ def points_html(points, figs=()):
 
 
 
-def copy_btn(c):
-    """이 카드만 가리키는 주소를 집어 가는 버튼. 대시보드 전체 링크밖에 못 보내던 자리다."""
+def copy_btn(c, page_slug='', standalone=False):
+    """이 카드만 가리키는 주소를 집어 가는 버튼.
+
+    standalone(카드 단독 페이지 자신)이면 아무 표도 안 단다 — LINK_JS가 그 페이지 자신의
+    주소를 그대로 집는다. page_slug가 있으면(목록 페이지, 카드마다 파일이 따로 있는 장)
+    그 파일 주소를 낸다. 둘 다 없으면 예전처럼 대시보드 안 앵커를 낸다."""
+    if standalone:
+        return '<button type="button" class="uc-copy">링크 복사</button>'
+    if page_slug:
+        return ('<button type="button" class="uc-copy" data-href="%s/%s.html">링크 복사</button>'
+                % (page_slug, slug(c['title'])))
     return ('<button type="button" class="uc-copy" data-anchor="%s">링크 복사</button>'
             % slug(c['title']))
 
 
-def slim_html(c):
+def _kin_href(anchor, page_slug='', standalone=False):
+    """카드끼리 잇는 링크(related·kin) 하나의 주소.
+
+    standalone(카드 단독 페이지 자신)이면 같은 디렉터리에 있는 형제 파일을 가리킨다.
+    page_slug가 있으면(목록 페이지) 그 장 디렉터리 아래 파일을 가리킨다. 둘 다 없으면
+    예전처럼 같은 문서 안 앵커다."""
+    if standalone:
+        return '%s.html' % anchor
+    if page_slug:
+        return '%s/%s.html' % (page_slug, anchor)
+    return '#%s' % anchor
+
+
+def _head_open(c, page_slug='', standalone=False):
+    """카드 여는 태그(.ucard)와 머리(.uc-head)·캐럿을 만든다.
+
+    standalone(카드 단독 페이지)이면 펼친 채로 고정한다(is-open, is-fold 없음) — 접을
+    구실이 없다(FOLD_JS를 안 싣는다). page_slug가 있으면(목록 페이지, 카드마다 파일이
+    따로 있는 장) 머리는 그 파일로 가는 링크다(role=link, data-href) — 캐럿만 그 자리에서
+    접고 편다(role=button aria-expanded). 둘 다 없으면 예전처럼 머리 자체가 접었다 편다."""
+    wrap_cls = 'ucard is-open' if standalone else 'ucard is-fold'
+    if standalone:
+        head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="true">'
+        caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
+    elif page_slug:
+        head = ('<div class="uc-head" role="link" tabindex="0" data-href="%s/%s.html">'
+                % (page_slug, slug(c['title'])))
+        caret = '<span class="uc-caret" role="button" tabindex="0" aria-expanded="false">▾</span>'
+    else:
+        head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="false">'
+        caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
+    return wrap_cls, head, caret
+
+
+def slim_html(c, page_slug='', standalone=False):
     """펼쳤을 때 본문을 AI · 인프라 · 에너지 카드와 같은 형태로 낸다.
 
     접힌 상태는 부동산 인사이트 그대로다(주제칩·제목·gain·화자와 날짜).
@@ -318,9 +365,10 @@ def slim_html(c):
       slim_points    6~8개, 각 한두 문장
       slim_stats     4개
     """
-    h = ['<div class="ucard is-fold"%s>' % _card_attrs(c)]
+    wrap_cls, head, caret = _head_open(c, page_slug, standalone)
+    h = ['<div class="%s"%s>' % (wrap_cls, _card_attrs(c))]
     # 접힌 상태는 지금까지와 같다 — 주제칩·제목·이 편에서 무엇을 알 수 있는지·화자와 날짜
-    h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
+    h.append(head)
     # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
     # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
     if c.get('topic'):
@@ -329,7 +377,7 @@ def slim_html(c):
     if c.get('gain'):
         h.append('<p class="uc-gain">%s</p>' % c['gain'])
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
-    h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
+    h.append(caret + '</div>')
     h.append('<div class="uc-body">')
     # 슬림 전용 필드만 갖춘 카드도 있다 — 기본값을 미리 꺼내면 KeyError가 난다
     h.append('<p class="uc-oneliner">%s</p>' % (c.get('slim_oneliner') or c.get('oneliner', '')))
@@ -354,7 +402,8 @@ def slim_html(c):
                 if anchor is None:
                     k.append('<li class="is-here">%s<span class="kin-now">지금 이 카드</span></li>' % title)
                 else:
-                    k.append('<li><a class="kin-link" href="#%s">%s</a></li>' % (anchor, title))
+                    k.append('<li><a class="kin-link" href="%s">%s</a></li>'
+                             % (_kin_href(anchor, page_slug, standalone), title))
             k.append('</ol></div>')
         k.append('</div>')
         h.append(''.join(k))
@@ -364,12 +413,13 @@ def slim_html(c):
     if c.get('related'):
         h.append('<div class="uc-kin"><p class="uc-label">연관 포스트</p>'
                  '<div class="kin-g"><ol>%s</ol></div></div>'
-                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (a, t)
+                 % ''.join('<li><a class="kin-link" href="%s">%s</a></li>'
+                           % (_kin_href(a, page_slug, standalone), t)
                            for t, a in c['related']))
     h.append('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
              % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                         % (('class="%s" ' % cls) if cls else '', url, lab) for lab, url, cls in c['links']),
-                copy_btn(c)))
+                copy_btn(c, page_slug, standalone)))
     h.append('</div></div>')
     return ''.join(h)
 
@@ -627,23 +677,24 @@ def report_html(blocks):
     return ''.join(h)
 
 
-def _links_html(c):
+def _links_html(c, page_slug='', standalone=False):
     """카드 발치의 링크 줄 — 지금까지의 형식과 번호글 형식이 같은 마크업을 쓴다."""
     return ('<div class="uc-links" style="margin-top:16px;">%s%s</div>'
             % (''.join('<a %shref="%s" target="_blank" rel="noopener">%s</a>'
                        % (('class="%s" ' % cls) if cls else '', url, lab)
                        for lab, url, cls in (c.get('links') or ())),
-               copy_btn(c)))
+               copy_btn(c, page_slug, standalone)))
 
 
-def card_html(c):
+def card_html(c, page_slug='', standalone=False):
     # 슬림 필드를 갖춘 카드는 슬림으로, 아직 없는 카드는 지금까지의 형식 그대로 나간다
     if c.get('slim_points'):
-        return slim_html(c)
+        return slim_html(c, page_slug, standalone)
     # scope는 국내(kr)·국외(intl) 필터용이다. 안 적은 카드는 필터와 무관하게 늘 보인다
-    h = ['<div class="ucard is-fold"%s>' % _card_attrs(c)]
+    wrap_cls, head, caret = _head_open(c, page_slug, standalone)
+    h = ['<div class="%s"%s>' % (wrap_cls, _card_attrs(c))]
     # 접힌 상태에서는 머리(주제칩·제목·화자/날짜)만 남고 uc-body는 감춘다
-    h.append('<div class="uc-head" role="button" tabindex="0" aria-expanded="false">')
+    h.append(head)
     # 손으로 쓰던 시절 카드는 갖춘 필드가 저마다 달랐다 — 텍스트 브리핑에는 주제칩이 없다.
     # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
     if c.get('topic'):
@@ -653,7 +704,7 @@ def card_html(c):
     if c.get('gain'):
         h.append('<p class="uc-gain">%s</p>' % c['gain'])
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
-    h.append('<span class="uc-caret" aria-hidden="true">▾</span></div>')
+    h.append(caret + '</div>')
     h.append('<div class="uc-body">')
     # 여러 편을 하나로 묶은 카드는 결론(적정가 레인지 같은 것)이 본문 맨 위에 와야 한다.
     # 읽고 나서야 값이 나오면 그 카드는 통합본 구실을 못 한다.
@@ -667,14 +718,14 @@ def card_html(c):
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
         h.append(report_html(c['report']))
-        h.append(_links_html(c))
+        h.append(_links_html(c, page_slug, standalone))
         h.append('</div></div>')
         return ''.join(h)
     if c.get('debate'):
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
         h.append(debate_html(c['debate']))
-        h.append(_links_html(c))
+        h.append(_links_html(c, page_slug, standalone))
         h.append('</div></div>')
         return ''.join(h)
     if c.get('post'):
@@ -682,7 +733,7 @@ def card_html(c):
         if c.get('verdict'):
             h.append('<p class="uc-verdict"><b>한줄 코멘트.</b> %s</p>' % c['verdict'])
         h.append(post_html(c['post'], c.get('figs', ())))
-        h.append(_links_html(c))
+        h.append(_links_html(c, page_slug, standalone))
         h.append('</div></div>')
         return ''.join(h)
     h.append('<p class="uc-label">핵심 포인트</p>')
@@ -706,9 +757,10 @@ def card_html(c):
     if c.get('related'):
         h.append('<div class="uc-kin"><p class="uc-label">연관 포스트</p>'
                  '<div class="kin-g"><ol>%s</ol></div></div>'
-                 % ''.join('<li><a class="kin-link" href="#%s">%s</a></li>' % (a, t)
+                 % ''.join('<li><a class="kin-link" href="%s">%s</a></li>'
+                           % (_kin_href(a, page_slug, standalone), t)
                            for t, a in c['related']))
-    h.append(_links_html(c))
+    h.append(_links_html(c, page_slug, standalone))
     h.append('</div></div>')
     return ''.join(h)
 

@@ -3032,6 +3032,7 @@ COURSE = [
 
 if __name__ == '__main__':
     dc.render(CARDS, '미국주식 사관학교 인사이트', HEADER, FOOTER, OUT,
+              page_slug='usa-academy',
               rollup=dc.rollup_for('usa', CARDS, '편'),
               intro=dc.course(CARDS, COURSE, COURSE_LEDE), extra_css=dc.COURSE_CSS + figs0825.FIG_CSS,
               newest_first=True)

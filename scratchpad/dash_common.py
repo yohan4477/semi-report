@@ -120,9 +120,11 @@ def css():
     return out
 
 
-def _card(c, dup=False):
-    """카드 마크업. 사본(다른 회사 섹션에 한 번 더 서는 것)은 앵커를 뗀다."""
-    h = card_html(c)
+def _card(c, dup=False, page_slug=''):
+    """카드 마크업. 사본(다른 회사 섹션에 한 번 더 서는 것)은 앵커를 뗀다.
+
+    page_slug가 있으면(카드마다 파일이 따로 있는 장) 머리가 그 파일로 가는 링크가 된다."""
+    h = card_html(c, page_slug=page_slug)
     if dup:
         h = h.replace(' id="%s"' % slug(c['title']), '', 1)
     return h
@@ -167,20 +169,33 @@ FOLD_JS = '''<script>
   function toggle(card){
     var open=card.classList.toggle('is-open');
     var head=card.querySelector('.uc-head');
-    if(head) head.setAttribute('aria-expanded', String(open));
+    if(head && head.getAttribute('role')==='button') head.setAttribute('aria-expanded', String(open));
+    var caret=card.querySelector('.uc-caret');
+    if(caret && caret.getAttribute('role')==='button') caret.setAttribute('aria-expanded', String(open));
     if(!open){
       var top=card.getBoundingClientRect().top;
       if(top<60) card.scrollIntoView({block:'start'});   // 접을 때 화면이 위로 튀지 않게
     }
   }
+  // 카드마다 파일이 따로 있는 장에서는 머리가 그 글 페이지로 가는 링크다(data-href).
+  // 캐럿만 그 자리에서 접고 편다 — 캐럿 클릭이 머리까지 올라가 페이지를 이동시키면 안 된다.
   document.addEventListener('click', function(e){
+    var caret=e.target.closest('.uc-caret');
+    if(caret){ e.stopPropagation(); toggle(caret.closest('.ucard')); return; }
     var head=e.target.closest('.uc-head');
-    if(head) toggle(head.closest('.ucard'));
+    if(!head) return;
+    if(head.dataset.href){ location.href = head.dataset.href; return; }
+    toggle(head.closest('.ucard'));
   });
   document.addEventListener('keydown', function(e){
     if(e.key!=='Enter' && e.key!==' ') return;
+    var caret=e.target.closest('.uc-caret');
+    if(caret){ e.preventDefault(); e.stopPropagation(); toggle(caret.closest('.ucard')); return; }
     var head=e.target.closest('.uc-head');
-    if(head){ e.preventDefault(); toggle(head.closest('.ucard')); }
+    if(!head) return;
+    e.preventDefault();
+    if(head.dataset.href){ location.href = head.dataset.href; return; }
+    toggle(head.closest('.ucard'));
   });
 })();
 </script>'''
@@ -213,8 +228,14 @@ LINK_JS = """<script>
     }
     setTimeout(function(){
       if(card && !card.classList.contains('is-open')){
+        // head.click()으로 미루지 않는다 — 카드마다 파일이 따로 있는 장에서는 머리가
+        // data-href를 달고 있어 클릭이 그 페이지로 이동해 버린다(FOLD_JS). 여기서는
+        // 목록 페이지 안에서 그 자리 펼침만 하면 된다 — 직접 편다.
+        card.classList.add('is-open');
         var head=card.querySelector('.uc-head');
-        if(head) head.click();   // FOLD_JS가 문서 단위로 받아서 편다
+        if(head && head.getAttribute('role')==='button') head.setAttribute('aria-expanded', 'true');
+        var caret=card.querySelector('.uc-caret');
+        if(caret && caret.getAttribute('role')==='button') caret.setAttribute('aria-expanded', 'true');
       }
       // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
       (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
@@ -227,12 +248,26 @@ LINK_JS = """<script>
   document.addEventListener('click', function(e){
     var a=e.target.closest('a.kin-link');
     if(a){
-      e.preventDefault();
-      jump(a.getAttribute('href').slice(1), true);
+      var href=a.getAttribute('href') || '';
+      // 카드마다 파일이 따로 있는 장에서는 이 링크가 진짜 다른 문서를 가리킨다 —
+      // 그때는 기본 이동에 맡긴다. #으로 시작하는 옛 앵커 링크만 여기서 대신 연다.
+      if(href.charAt(0) === '#'){
+        e.preventDefault();
+        jump(href.slice(1), true);
+      }
       return;
     }
     var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
-    var url=location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    // 세 갈래다 — data-href(카드 단독 페이지를 가리키는 상대 주소) > data-anchor(같은 문서 안
+    // 앵커) > 아무 표도 없으면(카드 단독 페이지 자신의 「링크 복사」) 지금 이 주소 그대로.
+    var url;
+    if(b.dataset.href){
+      url = new URL(b.dataset.href, location.href).href;
+    } else if(b.dataset.anchor){
+      url = location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    } else {
+      url = location.origin + location.pathname;
+    }
     var done=function(ok){
       b.textContent = ok ? '복사됨' : '주소창에 있습니다';
       setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
@@ -606,7 +641,7 @@ def sec_picker(secs, order, total, extra=None, groups=None, badges=None, pick_to
         return ('<div class="sec-pick sgrid">%s%s%s</div>%s'
                 % (search_html(search_ph) if search_ph else SEARCH_HTML, pick_top, ''.join(tiles), BACK))
 
-    # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 가른다. 묶음 안이
+    # 묶음이 있으면 「전체 보기」만 위에 두고 그 아래를 묶음별로 나눈다. 묶음 안이
     # (섹터, 설명, [sid…]) 꼴이면 섹터 타일이 한 겹 더 선다. 묶음·섹터에 안 들어간
     # 섹션이 있으면 화면에서 조용히 사라지므로 여기서 잡는다.
     sectored = any(sids and not isinstance(sids[0], str) for _lab, sids in groups)
@@ -956,12 +991,65 @@ def sec_copy(sid):
 XSEC = 'sec-cross'      # 통합 인사이트 섹션 id — 카드가 없는 섹션이라 NAV_JS가 따로 센다
 
 
+def _has_figs(c):
+    """카드에 그림이 있는지 — 있으면 카드 단독 페이지에 FIG_DEFS(화살촉·해칭 defs)를 싣는다.
+
+    보통은 c['figs']에 있지만, 번호글(post)·보고서(report) 카드는 그림이 항목 사이에
+    직접 낀다 — report 블록 안 ('fig', …) 항목까지 본다."""
+    if c.get('figs'):
+        return True
+    for block in c.get('report') or ():
+        if block and block[0] == 'fig':
+            return True
+    d = c.get('debate')
+    if d and d.get('figs'):
+        return True
+    return False
+
+
+def _write_card_pages(cards, title, footer, out, page_slug, page_css):
+    """카드마다 그 글만 있는 페이지를 하나씩 쓴다 — 대시보드/<page_slug>/<카드슬러그>.html.
+
+    껍데기는 대시보드와 같은 page_css(css() + extra_css)다. 몸은 그 카드 하나를 펼친 채로
+    (card_html(c, standalone=True)) 내고, 머리에 대시보드로 돌아가는 「← 장」 링크를 단다.
+    FOLD_JS·NAV_JS·SW_JS는 안 싣는다 — 접을 것도 고를 것도 없는 페이지다. LINK_JS만 실어
+    「링크 복사」가 이 페이지 자신의 주소를 집게 한다.
+
+    page_slug가 비어 있으면(호환) 아무것도 안 쓰고 0을 돌려준다."""
+    if not page_slug:
+        return 0
+    dash_name = os.path.basename(out)
+    out_dir = os.path.join(os.path.dirname(out), page_slug)
+    os.makedirs(out_dir, exist_ok=True)
+    seen, n = set(), 0
+    for c in cards:
+        t = c['title']
+        if t in seen:      # 'also'로 다른 섹션에도 서는 카드는 원본 목록에서 한 번만 온다
+            continue
+        seen.add(t)
+        sid = c['section'][0]
+        body = card_html(c, standalone=True)
+        fig_defs = FIG_DEFS if _has_figs(c) else ''
+        page = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+                '<title>%s · %s</title>\n' % (t, title) + page_css
+                + '\n' + fig_defs
+                + '\n<div class="wrap">\n'
+                + '<a class="pback" href="../%s#%s">← %s</a>\n' % (dash_name, sid, title)
+                + body
+                + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
+                + LINK_JS + '\n')
+        io.open(os.path.join(out_dir, '%s.html' % slug(t)), 'w', encoding='utf-8').write(page)
+        n += 1
+    print('  글 페이지 %d장 -> 대시보드/%s/' % (n, page_slug))
+    return n
+
+
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='', tops=None,
            search_ph='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
-           sw_labels=('밸류에이션', '개별 포스트')):
+           sw_labels=('밸류에이션', '개별 포스트'), page_slug=''):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -984,7 +1072,11 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
     달리 타일과 한 컨테이너(.sec-pick) 안에 있어 회사를 고르면 같이 접힌다.
 
     newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
-    세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다."""
+    세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다.
+
+    page_slug가 있으면 카드마다 따로 파일을 쓴다(대시보드/<page_slug>/<카드슬러그>.html) —
+    누르면 그 글만 있는 페이지로 간다. 비면(기본값) 지금까지처럼 목록 페이지 안에서만 접혔다
+    편다. 값은 scripts/gen_site.py의 PAGES와 같은 슬러그를 쓴다."""
     secs, order = sections(cards, newest_first)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
@@ -1021,7 +1113,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
         # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
         # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
         lead = sec_top.get(sid, '')
-        cards_html = ''.join(_card(c, dup) for c, dup in cs)
+        cards_html = ''.join(_card(c, dup, page_slug) for c, dup in cs)
         if lead:
             # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
             # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
@@ -1056,6 +1148,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + len(layers), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
+    _write_card_pages(cards, title, footer, out, page_slug, page_css)
     return html
 
 
