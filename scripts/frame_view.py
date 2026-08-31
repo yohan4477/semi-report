@@ -36,7 +36,9 @@ _BOX = re.compile(r'\[([^\]\[]+)\]')
 _ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+)')
 
 
-_BAR = '│║'
+# 세로선은 전각만 오지 않는다. 아스키 표 꼴(+---+ 와 | 이름 |)로 그려 오는 판이 있어
+# ASCII 막대도 본다 — 도식 덩어리 안에서만 도는 함수라 마크다운 표와 안 부딪친다
+_BAR = '│║|'
 
 
 def _bracketize(block):
@@ -48,7 +50,7 @@ def _bracketize(block):
     out = []
     for ln in block.split(chr(10)):
         if any(c in ln for c in _BAR) and not _BOX.search(ln):
-            cells = [c.strip(' ─═-') for c in re.split('[%s]' % _BAR, ln)]
+            cells = [c.strip(' ─═-+') for c in re.split(r'[%s]' % re.escape(_BAR), ln)]
             cells = [c for c in cells if len(re.findall(r'[가-힣A-Za-z0-9]', c)) >= 2]
             if cells:
                 ln = ' '.join('[%s]' % c for c in cells)
