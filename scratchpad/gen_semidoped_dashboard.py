@@ -199,8 +199,9 @@ FOOTER = ('<p>생성물이다. 고칠 것은 <code>scratchpad/gen_semidoped_dash
 def main():
     dc.check_links(CARDS)
     dc.check_labels(CARDS)
+    # 카드를 눌러도 새 페이지로 안 간다 — 자리에서 펼친다. 회차 한 편이 카드 한 장이라
+    # 목록에서 펼치는 것으로 충분하고, 페이지가 따로 나면 주소가 둘로 갈린다
     dc.render(CARDS, 'Semi Doped 대시보드', HEADER, FOOTER, OUT,
-              page_slug='semidoped',
               extra_css=frame_view.CSS + CSS, newest_first=True)
 
 
