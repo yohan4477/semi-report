@@ -6,6 +6,13 @@
 # insights/watch/_metrics/<kind>/<슬러그>.json 에 어댑터가 덮어쓴다. 두 파일을 여기서 합친다.
 # 한 파일에 섞지 않는 이유 — 스크립트가 사람 글을 날리거나 사람이 수치를 손으로 고친다.
 #
+# 어댑터 계약 (metric 하나가 주는 것):
+#   {"value": …, "as_of": "2026-07", "kind": "공표|추정", "src": …,
+#    "unit": "지수(2021.6=100)", "series": [["2024-01", 98.2], …]}
+# series 는 트렌드 도해가 읽는 자리다. 설계에는 없었고 「권역별 가격 트렌드」를 넣으려다
+# 나왔다 — 한 시점 값만으로는 선을 못 그린다. 따로 빼지 않고 같은 파일에 둔 이유는
+# 「지금 값」이 시계열의 마지막 점이라야 둘이 어긋나지 않기 때문이다.
+#
 # 트리거는 frontmatter 가 아니라 본문 표에 있다. notes_lib.parse_front 가 평평한
 # key:value 만 읽기도 하고, 파일을 열었을 때 카드와 같은 꼴로 읽히는 편이 낫기도 하다.
 import io, os, re, json, glob
@@ -87,9 +94,13 @@ def load_one(path):
         # 무엇을 · 갈래 · metric · 걸리는 조건
         what, tk, key, cond = (r + ['', '', '', ''])[:4]
         v = vals.get(key) or {}
+        # series 는 [(때, 값), …]. 트렌드 도해가 이 자리를 읽는다 — 트리거 값과 같은
+        # 파일에 두면 「지금 값」이 시계열의 마지막 점이라 둘이 어긋날 일이 없다.
+        ser = [tuple(x) for x in (v.get('series') or [])]
         trg.append({'what': what, 'kind': tk, 'metric': key, 'cond': cond,
                     'value': v.get('value'), 'as_of': v.get('as_of'),
-                    'nature': v.get('kind'), 'src': v.get('src')})
+                    'nature': v.get('kind'), 'src': v.get('src'),
+                    'unit': v.get('unit', ''), 'series': ser})
 
     return {
         'slug': slug, 'path': os.path.relpath(path, os.path.dirname(HERE)),
