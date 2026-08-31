@@ -322,8 +322,36 @@
 <div class="fs" data-kind="gen"><p class="sh"><b>⑦ 발행</b><i>세 갈래가 같은 길을 쓴다</i></p><div class="fnn"><div class="fn" style="--nc:#0f9d76"><span class="nn">NEW 배지 기준일</span><span class="ns">scripts/update_card_ledger.py</span></div><div class="fn" style="--nc:#0f9d76"><span class="nn">사이트 빌드</span><span class="ns">scripts/gen_site.py</span></div></div><ul><li><code>update_card_ledger.py</code>를 건너뛰면 NEW 배지가 안 붙는다. 기준은 업로드일이 아니라 <b>사이트에 처음 올라온 날</b>이고 그 날짜는 대장에만 있다.</li><li><b>리포트 한 편 때문에 페이지를 새로 만들지 않는다</b> — 주제 대시보드의 섹션으로 넣는다. 그렇게 늘어난 게 19장이었다.</li><li><code>main</code>에 푸시하면 Cloudflare Pages가 <code>gen_site.py</code>를 돌려 자동 배포한다.</li></ul></div>
 </section>
 </details>
-<details class="fold"><summary>실험 — 체계를 바꾸기 전에 재 본 것<span>2</span></summary>
+<details class="fold"><summary>실험 — 체계를 바꾸기 전에 재 본 것<span>4</span></summary>
 <p class="lede2">측정값을 남긴다. 무엇을 조건으로 걸었고, 그 조건 안에서 무엇이 안 되었는지가 다음 회차의 근거다.</p>
+<section class="xp" id="exp-card-fit" style="--ac:#7c3aed">
+<div class="xh"><span class="em">📏</span><h2>오푸스 답을 그대로 카드에 실으면 읽히나</h2><span class="dt">2026-08-31</span></div>
+<p class="q">앞 실험이 남긴 물음 하나다 — 분량이 세 배인 답을 지금 카드 꼴(접었다 펴는 한 덩어리)에 그대로 실었을 때 읽히나.</p><p class="cond">운영 대시보드는 안 건드리고 미리보기 HTML 을 임시 자리에 구웠다. 카드 넷(오푸스 둘·제미나이 둘)을 다 펴고 브라우저(폭 1280)에서 카드 높이를 쟀다.</p>
+<div class="common">
+<div class="cm"><b>오푸스 경영전략</b><span class="w">6,287 px</span><p>판 2 · 아스키 9.</p></div>
+<div class="cm"><b>오푸스 기술</b><span class="w">9,246 px</span><p>판 23 · 아스키 8. 노트북 화면(800px)으로 11.5 화면이다.</p></div>
+<div class="cm"><b>제미나이</b><span class="w">2,418 · 2,570 px</span><p>같은 자로 잰 값. 2.6~3.6배 차이다.</p></div>
+<div class="cm"><b>덤으로 나온 결함</b><span class="w">2건</span><p>아스키 9px · 도식 들여쓰기 소실. 둘 다 운영에도 있었다.</p></div>
+</div>
+<div class="fs" data-kind="gate"><p class="sh"><b>결과 ① 한 카드에 안 담긴다</b><i>접었다 펴는 꼴로는 길다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">오푸스 기술</span><span class="ns">9,246 px</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">화면 하나</span><span class="ns">약 800 px</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">나눗셈</span><span class="ns">11.5 화면</span></div></div><ul><li>카드를 나누거나(절 단위) 카드 안에 목차를 세우지 않으면 못 읽는다.</li><li>분량은 모델이 아니라 <b>카드 꼴</b>이 정하는 문제다 — 이 실험이 그것을 갈라 보였다.</li></ul></div>
+<div class="arw" aria-hidden="true">▼</div>
+<div class="fs" data-kind="gate"><p class="sh"><b>결과 ② 실어 보니 우리 결함이 드러났다</b><i>남의 답으로 우리 파서를 시험한 셈이다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">아스키 글자</span><span class="ns">9px  →  10.5px</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">들여쓰기</span><span class="ns">문단으로 쪼갰다 이으며 사라짐</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">그 여파</span><span class="ns">표·좌우 대조가 아스키로 떨어짐</span></div></div><ul><li>아스키를 폭에 맞춰 9px 까지 줄이고 있었다. 화면에서 못 읽는다 — 글자를 줄이는 일과 지우는 일이 그 크기에서 갈리지 않는다. 바닥을 10.5px 로 올렸다.</li><li>카드가 앞면 문단을 걷을 때 본문을 문단으로 쪼갰다 다시 이었는데, 조각마다 strip 이 걸려 <b>도식 줄의 들여쓰기가 통째로 사라졌다</b>. 칸 정렬이 무너지니 표가 표로 안 읽혔다. 걷은 문단 자리만 도려내도록 고쳤다.</li></ul></div>
+<p class="verdict">오푸스 답을 그대로 싣는 길은 지금 카드 꼴에서 막힌다. 실으려면 카드를 절 단위로 쪼개거나 카드 안에 목차를 세워야 한다 — 그것은 모델을 고르는 일과 별개의 결정이다.</p>
+</section>
+<section class="xp" id="exp-fig-width" style="--ac:#7c3aed">
+<div class="xh"><span class="em">📐</span><h2>도해 폭을 프롬프트로 제한하면 판이 늘어나나</h2><span class="dt">2026-08-31</span></div>
+<p class="q">우리 파서는 줄이 길면 판(SVG)을 못 만들고 아스키로 둔다. 프롬프트에 「한 줄 40자」를 넣으면 판으로 굽는 비율이 오르나.</p><p class="cond">운영 프롬프트는 안 건드리고 사본에 한 줄을 더해 같은 회차를 3.1 Pro 로 다시 받았다. 40자는 판 폭 520px 과 본문 글자 13.4px 에서 낸 수다. 잰 것은 <code>frame_view._block_html</code> 이 실제로 무엇을 냈는가다.</p>
+<div class="common">
+<div class="cm"><b>최장 줄</b><span class="w">97~144칸  →  36~40칸</span><p>지시는 들었다. 줄이 실제로 짧아졌다.</p></div>
+<div class="cm"><b>판 비율</b><span class="w">50%  →  0%</span><p>판 3개에서 0개. 목표와 반대로 갔다.</p></div>
+<div class="cm"><b>도해 수</b><span class="w">6개  →  3개</span><p>개수 자체가 절반으로 줄었다.</p></div>
+<div class="cm"><b>낱말 손실</b><span class="w">0건</span><p>상자 이름이 잘리거나 문장이 사라지지는 않았다.</p></div>
+</div>
+<div class="fs" data-kind="gate"><p class="sh"><b>결과 ① 폭이 아니라 그림 꼴이 바뀌었다</b><i>짧게 그리라니 다르게 그렸다</i></p><div class="fnn"><div class="fn" style="--nc:#ea580c"><span class="nn">상자 틀</span><span class="ns">┌ │ └ 대신 ├ └ 로 그림</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">우리 판정</span><span class="ns">_is_list 가 목록으로 읽음</span></div><div class="fn" style="--nc:#ea580c"><span class="nn">목적지 줄</span><span class="ns">선 문자가 없어 도식 범위가 끊김</span></div></div><ul><li>전략 뷰의 유일한 도해는 <code>boxes()</code> 를 직접 부르면 판이 나온다. 그런데 <code>_is_list</code> 가 줄머리 <code>├ └</code> 를 목록 표시로 보고 글로 풀었다.</li><li>기술 뷰는 소스 상자와 목적지 상자를 빈 줄 없이 이었는데 목적지 줄에 선 문자가 없어 <code>_is_dia</code> 가 그 줄을 도식으로 안 봤다 — 이음 0개짜리 그래프가 되어 아스키로 떨어졌다.</li></ul></div>
+<div class="arw" aria-hidden="true">▼</div>
+<div class="fs" data-kind="work"><p class="sh"><b>결과 ② 넣지 않았다</b><i>순서가 틀렸다</i></p><div class="fnn"><div class="fn" style="--nc:#6366f1"><span class="nn">표본</span><span class="ns">1편 · 2뷰 · 6도해</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">먼저 할 것</span><span class="ns">_is_list · _is_dia 판정</span></div><div class="fn" style="--nc:#6366f1"><span class="nn">그다음</span><span class="ns">표본을 늘려 다시 잰다</span></div></div><ul><li>한 줄을 넣으면 이 회차처럼 역효과가 난다. 파서의 목록·도식 판정을 먼저 손보고 다시 재는 것이 순서다.</li><li>실험 산출물은 <code>insights/frames/exp/</code> 에 있다 — 프롬프트 사본과 받은 답 둘.</li></ul></div>
+<p class="verdict">「폭을 줄이면 판이 는다」는 틀렸다. 판을 막는 것은 줄 길이가 아니라 우리 판정 규칙이었다. 다음에 잴 것: 목록·도식 판정을 고친 뒤 같은 프롬프트로 다시 받으면 판 비율이 오르나.</p>
+</section>
 <section class="xp" id="exp-opus-gemini" style="--ac:#7c3aed">
 <div class="xh"><span class="em">⚖️</span><h2>같은 프롬프트에 오푸스는 다르게 답하나</h2><span class="dt">2026-08-31</span></div>
 <p class="q">뷰를 받아 오는 자리에 <b>제미나이 3.1 Pro</b> 대신 <b>클로드 오푸스 5</b>를 세우면 무엇이 달라지나 — 길이·구조·도해·원문 밖 주장.</p><p class="cond">할라페뇨 회차 하나(2026-08-27)로 뷰 둘을 각각 받았다. 프롬프트는 <code>scripts/prompts/{strategy,tech}.txt</code> 그대로, 회차 전문 50KB 를 같이 보냈다. 오푸스 쪽에는 저장소 규칙(CLAUDE.md·문체 규칙)을 <b>따르지 말라</b>고 못 박았다 — 안 그러면 조건이 달라 비교가 안 된다. 답은 <code>insights/frames/exp/</code> 에 두었다(검사기가 보는 자리 밖).</p>
