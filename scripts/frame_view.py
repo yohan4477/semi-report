@@ -121,6 +121,485 @@ def _cells(ln):
     return out
 
 
+# ── 격자 그래프 파서 ─────────────────────────────────────────────────────
+# 줄 순서로 상자를 이어 붙이지 않는다. 문자 격자에서 상자를 찾고, 상자 밖의
+# 선 문자를 따라가 실제로 어느 상자와 어느 상자가 닿았는지를 읽은 뒤, 그
+# 그래프(상자 + 이음) 그대로 판을 짠다. 「연산기 A·B·C 가 한 풀에 붙는다」처럼
+# 갈래·모임이 있는 그림은 줄 단위 사슬(옛 길)로는 못 그린다 — 세 상자가
+# 세로로 쌓인 것과 셋이 한 곳에 모이는 것이 같은 그림으로 나온다.
+# 글자마다 어느 쪽(위·아래·왼·오)으로 이어지는지를 정해 둔다. '◀' 같은 화살촉은
+# 좌우로만 잇는다 — 방향을 안 가리면 화살촉이 우연히 같은 칸에 세로로 쌓였을 때
+# (독립된 가로선 셋이 왼쪽 끝만 나란한 경우) 하나의 세로선으로 잘못 묶인다.
+# 2026-08-31 「전용 저지연 버스」 세 줄이 그렇게 하나로 뭉쳤다.
+_DIRS = {
+    '─': 'LR', '-': 'LR', '═': 'LR', '~': 'LR', '=': 'LR',
+    '│': 'UD', '|': 'UD', '║': 'UD',
+    '┌': 'DR', '╔': 'DR', '╭': 'DR',
+    '┐': 'DL', '╗': 'DL', '╮': 'DL',
+    '└': 'UR', '╚': 'UR', '╰': 'UR',
+    '┘': 'UL', '╝': 'UL', '╯': 'UL',
+    '├': 'UDR', '┤': 'UDL', '┬': 'DLR', '┴': 'ULR', '┼': 'UDLR',
+    '+': 'UDLR',
+    '▲': 'UD', '▼': 'UD', '↑': 'UD', '↓': 'UD',
+    '◀': 'LR', '▶': 'LR', '←': 'LR', '→': 'LR', '<': 'LR', '>': 'LR',
+}
+_WIRE_CH = ''.join(_DIRS.keys())
+_WIRE = frozenset(_DIRS.keys())
+# 줄 머리에서 대괄호 없이 선에 바로 붙은 낱말(「사용자 프롬프트 ──>」의
+# 「사용자 프롬프트」)도 상자로 본다 — 안 그러면 그 낱말이 각주로 떨어져
+# 그래프에서 시작점이 사라진다
+_BARE_HEAD = re.compile(r'^([가-힣A-Za-z0-9][가-힣A-Za-z0-9 /]{0,18}[가-힣A-Za-z0-9])'
+                        r'\s*(?=[%s])' % re.escape(_WIRE_CH))
+
+
+class _GBox(object):
+    """격자에서 읽은 상자 하나. (줄, 칸) 이 곧 원래 그림에서의 자리다."""
+    __slots__ = ('name', 'sub', 'row', 'c0', 'c1', 'bare')
+
+    def __init__(self, name, sub, row, c0, c1, bare=False):
+        self.name, self.sub, self.row, self.c0, self.c1 = name, sub, row, c0, c1
+        self.bare = bare             # 대괄호 없이 맨몸으로 선에 붙은 낱말인가
+
+
+def _graph_boxes(block):
+    """대괄호 상자와 맨몸 낱말을 줄·칸 위치와 함께 뽑는다.
+
+    여러 줄 테두리(┌│└)는 호출하는 쪽에서 미리 `_unframe` 으로 접어 한 줄로
+    만들어 둔다 — 상자 찾기는 대괄호 정규식 하나로 충분해진다.
+    """
+    out = []
+    for i, ln in enumerate(block.split(chr(10))):
+        cells = _cells(ln)
+        idx2col = [a for ch, a, b in cells]
+
+        def col_of(idx):
+            return idx2col[idx] if idx < len(idx2col) else (
+                idx2col[-1] + 1 if idx2col else 0)
+        taken = []           # 이 줄에서 이미 상자로 먹은 문자 구간(시작,끝)
+        for m in _BOX.finditer(ln):
+            name = m.group(1).strip()
+            if len(re.findall(r'[가-힣A-Za-z0-9]', name)) < 2:
+                continue
+            s, e = m.start(), m.end()
+            c0, c1 = col_of(s), col_of(e - 1) + (cells[e - 1][2] - cells[e - 1][1]
+                                                 if e - 1 < len(cells) else 1)
+            tail = ln[e:]
+            tm = re.match(r'\s*[:\-–—]\s*(.+)', tail)
+            sub = ''
+            if tm and not (set(tm.group(1)) & _WIRE) and '[' not in tm.group(1):
+                sub = tm.group(1).strip()
+            out.append(_GBox(name, sub, i, c0, c1))
+            taken.append((s, e))
+        bm = _BARE_HEAD.match(ln.lstrip())
+        if bm:
+            lead = len(ln) - len(ln.lstrip())
+            s, e = lead, lead + bm.end(1)
+            if not any(s < te and s2 < e for s2, te in taken):
+                text = bm.group(1).strip()
+                if len(re.findall(r'[가-힣A-Za-z0-9]', text)) >= 2:
+                    c0, c1 = col_of(s), col_of(min(e, len(idx2col)) - 1) + 1 if e else col_of(s)
+                    out.append(_GBox(text, '', i, c0, c1, bare=True))
+    return out
+
+
+def _wire_cells(block, boxes):
+    """상자 칸을 뺀 나머지에서 선 문자만 (줄,칸) -> 글자 로 모은다."""
+    covered = set()
+    for b in boxes:
+        for c in range(b.c0, b.c1):
+            covered.add((b.row, c))
+    cells = {}
+    for i, ln in enumerate(block.split(chr(10))):
+        for ch, a, b in _cells(ln):
+            if ch == ' ' or (i, a) in covered:
+                continue
+            if ch in _WIRE:
+                cells[(i, a)] = ch
+    return cells
+
+
+_ARROWHEAD = frozenset('▲▼◀▶→←↑↓<>')
+
+
+def _components(cells):
+    """선 칸을 이웃으로 묶어 이음 성분을 만든다.
+
+    글자의 방향(`_DIRS`)이 맞는 이웃만 잇는다 — 아무 선 칸이나 붙어 있다고
+    이으면 '◀' 셋이 왼쪽 끝만 나란한 우연을 세로선 하나로 읽는다. 나가는 쪽은
+    엄격히 본다. 다만 **받는 쪽이 화살촉이면 방향을 안 가린다** — 손으로 그린
+    그림은 화살촉이 꺾이는 자리에서 한 칸씩 어긋나는 일이 흔하다(「▼」가 코너
+    「┘」보다 한 칸 왼쪽에 서는 식). 화살촉은 그 자체가 「여기서 선이 끝난다」는
+    표시라 어느 쪽에서 와도 받는다.
+    """
+    seen, comps = set(), []
+    for pos in cells:
+        if pos in seen:
+            continue
+        stack, comp = [pos], []
+        seen.add(pos)
+        while stack:
+            p = stack.pop()
+            comp.append(p)
+            r, c = p
+            dp = _DIRS.get(cells[p], '')
+            for dr, dc, out, back in ((0, 1, 'R', 'L'), (0, -1, 'L', 'R'),
+                                      (1, 0, 'D', 'U'), (-1, 0, 'U', 'D')):
+                if out not in dp:
+                    continue
+                q = (r + dr, c + dc)
+                if q not in cells or q in seen:
+                    continue
+                qc = cells[q]
+                if back in _DIRS.get(qc, '') or qc in _ARROWHEAD or cells[p] in _ARROWHEAD:
+                    seen.add(q)
+                    stack.append(q)
+        comps.append(comp)
+    return comps
+
+
+class _UF(object):
+    """이음 성분을 라벨 다리로 합칠 때 쓰는 합집합-찾기."""
+
+    def __init__(self, n):
+        self.p = list(range(n))
+
+    def find(self, x):
+        while self.p[x] != x:
+            self.p[x] = self.p[self.p[x]]
+            x = self.p[x]
+        return x
+
+    def union(self, x, y):
+        x, y = self.find(x), self.find(y)
+        if x != y:
+            self.p[y] = x
+
+
+def _bridge(block, comps, boxes):
+    """같은 줄에서 글 하나(라벨)를 사이에 두고 끊긴 이음 성분을 하나로 잇는다.
+
+    「─┼─ (트래픽 경합/지연) ─▶」처럼 선 가운데 글이 끼면 그 자리의 선 문자가
+    없어 두 성분으로 갈린다. 사이에 상자가 없고 글이 짧으면(60 칸 이내) 원래
+    한 선이었던 것으로 보고 합치고, 그 글을 이음의 이름으로 얹는다.
+    """
+    comp_id = {}
+    for i, comp in enumerate(comps):
+        for p in comp:
+            comp_id[p] = i
+    uf = _UF(len(comps))
+    box_spans = {}
+    for b in boxes:
+        box_spans.setdefault(b.row, []).append((b.c0, b.c1))
+    labels = {}
+    lines = block.split(chr(10))
+    for row_i, ln in enumerate(lines):
+        cells = _cells(ln)
+        cols = sorted(c for (r, c) in comp_id if r == row_i)
+        runs = []                    # (시작칸, 끝칸, 성분id) — 이 줄 안에서 이어진 구간
+        cur = None
+        for c in cols:
+            cid = comp_id[(row_i, c)]
+            if cur and cur[2] == cid and c == cur[1] + 1:
+                cur = (cur[0], c, cid)
+            else:
+                if cur:
+                    runs.append(cur)
+                cur = (c, c, cid)
+        if cur:
+            runs.append(cur)
+        for k in range(len(runs) - 1):
+            s0, e0, id0 = runs[k]
+            s1, e1, id1 = runs[k + 1]
+            if uf.find(id0) == uf.find(id1):
+                continue
+            g0, g1 = e0 + 1, s1 - 1
+            if g1 < g0 or g1 - g0 > 60:
+                continue
+            if any(bc0 < g1 + 1 and bc1 > g0 for bc0, bc1 in box_spans.get(row_i, [])):
+                continue            # 사이에 상자가 있으면 상자를 건너 잇지 않는다
+            text = ''.join(ch for ch, a, bb in cells if g0 <= a <= g1).strip(' ─═-·')
+            if len(re.findall(r'[가-힣A-Za-z0-9]', text)) < 1:
+                continue
+            uf.union(id0, id1)
+            root = uf.find(id0)
+            if text and root not in labels:
+                labels[root] = text
+    groups = {}
+    for i, comp in enumerate(comps):
+        groups.setdefault(uf.find(i), []).extend(comp)
+    out_cells, out_labels = [], []
+    for root, cells_ in groups.items():
+        out_cells.append(cells_)
+        out_labels.append(labels.get(root, ''))
+    return out_cells, out_labels
+
+
+def _horiz_seeded(comps, boxes):
+    """가로로(대괄호 바로 옆) 선이 닿은 적이 있는 상자 id 집합.
+
+    넓은 상자(제목 줄)는 세로 붙음을 안 본다 — 아래 세로선의 칸이 넓은 폭
+    안에 우연히 들 수 있다. 하지만 그 상자가 다른 자리에서 이미 가로로
+    선을 문 적이 있으면(진짜 마디라는 증거) 넓어도 세로 붙음을 마저 본다.
+    """
+    allcells = set()
+    for c in comps:
+        allcells.update(c)
+    seeded = set()
+    for b in boxes:
+        if any((b.row, c) in allcells for c in (b.c1, b.c1 + 1, b.c0 - 1, b.c0 - 2)):
+            seeded.add(id(b))
+    return seeded
+
+
+# 화살촉이 가리키는 쪽. 닿은 자리의 글자가 이 사전에 있으면 기본 방향을 뒤집을
+# 수도 있다 — 「[상자] <── …」처럼 화살촉이 상자 쪽을 보면 그 상자는 나가는
+# 쪽이 아니라 받는 쪽이다
+_ARROW_DIR = {'<': 'L', '◀': 'L', '>': 'R', '▶': 'R', '←': 'L', '→': 'R',
+             '▲': 'U', '▼': 'D', '↑': 'U', '↓': 'D'}
+_OPPOSITE = {'R': 'L', 'L': 'R', 'U': 'D', 'D': 'U'}
+
+
+def _side_role(touch_dir, ch, default):
+    """상자에서 touch_dir 쪽으로 닿은 자리의 글자 ch 를 보고 나가는지·받는지 정한다.
+
+    화살촉이 상자를 향하면(닿은 방향의 반대쪽을 가리키면) 받는 쪽이고, 상자에서
+    멀어지는 쪽을 가리키면 나가는 쪽이다. 화살촉이 없으면 `default`(기본값)다.
+    """
+    d = _ARROW_DIR.get(ch)
+    if d is None:
+        return default
+    return 'dst' if d == _OPPOSITE[touch_dir] else 'src'
+
+
+def _touches(cellset, cellchars, boxes, seeded, ignore_arrows=False):
+    """이 이음 성분이 닿은 상자를 나가는 쪽(src)·들어오는 쪽(dst) 으로 가른다.
+
+    오른쪽·아래로 나는 선은 나가는 쪽, 왼쪽·위에서 오는 선은 들어오는 쪽으로
+    본다 — 화살촉이 없을 때의 기본 방향이다. 닿은 자리에 화살촉이 있으면
+    `_side_role` 이 그 방향을 따라 뒤집는다(`ignore_arrows` 면 안 뒤집는다 —
+    「◀── … ──▶」처럼 양끝에 화살촉이 서로를 보면 둘 다 받는 쪽이 되어 이음이
+    아예 안 잡힌다. 그때는 화살촉을 무시하고 기본값으로 되돌린다). 가로 붙음
+    (같은 줄, 대괄호 바로 옆)을 먼저 보고, 그것이 없을 때만 세로 붙음(윗줄·
+    아랫줄)을 본다. 세로 붙음은 좁은 상자(24 칸 이하)이거나 `seeded`(다른
+    곳에서 이미 가로로 닿은 적이 있는) 상자만 본다.
+    """
+    src, dst = [], []
+    for b in boxes:
+        narrow = b.c1 - b.c0 <= 24 or id(b) in seeded
+        # 대괄호와 선 사이에 빈칸이 하나 끼는 꼴(「] ─┐」)까지 허용한다
+        right = next((c for c in (b.c1, b.c1 + 1) if (b.row, c) in cellset), None)
+        left = next((c for c in (b.c0 - 1, b.c0 - 2) if (b.row, c) in cellset), None)
+        below = next((c for c in range(b.c0, b.c1) if (b.row + 1, c) in cellset), None)
+        above = next((c for c in range(b.c0, b.c1) if (b.row - 1, c) in cellset), None)
+        if right is not None:
+            ch = '' if ignore_arrows else cellchars.get((b.row, right), '')
+            role = _side_role('R', ch, 'src')
+        elif left is not None:
+            ch = '' if ignore_arrows else cellchars.get((b.row, left), '')
+            role = _side_role('L', ch, 'dst')
+        elif narrow and below is not None:
+            ch = '' if ignore_arrows else cellchars.get((b.row + 1, below), '')
+            role = _side_role('D', ch, 'src')
+        elif narrow and above is not None:
+            ch = '' if ignore_arrows else cellchars.get((b.row - 1, above), '')
+            role = _side_role('U', ch, 'dst')
+        else:
+            continue
+        (src if role == 'src' else dst).append(b)
+    return src, dst
+
+
+def _graph_edges(block, boxes):
+    """상자 목록에서 실제 선으로 닿은 쌍만 이음으로 만든다. 없는 이음은 안 만든다."""
+    wcells = _wire_cells(block, boxes)
+    comps = _components(wcells)
+    if not comps:
+        return []
+    seeded = _horiz_seeded(comps, boxes)
+    groups, labels = _bridge(block, comps, boxes)
+    edges = []
+    for cells, label in zip(groups, labels):
+        cellset = set(cells)
+        src, dst = _touches(cellset, wcells, boxes, seeded)
+        if not src or not dst:
+            # 화살촉 방향이 양끝에서 서로를 가리키면(「◀──…──▶」) 둘 다 받는
+            # 쪽이 되어 여기 걸린다 — 화살촉을 무시하고 기본 방향으로 다시 본다
+            src, dst = _touches(cellset, wcells, boxes, seeded, ignore_arrows=True)
+        if not src or not dst:
+            continue                # 상자를 못 찾은 선은 이음이 아니다(꾸밈 화살표 등)
+        first = True
+        for s in src:
+            for t in dst:
+                if s is t:
+                    continue
+                edges.append((s, t, label if first else ''))
+                first = False
+    return edges
+
+
+_WIRE_STRIP = re.compile('[%s]' % re.escape(_WIRE_CH))
+
+
+def _graph_notes(block, used):
+    """상자에도 이음에도 못 붙는 글을 각주로 남긴다. `used` 는 이미 쓴 글(이음 이름)이다."""
+    notes = []
+    for ln in block.split(chr(10)):
+        t = _BOX.sub(' ', ln)
+        t = _ARROW.sub(' ', t)
+        t = _WIRE_STRIP.sub(' ', t)
+        t = re.sub(r'\s{2,}', ' · ', t).strip(' ·')
+        if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 4 and t not in used:
+            notes.append(t)
+    return notes
+
+
+def _col_bands(boxes, gap=6):
+    """상자의 왼쪽 칸을 왼→오 묶음(열)으로 가른다. 틈이 좁으면 같은 열이다."""
+    xs = sorted(set(b.c0 for b in boxes))
+    bands = []
+    for x in xs:
+        if bands and x - bands[-1][-1] <= gap:
+            bands[-1].append(x)
+        else:
+            bands.append([x])
+    band_of = {}
+    for i, grp in enumerate(bands):
+        for x in grp:
+            band_of[x] = i
+    return band_of, len(bands)
+
+
+def _graph_of(block):
+    """도식 한 덩어리를 (상자, 이음, 각주) 그래프로. 그래프로 못 읽으면 None.
+
+    이음이 하나도 안 잡히면 그래프로 다룰 뜻이 없다 — 사슬 하나짜리 그림은
+    옛 길(줄 단위)에 맡긴다. 그 길도 같은 안전망(`_kept`)을 탄다.
+    """
+    block = _unframe(block)
+    boxes = _graph_boxes(block)
+    if len(boxes) < 2:
+        return None
+    edges = _graph_edges(block, boxes)
+    if not edges:
+        return None
+    used = set(e[2] for e in edges if e[2])
+    notes = _graph_notes(block, used)
+    return boxes, edges, notes
+
+
+def _weak_groups(boxes, edges):
+    """이음으로 이어진 상자만 한 덩이로 묶는다(약한 연결 성분).
+
+    받은 그림 한 덩어리 안에 서로 안 이어진 미니 도식이 여럿 들어오는 일이
+    있다(「과거」 사슬과 「현재」 다이아몬드가 빈 줄로만 나뉜 채 한 울타리
+    안에 있는 경우). 그 둘을 한 판의 같은 열로 묶으면 서로 무관한 상자의
+    가로 자리가 우연히 겹쳐 열이 쓸데없이 늘고 판 폭을 넘는다 — 이음이 실제로
+    있는 상자끼리만 한 판으로 묶고, 나머지는 따로 판을 짠다.
+    """
+    idx = {id(b): i for i, b in enumerate(boxes)}
+    uf = _UF(len(boxes))
+    for a, b, _ in edges:
+        uf.union(idx[id(a)], idx[id(b)])
+    groups = {}
+    for b in boxes:
+        groups.setdefault(uf.find(idx[id(b)]), []).append(b)
+    # 원래 그림에서 먼저 나온 덩이가 앞서게, 맨 위 줄 번호로 정렬한다
+    return sorted(groups.values(), key=lambda g: min(b.row for b in g))
+
+
+def _one_graph_plate(boxes, edges, width):
+    """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 못 앉히면 None."""
+    if len(boxes) < 2:
+        return None
+    rows_sorted = sorted(set(b.row for b in boxes))
+    row_of = {r: i for i, r in enumerate(rows_sorted)}
+    band_of, ncol = _col_bands(boxes)
+    if ncol > 4 or ncol < 1:
+        return None
+    grid = {}
+    for b in boxes:
+        key = (row_of[b.row], band_of[b.c0])
+        if key in grid:
+            return None           # 자리가 겹치면 읽은 자리를 못 믿는 것이니 되돌린다
+        grid[key] = b
+    nrow = len(rows_sorted)
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0)
+    slot = {}
+    for r in range(nrow):
+        cells = []
+        for c in range(ncol):
+            b = grid.get((r, c))
+            cells.append((b.name, b.sub) if b else None)
+        p.row(*cells)
+        for c in range(ncol):
+            b = grid.get((r, c))
+            if b:
+                slot[id(b)] = (r, c)
+    try:
+        for a, b, label in edges:
+            ra, ca = slot[id(a)]
+            rb, cb = slot[id(b)]
+            p.connect(p.at(ra, ca), p.at(rb, cb), label)
+        return p.render('받은 글의 도식')
+    except AssertionError:
+        return None
+
+
+def _graph_plate(block, width=520.0):
+    """그래프를 판으로. 자리가 겹치거나 칸이 넷을 넘으면 못 읽은 것으로 되돌린다.
+
+    서로 안 이어진 미니 도식이 한 덩어리에 여럿 있으면(`_weak_groups`) 판을
+    여럿 짜서 위아래로 잇는다 — 하나라도 못 앉히면 전부 되돌려 옛 길에 맡긴다.
+    """
+    g = _graph_of(block)
+    if not g:
+        return None
+    boxes, edges, notes = g
+    # 이음이 하나도 안 닿은 상자는 그래프의 마디가 아니라 소제목·구분줄이다
+    # (「기존 방식: 통합 메모리 풀」처럼). 칸에 넣으면 그 넓은 글이 열 폭을
+    # 잡아먹어 진짜 마디들이 밀려나거나 판 자체가 폭을 넘는다 — 각주로 내린다
+    touched = set()
+    for a, b, _ in edges:
+        touched.add(id(a))
+        touched.add(id(b))
+    heads = [b for b in boxes if id(b) not in touched]
+    boxes = [b for b in boxes if id(b) in touched]
+    if len(boxes) < 2:
+        return None
+    notes = [h.name + (' — ' + h.sub if h.sub else '') for h in heads] + notes
+    # 이음 이름이 길면 같은 줄 이음의 틈(`_need_gap_x`)이 그 글자 폭만큼 벌어져
+    # 판 폭을 넘긴다 — 긴 이름은 선 위에 못 얹고 판 아래 각주로 내린다
+    fixed_edges = []
+    for a, b, label in edges:
+        if label and fig_layout.text_w(label, fig_layout.FS_S) > 90:
+            notes.append(label)
+            label = ''
+        fixed_edges.append((a, b, label))
+    edges = fixed_edges
+    groups = _weak_groups(boxes, edges)
+    svgs = []
+    for grp in groups:
+        gset = set(id(b) for b in grp)
+        gedges = [e for e in edges if id(e[0]) in gset and id(e[1]) in gset]
+        svg = _one_graph_plate(grp, gedges, width)
+        if not svg:
+            return None            # 한 덩이라도 못 앉히면 전부 옛 길로 되돌린다
+        svgs.append(svg)
+    # 각주는 빈 판에 못 싣는다(줄이 없으면 `_layout` 이 못 짠다) — 문단으로
+    # 마지막 판 뒤에 붙인다. svg 안 각주(`p.note()`)와 달리 판 높이에 안 갇히는
+    # <p> 라 개수를 억지로 줄이지 않는다 — 줄이면 `_kept` 가 낱말 빠짐으로 막는다
+    seen, uniq = set(), []
+    for n in notes:
+        if n and n not in seen:
+            seen.add(n)
+            uniq.append(n)
+    if uniq:
+        notes_html = ''.join('<p class="fig-note">%s</p>' % _inline(n) for n in uniq)
+        return ''.join(svgs) + notes_html
+    return ''.join(svgs)
+
+
 def _split_cols(block):
     """나란히 선 두 판을 가른다. 못 가르면 None.
 
@@ -247,6 +726,19 @@ def _narrow_plate(block):
     return None
 
 
+def _plate_for(block):
+    """도식 한 덩어리(가른 뒤의 한쪽도 포함)를 판으로. 그래프 길을 먼저 시도한다.
+
+    격자에서 상자·이음을 읽어 그린 판이 사슬이 아니라 실제 그래프(갈래·모임)를
+    담는다 — 되면 그 판을 쓰고, 이음이 안 잡히거나 자리가 겹치면(4-1 칸 넘음 등)
+    옛 줄 단위 길로 넘긴다. 옛 길도 같은 낱말 안전망(`_kept`)을 탄다.
+    """
+    g = _graph_plate(block)
+    if g:
+        return g
+    return _one_plate(block)
+
+
 def boxes(block):
     """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
     # 좌우 가르기가 먼저다. 상자 접기를 먼저 하면 열 정렬이 깨져 나란한 두 판이 한 줄에
@@ -258,11 +750,11 @@ def boxes(block):
     if _is_list(block):
         return None                 # 목록은 받은 꼴 그대로 둔다
     if two:
-        a, b = (_one_plate(_unframe(x)) for x in two)
+        a, b = (_plate_for(_unframe(x)) for x in two)
         if a and b:
             return '<div class="fv-two">%s%s</div>' % (a, b)
         return None
-    return _one_plate(block)
+    return _plate_for(block)
 
 
 def _one_plate(block):
@@ -683,6 +1175,11 @@ CSS = fig_layout.CSS + '''
 .uc-rep .fv-b { padding:4px 14px 14px; }
 .uc-rep .fv-b p { margin:8px 0; font-size:.84rem; line-height:1.75; color:var(--ink-2); }
 .uc-rep .fv-b p.fv-h { margin:14px 0 6px; font-weight:800; color:var(--ink); }
+/* 격자 그래프 판이 상자에도 이음에도 못 붙인 글 — 판 아래 각주로 낸다.
+   fig_layout.Plate.note() 가 svg 안에 그리는 각주와 같은 자리 뜻이라 비슷하게
+   가운데 정렬한 작은 글자로 둔다 */
+.uc-rep .fv-b p.fig-note { text-align:center; font-size:.76rem; color:var(--ink-3);
+  margin:2px 0 10px; }
 .uc-rep .fv-b ul { margin:6px 0; padding-left:18px; }
 .uc-rep .fv-b li { font-size:.84rem; line-height:1.75; color:var(--ink-2); margin:0 0 4px; }
 .uc-rep .fv-b table { width:100%; border-collapse:collapse; margin:10px 0; font-size:.78rem; }
