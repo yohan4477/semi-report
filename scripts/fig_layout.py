@@ -66,9 +66,12 @@ def text_w(s, fs=FS):
 class Box(object):
     """놓인 상자 하나. 변 위의 점을 준다 — 좌표는 여기서만 나온다."""
 
-    def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None):
+    def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None, subout=False):
         self.x, self.y, self.w, self.h = x, y, w, h
         self.label, self.sub, self.hi = label, sub, hi
+        # subout 이면 부제를 상자 밖 아래에 깐다. 부제가 길어 상자를 넓히면 두 칸짜리
+        # 줄이 판을 넘어 세로 사슬로 떨어진다 — 글자를 지우지 않고 폭만 피한다
+        self.subout = subout
         self.rc = rc                # (줄, 칸). 판을 다시 놓아도 링크를 찾아온다
 
     @property
@@ -103,7 +106,12 @@ class Box(object):
         cls = 'fl-bh' if self.hi else 'fl-b'
         o = ['<rect x="%g" y="%g" width="%g" height="%g" rx="6" class="%s"/>'
              % (self.x, self.y, self.w, self.h, cls)]
-        if self.sub:
+        if self.sub and self.subout:
+            o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
+                     % (self.cx, self.cy + 4, self.label))
+            o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
+                     % (self.cx, self.y1 + 14, self.sub))
+        elif self.sub:
             o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
                      % (self.cx, self.cy - 2, self.label))
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
@@ -118,11 +126,12 @@ class Plate(object):
     """판 하나. 칸을 격자로 놓고, 선은 놓인 상자에서 뽑는다."""
 
     def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
-                 stretch=True):
+                 stretch=True, subout=False):
         self.W = float(width)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
+        self.subout = subout        # 부제를 상자 밖 아래에 깐다(폭 계산에서 뺀다)
         # 칸을 판 끝까지 늘린다. 글자에 맞춰 재기만 하면 짧은 이름이 든 줄은 가운데
         # 조금만 차지하고 양옆이 크게 빈다 — 그 빈자리 때문에 글자가 더 작아 보인다
         self.stretch = stretch
@@ -180,7 +189,7 @@ class Plate(object):
             for r in self.rows:
                 if c < len(r) and r[c]:
                     cand.append(text_w(r[c][0]))
-                    if r[c][1]:
+                    if r[c][1] and not self.subout:
                         cand.append(text_w(r[c][1], FS_S))
             ws.append(round(max(cand) + 2 * PAD_X))
         gap = max(self.gap_x, self._need_gap_x())
@@ -202,8 +211,9 @@ class Plate(object):
         gy = max(self.gap_y, self._need_gap_y())
         placed = []
         for r in self.rows:
-            two = any(c and c[1] for c in r)
+            two = any(c and c[1] for c in r) and not self.subout
             h = PAD_Y * 2 + LH + (LH if two else 0)
+            below = 18.0 if (self.subout and any(c and c[1] for c in r)) else 0.0
             line = []
             # 한 칸만 든 줄은 판을 가로질러 세운다. 안 그러면 그 줄만 반쪽에 몰려
             # 오른쪽이 통째로 비고, 빈자리 때문에 글자가 더 작아 보인다
@@ -216,9 +226,9 @@ class Plate(object):
                     continue
                 bx, bw = (xs[0], xs[-1] + ws[-1] - xs[0]) if wide else (xs[c], ws[c])
                 line.append(Box(bx, y, bw, h, cell[0], cell[1], cell[2],
-                                (len(placed), c)))
+                                (len(placed), c), self.subout))
             placed.append(line)
-            y += h + gy
+            y += h + below + gy
         self._placed = placed
         self._xs, self._ws, self._gap = xs, ws, gap
         self._bottom = y - gy

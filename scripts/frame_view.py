@@ -222,10 +222,10 @@ def _one_plate(block):
         return _plate(rows, notes, ncol)
     except AssertionError:
         pass
-    # 폭이 모자라면 딸린 설명을 떼고 이름만으로 다시 굽는다. 설명 때문에 상자가 넓어져
-    # 두 칸짜리 줄이 통째로 세로 사슬로 떨어졌다 — 그림의 뼈대는 이름과 이음이다
+    # 폭이 모자라면 딸린 설명을 상자 밖 아래에 깔고 다시 굽는다. 설명을 지우지 않는다 —
+    # 2026-08-31 에 지웠다가 받은 글의 네 줄이 판에서 사라졌다
     try:
-        return _plate([[(n, '') for n, _s in r] for r in rows], notes, ncol)
+        return _plate(rows, notes, ncol, subout=True)
     except AssertionError:
         pass
     # 폭이 모자라면 세로로 쌓아 다시 굽는다. 이름을 자르지 않는다 — 2026-08-31 에
@@ -237,8 +237,8 @@ def _one_plate(block):
         return None
 
 
-def _plate(rows, notes, ncol):
-    p = fig_layout.Plate()
+def _plate(rows, notes, ncol, subout=False):
+    p = fig_layout.Plate(subout=subout)
     for r in rows:
         p.row(*(list(r) + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
