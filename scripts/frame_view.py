@@ -208,7 +208,9 @@ def to_html(md):
         if re.match(r'\s*[\*\-]\s+', ln):
             items = []
             while i < len(lines) and re.match(r'\s*[\*\-]\s+', lines[i]):
-                items.append(_inline(re.sub(r'\s*[\*\-]\s+', '', lines[i])))
+                # 줄머리 불릿 하나만 걷는다. 앵커 없이 sub 하면 문장 속 굵은 글씨의
+                # 별표까지 먹어 「**핵심 평가지표 변경:*'최초」로 짝이 깨진다
+                items.append(_inline(re.sub(r'^\s*[\*\-]\s+', '', lines[i])))
                 i += 1
             out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % t for t in items))
             continue
