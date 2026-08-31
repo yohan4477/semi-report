@@ -888,6 +888,51 @@ def _split_cols(block):
         right = chr(10).join(''.join(ch for ch, s, e in cs if s > b) for cs in grid)
         if _BOX.search(left) and _BOX.search(right):
             return left, right
+    # 밑줄 행이 경계를 대놓고 알려 주는 판이 있다 — 「────────    ────────」처럼
+    # 두 덩이로 갈린 줄이다. 그 아래 단에서 한쪽 열만 남아 두 열 구조가 깨져도
+    # (2026-08-31 「표준 칩 개발 대 Jalapeño」) 이 줄 하나면 어디서 갈렸는지 안다
+    for cs in grid:
+        segs, run = [], None
+        for ch, a, b in cs:
+            if ch in '─═-_':
+                run = a if run is None else run
+            else:
+                if run is not None and a - run >= 6:
+                    segs.append((run, a))
+                run = None
+        if run is not None and cs and cs[-1][2] - run >= 6:
+            segs.append((run, cs[-1][2]))
+        if len(segs) >= 2:
+            edge = (segs[0][1] + segs[1][0]) / 2.0
+
+            def _cut_at(c):
+                """그 줄에서 경계에 가장 가까운 빈 자리. 낱말 가운데는 안 자른다.
+
+                왼쪽 열 내용이 제 밑줄보다 넓게 삐져나오는 판이 있다(2026-08-31
+                「표준 칩 개발 대 Jalapeño」). 경계 칸으로 곧장 자르면 「테이프아 / 웃」
+                처럼 낱말이 갈린다 — 그 줄이 만든 공백에서 자른다.
+                """
+                gaps, run = [], None
+                for ch, a, _b in c:
+                    if ch == ' ':
+                        run = a if run is None else run
+                    else:
+                        if run is not None and a - run >= 2:
+                            gaps.append((run + a) / 2.0)
+                        run = None
+                if not gaps:
+                    # 빈 자리가 없는 줄은 통째로 한쪽에 둔다. 시작 칸으로 어느 쪽인지 정한다
+                    return 0.0 if (c and c[0][1] >= edge) else 10 ** 6
+                return min(gaps, key=lambda g: abs(g - edge))
+
+            cuts = [_cut_at(c) for c in grid]
+            left = chr(10).join(''.join(ch for ch, s2, e in c if s2 < cut)
+                                for c, cut in zip(grid, cuts))
+            right = chr(10).join(''.join(ch for ch, s2, e in c if s2 >= cut)
+                                 for c, cut in zip(grid, cuts))
+            if len(re.findall(r'[가-힣A-Za-z0-9]', left)) >= 6                     and len(re.findall(r'[가-힣A-Za-z0-9]', right)) >= 6:
+                return left, right
+
     # 모든 줄에서 똑같이 비어 있는 자리가 없는 판이다 — 아래 단(사람이 사는
     # 낱말을 넣은 줄, 「하이퍼스케일러 · AI 랩  ← 이 사람이」)이 위 단(머리
     # 줄)보다 넓어 경계 자리를 침범하면 전 줄에서 안 비니 위 방법이 못 가른다
