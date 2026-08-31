@@ -195,17 +195,10 @@ h1 a.h-home:hover { text-decoration:underline; }
 .uc-rep .ang-s li { font-size:.78rem; line-height:1.7; color:var(--ink-2); margin:0 0 4px; }
 .uc-rep .ang-m { margin:0; padding:10px 13px; border-top:1px solid var(--line);
   font-size:.78rem; line-height:1.7; color:var(--ink-2); }
-/* 한줄 코멘트가 머리다. 그 아래를 한 칸 들여써서 나머지가 그 머리에 딸린 것으로
-   보이게 한다 — 나란히 서면 코멘트가 여러 문단 중 하나로 읽힌다 */
-.uc-body > .uc-verdict { margin-bottom:12px; }
-/* 딱지 뒤에서 줄을 바꾼다 — 딱지와 글이 한 문장처럼 붙어 읽히지 않게 */
-.uc-body > .uc-verdict > b:first-child { display:block; margin-bottom:5px;
-  font-size:.74rem; color:var(--ink-3); letter-spacing:.02em; }
-.uc-body > .uc-rep { margin-left:14px; padding-left:14px;
-  border-left:2px solid var(--line); }
-@media (max-width:520px) {
-  .uc-body > .uc-rep { margin-left:6px; padding-left:10px; }
-}
+/* 본문을 들여쓰지 않는다. 카드 안에 상자를 하나 더 그리면 쓸 폭이 그만큼 줄고,
+   받은 글이 카드 속 카드처럼 읽힌다 — 여기서 카드는 뷰 하나다 */
+.uc-body > .uc-rep { margin-left:0; padding-left:0; border-left:0; }
+.uc-rep .fv-b { padding:0; }
 /* 절 제목 앞의 노드 이름 — 번호가 노드마다 다시 시작하므로 어느 노드의 몇째인지를
    제목이 스스로 말해야 한다 */
 .uc-rep h3 .h-node { display:block; font-size:.72rem; font-weight:700; line-height:1.6;
