@@ -322,6 +322,25 @@ def _table(rows):
     return '<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table>' % (h, b)
 
 
+def _groups(block):
+    """목록을 (머리, [딸린 줄]) 묶음으로. 머리는 불릿이 아닌 줄이다."""
+    out, cur = [], None
+    for ln in block.split(chr(10)):
+        t = ln.strip()
+        if not t or t == 'text':
+            continue
+        m = re.match(r'[└├]─\s*(.*)', t) or re.match(r'[-*]\s+(.*)', t)
+        if m:
+            if cur is None:
+                cur = ('', [])
+                out.append(cur)
+            cur[1].append(m.group(1).strip())
+        else:
+            cur = (t, [])
+            out.append(cur)
+    return [(h, its) for h, its in out if h]
+
+
 def _block_html(block):
     """도식 덩어리 하나를 판·글·아스키 중 하나로.
 
@@ -329,6 +348,17 @@ def _block_html(block):
     아스키로 두면 읽기 어려운 고정폭 덩어리가 된다. 목록 표시를 불릿으로 바꿔 글로 낸다.
     """
     if _is_list(block):
+        groups = _groups(block)
+        # 머리가 둘 이상이면 단계다 — 머리마다 상자 하나를 치고 딸린 줄을 그 안에 넣는다.
+        # 단계는 차례가 있으니 상자끼리 이어진다
+        if len(groups) >= 2 and all(g[1] for g in groups):
+            try:
+                plate = _plate([[(h, ' · '.join(its))] for h, its in groups], [], 1,
+                               subout=True)
+            except AssertionError:
+                plate = None
+            if plate:
+                return plate
         out, items = [], []
         for ln in block.split(chr(10)):
             t = ln.strip()
