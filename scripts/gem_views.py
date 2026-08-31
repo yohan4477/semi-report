@@ -3,9 +3,10 @@
 
   PYTHONIOENCODING=utf-8 python scripts/gem_views.py <원문 md 경로> <회차 링크>
 
-프롬프트는 scripts/prompts/{strategy,tech,merged}.txt 다. 규칙은 둘뿐이다 —
-회차 밖 값은 쓰지 않는다, 값마다 성격을 단다. 나머지(문체·절 제목·표·마지막 절)는
-받은 뒤 우리가 세우므로 시키지 않는다.
+프롬프트는 scripts/prompts/{strategy,tech,merged}.txt 다. 시키는 것은 셋뿐이다 —
+회차 밖 값은 쓰지 않는다, 값마다 성격을 단다, 그림으로 보이면 쉬운 대목에는 도해를
+넣는다([ 이름 ] 꼴 상자·한 줄에 셋까지). 나머지(문체·절 제목·표·마지막 절)는 받은 뒤
+우리가 세우므로 시키지 않는다.
 
 받은 답은 재료가 아니라 프레임 후보다. insights/frames/ 에 두고 check_frame 으로
 원문과 대조한 뒤에 카드로 옮긴다.
