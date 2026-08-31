@@ -188,12 +188,31 @@ def _rows_of(block):
                 notes.append(re.sub(r'\s{2,}', ' · ', t)[:70])
     if not rows or sum(len(r) for r in rows) < 2:
         return None
-    return rows, notes[:3]
+    return rows, notes[:6]
+
+
+def _is_list(block):
+    """상자 그림이 아니라 들여쓴 목록인가.
+
+    「Phase 1: …」 아래 「└─ [한계] …」가 붙는 꼴이 온다. 대괄호가 줄머리가 아니라 문장
+    속 딱지라, 그대로 구우면 「한계」·「장점」이 주인공 상자가 되고 정작 단계 이름이
+    각주로 밀린다 — 2026-08-31 에 Phase 3 이 통째로 판에서 빠졌다. 목록은 안 굽는다.
+    """
+    head, bullet = 0, 0
+    for ln in block.split(chr(10)):
+        t = ln.strip()
+        if t.startswith('['):
+            head += 1
+        if t.startswith(('└', '├', '- ', '* ')):
+            bullet += 1
+    return head == 0 and bullet >= 2
 
 
 def boxes(block):
     """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
     block = _unframe(block)
+    if _is_list(block):
+        return None                 # 목록은 받은 꼴 그대로 둔다
     two = _split_cols(block)
     if two:
         a, b = (_one_plate(x) for x in two)
