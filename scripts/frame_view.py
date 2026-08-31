@@ -332,3 +332,26 @@ def split_summary(md):
         head = chr(10).join(chr(10).join(l) for _, l in bs[:-1])
         return para, (head + chr(10) + rest).strip()
     return '', md
+
+def front_of(path):
+    """머리말(frontmatter)을 사전으로. 어느 모델이 쓴 글인지가 여기 있다."""
+    s = io.open(path, encoding='utf-8').read()
+    if not s.startswith('---'):
+        return {}
+    head = s[3:s.index('---', 3)]
+    out = {}
+    for ln in head.split(chr(10)):
+        if ':' in ln:
+            k, v = ln.split(':', 1)
+            out[k.strip()] = v.strip()
+    return out
+
+
+def model_of(path):
+    """그 뷰를 쓴 모델 이름. 괄호 안(어떻게 받았나)은 뗀다.
+
+    카드마다 적어 둔다 — 한도가 차면 조용히 낮은 모델로 답이 오는 일이 있어서, 나중에
+    어느 카드를 다시 받아야 하는지 화면에서 바로 보여야 한다.
+    """
+    m = front_of(path).get('model', '')
+    return m.split('(')[0].strip() or '모델 미상'

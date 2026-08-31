@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Semi Doped 대시보드 — 회차 하나를 여러 눈으로 설명하게 하고 그대로 싣는다.
 
-카드 한 장이 「회차 × 뷰」다. 본문은 우리가 쓴 글이 아니라 다른 모델(Gemini 3.1 Pro)
+카드 한 장이 「회차 × 뷰」다. 본문은 우리가 쓴 글이 아니라 다른 모델(Gemini)
 에게 물어 받은 답이고, 문장을 고치지 않는다. 원본은 insights/frames/ 에 있다.
 
   물어 오기   py -3.13 scripts/gem_views.py <원문 md> <회차 링크>
@@ -44,11 +44,15 @@ EPISODES = [
      'https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus'),
 ]
 
-# 섹션이 회차다. 회차 제목 아래 뷰 카드 셋이 나란히 선다
+# 섹션이 회차다. 회차 제목 아래 뷰 카드 둘이 나란히 선다.
+#
+# 통합 뷰는 카드로 안 세운다 — 2026-08-31 에 할라페뇨 세 뷰를 대조해 보니 통합 뷰가
+# 혼자 가진 대목이 하나도 없었다. 절 아홉 중 여섯이 세 뷰에 다 있었고(설계 철학·NUMA
+# 로컬 HBM·다크 실리콘·9개월 테이프아웃·범용 벤치마크·SRAM 영역 침투), 전략 뷰의 제언과
+# 통합 뷰의 제언은 관전 포인트 둘이 같은 말이었다. 앞머리 자리에만 세운다.
 VIEWS = [
     ('strategy', '전략 뷰', '시니어 전략 컨설턴트에게 물었다'),
     ('tech', '기술 뷰', '시니어 업계 기술 전문가에게 물었다'),
-    ('merged', '통합 뷰', '시니어 애널리스트에게 두 뷰를 합쳐 달라고 물었다'),
 ]
 
 
@@ -143,7 +147,12 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
         'gain': plain(front)[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
                  '업로드 %s' % date, '원제 %s' % en_title,
-                 asked, 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
+                 asked,
+                 # 어느 모델이 쓴 글인지는 머리말에서 읽는다. 한도가 차면 낮은
+                 # 모델로 답이 오는 일이 있어 카드마다 보여야 다시 받을 것을 고른다
+                 '모델 %s' % frame_view.model_of(os.path.join(
+                     ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind))),
+                 '받은 그대로 · 미검증'],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
         # 앞면에 세운 문단을 한줄 코멘트로 또 세우지 않는다
