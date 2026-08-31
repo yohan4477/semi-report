@@ -136,8 +136,10 @@ CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
          for i, (slug, t, en, d, u) in enumerate(EPISODES)
          for kind, vt, asked in VIEWS]
 
-# 섹션 머리 아래 앞머리 — 뷰 카드 앞에 선다
-SEC_TOP = {'sd-%s' % slug: intro_html(slug) for slug, *_ in EPISODES}
+# 섹션 머리 아래 앞머리 — 늘 펴져 있고 그 아래에 뷰 카드가 이어 선다.
+# sec_top 이 아니라 sec_fig 다. sec_top 은 「밸류에이션 · 개별 포스트」 버튼을 만들어
+# 앞머리와 카드를 갈라 놓는다 — 앞머리는 고를 대상이 아니라 먼저 읽는 글이다
+SEC_LEAD = {'sd-%s' % slug: intro_html(slug) for slug, *_ in EPISODES}
 
 
 CSS = '''
@@ -244,7 +246,7 @@ def main():
     # 카드를 눌러도 새 페이지로 안 간다 — 자리에서 펼친다. 회차 한 편이 카드 한 장이라
     # 목록에서 펼치는 것으로 충분하고, 페이지가 따로 나면 주소가 둘로 갈린다
     dc.render(CARDS, 'Semi Doped 대시보드', HEADER, FOOTER, OUT,
-              sec_top=SEC_TOP,
+              sec_fig=SEC_LEAD,
               extra_css=frame_view.CSS + CSS, newest_first=True)
 
 
