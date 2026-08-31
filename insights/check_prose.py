@@ -478,6 +478,7 @@ DASH_DIR = os.path.join(paths.ROOT, '대시보드')
 # 대시보드 산문에서 걷어내야 하는 것. 눈에 보이는 글만 남긴다.
 _TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
 _TAG = re.compile(r'<[^>]+>')
+_QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>', re.S)
 _ENT = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&#39;', "'"),
         ('&nbsp;', ' ')]
 
@@ -531,6 +532,10 @@ def dashboard_text(path):
     이미 노트·인사이트에서 본 문장이 아니라 파이썬 생성기가 만든 원본이라
     같은 문장을 두 번 잡는다. 표의 숫자 칸은 문장이 아니라서 저절로 걸러진다."""
     raw = io.open(path, encoding='utf-8').read()
+    # fv 는 다른 모델에게 받은 글을 그대로 실은 상자다. 우리 문체 규칙을 남의 글에
+    # 대면 고칠 수 없는 빚만 쌓인다 — 인용은 인용으로 둔다(2026-08-31).
+    # _drop_block 을 못 쓰는 이유는 그 함수가 <div> 깊이만 세기 때문이다
+    raw = _QUOTE_BOX.sub(' ', raw)
     raw = _TAGBLOCK.sub(' ', raw)
     for _cls in _ECHO_CLASSES:
         raw = _drop_block(raw, _cls)

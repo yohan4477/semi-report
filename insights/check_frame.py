@@ -46,6 +46,7 @@ SKIP_NAME = {
 }
 TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
 TAG = re.compile(r'<[^>]+>')
+QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>', re.S)
 
 
 def meta(text):
@@ -98,6 +99,9 @@ def cards_of(slug):
         for m in CARD.finditer(raw):
             block = m.group(0)
             if slug in block:
+                # 「받은 그대로」 상자는 남의 글을 인용한 자리다. 우리가 한 주장이 아니라
+                # 유출로 세지 않는다 — 상자 머리에 미검증이라고 적혀 있다(2026-08-31)
+                block = QUOTE_BOX.sub(' ', block)
                 out.append((os.path.basename(p), flat(TAG.sub(' ', TAGBLOCK.sub(' ', block)))))
     return out
 

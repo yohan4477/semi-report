@@ -95,6 +95,7 @@ OPEN_LIST = re.compile(r'(둘이다|셋이다|넷이다|둘 남는다|셋 남는
 TF = re.compile(r'<span class="tg-f">(.*?)</span>', re.S)
 TBL_HEAD = re.compile(r'<thead>(.*?)</thead>', re.S)
 TAG = re.compile(r'<[^>]+>')
+QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>', re.S)
 
 # 절 제목이 물음인가 — 물음말이 들었거나 「~나/~가」로 닫히면 물음으로 본다
 ASK = re.compile(r'무엇|왜|언제|어디|어떻게|얼마|누가|몇|어느')
@@ -295,7 +296,8 @@ def check_card(where, body):
                 % txt(sec[:sec.find('</h3>')])[:34])
 
     # S6 견주는 표에 성격 열
-    for th in TBL_HEAD.findall(rep):
+    # 「받은 그대로」 상자는 남의 글이라 우리 표 규칙을 대지 않는다(2026-08-31)
+    for th in TBL_HEAD.findall(QUOTE_BOX.sub(' ', rep)):
         head = txt(th)
         if '성격' not in head:
             add('FAIL', at, 'S6', '표에 「언제 것 · 성격」 열이 없다: %s' % head[:40])

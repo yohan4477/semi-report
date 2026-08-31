@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))), 'scripts'))
 
 import dash_common as dc  # noqa: E402
+import frame_view  # noqa: E402
 import semidoped_figs as figs  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -240,6 +241,9 @@ JAL = {
               '③ 1억 달러짜리 고정비를 <b>제 트래픽으로 갚는지 남에게 빌려주는지</b>. 셋 다 이 편이 '
               '답하지 않는다.'),
 
+        ('raw', frame_view.view('2026-08-27-openai-jalapeno', 'strategy', '전략 뷰 — 전략 컨설턴트에게 물었다')),
+        ('raw', frame_view.view('2026-08-27-openai-jalapeno', 'tech', '기술 뷰 — 업계 기술 전문가에게 물었다')),
+        ('raw', frame_view.view('2026-08-27-openai-jalapeno', 'merged', '통합 뷰 — 두 뷰를 합쳐 달라고 물었다')),
         ('h', '<span class="h-node">못 믿을 것</span> ① 이 편이 밝히지 않은 것'),
         ('p', '스펙 상당수는 진행자 추측이다. CPU 가 x86 계열 Turin 급인지, 공정이 TSMC N3 '
               '변형인지, HBM 이 삼성 것인지는 오픈AI 가 확인한 것이 아니다. 삼성 HBM4 가 '
@@ -404,6 +408,9 @@ GROK = {
               '부리는 층을 누가 쥐느냐</b>다. 그 층이 없는 동안에는 코어를 아무리 사도 '
               '<b>직원 한 명당 비용</b>이 계산되지 않는다.'),
 
+        ('raw', frame_view.view('2026-08-24-grok-bots-cpu', 'strategy', '전략 뷰 — 전략 컨설턴트에게 물었다')),
+        ('raw', frame_view.view('2026-08-24-grok-bots-cpu', 'tech', '기술 뷰 — 업계 기술 전문가에게 물었다')),
+        ('raw', frame_view.view('2026-08-24-grok-bots-cpu', 'merged', '통합 뷰 — 두 뷰를 합쳐 달라고 물었다')),
         ('h', '<span class="h-node">못 믿을 것</span> ① 이 편이 밝히지 않은 것'),
         ('p', '가장 큰 수가 사고실험이다. 진행자는 <b>1,000만 명</b>이 이런 도구를 쓰고 가상머신마다 '
               '에이전트를 <b>100개</b> 돌린다고 가정해 <b>10억 코어</b> 수요를 말하는데, 두 가정을 '
@@ -511,7 +518,7 @@ def main():
     dc.check_labels(CARDS)
     dc.render(CARDS, 'Semi Doped 대시보드', HEADER, FOOTER, OUT,
               page_slug='semidoped',
-              extra_css=figs.FIG_CSS + CSS, newest_first=True)
+              extra_css=figs.FIG_CSS + frame_view.CSS + CSS, newest_first=True)
 
 
 if __name__ == '__main__':

@@ -53,12 +53,43 @@ def copy_via_button(pg):
     return None
 
 
-def ask(prompt, dest, timeout=300):
+MODEL = '3.1 Pro'        # 판단이 섞이는 물음이라 고급 추론 쪽으로. 「확장된 사고 모델」은
+                          # 골라도 단추 라벨이 안 바뀌어 실제로 걸렸는지 확인할 길이 없었다
+
+
+def pick_model(pg, want=MODEL):
+    """새 대화마다 모델을 고르고 **바뀌었는지 라벨로 확인한다**.
+
+    안 고르면 기본값(Flash)으로 답한다. 고른 뒤 단추 글자가 안 바뀌면 안 걸린 것이다 —
+    2026-08-31 에 「확장된 사고 모델」을 골랐더니 클릭은 되는데 라벨이 그대로였고, 답도
+    Flash 라고 말했다. 확인되는 것만 쓴다."""
+    btn = pg.locator('button:has-text("Flash"), button:has-text("Pro")').first
+    if not btn.count():
+        return None
+    before = (btn.inner_text() or '').strip()
+    btn.click()
+    pg.wait_for_timeout(1200)
+    items = pg.locator('[role="menuitemradio"], [role="menuitem"], button[role="option"]')
+    for i in range(items.count()):
+        if want in (items.nth(i).inner_text() or ''):
+            items.nth(i).click()
+            pg.wait_for_timeout(2000)
+            after = (pg.locator('button:has-text("Flash"), button:has-text("Pro")')
+                     .first.inner_text() or '').strip()
+            key = want.split()[-1]          # 「3.1 Pro」 -> 「Pro」
+            return after if key in after else None
+    pg.keyboard.press('Escape')
+    return None
+
+
+def ask(prompt, dest, timeout=600):
     with sync_playwright() as pw:
         b = pw.chromium.connect_over_cdp('http://127.0.0.1:9222')
         pg = b.contexts[0].new_page()
         pg.goto('https://gemini.google.com/app', wait_until='domcontentloaded', timeout=60000)
         pg.wait_for_timeout(5000)
+        got = pick_model(pg)
+        print('모델:', got or '기본값 그대로', file=OUT)
         box = pg.locator('div[contenteditable="true"]').first
         box.click()
         # 줄바꿈이 전송으로 잡히지 않게 한 덩어리로 넣는다
