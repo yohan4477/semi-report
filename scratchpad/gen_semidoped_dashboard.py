@@ -32,7 +32,7 @@ def blob(p):
     return BLOB + p.replace(' ', '%20')
 
 
-# 회차 하나에 뷰 셋. 뷰마다 카드 한 장이고, 본문은 받은 답을 그대로 싣는다
+# 회차 하나에 뷰 둘. 뷰마다 카드 한 장이고, 본문은 받은 답을 그대로 싣는다
 EPISODES = [
     # 제목은 우리가 새로 짓지 않는다. 그 회차가 달고 나온 이름을 한국어로 옮기고,
     # 원제는 메타 줄에 그대로 남긴다
@@ -46,10 +46,10 @@ EPISODES = [
 
 # 섹션이 회차다. 회차 제목 아래 뷰 카드 둘이 나란히 선다.
 #
-# 통합 뷰는 카드로 안 세운다 — 2026-08-31 에 할라페뇨 세 뷰를 대조해 보니 통합 뷰가
+# 통합 뷰는 아예 안 묻는다 — 2026-08-31 에 할라페뇨 세 뷰를 대조해 보니 통합 뷰가
 # 혼자 가진 대목이 하나도 없었다. 절 아홉 중 여섯이 세 뷰에 다 있었고(설계 철학·NUMA
 # 로컬 HBM·다크 실리콘·9개월 테이프아웃·범용 벤치마크·SRAM 영역 침투), 전략 뷰의 제언과
-# 통합 뷰의 제언은 관전 포인트 둘이 같은 말이었다. 앞머리 자리에만 세운다.
+# 통합 뷰의 제언은 관전 포인트 둘이 같은 말이었다.
 # 카드 이름은 누가 본 것인지로 단다 — 「전략 뷰」는 무엇을 담았는지 안 말한다
 VIEWS = [
     ('strategy', '전략 컨설턴트 검토', '시니어 전략 컨설턴트에게 물었다'),
@@ -96,27 +96,20 @@ def plain(md):
     return re.sub(r'\s+', ' ', t).strip()
 
 
-def intro_html(slug, ep_title, en_title, date):
-    """회차 앞머리 — 회차에 붙는 것은 여기 한 번만 선다.
+def head_html(date, en_title):
+    """섹션 머리 아래 한 줄 — 회차에 붙는 것은 여기 한 번만 선다.
 
-    진행자·업로드 날짜·원제·「받은 그대로 · 미검증」은 뷰가 달라도 같은 값이다. 카드마다
-    달면 카드 넷에 같은 줄이 넷이 된다. 카드에 남는 것은 뷰마다 다른 것 하나 —
-    어느 모델이 썼나 — 뿐이다.
-
-    본문은 통합 뷰의 첫 제목 앞 문단이다. 뷰 셋이 저마다 「이 회차는 …를 다루고 있습니다」
-    로 여는데 서로 같은 말이라, 셋을 다 걸면 상자가 벽이 된다. 두 뷰를 합쳐 받은 통합 뷰의
-    앞머리가 회차 전체를 말한다. 전략·기술 뷰의 앞머리는 그 카드 안에 그대로 둔다.
+    진행자·업로드 날짜·원제는 뷰가 달라도 같은 값이다. 카드마다 달면 같은 줄이 넷이 된다.
+    앞머리 상자는 없앴다 — 통합 뷰를 걷으면서 그 글이 사라졌고, 전략·기술 뷰는 저마다
+    자기 앞머리를 카드 안에 그대로 갖고 있다.
     """
-    md = frame_view.body_of(os.path.join(
-        ROOT, 'insights', 'frames', '%s-merged.md' % slug))
     meta = ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
             '업로드 %s' % date, '원제 %s' % en_title]
-    return ('<p class="sd-meta">%s</p><div class="fv-b sd-intro">%s</div>'
-            % (' · '.join(meta), frame_view.to_html(frame_view.intro_of(md))))
+    return '<p class="sd-meta">%s</p>' % ' · '.join(meta)
 
 
 def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
-    """뷰 하나가 카드 한 장이다. 회차 하나에 카드 셋이 한 섹션에 선다.
+    """뷰 하나가 카드 한 장이다. 회차 하나에 카드 둘이 한 섹션에 선다.
 
     카드 앞면에 세우는 글도 받은 답에서 뽑는다 — 꼬리에 요약·제언이 붙어 오면 그
     첫 문단을, 안 붙어 오면 답의 첫 문단을 쓴다. 뽑아 올린 문단은 몸에서 걷는다.
@@ -124,12 +117,6 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     summ, rest = frame_view.split_summary(md)
-    if kind == 'merged':
-        # 통합 뷰 앞머리는 섹션 머리 아래에 이미 섰다. 전략·기술 뷰 앞머리는 안 걷는다 —
-        # 위에 안 세웠으니 여기서 걷으면 그 문장이 어디에도 없다
-        intro = frame_view.intro_of(md)
-        if intro and rest.startswith(intro):
-            rest = rest[len(intro):].strip()
     if summ:
         sp = _paras(summ)
         # 제목 줄(**[요약 및 컨설턴트 제언]**)만 있는 첫 문단은 앞면에 세우지 않는다
@@ -170,7 +157,7 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
     }
 
 
-# 회차를 바깥 고리로 돈다 — 한 회차의 뷰 셋이 한 섹션에 모인다
+# 회차를 바깥 고리로 돈다 — 한 회차의 뷰 둘이 한 섹션에 모인다
 CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
          for i, (slug, t, en, d, u) in enumerate(EPISODES)
          for kind, vt, asked in VIEWS]
@@ -178,8 +165,8 @@ CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
 # 섹션 머리 아래 앞머리 — 늘 펴져 있고 그 아래에 뷰 카드가 이어 선다.
 # sec_top 이 아니라 sec_fig 다. sec_top 은 「밸류에이션 · 개별 포스트」 버튼을 만들어
 # 앞머리와 카드를 갈라 놓는다 — 앞머리는 고를 대상이 아니라 먼저 읽는 글이다
-SEC_LEAD = {'sd-%s' % slug: intro_html(slug, t, en, d)
-            for slug, t, en, d, _u in EPISODES}
+SEC_LEAD = {'sd-%s' % slug: head_html(d, en)
+            for slug, _t, en, d, _u in EPISODES}
 
 
 CSS = '''
@@ -255,15 +242,9 @@ h1 a.h-home:hover { text-decoration:underline; }
 .uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
 .uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
 
-/* 회차 앞머리 — 섹션 머리 아래, 뷰 카드 앞에 한 번만 선다 */
-.sd-intro { margin:0 0 16px; padding:12px 14px; border:1px solid var(--line);
-  border-radius:10px; background:var(--surface); }
-.sd-intro p { margin:6px 0; font-size:.86rem; line-height:1.8; color:var(--ink-2); }
-/* 뷰마다 한 도막. 누가 무엇을 보겠다고 했는지가 도막 머리에 선다 */
-.sd-intro .sd-i + .sd-i { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
-.sd-intro .sd-i-h { margin:0 0 4px; font-size:.8rem; font-weight:800; color:var(--ink); }
-.sd-intro .sd-i-h span { font-weight:400; color:var(--ink-3); margin-left:7px; font-size:.72rem; }
-.sd-intro .sd-i p:last-child { margin-bottom:0; }
+/* 회차에 붙는 줄 — 섹션 머리 아래 한 줄 */
+.sd-meta { margin:0 0 14px; font-size:.76rem; line-height:1.7; color:var(--ink-3); }
+.sd-meta b { color:var(--ink-2); font-weight:700; }
 /* 받은 글 꼬리의 요약·제언을 여기로 올린다 — 뷰 카드에서 먼저 읽히는 자리 */
 .uc-rep .vc-sum { margin:12px 14px 0; padding:10px 12px; border-left:3px solid var(--ink-3);
   border-radius:0 6px 6px 0; background:var(--sunk); }

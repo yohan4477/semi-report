@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""원문 하나에 뷰 셋을 물어 프레임 파일로 받는다.
+"""원문 하나에 뷰 둘(전략·기술)을 물어 프레임 파일로 받는다.
 
   PYTHONIOENCODING=utf-8 python scripts/gem_views.py <원문 md 경로> <회차 링크>
 
-프롬프트는 scripts/prompts/{strategy,tech,merged}.txt 다. 시키는 것은 셋뿐이다 —
+프롬프트는 scripts/prompts/{strategy,tech}.txt 다. 시키는 것은 셋뿐이다 —
 회차 밖 값은 쓰지 않는다, 값마다 성격을 단다, 그림으로 보이면 쉬운 대목에는 도해를
 넣는다. **도해를 어떻게 그리라고는 안 적는다** — 꼴을 길게 달아도 그대로 오지 않고,
 받는 꼴을 맞추는 일은 frame_view 가 한다. 나머지(문체·절 제목·표·마지막 절)도 받은 뒤
@@ -49,12 +49,12 @@ def run(src, url, today, allow_lower=False):
     raw = os.path.join(ROOT, os.path.dirname(src), 'raw', os.path.basename(src))
     assert os.path.exists(raw), '전문이 없다. scripts/semidoped_clip.py 로 먼저 긁는다: ' + raw
     src_text = io.open(raw, encoding='utf-8').read()
+    # 뷰는 둘이다. 통합 뷰는 걷었다 — 두 뷰를 합쳐 받아 보니 혼자 가진 대목이 없었고
+    # (2026-08-31 할라페뇨 대조), 카드로도 안 섰다
     got = {}
-    for kind in ('strategy', 'tech', 'merged'):
+    for kind in ('strategy', 'tech'):
         tpl = io.open(os.path.join(PROMPTS, kind + '.txt'), encoding='utf-8').read()
         text = tpl.replace('{URL}', url).replace('{SOURCE}', src_text)
-        if kind == 'merged':
-            text = text.replace('{STRATEGY}', got['strategy']).replace('{TECH}', got['tech'])
         tmp = os.path.join(FRAMES, '.ask-%s.txt' % kind)
         io.open(tmp, 'w', encoding='utf-8').write(text)
         dest = os.path.join(FRAMES, '%s-%s.md' % (slug, kind))
