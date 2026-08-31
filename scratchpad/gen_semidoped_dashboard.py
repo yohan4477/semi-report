@@ -52,15 +52,20 @@ VIEWS = [
 ]
 
 
-def view_html(slug, kind, view_title, asked):
+def view_html(slug, kind, view_title, asked, drop=''):
     """뷰 하나를 카드 상자로. 꼬리에 붙은 요약·제언은 상자 맨 위로 올린다.
 
     받은 글에서 그 대목이 맨 끝에 서면, 접힌 카드에서 먼저 보이는 자리에 배경 설명이
     오고 결론이 스크롤 끝에 숨는다. 문장은 안 고치고 자리만 옮긴다.
+
+    drop 은 이 회차의 앞머리로 이미 카드 맨 위에 세운 대목이다. 그 뷰의 몸에서 걷는다 —
+    안 걷으면 같은 문단이 카드 위와 뷰 안에 두 번 선다.
     """
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     summ, rest = frame_view.split_summary(md)
+    if drop and rest.startswith(drop):
+        rest = rest[len(drop):].strip()
     top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(summ)) if summ else ''
     return ('<section class="vc">'
             '<p class="vc-h">%s<span>%s · 받은 그대로 · 미검증</span></p>'
@@ -69,27 +74,35 @@ def view_html(slug, kind, view_title, asked):
 
 
 def make_card(slug, ep_title, en_title, date, url, num):
-    """회차 한 편이 카드 한 장이다. 누르면 앞머리가 먼저 서고 그 아래 뷰 카드가 선다."""
+    """회차 한 편이 카드 한 장이다. 누르면 앞머리가 먼저 서고 그 아래 뷰 카드가 선다.
+
+    앞머리는 전략 뷰의 첫 제목 앞 문단이다. 첫 문단은 카드 머리(gain)에, 나머지는 본문
+    맨 위 상자에 선다 — 같은 자리에 둘 다 세우면 접었다 펴는 순간 같은 글이 두 번 뜬다.
+    """
     lead_md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-strategy.md' % slug))
     intro = frame_view.intro_of(lead_md)
-    body = ''.join(view_html(slug, kind, vt, asked) for kind, vt, asked in VIEWS)
+    paras = [t.strip() for t in intro.split(chr(10) * 2) if t.strip()]
+    head, rest_intro = (paras[0] if paras else ''), (chr(10) * 2).join(paras[1:])
+    body = ''.join(
+        view_html(slug, kind, vt, asked, drop=intro if kind == 'strategy' else '')
+        for kind, vt, asked in VIEWS)
+    top = ('<div class="fv-b vc-intro">%s</div>' % frame_view.to_html(rest_intro)
+           ) if rest_intro else ''
     return {
         'id': 'sd-%s' % slug,
         'section': ('sd-ep', '01', '회차',
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
         'title': ep_title,
-        'gain': frame_view.lead_of(lead_md)[:150],
+        'gain': frame_view.lead_of(head)[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
                  '업로드 %s' % date, '원제 %s' % en_title,
                  'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
-        # 앞머리는 본문 맨 위 상자에 한 번만 선다 — 한줄 코멘트로도 세우면 같은 글이 두 번
-        # 읽힌다. 접힌 목록에 서는 gain 만 그 첫 문장을 쓴다
+        # 앞머리를 한줄 코멘트로도 세우면 같은 글이 두 번 읽힌다
         'verdict': '',
-        'report': [('raw', '<div class="fv-b vc-intro">%s</div>%s'
-                    % (frame_view.to_html(intro), body))],
+        'report': [('raw', top + body)],
     }
 
 
