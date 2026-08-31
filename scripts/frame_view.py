@@ -32,8 +32,10 @@ FRAMES = os.path.join(ROOT, 'insights', 'frames')
 # 상자는 판 폭에 맞춰 서고 다크모드 색도 따라온다. 못 읽는 꼴이면 아스키 그대로 둔다.
 _BOX = re.compile(r'\[([^\]\[]+)\]')
 # 「──>」처럼 선을 길게 끌고 온 화살표도 잡는다 — 안 잡으면 「>」가 상자 밑에
-# 딸린 라벨로 남는다
-_ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+)')
+# 딸린 라벨로 남는다. ➡⬅⬆⬇ 는 여기서 안 잡는다 — `_denorm_emoji` 가 도식
+# 덩어리 맨 앞에서 이미 →←↑↓ 로 바꿔 놓는다(방침: 화면에 이모지를 안 남긴다).
+# ↔·⇒ 는 그 방침에서도 그대로 두는 문자라 여기 남는다
+_ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+|[↔⇒])')
 
 
 # 세로선은 전각만 오지 않는다. 아스키 표 꼴(+---+ 와 | 이름 |)로 그려 오는 판이 있어
@@ -142,6 +144,10 @@ _DIRS = {
     '+': 'UDLR',
     '▲': 'UD', '▼': 'UD', '↑': 'UD', '↓': 'UD',
     '◀': 'LR', '▶': 'LR', '←': 'LR', '→': 'LR', '<': 'LR', '>': 'LR',
+    # ➡⬅⬆⬇ 는 여기 없다 — `_denorm_emoji` 가 도식 맨 앞에서 이미 →←↑↓ 로
+    # 바꿔 놓는다(화면에 이모지를 안 남기는 방침). ↔·⇒ 는 그대로 남는 문자라
+    # 방향을 정해 둔다 — 안 넣으면 「TSMC ↔ 엔비디아」 같은 줄이 이음이 안 잡힌다
+    '↔': 'LR', '⇒': 'LR',
 }
 _WIRE_CH = ''.join(_DIRS.keys())
 _WIRE = frozenset(_DIRS.keys())
@@ -159,6 +165,20 @@ class _GBox(object):
     def __init__(self, name, sub, row, c0, c1, bare=False):
         self.name, self.sub, self.row, self.c0, self.c1 = name, sub, row, c0, c1
         self.bare = bare             # 대괄호 없이 맨몸으로 선에 붙은 낱말인가
+
+
+def _end_col(idx, cells):
+    """문자 인덱스 [.., idx) 범위 — 곧 마지막 글자(인덱스 idx-1)의 끝 칸.
+
+    끝 칸을 「시작 칸 + 1」로 어림하면 한글처럼 두 칸 먹는 글자로 끝나는
+    이름에서 한 칸이 모자란다 — 「엔비디아」 뒤 화살표가 상자 바로 옆이 아니라
+    한 칸 건너에 있는 것으로 읽혀 이음이 안 잡힌다(2026-08-27 밸류체인 그림).
+    `_cells` 가 이미 (글자, 시작, 끝) 을 주므로 끝 칸을 그대로 쓴다.
+    """
+    j = idx - 1
+    if 0 <= j < len(cells):
+        return cells[j][2]
+    return cells[-1][2] if cells else 0
 
 
 def _graph_boxes(block):
@@ -190,6 +210,22 @@ def _graph_boxes(block):
                 sub = tm.group(1).strip()
             out.append(_GBox(name, sub, i, c0, c1))
             taken.append((s, e))
+        # 화살표로 이어 놓은 낱말 사슬(「TSMC(제조) ➡ 엔비디아 ➡ 클라우드 ➡ …」)도
+        # 상자로 읽는다. 대괄호가 없다고 각주로 내리면 그 줄이 그림의 알맹이인데
+        # 판에서 사라진다 — 2026-08-31 밸류체인 그림이 그랬다
+        if not taken and len(_ARROW.findall(ln)) >= 2:
+            pos = 0
+            for piece in _ARROW.split(ln):
+                if not piece or _ARROW.fullmatch(piece):
+                    pos += len(piece or '')
+                    continue
+                name = piece.strip()
+                if len(re.findall(r'[가-힣A-Za-z0-9]', name)) >= 2:
+                    s0 = pos + (len(piece) - len(piece.lstrip()))
+                    e0 = s0 + len(name)
+                    out.append(_GBox(name, '', i, col_of(s0), _end_col(e0, cells)))
+                    taken.append((s0, e0))
+                pos += len(piece)
         bm = _BARE_HEAD.match(ln.lstrip())
         if bm:
             lead = len(ln) - len(ln.lstrip())
@@ -197,7 +233,8 @@ def _graph_boxes(block):
             if not any(s < te and s2 < e for s2, te in taken):
                 text = bm.group(1).strip()
                 if len(re.findall(r'[가-힣A-Za-z0-9]', text)) >= 2:
-                    c0, c1 = col_of(s), col_of(min(e, len(idx2col)) - 1) + 1 if e else col_of(s)
+                    c0 = col_of(s)
+                    c1 = _end_col(e, cells) if e else c0
                     out.append(_GBox(text, '', i, c0, c1, bare=True))
     return out
 
@@ -440,17 +477,92 @@ def _graph_edges(block, boxes):
 _WIRE_STRIP = re.compile('[%s]' % re.escape(_WIRE_CH))
 
 
-def _graph_notes(block, used):
-    """상자에도 이음에도 못 붙는 글을 각주로 남긴다. `used` 는 이미 쓴 글(이음 이름)이다."""
+def _mask_boxes(ln, row, boxes):
+    """이 줄에서 상자가 차지한 칸을 빈칸으로 지운다.
+
+    대괄호 상자는 `_BOX.sub` 로 이미 지워지지만, 화살표 사슬의 맨몸 상자
+    (「TSMC(제조) → 엔비디아」의 「TSMC(제조)」)는 대괄호가 없어 그대로 남는다 —
+    각주 추출이 사슬 줄 자체를 다시 각주 글로 읽어 버린다(2026-08-27
+    밸류체인 그림). 칸 위치로 상자 몫을 지운다.
+    """
+    row_boxes = [b for b in boxes if b.row == row]
+    if not row_boxes:
+        return ln
+    out = list(ln)
+    for i, (ch, a, bnd) in enumerate(_cells(ln)):
+        if any(b.c0 <= a < b.c1 for b in row_boxes):
+            out[i] = ' '
+    return ''.join(out)
+
+
+def _graph_notes(block, used, skip_rows=frozenset(), boxes=()):
+    """상자에도 이음에도 못 붙는 글을 각주로 남긴다.
+
+    `used` 는 이미 쓴 글(이음 이름), `skip_rows` 는 `_below_labels` 가 이미
+    이음 이름으로 다 건져 간 줄이다 — 안 빼면 「(마진 흡수) · (마진 흡수) ·
+    (비용 압박)」이 각주로 한 번 더 나온다. `boxes` 는 대괄호 없는 사슬 상자를
+    빼려고 받는다(`_mask_boxes`).
+    """
     notes = []
-    for ln in block.split(chr(10)):
-        t = _BOX.sub(' ', ln)
+    for r, ln in enumerate(block.split(chr(10))):
+        if r in skip_rows:
+            continue
+        t = _mask_boxes(ln, r, boxes)
+        t = _BOX.sub(' ', t)
         t = _ARROW.sub(' ', t)
         t = _WIRE_STRIP.sub(' ', t)
         t = re.sub(r'\s{2,}', ' · ', t).strip(' ·')
         if len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 4 and t not in used:
             notes.append(t)
     return notes
+
+
+_PAREN = re.compile(r'\(([^()]+)\)')
+
+
+def _below_labels(block, boxes, edges):
+    """사슬 아래 줄에 괄호로 붙은 라벨을 칸 위치로 가장 가까운 이음에 붙인다.
+
+    「TSMC → 엔비디아 → 클라우드」사슬 밑에 「(마진 흡수)   (마진 흡수)」식으로
+    라벨이 화살표가 아니라 **한 줄 아래**에 따로 앉는 꼴이 있다. 그 줄은 상자도
+    이음도 아니라 격자 추적(`_graph_edges`)으로는 안 잡힌다 — 괄호 조각의 칸
+    중심과, 그 위 줄에서 라벨 없는 이음마다의 자리(두 상자 사이 빈 칸의 가운데)
+    를 견줘 가장 가까운 이음에 이름으로 얹는다. 반환은 (새 이음 목록, 라벨
+    줄로 다 쓴 줄 번호 집합) — 뒤엣것은 `_graph_notes` 가 그 줄을 다시 각주로
+    안 내리게 뺄 때 쓴다.
+    """
+    box_rows = set(b.row for b in boxes)
+    lines = block.split(chr(10))
+    used_rows = set()
+    out = list(edges)
+    for r, ln in enumerate(lines):
+        if r in box_rows or r - 1 not in box_rows:
+            continue
+        pieces = [(m.start(), m.end(), m.group(1)) for m in _PAREN.finditer(ln)]
+        if not pieces:
+            continue
+        # 괄호 밖에 다른 글이 있으면 라벨 줄이 아니라 그냥 설명 문단이다
+        if _PAREN.sub('', ln).strip():
+            continue
+        row_edges = [i for i, (a, b, lab) in enumerate(out)
+                    if a.row == b.row == r - 1 and not lab]
+        if not row_edges:
+            continue
+        cells = _cells(ln)
+        for s, e, text in pieces:
+            c0 = cells[s][1] if s < len(cells) else 0
+            c1 = cells[e - 1][2] if e - 1 < len(cells) else c0
+            center = (c0 + c1) / 2.0
+
+            def dist(i):
+                a, b, _ = out[i]
+                return abs((a.c1 + b.c0) / 2.0 - center)
+            best = min(row_edges, key=dist)
+            a, b, _ = out[best]
+            out[best] = (a, b, text.strip())
+            row_edges.remove(best)      # 라벨 하나가 이음 둘을 먹지 않는다
+        used_rows.add(r)
+    return out, used_rows
 
 
 def _col_bands(boxes, gap=6):
@@ -482,8 +594,9 @@ def _graph_of(block):
     edges = _graph_edges(block, boxes)
     if not edges:
         return None
+    edges, label_rows = _below_labels(block, boxes, edges)
     used = set(e[2] for e in edges if e[2])
-    notes = _graph_notes(block, used)
+    notes = _graph_notes(block, used, label_rows, boxes)
     return boxes, edges, notes
 
 
@@ -548,24 +661,6 @@ def _grid_plate_build(boxes, edges, row_of, col_of, ncol, width):
         return None
 
 
-def _one_graph_plate(boxes, edges, width):
-    """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 못 앉히면 None.
-
-    상자의 원래 세로 자리(줄)를 판의 행으로, 가로 군집(`_col_bands`)을 판의
-    열로 그대로 쓴다 — 받은 그림의 자리 그대로다.
-    """
-    if len(boxes) < 2:
-        return None
-    rows_sorted = sorted(set(b.row for b in boxes))
-    row_idx = {r: i for i, r in enumerate(rows_sorted)}
-    row_of = {id(b): row_idx[b.row] for b in boxes}
-    band_of, ncol = _col_bands(boxes)
-    if ncol > 4 or ncol < 1:
-        return None
-    col_of = {id(b): band_of[b.c0] for b in boxes}
-    return _grid_plate_build(boxes, edges, row_of, col_of, ncol, width)
-
-
 def _topo_order(boxes, edges):
     """소스(들어오는 이음이 없는 상자)가 먼저, 싱크(나가는 이음이 없는 상자)가
     나중에 오는 순서로 상자를 늘어놓는다.
@@ -603,17 +698,20 @@ def _topo_order(boxes, edges):
     return order
 
 
-def _narrow_group_plate(boxes, edges, width=340.0):
-    """상자·이음 한 덩이를 좁은 판(폭 340)으로. 넓은 판과 같은 그래프를 쓰되
-    자리가 안 맞으면 셋을 차례로 시도한다.
+def _group_plate(boxes, edges, width):
+    """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 자리가 안 맞으면 셋을
+    차례로 시도한다. 넓은 판(520)·좁은 판(340) 둘 다 이 하나를 쓴다.
 
-    ① 원래 자리(행·열) 그대로 좁은 폭에 앉혀 본다 — 칸이 이미 하나뿐이거나
-       이름이 짧으면 이걸로 된다.
+    ① 원래 자리(행·열) 그대로 앉혀 본다 — 칸이 넷 이하고 이름이 짧으면
+       이걸로 된다.
     ② 안 되면 왼쪽 첫 열만 남기고 나머지 열을 하나로 합친다 — 칸 수를
        줄이지만 이음은 그대로다.
-    ③ 그래도 안 되면 한 칸으로 쌓되, 원문 줄 순서가 아니라 `_topo_order`
-       (소스 먼저, 싱크 나중)로 쌓는다. 이음은 여전히 실제 이음 그대로 건다 —
-       옛 길처럼 「위아래로 이웃한 줄은 다 잇는다」로 되돌아가지 않는다.
+    ③ 그래도 안 되면(칸이 넷을 넘거나 ②도 자리가 겹치면) 한 칸으로 쌓되,
+       원문 줄 순서가 아니라 `_topo_order`(소스 먼저, 싱크 나중)로 쌓는다.
+       이음은 여전히 실제 이음 그대로 건다 — 옛 길처럼 「위아래로 이웃한
+       줄은 다 잇는다」로 되돌아가지 않는다. 한 줄에 상자 다섯이 나란히
+       서는 사슬(「TSMC → 엔비디아 → … → 최종 사용자」)이 여기로 온다 —
+       520 폭에 다섯 칸을 나란히 못 놓으니 위상 정렬 사슬로 세로로 세운다.
     """
     if len(boxes) < 2:
         return None
@@ -642,10 +740,10 @@ def _graph_plate(block, width=520.0, narrow=False):
 
     서로 안 이어진 미니 도식이 한 덩어리에 여럿 있으면(`_weak_groups`) 판을
     여럿 짜서 위아래로 잇는다 — 하나라도 못 앉히면 전부 되돌려 옛 길에 맡긴다.
-    `narrow` 면 한 덩이씩 `_narrow_group_plate`(폭 340, 안 맞으면 열을 줄이거나
-    위상 정렬로 쌓는다)를 쓴다 — 넓은 판과 **같은 그래프**(상자·이음)를 쓰되
-    자리만 화면 폭에 맞춰 다시 잡는다. 화면 폭이 바뀐다고 그림의 뜻(누가
-    누구에게 붙는가)이 바뀌면 안 된다.
+    한 덩이씩 `_group_plate`(자리가 안 맞으면 열을 줄이거나 위상 정렬로
+    쌓는다)를 쓴다 — `narrow` 는 그 판의 폭만 바꾼다. 넓은 판과 좁은 판이
+    **같은 그래프**(상자·이음)를 쓰되 자리만 화면 폭에 맞춰 다시 잡는다.
+    화면 폭이 바뀐다고 그림의 뜻(누가 누구에게 붙는가)이 바뀌면 안 된다.
     """
     g = _graph_of(block)
     if not g:
@@ -675,12 +773,11 @@ def _graph_plate(block, width=520.0, narrow=False):
         fixed_edges.append((a, b, label))
     edges = fixed_edges
     groups = _weak_groups(boxes, edges)
-    build = _narrow_group_plate if narrow else _one_graph_plate
     svgs = []
     for grp in groups:
         gset = set(id(b) for b in grp)
         gedges = [e for e in edges if id(e[0]) in gset and id(e[1]) in gset]
-        svg = build(grp, gedges, width)
+        svg = _group_plate(grp, gedges, width)
         if not svg:
             return None            # 한 덩이라도 못 앉히면 전부 옛 길로 되돌린다
         svgs.append(svg)
@@ -1048,6 +1145,13 @@ def _split_title(block):
     if i >= len(lines):
         return '', block
     t = lines[i].strip()
+    # ┌─┐ 테두리 하나짜리 제목은 `_unframe` 을 지나면 안에 있던 [ … ] 를 다시
+    # 대괄호로 감싸 [ [ … ] ] 꼴(겹)이 된다 — `_TITLE_ONLY` 는 홑겹만 알아서
+    # 겉 한 겹을 먼저 벗긴다. 안 벗기면 이 줄이 상자로 판에 그대로 섞여 든다
+    # (2026-08-27 밸류체인 그림)
+    m2 = re.match(r'^\[\s*(\[[^\[\]]+\])\s*\]$', t)
+    if m2:
+        t = m2.group(1)
     if not _TITLE_ONLY.match(t):
         return '', block
     rest = chr(10).join(lines[:i] + lines[i + 1:])
@@ -1056,12 +1160,84 @@ def _split_title(block):
     return t.strip('[]').strip(), rest
 
 
+# ── 도식 안 이모지를 지운다 ──────────────────────────────────────────────
+# 방침: 화면에 이모지를 안 남긴다. 받는 글에는 「이모지는 쓰지 않는다」를 이미
+# 프롬프트에 박아 뒀지만, 이미 실린 넉 편에는 남아 있어 파서가 대신 지운다.
+# 화살표류는 우리 격자 파서가 이미 아는 문자(→←↑↓)로 바꿔야 이음이 잡히고,
+# 채운·빈·꺼진 칸은 뜻이 사는 기호(■·□·▨)로 바꿔야 막대 그림이 살아남는다.
+# 그 밖의 그림 이모지는 낱말이 아니라 `_kept`에 안 걸리니 그냥 걷는다.
+# 산문에는 안 쓴다 — 도식 덩어리(`_block_html`)에 들어온 글만 여기를 거친다.
+_EMOJI_MAP = {
+    '➡': '→', '⬅': '←', '⬆': '↑', '⬇': '↓', '↔': '↔', '⇒': '⇒',
+    '🟩': '■', '🟢': '■', '🟥': '■', '🔴': '■', '🟦': '■', '🔵': '■',
+    '⬜': '□', '⚪': '□',
+    '⬛': '▨',
+}
+# VS16(️)·그 밖의 그림 이모지(이모지·딩뱃·기타 화살표 판)를 마저 지운다.
+# 위에서 이미 뜻 있는 문자로 바꾼 것들은 이 대역 밖(→←↑↓·■□▨)이라 안 걸린다
+_EMOJI_STRIP = re.compile(
+    '[\U0001F300-\U0001FAFF⬀-⯿☀-➿️]')
+
+
+def _denorm_emoji(block):
+    """도식 덩어리의 이모지를 우리 파서가 아는 문자나 칸 기호로 바꾸거나 지운다."""
+    for k, v in _EMOJI_MAP.items():
+        block = block.replace(k, v)
+    return _EMOJI_STRIP.sub('', block)
+
+
+# 판을 못 짜서 아스키로 남는 도식이 카드 폭을 넘으면 가로 스크롤이 생기는데,
+# 스크롤바가 눈에 안 띄어 그냥 잘린 것처럼 읽힌다(2026-08-27). 글자를 지우거나
+# 줄을 접지 않고 — 모노스페이스 글꼴 그대로 크기만 줄여 판 폭에 맞춘다. 모노스페이스
+# 한 칸의 폭은 글자 크기의 대략 0.6배다(라틴 1칸·한글 2칸이라는 `_cells` 셈과 맞물려,
+# 한글도 라틴의 두 배 폭이라 이 비율이 그대로 적용된다)
+_MONO_COL_EM = 0.6
+_ASCII_SEQ = [0]         # 도식마다 다른 class 이름을 붙이는 데만 쓴다
+
+
+def _ascii_pre(block):
+    """아스키로 남은 도식을 <pre> 로. 가장 긴 줄이 판 폭(520·340)을 넘으면
+    그 폭에 맞는 글자 크기를 그 도식만의 class 로 박아 넣는다.
+    """
+    esc = block.replace('&', '&amp;').replace('<', '&lt;')
+    max_cols = 0
+    for ln in block.split(chr(10)):
+        cells = _cells(ln)
+        if cells:
+            max_cols = max(max_cols, cells[-1][2])
+    if max_cols == 0:
+        return '<pre class="fv-pre">%s</pre>' % esc
+    # 기본 크기(넓은 화면 .72rem·좁은 화면 .62rem)를 지금 CSS 에서 그대로 가져온다.
+    # 이미 다 들어가면(계산값이 기본보다 크면) 손 안 대고 기본 CSS 그대로 쓴다
+    base_wide, base_narrow = 0.72 * 16.0, 0.62 * 16.0
+    fs_wide = min(base_wide, (520.0 - 24.0) / (max_cols * _MONO_COL_EM))
+    fs_narrow = min(base_narrow, (340.0 - 24.0) / (max_cols * _MONO_COL_EM))
+    # 9px 아래로는 안 내린다 — 이 장이 이미 쓰는 가장 작은 글자(.62rem≈9.92px)
+    # 언저리다. 그 밑으로 줄이면 글자를 지운 것과 다를 바 없이 안 읽힌다.
+    # 그래도 다 안 들어가는 줄은 `.fv-pre` 의 overflow-x:auto 로 마저 스크롤한다
+    fs_wide, fs_narrow = max(fs_wide, 9.0), max(fs_narrow, 9.0)
+    if fs_wide >= base_wide - 0.05 and fs_narrow >= base_narrow - 0.05:
+        return '<pre class="fv-pre">%s</pre>' % esc
+    _ASCII_SEQ[0] += 1
+    cls = 'fv-pre-%d' % _ASCII_SEQ[0]
+    # 셀렉터 앞에 .uc-rep 을 또 붙인다 — 전역 CSS 의 `.uc-rep .fv-pre` 와
+    # 우선순위가 같으면 뒤에 실린 것이 이기지만, 그 순서에 기대지 않고 확실히
+    # 이기도록 특정도를 하나 더 높여 둔다
+    style = ('<style>.uc-rep .fv-pre.%s{font-size:%.2fpx}'
+             '@media (max-width:640px){.uc-rep .fv-pre.%s{font-size:%.2fpx}}'
+             '</style>' % (cls, fs_wide, cls, fs_narrow))
+    return style + '<pre class="fv-pre %s">%s</pre>' % (cls, esc)
+
+
 def _block_html(block):
     """도식 덩어리 하나를 판·글·아스키 중 하나로.
 
     들여쓴 목록은 그냥 글이다 — 판으로 구우면 딱지가 주인공이 되고(「한계」·「장점」),
     아스키로 두면 읽기 어려운 고정폭 덩어리가 된다. 목록 표시를 불릿으로 바꿔 글로 낸다.
     """
+    # 이모지는 여기 하나뿐인 문턱에서 지운다 — 판·아스키 어느 길로 가든,
+    # 이 함수를 지난 뒤로는 이모지가 없다고 믿을 수 있다
+    block = _denorm_emoji(block)
     if _is_list(block):
         groups = _groups(block)
         # 머리가 둘 이상이면 단계다 — 머리마다 상자 하나를 치고 딸린 줄을 그 안에 넣는다.
@@ -1156,8 +1332,7 @@ def _block_html(block):
             return (head + '<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
                     % (svg, small))
         return head + svg
-    return ('<pre class="fv-pre">%s</pre>'
-            % block.replace('&', '&amp;').replace('<', '&lt;'))
+    return _ascii_pre(block)
 
 
 def _place(out, html):
