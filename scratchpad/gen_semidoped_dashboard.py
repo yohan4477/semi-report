@@ -54,17 +54,18 @@ VIEWS = [
 def make_card(slug, ep_title, date, url, kind, view_title, asked, section):
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
+    # 카드 앞면에 세우는 글도 받은 답에서 뽑는다. 우리가 쓴 문장은 카드에 없다
+    lead = frame_view.lead_of(md)
     return {
         'id': 'sd-%s-%s' % (slug, kind),
         'section': section,
         'title': '%s — %s' % (ep_title, view_title),
-        'gain': '%s. 받은 글을 고치지 않고 그대로 싣는다.' % asked,
+        'gain': lead[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
                  '업로드 %s' % date, 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
-        'verdict': '%s 받은 답을 그대로 싣는다. 원문이 받쳐 주는지는 '
-                   'insights/check_frame.py 가 따로 센다.' % asked,
+        'verdict': lead,
         'report': [('raw', '<div class="fv-b">%s</div>' % frame_view.to_html(md))],
     }
 

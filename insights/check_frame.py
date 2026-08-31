@@ -102,6 +102,10 @@ def cards_of(slug):
             continue
         for m in CARD.finditer(raw):
             block = m.group(0)
+            # 메타에 「받은 그대로」가 붙은 카드는 앞면(요지·한줄)까지 다 인용이다.
+            # 그런 카드를 유출로 세면 인용을 실을 수 없는 검사기가 된다(2026-08-31)
+            if slug in block and '받은 그대로' in block:
+                continue
             if slug in block:
                 # 「받은 그대로」 상자는 남의 글을 인용한 자리다. 우리가 한 주장이 아니라
                 # 유출로 세지 않는다 — 상자 머리에 미검증이라고 적혀 있다(2026-08-31)

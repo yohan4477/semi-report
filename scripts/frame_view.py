@@ -64,9 +64,25 @@ def boxes(block):
     ncol = max(len(r) for r in rows)
     if ncol > 3:
         return None                 # 한 줄에 넷을 넘으면 판에 안 들어간다
+    # 이름이 길면 판을 넘는다. 한 번 줄여 다시 굽고, 그래도 넘치면 아스키로 둔다 —
+    # 상자 안에서 글자를 자르는 것보다 원본을 그대로 보이는 편이 낫다
+    for cut in (None, 14):
+        try:
+            return _plate(rows, notes, ncol, cut)
+        except AssertionError:
+            continue
+    return None
+
+
+def _plate(rows, notes, ncol, cut=None):
+    def fit(name, sub):
+        if cut and len(name) > cut:
+            sub = (name[cut:] + ' ' + sub).strip()[:30]
+            name = name[:cut]
+        return name, sub
     p = fig_layout.Plate()
     for r in rows:
-        p.row(*([(n, sub) for n, sub in r] + [None] * (ncol - len(r))))
+        p.row(*([fit(n, sub) for n, sub in r] + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
         p.connect(p.at(i, 0), p.at(i + 1, 0))
     for ri, r in enumerate(rows):
@@ -147,6 +163,20 @@ def body_of(path):
         s = s[s.index('---', 3) + 3:]
     s = re.sub(r'이 파일은 \*\*미검증 원본\*\*이다\..*?옮긴다\.\n', '', s, flags=re.S)
     return s.strip()
+
+
+
+def lead_of(md):
+    """답의 첫 문단. 카드 앞면에 세울 글도 받은 글에서만 뽑는다 — 우리가 쓰지 않는다."""
+    for ln in md.split(chr(10)):
+        t = ln.strip()
+        if not t or t.startswith(('#', '|', '```', '*', '-', '>')):
+            continue
+        t = re.sub(r'\*\*(.+?)\*\*', r'', t)
+        t = re.sub(r'`(.+?)`', r'', t)
+        if len(re.findall(r'[가-힣]', t)) >= 10:
+            return t
+    return ''
 
 
 def view(slug, kind, title, note=''):
