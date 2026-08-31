@@ -59,6 +59,20 @@ def _paras(md):
     return [t.strip() for t in md.split(chr(10) * 2) if t.strip()]
 
 
+def _first_prose(md):
+    """제목·표·도식을 건너뛴 첫 줄글 한 도막. 카드 앞면에 세울 자리다."""
+    for t in _paras(md):
+        for ln in t.split(chr(10)):
+            # 목록 표시만 걷는다. 굵은 글씨(**핵심 요약:**)의 별표까지 걷으면 짝이 깨져
+            # 앞면에 별표가 그대로 남는다
+            ln = re.sub(r'^\s*[-*]\s+', '', ln.strip())
+            if ln.startswith(('#', '|', '`', '>')):
+                continue
+            if len(re.findall(r'[가-힣]', ln)) >= 20:
+                return ln
+    return ''
+
+
 def plain(md):
     """문단 하나를 카드 앞면에 세울 줄글로. 굵은 글씨 표시만 걷고 글자는 그대로 둔다.
 
@@ -80,13 +94,19 @@ def plain(md):
 def intro_html(slug):
     """회차 앞머리 — 뷰 카드보다 먼저, 섹션 머리 아래에 선다.
 
-    전략 뷰의 첫 제목 앞 문단이다. 이 회차가 무엇을 다루는지를 말하는 자리라 뷰마다
-    되풀이하지 않고 섹션에 한 번만 세운다.
+    뷰마다 답의 첫 제목 앞에 「이 회차가 무엇을 다루나」를 적어 온다. 셋을 다 세운다 —
+    전략 것만 세우면 나머지 두 페르소나가 무엇을 보겠다고 했는지가 안 보인다.
     """
-    md = frame_view.body_of(os.path.join(
-        ROOT, 'insights', 'frames', '%s-strategy.md' % slug))
-    return '<div class="fv-b sd-intro">%s</div>' % frame_view.to_html(
-        frame_view.intro_of(md))
+    out = []
+    for kind, view_title, asked in VIEWS:
+        md = frame_view.body_of(os.path.join(
+            ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
+        intro = frame_view.intro_of(md)
+        if not intro:
+            continue
+        out.append('<div class="sd-i"><p class="sd-i-h">%s<span>%s</span></p>%s</div>'
+                   % (view_title, asked, frame_view.to_html(intro)))
+    return '<div class="fv-b sd-intro">%s</div>' % ''.join(out)
 
 
 def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
@@ -98,20 +118,19 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     summ, rest = frame_view.split_summary(md)
-    if kind == 'strategy':
-        # 앞머리는 섹션 머리 아래에 이미 섰다
-        intro = frame_view.intro_of(md)
-        if rest.startswith(intro):
-            rest = rest[len(intro):].strip()
+    # 앞머리는 섹션 머리 아래에 이미 섰다 — 뷰마다 걷는다
+    intro = frame_view.intro_of(md)
+    if intro and rest.startswith(intro):
+        rest = rest[len(intro):].strip()
     if summ:
         sp = _paras(summ)
         # 제목 줄(**[요약 및 컨설턴트 제언]**)만 있는 첫 문단은 앞면에 세우지 않는다
         i = 1 if len(sp) > 1 and len(sp[0]) < 40 else 0
         front, top_md = sp[i], (chr(10) * 2).join(sp[:i] + sp[i + 1:])
     else:
-        rp = _paras(rest)
-        front, top_md = (rp[0] if rp else ''), ''
-        rest = (chr(10) * 2).join(rp[1:])
+        # 꼬리에 요약이 안 붙어 온 뷰. 몸의 첫 줄글을 앞면에 세우고 몸에서 걷지는 않는다 —
+        # 제목 바로 아래 문단을 빼면 그 제목이 자기 글을 잃는다
+        front, top_md = _first_prose(rest), ''
     top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(top_md)) if top_md else ''
     return {
         'id': 'sd-%s-%s' % (slug, kind),
@@ -219,7 +238,11 @@ h1 a.h-home:hover { text-decoration:underline; }
 .sd-intro { margin:0 0 16px; padding:12px 14px; border:1px solid var(--line);
   border-radius:10px; background:var(--surface); }
 .sd-intro p { margin:6px 0; font-size:.86rem; line-height:1.8; color:var(--ink-2); }
-.sd-intro p:first-child { margin-top:0; }
+/* 뷰마다 한 도막. 누가 무엇을 보겠다고 했는지가 도막 머리에 선다 */
+.sd-intro .sd-i + .sd-i { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
+.sd-intro .sd-i-h { margin:0 0 4px; font-size:.8rem; font-weight:800; color:var(--ink); }
+.sd-intro .sd-i-h span { font-weight:400; color:var(--ink-3); margin-left:7px; font-size:.72rem; }
+.sd-intro .sd-i p:last-child { margin-bottom:0; }
 /* 받은 글 꼬리의 요약·제언을 여기로 올린다 — 뷰 카드에서 먼저 읽히는 자리 */
 .uc-rep .vc-sum { margin:12px 14px 0; padding:10px 12px; border-left:3px solid var(--ink-3);
   border-radius:0 6px 6px 0; background:var(--sunk); }
