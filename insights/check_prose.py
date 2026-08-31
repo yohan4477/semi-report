@@ -478,7 +478,10 @@ DASH_DIR = os.path.join(paths.ROOT, '대시보드')
 # 대시보드 산문에서 걷어내야 하는 것. 눈에 보이는 글만 남긴다.
 _TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
 _TAG = re.compile(r'<[^>]+>')
-_QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>', re.S)
+# 받은 글을 그대로 실은 자리. 접힌 상자든 카드 본문 전체든 남의 글이라 문체를 재지
+# 않는다 — 2026-08-31 에 카드가 뷰 하나를 통째로 싣는 꼴로 바뀌었다
+_QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>'
+                        r'|<div class="fv-b">.*?</div>\s*(?=<div class="uc-links"|\Z)', re.S)
 _ENT = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&#39;', "'"),
         ('&nbsp;', ' ')]
 

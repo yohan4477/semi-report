@@ -117,7 +117,8 @@ SHORT = re.compile(r'\d\s*(Gb|GB|Tb|TB|Mb|MB|kW|MW|GHz|MHz|㎿|㎾)\b')
 CUT = re.compile(r'(이|가|을|를|의|에|에서|으로|로|와|과|보다|부터|까지|에게|한테)$')
 # 이 장은 규칙을 세우며 다시 그리는 중이라 줄임말도 FAIL 로 막는다.
 # 나머지 장은 이 규칙보다 먼저 그려졌으니 세기만 한다
-STRICT_FIG = ('오픈AI 할라페뇨',)
+# 2026-08-31 에 이 장을 게이트에서 뺐다. 규칙은 남기고 연결만 끊는다
+STRICT_FIG = ()
 
 
 def text_hits(svg, strict=True):

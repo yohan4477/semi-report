@@ -46,7 +46,11 @@ SKIP_NAME = {
 }
 TAGBLOCK = re.compile(r'<(script|style|svg)\b.*?</\1>', re.S | re.I)
 TAG = re.compile(r'<[^>]+>')
-QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>', re.S)
+# 받은 글을 그대로 실은 자리. 접힌 상자(details.fv)든 카드 본문 전체(div.fv-b)든
+# 남의 글을 인용한 것이라 유출로 세지 않는다 — 2026-08-31 에 카드가 뷰 하나를
+# 통째로 싣는 꼴로 바뀌면서 본문 전체가 인용이 됐다
+QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>'
+                       r'|<div class="fv-b">.*?</div>\s*(?=<div class="uc-links"|\Z)', re.S)
 
 
 def meta(text):
