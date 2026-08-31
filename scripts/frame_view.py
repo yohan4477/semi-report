@@ -35,7 +35,7 @@ _BOX = re.compile(r'\[([^\]\[]+)\]')
 # 딸린 라벨로 남는다. ➡⬅⬆⬇ 는 여기서 안 잡는다 — `_denorm_emoji` 가 도식
 # 덩어리 맨 앞에서 이미 →←↑↓ 로 바꿔 놓는다(방침: 화면에 이모지를 안 남긴다).
 # ↔·⇒ 는 그 방침에서도 그대로 두는 문자라 여기 남는다
-_ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+|[↔⇒])')
+_ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|►|=>|=+>|[─—-]+>|<[─—-]+|[↔⇒])')
 
 
 # 세로선은 전각만 오지 않는다. 아스키 표 꼴(+---+ 와 | 이름 |)로 그려 오는 판이 있어
@@ -148,6 +148,9 @@ _DIRS = {
     # 바꿔 놓는다(화면에 이모지를 안 남기는 방침). ↔·⇒ 는 그대로 남는 문자라
     # 방향을 정해 둔다 — 안 넣으면 「TSMC ↔ 엔비디아」 같은 줄이 이음이 안 잡힌다
     '↔': 'LR', '⇒': 'LR',
+    # ► (U+25BA, 다른 모델이 ──►로 자주 그려 보낸다)도 ▶ 와 같은 화살촉이다.
+    # 여기 없으면 이 화살촉이 낀 선은 방향이 없는 문자로 취급돼 이음이 안 잡힌다
+    '►': 'LR',
 }
 _WIRE_CH = ''.join(_DIRS.keys())
 _WIRE = frozenset(_DIRS.keys())
@@ -156,6 +159,7 @@ _WIRE = frozenset(_DIRS.keys())
 # 그래프에서 시작점이 사라진다
 _BARE_HEAD = re.compile(r'^([가-힣A-Za-z0-9][가-힣A-Za-z0-9 /]{0,18}[가-힣A-Za-z0-9])'
                         r'\s*(?=[%s])' % re.escape(_WIRE_CH))
+
 
 
 class _GBox(object):
@@ -212,17 +216,27 @@ def _graph_boxes(block):
             taken.append((s, e))
         # 화살표로 이어 놓은 낱말 사슬(「TSMC(제조) ➡ 엔비디아 ➡ 클라우드 ➡ …」)도
         # 상자로 읽는다. 대괄호가 없다고 각주로 내리면 그 줄이 그림의 알맹이인데
-        # 판에서 사라진다 — 2026-08-31 밸류체인 그림이 그랬다
-        if not taken and len(_ARROW.findall(ln)) >= 2:
+        # 판에서 사라진다 — 2026-08-31 밸류체인 그림이 그랬다. **화살촉 하나만
+        # 있어도**(「├─ 후회 계수 높다 ──► Gen 1 …」처럼 사슬 한 토막뿐인 줄) 잇는다
+        # — 화살촉 자체가 「여기서 갈린다」는 표시라 두 개를 요구할 이유가 없다.
+        # 화살촉이 아예 없이 대시만 두 칸 이상 이어진 줄(「랩 ──── 안 판다」)도
+        # 잇는다 — 2026-08-31 「경쟁 관계 세기별 판로」가 그런 화살촉 없는 대조였다
+        if not taken and _EDGE.search(ln):
             pos = 0
-            for piece in _ARROW.split(ln):
-                if not piece or _ARROW.fullmatch(piece):
+            for piece in re.split(_EDGE_CAP, ln):
+                if not piece or _EDGE.fullmatch(piece):
                     pos += len(piece or '')
                     continue
-                name = piece.strip()
+                # 이름표는 앞뒤 선 부스러기(├─ 의 ├─ 등)와 빈칸을 뗀다 — 실제
+                # 이음은 격자 문자 그대로 `_wire_cells` 가 따로 다시 읽으니
+                # 이름표에는 안 남겨도 된다. 하지만 **칸(c0·c1)은 조각 원래
+                # 자리 그대로** 쓴다 — 이름만 잘라 칸까지 줄이면 「몫  ──」처럼
+                # 이름과 선 사이에 빈칸이 둘 이상 낀 줄에서 상자 오른쪽 끝이
+                # 선보다 두 칸 넘게 떨어져 `_touches`(빈칸 한 칸까지만 허용)가
+                # 못 잇는다(2026-08-31 「OpenAI 전력 예산」 다지관이 그랬다)
+                name = piece.strip(_WIRE_CH + ' \t')
                 if len(re.findall(r'[가-힣A-Za-z0-9]', name)) >= 2:
-                    s0 = pos + (len(piece) - len(piece.lstrip()))
-                    e0 = s0 + len(name)
+                    s0, e0 = pos, pos + len(piece)
                     out.append(_GBox(name, '', i, col_of(s0), _end_col(e0, cells)))
                     taken.append((s0, e0))
                 pos += len(piece)
@@ -235,6 +249,28 @@ def _graph_boxes(block):
                 if len(re.findall(r'[가-힣A-Za-z0-9]', text)) >= 2:
                     c0 = col_of(s)
                     c1 = _end_col(e, cells) if e else c0
+                    out.append(_GBox(text, '', i, c0, c1, bare=True))
+                    taken.append((s, e))
+        # 선 문자가 아예 하나도 없는 줄 통째(「기능 목록(다 넣고 싶다)」 같은
+        # 뿌리 제목, 「(A) NVL72 랙 1대 …」 같은 갈래 이름)도 상자 후보로 둔다 —
+        # 위아래 줄의 세로선이 이 칸 범위에 닿으면 `_touches` 가 마디로 이어
+        # 준다. 안 닿으면(진짜 산문이면) `_graph_plate` 가 손대지 않은 상자를
+        # 각주로 내리는 안전망을 이미 갖고 있어 그림이 지어지지 않는다.
+        # 폭이 넓은 줄(24 칸 넘음)은 뺀다 — 두 갈래 제목을 한 줄에 큰 공백으로
+        # 나란히 적은 줄(「과거 …    현재 및 미래 …」)까지 상자 하나로 삼으면
+        # 그 상자가 열 폭을 통째로 먹어 진짜 마디들의 자리를 밀어낸다
+        # (2026-08-31 Grok bot 밸류체인이 그렇게 깨졌다). 「text」(울타리 언어
+        # 표시)는 상자가 아니다. 낱말다운 이어진 글자가 있어야 한다 — 「v … v」
+        # 처럼 화살촉 대용 낱글자만 흩어진 줄(우리 격자가 모르는 ASCII 표시)을
+        # 상자로 세우면 안 된다
+        if not taken and not (set(ln) & _WIRE):
+            text = ln.strip()
+            if (text and text != 'text'
+                    and re.search(r'[가-힣]{2,}|[A-Za-z]{3,}|[0-9]{2,}', text)):
+                s = len(ln) - len(ln.lstrip())
+                e = s + len(text)
+                c0, c1 = col_of(s), _end_col(e, cells)
+                if c1 - c0 <= 24:
                     out.append(_GBox(text, '', i, c0, c1, bare=True))
     return out
 
@@ -255,7 +291,17 @@ def _wire_cells(block, boxes):
     return cells
 
 
-_ARROWHEAD = frozenset('▲▼◀▶→←↑↓<>')
+_ARROWHEAD = frozenset('▲▼◀▶►→←↑↓<>')
+
+# 대괄호 없는 줄 안에서 낱말 사슬을 가르는 자리(`_graph_boxes` 가 쓴다).
+# 화살촉 문자는 하나만 있어도 이음이다 — 그 자체가 「여기서 갈린다」는
+# 표시라 두 개를 요구할 이유가 없다(「├─ 후회 계수 높다 ──► Gen 1 …」처럼
+# 사슬 한 토막뿐인 줄도 있다). 화살촉이 없으면 선 문자가 두 칸 이상 이어질
+# 때만 이음으로 본다 — 「Gen 1 = Jalapeño」의 「=」 하나, 「23~24 Gb/s」의
+# 「~」 하나처럼 낱말 속에 낀 문자 하나까지 자르면 안 된다(화살촉 없는
+# 대시 대조 「랩 ──── 안 판다」는 두 칸짜리 대시 이음으로 잡힌다)
+_EDGE = re.compile(r'[%s]|[%s]{2,}' % (re.escape(''.join(_ARROWHEAD)), re.escape(_WIRE_CH)))
+_EDGE_CAP = re.compile('(%s)' % _EDGE.pattern)
 
 
 def _components(cells):
@@ -391,7 +437,7 @@ def _horiz_seeded(comps, boxes):
 # 화살촉이 가리키는 쪽. 닿은 자리의 글자가 이 사전에 있으면 기본 방향을 뒤집을
 # 수도 있다 — 「[상자] <── …」처럼 화살촉이 상자 쪽을 보면 그 상자는 나가는
 # 쪽이 아니라 받는 쪽이다
-_ARROW_DIR = {'<': 'L', '◀': 'L', '>': 'R', '▶': 'R', '←': 'L', '→': 'R',
+_ARROW_DIR = {'<': 'L', '◀': 'L', '>': 'R', '▶': 'R', '►': 'R', '←': 'L', '→': 'R',
              '▲': 'U', '▼': 'D', '↑': 'U', '↓': 'D'}
 _OPPOSITE = {'R': 'L', 'L': 'R', 'U': 'D', 'D': 'U'}
 
@@ -760,6 +806,14 @@ def _graph_plate(block, width=520.0, narrow=False):
     boxes = [b for b in boxes if id(b) in touched]
     if len(boxes) < 2:
         return None
+    # 이은 상자보다 못 이은 상자(각주로 내려간 것)가 더 많으면 그래프로 읽은
+    # 것 자체를 못 믿는다 — 진짜 그래프라면 마디 대부분이 이어져 있어야 한다.
+    # 헐거운 이음 한둘만 건지고 나머지를 각주 더미로 흘리면(`_one_plate`가
+    # 이미 온전히 읽는 표를 그래프가 어설프게 가로챈 꼴) 되돌려서 줄 단위 표
+    # (`_one_plate`)로 넘긴다 — 2026-08-31 Grok bot 밸류체인이 그렇게 상자
+    # 열 개 중 여덟이 각주로 흩어질 뻔했다
+    if len(heads) > len(boxes):
+        return None
     notes = [h.name + (' — ' + h.sub if h.sub else '') for h in heads] + notes
     # 이음 이름이 길면 같은 줄 이음의 틈(`_need_gap_x`)이 그 글자 폭만큼 벌어져
     # 판 폭을 넘긴다 — 긴 이름은 선 위에 못 얹고 판 아래 각주로 내린다. 좁은
@@ -916,9 +970,13 @@ def _rows_of(block):
                 cells.append((t.strip(), tail))
             rows.append(cells)
         else:
-            # 「- 역할: …」처럼 대시로 시작하는 줄은 바로 앞 상자가 하는 말이다. 각주로
-            # 내리면 판 아래에 몰리고 상한(여섯)에 걸려 잘린다 — 그 상자 안에 넣는다
-            dash = re.match(r'\s*[-•]\s*(.+)', ln)
+            # 「- 역할: …」·「└─ 대역폭: …」처럼 대시나 └─·├─ 로 시작하는 줄은
+            # 바로 앞 상자가 하는 말이다. 각주로 내리면 판 아래에 몰리고 상한
+            # (여섯)에 걸려 잘린다 — 그 상자 안에 넣는다. 나무 꼴 줄머리(└├)를
+            # 안 받으면 「[Tier 2: …]」 다음 줄 「└─ 대역폭: …」이 상자에 안
+            # 붙고 각주로 떨어져, 정작 있어야 할 Tier 2 → Tier 1 사슬이
+            # 상자 둘만 남은 반쪽 사슬로 준다(2026-08-31 스케일업 네트워크)
+            dash = re.match(r'\s*[-•]\s*(.+)', ln) or re.match(r'\s*[└├]─\s*(.+)', ln)
             if dash and rows and rows[-1]:
                 n, sub = rows[-1][-1]
                 add = dash.group(1).strip()
@@ -1004,13 +1062,17 @@ def boxes(block):
     if not two:
         block = _unframe(block)
         two = _split_cols(block)
-    if _is_list(block):
-        return None                 # 목록은 받은 꼴 그대로 둔다
     if two:
         a, b = (_plate_for(_unframe(x)) for x in two)
         if a and b:
             return '<div class="fv-two">%s%s</div>' % (a, b)
         return None
+    # 목록 판정보다 판 시도가 먼저다. 줄머리가 ├─·└─ 라도(`_is_list` 가 보는
+    # 표시) 실은 상자 그림인 일이 잦다 — 2026-08-31 「기능 목록」이 그래프로는
+    # 다 읽히는데 목록 판정에 먼저 걸려 「│」한 줄이 빈 불릿으로 섰다. 그래프도
+    # 줄 단위 판(`_one_plate`)도 다 못 읽어야(`_plate_for` 가 None) 그때
+    # `_block_html` 이 목록·글로 내려간다 — 자체 안전망(`_kept`)이 낱말을
+    # 흘린 판은 이미 걸러 준다
     return _plate_for(block)
 
 
@@ -1196,7 +1258,10 @@ def _split_title(block):
     body = _unframe(block)
     lines = body.split(chr(10))
     i = 0
-    while i < len(lines) and not lines[i].strip():
+    # 울타리 언어 표시(```text)가 도식 첫 줄로 그대로 들어오는 일이 있다 —
+    # 빈 줄과 똑같이 건너뛴다. 안 건너뛰면 「text」자체가 「제목 아님」으로
+    # 읽혀 진짜 제목 줄(「[다이어그램 3: …]」)을 못 찾는다(2026-08-31)
+    while i < len(lines) and (not lines[i].strip() or lines[i].strip() == 'text'):
         i += 1
     if i >= len(lines):
         return '', block
@@ -1602,6 +1667,50 @@ def _block_html(block):
     tbl = _gap_table(block)
     if tbl and _kept(block, tbl):
         return tbl
+    # 상자 그래프를 목록·대조 판정보다 먼저 시도한다. 줄머리가 ├─·└─ 라도
+    # (`_is_list` 가 목록으로 보는 표시) 실은 상자 그림인 일이 잦다 —
+    # 2026-08-31 「기능 목록」이 그래프로는 다 읽히는데 목록 판정에 먼저 걸려
+    # 「│」한 줄이 빈 불릿으로 섰다. 여기서 실패하면 아스키로 남을 덩어리다 —
+    # 제목을 떼는 손질이 실패작을 판으로 되살리면 안 된다(아스키로 남은 넷은
+    # 그대로 둔다는 규칙). 성공했을 때만 제목 줄을 상자에서 빼는 손질을 시도한다
+    try:
+        svg = boxes(block)
+    except Exception:
+        svg = None
+    if svg and not _kept(block, svg):
+        svg = None                  # 낱말을 흘린 판은 안 쓴다
+    title = ''
+    # 첫 줄이 「[다이어그램 N: …]」 같은 제목 한 줄이면 상자에서 떼고 판 위에
+    # 세운다. 뗀 채로 못 구우면(폭 계산이 그 줄에 기대는 판도 있다) 방금 구운
+    # 판을 그대로 쓴다 — 제목이 상자 하나로 남는 채가 안전한 대안이다. 첫
+    # 시도(svg)가 아예 실패했을 때도 시도한다 — 제목 글이 길면 그 자체로
+    # 판 폭을 넘겨 몸통까지 통째로 못 짜이는 일이 있다(2026-08-31 스케일업
+    # 네트워크 그림이 그랬다) — 뗀 뒤에야 몸통이 폭 안에 들어온다
+    t, body = _split_title(block)
+    if t:
+        try:
+            svg2 = boxes(body)
+        except Exception:
+            svg2 = None
+        # 뗀 제목은 판 밖 <p> 로 나가니, 낱말 검사는 그 문단까지 합쳐서 본다 —
+        # svg2 만 보면 제목 낱말이 거기 없다는 이유로 늘 걸린다
+        head2 = '<p class="fig-title">%s</p>' % _inline(t)
+        if svg2 and _kept(block, head2 + svg2):
+            svg, title = svg2, t
+    if svg:
+        head = '<p class="fig-title">%s</p>' % _inline(title) if title else ''
+        # 넓은 화면과 좁은 화면에 다른 판을 낸다. 같은 판을 줄이면 글자가 깨알이 된다.
+        # 제목을 뗀 판이면 낱말 검사도 head 를 합쳐서 본다 — head 를 빼면 제목
+        # 낱말이 small 어디에도 없다는 이유로 늘 걸려 좁은 화면 판을 못 쓴다
+        try:
+            small = _narrow_plate(body if title else block)
+        except Exception:
+            small = None
+        if small and small != svg and _kept(block, head + small):
+            return (head + '<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
+                    % (svg, small))
+        return head + svg
+    # 판으로 못 읽었을 때만 목록으로 본다.
     if _is_list(block):
         groups = _groups(block)
         # 머리가 둘 이상이면 단계다 — 머리마다 상자 하나를 치고 딸린 줄을 그 안에 넣는다.
@@ -1658,44 +1767,6 @@ def _block_html(block):
             two = '<div class="fv-two">%s%s</div>' % tuple(plates)
             if _kept(block, two):
                 return two
-    # 원래 글 그대로 먼저 구워 본다. 여기서 실패하면 아스키로 남을 덩어리다 —
-    # 제목을 떼는 손질이 실패작을 판으로 되살리면 안 된다(아스키로 남은 넷은
-    # 그대로 둔다는 규칙). 성공했을 때만 제목 줄을 상자에서 빼는 손질을 시도한다
-    try:
-        svg = boxes(block)
-    except Exception:
-        svg = None
-    if svg and not _kept(block, svg):
-        svg = None                  # 낱말을 흘린 판은 안 쓴다
-    title = ''
-    if svg:
-        # 첫 줄이 「[다이어그램 N: …]」 같은 제목 한 줄이면 상자에서 떼고 판 위에
-        # 세운다. 뗀 채로 못 구우면(폭 계산이 그 줄에 기대는 판도 있다) 방금 구운
-        # 판을 그대로 쓴다 — 제목이 상자 하나로 남는 채가 안전한 대안이다
-        t, body = _split_title(block)
-        if t:
-            try:
-                svg2 = boxes(body)
-            except Exception:
-                svg2 = None
-            # 뗀 제목은 판 밖 <p> 로 나가니, 낱말 검사는 그 문단까지 합쳐서 본다 —
-            # svg2 만 보면 제목 낱말이 거기 없다는 이유로 늘 걸린다
-            head2 = '<p class="fig-title">%s</p>' % _inline(t)
-            if svg2 and _kept(block, head2 + svg2):
-                svg, title = svg2, t
-    if svg:
-        head = '<p class="fig-title">%s</p>' % _inline(title) if title else ''
-        # 넓은 화면과 좁은 화면에 다른 판을 낸다. 같은 판을 줄이면 글자가 깨알이 된다.
-        # 제목을 뗀 판이면 낱말 검사도 head 를 합쳐서 본다 — head 를 빼면 제목
-        # 낱말이 small 어디에도 없다는 이유로 늘 걸려 좁은 화면 판을 못 쓴다
-        try:
-            small = _narrow_plate(body if title else block)
-        except Exception:
-            small = None
-        if small and small != svg and _kept(block, head + small):
-            return (head + '<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
-                    % (svg, small))
-        return head + svg
     # 표도 판도 못 되는 도식(축·눈금이 있는 산점도, 문단 딸린 나무 가지 등)의
     # 마지막 수단 — 불릿 글로 푼다. 새 이음·칸·차례를 짓지 않는다: 장식 문자만
     # 걷고 남은 줄을 받은 순서 그대로 한 줄에 한 항목씩 옮길 뿐이다
