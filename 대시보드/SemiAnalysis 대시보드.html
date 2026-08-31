@@ -71,6 +71,16 @@
   .sig .d.clamped::after{content:"⋯ 더보기"; display:block; color:var(--accent); font-size:.72rem; font-weight:600; margin-top:1px;}
   .sig .d.exp{-webkit-line-clamp:unset; overflow:visible;}
   .sig .d.exp.clamped::after{content:"접기"; color:var(--sub);}
+  /* 좁은 화면에서는 날짜·출처를 한 줄로 올리고 글은 그 아래 폭을 다 쓴다 —
+     날짜 64px + 아이콘 17px 이 본문에서 빠지면 휴대폰에서 한 줄에 예닐곱 자만 남는다 */
+  @media (max-width:560px){
+    .sig{flex-wrap:wrap; gap:4px 8px;}
+    .sig > .dt{order:1; width:auto; margin-top:0;}
+    .sig > .srci{order:2; margin-top:0;}
+    .sig > div{order:3; flex:1 1 100%; min-width:0;}
+    .ag-p > li{display:flex; gap:8px;}
+    .ag-ax{flex:none; min-width:0; padding-right:0;}
+  }
   .nl .day{margin-top:4px;}
   .nl .day h3{margin:0; padding-bottom:0; border-bottom:none;}
   .nl .sig{padding:5px 0;}
