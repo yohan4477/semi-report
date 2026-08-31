@@ -58,6 +58,53 @@ def _bracketize(block):
     return chr(10).join(out)
 
 
+_TOP = re.compile(r'^\s*[┌╔+][─═\-]{2,}')
+_BOT = re.compile(r'^\s*[└╚+][─═\-]{2,}')
+
+
+def _unframe(block):
+    """여러 줄로 그린 상자(┌ │ └)를 한 줄짜리 [ 이름 — 설명 ] 로 접는다.
+
+    상자 하나가 세 줄이면 우리 파서는 그 줄들을 따로 센다 — 상자 안 설명이 저마다
+    상자가 되어 한 줄에 칸이 여섯이 되고, 폭이 넘쳐 판이 세로 사슬로 떨어진다.
+    2026-08-31 그록 경영전략 뷰가 그랬다. 테두리 줄 사이를 열별로 이어 붙인다.
+    """
+    lines = block.split(chr(10))
+    out, i = [], 0
+    while i < len(lines):
+        if not _TOP.match(lines[i]):
+            out.append(lines[i])
+            i += 1
+            continue
+        j = i + 1
+        body = []
+        while j < len(lines) and not _BOT.match(lines[j]):
+            body.append(lines[j])
+            j += 1
+        if j >= len(lines) or not body:
+            out.append(lines[i])
+            i += 1
+            continue
+        # 열 슬롯별로 글을 모은다. 세로선 사이가 한 칸이다
+        cols = []
+        for ln in body:
+            parts = [p.strip(' -─═') for p in re.split(r'[│║|]', ln)]
+            parts = [p for p in parts if len(re.findall(r'[가-힣A-Za-z0-9]', p)) >= 2]
+            for k, p in enumerate(parts):
+                while len(cols) <= k:
+                    cols.append([])
+                cols[k].append(p)
+        cells = []
+        for c in cols:
+            if not c:
+                continue
+            name, sub = c[0], ' '.join(c[1:])
+            cells.append('[ %s ]%s' % (name, (' — ' + sub) if sub else ''))
+        out.append('  '.join(cells) if cells else lines[i])
+        i = j + 1
+    return chr(10).join(out)
+
+
 def _cells(ln):
     """줄 하나를 (글자, 시작 칸, 끝 칸) 으로. 한글은 두 칸을 먹는다.
 
@@ -130,7 +177,7 @@ def _rows_of(block):
             for i, t in enumerate(toks):
                 tail = parts[2 * i + 2] if 2 * i + 2 < len(parts) else ''
                 tail = _ARROW.sub(' ', tail).strip(' |/·+').strip(' \_—-─═│')
-                cells.append((t.strip(), tail[:34]))
+                cells.append((t.strip(), tail))
             rows.append(cells)
         else:
             t = _ARROW.sub('', ln).strip(' |/+<>←↑↓▲▼').strip(' \_—-─═│')
@@ -144,6 +191,7 @@ def _rows_of(block):
 
 def boxes(block):
     """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
+    block = _unframe(block)
     two = _split_cols(block)
     if two:
         a, b = (_one_plate(x) for x in two)
@@ -172,6 +220,12 @@ def _one_plate(block):
         return None                 # 한 줄에 넷을 넘으면 판에 안 들어간다
     try:
         return _plate(rows, notes, ncol)
+    except AssertionError:
+        pass
+    # 폭이 모자라면 딸린 설명을 떼고 이름만으로 다시 굽는다. 설명 때문에 상자가 넓어져
+    # 두 칸짜리 줄이 통째로 세로 사슬로 떨어졌다 — 그림의 뼈대는 이름과 이음이다
+    try:
+        return _plate([[(n, '') for n, _s in r] for r in rows], notes, ncol)
     except AssertionError:
         pass
     # 폭이 모자라면 세로로 쌓아 다시 굽는다. 이름을 자르지 않는다 — 2026-08-31 에
