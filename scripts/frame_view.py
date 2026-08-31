@@ -218,6 +218,31 @@ def _is_list(block):
     return head == 0 and bullet >= 2
 
 
+def _narrow_plate(block):
+    """좁은 화면용 판. 칸을 한 줄로 쌓는다.
+
+    넓은 판은 폭 520 을 채우고 글자가 줄어 든다 — 휴대폰에서 상자 이름이 깨알이 된다.
+    같은 내용을 한 칸으로 다시 구워 CSS 로 갈아 끼운다.
+    """
+    got = _rows_of(block)
+    if not got:
+        return None
+    rows, notes = got
+
+    def _keep(t):
+        return len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 2
+    rows = [[(n, sub if _keep(sub) else '') for n, sub in r if _keep(n)] for r in rows]
+    cells = [c for r in rows for c in r]
+    if len(cells) < 2:
+        return None
+    for kw in ({'subout': True}, {}):
+        try:
+            return _plate([[c] for c in cells], notes, 1, **kw)
+        except AssertionError:
+            continue
+    return None
+
+
 def boxes(block):
     """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
     # 좌우 가르기가 먼저다. 상자 접기를 먼저 하면 열 정렬이 깨져 나란한 두 판이 한 줄에
@@ -469,8 +494,18 @@ def _block_html(block):
         svg = None
     if svg and not _kept(block, svg):
         svg = None                  # 낱말을 흘린 판은 안 쓴다
-    return svg or ('<pre class="fv-pre">%s</pre>'
-                   % block.replace('&', '&amp;').replace('<', '&lt;'))
+    if svg:
+        # 넓은 화면과 좁은 화면에 다른 판을 낸다. 같은 판을 줄이면 글자가 깨알이 된다
+        try:
+            small = _narrow_plate(block)
+        except Exception:
+            small = None
+        if small and small != svg and _kept(block, small):
+            return ('<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
+                    % (svg, small))
+        return svg
+    return ('<pre class="fv-pre">%s</pre>'
+            % block.replace('&', '&amp;').replace('<', '&lt;'))
 
 
 def to_html(md):
@@ -582,6 +617,13 @@ CSS = fig_layout.CSS + '''
 .uc-rep .fv-b th, .uc-rep .fv-b td { border:1px solid var(--line); padding:6px 8px;
   text-align:left; vertical-align:top; color:var(--ink-2); }
 .uc-rep .fv-b th { background:var(--sunk); color:var(--ink); font-weight:800; }
+.uc-rep .fig-mo { display:none; }
+@media (max-width:640px) {
+  .uc-rep .fig-pc { display:none; }
+  .uc-rep .fig-mo { display:block; }
+  /* 아스키로 남은 도식은 좁은 화면에서 글자를 줄여 가로 스크롤을 줄인다 */
+  .uc-rep .fv-pre { font-size:.62rem; line-height:1.5; }
+}
 .uc-rep .fv-pre { margin:10px 0; padding:10px 12px; border:1px solid var(--line);
   border-radius:6px; background:var(--sunk); overflow-x:auto;
   font:400 .72rem/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--ink-2); }
