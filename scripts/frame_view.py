@@ -33,10 +33,30 @@ _BOX = re.compile(r'\[([^\]\[]+)\]')
 _ARROW = re.compile(r'(-->|→|▶|=>|=+>)')
 
 
+_BAR = '│║'
+
+
+def _bracketize(block):
+    """선 그림(│ 이름 │)을 [ 이름 ] 꼴로 바꾼다.
+
+    받는 쪽이 아스키 선으로 그려 오는 일이 잦은데, 상자 뽑는 자리는 대괄호만 안다.
+    선 그림의 세로선 사이 글자가 곧 상자 이름이라 그대로 옮길 수 있다.
+    """
+    out = []
+    for ln in block.split(chr(10)):
+        if any(c in ln for c in _BAR) and not _BOX.search(ln):
+            cells = [c.strip(' ─═-') for c in re.split('[%s]' % _BAR, ln)]
+            cells = [c for c in cells if len(re.findall(r'[가-힣A-Za-z0-9]', c)) >= 2]
+            if cells:
+                ln = ' '.join('[%s]' % c for c in cells)
+        out.append(ln)
+    return chr(10).join(out)
+
+
 def _rows_of(block):
     """줄마다 [ ... ] 를 뽑아 상자 줄로 만든다. 못 뽑으면 None."""
     rows, notes = [], []
-    for ln in block.split(chr(10)):
+    for ln in _bracketize(block).split(chr(10)):
         toks = _BOX.findall(ln)
         if toks:
             parts = _BOX.split(ln)
@@ -93,6 +113,39 @@ def _plate(rows, notes, ncol, cut=None):
     return p.render('받은 글의 도식')
 
 
+# 도식이 울타리(```) 없이 그냥 본문에 오는 일이 잦다. 요청하지 않아도 오면 상자로
+# 굽는다 — 판 위 글자가 아니라 상자라야 폭에 맞고 다크모드 색이 따라온다.
+_DRAW = set('─│┌┐└┘├┤┬┴┼╔╗╚╝═║╭╮╰╯→←↑↓▶◀')
+_SKIP = ('#', '>', '|')
+
+
+def _is_dia(ln):
+    """이 한 줄이 도식의 일부인가. 제목·목록·표는 아니다."""
+    t = ln.strip()
+    if not t or t.startswith(_SKIP):
+        return False
+    draw = bool(set(t) & _DRAW)
+    nbox = len(_BOX.findall(t))
+    if t.startswith(('*', '-')) and not draw:
+        return False               # 그냥 목록
+    if nbox >= 2:
+        return True                # [A] → [B] 는 한 줄이어도 도식
+    if draw and (nbox or sum(c in _DRAW or c in ' +-' for c in t) >= len(t) * 0.4):
+        return True
+    return False
+
+
+def _dia_span(lines, i):
+    """i 줄부터 이어지는 도식 덩어리의 끝. 도식이 아니면 i."""
+    j = i
+    while j < len(lines) and _is_dia(lines[j]):
+        j += 1
+    # 한 줄짜리는 상자가 둘 이상일 때만 도식으로 본다 (제목 속 대괄호 제외)
+    if j - i == 1 and len(_BOX.findall(lines[i])) < 2:
+        return i
+    return j
+
+
 def _inline(s):
     s = s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     s = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', s)
@@ -127,6 +180,17 @@ def to_html(md):
             out.append(svg if svg else '<pre class="fv-pre">%s</pre>'
                        % block.replace('&', '&amp;').replace('<', '&lt;'))
             i = j + 1
+            continue
+        j = _dia_span(lines, i)
+        if j > i:
+            block = chr(10).join(lines[i:j])
+            try:
+                svg = boxes(block)
+            except Exception:
+                svg = None
+            out.append(svg if svg else '<pre class="fv-pre">%s</pre>'
+                       % block.replace('&', '&amp;').replace('<', '&lt;'))
+            i = j
             continue
         if ln.lstrip().startswith('|') and '|' in ln[1:]:
             rows = []
