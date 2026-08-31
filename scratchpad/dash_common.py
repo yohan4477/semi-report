@@ -19,7 +19,7 @@ import io, json, os, re, sys, urllib.parse
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 import rollup_lib as _rl
 # 카드 마크업 표준은 scripts/card_lib.py 한 벌뿐이다 — 여기서는 가져다 쓴다
-from card_lib import EXTRA_CSS, FIG_CSS, FIG_DEFS, slug, card_html  # noqa: F401
+from card_lib import EXTRA_CSS, FIG_CSS, FIG_DEFS, slug, card_html, anchor_of  # noqa: F401,E501
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
@@ -126,7 +126,7 @@ def _card(c, dup=False, page_slug=''):
     page_slug가 있으면(카드마다 파일이 따로 있는 장) 머리가 그 파일로 가는 링크가 된다."""
     h = card_html(c, page_slug=page_slug)
     if dup:
-        h = h.replace(' id="%s"' % slug(c['title']), '', 1)
+        h = h.replace(' id="%s"' % anchor_of(c), '', 1)
     return h
 
 
@@ -1173,6 +1173,29 @@ ACTORS = ('삼성전자', 'SK하이닉스', '마이크론', '엔비디아', 'TSM
           'KLA', '브로드컴', '퀄컴', '코어위브', '오라클')
 
 
+# 이름은 한국어 정본으로 적었지만 본문에는 영문으로 서는 일이 잦다(받은 글은 「OpenAI」로
+# 쓴다). 별칭 사전을 읽어 한 이름의 여러 표기를 다 본다 — 없으면 한국어 표기만 본다.
+def _alias_map():
+    out = {n: {n} for n in ACTORS}
+    try:
+        raw = json.load(io.open(os.path.join(ROOT, 'insights', 'actor_alias.json'),
+                                encoding='utf-8'))
+    except Exception:
+        return out
+    for k, v in raw.items():
+        # 「_설명」처럼 값이 목록인 줄이 섞여 있다 — 문자열만 본다
+        if isinstance(v, str) and v in out:
+            out[v].add(k)
+    return out
+
+
+ALIASES = _alias_map()
+
+
+def _has_actor(name, text):
+    return any(a in text for a in ALIASES.get(name, {name}))
+
+
 def attach_related(cards, by_title=None, by_keyword=()):
     """카드끼리 잇는 「연관 포스트」를 붙인다.
 
@@ -1232,15 +1255,21 @@ def check_labels(cards):
         body_src = (src + ' ' + (c.get('oneliner') or '') + ' '
                     + ' '.join(c.get('points') or ())
                     # 번호글 카드는 points가 없다 — 본문이 post에 들어 있다
-                    + ' ' + ' '.join(c.get('post') or ()))
+                    + ' ' + ' '.join(c.get('post') or ())
+                    # 받은 글을 그대로 싣는 카드(Semi Doped)는 본문이 report 에 있다.
+                    # 안 보면 「제목에 회사 이름이 없다」는 이유만으로 걸린다
+                    + ' ' + ' '.join(str(b[1]) for b in (c.get('report') or ())
+                                     if len(b) > 1))
         title = c.get('title', '')
         named = [n for n in ACTORS if n in label]
-        alien = [n for n in named if n not in body_src and n not in title]
+        alien = [n for n in named
+                 if not _has_actor(n, body_src) and not _has_actor(n, title)]
         assert not alien, ('라벨 규칙 위반: 원문에 없는 회사를 라벨에 달았다 — %s / 라벨 %s / 없는 이름 %s'
                            % (title, label.strip(), ', '.join(alien)))
         # 여러 회사 섹션에 같이 서는 카드(c['also'])는 좁힌 것이 아니다 — 양쪽에 다 있다
         if named and not c.get('also'):
-            narrowed = [n for n in ACTORS if n in src and n not in label and n not in title]
+            narrowed = [n for n in ACTORS if n in src
+                        and n not in label and not _has_actor(n, title)]
             assert not narrowed, (
                 '라벨 규칙 위반: 여러 회사를 다룬 원문을 한 회사 라벨 아래 뒀다 — %s / 라벨 %s / '
                 '원문에도 있는 이름 %s. 라벨을 넓히거나(예: 「반도체 3사」) 주제 라벨로 바꾼다'

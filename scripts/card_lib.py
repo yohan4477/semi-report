@@ -304,6 +304,16 @@ def points_html(points, figs=()):
 
 
 
+
+def anchor_of(c):
+    """이 카드를 가리키는 주소 조각. 기본은 제목이고, anchor 를 주면 그것을 쓴다.
+
+    제목이 짧아 다른 섹션의 카드와 겹치는 장이 있다(Semi Doped — 회차가 섹션이고 카드
+    이름이 「전략 컨설턴트 검토」다). 겹치면 문서에 같은 id 가 둘 서고 「링크 복사」가
+    어느 쪽을 집는지 알 수 없다. anchor 를 안 준 카드는 지금까지와 똑같다.
+    """
+    return slug(c.get('anchor') or c['title'])
+
 def copy_btn(c, page_slug='', standalone=False):
     """이 카드만 가리키는 주소를 집어 가는 버튼.
 
@@ -314,9 +324,9 @@ def copy_btn(c, page_slug='', standalone=False):
         return '<button type="button" class="uc-copy">링크 복사</button>'
     if page_slug:
         return ('<button type="button" class="uc-copy" data-href="%s/%s.html">링크 복사</button>'
-                % (page_slug, slug(c['title'])))
+                % (page_slug, anchor_of(c)))
     return ('<button type="button" class="uc-copy" data-anchor="%s">링크 복사</button>'
-            % slug(c['title']))
+            % anchor_of(c))
 
 
 def _kin_href(anchor, page_slug='', standalone=False):
@@ -345,7 +355,7 @@ def _head_open(c, page_slug='', standalone=False):
         caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
     elif page_slug:
         head = ('<div class="uc-head" role="link" tabindex="0" data-href="%s/%s.html">'
-                % (page_slug, slug(c['title'])))
+                % (page_slug, anchor_of(c)))
         caret = '<span class="uc-caret" role="button" tabindex="0" aria-expanded="false">▾</span>'
     else:
         head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="false">'
@@ -373,7 +383,7 @@ def slim_html(c, page_slug='', standalone=False):
     # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
     if c.get('topic'):
         h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
-    h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
+    h.append('<h2 id="%s">%s</h2>' % (anchor_of(c), c['title']))
     if c.get('gain'):
         h.append('<p class="uc-gain">%s</p>' % c['gain'])
     h.append('<div class="uc-meta">%s</div>' % ''.join('<span>%s</span>' % m for m in c['meta']))
@@ -699,7 +709,7 @@ def card_html(c, page_slug='', standalone=False):
     # 없는 것은 없는 대로 건너뛴다. 채우려면 내용을 지어내야 한다.
     if c.get('topic'):
         h.append('<span class="uc-topic %s">%s</span>' % c['topic'])
-    h.append('<h2 id="%s">%s</h2>' % (slug(c['title']), c['title']))
+    h.append('<h2 id="%s">%s</h2>' % (anchor_of(c), c['title']))
     # gain = 이 편을 열면 무엇을 알게 되는지. 접힌 상태에서 고를 수 있게 제목 바로 밑에 둔다
     if c.get('gain'):
         h.append('<p class="uc-gain">%s</p>' % c['gain'])

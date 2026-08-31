@@ -96,17 +96,23 @@ def plain(md):
     return re.sub(r'\s+', ' ', t).strip()
 
 
-def intro_html(slug):
-    """회차 앞머리 — 통합 뷰 것만 세운다.
+def intro_html(slug, ep_title, en_title, date):
+    """회차 앞머리 — 회차에 붙는 것은 여기 한 번만 선다.
 
-    뷰 셋이 저마다 「이 회차는 …를 다루고 있습니다」로 여는데 서로 같은 말이라, 셋을 다
-    걸면 상자가 벽이 된다. 두 뷰를 합쳐 받은 통합 뷰의 앞머리가 회차 전체를 말한다.
-    전략·기술 뷰의 앞머리는 그 카드 안에 그대로 둔다.
+    진행자·업로드 날짜·원제·「받은 그대로 · 미검증」은 뷰가 달라도 같은 값이다. 카드마다
+    달면 카드 넷에 같은 줄이 넷이 된다. 카드에 남는 것은 뷰마다 다른 것 하나 —
+    어느 모델이 썼나 — 뿐이다.
+
+    본문은 통합 뷰의 첫 제목 앞 문단이다. 뷰 셋이 저마다 「이 회차는 …를 다루고 있습니다」
+    로 여는데 서로 같은 말이라, 셋을 다 걸면 상자가 벽이 된다. 두 뷰를 합쳐 받은 통합 뷰의
+    앞머리가 회차 전체를 말한다. 전략·기술 뷰의 앞머리는 그 카드 안에 그대로 둔다.
     """
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-merged.md' % slug))
-    return '<div class="fv-b sd-intro">%s</div>' % frame_view.to_html(
-        frame_view.intro_of(md))
+    meta = ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
+            '업로드 %s' % date, '원제 %s' % en_title]
+    return ('<p class="sd-meta">%s</p><div class="fv-b sd-intro">%s</div>'
+            % (' · '.join(meta), frame_view.to_html(frame_view.intro_of(md))))
 
 
 def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
@@ -144,16 +150,17 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
         'id': 'sd-%s-%s' % (slug, kind),
         'section': ('sd-%s' % slug, num, ep_title,
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
-        'title': '%s — %s' % (ep_title, view_title),
+        # 제목에 회차를 다시 안 적는다 — 섹션 머리가 바로 위에서 그 말을 한다.
+        # 대신 앵커를 따로 준다. 이름이 짧아 다른 회차 카드와 겹친다
+        'title': view_title,
+        'anchor': 'sd-%s-%s' % (slug, kind),
         'gain': plain(front)[:150],
-        'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
-                 '업로드 %s' % date, '원제 %s' % en_title,
-                 asked,
-                 # 어느 모델이 쓴 글인지는 머리말에서 읽는다. 한도가 차면 낮은
-                 # 모델로 답이 오는 일이 있어 카드마다 보여야 다시 받을 것을 고른다
-                 '모델 %s' % frame_view.model_of(os.path.join(
-                     ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind))),
-                 '받은 그대로 · 미검증'],
+        # 회차에 붙는 줄(진행자·업로드·원제)은 섹션 머리 아래에 한 번 선다. 카드에 남는
+        # 것은 뷰마다 다른 것 — 어느 모델이 썼나. 「받은 그대로 · 미검증」은 그 줄에 붙여
+        # 카드 안에 남긴다. 이 카드 본문이 인용이라는 표이고, check_frame 이 그 표로
+        # 인용 카드를 유출 검사에서 뺀다 — 카드 밖으로 옮기면 인용이 유출로 잡힌다
+        'meta': ['모델 %s · 받은 그대로 · 미검증' % frame_view.model_of(os.path.join(
+            ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
         # 앞면에 세운 문단을 한줄 코멘트로 또 세우지 않는다
@@ -171,7 +178,8 @@ CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
 # 섹션 머리 아래 앞머리 — 늘 펴져 있고 그 아래에 뷰 카드가 이어 선다.
 # sec_top 이 아니라 sec_fig 다. sec_top 은 「밸류에이션 · 개별 포스트」 버튼을 만들어
 # 앞머리와 카드를 갈라 놓는다 — 앞머리는 고를 대상이 아니라 먼저 읽는 글이다
-SEC_LEAD = {'sd-%s' % slug: intro_html(slug) for slug, *_ in EPISODES}
+SEC_LEAD = {'sd-%s' % slug: intro_html(slug, t, en, d)
+            for slug, t, en, d, _u in EPISODES}
 
 
 CSS = '''
