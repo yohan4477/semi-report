@@ -182,6 +182,14 @@ def _rows_of(block):
                 cells.append((t.strip(), tail))
             rows.append(cells)
         else:
+            # 「- 역할: …」처럼 대시로 시작하는 줄은 바로 앞 상자가 하는 말이다. 각주로
+            # 내리면 판 아래에 몰리고 상한(여섯)에 걸려 잘린다 — 그 상자 안에 넣는다
+            dash = re.match(r'\s*[-•]\s*(.+)', ln)
+            if dash and rows and rows[-1]:
+                n, sub = rows[-1][-1]
+                add = dash.group(1).strip()
+                rows[-1][-1] = (n, (sub + ' · ' + add).strip(' ·') if sub else add)
+                continue
             t = _ARROW.sub('', ln).strip(' |/+<>←↑↓▲▼').strip(' \_—-─═│')
             if len(re.findall(r'[가-힣A-Za-z]', t)) >= 4:
                 # 한 줄에 캡션 셋을 나란히 쓴 것이 온다 — 넓은 공백을 가운뎃점으로
@@ -362,11 +370,33 @@ def _compare_pair(block):
             groups.append(cur)
         elif cur is None or '[' in t:
             return None
+        elif _is_dia(t) or set(t) & _DRAW or '+--' in t or '===' in t:
+            # 딸린 줄이 그림이면 대조가 아니라 도식이다. 그대로 이으면 그림 한 판이
+            # 상자 하나의 설명으로 뭉개져 판 밖으로 넘친다(2026-08-31)
+            return None
         else:
             cur[1].append(t)
     if len(groups) == 2 and all(g[1] for g in groups):
         return groups
     return None
+
+
+def _kept(block, html):
+    """구운 판에 원문 낱말이 다 들어갔나. 하나라도 빠지면 판을 못 쓴다.
+
+    파서가 어떤 꼴에서 무엇을 흘리는지는 미리 다 알 수 없다 — 그림 한 줄을 각주로
+    내렸다가 상한에 걸려 잘리거나, 한 줄에 칸이 넷이면 판을 포기하는 식이다. 낱말이
+    빠진 판은 남의 글을 지운 판이라, 그런 판은 안 쓰고 받은 꼴을 그대로 보인다.
+    """
+    seen = re.sub(r'\s+', '', re.sub('<[^>]+>', ' ', html))
+    for ln in block.split(chr(10)):
+        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•]', ' ', ln)
+        for w in re.split(r'\s+', bare):
+            w = w.strip()
+            if len(re.findall(r'[가-힣A-Za-z0-9]', w)) >= 3 and w != 'text':
+                if re.sub(r'\s+', '', w) not in seen:
+                    return False
+    return True
 
 
 def _block_html(block):
@@ -391,14 +421,16 @@ def _block_html(block):
                     plates = []
                     break
             if len(plates) == 2:
-                return '<div class="fv-two">%s%s</div>' % tuple(plates)
+                two = '<div class="fv-two">%s%s</div>' % tuple(plates)
+                if _kept(block, two):
+                    return two
         if len(groups) >= 2 and all(g[1] for g in groups):
             try:
                 plate = _plate([[(h, ' · '.join(its))] for h, its in groups], [], 1,
                                subout=True)
             except AssertionError:
                 plate = None
-            if plate:
+            if plate and _kept(block, plate):
                 return plate
         out, items = [], []
         for ln in block.split(chr(10)):
@@ -426,11 +458,15 @@ def _block_html(block):
                 plates = []
                 break
         if len(plates) == 2:
-            return '<div class="fv-two">%s%s</div>' % tuple(plates)
+            two = '<div class="fv-two">%s%s</div>' % tuple(plates)
+            if _kept(block, two):
+                return two
     try:
         svg = boxes(block)
     except Exception:
         svg = None
+    if svg and not _kept(block, svg):
+        svg = None                  # 낱말을 흘린 판은 안 쓴다
     return svg or ('<pre class="fv-pre">%s</pre>'
                    % block.replace('&', '&amp;').replace('<', '&lt;'))
 

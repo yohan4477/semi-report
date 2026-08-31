@@ -71,7 +71,9 @@ def pick_model(pg, want=MODEL):
     key = want.split()[-1]              # 「3.1 Pro」 -> 「Pro」
     before = (btn.inner_text() or '').strip()
     if key in before:
-        return before                   # 이미 걸려 있다. 메뉴를 안 연다
+        # 이미 걸려 있다. 메뉴를 안 연다. 이름은 고른 이름으로 적는다 —
+        # 버튼 라벨은 「Gemini Pro」처럼 판 이름을 흘려 어느 판인지 안 남는다
+        return 'Gemini ' + want
     btn.click()
     pg.wait_for_timeout(1200)
     items = pg.locator('[role="menuitemradio"], [role="menuitem"], button[role="option"]')
@@ -84,9 +86,11 @@ def pick_model(pg, want=MODEL):
         if want in (it.inner_text() or ''):
             it.click()
             pg.wait_for_timeout(2000)
-            after = (pg.locator('button:has-text("Flash"), button:has-text("Pro")')
-                     .first.inner_text() or '').strip()
-            return after if key in after else None
+            after = ' '.join((pg.locator('button:has-text("Flash"), button:has-text("Pro")')
+                              .first.inner_text() or '').split())
+            # 라벨은 줄이 갈려 온다(Gemini / Pro). 그대로 적으면 머리말에
+            # 「Gemini」만 남아 어느 모델이 썼는지 못 읽는다 — 고른 이름으로 적는다
+            return ('Gemini ' + want) if key in after else None
     pg.keyboard.press('Escape')
     return None
 
