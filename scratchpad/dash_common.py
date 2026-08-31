@@ -1040,6 +1040,13 @@ def _write_card_pages(cards, title, footer, out, page_slug, page_css):
                 + LINK_JS + '\n')
         io.open(os.path.join(out_dir, '%s.html' % slug(t)), 'w', encoding='utf-8').write(page)
         n += 1
+    # 없어진 카드의 글 페이지를 걷는다. 새로 쓰기만 하면 지운 카드의 주소가 계속 살아
+    # 있어서, 대시보드에 없는 글이 링크로만 열린다(2026-08-31 Semi Doped 에서 그랬다)
+    keep = {'%s.html' % slug(t) for t in seen}
+    for f in os.listdir(out_dir):
+        if f.endswith('.html') and f not in keep:
+            os.remove(os.path.join(out_dir, f))
+            print('  걷음 · %s' % f)
     print('  글 페이지 %d장 -> 대시보드/%s/' % (n, page_slug))
     return n
 
