@@ -91,7 +91,9 @@ def make_card(slug, ep_title, en_title, date, url, num):
            ) if rest_intro else ''
     return {
         'id': 'sd-%s' % slug,
-        'section': ('sd-ep', '01', '회차',
+        # 섹션이 회차다 — 첫 화면 타일에 회차 제목이 바로 선다. 「회차」라는 한 칸으로
+        # 묶으면 타일을 눌러야 무슨 편이 있는지 보인다
+        'section': ('sd-%s' % slug, num, ep_title,
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
         'title': ep_title,
         'gain': frame_view.lead_of(head)[:150],
