@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-27",
+ "generated": "2026-08-31",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -65,7 +65,7 @@
    ],
    "date": "2026-07-01",
    "path": "content/linkedin/[2607] 링크드인 게시물.md",
-   "hash": "690fc5ef6831"
+   "hash": "172381665322"
   },
   {
    "id": "li:root:2608-링크드인-게시물",
@@ -103,6 +103,18 @@
    "date": "2026-08-20",
    "path": "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md",
    "hash": "3c34b9ea89e4"
+  },
+  {
+   "id": "pod:semianalysis:Ep27-브라이언-샨마이런-시-오픈AI-할라페뇨는-왜-블랙웰보다-낫나",
+   "corpus": "podcast",
+   "folder": "semianalysis",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-29",
+   "path": "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md",
+   "hash": "fdc0e928ab50"
   },
   {
    "id": "semi:agents:Claude-Code-에이전트-시대의-변곡점",
@@ -867,6 +879,18 @@
    "hash": "6ab738197abb"
   },
   {
+   "id": "semi:security:네오클라우드-대다수는-보안이-엉망이다",
+   "corpus": "semianalysis",
+   "folder": "security",
+   "categories": [
+    "ai-infra/security",
+    "ai-infra/business"
+   ],
+   "date": "2026-08-30",
+   "path": "content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md",
+   "hash": "ea155d815ec8"
+  },
+  {
    "id": "semi:semiconductors:EDA-시장-개관-시장-역학-케이던스시놉시스지멘스-중국-EDA의-부상",
    "corpus": "semianalysis",
    "folder": "semiconductors",
@@ -908,7 +932,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md",
-   "hash": "8b87d88dca95"
+   "hash": "ffb9946ac39c"
   },
   {
    "id": "und:AI Engineer:2025-04-01-블룸버그-에이전트-확장",
@@ -919,7 +943,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md",
-   "hash": "15e1770c3178"
+   "hash": "e34b329cd3ce"
   },
   {
    "id": "und:AI Engineer:2025-08-26-AI-레드팀-에이전트",
@@ -930,7 +954,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md",
-   "hash": "966a0161362d"
+   "hash": "a4c1f9d74d0b"
   },
   {
    "id": "und:AI Engineer:2025-08-26-그래프RAG로-컨텍스트-창-짜기",
@@ -941,7 +965,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md",
-   "hash": "601c6d631a72"
+   "hash": "2d8a19af9d0d"
   },
   {
    "id": "und:AI Engineer:2025-08-26-그래프와-벡터를-섞은-검색",
@@ -952,7 +976,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md",
-   "hash": "1bddbb3d7e5c"
+   "hash": "a7578c360550"
   },
   {
    "id": "und:AI Engineer:2025-08-26-기기-위에서-도는-파운드리-로컬",
@@ -963,7 +987,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md",
-   "hash": "171ebf57c18e"
+   "hash": "dd9e11aa4ffe"
   },
   {
    "id": "und:AI Engineer:2025-08-26-내보낼-수-있는-에이전트-만들기",
@@ -996,7 +1020,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md",
-   "hash": "7a688a06e66c"
+   "hash": "9558f6b47b16"
   },
   {
    "id": "und:AI Engineer:2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙",
@@ -1018,7 +1042,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md",
-   "hash": "323c22115171"
+   "hash": "f2ccf4431438"
   },
   {
    "id": "und:AI Engineer:2025-08-26-스트랜즈-에이전트-SDK",
@@ -1040,7 +1064,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md",
-   "hash": "7df3e84b465b"
+   "hash": "1c1c3efac888"
   },
   {
    "id": "und:AI Engineer:2025-08-26-에이전트로-앱을-만든다는-것",
@@ -1073,7 +1097,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md",
-   "hash": "40a83c45ac2f"
+   "hash": "b8469158b125"
   },
   {
    "id": "und:AI Engineer:2025-08-26-음성-AI를-규모로-내보내기",
@@ -1106,7 +1130,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md",
-   "hash": "0e43ba82cbb0"
+   "hash": "99f05c342ca8"
   },
   {
    "id": "und:AI Engineer:2025-08-26-클라우드-규모로-에이전트-굴리기",
@@ -1139,7 +1163,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md",
-   "hash": "0a3de91c1505"
+   "hash": "e1eb81617de1"
   },
   {
    "id": "und:AI Engineer:2025-08-26-현장에서-쓰는-MCP",
@@ -1161,7 +1185,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-11-26-그래프로-컨텍스트를-잇기.md",
-   "hash": "6133e60f80a7"
+   "hash": "6635244221ad"
   },
   {
    "id": "und:AI Engineer:2025-12-26-다음-모델에도-버티는-코딩-에이전트",
@@ -1172,7 +1196,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md",
-   "hash": "fd8e8909b933"
+   "hash": "318423b588d9"
   },
   {
    "id": "und:AI Engineer:2025-12-26-에이전트-강화-파인튜닝",
@@ -1183,7 +1207,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md",
-   "hash": "ff2f454d7ba6"
+   "hash": "591f14b8d1ab"
   },
   {
    "id": "und:AI Engineer:2025-12-26-에이전트-말고-스킬을-만들어라",
@@ -1205,7 +1229,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md",
-   "hash": "2728d5ea21cb"
+   "hash": "767f192c2de3"
   },
   {
    "id": "und:AI Engineer:2025-12-26-제미나이-시대의-만들기",
@@ -1238,7 +1262,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md",
-   "hash": "cc8df54dcf4c"
+   "hash": "66d2f0e14728"
   },
   {
    "id": "und:AI Engineer:2026-04-26-MCP는-어디로-가나",
@@ -1260,7 +1284,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md",
-   "hash": "7aab5ea09842"
+   "hash": "7ca350a5badf"
   },
   {
    "id": "und:AI Engineer:2026-04-26-젬마-딥마인드의-오픈-모델",
@@ -1271,7 +1295,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md",
-   "hash": "08c48bdf426e"
+   "hash": "fb01428a42ac"
   },
   {
    "id": "und:AI Engineer:2026-04-26-코드-모드-말은-코드가-한다",
@@ -1304,7 +1328,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md",
-   "hash": "84fda6a86b52"
+   "hash": "098b61562d29"
   },
   {
    "id": "und:AI Engineer:2026-05-26-개발자-한-명과-스무-개의-에이전트",
@@ -1326,7 +1350,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md",
-   "hash": "3198b85d6e86"
+   "hash": "ae18b270ec9f"
   },
   {
    "id": "und:AI Engineer:2026-05-26-딥마인드가-에이전트를-굴리는-법",
@@ -1359,7 +1383,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md",
-   "hash": "09a157a31d49"
+   "hash": "4645e04df079"
   },
   {
    "id": "und:AI Engineer:2026-05-26-에이전트에-맞춰-깃허브를-넓히기",
@@ -1381,7 +1405,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md",
-   "hash": "3b59512377af"
+   "hash": "e57186118700"
   },
   {
    "id": "und:AI Engineer:2026-05-26-제미나이-나노-온디바이스",
@@ -1392,7 +1416,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md",
-   "hash": "3eb8625dc092"
+   "hash": "1a04d201b508"
   },
   {
    "id": "und:AI Engineer:2026-05-26-커버리지-너머의-기능-테스트",
@@ -1403,7 +1427,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md",
-   "hash": "9b768a040bf0"
+   "hash": "744f5626dc03"
   },
   {
    "id": "und:AI Engineer:2026-05-26-평가-플랫폼-만들기가-어려운-이유",
@@ -1414,7 +1438,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-05-26-평가-플랫폼-만들기가-어려운-이유.md",
-   "hash": "e872b37cde7a"
+   "hash": "c007c024adf2"
   },
   {
    "id": "und:AI Engineer:2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기",
@@ -1436,7 +1460,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-관측과-평가와-실험을-한-판에.md",
-   "hash": "8990c5dc6531"
+   "hash": "b9fb78fb0a8e"
   },
   {
    "id": "und:AI Engineer:2026-06-26-문서가-아니라-결정의-흔적이-필요하다",
@@ -1447,7 +1471,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md",
-   "hash": "c5589f8b7974"
+   "hash": "cfb174202ecf"
   },
   {
    "id": "und:AI Engineer:2026-06-26-시니어가-에이전트에서-막히는-이유",
@@ -1469,7 +1493,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-에이전트-관측은-무엇이-다른가.md",
-   "hash": "2da70bb2603f"
+   "hash": "f1a5752d4e09"
   },
   {
    "id": "und:AI Engineer:2026-06-26-에이전트-평가를-모두에게",
@@ -1480,7 +1504,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md",
-   "hash": "3431eae96a0a"
+   "hash": "dd6cbdbf1db0"
   },
   {
    "id": "und:AI Engineer:2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트",
@@ -1491,7 +1515,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md",
-   "hash": "bb0c5e0e5ea3"
+   "hash": "9887f790a454"
   },
   {
    "id": "und:AI Engineer:2026-06-26-제미나이-오디오-스택",
@@ -1513,7 +1537,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md",
-   "hash": "5c548b14b508"
+   "hash": "e3b01ff9c316"
   },
   {
    "id": "und:AI Engineer:2026-06-26-평가가-다음-연산-부품이-된다",
@@ -1524,7 +1548,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-평가가-다음-연산-부품이-된다.md",
-   "hash": "8f675403858c"
+   "hash": "c2a97fdd434a"
   },
   {
    "id": "und:AI Engineer:2026-06-26-평가를-굴리는-단계들",
@@ -1535,7 +1559,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-06-26-평가를-굴리는-단계들.md",
-   "hash": "d7d2e3057460"
+   "hash": "65afe662f087"
   },
   {
    "id": "und:AI Engineer:2026-07-26-AI-엔지니어링의-황금기",
@@ -1546,7 +1570,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md",
-   "hash": "27d5b51a0485"
+   "hash": "b684f4a2f673"
   },
   {
    "id": "und:AI Engineer:2026-07-26-LLM에게-운전대를-주지-마라",
@@ -1568,7 +1592,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-기기-위에서-프런티어-수준을-낸다.md",
-   "hash": "8c0fd4dd695a"
+   "hash": "0342fa6a3b25"
   },
   {
    "id": "und:AI Engineer:2026-07-26-긴-호흡의-작업을-맡길-때",
@@ -1579,7 +1603,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md",
-   "hash": "7e29195317cc"
+   "hash": "92e7f7d3c943"
   },
   {
    "id": "und:AI Engineer:2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트",
@@ -1590,7 +1614,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md",
-   "hash": "b01687ae880d"
+   "hash": "dc530f35e938"
   },
   {
    "id": "und:AI Engineer:2026-07-26-명세로-이끄는-개발",
@@ -1623,7 +1647,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-벡터만으로는-기억이-안-된다.md",
-   "hash": "9f1654f6718f"
+   "hash": "66fb35b438ed"
   },
   {
    "id": "und:AI Engineer:2026-07-26-신호에서-PR까지-스스로-고치는-에이전트",
@@ -1634,7 +1658,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-신호에서-PR까지-스스로-고치는-에이전트.md",
-   "hash": "77f624c1ba9b"
+   "hash": "5b792b2a1175"
   },
   {
    "id": "und:AI Engineer:2026-07-26-운영에서-터진-에이전트-다시-재현하기",
@@ -1645,7 +1669,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md",
-   "hash": "775d3103f48e"
+   "hash": "4ca69bca5549"
   },
   {
    "id": "und:AI Engineer:2026-07-26-코드를-쓰다가-시스템을-설계하는-일로",
@@ -1656,7 +1680,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md",
-   "hash": "c56a8b200aae"
+   "hash": "7829e3555be4"
   },
   {
    "id": "und:AI Engineer:2026-07-26-페이블-현장-안내서",
@@ -1667,7 +1691,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md",
-   "hash": "8b751e990e6e"
+   "hash": "a9a6d7e91cc0"
   },
   {
    "id": "und:AI Engineer:2026-07-26-평가-없이-스킬을-내보내지-마라",
@@ -1678,7 +1702,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md",
-   "hash": "0afda0addcd4"
+   "hash": "79a75cf1268a"
   },
   {
    "id": "und:AI Engineer:2026-07-29-모델-200만-개를-녹지-않고-내보내기",
@@ -1689,7 +1713,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md",
-   "hash": "7537c63afbb6"
+   "hash": "ed8089a22e1a"
   },
   {
    "id": "und:AI Engineer:2026-07-31-AI-슬롭을-끝내는-법",
@@ -1700,7 +1724,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-07-31-AI-슬롭을-끝내는-법.md",
-   "hash": "d644be9dbf69"
+   "hash": "a265f69380fc"
   },
   {
    "id": "und:AI Engineer:2026-07-31-일하면서-배우는-에이전트",
@@ -1733,7 +1757,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-12-개인용-앱을-안전하게-바이브-코딩하기.md",
-   "hash": "8149e07c7493"
+   "hash": "95de75c2f071"
   },
   {
    "id": "und:AI Engineer:2026-08-12-실시간-멀티플레이어와-자동화",
@@ -1744,7 +1768,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-12-실시간-멀티플레이어와-자동화.md",
-   "hash": "581dac753c7f"
+   "hash": "e2b2c4c4c1ff"
   },
   {
    "id": "und:AI Engineer:2026-08-12-코덱스-하니스-뒤편",
@@ -1755,7 +1779,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md",
-   "hash": "00a304ca95e2"
+   "hash": "57482d4bebbc"
   },
   {
    "id": "und:AI Engineer:2026-08-21-에이전트는-바뀌었는데-평가는-그대로다",
@@ -1766,7 +1790,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md",
-   "hash": "777e63fd58f0"
+   "hash": "e9c879d152a9"
   },
   {
    "id": "und:AI Engineer:2026-08-23-토큰을-누가-다-썼나",
@@ -1777,7 +1801,7 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md",
-   "hash": "81734c4a80a7"
+   "hash": "d885fc1e4110"
   },
   {
    "id": "und:AI Engineer:2026-08-23-토큰이-아니라-예산을-준다",
@@ -1788,7 +1812,271 @@
    ],
    "date": null,
    "path": "content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md",
-   "hash": "608792a7f717"
+   "hash": "b2164dfe72b0"
+  },
+  {
+   "id": "und:Semi Doped:2026-04-24-google-networking",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-04-24-google-networking.md",
+   "hash": "fc57c4530591"
+  },
+  {
+   "id": "und:Semi Doped:2026-05-04-memory-tax",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-05-04-memory-tax.md",
+   "hash": "e23127396bb1"
+  },
+  {
+   "id": "und:Semi Doped:2026-05-08-power-wall",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-05-08-power-wall.md",
+   "hash": "ef78052b94f3"
+  },
+  {
+   "id": "und:Semi Doped:2026-05-15-cerebras-ipo",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md",
+   "hash": "c863ced95b84"
+  },
+  {
+   "id": "und:Semi Doped:2026-05-22-litho-masterclass",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md",
+   "hash": "44e806dee74b"
+  },
+  {
+   "id": "und:Semi Doped:2026-05-29-huawei-tau",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-05-29-huawei-tau.md",
+   "hash": "20c53e4737bd"
+  },
+  {
+   "id": "und:Semi Doped:2026-06-12-computex-optics-power",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-06-12-computex-optics-power.md",
+   "hash": "9a90475046f5"
+  },
+  {
+   "id": "und:Semi Doped:2026-06-19-advanced-packaging",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md",
+   "hash": "3917b451e461"
+  },
+  {
+   "id": "und:Semi Doped:2026-06-29-qualcomm-hbc",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md",
+   "hash": "48643f6ff518"
+  },
+  {
+   "id": "und:Semi Doped:2026-07-03-micron-cxmt",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md",
+   "hash": "252b81a89835"
+  },
+  {
+   "id": "und:Semi Doped:2026-07-10-weka-bercovici",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md",
+   "hash": "0cb3c37400bd"
+  },
+  {
+   "id": "und:Semi Doped:2026-07-16-picojool-yuen",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-07-16-picojool-yuen.md",
+   "hash": "0a415e3910fe"
+  },
+  {
+   "id": "und:Semi Doped:2026-07-25-datacenter-interconnects",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-07-25-datacenter-interconnects.md",
+   "hash": "b28271941295"
+  },
+  {
+   "id": "und:Semi Doped:2026-07-29-hyperscaler-cds",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md",
+   "hash": "ab7e245c55d1"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-04-astera-labs",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-04-astera-labs.md",
+   "hash": "fe2ef4a5a1bf"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-07-globalfoundries-barber",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-07-globalfoundries-barber.md",
+   "hash": "878e6d32e456"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-11-china-optical-ban",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-11-china-optical-ban.md",
+   "hash": "7a068e0a62ae"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-18-tensordyne-rk-anand",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-18-tensordyne-rk-anand.md",
+   "hash": "fb25696207d7"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-24-grok-bots-cpu",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md",
+   "hash": "00d2e6ee67fc"
+  },
+  {
+   "id": "und:Semi Doped:2026-08-27-openai-jalapeno",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/2026-08-27-openai-jalapeno.md",
+   "hash": "675e63ddb108"
+  },
+  {
+   "id": "und:Semi Doped:daily-2026-04-08",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/daily-2026-04-08.md",
+   "hash": "04bd347fafb4"
+  },
+  {
+   "id": "und:Semi Doped:til-14",
+   "corpus": "understanding",
+   "folder": "Semi Doped",
+   "categories": [
+    "Semi Doped"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/til-14.md",
+   "hash": "d6eb5a0df33c"
+  },
+  {
+   "id": "und:raw:2026-08-24-grok-bots-cpu",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-24-grok-bots-cpu.md",
+   "hash": "9d729509f232"
+  },
+  {
+   "id": "und:raw:2026-08-27-openai-jalapeno",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-27-openai-jalapeno.md",
+   "hash": "f8c514a3c7df"
   },
   {
    "id": "und:root:대기-목록",
@@ -1799,7 +2087,7 @@
    ],
    "date": null,
    "path": "content/understanding/_대기 목록.md",
-   "hash": "50192f80df05"
+   "hash": "866d1826b332"
   },
   {
    "id": "und:권효재 대표:15억-인구-밥-못-짓는다-인도-덮친-비상사태-3부",
@@ -2286,14 +2574,14 @@
    "hash": "6b8bc0b760fc"
   },
   {
-   "id": "und:미국주식 사관학교:병목이-이사를-가면-협상력도-옮겨간다-전력형과-메모리형을-가르는-법",
+   "id": "und:미국주식 사관학교:병목이-이사를-가면-협상력도-옮겨간다-전력형과-메모리형을-나누는-법",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
    "categories": [
     "미국주식 사관학교"
    ],
    "date": "2026-07-10",
-   "path": "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 가르는 법.md",
+   "path": "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 나누는 법.md",
    "hash": "e3a552872976"
   },
   {
@@ -2814,6 +3102,17 @@
    "hash": "9a32ad99a63a"
   },
   {
+   "id": "und:부동산:빌라를-10평-더-짓게-해주는-대책의-실효-장순원",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-08-18",
+   "path": "content/understanding/부동산/[260818] 빌라를 10평 더 짓게 해주는 대책의 실효 - 장순원.md",
+   "hash": "7a601664625c"
+  },
+  {
    "id": "und:부동산:상가오피스를-집으로-바꾸기-평당-500만-원이면-차라리-새로-짓는다-장순원",
    "corpus": "understanding",
    "folder": "부동산",
@@ -2823,6 +3122,28 @@
    "date": "2026-04-09",
    "path": "content/understanding/부동산/[260409] 상가·오피스를 집으로 바꾸기 - 평당 500만 원이면 차라리 새로 짓는다 - 장순원.md",
    "hash": "7cbd65e5c94e"
+  },
+  {
+   "id": "und:부동산:서울-한복판에-63빌딩-20개-분량이-남았다-오피스와-아파트-김열매",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-08-26",
+   "path": "content/understanding/부동산/[260826] 서울 한복판에 63빌딩 20개 분량이 남았다 - 오피스와 아파트 - 김열매.md",
+   "hash": "de1134264697"
+  },
+  {
+   "id": "und:부동산:선분양이-키운-2천조-가계부채-박선영",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-08-21",
+   "path": "content/understanding/부동산/[260821] 선분양이 키운 2천조 가계부채 - 박선영.md",
+   "hash": "83dc74b8777d"
   },
   {
    "id": "und:부동산:시골집-하나에-세금-8억-양도세-중과-부활-앞-네-갈래-선택-1부-이장원",
@@ -2858,6 +3179,17 @@
    "hash": "7959a5ea4a9c"
   },
   {
+   "id": "und:부동산:용산공원에-청년주택을-지을-수-있나-장순원",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-08-20",
+   "path": "content/understanding/부동산/[260820] 용산공원에 청년주택을 지을 수 있나 - 장순원.md",
+   "hash": "c6c1d79989f3"
+  },
+  {
    "id": "und:부동산:용인에-공장이-와도-사람은-동탄에-산다-전기는-묻으면-되지만-물은-답이-없다-김시덕",
    "corpus": "understanding",
    "folder": "부동산",
@@ -2867,6 +3199,17 @@
    "date": "2026-01-06",
    "path": "content/understanding/부동산/[260106] 용인에 공장이 와도 사람은 동탄에 산다 - 전기는 묻으면 되지만 물은 답이 없다 - 김시덕.md",
    "hash": "f2f23e404344"
+  },
+  {
+   "id": "und:부동산:이삿날-하루의-구멍을-40년간-못-막은-이유-전세사기-장순원",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-03-22",
+   "path": "content/understanding/부동산/[260322] 이삿날 하루의 구멍을 40년간 못 막은 이유 - 전세사기 - 장순원.md",
+   "hash": "28c36c0ba379"
   },
   {
    "id": "und:부동산:일본-지방-땅값이-오르는-곳은-전부-기업을-끼고-있다-박상준",
@@ -3199,15 +3542,15 @@
    "hash": "094ca6e8667b"
   },
   {
-   "id": "und:이선엽 대표:260503-260820-이기는-투자사령부-실시간-시황",
+   "id": "und:이선엽 대표:260503-260828-이기는-투자사령부-실시간-시황",
    "corpus": "understanding",
    "folder": "이선엽 대표",
    "categories": [
     "이선엽 대표"
    ],
    "date": null,
-   "path": "content/understanding/이선엽 대표/[260503-260820] 이기는 투자사령부 실시간 시황.md",
-   "hash": "b508fa923883"
+   "path": "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md",
+   "hash": "b61cd5fb9902"
   },
   {
    "id": "und:이선엽 대표:같은-반도체-급락인데-한국만-더-깊었다-레버리지와-기계-매매-이선엽",
@@ -3647,7 +3990,7 @@
    ],
    "date": "2026-08-20",
    "path": "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md",
-   "hash": "87e4783254bb"
+   "hash": "68b41dc93d64"
   },
   {
    "id": "und:회계사:2분기-영업이익-89조-연환산-1890조-vs-시총-1768조-삼성전자-엘곰",
@@ -3779,7 +4122,7 @@
    ],
    "date": "2026-03-08",
    "path": "content/understanding/회계사/[260308] DCF 공격 시나리오 109,300원, PER 상대가치(ISC 기준) 126,528원 - 리노공업 - 엘곰.md",
-   "hash": "7ef140661564"
+   "hash": "82eb22be8bc3"
   },
   {
    "id": "und:회계사:DCF-내재가치-105410원-주가보다-472-아래-티씨케이-엘곰",
@@ -3867,7 +4210,7 @@
    ],
    "date": "2026-08-22",
    "path": "content/understanding/회계사/[260822] DCF 내재가치 1,894,539원, 주가보다 30.4% 아래 - 효성중공업 - 엘곰.md",
-   "hash": "2d36966c76ab"
+   "hash": "2f86e9c4d58d"
   },
   {
    "id": "und:회계사:DCF-내재가치-26만원-주가보다-192-위-삼성SDS-엘곰",
@@ -3933,7 +4276,7 @@
    ],
    "date": "2026-08-23",
    "path": "content/understanding/회계사/[260823] DCF 내재가치 518,300원, 주가보다 4.5% 위 - 현대모비스 - 엘곰.md",
-   "hash": "b668bea869dd"
+   "hash": "5dd7943a2ae5"
   },
   {
    "id": "und:회계사:DCF-내재가치-558만원-주가보다-259-아래-HD현대일렉트릭-엘곰",
@@ -3977,7 +4320,7 @@
    ],
    "date": "2026-07-19",
    "path": "content/understanding/회계사/[260719] DCF 내재가치 60만원, 주가보다 53.0% 아래 - 삼성전기 - 엘곰.md",
-   "hash": "244365f79186"
+   "hash": "21803b0b48f6"
   },
   {
    "id": "und:회계사:DCF-내재가치-62만원-주가보다-169-위-코스맥스-엘곰",
@@ -4032,7 +4375,7 @@
    ],
    "date": "2026-07-11",
    "path": "content/understanding/회계사/[260711] DCF 내재가치 82,941원, 주가보다 15.7% 위 - 한화시스템 - 엘곰.md",
-   "hash": "10740cadaf00"
+   "hash": "4b1ca2882f33"
   },
   {
    "id": "und:회계사:DCF-내재가치-85100원-주가보다-8792-위-실리콘투-엘곰",
@@ -4065,7 +4408,7 @@
    ],
    "date": "2026-05-08",
    "path": "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md",
-   "hash": "933bc795c201"
+   "hash": "aef4d57a7ccb"
   },
   {
    "id": "und:회계사:DCF-적정주가-130만-5천원-주가가-239-웃돈다-고려아연-엘곰",
@@ -4087,7 +4430,7 @@
    ],
    "date": "2026-07-11",
    "path": "content/understanding/회계사/[260711] DCF 적정주가 43만 5천원, 주가보다 13.7% 아래 - HD현대중공업 - 엘곰.md",
-   "hash": "fdff5f043211"
+   "hash": "82396d108703"
   },
   {
    "id": "und:회계사:DCF-주당가치-633700원-주가보다-49-위-현대자동차-엘곰",
@@ -4395,7 +4738,7 @@
    ],
    "date": "2026-08-22",
    "path": "content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md",
-   "hash": "ca49aedf265d"
+   "hash": "00db4d2cc48c"
   },
   {
    "id": "und:회계사:바이백을-두-배로-늘리자-30년물이-9bp-내렸다-미-재무부-엘곰",
@@ -4472,7 +4815,7 @@
    ],
    "date": "2026-08-22",
    "path": "content/understanding/회계사/[260822] 부칙에 못을 안 박아 2009년 세금을 되돌릴 길이 남았다 - 계약해제 경정청구 - 방구퐁.md",
-   "hash": "55e73c6866c9"
+   "hash": "c74ed857bc18"
   },
   {
    "id": "und:회계사:브렌트유-하루-7-급등-100달러-10년물-금리-471로-2025년-1월-최고-엘곰",
@@ -4494,7 +4837,7 @@
    ],
    "date": "2026-08-21",
    "path": "content/understanding/회계사/[260821] 비트코인 48시간에 18% 올라 77,600달러, 방아쇠는 국채 바이백이었다 - 크립토 - 엘곰.md",
-   "hash": "86d045d7b313"
+   "hash": "7b2045a8c337"
   },
   {
    "id": "und:회계사:빅테크-DCF-성장률은-한-번에-꺾지-않고-서서히-낮춘다-엘곰",
@@ -4527,7 +4870,7 @@
    ],
    "date": "2026-08-20",
    "path": "content/understanding/회계사/[260820] 삼성전자 100조 배당·SK하이닉스 40조 소각, 기준은 둘 다 FCF의 50% - 삼성전자·SK하이닉스 - 엘곰.md",
-   "hash": "736bd61eca35"
+   "hash": "e7d8f9eda8da"
   },
   {
    "id": "und:회계사:삼성전자-9SK하이닉스-12-급등-자사주-소각에-30년물-하락이-겹쳤다-삼성전자SK하이닉스-엘곰",
@@ -4835,7 +5178,7 @@
    ],
    "date": "2026-08-19",
    "path": "content/understanding/회계사/[260819] 점유율 7% 삼성 파운드리가 4·5나노 가격을 최대 15% 올렸다 - 삼성 파운드리 - 엘곰.md",
-   "hash": "dcaa66f9455c"
+   "hash": "fd06e17fa747"
   },
   {
    "id": "und:회계사:준비금으로-적은-한-줄-때문에-82억-환급이-막혔다-비영리법인-배당금-방구퐁",
@@ -4901,7 +5244,7 @@
    ],
    "date": "2026-08-13",
    "path": "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md",
-   "hash": "d9222fe26c17"
+   "hash": "c1d5d104c771"
   },
   {
    "id": "und:회계사:퇴사-조항이-계약서에-없어도-근무조건은-있다-넷을-봐야-한다-주식기준보상-엘곰",
