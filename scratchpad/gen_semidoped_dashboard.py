@@ -34,46 +34,69 @@ def blob(p):
 
 # 회차 하나에 뷰 셋. 뷰마다 카드 한 장이고, 본문은 받은 답을 그대로 싣는다
 EPISODES = [
-    # 제목은 우리가 붙이지 않는다. 그 회차가 달고 나온 제목을 그대로 쓴다
-    ('2026-08-27-openai-jalapeno', "OpenAI's Jalapeño Feeling", '2026-08-27',
+    # 제목은 우리가 새로 짓지 않는다. 그 회차가 달고 나온 이름을 한국어로 옮기고,
+    # 원제는 메타 줄에 그대로 남긴다
+    ('2026-08-27-openai-jalapeno', '오픈AI 의 할라페뇨라는 느낌',
+     "OpenAI's Jalapeño Feeling", '2026-08-27',
      'https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling'),
-    ('2026-08-24-grok-bots-cpu', 'Grok Bots and How CPUs are used in Agentic AI',
-     '2026-08-24',
+    ('2026-08-24-grok-bots-cpu', 'Grok 봇과 에이전틱 AI 에서 CPU 가 쓰이는 방식',
+     'Grok Bots and How CPUs are used in Agentic AI', '2026-08-24',
      'https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus'),
 ]
 
 # 섹션이 회차다. 회차 제목 아래 뷰 카드 셋이 나란히 선다
 VIEWS = [
-    ('strategy', '전략 뷰', '전략 컨설턴트에게 물었다'),
-    ('tech', '기술 뷰', '업계 기술 전문가에게 물었다'),
-    ('merged', '통합 뷰', '두 뷰를 합쳐 달라고 물었다'),
+    ('strategy', '전략 뷰', '시니어 전략 컨설턴트에게 물었다'),
+    ('tech', '기술 뷰', '시니어 업계 기술 전문가에게 물었다'),
+    ('merged', '통합 뷰', '시니어 애널리스트에게 두 뷰를 합쳐 달라고 물었다'),
 ]
 
 
-def make_card(slug, ep_title, date, url, kind, view_title, asked, num):
+def view_html(slug, kind, view_title, asked):
+    """뷰 하나를 카드 상자로. 꼬리에 붙은 요약·제언은 상자 맨 위로 올린다.
+
+    받은 글에서 그 대목이 맨 끝에 서면, 접힌 카드에서 먼저 보이는 자리에 배경 설명이
+    오고 결론이 스크롤 끝에 숨는다. 문장은 안 고치고 자리만 옮긴다.
+    """
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
-    # 카드 앞면에 세우는 글도 받은 답에서 뽑는다. 우리가 쓴 문장은 카드에 없다
-    lead = frame_view.lead_of(md)
+    summ, rest = frame_view.split_summary(md)
+    top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(summ)) if summ else ''
+    return ('<section class="vc">'
+            '<p class="vc-h">%s<span>%s · 받은 그대로 · 미검증</span></p>'
+            '%s<div class="fv-b">%s</div></section>'
+            % (view_title, asked, top, frame_view.to_html(rest)))
+
+
+def make_card(slug, ep_title, en_title, date, url, num):
+    """회차 한 편이 카드 한 장이다. 누르면 앞머리가 먼저 서고 그 아래 뷰 카드가 선다."""
+    lead_md = frame_view.body_of(os.path.join(
+        ROOT, 'insights', 'frames', '%s-strategy.md' % slug))
+    intro = frame_view.intro_of(lead_md)
+    body = ''.join(view_html(slug, kind, vt, asked) for kind, vt, asked in VIEWS)
     return {
-        'id': 'sd-%s-%s' % (slug, kind),
-        'section': ('sd-%s' % slug, num, ep_title,
+        'id': 'sd-%s' % slug,
+        'section': ('sd-ep', '01', '회차',
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
-        'title': '%s — %s' % (ep_title, view_title),
-        'gain': lead[:150],
+        'title': ep_title,
+        'gain': frame_view.lead_of(lead_md)[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
-                 '업로드 %s' % date, 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
+                 '업로드 %s' % date, '원제 %s' % en_title,
+                 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
-        'verdict': lead,
-        'report': [('raw', '<div class="fv-b">%s</div>' % frame_view.to_html(md))],
+        # 앞머리는 본문 맨 위 상자에 한 번만 선다 — 한줄 코멘트로도 세우면 같은 글이 두 번
+        # 읽힌다. 접힌 목록에 서는 gain 만 그 첫 문장을 쓴다
+        'verdict': '',
+        'report': [('raw', '<div class="fv-b vc-intro">%s</div>%s'
+                    % (frame_view.to_html(intro), body))],
     }
 
 
-# 회차를 바깥 고리로 돈다 — 한 회차의 뷰 셋이 한 섹션에 모인다
-CARDS = [make_card(slug, t, d, u, kind, vt, asked, '%02d' % (i + 1))
-         for i, (slug, t, d, u) in enumerate(EPISODES)
-         for kind, vt, asked in VIEWS]
+# 회차 한 편에 카드 한 장. 뷰 셋은 그 카드 안에 상자로 선다
+CARDS = [make_card(slug, t, en, d, u, '%02d' % (i + 1))
+         for i, (slug, t, en, d, u) in enumerate(EPISODES)]
+
 
 CSS = '''
 /* 밸류체인 도식 — 칸이 어디로 옮겨 가는지 두 줄로 */
@@ -144,6 +167,24 @@ CSS = '''
   border-bottom:1px solid var(--line); font-size:.78rem; line-height:1.6; }
 .uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
 .uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
+
+/* 회차 앞머리 — 뷰 카드보다 먼저 선다. 이 회차가 무엇을 다루나 */
+.uc-rep .vc-intro { padding:0 0 6px; }
+.uc-rep .vc-intro p { font-size:.86rem; }
+/* 뷰 카드 — 한 회차 아래 뷰마다 한 장 */
+.uc-rep section.vc { margin:16px 0; border:1px solid var(--line); border-radius:10px;
+  background:var(--surface); }
+.uc-rep section.vc .vc-h { margin:0; padding:11px 14px 9px; border-bottom:1px solid var(--line);
+  font-size:.88rem; font-weight:800; color:var(--ink); }
+.uc-rep section.vc .vc-h span { display:block; margin-top:2px; font-weight:400;
+  font-size:.72rem; color:var(--ink-3); }
+/* 받은 글 꼬리의 요약·제언을 여기로 올린다 — 뷰 카드에서 먼저 읽히는 자리 */
+.uc-rep .vc-sum { margin:12px 14px 0; padding:10px 12px; border-left:3px solid var(--ink-3);
+  border-radius:0 6px 6px 0; background:var(--sunk); }
+.uc-rep .vc-sum p { margin:6px 0; font-size:.82rem; line-height:1.75; color:var(--ink-2); }
+.uc-rep .vc-sum p.fv-h { margin:0 0 4px; font-weight:800; color:var(--ink); }
+.uc-rep .vc-sum ul { margin:6px 0; padding-left:18px; }
+.uc-rep .vc-sum li { font-size:.82rem; line-height:1.75; color:var(--ink-2); }
 '''
 
 HEADER = '''<h1>🎙️ Semi Doped</h1>

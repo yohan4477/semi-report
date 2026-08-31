@@ -275,3 +275,58 @@ CSS = '''
   border-radius:6px; background:var(--sunk); overflow-x:auto;
   font:400 .72rem/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--ink-2); }
 '''
+
+
+# ── 받은 글을 카드 자리에 맞게 가른다 ───────────────────────────────────────
+# 앞머리(회차가 무엇을 다루나)는 포스트 맨 위로 올리고, 꼬리에 붙은 요약·제언은
+# 뷰 카드 맨 위로 올린다. 받은 문장은 고치지 않는다 — 자리만 옮긴다.
+
+_HEAD = re.compile(r'\s*#{1,6}\s+(.*)')
+# 「요약 및 컨설턴트 제언」처럼 제목 대신 굵은 글씨 한 줄로 오는 일이 잦다
+_BOLDLINE = re.compile(r'^\*\*\[?(.+?)\]?\*\*\s*$')
+_SUMWORD = re.compile(r'(요약|제언|결론|종합|맺음)')
+
+
+def _blocks(md):
+    """제목 줄을 경계로 덩어리 목록을 만든다. [(머리글 또는 '', 줄 목록)]"""
+    out, cur = [], ('', [])
+    for ln in md.split(chr(10)):
+        m = _HEAD.match(ln)
+        b = _BOLDLINE.match(ln.strip())
+        if m or (b and _SUMWORD.search(b.group(1))):
+            out.append(cur)
+            cur = (m.group(1) if m else b.group(1), [ln])
+        else:
+            cur[1].append(ln)
+    out.append(cur)
+    return [(h, ls) for h, ls in out if h or ''.join(ls).strip()]
+
+
+def intro_of(md):
+    """첫 제목 앞에 선 앞머리. 이 회차가 무엇을 다루는지를 말하는 자리다."""
+    bs = _blocks(md)
+    if not bs or bs[0][0]:
+        return ''
+    return chr(10).join(bs[0][1]).strip()
+
+
+def split_summary(md):
+    """(요약·제언 덩어리, 나머지). 꼬리에 그런 덩어리가 없으면 ('', md).
+
+    꼬리만 본다 — 「전략적 시사점」처럼 가운데 서는 제목까지 걷으면 글 순서가 무너진다.
+    """
+    bs = _blocks(md)
+    if not bs:
+        return '', md
+    h, ls = bs[-1]
+    if h and _SUMWORD.search(h):
+        return chr(10).join(ls).strip(), chr(10).join(
+            chr(10).join(l) for _, l in ((x[0], x[1]) for x in bs[:-1])).strip()
+    # 제목 없이 「**요약하자면,**」로 시작하는 마지막 문단
+    body = chr(10).join(ls).rstrip()
+    para = body.split(chr(10) * 2)[-1].strip()
+    if _SUMWORD.match(re.sub(r'^\*+', '', para)[:4]) or para.startswith('**요약'):
+        rest = body[:len(body) - len(para)].rstrip()
+        head = chr(10).join(chr(10).join(l) for _, l in bs[:-1])
+        return para, (head + chr(10) + rest).strip()
+    return '', md

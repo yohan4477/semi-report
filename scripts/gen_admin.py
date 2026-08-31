@@ -381,9 +381,14 @@ VIEWSTEPS = [
  ('6', '싣는다',
   '문장을 고치지 않는다. 받은 글은 인용이지 우리 주장이 아니다.',
   ['마크다운을 카드 마크업으로 옮긴다 — 제목·표·목록·문단',
+   '카드 한 장은 회차 한 편이다. 누르면 앞머리가 먼저 서고 그 아래 뷰 카드가 선다',
+   '앞머리는 답의 첫 제목 앞 문단이다 — 이 회차가 무엇을 다루나. 한 번만 세운다',
+   '꼬리에 붙은 요약·제언은 그 뷰 카드 맨 위로 올린다. 문장은 안 고치고 자리만 옮긴다',
    '도식은 울타리 밖에 그려 와도 상자로 굽는다. 못 읽는 꼴이면 아스키 그대로 둔다',
    '그 자리를 검사기에서 뺀다 — 남의 글에 우리 규칙을 대지 않는다'],
-  ['scripts/frame_view.py', 'check_prose · check_struct · check_frame 의 인용 예외'],
+  ['scripts/frame_view.py 의 intro_of · split_summary',
+   'scratchpad/gen_semidoped_dashboard.py 의 view_html',
+   'check_prose · check_struct · check_frame 의 인용 예외'],
   ['싣는 자리']),
 ]
 
