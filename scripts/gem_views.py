@@ -39,11 +39,18 @@ named:
 
 
 def run(src, url, today):
+    # 링크만 주면 못 읽고 배경지식으로 쓰는 일이 있다 — 2026-08-31 에 기술 뷰가
+    # 「유료라 원문을 못 긁는다」고 적고 업계 동향으로 답했다. **전문을 같이 보낸다.**
+    # 우리가 옮긴 요약본은 사실을 골라 담은 중간물이라 그 선택까지 넘어간다 —
+    # 무엇을 고를지는 받는 쪽이 해야 뷰가 뷰다. 무료로 푸는 매체라 보낼 수 있다
     slug = os.path.splitext(os.path.basename(src))[0]
+    raw = os.path.join(ROOT, os.path.dirname(src), 'raw', os.path.basename(src))
+    assert os.path.exists(raw), '전문이 없다. scripts/semidoped_clip.py 로 먼저 긁는다: ' + raw
+    src_text = io.open(raw, encoding='utf-8').read()
     got = {}
     for kind in ('strategy', 'tech', 'merged'):
         tpl = io.open(os.path.join(PROMPTS, kind + '.txt'), encoding='utf-8').read()
-        text = tpl.replace('{URL}', url)
+        text = tpl.replace('{URL}', url).replace('{SOURCE}', src_text)
         if kind == 'merged':
             text = text.replace('{STRATEGY}', got['strategy']).replace('{TECH}', got['tech'])
         tmp = os.path.join(FRAMES, '.ask-%s.txt' % kind)
