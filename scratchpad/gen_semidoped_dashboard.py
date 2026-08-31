@@ -108,14 +108,15 @@ def head_html(date, en_title):
     return '<p class="sd-meta">%s</p>' % ' · '.join(meta)
 
 
-def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
+def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num,
+              path=None, tag=''):
     """뷰 하나가 카드 한 장이다. 회차 하나에 카드 둘이 한 섹션에 선다.
 
     받은 글을 상자에 나눠 담지 않는다 — 카드 안에 상자를 하나 더 그리면 쓸 폭이 줄고
     카드 속 카드처럼 읽힌다. 몸은 한 덩어리로 흐르고, 앞면에 세울 첫 줄글만 위로 뽑는다.
     """
-    md = frame_view.body_of(os.path.join(
-        ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
+    path = path or os.path.join(ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind))
+    md = frame_view.body_of(path)
     front = _first_prose(md)
     rp = _paras(md)
     # 앞면에 세운 줄글은 몸에서 걷는다. 맨 앞 두 문단 안에 있을 때만 — 제목 아래 문단을
@@ -135,20 +136,20 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
         if at >= 0:
             rest = (md[:at] + md[at + len(rp[cut]):]).strip()
     return {
-        'id': 'sd-%s-%s' % (slug, kind),
+        'id': 'sd-%s-%s%s' % (slug, kind, '-' + tag.split()[0].lower() if tag else ''),
         'section': ('sd-%s' % slug, num, ep_title,
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
         # 제목에 회차를 다시 안 적는다 — 섹션 머리가 바로 위에서 그 말을 한다.
         # 대신 앵커를 따로 준다. 이름이 짧아 다른 회차 카드와 겹친다
-        'title': view_title,
-        'anchor': 'sd-%s-%s' % (slug, kind),
+        # 같은 회차에 모델이 둘이면 제목에 모델 이름만 붙여 가른다
+        'title': '%s — %s' % (view_title, tag) if tag else view_title,
+        'anchor': 'sd-%s-%s%s' % (slug, kind, '-' + tag.split()[0].lower() if tag else ''),
         'gain': plain(front)[:150],
         # 회차에 붙는 줄(진행자·업로드·원제)은 섹션 머리 아래에 한 번 선다. 카드에 남는
         # 것은 뷰마다 다른 것 — 어느 모델이 썼나. 「받은 그대로 · 미검증」은 그 줄에 붙여
         # 카드 안에 남긴다. 이 카드 본문이 인용이라는 표이고, check_frame 이 그 표로
         # 인용 카드를 유출 검사에서 뺀다 — 카드 밖으로 옮기면 인용이 유출로 잡힌다
-        'meta': ['모델 %s · 받은 그대로 · 미검증' % frame_view.model_of(os.path.join(
-            ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))],
+        'meta': ['모델 %s · 받은 그대로 · 미검증' % frame_view.model_of(path)],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
         # 앞면에 세운 문단을 한줄 코멘트로 또 세우지 않는다
@@ -158,9 +159,21 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
 
 
 # 회차를 바깥 고리로 돈다 — 한 회차의 뷰 둘이 한 섹션에 모인다
-CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
+CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1),
+                   tag='Gemini 3.1 Pro')
          for i, (slug, t, en, d, u) in enumerate(EPISODES)
          for kind, vt, asked in VIEWS]
+
+# 같은 프롬프트를 다른 모델에 넣어 본 답도 같은 섹션에 세운다. 가르는 것은 제목의
+# 모델 이름뿐이다 — 무엇이 달라지는지는 나란히 놓고 읽어야 보인다(2026-08-31 실험)
+EXP = os.path.join(ROOT, 'insights', 'frames', 'exp')
+for i, (slug, t, en, d, u) in enumerate(EPISODES):
+    for kind, vt, asked in VIEWS:
+        f = os.path.join(EXP, '%s-%s-opus.md' % (slug, kind))
+        if os.path.exists(f):
+            CARDS.append(make_card(slug, t, en, d, u, kind, vt, asked,
+                                   '%02d' % (i + 1), path=f, tag='Claude Opus 5'))
+
 
 # 섹션 머리 아래 앞머리 — 늘 펴져 있고 그 아래에 뷰 카드가 이어 선다.
 # sec_top 이 아니라 sec_fig 다. sec_top 은 「밸류에이션 · 개별 포스트」 버튼을 만들어
