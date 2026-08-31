@@ -111,6 +111,9 @@ def load_one(path):
         'why': meta.get('why', ''),
         'judged': md_inline(sec.get('지금 판단', '').replace('\n', ' ')),
         'triggers': trg,
+        # metrics 는 어댑터가 받은 것 전부다. 트리거만 내주면 트리거가 아닌 값(맥락으로
+        # 같이 보는 전세지수 같은 것)이 도해 재료에서 통째로 빠진다.
+        'metrics': vals,
         'points': [md_inline(b) for b in bullets(sec.get('왜 보나', ''))],
         'clash': [md_inline(b) for b in bullets(sec.get('반대 근거', ''))],
     }

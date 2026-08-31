@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
 import watch_lib as wl  # noqa: E402
+import watch_fig as wf  # noqa: E402
 
 OUT = os.path.join(dc.ROOT, '대시보드', '포트폴리오 워치.html')
 STAMP = '2026-08-31'
@@ -30,6 +31,9 @@ LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목'}
 # 「언제 것 · 성격」은 CLAUDE.md 가 값에 요구하는 두 열이라 어댑터 계약에 박혀 있다.
 TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '언제 것', '성격']
 
+# 열쇠 앞머리를 도해 제목으로. 없으면 열쇠를 그대로 쓴다
+TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수'}
+
 
 def trg_row(t):
     """트리거 한 줄을 표 행으로. 사건 줄은 어댑터가 안 채우므로 값 자리에 갈래를 적는다 —
@@ -42,6 +46,32 @@ def trg_row(t):
             t['cond'],
             t['as_of'] or '—',
             t['nature'] or '자리표시']
+
+
+def figs_of(w):
+    """트렌드 도해. 어댑터가 받은 metric 중 series 가 든 것만 그린다 — 어댑터가 붙기
+    전에는 아무것도 안 선다(insight-figure 규칙 1을 배선으로 지킨다).
+
+    트리거가 아니라 metric 전부를 본다. 전세지수처럼 트리거는 아니고 맥락으로만
+    같이 보는 값이 있어서다.
+
+    같은 단위끼리만 한 판에 둔다. 매매지수와 전세지수를 겹치면 세로 자 하나에 뜻이
+    다른 두 값이 서서 어느 쪽이 움직인 건지 안 보인다. 열쇠 앞머리가 묶는 열쇠다 —
+    sale_idx_강남구 · sale_idx_서초구 는 한 판, jeonse_idx_* 는 다른 판."""
+    groups = {}
+    for key, m in sorted((w.get('metrics') or {}).items()):
+        if not m.get('series'):
+            continue
+        base, _, area = key.rpartition('_')
+        groups.setdefault(base or key, []).append((area or key, m))
+    out = []
+    for base, items in groups.items():
+        svg = wf.trend([(n, [tuple(x) for x in m['series']]) for n, m in items[:3]],
+                       items[0][1].get('unit') or '값',
+                       note=items[0][1].get('src', ''))
+        if svg:
+            out.append((0, TITLE.get(base, base), svg, items[0][1].get('src', '')))
+    return out
 
 
 def card(w):
@@ -59,6 +89,7 @@ def card(w):
                        [trg_row(t) for t in w['triggers']]),
         'oneliner': w['judged'],
         'points': w['points'],
+        'figs': figs_of(w),
         # 반대 근거는 「무엇이 — 왜」로 적혀 있다. 앞머리를 화자 자리에 넣는다.
         'clash': [tuple(c.split(' — ', 1)) if ' — ' in c else ('', c) for c in w['clash']],
     }
