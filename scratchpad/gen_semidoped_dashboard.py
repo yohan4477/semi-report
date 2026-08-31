@@ -34,31 +34,31 @@ def blob(p):
 
 # 회차 하나에 뷰 셋. 뷰마다 카드 한 장이고, 본문은 받은 답을 그대로 싣는다
 EPISODES = [
-    ('2026-08-27-openai-jalapeno', '오픈AI 할라페뇨', '2026-08-27',
+    # 제목은 우리가 붙이지 않는다. 그 회차가 달고 나온 제목을 그대로 쓴다
+    ('2026-08-27-openai-jalapeno', "OpenAI's Jalapeño Feeling", '2026-08-27',
      'https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling'),
-    ('2026-08-24-grok-bots-cpu', 'Grok bots 와 에이전틱 CPU', '2026-08-24',
+    ('2026-08-24-grok-bots-cpu', 'Grok Bots and How CPUs are used in Agentic AI',
+     '2026-08-24',
      'https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus'),
 ]
 
-# 뷰마다 섹션 하나. 같은 눈으로 본 글끼리 모아 두어야 회차를 건너 견줄 수 있다
+# 섹션이 회차다. 회차 제목 아래 뷰 카드 셋이 나란히 선다
 VIEWS = [
-    ('strategy', '전략 뷰', '전략 컨설턴트에게 물었다',
-     ('sd-strategy', '01', '전략 뷰', '전략 컨설턴트에게 회차를 설명하게 했다')),
-    ('tech', '기술 뷰', '업계 기술 전문가에게 물었다',
-     ('sd-tech', '02', '기술 뷰', '업계 기술 전문가에게 회차를 설명하게 했다')),
-    ('merged', '통합 뷰', '두 뷰를 합쳐 달라고 물었다',
-     ('sd-merged', '03', '통합 뷰', '앞의 두 뷰를 넣고 합쳐 달라고 했다')),
+    ('strategy', '전략 뷰', '전략 컨설턴트에게 물었다'),
+    ('tech', '기술 뷰', '업계 기술 전문가에게 물었다'),
+    ('merged', '통합 뷰', '두 뷰를 합쳐 달라고 물었다'),
 ]
 
 
-def make_card(slug, ep_title, date, url, kind, view_title, asked, section):
+def make_card(slug, ep_title, date, url, kind, view_title, asked, num):
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     # 카드 앞면에 세우는 글도 받은 답에서 뽑는다. 우리가 쓴 문장은 카드에 없다
     lead = frame_view.lead_of(md)
     return {
         'id': 'sd-%s-%s' % (slug, kind),
-        'section': section,
+        'section': ('sd-%s' % slug, num, ep_title,
+                    '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
         'title': '%s — %s' % (ep_title, view_title),
         'gain': lead[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
@@ -70,10 +70,10 @@ def make_card(slug, ep_title, date, url, kind, view_title, asked, section):
     }
 
 
-# 섹션이 뷰라서 뷰를 바깥 고리로 돈다 — 전략 뷰 카드가 먼저 모이고 그다음이 기술 뷰다
-CARDS = [make_card(slug, t, d, u, kind, vt, asked, sec)
-         for kind, vt, asked, sec in VIEWS
-         for slug, t, d, u in EPISODES]
+# 회차를 바깥 고리로 돈다 — 한 회차의 뷰 셋이 한 섹션에 모인다
+CARDS = [make_card(slug, t, d, u, kind, vt, asked, '%02d' % (i + 1))
+         for i, (slug, t, d, u) in enumerate(EPISODES)
+         for kind, vt, asked in VIEWS]
 
 CSS = '''
 /* 밸류체인 도식 — 칸이 어디로 옮겨 가는지 두 줄로 */
