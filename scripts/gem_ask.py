@@ -10,7 +10,8 @@
 
   python gem_ask.py <프롬프트파일> <저장경로>
 
-새 대화로 물어야 각도가 안 섞인다 — 매번 /app 을 새로 연다.
+새 대화로 물어야 각도가 안 섞인다 — 매번 /app 을 새로 열고 **임시 채팅**을 켠다.
+새 대화만으로는 저장된 정보(기억)가 따라와 앞 회차 틀이 다음 답에 섞인다.
 """
 import io
 import sys
@@ -66,20 +67,46 @@ def pick_model(pg, want=MODEL):
     btn = pg.locator('button:has-text("Flash"), button:has-text("Pro")').first
     if not btn.count():
         return None
+    key = want.split()[-1]              # 「3.1 Pro」 -> 「Pro」
     before = (btn.inner_text() or '').strip()
+    if key in before:
+        return before                   # 이미 걸려 있다. 메뉴를 안 연다
     btn.click()
     pg.wait_for_timeout(1200)
     items = pg.locator('[role="menuitemradio"], [role="menuitem"], button[role="option"]')
     for i in range(items.count()):
-        if want in (items.nth(i).inner_text() or ''):
-            items.nth(i).click()
+        it = items.nth(i)
+        # 임시 채팅에서는 못 고르는 항목이 회색으로 남아 있다. 눌러도 안 걸리고 30초를
+        # 기다리다 죽는다 — 막힌 것은 건너뛴다
+        if (it.get_attribute('aria-disabled') or '') == 'true':
+            continue
+        if want in (it.inner_text() or ''):
+            it.click()
             pg.wait_for_timeout(2000)
             after = (pg.locator('button:has-text("Flash"), button:has-text("Pro")')
                      .first.inner_text() or '').strip()
-            key = want.split()[-1]          # 「3.1 Pro」 -> 「Pro」
             return after if key in after else None
     pg.keyboard.press('Escape')
     return None
+
+
+def temp_chat(pg):
+    """물을 때마다 「임시 채팅」을 켠다. 켜졌는지 화면 안내로 확인한다.
+
+    새 대화를 열어도 저장된 정보(기억)는 그대로 따라온다 — 앞 회차에서 받은 틀이 다음
+    회차 답에 섞이고, 그게 섞였는지 우리 쪽에서 알 길이 없다. 임시 채팅은 기억을 쓰지도
+    남기지도 않는다. 못 켜면 그대로 진행하지 않는다 — 섞인 답은 대조로도 안 걸린다.
+    """
+    btn = pg.locator('button[aria-label*="임시 채팅"], button[aria-label*="Temporary"]').first
+    assert btn.count(), '임시 채팅 단추를 못 찾았다'
+    btn.click()
+    pg.wait_for_timeout(3000)
+    # 단추는 눌린 상태를 안 알린다(aria-pressed 없음) — 켜지면 뜨는 안내로 확인한다.
+    # 「72시간 동안 저장됩니다」·「잠깐 들르신 건가요?」가 임시 채팅 화면의 글이다
+    body = pg.locator('body').inner_text()
+    on = any(t in body for t in ('72시간', '잠깐 들르신', 'Temporary chat', '72 hours'))
+    assert on, '임시 채팅이 안 켜졌다 — 안내 문구가 없다'
+    return True
 
 
 def ask(prompt, dest, timeout=600):
@@ -88,8 +115,15 @@ def ask(prompt, dest, timeout=600):
         pg = b.contexts[0].new_page()
         pg.goto('https://gemini.google.com/app', wait_until='domcontentloaded', timeout=60000)
         pg.wait_for_timeout(5000)
+        temp_chat(pg)
         got = pick_model(pg)
-        print('모델:', got or '기본값 그대로', file=OUT)
+        # 못 걸면 멈춘다. 조용히 기본값(Flash-Lite)으로 받으면 어느 모델이 쓴 글인지
+        # 모른 채 프레임 파일에 「Gemini 3.1 Pro」라고 적히고, 답이 짧아진 이유도 안 남는다.
+        # 2026-08-31 에 한도가 차서 3.1 Pro·3.7 Flash 가 회색이었고 여섯 편이 Flash-Lite 로
+        # 왔다 — 한도가 풀린 뒤에 다시 묻는다
+        assert got, ('원하는 모델(%s)이 안 걸렸다. 메뉴에서 회색이면 한도가 찬 것이다 — '
+                     '풀린 뒤에 다시 묻는다' % MODEL)
+        print('모델:', got, file=OUT)
         box = pg.locator('div[contenteditable="true"]').first
         box.click()
         # 줄바꿈이 전송으로 잡히지 않게 한 덩어리로 넣는다
