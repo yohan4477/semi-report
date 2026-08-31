@@ -210,12 +210,16 @@ def _is_list(block):
 
 def boxes(block):
     """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
-    block = _unframe(block)
+    # 좌우 가르기가 먼저다. 상자 접기를 먼저 하면 열 정렬이 깨져 나란한 두 판이 한 줄에
+    # 쌓인다 — 2026-08-31 에 Traditional 대 Jalapeño 여덟 칸이 세로 사슬로 나갔다
+    two = _split_cols(block)
+    if not two:
+        block = _unframe(block)
+        two = _split_cols(block)
     if _is_list(block):
         return None                 # 목록은 받은 꼴 그대로 둔다
-    two = _split_cols(block)
     if two:
-        a, b = (_one_plate(x) for x in two)
+        a, b = (_one_plate(_unframe(x)) for x in two)
         if a and b:
             return '<div class="fv-two">%s%s</div>' % (a, b)
         return None
@@ -341,6 +345,30 @@ def _groups(block):
     return [(h, its) for h, its in out if h]
 
 
+def _compare_pair(block):
+    """대괄호 머리 둘에 각각 글줄이 붙은 대조인가. 맞으면 [(머리, [줄]), …].
+
+    「[전통적 칩 디자인 (2~3년 이상)]」 다음 줄에 그 흐름, 「[OpenAI 할라피뇨 방식(9개월)]」
+    다음 줄에 그 흐름이 오는 꼴이다. 차례가 아니라 견줌이라 화살표로 이으면 안 된다 —
+    2026-08-31 에 앞뒤를 화살표로 잇고 세로로 쌓아 「전통 → 할라피뇨」로 읽혔다.
+    """
+    groups, cur = [], None
+    for ln in block.split(chr(10)):
+        t = ln.strip()
+        if not t or t == 'text':
+            continue
+        if t.startswith('[') and t.endswith(']'):
+            cur = (t.strip('[]').strip(), [])
+            groups.append(cur)
+        elif cur is None or '[' in t:
+            return None
+        else:
+            cur[1].append(t)
+    if len(groups) == 2 and all(g[1] for g in groups):
+        return groups
+    return None
+
+
 def _block_html(block):
     """도식 덩어리 하나를 판·글·아스키 중 하나로.
 
@@ -351,6 +379,19 @@ def _block_html(block):
         groups = _groups(block)
         # 머리가 둘 이상이면 단계다 — 머리마다 상자 하나를 치고 딸린 줄을 그 안에 넣는다.
         # 단계는 차례가 있으니 상자끼리 이어진다
+        # 머리가 대괄호면 나란한 대조다 — 차례가 아니라 견줌이라 화살표로 잇지 않는다.
+        # 「[전통적 칩 디자인 (2~3년 이상)]」과 「[OpenAI 할라피뇨 방식 (9개월)]」이 그렇다
+        if len(groups) == 2 and all(g[1] and g[0].startswith('[') for g in groups):
+            plates = []
+            for h, its in groups:
+                try:
+                    plates.append(_plate([[(h.strip('[]').strip(), ' · '.join(its))]],
+                                         [], 1, subout=True))
+                except AssertionError:
+                    plates = []
+                    break
+            if len(plates) == 2:
+                return '<div class="fv-two">%s%s</div>' % tuple(plates)
         if len(groups) >= 2 and all(g[1] for g in groups):
             try:
                 plate = _plate([[(h, ' · '.join(its))] for h, its in groups], [], 1,
@@ -375,6 +416,17 @@ def _block_html(block):
         if items:
             out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % x for x in items))
         return ''.join(out)
+    pair = _compare_pair(block)
+    if pair:
+        plates = []
+        for h, its in pair:
+            try:
+                plates.append(_plate([[(h, ' · '.join(its))]], [], 1, subout=True))
+            except AssertionError:
+                plates = []
+                break
+        if len(plates) == 2:
+            return '<div class="fv-two">%s%s</div>' % tuple(plates)
     try:
         svg = boxes(block)
     except Exception:
