@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-08-31",
-"index_fingerprint": "ed3da006651b09f23a9ead71c5d1029a03665348",
-"lines": 3140
+"index_fingerprint": "733f0ef5c939635e8dd8dca59c6cd60ce5b76b7b",
+"lines": 3141
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6237,6 +6237,11 @@
 ],
 "t": "2026",
 "tense": "현재"
+},
+"content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
 },
 "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",

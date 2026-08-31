@@ -17,6 +17,7 @@
 """
 import io
 import os
+import unicodedata
 import re
 import sys
 
@@ -30,7 +31,9 @@ FRAMES = os.path.join(ROOT, 'insights', 'frames')
 # 아스키 도식을 상자로 굽는다. 그대로 두면 폭이 넘치고 글꼴이 바뀌면 선이 어긋난다 —
 # 상자는 판 폭에 맞춰 서고 다크모드 색도 따라온다. 못 읽는 꼴이면 아스키 그대로 둔다.
 _BOX = re.compile(r'\[([^\]\[]+)\]')
-_ARROW = re.compile(r'(-->|→|▶|=>|=+>)')
+# 「──>」처럼 선을 길게 끌고 온 화살표도 잡는다 — 안 잡으면 「>」가 상자 밑에
+# 딸린 라벨로 남는다
+_ARROW = re.compile(r'(-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+)')
 
 
 _BAR = '│║'
@@ -53,6 +56,61 @@ def _bracketize(block):
     return chr(10).join(out)
 
 
+def _cells(ln):
+    """줄 하나를 (글자, 시작 칸, 끝 칸) 으로. 한글은 두 칸을 먹는다.
+
+    글자 수로 칸을 세면 한글 줄과 라틴 줄의 칸이 어긋나 좌우 두 판을 못 가른다 —
+    「[ 기존 구조: 공유형 HBM ]」은 글자 17 개인데 화면에서는 27 칸이다.
+    """
+    out, col = [], 0
+    for ch in ln:
+        w = 2 if unicodedata.east_asian_width(ch) in 'WF' else 1
+        out.append((ch, col, col + w))
+        col += w
+    return out
+
+
+def _split_cols(block):
+    """나란히 선 두 판을 가른다. 못 가르면 None.
+
+    받은 도식은 「기존 구조」와 「새 구조」를 좌우로 붙여 그려 오는 일이 잦다. 줄 단위로
+    상자를 세면 왼쪽 첫 상자와 오른쪽 첫 상자가 한 줄에 서고, 줄 사이를 잇는 선이
+    엉뚱한 상자끼리 대각선으로 그어진다 — 2026-08-31 화면이 그랬다.
+    모든 줄에서 빈 칸이 넷 이상 이어지면 그 자리를 두 판의 경계로 본다.
+    """
+    lines = [ln.rstrip() for ln in block.split(chr(10)) if ln.strip()]
+    if len(lines) < 2:
+        return None
+    grid = [_cells(ln) for ln in lines]
+    width = max((c[-1][2] if c else 0) for c in grid)
+    used = set()
+    for cs in grid:
+        for ch, a, b in cs:
+            if ch != ' ':
+                used.update(range(a, b))
+    runs, start, prev = [], None, None
+    for c in range(width):
+        if c in used:
+            if start is not None:
+                runs.append((start, prev))
+                start = None
+            continue
+        if start is None:
+            start = c
+        prev = c
+    if start is not None:
+        runs.append((start, prev))
+    cand = [(a, b) for a, b in runs if b - a + 1 >= 4 and a > 6 and b < width - 6]
+    if not cand:
+        return None
+    a, b = max(cand, key=lambda r: r[1] - r[0])
+    left = chr(10).join(''.join(ch for ch, s, e in cs if e <= a + 1) for cs in grid)
+    right = chr(10).join(''.join(ch for ch, s, e in cs if s > b) for cs in grid)
+    if _BOX.search(left) and _BOX.search(right):
+        return left, right
+    return None
+
+
 def _rows_of(block):
     """줄마다 [ ... ] 를 뽑아 상자 줄로 만든다. 못 뽑으면 None."""
     rows, notes = [], []
@@ -61,48 +119,70 @@ def _rows_of(block):
         if toks:
             parts = _BOX.split(ln)
             cells = []
+            head = _ARROW.sub(' ', parts[0]).strip(' |/·+<>')
+            head = head.strip(' \_—-─═│').strip()
+            if len(re.findall(r'[가-힣A-Za-z0-9]', head)) >= 2:
+                cells.append((head[:20], ''))     # 「Core 1 ── [ … ]」의 왼쪽
             for i, t in enumerate(toks):
                 tail = parts[2 * i + 2] if 2 * i + 2 < len(parts) else ''
-                tail = _ARROW.sub(' ', tail).strip(' |/\_·—-+')
+                tail = _ARROW.sub(' ', tail).strip(' |/·+').strip(' \_—-─═│')
                 cells.append((t.strip(), tail[:34]))
             rows.append(cells)
         else:
-            t = _ARROW.sub('', ln).strip(' |/\_+—-=<>←↑↓▲▼')
+            t = _ARROW.sub('', ln).strip(' |/+<>←↑↓▲▼').strip(' \_—-─═│')
             if len(re.findall(r'[가-힣A-Za-z]', t)) >= 4:
-                notes.append(t[:60])
+                # 한 줄에 캡션 셋을 나란히 쓴 것이 온다 — 넓은 공백을 가운뎃점으로
+                notes.append(re.sub(r'\s{2,}', ' · ', t)[:70])
     if not rows or sum(len(r) for r in rows) < 2:
         return None
     return rows, notes[:3]
 
 
 def boxes(block):
-    """도식 한 덩어리를 판 하나로. 못 읽으면 None."""
+    """도식 한 덩어리를 판으로. 좌우로 붙여 온 것은 판 둘로 가른다. 못 읽으면 None."""
+    two = _split_cols(block)
+    if two:
+        a, b = (_one_plate(x) for x in two)
+        if a and b:
+            return '<div class="fv-two">%s%s</div>' % (a, b)
+        return None
+    return _one_plate(block)
+
+
+def _one_plate(block):
+    """판 하나. 못 읽으면 None."""
     got = _rows_of(block)
     if not got:
         return None
     rows, notes = got
+    # 글자 한둘짜리 칸(「>」·「|」)은 상자가 아니다. 판에 세우면 빈 상자가 하나 선다
+    def _keep(t):
+        return len(re.findall(r'[가-힣A-Za-z0-9]', t)) >= 2
+    rows = [[(n, sub if _keep(sub) else '') for n, sub in r if _keep(n)]
+            for r in rows]
+    rows = [r for r in rows if r]
+    if not rows or sum(len(r) for r in rows) < 2:
+        return None
     ncol = max(len(r) for r in rows)
     if ncol > 3:
         return None                 # 한 줄에 넷을 넘으면 판에 안 들어간다
-    # 이름이 길면 판을 넘는다. 한 번 줄여 다시 굽고, 그래도 넘치면 아스키로 둔다 —
-    # 상자 안에서 글자를 자르는 것보다 원본을 그대로 보이는 편이 낫다
-    for cut in (None, 14):
-        try:
-            return _plate(rows, notes, ncol, cut)
-        except AssertionError:
-            continue
-    return None
+    try:
+        return _plate(rows, notes, ncol)
+    except AssertionError:
+        pass
+    # 폭이 모자라면 세로로 쌓아 다시 굽는다. 이름을 자르지 않는다 — 2026-08-31 에
+    # 열넷에서 자르다 「Accelerator Co」와 「re」로 갈린 상자가 그대로 나갔다
+    stacked = [[c] for r in rows for c in r]
+    try:
+        return _plate(stacked, notes, 1)
+    except AssertionError:
+        return None
 
 
-def _plate(rows, notes, ncol, cut=None):
-    def fit(name, sub):
-        if cut and len(name) > cut:
-            sub = (name[cut:] + ' ' + sub).strip()[:30]
-            name = name[:cut]
-        return name, sub
+def _plate(rows, notes, ncol):
     p = fig_layout.Plate()
     for r in rows:
-        p.row(*([fit(n, sub) for n, sub in r] + [None] * (ncol - len(r))))
+        p.row(*(list(r) + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
         p.connect(p.at(i, 0), p.at(i + 1, 0))
     for ri, r in enumerate(rows):
@@ -253,7 +333,13 @@ def view(slug, kind, title, note=''):
                                                       to_html(md)))
 
 
-CSS = '''
+# 받은 아스키를 상자로 구우면 fig_layout 의 판이 나온다. 그 판의 CSS 를 같이 실어야
+# 한다 — 안 실으면 상자가 까맣게 칠해지고 글자가 안 보인다(fill 이 var(--surface) 인데
+# 그 규칙이 없으면 SVG 기본값인 검정으로 칠한다). 2026-08-31 에 그대로 나갔다
+CSS = fig_layout.CSS + '''
+/* 좌우로 붙여 온 도식 — 판 둘을 나란히. 좁은 화면에서는 위아래로 */
+.uc-rep .fv-two { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+@media (max-width:640px) { .uc-rep .fv-two { grid-template-columns:1fr; } }
 /* 받은 뷰를 그대로 싣는 상자 */
 .uc-rep details.fv { margin:14px 0; border:1px solid var(--line); border-radius:8px;
   background:var(--surface); }
