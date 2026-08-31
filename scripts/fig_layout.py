@@ -63,6 +63,13 @@ def text_w(s, fs=FS):
     return max(w, len(s) * CHECK_CH)
 
 
+def _word_w(s, fs=FS):
+    """`s` 안 낱말 중 가장 넓은 것의 폭. `wrap()`이 낱말 사이에서만 자르므로,
+    칸이 이 폭만 넘으면 나머지는 줄 수를 늘려서라도 접힌다."""
+    words = s.split(' ') if s else ['']
+    return max(text_w(w, fs) for w in words) if words else 0.0
+
+
 def wrap(s, width, fs=FS_S):
     """글줄을 폭에 맞춰 나눈다. 낱말 사이에서만 자른다.
 
@@ -86,13 +93,18 @@ class Box(object):
     """놓인 상자 하나. 변 위의 점을 준다 — 좌표는 여기서만 나온다."""
 
     def __init__(self, x, y, w, h, label, sub='', hi=False, rc=None, subout=False,
-                 fs=FS, fs_s=FS_S):
+                 fs=FS, fs_s=FS_S, wrap_label=False):
         self.x, self.y, self.w, self.h = x, y, w, h
         self.label, self.sub, self.hi = label, sub, hi
         # subout 이면 부제를 상자 **안**에 여러 줄로 깐다. 폭이 아니라 높이로 늘린다 —
         # 폭으로 늘리면 두 칸짜리 줄이 판을 넘어 세로 사슬로 떨어진다. 상자 안에 두는
         # 이유는 포함 관계다: 그 설명은 그 상자가 하는 일이다
         self.subout = subout
+        # wrap_label 이면 **이름 자체**(부제가 아니라 label)를 칸 폭에 맞춰 여러 줄로
+        # 접는다. 이름이 길어 칸에 못 들어갈 때 이름을 자르거나 갈래를 세로로 쌓는
+        # 대신 상자를 키워 접는다 — 형제 상자(같은 부모에서 갈린 것들)가 같은 행에
+        # 나란히 서야 하는데, 이름 길이 때문에 열을 줄이면 그 나란함이 깨진다
+        self.wrap_label = wrap_label
         self.rc = rc                # (줄, 칸). 판을 다시 놓아도 링크를 찾아온다
         # 글자 크기는 판마다 다를 수 있다(카드 본문에 낀 판은 본문 크기로 줄인다).
         # CSS 클래스(.fl · .fl-s)는 다른 장도 같이 쓰므로 고치지 않고, 여기서만
@@ -134,7 +146,21 @@ class Box(object):
         # font-size 만 인라인으로 덮는다 — .fl/.fl-s 의 weight·line-height·색은 그대로 쓴다
         fa = ' style="font-size:%gpx"' % self.fs
         fsa = ' style="font-size:%gpx"' % self.fs_s
-        if self.sub and self.subout:
+        if self.wrap_label:
+            # 이름 자체를 칸 폭에 맞춰 접는다 — `_layout()` 이 이미 이 폭·줄 수로
+            # 상자 키를 정해 뒀으니(같은 self.w·self.fs 로 다시 접는다) 여기서
+            # 나온 줄 수가 거기서 셈한 줄 수와 어긋나지 않는다
+            lines = wrap(self.label, self.w - 2 * PAD_X, fs=self.fs) or ['']
+            extra = wrap(self.sub, self.w - 2 * PAD_X, fs=self.fs_s) if self.sub else []
+            n = len(lines) + len(extra)
+            y0 = self.cy - (n - 1) * LH / 2.0 + 4
+            for i, ln in enumerate(lines):
+                o.append('<text x="%g" y="%g" class="fl" text-anchor="middle"%s>%s</text>'
+                         % (self.cx, y0 + i * LH, fa, ln))
+            for j, ln in enumerate(extra):
+                o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
+                         % (self.cx, y0 + (len(lines) + j) * LH, fsa, ln))
+        elif self.sub and self.subout:
             # 줄바꿈 자리는 늘 기본 폭 계산(FS_S)과 맞춘다 — _layout() 이 상자 키를
             # 그 계산으로 이미 정했다. 여기서 작은 글자 폭으로 다시 접으면 줄 수가
             # 달라져 정해 둔 키보다 글이 넘치거나 아래가 빈다
@@ -161,12 +187,16 @@ class Plate(object):
 
     def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
                  stretch=True, subout=False, pad_y=PAD_Y, bottom=14.0,
-                 fs=FS, fs_s=FS_S):
+                 fs=FS, fs_s=FS_S, wrap_label=False):
         self.W = float(width)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
         self.subout = subout        # 부제를 상자 안에 여러 줄로 깐다(폭 계산에서 뺀다)
+        # 이름 자체가 칸 폭보다 길면 자르거나 옆 칸을 잡아먹는 대신 상자 안에서
+        # 여러 줄로 접는다 — 형제 상자(분기·합류)를 같은 행에 나란히 세워야 할 때,
+        # 열을 줄여 한 줄로 쌓으면 갈래가 사슬로 보인다(2026-09-01)
+        self.wrap_label = wrap_label
         # 다른 장(회계사·메르 등)은 이 판을 기본 크기(15.2/13.5)로 쓰므로 모듈 상수는
         # 그대로 두고, 카드 본문에 낀 판만 호출하는 쪽에서 작은 크기를 넘긴다
         self.fs, self.fs_s = fs, fs_s
@@ -236,9 +266,18 @@ class Plate(object):
                 cand.append(text_w(self.heads[c], FS_S))
             for r in self.rows:
                 if c < len(r) and r[c]:
-                    cand.append(text_w(r[c][0]))
-                    if r[c][1] and not self.subout:
-                        cand.append(text_w(r[c][1], FS_S))
+                    if self.wrap_label:
+                        # 이름 전체가 아니라 가장 긴 낱말 하나만큼만 요구한다 —
+                        # 낱말 사이에서 접을 수 있으니 그 밖은 칸을 늘려 줄 수를
+                        # 늘리면 된다(`wrap()`과 같은 규칙). 한 낱말이 이미 칸보다
+                        # 넓으면(고유명사 등) 그건 접어도 못 줄이니 그대로 요구한다
+                        cand.append(_word_w(r[c][0], FS))
+                        if r[c][1]:
+                            cand.append(_word_w(r[c][1], FS_S))
+                    else:
+                        cand.append(text_w(r[c][0]))
+                        if r[c][1] and not self.subout:
+                            cand.append(text_w(r[c][1], FS_S))
             ws.append(round(max(cand) + 2 * PAD_X))
         gap = max(self.gap_x, self._need_gap_x())
         if self.mid:
@@ -259,17 +298,32 @@ class Plate(object):
         gy = max(self.gap_y, self._need_gap_y())
         placed = []
         for r in self.rows:
-            two = any(c and c[1] for c in r) and not self.subout
-            h = self.pad_y * 2 + LH + (LH if two else 0)
-            if self.subout:
-                # 상자 안에 깐 설명 줄만큼 키를 키운다. 열 폭이 이미 정해져 있어
-                # 몇 줄이 될지 여기서 셀 수 있다
-                deep = 0
+            if self.wrap_label:
+                # 이름을 접은 줄 수(+부제 한 묶음) 만큼 키를 키운다. `svg()` 가
+                # 그릴 때도 같은 폭(ws[c])·글자 크기(self.fs)로 다시 접으므로
+                # 여기서 셈한 줄 수와 어긋나지 않는다
+                deep = 1
                 for c in range(ncol):
                     cell = r[c] if c < len(r) else None
-                    if cell and cell[1]:
-                        deep = max(deep, len(wrap(cell[1], ws[c] - 2 * PAD_X)))
-                h += 17 * deep + (6 if deep else 0)
+                    if not cell:
+                        continue
+                    n = len(wrap(cell[0], ws[c] - 2 * PAD_X, fs=self.fs)) or 1
+                    if cell[1]:
+                        n += len(wrap(cell[1], ws[c] - 2 * PAD_X, fs=self.fs_s)) or 1
+                    deep = max(deep, n)
+                h = self.pad_y * 2 + LH * deep
+            else:
+                two = any(c and c[1] for c in r) and not self.subout
+                h = self.pad_y * 2 + LH + (LH if two else 0)
+                if self.subout:
+                    # 상자 안에 깐 설명 줄만큼 키를 키운다. 열 폭이 이미 정해져 있어
+                    # 몇 줄이 될지 여기서 셀 수 있다
+                    deep = 0
+                    for c in range(ncol):
+                        cell = r[c] if c < len(r) else None
+                        if cell and cell[1]:
+                            deep = max(deep, len(wrap(cell[1], ws[c] - 2 * PAD_X)))
+                    h += 17 * deep + (6 if deep else 0)
             below = 0.0
             line = []
             # 한 칸만 든 줄은 판을 가로질러 세운다. 안 그러면 그 줄만 반쪽에 몰려
@@ -284,7 +338,7 @@ class Plate(object):
                 bx, bw = (xs[0], xs[-1] + ws[-1] - xs[0]) if wide else (xs[c], ws[c])
                 line.append(Box(bx, y, bw, h, cell[0], cell[1], cell[2],
                                 (len(placed), c), self.subout,
-                                fs=self.fs, fs_s=self.fs_s))
+                                fs=self.fs, fs_s=self.fs_s, wrap_label=self.wrap_label))
             placed.append(line)
             y += h + below + gy
         self._placed = placed

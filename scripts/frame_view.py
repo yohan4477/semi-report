@@ -666,12 +666,16 @@ def _weak_groups(boxes, edges):
     return sorted(groups.values(), key=lambda g: min(b.row for b in g))
 
 
-def _grid_plate_build(boxes, edges, row_of, col_of, ncol, width):
+def _grid_plate_build(boxes, edges, row_of, col_of, ncol, width, wrap_label=False):
     """자리(row_of·col_of, 상자 id 로 찾는다)가 이미 정해진 상자들을 판 하나로 굽는다.
 
     좁은 판(열을 줄이거나 한 칸으로 쌓은 것)과 넓은 판이 이 함수 하나를 같이
     쓴다 — 자리를 어떻게 셈했든 판을 짜고 이음을 거는 마지막 손은 하나여야
     한다. 자리가 겹치거나 폭을 넘으면 None.
+
+    `wrap_label` 이면 상자 이름이 칸 폭을 넘을 때 칸 수를 줄이는 대신 상자
+    안에서 이름을 여러 줄로 접는다(`fig_layout.wrap`) — 형제 상자(분기·합류)를
+    같은 행에 세운 채로 긴 이름을 담을 때 쓴다.
     """
     grid = {}
     for b in boxes:
@@ -681,7 +685,8 @@ def _grid_plate_build(boxes, edges, row_of, col_of, ncol, width):
         grid[key] = b
     nrow = len(set(row_of.values()))
     p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
-                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0)
+                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
+                         wrap_label=wrap_label)
     slot = {}
     for r in range(nrow):
         cells = []
@@ -744,6 +749,42 @@ def _topo_order(boxes, edges):
     return order
 
 
+def _topo_levels(boxes, edges):
+    """소스가 먼저인 파도(레벨)로 나눈다. 한 파도 안 순서는 원문 줄 순서.
+
+    `_topo_order` 와 같은 위상 정렬(Kahn)이지만, 한 파도(같은 깊이)를 낱개로
+    펴지 않고 그대로 둔다 — 한 상자에서 갈린 형제(같은 부모에서 나간 자식,
+    또는 같은 자식으로 모이는 부모)는 부모의 깊이 하나만큼만 떨어져 있으므로
+    이 셈으로 **저절로 같은 파도**에 들어온다. 파도를 낱개로 펴서 한 칸으로
+    쌓으면(옛 `_topo_order` 를 그대로 한 줄씩 쓰던 방식) 그 형제가 서로 다른
+    줄에 갈려 갈래가 사슬로 보인다 — 2026-09-01, 「폐쇄형/개방형 전략」이
+    세로로 이어진 사고가 이렇게 났다.
+    """
+    ids = [id(b) for b in boxes]
+    by_id = {id(b): b for b in boxes}
+    indeg = {i: 0 for i in ids}
+    out = {i: [] for i in ids}
+    for a, b, _ in edges:
+        if id(a) in indeg and id(b) in indeg:
+            indeg[id(b)] += 1
+            out[id(a)].append(id(b))
+    seen = set()
+    levels = []
+    frontier = [i for i in ids if indeg[i] == 0]
+    while frontier:
+        frontier.sort(key=lambda i: (by_id[i].row, by_id[i].c0))
+        levels.append([by_id[i] for i in frontier])
+        seen.update(frontier)
+        for i in frontier:
+            for j in out[i]:
+                indeg[j] -= 1
+        frontier = [i for i in ids if i not in seen and indeg[i] == 0]
+    remaining = [by_id[i] for i in ids if i not in seen]
+    if remaining:            # 고리 등 위상 정렬로 못 다룬 것은 안전망으로 맨 끝에
+        levels.append(remaining)
+    return levels
+
+
 def _group_plate(boxes, edges, width):
     """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 자리가 안 맞으면 셋을
     차례로 시도한다. 넓은 판(520)·좁은 판(340) 둘 다 이 하나를 쓴다.
@@ -752,12 +793,16 @@ def _group_plate(boxes, edges, width):
        이걸로 된다.
     ② 안 되면 왼쪽 첫 열만 남기고 나머지 열을 하나로 합친다 — 칸 수를
        줄이지만 이음은 그대로다.
-    ③ 그래도 안 되면(칸이 넷을 넘거나 ②도 자리가 겹치면) 한 칸으로 쌓되,
-       원문 줄 순서가 아니라 `_topo_order`(소스 먼저, 싱크 나중)로 쌓는다.
-       이음은 여전히 실제 이음 그대로 건다 — 옛 길처럼 「위아래로 이웃한
-       줄은 다 잇는다」로 되돌아가지 않는다. 한 줄에 상자 다섯이 나란히
-       서는 사슬(「TSMC → 엔비디아 → … → 최종 사용자」)이 여기로 온다 —
-       520 폭에 다섯 칸을 나란히 못 놓으니 위상 정렬 사슬로 세로로 세운다.
+    ③ 그래도 안 되면(칸이 넷을 넘거나 ②도 자리가 겹치면) `_topo_levels`(소스
+       먼저, 싱크 나중인 파도)로 자리를 다시 잡는다. **파도가 곧 행이고, 한
+       파도 안 형제는 늘 같은 행에 나란히 선다** — 파도를 쪼개 한 칸씩
+       쌓지 않는다. 이름이 길어 그 행이 폭을 넘으면 칸 수를 줄이는 대신
+       상자 안에서 이름을 접는다(`wrap_label`). 그래도 안 되면(파도 하나가
+       낱말 하나로도 폭을 넘길 만큼 넓다) 판을 포기한다 — 갈래를 사슬로
+       바꾸는 대신 이전 길(줄 단위 판·글)로 물러난다. 한 줄에 상자 다섯이
+       나란히 서는 사슬(「TSMC → 엔비디아 → … → 최종 사용자」)처럼 파도마다
+       상자가 하나뿐인 도식은 이 계산이 옛 `_topo_order`와 같은 결과를 낸다
+       — 사슬은 그대로 사슬로, 갈래만 갈래로 남는다.
     """
     if len(boxes) < 2:
         return None
@@ -775,10 +820,19 @@ def _group_plate(boxes, edges, width):
         svg = _grid_plate_build(boxes, edges, row_of, col_of2, 2, width)
         if svg:
             return svg
-    order = _topo_order(boxes, edges)
-    row_of1 = {id(b): i for i, b in enumerate(order)}
-    col_of1 = {id(b): 0 for b in boxes}
-    return _grid_plate_build(boxes, edges, row_of1, col_of1, 1, width)
+    levels = _topo_levels(boxes, edges)
+    row_of3, col_of3, ncol3 = {}, {}, 1
+    for ri, lv in enumerate(levels):
+        ncol3 = max(ncol3, len(lv))
+        for ci, b in enumerate(lv):
+            row_of3[id(b)] = ri
+            col_of3[id(b)] = ci
+    for wrap_label in (False, True):
+        svg = _grid_plate_build(boxes, edges, row_of3, col_of3, ncol3, width,
+                                wrap_label=wrap_label)
+        if svg:
+            return svg
+    return None
 
 
 def _graph_plate(block, width=520.0, narrow=False):
