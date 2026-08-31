@@ -507,22 +507,20 @@ def _weak_groups(boxes, edges):
     return sorted(groups.values(), key=lambda g: min(b.row for b in g))
 
 
-def _one_graph_plate(boxes, edges, width):
-    """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 못 앉히면 None."""
-    if len(boxes) < 2:
-        return None
-    rows_sorted = sorted(set(b.row for b in boxes))
-    row_of = {r: i for i, r in enumerate(rows_sorted)}
-    band_of, ncol = _col_bands(boxes)
-    if ncol > 4 or ncol < 1:
-        return None
+def _grid_plate_build(boxes, edges, row_of, col_of, ncol, width):
+    """자리(row_of·col_of, 상자 id 로 찾는다)가 이미 정해진 상자들을 판 하나로 굽는다.
+
+    좁은 판(열을 줄이거나 한 칸으로 쌓은 것)과 넓은 판이 이 함수 하나를 같이
+    쓴다 — 자리를 어떻게 셈했든 판을 짜고 이음을 거는 마지막 손은 하나여야
+    한다. 자리가 겹치거나 폭을 넘으면 None.
+    """
     grid = {}
     for b in boxes:
-        key = (row_of[b.row], band_of[b.c0])
+        key = (row_of[id(b)], col_of[id(b)])
         if key in grid:
             return None           # 자리가 겹치면 읽은 자리를 못 믿는 것이니 되돌린다
         grid[key] = b
-    nrow = len(rows_sorted)
+    nrow = len(set(row_of.values()))
     p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0)
     slot = {}
@@ -540,17 +538,114 @@ def _one_graph_plate(boxes, edges, width):
         for a, b, label in edges:
             ra, ca = slot[id(a)]
             rb, cb = slot[id(b)]
-            p.connect(p.at(ra, ca), p.at(rb, cb), label)
+            # 한 칸으로 쌓은 판(ncol=1)에서 상자를 하나 이상 건너뛰는 이음은
+            # 가운데로 그으면 사이 상자를 정통으로 뚫고 지나가 다른(인접) 이음과
+            # 겹쳐 안 보인다 — 가장자리로 붙여 「이 상자를 지나쳐 간다」를 보이게 한다
+            at = 0.82 if ncol == 1 and abs(ra - rb) > 1 else 0.5
+            p.connect(p.at(ra, ca), p.at(rb, cb), label, at=at)
         return p.render('받은 글의 도식')
     except AssertionError:
         return None
 
 
-def _graph_plate(block, width=520.0):
+def _one_graph_plate(boxes, edges, width):
+    """상자·이음 한 덩이(서로 이어진 것들)를 판 하나로. 못 앉히면 None.
+
+    상자의 원래 세로 자리(줄)를 판의 행으로, 가로 군집(`_col_bands`)을 판의
+    열로 그대로 쓴다 — 받은 그림의 자리 그대로다.
+    """
+    if len(boxes) < 2:
+        return None
+    rows_sorted = sorted(set(b.row for b in boxes))
+    row_idx = {r: i for i, r in enumerate(rows_sorted)}
+    row_of = {id(b): row_idx[b.row] for b in boxes}
+    band_of, ncol = _col_bands(boxes)
+    if ncol > 4 or ncol < 1:
+        return None
+    col_of = {id(b): band_of[b.c0] for b in boxes}
+    return _grid_plate_build(boxes, edges, row_of, col_of, ncol, width)
+
+
+def _topo_order(boxes, edges):
+    """소스(들어오는 이음이 없는 상자)가 먼저, 싱크(나가는 이음이 없는 상자)가
+    나중에 오는 순서로 상자를 늘어놓는다.
+
+    좁은 판이 한 칸으로 쌓아야 할 때 원문 줄 순서를 그대로 쓰면 갈래·모임이
+    사슬로 보인다 — 「연산기 A·B·C 가 다 풀로 모인다」인데 줄 순서로 쌓으면
+    B 가 A 와 C 사이에 끼어 「A→B→C→풀」사슬처럼 읽힌다. 이음을 따라 위상
+    정렬해 소스를 앞으로, 싱크를 뒤로 모은다. 같은 단계에 선 상자끼리는 원문
+    줄 순서를 지킨다 — 안 그러면 매번 다른 순서가 나와 재현이 안 된다.
+    """
+    ids = [id(b) for b in boxes]
+    by_id = {id(b): b for b in boxes}
+    indeg = {i: 0 for i in ids}
+    out = {i: [] for i in ids}
+    for a, b, _ in edges:
+        if id(a) in indeg and id(b) in indeg:
+            indeg[id(b)] += 1
+            out[id(a)].append(id(b))
+    order, seen = [], set()
+    frontier = [i for i in ids if indeg[i] == 0]
+    while frontier:
+        frontier.sort(key=lambda i: by_id[i].row)
+        nxt = []
+        for i in frontier:
+            if i in seen:
+                continue
+            seen.add(i)
+            order.append(by_id[i])
+            for j in out[i]:
+                indeg[j] -= 1
+                if indeg[j] == 0:
+                    nxt.append(j)
+        frontier = nxt
+    order += [b for b in boxes if id(b) not in seen]   # 고리 등 못 다룬 것은 안전망으로
+    return order
+
+
+def _narrow_group_plate(boxes, edges, width=340.0):
+    """상자·이음 한 덩이를 좁은 판(폭 340)으로. 넓은 판과 같은 그래프를 쓰되
+    자리가 안 맞으면 셋을 차례로 시도한다.
+
+    ① 원래 자리(행·열) 그대로 좁은 폭에 앉혀 본다 — 칸이 이미 하나뿐이거나
+       이름이 짧으면 이걸로 된다.
+    ② 안 되면 왼쪽 첫 열만 남기고 나머지 열을 하나로 합친다 — 칸 수를
+       줄이지만 이음은 그대로다.
+    ③ 그래도 안 되면 한 칸으로 쌓되, 원문 줄 순서가 아니라 `_topo_order`
+       (소스 먼저, 싱크 나중)로 쌓는다. 이음은 여전히 실제 이음 그대로 건다 —
+       옛 길처럼 「위아래로 이웃한 줄은 다 잇는다」로 되돌아가지 않는다.
+    """
+    if len(boxes) < 2:
+        return None
+    rows_sorted = sorted(set(b.row for b in boxes))
+    row_idx = {r: i for i, r in enumerate(rows_sorted)}
+    row_of = {id(b): row_idx[b.row] for b in boxes}
+    band_of, ncol = _col_bands(boxes)
+    col_of = {id(b): band_of[b.c0] for b in boxes}
+    if 1 <= ncol <= 4:
+        svg = _grid_plate_build(boxes, edges, row_of, col_of, ncol, width)
+        if svg:
+            return svg
+    if ncol > 2:
+        col_of2 = {i: (0 if c == 0 else 1) for i, c in col_of.items()}
+        svg = _grid_plate_build(boxes, edges, row_of, col_of2, 2, width)
+        if svg:
+            return svg
+    order = _topo_order(boxes, edges)
+    row_of1 = {id(b): i for i, b in enumerate(order)}
+    col_of1 = {id(b): 0 for b in boxes}
+    return _grid_plate_build(boxes, edges, row_of1, col_of1, 1, width)
+
+
+def _graph_plate(block, width=520.0, narrow=False):
     """그래프를 판으로. 자리가 겹치거나 칸이 넷을 넘으면 못 읽은 것으로 되돌린다.
 
     서로 안 이어진 미니 도식이 한 덩어리에 여럿 있으면(`_weak_groups`) 판을
     여럿 짜서 위아래로 잇는다 — 하나라도 못 앉히면 전부 되돌려 옛 길에 맡긴다.
+    `narrow` 면 한 덩이씩 `_narrow_group_plate`(폭 340, 안 맞으면 열을 줄이거나
+    위상 정렬로 쌓는다)를 쓴다 — 넓은 판과 **같은 그래프**(상자·이음)를 쓰되
+    자리만 화면 폭에 맞춰 다시 잡는다. 화면 폭이 바뀐다고 그림의 뜻(누가
+    누구에게 붙는가)이 바뀌면 안 된다.
     """
     g = _graph_of(block)
     if not g:
@@ -569,20 +664,23 @@ def _graph_plate(block, width=520.0):
         return None
     notes = [h.name + (' — ' + h.sub if h.sub else '') for h in heads] + notes
     # 이음 이름이 길면 같은 줄 이음의 틈(`_need_gap_x`)이 그 글자 폭만큼 벌어져
-    # 판 폭을 넘긴다 — 긴 이름은 선 위에 못 얹고 판 아래 각주로 내린다
+    # 판 폭을 넘긴다 — 긴 이름은 선 위에 못 얹고 판 아래 각주로 내린다. 좁은
+    # 판은 틈이 더 좁으니 문턱도 더 낮춘다
+    limit = 55 if narrow else 90
     fixed_edges = []
     for a, b, label in edges:
-        if label and fig_layout.text_w(label, fig_layout.FS_S) > 90:
+        if label and fig_layout.text_w(label, fig_layout.FS_S) > limit:
             notes.append(label)
             label = ''
         fixed_edges.append((a, b, label))
     edges = fixed_edges
     groups = _weak_groups(boxes, edges)
+    build = _narrow_group_plate if narrow else _one_graph_plate
     svgs = []
     for grp in groups:
         gset = set(id(b) for b in grp)
         gedges = [e for e in edges if id(e[0]) in gset and id(e[1]) in gset]
-        svg = _one_graph_plate(grp, gedges, width)
+        svg = build(grp, gedges, width)
         if not svg:
             return None            # 한 덩이라도 못 앉히면 전부 옛 길로 되돌린다
         svgs.append(svg)
@@ -702,11 +800,17 @@ def _is_list(block):
 
 
 def _narrow_plate(block):
-    """좁은 화면용 판. 칸을 한 줄로 쌓는다.
+    """좁은 화면용 판.
 
     넓은 판은 폭 520 을 채우고 글자가 줄어 든다 — 휴대폰에서 상자 이름이 깨알이 된다.
-    같은 내용을 한 칸으로 다시 구워 CSS 로 갈아 끼운다.
+    그래프 길을 먼저 시도한다 — 넓은 판과 같은 상자·이음을 쓰되 폭 340 에
+    맞게 자리만 다시 잡는다(`_graph_plate` 의 `narrow` 갈래). 화면이 좁다고
+    「연산기 A → B → 풀」처럼 갈래·모임이 사슬로 뒤바뀌면 안 된다 — 그래프가
+    안 잡히는 그림만 옛 줄 단위 길(칸을 한 줄로 쌓기)로 내려간다.
     """
+    g = _graph_plate(block, width=340.0, narrow=True)
+    if g:
+        return g
     got = _rows_of(block)
     if not got:
         return None

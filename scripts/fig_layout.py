@@ -299,7 +299,7 @@ class Plate(object):
         「네모 테두리에 깔림」이 그것이다. 틈을 이름에 맞춰 벌린다.
         """
         need = 0.0
-        for (ra, _ca), (rb, _cb), label, _k in self.links:
+        for (ra, _ca), (rb, _cb), label, _k, _at in self.links:
             if label and ra == rb:
                 need = max(need, text_w(label, FS_S) + 10)
         return need
@@ -307,7 +307,7 @@ class Plate(object):
     def _need_gap_y(self):
         """줄과 줄 사이를 세로로 잇는 선의 이름이 앉을 띠."""
         return 30.0 if any(ra != rb and label
-                           for (ra, _ca), (rb, _cb), label, _k in self.links) else 0.0
+                           for (ra, _ca), (rb, _cb), label, _k, _at in self.links) else 0.0
 
     def at(self, row, col):
         placed = self._layout()
@@ -317,15 +317,19 @@ class Plate(object):
         return b
 
     # ---- 잇기 ------------------------------------------------------------
-    def connect(self, a, b, label='', kind='l'):
+    def connect(self, a, b, label='', kind='l', at=0.5):
         """두 상자를 잇는다. 어느 변에서 나가고 들어올지는 자리가 정한다.
 
         kind: 'l' 회색 실선(물건·용역) · 'a' 강조색 실선(돈) · 'd' 점선(조건부)
+        at: 위아래로 잇는 선이 상자 변의 어디에 붙을지(0~1, 기본 가운데).
+            한 칸으로 쌓은 판에서 한 상자를 건너뛰는 이음은 가운데로 그으면
+            사이 상자를 정통으로 뚫고 지나가 다른 이음과 겹쳐 안 보인다 —
+            가장자리로 붙여야 「그 상자를 지나쳐 간다」는 게 보인다
         """
-        self.links.append((a.rc, b.rc, label, kind))
+        self.links.append((a.rc, b.rc, label, kind, at))
         self._placed = None         # 틈이 이름에 따라 달라진다. 다시 놓는다
 
-    def _link_svg(self, a, b, label, kind):
+    def _link_svg(self, a, b, label, kind, at=0.5):
         cls = {'l': 'fl-l', 'a': 'fl-a', 'd': 'fl-d'}[kind]
         mk = 'url(#flAa)' if kind == 'a' else 'url(#flA)'
         fsa = ' style="font-size:%gpx"' % self.fs_s
@@ -343,8 +347,8 @@ class Plate(object):
                 lx, ly, anchor = mx, min(p0[1], p1[1]) - 6, 'middle'
         else:                                            # 위아래로 떨어져 있다
             down = a.y1 <= b.y - 4
-            p0 = a.port('b' if down else 't')
-            p1 = b.port('t' if down else 'b')
+            p0 = a.port('b' if down else 't', at)
+            p1 = b.port('t' if down else 'b', at)
             if abs(p0[0] - p1[0]) < 1.0:
                 d = 'M%g %g L%g %g' % (p0[0], p0[1], p1[0], p1[1])
             else:
@@ -387,8 +391,8 @@ class Plate(object):
             gx = (self._xs[0] + self._ws[0] + self._xs[1]) / 2.0
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
                      % (gx, self.top + (20.0 if self.heads else 0.0) - 6, fsa, self.mid))
-        for (ra, ca), (rb, cb), label, kind in self.links:
-            o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind)
+        for (ra, ca), (rb, cb), label, kind, at in self.links:
+            o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind, at)
         y = self._bottom
         for n in self.notes:
             # 각주도 판 폭에 맞춰 나눈다. 한 줄로 두면 긴 한 줄 평이 판 밖으로 나가거나,
