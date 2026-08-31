@@ -13,7 +13,7 @@ import re
 W = 640
 X0, X1 = 96, 560          # 판 좌우. 왼쪽 96 은 세로 눈금 글자 자리다
 Y0, Y1 = 62, 300          # 판 위아래
-COLORS = ('var(--fig-blue,#2f6fd0)', 'var(--fig-good,#2f8f6b)')
+COLORS = ('var(--fig-blue,#2f6fd0)', 'var(--fig-good,#2f8f6b)', 'var(--warn,#c2831f)')
 
 
 def esc(s):
@@ -35,7 +35,8 @@ def _fmt(v):
 def trend(lines, ylabel, note='', threshold=None):
     """시계열 선 도해.
 
-    lines     = [(이름, [(때, 값), …]), …]  — 최대 둘. 셋이 넘으면 그림이 둘로 갈 일이다
+    lines     = [(이름, [(때, 값), …]), …]  — 최대 셋. 같은 것을 여러 곳에서 견주는
+                것(구 셋의 같은 지수)은 축이 하나라 한 판에 둔다. 축이 다르면 판을 나눈다
     ylabel    = 세로 자가 무엇인지. 「지수(2021.6=100)」처럼 기준까지 적는다
     threshold = (이름, 값) 이면 문턱을 점선으로 하나 긋는다. 트리거 조건을 눈으로 보게 하는 자리
     반환      = SVG 문자열. 그릴 값이 없으면 None
@@ -43,7 +44,7 @@ def trend(lines, ylabel, note='', threshold=None):
     lines = [(n, s) for n, s in lines if s]
     if not lines:
         return None                      # 값이 없으면 안 그린다
-    assert len(lines) <= 2, '선이 셋이면 그림을 둘로 나눈다'
+    assert len(lines) <= 3, '선이 넷이면 그림을 나눈다 — 축이 둘이라는 뜻이다'
 
     xs = [t for _, s in lines for t, _ in s]
     order = sorted(set(xs))

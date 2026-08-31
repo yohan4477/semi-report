@@ -21,6 +21,10 @@ AREAS = os.path.join(wl.WATCH, '_areas.json')
 NEED_SECS = ('지금 판단', '트리거', '왜 보나', '반대 근거')
 STALE_DAYS = 90
 NUM_RE = re.compile(r'\d')
+# metric 열쇠 꼴. 소문자로 열고 밑줄·숫자·한글만. 한글을 여는 이유는 열쇠에 구 이름이
+# 들어가기 때문이다(sale_idx_강남구) — 구마다 값을 따로 받아 평균을 안 내는 설계라
+# 무엇을 재는 값인지가 열쇠에 남아야 한다. 빈칸과 문장부호는 계속 막는다.
+KEY_RE = re.compile(r'^[a-z][a-z0-9_가-힣]*$')
 
 
 def canon():
@@ -67,10 +71,10 @@ def check_one(path, today, eq, ar):
         if t['kind'] == wl.KIND_VALUE and not NUM_RE.search(t['cond']):
             bad('W2', '값 트리거 "%s" 의 조건에 수가 없다: "%s"' % (t['what'], t['cond']))
         # W3 — 값 트리거에 metric 키가 있나, 사건 트리거에 키가 붙지 않았나
-        if t['kind'] == wl.KIND_VALUE and not re.match(r'^[a-z][a-z0-9_]*$', t['metric'] or ''):
+        if t['kind'] == wl.KIND_VALUE and not KEY_RE.match(t['metric'] or ''):
             bad('W3', '값 트리거 "%s" 의 metric 키가 없거나 꼴이 아니다: "%s"'
                 % (t['what'], t['metric']))
-        if t['kind'] == wl.KIND_EVENT and re.match(r'^[a-z][a-z0-9_]*$', t['metric'] or ''):
+        if t['kind'] == wl.KIND_EVENT and KEY_RE.match(t['metric'] or ''):
             bad('W3', '사건 트리거 "%s" 에 metric 키가 붙어 있다 — 어댑터가 채울 자리가 아니다'
                 % t['what'])
         # W4 — 값이 들어온 줄에는 「언제 것 · 성격」이 있어야 한다. 표에서 공표치와
@@ -153,6 +157,8 @@ CASES = [
     ('값 조건에 수가 없다', 'W2', {'rows': '| 배수 | 값 | fwd_pe | 오르면 |'}),
     ('값 트리거에 metric 이 없다', 'W3', {'rows': '| 배수 | 값 | — | 30배 초과 |'}),
     ('사건에 metric 이 붙었다', 'W3', {'rows': '| 공표 | 사건 | fwd_pe | 공표 발생 |'}),
+    ('열쇠 자리에 산문', 'W3', {'rows': '| 배수 | 값 | 선행 P/E 배수 | 30배 초과 |'}),
+    ('열쇠에 한글은 통과', None, {'rows': '| 지수 | 값 | sale_idx_강남구 | 5% 하회 |'}),
     ('오래 안 봤다', 'W5', {'checked': '2020-01-01'}),
 ]
 
