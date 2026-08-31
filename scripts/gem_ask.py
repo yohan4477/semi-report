@@ -14,6 +14,7 @@
 새 대화만으로는 저장된 정보(기억)가 따라와 앞 회차 틀이 다음 답에 섞인다.
 """
 import io
+import re
 import sys
 import time
 from playwright.sync_api import sync_playwright
@@ -109,7 +110,28 @@ def temp_chat(pg):
     return True
 
 
-def ask(prompt, dest, timeout=600):
+def current_model(pg):
+    """지금 걸려 있는 모델 이름. 모드 단추의 aria-label 이 말해 준다.
+
+    「모드 선택 도구 열기, 현재 Gemini Flash-Lite 모드 사용 중」에서 가운데만 뽑는다.
+    받은 글이 어느 모델 것인지는 프레임 머리말에 그대로 적어야 한다 — 카드에 그 이름이
+    뜨고, 나중에 무엇을 다시 받을지 그것으로 고른다.
+    """
+    for sel in ('button[aria-label*="모드 선택"]', 'button[aria-label*="mode"]'):
+        b = pg.locator(sel).first
+        if not b.count():
+            continue
+        lab = b.get_attribute('aria-label') or ''
+        m = re.search(r'현재\s+(.+?)\s+모드', lab)
+        if m:
+            return m.group(1).strip()
+        t = (b.inner_text() or '').replace(chr(10), ' ').strip()
+        if t:
+            return t
+    return '모델 미상'
+
+
+def ask(prompt, dest, timeout=600, allow_lower=False):
     with sync_playwright() as pw:
         b = pw.chromium.connect_over_cdp('http://127.0.0.1:9222')
         pg = b.contexts[0].new_page()
@@ -117,12 +139,16 @@ def ask(prompt, dest, timeout=600):
         pg.wait_for_timeout(5000)
         temp_chat(pg)
         got = pick_model(pg)
-        # 못 걸면 멈춘다. 조용히 기본값(Flash-Lite)으로 받으면 어느 모델이 쓴 글인지
-        # 모른 채 프레임 파일에 「Gemini 3.1 Pro」라고 적히고, 답이 짧아진 이유도 안 남는다.
-        # 2026-08-31 에 한도가 차서 3.1 Pro·3.7 Flash 가 회색이었고 여섯 편이 Flash-Lite 로
-        # 왔다 — 한도가 풀린 뒤에 다시 묻는다
-        assert got, ('원하는 모델(%s)이 안 걸렸다. 메뉴에서 회색이면 한도가 찬 것이다 — '
-                     '풀린 뒤에 다시 묻는다' % MODEL)
+        # 못 걸면 멈춘다. 조용히 기본값으로 받으면 어느 모델이 쓴 글인지 모른 채 프레임
+        # 파일에 「3.1 Pro」라고 적힌다. 2026-08-31 에 한도가 차서 3.1 Pro·3.7 Flash 가
+        # 회색이었고 여섯 편이 Flash-Lite 로 왔다.
+        # allow_lower 를 켜면 낮은 모델로도 받는다 — 대신 실제로 걸린 이름을 돌려주고,
+        # 그 이름이 프레임 머리말과 카드에 그대로 선다
+        if not got:
+            assert allow_lower, ('원하는 모델(%s)이 안 걸렸다. 메뉴에서 회색이면 한도가 '
+                                 '찬 것이다 — 풀린 뒤에 다시 묻거나 allow_lower 로 낮은 '
+                                 '모델을 받는다' % MODEL)
+            got = current_model(pg)
         print('모델:', got, file=OUT)
         box = pg.locator('div[contenteditable="true"]').first
         box.click()
@@ -153,6 +179,7 @@ def ask(prompt, dest, timeout=600):
         io.open(dest, 'w', encoding='utf-8').write(text)
         print('받은 글자 %d · %s' % (len(text), dest), file=OUT)
         pg.close()
+        return got
 
 
 if __name__ == '__main__':

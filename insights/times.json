@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-08-31",
-"index_fingerprint": "7218c1ca90fcf467d8a9d7b035517d95f4151905",
-"lines": 3138
+"index_fingerprint": "ed3da006651b09f23a9ead71c5d1029a03665348",
+"lines": 3140
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -4511,7 +4511,7 @@
 "t": "2024",
 "tense": "회고"
 },
-"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L117": {
+"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L124": {
 "how": "명시",
 "span": [
 "2024",
@@ -4520,15 +4520,29 @@
 "t": "2025",
 "tense": "회고"
 },
-"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L124": {
+"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L131": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L181": {
+"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L193": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
+},
+"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L296": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L326": {
+"how": "명시",
+"span": [
+"2020",
+"2023"
+],
+"t": "2023",
+"tense": "회고"
 },
 "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L121": {
 "how": "명시",

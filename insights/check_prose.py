@@ -481,7 +481,12 @@ _TAG = re.compile(r'<[^>]+>')
 # 받은 글을 그대로 실은 자리. 접힌 상자든 카드 본문 전체든 남의 글이라 문체를 재지
 # 않는다 — 2026-08-31 에 카드가 뷰 하나를 통째로 싣는 꼴로 바뀌었다
 _QUOTE_BOX = re.compile(r'<details class="fv">.*?</details>'
-                        r'|<div class="fv-b">.*?</div>\s*(?=<div class="uc-links"|\Z)', re.S)
+                        # 카드 본문(fv-b)과 섹션 앞머리(fv-b sd-intro)를 다 뺀다. 끝은
+                        # 「</div>」로 못 잡는다 — 도해가 들어오면서 본문 안에 div 가 생겨
+                        # 첫 닫는 태그가 상자 것이다. 다음 자리(링크·다음 카드·섹션 끝)
+                        # 앞까지 걷는다
+                        r'|<div class="fv-b[^"]*">.*?'
+                        r'(?=<div class="uc-links"|<div class="ucard|</section>|\Z)', re.S)
 _ENT = [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&#39;', "'"),
         ('&nbsp;', ' ')]
 

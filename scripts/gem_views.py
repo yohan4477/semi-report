@@ -27,7 +27,7 @@ OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8')
 HEAD = """---
 source: %s
 kind: %s
-model: Gemini 3.1 Pro (CDP 크롬 · playwright · 복사 버튼)
+model: %s (CDP 크롬 · playwright · 복사 버튼)
 asked: scripts/prompts/%s.txt
 date: %s
 used:
@@ -40,7 +40,7 @@ named:
 """
 
 
-def run(src, url, today):
+def run(src, url, today, allow_lower=False):
     # 링크만 주면 못 읽고 배경지식으로 쓰는 일이 있다 — 2026-08-31 에 기술 뷰가
     # 「유료라 원문을 못 긁는다」고 적고 업계 동향으로 답했다. **전문을 같이 보낸다.**
     # 우리가 옮긴 요약본은 사실을 골라 담은 중간물이라 그 선택까지 넘어간다 —
@@ -58,11 +58,14 @@ def run(src, url, today):
         tmp = os.path.join(FRAMES, '.ask-%s.txt' % kind)
         io.open(tmp, 'w', encoding='utf-8').write(text)
         dest = os.path.join(FRAMES, '%s-%s.md' % (slug, kind))
-        gem_ask.ask(io.open(tmp, encoding='utf-8').read(), dest + '.raw')
+        # 실제로 걸린 모델 이름을 받아 머리말에 적는다 — 하드코딩하면 한도가 차서 낮은
+        # 모델이 답한 날에도 「3.1 Pro」라고 적힌다
+        model = gem_ask.ask(io.open(tmp, encoding='utf-8').read(), dest + '.raw',
+                            allow_lower=allow_lower)
         body = io.open(dest + '.raw', encoding='utf-8').read()
         got[kind] = body
         io.open(dest, 'w', encoding='utf-8').write(
-            HEAD % (src, kind, kind, today) + body)
+            HEAD % (src, kind, model, kind, today) + body)
         os.remove(dest + '.raw')
         os.remove(tmp)
         print('%s -> %s (%d자)' % (kind, os.path.basename(dest), len(body)), file=OUT)
@@ -70,4 +73,6 @@ def run(src, url, today):
 
 if __name__ == '__main__':
     import datetime
-    run(sys.argv[1], sys.argv[2], datetime.date.today().isoformat())
+    # 세 번째 인자로 --allow-lower 를 주면 한도가 찼을 때 낮은 모델로도 받는다
+    run(sys.argv[1], sys.argv[2], datetime.date.today().isoformat(),
+        allow_lower='--allow-lower' in sys.argv[3:])
