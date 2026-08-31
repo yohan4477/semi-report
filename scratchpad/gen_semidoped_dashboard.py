@@ -52,68 +52,98 @@ VIEWS = [
 ]
 
 
-def view_html(slug, kind, view_title, asked, drop=''):
-    """뷰 하나를 카드 상자로. 꼬리에 붙은 요약·제언은 상자 맨 위로 올린다.
+import re  # noqa: E402
 
-    받은 글에서 그 대목이 맨 끝에 서면, 접힌 카드에서 먼저 보이는 자리에 배경 설명이
-    오고 결론이 스크롤 끝에 숨는다. 문장은 안 고치고 자리만 옮긴다.
 
-    drop 은 이 회차의 앞머리로 이미 카드 맨 위에 세운 대목이다. 그 뷰의 몸에서 걷는다 —
-    안 걷으면 같은 문단이 카드 위와 뷰 안에 두 번 선다.
+def _paras(md):
+    return [t.strip() for t in md.split(chr(10) * 2) if t.strip()]
+
+
+def plain(md):
+    """문단 하나를 카드 앞면에 세울 줄글로. 굵은 글씨 표시만 걷고 글자는 그대로 둔다.
+
+    frame_view.lead_of 는 굵은 글씨로 시작하는 줄을 통째로 건너뛴다 — 「**요약하자면,**」
+    으로 시작하는 문단이 앞면에서 통째로 사라진다.
+    """
+    lines = []
+    for ln in md.split(chr(10)):
+        t = ln.strip()
+        # 제목 노릇만 하는 굵은 글씨 한 줄(**[요약 및 컨설턴트 제언]**)은 앞면에 안 세운다
+        if t.startswith('**') and t.endswith('**') and len(t) < 44:
+            continue
+        lines.append(t)
+    t = ' '.join(lines)
+    t = re.sub(r'\*\*(.+?)\*\*', r'\g<1>', t).replace('`', '')
+    return re.sub(r'\s+', ' ', t).strip()
+
+
+def intro_html(slug):
+    """회차 앞머리 — 뷰 카드보다 먼저, 섹션 머리 아래에 선다.
+
+    전략 뷰의 첫 제목 앞 문단이다. 이 회차가 무엇을 다루는지를 말하는 자리라 뷰마다
+    되풀이하지 않고 섹션에 한 번만 세운다.
+    """
+    md = frame_view.body_of(os.path.join(
+        ROOT, 'insights', 'frames', '%s-strategy.md' % slug))
+    return '<div class="fv-b sd-intro">%s</div>' % frame_view.to_html(
+        frame_view.intro_of(md))
+
+
+def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
+    """뷰 하나가 카드 한 장이다. 회차 하나에 카드 셋이 한 섹션에 선다.
+
+    카드 앞면에 세우는 글도 받은 답에서 뽑는다 — 꼬리에 요약·제언이 붙어 오면 그
+    첫 문단을, 안 붙어 오면 답의 첫 문단을 쓴다. 뽑아 올린 문단은 몸에서 걷는다.
     """
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     summ, rest = frame_view.split_summary(md)
-    if drop and rest.startswith(drop):
-        rest = rest[len(drop):].strip()
-    top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(summ)) if summ else ''
-    return ('<section class="vc">'
-            '<p class="vc-h">%s<span>%s · 받은 그대로 · 미검증</span></p>'
-            '%s<div class="fv-b">%s</div></section>'
-            % (view_title, asked, top, frame_view.to_html(rest)))
-
-
-def make_card(slug, ep_title, en_title, date, url, num):
-    """회차 한 편이 카드 한 장이다. 누르면 앞머리가 먼저 서고 그 아래 뷰 카드가 선다.
-
-    앞머리는 전략 뷰의 첫 제목 앞 문단이다. 첫 문단은 카드 머리(gain)에, 나머지는 본문
-    맨 위 상자에 선다 — 같은 자리에 둘 다 세우면 접었다 펴는 순간 같은 글이 두 번 뜬다.
-    """
-    lead_md = frame_view.body_of(os.path.join(
-        ROOT, 'insights', 'frames', '%s-strategy.md' % slug))
-    intro = frame_view.intro_of(lead_md)
-    paras = [t.strip() for t in intro.split(chr(10) * 2) if t.strip()]
-    head, rest_intro = (paras[0] if paras else ''), (chr(10) * 2).join(paras[1:])
-    body = ''.join(
-        view_html(slug, kind, vt, asked, drop=intro if kind == 'strategy' else '')
-        for kind, vt, asked in VIEWS)
-    top = ('<div class="fv-b vc-intro">%s</div>' % frame_view.to_html(rest_intro)
-           ) if rest_intro else ''
+    if kind == 'strategy':
+        # 앞머리는 섹션 머리 아래에 이미 섰다
+        intro = frame_view.intro_of(md)
+        if rest.startswith(intro):
+            rest = rest[len(intro):].strip()
+    if summ:
+        sp = _paras(summ)
+        # 제목 줄(**[요약 및 컨설턴트 제언]**)만 있는 첫 문단은 앞면에 세우지 않는다
+        i = 1 if len(sp) > 1 and len(sp[0]) < 40 else 0
+        front, top_md = sp[i], (chr(10) * 2).join(sp[:i] + sp[i + 1:])
+    else:
+        rp = _paras(rest)
+        front, top_md = (rp[0] if rp else ''), ''
+        rest = (chr(10) * 2).join(rp[1:])
+    top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(top_md)) if top_md else ''
     return {
-        'id': 'sd-%s' % slug,
-        # 섹션이 회차다 — 첫 화면 타일에 회차 제목이 바로 선다. 「회차」라는 한 칸으로
-        # 묶으면 타일을 눌러야 무슨 편이 있는지 보인다
+        'id': 'sd-%s-%s' % (slug, kind),
         'section': ('sd-%s' % slug, num, ep_title,
                     '한 회차를 눈을 바꿔 설명하게 하고 받은 글을 그대로 싣는다'),
-        'title': ep_title,
-        'gain': frame_view.lead_of(head)[:150],
+        'title': '%s — %s' % (ep_title, view_title),
+        'gain': plain(front)[:150],
         'meta': ['Austin · Vik Sekar <b>Semi Doped 공동 진행</b>',
                  '업로드 %s' % date, '원제 %s' % en_title,
-                 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
+                 asked, 'Gemini 3.1 Pro', '받은 그대로 · 미검증'],
         'links': [('요약본', blob(SRC + '%s.md' % slug), ''),
                   ('원문(Semi Doped)', url, 'ghost')],
-        # 앞머리를 한줄 코멘트로도 세우면 같은 글이 두 번 읽힌다
+        # 앞면에 세운 문단을 한줄 코멘트로 또 세우지 않는다
         'verdict': '',
-        'report': [('raw', top + body)],
+        'report': [('raw', top + '<div class="fv-b">%s</div>'
+                    % frame_view.to_html(rest))],
     }
 
 
-# 회차 한 편에 카드 한 장. 뷰 셋은 그 카드 안에 상자로 선다
-CARDS = [make_card(slug, t, en, d, u, '%02d' % (i + 1))
-         for i, (slug, t, en, d, u) in enumerate(EPISODES)]
+# 회차를 바깥 고리로 돈다 — 한 회차의 뷰 셋이 한 섹션에 모인다
+CARDS = [make_card(slug, t, en, d, u, kind, vt, asked, '%02d' % (i + 1))
+         for i, (slug, t, en, d, u) in enumerate(EPISODES)
+         for kind, vt, asked in VIEWS]
+
+# 섹션 머리 아래 앞머리 — 뷰 카드 앞에 선다
+SEC_TOP = {'sd-%s' % slug: intro_html(slug) for slug, *_ in EPISODES}
 
 
 CSS = '''
+/* 제목 링크 — 누르면 이 장으로 오지만 글자는 제목 그대로다 */
+h1 a.h-home { color:inherit; text-decoration:none; }
+h1 a.h-home:hover { text-decoration:underline; }
 /* 밸류체인 도식 — 칸이 어디로 옮겨 가는지 두 줄로 */
 .uc-rep pre.vc { margin:12px 0; padding:12px 14px; border:1px solid var(--line);
   border-radius:8px; background:var(--surface); overflow-x:auto;
@@ -183,16 +213,11 @@ CSS = '''
 .uc-rep .uc-toc .tg-chain b { font-weight:800; color:var(--ink); }
 .uc-rep .uc-toc .tg-chain i { font-style:normal; color:var(--ink-3); padding:0 1px; }
 
-/* 회차 앞머리 — 뷰 카드보다 먼저 선다. 이 회차가 무엇을 다루나 */
-.uc-rep .vc-intro { padding:0 0 6px; }
-.uc-rep .vc-intro p { font-size:.86rem; }
-/* 뷰 카드 — 한 회차 아래 뷰마다 한 장 */
-.uc-rep section.vc { margin:16px 0; border:1px solid var(--line); border-radius:10px;
-  background:var(--surface); }
-.uc-rep section.vc .vc-h { margin:0; padding:11px 14px 9px; border-bottom:1px solid var(--line);
-  font-size:.88rem; font-weight:800; color:var(--ink); }
-.uc-rep section.vc .vc-h span { display:block; margin-top:2px; font-weight:400;
-  font-size:.72rem; color:var(--ink-3); }
+/* 회차 앞머리 — 섹션 머리 아래, 뷰 카드 앞에 한 번만 선다 */
+.sd-intro { margin:0 0 16px; padding:12px 14px; border:1px solid var(--line);
+  border-radius:10px; background:var(--surface); }
+.sd-intro p { margin:6px 0; font-size:.86rem; line-height:1.8; color:var(--ink-2); }
+.sd-intro p:first-child { margin-top:0; }
 /* 받은 글 꼬리의 요약·제언을 여기로 올린다 — 뷰 카드에서 먼저 읽히는 자리 */
 .uc-rep .vc-sum { margin:12px 14px 0; padding:10px 12px; border-left:3px solid var(--ink-3);
   border-radius:0 6px 6px 0; background:var(--sunk); }
@@ -202,7 +227,9 @@ CSS = '''
 .uc-rep .vc-sum li { font-size:.82rem; line-height:1.75; color:var(--ink-2); }
 '''
 
-HEADER = '''<h1>🎙️ Semi Doped</h1>
+# 제목을 누르면 이 장으로 온다. 파일 이름으로 걸면 gen_site 가 공개 주소(/semidoped)로
+# 바꿔 준다 — 손으로 두 주소를 적지 않는다
+HEADER = '''<h1><a class="h-home" href="Semi Doped 대시보드.html">🎙️ Semi Doped</a></h1>
 <p class="lede">daily.semidoped.com 전사본을 카드로 옮긴다. 원문은 전부 무료라
 잠그지 않는다. 카드 한 장이 원문 한 편이고, 목차가 그 편을 무슨 방법으로 나눴는지를
 먼저 보인다.</p>'''
@@ -217,6 +244,7 @@ def main():
     # 카드를 눌러도 새 페이지로 안 간다 — 자리에서 펼친다. 회차 한 편이 카드 한 장이라
     # 목록에서 펼치는 것으로 충분하고, 페이지가 따로 나면 주소가 둘로 갈린다
     dc.render(CARDS, 'Semi Doped 대시보드', HEADER, FOOTER, OUT,
+              sec_top=SEC_TOP,
               extra_css=frame_view.CSS + CSS, newest_first=True)
 
 
