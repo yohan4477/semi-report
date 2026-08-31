@@ -128,7 +128,7 @@ class Box(object):
              % (self.x, self.y, self.w, self.h, cls)]
         if self.sub and self.subout:
             lines = wrap(self.sub, self.w - 2 * PAD_X)
-            y = self.y + PAD_Y + LH - 6
+            y = self.y + (self.h - LH) / 2.0 + LH - 12
             o.append('<text x="%g" y="%g" class="fl" text-anchor="middle">%s</text>'
                      % (self.cx, y, self.label))
             for i, ln in enumerate(lines):
@@ -149,12 +149,16 @@ class Plate(object):
     """판 하나. 칸을 격자로 놓고, 선은 놓인 상자에서 뽑는다."""
 
     def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
-                 stretch=True, subout=False):
+                 stretch=True, subout=False, pad_y=PAD_Y, bottom=14.0):
         self.W = float(width)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
-        self.subout = subout        # 부제를 상자 밖 아래에 깐다(폭 계산에서 뺀다)
+        self.subout = subout        # 부제를 상자 안에 여러 줄로 깐다(폭 계산에서 뺀다)
+        # 상자 안 위아래 여백과 판 아래 여백. 받은 도식을 굽는 판은 글 사이에 끼므로
+        # 좁게 준다 — 손으로 그리는 판은 기본값 그대로다
+        self.pad_y = float(pad_y)
+        self.bottom = float(bottom)
         # 칸을 판 끝까지 늘린다. 글자에 맞춰 재기만 하면 짧은 이름이 든 줄은 가운데
         # 조금만 차지하고 양옆이 크게 빈다 — 그 빈자리 때문에 글자가 더 작아 보인다
         self.stretch = stretch
@@ -235,7 +239,7 @@ class Plate(object):
         placed = []
         for r in self.rows:
             two = any(c and c[1] for c in r) and not self.subout
-            h = PAD_Y * 2 + LH + (LH if two else 0)
+            h = self.pad_y * 2 + LH + (LH if two else 0)
             if self.subout:
                 # 상자 안에 깐 설명 줄만큼 키를 키운다. 열 폭이 이미 정해져 있어
                 # 몇 줄이 될지 여기서 셀 수 있다
@@ -365,6 +369,6 @@ class Plate(object):
             y += 18
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle">%s</text>'
                      % (self.W / 2.0, y, n))
-        h = y + 14
+        h = y + self.bottom
         return ('<svg viewBox="0 0 %g %g" width="100%%" data-fig-layout="1" role="img" '
                 'aria-label="%s">%s%s</svg>' % (self.W, h, alt, self.DEFS, ''.join(o)))

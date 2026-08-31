@@ -261,7 +261,8 @@ def _one_plate(block):
 def _plate(rows, notes, ncol, subout=False):
     # 판 위아래 여백을 좁힌다. 받은 도식은 카드 본문 사이에 끼는 그림이라 판 자체가
     # 여백을 크게 물면 글과 그림 사이가 벌어져 한 덩어리로 안 읽힌다
-    p = fig_layout.Plate(subout=subout, top=4.0, gap_y=14.0)
+    p = fig_layout.Plate(subout=subout, top=2.0, gap_y=10.0,
+                         pad_y=8.0, bottom=4.0)
     for r in rows:
         p.row(*(list(r) + [None] * (ncol - len(r))))
     for i in range(len(rows) - 1):
@@ -321,6 +322,37 @@ def _table(rows):
     return '<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table>' % (h, b)
 
 
+def _block_html(block):
+    """도식 덩어리 하나를 판·글·아스키 중 하나로.
+
+    들여쓴 목록은 그냥 글이다 — 판으로 구우면 딱지가 주인공이 되고(「한계」·「장점」),
+    아스키로 두면 읽기 어려운 고정폭 덩어리가 된다. 목록 표시를 불릿으로 바꿔 글로 낸다.
+    """
+    if _is_list(block):
+        out, items = [], []
+        for ln in block.split(chr(10)):
+            t = ln.strip()
+            if not t or t == 'text':
+                continue
+            m = re.match(r'[└├]─\s*(.*)', t) or re.match(r'[-*]\s+(.*)', t)
+            if m:
+                items.append(_inline(m.group(1)))
+                continue
+            if items:
+                out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % x for x in items))
+                items = []
+            out.append('<p>%s</p>' % _inline(t))
+        if items:
+            out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % x for x in items))
+        return ''.join(out)
+    try:
+        svg = boxes(block)
+    except Exception:
+        svg = None
+    return svg or ('<pre class="fv-pre">%s</pre>'
+                   % block.replace('&', '&amp;').replace('<', '&lt;'))
+
+
 def to_html(md):
     """마크다운 한 편을 카드 안에 들어갈 조각으로."""
     out, i = [], 0
@@ -334,23 +366,13 @@ def to_html(md):
                 buf.append(lines[j])
                 j += 1
             block = '\n'.join(buf)
-            try:
-                svg = boxes(block)
-            except Exception:
-                svg = None
-            out.append(svg if svg else '<pre class="fv-pre">%s</pre>'
-                       % block.replace('&', '&amp;').replace('<', '&lt;'))
+            out.append(_block_html(block))
             i = j + 1
             continue
         j = _dia_span(lines, i)
         if j > i:
             block = chr(10).join(lines[i:j])
-            try:
-                svg = boxes(block)
-            except Exception:
-                svg = None
-            out.append(svg if svg else '<pre class="fv-pre">%s</pre>'
-                       % block.replace('&', '&amp;').replace('<', '&lt;'))
+            out.append(_block_html(block))
             i = j
             continue
         if ln.lstrip().startswith('|') and '|' in ln[1:]:
