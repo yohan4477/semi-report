@@ -1333,7 +1333,10 @@ def _kept(block, html):
     """
     seen = re.sub(r'\s+', '', re.sub('<[^>]+>', ' ', html))
     for ln in block.split(chr(10)):
-        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•]', ' ', ln)
+        # mermaid 노드 꼴(원·마름모)이 쓰는 ()·{} 도 지운다 — 안 지우면 「E{정확도」처럼
+        # 물음표 노드의 여는 중괄호가 낱말에 눌어붙어, 판이 이름을 제대로 실었어도
+        # 이 안전망이 헛걸린다(2026-09-01)
+        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•━┼┴┬├┤►(){}]', ' ', ln)
         for w in re.split(r'\s+', bare):
             w = w.strip()
             if len(re.findall(r'[가-힣A-Za-z0-9]', w)) >= 3 and w != 'text':
@@ -1404,6 +1407,393 @@ def _denorm_emoji(block):
     for k, v in _EMOJI_MAP.items():
         block = block.replace(k, v)
     return _EMOJI_STRIP.sub('', block)
+
+
+# ── mermaid flowchart 표기 ───────────────────────────────────────────────
+# 아스키 격자 파서(위)는 화살촉·테두리 문자 꼴이 매번 달라져 규칙이 계속
+# 늘었다. mermaid flowchart 는 문법이 고정돼 있어 정규식 몇 줄로 노드·이음을
+# 읽는다. 시험판과 그 근거는 `insights/frames/exp/mermaid_plate.py` ·
+# `insights/frames/exp/2026-08-27-openai-jalapeno-strategy-mermaid.md` — 이
+# 아래는 그 시험을 운영으로 그대로 옮긴 것이다. 자리 배치 상수도 같다: 넓은
+# 판 520 · 좁은 판 340 · fs=13.4, fs_s=12.0 · top=2, gap_y=10, pad_y=8,
+# bottom=4 · 분기는 나란히(`_mm_topo_levels`) · 폭 모자라면 wrap_label.
+# `fig_layout` 모듈 상수는 고치지 않는다 — 필요한 값은 `Plate(...)` 인자로만.
+#
+# 읽는 것은 셋뿐이다 — ```mermaid 안의 flowchart 줄, 노드 선언(`A[이름]` ·
+# `A(이름)` · `A{이름}`), 이음(`A --> B` · `A -->|라벨| B` · `A --- B`).
+# subgraph·style·classDef·class·click·linkStyle·%% 주석은 그 줄만 건너뛴다.
+_MM_HEAD = re.compile(r'^\s*(flowchart|graph)\s+(LR|TD|TB|BT|RL)\s*$', re.I | re.M)
+_MM_SKIP_LINE = re.compile(
+    r'^\s*(flowchart\b|graph\b|subgraph\b|end\s*$|style\b|classDef\b|class\b|'
+    r'click\b|linkStyle\b|%%)', re.I)
+_MM_ID = r'[A-Za-z0-9_]+'
+_MM_BR = r'(\[[^\]]+\]|\([^\)]+\)|\{[^\}]+\})'
+_MM_DECL = re.compile(r'^\s*(%s)\s*%s\s*$' % (_MM_ID, _MM_BR))
+_MM_EDGE = re.compile(
+    r'^\s*(%s)\s*%s?\s*(-->|---)\s*(?:\|([^|]+)\|\s*)?(%s)\s*%s?'
+    % (_MM_ID, _MM_BR, _MM_ID, _MM_BR))
+# 독립 검산(`mermaid_verify`)에 쓰는 단순 잣대 — 문법 파서와 다른 경로로
+# 화살표 수·선언 id 집합을 다시 센다
+_MM_ARROW_COUNT = re.compile(r'-->|---')
+_MM_ANY_DECL = re.compile(r'(%s)\s*%s' % (_MM_ID, _MM_BR))
+
+# mermaid 화살표 표기는 셋을 넘게 섞여 온다 — 실선(`-->`)뿐 아니라 양방향
+# (`<-->`)·대시 사이에 낀 라벨(`--라벨-->`, 파이프 없이)까지 원문이 쓴다
+# (2026-09-01, 그록봇 기술 뷰의 「과거: 단순 추론 파이프라인」 도식이 그랬다).
+# 파서에 넣기 전에 이 둘을 우리가 아는 꼴로 정규화한다 — 양방향은 방향을
+# 무시하고 보통 이음으로, 대시-라벨-대시는 파이프 라벨(`-->|라벨|`)로 바꾼다
+_MM_BIDIR = re.compile(r'<-->')
+_MM_INLINE_LABEL = re.compile(r'--([^->][^-]*?)-->')
+
+
+def _mm_normalize(block):
+    """줄마다 양방향 화살표·대시-라벨-대시 화살표를 우리 파서가 아는 꼴로."""
+    out = []
+    for ln in block.split(chr(10)):
+        ln = _MM_BIDIR.sub('-->', ln)
+        ln = _MM_INLINE_LABEL.sub(lambda m: '-->|%s|' % m.group(1).strip(), ln)
+        out.append(ln)
+    return chr(10).join(out)
+
+
+def _mm_fanout(ln):
+    """`A & B & C --> D`(여러 시작점이 이음 하나를 공유)를 낱개 이음 줄로 편다.
+
+    안 펴면 그 줄 전체가 우리 이음 규칙(시작 하나 · 끝 하나)에 안 맞아
+    통째로 버려지고, 그 이음에 달린 라벨(「결과 취합」 같은)까지 함께
+    사라진다. 여러 줄로 펴면 형제 상자 하나하나에 같은 라벨이 달리지만
+    — 뜻은 그대로고 낱말은 하나도 안 잃는다.
+    """
+    if '&' not in ln:
+        return [ln]
+    m = _MM_ARROW_COUNT.search(ln)
+    if not m:
+        return [ln]
+    left = ln[:m.start()]
+    if '&' not in left:
+        return [ln]           # & 가 화살표 오른쪽(받는 쪽)에 있으면 손 안 댄다
+    rest = ln[m.start():]
+    srcs = [s.strip() for s in left.split('&') if s.strip()]
+    if len(srcs) < 2:
+        return [ln]
+    return [s + ' ' + rest for s in srcs]
+
+
+def _is_mermaid_block(block):
+    """```mermaid 안쪽 글인가 — 첫 줄이 flowchart 방향 선언이면 그렇다."""
+    return bool(_MM_HEAD.search(block))
+
+
+def _mm_bracket_text(s):
+    """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다."""
+    if not s:
+        return None
+    return s[1:-1].strip()
+
+
+_MM_SUBGRAPH = re.compile(r'^\s*subgraph\s+(.+?)\s*$', re.I)
+_MM_END = re.compile(r'^\s*end\s*$', re.I)
+
+
+class _MGraph(object):
+    """mermaid flowchart 하나에서 읽은 노드·이음."""
+
+    def __init__(self):
+        self.names = {}     # id -> 이름(대괄호가 없으면 id 그대로)
+        self.order = []     # 처음 나온 차례
+        self.edges = []     # (src_id, dst_id, label)
+        self.title_of = {}  # id -> 그 노드가 든 subgraph 제목(있으면)
+
+    def _register(self, nid, disp, title=None):
+        if nid not in self.names:
+            self.names[nid] = disp or nid
+            self.order.append(nid)
+        elif disp and self.names[nid] == nid:
+            self.names[nid] = disp   # 맨몸으로 먼저 나온 id 에 뒤늦게 이름이 붙었다
+        if title and nid not in self.title_of:
+            self.title_of[nid] = title
+
+
+def _mm_parse(block):
+    """```mermaid ... ``` 안쪽 글 하나를 _MGraph 로 읽는다.
+
+    `subgraph 제목 ... end` 는 그 줄 자체(제어 줄)는 안 읽지만, **제목은
+    그 안에 든 노드에 매달아 둔다** — 「과거: 로컬 구축형」·「현재: 클라우드
+    구독형」처럼 두 덩이를 가르는 이름이 통째로 사라지면 안 된다. 판을 짤 때
+    한 덩이(약한 연결 성분)의 노드가 모두 같은 제목을 달고 있으면 그 제목을
+    판 위 캡션으로 올린다(`_mm_to_plate`).
+    """
+    g = _MGraph()
+    stack = []
+    for raw_ln in _mm_normalize(block).split(chr(10)):
+        if not raw_ln.strip():
+            continue
+        # subgraph·end 는 펴기 전(원래 한 줄)에 먼저 본다 — 펴는 대상은
+        # 이음 줄뿐이라 제어 줄에는 `&` 가 없다
+        sm = _MM_SUBGRAPH.match(raw_ln)
+        if sm:
+            stack.append(sm.group(1).strip())
+            continue
+        if _MM_END.match(raw_ln):
+            if stack:
+                stack.pop()
+            continue
+        if _MM_SKIP_LINE.match(raw_ln):
+            continue
+        title = stack[-1] if stack else None
+        for ln in _mm_fanout(raw_ln):
+            m = _MM_EDGE.match(ln)
+            if m:
+                sid, sbr, arrow, label, tid, tbr = m.groups()
+                g._register(sid, _mm_bracket_text(sbr), title)
+                g._register(tid, _mm_bracket_text(tbr), title)
+                g.edges.append((sid, tid, (label or '').strip()))
+                continue
+            m2 = _MM_DECL.match(ln)
+            if m2:
+                nid, br = m2.group(1), m2.group(2)
+                g._register(nid, _mm_bracket_text(br), title)
+                continue
+            # 그 밖(주석 안 걸린 산문 등)은 노드도 이음도 아니다
+    return g
+
+
+def _mm_topo_levels(order, edges):
+    """소스가 먼저인 파도(레벨)로 나눈다. 한 파도 안 순서는 원문 등장 차례.
+
+    파도를 낱개로 펴서 한 칸에 쌓지 않는다 — 한 상자에서 갈린 형제(같은
+    부모의 자식, 같은 자식으로 모이는 부모)가 같은 파도에 남아야 갈래가
+    사슬로 안 보인다(2026-09-01, 「폐쇄형/개방형 전략」 사고 참고).
+    """
+    indeg = {n: 0 for n in order}
+    out = {n: [] for n in order}
+    for a, b, _ in edges:
+        if a in indeg and b in indeg:
+            indeg[b] += 1
+            out[a].append(b)
+    seen = set()
+    levels = []
+    frontier = [n for n in order if indeg[n] == 0]
+    while frontier:
+        levels.append(frontier)
+        seen.update(frontier)
+        for n in frontier:
+            for m in out[n]:
+                indeg[m] -= 1
+        frontier = [n for n in order if n not in seen and indeg[n] == 0]
+    remaining = [n for n in order if n not in seen]
+    if remaining:            # 고리 등 위상 정렬로 못 다룬 것은 안전망으로 맨 끝에
+        levels.append(remaining)
+    return levels
+
+
+def _mm_weak_groups(order, edges):
+    """이음으로 이어진 상자만 한 덩이로 묶는다(약한 연결 성분).
+
+    받은 도식 하나에 서로 안 이어진 사슬 둘이 들어오는 일이 있다 — 한 판에
+    같이 앉히면 위상 정렬이 둘을 섞어 없던 인과가 생긴다. 이어진 상자끼리만
+    묶어 따로따로 판을 짠다.
+    """
+    idx = {n: i for i, n in enumerate(order)}
+    uf = list(range(len(order)))
+
+    def find(x):
+        while uf[x] != x:
+            uf[x] = uf[uf[x]]
+            x = uf[x]
+        return x
+
+    def union(x, y):
+        x, y = find(x), find(y)
+        if x != y:
+            uf[y] = x
+
+    for a, b, _ in edges:
+        if a in idx and b in idx:
+            union(idx[a], idx[b])
+    groups = {}
+    for n in order:
+        groups.setdefault(find(idx[n]), []).append(n)
+    return sorted(groups.values(), key=lambda gr: idx[gr[0]])
+
+
+def _mm_build(names, rows, edges, width, wrap_label=False):
+    """자리(rows, 파도마다 id 리스트)가 정해진 상자들을 판 하나로 굽는다. 실패하면 None."""
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
+                         wrap_label=wrap_label)
+    slot = {}
+    for r, row_ids in enumerate(rows):
+        cells = [names.get(nid, nid) for nid in row_ids]
+        p.row(*cells)
+        for c, nid in enumerate(row_ids):
+            slot[nid] = (r, c)
+    for sid, tid, label in edges:
+        if sid not in slot or tid not in slot or sid == tid:
+            continue
+        ra, ca = slot[sid]
+        rb, cb = slot[tid]
+        try:
+            p.connect(p.at(ra, ca), p.at(rb, cb), label)
+        except Exception:
+            pass
+    try:
+        return p.render('받은 글의 mermaid 도식')
+    except AssertionError:
+        return None
+
+
+def _mm_back_edges(order, edges):
+    """DFS 로 고리를 만드는 이음(뒤로 가는 이음)의 자리(edges 안 인덱스)를 찾는다.
+
+    agentic 루프처럼 결과가 앞 상자로 되돌아가는 그림은 진짜 고리(사이클)다 —
+    Kahn 위상 정렬은 고리를 못 풀어 남은 상자를 전부 한 파도에 몰아넣는다
+    (2026-09-01, 그록봇 기술 뷰 「에이전틱 CPU 풀」이 여덟 상자 중 여섯을 한
+    행에 몰아넣어 판 폭을 넘겼다). 표준 DFS 뒤 이음 찾기로 고리를 여는 이음만
+    골라 **파도 계산에서만** 뺀다 — 그림에는 그대로 그린다(되돌아가는 화살표
+    자체가 뜻이다).
+    """
+    adj = {}
+    for i, (a, b, _) in enumerate(edges):
+        adj.setdefault(a, []).append((b, i))
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {n: WHITE for n in order}
+    back = set()
+
+    def dfs(u):
+        color[u] = GRAY
+        for v, ei in adj.get(u, ()):
+            if color.get(v, WHITE) == WHITE:
+                dfs(v)
+            elif color.get(v) == GRAY:
+                back.add(ei)          # v 가 지금 스택에 있다 — u->v 는 뒤로 가는 이음
+        color[u] = BLACK
+
+    for n in order:
+        if color.get(n) == WHITE:
+            dfs(n)
+    return back
+
+
+def _mm_component_plate(names, order, edges, width):
+    """한 덩이(서로 이어진 상자들)를 판 하나로. 이름이 길어 폭을 넘기면
+    칸 수를 줄이는 대신 상자 안 줄 수를 늘린다(wrap_label). 그래도 안 되면
+    판을 포기한다."""
+    back = _mm_back_edges(order, edges)
+    fwd = [e for i, e in enumerate(edges) if i not in back]
+    rows = _mm_topo_levels(order, fwd or edges)
+    if not rows:
+        return None
+    for wrap_label in (False, True):
+        # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
+        # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
+        svg = _mm_build(names, rows, edges, width, wrap_label=wrap_label)
+        if svg:
+            return svg
+    return None
+
+
+def _mm_to_plate(g, width=520.0):
+    """그래프 하나를 fig_layout.Plate SVG 로. 못 그리면 None. 서로 안 이어진
+    덩이는 `_mm_weak_groups` 로 갈라 따로 판을 짜고 이어 붙인다 — 하나라도
+    못 앉히면 전부 실패로 되돌린다."""
+    groups = _mm_weak_groups(g.order, g.edges)
+    if not groups:
+        return None
+    svgs = []
+    for grp in groups:
+        gset = set(grp)
+        gedges = [e for e in g.edges if e[0] in gset and e[1] in gset]
+        svg = _mm_component_plate(g.names, grp, gedges, width)
+        if not svg:
+            return None
+        # 이 덩이(약한 연결 성분)의 노드가 모두 같은 subgraph 제목을 달고
+        # 있으면 그 제목을 판 위 캡션으로 올린다 — 「과거: 로컬 구축형」처럼
+        # 두 덩이를 가르는 이름을 잃지 않는다
+        titles = set(g.title_of.get(nid) for nid in grp)
+        titles.discard(None)
+        if len(titles) == 1:
+            svg = '<p class="fig-title">%s</p>%s' % (_inline(next(iter(titles))), svg)
+        svgs.append(svg)
+    return ''.join(svgs)
+
+
+def _mm_prose(g):
+    """판을 못 지었을 때의 마지막 수단 — 노드·이음을 글로 푼다. 낱말을 하나도
+    안 지운다(이음마다 「A → B(라벨)」, 이음 없는 노드는 이름 그대로)."""
+    items, shown = [], set()
+    for a, b, label in g.edges:
+        na, nb = g.names.get(a, a), g.names.get(b, b)
+        shown.add(a)
+        shown.add(b)
+        items.append('%s → %s%s' % (na, nb, ('(%s)' % label) if label else ''))
+    for nid in g.order:
+        if nid not in shown:
+            items.append(g.names.get(nid, nid))
+    if len(items) < 2:
+        return None
+    return '<ul>%s</ul>' % ''.join('<li>%s</li>' % _inline(x) for x in items)
+
+
+def mermaid_verify(block):
+    """`_mm_parse` 가 읽은 값이 문법과 무관한 단순 셈(화살표 개수 · 선언된
+    id 집합)과 맞아떨어지는지 — 파서 자체가 틀렸으면 이 셈도 같이 틀릴 수
+    있어 완전한 증명은 아니지만, 둘이 갈리면 파서가 뭔가를 잃었다는 신호는
+    된다."""
+    g = _mm_parse(block)
+    ids = set()
+    arrows = 0
+    for ln in block.split(chr(10)):
+        if not ln.strip() or _MM_SKIP_LINE.match(ln):
+            continue
+        n = len(_MM_ARROW_COUNT.findall(ln))
+        # `A & B & C --> D` 는 한 줄에 화살표가 하나뿐이라도 실제로는 이음이
+        # 셋이다 — 시작점 수만큼 센다. 안 그러면 우리 파서가 펴서 읽은 값
+        # (`_mm_fanout`)과 이 단순 셈이 갈려, 제대로 읽었는데도 「어긋난다」로
+        # 잘못 걸린다
+        am = _MM_ARROW_COUNT.search(ln)
+        if n and am and '&' in ln[:am.start()]:
+            n *= len([s for s in ln[:am.start()].split('&') if s.strip()])
+        arrows += n
+        for m in _MM_ANY_DECL.finditer(ln):
+            ids.add(m.group(1))
+        for tok in re.split(r'-->|---|\|[^|]*\|', ln):
+            tm = re.match(r'^\s*(%s)\b' % _MM_ID, tok)
+            if tm:
+                ids.add(tm.group(1))
+    return {
+        'parsed_nodes': len(g.order), 'naive_nodes': len(ids),
+        'parsed_edges': len(g.edges), 'naive_edges': arrows,
+        'nodes_match': len(g.order) == len(ids),
+        'edges_match': len(g.edges) == arrows,
+    }
+
+
+def _mm_content_only(block):
+    """제어 줄(flowchart·subgraph·end·style 등)을 뺀 나머지 — mermaid 문법
+    낱말 자체는 화면에 실을 뜻이 없으니 `_kept` 검사에서 요구하지 않는다."""
+    return chr(10).join(ln for ln in block.split(chr(10)) if not _MM_SKIP_LINE.match(ln))
+
+
+def _mermaid_block_html(block):
+    """mermaid 도식 한 덩어리를 판(또는 글)으로. 노드가 둘 미만이면 None."""
+    g = _mm_parse(block)
+    if len(g.order) < 2:
+        return None
+    content = _mm_content_only(block)
+    svg = _mm_to_plate(g, width=520.0)
+    if svg and not _kept(content, svg):
+        svg = None                  # 낱말을 흘린 판은 안 쓴다
+    if not svg:
+        prose = _mm_prose(g)
+        if prose and _kept(content, prose):
+            return prose
+        return None
+    small = _mm_to_plate(g, width=340.0)
+    if small and small != svg and _kept(content, small):
+        return ('<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
+                % (svg, small))
+    return svg
 
 
 # 판을 못 짜서 아스키로 남는 도식이 카드 폭을 넘으면 가로 스크롤이 생기는데,
@@ -1762,6 +2152,14 @@ def _block_html(block):
     # 이모지는 여기 하나뿐인 문턱에서 지운다 — 판·아스키 어느 길로 가든,
     # 이 함수를 지난 뒤로는 이모지가 없다고 믿을 수 있다
     block = _denorm_emoji(block)
+    # mermaid flowchart 표기는 문법이 고정돼 있어 정규식 파서(위 `_mm_*`)가
+    # 먼저 읽는다. 거기서 판도 글도 못 지었을 때만(정상적으로는 안 일어난다)
+    # 옛 아스키 격자 길로 내려간다 — mermaid 의 `A[이름]` 노드 선언도 옛
+    # `_BOX` 규칙(대괄호)과 형태가 같아 안전망으로 통한다
+    if _is_mermaid_block(block):
+        mm = _mermaid_block_html(block)
+        if mm:
+            return mm
     # 두 갈래를 견주는 표는 판이 아니라 표다 — 좌우로 갈라 나란히 보여야 뜻이 산다
     tbl = _gap_table(block)
     if tbl and _kept(block, tbl):
