@@ -92,21 +92,16 @@ def plain(md):
 
 
 def intro_html(slug):
-    """회차 앞머리 — 뷰 카드보다 먼저, 섹션 머리 아래에 선다.
+    """회차 앞머리 — 통합 뷰 것만 세운다.
 
-    뷰마다 답의 첫 제목 앞에 「이 회차가 무엇을 다루나」를 적어 온다. 셋을 다 세운다 —
-    전략 것만 세우면 나머지 두 페르소나가 무엇을 보겠다고 했는지가 안 보인다.
+    뷰 셋이 저마다 「이 회차는 …를 다루고 있습니다」로 여는데 서로 같은 말이라, 셋을 다
+    걸면 상자가 벽이 된다. 두 뷰를 합쳐 받은 통합 뷰의 앞머리가 회차 전체를 말한다.
+    전략·기술 뷰의 앞머리는 그 카드 안에 그대로 둔다.
     """
-    out = []
-    for kind, view_title, asked in VIEWS:
-        md = frame_view.body_of(os.path.join(
-            ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
-        intro = frame_view.intro_of(md)
-        if not intro:
-            continue
-        out.append('<div class="sd-i"><p class="sd-i-h">%s<span>%s</span></p>%s</div>'
-                   % (view_title, asked, frame_view.to_html(intro)))
-    return '<div class="fv-b sd-intro">%s</div>' % ''.join(out)
+    md = frame_view.body_of(os.path.join(
+        ROOT, 'insights', 'frames', '%s-merged.md' % slug))
+    return '<div class="fv-b sd-intro">%s</div>' % frame_view.to_html(
+        frame_view.intro_of(md))
 
 
 def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num):
@@ -118,19 +113,27 @@ def make_card(slug, ep_title, en_title, date, url, kind, view_title, asked, num)
     md = frame_view.body_of(os.path.join(
         ROOT, 'insights', 'frames', '%s-%s.md' % (slug, kind)))
     summ, rest = frame_view.split_summary(md)
-    # 앞머리는 섹션 머리 아래에 이미 섰다 — 뷰마다 걷는다
-    intro = frame_view.intro_of(md)
-    if intro and rest.startswith(intro):
-        rest = rest[len(intro):].strip()
+    if kind == 'merged':
+        # 통합 뷰 앞머리는 섹션 머리 아래에 이미 섰다. 전략·기술 뷰 앞머리는 안 걷는다 —
+        # 위에 안 세웠으니 여기서 걷으면 그 문장이 어디에도 없다
+        intro = frame_view.intro_of(md)
+        if intro and rest.startswith(intro):
+            rest = rest[len(intro):].strip()
     if summ:
         sp = _paras(summ)
         # 제목 줄(**[요약 및 컨설턴트 제언]**)만 있는 첫 문단은 앞면에 세우지 않는다
         i = 1 if len(sp) > 1 and len(sp[0]) < 40 else 0
         front, top_md = sp[i], (chr(10) * 2).join(sp[:i] + sp[i + 1:])
     else:
-        # 꼬리에 요약이 안 붙어 온 뷰. 몸의 첫 줄글을 앞면에 세우고 몸에서 걷지는 않는다 —
-        # 제목 바로 아래 문단을 빼면 그 제목이 자기 글을 잃는다
+        # 꼬리에 요약이 안 붙어 온 뷰. 몸의 첫 줄글을 앞면에 세운다
         front, top_md = _first_prose(rest), ''
+        rp = _paras(rest)
+        # 그 줄글이 첫 제목 앞(앞머리)에 있으면 몸에서 걷는다. 제목 아래 문단은 안 걷는다 —
+        # 빼면 그 제목이 자기 글을 잃는다
+        # 굵은 글씨 표시를 걷고 견준다 — front 는 원본 줄이라 별표가 남아 있다
+        if (front and rp and not rp[0].lstrip().startswith('#')
+                and plain(front) in plain(rp[0])):
+            rest = (chr(10) * 2).join(rp[1:])
     top = ('<div class="vc-sum">%s</div>' % frame_view.to_html(top_md)) if top_md else ''
     return {
         'id': 'sd-%s-%s' % (slug, kind),
