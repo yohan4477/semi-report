@@ -33,7 +33,7 @@ FRAMES = os.path.join(ROOT, 'insights', 'frames')
 _BOX = re.compile(r'\[([^\]\[]+)\]')
 # 「──>」처럼 선을 길게 끌고 온 화살표도 잡는다 — 안 잡으면 「>」가 상자 밑에
 # 딸린 라벨로 남는다
-_ARROW = re.compile(r'(-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+)')
+_ARROW = re.compile(r'(<[─—=-]+>|-->|→|▶|=>|=+>|[─—-]+>|<[─—-]+)')
 
 
 _BAR = '│║'
@@ -100,7 +100,9 @@ def _split_cols(block):
         prev = c
     if start is not None:
         runs.append((start, prev))
-    cand = [(a, b) for a, b in runs if b - a + 1 >= 4 and a > 6 and b < width - 6]
+    # 세 칸이면 가른다. 모든 줄에서 비어 있어야 하는 조건이 세서 헛나누지 않는다 —
+    # 넷으로 잡았더니 틈이 세 칸인 판(할라페뇨 기술 뷰)이 통째로 아스키로 떨어졌다
+    cand = [(a, b) for a, b in runs if b - a + 1 >= 3 and a > 6 and b < width - 6]
     if not cand:
         return None
     a, b = max(cand, key=lambda r: r[1] - r[0])
