@@ -2,7 +2,7 @@
 source: content/understanding/Semi Doped/2026-08-27-openai-jalapeno.md
 kind: strategy
 model: Claude Opus 5 (같은 프롬프트 · 실험)
-asked: insights/frames/exp/prompt-strategy-mermaid.txt (도해 규칙 넷 추가판)
+asked: scripts/prompts/strategy.txt + 공통-값 + 공통-도해
 date: 2026-09-01
 ---
 

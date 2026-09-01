@@ -2,7 +2,7 @@
 source: content/understanding/Semi Doped/2026-08-27-openai-jalapeno.md
 kind: tech
 model: Claude Opus 5 (같은 프롬프트 · 실험)
-asked: insights/frames/exp/prompt-tech-mermaid.txt (도해 규칙 다섯 추가판)
+asked: scripts/prompts/tech.txt + 공통-값 + 공통-도해
 date: 2026-09-01
 ---
 
