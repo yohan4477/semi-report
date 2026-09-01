@@ -168,3 +168,79 @@ if __name__ == '__main__':
             w['target'], w['kind'], len(w['triggers']),
             sum(1 for t in w['triggers'] if t['kind'] == KIND_VALUE),
             sum(1 for t in w['triggers'] if t['kind'] == KIND_EVENT)))
+
+
+# ── 조건을 기계가 읽는다 ──────────────────────────────────────────────────
+# 「걸리는 조건」은 사람이 읽는 문장이었다. 그래서 「지금 걸렸나」가 카드 산문에 손으로
+# 적혔고(「강북구에서 이미 넘었다」) 값이 바뀌어도 그 문장은 안 바뀌었다.
+# 여기서 읽을 수 있는 꼴만 정해 두고, 못 읽는 것은 「사람 판정」으로 남긴다 —
+# 억지로 다 읽으려 들면 조용히 틀린 판정이 화면에 뜬다.
+COND_FORMS = [
+    (re.compile(r'최근\s*(\d+)\s*개월\s*최고\s*경신'), 'max_n'),
+    (re.compile(r'최근\s*(\d+)\s*개월\s*최저\s*경신'), 'min_n'),
+    (re.compile(r'직전\s*고점\s*대비\s*([\d.]+)\s*%\s*하회'), 'peak_down'),
+    (re.compile(r'([\d.]+)\s*%?\s*상향\s*돌파'), 'above'),
+    (re.compile(r'([\d.]+)\s*%?\s*하회'), 'below'),
+    (re.compile(r'([\d.]+)\s*%?\s*초과'), 'above'),
+]
+
+
+def parse_cond(cond):
+    """조건 문장 → (꼴, 수). 못 읽으면 (None, None)."""
+    for rx, kind in COND_FORMS:
+        m = rx.search(cond or '')
+        if m:
+            return kind, float(m.group(1))
+    return None, None
+
+
+def fires_at(kind, num, vals, i):
+    """vals[:i+1] 까지 봤을 때 i 번째 달에 조건이 걸렸나. vals 는 값만 담은 목록."""
+    v = vals[i]
+    if kind == 'above':
+        return v > num
+    if kind == 'below':
+        return v < num
+    if kind == 'peak_down':
+        return v <= max(vals[:i + 1]) * (1 - num / 100.0)
+    if kind in ('max_n', 'min_n'):
+        w = vals[max(0, i - int(num) + 1):i + 1]
+        if len(w) < 2:
+            return False
+        return v >= max(w) if kind == 'max_n' else v <= min(w)
+    return False
+
+
+def nearest(cond, series):
+    """한 번도 안 걸렸을 때 가장 가까웠던 거리 — 그 시계열 자신의 변동폭에 견줘 잰다.
+
+    0.0 이면 닿았던 것이고 1.0 이면 이력 변동폭만큼 떨어져 있었다는 뜻이다.
+    「아직 안 일어난 일」과 「애초에 닿을 수 없는 문턱」을 가르는 자리다.
+    거리로 잴 수 없는 꼴(경신류)에는 None."""
+    kind, num = parse_cond(cond)
+    vals = [v for _t, v in (series or [])]
+    if kind not in ('above', 'below', 'peak_down') or len(vals) < 2:
+        return None
+    span = max(vals) - min(vals)
+    if span <= 0:
+        return None
+    if kind == 'above':
+        gap = min(num - v for v in vals)
+    elif kind == 'below':
+        gap = min(v - num for v in vals)
+    else:
+        gap = min(v - max(vals[:i + 1]) * (1 - num / 100.0) for i, v in enumerate(vals))
+    return max(gap, 0.0) / span
+
+
+def backtest(cond, series):
+    """이 조건이 이력에서 몇 번 걸렸나. (걸린 달 수, 전체 달 수, 지금 걸렸나).
+
+    조건을 못 읽거나 시계열이 없으면 (None, None, None). 문턱이 0회거나 전부면
+    그건 신호가 아니라는 뜻이다 — check_watch W8 이 그걸 센다."""
+    kind, num = parse_cond(cond)
+    if kind is None or not series:
+        return None, None, None
+    vals = [v for _t, v in series]
+    fired = [i for i in range(len(vals)) if fires_at(kind, num, vals, i)]
+    return len(fired), len(vals), bool(fired and fired[-1] == len(vals) - 1)
