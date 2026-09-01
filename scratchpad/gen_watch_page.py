@@ -191,8 +191,10 @@ def time_ruler(watches):
                  'style="font-size:11px;font-weight:800">%d</text>'
                  % (x, 14 if up else 126, anc, n))
     gap = (xs[order[-1]] - xs[order[0]]) // 12
-    note = ('가장 오래된 값이 %s, 가장 새 값이 %s입니다 — %d년 넘게 벌어져 있습니다.'
-            % (order[0], order[-1], gap)) if gap >= 1 else \
+    who = ' · '.join(sorted(set(pts[order[0]]))[:2])
+    note = ('가장 오래된 것이 %s(%s), 가장 새 것이 %s입니다 — %d년 넘게 벌어져 있습니다. '
+            '왼쪽 끝이 오래됐다는 것은 그 자료가 그 뒤로 안 바뀌었다는 뜻입니다.'
+            % (who, order[0], order[-1], gap)) if gap >= 1 else \
            ('%s부터 %s까지 들어와 있습니다.' % (order[0], order[-1]))
     return ('<figure><svg viewBox="0 0 %d 134" role="img" aria-label="값이 언제 것인가">'
             '%s</svg><figcaption>%s 점 크기는 그 때에 딸린 값의 개수입니다.</figcaption>'
@@ -225,13 +227,18 @@ def fired(watches):
     hit = sum(1 for r in rows if r[0] == 0)
     h = ['<p class="band-s">걸린 것 <b>%d</b>, 문턱 가까이 온 것 <b>%d</b>.</p><div class="rows">'
          % (hit, len(rows) - hit)]
+    prev = None
     for o, t9, what, val, cond, st, why, asof in rows:
+        # 같은 줄이 잇달아 서면 이름을 되풀이하지 않는다 — 세 번 같은 이름이 서면
+        # 눈이 그 열을 통째로 건너뛴다
+        label = '' if t9 == prev else E(t9)
+        prev = t9
         h.append('<div class="row"><span class="row-where">'
                  '<span class="dot %s"></span><a href="#%s">%s</a></span>'
                  '<span class="row-what">%s</span>'
                  '<span class="row-num">%s</span>'
                  '<span class="row-why">%s · %s · %s</span></div>'
-                 % ('d-hit' if o == 0 else 'd-near', slug(t9), E(t9), E(what),
+                 % ('d-hit' if o == 0 else 'd-near', slug(t9), label, E(what),
                     E(val), E(cond), E(why), E(asof)))
     h.append('</div>')
     return ''.join(h)
@@ -379,8 +386,15 @@ def check_ui(html, watches):
 
 def build():
     ws = wl.load_all()
-    asof = max([m.get('as_of', '') for w in ws
-                for m in (w['metrics'] or {}).values()] or ['—'])
+    # 통계 기준월과 법 시행일은 성격이 다르다. max 로 뭉치면 「자료 기준」에 법 시행일이
+    # 올라와 통계가 실제보다 새 것처럼 읽힌다 — 이 장이 값에 「언제 것 · 성격」을 붙이는
+    # 이유를 머리에서 어기는 자리였다
+    stat = [m.get('as_of', '') for w in ws for m in (w['metrics'] or {}).values()
+            if m.get('level') != 'law']
+    laws = [m.get('as_of', '') for w in ws for m in (w['metrics'] or {}).values()
+            if m.get('level') == 'law']
+    asof = max(stat or ['—'])
+    lawof = max(laws or ['—'])
     checked = max([w['checked'] for w in ws if w.get('checked')] or ['—'])
     seen = []
     for w in sorted(ws, key=lambda x: (0 if x['kind'] == 'realestate' else 1,
@@ -392,13 +406,13 @@ def build():
     h = ['<!doctype html><html lang="ko"><head><meta charset="utf-8">',
          '<meta name="viewport" content="width=device-width, initial-scale=1">',
          '<title>포트폴리오 워치</title><style>%s</style></head><body><div class="wrap">' % CSS]
-    h.append('<header><p class="eyebrow">보고 있는 것 %d · 자료 기준 %s</p>'
+    h.append('<header><p class="eyebrow">보고 있는 것 %d · 통계 %s · 제도 %s</p>'
              '<h1>포트폴리오 워치</h1>'
              '<p class="lede">서울 세 권역을 보고 있습니다. 집값이 오를지가 아니라 '
              '<b>지금 들어가는 조건</b>을 봅니다 — 전세와 매매 중 어느 쪽이 나은지, 값을 '
              '깎을 수 있는 장인지, 제도가 그 셈을 바꿨는지. 보유 자산이 아니라 관찰이라 '
              '손익과 비중은 다루지 않습니다.</p>'
-             % (len(ws), E(asof)))
+             % (len(ws), E(asof), E(lawof)))
     h.append(time_ruler(ws))
     h.append('</header>')
 
@@ -419,7 +433,7 @@ def build():
         h.append(line_block(w))
 
     h.append('<footer>값은 한국부동산원 공표 통계, 제도는 국가법령정보센터에서 받습니다. '
-             '마지막 확인 %s · 자료 기준 %s. 줄은 <code>insights/watch/</code>, 수치는 '
+             '마지막 확인 %s · 통계 기준 %s. 줄은 <code>insights/watch/</code>, 수치는 '
              '<code>insights/watch/_metrics/</code>, 이 화면은 '
              '<code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
              % (E(checked), E(asof)))
