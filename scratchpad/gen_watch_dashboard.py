@@ -16,7 +16,10 @@ import watch_fig as wf  # noqa: E402
 import card_lib as cl  # noqa: E402
 
 OUT = os.path.join(dc.ROOT, '대시보드', '포트폴리오 워치.html')
-STAMP = '2026-08-31'
+# 정리일을 손으로 적으면 워치 줄을 고친 날과 어긋난다 — 실제로 하루 벌어져 있었다.
+# 줄들이 마지막으로 확인된 날에서 뽑는다.
+def _stamp(ws):
+    return max([w['checked'] for w in ws if w.get('checked')] or ['—'])
 
 SECS = {
     'realestate': ('sec-area', '01', '권역 — 부동산',
@@ -170,6 +173,10 @@ HEADER = '''  <header>
     <h1>포트폴리오 워치</h1>
   </header>'''
 
+INTRO_T = ('<p class="lede"><b>보고 있는 곳 %d군데.</b> 권역마다 「왜 보나」와 '
+           '「무엇이 일어나면 판단이 바뀌나」를 세웁니다. 값은 한국부동산원 공표 통계이고 '
+           '자료 기준은 <b>%s</b>입니다. 손익·비중은 다루지 않습니다.</p>')
+
 LEDE = ('<p class="lede"><b>보유 자산이 아닙니다.</b> 손익·비중·현금흐름은 이 장이 다루지 않습니다. '
         '보고 있는 대상마다 「왜 보나」와 「무엇이 일어나면 판단이 바뀌나」만 세웁니다. '
         '부동산은 <b>권역</b>, 주식은 <b>종목</b>이 한 줄입니다.</p>'
@@ -177,11 +184,15 @@ LEDE = ('<p class="lede"><b>보유 자산이 아닙니다.</b> 손익·비중·�
         '<b>사건</b>은 공표가 날 때 사람이 갱신합니다. 값 트리거 %d개 중 <b>%d개</b>가 채워져 '
         '있습니다 — 성격이 <b>자리표시</b>인 줄은 아직 판단 근거가 아닙니다.</p>' % (NVAL, NFILLED))
 
+ASOF = max([m.get('as_of', '') for w in WATCHES for m in (w['metrics'] or {}).values()]
+           or ['—'])
+INTRO = INTRO_T % (len(CARDS), ASOF)
+
 META = ('''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>워치 <b>%d줄</b></span>
       <span>트리거 <b>%d개</b></span>
-    </div>''' % (STAMP, len(CARDS), sum(len(w['triggers']) for w in WATCHES)))
+    </div>''' % (_stamp(WATCHES), len(CARDS), sum(len(w['triggers']) for w in WATCHES)))
 
 FOOTER = (LEDE + META + '\n워치 줄은 <code>insights/watch/</code>, 수치는 '
           '<code>insights/watch/_metrics/</code>, 설계는 '
@@ -192,5 +203,6 @@ FOOTER = (LEDE + META + '\n워치 줄은 <code>insights/watch/</code>, 수치는
 if __name__ == '__main__':
     top, n = compare_layer(WATCHES)
     dc.render(CARDS, '포트폴리오 워치', HEADER, FOOTER, OUT, page_slug='watch',
-              top=top, top_n=n, top_id='sec-compare',
-              top_title='권역 견주기', top_sub='구 아홉을 한 판에 놓고 본다')
+              top=top, top_n=0, top_id='sec-compare',
+              top_title='권역 견주기', top_sub='구 아홉을 한 판에 놓고 본다',
+              intro=INTRO)
