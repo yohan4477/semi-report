@@ -55,10 +55,17 @@ _EDGE = re.compile(
 
 
 def _bracket_text(s):
-    """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다."""
+    """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다.
+
+    mermaid 는 이름에 빈칸이나 문장부호가 들면 `A["이름"]` 처럼 따옴표로 한 겹 더
+    감싼다. 그 따옴표는 표기이지 이름이 아니다 — 안 벗기면 구운 판에 그대로 나온다.
+    """
     if not s:
         return None
-    return s[1:-1].strip()
+    t = s[1:-1].strip()
+    while len(t) > 1 and t[0] == t[-1] and t[0] in (chr(34), chr(39)):
+        t = t[1:-1].strip()
+    return t
 
 
 class Graph(object):

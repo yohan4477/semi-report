@@ -409,7 +409,14 @@ class Plate(object):
                 my = (p0[1] + p1[1]) / 2.0
                 d = 'M%g %g L%g %g L%g %g L%g %g' % (
                     p0[0], p0[1], p0[0], my, p1[0], my, p1[0], p1[1])
-            lx, ly, anchor = p0[0] + 9, (p0[1] + p1[1]) / 2.0 + 4, 'start'
+            my = (p0[1] + p1[1]) / 2.0
+            if abs(p0[0] - p1[0]) < 1.0:
+                lx, ly, anchor = p0[0] + 9, my + 4, 'start'
+            else:
+                # 꺾여 내려가는 이음은 이름을 **받는 쪽** 칸 위에 둔다. 나가는 쪽에
+                # 두면 한 상자에서 갈래가 둘 나갈 때 두 이름이 같은 점에 포개진다
+                # (「판다」와 「안 판다」가 한 자리에 겹쳤다, 2026-09-01)
+                lx, ly, anchor = p1[0], my - 4, 'middle'
         o = ['<path d="%s" class="%s" marker-end="%s"/>' % (d, cls, mk)]
         if label:
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="%s"%s>%s</text>'
