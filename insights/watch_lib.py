@@ -205,6 +205,14 @@ if __name__ == '__main__':
 # 세는 것은 어느 쪽이든 시계열의 점 개수다 — 낱말을 하나로 박으면 종목 줄이 통째로
 # 「사람 판정」으로 떨어진다.
 COND_FORMS = [
+    # 반전 — 앞 구간 흐름과 반대로 움직였나. 「경신」은 추세를 타서 추세가 있으면 절반이
+    # 걸리고 없으면 안 걸린다. 실제로 노도강 전세가율이 61%, 강남이 58% 였다 —
+    # 그건 신호가 아니라 배경음이다. 반전은 흐름이 꺾인 달만 문다
+    (re.compile(r'최근\s*(\d+)\s*(?:개월|달|분기)?\s*흐름이?\s*뒤집히고\s*([\d.]+)\s*%?p?\s*이상'),
+     'turn'),
+    # 속도 — 최근 구간 변화가 그 앞 구간의 몇 배인가
+    (re.compile(r'최근\s*(\d+)\s*(?:개월|달|분기)?\s*변화가\s*그\s*앞의?\s*([\d.]+)\s*배\s*이상'),
+     'accel'),
     (re.compile(r'최근\s*(\d+)\s*(?:개월|달|년|분기|점)?\s*최고\s*경신'), 'max_n'),
     (re.compile(r'최근\s*(\d+)\s*(?:개월|달|년|분기|점)?\s*최저\s*경신'), 'min_n'),
     (re.compile(r'직전\s*고점\s*대비\s*([\d.]+)\s*%\s*하회'), 'peak_down'),
@@ -215,10 +223,14 @@ COND_FORMS = [
 
 
 def parse_cond(cond):
-    """조건 문장 → (꼴, 수). 못 읽으면 (None, None)."""
+    """조건 문장 → (꼴, 수). 못 읽으면 (None, None).
+
+    반전·속도는 수가 둘이라 튜플로 준다 — 창 크기와 문턱이다."""
     for rx, kind in COND_FORMS:
         m = rx.search(cond or '')
         if m:
+            if kind in ('turn', 'accel'):
+                return kind, (float(m.group(1)), float(m.group(2)))
             return kind, float(m.group(1))
     return None, None
 
@@ -232,6 +244,19 @@ def fires_at(kind, num, vals, i):
         return v < num
     if kind == 'peak_down':
         return v <= max(vals[:i + 1]) * (1 - num / 100.0)
+    if kind == 'turn':
+        win, pp = int(num[0]), num[1]
+        if i < win * 2:
+            return False
+        rose = vals[i - win * 2] < vals[i - win]      # 앞 구간이 올랐나
+        moved = vals[i] - vals[i - win]
+        return moved <= -pp if rose else moved >= pp
+    if kind == 'accel':
+        win, mult = int(num[0]), num[1]
+        if i < win * 2:
+            return False
+        a, b = abs(vals[i] - vals[i - win]), abs(vals[i - win] - vals[i - win * 2])
+        return b > 0 and a >= b * mult
     if kind in ('max_n', 'min_n'):
         w = vals[max(0, i - int(num) + 1):i + 1]
         if len(w) < 2:
@@ -303,6 +328,14 @@ def state_now(cond, series):
         need = peak * (1 - num / 100.0)
         return ('근접' if v <= need * 1.02 else '멂',
                 '고점 %.2f 대비 지금 %+.1f%%' % (peak, (v / peak - 1) * 100))
+    if kind in ('turn', 'accel'):
+        win = int(num[0])
+        if i < win * 2:
+            return '멂', '이력이 아직 짧다'
+        d1 = vals[i] - vals[i - win]
+        d0 = vals[i - win] - vals[i - win * 2]
+        return ('근접' if d1 * d0 < 0 else '멂',
+                '앞 %d칸 %+.2f · 최근 %d칸 %+.2f' % (win, d0, win, d1))
     # 경신류 — 창 안에서 몇 번째인지가 곧 얼마나 가까운지다.
     # 단위 낱말은 조건에 적힌 것을 되쓴다 — 「개월」로 박으면 연·분기 시계열에서
     # 설명이 거짓말을 한다
