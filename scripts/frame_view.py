@@ -1757,6 +1757,15 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     rows = _mm_topo_levels(order, fwd or edges)
     if not rows:
         return None
+    # 한 파도에 형제가 넷을 넘으면 폭 520 에 못 앉는다. 예전에는 판을 통째로 포기하고
+    # 프롬프트로 「형제는 셋까지」를 시켰는데, 그건 우리 판이 좁아서 생긴 사정이지
+    # 그림의 규칙이 아니다 — 받는 쪽에 시킬 일이 아니라 여기서 감당한다.
+    # 넘치는 파도는 셋씩 끊어 잇달아 놓는다(2026-09-01)
+    wide = []
+    for lv in rows:
+        for k in range(0, len(lv), 3):
+            wide.append(lv[k:k + 3])
+    rows = wide
     # 가로로 그리라고 적혀 왔으면 파도를 열로 세운다. 파도가 넷을 넘으면 폭을 못 대니
     # 그냥 세로로 간다 — 열 셋까지가 폭 520 에 앉는 한계다(2026-09-01 실측)
     if horizontal and len(rows) <= 3:

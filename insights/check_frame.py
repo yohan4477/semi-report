@@ -114,8 +114,16 @@ def cards_of(slug):
     return out
 
 
+# F3 — 한국말 뒤에 영문을 나란히 붙인 자리. 「기회비용(Opportunity Cost)」은 한국
+# 독자에게 뜻이 하나도 안 늘고 낱말만 는다. 프롬프트에 두 번 적었는데 두 번 다 반쯤만
+# 걸렸다 — 프롬프트에서 빼고 여기서 센다(2026-09-01). 제품·회사·사람 이름은 그대로
+# 두는 것이 맞으므로 FAIL 로 올리지 않고 세기만 한다
+_ENG_GLOSS = re.compile(r'[가-힣]\s*\(([A-Za-z][A-Za-z0-9 \-\.]{3,})\)')
+
+
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else ''
+    glosses = 0
     files = sorted(glob.glob(os.path.join(FRAME_DIR, '*.md')))
     fails = missing = 0
     for p in files:
@@ -136,8 +144,12 @@ def main():
         used = head.get('used', '') + ' ' + head.get('named', '')
         out_of_source = [c for c in claims(body) if flat(c) not in srcflat]
         missing += len(out_of_source)
-        print('%s  %s · 원문 밖 %d개'
-              % (name, head.get('kind', '?'), len(out_of_source)), file=OUT)
+        eng = _ENG_GLOSS.findall(body)
+        glosses += len(eng)
+        print('%s  %s · 원문 밖 %d개 · 영문 병기 %d개'
+              % (name, head.get('kind', '?'), len(out_of_source), len(eng)), file=OUT)
+        if eng:
+            print('   F3 한국말 뒤 영문: %s' % ' · '.join(eng[:8]), file=OUT)
         if out_of_source:
             print('   F1 원문에 없다: %s' % ' · '.join(out_of_source[:24]), file=OUT)
         # F2 — 원문에 없는 말이 그 원문의 카드에 들어갔나
@@ -153,8 +165,8 @@ def main():
                     print('FAIL %s [F2] 원문에 없는 「%s」가 %s 의 그 카드에 들어갔다'
                           % (name, c, where), file=OUT)
                     fails += 1
-    print('\n요약: 프레임 %d편 / FAIL %d / 원문 밖 주장 %d개'
-          % (len(files), fails, missing), file=OUT)
+    print('\n요약: 프레임 %d편 / FAIL %d / 원문 밖 주장 %d개 / 영문 병기 %d개'
+          % (len(files), fails, missing, glosses), file=OUT)
     return 1 if fails else 0
 
 
