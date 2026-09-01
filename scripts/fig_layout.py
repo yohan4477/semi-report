@@ -422,6 +422,14 @@ class Plate(object):
                 lx, ly, anchor = (p0[0] + p1[0]) / 2.0, my - 4, 'middle'
         o = ['<path d="%s" class="%s" marker-end="%s"/>' % (d, cls, mk)]
         if label:
+            # 이미 이름이 앉은 점이면 한 줄씩 올려 비킨다. 계산으로 갈리지 않는 경우가
+            # 남는다 — 고리가 있는 판에서 두 이음의 꺾인 구간 가운데가 같은 점이 된다
+            # (2026-09-01, 「작업 분배」와 「다음 작업 투입」이 한 자리에 겹쳤다)
+            pts = getattr(self, '_label_pts', None)
+            if pts is not None:
+                while (round(lx), round(ly)) in pts:
+                    ly -= 13.0
+                pts.add((round(lx), round(ly)))
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="%s"%s>%s</text>'
                      % (lx, ly, anchor, fsa, label))
         return o
@@ -455,6 +463,9 @@ class Plate(object):
             gx = (self._xs[0] + self._ws[0] + self._xs[1]) / 2.0
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="middle"%s>%s</text>'
                      % (gx, self.top + (20.0 if self.heads else 0.0) - 6, fsa, self.mid))
+        # 이음 이름이 앉은 자리. 꺾인 구간의 가운데로 잡아도 고리(사이클)가 있는 판에서는
+        # 두 이음의 가운데가 같은 점이 되는 일이 있다 — 먼저 앉은 이름을 비켜 준다
+        self._label_pts = set()
         for (ra, ca), (rb, cb), label, kind, at in self.links:
             o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind, at)
         y = self._bottom
