@@ -11,8 +11,14 @@
   ```mermaid ... ```           안의 `flowchart LR|TD|TB|BT|RL` 블록
   노드 선언   A[이름] · A(이름) · A{이름}
   이음        A --> B · A -->|라벨| B · A --- B
+  묶음        subgraph 이름 … end  — 제목이 판의 열 이름(축)이 된다
 
-subgraph·style·classDef·class·click·linkStyle·%% 주석은 그 줄만 건너뛴다 — 그
+`subgraph` 줄은 노드·이음 파서에서는 그대로 건너뛴다(그 줄에 뜬 id 는 노드가
+아니다). 대신 딴 판에서 한 번 더 훑어 묶음을 읽는다 — 묶음이 곧은 사슬이면
+열 하나로 세우고 제목을 열 이름으로 얹는다(`_column_plate`). 대비 판의 축이
+그 자리다. 묶음 안이 갈라지면 이 길을 포기하고 원래 길로 돌아간다.
+
+style·classDef·class·click·linkStyle·%% 주석은 그 줄만 건너뛴다 — 그
 안에 든 노드·이음 줄은 그대로 읽는다(노드 이름을 잃지 않는다).
 
 이 파일은 실험 산출물이다. `scripts/fig_layout.py` 를 그대로 쓰되 그 모듈 상수는
@@ -93,6 +99,91 @@ def parse(block):
             continue
         # 그 밖(주석 안 걸린 산문, subgraph 이름 줄 등)은 노드도 이음도 아니다
     return g
+
+
+_SUBGRAPH = re.compile(
+    r'^\s*subgraph\s+(?:%s\s*)?(\[[^\]]+\]|"[^"]+"|\S.*?)\s*$' % _ID, re.I)
+_END = re.compile(r'^\s*end\s*$', re.I)
+
+
+def parse_groups(block, g):
+    """`subgraph … end` 를 (제목, [노드 id]) 로 읽는다. 없으면 빈 목록.
+
+    노드·이음은 `parse()` 가 이미 읽었다 — 여기서는 어느 노드가 어느 묶음에
+    드는지만 본다. 중첩 subgraph 는 안쪽부터 닫히는 대로 담는다.
+    """
+    groups, stack = [], []
+    for ln in block.split(chr(10)):
+        ms = _SUBGRAPH.match(ln)
+        if ms:
+            t = ms.group(1).strip()
+            for _ in (0, 1):
+                if len(t) > 1 and (t[0], t[-1]) in (('[', ']'), ('"', '"')):
+                    t = t[1:-1].strip()
+            stack.append([t, []])
+            continue
+        if _END.match(ln):
+            if stack:
+                groups.append(tuple(stack.pop()))
+            continue
+        if not stack:
+            continue
+        for m in _ANY_DECL.finditer(ln):
+            nid = m.group(1)
+            if nid in g.names and nid not in stack[-1][1]:
+                stack[-1][1].append(nid)
+    return groups
+
+
+def _column_plate(g, groups, width):
+    """묶음 하나를 열 하나로 세운 판. 제목이 열 이름(축)이다. 못 세우면 None.
+
+    대비 판이 이 길로 온다 — 갈래가 나란한 사슬로 서는 꼴. 묶음 안에서 갈라지거나
+    합류하면(한 파도에 형제가 여럿) 열 하나에 못 담으니 None 을 물려 원래 길
+    (`_component_plate`)로 돌아간다. 묶음 밖에 남은 노드가 있어도 마찬가지다.
+    """
+    if len(groups) < 2:
+        return None
+    inside = set()
+    for _, ids in groups:
+        inside.update(ids)
+    if inside != set(g.order):
+        return None
+    cols = []
+    for title, ids in groups:
+        if not title:
+            return None
+        edges = [e for e in g.edges if e[0] in ids and e[1] in ids]
+        rows = _rows_of(ids, edges)
+        if not rows or any(len(r) != 1 for r in rows):
+            return None
+        cols.append((title, [r[0] for r in rows]))
+    depth = max(len(c[1]) for c in cols)
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+                         pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
+                         wrap_label=True)
+    p.head(*[c[0] for c in cols])
+    slot = {}
+    for r in range(depth):
+        cells, ids = [], []
+        for _, chain in cols:
+            nid = chain[r] if r < len(chain) else None
+            cells.append(g.names[nid] if nid else None)
+            ids.append(nid)
+        p.row(*cells)
+        for ci, nid in enumerate(ids):
+            if nid:
+                slot[nid] = (r, ci)
+    for sid, tid, label in g.edges:
+        if sid in slot and tid in slot and sid != tid:
+            try:
+                p.connect(p.at(*slot[sid]), p.at(*slot[tid]), label)
+            except Exception:
+                pass
+    try:
+        return p.render('묶음을 열로 세운 판')
+    except AssertionError:
+        return None
 
 
 def mermaid_blocks(md):
@@ -229,7 +320,7 @@ def _component_plate(names, order, edges, width):
     return None
 
 
-def to_plate(g, width=520.0):
+def to_plate(g, width=520.0, groups=None):
     """그래프 하나를 fig_layout.Plate SVG 로. 못 그리면 None.
 
     상자 배치는 `scripts/frame_view.py` 의 `_grid_plate_build` 가 쓰는 값을
@@ -237,6 +328,10 @@ def to_plate(g, width=520.0):
     top=2 · gap_y=10 · pad_y=8 · bottom=4. 서로 안 이어진 덩이는 `_weak_groups`
     로 갈라 따로 판을 짜고 이어 붙인다 — 하나라도 못 앉히면 전부 실패로 되돌린다.
     """
+    if groups:
+        svg = _column_plate(g, groups, width)
+        if svg:
+            return svg
     groups = _weak_groups(g.order, g.edges)
     if not groups:
         return None
@@ -256,7 +351,7 @@ def block_html(block, width=520.0):
     g = parse(block)
     if len(g.order) < 2:
         return None
-    return to_plate(g, width=width)
+    return to_plate(g, width=width, groups=parse_groups(block, g))
 
 
 # ── 독립 검산 — 우리 파서와 다른 경로로 노드·이음 수를 다시 센다 ──────────
@@ -304,5 +399,5 @@ if __name__ == '__main__':
         g = parse(block)
         print('--- 도식 %d: 노드 %d · 이음 %d ---' % (i + 1, len(g.order), len(g.edges)))
         print('검산:', verify(block))
-        svg = to_plate(g)
+        svg = to_plate(g, groups=parse_groups(block, g))
         print('판 굽기:', 'OK (%d자)' % len(svg) if svg else '실패')
