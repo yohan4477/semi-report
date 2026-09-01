@@ -1637,7 +1637,10 @@ def _mm_parse(block):
                 sid, sbr, arrow, label, tid, tbr = m.groups()
                 g._register(sid, _mm_bracket_text(sbr), title)
                 g._register(tid, _mm_bracket_text(tbr), title)
-                g.edges.append((sid, tid, (label or '').strip()))
+                # 이음 이름에도 따옴표가 붙어 온다 — `-- "설계도 (RTL)" -->`.
+                # 상자 이름은 벗기면서 이음 이름은 안 벗겨 화면에 그대로 찍혔다
+                # (2026-09-01). 표기는 표기다
+                g.edges.append((sid, tid, _mm_unquote((label or '').strip())))
                 continue
             m2 = _MM_DECL.match(ln)
             if m2:
