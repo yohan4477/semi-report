@@ -42,6 +42,21 @@ TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '상태', '언제 것
 # 사건 줄은 하는 일이 다르다 — 견주는 표가 아니라 사람이 확인할 목록이다.
 # 한 표에 섞으면 표가 두 가지 일을 하고, 값 없는 줄이 값 있는 줄 사이에 끼어 읽기를 끊는다
 EVT_HEAD = ['무엇을 확인하나', '언제 판단이 바뀌나']
+# 정책 줄은 값 트리거가 없다. 맨 위에 서는 것은 「내가 본 판과 지금 판이 같은가」다 —
+# 조문을 견줄 필요 없이 시행일자로 갈린다
+LAW_HEAD = ['법·고시', '내가 읽은 판', '지금 판', '같은가', '어디 것']
+
+
+def law_table(w):
+    rows = []
+    for _tgt, name, seen in (w.get('laws') or []):
+        m = (w.get('metrics') or {}).get(wl.law_key(name)) or {}
+        now = m.get('value')
+        same = ('—' if not now or not seen
+                else ('같다' if str(now) == seen else '<b>바뀌었다</b>'))
+        rows.append([wl.esc(name), wl.esc(seen or '—'), wl.esc(now or '아직 안 받음'),
+                     same, wl.esc((m.get('src') or '').split(' · ')[0] or '—')])
+    return ('무엇이 바뀌면 판단이 바뀌나 — 내가 읽은 판과 지금 판', LAW_HEAD, rows) if rows else None
 
 # 상태 딱지 — 걸린 것이 표에서 눈에 띄어야 한다. 「지금 걸렸나」가 이 장의 존재 이유인데
 # 지금 값과 조건을 나란히 놓기만 하면 사람이 줄마다 암산으로 부등호를 세운다.
@@ -135,9 +150,12 @@ def card(w):
                     else ['마지막 확인 <b>%s</b>' % w['checked']])),
         # 트리거 표가 맨 위다. 워치리스트에서 먼저 알아야 할 것은 근거가 아니라
         # 「지금 조건에 걸렸나」다(설계 §3).
-        'lead_table': ('무엇이 일어나면 판단이 바뀌나 — 값으로 오는 것', TRG_HEAD,
-                       [trg_row(t) for t in w['triggers']
-                        if t['kind'] == wl.KIND_VALUE]),
+        'lead_table': (law_table(w) if w['kind'] == 'policy' else
+                       (('무엇이 일어나면 판단이 바뀌나 — 값으로 오는 것', TRG_HEAD,
+                         [trg_row(t) for t in w['triggers']
+                          if t['kind'] == wl.KIND_VALUE])
+                        if any(t['kind'] == wl.KIND_VALUE for t in w['triggers'])
+                        else None)),
         'oneliner': w['judged'],
         'points': w['points'],
         'figs': figs_of(w),

@@ -96,6 +96,28 @@ def metrics_of(kind, slug):
         return json.load(f)
 
 
+def parse_laws(spec):
+    """frontmatter 의 laws 를 [(target, 이름, 내가 본 시행일)] 로.
+
+    꼴은 `law:종합부동산세법=2026-01-01, admrul:은행업감독규정=2026-04-01`.
+    본 날짜를 줄에 적어 두는 이유는 그것이 「내가 이 판을 읽었다」는 표시이기 때문이다 —
+    지금 시행일이 이것과 다르면 그 사이에 바뀐 것이고, 그게 정책 줄의 트리거다."""
+    out = []
+    for part in (spec or '').split(','):
+        part = part.strip()
+        if not part:
+            continue
+        tgt, _, rest = part.partition(':')
+        name, _, seen = rest.partition('=')
+        if tgt.strip() and name.strip():
+            out.append((tgt.strip(), name.strip(), seen.strip()))
+    return out
+
+
+def law_key(name):
+    return 'law_' + name.replace(' ', '')
+
+
 def _pick(vals, trigger_keys, context):
     """이 줄이 쓸 metric 만 고른다. 트리거가 건 열쇠와 context 앞머리에 걸리는 것.
 
@@ -140,12 +162,16 @@ def load_one(path):
         'topic': meta.get('topic', ''),
         'opened': meta.get('opened', ''), 'checked': meta.get('checked', ''),
         'why': meta.get('why', ''),
+        # 정책 줄만 쓴다. 어느 법·고시를 보고 있고 어느 판을 읽었는지
+        'laws': parse_laws(meta.get('laws', '')),
         'judged': md_inline(sec.get('지금 판단', '').replace('\n', ' ')),
         'triggers': trg,
         # metrics 는 이 줄이 쓰겠다고 밝힌 것만이다. 트리거에 건 열쇠와 frontmatter 의
         # context 에 적은 앞머리가 그것이다. 어댑터가 받은 것을 통째로 내주면 같은 대상을
         # 다른 물음으로 보는 줄들이 전부 같은 그림을 그린다 — 줄을 가른 뜻이 사라진다.
-        'metrics': _pick(vals, [t['metric'] for t in trg], meta.get('context', '')),
+        'metrics': _pick(vals, [t['metric'] for t in trg] +
+                         [law_key(n) for _t, n, _s in parse_laws(meta.get('laws', ''))],
+                         meta.get('context', '')),
         'points': [md_inline(b) for b in bullets(sec.get('왜 보나', ''))],
         'clash': [md_inline(b) for b in bullets(sec.get('반대 근거', ''))],
     }

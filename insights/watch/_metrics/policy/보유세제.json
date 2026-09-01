@@ -1,0 +1,28 @@
+{
+ "law_종합부동산세법": {
+  "value": "2026-01-01",
+  "as_of": "2026-01-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 종합부동산세법 · 일부개정",
+  "area": "종합부동산세법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "280417"
+ },
+ "law_지방세법": {
+  "value": "2026-07-01",
+  "as_of": "2026-07-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 지방세법 · 일부개정",
+  "area": "지방세법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "282559"
+ }
+}

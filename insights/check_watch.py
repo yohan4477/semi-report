@@ -168,6 +168,20 @@ def check_one(path, today, eq, ar, po):
             bad('W10', 'metric 들의 as_of 가 %d가지로 갈렸다(%s) — 한 판에 서로 다른 달이 '
                 '섞인다' % (len(asofs), ' · '.join(sorted(asofs))), 'WARN')
 
+    # W12 — 정책 줄이 본 판과 지금 판이 같은가. 정책의 트리거는 결국 이 하나다 —
+    #       조문을 견줄 필요 없이 시행일자로 정확히 갈린다.
+    for tgt, name, seen in (w.get('laws') or []):
+        if not seen:
+            bad('W12', '%s 에 내가 본 시행일이 없다 — laws 에 =YYYY-MM-DD 로 적는다' % name)
+            continue
+        m = (w.get('metrics') or {}).get(wl.law_key(name))
+        if not m:
+            continue                       # 아직 안 받아 왔다. W9 자리가 아니다
+        if str(m.get('value')) != seen:
+            bad('W12', '%s 가 내가 본 판(%s) 뒤에 바뀌었다 — 지금 시행일 %s. '
+                '바뀐 것을 읽고 laws 와 checked 를 갱신한다'
+                % (name, seen, m.get('value')))
+
     # W5 — 오래 안 본 줄. 워치는 안 보면 그냥 옛날 판단이 된다.
     try:
         d = (today - datetime.date.fromisoformat(w['checked'])).days
@@ -224,6 +238,7 @@ ticker: %(ticker)s
 topic: 시험
 opened: 2026-08-31
 checked: %(checked)s
+laws: %(laws)s
 why: 시험용
 ---
 
@@ -271,6 +286,14 @@ CASES = [
     ('정책에 값 트리거', 'W1',
      {'kind': 'policy', 'target': '대출 규제', 'ticker': '',
       'rows': '| 배수 | 값 | fwd_pe | 5 초과 |'}, None),
+    ('본 판과 지금 판이 다르다', 'W12',
+     {'kind': 'policy', 'target': '대출 규제', 'ticker': '', 'rows': '',
+      'laws': 'admrul:은행업감독규정=1999-01-01'},
+     {'law_은행업감독규정': {'value': '2026-04-01', 'as_of': '2026-04-01',
+                       'kind': '공표', 'unit': '시행일', 'series': []}}),
+    ('본 판을 안 적었다', 'W12',
+     {'kind': 'policy', 'target': '대출 규제', 'ticker': '', 'rows': '',
+      'laws': 'admrul:은행업감독규정'}, None),
     ('오래 안 봤다', 'W5', {'checked': '2020-01-01'}, None),
     ('절이 하나 없다', 'W6', {'drop_sec': '반대 근거'}, None),
     ('없는 경로를 가리킨다', 'W7', {'extra': '`insights/없는폴더/x.md` 를 본다.'}, None),
@@ -298,7 +321,7 @@ def selftest():
     today = datetime.date(2026, 8, 31)
     base = {'target': '엔비디아', 'ticker': 'TST', 'checked': '2026-08-31',
             'rows': '| 배수 | 값 | fwd_pe | 30배 하회 |', 'kind': 'equity',
-            'extra': '', 'drop_sec': ''}
+            'extra': '', 'drop_sec': '', 'laws': ''}
     real_metrics = wl.METRICS
     ok = True
     for name, want, patch, mets in CASES:

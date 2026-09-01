@@ -54,11 +54,6 @@ def main(only=None, dry=False):
     for w in wl.load_all():
         if only and only not in (w['target'], w['slug']):
             continue
-        if w['kind'] == 'policy':
-            # 정책은 값이 안 온다 — 조문·고시가 바뀌는 것을 사람이 확인한다
-            print('  건너뜀 %-22s 정책은 값으로 안 온다' % w['slug'])
-            skip += 1
-            continue
         mod = adapter_for(w['kind'])
         if mod is None:
             print('  건너뜀 %-22s 어댑터 %s.py 가 없다' % (w['slug'], w['kind']))
@@ -66,7 +61,14 @@ def main(only=None, dry=False):
             continue
         # 부동산은 권역 사전이 필요하고 종목은 티커면 된다. 어댑터가 무엇을 받는지는
         # 갈래가 정한다 — 종목에 권역 사전을 물으면 영영 건너뛴다
-        if w['kind'] == 'realestate':
+        if w['kind'] == 'policy':
+            # 정책은 조문이 아니라 시행일자를 받는다 — 「내가 본 뒤에 바뀌었나」만 센다
+            if not w.get('laws'):
+                print('  건너뜀 %-22s laws 가 비어 있다' % w['slug'])
+                skip += 1
+                continue
+            area, key = None, w['target']
+        elif w['kind'] == 'realestate':
             area = ar.get(w['target'])
             if area is None:
                 print('  건너뜀 %-22s _areas.json 에 %s 가 없다' % (w['slug'], w['target']))
@@ -78,7 +80,8 @@ def main(only=None, dry=False):
         path = os.path.join(wl.METRICS, w['kind'], w['slug'] + '.json')
         prev_n = len(wl.metrics_of(w['kind'], w['slug']))
         try:
-            got = mod.fetch(key, area)
+            got = (mod.fetch(key, area, laws=[(a, b) for a, b, _c in w['laws']])
+                   if w['kind'] == 'policy' else mod.fetch(key, area))
         except Exception as e:                       # noqa: BLE001 — 무엇이든 소리를 낸다
             print('  실패   %-22s %s: %s' % (w['slug'], type(e).__name__, e))
             fail += 1
