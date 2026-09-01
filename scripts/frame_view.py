@@ -1648,6 +1648,45 @@ def _mm_topo_levels(order, edges):
     return levels
 
 
+def _mm_levels_sink(order, edges):
+    """끝에서 재서 파도를 나눈다 — 받는 쪽에 붙여 세운다.
+
+    뿌리에서 세면(`_mm_topo_levels`) 들어오는 이음이 없는 상자가 전부 첫 파도에 몰린다.
+    그런데 그중에는 끝까지 두 칸인 것과 한 칸인 것이 섞여 있다 — 한 칸짜리가 첫 파도에
+    서면 그 선이 사이 열을 가로질러 남의 상자를 뚫는다(2026-09-01, 할라페뇨 밸류체인에서
+    네트워크·메모리·CPU 셋이 파운드리를 건너뛰어 조립으로 갔다).
+
+    끝까지의 가장 긴 거리를 재고 그만큼 뒤에서 당겨 세우면, 한 칸짜리는 받는 상자
+    바로 앞 파도에 선다. 층 나누기의 표준 방식이다.
+    """
+    nxt = {}
+    for a, b, _ in edges:
+        nxt.setdefault(a, []).append(b)
+    memo, busy = {}, set()
+
+    def depth(n):
+        """n 에서 끝까지의 가장 긴 걸음 수."""
+        if n in memo:
+            return memo[n]
+        if n in busy:                    # 고리는 여기서 끊는다
+            return 0
+        busy.add(n)
+        d = 0
+        for m in nxt.get(n, ()):
+            if m in idx:
+                d = max(d, depth(m) + 1)
+        busy.discard(n)
+        memo[n] = d
+        return d
+
+    idx = {n: i for i, n in enumerate(order)}
+    far = max((depth(n) for n in order), default=0)
+    rows = {}
+    for n in order:
+        rows.setdefault(far - depth(n), []).append(n)
+    return [rows[k] for k in sorted(rows)]
+
+
 def _mm_weak_groups(order, edges):
     """이음으로 이어진 상자만 한 덩이로 묶는다(약한 연결 성분).
 
@@ -1754,7 +1793,7 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     판을 포기한다."""
     back = _mm_back_edges(order, edges)
     fwd = [e for i, e in enumerate(edges) if i not in back]
-    rows = _mm_topo_levels(order, fwd or edges)
+    rows = _mm_levels_sink(order, fwd or edges)
     if not rows:
         return None
     # 한 파도에 형제가 넷을 넘으면 폭 520 에 못 앉는다. 예전에는 판을 통째로 포기하고
@@ -1763,8 +1802,16 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     # 넘치는 파도는 셋씩 끊어 잇달아 놓는다(2026-09-01)
     wide = []
     for lv in rows:
-        for k in range(0, len(lv), 3):
-            wide.append(lv[k:k + 3])
+        if len(lv) <= 3:
+            wide.append(lv)
+            continue
+        # 고르게 나눈다. 셋씩 끊으면 넷이 3+1 이 되어 마지막 하나가 혼자 한 줄을
+        # 차지하고, 칸을 판 끝까지 늘리는 규칙 때문에 그 상자가 폭 전체를 막는다 —
+        # 위에서 아래로 가는 선이 그 줄을 지날 데가 없어진다(2026-09-01)
+        n = (len(lv) + 2) // 3
+        size = (len(lv) + n - 1) // n
+        for k in range(0, len(lv), size):
+            wide.append(lv[k:k + size])
     rows = wide
     # 가로로 그리라고 적혀 왔으면 파도를 열로 세워 **먼저 시켜 본다**. 파도 수로
     # 미리 자르지 않는다 — 「넷이면 폭을 못 댄다」를 재 보지 않고 규칙으로 박았더니

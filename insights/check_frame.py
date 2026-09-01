@@ -31,6 +31,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paths  # noqa: E402
 
+sys.path.insert(0, os.path.join(paths.ROOT, 'scripts'))
+import frame_view  # noqa: E402
+
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 FRAME_DIR = os.path.join(paths.ROOT, 'insights', 'frames')
 DASH_DIR = os.path.join(paths.ROOT, '대시보드')
@@ -118,12 +121,29 @@ def cards_of(slug):
 # 독자에게 뜻이 하나도 안 늘고 낱말만 는다. 프롬프트에 두 번 적었는데 두 번 다 반쯤만
 # 걸렸다 — 프롬프트에서 빼고 여기서 센다(2026-09-01). 제품·회사·사람 이름은 그대로
 # 두는 것이 맞으므로 FAIL 로 올리지 않고 세기만 한다
+# F4 — 이름 없이 선 노드. mermaid 는 `CPU_AMD --> 조립` 처럼 대괄호 없이도 쓸 수 있는데,
+# 그러면 id 가 그대로 화면에 선다 — 「CPU_AMD」·「파운드리_TSMC」로 찍힌 자리가 그것이다.
+# id 는 표기이지 이름이 아니다. 밑줄이 든 것만 센다(짧은 영문 약어는 그대로 이름일 수 있다)
+_FENCE_MM = re.compile(r'```mermaid\n(.*?)\n```', re.S)
+
+
+def bare_nodes(body):
+    """판마다 이름이 안 붙은 노드. `frame_view` 파서가 읽은 것을 그대로 쓴다."""
+    out = []
+    for blk in _FENCE_MM.findall(body):
+        g = frame_view._mm_parse(blk)
+        for nid in g.order:
+            if g.names[nid] == nid and '_' in nid:
+                out.append(nid)
+    return out
+
+
 _ENG_GLOSS = re.compile(r'[가-힣]\s*\(([A-Za-z][A-Za-z0-9 \-\.]{3,})\)')
 
 
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else ''
-    glosses = 0
+    glosses = bares = 0
     files = sorted(glob.glob(os.path.join(FRAME_DIR, '*.md')))
     fails = missing = 0
     for p in files:
@@ -146,10 +166,14 @@ def main():
         missing += len(out_of_source)
         eng = _ENG_GLOSS.findall(body)
         glosses += len(eng)
+        bare = bare_nodes(body)
+        bares += len(bare)
         print('%s  %s · 원문 밖 %d개 · 영문 병기 %d개'
               % (name, head.get('kind', '?'), len(out_of_source), len(eng)), file=OUT)
         if eng:
             print('   F3 한국말 뒤 영문: %s' % ' · '.join(eng[:8]), file=OUT)
+        if bare:
+            print('   F4 이름 없이 id 로 선 상자: %s' % ' · '.join(bare[:8]), file=OUT)
         if out_of_source:
             print('   F1 원문에 없다: %s' % ' · '.join(out_of_source[:24]), file=OUT)
         # F2 — 원문에 없는 말이 그 원문의 카드에 들어갔나
@@ -165,8 +189,8 @@ def main():
                     print('FAIL %s [F2] 원문에 없는 「%s」가 %s 의 그 카드에 들어갔다'
                           % (name, c, where), file=OUT)
                     fails += 1
-    print('\n요약: 프레임 %d편 / FAIL %d / 원문 밖 주장 %d개 / 영문 병기 %d개'
-          % (len(files), fails, missing, glosses), file=OUT)
+    print('\n요약: 프레임 %d편 / FAIL %d / 원문 밖 주장 %d개 / 영문 병기 %d개 / '
+          '이름 없는 상자 %d개' % (len(files), fails, missing, glosses, bares), file=OUT)
     return 1 if fails else 0
 
 
