@@ -584,10 +584,10 @@
 <a class="pback" href="../포트폴리오 워치.html#sec-ticker">← 포트폴리오 워치</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic market">HBM · 메모리 사이클</span><h2 id="card-삼성전자">삼성전자</h2><p class="uc-gain">HBM 공급 자격을 실제로 따냈는지가 어느 숫자로 확인되나.</p><div class="uc-meta"><span>주식 — 종목</span><span>보기 시작 <b>2026-08-31</b></span><span>마지막 확인 <b>2026-08-31</b></span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-label">무엇이 일어나면 판단이 바뀌나</p><div class="tbl-wrap"><table class="uc-tbl"><thead><tr><th>무엇을</th><th>지금 값</th><th>걸리는 조건</th><th>언제 것</th><th>성격</th></tr></thead><tbody><tr><td>HBM 공급 계약 공표</td><td><i>사건</i></td><td>주요 고객사가 공표</td><td>—</td><td>사건</td></tr><tr><td>메모리 재고 주수</td><td>—</td><td>직전 4개 분기 평균 이하</td><td>—</td><td>자리표시</td></tr></tbody></table></div><p class="uc-oneliner">이 줄의 트리거는 값이 아니라 <b>사건</b>이 절반이다. 공표가 나기 전에는 「지금 값」이 계속 비어 있고, 사람이 <code>checked</code> 를 갱신할 때만 줄이 움직인다. 어댑터는 사건 줄을 안 건드린다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>사건형 트리거가 섞인다.</b> 수치로 안 오는 것(계약 공표·이사회 개편)이 있다. 갈래 열을 둬서 어댑터가 값 줄만 채우게 나눴다.</li><li><b>뼈대를 만들다 나온 결함이다.</b> 설계는 트리거를 「값이 조건을 넘는다」로만 잡았는데 이 줄에서 안 맞았다. 화면을 먼저 세운 덕에 걸렸다.</li></ul><div class="clash"><p class="ch">반론 · 충돌</p><ul><li><span class="who"><b>공표 시점과 물량이 다르다</b></span>계약이 공표돼도 물량과 단가가 안 나오면 무엇이 확인된 것인지 불분명하다.</li><li><span class="who"><b>재고 주수는 공표치가 아니다</b></span>업계 추정치라 출처마다 다르다. 「성격」 열이 추정으로 남는다.</li></ul></div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy">링크 복사</button></div></div></div>
 
-  <footer><p class="lede"><b>보유 자산이 아닙니다.</b> 손익·비중·현금흐름은 이 장이 다루지 않습니다. 보고 있는 대상마다 「왜 보나」와 「무엇이 일어나면 판단이 바뀌나」만 세웁니다. 부동산은 <b>권역</b>, 주식은 <b>종목</b>이 한 줄입니다.</p><p class="lede">트리거는 갈래가 둘입니다. <b>값</b>은 스크립트가 받아 채우고, <b>사건</b>은 공표가 날 때 사람이 갱신합니다. 값 트리거 14개 중 <b>8개</b>가 채워져 있습니다 — 성격이 <b>자리표시</b>인 줄은 아직 판단 근거가 아닙니다.</p>    <div class="meta-row">
+  <footer><p class="lede"><b>보유 자산이 아닙니다.</b> 손익·비중·현금흐름은 이 장이 다루지 않습니다. 보고 있는 대상마다 「왜 보나」와 「무엇이 일어나면 판단이 바뀌나」만 세웁니다. 부동산은 <b>권역</b>, 주식은 <b>종목</b>이 한 줄입니다.</p><p class="lede">트리거는 갈래가 둘입니다. <b>값</b>은 스크립트가 받아 채우고, <b>사건</b>은 공표가 날 때 사람이 갱신합니다. 값 트리거 23개 중 <b>17개</b>가 채워져 있습니다 — 성격이 <b>자리표시</b>인 줄은 아직 판단 근거가 아닙니다.</p>    <div class="meta-row">
       <span>정리일 <b>2026-08-31</b></span>
-      <span>워치 <b>4줄</b></span>
-      <span>트리거 <b>15개</b></span>
+      <span>워치 <b>6줄</b></span>
+      <span>트리거 <b>25개</b></span>
     </div>
 워치 줄은 <code>insights/watch/</code>, 수치는 <code>insights/watch/_metrics/</code>, 설계는 <code>docs/superpowers/specs/2026-08-31-포트폴리오-워치-대시보드-design.md</code>, 페이지 생성은 <code>scratchpad/gen_watch_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).</footer>
 </div>
