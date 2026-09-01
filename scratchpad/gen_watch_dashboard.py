@@ -13,6 +13,7 @@ import dash_common as dc
 sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
 import watch_lib as wl  # noqa: E402
 import watch_fig as wf  # noqa: E402
+import card_lib as cl  # noqa: E402
 
 OUT = os.path.join(dc.ROOT, '대시보드', '포트폴리오 워치.html')
 STAMP = '2026-08-31'
@@ -106,6 +107,59 @@ def card(w):
     }
 
 
+# ── 견주는 층 ────────────────────────────────────────────────────────────
+# 집 구하는 사람은 권역 하나를 보는 게 아니라 여럿을 견준다. 카드를 하나씩 열어야
+# 견줄 수 있으면 그 일이 안 일어난다 — 타일과 같은 자리에 층으로 세운다.
+def compare_layer(watches):
+    """구 아홉의 전세가율을 한 판에 세우고, 묶음이 실제로 붙어 다니는지를 표로 낸다."""
+    import statistics as _st
+    live = [w for w in watches if w['kind'] == 'realestate' and w.get('view')]
+    rows, spread = [], []
+    for w in live:
+        ser = []
+        for k, m in sorted((w['metrics'] or {}).items()):
+            if k.startswith('jeonse_ratio_'):
+                rows.append((w['target'], m['area'], m['value']))
+                ser.append([v for _t, v in m['series']])
+        if len(ser) >= 2:
+            n = min(len(s) for s in ser)
+            gaps = [max(s[i] for s in ser) - min(s[i] for s in ser) for i in range(n)]
+            spread.append((w['target'], gaps[-1], _st.mean(gaps), max(gaps), n))
+    if not rows:
+        return '', 0
+    asof = next((m['as_of'] for w in live for k, m in (w['metrics'] or {}).items()
+                 if k.startswith('jeonse_ratio_')), '')
+    src = next((m['src'] for w in live for k, m in (w['metrics'] or {}).items()
+                if k.startswith('jeonse_ratio_')), '')
+    svg = wf.rank_bar(rows, '전세가율 — 중위 매매가격 대비 전세가격 (%%, %s)' % asof, note=src)
+
+    h = ['<p class="xl-lede">집 구하는 사람에게 전세가율은 <b>한 수가 두 방향으로</b> 읽힙니다. '
+         '올라가면 보증금이 집값에 가까워져 떼일 위험이 커지고, 동시에 「이 돈이면 사는 게 '
+         '낫다」 쪽으로도 밉니다. 권역마다 그 수가 얼마나 다른지를 먼저 봅니다.</p>']
+    h.append(cl.fig_html(('구 아홉의 전세가율', svg, src)))
+    hi, lo = rows and max(rows, key=lambda r: r[2]), rows and min(rows, key=lambda r: r[2])
+    h.append('<p class="xl-lede">가장 높은 <b>%s %s%%</b>와 가장 낮은 <b>%s %s%%</b>가 '
+             '<b>%.2f%%포인트</b> 벌어집니다. 같은 서울입니다.</p>'
+             % (hi[1], hi[2], lo[1], lo[2], hi[2] - lo[2]))
+    if spread:
+        h.append(cl.tbl_html((
+            '묶음 안에서 세 구가 붙어 다니나 — 같은 달 최대·최소의 벌어짐',
+            ['묶음', '지금', '평균', '최대', '기간', '언제 것', '성격'],
+            [[t, '%.2f%%p' % now, '%.2f' % avg, '%.2f' % mx, '%d개월' % n, asof, '계산치']
+             for t, now, avg, mx, n in sorted(spread, key=lambda r: r[2])])))
+        tight = min(spread, key=lambda r: r[2])
+        h.append('<p class="xl-lede"><b>%s만 묶음으로 성립합니다.</b> 세 구의 벌어짐이 평균 '
+                 '%.2f%%포인트인데 나머지는 %s입니다. 시장에서 한 이름으로 부른다고 값이 '
+                 '같이 움직이지는 않습니다 — 그래서 이 장은 묶음 평균을 내지 않고 '
+                 '구마다 값을 따로 둡니다.</p>'
+                 % (tight[0], tight[2],
+                    ' · '.join('%s %.2f' % (t, a) for t, _n, a, _m, _k in spread
+                               if t != tight[0])))
+    h.append('<p class="xl-lede t-axis">벌어짐은 공표치에서 우리가 뺀 수라 성격이 '
+             '<b>계산치</b>입니다. 전세가율 자체는 공표치입니다.</p>')
+    return ''.join(h), len(rows)
+
+
 WATCHES = wl.load_all()
 CARDS = [card(w) for w in WATCHES]
 NVAL = sum(1 for w in WATCHES for t in w['triggers'] if t['kind'] == wl.KIND_VALUE)
@@ -136,4 +190,7 @@ FOOTER = (LEDE + META + '\n워치 줄은 <code>insights/watch/</code>, 수치는
           '(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
-    dc.render(CARDS, '포트폴리오 워치', HEADER, FOOTER, OUT, page_slug='watch')
+    top, n = compare_layer(WATCHES)
+    dc.render(CARDS, '포트폴리오 워치', HEADER, FOOTER, OUT, page_slug='watch',
+              top=top, top_n=n, top_id='sec-compare',
+              top_title='권역 견주기', top_sub='구 아홉을 한 판에 놓고 본다')

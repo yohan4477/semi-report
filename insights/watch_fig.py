@@ -123,3 +123,64 @@ def nums_in(svg):
             continue
         out |= set(re.findall(r'\d[\d,\.]*', m.group(2)))
     return out
+
+
+# ── 순위 막대 ────────────────────────────────────────────────────────────
+# 시계열 선은 한 판에 셋까지다. 아홉을 견주려면 선이 아니라 지금 값을 세운다.
+BAR_X0, BAR_X1 = 168, 552      # 왼쪽은 이름 자리, 오른쪽 끝은 값 자리를 남긴다
+BAR_H, BAR_STEP = 20, 28
+
+
+def rank_bar(rows, unit, note='', mark=None):
+    """지금 값을 큰 순서로 세운다.
+
+    rows = [(묶음, 이름, 값), …]. 묶음은 색을 가르는 데만 쓴다.
+    mark = (이름, 값) 이면 문턱을 세로 점선으로 하나 긋는다.
+    막대 길이가 곧 값이라 축이 0 에서 시작한다 — 잘라 내면 차이가 부풀려 보인다.
+    """
+    rows = [(g, n, v) for g, n, v in rows if v is not None]
+    if not rows:
+        return None
+    rows = sorted(rows, key=lambda r: -r[2])
+    hi = max([v for _, _, v in rows] + ([mark[1]] if mark else []))
+    hi = hi * 1.08
+    groups = []
+    for g, _n, _v in rows:
+        if g not in groups:
+            groups.append(g)
+
+    def px(v):
+        return BAR_X0 + (BAR_X1 - BAR_X0) * v / float(hi)
+
+    o = ['<text x="16" y="24" class="t-sm" style="font-weight:800">%s</text>' % esc(unit)]
+    y = 48
+    for g, n, v in rows:
+        c = COLORS[groups.index(g) % len(COLORS)]
+        o.append('<text x="%d" y="%d" class="t-sm" text-anchor="end">%s</text>'
+                 % (BAR_X0 - 10, y + BAR_H - 6, esc(n)))
+        o.append('<rect x="%d" y="%d" width="%.1f" height="%d" rx="3" fill="%s"/>'
+                 % (BAR_X0, y, max(px(v) - BAR_X0, 1), BAR_H, c))
+        # 소수 둘로 적는다 — 반올림해 한 자리로 줄이면 카드 본문과 값이 어긋난다
+        o.append('<text x="%.1f" y="%d" class="t-sm">%s</text>'
+                 % (px(v) + 8, y + BAR_H - 6, ('%.2f' % v).rstrip('0').rstrip('.')))
+        y += BAR_STEP
+    if mark:
+        o.append('<path d="M%.1f 40 L%.1f %d" stroke="var(--warn,#c2831f)" stroke-width="1.6" '
+                 'stroke-dasharray="6 4" fill="none"/>' % (px(mark[1]), px(mark[1]), y - 4))
+    # 범례·설명은 판 아래다(규칙 3)
+    y += 18
+    for i, g in enumerate(groups):
+        o.append('<rect x="16" y="%d" width="18" height="4" rx="2" fill="%s"/>'
+                 % (y - 5, COLORS[i % len(COLORS)]))
+        o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(g)))
+        y += 20
+    if mark:
+        o.append('<path d="M16 %d L34 %d" stroke="var(--warn,#c2831f)" stroke-width="1.6" '
+                 'stroke-dasharray="6 4"/>' % (y - 5, y - 5))
+        o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(mark[0])))
+        y += 20
+    if note:
+        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(note)))
+        y += 18
+    return ('<svg viewBox="0 0 %d %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
+            % (W, y, ''.join(o)))
