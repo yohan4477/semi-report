@@ -44,6 +44,22 @@ def _wrap(s, width=62):
     return out
 
 
+def _pos(t):
+    """때 하나의 가로 자리 — 달 수로 센다. YYYY-MM 과 YYYY 둘 다 받는다.
+
+    순번으로 놓으면 한 달이 빠졌을 때 그 칸이 사라져 선이 그 구간만 시간압축되고,
+    연 단위와 분기 단위가 한 판에 섞이면 간격이 통째로 거짓말이 된다. 읽을 수 없는
+    꼴이 오면 None 을 준다 — 그런 판은 아예 안 그린다."""
+    t = str(t)
+    m = re.match(r'^(\d{4})-(\d{2})$', t)
+    if m:
+        return int(m.group(1)) * 12 + int(m.group(2))
+    m = re.match(r'^(\d{4})$', t)
+    if m:
+        return int(m.group(1)) * 12 + 12      # 회계연도는 그 해 끝에 찍는다
+    return None
+
+
 def _fmt(v):
     return ('%.1f' % v).rstrip('0').rstrip('.')
 
@@ -62,17 +78,20 @@ def trend(lines, ylabel, note='', threshold=None):
         return None                      # 값이 없으면 안 그린다
     assert len(lines) <= 3, '선이 넷이면 그림을 나눈다 — 축이 둘이라는 뜻이다'
 
-    xs = [t for _, s in lines for t, _ in s]
-    order = sorted(set(xs))
+    order = sorted(set(t for _, s in lines for t, _ in s))
+    pos = dict((t, _pos(t)) for t in order)
+    if any(v is None for v in pos.values()):
+        return None                      # 못 읽는 때가 섞이면 안 그린다
+    lo_x, hi_x = min(pos.values()), max(pos.values())
     vals = [v for _, s in lines for _, v in s] + ([threshold[1]] if threshold else [])
     lo, hi = min(vals), max(vals)
     pad = (hi - lo) * 0.12 or 1.0
     lo, hi = lo - pad, hi + pad
 
     def px(t):
-        """때 하나의 x. 자리를 눈으로 어림하지 않으려고 순서에서만 낸다."""
-        i = order.index(t)
-        return X0 + (X1 - X0) * i / float(max(len(order) - 1, 1))
+        """때 하나의 x. 순번이 아니라 달 수에서 낸다(_pos)."""
+        span = hi_x - lo_x
+        return X0 + (X1 - X0) * ((pos[t] - lo_x) / float(span) if span else 0.5)
 
     def py(v):
         return Y1 - (Y1 - Y0) * (v - lo) / float(hi - lo)
@@ -122,23 +141,6 @@ def trend(lines, ylabel, note='', threshold=None):
     return ('<svg viewBox="0 0 %d %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
             % (W, y, ''.join(o)))
 
-
-def from_triggers(triggers, ylabel, note='', which=None):
-    """워치 줄의 트리거에서 바로 그린다. series 가 든 값 트리거만 쓴다 —
-    비어 있으면 None 이라 어댑터가 붙기 전에는 카드에 그림이 아예 안 선다."""
-    picked = [(t['what'], t['series']) for t in triggers
-              if t.get('series') and (which is None or t['metric'] in which)]
-    return trend(picked[:2], ylabel, note)
-
-
-def nums_in(svg):
-    """그림 글자에 든 수. 원문 대조에 쓴다 — 축 눈금(t-axis)은 자의 눈금이라 뺀다."""
-    out = set()
-    for m in re.finditer(r'<text[^>]*?class="([^"]*)"[^>]*>([^<]*)<', svg or ''):
-        if 't-axis' in m.group(1):
-            continue
-        out |= set(re.findall(r'\d[\d,\.]*', m.group(2)))
-    return out
 
 
 # ── 순위 막대 ────────────────────────────────────────────────────────────
