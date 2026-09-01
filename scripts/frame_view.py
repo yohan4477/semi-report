@@ -1557,6 +1557,7 @@ class _MGraph(object):
         self.order = []     # 처음 나온 차례
         self.edges = []     # (src_id, dst_id, label)
         self.title_of = {}  # id -> 그 노드가 든 subgraph 제목(있으면)
+        self.direction = 'TD'   # flowchart 머리에 적힌 방향. LR 이면 파도를 열로 세운다
 
     def _register(self, nid, disp, title=None):
         if nid not in self.names:
@@ -1578,6 +1579,9 @@ def _mm_parse(block):
     판 위 캡션으로 올린다(`_mm_to_plate`).
     """
     g = _MGraph()
+    mh = _MM_HEAD.search(block)
+    if mh:
+        g.direction = mh.group(2).upper()
     stack = []
     for raw_ln in _mm_normalize(block).split(chr(10)):
         if not raw_ln.strip():
@@ -1734,7 +1738,17 @@ def _mm_back_edges(order, edges):
     return back
 
 
-def _mm_component_plate(names, order, edges, width):
+def _mm_transpose(waves):
+    """파도를 행이 아니라 **열**로 세운다 — `flowchart LR` 을 위한 자리 잡기.
+
+    파도 하나가 열 하나가 되고, 그 안 형제는 위아래로 쌓인다. 행 수는 가장 긴
+    파도만큼이고 빈 자리는 None 이다(`Plate.row` 가 빈 칸으로 받는다).
+    """
+    depth = max(len(w) for w in waves)
+    return [[w[r] if r < len(w) else None for w in waves] for r in range(depth)]
+
+
+def _mm_component_plate(names, order, edges, width, horizontal=False):
     """한 덩이(서로 이어진 상자들)를 판 하나로. 이름이 길어 폭을 넘기면
     칸 수를 줄이는 대신 상자 안 줄 수를 늘린다(wrap_label). 그래도 안 되면
     판을 포기한다."""
@@ -1743,6 +1757,10 @@ def _mm_component_plate(names, order, edges, width):
     rows = _mm_topo_levels(order, fwd or edges)
     if not rows:
         return None
+    # 가로로 그리라고 적혀 왔으면 파도를 열로 세운다. 파도가 넷을 넘으면 폭을 못 대니
+    # 그냥 세로로 간다 — 열 셋까지가 폭 520 에 앉는 한계다(2026-09-01 실측)
+    if horizontal and len(rows) <= 3:
+        rows = _mm_transpose(rows)
     for wrap_label in (False, True):
         # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
         # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
@@ -1763,7 +1781,8 @@ def _mm_to_plate(g, width=520.0):
     for grp in groups:
         gset = set(grp)
         gedges = [e for e in g.edges if e[0] in gset and e[1] in gset]
-        svg = _mm_component_plate(g.names, grp, gedges, width)
+        svg = _mm_component_plate(g.names, grp, gedges, width,
+                                  horizontal=g.direction in ('LR', 'RL'))
         if not svg:
             return None
         # 이 덩이(약한 연결 성분)의 노드가 모두 같은 subgraph 제목을 달고
