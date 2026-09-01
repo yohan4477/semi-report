@@ -1,37 +1,47 @@
 # -*- coding: utf-8 -*-
-"""부동산 어댑터 — 한국부동산원 R-ONE 에서 가격지수를 받는다.
+"""부동산 어댑터 — 한국부동산원 R-ONE.
 
-계약은 watch_lib 머리에 있다. 여기서 지키는 것 셋.
+계약은 watch_lib 머리에 있다. 여기서 지키는 것 넷.
 
 1. **평균을 내지 않는다.** 「강남 3구」는 구 셋이지만 셋을 평균하면 그 수는 공표치가 아니라
-   우리가 만든 값이 된다(가중치도 없다). 구마다 선을 따로 준다 — 성격이 공표치로 남는다.
-2. **지수를 가격으로 읽지 않는다.** DTA_VAL 은 기준시점 100 인 지수다. 전세지수를
-   매매지수로 나눈 것은 전세가율이 아니다 — 지수끼리의 비라 값에 뜻이 없다.
-   전세가율은 별도 통계이고 아직 안 뚫었다.
-3. **키가 없으면 조용히 반쪽을 주지 않는다.** R-ONE 은 키 없이도 앞 5건만 주는데
-   그걸 시계열로 쓰면 「최근 자료가 없다」가 아니라 「값이 안 움직였다」로 읽힌다.
-   키가 없으면 partial 표시를 붙인다.
+   우리가 만든 값이 된다(가중치도 없다). 구마다 값을 따로 준다.
+2. **지수를 가격으로 읽지 않는다.** 지수는 기준시점 100 인 상대값이다. 전세지수를
+   매매지수로 나눈 것은 전세가율이 아니다 — 전세가율은 별도 통계표(A_2024_00073)다.
+3. **표마다 지역 단위가 다르다.** 지수·전세가율은 구까지 오는데, 수급은 권역까지,
+   중위가격은 시도까지다. 없는 단위를 만들지 않고 온 단위를 그대로 이름에 적는다 —
+   서울 중위가를 강남 3구 값인 것처럼 두면 카드가 거짓말을 한다.
+4. **같은 지역의 코드가 표마다 다르다.** 「서울」이 중위가격 표에서는 500004,
+   수급 표에서는 500008 이다. 그래서 코드를 지역이 아니라 (지역, 표) 쌍으로 둔다.
 """
 import os, json, urllib.request, urllib.parse
 
 BASE = 'https://www.reb.or.kr/r-one/openapi/SttsApiTblData.do'
 KEY_ENV = 'REB_API_KEY'
+ITM_DEFAULT = '100001'
 
-# 통계표. 아파트 기준이다 — 「주택종합」은 단독·연립이 섞여 권역 비교가 흐려진다.
+# level 은 이 표가 실제로 주는 가장 작은 지역 단위다. 확인해서 적은 것이지 짐작이 아니다.
 TBL = {
-    'sale_idx':   ('A_2024_00045', '매매가격지수(아파트)'),
-    'jeonse_idx': ('A_2024_00050', '전세가격지수(아파트)'),
+    'sale_idx':      dict(id='A_2024_00045', level='gu',
+                          unit='지수(기준시점=100)', label='매매가격지수(아파트)'),
+    'jeonse_idx':    dict(id='A_2024_00050', level='gu',
+                          unit='지수(기준시점=100)', label='전세가격지수(아파트)'),
+    'jeonse_ratio':  dict(id='A_2024_00073', level='gu',
+                          unit='%', label='중위 매매가격 대비 전세가격(아파트)'),
+    'supply_demand': dict(id='A_2024_00076', level='zone',
+                          unit='지수(100=균형)', label='매매수급동향(아파트)'),
+    'median_sale':   dict(id='A_2024_00189', level='sido',
+                          unit='만원/㎡', label='지역별 매매 중위가격(아파트)'),
+    'median_jeonse': dict(id='A_2024_00193', level='sido',
+                          unit='만원/㎡', label='지역별 전세 중위가격(아파트)'),
 }
-ITM_INDEX = '100001'      # 항목 「지수」
 
 
-def _get(params):
+def _rows(params):
     u = BASE + '?' + urllib.parse.urlencode(params)
-    with urllib.request.urlopen(u, timeout=30) as r:
+    with urllib.request.urlopen(u, timeout=45) as r:
         d = json.loads(r.read().decode('utf-8'))
-    blocks = d.get('SttsApiTblData') or []
     total, rows = 0, []
-    for b in blocks:
+    for b in d.get('SttsApiTblData') or []:
         if isinstance(b, dict) and 'head' in b:
             for h in b['head']:
                 if 'list_total_count' in h:
@@ -44,40 +54,56 @@ def _get(params):
 def series(statbl_id, cls_id, start, end):
     """[(YYYY-MM, 값)] 과 「다 받았나」. 키가 없으면 앞 몇 건만 온다."""
     p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': 'MM', 'CLS_ID': cls_id,
-         'ITM_ID': ITM_INDEX, 'START_WRTTIME': start, 'END_WRTTIME': end,
+         'ITM_ID': ITM_DEFAULT, 'START_WRTTIME': start, 'END_WRTTIME': end,
          'Type': 'json', 'pSize': 1000}
     key = os.environ.get(KEY_ENV)
     if key:
         p['KEY'] = key
-    total, rows = _get(p)
+    total, rows = _rows(p)
     out = []
     for r in rows:
-        t = str(r.get('WRTTIME_IDTFR_ID') or '')
-        v = r.get('DTA_VAL')
+        t, v = str(r.get('WRTTIME_IDTFR_ID') or ''), r.get('DTA_VAL')
         if len(t) == 6 and v is not None:
             out.append(('%s-%s' % (t[:4], t[4:]), round(float(v), 2)))
     out.sort()
     return out, (len(out) >= total > 0)
 
 
-def fetch(target, areas, start='202401', end='202612'):
-    """워치 대상 하나의 metric 들. areas 는 watch/_areas.json 의 그 대상 항목이다.
+def _targets(area, spec):
+    """이 표를 무슨 지역으로 부를지. [(붙일 이름, CLS_ID)].
 
-    구마다 metric 이 따로 선다 — sale_idx_강남구 처럼. 평균을 안 내는 대신
-    이름에 구를 박아 무엇을 재는 값인지가 열쇠에 남는다."""
+    구는 여럿이라 이름을 열쇠에 박고, 권역·시도는 하나라 이름을 값 쪽 라벨로만 쓴다."""
+    lv = spec['level']
+    if lv == 'gu':
+        return [(gu, code) for gu, code in (area.get('codes') or {}).items()], ''
+    blk = area.get(lv) or {}
+    code = (blk.get('codes') or {}).get(spec['id'])
+    if not code:
+        return [], ''
+    return [('', code)], blk.get('이름', '')
+
+
+def fetch(target, area, start='202401', end='202612'):
+    """워치 대상 하나의 metric 전부. area 는 watch/_areas.json 의 그 항목이다."""
     out = {}
-    for gu, cls_id in areas.get('codes', {}).items():
-        for base, (tbl, label) in TBL.items():
-            s, full = series(tbl, cls_id, start, end)
+    for base, spec in TBL.items():
+        pairs, wide = _targets(area, spec)
+        for name, cls_id in pairs:
+            s, full = series(spec['id'], cls_id, start, end)
             if not s:
                 continue
-            out['%s_%s' % (base, gu)] = {
+            key = '%s_%s' % (base, name) if name else base
+            src = '한국부동산원 R-ONE %s · %s' % (spec['id'], spec['label'])
+            if wide:
+                # 대상보다 넓은 단위로 온 값이다. 그 사실을 출처에 박는다 —
+                # 표에서 구별 값과 나란히 서면 같은 단위로 읽힌다
+                src += ' · %s 단위(대상보다 넓다)' % wide
+            out[key] = {
                 'value': s[-1][1], 'as_of': s[-1][0],
                 'kind': '공표' if full else '공표(일부)',
-                'unit': '지수(기준시점=100)',
-                'src': '한국부동산원 R-ONE %s · %s' % (tbl, label),
-                'series': [list(x) for x in s],
-                'partial': not full,
+                'unit': spec['unit'], 'src': src,
+                'area': name or wide, 'level': spec['level'],
+                'series': [list(x) for x in s], 'partial': not full,
             }
     return out
 
@@ -91,5 +117,5 @@ if __name__ == '__main__':
     got = fetch(tgt, areas[tgt])
     print('열쇠', '있음' if os.environ.get(KEY_ENV) else '없음 — 앞 몇 건만 온다')
     for k, v in sorted(got.items()):
-        print('%-22s %-8s %s  점 %d  %s'
-              % (k, v['as_of'], v['value'], len(v['series']), v['kind']))
+        print('%-24s %-8s %9s %-14s 점 %-3d %s'
+              % (k, v['as_of'], v['value'], v['unit'], len(v['series']), v['kind']))
