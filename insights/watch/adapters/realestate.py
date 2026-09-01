@@ -13,7 +13,7 @@
 4. **같은 지역의 코드가 표마다 다르다.** 「서울」이 중위가격 표에서는 500004,
    수급 표에서는 500008 이다. 그래서 코드를 지역이 아니라 (지역, 표) 쌍으로 둔다.
 """
-import os, json, urllib.request, urllib.parse
+import os, json, datetime, urllib.request, urllib.parse
 
 BASE = 'https://www.reb.or.kr/r-one/openapi/SttsApiTblData.do'
 KEY_ENV = 'REB_API_KEY'
@@ -36,18 +36,31 @@ TBL = {
 }
 
 
+class AdapterError(Exception):
+    """응답이 기대한 모양이 아니다. R-ONE 은 키 오류·쿼터 초과·표 폐기를 HTTP 200 에
+    다른 모양의 JSON 으로 준다 — 조용히 빈 결과를 주면 화면의 값이 통째로 사라지는데
+    아무 데서도 FAIL 이 안 난다."""
+
+
 def _rows(params):
     u = BASE + '?' + urllib.parse.urlencode(params)
     with urllib.request.urlopen(u, timeout=45) as r:
         d = json.loads(r.read().decode('utf-8'))
-    total, rows = 0, []
-    for b in d.get('SttsApiTblData') or []:
+    blocks = d.get('SttsApiTblData')
+    if not isinstance(blocks, list):
+        raise AdapterError('응답에 SttsApiTblData 가 없다: %s' % str(d)[:200])
+    total, rows, code = None, [], None
+    for b in blocks:
         if isinstance(b, dict) and 'head' in b:
             for h in b['head']:
                 if 'list_total_count' in h:
                     total = h['list_total_count']
+                if isinstance(h.get('RESULT'), dict):
+                    code = h['RESULT'].get('CODE')
         if isinstance(b, dict) and 'row' in b:
             rows = b['row']
+    if code is not None and not str(code).startswith('INFO-0'):
+        raise AdapterError('R-ONE 이 정상이 아니라고 답했다: %s' % code)
     return total, rows
 
 
@@ -60,13 +73,24 @@ def series(statbl_id, cls_id, start, end):
     if key:
         p['KEY'] = key
     total, rows = _rows(p)
-    out = []
+    out, dropped = [], 0
     for r in rows:
         t, v = str(r.get('WRTTIME_IDTFR_ID') or ''), r.get('DTA_VAL')
-        if len(t) == 6 and v is not None:
+        if len(t) != 6:
+            continue
+        try:
             out.append(('%s-%s' % (t[:4], t[4:]), round(float(v), 2)))
+        except (TypeError, ValueError):
+            # 비공표 구간에 '-'·''·'X' 가 온다. 그 점만 버리고 나머지는 살린다
+            dropped += 1
     out.sort()
-    return out, (len(out) >= total > 0)
+    # B3 — total 을 못 읽으면 「일부」가 아니라 「모름」이다. 파싱 실패가 성격을
+    #      통째로 강등시키던 자리다
+    if total is None:
+        full = None
+    else:
+        full = len(out) + dropped >= total > 0
+    return out, full, dropped
 
 
 def _targets(area, spec):
@@ -83,13 +107,19 @@ def _targets(area, spec):
     return [('', code)], blk.get('이름', '')
 
 
-def fetch(target, area, start='202401', end='202612'):
-    """워치 대상 하나의 metric 전부. area 는 watch/_areas.json 의 그 항목이다."""
+def fetch(target, area, start='202401', end=None):
+    """워치 대상 하나의 metric 전부. area 는 watch/_areas.json 의 그 항목이다.
+
+    end 를 박아 두면 그 뒤 자료가 **오류 없이** 안 온다 — 시계열이 거기서 멈추고
+    화면은 그걸 「지금 값」이라 부른다. 안 주면 오늘 기준으로 넉넉히 잡는다."""
+    if end is None:
+        t = datetime.date.today()
+        end = '%04d%02d' % (t.year + 1, t.month)
     out = {}
     for base, spec in TBL.items():
         pairs, wide = _targets(area, spec)
         for name, cls_id in pairs:
-            s, full = series(spec['id'], cls_id, start, end)
+            s, full, dropped = series(spec['id'], cls_id, start, end)
             if not s:
                 continue
             key = '%s_%s' % (base, name) if name else base
@@ -100,10 +130,11 @@ def fetch(target, area, start='202401', end='202612'):
                 src += ' · %s 단위(대상보다 넓다)' % wide
             out[key] = {
                 'value': s[-1][1], 'as_of': s[-1][0],
-                'kind': '공표' if full else '공표(일부)',
+                'kind': {True: '공표', False: '공표(일부)', None: '확인 못 함'}[full],
                 'unit': spec['unit'], 'src': src,
                 'area': name or wide, 'level': spec['level'],
-                'series': [list(x) for x in s], 'partial': not full,
+                'series': [list(x) for x in s], 'partial': full is not True,
+                'dropped': dropped,
             }
     return out
 

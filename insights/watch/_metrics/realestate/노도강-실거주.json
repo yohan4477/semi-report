@@ -133,7 +133,8 @@
     101.77
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_도봉구": {
   "value": 101.31,
@@ -269,7 +270,8 @@
     101.31
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_강북구": {
   "value": 101.6,
@@ -405,7 +407,8 @@
     101.6
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_노원구": {
   "value": 101.82,
@@ -541,7 +544,8 @@
     101.82
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_도봉구": {
   "value": 101.59,
@@ -677,7 +681,8 @@
     101.59
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_강북구": {
   "value": 101.77,
@@ -813,7 +818,8 @@
     101.77
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_노원구": {
   "value": 55.44,
@@ -949,7 +955,8 @@
     55.44
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_도봉구": {
   "value": 58.09,
@@ -1085,7 +1092,8 @@
     58.09
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_강북구": {
   "value": 63.77,
@@ -1221,7 +1229,8 @@
     63.77
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "supply_demand": {
   "value": 119.28,
@@ -1357,7 +1366,8 @@
     119.28
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_sale": {
   "value": 1308.56,
@@ -1489,7 +1499,8 @@
     1308.56
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_jeonse": {
   "value": 836.11,
@@ -1621,6 +1632,7 @@
     836.11
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  }
 }

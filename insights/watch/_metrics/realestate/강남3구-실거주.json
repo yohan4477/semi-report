@@ -133,7 +133,8 @@
     100.57
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_서초구": {
   "value": 100.37,
@@ -269,7 +270,8 @@
     100.37
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_송파구": {
   "value": 101.34,
@@ -405,7 +407,8 @@
     101.34
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_강남구": {
   "value": 100.67,
@@ -541,7 +544,8 @@
     100.67
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_서초구": {
   "value": 100.34,
@@ -677,7 +681,8 @@
     100.34
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_송파구": {
   "value": 101.79,
@@ -813,7 +818,8 @@
     101.79
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_강남구": {
   "value": 43.05,
@@ -949,7 +955,8 @@
     43.05
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_서초구": {
   "value": 43.21,
@@ -1085,7 +1092,8 @@
     43.21
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_송파구": {
   "value": 42.95,
@@ -1221,7 +1229,8 @@
     42.95
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "supply_demand": {
   "value": 106.76,
@@ -1357,7 +1366,8 @@
     106.76
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_sale": {
   "value": 1308.56,
@@ -1489,7 +1499,8 @@
     1308.56
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_jeonse": {
   "value": 836.11,
@@ -1621,6 +1632,7 @@
     836.11
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  }
 }

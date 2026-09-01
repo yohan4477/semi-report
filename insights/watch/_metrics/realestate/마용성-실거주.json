@@ -133,7 +133,8 @@
     101.32
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_용산구": {
   "value": 100.7,
@@ -269,7 +270,8 @@
     100.7
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "sale_idx_성동구": {
   "value": 101.17,
@@ -405,7 +407,8 @@
     101.17
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_마포구": {
   "value": 101.02,
@@ -541,7 +544,8 @@
     101.02
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_용산구": {
   "value": 100.69,
@@ -677,7 +681,8 @@
     100.69
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_idx_성동구": {
   "value": 101.53,
@@ -813,7 +818,8 @@
     101.53
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_마포구": {
   "value": 48.26,
@@ -949,7 +955,8 @@
     48.26
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_용산구": {
   "value": 42.59,
@@ -1085,7 +1092,8 @@
     42.59
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "jeonse_ratio_성동구": {
   "value": 44.27,
@@ -1221,7 +1229,8 @@
     44.27
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_sale": {
   "value": 1308.56,
@@ -1353,7 +1362,8 @@
     1308.56
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  },
  "median_jeonse": {
   "value": 836.11,
@@ -1485,6 +1495,7 @@
     836.11
    ]
   ],
-  "partial": false
+  "partial": false,
+  "dropped": 0
  }
 }
