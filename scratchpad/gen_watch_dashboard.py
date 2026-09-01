@@ -33,7 +33,19 @@ LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목'}
 
 # 트리거 표의 열은 어느 자산군이든 같다 — 어댑터가 자산군마다 값만 다르게 채운다.
 # 「언제 것 · 성격」은 CLAUDE.md 가 값에 요구하는 두 열이라 어댑터 계약에 박혀 있다.
-TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '언제 것', '성격']
+TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '상태', '언제 것', '성격']
+
+# 상태 딱지 — 걸린 것이 표에서 눈에 띄어야 한다. 「지금 걸렸나」가 이 장의 존재 이유인데
+# 지금 값과 조건을 나란히 놓기만 하면 사람이 줄마다 암산으로 부등호를 세운다.
+STATE_CSS = {'걸림': 'background:var(--warn,#c2831f);color:#fff',
+             '근접': 'border:1px solid var(--warn,#c2831f)'}
+
+
+def state_tag(st, why):
+    style = STATE_CSS.get(st, 'color:var(--ink-3)')
+    return ('<span title="%s" style="%s;border-radius:9px;padding:1px 7px;'
+            'font-size:.72rem;font-weight:800;white-space:nowrap">%s</span>'
+            % (wl.esc(why), style, wl.esc(st)))
 
 # 열쇠 앞머리를 도해 제목으로. 없으면 열쇠를 그대로 쓴다
 TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수',
@@ -51,13 +63,16 @@ def trg_row(t):
     비워 두면 「아직 안 받아 온 값」과 「애초에 값이 아닌 것」이 화면에서 같아 보인다."""
     e = wl.esc
     if t['kind'] == wl.KIND_EVENT:
-        return [e(t['what']), '<i>사건</i>', e(t['cond']), '—', '사건']
+        return [e(t['what']), '<i>사건</i>', e(t['cond']),
+                state_tag('사람 판정', '공표가 났나 안 났나로 갈린다'), '—', '사건']
     v = t['value']
-    return [e(t['what']),
-            '—' if v is None else e(v),
-            e(t['cond']),
-            e(t['as_of'] or '—'),
-            e(t['nature'] or '자리표시')]
+    st, why = wl.state_now(t['cond'], t['series'])
+    # 단위를 붙인다. 43.05·1308.56 이 맨 숫자로 서면 무엇을 재는 값인지 표에서 안 보인다
+    unit = t.get('unit') or ''
+    shown = '—' if v is None else e(v) + (' <span class="t-axis">%s</span>' % e(unit)
+                                          if unit and unit not in ('배',) else '')
+    return [e(t['what']), shown, e(t['cond']), state_tag(st, why),
+            e(t['as_of'] or '—'), e(t['nature'] or '자리표시')]
 
 
 def figs_of(w):
@@ -117,6 +132,37 @@ def card(w):
 # ── 견주는 층 ────────────────────────────────────────────────────────────
 # 집 구하는 사람은 권역 하나를 보는 게 아니라 여럿을 견준다. 카드를 하나씩 열어야
 # 견줄 수 있으면 그 일이 안 일어난다 — 타일과 같은 자리에 층으로 세운다.
+def fired_block(watches):
+    """지금 걸린 조건과 근접한 것만 모아 맨 위에 세운다.
+
+    이게 없으면 매달 카드를 전부 열어 표를 눈으로 재야 한다. 실제로는 안 열게 되고
+    넘은 줄을 놓친다 — 설계가 「알리는 길이 없다」로 적어 둔 자리를 화면이 메운다."""
+    rows = []
+    for w in watches:
+        title = '%s — %s' % (w['target'], w['view']) if w.get('view') else w['target']
+        for t in w['triggers']:
+            if t['kind'] != wl.KIND_VALUE:
+                continue
+            st, why = wl.state_now(t['cond'], t['series'])
+            if st in ('걸림', '근접'):
+                rows.append((0 if st == '걸림' else 1, title, t, st, why))
+    if not rows:
+        return ('<p class="xl-lede"><b>지금 걸린 조건이 없습니다.</b> 값 트리거 가운데 '
+                '조건에 든 것도, 문턱 가까이 온 것도 없습니다.</p>')
+    rows.sort(key=lambda r: (r[0], r[1]))
+    n_hit = sum(1 for r in rows if r[0] == 0)
+    h = ['<p class="xl-lede"><b>지금 걸린 조건 %d개</b>, 문턱 가까이 온 것 %d개입니다. '
+         '아래 표의 이름을 누르면 그 카드로 갑니다.</p>' % (n_hit, len(rows) - n_hit)]
+    h.append(cl.tbl_html((
+        '지금 걸린 조건 · 가까이 온 조건',
+        ['어디', '무엇을', '지금 값', '걸리는 조건', '상태', '얼마나', '언제 것'],
+        [['<a href="#%s">%s</a>' % (cl.slug(title), wl.esc(title)),
+          wl.esc(t['what']), wl.esc(t['value']), wl.esc(t['cond']),
+          state_tag(st, why), wl.esc(why), wl.esc(t['as_of'] or '—')]
+         for _o, title, t, st, why in rows])))
+    return ''.join(h)
+
+
 def compare_layer(watches):
     """구 아홉의 전세가율을 한 판에 세우고, 묶음이 실제로 붙어 다니는지를 표로 낸다.
 
@@ -154,10 +200,11 @@ def compare_layer(watches):
                       '전세가율 — 중위 매매가격 대비 중위 전세가격 (%%, %s%s)'
                       % (asof, ' 기준. 구마다 갱신월이 다르다' if mixed else ''), note=src)
 
-    h = ['<p class="xl-lede">전세가율은 <b>한 수가 두 방향으로</b> 읽힙니다. 올라가면 '
+    h = [fired_block(watches)]
+    h.append('<p class="xl-lede">전세가율은 <b>한 수가 두 방향으로</b> 읽힙니다. 올라가면 '
          '보증금이 집값에 가까워지고, 동시에 「이 돈이면 사는 게 낫다」 쪽으로도 밉니다. '
          '내려가면 매매로 갈아타는 데 드는 자기 돈이 늘었다는 뜻입니다. '
-         '권역마다 그 수가 얼마나 다른지를 먼저 봅니다.</p>']
+             '권역마다 그 수가 얼마나 다른지를 먼저 봅니다.</p>')
     h.append(cl.fig_html(('구 아홉의 전세가율', svg, src)))
     same = [r for r in rows if r[3] == asof]
     hi, lo = max(same, key=lambda r: r[2]), min(same, key=lambda r: r[2])
@@ -185,8 +232,6 @@ def compare_layer(watches):
 
 WATCHES = wl.load_all()
 CARDS = [card(w) for w in WATCHES]
-NVAL = sum(1 for w in WATCHES for t in w['triggers'] if t['kind'] == wl.KIND_VALUE)
-NFILLED = sum(1 for w in WATCHES for t in w['triggers'] if t['value'] is not None)
 
 HEADER = '''  <header>
     <p class="eyebrow">포트폴리오 — 무엇을 왜 보고 있나</p>
@@ -201,8 +246,8 @@ LEDE = ('<p class="lede"><b>보유 자산이 아닙니다.</b> 손익·비중·�
         '보고 있는 대상마다 「왜 보나」와 「무엇이 일어나면 판단이 바뀌나」만 세웁니다. '
         '부동산은 <b>권역</b>, 주식은 <b>종목</b>이 한 줄입니다.</p>'
         '<p class="lede">트리거는 갈래가 둘입니다. <b>값</b>은 스크립트가 받아 채우고, '
-        '<b>사건</b>은 공표가 날 때 사람이 갱신합니다. 값 트리거 %d개 중 <b>%d개</b>가 채워져 '
-        '있습니다 — 성격이 <b>자리표시</b>인 줄은 아직 판단 근거가 아닙니다.</p>' % (NVAL, NFILLED))
+        '<b>사건</b>은 공표가 날 때 사람이 갱신합니다. 성격이 <b>자리표시</b>인 줄은 '
+        '아직 원천이 없어 판단 근거가 아닙니다.</p>')
 
 ASOF = max([m.get('as_of', '') for w in WATCHES for m in (w['metrics'] or {}).values()]
            or ['—'])

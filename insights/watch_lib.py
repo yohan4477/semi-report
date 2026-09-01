@@ -244,3 +244,38 @@ def backtest(cond, series):
     vals = [v for _t, v in series]
     fired = [i for i in range(len(vals)) if fires_at(kind, num, vals, i)]
     return len(fired), len(vals), bool(fired and fired[-1] == len(vals) - 1)
+
+
+def state_now(cond, series):
+    """지금 이 조건이 어떤 상태인가. (표시, 설명).
+
+    표시는 걸림 · 근접 · 멂 · 사람 판정 · — 다섯. 「지금 걸렸나」를 카드 산문에 손으로
+    적던 것을 여기서 낸다 — 손으로 적으면 값이 바뀌어도 그 문장이 안 바뀐다.
+    거리를 못 재는 꼴(경신류)은 창 안에서 몇 번째인지로 말한다."""
+    if not series:
+        return '—', '값이 아직 없다'
+    kind, num = parse_cond(cond)
+    if kind is None:
+        return '사람 판정', '조건을 기계가 못 읽는다'
+    vals = [v for _t, v in series]
+    i = len(vals) - 1
+    if fires_at(kind, num, vals, i):
+        return '걸림', '지금 조건에 든다'
+    v = vals[i]
+    if kind in ('above', 'below'):
+        gap = (num - v) if kind == 'above' else (v - num)
+        span = max(vals) - min(vals)
+        near = span and gap <= span * 0.25
+        return ('근접' if near else '멂',
+                '문턱까지 %.2f' % gap + (' (이력 변동폭의 %.0f%%)' % (100.0 * gap / span)
+                                      if span else ''))
+    if kind == 'peak_down':
+        peak = max(vals)
+        need = peak * (1 - num / 100.0)
+        return ('근접' if v <= need * 1.02 else '멂',
+                '고점 %.2f 대비 지금 %+.1f%%' % (peak, (v / peak - 1) * 100))
+    # 경신류 — 창 안에서 몇 번째인지가 곧 얼마나 가까운지다
+    w = vals[max(0, i - int(num) + 1):i + 1]
+    rank = (sorted(w, reverse=True).index(v) + 1 if kind == 'max_n'
+            else sorted(w).index(v) + 1)
+    return ('근접' if rank <= 3 else '멂', '최근 %d개월 중 %d번째' % (len(w), rank))
