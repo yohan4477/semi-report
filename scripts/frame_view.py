@@ -1856,6 +1856,9 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     # LR 로 온 판 넷 중 둘이 세로로 떨어졌다(2026-09-01). 짧은 이름이면 넷도 앉는다.
     # 굽기가 실제로 실패할 때만 세로로 물러난다
     plans = []
+    # 방향이 뭐라고 적혀 왔든 **가로를 먼저 시도한다**(2026-09-01 결정). 도해는 좌에서
+    # 우로 읽는 것이 기본이고, 세로는 가로가 어떤 폭에서도 안 될 때만 쓴다
+    horizontal = True
     if horizontal:
         # 가로로 그리라고 적혀 온 판은 **폭을 넓혀서라도 가로로 세운다.** 이름이 길면
         # 520 에 네 열이 안 들어가는데(「Broadcom: Tomahawk 스위치/ESUN 네트워크」 하나가
