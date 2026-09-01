@@ -1749,11 +1749,12 @@ def _mm_weak_groups(order, edges):
     return sorted(groups.values(), key=lambda gr: idx[gr[0]])
 
 
-def _mm_build(names, rows, edges, width, wrap_label=False):
+def _mm_build(names, rows, edges, width, wrap_label=False, keep_cols=False):
     """자리(rows, 파도마다 id 리스트)가 정해진 상자들을 판 하나로 굽는다. 실패하면 None."""
     # 파도 사이 틈 — 화살촉이 8px 라 10 을 주면 막대가 2px 만 남아 촉만 보인다
     # (2026-09-01). 20 이면 막대 12px + 촉 8px 로 이음이 선으로 읽힌다
     p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=34.0,
+                         keep_cols=keep_cols,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
                          wrap_label=wrap_label)
     slot = {}
@@ -1832,6 +1833,11 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     # 프롬프트로 「형제는 셋까지」를 시켰는데, 그건 우리 판이 좁아서 생긴 사정이지
     # 그림의 규칙이 아니다 — 받는 쪽에 시킬 일이 아니라 여기서 감당한다.
     # 넘치는 파도는 셋씩 끊어 잇달아 놓는다(2026-09-01)
+    # 넓은 파도를 쪼개는 것은 **세로로 세울 때만** 하는 일이다. 가로로 세우면 파도가
+    # 열이 되고 형제는 위아래로 쌓이므로 폭이 안 는다 — 거기서 쪼개면 한 파도가 열 둘로
+    # 갈려, 같은 걸음수에 있어야 할 상자가 앞뒤 열로 흩어지고 그 사이를 선이 관통한다
+    # (2026-09-01, TSMC 와 AMD 가 갈리며 TSMC->Celestica 선이 AMD 를 뚫었다)
+    tall = rows
     wide = []
     for lv in rows:
         if len(lv) <= 3:
@@ -1855,7 +1861,7 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
         # 520 에 네 열이 안 들어가는데(「Broadcom: Tomahawk 스위치/ESUN 네트워크」 하나가
         # 288px 다), 그때 세로로 물러나면 좌우로 읽으라고 그린 판이 위아래가 된다.
         # 판이 넓어지면 화면에서 축소돼 글자가 작아지는 것은 감수한다(2026-09-01 결정)
-        tr = _mm_transpose(rows)
+        tr = _mm_transpose(tall)
         for w in (width, width * 1.25, width * 1.5, width * 1.75, width * 2.0):
             plans.append((tr, w))
     plans.append((rows, width))
@@ -1863,7 +1869,8 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
         for wrap_label in (False, True):
             # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
             # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
-            svg = _mm_build(names, plan, edges, w, wrap_label=wrap_label)
+            svg = _mm_build(names, plan, edges, w, wrap_label=wrap_label,
+                            keep_cols=(plan is not rows))
             if svg:
                 return svg
     return None

@@ -187,8 +187,12 @@ class Plate(object):
 
     def __init__(self, width=520.0, top=16.0, gap_x=GAP_X, gap_y=GAP_Y, mid='',
                  stretch=True, subout=False, pad_y=PAD_Y, bottom=14.0,
-                 fs=FS, fs_s=FS_S, wrap_label=False):
+                 fs=FS, fs_s=FS_S, wrap_label=False, keep_cols=False):
         self.W = float(width)
+        # 한 칸만 든 줄을 판 폭 전체로 늘릴지. 손으로 그린 판에서는 늘리는 편이 낫지만,
+        # 파도를 열로 세운 판(가로 도해)에서는 한 칸짜리 줄이 정상이라 늘리면 안 된다 —
+        # 그 줄이 판을 가로막아 위로 가는 선이 반드시 그 상자를 뚫는다(2026-09-01)
+        self.keep_cols = bool(keep_cols)
         self.top = float(top)
         self.gap_x, self.gap_y = gap_x, gap_y
         self.mid = mid              # 열 사이 도랑에 세울 역할 라벨(흐름도 규칙 3)
@@ -329,7 +333,7 @@ class Plate(object):
             # 한 칸만 든 줄은 판을 가로질러 세운다. 안 그러면 그 줄만 반쪽에 몰려
             # 오른쪽이 통째로 비고, 빈자리 때문에 글자가 더 작아 보인다
             filled = [c for c in range(ncol) if c < len(r) and r[c]]
-            wide = len(filled) == 1 and ncol > 1
+            wide = len(filled) == 1 and ncol > 1 and not self.keep_cols
             for c in range(ncol):
                 cell = r[c] if c < len(r) else None
                 if not cell:
