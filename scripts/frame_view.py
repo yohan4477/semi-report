@@ -1342,7 +1342,10 @@ def _kept(block, html):
         # 이 안전망이 헛걸린다(2026-09-01). 따옴표도 같다 — 이름에 빈칸이 들면
         # mermaid 가 `A["구매 부서"]` 로 한 겹 더 감싸는데, 그 따옴표를 표기로 안 보면
         # 판이 이름을 제대로 실어도 「"구매」가 빠진 낱말로 잡혀 판이 통째로 버려진다
-        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•━┼┴┬├┤►(){}"\']', ' ', ln)
+        # 밑줄도 표기다 — mermaid id 를 「작업별_랙_분리」로 쓰면 판에는 「작업별 랙
+        # 분리」로 서는데, 밑줄째 한 낱말로 세면 빠진 낱말로 잡혀 판이 통째로 버려진다
+        # (2026-09-01, 영문 병기를 막자 받은 답이 id 를 한글로 쓰기 시작했다)
+        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•━┼┴┬├┤►(){}"\'_]', ' ', ln)
         for w in re.split(r'\s+', bare):
             w = w.strip()
             if len(re.findall(r'[가-힣A-Za-z0-9]', w)) >= 3 and w != 'text':
@@ -1432,7 +1435,10 @@ _MM_HEAD = re.compile(r'^\s*(flowchart|graph)\s+(LR|TD|TB|BT|RL)\s*$', re.I | re
 _MM_SKIP_LINE = re.compile(
     r'^\s*(flowchart\b|graph\b|subgraph\b|end\s*$|direction\b|style\b|classDef\b|'
     r'class\b|click\b|linkStyle\b|%%)', re.I)
-_MM_ID = r'[A-Za-z0-9_]+'
+# id 에 한글이 온다. mermaid 는 허용하고, 받은 답이 실제로 그렇게 쓴다 —
+# 「작업별_랙_분리[작업별 랙 분리]」(2026-09-01, 영문 병기를 막자 id 까지 한글로 왔다).
+# 영숫자만 보면 그 줄의 이음이 통째로 안 읽혀 판이 버려진다
+_MM_ID = r'[A-Za-z0-9_가-힣]+'
 _MM_BR = r'(\[[^\]]+\]|\([^\)]+\)|\{[^\}]+\})'
 _MM_DECL = re.compile(r'^\s*(%s)\s*%s\s*$' % (_MM_ID, _MM_BR))
 _MM_EDGE = re.compile(
@@ -1533,8 +1539,13 @@ def _mm_bracket_text(s):
 # subgraph 줄은 `subgraph 제목` 으로도 오고 `subgraph V["제목"]` 으로도 온다.
 # id 와 괄호는 표기이지 제목이 아니다 — 통째로 받으면 캡션에 `V["설계 주체 —
 # 칩 벤더"]` 가 그대로 찍힌다(2026-09-01)
-_MM_SUBGRAPH = re.compile(
-    r'^\s*subgraph\s+(?:%s\s*)?(\[[^\]]+\]|"[^"]+"|.+?)\s*$' % _MM_ID, re.I)
+# subgraph 는 두 꼴로 온다 — `subgraph id ["제목"]` 과 `subgraph 제목`.
+# 한 정규식에 담고 id 를 선택으로 두면, id 에 한글이 허용된 뒤로 제목 없는 꼴의
+# **첫 낱말을 id 로 먹는다**(2026-09-01, 「메모리 접근 — NUMA」가 「접근 — NUMA」로
+# 잘렸다). 괄호가 붙은 꼴을 먼저 보고, 안 맞으면 뒤를 통째로 제목으로 받는다
+_MM_SUBGRAPH_ID = re.compile(
+    r'^\s*subgraph\s+(?:%s\s+)?(\[[^\]]+\]|"[^"]+")\s*$' % _MM_ID, re.I)
+_MM_SUBGRAPH = re.compile(r'^\s*subgraph\s+(.+?)\s*$', re.I)
 _MM_END = re.compile(r'^\s*end\s*$', re.I)
 
 
@@ -1573,7 +1584,7 @@ def _mm_parse(block):
             continue
         # subgraph·end 는 펴기 전(원래 한 줄)에 먼저 본다 — 펴는 대상은
         # 이음 줄뿐이라 제어 줄에는 `&` 가 없다
-        sm = _MM_SUBGRAPH.match(raw_ln)
+        sm = _MM_SUBGRAPH_ID.match(raw_ln) or _MM_SUBGRAPH.match(raw_ln)
         if sm:
             t = sm.group(1).strip()
             if len(t) > 1 and t[0] == '[' and t[-1] == ']':
@@ -1819,8 +1830,29 @@ def mermaid_verify(block):
 
 def _mm_content_only(block):
     """제어 줄(flowchart·subgraph·end·style 등)을 뺀 나머지 — mermaid 문법
-    낱말 자체는 화면에 실을 뜻이 없으니 `_kept` 검사에서 요구하지 않는다."""
-    return chr(10).join(ln for ln in block.split(chr(10)) if not _MM_SKIP_LINE.match(ln))
+    낱말 자체는 화면에 실을 뜻이 없으니 `_kept` 검사에서 요구하지 않는다.
+
+    노드 id 도 표기다. `host_cpu[호스트 CPU]` 에서 화면에 서는 것은 대괄호 안이고
+    `host_cpu` 는 어디에도 안 나온다 — 그걸 낱말로 세면 판이 낱말을 흘린 것으로 잡혀
+    통째로 버려진다(2026-09-01, 받은 답이 id 를 길게 쓰면서 판 셋이 그렇게 죽었다).
+    이름이 붙은 노드는 id 를 떼고 이름만 남긴다. 이름 없이 맨몸으로 선 id 는 그
+    글자가 그대로 화면에 서므로 남긴다.
+    """
+    # 이름이 붙은 id 를 먼저 모은다. 그 id 는 뒤 줄에 맨몸으로 다시 나와도 표기다 —
+    # `host_cpu[호스트 CPU]` 로 한 번 이름이 붙으면 그다음 `host_cpu` 도 화면에는
+    # 「호스트 CPU」로 선다
+    labeled = set(m.group(1) for m in _MM_ANY_DECL.finditer(block))
+    bare = [re.compile(r'(?<![A-Za-z0-9_가-힣])%s(?![A-Za-z0-9_가-힣])' % re.escape(i))
+            for i in labeled]
+    lines = []
+    for ln in block.split(chr(10)):
+        if _MM_SKIP_LINE.match(ln):
+            continue
+        ln = _MM_ANY_DECL.sub(lambda m: m.group(0)[len(m.group(1)):], ln)
+        for rx in bare:
+            ln = rx.sub(' ', ln)
+        lines.append(ln)
+    return chr(10).join(lines)
 
 
 def _mermaid_block_html(block):

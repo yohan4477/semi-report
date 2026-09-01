@@ -77,6 +77,20 @@ def run(src, url, today, allow_lower=False):
         model = gem_ask.ask(io.open(tmp, encoding='utf-8').read(), dest + '.raw',
                             allow_lower=allow_lower)
         body = io.open(dest + '.raw', encoding='utf-8').read()
+        # 받은 답을 재고 덮는다. 복사 버튼이 답 전체가 아니라 코드 블록 하나만 집어
+        # 오는 일이 있다 — 2026-09-01 에 227자짜리가 와서 4,039자짜리 좋은 프레임을
+        # 조용히 덮었다. 짧거나 절이 하나도 없으면 안 덮고 받은 것만 .bad 로 남긴다
+        why = ''
+        if len(body) < 1500:
+            why = '너무 짧다(%d자)' % len(body)
+        elif '##' not in body:
+            why = '절(##)이 하나도 없다'
+        if why:
+            os.rename(dest + '.raw', dest + '.bad')
+            print('%s -> 안 덮는다: %s. 받은 것은 %s.bad'
+                  % (kind, why, os.path.basename(dest)), file=OUT)
+            os.remove(tmp)
+            continue
         got[kind] = body
         io.open(dest, 'w', encoding='utf-8').write(
             HEAD % (src, kind, model, kind, today) + body)
