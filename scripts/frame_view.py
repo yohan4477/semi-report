@@ -1561,7 +1561,10 @@ class _MGraph(object):
 
     def _register(self, nid, disp, title=None):
         if nid not in self.names:
-            self.names[nid] = disp or nid
+            # 이름을 따로 안 붙이고 id 를 이름처럼 쓰는 판이 온다 —
+            # 「사전채우기_전용랙 --> 작업량_변동1」. 뜻은 다 있고 밑줄만 mermaid 표기다.
+            # 그대로 세우면 화면에 밑줄이 찍히니 빈칸으로 편다(2026-09-01)
+            self.names[nid] = disp or (nid.replace('_', ' ') if '_' in nid else nid)
             self.order.append(nid)
         elif disp and self.names[nid] == nid:
             self.names[nid] = disp   # 맨몸으로 먼저 나온 id 에 뒤늦게 이름이 붙었다

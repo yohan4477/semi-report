@@ -122,18 +122,25 @@ def cards_of(slug):
 # 걸렸다 — 프롬프트에서 빼고 여기서 센다(2026-09-01). 제품·회사·사람 이름은 그대로
 # 두는 것이 맞으므로 FAIL 로 올리지 않고 세기만 한다
 # F4 — 이름 없이 선 노드. mermaid 는 `CPU_AMD --> 조립` 처럼 대괄호 없이도 쓸 수 있는데,
-# 그러면 id 가 그대로 화면에 선다 — 「CPU_AMD」·「파운드리_TSMC」로 찍힌 자리가 그것이다.
-# id 는 표기이지 이름이 아니다. 밑줄이 든 것만 센다(짧은 영문 약어는 그대로 이름일 수 있다)
+# 그러면 id 가 그대로 화면에 선다. 렌더러가 밑줄을 빈칸으로 펴 주므로 화면은 읽히지만
+# (「사전채우기 전용랙」), 이름을 지은 것이 아니라 표기를 그대로 읽은 것이라 세어 둔다
 _FENCE_MM = re.compile(r'```mermaid\n(.*?)\n```', re.S)
 
 
 def bare_nodes(body):
-    """판마다 이름이 안 붙은 노드. `frame_view` 파서가 읽은 것을 그대로 쓴다."""
+    """대괄호로 이름을 안 붙인 노드.
+
+    파서가 읽은 이름과 id 를 견주면 안 된다 — 렌더러가 밑줄을 빈칸으로 펴 주므로
+    이름이 id 와 달라지고, 그러면 이 검사가 제 몫을 못 한다(2026-09-01, 고친 다음
+    커밋에서 바로 0 이 됐다). 표기 자체를 본다: 그 판에서 한 번도 `id[이름]` 꼴로
+    선언되지 않은 id 를 센다. 화면에는 그 id 가 이름 자리에 선다.
+    """
     out = []
     for blk in _FENCE_MM.findall(body):
+        named = set(m.group(1) for m in frame_view._MM_ANY_DECL.finditer(blk))
         g = frame_view._mm_parse(blk)
         for nid in g.order:
-            if g.names[nid] == nid and '_' in nid:
+            if nid not in named:
                 out.append(nid)
     return out
 
