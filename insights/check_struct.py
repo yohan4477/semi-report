@@ -14,7 +14,7 @@ CLAUDE.md 「글은 기본이 구조다」는 지금까지 스킬(`doc-structure
 
   S1  앞머리에 물음·바탕·축 셋이 다 있나              FAIL
   S2  목차가 있고 그 첫 줄이 「구조.」인가              FAIL
-  S3  마디가 본문의 말이거나, 무엇으로 갈랐는지 밝혔나    FAIL
+  S3  왼쪽 칸이 본문의 말이거나, 무엇으로 갈랐는지 밝혔나  FAIL
   S3c 뿌리가 제 자식을 무슨 방법으로 갈랐는지 적었나      FAIL
   S4  절 제목이 물음인가                            FAIL
   S5  목차의 번호와 실제 절 번호가 맞나                FAIL
@@ -194,38 +194,32 @@ def check_card(where, body):
         if f == '한계':
             continue
         if f in BAD_NODE:
-            add('FAIL', at, 'S3', '글의 꼴을 마디로 적었다 — 대상의 마디를 댄다: %s' % f)
+            add('FAIL', at, 'S3', '글의 꼴을 목차 칸에 적었다 — 다루는 것을 댄다: %s' % f)
             continue
         # 대상의 마디라면 본문에서 그 말로 이야기하고 있어야 한다. 글이 굴러가는 차례로
         # 갈랐다고 밝힌 카드는 그 말이 본문에 없어도 된다 — 그건 대상의 말이 아니다
         core = max(f.split(), key=len)
         if core not in body_txt and not axis:
-            add('FAIL', at, 'S3', '본문에 안 나오는 마디다 — 대상의 마디를 대거나 '
+            add('FAIL', at, 'S3', '본문에 안 나오는 말이다 — 다루는 것을 대거나 '
                 '무엇으로 갈랐는지를 목차에 밝힌다: %s' % f)
 
-    # S3b 마디 옆 칸은 그 마디의 자식을 무슨 기준으로 갈랐는지다. 마디만 있으면
-    # 무슨 기준으로 나뉜 자식인지가 안 보인다
-    shapes = [txt(x) for x in TF.findall(mbox.group(1))] if mbox else []
-    if mbox and not shapes:
-        add('FAIL', at, 'S3b', '목차에 글의 꼴 칸이 없다 — 마디와 꼴 둘 다 세운다')
+    # S3b 는 걷었다(2026-09-01). 목차 옆 칸에 글의 꼴(대비·인과 사슬 …)을 적게 했는데,
+    # 적고 나면 목차가 분류표가 된다 — 무엇을 다루고 무엇을 묻는지는 두 칸이면 담긴다.
+    # 글의 꼴 일곱은 목차가 아니라 도해를 그릴 때와 요소를 쪼갤 때 쓴다.
 
     # S3c 뿌리도 제 자식을 무슨 방법으로 갈랐는지 적어야 한다. **한 노드는 한 방법으로만
     # 쪼갠다** — 안 적으면 방법이 섞여도 아무도 모른다. 「대비」라 적어 놓고 대비의 항이
     # 아닌 것을 같은 자리에 둔 적이 있다(2026-08-29). 마디마다의 방법은 S3b 가 본다
     if mbox and not axis:
-        add('FAIL', at, 'S3c', '마디들을 무슨 방법으로 갈랐는지가 없다 — '
+        add('FAIL', at, 'S3c', '목차 칸들을 무슨 방법으로 갈랐는지가 없다 — '
             "('toc', (방법, 갈래목록)) 로 적는다")
-    for sh in shapes:
-        if sh not in SHAPE_WORDS:
-            add('FAIL', at, 'S3b', '글의 꼴이 정해진 일곱에 없다: %s' % sh)
-
     # S9 차례로 갈랐다고 밝혔으면 마디가 실제로 순서를 갖는가. 정해진 목록과 견주지
     # 않는다 — 무엇이 먼저인지는 그 글이 안다. 여기서는 같은 마디가 두 번 서거나
     # 마디가 둘뿐이어서 차례랄 게 없는 경우만 본다
     if axis:
         dup = [f for f in set(forms_used) if forms_used.count(f) > 1]
         if dup:
-            add('FAIL', at, 'S9', '차례에 같은 마디가 두 번 선다: %s' % ' · '.join(dup))
+            add('FAIL', at, 'S9', '차례에 같은 것이 두 번 선다: %s' % ' · '.join(dup))
         if len(forms_used) < 3:
             add('WARN', at, 'S9', '마디가 %d 개뿐이라 차례랄 것이 없다 — 축을 지우거나 '
                 '더 가른다' % len(forms_used))

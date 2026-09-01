@@ -1430,8 +1430,8 @@ def _denorm_emoji(block):
 # subgraph·style·classDef·class·click·linkStyle·%% 주석은 그 줄만 건너뛴다.
 _MM_HEAD = re.compile(r'^\s*(flowchart|graph)\s+(LR|TD|TB|BT|RL)\s*$', re.I | re.M)
 _MM_SKIP_LINE = re.compile(
-    r'^\s*(flowchart\b|graph\b|subgraph\b|end\s*$|style\b|classDef\b|class\b|'
-    r'click\b|linkStyle\b|%%)', re.I)
+    r'^\s*(flowchart\b|graph\b|subgraph\b|end\s*$|direction\b|style\b|classDef\b|'
+    r'class\b|click\b|linkStyle\b|%%)', re.I)
 _MM_ID = r'[A-Za-z0-9_]+'
 _MM_BR = r'(\[[^\]]+\]|\([^\)]+\)|\{[^\}]+\})'
 _MM_DECL = re.compile(r'^\s*(%s)\s*%s\s*$' % (_MM_ID, _MM_BR))
@@ -1452,13 +1452,34 @@ _MM_BIDIR = re.compile(r'<-->')
 _MM_INLINE_LABEL = re.compile(r'--([^->][^-]*?)-->')
 
 
+# 이음을 한 줄에 이어 쓴 꼴(`A --> B --> C`)을 낱개 줄로 편다. 우리 이음 규칙은
+# 줄 하나에 이음 하나라, 안 펴면 첫 이음만 읽히고 뒤 상자가 통째로 사라진다 —
+# 그러면 낱말 검사(`_kept`)가 판을 버리고 글로도 못 풀어 원본이 목록으로 찍힌다
+# (2026-09-01, 제미나이 그록봇 「하드웨어 구매 → 소프트웨어 설치 → 직접 유지보수」)
+_MM_ARROW_SPLIT = re.compile(r'(-->\|[^|]*\||-->|---)')
+
+
+def _mm_chain(ln):
+    """`A --> B --> C` 를 `A --> B` · `B --> C` 두 줄로. 이음이 하나면 그대로."""
+    parts = _MM_ARROW_SPLIT.split(ln)
+    if len(parts) < 5:                      # 노드·이음·노드 = 셋이면 이음 하나뿐이다
+        return [ln]
+    head = parts[0][:len(parts[0]) - len(parts[0].lstrip())]
+    nodes = [parts[i].strip() for i in range(0, len(parts), 2)]
+    ops = [parts[i] for i in range(1, len(parts), 2)]
+    if not all(nodes):                      # 빈 자리가 있으면 손대지 않는다
+        return [ln]
+    return [head + nodes[i] + ' ' + ops[i] + ' ' + nodes[i + 1]
+            for i in range(len(ops))]
+
+
 def _mm_normalize(block):
     """줄마다 양방향 화살표·대시-라벨-대시 화살표를 우리 파서가 아는 꼴로."""
     out = []
     for ln in block.split(chr(10)):
         ln = _MM_BIDIR.sub('-->', ln)
         ln = _MM_INLINE_LABEL.sub(lambda m: '-->|%s|' % m.group(1).strip(), ln)
-        out.append(ln)
+        out.extend(_mm_chain(ln))
     return chr(10).join(out)
 
 
