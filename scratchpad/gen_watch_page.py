@@ -91,6 +91,9 @@ ul.pts li b{color:var(--ink)}
 .lbl{font-size:10px;font-weight:850;letter-spacing:.1em;color:var(--ink-3);margin:22px 0 0}
 figure{margin:9px 0 0}
 figure svg{width:100%;height:auto;display:block}
+/* 도해는 넓은 판·좁은 판 둘을 싣고 화면 폭으로 하나만 보인다. 줄여 그리면 글자가
+   7px 이 되고 최소폭을 두면 오른쪽 끝(제일 최근 달)이 화면 밖으로 나간다 */
+svg.fig-n{display:none}
 figcaption{font-size:.78rem;color:var(--ink-3);margin:5px 0 0}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}
@@ -105,8 +108,11 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
 @media (max-width:620px){
   body{font-size:16px}
   .wrap{padding:0 14px 60px}
-  .row{grid-template-columns:1fr auto;gap:3px 10px}
-  .row-where{grid-column:1/-1}
+  /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
+     세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}
+  .row-where,.row-why{grid-column:1/-1}
+  .row-what{word-break:keep-all;overflow-wrap:anywhere}
   .tw{overflow-x:visible}
   table,thead,tbody,tr,td{display:block;width:100%}
   thead{display:none}
@@ -117,9 +123,8 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
     letter-spacing:.08em;color:var(--ink-3);line-height:1.9}
   td:first-child{font-size:1.02rem;padding-bottom:5px}
   td:first-child::before{display:none}
-  /* 도해는 최소 폭을 지켜 글자가 안 뭉개지게 한다. 그 판만 옆으로 민다 */
-  figure{overflow-x:auto}
-  figure svg{min-width:560px}
+  svg.fig-w{display:none}
+  svg.fig-n{display:block}
   .band{margin-top:32px}
   .line{margin-top:28px}
 }
@@ -177,7 +182,7 @@ def _months(t):
     return int(m.group(1)) * 12 + int(m.group(2)) if m else None
 
 
-def time_ruler(watches):
+def time_ruler(watches, W=640):
     """시그니처 — 값의 나이를 먼저 보여 준다.
 
     이 장의 모든 값에 「언제 것」이 붙는다. 그 나이가 곧 내용인데 표 안에 흩어 두면
@@ -195,7 +200,7 @@ def time_ruler(watches):
     lo, hi = min(xs.values()), max(xs.values())
     # 판을 좁게 잡는다. 920 으로 두면 좁은 화면에서 2.4배 줄어 11px 글자가
     # 4.5px 이 된다 — 벡터라 판을 줄이면 같은 글자가 상대적으로 커진다
-    W, X0, X1, Y = 640, 20, 620, 66
+    X0, X1, Y = 20, W - 20, 66
 
     def px(a):
         return X0 + (X1 - X0) * ((xs[a] - lo) / float(hi - lo) if hi > lo else .5)
@@ -252,9 +257,19 @@ def time_ruler(watches):
             '왼쪽 끝이 오래됐다는 것은 그 자료가 그 뒤로 안 바뀌었다는 뜻입니다.'
             % (who, order[0], order[-1], gap)) if gap >= 1 else \
            ('%s부터 %s까지 들어와 있습니다.' % (order[0], order[-1]))
-    return ('<figure><svg viewBox="0 0 %d 134" role="img" aria-label="값이 언제 것인가">'
-            '%s</svg><figcaption>%s 점 크기는 그 때에 딸린 값의 개수입니다.</figcaption>'
-            '</figure>' % (W, ''.join(o), E(note)))
+    return ('<svg viewBox="0 0 %d 134" role="img" aria-label="값이 언제 것인가" class="%s">'
+            '%s</svg>' % (W, 'fig-w' if W > 400 else 'fig-n', ''.join(o)), note)
+
+
+def time_ruler_fig(watches):
+    """넓은 판과 좁은 판을 한 figure 에 싣는다. 좁은 화면에서 넓은 판을 밀게 두면
+    점 하나만 보이고 나머지는 스크롤 뒤에 숨는다 — 밀 수 있다는 표시도 없다."""
+    wide = time_ruler(watches, 640)
+    if not wide:
+        return ''
+    narrow = time_ruler(watches, 360)
+    return ('<figure>%s%s<figcaption>%s 점 크기는 그 때에 딸린 값의 개수입니다.</figcaption>'
+            '</figure>' % (wide[0], narrow[0], E(wide[1])))
 
 
 def fired(watches):
@@ -368,11 +383,14 @@ def figures(w):
     out = []
     for (base, unit), items in groups.items():
         note = ' · '.join(dict.fromkeys(m.get('src', '') for _n, m in items if m.get('src')))
-        svg = wf.trend([(n, [tuple(x) for x in m['series']]) for n, m in items[:3]],
-                       unit or '값', note=note)
+        ser = [(n, [tuple(x) for x in m['series']]) for n, m in items[:3]]
+        svg = wf.trend(ser, unit or '값', note=note)
         if svg:
-            out.append('<figure>%s<figcaption>%s</figcaption></figure>'
-                       % (svg, E(TITLE.get(base, base))))
+            nsvg = wf.trend(ser, unit or '값', note=note, narrow=True)
+            out.append('<figure>%s%s<figcaption>%s</figcaption></figure>'
+                       % (svg.replace('<svg ', '<svg class="fig-w" ', 1),
+                          nsvg.replace('<svg ', '<svg class="fig-n" ', 1),
+                          E(TITLE.get(base, base))))
     return ''.join(out)
 
 
@@ -476,7 +494,7 @@ def build():
              '깎을 수 있는 장인지, 제도가 그 셈을 바꿨는지. 보유 자산이 아니라 관찰이라 '
              '손익과 비중은 다루지 않습니다.</p>'
              % (len(ws), E(asof), E(lawof)))
-    h.append(time_ruler(ws))
+    h.append(time_ruler_fig(ws))
     h.append('</header>')
 
     h.append('<div class="band"><p class="band-t">지금 걸린 것</p>%s</div>' % fired(ws))

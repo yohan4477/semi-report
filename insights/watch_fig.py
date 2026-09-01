@@ -64,15 +64,23 @@ def _fmt(v):
     return ('%.1f' % v).rstrip('0').rstrip('.')
 
 
-def trend(lines, ylabel, note='', threshold=None):
+# 좁은 판. 폰에서 640 판을 100% 로 줄이면 13px 글자가 7px 이 되고, 최소폭을 두면
+# 오른쪽 끝(제일 최근 달)이 화면 밖으로 나간다 — 둘 다 제일 봐야 할 자리를 숨긴다.
+# 그래서 같은 값을 좁은 판에 한 번 더 그린다. 왼쪽 64 는 「1004.5」여섯 자 자리다
+NW, NX0, NX1 = 360, 64, 316
+
+
+def trend(lines, ylabel, note='', threshold=None, narrow=False):
     """시계열 선 도해.
 
     lines     = [(이름, [(때, 값), …]), …]  — 최대 셋. 같은 것을 여러 곳에서 견주는
                 것(구 셋의 같은 지수)은 축이 하나라 한 판에 둔다. 축이 다르면 판을 나눈다
     ylabel    = 세로 자가 무엇인지. 「지수(2021.6=100)」처럼 기준까지 적는다
     threshold = (이름, 값) 이면 문턱을 점선으로 하나 긋는다. 트리거 조건을 눈으로 보게 하는 자리
+    narrow    = True 면 좁은 판(360)에 그린다. 값·축·범례는 같고 판만 좁다
     반환      = SVG 문자열. 그릴 값이 없으면 None
     """
+    W, X0, X1 = (NW, NX0, NX1) if narrow else (globals()['W'], globals()['X0'], globals()['X1'])
     lines = [(n, s) for n, s in lines if s]
     if not lines:
         return None                      # 값이 없으면 안 그린다
@@ -135,7 +143,7 @@ def trend(lines, ylabel, note='', threshold=None):
                  'stroke-dasharray="6 4"/>' % (y - 5, y - 5))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(threshold[0])))
         y += 20
-    for ln in _wrap(note):
+    for ln in _wrap(note, 34 if narrow else 62):
         o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(ln)))
         y += 18
     return ('<svg viewBox="0 0 %d %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
