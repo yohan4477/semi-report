@@ -136,6 +136,7 @@ def body_html(md, figs=()):
         elif ln.startswith('### '):
             flush()
             out.append('<h3>%s</h3>' % inline(ln[4:].strip()))
+            figs_under(ln[4:].strip())
         elif re.match(r'^\s*[-*] ', ln):
             if para:
                 out.append('<p>%s</p>' % inline(' '.join(para)))
@@ -326,7 +327,10 @@ def check_figs():
             miss = semidoped_figs.missing_values(slug, svg)
             if miss:
                 bad.append('%s/%s %s — 전사에 없는 값 %s' % (slug, lane, title, miss))
-            for h in check_fig.hits(svg):
+            # 엄격 모드로 본다(줄임말·비스듬한 선까지). 화살촉 마커는 <defs> 안 path 라
+            # 비스듬한 선으로 읽히므로 defs 만 걷고 잰다
+            bare = re.sub(r'<defs>.*?</defs>', '', svg, flags=re.S)
+            for h in check_fig.hits(bare, strict=True):
                 bad.append('%s/%s %s — %s' % (slug, lane, title, h))
     return bad
 
