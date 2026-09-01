@@ -166,7 +166,9 @@ def _column_plate(g, groups, width):
             return None
         cols.append((title, [r[0] for r in rows]))
     depth = max(len(c[1]) for c in cols)
-    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+    # 파도 사이 틈 — 화살촉이 8px 라 10 을 주면 막대가 2px 만 남아 촉만 보인다
+    # (2026-09-01). 20 이면 막대 12px + 촉 8px 로 이음이 선으로 읽힌다
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=20.0,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
                          wrap_label=True)
     p.head(*[c[0] for c in cols])
@@ -282,7 +284,9 @@ def _build(names, rows, edges, width, wrap_label=False):
     상자 안에서 여러 줄로 접는다(`fig_layout.wrap`) — 형제 상자를 같은 행에
     나란히 세운 채로 긴 mermaid 이름을 담을 수 있다.
     """
-    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+    # 파도 사이 틈 — 화살촉이 8px 라 10 을 주면 막대가 2px 만 남아 촉만 보인다
+    # (2026-09-01). 20 이면 막대 12px + 촉 8px 로 이음이 선으로 읽힌다
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=20.0,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
                          wrap_label=wrap_label)
     slot = {}

@@ -32,7 +32,7 @@ date: 2026-09-01
 ```mermaid
 flowchart TD
     subgraph V["설계 주체 — 칩 벤더"]
-        V1["구매 부서"] --> V2["총소유비용"]
+        V1["구매 결재자"] --> V2["총소유비용"]
         V2 --> V3["결재용 설계"]
     end
     subgraph L["설계 주체 — 모델 랩"]

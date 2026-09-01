@@ -1335,8 +1335,10 @@ def _kept(block, html):
     for ln in block.split(chr(10)):
         # mermaid 노드 꼴(원·마름모)이 쓰는 ()·{} 도 지운다 — 안 지우면 「E{정확도」처럼
         # 물음표 노드의 여는 중괄호가 낱말에 눌어붙어, 판이 이름을 제대로 실었어도
-        # 이 안전망이 헛걸린다(2026-09-01)
-        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•━┼┴┬├┤►(){}]', ' ', ln)
+        # 이 안전망이 헛걸린다(2026-09-01). 따옴표도 같다 — 이름에 빈칸이 들면
+        # mermaid 가 `A["구매 부서"]` 로 한 겹 더 감싸는데, 그 따옴표를 표기로 안 보면
+        # 판이 이름을 제대로 실어도 「"구매」가 빠진 낱말로 잡혀 판이 통째로 버려진다
+        bare = re.sub(r'[│║|┌┐└┘─═+<>▼▲←→↓↑·\[\]\-=*★•━┼┴┬├┤►(){}"\']', ' ', ln)
         for w in re.split(r'\s+', bare):
             w = w.strip()
             if len(re.findall(r'[가-힣A-Za-z0-9]', w)) >= 3 and w != 'text':
@@ -1484,14 +1486,30 @@ def _is_mermaid_block(block):
     return bool(_MM_HEAD.search(block))
 
 
+def _mm_unquote(t):
+    """이름을 감싼 따옴표를 벗긴다.
+
+    mermaid 는 이름에 빈칸이나 문장부호가 들면 `A["이름"]` 처럼 따옴표로 한 겹 더
+    감싼다. 그 따옴표는 표기이지 이름이 아니다 — 안 벗기면 구운 판에 `"구매 부서"`
+    로 찍힌다(2026-09-01, 판 열일곱이 다 그랬다).
+    """
+    while len(t) > 1 and t[0] == t[-1] and t[0] in (chr(34), chr(39)):
+        t = t[1:-1].strip()
+    return t
+
+
 def _mm_bracket_text(s):
     """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다."""
     if not s:
         return None
-    return s[1:-1].strip()
+    return _mm_unquote(s[1:-1].strip())
 
 
-_MM_SUBGRAPH = re.compile(r'^\s*subgraph\s+(.+?)\s*$', re.I)
+# subgraph 줄은 `subgraph 제목` 으로도 오고 `subgraph V["제목"]` 으로도 온다.
+# id 와 괄호는 표기이지 제목이 아니다 — 통째로 받으면 캡션에 `V["설계 주체 —
+# 칩 벤더"]` 가 그대로 찍힌다(2026-09-01)
+_MM_SUBGRAPH = re.compile(
+    r'^\s*subgraph\s+(?:%s\s*)?(\[[^\]]+\]|"[^"]+"|.+?)\s*$' % _MM_ID, re.I)
 _MM_END = re.compile(r'^\s*end\s*$', re.I)
 
 
@@ -1532,7 +1550,10 @@ def _mm_parse(block):
         # 이음 줄뿐이라 제어 줄에는 `&` 가 없다
         sm = _MM_SUBGRAPH.match(raw_ln)
         if sm:
-            stack.append(sm.group(1).strip())
+            t = sm.group(1).strip()
+            if len(t) > 1 and t[0] == '[' and t[-1] == ']':
+                t = t[1:-1].strip()
+            stack.append(_mm_unquote(t))
             continue
         if _MM_END.match(raw_ln):
             if stack:
@@ -1619,7 +1640,9 @@ def _mm_weak_groups(order, edges):
 
 def _mm_build(names, rows, edges, width, wrap_label=False):
     """자리(rows, 파도마다 id 리스트)가 정해진 상자들을 판 하나로 굽는다. 실패하면 None."""
-    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=10.0,
+    # 파도 사이 틈 — 화살촉이 8px 라 10 을 주면 막대가 2px 만 남아 촉만 보인다
+    # (2026-09-01). 20 이면 막대 12px + 촉 8px 로 이음이 선으로 읽힌다
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=20.0,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
                          wrap_label=wrap_label)
     slot = {}
