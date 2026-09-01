@@ -1456,6 +1456,15 @@ _MM_ANY_DECL = re.compile(r'(%s)\s*%s' % (_MM_ID, _MM_BR))
 # 무시하고 보통 이음으로, 대시-라벨-대시는 파이프 라벨(`-->|라벨|`)로 바꾼다
 _MM_BIDIR = re.compile(r'<-->')
 _MM_INLINE_LABEL = re.compile(r'--([^->][^-]*?)-->')
+# 점선 이음. 받은 답이 「안 일어나는 쪽」을 점선으로 그린다 — `A -. "라벨" .-> B` 와
+# `A -.-> B` 둘 다 온다(2026-09-01, 다크 실리콘 판). 우리는 선 꼴을 안 가리므로
+# 보통 이음으로 바꾼다. 라벨은 파이프 꼴로 옮겨 낱말을 안 잃는다
+_MM_DOT_LABEL = re.compile(r'-\.\s*"?([^"\n]*?)"?\s*\.->')
+_MM_DOT = re.compile(r'-\.->')
+# 겹괄호(원 노드) `A(("이름"))` 는 홑괄호와 같은 자리다. 안쪽만 남긴다
+_MM_DBL_PAREN = re.compile(r'\(\((.*?)\)\)')
+# `--> |라벨|` 처럼 화살표와 파이프 사이에 빈칸이 끼어 온다. 붙여 놓는다
+_MM_PIPE_GAP = re.compile(r'(-->|---)\s+\|')
 
 
 # 이음을 한 줄에 이어 쓴 꼴(`A --> B --> C`)을 낱개 줄로 편다. 우리 이음 규칙은
@@ -1480,9 +1489,19 @@ def _mm_chain(ln):
 
 
 def _mm_normalize(block):
-    """줄마다 양방향 화살표·대시-라벨-대시 화살표를 우리 파서가 아는 꼴로."""
+    """줄마다 우리 파서가 모르는 표기를 아는 꼴로 바꾼다.
+
+    받는 쪽이 mermaid 표기를 골고루 쓴다 — 양방향·점선·겹괄호·대시 사이 라벨·화살표와
+    파이프 사이 빈칸까지. 못 읽는 표기가 하나 오면 그 줄의 이음이 통째로 사라지고,
+    낱말 검사가 판을 버려 원본이 목록으로 찍힌다. 선 꼴(실선·점선)은 우리가 안 가리므로
+    전부 보통 이음으로 모은다 — 잃는 것은 선 모양이고 지키는 것은 낱말이다.
+    """
     out = []
     for ln in block.split(chr(10)):
+        ln = _MM_DOT_LABEL.sub(lambda m: '-->|%s|' % m.group(1).strip(), ln)
+        ln = _MM_DOT.sub('-->', ln)
+        ln = _MM_DBL_PAREN.sub(lambda m: '(%s)' % m.group(1), ln)
+        ln = _MM_PIPE_GAP.sub(lambda m: m.group(1) + '|', ln)
         ln = _MM_BIDIR.sub('-->', ln)
         ln = _MM_INLINE_LABEL.sub(lambda m: '-->|%s|' % m.group(1).strip(), ln)
         out.extend(_mm_chain(ln))
@@ -1530,10 +1549,17 @@ def _mm_unquote(t):
 
 
 def _mm_bracket_text(s):
-    """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다."""
+    """`[이름]`·`(이름)`·`{이름}` 에서 안쪽 글자만 뽑는다.
+
+    이름 안에 줄바꿈 표기(역슬래시 n)가 글자로 들어오는 일이 있다 —
+    `GPU\\n추론 및 의사결정`(2026-09-01). 그대로 두면 한 줄로 붙어 상자가 지나치게
+    넓어지고, 그 넓은 상자를 선이 지나간다. 빈칸으로 바꾸면 `wrap_label` 이 알아서
+    접는다 — 어차피 우리가 상자 폭에 맞춰 다시 나눈다
+    """
     if not s:
         return None
-    return _mm_unquote(s[1:-1].strip())
+    t = _mm_unquote(s[1:-1].strip())
+    return re.sub(r'\\+n', ' ', t).strip()
 
 
 # subgraph 줄은 `subgraph 제목` 으로도 오고 `subgraph V["제목"]` 으로도 온다.
@@ -1938,6 +1964,35 @@ def _mm_content_only(block):
     return chr(10).join(lines)
 
 
+_SVG_RECT = re.compile(r'<rect[^>]*x="([-\d.]+)"[^>]*y="([-\d.]+)"'
+                       r'[^>]*width="([-\d.]+)"[^>]*height="([-\d.]+)"')
+_SVG_LINE = re.compile(r'<path d="([^"]+)" class="fl')
+
+
+def _mm_crossings(svg):
+    """구운 판에서 선이 남의 상자 안을 지나는 자리 수.
+
+    선 끝이 상자에 붙었나는 `check_fig` F5 가 보는데, 선이 **지나가는** 자리는 아무도
+    안 봤다 — 2026-09-01 에 화면에서 그걸 짚어 받고서야 알았다. 토막 가운데가 상자
+    안이면 뚫은 것으로 센다(끝점은 원래 변에 닿으므로 가운데로 본다).
+    """
+    boxes = []
+    for m in _SVG_RECT.finditer(svg or ''):
+        x, y, w, h = [float(v) for v in m.groups()]
+        boxes.append((x, y, x + w, y + h))
+    n = 0
+    for m in _SVG_LINE.finditer(svg or ''):
+        pts = [float(v) for v in re.findall(r'[-\d.]+', m.group(1))]
+        for k in range(0, len(pts) - 3, 2):
+            mx = (pts[k] + pts[k + 2]) / 2.0
+            my = (pts[k + 1] + pts[k + 3]) / 2.0
+            for (bx0, by0, bx1, by1) in boxes:
+                if bx0 + 1 < mx < bx1 - 1 and by0 + 1 < my < by1 - 1:
+                    n += 1
+                    break
+    return n
+
+
 def _mermaid_block_html(block):
     """mermaid 도식 한 덩어리를 판(또는 글)으로. 노드가 둘 미만이면 None."""
     g = _mm_parse(block)
@@ -1953,7 +2008,10 @@ def _mermaid_block_html(block):
             return prose
         return None
     small = _mm_to_plate(g, width=340.0)
-    if small and small != svg and _kept(content, small):
+    # 좁은 판은 칸이 좁아 선이 남의 상자를 지나는 일이 있다 — 넓은 판은 멀쩡한데
+    # 모바일에서만 겹친다(2026-09-01, 할라페뇨 경영 판2). 그런 좁은 판은 안 쓴다.
+    # 넓은 판은 width:100% 라 좁은 화면에서도 줄어들 뿐 겹치지는 않는다
+    if small and small != svg and _kept(content, small) and not _mm_crossings(small):
         return ('<div class="fig-pc">%s</div><div class="fig-mo">%s</div>'
                 % (svg, small))
     return svg
