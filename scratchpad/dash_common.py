@@ -1077,7 +1077,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
            sw_labels=('밸류에이션', '개별 포스트'), page_slug='', home='pick',
-           pick_tabs=None):
+           pick_tabs=None, tiles=True):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -1101,6 +1101,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
 
     newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
     세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다.
+
+    tiles=False면 섹션 타일 층을 아예 안 낸다. pick_tabs 와 같은 축을 고르는 장에서
+    둘을 다 두면 같은 일을 두 번 시키는 계층이 된다 — 하나만 남긴다. 카드를 거르는 일은
+    타일보다 먼저 일어나므로(apply 앞머리) 탭은 그대로 돈다.
 
     pick_tabs=[(scope값, 이름), …]이면 위에 그 갈래로 탭을 세운다. 국내·해외 범위 탭
     자리를 장이 가져다 쓰는 것이고, 거르는 것은 같은 JS(카드의 scope)다. 권역처럼
@@ -1129,7 +1133,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
     # 처음 화면이 「전체」라 타일에 적히는 수도 전체다(JS가 범위를 바꿀 때 다시 센다)
     nav = sec_picker(secs, order, len(cards) + sum(l[3] for l in layers), extra,
                      groups=sec_groups, badges=sec_badges, pick_top=pick_top,
-                     search_ph=search_ph)
+                     search_ph=search_ph) if tiles else ''
     tabs = ''
     if pick_tabs:
         # 장이 스스로 갈래를 정한 경우. 국내·해외 대신 그 갈래로 탭을 세운다
@@ -1186,7 +1190,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
             + FOLD_JS + NAV_JS + LINK_JS + SW_JS + ui_bits.TOP_BTN + '\n')
     check_labels(cards)
     check_links(cards)
-    check_ui(html, bool(layers))
+    check_ui(html, bool(layers), tiles)
     io.open(out, 'w', encoding='utf-8').write(html)
     print('OK: 카드 %d개 / 섹션 %d개 -> %s' % (len(cards), len(order) + len(layers), out))
     print('div', html.count('<div'), html.count('</div>'), '| section', html.count('<section'), html.count('</section>'))
@@ -1313,7 +1317,13 @@ def check_labels(cards):
 
 # 이 규약이 깨진 채로 페이지가 나가면 대시보드마다 첫 화면이 달라진다. 2026-08-17에 부동산만
 # 관문 버튼이 하나 더 생겨 그렇게 됐다. 사람이 눈으로 지키지 말고 여기서 막는다.
-def check_ui(html, has_top):
+def check_ui(html, has_top, tiles=True):
+    assert 'mode-pick' not in html,         'UI 규약 위반: 섹션 타일 앞에 관문 버튼을 두지 않는다 — 타일 하나로 넣는다'
+    if not tiles:
+        # 타일을 안 내는 장. 갈래를 고르는 층이 탭 하나뿐이라 규약이 막던 것(관문·타일
+        # 순서)이 애초에 생기지 않는다. 대신 고를 길이 하나는 있어야 한다
+        assert 'scope-tabs' in html, 'UI 규약 위반: 타일도 탭도 없으면 고를 길이 없다'
+        return
     must = [('sec-pick', '섹션 타일'), ('class="sback"', '현재 자리 이름표'),
             ('class="stile is-all"', '전체 보기 타일')]
     for key, name in must:

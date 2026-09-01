@@ -1,0 +1,28 @@
+{
+ "law_소득세법": {
+  "value": "2026-07-01",
+  "as_of": "2026-07-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 소득세법 · 일부개정",
+  "area": "소득세법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "280405"
+ },
+ "law_조세특례제한법": {
+  "value": "2026-07-01",
+  "as_of": "2026-07-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 조세특례제한법 · 일부개정",
+  "area": "조세특례제한법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "280409"
+ }
+}

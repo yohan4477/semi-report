@@ -1,0 +1,28 @@
+{
+ "law_부동산거래신고등에관한법률": {
+  "value": "2024-05-17",
+  "as_of": "2024-05-17",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 부동산 거래신고 등에 관한 법률 · 타법개정",
+  "area": "부동산 거래신고 등에 관한 법률",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "259641"
+ },
+ "law_주택법": {
+  "value": "2026-08-04",
+  "as_of": "2026-08-04",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 주택법 · 일부개정",
+  "area": "주택법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "283191"
+ }
+}
