@@ -21,15 +21,16 @@ OUT = os.path.join(dc.ROOT, '대시보드', '포트폴리오 워치.html')
 def _stamp(ws):
     return max([w['checked'] for w in ws if w.get('checked')] or ['—'])
 
+# 부제는 한 줄에 끝나야 한다 — 길면 타일에서 말줄임표로 잘리고, 잘린 자리가 하필
+# 「여기는 「무엇을…」이라 읽어도 아무 정보가 없다.
 SECS = {
-    'realestate': ('sec-area', '01', '권역 — 부동산',
-                   '어느 권역을 왜 보고 있고, 무엇이 일어나면 판단이 바뀌나. '
-                   '개별 물건이 아니라 권역이 한 줄이다'),
-    'equity': ('sec-ticker', '02', '종목 — 주식',
-               '보유가 아니라 관찰이다. 적정가를 재는 자리는 밸류에이션 쪽이고 '
-               '여기는 「무엇을 기다리나」만 세운다'),
+    'realestate': ('sec-area', '01', '권역 — 부동산', '전세냐 매매냐, 깎을 수 있는 장인가'),
+    'equity': ('sec-ticker', '02', '종목 — 주식', '무엇이 깨지면 계산을 다시 하나'),
 }
 LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목'}
+# 관점을 한쪽에만 적으면 라벨 없는 쪽이 기본값처럼 보인다 — 「강남 3구」와
+# 「강남 3구 — 집 구하는 사람」이 나란히 서면 앞엣것이 무슨 관점인지 열어 봐야 안다
+DEFAULT_VIEW = {'realestate': '투자로 보는 사람', 'equity': '보고만 있는 사람'}
 
 # 트리거 표의 열은 어느 자산군이든 같다 — 어댑터가 자산군마다 값만 다르게 채운다.
 # 「언제 것 · 성격」은 CLAUDE.md 가 값에 요구하는 두 열이라 어댑터 계약에 박혀 있다.
@@ -56,6 +57,10 @@ TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수',
 # 한 판에 겹칠 것. 단위가 같아 나란히 놓을 수 있는 짝이다. 판 위의 벌어짐은 차(差)이지
 # 전세가율(比)이 아니다 — 전세가율은 따로 판이 있다. 값은 그 짝이 정한 이름으로 구분한다.
 GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전세')}
+
+
+def title_of(w):
+    return '%s — %s' % (w['target'], w.get('view') or DEFAULT_VIEW[w['kind']])
 
 
 def trg_row(t):
@@ -112,11 +117,11 @@ def card(w):
     return {
         'section': SECS[w['kind']],
         'topic': ('market', w['topic']),
-        'title': '%s — %s' % (w['target'], w['view']) if w.get('view') else w['target'],
+        'title': '%s — %s' % (w['target'], w.get('view') or DEFAULT_VIEW[w['kind']]),
         'gain': w['why'],
-        'meta': [LABEL[w['kind']],
-                 '보기 시작 <b>%s</b>' % w['opened'],
-                 '마지막 확인 <b>%s</b>' % w['checked']],
+        'meta': ([LABEL[w['kind']], '보기 시작 <b>%s</b>' % w['opened']]
+                 + ([] if w['opened'] == w['checked']
+                    else ['마지막 확인 <b>%s</b>' % w['checked']])),
         # 트리거 표가 맨 위다. 워치리스트에서 먼저 알아야 할 것은 근거가 아니라
         # 「지금 조건에 걸렸나」다(설계 §3).
         'lead_table': ('무엇이 일어나면 판단이 바뀌나', TRG_HEAD,
@@ -139,7 +144,7 @@ def fired_block(watches):
     넘은 줄을 놓친다 — 설계가 「알리는 길이 없다」로 적어 둔 자리를 화면이 메운다."""
     rows = []
     for w in watches:
-        title = '%s — %s' % (w['target'], w['view']) if w.get('view') else w['target']
+        title = title_of(w)
         for t in w['triggers']:
             if t['kind'] != wl.KIND_VALUE:
                 continue
@@ -211,27 +216,45 @@ def compare_layer(watches):
     h.append('<p class="xl-lede">%s 기준 가장 높은 <b>%s %s%%</b>와 가장 낮은 '
              '<b>%s %s%%</b>가 <b>%.2f%%포인트</b> 벌어집니다. 같은 서울입니다.</p>'
              % (asof, hi[1], hi[2], lo[1], lo[2], hi[2] - lo[2]))
-    if spread:
+    # 보는 사람이 견주고 싶은 것은 권역 × (전세가율·협상력·걸린 조건)이다.
+    # 「묶음이 옳게 묶였나」는 만든 사람의 물음이라 한 줄로 내린다
+    summ = []
+    for w in live:
+        rs = [m['value'] for k, m in (w['metrics'] or {}).items()
+              if k.startswith('jeonse_ratio_')]
+        sd = (w['metrics'] or {}).get('supply_demand')
+        hits = sum(1 for t in w['triggers']
+                   if t['kind'] == wl.KIND_VALUE
+                   and wl.state_now(t['cond'], t['series'])[0] in ('걸림', '근접'))
+        summ.append([
+            '<a href="#%s">%s</a>' % (cl.slug(title_of(w)), wl.esc(w['target'])),
+            '%.2f ~ %.2f' % (min(rs), max(rs)) if rs else '—',
+            '전세금의 %.1f배' % (100.0 / (sum(rs) / len(rs))) if rs else '—',
+            ('%s <span class="t-axis">%s</span>' % (sd['value'], wl.esc(sd['area']))
+             if sd else '못 붙임'),
+            '%d개' % hits, asof, '공표'])
+    if summ:
         h.append(cl.tbl_html((
-            '묶음 안에서 세 구가 붙어 다니나 — 같은 달 최대·최소의 벌어짐',
-            ['묶음', '마지막 달', '그달', '평균', '최대', '겹치는 달', '성격'],
-            [[t, last, '%.2f%%p' % now, '%.2f' % avg, '%.2f' % mx, '%d개월' % n, '계산치']
-             for t, now, avg, mx, n, last in sorted(spread, key=lambda r: r[2])])))
+            '권역마다 지금 어떤가',
+            ['권역', '전세가율(구별 범위)', '매매로 넘어가는 문턱', '수급동향',
+             '걸림·근접', '언제 것', '성격'],
+            sorted(summ, key=lambda r: r[1], reverse=True))))
+    if spread:
         tight = min(spread, key=lambda r: r[2])
-        h.append('<p class="xl-lede"><b>%s만 묶음으로 성립합니다.</b> 세 구의 벌어짐이 평균 '
-                 '%.2f%%포인트인데 나머지는 %s입니다. 시장에서 한 이름으로 부른다고 값이 '
-                 '같이 움직이지는 않습니다 — 그래서 이 장은 묶음 평균을 내지 않고 '
-                 '구마다 값을 따로 둡니다.</p>'
+        h.append('<p class="xl-lede"><b>%s만 묶음으로 성립합니다.</b> 세 구의 벌어짐이 '
+                 '평균 %.2f%%포인트인데 나머지는 %s입니다. 시장에서 한 이름으로 부른다고 '
+                 '값이 같이 움직이지는 않아서, 이 장은 묶음 평균을 내지 않고 구마다 값을 '
+                 '따로 둡니다.</p>'
                  % (tight[0], tight[2],
                     ' · '.join('%s %.2f' % (r[0], r[2]) for r in spread if r[0] != tight[0])))
-    h.append('<p class="xl-lede t-axis">벌어짐은 공표치에서 우리가 뺀 수라 성격이 '
-             '<b>계산치</b>입니다. 전세가율 자체는 공표치입니다.</p>')
+    h.append('<p class="xl-lede t-axis">전세가율은 공표치이고, 「매매로 넘어가는 문턱」과 '
+             '묶음 안 벌어짐은 그 값에서 우리가 셈한 <b>계산치</b>입니다.</p>')
     return ''.join(h), len(rows)
 
 
 
 WATCHES = wl.load_all()
-CARDS = [card(w) for w in WATCHES]
+CARDS = [card(w) for w in sorted(WATCHES, key=lambda w: SECS[w['kind']][1])]
 
 HEADER = '''  <header>
     <p class="eyebrow">포트폴리오 — 무엇을 왜 보고 있나</p>
@@ -255,8 +278,8 @@ INTRO = INTRO_T % (len(CARDS), ASOF)
 
 META = ('''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
-      <span>워치 <b>%d줄</b></span>
-      <span>트리거 <b>%d개</b></span>
+      <span>보고 있는 것 <b>%d</b></span>
+      <span>지켜보는 조건 <b>%d</b></span>
     </div>''' % (_stamp(WATCHES), len(CARDS), sum(len(w['triggers']) for w in WATCHES)))
 
 FOOTER = (LEDE + META + '\n워치 줄은 <code>insights/watch/</code>, 수치는 '
