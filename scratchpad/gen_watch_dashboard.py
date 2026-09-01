@@ -35,6 +35,9 @@ DEFAULT_VIEW = {'realestate': '투자로 보는 사람', 'equity': '보고만 �
 # 트리거 표의 열은 어느 자산군이든 같다 — 어댑터가 자산군마다 값만 다르게 채운다.
 # 「언제 것 · 성격」은 CLAUDE.md 가 값에 요구하는 두 열이라 어댑터 계약에 박혀 있다.
 TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '상태', '언제 것', '성격']
+# 사건 줄은 하는 일이 다르다 — 견주는 표가 아니라 사람이 확인할 목록이다.
+# 한 표에 섞으면 표가 두 가지 일을 하고, 값 없는 줄이 값 있는 줄 사이에 끼어 읽기를 끊는다
+EVT_HEAD = ['무엇을 확인하나', '언제 판단이 바뀌나']
 
 # 상태 딱지 — 걸린 것이 표에서 눈에 띄어야 한다. 「지금 걸렸나」가 이 장의 존재 이유인데
 # 지금 값과 조건을 나란히 놓기만 하면 사람이 줄마다 암산으로 부등호를 세운다.
@@ -69,9 +72,6 @@ def trg_row(t):
     """트리거 한 줄을 표 행으로. 사건 줄은 어댑터가 안 채우므로 값 자리에 갈래를 적는다 —
     비워 두면 「아직 안 받아 온 값」과 「애초에 값이 아닌 것」이 화면에서 같아 보인다."""
     e = wl.esc
-    if t['kind'] == wl.KIND_EVENT:
-        return [e(t['what']), '<i>사건</i>', e(t['cond']),
-                state_tag('사람 판정', '공표가 났나 안 났나로 갈린다'), '—', '사건']
     v = t['value']
     st, why = wl.state_now(t['cond'], t['series'])
     # 단위를 붙인다. 43.05·1308.56 이 맨 숫자로 서면 무엇을 재는 값인지 표에서 안 보인다
@@ -126,11 +126,17 @@ def card(w):
                     else ['마지막 확인 <b>%s</b>' % w['checked']])),
         # 트리거 표가 맨 위다. 워치리스트에서 먼저 알아야 할 것은 근거가 아니라
         # 「지금 조건에 걸렸나」다(설계 §3).
-        'lead_table': ('무엇이 일어나면 판단이 바뀌나', TRG_HEAD,
-                       [trg_row(t) for t in w['triggers']]),
+        'lead_table': ('무엇이 일어나면 판단이 바뀌나 — 값으로 오는 것', TRG_HEAD,
+                       [trg_row(t) for t in w['triggers']
+                        if t['kind'] == wl.KIND_VALUE]),
         'oneliner': w['judged'],
         'points': w['points'],
         'figs': figs_of(w),
+        # 사건은 값으로 안 온다. 사람이 확인할 때만 움직이므로 본문 아래에 목록으로 둔다
+        'table': (('값으로 안 오는 것 — 사람이 확인한다', EVT_HEAD,
+                   [[wl.esc(t['what']), wl.esc(t['cond'])] for t in w['triggers']
+                    if t['kind'] == wl.KIND_EVENT])
+                  if any(t['kind'] == wl.KIND_EVENT for t in w['triggers']) else None),
         # 반대 근거는 「무엇이 — 왜」로 적혀 있다. 앞머리를 화자 자리에 넣는다.
         'clash': [tuple(c.split(' — ', 1)) if ' — ' in c else ('', c) for c in w['clash']],
     }
