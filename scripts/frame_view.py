@@ -1267,6 +1267,10 @@ def _inline(s):
     s = s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     s = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', s)
     s = re.sub(r'`(.+?)`', r'<code>\1</code>', s)
+    # 표 한 칸에 여러 줄을 담을 길은 마크다운에 `<br>` 뿐이다. 받은 답이 목차 칸에
+    # 절을 여러 줄로 넣을 때 그걸 쓴다 — 통째로 escape 하면 화면에 「<br>」이 글자로
+    # 찍힌다(2026-09-01, 제미나이 그록봇 목차). 이 한 태그만 되돌린다
+    s = re.sub(r'&lt;br\s*/?&gt;', '<br>', s, flags=re.I)
     return s
 
 
@@ -2335,10 +2339,27 @@ def to_html(md):
             i = j
             continue
         if ln.lstrip().startswith('|') and '|' in ln[1:]:
-            rows = []
-            while i < len(lines) and lines[i].lstrip().startswith('|'):
-                rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')])
-                i += 1
+            # 표 한 줄이 `|` 로 안 닫히면 그 칸이 다음 줄로 이어진다 — 받은 답이 목차
+            # 칸에 절을 여러 줄로 넣을 때 그 꼴로 온다(2026-09-01, 제미나이 그록봇).
+            # 이어지는 줄을 안 물면 표가 첫 줄에서 끊기고 나머지가 문단으로 새며
+            # 남은 `|` 가 글자로 찍힌다. 이어붙일 줄은 좁게 본다 — 빈 줄이거나
+            # `<br>` 이 들었거나 `|` 로 닫는 줄만. 그래야 뒤 문단을 안 삼킨다
+            rows, open_row = [], False
+            while i < len(lines):
+                t = lines[i].strip()
+                if t.startswith('|'):
+                    rows.append([c.strip() for c in t.strip('|').split('|')])
+                    open_row = not t.endswith('|')
+                    i += 1
+                    continue
+                if open_row and (not t or '<br>' in t.lower() or t.endswith('|')):
+                    if t:
+                        rows[-1][-1] = (rows[-1][-1] + ' ' + t.rstrip('|').strip()).strip()
+                        if t.endswith('|'):
+                            open_row = False
+                    i += 1
+                    continue
+                break
             if len(rows) >= 3:
                 _place(out, _table(rows))
             continue

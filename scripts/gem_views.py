@@ -4,8 +4,8 @@
   PYTHONIOENCODING=utf-8 python scripts/gem_views.py <원문 md 경로> <회차 링크>
 
 프롬프트는 조각으로 나뉜다. 앵글(`prompts/{strategy,tech}.txt`)이 페르소나와 그
-앵글에만 걸리는 요구를 적고, 그 뒤에 공통 조각(`공통-값.txt` · `공통-도해.txt`)을
-붙인다. 앵글은 둘로 고정이다 — 경영전략 컨설턴트와 업계 기술 전문가.
+앵글에만 걸리는 요구를 적고, 그 뒤에 공통 조각(`공통-구조.txt` ·
+`공통-값.txt` · `공통-도해.txt`)을 붙인다. 앵글은 둘로 고정이다 — 경영전략 컨설턴트와 업계 기술 전문가.
 
 **도해는 어떻게 그리라고 적는다**(공통-도해). 예전에는 안 적었다 — 꼴을 달아도 그대로
 안 온다고 봤고 받는 꼴은 frame_view 가 맞춘다고 여겼다. 2026-09-01 에 받은 판 열일곱을
@@ -28,7 +28,7 @@ import gem_ask  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROMPTS = os.path.join(ROOT, 'scripts', 'prompts')
 # 앵글 파일 뒤에 이 차례로 붙인다. 앵글이 둘(경영전략·기술)뿐이라도 규칙은 공통이다
-COMMON = ('공통-값.txt', '공통-도해.txt')
+COMMON = ('공통-구조.txt', '공통-값.txt', '공통-도해.txt')
 FRAMES = os.path.join(ROOT, 'insights', 'frames')
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8')
 
@@ -36,7 +36,7 @@ HEAD = """---
 source: %s
 kind: %s
 model: %s (CDP 크롬 · playwright · 복사 버튼)
-asked: scripts/prompts/%s.txt + 공통-값 + 공통-도해
+asked: scripts/prompts/%s.txt + 공통-구조 + 공통-값 + 공통-도해
 date: %s
 used:
 named:
