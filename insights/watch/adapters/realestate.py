@@ -10,8 +10,10 @@
 3. **표마다 지역 단위가 다르다.** 지수·전세가율은 구까지 오는데, 수급은 권역까지,
    중위가격은 시도까지다. 없는 단위를 만들지 않고 온 단위를 그대로 이름에 적는다 —
    서울 중위가를 강남 3구 값인 것처럼 두면 카드가 거짓말을 한다.
-4. **같은 지역의 코드가 표마다 다르다.** 「서울」이 중위가격 표에서는 500004,
-   수급 표에서는 500008 이다. 그래서 코드를 지역이 아니라 (지역, 표) 쌍으로 둔다.
+4. **같은 지역의 코드가 표마다 다르다.** 강남구가 지수 표에서 530038, 거래량 표에서
+   510025, 전월세전환율 표에서 510036 이다. 코드를 손으로 세 벌 적지 않는다 —
+   표마다 지역 목록을 한 번 받아 **이름으로 찾는다**. 손으로 찍은 좌표가 어긋나는 것과
+   같은 자리다.
 """
 import os, json, datetime, urllib.request, urllib.parse
 
@@ -27,6 +29,10 @@ TBL = {
                           unit='지수(기준시점=100)', label='전세가격지수(아파트)'),
     'jeonse_ratio':  dict(id='A_2024_00073', level='gu',
                           unit='%', label='중위 매매가격 대비 전세가격(아파트)'),
+    'deal_count':    dict(id='A_2024_00554', level='gu', itm='100001',
+                          unit='호', label='행정구역별 아파트매매거래현황'),
+    'rent_conv':     dict(id='A_2024_00156', level='gu',
+                          unit='%', label='지역별 전월세 전환율(아파트)'),
     'supply_demand': dict(id='A_2024_00076', level='zone',
                           unit='지수(100=균형)', label='매매수급동향(아파트)'),
     'median_sale':   dict(id='A_2024_00189', level='sido',
@@ -34,6 +40,30 @@ TBL = {
     'median_jeonse': dict(id='A_2024_00193', level='sido',
                           unit='만원/㎡', label='지역별 전세 중위가격(아파트)'),
 }
+
+_CODES = {}
+
+
+def codes_of(statbl_id, prefix='서울'):
+    """이 표가 쓰는 지역 코드를 이름으로 찾는다. {이름: CLS_ID}.
+
+    한 번 받아 두고 그 실행 안에서는 다시 안 받는다. 이름이 같은 구가 다른 시도에도
+    있으므로(중구 등) 전체 이름이 prefix 로 시작하는 것만 남긴다."""
+    if statbl_id in _CODES:
+        return _CODES[statbl_id]
+    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': 'MM', 'Type': 'json', 'pSize': 1000}
+    key = os.environ.get(KEY_ENV)
+    if key:
+        p['KEY'] = key
+    _t, rows = _rows(p)
+    out = {}
+    for r in rows:
+        full, nm, cid = (str(r.get('CLS_FULLNM') or ''), str(r.get('CLS_NM') or ''),
+                         r.get('CLS_ID'))
+        if nm and cid is not None and (full == prefix or full.startswith(prefix + '>')):
+            out.setdefault(nm, str(cid))
+    _CODES[statbl_id] = out
+    return out
 
 
 class AdapterError(Exception):
@@ -64,10 +94,10 @@ def _rows(params):
     return total, rows
 
 
-def series(statbl_id, cls_id, start, end):
+def series(statbl_id, cls_id, start, end, itm=None):
     """[(YYYY-MM, 값)] 과 「다 받았나」. 키가 없으면 앞 몇 건만 온다."""
     p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': 'MM', 'CLS_ID': cls_id,
-         'ITM_ID': ITM_DEFAULT, 'START_WRTTIME': start, 'END_WRTTIME': end,
+         'ITM_ID': itm or ITM_DEFAULT, 'START_WRTTIME': start, 'END_WRTTIME': end,
          'Type': 'json', 'pSize': 1000}
     key = os.environ.get(KEY_ENV)
     if key:
@@ -96,15 +126,16 @@ def series(statbl_id, cls_id, start, end):
 def _targets(area, spec):
     """이 표를 무슨 지역으로 부를지. [(붙일 이름, CLS_ID)].
 
-    구는 여럿이라 이름을 열쇠에 박고, 권역·시도는 하나라 이름을 값 쪽 라벨로만 쓴다."""
+    구는 여럿이라 이름을 열쇠에 박고, 권역·시도는 하나라 이름을 값 쪽 라벨로만 쓴다.
+    코드는 표마다 다르므로 이름으로 찾는다(codes_of)."""
     lv = spec['level']
+    tbl = codes_of(spec['id'])
     if lv == 'gu':
-        return [(gu, code) for gu, code in (area.get('codes') or {}).items()], ''
-    blk = area.get(lv) or {}
-    code = (blk.get('codes') or {}).get(spec['id'])
-    if not code:
+        return [(gu, tbl[gu]) for gu in (area.get('구') or []) if gu in tbl], ''
+    nm = area.get(lv)
+    if not nm or nm not in tbl:
         return [], ''
-    return [('', code)], blk.get('이름', '')
+    return [('', tbl[nm])], nm
 
 
 def fetch(target, area, start='202401', end=None):
@@ -119,7 +150,8 @@ def fetch(target, area, start='202401', end=None):
     for base, spec in TBL.items():
         pairs, wide = _targets(area, spec)
         for name, cls_id in pairs:
-            s, full, dropped = series(spec['id'], cls_id, start, end)
+            s, full, dropped = series(spec['id'], cls_id, start, end,
+                                      spec.get('itm'))
             if not s:
                 continue
             key = '%s_%s' % (base, name) if name else base
