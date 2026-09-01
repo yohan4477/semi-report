@@ -1682,7 +1682,7 @@ def _mm_build(names, rows, edges, width, wrap_label=False):
     """자리(rows, 파도마다 id 리스트)가 정해진 상자들을 판 하나로 굽는다. 실패하면 None."""
     # 파도 사이 틈 — 화살촉이 8px 라 10 을 주면 막대가 2px 만 남아 촉만 보인다
     # (2026-09-01). 20 이면 막대 12px + 촉 8px 로 이음이 선으로 읽힌다
-    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=20.0,
+    p = fig_layout.Plate(width=width, subout=False, top=2.0, gap_y=34.0,
                          pad_y=8.0, bottom=4.0, fs=13.4, fs_s=12.0,
                          wrap_label=wrap_label)
     slot = {}
@@ -1766,16 +1766,21 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
         for k in range(0, len(lv), 3):
             wide.append(lv[k:k + 3])
     rows = wide
-    # 가로로 그리라고 적혀 왔으면 파도를 열로 세운다. 파도가 넷을 넘으면 폭을 못 대니
-    # 그냥 세로로 간다 — 열 셋까지가 폭 520 에 앉는 한계다(2026-09-01 실측)
-    if horizontal and len(rows) <= 3:
-        rows = _mm_transpose(rows)
-    for wrap_label in (False, True):
-        # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
-        # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
-        svg = _mm_build(names, rows, edges, width, wrap_label=wrap_label)
-        if svg:
-            return svg
+    # 가로로 그리라고 적혀 왔으면 파도를 열로 세워 **먼저 시켜 본다**. 파도 수로
+    # 미리 자르지 않는다 — 「넷이면 폭을 못 댄다」를 재 보지 않고 규칙으로 박았더니
+    # LR 로 온 판 넷 중 둘이 세로로 떨어졌다(2026-09-01). 짧은 이름이면 넷도 앉는다.
+    # 굽기가 실제로 실패할 때만 세로로 물러난다
+    plans = []
+    if horizontal:
+        plans.append(_mm_transpose(rows))
+    plans.append(rows)
+    for plan in plans:
+        for wrap_label in (False, True):
+            # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
+            # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
+            svg = _mm_build(names, plan, edges, width, wrap_label=wrap_label)
+            if svg:
+                return svg
     return None
 
 
