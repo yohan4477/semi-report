@@ -81,6 +81,20 @@ def metrics_of(kind, slug):
         return json.load(f)
 
 
+def _pick(vals, trigger_keys, context):
+    """이 줄이 쓸 metric 만 고른다. 트리거가 건 열쇠와 context 앞머리에 걸리는 것.
+
+    앞머리로 받는 이유는 구마다 열쇠가 갈리기 때문이다 — context 에 jeonse_idx 하나만
+    적으면 jeonse_idx_강남구·서초구·송파구가 다 딸려 온다."""
+    pre = [x.strip() for x in (context or '').replace(',', ' ').split() if x.strip()]
+    keys = set(k for k in trigger_keys if k)
+    out = {}
+    for k, v in (vals or {}).items():
+        if k in keys or any(k == p or k.startswith(p + '_') for p in pre):
+            out[k] = v
+    return out
+
+
 def load_one(path):
     with io.open(path, encoding='utf-8') as f:
         meta, body = nl.parse_front(f.read())
@@ -106,14 +120,17 @@ def load_one(path):
         'slug': slug, 'path': os.path.relpath(path, os.path.dirname(HERE)),
         'kind': kind, 'target': meta.get('target', ''),
         'ticker': meta.get('ticker', ''),
+        # view — 같은 대상을 다른 물음으로 보는 줄이 둘 이상일 때 제목을 가른다
+        'view': meta.get('view', ''),
         'topic': meta.get('topic', ''),
         'opened': meta.get('opened', ''), 'checked': meta.get('checked', ''),
         'why': meta.get('why', ''),
         'judged': md_inline(sec.get('지금 판단', '').replace('\n', ' ')),
         'triggers': trg,
-        # metrics 는 어댑터가 받은 것 전부다. 트리거만 내주면 트리거가 아닌 값(맥락으로
-        # 같이 보는 전세지수 같은 것)이 도해 재료에서 통째로 빠진다.
-        'metrics': vals,
+        # metrics 는 이 줄이 쓰겠다고 밝힌 것만이다. 트리거에 건 열쇠와 frontmatter 의
+        # context 에 적은 앞머리가 그것이다. 어댑터가 받은 것을 통째로 내주면 같은 대상을
+        # 다른 물음으로 보는 줄들이 전부 같은 그림을 그린다 — 줄을 가른 뜻이 사라진다.
+        'metrics': _pick(vals, [t['metric'] for t in trg], meta.get('context', '')),
         'points': [md_inline(b) for b in bullets(sec.get('왜 보나', ''))],
         'clash': [md_inline(b) for b in bullets(sec.get('반대 근거', ''))],
     }

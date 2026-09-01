@@ -32,7 +32,14 @@ LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목'}
 TRG_HEAD = ['무엇을', '지금 값', '걸리는 조건', '언제 것', '성격']
 
 # 열쇠 앞머리를 도해 제목으로. 없으면 열쇠를 그대로 쓴다
-TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수'}
+TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수',
+         'jeonse_ratio': '전세가율 — 중위 매매가격 대비 전세가격',
+         'supply_demand': '매매수급동향 — 100이 균형',
+         'median': '서울 중위가격 — 매매와 전세'}
+
+# 한 판에 겹칠 것. 단위가 같아 나란히 놓을 수 있는 짝이다. 판 위의 벌어짐은 차(差)이지
+# 전세가율(比)이 아니다 — 전세가율은 따로 판이 있다. 값은 그 짝이 정한 이름으로 구분한다.
+GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전세')}
 
 
 def trg_row(t):
@@ -62,13 +69,17 @@ def figs_of(w):
     for key, m in sorted((w.get('metrics') or {}).items()):
         if not m.get('series'):
             continue
-        base, _, area = key.rpartition('_')
-        groups.setdefault(base or key, []).append((area or key, m))
+        # 열쇠를 밑줄로 쪼개 어림하지 않는다 — supply_demand 처럼 밑줄이 든 이름에서
+        # 깨진다. 어댑터가 실어 보낸 area 를 떼어 내 묶음 열쇠를 만든다.
+        area = m.get('area') or ''
+        base = key[:-(len(area) + 1)] if area and key.endswith('_' + area) else key
+        # 겹칠 짝이면 판 열쇠를 바꾸고 선 이름도 그 짝이 정한 것으로 쓴다
+        gkey, gname = GROUP.get(base, (base, area or base))
+        groups.setdefault((gkey, m.get('unit') or ''), []).append((gname, m))
     out = []
-    for base, items in groups.items():
+    for (base, unit), items in groups.items():
         svg = wf.trend([(n, [tuple(x) for x in m['series']]) for n, m in items[:3]],
-                       items[0][1].get('unit') or '값',
-                       note=items[0][1].get('src', ''))
+                       unit or '값', note=items[0][1].get('src', ''))
         if svg:
             out.append((0, TITLE.get(base, base), svg, items[0][1].get('src', '')))
     return out
@@ -78,7 +89,7 @@ def card(w):
     return {
         'section': SECS[w['kind']],
         'topic': ('market', w['topic']),
-        'title': w['target'],
+        'title': '%s — %s' % (w['target'], w['view']) if w.get('view') else w['target'],
         'gain': w['why'],
         'meta': [LABEL[w['kind']],
                  '보기 시작 <b>%s</b>' % w['opened'],
