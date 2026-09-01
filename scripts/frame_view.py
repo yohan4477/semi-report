@@ -1851,13 +1851,19 @@ def _mm_component_plate(names, order, edges, width, horizontal=False):
     # 굽기가 실제로 실패할 때만 세로로 물러난다
     plans = []
     if horizontal:
-        plans.append(_mm_transpose(rows))
-    plans.append(rows)
-    for plan in plans:
+        # 가로로 그리라고 적혀 온 판은 **폭을 넓혀서라도 가로로 세운다.** 이름이 길면
+        # 520 에 네 열이 안 들어가는데(「Broadcom: Tomahawk 스위치/ESUN 네트워크」 하나가
+        # 288px 다), 그때 세로로 물러나면 좌우로 읽으라고 그린 판이 위아래가 된다.
+        # 판이 넓어지면 화면에서 축소돼 글자가 작아지는 것은 감수한다(2026-09-01 결정)
+        tr = _mm_transpose(rows)
+        for w in (width, width * 1.25, width * 1.5, width * 1.75, width * 2.0):
+            plans.append((tr, w))
+    plans.append((rows, width))
+    for plan, w in plans:
         for wrap_label in (False, True):
             # 파도(행) 자리는 앞으로 가는 이음만으로 잡되, 그리는 이음은 전부
             # (되돌아가는 것 포함) 넘긴다 — 자리와 그림은 다른 일이다
-            svg = _mm_build(names, plan, edges, width, wrap_label=wrap_label)
+            svg = _mm_build(names, plan, edges, w, wrap_label=wrap_label)
             if svg:
                 return svg
     return None
@@ -1963,7 +1969,9 @@ def _mm_content_only(block):
         ln = _MM_ANY_DECL.sub(lambda m: m.group(0)[len(m.group(1)):], ln)
         for rx in bare:
             ln = rx.sub(' ', ln)
-        lines.append(ln)
+        # 이름 안 줄바꿈 표기도 상자에서와 똑같이 편다. 한쪽만 펴면 그 낱말이 빠진
+        # 것으로 잡혀 멀쩡한 판이 버려진다(2026-09-01, 상자 쪽만 고친 그날 둘이 죽었다)
+        lines.append(re.sub(r'\\+n', ' ', ln))
     return chr(10).join(lines)
 
 
