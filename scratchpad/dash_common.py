@@ -484,7 +484,11 @@ NAV_JS = '''<script>
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
     } else if(!id){
-      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+      // 처음 들어온 화면. 기본은 타일 고르기 — 카드가 쌓이는 아카이브에서는 고르는
+      // 일이 먼저다. 감시 성격의 장(포트폴리오 워치)은 고르러 오는 게 아니라 바뀐
+      // 것을 보러 오므로 전체 보기로 연다. render(home='all') 이 이 표시를 심는다.
+      if(document.getElementById('home-all')){ picking = false; only = null; }
+      else { picking = true; only = null; sect = null; }
     } else if(id === 'all'){
       picking = false; only = null;
     } else {
@@ -1056,7 +1060,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
-           sw_labels=('밸류에이션', '개별 포스트'), page_slug=''):
+           sw_labels=('밸류에이션', '개별 포스트'), page_slug='', home='pick'):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -1080,6 +1084,11 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
 
     newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
     세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다.
+
+    home='all'이면 처음 들어온 사람에게 타일 고르기 대신 **전체 보기**를 낸다. 타일은
+    그대로 위에 서서 필터 노릇을 한다 — 규약(첫 화면에 섹션 타일이 선다)은 지켜진다.
+    카드가 쌓이는 아카이브는 고르는 일이 먼저라 기본은 'pick'이다. 감시 성격의 장은
+    고르러 오는 게 아니라 바뀐 것을 보러 오므로 'all'을 쓴다.
 
     page_slug가 있으면 카드마다 따로 파일을 쓴다(대시보드/<page_slug>/<카드슬러그>.html) —
     누르면 그 글만 있는 페이지로 간다. 비면(기본값) 지금까지처럼 목록 페이지 안에서만 접혔다
@@ -1146,6 +1155,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
             + '\n<div class="wrap">\n' + header
             # 타일이 롤업보다 먼저다. 회계사 장은 롤업 자리에 드라이버 지도가 들어 있어
             # 타일이 화면 한참 아래로 밀렸다(2026-08-18). 첫 화면은 어느 장이든 타일이다.
+            # home='all' 표시. NAV_JS 가 처음 들어온 화면을 정할 때 이걸 본다
+            + ('\n<div id="home-all" hidden></div>' if home == 'all' else '')
             + '\n\n  ' + intro + '\n\n  ' + tabs + nav + '\n\n  ' + rollup + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
             + FOLD_JS + NAV_JS + LINK_JS + SW_JS + ui_bits.TOP_BTN + '\n')

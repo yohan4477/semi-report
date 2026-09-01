@@ -585,6 +585,7 @@
     <p class="eyebrow">포트폴리오 — 무엇을 왜 보고 있나</p>
     <h1>포트폴리오 워치</h1>
   </header>
+<div id="home-all" hidden></div>
 
   <p class="lede"><b>보고 있는 곳 6군데.</b> 권역마다 「왜 보나」와 「무엇이 일어나면 판단이 바뀌나」를 세웁니다. 값은 한국부동산원 공표 통계이고 자료 기준은 <b>2026-07</b>입니다. 손익·비중은 다루지 않습니다.</p>
 
@@ -826,7 +827,11 @@
     if(st && typeof st.picking === 'boolean'){
       picking = st.picking; only = st.sec || null;
     } else if(!id){
-      picking = true; only = null; sect = null;   // 처음 들어온 화면 — 타일 고르기
+      // 처음 들어온 화면. 기본은 타일 고르기 — 카드가 쌓이는 아카이브에서는 고르는
+      // 일이 먼저다. 감시 성격의 장(포트폴리오 워치)은 고르러 오는 게 아니라 바뀐
+      // 것을 보러 오므로 전체 보기로 연다. render(home='all') 이 이 표시를 심는다.
+      if(document.getElementById('home-all')){ picking = false; only = null; }
+      else { picking = true; only = null; sect = null; }
     } else if(id === 'all'){
       picking = false; only = null;
     } else {

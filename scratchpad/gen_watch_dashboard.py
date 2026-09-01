@@ -293,4 +293,7 @@ if __name__ == '__main__':
     dc.render(CARDS, '포트폴리오 워치', HEADER, FOOTER, OUT, page_slug='watch',
               top=top, top_n=0, top_id='sec-compare',
               top_title='권역 견주기', top_sub='구 아홉을 한 판에 놓고 본다',
-              intro=INTRO)
+              intro=INTRO,
+              # 이 장은 고르러 오는 곳이 아니라 바뀐 것을 보러 오는 곳이다.
+              # 타일은 위에 남아 필터 노릇을 하고, 열면 바로 전체가 보인다
+              home='all')
