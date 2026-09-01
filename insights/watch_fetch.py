@@ -59,15 +59,21 @@ def main(only=None, dry=False):
             print('  건너뜀 %-22s 어댑터 %s.py 가 없다' % (w['slug'], w['kind']))
             skip += 1
             continue
-        area = ar.get(w['target'])
-        if area is None:
-            print('  건너뜀 %-22s _areas.json 에 %s 가 없다' % (w['slug'], w['target']))
-            skip += 1
-            continue
+        # 부동산은 권역 사전이 필요하고 종목은 티커면 된다. 어댑터가 무엇을 받는지는
+        # 갈래가 정한다 — 종목에 권역 사전을 물으면 영영 건너뛴다
+        if w['kind'] == 'realestate':
+            area = ar.get(w['target'])
+            if area is None:
+                print('  건너뜀 %-22s _areas.json 에 %s 가 없다' % (w['slug'], w['target']))
+                skip += 1
+                continue
+            key = w['target']
+        else:
+            area, key = None, (w['ticker'] or w['target'])
         path = os.path.join(wl.METRICS, w['kind'], w['slug'] + '.json')
         prev_n = len(wl.metrics_of(w['kind'], w['slug']))
         try:
-            got = mod.fetch(w['target'], area)
+            got = mod.fetch(key, area)
         except Exception as e:                       # noqa: BLE001 — 무엇이든 소리를 낸다
             print('  실패   %-22s %s: %s' % (w['slug'], type(e).__name__, e))
             fail += 1

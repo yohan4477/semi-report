@@ -175,9 +175,12 @@ if __name__ == '__main__':
 # 적혔고(「강북구에서 이미 넘었다」) 값이 바뀌어도 그 문장은 안 바뀌었다.
 # 여기서 읽을 수 있는 꼴만 정해 두고, 못 읽는 것은 「사람 판정」으로 남긴다 —
 # 억지로 다 읽으려 들면 조용히 틀린 판정이 화면에 뜬다.
+# 창을 「몇 점」으로 읽는다. 부동산은 월, 종목은 연·분기라 단위 낱말이 다른데
+# 세는 것은 어느 쪽이든 시계열의 점 개수다 — 낱말을 하나로 박으면 종목 줄이 통째로
+# 「사람 판정」으로 떨어진다.
 COND_FORMS = [
-    (re.compile(r'최근\s*(\d+)\s*개월\s*최고\s*경신'), 'max_n'),
-    (re.compile(r'최근\s*(\d+)\s*개월\s*최저\s*경신'), 'min_n'),
+    (re.compile(r'최근\s*(\d+)\s*(?:개월|달|년|분기|점)?\s*최고\s*경신'), 'max_n'),
+    (re.compile(r'최근\s*(\d+)\s*(?:개월|달|년|분기|점)?\s*최저\s*경신'), 'min_n'),
     (re.compile(r'직전\s*고점\s*대비\s*([\d.]+)\s*%\s*하회'), 'peak_down'),
     (re.compile(r'([\d.]+)\s*%?\s*상향\s*돌파'), 'above'),
     (re.compile(r'([\d.]+)\s*%?\s*하회'), 'below'),
@@ -274,8 +277,12 @@ def state_now(cond, series):
         need = peak * (1 - num / 100.0)
         return ('근접' if v <= need * 1.02 else '멂',
                 '고점 %.2f 대비 지금 %+.1f%%' % (peak, (v / peak - 1) * 100))
-    # 경신류 — 창 안에서 몇 번째인지가 곧 얼마나 가까운지다
+    # 경신류 — 창 안에서 몇 번째인지가 곧 얼마나 가까운지다.
+    # 단위 낱말은 조건에 적힌 것을 되쓴다 — 「개월」로 박으면 연·분기 시계열에서
+    # 설명이 거짓말을 한다
     w = vals[max(0, i - int(num) + 1):i + 1]
     rank = (sorted(w, reverse=True).index(v) + 1 if kind == 'max_n'
             else sorted(w).index(v) + 1)
-    return ('근접' if rank <= 3 else '멂', '최근 %d개월 중 %d번째' % (len(w), rank))
+    um = re.search(r'최근\s*\d+\s*(개월|달|년|분기)', cond or '')
+    return ('근접' if rank <= 3 else '멂',
+            '최근 %d%s 중 %d번째' % (len(w), um.group(1) if um else '점', rank))

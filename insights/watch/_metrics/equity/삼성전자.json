@@ -1,0 +1,113 @@
+{
+ "revenue": {
+  "value": 1714995,
+  "as_of": "2026-06",
+  "kind": "공표",
+  "unit": "억원",
+  "src": "insights/valuation/005930-삼성전자/fundamentals.json (https://m.stock.naver.com/api/stock/005930/finance/quarter · https://m.stock.nav)",
+  "area": "",
+  "level": "ticker",
+  "series": [
+   [
+    "2025-06",
+    745663
+   ],
+   [
+    "2025-09",
+    860617
+   ],
+   [
+    "2025-12",
+    938374
+   ],
+   [
+    "2026-03",
+    1338734
+   ],
+   [
+    "2026-06",
+    1714995
+   ]
+  ],
+  "partial": false,
+  "note": "추정치 1분기를 뺐다 — 공표치와 한 선에 서면 어디부터 추정인지가 사라진다"
+ },
+ "op_margin": {
+  "value": 52.18,
+  "as_of": "2026-06",
+  "kind": "공표",
+  "unit": "%",
+  "src": "insights/valuation/005930-삼성전자/fundamentals.json (https://m.stock.naver.com/api/stock/005930/finance/quarter · https://m.stock.nav)",
+  "area": "",
+  "level": "ticker",
+  "series": [
+   [
+    "2025-06",
+    6.27
+   ],
+   [
+    "2025-09",
+    14.14
+   ],
+   [
+    "2025-12",
+    21.39
+   ],
+   [
+    "2026-03",
+    42.75
+   ],
+   [
+    "2026-06",
+    52.18
+   ]
+  ],
+  "partial": false,
+  "note": "추정치 1분기를 뺐다 — 공표치와 한 선에 서면 어디부터 추정인지가 사라진다"
+ },
+ "net_income": {
+  "value": 716245,
+  "as_of": "2026-06",
+  "kind": "공표",
+  "unit": "억원",
+  "src": "insights/valuation/005930-삼성전자/fundamentals.json (https://m.stock.naver.com/api/stock/005930/finance/quarter · https://m.stock.nav)",
+  "area": "",
+  "level": "ticker",
+  "series": [
+   [
+    "2025-06",
+    51164
+   ],
+   [
+    "2025-09",
+    122257
+   ],
+   [
+    "2025-12",
+    196417
+   ],
+   [
+    "2026-03",
+    472253
+   ],
+   [
+    "2026-06",
+    716245
+   ]
+  ],
+  "partial": false,
+  "note": "추정치 1분기를 뺐다 — 공표치와 한 선에 서면 어디부터 추정인지가 사라진다"
+ },
+ "price": {
+  "value": 260000,
+  "as_of": "2026-08-31",
+  "kind": "공표",
+  "unit": "원",
+  "src": "insights/valuation/005930-삼성전자/price.json",
+  "area": "",
+  "level": "ticker",
+  "series": [],
+  "partial": false,
+  "note": "그 시점 스냅숏이다 — 주가 이력이 이 파일에 없다"
+ }
+}

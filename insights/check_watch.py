@@ -94,6 +94,10 @@ def check_one(path, today, eq, ar):
         if t['kind'] != wl.KIND_VALUE:
             continue
         n, tot, _now = wl.backtest(t['cond'], t['series'])
+        # 단위 낱말은 조건에 적힌 것을 되쓴다 — 「개월」로 박으면 연·분기 시계열에서
+        # 메시지가 거짓말을 한다(종목 줄에서 「5개월 이력」이 나왔다)
+        _um = re.search(r'최근\s*\d+\s*(개월|달|년|분기)', t['cond'] or '')
+        U = _um.group(1) if _um else '점'
         if n is None:
             if t['series']:
                 bad('W8', '트리거 "%s" 의 조건을 기계가 못 읽는다: "%s" — 사람만 판정할 수 '
@@ -103,20 +107,20 @@ def check_one(path, today, eq, ar):
         if n == 0:
             d = wl.nearest(t['cond'], t['series'])
             if d is not None and d > FAR:
-                bad('W8', '트리거 "%s" 가 %d개월 내내 안 걸렸고 가장 가까웠을 때도 이력 '
+                bad('W8', '트리거 "%s" 가 %d%s 내내 안 걸렸고 가장 가까웠을 때도 이력 '
                     '변동폭의 %.1f배만큼 멀었다 — 닿을 수 없는 문턱이다: "%s"'
-                    % (t['what'], tot, d, t['cond']))
+                    % (t['what'], tot, U, d, t['cond']))
             else:
-                bad('W8', '트리거 "%s" 가 %d개월 이력에서 한 번도 안 걸렸다%s: "%s"'
-                    % (t['what'], tot,
+                bad('W8', '트리거 "%s" 가 %d%s 이력에서 한 번도 안 걸렸다%s: "%s"'
+                    % (t['what'], tot, U,
                        '' if d is None else ' (가장 가까웠을 때 변동폭의 %.2f배)' % d,
                        t['cond']), 'WARN')
         elif n == tot:
-            bad('W8', '트리거 "%s" 가 %d개월 내내 걸려 있었다: "%s"'
-                % (t['what'], tot, t['cond']))
+            bad('W8', '트리거 "%s" 가 %d%s 내내 걸려 있었다: "%s"'
+                % (t['what'], tot, U, t['cond']))
         elif tot and not (RARE <= n / float(tot) <= BUSY):
-            bad('W8', '트리거 "%s" 가 %d개월 중 %d번(%.0f%%) 걸렸다 — 잦기가 이래도 되나: "%s"'
-                % (t['what'], tot, n, 100.0 * n / tot, t['cond']), 'WARN')
+            bad('W8', '트리거 "%s" 가 %d%s 중 %d번(%.0f%%) 걸렸다 — 잦기가 이래도 되나: "%s"'
+                % (t['what'], tot, U, n, 100.0 * n / tot, t['cond']), 'WARN')
 
     # W9 — 값 트리거가 건 열쇠를 어댑터가 실제로 내나. 오타와 「원천이 아직 없다」가
     #      화면에서 똑같이 「자리표시」로 보여 구분이 안 됐다. metrics 파일이 있을 때만 본다

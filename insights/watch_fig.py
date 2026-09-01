@@ -28,6 +28,22 @@ def _ticks(lo, hi, n=4):
     return [lo + step * i for i in range(n + 1)]
 
 
+def _wrap(s, width=62):
+    """판 밖 설명을 접어 내린다. 한 줄로 두면 출처가 긴 도해에서 판을 넘는다 —
+    check_fig 이 「가로 넘침」으로 문다. 한글은 폭이 두 배라 두 칸으로 센다."""
+    if not s:
+        return []
+    out, cur, w = [], '', 0
+    for ch in str(s):
+        cw = 2 if ord(ch) > 0x2000 else 1
+        if w + cw > width and cur:
+            out.append(cur); cur, w = '', 0
+        cur += ch; w += cw
+    if cur:
+        out.append(cur)
+    return out
+
+
 def _fmt(v):
     return ('%.1f' % v).rstrip('0').rstrip('.')
 
@@ -100,9 +116,9 @@ def trend(lines, ylabel, note='', threshold=None):
                  'stroke-dasharray="6 4"/>' % (y - 5, y - 5))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(threshold[0])))
         y += 20
-    if note:
-        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(note)))
-        y += 20
+    for ln in _wrap(note):
+        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(ln)))
+        y += 18
     return ('<svg viewBox="0 0 %d %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
             % (W, y, ''.join(o)))
 
@@ -179,8 +195,8 @@ def rank_bar(rows, unit, note='', mark=None):
                  'stroke-dasharray="6 4"/>' % (y - 5, y - 5))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(mark[0])))
         y += 20
-    if note:
-        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(note)))
+    for ln in _wrap(note):
+        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>' % (y, esc(ln)))
         y += 18
     return ('<svg viewBox="0 0 %d %d" role="img" xmlns="http://www.w3.org/2000/svg">%s</svg>'
             % (W, y, ''.join(o)))
