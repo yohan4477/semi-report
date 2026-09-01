@@ -18,6 +18,7 @@ import notes_lib as nl
 HERE = os.path.dirname(os.path.abspath(__file__))
 ALIAS = os.path.join(HERE, 'actor_alias.json')
 AREAS = os.path.join(wl.WATCH, '_areas.json')
+POLICIES = os.path.join(wl.WATCH, '_policies.json')
 NEED_SECS = ('지금 판단', '트리거', '왜 보나', '반대 근거')
 # 늘 걸려 있는 조건은 정의상 신호가 아니다 — FAIL.
 # 한 번도 안 걸린 것은 다르다. 아직 안 일어난 일을 기다리는 것이 워치리스트다.
@@ -34,16 +35,18 @@ KEY_RE = re.compile(r'^[a-z][a-z0-9_가-힣]*$')
 
 
 def canon():
-    """종목 정본 집합과 권역 정본 집합."""
+    """종목·권역·정책 정본 집합."""
     with io.open(ALIAS, encoding='utf-8') as f:
         d = json.load(f)
     eq = set(v for k, v in d.items() if not k.startswith('_'))
     with io.open(AREAS, encoding='utf-8') as f:
         ar = set(k for k in json.load(f) if not k.startswith('_'))
-    return eq, ar
+    with io.open(POLICIES, encoding='utf-8') as f:
+        po = set(k for k in json.load(f) if not k.startswith('_'))
+    return eq, ar, po
 
 
-def check_one(path, today, eq, ar):
+def check_one(path, today, eq, ar, po):
     out = []
     def bad(rule, msg, sev='FAIL'):
         out.append((sev, os.path.basename(path), rule, msg))
@@ -63,8 +66,16 @@ def check_one(path, today, eq, ar):
     elif w['kind'] == 'realestate':
         if w['target'] not in ar:
             bad('W1', '권역 대상 "%s" 가 watch/_areas.json 에 없다' % w['target'])
+    elif w['kind'] == 'policy':
+        if w['target'] not in po:
+            bad('W1', '정책 대상 "%s" 가 watch/_policies.json 에 없다' % w['target'])
+        # 정책은 값이 안 온다. 값 트리거를 걸면 영영 안 채워진다
+        for t in w['triggers']:
+            if t['kind'] == wl.KIND_VALUE:
+                bad('W1', '정책 줄에 값 트리거 "%s" 가 있다 — 정책은 사건으로만 온다'
+                    % t['what'])
     else:
-        bad('W1', 'kind 가 equity·realestate 가 아니다: "%s"' % w['kind'])
+        bad('W1', 'kind 가 equity·realestate·policy 가 아니다: "%s"' % w['kind'])
 
     if not w['triggers']:
         bad('W2', '트리거가 하나도 없다')
@@ -182,12 +193,12 @@ def check_one(path, today, eq, ar):
 
 def main(paths=None, today=None):
     today = today or datetime.date.today()
-    eq, ar = canon()
+    eq, ar, po = canon()
     paths = paths or [p for p in sorted(glob.glob(os.path.join(wl.WATCH, '*', '*.md')))
                       if os.path.basename(os.path.dirname(p)) != '_metrics']
     rows = []
     for p in paths:
-        rows += check_one(p, today, eq, ar)
+        rows += check_one(p, today, eq, ar, po)
     # W11 — 제목이 겹치면 카드 앵커가 같아져 섹션 링크가 첫 카드로만 간다
     seen = {}
     for p in paths:
@@ -256,6 +267,10 @@ CASES = [
     ('열쇠에 한글은 통과', None, {'rows': '| 지수 | 값 | sale_idx_강남구 | 5% 하회 |'}, None),
     ('값에 as_of 가 없다', 'W4',
      {}, {'fwd_pe': {'value': 20, 'series': [['2026-06', 19], ['2026-07', 20]]}}),
+    ('정책 대상이 사전에 없다', 'W1', {'kind': 'policy', 'target': '없는정책'}, None),
+    ('정책에 값 트리거', 'W1',
+     {'kind': 'policy', 'target': '대출 규제', 'ticker': '',
+      'rows': '| 배수 | 값 | fwd_pe | 5 초과 |'}, None),
     ('오래 안 봤다', 'W5', {'checked': '2020-01-01'}, None),
     ('절이 하나 없다', 'W6', {'drop_sec': '반대 근거'}, None),
     ('없는 경로를 가리킨다', 'W7', {'extra': '`insights/없는폴더/x.md` 를 본다.'}, None),
@@ -279,7 +294,7 @@ def selftest():
     """결함을 일부러 넣어 무는지 본다. 규칙을 세울 때 이것부터 한다 —
     안 물면 규칙이 아니라 장식이다."""
     import tempfile, shutil
-    eq, ar = canon()
+    eq, ar, po = canon()
     today = datetime.date(2026, 8, 31)
     base = {'target': '엔비디아', 'ticker': 'TST', 'checked': '2026-08-31',
             'rows': '| 배수 | 값 | fwd_pe | 30배 하회 |', 'kind': 'equity',
@@ -305,7 +320,7 @@ def selftest():
         else:
             wl.METRICS = os.path.join(root, '_none')
         try:
-            rows = check_one(tmp, today, eq, ar)
+            rows = check_one(tmp, today, eq, ar, po)
             hits = {r[2] for r in rows}
             fails = {r[2] for r in rows if r[0] == 'FAIL'}
         finally:
@@ -327,7 +342,7 @@ def selftest():
     try:
         rows = []
         for nm in ('A.md', 'B.md'):
-            rows += check_one(os.path.join(root, nm), today, eq, ar)
+            rows += check_one(os.path.join(root, nm), today, eq, ar, po)
         seen, dup = {}, False
         for nm in ('A.md', 'B.md'):
             w = wl.load_one(os.path.join(root, nm))

@@ -26,11 +26,15 @@ def _stamp(ws):
 SECS = {
     'realestate': ('sec-area', '01', '권역 — 부동산', '전세냐 매매냐, 깎을 수 있는 장인가'),
     'equity': ('sec-ticker', '02', '종목 — 주식', '무엇이 깨지면 계산을 다시 하나'),
+    # 정책은 값이 안 온다. 조문·고시가 바뀌는 것을 사람이 확인한다
+    'policy': ('sec-policy', '03', '제도 — 정책', '무엇이 바뀌면 셈이 달라지나'),
 }
-LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목'}
+LABEL = {'realestate': '부동산 — 권역', 'equity': '주식 — 종목',
+         'policy': '제도 — 정책'}
 # 관점을 한쪽에만 적으면 라벨 없는 쪽이 기본값처럼 보인다 — 「강남 3구」와
 # 「강남 3구 — 집 구하는 사람」이 나란히 서면 앞엣것이 무슨 관점인지 열어 봐야 안다
-DEFAULT_VIEW = {'realestate': '투자로 보는 사람', 'equity': '보고만 있는 사람'}
+DEFAULT_VIEW = {'realestate': '투자로 보는 사람', 'equity': '보고만 있는 사람',
+                'policy': '지금 어떻게 되어 있나'}
 
 # 트리거 표의 열은 어느 자산군이든 같다 — 어댑터가 자산군마다 값만 다르게 채운다.
 # 「언제 것 · 성격」은 CLAUDE.md 가 값에 요구하는 두 열이라 어댑터 계약에 박혀 있다.
@@ -122,7 +126,8 @@ def card(w):
         # 권역은 고르는 축이라 위 탭으로 간다. 카드로 세우면 강남 3구를 보려고
         # 목록을 훑어야 하고, 권역이 늘수록 그 일이 길어진다. 견주는 일은
         # 탭이 아니라 견주기 층이 한 화면에 한다
-        'scope': w['target'] if w['kind'] == 'realestate' else '종목',
+        'scope': w['target'] if w['kind'] == 'realestate'
+                 else ('제도' if w['kind'] == 'policy' else '종목'),
         'title': '%s — %s' % (w['target'], w.get('view') or DEFAULT_VIEW[w['kind']]),
         'gain': w['why'],
         'meta': ([LABEL[w['kind']], '보기 시작 <b>%s</b>' % w['opened']]
@@ -304,7 +309,8 @@ if __name__ == '__main__':
     # 탭 차례는 대상을 처음 본 순서다 — 매번 값에 따라 흔들리면 손이 기억을 못 한다
     seen = []
     for w in sorted(WATCHES, key=lambda x: (SECS[x['kind']][1], x['opened'], x['slug'])):
-        k = w['target'] if w['kind'] == 'realestate' else '종목'
+        k = (w['target'] if w['kind'] == 'realestate'
+             else ('제도' if w['kind'] == 'policy' else '종목'))
         if k not in seen:
             seen.append(k)
     top, n = compare_layer(WATCHES)

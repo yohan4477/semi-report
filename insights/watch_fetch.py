@@ -54,6 +54,11 @@ def main(only=None, dry=False):
     for w in wl.load_all():
         if only and only not in (w['target'], w['slug']):
             continue
+        if w['kind'] == 'policy':
+            # 정책은 값이 안 온다 — 조문·고시가 바뀌는 것을 사람이 확인한다
+            print('  건너뜀 %-22s 정책은 값으로 안 온다' % w['slug'])
+            skip += 1
+            continue
         mod = adapter_for(w['kind'])
         if mod is None:
             print('  건너뜀 %-22s 어댑터 %s.py 가 없다' % (w['slug'], w['kind']))
