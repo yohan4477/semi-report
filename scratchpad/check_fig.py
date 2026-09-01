@@ -307,6 +307,11 @@ def all_figs():
         out += [(vid, f) for f in items]
     for vid, named in getattr(aie, 'RFIGS', {}).items():
         out += [(vid, (0,) + f) for f in named.values()]
+    # Semi Doped 판 도해. 받은 글은 안 고치므로 그림이 글 밖(semidoped_figs)에 산다 —
+    # 열쇠가 (slug, lane) 이고 anchor 자리에 절 제목 머리가 든다
+    sd = importlib.import_module('semidoped_figs')
+    for (slug, lane), items in getattr(sd, 'FIGS', {}).items():
+        out += [('%s/%s' % (slug, lane), f) for f in items]
     return out
 
 

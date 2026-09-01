@@ -18,7 +18,12 @@
 import io
 import os
 import re
+import sys
 import html as _html
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import semidoped_figs  # noqa: E402
+import check_fig  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -65,8 +70,8 @@ def one_line(body):
 
 
 # ── 받은 글을 화면으로 ────────────────────────────────────────────────
-# 표·문단·목록·굵게만 옮긴다. 도해는 아직 안 받는다 — 받게 되면 여기가 아니라
-# frame_view 를 부른다.
+# 표·문단·목록·굵게만 옮긴다. 도해는 받은 글에 없다 — 우리가 그려 semidoped_figs 에
+# 두고, 절 제목 바로 아래(본문보다 앞)에 세운다. 그림을 보고 그 아래 글을 읽는 순서다.
 
 def inline(s):
     s = esc(s)
@@ -90,9 +95,19 @@ def cells(ln):
     return [c.strip() for c in ln.strip().strip('|').split('|')]
 
 
-def body_html(md):
+def body_html(md, figs=()):
+    """figs = [(절 제목 머리, 제목, svg, 캡션)]. 머리가 h2 제목의 앞부분과 같으면 그 제목
+    바로 아래에 그림을 세운다. 안 걸린 그림은 오류다 — 절 번호가 바뀌면 그림이 소리 없이
+    사라지는 일을 막는다."""
     lines = md.split('\n')
     out, i, para, items = [], 0, [], []
+    pending = list(figs)
+
+    def figs_under(title):
+        hit = [f for f in pending if title.startswith(f[0])]
+        for f in hit:
+            pending.remove(f)
+            out.append(semidoped_figs.fig_html(f))
 
     def flush():
         if para:
@@ -117,6 +132,7 @@ def body_html(md):
         if ln.startswith('## '):
             flush()
             out.append('<h2>%s</h2>' % inline(ln[3:].strip()))
+            figs_under(ln[3:].strip())
         elif ln.startswith('### '):
             flush()
             out.append('<h3>%s</h3>' % inline(ln[4:].strip()))
@@ -135,6 +151,8 @@ def body_html(md):
             para.append(ln.strip())
         i += 1
     flush()
+    if pending:
+        raise SystemExit('도해가 설 절이 없다: %s' % ', '.join(f[0] for f in pending))
     return '\n'.join(out)
 
 
@@ -204,7 +222,7 @@ table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
 th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
 th{background:#eef1f6;font-weight:600;white-space:nowrap}
 .foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
-'''
+''' + semidoped_figs.CSS
 
 HEAD = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -250,7 +268,8 @@ def post_html(ep):
                       esc(lm.get('model', ''))))
         if lm.get('title'):
             out.append('<div class="ltitle">%s</div>' % esc(lm['title']))
-        out.append(body_html(lane['body']))
+        out.append(body_html(lane['body'],
+                             semidoped_figs.figs_for(ep['slug'], lane['key'])))
         out.append('<div class="foot">받은 글을 문장 그대로 싣는다. '
                    '원본 <a href="%s">%s</a> · 페르소나 %s</div>'
                    % (blob(lane['src']), esc(lane['src']),
@@ -298,8 +317,25 @@ def check_ui(index, posts):
     return bad
 
 
+def check_figs():
+    """도해 규칙 둘을 생성 때 기계로 본다 — 글자에 든 값이 전사에 있나, 배치가 겹치나.
+    도형 개수가 값인지는 사람이 본다."""
+    bad = []
+    for (slug, lane), figs in semidoped_figs.FIGS.items():
+        for key, title, svg, _cap in figs:
+            miss = semidoped_figs.missing_values(slug, svg)
+            if miss:
+                bad.append('%s/%s %s — 전사에 없는 값 %s' % (slug, lane, title, miss))
+            for h in check_fig.hits(svg):
+                bad.append('%s/%s %s — %s' % (slug, lane, title, h))
+    return bad
+
+
 def main():
     eps = episodes()
+    bad = check_figs()
+    if bad:
+        raise SystemExit('도해 규칙 위반\n  ' + '\n  '.join(bad))
     if not os.path.isdir(POST_DIR):
         os.makedirs(POST_DIR)
     posts = []
