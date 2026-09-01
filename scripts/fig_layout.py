@@ -398,7 +398,13 @@ class Plate(object):
                 mx = (p0[0] + p1[0]) / 2.0
                 d = 'M%g %g L%g %g L%g %g L%g %g' % (
                     p0[0], p0[1], mx, p0[1], mx, p1[1], p1[0], p1[1])
-                lx, ly, anchor = mx, min(p0[1], p1[1]) - 6, 'middle'
+                # 세로 이음과 같은 이유로 이름을 **나가는 상자 옆 도랑 안**에 묶는다.
+                # x 한가운데로 잡으면 열을 건너뛰는 이음에서 그 점이 사이 상자 안에
+                # 떨어진다(2026-09-01, 「최종 취합 자료 전달」)
+                dx = p1[0] - p0[0]
+                offx = min(self.gap_x / 2.0, abs(dx) / 2.0)
+                lx = p0[0] + (offx if dx > 0 else -offx)
+                ly, anchor = min(p0[1], p1[1]) - 6, 'middle'
         else:                                            # 위아래로 떨어져 있다
             down = a.y1 <= b.y - 4
             p0 = a.port('b' if down else 't', at)
@@ -425,12 +431,15 @@ class Plate(object):
                 # (「판다」·「안 판다」), 받는 쪽으로 잡으면 셋이 한 상자로 모일 때
                 # (「결과 취합」 셋) 겹쳤다. 두 끝의 가운데는 어느 쪽을 나눠 쓰든
                 # 갈린다 (2026-09-01)
-                # 이름 자리는 선이 꺾이는 자리(35%)가 아니라 **줄 사이 도랑 한가운데**로
-                # 잡는다. 꺾이는 자리에 붙이면 나가는 상자에서 8px 밖에 안 떨어져
-                # 상자에 바싹 붙어 보인다 — 곧은 이음은 13px 인데 꺾인 이음만 8px 라
-                # 한 판 안에서 간격이 들쭉날쭉했다(2026-09-01)
+                # 이름은 **나가는 상자 바로 아래 도랑 안**에 둔다. 두 번 틀렸다 —
+                # 꺾이는 자리(35%)에 붙이니 상자에서 8px 밖에 안 떨어졌고, 두 끝의
+                # 중간점으로 옮기니 줄을 건너뛰는 이음에서 그 점이 **사이 상자 안**에
+                # 떨어져 글자가 상자와 겹쳤다(2026-09-01, 「실리콘 칩」·「메모리 부품」).
+                # 도랑 절반만큼 내려오면 어느 쪽이든 상자 밖이고 간격도 곧은 이음과 같다
+                span = p1[1] - p0[1]
+                off = min(self.gap_y / 2.0 + 4, abs(span) / 2.0 + 4)
                 lx = (p0[0] + p1[0]) / 2.0
-                ly, anchor = (p0[1] + p1[1]) / 2.0 + 4, 'middle'
+                ly, anchor = p0[1] + (off if span > 0 else -off), 'middle'
         o = ['<path d="%s" class="%s" marker-end="%s"/>' % (d, cls, mk)]
         if label:
             # 이미 이름이 앉은 점이면 한 줄씩 올려 비킨다. 계산으로 갈리지 않는 경우가
@@ -438,8 +447,22 @@ class Plate(object):
             # (2026-09-01, 「작업 분배」와 「다음 작업 투입」이 한 자리에 겹쳤다)
             pts = getattr(self, '_label_pts', None)
             if pts is not None:
-                while (round(lx), round(ly)) in pts:
-                    ly -= 13.0
+                boxes = getattr(self, '_label_boxes', ())
+
+                def free(y):
+                    if (round(lx), round(y)) in pts:
+                        return False
+                    return not any(bx0 < lx < bx1 and by0 < y < by1
+                                   for (bx0, by0, bx1, by1) in boxes)
+
+                # 위로만 밀면 상자 안으로 들어간다 — 한 자리에 이름이 셋 몰리자
+                # 세 번째가 상자 안에 앉았다(2026-09-01, 「최종 취합 자료 전달」).
+                # 위아래로 번갈아 비키고, 상자 안인 자리는 건너뛴다
+                base = ly
+                for k in range(1, 12):
+                    if free(ly):
+                        break
+                    ly = base + (13.0 * (k // 2 + 1)) * (1 if k % 2 else -1)
                 pts.add((round(lx), round(ly)))
             o.append('<text x="%g" y="%g" class="fl fl-s" text-anchor="%s"%s>%s</text>'
                      % (lx, ly, anchor, fsa, label))
@@ -477,6 +500,8 @@ class Plate(object):
         # 이음 이름이 앉은 자리. 꺾인 구간의 가운데로 잡아도 고리(사이클)가 있는 판에서는
         # 두 이음의 가운데가 같은 점이 되는 일이 있다 — 먼저 앉은 이름을 비켜 준다
         self._label_pts = set()
+        self._label_boxes = [(bx.x, bx.y, bx.x1, bx.y1)
+                             for row in placed for bx in row if bx is not None]
         for (ra, ca), (rb, cb), label, kind, at in self.links:
             o += self._link_svg(placed[ra][ca], placed[rb][cb], label, kind, at)
         y = self._bottom
