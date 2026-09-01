@@ -349,19 +349,14 @@ def _head_open(c, page_slug='', standalone=False):
     구실이 없다(FOLD_JS를 안 싣는다). page_slug가 있으면(목록 페이지, 카드마다 파일이
     따로 있는 장) 머리는 그 파일로 가는 링크다(role=link, data-href) — 캐럿만 그 자리에서
     접고 편다(role=button aria-expanded). 둘 다 없으면 예전처럼 머리 자체가 접었다 편다."""
-    # c['open']이면 목록에서도 펼친 채로 낸다. 카드가 쌓이는 아카이브는 접어야 훑을 수
-    # 있지만, 감시 성격의 장(포트폴리오 워치)은 열어야 보이는 것 자체가 한 겹 방해다 —
-    # 접는 기능은 남으니 누르면 여전히 접힌다.
-    opened = bool(standalone or c.get('open'))
-    wrap_cls = 'ucard is-open' if opened else 'ucard is-fold'
+    wrap_cls = 'ucard is-open' if standalone else 'ucard is-fold'
     if standalone:
         head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="true">'
         caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
     elif page_slug:
         head = ('<div class="uc-head" role="link" tabindex="0" data-href="%s/%s.html">'
                 % (page_slug, anchor_of(c)))
-        caret = ('<span class="uc-caret" role="button" tabindex="0" aria-expanded="%s">▾</span>'
-                 % ('true' if opened else 'false'))
+        caret = '<span class="uc-caret" role="button" tabindex="0" aria-expanded="false">▾</span>'
     else:
         head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="false">'
         caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
