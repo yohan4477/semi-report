@@ -1,0 +1,71 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>설계를 아홉 달에 끝낸 추론 칩 — 오픈AI 할라페뇨 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.75 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:17px;margin:30px 0 10px;line-height:1.5}
+.lane h3{font-size:15px;margin:22px 0 8px}
+.lane p{margin:0 0 14px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>설계를 아홉 달에 끝낸 추론 칩 — 오픈AI 할라페뇨</h1><div class="pmeta">2026-08-27 · Austin · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling">https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-27-openai-jalapeno.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>맥킨지 꼴 이슈 트리 · claude-sonnet 가 씀</span></div><div class="ltitle">사용자를 보고 짠 칩이라 「팔 것인가」가 미결로 남는다 — 2세대 테이프아웃은 이미 다가와 있다</div><p><b>물음</b> — OpenAI가 Hot Chips에서 첫 추론 칩 Jalapeño를 공개했다. 설계를 사는 사람이 아니라 쓰는 사람을 보고 짰다는 것이 진행자 둘(Austin·Vik)이 공통으로 짚은 출발점인데, 그 선택이 「이 칩을 팔 것인가」라는 물음에는 답을 안 주고 오히려 더 열어 놓는다. 왜 그런가, 그리고 이 미결정이 얼마나 급한 물음인가를 본다. <b>바탕</b> — Semi Doped 진행자 둘이 발표 직후(12시간 이내) 슬라이드를 짚어 가며 나눈 대화 전문 하나. <b>축</b> — 설계 목표(Q0) → 범용이냐 전용이냐(Q1) → 판매 여부(Q2) → 왜 지금 급한가(Q3) → 무엇이 뒤집나(Q4).</p>
+<h2>Q0. 왜 설계가 달라졌나 — 사는 사람이 아니라 쓰는 사람을 본다</h2>
+<p>발표를 이끈 세 사람 중 Richard Ho(전 구글 TPU팀)·Ravi(칩 아키텍트)·Chris(소프트웨어 코디자인 담당)가 초반에 밝힌 설계 목표는 둘뿐이다 — 사용자 경험(첫 토큰이 아니라 마지막 토큰까지 걸리는 종단 지연시간)과 요청당 에너지. 둘은 서로 상충하므로(더 빠르게 하려면 에너지를 더 쓰면 된다) 단일 수치 대신 항상 파레토 프론티어(한 축을 조이면 다른 축이 어떻게 움직이는지 보여주는 곡선) 곡선으로 보고했다고 밝혔다.</p>
+<p>Austin이 짚은 것은 이 목표 설정 자체다 — "이건 고객이 AI 사용자인 모델랩이 최종 사용자 경험을 최우선으로 보고 칩을 설계하는 것"이고, 상용 실리콘 업체는 AI 랩이나 하이퍼스케일러에 파는 입장이라 TCO(총소유비용 — 사고 굴리는 데 드는 비용 전부)를 먼저 말한다는 것이다. Vik은 여기에 Jensen Huang이 예전에 한 말을 얹었다 — 칩을 싸게 만드는 쪽으로 아키텍처를 고르면 나쁜 설계 결정이라는 것, 지금은 칩을 만드는 비용이 아니라 굴리는 비용(주울당 토큰 — tokens per joule, 에너지 1주울로 토큰을 몇 개 내나)을 아껴야 하는 시대라는 것. Ravi의 인용도 같은 축이다 — "토큰 시장은 빠르고 싼 것을 원하고, 빠르게 만드는 일이 우리에게 즐거움을 준다."</p>
+<p><b>so-what</b> — 사는 사람과 쓰는 사람이 같은 회사(OpenAI)라서, 이 칩이 기본으로 최적화하는 대상 자체가 상용 실리콘과 다르다. Nvidia·AMD는 칩을 산 하이퍼스케일러가 그 위에서 사용자를 다시 상대하는 2단계 구조라 TCO가 자연스러운 1순위 지표가 되지만, OpenAI는 칩과 사용자 사이에 중간 판매자가 없다. 뒤에 나오는 NUMA(비균일 메모리 아키텍처 — 코어마다 가까운 메모리를 따로 둬 경합을 줄이는 방식) HBM 슬라이스도, 다크 실리콘 원칙도 전부 이 목표에서 역산된 선택이다 — 즉 「누구를 보고 짰나」가 뒤에 나오는 모든 설계 결정의 원인 변수다.</p>
+<h2>Q1. 범용으로 남기면 — 무엇을 얻나, 무엇을 잃나</h2>
+<p>Jalapeño는 GPT-OSS(작은 모델, 1,200억 파라미터)부터 Kimi K2.5(형태가 전혀 다른 모델)까지 돌아갔고, SemiAnalysis는 이 칩으로 둠(Doom)까지 실행했다고 전했다. Austin은 이것을 두 갈래로 읽었다 — ① 엔지니어링 관점에서는 앞으로 나올 알고리즘·하니스(모델을 감싸는 실행 틀) 혁신에 대응하려는 유연성이고, ② 사업 관점에서는 "잠깐, 이게 다른 모델도 돌아간다고?"라는 질문을 던진다. 이 범용성은 Nvidia·AMD의 범용 GPU 논리("어떤 모양의 모델이든 돈다")나, 특정 모델에 좁게 묶이지 않는다는 구글 TPU의 기존 포지셔닝과 정확히 같은 자리에 선다.</p>
+<p>Vik의 반응은 처음엔 정반대였다. "다른 모델에서도 이게 되는 걸 왜 보여주는지 모르겠다, 다른 사람에게 팔려는 게 아니라면." 그는 오히려 OpenAI 자체 모델에만 맞춰 극단적으로 코디자인해야 한다고 주장했다 — Nvidia는 갖지 못한 자사 토큰·워크로드 데이터를 살리면 Cerebras급 성능까지 밀어붙일 수 있는데, 범용으로 남기는 건 그 우위를 스스로 버리는 일이라는 논지다.</p>
+<p>그런데 「후회 요인」 절에서 Vik은 스스로 이 논지를 뒤집는다 — "범용성을 유지하면 좋은 게, Kimi를 굳이 안 돌려도 되지만, 범용성이 있어야 OpenAI 자신의 미래 모델을 개발하는 데도 이 칩을 쓸 수 있다. 그래서 내 주장에 반대되는 주장도 할 수 있다"고 직접 밝혔다.</p>
+<div class="tw"><table><thead><tr><th>선택</th><th>얻는 것</th><th>잃는 것</th><th>누가·성격</th></tr></thead><tbody><tr><td>범용으로 남긴다</td><td>미래 알고리즘·하니스 혁신에 대응, OpenAI 자신의 차세대 모델 개발에도 그대로 씀</td><td>지금 낼 수 있는 최대 성능(Cerebras급 코디자인 이득)을 못 낸다</td><td>Austin — 엔지니어링 관측 / Vik — 스스로 뒤집은 뒤의 재판단</td></tr><tr><td>OpenAI 모델 전용으로 좁힌다(극단적 코디자인)</td><td>Nvidia가 갖지 못한 자사 토큰·워크로드 데이터를 살려 Cerebras급 성능까지 갈 수 있다</td><td>모델 구조가 바뀌면 실리콘 쓸모가 좁아질 위험</td><td>Vik — 첫 주장(판단)</td></tr></tbody></table></div>
+<p><b>so-what</b> — 이건 원문 안에서도 안 닫힌 물음이다. 진행자 한 명이 자기 주장을 자기 손으로 뒤집었다는 것 자체가, 범용이냐 전용이냐가 트레이드오프이지 정답이 있는 문제가 아니라는 증거다. 다음 세대 설계에서 이 저울이 어느 쪽으로 기우는지가 「팔 것인가」(Q2) 물음의 답을 사실상 결정한다 — 전용으로 좁힐수록 판매 상대가 좁아지고, 범용으로 남길수록 파는 것 자체의 유인이 커진다.</p>
+<h2>Q2. 판다면 — 왜 파나, 누구에게, 어떤 꼴로</h2>
+<p>Vik이 직접 물었다 — "구글 TPU처럼 처음엔 일반 시장에 안 팔다가, 어떤 모델이든 돌아가는 걸 보니 OpenAI도 결국 팔기 시작할까?" Austin의 답은 양쪽을 다 짚었다.</p>
+<p>안 파는 쪽 논리는 명확하다 — 수직 통합을 Anthropic·구글과 겨루는 무기로 쓴다, 마진이 더 좋다, 더 빨리 움직인다, 비용을 통제한다, 사용자 경험을 더 낫게 만든다. 하지만 재무팀 관점에서는 다르다 — 이 정도 규모로 짓고 굴리는 데 드는 돈이 큰데("타이프아웃하고 램프업하는 데 1억 달러쯤, 뭐가 됐든" — Austin이 정확한 수치가 아니라 어림으로 든 값이다), 남에게 빌려주거나 팔아서 그 비용을 상각할 방법이 있다면 마다할 이유가 없다는 것이다. Austin은 이걸 파운드리와 IDM(종합반도체회사)의 관계에 비유했다 — 인텔이 오랫동안 팹을 자사 전용으로 묶어 뒀지만, 팹 하나 짓는 비용이 계속 배로 뛰면서 결국 그 비용을 나눠 낼 방법을 찾아야 했던 것과 같은 압력이라는 것이다.</p>
+<p>Austin이 즉흥적으로 꼽은 형태는 셋이다.</p>
+<div class="tw"><table><thead><tr><th>꼴</th><th>파는 대상</th><th>경쟁 노출</th><th>선례</th><th>성격</th></tr></thead><tbody><tr><td>기업에 직접 렌트·판매</td><td>온프레미스로 돌리거나 더 싸게 쓰려는 엔터프라이즈(Anthropic 제외)</td><td>낮음 — 직접 경쟁사는 뺀다</td><td>원문에 없음</td><td>Austin의 즉흥 제안("thinking out loud")</td></tr><tr><td>네오클라우드 경유 도매</td><td>네오클라우드가 받아 엔터프라이즈에 재임대</td><td>중간</td><td>원문에 없음</td><td>Austin의 즉흥 제안</td></tr><tr><td>실리콘은 안 팔고 추론을 서비스로 판다</td><td>OpenAI 추론을 GPU 대비 더 싸게 서비스로 제공</td><td>낮음 — 실리콘 자체는 안 넘긴다</td><td>AWS가 자사 XPU(Trainium)로 자사 모델을 GPU 중간마진 없이 약 30% 싸게 서비스한다는 선례</td><td>Austin이 직접 든 비교 사례</td></tr></tbody></table></div>
+<p>Vik은 이 물음에 정면으로 답하는 대신, Q1에서 편 자신의 논지(전용 코디자인)를 다시 밀었다 — 범용으로 보여준 것 자체가 "팔려는 게 아니라면 이해가 안 된다"는 의심을 유지하면서도, 정작 자신은 팔지 말고 자사 모델에 맞춰 좁히는 쪽이 더 낫다고 본다. 즉 Vik의 입장은 실질적으로 "판매 유인이 보이긴 하는데, 그래도 안 파는 게 전략적으로 맞다"에 가깝다.</p>
+<p><b>so-what</b> — 세 형태는 경쟁 노출 정도가 다 다르다. 직접 렌트나 네오클라우드 경유는 실리콘 자체를 넘기므로 그 실리콘이 훗날 경쟁사 손에 들어갈 길을 원천적으로 남기지만, 추론-서비스형(AWS Trainium 방식)은 실리콘을 비공개로 둔 채 비용 우위만 판다 — "돕는 대상을 Anthropic만 빼면 된다"는 Austin의 처음 발상보다 훨씬 안전한 형태다. 그런데 원문은 이 셋 중 어느 것도 확정하지 않는다. Austin 스스로 "시간이 답해줄 것"이라고 끝맺었다 — 이 물음은 원문 안에서 열린 채로 남는다.</p>
+<h2>Q3. 왜 지금 걸리나 — 첫 RTL에서 테이프아웃, 그다음 세대로</h2>
+<p>첫 RTL(레지스터 전송 레벨 — 회로의 동작을 기술하는 설계 단계)에서 테이프아웃(칩 설계를 완료해 제조에 넘기는 시점)까지 아홉 달이 걸렸다. Vik은 이걸 "말도 안 되게 짧다"고 했다 — 보통은 최소 2~3년, 그것도 수작업이 많이 들어간다는 것이다. 발표 중 한 화자는 초기 RTL을 GPT-3급 모델로 짰다고 말했고(Vik이 이를 전했다), 설계가 진행되며 더 나은 모델을 썼다고 한다. Richard는 여기에 「백지 상태」의 이점도 더했다 — 레거시 소프트웨어에 맞춰야 할 부담이 없었다는 것이다.</p>
+<p>Ravi가 설명한 설계 판단의 기준은 「후회 요인」이다 — 기능 하나를 더 넣는 데 드는 한계비용보다, 그 기능이 없어서 못 받는 수요(기회비용)가 대체로 더 크다는 것. 그래서 팀은 넣고 싶은 기능 목록을 다 채우려 하다가 결국 플로어플랜(칩 위 면적 배치)에 다 못 넣는다는 걸 깨닫고 잘라내야 했다 — 청중이 "가장 어려웠던 결정이 뭐였냐"고 묻자 Ravi는 "무엇을 뺄지 정하는 것"이라고 답했다.</p>
+<div class="tw"><table><thead><tr><th>세대</th><th>상태</th><th>근거</th></tr></thead><tbody><tr><td>1세대(Jalapeño)</td><td>이미 테이프아웃, Hot Chips에서 실물 공개</td><td>Richard가 발표에서 직접 손에 들고 보여줬다</td></tr><tr><td>2세대</td><td>테이프아웃에 다가가는 중</td><td>Richard의 발언(Austin이 전함)</td></tr><tr><td>3세대</td><td>구상 단계</td><td>Richard의 발언(Austin이 전함)</td></tr></tbody></table></div>
+<p>Austin은 SemiAnalysis의 관전평도 얹었다 — 보통 첫 칩은 "거의 버리는 셈"이고 진짜 경쟁은 두세 번째 칩부터 시작되는데, OpenAI는 1세대부터 곧바로 경쟁력을 내며 나왔다는 것이다.</p>
+<p><b>so-what</b> — 2세대가 이미 테이프아웃 근처라는 것은 Q1(범용이냐 전용이냐)과 Q2(파느냐 마느냐)가 한 번 정해지고 끝나는 결정이 아니라는 뜻이다. 아홉 달짜리 사이클에서는 1세대의 「후회 요인」 표에서 잘려 나간 기능이 거의 곧바로 2세대에서 다시 살아나거나 영구히 밀린다 — 보통 칩처럼 2~3년의 여유를 두고 다시 고민할 시간이 없다. 즉 이 글이 다루는 미결정들은 지금 이 순간에도 2세대 설계 안에서 다시 결정되고 있는 중이다.</p>
+<h2>Q4. 무엇이 이 판단을 뒤집나</h2>
+<p>Vik이 던진 더 큰 물음은 경쟁 구도 자체다 — 1년도 안 돼 Blackwell을 이기는 칩이 나온다면, 2년을 준 회사는 얼마나 더 나은 칩을 내놓을 수 있는가. 이게 앞으로 "돈이 어디로 흘러야 하는지, 누가 이 일을 할 능력이 있는지"를 가를 것이라는 게 그의 결론이다. Austin은 여기에 Nvidia 쪽 반론도 그대로 실어 뒀다 — "그래, 그럼 이제 대량 생산해 봐, 대량 출하해 봐, 규모에서 신뢰성이 어떤지 보자"는 것. 시장을 오래 이끌어 온 회사에는 생산 경험치가 쌓여 있다는 뜻이다. Austin은 또 Nvidia가 CUDA와 레거시 부담을 접어 두고 내부에 스컹크웍스 팀을 꾸릴지도 모른다고 했는데, 이건 스스로도 "그냥 궁금하다(I wonder if)"고 밝힌 순수 추측이다.</p>
+<div class="tw"><table><thead><tr><th>무엇이 바뀌면</th><th>판단이 어떻게 뒤집히나</th><th>지금 상태(원문 기준)</th></tr></thead><tbody><tr><td>에이전틱·롱컨텍스트 벤치마크 결과가 나쁘게 나오면</td><td>범용 주장의 근거가 흔들려 Vik의 「전용으로 좁히자」는 논지가 다시 힘을 얻는다</td><td>아직 안 돌렸다 — SemiAnalysis 자신이 에이전틱 워크로드는 안 돌렸다고 밝혔고, AgentX 벤치마크는 아직이다</td></tr><tr><td>2세대가 나와도 자사 수요만으로 못 채우면</td><td>파운드리·IDM 비유대로 비용 상각 압력이 커져 판매 쪽으로 기운다</td><td>아직 신호 없음 — Austin의 표현으로 "시간이 답해줄 것"</td></tr><tr><td>Nvidia가 CUDA 레거시를 접고 스컹크웍스로 대응하면</td><td>OpenAI가 지금 쥔 속도 우위가 좁아진다</td><td>Austin의 순수 추측, 근거 없음</td></tr></tbody></table></div>
+<p><b>so-what</b> — 세 트리거 모두 이 회차 안에서는 아직 관측되지 않은 미래 사건이다. 그런데 그중 ①(에이전틱·롱컨텍스트 성능)만이 OpenAI가 통제할 수 있고 가장 먼저 답이 나올 항목이다 — AgentX 벤치마크 결과가 나오는 순간 Q1의 저울이 실제로 어느 쪽으로 기우는지가 드러난다. 나머지 둘(수요 부족, Nvidia 대응)은 OpenAI 밖의 변수라 이 회차만으로는 예측선을 그을 수 없다.</p>
+<h2>한계 — 이 회차가 안 말한 것</h2>
+<p>① 에이전틱 워크로드 벤치마크는 아직 없다. SemiAnalysis 스스로 안 돌렸다고 밝혔고, AgentX 결과가 나와야 Q1·Q4의 판단이 갱신된다. ② 입력·출력 컨텍스트 길이가 상대적으로 짧은 조건(Vik이 어림으로 든 값은 입력 8K·출력 1K 언저리다)에서 낸 성능이라, 100만 토큰급 긴 컨텍스트에서 어떻게 되는지는 이 회차에서 다뤄지지 않았다. ③ Samsung HBM4가 SK Hynix보다 핀당 속도가 낫다는 대목은 Vik이 "전적으로 추정"이라고 직접 못 박았다. ④ CPU가 Turin급이라는 것, Celestica가 시스템 레벨 파트너라는 것 모두 "사람들이 믿는다" "SemiAnalysis가 추정했다"는 식으로 소개됐을 뿐, OpenAI가 이 회차 안에서 직접 확인한 사실은 아니다. ⑤ 네트워킹을 "half flattened two-level Clos topology"라 부른다는 것은 나왔지만, Vik 자신이 "이게 정확히 무슨 뜻인지 아직 다 이해하지 못했다"고 말했다 — 이 회차는 그 구조를 풀어 설명하지 않는다. ⑥ 「팔 것인가」와 「범용이냐 전용이냐」 둘 다 진행자들이 결론을 내리지 않고 끝냈다. 이 글의 답("설계가 미결로 남긴다")은 이 회차의 대화 구조 자체에서 나온 관찰이지, 원문이 명시적으로 내린 결론이 아니다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-08-27-openai-jalapeno-strategy.md">insights/semidoped/2026-08-27-openai-jalapeno-strategy.md</a> · 페르소나 맥킨지 출신 시니어 전략 컨설턴트</div></div></div>

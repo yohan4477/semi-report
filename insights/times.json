@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-08-31",
-"index_fingerprint": "733f0ef5c939635e8dd8dca59c6cd60ce5b76b7b",
-"lines": 3141
+"built": "2026-09-02",
+"index_fingerprint": "874cd111dd23f89975f2a769ac39c6a94d630df7",
+"lines": 3157
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -1683,6 +1683,98 @@
 "how": "명시",
 "t": "2026",
 "tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L101": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L158": {
+"how": "명시",
+"span": [
+"2029",
+"2035"
+],
+"t": "2035",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L160": {
+"how": "명시",
+"span": [
+"1990",
+"2010"
+],
+"t": "2010",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L207": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L214": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L215": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L217": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L226": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L238": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L249": {
+"how": "명시",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L252": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L258": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L67": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L69": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L78": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L94": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
 },
 "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md#L174": {
 "how": "명시",
