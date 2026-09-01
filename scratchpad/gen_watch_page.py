@@ -171,25 +171,52 @@ def time_ruler(watches):
     def px(a):
         return X0 + (X1 - X0) * ((xs[a] - lo) / float(hi - lo) if hi > lo else .5)
 
-    o = ['<line x1="%d" y1="%d" x2="%d" y2="%d" class="grid"/>' % (X0, Y, X1, Y)]
     order = sorted(pts, key=lambda a: xs[a])
-    for i, a in enumerate(order):
-        x, n = px(a), len(pts[a])
+    # 라벨을 줄인다. 연도가 앞 점과 같으면 안 되풀이한다 — 오른쪽에 넉 달이 몰려 있어
+    # 전체 날짜를 다 적으면 글자가 겹친다(실제로 다섯 쌍이 겹쳤다)
+    lab, prev_y = [], None
+    for a_ in order:
+        y4 = a_[:4]
+        lab.append(a_ if y4 != prev_y else a_[5:])
+        prev_y = y4
+    CH = 9.0                             # check_fig 이 한 자를 이만큼으로 센다.
+    # 좁게 잡으면 내 눈에는 안 겹치는데 검사기는 겹친다고 한다 — 자를 맞춘다
+    o = ['<line x1="%d" y1="%d" x2="%d" y2="%d" class="grid"/>' % (X0, Y, X1, Y)]
+    # 위·아래 두 줄에 번갈아 놓고, 줄 안에서 겹치면 오른쪽으로 민다. 지시선이 제 점을
+    # 가리키므로 라벨이 밀려도 어느 점인지는 안 흐려진다
+    place = {}
+    for row in (0, 1):
+        idx = [i for i in range(len(order)) if i % 2 == row]
+        wid = dict((i, len(lab[i]) * CH) for i in idx)
+        x0 = dict((i, px(order[i]) - wid[i] / 2) for i in idx)
+        # 왼쪽에서 오른쪽으로 밀고, 끝에 몰려 못 밀린 것은 오른쪽에서 왼쪽으로 되민다.
+        # 한 번만 밀면 마지막 점이 판 끝에 붙어 앞 라벨과 겹친 채로 남는다
+        for k in range(1, len(idx)):
+            i, j = idx[k - 1], idx[k]
+            x0[j] = max(x0[j], x0[i] + wid[i] + 6)
+        x0[idx[-1]] = min(x0[idx[-1]], W - wid[idx[-1]] - 2)
+        for k in range(len(idx) - 2, -1, -1):
+            i, j = idx[k], idx[k + 1]
+            x0[i] = min(x0[i], x0[j] - wid[i] - 6)
+        x0[idx[0]] = max(x0[idx[0]], 2)
+        for i in idx:
+            place[i] = (x0[i] + wid[i] / 2, wid[i])
+    for i, a_ in enumerate(order):
+        x, n = px(a_), len(pts[a_])
+        lx, _w = place[i]
         r = 3.5 + min(n, 12) * .5
         up = (i % 2 == 0)
         o.append('<circle cx="%.1f" cy="%d" r="%.1f" fill="var(--calm)"/>' % (x, Y, r))
-        if up:
-            o.append('<line x1="%.1f" y1="34" x2="%.1f" y2="%.1f" class="grid"/>'
-                     % (x, x, Y - r - 3))
-        else:
-            o.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="98" class="grid"/>'
-                     % (x, Y + r + 3, x))
-        anc = 'start' if i == 0 else ('end' if i == len(order) - 1 else 'middle')
-        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="%s" '
-                 'style="font-size:11px">%s</text>' % (x, 28 if up else 112, anc, E(a)))
-        o.append('<text x="%.1f" y="%d" class="t-sm" text-anchor="%s" '
+        # 지시선은 꺾어서 간다. 비스듬한 선은 다른 선과 구분이 안 된다(check_fig)
+        mid = (Y - 14) if up else (Y + 14)
+        o.append('<path d="M%.1f %.1f L%.1f %d L%.1f %d L%.1f %d" class="grid"/>'
+                 % (x, Y - r - 3 if up else Y + r + 3, x, mid, lx, mid,
+                    lx, 36 if up else 96))
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle" '
+                 'style="font-size:11px">%s</text>' % (lx, 30 if up else 110, E(lab[i])))
+        o.append('<text x="%.1f" y="%d" class="t-sm" text-anchor="middle" '
                  'style="font-size:11px;font-weight:800">%d</text>'
-                 % (x, 14 if up else 126, anc, n))
+                 % (lx, 16 if up else 124, n))
     gap = (xs[order[-1]] - xs[order[0]]) // 12
     who = ' · '.join(sorted(set(pts[order[0]]))[:2])
     note = ('가장 오래된 것이 %s(%s), 가장 새 것이 %s입니다 — %d년 넘게 벌어져 있습니다. '
@@ -378,6 +405,13 @@ def check_ui(html, watches):
     assert 0 < at_fired < at_line, \
         '규약 위반: 「지금 걸린 것」이 줄 상세보다 먼저 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 때 자가 없다 — 값의 나이를 먼저 보인다'
+    # 도해 배치는 눈이 아니라 검사기가 본다. 때 자는 점이 몰리면 글자가 겹치는데
+    # 화면을 못 볼 때는 그걸 알 길이 없다 — 실제로 다섯 쌍이 겹친 채로 나갈 뻔했다
+    sys.path.insert(0, HERE)
+    import check_fig
+    for m in re.finditer(r'<svg[^>]*>.*?</svg>', html, re.S):
+        bad = check_fig.hits(m.group(0))
+        assert not bad, '규약 위반: 도해 배치 — %s' % ' · '.join(bad)
     n = sum(1 for w in watches for t in w['triggers'] if t['kind'] == wl.KIND_VALUE
             and t['value'] is not None)
     assert html.count('<th>언제 것</th>') >= 1 or n == 0, \
