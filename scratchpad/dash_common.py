@@ -2014,7 +2014,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
-           sw_labels=('밸류에이션', '개별 포스트'), page_slug=''):
+           sw_labels=('밸류에이션', '개별 포스트'), page_slug='', pick_tabs=None,
+           home=''):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
