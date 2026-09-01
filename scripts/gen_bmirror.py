@@ -178,11 +178,13 @@ for a in defs:
     # 있을 때만 선다 — 규칙은 CLAUDE.md 「각도 아래 물음, 물음 아래 축」이다.
     sh = '<span class="ag-sh">' + a["shape"] + "</span>" if a.get("shape") else ""
     eq = '<span class="ag-eq">' + a["eq"] + "</span>" if a.get("eq") else ""
-    ax = "".join('<li><span class="ag-ax">' + k + '</span><span class="ag-v">' + v + "</span></li>"
+    # 축은 표로 세운다 — 이름 폭이 제각각이라 목록으로 두면 값이 행마다 다른 자리에서
+    # 시작하고, 두 줄로 넘어간 값이 몰려 보인다. 표는 <p> 안에 설 수 없어 머리가 div 다.
+    ax = "".join("<tr><th>" + k + "</th><td>" + v + "</td></tr>"
                  for k, v in a.get("axes", []))
-    axh = '<ul class="ag-p">' + ax + "</ul>" if ax else ""
-    out += ('    <p class="tlog-m" data-c="' + cats + '"><span class="ag-q">' + a["name"] + "</span>"
-            + sh + '<span class="tln">' + str(len(items)) + "건</span>" + eq + axh + "</p>\n")
+    axh = '<table class="ag-t"><tbody>' + ax + "</tbody></table>" if ax else ""
+    out += ('    <div class="tlog-m" data-c="' + cats + '"><span class="ag-q">' + a["name"] + "</span>"
+            + sh + '<span class="tln">' + str(len(items)) + "건</span>" + eq + axh + "</div>\n")
     vis = hid = ""
     shown = 0
     prev = None
