@@ -119,6 +119,10 @@ def card(w):
     return {
         'section': SECS[w['kind']],
         'topic': ('market', w['topic']),
+        # 권역은 고르는 축이라 위 탭으로 간다. 카드로 세우면 강남 3구를 보려고
+        # 목록을 훑어야 하고, 권역이 늘수록 그 일이 길어진다. 견주는 일은
+        # 탭이 아니라 견주기 층이 한 화면에 한다
+        'scope': w['target'] if w['kind'] == 'realestate' else '종목',
         'title': '%s — %s' % (w['target'], w.get('view') or DEFAULT_VIEW[w['kind']]),
         'gain': w['why'],
         'meta': ([LABEL[w['kind']], '보기 시작 <b>%s</b>' % w['opened']]
@@ -297,6 +301,12 @@ FOOTER = (LEDE + META + '\n워치 줄은 <code>insights/watch/</code>, 수치는
           '(공용 부품 <code>dash_common.py</code>).')
 
 if __name__ == '__main__':
+    # 탭 차례는 대상을 처음 본 순서다 — 매번 값에 따라 흔들리면 손이 기억을 못 한다
+    seen = []
+    for w in sorted(WATCHES, key=lambda x: (SECS[x['kind']][1], x['opened'], x['slug'])):
+        k = w['target'] if w['kind'] == 'realestate' else '종목'
+        if k not in seen:
+            seen.append(k)
     top, n = compare_layer(WATCHES)
     dc.render(CARDS, '포트폴리오 워치', HEADER, FOOTER, OUT, page_slug='watch',
               top=top, top_n=0, top_id='sec-compare',
@@ -304,4 +314,5 @@ if __name__ == '__main__':
               intro=INTRO,
               # 이 장은 고르러 오는 곳이 아니라 바뀐 것을 보러 오는 곳이다.
               # 타일은 위에 남아 필터 노릇을 하고, 열면 바로 전체가 보인다
-              home='all')
+              home='all',
+              pick_tabs=[(k, k) for k in seen])

@@ -158,6 +158,22 @@ def sections(cards, newest_first=False):
     return secs, order
 
 
+def pick_tabs_html(items, cards):
+    """위에 서는 갈래 탭. 카드의 scope 값으로 거른다 — 거르는 JS 는 국내·해외 탭과
+    같은 것을 쓴다(c.dataset.scope). 이름과 갈래만 장마다 다르다.
+
+    items = [(scope 값, 보일 이름), …]. 「전체」는 여기서 붙인다.
+    비교는 한 화면에 병렬로 두고 탭은 고르는 데만 쓴다 — 견주는 층이 그 자리다."""
+    b = []
+    for key, label in items:
+        n = len([c for c in cards if c.get('scope') == key])
+        b.append('<button data-pick="%s" aria-pressed="false">%s <span class="cnt">%d</span>'
+                 '</button>' % (key, label, n))
+    b.append('<button data-pick="all" aria-pressed="true">전체 <span class="cnt">%d</span>'
+             '</button>' % len(cards))
+    return '<div class="scope-tabs">\n    ' + '\n    '.join(b) + '\n  </div>'
+
+
 SCOPE_TABS = '''<div class="scope-tabs">
     <button data-pick="kr" aria-pressed="false">🇰🇷 국내 <span class="cnt">%d</span></button>
     <button data-pick="intl" aria-pressed="false">🌍 해외 <span class="cnt">%d</span></button>
@@ -1060,7 +1076,8 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
            sec_bottom=None, sec_groups=None, sec_badges=None, pick_top='',
            sec_fig=None, newest_first=False,
-           sw_labels=('밸류에이션', '개별 포스트'), page_slug='', home='pick'):
+           sw_labels=('밸류에이션', '개별 포스트'), page_slug='', home='pick',
+           pick_tabs=None):
     """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
     버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
     눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
@@ -1084,6 +1101,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
 
     newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
     세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다.
+
+    pick_tabs=[(scope값, 이름), …]이면 위에 그 갈래로 탭을 세운다. 국내·해외 범위 탭
+    자리를 장이 가져다 쓰는 것이고, 거르는 것은 같은 JS(카드의 scope)다. 권역처럼
+    **고르는** 축에만 쓴다 — 견주는 것은 탭이 아니라 한 화면 병렬이다(견주기 층).
 
     home='all'이면 처음 들어온 사람에게 타일 고르기 대신 **전체 보기**를 낸다. 타일은
     그대로 위에 서서 필터 노릇을 한다 — 규약(첫 화면에 섹션 타일이 선다)은 지켜진다.
@@ -1110,7 +1131,10 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
                      groups=sec_groups, badges=sec_badges, pick_top=pick_top,
                      search_ph=search_ph)
     tabs = ''
-    if scoped:
+    if pick_tabs:
+        # 장이 스스로 갈래를 정한 경우. 국내·해외 대신 그 갈래로 탭을 세운다
+        tabs = pick_tabs_html(pick_tabs, cards) + '\n\n  '
+    elif scoped:
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
     body = []
     for i, (lid, ltitle, _lsub, ln, lhtml) in enumerate(layers):
