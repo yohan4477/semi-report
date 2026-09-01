@@ -98,9 +98,30 @@ figcaption{font-size:.78rem;color:var(--ink-3);margin:5px 0 0}
 footer{margin:60px 0 0;padding-top:16px;border-top:2px solid var(--ink);
   font-size:.8rem;color:var(--ink-3)}
 code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px}
+/* ── 좁은 화면 ────────────────────────────────────────────────────────────
+   표를 가로로 밀게 두지 않는다. 열 이름을 값 앞에 세워 세로로 편다 —
+   7열짜리를 손가락으로 미는 화면에서는 값을 견줄 수가 없다.
+   도해는 세로로 못 편다(가로축이 시간이다). 대신 최소 폭을 두고 그 판만 민다. */
 @media (max-width:620px){
-  .row{grid-template-columns:1fr auto}
+  body{font-size:16px}
+  .wrap{padding:0 14px 60px}
+  .row{grid-template-columns:1fr auto;gap:3px 10px}
   .row-where{grid-column:1/-1}
+  .tw{overflow-x:visible}
+  table,thead,tbody,tr,td{display:block;width:100%}
+  thead{display:none}
+  tr{padding:11px 0;border-bottom:1px solid var(--rule)}
+  tr:last-child{border-bottom:0}
+  td{display:flex;gap:10px;align-items:baseline;border:0;padding:2px 0}
+  td::before{content:attr(data-th);flex:0 0 8.5em;font-size:10px;font-weight:850;
+    letter-spacing:.08em;color:var(--ink-3);line-height:1.9}
+  td:first-child{font-size:1.02rem;padding-bottom:5px}
+  td:first-child::before{display:none}
+  /* 도해는 최소 폭을 지켜 글자가 안 뭉개지게 한다. 그 판만 옆으로 민다 */
+  figure{overflow-x:auto}
+  figure svg{min-width:560px}
+  .band{margin-top:32px}
+  .line{margin-top:28px}
 }
 """
 
@@ -132,12 +153,18 @@ def title_of(w):
 
 
 def tbl(cap, head, rows):
+    """표. 칸마다 열 이름을 data-th 로 실어 둔다 — 좁은 화면에서 가로로 미는 대신
+    그 이름을 앞에 세워 세로로 편다. 7열짜리를 손가락으로 밀게 두면 값을 못 본다."""
     if not rows:
         return ''
+    body = []
+    for r in rows:
+        cells = ''.join('<td data-th="%s">%s</td>' % (E(head[i]) if i < len(head) else '', c)
+                        for i, c in enumerate(r))
+        body.append('<tr>%s</tr>' % cells)
     return ('<p class="lbl">%s</p><div class="tw"><table><thead><tr>%s</tr></thead>'
             '<tbody>%s</tbody></table></div>'
-            % (E(cap), ''.join('<th>%s</th>' % E(h) for h in head),
-               ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in r) for r in rows)))
+            % (E(cap), ''.join('<th>%s</th>' % E(h) for h in head), ''.join(body)))
 
 
 def tag(state):
@@ -166,7 +193,9 @@ def time_ruler(watches):
         return ''
     xs = dict((a, _months(a)) for a in pts)
     lo, hi = min(xs.values()), max(xs.values())
-    W, X0, X1, Y = 920, 24, 896, 66
+    # 판을 좁게 잡는다. 920 으로 두면 좁은 화면에서 2.4배 줄어 11px 글자가
+    # 4.5px 이 된다 — 벡터라 판을 줄이면 같은 글자가 상대적으로 커진다
+    W, X0, X1, Y = 640, 20, 620, 66
 
     def px(a):
         return X0 + (X1 - X0) * ((xs[a] - lo) / float(hi - lo) if hi > lo else .5)
