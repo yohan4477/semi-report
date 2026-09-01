@@ -51,24 +51,39 @@ def table_rows(block):
         if not cells or set(''.join(cells)) <= set('-: '):
             continue          # 구분선
         rows.append(cells)
-    return rows[1:] if rows else []      # 첫 줄은 머리
+    if not rows:
+        return []
+    # 첫 줄을 무조건 버리면 머리 없는 표에서 첫 트리거가 조용히 사라진다.
+    # 머리로 보이는 줄일 때만 버린다.
+    return rows[1:] if rows[0][:2] == ['무엇을', '갈래'] else rows
 
 
 def bullets(block):
-    """- 로 시작하는 줄만. 여러 줄로 접힌 항목은 이어 붙인다."""
-    out = []
+    """- 로 시작하는 줄만. 이어지는 줄은 들여썼을 때만 앞 항목에 붙인다 —
+    그냥 「비지 않은 줄」로 두면 목록 뒤 마무리 문단이 마지막 불릿에 삼켜진다."""
+    out, open_item = [], False
     for ln in block.splitlines():
-        s = ln.strip()
-        if s.startswith('- '):
-            out.append(s[2:].strip())
-        elif out and s:
-            out[-1] += ' ' + s
+        t = ln.strip()
+        if t.startswith('- ') and not ln.startswith((' ', '	')):
+            out.append(t[2:].strip()); open_item = True
+        elif not t:
+            open_item = False
+        elif open_item and ln.startswith((' ', '	')):
+            out[-1] += ' ' + t
     return out
+
+
+def esc(s):
+    """HTML 로 나가기 전에 막는다. 워치의 「걸리는 조건」은 본성상 부등호를 쓰고 싶은
+    자리라(「< 100」) 안 막으면 그 뒤가 태그로 먹혀 칸이 통째로 깨진다."""
+    return (str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
 def md_inline(s):
     """**굵게** 와 `코드` 만 마크업으로. 본문 전체를 마크다운으로 굴리지 않는다 —
-    카드가 받는 것은 이미 HTML 이고, 여기서 바꿀 것은 이 둘뿐이다."""
+    카드가 받는 것은 이미 HTML 이고, 여기서 바꿀 것은 이 둘뿐이다.
+    탈출을 먼저 걸고 그 위에 이 둘을 푼다."""
+    s = esc(s)
     s = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', s)
     return re.sub(r'`(.+?)`', r'<code>\1</code>', s)
 

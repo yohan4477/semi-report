@@ -49,14 +49,15 @@ GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전�
 def trg_row(t):
     """트리거 한 줄을 표 행으로. 사건 줄은 어댑터가 안 채우므로 값 자리에 갈래를 적는다 —
     비워 두면 「아직 안 받아 온 값」과 「애초에 값이 아닌 것」이 화면에서 같아 보인다."""
+    e = wl.esc
     if t['kind'] == wl.KIND_EVENT:
-        return [t['what'], '<i>사건</i>', t['cond'], '—', '사건']
+        return [e(t['what']), '<i>사건</i>', e(t['cond']), '—', '사건']
     v = t['value']
-    return [t['what'],
-            '—' if v is None else str(v),
-            t['cond'],
-            t['as_of'] or '—',
-            t['nature'] or '자리표시']
+    return [e(t['what']),
+            '—' if v is None else e(v),
+            e(t['cond']),
+            e(t['as_of'] or '—'),
+            e(t['nature'] or '자리표시')]
 
 
 def figs_of(w):
@@ -82,10 +83,13 @@ def figs_of(w):
         groups.setdefault((gkey, m.get('unit') or ''), []).append((gname, m))
     out = []
     for (base, unit), items in groups.items():
+        # 한 판에 표 둘이 겹치면 출처도 둘이다. 하나만 달면 매매 선이 그려진 판에
+        # 전세 통계표 번호가 붙는다 — GROUP 을 넣은 순간 「한 판 한 출처」가 깨졌다
+        note = ' · '.join(dict.fromkeys(m.get('src', '') for _n, m in items if m.get('src')))
         svg = wf.trend([(n, [tuple(x) for x in m['series']]) for n, m in items[:3]],
-                       unit or '값', note=items[0][1].get('src', ''))
+                       unit or '값', note=note)
         if svg:
-            out.append((0, TITLE.get(base, base), svg, items[0][1].get('src', '')))
+            out.append((0, TITLE.get(base, base), svg, note))
     return out
 
 
@@ -114,53 +118,69 @@ def card(w):
 # 집 구하는 사람은 권역 하나를 보는 게 아니라 여럿을 견준다. 카드를 하나씩 열어야
 # 견줄 수 있으면 그 일이 안 일어난다 — 타일과 같은 자리에 층으로 세운다.
 def compare_layer(watches):
-    """구 아홉의 전세가율을 한 판에 세우고, 묶음이 실제로 붙어 다니는지를 표로 낸다."""
-    import statistics as _st
-    live = [w for w in watches if w['kind'] == 'realestate' and w.get('view')]
-    rows, spread = [], []
+    """구 아홉의 전세가율을 한 판에 세우고, 묶음이 실제로 붙어 다니는지를 표로 낸다.
+
+    벌어짐은 **같은 달끼리** 잰다. 값 배열을 순번으로 맞추면 한 구가 한 달 늦게
+    공표되는 순간 서로 다른 달을 견주게 되고, 그 수가 그럴듯해서 아무도 못 본다."""
+    live = [w for w in watches if w['kind'] == 'realestate'
+            and any(k.startswith('jeonse_ratio_') for k in (w['metrics'] or {}))]
+    rows, spread, asofs, srcs = [], [], set(), []
     for w in live:
-        ser = []
+        by = {}
         for k, m in sorted((w['metrics'] or {}).items()):
-            if k.startswith('jeonse_ratio_'):
-                rows.append((w['target'], m['area'], m['value']))
-                ser.append([v for _t, v in m['series']])
-        if len(ser) >= 2:
-            n = min(len(s) for s in ser)
-            gaps = [max(s[i] for s in ser) - min(s[i] for s in ser) for i in range(n)]
-            spread.append((w['target'], gaps[-1], _st.mean(gaps), max(gaps), n))
+            if not k.startswith('jeonse_ratio_'):
+                continue
+            rows.append((w['target'], m['area'], m['value'], m['as_of']))
+            asofs.add(m['as_of'])
+            if m['src'] not in srcs:
+                srcs.append(m['src'])
+            by[m['area']] = dict((t, v) for t, v in m['series'])
+        if len(by) >= 2:
+            # 모든 구가 다 가진 달에서만 잰다
+            common = sorted(set.intersection(*[set(d) for d in by.values()]))
+            if common:
+                gaps = [max(d[t] for d in by.values()) - min(d[t] for d in by.values())
+                        for t in common]
+                spread.append((w['target'], gaps[-1], sum(gaps) / len(gaps), max(gaps),
+                               len(common), common[-1]))
     if not rows:
         return '', 0
-    asof = next((m['as_of'] for w in live for k, m in (w['metrics'] or {}).items()
-                 if k.startswith('jeonse_ratio_')), '')
-    src = next((m['src'] for w in live for k, m in (w['metrics'] or {}).items()
-                if k.startswith('jeonse_ratio_')), '')
-    svg = wf.rank_bar(rows, '전세가율 — 중위 매매가격 대비 전세가격 (%%, %s)' % asof, note=src)
+    # as_of 가 갈리면 가장 이른 것으로 말한다. 하나만 집어 아홉에 붙이면
+    # 늦게 온 구의 지난달 값이 이번 달 값으로 표시된다
+    asof = min(asofs)
+    mixed = len(asofs) > 1
+    src = ' · '.join(srcs)
+    svg = wf.rank_bar([(g, n, v) for g, n, v, _a in rows],
+                      '전세가율 — 중위 매매가격 대비 중위 전세가격 (%%, %s%s)'
+                      % (asof, ' 기준. 구마다 갱신월이 다르다' if mixed else ''), note=src)
 
-    h = ['<p class="xl-lede">집 구하는 사람에게 전세가율은 <b>한 수가 두 방향으로</b> 읽힙니다. '
-         '올라가면 보증금이 집값에 가까워져 떼일 위험이 커지고, 동시에 「이 돈이면 사는 게 '
-         '낫다」 쪽으로도 밉니다. 권역마다 그 수가 얼마나 다른지를 먼저 봅니다.</p>']
+    h = ['<p class="xl-lede">전세가율은 <b>한 수가 두 방향으로</b> 읽힙니다. 올라가면 '
+         '보증금이 집값에 가까워지고, 동시에 「이 돈이면 사는 게 낫다」 쪽으로도 밉니다. '
+         '내려가면 매매로 갈아타는 데 드는 자기 돈이 늘었다는 뜻입니다. '
+         '권역마다 그 수가 얼마나 다른지를 먼저 봅니다.</p>']
     h.append(cl.fig_html(('구 아홉의 전세가율', svg, src)))
-    hi, lo = rows and max(rows, key=lambda r: r[2]), rows and min(rows, key=lambda r: r[2])
-    h.append('<p class="xl-lede">가장 높은 <b>%s %s%%</b>와 가장 낮은 <b>%s %s%%</b>가 '
-             '<b>%.2f%%포인트</b> 벌어집니다. 같은 서울입니다.</p>'
-             % (hi[1], hi[2], lo[1], lo[2], hi[2] - lo[2]))
+    same = [r for r in rows if r[3] == asof]
+    hi, lo = max(same, key=lambda r: r[2]), min(same, key=lambda r: r[2])
+    h.append('<p class="xl-lede">%s 기준 가장 높은 <b>%s %s%%</b>와 가장 낮은 '
+             '<b>%s %s%%</b>가 <b>%.2f%%포인트</b> 벌어집니다. 같은 서울입니다.</p>'
+             % (asof, hi[1], hi[2], lo[1], lo[2], hi[2] - lo[2]))
     if spread:
         h.append(cl.tbl_html((
             '묶음 안에서 세 구가 붙어 다니나 — 같은 달 최대·최소의 벌어짐',
-            ['묶음', '지금', '평균', '최대', '기간', '언제 것', '성격'],
-            [[t, '%.2f%%p' % now, '%.2f' % avg, '%.2f' % mx, '%d개월' % n, asof, '계산치']
-             for t, now, avg, mx, n in sorted(spread, key=lambda r: r[2])])))
+            ['묶음', '마지막 달', '그달', '평균', '최대', '겹치는 달', '성격'],
+            [[t, last, '%.2f%%p' % now, '%.2f' % avg, '%.2f' % mx, '%d개월' % n, '계산치']
+             for t, now, avg, mx, n, last in sorted(spread, key=lambda r: r[2])])))
         tight = min(spread, key=lambda r: r[2])
         h.append('<p class="xl-lede"><b>%s만 묶음으로 성립합니다.</b> 세 구의 벌어짐이 평균 '
                  '%.2f%%포인트인데 나머지는 %s입니다. 시장에서 한 이름으로 부른다고 값이 '
                  '같이 움직이지는 않습니다 — 그래서 이 장은 묶음 평균을 내지 않고 '
                  '구마다 값을 따로 둡니다.</p>'
                  % (tight[0], tight[2],
-                    ' · '.join('%s %.2f' % (t, a) for t, _n, a, _m, _k in spread
-                               if t != tight[0])))
+                    ' · '.join('%s %.2f' % (r[0], r[2]) for r in spread if r[0] != tight[0])))
     h.append('<p class="xl-lede t-axis">벌어짐은 공표치에서 우리가 뺀 수라 성격이 '
              '<b>계산치</b>입니다. 전세가율 자체는 공표치입니다.</p>')
     return ''.join(h), len(rows)
+
 
 
 WATCHES = wl.load_all()
