@@ -574,8 +574,11 @@ def check_dashboards(gloss):
     「첫 등장」이라는 개념이 문서와 다르다."""
     # watch/ 하위 글 페이지(줄 상세)도 우리가 쓴 화면이라 같은 규칙을 댄다 —
     # 다른 장의 카드 단독 페이지 폴더는 이 목록에 없으니 안 건드린다(2026-09-02).
+    # semidoped/ 글 페이지도 본다 — 2026-09-03 까지 빠져 있어 대시 밀도(P8)·대구 밀도(P9)가
+    # Semi Doped 아홉 편에 한 번도 안 걸렸다(진단에서 대시 20회·대구 7회가 나와 알았다)
     paths_ = sorted(glob.glob(os.path.join(DASH_DIR, '*.html')) +
-                    glob.glob(os.path.join(DASH_DIR, 'watch', '*.html')))
+                    glob.glob(os.path.join(DASH_DIR, 'watch', '*.html')) +
+                    glob.glob(os.path.join(DASH_DIR, 'semidoped', '*.html')))
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)
