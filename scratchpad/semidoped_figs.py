@@ -502,34 +502,34 @@ TD = '2026-08-18-tensordyne-rk-anand'
 # 값은 전사의 것만 — 27%·34%·약 50%. 부품·갈래·조달 부품은 상태다.
 
 def _op_module():
-    """트랜시버 모듈 하나. 안의 부품마다 색이 나라다 — 흰 상자는 미국 부품, 짙은 상자는 중국이 맡은 부품.
-    모듈 테두리(조립·결합)도 중국 색. 전기 쪽 넷과 광 쪽 넷은 전사에 나온 이름을 그대로 센 것이다."""
-    h = 2 * LH + 22
-    US, CN = 'fig-box', 'fig-agent'
-    rows = [('전기 쪽', [(['DSP', 'Broadcom·Marvell'], US), (['리타이머'], US), (['드라이버'], US), (['TIA', '증폭기'], US)]),
-            ('광 쪽', [(['증폭기', '송신'], CN), (['증폭기', '수신'], CN), (['변환 회로'], CN), (['광섬유', '접속'], CN)])]
-    gap = 12
-    widths = [sum(w_of(l) for l, _ in items) + gap * (len(items) - 1) for _, items in rows]
-    inner = max(widths)
-    fx, fw = (W - (inner + 40)) / 2, inner + 40
-    fy = 36
-    parts = head(fx, 24, fw, '트랜시버 모듈 하나')
-    y = fy + 16
-    for label, items in rows:
-        parts += head(fx + 20, y + 2, inner, label)
-        x = fx + 20 + (inner - (sum(w_of(l) for l, _ in items) + gap * (len(items) - 1))) / 2
-        for lines, cls in items:
-            w = w_of(lines)
-            parts += box(x, y + 12, w, h, lines, cls)
+    """같은 트랜시버 모듈을 두 줄로. 윗줄은 미국이 만드는 부품만 짙게, 아랫줄은 중국이 맡는 부품(과 조립
+    테두리)만 짙게. 나머지는 점선. 같은 꼴 둘이라 다른 곳만 보인다. 부품 이름은 전사에 나온 것(L61·L65)."""
+    parts_all = [('DSP', 'us'), ('드라이버', 'us'), ('증폭기', 'cn'), ('광섬유', 'cn'),
+                 ('증폭기', 'cn'), ('변환', 'cn'), ('TIA', 'us'), ('리타이머', 'us')]
+    h, gap = 44, 8
+    ws = [w_of([n]) for n, _ in parts_all]
+    inner = sum(ws) + gap * (len(ws) - 1)
+    fw = inner + 32
+    fx = (W - fw) / 2
+    parts, y = [], 22
+
+    def row(y, who, label):
+        out = head(fx, y, fw, label)
+        fy = y + 10
+        out += ['  <rect x="%g" y="%g" width="%g" height="%g" rx="10" class="%s"/>'
+                % (fx, fy, fw, h + 32, 'fig-agent' if who == 'cn' else 'fig-outside')]
+        x = fx + 16
+        for (n, c), w in zip(parts_all, ws):
+            out += box(x, fy + 16, w, h, [n], 'fig-agent' if c == who else 'fig-box')
             x += w + gap
-        y += 12 + h + 14
-    bw = w_of(['조립·결합 — Innolight 등'])
-    parts += box(fx + (fw - bw) / 2, y, bw, 44, ['조립·결합 — Innolight 등'], CN)
-    y += 44 + 14
-    parts.insert(len(head(fx, 24, fw, '')), '  <rect x="%g" y="%g" width="%g" height="%g" rx="10" class="fig-outside"/>' % (fx, fy, fw, y - fy))
-    parts += legend([(US, '미국이 만든다'), (CN, '중국이 맡는다')], y + 16)
-    return svg(y + 42, parts,
-               '트랜시버 모듈 하나 안에서 전기 쪽 부품(DSP·리타이머·드라이버·TIA)은 미국이 만들고, 광 쪽 부품(증폭기 둘·변환 회로·광섬유 접속)과 최종 조립은 중국이 맡는다')
+        return out, fy + h + 32
+
+    r1, y1 = row(y, 'us', '미국이 만드는 부품')
+    r2, y2 = row(y1 + 26, 'cn', '중국이 맡는 부품 + 조립(테두리)')
+    parts += r1 + r2
+    parts += legend([('fig-agent', '그 나라가 맡는 것'), ('fig-box', '아닌 것')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '같은 트랜시버 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·드라이버·TIA·리타이머)만 짙고, 아랫줄은 중국이 맡는 부품(증폭기 둘·광섬유 접속·변환 회로)과 모듈 테두리(조립)가 짙다')
 
 
 def _op_stack():
@@ -595,9 +595,9 @@ FIGS = {
          '엔지니어 60% 이상이 소프트웨어다(L343). 스타트업이 시스템 인증까지 지면 출시가 밀린다는 것이 이유다(L231).'),
     ],
     (OP, 'strategy'): [
-        ('1.|광트랜시버(빛과', '트랜시버 하나 안에서 누가 무엇을 만드나', _op_module(),
-         '흰 상자가 미국 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등, L61), 짙은 상자가 중국이 맡은 부품(증폭기 둘·변환 회로·광섬유 접속)과 최종 조립이다(L61·L65). '
-         '전기 쪽과 광 쪽으로 나눈 것은 이 그림의 배치이고, 부품 수는 전사에 나온 이름을 그대로 센 것이다.'),
+        ('1.|광트랜시버(빛과', '같은 트랜시버, 누가 무엇을 만드나', _op_module(),
+         '같은 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등, L61)만 짙고, '
+         '아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)과 조립을 뜻하는 모듈 테두리가 짙다(L61·L65). 부품 순서는 이 그림의 배치다.'),
         ('1.|주가가 어긋난', '조립이 빠지면 위도 줄어든다', _op_stack(),
          'Innolight 한 곳이 세계 트랜시버 매출의 27~34%(로이터 27%, 일부 애널리스트 34%), 중국 공급망을 다 더하면 약 50% 다(L79). '
          '조립을 안 하는 Lumentum·Coherent 주가가 올랐지만 Vik 은 반대로 짚었다 — 모듈로 묶어 줄 사람이 사라지면 그들도 곤란해지지 않겠느냐는 것이다(L81·L83).'),
