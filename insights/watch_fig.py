@@ -70,7 +70,7 @@ def _fmt(v):
 NW, NX0, NX1 = 360, 64, 316
 
 
-def trend(lines, ylabel, note='', threshold=None, narrow=False):
+def trend(lines, ylabel, note='', threshold=None, narrow=False, marks=None):
     """시계열 선 도해.
 
     lines     = [(이름, [(때, 값), …]), …]  — 최대 셋. 같은 것을 여러 곳에서 견주는
@@ -78,6 +78,10 @@ def trend(lines, ylabel, note='', threshold=None, narrow=False):
     ylabel    = 세로 자가 무엇인지. 「지수(2021.6=100)」처럼 기준까지 적는다
     threshold = (이름, 값) 이면 문턱을 점선으로 하나 긋는다. 트리거 조건을 눈으로 보게 하는 자리
     narrow    = True 면 좁은 판(360)에 그린다. 값·축·범례는 같고 판만 좁다
+    marks     = lines 와 같은 길이의 목록. 각 자리에 그 선의 [(때, 값), …] —
+                워치 조건이 그 달에 걸렸다는 뜻이다(watch_lib.fired_months). 그 선과
+                같은 색의 빈 원으로 찍는다 — 채운 원(지금 값)과 헷갈리면 안 되니
+                가운데를 비워 판 색으로 채운다. 없으면 아무것도 안 찍는다
     반환      = SVG 문자열. 그릴 값이 없으면 None
     """
     W, X0, X1 = (NW, NX0, NX1) if narrow else (globals()['W'], globals()['X0'], globals()['X1'])
@@ -125,6 +129,16 @@ def trend(lines, ylabel, note='', threshold=None, narrow=False):
         o.append('<path d="M%d %.1f L%d %.1f" stroke="var(--warn,#c2831f)" stroke-width="1.6" '
                  'stroke-dasharray="6 4" fill="none"/>' % (X0, py(threshold[1]),
                                                            X1 + 14, py(threshold[1])))
+    # 걸렸던 달 표시 — 선·채운 원보다 먼저 그린다. 마지막 점(지금 값)의 채운 원과
+    # 겹치면 빈 원이 밑에 깔리고 채운 원이 위에 와야 「지금」이 흐려지지 않는다
+    marks = marks or []
+    for i, (_name, _s) in enumerate(lines):
+        c = COLORS[i % len(COLORS)]
+        for t, v in (marks[i] if i < len(marks) else []):
+            if t not in pos:
+                continue
+            o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--paper)" stroke="%s" '
+                     'stroke-width="2"/>' % (px(t), py(v), c))
     for i, (name, s) in enumerate(lines):
         c = COLORS[i % len(COLORS)]
         pts = ' '.join('%.1f,%.1f' % (px(t), py(v)) for t, v in s)
@@ -137,6 +151,10 @@ def trend(lines, ylabel, note='', threshold=None, narrow=False):
     for i, (name, _s) in enumerate(lines):
         o.append('<rect x="16" y="%d" width="18" height="4" rx="2" fill="%s"/>' % (y - 5, COLORS[i]))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y, esc(name)))
+        y += 20
+    if any(marks):
+        o.append('<text x="16" y="%d" class="t-sm t-axis">%s</text>'
+                 % (y, esc('○ 조건이 걸렸던 달')))
         y += 20
     if threshold:
         o.append('<path d="M16 %d L34 %d" stroke="var(--warn,#c2831f)" stroke-width="1.6" '

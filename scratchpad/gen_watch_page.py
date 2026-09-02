@@ -7,6 +7,18 @@
 
 규약은 check_ui() 가 생성 때 검사한다. 규약을 우회하려고 나온 장이 규약이 없는 장이
 되면 다음 사람이 같은 자리를 다시 판다.
+
+2026-09-02 에 맨 위 띠를 「지금 걸린 것」에서 「지난 확인 이후」로 바꿨다. 한 달에 한
+번 여는 독자에게 「지금 걸려 있다」는 새 정보가 아니다 — 지난달에도 걸려 있었을 수
+있다. 정말 새 정보는 「지난번과 달라진 것」이라 `insights/watch/_seen.json`
+(scripts/watch_mark.py 가 찍는 스냅숏)과 지금 상태를 견줘 새로 걸린·새로 근접·풀린·
+그대로 걸린 네 묶음으로 가른다. 그 파일이 없으면(한 번도 확인한 적이 없으면) 비교할
+기준점이 없다는 뜻이라 지금 걸린 것을 전부 「새로」로 센다.
+
+트리거 표는 이제 여섯 열(watch_lib.py 머리 주석 참고)이고, 값 트리거에는 「걸리면」
+(다음에 할 일)이, 사건 트리거에는 「걸리면」·「확인처」(사람이 확인하는 URL)가 붙는다.
+줄 하나가 `## 이력` 절을 두면 「판단 이력」 표로 낸다 — 판단이 언제 왜 바뀌었는지가
+「지금 판단」 문단 하나에는 안 남는다.
 """
 import io
 import os
@@ -272,46 +284,69 @@ def time_ruler_fig(watches):
             '</figure>' % (wide[0], narrow[0], E(wide[1])))
 
 
-def fired(watches):
-    """지금 걸린 것과 가까이 온 것. 값 트리거와 법 개정을 한자리에 놓는다 —
-    둘 다 「내가 본 뒤에 무엇이 달라졌나」에 답한다."""
-    rows = []
+def _since_buckets(watches, seen):
+    """네 묶음 — 새로 걸린 · 새로 근접 · 풀린(지난번엔 걸림·근접, 지금은 아님) ·
+    그대로 걸린. 값 트리거와 법 개정을 한자리에 놓는다 — 둘 다 「내가 본 뒤에 무엇이
+    달라졌나」에 답한다. seen 이 None(한 번도 확인한 적이 없다)이면 모든 열쇠의
+    지난 상태가 없는 것으로 쳐서, 지금 걸린·근접이 전부 「새로」 쪽으로 떨어진다."""
+    prev_v = ((seen or {}).get('value')) or {}
+    prev_l = ((seen or {}).get('laws')) or {}
+    buckets = {'새로 걸린': [], '새로 근접': [], '풀린': [], '그대로 걸린': []}
     for w in watches:
         t9 = title_of(w)
         for t in w['triggers']:
             if t['kind'] != wl.KIND_VALUE:
                 continue
-            st, why = wl.state_now(t['cond'], t['series'])
-            if st in ('걸림', '근접'):
-                rows.append((0 if st == '걸림' else 1, t9, t['what'], t['value'],
-                             t['cond'], st, why, t['as_of'] or '—'))
-        for _tg, name, seen in (w.get('laws') or []):
+            now, why = wl.state_now(t['cond'], t['series'])
+            prev = prev_v.get('%s|%s' % (w['slug'], t['what']))
+            row = (t9, t['what'], t['value'], t['cond'], now, why, t['as_of'] or '—')
+            if now == '걸림':
+                buckets['그대로 걸린' if prev == '걸림' else '새로 걸린'].append(row)
+            elif now == '근접':
+                if prev != '근접':
+                    buckets['새로 근접'].append(row)
+            elif prev in ('걸림', '근접'):
+                buckets['풀린'].append(row)
+        for _tg, name, law_seen in (w.get('laws') or []):
             m = (w.get('metrics') or {}).get(wl.law_key(name)) or {}
             now = m.get('value')
-            if seen and now and str(now) != seen:
-                rows.append((0, t9, name, now, '내가 읽은 판 %s' % seen, '걸림',
-                             '그 뒤에 개정됐다 — 읽고 갱신한다', now))
-    if not rows:
-        return ('<p class="band-s">조건에 든 값도, 내가 읽은 뒤에 바뀐 법도 없습니다. '
-                '이번 달은 볼 것이 없습니다.</p>')
-    rows.sort(key=lambda r: (r[0], r[1]))
-    hit = sum(1 for r in rows if r[0] == 0)
-    h = ['<p class="band-s">걸린 것 <b>%d</b>, 문턱 가까이 온 것 <b>%d</b>.</p><div class="rows">'
-         % (hit, len(rows) - hit)]
-    prev = None
-    for o, t9, what, val, cond, st, why, asof in rows:
-        # 같은 줄이 잇달아 서면 이름을 되풀이하지 않는다 — 세 번 같은 이름이 서면
-        # 눈이 그 열을 통째로 건너뛴다
-        label = '' if t9 == prev else E(t9)
-        prev = t9
-        h.append('<div class="row"><span class="row-where">'
-                 '<span class="dot %s"></span><a href="#%s">%s</a></span>'
-                 '<span class="row-what">%s</span>'
-                 '<span class="row-num">%s</span>'
-                 '<span class="row-why">%s · %s · %s</span></div>'
-                 % ('d-hit' if o == 0 else 'd-near', slug(t9), label, E(what),
-                    E(val), E(cond), E(why), E(asof)))
-    h.append('</div>')
+            if law_seen and now and str(now) != law_seen:
+                row = (t9, name, now, '내가 읽은 판 %s' % law_seen, '걸림',
+                       '그 뒤에 개정됐다 — 읽고 갱신한다', now)
+                buckets['그대로 걸린' if prev_l.get(name) == '걸림' else '새로 걸린'].append(row)
+    return buckets
+
+
+def since_block(watches, seen):
+    """맨 위 띠. 「지금 걸려 있다」가 아니라 「지난번과 무엇이 달라졌나」를 낸다 —
+    한 달에 한 번 여는 독자에게 계속 걸려 있던 조건은 새 정보가 아니다."""
+    buckets = _since_buckets(watches, seen)
+    total = sum(len(v) for v in buckets.values())
+    sub = ('아직 확인한 적이 없다 — 전부 새로 걸린 것으로 센다' if seen is None else
+           '지난 확인 %s 이후' % E(seen.get('checked') or '—'))
+    if total == 0:
+        return ('<p class="band-s">%s. 조건에 든 값도, 내가 읽은 뒤에 바뀐 법도 없습니다. '
+                '이번 달은 볼 것이 없습니다.</p>' % sub)
+    h = ['<p class="band-s">%s.</p>' % sub]
+    for name in ('새로 걸린', '새로 근접', '풀린', '그대로 걸린'):
+        rows = buckets[name]
+        if not rows:
+            continue        # 묶음이 비면 그 묶음 제목을 안 낸다
+        h.append('<p class="lbl">%s <b>%d</b></p><div class="rows">' % (E(name), len(rows)))
+        prev = None
+        for t9, what, val, cond, st, why, asof in rows:
+            # 같은 줄이 잇달아 서면 이름을 되풀이하지 않는다 — 세 번 같은 이름이 서면
+            # 눈이 그 열을 통째로 건너뛴다
+            label = '' if t9 == prev else E(t9)
+            prev = t9
+            h.append('<div class="row"><span class="row-where">'
+                     '<span class="dot %s"></span><a href="#%s">%s</a></span>'
+                     '<span class="row-what">%s</span>'
+                     '<span class="row-num">%s</span>'
+                     '<span class="row-why">%s · %s · %s</span></div>'
+                     % ('d-hit' if st == '걸림' else 'd-near', slug(t9), label, E(what),
+                        E(val), E(cond), E(why), E(asof)))
+        h.append('</div>')
     return ''.join(h)
 
 
@@ -365,13 +400,19 @@ def law_table(watches):
 
 
 def figures(w):
-    """도해. series 가 든 metric 만 그린다 — 어댑터가 안 채운 자리에는 아무것도 안 선다."""
+    """도해. series 가 든 metric 만 그린다 — 어댑터가 안 채운 자리에는 아무것도 안 선다.
+
+    그 metric 을 건 값 트리거가 있으면 그 조건이 걸렸던 달을 선 위에 빈 원으로
+    찍는다(wl.fired_months) — 표의 「이력 N개월 중 k번」과 같은 판정을 그림으로도
+    보게 하는 자리다."""
     TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수',
              'jeonse_ratio': '전세가율 — 중위 매매가 대비 중위 전세가',
              'supply_demand': '매매수급동향 — 100이 균형',
              'median': '서울 중위가격 — 매매와 전세',
              'deal_count': '아파트 매매 거래량', 'rent_conv': '전월세 전환율'}
     GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전세')}
+    trig_by_metric = dict((t['metric'], t) for t in w['triggers']
+                          if t['kind'] == wl.KIND_VALUE and t['metric'])
     groups = {}
     for key, m in sorted((w.get('metrics') or {}).items()):
         if not m.get('series'):
@@ -379,19 +420,51 @@ def figures(w):
         area = m.get('area') or ''
         base = key[:-(len(area) + 1)] if area and key.endswith('_' + area) else key
         gk, gn = GROUP.get(base, (base, area or base))
-        groups.setdefault((gk, m.get('unit') or ''), []).append((gn, m))
+        groups.setdefault((gk, m.get('unit') or ''), []).append((gn, m, key))
     out = []
     for (base, unit), items in groups.items():
-        note = ' · '.join(dict.fromkeys(m.get('src', '') for _n, m in items if m.get('src')))
-        ser = [(n, [tuple(x) for x in m['series']]) for n, m in items[:3]]
-        svg = wf.trend(ser, unit or '값', note=note)
+        sel = items[:3]
+        note = ' · '.join(dict.fromkeys(m.get('src', '') for _n, m, _k in sel if m.get('src')))
+        ser = [(n, [tuple(x) for x in m['series']]) for n, m, _k in sel]
+        marks = []
+        for _n, m, key in sel:
+            t = trig_by_metric.get(key)
+            s = [tuple(x) for x in m['series']]
+            marks.append(wl.fired_months(t['cond'], s) if t else [])
+        svg = wf.trend(ser, unit or '값', note=note, marks=marks)
         if svg:
-            nsvg = wf.trend(ser, unit or '값', note=note, narrow=True)
+            nsvg = wf.trend(ser, unit or '값', note=note, narrow=True, marks=marks)
             out.append('<figure>%s%s<figcaption>%s</figcaption></figure>'
                        % (svg.replace('<svg ', '<svg class="fig-w" ', 1),
                           nsvg.replace('<svg ', '<svg class="fig-n" ', 1),
                           E(TITLE.get(base, base))))
     return ''.join(out)
+
+
+def hist_note(cond, series):
+    """「걸리는 조건」 칸 아래 작은 글씨 — 이력 몇 달 중 몇 번 걸렸나(check_watch W8 과
+    같은 판정). series 가 없으면 잴 수 없으니 아무것도 안 붙인다."""
+    if not series:
+        return ''
+    n, tot, _now = wl.backtest(cond, series)
+    if n is None:
+        return ''
+    um = re.search(r'최근\s*(\d+)\s*(개월|달|년|분기)', cond or '')
+    unit = um.group(2) if um else '점'
+    return ('<br><span class="t-none" style="font-size:.78em">이력 %d%s 중 %d번</span>'
+            % (tot, E(unit), n))
+
+
+def link_out(url):
+    """확인처 칸. URL 이면 도메인만 글자로 보이는 링크로, 아니면(빈 칸·「어댑터」)
+    그대로 글자로 낸다 — 없는 것을 링크인 척 안 한다."""
+    url = (url or '').strip()
+    if not url:
+        return '<span class="t-none">—</span>'
+    m = re.match(r'https?://([^/]+)', url)
+    if not m:
+        return wl.md_inline(url)
+    return '<a href="%s">%s</a>' % (E(url), E(m.group(1)))
 
 
 def line_block(w):
@@ -400,6 +473,11 @@ def line_block(w):
     h = ['<section class="line" id="%s" data-pick="%s">' % (slug(t9), E(pick))]
     h.append('<h2>%s</h2><p class="line-why">%s</p>' % (E(t9), E(w['why'])))
     h.append('<p class="line-judge">%s</p>' % w['judged'])
+
+    if w.get('history'):
+        h.append(tbl('판단 이력', ['날짜', '무엇을', '왜'],
+                     [[E(d), wl.md_inline(what), wl.md_inline(why)]
+                      for d, what, why in w['history']]))
 
     vals = [t for t in w['triggers'] if t['kind'] == wl.KIND_VALUE]
     if vals:
@@ -410,10 +488,13 @@ def line_block(w):
             rows.append([E(t['what']),
                          ('—' if t['value'] is None else
                           '%s <span class="t-none">%s</span>' % (E(t['value']), E(unit))),
-                         E(t['cond']), tag(st) + ' <span class="t-none">%s</span>' % E(why),
+                         E(t['cond']) + hist_note(t['cond'], t['series']),
+                         tag(st) + ' <span class="t-none">%s</span>' % E(why),
+                         wl.md_inline(t['act']) if t['act'] else '<span class="t-none">—</span>',
                          E(t['as_of'] or '—'), E(t['nature'] or '자리표시')])
         h.append(tbl('무엇이 일어나면 판단이 바뀌나 — 값으로 오는 것',
-                     ['무엇을', '지금', '걸리는 조건', '상태', '언제 것', '성격'], rows))
+                     ['무엇을', '지금', '걸리는 조건', '상태', '걸리면', '언제 것', '성격'],
+                     rows))
     if w.get('laws'):
         rows = []
         for _tg, name, seen in w['laws']:
@@ -432,8 +513,10 @@ def line_block(w):
     evt = [t for t in w['triggers'] if t['kind'] == wl.KIND_EVENT]
     if evt:
         h.append(tbl('값으로 안 오는 것 — 사람이 확인한다',
-                     ['무엇을 확인하나', '언제 판단이 바뀌나'],
-                     [[E(t['what']), E(t['cond'])] for t in evt]))
+                     ['무엇을 확인하나', '언제 판단이 바뀌나', '걸리면', '어디서 확인하나'],
+                     [[E(t['what']), E(t['cond']),
+                       wl.md_inline(t['act']) if t['act'] else '<span class="t-none">—</span>',
+                       link_out(t['where'])] for t in evt]))
     if w['clash']:
         h.append('<p class="lbl">반대 근거</p><ul class="pts">%s</ul>'
                  % ''.join('<li>%s</li>' % c for c in w['clash']))
@@ -447,10 +530,10 @@ def check_ui(html, watches):
         '규약 위반: 접는 것을 두지 않는다 — 열면 다 보여야 한다'
     assert 'class="stile' not in html, \
         '규약 위반: 타일을 두지 않는다 — 고르는 계층은 탭 하나다'
-    at_fired = html.find('지금 걸린 것')
+    at_fired = html.find('지난 확인 이후')
     at_line = html.find('class="line"')
     assert 0 < at_fired < at_line, \
-        '규약 위반: 「지금 걸린 것」이 줄 상세보다 먼저 서야 한다'
+        '규약 위반: 「지난 확인 이후」가 줄 상세보다 먼저 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 때 자가 없다 — 값의 나이를 먼저 보인다'
     # 도해 배치는 눈이 아니라 검사기가 본다. 때 자는 점이 몰리면 글자가 겹치는데
     # 화면을 못 볼 때는 그걸 알 길이 없다 — 실제로 다섯 쌍이 겹친 채로 나갈 뻔했다
@@ -467,6 +550,7 @@ def check_ui(html, watches):
 
 def build():
     ws = wl.load_all()
+    snap = wl.load_seen()      # 지난 확인 스냅숏. 아래 tab 라벨 목록(seen)과 이름이 겹쳐 갈랐다
     # 통계 기준월과 법 시행일은 성격이 다르다. max 로 뭉치면 「자료 기준」에 법 시행일이
     # 올라와 통계가 실제보다 새 것처럼 읽힌다 — 이 장이 값에 「언제 것 · 성격」을 붙이는
     # 이유를 머리에서 어기는 자리였다
@@ -497,7 +581,7 @@ def build():
     h.append(time_ruler_fig(ws))
     h.append('</header>')
 
-    h.append('<div class="band"><p class="band-t">지금 걸린 것</p>%s</div>' % fired(ws))
+    h.append('<div class="band"><p class="band-t">지난 확인 이후</p>%s</div>' % since_block(ws, snap))
     h.append('<div class="band"><p class="band-t">권역 견주기</p>'
              '<p class="band-s">전세가율은 한 수가 두 방향으로 읽힙니다. 올라가면 보증금이 '
              '집값에 가까워지고, 동시에 매매로 넘어가는 데 드는 자기 돈이 줄어듭니다.</p>'

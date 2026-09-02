@@ -15,12 +15,27 @@
 #
 # 트리거는 frontmatter 가 아니라 본문 표에 있다. notes_lib.parse_front 가 평평한
 # key:value 만 읽기도 하고, 파일을 열었을 때 카드와 같은 꼴로 읽히는 편이 낫기도 하다.
+#
+# 트리거 표는 여섯 열이다 — 무엇을 · 갈래 · metric · 걸리는 조건 · 걸리면 · 확인처.
+# 뒤 둘(걸리면·확인처)은 2026-09-02 에 늘었다. 「걸렸다」까지만 화면이 말하고 「그다음
+# 무엇을 하나」를 안 적으면, 한 달에 한 번 열어 보는 독자가 조건을 읽고 다시 판단을
+# 처음부터 다시 해야 한다. 옛 파일(네 열)도 그대로 읽혀야 하므로 `(r + ['']*6)[:6]` 로
+# 채운다 — 없는 열은 빈 칸이지 오류가 아니다.
+#
+# `## 이력` 절은 판단이 바뀐 날을 사람이 적어 두는 자리다(표 `| 날짜 | 무엇을 | 왜 |`).
+# 「지금 판단」 문단은 늘 지금 시점으로만 쓰여서, 지난달엔 뭐라고 판단했었는지가 덮어써져
+# 사라진다 — 판단이 두 번 바뀐 줄인지 첫 판단인지를 독자가 구분할 수 없었다.
+#
+# insights/watch/_seen.json 은 지난번 확인(scripts/watch_mark.py) 때 찍은 스냅숏이다.
+# 화면이 「지금 어떤가」만 내면 매달 같은 것을 또 읽어야 하는데, 한 달에 한 번 여는
+# 독자에게 필요한 것은 「지난번과 무엇이 달라졌나」다 — 그 비교의 기준점이 이 파일이다.
 import io, os, re, json, glob
 import notes_lib as nl
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WATCH = os.path.join(HERE, 'watch')
 METRICS = os.path.join(WATCH, '_metrics')
+SEEN = os.path.join(WATCH, '_seen.json')
 
 # 트리거 갈래 둘. 값은 어댑터가 채우고, 사건은 사람이 checked 를 갱신할 때만 움직인다.
 # 설계에는 값 하나뿐이었는데 삼성전자 줄(HBM 공급 계약 공표)이 안 맞아 여기서 갈랐다.
@@ -54,8 +69,9 @@ def table_rows(block):
     if not rows:
         return []
     # 첫 줄을 무조건 버리면 머리 없는 표에서 첫 트리거가 조용히 사라진다.
-    # 머리로 보이는 줄일 때만 버린다.
-    return rows[1:] if rows[0][:2] == ['무엇을', '갈래'] else rows
+    # 머리로 보이는 줄일 때만 버린다. 트리거 표(무엇을·갈래…)와 이력 표(날짜·무엇을…)
+    # 둘 다 여기를 지난다 — 표 꼴이 둘이라 머리 감지도 둘 다 안다.
+    return rows[1:] if rows[0][:2] in (['무엇을', '갈래'], ['날짜', '무엇을']) else rows
 
 
 def bullets(block):
@@ -142,16 +158,24 @@ def load_one(path):
 
     trg = []
     for r in table_rows(sec.get('트리거', '')):
-        # 무엇을 · 갈래 · metric · 걸리는 조건
-        what, tk, key, cond = (r + ['', '', '', ''])[:4]
+        # 무엇을 · 갈래 · metric · 걸리는 조건 · 걸리면 · 확인처. 옛 파일(네 열)도
+        # 그대로 읽는다 — 없는 열은 빈 칸으로 채운다.
+        what, tk, key, cond, act, where = (r + [''] * 6)[:6]
         v = vals.get(key) or {}
         # series 는 [(때, 값), …]. 트렌드 도해가 이 자리를 읽는다 — 트리거 값과 같은
         # 파일에 두면 「지금 값」이 시계열의 마지막 점이라 둘이 어긋날 일이 없다.
         ser = [tuple(x) for x in (v.get('series') or [])]
         trg.append({'what': what, 'kind': tk, 'metric': key, 'cond': cond,
+                    'act': act, 'where': where,
                     'value': v.get('value'), 'as_of': v.get('as_of'),
                     'nature': v.get('kind'), 'src': v.get('src'),
                     'unit': v.get('unit', ''), 'series': ser})
+
+    hist = []
+    for r in table_rows(sec.get('이력', '')):
+        # 날짜 · 무엇을 · 왜
+        d, what, why = (r + ['', '', ''])[:3]
+        hist.append((d, what, why))
 
     return {
         'slug': slug, 'path': os.path.relpath(path, os.path.dirname(HERE)),
@@ -166,6 +190,9 @@ def load_one(path):
         'laws': parse_laws(meta.get('laws', '')),
         'judged': md_inline(sec.get('지금 판단', '').replace('\n', ' ')),
         'triggers': trg,
+        # 판단이 바뀐 날의 자취. 없는 줄이 대부분이다 — 아직 한 번도 안 바뀐 판단에
+        # 억지로 「최초 기록」을 만들어 넣지 않는다.
+        'history': hist,
         # metrics 는 이 줄이 쓰겠다고 밝힌 것만이다. 트리거에 건 열쇠와 frontmatter 의
         # context 에 적은 앞머리가 그것이다. 어댑터가 받은 것을 통째로 내주면 같은 대상을
         # 다른 물음으로 보는 줄들이 전부 같은 그림을 그린다 — 줄을 가른 뜻이 사라진다.
@@ -175,6 +202,15 @@ def load_one(path):
         'points': [md_inline(b) for b in bullets(sec.get('왜 보나', ''))],
         'clash': [md_inline(b) for b in bullets(sec.get('반대 근거', ''))],
     }
+
+
+def load_seen():
+    """지난번 scripts/watch_mark.py 실행 때 찍은 스냅숏. 없으면 None —
+    「아직 한 번도 확인한 적이 없다」와 「확인했는데 아무것도 없었다」는 다른 상태다."""
+    if not os.path.exists(SEEN):
+        return None
+    with io.open(SEEN, encoding='utf-8') as f:
+        return json.load(f)
 
 
 def load_all():
@@ -287,17 +323,38 @@ def nearest(cond, series):
     return max(gap, 0.0) / span
 
 
+def _fired_idx(cond, series):
+    """조건이 걸렸던 자리(색인) 목록. 못 읽거나 시계열이 없으면 None.
+
+    backtest 와 fired_months 가 같은 판정을 나눠 쓰는 자리다 — 둘로 나뉘어 있던 시절에
+    한쪽만 고치면 화면(fired_months)과 검사기(backtest)가 다른 답을 냈다."""
+    kind, num = parse_cond(cond)
+    if kind is None or not series:
+        return None
+    vals = [v for _t, v in series]
+    return [i for i in range(len(vals)) if fires_at(kind, num, vals, i)]
+
+
 def backtest(cond, series):
     """이 조건이 이력에서 몇 번 걸렸나. (걸린 달 수, 전체 달 수, 지금 걸렸나).
 
     조건을 못 읽거나 시계열이 없으면 (None, None, None). 문턱이 0회거나 전부면
     그건 신호가 아니라는 뜻이다 — check_watch W8 이 그걸 센다."""
-    kind, num = parse_cond(cond)
-    if kind is None or not series:
+    idx = _fired_idx(cond, series)
+    if idx is None:
         return None, None, None
     vals = [v for _t, v in series]
-    fired = [i for i in range(len(vals)) if fires_at(kind, num, vals, i)]
-    return len(fired), len(vals), bool(fired and fired[-1] == len(vals) - 1)
+    return len(idx), len(vals), bool(idx and idx[-1] == len(vals) - 1)
+
+
+def fired_months(cond, series):
+    """조건이 걸렸던 때 목록 [(때, 값), …]. 도해 위에 표시 삼아 찍는 자리라
+    backtest 가 세는 것과 같은 판정이어야 한다 — 그래서 이 함수를 만들지 않고
+    _fired_idx 위에 함께 세운다."""
+    idx = _fired_idx(cond, series)
+    if not idx or not series:
+        return []
+    return [series[i] for i in idx]
 
 
 def state_now(cond, series):

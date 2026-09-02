@@ -202,6 +202,67 @@ def check_one(path, today, eq, ar, po):
         p = m.group(1)
         if not os.path.exists(os.path.join(os.path.dirname(HERE), p.rstrip('/'))):
             bad('W7', '본문이 가리키는 경로가 없다: %s' % p)
+
+    # W14 — 「걸리면」·「확인처」가 비어 있나. 조건만 있고 행동이 없으면 워치가 아니라
+    # 관측이다 — 걸렸을 때 무엇을 하는지가 줄에 적혀 있어야 독자가 그 자리에서 움직인다.
+    # 2026-09-02 에 열 줄을 다 채우고 FAIL 로 올렸다(그전에는 WARN — 여섯 열로 늘어난
+    # 직후라 옛 줄이 비어 있는 게 정상이었다). 값 트리거는 「걸리면」에 다음에 할 일을,
+    # 사건 트리거는 「걸리면」과 「확인처」(사람이 열어 볼 URL)를 적는다.
+    for t in w['triggers']:
+        if t['kind'] == wl.KIND_VALUE and not (t.get('act') or '').strip():
+            bad('W14', '값 트리거 "%s" 의 「걸리면」이 비어 있다 — 이 조건이 걸렸을 때 '
+                '무엇을 할지(더 볼 것·손절선 등)를 적는다' % t['what'])
+        if t['kind'] == wl.KIND_EVENT:
+            if not (t.get('act') or '').strip():
+                bad('W14', '사건 트리거 "%s" 의 「걸리면」이 비어 있다 — 이 사건이 나면 '
+                    '무엇을 할지를 적는다' % t['what'])
+            if not (t.get('where') or '').strip():
+                bad('W14', '사건 트리거 "%s" 의 「확인처」가 비어 있다 — 사람이 열어 볼 '
+                    'URL을 적는다' % t['what'])
+
+    # W15 — 「## 이력」 표의 날짜가 YYYY-MM-DD 이고 그 순서(오래된 것 먼저)로 늘어서 있나.
+    # 판단이 언제 바뀌었는지를 적어 두는 표라, 날짜가 뒤죽박죽이면 무엇이 먼저 있었던
+    # 판단인지를 표 스스로 말하지 못한다.
+    DATE_RE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    prev_d = None
+    for d, _what, _why in w.get('history') or []:
+        if not DATE_RE.match(d or ''):
+            bad('W15', '이력의 날짜가 YYYY-MM-DD 꼴이 아니다: "%s"' % d)
+        elif prev_d is not None and d < prev_d:
+            bad('W15', '이력의 날짜가 순서(오래된 것 먼저)가 아니다: "%s" 다음에 "%s"'
+                % (prev_d, d))
+        if DATE_RE.match(d or ''):
+            prev_d = d
+    return out
+
+
+# W13 — _seen.json 의 열쇠가 지금 줄에 있나. 트리거 이름을 바꾸거나 지웠는데 스냅숏이
+# 그 옛 이름을 그대로 들고 있으면, watch_mark.py 가 다음에 다시 찍기 전까지 「지난 확인
+# 이후」 화면이 그 옛 이름을 향해 조용히 비교를 계속한다. main() 밖으로 뺀 것은
+# --selftest 가 snap 을 직접 지어 넣어 볼 수 있어야 해서다 — main() 안에 있으면
+# wl.load_seen() 을 몽키패치해야만 시험할 수 있다.
+def stale_seen_rows(paths, snap):
+    if not snap:
+        return []
+    cur_v, cur_l = set(), set()
+    for p in paths:
+        w = wl.load_one(p)
+        for t in w['triggers']:
+            if t['kind'] == wl.KIND_VALUE:
+                cur_v.add('%s|%s' % (w['slug'], t['what']))
+        for _tg, name, _s in (w.get('laws') or []):
+            cur_l.add(name)
+    out = []
+    for k in (snap.get('value') or {}):
+        if k not in cur_v:
+            out.append(('WARN', '_seen.json', 'W13',
+                        '값 열쇠 "%s" 가 지금 어느 줄에도 없다 — 트리거 이름을 바꿨거나 '
+                        '지웠는데 스냅숏이 낡았다' % k))
+    for k in (snap.get('laws') or {}):
+        if k not in cur_l:
+            out.append(('WARN', '_seen.json', 'W13',
+                        '법 이름 "%s" 가 지금 어느 줄의 laws 에도 없다 — 스냅숏이 낡았다'
+                        % k))
     return out
 
 
@@ -223,6 +284,9 @@ def main(paths=None, today=None):
                          '(갈래·대상·관점)이 %s 와 겹친다 — 카드 제목과 앵커가 같아진다'
                          % seen[key]))
         seen[key] = os.path.basename(p)
+
+    rows += stale_seen_rows(paths, wl.load_seen())
+
     for sev, f, rule, msg in rows:
         print('%s %s [%s] %s' % (sev, f, rule, msg))
     nf = sum(1 for r in rows if r[0] == 'FAIL')
@@ -248,8 +312,8 @@ why: 시험용
 
 ## 트리거
 
-| 무엇을 | 갈래 | metric | 걸리는 조건 |
-|---|---|---|---|
+| 무엇을 | 갈래 | metric | 걸리는 조건 | 걸리면 | 확인처 |
+|---|---|---|---|---|---|
 %(rows)s
 
 ## 왜 보나
@@ -259,7 +323,7 @@ why: 시험용
 ## 반대 근거
 
 - 시험 — 시험.
-'''
+%(hist)s'''
 
 def _M(vals, start=1):
     """시험용 metric — 값 목록에서 series·value·as_of 를 한꺼번에 만든다."""
@@ -318,7 +382,32 @@ CASES = [
     ('series 가 때 순서가 아니다', 'W10', {'rows': '| 배수 | 값 | fwd_pe | 5 초과 |'},
      {'fwd_pe': {'value': 10, 'as_of': '2026-01', 'kind': '공표',
                  'series': [['2026-04', 13], ['2026-01', 10]]}}),
+    # 이력 표 — 날짜 꼴과 순서(W15). 정상 표는 안 걸리고, 꼴이 틀리거나
+    # 거꾸로 서면 걸린다
+    ('이력 날짜가 정상', None,
+     {'hist': '\n## 이력\n\n| 날짜 | 무엇을 | 왜 |\n|---|---|---|\n'
+              '| 2026-01-01 | 처음 판단 | 시험 |\n| 2026-06-01 | 판단을 바꿈 | 시험 |\n'}, None),
+    ('이력 날짜 꼴이 아니다', 'W15',
+     {'hist': '\n## 이력\n\n| 날짜 | 무엇을 | 왜 |\n|---|---|---|\n'
+              '| 2026/01/01 | 처음 판단 | 시험 |\n'}, None),
+    ('이력 날짜가 거꾸로 섰다', 'W15',
+     {'hist': '\n## 이력\n\n| 날짜 | 무엇을 | 왜 |\n|---|---|---|\n'
+              '| 2026-06-01 | 나중 판단 | 시험 |\n| 2026-01-01 | 처음 판단 | 시험 |\n'}, None),
 ]
+
+
+def _seed(d):
+    """시험 줄을 만든다. CASES 의 줄은 옛 네 열로 적혀 있다 — 표가 여섯 열이 된 뒤에도
+    케이스를 전부 고쳐 쓰지 않으려고 여기서 「걸리면」·「확인처」를 채운다. W14 를
+    시험하는 자리는 여섯 열을 직접 적으므로 그 줄은 손대지 않는다."""
+    out = []
+    for ln in d['rows'].splitlines():
+        cells = [c.strip() for c in ln.strip().strip('|').split('|')]
+        if len(cells) == 4:
+            act, where = ('시험한다', 'https://www.law.go.kr' if cells[1] == '사건' else '')
+            ln = '| %s | %s | %s |' % (' | '.join(cells), act, where)
+        out.append(ln)
+    return SEED % dict(d, rows=chr(10).join(out))
 
 
 def selftest():
@@ -329,14 +418,14 @@ def selftest():
     today = datetime.date(2026, 8, 31)
     base = {'target': '엔비디아', 'ticker': 'TST', 'checked': '2026-08-31',
             'rows': '| 배수 | 값 | fwd_pe | 30배 하회 |', 'kind': 'equity',
-            'extra': '', 'drop_sec': '', 'laws': ''}
+            'extra': '', 'drop_sec': '', 'laws': '', 'hist': ''}
     real_metrics = wl.METRICS
     ok = True
     for name, want, patch, mets in CASES:
         d = dict(base, **patch)
         root = tempfile.mkdtemp()
         tmp = os.path.join(root, 'TST.md')
-        text = SEED % d
+        text = _seed(d)
         if d['drop_sec']:
             i = text.index('## ' + d['drop_sec'])
             j = text.find('\n## ', i + 1)
@@ -368,7 +457,7 @@ def selftest():
     root = tempfile.mkdtemp()
     for nm in ('A.md', 'B.md'):
         io.open(os.path.join(root, nm), 'w', encoding='utf-8',
-                newline='\n').write(SEED % base)
+                newline='\n').write(_seed(base))
     wl.METRICS = os.path.join(root, '_none')
     try:
         rows = []
@@ -387,6 +476,46 @@ def selftest():
     print('%s %-24s 기대 W11   잡힌 것 %s'
           % ('OK  ' if dup else 'MISS', '대상·관점이 겹친다', 'W11' if dup else '없음'))
     ok &= dup
+
+    # W13 — main() 에서 뺀 stale_seen_rows() 를 직접 부른다. snap 을 몽키패치 없이
+    # 지어 넣을 수 있어야 「값 열쇠가 지금 줄에 없다」와 「있다」 둘 다 확실히 잰다.
+    root = tempfile.mkdtemp()
+    tmp = os.path.join(root, 'TST.md')
+    io.open(tmp, 'w', encoding='utf-8', newline='\n').write(_seed(base))
+    live_key = 'TST|배수'          # SEED 의 기본 rows 가 거는 트리거 이름
+    stale = stale_seen_rows([tmp], {'value': {'없는열쇠|없음': '걸림'}, 'laws': {}})
+    fresh = stale_seen_rows([tmp], {'value': {live_key: '걸림'}, 'laws': {}})
+    none_ = stale_seen_rows([tmp], None)
+    shutil.rmtree(root, ignore_errors=True)
+    ok13 = (any(r[2] == 'W13' for r in stale) and not any(r[2] == 'W13' for r in fresh)
+            and not none_)
+    print('%s %-24s 기대 W13   잡힌 것 stale=%s · fresh=%s · seen없음=%s'
+          % ('OK  ' if ok13 else 'MISS', '_seen.json 낡은 열쇠',
+             sorted(r[2] for r in stale), sorted(r[2] for r in fresh), none_))
+    ok &= ok13
+
+    # W14 — 「걸리면」·「확인처」를 채우면 사라지고 비면 걸리는지 두 파일로 견준다.
+    # CASES 는 전부 옛 네 열 표를 쓰므로(빈 걸리면) W14 가 늘 걸린다 — 그것만으로는
+    # 「채우면 사라진다」쪽을 못 본다
+    root = tempfile.mkdtemp()
+    filled = dict(base, rows='| 배수 | 값 | fwd_pe | 30배 하회 | 재평가한다 |  |')
+    empty6 = dict(base, rows='| 배수 | 값 | fwd_pe | 30배 하회 |  |  |')
+    evt_empty = dict(base, rows='| 공표 | 사건 | — | 공표되면 |  |  |')
+    for nm, d in (('filled.md', filled), ('empty6.md', empty6), ('evt.md', evt_empty)):
+        io.open(os.path.join(root, nm), 'w', encoding='utf-8', newline='\n').write(_seed(d))
+    wl.METRICS = os.path.join(root, '_none')
+    try:
+        f_hits = {r[2] for r in check_one(os.path.join(root, 'filled.md'), today, eq, ar, po)}
+        e_hits = {r[2] for r in check_one(os.path.join(root, 'empty6.md'), today, eq, ar, po)}
+        v_hits = {r[2] for r in check_one(os.path.join(root, 'evt.md'), today, eq, ar, po)}
+    finally:
+        wl.METRICS = real_metrics
+        shutil.rmtree(root, ignore_errors=True)
+    ok14 = 'W14' not in f_hits and 'W14' in e_hits and 'W14' in v_hits
+    print('%s %-24s 기대 W14  채우면=%s · 값 빈칸=%s · 사건 빈칸=%s'
+          % ('OK  ' if ok14 else 'MISS', '걸리면·확인처',
+             sorted(f_hits), sorted(e_hits), sorted(v_hits)))
+    ok &= ok14
 
     print('\n자체검사: %s' % ('통과' if ok else '실패'))
     return 0 if ok else 1
