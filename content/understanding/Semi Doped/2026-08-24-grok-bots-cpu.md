@@ -2,10 +2,10 @@
 title: GPU 옆에 CPU 를 몇 개나 두어야 하나
 date: 2026-08-24
 source: https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus
-speaker: Austin · Vik Sekar
+speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
-host: Austin · Vik Sekar
+host: Austin Lyons · Vik Sekar
 section: compute
 topic: 에이전틱 AI · 호스트 CPU · 코어 수
 gain: 에이전트를 돌리는 일이 GPU 가 아니라 CPU 쪽 수요로 번지는 경로. 호스트 노드에 남아 돌던 코어를 다시 쓰는 방식과, 코어 수가 88 에서 512 로 가는 사례.

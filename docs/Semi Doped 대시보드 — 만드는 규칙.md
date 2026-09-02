@@ -12,7 +12,8 @@
 
 ## 전략 판
 
-전략 컨설턴트 출신 애널리스트가 회차를 읽고 업계에 무엇이 보이는지를 쓴다. frontmatter —
+전략 컨설턴트 출신 애널리스트가 회차를 읽고 업계에 무엇이 보이는지를 쓴다. 글을 받는 프롬프트와
+대조 프롬프트는 `scratchpad/semidoped_prompt_strategy.md` — `<slug>` 만 바꿔 그대로 쓴다. frontmatter —
 slug · lane · persona · model · source · sent · date · title(결론 한 문장) · fixed(고친 것).
 
 ## 화자 줄
