@@ -58,6 +58,18 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .chip-legend{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
 /* 용어 풀이 — 그 말 옆에 둔다. 별도 절이 아니라 등장한 자리 바로 아래 잔글씨다 */
 .term{font-size:12.5px;color:var(--ink-3);margin:4px 0 0;max-width:66ch}
+/* 「지난번 본 뒤 바뀐 것」 — 지표별 소제 + 얼마나 움직였나 행. 화살표 색만 방향을
+   말한다(상태 색은 안 쓴다 — 문턱을 넘었는지가 아니라 얼마나 움직였는지만 본다) */
+.move-h{font-size:15px;font-weight:600;margin:22px 0 0}
+.mv-row{padding:9px 0;border-bottom:1px solid var(--line)}
+.mv-row:last-child{border-bottom:0}
+.mv-name{margin:0;font-weight:600;font-size:.92rem}
+/* flex-wrap 로 편다 — grid 로 열을 나누면 좁은 화면에서 칸이 남거나 겹친다
+   (모바일 「보고 있는 것」에서 겪은 버그와 같은 종류라 처음부터 피한다) */
+.mv-line{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin:4px 0 0}
+.mv-val{font-size:20px;font-weight:600}
+.mv-d{font-size:13px;color:var(--ink-2);white-space:nowrap}
+.mv-as{font-size:12.5px;color:var(--ink-3);white-space:nowrap}
 .rows{margin:14px 0 0}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:baseline;
   padding:10px 0;border-bottom:1px solid var(--line)}
