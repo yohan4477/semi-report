@@ -135,8 +135,7 @@ def _jal_nine_months():
     parts += box((W - tw) / 2, ty, tw, 44, tl, 'fig-agent')
     for cx, _w in cs:
         parts += vline(cx, 30 + hh + 2, ty - 2)
-    parts += mid(ty + 60, 44, ['통상은 최소 2~3년, 수작업이 많이 든다'], 'fig-stage')
-    return svg(ty + 116, parts,
+    return svg(ty + 60, parts,
                'AI 도구·TPU 출신 인재·백지 설계 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다. 통상은 최소 2~3년이다')
 
 
@@ -567,8 +566,8 @@ def _op_finance():
     h = 2 * LH + 22
     row, _x = band([(['Nvidia', '할당'], 'fig-box'), ('>', ''), (['전력'], 'fig-box'), ('>', ''),
                     (['운영', 'Bitdeer 류'], 'fig-box'), ('>', ''), (['깨끗한', '재무제표 Volta'], 'fig-agent')], 30, h)
-    parts = row + mid(30 + h + 18, 40, ['기관 대출자의 낮은 금리 → 싼 컴퓨트 가격'], 'fig-stage')
-    return svg(30 + h + 72, parts,
+    parts = row
+    return svg(30 + h + 16, parts,
                'GPU 를 더 원하면 Nvidia 할당·전력·운영할 사람·담보가 될 재무제표 넷이 필요하다. 채굴 업체는 운영은 하되 장부에 부채를 못 얹고, Volta 가 판 것은 아직 아무것도 안 적힌 장부다')
 
 
