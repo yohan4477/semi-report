@@ -5,6 +5,8 @@
   --line:#DDE2E7;
   --up:#D6412B; --down:#2B63D6; --near:#C9931A;
   --fig-blue:#4A5560; --fig-good:#D6412B; --warn:#C9931A;
+  /* 지도 전세가율 층 — 순차 램프 다섯 단(<45·45~50·50~55·55~60·≥60) */
+  --seq-1:#D9EFE8; --seq-2:#9FD6C5; --seq-3:#5FB59D; --seq-4:#2E8C74; --seq-5:#175E4C;
 }
 @media (prefers-color-scheme:dark){:root{
   --paper:#0F1418; --surface:#171D22;
@@ -12,6 +14,7 @@
   --line:#263038;
   --up:#E0704A; --down:#5C8CE0; --near:#D9AA4A;
   --fig-blue:#AAB4BC; --fig-good:#E0704A; --warn:#D9AA4A;
+  --seq-1:#1C4A3D; --seq-2:#2A6E5A; --seq-3:#3F947A; --seq-4:#6DB89F; --seq-5:#A6DBC8;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -52,6 +55,68 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .d-down{color:var(--down)}
 /* 절 — 대문자·자간 라벨을 걷고 문장형 제목으로 */
 .hero{margin:28px 0 0}
+.hero-t{font-size:15px;font-weight:600;margin:0}
+/* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
+.layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+.map-fig{flex:0 0 58%;margin:0;min-width:0}
+.mappanel{flex:1;min-width:0}
+.seoul-map{width:100%;height:auto;display:block}
+.seoul-map .gu{fill:var(--surface);stroke:var(--paper);stroke-width:1.5px;cursor:default}
+.seoul-map .gu[data-slug]{cursor:pointer}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
+.seoul-map[data-layer="lth"] .gu[data-lth="전부"]{fill:var(--ink)}
+.seoul-map[data-layer="lth"] .gu[data-lth="일부"]{fill:url(#hatch-ink)}
+.seoul-map[data-layer="lth"] .gu[data-lth="없음"]{fill:var(--surface)}
+.seoul-map[data-layer="lth"] .gu[data-lth="null"]{fill:url(#hatch-line)}
+.seoul-map[data-layer="reg"] .gu[data-reg="both"]{fill:var(--ink)}
+.seoul-map[data-layer="reg"] .gu[data-reg="one"]{fill:url(#hatch-ink)}
+.seoul-map[data-layer="reg"] .gu[data-reg="none"]{fill:var(--surface)}
+.seoul-map[data-layer="reg"] .gu[data-reg="null"]{fill:url(#hatch-line)}
+.seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
+.seoul-map .gu.gu-dim{opacity:.55}
+.gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
+  stroke:var(--paper);stroke-width:3px;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.seoul-map .gu{transition:fill .15s}}
+/* 패널 — 기본(권역 요약 셋)과 구 25개짜리를 data-panel 로 JS 가 바꿔 낀다.
+   값은 전부 생성 때 박아 둔다 — JS 는 hidden 만 만진다(계산 안 한다).
+   [hidden] 을 여기서 다시 못 박는다 — 저자 스타일시트의 .gu-panel{display:block}
+   이 명시도(둘 다 (0,1,0))가 같은 UA 기본 규칙([hidden]{display:none})을 저자
+   출처라는 이유만으로 이긴다. 실제로 그렇게 나가 구 25개가 패널 아래 전부
+   펼쳐져 보였다(2026-09-03, 스크린샷으로 잡힘) — !important 로 확실히 막는다. */
+[hidden]{display:none!important}
+.gu-panel{display:block}
+.rs{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+.rs:last-child{border-bottom:0}
+.rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
+.rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
+.rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
+.gp-name{margin:0;font-size:20px;font-weight:700}
+.gp-line{margin:6px 0 0;font-size:.88rem;color:var(--ink-2)}
+.gp-more{display:inline-block;margin:8px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+/* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
+.map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
+.leg-strip{display:flex}
+.leg-strip .leg-sw{flex:1;height:16px;border-radius:0;margin:0}
+.leg-strip .leg-sw:first-child{border-radius:3px 0 0 3px}
+.leg-strip .leg-sw:last-child{border-radius:0 3px 3px 0}
+.leg-labels{display:flex;margin:4px 0 0;font-size:11px;color:var(--ink-3)}
+.leg-labels span{flex:1;text-align:center}
+.leg-item{margin:8px 0 0;font-size:.85rem;color:var(--ink-2)}
+.leg-sw{display:inline-block;width:16px;height:16px;border-radius:3px;
+  vertical-align:middle;margin-right:6px}
+.leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
+.leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
+.leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+.map-terms{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -143,8 +208,12 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .stat{flex:1 1 0;min-width:0}
   .stat-v{font-size:26px}
   .delta{font-size:13px}
-  .areas{grid-template-columns:1fr}
-  .area-n{font-size:30px}
+  /* 지도 히어로 — 층 버튼 줄 → 지도 → 패널 순으로 세로 편다 */
+  .maprow{flex-direction:column}
+  .map-fig{flex:0 0 auto;width:100%}
+  .layer-btns{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .layer-btns::-webkit-scrollbar{display:none}
+  .rs-n{font-size:24px}
   /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
      세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
   .row{grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}

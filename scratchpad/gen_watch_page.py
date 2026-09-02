@@ -84,6 +84,112 @@ def _area_head(target):
     gu = _gu_short(target)
     return '%s — %s' % (target, gu) if gu else target
 
+
+# ── 서울 지도 (2026-09-03) ─────────────────────────────────────────────────
+# southkorea/seoul-maps 의 25개 구 경계와 서울부동산정보광장·국토교통부 지정 현황을
+# 읽기만 한다(손으로 안 고친다). 지도가 첫 화면이고 나머지 정보는 지도에서 나온다 —
+# 사용자 지시(2026-09-03) 「계속 밑으로 내리는 것보다 지도를 통해서 모든 정보를
+# 보여줄 수 있잖아」. 구를 손대면(호버·포커스) 오른쪽 패널이 그 구로 바뀌고,
+# 누르면(클릭·Enter) 권역에 든 구만 그 권역 상세로 넘어간다.
+SEOUL_GU_PATH = os.path.join(ROOT, 'insights', 'watch', '_seoul_gu.json')
+ZONES_PATH = os.path.join(ROOT, 'insights', 'watch', '_zones.json')
+
+
+def _load_json(path):
+    with io.open(path, encoding='utf-8') as f:
+        return json.load(f)
+
+
+SEOUL_GU = _load_json(SEOUL_GU_PATH)
+ZONES = _load_json(ZONES_PATH)
+# 구 → 권역. 보는 것은 세 권역뿐이라(강남 3구·노도강·마용성) 그 구 아홉만 채워진다.
+# 나머지 열여섯은 지도에 있지만 「보고 있지 않은 구」다.
+GU_REGION = dict((g, t) for t in ('강남 3구', '노도강', '마용성')
+                 for g in AREAS.get(t, {}).get('구', []))
+WATCHED_GU = sorted(GU_REGION)
+
+
+def _ratio_bin(v):
+    """전세가율 값 → 다섯 단 순차 램프의 몇 번째 칸인가. <45·45~50·50~55·55~60·≥60."""
+    if v is None:
+        return None
+    for edge, b in ((45, 1), (50, 2), (55, 3), (60, 4)):
+        if v < edge:
+            return b
+    return 5
+
+
+def _lth_info(gu):
+    """토지거래허가구역 (값, 상세)."""
+    e = (ZONES.get('토지거래허가구역', {}).get('gu', {}) or {}).get(gu) or {}
+    return e.get('value'), e.get('detail')
+
+
+def _reg_info(gu):
+    """조정대상지역·투기과열지구 여부(True/False/None 각각)."""
+    adj = ((ZONES.get('조정대상지역', {}).get('gu', {}) or {}).get(gu) or {}).get('value')
+    hot = ((ZONES.get('투기과열지구', {}).get('gu', {}) or {}).get(gu) or {}).get('value')
+    return adj, hot
+
+
+def _reg_bin(adj, hot):
+    """규제지역 채움 칸 — both(둘 다 지정)·one(하나만)·none(둘 다 해제)·null(모름)."""
+    if adj is None or hot is None:
+        return 'null'
+    if adj and hot:
+        return 'both'
+    if adj or hot:
+        return 'one'
+    return 'none'
+
+
+def _lth_counts():
+    gu = (ZONES.get('토지거래허가구역', {}) or {}).get('gu', {}) or {}
+    vals = [(v or {}).get('value') for v in gu.values()]
+    n_all, n_part, n_none = vals.count('전부'), vals.count('일부'), vals.count('없음')
+    return n_all, n_part, n_none, len(SEOUL_GU['gu']) - n_all - n_part - n_none
+
+
+def _reg_counts():
+    cnt = {'both': 0, 'one': 0, 'none': 0, 'null': 0}
+    for name in SEOUL_GU['gu']:
+        cnt[_reg_bin(*_reg_info(name))] += 1
+    return cnt
+
+
+def _region_raw(watches):
+    """3 실거주 줄의 원자료(insights/watch/_metrics/) — target 이름으로 찾는다."""
+    return dict((w['target'], wl.metrics_of(w['kind'], w['slug'])) for w in _live_areas(watches))
+
+
+def _val3(series):
+    ser = [tuple(x) for x in series]
+    return {'cur': ser[-1][1], 'd1': _delta(ser, 1), 'd3': _delta(ser, 3), 'asof': ser[-1][0]}
+
+
+def _gu_map_data(watches):
+    """구 25개마다 지도·패널이 쓰는 값을 한 자리에 — movement 계산(_movement_rows)을
+    그대로 재사용한다. 「지난번 본 뒤 바뀐 것」 절은 없어졌지만 그 계산은 패널이
+    그대로 쓴다(2026-09-03)."""
+    rows_by = _movement_rows(watches)
+    jeonse = dict(rows_by.get('전세가율') or [])
+    sale = dict(rows_by.get('매매가격지수') or [])
+    region_raw = _region_raw(watches)
+    region_slug = dict((w['target'], w['slug']) for w in _live_areas(watches))
+    out = {}
+    for name in sorted(SEOUL_GU['gu']):
+        region = GU_REGION.get(name)
+        entry = {'region': region, 'slug': region_slug.get(region)}
+        entry['jeonse'] = _val3(jeonse[name]) if name in jeonse else None
+        entry['sale'] = _val3(sale[name]) if name in sale else None
+        sd = (region_raw.get(region) or {}).get('supply_demand') if region else None
+        entry['sd'] = ({'value': sd.get('value'), 'area': sd.get('area')} if sd else None)
+        entry['lth_value'], entry['lth_detail'] = _lth_info(name)
+        entry['adj'], entry['hot'] = _reg_info(name)
+        out[name] = entry
+    return out
+
+
 # 구글 폰트 — 본문은 IBM Plex Sans KR, 날짜·기준 표기는 IBM Plex Mono. preconnect
 # 둘을 먼저 걸고 스타일시트를 문다(display=swap 은 URL 파라미터로 이미 걸려 있다).
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
@@ -104,6 +210,8 @@ CSS = """
   --line:#DDE2E7;
   --up:#D6412B; --down:#2B63D6; --near:#C9931A;
   --fig-blue:#4A5560; --fig-good:#D6412B; --warn:#C9931A;
+  /* 지도 전세가율 층 — 순차 램프 다섯 단(<45·45~50·50~55·55~60·≥60) */
+  --seq-1:#D9EFE8; --seq-2:#9FD6C5; --seq-3:#5FB59D; --seq-4:#2E8C74; --seq-5:#175E4C;
 }
 @media (prefers-color-scheme:dark){:root{
   --paper:#0F1418; --surface:#171D22;
@@ -111,6 +219,7 @@ CSS = """
   --line:#263038;
   --up:#E0704A; --down:#5C8CE0; --near:#D9AA4A;
   --fig-blue:#AAB4BC; --fig-good:#E0704A; --warn:#D9AA4A;
+  --seq-1:#1C4A3D; --seq-2:#2A6E5A; --seq-3:#3F947A; --seq-4:#6DB89F; --seq-5:#A6DBC8;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -151,6 +260,68 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .d-down{color:var(--down)}
 /* 절 — 대문자·자간 라벨을 걷고 문장형 제목으로 */
 .hero{margin:28px 0 0}
+.hero-t{font-size:15px;font-weight:600;margin:0}
+/* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
+.layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+.map-fig{flex:0 0 58%;margin:0;min-width:0}
+.mappanel{flex:1;min-width:0}
+.seoul-map{width:100%;height:auto;display:block}
+.seoul-map .gu{fill:var(--surface);stroke:var(--paper);stroke-width:1.5px;cursor:default}
+.seoul-map .gu[data-slug]{cursor:pointer}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
+.seoul-map[data-layer="lth"] .gu[data-lth="전부"]{fill:var(--ink)}
+.seoul-map[data-layer="lth"] .gu[data-lth="일부"]{fill:url(#hatch-ink)}
+.seoul-map[data-layer="lth"] .gu[data-lth="없음"]{fill:var(--surface)}
+.seoul-map[data-layer="lth"] .gu[data-lth="null"]{fill:url(#hatch-line)}
+.seoul-map[data-layer="reg"] .gu[data-reg="both"]{fill:var(--ink)}
+.seoul-map[data-layer="reg"] .gu[data-reg="one"]{fill:url(#hatch-ink)}
+.seoul-map[data-layer="reg"] .gu[data-reg="none"]{fill:var(--surface)}
+.seoul-map[data-layer="reg"] .gu[data-reg="null"]{fill:url(#hatch-line)}
+.seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
+.seoul-map .gu.gu-dim{opacity:.55}
+.gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
+  stroke:var(--paper);stroke-width:3px;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.seoul-map .gu{transition:fill .15s}}
+/* 패널 — 기본(권역 요약 셋)과 구 25개짜리를 data-panel 로 JS 가 바꿔 낀다.
+   값은 전부 생성 때 박아 둔다 — JS 는 hidden 만 만진다(계산 안 한다).
+   [hidden] 을 여기서 다시 못 박는다 — 저자 스타일시트의 .gu-panel{display:block}
+   이 명시도(둘 다 (0,1,0))가 같은 UA 기본 규칙([hidden]{display:none})을 저자
+   출처라는 이유만으로 이긴다. 실제로 그렇게 나가 구 25개가 패널 아래 전부
+   펼쳐져 보였다(2026-09-03, 스크린샷으로 잡힘) — !important 로 확실히 막는다. */
+[hidden]{display:none!important}
+.gu-panel{display:block}
+.rs{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+.rs:last-child{border-bottom:0}
+.rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
+.rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
+.rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
+.gp-name{margin:0;font-size:20px;font-weight:700}
+.gp-line{margin:6px 0 0;font-size:.88rem;color:var(--ink-2)}
+.gp-more{display:inline-block;margin:8px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+/* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
+.map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
+.leg-strip{display:flex}
+.leg-strip .leg-sw{flex:1;height:16px;border-radius:0;margin:0}
+.leg-strip .leg-sw:first-child{border-radius:3px 0 0 3px}
+.leg-strip .leg-sw:last-child{border-radius:0 3px 3px 0}
+.leg-labels{display:flex;margin:4px 0 0;font-size:11px;color:var(--ink-3)}
+.leg-labels span{flex:1;text-align:center}
+.leg-item{margin:8px 0 0;font-size:.85rem;color:var(--ink-2)}
+.leg-sw{display:inline-block;width:16px;height:16px;border-radius:3px;
+  vertical-align:middle;margin-right:6px}
+.leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
+.leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
+.leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+.map-terms{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -242,8 +413,12 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .stat{flex:1 1 0;min-width:0}
   .stat-v{font-size:26px}
   .delta{font-size:13px}
-  .areas{grid-template-columns:1fr}
-  .area-n{font-size:30px}
+  /* 지도 히어로 — 층 버튼 줄 → 지도 → 패널 순으로 세로 편다 */
+  .maprow{flex-direction:column}
+  .map-fig{flex:0 0 auto;width:100%}
+  .layer-btns{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .layer-btns::-webkit-scrollbar{display:none}
+  .rs-n{font-size:24px}
   /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
      세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
   .row{grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}
@@ -280,6 +455,16 @@ def title_of(w):
 
 def _fmt1(v):
     return ('%.1f' % v)
+
+
+def _extra_line(ratio):
+    """「더 얹을 돈」 — 매매가가 전세금 위로 얼마나 더 드는가. 전세가율의 역수
+    (전세금의 몇 배)가 아니라 100에서 전세가율을 뺀 값(매매가의 몇 %)이다 —
+    전세가율 60%면 매매가가 전세금의 1.67배지만, 얹는 돈은 매매가의 40%다.
+    두 수는 다른 물음에 답한다. 사용자 지시(2026-09-03)로 후자만 쓴다."""
+    if not ratio:
+        return '더 얹을 돈 —'
+    return '더 얹을 돈 · 매매가의 %d%%' % round(100.0 - ratio)
 
 
 def _delta_span(d, unit='', digits=2, eps=0.005):
@@ -525,58 +710,6 @@ def ratio_ruler_fig(watches):
     return '<figure>%s%s<figcaption>%s</figcaption></figure>' % (wide, narrow, cap)
 
 
-def area_cards(watches):
-    """권역 카드 셋 — 지금 값이 큰 글씨로 먼저 선다. 표(area_table)를 걷어낸 자리다.
-    아카이브의 「타일 금지」 규약은 접어서 고르는 카드를 말한다. 이 카드는 접히지
-    않고 늘 펼쳐져 있으므로 class="area" 로 두고 그 규약을 그대로 지킨다."""
-    live = _live_areas(watches)
-    items = []
-    for w in live:
-        metrics = [m for k, m in (w.get('metrics') or {}).items() if k.startswith('jeonse_ratio_')]
-        if not metrics:
-            continue
-        rs = [m['value'] for m in metrics]
-        avg = _avg_series(w)
-        cur = avg[-1][1] if avg else sum(rs) / len(rs)
-        d1 = (avg[-1][1] - avg[-2][1]) if len(avg) >= 2 else None
-        d3 = (avg[-1][1] - avg[-4][1]) if len(avg) >= 4 else None
-        sd = (w.get('metrics') or {}).get('supply_demand')
-        items.append((cur, w, rs, d1, d3, sd))
-    if not items:
-        return ''
-    # 오름차순 — 전세가율 자도 값이 작은 쪽이 왼쪽이다. 반대로 두면 눈이 자와
-    # 카드 순서를 못 맞춘다
-    items.sort(key=lambda r: r[0])
-    h = ['<div class="areas">']
-    for cur, w, rs, d1, d3, sd in items:
-        arrow = _delta_span(d3) if d3 is not None and abs(d3) >= 0.05 else ''
-        if sd and sd.get('value') is not None:
-            sdv = float(sd['value'])
-            sd_line = ('<b>%s</b> · %s <span class="t-sub">%s</span>'
-                      % (_fmt1(sdv), '사려는 사람이 많다' if sdv >= 100 else '팔려는 사람이 많다',
-                         E(sd.get('area') or '')))
-        else:
-            sd_line = '못 붙임'
-        # 걸림·근접 칩 대신 「얼마나 움직였나」만 — 독자마다 다른 문턱이 아니라
-        # 원문 값 자체를 준다(사용자 지시 2026-09-02: 「조건 다 없애」)
-        move = '지난달 대비 %s · 석 달 대비 %s' % (_delta_span(d1), _delta_span(d3))
-        h.append(
-            '<div class="area"><p class="area-k">%s · %s</p>'
-            '<p class="area-v">%s</p>'
-            '<p class="area-n">%s%%%s</p>'
-            '<p class="area-r">구별 %s ~ %s</p>'
-            '<div class="area-d">'
-            '<div class="area-row"><span>매매 문턱</span><span>전세금의 %s배</span></div>'
-            '<div class="area-row"><span>수급동향</span><span>%s</span></div>'
-            '</div>'
-            '<p class="area-c">%s</p>'
-            '<a class="area-more" href="watch/%s.html">자세히 →</a></div>'
-            % (E(_area_head(w['target'])), E(w.get('view') or ''),
-               E(w.get('verdict') or '판단 없음'),
-               _fmt1(cur), arrow, ('%.2f' % min(rs)), ('%.2f' % max(rs)),
-               _fmt1(100.0 / cur) if cur else '—', sd_line, move, w['slug']))
-    h.append('</div>')
-    return ''.join(h)
 
 
 # ── 용어 풀이 — 그 말 옆에 둔다 ─────────────────────────────────────────────
@@ -673,42 +806,6 @@ def _delta(series, back):
     if len(series) <= back:
         return None
     return series[-1][1] - series[-1 - back][1]
-
-
-def movement_block(watches, asof, checked):
-    """맨 위 띠 — 걸림·근접 대신 「지난달·석 달 전 대비 얼마나 움직였나」만.
-    지표(전세가율·매매가격지수·수급동향)마다 소제를 두고, 그 아래 구·권역별
-    행을 |석 달 Δ| 큰 순으로 정렬한다 — 움직임이 큰 곳이 먼저 눈에 든다."""
-    rows_by = _movement_rows(watches)
-    h = ['<p class="band-s">기준 %s · 지난달과 석 달 전에 견준 값입니다. '
-         '지난번 확인 %s.</p>' % (E(asof), E(checked))]
-    any_row = False
-    for name in MOVE_ORDER:
-        items = rows_by.get(name) or []
-        if not items:
-            continue
-        any_row = True
-        h.append('<p class="move-h">%s</p>' % E(name))
-        h.append(term_lines(watches, {name}))
-        unit, cur_unit = MOVE_UNIT[name], MOVE_CUR_UNIT[name]
-        rows = []
-        for label, ser in items:
-            ser = [tuple(x) for x in ser]
-            d1, d3 = _delta(ser, 1), _delta(ser, 3)
-            rows.append((label, ser[-1][1], d1, d3, ser[-1][0]))
-        rows.sort(key=lambda r: -(abs(r[3]) if r[3] is not None else -1))
-        for label, cur, d1, d3, as_of in rows:
-            h.append(
-                '<div class="mv-row"><p class="mv-name">%s — %s</p>'
-                '<p class="mv-line"><span class="mv-val">%.2f%s</span>'
-                '<span class="mv-d">지난달 %s</span>'
-                '<span class="mv-d">석 달 %s</span>'
-                '<span class="mv-as mono">기준 %s</span></p></div>'
-                % (E(name), E(label), cur, cur_unit,
-                   _delta_span(d1, unit), _delta_span(d3, unit), E(as_of)))
-    if not any_row:
-        h.append('<p class="band-s">아직 실은 값이 없습니다.</p>')
-    return ''.join(h)
 
 
 def _laws_grouped(watches):
@@ -1015,6 +1112,247 @@ def law_page(watches):
             % (FONTS, CSS, len(_laws_grouped(watches)), body))
 
 
+def _src_link(src):
+    """법·고시 표의 messy 다중 URL 문자열(예: "https://a ; https://b")에서 첫
+    URL만 뽑아 도메인 링크로 낸다. link_out() 은 URL 이 문자열 전체일 때만
+    맞는 짝이라(끝의 부가설명까지 href 에 실린다) 지도 범례는 따로 쓴다."""
+    m = re.search(r'https?://[^\s;]+', src or '')
+    if not m:
+        return E(src or '—')
+    url = m.group(0)
+    dm = re.match(r'https?://([^/]+)', url)
+    return '<a href="%s">%s</a>' % (E(url), E(dm.group(1)))
+
+
+def _ratio_legend_html(watches):
+    """전세가율 층의 범례 — 다섯 단 색 띠 + 값 없음 칸 + 전세가율 자(양 끝 문구와
+    권역 점을 그대로 보여준다)."""
+    n_blank = len(SEOUL_GU['gu']) - len(WATCHED_GU)
+    strip = ''.join('<span class="leg-sw" style="background:var(--seq-%d)"></span>' % i
+                    for i in range(1, 6))
+    labels = ''.join('<span>%s</span>' % E(t) for t in ('<45', '45~50', '50~55', '55~60', '≥60'))
+    return ('<div class="leg-strip">%s</div><p class="leg-labels">%s</p>'
+            '<p class="leg-item"><span class="leg-sw" style="background:var(--surface);'
+            'border:1px solid var(--line)"></span> 값 없음 — %d구</p>%s'
+            % (strip, labels, n_blank, ratio_ruler_fig(watches)))
+
+
+def _zone_legend_rows(rows):
+    return ''.join(
+        '<p class="leg-item"><span class="leg-sw %s" style="%s"></span> %s — %d구</p>'
+        % (cls, style, E(label), n) for style, cls, label, n in rows)
+
+
+def _lth_legend_html():
+    """토지거래허가구역 층의 범례 — 넷 다(전부·일부·없음·확인 안 됨) + 출처."""
+    n_all, n_part, n_none, n_null = _lth_counts()
+    z = ZONES.get('토지거래허가구역', {})
+    rows = [('background:var(--ink)', '', '전부 지정', n_all),
+            ('', 'leg-hatch-ink', '일부 지정', n_part),
+            ('background:var(--surface);border:1px solid var(--line)', '', '미지정', n_none),
+            ('', 'leg-hatch-line', '확인 안 됨', n_null)]
+    return (_zone_legend_rows(rows) + '<p class="leg-src">기준 %s · %s</p>'
+           % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
+
+
+def _reg_legend_html():
+    """규제지역 층의 범례 — 넷 다(둘 다 지정·하나만·둘 다 해제·확인 안 됨) + 출처."""
+    cnt = _reg_counts()
+    z = ZONES.get('조정대상지역', {})
+    rows = [('background:var(--ink)', '', '둘 다 지정', cnt['both']),
+            ('', 'leg-hatch-ink', '하나만 지정', cnt['one']),
+            ('background:var(--surface);border:1px solid var(--line)', '', '둘 다 해제', cnt['none']),
+            ('', 'leg-hatch-line', '확인 안 됨', cnt['null'])]
+    return (_zone_legend_rows(rows) + '<p class="leg-src">기준 %s · %s</p>'
+           % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
+
+
+def _gu_svg(gu_data):
+    """서울 25개 구 지도. 채움은 CSS 가 data-layer/data-ratio-bin/data-lth/data-reg
+    로 고른다(층 전환은 JS 가 <svg> 의 data-layer 만 바꾼다) — 값 자체는 여기서
+    속성으로 다 박아 두고 JS 는 아무 계산도 안 한다."""
+    vb = SEOUL_GU['viewBox']
+    defs = ('<defs>'
+            '<pattern id="hatch-ink" width="6" height="6" patternUnits="userSpaceOnUse" '
+            'patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"/>'
+            '<path d="M0 0L0 6" class="fat" stroke="var(--ink)" stroke-width="3"/></pattern>'
+            '<pattern id="hatch-line" width="6" height="6" patternUnits="userSpaceOnUse" '
+            'patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"/>'
+            '<path d="M0 0L0 6" class="fat" stroke="var(--line)" stroke-width="2"/></pattern>'
+            '</defs>')
+    paths, labels = [], []
+    for name in sorted(SEOUL_GU['gu']):
+        g = SEOUL_GU['gu'][name]
+        e = gu_data[name]
+        rbin = _ratio_bin(e['jeonse']['cur']) if e['jeonse'] else 0
+        lv = e['lth_value'] if e['lth_value'] is not None else 'null'
+        label = ('전세가율 %.1f%%' % e['jeonse']['cur']) if e['jeonse'] else '보고 있지 않은 구'
+        attrs = ['class="gu"', 'data-gu="%s"' % E(name), 'tabindex="0"', 'role="button"',
+                 'data-ratio-bin="%d"' % rbin, 'data-lth="%s"' % E(lv),
+                 'data-reg="%s"' % _reg_bin(e['adj'], e['hot'])]
+        if e['slug']:
+            attrs.append('data-slug="%s"' % E(e['slug']))
+        attrs.append('aria-label="%s"' % E('%s · %s' % (name, label)))
+        attrs.append('d="%s"' % g['d'])
+        paths.append('<path %s/>' % ' '.join(attrs))
+        if name in WATCHED_GU:
+            labels.append('<text x="%.1f" y="%.1f" class="gu-lbl" text-anchor="middle">%s</text>'
+                          % (g['cx'], g['cy'], E(name)))
+    return ('<svg class="seoul-map" data-layer="ratio" viewBox="%d %d %d %d">%s%s'
+            '<g class="gu-labels">%s</g></svg>'
+            % (vb[0], vb[1], vb[2], vb[3], defs, ''.join(paths), ''.join(labels)))
+
+
+def _region_summary_html(watches):
+    """패널 기본 상태 — 권역 셋 요약(area_cards 가 하던 계산을 그대로 쓴다). 각
+    요약은 그 권역 상세로 가는 링크이고, data-gus 로 그 권역 구 셋을 실어 둔다 —
+    요약에 마우스를 올리면 지도에서 그 셋이 강조된다."""
+    items = []
+    for w in _live_areas(watches):
+        metrics = [m for k, m in (w.get('metrics') or {}).items() if k.startswith('jeonse_ratio_')]
+        if not metrics:
+            continue
+        avg = _avg_series(w)
+        cur = avg[-1][1] if avg else sum(m['value'] for m in metrics) / len(metrics)
+        d3 = (avg[-1][1] - avg[-4][1]) if len(avg) >= 4 else None
+        sd = (w.get('metrics') or {}).get('supply_demand')
+        if sd and sd.get('value') is not None:
+            sdv = float(sd['value'])
+            sd_txt = '수급 %s %s' % (_fmt1(sdv),
+                                    '사려는 사람이 많다' if sdv >= 100 else '팔려는 사람이 많다')
+        else:
+            sd_txt = '수급 못 붙임'
+        line = '%s · %s' % (_extra_line(cur), sd_txt)
+        gus = ' '.join(AREAS.get(w['target'], {}).get('구', []))
+        items.append((cur, w, d3, gus, line))
+    items.sort(key=lambda r: r[0])
+    return ''.join(
+        '<a class="rs" href="watch/%s.html" data-gus="%s">'
+        '<p class="rs-k">%s</p><p class="rs-v">%s</p>'
+        '<p class="rs-n">%s%%%s</p><p class="rs-line">%s</p></a>'
+        % (w['slug'], E(gus), E(_area_head(w['target'])), E(w.get('verdict') or '판단 없음'),
+           _fmt1(cur), _delta_span(d3), E(line))
+        for cur, w, d3, gus, line in items)
+
+
+def _gu_panel_html(name, e):
+    """구 하나의 패널 — 손을 대면 이걸로 바뀐다(JS 는 hidden 만 토글한다). 보고
+    있지 않은 구(전세가율·매매가격지수 없음)는 이름·토허·규제만 낸다."""
+    watched = bool(e['jeonse'] or e['sale'])
+    h = ['<div class="gu-panel" data-panel="%s" hidden><p class="gp-name">%s</p>'
+        % (E(name), E(name))]
+    if watched:
+        if e['region']:
+            h.append('<p class="gp-line">권역 %s</p>' % E(e['region']))
+        if e['jeonse']:
+            j = e['jeonse']
+            h.append('<p class="gp-line">전세가율 %.1f%% (지난달 %s · 석 달 %s)</p>'
+                     % (j['cur'], _delta_span(j['d1'], '%p'), _delta_span(j['d3'], '%p')))
+        if e['sale']:
+            s = e['sale']
+            h.append('<p class="gp-line">매매가격지수 %.2f (지난달 %s · 석 달 %s)</p>'
+                     % (s['cur'], _delta_span(s['d1'], 'pt'), _delta_span(s['d3'], 'pt')))
+        if e['sd'] and e['sd'].get('value') is not None:
+            h.append('<p class="gp-line">수급동향 %s <span class="t-sub">%s</span></p>'
+                     % (_fmt1(float(e['sd']['value'])), E(e['sd'].get('area') or '')))
+    if e['lth_value'] is not None:
+        detail = e['lth_detail'] or ''
+        if len(detail) > 60:
+            detail = detail[:60] + '…'
+        h.append('<p class="gp-line">토지거래허가구역 %s%s</p>'
+                 % (E(e['lth_value']), ' — %s' % E(detail) if detail else ''))
+    adj_txt = '지정' if e['adj'] else ('해제' if e['adj'] is False else '미확인')
+    hot_txt = '지정' if e['hot'] else ('해제' if e['hot'] is False else '미확인')
+    h.append('<p class="gp-line">조정대상지역 %s · 투기과열지구 %s</p>' % (adj_txt, hot_txt))
+    if not watched:
+        h.append('<p class="gp-line t-none">값을 보고 있지 않은 구입니다</p>')
+    if e['slug']:
+        h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
+    h.append('</div>')
+    return ''.join(h)
+
+
+# 바닐라 JS — 층 전환(버튼 3개) · 지도 호버/포커스(패널 교체 + 강조) · 권역 요약
+# 호버(지도 강조만) · 클릭/Enter 이동. 값은 전부 생성 때 HTML 에 이미 있다 —
+# 여기서는 hidden 토글과 class 토글만 한다(계산 없음).
+_MAP_JS = """<script>
+(function(){
+var svg=document.querySelector('.seoul-map');
+if(!svg)return;
+var gus=Array.from(svg.querySelectorAll('.gu'));
+var panels=Array.from(document.querySelectorAll('.gu-panel'));
+var rss=Array.from(document.querySelectorAll('.rs'));
+var showPanel=function(n){panels.forEach(function(p){p.hidden=p.dataset.panel!==n;});};
+var clearHi=function(){gus.forEach(function(g){g.classList.remove('gu-hover','gu-dim');});};
+var highlight=function(names){gus.forEach(function(g){
+  var on=names.indexOf(g.dataset.gu)>-1;
+  g.classList.toggle('gu-hover',on);g.classList.toggle('gu-dim',!on);});};
+var reset=function(){clearHi();showPanel('default');};
+gus.forEach(function(g){
+  var n=g.dataset.gu;
+  g.addEventListener('mouseenter',function(){highlight([n]);showPanel(n);});
+  g.addEventListener('focus',function(){highlight([n]);showPanel(n);});
+  g.addEventListener('mouseleave',reset);
+  g.addEventListener('blur',reset);
+  g.addEventListener('click',function(){if(g.dataset.slug)location.href='watch/'+g.dataset.slug+'.html';});
+  g.addEventListener('keydown',function(ev){
+    if(ev.key==='Enter'&&g.dataset.slug)location.href='watch/'+g.dataset.slug+'.html';});
+});
+rss.forEach(function(a){
+  var names=a.dataset.gus.split(' ');
+  a.addEventListener('mouseenter',function(){highlight(names);});
+  a.addEventListener('focus',function(){highlight(names);});
+  a.addEventListener('mouseleave',clearHi);
+  a.addEventListener('blur',clearHi);
+});
+Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
+  b.addEventListener('click',function(){
+    svg.setAttribute('data-layer',b.dataset.layer);
+    Array.from(document.querySelectorAll('.layer-btn')).forEach(function(x){
+      x.classList.toggle('is-on',x===b);});
+    Array.from(document.querySelectorAll('.map-legend')).forEach(function(x){
+      x.hidden=x.dataset.legend!==b.dataset.layer;});
+  });
+});
+})();
+</script>"""
+
+
+def seoul_map_section(watches, asof):
+    """지도 히어로 — 왼쪽 지도(58%) · 오른쪽 패널(42%, 기본은 권역 셋 요약).
+    구를 손대면 패널이 그 구로 바뀌고, 누르면(권역에 든 구만) 그 권역 상세로
+    간다. 값은 전부 insights/watch/_seoul_gu.json·_zones.json·metrics 에서 —
+    지정 현황이 셋 다 「전부」라도 범례 수는 그 데이터에서 센다."""
+    gu_data = _gu_map_data(watches)
+    svg = _gu_svg(gu_data)
+    panels = ('<div class="gu-panel" data-panel="default">%s</div>'
+             % _region_summary_html(watches)) + \
+             ''.join(_gu_panel_html(name, gu_data[name]) for name in sorted(SEOUL_GU['gu']))
+    lth_z = ZONES.get('토지거래허가구역', {})
+    reg_z = ZONES.get('조정대상지역', {})
+    cap = ('출처 southkorea/seoul-maps · 값 기준 %s · 지정 현황 기준 %s(토지거래허가구역) · '
+          '%s(조정대상지역·투기과열지구)'
+          % (E(asof), E(lth_z.get('as_of') or '—'), E(reg_z.get('as_of') or '—')))
+    terms = term_lines(watches, set(MOVE_ORDER))
+    return (
+        '<p class="hero-t">서울 지도</p>'
+        '<div class="layer-btns">'
+        '<button type="button" class="layer-btn is-on" data-layer="ratio">전세가율</button>'
+        '<button type="button" class="layer-btn" data-layer="lth">토지거래허가구역</button>'
+        '<button type="button" class="layer-btn" data-layer="reg">규제지역</button>'
+        '</div>'
+        '<div class="maprow">'
+        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>'
+        '<div class="mappanel">%s'
+        '<div class="map-legend" data-legend="ratio">%s</div>'
+        '<div class="map-legend" data-legend="lth" hidden>%s</div>'
+        '<div class="map-legend" data-legend="reg" hidden>%s</div>'
+        '<div class="map-terms">%s</div>'
+        '</div></div>%s'
+        % (svg, cap, panels, _ratio_legend_html(watches), _lth_legend_html(), _reg_legend_html(),
+           terms, _MAP_JS))
+
+
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
 # 칩으로 남기되(뜻을 subtitle 에 한 번 적는다), 나머지 넷은 절 제목·목록 이름·열
 # 이름으로 못 쓴다.
@@ -1042,21 +1380,25 @@ def check_ui(html, watches):
     """본 장의 규약. 아카이브 규약(check_ui)에서 나온 장이라 규약이 없어지면 안 된다.
 
     2026-09-02 네 번째 개정 — 트리거 조건(문턱)은 글쓴이 개인 기준이라 독자에게는
-    뜻이 없다(「조건 다 없애」). 걸림·근접 칩과 조건 문장의 부재를 잰다."""
+    뜻이 없다(「조건 다 없애」). 걸림·근접 칩과 조건 문장의 부재를 잰다.
+
+    2026-09-03 다섯 번째 개정 — 지도가 첫 화면이다. 「권역」·「바뀐 것」 앵커와
+    그 절은 없어졌고(지도 히어로가 흡수), figure 예산이 셋(지도·전세가율 자·
+    자료 기준 자)으로 늘었다."""
     assert 'is-fold' not in html and 'uc-caret' not in html, \
         '규약 위반: 접는 것을 두지 않는다 — 열면 다 보여야 한다'
     assert 'class="stile' not in html, \
         '규약 위반: 타일을 두지 않는다 — 고르는 계층은 탭 하나다'
     assert 'class="line"' not in html, \
         '규약 위반: 줄 상세는 본 장에 없다 — watch/<슬러그>.html 로 옮겼다'
-    at_fired = html.find('지난번 본 뒤 바뀐 것')
-    at_lines = html.find('id="lines"')
-    assert 0 < at_fired < at_lines, \
-        '규약 위반: 「지난번 본 뒤 바뀐 것」이 「보고 있는 것」보다 먼저 서야 한다'
+    at_map = html.find('id="map"')
+    at_policy = html.find('id="policy"')
+    assert 0 < at_map < at_policy, \
+        '규약 위반: 지도 히어로(#map)가 첫 화면(제도보다 먼저)이어야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
     n_fig = html.count('<figure')
-    assert n_fig == 2, \
-        '규약 위반: 본 장의 <figure 는 전세가율 자 + 자료 기준 자 둘이어야 한다 (%d개)' % n_fig
+    assert n_fig == 3, \
+        '규약 위반: 본 장의 <figure 는 지도 + 전세가율 자 + 자료 기준 자 셋이어야 한다 (%d개)' % n_fig
     n_tbl = html.count('<table')
     assert n_tbl <= 3, '규약 위반: 본 장의 <table 은 셋 이하여야 한다 (%d개)' % n_tbl
     for term in _JARGON:
@@ -1105,9 +1447,10 @@ def check_detail_ui(watches):
 
 def build():
     ws = wl.load_all()
-    # 지난번 「지금 걸려 있다」 스냅숏(_seen.json) 비교는 안 쓴다 — 「지난번 본 뒤
-    # 바뀐 것」이 이제 걸림·근접이 아니라 값의 움직임을 보여준다(movement_block).
-    # watch_mark.py·_seen.json 은 글쓴이 도구로 그대로 둔다(2026-09-02).
+    # 지난번 「지금 걸려 있다」 스냅숏(_seen.json) 비교는 안 쓴다 — watch_mark.py·
+    # _seen.json 은 글쓴이 도구로 그대로 둔다(2026-09-02). 「지난번 본 뒤 바뀐 것」
+    # 절 자체도 이제 없다 — 그 값(지난달·석 달 Δ)은 지도 패널이 구마다 낸다
+    # (2026-09-03, movement 계산 함수는 _gu_map_data 가 그대로 재사용한다).
     # 통계 기준월과 법 시행일은 성격이 다르다. max 로 뭉치면 「자료 기준」에 법 시행일이
     # 올라와 통계가 실제보다 새 것처럼 읽힌다 — 이 장이 값에 「기준」을 붙이는
     # 이유를 머리에서 어기는 자리였다. 분기 표기(YYYY-nQ)도 같은 이유로 뺀다 —
@@ -1128,18 +1471,20 @@ def build():
              '장인지, 제도가 셈을 바꿨는지.</p></header>' % (E(checked), E(asof)))
     # 절 바로가기 — header 밖에 둔다. sticky 는 제 부모 상자 안에서만 붙어서, header 안에
     # 넣으면 header 가 화면 위로 지나가는 순간 같이 사라진다(실제로 그렇게 나갔다). — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을
-    # 말한다(스킨 첫 화면에서 카드를 숨기고 그 앞을 막는 것). 이 줄은 아래 다섯
-    # 절을 전부 그대로 펼쳐 두고 그 자리로 뛰는 것만 돕는다 — 걸러 내지 않는다.
+    # 말한다(스킨 첫 화면에서 카드를 숨기고 그 앞을 막는 것). 이 줄은 아래 절을
+    # 전부 그대로 펼쳐 두고 그 자리로 뛰는 것만 돕는다 — 걸러 내지 않는다.
+    # 2026-09-03 — 「권역」·「바뀐 것」 두 앵커는 없앴다(지도 히어로가 그 둘을
+    # 흡수했다). 「지도」 하나로 판단한다.
     h.append('<nav class="jump" aria-label="절 바로가기">'
-             '<a href="#areas">권역</a><a href="#since">바뀐 것</a>'
+             '<a href="#map">지도</a>'
              '<a href="#policy">제도</a><a href="#lines">보고 있는 것</a>'
              '<a href="#basis">자료 기준</a></nav>')
 
-    h.append('<section class="hero" id="areas">%s%s</section>'
-             % (ratio_ruler_fig(ws), area_cards(ws)))
+    # 지도가 첫 화면이고 정보는 지도에서 나온다(사용자 지시 2026-09-03) — 전세가율
+    # 자·권역 카드를 여기 한자리로 접었다(ratio_ruler_fig 는 전세가율 층 범례 안으로,
+    # area_cards 는 패널 기본 상태로 흡수됐다).
+    h.append('<section class="hero" id="map">%s</section>' % seoul_map_section(ws, asof))
 
-    h.append('<div class="band" id="since"><p class="band-t">지난번 본 뒤 바뀐 것</p>%s</div>'
-             % movement_block(ws, asof, checked))
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
