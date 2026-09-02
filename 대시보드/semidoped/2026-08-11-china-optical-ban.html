@@ -169,7 +169,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </svg><figcaption>같은 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등)만 짙고, 아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)과 조립을 뜻하는 모듈 테두리가 짙다. 부품 순서는 이 그림의 배치다.</figcaption></figure>
 <p>광트랜시버(빛과 전기 신호를 서로 바꿔 데이터센터의 먼 구간을 잇는 부품) 안에 든 것은 대부분 미국 것이다. Austin이 짚은 목록은 Broadcom이나 Marvell의 DSP(디지털 신호 처리 칩), 리타이머, 드라이버, TIA(트랜스임피던스 증폭기)다. Vik의 설명은 더 짧다 — 송신 쪽 증폭기 하나, 수신 쪽 증폭기 하나, 변환 회로 얼마간, 광섬유를 붙이는 부분이 전부다. 그러니까 Innolight나 Eoptolink 같은 중국 업체가 하는 일은 조립과 배선과 최종 결합이고, Austin은 그 「조립」을 일부러 강조했다.</p>
 <p>그런데 그 조립이 급소다. Vik이 든 수는 Innolight 한 곳이 세계 트랜시버 매출의 34%쯤이고(로이터 기사는 27%로 적었는데 일부 애널리스트가 상향했다), 중국 공급망을 다 더하면 세계 시장의 절반쯤이다. 이만한 양은 다른 데서 못 구한다.</p>
-<figure class="uc-fig"><p class="fig-title">조립이 빠지면 위도 줄어든다</p><svg class="epoch" viewBox="0 0 520 306" role="img" aria-label="중국 조립 층이 세계 트랜시버의 절반쯤이고 Innolight 한 곳이 27~34% 다. 조립이 빠지면 그 위 고부가 광원 회사 매출도 줄어드는데 주가는 반대로 올랐다">
+<figure class="uc-fig"><p class="fig-title">광트랜시버 밸류체인 — 급소는 조립</p><svg class="epoch" viewBox="0 0 520 137" role="img" aria-label="광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 급소는 세계 절반쯤을 맡은 조립이다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -180,17 +180,25 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
       <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
     </marker>
   </defs>
-  <rect x="39.5" y="30" width="441" height="68" rx="9" class="fig-box"/>
-  <text x="260" y="58.5" text-anchor="middle" class="fig-b">고부가 광원 — Lumentum · Coherent</text>
-  <text x="260" y="81.5" text-anchor="middle" class="fig-b">200기가 EML · 초고출력 레이저</text>
-  <rect x="102" y="138" width="316" height="68" rx="9" class="fig-agent"/>
-  <text x="260" y="166.5" text-anchor="middle" class="fig-b">조립 — 중국 공급망 약 50%</text>
-  <text x="260" y="189.5" text-anchor="middle" class="fig-b">Innolight 한 곳 27~34%</text>
-  <line x1="260" y1="136" x2="260" y2="102" class="fig-arw" marker-end="url(#aieArw)"/>
-  <rect x="110" y="224" width="300" height="68" rx="9" class="fig-stage"/>
-  <text x="260" y="252.5" text-anchor="middle" class="fig-b">아래가 빠지면 위의 매출도 줄어든다</text>
-  <text x="260" y="275.5" text-anchor="middle" class="fig-b">주가는 반대로 움직였다</text>
-</svg><figcaption>Innolight 한 곳이 세계 트랜시버 매출의 27~34%(로이터 27%, 일부 애널리스트 34%), 중국 공급망을 다 더하면 약 50% 다. 조립을 안 하는 Lumentum·Coherent 주가가 올랐지만 Vik 은 반대로 짚었다 — 모듈로 묶어 줄 사람이 사라지면 그들도 곤란해지지 않겠느냐는 것이다.</figcaption></figure>
+  <rect x="0" y="30" width="113" height="91" rx="9" class="fig-box"/>
+  <text x="56.5" y="58.5" text-anchor="middle" class="fig-b">부품</text>
+  <text x="56.5" y="81.5" text-anchor="middle" class="fig-b">DSP·TIA</text>
+  <text x="56.5" y="104.5" text-anchor="middle" class="fig-b">미국</text>
+  <line x1="117" y1="75.5" x2="126.333" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="130.333" y="30" width="129" height="91" rx="9" class="fig-box"/>
+  <text x="194.833" y="58.5" text-anchor="middle" class="fig-b">광원</text>
+  <text x="194.833" y="81.5" text-anchor="middle" class="fig-b">Lumentum</text>
+  <text x="194.833" y="104.5" text-anchor="middle" class="fig-b">Coherent</text>
+  <line x1="263.333" y1="75.5" x2="272.667" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="276.667" y="30" width="113" height="91" rx="9" class="fig-agent"/>
+  <text x="333.167" y="58.5" text-anchor="middle" class="fig-b">조립 · 중국</text>
+  <text x="333.167" y="81.5" text-anchor="middle" class="fig-b">약 50%</text>
+  <text x="333.167" y="104.5" text-anchor="middle" class="fig-b">급소</text>
+  <line x1="393.667" y1="75.5" x2="403" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="407" y="30" width="113" height="91" rx="9" class="fig-box"/>
+  <text x="463.5" y="70" text-anchor="middle" class="fig-b">구축</text>
+  <text x="463.5" y="93" text-anchor="middle" class="fig-b">Azure 등</text>
+</svg><figcaption>끝에서 끝까지다. 부품(DSP·리타이머·드라이버·TIA)은 미국, 고부가 광원(200기가 EML·초고출력 레이저)은 Lumentum·Coherent, 조립은 중국 공급망이 세계의 약 50% 이고 Innolight 한 곳이 27~34% 다, 구축은 Azure·OCI 같은 주체다. 조립이 빠지면 광원 매출도 줄어들지 않겠느냐는 것이 Vik 의 말인데 주가는 광원 쪽이 올랐다.</figcaption></figure>
 <p>주가가 어긋난 자리가 이 구조를 그대로 보여 준다. 금지안 소식에 Lumentum·Coherent·Applied Optoelectronics 주가가 올랐는데, Vik의 지적은 이들이 조립을 안 한다는 것이다 — Applied Optoelectronics가 일부 하는 것을 빼면. 이들이 만드는 것은 200기가 EML이나 초고출력 레이저처럼 만들기 어려운 고부가 부분이고, 중국 업체가 맡은 것은 마진이 아주 얇은데 없으면 안 되는 부분이다. 그래서 Vik은 반대로 짚었다 — 어떻게 봐야 할지 모르겠다면서도, 꽂아 쓰는 모듈로 묶어 줄 사람이 사라지면 Lumentum과 Coherent가 오히려 곤란해지지 않겠느냐는 것이다. 값을 못 받는다는 것과 대체할 수 있다는 것은 다른 말인데, 시장은 그 둘을 같은 것으로 읽었다.</p>
 <h2 id="s2"><span class="num">2</span> 기술이 복잡한 영역에서는 명분이 검증을 안 거친다</h2>
 <p>기사가 든 이유를 Vik이 소리 내어 읽는다. 이 조치가 "중국 기업이 데이터를 훔치거나 악성코드를 심거나 미국 데이터센터의 서비스를 중단시키는 것을 막으려 한다"는 것이다. Vik의 반문은 한 줄이다 — 트랜시버 출하를 막는 일이 데이터 절취나 악성코드 설치와 무슨 상관이냐.</p>

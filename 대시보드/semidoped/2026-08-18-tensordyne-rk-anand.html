@@ -120,7 +120,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>그래서 이 회차에서 볼 것은 「스타트업도 이길 수 있다」가 아니다. <b>차별화가 수학 한 군데에만 있으면 안 되고 시스템 전체에 걸쳐 있어야 한다</b>는 쪽이다. 아래 절들은 텐서다인이 그 차별화를 어디에 나눠 놓았는지, 그리고 그중 무엇이 남의 회사에도 적용되는 관측인지를 따라간다.</p>
 <h2 id="s2"><span class="num">2</span> 곱셈을 덧셈으로 바꾼 값은 전력이 아니라 남은 면적이다</h2>
 <p>로그 연산 자체는 오래된 도구다. 400년도 더 전에 존 네이피어가 만들었고 아폴로 계획에서 계산자로 탈출속도를 구할 때 썼으며 최근 20~30년은 DSP(디지털 신호 처리기)에 들어가 있었다. RK가 새로 물은 것은 AI에 쓸 수 있느냐였다. 밑이 2인 로그에서 A 곱하기 B는 로그 A 더하기 로그 B이므로 곱셈기가 덧셈기가 된다. 실리콘에서 곱셈은 게이트도 면적도 전력도 훨씬 많이 먹는다.</p>
-<figure class="uc-fig"><p class="fig-title">곱셈을 덧셈으로, 그리고 되돌아오기</p><svg class="epoch" viewBox="0 0 520 198" role="img" aria-label="곱셈을 로그 영역으로 옮기면 덧셈이 되고, 누산하려면 선형으로 되돌아와야 한다. 되돌아오는 자리에서 이득을 잃지 않는 것이 특허다">
+<figure class="uc-fig"><p class="fig-title">곱셈을 덧셈으로, 그리고 되돌아오기</p><svg class="epoch" viewBox="0 0 520 114" role="img" aria-label="곱셈을 로그 영역으로 옮기면 덧셈이 되고, 누산하려면 선형으로 되돌아와야 한다. 되돌아오는 자리에서 이득을 잃지 않는 것이 특허다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -145,14 +145,11 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <line x1="461.333" y1="64" x2="481" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
   <rect x="485" y="30" width="35" height="68" rx="9" class="fig-box"/>
   <text x="502.5" y="70" text-anchor="middle" class="fig-b">누산</text>
-  <rect x="55" y="116" width="410" height="68" rx="9" class="fig-stage"/>
-  <text x="260" y="144.5" text-anchor="middle" class="fig-b">흔한 길(룩업 테이블·테일러 급수)로 되돌아오면</text>
-  <text x="260" y="167.5" text-anchor="middle" class="fig-b">번 것을 반납한다</text>
 </svg><figcaption>밑이 2인 로그에서 A×B 는 log A + log B 라 곱셈기가 덧셈기가 된다. 어려운 곳은 누산을 위해 선형으로 되돌아오는 자리다 — 룩업 테이블이나 테일러 급수로 가면 번 것을 반납하고, 그 이득을 잃지 않는 방법이 특허다. 절감률은 전사에 없다.</figcaption></figure>
 <p>어려운 쪽은 그다음이다. 곱하고 나서 누산해야 하는데 로그 영역에서는 덧셈이 문제가 되고, 룩업 테이블이나 테일러 급수처럼 흔한 길로 가면 곱셈을 덧셈으로 바꿔 번 것을 그대로 반납한다. 그가 특허로 세운 것이 로그에서 선형으로 되돌아와 덧셈을 하되 그 이득을 잃지 않는 방법이고, 회사의 거의 절반이 5년 가까이 수학에만 매달렸다. 그가 그 시간을 정당화한 논리가 날카롭다 — 같은 7나노·5나노를 쓰면서 남과 같은 방식으로 만들면 아무 우위도 없으니 큰 회사를 이길 수 없다는 것이다.</p>
 <p>여기서 업계에 보이는 것은 전력 효율 숫자가 아니다. 연산이 자리를 덜 쓰면 무엇이 남느냐가 진짜 질문이고, RK의 답은 SRAM과 HBM이다. 칩을 레티클(노광 장비가 한 번에 찍을 수 있는 최대 크기) 한계까지 키우지 않고도 성능을 내면, 남긴 면적이 곧 메모리 용량이 된다. <b>수학의 혁신이 메모리 배치 문제로 환급된다</b>는 구조다.</p>
 <h2 id="s3"><span class="num">3</span> 스케일업 패브릭을 새로 만들지 않는 길이 있다</h2>
-<figure class="uc-fig"><p class="fig-title">라우터 뒷면을 그대로 가져왔다</p><svg class="epoch" viewBox="0 0 520 298" role="img" aria-label="라우터 뒷면 패브릭은 어느 포트에서 어느 포트로든 아무 크기 패킷을 처리하도록 20년 다듬어졌다. 텐서다인은 그것을 설계하지 않고 가속기 72개 아래에 그대로 가져왔다">
+<figure class="uc-fig"><p class="fig-title">라우터 뒷면을 그대로 가져왔다</p><svg class="epoch" viewBox="0 0 520 216" role="img" aria-label="라우터 뒷면 패브릭은 어느 포트에서 어느 포트로든 아무 크기 패킷을 처리하도록 20년 다듬어졌다. 텐서다인은 그것을 설계하지 않고 가속기 72개 아래에 그대로 가져왔다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -179,9 +176,6 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="277" y="132" width="238" height="68" rx="9" class="fig-stage"/>
   <text x="396" y="160.5" text-anchor="middle" class="fig-b">뒷면 패브릭</text>
   <text x="396" y="183.5" text-anchor="middle" class="fig-b">어느 포트에서 어느 포트로든</text>
-  <rect x="39.5" y="216" width="441" height="68" rx="9" class="fig-stage"/>
-  <text x="260" y="244.5" text-anchor="middle" class="fig-b">같은 패브릭 — 40바이트부터 9K 점보 프레임까지</text>
-  <text x="260" y="267.5" text-anchor="middle" class="fig-b">20년 굴러 온 것</text>
 </svg><figcaption>고성능 라우터 뒷면은 어느 포트에서 어느 포트로든 40바이트부터 9K 점보 프레임까지 처리하도록 설계돼 있다. 텐서다인은 스케일업 패브릭을 설계하지 않고 그것을 가속기 아래에 가져왔다. 가속기 수 72 는 쿼터랙 값이다.</figcaption></figure>
 <p>모델이 한 칩에 안 들어가면 망 문제가 된다. 여기서 텐서다인의 선택이 이 회차에서 가장 배울 것이 많은 대목이다 — 스케일업 패브릭을 설계하지 않고 라우터 뒷면에서 통째로 가져왔다. 고성능 라우터 뒷면은 원래 어느 포트에서 어느 포트로든 가는 아무 크기의 패킷을 처리하도록 설계돼 있다. 40바이트짜리부터 9K 점보 프레임까지, 이메일부터 실시간 영상까지 섞여 들어와도 견뎌야 한다.</p>
 <p>그 성질이 지금 값을 받는 이유가 모델 쪽에서 생겼다. RK의 관측은 이렇다 — 모델이 커지면서 트래픽이 텐서 병렬의 규칙적인 리듬에서 무작위로 바뀌었고, 전문가 혼합(MoE)에서 어느 전문가로 갈지가 무작위이기 때문이다. 라우터 패브릭이 20년 동안 다뤄 온 것이 바로 그 무작위 트래픽이다. 지연은 1~2마이크로초이고 이용률을 99% 넘게 밀어도 성능이 버틴다는 것이 그가 든 성질이다.</p>
@@ -191,7 +185,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>RK가 그 조합에 붙인 값이 구체적이다 — 2조 파라미터 모델 하나에 9랙에서 14랙, 베라 루빈용 CUDA 컴파일러와 그록용 컴파일러 둘, 그리고 그 섀시들을 묶을 이더넷 스위치 여럿이다. 통합 칩의 논거는 여기서 나온다. SRAM이 연산 배열 곁에 넉넉하면 HBM에서 데이터를 가져오는 지연을 가릴 수 있어 연산 배열이 멈추지 않는다. 쿼터랙 하나에 HBM 10.8테라바이트, SRAM 18기가바이트 이상이라는 것이 그가 댄 수치다.</p>
 <p>다만 그가 곧바로 단서를 붙인다. 그것만으로는 필요조건이지 충분조건이 아니고, 연산과 통신이 번갈아 도는 리듬에서 통신이 지연과 처리량을 지배하기 시작한다는 것이다. 그래서 2절의 연산과 3절의 망이 따로 선 자랑이 아니라 하나의 논거로 묶인다. <b>한 칩으로 두 구간을 다 하려면 남긴 면적과 빌려 온 패브릭이 동시에 있어야 한다</b>는 뜻이고, 둘 중 하나만 있는 설계는 이 논거를 못 쓴다.</p>
 <h2 id="s5"><span class="num">5</span> 30킬로와트 공랭 쿼터랙이 겨누는 곳</h2>
-<figure class="uc-fig"><p class="fig-title">쿼터랙 대 풀랙</p><svg class="epoch" viewBox="0 0 520 227" role="img" aria-label="텐서다인 쿼터랙은 13U 에 칩 72개, 30킬로와트 공랭이고 견준 상대는 GB300 풀랙 150킬로와트 액랭이다. 성능이 동급인지는 이 회차에 값이 없다">
+<figure class="uc-fig"><p class="fig-title">쿼터랙 대 풀랙</p><svg class="epoch" viewBox="0 0 520 143" role="img" aria-label="텐서다인 쿼터랙은 13U 에 칩 72개, 30킬로와트 공랭이고 견준 상대는 GB300 풀랙 150킬로와트 액랭이다. 성능이 동급인지는 이 회차에 값이 없다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -212,9 +206,6 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="396" y="64.5" text-anchor="middle" class="fig-b">풀랙</text>
   <text x="396" y="87.5" text-anchor="middle" class="fig-b"></text>
   <text x="396" y="110.5" text-anchor="middle" class="fig-b">150킬로와트 · 액랭</text>
-  <rect x="86.5" y="145" width="347" height="68" rx="9" class="fig-stage"/>
-  <text x="260" y="173.5" text-anchor="middle" class="fig-b">19인치 텔코 랙에 그대로 들어간다</text>
-  <text x="260" y="196.5" text-anchor="middle" class="fig-b">액랭 개조가 안 되는 기존 시설을 겨눈다</text>
 </svg><figcaption>13U 에 칩 72개, 랙의 4분의 1, 30킬로와트 공랭 대 GB300 풀랙 150킬로와트 액랭. 성능이 동급이라는 전제는 이 회차에 값이 없어 그리지 않았다. 19인치 텔코 랙이라 기존 시설에 그대로 들어간다는 것이 겨냥이다.</figcaption></figure>
 <p>수치가 가장 도발적인 대목이다. 13U 크기에 칩 72개, 랙의 4분의 1, 30킬로와트, 공랭이다. 그가 견준 상대는 블랙웰 GB300 풀랙 150킬로와트다. 액랭이 아닌 이유가 주니퍼 시스템을 그대로 쓰기 때문이라는 점에서, 이것도 3절의 선택에 딸려 온 결과다.</p>
 <p>배포 이야기로 넘어가면 겨냥이 분명해진다. 하이퍼스케일러 중에는 전 세계에 데이터센터를 400개 둔 곳이 있는데 그것들은 액랭이 아니고 개조도 안 된다. 텐서다인 시스템은 19인치 텔코 랙이라 AT&amp;T·버라이즌·도이체텔레콤·NTT·뉴욕증권거래소에 그대로 들어간다. 그가 그린 그림은 20~30킬로와트짜리 작은 데이터센터로 200~500메가와트급의 성능 특성을 낸다는 것이다.</p>

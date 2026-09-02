@@ -146,7 +146,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </svg><figcaption>셋이 겹쳐 아홉 달이 됐다. 사람과 백지는 전에도 있던 항이고 AI 도구만 새 항이라는 것이 이 절의 논지다. 셋 중 무엇이 몇 할인지는 전사에 없어 상자 크기를 같게 뒀다.</figcaption></figure>
 <p>Vik이 먼저 꺼낸 수는 일정이다. "첫 RTL(레지스터 전송 레벨 — 회로가 매 클럭에 무엇을 하는지 기술하는 설계 단계)에서 테이프아웃(설계를 마감해 제조로 넘기는 시점)까지 아홉 달쯤이다". 보통은 최소 2~3년이다. 설명하는 항은 셋으로 Vik이 든 것이 ① AI 도구 ② 사람이고 Austin이 ③ 백지를 얹었다. 초기 RTL을 GPT-3급 모델로 짜고 더 나은 모델로 갈아탔고(Vik이 전함), 사람은 구글 TPU팀 출신이 통째로 들어와 있으며(발표를 이끈 Richard Ho가 전 구글 TPU 담당), 백지는 레거시 부담 없이 시작했다는 점이다(Austin이 전함). 새로운 항은 ①뿐이다 — d-Matrix와 Reiner Pope처럼 사람과 노하우로 출발한 팀에게는 당장 쓸 AI 도구가 없었다.</p>
 <p>Vik의 결론은 산업을 향한다. "맞는 사람과 맞는 도구를 가진 회사라면 1년 안에 루빈급 칩을 만들 수 있다". 장벽은 두 겹이다. ① 설계 장벽은 낮아졌고, Austin은 작은 팀이 빠르게 칩을 내면 수요가 는다며 EDA(전자설계자동화 — 칩 설계 소프트웨어) 업계에는 호재로 봤다. ② 제조 장벽은 그대로다 — 그럼 대량으로 만들어 출하해 보고 규모에서 신뢰성을 보자는 Nvidia 쪽 반론이 그 자리다.</p>
-<figure class="uc-fig"><p class="fig-title">주기가 짧으면 덜 욕심내도 된다</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="통상은 다음 세대까지 2~3년이라 잘라낸 기능이 그때나 다시 들어가지만, 할라페뇨는 아홉 달 주기라 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이다">
+<figure class="uc-fig"><p class="fig-title">주기가 짧으면 덜 욕심내도 된다</p><svg class="epoch" viewBox="0 0 520 228" role="img" aria-label="통상은 다음 세대까지 2~3년이라 잘라낸 기능이 그때나 다시 들어가지만, 할라페뇨는 아홉 달 주기라 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -179,8 +179,6 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="454" y="144" width="66" height="68" rx="9" class="fig-box"/>
   <text x="487" y="172.5" text-anchor="middle" class="fig-b">3세대</text>
   <text x="487" y="195.5" text-anchor="middle" class="fig-b">구상 중</text>
-  <rect x="86.5" y="230" width="347" height="40" rx="9" class="fig-stage"/>
-  <text x="260" y="256" text-anchor="middle" class="fig-b">간격이 짧으면 설계마다 덜 욕심내도 된다</text>
 </svg><figcaption>잘라낸 기능이 다음 판에 붙는 간격이 곧 욕심의 크기다. 통상은 2~3년이라 무리해서 넣게 되고, 아홉 달이면 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이라 곧 다시 붙는다.</figcaption></figure>
 <p>설계 셈법도 달라진다. Ravi의 기준은 ① 기능 하나를 더 넣는 한계비용과 ② 없어서 못 받는 기회비용을 견주는 것이고 기회비용이 훨씬 크다(Austin이 전함). Ravi가 가장 어려웠다고 한 결정도 무엇을 뺄지 고르는 일이다. 2세대가 이미 테이프아웃에 다가가 있으니 잘라낸 것이 곧 다시 붙는다 — 짧은 주기는 <b>설계마다 덜 욕심내도 되게 만든다.</b></p>
 <p>그래서 아홉 달이 뜻하는 것은 「누구나 칩을 만들 수 있다」가 아니라 <b>첫 칩을 버리지 않아도 되게 됐다</b>는 쪽이다. 보통 첫 칩은 거의 버리는 셈이고 진짜 경쟁은 두세 번째부터인데 OpenAI는 1세대부터 경쟁력을 내고 나왔다. 첫 칩이 학습비가 아니라 제품이 되면 신규 진입의 손익 계산이 통째로 바뀐다.</p>
@@ -222,7 +220,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>그 차이가 드러난 자리가 전력이다. Jalapeño는 700W TDP(열설계전력)이고 Vik이 견준 Blackwell GB200은 1,200W쯤이다. SemiAnalysis의 Inference X 벤치마크를 OpenAI 팀이 좋게 본 이유도 전력 정규화였다. 그 잣대 위에서 Jalapeño는 DeepSeek R1(6,710억 파라미터)로 새 파레토 프론티어를 그었다 — 같은 상호작용성에서 처리량이 훨씬 높고 GPU가 못 가는 데까지 밀어 올린다. 이 잣대가 표준이 되면 전력을 더 먹고 성능을 올려 온 설계는 뒤로 밀린다.</p>
 <p>다만 Austin은 조건을 붙였다. Jalapeño는 HBM4를 쓰고 Blackwell과 MI355는 HBM3E이니 제대로 된 비교는 Vera Rubin과 Helios를 상대로 해야 한다. Vik도 이것을 Rubin급 칩으로 봤다.</p>
 <h2 id="s3"><span class="num">3</span> 균형 잡힌 한 칩이 맞으면 나눠 놓은 칩들의 자리가 좁아진다</h2>
-<figure class="uc-fig"><p class="fig-title">투기적 디코딩 — 초안이 똑똑할수록 검증이 가볍다</p><svg class="epoch" viewBox="0 0 520 266" role="img" aria-label="덜 똑똑한 초안 모델은 토큰 여덟 개를 뱉어 큰 모델의 검증이 무겁고, 똑똑한 초안 모델은 두 개만 뱉어 검증이 가볍다. 비율이 워크로드마다 움직인다">
+<figure class="uc-fig"><p class="fig-title">투기적 디코딩 — 초안이 똑똑할수록 검증이 가볍다</p><svg class="epoch" viewBox="0 0 520 210" role="img" aria-label="덜 똑똑한 초안 모델은 토큰 여덟 개를 뱉어 큰 모델의 검증이 무겁고, 똑똑한 초안 모델은 두 개만 뱉어 검증이 가볍다. 비율이 워크로드마다 움직인다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -260,8 +258,6 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="320" y="126" width="129" height="68" rx="9" class="fig-agent"/>
   <text x="384.5" y="154.5" text-anchor="middle" class="fig-b">큰 모델이 검증</text>
   <text x="384.5" y="177.5" text-anchor="middle" class="fig-b">가볍다</text>
-  <rect x="39.5" y="212" width="441" height="40" rx="9" class="fig-stage"/>
-  <text x="260" y="238" text-anchor="middle" class="fig-b">비율이 워크로드마다 움직인다 — 고정 배분이 비효율</text>
 </svg><figcaption>작은 초안 모델이 토큰을 뱉고 큰 모델이 검증한다. 덜 똑똑하면 여덟 개를 뱉어 검증이 무겁고, 똑똑하면 두 개만 뱉어 가볍다(Vik). 여덟과 둘은 Vik 이 든 수다. 이 비율이 워크로드마다 움직이니 칩을 고정 배분하면 한쪽이 논다.</figcaption></figure>
 <p>추론은 성격이 다른 두 구간이다 — ① 입력을 한꺼번에 밀어 넣는 프리필 ② 토큰을 하나씩 내는 디코드. 투기적 디코딩이 얹히면 더 갈린다 — 작은 초안 모델이 토큰을 뱉고 큰 모델이 검증하는데, 초안 모델이 똑똑할수록 적게 뱉고 검증이 가벼워진다(Vik). 비율은 워크로드마다 움직인다.</p>
 <figure class="uc-fig"><p class="fig-title">추론을 받는 세 구성</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="범용 GPU 하나는 초당 1,000토큰 영역에 못 닿고, 프리필·디코드를 나누면 NVL72 랙 1대에 Groq 랙 9대가 붙고, 균형 잡힌 한 칩은 랙 1~2대 700W 로 그 자리를 밟는다">
