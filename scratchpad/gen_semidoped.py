@@ -180,7 +180,15 @@ def body_html(md, figs=()):
     pending = list(figs)
 
     def figs_under(title):
-        hit = [f for f in pending if title.startswith(f[0])]
+        hit = [f for f in pending if '|' not in f[0] and title.startswith(f[0])]
+        for f in hit:
+            pending.remove(f)
+            out.append(fig_block(f))
+
+    def figs_before_para(text):
+        # 열쇠에 「|」가 있으면 뒤가 문단 머리다 — 그 문단 앞에 그림을 세운다. 절 하나에
+        # 그림 여럿을 두되 절 머리에 쌓지 않으려는 것이다(2026-09-02)
+        hit = [f for f in pending if '|' in f[0] and text.startswith(f[0].split('|', 1)[1])]
         for f in hit:
             pending.remove(f)
             out.append(fig_block(f))
@@ -188,6 +196,7 @@ def body_html(md, figs=()):
     def flush():
         if para:
             text = ' '.join(para)
+            figs_before_para(text)
             m = re.match(r'^\*\*so-what\*\*\s*[—-]?\s*(.*)$', text, re.S)
             if m:
                 # 절의 값이 여기 있다. 본문과 같은 모양이면 지나친다
@@ -364,10 +373,11 @@ def lane_html(body, figs):
         out.append(heading_html('h2', t, 's%s' % parse_head(t)[0]))
         # 절 머리에 걸린 도해는 여기서 바로 세운다 — 제목 줄을 본문에서 뺐으므로 body_html 은
         # ### 아래에 걸린 것만 잡는다
-        top = [f for f in figs if t.startswith(f[0])]
+        top = [f for f in figs if '|' not in f[0] and t.startswith(f[0])]
         out += [fig_block(f) for f in top]
-        sub = [f for f in figs if f not in top and
-               any(x.startswith('### ') and x[4:].strip().startswith(f[0]) for x in l)]
+        sub = [f for f in figs if f not in top and (
+            ('|' in f[0] and t.startswith(f[0].split('|', 1)[0])) or
+            any(x.startswith('### ') and x[4:].strip().startswith(f[0]) for x in l))]
         used.update(f[0] for f in top + sub)
         out.append(body_html('\n'.join(l), sub))
     for t, l in rest:
