@@ -898,20 +898,12 @@ def _al_three():
 
 def _al_order():
     """AMD 와 브로드컴 — 순서. 없는 것은 점선, 갈림을 정한 한 걸음만 짙게."""
-    steps = [(['AMD 가 개방형 UALink 스위치를 찾았다', '시장에 없었다'], 'fig-outside'),
+    return _chain_down([(['AMD 가 개방형 UALink 스위치를 찾았다', '시장에 없었다'], 'fig-outside'),
              (['브로드컴 토마호크(이더넷)로 갔다'], 'fig-box'),
              (['브로드컴이 UALink 컨소시엄에서 나갔다'], 'fig-agent'),
              (['헬리오스는 UALOE 로 간다'], 'fig-box'),
-             (['2027 — UALink 스코피오·마벨이 나온다', '그때 갈아타나'], 'fig-outside')]
-    parts, y = [], 26
-    for k, (lines, cls) in enumerate(steps):
-        h = len(lines) * LH + 22
-        parts += mid(y, h, lines, cls)
-        y += h
-        if k < len(steps) - 1:
-            parts += down(W / 2, y, y + 20)
-            y += 22
-    return svg(y + 4, parts, 'UALink 스위치가 없어 브로드컴 이더넷으로 갔고, 소켓을 잡은 브로드컴이 UALink 에서 나갔다. 2027 년 UALink 스위치가 나올 때 갈아타는지가 물음이다')
+             (['2027 — UALink 스코피오·마벨이 나온다', '그때 갈아타나'], 'fig-outside')],
+                       'UALink 스위치가 없어 브로드컴 이더넷으로 갔고, 소켓을 잡은 브로드컴이 UALink 에서 나갔다. 2027 년 UALink 스위치가 나올 때 갈아타는지가 물음이다')
 
 
 AL = '2026-08-04-astera-labs'
@@ -940,20 +932,12 @@ def _dc_layers():
 
 def _dc_gens():
     """속도 세대 — 위에서 아래로. 겹쳐 가는 순서다."""
-    steps = [(['2020년대 초 — 100·200기가가 대부분'], 'fig-box'),
+    return _chain_down([(['2020년대 초 — 100·200기가가 대부분'], 'fig-box'),
              (['2023~2024 — 400기가가 떠오른다'], 'fig-box'),
              (['800기가가 들어온다', '400기가는 25·26년에 스러진다'], 'fig-box'),
              (['1.6테라 — 시작', '레인당 200기가 × 여덟 레인'], 'fig-agent'),
-             (['2.4테라(레인당 300기가)를 거칠 가능성'], 'fig-outside')]
-    parts, y = [], 26
-    for k, (lines, cls) in enumerate(steps):
-        h = len(lines) * LH + 22
-        parts += mid(y, h, lines, cls)
-        y += h
-        if k < len(steps) - 1:
-            parts += down(W / 2, y, y + 20)
-            y += 22
-    return svg(y + 4, parts, '100·200기가에서 400, 800, 1.6테라로 두 배씩 뛰고, 2.4테라를 한 번 거칠 가능성이 돈다')
+             (['2.4테라(레인당 300기가)를 거칠 가능성'], 'fig-outside')],
+                       '100·200기가에서 400, 800, 1.6테라로 두 배씩 뛰고, 2.4테라를 한 번 거칠 가능성이 돈다')
 
 
 def _dc_layers78():
@@ -985,11 +969,14 @@ DC = '2026-07-25-datacenter-interconnects'
 
 
 def _chain_down(steps, cap):
-    """인과 사슬 — 위에서 아래로, 상자 사이는 화살표. 인과는 화살표로 잇는다(2026-09-02)."""
+    """인과·순서 사슬 — 위에서 아래로, 상자 사이는 화살표. **상자는 전부 한 크기**다 —
+    폭은 가장 긴 글, 높이는 줄이 가장 많은 상자에 맞춘다. 크기가 다르면 중요도가 다른 것처럼
+    읽힌다(2026-09-02 사용자 지적). 짙은 상자 하나만 색으로 다르다."""
+    w = w_of(*[l for l, _ in steps])
+    h = max(len(l) for l, _ in steps) * LH + 22
     parts, y = [], 26
     for k, (lines, cls) in enumerate(steps):
-        h = len(lines) * LH + 22
-        parts += mid(y, h, lines, cls)
+        parts += box((W - w) / 2, y, w, h, lines, cls)
         y += h
         if k < len(steps) - 1:
             parts += down(W / 2, y, y + 20)
