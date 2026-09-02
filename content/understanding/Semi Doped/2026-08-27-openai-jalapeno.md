@@ -6,7 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
-people: 진행 Austin Lyons · Vik Sekar (Semi Doped 공동 진행) / 발표 Richard Ho (전 구글 TPU 팀, 발표를 이끔) · Ravi (칩 아키텍트) · Chris (소프트웨어 코디자인)
+people: 진행 Austin Lyons · Vik Sekar (Semi Doped 공동 진행) / 발표 Richard Ho (전 구글 TPU 팀, 발표를 이끔) · Ravi (칩 아키텍트) · Chris (소프트웨어 코디자인) / 기사 SemiAnalysis (반도체 리서치. OpenAI 와 함께 이 칩을 InferenceX 벤치마크로 미리 재서 발표 당일 기사를 냈고, 진행자 둘이 그 기사를 화면에 띄워 놓고 말한다. 글에 SemiAnalysis 가 나오면 그 기사의 말을 진행자가 전한 것이다)
 section: compute
 topic: 추론 칩 · HBM 활용률 · 스케일업 도메인
 gain: RTL 부터 테이프아웃까지 아홉 달이라는 일정이 무엇을 뜻하는지, HBM 대역폭을 다 쓰지 못하는 구조적 이유, 스케일업 도메인을 128칩과 2,048칩으로 나눠 보는 셈.
