@@ -487,7 +487,7 @@ a.row:hover{background:#eef1f6}
 .tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
 .tag.on{background:#1b1f27;color:#fff}
 .tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
-.lhead .tag.hk{margin-left:8px;vertical-align:middle}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
 .row.dead{opacity:.62}
 .why{font-size:12px;color:#8a93a1;margin-top:6px}
 .back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
@@ -576,9 +576,8 @@ def row_html(ep):
     for key, emo, label, _sub in LANES:
         if any(l['key'] == key for l in ep['lanes']):
             tags.append('<span class="tag on">%s %s</span>' % (emo, label))
-    # 윤문(한글패치)을 거친 글은 꼬리표로 밝힌다 — frontmatter humanized (2026-09-03)
-    if any(l['meta'].get('humanized') for l in ep['lanes']):
-        tags.append('<span class="tag hk">한글패치</span>')
+    # 윤문을 거친 글은 제목 옆에 「한글패치」 — frontmatter humanized (2026-09-03, 목록에서도 보이게)
+    hk = '<span class="tag hk">한글패치</span>' if any(l['meta'].get('humanized') for l in ep['lanes']) else ''
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
     # 진행자 둘뿐인 회차는 날짜만 선다
     others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
@@ -586,9 +585,9 @@ def row_html(ep):
     who = ' · '.join(PN_RE.sub(lambda mm: '<span class="pn g%d">%s</span>' % (onames.index(mm.group(1)) % PN_COLORS, mm.group(1)), esc(x))
                     for x in others)
     inner = ('<div class="rmeta"><span>%s</span>%s</div>'
-             '<div class="rtitle">%s</div>'
+             '<div class="rtitle">%s%s</div>'
              % (esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
-                esc(m.get('title', ep['slug']))))
+                esc(m.get('title', ep['slug'])), hk))
     if ep['one']:
         inner += '<div class="rone">%s</div>' % esc(ep['one'])
     inner += '<div class="tags">%s</div>' % ''.join(tags)
@@ -603,7 +602,8 @@ def post_html(ep):
     m = ep['meta']
     out = [HEAD % (esc(m.get('title', ep['slug'])) + ' — Semi Doped', CSS)]
     out.append('<a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a>')
-    out.append('<h1>%s</h1>' % esc(m.get('title', ep['slug'])))
+    hk = '<span class="tag hk">한글패치</span>' if any(l['meta'].get('humanized') for l in ep['lanes']) else ''
+    out.append('<h1>%s%s</h1>' % (esc(m.get('title', ep['slug'])), hk))
     # 화자 — 팟캐스트라 누가 말하는 사람인지가 먼저다. 요약본 frontmatter people 에
     # 「진행 … / 발표 …」로 적고, 없으면 speaker 만 낸다. 전사에 없는 소속·직함은 안 적는다
     people = m.get('people', '')
@@ -626,8 +626,6 @@ def post_html(ep):
         out.append('<div class="lhead"><b>%s %s 판</b><span>%s · %s 가 씀</span></div>'
                    % (lane['emo'], lane['label'], esc(lane['sub']),
                       esc(lm.get('model', ''))))
-        if lm.get('humanized'):
-            out[-1] = out[-1].replace('</span></div>', '</span><span class="tag hk">한글패치</span></div>')
         if lm.get('title'):
             out.append('<div class="ltitle">%s</div>' % esc(lm['title']))
         out.append(lane_html(lane['body'],
