@@ -120,6 +120,19 @@ def body_html(md, figs=()):
 
     while i < len(lines):
         ln = lines[i]
+        if ln.startswith('```'):
+            # 펜스 블록 — 구조 절의 트리가 여기로 온다. 줄바꿈과 들여쓰기가 뜻이라
+            # 문단으로 합치면 안 된다. 2026-09-02 에 이걸 안 잡아 트리가 인라인 코드
+            # 한 문단으로 나갔다
+            flush()
+            i += 1
+            code = []
+            while i < len(lines) and not lines[i].startswith('```'):
+                code.append(esc(lines[i]))
+                i += 1
+            out.append('<pre class="tree">%s</pre>' % '\n'.join(code))
+            i += 1
+            continue
         if ln.strip().startswith('|') and i + 1 < len(lines) and \
                 set(lines[i + 1].replace('|', '').strip()) <= set('-: '):
             flush()
@@ -218,6 +231,8 @@ a.row:hover{background:#eef1f6}
 .lane ul{margin:0 0 14px;padding-left:20px}
 .lane li{margin:0 0 6px}
 code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+pre.tree{margin:0 0 18px;padding:14px 16px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;
+ font:13px/1.65 Consolas,"D2Coding","Malgun Gothic",monospace;overflow-x:auto;white-space:pre}
 .tw{overflow-x:auto;margin:0 0 18px}
 table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
 th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
@@ -306,6 +321,8 @@ def check_ui(index, posts):
     for p in posts:
         if 'class="pmeta"' not in p:
             bad.append('글 페이지에 회차 메타(언제 것·누가)가 없다')
+        if '<code>```' in p or '├─' in re.sub(r'<pre[^>]*>.*?</pre>', '', p, flags=re.S):
+            bad.append('트리가 <pre> 밖으로 나갔다 — 펜스가 문단으로 뭉개졌다')
         if '회차 목록' not in p:
             bad.append('글 페이지에서 목록으로 돌아갈 길이 없다')
     dead = re.findall(r'<div class="row dead">(.*?)</div>\s*(?=<a class="row"|'
