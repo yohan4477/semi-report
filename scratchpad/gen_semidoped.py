@@ -576,9 +576,9 @@ def row_html(ep):
     for key, emo, label, _sub in LANES:
         if any(l['key'] == key for l in ep['lanes']):
             tags.append('<span class="tag on">%s %s</span>' % (emo, label))
-    # 윤문(한글 손질)을 거친 글은 꼬리표로 밝힌다 — frontmatter humanized (2026-09-03)
+    # 윤문(한글패치)을 거친 글은 꼬리표로 밝힌다 — frontmatter humanized (2026-09-03)
     if any(l['meta'].get('humanized') for l in ep['lanes']):
-        tags.append('<span class="tag hk">한글 손질</span>')
+        tags.append('<span class="tag hk">한글패치</span>')
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
     # 진행자 둘뿐인 회차는 날짜만 선다
     others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
@@ -627,7 +627,7 @@ def post_html(ep):
                    % (lane['emo'], lane['label'], esc(lane['sub']),
                       esc(lm.get('model', ''))))
         if lm.get('humanized'):
-            out[-1] = out[-1].replace('</span></div>', '</span><span class="tag hk">한글 손질</span></div>')
+            out[-1] = out[-1].replace('</span></div>', '</span><span class="tag hk">한글패치</span></div>')
         if lm.get('title'):
             out.append('<div class="ltitle">%s</div>' % esc(lm['title']))
         out.append(lane_html(lane['body'],
