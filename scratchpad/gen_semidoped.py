@@ -413,9 +413,9 @@ def episodes():
 CSS = '''
 *{box-sizing:border-box}
 body{margin:0;background:#f6f7f9;color:#1b1f27;
- font:15px/1.75 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+ font:17px/1.85 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
 a{color:inherit}
-.wrap{max-width:760px;margin:0 auto;padding:36px 20px 80px}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
 h1{font-size:26px;margin:0 0 6px}
 .sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
 .rows{border-top:1px solid #e2e5ea}
@@ -440,12 +440,12 @@ a.row:hover{background:#eef1f6}
 .lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
 .lhead b{font-size:19px;white-space:nowrap}
 .lhead span{font-size:12px;color:#8a93a1}
-.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+.ltitle{font-size:17px;font-weight:600;line-height:1.6;margin:10px 0 20px;
  padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
-.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2{font-size:23px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
 .lane h2.apx{color:#66707f}
 .lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
-.lane p{margin:0 0 14px}
+.lane p{margin:0 0 20px}
 .lane ul{margin:0 0 14px;padding-left:20px}
 .lane li{margin:0 0 6px}
 .q{color:#5b6472}
