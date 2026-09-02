@@ -183,6 +183,10 @@ def load_one(path):
         'ticker': meta.get('ticker', ''),
         # view — 같은 대상을 다른 물음으로 보는 줄이 둘 이상일 때 제목을 가른다
         'view': meta.get('view', ''),
+        # verdict — 카드·목록에 쓰는 한 마디 판정(예: 「지금은 전세」). 「지금 판단」
+        # 문단은 몇 문장이라 카드 큰 글씨 자리에 못 들어간다 — 그 문단을 쓴 사람이
+        # 같은 뜻을 한 마디로 다시 눌러 담는 자리다. 없으면 빈 문자열.
+        'verdict': meta.get('verdict', ''),
         'topic': meta.get('topic', ''),
         'opened': meta.get('opened', ''), 'checked': meta.get('checked', ''),
         'why': meta.get('why', ''),
