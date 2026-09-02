@@ -480,9 +480,9 @@ def ratio_ruler(watches, W=640):
         o.append('<text x="%.1f" y="%d" class="t-sm" text-anchor="middle" '
                  'style="font-weight:700">%s</text>' % (lx, LY, E(labels[i])))
     cap_y = LY + 24
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (X0, cap_y, E('전세가 낫다')))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (X0, cap_y, E('낮을수록 전세가 낫다')))
     o.append('<text x="%d" y="%d" class="t-sm t-axis" text-anchor="end">%s</text>'
-             % (X1, cap_y, E('매매 문턱이 낮다')))
+             % (X1, cap_y, E('높을수록 매매가 가깝다')))
     return ('<svg viewBox="0 0 %d %d" role="img" aria-label="권역별 전세가율" class="%s">%s</svg>'
             % (W, cap_y + 10, 'fig-w' if W > 400 else 'fig-n', ''.join(o)))
 
@@ -495,8 +495,9 @@ def ratio_ruler_fig(watches):
     asof = max([m['as_of'] for w in _live_areas(watches)
                for k, m in (w.get('metrics') or {}).items()
                if k.startswith('jeonse_ratio_')] or ['—'])
-    cap = ('전세가율 = 중위 전세가 ÷ 중위 매매가. 올라가면 보증금이 집값에 가까워지고, '
-           '동시에 매매로 넘어가는 자기 돈이 줄어듭니다. 기준 %s · 공표.' % E(asof))
+    cap = ('전세가율 = 중위 전세가 ÷ 중위 매매가. 세입자로 있을 거면 낮은 게 좋고, 살 거면 '
+           '높은 게 얹을 돈이 적습니다. 대신 높을수록 보증금이 집값에 가까워져 못 돌려받을 '
+           '위험이 커집니다. 기준 %s · 공표.' % E(asof))
     return '<figure>%s%s<figcaption>%s</figcaption></figure>' % (wide, narrow, cap)
 
 
@@ -546,7 +547,7 @@ def area_cards(watches):
             parts.append('<span class="tag t-hit">걸림 %d</span>' % n_hit)
         if n_near:
             parts.append('<span class="tag t-near">근접 %d</span>' % n_near)
-        chips = ' '.join(parts) if parts else '<span class="t-none">조건에 든 것 없음</span>'
+        chips = ' '.join(parts) if parts else '<span class="t-none">판단을 바꿀 일 없음</span>'
         h.append(
             '<div class="area"><p class="area-k">%s · %s</p>'
             '<p class="area-v">%s</p>'
@@ -588,10 +589,12 @@ def _term_dict(watches):
     base = _sale_base_month(watches)
     basephrase = ('기준월(%s = 100)' % base) if base else '기준월 = 100'
     return {
-        '매매가격지수': ('그 구 아파트 값이 %s 대비 얼마나 움직였나. 값 자체보다 세 구가 같이 '
-                    '가나, 어느 구가 먼저 꺾이나를 본다.' % basephrase),
-        '전세가율': ('그 구 아파트의 중위 전세가 ÷ 중위 매매가. 올라가면 보증금이 집값에 '
-                  '가까워지고, 동시에 매매로 넘어갈 때 더 얹을 돈이 준다.'),
+        '매매가격지수': ('집값이 오르는 중인가 내리는 중인가. 그 구 아파트 값이 %s 대비 얼마나 '
+                    '움직였나 — 값 자체보다 세 구가 같이 가나, 어느 구가 먼저 꺾이나를 본다.'
+                    % basephrase),
+        '전세가율': ('그 구 아파트의 중위 전세가 ÷ 중위 매매가. 세입자로 있을 거면 낮은 게 좋고, '
+                  '살 거면 높은 게 얹을 돈이 적다. 대신 높을수록 보증금이 집값에 가까워져 '
+                  '못 돌려받을 위험이 커진다.'),
         '수급동향': '100 이 균형. 위면 사려는 사람이, 아래면 팔려는 사람이 많다.',
     }
 
@@ -663,8 +666,8 @@ def since_block(watches, seen):
         n1, n2, n3 = len(buckets['새로 걸린']), len(buckets['새로 근접']), len(buckets['풀린'])
         sub = ('지난 확인 %s 이후 — 새로 걸린 <b>%d</b> · 가까이 온 <b>%d</b> · 풀린 <b>%d</b>'
                % (E(seen.get('checked') or '—'), n1, n2, n3))
-    h = ['<p class="band-s">%s <span class="chip-legend">걸림 = 정한 조건에 들어옴 · '
-         '근접 = 문턱 가까이</span></p>' % sub]
+    h = ['<p class="band-s">%s <span class="chip-legend">조건 = 미리 정해 둔 「이러면 판단을 '
+         '다시 한다」는 기준. 걸림 = 그 기준에 들어옴 · 근접 = 그 기준 가까이</span></p>' % sub]
     # 이 절에 등장하는 지표 이름마다 풀이 한 줄 — 등장하지 않는 것은 안 낸다
     names = set(_metric_name(row[2]) for rows in buckets.values() for row in rows)
     h.append(term_lines(watches, names))
@@ -1117,16 +1120,16 @@ def build():
          % (FONTS, CSS)]
     h.append('<header><div class="h-top"><h1>포트폴리오 워치</h1>'
              '<p class="meta mono">마지막 확인 %s · 자료 기준 %s</p></div>'
-             '<p class="lede">서울 세 권역, 지금 들어가는 조건을 봅니다 — 전세냐 매매냐, '
-             '깎을 수 있는 장이냐, 제도가 셈을 바꿨냐.</p>' % (E(checked), E(asof)))
-    # 절 바로가기 — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을
+             '<p class="lede">서울 세 권역, 지금 전세로 갈지 매매로 갈지 — 값을 깎을 수 있는 '
+             '장인지, 제도가 셈을 바꿨는지.</p></header>' % (E(checked), E(asof)))
+    # 절 바로가기 — header 밖에 둔다. sticky 는 제 부모 상자 안에서만 붙어서, header 안에
+    # 넣으면 header 가 화면 위로 지나가는 순간 같이 사라진다(실제로 그렇게 나갔다). — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을
     # 말한다(스킨 첫 화면에서 카드를 숨기고 그 앞을 막는 것). 이 줄은 아래 다섯
     # 절을 전부 그대로 펼쳐 두고 그 자리로 뛰는 것만 돕는다 — 걸러 내지 않는다.
     h.append('<nav class="jump" aria-label="절 바로가기">'
              '<a href="#areas">권역</a><a href="#since">바뀐 것</a>'
              '<a href="#policy">제도</a><a href="#lines">보고 있는 것</a>'
              '<a href="#basis">자료 기준</a></nav>')
-    h.append('</header>')
 
     h.append('<section class="hero" id="areas">%s%s</section>'
              % (ratio_ruler_fig(ws), area_cards(ws)))
