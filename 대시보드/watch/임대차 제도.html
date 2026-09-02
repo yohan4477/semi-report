@@ -27,6 +27,14 @@ header{padding:34px 0 0}
 h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .meta{font-size:12.5px;font-weight:500;color:var(--ink-3);margin:0}
 .lede{color:var(--ink-2);font-size:.95rem;max-width:66ch;margin:14px 0 0}
+/* 절 바로가기 — 스크롤해도 붙어 있다. 현재 절 강조는 JS 없이는 못 하니 안 한다 */
+.jump{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;
+  white-space:nowrap;margin:16px 0 0;padding:10px 0;background:var(--paper);
+  border-bottom:1px solid var(--line);scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:0 0 auto;font-size:12.5px;font-weight:500;background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.jump a:hover{border-color:var(--ink-3)}
 .back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:600;
   color:var(--ink-3);border-bottom:0}
 .back:hover,.back:focus-visible{color:var(--ink)}
@@ -48,6 +56,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
 .chip-legend{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
+/* 용어 풀이 — 그 말 옆에 둔다. 별도 절이 아니라 등장한 자리 바로 아래 잔글씨다 */
+.term{font-size:12.5px;color:var(--ink-3);margin:4px 0 0;max-width:66ch}
 .rows{margin:14px 0 0}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:baseline;
   padding:10px 0;border-bottom:1px solid var(--line)}

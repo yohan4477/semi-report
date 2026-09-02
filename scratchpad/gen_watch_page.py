@@ -41,6 +41,7 @@
 그 넷이 화면에 남으면 FAIL 한다.
 """
 import io
+import json
 import os
 import re
 import sys
@@ -53,9 +54,35 @@ import watch_fig as wf          # noqa: E402
 
 OUT = os.path.join(ROOT, '대시보드', '포트폴리오 워치.html')
 WATCH_DIR = os.path.join(ROOT, '대시보드', 'watch')
+AREAS_PATH = os.path.join(ROOT, 'insights', 'watch', '_areas.json')
 E = wl.esc
 
 KIND_LABEL = {'realestate': '부동산', 'policy': '제도', 'equity': '종목'}
+
+
+def _load_areas():
+    """권역 → 구 목록 정본. 손으로 구 이름을 박지 않는다 — insights/watch/_areas.json
+    이 바뀌면(권역 경계 수정 등) 화면이 자동으로 따라가야 한다."""
+    with io.open(AREAS_PATH, encoding='utf-8') as f:
+        d = json.load(f)
+    return dict((k, v) for k, v in d.items() if not k.startswith('_'))
+
+
+AREAS = _load_areas()
+
+
+def _gu_short(target):
+    """권역 이름 옆에 구 셋을 짧게 푼다(「노원·도봉·강북」류) — AREAS 정본에서만 읽는다.
+    자(ruler)의 점 라벨은 대상이 아니다 — 거기는 짧게 그대로 둔다(자리가 좁다)."""
+    gus = (AREAS.get(target) or {}).get('구') or []
+    return '·'.join(g[:-1] if g.endswith('구') else g for g in gus)
+
+
+def _area_head(target):
+    """카드 머리·상세 eyebrow 에 쓰는 「권역 — 구 셋」. 구가 없으면(정책 줄 등) 그냥
+    권역 이름이다."""
+    gu = _gu_short(target)
+    return '%s — %s' % (target, gu) if gu else target
 
 # 구글 폰트 — 본문은 IBM Plex Sans KR, 날짜·기준 표기는 IBM Plex Mono. preconnect
 # 둘을 먼저 걸고 스타일시트를 문다(display=swap 은 URL 파라미터로 이미 걸려 있다).
@@ -99,6 +126,14 @@ header{padding:34px 0 0}
 h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .meta{font-size:12.5px;font-weight:500;color:var(--ink-3);margin:0}
 .lede{color:var(--ink-2);font-size:.95rem;max-width:66ch;margin:14px 0 0}
+/* 절 바로가기 — 스크롤해도 붙어 있다. 현재 절 강조는 JS 없이는 못 하니 안 한다 */
+.jump{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;
+  white-space:nowrap;margin:16px 0 0;padding:10px 0;background:var(--paper);
+  border-bottom:1px solid var(--line);scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:0 0 auto;font-size:12.5px;font-weight:500;background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.jump a:hover{border-color:var(--ink-3)}
 .back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:600;
   color:var(--ink-3);border-bottom:0}
 .back:hover,.back:focus-visible{color:var(--ink)}
@@ -120,6 +155,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
 .chip-legend{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
+/* 용어 풀이 — 그 말 옆에 둔다. 별도 절이 아니라 등장한 자리 바로 아래 잔글씨다 */
+.term{font-size:12.5px;color:var(--ink-3);margin:4px 0 0;max-width:66ch}
 .rows{margin:14px 0 0}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:baseline;
   padding:10px 0;border-bottom:1px solid var(--line)}
@@ -521,11 +558,58 @@ def area_cards(watches):
             '</div>'
             '<p class="area-c">%s</p>'
             '<a class="area-more" href="watch/%s.html">자세히 →</a></div>'
-            % (E(w['target']), E(w.get('view') or ''), E(w.get('verdict') or '판단 없음'),
+            % (E(_area_head(w['target'])), E(w.get('view') or ''),
+               E(w.get('verdict') or '판단 없음'),
                _fmt1(cur), arrow, ('%.2f' % min(rs)), ('%.2f' % max(rs)),
                _fmt1(100.0 / cur) if cur else '—', sd_line, chips, w['slug']))
     h.append('</div>')
     return ''.join(h)
+
+
+# ── 용어 풀이 — 그 말 옆에 둔다 ─────────────────────────────────────────────
+# 별도 「용어」 절을 안 둔다(CLAUDE.md 규칙). 대신 지표 이름이 등장하는 두 자리
+# (본 장의 「지난번 본 뒤 바뀐 것」·상세의 머리 수치 띠)에 같은 문장을 붙인다 —
+# TERM 사전 하나를 두 자리가 같이 읽어서, 한쪽만 고치고 다른 쪽을 잊는 일이 없다.
+def _sale_base_month(watches):
+    """매매가격지수의 기준월. unit 문자열이 "지수(기준시점=100)"처럼 날짜 없이
+    와서, series 에서 값이 100 인 첫 달을 찾는다. 없으면 None — 그 자리는 문장이
+    스스로 「기준월 = 100」으로 채운다."""
+    for w in watches:
+        for k, m in (w.get('metrics') or {}).items():
+            if not k.startswith('sale_idx'):
+                continue
+            for t, v in (m.get('series') or []):
+                if abs(v - 100.0) < 0.01:
+                    return t
+    return None
+
+
+def _term_dict(watches):
+    base = _sale_base_month(watches)
+    basephrase = ('기준월(%s = 100)' % base) if base else '기준월 = 100'
+    return {
+        '매매가격지수': ('그 구 아파트 값이 %s 대비 얼마나 움직였나. 값 자체보다 세 구가 같이 '
+                    '가나, 어느 구가 먼저 꺾이나를 본다.' % basephrase),
+        '전세가율': ('그 구 아파트의 중위 전세가 ÷ 중위 매매가. 올라가면 보증금이 집값에 '
+                  '가까워지고, 동시에 매매로 넘어갈 때 더 얹을 돈이 준다.'),
+        '수급동향': '100 이 균형. 위면 사려는 사람이, 아래면 팔려는 사람이 많다.',
+    }
+
+
+def _metric_name(what):
+    """트리거 「무엇을」에서 지표 이름만(구 이름을 뗀다) — "전세가율 — 강남구" → "전세가율"."""
+    return (what or '').split(' —')[0].strip()
+
+
+def term_lines(watches, names):
+    """등장하는 지표 이름마다 풀이 한 줄. names 에 없는 지표는 안 낸다 — 세 줄을
+    늘 다 보여주면 그중 못 보는 지표까지 설명한 꼴이 된다."""
+    terms = _term_dict(watches)
+    order = ('매매가격지수', '전세가율', '수급동향')
+    keys = [n for n in order if n in names]
+    if not keys:
+        return ''
+    return ''.join('<p class="term">%s — %s</p>' % (E(n), E(terms[n])) for n in keys)
 
 
 CHIP_STATE = {'새로 걸린': '걸림', '그대로 걸린': '걸림', '새로 근접': '근접', '풀린': '풀림'}
@@ -581,6 +665,9 @@ def since_block(watches, seen):
                % (E(seen.get('checked') or '—'), n1, n2, n3))
     h = ['<p class="band-s">%s <span class="chip-legend">걸림 = 정한 조건에 들어옴 · '
          '근접 = 문턱 가까이</span></p>' % sub]
+    # 이 절에 등장하는 지표 이름마다 풀이 한 줄 — 등장하지 않는 것은 안 낸다
+    names = set(_metric_name(row[2]) for rows in buckets.values() for row in rows)
+    h.append(term_lines(watches, names))
     if total == 0:
         h.append('<p class="band-s">조건에 든 값도, 내가 읽은 뒤에 바뀐 법도 없습니다. '
                  '이번 달은 볼 것이 없습니다.</p>')
@@ -766,7 +853,8 @@ def stat_strip(w):
             '<p class="stat-m">기준 %s · %s</p></div>'
             % (E(label), _fmt1(cur), E(unit), arrow,
                E(t['as_of'] or '—'), E(t['nature'] or '공표')))
-    return '<div class="stats">%s</div>' % ''.join(cells)
+    names = set(_metric_name(t['what']) for t in vals)
+    return '<div class="stats">%s</div>%s' % (''.join(cells), term_lines([w], names))
 
 
 def hist_note(cond, series):
@@ -915,8 +1003,8 @@ def detail_page(w):
             '<div class="dbody">%s</div>'
             '<footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
             '</div></body></html>'
-            % (E(t9), FONTS, CSS, E(w['target']), E(view), E(w['checked'] or '—'), E(t9),
-               E(verdict), line_block(w)))
+            % (E(t9), FONTS, CSS, E(_area_head(w['target'])), E(view), E(w['checked'] or '—'),
+               E(t9), E(verdict), line_block(w)))
 
 
 def law_page(watches):
@@ -1031,11 +1119,19 @@ def build():
              '<p class="meta mono">마지막 확인 %s · 자료 기준 %s</p></div>'
              '<p class="lede">서울 세 권역, 지금 들어가는 조건을 봅니다 — 전세냐 매매냐, '
              '깎을 수 있는 장이냐, 제도가 셈을 바꿨냐.</p>' % (E(checked), E(asof)))
+    # 절 바로가기 — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을
+    # 말한다(스킨 첫 화면에서 카드를 숨기고 그 앞을 막는 것). 이 줄은 아래 다섯
+    # 절을 전부 그대로 펼쳐 두고 그 자리로 뛰는 것만 돕는다 — 걸러 내지 않는다.
+    h.append('<nav class="jump" aria-label="절 바로가기">'
+             '<a href="#areas">권역</a><a href="#since">바뀐 것</a>'
+             '<a href="#policy">제도</a><a href="#lines">보고 있는 것</a>'
+             '<a href="#basis">자료 기준</a></nav>')
     h.append('</header>')
 
-    h.append('<section class="hero">%s%s</section>' % (ratio_ruler_fig(ws), area_cards(ws)))
+    h.append('<section class="hero" id="areas">%s%s</section>'
+             % (ratio_ruler_fig(ws), area_cards(ws)))
 
-    h.append('<div class="band"><p class="band-t">지난번 본 뒤 바뀐 것</p>%s</div>'
+    h.append('<div class="band" id="since"><p class="band-t">지난번 본 뒤 바뀐 것</p>%s</div>'
              % since_block(ws, snap))
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
@@ -1044,7 +1140,7 @@ def build():
     h.append('<div class="band" id="lines"><p class="band-t">보고 있는 것 %d</p>%s</div>'
              % (len(ws), line_summary_rows(ws)))
 
-    h.append('<div class="band"><p class="band-t">값이 언제 것인가</p>%s</div>'
+    h.append('<div class="band" id="basis"><p class="band-t">값이 언제 것인가</p>%s</div>'
              % time_ruler_fig(ws))
 
     h.append('<footer>값은 한국부동산원 공표 통계, 제도는 국가법령정보센터에서 받습니다. '
