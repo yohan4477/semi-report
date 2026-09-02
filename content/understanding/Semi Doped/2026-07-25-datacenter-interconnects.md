@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 section: link
 topic: 스케일업 · 스케일아웃 · CPO
 gain: 데이터센터 네트워킹 세 층과 구리·빛의 경계. 랙 하나를 다 잇는 케이블 수, 광 모듈 하나의 전력, 그리고 그 전력 때문에 광학을 패키지 옆으로 끌어오려는 이유.

@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 section: link
 topic: 리타이머 · PCIe · 스케일업 스위치
 gain: 서버 트레이 안 30센티미터 구간에서 구리 신호가 무너지는 방식과 그것을 되살리는 두 방법. 한번 설계에 들어가면 왜 잘 안 바뀌는지, 그리고 그 자리에서 스위치로 넓혀 가는 경로.

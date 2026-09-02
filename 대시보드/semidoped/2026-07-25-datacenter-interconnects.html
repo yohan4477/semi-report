@@ -1,0 +1,396 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>구리를 쓸 수 있으면 구리, 꼭 필요할 때만 빛 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>구리를 쓸 수 있으면 구리, 꼭 필요할 때만 빛</h1><div class="pmeta">2026-07-25 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/semi-doped-20260715-datacenter-interconnects">https://daily.semidoped.com/p/semi-doped-20260715-datacenter-interconnects</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-07-25-datacenter-interconnects.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">구리를 지키는 값이 78층 PCB 로 나오고, 광학이 스케일업으로 들어가는 문턱은 전력이라 칩 옆에 붙여 3분의 1로 줄이는 쪽으로 간다</div><p>Semi Doped 진행자 둘 — <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>) — 이 게스트 없이 데이터센터 네트워킹 한 회차를 냈다. 슬라이드를 띄워 두고 짚어 가는 형식이라 랙 사진과 그래프 설명이 많고, 한 회사의 제품보다 업계 전체가 서 있는 갈림길이 축이다. 이 글은 그 대화에서 업계에 무엇이 보이는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">연산이 아니라 연결이 한계가 됐다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">세 층을 가르는 것은 거리가 아니라 지연이다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">케이블 수가 곧 시장 크기다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">세대가 두 배씩 뛸 때마다 값을 더 받는 자리가 생긴다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">구리를 지키는 값은 78층으로 나온다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">광학의 문턱은 속도가 아니라 전력이고, 그 문턱은 거리를 없애 낮춘다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 글이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 연산이 아니라 연결이 한계가 됐다</h2>
+<p><span class="pn">진행자V</span>가 회차를 여는 문장은 진단이다. "오늘의 연산 능력은 실리콘 자체의 성능보다 CPU 와 GPU 를 데이터센터 안에서 어떻게 이어 놓느냐에 더 묶여 있다". 세상에서 가장 큰 컴퓨터는 상자 하나가 아니라 데이터센터 한 채인데, 그 안의 칩 전부를 하나의 컴퓨터로 움직이게 하는 능력이 연산 능력보다 훨씬 느리게 커졌다는 것이다.</p>
+<p><span class="pn">진행자V</span>는 계보로 짚었다. CPU 코어 하나의 성능을 따지던 시절에서 멀티코어로, 서버 칩이 256코어를 얹는 데까지 왔고, 그다음이 가속 카드였다. 그 시절의 가장 단순한 형태가 Nvidia SLI 로 GPU 두 장을 다리로 이어 하나처럼 쓰는 것이었는데, 지금은 <span class="q">"LLM 때문에 GPU 10만 장을 하나로 만들어야 한다"</span>. 두 장에서 10만 장으로, 같은 문제가 커진 것이다.</p>
+<p><span class="pn">진행자A</span>가 얹은 것은 이것이 학습만의 이야기가 아니라는 점이다. 추론도 GPU 72장짜리 스케일업 도메인으로 가고 있고 그 너머로도 간다. 전문가 혼합(모델 안에 전문가 여럿을 두고 토큰마다 일부만 쓰는 구조)으로 10조 파라미터를 얹은 최전선 모델에서는 프리필(입력을 한꺼번에 밀어 넣는 구간)과 특히 디코드(토큰을 하나씩 내는 구간)가 메모리 대역폭을 가능한 한 다 요구한다. "이게 학습만의 이야기라고 생각하게 두지 말라"는 것이 <span class="pn">진행자A</span>의 당부다.</p>
+<h2 id="s2"><span class="num">2</span> 세 층을 가르는 것은 거리가 아니라 지연이다</h2>
+<figure class="uc-fig"><p class="fig-title">망의 층 — 안에서 밖으로</p><svg class="epoch" viewBox="0 0 520 302" role="img" aria-label="안에서 밖으로 스케일인·업·아웃·어크로스·어보브. 이 회차는 가운데 셋을 다룬다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="55" y="30" width="113" height="44" rx="9" class="fig-outside"/>
+  <text x="111.5" y="58" text-anchor="middle" class="fig-b">스케일인</text>
+  <rect x="180" y="30" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="322.5" y="58" text-anchor="middle" class="fig-b">트레이 안 — 오늘은 안 다룬다</text>
+  <rect x="55" y="84" width="113" height="44" rx="9" class="fig-agent"/>
+  <text x="111.5" y="112" text-anchor="middle" class="fig-b">스케일업</text>
+  <rect x="180" y="84" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="322.5" y="112" text-anchor="middle" class="fig-b">랙 하나 — 2미터</text>
+  <rect x="55" y="138" width="113" height="44" rx="9" class="fig-box"/>
+  <text x="111.5" y="166" text-anchor="middle" class="fig-b">스케일아웃</text>
+  <rect x="180" y="138" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="322.5" y="166" text-anchor="middle" class="fig-b">랙과 랙 — 슈퍼팟이면 열두 랙</text>
+  <rect x="55" y="192" width="113" height="44" rx="9" class="fig-box"/>
+  <text x="111.5" y="220" text-anchor="middle" class="fig-b">스케일어크로스</text>
+  <rect x="180" y="192" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="322.5" y="220" text-anchor="middle" class="fig-b">캠퍼스 사이 — 30~80킬로미터</text>
+  <rect x="55" y="246" width="113" height="44" rx="9" class="fig-outside"/>
+  <text x="111.5" y="274" text-anchor="middle" class="fig-b">스케일어보브</text>
+  <rect x="180" y="246" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="322.5" y="274" text-anchor="middle" class="fig-b">우주 — 위성 주파수</text>
+</svg><figcaption>트레이 안의 스케일인, 랙 하나(2미터)의 스케일업, 슈퍼팟이면 열두 랙을 가로지르는 스케일아웃, 30~80킬로미터의 스케일어크로스, 위성으로 잇는 스케일어보브. 점선 둘은 오늘 안 다룬다고 <span class="pn">진행자V</span>가 선을 그은 것이다.</figcaption></figure>
+<p>데이터센터 망은 세 층이다. ① 스케일업은 랙 하나 안에서 아래에서 위로 GPU 를 다 잇는다. 랙 높이는 키 큰 성인의 키쯤, 2미터 안팎이다. ② 스케일아웃은 각자 스케일업 망을 가진 랙들을 서로 잇는다. 슈퍼팟 하나면 동서로 열두 랙쯤을 가로지른다. ③ 스케일어크로스는 30~80킬로미터 떨어진 다른 캠퍼스까지 잇는다. <span class="pn">진행자V</span>의 요약은 "그래서 각 층에 쓰이는 기술이 상당히 다르다"이다.</p>
+<p>거리로 갈린 것처럼 보이지만 <span class="pn">진행자A</span>가 다시 잡은 경계는 지연이다. 스케일업은 "내가 얼마나 많은 다른 GPU 와, 서로 메모리를 나눠 쓴다고 느껴질 만큼 낮은 지연으로 이야기할 수 있느냐"로 정의된다. 그래서 이웃한 두 랙에 걸친 스케일업 도메인도 기술적으로 가능하다 — 옆 랙 GPU 의 메모리를 자기 것처럼 읽는 느낌이 유지되기만 하면 된다. 반대로 30미터 떨어진 랙은 스위치를 몇 번 거치는 순간 그 느낌이 깨지므로 아예 다른 방식으로 주고받는다.</p>
+<p>이 정의에서 이 글이 읽는 것은 스케일업이 물리적 상자가 아니라 성립 조건이라는 점이다. 랙 안으로 시장을 잡아 온 계산은 도메인이 랙 둘에 걸치는 순간 다시 서야 한다. 층 이름도 늘어나는 중이다. 컴퓨트 트레이(랙에 밀어 넣는, GPU 두 장 남짓이 들어가는 판) 안쪽을 다루는 스케일인과, 광섬유가 아니라 위성 주파수로 잇는 우주의 스케일어보브(<span class="pn">진행자A</span>의 설명)가 그것인데, 둘 다 "보통의 데이터센터 네트워킹 대화 바깥"이라고 <span class="pn">진행자V</span>가 선을 그었다.</p>
+<h2 id="s3"><span class="num">3</span> 케이블 수가 곧 시장 크기다</h2>
+<p><span class="pn">진행자V</span>가 랙 사진을 놓고 센 수가 이 회차에서 가장 값이 크다. GPU 72장을 모두가 모두와 잇자면 72의 제곱쯤이 되어 랙 하나에 케이블 5,000개가 조금 넘게 들어가고, 그 길이를 다 더하면 2킬로미터쯤 된다(어디선가 읽은 수라고 <span class="pn">진행자V</span>가 밝혔다). 속도는 Blackwell 세대에서 레인당 초당 200기가비트이고, Rubin 세대에서는 케이블 하나에서 양방향으로 동시에 흐른다.</p>
+<p><span class="pn">진행자A</span>는 이 그림을 시장 크기의 대리 지표로 읽었다. 랙 안은 케이블이 빽빽하고, 랙과 랙 사이로 나가면 줄고, 캠퍼스 사이로 가면 더 준다. 그가 든 비유가 도로다 — 도시를 잇는 고속도로가 눈에 띄지만 실제로 길이가 가장 긴 것은 집집을 잇는 마을 안 도로다. 그래서 광학 업체들이 스케일업에 들어가고 싶어 하는 이유가 사진에 그대로 보인다. 그들이 이미 자리 잡은 스케일아웃과 스케일어크로스는 연결 수가 적은 자리다.</p>
+<p>케이블 수는 반대편에서 성능의 천장으로도 돌아온다. <span class="pn">진행자A</span>는 NVLink 스위치 하나가 정보를 넘기는 데 걸리는 시간에 전문가 혼합 모델이 정보를 주고받아야 하는 횟수를 곱하면 추론에 걸리는 최소 시간이 나온다고 계산 방식을 보였다. 그렇게 나온 사용자 한 명당 초당 400토큰은 "연산에 묶인 것이 아니라 데이터 이동에 묶인" 한계다. 다만 그가 스위치 지연으로 든 수는 "이를테면"이라고 붙인 예시값이다. 이 천장이 Cerebras 처럼 웨이퍼 한 장에 모델 가중치를 다 얹어 이동 자체를 없애는 설계가 서는 자리다.</p>
+<h2 id="s4"><span class="num">4</span> 세대가 두 배씩 뛸 때마다 값을 더 받는 자리가 생긴다</h2>
+<figure class="uc-fig"><p class="fig-title">속도 세대 — 겹쳐서 간다</p><svg class="epoch" viewBox="0 0 520 389" role="img" aria-label="100·200기가에서 400, 800, 1.6테라로 두 배씩 뛰고, 2.4테라를 한 번 거칠 가능성이 돈다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="63" y="26" width="394" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="54.5" text-anchor="middle" class="fig-b">2020년대 초 — 100·200기가가 대부분</text>
+  <line x1="260" y1="71" x2="260" y2="91" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="78.5" y="93" width="363" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="121.5" text-anchor="middle" class="fig-b">2023~2024 — 400기가가 떠오른다</text>
+  <line x1="260" y1="138" x2="260" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="110" y="160" width="300" height="68" rx="9" class="fig-box"/>
+  <text x="260" y="188.5" text-anchor="middle" class="fig-b">800기가가 들어온다</text>
+  <text x="260" y="211.5" text-anchor="middle" class="fig-b">400기가는 25·26년에 스러진다</text>
+  <line x1="260" y1="228" x2="260" y2="248" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="125.5" y="250" width="269" height="68" rx="9" class="fig-agent"/>
+  <text x="260" y="278.5" text-anchor="middle" class="fig-b">1.6테라 — 시작</text>
+  <text x="260" y="301.5" text-anchor="middle" class="fig-b">레인당 200기가 × 여덟 레인</text>
+  <line x1="260" y1="318" x2="260" y2="338" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="340" width="378" height="45" rx="9" class="fig-outside"/>
+  <text x="260" y="368.5" text-anchor="middle" class="fig-b">2.4테라(레인당 300기가)를 거칠 가능성</text>
+</svg><figcaption><span class="pn">진행자V</span>가 그래프를 읽어 준 순서다. 1.6테라는 합산 대역폭이라 레인당 200기가 여덟 레인일 수 있고, 다음이 3.2 가 아니라 레인당 300기가짜리 2.4테라일 가능성이 돈다는 것은 <span class="pn">진행자V</span>의 전언이다.</figcaption></figure>
+<p>속도 세대는 겹쳐서 간다. <span class="pn">진행자V</span>가 그래프를 읽어 준 순서는 이렇다. 2020년대 초에는 100·200기가 망이 대부분이었고, 2023~2024년에 400기가가 떠올랐으며, 이어 800기가가 들어와 상당한 자리를 차지했고, 그래프대로면 400기가는 2025~2026년에 스러진다. 그다음이 1.6테라 세대다.</p>
+<p><span class="pn">진행자A</span>가 붙인 단서 둘이 이 그래프를 읽는 법이다. ① 1.6테라는 합산 대역폭이라 레인당 200기가짜리 여덟 레인일 수 있다. ② 1.6테라는 이제 시작이고 800기가와 400기가가 아직 많이 깔려 있다. 실적 발표에서 최신 세대 이야기만 듣다 보면 이미 갈아탄 것처럼 들리지만 그래프는 그렇지 않다는 것이다.</p>
+<p>여기서 업계에 보이는 것은 두 배 뛸 때마다 같은 일이 되풀이된다는 점이다. 먼저 닿으려는 경쟁이 붙고, 트랜시버든 공급망의 다른 자리든 부품당 값을 더 받을 근거가 생긴다. 최전선이라 하이퍼스케일러가 1.6테라에 800기가보다 더 낸다. 그리고 먼저 못 가도 뒤 세대에서 벌 것이 남는다. 다음 세대가 3.2테라가 아닐 수도 있다는 이야기도 나왔다 — 레인당 300기가로 2.4테라를 한 번 거칠 가능성이 업계에 돌고, TPU 팟에 온갖 종류의 연결이 필요한 구글이 밀고 있다고 들었다는 것이 <span class="pn">진행자V</span>의 전언이다.</p>
+<h2 id="s5"><span class="num">5</span> 구리를 지키는 값은 78층으로 나온다</h2>
+<p>이 층위의 원칙을 <span class="pn">진행자V</span>는 한 문장으로 요약했다. "쓸 수 있으면 구리, 꼭 써야만 할 때 빛". 구리는 싸고 전력을 적게 먹고 수십 년 동안 잘 작동해 왔으니 피할 수 있으면 굳이 다른 것을 할 이유가 없다.</p>
+<figure class="uc-fig"><p class="fig-title">PCB 층수 — 25층과 78층</p><svg class="epoch" viewBox="0 0 520 194.6" role="img" aria-label="보통 PCB 는 25층, Nvidia 다음 세대 미드플레인은 78층으로 알려져 있다. 줄 하나가 층 하나다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">보통 PCB · 25층</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">다음 세대 기판 · 78층</text>
+  <rect x="49" y="132.1" width="150" height="50.5" rx="4" class="fig-stage"/>
+  <line x1="57" y1="178.6" x2="191" y2="178.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="176.9" x2="191" y2="176.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="175.2" x2="191" y2="175.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="173.5" x2="191" y2="173.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="171.8" x2="191" y2="171.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="170.1" x2="191" y2="170.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="168.4" x2="191" y2="168.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="166.7" x2="191" y2="166.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="165" x2="191" y2="165" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="163.3" x2="191" y2="163.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="161.6" x2="191" y2="161.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="159.9" x2="191" y2="159.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="158.2" x2="191" y2="158.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="156.5" x2="191" y2="156.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="154.8" x2="191" y2="154.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="153.1" x2="191" y2="153.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="151.4" x2="191" y2="151.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="149.7" x2="191" y2="149.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="148" x2="191" y2="148" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="146.3" x2="191" y2="146.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="144.6" x2="191" y2="144.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="142.9" x2="191" y2="142.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="141.2" x2="191" y2="141.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="139.5" x2="191" y2="139.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="57" y1="137.8" x2="191" y2="137.8" class="fig-arw" style="stroke-width:.8"/>
+  <rect x="321" y="42" width="150" height="140.6" rx="4" class="fig-stage"/>
+  <line x1="329" y1="178.6" x2="463" y2="178.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="176.9" x2="463" y2="176.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="175.2" x2="463" y2="175.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="173.5" x2="463" y2="173.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="171.8" x2="463" y2="171.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="170.1" x2="463" y2="170.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="168.4" x2="463" y2="168.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="166.7" x2="463" y2="166.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="165" x2="463" y2="165" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="163.3" x2="463" y2="163.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="161.6" x2="463" y2="161.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="159.9" x2="463" y2="159.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="158.2" x2="463" y2="158.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="156.5" x2="463" y2="156.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="154.8" x2="463" y2="154.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="153.1" x2="463" y2="153.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="151.4" x2="463" y2="151.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="149.7" x2="463" y2="149.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="148" x2="463" y2="148" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="146.3" x2="463" y2="146.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="144.6" x2="463" y2="144.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="142.9" x2="463" y2="142.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="141.2" x2="463" y2="141.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="139.5" x2="463" y2="139.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="137.8" x2="463" y2="137.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="136.1" x2="463" y2="136.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="134.4" x2="463" y2="134.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="132.7" x2="463" y2="132.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="131" x2="463" y2="131" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="129.3" x2="463" y2="129.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="127.6" x2="463" y2="127.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="125.9" x2="463" y2="125.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="124.2" x2="463" y2="124.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="122.5" x2="463" y2="122.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="120.8" x2="463" y2="120.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="119.1" x2="463" y2="119.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="117.4" x2="463" y2="117.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="115.7" x2="463" y2="115.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="114" x2="463" y2="114" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="112.3" x2="463" y2="112.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="110.6" x2="463" y2="110.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="108.9" x2="463" y2="108.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="107.2" x2="463" y2="107.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="105.5" x2="463" y2="105.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="103.8" x2="463" y2="103.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="102.1" x2="463" y2="102.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="100.4" x2="463" y2="100.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="98.7" x2="463" y2="98.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="97" x2="463" y2="97" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="95.3" x2="463" y2="95.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="93.6" x2="463" y2="93.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="91.9" x2="463" y2="91.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="90.2" x2="463" y2="90.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="88.5" x2="463" y2="88.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="86.8" x2="463" y2="86.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="85.1" x2="463" y2="85.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="83.4" x2="463" y2="83.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="81.7" x2="463" y2="81.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="80" x2="463" y2="80" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="78.3" x2="463" y2="78.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="76.6" x2="463" y2="76.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="74.9" x2="463" y2="74.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="73.2" x2="463" y2="73.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="71.5" x2="463" y2="71.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="69.8" x2="463" y2="69.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="68.1" x2="463" y2="68.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="66.4" x2="463" y2="66.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="64.7" x2="463" y2="64.7" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="63" x2="463" y2="63" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="61.3" x2="463" y2="61.3" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="59.6" x2="463" y2="59.6" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="57.9" x2="463" y2="57.9" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="56.2" x2="463" y2="56.2" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="54.5" x2="463" y2="54.5" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="52.8" x2="463" y2="52.8" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="51.1" x2="463" y2="51.1" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="49.4" x2="463" y2="49.4" class="fig-arw" style="stroke-width:.8"/>
+  <line x1="329" y1="47.7" x2="463" y2="47.7" class="fig-arw" style="stroke-width:.8"/>
+</svg><figcaption>줄 하나가 층 하나다. 보통의 데이터센터 PCB 는 25층쯤, Nvidia 다음 세대 미드플레인은 78층으로 알려져 있다. 구리를 지키는 값이 이 층수로 나온다는 것이 이 글의 읽기다.</figcaption></figure>
+<p>그런데 속도가 오르면 구리 케이블이 거리를 못 버틴다. Nvidia 가 다음 세대 랙에서 택한 답은 거대한 PCB 를 한 장 만들어 한쪽에 연산을, 다른 쪽에 네트워킹을 붙이고 연결을 전부 기판 안에서 끝내는 것이다. 데이터센터용 PCB 가 보통 25층쯤인데 이 기판은 78층으로 알려져 있다. <span class="pn">진행자V</span>가 든 그림은 대도시의 입체 교차로다 — 북에서 동으로, 남에서 서로 가는 길이 서로 부딪히지 않고 위아래로 지나가야 하는데, 그것을 78개 층으로 한다는 뜻이다.</p>
+<p>여기서 보이는 것은 구리를 지키는 값이 층수로 환산되어 나왔다는 사실이다. 25층 대 78층, 세 배가 그 값이고, 만들기가 매우 어려워 업계에서는 이게 만들어질 수 있느냐 없느냐를 두고 갈린다. <span class="pn">진행자V</span>는 판단을 유보하면서도 성격은 분명히 했다. "이건 정말 구리 쪽 이야기를 밀어붙이는 것"이고, 그렇게까지 하는 이유는 "당연히 광학으로 가는 것을 피하고 싶어서"다. 이 글이 여기서 읽는 것은, 광학을 피하는 값이 78층까지는 지불할 만하다고 본 회사가 있다는 점과, 그 값이 광학 쪽 문턱이 얼마나 높은지를 거꾸로 알려 준다는 점이다.</p>
+<h2 id="s6"><span class="num">6</span> 광학의 문턱은 속도가 아니라 전력이고, 그 문턱은 거리를 없애 낮춘다</h2>
+<p>광학 링크 하나가 하는 일은 단순하다. 보내는 쪽에서 레이저를 켜고 끄고(1이면 켜고 0이면 끈다 — 강도 변조), 받는 쪽에서 포토다이오드가 빛을 다시 전자로 바꾼다. 레이저에는 구동 칩이, 포토다이오드 뒤에는 증폭기가 붙는다. 거리가 길면 여기에 DSP(디지털 신호 처리기)가 더 붙는다. 비트가 뒤집혀 도착하는 일이 있어서, 패리티 비트로 앞의 열 비트가 맞게 왔는지 검산하고 틀린 자리를 찾아 고친다. <span class="pn">진행자V</span>의 정리는 "이 전부가 전력을 먹는다. 이것이 정말 필요할 때만 쓰려는 가장 큰 이유"다.</p>
+<figure class="uc-fig"><p class="fig-title">플러거블이 스케일업에서 밀리는 셈</p><svg class="epoch" viewBox="0 0 520 255" role="img" aria-label="모듈 30와트가 양 끝 둘씩 5,000개면 이미 전력에 눌린 랙에 10~20% 를 더 얹는 셈이라 Nvidia 는 스케일업에 플러거블을 안 쓴다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="117.5" y="26" width="285" height="68" rx="9" class="fig-box"/>
+  <text x="260" y="54.5" text-anchor="middle" class="fig-b">플러거블 모듈 하나 30와트쯤</text>
+  <text x="260" y="77.5" text-anchor="middle" class="fig-b">양 끝 둘 × 케이블 5,000개</text>
+  <line x1="260" y1="94" x2="260" y2="114" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="24" y="116" width="472" height="68" rx="9" class="fig-box"/>
+  <text x="260" y="144.5" text-anchor="middle" class="fig-b">랙은 이미 100~200킬로와트, Kyber 는 600</text>
+  <text x="260" y="167.5" text-anchor="middle" class="fig-b">거기에 10~20% 를 더 얹는 셈</text>
+  <line x1="260" y1="184" x2="260" y2="204" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="63" y="206" width="394" height="45" rx="9" class="fig-agent"/>
+  <text x="260" y="234.5" text-anchor="middle" class="fig-b">Nvidia — 스케일업에 플러거블을 안 쓴다</text>
+</svg><figcaption>모듈 하나 30와트쯤(<span class="pn">진행자V</span>의 어림)이 양 끝 둘씩 케이블 5,000개면, 이미 100~200킬로와트를 쓰고 Kyber 세대는 600킬로와트로 이야기되는 랙에 10~20% 를 더 얹는 셈이다. 그래서 Nvidia 는 스케일업에 플러거블을 안 쓰겠다고 말해 왔다는 것이 <span class="pn">진행자V</span>의 전언이다.</figcaption></figure>
+<p>전력을 수로 보면 문턱의 높이가 나온다. 플러거블 모듈 하나가 30와트쯤이고(<span class="pn">진행자V</span>의 어림), 케이블 하나에 양 끝으로 둘이 필요하며, 케이블은 랙 하나에 5,000개다. 그런데 랙은 이미 100~200킬로와트를 쓰고 Kyber 세대는 600킬로와트로 이야기되며 앞으로는 1메가와트 랙을 만들려 한다. 이미 전력에 눌린 랙에 10~20퍼센트를 더 얹을 이유가 없어서, Nvidia 는 컨퍼런스마다 스케일업에 플러거블을 쓰지 않겠다고 분명히 말해 왔다는 것이 <span class="pn">진행자V</span>의 전언이다.</p>
+<figure class="uc-fig"><p class="fig-title">광 엔진을 스위치 칩 쪽으로 당기기</p><svg class="epoch" viewBox="0 0 520 412" role="img" aria-label="광 엔진을 스위치 칩 쪽으로 당길수록 기판 위 전기 경로가 짧아져 DSP 가 빠지고, 패키지 옆이면 에너지가 3분의 1 이 된다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">플러거블 — 스위치 앞판에 꽂는다</text>
+  <rect x="60" y="32" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="76" y="48" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="117" y="76" text-anchor="middle" class="fig-b">스위치 칩</text>
+  <line x1="158" y1="70" x2="378" y2="70" class="fig-arw"/>
+  <rect x="378" y="48" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="411" y="76" text-anchor="middle" class="fig-b">광 엔진</text>
+  <text x="260" y="126" text-anchor="middle" class="fig-hd">기판 위 긴 경로 — DSP 가 메운다</text>
+  <text x="260" y="154" text-anchor="middle" class="fig-hd">근접 패키지 광학 — 같은 보드 위</text>
+  <rect x="60" y="164" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="76" y="180" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="117" y="208" text-anchor="middle" class="fig-b">스위치 칩</text>
+  <line x1="158" y1="202" x2="280" y2="202" class="fig-arw"/>
+  <rect x="280" y="180" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="313" y="208" text-anchor="middle" class="fig-b">광 엔진</text>
+  <text x="260" y="262" text-anchor="middle" class="fig-hd">공동 패키지 광학 — 패키지 옆에</text>
+  <rect x="60" y="272" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="70" y="281" width="168" height="58" rx="7" class="fig-outside"/>
+  <rect x="76" y="288" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="117" y="316" text-anchor="middle" class="fig-b">스위치 칩</text>
+  <rect x="166" y="288" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="199" y="316" text-anchor="middle" class="fig-b">광 엔진</text>
+  <text x="260" y="366" text-anchor="middle" class="fig-hd">구리는 얇은 조각만 · 에너지 3분의 1</text>
+  <rect x="0" y="386" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="398" class="fig-lg">광 엔진</text>
+  <rect x="114.4" y="386" width="14" height="14" rx="3" class="fig-box fig-stage"/>
+  <text x="136.4" y="398" class="fig-lg">보드</text>
+  <rect x="197.6" y="386" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="219.6" y="398" class="fig-lg">패키지</text>
+</svg><figcaption>같은 보드에 같은 스위치 칩과 광 엔진을 세 번 그렸다. 플러거블은 앞판에서 스위치 실리콘까지 기판 위를 길게 지나 DSP 가 메워야 하고, 같은 보드 위가 근접 패키지 광학, CoWoS·EMIB 로 옆에 붙이면 공동 패키지 광학이다. 에너지가 3분의 1 까지 떨어진다는 것이 <span class="pn">진행자V</span>의 말이다.</figcaption></figure>
+<p>그 전력이 어디서 새는지가 해법을 정한다. 플러거블은 스위치 앞판에 꽂히는데, 앞판에서 스위치 실리콘까지 기판 위를 길게 지나야 한다. 레인당 200기가 이상에서는 이 경로가 신호에 너무 나빠서 DSP 로 메워야 하고, 그 DSP 가 전력을 먹는다. 그러면 트랜시버를 상자 밖이 아니라 안에, 스위치 가까이 두면 된다. 같은 보드 위에 올리는 것이 근접 패키지 광학이고, TSMC 의 CoWoS 나 인텔의 EMIB 같은 첨단 패키징으로 바로 옆에 붙여 버리는 것이 공동 패키지 광학(CPO)이다. 이렇게 하면 구리 구간은 칩과 광 엔진 사이의 아주 얇은 조각만 남는다.</p>
+<p>값은 3분의 1이다. <span class="pn">진행자V</span>는 "플러거블 트랜시버로 쓰던 에너지의 3분의 1까지 떨어뜨릴 수 있다"고 했고, 그래서 "갑자기 광학이 스케일업에 흥미로운 기술이 됐다". 막는 것은 신뢰성이다. 광 엔진 안의 레이저는 온도에 약해서 죽는데, 죽으면 광 엔진만 갈아 끼울 수 없어 2나노 공정으로 만든 수천 달러짜리 스위치 실리콘까지 통째로 버려야 한다. 그래서 업계가 지금 밟는 순서는 둘이다. ① 가장 잘 죽는 레이저만 랙 밖으로 빼고 나머지는 안에 둔다. ② 그래도 걸리는 것이 남으면 한 걸음 물러나 근접 패키지 광학으로 간다. 십 년쯤 이야기됐는데 아직 시장에 안 나온 이유가 이것이다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 글이 바뀌나</h2>
+<p>값의 성격부터 밝혀 둘 것이 셋이다. ① 랙 하나의 케이블 5,000개와 2킬로미터는 <span class="pn">진행자V</span>가 어디선가 읽었다고 밝힌 수다. ② 모듈 30와트는 "내 생각엔"이 붙은 어림이고, 78층도 "그렇게 알고 있다"로 말했다. ③ <span class="pn">진행자A</span>가 추론 시간 계산에 넣은 스위치 지연은 계산 방식을 보이려고 든 예시값이다. 세 수 모두 방향을 보기에는 충분하지만 모형에 그대로 넣을 수는 없다.</p>
+<p>회사 이름은 나왔지만 값이 없다. Credo 는 XAI Colossus 2 사진의 보라색 케이블 이야기로만 나왔고, Corning 은 광섬유를 만드는 데로 이름만 언급됐으며, Broadcom·Marvell 은 스케일업 이더넷 스위치를 살 수 있는 데로 나온다. 점유율도 가격도 물량도 이 회차에 없으므로 3절의 시장 크기 이야기는 케이블 수가 많다는 방향까지만 서 있다. 표준 쪽도 마찬가지다. NVLink 에 맞선 UALink 와 스케일업 이더넷(<span class="pn">진행자A</span>는 ESUN 으로 기억한다고 했다)이 아직 만들어지는 중이라는 사실만 나오고, 어느 쪽이 언제 서는지는 다루지 않았다. 스케일인은 오늘 깊이 다루지 않겠다고 <span class="pn">진행자V</span>가 명시했다.</p>
+<p>무엇이 나오면 이 글의 판단이 바뀌는지는 셋이다. ① 78층 미드플레인이 실제로 양산되면 5절이 뒤집힌다 — 구리가 다음 세대를 한 번 더 버티면 광학이 스케일업으로 들어가는 시점이 통째로 미뤄진다. 반대로 못 만들면 6절의 순서가 앞당겨진다. ② 광 엔진의 수명 수치가 나오면 6절이 정해진다. 지금 CPO 를 막는 것은 성능이 아니라 죽는 빈도인데 그 빈도가 이 회차에 없다. ③ 레인당 300기가짜리 2.4테라 세대가 실제로 서면 4절의 두 배씩 뛰는 주기가 깨진다. 세대 간격이 좁아지면 먼저 닿아 값을 더 받는 구간도 그만큼 짧아진다. <span class="pn">진행자V</span>가 회차를 닫으며 남긴 것도 결국 시점이다. 스케일업과 스케일아웃을 전부 광학으로 잇는 것이 "네트워킹의 성배이고 업계가 그리로 가고 있는데, 언제냐가 큰 물음으로 남는다. 아무도 모른다".</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-07-25-datacenter-interconnects-strategy.md">insights/semidoped/2026-07-25-datacenter-interconnects-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>

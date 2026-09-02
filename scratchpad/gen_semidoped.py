@@ -96,16 +96,34 @@ PN_RE = re.compile(r'\[\[([^\]]+)\]\]')   # 화자 줄의 [[이름]]
 HOST = {'Austin': '진행자A', 'Vik': '진행자V'}
 HOST_RE = re.compile(r"\b(Austin|Vik)(?! Lyons| Sekar|['’]s)\s?(이|가|은|는|을|를|과|와)?(?=[^A-Za-z]|$)")
 PART = {'이': '가', '은': '는', '을': '를', '과': '와'}
-NAMES = []   # 화자 줄의 [[이름]] — 본문에서 색을 입힌다. post_html 이 회차마다 채운다
+NAMES = []   # 화자 줄의 [[이름]] 중 진행자가 아닌 사람 — 본문에서 사람마다 다른 색. post_html 이 회차마다 채운다
+HOSTS = []   # 진행자 이름 — 둘이 한 색(pn). 본문의 진행자A·진행자V 도 같은 색(2026-09-02)
+PN_COLORS = 4
+
+
+def pn_cls(n):
+    return 'pn' if n in HOSTS or n not in NAMES else 'pn g%d' % (NAMES.index(n) % PN_COLORS)
+
 
 
 def host_sub(s):
     return HOST_RE.sub(lambda m: HOST[m.group(1)] + (PART.get(m.group(2), m.group(2)) if m.group(2) else ''), s)
 
 
+def _pn_sub(s, t, cls):
+    # 앞뒤 경계는 영문·숫자·태그 꺾쇠만 본다 — 한글 조사가 바로 붙는 자리(진행자A가·Barber의)도 칠해야 한다
+    return re.sub(r'(?<![A-Za-z0-9>])' + re.escape(t) + r'(?![A-Za-z0-9<])', '<span class="%s">%s</span>' % (cls, t), s)
+
+
 def name_spans(s):
-    for n in ['진행자A', '진행자V'] + NAMES:
-        s = re.sub(r'(?<![\w>])' + re.escape(n) + r'(?![\w<])', '<span class="pn">%s</span>' % n, s)
+    """본문 이름 색 — 진행자 둘(과 풀네임)은 한 색, 게스트·발표자는 사람마다 다른 색.
+    성만 쓴 자리(Barber·Yuen)도 칠한다(2026-09-02)."""
+    for n in ['진행자A', '진행자V'] + HOSTS:
+        s = _pn_sub(s, n, 'pn')
+    for n in NAMES:
+        toks = [n] + ([n.split()[-1]] if ' ' in n and len(n.split()[-1]) >= 3 else [])
+        for t in toks:
+            s = _pn_sub(s, t, pn_cls(n))
     return s
 
 
@@ -476,6 +494,7 @@ a.row:hover{background:#eef1f6}
 .who{font-size:13px;color:#4c5563;line-height:1.8}
 .who b{color:#1b1f27;margin-right:6px}
 .pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
 .pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
  padding-bottom:18px;border-bottom:1px solid #e2e5ea}
 .lane{margin:0 0 44px}
@@ -558,7 +577,9 @@ def row_html(ep):
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
     # 진행자 둘뿐인 회차는 날짜만 선다
     others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
-    who = ' · '.join(PN_RE.sub(r'<span class="pn">\1</span>', esc(x)) for x in others)
+    onames = [n for x in others for n in PN_RE.findall(x)]
+    who = ' · '.join(PN_RE.sub(lambda mm: '<span class="pn g%d">%s</span>' % (onames.index(mm.group(1)) % PN_COLORS, mm.group(1)), esc(x))
+                    for x in others)
     inner = ('<div class="rmeta"><span>%s</span>%s</div>'
              '<div class="rtitle">%s</div>'
              % (esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
@@ -581,11 +602,12 @@ def post_html(ep):
     # 화자 — 팟캐스트라 누가 말하는 사람인지가 먼저다. 요약본 frontmatter people 에
     # 「진행 … / 발표 …」로 적고, 없으면 speaker 만 낸다. 전사에 없는 소속·직함은 안 적는다
     people = m.get('people', '')
-    NAMES[:] = PN_RE.findall(people)
+    HOSTS[:] = [n for x in people.split(' / ') if x.strip().startswith('진행') for n in PN_RE.findall(x)]
+    NAMES[:] = [n for x in people.split(' / ') if not x.strip().startswith('진행') for n in PN_RE.findall(x)]
 
     def who_line(x):
         k, v = x.strip().split(' ', 1)
-        v = re.sub(r'\[\[([^\]]+)\]\]', r'<span class="pn">\1</span>', esc(v))
+        v = PN_RE.sub(lambda mm: '<span class="%s">%s</span>' % (pn_cls(mm.group(1)), mm.group(1)), esc(v))
         return '<div class="who"><b>%s</b> %s</div>' % (esc(k), v)
     who = ('<div class="whobox">%s</div>' % ''.join(who_line(x) for x in people.split(' / ') if ' ' in x.strip())) if people else ''
     out.append('<div class="pmeta">%s · %s<br>원문 <a href="%s">%s</a> · '

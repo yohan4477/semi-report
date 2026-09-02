@@ -5,7 +5,8 @@ source: https://daily.semidoped.com/p/new-episode-globalfoundries-thomas
 speaker: Thomas Barber
 org: GlobalFoundries
 channel: Semi Doped
-host: Austin
+host: Austin Lyons
+people: 진행 [[Austin Lyons]] (Semi Doped) / 게스트 [[Tom Barber]] (GlobalFoundries 통신 인프라·데이터센터 담당 부사장, 전사 라벨 Tom)
 section: link
 topic: 실리콘 포토닉스 · CPO · SiGe
 gain: 구리가 속도별로 몇 미터에서 끊기는지, 광 링크의 손실과 비트당 전력이 플러거블에서 CPO 로 가며 어떻게 줄어드는지를 수치로 짚는다. NRZ 로 되돌아가는 이유와 레이저 하나가 파이버 몇 가닥을 먹이는지까지.

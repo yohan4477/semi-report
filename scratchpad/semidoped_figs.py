@@ -697,9 +697,417 @@ def _pj_chain():
 
 PJ = '2026-07-16-picojool-yuen'
 
+
+# ══ 공용 — 같은 대상을 줄마다 (누가 무엇을 맡나 · 무엇이 어디까지 하나) ═══════════
+
+def _same_rows(stages, rows, leg, cap):
+    """같은 칸들을 줄마다 한 번씩 그리고 줄마다 켜진 칸만 짙게. 테두리는 줄마다 같다."""
+    h, gap = 44, 12
+    ws = [w_of([t]) for t in stages]
+    inner = sum(ws) + gap * (len(ws) - 1)
+    fx = (W - (inner + 32)) / 2
+    parts, y = [], 22
+    for label, on in rows:
+        parts += head(fx, y, inner + 32, label)
+        fy = y + 10
+        parts += _rect(fx, fy, inner + 32, h + 32, 'fig-outside')
+        x = fx + 16
+        for k, (t, w) in enumerate(zip(stages, ws)):
+            parts += box(x, fy + 16, w, h, [t], 'fig-agent' if k in on else 'fig-box')
+            x += w + gap
+        y = fy + h + 32 + 26
+    parts += legend(leg, y - 10)
+    return svg(y + 16, parts, cap)
+
+
+def _opt_place(left, rows, cap):
+    """플러거블·근접 패키지·공동 패키지 — 같은 보드에 같은 칩과 광 엔진을 두고 둘 사이 전기 배선 길이만 다르게."""
+    fw, h = 400.0, 44
+    fx = (W - fw) / 2
+    pw, ow = w_of([left]), w_of(['광 엔진'])
+    parts, y = [], 22
+    for label, pos, note in rows:
+        parts += head(fx, y, fw, label)
+        fy = y + 10
+        parts += _rect(fx, fy, fw, h + 32, 'fig-stage')
+        px, py = fx + 16, fy + 16
+        if pos == 'edge':
+            ox = fx + fw - 16 - ow
+        elif pos == 'board':
+            ox = fx + fw / 2 + 20
+        else:
+            ox = px + pw + 8
+        if pos == 'pkg':
+            # 패키지 테두리는 칩보다 먼저 그린다 — 뒤에 그리면 흰 채움이 칩을 덮는다
+            parts += ['  <rect x="%g" y="%g" width="%g" height="%g" rx="7" class="fig-outside"/>'
+                      % (px - 6, py - 7, (ox + ow + 6) - (px - 6), h + 14)]
+        parts += box(px, py, pw, h, [left], 'fig-box')
+        if pos != 'pkg':
+            parts += hline(px + pw, ox, py + h / 2)
+        parts += box(ox, py, ow, h, ['광 엔진'], 'fig-agent')
+        y = fy + h + 32
+        if note:
+            parts += head(fx, y + 18, fw, note)
+            y += 24
+        y += 22
+    parts += legend([('fig-agent', '광 엔진'), ('fig-stage', '보드'), ('fig-outside', '패키지')], y - 8)
+    return svg(y + 18, parts, cap)
+
+
+# ══ GlobalFoundries (2026-08-07) 전략 판 ═══════════════════════════════════
+# 값은 전사의 것만 — 100·200·400기가비트, 2·1·반 미터, 35·15~20·6dB, 20~25·10·5피코줄, 4·8·32대 1.
+
+def _gf_reach():
+    """레인 속도별 직결 구리의 도달 거리 — 막대 길이가 미터다. 점선은 랙 하나 높이(2미터)."""
+    rows = [('레인당 100기가비트', 2.0, '2미터'), ('200기가비트', 1.0, '1미터'), ('400기가비트', 0.5, '반 미터')]
+    lw = w_of([r[0] for r in rows])
+    bx = lw + 16
+    scale = (W - bx - 96) / 2.0
+    parts, y, h = [], 30, 28
+    for label, m, t in rows:
+        parts += box(0, y, lw, h, [label], 'fig-stage')
+        parts += _rect(bx, y, m * scale, h, 'fig-agent')
+        parts += ['  <text x="%g" y="%g" class="fig-e">%s</text>' % (bx + m * scale + 8, y + h / 2 + 6, t)]
+        y += h + 14
+    xr = bx + 2 * scale
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" stroke-dasharray="4 3"/>' % (xr, 22, xr, y - 6)]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">랙 하나 높이</text>' % (xr, 14)]
+    return svg(y + 4, parts, '직결 구리는 레인당 100기가비트에서 2미터, 200기가비트에서 1미터, 400기가비트에서 반 미터를 간다. 랙 하나 높이가 2미터다')
+
+
+def _gf_place():
+    return _opt_place('프로세서', [
+        ('플러거블 — 랙 가장자리', 'edge', '35dB · 20~25피코줄 · DSP 필요'),
+        ('NPO — 같은 보드 위', 'board', '15~20dB · 10피코줄 · 리니어'),
+        ('CPO — 패키지 안', 'pkg', '6dB 안팎 · 5피코줄 미만'),
+    ], '같은 보드에서 광 엔진을 프로세서 쪽으로 당길수록 전기 배선이 짧아지고 손실과 비트당 에너지가 준다')
+
+
+def _gf_pam():
+    """PAM4 와 NRZ — 같은 높이 안에 레벨 넷과 둘. 레벨 사이 틈이 곧 수신 여유다."""
+    L, R = 0.0, 272.0
+    pw, top, hh = 248.0, 44.0, 84.0
+    parts = head(L, 22, pw, 'PAM4 — 심볼당 2비트') + head(R, 22, pw, 'NRZ — 심볼당 1비트')
+    for x0, n in [(L, 4), (R, 2)]:
+        parts += _rect(x0 + 24, top - 8, pw - 48, hh + 16, 'fig-stage')
+        for k in range(n):
+            yy = top + k * (hh / (n - 1))
+            parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"/>' % (x0 + 40, yy, x0 + pw - 40, yy)]
+    parts += head(L, top + hh + 36, pw, '레벨 넷 — 틈이 좁다') + head(R, top + hh + 36, pw, '레벨 둘 — 틈이 넓다')
+    return svg(top + hh + 48, parts, 'PAM4 는 같은 진폭 안에 레벨 넷을 두어 틈이 좁고, NRZ 는 레벨 둘이라 틈이 넓다')
+
+
+def _gf_laser():
+    """레이저 하나가 먹이는 파이버 수 — 4 · 8 · 32. 작은 네모 하나가 파이버 한 가닥이다."""
+    rows = [('지금 — 4대 1', 4), ('플러거블이 가는 곳 — 8대 1', 8), ('OCI 규격 — 32대 1', 32)]
+    lw = w_of(['레이저'])
+    tw, g = 10, 3
+    parts, y = [], 24
+    for label, n in rows:
+        parts += head(0, y, W, label)
+        by = y + 10
+        parts += box(0, by, lw, 26, ['레이저'], 'fig-agent')
+        x = lw + 14
+        parts += hline(lw, x, by + 13)
+        for k in range(n):
+            parts += _rect(x + k * (tw + g), by + 6, tw, 14, 'fig-box')
+        y = by + 26 + 24
+    return svg(y - 4, parts, '레이저 하나가 지금은 파이버 넷을, 플러거블은 여덟을, OCI 규격은 서른둘을 먹인다')
+
+
+def _gf_stack():
+    """Scale 광 엔진의 세 층과 누가 만드나 — 위에서 아래로 전자 IC · 광자 IC · 마이크로 광학과 커넥터."""
+    rows = [('전자 IC', '자사 공정 또는 고객 웨이퍼', 'fig-box'),
+            ('광자 IC', '자사 100%', 'fig-agent'),
+            ('마이크로 광학 · 커넥터', '외부 제조 · 자사 조립·시험', 'fig-box')]
+    lw = w_of([r[0] for r in rows]); rw = w_of([r[1] for r in rows])
+    gap = 12
+    x0 = (W - (lw + gap + rw)) / 2
+    parts, y, h = [], 30, 44
+    for name, note, cls in rows:
+        parts += box(x0, y, lw, h, [name], cls)
+        parts += box(x0 + lw + gap, y, rw, h, [note], 'fig-stage')
+        y += h + 10
+    return svg(y + 2, parts, '전자 IC 아래 광자 IC, 그 아래 마이크로 광학과 탈착식 파이버 커넥터. 광자 IC 만 100% 자사다')
+
+
+GF = '2026-08-07-globalfoundries-barber'
+
+
+# ══ Astera Labs (2026-08-04) 전략 판 ═══════════════════════════════════════
+# 값은 전사의 것만 — 32·64·128기가전송, 2027. 눈 다이어그램은 값이 없는 그림이다.
+
+def _al_eye():
+    """눈 다이어그램 — 같은 네 궤적을 두 판에. 오른쪽은 지터로 흔들려 가운데 틈이 메워진다."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '눈이 열렸다') + head(R, 22, pw, '눈이 닫혔다')
+    ym, amp = 96.0, 40.0
+
+    def traces(x0, dx=0.0, dy=0.0, thin=False):
+        a, b = x0 + 36 + dx, x0 + pw - 36 + dx
+        xm = (a + b) / 2
+        t, bt = ym - amp + dy, ym + amp + dy
+        st = ' style="stroke-width:.9"' if thin else ''
+        out = ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"%s/>' % (a, t, b, t, st),
+               '  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"%s/>' % (a, bt, b, bt, st),
+               '  <path d="M%g %g C%g %g %g %g %g %g" class="fig-arw"%s/>' % (a, t, xm, t, xm, bt, b, bt, st),
+               '  <path d="M%g %g C%g %g %g %g %g %g" class="fig-arw"%s/>' % (a, bt, xm, bt, xm, t, b, t, st)]
+        return out
+    parts += _rect(L + 24, ym - amp - 16, pw - 48, 2 * amp + 32, 'fig-stage')
+    parts += _rect(R + 24, ym - amp - 16, pw - 48, 2 * amp + 32, 'fig-stage')
+    parts += traces(L)
+    for dx in (-18, -9, 0, 9, 18):
+        for dy in (-7, 0, 7):
+            parts += traces(R, dx, dy, thin=True)
+    return svg(ym + amp + 36, parts, '왼쪽은 0 과 1 사이 틈이 열려 있고, 오른쪽은 궤적이 시간과 전압에서 흔들려 틈이 메워졌다')
+
+
+def _al_gen():
+    """PCIe 세대 — 초당 기가전송. Gen6 가 블랙웰 세대에 들어간 것, Gen7 은 앞으로."""
+    h = 2 * LH + 22
+    parts = head(0, 22, W, '초당 기가전송')
+    row, _x = band([(['Gen5', '32'], 'fig-box'), ('>', ''),
+                    (['Gen6', '64 · PAM4'], 'fig-agent'), ('>', ''),
+                    (['Gen7', '128'], 'fig-outside')], 36, h)
+    parts += row + legend([('fig-agent', '블랙웰 세대'), ('fig-outside', '앞으로')], 36 + h + 16)
+    return svg(36 + h + 42, parts, 'PCIe Gen5 는 초당 32기가전송, Gen6 는 64 에 PAM4, Gen7 은 128 이다')
+
+
+def _al_two():
+    return _same_rows(['송신 등화', 'CTLE', 'DFE', 'CDR'],
+                      [('리드라이버 — 앞의 둘만', {0, 1}), ('리타이머 — 넷 다', {0, 1, 2, 3})],
+                      [('fig-agent', '하는 것'), ('fig-box', '안 하는 것')],
+                      '같은 네 손질 중 리드라이버는 송신 등화와 CTLE 둘만 하고, 리타이머는 넷을 다 한다')
+
+
+def _al_three():
+    """같은 신호 손질 칩이 트레이 안·케이블 안·스위치 안 세 자리에 — 제품 이름만 다르다."""
+    fw, gap = 150.0, 20.0
+    x0 = (W - (3 * fw + 2 * gap)) / 2
+    cw = w_of(['신호 손질 칩'])
+    parts, y = [], 22
+    for k, (place, prod) in enumerate([('트레이 안', 'Aries'), ('케이블 안', '타우로스'), ('스위치 안', '스코피오')]):
+        fx = x0 + k * (fw + gap)
+        parts += head(fx, y, fw, place)
+        parts += _rect(fx, y + 10, fw, 92, 'fig-stage')
+        parts += box(fx + (fw - cw) / 2, y + 26, cw, 44, ['신호 손질 칩'], 'fig-agent')
+        parts += head(fx, y + 96, fw, prod)
+    return svg(y + 112, parts, '같은 신호 손질 칩이 트레이 안(Aries)·케이블 안(타우로스)·스위치 안(스코피오)에 들어간다')
+
+
+def _al_order():
+    """AMD 와 브로드컴 — 순서. 없는 것은 점선, 갈림을 정한 한 걸음만 짙게."""
+    steps = [(['AMD 가 개방형 UALink 스위치를 찾았다', '시장에 없었다'], 'fig-outside'),
+             (['브로드컴 토마호크(이더넷)로 갔다'], 'fig-box'),
+             (['브로드컴이 UALink 컨소시엄에서 나갔다'], 'fig-agent'),
+             (['헬리오스는 UALOE 로 간다'], 'fig-box'),
+             (['2027 — UALink 스코피오·마벨이 나온다', '그때 갈아타나'], 'fig-outside')]
+    parts, y = [], 26
+    for k, (lines, cls) in enumerate(steps):
+        h = len(lines) * LH + 22
+        parts += mid(y, h, lines, cls)
+        y += h
+        if k < len(steps) - 1:
+            parts += down(W / 2, y, y + 20)
+            y += 22
+    return svg(y + 4, parts, 'UALink 스위치가 없어 브로드컴 이더넷으로 갔고, 소켓을 잡은 브로드컴이 UALink 에서 나갔다. 2027 년 UALink 스위치가 나올 때 갈아타는지가 물음이다')
+
+
+AL = '2026-08-04-astera-labs'
+
+
+# ══ 데이터센터 인터커넥트 (2026-07-25) 전략 판 ══════════════════════════════
+# 값은 전사의 것만 — 2미터, 열두 랙, 30~80킬로미터, 25·78층, 100·200·400·800기가, 1.6·2.4테라, 2023~24, 25~26.
+
+def _dc_layers():
+    """망의 층 — 안에서 밖으로. 이 회차가 다루는 셋만 실선, 안 다루는 둘은 점선."""
+    rows = [('스케일인', '트레이 안 — 오늘은 안 다룬다', 'fig-outside'),
+            ('스케일업', '랙 하나 — 2미터', 'fig-agent'),
+            ('스케일아웃', '랙과 랙 — 슈퍼팟이면 열두 랙', 'fig-box'),
+            ('스케일어크로스', '캠퍼스 사이 — 30~80킬로미터', 'fig-box'),
+            ('스케일어보브', '우주 — 위성 주파수', 'fig-outside')]
+    lw = w_of([r[0] for r in rows]); rw = w_of([r[1] for r in rows])
+    gap = 12
+    x0 = (W - (lw + gap + rw)) / 2
+    parts, y, h = [], 30, 44
+    for name, note, cls in rows:
+        parts += box(x0, y, lw, h, [name], cls)
+        parts += box(x0 + lw + gap, y, rw, h, [note], 'fig-stage')
+        y += h + 10
+    return svg(y + 2, parts, '안에서 밖으로 스케일인·업·아웃·어크로스·어보브. 이 회차는 가운데 셋을 다룬다')
+
+
+def _dc_gens():
+    """속도 세대 — 위에서 아래로. 겹쳐 가는 순서다."""
+    steps = [(['2020년대 초 — 100·200기가가 대부분'], 'fig-box'),
+             (['2023~2024 — 400기가가 떠오른다'], 'fig-box'),
+             (['800기가가 들어온다', '400기가는 25·26년에 스러진다'], 'fig-box'),
+             (['1.6테라 — 시작', '레인당 200기가 × 여덟 레인'], 'fig-agent'),
+             (['2.4테라(레인당 300기가)를 거칠 가능성'], 'fig-outside')]
+    parts, y = [], 26
+    for k, (lines, cls) in enumerate(steps):
+        h = len(lines) * LH + 22
+        parts += mid(y, h, lines, cls)
+        y += h
+        if k < len(steps) - 1:
+            parts += down(W / 2, y, y + 20)
+            y += 22
+    return svg(y + 4, parts, '100·200기가에서 400, 800, 1.6테라로 두 배씩 뛰고, 2.4테라를 한 번 거칠 가능성이 돈다')
+
+
+def _dc_layers78():
+    """PCB 층수 — 같은 폭의 판에 층을 줄로 그렸다. 줄 수가 25 와 78 이다."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '보통 PCB · 25층') + head(R, 22, pw, '다음 세대 기판 · 78층')
+    sp, bw = 1.7, 150.0
+    base = 40 + 78 * sp + 10
+    for x0, n in [(L, 25), (R, 78)]:
+        bx = x0 + (pw - bw) / 2
+        hh = n * sp + 8
+        parts += _rect(bx, base - hh, bw, hh, 'fig-stage')
+        for k in range(n):
+            yy = base - 4 - k * sp
+            parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" style="stroke-width:.8"/>' % (bx + 8, yy, bx + bw - 8, yy)]
+    return svg(base + 12, parts, '보통 PCB 는 25층, Nvidia 다음 세대 미드플레인은 78층으로 알려져 있다. 줄 하나가 층 하나다')
+
+
+def _dc_place():
+    return _opt_place('스위치 칩', [
+        ('플러거블 — 스위치 앞판에 꽂는다', 'edge', '기판 위 긴 경로 — DSP 가 메운다'),
+        ('근접 패키지 광학 — 같은 보드 위', 'board', ''),
+        ('공동 패키지 광학 — 패키지 옆에', 'pkg', '구리는 얇은 조각만 · 에너지 3분의 1'),
+    ], '광 엔진을 스위치 칩 쪽으로 당길수록 기판 위 전기 경로가 짧아져 DSP 가 빠지고, 패키지 옆이면 에너지가 3분의 1 이 된다')
+
+
+DC = '2026-07-25-datacenter-interconnects'
+
+
+def _chain_down(steps, cap):
+    """인과 사슬 — 위에서 아래로, 상자 사이는 화살표. 인과는 화살표로 잇는다(2026-09-02)."""
+    parts, y = [], 26
+    for k, (lines, cls) in enumerate(steps):
+        h = len(lines) * LH + 22
+        parts += mid(y, h, lines, cls)
+        y += h
+        if k < len(steps) - 1:
+            parts += down(W / 2, y, y + 20)
+            y += 22
+    return svg(y + 4, parts, cap)
+
+
+def _gf_wafer():
+    """200mm → 300mm — 같은 꼴의 원 둘, 지름 비는 전사의 50%. 사이 화살표가 인과다."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '전 — 200mm 웨이퍼') + head(R, 22, pw, '후 — 300mm 웨이퍼')
+    cy, r1, r2 = 122.0, 50.0, 75.0
+    parts += ['  <circle cx="%g" cy="%g" r="%g" class="fig-box"/>' % (L + pw / 2, cy, r1)]
+    parts += ['  <circle cx="%g" cy="%g" r="%g" class="fig-agent"/>' % (R + pw / 2, cy, r2)]
+    parts += arrow(L + pw / 2 + r1 + 12, R + pw / 2 - r2 - 12, cy)
+    parts += head(0, cy + r2 + 28, W, '지름이 50% 커지면 웨이퍼당 다이는 2.25배')
+    return svg(cy + r2 + 40, parts, '200mm 에서 300mm 로 옮기면 지름이 50% 커지고 웨이퍼당 다이는 그 제곱인 2.25배가 된다')
+
+
+def _gf_chain():
+    return _chain_down([(['레인 속도가 두 배 오른다'], 'fig-box'),
+                        (['구리가 가는 거리가 절반이 된다'], 'fig-box'),
+                        (['스위치를 랙 가운데로 내린다 — 한 번만 쓰는 수'], 'fig-box'),
+                        (['랙은 4분의 1로 못 줄인다', '광으로 갈 수밖에 없다'], 'fig-agent')],
+                       '속도가 오르면 구리 거리가 줄고, 스위치를 가운데로 내리는 수는 한 번뿐이라 그다음은 광이다')
+
+
+def _al_chain():
+    return _chain_down([(['속도가 한 세대 오른다'], 'fig-box'),
+                        (['눈을 열어 둘 수 있는 거리가 준다'], 'fig-box'),
+                        (['보드 크기는 그대로라', '비어 있던 자리에 칩 하나가 들어간다'], 'fig-agent'),
+                        (['부품 수요가 GPU 수요와 따로 는다'], 'fig-box')],
+                       '속도가 오르면 눈을 열어 둘 거리가 줄고, 보드는 그대로라 칩 자리가 새로 생긴다')
+
+
+def _al_nic():
+    """GPU 와 NIC — 레퍼런스(멀다) · 블랙웰 계획(붙인다) · 실제 배치(다시 멀어진다). 같은 두 칩, 사이만 다르다."""
+    fw, h = 400.0, 44
+    fx = (W - fw) / 2
+    gw, nw, rw = w_of(['GPU']), w_of(['NIC']), w_of(['리타이머'])
+    rows = [('레퍼런스 설계 — 멀다', 'far', '리타이머가 든다'),
+            ('블랙웰 계획 — NIC 을 GPU 에 붙인다', 'near', '리드라이버로 충분하지 않겠나 — 걱정'),
+            ('실제 배치 — 커스텀으로 다시 멀어진다', 'far', '리타이머가 남는다')]
+    parts, y = [], 22
+    for label, pos, note in rows:
+        parts += head(fx, y, fw, label)
+        fy = y + 10
+        parts += _rect(fx, fy, fw, h + 32, 'fig-stage')
+        gx, py = fx + 16, fy + 16
+        parts += box(gx, py, gw, h, ['GPU'], 'fig-box')
+        if pos == 'far':
+            nx = fx + fw - 16 - nw
+            rx = (gx + gw + nx) / 2 - rw / 2
+            parts += hline(gx + gw, rx, py + h / 2) + hline(rx + rw, nx, py + h / 2)
+            parts += box(rx, py, rw, h, ['리타이머'], 'fig-agent')
+        else:
+            nx = gx + gw + 8
+        parts += box(nx, py, nw, h, ['NIC'], 'fig-box')
+        y = fy + h + 32
+        parts += head(fx, y + 18, fw, note)
+        y += 46
+    return svg(y + 2, parts, '같은 GPU 와 NIC 을 세 번 그렸다. 멀면 사이에 리타이머가 들고, 붙이면 빠질 것 같았는데, 실제 배치가 갈라져 다시 멀어졌다')
+
+
+def _dc_power():
+    return _chain_down([(['플러거블 모듈 하나 30와트쯤', '양 끝 둘 × 케이블 5,000개'], 'fig-box'),
+                        (['랙은 이미 100~200킬로와트, Kyber 는 600', '거기에 10~20% 를 더 얹는 셈'], 'fig-box'),
+                        (['Nvidia — 스케일업에 플러거블을 안 쓴다'], 'fig-agent')],
+                       '모듈 30와트가 양 끝 둘씩 5,000개면 이미 전력에 눌린 랙에 10~20% 를 더 얹는 셈이라 Nvidia 는 스케일업에 플러거블을 안 쓴다')
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (GF, 'strategy'): [
+        ('1.|Barber가 이 회차에서', '레인 속도별 구리가 가는 거리', _gf_reach(),
+         '막대 길이가 미터다. 레인당 100기가비트에서 2미터, 200기가비트에서 1미터, 400기가비트에서 반 미터(L81). 점선이 랙 하나 높이라, 200기가비트부터 스위치를 랙 가운데로 내려야 하고 400기가비트에서는 그 수도 안 먹힌다.'),
+        ('1.|문제는 이 대응이', '속도가 오르면 왜 광으로 가나', _gf_chain(),
+         '레인 속도가 두 배 오르면 구리가 가는 거리가 절반이 되고, 스위치를 랙 가운데로 내리는 수는 랙 높이가 바닥이라 한 번뿐이다(L81). 그다음은 광이다.'),
+        ('2.|수요가 저렇게 서면', '200mm 에서 300mm 로 — 전과 후', _gf_wafer(),
+         '같은 꼴의 웨이퍼 둘이다. 지름이 50% 커지면 면적은 그 제곱이라 웨이퍼당 다이가 2.25배 나오고, 같은 장수를 돌려도 물량이 두 배 넘게 나온다(L73). 경쟁사 대부분은 아직 200mm 에 있다.'),
+        ('3.|손실이 어디서 나는지가', '광 엔진을 어디까지 안으로 들이나', _gf_place(),
+         '같은 보드에 같은 프로세서와 광 엔진을 세 번 그렸다. 다른 것은 둘 사이 전기 배선 길이뿐이다. 플러거블 약 35dB·20~25피코줄, NPO 15~20dB·10피코줄쯤, CPO 6dB 안팎(다른 자리에서는 3dB)·5피코줄 미만(L91~L97). 손실이 줄면 그것을 메우던 DSP 가 빠진다.'),
+        ('5.|바꾼 방향이 뒤로다', 'PAM4 와 NRZ — 레벨 사이 틈', _gf_pam(),
+         '같은 진폭 안에 PAM4 는 레벨 넷을, NRZ 는 둘을 둔다(L139·L141). 틈이 좁으면 수신에 전력을 많이 쓰거나 잡음을 극도로 낮춰야 한다. OCI 가 NRZ 로 돌아간 대신 속도를 50기가헤르츠로 낮추고 파장 넷으로 200기가비트를 맞춘다. 값은 레벨 수뿐이다.'),
+        ('5.|레이저 쪽 셈도', '레이저 하나가 먹이는 파이버 수', _gf_laser(),
+         '작은 네모 하나가 파이버 한 가닥이다. 지금 4대 1, 플러거블은 8대 1로 가는 중, OCI 규격은 32대 1까지(L155). 파장을 늘려도 레이저 수는 그만큼 늘지 않는다.'),
+        ('6.|Scale 플랫폼은', 'Scale 광 엔진의 세 층과 누가 만드나', _gf_stack(),
+         '위에서 아래로 전자 IC·광자 IC·마이크로 광학과 탈착식 파이버 커넥터(L165). 광자 IC 만 100% 자사이고, 전자 IC 는 자사 공정이거나 고객이 3나노·2나노 웨이퍼를 들고 오면 조립·시험만, 마이크로 광학은 외부 제조에 조립·시험만 자사다(L169).'),
+    ],
+    (AL, 'strategy'): [
+        ('1.|얼마나 빠른지가', 'PCIe 세대와 초당 전송 수', _al_gen(),
+         'Gen5 는 초당 32기가전송, Gen6 는 64기가전송에 PAM4, Gen7 은 128기가전송이다(L53·L81). 블랙웰 세대에 들어간 것은 Gen6 제품이었을 것이라고 Vik 은 봤다(L143).'),
+        ('1.|이 다섯이 한 그림으로', '눈 다이어그램 — 열린 눈과 닫힌 눈', _al_eye(),
+         '같은 네 궤적을 두 판에 그렸다. 왼쪽은 0 으로 읽을 아래와 1 로 읽을 위 사이에 틈이 있고(L73·L75), 오른쪽은 궤적이 시간(지터)과 전압에서 흔들려 그 틈이 메워졌다. 값은 없는 그림이다 — 파형을 수천 장 겹쳐 그리면 이 모양이 된다는 것이 Austin 의 설명이다(L77).'),
+        ('1.|업계에 보이는 규칙은', '속도가 오르면 왜 칩 자리가 생기나', _al_chain(),
+         '속도가 한 세대 오르면 눈을 열어 둘 수 있는 거리가 줄고(L85), 보드 크기는 그대로라 원래 비어 있던 자리에 칩 하나가 들어간다. 부품 수요가 GPU 수요와 따로 늘어나는 구조다.'),
+        ('2.|리드라이버는 ①②만', '리드라이버와 리타이머 — 같은 네 손질 중 무엇을 하나', _al_two(),
+         '같은 네 칸을 두 줄로 그렸다. 리드라이버는 송신 등화와 CTLE 둘만, 리타이머는 DFE 와 CDR 까지 넷을 다 한다(L115·L119). 뒤의 둘이 있어야 뭉개진 비트를 제자리에 다시 끼운다.'),
+        ('4.|이 잠금이 깨질 뻔한', 'GPU 와 NIC 사이 — 계획과 실제', _al_nic(),
+         '같은 GPU 와 NIC 을 세 번 그렸다. 레퍼런스 설계에서는 멀어서 리타이머가 들고, 블랙웰에서 붙이겠다고 하자 리드라이버로 충분하지 않겟느냐는 걱정이 돌았는데(L143), 레퍼런스 그대로 쓴 곳이 적고 커스텀 배치가 많아 거리가 다시 늘었다(L147).'),
+        ('5.|나머지 제품군은', '한 기술을 세 자리에', _al_three(),
+         '같은 신호 손질 칩이 트레이 안(Aries)·케이블 안(타우로스)·스위치 안(스코피오)에 들어간다(L157·L173). 값을 제대로 받는 곳은 경로 배정을 얹어야 하는 스위치 하나라는 것이 이 글의 읽기다(L161).'),
+        ('6.|읽을 것은 순서다', 'AMD 와 브로드컴 — 순서', _al_order(),
+         'UALink 스위치가 시장에 없어 AMD 가 브로드컴 토마호크로 갔고, 소켓을 잡은 브로드컴이 UALink 컨소시엄에서 나갔다(L167). 헬리오스는 UALOE 로 간다(L169). 2027 년쯤 UALink 스코피오와 마벨 제품이 나올 때 이미 이더넷으로 들어간 회사들이 갈아타는지가 Vik 의 물음이다(L167).'),
+    ],
+    (DC, 'strategy'): [
+        ('2.|데이터센터 망은 세 층이다', '망의 층 — 안에서 밖으로', _dc_layers(),
+         '트레이 안의 스케일인, 랙 하나(2미터)의 스케일업, 슈퍼팟이면 열두 랙을 가로지르는 스케일아웃, 30~80킬로미터의 스케일어크로스, 위성으로 잇는 스케일어보브(L43~L59). 점선 둘은 오늘 안 다룬다고 Vik 이 선을 그은 것이다.'),
+        ('4.|속도 세대는 겹쳐서', '속도 세대 — 겹쳐서 간다', _dc_gens(),
+         'Vik 이 그래프를 읽어 준 순서다(L153). 1.6테라는 합산 대역폭이라 레인당 200기가 여덟 레인일 수 있고(L155), 다음이 3.2 가 아니라 레인당 300기가짜리 2.4테라일 가능성이 돈다는 것은 Vik 의 전언이다(L157).'),
+        ('5.|그런데 속도가 오르면', 'PCB 층수 — 25층과 78층', _dc_layers78(),
+         '줄 하나가 층 하나다. 보통의 데이터센터 PCB 는 25층쯤, Nvidia 다음 세대 미드플레인은 78층으로 알려져 있다(L121). 구리를 지키는 값이 이 층수로 나온다는 것이 이 글의 읽기다.'),
+        ('6.|전력을 수로 보면', '플러거블이 스케일업에서 밀리는 셈', _dc_power(),
+         '모듈 하나 30와트쯤(Vik 의 어림)이 양 끝 둘씩 케이블 5,000개면, 이미 100~200킬로와트를 쓰고 Kyber 세대는 600킬로와트로 이야기되는 랙에 10~20% 를 더 얹는 셈이다(L145). 그래서 Nvidia 는 스케일업에 플러거블을 안 쓰겠다고 말해 왔다는 것이 Vik 의 전언이다.'),
+        ('6.|그 전력이 어디서 새는지가', '광 엔진을 스위치 칩 쪽으로 당기기', _dc_place(),
+         '같은 보드에 같은 스위치 칩과 광 엔진을 세 번 그렸다. 플러거블은 앞판에서 스위치 실리콘까지 기판 위를 길게 지나 DSP 가 메워야 하고(L159), 같은 보드 위가 근접 패키지 광학, CoWoS·EMIB 로 옆에 붙이면 공동 패키지 광학이다(L163). 에너지가 3분의 1 까지 떨어진다는 것이 Vik 의 말이다(L167).'),
+    ],
     (CDS, 'strategy'): [
         ('4.|그런데 밀려나지도', '메모리 계층 셋', _cds_layers(),
          'Vik 이 정리한 계층이다(L69). SRAM 은 가장 빠르지만 트랜지스터라 면적을 많이 먹어 비싸고 용량이 모자란다. HBM 은 DRAM 을 3D 로 쌓아 칩 가까이 붙여 대역폭을 낸다. '

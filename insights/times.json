@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-02",
-"index_fingerprint": "874cd111dd23f89975f2a769ac39c6a94d630df7",
-"lines": 3157
+"index_fingerprint": "253e371155c20d454c0f455700311af6de44b06d",
+"lines": 3255
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6609,22 +6609,22 @@
 "t": "2028",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L24": {
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L25": {
 "how": "계산",
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L47": {
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L48": {
 "how": "명시",
 "t": "2008",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L54": {
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L55": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L66": {
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L67": {
 "how": "명시",
 "span": [
 "2026",
@@ -6633,12 +6633,12 @@
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L73": {
+"content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L74": {
 "how": "명시",
 "t": "2008",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L18": {
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L19": {
 "how": "명시",
 "span": [
 "2024",
@@ -6647,32 +6647,32 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L39": {
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L40": {
 "how": "명시",
 "t": "2024",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L49": {
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L50": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L68": {
+"content/understanding/Semi Doped/2026-08-04-astera-labs.md#L69": {
 "how": "명시",
 "t": "2024",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-08-11-china-optical-ban.md#L76": {
+"content/understanding/Semi Doped/2026-08-11-china-optical-ban.md#L77": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L23": {
+"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L24": {
 "how": "명시",
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L53": {
+"content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L54": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
@@ -9352,6 +9352,564 @@
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L9": {
 "how": "명시",
 "t": "2024",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-08 ​Professional 영어, 이제 옵션이 아닌 '생존 도구 [8096].md#L40": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L12": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L16": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L21": {
+"how": "계산",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L26": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L30": {
+"how": "계산",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L31": {
+"how": "계산",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md#L44": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-16 8,000억의 시계는 흐른다  IMM PE와 한샘, 엑시트는 가능한가 [0592].md#L13": {
+"how": "명시",
+"span": [
+"2021",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-16 8,000억의 시계는 흐른다  IMM PE와 한샘, 엑시트는 가능한가 [0592].md#L17": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-16 8,000억의 시계는 흐른다  IMM PE와 한샘, 엑시트는 가능한가 [0592].md#L26": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-17 1등 한샘은 왜 1%의 이익률에 갇혔을까 [8881].md#L13": {
+"how": "명시",
+"span": [
+"2021",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-17 1등 한샘은 왜 1%의 이익률에 갇혔을까 [8881].md#L48": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-18 ​ 졸리비의 K-푸드 쇼핑은 계속된다 [1936].md#L20": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-02-18 ​ 졸리비의 K-푸드 쇼핑은 계속된다 [1936].md#L28": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-02-22 🍦네슬레의 하겐다즈 매각, ‘완전한 이별’일까 ‘영리한 진화’일까 [7584].md#L20": {
+"how": "명시",
+"t": "2013",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-22 🍦네슬레의 하겐다즈 매각, ‘완전한 이별’일까 ‘영리한 진화’일까 [7584].md#L34": {
+"how": "명시",
+"t": "2019",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-23 일론 머스크는 왜 그토록 'X'라는 한 글자에 집착하는 걸까 [1952].md#L14": {
+"how": "명시",
+"t": "1999",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-23 일론 머스크는 왜 그토록 'X'라는 한 글자에 집착하는 걸까 [1952].md#L18": {
+"how": "명시",
+"t": "1999",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-24 현대자동차의 롯데렌탈 인수說 [7648].md#L17": {
+"how": "명시",
+"span": [
+"2017",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-02-24 현대자동차의 롯데렌탈 인수說 [7648].md#L40": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-02-26 K-뷰티의 심장 코스맥스, 이탈리아를 유럽시장 진출의 교두보로 삼다 🇮🇹🇰🇷 [3312].md#L47": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-03 LG생활건강은 토리든을 인수해야 하는가  — K뷰티 지각변동과 대기업의 생존 전략 [8912].md#L17": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-03 LG생활건강은 토리든을 인수해야 하는가  — K뷰티 지각변동과 대기업의 생존 전략 [8912].md#L30": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-04 탕비실 간식을 채워주던 스타트업의 M&A 여정 [4624].md#L18": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-04 탕비실 간식을 채워주던 스타트업의 M&A 여정 [4624].md#L21": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L12": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L18": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L20": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-06 분식회계로 상폐된 회사가 미국 스페셜티 커피의 아이콘을 인수했습니다 [4561].md#L18": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-06 분식회계로 상폐된 회사가 미국 스페셜티 커피의 아이콘을 인수했습니다 [4561].md#L22": {
+"how": "명시",
+"span": [
+"2022",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-08 고등학교 1년 유급하고 미국으로 교환학생 간 썰 [0544].md#L18": {
+"how": "명시",
+"t": "2004",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-09 🚨 벼랑 끝에 선 컬리, 그리고 기적 같은 반전 [3136].md#L46": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-10 The company delisted for accounting fraud just bou [9264].md#L18": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-10 최강의 무기가 짐이 되는 순간 [6944].md#L24": {
+"how": "명시",
+"t": "2007",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-11 글로벌 사모펀드는 왜 지금 한국 상장사를 사들이고 있는가 [7696].md#L16": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-11 글로벌 사모펀드는 왜 지금 한국 상장사를 사들이고 있는가 [7696].md#L19": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-11 글로벌 사모펀드는 왜 지금 한국 상장사를 사들이고 있는가 [7696].md#L30": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-12 샤킬오닐  前 공룡 센터   現 투자계의 티라노사우루스 [0576].md#L19": {
+"how": "명시",
+"t": "1999",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-12 샤킬오닐  前 공룡 센터   現 투자계의 티라노사우루스 [0576].md#L31": {
+"how": "명시",
+"t": "1999",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-13 ✈️ 하나투어가 와그(WAUG)에 투자했습니다 [1280].md#L18": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-13 ✈️ 하나투어가 와그(WAUG)에 투자했습니다 [1280].md#L21": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-13 ✈️ 하나투어가 와그(WAUG)에 투자했습니다 [1280].md#L27": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-16 황제주의 몰락 그리고 생존을 위한 몸부림 [0832].md#L21": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-19 🏦 교보생명 × SBI저축은행  20년 인연이 만든 9,000억짜리 빅딜 [4896].md#L19": {
+"how": "명시",
+"t": "2013",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-19 🏦 교보생명 × SBI저축은행  20년 인연이 만든 9,000억짜리 빅딜 [4896].md#L20": {
+"how": "명시",
+"t": "2007",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-20 BTS is back — all seven members — after nearly fou [4992].md#L21": {
+"how": "명시",
+"t": "2012",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 Bonchon is on sales [2352].md#L17": {
+"how": "명시",
+"span": [
+"2002",
+"2006"
+],
+"t": "2006",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 Bonchon is on sales [2352].md#L18": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 Bonchon is on sales [2352].md#L19": {
+"how": "명시",
+"t": "2016",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 Bonchon is on sales [2352].md#L29": {
+"how": "명시",
+"t": "2006",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md#L17": {
+"how": "명시",
+"span": [
+"2002",
+"2006"
+],
+"t": "2006",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md#L18": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md#L19": {
+"how": "명시",
+"t": "2016",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md#L29": {
+"how": "명시",
+"t": "2006",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-24 피자헛이 쏘아올린 작지 않은 공, 나비효과되어 돌아올까 [2752].md#L17": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-25 Estée Lauder is offloading Dr. Jart+ [9744].md#L20": {
+"how": "명시",
+"span": [
+"2010",
+"2019"
+],
+"t": "2019",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-25 K-뷰티 전성시대에, K-뷰티 원조 브랜드가 손절당할까 [7041].md#L19": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-03-26 MSC × 장금마리타임 JV — 비즈니스 딜인가, 승계 포석인가 [3952].md#L20": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-26 MSC × 장금마리타임 JV — 비즈니스 딜인가, 승계 포석인가 [3952].md#L52": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-03-29 영어 강박관념을 내려놓기까지 [6272].md#L17": {
+"how": "계산",
+"t": "2029",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-03-30 우리가 몰랐던 Red Bull 이야기 🐂 - 上 [2000].md#L18": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L12": {
+"how": "명시",
+"t": "2013",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L16": {
+"how": "명시",
+"t": "2013",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-06 🚗 KG그룹이 케이카를 품었습니다 [5792].md#L19": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-06 🚗 KG그룹이 케이카를 품었습니다 [5792].md#L35": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md#L16": {
+"how": "계산",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md#L17": {
+"how": "명시",
+"span": [
+"1997",
+"1999"
+],
+"t": "1999",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md#L19": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md#L22": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md#L33": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-15 F&F가 디퓨저 회사를 샀습니다. 그 이면에 있는 질문 [2096].md#L19": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-15 F&F가 디퓨저 회사를 샀습니다. 그 이면에 있는 질문 [2096].md#L21": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-20 🎮 배틀그라운드로 번 돈, 성수동에 묻는 게 최선일까 [7152].md#L19": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-04-20 🎮 배틀그라운드로 번 돈, 성수동에 묻는 게 최선일까 [7152].md#L20": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-05-11 USB 팔던 그 회사, 1년 만에 주가가 40배 올랐습니다 [4368].md#L13": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-05-11 USB 팔던 그 회사, 1년 만에 주가가 40배 올랐습니다 [4368].md#L20": {
+"how": "명시",
+"span": [
+"2016",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-05-11 USB 팔던 그 회사, 1년 만에 주가가 40배 올랐습니다 [4368].md#L28": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-05-12 삼일PwC PE Newsletter - 2026년 4월호 [5008].md#L16": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-05-20 AI가 전기를 먹는다 — 데이터센터 전력 밸류체인과 한국 기업들 [8528].md#L19": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-05-20 AI가 전기를 먹는다 — 데이터센터 전력 밸류체인과 한국 기업들 [8528].md#L38": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md#L24": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md#L32": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md#L33": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-06-01 국민성장펀드, 제대로 알고 보자 [4608].md#L16": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-06-10 같은 위기, 다른 정의  코닥의 파산과 후지필름의 생존 [6432].md#L21": {
+"how": "명시",
+"span": [
+"2000",
+"2007"
+],
+"t": "2007",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-06-10 같은 위기, 다른 정의  코닥의 파산과 후지필름의 생존 [6432].md#L32": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L12": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L18": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L3": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L44": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/한주성/2026-07-06 피자헛은 왜 팔렸나  어제의 강점이 내일의 부채가 되는 순간 [8273].md#L18": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-07-13 인수인 척하지 않는 인수 — 애퀴하이어의 시대 [4752].md#L19": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-07-13 인수인 척하지 않는 인수 — 애퀴하이어의 시대 [4752].md#L20": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-07-21 우버, 배민 인수 … 주주만 바뀐 딜 [2416].md#L17": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/한주성/2026-08-26 K-Beauty의 진짜 승자는 브랜드가 아닐 수도 있다 [4496].md#L17": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-08-26 K-Beauty의 진짜 승자는 브랜드가 아닐 수도 있다 [4496].md#L18": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/한주성/2026-08-26 K-Beauty의 진짜 승자는 브랜드가 아닐 수도 있다 [4496].md#L28": {
+"how": "명시",
+"t": "2025",
 "tense": "회고"
 },
 "content/understanding/회계사/[240627] 삼성전자와 SK하이닉스의 PBR비교의 시사점 - 엘곰.md#L17": {

@@ -1,0 +1,418 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>죽어가는 신호를 다시 세우는 칩 — 리타이머 한 종으로 잡은 자리 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>죽어가는 신호를 다시 세우는 칩 — 리타이머 한 종으로 잡은 자리</h1><div class="pmeta">2026-08-04 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/semi-doped-20260729-astera-labs">https://daily.semidoped.com/p/semi-doped-20260729-astera-labs</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-04-astera-labs.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">속도를 한 세대 올릴 때마다 서버 보드 안쪽에 고치는 부품 자리가 새로 생기고, 그 자리를 먼저 밟은 쪽이 스위치까지 간다</div><p>2024년 3월에 주당 36달러로 상장한 회사가 이번 6월에 499달러가 되어 나스닥100에 들어갔고, 전년 대비 93% 성장에 매출총이익률 76%를 냈다. 만드는 것은 GPU도 메모리도 광학 부품도 아니다. 서버 보드 위에서 반쯤 죽은 고속 신호를 중간에 붙잡아 깨끗하게 다시 내보내는 칩이다. Semi Doped 진행자 둘 — <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>) — 이 이 회차에서 짚은 것은 아스테라 랩스 한 회사의 이야기지만, 그 안에 업계 전체에 걸리는 규칙이 몇 개 들어 있다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">속도를 한 세대 올릴 때마다 서버 안쪽에 부품 자리가 새로 생긴다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">확성기와 받아쓰는 사람</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">부품으로 본 회사와 시스템으로 본 회사</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">설계에 들어가면 왜 안 빠지나, 그 잠금이 깨질 뻔한 자리</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">신호를 손질하는 기술로 스위치까지 갈 수 있나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">스위치를 가진 쪽이 표준의 운명을 정한다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 무엇이 나오면 이 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 속도를 한 세대 올릴 때마다 서버 안쪽에 부품 자리가 새로 생긴다</h2>
+<p><span class="pn">진행자V</span>가 먼저 잡은 것은 다들 안 보던 구간이다. 트레이 밖의 연결은 스케일업·스케일아웃으로 늘 다뤘는데, 트레이 안에서 GPU가 CPU나 NIC(네트워크 인터페이스 카드)와 어떻게 붙는지는 다룬 적이 없다는 것이다. 거리는 짧다 — 트레이가 폭 2피트, 깊이 4피트쯤이다. 그런데도 문제가 되는 이유는 그 짧은 거리를 PCB(인쇄회로기판) 위의 구리 배선이 잇기 때문이고, 구리는 고속 신호를 잘 못 나른다.</p>
+<figure class="uc-fig"><p class="fig-title">PCIe 세대와 초당 전송 수</p><svg class="epoch" viewBox="0 0 520 146" role="img" aria-label="PCIe Gen5 는 초당 32기가전송, Gen6 는 64 에 PAM4, Gen7 은 128 이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">초당 기가전송</text>
+  <rect x="0" y="36" width="66" height="68" rx="9" class="fig-box"/>
+  <text x="33" y="64.5" text-anchor="middle" class="fig-b">Gen5</text>
+  <text x="33" y="87.5" text-anchor="middle" class="fig-b">32</text>
+  <line x1="70" y1="70" x2="184" y2="70" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="188" y="36" width="144" height="68" rx="9" class="fig-agent"/>
+  <text x="260" y="64.5" text-anchor="middle" class="fig-b">Gen6</text>
+  <text x="260" y="87.5" text-anchor="middle" class="fig-b">64 · PAM4</text>
+  <line x1="336" y1="70" x2="450" y2="70" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="454" y="36" width="66" height="68" rx="9" class="fig-outside"/>
+  <text x="487" y="64.5" text-anchor="middle" class="fig-b">Gen7</text>
+  <text x="487" y="87.5" text-anchor="middle" class="fig-b">128</text>
+  <rect x="0" y="120" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="132" class="fig-lg">블랙웰 세대</text>
+  <rect x="145.6" y="120" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="167.6" y="132" class="fig-lg">앞으로</text>
+</svg><figcaption>Gen5 는 초당 32기가전송, Gen6 는 64기가전송에 PAM4, Gen7 은 128기가전송이다. 블랙웰 세대에 들어간 것은 Gen6 제품이었을 것이라고 <span class="pn">진행자V</span>는 봤다.</figcaption></figure>
+<p>얼마나 빠른지가 왜 어려운지를 그대로 말해 준다. PCIe Gen5는 초당 32기가전송이라 심볼 하나가 31.25피코초 간격으로 지나가고, Gen6는 64기가전송에 PAM4(전압을 네 단계로 갈라 심볼 하나에 두 비트를 싣는 변조)로 가며, 앞으로 Gen7은 128기가전송이다. 구리 위에서 이 신호가 무너지는 방식은 다섯이다. ① 보낸 세기를 잃는 감쇠 ② 끝에서 되튀는 반사 ③ 옆 배선이 끼어드는 크로스토크 ④ 앞뒤 심볼이 서로 번져 겹치는 심볼 간 간섭 ⑤ 신호가 기다리는 시점에 안 오는 지터다. <span class="pn">진행자V</span>는 심볼 간 간섭은 어느 정도 결정적이라 알아낼 수 있을 것 같다고 했고, 지터는 무작위라 손쓸 데가 적다고 갈랐다.</p>
+<figure class="uc-fig"><p class="fig-title">눈 다이어그램 — 열린 눈과 닫힌 눈</p><svg class="epoch" viewBox="0 0 520 172" role="img" aria-label="왼쪽은 0 과 1 사이 틈이 열려 있고, 오른쪽은 궤적이 시간과 전압에서 흔들려 틈이 메워졌다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">눈이 열렸다</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">눈이 닫혔다</text>
+  <rect x="24" y="40" width="200" height="112" rx="4" class="fig-stage"/>
+  <rect x="296" y="40" width="200" height="112" rx="4" class="fig-stage"/>
+  <line x1="36" y1="56" x2="212" y2="56" class="fig-arw"/>
+  <line x1="36" y1="136" x2="212" y2="136" class="fig-arw"/>
+  <path d="M36 56 C124 56 124 136 212 136" class="fig-arw"/>
+  <path d="M36 136 C124 136 124 56 212 56" class="fig-arw"/>
+  <line x1="290" y1="49" x2="466" y2="49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="290" y1="129" x2="466" y2="129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 49 C378 49 378 129 466 129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 129 C378 129 378 49 466 49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="290" y1="56" x2="466" y2="56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="290" y1="136" x2="466" y2="136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 56 C378 56 378 136 466 136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 136 C378 136 378 56 466 56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="290" y1="63" x2="466" y2="63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="290" y1="143" x2="466" y2="143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 63 C378 63 378 143 466 143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M290 143 C378 143 378 63 466 63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="49" x2="475" y2="49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="129" x2="475" y2="129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 49 C387 49 387 129 475 129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 129 C387 129 387 49 475 49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="56" x2="475" y2="56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="136" x2="475" y2="136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 56 C387 56 387 136 475 136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 136 C387 136 387 56 475 56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="63" x2="475" y2="63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="299" y1="143" x2="475" y2="143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 63 C387 63 387 143 475 143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M299 143 C387 143 387 63 475 63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="49" x2="484" y2="49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="129" x2="484" y2="129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 49 C396 49 396 129 484 129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 129 C396 129 396 49 484 49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="56" x2="484" y2="56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="136" x2="484" y2="136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 56 C396 56 396 136 484 136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 136 C396 136 396 56 484 56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="63" x2="484" y2="63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="308" y1="143" x2="484" y2="143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 63 C396 63 396 143 484 143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M308 143 C396 143 396 63 484 63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="49" x2="493" y2="49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="129" x2="493" y2="129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 49 C405 49 405 129 493 129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 129 C405 129 405 49 493 49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="56" x2="493" y2="56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="136" x2="493" y2="136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 56 C405 56 405 136 493 136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 136 C405 136 405 56 493 56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="63" x2="493" y2="63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="317" y1="143" x2="493" y2="143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 63 C405 63 405 143 493 143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M317 143 C405 143 405 63 493 63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="49" x2="502" y2="49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="129" x2="502" y2="129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 49 C414 49 414 129 502 129" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 129 C414 129 414 49 502 49" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="56" x2="502" y2="56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="136" x2="502" y2="136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 56 C414 56 414 136 502 136" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 136 C414 136 414 56 502 56" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="63" x2="502" y2="63" class="fig-arw" style="stroke-width:.9"/>
+  <line x1="326" y1="143" x2="502" y2="143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 63 C414 63 414 143 502 143" class="fig-arw" style="stroke-width:.9"/>
+  <path d="M326 143 C414 143 414 63 502 63" class="fig-arw" style="stroke-width:.9"/>
+</svg><figcaption>같은 네 궤적을 두 판에 그렸다. 왼쪽은 0 으로 읽을 아래와 1 로 읽을 위 사이에 틈이 있고, 오른쪽은 궤적이 시간(지터)과 전압에서 흔들려 그 틈이 메워졌다. 값은 없는 그림이다 — 파형을 수천 장 겹쳐 그리면 이 모양이 된다는 것이 <span class="pn">진행자A</span>의 설명이다.</figcaption></figure>
+<p>이 다섯이 한 그림으로 모이는 자리가 눈 다이어그램이다. <span class="pn">진행자V</span>는 심볼 하나가 지나가는 시간 구간에 0으로 읽을 아래쪽과 1로 읽을 위쪽 사이의 빈 틈이 있어야 한다고 했고, <span class="pn">진행자A</span>는 그 구간의 파형을 수천 장 겹쳐 그리면 그것이 눈 모양으로 보인다고 풀었다. 눈이 닫히면 무엇을 받았는지 알 수 없다. 그래서 트레이 안의 문제는 한 문장으로 줄어든다. "아스테라 랩스가 하는 일은 컴퓨트 트레이 안에서 눈을 열어 두는 것이다".</p>
+<figure class="uc-fig"><p class="fig-title">속도가 오르면 왜 칩 자리가 생기나</p><svg class="epoch" viewBox="0 0 520 299" role="img" aria-label="속도가 오르면 눈을 열어 둘 거리가 줄고, 보드는 그대로라 칩 자리가 새로 생긴다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="164.5" y="26" width="191" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="54.5" text-anchor="middle" class="fig-b">속도가 한 세대 오른다</text>
+  <line x1="260" y1="71" x2="260" y2="91" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="110" y="93" width="300" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="121.5" text-anchor="middle" class="fig-b">눈을 열어 둘 수 있는 거리가 준다</text>
+  <line x1="260" y1="138" x2="260" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="102" y="160" width="316" height="68" rx="9" class="fig-agent"/>
+  <text x="260" y="188.5" text-anchor="middle" class="fig-b">보드 크기는 그대로라</text>
+  <text x="260" y="211.5" text-anchor="middle" class="fig-b">비어 있던 자리에 칩 하나가 들어간다</text>
+  <line x1="260" y1="228" x2="260" y2="248" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="102" y="250" width="316" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="278.5" text-anchor="middle" class="fig-b">부품 수요가 GPU 수요와 따로 는다</text>
+</svg><figcaption>속도가 한 세대 오르면 눈을 열어 둘 수 있는 거리가 줄고, 보드 크기는 그대로라 원래 비어 있던 자리에 칩 하나가 들어간다. 부품 수요가 GPU 수요와 따로 늘어나는 구조다.</figcaption></figure>
+<p>업계에 보이는 규칙은 여기서 나온다. GPU가 NIC이나 CPU와 통신하는 실제 거리는 30센티미터쯤인데, 그리 멀지 않은데도 리타이밍이 필요하다. <span class="pn">진행자A</span>는 속도가 오를수록 눈을 열어 둔 채 갈 수 있는 거리가 줄고 있다고 짚었다. PAM4로 가면 전압 네 단계를 갈라 읽어야 해서 여유가 더 준다. <b>보드 크기는 그대로인데 신호가 버티는 거리만 줄어드니, 세대가 바뀔 때마다 원래 아무것도 없던 자리에 칩 하나가 들어가야 한다.</b> 부품 수요가 GPU 수요와 따로 늘어나는 구조다.</p>
+<h2 id="s2"><span class="num">2</span> 확성기와 받아쓰는 사람 — 두 해법이 값을 가른다</h2>
+<p>고치는 방법은 크게 넷이다. ① 보내는 쪽에서 나중에 약해질 것을 미리 계산해 세게 보내는 등화 ② 받는 쪽에서 높은 전압을 더 크게 키워 눈을 벌리는 CTLE(연속시간선형등화기) ③ 앞 심볼이 얼마나 번졌는지 알아내 상쇄하는 DFE(결정귀환등화기) ④ 신호가 지나간 시점을 세어 심볼 주기를 다시 뽑아내는 CDR(클록·데이터 복원)이다. ②는 잡음까지 같이 키우는 한계가 있고, ③은 보드마다 제조 단계에서 맞춰 줘야 할 수 있다.</p>
+<figure class="uc-fig"><p class="fig-title">리드라이버와 리타이머 — 같은 네 손질 중 무엇을 하나</p><svg class="epoch" viewBox="0 0 520 262" role="img" aria-label="같은 네 손질 중 리드라이버는 송신 등화와 CTLE 둘만 하고, 리타이머는 넷을 다 한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">리드라이버 — 앞의 둘만</text>
+  <rect x="101" y="32" width="318" height="76" rx="4" class="fig-outside"/>
+  <rect x="117" y="48" width="82" height="44" rx="9" class="fig-agent"/>
+  <text x="158" y="76" text-anchor="middle" class="fig-b">송신 등화</text>
+  <rect x="211" y="48" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="244" y="76" text-anchor="middle" class="fig-b">CTLE</text>
+  <rect x="289" y="48" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="314.5" y="76" text-anchor="middle" class="fig-b">DFE</text>
+  <rect x="352" y="48" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="377.5" y="76" text-anchor="middle" class="fig-b">CDR</text>
+  <text x="260" y="134" text-anchor="middle" class="fig-hd">리타이머 — 넷 다</text>
+  <rect x="101" y="144" width="318" height="76" rx="4" class="fig-outside"/>
+  <rect x="117" y="160" width="82" height="44" rx="9" class="fig-agent"/>
+  <text x="158" y="188" text-anchor="middle" class="fig-b">송신 등화</text>
+  <rect x="211" y="160" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="244" y="188" text-anchor="middle" class="fig-b">CTLE</text>
+  <rect x="289" y="160" width="51" height="44" rx="9" class="fig-agent"/>
+  <text x="314.5" y="188" text-anchor="middle" class="fig-b">DFE</text>
+  <rect x="352" y="160" width="51" height="44" rx="9" class="fig-agent"/>
+  <text x="377.5" y="188" text-anchor="middle" class="fig-b">CDR</text>
+  <rect x="0" y="236" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="248" class="fig-lg">하는 것</text>
+  <rect x="114.4" y="236" width="14" height="14" rx="3" class="fig-box fig-box"/>
+  <text x="136.4" y="248" class="fig-lg">안 하는 것</text>
+</svg><figcaption>같은 네 칸을 두 줄로 그렸다. 리드라이버는 송신 등화와 CTLE 둘만, 리타이머는 DFE 와 CDR 까지 넷을 다 한다. 뒤의 둘이 있어야 뭉개진 비트를 제자리에 다시 끼운다.</figcaption></figure>
+<p>리드라이버는 ①②만 하고, 리타이머는 넷을 다 한다. <span class="pn">진행자V</span>의 표현으로 "리드라이버는 그냥 아날로그 확성기다". 리타이머는 다시 뽑아낸 클록이 비트가 있어야 할 자리를 알려 주므로, 늦게 오거나 뭉개진 비트를 제자리에 다시 끼워 넣는다. <span class="pn">진행자A</span>가 중간에 사람을 세워 되풀이하게 하는 것이냐고 묻자 <span class="pn">진행자V</span>는 아니라고 했다. 그건 중계 증폭기이고, 리타이머는 맥락을 아는 쪽에 가깝다는 것이다 — 리타이머 이야기를 하는 줄 아는 사람은 반쯤 뭉개진 낱말도 무슨 말인지 복원한다.</p>
+<p>값을 가르는 것은 이 차이다. 리드라이버는 전력이 적게 들고 단순하며 지연도 작지만, 빨라질수록 못 살린다. 그러니 세대가 오를 때마다 같은 구간의 부품이 싼 것에서 비싼 것으로 갈아 끼워진다. 실제로 블랙웰 세대에 들어간 것은 PAM4로 64기가전송을 처리하는 Gen6 제품 Aries 6이었을 것이라고 <span class="pn">진행자V</span>는 봤고, 이전보다 평균판매단가가 높다고 했다. <b>속도 세대는 수량만 늘리는 게 아니라 같은 자리의 단가를 올린다.</b></p>
+<h2 id="s3"><span class="num">3</span> 부품으로 본 회사와 시스템으로 본 회사</h2>
+<p>물음은 둘로 나뉘어 나왔다. <span class="pn">진행자A</span>가 먼저 던진 것은 스타트업이 어떻게 그 소켓을 차지했느냐다. <span class="pn">진행자V</span>가 자료를 뒤지다 스스로 물은 것은 PCIe가 오래된 규격인데 왜 브로드컴도 텍사스 인스트루먼츠도 아니었느냐다. Gen5 규격을 짜던 사람이면 32기가전송에서 문제가 생길 줄 알았을 것이라고 <span class="pn">진행자A</span>가 덧붙였다.</p>
+<p>창업자 전원이 텍사스 인스트루먼츠의 고속 인터페이스 엔지니어였고, 2017년에 나온 것으로 <span class="pn">진행자V</span>는 기억했다. 걸었던 판단은 하나다 — 모든 서버 보드에 PCIe5가 필요해진다. 이긴 이유로 <span class="pn">진행자V</span>가 든 것은 둘인데 둘 다 그의 추정이다. ① PCIe5 시장에 가장 먼저 들어갔다 ② 코스모스라는 모니터링 플랫폼을 일찍 만들어 링크가 죽어 가는 것과 채널이 얼마나 상했는지를 다 잡아냈고 하이퍼스케일러가 그것을 좋아했다.</p>
+<p><span class="pn">진행자A</span>는 여기서 큰 회사가 놓친 것을 정리했다. 텍사스 인스트루먼츠처럼 방대한 카탈로그를 가진 회사는 리타이머를 카탈로그의 한 품목으로 봤을 것이고, 아스테라 랩스는 같은 물건을 보드 위의 검은 상자가 아니라 함대 전체의 링크 건강을 알려 주는 센서로 봤다는 것이다. GPU 수만·수십만·수백만 개짜리 학습 클러스터에서 링크 하나하나가 자기 상태를 보고한다면 그 값어치는 부품값과 다른 자리에서 매겨진다. <b>같은 실리콘을 놓고 부품으로 파느냐 계측 시스템으로 파느냐가 갈렸고, 갈린 쪽이 소켓을 가져갔다.</b> 팹리스라 설계만 들어가면 위탁 생산으로 물량을 맞출 수 있다는 점도 <span class="pn">진행자A</span>가 덧붙였다.</p>
+<h2 id="s4"><span class="num">4</span> 설계에 들어가면 왜 안 빠지나, 그 잠금이 깨질 뻔한 자리</h2>
+<p>엔비디아 H100 HGX 베이스보드는 GPU 여덟 개가 서로, 그리고 CPU·NIC와 통신해야 했고 그 자리를 아스테라 랩스가 채웠다. <span class="pn">진행자V</span>가 잠금의 성격을 못 박았다. "일단 설계에 반영되고 그게 작동하면, 그걸로 끝이다". 이유는 감정이 아니라 절차다 — 바꾸면 엔비디아가 전부 재인증해야 하고 채널 링크 예산이 맞는지 다시 봐야 한다. 브로드컴이 2024년에 비슷한 Gen5 리타이머를 들고 2차 공급사로 들어왔지만 기존 소켓은 그대로였다.</p>
+<figure class="uc-fig"><p class="fig-title">GPU 와 NIC 사이 — 계획과 실제</p><svg class="epoch" viewBox="0 0 520 420" role="img" aria-label="같은 GPU 와 NIC 을 세 번 그렸다. 멀면 사이에 리타이머가 들고, 붙이면 빠질 것 같았는데, 실제 배치가 갈라져 다시 멀어졌다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">레퍼런스 설계 — 멀다</text>
+  <rect x="60" y="32" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="76" y="48" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="101.5" y="76" text-anchor="middle" class="fig-b">GPU</text>
+  <line x1="127" y1="70" x2="227" y2="70" class="fig-arw"/>
+  <line x1="293" y1="70" x2="393" y2="70" class="fig-arw"/>
+  <rect x="227" y="48" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="260" y="76" text-anchor="middle" class="fig-b">리타이머</text>
+  <rect x="393" y="48" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="418.5" y="76" text-anchor="middle" class="fig-b">NIC</text>
+  <text x="260" y="126" text-anchor="middle" class="fig-hd">리타이머가 든다</text>
+  <text x="260" y="154" text-anchor="middle" class="fig-hd">블랙웰 계획 — NIC 을 GPU 에 붙인다</text>
+  <rect x="60" y="164" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="76" y="180" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="101.5" y="208" text-anchor="middle" class="fig-b">GPU</text>
+  <rect x="135" y="180" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="160.5" y="208" text-anchor="middle" class="fig-b">NIC</text>
+  <text x="260" y="258" text-anchor="middle" class="fig-hd">리드라이버로 충분하지 않겠나 — 걱정</text>
+  <text x="260" y="286" text-anchor="middle" class="fig-hd">실제 배치 — 커스텀으로 다시 멀어진다</text>
+  <rect x="60" y="296" width="400" height="76" rx="4" class="fig-stage"/>
+  <rect x="76" y="312" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="101.5" y="340" text-anchor="middle" class="fig-b">GPU</text>
+  <line x1="127" y1="334" x2="227" y2="334" class="fig-arw"/>
+  <line x1="293" y1="334" x2="393" y2="334" class="fig-arw"/>
+  <rect x="227" y="312" width="66" height="44" rx="9" class="fig-agent"/>
+  <text x="260" y="340" text-anchor="middle" class="fig-b">리타이머</text>
+  <rect x="393" y="312" width="51" height="44" rx="9" class="fig-box"/>
+  <text x="418.5" y="340" text-anchor="middle" class="fig-b">NIC</text>
+  <text x="260" y="390" text-anchor="middle" class="fig-hd">리타이머가 남는다</text>
+</svg><figcaption>같은 GPU 와 NIC 을 세 번 그렸다. 레퍼런스 설계에서는 멀어서 리타이머가 들고, 블랙웰에서 붙이겠다고 하자 리드라이버로 충분하지 않겟느냐는 걱정이 돌았는데, 레퍼런스 그대로 쓴 곳이 적고 커스텀 배치가 많아 거리가 다시 늘었다.</figcaption></figure>
+<p>이 잠금이 깨질 뻔한 자리가 블랙웰 세대다. 엔비디아가 NIC과 GPU 거리가 너무 멀다며 붙여 놓겠다고 하자, 가까우면 비싼 리타이머 대신 싼 리드라이버로 충분하지 않겠느냐는 걱정이 돌았다. 실제로는 그렇게 안 됐다. <span class="pn">진행자V</span>가 든 이유는 둘이다. ① 레퍼런스 설계 그대로 쓴 곳이 적었고 커스터마이즈된 배치가 많아 거리가 다시 늘어났다 ② 트레이니엄 같은 커스텀 가속기가 나오면서 엔비디아에만 매이지 않게 됐다. <span class="pn">진행자A</span>는 셋째를 얹었다 — 텔레메트리를 한번 쓴 고객은 필요 없다는 말을 들어도 그것을 잃기 싫어한다.</p>
+<p>여기서 읽을 것은 운이 아니다. <b>원청이 물리적 거리를 줄여 부품 하나를 없애려 해도, 실제 배치가 여럿으로 갈라지면 그 부품이 다시 필요해진다.</b> 표준 설계에서만 사라지는 부품은 사라지지 않는다. 그리고 잠금이 한 고객에게 걸려 있는 동안 다른 고객이 늘어나면 잠금의 성격 자체가 바뀐다.</p>
+<h2 id="s5"><span class="num">5</span> 신호를 손질하는 기술로 스위치까지 갈 수 있나</h2>
+<p><span class="pn">진행자A</span>가 물었다. 리타이머 말고 다음이 있느냐. <span class="pn">진행자V</span>의 답은 스코피오다. 신호를 다듬을 줄 아니 트레이 안에 머물지 말고 올라가 스위치를 만들자는 것이다. 스케일아웃용 스코피오 P는 최대 320레인짜리 고밀도 스위치로 브로드컴 토마호크를 겨누고, 스케일업용 스코피오 X는 엔비디아 NV스위치 자리를 노리는 머천트 실리콘이다. 아마존 트레이니엄 3가 스케일업 구간에 스코피오 X를 쓴다고 <span class="pn">진행자V</span>는 봤다. 2023년 매출은 1억1,500만 달러였다.</p>
+<p>인접 확장이 쉬운 쪽과 안 쉬운 쪽이 갈린다. <span class="pn">진행자A</span>가 스위치란 결국 레인마다 신호를 다듬고 거기에 경로 배정을 얹은 것이냐고 묻자 <span class="pn">진행자V</span>는 앞 절반만 맞다고 했다 — 신호를 다듬는 부분은 그대로 쓰지만 패킷을 실제로 어디로 보낼지 정하는 일은 전혀 간단하지 않다. 그리고 그 어려움이 곧 값이다. 기존 기술에 조금 얹는 게 아니어서 평균판매단가가 높게 잡히고, 그래서 스코피오에 매출 기대가 크다.</p>
+<figure class="uc-fig"><p class="fig-title">한 기술을 세 자리에</p><svg class="epoch" viewBox="0 0 520 134" role="img" aria-label="같은 신호 손질 칩이 트레이 안(Aries)·케이블 안(타우로스)·스위치 안(스코피오)에 들어간다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="90" y="22" text-anchor="middle" class="fig-hd">트레이 안</text>
+  <rect x="15" y="32" width="150" height="92" rx="4" class="fig-stage"/>
+  <rect x="33.5" y="48" width="113" height="44" rx="9" class="fig-agent"/>
+  <text x="90" y="76" text-anchor="middle" class="fig-b">신호 손질 칩</text>
+  <text x="90" y="118" text-anchor="middle" class="fig-hd">Aries</text>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">케이블 안</text>
+  <rect x="185" y="32" width="150" height="92" rx="4" class="fig-stage"/>
+  <rect x="203.5" y="48" width="113" height="44" rx="9" class="fig-agent"/>
+  <text x="260" y="76" text-anchor="middle" class="fig-b">신호 손질 칩</text>
+  <text x="260" y="118" text-anchor="middle" class="fig-hd">타우로스</text>
+  <text x="430" y="22" text-anchor="middle" class="fig-hd">스위치 안</text>
+  <rect x="355" y="32" width="150" height="92" rx="4" class="fig-stage"/>
+  <rect x="373.5" y="48" width="113" height="44" rx="9" class="fig-agent"/>
+  <text x="430" y="76" text-anchor="middle" class="fig-b">신호 손질 칩</text>
+  <text x="430" y="118" text-anchor="middle" class="fig-hd">스코피오</text>
+</svg><figcaption>같은 신호 손질 칩이 트레이 안(Aries)·케이블 안(타우로스)·스위치 안(스코피오)에 들어간다. 값을 제대로 받는 곳은 경로 배정을 얹어야 하는 스위치 하나라는 것이 이 글의 읽기다.</figcaption></figure>
+<p>나머지 제품군은 같은 기술을 다른 값에 파는 실험이다. 타우로스는 같은 신호 손질 칩을 케이블 안에 넣어 액티브 전기 케이블로 만드는 것인데, 회사가 매출총이익률이 내려갈 것을 알면서도 이미 가진 기술을 쓸 수 있으면 한다고 분명히 했다. 레오는 CXL(컴퓨트 익스프레스 링크 — 메모리를 여러 장치가 나눠 쓰게 하는 규격) 컨트롤러로 아직 초기지만 설계 수주가 몇 건 있다. <b>한 가지 회로 기술을 트레이 안·케이블 안·스위치 안으로 세 번 파는 구조이고, 값을 제대로 받는 곳은 그중 하나다.</b></p>
+<h2 id="s6"><span class="num">6</span> 스위치를 가진 쪽이 표준의 운명을 정한다</h2>
+<p>이 회차에서 가장 넓게 걸리는 대목은 아스테라 랩스가 아니라 브로드컴 이야기다. AMD는 개방형 스케일업 규격인 UALink 스위치를 쓰고 싶었는데 시장에 그런 스위치가 없었고, 결국 브로드컴 토마호크로 갈 수밖에 없었다. 소켓을 확보한 브로드컴은 곧바로 UALink 컨소시엄에서 나가 이더넷 노선을 확정했다. <span class="pn">진행자V</span>는 이것을 UALink를 하려던 다른 회사들에게 못을 박은 일로 봤다.</p>
+<figure class="uc-fig"><p class="fig-title">AMD 와 브로드컴 — 순서</p><svg class="epoch" viewBox="0 0 520 389" role="img" aria-label="UALink 스위치가 없어 브로드컴 이더넷으로 갔고, 소켓을 잡은 브로드컴이 UALink 에서 나갔다. 2027 년 UALink 스위치가 나올 때 갈아타는지가 물음이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="63" y="26" width="394" height="68" rx="9" class="fig-outside"/>
+  <text x="260" y="54.5" text-anchor="middle" class="fig-b">AMD 가 개방형 UALink 스위치를 찾았다</text>
+  <text x="260" y="77.5" text-anchor="middle" class="fig-b">시장에 없었다</text>
+  <line x1="260" y1="94" x2="260" y2="114" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="117.5" y="116" width="285" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="144.5" text-anchor="middle" class="fig-b">브로드컴 토마호크(이더넷)로 갔다</text>
+  <line x1="260" y1="161" x2="260" y2="181" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="78.5" y="183" width="363" height="45" rx="9" class="fig-agent"/>
+  <text x="260" y="211.5" text-anchor="middle" class="fig-b">브로드컴이 UALink 컨소시엄에서 나갔다</text>
+  <line x1="260" y1="228" x2="260" y2="248" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="133" y="250" width="254" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="278.5" text-anchor="middle" class="fig-b">헬리오스는 UALOE 로 간다</text>
+  <line x1="260" y1="295" x2="260" y2="315" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="55" y="317" width="410" height="68" rx="9" class="fig-outside"/>
+  <text x="260" y="345.5" text-anchor="middle" class="fig-b">2027 — UALink 스코피오·마벨이 나온다</text>
+  <text x="260" y="368.5" text-anchor="middle" class="fig-b">그때 갈아타나</text>
+</svg><figcaption>UALink 스위치가 시장에 없어 AMD 가 브로드컴 토마호크로 갔고, 소켓을 잡은 브로드컴이 UALink 컨소시엄에서 나갔다. 헬리오스는 UALOE 로 간다. 2027 년쯤 UALink 스코피오와 마벨 제품이 나올 때 이미 이더넷으로 들어간 회사들이 갈아타는지가 <span class="pn">진행자V</span>의 물음이다.</figcaption></figure>
+<p>읽을 것은 순서다. 규격이 좋아서 이기는 게 아니라, 그 규격으로 만든 스위치가 제때 있어야 이긴다. UALink는 GPU끼리 서로의 메모리에 접근하는 데 맞춰 만든 가볍고 부담 적은 규격이고, 이더넷 계열은 이전 시대에서 이어져 와 지금 AI가 필요로 하는 것에 최적화돼 있지 않다는 것이 <span class="pn">진행자V</span>의 정리다. 그런데도 물건이 없으면 진다. AMD 헬리오스가 지금 UALOE(이더넷 스위치 위에서 UALink 규격을 쓰는 과도기 방식)로 가는 것이 그 결과이고, <span class="pn">진행자A</span>는 다음 세대에서 UALink로 넘어갈 계획으로 봤다.</p>
+<p>그래서 2027년이 관전 지점이다. UALink를 넣은 스코피오가 그때쯤 나오고 마벨도 비슷한 것을 만든다. <span class="pn">진행자V</span>가 던진 물음은 그 시점에 걸린다 — 이미 이더넷으로 설계에 들어간 AMD와 다른 회사들이 그때 가서 UALink 쪽 스위치를 사겠느냐, 아니면 이미 들어갔으니 이더넷으로 가겠다고 하겠느냐. <b>4절의 잠금이 이번에는 아스테라 랩스가 아니라 아스테라 랩스를 막는 쪽에 걸려 있다.</b> 같은 규칙이 이번엔 반대 방향으로 작동한다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 무엇이 나오면 이 판단이 바뀌나</h2>
+<p>확인 안 된 것이 셋이다. ① 아마존이 아스테라 랩스 지분을 워런트로 갖고 있는지를 <span class="pn">진행자A</span>가 꺼냈지만 본인이 찾아봐야 한다고 했다. 트레이니엄에 스코피오가 들어간 배경을 설명하는 데 쓰인 추정이라 확인 없이 인과로 읽으면 안 된다. ② 브로드컴이 밀어붙인 이더넷 진영의 이름이 전사에서 <span class="q">"Eson"</span>으로 들리는데, 철자와 공식 명칭은 전사만으로 확정되지 않는다. ③ 2023년 매출 1억1,500만 달러를 비롯한 값들은 진행자가 구두로 말한 수치이고 공시와 대조되지 않았다.</p>
+<p>빠진 대목도 셋이다. ① 리타이머 한 대의 값과 GPU 한 대당 몇 개가 들어가는지가 안 나온다. 수량 이야기는 하다가 문장이 끊겼다. 이 수 없이는 세대 전환의 단가 상승이 매출에 얼마나 옮겨지는지 못 센다. ② 브로드컴이 2차 공급사로 들어온 뒤 실제로 얼마를 가져갔는지가 없다. 소켓이 유지됐다는 것과 물량이 안 나뉘었다는 것은 다른 말이다. ③ 스코피오가 언제 매출로 잡히는지가 없다. 트레이니엄 3에 들어간다는 말만 있고 규모도 시점도 안 나온다.</p>
+<p>무엇이 나오면 이 글의 판단이 바뀌나. ① 엔비디아가 다음 세대 레퍼런스 설계에서 배치를 다시 표준화해 커스터마이즈 여지를 줄이면 4절이 흔들린다 — 거리가 다시 늘어난 것은 배치가 갈라졌기 때문이지 물리가 지켜 준 것이 아니다. ② 브로드컴이 UALink 컨소시엄에 되돌아오면 6절의 순서가 뒤집힌다. <span class="pn">진행자V</span>도 그것이 볼 만한 대목이라고 남겼다. ③ 스코피오가 실제 매출로 잡히면 5절의 「어려워서 값을 받는다」가 검증된다. 반대로 안 잡히면 신호를 다듬는 기술이 스위치까지 이어진다는 전제 자체가 틀린 것이 된다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-08-04-astera-labs-strategy.md">insights/semidoped/2026-08-04-astera-labs-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
