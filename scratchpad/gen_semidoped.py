@@ -73,11 +73,29 @@ def one_line(body):
 # 표·문단·목록·굵게만 옮긴다. 도해는 받은 글에 없다 — 우리가 그려 semidoped_figs 에
 # 두고, 절 제목 바로 아래(본문보다 앞)에 세운다. 그림을 보고 그 아래 글을 읽는 순서다.
 
+# 전사 줄 번호 (L97)·(L45·L47)·(Vik이 전함, L177) 은 대조용 장치다. 원본 파일에는 남기고
+# 화면에서만 걷는다 — 독자는 뉴스를 따라가는 사람이고 줄 번호는 그에게 소음이다(2026-09-02)
+LREF_ALONE = re.compile(r'\s*\(\s*L\d+(?:\s*[·,\-–~]\s*L?\d+)*\s*\)')
+LREF_TAIL = re.compile(r',\s*L\d+(?:\s*[·\-–~]\s*L?\d+)*(?=\))')
+# 영어 인용은 옅게 — 앞뒤 한국어 문장이 뜻을 말하고 인용은 근거다
+ENG_QUOTE = re.compile(r'"([A-Za-z][^"<>]{3,}?)"')
+
+
+def strip_lrefs(s):
+    return LREF_TAIL.sub('', LREF_ALONE.sub('', s))
+
+
 def inline(s):
-    s = esc(s)
+    s = esc(strip_lrefs(s))
     s = re.sub(r'`([^`]+)`', r'<code>\1</code>', s)
     s = re.sub(r'\*\*([^*]+)\*\*', r'<b>\1</b>', s)
+    s = ENG_QUOTE.sub(r'<span class="q">"\1"</span>', s)
     return s
+
+
+def fig_block(f):
+    key, title, svg, cap = f
+    return semidoped_figs.fig_html((key, title, svg, strip_lrefs(cap)))
 
 
 def table_html(rows):
@@ -165,7 +183,7 @@ def body_html(md, figs=()):
         hit = [f for f in pending if title.startswith(f[0])]
         for f in hit:
             pending.remove(f)
-            out.append(semidoped_figs.fig_html(f))
+            out.append(fig_block(f))
 
     def flush():
         if para:
@@ -347,7 +365,7 @@ def lane_html(body, figs):
         # 절 머리에 걸린 도해는 여기서 바로 세운다 — 제목 줄을 본문에서 뺐으므로 body_html 은
         # ### 아래에 걸린 것만 잡는다
         top = [f for f in figs if t.startswith(f[0])]
-        out += [semidoped_figs.fig_html(f) for f in top]
+        out += [fig_block(f) for f in top]
         sub = [f for f in figs if f not in top and
                any(x.startswith('### ') and x[4:].strip().startswith(f[0]) for x in l)]
         used.update(f[0] for f in top + sub)
@@ -428,6 +446,7 @@ a.row:hover{background:#eef1f6}
 .lane p{margin:0 0 14px}
 .lane ul{margin:0 0 14px;padding-left:20px}
 .lane li{margin:0 0 6px}
+.q{color:#5b6472}
 .num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
  background:#1b1f27;color:#fff;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
 h3 .num{background:#e7ebf1;color:#3a4150}
