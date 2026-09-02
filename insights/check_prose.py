@@ -544,6 +544,9 @@ def dashboard_text(path):
     # 대면 고칠 수 없는 빚만 쌓인다 — 인용은 인용으로 둔다(2026-08-31).
     # _drop_block 을 못 쓰는 이유는 그 함수가 <div> 깊이만 세기 때문이다
     raw = _QUOTE_BOX.sub(' ', raw)
+    # <!--RAW:START/END--> 는 남의 글 전문을 접어 둔 상자다(M&A 장, 2026-09-02). 공개본에서는
+    # gen_site 가 떼고, 여기서도 인용은 인용으로 둔다 — 필자 문장에 우리 문체 규칙을 대지 않는다
+    raw = re.sub(r'<!--RAW:START-->.*?<!--RAW:END-->', ' ', raw, flags=re.S)
     raw = _TAGBLOCK.sub(' ', raw)
     for _cls in _ECHO_CLASSES:
         raw = _drop_block(raw, _cls)

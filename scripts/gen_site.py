@@ -167,6 +167,15 @@ def mark_new(html: str, book: dict) -> tuple:
     return H2_CARD.sub(repl, html), hits
 
 
+RAW_BLOCK = re.compile(r'<!--RAW:START-->.*?<!--RAW:END-->', re.S)
+
+
+def strip_private(html: str) -> str:
+    """로컬 전용 조각을 걷는다. M&A 장은 카드마다 링크드인 원문 전문을 접어 두는데(2026-09-02),
+    남의 글 전문을 공개 사이트에 다시 싣는 것은 저작권 문제라 로컬 파일에만 남기고 여기서 뗀다."""
+    return RAW_BLOCK.sub('', html)
+
+
 def rewrite_links(html: str, own_slug: str = '') -> str:
     """상대 .html 링크를 슬러그(사이트 내) 또는 github.io 절대 URL(사이트 밖)로.
 
@@ -391,7 +400,7 @@ def main():
             # (2026-09-02, M&A 장). 빠진 장은 눈에 띄게 적는다
             print(f'  !! 없음 — 건너뜀: {src}  (산출물이 커밋되지 않았다)')
             continue
-        html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
+        html = rewrite_links(strip_private((SRC / src).read_text(encoding='utf-8')))
         html, fresh = mark_new(html, ledger.get(slug, {}))
         (OUT / f'{slug}.html').write_text(html + BADGE_BITS, encoding='utf-8')
         badge = f'  NEW {len(fresh)}' if fresh else ''
@@ -406,7 +415,7 @@ def main():
             out_dir.mkdir(parents=True, exist_ok=True)
             n = 0
             for f in sorted(card_dir.glob('*.html')):
-                page_html = rewrite_links(f.read_text(encoding='utf-8'), own_slug=slug)
+                page_html = rewrite_links(strip_private(f.read_text(encoding='utf-8')), own_slug=slug)
                 (out_dir / f.name).write_text(page_html, encoding='utf-8')
                 n += 1
             if n:

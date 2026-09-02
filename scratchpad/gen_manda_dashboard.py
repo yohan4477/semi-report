@@ -53,6 +53,26 @@ def esc(s):
     return _html.escape(s, quote=False)
 
 
+# 원제의 이모지·국기는 뗀다 — 화면 글꼴에서 국기가 「ITKR」 같은 글자로 나온다
+EMOJI = re.compile('[🀀-🫿☀-➿🇦-🇿⭐⭕️‍⚠❗📌]+')
+
+
+def de_emoji(s):
+    return re.sub(r'\s{2,}', ' ', EMOJI.sub('', s)).strip()
+
+
+# 글 페이지 파일 이름은 slug(제목)인데 slug 가 한자를 떨어낸다 — 「上·中·下」만 다른 연재 제목이
+# 같은 파일이 된다(Red Bull 上/中, 2026-09-02). 제목에서 한글로 바꿔 둔다
+HANJA = {'上': '상', '中': '중', '下': '하'}
+
+
+def title_of(t):
+    t = de_emoji(t)
+    for a, b in HANJA.items():
+        t = re.sub(r'(?<![가-힣A-Za-z])%s(?![가-힣A-Za-z])' % a, b, t)
+    return t
+
+
 def inline(s):
     """원고의 굵게·코드만 옮긴다. 나머지 마크다운은 쓰지 않는다."""
     s = esc(s.strip())
@@ -141,12 +161,20 @@ def parse_clash(txt):
     return out
 
 
-def load_cards():
-    raw_by_aid = {}
-    for p in glob.glob(os.path.join(RAW_DIR, '*.md')):
-        m = re.search(r'\[(\d{4})\]\.md$', p)
+def raw_files():
+    """{full aid: 클리핑 경로}. 파일 이름의 끝 네 자리는 365편 중 41쌍이 겹친다 — frontmatter 의
+    source 에 든 활동 ID 전체로 잇는다."""
+    out = {}
+    for p in glob.glob(os.path.join(RAW_DIR, '2*.md')):
+        head = io.open(p, encoding='utf-8').read(800)
+        m = re.search(r'activity:(\d+)/', head)
         if m:
-            raw_by_aid[m.group(1)] = os.path.relpath(p, dc.ROOT).replace('\\', '/')
+            out[m.group(1)] = p
+    return out
+
+
+def load_cards():
+    raw_by_aid = {a: os.path.relpath(p, dc.ROOT).replace(os.sep, '/') for a, p in raw_files().items()}
     cards = []
     for p in sorted(glob.glob(os.path.join(SRC_DIR, '*.md'))):
         if os.path.basename(p).startswith('_'):
@@ -166,13 +194,15 @@ def load_cards():
         aid = fm['aid']
         n_chars = fm.get('chars', '')
         links = [('▶ 원문 LinkedIn', PERMALINK % aid, '')]
-        rel = raw_by_aid.get(aid[-4:])
+        rel = raw_by_aid.get(aid)
+        if not rel:
+            raise SystemExit('%s: aid %s 의 클리핑이 없다' % (os.path.basename(p), aid))
         if rel:
             links.append(('클리핑', dc.blob(rel), 'secondary'))
         c = {
             'section': SEC[fm['section']],
-            'topic': ('market', esc(fm['topic'])),
-            'title': esc(fm['title']),
+            'topic': ('market', esc(de_emoji(fm['topic']))),
+            'title': esc(title_of(fm['title'])),
             'gain': inline(fm['gain']),
             'meta': ['<a href="%s" target="_blank" rel="noopener">한주성</a> <b>PwC Korea</b>' % AUTHOR,
                      '게시 %s' % fm['date'], 'LinkedIn 글'],
@@ -181,7 +211,8 @@ def load_cards():
             'stats': parse_stats(sec['주요 숫자']),
             'quote': parse_quotes(sec['인용']),
             'clash': parse_clash(sec['반론 · 충돌']),
-            'note': ' '.join(inline(x) for x in sec['메모'].split('\n') if x.strip()),
+            'note': ' '.join(inline(x) for x in sec['메모'].split('\n') if x.strip())
+                    + raw_block(os.path.join(dc.ROOT, rel)),
             'links': links,
             'date': fm['date'],
             '_file': os.path.basename(p),
@@ -189,8 +220,36 @@ def load_cards():
         if fm.get('scope') in ('kr', 'intl'):
             c['scope'] = fm['scope']
         cards.append(c)
+    # dup anchors — 「우리가 몰랐던 Red Bull 이야기 - 上 / 中」처럼 slug 가 한자를 떨어내 겹치는 제목은
+    # 날짜를 붙여 가른다. 겹치면 문서에 같은 id 가 둘 서고 글 페이지 한 장이 덮어써진다
+    from card_lib import anchor_of
+    import collections
+    cnt = collections.Counter(anchor_of(c) for c in cards)
+    for c in cards:
+        if cnt[anchor_of(c)] > 1:
+            c['anchor'] = '%s %s' % (de_emoji(c['title']), c['date'])
     return cards
 
+
+def raw_block(path):
+    """클리핑 전문을 접어서 카드 끝에 둔다. <!--RAW:START/END--> 로 감싸 gen_site 가 공개본에서 뗀다 —
+    남의 글 전문은 이 컴퓨터에서만 읽는다."""
+    md = io.open(path, encoding='utf-8').read()
+    _, body = front(md)
+    body = body.split('\n## 퍼온 원글')[0].strip()
+    paras = [esc(x.strip()) for x in re.split(r'\n\s*\n', body) if x.strip()]
+    inner = ''.join('<p>%s</p>' % x.replace('\n', '<br>') for x in paras)
+    return ('<!--RAW:START--><details class="uc-raw"><summary>원문 읽기 — 이 컴퓨터에서만 보인다</summary>'
+            '<div class="uc-raw-body">%s</div></details><!--RAW:END-->' % inner)
+
+
+RAW_CSS = '''
+  .uc-raw{margin:14px 0 0;border-top:1px dashed var(--line);padding-top:10px}
+  .uc-raw summary{cursor:pointer;font-size:12.5px;font-weight:800;color:var(--ink-3)}
+  .uc-raw-body{margin-top:10px;font-size:14px;line-height:1.8;color:var(--ink-2);
+    max-height:70vh;overflow:auto;padding-right:6px}
+  .uc-raw-body p{margin:0 0 .9em}
+'''
 
 HEADER = '''  <header>
     <p class="eyebrow">한주성(PwC Korea)의 링크드인 — 딜로 읽는 2026</p>
@@ -213,7 +272,7 @@ if __name__ == '__main__':
     dc.render(cards, 'M&A 인사이트', HEADER, FOOTER, OUT,
               page_slug='manda',
               rollup=dc.rollup_for('manda', cards, '편'),
-              search_ph='회사·딜·용어로 찾기',
+              search_ph='회사·딜·용어로 찾기', extra_css=RAW_CSS,
               newest_first=True)
     print('카드 %d · 섹션 %d · %s ~ %s' % (len(cards), n_sec, dates[0], dates[-1]))
     print(OUT)

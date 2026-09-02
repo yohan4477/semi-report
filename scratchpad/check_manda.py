@@ -37,8 +37,37 @@ def norm(t):
     return re.sub(r'[\s,、,·"“”\'‘’「」<>\-–—…\.]', '', t)
 
 
+
+# 영어 원문은 수를 말로 적는다(「Ninety percent」). 대조 전에 숫자로 바꿔 한 벌 더 둔다
+_W = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+      'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15,
+      'sixteen': 16, 'seventeen': 17, 'eighteen': 18, 'nineteen': 19, 'twenty': 20, 'thirty': 30,
+      'forty': 40, 'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80, 'ninety': 90, 'hundred': 100}
+_TENS = ('twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety')
+
+
+def words_to_digits(t):
+    def rep(m):
+        a, b = m.group(1).lower(), (m.group(2) or '').lower()
+        return str(_W[a] + (_W.get(b, 0) if a in _TENS else 0))
+    pat = r'\b(' + '|'.join(_W) + r')(?:[- ](' + '|'.join(k for k in _W if _W[k] < 10) + r'))?\b'
+    return re.sub(pat, rep, t, flags=re.I)
+
+
+def sibling_titles():
+    """배정표의 제목들 — 메모에서 다른 글을 제목으로 부를 때 그 안의 숫자는 이 편 원문에 없다"""
+    import json
+    p = os.path.join(G.dc.ROOT, 'data', 'manda_posts.json')
+    try:
+        return [x['title'] for x in json.load(io.open(p, encoding='utf-8')) if len(x['title']) > 6]
+    except Exception:
+        return []
+
+
+TITLES = None
+
 def raw_of(aid, raw_files):
-    p = raw_files.get(aid[-4:])
+    p = raw_files.get(aid)
     if not p:
         return None
     md = io.open(p, encoding='utf-8').read()
@@ -111,7 +140,14 @@ def check_file(p, raw_files):
     # 숫자 — 본문(frontmatter 제외) 전체
     text_for_num = '\n'.join(v for k, v in sec.items() if k != '반론 · 충돌') + '\n' + fm.get('gain', '')
     text_for_num = re.sub(r'같은 저자 · 20\d\d-\d\d-\d\d', '', text_for_num)
-    nraw = norm(raw)
+    global TITLES
+    if TITLES is None:
+        TITLES = sibling_titles()
+    for t in TITLES:
+        if t not in raw:
+            text_for_num = text_for_num.replace(t, ' ')
+            text_for_num = text_for_num.replace(G.de_emoji(t), ' ')
+    nraw = norm(raw) + '|' + norm(words_to_digits(raw))
     for tok in numbers(text_for_num):
         if norm(tok) not in nraw:
             fails.append('숫자 %s 가 원문에 없다' % tok)
@@ -155,11 +191,7 @@ def check_file(p, raw_files):
 
 def main():
     key = sys.argv[1] if len(sys.argv) > 1 else ''
-    raw_files = {}
-    for p in glob.glob(os.path.join(G.RAW_DIR, '*.md')):
-        m = re.search(r'\[(\d{4})\]\.md$', p)
-        if m:
-            raw_files[m.group(1)] = p
+    raw_files = G.raw_files()
     files = [p for p in sorted(glob.glob(os.path.join(G.SRC_DIR, '*.md')))
              if not os.path.basename(p).startswith('_') and key in os.path.basename(p)]
     nf = nw = 0
