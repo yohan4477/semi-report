@@ -161,30 +161,31 @@ def _jal_three_configs():
 
 
 def _jal_numa4():
-    """가속기를 모듈로 놓고 넷을 그린다. 왼쪽은 넷이 HBM 한 덩어리를 나눠 써 줄이 한 곳으로
-    몰리고, 오른쪽은 가속기마다 자기 HBM 몫과 전용 버스가 붙는다. 넷은 보기용 수다 — 실제
-    랙은 128칩이고 몇 개가 한 HBM 을 나눠 쓰는지는 전사에 없다. 캡션에 그 말을 적는다."""
+    """가속기를 모듈로 놓고 넷을 그린다. 두 판이 같은 꼴이다 — 위 가속기 넷, 아래 HBM, 화살표는
+    아래로. 왼쪽은 넷이 HBM 한 덩어리로 모이고, 오른쪽은 각자 제 HBM 몫으로 내려간다. 넷은
+    보기용 수다 — 실제 랙은 128칩이고 몇 개가 한 HBM 을 나눠 쓰는지는 전사에 없다."""
     L, R = 0.0, 272.0
     parts = head(L, 22, 248, 'HBM 을 나눠 쓴다') + head(R, 22, 248, '가속기마다 자기 몫')
     acc = [(['가속기'], 'fig-box')] * 4
-    # 왼쪽 — HBM 한 덩어리(위) ← 가속기 넷(아래) 화살표가 한 상자로 몰린다
-    parts += box(L + 4, 38, 240, 44, ['HBM 한 덩어리'], 'fig-stage')
-    row, x_end, cs, hh = panel_boxes(L + 4, 150, acc, gap=12)
+    y_acc, y_hbm = 38, 150
+    # 왼쪽 — 가속기 넷(위) → HBM 한 덩어리(아래)로 화살표 넷이 모인다
+    row, _x, cs, hh = panel_boxes(L + 4, y_acc, acc, gap=12)
     parts += row
     for cx, _w in cs:
-        parts += vline(cx, 148, 84)
-    parts += box(L + 4, 150 + hh + 22, 240, 44, ['데이터가 늦게 온다'], 'fig-bad')
-    # 오른쪽 — 가속기 넷(위), 각자 아래 자기 HBM 몫, 짧은 전용 버스
-    row2, _x2, cs2, hh2 = panel_boxes(R + 4, 38, acc, gap=12)
+        parts += vline(cx, y_acc + hh + 2, y_hbm - 2)
+    parts += box(L + 4, y_hbm, 240, hh, ['HBM 한 덩어리'], 'fig-stage')
+    parts += box(L + 4, y_hbm + hh + 22, 240, 44, ['데이터가 늦게 온다'], 'fig-bad')
+    # 오른쪽 — 가속기 넷(위) → 각자 제 HBM 몫(아래), 전용 버스 하나씩
+    row2, _x2, cs2, hh2 = panel_boxes(R + 4, y_acc, acc, gap=12)
     parts += row2
     for cx, w in cs2:
-        parts += vline(cx, 38 + hh2 + 2, 148)
-        parts += box(cx - w / 2, 150, w, hh, ['HBM', '몫'], 'fig-agent')
-    parts += box(R + 4, 150 + hh + 22, 240, 44, ['실제로 전달되는 플롭'], 'fig-agent')
-    y = 150 + hh + 22 + 44
+        parts += vline(cx, y_acc + hh2 + 2, y_hbm - 2)
+        parts += box(cx - w / 2, y_hbm, w, hh, ['HBM', '몫'], 'fig-agent')
+    parts += box(R + 4, y_hbm + hh + 22, 240, 44, ['실제로 전달되는 플롭'], 'fig-agent')
+    y = y_hbm + hh + 22 + 44
     parts += legend([('fig-agent', '할라페뇨의 배치'), ('fig-bad', '경합이 나는 자리')], y + 16)
     return svg(y + 42, parts,
-               '왼쪽은 가속기 넷이 HBM 한 덩어리를 나눠 써 데이터가 늦게 오고, 오른쪽은 가속기마다 자기 HBM 몫과 전용 버스를 두어 실제로 플롭을 전달한다')
+               '왼쪽은 가속기 넷이 HBM 한 덩어리로 내려가 데이터가 늦게 오고, 오른쪽은 가속기마다 자기 HBM 몫으로 내려가 실제로 플롭을 전달한다')
 
 
 def _jal_scaleup():
