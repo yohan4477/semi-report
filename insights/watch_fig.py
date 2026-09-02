@@ -57,6 +57,9 @@ def _pos(t):
     m = re.match(r'^(\d{4})$', t)
     if m:
         return int(m.group(1)) * 12 + 12      # 회계연도는 그 해 끝에 찍는다
+    m = re.match(r'^(\d{4})-([1-4])Q$', t)
+    if m:                                     # 분기는 그 분기 끝 달에 찍는다
+        return int(m.group(1)) * 12 + int(m.group(2)) * 3
     return None
 
 

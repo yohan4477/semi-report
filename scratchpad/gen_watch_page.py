@@ -409,8 +409,13 @@ def figures(w):
              'jeonse_ratio': '전세가율 — 중위 매매가 대비 중위 전세가',
              'supply_demand': '매매수급동향 — 100이 균형',
              'median': '서울 중위가격 — 매매와 전세',
-             'deal_count': '아파트 매매 거래량', 'rent_conv': '전월세 전환율'}
-    GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전세')}
+             'deal_count': '아파트 매매 거래량', 'rent_conv': '전월세 전환율',
+             # 실거래가격지수 — 반복매매라 표본 구성에 안 흔들린다. 월간은 권역까지만
+             # 내려오고 구 단위는 분기뿐이라 둘을 따로 그린다
+             'rtp': '실거래가격지수 — 매매와 전세 (2017.11=100, 권역 단위)',
+             'rtp_sale_idx_gu': '실거래가격지수 — 매매, 구별 (분기)'}
+    GROUP = {'median_sale': ('median', '매매'), 'median_jeonse': ('median', '전세'),
+             'rtp_sale_idx': ('rtp', '매매'), 'rtp_jeonse_idx': ('rtp', '전세')}
     trig_by_metric = dict((t['metric'], t) for t in w['triggers']
                           if t['kind'] == wl.KIND_VALUE and t['metric'])
     groups = {}
