@@ -113,7 +113,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 .uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
 .uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
 </style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>설계를 아홉 달에 끝낸 추론 칩 — 오픈AI 할라페뇨</h1><div class="pmeta">2026-08-27 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling">https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-27-openai-jalapeno.md">저장소</a><div class="who"><b>진행</b> Austin Lyons · Vik Sekar (Semi Doped 공동 진행)</div><div class="who"><b>발표</b> Richard Ho (전 구글 TPU 팀, 발표를 이끔) · Ravi (칩 아키텍트) · Chris (소프트웨어 코디자인)</div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">아홉 달 만에 나온 칩 하나가 설계 잣대·칩 구성·메모리 로드맵·공급망 네 자리를 동시에 흔든다</div><p>OpenAI가 Hot Chips에서 추론 가속기 Jalapeño를 공개했고, Semi Doped 진행자 둘(Austin·Vik)이 발표 12시간 안에 슬라이드를 짚어 가며 회차 하나를 냈다. 이 글은 그 대화에서 한 회사의 결정이 아니라 업계에 보이는 것을 읽는다.</p>
-<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">아홉 달이 진입 장벽에 무엇을 하나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">잣대가 TCO에서 요청당 에너지로 옮기면 순위가 흔들린다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">균형 잡힌 한 칩이 맞으면 나눠 놓은 칩들의 자리가 좁아진다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">HBM을 다 못 쓰고 있다는 고백이 메모리 로드맵에 붙는다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">모델랩이 실리콘까지 내려오면 그 아래 단에 무엇이 열리나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">범용으로 남긴 선택이 남에게 뜻하는 것</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 글이 바뀌나</a></div></nav>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">아홉 달이 진입 장벽에 무엇을 하나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">잣대가 TCO에서 요청당 에너지로 옮기면 순위가 흔들린다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">균형 잡힌 한 칩이 맞으면 나눠 놓은 칩들의 자리가 좁아진다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">HBM을 다 못 쓰고 있다는 고백이 메모리 로드맵에 붙는다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">모델랩이 실리콘까지 내려오면 밸류체인 아래쪽에 무엇이 열리나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">범용으로 남긴 선택이 남에게 뜻하는 것</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 글이 바뀌나</a></div></nav>
 <h2 id="s1"><span class="num">1</span> 아홉 달이 진입 장벽에 무엇을 하나</h2>
 <figure class="uc-fig"><p class="fig-title">아홉 달을 만든 세 요인</p><svg class="epoch" viewBox="0 0 520 277" role="img" aria-label="AI 도구·TPU 출신 인재·백지 설계 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다. 통상은 최소 2~3년이다">
   <defs>
@@ -370,8 +370,8 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>가장 값이 큰 관측은 성능이 아니라 미달이다. Vik의 산수는 이렇다. 칩 128개의 HBM4 대역폭을 다 더하면 초당 1페타바이트, FP4(4비트 부동소수점)로 1조 파라미터 모델을 얹어 0.5테라바이트쯤이라 치면 초당 2,000토큰쯤이 나와야 하는데 실제로는 안 나온다. "왜 우리는 HBM을 최대로 쓰지도 못하고 있나?".</p>
 <p>답은 코디자인을 맡은 Chris의 말에 있다 — "피연산자가 늦게 도착한다". HBM을 스케일업 망의 이웃들과 나눠 쓰다 보니 경합이 생겨, 빨리 빼는 것은 되는데 제때 제자리에 놓는 것이 안 된다. 그래서 나온 문장이 "보여 주기용 플롭은 뜻이 없다. 실제로 전달하는 플롭이 얼마냐다". 처방은 나눠 붙이는 것이다 — 가속기마다 자기 몫의 로컬 HBM 슬라이스를 전용 버스로 붙이는 NUMA(비균일 메모리 아키텍처 — 코어마다 가까운 메모리를 따로 둬 경합을 줄이는 방식) 스타일이다.</p>
 <p>지금 업계의 답은 늘 더 빠르게였다 — 핀당 10Gb/s에서 16Gb/s로 밀고 있고 HBM5는 23~24Gb/s에 닿는다. Austin의 물음은 그 곡선을 겨눈다 — 매년 더 빠르게 만들어야 하나, 아니면 이미 가진 것을 다 쓰는 데 먼저 붙어야 하나. 공급자에게는 값을 매기는 근거가 흔들린다는 뜻이다. 핀당 속도로 세대를 가르고 값을 매겨 왔는데 그 속도를 다 못 쓴다는 것을 최대 수요처 중 하나가 공개 자리에서 말했으니, 다음 세대의 판매 논거는 속도 수치가 아니라 <b>그 속도가 실제 토큰 수로 옮겨진다는 증명</b> 쪽으로 옮겨 간다.</p>
-<h2 id="s5"><span class="num">5</span> 모델랩이 실리콘까지 내려오면 그 아래 단에 무엇이 열리나</h2>
-<figure class="uc-fig"><p class="fig-title">단마다 무엇이 열리나</p><svg class="epoch" viewBox="0 0 520 308" role="img" aria-label="CPU 는 대체재가 널렸고 파운드리는 대안이 없어 그대로 가고, 값이 움직이는 단은 메모리와 스케일업 망 둘이다. 시스템 조립은 Celestica 로 추정된다">
+<h2 id="s5"><span class="num">5</span> 모델랩이 실리콘까지 내려오면 밸류체인 아래쪽에 무엇이 열리나</h2>
+<figure class="uc-fig"><p class="fig-title">밸류체인에서 어디가 열리나</p><svg class="epoch" viewBox="0 0 520 308" role="img" aria-label="CPU 는 대체재가 널렸고 파운드리는 대안이 없어 그대로 가고, 새로 열리는 곳은 메모리와 스케일업 망 둘이다. 시스템 조립은 Celestica 로 추정된다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -382,29 +382,29 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
       <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
     </marker>
   </defs>
-  <text x="65" y="26" text-anchor="middle" class="fig-hd">단</text>
+  <text x="72.5" y="26" text-anchor="middle" class="fig-hd">밸류체인</text>
   <text x="315" y="26" text-anchor="middle" class="fig-hd">이 회차가 본 것</text>
-  <rect x="16" y="36" width="98" height="44" rx="9" class="fig-box"/>
-  <text x="65" y="64" text-anchor="middle" class="fig-b">CPU</text>
-  <rect x="126" y="36" width="378" height="44" rx="9" class="fig-stage"/>
+  <rect x="23.5" y="36" width="98" height="44" rx="9" class="fig-box"/>
+  <text x="72.5" y="64" text-anchor="middle" class="fig-b">CPU</text>
+  <rect x="133.5" y="36" width="363" height="44" rx="9" class="fig-stage"/>
   <text x="315" y="64" text-anchor="middle" class="fig-b">대체재가 널렸다 — Venice · 인텔</text>
-  <rect x="16" y="90" width="98" height="44" rx="9" class="fig-box"/>
-  <text x="65" y="118" text-anchor="middle" class="fig-b">파운드리</text>
-  <rect x="126" y="90" width="378" height="44" rx="9" class="fig-stage"/>
+  <rect x="23.5" y="90" width="98" height="44" rx="9" class="fig-box"/>
+  <text x="72.5" y="118" text-anchor="middle" class="fig-b">파운드리</text>
+  <rect x="133.5" y="90" width="363" height="44" rx="9" class="fig-stage"/>
   <text x="315" y="118" text-anchor="middle" class="fig-b">대안이 없다 — TSMC N3</text>
-  <rect x="16" y="144" width="98" height="44" rx="9" class="fig-box"/>
-  <text x="65" y="172" text-anchor="middle" class="fig-b">메모리</text>
-  <rect x="126" y="144" width="378" height="44" rx="9" class="fig-agent"/>
-  <text x="315" y="172" text-anchor="middle" class="fig-b">값이 움직인다 — 세대 차가 비교를 뒤집는다</text>
-  <rect x="16" y="198" width="98" height="44" rx="9" class="fig-box"/>
-  <text x="65" y="226" text-anchor="middle" class="fig-b">스케일업 망</text>
-  <rect x="126" y="198" width="378" height="44" rx="9" class="fig-agent"/>
-  <text x="315" y="226" text-anchor="middle" class="fig-b">값이 움직인다 — 규격이 갈라져 있다</text>
-  <rect x="16" y="252" width="98" height="44" rx="9" class="fig-box"/>
-  <text x="65" y="280" text-anchor="middle" class="fig-b">시스템 조립</text>
-  <rect x="126" y="252" width="378" height="44" rx="9" class="fig-stage"/>
+  <rect x="23.5" y="144" width="98" height="44" rx="9" class="fig-box"/>
+  <text x="72.5" y="172" text-anchor="middle" class="fig-b">메모리</text>
+  <rect x="133.5" y="144" width="363" height="44" rx="9" class="fig-agent"/>
+  <text x="315" y="172" text-anchor="middle" class="fig-b">새로 열린다 — 세대 차가 비교를 뒤집는다</text>
+  <rect x="23.5" y="198" width="98" height="44" rx="9" class="fig-box"/>
+  <text x="72.5" y="226" text-anchor="middle" class="fig-b">스케일업 망</text>
+  <rect x="133.5" y="198" width="363" height="44" rx="9" class="fig-agent"/>
+  <text x="315" y="226" text-anchor="middle" class="fig-b">새로 열린다 — 규격이 갈라져 있다</text>
+  <rect x="23.5" y="252" width="98" height="44" rx="9" class="fig-box"/>
+  <text x="72.5" y="280" text-anchor="middle" class="fig-b">시스템 조립</text>
+  <rect x="133.5" y="252" width="363" height="44" rx="9" class="fig-stage"/>
   <text x="315" y="280" text-anchor="middle" class="fig-b">Celestica 로 추정</text>
-</svg><figcaption>모델랩이 실리콘까지 내려와도 아래 단 전부가 열리는 게 아니다. CPU 는 대체재가 널렸고 파운드리는 대안이 없어 그대로 간다. 값이 움직이는 단은 메모리와 스케일업 망 둘이다. 시스템 조립은 SemiAnalysis 의 추정이다.</figcaption></figure>
+</svg><figcaption>모델랩이 실리콘까지 내려와도 밸류체인 아래쪽 전부가 열리는 게 아니다. CPU 는 대체재가 널렸고 파운드리는 대안이 없어 그대로 간다. 새로 열리는 곳은 메모리와 스케일업 망 둘이다. 시스템 조립은 SemiAnalysis 의 추정이다.</figcaption></figure>
 <p>Austin은 발표 슬라이드의 감사 문구에서 실마리를 잡았다 — Broadcom과 Celestica가 이름을 올렸다. OpenAI가 자체 칩에 점점 더 많은 기가와트를 쓴다면 공급망의 어느 업체가 그 흐름을 받느냐. CPU는 X86이고 Turin급으로 보는데, Vik은 다음 세대 Venice가 낫고 인텔 대안도 있다며 CPU는 널려 있다고 했다. 공정은 TSMC N3(N3P·N3E)로 본다. 메모리는 삼성 HBM4로 보이고 핀당 속도가 SK하이닉스보다 조금 나아 보탬이 됐을 수 있다는 것이 Vik의 관측인데, 그는 "전적으로 추측"이라고 못 박았다. 시스템 조립은 Celestica로 추정되고 Austin은 OEM 자리로 봤다.</p>
 <figure class="uc-fig"><p class="fig-title">스케일업은 랙 안이 아니다</p><svg class="epoch" viewBox="0 0 520 314" role="img" aria-label="랙 16대가 한 스케일업 도메인이다. 랙 하나는 128칩을 Tomahawk 6 로 칩당 초당 600기가비트로, 16대 2,048칩은 ESUN 으로 초당 200기가비트로 잇는다">
   <defs>
@@ -458,7 +458,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="260" y="285.5" text-anchor="middle" class="fig-b">Tomahawk 6 · 칩당 초당 600기가비트</text>
 </svg><figcaption>랙 16대가 한 스케일업 도메인이다. 랙 하나 128칩은 Tomahawk 6 로 칩당 초당 600기가비트, 16대 2,048칩은 ESUN 으로 초당 200기가비트다. 스케일업은 메모리를 나눠 쓰는 가속기들의 범위이지 랙 경계가 아니라는 것이 Austin 의 말이다.</figcaption></figure>
 <p>망이 가장 구체적이다. 128개의 Jalapeño가 하나의 스케일업 도메인에서 Broadcom Tomahawk 6 스위치로 붙고 칩당 초당 600기가비트로 통신하며, 그 위로 2,048개까지 넓히는 200기가비트 도메인이 있다. 프로토콜은 Broadcom이 이끈 ESUN이고 UALink와는 다른 갈래다. 배치로는 128개가 랙 하나, 2,048개가 랙 16개다. Austin은 스케일업의 정의도 고쳐 잡았다 — 랙 안이 아니라 메모리를 나눠 쓰는 가속기들을 뜻하며 이 구성은 랙 16개에 걸친다. 그 시장을 랙 안으로 잡아 온 계산이 다시 서야 한다.</p>
-<p>모델랩이 실리콘까지 내려와도 <b>아래 단 전부가 열리는 게 아니라 어긋난 자리만 열린다.</b> CPU처럼 대체재가 널린 단은 값을 못 받고 파운드리처럼 대안이 없는 단은 하던 대로 간다. 움직이는 곳은 ① 세대 차이가 성능 비교를 뒤집을 만큼 큰 메모리 ② 프로토콜이 아직 갈라져 있는 스케일업 망 둘이다.</p>
+<p>모델랩이 실리콘까지 내려와도 <b>밸류체인 아래쪽 전부가 열리는 게 아니라 어긋난 자리만 열린다.</b> CPU처럼 대체재가 널린 자리는 값을 못 받고 파운드리처럼 대안이 없는 자리는 하던 대로 간다. 새로 열리는 곳은 ① 세대 차이가 성능 비교를 뒤집을 만큼 큰 메모리 ② 프로토콜이 아직 갈라져 있는 스케일업 망 둘이다.</p>
 <h2 id="s6"><span class="num">6</span> 범용으로 남긴 선택이 남에게 뜻하는 것</h2>
 <figure class="uc-fig"><p class="fig-title">범용과 전용 사이 어디에 앉았나</p><svg class="epoch" viewBox="0 0 520 158" role="img" aria-label="범용 GPU 에서 한 모델 전용까지의 축 위에 구글 TPU 와 할라페뇨가 중간에 선다. 할라페뇨는 LLM 추론용이되 어떤 모델이든 돈다">
   <defs>
