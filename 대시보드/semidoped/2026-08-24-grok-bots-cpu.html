@@ -1,0 +1,279 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GPU 옆에 CPU 를 몇 개나 두어야 하나 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.who{margin-top:8px;font-size:13px;color:#4c5563;line-height:1.7}
+.who b{color:#1b1f27;margin-right:6px}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>GPU 옆에 CPU 를 몇 개나 두어야 하나</h1><div class="pmeta">2026-08-24 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus">https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-24-grok-bots-cpu.md">저장소</a><div class="who"><b>진행</b> Austin Lyons (Chipstrat) · Vik Sekar (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">에이전트를 어렵게 만들던 것이 사라지자 수요는 GPU 가 아니라 서버 CPU 쪽으로 번진다</div><p>Semi Doped 이번 회차는 Grok bot 이라는 에이전트 소프트웨어 하나에서 출발해 서버 CPU 시장 이야기로 끝난다. 진행자 둘(Austin·Vik)이 붙든 물음은 단순하다 — 보통 사람이 에이전트를 쉽게 돌리게 되면 그 일은 어느 칩 위에서 벌어지나. 이 글은 그 대화에서 한 제품의 평가가 아니라 업계에 보이는 것을 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">사람을 막던 것은 성능이 아니라 설치와 전원이었다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">에이전트가 사는 자리는 셋이고, 자리마다 다른 칩이 팔린다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">CPU 가 하는 일이 둘로 갈렸다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">「가장 좋은 에이전틱 CPU」가 없다는 말의 뜻</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">랙은 여러 종류가 됐는데 그 위를 지휘하는 층이 없다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">10억 코어라는 산수, 그리고 그 산수가 서려면 필요한 것</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 사람을 막던 것은 성능이 아니라 설치와 전원이었다</h2>
+<p>Vik 이 회차를 여는 자리에서 미리 못 박는다. "중요한 건 Grok bot 이 제품으로 무엇이냐가 아니라, 그 밑에 깔린 연산 기반에 무엇을 뜻하느냐, 특히 CPU 에 무엇을 뜻하느냐다". 실제로 이 회차에서 제품 자체를 다루는 대목은 첫머리 잠깐이고 나머지는 전부 그 아래 하드웨어다.</p>
+<p>무엇이 없어졌는지를 보려면 그 앞에 있던 것을 봐야 한다. Vik 이 되짚은 것은 지난겨울의 Mac Mini 열풍이다. 사람들이 산 것이 메모리였나, 거기 든 NPU(신경망 전용 연산기)였나, 그냥 CPU 였나 — Vik 의 답은 셋 다 아니다. 자기 노트북에 에이전트를 붙이면 의료 기록까지 포함해 컴퓨터 전체를 내주는 셈이라, 따로 둘 기계 한 대를 산 것이다. 산 것은 성능이 아니라 격리다.</p>
+<p>그런데 그 기계를 계속 살려 두는 일이 어렵다. Vik 이 든 걸림돌은 셋이다 — ① 정전이나 전원장치 고장으로 꺼지는 것 ② 집 인터넷이 끊기면 밖에서 못 들어가는 것 ③ 여행 중에 접속하려면 VPN 을 따로 세워야 하는 것. 그가 어머니에게 Mac Mini 와 Tailscale 과 무정전 전원장치와 예비 회선을 다 갖추라고 말하는 장면을 그려 보이고 대사를 붙였다. "나는 못 쓰겠다. 에이전트 컴퓨터는 네가 가져라. 나는 그냥 쓰던 노트북 쓰겠다". Austin 은 "99% 의 사람에게는 전부 쉬운 버튼 문제"라고 받았다.</p>
+<p>Grok bot 이 없앤 것이 정확히 이 셋이다. 다운로드한 것은 껍데기이고 실제로는 클라우드 어딘가의 가상머신 한 대가 돌아가며, 도구 로그인도 보안도 그 안에 들어 있다. 설치 단계에서 캘린더·드라이브·Canva·Figma 같은 연동을 고르면 그대로 깔린다. 값은 월 200달러다. 업계가 여기서 읽어야 할 것은 성능 경쟁이 아니라 <b>에이전트를 쓰기 어렵게 만들던 것이 하드웨어가 아니라 잡일이었고, 그 잡일을 남이 대신 해 주는 순간 사용자 수가 갇혀 있던 자리에서 풀린다</b>는 점이다.</p>
+<h2 id="s2"><span class="num">2</span> 에이전트가 사는 자리는 셋이고, 자리마다 다른 칩이 팔린다</h2>
+<figure class="uc-fig"><p class="fig-title">에이전트가 사는 자리 셋</p><svg class="epoch" viewBox="0 0 520 242" role="img" aria-label="세 자리 모두 추론은 클라우드 GPU 다. 다른 것은 에이전트 잡일이 도는 CPU 가 내 노트북인가, 책상 위 두 번째 기계인가, 남의 서버인가 하나다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="111.5" y="26" text-anchor="middle" class="fig-hd">노트북</text>
+  <rect x="39.5" y="36" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="111.5" y="64.5" text-anchor="middle" class="fig-b">잡일: 내 노트북</text>
+  <text x="111.5" y="87.5" text-anchor="middle" class="fig-b">CPU</text>
+  <line x1="111.5" y1="106" x2="111.5" y2="130" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="39.5" y="132" width="144" height="68" rx="9" class="fig-stage"/>
+  <text x="111.5" y="160.5" text-anchor="middle" class="fig-b">추론</text>
+  <text x="111.5" y="183.5" text-anchor="middle" class="fig-b">클라우드 GPU</text>
+  <text x="260" y="26" text-anchor="middle" class="fig-hd">Mac Mini</text>
+  <rect x="195.5" y="36" width="129" height="68" rx="9" class="fig-box"/>
+  <text x="260" y="64.5" text-anchor="middle" class="fig-b">잡일: 책상 위</text>
+  <text x="260" y="87.5" text-anchor="middle" class="fig-b">두 번째 CPU</text>
+  <line x1="260" y1="106" x2="260" y2="130" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="195.5" y="132" width="129" height="68" rx="9" class="fig-stage"/>
+  <text x="260" y="160.5" text-anchor="middle" class="fig-b">추론</text>
+  <text x="260" y="183.5" text-anchor="middle" class="fig-b">클라우드 GPU</text>
+  <text x="408.5" y="26" text-anchor="middle" class="fig-hd">클라우드 가상머신</text>
+  <rect x="336.5" y="36" width="144" height="68" rx="9" class="fig-agent"/>
+  <text x="408.5" y="64.5" text-anchor="middle" class="fig-b">잡일: 남의</text>
+  <text x="408.5" y="87.5" text-anchor="middle" class="fig-b">서버 CPU</text>
+  <line x1="408.5" y1="106" x2="408.5" y2="130" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="336.5" y="132" width="144" height="68" rx="9" class="fig-stage"/>
+  <text x="408.5" y="160.5" text-anchor="middle" class="fig-b">추론</text>
+  <text x="408.5" y="183.5" text-anchor="middle" class="fig-b">클라우드 GPU</text>
+  <rect x="0" y="216" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="228" class="fig-lg">쉬운 버튼이 옮기는 자리</text>
+</svg><figcaption>Austin 이 나란히 세운 세 경우다. 셋 모두 추론은 클라우드 GPU 이고, 갈리는 것은 에이전트 잡일이 도는 CPU 가 어디 있느냐다. 쉬운 버튼은 그 잡일까지 남의 서버로 옮긴다. 자리는 상태고 값은 없다.</figcaption></figure>
+<p>Austin 이 대화 중간에 세 경우를 나란히 세운다. ① 노트북에서 에이전트를 돌리면 일은 내 노트북 CPU 에서 벌어지고 추론만 클라우드 GPU 를 부른다 ② Mac Mini 를 따로 두면 그 일이 책상 위 두 번째 CPU 로 옮겨 가지만 여전히 내 것이다 ③ Grok bot 처럼 클라우드에 가상머신을 띄우면 CPU 도 GPU 도 남의 데이터센터에 있고 결과만 내려온다.</p>
+<p>셋 모두 GPU 는 클라우드다. 갈리는 것은 CPU 가 어디 있느냐 하나뿐이고, 그 하나가 어느 회사 매출로 잡히는지를 통째로 바꾼다. ①②에서 늘어나는 것은 소비자용 칩과 완제품이고, ③에서 늘어나는 것은 서버 CPU 와 데이터센터 임대다 — 이것은 진행자의 말이 아니라 이 글이 이어 읽은 것이다. Austin 이 마지막에 둘을 견준 대목이 이것이다 — Mac Mini 시절에도 토큰 요청이 늘어 호스트 노드 CPU 는 팔렸지만 에이전트가 하는 잡일 자체는 책상 위에서 벌어졌고, 쉬운 버튼을 누르는 방식에서는 그 잡일까지 데이터센터로 넘어간다.</p>
+<p>Vik 은 자기 가상머신이 어디 있을지를 직접 답한다 — 범용 CPU 위에서 그냥 운영체제 하나를 돌리는 컴퓨터이고, 그 작은 컴퓨터가 지니어스와 호스트 노드가 있는 건물 전체에 접근한다. 첫 번째로 늘어나는 수요가 특수한 칩이 아니라 <b>평범한 범용 서버 CPU</b> 라는 뜻이다.</p>
+<h2 id="s3"><span class="num">3</span> CPU 가 하는 일이 둘로 갈렸다</h2>
+<figure class="uc-fig"><p class="fig-title">천재 하나, 조수 둘</p><svg class="epoch" viewBox="0 0 520 248" role="img" aria-label="GPU 천재 옆에 같은 방의 호스트 CPU 가 다음 서류철을 대령하고, 천재가 뱉은 잡일은 코히어런시 없는 별도 랙의 에이전틱 CPU 가 받는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="26" text-anchor="middle" class="fig-hd">같은 방 — 코히어런트 연결(C2C)</text>
+  <rect x="96" y="36" width="144" height="68" rx="9" class="fig-agent"/>
+  <text x="168" y="64.5" text-anchor="middle" class="fig-b">GPU = 천재</text>
+  <text x="168" y="87.5" text-anchor="middle" class="fig-b">HBM 종이 더미</text>
+  <rect x="280" y="36" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="352" y="64.5" text-anchor="middle" class="fig-b">호스트 CPU</text>
+  <text x="352" y="87.5" text-anchor="middle" class="fig-b">다음 서류철 대령</text>
+  <line x1="242" y1="70" x2="278" y2="70" class="fig-arw"/>
+  <rect x="180" y="144" width="160" height="68" rx="9" class="fig-outside"/>
+  <text x="260" y="172.5" text-anchor="middle" class="fig-b">에이전틱 CPU 랙</text>
+  <text x="260" y="195.5" text-anchor="middle" class="fig-b">공시 긁기·컴파일</text>
+  <line x1="168" y1="106" x2="168" y2="142" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="260" y="234" text-anchor="middle" class="fig-hd">다른 랙 — 코히어런시 없음</text>
+</svg><figcaption>GPU 가 천재, CPU 가 조수라는 Austin 의 비유를 Vik 이 둘로 쪼갠 것이다. 호스트 CPU 는 같은 방에서 천재를 먹이고, 에이전틱 CPU 랙은 천재가 뱉은 잡일을 받아 다녀온다. 천재와 계속 말하지 않으니 코히어런시가 없어도 된다.</figcaption></figure>
+<p>Austin 이 세운 비유가 회차의 뼈대다. GPU 는 모든 분야에 박사 학위를 가진 천재이고, 그 천재가 무엇을 해야 할지 정하고 나면 실제 작업 대부분은 조수들에게 넘길 수 있으니 CPU 는 조수라는 것이다. Vik 이 여기서 조수를 둘로 쪼갠다.</p>
+<p>첫째는 호스트 노드 CPU 다. 하는 일은 천재가 멈추지 않게 다음 서류철을 계속 대령하는 것 하나뿐이다 — 천재가 쉬면 그게 손실이기 때문이다. 그래서 필요한 것은 코어 수가 아니라 코어 하나의 속도이고, GPU 와 같은 방에 있어야 한다. Austin 이 칩과 칩을 직접 잇는 코히어런트 방식(둘이 같은 메모리를 그대로 들여다보는 연결)을 Grace Blackwell 로 예시하고 Vik 이 C2C 프로토콜을 붙였다. Vik 은 HBM(고대역폭 메모리)을 천재 책상 옆의 종이 더미로 놓고, 메모리 일관성이란 조수가 그 더미를 같이 볼 수 있는 상태라고 풀었다. Austin 의 정리는 짧다. "호스트 CPU 는 할 일이 하나다. GPU 를 계속 먹이는 것".</p>
+<p>둘째가 새로 생긴 자리다 — 이 대목은 Austin 이 열었다. 챗봇 시대에는 첫째만 있으면 됐는데, 이제 천재가 코드를 뱉으면 그것을 컴파일해 봐야 하고 "50곳에서 정보를 가져와라, SEC 공시를 뒤지고 웹을 뒤져라" 같은 지시가 나온다. 이 일을 호스트가 받으면 그 순간 GPU 를 먹이던 손이 멈춘다 — Vik 은 그때 천재가 노는 것이 최악이라고 했다. 그래서 이 넘치는 일만 전담하는 랙이 필요하고, 여기 붙은 이름이 에이전틱 CPU 다. Vik 은 마케팅 용어일 거라 했고 Austin 은 최근 생긴 용어라고 불렀다. 기능이 다를 뿐 물리적으로는 같은 칩이어도 되며, 천재와 계속 이야기하지 않으니 코히어런시는 없어도 된다는 것이 Vik 의 정리다.</p>
+<h2 id="s4"><span class="num">4</span> 「가장 좋은 에이전틱 CPU」가 없다는 말의 뜻</h2>
+<p>Vik 은 코어 128개짜리 CPU 를 사무실 평면도로 놓는다. 네 코어씩 묶어 재무팀·리서치팀·시설팀으로 칸을 나누면, 호스트 노드가 "재무팀, 어젯밤 공시 긁어 와" 하고 부르고 그 네 코어가 다녀와 보고한다. 그러면 칸을 몇 개 만들지와 칸마다 몇 명을 넣을지가 설계 문제가 된다. AMD 의 256코어나 인텔의 288코어 제품이면 팀을 크게 짤 수 있다. 다만 사람이 유능해야 한다며 Vik 이 붙인 조건이 인턴 여덟 명과 경력자 여덟 명은 다르다는 것이고, 그래서 단일 코어 성능도 버릴 수 없다.</p>
+<p>Austin 이 여기에 반대 방향을 하나 얹는다. 호스트용 칩은 88코어쯤이지만 아주 빠른데, 같은 칩을 에이전틱 자리로 옮기면 빠른 사람 88명이 맞는지 아니면 128·256·288·512명이 맞는지를 다시 물어야 한다는 것이다. 이유는 작업의 성격이다 — 웹에서 무언가 가져오는 데 2~3초 걸리고 그동안 어차피 기다릴 뿐이라면 느린 코어여도 상관없다. Vik 의 요약이 "이제 직원 한 명당 비용 문제"다.</p>
+<p>그래서 나온 결론이 정답 없음이다. Vik 은 데이터센터를 랙으로 채울 때 코어가 많고 느린 칩 랙과 코어가 적고 빠른 칩 랙을 섞지 못할 이유가 없다고 하고 이렇게 닫는다. "맞는 CPU 하나 같은 건 없다. 전부 맞는 CPU 다. 코어당 비용과 총소유비용, 그리고 그것들을 어떻게 같이 쓰느냐의 문제다". 인텔이 올여름 에이전틱 AI 용으로 P랙과 E랙을 나눠 내놓은 것이 같은 판단이라고 Austin 이 짚었다. Vik 은 타이완에서 만난 인텔 발표자가 워크로드별로 어떤 구성이 맞는지 권해 준다고 전했다.</p>
+<p>파는 쪽에 이것이 뜻하는 바가 있다. 사양 한 줄로 우열을 가릴 수 있던 시절에는 카탈로그가 곧 영업이었는데, 맞는 칩이 워크로드마다 다르면 팔리는 것은 칩이 아니라 구성 제안이 된다. Austin 이 하이퍼스케일러와 일반 기업을 갈라 놓은 것도 이 축이다 — 앞쪽은 메모리 최적화처럼 워크로드를 정해 놓고 모양을 골라 사고, 뒤쪽은 두루 쓸 만한 것을 산다.</p>
+<h2 id="s5"><span class="num">5</span> 랙은 여러 종류가 됐는데 그 위를 지휘하는 층이 없다</h2>
+<figure class="uc-fig"><p class="fig-title">랙은 넷인데 지휘하는 층이 비었다</p><svg class="epoch" viewBox="0 0 520 236" role="img" aria-label="아래에 성격이 다른 랙 넷이 서고, 그 위 Nvidia Dynamo 는 천재를 굴리는 층일 뿐이다. 랙을 가로질러 일감을 나누는 맨 위 층은 있는지 미확인이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="36" y="150" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="77" y="178" text-anchor="middle" class="fig-b">GPU 랙</text>
+  <rect x="132" y="150" width="160" height="44" rx="9" class="fig-box"/>
+  <text x="212" y="178" text-anchor="middle" class="fig-b">Cerebras 랙</text>
+  <rect x="306" y="150" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="347" y="178" text-anchor="middle" class="fig-b">P코어 랙</text>
+  <rect x="402" y="150" width="82" height="44" rx="9" class="fig-box"/>
+  <text x="443" y="178" text-anchor="middle" class="fig-b">E코어 랙</text>
+  <rect x="57" y="92" width="394" height="44" rx="9" class="fig-stage"/>
+  <text x="254" y="120" text-anchor="middle" class="fig-b">Nvidia Dynamo — 천재를 굴리는 층</text>
+  <rect x="47.5" y="30" width="425" height="44" rx="9" class="fig-outside"/>
+  <text x="260" y="58" text-anchor="middle" class="fig-b">랙을 가로질러 일감을 나누는 층 — 있는지 미확인</text>
+  <rect x="0" y="210" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="22" y="222" class="fig-lg">비어 있는 자리</text>
+  <rect x="176.8" y="210" width="14" height="14" rx="3" class="fig-box fig-stage"/>
+  <text x="198.8" y="222" class="fig-lg">천재 안쪽 층</text>
+</svg><figcaption>아래는 이 회차에 이름이 나온 랙 넷. Nvidia Dynamo 는 천재를 잘 굴리는 층이지 그 위층이 아니라고 Vik 이 선을 그었다. 맨 위 층은 있는지 없는지 둘 다 모른다고 밝혔고, 후보로 Modular 와 Gimlet Labs 가 나왔다.</figcaption></figure>
+<p>Vik 이 곁가지로 꺼낸 Cerebras 의 랙 규모 제품 발표가 여기서 축이 된다. 웨이퍼 하나가 곧 칩이던 회사가 이제 연산의 단위를 랙으로 말한다는 것이다. 그러면 데이터센터에 성격이 다른 랙이 나란히 선다 — GPU 랙, Cerebras 랙, 인텔 P코어 랙, E코어 랙.</p>
+<p>Vik 은 천재 쪽도 셋으로 갈랐다. ① 아주 빠른데 기억을 못 하는 천재 ② HBM 을 많이 달아 맥락을 넓게 쥐지만 그만큼 빠르지는 않은 천재 ③ 느리게 오래 생각하고 나중에 답을 들고 오는 천재. 셋째가 실제 수요라는 근거로 그가 든 것이 과학과 의학 문제, 그리고 날씨다 — 날씨 자체가 느리니 추론이 느려도 상관없다는 것이다. Austin 은 야간 배치 작업을 얹었고, 그런 일이라면 P코어 묶음 위에서 LLM 을 돌려도 된다고 했다.</p>
+<p>여기서 빈자리가 드러난다. Austin 의 물음은 빠른 천재와 보통 천재와 CPU 에 걸쳐 작업을 배분하는 소프트웨어가 지금 있느냐다. Vik 은 Nvidia Dynamo 가 있지만 그것은 천재를 잘 굴리는 층이지 그 위층이 아니라고 선을 그었다. 후보로 Modular 를 들었으나 그쪽도 아직 천재 쪽에 가까운 것 같다고 했고, Austin 은 Mojo 로 CPU 와 GPU 를 한 언어로 짤 수 있다는 것까지만 알고 조율 기능은 잘 모르겠다고 했다. Vik 이 그린 최종 형태는 AMD 랙과 Nvidia 랙을 한 데이터센터에서 섞어 쓰고 그 위에 CPU 와 GPU 사이 데이터 이동까지 관장하는 층인데, 있는지 없는지 둘 다 모른다고 밝혔다. Austin 이 지난 5월 대화한 Gimlet Labs 가 그 자리에서 일한다며, 신생 GPU 임대 사업자가 서로 다른 하드웨어에 일감을 잘 나눠 원가를 낮출 수 있느냐가 그들의 물음이었다고 전했다.</p>
+<h2 id="s6"><span class="num">6</span> 10억 코어라는 산수, 그리고 그 산수가 서려면 필요한 것</h2>
+<p>Vik 은 사용자층이 넓어지는 쪽에 무게를 뒀다. 토큰을 아껴 쓰는 기술 애호가만이 아니라 AI 를 쓸 생각이 없던 사람들까지 들어오면 그 한 사람 한 사람에게 가상머신이 배정되고, 그 가상머신마다 에이전트 10개·50개·100개가 돌면서 CPU 와 GPU 를 부른다는 것이다. Austin 이 그것을 수로 옮겼다. "1천만 명이 이걸 한다는 게 말도 안 되는 수는 아니다. 그러면 클라우드에서 코어 1천만 개 위에 가상머신 1천만 개가 돈다. 거기에 가상머신마다 에이전트를 100개씩 띄우면 갑자기 코어 10억 개가 필요해진다".</p>
+<figure class="uc-fig"><p class="fig-title">코어 10억 개의 곱셈</p><svg class="epoch" viewBox="0 0 520 204" role="img" aria-label="사용자 1천만 명 × 사람당 가상머신 1개 × 가상머신마다 에이전트 100개 = 코어 10억 개. 항마다 조건이 붙고 셋째 항이 가장 헐겁다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0.5" y="30" width="98" height="68" rx="9" class="fig-box"/>
+  <text x="49.5" y="58.5" text-anchor="middle" class="fig-b">사용자</text>
+  <text x="49.5" y="81.5" text-anchor="middle" class="fig-b">1천만 명</text>
+  <line x1="49.5" y1="100" x2="49.5" y2="120" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0.5" y="122" width="98" height="68" rx="9" class="fig-stage"/>
+  <text x="49.5" y="150.5" text-anchor="middle" class="fig-b">쉬운 버튼이</text>
+  <text x="49.5" y="173.5" text-anchor="middle" class="fig-b">쉬워야</text>
+  <text x="109.5" y="70" text-anchor="middle" class="fig-st">×</text>
+  <rect x="120.5" y="30" width="113" height="68" rx="9" class="fig-box"/>
+  <text x="177" y="58.5" text-anchor="middle" class="fig-b">사람당</text>
+  <text x="177" y="81.5" text-anchor="middle" class="fig-b">가상머신 1개</text>
+  <line x1="177" y1="100" x2="177" y2="120" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="120.5" y="122" width="113" height="68" rx="9" class="fig-stage"/>
+  <text x="177" y="150.5" text-anchor="middle" class="fig-b">제품 구조일</text>
+  <text x="177" y="173.5" text-anchor="middle" class="fig-b">뿐</text>
+  <text x="244.5" y="70" text-anchor="middle" class="fig-st">×</text>
+  <rect x="255.5" y="30" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="327.5" y="58.5" text-anchor="middle" class="fig-b">가상머신마다</text>
+  <text x="327.5" y="81.5" text-anchor="middle" class="fig-b">에이전트 100개</text>
+  <line x1="327.5" y1="100" x2="327.5" y2="120" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="255.5" y="122" width="144" height="68" rx="9" class="fig-stage"/>
+  <text x="327.5" y="150.5" text-anchor="middle" class="fig-b">기다리는 일이면</text>
+  <text x="327.5" y="173.5" text-anchor="middle" class="fig-b">코어를 나눠 씀</text>
+  <text x="410.5" y="70" text-anchor="middle" class="fig-st">=</text>
+  <rect x="421.5" y="30" width="98" height="68" rx="9" class="fig-agent"/>
+  <text x="470.5" y="58.5" text-anchor="middle" class="fig-b">코어</text>
+  <text x="470.5" y="81.5" text-anchor="middle" class="fig-b">10억 개</text>
+  <line x1="470.5" y1="100" x2="470.5" y2="120" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="421.5" y="122" width="98" height="68" rx="9" class="fig-stage"/>
+  <text x="470.5" y="150.5" text-anchor="middle" class="fig-b">가장 헐거운</text>
+  <text x="470.5" y="173.5" text-anchor="middle" class="fig-b">항은 셋째</text>
+</svg><figcaption>Austin 의 산수다. 항마다 조건이 붙는다 — 사용자 수는 월 200달러가 막고, 사람당 가상머신 하나는 제품 구조일 뿐이고, 에이전트 100개가 코어 100개가 되려면 코어를 붙들고 있어야 하는데 기다리는 일이면 나눠 쓴다. 셋째 항이 가장 헐겁다.</figcaption></figure>
+<p>산수의 항은 셋이고 항마다 조건이 다르다. ① 사용자 수는 쉬운 버튼이 실제로 쉬운지에 달렸는데 월 200달러라는 값이 지금은 그 앞을 막는다. ② 사람당 가상머신 하나는 제품 구조가 그래서 성립하는 것이지 법칙이 아니다. ③ 에이전트 100개가 코어 100개를 뜻하려면 에이전트 하나가 코어 하나를 붙들고 있어야 하는데, 정작 Austin 자신이 웹 응답을 2~3초 기다리며 앉아 있을 뿐인 작업을 예로 들었다. 기다리는 일이라면 코어 하나에 여럿을 얹을 수 있으니 셋째 항이 가장 헐겁다.</p>
+<p>그래도 방향은 남는다. 이 회차가 실제로 말하는 것은 코어 10억 개라는 수가 아니라, 에이전트가 늘 때 늘어나는 하드웨어가 GPU 만이 아니라는 것이다. 그리고 그중 지금 당장 늘어나는 쪽은 이름 붙은 에이전틱 CPU 가 아니라 가상머신을 얹는 범용 서버 CPU 다. Vik 이 인텔의 2월 실적 발표를 끌어온 이유가 이것이다 — 에이전트가 세상에 나온 것이 작년 12월인데 그 짧은 사이에 CPU 수요가 몰렸고, 인텔조차 그런 게 올 줄 몰랐다고 말했다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</h2>
+<p>말하지 않은 것 넷이다. ① 실제 비중. Austin 이 회차를 닫으며 남긴 물음이 그대로다 — 이 일들이 에이전틱 CPU 라고 이름 붙은 것 위에서 얼마나 돌고 범용 기계의 가상머신에서 얼마나 도는지 모르니, Anthropic 이나 OpenAI 가 알려 주면 좋겠다고 했다. ② 에이전트 하나가 코어를 얼마나 오래 붙들고 있는지에 대한 측정치가 없다. ③ 조율 소프트웨어가 이미 있는지 없는지를 둘 다 확인하지 못했다고 밝혔다. ④ 가격과 원가. 월 200달러가 어떻게 나온 값인지, 그 안에서 CPU 에 얼마가 가고 토큰에 얼마가 가는지는 이 회차에 없다.</p>
+<p>판단이 바뀌는 조건은 셋이다. ① 가상머신이 아니라 컨테이너나 요청 단위 실행으로 제품 구조가 옮겨 가면 사람당 코어 하나라는 전제가 무너지고 6절의 산수가 통째로 다시 서야 한다. ② 인텔의 P랙·E랙이 실제로 얼마나 나가는지가 4절의 「정답 없음」이 시장에서도 성립하는지를 가른다 — 지금은 파는 쪽이 그렇게 말한 단계까지다. ③ 조율 층을 누가 쥐느냐가 정해지면 5절의 빈자리가 사라진다. 그 층이 GPU 공급자 쪽에서 나오면 이종 랙을 섞을 이유가 줄고, 독립 소프트웨어 쪽에서 나오면 3절에서 갈라 놓은 CPU 두 종류가 실제로 따로 팔릴 근거가 생긴다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-08-24-grok-bots-cpu-strategy.md">insights/semidoped/2026-08-24-grok-bots-cpu-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>

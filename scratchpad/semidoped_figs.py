@@ -336,9 +336,119 @@ def _jal_spectrum():
 
 JAL = '2026-08-27-openai-jalapeno'
 
+
+# ══ GPU 옆 CPU (2026-08-24) 전략 판 ═══════════════════════════════════
+# 값은 전사의 것만 — 월 200달러 · 1천만 명 · 에이전트 100개 · 코어 10억 개. 자리·역할은 상태다.
+
+def _grok_places():
+    """에이전트가 사는 자리 셋. 열 셋이 같은 꼴 — 위 「에이전트 잡일」, 아래 「추론」. 다른 것은 잡일 칸의
+    위치(내 노트북 / 책상 위 두 번째 기계 / 남의 데이터센터)뿐이다."""
+    cols = [('노트북', ['잡일: 내 노트북', 'CPU'], 'fig-box'),
+            ('Mac Mini', ['잡일: 책상 위', '두 번째 CPU'], 'fig-box'),
+            ('클라우드 가상머신', ['잡일: 남의', '서버 CPU'], 'fig-agent')]
+    h = 2 * LH + 22
+    bot = ['추론', '클라우드 GPU']
+    ws = [w_of(top, [hd], bot) for hd, top, _c in cols]
+    gap = 12
+    x = (W - (sum(ws) + gap * 2)) / 2
+    parts = []
+    for (hd, top, cls), w in zip(cols, ws):
+        parts += head(x, 26, w, hd)
+        parts += box(x, 36, w, h, top, cls)
+        parts += vline(x + w / 2, 36 + h + 2, 36 + h + 26)
+        parts += box(x, 36 + h + 28, w, h, bot, 'fig-stage')
+        x += w + gap
+    y = 36 + h + 28 + h
+    parts += legend([('fig-agent', '쉬운 버튼이 옮기는 자리')], y + 16)
+    return svg(y + 42, parts,
+               '세 자리 모두 추론은 클라우드 GPU 다. 다른 것은 에이전트 잡일이 도는 CPU 가 내 노트북인가, 책상 위 두 번째 기계인가, 남의 서버인가 하나다')
+
+
+def _grok_genius():
+    """천재(GPU)와 조수 둘. 호스트 CPU 는 같은 방에서 천재를 먹이고, 에이전틱 CPU 랙은 넘치는 잡일을 받는다."""
+    h = 2 * LH + 22
+    gw = w_of(['GPU = 천재', 'HBM 종이 더미'])
+    hw = w_of(['호스트 CPU', '다음 서류철 대령'])
+    aw = w_of(['에이전틱 CPU 랙', '공시 긁기·컴파일'])
+    gap = 40
+    x0 = (W - (gw + gap + hw)) / 2
+    parts = head(x0, 26, gw + gap + hw, '같은 방 — 코히어런트 연결(C2C)')
+    parts += box(x0, 36, gw, h, ['GPU = 천재', 'HBM 종이 더미'], 'fig-agent')
+    parts += box(x0 + gw + gap, 36, hw, h, ['호스트 CPU', '다음 서류철 대령'], 'fig-box')
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"/>' % (x0 + gw + 2, 36 + h / 2, x0 + gw + gap - 2, 36 + h / 2)]
+    y2 = 36 + h + 40
+    ax = (W - aw) / 2
+    parts += box(ax, y2, aw, h, ['에이전틱 CPU 랙', '공시 긁기·컴파일'], 'fig-outside')
+    parts += vline(x0 + gw / 2, 36 + h + 2, y2 - 2)
+    parts += head(0, y2 + h + 22, W, '다른 랙 — 코히어런시 없음')
+    return svg(y2 + h + 36, parts,
+               'GPU 천재 옆에 같은 방의 호스트 CPU 가 다음 서류철을 대령하고, 천재가 뱉은 잡일은 코히어런시 없는 별도 랙의 에이전틱 CPU 가 받는다')
+
+
+def _grok_layers():
+    """랙 종류 넷이 아래에 나란히, 그 위에 Dynamo(천재 안쪽), 맨 위가 빈 조율 층."""
+    h = 44
+    racks = [(['GPU 랙'], 'fig-box'), (['Cerebras 랙'], 'fig-box'), (['P코어 랙'], 'fig-box'), (['E코어 랙'], 'fig-box')]
+    ws = [w_of(l) for l, _ in racks]
+    gap = 14
+    x = (W - (sum(ws) + gap * 3)) / 2
+    y_r = 150
+    parts, cs = [], []
+    for (l, c), w in zip(racks, ws):
+        parts += box(x, y_r, w, h, l, c)
+        cs.append(x + w / 2)
+        x += w + gap
+    dw = w_of(['Nvidia Dynamo — 천재를 굴리는 층'])
+    parts += box(cs[0] - 20, 92, dw, h, ['Nvidia Dynamo — 천재를 굴리는 층'], 'fig-stage')
+    tw = w_of(['랙을 가로질러 일감을 나누는 층 — 있는지 미확인'])
+    parts += box((W - tw) / 2, 30, tw, h, ['랙을 가로질러 일감을 나누는 층 — 있는지 미확인'], 'fig-outside')
+    parts += legend([('fig-outside', '비어 있는 자리'), ('fig-stage', '천재 안쪽 층')], y_r + h + 16)
+    return svg(y_r + h + 42, parts,
+               '아래에 성격이 다른 랙 넷이 서고, 그 위 Nvidia Dynamo 는 천재를 굴리는 층일 뿐이다. 랙을 가로질러 일감을 나누는 맨 위 층은 있는지 미확인이다')
+
+
+def _grok_math():
+    """코어 10억 개의 곱셈. 항 셋과 결과가 한 줄, 항마다 아래에 조건."""
+    h = 2 * LH + 22
+    terms = [(['사용자', '1천만 명'], ['쉬운 버튼이', '쉬워야']),
+             (['사람당', '가상머신 1개'], ['제품 구조일', '뿐']),
+             (['가상머신마다', '에이전트 100개'], ['기다리는 일이면', '코어를 나눠 씀']),
+             (['코어', '10억 개'], ['가장 헐거운', '항은 셋째'])]
+    ws = [w_of(t, c) for t, c in terms]
+    gap = 22
+    x = (W - (sum(ws) + gap * 3)) / 2
+    parts, ops = [], ['×', '×', '=']
+    for k, ((t, c), w) in enumerate(zip(terms, ws)):
+        parts += box(x, 30, w, h, t, 'fig-agent' if k == 3 else 'fig-box')
+        parts += vline(x + w / 2, 30 + h + 2, 30 + h + 22)
+        parts += box(x, 30 + h + 24, w, h, c, 'fig-stage')
+        if k < 3:
+            parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-st">%s</text>' % (x + w + gap / 2, 30 + h / 2 + 6, ops[k])]
+        x += w + gap
+    y = 30 + h + 24 + h
+    return svg(y + 14, parts,
+               '사용자 1천만 명 × 사람당 가상머신 1개 × 가상머신마다 에이전트 100개 = 코어 10억 개. 항마다 조건이 붙고 셋째 항이 가장 헐겁다')
+
+
+GROK = '2026-08-24-grok-bots-cpu'
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (GROK, 'strategy'): [
+        ('2.|Austin 이 대화', '에이전트가 사는 자리 셋', _grok_places(),
+         'Austin 이 나란히 세운 세 경우다(L73). 셋 모두 추론은 클라우드 GPU 이고, 갈리는 것은 에이전트 잡일이 도는 CPU 가 어디 있느냐다. '
+         '쉬운 버튼은 그 잡일까지 남의 서버로 옮긴다(L147). 자리는 상태고 값은 없다.'),
+        ('3.|Austin 이 세운', '천재 하나, 조수 둘', _grok_genius(),
+         'GPU 가 천재, CPU 가 조수라는 Austin 의 비유(L77)를 Vik 이 둘로 쪼갠 것이다(L81·L91·L101). 호스트 CPU 는 같은 방에서 천재를 먹이고, '
+         '에이전틱 CPU 랙은 천재가 뱉은 잡일을 받아 다녀온다. 천재와 계속 말하지 않으니 코히어런시가 없어도 된다.'),
+        ('5.|Vik 이 곁가지로', '랙은 넷인데 지휘하는 층이 비었다', _grok_layers(),
+         '아래는 이 회차에 이름이 나온 랙 넷(L115·L121). Nvidia Dynamo 는 천재를 잘 굴리는 층이지 그 위층이 아니라고 Vik 이 선을 그었다(L125). '
+         '맨 위 층은 있는지 없는지 둘 다 모른다고 밝혔고(L133), 후보로 Modular 와 Gimlet Labs 가 나왔다(L129·L135).'),
+        ('6.|산수의 항은', '코어 10억 개의 곱셈', _grok_math(),
+         'Austin 의 산수다(L145). 항마다 조건이 붙는다 — 사용자 수는 월 200달러가 막고(L63), 사람당 가상머신 하나는 제품 구조일 뿐이고, '
+         '에이전트 100개가 코어 100개가 되려면 코어를 붙들고 있어야 하는데 기다리는 일이면 나눠 쓴다(L105). 셋째 항이 가장 헐겁다.'),
+    ],
     (JAL, 'strategy'): [
         ('1.', '아홉 달을 만든 세 요인', _jal_nine_months(),
          '셋이 겹쳐 아홉 달이 됐다(L97). 사람과 백지는 전에도 있던 항이고 AI 도구만 새 항이라는 것이 이 절의 논지다. '
