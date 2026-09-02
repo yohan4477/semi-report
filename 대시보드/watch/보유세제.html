@@ -1,0 +1,110 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>보유세제 — 포트폴리오 워치</title><style>
+:root{
+  --paper:#F2F4F3; --ink:#17211F; --ink-2:#3C4A46; --ink-3:#6E7B77;
+  --rule:#C9D2CE; --surface:#FBFCFB; --line:#C9D2CE;
+  --hit:#B4451F; --near:#C08A2E; --calm:#2E6E63;
+  --fig-blue:#2E6E63; --fig-good:#B4451F; --warn:#C08A2E;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#101614; --ink:#E6EBE9; --ink-2:#B4C0BC; --ink-3:#7E8C87;
+  --rule:#2A3633; --surface:#161E1B; --line:#2A3633;
+  --hit:#E0703F; --near:#D9A64A; --calm:#5FA79A;
+  --fig-blue:#5FA79A; --fig-good:#E0703F; --warn:#D9A64A;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:400 15px/1.7 -apple-system,"Segoe UI","Malgun Gothic",sans-serif;
+  font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+header{padding:34px 0 0}
+h1{font-size:1.5rem;font-weight:850;letter-spacing:-.02em;margin:0}
+.eyebrow{font-size:10.5px;font-weight:850;letter-spacing:.16em;color:var(--ink-3);margin:0 0 7px}
+.lede{color:var(--ink-2);font-size:.93rem;max-width:64ch;margin:14px 0 0}
+.back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:700;
+  color:var(--ink-3);border-bottom:0}
+.back:hover,.back:focus-visible{color:var(--ink)}
+.dbody{margin:26px 0 0}
+.band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
+.band-t{font-size:11px;font-weight:850;letter-spacing:.14em;margin:0}
+.band-s{font-size:.85rem;color:var(--ink-3);margin:5px 0 0;max-width:64ch}
+.rows{margin:14px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--rule)}
+.row:last-child{border-bottom:0}
+.row-where{font-size:.8rem;color:var(--ink-3)}
+.row-what{font-weight:700}
+.row-num{font-size:1.05rem;font-weight:600;white-space:nowrap}
+.row-why{grid-column:2/-1;font-size:.83rem;color:var(--ink-3)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+.d-hit{background:var(--hit)}
+.d-near{background:transparent;border:2px solid var(--near)}
+.tag{font-size:10.5px;font-weight:850;letter-spacing:.06em;padding:1px 7px;
+  border-radius:2px;white-space:nowrap}
+.t-hit{background:var(--hit);color:#fff}
+.t-near{border:1px solid var(--near);color:var(--near)}
+.t-calm{color:var(--calm)}
+.t-none{color:var(--ink-3)}
+table{width:100%;border-collapse:collapse;margin:12px 0 0;font-size:.88rem}
+th{text-align:left;font-size:10px;font-weight:850;letter-spacing:.1em;color:var(--ink-3);
+  border-bottom:1.5px solid var(--ink);padding:0 12px 7px 0;white-space:nowrap}
+td{padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+td:first-child{font-weight:700}
+.tw{overflow-x:auto}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+a:hover,a:focus-visible{border-bottom-color:var(--ink)}
+/* 줄 목록 — 이름·문장·수치 세 줄. 탭·카드 대신 훑어 내려가는 목록 하나다 */
+.wline{margin:14px 0 0;padding:12px 0;border-bottom:1px solid var(--rule)}
+.wline:last-child{border-bottom:0}
+.wline-t{display:block;font-weight:800;font-size:1rem;border-bottom:0}
+.wline-s{margin:4px 0 0;font-size:.88rem;color:var(--ink-2)}
+.wline-s b{color:var(--ink);font-weight:800}
+.wline-n{margin:4px 0 0;font-size:.8rem;color:var(--ink-3)}
+.wline-n b{color:var(--ink-2);font-weight:800}
+.line{margin:34px 0 0;padding:20px 0 0;border-top:1px solid var(--rule)}
+.line-why{color:var(--ink-2);font-size:.9rem;margin:6px 0 0}
+.line-judge{margin:13px 0 0;font-size:.94rem;line-height:1.75;color:var(--ink-2)}
+.line-judge b{color:var(--ink);font-weight:800}
+ul.pts{margin:12px 0 0;padding-left:18px}
+ul.pts li{margin:0 0 8px;font-size:.9rem;color:var(--ink-2)}
+ul.pts li b{color:var(--ink)}
+.lbl{font-size:10px;font-weight:850;letter-spacing:.1em;color:var(--ink-3);margin:22px 0 0}
+figure{margin:9px 0 0}
+figure svg{width:100%;height:auto;display:block}
+/* 도해는 넓은 판·좁은 판 둘을 싣고 화면 폭으로 하나만 보인다. 줄여 그리면 글자가
+   7px 이 되고 최소폭을 두면 오른쪽 끝(제일 최근 달)이 화면 밖으로 나간다 */
+svg.fig-n{display:none}
+figcaption{font-size:.78rem;color:var(--ink-3);margin:5px 0 0}
+.t-sm{font-size:13px;fill:var(--ink-2)}
+.t-axis{fill:var(--ink-3)}
+.grid{stroke:var(--rule);stroke-width:1;fill:none}
+footer{margin:60px 0 0;padding-top:16px;border-top:2px solid var(--ink);
+  font-size:.8rem;color:var(--ink-3)}
+code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px}
+/* ── 좁은 화면 ────────────────────────────────────────────────────────────
+   표를 가로로 밀게 두지 않는다. 열 이름을 값 앞에 세워 세로로 편다 —
+   7열짜리를 손가락으로 미는 화면에서는 값을 견줄 수가 없다.
+   도해는 세로로 못 편다(가로축이 시간이다). 대신 최소 폭을 두고 그 판만 민다. */
+@media (max-width:620px){
+  body{font-size:16px}
+  .wrap{padding:0 14px 60px}
+  /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
+     세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}
+  .row-where,.row-why{grid-column:1/-1}
+  .row-what{word-break:keep-all;overflow-wrap:anywhere}
+  .tw{overflow-x:visible}
+  table,thead,tbody,tr,td{display:block;width:100%}
+  thead{display:none}
+  tr{padding:11px 0;border-bottom:1px solid var(--rule)}
+  tr:last-child{border-bottom:0}
+  td{display:flex;gap:10px;align-items:baseline;border:0;padding:2px 0}
+  td::before{content:attr(data-th);flex:0 0 8.5em;font-size:10px;font-weight:850;
+    letter-spacing:.08em;color:var(--ink-3);line-height:1.9}
+  td:first-child{font-size:1.02rem;padding-bottom:5px}
+  td:first-child::before{display:none}
+  svg.fig-w{display:none}
+  svg.fig-n{display:block}
+  .band{margin-top:32px}
+  .line{margin-top:28px}
+}
+</style></head><body><div class="wrap"><a class="back" href="../포트폴리오 워치.html#lines">← 포트폴리오 워치</a><header><p class="eyebrow">보유세제 · 제도 · 마지막 확인 2026-09-01</p><h1>보유세제</h1></header><div class="dbody"><section class="line"><p class="line-why">갖고 있는 동안 해마다 나가는 돈이 바뀌었나.</p><p class="line-judge">집 한 채에 세금은 세 번 붙는다 — 살 때, 갖고 있는 동안, 팔 때. 이 줄은 <b>갖고 있는 동안</b>만 본다. 취득과 양도는 각각 다른 줄이다.  확인된 것은 판이 언제 것인가다. 종합부동산세법은 시행일이 2026년 1월 1일이고 소관은 재정경제부, 지방세법은 2026년 7월 1일이다. <b>세율과 공제액은 여기 안 적는다</b> — 조문과 시행령에 흩어져 있고, 해마다 공시가격과 공정시장가액비율이 따로 정해져 실제 부담은 그 둘을 같이 봐야 나온다.</p><p class="lbl">판단 이력</p><div class="tw"><table><thead><tr><th>날짜</th><th>무엇을</th><th>왜</th></tr></thead><tbody><tr><td data-th="날짜">2026-09-01</td><td data-th="무엇을">줄을 연다 — 조문이 아니라 시행일자를 본다</td><td data-th="왜">바뀐 내용은 사람이 읽는다. 기계는 「내가 읽은 판」과 지금 판이 같은지만 안다</td></tr></tbody></table></div><p class="lbl">내가 읽은 판과 지금 판</p><div class="tw"><table><thead><tr><th>법·고시</th><th>내가 읽은 판</th><th>지금 판</th><th>같은가</th></tr></thead><tbody><tr><td data-th="법·고시">종합부동산세법</td><td data-th="내가 읽은 판">2026-01-01</td><td data-th="지금 판">2026-01-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td></tr><tr><td data-th="법·고시">지방세법</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="지금 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td></tr></tbody></table></div><p class="lbl">왜 보나</p><ul class="pts"><li><b>실거주자에게도 남의 일이 아니다.</b> 보유세는 파는 쪽의 셈을 바꾸고, 그것이 매물이 나오는 속도를 바꾼다. 살 사람이 고를 수 있는 물건 수가 여기서 갈린다.</li><li><b>법이 둘이라 따로 본다.</b> 종합부동산세는 국세이고 재산세는 지방세다. 한쪽만 바뀌는 일이 흔해서 시행일을 각각 적어 둔다.</li><li><b>법이 안 바뀌어도 부담은 바뀐다.</b> 공시가격과 공정시장가액비율이 해마다 따로 정해진다 — 그래서 세 번째 줄을 사건으로 뒀다.</li></ul><p class="lbl">값으로 안 오는 것 — 사람이 확인한다</p><div class="tw"><table><thead><tr><th>무엇을 확인하나</th><th>언제 판단이 바뀌나</th><th>걸리면</th><th>어디서 확인하나</th></tr></thead><tbody><tr><td data-th="무엇을 확인하나">종합부동산세법 개정</td><td data-th="언제 판단이 바뀌나">시행일이 내가 본 판과 달라지면</td><td data-th="걸리면">바뀐 조문을 읽고 이 줄 「내가 읽은 판」을 올린다 — 실거주 줄의 사건 트리거에 닿으면 그쪽도 건다</td><td data-th="어디서 확인하나"><a href="https://www.law.go.kr">www.law.go.kr</a></td></tr><tr><td data-th="무엇을 확인하나">지방세법 개정</td><td data-th="언제 판단이 바뀌나">시행일이 내가 본 판과 달라지면</td><td data-th="걸리면">바뀐 조문을 읽고 이 줄 「내가 읽은 판」을 올린다 — 실거주 줄의 사건 트리거에 닿으면 그쪽도 건다</td><td data-th="어디서 확인하나"><a href="https://www.law.go.kr">www.law.go.kr</a></td></tr><tr><td data-th="무엇을 확인하나">공시가격·공정시장가액비율 고시</td><td data-th="언제 판단이 바뀌나">해마다 정해지는 값이 나오면</td><td data-th="걸리면">보유세를 다시 셈한다 — 1주택 실거주 기준으로 종부세 문턱을 넘나만 본다</td><td data-th="어디서 확인하나"><a href="https://www.realtyprice.kr">www.realtyprice.kr</a></td></tr></tbody></table></div><p class="lbl">반대 근거</p><ul class="pts"><li><b>세율이 이 줄에 없다</b> — 있는 것은 판이 언제 바뀌었나뿐이다. 얼마를 내는지는 조문과 그해 고시를 같이 읽어야 나온다.</li><li><b>개인 사정에 달렸다</b> — 몇 채인지, 어디에 사는지, 나이와 보유 기간이 얼마인지에 따라 갈린다. 권역 값처럼 하나의 수로 안 나온다.</li><li><b>발표는 아직 법이 아니다</b> — 개편안이 나와도 국회를 지나야 시행된다. 이 줄이 재는 것은 시행된 판뿐이다.</li></ul></section></div><footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer></div></body></html>

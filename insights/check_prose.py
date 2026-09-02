@@ -569,7 +569,10 @@ def check_dashboards(gloss):
 
     용어 사전(P2)은 대지 않는다. 대시보드는 카드마다 독립해 읽히는 화면이라
     「첫 등장」이라는 개념이 문서와 다르다."""
-    paths_ = sorted(glob.glob(os.path.join(DASH_DIR, '*.html')))
+    # watch/ 하위 글 페이지(줄 상세)도 우리가 쓴 화면이라 같은 규칙을 댄다 —
+    # 다른 장의 카드 단독 페이지 폴더는 이 목록에 없으니 안 건드린다(2026-09-02).
+    paths_ = sorted(glob.glob(os.path.join(DASH_DIR, '*.html')) +
+                    glob.glob(os.path.join(DASH_DIR, 'watch', '*.html')))
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)

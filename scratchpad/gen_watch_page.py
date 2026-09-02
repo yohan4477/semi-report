@@ -19,6 +19,14 @@
 (다음에 할 일)이, 사건 트리거에는 「걸리면」·「확인처」(사람이 확인하는 URL)가 붙는다.
 줄 하나가 `## 이력` 절을 두면 「판단 이력」 표로 낸다 — 판단이 언제 왜 바뀌었는지가
 「지금 판단」 문단 하나에는 안 남는다.
+
+2026-09-02 두 번째 변경 — 화면을 두 층으로 가른다. 도해 26장·표 32개·줄 열 개가
+한 장에 다 펼쳐져 있어 390px 폰에서 스크린 수십 개였다. 이 장을 여는 이유는
+「지난번 이후 무엇이 바뀌었나 → 내 판단을 건드리나 → 뭘 하나」 셋뿐이라, 그 답이
+되는 것(지난 확인 이후·권역 견주기·제도 요약·줄 목록)만 본 장에 남기고 줄마다의
+상세(트리거 표·도해·이력·반대 근거)는 `watch/<슬러그>.html` 로 뺐다. **접지는
+않는다** — 이 장의 규약이 접힘을 금지한다. 대신 페이지를 가른다. 법·고시 전체 표는
+같은 이유로 `watch/제도.html` 로 옮겼다.
 """
 import io
 import os
@@ -32,7 +40,10 @@ import watch_lib as wl          # noqa: E402
 import watch_fig as wf          # noqa: E402
 
 OUT = os.path.join(ROOT, '대시보드', '포트폴리오 워치.html')
+WATCH_DIR = os.path.join(ROOT, '대시보드', 'watch')
 E = wl.esc
+
+KIND_LABEL = {'realestate': '부동산', 'policy': '제도', 'equity': '종목'}
 
 # 재 섞인 흰 바탕에 먹녹. 걸림은 벽돌, 근접은 황토, 평온은 짙은 청록.
 # 색은 「지금 어떤가」에만 쓴다 — 값의 성격까지 색으로 가르면 화면이 알록달록해지고
@@ -59,6 +70,10 @@ header{padding:34px 0 0}
 h1{font-size:1.5rem;font-weight:850;letter-spacing:-.02em;margin:0}
 .eyebrow{font-size:10.5px;font-weight:850;letter-spacing:.16em;color:var(--ink-3);margin:0 0 7px}
 .lede{color:var(--ink-2);font-size:.93rem;max-width:64ch;margin:14px 0 0}
+.back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:700;
+  color:var(--ink-3);border-bottom:0}
+.back:hover,.back:focus-visible{color:var(--ink)}
+.dbody{margin:26px 0 0}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:11px;font-weight:850;letter-spacing:.14em;margin:0}
 .band-s{font-size:.85rem;color:var(--ink-3);margin:5px 0 0;max-width:64ch}
@@ -87,13 +102,15 @@ td:first-child{font-weight:700}
 .tw{overflow-x:auto}
 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 a:hover,a:focus-visible{border-bottom-color:var(--ink)}
-.tabs{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 0}
-.tabs button{font:inherit;font-size:.85rem;font-weight:700;color:var(--ink-2);background:none;
-  border:1px solid var(--rule);border-radius:2px;padding:5px 13px;cursor:pointer}
-.tabs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.tabs button:focus-visible{outline:2px solid var(--calm);outline-offset:2px}
+/* 줄 목록 — 이름·문장·수치 세 줄. 탭·카드 대신 훑어 내려가는 목록 하나다 */
+.wline{margin:14px 0 0;padding:12px 0;border-bottom:1px solid var(--rule)}
+.wline:last-child{border-bottom:0}
+.wline-t{display:block;font-weight:800;font-size:1rem;border-bottom:0}
+.wline-s{margin:4px 0 0;font-size:.88rem;color:var(--ink-2)}
+.wline-s b{color:var(--ink);font-weight:800}
+.wline-n{margin:4px 0 0;font-size:.8rem;color:var(--ink-3)}
+.wline-n b{color:var(--ink-2);font-weight:800}
 .line{margin:34px 0 0;padding:20px 0 0;border-top:1px solid var(--rule)}
-.line h2{font-size:1.08rem;font-weight:850;margin:0;letter-spacing:-.01em}
 .line-why{color:var(--ink-2);font-size:.9rem;margin:6px 0 0}
 .line-judge{margin:13px 0 0;font-size:.94rem;line-height:1.75;color:var(--ink-2)}
 .line-judge b{color:var(--ink);font-weight:800}
@@ -141,28 +158,6 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .line{margin-top:28px}
 }
 """
-
-TAB_JS = """
-(function(){
-  var tabs=document.querySelector('.tabs');
-  if(!tabs) return;
-  function apply(pick){
-    document.querySelectorAll('.line').forEach(function(s){
-      s.hidden = pick!=='all' && s.dataset.pick!==pick;
-    });
-    tabs.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
-    });
-  }
-  tabs.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(b) apply(b.dataset.pick);
-  });
-})();
-"""
-
-
-def slug(t):
-    return 'w-' + re.sub(r'[^0-9A-Za-z가-힣]+', '-', t).strip('-')
 
 
 def title_of(w):
@@ -288,7 +283,10 @@ def _since_buckets(watches, seen):
     """네 묶음 — 새로 걸린 · 새로 근접 · 풀린(지난번엔 걸림·근접, 지금은 아님) ·
     그대로 걸린. 값 트리거와 법 개정을 한자리에 놓는다 — 둘 다 「내가 본 뒤에 무엇이
     달라졌나」에 답한다. seen 이 None(한 번도 확인한 적이 없다)이면 모든 열쇠의
-    지난 상태가 없는 것으로 쳐서, 지금 걸린·근접이 전부 「새로」 쪽으로 떨어진다."""
+    지난 상태가 없는 것으로 쳐서, 지금 걸린·근접이 전부 「새로」 쪽으로 떨어진다.
+
+    행마다 w['slug'] 를 같이 담는다 — 줄 이름 링크가 이제 화면 안 앵커(#w-…)가 아니라
+    watch/<슬러그>.html 상세 페이지를 가리켜야 해서다."""
     prev_v = ((seen or {}).get('value')) or {}
     prev_l = ((seen or {}).get('laws')) or {}
     buckets = {'새로 걸린': [], '새로 근접': [], '풀린': [], '그대로 걸린': []}
@@ -299,7 +297,7 @@ def _since_buckets(watches, seen):
                 continue
             now, why = wl.state_now(t['cond'], t['series'])
             prev = prev_v.get('%s|%s' % (w['slug'], t['what']))
-            row = (t9, t['what'], t['value'], t['cond'], now, why, t['as_of'] or '—')
+            row = (t9, w['slug'], t['what'], t['value'], t['cond'], now, why, t['as_of'] or '—')
             if now == '걸림':
                 buckets['그대로 걸린' if prev == '걸림' else '새로 걸린'].append(row)
             elif now == '근접':
@@ -311,7 +309,7 @@ def _since_buckets(watches, seen):
             m = (w.get('metrics') or {}).get(wl.law_key(name)) or {}
             now = m.get('value')
             if law_seen and now and str(now) != law_seen:
-                row = (t9, name, now, '내가 읽은 판 %s' % law_seen, '걸림',
+                row = (t9, w['slug'], name, now, '내가 읽은 판 %s' % law_seen, '걸림',
                        '그 뒤에 개정됐다 — 읽고 갱신한다', now)
                 buckets['그대로 걸린' if prev_l.get(name) == '걸림' else '새로 걸린'].append(row)
     return buckets
@@ -334,17 +332,17 @@ def since_block(watches, seen):
             continue        # 묶음이 비면 그 묶음 제목을 안 낸다
         h.append('<p class="lbl">%s <b>%d</b></p><div class="rows">' % (E(name), len(rows)))
         prev = None
-        for t9, what, val, cond, st, why, asof in rows:
+        for t9, wslug, what, val, cond, st, why, asof in rows:
             # 같은 줄이 잇달아 서면 이름을 되풀이하지 않는다 — 세 번 같은 이름이 서면
             # 눈이 그 열을 통째로 건너뛴다
             label = '' if t9 == prev else E(t9)
             prev = t9
             h.append('<div class="row"><span class="row-where">'
-                     '<span class="dot %s"></span><a href="#%s">%s</a></span>'
+                     '<span class="dot %s"></span><a href="watch/%s.html">%s</a></span>'
                      '<span class="row-what">%s</span>'
                      '<span class="row-num">%s</span>'
                      '<span class="row-why">%s · %s · %s</span></div>'
-                     % ('d-hit' if st == '걸림' else 'd-near', slug(t9), label, E(what),
+                     % ('d-hit' if st == '걸림' else 'd-near', wslug, label, E(what),
                         E(val), E(cond), E(why), E(asof)))
         h.append('</div>')
     return ''.join(h)
@@ -363,7 +361,7 @@ def area_table(watches):
                 and wl.state_now(t['cond'], t['series'])[0] in ('걸림', '근접'))
         asof = next((m['as_of'] for k, m in (w['metrics'] or {}).items()
                      if k.startswith('jeonse_ratio_')), '—')
-        rows.append(['<a href="#%s">%s</a>' % (slug(title_of(w)), E(w['target'])),
+        rows.append(['<a href="watch/%s.html">%s</a>' % (w['slug'], E(w['target'])),
                      '%.2f ~ %.2f' % (min(rs), max(rs)) if rs else '—',
                      '전세금의 %.1f배' % (100.0 / (sum(rs) / len(rs))) if rs else '—',
                      ('%s <span class="t-none">%s</span>' % (sd['value'], E(sd['area']))
@@ -375,7 +373,11 @@ def area_table(watches):
                 '걸림·근접', '언제 것', '성격'], rows)
 
 
-def law_table(watches):
+def _laws_grouped(watches):
+    """법·고시 이름 → {지금 판·내가 읽은 판들·이 법을 보는 줄(제목, 슬러그)}.
+
+    본 장의 요약과 watch/제도.html 의 전체 표가 같은 값을 봐야 한다 — 따로 세면
+    「N개를 봅니다」의 N과 표의 행 수가 어긋날 수 있다."""
     by = {}
     for w in watches:
         if w['kind'] != 'policy':
@@ -385,18 +387,58 @@ def law_table(watches):
             e = by.setdefault(name, {'now': m.get('value'), 'seen': set(), 'who': []})
             if seen:
                 e['seen'].add(seen)
-            e['who'].append(title_of(w))
+            e['who'].append((title_of(w), w['slug']))
+    return by
+
+
+def _law_state(e):
+    return ('—' if not e['now'] or not e['seen']
+            else ('같다' if e['seen'] == set([e['now']]) else '걸림'))
+
+
+def law_table_full(watches, prefix=''):
+    """법·고시 전체 표. watch/제도.html 전용이다 — 32개짜리 표를 한 문장으로 줄인
+    것이 본 장의 「제도」 요약(law_summary)이고, 전체는 여기 있다. prefix 는 보는 줄
+    링크가 상대 경로로 어디를 가리켜야 하는지다. watch/ 폴더 안에서 부르므로 같은
+    폴더의 파일명만 적으면 된다('') — gen_site.rewrite_links()가 own_slug='watch'로
+    이 폴더를 처리할 때 그 형태(디렉터리 없는 파일명)만 /watch/<이름>으로 바꾼다."""
+    by = _laws_grouped(watches)
     rows = []
     for name in sorted(by, key=lambda n: (by[n]['now'] or ''), reverse=True):
         e = by[name]
-        st = ('—' if not e['now'] or not e['seen']
-              else ('같다' if e['seen'] == set([e['now']]) else '걸림'))
+        st = _law_state(e)
         rows.append([E(name), E(e['now'] or '아직 안 받음'),
                      E(' · '.join(sorted(e['seen'])) or '—'), tag(st),
-                     ' · '.join('<a href="#%s">%s</a>' % (slug(t), E(t))
-                                for t in dict.fromkeys(e['who'])), '공표'])
+                     ' · '.join('<a href="%s%s.html">%s</a>' % (prefix, s, E(t))
+                                for t, s in dict.fromkeys(e['who'])), '공표'])
     return tbl('법·고시가 지금 어느 판인가',
                ['법·고시', '지금 판', '내가 읽은 판', '같은가', '보는 줄', '성격'], rows)
+
+
+def law_summary(watches):
+    """본 장의 「제도」 섹션 — 표 대신 한 문장 + 바뀐 것만.
+
+    법·고시는 32개인데 대부분 내가 읽은 판과 지금 판이 같다. 매달 그 32줄을 다시
+    읽게 하는 대신 「몇 개를 보고 몇 개가 바뀌었나」만 밝히고, 바뀐 것만 이름을 댄다.
+    전체는 watch/제도.html 에 그대로 있다."""
+    by = _laws_grouped(watches)
+    changed = sorted(name for name, e in by.items() if _law_state(e) == '걸림')
+    h = ['<p class="band-s">법·고시 %d개를 봅니다. 내가 읽은 뒤 바뀐 것 %d개.</p>'
+         % (len(by), len(changed))]
+    if changed:
+        h.append('<div class="rows">')
+        for name in changed:
+            e = by[name]
+            who = ' · '.join('<a href="watch/%s.html">%s</a>' % (s, E(t))
+                              for t, s in dict.fromkeys(e['who']))
+            h.append('<div class="row"><span class="row-where">'
+                     '<span class="dot d-hit"></span>%s</span>'
+                     '<span class="row-what">%s → %s</span>'
+                     '<span class="row-why">보는 줄 %s</span></div>'
+                     % (E(name), E(' · '.join(sorted(e['seen']))), E(e['now']), who))
+        h.append('</div>')
+    h.append('<p class="lbl"><a href="watch/제도.html">전체 표 →</a></p>')
+    return ''.join(h)
 
 
 def figures(w):
@@ -404,7 +446,12 @@ def figures(w):
 
     그 metric 을 건 값 트리거가 있으면 그 조건이 걸렸던 달을 선 위에 빈 원으로
     찍는다(wl.fired_months) — 표의 「이력 N개월 중 k번」과 같은 판정을 그림으로도
-    보게 하는 자리다."""
+    보게 하는 자리다.
+
+    2026-09-02 — 값 트리거가 건 metric 의 도해를 앞에 세운다. 상세 페이지를 여는
+    이유가 그 값(실거주 줄이면 전세가율, 강남3구 매매 줄이면 매매가격지수)이지
+    나머지 참고용 시계열이 아니다. sorted() 가 안정 정렬이라 우선순위가 같은 것들
+    끼리는 원래 순서(열쇠 이름 알파벳)가 그대로 유지된다."""
     TITLE = {'sale_idx': '매매가격지수', 'jeonse_idx': '전세가격지수',
              'jeonse_ratio': '전세가율 — 중위 매매가 대비 중위 전세가',
              'supply_demand': '매매수급동향 — 100이 균형',
@@ -426,8 +473,13 @@ def figures(w):
         base = key[:-(len(area) + 1)] if area and key.endswith('_' + area) else key
         gk, gn = GROUP.get(base, (base, area or base))
         groups.setdefault((gk, m.get('unit') or ''), []).append((gn, m, key))
+
+    def _prio(item):
+        _gk, entries = item
+        return 0 if any(k in trig_by_metric for _n, _m, k in entries) else 1
+
     out = []
-    for (base, unit), items in groups.items():
+    for (base, unit), items in sorted(groups.items(), key=_prio):
         sel = items[:3]
         note = ' · '.join(dict.fromkeys(m.get('src', '') for _n, m, _k in sel if m.get('src')))
         ser = [(n, [tuple(x) for x in m['series']]) for n, m, _k in sel]
@@ -473,10 +525,13 @@ def link_out(url):
 
 
 def line_block(w):
-    t9 = title_of(w)
-    pick = (w['target'] if w['kind'] == 'realestate' else '제도')
-    h = ['<section class="line" id="%s" data-pick="%s">' % (slug(t9), E(pick))]
-    h.append('<h2>%s</h2><p class="line-why">%s</p>' % (E(t9), E(w['why'])))
+    """줄 하나의 상세 본문 — watch/<슬러그>.html 안에 실린다.
+
+    2026-09-02 이전에는 이 함수가 본 장 안에 h2 를 단 <section> 을 쭉 늘어놓아 화면을
+    만들었다. 지금은 줄마다 제 파일을 가지므로 제목은 그 페이지의 h1 이 이미 말하고
+    있다 — 여기서 다시 h2 로 되풀이하지 않는다."""
+    h = ['<section class="line">']
+    h.append('<p class="line-why">%s</p>' % E(w['why']))
     h.append('<p class="line-judge">%s</p>' % w['judged'])
 
     if w.get('history'):
@@ -509,12 +564,14 @@ def line_block(w):
             rows.append([E(name), E(seen or '—'), E(now or '아직 안 받음'), tag(st)])
         h.append(tbl('내가 읽은 판과 지금 판',
                      ['법·고시', '내가 읽은 판', '지금 판', '같은가'], rows))
-    if w['points']:
-        h.append('<p class="lbl">왜 보나</p><ul class="pts">%s</ul>'
-                 % ''.join('<li>%s</li>' % p for p in w['points']))
+    # 도해를 「왜 보나」보다 앞에 둔다 — 그 절의 글보다 그림이 먼저 서야 한다는 이
+    # 저장소의 도해 규칙(CLAUDE.md)이 줄 하나짜리 상세 페이지에도 그대로 적용된다.
     fig = figures(w)
     if fig:
         h.append(fig)
+    if w['points']:
+        h.append('<p class="lbl">왜 보나</p><ul class="pts">%s</ul>'
+                 % ''.join('<li>%s</li>' % p for p in w['points']))
     evt = [t for t in w['triggers'] if t['kind'] == wl.KIND_EVENT]
     if evt:
         h.append(tbl('값으로 안 오는 것 — 사람이 확인한다',
@@ -529,17 +586,112 @@ def line_block(w):
     return ''.join(h)
 
 
+def _first_sentence(judged):
+    """줄 목록의 「지금 판단」 요약 한 줄 — 첫 볼드 문장, 없으면 첫 문장.
+
+    judged 는 이미 **굵게**가 <b> 로 풀린 HTML 이다(watch_lib.md_inline). 판단
+    문단 전체를 목록에 실으면 세 줄 예산을 넘으니, 그 문단에서 가장 힘줘 쓴 자리
+    (볼드)나 그것도 없으면 첫 문장만 뽑는다."""
+    m = re.search(r'<b>(.*?)</b>', judged, re.S)
+    if m:
+        return m.group(1)
+    text = re.sub(r'<[^>]+>', '', judged).strip()
+    idx = text.find('.')
+    return text[:idx + 1] if idx >= 0 else text
+
+
+def line_summary_rows(watches):
+    """본 장의 「줄」 목록 — 이름·문장·수치 세 줄짜리 행. 탭 대신 훑어 내려가는
+    목록 하나로 둔다. 부동산 넷을 먼저, 제도 여섯을 그다음에 묶는다."""
+    ordered = sorted(watches,
+                     key=lambda w: (0 if w['kind'] == 'realestate' else 1, w['slug']))
+    h, cur = [], None
+    for w in ordered:
+        g = 0 if w['kind'] == 'realestate' else 1
+        if g != cur:
+            h.append('<p class="lbl">%s</p>' % ('부동산' if g == 0 else '제도'))
+            cur = g
+        vals = [t for t in w['triggers'] if t['kind'] == wl.KIND_VALUE]
+        states = [wl.state_now(t['cond'], t['series'])[0] for t in vals]
+        n_hit = states.count('걸림')
+        n_near = states.count('근접')
+        h.append('<div class="wline"><a class="wline-t" href="watch/%s.html">%s</a>'
+                 '<p class="wline-s">%s</p>'
+                 '<p class="wline-n">걸림 <b>%d</b> · 근접 <b>%d</b> · 마지막 확인 %s</p></div>'
+                 % (w['slug'], E(title_of(w)), _first_sentence(w['judged']),
+                    n_hit, n_near, E(w['checked'] or '—')))
+    return ''.join(h)
+
+
+def detail_page(w):
+    """줄 하나의 상세 페이지 — 대시보드/watch/<슬러그>.html.
+
+    돌아가는 링크에 앵커(#lines)를 붙인다. scripts/gen_site.py의 rewrite_links()가
+    「../<대시보드 파일명>.html#<앵커>」꼴만 절대경로(/watch#lines)로 바꾼다 — 앵커가
+    없는 「../포트폴리오 워치.html」은 그 정규식이 안 잡아서 배포판에서
+    site/watch/<슬러그>.html 기준으로 상대경로가 풀려 엉뚱한 자리(/포트폴리오 워치.html)로
+    간다. 로컬 파일 경로로도, 배포 경로로도 맞는 꼴은 이 형태뿐이다."""
+    t9 = title_of(w)
+    view = w.get('view') or KIND_LABEL.get(w['kind'], w['kind'])
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>%s — 포트폴리오 워치</title><style>%s</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#lines">'
+            '← 포트폴리오 워치</a>'
+            '<header><p class="eyebrow">%s · %s · 마지막 확인 %s</p><h1>%s</h1></header>'
+            '<div class="dbody">%s</div>'
+            '<footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
+            '</div></body></html>'
+            % (E(t9), CSS, E(w['target']), E(view), E(w['checked'] or '—'), E(t9),
+               line_block(w)))
+
+
+def law_page(watches):
+    """법·고시 전체 표 페이지 — 대시보드/watch/제도.html.
+
+    본 장 「제도」 요약이 「전체 표 →」로 여기를 가리킨다. 표 아래에 정책 줄로 가는
+    링크도 둔다 — 표의 「보는 줄」 칸에 이미 있지만, 여섯 줄을 한눈에 훑을 목록이
+    따로 있는 편이 낫다."""
+    policy_ws = sorted((w for w in watches if w['kind'] == 'policy'),
+                       key=lambda w: w['slug'])
+    links = ''.join('<div class="wline"><a class="wline-t" href="%s.html">%s</a></div>'
+                    % (w['slug'], E(title_of(w))) for w in policy_ws)
+    body = law_table_full(watches, prefix='') + '<p class="lbl">이 법·고시를 보는 줄</p>' + links
+    # 앵커(#policy)가 필요한 이유는 detail_page()와 같다 — rewrite_links()가
+    # 「../<파일명>.html#<앵커>」꼴만 /watch#policy로 바꾼다.
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>제도 — 포트폴리오 워치</title><style>%s</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#policy">'
+            '← 포트폴리오 워치</a>'
+            '<header><p class="eyebrow">법·고시 %d개</p><h1>제도</h1></header>'
+            '<div class="dbody">%s</div>'
+            '<footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
+            '</div></body></html>'
+            % (CSS, len(_laws_grouped(watches)), body))
+
+
 def check_ui(html, watches):
-    """이 장의 규약. 아카이브 규약(check_ui)에서 나온 장이라 규약이 없어지면 안 된다."""
+    """본 장의 규약. 아카이브 규약(check_ui)에서 나온 장이라 규약이 없어지면 안 된다.
+
+    2026-09-02 에 규약을 다시 세웠다 — 줄 상세를 watch/ 로 옮기면서 본 장에 남는
+    것은 요약뿐이라, 도해는 때 자 하나, 표는 권역 견주기 하나뿐이어야 한다.
+    「언제 것」 열 단언은 이제 상세 파일 쪽 몫이다(check_detail_ui)."""
     assert 'is-fold' not in html and 'uc-caret' not in html, \
         '규약 위반: 접는 것을 두지 않는다 — 열면 다 보여야 한다'
     assert 'class="stile' not in html, \
         '규약 위반: 타일을 두지 않는다 — 고르는 계층은 탭 하나다'
+    assert 'class="line"' not in html, \
+        '규약 위반: 줄 상세는 본 장에 없다 — watch/<슬러그>.html 로 옮겼다'
     at_fired = html.find('지난 확인 이후')
-    at_line = html.find('class="line"')
-    assert 0 < at_fired < at_line, \
-        '규약 위반: 「지난 확인 이후」가 줄 상세보다 먼저 서야 한다'
+    at_lines = html.find('id="lines"')
+    assert 0 < at_fired < at_lines, \
+        '규약 위반: 「지난 확인 이후」가 줄 목록보다 먼저 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 때 자가 없다 — 값의 나이를 먼저 보인다'
+    n_fig = html.count('<figure')
+    assert n_fig == 1, '규약 위반: 본 장의 <figure 는 때 자 하나여야 한다 (%d개)' % n_fig
+    n_tbl = html.count('<table')
+    assert n_tbl <= 3, '규약 위반: 본 장의 <table 은 셋 이하여야 한다 (%d개)' % n_tbl
     # 도해 배치는 눈이 아니라 검사기가 본다. 때 자는 점이 몰리면 글자가 겹치는데
     # 화면을 못 볼 때는 그걸 알 길이 없다 — 실제로 다섯 쌍이 겹친 채로 나갈 뻔했다
     sys.path.insert(0, HERE)
@@ -547,10 +699,26 @@ def check_ui(html, watches):
     for m in re.finditer(r'<svg[^>]*>.*?</svg>', html, re.S):
         bad = check_fig.hits(m.group(0))
         assert not bad, '규약 위반: 도해 배치 — %s' % ' · '.join(bad)
-    n = sum(1 for w in watches for t in w['triggers'] if t['kind'] == wl.KIND_VALUE
-            and t['value'] is not None)
-    assert html.count('<th>언제 것</th>') >= 1 or n == 0, \
-        '규약 위반: 값을 내면서 「언제 것」 열이 없다'
+
+
+def check_detail_ui(watches):
+    """줄 상세 페이지의 규약. 본 장에서 걷어낸 검사(도해 배치·「언제 것」 열)를
+    상세 파일 전부로 돌린다 — 옮겼다고 검사까지 놓치면 안 된다."""
+    sys.path.insert(0, HERE)
+    import check_fig
+    for w in watches:
+        path = os.path.join(WATCH_DIR, w['slug'] + '.html')
+        assert os.path.exists(path), '규약 위반: 줄 상세 파일이 없다 — %s' % w['slug']
+        html = io.open(path, encoding='utf-8').read()
+        for m in re.finditer(r'<svg[^>]*>.*?</svg>', html, re.S):
+            bad = check_fig.hits(m.group(0))
+            assert not bad, '규약 위반(%s): 도해 배치 — %s' % (w['slug'], ' · '.join(bad))
+        n = sum(1 for t in w['triggers']
+                if t['kind'] == wl.KIND_VALUE and t['value'] is not None)
+        assert html.count('<th>언제 것</th>') >= 1 or n == 0, \
+            '규약 위반(%s): 값을 내면서 「언제 것」 열이 없다' % w['slug']
+    law_path = os.path.join(WATCH_DIR, '제도.html')
+    assert os.path.exists(law_path), '규약 위반: watch/제도.html 이 없다'
 
 
 def build():
@@ -566,12 +734,6 @@ def build():
     asof = max(stat or ['—'])
     lawof = max(laws or ['—'])
     checked = max([w['checked'] for w in ws if w.get('checked')] or ['—'])
-    seen = []
-    for w in sorted(ws, key=lambda x: (0 if x['kind'] == 'realestate' else 1,
-                                       x['opened'], x['slug'])):
-        k = w['target'] if w['kind'] == 'realestate' else '제도'
-        if k not in seen:
-            seen.append(k)
 
     h = ['<!doctype html><html lang="ko"><head><meta charset="utf-8">',
          '<meta name="viewport" content="width=device-width, initial-scale=1">',
@@ -591,28 +753,43 @@ def build():
              '<p class="band-s">전세가율은 한 수가 두 방향으로 읽힙니다. 올라가면 보증금이 '
              '집값에 가까워지고, 동시에 매매로 넘어가는 데 드는 자기 돈이 줄어듭니다.</p>'
              '%s</div>' % area_table(ws))
-    h.append('<div class="band"><p class="band-t">제도</p>'
+    h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
-             '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_table(ws))
+             '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
 
-    h.append('<div class="band"><p class="band-t">줄</p>'
-             '<div class="tabs"><button data-pick="all" aria-pressed="true">전체</button>%s</div>'
-             '</div>' % ''.join('<button data-pick="%s" aria-pressed="false">%s</button>'
-                                % (E(k), E(k)) for k in seen))
-    for w in sorted(ws, key=lambda x: (0 if x['kind'] == 'realestate' else 1, x['slug'])):
-        h.append(line_block(w))
+    h.append('<div class="band" id="lines"><p class="band-t">줄</p>%s</div>'
+             % line_summary_rows(ws))
 
     h.append('<footer>값은 한국부동산원 공표 통계, 제도는 국가법령정보센터에서 받습니다. '
-             '마지막 확인 %s · 통계 기준 %s. 줄은 <code>insights/watch/</code>, 수치는 '
+             '마지막 확인 %s · 통계 기준 %s. 줄 상세는 <code>watch/</code> 아래에 있습니다. '
+             '줄은 <code>insights/watch/</code>, 수치는 '
              '<code>insights/watch/_metrics/</code>, 이 화면은 '
              '<code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
              % (E(checked), E(asof)))
-    h.append('</div><script>%s</script></body></html>' % TAB_JS)
+    h.append('</div></body></html>')
     html = ''.join(h)
     check_ui(html, ws)
     with io.open(OUT, 'w', encoding='utf-8', newline='\n') as f:
         f.write(html)
+
+    # 줄 상세 페이지 + 제도 전체 표 페이지. 옛 파일이 남아 있으면 먼저 지운다 —
+    # 줄 이름을 바꾸거나 지운 뒤에도 옛 슬러그 파일이 그대로 남으면 아무도 안 가리키는
+    # 페이지가 site/ 로도 같이 나간다.
+    os.makedirs(WATCH_DIR, exist_ok=True)
+    expected = set(w['slug'] + '.html' for w in ws) | {'제도.html'}
+    for f in os.listdir(WATCH_DIR):
+        if f.endswith('.html') and f not in expected:
+            os.remove(os.path.join(WATCH_DIR, f))
+    for w in ws:
+        with io.open(os.path.join(WATCH_DIR, w['slug'] + '.html'), 'w',
+                     encoding='utf-8', newline='\n') as f:
+            f.write(detail_page(w))
+    with io.open(os.path.join(WATCH_DIR, '제도.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(law_page(ws))
+    check_detail_ui(ws)
+
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))
+    print('OK: 상세 %d장 -> %s' % (len(ws) + 1, WATCH_DIR))
     return html
 
 
