@@ -519,10 +519,10 @@ HEAD = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
 def row_html(ep):
     m = ep['meta']
     tags = []
+    # 판이 선 것만 표시한다 — 회색 「🔧 기술」 꼬리표는 「없음」을 말하는 것이라 걷었다(2026-09-02)
     for key, emo, label, _sub in LANES:
-        on = any(l['key'] == key for l in ep['lanes'])
-        tags.append('<span class="tag%s">%s %s</span>'
-                    % (' on' if on else '', emo, label))
+        if any(l['key'] == key for l in ep['lanes']):
+            tags.append('<span class="tag on">%s %s</span>' % (emo, label))
     inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
              '<div class="rtitle">%s</div>'
              % (esc(m.get('date', '')), esc(m.get('speaker', '')),
