@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] · [[Vik Sekar]] — Semi Doped 공동 진행. 게스트 없음
 section: news
 topic: 신용부도스와프 · 메모리 실적 · 중국 DUV
 gain: 부도에 대비해 사는 보험이 하이퍼스케일러 채권에 붙었다는 관측과 그 반박, 매출이 크게 늘었는데 주가가 빠진 메모리 실적, 그리고 중국이 내놓은 이머전 DUV 가 어느 시점의 기술인지.

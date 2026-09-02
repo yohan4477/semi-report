@@ -5,7 +5,8 @@ source: https://daily.semidoped.com/p/picojools-al-yuen-the-case-for-gaas
 speaker: Al Yuen
 org: PicoJool 최고경영자(CEO)
 channel: Semi Doped
-host: Austin
+host: Austin Lyons
+people: 진행 [[Austin Lyons]] (Semi Doped) / 게스트 [[Al Yuen]] (PicoJool 최고경영자, 전사 라벨 Al)
 section: link
 topic: VCSEL · 스케일업 인터커넥트
 gain: 광소자 경쟁을 성능이 아니라 물량이 정한다는 논지. 인듐인 계열은 기판부터 막혀 있고 갈륨비소는 이미 월 수백만 개를 찍어 왔다는 주장, 1.6테라비트를 채우는 세 조합, 12.8테라비트까지 새 기술 없이 가는 경로, 그리고 실제 리드타임과 웨이퍼 한 장에서 나오는 개수까지.

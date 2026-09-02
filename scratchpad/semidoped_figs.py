@@ -573,9 +573,153 @@ def _op_finance():
 
 OP = '2026-08-11-china-optical-ban'
 
+
+# ══ 하이퍼스케일러 CDS (2026-07-29) 전략 판 ═══════════════════════════════
+# 값은 전사의 것만 — 28나노·7나노·2나노·3배. 계층과 순위는 상태다.
+
+def _cds_layers():
+    """메모리 계층 셋 — 위아래 층. 빠른 것이 위. 각 층 옆에 제약."""
+    rows = [('SRAM', ['가장 빠름 · 트랜지스터', '면적 크고 비쌈 · 용량 모자람'], 'fig-box'),
+            ('HBM', ['DRAM 을 3D 로 쌓아 칩 옆에', '대역폭'], 'fig-agent'),
+            ('DRAM', ['용량 크고', '대역폭 낮음'], 'fig-box')]
+    lw = w_of([r[0] for r in rows]); rw = w_of(*[r[1] for r in rows])
+    gap = 12
+    x0 = (W - (lw + gap + rw)) / 2
+    parts, y, h = [], 30, 2 * LH + 22
+    for name, note, cls in rows:
+        parts += box(x0, y, lw, h, [name], cls)
+        parts += box(x0 + lw + gap, y, rw, h, note, 'fig-stage')
+        y += h + 10
+    return svg(y + 2, parts,
+               'SRAM 은 가장 빠르지만 면적을 많이 먹어 용량이 모자라고, HBM 은 DRAM 을 쌓아 칩 옆에 붙여 대역폭을 내며, DRAM 은 용량이 크고 대역폭이 낮다')
+
+
+def _cds_rank():
+    """수익성 순위와 대체 불가능성 순위가 어긋나 있다 — 같은 두 칸(DRAM·HBM)을 두 줄로, 줄마다 1위만 짙게."""
+    L, R = 0.0, 272.0
+    h = 2 * LH + 22
+    parts = head(L, 22, 248, '지금 값을 받는 자리') + head(R, 22, 248, '대체할 수 없는 자리')
+    for x0, top in [(L, 'DRAM'), (R, 'HBM')]:
+        items = [(['DRAM', '웨이퍼 모자람'], 'fig-agent' if top == 'DRAM' else 'fig-box'),
+                 (['HBM', '웨이퍼 3장'], 'fig-agent' if top == 'HBM' else 'fig-box')]
+        ws = [w_of(l) for l, _ in items]
+        x = x0 + (248 - (sum(ws) + 14)) / 2
+        for (l, c), w in zip(items, ws):
+            parts += box(x, 36, w, h, l, c); x += w + 14
+    parts += legend([('fig-agent', '그 줄의 1위')], 36 + h + 16)
+    return svg(36 + h + 42, parts,
+               '같은 두 칸을 두 줄로 그렸다. 지금 값을 받는 자리는 웨이퍼가 모자란 DRAM 이고, 대체할 수 없는 자리는 HBM 이다 — 두 순위가 어긋나 있다')
+
+
+def _cds_litho():
+    """이머전 DUV 로 어디까지 가나 — 가로 흐름. 단일 노광 28나노 → 멀티패터닝 7나노(한계) → 2나노는 EUV."""
+    h = 2 * LH + 22
+    row, _x = band([(['단일 노광', '28나노'], 'fig-agent'), ('>', ''),
+                    (['멀티패터닝', '7나노 — 한계'], 'fig-agent'), ('>', ''),
+                    (['2나노', 'EUV 가 필요'], 'fig-outside')], 30, h)
+    parts = row + legend([('fig-agent', '이머전 DUV 로 닿는 곳'), ('fig-outside', '못 닿는 곳')], 30 + h + 16)
+    return svg(30 + h + 42, parts,
+               '이머전 DUV 는 한 번 노광으로 28나노, 멀티패터닝으로 7나노까지 가고 거기가 한계다. 2나노는 EUV 가 필요하다')
+
+
+CDS = '2026-07-29-hyperscaler-cds'
+
+
+# ══ PicoJool VCSEL (2026-07-16) 전략 판 ═══════════════════════════════════
+# 값은 전사의 것만 — 8·16·32 레인, 200G·100G·50G, 1×4·4×16=64, 1.6T·12.8T.
+
+def _pj_lanes():
+    """같은 1.6테라비트를 채우는 세 구성 — 레인 하나가 네모 하나. 8·16·32 는 전사의 수."""
+    rows = [('8레인 × 200G PAM4', 8), ('16레인 × 100G LPO', 16), ('32레인 × 50G NRZ', 32)]
+    parts, y = [], 24
+    tw = 11; gap = 3
+    for label, n in rows:
+        parts += head(0, y + 2, W, label)
+        x = (W - (n * tw + (n - 1) * gap)) / 2
+        for k in range(n):
+            parts += _rect(x + k * (tw + gap), y + 12, tw, 16, 'fig-agent')
+        y += 12 + 16 + 22
+    return svg(y + 2, parts,
+               '같은 1.6테라비트를 8레인 × 200G, 16레인 × 100G, 32레인 × 50G 셋으로 채운다. 네모 하나가 레인 하나다')
+
+
+def _pj_constraint():
+    """제약이 걸린 자리 셋 — 같은 세 칸(기판·파운드리·조립 장비)을 두 줄로, 인듐인은 셋 다 걸리고 갈륨비소는 안 걸린다."""
+    h = 44
+    stages = ['기판 원재료', '웨이퍼 공정', '뒷단 조립 장비']
+    ws = [w_of([t]) for t in stages]; gap = 12
+    inner = sum(ws) + gap * 2
+    fx = (W - (inner + 32)) / 2
+    parts, y = [], 22
+    for label, blocked in [('인듐인(InP) — 단일모드', {0, 1, 2}), ('갈륨비소(GaAs) — VCSEL', set())]:
+        parts += head(fx, y, inner + 32, label)
+        fy = y + 10
+        parts += _rect(fx, fy, inner + 32, h + 32, 'fig-outside')
+        x = fx + 16
+        for k, (t, w) in enumerate(zip(stages, ws)):
+            parts += box(x, fy + 16, w, h, [t], 'fig-agent' if k in blocked else 'fig-box'); x += w + gap
+        y = fy + h + 32 + 26
+    parts += legend([('fig-agent', '제약이 걸린 자리'), ('fig-box', '안 걸림')], y - 10)
+    return svg(y + 16, parts,
+               '같은 세 자리를 두 줄로 그렸다. 인듐인은 기판 원재료부터 웨이퍼 공정, 뒷단 조립 장비까지 셋 다 걸리고, 갈륨비소는 어디도 안 걸린다')
+
+
+def _pj_array():
+    """엣지발광은 한 줄(1×4), 표면발광은 판(4×16 = 64채널). 칸 수가 전사의 값이다."""
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, '엣지발광 — 한 줄로만') + head(R, 22, 248, '표면발광 — 판으로')
+    t = 12; g = 3
+    x = L + (248 - (4 * t + 3 * g)) / 2
+    for k in range(4):
+        parts += _rect(x + k * (t + g), 60, t, t, 'fig-box')
+    parts += head(L, 36 + 4 * (t + g) + 16, 248, '1×4')
+    x0 = R + (248 - (16 * t + 15 * g)) / 2
+    for r in range(4):
+        for c in range(16):
+            parts += _rect(x0 + c * (t + g), 36 + r * (t + g), t, t, 'fig-agent')
+    parts += head(R, 36 + 4 * (t + g) + 16, 248, '4×16 = 64채널')
+    return svg(36 + 4 * (t + g) + 30, parts,
+               '엣지에서 빛을 내는 소자는 1×4 처럼 한 줄로만 늘어서고, 표면에서 빛을 내는 소자는 4×16 = 64채널 판으로 깔린다')
+
+
+def _pj_chain():
+    """광소자 밸류체인 끝에서 끝까지 — PicoJool 이 맡는 설계만 짙게."""
+    h = 2 * LH + 22
+    row, _x = band([(['설계', 'PicoJool'], 'fig-agent'), ('>', ''),
+                    (['에피', '웨이퍼'], 'fig-box'), ('>', ''),
+                    (['웨이퍼 공정', 'WIN'], 'fig-box'), ('>', ''),
+                    (['다이싱'], 'fig-box'), ('>', ''),
+                    (['모듈 통합', '파트너'], 'fig-box')], 30, h)
+    parts = row + legend([('fig-agent', 'PicoJool 이 하는 것')], 30 + h + 16)
+    return svg(30 + h + 42, parts,
+               '설계에서 모듈까지 다섯 단 중 PicoJool 이 맡는 것은 설계(에피 층과 캐비티)뿐이다. 웨이퍼 공정은 대만 WIN, 모듈은 통합 파트너가 한다')
+
+
+PJ = '2026-07-16-picojool-yuen'
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (CDS, 'strategy'): [
+        ('4.|그런데 밀려나지도', '메모리 계층 셋', _cds_layers(),
+         'Vik 이 정리한 계층이다(L69). SRAM 은 가장 빠르지만 트랜지스터라 면적을 많이 먹어 비싸고 용량이 모자란다. HBM 은 DRAM 을 3D 로 쌓아 칩 가까이 붙여 대역폭을 낸다. '
+         '대안(KV 캐시 내리기·TurboQuant·델타 어텐션)도 결국 초당 토큰 처리량을 HBM 에 기댄다는 것이 Austin 의 말이다(L67).'),
+        ('4.|그래서 지금 갈라진', '수익성 순위와 대체 불가능성 순위', _cds_rank(),
+         '같은 두 칸을 두 줄로 그렸다. 지금 값을 받는 자리는 웨이퍼가 모자란 일반 DRAM 이고(HBM 은 같은 비트에 DRAM 웨이퍼가 세 배 든다, L65), 대체할 수 없는 자리는 HBM 이다(L67). '
+         '두 순위가 어긋나 있고, 이번 실적 충격이 그 어긋남을 분기 숫자로 드러냈다는 것이 이 글의 읽기다.'),
+        ('5.|Austin이 기술을', '이머전 DUV 로 어디까지 가나', _cds_litho(),
+         '한 번 노광으로 28나노, 멀티패터닝으로 7나노까지 가고 거기가 한계다. 2나노로는 못 간다(L83). 7나노로 오늘 쓸 물건을 만들려면 로직 폴딩과 3D 적층이 붙어야 한다(L85).'),
+    ],
+    (PJ, 'strategy'): [
+        ('3.|Yuen 이 물량', '제약이 걸린 자리 셋', _pj_constraint(),
+         '같은 세 자리를 두 줄로 그렸다. 인듐인은 기판 원재료부터 걸리고 파운드리도 출발 재료를 못 받으며 단일모드 정렬 장비도 월 수백만 개 규모로 깔려 있지 않다(L85). 갈륨비소는 제약이 없다는 것이 Yuen 의 말이다(L85).'),
+        ('4.|레인당 200기', '같은 1.6테라비트를 채우는 세 구성', _pj_lanes(),
+         '네모 하나가 레인 하나다. 8레인 × 200G PAM4, 16레인 × 100G LPO, 32레인 × 50G NRZ 가 같은 1.6테라비트를 낸다(L103~L111). 셋이 같은 200G 소자를 다르게 돌린 것이라는 것이 Yuen 의 논거다(L131). 전력·값은 전사에 없다.'),
+        ('5.|더 멀리 가는', '한 줄 대 판', _pj_array(),
+         '엣지발광 소자는 1×4 처럼 한 줄로만 늘어서고, 표면발광 소자는 2×4·2×12·2×16 처럼 판으로 깔린다(L125). 오른쪽에 그린 4×16 은 손가락 굵기 커넥터 하나에 든 64채널이고, 200G 로 돌리면 12.8테라비트다(L127). 칸 수는 전사의 값이다.'),
+        ('6.|분업 구조는', '광소자에도 팹리스', _pj_chain(),
+         '설계에서 모듈까지 다섯 단 중 PicoJool 이 맡는 것은 에피 층과 캐비티 설계뿐이다. 웨이퍼 공정은 대만 WIN Semiconductors, 자른 뒤 모듈 통합은 파트너가 한다(L93·L95). WIN 의 캐파는 주당 웨이퍼 1,000장, 웨이퍼당 VCSEL 24만 개다(L141).'),
+    ],
     (TD, 'strategy'): [
         ('2.|어려운 쪽은 그다음이다', '곱셈을 덧셈으로, 그리고 되돌아오기', _td_logflow(),
          '밑이 2인 로그에서 A×B 는 log A + log B 라 곱셈기가 덧셈기가 된다(L127). 어려운 곳은 누산을 위해 선형으로 되돌아오는 자리다 — '

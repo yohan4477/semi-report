@@ -1,0 +1,231 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>하이퍼스케일러 부채에 보험이 붙기 시작했다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>하이퍼스케일러 부채에 보험이 붙기 시작했다</h1><div class="pmeta">2026-07-29 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi">https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-07-29-hyperscaler-cds.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> · <span class="pn">Vik Sekar</span> — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">한 주 동안 값을 매기는 자리가 셋 다 바뀌었다 — 채권시장이 설비투자를, 기대치가 실적을, 발표가 기술 수준을</div><p>Semi Doped 진행자 둘 — <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>) — 이 18분짜리 회차에서 한 주 동안 벌어진 셋을 짚었다. 하이퍼스케일러 부채에 붙은 신용부도스와프, SK하이닉스 실적 뒤의 폭락, 중국의 이머전 DUV 발표다. 셋은 따로 난 사건인데 한 자리에서 겹친다 — 반도체의 값을 누가 매기고 있느냐가 셋 다에서 바뀌었다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">설비투자의 값을 채권시장이 매기기 시작했다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">반론은 부채가 아니라 그 부채가 사는 물건의 회수율을 겨눈다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">좋은 실적이 무너뜨린 것은 실적이 아니라 기대치와 레버리지다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">돈을 버는 제품과 밀려나지 않는 제품이 갈라져 있다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">되는 것과 앞서는 것 사이</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 설비투자의 값을 채권시장이 매기기 시작했다</h2>
+<p>진행자V가 짚은 것은 자금 출처가 바뀐 대목이다. 컴퓨트를 쓰는 쪽은 OpenAI·Anthropic이지만 엔비디아에서 수십억 달러어치 랙을 사 오는 쪽은 하이퍼스케일러다. 여태 그 돈은 영업으로 벌어들인 현금에서 나왔다. 그런데 분기 설비투자가 계속 커지면서 잉여현금흐름이 바닥나기 시작했고, 부채를 지거나 부외 특수법인을 세우는 쪽으로 넘어갔다 — 진행자V는 메타와 Blue Owl로 기억되는 건을 예로 들었다.</p>
+<p>여기서 값을 매기는 주체가 바뀐다. 현금으로 살 때는 설비투자의 타당성을 회사 이사회가 판단했다. 부채로 사면 채권 투자자가 판단하고, 그 판단이 매일 숫자로 찍힌다. 진행자A는 신용부도스와프를 보험에 빗대 설명했다 — 회사가 몸에 나쁜 것을 너무 먹는다 싶으면 투자자가 보험료를 내고 부도 시 회수를 확보한다. 프리미엄이 오르고 스프레드가 벌어졌다는 것은 그 판단이 나빠졌다는 뜻이다.</p>
+<p>업계에 보이는 것은 부도 확률의 상승이 아니다. <b>설비투자 계획이 매일 재평가되는 자리로 옮겨 갔다</b>는 것이다. 이사회 승인은 분기에 한 번이지만 스프레드는 장중에도 움직인다. 진행자A가 매도세의 원인 하나로 든 순환 금융 — 엔비디아가 고객에게 돈을 내주고 그 고객이 엔비디아 칩을 사는 구조 — 도 여태 논평 대상이었다. 값이 붙는 대상은 아니었다는 것은 이 글의 읽기다.</p>
+<h2 id="s2"><span class="num">2</span> 반론은 부채가 아니라 그 부채가 사는 물건의 회수율을 겨눈다</h2>
+<p>진행자V가 전한 Gavin Baker의 반박은 부채 규모를 부정하지 않는다. 하이퍼스케일러의 잉여현금흐름이 0을 향한다는 것도, 순환 금융이 걱정거리라는 것도 인정한 채로 데이터 두 가지를 얹었다.</p>
+<p>① GPU 임대의 현물 가격이 계약 가격보다 훨씬 높고 때로는 두 배까지 간다. 임대는 대개 3년짜리 장기 계약이라 지금 받는 값이 낮은데, 계약이 갱신되는 대로 훨씬 더 받게 된다는 것이다 — 시간당 3달러가 5~6달러가 되는 식이다(진행자V가 전하며 숫자는 지어낸 예시라고 밝혔다). ② 최종 수요처인 Anthropic과 OpenAI의 수익성이다. 학습 위주이던 시기가 지나고 추론 비중이 커졌는데 추론의 마진이 높다. Anthropic이 먼저 기업과 코딩에서 API 토큰 값을 받아 돈이 된다는 것을 확인했고, 월 20달러짜리 소비자에 묶여 있던 OpenAI가 Codex로 그 자리를 쫓아가고 있다.</p>
+<p>두 항이 겨누는 곳은 같다. 부채가 위험한 것은 그 부채로 산 자산이 돈을 못 벌 때다. Baker의 주장은 계약 구조 때문에 지금 재무제표에 찍히는 수익이 자산의 실제 수익력보다 낮게 나온다는 것이고, 그렇다면 최종 고객이 엔비디아의 뒷받침 없이도 스스로 살 수 있게 된다. 진행자A는 "흥미로운 견해다. 어떻게 되는지 보자"로 판단을 미뤘다. 어느 쪽이 맞든 확인 시점은 정해져 있다 — <b>초기 장기 계약이 갱신되는 때다.</b> 그때 현물과 계약의 차이가 실제로 좁혀지는지가 이 논쟁을 끝낸다.</p>
+<h2 id="s3"><span class="num">3</span> 좋은 실적이 무너뜨린 것은 실적이 아니라 기대치와 레버리지다</h2>
+<p>SK하이닉스의 수치는 진행자A가 자기 메모에서 읽어 냈다 — 매출 전년 대비 257% 증가, 영업이익 6배 이상, 영업이익률 76%다. 그런데 시장 기대에 못 미쳤고 서울 상장 주식이 하루 20% 빠졌다. 기록에 남을 만한 하루 낙폭이고 코스피 전체를 끌어내렸으며, 레버리지 거래를 기관으로 제한하는 조치까지 나왔다.</p>
+<p>진행자A가 물은 것은 기술 쪽이다. 메모리 요구량이 바뀌었느냐. 진행자V의 답은 아니다 — 더 큰 모델, 더 긴 컨텍스트, 수십 개씩 돌아가는 에이전트까지 HBM과 DRAM 수요는 그대로다. 그렇다면 무너진 것은 수요가 아니다. 진행자V가 든 것은 보유 구조다. 미국에서는 여러 회사에 나눠 투자할 수 있지만 다른 나라에서는 자국 산업에 몰린다 — 대만이면 TSMC, 한국이면 SK하이닉스다. 메모리가 크게 오른 뒤라 개인과 펀드가 몰려 있었고 레버리지를 쓴 쪽도 많았다. 500% 수익이 300%로 줄어드는 순간 팔고 나오게 된다는 것이 진행자V의 설명이고, 그래서 이번 매도는 기본 체력이 아니라 공포와 변동성 때문이라고 봤다.</p>
+<p>여기서 보이는 것은 사이클의 방아쇠가 어디에 있느냐다. 진행자A는 다들 메모리 고점을 찾고 있었고 어느 실적 발표에서 누군가 「모자란다(short)」고 말하는 순간이 공황의 방아쇠가 될 것이라고 예상해 왔다고 밝혔다. 예상된 방아쇠도 방아쇠다. <b>기대치가 실적보다 빨리 오른 구간에서는 좋은 숫자가 나쁜 사건이 된다</b> — 실적이 컨센서스의 함수가 되는 자리라 실적 자체는 판단 근거가 못 된다.</p>
+<h2 id="s4"><span class="num">4</span> 돈을 버는 제품과 밀려나지 않는 제품이 갈라져 있다</h2>
+<p>진행자A가 짚은 역설이 이 회차에서 가장 값이 크다. HBM보다 DRAM이 더 벌고 있다. 이유는 비트 산출이다 — HBM은 같은 비트를 내는 데 DRAM 웨이퍼가 세 배 든다. 그만큼 웨이퍼 공급을 더 먹는데 DRAM 현물 가격은 크게 올랐으니, HBM 없이 DRAM만 파는 회사가 오히려 더 벌게 됐다.</p>
+<figure class="uc-fig"><p class="fig-title">메모리 계층 셋</p><svg class="epoch" viewBox="0 0 520 266" role="img" aria-label="SRAM 은 가장 빠르지만 면적을 많이 먹어 용량이 모자라고, HBM 은 DRAM 을 쌓아 칩 옆에 붙여 대역폭을 내며, DRAM 은 용량이 크고 대역폭이 낮다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="71" y="30" width="66" height="68" rx="9" class="fig-box"/>
+  <text x="104" y="70" text-anchor="middle" class="fig-b">SRAM</text>
+  <rect x="149" y="30" width="300" height="68" rx="9" class="fig-stage"/>
+  <text x="299" y="58.5" text-anchor="middle" class="fig-b">가장 빠름 · 트랜지스터</text>
+  <text x="299" y="81.5" text-anchor="middle" class="fig-b">면적 크고 비쌈 · 용량 모자람</text>
+  <rect x="71" y="108" width="66" height="68" rx="9" class="fig-agent"/>
+  <text x="104" y="148" text-anchor="middle" class="fig-b">HBM</text>
+  <rect x="149" y="108" width="300" height="68" rx="9" class="fig-stage"/>
+  <text x="299" y="136.5" text-anchor="middle" class="fig-b">DRAM 을 3D 로 쌓아 칩 옆에</text>
+  <text x="299" y="159.5" text-anchor="middle" class="fig-b">대역폭</text>
+  <rect x="71" y="186" width="66" height="68" rx="9" class="fig-box"/>
+  <text x="104" y="226" text-anchor="middle" class="fig-b">DRAM</text>
+  <rect x="149" y="186" width="300" height="68" rx="9" class="fig-stage"/>
+  <text x="299" y="214.5" text-anchor="middle" class="fig-b">용량 크고</text>
+  <text x="299" y="237.5" text-anchor="middle" class="fig-b">대역폭 낮음</text>
+</svg><figcaption>진행자V가 정리한 계층이다. SRAM 은 가장 빠르지만 트랜지스터라 면적을 많이 먹어 비싸고 용량이 모자란다. HBM 은 DRAM 을 3D 로 쌓아 칩 가까이 붙여 대역폭을 낸다. 대안(KV 캐시 내리기·TurboQuant·델타 어텐션)도 결국 초당 토큰 처리량을 HBM 에 기댄다는 것이 진행자A의 말이다.</figcaption></figure>
+<p>그런데 밀려나지도 않는다. 진행자A가 든 이유는 메모리 계층에서 HBM이 앉은 자리다. 대안을 찾는 시도는 계속 있었다 — KV 캐시를 다른 저장 장치로 내리는 방법, TurboQuant나 Kimi의 델타 어텐션 같은 알고리즘 쪽 접근이다. 그러나 전부 결국 초당 토큰 처리량을 HBM에 기댄다. SRAM은 용량이 모자라기 때문이다. 진행자V가 계층을 정리했다 — SRAM은 가장 빠르지만 트랜지스터라 면적을 많이 먹고 비싸다. HBM은 그 바로 아래에서 DRAM을 3D로 쌓아 칩 가까이 붙여 필요한 대역폭을 낸다.</p>
+<figure class="uc-fig"><p class="fig-title">수익성 순위와 대체 불가능성 순위</p><svg class="epoch" viewBox="0 0 520 146" role="img" aria-label="같은 두 칸을 두 줄로 그렸다. 지금 값을 받는 자리는 웨이퍼가 모자란 DRAM 이고, 대체할 수 없는 자리는 HBM 이다 — 두 순위가 어긋나 있다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">지금 값을 받는 자리</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">대체할 수 없는 자리</text>
+  <rect x="11.5" y="36" width="113" height="68" rx="9" class="fig-agent"/>
+  <text x="68" y="64.5" text-anchor="middle" class="fig-b">DRAM</text>
+  <text x="68" y="87.5" text-anchor="middle" class="fig-b">웨이퍼 모자람</text>
+  <rect x="138.5" y="36" width="98" height="68" rx="9" class="fig-box"/>
+  <text x="187.5" y="64.5" text-anchor="middle" class="fig-b">HBM</text>
+  <text x="187.5" y="87.5" text-anchor="middle" class="fig-b">웨이퍼 3장</text>
+  <rect x="283.5" y="36" width="113" height="68" rx="9" class="fig-box"/>
+  <text x="340" y="64.5" text-anchor="middle" class="fig-b">DRAM</text>
+  <text x="340" y="87.5" text-anchor="middle" class="fig-b">웨이퍼 모자람</text>
+  <rect x="410.5" y="36" width="98" height="68" rx="9" class="fig-agent"/>
+  <text x="459.5" y="64.5" text-anchor="middle" class="fig-b">HBM</text>
+  <text x="459.5" y="87.5" text-anchor="middle" class="fig-b">웨이퍼 3장</text>
+  <rect x="0" y="120" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="132" class="fig-lg">그 줄의 1위</text>
+</svg><figcaption>같은 두 칸을 두 줄로 그렸다. 지금 값을 받는 자리는 웨이퍼가 모자란 일반 DRAM 이고(HBM 은 같은 비트에 DRAM 웨이퍼가 세 배 든다), 대체할 수 없는 자리는 HBM 이다. 두 순위가 어긋나 있고, 이번 실적 충격이 그 어긋남을 분기 숫자로 드러냈다는 것이 이 글의 읽기다.</figcaption></figure>
+<p>그래서 지금 갈라진 것은 둘이다. ① 지금 값을 받는 자리는 웨이퍼가 모자란 일반 DRAM이고 ② 대체 불가능한 자리는 HBM이다. 진행자V는 장기적으로는 HBM이 다시 더 많은 가치를 가져간다고 봤고 근거로 커스텀 베이스 다이를 들었다 — 그렇게 되면 HBM은 규격품에서 멀어지고, 그 아래 DRAM은 대역폭이 낮은 대용량 쪽으로 내려간다. 업계에 보이는 것은 <b>수익성 순위와 대체 불가능성 순위가 지금 어긋나 있다</b>는 것이고, 이번 실적 충격이 그 어긋남을 분기 숫자로 드러냈다는 것이 이 글의 읽기다.</p>
+<h2 id="s5"><span class="num">5</span> 되는 것과 앞서는 것 사이 — 중국의 이머전 DUV</h2>
+<p>진행자A는 발표를 ASML의 2003년이나 2008년쯤 장비에 견줬고 진행자V가 그 견해를 받았다. 실험실에서 뭔가를 만들었다는 것이 그 회사를 당장 무너뜨린다는 뜻도, 그 회사의 최전선과 경쟁이 된다는 뜻도 아니라는 것이다.</p>
+<figure class="uc-fig"><p class="fig-title">이머전 DUV 로 어디까지 가나</p><svg class="epoch" viewBox="0 0 520 140" role="img" aria-label="이머전 DUV 는 한 번 노광으로 28나노, 멀티패터닝으로 7나노까지 가고 거기가 한계다. 2나노는 EUV 가 필요하다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="30" width="82" height="68" rx="9" class="fig-agent"/>
+  <text x="41" y="58.5" text-anchor="middle" class="fig-b">단일 노광</text>
+  <text x="41" y="81.5" text-anchor="middle" class="fig-b">28나노</text>
+  <line x1="86" y1="64" x2="168" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="172" y="30" width="129" height="68" rx="9" class="fig-agent"/>
+  <text x="236.5" y="58.5" text-anchor="middle" class="fig-b">멀티패터닝</text>
+  <text x="236.5" y="81.5" text-anchor="middle" class="fig-b">7나노 — 한계</text>
+  <line x1="305" y1="64" x2="387" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="391" y="30" width="129" height="68" rx="9" class="fig-outside"/>
+  <text x="455.5" y="58.5" text-anchor="middle" class="fig-b">2나노</text>
+  <text x="455.5" y="81.5" text-anchor="middle" class="fig-b">EUV 가 필요</text>
+  <rect x="0" y="114" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="126" class="fig-lg">이머전 DUV 로 닿는 곳</text>
+  <rect x="270.4" y="114" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="292.4" y="126" class="fig-lg">못 닿는 곳</text>
+</svg><figcaption>한 번 노광으로 28나노, 멀티패터닝으로 7나노까지 가고 거기가 한계다. 2나노로는 못 간다. 7나노로 오늘 쓸 물건을 만들려면 로직 폴딩과 3D 적층이 붙어야 한다.</figcaption></figure>
+<p>진행자A가 기술을 짚은 대목은 이 장비로 어디까지 가느냐다. 이머전 DUV는 2010년대 초 45나노 이하 칩을 대량으로 찍던 장비고, 한 번의 노광으로 28나노까지 패턴을 만든다. 7나노로 가려면 멀티패터닝을 거쳐야 하고, 그래도 7나노가 한계다 — 2나노로는 못 간다. 그리고 7나노로 오늘 쓸 만한 물건을 만들려면 로직 폴딩과 3D 적층이 붙어야 한다. 화웨이가 7나노를 수직으로 쌓아 같은 면적에 트랜지스터를 더 넣으려는 계획을 세운 자리다 — 진행자A는 단독 주택 대신 아파트를 올리는 일에 빗댔다.</p>
+<p>EUV까지 3년이면 된다는 견해에는 진행자A가 명확히 반대했다. 13.5나노 극자외선을 만들려면 주석 방울을 두 번 때려야 하는데 그것이 매우 어렵고, ASML은 공급망 제약 없이도 20년쯤 걸려 그것을 해냈다. 다만 길이 하나만 있는 것은 아니라고 덧붙였다 — 자유전자레이저나 X선 리소그래피 같은 대안이 있고, X선 쪽은 베이 에어리어의 Substrate보다 중국이 먼저 풀 수도 있다는 것이다. 진행자V가 전한 계획은 올해 5대, 2027년 20대 출하다. 자급으로 가는 방향은 맞지만 최전선과 경쟁하는 것과는 거리가 멀다.</p>
+<p>셋을 같이 놓으면 규칙이 하나 보인다. 신용부도스와프도 실적 발표도 리소그래피 발표도 <b>사실이 아니라 사실에 대한 값 매김이 먼저 바뀌었다.</b> 부도는 나지 않았고 메모리 수요는 그대로이며 중국 장비에서 나온 칩은 아직 보지 못했는데, 셋 다에서 값이 먼저 붙었다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</h2>
+<p>말하지 않은 것이 셋이다. ① 신용부도스와프의 실제 스프레드 수치가 없다. 프리미엄이 올랐다는 방향만 있고 어느 회사가 얼마인지, 다른 업종과 견주면 어디쯤인지는 이 회차에 없다. ② SK하이닉스가 얼마나 못 미쳤는지가 없다. 진행자A는 "몇십억쯤 못 미쳤다고 다 망가졌다"고만 말했다. 하회 폭을 모르면 20% 낙폭이 과잉인지 판단할 근거가 없다. ③ 중국 장비의 성능 지표가 없다. 진행자A스스로 공개된 것이 거의 없고 증거 없는 발표뿐이라 회의적이라고 밝혔다.</p>
+<p>바뀌는 조건도 셋이다. ① 초기 GPU 임대 계약이 갱신될 때 2절의 반론이 판정된다 — 현물과 계약의 차이가 실제로 좁혀지면 부채 우려는 회수 시점 문제로 내려앉고, 안 좁혀지면 순환 금융 쪽 우려가 남는다. ② 커스텀 베이스 다이가 실제 제품에 실리면 4절의 어긋남이 풀린다. HBM이 규격품에서 멀어지는 순간 수익성 순위가 대체 불가능성 순위를 따라간다. ③ 중국 장비에서 나온 칩이 실물로 나오면 5절이 다시 서야 한다 — 진행자A가 걸어 둔 조건이 그것이다.</p>
+<p>진행자A가 회차를 닫은 문장은 기술 쪽에 있다. 지난주에 필요했던 인듐인화물도 레이저도 더 나은 컴퓨터도 더 많은 메모리도 여전히 필요하고 바뀐 것이 없다는 것이다. 값 매김이 먼저 바뀐 한 주였다는 이 글의 읽기와 같은 자리다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-07-29-hyperscaler-cds-strategy.md">insights/semidoped/2026-07-29-hyperscaler-cds-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
