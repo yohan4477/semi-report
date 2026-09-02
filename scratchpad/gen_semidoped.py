@@ -578,9 +578,9 @@ def index_html(eps):
     out.append('<div class="sub">칩을 만드는 사람이 나와 앉아 설계를 말하는 팟캐스트. '
                '회차마다 두 판이 따로 읽는다 — ⚖ 전략은 전략 컨설턴트 출신 애널리스트의 해설로, '
                '🔧 기술은 주제 아래 순서와 층위로.<br>'
-               '판은 주제가 서는 회차에만 생긴다. 안 선 회차는 줄만 서고 열리지 않는다 — '
-               '회차 %d편 중 %d편에 글이 있다.</div>' % (len(eps), live))
-    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in eps))
+               '글이 있는 회차만 싣는다 — 회차 %d편 중 %d편.</div>' % (len(eps), live))
+    # 글 없는 회차는 목록에 안 싣는다 — 「글 없음」 줄이 열여덟 개 서 있으면 목록이 아니라 빈칸이다(2026-09-02)
+    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in eps if e['lanes']))
     out.append('<div class="foot">글은 원문 전사를 통째로 읽힌 뒤 받은 것이고 '
                '문장을 고치지 않는다. 값이 원문에 있는지는 사람이 대조한다.</div>')
     out.append('</div>')
