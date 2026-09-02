@@ -1,0 +1,193 @@
+# -*- coding: utf-8 -*-
+"""서울 25구의 지정 현황(토지거래허가구역·조정대상지역·투기과열지구) — insights/watch/_zones.json.
+
+포트폴리오 워치 지도는 구마다 "지금 무엇이 걸려 있나"를 보여준다. 값은 오늘 실제로
+연 공식 페이지에서만 채운다 — 지어내면 지도 전체가 무너진다(저장소 규칙, CLAUDE.md).
+
+## 토지거래허가구역 — 살아 있는 JSON API가 있다
+서울부동산정보광장 페이지(appointStatusSeoul.do)는 화면은 JS로 그리지만 표 데이터
+자체는 POST /land/other/searchAppointStatusList.do 가 순수 JSON으로 낸다(로그인·세션
+불필요, 2026-09-03 확인). 그래서 이 스크립트는 그 API를 그대로 다시 부른다 — 화면을
+읽는 게 아니라 표를 채우는 원 데이터를 읽는다. 표에는 지정구분마다 지정권자·최초
+지정일·면적(㎢ 또는 "區 전체"/"市 전체")·비고가 있을 뿐 구 이름을 직접 나열하지
+않는 행이 많다("신속통합기획 160개소" 등) — 그런 행은 어느 구인지 특정 못하니
+가공 안 하고 note에만 남긴다. 구 이름이 직접 들리는 행(강남·서초·송파·용산,
+압구정=강남·여의도=영등포·목동=양천·성수=성동)과 "市 전체"(전 25구) 행만 구별로
+옮긴다.
+
+## 조정대상지역·투기과열지구 — 공식 API가 없다
+국토교통부는 규제지역 지정을 관보 고시(PDF)로만 낸다. molit.go.kr에 표 형태 API가
+없어 이 스크립트는 실행할 때마다 사람이 WebSearch/WebFetch로 다시 확인해 아래 상수를
+갱신해야 한다("다시 돌릴 수 있게"의 의미가 여기서는 "같은 절차를 다시 밟게" 쪽이다).
+2026-09-03에 확인한 사실 — 정책브리핑(korea.kr, 국무조정실 공동 발표)과
+국토교통부공고 두 건(조정대상지역 제2025-1223호, 투기과열지구 제2025-1225호,
+2025-10-16 시행)이 서울 25개구 전체를 조정대상지역·투기과열지구로 지정했다고 밝힌다.
+기존 4구(강남·서초·송파·용산)는 2023-01-05 규제지역 재편 때부터 계속 지정 상태였고
+(그때 다른 21구는 해제됐다), 나머지 21구가 2025-10-16 신규로 다시 묶였다. 두 정부
+발표를 부동산위키(교차 확인용, 같은 25구 표를 보여준다)로 한 번 더 대조했다.
+이 셋의 지정 여부는 현재 25구 전부 동일(true)하므로 "일부"가 없다 — 그래서 gu 값이
+전부 true인 게 이상한 게 아니라 실제로 그렇다.
+
+    python scripts/fetch_zones.py
+"""
+import io
+import json
+import os
+import urllib.parse
+import urllib.request
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+GU_SRC = os.path.join(ROOT, 'insights', 'watch', '_seoul_gu.json')
+OUT = os.path.join(ROOT, 'insights', 'watch', '_zones.json')
+
+LAND_PAGE = 'https://land.seoul.go.kr/land/other/appointStatusSeoul.do'
+LAND_API = 'https://land.seoul.go.kr/land/other/searchAppointStatusList.do'
+
+# 지정구분 문자열에 등장하는 지명 조각 -> 정식 구 이름. 이 표에 없는 조각(신속통합기획
+# 등 위치가 특정 안 된 사업 유형)은 구별로 못 옮기고 note로만 남긴다.
+NAME_ALIAS = {
+    '강남': '강남구', '서초': '서초구', '송파': '송파구', '용산': '용산구',
+    '압구정': '강남구', '여의도': '영등포구', '목동': '양천구', '성수': '성동구',
+    '잠실': '송파구', '삼성': '강남구', '대치': '강남구', '청담': '강남구',
+}
+
+
+def load_gu_names():
+    d = json.load(io.open(GU_SRC, encoding='utf-8'))
+    return sorted(d['gu'].keys())
+
+
+def fetch_land_rows():
+    """서울부동산정보광장 API를 그대로 불러 원 레코드 리스트를 돌려준다."""
+    body = urllib.parse.urlencode({}).encode()
+    req = urllib.request.Request(LAND_API, data=body, headers={
+        'User-Agent': 'Mozilla/5.0',
+        'Referer': LAND_PAGE,
+        'X-Requested-With': 'XMLHttpRequest',
+    })
+    with urllib.request.urlopen(req, timeout=20) as f:
+        data = json.loads(f.read().decode('utf-8'))
+    return data['result']
+
+
+def fetch_land_asof():
+    """페이지 정적 HTML에 박힌 '기준 일자'를 그대로 읽는다(JS 렌더 없이도 있다)."""
+    req = urllib.request.Request(LAND_PAGE, headers={'User-Agent': 'Mozilla/5.0'})
+    with urllib.request.urlopen(req, timeout=20) as f:
+        html = f.read().decode('utf-8', 'replace')
+    import re
+    m = re.search(r'기준\s*일자[^0-9]*([0-9]{4}[.\s]*[0-9]{1,2}[.\s]*[0-9]{1,2})', html)
+    if not m:
+        return None
+    y, mo, da = re.findall(r'[0-9]+', m.group(1))
+    return '%s-%02d-%02d' % (y, int(mo), int(da))
+
+
+def matched_gu(text):
+    """지정구분 문자열에서 NAME_ALIAS 조각을 찾아 매치된 구 이름 집합을 돌려준다."""
+    hit = set()
+    for frag, gu in NAME_ALIAS.items():
+        if frag in text:
+            hit.add(gu)
+    return hit
+
+
+def build_land_zone(all_gu):
+    rows = fetch_land_rows()
+    as_of = fetch_land_asof() or '확인 못함'
+
+    blanket = []          # areaCn == '市 전체' 인 행 — 25구 전부에 적용
+    partial_by_gu = {}    # 구 이름 -> [문구, ...]
+    unresolved = []       # 위치가 특정 안 된 행(신속통합기획 등)
+
+    for r in rows:
+        typ, first, area, note = r['dsgnTypeNm'], r['frstDsgnYmd'], r['areaCn'], r['rmrkCn']
+        authr = r['dsgnAuthrNm']
+        label = '%s(%s, %s 지정, %s)' % (typ, first, authr, note)
+        if area in ('市 전체',):
+            blanket.append(label)
+            continue
+        hit = matched_gu(typ)
+        if hit:
+            for gu in hit:
+                partial_by_gu.setdefault(gu, []).append(
+                    '%s(%s, %s 지정, 면적 %s, %s)' % (typ, first, authr, area, note))
+        else:
+            unresolved.append('%s(%s, %s, 면적 %s, %s)' % (typ, first, authr, area, note))
+
+    gu_out = {}
+    for gu in all_gu:
+        parts = list(blanket) + partial_by_gu.get(gu, [])
+        gu_out[gu] = {'value': '전부' if blanket else ('일부' if parts else '없음'),
+                       'detail': ' / '.join(parts) if parts else '해당 지정 없음'}
+
+    note = ('서울부동산정보광장 API(searchAppointStatusList.do) 레코드 %d건 중 '
+            '위치가 특정 안 된 사업형 지정 %d건은 구별로 못 옮겨 여기 남긴다: %s'
+            % (len(rows), len(unresolved), '; '.join(unresolved)))
+    return {
+        'src': LAND_PAGE + ' (표 데이터는 ' + LAND_API + ')',
+        'as_of': as_of,
+        'note': note,
+        'gu': gu_out,
+    }
+
+
+# --- 조정대상지역 · 투기과열지구: 공식 API가 없어 조사 결과를 상수로 박는다 -------
+# 확인한 자료(2026-09-03 조사):
+#   - korea.kr 정책브리핑 "서울 전역·경기 12곳 투기과열지구·토지거래허가구역 지정"
+#     (newsId=148950973, 관계부처 합동 2025-10-15 발표) — 기존 4구(강남·서초·송파·
+#     용산) 외 서울 21개구 전체 신규 지정, 5일 뒤(10-20) 토지거래허가 발효.
+#   - 국토교통부공고 제2025-1223호(조정대상지역 지정) — 2025-10-16 시행.
+#   - 국토교통부공고 제2025-1225호(투기과열지구 지정) — 2025-10-16 시행.
+#   - 기존 4구는 2023-01-05 규제지역 재편(그 외 지역 전부 해제) 때부터 계속 지정.
+#   - 부동산위키 "투기과열지구 및 조정대상지역 현황"(2025-10-15 기준 표)으로 교차
+#     확인 — 서울 25개구 전부 두 항목 모두 지정.
+_ADJUST_SRC = ('https://www.korea.kr/news/policyNewsView.do?newsId=148950973 ; '
+               '국토교통부공고 제2025-1223호(조정대상지역, 2025-10-16 시행) ; '
+               '교차확인 https://xn--989a00af8jnslv3dba.com/wiki/'
+               '투기과열지구_및_조정대상지역_현황')
+_OVERHEAT_SRC = ('https://www.korea.kr/news/policyNewsView.do?newsId=148950973 ; '
+                  '국토교통부공고 제2025-1225호(투기과열지구, 2025-10-16 시행) ; '
+                  '교차확인 https://xn--989a00af8jnslv3dba.com/wiki/'
+                  '투기과열지구_및_조정대상지역_현황')
+_OLD4 = {'강남구', '서초구', '송파구', '용산구'}
+
+
+def build_regulation_zone(all_gu, src, label):
+    gu_out = {}
+    for gu in all_gu:
+        if gu in _OLD4:
+            detail = '2023-01-05 규제지역 재편 때 유지 지정, 2025-10-16 %s 고시로 서울 21개구와 함께 재확인' % label
+        else:
+            detail = '2025-10-16 국토교통부 고시로 신규 지정(그 전 2023-01-05 재편 때는 해제됐던 구)'
+        gu_out[gu] = {'value': True, 'detail': detail}
+    return {
+        'src': src,
+        'as_of': '2025-10-16',
+        'note': ('공식 표/JSON API가 없어(고시 PDF만 발행) 사람이 WebSearch/WebFetch로 '
+                 '확인한 결과를 상수로 박았다 — 재실행해도 이 스크립트가 자동으로 다시 '
+                 '확인하지 않는다. 규정이 바뀌면 이 파일의 상수를 사람이 갱신해야 한다.'),
+        'gu': gu_out,
+    }
+
+
+def main():
+    all_gu = load_gu_names()
+    out = {
+        'fetched': '2026-09-03',
+        '토지거래허가구역': build_land_zone(all_gu),
+        '조정대상지역': build_regulation_zone(all_gu, _ADJUST_SRC, '조정대상지역'),
+        '투기과열지구': build_regulation_zone(all_gu, _OVERHEAT_SRC, '투기과열지구'),
+    }
+    io.open(OUT, 'w', encoding='utf-8').write(json.dumps(out, ensure_ascii=False, indent=1))
+    print('gu=%d -> %s (%.1fKB)' %
+          (len(all_gu), OUT, os.path.getsize(OUT) / 1024.0))
+    land = out['토지거래허가구역']
+    print('토지거래허가구역 as_of=%s  강남구=%s' % (land['as_of'], land['gu']['강남구']['value']))
+    for k in ('조정대상지역', '투기과열지구'):
+        vals = set(v['value'] for v in out[k]['gu'].values())
+        print('%s: 값 집합=%s' % (k, vals))
+
+
+if __name__ == '__main__':
+    main()
