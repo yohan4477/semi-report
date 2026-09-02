@@ -144,8 +144,8 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="399.5" y="76" text-anchor="middle" class="fig-b">TIA</text>
   <rect x="433" y="48" width="66" height="44" rx="9" class="fig-agent"/>
   <text x="466" y="76" text-anchor="middle" class="fig-b">리타이머</text>
-  <text x="260" y="134" text-anchor="middle" class="fig-hd">중국이 맡는 부품 + 조립(테두리)</text>
-  <rect x="5" y="144" width="510" height="76" rx="10" class="fig-agent"/>
+  <text x="260" y="134" text-anchor="middle" class="fig-hd">중국이 맡는 부품 — 조립도 중국</text>
+  <rect x="5" y="144" width="510" height="76" rx="10" class="fig-outside"/>
   <rect x="21" y="160" width="51" height="44" rx="9" class="fig-box"/>
   <text x="46.5" y="188" text-anchor="middle" class="fig-b">DSP</text>
   <rect x="80" y="160" width="66" height="44" rx="9" class="fig-box"/>
@@ -166,10 +166,10 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="22" y="248" class="fig-lg">그 나라가 맡는 것</text>
   <rect x="208" y="236" width="14" height="14" rx="3" class="fig-box fig-box"/>
   <text x="230" y="248" class="fig-lg">아닌 것</text>
-</svg><figcaption>같은 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등)만 짙고, 아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)과 조립을 뜻하는 모듈 테두리가 짙다. 부품 순서는 이 그림의 배치다.</figcaption></figure>
+</svg><figcaption>같은 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등)만 짙고, 아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)만 짙다. 조립도 중국이 한다. 부품 순서는 이 그림의 배치다.</figcaption></figure>
 <p>광트랜시버(빛과 전기 신호를 서로 바꿔 데이터센터의 먼 구간을 잇는 부품) 안에 든 것은 대부분 미국 것이다. Austin이 짚은 목록은 Broadcom이나 Marvell의 DSP(디지털 신호 처리 칩), 리타이머, 드라이버, TIA(트랜스임피던스 증폭기)다. Vik의 설명은 더 짧다 — 송신 쪽 증폭기 하나, 수신 쪽 증폭기 하나, 변환 회로 얼마간, 광섬유를 붙이는 부분이 전부다. 그러니까 Innolight나 Eoptolink 같은 중국 업체가 하는 일은 조립과 배선과 최종 결합이고, Austin은 그 「조립」을 일부러 강조했다.</p>
 <p>그런데 그 조립이 급소다. Vik이 든 수는 Innolight 한 곳이 세계 트랜시버 매출의 34%쯤이고(로이터 기사는 27%로 적었는데 일부 애널리스트가 상향했다), 중국 공급망을 다 더하면 세계 시장의 절반쯤이다. 이만한 양은 다른 데서 못 구한다.</p>
-<figure class="uc-fig"><p class="fig-title">광트랜시버 밸류체인 — 급소는 조립</p><svg class="epoch" viewBox="0 0 520 137" role="img" aria-label="광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 급소는 세계 절반쯤을 맡은 조립이다">
+<figure class="uc-fig"><p class="fig-title">광트랜시버 밸류체인 — 광원과 조립</p><svg class="epoch" viewBox="0 0 520 163" role="img" aria-label="광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 이 절이 말하는 두 단은 광원과 조립이다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -184,20 +184,22 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="56.5" y="58.5" text-anchor="middle" class="fig-b">부품</text>
   <text x="56.5" y="81.5" text-anchor="middle" class="fig-b">DSP·TIA</text>
   <text x="56.5" y="104.5" text-anchor="middle" class="fig-b">미국</text>
-  <line x1="117" y1="75.5" x2="126.333" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
-  <rect x="130.333" y="30" width="129" height="91" rx="9" class="fig-box"/>
-  <text x="194.833" y="58.5" text-anchor="middle" class="fig-b">광원</text>
-  <text x="194.833" y="81.5" text-anchor="middle" class="fig-b">Lumentum</text>
-  <text x="194.833" y="104.5" text-anchor="middle" class="fig-b">Coherent</text>
-  <line x1="263.333" y1="75.5" x2="272.667" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
-  <rect x="276.667" y="30" width="113" height="91" rx="9" class="fig-agent"/>
-  <text x="333.167" y="58.5" text-anchor="middle" class="fig-b">조립 · 중국</text>
-  <text x="333.167" y="81.5" text-anchor="middle" class="fig-b">약 50%</text>
-  <text x="333.167" y="104.5" text-anchor="middle" class="fig-b">급소</text>
-  <line x1="393.667" y1="75.5" x2="403" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="117" y1="75.5" x2="121.333" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="125.333" y="30" width="144" height="91" rx="9" class="fig-agent"/>
+  <text x="197.333" y="58.5" text-anchor="middle" class="fig-b">고부가 광원 부품</text>
+  <text x="197.333" y="81.5" text-anchor="middle" class="fig-b">Lumentum</text>
+  <text x="197.333" y="104.5" text-anchor="middle" class="fig-b">Coherent</text>
+  <line x1="273.333" y1="75.5" x2="277.667" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="281.667" y="30" width="113" height="91" rx="9" class="fig-agent"/>
+  <text x="338.167" y="58.5" text-anchor="middle" class="fig-b">조립 · 중국</text>
+  <text x="338.167" y="81.5" text-anchor="middle" class="fig-b">약 50%</text>
+  <text x="338.167" y="104.5" text-anchor="middle" class="fig-b">27~34%</text>
+  <line x1="398.667" y1="75.5" x2="403" y2="75.5" class="fig-arw" marker-end="url(#aieArw)"/>
   <rect x="407" y="30" width="113" height="91" rx="9" class="fig-box"/>
   <text x="463.5" y="70" text-anchor="middle" class="fig-b">구축</text>
   <text x="463.5" y="93" text-anchor="middle" class="fig-b">Azure 등</text>
+  <rect x="0" y="137" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="149" class="fig-lg">이 절이 말하는 두 단</text>
 </svg><figcaption>끝에서 끝까지다. 부품(DSP·리타이머·드라이버·TIA)은 미국, 고부가 광원(200기가 EML·초고출력 레이저)은 Lumentum·Coherent, 조립은 중국 공급망이 세계의 약 50% 이고 Innolight 한 곳이 27~34% 다, 구축은 Azure·OCI 같은 주체다. 조립이 빠지면 광원 매출도 줄어들지 않겠느냐는 것이 Vik 의 말인데 주가는 광원 쪽이 올랐다.</figcaption></figure>
 <p>주가가 어긋난 자리가 이 구조를 그대로 보여 준다. 금지안 소식에 Lumentum·Coherent·Applied Optoelectronics 주가가 올랐는데, Vik의 지적은 이들이 조립을 안 한다는 것이다 — Applied Optoelectronics가 일부 하는 것을 빼면. 이들이 만드는 것은 200기가 EML이나 초고출력 레이저처럼 만들기 어려운 고부가 부분이고, 중국 업체가 맡은 것은 마진이 아주 얇은데 없으면 안 되는 부분이다. 그래서 Vik은 반대로 짚었다 — 어떻게 봐야 할지 모르겠다면서도, 꽂아 쓰는 모듈로 묶어 줄 사람이 사라지면 Lumentum과 Coherent가 오히려 곤란해지지 않겠느냐는 것이다. 값을 못 받는다는 것과 대체할 수 있다는 것은 다른 말인데, 시장은 그 둘을 같은 것으로 읽었다.</p>
 <h2 id="s2"><span class="num">2</span> 기술이 복잡한 영역에서는 명분이 검증을 안 거친다</h2>

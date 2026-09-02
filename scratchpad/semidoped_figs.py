@@ -512,8 +512,9 @@ def _op_module():
     def row(y, who, label):
         out = head(fx, y, fw, label)
         fy = y + 10
-        out += ['  <rect x="%g" y="%g" width="%g" height="%g" rx="10" class="%s"/>'
-                % (fx, fy, fw, h + 32, 'fig-agent' if who == 'cn' else 'fig-outside')]
+        # 테두리 배경은 줄마다 같다 — 다른 것은 부품 색만이어야 견줌이 된다(2026-09-02)
+        out += ['  <rect x="%g" y="%g" width="%g" height="%g" rx="10" class="fig-outside"/>'
+                % (fx, fy, fw, h + 32)]
         x = fx + 16
         for (n, c), w in zip(parts_all, ws):
             out += box(x, fy + 16, w, h, [n], 'fig-agent' if c == who else 'fig-box')
@@ -521,7 +522,7 @@ def _op_module():
         return out, fy + h + 32
 
     r1, y1 = row(y, 'us', '미국이 만드는 부품')
-    r2, y2 = row(y1 + 26, 'cn', '중국이 맡는 부품 + 조립(테두리)')
+    r2, y2 = row(y1 + 26, 'cn', '중국이 맡는 부품 — 조립도 중국')
     parts += r1 + r2
     parts += legend([('fig-agent', '그 나라가 맡는 것'), ('fig-box', '아닌 것')], y2 + 16)
     return svg(y2 + 42, parts,
@@ -532,12 +533,14 @@ def _op_chain():
     """광트랜시버 밸류체인 끝에서 끝까지 — 부품(미국) → 광원(Lumentum·Coherent) → 조립(중국) → 구축(하이퍼스케일러).
     급소인 조립만 짙게. 두 층만 뽑으면 층 셋으로 읽혀서 전체를 그린다(2026-09-02)."""
     h = 3 * LH + 22
+    # 사슬은 넷 다 그리고, 이 절이 말하는 두 단(광원·조립)만 짙게
     row, _x = band([(['부품', 'DSP·TIA', '미국'], 'fig-box'), ('>', ''),
-                    (['광원', 'Lumentum', 'Coherent'], 'fig-box'), ('>', ''),
-                    (['조립 · 중국', '약 50%', '급소'], 'fig-agent'), ('>', ''),
+                    (['고부가 광원 부품', 'Lumentum', 'Coherent'], 'fig-agent'), ('>', ''),
+                    (['조립 · 중국', '약 50%', '27~34%'], 'fig-agent'), ('>', ''),
                     (['구축', 'Azure 등'], 'fig-box')], 30, h)
-    return svg(30 + h + 16, row,
-               '광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 급소는 세계 절반쯤을 맡은 조립이다')
+    parts = row + legend([('fig-agent', '이 절이 말하는 두 단')], 30 + h + 16)
+    return svg(30 + h + 42, parts,
+               '광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 이 절이 말하는 두 단은 광원과 조립이다')
 
 
 def _op_fork():
@@ -591,8 +594,8 @@ FIGS = {
     (OP, 'strategy'): [
         ('1.|광트랜시버(빛과', '같은 트랜시버, 누가 무엇을 만드나', _op_module(),
          '같은 모듈을 두 줄로 그렸다. 윗줄은 미국이 만드는 부품(DSP·리타이머·드라이버·TIA — Broadcom·Marvell 등, L61)만 짙고, '
-         '아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)과 조립을 뜻하는 모듈 테두리가 짙다(L61·L65). 부품 순서는 이 그림의 배치다.'),
-        ('1.|주가가 어긋난', '광트랜시버 밸류체인 — 급소는 조립', _op_chain(),
+         '아랫줄은 중국이 맡는 부품(증폭기 둘·변환 회로·광섬유 접속)만 짙다. 조립도 중국이 한다(L61·L65). 부품 순서는 이 그림의 배치다.'),
+        ('1.|주가가 어긋난', '광트랜시버 밸류체인 — 광원과 조립', _op_chain(),
          '끝에서 끝까지다. 부품(DSP·리타이머·드라이버·TIA)은 미국(L61), 고부가 광원(200기가 EML·초고출력 레이저)은 Lumentum·Coherent(L81), 조립은 중국 공급망이 세계의 약 50% 이고 Innolight 한 곳이 27~34% 다(L79), '
          '구축은 Azure·OCI 같은 주체다(L91). 조립이 빠지면 광원 매출도 줄어들지 않겠느냐는 것이 Vik 의 말인데 주가는 광원 쪽이 올랐다(L81·L83).'),
         ('3.|금지가 곧', '되돌릴 수 있는 규제 앞의 갈림', _op_fork(),
