@@ -85,17 +85,35 @@ def strip_lrefs(s):
     return LREF_TAIL.sub('', LREF_ALONE.sub('', s))
 
 
+# 진행자는 여는 문단에서 풀네임으로 한 번만 부르고 뒤에서는 진행자A·진행자V 다(2026-09-02).
+# 원본 파일에는 이름이 남는다(전사 대조용). 풀네임(Austin Lyons·Vik Sekar)과 Vik's 는 건드리지 않는다.
+HOST = {'Austin': '진행자A', 'Vik': '진행자V'}
+HOST_RE = re.compile(r"\b(Austin|Vik)(?! Lyons| Sekar|['’]s)\s?(이|가|은|는|을|를|과|와)?(?=[^A-Za-z]|$)")
+PART = {'이': '가', '은': '는', '을': '를', '과': '와'}
+NAMES = []   # 화자 줄의 [[이름]] — 본문에서 색을 입힌다. post_html 이 회차마다 채운다
+
+
+def host_sub(s):
+    return HOST_RE.sub(lambda m: HOST[m.group(1)] + (PART.get(m.group(2), m.group(2)) if m.group(2) else ''), s)
+
+
+def name_spans(s):
+    for n in ['진행자A', '진행자V'] + NAMES:
+        s = re.sub(r'(?<![\w>])' + re.escape(n) + r'(?![\w<])', '<span class="pn">%s</span>' % n, s)
+    return s
+
+
 def inline(s):
-    s = esc(strip_lrefs(s))
+    s = esc(host_sub(strip_lrefs(s)))
     s = re.sub(r'`([^`]+)`', r'<code>\1</code>', s)
     s = re.sub(r'\*\*([^*]+)\*\*', r'<b>\1</b>', s)
     s = ENG_QUOTE.sub(r'<span class="q">"\1"</span>', s)
-    return s
+    return name_spans(s)
 
 
 def fig_block(f):
     key, title, svg, cap = f
-    return semidoped_figs.fig_html((key, title, svg, strip_lrefs(cap)))
+    return semidoped_figs.fig_html((key, title, svg, name_spans(host_sub(strip_lrefs(cap)))))
 
 
 def table_html(rows):
@@ -442,8 +460,10 @@ a.row:hover{background:#eef1f6}
 .why{font-size:12px;color:#8a93a1;margin-top:6px}
 .back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
  text-decoration:none}
-.who{margin-top:8px;font-size:13px;color:#4c5563;line-height:1.7}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
 .who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
 .pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
  padding-bottom:18px;border-bottom:1px solid #e2e5ea}
 .lane{margin:0 0 44px}
@@ -545,8 +565,13 @@ def post_html(ep):
     # 화자 — 팟캐스트라 누가 말하는 사람인지가 먼저다. 요약본 frontmatter people 에
     # 「진행 … / 발표 …」로 적고, 없으면 speaker 만 낸다. 전사에 없는 소속·직함은 안 적는다
     people = m.get('people', '')
-    who = ''.join('<div class="who"><b>%s</b> %s</div>' % (esc(x.strip().split(' ', 1)[0]), esc(x.strip().split(' ', 1)[1]))
-                  for x in people.split(' / ') if ' ' in x.strip()) if people else ''
+    NAMES[:] = re.findall(r'\[\[([^\]]+)\]\]', people)
+
+    def who_line(x):
+        k, v = x.strip().split(' ', 1)
+        v = re.sub(r'\[\[([^\]]+)\]\]', r'<span class="pn">\1</span>', esc(v))
+        return '<div class="who"><b>%s</b> %s</div>' % (esc(k), v)
+    who = ('<div class="whobox">%s</div>' % ''.join(who_line(x) for x in people.split(' / ') if ' ' in x.strip())) if people else ''
     out.append('<div class="pmeta">%s · %s<br>원문 <a href="%s">%s</a> · '
                '요약본 <a href="%s">저장소</a>%s</div>'
                % (esc(m.get('date', '')), esc(m.get('speaker', '')),

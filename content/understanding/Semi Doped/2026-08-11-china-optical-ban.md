@@ -6,7 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
-people: 진행 Austin Lyons (Chipstrat) · Vik Sekar (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 section: news
 topic: 수출 규제 · 광트랜시버 · 데이터센터 자금
 gain: 악성코드를 명분으로 든 수입 금지안이 실제로 무엇을 겨냥하는지, 중국 업체의 점유율이 어디쯤인지, 그리고 AMD 실적과 100억 달러짜리 데이터센터 딜의 구조.
