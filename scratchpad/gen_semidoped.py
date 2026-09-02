@@ -486,6 +486,8 @@ a.row:hover{background:#eef1f6}
 .tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
 .tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
 .tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.lhead .tag.hk{margin-left:8px;vertical-align:middle}
 .row.dead{opacity:.62}
 .why{font-size:12px;color:#8a93a1;margin-top:6px}
 .back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
@@ -574,6 +576,9 @@ def row_html(ep):
     for key, emo, label, _sub in LANES:
         if any(l['key'] == key for l in ep['lanes']):
             tags.append('<span class="tag on">%s %s</span>' % (emo, label))
+    # 윤문(한글 손질)을 거친 글은 꼬리표로 밝힌다 — frontmatter humanized (2026-09-03)
+    if any(l['meta'].get('humanized') for l in ep['lanes']):
+        tags.append('<span class="tag hk">한글 손질</span>')
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
     # 진행자 둘뿐인 회차는 날짜만 선다
     others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
@@ -621,6 +626,8 @@ def post_html(ep):
         out.append('<div class="lhead"><b>%s %s 판</b><span>%s · %s 가 씀</span></div>'
                    % (lane['emo'], lane['label'], esc(lane['sub']),
                       esc(lm.get('model', ''))))
+        if lm.get('humanized'):
+            out[-1] = out[-1].replace('</span></div>', '</span><span class="tag hk">한글 손질</span></div>')
         if lm.get('title'):
             out.append('<div class="ltitle">%s</div>' % esc(lm['title']))
         out.append(lane_html(lane['body'],
