@@ -432,6 +432,8 @@ a.row:hover{background:#eef1f6}
 .why{font-size:12px;color:#8a93a1;margin-top:6px}
 .back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
  text-decoration:none}
+.who{margin-top:8px;font-size:13px;color:#4c5563;line-height:1.7}
+.who b{color:#1b1f27;margin-right:6px}
 .pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
  padding-bottom:18px;border-bottom:1px solid #e2e5ea}
 .lane{margin:0 0 44px}
@@ -440,7 +442,7 @@ a.row:hover{background:#eef1f6}
 .lhead span{font-size:12px;color:#8a93a1}
 .ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
  padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
-.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
 .lane h2.apx{color:#66707f}
 .lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
 .lane p{margin:0 0 14px}
@@ -530,11 +532,16 @@ def post_html(ep):
     out = [HEAD % (esc(m.get('title', ep['slug'])) + ' — Semi Doped', CSS)]
     out.append('<a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a>')
     out.append('<h1>%s</h1>' % esc(m.get('title', ep['slug'])))
+    # 화자 — 팟캐스트라 누가 말하는 사람인지가 먼저다. 요약본 frontmatter people 에
+    # 「진행 … / 발표 …」로 적고, 없으면 speaker 만 낸다. 전사에 없는 소속·직함은 안 적는다
+    people = m.get('people', '')
+    who = ''.join('<div class="who"><b>%s</b> %s</div>' % (esc(x.strip().split(' ', 1)[0]), esc(x.strip().split(' ', 1)[1]))
+                  for x in people.split(' / ') if ' ' in x.strip()) if people else ''
     out.append('<div class="pmeta">%s · %s<br>원문 <a href="%s">%s</a> · '
-               '요약본 <a href="%s">저장소</a></div>'
+               '요약본 <a href="%s">저장소</a>%s</div>'
                % (esc(m.get('date', '')), esc(m.get('speaker', '')),
                   esc(m.get('source', '')), esc(m.get('source', '')),
-                  blob(ep['raw'])))
+                  blob(ep['raw']), who))
     for lane in ep['lanes']:
         lm = lane['meta']
         out.append('<div class="lane">')
