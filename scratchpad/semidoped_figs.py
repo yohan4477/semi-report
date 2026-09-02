@@ -443,8 +443,8 @@ def _td_logflow():
                     (['로그로 가면', 'log A + log B'], 'fig-agent'), ('>', ''),
                     (['선형 복귀', '이득 안 반납'], 'fig-outside'), ('>', ''),
                     (['누산'], 'fig-box')], 30, h)
-    parts = row + mid(30 + h + 18, 40, ['흔한 길(룩업 테이블·테일러 급수)로 되돌아오면 번 것을 반납한다'], 'fig-stage')
-    return svg(30 + h + 72, parts,
+    parts = row + mid(30 + h + 18, 2 * LH + 22, ['흔한 길(룩업 테이블·테일러 급수)로 되돌아오면', '번 것을 반납한다'], 'fig-stage')
+    return svg(30 + h + 100, parts,
                '곱셈을 로그 영역으로 옮기면 덧셈이 되고, 누산하려면 선형으로 되돌아와야 한다. 되돌아오는 자리에서 이득을 잃지 않는 것이 특허다')
 
 
@@ -460,8 +460,8 @@ def _td_fabric():
         bw = w_of(['뒷면 패브릭', '어느 포트에서 어느 포트로든'])
         parts += box(x0 + (248 - bw) / 2, 36 + h + 28, bw, h, ['뒷면 패브릭', '어느 포트에서 어느 포트로든'], 'fig-stage')
     y = 36 + h + 28 + h
-    parts += mid(y + 16, 40, ['같은 패브릭 — 40바이트부터 9K 점보 프레임까지, 20년 굴러 온 것'], 'fig-stage')
-    return svg(y + 70, parts,
+    parts += mid(y + 16, 2 * LH + 22, ['같은 패브릭 — 40바이트부터 9K 점보 프레임까지', '20년 굴러 온 것'], 'fig-stage')
+    return svg(y + 98, parts,
                '라우터 뒷면 패브릭은 어느 포트에서 어느 포트로든 아무 크기 패킷을 처리하도록 20년 다듬어졌다. 텐서다인은 그것을 설계하지 않고 가속기 72개 아래에 그대로 가져왔다')
 
 
@@ -475,8 +475,8 @@ def _td_rack():
     aw, bw = w_of(a), w_of(b)
     parts += box(L + (248 - aw) / 2, 36, aw, h, a, 'fig-agent')
     parts += box(R + (248 - bw) / 2, 36, bw, h, [x for x in b], 'fig-box')
-    parts += mid(36 + h + 18, 40, ['19인치 텔코 랙에 그대로 — 액랭 개조가 안 되는 기존 시설을 겨눈다'], 'fig-stage')
-    return svg(36 + h + 72, parts,
+    parts += mid(36 + h + 18, 2 * LH + 22, ['19인치 텔코 랙에 그대로 들어간다', '액랭 개조가 안 되는 기존 시설을 겨눈다'], 'fig-stage')
+    return svg(36 + h + 100, parts,
                '텐서다인 쿼터랙은 13U 에 칩 72개, 30킬로와트 공랭이고 견준 상대는 GB300 풀랙 150킬로와트 액랭이다. 성능이 동급인지는 이 회차에 값이 없다')
 
 
@@ -526,8 +526,8 @@ def _op_stack():
     parts = box((W - tw) / 2, 30, tw, h, top, 'fig-box')
     parts += box((W - bw) / 2, 30 + h + 40, bw, h, bot, 'fig-agent')
     parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" marker-end="url(#aieArw)"/>' % (W / 2, 30 + h + 38, W / 2, 30 + h + 4)]
-    parts += mid(30 + 2 * h + 58, 40, ['아래가 빠지면 위의 매출도 줄어든다 — 주가는 반대로 움직였다'], 'fig-stage')
-    return svg(30 + 2 * h + 112, parts,
+    parts += mid(30 + 2 * h + 58, 2 * LH + 22, ['아래가 빠지면 위의 매출도 줄어든다', '주가는 반대로 움직였다'], 'fig-stage')
+    return svg(30 + 2 * h + 140, parts,
                '중국 조립 층이 세계 트랜시버의 절반쯤이고 Innolight 한 곳이 27~34% 다. 조립이 빠지면 그 위 고부가 광원 회사 매출도 줄어드는데 주가는 반대로 올랐다')
 
 
