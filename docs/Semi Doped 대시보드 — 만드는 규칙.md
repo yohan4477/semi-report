@@ -8,7 +8,7 @@
 회차 요약본 frontmatter `section` 코드에 이름을 얹는다. 순서가 화면 순서다.
 
 ```
-compute  추론 칩            link  칩끼리 잇는 길        power  전력
+compute  추론 칩            link  네트워크        power  전력
 mem      메모리             fab   공정·패키징·리소      news   시황·규제·자금
 ```
 회차마다 한 자리. 두 갈래인 회차(메모리 실적·캡엑스는 메모리 대 시황, 컴퓨텍스는 전력 대 잇는 길)는
