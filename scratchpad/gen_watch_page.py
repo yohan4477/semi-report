@@ -176,10 +176,12 @@ def _gu_map_data(watches):
     sale = dict(rows_by.get('매매가격지수') or [])
     region_raw = _region_raw(watches)
     region_slug = dict((w['target'], w['slug']) for w in _live_areas(watches))
+    region_view = dict((w['target'], w.get('view') or '') for w in _live_areas(watches))
     out = {}
     for name in sorted(SEOUL_GU['gu']):
         region = GU_REGION.get(name)
-        entry = {'region': region, 'slug': region_slug.get(region)}
+        entry = {'region': region, 'slug': region_slug.get(region),
+                 'region_view': region_view.get(region) or ''}
         entry['jeonse'] = _val3(jeonse[name]) if name in jeonse else None
         entry['sale'] = _val3(sale[name]) if name in sale else None
         sd = (region_raw.get(region) or {}).get('supply_demand') if region else None
@@ -267,6 +269,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
 .layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+/* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
+   사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
+   바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
+@media (min-width:621px){.map-fig{position:sticky;top:62px}}
 .map-fig{flex:0 0 58%;margin:0;min-width:0}
 .mappanel{flex:1;min-width:0}
 .seoul-map{width:100%;height:auto;display:block}
@@ -304,9 +310,36 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
 .rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
-.gp-name{margin:0;font-size:20px;font-weight:700}
-.gp-line{margin:6px 0 0;font-size:.88rem;color:var(--ink-2)}
-.gp-more{display:inline-block;margin:8px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+.gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
+.gp-name{font-size:20px;font-weight:700}
+.gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
+  border:0;background:transparent;color:var(--ink-3);font-size:20px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;border-radius:999px}
+.gp-close:hover{background:var(--line);color:var(--ink)}
+.gp-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+/* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
+   폰 폭에서 두 열이면 값이 잘린다(2026-09-03) */
+.gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+.gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
+.gp-d{color:var(--ink-2)}
+.gp-more{display:inline-block;margin:10px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+/* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
+   지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
+@media (max-width:620px){
+  .gu-panel:not([data-panel="default"]){
+    display:block!important;position:fixed;left:0;right:0;bottom:0;max-height:45vh;
+    overflow-y:auto;background:var(--surface);border-top:1px solid var(--line);
+    border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.12);z-index:20;
+    padding:14px 16px 20px;transform:translateY(100%);pointer-events:none}
+  .gu-panel:not([data-panel="default"])::before{
+    content:"";display:block;width:36px;height:4px;border-radius:2px;
+    background:var(--line);margin:0 0 10px}
+  .gu-panel:not([data-panel="default"]):not([hidden]){
+    transform:translateY(0);pointer-events:auto}
+  @media (prefers-reduced-motion:no-preference){
+    .gu-panel:not([data-panel="default"]){transition:transform .18s}
+  }
+}
 /* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
 .map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .leg-strip{display:flex}
@@ -321,7 +354,6 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
 .leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
 .leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
-.map-terms{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -981,6 +1013,26 @@ def link_out(url):
     return '<a href="%s">%s</a>' % (E(url), E(m.group(1)))
 
 
+def _lth_detail_block(w):
+    """토지거래허가구역 「지정 내역」 — 지도 패널에서 뺀 긴 detail 문장이 가는
+    자리(2026-09-03). 그 권역 구 셋만, 값·detail·기준·출처를 표로 낸다.
+    권역이 없는 줄(정책 줄 등)은 아무것도 안 낸다."""
+    gus = AREAS.get(w['target'], {}).get('구') or []
+    if not gus:
+        return ''
+    z = ZONES.get('토지거래허가구역', {})
+    rows = []
+    for g in gus:
+        v, d = _lth_info(g)
+        if v is None:
+            continue
+        rows.append([E(g), E(v), wl.md_inline(d) if d else '<span class="t-none">—</span>',
+                     E(z.get('as_of') or '—'), _src_link(z.get('src'))])
+    if not rows:
+        return ''
+    return tbl('토지거래허가구역 지정 내역', ['구', '지정', '내용', '기준', '출처'], rows)
+
+
 def line_block(w):
     """줄 하나의 상세 본문 — watch/<슬러그>.html 안에 실린다.
 
@@ -1022,6 +1074,7 @@ def line_block(w):
     if evt:
         h.append(tbl('사람이 확인하는 것', ['무엇을 확인하나', '어디서'],
                      [[E(t['what']), link_out(t['where'])] for t in evt]))
+    h.append(_lth_detail_block(w))
     if w['clash']:
         h.append('<p class="lbl">반대 근거</p><ul class="pts">%s</ul>'
                  % ''.join('<li>%s</li>' % c for c in w['clash']))
@@ -1235,46 +1288,72 @@ def _region_summary_html(watches):
         for cur, w, d3, gus, line in items)
 
 
+LTH_LABEL = {'전부': '전부 지정', '일부': '일부 지정', '없음': '미지정'}
+
+
+def _reg_row_text(e):
+    """규제지역 한 줄 — 「조정대상지역·투기과열지구」 각각 지정/해제를 되풀이하지
+    않고, 그 구에 지금 걸려 있는 이름만 나열한다(둘 다면 둘 다, 하나면 하나,
+    아무 것도 안 걸리면 「해당 없음」). 어느 한쪽이라도 모르면 「확인 안 됨」."""
+    if e['adj'] is None or e['hot'] is None:
+        return '확인 안 됨'
+    names = []
+    if e['adj']:
+        names.append('조정대상지역')
+    if e['hot']:
+        names.append('투기과열지구')
+    return ' · '.join(names) if names else '해당 없음'
+
+
 def _gu_panel_html(name, e):
-    """구 하나의 패널 — 손을 대면 이걸로 바뀐다(JS 는 hidden 만 토글한다). 보고
-    있지 않은 구(전세가율·매매가격지수 없음)는 이름·토허·규제만 낸다."""
+    """구 하나의 패널 — 손을 대면(미리보기) 또는 누르면(고정) 이걸로 바뀐다.
+    최대 9줄 — 데스크톱·모바일(시트) 어디서든 한 화면에 다 들어와야 한다
+    (2026-09-03, 사용자 P0: 「내용이 한 화면에 다 들어오는 것도 아니고」).
+    토허 detail 긴 문장은 여기 안 낸다 — 상세 페이지 「지정 내역」으로 옮겼다."""
     watched = bool(e['jeonse'] or e['sale'])
-    h = ['<div class="gu-panel" data-panel="%s" hidden><p class="gp-name">%s</p>'
-        % (E(name), E(name))]
+    h = ['<div class="gu-panel" data-panel="%s" hidden>'
+         '<p class="gp-head"><span class="gp-name">%s</span>'
+         '<button type="button" class="gp-close" aria-label="닫기">×</button></p>'
+         % (E(name), E(name))]
+    if watched and e['region']:
+        h.append('<p class="gp-sub">%s · %s</p>' % (E(e['region']), E(e['region_view'])))
+    else:
+        h.append('<p class="gp-sub">보고 있지 않은 구</p>')
     if watched:
-        if e['region']:
-            h.append('<p class="gp-line">권역 %s</p>' % E(e['region']))
         if e['jeonse']:
             j = e['jeonse']
-            h.append('<p class="gp-line">전세가율 %.1f%% (지난달 %s · 석 달 %s)</p>'
+            h.append('<p class="gp-row"><span class="gp-lbl">전세가율</span><b>%.1f%%</b> '
+                     '<span class="gp-d">지난달 %s · 석 달 %s</span></p>'
                      % (j['cur'], _delta_span(j['d1'], '%p'), _delta_span(j['d3'], '%p')))
         if e['sale']:
-            s = e['sale']
-            h.append('<p class="gp-line">매매가격지수 %.2f (지난달 %s · 석 달 %s)</p>'
-                     % (s['cur'], _delta_span(s['d1'], 'pt'), _delta_span(s['d3'], 'pt')))
+            sv = e['sale']
+            h.append('<p class="gp-row"><span class="gp-lbl">매매가격지수</span><b>%.2f</b> '
+                     '<span class="gp-d">지난달 %s · 석 달 %s</span></p>'
+                     % (sv['cur'], _delta_span(sv['d1'], 'pt'), _delta_span(sv['d3'], 'pt')))
         if e['sd'] and e['sd'].get('value') is not None:
-            h.append('<p class="gp-line">수급동향 %s <span class="t-sub">%s</span></p>'
-                     % (_fmt1(float(e['sd']['value'])), E(e['sd'].get('area') or '')))
+            sdv = float(e['sd']['value'])
+            h.append('<p class="gp-row"><span class="gp-lbl">수급동향</span><b>%s</b> · %s '
+                     '<span class="t-sub">(%s)</span></p>'
+                     % (_fmt1(sdv), '사려는 사람이 많다' if sdv >= 100 else '팔려는 사람이 많다',
+                        E(e['sd'].get('area') or '')))
     if e['lth_value'] is not None:
-        detail = e['lth_detail'] or ''
-        if len(detail) > 60:
-            detail = detail[:60] + '…'
-        h.append('<p class="gp-line">토지거래허가구역 %s%s</p>'
-                 % (E(e['lth_value']), ' — %s' % E(detail) if detail else ''))
-    adj_txt = '지정' if e['adj'] else ('해제' if e['adj'] is False else '미확인')
-    hot_txt = '지정' if e['hot'] else ('해제' if e['hot'] is False else '미확인')
-    h.append('<p class="gp-line">조정대상지역 %s · 투기과열지구 %s</p>' % (adj_txt, hot_txt))
-    if not watched:
-        h.append('<p class="gp-line t-none">값을 보고 있지 않은 구입니다</p>')
-    if e['slug']:
+        lth_as_of = ZONES.get('토지거래허가구역', {}).get('as_of') or '—'
+        h.append('<p class="gp-row"><span class="gp-lbl">토지거래허가구역</span>%s · %s 기준</p>'
+                 % (E(LTH_LABEL.get(e['lth_value'], e['lth_value'])), E(lth_as_of)))
+    reg_as_of = ZONES.get('조정대상지역', {}).get('as_of') or '—'
+    h.append('<p class="gp-row"><span class="gp-lbl">규제지역</span>%s · %s 기준</p>'
+             % (E(_reg_row_text(e)), E(reg_as_of)))
+    if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
     return ''.join(h)
 
 
-# 바닐라 JS — 층 전환(버튼 3개) · 지도 호버/포커스(패널 교체 + 강조) · 권역 요약
-# 호버(지도 강조만) · 클릭/Enter 이동. 값은 전부 생성 때 HTML 에 이미 있다 —
-# 여기서는 hidden 토글과 class 토글만 한다(계산 없음).
+# 바닐라 JS — 층 전환(버튼 3개) · 지도 호버=미리보기/누르기=고정(선택 모델
+# 하나로, 2026-09-03) · 권역 요약 호버(지도 강조만). 상세 이동은 패널 안
+# 「자세히 →」 링크로만 한다 — path 클릭은 더는 페이지를 안 옮긴다(모바일에서
+# 탭=이동이면 값을 볼 길이 없다는 사용자 지적). 값은 전부 생성 때 HTML 에
+# 이미 있다 — 여기서는 hidden·class 토글만 한다(계산 없음).
 _MAP_JS = """<script>
 (function(){
 var svg=document.querySelector('.seoul-map');
@@ -1282,21 +1361,22 @@ if(!svg)return;
 var gus=Array.from(svg.querySelectorAll('.gu'));
 var panels=Array.from(document.querySelectorAll('.gu-panel'));
 var rss=Array.from(document.querySelectorAll('.rs'));
+var locked=null;
 var showPanel=function(n){panels.forEach(function(p){p.hidden=p.dataset.panel!==n;});};
 var clearHi=function(){gus.forEach(function(g){g.classList.remove('gu-hover','gu-dim');});};
 var highlight=function(names){gus.forEach(function(g){
   var on=names.indexOf(g.dataset.gu)>-1;
   g.classList.toggle('gu-hover',on);g.classList.toggle('gu-dim',!on);});};
-var reset=function(){clearHi();showPanel('default');};
+var apply=function(n){if(n){highlight([n]);}else{clearHi();}showPanel(n||'default');};
 gus.forEach(function(g){
   var n=g.dataset.gu;
-  g.addEventListener('mouseenter',function(){highlight([n]);showPanel(n);});
-  g.addEventListener('focus',function(){highlight([n]);showPanel(n);});
-  g.addEventListener('mouseleave',reset);
-  g.addEventListener('blur',reset);
-  g.addEventListener('click',function(){if(g.dataset.slug)location.href='watch/'+g.dataset.slug+'.html';});
+  g.addEventListener('mouseenter',function(){apply(n);});
+  g.addEventListener('focus',function(){apply(n);});
+  g.addEventListener('mouseleave',function(){apply(locked);});
+  g.addEventListener('blur',function(){apply(locked);});
+  g.addEventListener('click',function(){locked=(locked===n)?null:n;apply(locked);});
   g.addEventListener('keydown',function(ev){
-    if(ev.key==='Enter'&&g.dataset.slug)location.href='watch/'+g.dataset.slug+'.html';});
+    if(ev.key==='Enter'){locked=(locked===n)?null:n;apply(locked);}});
 });
 rss.forEach(function(a){
   var names=a.dataset.gus.split(' ');
@@ -1304,6 +1384,17 @@ rss.forEach(function(a){
   a.addEventListener('focus',function(){highlight(names);});
   a.addEventListener('mouseleave',clearHi);
   a.addEventListener('blur',clearHi);
+});
+Array.from(document.querySelectorAll('.gp-close')).forEach(function(b){
+  b.addEventListener('click',function(){locked=null;apply(null);});
+});
+document.addEventListener('click',function(e){
+  if(!locked)return;
+  if(e.target.closest('.gu,.gu-panel,.rs'))return;
+  locked=null;apply(null);
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&locked){locked=null;apply(null);}
 });
 Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
   b.addEventListener('click',function(){
@@ -1319,10 +1410,15 @@ Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
 
 
 def seoul_map_section(watches, asof):
-    """지도 히어로 — 왼쪽 지도(58%) · 오른쪽 패널(42%, 기본은 권역 셋 요약).
-    구를 손대면 패널이 그 구로 바뀌고, 누르면(권역에 든 구만) 그 권역 상세로
-    간다. 값은 전부 insights/watch/_seoul_gu.json·_zones.json·metrics 에서 —
-    지정 현황이 셋 다 「전부」라도 범례 수는 그 데이터에서 센다."""
+    """지도 히어로 — 왼쪽 지도(58%, 데스크톱은 sticky) · 오른쪽 패널(42%, 기본은
+    권역 셋 요약). 구를 손대면(호버) 미리보기, 누르면(클릭·Enter) 그 구로
+    고정된다. 상세 이동은 패널 안 「자세히 →」로만 한다. 값은 전부
+    insights/watch/_seoul_gu.json·_zones.json·metrics 에서 — 지정 현황이 셋 다
+    「전부」라도 범례 수는 그 데이터에서 센다.
+
+    풀이 셋(전세가율·매매가격지수·수급동향)은 패널이 아니라 지도 캡션 줄로
+    내렸다(2026-09-03) — 권역 요약+범례+자+풀이가 패널 안에 다 있으면 데스크톱
+    800px 를 넘는다."""
     gu_data = _gu_map_data(watches)
     svg = _gu_svg(gu_data)
     panels = ('<div class="gu-panel" data-panel="default">%s</div>'
@@ -1330,10 +1426,10 @@ def seoul_map_section(watches, asof):
              ''.join(_gu_panel_html(name, gu_data[name]) for name in sorted(SEOUL_GU['gu']))
     lth_z = ZONES.get('토지거래허가구역', {})
     reg_z = ZONES.get('조정대상지역', {})
-    cap = ('출처 southkorea/seoul-maps · 값 기준 %s · 지정 현황 기준 %s(토지거래허가구역) · '
-          '%s(조정대상지역·투기과열지구)'
-          % (E(asof), E(lth_z.get('as_of') or '—'), E(reg_z.get('as_of') or '—')))
-    terms = term_lines(watches, set(MOVE_ORDER))
+    cap = ('<p>출처 southkorea/seoul-maps · 값 기준 %s · 지정 현황 기준 %s(토지거래허가구역) · '
+          '%s(조정대상지역·투기과열지구)</p>%s'
+          % (E(asof), E(lth_z.get('as_of') or '—'), E(reg_z.get('as_of') or '—'),
+             term_lines(watches, set(MOVE_ORDER))))
     return (
         '<p class="hero-t">서울 지도</p>'
         '<div class="layer-btns">'
@@ -1347,10 +1443,9 @@ def seoul_map_section(watches, asof):
         '<div class="map-legend" data-legend="ratio">%s</div>'
         '<div class="map-legend" data-legend="lth" hidden>%s</div>'
         '<div class="map-legend" data-legend="reg" hidden>%s</div>'
-        '<div class="map-terms">%s</div>'
         '</div></div>%s'
         % (svg, cap, panels, _ratio_legend_html(watches), _lth_legend_html(), _reg_legend_html(),
-           terms, _MAP_JS))
+           _MAP_JS))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은

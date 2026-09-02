@@ -62,6 +62,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
 .layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+/* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
+   사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
+   바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
+@media (min-width:621px){.map-fig{position:sticky;top:62px}}
 .map-fig{flex:0 0 58%;margin:0;min-width:0}
 .mappanel{flex:1;min-width:0}
 .seoul-map{width:100%;height:auto;display:block}
@@ -99,9 +103,36 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
 .rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
-.gp-name{margin:0;font-size:20px;font-weight:700}
-.gp-line{margin:6px 0 0;font-size:.88rem;color:var(--ink-2)}
-.gp-more{display:inline-block;margin:8px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+.gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
+.gp-name{font-size:20px;font-weight:700}
+.gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
+  border:0;background:transparent;color:var(--ink-3);font-size:20px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;border-radius:999px}
+.gp-close:hover{background:var(--line);color:var(--ink)}
+.gp-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+/* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
+   폰 폭에서 두 열이면 값이 잘린다(2026-09-03) */
+.gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+.gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
+.gp-d{color:var(--ink-2)}
+.gp-more{display:inline-block;margin:10px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+/* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
+   지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
+@media (max-width:620px){
+  .gu-panel:not([data-panel="default"]){
+    display:block!important;position:fixed;left:0;right:0;bottom:0;max-height:45vh;
+    overflow-y:auto;background:var(--surface);border-top:1px solid var(--line);
+    border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.12);z-index:20;
+    padding:14px 16px 20px;transform:translateY(100%);pointer-events:none}
+  .gu-panel:not([data-panel="default"])::before{
+    content:"";display:block;width:36px;height:4px;border-radius:2px;
+    background:var(--line);margin:0 0 10px}
+  .gu-panel:not([data-panel="default"]):not([hidden]){
+    transform:translateY(0);pointer-events:auto}
+  @media (prefers-reduced-motion:no-preference){
+    .gu-panel:not([data-panel="default"]){transition:transform .18s}
+  }
+}
 /* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
 .map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .leg-strip{display:flex}
@@ -116,7 +147,6 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
 .leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
 .leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
-.map-terms{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
