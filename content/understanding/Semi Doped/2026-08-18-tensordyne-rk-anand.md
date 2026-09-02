@@ -5,7 +5,8 @@ source: https://daily.semidoped.com/p/new-episode-tensordynes-r-k-anand
 speaker: R K Anand
 org: Tensordyne 공동창업자 · 최고제품책임자(CPO)
 channel: Semi Doped
-host: Austin
+host: Austin Lyons
+people: 진행 Austin Lyons (Semi Doped) / 게스트 R K Anand (Tensordyne 공동창업자 · 최고제품책임자)
 section: compute
 topic: 추론 칩 · 로그 연산
 gain: 곱셈을 덧셈으로 바꾸면 실리콘 면적이 남고, 그 자리에 SRAM과 HBM을 더 넣어 프리필과 디코드를 한 시스템에서 같이 한다는 설계. 라우터 뒷면의 스케일업 패브릭을 그대로 가져다 쓰는 이유와, 아직 전원도 안 켠 시스템이라는 점.

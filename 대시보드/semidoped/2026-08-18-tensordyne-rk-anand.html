@@ -1,0 +1,143 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>곱셈을 덧셈으로 바꿔 실리콘을 비운다 — 텐서다인의 로그 연산 추론 랙 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.who{margin-top:8px;font-size:13px;color:#4c5563;line-height:1.7}
+.who b{color:#1b1f27;margin-right:6px}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>곱셈을 덧셈으로 바꿔 실리콘을 비운다 — 텐서다인의 로그 연산 추론 랙</h1><div class="pmeta">2026-08-18 · R K Anand<br>원문 <a href="https://daily.semidoped.com/p/new-episode-tensordynes-r-k-anand">https://daily.semidoped.com/p/new-episode-tensordynes-r-k-anand</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-08-18-tensordyne-rk-anand.md">저장소</a><div class="who"><b>진행</b> Austin Lyons (Semi Doped)</div><div class="who"><b>게스트</b> R K Anand (Tensordyne 공동창업자 · 최고제품책임자)</div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">곱셈을 덧셈으로 바꿔 레티클 아래 머무르고, 스케일업 패브릭은 라우터에서 통째로 빌린다</div><p>텐서다인 공동창업자이자 최고제품책임자인 R K Anand가 Semi Doped 진행자 Austin과 마주 앉았다. 3나노 추론 칩 하나와 그것을 담은 쿼터랙 이야기인데, 회사 소개로만 읽으면 놓치는 것이 많다. 아직 전원도 안 켠 시스템이 업계가 당연하게 여기던 전제 여럿을 동시에 겨누고 있어서다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">라우터를 만들던 사람이 추론 랙을 만들 때 무엇이 따라오나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">곱셈을 덧셈으로 바꾼 값은 전력이 아니라 남은 면적이다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">스케일업 패브릭을 새로 만들지 않는 길이 있다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">프리필과 디코드를 나눈 지금의 답이 임시라면</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">30킬로와트 공랭 쿼터랙이 겨누는 곳</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">스타트업이 만들지 않기로 한 것의 목록이 곧 전략이다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 라우터를 만들던 사람이 추론 랙을 만들 때 무엇이 따라오나</h2>
+<p>RK의 이력은 1990년 Sun의 마이크로프로세서 팀에서 시작해 1996년 주니퍼 창업 엔지니어로 이어진다. 그가 회차 내내 되돌아가는 틀은 그때의 시스코 대 주니퍼다. 주니퍼가 시작할 무렵 시스코의 코어 라우터 점유율은 93~94%였고 2000년 즈음 시스코는 시가총액 세계 1위였는데, 주니퍼는 몇 해 만에 30%를 가져갔다. "새 시장이 생길 때 스타트업이 들어갈 데가 있고, 차별화된 기술이 있으면 시장에 영향을 줄 수 있다는 증거".</p>
+<p>주목할 것은 그가 이 유추의 유효 범위를 스스로 좁혔다는 점이다. "닮은 점은 거기서 금방 끝난다". 다른 점이 셋인데 ① 시장의 크기와 규모가 그때와 자릿수부터 다르고 ② 정보가 즉시 도는 세상이라 모두가 모두를 알며 ③ 구글을 비롯한 하이퍼스케일러가 직접 실리콘과 시스템을 만든다. 1996~99년에도 라우터 회사 여럿이 자금을 받았고 그는 사라진 이름들을 지금도 외운다.</p>
+<p>그래서 이 회차에서 볼 것은 「스타트업도 이길 수 있다」가 아니다. <b>차별화가 수학 한 군데에만 있으면 안 되고 시스템 전체에 걸쳐 있어야 한다</b>는 쪽이다. 아래 절들은 텐서다인이 그 차별화를 어디에 나눠 놓았는지, 그리고 그중 무엇이 남의 회사에도 적용되는 관측인지를 따라간다.</p>
+<h2 id="s2"><span class="num">2</span> 곱셈을 덧셈으로 바꾼 값은 전력이 아니라 남은 면적이다</h2>
+<p>로그 연산 자체는 오래된 도구다. 400년 전 존 네이피어가 만들었고 아폴로 계획에서 계산자로 탈출속도를 구할 때 썼으며 최근 20~30년은 DSP(디지털 신호 처리기)에 들어가 있었다. RK가 새로 물은 것은 AI에 쓸 수 있느냐였다. 밑이 2인 로그에서 A 곱하기 B는 로그 A 더하기 로그 B이므로 곱셈기가 덧셈기가 된다. 실리콘에서 곱셈은 게이트도 면적도 전력도 훨씬 많이 먹는다.</p>
+<p>어려운 쪽은 그다음이다. 곱하고 나서 누산해야 하는데 로그 영역에서는 덧셈이 문제가 되고, 룩업 테이블이나 테일러 급수처럼 흔한 길로 가면 곱셈을 덧셈으로 바꿔 번 것을 그대로 반납한다. 그가 특허로 세운 것이 로그에서 선형으로 되돌아와 덧셈을 하되 그 이득을 잃지 않는 방법이고, 회사의 거의 절반이 5년 가까이 수학에만 매달렸다. 그가 그 시간을 정당화한 논리가 날카롭다 — 같은 7나노·5나노를 쓰면서 남과 같은 방식으로 만들면 아무 우위도 없으니 큰 회사를 이길 수 없다는 것이다.</p>
+<p>여기서 업계에 보이는 것은 전력 효율 숫자가 아니다. 연산이 자리를 덜 쓰면 무엇이 남느냐가 진짜 질문이고, RK의 답은 SRAM과 HBM이다. 칩을 레티클(노광 장비가 한 번에 찍을 수 있는 최대 크기) 한계까지 키우지 않고도 성능을 내면, 남긴 면적이 곧 메모리 용량이 된다. <b>수학의 혁신이 메모리 배치 문제로 환급된다</b>는 구조다.</p>
+<h2 id="s3"><span class="num">3</span> 스케일업 패브릭을 새로 만들지 않는 길이 있다</h2>
+<p>모델이 한 칩에 안 들어가면 망 문제가 된다. 여기서 텐서다인의 선택이 이 회차에서 가장 배울 것이 많은 대목이다 — 스케일업 패브릭을 설계하지 않고 라우터 뒷면에서 통째로 가져왔다. 고성능 라우터 뒷면은 원래 어느 포트에서 어느 포트로든 가는 아무 크기의 패킷을 처리하도록 설계돼 있다. 40바이트짜리부터 9K 점보 프레임까지, 이메일부터 실시간 영상까지 섞여 들어와도 견뎌야 한다.</p>
+<p>그 성질이 지금 값을 받는 이유가 모델 쪽에서 생겼다. RK의 관측은 이렇다 — 모델이 커지면서 트래픽이 텐서 병렬의 규칙적인 리듬에서 무작위로 바뀌었고, 전문가 혼합(MoE)에서 어느 전문가로 갈지가 무작위이기 때문이다. 라우터 패브릭이 20년 동안 다뤄 온 것이 바로 그 무작위 트래픽이다. 지연은 1~2마이크로초이고 이용률을 99% 넘게 밀어도 성능이 버틴다는 것이 그가 든 성질이다.</p>
+<p>세대 셈법도 그의 논거다. <span class="q">"NVL72가 1세대다. 우리는 HP주니퍼 패브릭을 가져왔으니 7세대에 있다"</span>. 반대편에서 UALink와 ESUN은 아직 사양과 초기 구현 단계이고 그 프로토콜로 말하는 가속기도 패브릭 칩도 아직 없다. AMD 헬리오스는 급하니 UALink 계열 패킷을 표준 이더넷에 터널링하는데, 그러면 헤더와 주소가 먹는 자리만큼 페이로드가 줄어든다. 업계에 보이는 것은 <b>스케일업 망의 신참들이 사양을 맞추는 동안, 이미 20년 굴러 온 완제 패브릭이라는 우회로가 통신 장비 쪽에 놓여 있었다</b>는 점이다.</p>
+<h2 id="s4"><span class="num">4</span> 프리필과 디코드를 나눈 지금의 답이 임시라면</h2>
+<p>지금 업계의 답은 나누는 것이다. Austin이 정리한 단계가 둘인데 ① 1단계는 전부 GPU에서 돌리기 ② 2단계는 프리필은 GPU에, 디코드는 SRAM이 많은 칩에 나눠 붙이는 분리다. 실제 조합이 엔비디아 더하기 그록, 아마존 트레이니엄 더하기 세레브라스, 헬리오스 더하기 세레브라스로 나와 있다.</p>
+<p>RK가 그 조합에 붙인 값이 구체적이다 — 2조 파라미터 모델 하나에 9랙에서 14랙, 베라 루빈용 CUDA 컴파일러와 그록용 컴파일러 둘, 그리고 그 섀시들을 묶을 이더넷 스위치 여럿이다. 통합 칩의 논거는 여기서 나온다. SRAM이 연산 배열 곁에 넉넉하면 HBM에서 데이터를 가져오는 지연을 가릴 수 있어 연산 배열이 멈추지 않는다. 쿼터랙 하나에 HBM 10.8테라바이트, SRAM 18기가바이트 이상이라는 것이 그가 댄 수치다.</p>
+<p>다만 그가 곧바로 단서를 붙인다. 그것만으로는 필요조건이지 충분조건이 아니고, 연산과 통신이 번갈아 도는 리듬에서 통신이 지연과 처리량을 지배하기 시작한다는 것이다. 그래서 2절의 연산과 3절의 망이 따로 선 자랑이 아니라 하나의 논거로 묶인다. <b>한 칩으로 두 구간을 다 하려면 남긴 면적과 빌려 온 패브릭이 동시에 있어야 한다</b>는 뜻이고, 둘 중 하나만 있는 설계는 이 논거를 못 쓴다.</p>
+<h2 id="s5"><span class="num">5</span> 30킬로와트 공랭 쿼터랙이 겨누는 곳</h2>
+<p>수치가 가장 도발적인 대목이다. 13U 크기에 칩 72개, 랙의 4분의 1, 30킬로와트, 공랭이다. 그가 견준 상대는 블랙웰 GB300 풀랙 150킬로와트다. 액랭이 아닌 이유가 주니퍼 시스템을 그대로 쓰기 때문이라는 점에서, 이것도 3절의 선택에 딸려 온 결과다.</p>
+<p>배포 이야기로 넘어가면 겨냥이 분명해진다. 하이퍼스케일러 중에는 전 세계에 데이터센터를 400개 둔 곳이 있는데 그것들은 액랭이 아니고 개조도 안 된다. 텐서다인 시스템은 19인치 텔코 랙이라 AT&amp;T·버라이즌·도이체텔레콤·NTT·뉴욕증권거래소에 그대로 들어간다. 그가 그린 그림은 20~30킬로와트짜리 작은 데이터센터로 200~500메가와트급의 성능 특성을 낸다는 것이다.</p>
+<p>업계에 보이는 것은 성능 주장보다 <b>수요가 놓인 자리의 재정의</b>다. 지금 AI 인프라 논의는 기가와트급 신축 액랭 데이터센터를 기본값으로 놓고 돌아가는데, 이 회차는 그 옆에 이미 세워져 있고 전력이 모자라고 개조가 안 되는 기존 랙 수만 개를 겨냥한 갈래를 세운다. 전력이 부족한 도시와 국가가 그 갈래의 논거로 직접 언급된다. 그 갈래가 성립하면 값을 받는 곳이 신축 전력 계약이 아니라 기존 통신사 시설 쪽으로 갈라진다.</p>
+<h2 id="s6"><span class="num">6</span> 스타트업이 만들지 않기로 한 것의 목록이 곧 전략이다</h2>
+<p>이 회차에서 가장 실무적인 대목은 텐서다인이 자기 손으로 안 하는 일의 목록이다. ① 프런트엔드 설계는 자기 것이지만 물리 설계와 TSMC 관계는 브로드컴이 주도한다. ② 시스템은 HP주니퍼 것을 쓰고 그 회사는 투자자이기도 하다. ③ 양산은 페낭의 Flex 공장에서, 이미 그 시스템이 출하되고 있는 라인에서 한다. 그가 든 근거는 시간이다 — 스타트업이 실리콘 부담에 시스템 인증과 신뢰성 부담까지 지면 출시 시점이 통째로 밀린다.</p>
+<p>신뢰성이 이 구조의 핵심이다. 캐리어급 라우터의 기준인 5나인 가동률은 1년에 5분 남짓, 하루로는 680밀리초 이상 멈추면 안 된다는 뜻이다. 시스템의 80%가 이미 검증·인증돼 있고 70개국에서 쓰인다. 일정은 3나노 테이프아웃을 마쳐 10월 말~11월 초에 디바이스를 받고, 1분기에 고객 베타, 내년 2분기 말~3분기 초에 초기 양산이다. 표적 고객은 하이퍼스케일러가 먼저이고 그다음이 북미·유럽 네오클라우드이며 소버린과 엔터프라이즈가 뒤따른다.</p>
+<p>소프트웨어에서도 같은 태도가 나온다. 컴파일러는 직접 만들어야 하고 엔지니어링 조직의 60% 이상이 소프트웨어인데, 그가 든 바깥 변화가 둘이다 — ① 분리 추론이 퍼지면서 "추론에서는 CUDA의 해자가 더는 없다" ② 에이전틱 워크플로가 커널을 새 하드웨어에 빠르게 맞춰 준다. 신참 아키텍처의 소프트웨어 벽이 낮아지는 이유를 모델 능력 향상에서 찾는 논리인데, 이것은 텐서다인만의 이야기가 아니라 <b>모든 비 GPU 가속기의 진입 비용에 같이 걸리는 관측</b>이다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</h2>
+<p>가장 큰 미검증을 RK 본인이 말한다 — 아직 시스템에 전원을 안 켰다. 그 문장 바로 옆에 세계 최신 시스템보다 거의 한 자릿수 배 우위가 있을 것 같다는 말이 붙는데, 근거는 시뮬레이션이다. Austin도 "너무 좋아서 못 믿겠다"고 두 번 되받았다. 검증되지 않은 것이 셋이다. ① 30킬로와트 대 150킬로와트 비교는 성능이 동급이라는 전제 위에 서 있는데 그 성능 벤치마크가 이 회차에 없다. ② NVLink의 디코드 지연이 나쁘다는 대목은 그 자신이 "확실히 아는 건 아니고 일화로 들은 것"이라고 못 박았다. ③ 로그 연산의 정확도 손실을 다루는 대목이 없다 — 곱셈을 덧셈으로 바꾸고 되돌아오는 과정에서 모델 품질이 어떻게 되는지는 이 대화에 나오지 않는다.</p>
+<p>판단이 바뀌는 지점도 셋이다. ① 10월 말~11월 초 디바이스가 돌아와 실제 전력과 성능이 나오면 2절과 5절이 동시에 정해진다 — 남긴 면적이 정말 메모리로 환급됐는지, 30킬로와트에서 GB300만 한 성능이 나오는지가 같은 시험이다. ② 라우터 패브릭이 MoE 트래픽에서 실제로 무엇을 하는지는 켜 봐야 안다. 라우터의 무작위 트래픽과 전문가 선택의 무작위성은 성질이 같지 않을 수 있고, 이 회차는 그 둘을 같다고 놓고 3절과 4절의 논거를 세웠다. ③ UALink와 ESUN에 맞는 가속기와 패브릭 칩이 실제로 나오면 7세대 대 1세대라는 셈법의 수명이 정해진다. 그 격차는 시간이 지나면 좁아지는 종류의 것이라, 텐서다인이 파는 것은 결국 앞선 세대가 아니라 <b>먼저 도착하는 시간</b>이다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-08-18-tensordyne-rk-anand-strategy.md">insights/semidoped/2026-08-18-tensordyne-rk-anand-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
