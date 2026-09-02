@@ -752,3 +752,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # 확정 규칙 중 기계가 재는 것(G1~G8·S1~S4) — FAIL 이면 여기서 멈춘다. 생성물은 이미 썼지만
+    # 커밋 사슬은 「규칙 위반」을 보고 끊는다(2026-09-02)
+    import check_semidoped
+    if check_semidoped.main():
+        print('규칙 위반 — check_semidoped')
+        sys.exit(1)
