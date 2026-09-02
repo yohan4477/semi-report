@@ -28,6 +28,8 @@ BUILD = [
     ('AI Engineer 대시보드', ['scratchpad/gen_aie_dashboard.py']),
     ('통합 보고서', ['scratchpad/gen_report_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
+    # 카드 원고(content/understanding/한주성)는 check_manda 를 먼저 통과해야 한다
+    ('M&A 대시보드', ['scratchpad/gen_manda_dashboard.py']),
     # 링크드인은 원문 파일이 먼저 있어야 노트가 인용할 수 있다
     ('링크드인 원문', ['scripts/gen_li_source.py']),
     ('링크드인 신호 자격', ['insights/li_signal.py']),
