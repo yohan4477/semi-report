@@ -295,12 +295,19 @@ def toc_html(secs):
         if subs:
             right += '<div class="tsub">%s</div>' % ' '.join(
                 '%s %s' % ('①②③④⑤⑥⑦⑧⑨'[k] if k < 9 else '', s) for k, s in enumerate(subs))
-        rows.append('<div class="tl"><span class="num">%s</span> %s</div><div class="tr">%s</div>'
-                    % (esc(num), esc(left), right))
+        if subj:
+            rows.append('<div class="tl"><span class="num">%s</span> %s</div><div class="tr">%s</div>'
+                        % (esc(num), esc(left), right))
+        else:
+            # 트리(부록)가 없는 글은 한 칸 — 절 제목만 앵커로 늘어선다
+            rows.append('<div class="tr one"><span class="num">%s</span> %s</div>' % (esc(num), right))
     for title, _lines in secs:
         if title.startswith('한계'):
             rows.append('<div class="tl">한계</div><div class="tr"><a href="#limits">이 회차가 안 말한 것</a></div>')
-    return '<nav class="toc"><div class="th">다루는 것</div><div class="th">묻는 것</div>%s</nav>' % ''.join(rows)
+    heads = ('<div class="th">다루는 것</div><div class="th">묻는 것</div>' if subj
+             else '<div class="th">차례</div>')
+    cls = 'toc' if subj else 'toc one'
+    return '<nav class="%s">%s%s</nav>' % (cls, heads, ''.join(rows))
 
 
 def insights_html(lines):
@@ -411,7 +418,7 @@ a.row:hover{background:#eef1f6}
  padding-bottom:18px;border-bottom:1px solid #e2e5ea}
 .lane{margin:0 0 44px}
 .lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
-.lhead b{font-size:19px}
+.lhead b{font-size:19px;white-space:nowrap}
 .lhead span{font-size:12px;color:#8a93a1}
 .ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
  padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
@@ -432,6 +439,7 @@ h3 .num{background:#e7ebf1;color:#3a4150}
 .lk{font-weight:700;color:#66707f;white-space:nowrap}
 .toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
  background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
 .toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
 .toc .tl{white-space:nowrap}
 .toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
@@ -555,7 +563,7 @@ def check_ui(index, posts):
             bad.append('글 페이지에 회차 메타(언제 것·누가)가 없다')
         if '<code>```' in p or '├─' in p:
             bad.append('트리 선 글자가 화면에 남았다 — 펜스가 문단으로 뭉개졌거나 tree_html 을 안 거쳤다')
-        if '<nav class="toc"' not in p:
+        if '<nav class="toc' not in p:
             bad.append('글 페이지에 목차(다루는 것 · 묻는 것)가 없다')
         if 'id="appendix"' in p and 'id="limits"' in p and p.index('id="appendix"') < p.index('id="limits"'):
             bad.append('구조(부록)가 한계보다 앞에 섰다 — 방법론은 뒤에 둔다')

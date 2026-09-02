@@ -108,8 +108,7 @@ def panel_boxes(x0, y, items, gap=12, h=None):
 
 
 # ══ 할라페뇨 (2026-08-27) 전략 판 ═══════════════════════════════════════
-# 값은 전사에 있는 것만 — 아홉 달·671B·120B·1,000토큰·700W·1,200W·8K/1K·HBM4/HBM3E.
-# 상자 개수는 글이 가른 항의 수와 같다(요인 셋·잰 것 셋·못 잰 것 셋·공급망 세 단).
+# 값은 전사에 있는 것만. 상자 개수는 글이 가른 항의 수와 같다(요인 셋·구성 셋·단 둘).
 
 def _col(x0, y0, items, gap=10):
     """상자를 위아래로 쌓는다. [(줄들, 클래스)]. 폭은 열에서 가장 긴 글에 맞춘다."""
@@ -123,7 +122,6 @@ def _col(x0, y0, items, gap=10):
 
 
 def _jal_nine_months():
-    # 요인 셋(위) → 아홉 달(아래). 셋이 겹쳐 그 값이 났다는 것이라 화살표 셋이 한 상자로 모인다
     items = [(['AI 도구', 'GPT-3급 모델로', '첫 RTL 초안'], 'fig-box'),
              (['TPU 출신 인재', 'Richard Ho'], 'fig-box'),
              (['백지 설계', '레거시 부담 없음'], 'fig-box')]
@@ -140,49 +138,54 @@ def _jal_nine_months():
                'AI 도구·TPU 출신 인재·백지 설계 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다. 통상은 최소 2~3년이다')
 
 
-def _jal_measured():
-    L, R = 0.0, 272.0
-    parts = head(L, 22, 248, '잰 것') + head(R, 22, 248, '못 잰 것')
-    # 열 하나는 248 이다. 한 줄 15자(234px)를 넘기면 옆 열을 침범한다
-    left, lw, ly = _col(L + 12, 36, [(['중형 R1 671B', '새 파레토 프런티어'], 'fig-agent'),
-                                      (['소형 GPT-OSS 120B', '초당 1,000토큰'], 'fig-agent'),
-                                      (['700W TDP', 'GB200 약 1,200W'], 'fig-agent')])
-    right, rw, ry = _col(R + 12, 36, [(['짧은 컨텍스트', '8K 입력 · 1K 출력'], 'fig-outside'),
-                                       (['에이전틱', 'AgentX 아직 없음'], 'fig-outside'),
-                                       (['세대 차', 'HBM4 대 HBM3E'], 'fig-outside')])
-    parts += left + right
-    parts += legend([('fig-agent', '잰 값'), ('fig-outside', '아직 없는 값')], max(ly, ry) + 18)
-    return svg(max(ly, ry) + 44, parts,
-               '잰 것 셋(R1 파레토·GPT-OSS 초당 1,000토큰·700W)과 못 잰 것 셋(짧은 컨텍스트·에이전틱·HBM 세대 차)을 나란히 둔다')
+def _jal_three_configs():
+    # 추론 워크로드를 받는 세 구성을 나란히. 열 셋, 위 = 구성, 아래 = 이 회차가 붙인 조건
+    # 열 셋 합이 520 을 넘으면 안 된다 — 한 줄 10자(160px) 안으로 자른다
+    cols = [(['범용 GPU', '한 종류'], 'fig-box', ['초당 1,000토큰', '못 닿음'], 'fig-bad'),
+            (['프리필·디코드', '나눔', 'GPU+SRAM'], 'fig-box', ['NVL72 1대', 'Groq 9대'], 'fig-stage'),
+            (['균형 잡힌', '한 칩', '안 쓰는 구획 끔'], 'fig-agent', ['할라페뇨', '랙 1~2대', '700W'], 'fig-agent')]
+    gap = 16
+    ws = [w_of(top, bot) for top, _c, bot, _b in cols]
+    x, parts = (W - (sum(ws) + gap * 2)) / 2, []
+    th = 3 * LH + 22
+    bh = 3 * LH + 22
+    for (top, tc, bot, bc), w in zip(cols, ws):
+        parts += box(x, 30, w, th, top, tc)
+        parts += vline(x + w / 2, 30 + th + 2, 30 + th + 26)
+        parts += box(x, 30 + th + 28, w, bh, bot, bc)
+        x += w + gap
+    y = 30 + th + 28 + bh
+    parts += legend([('fig-agent', '할라페뇨의 선택'), ('fig-bad', '못 닿는 자리')], y + 18)
+    return svg(y + 44, parts,
+               '범용 GPU 하나는 초당 1,000토큰 영역에 못 닿고, 프리필·디코드를 나누면 NVL72 랙 1대에 Groq 랙 9대가 붙고, 균형 잡힌 한 칩은 랙 1~2대 700W 로 그 자리를 밟는다')
 
 
-def _jal_rule_pair():
-    # 두 기둥. 위가 잣대, 아래가 그 잣대가 낳은 칩의 꼴
-    L, R = 0.0, 272.0
-    parts = head(L, 22, 248, '상용 실리콘 벤더') + head(R, 22, 248, '할라페뇨')
-    a = ['잣대: TCO', '사고 굴리는 비용 전부']
-    b = ['잣대: 요청당 에너지', '마지막 토큰까지 지연']
-    aw, bw = w_of(a), w_of(b)
-    parts += box(L + (248 - aw) / 2, 36, aw, 2 * LH + 22, a, 'fig-stage')
-    parts += box(R + (248 - bw) / 2, 36, bw, 2 * LH + 22, b, 'fig-stage')
-    y2 = 36 + 2 * LH + 22 + 34
-    c = ['프리필 칩 · 디코드 칩 분리', '비율이 바뀌면 한쪽이 논다']
-    d = ['균형 단일 칩', '안 쓰는 부분만 끈다']
-    cw, dw = w_of(c), w_of(d)
-    parts += box(L + (248 - cw) / 2, y2, cw, 2 * LH + 22, c, 'fig-bad')
-    parts += box(R + (248 - dw) / 2, y2, dw, 2 * LH + 22, d, 'fig-agent')
-    parts += vline(L + 124, 36 + 2 * LH + 24, y2 - 2) + vline(R + 124, 36 + 2 * LH + 24, y2 - 2)
-    return svg(y2 + 2 * LH + 36, parts,
-               '왼쪽은 TCO 잣대가 프리필·디코드 분리 칩으로, 오른쪽은 요청당 에너지·마지막 토큰 지연 잣대가 균형 단일 칩으로 이어진다')
+def _jal_hbm_gap():
+    # 위에서 아래로 흐른다 — 산수 셋, 실제 하나, 원인, 처방. 실측치는 전사에 없어 「그 수가 안 나온다」로만
+    steps = [(['128칩 HBM4 대역폭을 다 더하면 초당 1페타바이트'], 'fig-box'),
+             (['1조 파라미터 모델을 FP4 로 얹으면 0.5테라바이트'], 'fig-box'),
+             (['산수로는 초당 2,000토큰'], 'fig-stage'),
+             (['실제로는 그 수가 안 나온다'], 'fig-bad'),
+             (['연산하려는 순간 데이터가 없다 — 이웃과 HBM 경합'], 'fig-bad'),
+             (['처방: 가속기마다 자기 몫 HBM 슬라이스 + 전용 버스'], 'fig-agent')]
+    w = w_of(*[l for l, _ in steps])
+    x0, y, parts = (W - w) / 2, 24, []
+    for k, (lines, cls) in enumerate(steps):
+        parts += box(x0, y, w, 44, lines, cls)
+        if k < len(steps) - 1:
+            parts += vline(W / 2, y + 46, y + 66)
+        y += 68
+    return svg(y - 10, parts,
+               '128칩의 HBM4 대역폭을 다 더하면 초당 1페타바이트, 1조 파라미터를 FP4 로 얹으면 0.5테라바이트라 산수로는 초당 2,000토큰인데 실제로는 그 수가 안 나온다. 원인은 경합, 처방은 가속기마다 자기 몫 슬라이스')
 
 
-def _jal_chain():
-    row, _x = band([(['HBM', 'Samsung'], 'fig-outside'), ('>', ''),
-                    (['스위치', 'Broadcom'], 'fig-agent'), ('>', ''),
-                    (['시스템', 'Celestica'], 'fig-outside')], 30, 72)
-    parts = row + legend([('fig-agent', '사실 — 발표자가 호명'), ('fig-outside', '추정')], 126)
-    return svg(150, parts,
-               'HBM(Samsung) → 스위치(Broadcom) → 시스템(Celestica) 세 단 중 사실로 확인된 것은 스위치 하나다')
+def _jal_scaleup():
+    parts, y_end = table(
+        [[['랙 16대'], ['2,048칩'], ['ESUN', '초당 200 기가비트']],
+         [['랙 1대'], ['128칩'], ['Tomahawk 6', '칩당 초당', '600 기가비트']]],
+        ['fig-stage', 'fig-box', 'fig-box'], heads=['층', '칩 수', '연결'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '랙 1대 안 128칩은 Tomahawk 6 로 칩당 초당 600기가비트, 랙 16대 2,048칩은 ESUN 으로 초당 200기가비트로 잇는다')
 
 
 JAL = '2026-08-27-openai-jalapeno'
@@ -192,17 +195,16 @@ JAL = '2026-08-27-openai-jalapeno'
 FIGS = {
     (JAL, 'strategy'): [
         ('1.', '아홉 달을 만든 세 요인', _jal_nine_months(),
-         '요인 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다(L97). AI 도구는 발표자 말을 Vik 이 전한 것(L177), '
-         '백지 설계는 Richard 말을 Austin 이 전한 것(L171)이다. 셋 중 무엇이 몇 할인지는 전사에 없어 상자 크기를 같게 뒀다.'),
-        ('2.', '잰 것과 못 잰 것', _jal_measured(),
-         '왼쪽 셋이 InferenceX 에서 나온 값이고(L103·L105·L111), 오른쪽 셋이 아직 없는 값이다(L63·L61·L103). '
-         '오른쪽이 채워지기 전까지 왼쪽은 「쉬운 조건에서 이긴 결과」일 수 있다.'),
-        ('3.', '잣대가 칩의 꼴을 정한다', _jal_rule_pair(),
-         '두 기둥이 한 쌍이다. TCO 를 잣대로 삼으면 프리필·디코드를 나눠 한쪽을 놀리는 설계가 나오고(L45·L155), '
-         '요청당 에너지를 잣대로 삼으면 한 칩에 다 넉넉히 두고 안 쓰는 부분만 끄는 균형 단일 칩이 나온다(L43·L157).'),
-        ('4-2', '공급망은 어디부터 사실인가', _jal_chain(),
-         '세 단 중 실선은 발표자가 감사 인사에서 직접 호명한 Broadcom 하나다(L115). Samsung HBM 우위는 Vik 이 「entirely speculative」라 못 박은 추정(L117), '
-         'Celestica 는 SemiAnalysis 추정을 Austin 이 전한 것이다(L119).'),
+         '셋이 겹쳐 아홉 달이 됐다(L97). 사람과 백지는 전에도 있던 항이고 AI 도구만 새 항이라는 것이 이 절의 논지다. '
+         '셋 중 무엇이 몇 할인지는 전사에 없어 상자 크기를 같게 뒀다.'),
+        ('3.', '추론을 받는 세 구성', _jal_three_configs(),
+         '위가 구성, 아래가 이 회차가 붙인 조건이다. 랙 수(NVL72 1대 + Groq 9대 대 할라페뇨 1~2대)는 Austin 의 어림이고(L109), '
+         '700W 는 발표 값(L111), 초당 1,000토큰은 GPT-OSS 기준이다(L105).'),
+        ('4.', 'HBM 대역폭이 토큰으로 안 옮겨지는 자리', _jal_hbm_gap(),
+         'Vik 의 산수(L121)는 초당 2,000토큰까지 가는데 실제는 그 수가 안 나온다. 실측치는 전사에 없어 마지막 칸을 상태로만 그렸다. '
+         '원인은 Chris 가 「the operands arrive late」라 부른 경합(L129), 처방은 가속기마다 로컬 HBM 슬라이스(L131).'),
+        ('5.', '스케일업 두 층', _jal_scaleup(),
+         '담는 것이 위, 담기는 것이 아래다(L141·L145). 스케일업의 기준이 랙 안이 아니라 메모리를 나눠 쓰는 범위라는 것이 Austin 의 지적이다(L149).'),
     ],
 }
 
