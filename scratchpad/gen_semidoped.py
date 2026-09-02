@@ -450,9 +450,9 @@ a.row:hover{background:#eef1f6}
 .lane li{margin:0 0 6px}
 .q{color:#5b6472}
 .num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
- background:#1b1f27;color:#fff;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
 h3 .num{background:#e7ebf1;color:#3a4150}
-.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#d6f2f2;color:#0b6c6d;
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
  font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
 .mv{font-size:12px;color:#66707f;margin-left:4px}
 .lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
@@ -467,9 +467,9 @@ h3 .num{background:#e7ebf1;color:#3a4150}
 .toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
 .toc .tq{margin-right:8px}
 .insights{display:grid;gap:10px;margin:0 0 10px}
-.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #00A5A6;border-radius:0 8px 8px 0}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
 .ins-c{font-weight:700;line-height:1.65}
-.ins-n{color:#0b6c6d;margin-right:6px}
+.ins-n{color:#3a4150;margin-right:6px}
 .ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
 .sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
 .sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}

@@ -28,28 +28,30 @@ RAW = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw')
 
 # 색 변수는 이 장 페이지에 없다(dash_common 을 안 쓴다). gen_semidoped 가 이 CSS 를 그대로 싣는다
 CSS = '''
+/* 색은 셋 — 흰 상자·회색 선(기본), 옅은 청록(이 회차의 선택, 판에 하나), 점선 회색(문제·아직 없는 것).
+   주황·강조색 여럿은 정신 사납다는 지적(2026-09-02)으로 걷었다. 화살표도 회색이다 */
 .uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
-        --epoch-teal:#00A5A6;--epoch-coral:#FD6438;--epoch-keybg:#D6F2F2;
-        --epoch-wrapbg:rgba(0,165,166,.10);--sunk:rgba(127,127,127,.10)}
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e9f3f3;--sunk:#eef1f6;--pick:#3d8b8b}
 .uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
         background:#fbfbfc}
 .uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
-.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:800;color:var(--ink-3)}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
 .uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
 .uc-fig figcaption b{color:var(--ink-2)}
-.uc-fig .fig-box{fill:var(--surface);stroke:var(--ink-3);stroke-width:1.2}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
 .uc-fig .fig-human{fill:var(--epoch-keybg)}
-.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal);stroke-width:1.6}
-.uc-fig .fig-stage{fill:var(--sunk)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.4}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
 .uc-fig .fig-inside{fill:var(--epoch-keybg)}
-.uc-fig .fig-outside{fill:var(--surface);stroke-dasharray:4 3}
-.uc-fig .fig-bad{fill:var(--surface);stroke:var(--epoch-coral);stroke-width:1.6}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
 .uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
 .uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
-.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:800}
-.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:700}
-.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:650}
-.uc-fig .fig-arw{stroke:var(--epoch-teal);stroke-width:2;fill:none}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
 '''
 
 
@@ -155,7 +157,7 @@ def _jal_three_configs():
         parts += box(x, 30 + th + 28, w, bh, bot, bc)
         x += w + gap
     y = 30 + th + 28 + bh
-    parts += legend([('fig-agent', '할라페뇨의 선택'), ('fig-bad', '못 닿는 자리')], y + 18)
+    parts += legend([('fig-agent', '할라페뇨의 선택'), ('fig-bad', '한계가 있는 자리')], y + 18)
     return svg(y + 44, parts,
                '범용 GPU 하나는 초당 1,000토큰 영역에 못 닿고, 프리필·디코드를 나누면 NVL72 랙 1대에 Groq 랙 9대가 붙고, 균형 잡힌 한 칩은 랙 1~2대 700W 로 그 자리를 밟는다')
 
