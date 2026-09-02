@@ -81,13 +81,71 @@ def inline(s):
 
 
 def table_html(rows):
+    """칸마다 열 이름을 data-label 로 붙인다 — 640px 아래에서 표를 행 블록으로 세울 때
+    CSS 가 그 이름을 칸 앞에 쓴다. 안 붙이면 모바일에서 5열 표가 한 글자씩 세로로 늘어진다."""
     head, body = rows[0], rows[2:]
     out = ['<table><thead><tr>']
     out += ['<th>%s</th>' % inline(c) for c in head]
     out.append('</tr></thead><tbody>')
     for r in body:
-        out.append('<tr>' + ''.join('<td>%s</td>' % inline(c) for c in r) + '</tr>')
+        out.append('<tr>' + ''.join(
+            '<td data-label="%s">%s</td>' % (esc(head[k]) if k < len(head) else '', inline(c))
+            for k, c in enumerate(r)) + '</tr>')
     out.append('</tbody></table>')
+    return ''.join(out)
+
+
+# ── 절 머리·방법 칩·트리 ─────────────────────────────────────────────
+# 받은 글의 절 제목은 「N. (방법) 물음」이다. 방법은 글자가 아니라 칩으로 낸다 — 제목과
+# 구분이 안 되면 「어디가 대비고 어디가 프로세스인가」가 화면에서 사라진다.
+
+METHODS = ['부분 나눔', '인과 사슬', '조건 갈림', '이해관계자', '밸류체인', '프로세스',
+           '시간 흐름', '행위자', '층위', '대비', '수식']
+METHOD_RE = re.compile(r'\((%s)(?::\s*([^)]*))?\)' % '|'.join(METHODS))
+HEAD_RE = re.compile(r'^(\d+(?:-\d+)?)\.?\s+(?:\((%s)(?::[^)]*)?\)\s*)?(.*)$' % '|'.join(METHODS))
+TREE_TOP = re.compile(r'^[├└]─\s*([A-Z])\.\s*(.+?)\s*[—-]\s*(.+?)\s*\(([^)]*)\)\s*$')
+
+
+def chip(method, value=''):
+    h = '<span class="chip">%s</span>' % esc(method)
+    if value:
+        h += '<span class="mv">%s</span>' % esc(value)
+    return h
+
+
+def parse_head(title):
+    """「2-1 (부분 나눔) 잰 것」 → ('2-1', '부분 나눔', '잰 것'). 번호가 없으면 None."""
+    m = HEAD_RE.match(title)
+    if not m:
+        return None
+    return m.group(1), m.group(2) or '', m.group(3).strip()
+
+
+def heading_html(tag, title, anchor=''):
+    p = parse_head(title)
+    idattr = ' id="%s"' % anchor if anchor else ''
+    if not p:
+        return '<%s%s>%s</%s>' % (tag, idattr, inline(title), tag)
+    num, method, q = p
+    return '<%s%s><span class="num">%s</span> %s%s</%s>' % (
+        tag, idattr, esc(num), inline(q), (' ' + chip(method)) if method else '', tag)
+
+
+def tree_html(code):
+    """트리 코드 블록을 들여쓴 줄로 낸다. 고정폭 30줄은 모바일에서 옆으로 밀어야 했다.
+    선 글자(│├└─)는 걷고 깊이만 들여쓰기로 남긴다. 방법은 칩, [L줄] 은 옅게."""
+    out = ['<div class="tree">']
+    for ln in code:
+        if not ln.strip() or set(ln.strip()) <= set('│ '):
+            continue
+        m = re.match(r'^((?:[│ ] {3})*)\s*([├└]─\s*)?(.*)$', ln)
+        prefix, branch, text = m.groups()
+        depth = len(prefix) // 4 + (1 if branch else 0)
+        t = esc(text.strip())
+        t = METHOD_RE.sub(lambda mm: chip(mm.group(1), mm.group(2) or ''), t)
+        t = re.sub(r'\[(L[^\]]*)\]', r'<span class="lref">\1</span>', t)
+        out.append('<div class="tn d%d">%s</div>' % (min(depth, 6), t))
+    out.append('</div>')
     return ''.join(out)
 
 
@@ -111,7 +169,13 @@ def body_html(md, figs=()):
 
     def flush():
         if para:
-            out.append('<p>%s</p>' % inline(' '.join(para)))
+            text = ' '.join(para)
+            m = re.match(r'^\*\*so-what\*\*\s*[—-]?\s*(.*)$', text, re.S)
+            if m:
+                # 절의 값이 여기 있다. 본문과 같은 모양이면 지나친다
+                out.append('<div class="sowhat"><span class="sw">so-what</span>%s</div>' % inline(m.group(1)))
+            else:
+                out.append('<p>%s</p>' % inline(text))
             del para[:]
         if items:
             out.append('<ul>%s</ul>' %
@@ -128,9 +192,9 @@ def body_html(md, figs=()):
             i += 1
             code = []
             while i < len(lines) and not lines[i].startswith('```'):
-                code.append(esc(lines[i]))
+                code.append(lines[i])
                 i += 1
-            out.append('<pre class="tree">%s</pre>' % '\n'.join(code))
+            out.append(tree_html(code))
             i += 1
             continue
         if ln.strip().startswith('|') and i + 1 < len(lines) and \
@@ -148,7 +212,7 @@ def body_html(md, figs=()):
             figs_under(ln[3:].strip())
         elif ln.startswith('### '):
             flush()
-            out.append('<h3>%s</h3>' % inline(ln[4:].strip()))
+            out.append(heading_html('h3', ln[4:].strip()))
             figs_under(ln[4:].strip())
         elif re.match(r'^\s*[-*] ', ln):
             if para:
@@ -167,6 +231,132 @@ def body_html(md, figs=()):
     flush()
     if pending:
         raise SystemExit('도해가 설 절이 없다: %s' % ', '.join(f[0] for f in pending))
+    return '\n'.join(out)
+
+
+# ── 판 한 장을 읽는 순서로 다시 세운다 ─────────────────────────────────
+# 받은 글의 순서는 쓴 사람의 순서다 — 앞머리 · 남는 것 · 구조 · 1~N · 한계. 독자의 순서는
+# 앞머리 · 목차 · 남는 것 · 1~N · 지켜볼 것 · 한계 · 구조(부록)다. 방법론은 애널리스트
+# 보고서처럼 뒤에 둔다. 글 파일은 안 고치고 화면만 다시 배치한다(2026-09-02).
+
+def split_sections(md):
+    """앞머리 줄들과 [(제목, 줄들)] — h2 단위."""
+    lead, secs, cur = [], [], None
+    for ln in md.split('\n'):
+        if ln.startswith('## '):
+            cur = [ln[3:].strip(), []]
+            secs.append(cur)
+        elif cur is None:
+            lead.append(ln)
+        else:
+            cur[1].append(ln)
+    return lead, secs
+
+
+def lead_html(lead):
+    """「**물음** — …」 세 줄을 표 셋 줄로. 한 문단에 붙어 있으면 셋이 구분이 안 된다."""
+    rows = []
+    for ln in lead:
+        m = re.match(r'^\*\*(물음|바탕|축)\*\*\s*[—-]\s*(.*)$', ln.strip())
+        if m:
+            rows.append((m.group(1), m.group(2)))
+    if not rows:
+        return body_html('\n'.join(lead))
+    return '<div class="lead">%s</div>' % ''.join(
+        '<div class="lk">%s</div><div class="lv">%s</div>' % (k, inline(v)) for k, v in rows)
+
+
+def subjects_from_tree(secs):
+    """부록 트리의 레벨 1 줄 「├─ A. 원인 — 왜 … (방법)」에서 다루는 것을 뽑는다. A→1, B→2 …"""
+    subj = {}
+    for title, lines in secs:
+        if not title.startswith('구조'):
+            continue
+        for ln in lines:
+            m = TREE_TOP.match(ln.strip())
+            if m:
+                subj[str(ord(m.group(1)) - ord('A') + 1)] = m.group(2)
+    return subj
+
+
+def toc_html(secs):
+    """두 칸 — 다루는 것 · 묻는 것. 왼쪽은 트리의 레벨 1 이름, 오른쪽은 절 물음과 소절 물음."""
+    subj = subjects_from_tree(secs)
+    rows = []
+    for title, lines in secs:
+        p = parse_head(title)
+        if not p or '-' in p[0]:
+            continue
+        num, method, q = p
+        left = subj.get(num) or (q.split(' — ', 1)[1] if ' — ' in q else q)
+        subs = [parse_head(l[4:].strip()) for l in lines if l.startswith('### ')]
+        subs = ['<span class="tq">%s</span>' % esc(s[2]) for s in subs if s]
+        right = '<a href="#s%s">%s</a>' % (num, esc(q.split(' — ', 1)[0]))
+        if subs:
+            right += '<div class="tsub">%s</div>' % ' '.join(
+                '%s %s' % ('①②③④⑤⑥⑦⑧⑨'[k] if k < 9 else '', s) for k, s in enumerate(subs))
+        rows.append('<div class="tl"><span class="num">%s</span> %s%s</div><div class="tr">%s</div>'
+                    % (esc(num), esc(left), (' ' + chip(method)) if method else '', right))
+    for title, _lines in secs:
+        if title.startswith('한계'):
+            rows.append('<div class="tl">한계</div><div class="tr"><a href="#limits">이 회차가 안 말한 것</a></div>')
+    return '<nav class="toc"><div class="th">다루는 것</div><div class="th">묻는 것</div>%s</nav>' % ''.join(rows)
+
+
+def insights_html(lines):
+    """「이 회차에서 남는 것」 — ①②③ 문단을 카드로. 주장은 굵게, 「→ 3-1. …」 이후는 출처 줄."""
+    out = []
+    for para in re.split(r'\n\s*\n', '\n'.join(lines).strip()):
+        t = ' '.join(para.split())
+        if not t:
+            continue
+        m = re.match(r'^([①②③④⑤⑥])\s*(.*?)\s*(→\s*.*)?$', t, re.S)
+        if not m:
+            out.append('<p>%s</p>' % inline(t))
+            continue
+        mark, claim, meta = m.groups()
+        h = '<div class="ins"><div class="ins-c"><span class="ins-n">%s</span>%s</div>' % (mark, inline(claim))
+        if meta:
+            h += '<div class="ins-m">%s</div>' % inline(meta)
+        out.append(h + '</div>')
+    return '<div class="insights">%s</div>' % ''.join(out)
+
+
+def lane_html(body, figs):
+    lead, secs = split_sections(body)
+    numbered = [(t, l) for t, l in secs if parse_head(t) and '-' not in parse_head(t)[0]]
+    insights = [(t, l) for t, l in secs if t.startswith('이 회차에서 남는 것')]
+    limits = [(t, l) for t, l in secs if t.startswith('한계')]
+    appendix = [(t, l) for t, l in secs if t.startswith('구조')]
+    rest = [(t, l) for t, l in secs if not (
+        parse_head(t) or t.startswith('이 회차에서 남는 것') or t.startswith('한계') or t.startswith('구조'))]
+    out = [lead_html(lead), toc_html(secs)]
+    for t, l in insights:
+        out.append('<h2 id="insights">%s</h2>' % inline(t))
+        out.append(insights_html(l))
+    used = set()
+    for t, l in numbered:
+        out.append(heading_html('h2', t, 's%s' % parse_head(t)[0]))
+        # 절 머리에 걸린 도해는 여기서 바로 세운다 — 제목 줄을 본문에서 뺐으므로 body_html 은
+        # ### 아래에 걸린 것만 잡는다
+        top = [f for f in figs if t.startswith(f[0])]
+        out += [semidoped_figs.fig_html(f) for f in top]
+        sub = [f for f in figs if f not in top and
+               any(x.startswith('### ') and x[4:].strip().startswith(f[0]) for x in l)]
+        used.update(f[0] for f in top + sub)
+        out.append(body_html('\n'.join(l), sub))
+    for t, l in rest:
+        out.append('<h2>%s</h2>' % inline(t))
+        out.append(body_html('\n'.join(l)))
+    for t, l in limits:
+        out.append('<h2 id="limits">%s</h2>' % inline(t))
+        out.append(body_html('\n'.join(l)))
+    for t, l in appendix:
+        out.append('<h2 id="appendix" class="apx">부록 — %s</h2>' % inline(t.split('—', 1)[-1].strip() if '—' in t else t))
+        out.append(body_html('\n'.join(l)))
+    missing = [f[0] for f in figs if f[0] not in used]
+    if missing:
+        raise SystemExit('도해가 설 절이 없다: %s' % ', '.join(missing))
     return '\n'.join(out)
 
 
@@ -200,7 +390,7 @@ CSS = '''
 body{margin:0;background:#f6f7f9;color:#1b1f27;
  font:15px/1.75 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
 a{color:inherit}
-.wrap{max-width:900px;margin:0 auto;padding:36px 20px 80px}
+.wrap{max-width:760px;margin:0 auto;padding:36px 20px 80px}
 h1{font-size:26px;margin:0 0 6px}
 .sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
 .rows{border-top:1px solid #e2e5ea}
@@ -225,18 +415,60 @@ a.row:hover{background:#eef1f6}
 .lhead span{font-size:12px;color:#8a93a1}
 .ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
  padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
-.lane h2{font-size:17px;margin:30px 0 10px;line-height:1.5}
-.lane h3{font-size:15px;margin:22px 0 8px}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
 .lane p{margin:0 0 14px}
 .lane ul{margin:0 0 14px;padding-left:20px}
 .lane li{margin:0 0 6px}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#1b1f27;color:#fff;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#d6f2f2;color:#0b6c6d;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #00A5A6;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#0b6c6d;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
 code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
-pre.tree{margin:0 0 18px;padding:14px 16px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;
- font:13px/1.65 Consolas,"D2Coding","Malgun Gothic",monospace;overflow-x:auto;white-space:pre}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
 .tw{overflow-x:auto;margin:0 0 18px}
 table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
 th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
 th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
 .foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
 ''' + semidoped_figs.CSS
 
@@ -284,7 +516,7 @@ def post_html(ep):
                       esc(lm.get('model', ''))))
         if lm.get('title'):
             out.append('<div class="ltitle">%s</div>' % esc(lm['title']))
-        out.append(body_html(lane['body'],
+        out.append(lane_html(lane['body'],
                              semidoped_figs.figs_for(ep['slug'], lane['key'])))
         out.append('<div class="foot">받은 글을 문장 그대로 싣는다. '
                    '원본 <a href="%s">%s</a> · 페르소나 %s</div>'
@@ -321,8 +553,14 @@ def check_ui(index, posts):
     for p in posts:
         if 'class="pmeta"' not in p:
             bad.append('글 페이지에 회차 메타(언제 것·누가)가 없다')
-        if '<code>```' in p or '├─' in re.sub(r'<pre[^>]*>.*?</pre>', '', p, flags=re.S):
-            bad.append('트리가 <pre> 밖으로 나갔다 — 펜스가 문단으로 뭉개졌다')
+        if '<code>```' in p or '├─' in p:
+            bad.append('트리 선 글자가 화면에 남았다 — 펜스가 문단으로 뭉개졌거나 tree_html 을 안 거쳤다')
+        if '<nav class="toc"' not in p:
+            bad.append('글 페이지에 목차(다루는 것 · 묻는 것)가 없다')
+        if 'id="appendix"' in p and 'id="limits"' in p and p.index('id="appendix"') < p.index('id="limits"'):
+            bad.append('구조(부록)가 한계보다 앞에 섰다 — 방법론은 뒤에 둔다')
+        if 'id="insights"' in p and 'id="s1"' in p and p.index('id="insights"') > p.index('id="s1"'):
+            bad.append('「이 회차에서 남는 것」이 본문 뒤에 섰다')
         if '회차 목록' not in p:
             bad.append('글 페이지에서 목록으로 돌아갈 길이 없다')
     dead = re.findall(r'<div class="row dead">(.*?)</div>\s*(?=<a class="row"|'
@@ -372,6 +610,14 @@ def main():
     if bad:
         raise SystemExit('규약 위반\n  ' + '\n  '.join(bad))
     io.open(OUT, 'w', encoding='utf-8', newline='').write(idx)
+    # 모바일 폭에서 옆으로 밀리나 — 브라우저로만 잴 수 있어 Playwright 를 부른다.
+    # 없으면 넘어가지 않고 멈춘다. 이 규약은 눈으로 본 결함에서 나왔다
+    import subprocess
+    targets = [OUT] + [os.path.join(POST_DIR, ep['slug'] + '.html') for ep in eps if ep['lanes']]
+    r = subprocess.run(['node', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'check_scroll.js')]
+                       + targets, capture_output=True, text=True, encoding='utf-8')
+    if r.returncode != 0:
+        raise SystemExit('모바일 가로 스크롤\n' + (r.stdout or '') + (r.stderr or ''))
     live = sum(1 for e in eps if e['lanes'])
     lanes = sum(len(e['lanes']) for e in eps)
     print('Semi Doped — 회차 %d줄 · 글 %d장 · 판 %d개  ->  %s'
