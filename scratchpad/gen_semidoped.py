@@ -96,8 +96,8 @@ def table_html(rows):
 
 
 # ── 절 머리·방법 칩·트리 ─────────────────────────────────────────────
-# 받은 글의 절 제목은 「N. (방법) 물음」이다. 방법은 글자가 아니라 칩으로 낸다 — 제목과
-# 구분이 안 되면 「어디가 대비고 어디가 프로세스인가」가 화면에서 사라진다.
+# 받은 글의 절 제목은 「N. (방법) 물음」이다. 방법은 제목·목차에서 걷고 부록 트리에만 칩으로
+# 남긴다 — 쓰는 쪽 규율(한 노드 한 방법)이지 독자가 읽을 말이 아니다(2026-09-02).
 
 METHODS = ['부분 나눔', '인과 사슬', '조건 갈림', '이해관계자', '밸류체인', '프로세스',
            '시간 흐름', '행위자', '층위', '대비', '수식']
@@ -126,9 +126,9 @@ def heading_html(tag, title, anchor=''):
     idattr = ' id="%s"' % anchor if anchor else ''
     if not p:
         return '<%s%s>%s</%s>' % (tag, idattr, inline(title), tag)
-    num, method, q = p
-    return '<%s%s><span class="num">%s</span> %s%s</%s>' % (
-        tag, idattr, esc(num), inline(q), (' ' + chip(method)) if method else '', tag)
+    num, _method, q = p
+    # 방법(부분 나눔·대비…)은 쓰는 쪽 규율이라 제목에서 걷는다 — 독자에게는 소음이다(2026-09-02)
+    return '<%s%s><span class="num">%s</span> %s</%s>' % (tag, idattr, esc(num), inline(q), tag)
 
 
 def tree_html(code):
@@ -295,8 +295,8 @@ def toc_html(secs):
         if subs:
             right += '<div class="tsub">%s</div>' % ' '.join(
                 '%s %s' % ('①②③④⑤⑥⑦⑧⑨'[k] if k < 9 else '', s) for k, s in enumerate(subs))
-        rows.append('<div class="tl"><span class="num">%s</span> %s%s</div><div class="tr">%s</div>'
-                    % (esc(num), esc(left), (' ' + chip(method)) if method else '', right))
+        rows.append('<div class="tl"><span class="num">%s</span> %s</div><div class="tr">%s</div>'
+                    % (esc(num), esc(left), right))
     for title, _lines in secs:
         if title.startswith('한계'):
             rows.append('<div class="tl">한계</div><div class="tr"><a href="#limits">이 회차가 안 말한 것</a></div>')
