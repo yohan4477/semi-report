@@ -35,6 +35,11 @@ BLOB = 'https://github.com/johnn8n/semianalysis/blob/main/'
 LANES = [('strategy', '⚖', '전략', '전략 컨설턴트 출신 애널리스트의 해설'),
          ('tech', '🔧', '기술', '주제 아래 순서와 층위')]
 
+# 섹션 — 회차 frontmatter section 코드에 이름을 얹는다. 순서가 곧 화면 순서(2026-09-02).
+# 글이 있는 회차가 하나도 없는 섹션은 안 보인다 — 「0편」 머리줄은 「글 없음」과 같다
+SECTIONS = [('compute', '추론 칩'), ('link', '칩끼리 잇는 길'), ('power', '전력'), ('mem', '메모리'),
+            ('fab', '공정·패키징·리소'), ('news', '시황·규제·자금')]
+
 # 회차가 아니라 모음인 글. 목록에 줄은 서되 판을 세우지 않는다
 NOT_EPISODE = {'daily-2026-04-08': '월별 회차 목록',
                'til-14': '역사 토막 모음'}
@@ -446,6 +451,8 @@ a{color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
 h1{font-size:26px;margin:0 0 6px}
 .sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
 .rows{border-top:1px solid #e2e5ea}
 .row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
  text-decoration:none;color:inherit}
@@ -543,9 +550,13 @@ def row_html(ep):
     for key, emo, label, _sub in LANES:
         if any(l['key'] == key for l in ep['lanes']):
             tags.append('<span class="tag on">%s %s</span>' % (emo, label))
-    inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
+    # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
+    # 진행자 둘뿐인 회차는 날짜만 선다
+    others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
+    who = ' · '.join(re.sub(r'\[\[([^\]]+)\]\]', r'<span class="pn"></span>', esc(x)) for x in others)
+    inner = ('<div class="rmeta"><span>%s</span>%s</div>'
              '<div class="rtitle">%s</div>'
-             % (esc(m.get('date', '')), esc(m.get('speaker', '')),
+             % (esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
                 esc(m.get('title', ep['slug']))))
     if ep['one']:
         inner += '<div class="rone">%s</div>' % esc(ep['one'])
@@ -605,7 +616,17 @@ def index_html(eps):
                '🔧 기술은 주제 아래 순서와 층위로.<br>'
                '글이 있는 회차만 싣는다 — 회차 %d편 중 %d편.</div>' % (len(eps), live))
     # 글 없는 회차는 목록에 안 싣는다 — 「글 없음」 줄이 열여덟 개 서 있으면 목록이 아니라 빈칸이다(2026-09-02)
-    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in eps if e['lanes']))
+    # 섹션 머리줄로 갈라 세운다. 머리에 「글 m편 / 회차 n편」
+    for code, name in SECTIONS:
+        allc = [e for e in eps if e['meta'].get('section', '') == code and not e['note']]
+        withl = [e for e in allc if e['lanes']]
+        if not withl:
+            continue
+        out.append('<h2 class="sec"><span>%s</span><small>글 %d편 / 회차 %d편</small></h2>' % (esc(name), len(withl), len(allc)))
+        out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in withl))
+    stray = [e for e in eps if e['lanes'] and e['meta'].get('section', '') not in dict(SECTIONS)]
+    if stray:
+        raise SystemExit('섹션 코드가 없는 회차: ' + ', '.join(e['slug'] for e in stray))
     out.append('<div class="foot">글은 원문 전사를 통째로 읽힌 뒤 받은 것이고 '
                '문장을 고치지 않는다. 값이 원문에 있는지는 사람이 대조한다.</div>')
     out.append('</div>')
@@ -617,6 +638,8 @@ def check_ui(index, posts):
     bad = []
     if '<details' in index or any('<details' in p for p in posts):
         bad.append('접는 것이 있다 — 이 장은 목록과 글뿐이다')
+    if 'class="sec"' not in index:
+        bad.append('목록에 섹션 머리줄이 없다')
     if 'class="tile' in index:
         bad.append('타일이 있다 — 첫 화면은 회차 줄이다')
     for p in posts:

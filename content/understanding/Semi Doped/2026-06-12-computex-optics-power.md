@@ -6,7 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
-section: link
+section: power
 topic: 컴퓨텍스 · CPO · 800V 전원
 gain: 랙 안의 연결이 어디까지 구리로 남고 어디부터 빛으로 가는지를 전시로 확인한 편. 800볼트 전원이 어디서 어떤 소재로 갈리는지, 그리고 인텔이 칩렛 열일곱 개로 보여 준 것.
 ---
