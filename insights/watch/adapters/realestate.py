@@ -39,19 +39,35 @@ TBL = {
                           unit='만원/㎡', label='지역별 매매 중위가격(아파트)'),
     'median_jeonse': dict(id='A_2024_00193', level='sido',
                           unit='만원/㎡', label='지역별 전세 중위가격(아파트)'),
+    # 아래 셋은 표본조사(설문) 기반이 아니라 **반복매매 방식**이다 — 같은 주택이
+    # 다시 팔릴 때만 짝지어 값을 내므로 표본 구성이 달마다 바뀌어도 안 흔들린다.
+    # median_sale·median_jeonse(서울 중위가)가 두 달에 18%씩 뛰는 문제를 이게 없앤다.
+    # 다만 표마다 줄 수 있는 지역 단위가 다르다 — 월간은 권역까지만 내려오고
+    # 구까지 내려오는 건 분기표뿐이다(A_2024_00180, 확인함). 없는 걸 만들지 않는다.
+    'rtp_sale_idx':   dict(id='A_2024_00178', level='zone',
+                          unit='지수(2017.11=100, 반복매매)',
+                          label='지역별 매매지수_아파트(실거래가격지수)'),
+    'rtp_jeonse_idx': dict(id='A_2024_00182', level='zone',
+                          unit='지수(2017.11=100, 반복매매)',
+                          label='지역별 전세지수_아파트(실거래가격지수)'),
+    'rtp_sale_idx_gu': dict(id='A_2024_00180', level='gu', cycle='QY',
+                          unit='지수(2017.4Q=100, 반복매매, 분기)',
+                          label='시군구별 매매지수_아파트(실거래가격지수)'),
 }
 
 _CODES = {}
 
 
-def codes_of(statbl_id, prefix='서울'):
+def codes_of(statbl_id, prefix='서울', cycle='MM'):
     """이 표가 쓰는 지역 코드를 이름으로 찾는다. {이름: CLS_ID}.
 
     한 번 받아 두고 그 실행 안에서는 다시 안 받는다. 이름이 같은 구가 다른 시도에도
-    있으므로(중구 등) 전체 이름이 prefix 로 시작하는 것만 남긴다."""
-    if statbl_id in _CODES:
-        return _CODES[statbl_id]
-    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': 'MM', 'Type': 'json', 'pSize': 1000}
+    있으므로(중구 등) 전체 이름이 prefix 로 시작하는 것만 남긴다. cycle 은 표의
+    DTACYCLE_CD 다 — 분기표(QY)에 월(MM)로 물으면 「해당 자료 없음」이 온다."""
+    ck = (statbl_id, cycle)
+    if ck in _CODES:
+        return _CODES[ck]
+    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': cycle, 'Type': 'json', 'pSize': 1000}
     key = os.environ.get(KEY_ENV)
     if key:
         p['KEY'] = key
@@ -62,7 +78,7 @@ def codes_of(statbl_id, prefix='서울'):
                          r.get('CLS_ID'))
         if nm and cid is not None and (full == prefix or full.startswith(prefix + '>')):
             out.setdefault(nm, str(cid))
-    _CODES[statbl_id] = out
+    _CODES[ck] = out
     return out
 
 
@@ -94,9 +110,13 @@ def _rows(params):
     return total, rows
 
 
-def series(statbl_id, cls_id, start, end, itm=None):
-    """[(YYYY-MM, 값)] 과 「다 받았나」. 키가 없으면 앞 몇 건만 온다."""
-    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': 'MM', 'CLS_ID': cls_id,
+def series(statbl_id, cls_id, start, end, itm=None, cycle='MM'):
+    """[(때, 값)] 과 「다 받았나」. 키가 없으면 앞 몇 건만 온다.
+
+    cycle='QY' 인 표는 WRTTIME_IDTFR_ID 뒤 두 자리가 달이 아니라 분기 번호다
+    (「200601」= 2006년 1분기). 「2006-01」로 적으면 1월로 읽혀 월간 표와 헷갈리므로
+    「2006-1Q」로 적는다 — 분기표라는 게 값 자체에서 보인다."""
+    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': cycle, 'CLS_ID': cls_id,
          'ITM_ID': itm or ITM_DEFAULT, 'START_WRTTIME': start, 'END_WRTTIME': end,
          'Type': 'json', 'pSize': 1000}
     key = os.environ.get(KEY_ENV)
@@ -109,7 +129,11 @@ def series(statbl_id, cls_id, start, end, itm=None):
         if len(t) != 6:
             continue
         try:
-            out.append(('%s-%s' % (t[:4], t[4:]), round(float(v), 2)))
+            val = round(float(v), 2)
+            if cycle == 'QY':
+                out.append(('%s-%dQ' % (t[:4], int(t[4:6])), val))
+            else:
+                out.append(('%s-%s' % (t[:4], t[4:]), val))
         except (TypeError, ValueError):
             # 비공표 구간에 '-'·''·'X' 가 온다. 그 점만 버리고 나머지는 살린다
             dropped += 1
@@ -129,7 +153,7 @@ def _targets(area, spec):
     구는 여럿이라 이름을 열쇠에 박고, 권역·시도는 하나라 이름을 값 쪽 라벨로만 쓴다.
     코드는 표마다 다르므로 이름으로 찾는다(codes_of)."""
     lv = spec['level']
-    tbl = codes_of(spec['id'])
+    tbl = codes_of(spec['id'], cycle=spec.get('cycle', 'MM'))
     if lv == 'gu':
         return [(gu, tbl[gu]) for gu in (area.get('구') or []) if gu in tbl], ''
     nm = area.get(lv)
@@ -151,7 +175,7 @@ def fetch(target, area, start='202401', end=None):
         pairs, wide = _targets(area, spec)
         for name, cls_id in pairs:
             s, full, dropped = series(spec['id'], cls_id, start, end,
-                                      spec.get('itm'))
+                                      spec.get('itm'), spec.get('cycle', 'MM'))
             if not s:
                 continue
             key = '%s_%s' % (base, name) if name else base
@@ -160,6 +184,12 @@ def fetch(target, area, start='202401', end=None):
                 # 대상보다 넓은 단위로 온 값이다. 그 사실을 출처에 박는다 —
                 # 표에서 구별 값과 나란히 서면 같은 단위로 읽힌다
                 src += ' · %s 단위(대상보다 넓다)' % wide
+                # 대상이 이 넓은 단위 여러 개에 걸쳐 있어 그중 하나를 골라 붙인
+                # 경우(마용성 등)는 어느 구가 이 값 밖인지도 적는다 — 안 그러면
+                # 세 구가 다 이 권역에 드는 것처럼 읽힌다
+                note = area.get('zone_note')
+                if note:
+                    src += ' · ' + note
             out[key] = {
                 'value': s[-1][1], 'as_of': s[-1][0],
                 'kind': {True: '공표', False: '공표(일부)', None: '확인 못 함'}[full],
