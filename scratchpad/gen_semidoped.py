@@ -92,6 +92,7 @@ def strip_lrefs(s):
 
 # 진행자는 여는 문단에서 풀네임으로 한 번만 부르고 뒤에서는 진행자A·진행자V 다(2026-09-02).
 # 원본 파일에는 이름이 남는다(전사 대조용). 풀네임(Austin Lyons·Vik Sekar)과 Vik's 는 건드리지 않는다.
+PN_RE = re.compile(r'\[\[([^\]]+)\]\]')   # 화자 줄의 [[이름]]
 HOST = {'Austin': '진행자A', 'Vik': '진행자V'}
 HOST_RE = re.compile(r"\b(Austin|Vik)(?! Lyons| Sekar|['’]s)\s?(이|가|은|는|을|를|과|와)?(?=[^A-Za-z]|$)")
 PART = {'이': '가', '은': '는', '을': '를', '과': '와'}
@@ -451,7 +452,11 @@ a{color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
 h1{font-size:26px;margin:0 0 6px}
 .sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
-.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
 .sec small{font-size:12px;color:#8a93a1;font-weight:400}
 .rows{border-top:1px solid #e2e5ea}
 .row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
@@ -553,7 +558,7 @@ def row_html(ep):
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
     # 진행자 둘뿐인 회차는 날짜만 선다
     others = [x.strip() for x in m.get('people', '').split(' / ') if x.strip() and not x.strip().startswith('진행')]
-    who = ' · '.join(re.sub(r'\[\[([^\]]+)\]\]', r'<span class="pn"></span>', esc(x)) for x in others)
+    who = ' · '.join(PN_RE.sub(r'<span class="pn">\1</span>', esc(x)) for x in others)
     inner = ('<div class="rmeta"><span>%s</span>%s</div>'
              '<div class="rtitle">%s</div>'
              % (esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
@@ -576,7 +581,7 @@ def post_html(ep):
     # 화자 — 팟캐스트라 누가 말하는 사람인지가 먼저다. 요약본 frontmatter people 에
     # 「진행 … / 발표 …」로 적고, 없으면 speaker 만 낸다. 전사에 없는 소속·직함은 안 적는다
     people = m.get('people', '')
-    NAMES[:] = re.findall(r'\[\[([^\]]+)\]\]', people)
+    NAMES[:] = PN_RE.findall(people)
 
     def who_line(x):
         k, v = x.strip().split(' ', 1)
@@ -617,12 +622,17 @@ def index_html(eps):
                '글이 있는 회차만 싣는다 — 회차 %d편 중 %d편.</div>' % (len(eps), live))
     # 글 없는 회차는 목록에 안 싣는다 — 「글 없음」 줄이 열여덟 개 서 있으면 목록이 아니라 빈칸이다(2026-09-02)
     # 섹션 머리줄로 갈라 세운다. 머리에 「글 m편 / 회차 n편」
+    groups = []
     for code, name in SECTIONS:
         allc = [e for e in eps if e['meta'].get('section', '') == code and not e['note']]
         withl = [e for e in allc if e['lanes']]
-        if not withl:
-            continue
-        out.append('<h2 class="sec"><span>%s</span><small>글 %d편 / 회차 %d편</small></h2>' % (esc(name), len(withl), len(allc)))
+        if withl:
+            groups.append((code, name, allc, withl))
+    # 섹션 선택 줄 — 맨 위에서 누르면 그 섹션으로 간다. 접지 않는다(2026-09-02)
+    out.append('<nav class="secnav">%s</nav>' % ''.join(
+        '<a href="#sec-%s">%s <small>%d</small></a>' % (code, esc(name), len(withl)) for code, name, _a, withl in groups))
+    for code, name, allc, withl in groups:
+        out.append('<h2 class="sec" id="sec-%s"><span>%s</span><small>글 %d편 / 회차 %d편</small></h2>' % (code, esc(name), len(withl), len(allc)))
         out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in withl))
     stray = [e for e in eps if e['lanes'] and e['meta'].get('section', '') not in dict(SECTIONS)]
     if stray:
@@ -640,6 +650,8 @@ def check_ui(index, posts):
         bad.append('접는 것이 있다 — 이 장은 목록과 글뿐이다')
     if 'class="sec"' not in index:
         bad.append('목록에 섹션 머리줄이 없다')
+    if 'class="secnav"' not in index:
+        bad.append('목록 위에 섹션 선택 줄이 없다')
     if 'class="tile' in index:
         bad.append('타일이 있다 — 첫 화면은 회차 줄이다')
     for p in posts:
