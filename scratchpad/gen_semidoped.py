@@ -4,7 +4,7 @@
 카드가 없다. 접힘도 타일도 없다. 회차 목록에서 줄을 눌러 글로 들어가고,
 글 페이지에는 그 회차에 대해 선 판만 실린다.
 
-  판   전략(⚖) 맥킨지 꼴 이슈 트리   ·   기술(🔧) 주제 + 순서·층위
+  판   전략(⚖) 컨설턴트 출신 애널리스트의 이슈 트리   ·   기술(🔧) 주제 + 순서·층위
        판은 주제가 서는 회차에만 생긴다. 둘 다 안 서면 그 줄은 링크가 안 걸린다.
 
   재료 content/understanding/Semi Doped/*.md   회차 메타와 한 줄
@@ -32,7 +32,7 @@ OUT = os.path.join(ROOT, '대시보드', 'Semi Doped 대시보드.html')
 POST_DIR = os.path.join(ROOT, '대시보드', 'semidoped')
 BLOB = 'https://github.com/johnn8n/semianalysis/blob/main/'
 
-LANES = [('strategy', '⚖', '전략', '맥킨지 꼴 이슈 트리'),
+LANES = [('strategy', '⚖', '전략', '컨설턴트 출신 애널리스트의 이슈 트리'),
          ('tech', '🔧', '기술', '주제 아래 순서와 층위')]
 
 # 회차가 아니라 모음인 글. 목록에 줄은 서되 판을 세우지 않는다
@@ -300,7 +300,7 @@ def index_html(eps):
     out = [HEAD % ('Semi Doped 대시보드', CSS)]
     out.append('<h1>🎙️ Semi Doped</h1>')
     out.append('<div class="sub">칩을 만드는 사람이 나와 앉아 설계를 말하는 팟캐스트. '
-               '회차마다 두 판이 따로 읽는다 — ⚖ 전략은 맥킨지 꼴 이슈 트리로, '
+               '회차마다 두 판이 따로 읽는다 — ⚖ 전략은 컨설턴트 출신 애널리스트의 이슈 트리로, '
                '🔧 기술은 주제 아래 순서와 층위로.<br>'
                '판은 주제가 서는 회차에만 생긴다. 안 선 회차는 줄만 서고 열리지 않는다 — '
                '회차 %d편 중 %d편에 글이 있다.</div>' % (len(eps), live))

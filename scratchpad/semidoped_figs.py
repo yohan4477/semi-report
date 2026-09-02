@@ -108,92 +108,81 @@ def panel_boxes(x0, y, items, gap=12, h=None):
 
 
 # ══ 할라페뇨 (2026-08-27) 전략 판 ═══════════════════════════════════════
-# 값은 전사에 있는 것만 — 128칩·600Gb/s·2,048칩·16랙·200Gb/s·아홉 달. 상자 개수는
-# 그 자체가 뜻이 아닌 자리(가속기 「둘」)를 캡션에 밝힌다.
+# 값은 전사에 있는 것만 — 아홉 달·671B·120B·1,000토큰·700W·1,200W·8K/1K·HBM4/HBM3E.
+# 상자 개수는 글이 가른 항의 수와 같다(요인 셋·잰 것 셋·못 잰 것 셋·공급망 세 단).
 
-def _jal_numa():
-    # 왼쪽 — 나눠 쓰는 HBM.  오른쪽 — 가속기마다 전용 슬라이스
-    L, R = 0.0, 272.0
-    parts = head(L, 22, 248, '나눠 쓰는 HBM') + head(R, 22, 248, '전용 슬라이스 (할라페뇨)')
-    # 왼쪽: HBM 한 덩어리 위, 가속기 둘 아래, 둘 다 위로 올라가 한 곳에 닿는다
-    hbm_w = w_of(['HBM 한 덩어리'])
-    hbm_x = L + (248 - hbm_w) / 2
-    parts += box(hbm_x, 40, hbm_w, 44, ['HBM 한 덩어리'], 'fig-stage')
-    acc, x_end, cs, hh = panel_boxes(L + 24, 128, [(['가속기'], 'fig-box'), (['이웃 가속기'], 'fig-box')], gap=20)
-    parts += acc
+def _col(x0, y0, items, gap=10):
+    """상자를 위아래로 쌓는다. [(줄들, 클래스)]. 폭은 열에서 가장 긴 글에 맞춘다."""
+    w = w_of(*[l for l, _ in items])
+    out, y = [], y0
+    for lines, cls in items:
+        h = len(lines) * LH + 22
+        out += box(x0, y, w, h, lines, cls)
+        y += h + gap
+    return out, w, y - gap
+
+
+def _jal_nine_months():
+    # 요인 셋(위) → 아홉 달(아래). 셋이 겹쳐 그 값이 났다는 것이라 화살표 셋이 한 상자로 모인다
+    items = [(['AI 도구', 'GPT-3급 모델로', '첫 RTL 초안'], 'fig-box'),
+             (['TPU 출신 인재', 'Richard Ho'], 'fig-box'),
+             (['백지 설계', '레거시 부담 없음'], 'fig-box')]
+    row, x_end, cs, hh = panel_boxes(0, 30, items, gap=18, h=3 * LH + 22)
+    parts = list(row)
+    tl = ['첫 RTL 에서 테이프아웃까지 아홉 달']
+    tw = w_of(tl)
+    ty = 30 + hh + 40
+    parts += box((W - tw) / 2, ty, tw, 44, tl, 'fig-agent')
     for cx, _w in cs:
-        parts += vline(cx, 128, 86)
-    parts += box(L + 20, 200, 208, 44, ['데이터가 늦게 온다'], 'fig-bad')
-    # 오른쪽: 가속기 둘, 각자 아래 자기 슬라이스
-    acc2, _x, cs2, _h = panel_boxes(R + 8, 40, [(['가속기'], 'fig-box'), (['가속기'], 'fig-box')], gap=96)
-    parts += acc2
-    for cx, _w in cs2:
-        sw = w_of(['전용 HBM', '슬라이스'])
-        parts += box(cx - sw / 2, 128, sw, hh + 23, ['전용 HBM', '슬라이스'], 'fig-agent')
-        parts += vline(cx, 84, 126)
-    parts += box(R + 20, 200 + 23, 208, 44, ['전달되는 플롭'], 'fig-agent')
-    return svg(272, parts,
-               '왼쪽은 가속기 둘이 HBM 한 덩어리를 나눠 써 데이터가 늦게 오고, 오른쪽은 가속기마다 전용 HBM 슬라이스를 둬 전달되는 플롭을 확보한다')
+        parts += vline(cx, 30 + hh + 2, ty - 2)
+    parts += mid(ty + 60, 44, ['통상은 최소 2~3년, 수작업이 많이 든다'], 'fig-stage')
+    return svg(ty + 116, parts,
+               'AI 도구·TPU 출신 인재·백지 설계 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다. 통상은 최소 2~3년이다')
 
 
-def _jal_scaleup():
-    parts, y_end = table(
-        [[['랙 사이'], ['2,048칩', '16랙'], ['ESUN', '초당 200 기가비트']],
-         [['랙 안'], ['128칩'], ['Tomahawk6', '칩당 초당', '600 기가비트']]],
-        ['fig-stage', 'fig-box', 'fig-box'], heads=['층', '칩 수', '연결'], y0=36, arrows=False)
-    return svg(y_end + 12, parts,
-               '랙 안 128칩은 Tomahawk6 로 칩당 600Gb/s, 랙 사이 2,048칩(16랙)은 ESUN 으로 200Gb/s 로 잇는다')
-
-
-def _jal_balanced():
+def _jal_measured():
     L, R = 0.0, 272.0
-    parts = head(L, 22, 248, '분리 (GPU 방식)') + head(R, 22, 248, '균형 단일 칩 (할라페뇨)')
-    sep, x_end, cs, hh = panel_boxes(L + 30, 40, [(['프리필 칩'], 'fig-box'), (['디코드 칩'], 'fig-box')], gap=16)
-    parts += sep
-    parts += box(L + 12, 150, 224, 44, ['비율이 바뀌면 한쪽이 논다'], 'fig-bad')
-    one_w = w_of(['한 칩에', '연산·대역폭·IO', '다 넉넉히'])
-    parts += box(R + (248 - one_w) / 2, 40, one_w, 3 * LH + 26, ['한 칩에', '연산·대역폭·IO', '다 넉넉히'], 'fig-agent')
-    parts += box(R + 12, 150, 224, 44, ['안 쓰는 부분만 끈다'], 'fig-agent')
-    return svg(210, parts,
-               '왼쪽은 프리필 칩과 디코드 칩을 나눠 비율이 바뀌면 한쪽이 놀고, 오른쪽은 한 칩에 연산·대역폭·IO 를 다 넉넉히 두고 안 쓰는 부분만 끈다')
+    parts = head(L, 22, 248, '잰 것') + head(R, 22, 248, '못 잰 것')
+    # 열 하나는 248 이다. 한 줄 15자(234px)를 넘기면 옆 열을 침범한다
+    left, lw, ly = _col(L + 12, 36, [(['중형 R1 671B', '새 파레토 프런티어'], 'fig-agent'),
+                                      (['소형 GPT-OSS 120B', '초당 1,000토큰'], 'fig-agent'),
+                                      (['700W TDP', 'GB200 약 1,200W'], 'fig-agent')])
+    right, rw, ry = _col(R + 12, 36, [(['짧은 컨텍스트', '8K 입력 · 1K 출력'], 'fig-outside'),
+                                       (['에이전틱', 'AgentX 아직 없음'], 'fig-outside'),
+                                       (['세대 차', 'HBM4 대 HBM3E'], 'fig-outside')])
+    parts += left + right
+    parts += legend([('fig-agent', '잰 값'), ('fig-outside', '아직 없는 값')], max(ly, ry) + 18)
+    return svg(max(ly, ry) + 44, parts,
+               '잰 것 셋(R1 파레토·GPT-OSS 초당 1,000토큰·700W)과 못 잰 것 셋(짧은 컨텍스트·에이전틱·HBM 세대 차)을 나란히 둔다')
 
 
-def _jal_cycle():
-    # 「아홉 달」 라벨이 상자 테두리에 닿지 않게 첫 틈만 넓게 준다 — 남는 자리 192 를 96·48·48 로
-    row, _x = band([(['첫 RTL'], 'fig-box'), ('>', '아홉 달'),
-                    (['테이프아웃'], 'fig-agent'), ('>', ''),
-                    (['Gen 2', '테이프아웃', '근접'], 'fig-box'), ('>', ''),
-                    (['Gen 3', '구상'], 'fig-box')], 40, 95, gaps=[96, 48, 48])
-    note = mid(140, 44, ['통상은 첫 RTL 에서 테이프아웃까지 2~3년'], 'fig-stage')
-    return svg(200, row + note,
-               '첫 RTL 에서 테이프아웃까지 아홉 달, 통상은 2~3년. Gen 2 는 테이프아웃에 다가섰고 Gen 3 은 구상 중이다')
+def _jal_rule_pair():
+    # 두 기둥. 위가 잣대, 아래가 그 잣대가 낳은 칩의 꼴
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, '상용 실리콘 벤더') + head(R, 22, 248, '할라페뇨')
+    a = ['잣대: TCO', '사고 굴리는 비용 전부']
+    b = ['잣대: 요청당 에너지', '마지막 토큰까지 지연']
+    aw, bw = w_of(a), w_of(b)
+    parts += box(L + (248 - aw) / 2, 36, aw, 2 * LH + 22, a, 'fig-stage')
+    parts += box(R + (248 - bw) / 2, 36, bw, 2 * LH + 22, b, 'fig-stage')
+    y2 = 36 + 2 * LH + 22 + 34
+    c = ['프리필 칩 · 디코드 칩 분리', '비율이 바뀌면 한쪽이 논다']
+    d = ['균형 단일 칩', '안 쓰는 부분만 끈다']
+    cw, dw = w_of(c), w_of(d)
+    parts += box(L + (248 - cw) / 2, y2, cw, 2 * LH + 22, c, 'fig-bad')
+    parts += box(R + (248 - dw) / 2, y2, dw, 2 * LH + 22, d, 'fig-agent')
+    parts += vline(L + 124, 36 + 2 * LH + 24, y2 - 2) + vline(R + 124, 36 + 2 * LH + 24, y2 - 2)
+    return svg(y2 + 2 * LH + 36, parts,
+               '왼쪽은 TCO 잣대가 프리필·디코드 분리 칩으로, 오른쪽은 요청당 에너지·마지막 토큰 지연 잣대가 균형 단일 칩으로 이어진다')
 
 
-def _jal_sell():
-    top_w = w_of(['할라페뇨 칩을'])
-    parts = box((W - top_w) / 2, 20, top_w, 44, ['할라페뇨 칩을'], 'fig-box')
-    # 갈림 둘
-    lw, rw = w_of(['사내 전용']), w_of(['판다'])
-    lx, rx = 60.0, 354.0     # 오른쪽 가지 셋(250..493)의 한가운데가 371 이라 「판다」를 거기 맞춘다
-    parts += box(lx, 110, lw, 44, ['사내 전용'], 'fig-box')
-    parts += box(rx, 110, rw, 44, ['판다'], 'fig-agent')
-    parts += vline(W / 2, 64, 86, arrow_=False) + hline(lx + lw / 2, rx + rw / 2, 86)
-    parts += vline(lx + lw / 2, 86, 108) + vline(rx + rw / 2, 86, 108)
-    # 사내 전용 아래 근거 하나
-    gl = ['Anthropic·', 'Google', '상대 우위']
-    gw = w_of(gl)
-    parts += box(lx + lw / 2 - gw / 2, 200, gw, 3 * LH + 26, gl, 'fig-stage')
-    parts += vline(lx + lw / 2, 154, 198)
-    # 판다 아래 행위자 셋
-    acts, x_end, cs, hh = panel_boxes(250, 200, [(['기업에', '직접'], 'fig-box'),
-                                                 (['네오클라우드', '경유'], 'fig-box'),
-                                                 (['추론을', '서비스로'], 'fig-box')], gap=14)
-    parts += acts
-    parts += vline(rx + rw / 2, 154, 176, arrow_=False) + hline(cs[0][0], cs[-1][0], 176)
-    for cx, _w in cs:
-        parts += vline(cx, 176, 198)
-    return svg(200 + hh + 14, parts,
-               '할라페뇨 칩을 사내 전용으로 두면 Anthropic·Google 상대 우위, 판다면 기업에 직접·네오클라우드 경유·추론을 서비스로 셋 중 하나다')
+def _jal_chain():
+    row, _x = band([(['HBM', 'Samsung'], 'fig-outside'), ('>', ''),
+                    (['스위치', 'Broadcom'], 'fig-agent'), ('>', ''),
+                    (['시스템', 'Celestica'], 'fig-outside')], 30, 72)
+    parts = row + legend([('fig-agent', '사실 — 발표자가 호명'), ('fig-outside', '추정')], 126)
+    return svg(150, parts,
+               'HBM(Samsung) → 스위치(Broadcom) → 시스템(Celestica) 세 단 중 사실로 확인된 것은 스위치 하나다')
 
 
 JAL = '2026-08-27-openai-jalapeno'
@@ -202,21 +191,18 @@ JAL = '2026-08-27-openai-jalapeno'
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]
 FIGS = {
     (JAL, 'strategy'): [
-        ('2-1', 'NUMA 슬라이스가 푼 것', _jal_numa(),
-         '왼쪽이 문제다 — 이웃 가속기와 HBM 한 덩어리를 나눠 쓰면 대역폭이 있어도 필요한 순간 데이터가 없다(Chris, L129). '
-         '오른쪽이 할라페뇨의 답이다 — 가속기마다 전용 HBM 슬라이스와 저지연 버스를 둔다(L131). '
-         '가속기를 둘 그린 것은 「나눠 쓴다」를 보이려는 최소 수이고 실제 개수는 전사에 없다.'),
-        ('2-2', '스케일업 두 층', _jal_scaleup(),
-         '담는 것이 위, 담기는 것이 아래다. 랙 안 128칩은 Broadcom Tomahawk6 로 칩당 600Gb/s, '
-         '랙 사이는 2,048칩(16랙)까지 ESUN 으로 200Gb/s 다(L141·L145). 스케일업의 기준이 랙 경계가 아니라 메모리를 공유하는 범위라는 것이 Austin 의 논지다(L149).'),
-        ('2-3', '분리 대 균형 단일 칩', _jal_balanced(),
-         '왼쪽은 GPU 쪽 관행 — 프리필 칩과 디코드 칩을 나누면 워크로드 비율이 바뀔 때 한쪽이 논다(L155). '
-         '오른쪽은 할라페뇨 — 한 칩에 연산·대역폭·IO 를 다 넉넉히 두고 안 쓰는 부분만 끈다(L157). 끈 자리가 다크 실리콘이다.'),
-        ('4.', '첫 RTL 에서 Gen 3 까지', _jal_cycle(),
-         '순서가 뜻이다. 첫 RTL 에서 테이프아웃까지 아홉 달(L97), 통상은 2~3년. Gen 2 는 이미 테이프아웃에 다가섰고 Gen 3 은 구상 중이라고 Richard 가 말했다고 Austin 이 전했다(L95).'),
-        ('6.', '사내 전용인가 파는가', _jal_sell(),
-         '갈림 하나에 가지 셋. 왼쪽은 Austin 이 든 사내 전용의 논리(L77), 오른쪽 셋은 Austin 이 「thinking out loud」라 밝힌 즉흥 제안이다(L81). '
-         '원문은 어느 쪽도 확정하지 않았다.'),
+        ('1.', '아홉 달을 만든 세 요인', _jal_nine_months(),
+         '요인 셋이 겹쳐 첫 RTL 에서 테이프아웃까지 아홉 달이 걸렸다(L97). AI 도구는 발표자 말을 Vik 이 전한 것(L177), '
+         '백지 설계는 Richard 말을 Austin 이 전한 것(L171)이다. 셋 중 무엇이 몇 할인지는 전사에 없어 상자 크기를 같게 뒀다.'),
+        ('2.', '잰 것과 못 잰 것', _jal_measured(),
+         '왼쪽 셋이 InferenceX 에서 나온 값이고(L103·L105·L111), 오른쪽 셋이 아직 없는 값이다(L63·L61·L103). '
+         '오른쪽이 채워지기 전까지 왼쪽은 「쉬운 조건에서 이긴 결과」일 수 있다.'),
+        ('3.', '잣대가 칩의 꼴을 정한다', _jal_rule_pair(),
+         '두 기둥이 한 쌍이다. TCO 를 잣대로 삼으면 프리필·디코드를 나눠 한쪽을 놀리는 설계가 나오고(L45·L155), '
+         '요청당 에너지를 잣대로 삼으면 한 칩에 다 넉넉히 두고 안 쓰는 부분만 끄는 균형 단일 칩이 나온다(L43·L157).'),
+        ('4-2', '공급망은 어디부터 사실인가', _jal_chain(),
+         '세 단 중 실선은 발표자가 감사 인사에서 직접 호명한 Broadcom 하나다(L115). Samsung HBM 우위는 Vik 이 「entirely speculative」라 못 박은 추정(L117), '
+         'Celestica 는 SemiAnalysis 추정을 Austin 이 전한 것이다(L119).'),
     ],
 }
 
