@@ -180,19 +180,42 @@ def _rect(x, y, w, h, cls='fig-box'):
     return ['  <rect x="%g" y="%g" width="%g" height="%g" rx="4" class="%s"/>' % (x, y, w, h, cls)]
 
 
+def eband(items, y, h, w=None, min_gap=20):
+    """가로 사슬 — **상자는 전부 한 폭**. 폭은 가장 긴 글(또는 w), 틈은 남는 자리를 화살표 수로 고르게.
+    aie_figs.band 은 글자마다 폭을 재서 상자 크기가 달라지는데, 사슬에서는 그게 중요도로 읽힌다
+    (2026-09-02 사용자 지적). 두 줄을 견줄 때는 w 를 같이 준다."""
+    boxes = [it for it in items if it[0] != '>']
+    narw = len(items) - len(boxes)
+    w = w or max(w_of(l) for l, _ in boxes)
+    need = len(boxes) * w + narw * min_gap
+    assert need <= W + 1, '한 폭으로 놓으면 판보다 넓다(%g) — 라벨을 줄이거나 세로 사슬로' % need
+    gap = (W - len(boxes) * w) / narw if narw else 0
+    out, x = [], 0.0
+    for it in items:
+        if it[0] == '>':
+            out += arrow(x + 4, x + gap - 4, y + h / 2, it[1], len(it) > 2 and it[2])
+            x += gap
+        else:
+            lines, cls = it
+            out += box(x, y, w, h, lines, cls)
+            x += w
+    return out, x
+
+
 def _jal_cycle():
     """주기 둘. 위는 통상(2~3년), 아래는 할라페뇨(아홉 달). 잘라낸 기능이 다음 판에 붙는 간격이
     곧 욕심의 크기다 — 간격이 길면 무리해서 넣고, 짧으면 덜 넣어도 된다."""
     h = 2 * LH + 22
     parts = head(0, 22, W, '통상 — 다음 세대까지 2~3년')
-    r1, _ = band([(['1세대', '잘라낸 기능'], 'fig-box'), ('>', '2~3년 뒤에나 다시'),
-                  (['2세대', '그때 다시 넣음'], 'fig-box')], 32, h)
+    bw = w_of(['테이프아웃 근접'])
+    r1, _ = eband([(['1세대', '잘라낸 기능'], 'fig-box'), ('>', '2~3년 뒤에나 다시'),
+                   (['2세대', '그때 다시 넣음'], 'fig-box')], 32, h, w=bw)
     parts += r1
     parts += head(0, 32 + h + 34, W, '할라페뇨 — 첫 RTL 에서 테이프아웃까지 아홉 달')
     y2 = 32 + h + 44
-    r2, _ = band([(['1세대', '잘라낸 기능'], 'fig-box'), ('>', '아홉 달'),
-                  (['2세대', '테이프아웃 근접'], 'fig-agent'), ('>', ''),
-                  (['3세대', '구상 중'], 'fig-box')], y2, h)
+    r2, _ = eband([(['1세대', '잘라낸 기능'], 'fig-box'), ('>', '아홉 달'),
+                   (['2세대', '테이프아웃 근접'], 'fig-agent'), ('>', ''),
+                   (['3세대', '구상 중'], 'fig-box')], y2, h, w=bw)
     parts += r2
     return svg(y2 + h + 16, parts,
                '통상은 다음 세대까지 2~3년이라 잘라낸 기능이 그때나 다시 들어가지만, 할라페뇨는 아홉 달 주기라 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이다')
@@ -203,14 +226,15 @@ def _jal_yardstick():
     아래는 할라페뇨(설계팀 → 사용자). 같은 꼴, 칸 하나 차이."""
     h = 2 * LH + 22
     parts = head(0, 22, W, '상용 실리콘 — 잣대는 TCO')
-    r1, _ = band([(['칩 설계팀'], 'fig-box'), ('>', '판다'),
-                  (['AI 랩 ·', '하이퍼스케일러'], 'fig-box'), ('>', '서비스'),
-                  (['사용자'], 'fig-box')], 32, h)
+    bw = w_of(['(OpenAI)'])
+    r1, _ = eband([(['칩 설계팀'], 'fig-box'), ('>', '판다'),
+                   (['AI 랩 ·', '하이퍼스케일러'], 'fig-box'), ('>', '서비스'),
+                   (['사용자'], 'fig-box')], 32, h, w=bw)
     parts += r1
     y2 = 32 + h + 44
     parts += head(0, y2 - 10, W, '할라페뇨 — 잣대는 요청당 에너지 · 마지막 토큰까지 지연')
-    r2, _ = band([(['칩 설계팀', '(OpenAI)'], 'fig-agent'), ('>', '중간 판매자 없음'),
-                  (['사용자'], 'fig-box')], y2, h)
+    r2, _ = eband([(['칩 설계팀', '(OpenAI)'], 'fig-agent'), ('>', '중간 판매자 없음'),
+                   (['사용자'], 'fig-box')], y2, h, w=bw)
     parts += r2
     return svg(y2 + h + 16, parts,
                '상용 실리콘은 설계팀과 사용자 사이에 판매자가 있어 TCO 를 잣대로 삼고, 할라페뇨는 설계팀이 곧 서비스 주체라 요청당 에너지와 지연을 잣대로 삼는다')
@@ -434,15 +458,13 @@ GROK = '2026-08-24-grok-bots-cpu'
 # 값은 전사의 것만 — 40바이트·9K · 13U·칩 72개·30킬로와트 · 150킬로와트. 절감률·성능 비율은 없다.
 
 def _td_logflow():
-    """곱셈을 덧셈으로 — 로그로 들어가 덧셈하고 선형으로 되돌아와 누산한다. 어려운 곳이 되돌아오는 자리."""
-    h = 2 * LH + 22
-    row, _x = band([(['A × B', '곱셈'], 'fig-box'), ('>', ''),
-                    (['로그로 가면', 'log A + log B'], 'fig-agent'), ('>', ''),
-                    (['선형 복귀', '이득 안 반납'], 'fig-outside'), ('>', ''),
-                    (['누산'], 'fig-box')], 30, h)
-    parts = row
-    return svg(30 + h + 16, parts,
-               '곱셈을 로그 영역으로 옮기면 덧셈이 되고, 누산하려면 선형으로 되돌아와야 한다. 되돌아오는 자리에서 이득을 잃지 않는 것이 특허다')
+    """곱셈을 덧셈으로 — 로그로 들어가 덧셈하고 선형으로 되돌아와 누산한다. 어려운 곳이 되돌아오는 자리.
+    가로로 놓으면 「log A + log B」가 다른 칸보다 넓어져 세로 사슬로(2026-09-02)."""
+    return _chain_down([(['A × B — 곱셈'], 'fig-box'),
+                        (['로그로 가면 log A + log B — 덧셈'], 'fig-agent'),
+                        (['선형 복귀 — 이득 안 반납'], 'fig-outside'),
+                        (['누산'], 'fig-box')],
+                       '곱셈을 로그 영역으로 옮기면 덧셈이 되고, 누산하려면 선형으로 되돌아와야 한다. 되돌아오는 자리에서 이득을 잃지 않는 것이 특허다')
 
 
 def _td_fabric():
@@ -478,11 +500,11 @@ def _td_rack():
 def _td_outsource():
     """스타트업이 자기 손으로 하는 것과 남에게 맡긴 것 — 밸류체인 순서대로 다섯 칸, 자기 것 둘만 짙게."""
     h = 2 * LH + 22
-    items = [(['프런트엔드', '설계 — 자기'], 'fig-agent'), ('>', ''),
-             (['물리 설계', 'Broadcom'], 'fig-box'), ('>', ''),
+    items = [(['프런트엔드', '설계 · 자기'], 'fig-agent'), ('>', ''),
+             (['물리 설계', '브로드컴'], 'fig-box'), ('>', ''),
              (['시스템', 'HP주니퍼'], 'fig-box'), ('>', ''),
-             (['양산', 'Flex 페낭'], 'fig-box')]
-    row, _x = band(items, 30, h)
+             (['양산', 'Flex'], 'fig-box')]
+    row, _x = eband(items, 30, h)
     cw = w_of(['컴파일러 — 자기 (엔지니어 60% 이상이 소프트웨어)'])
     parts = row + box((W - cw) / 2, 30 + h + 18, cw, 40, ['컴파일러 — 자기 (엔지니어 60% 이상이 소프트웨어)'], 'fig-agent')
     parts += legend([('fig-agent', '자기 손으로 한다'), ('fig-box', '남의 것을 쓴다')], 30 + h + 76)
@@ -533,10 +555,10 @@ def _op_chain():
     급소인 조립만 짙게. 두 층만 뽑으면 층 셋으로 읽혀서 전체를 그린다(2026-09-02)."""
     h = 3 * LH + 22
     # 사슬은 넷 다 그리고, 이 절이 말하는 두 단(광원·조립)만 짙게
-    row, _x = band([(['부품', 'DSP·TIA', '미국'], 'fig-box'), ('>', ''),
-                    (['고부가 광원 부품', 'Lumentum', 'Coherent'], 'fig-agent'), ('>', ''),
-                    (['조립 · 중국', '약 50%', '27~34%'], 'fig-agent'), ('>', ''),
-                    (['구축', 'Azure 등'], 'fig-box')], 30, h)
+    row, _x = eband([(['부품·미국', 'DSP', 'TIA'], 'fig-box'), ('>', ''),
+                     (['광원 부품', '루멘텀', '코히런트'], 'fig-agent'), ('>', ''),
+                     (['조립·중국', '약 50%', '27~34%'], 'fig-agent'), ('>', ''),
+                     (['구축', 'Azure'], 'fig-box')], 30, h)
     parts = row + legend([('fig-agent', '이 절이 말하는 두 단')], 30 + h + 16)
     return svg(30 + h + 42, parts,
                '광트랜시버 밸류체인은 미국 부품에서 광원, 중국 조립을 거쳐 하이퍼스케일러 구축으로 간다. 이 절이 말하는 두 단은 광원과 조립이다')
@@ -547,14 +569,15 @@ def _op_fork():
     h = 2 * LH + 22
     tw = w_of(['금지안 발표 — 되돌릴 수 있는 결정'])
     parts = box((W - tw) / 2, 24, tw, 44, ['금지안 발표 — 되돌릴 수 있는 결정'], 'fig-stage')
-    lw, rw = w_of(['증설한다', '건물·장비·라인']), w_of(['기다린다', '공급이 빈다'])
+    lw = rw = max(w_of(['증설한다', '건물·장비·라인']), w_of(['기다린다', '공급이 빈다']),
+                  w_of(['몇 달 뒤 뒤집히면', '설비가 통째로 남는다']))  # 갈래 상자는 한 폭(2026-09-02)
     lx, rx = 60.0, W - 60.0 - rw
     y2 = 24 + 44 + 40
     parts += vline(W / 2, 68, 88, arrow_=False) + hline(lx + lw / 2, rx + rw / 2, 88)
     parts += vline(lx + lw / 2, 88, y2 - 2) + vline(rx + rw / 2, 88, y2 - 2)
     parts += box(lx, y2, lw, h, ['증설한다', '건물·장비·라인'], 'fig-outside')
     parts += box(rx, y2, rw, h, ['기다린다', '공급이 빈다'], 'fig-agent')
-    nw = w_of(['몇 달 뒤 뒤집히면', '설비가 통째로 남는다'])
+    nw = lw
     parts += box(lx + lw / 2 - nw / 2, y2 + h + 22, nw, h, ['몇 달 뒤 뒤집히면', '설비가 통째로 남는다'], 'fig-outside')
     parts += vline(lx + lw / 2, y2 + h + 2, y2 + h + 20)
     return svg(y2 + 2 * h + 36, parts,
@@ -564,8 +587,8 @@ def _op_fork():
 def _op_finance():
     """앤스로픽이 Nvidia GPU 를 더 확보하려고 꿴 부품 넷 — 왼쪽에서 오른쫽으로, 끝에 낮은 금리."""
     h = 2 * LH + 22
-    row, _x = band([(['Nvidia', '할당'], 'fig-box'), ('>', ''), (['전력'], 'fig-box'), ('>', ''),
-                    (['운영', 'Bitdeer 류'], 'fig-box'), ('>', ''), (['깨끗한', '재무제표 Volta'], 'fig-agent')], 30, h)
+    row, _x = eband([(['Nvidia', '할당'], 'fig-box'), ('>', ''), (['전력'], 'fig-box'), ('>', ''),
+                     (['운영', '비트디어'], 'fig-box'), ('>', ''), (['재무제표', 'Volta'], 'fig-agent')], 30, h)
     parts = row
     return svg(30 + h + 16, parts,
                'GPU 를 더 원하면 Nvidia 할당·전력·운영할 사람·담보가 될 재무제표 넷이 필요하다. 채굴 업체는 운영은 하되 장부에 부채를 못 얹고, Volta 가 판 것은 아직 아무것도 안 적힌 장부다')
@@ -614,9 +637,9 @@ def _cds_rank():
 def _cds_litho():
     """이머전 DUV 로 어디까지 가나 — 가로 흐름. 단일 노광 28나노 → 멀티패터닝 7나노(한계) → 2나노는 EUV."""
     h = 2 * LH + 22
-    row, _x = band([(['단일 노광', '28나노'], 'fig-agent'), ('>', ''),
-                    (['멀티패터닝', '7나노 — 한계'], 'fig-agent'), ('>', ''),
-                    (['2나노', 'EUV 가 필요'], 'fig-outside')], 30, h)
+    row, _x = eband([(['단일 노광', '28나노'], 'fig-agent'), ('>', ''),
+                     (['멀티패터닝', '7나노 — 한계'], 'fig-agent'), ('>', ''),
+                     (['2나노', 'EUV 가 필요'], 'fig-outside')], 30, h)
     parts = row + legend([('fig-agent', '이머전 DUV 로 닿는 곳'), ('fig-outside', '못 닿는 곳')], 30 + h + 16)
     return svg(30 + h + 42, parts,
                '이머전 DUV 는 한 번 노광으로 28나노, 멀티패터닝으로 7나노까지 가고 거기가 한계다. 2나노는 EUV 가 필요하다')
@@ -684,12 +707,12 @@ def _pj_array():
 
 def _pj_chain():
     """광소자 밸류체인 끝에서 끝까지 — PicoJool 이 맡는 설계만 짙게."""
-    h = 2 * LH + 22
-    row, _x = band([(['설계', 'PicoJool'], 'fig-agent'), ('>', ''),
-                    (['에피', '웨이퍼'], 'fig-box'), ('>', ''),
-                    (['웨이퍼 공정', 'WIN'], 'fig-box'), ('>', ''),
-                    (['다이싱'], 'fig-box'), ('>', ''),
-                    (['모듈 통합', '파트너'], 'fig-box')], 30, h)
+    h = 3 * LH + 22
+    row, _x = eband([(['설계'], 'fig-agent'), ('>', ''),
+                     (['에피', '웨이퍼'], 'fig-box'), ('>', ''),
+                     (['웨이퍼', '공정', 'WIN'], 'fig-box'), ('>', ''),
+                     (['다이싱'], 'fig-box'), ('>', ''),
+                     (['모듈', '통합', '파트너'], 'fig-box')], 30, h)
     parts = row + legend([('fig-agent', 'PicoJool 이 하는 것')], 30 + h + 16)
     return svg(30 + h + 42, parts,
                '설계에서 모듈까지 다섯 단 중 PicoJool 이 맡는 것은 설계(에피 층과 캐비티)뿐이다. 웨이퍼 공정은 대만 WIN, 모듈은 통합 파트너가 한다')
@@ -867,9 +890,9 @@ def _al_gen():
     """PCIe 세대 — 초당 기가전송. Gen6 가 블랙웰 세대에 들어간 것, Gen7 은 앞으로."""
     h = 2 * LH + 22
     parts = head(0, 22, W, '초당 기가전송')
-    row, _x = band([(['Gen5', '32'], 'fig-box'), ('>', ''),
-                    (['Gen6', '64 · PAM4'], 'fig-agent'), ('>', ''),
-                    (['Gen7', '128'], 'fig-outside')], 36, h)
+    row, _x = eband([(['Gen5', '32'], 'fig-box'), ('>', ''),
+                     (['Gen6', '64 · PAM4'], 'fig-agent'), ('>', ''),
+                     (['Gen7', '128'], 'fig-outside')], 36, h)
     parts += row + legend([('fig-agent', '블랙웰 세대'), ('fig-outside', '앞으로')], 36 + h + 16)
     return svg(36 + h + 42, parts, 'PCIe Gen5 는 초당 32기가전송, Gen6 는 64 에 PAM4, Gen7 은 128 이다')
 
