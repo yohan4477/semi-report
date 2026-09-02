@@ -385,6 +385,12 @@ def main():
     ledger = load_ledger()
     total_pages = 0
     for src, slug, _title, _emoji, _desc, _locked in PAGES:
+        if not (SRC / src).exists():
+            # 생성기는 커밋됐는데 산출물이 안 올라온 장이 있으면 그 장만 빠진다. 전에는
+            # 여기서 FileNotFoundError 로 죽어 사이트 전체 배포가 세 시간 멈췄다
+            # (2026-09-02, M&A 장). 빠진 장은 눈에 띄게 적는다
+            print(f'  !! 없음 — 건너뜀: {src}  (산출물이 커밋되지 않았다)')
+            continue
         html = rewrite_links((SRC / src).read_text(encoding='utf-8'))
         html, fresh = mark_new(html, ledger.get(slug, {}))
         (OUT / f'{slug}.html').write_text(html + BADGE_BITS, encoding='utf-8')
