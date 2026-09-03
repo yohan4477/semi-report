@@ -28,18 +28,12 @@ STAMP = '2026-09-03'
 # (content 아래 폴더, 도해 패키지, 원문 라벨)
 SOURCES = [('scaling-book', 'sb_figs', 'How To Scale Your Model')]
 
-# 섹션은 책의 읽는 순서다. 다른 원문이 들어오면 그 원문의 갈래를 아래에 잇는다.
+# 섹션은 원문 하나에 하나다. 책 한 권이 타일 하나이고 안에서는 장 순서로 선다 —
+# 주제로 다섯에 갈랐더니(2026-09-03) 열세 장이 셋넷씩 흩어져 책의 순서가 안 보였다.
+# 다른 원문이 들어오면 SOURCES 에 폴더를 더하고 여기에 타일 한 줄을 더한다.
 SEC = {
-    'basics':   ('sec-basics', '01', '하드웨어와 루프라인',
-                 '연산·메모리·통신 셋 중 무엇이 시간을 먹나. TPU·GPU가 각각 어떻게 생겼나'),
-    'parallel': ('sec-parallel', '02', '샤딩과 트랜스포머 계산',
-                 '행렬을 칩 여럿에 어떻게 자르나. 트랜스포머 한 층이 FLOPs와 바이트를 얼마나 쓰나'),
-    'train':    ('sec-train', '03', '학습 병렬화',
-                 '데이터·텐서·파이프라인·전문가 병렬을 언제 섞나. LLaMA 3를 TPU에서 굴리면'),
-    'infer':    ('sec-infer', '04', '추론과 서빙',
-                 '프리필과 디코드가 왜 다르게 묶이나. KV 캐시가 어디까지 커지나'),
-    'tools':    ('sec-tools', '05', '프로파일링 · JAX · 맺음',
-                 '어디서 시간이 새는지 보는 법, JAX로 샤딩을 적는 법, 책이 남긴 것'),
+    'scaling-book': ('sec-scaling-book', '01', 'How To Scale Your Model',
+                     'JAX 스케일링 북 — 루프라인·TPU·GPU·샤딩·학습·추론·프로파일링 열세 장을 책 순서로'),
 }
 
 
@@ -73,8 +67,6 @@ def build():
             meta, items, verdict = aie.parse_report(path, slug, figs=figs)
             why = ('본문 없음' if not items else
                    '한줄 코멘트 없음' if not verdict else
-                   'section 열쇠말이 SEC에 없다: %r' % meta.get('section')
-                   if meta.get('section') not in SEC else
                    'gain 없음' if not meta.get('gain') else
                    '도해 없음' if not any(k == 'fig' for k, _ in items) else '')
             if why:
@@ -82,8 +74,8 @@ def build():
                 continue
             part = int(meta.get('part', '0'))
             cards.append({
-                'section': SEC[meta['section']],
-                'topic': ('market', meta.get('topic') or SEC[meta['section']][2]),
+                'section': SEC[folder],
+                'topic': ('market', meta.get('topic') or SEC[folder][2]),
                 'title': meta.get('title') or fn[:-3],
                 'gain': meta['gain'],
                 'meta': ['%s <b>Part %d</b>' % (label, part),
