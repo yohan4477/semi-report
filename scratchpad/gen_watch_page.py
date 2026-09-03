@@ -132,6 +132,24 @@ def _reg_info(gu):
     return adj, hot
 
 
+def _cap_info(gu):
+    """민간택지 분양가상한제 (값, 상세). 규제지역과 별개 지정이라 층이 따로다 —
+    서울이 전역 투기과열지구가 된 뒤에도 이 층만 넷과 스물하나로 갈린다."""
+    e = (ZONES.get('분양가상한제', {}).get('gu', {}) or {}).get(gu) or {}
+    return e.get('value'), e.get('detail')
+
+
+def _cap_counts():
+    """적용·미적용·확인 안 됨. 손으로 안 센다 — _zones.json 이 바뀌면 화면이 따라간다."""
+    vals = [_cap_info(g)[0] for g in SEOUL_GU['gu']]
+    return (vals.count(True), vals.count(False),
+            sum(1 for v in vals if v is None))
+
+
+def _cap_names():
+    return sorted(g for g in SEOUL_GU['gu'] if _cap_info(g)[0] is True)
+
+
 def _reg_bin(adj, hot):
     """규제지역 채움 칸 — both(둘 다 지정)·one(하나만)·none(둘 다 해제)·null(모름)."""
     if adj is None or hot is None:
@@ -282,6 +300,12 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .hero{margin:28px 0 0}
 .hero-t{font-size:15px;font-weight:600;margin:0}
 /* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
+/* 층 버튼 — 구마다 갈리는 값만 층으로 그린다. 25구가 전부 같은 범주인 것(토허·
+   규제)은 지도가 아니라 아래 배너 문장이다 */
+.layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
@@ -298,12 +322,17 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
 .seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
-.seoul-map .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
-.seoul-map .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
-.seoul-map .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
-.seoul-map .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
-.seoul-map .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
-.seoul-map .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
+.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
+/* 분양가상한제 층 — 넷과 스물하나로 갈린다. 적용만 색을 얹고 나머지는 빈 칸이다
+   (서울 전체를 먹 단색으로 안 칠한다 — 그래서 토허·규제 층을 걷었었다) */
+.seoul-map[data-layer="cap"] .gu[data-cap="yes"]{fill:var(--seq-4);
+  stroke:var(--surface);stroke-width:1.5px}
+.seoul-map[data-layer="cap"] .gu[data-cap="null"]{fill:url(#hatch-line)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
 .gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
@@ -415,6 +444,12 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .chg-2{flex:0 0 100%;font-size:.85rem;color:var(--ink-2);margin:3px 0 0}
 /* 절 제목 옆 잔글씨 — 열마다 되풀이되는 상수(마지막 확인 날짜)를 한 번만 적는다 */
 .band-note{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
+/* 청약 — 조건 표 셋. 표 제목은 절 제목과 같은 무게(15px 600)로, 「근거」 칸은
+   잔글씨로 내린다 — 조문 번호가 조건과 같은 크기로 서면 무엇이 답인지 흐려진다 */
+.cond-t{font-size:15px;font-weight:600;margin:22px 0 0}
+.cond-lead{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
+.cond-tail{font-size:12.5px;color:var(--ink-3);margin:8px 0 0;max-width:66ch}
+.t-why{font-size:12.5px;color:var(--ink-3)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -512,7 +547,9 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .stat-v{font-size:24px}
   .stat-d{font-size:14px}
   .delta{font-size:13px}
-  /* 지도 히어로 — 지도 → 패널 순으로 세로 편다 */
+  /* 지도 히어로 — 층 버튼 줄 → 지도 → 패널 순으로 세로 편다 */
+  .layer-btns{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .layer-btns::-webkit-scrollbar{display:none}
   .maprow{flex-direction:column}
   .mapcol{flex:0 0 auto;width:100%}
   /* viewBox 안이라 SVG 좌표계 기준으로 올려야 화면에서 13px 안팎으로 보인다 */
@@ -578,6 +615,86 @@ def _delta_num(d, unit=''):
     cls = 'd-up' if d > 0 else 'd-down'
     return ('<span class="delta %s">%s%.2f%s</span>'
             % (cls, '+' if d > 0 else '−', abs(d), E(unit)))
+
+
+_H3_RE = re.compile(r'^###\s+(.+?)\s*$', re.M)
+
+
+def _md_table(block):
+    """마크다운 표에서 (머리, 몸통). watch_lib.table_rows() 는 트리거·이력 표의
+    머리만 알아서(그 둘의 첫 칸 이름으로 잰다) 여기서는 못 쓴다 — 조건 표는 머리
+    이름이 표마다 다르다."""
+    rows = []
+    for ln in block.splitlines():
+        ln = ln.strip()
+        if not ln.startswith('|'):
+            continue
+        cells = [c.strip() for c in ln.strip('|').split('|')]
+        if set(''.join(cells)) <= set('-: '):
+            continue
+        rows.append(cells)
+    return (rows[0], rows[1:]) if rows else ([], [])
+
+
+def cond_blocks(w):
+    """「## 조건」 절을 ### 소제목으로 다시 가른다.
+
+    watch_lib.sections() 는 ## 로만 가르니 표 셋이 한 덩어리로 온다. 그 안을
+    ### 로 다시 갈라 표마다 (제목, 머리글, 표 머리, 표 몸통, 꼬리글)로 낸다.
+    절이 없는 줄은 빈 목록이라 아무것도 안 그려진다 — 정책 줄 여섯 중 청약만
+    이 절을 갖는다.
+
+    반환: (절 머리 문장, [(제목, 머리글, head, rows, 꼬리글), …])."""
+    p = os.path.join(ROOT, w.get('path') or '')
+    if not w.get('path') or not os.path.exists(p):
+        return '', []
+    with io.open(p, encoding='utf-8') as f:
+        _meta, body = wl.nl.parse_front(f.read())
+    block = wl.sections(body).get('조건', '')
+    if not block:
+        return '', []
+    hits = list(_H3_RE.finditer(block))
+    lead = (block[:hits[0].start()] if hits else block).strip()
+    out = []
+    for i, m in enumerate(hits):
+        end = hits[i + 1].start() if i + 1 < len(hits) else len(block)
+        seg = block[m.end():end]
+        head, rows = _md_table(seg)
+        pre, post, seen = [], [], False
+        for ln in seg.splitlines():
+            t = ln.strip()
+            if t.startswith('|'):
+                seen = True
+            elif t:
+                (post if seen else pre).append(t)
+        out.append((m.group(1), ' '.join(pre), head, rows, ' '.join(post)))
+    return lead, out
+
+
+def cond_html(w, more=''):
+    """조건 표 셋 — 본 장의 「청약 — 조건」 절과 그 줄의 상세가 같은 조각을 쓴다.
+    같은 표를 두 자리에서 따로 그리면 한쪽만 고치고 다른 쪽을 잊는다."""
+    lead, blocks = cond_blocks(w)
+    if not blocks:
+        return ''
+    h = ['<p class="cond-lead">%s</p>' % wl.md_inline(lead)] if lead else []
+    for title, pre, head, rows, post in blocks:
+        if not rows:
+            continue
+        # 「근거」 칸은 잔글씨로 내린다 — 조문 번호가 조건과 같은 무게로 서면
+        # 무엇이 답인지 흐려진다
+        body = [['<span class="t-why">%s</span>' % wl.md_inline(c)
+                 if (i < len(head) and head[i] == '근거') else wl.md_inline(c)
+                 for i, c in enumerate(r)] for r in rows]
+        h.append('<p class="cond-t">%s</p>' % E(title))
+        if pre:
+            h.append('<p class="cond-tail">%s</p>' % wl.md_inline(pre))
+        h.append(tbl('', head, body))  # noqa: E501 — 제목은 위에서 따로 세웠다
+        if post:
+            h.append('<p class="cond-tail">%s</p>' % wl.md_inline(post))
+    if more:
+        h.append(more)
+    return ''.join(h)
 
 
 def _idx_of(w):
@@ -691,9 +808,12 @@ def tbl(cap, head, rows):
         cells = ''.join('<td data-th="%s">%s</td>' % (E(head[i]) if i < len(head) else '', c)
                         for i, c in enumerate(r))
         body.append('<tr>%s</tr>' % cells)
-    return ('<p class="lbl">%s</p><div class="tw"><table><thead><tr>%s</tr></thead>'
+    # cap 이 비면 제목 문단을 안 낸다 — 조건 표는 제목을 절 제목 무게(cond-t)로
+    # 따로 세우고 그 사이에 보충 문장이 들어간다
+    head_p = '<p class="lbl">%s</p>' % E(cap) if cap else ''
+    return ('%s<div class="tw"><table><thead><tr>%s</tr></thead>'
             '<tbody>%s</tbody></table></div>'
-            % (E(cap), ''.join('<th>%s</th>' % E(h) for h in head), ''.join(body)))
+            % (head_p, ''.join('<th>%s</th>' % E(h) for h in head), ''.join(body)))
 
 
 def tag(state):
@@ -1089,6 +1209,23 @@ def law_summary(watches):
     return ''.join(h)
 
 
+def subscription_section(watches):
+    """본 장의 「청약 — 조건」 절. 조건 표를 가진 정책 줄(지금은 청약 제도 하나)의
+    표를 그대로 낸다.
+
+    이 절만 본 장에 표를 둔다. 나머지 표는 전부 상세(watch/)로 옮겼는데, 청약
+    조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더 열게 하지 않는다.
+    값은 md 표에서만 온다 — 청약홈 공고·경쟁률은 열쇠가 없어 아무것도 안 넣는다."""
+    for w in sorted(watches, key=lambda x: x['slug']):
+        if not cond_blocks(w)[1]:
+            continue
+        more = ('<p class="lbl"><a href="watch/%s.html">%s 자세히 →</a></p>'
+                % (w['slug'], E(w['target'])))
+        return ('<div class="band" id="subscription"><p class="band-t">청약 — 조건</p>%s</div>'
+                % cond_html(w, more))
+    return ''
+
+
 def figures_lists(w):
     """도해 목록 — (우선순위, HTML) 짝. series 가 든 metric 만 그린다 — 어댑터가
     안 채운 자리에는 아무것도 안 선다.
@@ -1277,6 +1414,11 @@ def line_block(w):
         h.append('<div id="now">%s</div>' % strip)
     h.append('<div id="judge"><p class="line-judge">%s</p>%s</div>'
              % (w['judged'], trig[0] if trig else ''))
+    # 「조건」 — 판단 바로 다음이다. 이 줄을 여는 이유가 「지금 신청할 수 있나」라
+    # 판단 한 마디 다음에 곧장 그 표가 서야 한다
+    cond = cond_html(w)
+    if cond:
+        h.append('<div id="cond"><p class="lbl">조건</p>%s</div>' % cond)
     if w['clash']:
         h.append('<div id="clash"><p class="lbl">반대 근거</p><ul class="pts">%s</ul></div>'
                  % ''.join('<li>%s</li>' % c for c in w['clash']))
@@ -1320,8 +1462,9 @@ def _detail_jump(w):
     """상세의 절 바로가기 — 있는 절만. 6,300px 짜리 페이지에서 「반대 근거만 보고
     싶다」가 스크롤 노동이 되면 안 된다."""
     body = line_block(w)
-    items = [('now', '지금 값'), ('judge', '판단'), ('clash', '반대 근거'),
-             ('hist', '이력'), ('more', '값 더'), ('where', '확인처')]
+    items = [('now', '지금 값'), ('judge', '판단'), ('cond', '조건'),
+             ('clash', '반대 근거'), ('hist', '이력'), ('more', '값 더'),
+             ('where', '확인처')]
     got = [(i, t) for i, t in items if ('id="%s"' % i) in body]
     if len(got) < 2:
         return body, ''
@@ -1479,6 +1622,28 @@ def _ratio_legend_html(watches):
             % (strip, labels, len(blanks), E(names), ratio_ruler_fig(watches)))
 
 
+def _cap_legend_html():
+    """분양가상한제 층의 범례 — 적용 구 이름을 다 적는다(넷뿐이라 든다). 수가 0인
+    줄은 안 낸다 — 자리만 먹는 「0구」 줄이 범례를 늘린다."""
+    n_cap, n_no, n_null = _cap_counts()
+    z = ZONES.get('분양가상한제', {})
+    names = '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names())
+    rows = []
+    if n_cap:
+        rows.append('<p class="leg-item"><span class="leg-sw" '
+                    'style="background:var(--seq-4)"></span> 적용 — %d구: %s</p>'
+                    % (n_cap, E(names)))
+    if n_no:
+        rows.append('<p class="leg-item"><span class="leg-sw" style="background:var(--paper);'
+                    'border:1px solid var(--line)"></span> 미적용 — %d구</p>' % n_no)
+    if n_null:
+        rows.append('<p class="leg-item"><span class="leg-sw leg-hatch-line"></span> '
+                    '확인 안 됨 — %d구</p>' % n_null)
+    return (''.join(rows) + '<p class="leg-src">민간택지 기준입니다. 공공택지는 지역 지정과 '
+            '상관없이 적용됩니다. 기준 %s · %s</p>'
+            % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
+
+
 def _zone_age_chip(as_of, today):
     """여섯 달 넘게 안 바뀐 기준일에는 나이를 붙인다. 머리의 「자료 기준 2026-07」과
     같은 무게로 읽히면 값의 나이가 열 배 차이 나는 것이 안 보인다."""
@@ -1504,9 +1669,17 @@ def _zone_banner(today):
     reg_txt = ('%d구 둘 다 지정' % total if cnt['both'] == total
                else '둘 다 지정 %d구 · 하나만 %d구 · 둘 다 해제 %d구 · 확인 안 됨 %d구'
                % (cnt['both'], cnt['one'], cnt['none'], cnt['null']))
+    # 분양가상한제는 층으로도 그리지만(구마다 갈린다) 「몇 구인가」는 배너가 낸다
+    n_cap, _n_no, n_cnull = _cap_counts()
+    cap_txt = ('%d구 적용 (%s)'
+               % (n_cap, '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names()))
+               if n_cap else '적용되는 구 없음')
+    if n_cnull:
+        cap_txt += ' · 확인 안 됨 %d구' % n_cnull
     rows = []
     for label, txt, z in (('토지거래허가구역', lth_txt, ZONES.get('토지거래허가구역', {})),
-                          ('규제지역', reg_txt, ZONES.get('조정대상지역', {}))):
+                          ('규제지역', reg_txt, ZONES.get('조정대상지역', {})),
+                          ('분양가상한제', cap_txt, ZONES.get('분양가상한제', {}))):
         as_of = z.get('as_of') or '—'
         rows.append('<p class="zb-row"><span class="zb-k">%s</span>'
                     '<span class="zb-v">%s</span>'
@@ -1533,13 +1706,22 @@ def _gu_svg(gu_data):
     (_zone_banner)가 그 문장을 대신한다. 구마다 갈리는 날 층을 되살린다 — 그때
     색은 --seq-4 / hatch / --surface 3단으로 하고, 서울 전체를 먹으로 안 칠한다."""
     vb = SEOUL_GU['viewBox']
+    # 「확인 안 됨」 칸의 옅은 빗금. 지금은 0구지만 지정 공고가 PDF 로만 나와
+    # 못 받는 날이 있다 — 그때 빈 칸과 구분이 되어야 한다
+    defs = ('<defs><pattern id="hatch-line" width="6" height="6" '
+            'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+            '<rect width="6" height="6" fill="var(--paper)"/>'
+            '<path d="M0 0L0 6" stroke="var(--line)" stroke-width="2"/></pattern></defs>')
     paths, labels = [], []
     for name in sorted(SEOUL_GU['gu']):
         g = SEOUL_GU['gu'][name]
         e = gu_data[name]
         watched = bool(e['jeonse'])
         label = ('전세가율 %.1f%%' % e['jeonse']['cur']) if watched else '보고 있지 않은 구'
-        attrs = ['class="gu"', 'data-gu="%s"' % E(name)]
+        cap_v = _cap_info(name)[0]
+        attrs = ['class="gu"', 'data-gu="%s"' % E(name),
+                 'data-cap="%s"' % ('yes' if cap_v is True
+                                    else 'no' if cap_v is False else 'null')]
         if watched:
             attrs += ['tabindex="0"', 'role="button"',
                       'data-ratio-bin="%d"' % _ratio_bin(e['jeonse']['cur'])]
@@ -1557,9 +1739,9 @@ def _gu_svg(gu_data):
         cls = 'gu-lbl' if watched else 'gu-lbl blank'
         labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle">%s</text>'
                       % (g['cx'], g['cy'], cls, E(name)))
-    return ('<svg class="seoul-map" viewBox="%d %d %d %d">%s'
+    return ('<svg class="seoul-map" data-layer="ratio" viewBox="%d %d %d %d">%s%s'
             '<g class="gu-labels">%s</g></svg>'
-            % (vb[0], vb[1], vb[2], vb[3], ''.join(paths), ''.join(labels)))
+            % (vb[0], vb[1], vb[2], vb[3], defs, ''.join(paths), ''.join(labels)))
 
 
 def _region_summary_html(watches):
@@ -1710,6 +1892,17 @@ def _gu_panel_html(name, e):
     reg_as_of = ZONES.get('조정대상지역', {}).get('as_of') or '—'
     h.append('<p class="gp-row"><span class="gp-lbl">규제지역</span>%s · %s 기준</p>'
              % (E(_reg_row_text(e)), E(reg_as_of)))
+    # 분양가상한제 — 규제지역과 별개 지정이라 같은 구에서 답이 갈린다. 적용 주택은
+    # 재당첨 제한이 10년으로 가장 길다(청약 제도 줄의 「당첨 뒤 제한」 표)
+    cap_v, cap_d = _cap_info(name)
+    cap_as_of = ZONES.get('분양가상한제', {}).get('as_of') or '—'
+    cap_txt = ('적용 · %s 기준' % cap_as_of if cap_v is True
+               else '미적용' if cap_v is False else '확인 안 됨')
+    h.append('<p class="gp-row"><span class="gp-lbl">분양가상한제</span>%s</p>' % E(cap_txt))
+    # 원 지정이 동 단위였는데 그 목록을 못 열었다 — 구 전역으로 읽으면 안 된다
+    if cap_d and '확인 못 함' in cap_d:
+        h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
+                 % E(cap_d[:40]))
     if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
@@ -1819,6 +2012,18 @@ document.addEventListener('click',function(e){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&locked){locked=null;apply(null);}
 });
+/* 층 전환 — <svg> 의 data-layer 하나만 바꾸고 채움은 CSS 가 고른다. 패널은 안
+   건드린다: 「강남구가 지금 어떤가」는 층과 무관하게 같은 답이다 */
+Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
+  b.addEventListener('click',function(){
+    svg.setAttribute('data-layer',b.dataset.layer);
+    Array.from(document.querySelectorAll('.layer-btn')).forEach(function(x){
+      var on=(x===b);x.classList.toggle('is-on',on);
+      x.setAttribute('aria-pressed',on?'true':'false');});
+    Array.from(document.querySelectorAll('.map-legend')).forEach(function(x){
+      x.hidden=x.dataset.legend!==b.dataset.layer;});
+  });
+});
 })();
 </script>"""
 
@@ -1863,16 +2068,24 @@ def seoul_map_section(watches, asof, checked):
              ('<div class="gu-panel" data-panel="default">%s</div>'
               % _region_summary_html(watches))
     cap = '<p>지도 원본 southkorea/seoul-maps · 값 기준 %s</p>' % E(asof)
+    # 층 둘 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라
+    # 층에서 내려 배너 문장으로 갔고, 분양가상한제는 넷과 스물하나로 갈려 층이 된다
+    btns = ('<div class="layer-btns" role="group" aria-label="지도 층">'
+            '<button type="button" class="layer-btn is-on" data-layer="ratio" '
+            'aria-pressed="true">전세가율</button>'
+            '<button type="button" class="layer-btn" data-layer="cap" '
+            'aria-pressed="false">분양가상한제</button></div>')
     return (
-        '<p class="hero-t">서울 25구 — 지금 전세가율이 어디쯤인가</p>'
+        '<p class="hero-t">서울 25구 — 지금 전세가율이 어디쯤인가</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
         '<div class="mappanel" aria-live="polite" aria-atomic="true">%s'
-        '<div class="map-legend">%s</div>'
+        '<div class="map-legend" data-legend="ratio">%s</div>'
+        '<div class="map-legend" data-legend="cap" hidden>%s</div>'
         '</div></div>%s'
-        % (svg, cap, _zone_banner(checked), changed_section(watches),
-           panels, _ratio_legend_html(watches), _MAP_JS))
+        % (btns, svg, cap, _zone_banner(checked), changed_section(watches),
+           panels, _ratio_legend_html(watches), _cap_legend_html(), _MAP_JS))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -1886,8 +2099,10 @@ _JARGON = ('때 자', '<th>성격</th>', '<th>언제 것</th>')
 # 나온다(예: 임대차 제도 줄의 verdict 「전세 계약의 조건」, 법 표의 「같은가」
 # 열은 법 개정 여부를 걸림/같다로 말한다 — 이건 다른 개념이라 남긴다). 대신 옛
 # 트리거 UI 만 만들던 자국(칩 클래스·범례·표 열 머리·백테스트 문구)의 부재로 잰다.
-_COND_CHROME = ('class="chip-legend"', '<th>걸리면</th>', '<th>조건</th>',
-                'class="tag t-near"', 'class="tag t-clear"')
+# 표 열 이름(<th>조건</th>·<th>걸리면</th>)으로 재던 것은 걷었다 — 청약 줄의
+# 「1순위 요건」·「당첨 뒤 제한」 표가 「조건」을 정당한 열 이름으로 쓴다. 옛 트리거
+# UI 는 클래스 자국(칩·범례)으로만 잰다. 절 제목 「조건」도 허용이다.
+_COND_CHROME = ('class="chip-legend"', 'class="tag t-near"', 'class="tag t-clear"')
 _HIST_RE = re.compile(r'이력\s*\d+(개월|달|년|분기|점)\s*중\s*\d+번')
 
 
@@ -1920,19 +2135,25 @@ def check_ui(html, watches):
         '규약 위반: 지도 히어로(#map)가 첫 화면(제도보다 먼저)이어야 한다'
     assert 0 < at_changed < at_policy, \
         '규약 위반: 「달라진 것」(#changed)이 제도보다 먼저 서야 한다 — 매달 다시 여는 이유다'
-    # 층 버튼은 걷었다. 25구가 전부 같은 범주인 층을 지도로 그리면 서울 전체가 먹
-    # 단색이 되고 얻는 정보는 문장 하나다 — 그 문장을 상태 배너가 낸다
-    assert 'layer-btn' not in html and 'data-layer' not in html, \
-        '규약 위반: 층 버튼을 두지 않는다 — 구마다 갈리는 값만 지도로 그린다'
+    # 층은 구마다 갈리는 값만 그린다. 25구가 전부 같은 범주인 것(토허·규제)은 지도가
+    # 아니라 배너 문장이고, 갈리는 것(전세가율·분양가상한제)만 버튼이 된다
+    assert 'class="layer-btn' in html and 'aria-pressed' in html, \
+        '규약 위반: 층 버튼에 aria-pressed 가 없다 — 어느 층이 켜졌는지가 안 전해진다'
     assert 'class="zone-banner"' in html, \
-        '규약 위반: 지정 현황 상태 배너가 없다 — 층을 걷었으면 그 값이 문장으로 서야 한다'
+        '규약 위반: 지정 현황 상태 배너가 없다 — 층에서 내린 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
     n_fig = html.count('<figure')
     assert n_fig == 3, \
         '규약 위반: 본 장의 <figure 는 지도 + 전세가율 자 + 자료 기준 자 셋이어야 한다 (%d개)' % n_fig
+    # 본 장의 표는 「청약 — 조건」 절 안에만 둔다. 나머지는 전부 상세(watch/)로
+    # 옮겼는데, 청약 조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더
+    # 열게 하지 않는다 — 그 예외가 다른 절로 새지 않게 자리까지 잰다
     n_tbl = html.count('<table')
-    assert n_tbl == 0, \
-        '규약 위반: 본 장에 표를 두지 않는다 — 표는 상세(watch/)로 옮겼다 (%d개)' % n_tbl
+    at_sub = html.find('id="subscription"')
+    inside = html[at_sub:html.find('id="lines"')] if at_sub > 0 else ''
+    assert n_tbl <= 3, '규약 위반: 본 장의 표는 셋 이하여야 한다 (%d개)' % n_tbl
+    assert n_tbl == inside.count('<table'), \
+        '규약 위반: 본 장의 표는 「청약 — 조건」 절 안에만 둔다'
     assert 'scratchpad/' not in html.split('<footer>')[-1].split('</footer>')[0], \
         '규약 위반: 푸터에 내부 파일 경로를 내지 않는다 — 주석으로 내린다'
     for term in _JARGON:
@@ -2011,7 +2232,8 @@ def build():
     # 흡수했다). 「지도」 하나로 판단한다.
     h.append('<nav class="jump" aria-label="절 바로가기">'
              '<a href="#map">지도</a><a href="#changed">달라진 것</a>'
-             '<a href="#policy">제도</a><a href="#lines">보고 있는 것</a>'
+             '<a href="#policy">제도</a><a href="#subscription">청약</a>'
+             '<a href="#lines">보고 있는 것</a>'
              '<a href="#basis">자료 기준</a></nav>')
 
     # 지도가 첫 화면이고 정보는 지도에서 나온다(사용자 지시 2026-09-03) — 전세가율
@@ -2023,6 +2245,8 @@ def build():
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
+
+    h.append(subscription_section(ws))
 
     h.append('<div class="band" id="lines"><p class="band-t">보고 있는 것 %d%s</p>%s</div>'
              % (len(ws), _checked_note(ws), line_summary_rows(ws)))
