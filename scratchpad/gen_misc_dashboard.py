@@ -120,5 +120,5 @@ if __name__ == '__main__':
               '  페이지 생성은 <code>scratchpad/gen_misc_dashboard.py</code>'
               '(공용 부품 <code>dash_common.py</code>, 보고서 파서 <code>gen_aie_dashboard.py</code>).')
     dc.render(CARDS, '기타 대시보드', HEADER, FOOTER, OUT,
-              page_slug='misc',
+              page_slug='misc', search_ph='장 제목이나 용어로 찾기',
               extra_css=aie.POST_CSS, intro=INTRO, newest_first=False)
