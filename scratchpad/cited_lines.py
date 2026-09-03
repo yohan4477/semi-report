@@ -19,8 +19,9 @@ def main(slug, out=None):
     lane = io.open(os.path.join(ROOT, 'insights', 'semidoped', slug + '-strategy.md'), encoding='utf-8').read()
     raw = io.open(os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw', slug + '.md'), encoding='utf-8').read().split('\n')
     nums = set()
-    for m in re.finditer(r'\(L([^)]*)\)', lane):
-        for part in re.split(r'[·,]', m.group(1)):
+    # 「(Austin 의 설명, L57)」처럼 괄호 안에 다른 말이 있어도 잡는다(2026-09-03 인터커넥트 대조에서 놓쳤다)
+    for m in re.finditer(r'\(([^)]*L\d[^)]*)\)', lane):
+        for part in re.findall(r'L\d+(?:~L?\d+)?', m.group(1)):
             part = part.strip().lstrip('L')
             if '~' in part:
                 a, b = part.split('~'); nums.update(range(int(a.lstrip('L')), int(b.lstrip('L')) + 1))
@@ -30,10 +31,19 @@ def main(slug, out=None):
     for n in nums:
         want.update((n - 1, n, n + 1))
     lines = ['# %s — 글이 인용한 줄 %d개(앞뒤 한 줄 포함 %d줄). 줄 번호는 전사 파일의 것' % (slug, len(nums), len(want))]
+    # 전사는 「Vik: …」 라벨이 한 번 붙고 뒤 문단은 라벨 없이 이어진다 — 인용 줄만 보면 화자가 안 보여
+    # 귀속을 잘못 잡는다(2026-09-03). 줄마다 가장 가까운 앞 라벨을 [화자 …←L줄] 로 붙인다
+    label_re = re.compile(r'^([A-Z][A-Za-z .]{0,24}?):\s')
     for n in sorted(want):
         if 1 <= n <= len(raw) and raw[n - 1].strip():
             mark = '*' if n in nums else ' '
-            lines.append('%sL%d: %s' % (mark, n, raw[n - 1].strip()))
+            who = ''
+            for k in range(n, 0, -1):
+                mm = label_re.match(raw[k - 1])
+                if mm:
+                    who = '[화자 %s ←L%d] ' % (mm.group(1), k) if k != n else ''
+                    break
+            lines.append('%sL%d: %s%s' % (mark, n, who, raw[n - 1].strip()))
     out = out or os.path.join(ROOT, '_workspace', 'cited', slug + '.md')
     os.makedirs(os.path.dirname(out), exist_ok=True)
     text = '\n'.join(lines) + '\n'
