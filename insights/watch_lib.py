@@ -193,6 +193,9 @@ def load_one(path):
         # 정책 줄만 쓴다. 어느 법·고시를 보고 있고 어느 판을 읽었는지
         'laws': parse_laws(meta.get('laws', '')),
         'judged': md_inline(sec.get('지금 판단', '').replace('\n', ' ')),
+        # 문단 단위 — 빈 줄로 가른다. judged 는 한 줄(요약·첫 문장용), 상세 본문은 이걸 쓴다
+        'judged_paras': [md_inline(x.replace('\n', ' ').strip())
+                         for x in re.split(r'\n\s*\n', sec.get('지금 판단', '')) if x.strip()],
         'triggers': trg,
         # 판단이 바뀐 날의 자취. 없는 줄이 대부분이다 — 아직 한 번도 안 바뀐 판단에
         # 억지로 「최초 기록」을 만들어 넣지 않는다.

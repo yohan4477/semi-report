@@ -200,6 +200,36 @@ def _subscription_data(watches):
     return out
 
 
+def _sub_gu_data(watches):
+    """청약 제도 줄의 pblanc_gu.by_gu — 구 이름 → 최근 6개월 공고 목록(접수일 내림차순).
+
+    (None, None) 은 「어댑터가 못 냈다」(열쇠 없음 등)이고, ({}, as_of) 는 「받았는데
+    구가 하나도 안 걸렸다」다 — 지도 층 버튼은 앞의 경우에만 안 낸다. 값이 있는데
+    전부 0건인 것과 아예 못 받은 것은 다른 상태라 dict 존재 여부로 가른다."""
+    w = next((x for x in watches if x['kind'] == 'policy' and x['slug'] == '청약 제도'), None)
+    if w is None:
+        return None, None
+    m = (w['metrics'] or {}).get('pblanc_gu')
+    if m is None:
+        return None, None
+    return (m.get('by_gu') or {}), m.get('as_of')
+
+
+def _sub_bin(n):
+    """구별 6개월 청약 공고 건수 → 지도 층 칸. 0건은 채우지 않는다(--paper+--line
+    기본값과 같다 — 값 없는 구와 시각적으로 안 겹치려면 옅은 회색 하나로 뭉치면
+    안 되니 색을 아예 안 칠한다)."""
+    if not n:
+        return None
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    if n <= 4:
+        return 3
+    return 4
+
+
 def _val3(series):
     """지금 값 · 지난달 대비 · 석 달 대비. 견준 상대의 달(a1·a3)도 같이 낸다 —
     「+0.20%p」만 적으면 그게 한 달치인지 석 달치인지 화면에 없다."""
@@ -221,7 +251,7 @@ def _gu_map_data(watches):
     region_raw = _region_raw(watches)
     region_slug = dict((w['target'], w['slug']) for w in _live_areas(watches))
     region_view = dict((w['target'], w.get('view') or '') for w in _live_areas(watches))
-    sub = _subscription_data(watches)
+    sub_gu, sub_asof = _sub_gu_data(watches)
     out = {}
     for name in sorted(SEOUL_GU['gu']):
         region = GU_REGION.get(name)
@@ -239,7 +269,16 @@ def _gu_map_data(watches):
         entry['sd'] = ({'value': sd.get('value'), 'area': sd.get('area')} if sd else None)
         entry['lth_value'], entry['lth_detail'] = _lth_info(name)
         entry['adj'], entry['hot'] = _reg_info(name)
-        entry['sub_cnt'] = (sub.get(region) or {}).get('cnt') if region else None
+        # 청약홈 최근 공고 — 구 25개 전부(권역 무관). 어댑터가 못 냈으면(열쇠 없음)
+        # None, 받았으면 그 구가 0건이어도 {'value':0,…} — 「못 봤다」와 「0건이다」는
+        # 다른 상태다
+        if sub_gu is not None:
+            items = sub_gu.get(name) or []
+            entry['sub_cnt'] = {'value': len(items), 'as_of': sub_asof}
+            entry['sub_items'] = items
+        else:
+            entry['sub_cnt'] = None
+            entry['sub_items'] = []
         out[name] = entry
     return out
 
@@ -356,6 +395,13 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map[data-layer="cap"] .gu[data-cap="yes"]{fill:var(--seq-4);
   stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="cap"] .gu[data-cap="null"]{fill:url(#hatch-line)}
+/* 청약 공고 층 — 구별 6개월 건수 다섯 단(0·1·2·3~4·5+). 0건은 채우지 않는다
+   (--paper+--line 기본값) */
+.seoul-map[data-layer="sub"] .gu[data-sub-bin]{stroke:var(--surface);stroke-width:1.5px}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="1"]{fill:var(--seq-2)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="2"]{fill:var(--seq-3)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="3"]{fill:var(--seq-4)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="4"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
 .gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
@@ -404,6 +450,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
    폰 폭에서 두 열이면 값이 잘린다(2026-09-03) */
 .gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+/* 최근 공고 줄 아래 단지 목록 — 「최근 공고 n건」에 딸린 것임을 왼쪽 선으로 보인다 */
+.gp-sub-item{margin:4px 0 0;padding-left:10px;border-left:2px solid var(--line);
+  font-size:.8rem}
 .gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
 .gp-d{color:var(--ink-2)}
 .gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
@@ -615,6 +664,14 @@ def title_of(w):
 
 def _fmt1(v):
     return ('%.1f' % v)
+
+
+def _mmdd(d):
+    """"YYYY-MM-DD" → "MM-DD". 구 패널 공고 줄은 자리가 좁아 연도까지 못 싣는다 —
+    6개월 안 값이라 연도는 오늘과 같거나 하나 차이라 없어도 헷갈리지 않는다."""
+    if not d or len(d) < 10:
+        return d or '—'
+    return d[5:10]
 
 
 def _extra_sentence(ratio):
@@ -1238,10 +1295,31 @@ def _cap_label(v):
     return '적용' if t == 'True' else ('미적용' if t == 'False' else '—')
 
 
+def _sub_other_gu_line(watches):
+    """세 권역 밖(22구)의 최근 공고 — 표 아래 잔글씨 한 줄. 열쇠가 없거나 세 권역
+    밖에 공고가 하나도 없으면 안 낸다(수가 0인 줄은 안 낸다 — 분양가상한제 범례와
+    같은 규칙)."""
+    sub_gu, _asof = _sub_gu_data(watches)
+    if sub_gu is None:
+        return ''
+    watched_gu = set(g for t in ('강남 3구', '마용성', '노도강')
+                     for g in AREAS.get(t, {}).get('구', []))
+    other = [(name, len(items)) for name, items in sub_gu.items()
+             if name not in watched_gu and items]
+    if not other:
+        return ''
+    total = sum(n for _n, n in other)
+    names = '·'.join(sorted(n[:-1] if n.endswith('구') else n for n, _c in other))
+    return '<p class="cond-tail">그 밖의 구 %d건 — %s</p>' % (total, E(names))
+
+
 def subscription_table(watches):
     """「세 권역 최근 공고(6개월)」 — 청약홈 API 가 준 공고만. 권역별 접수일 내림차순
     최대 5행, 나머지는 「+n건」. 경쟁률(rate1)이 한 건이라도 있으면 열을 내고, 없으면
-    열 자체를 안 낸다. 값이 없으면 표·문구 다 안 낸다 — 자리표시 금지(사용자)."""
+    열 자체를 안 낸다. 값이 없으면 표·문구 다 안 낸다 — 자리표시 금지(사용자).
+
+    세 권역에 최근 공고가 하나도 없어도 그 밖의 22구에는 있을 수 있다 — 그때는
+    표 없이 「그 밖의 구」 줄만 낸다."""
     data = _subscription_data(watches)
     rows_by = []
     asofs = []
@@ -1255,8 +1333,9 @@ def subscription_table(watches):
             continue
         asofs.append(m.get('as_of') or '')
         rows_by.append((area, items))
+    other_line = _sub_other_gu_line(watches)
     if not rows_by:
-        return ''
+        return other_line
     has_rate = any(i.get('rate1') for _a, items in rows_by for i in items)
     head = ['권역', '단지명', '구', '접수 시작', '당첨자 발표', '분양가상한제'] + (['1순위 경쟁률'] if has_rate else [])
     rows = []
@@ -1276,7 +1355,7 @@ def subscription_table(watches):
     cap = ('청약홈(공공데이터포털) · 기준 %s · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음'
            % E(max(asofs) if asofs else '—'))
     return (tbl('세 권역 최근 공고 (6개월)', head, rows)
-            + '<p class="cond-tail">%s</p>' % cap)
+            + '<p class="cond-tail">%s</p>' % cap + other_line)
 
 
 def subscription_section(watches):
@@ -1483,8 +1562,12 @@ def line_block(w):
     strip = stat_strip(w)
     if strip:
         h.append('<div id="now">%s</div>' % strip)
-    h.append('<div id="judge"><p class="line-judge">%s</p>%s</div>'
-             % (w['judged'], trig[0] if trig else ''))
+    # 문단마다 <p> — md 의 빈 줄을 살린다. 한 덩어리로 붙이면 굵은 첫 문장들이 줄줄이
+    # 이어져 어디서 생각이 바뀌는지 안 보인다
+    paras = w.get('judged_paras') or [w['judged']]
+    h.append('<div id="judge">%s%s</div>'
+             % (''.join('<p class="line-judge">%s</p>' % x for x in paras),
+                trig[0] if trig else ''))
     # 「조건」 — 판단 바로 다음이다. 이 줄을 여는 이유가 「지금 신청할 수 있나」라
     # 판단 한 마디 다음에 곧장 그 표가 서야 한다
     cond = cond_html(w)
@@ -1715,6 +1798,28 @@ def _cap_legend_html():
             % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
 
 
+_SUB_BIN_LABEL = ((0, '0건'), (1, '1건'), (2, '2건'), (3, '3~4건'), (4, '5건 이상'))
+
+
+def _sub_legend_html(watches):
+    """청약 공고 층의 범례 — 구별 6개월 건수를 다섯 단으로 세어 한 줄에.
+    카테고리 수가 0이면 그 칸은 안 낸다(적용 구가 없는 분양가상한제 범례와 같은
+    규칙). 열쇠가 없으면(sub_gu 자체가 없으면) 빈 문자열 — 층 버튼도 같이 안 낸다."""
+    sub_gu, sub_asof = _sub_gu_data(watches)
+    if sub_gu is None:
+        return ''
+    counts = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+    for name in SEOUL_GU['gu']:
+        n = len(sub_gu.get(name) or [])
+        counts[_sub_bin(n) or 0] += 1
+    parts = ['%s %d구' % (lbl, counts[b]) for b, lbl in _SUB_BIN_LABEL if counts[b]]
+    line = '최근 6개월 공고 — ' + ' · '.join(parts)
+    return ('<p class="leg-item">%s</p>'
+            '<p class="leg-src">기준 %s · 청약홈(공공데이터포털) · '
+            '주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
+            % (E(line), E(sub_asof or '—')))
+
+
 def _zone_age_chip(as_of, today):
     """여섯 달 넘게 안 바뀐 기준일에는 나이를 붙인다. 머리의 「자료 기준 2026-07」과
     같은 무게로 읽히면 값의 나이가 열 배 차이 나는 것이 안 보인다."""
@@ -1793,6 +1898,9 @@ def _gu_svg(gu_data):
         attrs = ['class="gu"', 'data-gu="%s"' % E(name),
                  'data-cap="%s"' % ('yes' if cap_v is True
                                     else 'no' if cap_v is False else 'null')]
+        sub_bin = _sub_bin((e.get('sub_cnt') or {}).get('value'))
+        if sub_bin:
+            attrs.append('data-sub-bin="%d"' % sub_bin)
         if watched:
             attrs += ['tabindex="0"', 'role="button"',
                       'data-ratio-bin="%d"' % _ratio_bin(e['jeonse']['cur'])]
@@ -1974,13 +2082,24 @@ def _gu_panel_html(name, e):
     if cap_d and '확인 못 함' in cap_d:
         h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
                  % E(cap_d[:40]))
-    # 청약홈 최근 공고 — 이 구가 든 권역(강남 3구·마용성·노도강) 것. 열쇠가 없어
-    # 어댑터가 못 냈으면(sub_cnt 없음) 줄 자체를 안 낸다
+    # 청약홈 최근 공고 — 이 구 것(권역이 아니라). 열쇠가 없어 어댑터가 못 냈으면
+    # (sub_cnt 없음) 줄 자체를 안 낸다. 값이 있으면 0건이어도 낸다 — 「못 봤다」와
+    # 「0건이다」는 다른 상태다
     sc = e.get('sub_cnt')
     if sc is not None:
         h.append('<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
                  '<span class="t-sub">· 6개월 · %s 기준</span></p>'
                  % (sc['value'], E(sc['as_of'])))
+        items = e.get('sub_items') or []
+        for it in items[:3]:
+            name = E(it.get('name') or '—')
+            if it.get('url'):
+                name = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(it['url']), name)
+            rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
+            h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s</p>'
+                     % (name, E(_mmdd(it.get('apply'))), rate_txt))
+        if len(items) > 3:
+            h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
     if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
@@ -2156,24 +2275,34 @@ def seoul_map_section(watches, asof, checked):
              ('<div class="gu-panel" data-panel="default">%s</div>'
               % _region_summary_html(watches))
     cap = '<p>지도 원본 southkorea/seoul-maps · 값 기준 %s</p>' % E(asof)
-    # 층 둘 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라
-    # 층에서 내려 배너 문장으로 갔고, 분양가상한제는 넷과 스물하나로 갈려 층이 된다
-    btns = ('<div class="layer-btns" role="group" aria-label="지도 층">'
-            '<button type="button" class="layer-btn is-on" data-layer="ratio" '
-            'aria-pressed="true">전세가율</button>'
-            '<button type="button" class="layer-btn" data-layer="cap" '
-            'aria-pressed="false">분양가상한제</button></div>')
+    # 층 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라 층에서
+    # 내려 배너 문장으로 갔고, 분양가상한제는 넷과 스물하나로 갈려 층이 된다.
+    # 청약 공고는 열쇠가 있을 때만(sub_gu is not None) 셋째 층으로 더한다 —
+    # 값이 없으면 버튼 자체를 안 낸다
+    sub_gu, _sub_asof = _sub_gu_data(watches)
+    btn_list = ['<button type="button" class="layer-btn is-on" data-layer="ratio" '
+                'aria-pressed="true">전세가율</button>',
+                '<button type="button" class="layer-btn" data-layer="cap" '
+                'aria-pressed="false">분양가상한제</button>']
+    legend_list = ['<div class="map-legend" data-legend="ratio">%s</div>'
+                   % _ratio_legend_html(watches),
+                   '<div class="map-legend" data-legend="cap" hidden>%s</div>'
+                   % _cap_legend_html()]
+    if sub_gu is not None:
+        btn_list.append('<button type="button" class="layer-btn" data-layer="sub" '
+                        'aria-pressed="false">청약 공고</button>')
+        legend_list.append('<div class="map-legend" data-legend="sub" hidden>%s</div>'
+                           % _sub_legend_html(watches))
+    btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
     return (
         '<p class="hero-t">서울 25구 — 지금 전세가율이 어디쯤인가</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
-        '<div class="mappanel" aria-live="polite" aria-atomic="true">%s'
-        '<div class="map-legend" data-legend="ratio">%s</div>'
-        '<div class="map-legend" data-legend="cap" hidden>%s</div>'
+        '<div class="mappanel" aria-live="polite" aria-atomic="true">%s%s'
         '</div></div>%s'
         % (btns, svg, cap, _zone_banner(checked), changed_section(watches),
-           panels, _ratio_legend_html(watches), _cap_legend_html(), _MAP_JS))
+           panels, ''.join(legend_list), _MAP_JS))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -2224,9 +2353,26 @@ def check_ui(html, watches):
     assert 0 < at_changed < at_policy, \
         '규약 위반: 「달라진 것」(#changed)이 제도보다 먼저 서야 한다 — 매달 다시 여는 이유다'
     # 층은 구마다 갈리는 값만 그린다. 25구가 전부 같은 범주인 것(토허·규제)은 지도가
-    # 아니라 배너 문장이고, 갈리는 것(전세가율·분양가상한제)만 버튼이 된다
+    # 아니라 배너 문장이고, 갈리는 것(전세가율·분양가상한제·청약 공고)만 버튼이 된다.
+    # 청약 공고는 청약홈 열쇠가 있을 때만 셋째 버튼으로 더한다 — 값이 없으면(sub
+    # 데이터 없음) 버튼 자체를 안 낸다(2026-09-04, 「값이 없으면 버튼 자체를 안
+    # 낸다」). 「둘」로 고정했던 단언을 「데이터가 있으면 셋, 없으면 둘」로 고쳤다.
     assert 'class="layer-btn' in html and 'aria-pressed' in html, \
         '규약 위반: 층 버튼에 aria-pressed 가 없다 — 어느 층이 켜졌는지가 안 전해진다'
+    # <button ...class="layer-btn 으로만 센다 — 감싼 상자 class="layer-btns"(복수)도
+    # "layer-btn" 을 부분 문자열로 품어 그냥 세면 하나 더 잡힌다
+    n_btn = html.count('<button type="button" class="layer-btn')
+    # 청약 공고 층의 존재는 svg 안 data-sub-bin 이 아니라 범례 상자(data-legend="sub")
+    # 로 잰다 — CSS 규칙(.seoul-map[data-layer="sub"] …)은 값과 무관하게 항상
+    # <style> 안에 있어 data-layer="sub" 라는 문자열 자체는 늘 참이다
+    if 'data-legend="sub"' in html:
+        assert n_btn == 3, \
+            ('규약 위반: 청약 공고 데이터가 있으면 지도 층 버튼은 셋(전세가율·'
+             '분양가상한제·청약 공고)이어야 한다 (%d개)' % n_btn)
+    else:
+        assert n_btn == 2, \
+            ('규약 위반: 청약 공고 데이터가 없으면 지도 층 버튼은 둘(전세가율·'
+             '분양가상한제)이어야 한다 — 값 없는 버튼을 냈다 (%d개)' % n_btn)
     assert 'class="zone-banner"' in html, \
         '규약 위반: 지정 현황 상태 배너가 없다 — 층에서 내린 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
@@ -2301,7 +2447,9 @@ def build():
     # 문자열 max 는 "2026-2Q" > "2026-07" 로 읽어(다섯째 글자 '2' > '0') 분기가
     # 월간 통계를 이긴다. 「YYYY-MM」꼴만 자료 기준 후보로 남긴다
     stat = [m.get('as_of', '') for w in ws for m in (w['metrics'] or {}).values()
-            if m.get('level') != 'law' and re.match(r'^\d{4}-\d{2}$', m.get('as_of') or '')]
+            if w['kind'] == 'realestate' and m.get('level') != 'law'
+            and re.match(r'^\d{4}-\d{2}$', m.get('as_of') or '')]
+    # 부동산원 통계만 센다 — 청약홈 공고월(2026-08)이 섞이면 통계가 실제보다 새 것처럼 읽힌다
     asof = max(stat or ['—'])
     checked = max([w['checked'] for w in ws if w.get('checked')] or ['—'])
 

@@ -26,6 +26,16 @@
    실제로 2025-10-02 이전 공고는 강남 3구·용산·송파를 빼면 전부 N, 그 뒤로는
    전부 Y 였다(2026-09-03 확인, 표본 50건). 지어낸 규칙이 아니라 응답 그대로다.
 
+2026-09-04 — 세 권역만 거르던 것을 서울 25구 전부로 넓혔다(지도가 25구를 그리므로
+구를 못 뽑은 공고만 세지 못하고 나머지는 다 세야 한다). `pblanc_gu` 가 그 산출이다
+— 구 이름마다 공고 목록을 묶고, 총 건수는 구를 뽑아낸 공고만 센다(주소에 25구
+이름이 하나도 안 걸린 공고는 `n_unmatched` 로 src 에만 남기고 목록에서는 뺀다 —
+값을 지어내지 않는다). 세 권역 metric(`pblanc_cnt_<권역>`·`pblanc_list_<권역>`)은
+그대로 둔다 — 「청약 — 조건」 절의 표가 그 셋만 본다. 구를 뽑는 로직(`_in_gu`)과
+경쟁률 호출(`_rate1_summary`, 공고당 한 번)은 공고 하나에 한 번만 돈다 — 권역별로
+따로 돌리면 세 권역에 걸치지 않는 22구를 볼 방법이 없고, 겹치는 구도 없으니(세
+권역이 서로소) 한 번에 다 나눠 담아도 세 권역 결과가 이전과 같다.
+
 ## 열쇠
 
 공공데이터포털(data.go.kr)에서 두 서비스를 각각 활용신청한다.
@@ -61,6 +71,20 @@ AREA_GU = {
     '마용성': ('마포구', '용산구', '성동구'),
     '노도강': ('노원구', '도봉구', '강북구'),
 }
+
+
+def _all_gu():
+    """서울 25구 이름 — insights/watch/_seoul_gu.json(지도 정본)에서 읽는다.
+    손으로 목록을 새로 적지 않는다 — 지도가 구를 늘리거나 이름을 바꾸면 여기도
+    따라가야 한다."""
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                      '_seoul_gu.json')
+    with open(p, encoding='utf-8') as f:
+        d = json.load(f)
+    return sorted(d['gu'])
+
+
+ALL_GU = _all_gu()
 
 
 class NoKey(Exception):
@@ -166,8 +190,12 @@ def _in_gu(row, gu_names):
 def fetch(target_name, area=None, laws=()):
     """워치 계약대로 metric 을 돌려준다. 열쇠가 없으면 빈 dict 와 함께 사유를 알린다.
 
-    target_name 은 정책 줄 이름(「청약 제도」)이고, 세 권역을 한 줄이 함께 본다.
-    권역마다 pblanc_cnt_<권역>(건수)과 pblanc_list_<권역>(건수 + 공고 목록)을 낸다."""
+    target_name 은 정책 줄 이름(「청약 제도」)이고, 서울 25구 전부를 한 줄이 함께
+    본다. `pblanc_gu` 는 구마다 공고 목록을 묶은 지도용 산출(by_gu)이고,
+    `pblanc_cnt_<권역>`·`pblanc_list_<권역>`(세 권역만)은 「청약 — 조건」 절의
+    표가 그대로 쓰던 것이라 남긴다. 공고 하나당 경쟁률 호출(_rate1_summary)과
+    구 판정(_in_gu)은 한 번만 돈다 — 세 권역이 서로소라 나중에 권역별로 다시
+    나눠 담아도 세 권역 몫은 이전과 같다."""
     try:
         rows = pblancs('서울', since=_six_months_ago(), page_size=200)
     except NoKey as e:
@@ -183,57 +211,89 @@ def fetch(target_name, area=None, laws=()):
     fetch.last_error = None
     fetch.rate_error = None
     rate_ok = True    # 경쟁률 서비스가 도중에 죽으면 남은 공고는 조용히 건너뛴다
-    out = {}
+    matched = []       # [(구, row, item), …] — 구를 뽑은 공고만
+    n_unmatched = 0     # 공급위치 주소에 25구 이름이 하나도 안 걸린 공고
+    for r in rows:
+        gu_hit = _in_gu(r, ALL_GU)
+        if not gu_hit:
+            n_unmatched += 1
+            continue
+        gu = gu_hit[0]
+        it = {
+            'name': r.get('HOUSE_NM') or '',
+            'gu': gu,
+            'apply': r.get('RCEPT_BGNDE') or None,
+            'announce': r.get('PRZWNER_PRESNATN_DE') or None,
+            # 공고 시점의 값이다 — 위 머리 5번 참고
+            'cap': _yn(r.get('PARCPRC_ULS_AT')),
+            'hot': _yn(r.get('SPECLT_RDN_EARTH_AT')),
+        }
+        url = r.get('PBLANC_URL')
+        if url:
+            it['url'] = url
+        hmn, pno = r.get('HOUSE_MANAGE_NO'), r.get('PBLANC_NO')
+        if rate_ok and hmn and pno:
+            try:
+                rate1 = _rate1_summary(hmn, pno)
+            except NoKey as e:
+                rate_ok = False
+                fetch.rate_error = str(e)
+                rate1 = None
+            except Exception as e:            # 게이트웨이 장애 등 — 15098905 미승인 포함
+                rate_ok = False
+                fetch.rate_error = '%s: %s' % (type(e).__name__, e)
+                rate1 = None
+            if rate1:
+                it['rate1'] = rate1
+        matched.append((gu, r, it))
+
+    by_gu = {}
+    for gu, r, it in matched:
+        by_gu.setdefault(gu, []).append((str(r.get('RCEPT_BGNDE') or ''), it))
+    for gu in by_gu:
+        by_gu[gu] = [it for _k, it in
+                     sorted(by_gu[gu], key=lambda t: t[0], reverse=True)]
+
+    latest_all = max((str(r.get('RCRIT_PBLANC_DE') or '') for _g, r, _it in matched),
+                      default='')
+    out = {
+        'pblanc_gu': {
+            'value': len(matched),
+            'by_gu': by_gu,
+            'as_of': (latest_all[:7] or '확인 못 함'),
+            'kind': '공표',
+            'unit': '건(모집공고)',
+            'src': ('공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · '
+                    'getAPTLttotPblancDetail · 최근 6개월 서울 공고 %d건 중 공급위치에서 '
+                    '25구 이름을 찾은 것 %d건(못 찾은 것 %d건) · 주소 문자열 매칭이라 '
+                    '구를 잘못 골랐거나 놓친 공고가 있을 수 있다'
+                    % (len(rows), len(matched), n_unmatched)),
+            # 공고는 달마다 나오지 않는다. 한 점을 선으로 만들지 않는다
+            'series': [],
+            'partial': False,
+        }
+    }
     for area_name, gus in AREA_GU.items():
-        hit = sorted([r for r in rows if _in_gu(r, gus)],
-                     key=lambda r: str(r.get('RCEPT_BGNDE') or ''), reverse=True)
-        latest = max((str(r.get('RCRIT_PBLANC_DE') or '') for r in hit), default='')
         area_key = area_name.replace(' ', '')
+        area_hit = sorted(((r, it) for gu, r, it in matched if gu in gus),
+                          key=lambda t: str(t[0].get('RCEPT_BGNDE') or ''), reverse=True)
+        latest = max((str(r.get('RCRIT_PBLANC_DE') or '') for r, _it in area_hit),
+                     default='')
         note = ('공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · '
                 'getAPTLttotPblancDetail · 최근 6개월 서울 공고 %d건 중 공급위치에 %s 가 든 것 '
                 '· 주소 문자열 매칭이라 놓친 공고가 있을 수 있다'
                 % (len(rows), '·'.join(gus)))
+        items = [it for _r, it in area_hit]
         out['pblanc_cnt_' + area_key] = {
-            'value': len(hit),
+            'value': len(items),
             'as_of': (latest[:7] or '확인 못 함'),
             'kind': '공표',
             'unit': '건(모집공고)',
             'src': note,
             'area': area_name,
-            # 공고는 달마다 나오지 않는다. 한 점을 선으로 만들지 않는다
             'series': [],
             'partial': False,
         }
-        items = []
-        for r in hit:
-            gu_hit = _in_gu(r, gus)
-            it = {
-                'name': r.get('HOUSE_NM') or '',
-                'gu': gu_hit[0] if gu_hit else '',
-                'apply': r.get('RCEPT_BGNDE') or None,
-                'announce': r.get('PRZWNER_PRESNATN_DE') or None,
-                # 공고 시점의 값이다 — 위 머리 5번 참고
-                'cap': _yn(r.get('PARCPRC_ULS_AT')),
-                'hot': _yn(r.get('SPECLT_RDN_EARTH_AT')),
-            }
-            url = r.get('PBLANC_URL')
-            if url:
-                it['url'] = url
-            hmn, pno = r.get('HOUSE_MANAGE_NO'), r.get('PBLANC_NO')
-            if rate_ok and hmn and pno:
-                try:
-                    rate1 = _rate1_summary(hmn, pno)
-                except NoKey as e:
-                    rate_ok = False
-                    fetch.rate_error = str(e)
-                    rate1 = None
-                except Exception as e:            # 게이트웨이 장애 등 — 15098905 미승인 포함
-                    rate_ok = False
-                    fetch.rate_error = '%s: %s' % (type(e).__name__, e)
-                    rate1 = None
-                if rate1:
-                    it['rate1'] = rate1
-            items.append(it)
         out['pblanc_list_' + area_key] = {
             'value': len(items),
             'items': items,
@@ -262,7 +322,14 @@ if __name__ == '__main__':
         if rate_err:
             print('경고: 경쟁률(15098905)을 못 받았다 — %s\n' % rate_err)
         for k, v in sorted(got.items()):
-            if k.startswith('pblanc_list_'):
+            if k == 'pblanc_gu':
+                by_gu = v['by_gu']
+                n_items = sum(len(x) for x in by_gu.values())
+                print('  %-24s %d건 · %d구 (%s 기준, 항목 수 검산 %d)'
+                      % (k, v['value'], len(by_gu), v['as_of'], n_items))
+                for gu in sorted(by_gu, key=lambda g: -len(by_gu[g])):
+                    print('      %-6s %d건' % (gu, len(by_gu[gu])))
+            elif k.startswith('pblanc_list_'):
                 n_rate = sum(1 for it in v['items'] if it.get('rate1'))
                 print('  %-24s %d건 (%s 기준, 경쟁률 %d건)' % (k, v['value'], v['as_of'], n_rate))
             else:

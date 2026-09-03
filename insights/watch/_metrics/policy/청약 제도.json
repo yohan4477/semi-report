@@ -12,6 +12,248 @@
   "law_target": "law",
   "law_id": "286965"
  },
+ "pblanc_gu": {
+  "value": 21,
+  "by_gu": {
+   "성북구": [
+    {
+     "name": "브라운스톤 월곡 센트럴",
+     "gu": "성북구",
+     "apply": "2026-09-07",
+     "announce": "2026-09-16",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000399&pblancNo=2026000399"
+    },
+    {
+     "name": "장위 푸르지오 마크원",
+     "gu": "성북구",
+     "apply": "2026-06-29",
+     "announce": "2026-07-08",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000275&pblancNo=2026000275",
+     "rate1": "2.8~81.17"
+    }
+   ],
+   "서대문구": [
+    {
+     "name": "쌍용 더 플래티넘 서대문",
+     "gu": "서대문구",
+     "apply": "2026-08-24",
+     "announce": "2026-09-02",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000372&pblancNo=2026000372",
+     "rate1": "15.67~240.5"
+    }
+   ],
+   "영등포구": [
+    {
+     "name": "더샵 신길센트럴시티(조합원 취소분)",
+     "gu": "영등포구",
+     "apply": "2026-08-18",
+     "announce": "2026-08-27",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000374&pblancNo=2026000374",
+     "rate1": "54~564.67"
+    },
+    {
+     "name": "써밋 클라비온",
+     "gu": "영등포구",
+     "apply": "2026-08-18",
+     "announce": "2026-08-28",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000364&pblancNo=2026000364",
+     "rate1": "39.92~183"
+    },
+    {
+     "name": "더샵 신길센트럴시티",
+     "gu": "영등포구",
+     "apply": "2026-03-30",
+     "announce": "2026-04-09",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000064&pblancNo=2026000064",
+     "rate1": "7.25~102"
+    },
+    {
+     "name": "더샵 프리엘라",
+     "gu": "영등포구",
+     "apply": "2026-03-23",
+     "announce": "2026-04-01",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000023&pblancNo=2026000023",
+     "rate1": "29.5~896"
+    }
+   ],
+   "중구": [
+    {
+     "name": "충정로역자이르네",
+     "gu": "중구",
+     "apply": "2026-08-18",
+     "announce": "2026-08-31",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000358&pblancNo=2026000358",
+     "rate1": "10.47~202.67"
+    }
+   ],
+   "노원구": [
+    {
+     "name": "월계 중흥S-클래스 리비에르",
+     "gu": "노원구",
+     "apply": "2026-07-27",
+     "announce": "2026-08-05",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000355&pblancNo=2026000355",
+     "rate1": "41.45~105"
+    }
+   ],
+   "동작구": [
+    {
+     "name": "동작 센트럴 동문 디 이스트",
+     "gu": "동작구",
+     "apply": "2026-07-13",
+     "announce": "2026-07-23",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000153&pblancNo=2026000153",
+     "rate1": "48~198.67"
+    },
+    {
+     "name": "드파인 아르티아",
+     "gu": "동작구",
+     "apply": "2026-06-29",
+     "announce": "2026-07-08",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000241&pblancNo=2026000241",
+     "rate1": "1.83~50.1"
+    },
+    {
+     "name": "써밋 더힐",
+     "gu": "동작구",
+     "apply": "2026-05-26",
+     "announce": "2026-06-05",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000120&pblancNo=2026000120",
+     "rate1": "15.9~78"
+    },
+    {
+     "name": "아크로 리버스카이",
+     "gu": "동작구",
+     "apply": "2026-05-26",
+     "announce": "2026-06-05",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000116&pblancNo=2026000116",
+     "rate1": "2.33~76.75"
+    },
+    {
+     "name": "라클라체자이드파인",
+     "gu": "동작구",
+     "apply": "2026-04-13",
+     "announce": "2026-04-22",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000094&pblancNo=2026000094",
+     "rate1": "6.14~42.4"
+    }
+   ],
+   "강북구": [
+    {
+     "name": "북서울자이 폴라리스(보류지)",
+     "gu": "강북구",
+     "apply": "2026-06-22",
+     "announce": "2026-06-30",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000235&pblancNo=2026000235",
+     "rate1": "60~1040"
+    },
+    {
+     "name": "더 리치먼드 미아",
+     "gu": "강북구",
+     "apply": "2026-05-07",
+     "announce": "2026-05-18",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000156&pblancNo=2026000156",
+     "rate1": "1.81~14"
+    }
+   ],
+   "마포구": [
+    {
+     "name": "공덕역자이르네",
+     "gu": "마포구",
+     "apply": "2026-04-27",
+     "announce": "2026-05-08",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000114&pblancNo=2026000114",
+     "rate1": "70~100.08"
+    }
+   ],
+   "서초구": [
+    {
+     "name": "오티에르 반포",
+     "gu": "서초구",
+     "apply": "2026-04-10",
+     "announce": "2026-04-21",
+     "cap": true,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000058&pblancNo=2026000058",
+     "rate1": "101.33~1180.87"
+    },
+    {
+     "name": "아크로 드 서초",
+     "gu": "서초구",
+     "apply": "2026-03-31",
+     "announce": "2026-04-09",
+     "cap": true,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2025000497&pblancNo=2025000497",
+     "rate1": "646.5~1135.96"
+    }
+   ],
+   "용산구": [
+    {
+     "name": "이촌 르엘",
+     "gu": "용산구",
+     "apply": "2026-04-09",
+     "announce": "2026-04-20",
+     "cap": true,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000048&pblancNo=2026000048",
+     "rate1": "36.83~254.05"
+    }
+   ],
+   "강서구": [
+    {
+     "name": "래미안 엘라비네",
+     "gu": "강서구",
+     "apply": "2026-03-16",
+     "announce": "2026-03-25",
+     "cap": false,
+     "hot": true,
+     "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000039&pblancNo=2026000039",
+     "rate1": "2.67~228.8"
+    }
+   ]
+  },
+  "as_of": "2026-08",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에서 25구 이름을 찾은 것 21건(못 찾은 것 0건) · 주소 문자열 매칭이라 구를 잘못 골랐거나 놓친 공고가 있을 수 있다",
+  "series": [],
+  "partial": false
+ },
  "pblanc_cnt_강남3구": {
   "value": 2,
   "as_of": "2026-03",

@@ -97,6 +97,13 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map[data-layer="cap"] .gu[data-cap="yes"]{fill:var(--seq-4);
   stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="cap"] .gu[data-cap="null"]{fill:url(#hatch-line)}
+/* 청약 공고 층 — 구별 6개월 건수 다섯 단(0·1·2·3~4·5+). 0건은 채우지 않는다
+   (--paper+--line 기본값) */
+.seoul-map[data-layer="sub"] .gu[data-sub-bin]{stroke:var(--surface);stroke-width:1.5px}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="1"]{fill:var(--seq-2)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="2"]{fill:var(--seq-3)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="3"]{fill:var(--seq-4)}
+.seoul-map[data-layer="sub"] .gu[data-sub-bin="4"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
 .gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
@@ -145,6 +152,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
    폰 폭에서 두 열이면 값이 잘린다(2026-09-03) */
 .gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+/* 최근 공고 줄 아래 단지 목록 — 「최근 공고 n건」에 딸린 것임을 왼쪽 선으로 보인다 */
+.gp-sub-item{margin:4px 0 0;padding-left:10px;border-left:2px solid var(--line);
+  font-size:.8rem}
 .gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
 .gp-d{color:var(--ink-2)}
 .gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
