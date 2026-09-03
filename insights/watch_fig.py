@@ -21,11 +21,21 @@ def esc(s):
 
 
 def _ticks(lo, hi, n=4):
-    """세로 눈금값. 자의 눈금이지 원문에서 가져온 값이 아니다 — 값 대조에서 뺀다."""
+    """세로 눈금값. 자의 눈금이지 원문에서 가져온 값이 아니다 — 값 대조에서 뺀다.
+
+    「좋은 수」로 맞춘다. 범위를 그대로 n 등분하면 39.1·42.1·47.9 같은 눈금이 나와
+    「지금 43.0 이면 어디쯤인가」를 눈으로 못 잰다(2026-09-03 UI 리뷰). 간격을
+    1·2·2.5·5 × 10^k 중 하나로 고르고 범위를 그 배수로 넓힌다."""
+    import math
     if hi <= lo:
         hi = lo + 1.0
-    step = (hi - lo) / float(n)
-    return [lo + step * i for i in range(n + 1)]
+    raw = (hi - lo) / float(n)
+    mag = 10 ** math.floor(math.log10(raw))
+    step = next(m * mag for m in (1, 2, 2.5, 5, 10) if m * mag >= raw)
+    a = math.floor(lo / step) * step
+    b = math.ceil(hi / step) * step
+    k = int(round((b - a) / step))
+    return [a + step * i for i in range(k + 1)]
 
 
 def _wrap(s, width=62):
@@ -102,6 +112,10 @@ def trend(lines, ylabel, note='', threshold=None, narrow=False, marks=None):
     lo, hi = min(vals), max(vals)
     pad = (hi - lo) * 0.12 or 1.0
     lo, hi = lo - pad, hi + pad
+    # 눈금이 「좋은 수」로 범위를 넓히므로 판의 위아래를 그 눈금 끝에 맞춘다 —
+    # 안 맞추면 맨 위·아래 눈금이 판 밖에 그려진다
+    ys = _ticks(lo, hi)
+    lo, hi = ys[0], ys[-1]
 
     def px(t):
         """때 하나의 x. 순번이 아니라 달 수에서 낸다(_pos)."""
@@ -115,7 +129,7 @@ def trend(lines, ylabel, note='', threshold=None, narrow=False, marks=None):
     # 세로 자 이름 — 판 위가 아니라 판 위쪽 바깥이다
     o.append('<text x="16" y="24" class="t-sm" style="font-weight:800">%s</text>' % esc(ylabel))
     # 격자 먼저(뒤에 깔린다)
-    ys = _ticks(lo, hi)
+    # 눈금은 위에서 한 번만 낸다 — 넓힌 범위로 다시 내면 간격이 바뀌어 판 밖 눈금이 생긴다
     o.append(''.join('<path class="grid" d="M%.1f %.1f L%.1f %.1f"/>'
                      % (X0, py(v), X1 + 14, py(v)) for v in ys))
     o.append('<path d="M%d %d L%d %d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
