@@ -9,6 +9,7 @@ host: Austin Lyons · Vik Sekar
 section: mem
 topic: 설비투자 · 메모리 값 · 낸드 계약
 gain: 설비투자가 늘었는데 그 상당 부분이 연산이 아니라 부품 값 상승분을 메우는 데 간다는 프레임. 한 회사가 1,900억 달러 중 250억을 부품값이라고 밝힌 대목과, 낸드 쪽에 420억 달러짜리 장기 계약이 잡힌 이야기.
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 ---
 
 ## 한 줄

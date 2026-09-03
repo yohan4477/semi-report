@@ -9,6 +9,7 @@ host: Vik Sekar
 section: mem
 topic: KV 캐시 · NAND · 메모리 계층
 gain: 캐시에 맞은 토큰과 안 맞은 토큰의 값이 몇 배나 벌어지는지, 에이전트가 남기는 트레이스가 얼마나 길어지는지, 그 캐시를 어느 층에 두느냐로 NAND 등급 선택까지 어떻게 밀려 내려가는지.
+people: 진행 [[Vik Sekar]] (Vik's Newsletter) — 이 회차는 Vik 단독 진행 / 게스트 [[Val Bercovici]] (WEKA, 전사 라벨 Val)
 ---
 
 ## 한 줄
