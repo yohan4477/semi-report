@@ -9,6 +9,7 @@ host: Austin Lyons · Vik Sekar
 section: power
 topic: 랙 전력 · 800V · 전압 변환
 gain: 랙 하나가 600킬로와트를 먹을 때 48볼트로 보내면 전류가 12,500암페어가 된다는 셈과, 800볼트로 올리면 750암페어로 떨어진다는 계산. 발전소에서 GPU 까지 전압이 몇 번 바뀌는지도 단계별로.
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 ---
 
 ## 한 줄
