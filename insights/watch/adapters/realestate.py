@@ -55,23 +55,34 @@ TBL = {
                           label='시군구별 매매지수_아파트(실거래가격지수)'),
 }
 
-_CODES = {}
+_CODES = {}      # (statbl_id, prefix, cycle) -> {이름: CLS_ID} — prefix 로 거른 뒤
+_ROWS = {}       # (statbl_id, cycle) -> 원 행 전체(거르기 전) — prefix 마다 새로 안 부른다
 
 
 def codes_of(statbl_id, prefix='서울', cycle='MM'):
     """이 표가 쓰는 지역 코드를 이름으로 찾는다. {이름: CLS_ID}.
 
-    한 번 받아 두고 그 실행 안에서는 다시 안 받는다. 이름이 같은 구가 다른 시도에도
-    있으므로(중구 등) 전체 이름이 prefix 로 시작하는 것만 남긴다. cycle 은 표의
-    DTACYCLE_CD 다 — 분기표(QY)에 월(MM)로 물으면 「해당 자료 없음」이 온다."""
-    ck = (statbl_id, cycle)
+    같은 표를 그 실행 안에서 두 번 안 받는다(원 행을 _ROWS 에 한 번만 담아 두고
+    prefix 마다 그 위에서 거른다). 이름이 같은 구가 다른 시도에도 있으므로(중구 등)
+    전체 이름이 prefix 로 시작하는 것만 남긴다. **캐시 열쇠에 prefix 가 반드시
+    들어가야 한다** — (statbl_id, cycle) 만으로 캐시하면 서울(prefix='서울')을 먼저
+    부른 뒤 성남(prefix='경기')을 부를 때 캐시가 서울 결과를 그대로 돌려줘 분당구
+    같은 경기 이름이 통째로 사라진다(2026-09-04, watch_fetch.py 로 여러 area 를
+    한 프로세스에서 차례로 돌릴 때 이렇게 걸렸다 — 단독 호출에서는 캐시가 비어
+    있어 안 드러났다). cycle 은 표의 DTACYCLE_CD 다 — 분기표(QY)에 월(MM)로 물으면
+    「해당 자료 없음」이 온다."""
+    ck = (statbl_id, prefix, cycle)
     if ck in _CODES:
         return _CODES[ck]
-    p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': cycle, 'Type': 'json', 'pSize': 1000}
-    key = os.environ.get(KEY_ENV)
-    if key:
-        p['KEY'] = key
-    _t, rows = _rows(p)
+    rk = (statbl_id, cycle)
+    rows = _ROWS.get(rk)
+    if rows is None:
+        p = {'STATBL_ID': statbl_id, 'DTACYCLE_CD': cycle, 'Type': 'json', 'pSize': 1000}
+        key = os.environ.get(KEY_ENV)
+        if key:
+            p['KEY'] = key
+        _t, rows = _rows(p)
+        _ROWS[rk] = rows
     out = {}
     for r in rows:
         full, nm, cid = (str(r.get('CLS_FULLNM') or ''), str(r.get('CLS_NM') or ''),
@@ -151,9 +162,12 @@ def _targets(area, spec):
     """이 표를 무슨 지역으로 부를지. [(붙일 이름, CLS_ID)].
 
     구는 여럿이라 이름을 열쇠에 박고, 권역·시도는 하나라 이름을 값 쪽 라벨로만 쓴다.
-    코드는 표마다 다르므로 이름으로 찾는다(codes_of)."""
+    코드는 표마다 다르므로 이름으로 찾는다(codes_of). prefix 는 area 의 sido 를 그대로
+    쓴다 — 예전엔 '서울'로 박아 둬서 경기(성남) 구를 물으면 늘 빈 손이었다. sido 가
+    없는 옛 area(전부 서울)는 '서울'로 떨어진다."""
     lv = spec['level']
-    tbl = codes_of(spec['id'], cycle=spec.get('cycle', 'MM'))
+    prefix = area.get('sido') or '서울'
+    tbl = codes_of(spec['id'], prefix=prefix, cycle=spec.get('cycle', 'MM'))
     if lv == 'gu':
         return [(gu, tbl[gu]) for gu in (area.get('구') or []) if gu in tbl], ''
     nm = area.get(lv)

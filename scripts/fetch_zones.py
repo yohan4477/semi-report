@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""서울 25구의 지정 현황(토지거래허가구역·조정대상지역·투기과열지구) — insights/watch/_zones.json.
+"""서울 25구 + 성남 3구의 지정 현황(토지거래허가구역·조정대상지역·투기과열지구) —
+insights/watch/_zones.json.
 
 포트폴리오 워치 지도는 구마다 "지금 무엇이 걸려 있나"를 보여준다. 값은 오늘 실제로
 연 공식 페이지에서만 채운다 — 지어내면 지도 전체가 무너진다(저장소 규칙, CLAUDE.md).
 
-## 토지거래허가구역 — 살아 있는 JSON API가 있다
+## 토지거래허가구역 — 서울은 살아 있는 JSON API, 성남은 상수
 서울부동산정보광장 페이지(appointStatusSeoul.do)는 화면은 JS로 그리지만 표 데이터
 자체는 POST /land/other/searchAppointStatusList.do 가 순수 JSON으로 낸다(로그인·세션
 불필요, 2026-09-03 확인). 그래서 이 스크립트는 그 API를 그대로 다시 부른다 — 화면을
@@ -13,9 +14,12 @@
 않는 행이 많다("신속통합기획 160개소" 등) — 그런 행은 어느 구인지 특정 못하니
 가공 안 하고 note에만 남긴다. 구 이름이 직접 들리는 행(강남·서초·송파·용산,
 압구정=강남·여의도=영등포·목동=양천·성수=성동)과 "市 전체"(전 25구) 행만 구별로
-옮긴다.
+옮긴다. **이 API는 서울시 것이다** — "市 전체"("서울시 25개 區 전체") 행을 성남
+3구에까지 적용하면 안 된다. 성남은 경기부동산포털에 같은 JSON API가 없어(2026-09-04
+확인, gris.gg.go.kr 은 화면만 있다) 조정대상지역·투기과열지구와 같은 방식(사람이
+WebSearch/WebFetch로 확인해 상수로 박는다)으로 채운다.
 
-## 조정대상지역·투기과열지구 — 공식 API가 없다
+## 조정대상지역·투기과열지구·성남 토지거래허가구역 — 공식 API가 없다
 국토교통부는 규제지역 지정을 관보 고시(PDF)로만 낸다. molit.go.kr에 표 형태 API가
 없어 이 스크립트는 실행할 때마다 사람이 WebSearch/WebFetch로 다시 확인해 아래 상수를
 갱신해야 한다("다시 돌릴 수 있게"의 의미가 여기서는 "같은 절차를 다시 밟게" 쪽이다).
@@ -27,6 +31,26 @@
 발표를 부동산위키(교차 확인용, 같은 25구 표를 보여준다)로 한 번 더 대조했다.
 이 셋의 지정 여부는 현재 25구 전부 동일(true)하므로 "일부"가 없다 — 그래서 gu 값이
 전부 true인 게 이상한 게 아니라 실제로 그렇다.
+
+2026-09-04에 성남 3구를 더하며 같은 정책브리핑(newsId=148950973)을 다시 읽었다 —
+그 발표문이 "경기도 12개 지역"으로 과천시·광명시·성남시 분당·수정·중원구·수원시
+영통·장안·팔달구·안양시 동안구·용인시 수지구·의왕시·하남시를 원문 그대로 나열하고,
+이 12곳이 조정대상지역·투기과열지구·토지거래허가구역 셋 다에 든다고 밝힌다(원문:
+"그 외 서울 21개 자치구 전체와 경기도 12개 지역은 새로 지정한다"). 토지거래허가구역의
+효력발생일은 발표문에 "지정 공고한 날부터 5일 후인 10월20일부터 발생한다"고 못박혀
+있다 — 서울 25개구와 같은 날(2025-10-20)이다. 조정대상지역·투기과열지구의 시행일은
+발표문에 따로 안 나와 서울과 같은 국토교통부공고 시행일(2025-10-16)을 그대로 쓴다 —
+서울 21개구와 경기 12곳이 "그 외"로 한 문장에 같이 묶여 지정됐으므로 같은 고시로
+봐도 된다. 성남 3구는 이 2025-10-16/10-20 지정 이전에는(2023-01-05 규제지역 재편 때)
+전국 대부분 지역과 함께 해제돼 있었다 — 그때도 유지된 건 서울 4구(강남·서초·송파·
+용산)뿐이라 성남도 서울 21구와 같은 "신규 지정" 문구를 쓴다.
+
+## 분양가상한제 — 성남은 지정된 적이 없다
+2020년 민간택지 분양가상한제 지정(국토교통부공고 제2020-1244호류)은 서울 18개구만
+묶었다 — 성남을 포함한 경기 지역은 그 목록에 없었다(2026-09-04, 국가법령정보센터
+DRF admrul 검색·언론 보도로 교차 확인). 2025-10-15 대책 발표문(newsId=148950973)에도
+분양가상한제 지정 문구가 없다. 그래서 성남 3구는 지정된 적이 없는 구(서울의
+강북·관악구 등과 같은 부류)로 다룬다.
 
     python scripts/fetch_zones.py
 """
@@ -51,10 +75,25 @@ NAME_ALIAS = {
     '잠실': '송파구', '삼성': '강남구', '대치': '강남구', '청담': '강남구',
 }
 
+# 성남 3구 — 경기도 12개 지역 중 성남시 몫. 근거는 위 모듈 머리 「조정대상지역·
+# 투기과열지구·성남 토지거래허가구역」 절.
+_GG_SEONGNAM_SRC = ('https://www.korea.kr/news/policyNewsView.do?newsId=148950973 '
+                    '(서울 전역·경기 12곳 투기과열지구·토지거래허가구역 지정, '
+                    '2025-10-15 관계부처 합동 발표 — "과천시, 광명시, 성남시 '
+                    '분당·수정·중원구, 수원시 영통·장안·팔달구, 안양시 동안구, '
+                    '용인시 수지구, 의왕시, 하남시")')
+
 
 def load_gu_names():
     d = json.load(io.open(GU_SRC, encoding='utf-8'))
     return sorted(d['gu'].keys())
+
+
+def load_gu_sido():
+    """구 이름 -> sido('서울'|'경기'). _seoul_gu.json(지도 정본)에서 읽는다 —
+    서울 API 결과를 성남에 잘못 씌우지 않으려면 어느 구가 서울인지를 알아야 한다."""
+    d = json.load(io.open(GU_SRC, encoding='utf-8'))
+    return dict((name, e.get('sido', '서울')) for name, e in d['gu'].items())
 
 
 def fetch_land_rows():
@@ -92,11 +131,14 @@ def matched_gu(text):
     return hit
 
 
-def build_land_zone(all_gu):
+def build_land_zone(all_gu, sido_of):
+    """토지거래허가구역. all_gu 는 서울 25구 + 성남 3구다 — 서울부동산정보광장
+    API 는 서울시 것이라 sido_of 로 걸러 서울 구에만 적용하고, 성남 3구는 이 API
+    안 쓰고 _GG_SEONGNAM 상수로 채운다(위 모듈 머리 참고)."""
     rows = fetch_land_rows()
     as_of = fetch_land_asof() or '확인 못함'
 
-    blanket = []          # areaCn == '市 전체' 인 행 — 25구 전부에 적용
+    blanket = []          # areaCn == '市 전체' 인 행 — 서울 25구 전부에 적용
     partial_by_gu = {}    # 구 이름 -> [문구, ...]
     unresolved = []       # 위치가 특정 안 된 행(신속통합기획 등)
 
@@ -115,17 +157,24 @@ def build_land_zone(all_gu):
         else:
             unresolved.append('%s(%s, %s, 면적 %s, %s)' % (typ, first, authr, area, note))
 
+    gg_detail = ('토지거래허가구역(2025-10-20 시행, %s)' % _GG_SEONGNAM_SRC)
     gu_out = {}
     for gu in all_gu:
+        if sido_of.get(gu) != '서울':
+            # 성남 3구 — 서울시 API 밖. "市 전체"(서울 전역) 문구를 그대로 물려주면
+            # 근거 없는 값이 된다
+            gu_out[gu] = {'value': '전부', 'detail': gg_detail}
+            continue
         parts = list(blanket) + partial_by_gu.get(gu, [])
         gu_out[gu] = {'value': '전부' if blanket else ('일부' if parts else '없음'),
                        'detail': ' / '.join(parts) if parts else '해당 지정 없음'}
 
     note = ('서울부동산정보광장 API(searchAppointStatusList.do) 레코드 %d건 중 '
             '위치가 특정 안 된 사업형 지정 %d건은 구별로 못 옮겨 여기 남긴다: %s'
+            ' · 성남 3구는 이 API 밖이라 별도 조사(정책브리핑 2025-10-15 발표문)로 채운다'
             % (len(rows), len(unresolved), '; '.join(unresolved)))
     return {
-        'src': LAND_PAGE + ' (표 데이터는 ' + LAND_API + ')',
+        'src': LAND_PAGE + ' (표 데이터는 ' + LAND_API + ') · 성남 3구는 ' + _GG_SEONGNAM_SRC,
         'as_of': as_of,
         'note': note,
         'gu': gu_out,
@@ -239,22 +288,27 @@ def build_regulation_zone(all_gu, src, label):
 
 def main():
     all_gu = load_gu_names()
+    sido_of = load_gu_sido()
     out = {
-        'fetched': '2026-09-03',
-        '토지거래허가구역': build_land_zone(all_gu),
+        'fetched': '2026-09-04',
+        '토지거래허가구역': build_land_zone(all_gu, sido_of),
         '조정대상지역': build_regulation_zone(all_gu, _ADJUST_SRC, '조정대상지역'),
         '투기과열지구': build_regulation_zone(all_gu, _OVERHEAT_SRC, '투기과열지구'),
         '분양가상한제': build_ceiling_zone(all_gu),
     }
     io.open(OUT, 'w', encoding='utf-8').write(json.dumps(out, ensure_ascii=False, indent=1))
-    print('gu=%d -> %s (%.1fKB)' %
-          (len(all_gu), OUT, os.path.getsize(OUT) / 1024.0))
+    print('gu=%d (서울 %d · 경기 %d) -> %s (%.1fKB)' %
+          (len(all_gu), sum(1 for v in sido_of.values() if v == '서울'),
+           sum(1 for v in sido_of.values() if v != '서울'), OUT, os.path.getsize(OUT) / 1024.0))
     land = out['토지거래허가구역']
-    print('토지거래허가구역 as_of=%s  강남구=%s' % (land['as_of'], land['gu']['강남구']['value']))
+    print('토지거래허가구역 as_of=%s  강남구=%s  분당구=%s' %
+          (land['as_of'], land['gu']['강남구']['value'], land['gu'].get('분당구', {}).get('value')))
     for k in ('조정대상지역', '투기과열지구', '분양가상한제'):
         vals = set(v['value'] for v in out[k]['gu'].values())
         on = sorted(g for g, v in out[k]['gu'].items() if v['value'] is True)
         print('%s: 값 집합=%s  true=%d구 %s' % (k, vals, len(on), ' '.join(on[:6])))
+        for g in ('분당구', '수정구', '중원구'):
+            print('    %s -> %s' % (g, out[k]['gu'][g]['value']))
 
 
 if __name__ == '__main__':

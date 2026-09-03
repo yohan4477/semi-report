@@ -36,6 +36,16 @@
 따로 돌리면 세 권역에 걸치지 않는 22구를 볼 방법이 없고, 겹치는 구도 없으니(세
 권역이 서로소) 한 번에 다 나눠 담아도 세 권역 결과가 이전과 같다.
 
+2026-09-04 두 번째 — 지도가 성남 3구까지 그리게 되며 지역 필터를 서울 + 경기로
+넓혔다. `SUBSCRPT_AREA_CODE_NM`(청약홈 지역 파라미터)이 시·도 단위까지만 좁혀지는
+건 서울 때와 같아서(위 머리 2번), 경기 전체를 한 번 더 받고 공급위치(HSSPLY_ADRES)에
+"성남시"가 든 행만 남긴다 — 안양·수원 같은 다른 경기 시가 섞여 들어오지 않는다.
+`_in_gu`가 구 이름을 찾을 때 ALL_GU 는 `_seoul_gu.json`(지도 정본)을 그대로 읽으므로
+그 파일에 성남 3구가 들어간 순간 "성남시 분당구" 같은 주소에서 "분당구" 가 그대로
+잡힌다 — 이 파일에서 새로 할 일은 경기 사도를 한 번 더 부르는 것뿐이다. 경기 호출이
+실패해도(게이트웨이 장애 등) 서울 몫은 버리지 않는다 — `fetch.gg_error` 에 사유만
+남기고 서울 결과로 계속 간다.
+
 ## 열쇠
 
 공공데이터포털(data.go.kr)에서 두 서비스를 각각 활용신청한다.
@@ -75,7 +85,7 @@ AREA_GU = {
 
 
 def _all_gu():
-    """서울 25구 이름 — insights/watch/_seoul_gu.json(지도 정본)에서 읽는다.
+    """서울 25구 + 성남 3구 이름 — insights/watch/_seoul_gu.json(지도 정본)에서 읽는다.
     손으로 목록을 새로 적지 않는다 — 지도가 구를 늘리거나 이름을 바꾸면 여기도
     따라가야 한다."""
     p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -251,8 +261,8 @@ def _ym(v):
 def fetch(target_name, area=None, laws=()):
     """워치 계약대로 metric 을 돌려준다. 열쇠가 없으면 빈 dict 와 함께 사유를 알린다.
 
-    target_name 은 정책 줄 이름(「청약 제도」)이고, 서울 25구 전부를 한 줄이 함께
-    본다. `pblanc_gu` 는 구마다 공고 목록을 묶은 지도용 산출(by_gu)이고,
+    target_name 은 정책 줄 이름(「청약 제도」)이고, 서울 25구 + 성남 3구를 한 줄이
+    함께 본다. `pblanc_gu` 는 구마다 공고 목록을 묶은 지도용 산출(by_gu)이고,
     `pblanc_cnt_<권역>`·`pblanc_list_<권역>`(세 권역만)은 「청약 — 조건」 절의
     표가 그대로 쓰던 것이라 남긴다. 공고 하나당 경쟁률 호출(_rate1_summary)과
     구 판정(_in_gu)은 한 번만 돈다 — 세 권역이 서로소라 나중에 권역별로 다시
@@ -263,11 +273,24 @@ def fetch(target_name, area=None, laws=()):
         # 값을 못 받았다는 것을 지어낸 값으로 덮지 않는다. 빈 손이 정확한 답이다.
         fetch.last_error = str(e)
         fetch.rate_error = None
+        fetch.gg_error = None
         return {}
     except Exception as e:                      # 게이트웨이 장애·응답 꼴 변경
         fetch.last_error = '%s: %s' % (type(e).__name__, e)
         fetch.rate_error = None
+        fetch.gg_error = None
         return {}
+
+    # 경기(성남) — 서울 몫은 이미 손에 있으니 이 호출이 죽어도 통째로 안 비운다.
+    # 경기는 서울보다 공고가 많을 수 있어 perPage 를 넉넉히 잡는다(500) — 그래도
+    # 다음 페이지를 못 받으면 놓친 공고가 있을 수 있다는 것을 src 에 적는다.
+    fetch.gg_error = None
+    try:
+        gg_rows = pblancs('경기', since=_six_months_ago(), page_size=500)
+        rows = rows + [r for r in gg_rows
+                       if '성남시' in str(r.get('HSSPLY_ADRES') or '')]
+    except Exception as e:                       # noqa: BLE001 — 경기 몫만 빠진다
+        fetch.gg_error = '%s: %s' % (type(e).__name__, e)
 
     fetch.last_error = None
     fetch.rate_error = None
@@ -275,7 +298,7 @@ def fetch(target_name, area=None, laws=()):
     rate_ok = True    # 경쟁률 서비스가 도중에 죽으면 남은 공고는 조용히 건너뛴다
     types_ok = True   # getAPTLttotPblancMdl 이 도중에 죽으면 남은 공고는 조용히 건너뛴다
     matched = []       # [(구, row, item), …] — 구를 뽑은 공고만
-    n_unmatched = 0     # 공급위치 주소에 25구 이름이 하나도 안 걸린 공고
+    n_unmatched = 0     # 공급위치 주소에 28구 이름이 하나도 안 걸린 공고
     for r in rows:
         gu_hit = _in_gu(r, ALL_GU)
         if not gu_hit:
@@ -365,10 +388,11 @@ def fetch(target_name, area=None, laws=()):
             'kind': '공표',
             'unit': '건(모집공고)',
             'src': ('공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · '
-                    'getAPTLttotPblancDetail · 최근 6개월 서울 공고 %d건 중 공급위치에서 '
-                    '25구 이름을 찾은 것 %d건(못 찾은 것 %d건) · 주소 문자열 매칭이라 '
-                    '구를 잘못 골랐거나 놓친 공고가 있을 수 있다'
-                    % (len(rows), len(matched), n_unmatched)),
+                    'getAPTLttotPblancDetail · 최근 6개월 서울+경기(성남시만) 공고 %d건 중 '
+                    '공급위치에서 28구 이름을 찾은 것 %d건(못 찾은 것 %d건) · 주소 문자열 '
+                    '매칭이라 구를 잘못 골랐거나 놓친 공고가 있을 수 있다%s'
+                    % (len(rows), len(matched), n_unmatched,
+                       ' · 경기 몫을 못 받았다: %s' % fetch.gg_error if fetch.gg_error else '')),
             # 공고는 달마다 나오지 않는다. 한 점을 선으로 만들지 않는다
             'series': [],
             'partial': False,
@@ -419,6 +443,9 @@ if __name__ == '__main__':
               '(분양정보) · https://www.data.go.kr/data/15098905/openapi.do (경쟁률)')
         print('발급 뒤 환경변수 %s 에 넣는다.' % KEY_ENV)
     else:
+        gg_err = getattr(fetch, 'gg_error', None)
+        if gg_err:
+            print('경고: 경기(성남) 몫을 못 받았다 — %s\n' % gg_err)
         rate_err = getattr(fetch, 'rate_error', None)
         if rate_err:
             print('경고: 경쟁률(15098905)을 못 받았다 — %s\n' % rate_err)

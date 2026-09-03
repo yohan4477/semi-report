@@ -107,9 +107,9 @@ def _load_json(path):
 
 SEOUL_GU = _load_json(SEOUL_GU_PATH)
 ZONES = _load_json(ZONES_PATH)
-# 구 → 권역. 보는 것은 세 권역뿐이라(강남 3구·노도강·마용성) 그 구 아홉만 채워진다.
-# 나머지 열여섯은 지도에 있지만 「보고 있지 않은 구」다.
-GU_REGION = dict((g, t) for t in ('강남 3구', '노도강', '마용성')
+# 구 → 권역. 보는 것은 넷뿐이라(강남 3구·노도강·마용성·성남) 그 구 열둘만 채워진다.
+# 나머지는 지도에 있지만 「보고 있지 않은 구」다.
+GU_REGION = dict((g, t) for t in ('강남 3구', '노도강', '마용성', '성남')
                  for g in AREAS.get(t, {}).get('구', []))
 WATCHED_GU = sorted(GU_REGION)
 
@@ -201,9 +201,9 @@ def _sub_gu_data(watches):
 
 
 def _all_sub_items(watches):
-    """청약 제도 줄의 최근 6개월 공고 전부 — 서울 25구를 한 목록으로 편다(권역
-    셋에 갇히지 않는다). 어댑터가 못 냈으면(열쇠 없음) (None, None) — 「청약
-    공고」 화면·본 장 「청약」 절 축약 둘 다 이 자리를 그냥 비운다."""
+    """청약 제도 줄의 최근 6개월 공고 전부 — 서울 25구 + 성남 3구를 한 목록으로
+    편다(권역 셋에 갇히지 않는다). 어댑터가 못 냈으면(열쇠 없음) (None, None) —
+    「청약 공고」 화면·본 장 「청약」 절 축약 둘 다 이 자리를 그냥 비운다."""
     sub_gu, sub_asof = _sub_gu_data(watches)
     if sub_gu is None:
         return None, None
@@ -597,6 +597,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
 .seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
+/* 성남 3구 — 서울 밖이라는 것을 옅은 점선 테두리로만 표시한다. 채움 층은 다른 구와
+   똑같이 값을 따른다 — 성남만 다른 색으로 묶으면 「지금 값이 다르다」는 뜻으로
+   읽힌다(여기서 말하려는 건 시·도 경계일 뿐이다) */
+.seoul-map .gu[data-sido="경기"]{stroke-dasharray:2.5 2}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
@@ -630,7 +634,14 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    출처라는 이유만으로 이긴다. 실제로 그렇게 나가 구 25개가 패널 아래 전부
    펼쳐져 보였다(2026-09-03, 스크린샷으로 잡힘) — !important 로 확실히 막는다. */
 [hidden]{display:none!important}
-.gu-panel{display:block}
+/* flex column — 켜진 층에 맞는 덩이를 order 로 맨 위(머리 다음)에 올리려면 flex
+   컨테이너라야 한다(2026-09-04, 사용자 스크린샷: 「청약 공고」 층을 켜고 구를
+   눌렀는데 전세가율부터 나오고 정작 공고는 아래로 잘렸다). 순서는 아래 세 켜로 –
+   머리(-3)·부제(-2)는 늘 고정, 그 아래 「이 층의 덩이」만 -1 로 올라온다. 전세가율
+   층(기본)은 그 덩이에 order 를 안 줘서 지금 문서 순서 그대로 첫 자리에 남는다 */
+.gu-panel{display:flex;flex-direction:column}
+.mappanel[data-layer="cap"] .gp-cap{order:-1}
+.mappanel[data-layer="sub"] .gp-pblanc{order:-1}
 /* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
    「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
 @media (min-width:621px){
@@ -651,13 +662,13 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .rs-n{margin:2px 0 0;font-size:23px;font-weight:700}
 .rs-line{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
 .rs-cta{display:inline-block;margin:6px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
-.gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
+.gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0;order:-3}
 .gp-name{font-size:20px;font-weight:700}
 .gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
   border:0;background:transparent;color:var(--ink-3);font-size:20px;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;border-radius:999px}
 .gp-close:hover{background:var(--line);color:var(--ink)}
-.gp-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.gp-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3);order:-2}
 /* 뜻 한 줄 — 수 세 줄보다 먼저 읽힌다 */
 .gp-mean{font-size:14.5px;font-weight:600;color:var(--ink);margin:8px 0 10px;line-height:1.5}
 /* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
@@ -677,8 +688,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
 @media (max-width:620px){
   .gu-panel:not([data-panel="default"]){
-    display:block!important;position:fixed;left:0;right:0;bottom:0;max-height:45vh;
-    overflow-y:auto;background:var(--surface);border-top:1px solid var(--line);
+    display:flex!important;flex-direction:column;position:fixed;left:0;right:0;bottom:0;
+    max-height:45vh;overflow-y:auto;background:var(--surface);border-top:1px solid var(--line);
     border-radius:14px 14px 0 0;z-index:20;
     padding:14px 16px 20px;transform:translateY(100%);pointer-events:none;visibility:hidden}
   /* 그림자는 열렸을 때만. 숨은 시트에도 두면 위로 번진 그림자가 화면 밑에 검은 띠로
@@ -2014,7 +2025,7 @@ def subscription_page(watches):
            '<title>청약 공고 — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#subscription">'
            '← 포트폴리오 워치</a>'
-           '<header><p class="meta mono">서울 25구 · 최근 6개월 %d건 · 청약홈 기준 %s</p>'
+           '<header><p class="meta mono">서울 25구 + 성남 3구 · 최근 6개월 %d건 · 청약홈 기준 %s</p>'
            '<h1>청약 공고</h1><p class="verdict">%s</p></header>%s'
            '<div class="dbody">%s%s</div>'
            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->%s'
@@ -2171,6 +2182,7 @@ def _gu_svg(gu_data):
         label = ('전세가율 %.1f%%' % e['jeonse']['cur']) if watched else '보고 있지 않은 구'
         cap_v = _cap_info(name)[0]
         attrs = ['class="gu"', 'data-gu="%s"' % E(name),
+                 'data-sido="%s"' % E(g.get('sido', '서울')),
                  'data-cap="%s"' % ('yes' if cap_v is True
                                     else 'no' if cap_v is False else 'null')]
         sub_bin = _sub_bin((e.get('sub_cnt') or {}).get('value'))
@@ -2347,44 +2359,55 @@ def _gu_panel_html(name, e):
     h.append('<p class="gp-row"><span class="gp-lbl">규제지역</span>%s · %s 기준</p>'
              % (E(_reg_row_text(e)), E(reg_as_of)))
     # 분양가상한제 — 규제지역과 별개 지정이라 같은 구에서 답이 갈린다. 적용 주택은
-    # 재당첨 제한이 10년으로 가장 길다(청약 제도 줄의 「당첨 뒤 제한」 표)
+    # 재당첨 제한이 10년으로 가장 길다(청약 제도 줄의 「당첨 뒤 제한」 표). gp-cap
+    # 로 한 덩이를 묶는다 — 분양가상한제 층을 켰을 때 이 덩이가 CSS order:-1 로
+    # 맨 위(머리 다음)로 올라간다(2026-09-04, 「누른 층과 다른 게 먼저 보인다」).
     cap_v, cap_d = _cap_info(name)
     cap_as_of = ZONES.get('분양가상한제', {}).get('as_of') or '—'
     cap_txt = ('적용 · %s 기준' % cap_as_of if cap_v is True
                else '미적용' if cap_v is False else '확인 안 됨')
-    h.append('<p class="gp-row"><span class="gp-lbl">분양가상한제</span>%s</p>' % E(cap_txt))
+    cap_h = ['<p class="gp-row"><span class="gp-lbl">분양가상한제</span>%s</p>' % E(cap_txt)]
     # 원 지정이 동 단위였는데 그 목록을 못 열었다 — 구 전역으로 읽으면 안 된다
     if cap_d and '확인 못 함' in cap_d:
-        h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
-                 % E(cap_d[:40]))
+        cap_h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
+                     % E(cap_d[:40]))
+    h.append('<div class="gp-cap">%s</div>' % ''.join(cap_h))
     # 청약홈 최근 공고 — 이 구 것(권역이 아니라). 열쇠가 없어 어댑터가 못 냈으면
-    # (sub_cnt 없음) 줄 자체를 안 낸다. 값이 있으면 0건이어도 낸다 — 「못 봤다」와
-    # 「0건이다」는 다른 상태다
+    # (sub_cnt 없음) 덩이 자체를 안 낸다. 값이 있으면 0건이어도 낸다 — 「못 봤다」와
+    # 「0건이다」는 다른 상태다. gp-pblanc 로 한 덩이를 묶는다 — 청약 공고 층을
+    # 켰을 때 이 덩이가 CSS order:-1 로 맨 위로 올라간다(위 gp-cap 과 같은 이유).
     sc = e.get('sub_cnt')
     if sc is not None:
         items = e.get('sub_items') or []
-        n_open = sum(1 for it in items if _sub_status(it, _TODAY) == '접수 중')
-        open_txt = (' <span class="t-sub">· 지금 접수 중 %d건</span>' % n_open) if n_open else ''
-        h.append('<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
-                 '<span class="t-sub">· 6개월 · %s 기준</span>%s</p>'
-                 % (sc['value'], E(sc['as_of']), open_txt))
-        for it in items[:3]:
-            nm = E(it.get('name') or '—')
-            # 단지명은 그 건 자신의 앵커로 건다(청약공고_스펙 추가 §2) — 청약홈
-            # 실제 링크는 여기서 안 쓴다(그 건 안 「청약홈에서 보기 →」에만 쓴다)
-            if it.get('id'):
-                nm = ('<a href="watch/청약 공고.html#p-%s">%s</a>' % (E(it['id']), nm))
-            rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
-            st = _sub_status(it, _TODAY)
-            chip = ('<span class="tag %s gp-chip">%s</span>'
-                    % (_SUB_STATUS_CLS.get(st, 't-none'), E(st)))
-            h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s %s</p>'
-                     % (nm, E(_mmdd(it.get('apply'))), rate_txt, chip))
-        if len(items) > 3:
-            h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
+        if sc['value'] == 0:
+            # 값 없음 문구지 자리표시가 아니다 — 청약 공고 층을 켠 사람이 이 구를
+            # 골랐을 때 물은 것(공고가 있나)에 대한 답이 이 한 줄이다
+            pb_h = ['<p class="gp-row">이 구엔 최근 6개월 공고가 없습니다 '
+                    '<span class="t-sub">· %s 기준</span></p>' % E(sc['as_of'])]
+        else:
+            n_open = sum(1 for it in items if _sub_status(it, _TODAY) == '접수 중')
+            open_txt = (' <span class="t-sub">· 지금 접수 중 %d건</span>' % n_open) if n_open else ''
+            pb_h = ['<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
+                    '<span class="t-sub">· 6개월 · %s 기준</span>%s</p>'
+                    % (sc['value'], E(sc['as_of']), open_txt)]
+            for it in items[:3]:
+                nm = E(it.get('name') or '—')
+                # 단지명은 그 건 자신의 앵커로 건다(청약공고_스펙 추가 §2) — 청약홈
+                # 실제 링크는 여기서 안 쓴다(그 건 안 「청약홈에서 보기 →」에만 쓴다)
+                if it.get('id'):
+                    nm = ('<a href="watch/청약 공고.html#p-%s">%s</a>' % (E(it['id']), nm))
+                rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
+                st = _sub_status(it, _TODAY)
+                chip = ('<span class="tag %s gp-chip">%s</span>'
+                        % (_SUB_STATUS_CLS.get(st, 't-none'), E(st)))
+                pb_h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s %s</p>'
+                            % (nm, E(_mmdd(it.get('apply'))), rate_txt, chip))
+            if len(items) > 3:
+                pb_h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
         # 페이지에 구 필터가 없으므로 이 구 이름으로 걸러 보내지 않는다 — 전체
         # 목록으로 돌린다(청약공고_스펙 §5)
-        h.append('<a class="gp-more" href="watch/청약 공고.html">이 구 공고 전부 보기 →</a>')
+        pb_h.append('<a class="gp-more" href="watch/청약 공고.html">이 구 공고 전부 보기 →</a>')
+        h.append('<div class="gp-pblanc">%s</div>' % ''.join(pb_h))
     if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
@@ -2494,11 +2517,16 @@ document.addEventListener('click',function(e){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&locked){locked=null;apply(null);}
 });
-/* 층 전환 — <svg> 의 data-layer 하나만 바꾸고 채움은 CSS 가 고른다. 패널은 안
-   건드린다: 「강남구가 지금 어떤가」는 층과 무관하게 같은 답이다 */
+/* 층 전환 — <svg> 와 .mappanel 양쪽에 data-layer 를 박고 채움·순서는 CSS 가 고른다.
+   패널 안 값 자체는 안 건드린다: 「강남구가 지금 어떤가」는 층과 무관하게 같은 답이다.
+   .mappanel 쪽 data-layer 는 그 층에 맞는 덩이(gp-cap·gp-pblanc)를 CSS order 로
+   맨 위에 올리는 데만 쓴다(2026-09-04) — 「청약 공고」층을 켜고 구를 골랐는데
+   전세가율부터 나오던 것을 고친 자리다 */
+var mappanel=document.querySelector('.mappanel');
 Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
   b.addEventListener('click',function(){
     svg.setAttribute('data-layer',b.dataset.layer);
+    if(mappanel)mappanel.setAttribute('data-layer',b.dataset.layer);
     Array.from(document.querySelectorAll('.layer-btn')).forEach(function(x){
       var on=(x===b);x.classList.toggle('is-on',on);
       x.setAttribute('aria-pressed',on?'true':'false');});
@@ -2561,7 +2589,8 @@ def seoul_map_section(watches, asof, checked):
                      for name in sorted(SEOUL_GU['gu'])) + \
              ('<div class="gu-panel" data-panel="default">%s</div>'
               % _region_summary_html(watches))
-    cap = '<p>지도 원본 southkorea/seoul-maps · 값 기준 %s</p>' % E(asof)
+    cap = ('<p>지도 원본 southkorea/seoul-maps(서울)·southkorea/southkorea-maps(성남) · '
+           '값 기준 %s</p>' % E(asof))
     # 층 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라 층에서
     # 내려 배너 문장으로 갔고, 분양가상한제는 넷과 스물하나로 갈려 층이 된다.
     # 청약 공고는 열쇠가 있을 때만(sub_gu is not None) 셋째 층으로 더한다 —
@@ -2582,11 +2611,11 @@ def seoul_map_section(watches, asof, checked):
                            % _sub_legend_html(watches))
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
     return (
-        '<p class="hero-t">서울 25구 — 지금 전세가율이 어디쯤인가</p>%s'
+        '<p class="hero-t">서울 25구 + 성남 3구 — 지금 전세가율이 어디쯤인가</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
-        '<div class="mappanel" aria-live="polite" aria-atomic="true">%s%s'
+        '<div class="mappanel" data-layer="ratio" aria-live="polite" aria-atomic="true">%s%s'
         '</div></div>%s'
         % (btns, svg, cap, _zone_banner(checked), changed_section(watches),
            panels, ''.join(legend_list), _MAP_JS))
@@ -2759,8 +2788,8 @@ def build():
          % (FONTS, CSS)]
     h.append('<header><div class="h-top"><h1>포트폴리오 워치</h1>'
              '<p class="meta mono">마지막 확인 %s · 자료 기준 %s</p></div>'
-             '<p class="lede">서울 세 권역, 지금 전세로 갈지 매매로 갈지 — 값을 깎을 수 있는 '
-             '장인지, 제도가 셈을 바꿨는지.</p></header>' % (E(checked), E(asof)))
+             '<p class="lede">서울 세 권역과 성남, 지금 전세로 갈지 매매로 갈지 — 값을 깎을 수 '
+             '있는 장인지, 제도가 셈을 바꿨는지.</p></header>' % (E(checked), E(asof)))
     # 절 바로가기 — header 밖에 둔다. sticky 는 제 부모 상자 안에서만 붙어서, header 안에
     # 넣으면 header 가 화면 위로 지나가는 순간 같이 사라진다(실제로 그렇게 나갔다). — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을
     # 말한다(스킨 첫 화면에서 카드를 숨기고 그 앞을 막는 것). 이 줄은 아래 절을
