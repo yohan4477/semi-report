@@ -56,8 +56,9 @@ def check(slug, out):
     if secs and '말하지 않은 것' not in secs[-1][1]:
         fail('G2', '마지막 절이 「말하지 않은 것」이 아니다: %s' % secs[-1][1][:30])
     lead = body.split('## 1.')[0]
-    if '(이하 진행자A)' not in lead:
-        fail('G3', '여는 문단에 「(이하 진행자A)」가 없다')
+    # 진행자가 한 사람인 회차가 있다(WEKA 편은 Vik 단독) — 그 진행자가 본문에 나올 때만 요구한다
+    if re.search(r'Austin', body) and '(이하 진행자A)' not in lead:
+        fail('G3', 'Austin 이 말하는데 여는 문단에 「(이하 진행자A)」가 없다')
     if re.search(r'\bVik\b', body) and '(이하 진행자V)' not in lead:
         fail('G3', 'Vik 이 말하는데 여는 문단에 「(이하 진행자V)」가 없다')
     for para in body.split('\n\n'):
