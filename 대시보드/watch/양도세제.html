@@ -108,7 +108,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     box-shadow:0 2px 12px rgba(16,20,24,.10)}
 }
 /* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
-.rs{display:block;position:relative;padding:12px 26px 12px 0;
+.rs{display:block;position:relative;padding:9px 26px 9px 0;
   border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
 .rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
@@ -116,10 +116,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   border-radius:8px}
 .rs:hover::after{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
-.rs-v{margin:6px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
-.rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
-.rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
-.rs-cta{display:inline-block;margin:8px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.rs-v{margin:4px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-n{margin:2px 0 0;font-size:23px;font-weight:700}
+.rs-line{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
+.rs-cta{display:inline-block;margin:6px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
 .gp-name{font-size:20px;font-weight:700}
 .gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
@@ -186,6 +186,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .chg-k{flex:0 0 auto;font-weight:600;font-size:.9rem}
 .chg-v{font-size:.9rem;color:var(--ink-2)}
 .chg-say{font-size:.85rem;color:var(--ink-3)}
+/* 둘째 줄 — 전세가율만 보면 전세가 빠진 건지 매매가 오른 건지 모른다 */
+.chg-2{flex:0 0 100%;font-size:.85rem;color:var(--ink-2);margin:3px 0 0}
 /* 절 제목 옆 잔글씨 — 열마다 되풀이되는 상수(마지막 확인 날짜)를 한 번만 적는다 */
 .band-note{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}

@@ -179,6 +179,7 @@ def _gu_map_data(watches):
     rows_by = _movement_rows(watches)
     jeonse = dict(rows_by.get('전세가율') or [])
     sale = dict(rows_by.get('매매가격지수') or [])
+    idx = _idx_rows(watches)
     region_raw = _region_raw(watches)
     region_slug = dict((w['target'], w['slug']) for w in _live_areas(watches))
     region_view = dict((w['target'], w.get('view') or '') for w in _live_areas(watches))
@@ -189,6 +190,12 @@ def _gu_map_data(watches):
                  'region_view': region_view.get(region) or ''}
         entry['jeonse'] = _val3(jeonse[name]) if name in jeonse else None
         entry['sale'] = _val3(sale[name]) if name in sale else None
+        # 전세가격지수 — 매매가격지수와 같은 단위라 나란히 놓아야 전세가율이
+        # 왜 움직였는지가 갈린다(전세가 빠졌나, 매매가 올랐나)
+        ji = (idx.get(name) or {}).get('jeonse')
+        entry['jeonse_idx'] = _val3(ji) if ji else None
+        si = (idx.get(name) or {}).get('sale')
+        entry['gap'] = (_delta(si, 3) if si else None, _delta(ji, 3) if ji else None)
         sd = (region_raw.get(region) or {}).get('supply_demand') if region else None
         entry['sd'] = ({'value': sd.get('value'), 'area': sd.get('area')} if sd else None)
         entry['lth_value'], entry['lth_detail'] = _lth_info(name)
@@ -320,7 +327,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     box-shadow:0 2px 12px rgba(16,20,24,.10)}
 }
 /* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
-.rs{display:block;position:relative;padding:12px 26px 12px 0;
+.rs{display:block;position:relative;padding:9px 26px 9px 0;
   border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
 .rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
@@ -328,10 +335,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   border-radius:8px}
 .rs:hover::after{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
-.rs-v{margin:6px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
-.rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
-.rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
-.rs-cta{display:inline-block;margin:8px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.rs-v{margin:4px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-n{margin:2px 0 0;font-size:23px;font-weight:700}
+.rs-line{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
+.rs-cta{display:inline-block;margin:6px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
 .gp-name{font-size:20px;font-weight:700}
 .gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
@@ -398,6 +405,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .chg-k{flex:0 0 auto;font-weight:600;font-size:.9rem}
 .chg-v{font-size:.9rem;color:var(--ink-2)}
 .chg-say{font-size:.85rem;color:var(--ink-3)}
+/* 둘째 줄 — 전세가율만 보면 전세가 빠진 건지 매매가 오른 건지 모른다 */
+.chg-2{flex:0 0 100%;font-size:.85rem;color:var(--ink-2);margin:3px 0 0}
 /* 절 제목 옆 잔글씨 — 열마다 되풀이되는 상수(마지막 확인 날짜)를 한 번만 적는다 */
 .band-note{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
@@ -541,8 +550,10 @@ def _extra_sentence(ratio):
     읽는 사람에게 「43인지 57인지」로 남는다 — 둘이 한 짝이라는 것을 말로 적는다."""
     if not ratio:
         return ''
-    return ('전세 보증금이 매매가의 %d%%. 나머지 %d%%를 더 얹어야 매매로 넘어갑니다.'
-            % (round(ratio), round(100.0 - ratio)))
+    # 한 줄에 든다. 두 줄짜리로 두면 권역 카드 셋이 데스크톱 첫 화면(900px)을 넘어
+    # 셋을 견줄 수가 없다 — 이 절이 답하는 물음이 그 견주기다
+    return '전세금이 매매가의 %d%%. %d%%를 더 얹으면 매매입니다.' % (round(ratio),
+                                                    round(100.0 - ratio))
 
 
 def _delta_num(d, unit=''):
@@ -555,6 +566,86 @@ def _delta_num(d, unit=''):
     cls = 'd-up' if d > 0 else 'd-down'
     return ('<span class="delta %s">%s%.2f%s</span>'
             % (cls, '+' if d > 0 else '−', abs(d), E(unit)))
+
+
+def _idx_of(w):
+    """줄 하나의 구별 매매·전세 가격지수 시계열. w['metrics'](픽업)가 아니라
+    insights/watch/_metrics/ 원본을 읽는다 — 실거주 줄의 context 는 지수를 안 걸어서
+    (트리거가 전세가율뿐이라) 픽업에는 안 남는다.
+
+    반환: {구: {'sale': series, 'jeonse': series}}. 둘 다 기준월=100 짜리 지수라
+    같은 판에 놓고 견줄 수 있다(절대 매매가는 구 단위로 안 나온다 — 서울 전체
+    중위가뿐이다)."""
+    out = {}
+    if w['kind'] != 'realestate':
+        return out
+    for k, m in wl.metrics_of(w['kind'], w['slug']).items():
+        ser = [tuple(x) for x in (m.get('series') or [])]
+        area = m.get('area')
+        if not ser or not area:
+            continue
+        if k.startswith('sale_idx_'):
+            out.setdefault(area, {}).setdefault('sale', ser)
+        elif k.startswith('jeonse_idx_'):
+            out.setdefault(area, {}).setdefault('jeonse', ser)
+    return out
+
+
+def _idx_rows(watches):
+    """구 전부의 매매·전세 가격지수 — 여러 줄에 흩어진 것을 한 자리로 모은다."""
+    out = {}
+    for w in watches:
+        for gu, d in _idx_of(w).items():
+            e = out.setdefault(gu, {})
+            for k, ser in d.items():
+                e.setdefault(k, ser)
+    return out
+
+
+def _read_gap(ds, dj):
+    """매매와 전세 중 무엇이 전세가율을 움직였나.
+
+    전세가율 = 전세 ÷ 매매라, 그 값이 내려가도 전세가 빠진 건지 매매가 오른 건지
+    모른다. 두 지수의 같은 기간 변화를 견줘 그 물음에 답한다. 여기 쓰는 0.5pt 는
+    문턱이 아니라 「둘이 사실상 같이 갔다」와 「한쪽이 앞섰다」를 가르는 선이다 —
+    넘었다고 뭘 하라는 말은 안 한다."""
+    if ds is None or dj is None:
+        return ''
+    d = ds - dj
+    if -0.5 < d < 0.5:
+        return '매매와 전세가 같이 움직입니다'
+    sale_faster = d >= 0.5
+    if ds >= 0 and dj >= 0:
+        return ('매매가 전세보다 빨리 올라 전세가율이 내려갑니다' if sale_faster
+                else '전세가 매매보다 빨리 올라 전세가율이 올라갑니다')
+    if ds < 0 and dj < 0:
+        return ('전세가 매매보다 빨리 내려 전세가율이 내려갑니다' if sale_faster
+                else '매매가 전세보다 빨리 내려 전세가율이 올라갑니다')
+    if ds >= 0:
+        return '매매는 오르고 전세는 내려 전세가율이 내려갑니다'
+    return '전세는 오르고 매매는 내려 전세가율이 올라갑니다'
+
+
+def _idx_gap_line(pairs, note):
+    """「매매 +2.40pt · 전세 +0.95pt (석 달, 지수 · 구 셋 평균)」 + 읽는 말 한 줄.
+
+    pairs 는 (매매 Δ, 전세 Δ). 평균을 낸 경우 note 에 그렇게 적는다 — 우리가 만든
+    수라는 표시다(공표치가 아니다)."""
+    ds, dj = pairs
+    if ds is None or dj is None:
+        return ''
+    return ('<p class="rs-line">매매 %s · 전세 %s <span class="t-sub">(%s)</span> — %s</p>'
+            % (_delta_num(ds, 'pt'), _delta_num(dj, 'pt'), E(note), E(_read_gap(ds, dj))))
+
+
+def _idx_avg_delta(idx, gus, back=3):
+    """구 셋의 석 달 Δ 평균 — 값이 다 있는 구만 센다."""
+    out = []
+    for key in ('sale', 'jeonse'):
+        ds = [_delta(idx[g][key], back) for g in gus
+              if g in idx and key in idx[g] and _delta(idx[g][key], back) is not None]
+        out.append(sum(ds) / len(ds) if ds else None)
+    return tuple(out)
 
 
 def _delta_when(span, base):
@@ -848,6 +939,9 @@ def _term_dict(watches):
         '전세가율': ('그 구 아파트의 중위 전세가 ÷ 중위 매매가. 세입자로 있을 거면 낮은 게 좋고, '
                   '살 거면 높은 게 얹을 돈이 적다. 대신 높을수록 보증금이 집값에 가까워져 '
                   '못 돌려받을 위험이 커진다.'),
+        '전세가격지수': ('그 구 아파트 전세가가 %s 대비 얼마나 움직였나. 매매가격지수와 같은 '
+                    '단위라 나란히 놓고 견줄 수 있다 — 전세가율이 내려갔을 때 전세가 빠진 '
+                    '것인지 매매가 오른 것인지는 이 둘을 같이 봐야 갈린다.' % basephrase),
         '수급동향': '100 이 균형. 위면 사려는 사람이, 아래면 팔려는 사람이 많다.',
     }
 
@@ -861,7 +955,7 @@ def term_lines(watches, names):
     """등장하는 지표 이름마다 풀이 한 줄. names 에 없는 지표는 안 낸다 — 세 줄을
     늘 다 보여주면 그중 못 보는 지표까지 설명한 꼴이 된다."""
     terms = _term_dict(watches)
-    order = ('매매가격지수', '전세가율', '수급동향')
+    order = ('매매가격지수', '전세가격지수', '전세가율', '수급동향')
     keys = [n for n in order if n in names]
     if not keys:
         return ''
@@ -1011,6 +1105,10 @@ def figures_lists(w):
     for key, m in sorted((w.get('metrics') or {}).items()):
         if not m.get('series'):
             continue
+        # 매매·전세 가격지수는 따로 안 그린다 — 구마다 두 선을 한 판에 놓은
+        # idx_figs() 로 대체했다(같은 정보가 세 번 나오지 않게)
+        if key.startswith('sale_idx_') or key.startswith('jeonse_idx_'):
+            continue
         area = m.get('area') or ''
         base = key[:-(len(area) + 1)] if area and key.endswith('_' + area) else key
         gk, gn = GROUP.get(base, (base, area or base))
@@ -1035,6 +1133,30 @@ def figures_lists(w):
                           nsvg.replace('<svg ', '<svg class="fig-n" ', 1),
                           E(TITLE.get(base, base)))))
     return out
+
+
+def idx_figs(w):
+    """구마다 매매·전세 가격지수 두 선을 한 판에.
+
+    전세가율 = 전세 ÷ 매매라, 그 값이 내려가도 전세가 빠진 건지 매매가 오른 건지
+    한 선으로는 모른다. 둘 다 기준월=100 짜리 지수라 같은 축에 놓을 수 있다.
+    구별 절대 매매가는 안 나온다(서울 전체 중위가뿐) — 그래서 지수로 견준다."""
+    idx = _idx_of(w)
+    out = []
+    for gu in sorted(idx):
+        d = idx[gu]
+        if 'sale' not in d or 'jeonse' not in d:
+            continue
+        ser = [('매매', d['sale']), ('전세', d['jeonse'])]
+        svg = wf.trend(ser, '지수(기준시점=100)')
+        if not svg:
+            continue
+        nsvg = wf.trend(ser, '지수(기준시점=100)', narrow=True)
+        out.append('<figure>%s%s<figcaption>%s</figcaption></figure>'
+                   % (svg.replace('<svg ', '<svg class="fig-w" ', 1),
+                      nsvg.replace('<svg ', '<svg class="fig-n" ', 1),
+                      E('%s — 매매·전세 가격지수 (기준월=100)' % gu)))
+    return ''.join(out)
 
 
 def figures_trigger(w):
@@ -1123,7 +1245,11 @@ def line_block(w):
     글쓴이 개인 기준이라 독자에게는 뜻이 없다. 머리 수치 띠(stat_strip)가 이미
     같은 값(지금·석 달 Δ·기준)을 문턱 없이 보여준다."""
     trig = [html for p, html in figures_lists(w) if p == 0]
-    rest = trig[1:] + [html for p, html in figures_lists(w) if p == 1]
+    # 「값 더」 맨 앞이 구별 매매·전세 두 선 판이다 — 전세가율을 무엇이 움직였는지가
+    # 그 판에서만 갈린다
+    pair = idx_figs(w)
+    rest = ([pair] if pair else []) + trig[1:] + \
+        [html for p, html in figures_lists(w) if p == 1]
     h = ['<section class="line">']
     strip = stat_strip(w)
     if strip:
@@ -1420,6 +1546,7 @@ def _region_summary_html(watches):
     요약은 그 권역 상세로 가는 링크이고, data-gus 로 그 권역 구 셋을 실어 둔다 —
     요약에 마우스를 올리면 지도에서 그 셋이 강조된다."""
     items = []
+    idx = _idx_rows(watches)
     for w in _live_areas(watches):
         metrics = [m for k, m in (w.get('metrics') or {}).items() if k.startswith('jeonse_ratio_')]
         if not metrics:
@@ -1435,10 +1562,13 @@ def _region_summary_html(watches):
                                       else '팔려는 사람이 더 많습니다')
         else:
             sd_txt = '수급 못 붙임'
-        gus = ' '.join(AREAS.get(w['target'], {}).get('구', []))
+        gu_list = AREAS.get(w['target'], {}).get('구', [])
+        gus = ' '.join(gu_list)
         d1 = (avg[-1][1] - avg[-2][1]) if len(avg) >= 2 else None
         base1 = avg[-2][0] if len(avg) >= 2 else None
-        items.append((cur, w, d1, base1, gus, sd_txt))
+        gap = _idx_gap_line(_idx_avg_delta(idx, gu_list),
+                            '석 달, 지수 · 구 %d곳 평균' % len(gu_list))
+        items.append((cur, w, d1, base1, gus, sd_txt, gap))
     items.sort(key=lambda r: r[0])
     rows = ''.join(
         '<a class="rs" href="watch/%s.html" data-gus="%s">'
@@ -1447,17 +1577,17 @@ def _region_summary_html(watches):
         '<p class="rs-line">%s</p>'
         '<p class="rs-v">%s</p>'
         '<p class="rs-line">%s</p>'
-        '<p class="rs-line">%s</p>'
+        '<p class="rs-line">%s</p>%s'
         '<span class="rs-cta">이 권역 자세히 보기</span></a>'
         % (w['slug'], E(gus), E(w['target']), E(_gu_short(w['target'])),
            _fmt1(cur),
            _delta_phrase('지난달', base1, d1, '%p') or '지난달 값이 없습니다',
-           E(w.get('verdict') or '판단 없음'), E(_extra_sentence(cur)), E(sd_txt))
-        for cur, w, d1, base1, gus, sd_txt in items)
+           E(w.get('verdict') or '판단 없음'), E(_extra_sentence(cur)), E(sd_txt), gap)
+        for cur, w, d1, base1, gus, sd_txt, gap in items)
     # 용어 풀이는 그 수가 처음 나오는 자리 바로 밑에 붙인다(별도 「용어」 절을 안 둔다).
     # 전세가율은 자(ratio_ruler_fig) 캡션이 이미 맡는다 — 여기서 또 적으면 같은
     # 문장이 한 화면에 두 번 나온다
-    return rows + term_lines(watches, {'수급동향', '매매가격지수'})
+    return rows + term_lines(watches, {'수급동향', '매매가격지수', '전세가격지수'})
 
 
 LTH_LABEL = {'전부': '전부 지정', '일부': '일부 지정', '없음': '미지정'}
@@ -1504,6 +1634,15 @@ def _gu_panel_html(name, e):
                      '<span class="gp-d">%s · %s</span></p>'
                      % (sv['cur'], _delta_phrase('지난달', sv['a1'], sv['d1'], 'pt'),
                         _delta_phrase('석 달', sv['a3'], sv['d3'], 'pt')))
+        if e.get('jeonse_idx'):
+            jv = e['jeonse_idx']
+            h.append('<p class="gp-row"><span class="gp-lbl">전세가격지수</span><b>%.2f</b> '
+                     '<span class="gp-d">%s · %s</span></p>'
+                     % (jv['cur'], _delta_phrase('지난달', jv['a1'], jv['d1'], 'pt'),
+                        _delta_phrase('석 달', jv['a3'], jv['d3'], 'pt')))
+        say = _read_gap(*e.get('gap', (None, None)))
+        if say:
+            h.append('<p class="gp-row"><span class="gp-d">%s</span></p>' % E(say))
         if e['sd'] and e['sd'].get('value') is not None:
             sdv = float(e['sd']['value'])
             h.append('<p class="gp-row"><span class="gp-lbl">수급동향</span><b>%s</b> · %s '
@@ -1542,17 +1681,25 @@ def changed_section(watches):
     지도 왼쪽 아래 빈 칸에 선다(지도 그림이 그 칸의 위쪽 절반만 쓴다). 값이 없으면
     빈 절을 그대로 낸다 — 빈 절이 델타를 감추는 것보다 낫다."""
     rows, base = [], None
+    idx = _idx_rows(watches)
     for w in sorted(_live_areas(watches), key=lambda w: w['target']):
         avg = _avg_series(w)
         if len(avg) < 2:
             continue
         prev, cur = avg[-2][1], avg[-1][1]
         base = max(base or avg[-2][0], avg[-2][0])
+        # 둘째 줄 — 전세가율만 보면 전세가 빠진 건지 매매가 오른 건지 모른다.
+        # 이 절은 지난달 기준이라 지수 Δ 도 지난달치를 쓴다 — 여기만 석 달치를
+        # 쓰면 윗줄과 아랫줄이 다른 기간을 말해 서로 어긋나 보인다
+        ds, dj = _idx_avg_delta(idx, AREAS.get(w['target'], {}).get('구', []), back=1)
+        second = ('<span class="chg-2">매매 %s · 전세 %s — %s</span>'
+                  % (_delta_num(ds, 'pt'), _delta_num(dj, 'pt'), E(_read_gap(ds, dj)))
+                  if _read_gap(ds, dj) else '')
         rows.append('<p class="chg-row"><span class="chg-k">%s 전세가율</span>'
                     '<span class="chg-v">%s → %s %s</span>'
-                    '<span class="chg-say">%s</span></p>'
+                    '<span class="chg-say">%s</span>%s</p>'
                     % (E(w['target']), _fmt1(prev), _fmt1(cur),
-                       _delta_num(cur - prev, '%p'), E(_read_move(cur - prev))))
+                       _delta_num(cur - prev, '%p'), E(_read_move(cur - prev)), second))
     by = _laws_grouped(watches)
     changed = [n for n, e in by.items() if _law_state(e) == '걸림']
     law_txt = ('바뀐 법·고시 없음 (%d개 중 0개)' % len(by) if not changed
