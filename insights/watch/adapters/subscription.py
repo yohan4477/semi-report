@@ -56,6 +56,7 @@ DATA_GO_KR_KEY 에 넣는다. 게이트웨이는 odcloud.kr 이고 구형 apis.d
 아니다 — 오퍼레이션 이름은 두 서비스의 Swagger 문서에서 왔다.
 """
 import os
+import re
 import json
 import datetime
 import urllib.parse
@@ -181,6 +182,48 @@ def _rate1_summary(house_manage_no, pblanc_no):
     return _fmt_rate(lo) if lo == hi else '%s~%s' % (_fmt_rate(lo), _fmt_rate(hi))
 
 
+_HOUSE_TY_RE = re.compile(r'^(\d+(?:\.\d+)?)')
+
+
+def _house_ty_ex(v):
+    """HOUSE_TY("059.9442A")의 앞자리를 전용면적(㎡)으로. 2026-09-04에 실제 응답을
+    찍어 확인했다 — getAPTLttotPblancMdl 에는 EXCLUSE_AR 같은 별도 필드가 없다.
+    HOUSE_TY 의 정수부(예 "059")가 청약 화면이 부르는 「59형」 그 숫자와 같다."""
+    m = _HOUSE_TY_RE.match(str(v or '').strip())
+    if not m:
+        return None
+    try:
+        return float(m.group(1))
+    except ValueError:
+        return None
+
+
+def apt_types(house_manage_no, pblanc_no):
+    """공고 하나의 주택형별 상세 — [{ty, ex, sup, top}, …], 전용면적(ex) 오름차순.
+
+    getAPTLttotPblancMdl 은 주택형(모델)마다 한 행을 준다. 세대수(SUPLY_HSHLDCO)나
+    분양최고금액(LTTOT_TOP_AMOUNT)이 없는 행은 버린다 — 지어내지 않는다."""
+    rows = _get(DETAIL, 'getAPTLttotPblancMdl', {
+        'page': 1, 'perPage': 50,
+        'cond[HOUSE_MANAGE_NO::EQ]': house_manage_no,
+        'cond[PBLANC_NO::EQ]': pblanc_no})
+    out = []
+    for r in rows:
+        ex = _house_ty_ex(r.get('HOUSE_TY'))
+        sup = _int_str(r.get('SUPLY_HSHLDCO'))
+        top = r.get('LTTOT_TOP_AMOUNT')
+        if ex is None or not sup or top in (None, '', '-'):
+            continue
+        try:
+            top_i = int(float(str(top).replace(',', '')))
+        except (TypeError, ValueError):
+            continue
+        out.append({'ty': str(r.get('HOUSE_TY') or '').strip(), 'ex': ex,
+                    'sup': int(sup), 'top': top_i})
+    out.sort(key=lambda t: t['ex'])
+    return out
+
+
 def _in_gu(row, gu_names):
     """공급위치 문자열에 구 이름이 들었나. 주소가 비면 못 가른다 — 버린다."""
     addr = str(row.get('HSSPLY_ADRES') or '')
@@ -228,7 +271,9 @@ def fetch(target_name, area=None, laws=()):
 
     fetch.last_error = None
     fetch.rate_error = None
+    fetch.types_error = None
     rate_ok = True    # 경쟁률 서비스가 도중에 죽으면 남은 공고는 조용히 건너뛴다
+    types_ok = True   # getAPTLttotPblancMdl 이 도중에 죽으면 남은 공고는 조용히 건너뛴다
     matched = []       # [(구, row, item), …] — 구를 뽑은 공고만
     n_unmatched = 0     # 공급위치 주소에 25구 이름이 하나도 안 걸린 공고
     for r in rows:
@@ -238,6 +283,7 @@ def fetch(target_name, area=None, laws=()):
             continue
         gu = gu_hit[0]
         it = {
+            'id': str(r.get('HOUSE_MANAGE_NO') or ''),
             'name': r.get('HOUSE_NM') or '',
             'gu': gu,
             'apply': r.get('RCEPT_BGNDE') or None,
@@ -286,6 +332,20 @@ def fetch(target_name, area=None, laws=()):
                 rate1 = None
             if rate1:
                 it['rate1'] = rate1
+        # 평수·분양가 — 주택형별 상세(청약공고_스펙 추가 §1). 공고당 1회만 부른다
+        if types_ok and hmn and pno:
+            try:
+                types = apt_types(hmn, pno)
+            except NoKey as e:
+                types_ok = False
+                fetch.types_error = str(e)
+                types = []
+            except Exception as e:            # 게이트웨이 장애 등
+                types_ok = False
+                fetch.types_error = '%s: %s' % (type(e).__name__, e)
+                types = []
+            if types:
+                it['types'] = types
         matched.append((gu, r, it))
 
     by_gu = {}
@@ -362,6 +422,9 @@ if __name__ == '__main__':
         rate_err = getattr(fetch, 'rate_error', None)
         if rate_err:
             print('경고: 경쟁률(15098905)을 못 받았다 — %s\n' % rate_err)
+        types_err = getattr(fetch, 'types_error', None)
+        if types_err:
+            print('경고: 주택형 상세(getAPTLttotPblancMdl)를 못 받았다 — %s\n' % types_err)
         for k, v in sorted(got.items()):
             if k == 'pblanc_gu':
                 by_gu = v['by_gu']

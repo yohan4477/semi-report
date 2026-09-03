@@ -264,6 +264,99 @@ def _sub_line2(it):
     return E(' · '.join(parts))
 
 
+def _fmt_eok(man_won):
+    """만원 → 「n억 m,mmm만원」(m 이 0 이면 「n억」). 청약공고_스펙 추가 §1."""
+    man_won = int(man_won)
+    eok, rem = divmod(man_won, 10000)
+    if eok and rem:
+        return '%d억 %s만원' % (eok, format(rem, ',d'))
+    if eok:
+        return '%d억' % eok
+    return '%s만원' % format(rem, ',d')
+
+
+def _group_types(types):
+    """주택형 상세를 전용면적 정수부(「형」)로 묶는다 — 059.9200A·059.9500D·
+    059.9600B 는 사람 눈에 다 「59형」이다. 세대수는 더하고 최고금액은 그 형
+    안에서 가장 비싼 값을 낸다. ex 는 오름차순으로 이미 정렬돼 들어온다."""
+    groups = {}
+    order = []
+    for t in types:
+        k = int(t['ex'])
+        if k not in groups:
+            groups[k] = {'ex': k, 'sup': 0, 'top': 0}
+            order.append(k)
+        groups[k]['sup'] += t['sup']
+        groups[k]['top'] = max(groups[k]['top'], t['top'])
+    return [groups[k] for k in order]
+
+
+def _fmt_type_item(g):
+    """「전용 59㎡(약 18평) 30세대 · 최고 8억 7,500만원」. 평 = ㎡ ÷ 3.3058 반올림
+    (청약공고_스펙 추가 §1) — 「약」은 반드시 붙인다."""
+    py = int(round(g['ex'] / 3.3058))
+    return '전용 %d㎡(약 %d평) %d세대 · 최고 %s' % (g['ex'], py, g['sup'], _fmt_eok(g['top']))
+
+
+def _sub_types_html(it, full):
+    """「주택형」줄 — full(새 페이지)이면 최대 3형(넘으면 「+n형」), 본 장 축약
+    (full=False)은 첫 형 하나만(청약공고_스펙 추가 §1). types 가 없으면(어댑터가
+    못 받았거나 실패했으면) 통째로 뺀다."""
+    types = it.get('types') or []
+    if not types:
+        return ''
+    groups = _group_types(types)
+    if not groups:
+        return ''
+    if full:
+        shown = groups[:3]
+        extra = len(groups) - len(shown)
+        parts = [_fmt_type_item(g) for g in shown]
+        if extra > 0:
+            parts.append('+%d형' % extra)
+    else:
+        parts = [_fmt_type_item(groups[0])]
+    return '<p class="si-ty mono">%s</p>' % E(' / '.join(parts))
+
+
+def _watched_market(watches):
+    """WATCHED_GU(전세가율·매매가격지수를 추적하는 9구)만 — 구 이름 → (jeonse
+    _val3, sale _val3). 청약 항목 「그 구의 시세」 한 줄이 쓴다(청약공고_스펙
+    추가 §3). 보고 있지 않은 구는 아예 키가 없다 — 값을 지어내지 않는다."""
+    rows_by = _movement_rows(watches)
+    jeonse = dict(rows_by.get('전세가율') or [])
+    sale = dict(rows_by.get('매매가격지수') or [])
+    out = {}
+    for gu in WATCHED_GU:
+        j = _val3(jeonse[gu]) if gu in jeonse else None
+        sv = _val3(sale[gu]) if gu in sale else None
+        if j or sv:
+            out[gu] = (j, sv)
+    return out
+
+
+def _sub_gu_line(gu, market):
+    """「이 구 전세가율 43.0% · 매매가격지수 100.57 (석 달 +2.40pt) · 기준
+    2026-07」 — 보고 있는(WATCHED_GU) 구에만 낸다. 색·계산은 기존 헬퍼
+    (_delta_num·_val3) 그대로 재사용한다."""
+    e = (market or {}).get(gu)
+    if not e:
+        return ''
+    j, sv = e
+    parts = []
+    asof = None
+    if j:
+        parts.append('전세가율 %.1f%%' % j['cur'])
+        asof = j.get('asof')
+    if sv:
+        parts.append('매매가격지수 %.2f (석 달 %s)' % (sv['cur'], _delta_num(sv['d3'], 'pt')))
+        asof = sv.get('asof') or asof
+    if not parts:
+        return ''
+    return ('<p class="si-gu-mkt mono">이 구 %s · 기준 %s</p>'
+           % (' · '.join(parts), E(asof or '—')))
+
+
 def _sub_verdict(items, today):
     """물음 ① 「지금 접수 중인 게 있나」의 답 한 문장. 새 페이지 verdict·「접수 중」
     절 빈 문구·본 장 「청약」 절의 없음 대체 문구 셋이 이 한 함수를 쓴다."""
@@ -279,11 +372,15 @@ def _sub_verdict(items, today):
     return '지금 접수 중인 공고가 없습니다 · 예정된 공고도 아직 없습니다'
 
 
-def _sub_name_html(it):
+def _sub_name_html(it, full):
+    """단지명 — 청약공고_스펙 추가 §2. 페이지 안(full=True)이면 그 건 자신의
+    앵커(#p-<id>)로, 본 장 축약(full=False)이면 새 페이지의 그 앵커로 건다.
+    청약홈 실제 링크는 여기서 안 쓴다 — 그 건 안 「청약홈에서 보기 →」에만 쓴다."""
     name = E(it.get('name') or '')
-    if it.get('url'):
-        return ('<a class="si-name" href="%s" target="_blank" rel="noopener">%s</a>'
-                % (E(it['url']), name))
+    pid = it.get('id')
+    if pid:
+        href = ('#p-%s' % E(pid)) if full else ('watch/청약 공고.html#p-%s' % E(pid))
+        return '<a class="si-name" href="%s">%s</a>' % (href, name)
     return '<span class="si-name">%s</span>' % name
 
 
@@ -300,19 +397,27 @@ def _sub_links_html(it):
     return ''.join(links)
 
 
-def _sub_item_html(it, today, full=False):
+def _sub_item_html(it, today, full=False, market=None):
     """공고 한 건. full=True(새 페이지)면 셋째 줄(경쟁률·링크)도 낸다 — 본 장 축약
     절은 이름 자체가 링크라 둘째 줄까지만 낸다. 칩 클래스는 늘 si-chip 을 덧붙인다
     — 「tag t-near」만 단독으로 나가면 옛 조건 트리거 UI 자국 검사(_COND_CHROME)와
-    글자 그대로 겹친다(이 칩은 그 기능과 무관한 새 기능이다)."""
+    글자 그대로 겹친다(이 칩은 그 기능과 무관한 새 기능이다).
+
+    id="p-<HOUSE_MANAGE_NO>" 를 건마다 붙인다(청약공고_스펙 추가 §2) — 지도
+    구 패널·본 장 3건이 여기로 앵커를 건다. 「주택형」줄(추가 §1)은 둘째 줄
+    다음, 「그 구의 시세」줄(추가 §3)은 셋째 줄 앞에 선다."""
     st = _sub_status(it, today)
     cls = _SUB_STATUS_CLS.get(st, 't-none')
-    h = ['<div class="sub-item"><p class="si-1">%s <span class="si-gu">%s</span> '
+    pid = it.get('id')
+    id_attr = ' id="p-%s"' % E(pid) if pid else ''
+    h = ['<div class="sub-item"%s><p class="si-1">%s <span class="si-gu">%s</span> '
          '<span class="tag %s si-chip">%s</span></p>'
-         % (_sub_name_html(it), E(it.get('gu') or ''), cls, E(st))]
+         % (id_attr, _sub_name_html(it, full), E(it.get('gu') or ''), cls, E(st))]
     if it.get('builder'):
         h.append('<p class="si-b">%s</p>' % E(it['builder']))
     h.append('<p class="si-2 mono">%s</p>' % _sub_line2(it))
+    h.append(_sub_types_html(it, full))
+    h.append(_sub_gu_line(it.get('gu') or '', market))
     if full:
         rate = ('<span class="si-rate">1순위 경쟁률 %s:1</span>' % E(it['rate1'])
                if it.get('rate1') else '')
@@ -637,8 +742,11 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
-.sub-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.sub-item{padding:12px 0;border-bottom:1px solid var(--line);scroll-margin-top:64px}
 .sub-item:last-child{border-bottom:0}
+/* 공고를 누르면 그 공고가 맨 위로 — :target 강조(청약공고_스펙 추가 §2).
+   레이아웃을 안 밀려고 왼쪽 선은 inset box-shadow 로 그린다 */
+.sub-item:target{background:var(--surface);box-shadow:inset 3px 0 0 var(--ink);padding-left:9px}
 .si-1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0}
 .si-name{font-weight:700;font-size:1rem;border-bottom:0}
 .si-name:hover{border-bottom:1px solid var(--ink)}
@@ -646,6 +754,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .si-chip{margin-left:auto}
 .si-b{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
 .si-2{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+/* 주택형 줄(추가 §1)·그 구의 시세 줄(추가 §3) — si-2 와 같은 잔글씨 무게 */
+.si-ty,.si-gu-mkt{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
 .si-3{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;
   margin:4px 0 0;font-size:.85rem}
 .si-rate{color:var(--ink-2);font-weight:600}
@@ -1439,8 +1549,9 @@ def subscription_now(watches):
              + sorted((it for it in items if _sub_status(it, today) == '접수 예정'),
                       key=lambda it: it.get('apply') or ''))
     if shown:
+        market = _watched_market(watches)
         h.append('<div class="sub-list">%s</div>'
-                 % ''.join(_sub_item_html(it, today) for it in shown[:3]))
+                 % ''.join(_sub_item_html(it, today, market=market) for it in shown[:3]))
     else:
         h.append('<p class="cond-lead">%s</p>' % E(_sub_verdict(items, today)))
     h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 (%d건) →</a></p>'
@@ -1845,10 +1956,10 @@ _SUB_EMPTY = {'soon': '예정된 공고가 아직 없습니다',
               'done': '최근 6개월에 발표된 공고가 없습니다'}
 
 
-def _sub_band(id_, title, items, empty_txt):
+def _sub_band(id_, title, items, empty_txt, market):
     if items:
         body = ('<div class="sub-list">%s</div>'
-                % ''.join(_sub_item_html(it, _TODAY, full=True) for it in items))
+                % ''.join(_sub_item_html(it, _TODAY, full=True, market=market) for it in items))
     else:
         body = '<p class="cond-lead">%s</p>' % E(empty_txt)
     return '<div class="band" id="%s"><p class="band-t">%s</p>%s</div>' % (id_, E(title), body)
@@ -1884,10 +1995,11 @@ def subscription_page(watches):
           '<a href="#basis">자료 기준</a></nav>'
           % ''.join('<a href="#%s">%s %d</a>' % (i, E(t), n) for i, t, n in nav_items))
 
-    bands = (_sub_band('open', '접수 중', groups['open'], verdict)
-            + _sub_band('soon', '접수 예정 · 접수 시작 가까운 순', groups['soon'], _SUB_EMPTY['soon'])
-            + _sub_band('wait', '발표 대기 · 발표 최근 순', groups['wait'], _SUB_EMPTY['wait'])
-            + _sub_band('done', '발표됨 · 발표 최근 순', groups['done'], _SUB_EMPTY['done']))
+    market = _watched_market(watches)
+    bands = (_sub_band('open', '접수 중', groups['open'], verdict, market)
+            + _sub_band('soon', '접수 예정 · 접수 시작 가까운 순', groups['soon'], _SUB_EMPTY['soon'], market)
+            + _sub_band('wait', '발표 대기 · 발표 최근 순', groups['wait'], _SUB_EMPTY['wait'], market)
+            + _sub_band('done', '발표됨 · 발표 최근 순', groups['done'], _SUB_EMPTY['done'], market))
     basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
             '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 자료 기준 %s · '
             '상태는 화면 만든 날 %s 기준 · 최근 6개월 모집공고 · 공급위치 주소로 구를 골라 '
@@ -2257,15 +2369,17 @@ def _gu_panel_html(name, e):
                  '<span class="t-sub">· 6개월 · %s 기준</span>%s</p>'
                  % (sc['value'], E(sc['as_of']), open_txt))
         for it in items[:3]:
-            name = E(it.get('name') or '—')
-            if it.get('url'):
-                name = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(it['url']), name)
+            nm = E(it.get('name') or '—')
+            # 단지명은 그 건 자신의 앵커로 건다(청약공고_스펙 추가 §2) — 청약홈
+            # 실제 링크는 여기서 안 쓴다(그 건 안 「청약홈에서 보기 →」에만 쓴다)
+            if it.get('id'):
+                nm = ('<a href="watch/청약 공고.html#p-%s">%s</a>' % (E(it['id']), nm))
             rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
             st = _sub_status(it, _TODAY)
             chip = ('<span class="tag %s gp-chip">%s</span>'
                     % (_SUB_STATUS_CLS.get(st, 't-none'), E(st)))
             h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s %s</p>'
-                     % (name, E(_mmdd(it.get('apply'))), rate_txt, chip))
+                     % (nm, E(_mmdd(it.get('apply'))), rate_txt, chip))
         if len(items) > 3:
             h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
         # 페이지에 구 필터가 없으므로 이 구 이름으로 걸러 보내지 않는다 — 전체
@@ -2401,8 +2515,10 @@ _JUMP_JS = """<script>
 (function(){
 var links=Array.from(document.querySelectorAll('.jump a'));
 if(!links.length)return;
-// 누르면 스크롤만 하고 주소에 #앵커를 안 남긴다 — 남기면 새로고침이 그 절로 뛴다
-var strip=function(){if(location.hash&&history.replaceState){
+// 누르면 스크롤만 하고 주소에 #앵커를 안 남긴다 — 남기면 새로고침이 그 절로 뛴다.
+// #p-<id> 는 예외다(청약공고_스펙 추가 §2) — 그 공고를 가리키는 공유용 주소라
+// 지우면 :target 강조가 사라지고 새로고침·다시 열기에서 그 건으로 못 돌아간다
+var strip=function(){if(location.hash&&location.hash.indexOf('#p-')!==0&&history.replaceState){
   history.replaceState(null,'',location.pathname+location.search);}};
 var smooth=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 links.forEach(function(a){a.addEventListener('click',function(ev){

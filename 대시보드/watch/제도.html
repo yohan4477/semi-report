@@ -231,8 +231,11 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
-.sub-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.sub-item{padding:12px 0;border-bottom:1px solid var(--line);scroll-margin-top:64px}
 .sub-item:last-child{border-bottom:0}
+/* 공고를 누르면 그 공고가 맨 위로 — :target 강조(청약공고_스펙 추가 §2).
+   레이아웃을 안 밀려고 왼쪽 선은 inset box-shadow 로 그린다 */
+.sub-item:target{background:var(--surface);box-shadow:inset 3px 0 0 var(--ink);padding-left:9px}
 .si-1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0}
 .si-name{font-weight:700;font-size:1rem;border-bottom:0}
 .si-name:hover{border-bottom:1px solid var(--ink)}
@@ -240,6 +243,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .si-chip{margin-left:auto}
 .si-b{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
 .si-2{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+/* 주택형 줄(추가 §1)·그 구의 시세 줄(추가 §3) — si-2 와 같은 잔글씨 무게 */
+.si-ty,.si-gu-mkt{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
 .si-3{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;
   margin:4px 0 0;font-size:.85rem}
 .si-rate{color:var(--ink-2);font-weight:600}
