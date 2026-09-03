@@ -153,6 +153,72 @@ _OVERHEAT_SRC = ('https://www.korea.kr/news/policyNewsView.do?newsId=148950973 ;
 _OLD4 = {'강남구', '서초구', '송파구', '용산구'}
 
 
+# --- 분양가상한제(민간택지): 규제지역과 별개의 지정이라 층을 따로 둔다 ------------
+# 규제지역 셋과 달리 이 층은 서울에서 값이 갈린다(4구만 true) — 그래서 지도에서
+# 「투기과열지구라 다 같다」로 읽히던 자리가 여기서 처음 나뉜다.
+#
+# 2026-09-03에 확인한 것:
+#   - 국가법령정보센터 DRF admrul 검색('분양가상한제')에서 현행 공고는 하나뿐이다 —
+#     「분양가상한제 적용지역 지정 해제」(국토교통부공고 제2023-3호, 2023-01-05 발령·
+#     시행, 행정규칙일련번호 2100000221718). 그 뒤로 새 지정·해제 공고가 이 DB에
+#     안 잡힌다. 2025-10-15 대책(투기과열지구·조정대상지역 서울 전역 확대)도
+#     korea.kr 발표문에 분양가상한제 지정 문구가 없다.
+#   - 그 공고의 제·개정이유에 해제 지역이 적혀 있다. 서울에서 통째로 풀린 구는
+#     강동·영등포·마포·성동·동작·양천·중·광진·서대문 아홉이고, 강서·노원·동대문·
+#     성북·은평은 동 이름을 나열해 풀었다.
+#   - 해제 전 지정 범위는 2020년 공고의 서울 18개구 309개동이었다(강남·서초·송파·
+#     강동·영등포·마포·성동·동작·양천·용산·서대문·중·광진·강서·노원·동대문·성북·
+#     은평). 18개구에서 위 아홉과 동 단위로 푼 다섯을 빼면 강남·서초·송파·용산 넷이
+#     남는다 — 2023-01-03 국토교통부 발표를 옮긴 언론 보도 여럿과 같은 결과다.
+#
+# 못 확인한 것 둘(detail 에 그대로 적는다):
+#   1. 남은 네 구가 구 전역인지 동 단위인지. 원 지정 공고가 동 단위였는데 그 동
+#      목록을 오늘 못 열었다(molit 고시 페이지는 리다이렉트 루프, 첨부는 PDF·HWP).
+#   2. 동 단위로 푼 다섯 구에 안 풀린 동이 남았는지. 해제 공고가 그 구의 지정 동을
+#      전부 나열했는지 확인 못 했다 — 언론이 「4구만 남았다」로 쓴 것을 근거로 삼는다.
+_CEIL_SRC = ('https://www.law.go.kr/LSW//admRulLsInfoP.do?admRulId=69616&efYd=0 '
+             '(국토교통부공고 제2023-3호 「분양가상한제 적용지역 지정 해제」, '
+             '2023-01-05 발령·시행 ; DRF admrul 조회로 현행 확인) ; '
+             '교차확인 https://www.korea.kr/news/policyNewsView.do?newsId=148950973 '
+             '(2025-10-15 대책 — 분양가상한제 지정 문구 없음)')
+_CEIL_ON = {'강남구', '서초구', '송파구', '용산구'}
+# 2023-01-05 공고가 구 전체를 푼 구
+_CEIL_OFF_WHOLE = {'강동구', '영등포구', '마포구', '성동구', '동작구',
+                   '양천구', '중구', '광진구', '서대문구'}
+# 같은 공고가 동 이름을 나열해 푼 구
+_CEIL_OFF_DONG = {'강서구', '노원구', '동대문구', '성북구', '은평구'}
+
+
+def build_ceiling_zone(all_gu):
+    gu_out = {}
+    for gu in all_gu:
+        if gu in _CEIL_ON:
+            gu_out[gu] = {'value': True, 'detail': (
+                '2023-01-05 해제 공고의 해제 목록에 없다 — 2020년 지정 18개구 가운데 '
+                '남은 넷. 다만 원 지정이 동 단위였고 그 동 목록을 오늘 못 열어 '
+                '구 전역인지 일부 동인지는 확인 못 함')}
+        elif gu in _CEIL_OFF_WHOLE:
+            gu_out[gu] = {'value': False, 'detail':
+                          '국토교통부공고 제2023-3호(2023-01-05)가 구 전체를 해제'}
+        elif gu in _CEIL_OFF_DONG:
+            gu_out[gu] = {'value': False, 'detail': (
+                '국토교통부공고 제2023-3호(2023-01-05)가 이 구의 동 이름을 나열해 해제 — '
+                '지정돼 있던 동을 전부 나열했는지는 확인 못 함')}
+        else:
+            gu_out[gu] = {'value': False, 'detail':
+                          '2020년 지정 18개구에 안 들어간 구 — 지정된 적이 없다'}
+    return {
+        'src': _CEIL_SRC,
+        'as_of': '2023-01-05',
+        'note': ('민간택지 분양가상한제다. 공공택지는 지역 지정과 무관하게 「주택법」 제57조로 '
+                 '적용되므로 이 표로 판단하지 않는다. 규제지역(투기과열지구·조정대상지역)과 '
+                 '별개의 지정이라 층을 따로 뒀다 — 서울이 전역 투기과열지구가 된 뒤에도 '
+                 '이 층은 넷과 스물하나로 갈린다. 지정·해제가 공고(PDF)로만 나와 자동으로 '
+                 '못 받는다. 규정이 바뀌면 사람이 이 파일의 상수를 갱신한다.'),
+        'gu': gu_out,
+    }
+
+
 def build_regulation_zone(all_gu, src, label):
     gu_out = {}
     for gu in all_gu:
@@ -178,15 +244,17 @@ def main():
         '토지거래허가구역': build_land_zone(all_gu),
         '조정대상지역': build_regulation_zone(all_gu, _ADJUST_SRC, '조정대상지역'),
         '투기과열지구': build_regulation_zone(all_gu, _OVERHEAT_SRC, '투기과열지구'),
+        '분양가상한제': build_ceiling_zone(all_gu),
     }
     io.open(OUT, 'w', encoding='utf-8').write(json.dumps(out, ensure_ascii=False, indent=1))
     print('gu=%d -> %s (%.1fKB)' %
           (len(all_gu), OUT, os.path.getsize(OUT) / 1024.0))
     land = out['토지거래허가구역']
     print('토지거래허가구역 as_of=%s  강남구=%s' % (land['as_of'], land['gu']['강남구']['value']))
-    for k in ('조정대상지역', '투기과열지구'):
+    for k in ('조정대상지역', '투기과열지구', '분양가상한제'):
         vals = set(v['value'] for v in out[k]['gu'].values())
-        print('%s: 값 집합=%s' % (k, vals))
+        on = sorted(g for g, v in out[k]['gu'].items() if v['value'] is True)
+        print('%s: 값 집합=%s  true=%d구 %s' % (k, vals, len(on), ' '.join(on[:6])))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,164 @@
+# -*- coding: utf-8 -*-
+"""청약 어댑터 — 공공데이터포털의 청약홈 분양정보·경쟁률 API 에서 세 권역의 공고를 받는다.
+
+계약은 watch_lib 머리에 있다. 여기서 지키는 것 넷.
+
+1. **열쇠가 없으면 빈 손으로 돌아온다.** 예외를 던지지 않는다 — 워치 실행기가 줄
+   하나 때문에 통째로 멈추면 안 되고, 「아직 못 받는다」는 것 자체가 화면에 적힐
+   사실이다. 열쇠는 환경변수 DATA_GO_KR_KEY. 발급 절차는 아래 「열쇠」 절.
+2. **구는 주소 부분일치로 거른다.** 이 API 의 지역 파라미터(SUBSCRPT_AREA_CODE_NM)는
+   청약홈 검색 화면과 같은 시·도 단위로 보인다 — 서울까지만 좁혀진다. 구까지 내려가려면
+   공급위치(HSSPLY_ADRES)를 LIKE 로 건다. 정확한 코드표를 못 봐서(2026-09-03) 시·도로
+   받아 놓고 주소 문자열로 다시 거르는 두 단계를 쓴다.
+3. **경쟁률은 공고 하나를 열쇠로 받는다.** HOUSE_MANAGE_NO 와 PBLANC_NO 를 함께 넘겨야
+   하고, 돌아오는 것은 단지 하나의 수가 아니라 주택형×순위×거주코드 조합마다 한 행이다.
+   그래서 「이 권역 경쟁률」이라는 한 수는 API 에 없다 — 우리가 만들면 우리가 만든 수다.
+   여기서는 1순위 해당지역 행의 경쟁률만 모아 그 공고의 최고·중앙을 적어 둔다.
+4. **시계열을 지어내지 않는다.** 공고는 달마다 나오지 않는다. 값이 한 점뿐이면
+   series 를 비운다 — 도해가 두 점을 이어 없는 추세를 그리는 것을 막는 자리다.
+
+## 열쇠
+
+공공데이터포털(data.go.kr)에서 두 서비스를 각각 활용신청한다.
+
+  - 15098547  한국부동산원_청약홈 분양정보 조회 서비스
+  - 15098905  한국부동산원_청약홈 청약접수 경쟁률 및 특별공급 신청현황 조회 서비스
+
+    https://www.data.go.kr/data/15098547/openapi.do
+    https://www.data.go.kr/data/15098905/openapi.do
+
+개발단계는 자동승인, 운영단계는 심의승인이라고 두 페이지에 적혀 있다(2026-09-03 확인).
+심의에 며칠 걸리는지는 페이지에 없다. 발급받은 일반 인증키(Decoding)를 환경변수
+DATA_GO_KR_KEY 에 넣는다. 게이트웨이는 odcloud.kr 이고 구형 apis.data.go.kr 이 아니다 —
+그쪽 주소로 부르면 NO_OPENAPI_SERVICE_ERROR 가 온다.
+
+열쇠 없이 부르면 {"code":-401,"msg":"인증키는 필수 항목 입니다."} 가 온다(HTTP 401,
+2026-09-03 확인). 없는 경로에도 같은 응답이 오므로 이 401 은 「경로가 맞다」는 증거가
+아니다 — 오퍼레이션 이름은 두 서비스의 Swagger 문서에서 왔다.
+"""
+import os
+import json
+import urllib.parse
+import urllib.request
+
+DETAIL = 'https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/'
+CMPET = 'https://api.odcloud.kr/api/ApplyhomeInfoCmpetRtSvc/v1/'
+KEY_ENV = 'DATA_GO_KR_KEY'
+
+# 워치가 보는 세 권역. _areas.json 과 같은 이름을 쓴다 — 여기서 새로 만들지 않는다.
+AREA_GU = {
+    '강남 3구': ('강남구', '서초구', '송파구'),
+    '마용성': ('마포구', '용산구', '성동구'),
+    '노도강': ('노원구', '도봉구', '강북구'),
+}
+
+
+class NoKey(Exception):
+    """열쇠가 없다. 오류가 아니라 상태다 — fetch 는 이것을 잡아 빈 손으로 돌아온다."""
+
+
+def _key():
+    k = os.environ.get(KEY_ENV)
+    if not k:
+        raise NoKey('%s 가 없다 — data.go.kr 에서 15098547·15098905 를 활용신청한다' % KEY_ENV)
+    return k
+
+
+def _get(base, op, params, timeout=30):
+    p = dict(params)
+    p['serviceKey'] = _key()
+    u = base + op + '?' + urllib.parse.urlencode(p)
+    with urllib.request.urlopen(u, timeout=timeout) as r:
+        d = json.loads(r.read().decode('utf-8', 'replace'))
+    if 'data' not in d:
+        # {"code":-4,"msg":"등록되지 않은 인증키 입니다."} 같은 게이트웨이 응답
+        raise NoKey('게이트웨이가 거절했다: %s' % str(d)[:120])
+    return d['data']
+
+
+def pblancs(sido='서울', since=None, page_size=100):
+    """모집공고일이 since(YYYY-MM-DD) 이후인 APT 분양 공고를 시·도 단위로 받는다.
+
+    구 단위 필터를 여기서 안 거는 이유는 위 머리 2번에 적었다."""
+    p = {'page': 1, 'perPage': page_size,
+         'cond[SUBSCRPT_AREA_CODE_NM::EQ]': sido}
+    if since:
+        p['cond[RCRIT_PBLANC_DE::GTE]'] = since
+    return _get(DETAIL, 'getAPTLttotPblancDetail', p)
+
+
+def rank1_rates(house_manage_no, pblanc_no):
+    """공고 하나의 1순위 해당지역 경쟁률만 [(주택형, 경쟁률), …] 로.
+
+    RESIDE_SECD 01 이 해당지역이고 SUBSCRPT_RANK_CODE 1 이 1순위다. 둘을 안 고르면
+    같은 주택형이 순위·거주지마다 여러 줄로 와서 평균이 뜻을 잃는다."""
+    rows = _get(CMPET, 'getAPTLttotPblancCmpet', {
+        'page': 1, 'perPage': 200,
+        'cond[HOUSE_MANAGE_NO::EQ]': house_manage_no,
+        'cond[PBLANC_NO::EQ]': pblanc_no})
+    out = []
+    for r in rows:
+        if str(r.get('RESIDE_SECD')) != '01':
+            continue
+        if str(r.get('SUBSCRPT_RANK_CODE')) not in ('1', '01'):
+            continue
+        try:
+            out.append((r.get('HOUSE_TY'), float(r.get('CMPET_RATE'))))
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
+def _in_gu(row, gu_names):
+    """공급위치 문자열에 구 이름이 들었나. 주소가 비면 못 가른다 — 버린다."""
+    addr = str(row.get('HSSPLY_ADRES') or '')
+    return [g for g in gu_names if g in addr]
+
+
+def fetch(target_name, area=None, laws=()):
+    """워치 계약대로 metric 을 돌려준다. 열쇠가 없으면 빈 dict 와 함께 사유를 알린다.
+
+    target_name 은 정책 줄 이름(「청약 제도」)이고, 세 권역을 한 줄이 함께 본다."""
+    try:
+        rows = pblancs('서울')
+    except NoKey as e:
+        # 값을 못 받았다는 것을 지어낸 값으로 덮지 않는다. 빈 손이 정확한 답이다.
+        fetch.last_error = str(e)
+        return {}
+    except Exception as e:                      # 게이트웨이 장애·응답 꼴 변경
+        fetch.last_error = '%s: %s' % (type(e).__name__, e)
+        return {}
+
+    fetch.last_error = None
+    out = {}
+    for area_name, gus in AREA_GU.items():
+        hit = [r for r in rows if _in_gu(r, gus)]
+        latest = max((str(r.get('RCRIT_PBLANC_DE') or '') for r in hit), default='')
+        out['pblanc_cnt_' + area_name.replace(' ', '')] = {
+            'value': len(hit),
+            'as_of': (latest[:7] or '확인 못 함'),
+            'kind': '공표',
+            'unit': '건(모집공고)',
+            'src': ('공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · '
+                    'getAPTLttotPblancDetail · 서울 공고 %d건 중 공급위치에 %s 가 든 것'
+                    % (len(rows), '·'.join(gus))),
+            'area': area_name,
+            # 공고는 달마다 나오지 않는다. 한 점을 선으로 만들지 않는다
+            'series': [],
+            'partial': False,
+        }
+    return out
+
+
+if __name__ == '__main__':
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
+    got = fetch('청약 제도')
+    if not got:
+        print('값 없음 — %s' % (getattr(fetch, 'last_error', None) or '사유 불명'))
+        print('열쇠 발급: https://www.data.go.kr/data/15098547/openapi.do '
+              '(분양정보) · https://www.data.go.kr/data/15098905/openapi.do (경쟁률)')
+        print('발급 뒤 환경변수 %s 에 넣는다.' % KEY_ENV)
+    else:
+        for k, v in sorted(got.items()):
+            print('  %-24s %s %s  (%s)' % (k, v['value'], v['unit'], v['as_of']))
