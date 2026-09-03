@@ -40,6 +40,7 @@
 넷(「때 자」「줄」「성격」「언제 것」)을 걷었다 — check_ui()·check_detail_ui() 가
 그 넷이 화면에 남으면 FAIL 한다.
 """
+import datetime
 import io
 import json
 import os
@@ -56,6 +57,10 @@ OUT = os.path.join(ROOT, '대시보드', '포트폴리오 워치.html')
 WATCH_DIR = os.path.join(ROOT, '대시보드', 'watch')
 AREAS_PATH = os.path.join(ROOT, 'insights', 'watch', '_areas.json')
 E = wl.esc
+# 청약 공고 상태는 화면을 만드는 날 기준으로 빌드 때 박는다(JS 계산 금지 — 이 장의
+# 기존 규약). 배포까지 며칠 걸려도 사용자가 보는 상태가 만든 날짜와 다르게
+# 보이지 않도록 캡션에 이 날짜를 그대로 적는다.
+_TODAY = datetime.date.today().strftime('%Y-%m-%d')
 
 KIND_LABEL = {'realestate': '부동산', 'policy': '제도', 'equity': '종목'}
 
@@ -180,26 +185,6 @@ def _region_raw(watches):
     return dict((w['target'], wl.metrics_of(w['kind'], w['slug'])) for w in _live_areas(watches))
 
 
-def _subscription_data(watches):
-    """청약 제도 줄의 pblanc_cnt_<권역>·pblanc_list_<권역> 을 권역 이름으로 다시 묶는다.
-
-    어댑터가 못 냈으면(열쇠가 없으면) 빈 dict — 구 패널도 「세 권역 최근 공고」 표도
-    그 자리를 그냥 비운다. 청약 제도 줄 자체가 없어도(파일이 지워지는 일은 없지만)
-    마찬가지다."""
-    w = next((x for x in watches if x['kind'] == 'policy' and x['slug'] == '청약 제도'), None)
-    if w is None:
-        return {}
-    m = w['metrics']
-    out = {}
-    for area_name in ('강남 3구', '마용성', '노도강'):
-        key = area_name.replace(' ', '')
-        cnt = m.get('pblanc_cnt_' + key)
-        lst = m.get('pblanc_list_' + key)
-        if cnt or lst:
-            out[area_name] = {'cnt': cnt, 'list': lst}
-    return out
-
-
 def _sub_gu_data(watches):
     """청약 제도 줄의 pblanc_gu.by_gu — 구 이름 → 최근 6개월 공고 목록(접수일 내림차순).
 
@@ -213,6 +198,129 @@ def _sub_gu_data(watches):
     if m is None:
         return None, None
     return (m.get('by_gu') or {}), m.get('as_of')
+
+
+def _all_sub_items(watches):
+    """청약 제도 줄의 최근 6개월 공고 전부 — 서울 25구를 한 목록으로 편다(권역
+    셋에 갇히지 않는다). 어댑터가 못 냈으면(열쇠 없음) (None, None) — 「청약
+    공고」 화면·본 장 「청약」 절 축약 둘 다 이 자리를 그냥 비운다."""
+    sub_gu, sub_asof = _sub_gu_data(watches)
+    if sub_gu is None:
+        return None, None
+    return [it for lst in sub_gu.values() for it in lst], sub_asof
+
+
+# 청약공고_스펙 §2 — 상태는 날짜 문자열 비교만으로 기계가 정한다. 종료일이 없으면
+# (RCEPT_ENDDE 를 못 받으면) 끝나는 날을 추정해 만들지 않는다 — 접수 시작 당일만
+# 「접수 중」으로 보고 다음 날부터 「접수 마감·발표 대기」다.
+_SUB_STATUS_CLS = {'접수 중': 't-hit', '접수 예정': 't-near',
+                    '접수 마감·발표 대기': 't-clear', '발표됨': 't-none',
+                    '일정 미정': 't-none'}
+
+
+def _sub_status(it, today):
+    apply_ = it.get('apply')
+    if not apply_:
+        return '일정 미정'
+    if today < apply_:
+        return '접수 예정'
+    end_ = it.get('end')
+    if end_:
+        if apply_ <= today <= end_:
+            return '접수 중'
+    elif today == apply_:
+        return '접수 중'
+    announce_ = it.get('announce')
+    if announce_:
+        return '접수 마감·발표 대기' if today < announce_ else '발표됨'
+    if today > apply_:
+        return '접수 마감·발표 대기'
+    return '일정 미정'
+
+
+def _period_txt(apply_, end_):
+    """접수 기간 — 끝나는 날이 있으면 「2026-08-24~08-26」, 없으면 「2026-08-24~」로
+    열어 둔다(끝을 추정하지 않는다)."""
+    return '%s~%s' % (apply_, _mmdd(end_)) if end_ else '%s~' % apply_
+
+
+def _sub_line2(it):
+    """둘째 줄 — 접수 기간·발표일·세대수·분양가상한제·입주 예정·특별공급. 없는
+    조각은 통째로 뺀다(청약공고_스펙 §6) — 「—」를 찍지 않는다."""
+    parts = []
+    if it.get('apply'):
+        parts.append('접수 %s' % _period_txt(it['apply'], it.get('end')))
+    if it.get('announce'):
+        parts.append('발표 %s' % it['announce'])
+    if it.get('total'):
+        parts.append('%s세대' % it['total'])
+    cap = it.get('cap')
+    if cap is not None:
+        parts.append('분양가상한제 %s' % ('적용' if cap else '미적용'))
+    if it.get('movein'):
+        parts.append('입주 %s' % it['movein'])
+    if it.get('sp_apply'):
+        parts.append('특별공급 %s' % it['sp_apply'])
+    return E(' · '.join(parts))
+
+
+def _sub_verdict(items, today):
+    """물음 ① 「지금 접수 중인 게 있나」의 답 한 문장. 새 페이지 verdict·「접수 중」
+    절 빈 문구·본 장 「청약」 절의 없음 대체 문구 셋이 이 한 함수를 쓴다."""
+    n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
+    if n_open:
+        return '지금 접수 중인 공고가 %d건 있습니다' % n_open
+    upcoming = sorted((it for it in items if _sub_status(it, today) == '접수 예정'),
+                      key=lambda it: it.get('apply') or '')
+    if upcoming:
+        nx = upcoming[0]
+        return '지금 접수 중인 공고가 없습니다 · 다음 접수 %s %s' % (nx.get('apply') or '',
+                                                       nx.get('name') or '')
+    return '지금 접수 중인 공고가 없습니다 · 예정된 공고도 아직 없습니다'
+
+
+def _sub_name_html(it):
+    name = E(it.get('name') or '')
+    if it.get('url'):
+        return ('<a class="si-name" href="%s" target="_blank" rel="noopener">%s</a>'
+                % (E(it['url']), name))
+    return '<span class="si-name">%s</span>' % name
+
+
+def _sub_links_html(it):
+    """셋째 줄 오른쪽 — 분양 홈페이지(있으면)·청약홈. 값이 없으면 그 링크는 안
+    낸다(자리표시 금지)."""
+    links = []
+    if it.get('hmpg'):
+        links.append('<a class="si-go" href="%s" target="_blank" rel="noopener">분양 홈페이지 →</a>'
+                     % E(it['hmpg']))
+    if it.get('url'):
+        links.append('<a class="si-go" href="%s" target="_blank" rel="noopener">청약홈에서 보기 →</a>'
+                     % E(it['url']))
+    return ''.join(links)
+
+
+def _sub_item_html(it, today, full=False):
+    """공고 한 건. full=True(새 페이지)면 셋째 줄(경쟁률·링크)도 낸다 — 본 장 축약
+    절은 이름 자체가 링크라 둘째 줄까지만 낸다. 칩 클래스는 늘 si-chip 을 덧붙인다
+    — 「tag t-near」만 단독으로 나가면 옛 조건 트리거 UI 자국 검사(_COND_CHROME)와
+    글자 그대로 겹친다(이 칩은 그 기능과 무관한 새 기능이다)."""
+    st = _sub_status(it, today)
+    cls = _SUB_STATUS_CLS.get(st, 't-none')
+    h = ['<div class="sub-item"><p class="si-1">%s <span class="si-gu">%s</span> '
+         '<span class="tag %s si-chip">%s</span></p>'
+         % (_sub_name_html(it), E(it.get('gu') or ''), cls, E(st))]
+    if it.get('builder'):
+        h.append('<p class="si-b">%s</p>' % E(it['builder']))
+    h.append('<p class="si-2 mono">%s</p>' % _sub_line2(it))
+    if full:
+        rate = ('<span class="si-rate">1순위 경쟁률 %s:1</span>' % E(it['rate1'])
+               if it.get('rate1') else '')
+        links = _sub_links_html(it)
+        if rate or links:
+            h.append('<p class="si-3">%s%s</p>' % (rate, links))
+    h.append('</div>')
+    return ''.join(h)
 
 
 def _sub_bin(n):
@@ -457,6 +565,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gp-d{color:var(--ink-2)}
 .gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
   border-bottom:0;border-top:1px solid var(--line)}
+/* 청약 공고 상태 칩 — 구 패널 단지 줄 끝. 값 줄이 좁아 칩이 커지면 안 되므로
+   이 자리에서만 작게 줄인다(청약공고_스펙 §5) */
+.gp-chip{font-size:11px;padding:1px 6px;margin-left:6px;vertical-align:1px}
 /* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
    지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
 @media (max-width:620px){
@@ -522,6 +633,26 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .cond-lead{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
 .cond-tail{font-size:12.5px;color:var(--ink-3);margin:8px 0 0;max-width:66ch}
 .t-why{font-size:12.5px;color:var(--ink-3)}
+/* 청약 공고 한 건 — 본 장 「지금 청약」 축약과 watch/청약 공고.html 이 함께 쓴다
+   (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
+   가로로 밀린다 */
+.sub-list{margin:12px 0 0}
+.sub-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.sub-item:last-child{border-bottom:0}
+.si-1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0}
+.si-name{font-weight:700;font-size:1rem;border-bottom:0}
+.si-name:hover{border-bottom:1px solid var(--ink)}
+.si-gu{font-size:12.5px;color:var(--ink-3)}
+.si-chip{margin-left:auto}
+.si-b{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.si-2{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+.si-3{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;
+  margin:4px 0 0;font-size:.85rem}
+.si-rate{color:var(--ink-2);font-weight:600}
+.si-go{font-weight:600;color:var(--ink-2);border-bottom:0}
+.si-go:hover{color:var(--ink)}
+.si-go+.si-go{margin-left:10px}
+@media (max-width:620px){.si-1{gap:2px 8px}.si-gu{flex:0 0 100%}}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -1289,73 +1420,35 @@ def law_summary(watches):
     return ''.join(h)
 
 
-def _cap_label(v):
-    """분양가상한제 여부 — API 는 문자열 'True'/'False' 로 준다."""
-    t = str(v)
-    return '적용' if t == 'True' else ('미적용' if t == 'False' else '—')
-
-
-def _sub_other_gu_line(watches):
-    """세 권역 밖(22구)의 최근 공고 — 표 아래 잔글씨 한 줄. 열쇠가 없거나 세 권역
-    밖에 공고가 하나도 없으면 안 낸다(수가 0인 줄은 안 낸다 — 분양가상한제 범례와
-    같은 규칙)."""
-    sub_gu, _asof = _sub_gu_data(watches)
-    if sub_gu is None:
+def subscription_now(watches):
+    """「청약 — 조건」 절의 「지금 청약」 축약(청약공고_스펙 §3). 옛 7열 표
+    (subscription_table, 2026-09-04 걷음)를 대신한다 — 세 권역에 갇히지 않고
+    서울 25구 전부를 세되, 지금 접수 중·예정만 최대 3건 보여주고 나머지는
+    「공고 전부 보기」로 새 페이지(watch/청약 공고.html)에 돌린다."""
+    items, as_of = _all_sub_items(watches)
+    if items is None:
         return ''
-    watched_gu = set(g for t in ('강남 3구', '마용성', '노도강')
-                     for g in AREAS.get(t, {}).get('구', []))
-    other = [(name, len(items)) for name, items in sub_gu.items()
-             if name not in watched_gu and items]
-    if not other:
-        return ''
-    total = sum(n for _n, n in other)
-    names = '·'.join(sorted(n[:-1] if n.endswith('구') else n for n, _c in other))
-    return '<p class="cond-tail">그 밖의 구 %d건 — %s</p>' % (total, E(names))
-
-
-def subscription_table(watches):
-    """「세 권역 최근 공고(6개월)」 — 청약홈 API 가 준 공고만. 권역별 접수일 내림차순
-    최대 5행, 나머지는 「+n건」. 경쟁률(rate1)이 한 건이라도 있으면 열을 내고, 없으면
-    열 자체를 안 낸다. 값이 없으면 표·문구 다 안 낸다 — 자리표시 금지(사용자).
-
-    세 권역에 최근 공고가 하나도 없어도 그 밖의 22구에는 있을 수 있다 — 그때는
-    표 없이 「그 밖의 구」 줄만 낸다."""
-    data = _subscription_data(watches)
-    rows_by = []
-    asofs = []
-    for area in ('강남 3구', '마용성', '노도강'):
-        d = data.get(area)
-        if not d or not d.get('list'):
-            continue
-        m = d['list']
-        items = sorted(m.get('items') or [], key=lambda i: i.get('apply') or '', reverse=True)
-        if not items:
-            continue
-        asofs.append(m.get('as_of') or '')
-        rows_by.append((area, items))
-    other_line = _sub_other_gu_line(watches)
-    if not rows_by:
-        return other_line
-    has_rate = any(i.get('rate1') for _a, items in rows_by for i in items)
-    head = ['권역', '단지명', '구', '접수 시작', '당첨자 발표', '분양가상한제'] + (['1순위 경쟁률'] if has_rate else [])
-    rows = []
-    for area, items in rows_by:
-        for i in items[:5]:
-            name = E(i.get('name') or '—')
-            if i.get('url'):
-                name = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(i['url']), name)
-            r = [E(area), name, E(i.get('gu') or '—'), E(i.get('apply') or '—'),
-                 E(i.get('announce') or '—'), _cap_label(i.get('cap'))]
-            if has_rate:
-                r.append(E(i.get('rate1') or '—'))
-            rows.append(r)
-        if len(items) > 5:
-            r = ['', '<span class="t-sub">+%d건</span>' % (len(items) - 5)] + [''] * (len(head) - 2)
-            rows.append(r)
-    cap = ('청약홈(공공데이터포털) · 기준 %s · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음'
-           % E(max(asofs) if asofs else '—'))
-    return (tbl('세 권역 최근 공고 (6개월)', head, rows)
-            + '<p class="cond-tail">%s</p>' % cap + other_line)
+    today = _TODAY
+    n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
+    n_soon = sum(1 for it in items if _sub_status(it, today) == '접수 예정')
+    h = ['<p class="cond-t">지금 청약</p>',
+         '<p class="cond-lead">최근 6개월 서울 공고 %d건 · 지금 접수 중 %d건 · '
+         '접수 예정 %d건</p>' % (len(items), n_open, n_soon)]
+    shown = (sorted((it for it in items if _sub_status(it, today) == '접수 중'),
+                    key=lambda it: it.get('apply') or '')
+             + sorted((it for it in items if _sub_status(it, today) == '접수 예정'),
+                      key=lambda it: it.get('apply') or ''))
+    if shown:
+        h.append('<div class="sub-list">%s</div>'
+                 % ''.join(_sub_item_html(it, today) for it in shown[:3]))
+    else:
+        h.append('<p class="cond-lead">%s</p>' % E(_sub_verdict(items, today)))
+    h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 (%d건) →</a></p>'
+             % len(items))
+    h.append('<p class="cond-tail">청약홈(공공데이터포털) · 기준 %s · 상태는 화면 만든 날 %s '
+             '기준 · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
+             % (E(as_of or '—'), E(today)))
+    return ''.join(h)
 
 
 def subscription_section(watches):
@@ -1370,9 +1463,9 @@ def subscription_section(watches):
             continue
         more = ('<p class="lbl"><a href="watch/%s.html">%s 자세히 →</a></p>'
                 % (w['slug'], E(w['target'])))
-        # 상세 링크는 절 맨 끝 — 조건 표 셋과 공고 표 다음
+        # 상세 링크는 절 맨 끝 — 조건 표 셋과 「지금 청약」 축약 다음
         return ('<div class="band" id="subscription"><p class="band-t">청약 — 조건</p>%s%s%s</div>'
-                % (cond_html(w, ''), subscription_table(watches), more))
+                % (cond_html(w, ''), subscription_now(watches), more))
     return ''
 
 
@@ -1747,6 +1840,76 @@ def law_page(watches):
             % (FONTS, CSS, len(_laws_grouped(watches)), body))
 
 
+_SUB_EMPTY = {'soon': '예정된 공고가 아직 없습니다',
+              'wait': '발표를 기다리는 공고가 없습니다',
+              'done': '최근 6개월에 발표된 공고가 없습니다'}
+
+
+def _sub_band(id_, title, items, empty_txt):
+    if items:
+        body = ('<div class="sub-list">%s</div>'
+                % ''.join(_sub_item_html(it, _TODAY, full=True) for it in items))
+    else:
+        body = '<p class="cond-lead">%s</p>' % E(empty_txt)
+    return '<div class="band" id="%s"><p class="band-t">%s</p>%s</div>' % (id_, E(title), body)
+
+
+def subscription_page(watches):
+    """청약 공고 전부 — 대시보드/watch/청약 공고.html(청약공고_스펙 §4).
+
+    구별 필터는 없다 — 지도의 「청약 공고」 층이 이미 구로 고르는 자리라, 이
+    페이지는 상태(접수 중·예정·발표 대기·발표됨) 넷으로만 가른다. 표가 아니라
+    목록이다 — 한 건에 값이 여덟이라 열이 여덟이면 모바일에서 가로로 밀린다."""
+    today = _TODAY
+    items, as_of = _all_sub_items(watches)
+    if items is None:
+        items, as_of = [], '—'
+    groups = {'open': [], 'soon': [], 'wait': [], 'done': []}
+    key_of = {'접수 중': 'open', '접수 예정': 'soon',
+             '접수 마감·발표 대기': 'wait', '발표됨': 'done'}
+    for it in items:
+        st = _sub_status(it, today)
+        groups[key_of.get(st, 'done')].append(it)
+    groups['open'].sort(key=lambda it: it.get('apply') or '')
+    groups['soon'].sort(key=lambda it: it.get('apply') or '')
+    groups['wait'].sort(key=lambda it: it.get('announce') or '', reverse=True)
+    groups['done'].sort(key=lambda it: it.get('announce') or '', reverse=True)
+
+    verdict = _sub_verdict(items, today)
+    nav_items = [('open', '접수 중', len(groups['open'])),
+                ('soon', '접수 예정', len(groups['soon'])),
+                ('wait', '발표 대기', len(groups['wait'])),
+                ('done', '발표됨', len(groups['done']))]
+    nav = ('<nav class="jump" aria-label="절 바로가기">%s'
+          '<a href="#basis">자료 기준</a></nav>'
+          % ''.join('<a href="#%s">%s %d</a>' % (i, E(t), n) for i, t, n in nav_items))
+
+    bands = (_sub_band('open', '접수 중', groups['open'], verdict)
+            + _sub_band('soon', '접수 예정 · 접수 시작 가까운 순', groups['soon'], _SUB_EMPTY['soon'])
+            + _sub_band('wait', '발표 대기 · 발표 최근 순', groups['wait'], _SUB_EMPTY['wait'])
+            + _sub_band('done', '발표됨 · 발표 최근 순', groups['done'], _SUB_EMPTY['done']))
+    basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
+            '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 자료 기준 %s · '
+            '상태는 화면 만든 날 %s 기준 · 최근 6개월 모집공고 · 공급위치 주소로 구를 골라 '
+            '놓친 공고가 있을 수 있음</p>'
+            '<p><a class="back" href="../포트폴리오 워치.html#subscription">'
+            '← 포트폴리오 워치</a></p></div>'
+            % (E(as_of or '—'), E(today)))
+    # back 링크에 앵커(#subscription)를 반드시 붙인다 — gen_site.rewrite_links()가
+    # 「../<파일명>.html#<앵커>」꼴만 /watch#subscription 으로 바꾼다.
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+           '<meta name="viewport" content="width=device-width, initial-scale=1">'
+           '<title>청약 공고 — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
+           '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#subscription">'
+           '← 포트폴리오 워치</a>'
+           '<header><p class="meta mono">서울 25구 · 최근 6개월 %d건 · 청약홈 기준 %s</p>'
+           '<h1>청약 공고</h1><p class="verdict">%s</p></header>%s'
+           '<div class="dbody">%s%s</div>'
+           '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->%s'
+           '</div></body></html>'
+           % (FONTS, CSS, len(items), E(as_of or '—'), E(verdict), nav, bands, basis, _JUMP_JS))
+
+
 def _src_link(src):
     """법·고시 표의 messy 다중 URL 문자열(예: "https://a ; https://b")에서 첫
     URL만 뽑아 도메인 링크로 낸다. link_out() 은 URL 이 문자열 전체일 때만
@@ -2087,19 +2250,27 @@ def _gu_panel_html(name, e):
     # 「0건이다」는 다른 상태다
     sc = e.get('sub_cnt')
     if sc is not None:
-        h.append('<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
-                 '<span class="t-sub">· 6개월 · %s 기준</span></p>'
-                 % (sc['value'], E(sc['as_of'])))
         items = e.get('sub_items') or []
+        n_open = sum(1 for it in items if _sub_status(it, _TODAY) == '접수 중')
+        open_txt = (' <span class="t-sub">· 지금 접수 중 %d건</span>' % n_open) if n_open else ''
+        h.append('<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
+                 '<span class="t-sub">· 6개월 · %s 기준</span>%s</p>'
+                 % (sc['value'], E(sc['as_of']), open_txt))
         for it in items[:3]:
             name = E(it.get('name') or '—')
             if it.get('url'):
                 name = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(it['url']), name)
             rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
-            h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s</p>'
-                     % (name, E(_mmdd(it.get('apply'))), rate_txt))
+            st = _sub_status(it, _TODAY)
+            chip = ('<span class="tag %s gp-chip">%s</span>'
+                    % (_SUB_STATUS_CLS.get(st, 't-none'), E(st)))
+            h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s %s</p>'
+                     % (name, E(_mmdd(it.get('apply'))), rate_txt, chip))
         if len(items) > 3:
             h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
+        # 페이지에 구 필터가 없으므로 이 구 이름으로 걸러 보내지 않는다 — 전체
+        # 목록으로 돌린다(청약공고_스펙 §5)
+        h.append('<a class="gp-more" href="watch/청약 공고.html">이 구 공고 전부 보기 →</a>')
     if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
@@ -2433,6 +2604,19 @@ def check_detail_ui(watches):
     for term in _JARGON:
         assert term not in law_html, '규약 위반(제도): 은어 "%s" 가 남아 있다' % term
     _assert_no_condition_chrome(law_html, '제도')
+    # check_detail_ui 는 watches 의 슬러그만 도니 청약 공고.html 은 여기서 명시로
+    # 더한다(청약공고_스펙 §4 구현 주의).
+    sub_path = os.path.join(WATCH_DIR, '청약 공고.html')
+    assert os.path.exists(sub_path), '규약 위반: watch/청약 공고.html 이 없다'
+    sub_html = io.open(sub_path, encoding='utf-8').read()
+    for m in re.finditer(r'<svg[^>]*>.*?</svg>', sub_html, re.S):
+        bad = check_fig.hits(m.group(0))
+        assert not bad, '규약 위반(청약 공고): 도해 배치 — %s' % ' · '.join(bad)
+    for term in _JARGON:
+        assert term not in sub_html, '규약 위반(청약 공고): 은어 "%s" 가 남아 있다' % term
+    assert '<table' not in sub_html, \
+        '규약 위반(청약 공고): 표가 아니라 목록이다(청약공고_스펙 §4) — <table 이 있다'
+    _assert_no_condition_chrome(sub_html, '청약 공고')
 
 
 def build():
@@ -2509,7 +2693,8 @@ def build():
     # 줄 이름을 바꾸거나 지운 뒤에도 옛 슬러그 파일이 그대로 남으면 아무도 안 가리키는
     # 페이지가 site/ 로도 같이 나간다.
     os.makedirs(WATCH_DIR, exist_ok=True)
-    expected = set(w['slug'] + '.html' for w in ws) | {'제도.html'}
+    expected = (set(w['slug'] + '.html' for w in ws)
+               | {'제도.html', '청약 공고.html'})
     for f in os.listdir(WATCH_DIR):
         if f.endswith('.html') and f not in expected:
             os.remove(os.path.join(WATCH_DIR, f))
@@ -2519,10 +2704,12 @@ def build():
             f.write(detail_page(w))
     with io.open(os.path.join(WATCH_DIR, '제도.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(law_page(ws))
+    with io.open(os.path.join(WATCH_DIR, '청약 공고.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(subscription_page(ws))
     check_detail_ui(ws)
 
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))
-    print('OK: 상세 %d장 -> %s' % (len(ws) + 1, WATCH_DIR))
+    print('OK: 상세 %d장 -> %s' % (len(ws) + 2, WATCH_DIR))
     return html
 
 

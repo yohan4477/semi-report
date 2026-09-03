@@ -187,6 +187,24 @@ def _in_gu(row, gu_names):
     return [g for g in gu_names if g in addr]
 
 
+def _int_str(v):
+    """세대수 같은 숫자값을 문자열로. API 가 int 로도 "468" 로도 준다 — 콤마가
+    섞여 오는 경우까지 받는다. 파싱이 안 되면 None(값을 지어내지 않는다)."""
+    try:
+        n = int(float(str(v).replace(',', '')))
+    except (TypeError, ValueError):
+        return None
+    return str(n)
+
+
+def _ym(v):
+    """"202903"(YYYYMM) → "2029-03". 꼴이 아니면 None."""
+    s = str(v or '').strip()
+    if len(s) != 6 or not s.isdigit():
+        return None
+    return '%s-%s' % (s[:4], s[4:6])
+
+
 def fetch(target_name, area=None, laws=()):
     """워치 계약대로 metric 을 돌려준다. 열쇠가 없으면 빈 dict 와 함께 사유를 알린다.
 
@@ -228,9 +246,32 @@ def fetch(target_name, area=None, laws=()):
             'cap': _yn(r.get('PARCPRC_ULS_AT')),
             'hot': _yn(r.get('SPECLT_RDN_EARTH_AT')),
         }
+        # 2026-09-04 — 청약 공고 화면(watch/청약 공고.html)이 쓰는 필드 여섯.
+        # 없으면 키 자체를 안 둔다 — 「값은 원문에 있는 것만」(화면은 「—」를 안 찍는다).
         url = r.get('PBLANC_URL')
         if url:
             it['url'] = url
+        end = r.get('RCEPT_ENDDE') or None
+        if end:
+            it['end'] = end
+        total = _int_str(r.get('TOT_SUPLY_HSHLDCO'))
+        if total:
+            it['total'] = total
+        movein = _ym(r.get('MVN_PREARNGE_YM'))
+        if movein:
+            it['movein'] = movein
+        sp_apply = r.get('SPSPLY_RCEPT_BGNDE') or None
+        if sp_apply:
+            it['sp_apply'] = sp_apply
+        pblanc_de = r.get('RCRIT_PBLANC_DE') or None
+        if pblanc_de:
+            it['pblanc_de'] = pblanc_de
+        builder = r.get('CNSTRCT_ENTRPS_NM') or None
+        if builder:
+            it['builder'] = builder
+        hmpg = r.get('HMPG_ADRES') or None
+        if hmpg:
+            it['hmpg'] = hmpg
         hmn, pno = r.get('HOUSE_MANAGE_NO'), r.get('PBLANC_NO')
         if rate_ok and hmn and pno:
             try:

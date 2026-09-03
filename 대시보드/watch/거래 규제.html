@@ -159,6 +159,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gp-d{color:var(--ink-2)}
 .gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
   border-bottom:0;border-top:1px solid var(--line)}
+/* 청약 공고 상태 칩 — 구 패널 단지 줄 끝. 값 줄이 좁아 칩이 커지면 안 되므로
+   이 자리에서만 작게 줄인다(청약공고_스펙 §5) */
+.gp-chip{font-size:11px;padding:1px 6px;margin-left:6px;vertical-align:1px}
 /* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
    지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
 @media (max-width:620px){
@@ -224,6 +227,26 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .cond-lead{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
 .cond-tail{font-size:12.5px;color:var(--ink-3);margin:8px 0 0;max-width:66ch}
 .t-why{font-size:12.5px;color:var(--ink-3)}
+/* 청약 공고 한 건 — 본 장 「지금 청약」 축약과 watch/청약 공고.html 이 함께 쓴다
+   (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
+   가로로 밀린다 */
+.sub-list{margin:12px 0 0}
+.sub-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.sub-item:last-child{border-bottom:0}
+.si-1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0}
+.si-name{font-weight:700;font-size:1rem;border-bottom:0}
+.si-name:hover{border-bottom:1px solid var(--ink)}
+.si-gu{font-size:12.5px;color:var(--ink-3)}
+.si-chip{margin-left:auto}
+.si-b{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.si-2{margin:4px 0 0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+.si-3{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;
+  margin:4px 0 0;font-size:.85rem}
+.si-rate{color:var(--ink-2);font-weight:600}
+.si-go{font-weight:600;color:var(--ink-2);border-bottom:0}
+.si-go:hover{color:var(--ink)}
+.si-go+.si-go{margin-left:10px}
+@media (max-width:620px){.si-1{gap:2px 8px}.si-gu{flex:0 0 100%}}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
