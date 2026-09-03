@@ -227,7 +227,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </svg><figcaption>위는 상용 실리콘이다 — 설계팀이 AI 랩·하이퍼스케일러에 팔고 그들이 사용자를 상대하니 잣대가 TCO 다. 아래는 할라페뇨 — 설계팀과 사용자 사이에 판매자가 없어 요청당 에너지와 마지막 토큰까지 지연을 잣대로 삼는다.</figcaption></figure>
 <p><span class="pn">진행자A</span>가 본 것은 목표를 누가 세우느냐다. 상용 업체는 파는 입장이라 TCO(총소유비용)를 먼저 말한다. 여기서는 설계팀과 최종 사용자 사이에 중간 판매자가 없다. <span class="pn">진행자V</span>는 지표 자체는 새롭지 않다고 했다. 메가와트당 초당 토큰은 이미 상호작용 곡선의 세로축이고, 주울당 토큰은 와트당 초당 토큰을 달리 부른 것이다. <b>같은 지표라도 보고용 곡선으로 쓰느냐 설계 제약으로 쓰느냐에 따라 나오는 칩이 다르다.</b></p>
 <p>그 차이가 드러난 곳이 전력이다. Jalapeño는 700W TDP(열설계전력)이고, <span class="pn">진행자V</span>가 견준 Blackwell GB200은 1,200W쯤이다. OpenAI 팀이 SemiAnalysis의 Inference X 벤치마크를 좋게 본 이유도 전력으로 정규화했기 때문이다. 그 잣대 위에서 Jalapeño는 DeepSeek R1(6,710억 파라미터)로 새 파레토 프론티어를 그었다. 같은 상호작용성에서 처리량이 훨씬 높고, GPU가 못 가는 데까지 밀어 올린다. 이 잣대가 표준이 되면, 전력을 더 먹여 성능을 올려 온 설계는 뒤로 밀린다.</p>
-<p>다만 <span class="pn">진행자A</span>는 조건을 붙였다. Jalapeño는 HBM4를 쓰고 Blackwell과 MI355는 HBM3E를 쓰니, 제대로 된 비교는 Vera Rubin과 Helios를 상대로 해야 한다. <span class="pn">진행자V</span>도 이것을 Rubin급 칩으로 봤다.</p>
+<p>다만 <span class="pn">진행자A</span>는 조건을 붙였다. Jalapeño는 HBM4를 쓰고 Blackwell과 MI355는 HBM3E를 쓰니, 공정한 비교라면 Vera Rubin과 Helios를 상대로 하는 것이라고 했다. <span class="pn">진행자V</span>도 이것을 Rubin급 칩으로 봤다.</p>
 <h2 id="s3"><span class="num">3</span> 균형 잡힌 한 칩이 맞으면 나눠 놓은 칩들의 자리가 좁아진다</h2>
 <p>추론은 성격이 다른 두 구간으로 이뤄진다. ① 입력을 한꺼번에 밀어 넣는 프리필 ② 토큰을 하나씩 내는 디코드. 투기적 디코딩이 얹히면 더 갈린다. 작은 초안 모델이 토큰을 뱉고 큰 모델이 검증하는데, 초안 모델이 똑똑할수록 적게 뱉고 검증도 가벼워진다(<span class="pn">진행자V</span>). 비율은 워크로드마다 움직인다.</p>
 <figure class="uc-fig"><p class="fig-title">추론을 받는 세 구성</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="범용 GPU 하나는 초당 1,000토큰 영역에 못 닿고, 프리필·디코드를 나누면 NVL72 랙 1대에 Groq 랙 9대가 붙고, 균형 잡힌 한 칩은 랙 1~2대 700W 로 그 자리를 밟는다">

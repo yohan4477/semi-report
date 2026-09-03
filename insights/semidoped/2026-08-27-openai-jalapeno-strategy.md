@@ -7,6 +7,7 @@ source: https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling
 sent: content/understanding/Semi Doped/raw/2026-08-27-openai-jalapeno.md (전문)
 date: 2026-09-02
 rewritten: 2026-09-03 문단째 한국어로 다시 씀(메인 — sonnet 한도) run 2026-09-03-018 — 문단 22 · (L) 54 · 전사 대조는 따로
+rewritten-check: 다시 쓴 뒤 대조(2026-09-03, haiku — 인용 줄만) — 어긋남 1 고침(L103 비교 표현). haiku 가 짚은 「1,200억」은 120 billion 이 맞고, 나머지는 이미 표시됐거나 마지막 절의 글쓴이 판단
 title: 아홉 달 만에 나온 칩 하나가 설계 잣대·칩 구성·메모리 로드맵·공급망 네 자리를 동시에 흔든다
 fixed: 받은 뒤 고친 것 — 구성을 말하는 자리 여섯에 ①② · 1·3·5절 표 셋을 걷고 7절의 5절 되풀이를 한 문장으로(중복) · ⓞ 영어 인용 여덟을 한국어로 옮김(원문은 전사 L줄 참조) · ① 「백지」 항은 Vik 이 아니라 Austin 이 얹음(L171) ② 곡선 세로축은 주울당 토큰이 아니라 메가와트당 초당 토큰(L51) ③ 둠을 돌린 주체(L69) ④ Vera Rubin·Helios 가 HBM4 를 쓴다는 말은 전사에 없음(L103)
 ---
@@ -31,7 +32,7 @@ Austin이 본 것은 목표를 누가 세우느냐다. 상용 업체는 파는 �
 
 그 차이가 드러난 곳이 전력이다. Jalapeño는 700W TDP(열설계전력)이고, Vik이 견준 Blackwell GB200은 1,200W쯤이다(L111). OpenAI 팀이 SemiAnalysis의 Inference X 벤치마크를 좋게 본 이유도 전력으로 정규화했기 때문이다(L113). 그 잣대 위에서 Jalapeño는 DeepSeek R1(6,710억 파라미터)로 새 파레토 프론티어를 그었다. 같은 상호작용성에서 처리량이 훨씬 높고, GPU가 못 가는 데까지 밀어 올린다(L103). 이 잣대가 표준이 되면, 전력을 더 먹여 성능을 올려 온 설계는 뒤로 밀린다.
 
-다만 Austin은 조건을 붙였다. Jalapeño는 HBM4를 쓰고 Blackwell과 MI355는 HBM3E를 쓰니, 제대로 된 비교는 Vera Rubin과 Helios를 상대로 해야 한다(L103). Vik도 이것을 Rubin급 칩으로 봤다(L173).
+다만 Austin은 조건을 붙였다. Jalapeño는 HBM4를 쓰고 Blackwell과 MI355는 HBM3E를 쓰니, 공정한 비교라면 Vera Rubin과 Helios를 상대로 하는 것이라고 했다(L103). Vik도 이것을 Rubin급 칩으로 봤다(L173).
 
 ## 3. 균형 잡힌 한 칩이 맞으면 나눠 놓은 칩들의 자리가 좁아진다
 
