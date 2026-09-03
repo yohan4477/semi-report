@@ -1414,9 +1414,107 @@ def _wk_provision():
 
 WK = '2026-07-10-weka-bercovici'
 
+
+# ══ 첨단 패키징 (2026-06-19) 전략 판 ═══════════════════════════════════
+# 값은 전사의 것만 — 858제곱밀리미터(26×33), 3.3·5.5·9.5·40배, 8·12배, 2028, 120×180, 300, 500.
+
+def _ap_stack(x0, pw, label, mid_lines, mid_cls, top='칩', bottom='기판'):
+    """칩 / 가운데 층 / 기판 세 층 한 벌. 같은 꼴을 여러 벌 세우기 위한 부품."""
+    w = pw - 24
+    x = x0 + 12
+    out = head(x0, 22, pw, label)
+    y = 34
+    out += box(x, y, w, 40, [top], 'fig-box'); y += 40 + 6
+    h = len(mid_lines) * LH + 22
+    out += box(x, y, w, h, mid_lines, mid_cls); y += h + 6
+    out += box(x, y, w, 40, [bottom], 'fig-stage'); y += 40
+    return out, y
+
+
+def _ap_cowos():
+    """TSMC CoWoS 세 갈래 — 같은 세 층, 가운데 층만 다르다."""
+    pw = W / 3
+    parts, y = [], 0
+    for k, (label, mid, cls) in enumerate([('CoWoS-S', ['실리콘 인터포저', 'TSV 로 관통'], 'fig-agent'),
+                                           ('CoWoS-R', ['유기 RDL', '금속 두세 층'], 'fig-box'),
+                                           ('CoWoS-L', ['유기 층 안에', '실리콘 브리지'], 'fig-box')]):
+        out, y = _ap_stack(k * pw, pw, label, mid, cls)
+        parts += out
+    parts += legend([('fig-agent', '실리콘을 다 깐다'), ('fig-box', '싸게 깔거나 필요한 데만')], y + 14)
+    return svg(y + 40, parts, 'CoWoS 세 갈래는 칩과 기판 사이 가운데 층만 다르다 — S 는 실리콘 인터포저, R 은 유기 RDL, L 은 유기 층 안에 실리콘 브리지')
+
+
+def _ap_emib():
+    """CoWoS-L 세 층과 EMIB 두 층 — 같은 꼴 좌우, 인텔은 가운데 층을 뺐다."""
+    pw = W / 2
+    parts = []
+    out, y1 = _ap_stack(0, pw, 'CoWoS-L — 세 층', ['유기 층 안 브리지'], 'fig-box')
+    parts += out
+    x = pw + 12; w = pw - 24
+    parts += head(pw, 22, pw, 'EMIB — 두 층')
+    parts += box(x, 34, w, 40, ['칩'], 'fig-box')
+    parts += box(x, 80, w, LH + 22 + 40 + 6, ['브리지를 심은 기판'], 'fig-agent')
+    parts += legend([('fig-agent', '가운데 층이 기판 안으로')], max(y1, 80 + LH + 22 + 46) + 14)
+    return svg(max(y1, 80 + LH + 22 + 46) + 40, parts, 'CoWoS-L 은 칩·유기 층(브리지)·기판 세 층이고 EMIB 는 브리지를 기판 안에 심어 두 층이다')
+
+
+def _ap_reticle():
+    """다이는 레티클 한 장(858제곱밀리미터)을 못 넘는데 패키지는 3.3배로 커진다 — 위아래."""
+    sw = 140.0; sx = (W - sw * 3.3) / 2
+    parts = head(0, 22, W, '패키지 — 레티클 3.3배')
+    parts += _rect(sx, 34, sw * 3.3, 56, 'fig-stage')
+    parts += head(0, 112, W, '다이 상한 — 레티클 1배 = 858제곱밀리미터')
+    parts += _rect((W - sw) / 2, 124, sw, 56, 'fig-agent')
+    parts += legend([('fig-agent', '다이 하나의 상한'), ('fig-stage', '패키지가 커지는 만큼')], 196)
+    return svg(222, parts, '다이 하나는 레티클 한 장 858제곱밀리미터를 넘지 못한다. 패키지는 레티클 3.3배까지 커진다. 그 차이를 패키징이 메운다')
+
+
+def _ap_panel():
+    """300밀리미터 원형 웨이퍼와 500×500 사각 패널 — 같은 자에 그렸다."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    k = 0.32
+    parts = head(L, 22, pw, '원형 웨이퍼 300') + head(R, 22, pw, '사각 패널 500×500')
+    cy = 34 + 500 * k / 2
+    parts += ['  <circle cx="%g" cy="%g" r="%g" class="fig-box"/>' % (L + pw / 2, cy, 300 * k / 2)]
+    parts += _rect(R + (pw - 500 * k) / 2, 34, 500 * k, 500 * k, 'fig-agent')
+    parts += legend([('fig-agent', '넓이가 웨이퍼의 다섯~여섯 배')], 34 + 500 * k + 16)
+    return svg(34 + 500 * k + 42, parts, '원형 300밀리미터 웨이퍼에서 큰 사각형을 떼면 가장자리를 버린다. 500 × 500밀리미터 사각 패널은 넓이가 다섯~여섯 배다. 같은 자로 그렸다')
+
+
+def _ap_roadmap():
+    """레티클 배수 로드맵 두 줄 — CoWoS 와 EMIB. 같은 폭."""
+    h = 2 * LH + 22
+    bw = w_of(['블랙웰 울트라'])  # 넷을 한 폭으로 놓으려면 라벨이 일곱 자를 넘으면 안 된다
+    parts = head(0, 22, W, 'TSMC CoWoS')
+    r1, _ = eband([(['3.3배'], 'fig-box'), ('>', ''), (['5.5배', '블랙웰 울트라'], 'fig-box'), ('>', ''),
+                   (['9.5배'], 'fig-box'), ('>', ''), (['40배', '웨이퍼 한 장'], 'fig-outside')], 32, h, w=bw)
+    parts += r1
+    y2 = 32 + h + 44
+    parts += head(0, y2 - 10, W, '인텔 EMIB')
+    r2, _ = eband([(['8배', 'EMIB-T'], 'fig-box'), ('>', ''), (['12배 넘게', '2028년'], 'fig-outside')], y2, h, w=bw)
+    parts += r2
+    parts += legend([('fig-outside', '아직 안 나온 것')], y2 + h + 16)
+    return svg(y2 + h + 42, parts, 'CoWoS 는 3.3배에서 5.5배(Blackwell Ultra·Rubin), 9.5배, System on Wafer 40배로. EMIB 는 EMIB-T 8배에서 2028년 12배 넘게(120 × 180밀리미터)')
+
+
+AP = '2026-06-19-advanced-packaging'
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (AP, 'strategy'): [
+        ('2.|여기서 앞뒤가', '다이는 레티클을 못 넘는데 패키지는 3.3배', _ap_reticle(),
+         '다이 하나는 레티클 한 장 858제곱밀리미터(26 × 33밀리미터)를 넘지 못한다(L135·L159). 패키지는 레티클 3.3배까지 커진다(L161). 그 사이를 메우는 것이 첨단 패키징이다.'),
+        ('3.|CoWoS 는 세 층', 'CoWoS 세 갈래 — 가운데 층만 다르다', _ap_cowos(),
+         '같은 세 층을 세 벌 그렸다. CoWoS-S 는 실리콘 인터포저를 TSV 로 관통시켜 다 깔고(L205), R 은 금속 두세 층의 유기 RDL 로 싸게 깔고(L211), L 은 유기 층 안에 실리콘 브리지를 필요한 데만 심는다(L217). S 의 크기 상한이 레티클 3.3배다(L227·L229).'),
+        ('4.|EMIB(기판 안', 'CoWoS-L 세 층 대 EMIB 두 층', _ap_emib(),
+         '인텔 EMIB 는 브리지를 기판 안에 심어 가운데 층을 없앴다(L267). 값은 없는 그림이다 — 층의 수만 견준다.'),
+        ('4.|여기서 나오는 ', '원형 웨이퍼와 사각 패널', _ap_panel(),
+         '300밀리미터 원형 웨이퍼에서 큰 사각형을 떼면 가장자리를 버리는데, 500 × 500밀리미터 사각 패널은 넓이가 웨이퍼의 다섯~여섯 배다(L257·L261). 같은 자로 그렸고 버리는 비율은 전사에 없다.'),
+        ('7.|Vik 이 마지막에', '레티클 배수 로드맵 — CoWoS 와 EMIB', _ap_roadmap(),
+         'CoWoS 는 3.3배에서 5.5배(Blackwell Ultra·Rubin), 9.5배, System on Wafer 40배로 간다(L347). EMIB 는 EMIB-T 8배에서 2028년 12배 넘게, 120 × 180밀리미터다(L357). 점선은 아직 안 나온 것이다.'),
+    ],
     (WK, 'strategy'): [
         ('1.|Val 은 저장장치를', 'NVLink 레인 128 대 PCI 레인 32', _wk_lanes(),
          '같은 꼴 두 줄이다. Nvidia 서버의 스케일업 구간은 NVLink 레인이 128개쯤(Val 의 기억), 마더보드에서 CPU 가 DRAM 으로 가는 PCI 는 32개다(L47). 그래서 망을 최대 속도로 쓰면 DRAM 보다 빨라진다는 것이 Val 의 산수다(L45).'),
