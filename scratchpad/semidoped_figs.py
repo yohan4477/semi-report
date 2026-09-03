@@ -82,8 +82,42 @@ def missing_values(slug, svg_):
     path = os.path.join(RAW, slug + '.md')
     if not os.path.exists(path):
         return sorted(values(svg_))
-    src = re.sub(r'[\s,]', '', io.open(path, encoding='utf-8').read())
+    raw = io.open(path, encoding='utf-8').read()
+    # 전사는 수를 말로 적는다(forty-eight volts) — 영어 수사를 숫자로 풀어 붙여 두고 대조한다(2026-09-03)
+    src = re.sub(r'[\s,]', '', raw) + '|' + '|'.join(_number_words(raw))
     return sorted(n for n in values(svg_) if n.replace(',', '') not in src)
+
+
+_ONES = {w: i for i, w in enumerate('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split())}
+_TENS = {w: i * 10 for i, w in enumerate('_ _ twenty thirty forty fifty sixty seventy eighty ninety'.split()) if w != '_'}
+_MULT = {'hundred': 100, 'thousand': 1000, 'million': 10 ** 6, 'billion': 10 ** 9}
+
+
+def _number_words(text):
+    """영어 수사 연쇄를 숫자로. 「forty-eight」→48, 「eight hundred」→800, 「two point five」는 안 다룬다."""
+    toks = re.findall(r"[A-Za-z]+|-|[^A-Za-z\s-]", text.lower())  # 구두점은 끊는 표시
+    out, cur, total = [], 0, 0
+    def flush():
+        nonlocal cur, total
+        if cur or total:
+            out.append(str(total + cur))
+        cur = total = 0
+    for t in toks:
+        if t in _ONES:
+            cur += _ONES[t]
+        elif t in _TENS:
+            cur += _TENS[t]
+        elif t in _MULT:
+            if t == 'hundred':
+                cur = (cur or 1) * 100
+            else:
+                total += (cur or 1) * _MULT[t]; cur = 0
+        elif t == '-' or t == 'and':
+            continue
+        else:
+            flush()
+    flush()
+    return out
 
 
 # ── 붓 ───────────────────────────────────────────────────────────────
@@ -1071,9 +1105,166 @@ def _dc_power():
                         (['Nvidia — 스케일업에 플러거블을 안 쓴다'], 'fig-agent')],
                        '모듈 30와트가 양 끝 둘씩 5,000개면 이미 전력에 눌린 랙에 10~20% 를 더 얹는 셈이라 Nvidia 는 스케일업에 플러거블을 안 쓴다')
 
+
+# ══ 컴퓨텍스 2026 (2026-06-12) 전략 판 ═══════════════════════════════════
+# 값은 전사의 것만 — 99%, OSFP 8개, 800·48·12·6볼트, 칩렛 2·3·12(=17). 배치 시간 「절반」은 담당자 말이라 캡션에.
+
+def _cx_cpo_blocks():
+    """CPO 가 랙 안으로 못 들어오는 이유 둘 — 같은 꼴 두 기둥. 위는 지금 있는 것, 아래 점선은 아직 없는 것."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '① 수율') + head(R, 22, pw, '② 검사')
+    cols = [(L, ['엔지니어링 샘플', '99%'], ['수백만 개 양산', '아직 모름']),
+            (R, ['웨이퍼 위·아래', '동시 정렬'], ['빠른 검사 장비', '아직 없음'])]
+    w = max(w_of(a) + 0 for _, a, b in cols for a in (a, b))
+    h = 2 * LH + 22
+    for x0, top, bot in cols:
+        x = x0 + (pw - w) / 2
+        parts += box(x, 36, w, h, top, 'fig-box')
+        parts += down(x + w / 2, 36 + h, 36 + h + 20)
+        parts += box(x, 36 + h + 22, w, h, bot, 'fig-outside')
+    y = 36 + 2 * h + 22
+    parts += legend([('fig-box', '지금 있는 것'), ('fig-outside', '아직 없는 것')], y + 16)
+    return svg(y + 42, parts, '수율은 엔지니어링 샘플 99% 까지만 확인됐고 양산은 아직 모른다. 검사는 웨이퍼 위아래를 동시에 맞춰야 하는데 빠른 장비가 아직 없다')
+
+
+def _cx_optics_ways():
+    """빛으로 가는 길 넷 — 광 엔진이 칩에서 얼마나 가까운가. 같은 폭 상자 넷, 화살표는 가까워지는 방향."""
+    h = 2 * LH + 22
+    parts = head(0, 22, W, '광 엔진이 칩에 가까워지는 순서')
+    row, _x = eband([(['플러그형', 'OSFP'], 'fig-box'), ('>', ''),
+                     (['XPO', 'OSFP×8'], 'fig-box'), ('>', ''),
+                     (['NPO', '소켓'], 'fig-box'), ('>', ''),
+                     (['CPO', '패키지 위'], 'fig-agent')], 36, h)
+    parts += row + legend([('fig-agent', '이 회차의 물음 — 랙 안까지 들어오나')], 36 + h + 16)
+    return svg(36 + h + 42, parts, '플러그형에서 OSFP 여덟을 합친 XPO, 소켓에 꽂는 NPO, 패키지 위에 붙이는 CPO 순으로 광 엔진이 칩에 가까워진다')
+
+
+def _cx_voltage():
+    """전압 구간마다 소재가 정해져 있다 — 배전망 → 800볼트 → 48볼트 → 12·6볼트. 실리콘카바이드 구간만 짙게."""
+    h = 3 * LH + 22
+    row, _x = eband([(['배전망', '중전압'], 'fig-box'), ('>', ''),
+                     (['800볼트', '실리콘', '카바이드'], 'fig-agent'), ('>', ''),
+                     (['48볼트', '실리콘', '카바이드'], 'fig-agent'), ('>', ''),
+                     (['12·6볼트', '실리콘'], 'fig-box')], 30, h)
+    parts = row + legend([('fig-agent', '실리콘카바이드'), ('fig-box', '실리콘')], 30 + h + 16)
+    return svg(30 + h + 42, parts, '중전압 배전망에서 800볼트로, 다시 48볼트로 내리는 구간은 실리콘카바이드이고 그 아래 12·6볼트로 가는 변환은 실리콘이다')
+
+
+def _cx_chiplets():
+    """클리어워터포레스트 칩렛 열일곱 — 아래 줄 I/O 둘·베이스 셋, 그 위에 컴퓨트 열둘. 칸 수가 값이다."""
+    cw, ch, g = 78.0, 2 * LH + 22, 10.0  # 두 줄 글에 맞춘 높이 — 44 면 둘째 줄이 아래 테두리에 깔린다
+    labels = [('I/O', '인텔7', 'fig-box'), ('베이스', '인텔3', 'fig-agent'), ('베이스', '인텔3', 'fig-agent'),
+              ('베이스', '인텔3', 'fig-agent'), ('I/O', '인텔7', 'fig-box')]
+    total = 5 * cw + 4 * g
+    x0 = (W - total) / 2
+    parts = head(0, 22, W, '컴퓨트 다이 열둘 (인텔18A) — 베이스 위에 쌓음')
+    ty, th, tg = 36, 22, 4
+    # 컴퓨트 열둘 — 베이스 셋 위에 넷씩
+    for k in range(1, 4):
+        bx = x0 + k * (cw + g)
+        tw = (cw - 3 * tg) / 4
+        for j in range(4):
+            parts += _rect(bx + j * (tw + tg), ty, tw, th, 'fig-box')
+    by = ty + th + 14
+    for k, (n, proc, cls) in enumerate(labels):
+        parts += box(x0 + k * (cw + g), by, cw, ch, [n, proc], cls)
+    parts += head(0, by + ch + 24, W, 'I/O 둘 (인텔7) · 액티브 베이스 셋 (인텔3)')
+    return svg(by + ch + 36, parts, '칩렛 열일곱 — 인텔7 I/O 다이 둘, 인텔3 액티브 베이스 다이 셋, 그 위에 인텔18A 컴퓨트 다이 열둘')
+
+
+def _cx_prefab():
+    """조립식 인프라 블록 — 전에는 현장에서 설비를 짓고 랙을 넣었고, 후에는 갖춘 컨테이너에 랙만 밀어 넣는다. 같은 폭."""
+    h = 2 * LH + 22
+    bw = w_of(['냉각·전원 설비', '현장에서 짓기'])
+    parts = head(0, 22, W, '전 — 현장 시공')
+    r1, _ = eband([(['냉각·전원 설비', '현장에서 짓기'], 'fig-box'), ('>', ''),
+                   (['설비와 랙', '잇기'], 'fig-box'), ('>', ''),
+                   (['랙 넣기'], 'fig-box')], 32, h, w=bw)
+    parts += r1
+    y2 = 32 + h + 44
+    parts += head(0, y2 - 10, W, '후 — 조립식 블록')
+    r2, _ = eband([(['갖춘 컨테이너', '들여오기'], 'fig-agent'), ('>', ''),
+                   (['랙 밀어 넣기', '연결'], 'fig-box')], y2, h, w=bw)
+    parts += r2
+    return svg(y2 + h + 16, parts, '전에는 냉각·전원 설비를 현장에서 짓고 랙을 넣었다. 조립식 블록은 설비를 갖춘 컨테이너에 랙만 밀어 넣는다')
+
+
+CX = '2026-06-12-computex-optics-power'
+
+
+# ══ 전력 벽 (2026-05-08) 전략 판 ═════════════════════════════════════════
+# 값은 전사의 것만 — 600킬로와트, 48볼트·12,500암페어, 800볼트·750암페어, 수백 kV·10~30kV·400~430V·48V·12V·1V.
+
+def _pw_current():
+    """같은 600킬로와트를 48볼트로 보낼 때와 800볼트로 보낼 때 — 같은 꼴 둘, 다른 것은 전류."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '48볼트로 보내면') + head(R, 22, pw, '800볼트로 보내면')
+    h = 2 * LH + 22
+    w = w_of(['12,500암페어'])
+    for x0, volt, amp, cls in [(L, '48볼트', '12,500암페어', 'fig-outside'), (R, '800볼트', '750암페어', 'fig-agent')]:
+        x = x0 + (pw - w) / 2
+        parts += box(x, 36, w, h, ['600킬로와트', volt], 'fig-box')
+        parts += down(x + w / 2, 36 + h, 36 + h + 20)
+        parts += box(x, 36 + h + 22, w, h, ['흐르는 전류', amp], cls)
+    y = 36 + 2 * h + 22
+    parts += legend([('fig-agent', '가는 길'), ('fig-outside', '안 되는 길')], y + 16)
+    return svg(y + 42, parts, '같은 600킬로와트를 48볼트로 보내면 12,500암페어가 흐르고 800볼트로 보내면 750암페어가 흐른다')
+
+
+def _pw_chain():
+    """발전소에서 GPU 까지 — 전압이 바뀌는 자리. 위에서 아래로, 마지막 칸이 가장 많다."""
+    return _chain_down([(['발전소 — 수백 킬로볼트'], 'fig-box'),
+                        (['변전소 — 10~30킬로볼트'], 'fig-box'),
+                        (['유틸리티룸 — 400~430볼트 삼상'], 'fig-box'),
+                        (['랙 전원장치 — 48볼트 직류'], 'fig-box'),
+                        (['중간 버스 컨버터 — 12볼트'], 'fig-box'),
+                        (['VRM — 1볼트 안팎, 개수가 가장 많다'], 'fig-agent')],
+                       '발전소에서 GPU 까지 전압이 여섯 번 바뀌고, 자리마다 다른 회사가 선다. 마지막 VRM 이 가장 많다')
+
+
+def _pw_fork():
+    """800볼트 다음 — 48볼트를 거쳐 내려갈지 6볼트로 바로 갈지. 같은 폭 상자, 같은 출발."""
+    h = 2 * LH + 22
+    bw = w_of(['800볼트'])
+    parts = head(0, 22, W, '① 있던 48볼트 설비를 그대로 쓴다')
+    r1, _ = eband([(['800볼트'], 'fig-box'), ('>', ''), (['48볼트'], 'fig-agent'), ('>', ''),
+                   (['12볼트'], 'fig-box'), ('>', ''), (['1볼트'], 'fig-box')], 32, h, w=bw)
+    parts += r1
+    y2 = 32 + h + 44
+    parts += head(0, y2 - 10, W, '② 6볼트로 바로 간다 — TI · Navitas')
+    r2, _ = eband([(['800볼트'], 'fig-box'), ('>', ''), (['6볼트'], 'fig-agent')], y2, h, w=bw)
+    parts += r2
+    parts += legend([('fig-agent', '갈래가 갈리는 자리')], y2 + h + 16)
+    return svg(y2 + h + 42, parts, '800볼트 다음은 두 갈래다. 있던 48볼트 설비를 거쳐 12볼트·1볼트로 내려가거나, 6볼트로 바로 간다')
+
+
+PW = '2026-05-08-power-wall'
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (PW, 'strategy'): [
+        ('2.|전력 쪽 병목은', '같은 600킬로와트를 48볼트로, 800볼트로', _pw_current(),
+         '같은 꼴 둘이다. 전력은 전압 곱하기 전류라 600킬로와트를 48볼트로 보내면 12,500암페어, 800볼트로 보내면 750암페어가 흐른다(L137·L153). 손실은 전류의 제곱을 따르니 그 차이가 100~200배라는 것이 Vik 의 셈이다(L163).'),
+        ('5.|전체 사슬을', '발전소에서 GPU 까지 전압이 바뀌는 자리', _pw_chain(),
+         '발전소의 수백 킬로볼트가 변전소에서 10~30킬로볼트, 유틸리티룸에서 400~430볼트 삼상, 랙 전원장치에서 48볼트 직류, 중간 버스 컨버터에서 12볼트, VRM 에서 1볼트 안팎으로 내려온다(L191·L193·L195). 자리마다 다른 회사가 서고 VRM 이 개수가 가장 많다.'),
+        ('6.|정작 어느', '800볼트 다음의 두 갈래', _pw_fork(),
+         '① 있던 48볼트 설비를 그대로 쓰며 48·12·1볼트로 내려가는 길과 ② 6볼트로 바로 가는 길(TI·Navitas)이 갈린다(L215). 어느 쪽이 서는지는 아직 정해지지 않았다는 것이 Vik 의 말이다.'),
+    ],
+    (CX, 'strategy'): [
+        ('2.|막힌 곳은 둘이다', 'CPO 가 랙 안으로 못 들어오는 이유 둘', _cx_cpo_blocks(),
+         '같은 꼴 두 기둥이다. 수율은 엔지니어링 샘플 99% 까지만 확인됐고(L127) 수백만 개 양산에서도 그런지는 아직 모른다. 검사는 웨이퍼 위아래를 동시에 맞춰야 하는데 빠른 장비가 아직 없다(L129). 99% 는 Vik 이 전한 수다.'),
+        ('3.|XPO 모듈은', '빛으로 가는 길 넷 — 칩에 얼마나 가까운가', _cx_optics_ways(),
+         '플러그형에서 OSFP 여덟을 하나로 합친 XPO(L141), 소켓에 꽂는 NPO(L131), 패키지 위에 붙이는 CPO 순으로 광 엔진이 칩에 가까워진다. 이 회차의 물음은 CPO 가 랙 안(스케일업)까지 들어오느냐다(L125).'),
+        ('4.|전압 변환 칩을', '전압 구간마다 소재가 다르다', _cx_voltage(),
+         '리테온 부스의 답과 영상이 같은 구조다(L177·L183). 중전압 배전망에서 800볼트로 내리는 칩은 실리콘카바이드, 변압기로 48볼트까지도 실리콘카바이드, 그 아래 12볼트나 6볼트로 가는 변환은 전부 실리콘이다. GaN 은 「아직 이르다」.'),
+        ('5.|버티브 부스에는', '조립식 인프라 블록 — 전과 후', _cx_prefab(),
+         '전에는 냉각·전원 설비를 현장에서 짓고 랙을 넣었다. 조립식 블록은 설비를 갖춘 컨테이너에 랙만 밀어 넣고 연결하면 끝난다(L193·L197). 배치 시간이 절반으로 준다는 것은 델타 부스 담당자의 말이고(L199), 판 위에 시간 값은 없다.'),
+        ('6.|인텔 키노트의', '클리어워터포레스트 칩렛 열일곱', _cx_chiplets(),
+         '아래 줄이 인텔7 I/O 다이 둘과 인텔3 액티브 베이스 다이 셋, 그 위에 인텔18A 컴퓨트 다이 열둘이 포베로스 다이렉트 3D 로 쌓인다(L219·L221). I/O 는 이전 세대 것을 재사용했고 최신 공정은 연산 코어에만 썼다(L227). 칸 수가 값이다.'),
+    ],
     (GF, 'strategy'): [
         ('1.|Barber가 ', '레인 속도별 구리가 가는 거리', _gf_reach(),
          '막대 길이가 미터다. 레인당 100기가비트에서 2미터, 200기가비트에서 1미터, 400기가비트에서 반 미터(L81). 점선이 랙 하나 높이라, 200기가비트부터 스위치를 랙 가운데로 내려야 하고 400기가비트에서는 그 수도 안 먹힌다.'),
