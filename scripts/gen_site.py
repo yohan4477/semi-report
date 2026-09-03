@@ -214,6 +214,19 @@ def rewrite_links(html: str, own_slug: str = '') -> str:
             return f'href="/{own_slug}/{target[:-5]}"'
         return f'href="{GH}{quote(target)}" target="_blank" rel="noopener"'
 
+    # 장 안에서 딸린 글 페이지를 가리키는 링크 — href="<슬러그>/<파일>.html(#앵커)".
+    # 사이트 주소는 /<슬러그>/<파일>(확장자 없음)이다. 그대로 두면 .html 이 308 로 넘어가는데,
+    # 파일명에 공백이 있으면(청약 공고) Location 에 날 공백이 실려 브라우저에 따라 빈 화면이
+    # 된다(2026-09-04). 여기서 바로 잇고 파일명은 URL 인코딩한다 — 앵커는 살린다.
+    page_slugs = set(SLUGS.values())
+
+    def _psub(m):
+        slug, name, anchor = m.group(1), m.group(2), m.group(3) or ''
+        if slug not in page_slugs:
+            return m.group(0)
+        return 'href="/%s/%s%s"' % (slug, quote(name), anchor)
+    html = re.sub(r'href="([A-Za-z0-9_-]+)/([^"/:#]+)\.html(#[^"]*)?"', _psub, html)
+
     return re.sub(r'href="([^"/:]+\.html)"', repl, html)
 
 
