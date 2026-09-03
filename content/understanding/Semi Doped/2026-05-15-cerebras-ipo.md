@@ -8,6 +8,7 @@ channel: Semi Doped
 host: Austin Lyons · Vik Sekar
 section: compute
 topic: 웨이퍼 스케일 · SRAM 추론 · 상장
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 gain: SRAM 44기가바이트를 한 장에 얹은 칩의 스펙과 전력, 그리고 웨이퍼 스케일이라는 발상이 40년 전에 한 번 회사를 무너뜨린 적이 있다는 내력.
 ---
 

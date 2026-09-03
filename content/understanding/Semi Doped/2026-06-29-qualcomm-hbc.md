@@ -8,6 +8,7 @@ channel: Semi Doped
 host: Austin Lyons · Vik Sekar
 section: compute
 topic: HBC · 메모리 적층 · 데이터센터 진입
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 gain: 메모리를 연산 다이 옆이 아니라 위에 쌓으면 무엇이 달라지는지(레인 수와 대역폭), 그리고 그 대가로 무엇이 어려워지는지(열·평탄도·관통전극 킵아웃존). 통신 회사가 데이터센터로 들어오는 경로와 인수 둘.
 ---
 
