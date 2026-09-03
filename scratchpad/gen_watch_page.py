@@ -362,13 +362,16 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   .gu-panel:not([data-panel="default"]){
     display:block!important;position:fixed;left:0;right:0;bottom:0;max-height:45vh;
     overflow-y:auto;background:var(--surface);border-top:1px solid var(--line);
-    border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.12);z-index:20;
-    padding:14px 16px 20px;transform:translateY(100%);pointer-events:none}
+    border-radius:14px 14px 0 0;z-index:20;
+    padding:14px 16px 20px;transform:translateY(100%);pointer-events:none;visibility:hidden}
+  /* 그림자는 열렸을 때만. 숨은 시트에도 두면 위로 번진 그림자가 화면 밑에 검은 띠로
+     남는다(2026-09-03, 사용자 스크린샷) */
   .gu-panel:not([data-panel="default"])::before{
     content:"";display:block;width:36px;height:4px;border-radius:2px;
     background:var(--line);margin:0 0 10px}
   .gu-panel:not([data-panel="default"]):not([hidden]){
-    transform:translateY(0);pointer-events:auto}
+    transform:translateY(0);pointer-events:auto;visibility:visible;
+    box-shadow:0 -8px 24px rgba(0,0,0,.12)}
   @media (prefers-reduced-motion:no-preference){
     .gu-panel:not([data-panel="default"]){transition:transform .18s}
   }
