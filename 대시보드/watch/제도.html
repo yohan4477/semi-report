@@ -14,7 +14,10 @@
   --line:#263038;
   --up:#E0704A; --down:#5C8CE0; --near:#D9AA4A;
   --fig-blue:#AAB4BC; --fig-good:#E0704A; --warn:#D9AA4A;
-  --seq-1:#1C4A3D; --seq-2:#2A6E5A; --seq-3:#3F947A; --seq-4:#6DB89F; --seq-5:#A6DBC8;
+  /* 다크에서도 「값이 클수록 밝다」 방향을 라이트와 같게 둔다 — 뒤집으면 같은 색이
+     두 화면에서 반대 뜻이 된다(스크린샷을 주고받는 순간 오독이다). 맨 아래 단도
+     --surface 보다 충분히 밝게 잡아 「값 없음」과 안 헷갈리게 한다 */
+  --seq-1:#2A5F4E; --seq-2:#3E8570; --seq-3:#55A98F; --seq-4:#7ECBAF; --seq-5:#ADE4CC;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -30,7 +33,8 @@ header{padding:34px 0 0}
 h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .meta{font-size:12.5px;font-weight:500;color:var(--ink-3);margin:0}
 .lede{color:var(--ink-2);font-size:.95rem;max-width:66ch;margin:14px 0 0}
-/* 절 바로가기 — 스크롤해도 붙어 있다. 현재 절 강조는 JS 없이는 못 하니 안 한다 */
+/* 절 바로가기 — 스크롤해도 붙어 있다. 지금 어느 절인지는 IntersectionObserver 가
+   .is-here 로 표시한다(층 버튼의 is-on 과 같은 꼴이라 새 시각 언어를 안 만든다) */
 .jump{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;
   white-space:nowrap;margin:16px 0 0;padding:10px 0;background:var(--paper);
   border-bottom:1px solid var(--line);scrollbar-width:none}
@@ -38,6 +42,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .jump a{flex:0 0 auto;font-size:12.5px;font-weight:500;background:var(--surface);
   border:1px solid var(--line);border-radius:999px;padding:6px 12px}
 .jump a:hover{border-color:var(--ink-3)}
+.jump a.is-here{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:600;
   color:var(--ink-3);border-bottom:0}
 .back:hover,.back:focus-visible{color:var(--ink)}
@@ -57,37 +62,35 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .hero{margin:28px 0 0}
 .hero-t{font-size:15px;font-weight:600;margin:0}
 /* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
-.layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
-  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
-.layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
    바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
 @media (min-width:621px){.map-fig{position:sticky;top:62px}}
-.map-fig{flex:0 0 58%;margin:0;min-width:0}
+/* 왼쪽 칸 — 지도 그림은 이 칸의 위쪽 절반만 쓴다. 남는 아래를 상태 배너와
+   「달라진 것」이 채운다(빈 칸을 300px 넘게 두지 않는다) */
+.mapcol{flex:0 0 58%;min-width:0}
+.map-fig{margin:0;min-width:0}
 .mappanel{flex:1;min-width:0}
 .seoul-map{width:100%;height:auto;display:block}
-.seoul-map .gu{fill:var(--surface);stroke:var(--paper);stroke-width:1.5px;cursor:default}
+/* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
+   바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은
+   거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
+.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
-.seoul-map[data-layer="lth"] .gu[data-lth="전부"]{fill:var(--ink)}
-.seoul-map[data-layer="lth"] .gu[data-lth="일부"]{fill:url(#hatch-ink)}
-.seoul-map[data-layer="lth"] .gu[data-lth="없음"]{fill:var(--surface)}
-.seoul-map[data-layer="lth"] .gu[data-lth="null"]{fill:url(#hatch-line)}
-.seoul-map[data-layer="reg"] .gu[data-reg="both"]{fill:var(--ink)}
-.seoul-map[data-layer="reg"] .gu[data-reg="one"]{fill:url(#hatch-ink)}
-.seoul-map[data-layer="reg"] .gu[data-reg="none"]{fill:var(--surface)}
-.seoul-map[data-layer="reg"] .gu[data-reg="null"]{fill:url(#hatch-line)}
+.seoul-map .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
+.seoul-map .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
+.seoul-map .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
+.seoul-map .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
+.seoul-map .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
+.seoul-map .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
 .gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
   stroke:var(--paper);stroke-width:3px;pointer-events:none}
+/* 값 없는 구도 이름을 단다 — 「내가 사는 데 찾기」가 지도의 첫 동작이다. 위계는
+   크기·굵기·색으로 준다 */
+.gu-lbl.blank{font-size:10px;font-weight:400;fill:var(--ink-3)}
 @media (prefers-reduced-motion:no-preference){.seoul-map .gu{transition:fill .15s}}
 /* 패널 — 기본(권역 요약 셋)과 구 25개짜리를 data-panel 로 JS 가 바꿔 낀다.
    값은 전부 생성 때 박아 둔다 — JS 는 hidden 만 만진다(계산 안 한다).
@@ -97,12 +100,26 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    펼쳐져 보였다(2026-09-03, 스크린샷으로 잡힘) — !important 로 확실히 막는다. */
 [hidden]{display:none!important}
 .gu-panel{display:block}
-.rs{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+/* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
+   「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
+@media (min-width:621px){
+  .gu-panel:not([data-panel="default"]){background:var(--surface);
+    border:1px solid var(--line);border-radius:10px;padding:16px;margin:0 0 16px;
+    box-shadow:0 2px 12px rgba(16,20,24,.10)}
+}
+/* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
+.rs{display:block;position:relative;padding:12px 26px 12px 0;
+  border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
+.rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
+.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:38px;
+  border-radius:8px}
+.rs:hover::after{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
-.rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-v{margin:6px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
 .rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
+.rs-cta{display:inline-block;margin:8px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
 .gp-name{font-size:20px;font-weight:700}
 .gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
@@ -115,7 +132,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
 .gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
 .gp-d{color:var(--ink-2)}
-.gp-more{display:inline-block;margin:10px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+.gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
+  border-bottom:0;border-top:1px solid var(--line)}
 /* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
    지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
 @media (max-width:620px){
@@ -133,7 +151,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     .gu-panel:not([data-panel="default"]){transition:transform .18s}
   }
 }
-/* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
+/* 범례 — 전세가율 하나뿐이다(지정 현황 둘은 지도에서 내려 배너로 갔다) */
 .map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .leg-strip{display:flex}
 .leg-strip .leg-sw{flex:1;height:16px;border-radius:0;margin:0}
@@ -147,6 +165,29 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
 .leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
 .leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+/* 지정 현황 상태 배너 — 층 버튼을 대신한다. 25구가 전부 같은 값이라 지도로 그리면
+   서울 전체가 먹 단색이 되고, 얻는 정보는 문장 하나다 */
+.zone-banner{margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.zb-row{display:flex;flex-wrap:wrap;gap:3px 10px;align-items:baseline;padding:5px 0;
+  font-size:.88rem}
+.zb-k{flex:0 0 auto;font-weight:600}
+.zb-v{color:var(--ink-2)}
+.zb-m{font-size:12.5px;color:var(--ink-3)}
+/* 여섯 달 넘게 안 바뀐 값에는 나이를 붙인다 — 머리의 「자료 기준 2026-07」과 같은
+   무게로 읽히면 안 된다 */
+.t-old{display:inline-block;font-size:12px;font-weight:600;padding:1px 7px;
+  border-radius:4px;border:1px solid var(--near);color:var(--near)}
+/* 지난달과 달라진 것 — 이 장을 다시 여는 이유가 이것이다 */
+.changed{margin:24px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
+.chg-t{font-size:15px;font-weight:600;margin:0}
+.chg-row{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:8px 0;
+  border-bottom:1px solid var(--line)}
+.chg-row:last-child{border-bottom:0}
+.chg-k{flex:0 0 auto;font-weight:600;font-size:.9rem}
+.chg-v{font-size:.9rem;color:var(--ink-2)}
+.chg-say{font-size:.85rem;color:var(--ink-3)}
+/* 절 제목 옆 잔글씨 — 열마다 되풀이되는 상수(마지막 확인 날짜)를 한 번만 적는다 */
+.band-note{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -238,11 +279,12 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .stat{flex:1 1 0;min-width:0}
   .stat-v{font-size:26px}
   .delta{font-size:13px}
-  /* 지도 히어로 — 층 버튼 줄 → 지도 → 패널 순으로 세로 편다 */
+  /* 지도 히어로 — 지도 → 패널 순으로 세로 편다 */
   .maprow{flex-direction:column}
-  .map-fig{flex:0 0 auto;width:100%}
-  .layer-btns{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .layer-btns::-webkit-scrollbar{display:none}
+  .mapcol{flex:0 0 auto;width:100%}
+  /* viewBox 안이라 SVG 좌표계 기준으로 올려야 화면에서 13px 안팎으로 보인다 */
+  .gu-lbl{font-size:15px;stroke-width:3.5px}
+  .gu-lbl.blank{font-size:13px}
   .rs-n{font-size:24px}
   /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
      세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
@@ -271,4 +313,4 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   svg.fig-n{display:block}
   .band{margin-top:32px}
 }
-</style></head><body><div class="wrap"><a class="back" href="../포트폴리오 워치.html#policy">← 포트폴리오 워치</a><header><p class="meta mono">법·고시 9개</p><h1>제도</h1></header><div class="dbody"><p class="lbl">법·고시가 지금 어느 판인가</p><div class="tw"><table><thead><tr><th>법·고시</th><th>지금 판</th><th>내가 읽은 판</th><th>같은가</th><th>관련 화면</th><th>기준</th></tr></thead><tbody><tr><td data-th="법·고시">주택법</td><td data-th="지금 판">2026-08-04</td><td data-th="내가 읽은 판">2026-08-04</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="거래 규제.html">거래 규제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">지방세법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="보유세제.html">보유세제</a> · <a href="취득세제.html">취득세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">소득세법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="양도세제.html">양도세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">조세특례제한법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="양도세제.html">양도세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">지방세특례제한법</td><td data-th="지금 판">2026-06-02</td><td data-th="내가 읽은 판">2026-06-02</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="취득세제.html">취득세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">은행업감독규정</td><td data-th="지금 판">2026-04-01</td><td data-th="내가 읽은 판">2026-04-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="대출 규제.html">대출 규제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">주택임대차보호법</td><td data-th="지금 판">2026-01-02</td><td data-th="내가 읽은 판">2026-01-02</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="임대차 제도.html">임대차 제도</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">종합부동산세법</td><td data-th="지금 판">2026-01-01</td><td data-th="내가 읽은 판">2026-01-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="보유세제.html">보유세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">부동산 거래신고 등에 관한 법률</td><td data-th="지금 판">2024-05-17</td><td data-th="내가 읽은 판">2024-05-17</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="거래 규제.html">거래 규제</a> · <a href="임대차 제도.html">임대차 제도</a></td><td data-th="기준">공표</td></tr></tbody></table></div><p class="lbl">이 법·고시를 보는 화면</p><div class="wline"><a class="wline-t" href="거래 규제.html">거래 규제</a></div><div class="wline"><a class="wline-t" href="대출 규제.html">대출 규제</a></div><div class="wline"><a class="wline-t" href="보유세제.html">보유세제</a></div><div class="wline"><a class="wline-t" href="양도세제.html">양도세제</a></div><div class="wline"><a class="wline-t" href="임대차 제도.html">임대차 제도</a></div><div class="wline"><a class="wline-t" href="취득세제.html">취득세제</a></div></div><footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer></div></body></html>
+</style></head><body><div class="wrap"><a class="back" href="../포트폴리오 워치.html#policy">← 포트폴리오 워치</a><header><p class="meta mono">법·고시 9개</p><h1>제도</h1></header><div class="dbody"><p class="lbl">법·고시가 지금 어느 판인가</p><div class="tw"><table><thead><tr><th>법·고시</th><th>지금 판</th><th>내가 읽은 판</th><th>같은가</th><th>관련 화면</th><th>기준</th></tr></thead><tbody><tr><td data-th="법·고시">주택법</td><td data-th="지금 판">2026-08-04</td><td data-th="내가 읽은 판">2026-08-04</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="거래 규제.html">거래 규제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">지방세법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="보유세제.html">보유세제</a> · <a href="취득세제.html">취득세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">소득세법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="양도세제.html">양도세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">조세특례제한법</td><td data-th="지금 판">2026-07-01</td><td data-th="내가 읽은 판">2026-07-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="양도세제.html">양도세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">지방세특례제한법</td><td data-th="지금 판">2026-06-02</td><td data-th="내가 읽은 판">2026-06-02</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="취득세제.html">취득세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">은행업감독규정</td><td data-th="지금 판">2026-04-01</td><td data-th="내가 읽은 판">2026-04-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="대출 규제.html">대출 규제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">주택임대차보호법</td><td data-th="지금 판">2026-01-02</td><td data-th="내가 읽은 판">2026-01-02</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="임대차 제도.html">임대차 제도</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">종합부동산세법</td><td data-th="지금 판">2026-01-01</td><td data-th="내가 읽은 판">2026-01-01</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="보유세제.html">보유세제</a></td><td data-th="기준">공표</td></tr><tr><td data-th="법·고시">부동산 거래신고 등에 관한 법률</td><td data-th="지금 판">2024-05-17</td><td data-th="내가 읽은 판">2024-05-17</td><td data-th="같은가"><span class="tag t-calm">같다</span></td><td data-th="관련 화면"><a href="거래 규제.html">거래 규제</a> · <a href="임대차 제도.html">임대차 제도</a></td><td data-th="기준">공표</td></tr></tbody></table></div><p class="lbl">이 법·고시를 보는 화면</p><div class="wline"><a class="wline-t" href="거래 규제.html">거래 규제</a></div><div class="wline"><a class="wline-t" href="대출 규제.html">대출 규제</a></div><div class="wline"><a class="wline-t" href="보유세제.html">보유세제</a></div><div class="wline"><a class="wline-t" href="양도세제.html">양도세제</a></div><div class="wline"><a class="wline-t" href="임대차 제도.html">임대차 제도</a></div><div class="wline"><a class="wline-t" href="취득세제.html">취득세제</a></div></div><footer>제도는 국가법령정보센터에서 받습니다. 통계가 갱신되면 다음 달에 다시 확인합니다.</footer><!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 --></div></body></html>

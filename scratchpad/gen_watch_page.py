@@ -163,8 +163,13 @@ def _region_raw(watches):
 
 
 def _val3(series):
+    """지금 값 · 지난달 대비 · 석 달 대비. 견준 상대의 달(a1·a3)도 같이 낸다 —
+    「+0.20%p」만 적으면 그게 한 달치인지 석 달치인지 화면에 없다."""
     ser = [tuple(x) for x in series]
-    return {'cur': ser[-1][1], 'd1': _delta(ser, 1), 'd3': _delta(ser, 3), 'asof': ser[-1][0]}
+    return {'cur': ser[-1][1], 'd1': _delta(ser, 1), 'd3': _delta(ser, 3),
+            'asof': ser[-1][0],
+            'a1': ser[-2][0] if len(ser) >= 2 else None,
+            'a3': ser[-4][0] if len(ser) >= 4 else None}
 
 
 def _gu_map_data(watches):
@@ -221,7 +226,10 @@ CSS = """
   --line:#263038;
   --up:#E0704A; --down:#5C8CE0; --near:#D9AA4A;
   --fig-blue:#AAB4BC; --fig-good:#E0704A; --warn:#D9AA4A;
-  --seq-1:#1C4A3D; --seq-2:#2A6E5A; --seq-3:#3F947A; --seq-4:#6DB89F; --seq-5:#A6DBC8;
+  /* 다크에서도 「값이 클수록 밝다」 방향을 라이트와 같게 둔다 — 뒤집으면 같은 색이
+     두 화면에서 반대 뜻이 된다(스크린샷을 주고받는 순간 오독이다). 맨 아래 단도
+     --surface 보다 충분히 밝게 잡아 「값 없음」과 안 헷갈리게 한다 */
+  --seq-1:#2A5F4E; --seq-2:#3E8570; --seq-3:#55A98F; --seq-4:#7ECBAF; --seq-5:#ADE4CC;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -237,7 +245,8 @@ header{padding:34px 0 0}
 h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .meta{font-size:12.5px;font-weight:500;color:var(--ink-3);margin:0}
 .lede{color:var(--ink-2);font-size:.95rem;max-width:66ch;margin:14px 0 0}
-/* 절 바로가기 — 스크롤해도 붙어 있다. 현재 절 강조는 JS 없이는 못 하니 안 한다 */
+/* 절 바로가기 — 스크롤해도 붙어 있다. 지금 어느 절인지는 IntersectionObserver 가
+   .is-here 로 표시한다(층 버튼의 is-on 과 같은 꼴이라 새 시각 언어를 안 만든다) */
 .jump{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;
   white-space:nowrap;margin:16px 0 0;padding:10px 0;background:var(--paper);
   border-bottom:1px solid var(--line);scrollbar-width:none}
@@ -245,6 +254,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .jump a{flex:0 0 auto;font-size:12.5px;font-weight:500;background:var(--surface);
   border:1px solid var(--line);border-radius:999px;padding:6px 12px}
 .jump a:hover{border-color:var(--ink-3)}
+.jump a.is-here{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .back{display:inline-block;margin:22px 0 0;font-size:.82rem;font-weight:600;
   color:var(--ink-3);border-bottom:0}
 .back:hover,.back:focus-visible{color:var(--ink)}
@@ -264,37 +274,35 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .hero{margin:28px 0 0}
 .hero-t{font-size:15px;font-weight:600;margin:0}
 /* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
-.layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
-  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
-.layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
    바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
 @media (min-width:621px){.map-fig{position:sticky;top:62px}}
-.map-fig{flex:0 0 58%;margin:0;min-width:0}
+/* 왼쪽 칸 — 지도 그림은 이 칸의 위쪽 절반만 쓴다. 남는 아래를 상태 배너와
+   「달라진 것」이 채운다(빈 칸을 300px 넘게 두지 않는다) */
+.mapcol{flex:0 0 58%;min-width:0}
+.map-fig{margin:0;min-width:0}
 .mappanel{flex:1;min-width:0}
 .seoul-map{width:100%;height:auto;display:block}
-.seoul-map .gu{fill:var(--surface);stroke:var(--paper);stroke-width:1.5px;cursor:default}
+/* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
+   바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은
+   거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
+.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
-.seoul-map[data-layer="ratio"] .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
-.seoul-map[data-layer="lth"] .gu[data-lth="전부"]{fill:var(--ink)}
-.seoul-map[data-layer="lth"] .gu[data-lth="일부"]{fill:url(#hatch-ink)}
-.seoul-map[data-layer="lth"] .gu[data-lth="없음"]{fill:var(--surface)}
-.seoul-map[data-layer="lth"] .gu[data-lth="null"]{fill:url(#hatch-line)}
-.seoul-map[data-layer="reg"] .gu[data-reg="both"]{fill:var(--ink)}
-.seoul-map[data-layer="reg"] .gu[data-reg="one"]{fill:url(#hatch-ink)}
-.seoul-map[data-layer="reg"] .gu[data-reg="none"]{fill:var(--surface)}
-.seoul-map[data-layer="reg"] .gu[data-reg="null"]{fill:url(#hatch-line)}
+.seoul-map .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
+.seoul-map .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
+.seoul-map .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
+.seoul-map .gu[data-ratio-bin="3"]{fill:var(--seq-3)}
+.seoul-map .gu[data-ratio-bin="4"]{fill:var(--seq-4)}
+.seoul-map .gu[data-ratio-bin="5"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
 .gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
   stroke:var(--paper);stroke-width:3px;pointer-events:none}
+/* 값 없는 구도 이름을 단다 — 「내가 사는 데 찾기」가 지도의 첫 동작이다. 위계는
+   크기·굵기·색으로 준다 */
+.gu-lbl.blank{font-size:10px;font-weight:400;fill:var(--ink-3)}
 @media (prefers-reduced-motion:no-preference){.seoul-map .gu{transition:fill .15s}}
 /* 패널 — 기본(권역 요약 셋)과 구 25개짜리를 data-panel 로 JS 가 바꿔 낀다.
    값은 전부 생성 때 박아 둔다 — JS 는 hidden 만 만진다(계산 안 한다).
@@ -304,12 +312,26 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    펼쳐져 보였다(2026-09-03, 스크린샷으로 잡힘) — !important 로 확실히 막는다. */
 [hidden]{display:none!important}
 .gu-panel{display:block}
-.rs{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+/* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
+   「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
+@media (min-width:621px){
+  .gu-panel:not([data-panel="default"]){background:var(--surface);
+    border:1px solid var(--line);border-radius:10px;padding:16px;margin:0 0 16px;
+    box-shadow:0 2px 12px rgba(16,20,24,.10)}
+}
+/* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
+.rs{display:block;position:relative;padding:12px 26px 12px 0;
+  border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
+.rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
+.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:38px;
+  border-radius:8px}
+.rs:hover::after{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
-.rs-v{margin:2px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
+.rs-v{margin:6px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:4px 0 0;font-size:26px;font-weight:700}
 .rs-line{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
+.rs-cta{display:inline-block;margin:8px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .gp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
 .gp-name{font-size:20px;font-weight:700}
 .gp-close{flex:0 0 auto;width:32px;height:32px;min-width:44px;min-height:44px;margin:-6px -6px 0 0;
@@ -322,7 +344,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
 .gp-lbl{color:var(--ink-3);font-size:12.5px;margin-right:4px}
 .gp-d{color:var(--ink-2)}
-.gp-more{display:inline-block;margin:10px 0 0;font-weight:600;font-size:.85rem;border-bottom:0}
+.gp-more{display:block;margin:12px 0 0;padding:10px 0 0;font-weight:600;font-size:.95rem;
+  border-bottom:0;border-top:1px solid var(--line)}
 /* 모바일 — 구를 고르면 아래에서 시트가 올라온다. 기본(권역 요약 셋)은 그대로
    지도 아래 인라인이다(:not([data-panel="default"]) 로 가른다) */
 @media (max-width:620px){
@@ -340,7 +363,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     .gu-panel:not([data-panel="default"]){transition:transform .18s}
   }
 }
-/* 범례 — 층마다 하나, layer-btn 이 hidden 을 바꿔 하나만 보인다 */
+/* 범례 — 전세가율 하나뿐이다(지정 현황 둘은 지도에서 내려 배너로 갔다) */
 .map-legend{margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
 .leg-strip{display:flex}
 .leg-strip .leg-sw{flex:1;height:16px;border-radius:0;margin:0}
@@ -354,6 +377,29 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .leg-hatch-ink{background-image:repeating-linear-gradient(45deg,var(--ink) 0 2px,var(--surface) 2px 6px)}
 .leg-hatch-line{background-image:repeating-linear-gradient(45deg,var(--line) 0 2px,var(--surface) 2px 6px)}
 .leg-src{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+/* 지정 현황 상태 배너 — 층 버튼을 대신한다. 25구가 전부 같은 값이라 지도로 그리면
+   서울 전체가 먹 단색이 되고, 얻는 정보는 문장 하나다 */
+.zone-banner{margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.zb-row{display:flex;flex-wrap:wrap;gap:3px 10px;align-items:baseline;padding:5px 0;
+  font-size:.88rem}
+.zb-k{flex:0 0 auto;font-weight:600}
+.zb-v{color:var(--ink-2)}
+.zb-m{font-size:12.5px;color:var(--ink-3)}
+/* 여섯 달 넘게 안 바뀐 값에는 나이를 붙인다 — 머리의 「자료 기준 2026-07」과 같은
+   무게로 읽히면 안 된다 */
+.t-old{display:inline-block;font-size:12px;font-weight:600;padding:1px 7px;
+  border-radius:4px;border:1px solid var(--near);color:var(--near)}
+/* 지난달과 달라진 것 — 이 장을 다시 여는 이유가 이것이다 */
+.changed{margin:24px 0 0;padding:14px 0 0;border-top:1px solid var(--line)}
+.chg-t{font-size:15px;font-weight:600;margin:0}
+.chg-row{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:8px 0;
+  border-bottom:1px solid var(--line)}
+.chg-row:last-child{border-bottom:0}
+.chg-k{flex:0 0 auto;font-weight:600;font-size:.9rem}
+.chg-v{font-size:.9rem;color:var(--ink-2)}
+.chg-say{font-size:.85rem;color:var(--ink-3)}
+/* 절 제목 옆 잔글씨 — 열마다 되풀이되는 상수(마지막 확인 날짜)를 한 번만 적는다 */
+.band-note{margin-left:8px;font-size:12.5px;font-weight:400;color:var(--ink-3)}
 .band{margin:40px 0 0;border-top:2px solid var(--ink);padding-top:11px}
 .band-t{font-size:15px;font-weight:600;margin:0}
 .band-s{font-size:.9rem;color:var(--ink-2);margin:6px 0 0;max-width:66ch}
@@ -445,11 +491,12 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .stat{flex:1 1 0;min-width:0}
   .stat-v{font-size:26px}
   .delta{font-size:13px}
-  /* 지도 히어로 — 층 버튼 줄 → 지도 → 패널 순으로 세로 편다 */
+  /* 지도 히어로 — 지도 → 패널 순으로 세로 편다 */
   .maprow{flex-direction:column}
-  .map-fig{flex:0 0 auto;width:100%}
-  .layer-btns{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .layer-btns::-webkit-scrollbar{display:none}
+  .mapcol{flex:0 0 auto;width:100%}
+  /* viewBox 안이라 SVG 좌표계 기준으로 올려야 화면에서 13px 안팎으로 보인다 */
+  .gu-lbl{font-size:15px;stroke-width:3.5px}
+  .gu-lbl.blank{font-size:13px}
   .rs-n{font-size:24px}
   /* 설명을 오른쪽 auto 칸에 두면 그 칸이 긴 문장을 다 먹고 왼쪽 제목이 한 자씩
      세로로 떨어진다(매/매/가/격/지/수). 설명은 제 줄로 내리고 제목은 낱말로 접는다 */
@@ -489,26 +536,46 @@ def _fmt1(v):
     return ('%.1f' % v)
 
 
-def _extra_line(ratio):
-    """「더 얹을 돈」 — 매매가가 전세금 위로 얼마나 더 드는가. 전세가율의 역수
-    (전세금의 몇 배)가 아니라 100에서 전세가율을 뺀 값(매매가의 몇 %)이다 —
-    전세가율 60%면 매매가가 전세금의 1.67배지만, 얹는 돈은 매매가의 40%다.
-    두 수는 다른 물음에 답한다. 사용자 지시(2026-09-03)로 후자만 쓴다."""
+def _extra_sentence(ratio):
+    """전세가율의 여집합을 문장으로 잇는다. 43.1 과 57 을 나란히 놓으면 빠르게
+    읽는 사람에게 「43인지 57인지」로 남는다 — 둘이 한 짝이라는 것을 말로 적는다."""
     if not ratio:
-        return '더 얹을 돈 —'
-    return '더 얹을 돈 · 매매가의 %d%%' % round(100.0 - ratio)
+        return ''
+    return ('전세 보증금이 매매가의 %d%%. 나머지 %d%%를 더 얹어야 매매로 넘어갑니다.'
+            % (round(ratio), round(100.0 - ratio)))
 
 
-def _delta_span(d, unit='', digits=2, eps=0.005):
-    """방향 색은 이름표가 아니라 값에만 쓴다 — 오르면 --up, 내리면 --down. 카드의
-    큰 수 옆 화살표, 카드 밑줄, 「지난번 본 뒤 바뀐 것」 행이 전부 이 한 함수를
-    쓴다 — 문턱 통과 여부가 아니라 「얼마나 움직였나」만 보여준다."""
-    if d is None or abs(d) < eps:
-        return '<span class="t-none">—</span>' if d is None else '<span class="delta">·</span>'
+def _delta_num(d, unit=''):
+    """부호 + 색. 색만으로 방향을 말하지 않는다 — +/− 를 글자로 먼저 쓰고 색을
+    겹쳐 준다. 소수는 늘 둘째 자리다(한 화면에서 자릿수가 갈리면 크기 비교가 안 된다)."""
+    if d is None:
+        return '<span class="t-none">—</span>'
+    if abs(d) < 0.005:
+        return '<span class="delta">±0.00%s</span>' % E(unit)
     cls = 'd-up' if d > 0 else 'd-down'
-    arrow = '↑' if d > 0 else '↓'
-    fmt = '%%.%df' % digits
-    return '<span class="delta %s">%s%s%s</span>' % (cls, arrow, fmt % abs(d), unit)
+    return ('<span class="delta %s">%s%.2f%s</span>'
+            % (cls, '+' if d > 0 else '−', abs(d), E(unit)))
+
+
+def _delta_when(span, base):
+    """기간만 글자로. 값을 큰 글씨 옆에 이미 썼을 때(머리 수치 띠) 쓴다 — 같은 수를
+    두 번 적지 않는다."""
+    return E('%s(%s) 대비' % (span, base) if base else '%s 대비' % span)
+
+
+def _delta_phrase(span, base, d, unit=''):
+    """「지난달(2026-06) 대비 +0.20%p」 — 본 장 패널·권역 요약·달라진 것·상세
+    머리 띠가 전부 이 한 함수를 쓴다. 같은 지표의 변화가 두 화면에서 반대로 보인
+    적이 있다(본 장 ↑0.20, 상세 ↓0.1) — 계산과 기간을 한 자리로 모아 막는다."""
+    if d is None:
+        return ''
+    when = '%s(%s) 대비' % (span, base) if base else '%s 대비' % span
+    return '%s %s' % (E(when), _delta_num(d, unit))
+
+
+def _delta_unit(unit):
+    """값의 단위 → 변화의 단위. 비율(%)의 변화는 %p, 지수의 변화는 pt 다."""
+    return '%p' if '%' in (unit or '') else 'pt'
 
 
 def tbl(cap, head, rows):
@@ -559,10 +626,16 @@ def time_ruler(watches, W=640):
     # 4.5px 이 된다 — 벡터라 판을 줄이면 같은 글자가 상대적으로 커진다
     X0, X1, Y = 20, W - 20, 66
 
-    def px(a):
-        return X0 + (X1 - X0) * ((xs[a] - lo) / float(hi - lo) if hi > lo else .5)
-
     order = sorted(pts, key=lambda a: xs[a])
+    # 가로축은 날짜 선형이 아니라 순위 등간격이다. 선형으로 두면 오른쪽 넉 달이
+    # 한 자리에 뭉쳐 어느 라벨이 어느 점인지 못 짚는다 — 「2년 벌어져 있다」는
+    # 사실은 아래 캡션 문장이 맡고, 자는 판독만 맡는다
+    rank = dict((a, i) for i, a in enumerate(order))
+
+    def px(a):
+        n = len(order)
+        return X0 + (X1 - X0) * (rank[a] / float(n - 1) if n > 1 else .5)
+
     # 라벨을 줄인다. 연도가 앞 점과 같으면 안 되풀이한다 — 오른쪽에 넉 달이 몰려 있어
     # 전체 날짜를 다 적으면 글자가 겹친다(실제로 다섯 쌍이 겹쳤다)
     lab, prev_y = [], None
@@ -581,7 +654,10 @@ def time_ruler(watches, W=640):
         wid = dict((i, len(lab[i]) * CH) for i in idx)
         x0 = dict((i, px(order[i]) - wid[i] / 2) for i in idx)
         # 왼쪽에서 오른쪽으로 밀고, 끝에 몰려 못 밀린 것은 오른쪽에서 왼쪽으로 되민다.
-        # 한 번만 밀면 마지막 점이 판 끝에 붙어 앞 라벨과 겹친 채로 남는다
+        # 한 번만 밀면 마지막 점이 판 끝에 붙어 앞 라벨과 겹친 채로 남는다.
+        # 판 왼쪽 끝 clamp 를 맨 나중에 하면 첫 라벨이 오른쪽으로 튀어나가 두 번째
+        # 라벨을 덮는다 — 밀기 전에 먼저 세운다
+        x0[idx[0]] = max(x0[idx[0]], 2)
         for k in range(1, len(idx)):
             i, j = idx[k - 1], idx[k]
             x0[j] = max(x0[j], x0[i] + wid[i] + 6)
@@ -979,23 +1055,24 @@ def stat_strip(w):
         return ''
     cells = []
     for t in vals:
-        ser = t['series']
+        ser = [tuple(x) for x in t['series']]
         cur = ser[-1][1]
-        delta = ser[-1][1] - ser[-4][1] if len(ser) >= 4 else None
+        # 본 장 패널과 같은 계산·같은 기간이다. 예전에는 여기만 석 달치를 화살표로
+        # 냈고 본 장은 지난달치를 냈다 — 같은 값에 빨강 오름과 파랑 내림이 동시에
+        # 붙어 나갔다(P1-5). 기간을 글자로 박아 그 자리를 막는다
+        d1 = ser[-1][1] - ser[-2][1] if len(ser) >= 2 else None
+        base1 = ser[-2][0] if len(ser) >= 2 else None
         unit = t.get('unit') or ''
+        du = _delta_unit(unit)
         m = re.search(r'—\s*(\S+)$', t['what'] or '')
         label = m.group(1) if m else t['what']
-        if delta is None or abs(delta) < 0.005:
-            arrow = ''
-        elif delta > 0:
-            arrow = '<span class="delta d-up">↑%s</span>' % _fmt1(delta)
-        else:
-            arrow = '<span class="delta d-down">↓%s</span>' % _fmt1(-delta)
         cells.append(
             '<div class="stat"><p class="stat-k">%s</p>'
             '<p class="stat-v">%s%s%s</p>'
+            '<p class="stat-m">%s</p>'
             '<p class="stat-m">기준 %s · %s</p></div>'
-            % (E(label), _fmt1(cur), E(unit), arrow,
+            % (E(label), _fmt1(cur), E(unit), _delta_num(d1, du),
+               _delta_when('지난달', base1) if d1 is not None else '지난달 값이 없습니다',
                E(t['as_of'] or '—'), E(t['nature'] or '공표')))
     names = set(_metric_name(t['what']) for t in vals)
     return '<div class="stats">%s</div>%s' % (''.join(cells), term_lines([w], names))
@@ -1045,16 +1122,23 @@ def line_block(w):
     조건·상태·걸리면·기준)를 통째로 걷었다. 그 표가 보여주던 트리거 문턱은
     글쓴이 개인 기준이라 독자에게는 뜻이 없다. 머리 수치 띠(stat_strip)가 이미
     같은 값(지금·석 달 Δ·기준)을 문턱 없이 보여준다."""
+    trig = [html for p, html in figures_lists(w) if p == 0]
+    rest = trig[1:] + [html for p, html in figures_lists(w) if p == 1]
     h = ['<section class="line">']
-    h.append(stat_strip(w))
-    h.append(figures_trigger(w))
-    h.append('<p class="line-judge">%s</p>' % w['judged'])
+    strip = stat_strip(w)
+    if strip:
+        h.append('<div id="now">%s</div>' % strip)
+    h.append('<div id="judge"><p class="line-judge">%s</p>%s</div>'
+             % (w['judged'], trig[0] if trig else ''))
+    if w['clash']:
+        h.append('<div id="clash"><p class="lbl">반대 근거</p><ul class="pts">%s</ul></div>'
+                 % ''.join('<li>%s</li>' % c for c in w['clash']))
 
+    hist = ''
     if w.get('history'):
-        h.append(tbl('판단 이력', ['날짜', '무엇을', '왜'],
-                     [[E(d), wl.md_inline(what), wl.md_inline(why)]
-                      for d, what, why in w['history']]))
-
+        hist = tbl('판단 이력', ['날짜', '무엇을', '왜'],
+                   [[E(d), wl.md_inline(what), wl.md_inline(why)]
+                    for d, what, why in w['history']])
     if w.get('laws'):
         rows = []
         for _tg, name, seen in w['laws']:
@@ -1062,24 +1146,41 @@ def line_block(w):
             now = m.get('value')
             st = '—' if not now or not seen else ('같다' if str(now) == seen else '걸림')
             rows.append([E(name), E(seen or '—'), E(now or '아직 안 받음'), tag(st)])
-        h.append(tbl('내가 읽은 판과 지금 판',
-                     ['법·고시', '내가 읽은 판', '지금 판', '같은가'], rows))
-    h.append(figures_rest(w))
+        hist += tbl('내가 읽은 판과 지금 판',
+                    ['법·고시', '내가 읽은 판', '지금 판', '같은가'], rows)
+    if hist:
+        h.append('<div id="hist">%s</div>' % hist)
+    if rest:
+        h.append('<div id="more">%s</div>' % ''.join(rest))
     if w['points']:
-        h.append('<p class="lbl">왜 보나</p><ul class="pts">%s</ul>'
+        h.append('<div id="why"><p class="lbl">왜 보나</p><ul class="pts">%s</ul></div>'
                  % ''.join('<li>%s</li>' % p for p in w['points']))
     # 사건 트리거도 「걸리면」(다음에 할 일) 없이 「무엇을 확인하나 · 어디서」 둘로
     # — 「언제 판단이 바뀌나」 열도 조건 문장이라 함께 걷는다(2026-09-02)
     evt = [t for t in w['triggers'] if t['kind'] == wl.KIND_EVENT]
+    where = ''
     if evt:
-        h.append(tbl('사람이 확인하는 것', ['무엇을 확인하나', '어디서'],
-                     [[E(t['what']), link_out(t['where'])] for t in evt]))
-    h.append(_lth_detail_block(w))
-    if w['clash']:
-        h.append('<p class="lbl">반대 근거</p><ul class="pts">%s</ul>'
-                 % ''.join('<li>%s</li>' % c for c in w['clash']))
+        where = tbl('사람이 확인하는 것', ['무엇을 확인하나', '어디서'],
+                    [[E(t['what']), link_out(t['where'])] for t in evt])
+    where += _lth_detail_block(w)
+    if where:
+        h.append('<div id="where">%s</div>' % where)
     h.append('</section>')
     return ''.join(h)
+
+
+def _detail_jump(w):
+    """상세의 절 바로가기 — 있는 절만. 6,300px 짜리 페이지에서 「반대 근거만 보고
+    싶다」가 스크롤 노동이 되면 안 된다."""
+    body = line_block(w)
+    items = [('now', '지금 값'), ('judge', '판단'), ('clash', '반대 근거'),
+             ('hist', '이력'), ('more', '값 더'), ('where', '확인처')]
+    got = [(i, t) for i, t in items if ('id="%s"' % i) in body]
+    if len(got) < 2:
+        return body, ''
+    nav = ('<nav class="jump" aria-label="절 바로가기">%s</nav>'
+           % ''.join('<a href="#%s">%s</a>' % (i, E(t)) for i, t in got))
+    return body, nav
 
 
 def _first_sentence(judged):
@@ -1095,23 +1196,52 @@ def _first_sentence(judged):
     return text[:idx + 1] if idx >= 0 else text
 
 
+def _line_group(w):
+    """목록을 관점으로 가른다. 「강남 3구」와 「강남 3구 — 집 구하는 사람」이 아무
+    말 없이 나란히 서 있으면 뒤엣것이 앞엣것의 부분처럼 읽힌다 — 실은 같은 권역을
+    다른 눈으로 본 두 줄이다. 관점을 묶음 이름으로 올리고 줄 이름에서는 뗀다."""
+    if w['kind'] != 'realestate':
+        return 2
+    return 0 if w.get('view') else 1
+
+
+GROUP_NAME = {0: '집 구하는 사람', 1: '투자로 보는 사람', 2: '제도'}
+GROUP_NOTE = {1: '강남 3구만 봅니다 — 나머지 두 권역은 아직 안 봅니다.'}
+
+
+def _checked_note(watches):
+    """마지막 확인 날짜를 절 제목 옆에 한 번만 적는다. 열 줄 중 아홉이 같은 날짜면
+    그 열은 되풀이되는 상수라 스캔만 방해한다 — 다른 것만 이름을 댄다."""
+    dates = [w['checked'] for w in watches if w.get('checked')]
+    if not dates:
+        return ''
+    common = max(set(dates), key=dates.count)
+    odd = ['%s(%s)만 %s' % (w['target'], GROUP_NAME[_line_group(w)], w['checked'])
+           for w in sorted(watches, key=lambda x: x['slug'])
+           if w.get('checked') and w['checked'] != common]
+    txt = '전부 %s 확인' % common
+    if odd:
+        txt += ' · ' + ' · '.join(odd)
+    return '<span class="band-note">%s</span>' % E(txt)
+
+
 def line_summary_rows(watches):
-    """본 장의 「보고 있는 것」 목록 — 이름·verdict·마지막 확인만. 칩(걸림·근접)은
-    없다 — 문턱은 독자마다 달라 뜻이 없다. 부동산 넷을 먼저, 제도 여섯을 그다음에
-    묶는다."""
-    ordered = sorted(watches,
-                     key=lambda w: (0 if w['kind'] == 'realestate' else 1, w['slug']))
+    """본 장의 「보고 있는 것」 목록 — 이름·verdict 만. 마지막 확인 날짜는 절 제목
+    옆으로 올렸다(_checked_note). 칩(걸림·근접)은 없다 — 문턱은 독자마다 달라 뜻이
+    없다."""
+    ordered = sorted(watches, key=lambda w: (_line_group(w), w['slug']))
     h, cur = [], None
     for w in ordered:
-        g = 0 if w['kind'] == 'realestate' else 1
+        g = _line_group(w)
         if g != cur:
-            h.append('<p class="lbl">%s</p>' % ('부동산' if g == 0 else '제도'))
+            h.append('<p class="lbl">%s</p>' % E(GROUP_NAME[g]))
+            if GROUP_NOTE.get(g):
+                h.append('<p class="wline-v">%s</p>' % E(GROUP_NOTE[g]))
             cur = g
         verdict = w.get('verdict') or _first_sentence(w['judged'])
         h.append('<div class="wline"><a class="wline-t" href="watch/%s.html">%s</a>'
-                 '<p class="wline-v">%s</p>'
-                 '<span class="wline-d mono">마지막 확인 %s</span></div>'
-                 % (w['slug'], E(title_of(w)), E(verdict), E(w['checked'] or '—')))
+                 '<p class="wline-v">%s</p></div>'
+                 % (w['slug'], E(w['target']), E(verdict)))
     return ''.join(h)
 
 
@@ -1126,18 +1256,24 @@ def detail_page(w):
     t9 = title_of(w)
     view = w.get('view') or KIND_LABEL.get(w['kind'], w['kind'])
     verdict = w.get('verdict') or _first_sentence(w['judged'])
+    body, nav = _detail_jump(w)
     return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>%s — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
-            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#lines">'
-            '← 포트폴리오 워치</a>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#map">'
+            '← 서울 지도로</a>'
             '<header><p class="meta mono">%s · %s · 마지막 확인 %s</p><h1>%s</h1>'
-            '<p class="verdict">%s</p></header>'
+            '<p class="verdict">%s</p></header>%s'
             '<div class="dbody">%s</div>'
-            '<footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
+            '<p><a class="back" href="../포트폴리오 워치.html#lines">'
+            '← 보고 있는 것 목록</a></p>'
+            '<footer>값은 한국부동산원 공표 통계, 제도는 국가법령정보센터에서 받습니다. '
+            '마지막 확인 %s. 통계가 갱신되면 다음 달에 다시 확인합니다.</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다. 판단은'
+            ' insights/watch/, 수치는 insights/watch/_metrics/ -->%s'
             '</div></body></html>'
             % (E(t9), FONTS, CSS, E(_area_head(w['target'])), E(view), E(w['checked'] or '—'),
-               E(t9), E(verdict), line_block(w)))
+               E(t9), E(verdict), nav, body, E(w['checked'] or '—'), _JUMP_JS))
 
 
 def law_page(watches):
@@ -1160,7 +1296,9 @@ def law_page(watches):
             '← 포트폴리오 워치</a>'
             '<header><p class="meta mono">법·고시 %d개</p><h1>제도</h1></header>'
             '<div class="dbody">%s</div>'
-            '<footer>이 화면은 <code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
+            '<footer>제도는 국가법령정보센터에서 받습니다. 통계가 갱신되면 다음 달에 '
+            '다시 확인합니다.</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->'
             '</div></body></html>'
             % (FONTS, CSS, len(_laws_grouped(watches)), body))
 
@@ -1178,82 +1316,103 @@ def _src_link(src):
 
 
 def _ratio_legend_html(watches):
-    """전세가율 층의 범례 — 다섯 단 색 띠 + 값 없음 칸 + 전세가율 자(양 끝 문구와
-    권역 점을 그대로 보여준다)."""
-    n_blank = len(SEOUL_GU['gu']) - len(WATCHED_GU)
+    """전세가율 범례 — 다섯 단 색 띠 + 방향 한 줄 + 값 없는 구 이름 + 전세가율 자.
+
+    값 없는 구는 수만 적으면(「값 없음 — 16구」) 어느 구인지 알 길이 없다. 지도에서
+    자기 동네를 못 찾은 사람이 여기서 이름을 확인한다."""
+    blanks = sorted(set(SEOUL_GU['gu']) - set(WATCHED_GU))
+    names = '·'.join(g[:-1] if g.endswith('구') else g for g in blanks)
     strip = ''.join('<span class="leg-sw" style="background:var(--seq-%d)"></span>' % i
                     for i in range(1, 6))
     labels = ''.join('<span>%s</span>' % E(t) for t in ('<45', '45~50', '50~55', '55~60', '≥60'))
     return ('<div class="leg-strip">%s</div><p class="leg-labels">%s</p>'
-            '<p class="leg-item"><span class="leg-sw" style="background:var(--surface);'
-            'border:1px solid var(--line)"></span> 값 없음 — %d구</p>%s'
-            % (strip, labels, n_blank, ratio_ruler_fig(watches)))
+            '<p class="leg-src">→ 오른쪽일수록 매매가에 가깝습니다.</p>'
+            '<p class="leg-item"><span class="leg-sw" style="background:var(--paper);'
+            'border:1px solid var(--line)"></span> 값 없음 — %d구: %s</p>%s'
+            % (strip, labels, len(blanks), E(names), ratio_ruler_fig(watches)))
 
 
-def _zone_legend_rows(rows):
-    return ''.join(
-        '<p class="leg-item"><span class="leg-sw %s" style="%s"></span> %s — %d구</p>'
-        % (cls, style, E(label), n) for style, cls, label, n in rows)
+def _zone_age_chip(as_of, today):
+    """여섯 달 넘게 안 바뀐 기준일에는 나이를 붙인다. 머리의 「자료 기준 2026-07」과
+    같은 무게로 읽히면 값의 나이가 열 배 차이 나는 것이 안 보인다."""
+    a, b = _months(as_of), _months(today)
+    if a is None or b is None or b - a < 6:
+        return ''
+    return ' <span class="t-old">%d개월 전 값</span>' % (b - a)
 
 
-def _lth_legend_html():
-    """토지거래허가구역 층의 범례 — 넷 다(전부·일부·없음·확인 안 됨) + 출처."""
+def _zone_banner(today):
+    """지정 현황 상태 배너 — 층 버튼 둘을 대신한다.
+
+    25구가 전부 같은 범주라 지도로 그리면 서울 전체가 먹 단색이 되고, 클릭 한 번을
+    내고 얻는 정보는 「전부 지정」 문장 하나였다. 수와 날짜는 손으로 안 적는다 —
+    insights/watch/_zones.json 에서 센다. 구마다 갈리는 날 층을 되살린다(그때 색은
+    --seq-4 / hatch / --surface 3단)."""
+    total = len(SEOUL_GU['gu'])
     n_all, n_part, n_none, n_null = _lth_counts()
-    z = ZONES.get('토지거래허가구역', {})
-    rows = [('background:var(--ink)', '', '전부 지정', n_all),
-            ('', 'leg-hatch-ink', '일부 지정', n_part),
-            ('background:var(--surface);border:1px solid var(--line)', '', '미지정', n_none),
-            ('', 'leg-hatch-line', '확인 안 됨', n_null)]
-    return (_zone_legend_rows(rows) + '<p class="leg-src">기준 %s · %s</p>'
-           % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
-
-
-def _reg_legend_html():
-    """규제지역 층의 범례 — 넷 다(둘 다 지정·하나만·둘 다 해제·확인 안 됨) + 출처."""
+    lth_txt = ('%d구 전부 지정' % total if n_all == total
+               else '전부 지정 %d구 · 일부 지정 %d구 · 미지정 %d구 · 확인 안 됨 %d구'
+               % (n_all, n_part, n_none, n_null))
     cnt = _reg_counts()
-    z = ZONES.get('조정대상지역', {})
-    rows = [('background:var(--ink)', '', '둘 다 지정', cnt['both']),
-            ('', 'leg-hatch-ink', '하나만 지정', cnt['one']),
-            ('background:var(--surface);border:1px solid var(--line)', '', '둘 다 해제', cnt['none']),
-            ('', 'leg-hatch-line', '확인 안 됨', cnt['null'])]
-    return (_zone_legend_rows(rows) + '<p class="leg-src">기준 %s · %s</p>'
-           % (E(z.get('as_of') or '—'), _src_link(z.get('src'))))
+    reg_txt = ('%d구 둘 다 지정' % total if cnt['both'] == total
+               else '둘 다 지정 %d구 · 하나만 %d구 · 둘 다 해제 %d구 · 확인 안 됨 %d구'
+               % (cnt['both'], cnt['one'], cnt['none'], cnt['null']))
+    rows = []
+    for label, txt, z in (('토지거래허가구역', lth_txt, ZONES.get('토지거래허가구역', {})),
+                          ('규제지역', reg_txt, ZONES.get('조정대상지역', {}))):
+        as_of = z.get('as_of') or '—'
+        rows.append('<p class="zb-row"><span class="zb-k">%s</span>'
+                    '<span class="zb-v">%s</span>'
+                    '<span class="zb-m">기준 %s%s · %s</span></p>'
+                    % (E(label), E(txt), E(as_of), _zone_age_chip(as_of, today),
+                       _src_link(z.get('src'))))
+    return ('<div class="zone-banner">%s<p class="leg-src">규제지역은 조정대상지역과 '
+            '투기과열지구 둘을 함께 부르는 말입니다.</p></div>' % ''.join(rows))
+
+
+# 이름을 안 다는 구. 도형이 작아 가운데 좌표(cx·cy)에 글자를 놓으면 이웃 라벨과
+# 겹친다(check_fig 가 잡는다). 좌표는 cx·cy 만 쓰기로 했으므로 — 지시선을 새로
+# 그리지 않는다 — 이 구들만 뺀다. 값이 있는 구는 여기 못 든다(그 이름은 반드시
+# 보여야 한다).
+LABEL_SKIP = ()
 
 
 def _gu_svg(gu_data):
-    """서울 25개 구 지도. 채움은 CSS 가 data-layer/data-ratio-bin/data-lth/data-reg
-    로 고른다(층 전환은 JS 가 <svg> 의 data-layer 만 바꾼다) — 값 자체는 여기서
-    속성으로 다 박아 두고 JS 는 아무 계산도 안 한다."""
+    """서울 25개 구 지도. 채움은 CSS 가 data-ratio-bin 으로 고른다 — 값 자체는
+    여기서 속성으로 다 박아 두고 JS 는 아무 계산도 안 한다.
+
+    2026-09-03 — 층(토허·규제) 두 개를 걷었다. 25구가 전부 같은 범주라 서울 전체가
+    먹 단색으로 칠해졌고, 얻는 정보는 문장 하나였다. 지도 아래 상태 배너
+    (_zone_banner)가 그 문장을 대신한다. 구마다 갈리는 날 층을 되살린다 — 그때
+    색은 --seq-4 / hatch / --surface 3단으로 하고, 서울 전체를 먹으로 안 칠한다."""
     vb = SEOUL_GU['viewBox']
-    defs = ('<defs>'
-            '<pattern id="hatch-ink" width="6" height="6" patternUnits="userSpaceOnUse" '
-            'patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"/>'
-            '<path d="M0 0L0 6" class="fat" stroke="var(--ink)" stroke-width="3"/></pattern>'
-            '<pattern id="hatch-line" width="6" height="6" patternUnits="userSpaceOnUse" '
-            'patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"/>'
-            '<path d="M0 0L0 6" class="fat" stroke="var(--line)" stroke-width="2"/></pattern>'
-            '</defs>')
     paths, labels = [], []
     for name in sorted(SEOUL_GU['gu']):
         g = SEOUL_GU['gu'][name]
         e = gu_data[name]
-        rbin = _ratio_bin(e['jeonse']['cur']) if e['jeonse'] else 0
-        lv = e['lth_value'] if e['lth_value'] is not None else 'null'
-        label = ('전세가율 %.1f%%' % e['jeonse']['cur']) if e['jeonse'] else '보고 있지 않은 구'
-        attrs = ['class="gu"', 'data-gu="%s"' % E(name), 'tabindex="0"', 'role="button"',
-                 'data-ratio-bin="%d"' % rbin, 'data-lth="%s"' % E(lv),
-                 'data-reg="%s"' % _reg_bin(e['adj'], e['hot'])]
+        watched = bool(e['jeonse'])
+        label = ('전세가율 %.1f%%' % e['jeonse']['cur']) if watched else '보고 있지 않은 구'
+        attrs = ['class="gu"', 'data-gu="%s"' % E(name)]
+        if watched:
+            attrs += ['tabindex="0"', 'role="button"',
+                      'data-ratio-bin="%d"' % _ratio_bin(e['jeonse']['cur'])]
+        else:
+            # 값 없는 구는 탭 순서에서 뺀다 — 키보드로 열여섯 번 지나가는 죽은
+            # 정거장이 된다. 마우스·터치로는 그대로 패널이 뜬다
+            attrs.append('tabindex="-1"')
         if e['slug']:
             attrs.append('data-slug="%s"' % E(e['slug']))
         attrs.append('aria-label="%s"' % E('%s · %s' % (name, label)))
         attrs.append('d="%s"' % g['d'])
         paths.append('<path %s/>' % ' '.join(attrs))
-        if name in WATCHED_GU:
-            labels.append('<text x="%.1f" y="%.1f" class="gu-lbl" text-anchor="middle">%s</text>'
-                          % (g['cx'], g['cy'], E(name)))
-    return ('<svg class="seoul-map" data-layer="ratio" viewBox="%d %d %d %d">%s%s'
+        if name in LABEL_SKIP and not watched:
+            continue
+        cls = 'gu-lbl' if watched else 'gu-lbl blank'
+        labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle">%s</text>'
+                      % (g['cx'], g['cy'], cls, E(name)))
+    return ('<svg class="seoul-map" viewBox="%d %d %d %d">%s'
             '<g class="gu-labels">%s</g></svg>'
-            % (vb[0], vb[1], vb[2], vb[3], defs, ''.join(paths), ''.join(labels)))
+            % (vb[0], vb[1], vb[2], vb[3], ''.join(paths), ''.join(labels)))
 
 
 def _region_summary_html(watches):
@@ -1271,21 +1430,34 @@ def _region_summary_html(watches):
         sd = (w.get('metrics') or {}).get('supply_demand')
         if sd and sd.get('value') is not None:
             sdv = float(sd['value'])
-            sd_txt = '수급 %s %s' % (_fmt1(sdv),
-                                    '사려는 사람이 많다' if sdv >= 100 else '팔려는 사람이 많다')
+            sd_txt = '수급 %s · %s' % (_fmt1(sdv),
+                                      '사려는 사람이 더 많습니다' if sdv >= 100
+                                      else '팔려는 사람이 더 많습니다')
         else:
             sd_txt = '수급 못 붙임'
-        line = '%s · %s' % (_extra_line(cur), sd_txt)
         gus = ' '.join(AREAS.get(w['target'], {}).get('구', []))
-        items.append((cur, w, d3, gus, line))
+        d1 = (avg[-1][1] - avg[-2][1]) if len(avg) >= 2 else None
+        base1 = avg[-2][0] if len(avg) >= 2 else None
+        items.append((cur, w, d1, base1, gus, sd_txt))
     items.sort(key=lambda r: r[0])
-    return ''.join(
+    rows = ''.join(
         '<a class="rs" href="watch/%s.html" data-gus="%s">'
-        '<p class="rs-k">%s</p><p class="rs-v">%s</p>'
-        '<p class="rs-n">%s%%%s</p><p class="rs-line">%s</p></a>'
-        % (w['slug'], E(gus), E(_area_head(w['target'])), E(w.get('verdict') or '판단 없음'),
-           _fmt1(cur), _delta_span(d3), E(line))
-        for cur, w, d3, gus, line in items)
+        '<p class="rs-k">%s · 전세가율 <span class="t-sub">(%s)</span></p>'
+        '<p class="rs-n">%s%%</p>'
+        '<p class="rs-line">%s</p>'
+        '<p class="rs-v">%s</p>'
+        '<p class="rs-line">%s</p>'
+        '<p class="rs-line">%s</p>'
+        '<span class="rs-cta">이 권역 자세히 보기</span></a>'
+        % (w['slug'], E(gus), E(w['target']), E(_gu_short(w['target'])),
+           _fmt1(cur),
+           _delta_phrase('지난달', base1, d1, '%p') or '지난달 값이 없습니다',
+           E(w.get('verdict') or '판단 없음'), E(_extra_sentence(cur)), E(sd_txt))
+        for cur, w, d1, base1, gus, sd_txt in items)
+    # 용어 풀이는 그 수가 처음 나오는 자리 바로 밑에 붙인다(별도 「용어」 절을 안 둔다).
+    # 전세가율은 자(ratio_ruler_fig) 캡션이 이미 맡는다 — 여기서 또 적으면 같은
+    # 문장이 한 화면에 두 번 나온다
+    return rows + term_lines(watches, {'수급동향', '매매가격지수'})
 
 
 LTH_LABEL = {'전부': '전부 지정', '일부': '일부 지정', '없음': '미지정'}
@@ -1323,13 +1495,15 @@ def _gu_panel_html(name, e):
         if e['jeonse']:
             j = e['jeonse']
             h.append('<p class="gp-row"><span class="gp-lbl">전세가율</span><b>%.1f%%</b> '
-                     '<span class="gp-d">지난달 %s · 석 달 %s</span></p>'
-                     % (j['cur'], _delta_span(j['d1'], '%p'), _delta_span(j['d3'], '%p')))
+                     '<span class="gp-d">%s · %s</span></p>'
+                     % (j['cur'], _delta_phrase('지난달', j['a1'], j['d1'], '%p'),
+                        _delta_phrase('석 달', j['a3'], j['d3'], '%p')))
         if e['sale']:
             sv = e['sale']
             h.append('<p class="gp-row"><span class="gp-lbl">매매가격지수</span><b>%.2f</b> '
-                     '<span class="gp-d">지난달 %s · 석 달 %s</span></p>'
-                     % (sv['cur'], _delta_span(sv['d1'], 'pt'), _delta_span(sv['d3'], 'pt')))
+                     '<span class="gp-d">%s · %s</span></p>'
+                     % (sv['cur'], _delta_phrase('지난달', sv['a1'], sv['d1'], 'pt'),
+                        _delta_phrase('석 달', sv['a3'], sv['d3'], 'pt')))
         if e['sd'] and e['sd'].get('value') is not None:
             sdv = float(e['sd']['value'])
             h.append('<p class="gp-row"><span class="gp-lbl">수급동향</span><b>%s</b> · %s '
@@ -1349,7 +1523,49 @@ def _gu_panel_html(name, e):
     return ''.join(h)
 
 
-# 바닐라 JS — 층 전환(버튼 3개) · 지도 호버=미리보기/누르기=고정(선택 모델
+def _read_move(d):
+    """변화를 읽는 말. 규칙만 쓴다 — 0.10%p 를 넘게 움직였으면 방향을 말하고,
+    그 안이면 「사실상 제자리」다. 문턱이 아니라 반올림 잡음과 뜻 있는 움직임을
+    가르는 선이다(그 선을 넘었다고 뭘 하라는 말은 안 한다)."""
+    if d is None:
+        return '지난달 값이 없습니다'
+    if d >= 0.10:
+        return '매매에 가까워졌습니다'
+    if d <= -0.10:
+        return '전세 쪽으로 기울었습니다'
+    return '사실상 제자리입니다'
+
+
+def changed_section(watches):
+    """지난달과 달라진 것 — 이 장을 매달 다시 여는 이유가 이것 하나다.
+
+    지도 왼쪽 아래 빈 칸에 선다(지도 그림이 그 칸의 위쪽 절반만 쓴다). 값이 없으면
+    빈 절을 그대로 낸다 — 빈 절이 델타를 감추는 것보다 낫다."""
+    rows, base = [], None
+    for w in sorted(_live_areas(watches), key=lambda w: w['target']):
+        avg = _avg_series(w)
+        if len(avg) < 2:
+            continue
+        prev, cur = avg[-2][1], avg[-1][1]
+        base = max(base or avg[-2][0], avg[-2][0])
+        rows.append('<p class="chg-row"><span class="chg-k">%s 전세가율</span>'
+                    '<span class="chg-v">%s → %s %s</span>'
+                    '<span class="chg-say">%s</span></p>'
+                    % (E(w['target']), _fmt1(prev), _fmt1(cur),
+                       _delta_num(cur - prev, '%p'), E(_read_move(cur - prev))))
+    by = _laws_grouped(watches)
+    changed = [n for n, e in by.items() if _law_state(e) == '걸림']
+    law_txt = ('바뀐 법·고시 없음 (%d개 중 0개)' % len(by) if not changed
+               else '바뀐 법·고시 %d개 (%d개 중) — %s'
+               % (len(changed), len(by), ' · '.join(sorted(changed))))
+    rows.append('<p class="chg-row"><span class="chg-k">제도</span>'
+                '<span class="chg-v">%s</span></p>' % E(law_txt))
+    title = '지난달(%s)과 달라진 것' % base if base else '지난달과 달라진 것'
+    return ('<div class="changed" id="changed"><p class="chg-t">%s</p>%s</div>'
+            % (E(title), ''.join(rows)))
+
+
+# 바닐라 JS — 지도 호버=미리보기/누르기=고정(선택 모델
 # 하나로, 2026-09-03) · 권역 요약 호버(지도 강조만). 상세 이동은 패널 안
 # 「자세히 →」 링크로만 한다 — path 클릭은 더는 페이지를 안 옮긴다(모바일에서
 # 탭=이동이면 값을 볼 길이 없다는 사용자 지적). 값은 전부 생성 때 HTML 에
@@ -1362,7 +1578,10 @@ var gus=Array.from(svg.querySelectorAll('.gu'));
 var panels=Array.from(document.querySelectorAll('.gu-panel'));
 var rss=Array.from(document.querySelectorAll('.rs'));
 var locked=null;
-var showPanel=function(n){panels.forEach(function(p){p.hidden=p.dataset.panel!==n;});};
+/* 기본 패널(권역 셋)은 절대 안 감춘다 — 구 패널은 그 위에 얹힌다. 견주는 것이
+   화면에서 서로를 밀어내면 「어느 권역이 나은가」에 답할 수가 없다 */
+var showPanel=function(n){panels.forEach(function(p){
+  if(p.dataset.panel==='default')return;p.hidden=p.dataset.panel!==n;});};
 var clearHi=function(){gus.forEach(function(g){g.classList.remove('gu-hover','gu-dim');});};
 var highlight=function(names){gus.forEach(function(g){
   var on=names.indexOf(g.dataset.gu)>-1;
@@ -1375,8 +1594,11 @@ gus.forEach(function(g){
   g.addEventListener('mouseleave',function(){apply(locked);});
   g.addEventListener('blur',function(){apply(locked);});
   g.addEventListener('click',function(){locked=(locked===n)?null:n;apply(locked);});
+  /* ARIA 버튼은 Enter 와 Space 둘 다 받아야 한다. Space 를 안 막으면 한 화면
+     내려가면서 포커스가 지도 밖으로 나간다 */
   g.addEventListener('keydown',function(ev){
-    if(ev.key==='Enter'){locked=(locked===n)?null:n;apply(locked);}});
+    if(ev.key==='Enter'||ev.key===' '||ev.key==='Spacebar'){
+      ev.preventDefault();locked=(locked===n)?null:n;apply(locked);}});
 });
 rss.forEach(function(a){
   var names=a.dataset.gus.split(' ');
@@ -1396,20 +1618,32 @@ document.addEventListener('click',function(e){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&locked){locked=null;apply(null);}
 });
-Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
-  b.addEventListener('click',function(){
-    svg.setAttribute('data-layer',b.dataset.layer);
-    Array.from(document.querySelectorAll('.layer-btn')).forEach(function(x){
-      x.classList.toggle('is-on',x===b);});
-    Array.from(document.querySelectorAll('.map-legend')).forEach(function(x){
-      x.hidden=x.dataset.legend!==b.dataset.layer;});
-  });
-});
+})();
+</script>"""
+
+# 절 바로가기의 현재 위치 표시. 본 장과 상세가 같은 조각을 쓴다 — 나브 꼴이 같은데
+# 한쪽만 지금 절을 알려 주면 그것대로 헷갈린다.
+_JUMP_JS = """<script>
+(function(){
+var links=Array.from(document.querySelectorAll('.jump a'));
+if(!links.length||!window.IntersectionObserver)return;
+var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+var secs=Object.keys(map).map(function(id){return document.getElementById(id);})
+  .filter(Boolean);
+var seen={};
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){seen[e.target.id]=e.isIntersecting;});
+  var here=null;
+  secs.forEach(function(s){if(seen[s.id]&&!here)here=s.id;});
+  links.forEach(function(a){
+    a.classList.toggle('is-here',here!==null&&a.getAttribute('href')==='#'+here);});
+},{rootMargin:'-60px 0px -55% 0px'});
+secs.forEach(function(s){io.observe(s);});
 })();
 </script>"""
 
 
-def seoul_map_section(watches, asof):
+def seoul_map_section(watches, asof, checked):
     """지도 히어로 — 왼쪽 지도(58%, 데스크톱은 sticky) · 오른쪽 패널(42%, 기본은
     권역 셋 요약). 구를 손대면(호버) 미리보기, 누르면(클릭·Enter) 그 구로
     고정된다. 상세 이동은 패널 안 「자세히 →」로만 한다. 값은 전부
@@ -1421,31 +1655,23 @@ def seoul_map_section(watches, asof):
     800px 를 넘는다."""
     gu_data = _gu_map_data(watches)
     svg = _gu_svg(gu_data)
-    panels = ('<div class="gu-panel" data-panel="default">%s</div>'
-             % _region_summary_html(watches)) + \
-             ''.join(_gu_panel_html(name, gu_data[name]) for name in sorted(SEOUL_GU['gu']))
-    lth_z = ZONES.get('토지거래허가구역', {})
-    reg_z = ZONES.get('조정대상지역', {})
-    cap = ('<p>출처 southkorea/seoul-maps · 값 기준 %s · 지정 현황 기준 %s(토지거래허가구역) · '
-          '%s(조정대상지역·투기과열지구)</p>%s'
-          % (E(asof), E(lth_z.get('as_of') or '—'), E(reg_z.get('as_of') or '—'),
-             term_lines(watches, set(MOVE_ORDER))))
+    # 구 패널이 기본 패널보다 앞에 선다 — 골랐을 때 위에 얹히고 권역 셋은 그 아래
+    # 그대로 남는다(덮으면 견줄 수가 없다)
+    panels = ''.join(_gu_panel_html(name, gu_data[name])
+                     for name in sorted(SEOUL_GU['gu'])) + \
+             ('<div class="gu-panel" data-panel="default">%s</div>'
+              % _region_summary_html(watches))
+    cap = '<p>지도 원본 southkorea/seoul-maps · 값 기준 %s</p>' % E(asof)
     return (
-        '<p class="hero-t">서울 지도</p>'
-        '<div class="layer-btns">'
-        '<button type="button" class="layer-btn is-on" data-layer="ratio">전세가율</button>'
-        '<button type="button" class="layer-btn" data-layer="lth">토지거래허가구역</button>'
-        '<button type="button" class="layer-btn" data-layer="reg">규제지역</button>'
-        '</div>'
+        '<p class="hero-t">서울 25구 — 지금 전세가율이 어디쯤인가</p>'
         '<div class="maprow">'
-        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>'
-        '<div class="mappanel">%s'
-        '<div class="map-legend" data-legend="ratio">%s</div>'
-        '<div class="map-legend" data-legend="lth" hidden>%s</div>'
-        '<div class="map-legend" data-legend="reg" hidden>%s</div>'
+        '<div class="mapcol">'
+        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
+        '<div class="mappanel" aria-live="polite" aria-atomic="true">%s'
+        '<div class="map-legend">%s</div>'
         '</div></div>%s'
-        % (svg, cap, panels, _ratio_legend_html(watches), _lth_legend_html(), _reg_legend_html(),
-           _MAP_JS))
+        % (svg, cap, _zone_banner(checked), changed_section(watches),
+           panels, _ratio_legend_html(watches), _MAP_JS))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -1487,15 +1713,27 @@ def check_ui(html, watches):
     assert 'class="line"' not in html, \
         '규약 위반: 줄 상세는 본 장에 없다 — watch/<슬러그>.html 로 옮겼다'
     at_map = html.find('id="map"')
+    at_changed = html.find('id="changed"')
     at_policy = html.find('id="policy"')
     assert 0 < at_map < at_policy, \
         '규약 위반: 지도 히어로(#map)가 첫 화면(제도보다 먼저)이어야 한다'
+    assert 0 < at_changed < at_policy, \
+        '규약 위반: 「달라진 것」(#changed)이 제도보다 먼저 서야 한다 — 매달 다시 여는 이유다'
+    # 층 버튼은 걷었다. 25구가 전부 같은 범주인 층을 지도로 그리면 서울 전체가 먹
+    # 단색이 되고 얻는 정보는 문장 하나다 — 그 문장을 상태 배너가 낸다
+    assert 'layer-btn' not in html and 'data-layer' not in html, \
+        '규약 위반: 층 버튼을 두지 않는다 — 구마다 갈리는 값만 지도로 그린다'
+    assert 'class="zone-banner"' in html, \
+        '규약 위반: 지정 현황 상태 배너가 없다 — 층을 걷었으면 그 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
     n_fig = html.count('<figure')
     assert n_fig == 3, \
         '규약 위반: 본 장의 <figure 는 지도 + 전세가율 자 + 자료 기준 자 셋이어야 한다 (%d개)' % n_fig
     n_tbl = html.count('<table')
-    assert n_tbl <= 3, '규약 위반: 본 장의 <table 은 셋 이하여야 한다 (%d개)' % n_tbl
+    assert n_tbl == 0, \
+        '규약 위반: 본 장에 표를 두지 않는다 — 표는 상세(watch/)로 옮겼다 (%d개)' % n_tbl
+    assert 'scratchpad/' not in html.split('<footer>')[-1].split('</footer>')[0], \
+        '규약 위반: 푸터에 내부 파일 경로를 내지 않는다 — 주석으로 내린다'
     for term in _JARGON:
         assert term not in html, '규약 위반: 은어 "%s" 가 화면에 남아 있다' % term
     assert '>줄</p>' not in html and '>줄</a>' not in html, \
@@ -1571,31 +1809,34 @@ def build():
     # 2026-09-03 — 「권역」·「바뀐 것」 두 앵커는 없앴다(지도 히어로가 그 둘을
     # 흡수했다). 「지도」 하나로 판단한다.
     h.append('<nav class="jump" aria-label="절 바로가기">'
-             '<a href="#map">지도</a>'
+             '<a href="#map">지도</a><a href="#changed">달라진 것</a>'
              '<a href="#policy">제도</a><a href="#lines">보고 있는 것</a>'
              '<a href="#basis">자료 기준</a></nav>')
 
     # 지도가 첫 화면이고 정보는 지도에서 나온다(사용자 지시 2026-09-03) — 전세가율
     # 자·권역 카드를 여기 한자리로 접었다(ratio_ruler_fig 는 전세가율 층 범례 안으로,
     # area_cards 는 패널 기본 상태로 흡수됐다).
-    h.append('<section class="hero" id="map">%s</section>' % seoul_map_section(ws, asof))
+    h.append('<section class="hero" id="map">%s</section>'
+             % seoul_map_section(ws, asof, checked))
 
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
 
-    h.append('<div class="band" id="lines"><p class="band-t">보고 있는 것 %d</p>%s</div>'
-             % (len(ws), line_summary_rows(ws)))
+    h.append('<div class="band" id="lines"><p class="band-t">보고 있는 것 %d%s</p>%s</div>'
+             % (len(ws), _checked_note(ws), line_summary_rows(ws)))
 
     h.append('<div class="band" id="basis"><p class="band-t">값이 언제 것인가</p>%s</div>'
              % time_ruler_fig(ws))
 
+    # 푸터에는 출처와 갱신 약속만. 파일 경로는 주석으로 내린다 — 「scratchpad」라는
+    # 낱말이 화면에 있는 것만으로 임시로 만든 것처럼 읽힌다(2026-09-03)
     h.append('<footer>값은 한국부동산원 공표 통계, 제도는 국가법령정보센터에서 받습니다. '
-             '마지막 확인 %s · 통계 기준 %s. 줄 상세는 <code>watch/</code> 아래에 있습니다. '
-             '판단은 <code>insights/watch/</code>, 수치는 '
-             '<code>insights/watch/_metrics/</code>, 이 화면은 '
-             '<code>scratchpad/gen_watch_page.py</code>가 만듭니다.</footer>'
-             % (E(checked), E(asof)))
+             '마지막 확인 %s · 통계 기준 %s. 통계가 갱신되면 다음 달에 다시 '
+             '확인합니다.</footer>' % (E(checked), E(asof)))
+    h.append('<!-- 판단은 insights/watch/, 수치는 insights/watch/_metrics/, 줄 상세는'
+             ' 대시보드/watch/ 아래. 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->')
+    h.append(_JUMP_JS)
     h.append('</div></body></html>')
     html = ''.join(h)
     check_ui(html, ws)
