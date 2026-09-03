@@ -10,6 +10,7 @@
 "content/linkedin/[2607] 링크드인 게시물.md#L525",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L458",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L478",
+"content/scaling-book/원문/12-gpus.md#L269",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L16",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
 "content/understanding/피지컬AI/RFM & VLA란 무엇인가.md#L18",
@@ -3189,6 +3190,8 @@
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L344"
 ],
 "EDF": [
+"content/scaling-book/원문/04-transformers.md#L215",
+"content/scaling-book/원문/12-gpus.md#L504",
 "content/understanding/언더스탠딩 백브리핑/독일 신재생 전기 때문에 북유럽이 빡친 이유.md#L10"
 ],
 "EPRI": [
@@ -3984,6 +3987,11 @@
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L20",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L79",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L82",
+"content/scaling-book/원문/06-applied-training.md#L12",
+"content/scaling-book/원문/06-applied-training.md#L123",
+"content/scaling-book/원문/07-inference.md#L211",
+"content/scaling-book/원문/11-conclusion.md#L40",
+"content/scaling-book/원문/12-gpus.md#L668",
 "content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md#L6",
 "content/understanding/Semi Doped/daily-2026-04-08.md#L19",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L15",
@@ -5431,6 +5439,7 @@
 ],
 "SH": [
 "content/linkedin/[2605] 링크드인 게시물.md#L1005",
+"content/scaling-book/원문/04-transformers.md#L71",
 "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L6",
 "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L26",
 "content/understanding/부동산/[260323] 3억 4천만 원짜리 마곡 아파트 - 토지임대부가 다시 나온 이유 - 백종훈.md#L64",
@@ -7874,6 +7883,9 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L8",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L49",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L82",
+"content/scaling-book/원문/12-gpus.md#L28",
+"content/scaling-book/원문/12-gpus.md#L662",
+"content/scaling-book/원문/12-gpus.md#L663",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L39",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L88",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L44",
@@ -12050,9 +12062,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-02",
+"built": "2026-09-03",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1068,
+"files": 1084,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -12461,6 +12473,70 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md": [
 "796ccb873657093c890fff4cc93731735d51240e",
 100
+],
+"content/scaling-book/00-index.md": [
+"2f49a2ef93c320afccf609011d6b11bbd325e2b5",
+37
+],
+"content/scaling-book/01-roofline.md": [
+"8796ad73a47d793c299203847c01740f7a31f0d0",
+71
+],
+"content/scaling-book/02-tpus.md": [
+"62b7783bec3baaddf8362c0c8fa3425bc2793fad",
+81
+],
+"content/scaling-book/원문/00-index.md": [
+"056cd8653ae291963d406a384e46623a834d3b48",
+95
+],
+"content/scaling-book/원문/01-roofline.md": [
+"a0b54b57987d9d16e4434263c97a79086024e45f",
+163
+],
+"content/scaling-book/원문/02-tpus.md": [
+"ad90f6592def8989e05239ee1cd70f7cc9a46de6",
+281
+],
+"content/scaling-book/원문/03-sharding.md": [
+"4118a698aa7b39aa3c171fb09a56fb05df582c9b",
+519
+],
+"content/scaling-book/원문/04-transformers.md": [
+"44c37d1a45314b76ccf7821463fe4ef93298bc86",
+274
+],
+"content/scaling-book/원문/05-training.md": [
+"be82f30e4377de7410d112386700180a1f48320a",
+539
+],
+"content/scaling-book/원문/06-applied-training.md": [
+"1e87e480d7d0ac374f8579e2654bb6353a82d6fd",
+127
+],
+"content/scaling-book/원문/07-inference.md": [
+"34e1cd7facdcc30452df5f5d12e9cd6b48b1a1b2",
+565
+],
+"content/scaling-book/원문/08-applied-inference.md": [
+"5fc8e967db77ba160cfc6ea69bb7340c7024cc50",
+261
+],
+"content/scaling-book/원문/09-profiling.md": [
+"14170366d5bfa92a0dca2c6fe0361d78b61990a9",
+213
+],
+"content/scaling-book/원문/10-jax-stuff.md": [
+"484b82718d487ad188eaa0e1a80c07110f814f61",
+440
+],
+"content/scaling-book/원문/11-conclusion.md": [
+"435bd957f0ee6c3c18291a8284930f8a20795050",
+51
+],
+"content/scaling-book/원문/12-gpus.md": [
+"9c8a0085dd65fabf780cd86bcd0c6e09bdc472e7",
+718
 ],
 "content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -16327,8 +16403,8 @@
 213
 ]
 },
-"fingerprint": "817d99fa3f8fd0f988f431bb58fa8e97320a654e",
-"lines": 173380
+"fingerprint": "b00fd5e4fb99d554aca2c95d2f11f9d43b03110f",
+"lines": 177815
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -17044,6 +17120,31 @@
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L118",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L41",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L89",
+"content/scaling-book/02-tpus.md#L21",
+"content/scaling-book/원문/01-roofline.md#L18",
+"content/scaling-book/원문/02-tpus.md#L24",
+"content/scaling-book/원문/02-tpus.md#L28",
+"content/scaling-book/원문/02-tpus.md#L80",
+"content/scaling-book/원문/02-tpus.md#L120",
+"content/scaling-book/원문/02-tpus.md#L281",
+"content/scaling-book/원문/03-sharding.md#L71",
+"content/scaling-book/원문/03-sharding.md#L224",
+"content/scaling-book/원문/07-inference.md#L374",
+"content/scaling-book/원문/07-inference.md#L376",
+"content/scaling-book/원문/07-inference.md#L382",
+"content/scaling-book/원문/07-inference.md#L494",
+"content/scaling-book/원문/08-applied-inference.md#L24",
+"content/scaling-book/원문/08-applied-inference.md#L26",
+"content/scaling-book/원문/09-profiling.md#L10",
+"content/scaling-book/원문/09-profiling.md#L58",
+"content/scaling-book/원문/09-profiling.md#L82",
+"content/scaling-book/원문/09-profiling.md#L143",
+"content/scaling-book/원문/09-profiling.md#L157",
+"content/scaling-book/원문/09-profiling.md#L185",
+"content/scaling-book/원문/09-profiling.md#L202",
+"content/scaling-book/원문/11-conclusion.md#L12",
+"content/scaling-book/원문/11-conclusion.md#L33",
+"content/scaling-book/원문/12-gpus.md#L104",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L14",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L26",
@@ -20193,6 +20294,8 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
+"content/scaling-book/원문/07-inference.md#L559",
+"content/scaling-book/원문/11-conclusion.md#L12",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L14",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L128",
@@ -20522,6 +20625,19 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L48",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L49",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L54",
+"content/scaling-book/원문/04-transformers.md#L49",
+"content/scaling-book/원문/04-transformers.md#L103",
+"content/scaling-book/원문/04-transformers.md#L205",
+"content/scaling-book/원문/04-transformers.md#L211",
+"content/scaling-book/원문/04-transformers.md#L217",
+"content/scaling-book/원문/05-training.md#L184",
+"content/scaling-book/원문/05-training.md#L407",
+"content/scaling-book/원문/05-training.md#L409",
+"content/scaling-book/원문/12-gpus.md#L461",
+"content/scaling-book/원문/12-gpus.md#L498",
+"content/scaling-book/원문/12-gpus.md#L544",
+"content/scaling-book/원문/12-gpus.md#L574",
+"content/scaling-book/원문/12-gpus.md#L666",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L4",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L15",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L31",
@@ -21794,6 +21910,12 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/scaling-book/원문/02-tpus.md#L145",
+"content/scaling-book/원문/07-inference.md#L131",
+"content/scaling-book/원문/07-inference.md#L195",
+"content/scaling-book/원문/07-inference.md#L208",
+"content/scaling-book/원문/08-applied-inference.md#L184",
+"content/scaling-book/원문/08-applied-inference.md#L185",
 "content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md#L6",
 "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L6",
 "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19",
@@ -23109,6 +23231,8 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/scaling-book/원문/06-applied-training.md#L12",
+"content/scaling-book/원문/12-gpus.md#L212",
 "content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L51",
 "content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L92",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L20",
@@ -34838,6 +34962,46 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L84",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L89",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L91",
+"content/scaling-book/01-roofline.md#L21",
+"content/scaling-book/01-roofline.md#L63",
+"content/scaling-book/원문/00-index.md#L22",
+"content/scaling-book/원문/01-roofline.md#L16",
+"content/scaling-book/원문/01-roofline.md#L18",
+"content/scaling-book/원문/01-roofline.md#L157",
+"content/scaling-book/원문/02-tpus.md#L8",
+"content/scaling-book/원문/02-tpus.md#L244",
+"content/scaling-book/원문/11-conclusion.md#L25",
+"content/scaling-book/원문/12-gpus.md#L14",
+"content/scaling-book/원문/12-gpus.md#L18",
+"content/scaling-book/원문/12-gpus.md#L20",
+"content/scaling-book/원문/12-gpus.md#L22",
+"content/scaling-book/원문/12-gpus.md#L26",
+"content/scaling-book/원문/12-gpus.md#L28",
+"content/scaling-book/원문/12-gpus.md#L32",
+"content/scaling-book/원문/12-gpus.md#L48",
+"content/scaling-book/원문/12-gpus.md#L75",
+"content/scaling-book/원문/12-gpus.md#L122",
+"content/scaling-book/원문/12-gpus.md#L144",
+"content/scaling-book/원문/12-gpus.md#L200",
+"content/scaling-book/원문/12-gpus.md#L212",
+"content/scaling-book/원문/12-gpus.md#L236",
+"content/scaling-book/원문/12-gpus.md#L263",
+"content/scaling-book/원문/12-gpus.md#L271",
+"content/scaling-book/원문/12-gpus.md#L275",
+"content/scaling-book/원문/12-gpus.md#L319",
+"content/scaling-book/원문/12-gpus.md#L321",
+"content/scaling-book/원문/12-gpus.md#L333",
+"content/scaling-book/원문/12-gpus.md#L335",
+"content/scaling-book/원문/12-gpus.md#L363",
+"content/scaling-book/원문/12-gpus.md#L607",
+"content/scaling-book/원문/12-gpus.md#L615",
+"content/scaling-book/원문/12-gpus.md#L632",
+"content/scaling-book/원문/12-gpus.md#L658",
+"content/scaling-book/원문/12-gpus.md#L662",
+"content/scaling-book/원문/12-gpus.md#L663",
+"content/scaling-book/원문/12-gpus.md#L664",
+"content/scaling-book/원문/12-gpus.md#L680",
+"content/scaling-book/원문/12-gpus.md#L686",
 "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md#L6",
 "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md#L19",
 "content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L6",
@@ -38392,6 +38556,7 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L82",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L83",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/scaling-book/원문/12-gpus.md#L510",
 "content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md#L6",
 "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md#L6",
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L2",
@@ -40357,6 +40522,7 @@
 "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md#L210",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L222",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L486",
+"content/scaling-book/00-index.md#L19",
 "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L17",
 "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L94",
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L19",

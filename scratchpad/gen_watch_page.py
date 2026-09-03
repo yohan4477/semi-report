@@ -347,6 +347,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   display:flex;align-items:center;justify-content:center;border-radius:999px}
 .gp-close:hover{background:var(--line);color:var(--ink)}
 .gp-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+/* 뜻 한 줄 — 수 세 줄보다 먼저 읽힌다 */
+.gp-mean{font-size:14.5px;font-weight:600;color:var(--ink);margin:8px 0 10px;line-height:1.5}
 /* 값 줄 — 라벨(왼쪽 정렬 12.5px ink-3) 바로 뒤 같은 줄에 값. 두 열로 안 가른다 —
    폰 폭에서 두 열이면 값이 잘린다(2026-09-03) */
 .gp-row{margin:8px 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
@@ -1623,6 +1625,34 @@ def _reg_row_text(e):
     return ' · '.join(names) if names else '해당 없음'
 
 
+def _gu_meaning(cur, ds, dj):
+    """구 하나의 뜻 한 줄. 앞은 전세가율이 어디쯤인가(지금 전세가 낫나, 매매가 가깝나),
+    뒤는 석 달 매매·전세 지수 속도 차가 그 자리를 어디로 옮기고 있나. 둘 다 규칙이다 —
+    「그래서 이게 무슨 의미냐」에 수가 아니라 문장으로 답하는 자리다(2026-09-03)."""
+    if cur is None:
+        return ''
+    more = int(round(100 - cur))
+    if cur < 50:
+        base = '지금은 전세가 낫습니다 — 사려면 매매가의 %d%%를 더 얹어야 합니다' % more
+        up, down = '전세의 이점이 줄고 있습니다', '전세의 이점이 커지고 있습니다'
+    elif cur < 55:
+        base = '전세와 매매가 비슷한 자리입니다 — 사려면 매매가의 %d%%를 더 얹습니다' % more
+        up, down = '매매 쪽으로 기울고 있습니다', '전세 쪽으로 기울고 있습니다'
+    else:
+        base = '매매가 가깝습니다 — 매매가의 %d%%만 더 얹으면 됩니다' % more
+        up, down = '매매가 더 가까워지고 있습니다', '매매 문턱이 다시 높아지고 있습니다'
+    if ds is None or dj is None:
+        return base + '.'
+    g = dj - ds
+    if g >= 0.5:
+        how = '전세가 매매보다 빨리 올라' if dj > 0 else '매매가 전세보다 빨리 내려'
+        return '%s. %s %s.' % (base, how, up)
+    if g <= -0.5:
+        how = '매매가 전세보다 빨리 올라' if ds > 0 else '전세가 매매보다 빨리 내려'
+        return '%s. %s %s.' % (base, how, down)
+    return base + '. 매매와 전세가 같이 움직여 자리는 그대로입니다.'
+
+
 def _gu_panel_html(name, e):
     """구 하나의 패널 — 손을 대면(미리보기) 또는 누르면(고정) 이걸로 바뀐다.
     최대 9줄 — 데스크톱·모바일(시트) 어디서든 한 화면에 다 들어와야 한다
@@ -1637,6 +1667,11 @@ def _gu_panel_html(name, e):
         h.append('<p class="gp-sub">%s · %s</p>' % (E(e['region']), E(e['region_view'])))
     else:
         h.append('<p class="gp-sub">보고 있지 않은 구</p>')
+    if watched and e['jeonse']:
+        ds, dj = e.get('gap', (None, None))
+        mean = _gu_meaning(e['jeonse']['cur'], ds, dj)
+        if mean:
+            h.append('<p class="gp-mean">%s</p>' % E(mean))
     if watched:
         if e['jeonse']:
             j = e['jeonse']
