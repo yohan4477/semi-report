@@ -273,7 +273,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .stat{flex:1 1 150px;min-width:130px}
 .stat-k{font-size:12.5px;color:var(--ink-3);margin:0}
 .stat-v{font-size:34px;font-weight:700;margin:4px 0 0;line-height:1.1}
-.stat-m{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+.stat-d{margin:2px 0 0;font-size:15px;font-weight:600;white-space:nowrap}
+.stat-m{font-size:12.5px;color:var(--ink-3);margin:8px 0 0}
 .delta{font-size:15px;font-weight:600;margin-left:6px}
 .d-up{color:var(--up)}
 .d-down{color:var(--down)}
@@ -496,9 +497,15 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .h-top{flex-direction:column;align-items:flex-start;gap:4px}
   /* 3열을 유지한다 — 세로로 쌓으면 「43.0% ↓0.1」한 줄을 보자고 스크롤 셋을 만든다.
      390px 에서 한 열 ~115px 이면 이 글자가 그대로 든다(수 26px·화살표 13px로 줄인다) */
-  .stats{flex-wrap:nowrap;gap:8px}
-  .stat{flex:1 1 0;min-width:0}
-  .stat-v{font-size:26px}
+  /* 좁은 화면은 열 셋이 아니라 줄 셋 — 이름 · 값 · 변화. 글자를 키운 폰에서 3열은
+     변화가 옆 열로 넘쳤다 */
+  .stats{display:block;margin-top:12px}
+  .stat{display:grid;grid-template-columns:5.5em 1fr auto;align-items:baseline;gap:10px;
+    padding:7px 0;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:0}
+  .stat-k,.stat-v,.stat-d{margin:0}
+  .stat-v{font-size:24px}
+  .stat-d{font-size:14px}
   .delta{font-size:13px}
   /* 지도 히어로 — 지도 → 패널 순으로 세로 편다 */
   .maprow{flex-direction:column}
@@ -1175,7 +1182,7 @@ def stat_strip(w):
     vals = [t for t in w['triggers'] if t['kind'] == wl.KIND_VALUE and t['series']]
     if not vals:
         return ''
-    cells = []
+    cells, notes = [], []
     for t in vals:
         ser = [tuple(x) for x in t['series']]
         cur = ser[-1][1]
@@ -1188,16 +1195,25 @@ def stat_strip(w):
         du = _delta_unit(unit)
         m = re.search(r'—\s*(\S+)$', t['what'] or '')
         label = m.group(1) if m else t['what']
+        # 값과 변화를 딴 요소에 둔다. 한 요소에 이어 붙이면 글자를 키운 폰에서 변화가
+        # 옆 열의 큰 수 위로 넘쳤다(2026-09-03, 사용자 스크린샷). 좁은 화면은 CSS 가
+        # 이 셋을 한 줄(이름 · 값 · 변화)로 눕힌다
         cells.append(
             '<div class="stat"><p class="stat-k">%s</p>'
-            '<p class="stat-v">%s%s%s</p>'
-            '<p class="stat-m">%s</p>'
-            '<p class="stat-m">기준 %s · %s</p></div>'
-            % (E(label), _fmt1(cur), E(unit), _delta_num(d1, du),
-               _delta_when('지난달', base1) if d1 is not None else '지난달 값이 없습니다',
-               E(t['as_of'] or '—'), E(t['nature'] or '공표')))
+            '<p class="stat-v">%s%s</p><p class="stat-d">%s</p></div>'
+            % (E(label), _fmt1(cur), E(unit), _delta_num(d1, du)))
+        notes.append('%s · 기준 %s · %s'
+                     % (_delta_when('지난달', base1) if d1 is not None else '지난달 값이 없습니다',
+                        E(t['as_of'] or '—'), E(t['nature'] or '공표')))
+    # 「지난달(2026-06) 대비 · 기준 2026-07 · 공표」가 구 셋에 같으면 한 번만 적는다 —
+    # 칸마다 두 줄씩 되풀이하면 좁은 화면에서 그 줄이 접혀 띠가 세 배로 길어진다
+    if len(set(notes)) == 1:
+        foot = '<p class="stat-m">%s</p>' % notes[0]
+    else:
+        foot = ''.join('<p class="stat-m">%s — %s</p>' % (c.split('stat-k">')[1].split('<')[0], n)
+                       for c, n in zip(cells, notes))
     names = set(_metric_name(t['what']) for t in vals)
-    return '<div class="stats">%s</div>%s' % (''.join(cells), term_lines([w], names))
+    return '<div class="stats">%s</div>%s%s' % (''.join(cells), foot, term_lines([w], names))
 
 
 def link_out(url):
@@ -1912,7 +1928,7 @@ def check_detail_ui(watches):
             assert not bad, '규약 위반(%s): 도해 배치 — %s' % (w['slug'], ' · '.join(bad))
         n = sum(1 for t in w['triggers']
                 if t['kind'] == wl.KIND_VALUE and t['value'] is not None)
-        assert 'stat-m">기준' in html or n == 0, \
+        assert re.search(r'class="stat-m">[^<]*기준 ', html) or n == 0, \
             '규약 위반(%s): 값을 내면서 머리 수치 띠에 「기준」이 없다' % w['slug']
         for term in _JARGON:
             assert term not in html, '규약 위반(%s): 은어 "%s" 가 남아 있다' % (w['slug'], term)
