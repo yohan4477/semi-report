@@ -20,16 +20,17 @@ def main(slug, out=None):
     raw = io.open(os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw', slug + '.md'), encoding='utf-8').read().split('\n')
     nums = set()
     # 「(Austin 의 설명, L57)」처럼 괄호 안에 다른 말이 있어도 잡는다(2026-09-03 인터커넥트 대조에서 놓쳤다)
-    for m in re.finditer(r'\(([^)]*L\d[^)]*)\)', lane):
+    for m in re.finditer(r'\(([^)]*L\d[^)]*)\)', lane):
         for part in re.findall(r'L\d+(?:~L?\d+)?', m.group(1)):
             part = part.strip().lstrip('L')
             if '~' in part:
                 a, b = part.split('~'); nums.update(range(int(a.lstrip('L')), int(b.lstrip('L')) + 1))
             elif part.isdigit():
                 nums.add(int(part))
+    # 전사 한 줄이 문단 하나라 앞뒤 줄을 붙이면 전사의 2/3 가 된다 — 인용 줄만 낸다(--around 로 앞뒤 포함)
     want = set()
     for n in nums:
-        want.update((n - 1, n, n + 1))
+        want.update((n - 1, n, n + 1) if '--around' in sys.argv else (n,))
     lines = ['# %s — 글이 인용한 줄 %d개(앞뒤 한 줄 포함 %d줄). 줄 번호는 전사 파일의 것' % (slug, len(nums), len(want))]
     # 전사는 「Vik: …」 라벨이 한 번 붙고 뒤 문단은 라벨 없이 이어진다 — 인용 줄만 보면 화자가 안 보여
     # 귀속을 잘못 잡는다(2026-09-03). 줄마다 가장 가까운 앞 라벨을 [화자 …←L줄] 로 붙인다
