@@ -15,8 +15,9 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def main(slug, out=None):
-    lane = io.open(os.path.join(ROOT, 'insights', 'semidoped', slug + '-strategy.md'), encoding='utf-8').read()
+def main(slug, out=None, lane_path=None):
+    # --lane <경로> 로 다른 판(견주기용 초안)을 읽을 수 있다
+    lane = io.open(lane_path or os.path.join(ROOT, 'insights', 'semidoped', slug + '-strategy.md'), encoding='utf-8').read()
     raw = io.open(os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw', slug + '.md'), encoding='utf-8').read().split('\n')
     nums = set()
     # 「(Austin 의 설명, L57)」처럼 괄호 안에 다른 말이 있어도 잡는다(2026-09-03 인터커넥트 대조에서 놓쳤다)
@@ -53,4 +54,6 @@ def main(slug, out=None):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
+    lane_path = sys.argv[sys.argv.index('--lane') + 1] if '--lane' in sys.argv else None
+    args = [x for x in sys.argv[1:] if not x.startswith('--') and x != lane_path]
+    main(args[0], args[1] if len(args) > 1 else None, lane_path)
