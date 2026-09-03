@@ -1,7 +1,7 @@
 {
 "_meta": {
-"built": "2026-09-03",
-"index_fingerprint": "b00fd5e4fb99d554aca2c95d2f11f9d43b03110f",
+"built": "2026-09-04",
+"index_fingerprint": "323349612a235918bbdf4a54818bde9acaef87b2",
 "lines": 3255
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
@@ -6403,12 +6403,12 @@
 "t": "2022",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L15": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L16": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L20": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L21": {
 "how": "명시",
 "span": [
 "2025",
@@ -6417,22 +6417,22 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L21": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L22": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L22": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L23": {
 "how": "명시",
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L24": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L25": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L25": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L26": {
 "how": "명시",
 "span": [
 "2016",
@@ -6441,22 +6441,22 @@
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L26": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L27": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L27": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L28": {
 "how": "계산",
 "t": "2033",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L36": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L37": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L44": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L45": {
 "how": "명시",
 "span": [
 "2025",
@@ -6465,32 +6465,32 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L46": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L47": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L48": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L49": {
 "how": "명시",
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L56": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L57": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L59": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L60": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L62": {
+"content/understanding/Semi Doped/2026-05-04-memory-tax.md#L63": {
 "how": "명시",
 "t": "2016",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L16": {
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L17": {
 "how": "명시",
 "span": [
 "1980",
@@ -6499,12 +6499,12 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L20": {
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L21": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L70": {
+"content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L71": {
 "how": "명시",
 "t": "1980",
 "tense": "회고"
@@ -6519,57 +6519,57 @@
 "t": "2031",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-12-computex-optics-power.md#L29": {
+"content/understanding/Semi Doped/2026-06-12-computex-optics-power.md#L30": {
 "how": "계산",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L28": {
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L29": {
 "how": "명시",
 "t": "2010",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L40": {
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L41": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L57": {
+"content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L58": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L112": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L113": {
 "how": "명시",
 "t": "2040",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L29": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L30": {
 "how": "명시",
 "t": "2018",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L61": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L62": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L67": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L68": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L73": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L74": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L75": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L76": {
 "how": "명시",
 "t": "2040",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L95": {
+"content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L96": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"
@@ -6594,17 +6594,17 @@
 "t": "2027",
 "tense": "전망"
 },
-"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L28": {
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L29": {
 "how": "계산",
 "t": "2012",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L55": {
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L56": {
 "how": "계산",
 "t": "2025",
 "tense": "회고"
 },
-"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L74": {
+"content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L75": {
 "how": "명시",
 "t": "2028",
 "tense": "전망"

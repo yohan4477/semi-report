@@ -25,6 +25,8 @@ import _val_infra  # noqa: E402
 # 자금조달 층은 재료가 카드가 아니라 insights/angles/ 다 — 각도로 가른 뒤 대상이
 # 여러 편에 걸친 자리만 절로 세운다
 import _fund_part1  # noqa: E402
+import _cpo_part1  # noqa: E402
+import _cpo_fig  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1067,6 +1069,21 @@ def report_fund_html():
     return ''.join(h)
 
 
+def report_cpo_html():
+    """CPO 총정리 — 한 편. 본문은 insights/reports/cpo-2026-09-04.md 원본에서 읽는다."""
+    h = [_cpo_part1.HEAD_CPO]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="cpo-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _cpo_part1.report_cpo(sec, p, fig)
+    return ''.join(h)
+
+
 def fold_report(head, body):
     """보고서 하나를 접는다. **제목을 누르면 그 보고서가 통째로 나온다.**
 
@@ -1156,9 +1173,9 @@ LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 �
 
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
-      <span>바탕 <b>수도리무브 35편 · SemiAnalysis 38편 · SEC 제출서류</b></span>
-      <span>보고서 <b>9편</b></span>
-      <span>절 <b>86개</b></span>
+      <span>바탕 <b>수도리무브 35편 · SemiAnalysis 47편 · Semi Doped 5회차 · SEC 제출서류</b></span>
+      <span>보고서 <b>10편</b></span>
+      <span>절 <b>98개</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -1177,7 +1194,9 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                # 밸류에이션 편을 한 편으로 다시 쓰면서(2026-08-27) 그 편이 실제로
                # 쓰는 둘만 남긴다. 안 실리는 도해를 목록에 두면 목록이 거짓말을 한다.
                (0, '같은 잣대인데 기대는 정도가 회사마다 다르다', _val_peers_fig.FIG_SBC, ''),
-               (0, '우리 배수가 시장 범위 안에 든 회사가 없다', _val_peers_fig.FIG_BIAS, '')]
+               (0, '우리 배수가 시장 범위 안에 든 회사가 없다', _val_peers_fig.FIG_BIAS, ''),
+               # CPO 층(2026-09-04) — 캡션까지 _cpo_part1.CAPTION 이 정본이다
+               ] + [(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 
 
 if __name__ == '__main__':
@@ -1195,5 +1214,7 @@ if __name__ == '__main__':
                      '나누는 것, 엔비디아 해자가 얇아지는 자리, 칩을 빌려주는 층', 3,
                      report7_html() + report8_html() + report9_html()),
                     ('sec-fund', 'AI 인프라 자금조달', 'SemiAnalysis 4편 — 돈은 어디서 '
-                     '막히고 같은 회사가 어느 자리에 서나', 1, report_fund_html())],
+                     '막히고 같은 회사가 어느 자리에 서나', 1, report_fund_html()),
+                    ('sec-cpo', 'CPO — 빛과 구리의 경계', 'SemiAnalysis 9편 + Semi Doped 5회차 — '
+                     '빛이 데이터센터 어디까지 들어왔고 누가 그 자리에 서 있나', 1, report_cpo_html())],
               extra_css=REPORT_CSS)

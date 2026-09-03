@@ -11,6 +11,7 @@ check_cite 는 insights/ 아래 글만 본다. 통합 보고서는 카드에서 
 못 찾은 값은 FAIL 이 아니라 **확인 필요**로 낸다 — 원문이 「열흘」처럼 한글로만
 적어 둔 경우가 있어 사람이 봐야 갈린다.
 """
+import glob
 import io
 import os
 import re
@@ -38,7 +39,28 @@ PAGES = [
     # 대조 대상은 같다 — 각도를 거쳐 온 값이 원문에 없으면 각도가 틀린 것이다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-fund',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # CPO 층(2026-09-04). 재료가 뉴스레터 아홉 편 + Semi Doped 다섯 회차 + 영문 클리핑 넷 +
+    # 링크드인 셋이다. 뉴스레터 밖의 것은 파일로 EXTRA 에 올린다 — 폴더째 넣으면 이 층과 무관한
+    # 회차의 값이 다른 층의 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-cpo',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
+
+_SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
+_CLIP = os.path.join(ROOT, 'input', 'clippings')
+_LI = os.path.join(ROOT, 'content', 'linkedin')
+CPO_EXTRA = [os.path.join(_SD, f + '.md') for f in
+             ('2026-06-12-computex-optics-power', '2026-07-16-picojool-yuen',
+              '2026-07-25-datacenter-interconnects', '2026-08-07-globalfoundries-barber',
+              '2026-08-11-china-optical-ban')] + [
+    os.path.join(_CLIP, 'NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, '
+                 'Jensen Math, Feynman.md'),
+    os.path.join(_CLIP, 'Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment '
+                 'Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md'),
+] + glob.glob(os.path.join(_CLIP, 'Huawei AI CloudMatrix 384*.md')) + glob.glob(
+    os.path.join(_CLIP, 'Co-Packaged Optics (CPO) Book*.md')) + [
+    os.path.join(_LI, '[2605] 링크드인 게시물.md'), os.path.join(_LI, '[2607] 링크드인 게시물.md'),
+    os.path.join(_LI, '[2608] 링크드인 게시물.md')]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
@@ -53,7 +75,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')]
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
