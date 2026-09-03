@@ -1,0 +1,299 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>파장이 줄어든 만큼 값이 올랐다 — 리소그래피의 경제학 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>파장이 줄어든 만큼 값이 올랐다 — 리소그래피의 경제학</h1><div class="pmeta">2026-05-22 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/a-masterclass-on-ic-lithography">https://daily.semidoped.com/p/a-masterclass-on-ic-lithography</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-05-22-litho-masterclass.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">리소그래피 값이 진입장벽이 된 판에서 스타트업들은 장비를 이기려 하지 않고 광원과 광학을 떼어 내 셈을 바꾸려 한다</div><p>이번 Semi Doped 회차는 리소그래피(빛으로 웨이퍼에 회로 모양을 그리는 공정) 한 시간짜리 강의다. 진행자 둘, <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 365나노미터 광원에서 시작해 X선을 들고 나온 스타트업까지 훑는다. 이 글은 공정 설명을 따라가는 대신, 이 판에 왜 새로 들어오는 회사가 없는지를 이 회차에서 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">팹 값이 트랜지스터 값보다 빨리 오르기 시작했다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">파장을 못 줄이면 횟수로 갚는다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">광원 하나에 20년이 들었고 웨이퍼에 닿는 빛은 한 자릿수 퍼센트다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">거울을 크게 만들면 한 번에 찍는 면적이 반으로 준다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">xLight 는 장비를 만들지 않고 광원만 떼어 낸다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">Substrate 는 광학이 없는 자리로 간다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 팹 값이 트랜지스터 값보다 빨리 오르기 시작했다</h2>
+<p><span class="pn">진행자A</span>가 이 주제를 고른 이유는 인센티브였다. 인센티브가 결과를 만드는데, 리소그래피와 팹의 값이 오르는 지금 그 인센티브가 어떻게 되는지 보는 것이 흥미로울 것 같다고 했다. 멀리서 보면 TSMC 혼자 잘나가는 판처럼 보이고, 왜 다른 회사는 안 들어오나 싶어진다. 실을 당겨 보면 값이 진입장벽이다.</p>
+<p>그가 꺼낸 이름은 Rock의 법칙이다. 인텔 초기 투자자 Arthur Rock 의 관찰로, 반도체 팹 한 채의 값이 4년마다 두 배가 된다. 무어의 법칙은 트랜지스터 수가 2년마다 두 배가 된다고 했다. 4년이 2년보다 느리니 같은 돈으로 살 수 있는 연산이 해마다 늘어났고, 업계를 여기까지 끌고 온 힘이 이 계산이었다. 지금은 팹 값이 너무 커져서 트랜지스터당 값이 평평해지거나 되레 오를 판이 됐다.</p>
+<figure class="uc-fig"><p class="fig-title">EUV 장비 값의 계단</p><svg class="epoch" viewBox="0 0 520 140" role="img" aria-label="낮은 개구수 EUV 장비가 2억 5천만 달러, 높은 개구수가 4억 달러, 하이퍼 개구수는 6억에서 8억 달러이고 10억 달러까지 갈 수 있다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="30" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="72" y="58.5" text-anchor="middle" class="fig-b">낮은 개구수</text>
+  <text x="72" y="81.5" text-anchor="middle" class="fig-b">2억 5천만 달러</text>
+  <line x1="148" y1="64" x2="184" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="188" y="30" width="144" height="68" rx="9" class="fig-agent"/>
+  <text x="260" y="58.5" text-anchor="middle" class="fig-b">높은 개구수</text>
+  <text x="260" y="81.5" text-anchor="middle" class="fig-b">4억 달러</text>
+  <line x1="336" y1="64" x2="372" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="376" y="30" width="144" height="68" rx="9" class="fig-outside"/>
+  <text x="448" y="58.5" text-anchor="middle" class="fig-b">하이퍼 개구수</text>
+  <text x="448" y="81.5" text-anchor="middle" class="fig-b">6억~8억 달러</text>
+  <rect x="0" y="114" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="126" class="fig-lg">지금 넘어가는 곳</text>
+  <rect x="192.4" y="114" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="214.4" y="126" class="fig-lg">아직 안 나옴</text>
+</svg><figcaption>낮은 개구수 장비 2억 5천만 달러, 높은 개구수 4억 달러, 하이퍼 개구수는 6억에서 8억 달러이고 10억 달러까지 갈 수 있다. 팹 하나에 이런 장비 열다섯 대쯤이 들어가고 새 팹 한 채는 200억에서 300억 달러다.</figcaption></figure>
+<p>숫자를 붙이면 이렇다. 낮은 개구수 EUV 장비가 2억 5천만 달러쯤이었고 지금 나오는 높은 개구수 장비가 4억 달러쯤이다. 소문으로 도는 하이퍼 개구수 장비는 6억에서 8억 달러이고, 호르무즈 해협이 계속 막혀 있으면 10억 달러까지 갈 수 있다. 팹 하나를 새로 세우려면 이런 장비가 열다섯 대쯤 필요하다. <span class="pn">진행자A</span>는 인텔의 애리조나 18A 팹인 Fab 52 가 그만큼 들였다는 CNBC 보도를 봤다고 기억한다. 그래서 새 팹 한 채가 200억에서 300억 달러다.</p>
+<p>이 돈은 결국 웨이퍼 위로 내려온다. 월 웨이퍼 투입량은 수만 장이나 10만 장 선에서 정해져 있고, 장비값을 그 정해진 장수에 나눠 얹어야 하니 웨이퍼당 값이 오른다. <span class="pn">진행자V</span>는 시간도 셌다. 3년에서 5년이 걸리니, 칩 생산능력을 마음대로 늘릴 수 없다.</p>
+<p><span class="pn">진행자V</span>가 전한 Gavin Baker 인터뷰의 견해로는, TSMC 가 장비 도입 속도를 조절해 업계 전체의 물량을 억누르고 있으니 지금이 거품은 아니다.</p>
+<h2 id="s2"><span class="num">2</span> 파장을 못 줄이면 횟수로 갚는다</h2>
+<p>광원의 역사는 파장을 깎아 온 역사다. 1980년대 i-라인이 365나노미터였고, 크립톤 플루오라이드가 248나노미터로, 아르곤 플루오라이드가 193나노미터로 내려왔다. 여기서 광원이 떨어져 2000년대 내내 193나노미터에 머물렀고, 개구수를 올리려고 나온 답이 침액 리소그래피였다. 웨이퍼 위에 아주 순수한 물을 얹고 그 물로 빛을 통과시킨다.</p>
+<figure class="uc-fig"><p class="fig-title">멀티패터닝 — 두 번 그어 간격을 반으로</p><svg class="epoch" viewBox="0 0 520 222" role="img" aria-label="10야드마다밖에 못 긋는 기계로 10·20·30·40 을 긋고, 5야드 옮겨 5·15·25·35 를 다시 그으면 5야드 간격이 된다. 단계는 두 배, 처리량은 절반">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">1단계 — 10 · 20 · 30 · 40</text>
+  <rect x="60" y="30" width="400" height="36" rx="4" class="fig-stage"/>
+  <line x1="148.889" y1="34" x2="148.889" y2="62" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="237.778" y1="34" x2="237.778" y2="62" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="326.667" y1="34" x2="326.667" y2="62" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="415.556" y1="34" x2="415.556" y2="62" class="fig-arw" style="stroke-width:2.4"/>
+  <text x="260" y="90" text-anchor="middle" class="fig-hd">2단계 — 5야드 옮겨 5 · 15 · 25 · 35</text>
+  <rect x="60" y="98" width="400" height="36" rx="4" class="fig-stage"/>
+  <line x1="104.444" y1="102" x2="104.444" y2="130" class="fig-arw" style="stroke-width:1.4"/>
+  <line x1="193.333" y1="102" x2="193.333" y2="130" class="fig-arw" style="stroke-width:1.4"/>
+  <line x1="282.222" y1="102" x2="282.222" y2="130" class="fig-arw" style="stroke-width:1.4"/>
+  <line x1="371.111" y1="102" x2="371.111" y2="130" class="fig-arw" style="stroke-width:1.4"/>
+  <text x="260" y="158" text-anchor="middle" class="fig-hd">합치면 5야드 간격</text>
+  <rect x="60" y="166" width="400" height="36" rx="4" class="fig-stage"/>
+  <line x1="104.444" y1="170" x2="104.444" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="148.889" y1="170" x2="148.889" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="193.333" y1="170" x2="193.333" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="237.778" y1="170" x2="237.778" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="282.222" y1="170" x2="282.222" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="326.667" y1="170" x2="326.667" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="371.111" y1="170" x2="371.111" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+  <line x1="415.556" y1="170" x2="415.556" y2="198" class="fig-arw" style="stroke-width:2.4"/>
+</svg><figcaption>10야드마다밖에 못 긋는 기계로 5야드 선을 그리려면 10·20·30·40 을 긋고 기계를 5야드 옮겨 5·15·25·35 를 다시 긋는다. 새 기계를 사지 않는 대신 단계가 두 배, 처리량이 절반이다.</figcaption></figure>
+<p>193나노미터에 갇힌 동안 업계가 만든 우회로가 멀티패터닝이다. <span class="pn">진행자A</span>의 비유는 미식축구장 선 긋기다. 10야드마다밖에 못 긋는 기계로 5야드 선까지 그려야 한다면, 10·20·30·40 을 긋고 기계를 5야드 옮겨 5·15·25·35 를 다시 긋는다. 새 기계를 사지 않고 5야드 간격을 얻는 대신 단계가 두 배로 늘고 처리량이 절반이 된다. <span class="pn">진행자V</span>는 이것이 리소-에치를 두 번 하는 LELE 와 같은 이야기임을 확인했다.</p>
+<p>업계는 여기서 멈추지 않고 삼중과 사중까지 갔다. <span class="pn">진행자V</span>가 꼽은 문제는 둘이다. ① 마스크 정렬이 어려워진다. 15 하나에 맞추던 것이 12·14·16·18 로 늘어난다 ② 단계마다 같은 시간이 드니 사중이면 그 한 번의 리소그래피에 네 배 시간이 든다. 트랜지스터 하나를 만드는 데 패터닝과 식각과 증착이 60번에서 80번 반복된다. 여러 단계에 사중을 걸면 트랜지스터당 값이 오르거나 200억 달러 투자를 못 나눠 갚는다.</p>
+<p>이 우회로로 실제 버틴 곳은 중국 SMIC 다. EUV 를 받을 수 없으니 DUV 와 사중 패터닝으로 7나노급과 5나노급 트랜지스터까지 갔다.</p>
+<h2 id="s3"><span class="num">3</span> 광원 하나에 20년이 들었고 웨이퍼에 닿는 빛은 한 자릿수 퍼센트다</h2>
+<figure class="uc-fig"><p class="fig-title">주석 방울에서 웨이퍼까지</p><svg class="epoch" viewBox="0 0 520 343" role="img" aria-label="주석 방울을 레이저로 두 번 때려 13.5나노미터 빛을 만들고 거울 열세 장을 거치면, 웨이퍼에 닿는 양은 한 자릿수 퍼센트에도 못 미친다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="71" y="26" width="378" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="54.5" text-anchor="middle" class="fig-b">주석 방울 50마이크로미터가 떨어진다</text>
+  <line x1="260" y1="71" x2="260" y2="91" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="93" width="378" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="121.5" text-anchor="middle" class="fig-b">떨어지는 방울을 레이저로 두 번 때린다</text>
+  <line x1="260" y1="138" x2="260" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="160" width="378" height="45" rx="9" class="fig-agent"/>
+  <text x="260" y="188.5" text-anchor="middle" class="fig-b">플라스마에서 13.5나노미터 빛이 난다</text>
+  <line x1="260" y1="205" x2="260" y2="225" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="227" width="378" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="255.5" text-anchor="middle" class="fig-b">거울 열세 장을 거쳐 초점을 잡는다</text>
+  <line x1="260" y1="272" x2="260" y2="292" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="294" width="378" height="45" rx="9" class="fig-outside"/>
+  <text x="260" y="322.5" text-anchor="middle" class="fig-b">웨이퍼에 닿는 빛 — 한 자릿수 퍼센트 미만</text>
+</svg><figcaption>50마이크로미터 주석 방울이 떨어지는 것을 레이저로 두 번 때려 13.5나노미터 빛을 만들고, 거울 열세 장을 거쳐 초점을 잡는다. 웨이퍼에 닿는 빛은 한 자릿수 퍼센트에도 못 미치고, 피할 길은 없다는 것이 <span class="pn">진행자V</span> 의 지금까지 생각이다.</figcaption></figure>
+<p>13.5나노미터 빛을 얻는 방법은 앞의 광원들과 전혀 다르다. 50마이크로미터짜리 주석 방울이 챔버 안으로 떨어지고, 떨어지는 그 방울을 레이저로 두 번 때린다. 두 번째에 13.5나노미터 빛이 터지고 그것이 정확하게 계속 반복된다는 <span class="pn">진행자V</span>의 설명이다. 그 빛은 거울 열세 장을 거쳐 초점이 잡히고 마스크를 만나 선택적으로 노출된다. 반사할 때마다 세기를 잃어서 만들어 낸 EUV 출력 가운데 웨이퍼에 닿는 양이 한 자릿수 퍼센트에도 못 미친다. 피할 길은 없다는 것이 <span class="pn">진행자V</span>의 지금까지 생각이다.</p>
+<p><span class="pn">진행자A</span>는 그래서 오래 걸렸다고 정리했다. 진공에서 플라스마를 만들면 짧은 파장 빛이 나온다는 것은 알았지만, 사방으로 튀는 그 빛을 모으고 거울로 겨누고 초점을 맞춘 뒤에도 감광제를 노출시킬 만큼 남아 있어야 했다. 광원 세기를 키우는 일이 오랫동안 업계의 물음이었다. 여기에 공급망이 딸린다. Zeiss 의 거울이 유명하고, 웨이퍼 위 칸마다 같은 그림을 다시 찍는 메카트로닉스도 따로 있다. <span class="pn">진행자V</span>는 ASML 이 이 일에 20년을 썼다고 했고, 원래 미국에서 개발된 이 기술이 수출통제 시절 전에 ASML 로 넘어갔다는 이야기를 덧붙였다.</p>
+<h2 id="s4"><span class="num">4</span> 거울을 크게 만들면 한 번에 찍는 면적이 반으로 준다</h2>
+<p>최소 치수를 정하는 식은 레일리 기준이다. 웨이퍼에 만들 수 있는 가장 작은 치수는 파장에 비례하고 개구수에 반비례한다. 여기에 K1 이라는 상수 항이 하나 더 있고, 마스크 설계로 손댈 수 있다. 그러니 손잡이는 셋이다. ① 파장 ② 개구수 ③ 마스크에 거는 기교.</p>
+<figure class="uc-fig"><p class="fig-title">하프 필드 — 같은 꼴 두 판</p><svg class="epoch" viewBox="0 0 520 200" role="img" aria-label="개구수를 0.33 에서 0.55 로 올리면 피처는 1.5~1.7배 작아지지만 한 번에 찍는 면적은 절반이 된다. 값은 두 배 가까이 오른다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">개구수 0.33</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">개구수 0.55</text>
+  <rect x="34" y="34" width="180" height="100" rx="4" class="fig-stage"/>
+  <rect x="34" y="34" width="180" height="100" rx="4" class="fig-agent"/>
+  <rect x="306" y="34" width="180" height="100" rx="4" class="fig-stage"/>
+  <rect x="306" y="34" width="180" height="50" rx="4" class="fig-agent"/>
+  <text x="124" y="156" text-anchor="middle" class="fig-hd">전부 · 2억 5천만 달러</text>
+  <text x="396" y="156" text-anchor="middle" class="fig-hd">절반 · 4억 달러</text>
+  <rect x="0" y="174" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="186" class="fig-lg">한 번에 찍는 면적</text>
+  <rect x="208" y="174" width="14" height="14" rx="3" class="fig-box fig-stage"/>
+  <text x="230" y="186" class="fig-lg">노광 필드</text>
+</svg><figcaption>개구수 0.33 에서 0.55 로 올리면 피처는 1.5~1.7배 작아지지만 한 번에 찍는 면적은 절반이 된다. 2억 5천만 달러 장비가 찍던 면적을 4억 달러 장비가 절반만 찍는다. ASML 의 답은 스캐너를 더 빨리 움직이는 것이었다.</figcaption></figure>
+<p>파장은 20년을 들여 겨우 내려온 값이라 당장 또 건드리지 못한다. 남은 손잡이가 개구수, 결국 거울 크기다. 업계는 0.33 에서 0.55 로 옮기는 중이고, 그러면 1.5배에서 1.7배 작은 피처를 만들 수 있다. 대가가 있다. 거울이 커지면 빛이 들어오는 각도가 급해지고 아나모픽 광학이 끼어들면서, 한 번에 찍을 수 있는 면적이 낮은 개구수 때의 절반이 된다. 하프 필드라고 부른다.</p>
+<p>셈이 이상해지는 자리가 이것이다. 2억 5천만 달러 장비가 찍던 면적을 4억 달러 장비가 절반만 찍는다. <span class="pn">진행자A</span>가 옮긴 팹의 심정은 이렇다. 그 장비를 방금 샀는데 이제 4억 달러 장비를 그것도 두 대 사야 한다. ASML 의 답은 스캐너를 더 빨리 움직이는 것이었다. 면적이 작아진 만큼 웨이퍼 위를 더 빠르게 돌린다. 전투기급 가속으로 나노미터 정밀도를 지키며 멈추고 되돌리는 동작이다.</p>
+<p>거울을 크게 만드는 일 자체가 쉽지 않다. 이 거울은 몰리브덴과 실리콘을 아주 얇게 40층에서 50층 번갈아 쌓은 물건이다. <span class="pn">진행자V</span>는 Chip War 의 문장을 읽었다. <span class="q">"EUV 시스템의 거울을 독일 크기로 늘려도 가장 큰 요철은 10분의 1밀리미터일 것이다"</span>. 그래서 0.55 다음에 0.75 로 내년에 가는 식이 안 되고, 네트워킹 속도가 뛰는 리듬을 여기 기대하면 안 된다고 그는 못을 박았다. 그가 요약한 지금 상태는 이렇다. "경제성이 터져 나가고 있다. 뭔가 잘못되고 있다".</p>
+<h2 id="s5"><span class="num">5</span> xLight 는 장비를 만들지 않고 광원만 떼어 낸다</h2>
+<p>ASML 을 정면으로 상대하겠다는 스타트업에 업계가 보내는 반응은 정해져 있다. 13.5나노미터 빛을 얻는 데 업계 전체가 그만큼 걸렸고, 완벽한 거울을 만들 수 있는 회사는 Zeiss 하나인데 그 회사가 ASML 을 화나게 할 이유가 없다. 그래서 몇몇은 그 판을 접고 처음 원리로 돌아갔다.</p>
+<p>캘리포니아의 xLight 는 광원을 자유전자레이저로 바꾼다. Pat Gelsinger 가 이 회사 이사회에 있다. 전자를 광속 가까이 가속하고 언듈레이터로 흔들면 결맞은 빛이 나오는데 원리상 1나노미터 이하까지 내려간다. 그런데 이 회사가 먼저 하는 일은 13.5나노미터 빛을 만드는 것이다. 그래야 이미 팹에 들어가 있는 ASML 스캐너와 광학에 그대로 꽂힌다. 광학도 감광제도 바꿔 달라고 요구하지 않고 광원만 떼어 낸다.</p>
+<figure class="uc-fig"><p class="fig-title">광원 하나로 스캐너 열 대</p><svg class="epoch" viewBox="0 0 520 196" role="img" aria-label="자유전자레이저 하나의 빔을 쪼개 스캐너 열 대를 먹인다. 광원은 xLight 가 세우고 팹은 빛을 산다. 칸 수가 값이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">팹 안 — 스캐너 열 대</text>
+  <rect x="12" y="34" width="496" height="54" rx="4" class="fig-outside"/>
+  <rect x="24" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="72" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="120" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="168" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="216" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="264" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="312" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="360" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="408" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="456" y="46" width="40" height="30" rx="4" class="fig-box"/>
+  <rect x="203.5" y="118" width="113" height="44" rx="9" class="fig-agent"/>
+  <text x="260" y="146" text-anchor="middle" class="fig-b">자유전자레이저</text>
+  <line x1="260" y1="118" x2="260" y2="90" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="260" y="182" text-anchor="middle" class="fig-hd">광원은 팹 밖 — xLight 가 세우고 빛을 판다</text>
+</svg><figcaption>자유전자레이저는 총출력이 높아 빔을 쪼개면 스캐너 열 대를 광원 하나로 먹일 수 있다. 광원은 xLight 가 세우고 자본지출을 지며 팹은 빛을 산다. 출력·요금 값은 전사에 없고 칸 수만 값이다.</figcaption></figure>
+<p>떼어 내면 셈이 달라진다. 자유전자레이저는 총출력이 훨씬 높아서 도스를 올릴 수 있고 수율에 유리하다. 빔을 쪼개면 스캐너 열 대를 광원 하나로 먹일 수 있고, 고장을 생각하면 예비 광원을 하나 더 둔다. 처리량도 같이 오른다. 빛이 세면 짧게 노출해도 같은 수의 광자가 들어오니 웨이퍼를 더 빨리 넘기고, 조금 더 길게 쏘면 수율과 처리량을 함께 얻는다.</p>
+<p>고객은 ASML 이 아니고 팹이다. 그리고 파는 물건이 장비가 아니다. <span class="pn">진행자A</span>는 이 사업 모형을 광자를 서비스로 파는 유틸리티에 비유했다. 팹은 이미 전기와 물과 가스를 소비량 기준으로 산다. xLight 가 팹 옆에 광원을 세우는 자본지출을 자기 장부로 지고, 팹은 쓴 만큼 낸다. <span class="pn">진행자A</span>의 정리는 이렇다. "월말 전기 요금 같은 것이 리소그래피 빛 요금이 된다". 관계가 붙은 다음에는 13.5나노미터 빛을 팔다가 나중에 1나노미터 빛을 더 비싸게 팔 수도 있다.</p>
+<p>업계에 보이는 것은 진입장벽의 성격이 바뀔 수 있다는 점이다. TSMC 가 스타트업 광원을 들이고 ASML 에는 스캐너만 달라고 협상하는 일은 위험도 자본지출도 큰데, 그 위험과 선투자를 공급자가 지는 꼴로 옮기면 값이라는 장벽을 누가 먼저 넘느냐가 달라진다.</p>
+<h2 id="s6"><span class="num">6</span> Substrate 는 광학이 없는 자리로 간다</h2>
+<p>같은 캘리포니아의 Substrate 는 자유전자레이저 대신 X선 리소그래피를 든다. X선은 역사가 있다. 싱크로트론은 링에서 계속 가속되는 하전 입자가 방향을 틀 때 나오는 X선을 쓴다. 예전에는 축구장만 한 설비였지만 탁상형을 만드는 발명이 20~30년 전에 나왔고, IBM 은 80~90년대에 트럭에 올라가는 X선 광원까지 만들었다. 값이 안 맞아 멈춘 시제품이었는데, 30년 사이 감광제도 광학도 달라졌으니 다시 계산해 보자는 출발점이다.</p>
+<p>막히는 자리는 초점이다. X선은 물체를 통과해 버려서 반사가 안 되니 EUV 가 쓰는 거울 광학을 쓸 수 없다. 그러면 마스크를 5분의 1로 줄이는 현미경식 축소가 사라지니, 마스크를 찍을 치수와 같은 치수로 만들어 웨이퍼에 가까이 대는 근접 인쇄로 가야 하고 마스크 제작이 훨씬 어려워진다. 주석 방울 광원을 1나노미터 X선으로 갈아 끼우면 되는 일이 아니라고 <span class="pn">진행자V</span>는 못을 박았다. 파장을 바꾸면 전부 바뀐다.</p>
+<p>이 회사가 사람들을 놀라게 한 이유는 값이다. EUV 장비에 10억 달러를 쓰지 않아도 되면 훨씬 적은 자본으로 팹을 더 지을 수 있다. <span class="pn">진행자V</span>는 여기에 기술을 이번에는 미국 안에 두면 제조가 돌아온다는 이야기를 붙였다. <span class="pn">진행자A</span>가 얹은 함의는 회사 이름으로 나온다. GlobalFoundries 나 Texas Instruments 가 2나노미터 칩을 만들 수 있나. 뒤처진 노드에 남아 있던 팹들이 자기 노드 값으로 더 작은 트랜지스터를 찍게 되면 어떻게 되나. 웨이퍼 다섯 장만 필요해 웨이퍼당 10만 달러를 나눠 갚을 수 없던 팹리스 회사가 같은 트랜지스터를 1만 달러에 얻는다면 계산이 다시 선다.</p>
+<p>이 셈은 역사와 이어진다. 반도체 초창기에 모든 회사가 팹을 가졌던 이유는 수직 통합이 더 좋은 제품을 만들기 때문이었고, 그 회사들을 밀어낸 것이 Rock의 법칙이다. 팹 값이 10억, 20억, 40억, 80억 달러로 뛰는 동안 물량과 판매 단가가 그 값을 못 갚는 회사들이 차례로 떨어졌다. <span class="pn">진행자V</span>가 회차 후반을 닫은 인용에 그래서 뼈가 있다. "결국 Jerry Sanders 말대로 될 것이다. 진짜 사나이는 다시 팹을 갖는다".</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 무엇이 나오면 판단이 바뀌나</h2>
+<p>말하지 않은 것은 넷이다. ① 두 스타트업의 진척. 시제품이 어디까지 왔는지, 고객과 일정이 어떤지가 없다. <span class="pn">진행자A</span>는 따로 한 회차를 해야 한다고 했다. ② ASML 이 노출당 원가를 낮추는 로드맵을 imec 학회에서 공개했다는 언급만 있고 내용이 없다. ③ 하이퍼 개구수 장비가 양산에 들어갔는지를 <span class="pn">진행자V</span>는 모른다고 했다. ④ 마스크와 감광제 값. X선 리소그래피의 마스크 제작이 어렵다는 말은 나왔지만 비용이 없고, <span class="pn">진행자A</span>가 E빔에 값이 들 것이라고 짚은 데서 멈춘다.</p>
+<p>판단이 바뀌는 조건은 넷이다. ① xLight 가 광원 하나로 스캐너 여러 대를 실제로 먹이는 실증. 광원과 스캐너를 떼어 놓는 전제가 여기서 정해진다 ② X선 마스크를 만들 방법. 근접 인쇄용 마스크가 EUV 마스크보다 비싸지면 6절의 값 우위가 사라진다 ③ 하이퍼 개구수 장비 값이 10억 달러로 굳는지. 그렇게 되면 1절의 셈이 더 급해지고 두 스타트업을 볼 이유도 커진다 ④ 웨이퍼 값이 실제로 얼마나 내려가는지. 10만 달러에서 1만 달러라는 폭은 <span class="pn">진행자A</span>가 함의를 그려 본 가정이고 어느 회사가 제시한 값이 아니다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-05-22-litho-masterclass-strategy.md">insights/semidoped/2026-05-22-litho-masterclass-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
