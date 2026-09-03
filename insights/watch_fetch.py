@@ -21,6 +21,11 @@ import watch_lib as wl
 
 ADAPTERS = os.path.join(wl.WATCH, 'adapters')
 
+# 「청약 제도」줄만 — policy 어댑터가 주는 법 판 위에 subscription 어댑터의 청약홈
+# 공고 수치를 얹어 같은 _metrics/policy/청약 제도.json 에 쓴다. 다른 정책 줄(임대차
+# 제도 등)은 청약홈과 무관하니 슬러그로 딱 이 하나만 짚는다.
+SUBSCRIPTION_SLUG = '청약 제도'
+
 
 def adapter_for(kind):
     sys.path.insert(0, ADAPTERS)
@@ -86,6 +91,28 @@ def main(only=None, dry=False):
             print('  실패   %-22s %s: %s' % (w['slug'], type(e).__name__, e))
             fail += 1
             continue
+        # 청약 제도 줄만 — 법 판(got) 위에 청약홈 공고 수치를 얹는다. 열쇠가 없거나
+        # 실패해도 policy 것은 그대로 남으니 실패로 세지 않는다(경고 한 줄만).
+        if w['kind'] == 'policy' and w['slug'] == SUBSCRIPTION_SLUG:
+            sub = adapter_for('subscription')
+            if sub is None:
+                print('  경고   %-22s subscription.py 어댑터가 없다 — 법 판만 쓴다' % w['slug'])
+            else:
+                try:
+                    sub_got = sub.fetch(w['target'])
+                except Exception as e:                # noqa: BLE001
+                    sub_got = {}
+                    print('  경고   %-22s 청약홈 수치를 못 얻었다: %s: %s'
+                          % (w['slug'], type(e).__name__, e))
+                if sub_got:
+                    got.update(sub_got)
+                    rate_err = getattr(sub.fetch, 'rate_error', None)
+                    if rate_err:
+                        print('  경고   %-22s 경쟁률(15098905)을 못 얻었다: %s'
+                              % (w['slug'], rate_err))
+                else:
+                    print('  경고   %-22s 청약홈 수치 없음 — %s'
+                          % (w['slug'], getattr(sub.fetch, 'last_error', None) or '사유 불명'))
         if dry:
             print('  (안 씀) %-21s 열쇠 %d개 (지금 %d개)' % (w['slug'], len(got), prev_n))
             ok += 1

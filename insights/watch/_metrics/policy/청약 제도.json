@@ -1,0 +1,151 @@
+{
+ "law_주택공급에관한규칙": {
+  "value": "2026-06-15",
+  "as_of": "2026-06-15",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 주택공급에 관한 규칙 · 일부개정",
+  "area": "주택공급에 관한 규칙",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "286965"
+ },
+ "pblanc_cnt_강남3구": {
+  "value": 2,
+  "as_of": "2026-03",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 강남구·서초구·송파구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "강남 3구",
+  "series": [],
+  "partial": false
+ },
+ "pblanc_list_강남3구": {
+  "value": 2,
+  "items": [
+   {
+    "name": "오티에르 반포",
+    "gu": "서초구",
+    "apply": "2026-04-10",
+    "announce": "2026-04-21",
+    "cap": true,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000058&pblancNo=2026000058",
+    "rate1": "101.33~1180.87"
+   },
+   {
+    "name": "아크로 드 서초",
+    "gu": "서초구",
+    "apply": "2026-03-31",
+    "announce": "2026-04-09",
+    "cap": true,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2025000497&pblancNo=2025000497",
+    "rate1": "646.5~1135.96"
+   }
+  ],
+  "as_of": "2026-03",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 강남구·서초구·송파구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "강남 3구",
+  "series": [],
+  "partial": false
+ },
+ "pblanc_cnt_마용성": {
+  "value": 2,
+  "as_of": "2026-04",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 마포구·용산구·성동구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "마용성",
+  "series": [],
+  "partial": false
+ },
+ "pblanc_list_마용성": {
+  "value": 2,
+  "items": [
+   {
+    "name": "공덕역자이르네",
+    "gu": "마포구",
+    "apply": "2026-04-27",
+    "announce": "2026-05-08",
+    "cap": false,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000114&pblancNo=2026000114",
+    "rate1": "70~100.08"
+   },
+   {
+    "name": "이촌 르엘",
+    "gu": "용산구",
+    "apply": "2026-04-09",
+    "announce": "2026-04-20",
+    "cap": true,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000048&pblancNo=2026000048",
+    "rate1": "36.83~254.05"
+   }
+  ],
+  "as_of": "2026-04",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 마포구·용산구·성동구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "마용성",
+  "series": [],
+  "partial": false
+ },
+ "pblanc_cnt_노도강": {
+  "value": 3,
+  "as_of": "2026-07",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 노원구·도봉구·강북구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "노도강",
+  "series": [],
+  "partial": false
+ },
+ "pblanc_list_노도강": {
+  "value": 3,
+  "items": [
+   {
+    "name": "월계 중흥S-클래스 리비에르",
+    "gu": "노원구",
+    "apply": "2026-07-27",
+    "announce": "2026-08-05",
+    "cap": false,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000355&pblancNo=2026000355",
+    "rate1": "41.45~105"
+   },
+   {
+    "name": "북서울자이 폴라리스(보류지)",
+    "gu": "강북구",
+    "apply": "2026-06-22",
+    "announce": "2026-06-30",
+    "cap": false,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000235&pblancNo=2026000235",
+    "rate1": "60~1040"
+   },
+   {
+    "name": "더 리치먼드 미아",
+    "gu": "강북구",
+    "apply": "2026-05-07",
+    "announce": "2026-05-18",
+    "cap": false,
+    "hot": true,
+    "url": "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000156&pblancNo=2026000156",
+    "rate1": "1.81~14"
+   }
+  ],
+  "as_of": "2026-07",
+  "kind": "공표",
+  "unit": "건(모집공고)",
+  "src": "공공데이터포털 15098547 한국부동산원_청약홈 분양정보 조회 · getAPTLttotPblancDetail · 최근 6개월 서울 공고 21건 중 공급위치에 노원구·도봉구·강북구 가 든 것 · 주소 문자열 매칭이라 놓친 공고가 있을 수 있다",
+  "area": "노도강",
+  "series": [],
+  "partial": false
+ }
+}

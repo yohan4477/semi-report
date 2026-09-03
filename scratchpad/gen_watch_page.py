@@ -180,6 +180,26 @@ def _region_raw(watches):
     return dict((w['target'], wl.metrics_of(w['kind'], w['slug'])) for w in _live_areas(watches))
 
 
+def _subscription_data(watches):
+    """청약 제도 줄의 pblanc_cnt_<권역>·pblanc_list_<권역> 을 권역 이름으로 다시 묶는다.
+
+    어댑터가 못 냈으면(열쇠가 없으면) 빈 dict — 구 패널도 「세 권역 최근 공고」 표도
+    그 자리를 그냥 비운다. 청약 제도 줄 자체가 없어도(파일이 지워지는 일은 없지만)
+    마찬가지다."""
+    w = next((x for x in watches if x['kind'] == 'policy' and x['slug'] == '청약 제도'), None)
+    if w is None:
+        return {}
+    m = w['metrics']
+    out = {}
+    for area_name in ('강남 3구', '마용성', '노도강'):
+        key = area_name.replace(' ', '')
+        cnt = m.get('pblanc_cnt_' + key)
+        lst = m.get('pblanc_list_' + key)
+        if cnt or lst:
+            out[area_name] = {'cnt': cnt, 'list': lst}
+    return out
+
+
 def _val3(series):
     """지금 값 · 지난달 대비 · 석 달 대비. 견준 상대의 달(a1·a3)도 같이 낸다 —
     「+0.20%p」만 적으면 그게 한 달치인지 석 달치인지 화면에 없다."""
@@ -201,6 +221,7 @@ def _gu_map_data(watches):
     region_raw = _region_raw(watches)
     region_slug = dict((w['target'], w['slug']) for w in _live_areas(watches))
     region_view = dict((w['target'], w.get('view') or '') for w in _live_areas(watches))
+    sub = _subscription_data(watches)
     out = {}
     for name in sorted(SEOUL_GU['gu']):
         region = GU_REGION.get(name)
@@ -218,6 +239,7 @@ def _gu_map_data(watches):
         entry['sd'] = ({'value': sd.get('value'), 'area': sd.get('area')} if sd else None)
         entry['lth_value'], entry['lth_detail'] = _lth_info(name)
         entry['adj'], entry['hot'] = _reg_info(name)
+        entry['sub_cnt'] = (sub.get(region) or {}).get('cnt') if region else None
         out[name] = entry
     return out
 
@@ -276,6 +298,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
   white-space:nowrap;margin:16px 0 0;padding:10px 0;background:var(--paper);
   border-bottom:1px solid var(--line);scrollbar-width:none}
 .jump::-webkit-scrollbar{display:none}
+.band[id],.hero[id],section[id]{scroll-margin-top:64px}
 .jump a{flex:0 0 auto;font-size:12.5px;font-weight:500;background:var(--surface);
   border:1px solid var(--line);border-radius:999px;padding:6px 12px}
 .jump a:hover{border-color:var(--ink-3)}
@@ -1209,20 +1232,68 @@ def law_summary(watches):
     return ''.join(h)
 
 
+def _cap_label(v):
+    """분양가상한제 여부 — API 는 문자열 'True'/'False' 로 준다."""
+    t = str(v)
+    return '적용' if t == 'True' else ('미적용' if t == 'False' else '—')
+
+
+def subscription_table(watches):
+    """「세 권역 최근 공고(6개월)」 — 청약홈 API 가 준 공고만. 권역별 접수일 내림차순
+    최대 5행, 나머지는 「+n건」. 경쟁률(rate1)이 한 건이라도 있으면 열을 내고, 없으면
+    열 자체를 안 낸다. 값이 없으면 표·문구 다 안 낸다 — 자리표시 금지(사용자)."""
+    data = _subscription_data(watches)
+    rows_by = []
+    asofs = []
+    for area in ('강남 3구', '마용성', '노도강'):
+        d = data.get(area)
+        if not d or not d.get('list'):
+            continue
+        m = d['list']
+        items = sorted(m.get('items') or [], key=lambda i: i.get('apply') or '', reverse=True)
+        if not items:
+            continue
+        asofs.append(m.get('as_of') or '')
+        rows_by.append((area, items))
+    if not rows_by:
+        return ''
+    has_rate = any(i.get('rate1') for _a, items in rows_by for i in items)
+    head = ['권역', '단지명', '구', '접수 시작', '당첨자 발표', '분양가상한제'] + (['1순위 경쟁률'] if has_rate else [])
+    rows = []
+    for area, items in rows_by:
+        for i in items[:5]:
+            name = E(i.get('name') or '—')
+            if i.get('url'):
+                name = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(i['url']), name)
+            r = [E(area), name, E(i.get('gu') or '—'), E(i.get('apply') or '—'),
+                 E(i.get('announce') or '—'), _cap_label(i.get('cap'))]
+            if has_rate:
+                r.append(E(i.get('rate1') or '—'))
+            rows.append(r)
+        if len(items) > 5:
+            r = ['', '<span class="t-sub">+%d건</span>' % (len(items) - 5)] + [''] * (len(head) - 2)
+            rows.append(r)
+    cap = ('청약홈(공공데이터포털) · 기준 %s · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음'
+           % E(max(asofs) if asofs else '—'))
+    return (tbl('세 권역 최근 공고 (6개월)', head, rows)
+            + '<p class="cond-tail">%s</p>' % cap)
+
+
 def subscription_section(watches):
     """본 장의 「청약 — 조건」 절. 조건 표를 가진 정책 줄(지금은 청약 제도 하나)의
     표를 그대로 낸다.
 
     이 절만 본 장에 표를 둔다. 나머지 표는 전부 상세(watch/)로 옮겼는데, 청약
     조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더 열게 하지 않는다.
-    값은 md 표에서만 온다 — 청약홈 공고·경쟁률은 열쇠가 없어 아무것도 안 넣는다."""
+    조건 값은 md 표에서, 공고·경쟁률은 청약홈 API(_metrics)에서 온다 — 없으면 표를 안 낸다."""
     for w in sorted(watches, key=lambda x: x['slug']):
         if not cond_blocks(w)[1]:
             continue
         more = ('<p class="lbl"><a href="watch/%s.html">%s 자세히 →</a></p>'
                 % (w['slug'], E(w['target'])))
-        return ('<div class="band" id="subscription"><p class="band-t">청약 — 조건</p>%s</div>'
-                % cond_html(w, more))
+        # 상세 링크는 절 맨 끝 — 조건 표 셋과 공고 표 다음
+        return ('<div class="band" id="subscription"><p class="band-t">청약 — 조건</p>%s%s%s</div>'
+                % (cond_html(w, ''), subscription_table(watches), more))
     return ''
 
 
@@ -1903,6 +1974,13 @@ def _gu_panel_html(name, e):
     if cap_d and '확인 못 함' in cap_d:
         h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
                  % E(cap_d[:40]))
+    # 청약홈 최근 공고 — 이 구가 든 권역(강남 3구·마용성·노도강) 것. 열쇠가 없어
+    # 어댑터가 못 냈으면(sub_cnt 없음) 줄 자체를 안 낸다
+    sc = e.get('sub_cnt')
+    if sc is not None:
+        h.append('<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
+                 '<span class="t-sub">· 6개월 · %s 기준</span></p>'
+                 % (sc['value'], E(sc['as_of'])))
     if watched and e['slug']:
         h.append('<a class="gp-more" href="watch/%s.html">자세히 →</a>' % e['slug'])
     h.append('</div>')
@@ -2032,7 +2110,17 @@ Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
 _JUMP_JS = """<script>
 (function(){
 var links=Array.from(document.querySelectorAll('.jump a'));
-if(!links.length||!window.IntersectionObserver)return;
+if(!links.length)return;
+// 누르면 스크롤만 하고 주소에 #앵커를 안 남긴다 — 남기면 새로고침이 그 절로 뛴다
+var strip=function(){if(location.hash&&history.replaceState){
+  history.replaceState(null,'',location.pathname+location.search);}};
+var smooth=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+links.forEach(function(a){a.addEventListener('click',function(ev){
+  var t=document.getElementById(a.getAttribute('href').slice(1));
+  if(!t)return; ev.preventDefault();
+  t.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'}); strip();});});
+window.addEventListener('load',function(){setTimeout(strip,50);});
+if(!window.IntersectionObserver)return;
 var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
 var secs=Object.keys(map).map(function(id){return document.getElementById(id);})
   .filter(Boolean);
@@ -2151,7 +2239,8 @@ def check_ui(html, watches):
     n_tbl = html.count('<table')
     at_sub = html.find('id="subscription"')
     inside = html[at_sub:html.find('id="lines"')] if at_sub > 0 else ''
-    assert n_tbl <= 3, '규약 위반: 본 장의 표는 셋 이하여야 한다 (%d개)' % n_tbl
+    # 조건 표 셋 + 청약홈 공고 표 하나 — 넷까지. 전부 #subscription 안이어야 한다
+    assert n_tbl <= 4, '규약 위반: 본 장의 표는 넷 이하여야 한다 (%d개)' % n_tbl
     assert n_tbl == inside.count('<table'), \
         '규약 위반: 본 장의 표는 「청약 — 조건」 절 안에만 둔다'
     assert 'scratchpad/' not in html.split('<footer>')[-1].split('</footer>')[0], \
