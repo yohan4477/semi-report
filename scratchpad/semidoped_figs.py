@@ -1334,9 +1334,101 @@ def _mt_cycle():
 
 MT = '2026-05-04-memory-tax'
 
+
+# ══ WEKA (2026-07-10) 전략 판 ═══════════════════════════════════════════
+# 값은 전사의 것만 — 레인 128·32, KV 캐시 50GB·5GB, 컨텍스트 10배·세션 10~100배·순 100배, G1~G4, 95%, 300~500TB.
+
+def _wk_lanes():
+    """NVLink 128레인 대 PCI 32레인 — 같은 꼴 두 줄, 가운데 통로 굵기가 레인 수다."""
+    fw, h = 400.0, 44
+    fx = (W - fw) / 2
+    lw, rw = w_of(['GPU']), w_of(['스토리지'])
+    parts, y = [], 22
+    for label, left, right, lanes, cls in [('NVLink — 레인 128개쯤', 'GPU', '스토리지', 128, 'fig-agent'),
+                                           ('마더보드 PCI — 레인 32개', 'CPU', 'DRAM', 32, 'fig-box')]:
+        parts += head(fx, y, fw, label)
+        fy = y + 10
+        parts += _rect(fx, fy, fw, h + 32, 'fig-stage')
+        px, py = fx + 16, fy + 16
+        parts += box(px, py, lw, h, [left], 'fig-box')
+        rx = fx + fw - 16 - rw
+        parts += box(rx, py, rw, h, [right], 'fig-box')
+        th = 6 + lanes * 0.2
+        parts += _rect(px + lw + 8, py + h / 2 - th / 2, rx - (px + lw + 8) - 8, th, cls)
+        y = fy + h + 32 + 26
+    parts += legend([('fig-agent', '통로 굵기 = 레인 수')], y - 10)
+    return svg(y + 16, parts, 'NVLink 쪽은 레인이 128개쯤이고 마더보드에서 CPU 가 DRAM 으로 가는 PCI 는 32개다. 통로 굵기가 레인 수다')
+
+
+def _wk_kv():
+    return _chain_down([(['10만 토큰의 KV 캐시 — 50기가바이트'], 'fig-box'),
+                        (['DeepSeek V4 식 최적화 — 5기가바이트'], 'fig-agent'),
+                        (['컨텍스트 10배 · 동시 세션 10~100배'], 'fig-box'),
+                        (['총량은 순 100배'], 'fig-outside')],
+                       '단위 소비는 50GB 에서 5GB 로 줄었는데 컨텍스트와 동시 세션이 곱해져 총량은 100배가 된다')
+
+
+def _wk_tiers():
+    """Nvidia Dynamo 의 메모리 네 층 — 위가 빠르다. 층 사이는 자릿수로 벌어진다."""
+    rows = [('G1', 'HBM — GPU 안', 'fig-agent'), ('G2', 'DRAM — CPU 쪽', 'fig-box'),
+            ('G3', '로컬 스토리지 — 서버 안', 'fig-box'), ('G4', '원격 스토리지 — NFS · S3', 'fig-outside')]
+    lw = w_of([r[0] for r in rows]); rw = w_of([r[1] for r in rows])
+    gap = 12
+    x0 = (W - (lw + gap + rw)) / 2
+    parts, y, h = [], 30, 44
+    for name, note, cls in rows:
+        parts += box(x0, y, lw, h, [name], cls)
+        parts += box(x0 + lw + gap, y, rw, h, [note], 'fig-stage')
+        y += h + 10
+    return svg(y + 2, parts, 'Nvidia Dynamo 팀이 정리한 네 층 — HBM, CPU 쪽 DRAM, 서버 안 로컬 스토리지, NFS 나 S3 같은 원격 스토리지')
+
+
+def _wk_hit():
+    """캐시 적중률 둘 — 대시보드의 논리 적중률과 사업자가 실제로 맞히는 비율. 같은 꼴 좌우."""
+    L, R = 0.0, 272.0
+    pw = 248.0
+    parts = head(L, 22, pw, '① 논리 적중률') + head(R, 22, pw, '② 실제 적중률')
+    h = 2 * LH + 22
+    cols = [(L, ['에이전트 대시보드', '보통 95% 근처'], ['재사용될 수 있는', '비율'], 'fig-box'),
+            (R, ['사업자가 맞히는 비율', '메모리 계층에 달림'], ['HBM·DRAM 은', '정해진 양뿐'], 'fig-agent')]
+    w = w_of(*[l for _, a, b, _c in cols for l in (a, b)])  # 모든 줄 중 가장 긴 것에 맞춘다
+    for x0, top, bot, cls in cols:
+        x = x0 + (pw - w) / 2
+        parts += box(x, 36, w, h, top, cls)
+        parts += down(x + w / 2, 36 + h, 36 + h + 20)
+        parts += box(x, 36 + h + 22, w, h, bot, 'fig-stage')
+    y = 36 + 2 * h + 22
+    return svg(y + 14, parts, '대시보드에 뜨는 논리 적중률은 95% 근처로 높지만, 사업자가 실제로 맞히는 비율은 가진 메모리 계층에 달렸다')
+
+
+def _wk_provision():
+    """1페타바이트를 사서 300~500테라바이트만 쓴다 — 한 막대 안의 조각."""
+    bw = 440.0; x0 = (W - bw) / 2; y, h = 40, 34
+    parts = head(0, 22, W, '산 용량 — 1페타바이트')
+    parts += _rect(x0, y, bw, h, 'fig-outside')
+    parts += _rect(x0, y, bw * 0.5, h, 'fig-agent')
+    parts += head(0, y + h + 22, W, '짙은 조각 — 실제로 쓰는 300~500테라바이트')
+    parts += legend([('fig-agent', '쓰는 용량'), ('fig-outside', '여유분으로 남기는 용량')], y + h + 40)
+    return svg(y + h + 66, parts, 'SLC 없이 TLC 나 QLC 로 버티려면 1페타바이트를 사서 실제로는 300~500테라바이트만 쓴다. 짙은 조각은 위쪽 값으로 그렸다')
+
+
+WK = '2026-07-10-weka-bercovici'
+
 # ── 도해 ─────────────────────────────────────────────────────────────
 # FIGS[(slug, lane)] = [(절 제목 머리, 제목, svg, 캡션), …]   머리에 「|문단 앞머리」를 붙이면 그 문단 앞
 FIGS = {
+    (WK, 'strategy'): [
+        ('1.|Val 은 저장장치를', 'NVLink 레인 128 대 PCI 레인 32', _wk_lanes(),
+         '같은 꼴 두 줄이다. Nvidia 서버의 스케일업 구간은 NVLink 레인이 128개쯤(Val 의 기억), 마더보드에서 CPU 가 DRAM 으로 가는 PCI 는 32개다(L47). 그래서 망을 최대 속도로 쓰면 DRAM 보다 빨라진다는 것이 Val 의 산수다(L45).'),
+        ('3.|압축 이야기는', 'KV 캐시 — 단위는 90% 줄고 총량은 100배', _wk_kv(),
+         '10만 토큰에 50GB 들던 KV 캐시가 DeepSeek V4 식 최적화로 5GB 가 됐다(L77). 그런데 컨텍스트가 10배, 동시 세션이 10~100배가 되어 총량은 순 100배다(L77). 제번스 역설이 다시 걸린다는 것이 Val 의 말이다(L85).'),
+        ('4.|먼저 메모리 계층을', 'Dynamo 의 메모리 네 층', _wk_tiers(),
+         'Nvidia Dynamo 팀이 정리한 네 층이다(L69). 층 사이의 지연과 대역폭이 자릿수로 벌어져 그랜드캐니언처럼 끊긴다(L71). 사람 눈은 초당 35~50토큰을 요구하고 에이전트 스웜은 초당 수천 토큰을 뽑아 간다.'),
+        ('4.|그러면 캐시 적중률은', '캐시 적중률 둘 — 논리와 실제', _wk_hit(),
+         '같은 꼴 둘이다. 대시보드의 논리 적중률은 내 토큰이 재사용될 수 있는 비율이라 95% 근처로 높다(L107). 사업자가 실제로 맞히는 비율은 가진 메모리 계층에 달렸고, 스토리지 계층을 붙이면 응답 목표가 무너져 인기 모델에는 잘 안 쓴다(L109).'),
+        ('5.|값을 치르는 자리는', '여유분 — 1페타바이트 사서 300~500테라바이트', _wk_provision(),
+         'SLC 를 못 쓰고 TLC 나 QLC 로 버티면 드라이브가 망가지지 않게 여유 용량을 크게 잡아야 한다. 1페타바이트를 사서 전기까지 넣고도 실제로 쓰는 것은 300~500테라바이트다(L137). 짙은 조각은 그 범위의 위쪽 값이다.'),
+    ],
     (MT, 'strategy'): [
         ('1.|가장 또렷한 숫자는', '설비투자 1,900억 달러 안의 250억', _mt_capex(),
          '마이크로소프트의 2026년 설비투자 1,900억 달러 중 250억 달러가 부품값 상승분이라고 최고재무책임자가 밝혔다(L221). 몇 년 전에는 한 분기 설비투자 전체가 250억 달러였다(L223). 막대 길이가 값이다.'),
