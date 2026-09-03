@@ -9,6 +9,7 @@ host: Austin Lyons · Vik Sekar
 section: fab
 topic: 첨단 패키징 · CoWoS · EMIB
 gain: 다이를 무한정 키우지 못하는 이유(레티클 858제곱밀리미터)와 그 벽을 넘는 두 갈래. 실리콘 인터포저를 한 층 더 까는 쪽과 기판 안에 브리지만 심는 쪽이 층 수·재료비·수율에서 어떻게 갈리는지, 그리고 레티클 몇 배까지 담는지의 로드맵.
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 ---
 
 ## 한 줄

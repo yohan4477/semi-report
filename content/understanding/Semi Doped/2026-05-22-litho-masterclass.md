@@ -9,6 +9,7 @@ host: Austin Lyons · Vik Sekar
 section: fab
 topic: EUV · 멀티패터닝 · 노광 장비 값
 gain: 365나노미터에서 13.5나노미터까지 온 광원의 역사와, 그 대가로 장비 한 대가 2.5억에서 4억 달러가 된 셈. EUV 를 못 구하면 왜 패터닝을 서너 번 반복해야 하는지, 그리고 광원을 서비스로 팔겠다는 쪽과 X선으로 가겠다는 쪽.
+people: 진행 [[Austin Lyons]] (Chipstrat) · [[Vik Sekar]] (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음
 ---
 
 ## 한 줄
