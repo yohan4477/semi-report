@@ -307,3 +307,32 @@ FIG_COST = _svg(W, 232, '광 부품값은 절반인데 클러스터 총비용은
     _cbar(384, _pc(3), '3%', '3층망 그대로'),
     _cbar(504, _pc(7), '7%', '2층으로 평탄화', accent=True),
 ]))
+
+
+# ── 도해 6b. 루빈 울트라 NVL576 랙 지출 — HBM 을 깎기 전과 후 ───────────
+# 값은 LI-2609 L75(SemiAnalysis, 2026-09-02). 기둥 = 랙 지출 100%. 아래부터 메모리(옅은)·
+# 스케일업 네트워킹(짙은). 나머지는 원문에 없어 비워 둔다. 글자는 지시선으로.
+_RK = [(150, 44, 56, 236), (390, 44, 56, 236)]
+
+
+def _rcol(c, mem, net, name2):
+    x, y, w, h = c
+    mh, nh = int(h * mem / 100.0), int(h * net / 100.0)
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="%s" stroke-width="1.5"/>'
+        % (x, y, w, h, INK3),
+        _t(x + w // 2, y - 8, '100%', 't-sm'),
+        _piece(x, w, _SBASE - mh, mh, False),
+        _lead(x + w, _SBASE - mh // 2, '메모리 %d%%' % mem),
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="5" fill="%s" fill-opacity="0.38" stroke="%s" stroke-width="1.5"/>'
+        % (x, _SBASE - mh - nh, w, nh, INK3, INK),
+        _lead(x + w, _SBASE - mh - nh // 2, '스케일업 네트워킹 %d%%' % net),
+        _t(x + w // 2, _SBASE + 22, name2[0], 't-sm'),
+        _t(x + w // 2, _SBASE + 38, name2[1], 't-sm'),
+    ])
+
+
+FIG_RACK = _svg(W, 326, '루빈 울트라 NVL576 랙 지출 — HBM 을 깎자 스케일업 네트워킹이 세 배', ''.join([
+    _rcol(_RK[0], 40, 4, ('디스펙 전', 'HBM4E 12단 384GB')),
+    _rcol(_RK[1], 28, 12, ('디스펙 후', 'HBM4 8단 192GB')),
+]))

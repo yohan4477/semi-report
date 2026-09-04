@@ -60,7 +60,7 @@ CPO_EXTRA = [os.path.join(_SD, f + '.md') for f in
 ] + glob.glob(os.path.join(_CLIP, 'Huawei AI CloudMatrix 384*.md')) + glob.glob(
     os.path.join(_CLIP, 'Co-Packaged Optics (CPO) Book*.md')) + [
     os.path.join(_LI, '[2605] 링크드인 게시물.md'), os.path.join(_LI, '[2607] 링크드인 게시물.md'),
-    os.path.join(_LI, '[2608] 링크드인 게시물.md')]
+    os.path.join(_LI, '[2608] 링크드인 게시물.md'), os.path.join(_LI, '[2609] 링크드인 게시물.md')]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
