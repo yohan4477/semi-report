@@ -42,11 +42,18 @@ SRC_SEONGNAM = ('https://raw.githubusercontent.com/southkorea/southkorea-maps/ma
 LICENSE = ('Apache-2.0 (southkorea/seoul-maps 가공물, 서울 25구). 원 데이터는 KOSTAT'
            '(2013 센서스용 행정구역경계)·서울시 JUSO(2015 행정구역 시군구 정보) 공개자료. '
            '성남 3구는 southkorea/southkorea-maps(KOSTAT 2013, README: "Free to share '
-           'or remix") 의 code 31021·31022·31023 피처')
+           'or remix") 의 code 31021·31022·31023 피처. 화성시·수원 영통구·안양 동안구·'
+           '광주시(31240·31014·31042·31250)도 같은 파일(2026-09-04)')
 # 전국 파일의 code → (판에 쓸 이름, si). 성남시분당구 같은 원 이름을 그대로 쓰면
 # 서울 구(단독 두 글자+구)와 라벨 길이가 안 맞는다 — 다른 실거주 줄·_areas.json 이
 # 쓰는 "분당구" 로 맞춘다.
-SEONGNAM_CODES = {'31021': '수정구', '31022': '중원구', '31023': '분당구'}
+SEONGNAM_CODES = {'31021': ('수정구', '성남시'), '31022': ('중원구', '성남시'),
+                  '31023': ('분당구', '성남시'),
+                  # 2026-09-04 — 동탄·광교·평촌·남한산성. 부동산원 통계 단위(시군구)로는
+                  # 화성시·수원시 영통구·안양시 동안구·광주시다. 판 이름은 _areas.json 의
+                  # 「구」 이름과 같아야 한다(어댑터·지도·패널이 그 이름으로 만난다)
+                  '31014': ('영통구', '수원시'), '31042': ('동안구', '안양시'),
+                  '31240': ('화성시', None), '31250': ('광주시', None)}
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'insights', 'watch', '_seoul_gu.json')
 
@@ -197,6 +204,7 @@ def main():
     sido_of = {}
     si_of = {}
     all_pts = []
+    seoul_pts = []   # 축척은 서울 25구만으로 잰다 — 경기 시군구가 늘어도 서울 판은 안 줄어든다
 
     def _add(name, geom, sido, si=None):
         polys = [geom['coordinates']] if geom['type'] == 'Polygon' else geom['coordinates']
@@ -207,6 +215,8 @@ def main():
                 pr = [proj_raw(lon, lat) for lon, lat in ring]
                 proj_rings.append(pr)
                 all_pts.extend(pr)
+                if sido == '서울':
+                    seoul_pts.extend(pr)
             proj_polys.append(proj_rings)
         raw_by_gu[name] = proj_polys
         sido_of[name] = sido
@@ -220,10 +230,11 @@ def main():
     for feat in seongnam['features']:
         code = feat['properties'].get('code')
         if code in SEONGNAM_CODES:
-            _add(SEONGNAM_CODES[code], feat['geometry'], '경기', '성남시')
+            nm, si = SEONGNAM_CODES[code]
+            _add(nm, feat['geometry'], '경기', si)
             n_seongnam += 1
     if n_seongnam != len(SEONGNAM_CODES):
-        raise SystemExit('성남 3구를 다 못 찾았다 — code %d개만 걸림 (기대 %d)'
+        raise SystemExit('경기 시군구를 다 못 찾았다 — code %d개만 걸림 (기대 %d)'
                           % (n_seongnam, len(SEONGNAM_CODES)))
 
     minx = min(p[0] for p in all_pts)
@@ -234,8 +245,14 @@ def main():
     # 폭(640)·여백(12)만 고정하고 세로는 데이터에서 낸다 — 성남이 남동쪽에 붙어
     # 판이 서울만 그릴 때보다 아래로 길어진다. 가로를 꽉 채우는 스케일 하나로
     # 재기 때문에 서울 25구의 픽셀 크기는 성남을 더하기 전과 같다.
+    # 축척은 서울 25구의 가로폭이 640 을 채우도록 — 화성·광주까지 한 판에 두면(2026-09-04)
+    # 전체 폭으로 재는 순간 서울이 절반으로 줄어 라벨이 겹친다. 판의 가로·세로는 그 축척으로
+    # 전체 범위를 재서 낸다(서울 판보다 넓어진다). 화면은 시·도마다 경계 상자로 잘라 쓴다
+    s_minx = min(p[0] for p in seoul_pts)
+    s_maxx = max(p[0] for p in seoul_pts)
     avail_w = VB_W - 2 * MARGIN
-    scale = avail_w / (maxx - minx)
+    scale = avail_w / (s_maxx - s_minx)
+    vb_w = (maxx - minx) * scale + 2 * MARGIN
     used_h = (maxy - miny) * scale
     vb_h = used_h + 2 * MARGIN
     pad_x = MARGIN
@@ -268,7 +285,7 @@ def main():
         'src': SRC + ' ; ' + SRC_SEONGNAM,
         'license': LICENSE,
         'fetched': '2026-09-04',
-        'viewBox': [0, 0, int(VB_W), round(vb_h, 1)],
+        'viewBox': [0, 0, round(vb_w, 1), round(vb_h, 1)],
         'gu': out_gu,
     }
     io.open(OUT, 'w', encoding='utf-8').write(json.dumps(out, ensure_ascii=False))

@@ -109,14 +109,15 @@ SEOUL_GU = _load_json(SEOUL_GU_PATH)
 ZONES = _load_json(ZONES_PATH)
 # 구 → 권역. 보는 것은 넷뿐이라(강남 3구·노도강·마용성·성남) 그 구 열둘만 채워진다.
 # 나머지는 지도에 있지만 「보고 있지 않은 구」다.
-GU_REGION = dict((g, t) for t in ('강남 3구', '노도강', '마용성', '성남')
-                 for g in AREAS.get(t, {}).get('구', []))
+GU_REGION = dict((g, t) for t in AREAS if isinstance(AREAS[t], dict)
+                 for g in AREAS[t].get('구', []))
 WATCHED_GU = sorted(GU_REGION)
 # 시·도 — 첫 화면의 최상위 갈래다(2026-09-04 사용자 지시 「서울 경기 구분이 가장 상위」).
 # 성남 3구만 경기, 나머지(서울 25구)는 서울. 지도·분양·달라진 것·보고 있는 것이
 # 전부 이 갈래 아래 선다 — 제도·청약 조건·자료 기준은 전국 공통이라 밖에 남는다
 SIDOS = (('서울', ''), ('경기', '-gg'))
-_GYEONGGI_GU = set(AREAS.get('성남', {}).get('구', []))
+_GYEONGGI_GU = set(g for t, v in AREAS.items() if isinstance(v, dict)
+                   and v.get('sido') == '경기' for g in v.get('구', []))
 
 
 def _sido_of(gu):
@@ -231,14 +232,22 @@ REBUILD_STAGES = ('정비계획수립', '재정비촉진지구수립', '안전�
                   '조합설립인가', '주민대표회의구성통지', '사업시행인가', '관리처분인가',
                   '철거', '착공', '분양', '준공인가', '이전고시', '조합해산', '조합청산',
                   '추진주체 구성 전', '추진위원회', '조합(시행자)', '청산위원회')
-_REBUILD_BUCKET = {'정비계획수립': '구역', '재정비촉진지구수립': '구역', '안전진단': '구역',
-                   '정비구역지정': '구역', '추진위원회승인': '구역', '추진주체 구성 전': '구역',
-                   '추진위원회': '구역',
-                   '조합설립인가': '조합', '주민대표회의구성통지': '조합', '조합(시행자)': '조합',
-                   '사업시행인가': '인가', '관리처분인가': '인가',
-                   '철거': '공사', '착공': '공사', '분양': '공사',
-                   '준공인가': '끝', '이전고시': '끝', '조합해산': '끝', '조합청산': '끝',
-                   '청산위원회': '끝'}
+def _rebuild_bucket(stage):
+    """단계 이름 → 큰 묶음 다섯. 원천의 낱말이 고정돼 있지 않아(「정비계획 수립」·
+    「안전진단(1차)」·「철거 및 착공」·「사업계획승인(리모델링 허가)」·빈 값) 이름표가
+    아니라 낱말 조각으로 가른다. 순서가 뜻이다 — 「철거 및 착공」은 공사, 「조합해산」은 끝"""
+    st = (stage or '').replace(' ', '')
+    if any(k in st for k in ('준공', '이전고시', '해산', '청산')):
+        return '끝'
+    if any(k in st for k in ('착공', '철거', '분양')):
+        return '공사'
+    if any(k in st for k in ('관리처분', '사업시행', '사업계획승인')):
+        return '인가'
+    if any(k in st for k in ('조합', '주민대표')):
+        return '조합'
+    return '구역'
+
+
 REBUILD_BUCKET_ORDER = ('구역', '조합', '인가', '공사', '끝')
 REBUILD_BUCKET_LABEL = {'구역': '구역 지정·추진위까지', '조합': '조합 단계', '인가': '사업시행·관리처분 인가',
                         '공사': '철거·착공·분양', '끝': '준공·청산'}
@@ -246,7 +255,11 @@ REBUILD_SLUG = '정비사업'
 
 
 def _stage_rank(stage):
-    return REBUILD_STAGES.index(stage) if stage in REBUILD_STAGES else len(REBUILD_STAGES)
+    """늦은 단계가 큰 수. 묶음이 먼저, 묶음 안에서는 원천 목록 순서"""
+    b = REBUILD_BUCKET_ORDER.index(_rebuild_bucket(stage))
+    st = (stage or '').replace(' ', '')
+    inner = next((i for i, k in enumerate(REBUILD_STAGES) if k.replace(' ', '') in st), 0)
+    return b * 100 + inner
 
 
 def _rebuild_data(watches):
@@ -265,7 +278,7 @@ def _rebuild_gu_summary(items):
     by_type, by_bucket = {}, {}
     for it in items:
         by_type[it.get('type') or '기타'] = by_type.get(it.get('type') or '기타', 0) + 1
-        b = _REBUILD_BUCKET.get(it.get('stage') or '', '구역')
+        b = _rebuild_bucket(it.get('stage'))
         by_bucket[b] = by_bucket.get(b, 0) + 1
     return by_type, by_bucket
 
@@ -274,7 +287,7 @@ def _rebuild_item_html(it, full=False):
     nm = E(it.get('name') or '—')
     if full and it.get('url'):
         nm = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(it['url']), nm)
-    parts = [E(it.get('type') or ''), E(it.get('stage') or '')]
+    parts = [E(it.get('type') or ''), E(it.get('stage') or '단계 미기재')]
     if full and it.get('addr'):
         parts.append(E(it['addr']))
     return ('<div class="rb-item"><p class="si-1">%s <span class="si-gu">%s</span></p>'
@@ -310,7 +323,7 @@ def rebuild_section(watches, sido='서울', suffix=''):
                            if by_type.get(t))
         b_txt = ' · '.join('%s %d' % (E(REBUILD_BUCKET_LABEL[b]), by_bucket[b])
                            for b in REBUILD_BUCKET_ORDER if by_bucket.get(b))
-        late = [it for it in items if _REBUILD_BUCKET.get(it.get('stage') or '') in ('인가', '공사')]
+        late = [it for it in items if _rebuild_bucket(it.get('stage')) in ('인가', '공사')]
         late_html = ''.join(_rebuild_item_html(it) for it in late[:3])
         h.append('<div class="rb-row"><p class="rb-k"><a href="watch/정비사업 현황.html#g-%s">%s</a> '
                  '<span class="rb-n">%d곳</span></p>'
@@ -360,12 +373,12 @@ def rebuild_page(watches):
             '← 포트폴리오 워치</a>'
             '<header><p class="meta mono">사업장 %d곳 · 기준 %s</p><h1>정비사업 현황</h1>'
             '<p class="lede">재건축·재개발·리모델링 사업장이 지금 어느 단계에 있나 — 보고 있는 '
-            '12구, 단계 늦은 순.</p></header>%s<div class="dbody">%s%s</div>'
+            '%d곳, 단계 늦은 순.</p></header>%s<div class="dbody">%s%s</div>'
             '<footer>서울시 정비사업 정보몽땅과 경기도 정비사업 종합관리시스템에서 받습니다. '
             '매달 다시 확인합니다.</footer>'
             '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->'
             '</div></body></html>'
-            % (FONTS, CSS, total, E(as_of or '—'), nav, ''.join(bands), basis))
+            % (FONTS, CSS, total, E(as_of or '—'), len(gus), nav, ''.join(bands), basis))
 
 
 def _all_sub_items(watches):
@@ -1495,7 +1508,10 @@ def ratio_ruler(watches, W=640):
         pts.append((w['target'], cur, delta))
     if not pts:
         return ''
-    LO, HI = 40.0, 70.0
+    # 눈금은 40~70 이 기본이고, 70 을 넘는 권역이 있으면 80 까지 늘린다 — 광주시(남한산성)
+    # 74.4% 를 70 에 눌러 놓으면 「끝에 있다」로 읽힌다(2026-09-04). 눈금이라 값 대조에서 뺀다
+    LO = 40.0
+    HI = 80.0 if any(v > 70 for _n, v, _d in pts) else 70.0
     X0, X1, Y = 26, W - 26, 50
 
     def px(v):
@@ -1503,7 +1519,7 @@ def ratio_ruler(watches, W=640):
         return X0 + (X1 - X0) * (v - LO) / (HI - LO)
 
     o = ['<line x1="%d" y1="%d" x2="%d" y2="%d" class="grid"/>' % (X0, Y, X1, Y)]
-    for tkv in range(40, 71, 5):
+    for tkv in range(40, int(HI) + 1, 5):
         x = px(tkv)
         o.append('<path d="M%.1f %d L%.1f %d" class="grid"/>' % (x, Y - 4, x, Y + 4))
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle" '
@@ -1512,6 +1528,10 @@ def ratio_ruler(watches, W=640):
     pts.sort(key=lambda p: p[1])
     CH = 9.0
     labels = ['%s %s' % (n, _fmt1(v)) for n, v, _d in pts]
+    # 좁은 판(모바일)에 권역이 다섯이면 「이름 값」이 한 줄에 안 든다 — 그때만 값을 떼고
+    # 이름만 둔다(값은 패널·권역 요약에 있다). 넓은 판은 그대로
+    if sum(len(l) * CH for l in labels) + 10 * (len(labels) - 1) > W - 4:
+        labels = [n for n, _v, _d in pts]
     # 한 줄에 다 놓는다(점이 셋뿐이라 위아래로 나눌 이유가 없다). 겹치면 오른쪽으로
     # 밀고, 끝에 몰려 못 밀린 것은 왼쪽으로 되민다 — time_ruler와 같은 절차다
     idx = list(range(len(pts)))
@@ -1741,7 +1761,7 @@ def subscription_now(watches, sido='서울'):
     items = [it for it in items if _sido_of(it.get('gu') or '') == sido]
     n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
     n_soon = sum(1 for it in items if _sub_status(it, today) == '접수 예정')
-    where = '서울' if sido == '서울' else '성남'
+    where = '서울' if sido == '서울' else '경기 (보고 있는 %d곳)' % len(_sido_gus('경기'))
     h = ['<p class="cond-t">지금 청약</p>',
          '<p class="cond-lead">최근 6개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
          '접수 예정 %d건</p>' % (E(where), len(items), n_open, n_soon)]
@@ -2370,6 +2390,16 @@ def _path_bbox(d):
     return min(xs), min(ys), max(xs), max(ys)
 
 
+def _shift_d(d, dx, dy):
+    """path d 의 좌표를 (dx, dy) 만큼 옮긴다 — 시·도 판의 viewBox 를 0,0 에서 시작하게
+    한다(check_fig 가 원점 0 을 전제로 넘침을 잰다). d 는 M/L 절대 좌표 쌍뿐이다"""
+    idx = [0]
+    def _one(m):
+        v = float(m.group(0)); i = idx[0]; idx[0] += 1
+        return '%.1f' % (v + (dx if i % 2 == 0 else dy))
+    return re.sub(r'-?\d+(?:\.\d+)?', _one, d)
+
+
 def _gu_svg(gu_data, gus=None, suffix=''):
     """서울 25개 구 지도. 채움은 CSS 가 data-ratio-bin 으로 고른다 — 값 자체는
     여기서 속성으로 다 박아 두고 JS 는 아무 계산도 안 한다.
@@ -2384,16 +2414,22 @@ def _gu_svg(gu_data, gus=None, suffix=''):
     # 자체는 원본(640×688.4) 그대로라 서울 판과 성남 판의 축척이 다르다 — 성남 판은
     # 글자·선을 축척만큼 줄여 서울 판과 같은 굵기로 보인다
     bx = [_path_bbox(SEOUL_GU['gu'][g]['d']) for g in gus]
-    pad = 10
+    # 여백은 라벨 반폭(네 글자 11px ≈ 44px 의 절반)보다 커야 한다 — 가장자리 구(강동·중랑)
+    # 이름이 판 밖으로 나가면 check_fig 가 「가로 넘침」으로 문다(2026-09-04)
+    pad = 32
     x0, y0 = min(b[0] for b in bx) - pad, min(b[1] for b in bx) - pad
     x1, y1 = max(b[2] for b in bx) + pad, max(b[3] for b in bx) + pad
-    vb = (x0, y0, x1 - x0, y1 - y0)
-    full_w = float(SEOUL_GU['viewBox'][2])
-    # 서울 판 폭을 1로 봤을 때 이 판이 화면에서 차지할 폭 — 성남은 축척을 2.2배까지만
-    # 키운다(세 구가 손에 잡힐 만큼) 그 이상은 화면을 빈 종이로 채운다
-    zoom = min(2.2, full_w / vb[2]) if vb[2] < full_w else 1.0
-    width_pct = min(100.0, 100.0 * vb[2] / full_w * zoom)
-    scale = (width_pct / 100.0) * full_w / vb[2]   # 화면 픽셀 대비 원본 좌표 배율
+    vb = (0.0, 0.0, x1 - x0, y1 - y0)   # 좌표를 -x0,-y0 옮겨 원점 0 에서 시작
+    # 기준은 서울 판의 폭이다 — 「서울 25구가 칸을 꽉 채울 때의 글자 11px·선 1px」이
+    # 모든 판의 기준 축척이다. 판 원본(viewBox)이 화성~광주까지 넓어져도 서울 판은 이
+    # 기준으로 그대로고, 그보다 넓은 판(경기)은 글자를 그만큼 키워 화면 크기를 맞춘다
+    sb = [_path_bbox(SEOUL_GU['gu'][g]['d']) for g in SEOUL_GU['gu']
+          if SEOUL_GU['gu'][g].get('sido', '서울') == '서울']
+    seoul_w = (max(b[2] for b in sb) - min(b[0] for b in sb)) + 2 * pad
+    # 좁은 판(성남만일 때)은 축척을 2.2배까지만 키운다 — 그 이상은 화면을 빈 종이로 채운다
+    zoom = min(2.2, seoul_w / vb[2]) if vb[2] < seoul_w else 1.0
+    width_pct = min(100.0, 100.0 * vb[2] / seoul_w * zoom)
+    scale = (width_pct / 100.0) * seoul_w / vb[2]   # 기준 축척 대비 이 판의 배율
     lbl_px = 11.0 / scale
     stroke_px = 1.0 / scale
     # 「확인 안 됨」 칸의 옅은 빗금. 지금은 0구지만 지정 공고가 PDF 로만 나와
@@ -2426,15 +2462,15 @@ def _gu_svg(gu_data, gus=None, suffix=''):
         if e['slug']:
             attrs.append('data-slug="%s"' % E(e['slug']))
         attrs.append('aria-label="%s"' % E('%s · %s' % (name, label)))
-        attrs.append('d="%s"' % g['d'])
+        attrs.append('d="%s"' % _shift_d(g['d'], -x0, -y0))
         paths.append('<path %s/>' % ' '.join(attrs))
         if name in LABEL_SKIP and not watched:
             continue
         cls = 'gu-lbl' if watched else 'gu-lbl blank'
         labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle" '
                       'font-size="%.1f">%s</text>'
-                      % (g['cx'], g['cy'], cls, lbl_px, E(name)))
-    return ('<svg class="seoul-map%s" data-layer="ratio" viewBox="%.1f %.1f %.1f %.1f" '
+                      % (g['cx'] - x0, g['cy'] - y0, cls, lbl_px, E(name)))
+    return ('<svg class="seoul-map%s" data-layer="ratio" viewBox="%d %d %.1f %.1f" '
             'style="width:%.0f%%;--gu-stroke:%.2fpx">%s%s'
             '<g class="gu-labels">%s</g></svg>'
             % (suffix and ' map%s' % suffix, vb[0], vb[1], vb[2], vb[3], width_pct,
@@ -2845,7 +2881,7 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
     panels = ''.join(_gu_panel_html(name, gu_data[name]) for name in gus) + \
              ('<div class="gu-panel" data-panel="default">%s</div>'
               % _region_summary_html(sido_ws))
-    cap = ('<p>지도 원본 southkorea/seoul-maps(서울)·southkorea/southkorea-maps(성남) · '
+    cap = ('<p>지도 원본 southkorea/seoul-maps(서울)·southkorea/southkorea-maps(경기) · '
            '값 기준 %s</p>' % E(asof))
     # 층 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라 층에서
     # 내려 배너 문장으로 갔고, 분양가상한제는 넷과 스물하나로 갈려 층이 된다.
@@ -2867,7 +2903,7 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
                            % _sub_legend_html(watches, gus))
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
     head = ('서울 25구 — 지금 전세가율이 어디쯤인가' if sido == '서울'
-            else '경기 — 성남 3구, 지금 전세가율이 어디쯤인가')
+            else '경기 — 성남·동탄·광교·평촌·남한산성, 지금 전세가율이 어디쯤인가')
     return (
         '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
@@ -3068,7 +3104,7 @@ def build():
          % (FONTS, CSS)]
     h.append('<header><div class="h-top"><h1>포트폴리오 워치</h1>'
              '<p class="meta mono">마지막 확인 %s · 자료 기준 %s</p></div>'
-             '<p class="lede">서울 세 권역과 성남, 지금 전세로 갈지 매매로 갈지 — 값을 깎을 수 '
+             '<p class="lede">서울 세 권역과 경기 다섯 곳, 지금 전세로 갈지 매매로 갈지 — 값을 깎을 수 '
              '있는 장인지, 제도가 셈을 바꿨는지.</p></header>' % (E(checked), E(asof)))
     # 절 바로가기 — header 밖에 둔다. sticky 는 제 부모 상자 안에서만 붙어서, header 안에
     # 넣으면 header 가 화면 위로 지나가는 순간 같이 사라진다(실제로 그렇게 나갔다). — 앵커다. 저장소 규칙(관문 버튼 금지)은 내용을 가리는 버튼을

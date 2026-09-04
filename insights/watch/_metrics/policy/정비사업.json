@@ -1,0 +1,4058 @@
+{
+ "law_도시및주거환경정비법": {
+  "value": "2026-07-01",
+  "as_of": "2026-07-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 도시 및 주거환경정비법 · 타법개정",
+  "area": "도시 및 주거환경정비법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "284065"
+ },
+ "law_주택법": {
+  "value": "2026-08-04",
+  "as_of": "2026-08-04",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 주택법 · 일부개정",
+  "area": "주택법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "283191"
+ },
+ "law_빈집및소규모주택정비에관한특례법": {
+  "value": "2026-07-01",
+  "as_of": "2026-07-01",
+  "kind": "공표",
+  "unit": "시행일",
+  "src": "국가법령정보센터 law · 빈집 및 소규모주택 정비에 관한 특례법 · 타법개정",
+  "area": "빈집 및 소규모주택 정비에 관한 특례법",
+  "level": "law",
+  "series": [],
+  "partial": false,
+  "law_target": "law",
+  "law_id": "284083"
+ },
+ "rebuild_gu": {
+  "value": 442,
+  "unit": "건",
+  "as_of": "2026-09-04",
+  "src": "https://cleanup.seoul.go.kr/cleanup/bsnssttus/lscrMainIndx.do;https://www.gg.go.kr/onnuri/view.do?no=109",
+  "level": "public",
+  "by_gu": {
+   "강남구": [
+    {
+     "id": "gaepo3",
+     "name": "개포주공3단지아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "개포동 138",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepo3"
+    },
+    {
+     "id": "gaepo22",
+     "name": "개포주공2단지 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "개포동 140",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepo22"
+    },
+    {
+     "id": "gaepo2",
+     "name": "개포주공2단지 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "개포동 140",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepo2"
+    },
+    {
+     "id": "gaepo6_7",
+     "name": "개포주공6,7단지아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "개포동 185",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepo6_7"
+    },
+    {
+     "id": "gaepo5",
+     "name": "개포주공5단지아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "개포동 187",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepo5"
+    },
+    {
+     "id": "gaepofour",
+     "name": "개포주공4단지아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "개포동 189",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepofour"
+    },
+    {
+     "id": "ruddngus",
+     "name": "개포 경남·우성3차·현대1차 통합 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "개포동 649",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ruddngus"
+    },
+    {
+     "id": "gaepohd2",
+     "name": "개포현대2차아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "개포동 654",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepohd2"
+    },
+    {
+     "id": "hd200220",
+     "name": "개포현대2차아파트 200동,220동 소규모재건축사업조합",
+     "type": "소규모재건축",
+     "stage": "조합설립인가",
+     "addr": "개포동 655",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hd200220"
+    },
+    {
+     "id": "K0HnsE0P",
+     "name": "개포시영(아) 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "개포동 656",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=K0HnsE0P"
+    },
+    {
+     "id": "gaepoS",
+     "name": "개포시영아파트 중심상가 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "개포동 656-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepoS"
+    },
+    {
+     "id": "wooseong6",
+     "name": "개포우성6차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "개포동 658-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wooseong6"
+    },
+    {
+     "id": "kvNK2YB3",
+     "name": "개포1동주공아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "개포동 660-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kvNK2YB3"
+    },
+    {
+     "id": "cheonghak",
+     "name": "논현청학아파트재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "논현동 62-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cheonghak"
+    },
+    {
+     "id": "DonghyunApt",
+     "name": "논현동현아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "논현동 105",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=DonghyunApt"
+    },
+    {
+     "id": "nonhyun",
+     "name": "대성연립주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "논현동 191-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=nonhyun"
+    },
+    {
+     "id": "woosung1",
+     "name": "대치우성1차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "대치동 63",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=woosung1"
+    },
+    {
+     "id": "ssang2",
+     "name": "대치쌍용2차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "대치동 65",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ssang2"
+    },
+    {
+     "id": "ssang1",
+     "name": "대치쌍용1차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "대치동 66",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ssang1"
+    },
+    {
+     "id": "the-eunma",
+     "name": "은마아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "대치동 316",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=the-eunma"
+    },
+    {
+     "id": "gaepowoosung",
+     "name": "개포우성1,2차아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "정비계획 수립",
+     "addr": "대치동 503",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepowoosung"
+    },
+    {
+     "id": "tjsrud12",
+     "name": "대치선경아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "대치동 506",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=tjsrud12"
+    },
+    {
+     "id": "mido511",
+     "name": "대치미도아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "대치동 511",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mido511"
+    },
+    {
+     "id": "A768OvYc",
+     "name": "대치동구마을1지구재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "대치동 963",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=A768OvYc"
+    },
+    {
+     "id": "urban9",
+     "name": "대치동 구마을 제3지구 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "대치동 964",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=urban9"
+    },
+    {
+     "id": "daech2",
+     "name": "대치제2지구 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "대치동 977",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=daech2"
+    },
+    {
+     "id": "cCsUmJjP",
+     "name": "도곡개포한신아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "도곡동 464",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cCsUmJjP"
+    },
+    {
+     "id": "gaepowoosung4",
+     "name": "개포우성4차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "도곡동 465",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaepowoosung4"
+    },
+    {
+     "id": "dogoksamho",
+     "name": "도곡삼호아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "도곡동 540",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dogoksamho"
+    },
+    {
+     "id": "samik869",
+     "name": "도곡삼익아파트 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "도곡동 869",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samik869"
+    },
+    {
+     "id": "dogokwoosung",
+     "name": "도곡우성아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "도곡동 934-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dogokwoosung"
+    },
+    {
+     "id": "PJ9HOVHL",
+     "name": "상아아파트2차 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "삼성동 19-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=PJ9HOVHL"
+    },
+    {
+     "id": "hongsilapt",
+     "name": "홍실아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "삼성동 79",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hongsilapt"
+    },
+    {
+     "id": "apgujeong3",
+     "name": "압구정아파트지구 특별계획구역③ 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "압구정동 369-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=apgujeong3"
+    },
+    {
+     "id": "apgujeong1",
+     "name": "압구정아파트지구 특별계획구역① 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "압구정동 414",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=apgujeong1"
+    },
+    {
+     "id": "apgujeong2",
+     "name": "압구정아파트지구 특별계획구역② 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "압구정동 434",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=apgujeong2"
+    },
+    {
+     "id": "apgujeong4",
+     "name": "압구정아파트지구 특별계획구역4",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "압구정동 481",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=apgujeong4"
+    },
+    {
+     "id": "apgujeong5",
+     "name": "압구정아파트지구 특별계획구역5 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "압구정동 490",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=apgujeong5"
+    },
+    {
+     "id": "hanyang7",
+     "name": "압구정한양7차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "압구정동 528",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hanyang7"
+    },
+    {
+     "id": "gaenari6",
+     "name": "개나리6차(아) 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "역삼동 711-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gaenari6"
+    },
+    {
+     "id": "ijm7459",
+     "name": "개나리4차아파트주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "역삼동 712",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ijm7459"
+    },
+    {
+     "id": "ysdong758",
+     "name": "역삼동(758,은하수,760) 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "분양",
+     "addr": "역삼동 758",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ysdong758"
+    },
+    {
+     "id": "wooseong7",
+     "name": "개포우성7차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "일원동 615",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wooseong7"
+    },
+    {
+     "id": "ilwongaepohs",
+     "name": "일원개포한신아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "일원동 615-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ilwongaepohs"
+    },
+    {
+     "id": "hansolapt",
+     "name": "한솔아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "일원동 731",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hansolapt"
+    },
+    {
+     "id": "sangapt",
+     "name": "상록수아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "일원동 734",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sangapt"
+    },
+    {
+     "id": "garamapt",
+     "name": "가람아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "일원동 735",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=garamapt"
+    },
+    {
+     "id": "cheongdam",
+     "name": "청담삼익아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "청담동 134-18",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cheongdam"
+    },
+    {
+     "id": "dam877",
+     "name": "청담현대1차아파트 소규모재건축정비사업",
+     "type": "소규모재건축",
+     "stage": "조합설립인가",
+     "addr": "청담동 75-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dam877"
+    }
+   ],
+   "서초구": [
+    {
+     "id": "shinbanpo3",
+     "name": "신반포3차,경남 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "반포동 1-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo3"
+    },
+    {
+     "id": "banpokyeoungnam",
+     "name": "반포경남아파트 주택재건축 정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "반포동 1-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpokyeoungnam"
+    },
+    {
+     "id": "sbanpo1",
+     "name": "신반포1차아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "반포동 2-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sbanpo1"
+    },
+    {
+     "id": "sinbanpo15",
+     "name": "신반포15차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "반포동 12",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo15"
+    },
+    {
+     "id": "samho5",
+     "name": "삼호가든5차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "반포동 30-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samho5"
+    },
+    {
+     "id": "banpohyundai",
+     "name": "반포현대아파트주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "반포동 30-15",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpohyundai"
+    },
+    {
+     "id": "samho4",
+     "name": "삼호가든4차아파트 주택재건축 정비사업",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "반포동 30-18",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samho4"
+    },
+    {
+     "id": "seochohanyang",
+     "name": "서초한양아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "반포동 32-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seochohanyang"
+    },
+    {
+     "id": "samho3",
+     "name": "삼호가든맨션3차 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "반포동 32-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samho3"
+    },
+    {
+     "id": "banpomv",
+     "name": "반포동엠브이아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "반포동 46",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpomv"
+    },
+    {
+     "id": "banpomido1",
+     "name": "반포미도1차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "반포동 60-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpomido1"
+    },
+    {
+     "id": "banpomido2",
+     "name": "반포미도2차아파트 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "반포동 60-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpomido2"
+    },
+    {
+     "id": "shinbanpogungjun",
+     "name": "신반포궁전아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "반포동 65-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpogungjun"
+    },
+    {
+     "id": "hyosung",
+     "name": "강남원효성빌라 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "반포동 591-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hyosung"
+    },
+    {
+     "id": "banpo3",
+     "name": "반포아파트(제3주구) 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "반포동 1053",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpo3"
+    },
+    {
+     "id": "banpojk",
+     "name": "반포주공1단지(1,2,4주구) 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "반포동 810",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpojk"
+    },
+    {
+     "id": "cleanup43-9",
+     "name": "방배15 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "방배동 528-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cleanup43-9"
+    },
+    {
+     "id": "bangbae13",
+     "name": "방배13구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "철거",
+     "addr": "방배동 541-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae13"
+    },
+    {
+     "id": "bangwoo3",
+     "name": "방배대우가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "방배동 562-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangwoo3"
+    },
+    {
+     "id": "sinseong",
+     "name": "신성빌라 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "방배동 593-98",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinseong"
+    },
+    {
+     "id": "bangbaesinsamho",
+     "name": "방배신삼호아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "방배동 725",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbaesinsamho"
+    },
+    {
+     "id": "bangbae-samho",
+     "name": "방배삼호아파트 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "방배동 758-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae-samho"
+    },
+    {
+     "id": "bangbae6",
+     "name": "방배6구역 주택재건축 정비사업 조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "방배동 818-14",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae6"
+    },
+    {
+     "id": "naebang",
+     "name": "내방세권역활성화사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "방배동 872-11",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=naebang"
+    },
+    {
+     "id": "bangbae7",
+     "name": "방배7구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "방배동 891-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae7"
+    },
+    {
+     "id": "bangbae5",
+     "name": "방배5구역주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "방배동 946-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae5"
+    },
+    {
+     "id": "bangbae14",
+     "name": "방배14구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "철거",
+     "addr": "방배동 975-35",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae14"
+    },
+    {
+     "id": "bb98057",
+     "name": "방배동 도구머리공원 방배빌라 등 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "방배동 980-36",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bb98057"
+    },
+    {
+     "id": "shindongaapt",
+     "name": "방배신동아아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "방배동 988-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shindongaapt"
+    },
+    {
+     "id": "bangbae3",
+     "name": "방배3구역주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "방배동 992-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbae3"
+    },
+    {
+     "id": "seochojh2",
+     "name": "서초중앙하이츠2구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "방배동 1000-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seochojh2"
+    },
+    {
+     "id": "seochojh1",
+     "name": "서초중앙하이츠1구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "방배동 1000-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seochojh1"
+    },
+    {
+     "id": "imgwang3",
+     "name": "임광3차아파트 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "방배동 1010-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=imgwang3"
+    },
+    {
+     "id": "bangbaesamick",
+     "name": "방배삼익아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "분양",
+     "addr": "방배동 1018-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bangbaesamick"
+    },
+    {
+     "id": "seoch8",
+     "name": "방배경남아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "방배동 1028-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seoch8"
+    },
+    {
+     "id": "dwhr1038",
+     "name": "방배대우효령아파트 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "방배동 1038",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dwhr1038"
+    },
+    {
+     "id": "OI4yD42v",
+     "name": "서초삼호1차아파트 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "서초동 1310",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=OI4yD42v"
+    },
+    {
+     "id": "edqat05F",
+     "name": "서초진흥아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "서초동 1315",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=edqat05F"
+    },
+    {
+     "id": "wooseongtwo",
+     "name": "우성2차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "서초동 1331",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wooseongtwo"
+    },
+    {
+     "id": "wooseongthree",
+     "name": "우성3차 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "서초동 1332-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wooseongthree"
+    },
+    {
+     "id": "seochosindonga",
+     "name": "서초신동아아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "분양",
+     "addr": "서초동 1334",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seochosindonga"
+    },
+    {
+     "id": "seochorainbow",
+     "name": "서초무지개아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "서초동 1335",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seochorainbow"
+    },
+    {
+     "id": "wooseongone",
+     "name": "서초우성1차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "서초동 1336",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wooseongone"
+    },
+    {
+     "id": "samsunghomestay",
+     "name": "삼성홈스테이 지역주택조합",
+     "type": "지역주택",
+     "stage": "",
+     "addr": "서초동 1478-12",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samsunghomestay"
+    },
+    {
+     "id": "namyang",
+     "name": "남양연립주택재건축정비사업조합",
+     "type": "가로주택정비",
+     "stage": "이전고시",
+     "addr": "서초동 1611-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=namyang"
+    },
+    {
+     "id": "garoyangjae",
+     "name": "한신양재 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "양재동 18-12",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=garoyangjae"
+    },
+    {
+     "id": "phgaro",
+     "name": "양재동 풍림, 현대빌라 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "양재동 18-18",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=phgaro"
+    },
+    {
+     "id": "wmhalla",
+     "name": "우면한라아파트 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "우면동 67",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wmhalla"
+    },
+    {
+     "id": "sinbanpo18cha337",
+     "name": "신반포18차 337동 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "잠원동 49-17",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo18cha337"
+    },
+    {
+     "id": "sinbanpo12",
+     "name": "신반포12차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "잠원동 50-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo12"
+    },
+    {
+     "id": "hanshin18",
+     "name": "신반포18차24차 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "잠원동 52",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hanshin18"
+    },
+    {
+     "id": "shinbanpo13",
+     "name": "신반포13차 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "잠원동 52-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo13"
+    },
+    {
+     "id": "mijuremo2020",
+     "name": "미주파스텔아아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "잠원동 54",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mijuremo2020"
+    },
+    {
+     "id": "sbanpo16",
+     "name": "신반포16차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "잠원동 55-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sbanpo16"
+    },
+    {
+     "id": "sinbanpo27",
+     "name": "신반포27차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "잠원동 56-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo27"
+    },
+    {
+     "id": "jwdaelim",
+     "name": "잠원동 대림아파트 주택재건축 정비사업 조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "잠원동 57",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jwdaelim"
+    },
+    {
+     "id": "sinbanpo21",
+     "name": "신반포21차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "잠원동 59-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo21"
+    },
+    {
+     "id": "hs4apt",
+     "name": "신반포4지구 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "잠원동 60-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hs4apt"
+    },
+    {
+     "id": "sinbanpo20",
+     "name": "신반포20차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠원동 60-78",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo20"
+    },
+    {
+     "id": "sinbanpo25",
+     "name": "신반포25차아파트주택재건축정비사업조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "잠원동 61-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo25"
+    },
+    {
+     "id": "shinbanpo19",
+     "name": "신반포19차 25차(아) 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠원동 61-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo19"
+    },
+    {
+     "id": "W8N045i7",
+     "name": "신반포5차아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "잠원동 64-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=W8N045i7"
+    },
+    {
+     "id": "shinbanpo7",
+     "name": "신반포7차아파트주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠원동 65-32",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo7"
+    },
+    {
+     "id": "shinbanpo22",
+     "name": "신반포22차아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "잠원동 65-33",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo22"
+    },
+    {
+     "id": "PJ82der7",
+     "name": "반포한양아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "잠원동 66",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=PJ82der7"
+    },
+    {
+     "id": "sinbanpo4",
+     "name": "신반포4차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠원동 70",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo4"
+    },
+    {
+     "id": "sinbanpo2",
+     "name": "신반포2차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠원동 73",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinbanpo2"
+    },
+    {
+     "id": "banpowooseong",
+     "name": "반포우성아파트 재건축 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "잠원동 74-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banpowooseong"
+    },
+    {
+     "id": "XchC064Q",
+     "name": "신반포6차아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "잠원동 74-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=XchC064Q"
+    },
+    {
+     "id": "shinbanpo14",
+     "name": "신반포14차 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "잠원동 74",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinbanpo14"
+    }
+   ],
+   "송파구": [
+    {
+     "id": "grhd6ch",
+     "name": "가락현대6차아파트 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "가락동 55",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=grhd6ch"
+    },
+    {
+     "id": "woosung01",
+     "name": "가락우성1차아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "가락동 96-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=woosung01"
+    },
+    {
+     "id": "garakmirung",
+     "name": "가락미륭아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "가락동 138",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=garakmirung"
+    },
+    {
+     "id": "grss1rm",
+     "name": "가락쌍용1차아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "안전진단(1차)",
+     "addr": "가락동 140",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=grss1rm"
+    },
+    {
+     "id": "grh5apt",
+     "name": "가락현대5차아파트 소규모재건축정비사업조합",
+     "type": "소규모재건축",
+     "stage": "준공인가",
+     "addr": "가락동 161-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=grh5apt"
+    },
+    {
+     "id": "samhwan",
+     "name": "삼환가락아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "가락동 176",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samhwan"
+    },
+    {
+     "id": "garakgd",
+     "name": "가락극동아파트 재건축사업 조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "가락동 192",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=garakgd"
+    },
+    {
+     "id": "gpapt199",
+     "name": "가락프라자아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "가락동 199",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gpapt199"
+    },
+    {
+     "id": "hCmUm22k",
+     "name": "가락시영아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "가락동 479",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hCmUm22k"
+    },
+    {
+     "id": "rjduvkzmcnwlsdnl",
+     "name": "(가칭)거여파크 지역주택조합 추진위원회",
+     "type": "지역주택",
+     "stage": "지구단위계획수립/건축심의/교통심의",
+     "addr": "거여동 6",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=rjduvkzmcnwlsdnl"
+    },
+    {
+     "id": "rjdudur2wldur",
+     "name": "거여역2 지역주택조합",
+     "type": "지역주택",
+     "stage": "",
+     "addr": "거여동 173-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=rjdudur2wldur"
+    },
+    {
+     "id": "geoyeo21",
+     "name": "거여2재정비촉진구역 1지구 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "거여동 181",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=geoyeo21"
+    },
+    {
+     "id": "geoyeo2",
+     "name": "거여2재정비촉진구역제2지구 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "거여동 234",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=geoyeo2"
+    },
+    {
+     "id": "geoyeo5",
+     "name": "거여5단지아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "거여동 294",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=geoyeo5"
+    },
+    {
+     "id": "geoyeosae",
+     "name": "거여새마을구역(LH)",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "거여동 549",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=geoyeosae"
+    },
+    {
+     "id": "machun2",
+     "name": "마천2재정비촉진구역 주택재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "마천동 183-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=machun2"
+    },
+    {
+     "id": "macheon-1",
+     "name": "마천1재정비촉진구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "마천동 194-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=macheon-1"
+    },
+    {
+     "id": "macheon3",
+     "name": "마천3재정비촉진구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "마천동 283",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=macheon3"
+    },
+    {
+     "id": "akcjs4",
+     "name": "마천4재정비촉진구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "마천동 323",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=akcjs4"
+    },
+    {
+     "id": "machun5",
+     "name": "마천5재정비촉진구역 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "마천동 45",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=machun5"
+    },
+    {
+     "id": "hyundai",
+     "name": "가락1차현대아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "문정동 3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hyundai"
+    },
+    {
+     "id": "kylm2020",
+     "name": "문정건영아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "도시계획심의",
+     "addr": "문정동 72-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kylm2020"
+    },
+    {
+     "id": "moonsarang136",
+     "name": "문정동 136번지일대 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "문정동 136",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=moonsarang136"
+    },
+    {
+     "id": "siyoung-apt",
+     "name": "문정시영아파트 리모델링 주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "문정동 145",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=siyoung-apt"
+    },
+    {
+     "id": "OlympicFamilyTown",
+     "name": "올림픽훼밀리타운 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "문정동 150",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=OlympicFamilyTown"
+    },
+    {
+     "id": "olympicapt",
+     "name": "올림픽선수기자촌아파트 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "방이동 89",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=olympicapt"
+    },
+    {
+     "id": "daelim",
+     "name": "대림가락아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "방이동 217",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=daelim"
+    },
+    {
+     "id": "hanyang3",
+     "name": "한양3차아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "방이동 225",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hanyang3"
+    },
+    {
+     "id": "tjrchsdur",
+     "name": "(가칭)석촌역지역주택조합",
+     "type": "지역주택",
+     "stage": "조합원 모집신고",
+     "addr": "석촌동 287",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=tjrchsdur"
+    },
+    {
+     "id": "thdvkdur",
+     "name": "(가칭)송파역지역주택조합",
+     "type": "지역주택",
+     "stage": "",
+     "addr": "송파동 100",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=thdvkdur"
+    },
+    {
+     "id": "songpa100",
+     "name": "송파동 100번지 일대 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "송파동 100",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=songpa100"
+    },
+    {
+     "id": "hanyang01",
+     "name": "한양1차아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "송파동 119",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hanyang01"
+    },
+    {
+     "id": "songpa2",
+     "name": "송파한양2차아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "송파동 151",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=songpa2"
+    },
+    {
+     "id": "songpams",
+     "name": "송파미성아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "송파동 161",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=songpams"
+    },
+    {
+     "id": "grsamik",
+     "name": "가락삼익맨숀아파트 재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "송파동 166",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=grsamik"
+    },
+    {
+     "id": "J5qnq21Z",
+     "name": "반도아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "송파동 167",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=J5qnq21Z"
+    },
+    {
+     "id": "jmapt1",
+     "name": "장미1,2,3차아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "신천동 7",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jmapt1"
+    },
+    {
+     "id": "jsmsapt",
+     "name": "잠실미성·크로바아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "신천동 17-6",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jsmsapt"
+    },
+    {
+     "id": "jjapt16",
+     "name": "잠실진주아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "신천동 20-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jjapt16"
+    },
+    {
+     "id": "ogeum35-1",
+     "name": "오금동35-1번지일대 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "오금동 35-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ogeum35-1"
+    },
+    {
+     "id": "dhrmadur",
+     "name": "(가칭)오금역 지역주택조합",
+     "type": "지역주택",
+     "stage": "조합원 모집신고",
+     "addr": "오금동 36-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dhrmadur"
+    },
+    {
+     "id": "ogeumhyundai",
+     "name": "오금현대아파트 주택재건축정비사업구역",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "오금동 43",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ogeumhyundai"
+    },
+    {
+     "id": "newanam",
+     "name": "오금아남아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "오금동 67-7",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=newanam"
+    },
+    {
+     "id": "ogd143",
+     "name": "오금동143번지일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "관리처분인가",
+     "addr": "오금동 143-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ogd143"
+    },
+    {
+     "id": "ogum147",
+     "name": "오금동147번지일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "관리처분인가",
+     "addr": "오금동 147",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ogum147"
+    },
+    {
+     "id": "woochang",
+     "name": "가락우창아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "오금동 164",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=woochang"
+    },
+    {
+     "id": "sanga1cha",
+     "name": "가락상아1차아파트 재건축사업 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "오금동 166",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanga1cha"
+    },
+    {
+     "id": "jamsil5apt",
+     "name": "잠실5단지아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "잠실동 27",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jamsil5apt"
+    },
+    {
+     "id": "Q1qk5nF6",
+     "name": "잠실우성아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "잠실동 101-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Q1qk5nF6"
+    },
+    {
+     "id": "Tw2w7Iwv",
+     "name": "잠실우성4차 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "잠실동 320",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Tw2w7Iwv"
+    },
+    {
+     "id": "youcheonjohap",
+     "name": "유천연립 소규모재건축정비사업조합",
+     "type": "소규모재건축",
+     "stage": "조합설립인가",
+     "addr": "풍납동 147-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=youcheonjohap"
+    },
+    {
+     "id": "pungnapms",
+     "name": "풍납미성아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "풍납동 219",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=pungnapms"
+    },
+    {
+     "id": "riverhyundai",
+     "name": "강변현대아파트 리모델링사업조합",
+     "type": "리모델링",
+     "stage": "조합설립인가",
+     "addr": "풍납동 299-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=riverhyundai"
+    },
+    {
+     "id": "riverhd",
+     "name": "풍납강변현대아파트 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "풍납동 299-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=riverhd"
+    },
+    {
+     "id": "kd0391",
+     "name": "풍납극동아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "풍납동 391",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kd0391"
+    },
+    {
+     "id": "Od1JsPE7",
+     "name": "이화연립 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "풍납동 153",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Od1JsPE7"
+    }
+   ],
+   "마포구": [
+    {
+     "id": "gongdeok",
+     "name": "공덕8구역 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "공덕동 11-24",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gongdeok"
+    },
+    {
+     "id": "lpeorY03",
+     "name": "공덕1구역 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "공덕동 105-84",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=lpeorY03"
+    },
+    {
+     "id": "rhdejr18",
+     "name": "공덕7구역 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "공덕동 115-97",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=rhdejr18"
+    },
+    {
+     "id": "asHM6pbN",
+     "name": "공덕6구역 주택재개발 정비사업",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "공덕동 119",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=asHM6pbN"
+    },
+    {
+     "id": "gdapt1028",
+     "name": "공덕현대아파트 소규모재건축정비사업 조합",
+     "type": "소규모재건축",
+     "stage": "사업시행인가",
+     "addr": "공덕동 370-9",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gdapt1028"
+    },
+    {
+     "id": "ghc-gusu",
+     "name": "광흥창역세권(구수동) 도시정비형 재개발구역",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "구수동 16-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ghc-gusu"
+    },
+    {
+     "id": "dohwaws",
+     "name": "도화우성아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "정비계획 수립",
+     "addr": "도화동 82",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dohwaws"
+    },
+    {
+     "id": "mapo5street",
+     "name": "마포로1구역 제5지구 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "도화동 544",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mapo5street"
+    },
+    {
+     "id": "mapo123",
+     "name": "마포로1구역 제10지구 도시정비형 재개발사업 조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "도화동 536",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mapo123"
+    },
+    {
+     "id": "mapo125",
+     "name": "마포로1구역 제25지구 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "마포동 136-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mapo125"
+    },
+    {
+     "id": "mapo123ghc",
+     "name": "마포로1구역 제23지구 도시정비형 재개발사업 조합",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "마포동 350",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mapo123ghc"
+    },
+    {
+     "id": "mangwon41653",
+     "name": "망원동 신속통합기획 후보지",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "망원동 416-53",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mangwon41653"
+    },
+    {
+     "id": "mwd438",
+     "name": "망원동438주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "망원동 438-46",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mwd438"
+    },
+    {
+     "id": "mangwon454-3",
+     "name": "망원동 454-3 가로주택정비사업(신탁사업시행자방식)",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "망원동 454-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mangwon454-3"
+    },
+    {
+     "id": "mangwon456",
+     "name": "망원동 456번지 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "망원동 456-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mangwon456"
+    },
+    {
+     "id": "CjN70HC9",
+     "name": "망원1 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "망원동 458-16",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=CjN70HC9"
+    },
+    {
+     "id": "mangwon459",
+     "name": "망원동 459번지 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "망원동 459-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mangwon459"
+    },
+    {
+     "id": "mangwon464",
+     "name": "망원동 464-1번지 일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "망원동 464-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mangwon464"
+    },
+    {
+     "id": "sangsu",
+     "name": "(가칭)상수역지역주택조합 추진위원회",
+     "type": "지역주택",
+     "stage": "조합원 모집신고",
+     "addr": "상수동 334-11",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sangsu"
+    },
+    {
+     "id": "sungsangaro165",
+     "name": "성산동 165-72일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "성산동 165-72",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sungsangaro165"
+    },
+    {
+     "id": "seongsan4",
+     "name": "성산동200에서258번지일대 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "성산동 200-258",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsan4"
+    },
+    {
+     "id": "seongsanmoa3",
+     "name": "성산동 200-323일대 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "성산동 200-323",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsanmoa3"
+    },
+    {
+     "id": "seongsansy",
+     "name": "성산시영아파트 재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "성산동 446",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsansy"
+    },
+    {
+     "id": "shingd2019",
+     "name": "신공덕지역주택조합",
+     "type": "지역주택",
+     "stage": "조합규약작성",
+     "addr": "신공덕동 6-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shingd2019"
+    },
+    {
+     "id": "musoemak",
+     "name": "신수동무쇠막 지역주택조합",
+     "type": "지역주택",
+     "stage": "철거 및 착공",
+     "addr": "신수동 91-90",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=musoemak"
+    },
+    {
+     "id": "musoemak2",
+     "name": "무쇠막2 지역주택조합",
+     "type": "지역주택",
+     "stage": "",
+     "addr": "신수동 91-318",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=musoemak2"
+    },
+    {
+     "id": "pcPSfIGJ",
+     "name": "신수1 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "신수동 93-102",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=pcPSfIGJ"
+    },
+    {
+     "id": "sinsudong",
+     "name": "신수동 250번지 일대(신수13구역) 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "신수동 250",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinsudong"
+    },
+    {
+     "id": "shinsu",
+     "name": "광흥창역세권(신수동 301-1일원) 장기전세주택 도시정비형 재개발구역",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "신수동 301-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinsu"
+    },
+    {
+     "id": "sinsoo2",
+     "name": "신수2구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "신수동 225-7",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinsoo2"
+    },
+    {
+     "id": "ahhyun5",
+     "name": "아현동 331-29번지 일대 신속통합기획 후보지",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "아현동 331-29",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ahhyun5"
+    },
+    {
+     "id": "WMrak31u",
+     "name": "아현3구역 주택재개발정비사업 조합(뉴타운)",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "아현동 635",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=WMrak31u"
+    },
+    {
+     "id": "j4FcY6Pn",
+     "name": "아현2구역 주택재건축정비사업 조합(뉴타운)",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "아현동 662",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=j4FcY6Pn"
+    },
+    {
+     "id": "mapo33",
+     "name": "마포로3구역제3지구 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "착공",
+     "addr": "아현동 613-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mapo33"
+    },
+    {
+     "id": "ig316600",
+     "name": "이조빌라가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "연남동 366-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ig316600"
+    },
+    {
+     "id": "V6k6jhHf",
+     "name": "염리2구역 주택재개발정비사업 조합(뉴타운)",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "염리동 45",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=V6k6jhHf"
+    },
+    {
+     "id": "pcU7QaMA",
+     "name": "염리5구역 주택재개발 조합설립추진위원회(뉴타운)",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "염리동 105",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=pcU7QaMA"
+    },
+    {
+     "id": "haud1234",
+     "name": "염리동 488-14번지 일대 주택정비형 재개발사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "염리동 488-14",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=haud1234"
+    },
+    {
+     "id": "Lcu8f9Vh",
+     "name": "염리제3구역주택재개발정비사업조합(뉴타운)",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "염리동 507",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Lcu8f9Vh"
+    },
+    {
+     "id": "jdhouse78",
+     "name": "중동78번지일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "중동 78",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jdhouse78"
+    },
+    {
+     "id": "changjeon46",
+     "name": "창전동 46-1번지 일대 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "창전동 46-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=changjeon46"
+    },
+    {
+     "id": "Hk4Ax4M0",
+     "name": "창전1구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "창전동 27-19",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Hk4Ax4M0"
+    },
+    {
+     "id": "i3Z61W5D",
+     "name": "서강주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "준공인가",
+     "addr": "하중동 18-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=i3Z61W5D"
+    },
+    {
+     "id": "Hapjeong",
+     "name": "합정역세권 도시정비형 재개발구역",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "합정동 376-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Hapjeong"
+    },
+    {
+     "id": "hapjeong447",
+     "name": "합정동 447일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "합정동 447-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hapjeong447"
+    },
+    {
+     "id": "rhkdgmdckd3",
+     "name": "광흥창역세권(현석동) 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "현석동 1-31",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=rhkdgmdckd3"
+    }
+   ],
+   "용산구": [
+    {
+     "id": "SookDae-station",
+     "name": "숙대입구역세권 장기전세주택 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "갈월동 52-6",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=SookDae-station"
+    },
+    {
+     "id": "namyeong2",
+     "name": "남영동 업무지구 제2구역 도시정비형 재개발사업 조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "갈월동 92",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=namyeong2"
+    },
+    {
+     "id": "ob2n757B",
+     "name": "한남5재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "동빙고동 60",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ob2n757B"
+    },
+    {
+     "id": "dongja4",
+     "name": "동자동 제4구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "동자동 36-17",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dongja4"
+    },
+    {
+     "id": "hannam4",
+     "name": "한남4재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "보광동 360",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hannam4"
+    },
+    {
+     "id": "iw14v164",
+     "name": "한남2재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "보광동 272-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=iw14v164"
+    },
+    {
+     "id": "seogye33",
+     "name": "서계 통합구역 주택정비형재개발 사업(신속통합기획)",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "서계동 33-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seogye33"
+    },
+    {
+     "id": "seogye116",
+     "name": "서계동116번지 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "서계동 116",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seogye116"
+    },
+    {
+     "id": "sindonga85",
+     "name": "신동아아파트재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "서빙고동 241-21",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sindonga85"
+    },
+    {
+     "id": "hkhkhk",
+     "name": "신창동 76-1번지 일대 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "신창동 76-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hkhkhk"
+    },
+    {
+     "id": "Wonhyoro1-station",
+     "name": "원효로1가 역세권 장기전세주택 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "원효로1가 82-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Wonhyoro1-station"
+    },
+    {
+     "id": "wonhyoro4ga",
+     "name": "원효로4가 30-1 일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "원효로4가 30-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wonhyoro4ga"
+    },
+    {
+     "id": "pjapt2022",
+     "name": "풍전아파트소규모재건축정비사업조합",
+     "type": "소규모재건축",
+     "stage": "조합설립인가",
+     "addr": "원효로4가 109-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=pjapt2022"
+    },
+    {
+     "id": "sanhoAPT",
+     "name": "산호아파트 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "원효로4가 118-16",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanhoAPT"
+    },
+    {
+     "id": "gangbyeongangseo",
+     "name": "강변강서아파트 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "이촌동 193-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbyeongangseo"
+    },
+    {
+     "id": "ichondong1",
+     "name": "이촌동제1구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "이촌동 203-75",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ichondong1"
+    },
+    {
+     "id": "joongsan-apt",
+     "name": "중산아파트 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "이촌동 211-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=joongsan-apt"
+    },
+    {
+     "id": "jumbapt",
+     "name": "점보아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "",
+     "addr": "이촌동 300-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jumbapt"
+    },
+    {
+     "id": "VDv18hVZ",
+     "name": "왕궁아파트 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "이촌동 300-11",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=VDv18hVZ"
+    },
+    {
+     "id": "x16mPjJ3",
+     "name": "한강맨션아파트 주택재건축 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "이촌동 300-23",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=x16mPjJ3"
+    },
+    {
+     "id": "P2osCmVQ",
+     "name": "한강삼익아파트 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "이촌동 300-301",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=P2osCmVQ"
+    },
+    {
+     "id": "mjbr50",
+     "name": "미주아파트비동 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "안전진단(1차)",
+     "addr": "이촌동 302-48",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mjbr50"
+    },
+    {
+     "id": "gangchon1001",
+     "name": "강촌아파트 리모델링주택조합",
+     "type": "리모델링",
+     "stage": "사업계획승인(리모델링 허가)",
+     "addr": "이촌동 402",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangchon1001"
+    },
+    {
+     "id": "ku3JHxDr",
+     "name": "청화아파트주택재건축정비사업조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "이태원동 22-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ku3JHxDr"
+    },
+    {
+     "id": "cheongpa-station",
+     "name": "서울역세권(청파동1가 46번지 일대) 도시정비형 재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "청파동1가 46",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cheongpa-station"
+    },
+    {
+     "id": "cheongpa2",
+     "name": "청파2구역 주택정비형 재개발사업 정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "청파동1가 89-18",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cheongpa2"
+    },
+    {
+     "id": "cp1apt",
+     "name": "청파제1구역 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "청파동2가 11-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cp1apt"
+    },
+    {
+     "id": "han158",
+     "name": "한강로구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "한강로1가 158",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=han158"
+    },
+    {
+     "id": "samgak-mansion",
+     "name": "한강로1가 도시정비형 재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "한강로1가 231-30",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samgak-mansion"
+    },
+    {
+     "id": "sinyongsan1",
+     "name": "신용산역북측 제1구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "한강로2가 2-116",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinyongsan1"
+    },
+    {
+     "id": "sinyongsan2",
+     "name": "신용산역북측제2구역 도시정비형재개발정비사업조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "한강로2가 2-138",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sinyongsan2"
+    },
+    {
+     "id": "youngsan5",
+     "name": "국제빌딩주변 제5구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "준공인가",
+     "addr": "한강로2가 210-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=youngsan5"
+    },
+    {
+     "id": "x690Lg50",
+     "name": "용산역전면 제3구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "한강로2가 342",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=x690Lg50"
+    },
+    {
+     "id": "jbcfront3",
+     "name": "정비창전면 제3구역 도시정비형 재개발 정비사업 조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "한강로3가 40-19",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jbcfront3"
+    },
+    {
+     "id": "jbc641",
+     "name": "정비창전면 제1구역 재개발 정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "한강로3가 40-641",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jbc641"
+    },
+    {
+     "id": "yongsan12",
+     "name": "용산역전면 제1-2구역 재개발사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "한강로3가 40-712",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=yongsan12"
+    },
+    {
+     "id": "RainwaterPumping",
+     "name": "빗물펌프장구역 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "한강로3가 40-881",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=RainwaterPumping"
+    },
+    {
+     "id": "F3966NJ2",
+     "name": "국제빌딩주변 제4구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "한강로3가 63-70",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=F3966NJ2"
+    },
+    {
+     "id": "ichon-station",
+     "name": "이촌역 역세권 장기전세주택 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "한강로3가 65-342",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ichon-station"
+    },
+    {
+     "id": "kS2r3HUz",
+     "name": "한양철우아파트 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "한강로3가 65-500",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kS2r3HUz"
+    },
+    {
+     "id": "EZj5uOwy",
+     "name": "용산역전면 제2구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "한강로3가 391",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=EZj5uOwy"
+    },
+    {
+     "id": "hsapt294",
+     "name": "한남동 한성아파트 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "한남동 29-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hsapt294"
+    },
+    {
+     "id": "HIZF6k01",
+     "name": "한남 제3재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "철거",
+     "addr": "한남동 686",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=HIZF6k01"
+    },
+    {
+     "id": "nYG7ub9E",
+     "name": "한남연립 729번지 주택재건축 정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "한남동 729",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=nYG7ub9E"
+    },
+    {
+     "id": "b7VD2ARd",
+     "name": "효창제6구역주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "효창동 3-250",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=b7VD2ARd"
+    },
+    {
+     "id": "Hyochang-station",
+     "name": "효창공원앞역역세권 도시정비형 재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "효창동 5-307",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Hyochang-station"
+    },
+    {
+     "id": "hyochang5",
+     "name": "효창제5구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "효창동 13-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hyochang5"
+    },
+    {
+     "id": "donghuam1",
+     "name": "동후암1구역 주택재개발정비사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "후암동 30-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=donghuam1"
+    },
+    {
+     "id": "huam01",
+     "name": "후암동제1구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "후암동 142-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=huam01"
+    },
+    {
+     "id": "donghuam3",
+     "name": "동후암3구역 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "후암동 264-11",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=donghuam3"
+    }
+   ],
+   "성동구": [
+    {
+     "id": "ZEIOld61",
+     "name": "금호제15구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "금호동1가 280",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ZEIOld61"
+    },
+    {
+     "id": "kumho13",
+     "name": "금호제13구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "금호동2가 200",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kumho13"
+    },
+    {
+     "id": "singumhosa2",
+     "name": "(가칭)금호동2가 421-1번지 일원 도시정비형 재개발정비사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "금호동2가 421-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=singumhosa2"
+    },
+    {
+     "id": "bxP5EfNQ",
+     "name": "금호제16구역주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "금호동2가 501-31",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bxP5EfNQ"
+    },
+    {
+     "id": "ZO2PM42g",
+     "name": "금호제17구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "금호동2가 566",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=ZO2PM42g"
+    },
+    {
+     "id": "khd2g684",
+     "name": "(가칭)금호동2가 684번지 일원 도시정비형재개발정비사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "금호동2가 684",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=khd2g684"
+    },
+    {
+     "id": "PL0Tvr4o",
+     "name": "금호제19구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "금호동2가 900",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=PL0Tvr4o"
+    },
+    {
+     "id": "gumho21",
+     "name": "금호21구역 주택재개발정비사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "금호동3가 1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gumho21"
+    },
+    {
+     "id": "VDDWN5sC",
+     "name": "금호제18구역주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "금호동3가 632",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=VDDWN5sC"
+    },
+    {
+     "id": "geumho20",
+     "name": "금호제20구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "금호동4가 56-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=geumho20"
+    },
+    {
+     "id": "kumho141",
+     "name": "금호제14-1구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "금호동4가 480",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kumho141"
+    },
+    {
+     "id": "OY42gEX7",
+     "name": "금호제14구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "금호동4가 235",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=OY42gEX7"
+    },
+    {
+     "id": "mserim",
+     "name": "마장세림아파트 주택재건축사업",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "마장동 784",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mserim"
+    },
+    {
+     "id": "sageun293",
+     "name": "사근동 293번지 일대",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "사근동 293",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sageun293"
+    },
+    {
+     "id": "C77oUAZ4",
+     "name": "왕십리뉴타운 제2구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "상왕십리동 12-37",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=C77oUAZ4"
+    },
+    {
+     "id": "kyungdong",
+     "name": "경동연립 재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "성수동1가 22-13",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kyungdong"
+    },
+    {
+     "id": "kbret02",
+     "name": "장미아파트주택재건축정비사업",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "성수동1가 656-421",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=kbret02"
+    },
+    {
+     "id": "jangmy",
+     "name": "장미아파트 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "성수동1가 656-421",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jangmy"
+    },
+    {
+     "id": "sungsu1",
+     "name": "성수제1구역주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "성수동1가 656-1267",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sungsu1"
+    },
+    {
+     "id": "seongsu",
+     "name": "성수전략정비구역 제1 주택정비형 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "성수동1가 72-10",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsu"
+    },
+    {
+     "id": "seongsu4",
+     "name": "성수전략정비구역 제4지구 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "성수동2가 219-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsu4"
+    },
+    {
+     "id": "seongsu2",
+     "name": "성수전략정비구역 제2 주택정비형 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "성수동2가 506",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsu2"
+    },
+    {
+     "id": "seongsu3",
+     "name": "성수전략정비구역 제3 주택정비형 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "성수동2가 572-7",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=seongsu3"
+    },
+    {
+     "id": "Uty8d5WM",
+     "name": "한남하이츠아파트 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "옥수동 220-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Uty8d5WM"
+    },
+    {
+     "id": "W0Wuc5lI",
+     "name": "옥수제12구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "옥수동 500",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=W0Wuc5lI"
+    },
+    {
+     "id": "hDI0jH9w",
+     "name": "옥수제13구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "옥수동 526",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hDI0jH9w"
+    },
+    {
+     "id": "yongdap",
+     "name": "용답동 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "분양",
+     "addr": "용답동 108-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=yongdap"
+    },
+    {
+     "id": "janganpyeong",
+     "name": "장안평 중고차매매센터 도시정비형 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "용답동 234",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=janganpyeong"
+    },
+    {
+     "id": "eungbong1",
+     "name": "응봉1 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "응봉동 193-162",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=eungbong1"
+    },
+    {
+     "id": "s926Ff9L",
+     "name": "왕십리뉴타운제1구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "하왕십리동 339-67",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=s926Ff9L"
+    },
+    {
+     "id": "wangnew3",
+     "name": "왕십리뉴타운 제3구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "하왕십리동 700",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=wangnew3"
+    },
+    {
+     "id": "foS7SDlo",
+     "name": "하왕제1-5구역주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "하왕십리동 999",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=foS7SDlo"
+    },
+    {
+     "id": "Bfmv3f5Q",
+     "name": "행당제7구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "분양",
+     "addr": "행당동 128",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Bfmv3f5Q"
+    },
+    {
+     "id": "haengdang248",
+     "name": "행당동248번지 일대 역세권활성화사업 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "행당동 248",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=haengdang248"
+    }
+   ],
+   "노원구": [
+    {
+     "id": "g4cO1SNx",
+     "name": "공릉1(태릉현대) 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "공릉동 230",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=g4cO1SNx"
+    },
+    {
+     "id": "dmapt270",
+     "name": "대명아파트 소규모재건축정비사업위원회",
+     "type": "소규모재건축",
+     "stage": "착공",
+     "addr": "공릉동 270-71",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dmapt270"
+    },
+    {
+     "id": "sanggye3",
+     "name": "상계3재정비촉진구역 공공재개발정비사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "상계동 71-183",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanggye3"
+    },
+    {
+     "id": "sangkye4",
+     "name": "상계4재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "상계동 85-33",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sangkye4"
+    },
+    {
+     "id": "sanggye6",
+     "name": "상계6재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "상계동 95-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanggye6"
+    },
+    {
+     "id": "sanggye",
+     "name": "상계동 154-3 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "상계동 154-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanggye"
+    },
+    {
+     "id": "osunggaro",
+     "name": "오성빌라 가로주택정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "상계동 322-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=osunggaro"
+    },
+    {
+     "id": "sgboramapt",
+     "name": "상계보람아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "상계동 639",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sgboramapt"
+    },
+    {
+     "id": "DrWK0XGO",
+     "name": "상계주공8단지 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "상계동 677",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=DrWK0XGO"
+    },
+    {
+     "id": "sanggye6apt",
+     "name": "상계주공6단지아파트 재건축정비사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "상계동 720",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanggye6apt"
+    },
+    {
+     "id": "sanggye5",
+     "name": "상계주공5단지 재건축정비사업",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "상계동 721",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanggye5"
+    },
+    {
+     "id": "H4WYv7zZ",
+     "name": "상계5재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "상계동 109-43",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=H4WYv7zZ"
+    },
+    {
+     "id": "G9u1j5Ss",
+     "name": "상계2재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "사업시행인가",
+     "addr": "상계동 자력2구역 17블럭 1롯트",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=G9u1j5Ss"
+    },
+    {
+     "id": "sg1apt",
+     "name": "상계1재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "상계동 자력6구역 8블럭 9롯트",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sg1apt"
+    },
+    {
+     "id": "samho4apt",
+     "name": "월계삼호4차아파트 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "월계동 12",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samho4apt"
+    },
+    {
+     "id": "mms0612",
+     "name": "월계시영고층아파트 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "월계동 13",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mms0612"
+    },
+    {
+     "id": "dongshinapt",
+     "name": "월계동신아파트주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "월계동 436",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dongshinapt"
+    },
+    {
+     "id": "dnjf2233",
+     "name": "월계동주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "착공",
+     "addr": "월계동 487-17",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dnjf2233"
+    },
+    {
+     "id": "YyFQDr1L",
+     "name": "월계3(벼루마을) 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합청산",
+     "addr": "월계동 531",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=YyFQDr1L"
+    },
+    {
+     "id": "KuIRZHu0",
+     "name": "월계2(인덕마을) 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "월계동 633-31",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=KuIRZHu0"
+    },
+    {
+     "id": "R60TOrwV",
+     "name": "월계제4구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합청산",
+     "addr": "월계동 672",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=R60TOrwV"
+    },
+    {
+     "id": "jggreen",
+     "name": "중계그린아파트 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "중계동 502-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jggreen"
+    },
+    {
+     "id": "hansindsapt",
+     "name": "하계한신동성아파트 재건축사업",
+     "type": "재건축",
+     "stage": "정비계획 수립",
+     "addr": "하계동 256-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hansindsapt"
+    },
+    {
+     "id": "hgjangmi",
+     "name": "하계장미아파트 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "하계동 273",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hgjangmi"
+    }
+   ],
+   "도봉구": [
+    {
+     "id": "samhwandobong",
+     "name": "삼환도봉아파트 재건축사업",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "도봉동 87",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samhwandobong"
+    },
+    {
+     "id": "XR80qva2",
+     "name": "도봉제2구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "준공인가",
+     "addr": "도봉동 95",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=XR80qva2"
+    },
+    {
+     "id": "dobong62580",
+     "name": "도봉동 625-80번지 일대 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "도봉동 625-80",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dobong62580"
+    },
+    {
+     "id": "sungsam6",
+     "name": "방학성삼빌라가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "방학동 343",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sungsam6"
+    },
+    {
+     "id": "mmjjkkss",
+     "name": "성삼연립 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "이전고시",
+     "addr": "방학동 636",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mmjjkkss"
+    },
+    {
+     "id": "dobongbanghak",
+     "name": "방학동 638일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "방학동 638",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dobongbanghak"
+    },
+    {
+     "id": "dobongbanghak2",
+     "name": "방학동 641일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "방학동 641",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=dobongbanghak2"
+    },
+    {
+     "id": "banghakzone3",
+     "name": "방학3구역 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "방학동 685",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=banghakzone3"
+    },
+    {
+     "id": "sangm81",
+     "name": "쌍문2구역(쌍문동 81번지 일대) 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "쌍문동 81",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sangm81"
+    },
+    {
+     "id": "hanyang1",
+     "name": "쌍문한양1차아파트 재건축사업",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "쌍문동 388-33",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=hanyang1"
+    },
+    {
+     "id": "W0zS4n6n",
+     "name": "쌍문제1구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "쌍문동 414",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=W0zS4n6n"
+    },
+    {
+     "id": "Tkdans",
+     "name": "쌍문3구역 주택정비형재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "쌍문동 724",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Tkdans"
+    },
+    {
+     "id": "Changdong18",
+     "name": "창동주공18단지아파트 재건축사업",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "창동 30",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Changdong18"
+    },
+    {
+     "id": "sanga1apt",
+     "name": "창동상아1차아파트 재건축사업",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "창동 299",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sanga1apt"
+    },
+    {
+     "id": "eotls21",
+     "name": "대신빌라소규모재건축사업",
+     "type": "소규모재건축",
+     "stage": "사업시행인가",
+     "addr": "창동 466",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=eotls21"
+    },
+    {
+     "id": "changdong470",
+     "name": "창동470구역 주택정비형 공공재개발사업(LH)",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "창동 470",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=changdong470"
+    },
+    {
+     "id": "cdgaro1",
+     "name": "창동 501-13번지 일원 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "창동 501-13",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=cdgaro1"
+    },
+    {
+     "id": "changdong4",
+     "name": "창동 529-1번지 일원 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "창동 529-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=changdong4"
+    },
+    {
+     "id": "shinchang581",
+     "name": "신창연립가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "창동 581-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=shinchang581"
+    },
+    {
+     "id": "sgygaro",
+     "name": "창동 신건영빌리지 일대 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "창동 715-25",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sgygaro"
+    }
+   ],
+   "강북구": [
+    {
+     "id": "XNX3q5d0",
+     "name": "미아 제4구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합해산",
+     "addr": "미아동 1-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=XNX3q5d0"
+    },
+    {
+     "id": "llllll",
+     "name": "미아동 3-111 일대 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "조합해산",
+     "addr": "미아동 3-111",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=llllll"
+    },
+    {
+     "id": "YFST7396",
+     "name": "미아제16구역 주택재개발사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 6",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=YFST7396"
+    },
+    {
+     "id": "HFQZu12D",
+     "name": "미아제4-1구역 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "조합설립인가",
+     "addr": "미아동 8-373",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=HFQZu12D"
+    },
+    {
+     "id": "gangbuk2",
+     "name": "미아중심재정비촉진지구 강북2재정비촉진구역 도시환경정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "미아동 42-8",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbuk2"
+    },
+    {
+     "id": "gangbuk3",
+     "name": "강북3구역 도시환경정비사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 45-32",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbuk3"
+    },
+    {
+     "id": "gangbuk",
+     "name": "미아중심재정비촉진지구 강북3 재정비촉진구역",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "미아동 45-32",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbuk"
+    },
+    {
+     "id": "gangbukseven",
+     "name": "강북7구역(예정) 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "미아동 60-5",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbukseven"
+    },
+    {
+     "id": "gangbuk05",
+     "name": "강북5구역 공공재개발사업",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "미아동 61-79",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbuk05"
+    },
+    {
+     "id": "gangbuk5",
+     "name": "강북5구역 도시환경정비사업 조합설립추진위원회",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 61-79",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gangbuk5"
+    },
+    {
+     "id": "mia_75",
+     "name": "미아동 75번지 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "미아동 75",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia_75"
+    },
+    {
+     "id": "mia22scj",
+     "name": "미아2구역 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "미아동 90-45",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia22scj"
+    },
+    {
+     "id": "mia_station",
+     "name": "미아역세권 장기전세주택 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "미아동 121-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia_station"
+    },
+    {
+     "id": "miastation",
+     "name": "미아역세권 장기전세주택 도시정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "미아동 121-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=miastation"
+    },
+    {
+     "id": "mia130",
+     "name": "미아동 130번지 일대 주택정비형 재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 130",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia130"
+    },
+    {
+     "id": "sn6L45v9",
+     "name": "미아제9-2구역 주택재건축정비사업 조합",
+     "type": "재건축",
+     "stage": "사업시행인가",
+     "addr": "미아동 137-72",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=sn6L45v9"
+    },
+    {
+     "id": "mia258",
+     "name": "미아동 258번지 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 258",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia258"
+    },
+    {
+     "id": "mia345-1",
+     "name": "미아동 345-1번지 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "미아동 345-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia345-1"
+    },
+    {
+     "id": "mia2johap",
+     "name": "미아2재정비촉진구역 주택재개발정비사업 조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "미아동 403",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia2johap"
+    },
+    {
+     "id": "mia101",
+     "name": "미아 제10-1구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "이전고시",
+     "addr": "미아동 476",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia101"
+    },
+    {
+     "id": "samyangsageori",
+     "name": "삼양사거리역세권 장기전세주택 도시정비형 재개발구역",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "미아동 754-120",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samyangsageori"
+    },
+    {
+     "id": "mia3mia3",
+     "name": "미아3구역 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "미아동 767-51",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia3mia3"
+    },
+    {
+     "id": "eG05u80g",
+     "name": "미아제11구역 재개발정비사업조합",
+     "type": "재개발",
+     "stage": "조합설립인가",
+     "addr": "미아동 791-108",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=eG05u80g"
+    },
+    {
+     "id": "S6K6teW8",
+     "name": "미아제3구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "분양",
+     "addr": "미아동 791-364",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=S6K6teW8"
+    },
+    {
+     "id": "mia791",
+     "name": "미아동 791-2882번지 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "미아동 791-2882",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia791"
+    },
+    {
+     "id": "mia0429",
+     "name": "미아1구역 가로주택정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "미아동 833-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=mia0429"
+    },
+    {
+     "id": "rchEsG60",
+     "name": "미아4재정비촉진구역 주택재건축정비사업조합",
+     "type": "재건축",
+     "stage": "관리처분인가",
+     "addr": "미아동 1261-376",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=rchEsG60"
+    },
+    {
+     "id": "miachrwls",
+     "name": "미아3재정비촉진구역 주택재개발정비사업조합",
+     "type": "재개발",
+     "stage": "관리처분인가",
+     "addr": "미아동 439",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=miachrwls"
+    },
+    {
+     "id": "beondong148",
+     "name": "번동 148번지 일대 주택정비형 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "번동 148",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=beondong148"
+    },
+    {
+     "id": "bun41344",
+     "name": "번동3-1구역 가로주택정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "번동 413-44",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun41344"
+    },
+    {
+     "id": "bun42763",
+     "name": "번동 5구역 가로주택 정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "번동 427-63",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun42763"
+    },
+    {
+     "id": "bun4284",
+     "name": "번동 4구역 가로주택 정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "번동 428-4",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun4284"
+    },
+    {
+     "id": "bun42997",
+     "name": "번동2구역 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "번동 429-97",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun42997"
+    },
+    {
+     "id": "bun429114",
+     "name": "번동1구역 가로주택정비사업조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "번동 429-114",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun429114"
+    },
+    {
+     "id": "bun43027",
+     "name": "번동 3구역 가로주택 정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "사업시행인가",
+     "addr": "번동 430-27",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun43027"
+    },
+    {
+     "id": "bundong4413",
+     "name": "번동 441-3번지 일대 주택재개발정비사업",
+     "type": "재개발",
+     "stage": "추진위원회승인",
+     "addr": "번동 441-3",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bundong4413"
+    },
+    {
+     "id": "bun44346",
+     "name": "번동3-2구역 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "번동 443-46",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun44346"
+    },
+    {
+     "id": "bun45461",
+     "name": "번동2-1구역 가로주택정비사업 조합",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "번동 454-61",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun45461"
+    },
+    {
+     "id": "bun45802",
+     "name": "번동2-2구역 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "번동 458-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bun45802"
+    },
+    {
+     "id": "beondong10",
+     "name": "번동2-3구역 가로주택정비사업",
+     "type": "가로주택정비",
+     "stage": "조합설립인가",
+     "addr": "번동 471-118",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=beondong10"
+    },
+    {
+     "id": "samyangyeok",
+     "name": "삼양역세권 장기전세주택 건립사업",
+     "type": "재개발",
+     "stage": "정비계획 수립",
+     "addr": "수유동 58-9",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samyangyeok"
+    },
+    {
+     "id": "suyou401",
+     "name": "수유제4-1구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "수유동 170-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=suyou401"
+    },
+    {
+     "id": "YQmcxT8c",
+     "name": "수유제4-2구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "수유동 291-224",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=YQmcxT8c"
+    },
+    {
+     "id": "bokwang",
+     "name": "보광연립소규모재건축사업조합",
+     "type": "소규모재건축",
+     "stage": "사업시행인가",
+     "addr": "수유동 360-1",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=bokwang"
+    },
+    {
+     "id": "gy6Ylg8x",
+     "name": "수유제1-1구역 주택재건축정비사업 조합설립추진위원회",
+     "type": "재건축",
+     "stage": "추진위원회승인",
+     "addr": "수유동 472-81",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=gy6Ylg8x"
+    },
+    {
+     "id": "samhung",
+     "name": "삼흥연립주택 재건축정비사업조합",
+     "type": "소규모재건축",
+     "stage": "사업시행인가",
+     "addr": "수유동 486-2",
+     "src": "cleanup_seoul",
+     "url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=samhung"
+    }
+   ],
+   "분당구": [],
+   "수정구": [
+    {
+     "id": "GHMT_0000000000173",
+     "name": "산성구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 수정구 산성동(산성동) 74번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000172",
+     "name": "태평2,4구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 수정구 태평2동(태평동) 1180번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000205",
+     "name": "단대구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 수정구 단대동(단대동) 48-2번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000193",
+     "name": "태평1구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 수정구 태평1동(태평동) 5878번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000171",
+     "name": "수진2구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 수정구 수진2동(수진동) 3603번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000125",
+     "name": "건우아파트",
+     "type": "재건축",
+     "stage": "청산위원회",
+     "addr": "경기도 성남시 수정구 태평1동(태평동) 7346번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000108",
+     "name": "신흥3",
+     "type": "재개발",
+     "stage": "추진주체 구성 전",
+     "addr": "경기도 성남시 수정구 신흥3동(신흥동) 2890번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000107",
+     "name": "산성",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 수정구 산성동(산성동) 1336번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000104",
+     "name": "신흥주택재건축",
+     "type": "재건축",
+     "stage": "청산위원회",
+     "addr": "경기도 성남시 수정구 신흥1동(신흥동)   10번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000102",
+     "name": "신흥1",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 수정구 신흥1동(신흥동) 4900번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    }
+   ],
+   "중원구": [
+    {
+     "id": "GHMT_0000000000106",
+     "name": "성지․궁전아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 중원구 상대원1동(상대원동) 179번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000194",
+     "name": "중2구역 도시환경정비사업",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 중원구 중앙동(중앙동) 196번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000204",
+     "name": "상대원1·3구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 중원구 상대원3동(상대원동) 817번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000237",
+     "name": "은행동 현대아파트",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 중원구 은행1동(은행동) 1932-6번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000192",
+     "name": "은행1·금광2구역 생활권 재개발사업",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 성남시 중원구 은행1동(은행동) 1947번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000126",
+     "name": "삼남아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 중원구 하대원동(하대원동) 119번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000124",
+     "name": "삼창아파트",
+     "type": "재건축",
+     "stage": "청산위원회",
+     "addr": "경기도 성남시 중원구 중앙동(중앙동) 3748-1번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000105",
+     "name": "은행주공아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 성남시 중원구 은행1동(은행동) 550번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    }
+   ],
+   "영통구": [
+    {
+     "id": "GHMT_0000000000189",
+     "name": "영통3구역(원천주공)",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 원천동(원천동) 35번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000233",
+     "name": "매탄4구역(매탄동남빌라)",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 매탄2동(매탄동) 197번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000250",
+     "name": "원천2구역(성일아파트)",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 매탄2동(매탄동) 1199-1번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000248",
+     "name": "매탄2구역(삼성3차아파트)",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 매탄4동(매탄동) 1217-7번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000234",
+     "name": "매탄나구역",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 매탄1동(매탄동) 196-80번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000228",
+     "name": "매탄가구역",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 수원시 영통구 매탄2동(매탄동) 130-50번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000091",
+     "name": "영통1구역",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 수원시 영통구 매탄1동(매탄동) 173-50번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000081",
+     "name": "영통2구역(매탄주공4,5단지)",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 수원시 영통구 매탄1동(매탄동) 908번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    }
+   ],
+   "동안구": [
+    {
+     "id": "BARA_0000000000630",
+     "name": "종합운동장북측일원",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산1동(비산동) 1015-22번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000156",
+     "name": "중촌마을",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 1425번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000057",
+     "name": "현대아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 관양동번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000133",
+     "name": "수촌마을(A블럭)",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 1392번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000155",
+     "name": "부림마을",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 1471번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000153",
+     "name": "인덕원중학교 주변(B블럭)",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 인덕원동(관양동) 1491-59번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000273",
+     "name": "덕현지구",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 호계1동(호계동) 992번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000134",
+     "name": "수촌마을(B블럭)",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 1388-20번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000210",
+     "name": "호계럭키아파트",
+     "type": "재건축",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 호계2동(호계동) 570번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000252",
+     "name": "A-17 특별정비구역",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 평촌동(평촌동) 932-4번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000154",
+     "name": "관양초등학교 주변",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 안양시 동안구 관양동(관양동) 1413-11번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000148",
+     "name": "푸른마을삼성아파트",
+     "type": "재건축",
+     "stage": "추진주체 구성 전",
+     "addr": "경기도 안양시 동안구 호계2동(호계동) 931번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000143",
+     "name": "삼천리태하양수아파트",
+     "type": "재건축",
+     "stage": "추진주체 구성 전",
+     "addr": "경기도 안양시 동안구 호계3동(호계동) 843-1번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000055",
+     "name": "뉴타운맨션 삼호아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산1동(비산동) 283번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000433",
+     "name": "융창아파트 주변",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 호계2동(호계동) 929번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000604",
+     "name": "비산초교주변지구",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산3동(비산동) 281-1번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000629",
+     "name": "종합운동장 동측",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산1동(비산동) 1047-20번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000345",
+     "name": "임곡3지구",
+     "type": "재개발",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산1동(비산동) 515-2번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "BARA_0000000000358",
+     "name": "미륭아파트",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 안양시 동안구 비산2동(비산동) 406번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    }
+   ],
+   "화성시": [
+    {
+     "id": "GHMT_0000000000207",
+     "name": "매송02",
+     "type": "재개발",
+     "stage": "추진위원회",
+     "addr": "경기도 화성시 매송면(천천리) 204-1번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    },
+    {
+     "id": "GHMT_0000000000039",
+     "name": "화산주택",
+     "type": "재건축",
+     "stage": "조합(시행자)",
+     "addr": "경기도 화성시 화산동(송산동) 97-15번지 일원",
+     "src": "gg_onnuri",
+     "url": ""
+    }
+   ],
+   "광주시": []
+  }
+ }
+}

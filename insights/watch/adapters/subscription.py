@@ -287,8 +287,12 @@ def fetch(target_name, area=None, laws=()):
     fetch.gg_error = None
     try:
         gg_rows = pblancs('경기', since=_six_months_ago(), page_size=500)
+        # 보고 있는 경기 시군구만 남긴다 — 2026-09-04 동탄(화성시)·광교(수원 영통구)·
+        # 평촌(안양 동안구)·남한산성(광주시)을 더했다. 경기 sido 로 받은 행이라 「광주시」는
+        # 경기 광주다(광주광역시는 sido 가 다르다)
+        gg_keep = ('성남시', '화성시', '영통구', '동안구', '광주시')
         rows = rows + [r for r in gg_rows
-                       if '성남시' in str(r.get('HSSPLY_ADRES') or '')]
+                       if any(k in str(r.get('HSSPLY_ADRES') or '') for k in gg_keep)]
     except Exception as e:                       # noqa: BLE001 — 경기 몫만 빠진다
         fetch.gg_error = '%s: %s' % (type(e).__name__, e)
 
