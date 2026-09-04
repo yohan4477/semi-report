@@ -1799,11 +1799,9 @@ def subscription_now(watches, sido='서울'):
             if types_txt:
                 meta += '<br>' + E(types_txt)
             rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
-                        '<span class="st-r"><span class="tag %s si-chip">%s</span>'
-                        '<span class="t-sub"> · 공고 %s</span></span></p>'
+                        '<span class="st-r"><span class="tag %s si-chip">%s</span></span></p>'
                         '<p class="st-2 t-sub">%s</p></div>'
-                        % (E(it.get('id') or ''), E(it.get('name') or '—'),
-                           cls, E(st), E(it.get('pblanc_de') or it.get('apply') or '—'), meta))
+                        % (E(it.get('id') or ''), E(it.get('name') or '—'), cls, E(st), meta))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
         h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
