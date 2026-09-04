@@ -687,7 +687,9 @@ var pick=function(id){
   details.forEach(function(x){x.hidden=(x!==d);});
   if(list)list.hidden=!!d;
   Object.keys(maps).forEach(function(k){maps[k].hidden=d?(k!==d.dataset.sido):false;});
-  Array.from(document.querySelectorAll('.pin')).forEach(function(p){p.classList.toggle('pin-on',!!d&&p.dataset.id===id);});
+  Array.from(document.querySelectorAll('.pin')).forEach(function(p){var on=!!d&&p.dataset.id===id;
+    p.classList.toggle('pin-on',on);p.setAttribute('r',on?p.dataset.rOn:p.dataset.r);
+    if(on&&p.parentNode){p.parentNode.appendChild(p);}});
   Array.from(document.querySelectorAll('.gu')).forEach(function(g){
     var on=!!d&&g.dataset.gu===d.dataset.gu;g.classList.toggle('gu-hover',on);g.classList.toggle('gu-dim',!!d&&!on);});
   if(d){document.title=d.dataset.name+' — 청약 위치';}
@@ -1171,7 +1173,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
 .seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
 .seoul-map[data-layer="sub"] .pin{display:block}
-.seoul-map .pin.pin-on{fill:var(--ink);stroke:var(--paper)}
+.seoul-map .pin.pin-on{fill:var(--ink);stroke:var(--paper);stroke-width:calc(var(--gu-stroke,1px)*2.5)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
@@ -2854,6 +2856,7 @@ def _sub_pins(watches, gus, x0, y0, scale):
         return ''
     o = []
     r = 5.0 / scale
+    r_on = 12.0 / scale   # 고른 점은 두 배 넘게 — 작아서 안 보인다(2026-09-04)
     for gu in gus:
         for it in sub_gu.get(gu) or []:
             if it.get('lat') is None or it.get('lon') is None:
@@ -2861,9 +2864,9 @@ def _sub_pins(watches, gus, x0, y0, scale):
             xy = _board_xy(it['lat'], it['lon'])
             if not xy:
                 continue
-            o.append('<circle class="pin" data-id="%s" data-gu="%s" cx="%.1f" cy="%.1f" r="%.1f">'
-                     '<title>%s</title></circle>'
-                     % (E(it.get('id') or ''), E(gu), xy[0] - x0, xy[1] - y0, r,
+            o.append('<circle class="pin" data-id="%s" data-gu="%s" cx="%.1f" cy="%.1f" r="%.1f" '
+                     'data-r="%.1f" data-r-on="%.1f"><title>%s</title></circle>'
+                     % (E(it.get('id') or ''), E(gu), xy[0] - x0, xy[1] - y0, r, r, r_on,
                         E(it.get('name') or '')))
     return ('<g class="pins">%s</g>' % ''.join(o)) if o else ''
 
@@ -3231,7 +3234,8 @@ var apply=function(n){if(n){highlight([n]);}else{clearHi();}showPanel(n||'defaul
 /* 밖(분양 목록)에서 구를 고정한다 — 제목을 누르면 그 구가 지도에서 강조되고 패널이 그 구로
    선다(2026-09-04 사용자 「분양 제목 하나 누르면 지도에 그 위치 표시」) */
 root.__pick=function(n,id){locked=n;apply(n);
-  Array.from(svg.querySelectorAll('.pin')).forEach(function(p){p.classList.toggle('pin-on',!!id&&p.dataset.id===id);});};
+  Array.from(svg.querySelectorAll('.pin')).forEach(function(p){var on=!!id&&p.dataset.id===id;
+    p.classList.toggle('pin-on',on);p.setAttribute('r',on?p.dataset.rOn:p.dataset.r);});};
 gus.forEach(function(g){
   var n=g.dataset.gu;
   g.addEventListener('mouseenter',function(){apply(n);});
