@@ -3464,14 +3464,14 @@ def check_ui(html, watches):
         at_map = html.find('id="map%s"' % sfx)
         at_changed = html.find('id="changed%s"' % sfx)
         at_lines = html.find('id="lines%s"' % sfx)
-        assert 0 < at_sub < at_map < at_changed < at_lines < at_policy, \
-            ('규약 위반(%s): 분양 → 지도 → 달라진 것 → 보고 있는 것 → 제도 순서여야 한다'
+        assert 0 < at_map < at_changed < at_sub < at_lines < at_policy, \
+            ('규약 위반(%s): 지도 → 달라진 것 → 분양 → 보고 있는 것 → 제도 순서여야 한다(2026-09-04)'
              % _sido)
         # 정비사업 절은 어댑터가 값을 냈을 때만 선다 — 서면 달라진 것과 보고 있는 것 사이
         at_rb = html.find('id="rebuild%s"' % sfx)
         if _rebuild_data(watches)[0] is not None:
-            assert at_changed < at_rb < at_lines, \
-                '규약 위반(%s): 정비사업 절은 달라진 것 다음, 보고 있는 것 앞이다' % _sido
+            assert at_sub < at_rb < at_lines, \
+                '규약 위반(%s): 정비사업 절은 분양 다음, 보고 있는 것 앞이다' % _sido
         else:
             assert at_rb < 0, '규약 위반(%s): 값 없는 정비사업 절을 냈다' % _sido
     # 층은 구마다 갈리는 값만 그린다. 25구가 전부 같은 범주인 것(토허·규제)은 지도가
@@ -3644,9 +3644,11 @@ def build():
         blk = ['<div class="sido-block" data-sido="%s"%s>' % (sido, '' if not sfx else ' hidden')]
         # 절 바로가기 줄은 본 장에서 걷었다(2026-09-04 사용자 지시 「분양·지도·달라진 것 버튼
         # 다 지워」) — 고르는 계층은 서울|경기 탭 하나다. 상세 페이지의 바로가기는 그대로
-        blk.append(subscription_section(ws, sido, sfx))
+        # 지도(청약 공고 층이 기본)가 분양 목록보다 먼저(2026-09-04 「청약공고 버튼과 지도만
+        # 지금 청약 위로」) — 어디에 공고가 섰나를 먼저 보고, 그 밑에서 제목을 고른다
         blk.append('<section class="hero" id="map%s">%s</section>'
                    % (sfx, seoul_map_section(ws, asof, checked, sido, sfx)))
+        blk.append(subscription_section(ws, sido, sfx))
         blk.append(rebuild_section(ws, sido, sfx))
         blk.append('<div class="band" id="lines%s"><p class="band-t">보고 있는 것 — %s %d</p>%s</div>'
                    % (sfx, sido, len(sido_ws), line_summary_rows(ws, sido)))
