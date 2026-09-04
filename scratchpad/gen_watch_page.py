@@ -1805,10 +1805,11 @@ def subscription_now(watches, sido='서울'):
             meta = E(it.get('gu') or '')
             if types_txt:
                 meta += '<br>' + E(types_txt)
-            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
+            # 제목을 누르면 지도에서 그 구를 고정 강조한다(_SUB_JS). JS 가 없으면 공고 페이지로
+            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s" data-gu="%s">%s</a>'
                         '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
                         '<p class="st-2 t-sub">%s</p></div>'
-                        % (E(it.get('id') or ''), E(it.get('name') or '—'), cls, E(st),
+                        % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('name') or '—'), cls, E(st),
                            ('<span class="t-sub"> · %s</span>' % E(when)) if when else '', meta))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
@@ -2809,6 +2810,9 @@ var highlight=function(names){gus.forEach(function(g){
   var on=names.indexOf(g.dataset.gu)>-1;
   g.classList.toggle('gu-hover',on);g.classList.toggle('gu-dim',!on);});};
 var apply=function(n){if(n){highlight([n]);}else{clearHi();}showPanel(n||'default');};
+/* 밖(분양 목록)에서 구를 고정한다 — 제목을 누르면 그 구가 지도에서 강조되고 패널이 그 구로
+   선다(2026-09-04 사용자 「분양 제목 하나 누르면 지도에 그 위치 표시」) */
+root.__pick=function(n){locked=n;apply(n);};
 gus.forEach(function(g){
   var n=g.dataset.gu;
   g.addEventListener('mouseenter',function(){apply(n);});
@@ -2862,6 +2866,23 @@ Array.from(root.querySelectorAll('.layer-btn')).forEach(function(b){
 
 # 최상위 탭 — 서울|경기. 한 번에 한 시·도만 보인다(고르는 계층은 이것 하나다).
 # 둘 다 DOM 에 있고 hidden 만 토글한다 — 계산 없음. 주소에 #경기 가 있으면 그 탭으로
+_SUB_JS = """<script>
+(function(){
+Array.from(document.querySelectorAll('.st-1 a[data-gu]')).forEach(function(a){
+  a.addEventListener('click',function(ev){
+    var blk=a.closest('.sido-block');var hero=blk&&blk.querySelector('.hero');
+    if(!hero||!hero.__pick)return;
+    var gu=a.dataset.gu;
+    if(!hero.querySelector('.gu[data-gu="'+gu+'"]'))return;
+    ev.preventDefault();
+    hero.__pick(gu);
+    var smooth=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+    hero.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});
+  });
+});
+})();
+</script>"""
+
 _SIDO_JS = """<script>
 (function(){
 var tabs=Array.from(document.querySelectorAll('.sido-tab'));
@@ -3211,6 +3232,7 @@ def build():
     h.append('<!-- 판단은 insights/watch/, 수치는 insights/watch/_metrics/, 줄 상세는'
              ' 대시보드/watch/ 아래. 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->')
     h.append(_MAP_JS)
+    h.append(_SUB_JS)
     h.append(_SIDO_JS)
     h.append(_JUMP_JS)
     h.append('</div></body></html>')
