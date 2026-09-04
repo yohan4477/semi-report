@@ -776,7 +776,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
    바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
-@media (min-width:621px){.map-fig{position:sticky;top:62px}}
+/* 2026-09-04 — 따라 내려오지 않는다(사용자 「스크롤 내리면 지도도 같이 내려오잖아」).
+   sticky 를 풀었다. 구를 고르는 자리는 지도 옆 패널이라 지도가 화면 위로 지나가도 된다 */
+.map-fig{position:static}
 /* 왼쪽 칸 — 지도 그림은 이 칸의 위쪽 절반만 쓴다. 남는 아래를 상태 배너와
    「달라진 것」이 채운다(빈 칸을 300px 넘게 두지 않는다) */
 .mapcol{flex:0 0 58%;min-width:0}
