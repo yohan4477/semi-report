@@ -314,6 +314,10 @@ def rebuild_section(watches, sido='서울', suffix=''):
     src_txt = ('서울시 정비사업 정보몽땅' if sido == '서울' else '경기도 정비사업 종합관리시스템')
     h = ['<div class="band" id="rebuild%s"><p class="band-t">정비사업 — 재건축·재개발·리모델링</p>'
          '<p class="cond-lead">보고 있는 %d구 사업장 %d곳%s · %s · 기준 %s</p>'
+         # 27곳만 이름이 나오는데 무슨 기준으로 골랐는지가 화면에 없었다(2026-09-04).
+         # 뽑는 규칙을 목록 앞에 적는다 — 규칙을 안 밝히면 이 셋이 그 구의 전부로 읽힌다
+         '<p class="cond-tail">구마다 이름이 나오는 것은 인가·공사 단계에 든 사업장 '
+         '가운데 단계가 가장 늦은 셋입니다. 나머지는 「사업장 전부 보기」에 있습니다.</p>'
          % (suffix, len(gus), total, (' — ' + type_txt) if type_txt else '', E(src_txt),
             E(as_of or '—'))]
     for g in gus:
@@ -1320,13 +1324,12 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     box-shadow:0 2px 12px rgba(16,20,24,.10)}
 }
 /* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
-.rs{display:block;position:relative;padding:9px 26px 9px 0;
+.rs{display:block;position:relative;padding:9px 0;
   border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
-.rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
-.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:38px;
+.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:12px;
   border-radius:8px}
-.rs:hover::after{color:var(--ink)}
+.rs:hover .rs-cta{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
 .rs-v{margin:4px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:2px 0 0;font-size:23px;font-weight:700}
@@ -3161,7 +3164,7 @@ def _region_summary_html(watches):
         '<p class="rs-v">%s</p>'
         '<p class="rs-line">%s</p>'
         '<p class="rs-line">%s</p>%s'
-        '<span class="rs-cta">이 권역 자세히 보기</span></a>'
+        '<span class="rs-cta">이 권역 자세히 보기 →</span></a>'
         % (w['slug'], E(gus), E(w['target']), E(_gu_short(w['target'])),
            _fmt1(cur),
            _delta_phrase('지난달', base1, d1, '%p') or '지난달 값이 없습니다',

@@ -173,13 +173,12 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
     box-shadow:0 2px 12px rgba(16,20,24,.10)}
 }
 /* 권역 요약 행 — 링크라는 것이 보여야 한다. 밑줄만으로는 행 구분선과 구분이 안 된다 */
-.rs{display:block;position:relative;padding:9px 26px 9px 0;
+.rs{display:block;position:relative;padding:9px 0;
   border-bottom:1px solid var(--line)}
 .rs:last-child{border-bottom:0}
-.rs::after{content:"→";position:absolute;right:2px;top:14px;color:var(--ink-3);font-weight:600}
-.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:38px;
+.rs:hover{background:var(--surface);margin:0 -12px;padding-left:12px;padding-right:12px;
   border-radius:8px}
-.rs:hover::after{color:var(--ink)}
+.rs:hover .rs-cta{color:var(--ink)}
 .rs-k{margin:0;font-size:12.5px;color:var(--ink-3)}
 .rs-v{margin:4px 0 0;font-weight:600;font-size:.92rem;color:var(--ink)}
 .rs-n{margin:2px 0 0;font-size:23px;font-weight:700}
