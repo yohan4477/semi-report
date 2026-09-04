@@ -140,37 +140,38 @@ FIG_POWER = _svg(W, 232, '800G 한 개 — 트랜시버와 CPO 광엔진의 전�
 
 
 # ── 도해 4a. 비중 — 클러스터에서 모듈까지, 광 부품이 차지하는 것 ─────────
-# 막대 하나가 100% 이고 짙은 조각이 그 줄의 대상이다. 값은 CPO북 L112·L151·L154·L366.
-# 안에 든 조각(트랜시버)은 원문이 「네트워킹의 60%」로 준 것이라 네트워킹 조각 안에서 60% 로 그린다 —
+# 기둥 하나가 100% 이고 아래에서 채운 조각이 그 줄의 대상이다. 값은 CPO북 L112·L154·L366.
+# 안에 든 조각(트랜시버)은 원문이 「네트워킹의 60% · 45%」로 준 것이라 네트워킹 조각 안에서 그린다 —
 # 클러스터 대비 몇 % 인지는 원문에 없으니 적지 않는다.
-_SX, _SW, _SH = 176, 440, 38
+_SC = _row(4, 40, 200, 120, gap=24)
+_SBASE = 240
 
 
-def _sbar(i, name, outer, outer_lab, inner=None, inner_lab='', inner_of_outer=True):
-    y = 40 + i * 64
-    out = [_lt(18, y + 24, name, 't-sm', True),
-           '<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="%s" stroke-width="1.5"/>'
-           % (_SX, y, _SW, _SH, INK3)]
-    ow = int(_SW * outer / 100.0)
+def _scol(c, name, outer, outer_lab, inner=None, inner_lab=''):
+    x, y, w, h = c
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="%s" stroke-width="1.5"/>'
+           % (x, y, w, h, INK3)]
+    oh = int(h * outer / 100.0)
     out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="var(--sunk)" stroke="%s" stroke-width="2"/>'
-               % (_SX, y, ow, _SH, INK))
+               % (x, _SBASE - oh, w, oh, INK))
     if inner is not None:
-        iw = int((ow if inner_of_outer else _SW) * inner / 100.0)
+        ih = int(oh * inner / 100.0)
         out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="%s" fill-opacity="0.35" stroke="none"/>'
-                   % (_SX, y, iw, _SH, INK3))
-        out.append(_lt(_SX + ow + 10, y + 15, outer_lab, 't-sm', True))
-        out.append(_lt(_SX + ow + 10, y + 31, inner_lab, 't-sm', False))
+                   % (x, _SBASE - ih, w, ih, INK3))
+        out.append(_t(x + w // 2, _SBASE - oh - 26, outer_lab, 't-sm'))
+        out.append(_t(x + w // 2, _SBASE - oh - 10, inner_lab, 't-sm'))
     else:
-        out.append(_lt(_SX + ow + 10, y + 24, outer_lab, 't-sm', True))
+        out.append(_t(x + w // 2, _SBASE - oh - 10, outer_lab, 't-sm'))
+    out.append(_t(x + w // 2, _SBASE + 22, name, 't-sm'))
     return ''.join(out)
 
 
-FIG_SHARE = _svg(W, 310, '광 부품이 차지하는 비중 — 클러스터에서 모듈까지', ''.join([
-    _lt(_SX, 26, '막대 하나 = 100%', 't-sm', False),
-    _sbar(0, '클러스터 총비용', 15, '네트워킹 15%', 60, '그중 트랜시버 60% (짙은 조각)'),
-    _sbar(1, '클러스터 총전력', 9, '네트워킹 9%', 17 / 435 * 100, '그중 광트랜시버 17MW / 435MW', inner_of_outer=False),
-    _sbar(2, '트랜시버 한 개 전력', 50, 'DSP 약 50%'),
-    _sbar(3, '트랜시버 자재비', 30, 'DSP 20~30% (위 끝)'),
+FIG_SHARE = _svg(W, 276, '광 부품이 차지하는 비중 — 클러스터에서 모듈까지', ''.join([
+    _lt(_SC[0][0], 26, '기둥 하나 = 100%', 't-sm', False),
+    _scol(_SC[0], '클러스터 총비용', 15, '네트워킹 15%', 60, '그중 트랜시버 60%'),
+    _scol(_SC[1], '클러스터 총전력', 9, '네트워킹 9%', 45, '그중 트랜시버 45%'),
+    _scol(_SC[2], '트랜시버 한 개 전력', 50, 'DSP 약 50%'),
+    _scol(_SC[3], '트랜시버 자재비', 30, 'DSP 20~30%'),
 ]))
 
 
