@@ -1789,20 +1789,15 @@ def subscription_now(watches, sido='서울'):
             end = it.get('end')
             when = ('마감 %s' % end[5:]) if end else (('접수 %s' % it['apply'][5:]) if it.get('apply') else '')
             gs = _group_types(it.get('types') or [])
-            if gs:
-                lo, hi = gs[0]['ex'], gs[-1]['ex']
-                py = lambda ex: int(round(ex / 3.3058))
-                area = ('%d㎡(약 %d평)' % (lo, py(lo)) if lo == hi
-                        else '%d~%d㎡(약 %d~%d평)' % (lo, hi, py(lo), py(hi)))
-            else:
-                area = ''
-            # 최고분양가 — 주택형 가운데 가장 비싼 값(LTTOT_TOP_AMOUNT). 평당가는 안 낸다 —
-            # 어댑터가 받는 면적이 전용(HOUSE_TY 정수부)뿐이라 관례(공급면적 기준)와 어긋난다
-            top = max((g['top'] for g in gs), default=0)
-            top_txt = ('최고 %s' % _fmt_eok(top)) if top else ''
-            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when), E(area), E(top_txt)) if x)
-            # 첫 줄 왼쪽 단지명, 오른쪽 상태·공고일. 둘째 줄 구·마감·평수 — 모바일에서
-            # 칩이 셋째 줄로 떨어지던 것을 고친 자리(2026-09-04 사용자 스크린샷)
+            # 형마다 분양가(2026-09-04 「평마다 분양가로」) — 「59㎡(약 18평) 9억 1,000만원 ·
+            # 74㎡(약 22평) 10억 7,500만원」. 최고금액은 그 형 안에서 가장 비싼 값(LTTOT_TOP_AMOUNT).
+            # 평당가는 안 낸다 — 받는 면적이 전용뿐이라 관례(공급면적 기준)와 어긋난다
+            py = lambda ex: int(round(ex / 3.3058))
+            types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], py(g['ex']), _fmt_eok(g['top']))
+                                   for g in gs if g.get('top'))
+            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when)) if x)
+            if types_txt:
+                meta += '<br>' + E(types_txt)
             rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
                         '<span class="st-r"><span class="tag %s si-chip">%s</span>'
                         '<span class="t-sub"> · 공고 %s</span></span></p>'
