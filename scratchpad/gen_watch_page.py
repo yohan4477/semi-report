@@ -1227,7 +1227,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 층 버튼 — 구마다 갈리는 값만 층으로 그린다. 25구가 전부 같은 범주인 것(토허·
    규제)은 지도가 아니라 아래 배너 문장이다 */
 .layer-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-.layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
+/* 이름은 안 접는다 — 390px 에서 「청약 공고」가 「청약 공/고」로 갈라져 나갔다
+   (2026-09-04). 좁으면 버튼이 줄어드는 게 아니라 줄이 가로로 밀린다 */
+.layer-btn{flex:0 0 auto;white-space:nowrap;
+  font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
   border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
 .layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 /* 지도와 그 아래 칸은 세로로 쌓는다(2026-09-04) — 옆에 세우면 넓은 판에서 청약 목록과
@@ -2291,9 +2294,22 @@ def subscription_now(watches, sido='서울'):
     n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
     n_soon = sum(1 for it in items if _sub_status(it, today) == '접수 예정')
     where = '서울' if sido == '서울' else '경기 (보고 있는 %d곳)' % len(_sido_gus('경기'))
+    # 지금 할 수 있는 것이 앞이다 — 0 을 머리에 두면 「볼 게 없다」로 읽혀 그 뒤
+    # 예정 1건을 안 본다(2026-09-04). 0 인 칸은 아예 안 적고, 둘 다 0 일 때만
+    # 없다고 말한다. 최근 3개월 총건수는 맥락이라 뒤로 뺀다
+    lead = []
+    if n_open:
+        lead.append('지금 접수 중 %d건' % n_open)
+    if n_soon:
+        soon = [it for it in items if _sub_status(it, today) == '접수 예정']
+        soon.sort(key=lambda it: it.get('apply') or '')
+        nx = (soon[0].get('apply') or '')[5:] if soon else ''
+        lead.append('접수 예정 %d건%s' % (n_soon, (' · 가장 이른 접수 %s' % nx) if nx else ''))
+    if not lead:
+        lead.append('지금 접수할 수 있는 공고가 없습니다')
+    lead.append('최근 3개월 %s 공고 %d건' % (where, len(items)))
     h = ['<p class="cond-t">지금 청약</p>',
-         '<p class="cond-lead">최근 3개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
-         '접수 예정 %d건</p>' % (E(where), len(items), n_open, n_soon)]
+         '<p class="cond-lead">%s</p>' % E(' · '.join(lead))]
     if items:
         # 접수 중·접수 예정은 전부(접수 시작 가까운 순), 나머지(발표 대기·발표됨)는 공고일
         # 늦은 순으로 다섯을 채울 만큼만(2026-09-04 사용자 지시 「접수중, 접수예정은 다」)
@@ -2894,12 +2910,20 @@ def _sub_legend_html(watches, gus=None):
     for name in (gus or SEOUL_GU['gu']):
         n = len(sub_gu.get(name) or [])
         counts[_sub_bin(n) or 0] += 1
+    # 색 띠 — 기본 층인데 이 범례만 글자뿐이라 지도의 초록 농담이 무슨 수인지 안
+    # 보였다(2026-09-04). 0건은 지도에서 안 칠하므로 띠에서도 테두리만 있는 흰 칸
+    strip = ('<span class="leg-sw" style="background:var(--paper);'
+             'box-shadow:inset 0 0 0 1px var(--line)"></span>'
+             + ''.join('<span class="leg-sw" style="background:var(--seq-%d)"></span>'
+                       % (b + 1) for b in range(1, 5)))
+    labels = ''.join('<span>%s</span>' % E(lbl) for _b, lbl in _SUB_BIN_LABEL)
     parts = ['%s %d구' % (lbl, counts[b]) for b, lbl in _SUB_BIN_LABEL if counts[b]]
     line = '최근 6개월 공고 — ' + ' · '.join(parts)
-    return ('<p class="leg-item">%s</p>'
+    return ('<div class="leg-strip">%s</div><p class="leg-labels">%s</p>'
+            '<p class="leg-item">%s</p>'
             '<p class="leg-src">기준 %s · 청약홈(공공데이터포털) · '
             '주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
-            % (E(line), E(sub_asof or '—')))
+            % (strip, labels, E(line), E(sub_asof or '—')))
 
 
 def _zone_age_chip(as_of, today):
@@ -3512,7 +3536,11 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
 
     풀이 셋(전세가율·매매가격지수·수급동향)은 패널이 아니라 지도 캡션 줄로
     내렸다(2026-09-03) — 권역 요약+범례+자+풀이가 패널 안에 다 있으면 데스크톱
-    800px 를 넘는다."""
+    800px 를 넘는다.
+
+    범례는 지도 바로 밑(.mapcol 안, 캡션과 「지금 청약」 사이)이다 — 패널 뒤에
+    두었더니 색이 무슨 값인지가 1,200px 아래에 있어 지도를 읽는 동안 안 보였다
+    (2026-09-04)."""
     gus = _sido_gus(sido)
     gu_data = _gu_map_data(watches)
     svg = _gu_svg(gu_data, gus, suffix, watches)
@@ -3565,11 +3593,11 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
         '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
-        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s</div>'
-        '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s%s'
+        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
+        '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s'
         '</div></div><div class="mapextra">%s%s</div>%s'
         % (E(head), btns, svg.replace('data-layer="ratio"', 'data-layer="%s"' % first, 1),
-           cap, below, first, panels, ''.join(legend_list),
+           cap, ''.join(legend_list), below, first, panels,
            _zone_banner(checked, gus), changed_section(watches, sido, suffix), statsrow))
 
 
