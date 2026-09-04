@@ -473,7 +473,7 @@ def _fig_supply(items, months, sido):
             o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                      % (x + w / 2, Y1 + 16, ym[2:].replace('-', '.')))
     o.append('<text x="%d" y="%d" class="t-sm t-axis">세대 · 막대를 누르면 그 달 공고</text>' % (X0, H - 8))
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 월별 공급 세대수" class="fig-w fig-click">%s</svg>'
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 월별 공급 세대수" class="fig-s fig-click">%s</svg>'
             '<figcaption>%s 월별 공급 세대수 — 모집공고일 기준, 보고 있는 시군구만</figcaption></figure>'
             % (W, H, E(sido), ''.join(o), E(sido))), tot
 
@@ -518,7 +518,7 @@ def _fig_rate_price(items, sido):
                  % (E(it.get('id') or ''), sx(pm), sy(r), E(it.get('name') or ''), _fmt_rate(r),
                     '{:,}'.format(int(round(pm)))))
     o.append('<text x="%d" y="%d" class="t-sm t-axis">점을 누르면 그 공고</text>' % (X0, H - 8))
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 경쟁률과 분양가" class="fig-w fig-click">%s</svg>'
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 경쟁률과 분양가" class="fig-s fig-click">%s</svg>'
             '<figcaption>%s 1순위 경쟁률과 ㎡당 분양가 — 공고 하나가 점 하나 (%d건). 가로 ㎡당 분양가(만원, '
             '전용 기준), 세로 1순위 최고 경쟁률(대 1, 로그 눈금)</figcaption></figure>'
             % (W, H, E(sido), ''.join(o), E(sido), len(pts))), pts
@@ -570,7 +570,7 @@ def _fig_price_vs_median(items, watches, sido, n=12):
                  % (x, yb + 24, sido, '{:,}'.format(int(round(v)))))
     cap = ' · '.join('%s 중위 매매가 %s만원/㎡ (%s)' % (sd, '{:,}'.format(int(round(v))), E(a or '—'))
                      for sd, (v, a) in med.items() if v)
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 분양가와 시세" class="fig-w fig-click">%s</svg>'
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 분양가와 시세" class="fig-s fig-click">%s</svg>'
             '<figcaption>%s 최근 %d건의 ㎡당 분양가(만원, 전용 기준)와 중위 매매가 — %s · 막대를 누르면 그 공고</figcaption></figure>'
             % (W, H, E(sido), ''.join(o), E(sido), len(rows), cap)), rows
 
@@ -1465,6 +1465,8 @@ figure svg{width:100%;height:auto;display:block}
 /* 도해는 넓은 판·좁은 판 둘을 싣고 화면 폭으로 하나만 보인다. 줄여 그리면 글자가
    7px 이 되고 최소폭을 두면 오른쪽 끝(제일 최근 달)이 화면 밖으로 나간다 */
 svg.fig-n{display:none}
+/* 통계 그래프 — 넓은 판·좁은 판 갈래 없이 늘 보인다(2026-09-04, 휴대폰에서 fig-w 규칙에 숨었다) */
+svg.fig-s{display:block;width:100%;height:auto}
 figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}

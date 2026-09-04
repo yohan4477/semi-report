@@ -380,6 +380,8 @@ figure svg{width:100%;height:auto;display:block}
 /* 도해는 넓은 판·좁은 판 둘을 싣고 화면 폭으로 하나만 보인다. 줄여 그리면 글자가
    7px 이 되고 최소폭을 두면 오른쪽 끝(제일 최근 달)이 화면 밖으로 나간다 */
 svg.fig-n{display:none}
+/* 통계 그래프 — 넓은 판·좁은 판 갈래 없이 늘 보인다(2026-09-04, 휴대폰에서 fig-w 규칙에 숨었다) */
+svg.fig-s{display:block;width:100%;height:auto}
 figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}
