@@ -3449,7 +3449,7 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
     hist_items, _h_asof, _h_months = _sub_hist(watches)
     statsrow = ''
     if hist_items:
-        btn_list.append(_btn('stats', '통계'))
+        btn_list.append(_btn('stats', '청약 통계'))
     btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
     legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
     if hist_items:
