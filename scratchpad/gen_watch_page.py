@@ -1799,13 +1799,15 @@ def subscription_now(watches, sido='서울'):
                 return ('%d억' % v) if v == int(v) else ('%.1f억' % v)
             types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], py(g['ex']), _eok1(g['top']))
                                    for g in gs if g.get('top'))
-            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when)) if x)
+            # 마감일은 상태 칩 옆(제목 줄 오른쪽)으로(2026-09-04) — 둘째 줄은 구와 형별 분양가
+            meta = E(it.get('gu') or '')
             if types_txt:
                 meta += '<br>' + E(types_txt)
             rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
-                        '<span class="st-r"><span class="tag %s si-chip">%s</span></span></p>'
+                        '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
                         '<p class="st-2 t-sub">%s</p></div>'
-                        % (E(it.get('id') or ''), E(it.get('name') or '—'), cls, E(st), meta))
+                        % (E(it.get('id') or ''), E(it.get('name') or '—'), cls, E(st),
+                           ('<span class="t-sub"> · %s</span>' % E(when)) if when else '', meta))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
         h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
