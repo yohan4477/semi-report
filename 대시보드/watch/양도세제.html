@@ -83,7 +83,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
   border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
 .layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+/* 지도와 그 아래 칸은 세로로 쌓는다(2026-09-04) — 옆에 세우면 넓은 판에서 청약 목록과
+   전세가율이 서로를 밀어낸다. 지도는 900px 에서 멈춘다(폭을 다 주면 세로가 화면을 넘는다) */
+.maprow{display:block;margin:14px 0 0}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
    바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
@@ -92,9 +94,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .map-fig{position:static}
 /* 왼쪽 칸 — 지도 그림은 이 칸의 위쪽 절반만 쓴다. 남는 아래를 상태 배너와
    「달라진 것」이 채운다(빈 칸을 300px 넘게 두지 않는다) */
-.mapcol{flex:0 0 58%;min-width:0}
-.map-fig{margin:0;min-width:0}
-.mappanel{flex:1;min-width:0}
+.mapcol{min-width:0}
+.map-fig{margin:0;min-width:0;max-width:900px}
+.mappanel{min-width:0;margin:20px 0 0}
 .seoul-map{width:100%;height:auto;display:block}
 /* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
    바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은

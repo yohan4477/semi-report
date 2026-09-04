@@ -436,8 +436,8 @@ def _fig_supply(items, months, sido):
     """월별 공급 세대수 — 그 시·도만, 막대 하나. 막대를 누르면 그 달 공고가 밑에 선다
     (2026-09-04 「그래프의 위치 누르면 각각 나오게」) — data-ym 으로 JS 가 잇는다."""
     items = [it for it in items if _sido_of(it.get('gu') or '') == sido]
-    W, H = 640, 240
-    X0, X1, Y0, Y1 = 64, W - 12, 24, H - 44   # 왼쪽 여백은 「5,000」 다섯 글자가 든다
+    W, H = 640, 254
+    X0, X1, Y0, Y1 = 64, W - 12, 24, H - 58   # 왼쪽 여백은 「5,000」 다섯 글자가 든다
     tot = {}
     for it in items:
         ym = (it.get('pblanc_de') or '')[:7]
@@ -469,12 +469,15 @@ def _fig_supply(items, months, sido):
             o.append('<rect class="bar" data-ym="%s" x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
                      'fill="var(--ink-2)"><title>%s · %s세대 · 공고 %d건</title></rect>'
                      % (ym, x, sy(val), w, Y1 - sy(val), ym, '{:,}'.format(val), v['n']))
-        if i % 3 == 0:
+        if i % 2 == 0:
             o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                      % (x + w / 2, Y1 + 16, ym[2:].replace('-', '.')))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">세대 · 막대를 누르면 그 달 공고</text>' % (X0, H - 8))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">가로 모집공고 월 · 세로 공급 세대수(호)</text>'
+             % (X0, H - 22))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">막대를 누르면 그 달 공고</text>' % (X0, H - 8))
     return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 월별 공급 세대수" class="fig-s fig-click">%s</svg>'
-            '<figcaption>%s 월별 공급 세대수 — 모집공고일 기준, 보고 있는 시군구만</figcaption></figure>'
+            '<figcaption>%s 월별 공급 세대수 — 모집공고일 기준 최근 12개월, 보고 있는 시군구만. '
+            '세대수는 그 공고의 총 공급 세대(호)</figcaption></figure>'
             % (W, H, E(sido), ''.join(o), E(sido))), tot
 
 
@@ -493,8 +496,8 @@ def _fig_rate_price(items, sido):
         pts.append((pm[0], r, it))
     if len(pts) < 3:
         return '', pts
-    W, H = 640, 300
-    X0, X1, Y0, Y1 = 78, W - 12, 16, H - 44   # 「10,000」 여섯 글자 자리
+    W, H = 640, 314
+    X0, X1, Y0, Y1 = 78, W - 12, 16, H - 58   # 「10,000」 여섯 글자 자리
     xs = [p[0] for p in pts]
     xlo = (int(min(xs) // 250)) * 250
     xhi = (int(max(xs) // 250) + 1) * 250
@@ -517,7 +520,9 @@ def _fig_rate_price(items, sido):
                  '<title>%s · %s:1 · ㎡당 %s만원</title></circle>'
                  % (E(it.get('id') or ''), sx(pm), sy(r), E(it.get('name') or ''), _fmt_rate(r),
                     '{:,}'.format(int(round(pm)))))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">점을 누르면 그 공고</text>' % (X0, H - 8))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">가로 ㎡당 분양가(만원) · 세로 1순위 경쟁률(대 1)</text>'
+             % (X0, H - 22))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">세로는 로그 눈금 · 점을 누르면 그 공고</text>' % (X0, H - 8))
     return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 경쟁률과 분양가" class="fig-s fig-click">%s</svg>'
             '<figcaption>%s 1순위 경쟁률과 ㎡당 분양가 — 공고 하나가 점 하나 (%d건). 가로 ㎡당 분양가(만원, '
             '전용 기준), 세로 1순위 최고 경쟁률(대 1, 로그 눈금)</figcaption></figure>'
@@ -542,7 +547,7 @@ def _fig_price_vs_median(items, watches, sido, n=12):
     W = 640
     RH = 22
     X0, X1 = 150, W - 60
-    H = 20 + RH * len(rows) + 34
+    H = 20 + RH * len(rows) + 50
     vmax = max([r[1] for r in rows] + [v for v, _a in med.values() if v]) or 1
     sx = lambda v: X0 + (X1 - X0) * v / vmax
     o = []
@@ -568,6 +573,8 @@ def _fig_price_vs_median(items, watches, sido, n=12):
         o.append('<rect x="%.1f" y="%d" width="3" height="9" fill="var(--ink)"/>' % (x - 1.5, yb + 3))
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s 중위 매매가 %s</text>'
                  % (x, yb + 24, sido, '{:,}'.format(int(round(v)))))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">가로 ㎡당 분양가(만원, 전용면적) · 막대를 누르면 그 공고</text>'
+             % (X0 - 148, yb + 40))
     cap = ' · '.join('%s 중위 매매가 %s만원/㎡ (%s)' % (sd, '{:,}'.format(int(round(v))), E(a or '—'))
                      for sd, (v, a) in med.items() if v)
     return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 분양가와 시세" class="fig-s fig-click">%s</svg>'
@@ -651,7 +658,7 @@ def subscription_stats_page(watches):
     items, as_of, months = _sub_hist(watches)
     today = _TODAY
     n_months = 24
-    mlist = _month_list(n_months, today[:7])
+    mlist = _month_list(12, today[:7])   # 공급 막대는 12개월 — 24개월이면 막대가 실오라기가 된다
     mlist_desc = list(reversed(mlist))
     # 서울 → 경기, 시·도마다 그래프 셋(2026-09-04 「청약 통계도 서울 경기 나눠서」). 그래프 밑
     # 목록은 상시로 안 펴고, 막대·점을 누른 것만 선다(「그래프의 위치 누르면 각각 나오게」)
@@ -1168,7 +1175,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .layer-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;
   border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
 .layer-btn.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.maprow{display:flex;gap:24px;margin:14px 0 0;align-items:flex-start}
+/* 지도와 그 아래 칸은 세로로 쌓는다(2026-09-04) — 옆에 세우면 넓은 판에서 청약 목록과
+   전세가율이 서로를 밀어낸다. 지도는 900px 에서 멈춘다(폭을 다 주면 세로가 화면을 넘는다) */
+.maprow{display:block;margin:14px 0 0}
 /* 지도는 늘 손닿는 곳에 — 패널이 길어져 스크롤해도 지도는 제자리(2026-09-03,
    사용자 P0: 「스크롤 내리다 보면 다른 지역은 선택도 못 하네」). top 은 절
    바로가기 줄(.jump, sticky top:0) 의 실측 높이(~54px) + 여백 8px */
@@ -1177,9 +1186,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .map-fig{position:static}
 /* 왼쪽 칸 — 지도 그림은 이 칸의 위쪽 절반만 쓴다. 남는 아래를 상태 배너와
    「달라진 것」이 채운다(빈 칸을 300px 넘게 두지 않는다) */
-.mapcol{flex:0 0 58%;min-width:0}
-.map-fig{margin:0;min-width:0}
-.mappanel{flex:1;min-width:0}
+.mapcol{min-width:0}
+.map-fig{margin:0;min-width:0;max-width:900px}
+.mappanel{min-width:0;margin:20px 0 0}
 .seoul-map{width:100%;height:auto;display:block}
 /* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
    바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은
@@ -3327,8 +3336,10 @@ Array.from(root.querySelectorAll('.layer-btn')).forEach(function(b){
       x.setAttribute('aria-pressed',on?'true':'false');});
     Array.from(root.querySelectorAll('.map-legend')).forEach(function(x){
       x.hidden=x.dataset.legend!==b.dataset.layer;});
-    var st=root.querySelector('.statsrow'),mr=root.querySelector('.maprow');
-    if(st&&mr){var on=b.dataset.layer==='stats';st.hidden=!on;mr.hidden=on;}
+    /* 통계 층은 지도가 아니라 그래프다 — 지도·패널과 그 아래 지정 현황·달라진 것을 함께 접는다 */
+    var st=root.querySelector('.statsrow'),mr=root.querySelector('.maprow'),
+        ex=root.querySelector('.mapextra');
+    if(st&&mr){var on=b.dataset.layer==='stats';st.hidden=!on;mr.hidden=on;if(ex)ex.hidden=on;}
   });
 });
 });
@@ -3451,22 +3462,26 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
     btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
     legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
     if hist_items:
-        mlist = _month_list(24, _TODAY[:7])
+        mlist = _month_list(12, _TODAY[:7])
         blk, _nav = _stats_block(hist_items, watches, mlist, list(reversed(mlist)), sido, suffix)
         statsrow = '<div class="statsrow" hidden>%s</div>' % blk
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
     head = ('서울 25구 — 어디에 청약 공고가 있나, 전세가율은 어디쯤인가' if sido == '서울'
             else '경기 — 성남·동탄·광교·평촌·남한산성, 어디에 청약 공고가 있나, 전세가율은 어디쯤인가')
     return (
+        # 위에서 아래로 — 지도 · 지금 청약 · 전세가율(권역 요약과 구 패널) · 지정 현황 ·
+        # 달라진 것(2026-09-04 「전세가율이 지금 청약 오른쪽에 오는데 밑으로 내려」). 옆에
+        # 세우던 두 칸을 걷었다: 넓은 판에서 청약 목록 옆에 전세가율이 서면 둘이 서로를
+        # 밀어내 어느 쪽도 다 안 읽힌다
         '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
-        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s%s</div>'
+        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s</div>'
         '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s%s'
-        '</div></div>%s'
+        '</div></div><div class="mapextra">%s%s</div>%s'
         % (E(head), btns, svg.replace('data-layer="ratio"', 'data-layer="%s"' % first, 1),
-           cap, below, _zone_banner(checked, gus), changed_section(watches, sido, suffix), first,
-           panels, ''.join(legend_list), statsrow))
+           cap, below, first, panels, ''.join(legend_list),
+           _zone_banner(checked, gus), changed_section(watches, sido, suffix), statsrow))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
