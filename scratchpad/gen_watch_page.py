@@ -944,6 +944,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
+.sub-title{padding:8px 0;border-bottom:1px solid var(--line)}
+.sub-title:last-child{border-bottom:0}
 /* 정비사업 — 구 한 줄(이름·곳수)과 그 밑 사업장 셋 */
 .rb-row{padding:12px 0;border-bottom:1px solid var(--line)}
 .rb-row:last-of-type{border-bottom:0}
@@ -1750,37 +1752,54 @@ def law_summary(watches):
 
 
 def subscription_now(watches, sido='서울'):
-    """「분양」 절의 「지금 청약」 축약(청약공고_스펙 §3). 옛 7열 표
-    (subscription_table, 2026-09-04 걷음)를 대신한다 — 그 시·도 구 전부를 세되
-    (서울 25구 / 성남 3구), 지금 접수 중·예정만 최대 3건 보여주고 나머지는
-    「공고 전부 보기」로 새 페이지(watch/청약 공고.html)에 돌린다."""
+    """「분양」 절의 「지금 청약」 축약 — 그 시·도의 최근 3개월 공고를 공고일 늦은 순으로
+    다섯 건, 제목 줄(단지명·구·상태)만(2026-09-04 사용자 지시 「제목만 최근 3개월 다섯」).
+    평수·분양가·시세 줄은 watch/청약 공고.html 에 있다. 어댑터가 못 냈으면 빈 문자열."""
     items, as_of = _all_sub_items(watches)
     if items is None:
         return ''
     today = _TODAY
-    items = [it for it in items if _sido_of(it.get('gu') or '') == sido]
+    cut = _months_before(today, 3)
+    items = [it for it in items if _sido_of(it.get('gu') or '') == sido
+             and (it.get('pblanc_de') or it.get('apply') or '') >= cut]
+    items.sort(key=lambda it: (it.get('pblanc_de') or it.get('apply') or ''), reverse=True)
     n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
     n_soon = sum(1 for it in items if _sub_status(it, today) == '접수 예정')
     where = '서울' if sido == '서울' else '경기 (보고 있는 %d곳)' % len(_sido_gus('경기'))
     h = ['<p class="cond-t">지금 청약</p>',
-         '<p class="cond-lead">최근 6개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
+         '<p class="cond-lead">최근 3개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
          '접수 예정 %d건</p>' % (E(where), len(items), n_open, n_soon)]
-    shown = (sorted((it for it in items if _sub_status(it, today) == '접수 중'),
-                    key=lambda it: it.get('apply') or '')
-             + sorted((it for it in items if _sub_status(it, today) == '접수 예정'),
-                      key=lambda it: it.get('apply') or ''))
-    if shown:
-        market = _watched_market(watches)
-        h.append('<div class="sub-list">%s</div>'
-                 % ''.join(_sub_item_html(it, today, market=market) for it in shown[:3]))
-    elif items:
-        h.append('<p class="cond-lead">%s</p>' % E(_sub_verdict(items, today)))
+    if items:
+        rows = []
+        for it in items[:5]:
+            st = _sub_status(it, today)
+            cls = _SUB_STATUS_CLS.get(st, 't-none')
+            rows.append('<p class="si-1 sub-title"><a href="watch/청약 공고.html#p-%s">%s</a> '
+                        '<span class="si-gu">%s</span> <span class="tag %s si-chip">%s</span>'
+                        '<span class="t-sub"> · 공고 %s</span></p>'
+                        % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
+                           cls, E(st), E(it.get('pblanc_de') or it.get('apply') or '—')))
+        h.append('<div class="sub-list">%s</div>' % ''.join(rows))
+    else:
+        h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
     h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 →</a> · '
              '<a href="#subscription-cond">청약 조건 →</a></p>')
     h.append('<p class="cond-tail">청약홈(공공데이터포털) · 기준 %s · 상태는 화면 만든 날 %s '
              '기준 · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
              % (E(as_of or '—'), E(today)))
     return ''.join(h)
+
+
+def _months_before(ymd, n):
+    """YYYY-MM-DD 에서 n 달 앞 날짜(같은 일, 없으면 그 달 말일)."""
+    y, m, d = int(ymd[:4]), int(ymd[5:7]), int(ymd[8:10])
+    m -= n
+    while m <= 0:
+        m += 12
+        y -= 1
+    import calendar
+    d = min(d, calendar.monthrange(y, m)[1])
+    return '%04d-%02d-%02d' % (y, m, d)
 
 
 def subscription_section(watches, sido='서울', suffix=''):
@@ -2888,31 +2907,34 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
     # 청약 공고는 열쇠가 있을 때만(sub_gu is not None) 셋째 층으로 더한다 —
     # 값이 없으면 버튼 자체를 안 낸다
     sub_gu, _sub_asof = _sub_gu_data(watches)
-    btn_list = ['<button type="button" class="layer-btn is-on" data-layer="ratio" '
-                'aria-pressed="true">전세가율</button>',
-                '<button type="button" class="layer-btn" data-layer="cap" '
-                'aria-pressed="false">분양가상한제</button>']
-    legend_list = ['<div class="map-legend" data-legend="ratio">%s</div>'
-                   % _ratio_legend_html(sido_ws, gus),
-                   '<div class="map-legend" data-legend="cap" hidden>%s</div>'
-                   % _cap_legend_html(gus)]
+    # 청약 공고 층이 첫 버튼이자 기본 층이다(2026-09-04 사용자 지시 「지도에서는 청약
+    # 공고가 가장 앞에」) — 값이 없으면(sub_gu None) 전세가율이 기본으로 돌아간다
+    first = 'sub' if sub_gu is not None else 'ratio'
+    def _btn(layer, label):
+        on = layer == first
+        return ('<button type="button" class="layer-btn%s" data-layer="%s" aria-pressed="%s">%s</button>'
+                % (' is-on' if on else '', layer, 'true' if on else 'false', label))
+    def _leg(layer, body):
+        return '<div class="map-legend" data-legend="%s"%s>%s</div>' % (layer, '' if layer == first else ' hidden', body)
+    btn_list, legend_list = [], []
     if sub_gu is not None:
-        btn_list.append('<button type="button" class="layer-btn" data-layer="sub" '
-                        'aria-pressed="false">청약 공고</button>')
-        legend_list.append('<div class="map-legend" data-legend="sub" hidden>%s</div>'
-                           % _sub_legend_html(watches, gus))
+        btn_list.append(_btn('sub', '청약 공고'))
+        legend_list.append(_leg('sub', _sub_legend_html(watches, gus)))
+    btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
+    legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
-    head = ('서울 25구 — 지금 전세가율이 어디쯤인가' if sido == '서울'
-            else '경기 — 성남·동탄·광교·평촌·남한산성, 지금 전세가율이 어디쯤인가')
+    head = ('서울 25구 — 어디에 청약 공고가 있나, 전세가율은 어디쯤인가' if sido == '서울'
+            else '경기 — 성남·동탄·광교·평촌·남한산성, 어디에 청약 공고가 있나, 전세가율은 어디쯤인가')
     return (
         '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
-        '<div class="mappanel" data-layer="ratio" aria-live="polite" aria-atomic="true">%s%s'
+        '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s%s'
         '</div></div>'
-        % (E(head), btns, svg, cap, _zone_banner(checked, gus),
-           changed_section(watches, sido, suffix), panels, ''.join(legend_list)))
+        % (E(head), btns, svg.replace('data-layer="ratio"', 'data-layer="%s"' % first, 1),
+           cap, _zone_banner(checked, gus), changed_section(watches, sido, suffix), first,
+           panels, ''.join(legend_list)))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -2986,6 +3008,7 @@ def check_ui(html, watches):
     # <button ...class="layer-btn 으로만 센다 — 감싼 상자 class="layer-btns"(복수)도
     # "layer-btn" 을 부분 문자열로 품어 그냥 세면 하나 더 잡힌다
     n_btn = html.count('<button type="button" class="layer-btn') // 2   # 지도가 둘
+    assert html.count('class="layer-btns" role="group" aria-label="지도 층"><button type="button" class="layer-btn is-on" data-layer="sub"') == 2         or 'data-legend="sub"' not in html,         '규약 위반: 청약 공고 데이터가 있으면 그 층이 첫 버튼이자 기본 층이어야 한다 (2026-09-04)'
     # 청약 공고 층의 존재는 svg 안 data-sub-bin 이 아니라 범례 상자(data-legend="sub")
     # 로 잰다 — CSS 규칙(.seoul-map[data-layer="sub"] …)은 값과 무관하게 항상
     # <style> 안에 있어 data-layer="sub" 라는 문자열 자체는 늘 참이다
