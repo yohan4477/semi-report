@@ -1793,7 +1793,11 @@ def subscription_now(watches, sido='서울'):
             # 74㎡(약 22평) 10억 7,500만원」. 최고금액은 그 형 안에서 가장 비싼 값(LTTOT_TOP_AMOUNT).
             # 평당가는 안 낸다 — 받는 면적이 전용뿐이라 관례(공급면적 기준)와 어긋난다
             py = lambda ex: int(round(ex / 3.3058))
-            types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], py(g['ex']), _fmt_eok(g['top']))
+            # 억 단위 소수 한 자리(「9.1억」, 2026-09-04 사용자 지시) — 만원 → 억, .0 은 뗀다
+            def _eok1(man):
+                v = round(man / 10000.0, 1)
+                return ('%d억' % v) if v == int(v) else ('%.1f억' % v)
+            types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], py(g['ex']), _eok1(g['top']))
                                    for g in gs if g.get('top'))
             meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when)) if x)
             if types_txt:
