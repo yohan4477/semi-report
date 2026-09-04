@@ -1352,6 +1352,7 @@ svg.fig-click .is-on{fill:var(--ink);stroke:var(--ink);stroke-width:2px}
 .st-r{flex:0 0 auto;white-space:nowrap;font-weight:400}
 .st-2{margin:2px 0 0;font-size:12.5px}
 /* 정비사업 — 구 한 줄(이름·곳수)과 그 밑 사업장 셋 */
+.mapcol .band{margin-top:14px}
 .rb-row{padding:12px 0;border-bottom:1px solid var(--line)}
 .rb-row:last-of-type{border-bottom:0}
 .rb-k{margin:0;font-size:15px;font-weight:700}
@@ -3388,7 +3389,7 @@ secs.forEach(function(s){io.observe(s);});
 </script>"""
 
 
-def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
+def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''):
     """지도 히어로 — 왼쪽 지도(58%, 데스크톱은 sticky) · 오른쪽 패널(42%, 기본은
     권역 셋 요약). 구를 손대면(호버) 미리보기, 누르면(클릭·Enter) 그 구로
     고정된다. 상세 이동은 패널 안 「자세히 →」로만 한다. 값은 전부
@@ -3436,11 +3437,11 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
         '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
-        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
+        '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s%s</div>'
         '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s%s'
         '</div></div>'
         % (E(head), btns, svg.replace('data-layer="ratio"', 'data-layer="%s"' % first, 1),
-           cap, _zone_banner(checked, gus), changed_section(watches, sido, suffix), first,
+           cap, below, _zone_banner(checked, gus), changed_section(watches, sido, suffix), first,
            panels, ''.join(legend_list)))
 
 
@@ -3496,14 +3497,14 @@ def check_ui(html, watches):
         at_map = html.find('id="map%s"' % sfx)
         at_changed = html.find('id="changed%s"' % sfx)
         at_lines = html.find('id="lines%s"' % sfx)
-        assert 0 < at_map < at_changed < at_sub < at_lines < at_policy, \
-            ('규약 위반(%s): 지도 → 달라진 것 → 분양 → 보고 있는 것 → 제도 순서여야 한다(2026-09-04)'
+        assert 0 < at_map < at_sub < at_changed < at_lines < at_policy, \
+            ('규약 위반(%s): 지도 → 지금 청약(지도 밑) → 달라진 것 → 보고 있는 것 → 제도 순서여야 한다(2026-09-04)'
              % _sido)
         # 정비사업 절은 어댑터가 값을 냈을 때만 선다 — 서면 달라진 것과 보고 있는 것 사이
         at_rb = html.find('id="rebuild%s"' % sfx)
         if _rebuild_data(watches)[0] is not None:
-            assert at_sub < at_rb < at_lines, \
-                '규약 위반(%s): 정비사업 절은 분양 다음, 보고 있는 것 앞이다' % _sido
+            assert at_changed < at_rb < at_lines, \
+                '규약 위반(%s): 정비사업 절은 달라진 것 다음, 보고 있는 것 앞이다' % _sido
         else:
             assert at_rb < 0, '규약 위반(%s): 값 없는 정비사업 절을 냈다' % _sido
     # 층은 구마다 갈리는 값만 그린다. 25구가 전부 같은 범주인 것(토허·규제)은 지도가
@@ -3678,9 +3679,11 @@ def build():
         # 다 지워」) — 고르는 계층은 서울|경기 탭 하나다. 상세 페이지의 바로가기는 그대로
         # 지도(청약 공고 층이 기본)가 분양 목록보다 먼저(2026-09-04 「청약공고 버튼과 지도만
         # 지금 청약 위로」) — 어디에 공고가 섰나를 먼저 보고, 그 밑에서 제목을 고른다
+        # 「지금 청약」은 지도 그림 바로 밑, 왼쪽 칸 안(2026-09-04 「지도 바로 밑에 지금 청약」).
+        # 지정 현황 배너·달라진 것은 그 다음
         blk.append('<section class="hero" id="map%s">%s</section>'
-                   % (sfx, seoul_map_section(ws, asof, checked, sido, sfx)))
-        blk.append(subscription_section(ws, sido, sfx))
+                   % (sfx, seoul_map_section(ws, asof, checked, sido, sfx,
+                                             below=subscription_section(ws, sido, sfx))))
         blk.append(rebuild_section(ws, sido, sfx))
         blk.append('<div class="band" id="lines%s"><p class="band-t">보고 있는 것 — %s %d</p>%s</div>'
                    % (sfx, sido, len(sido_ws), line_summary_rows(ws, sido)))
