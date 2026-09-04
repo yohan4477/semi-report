@@ -677,6 +677,84 @@ def _fmt_rate(v):
     return ('%d' % v) if float(v).is_integer() else ('%.1f' % v)
 
 
+_PLACE_JS = """<script>
+(function(){
+var maps={};Array.from(document.querySelectorAll('.place-map')).forEach(function(m){maps[m.dataset.sido]=m;});
+var details=Array.from(document.querySelectorAll('.pd'));
+var list=document.getElementById('place-list');
+var pick=function(id){
+  var d=details.filter(function(x){return x.dataset.id===id;})[0];
+  details.forEach(function(x){x.hidden=(x!==d);});
+  if(list)list.hidden=!!d;
+  Object.keys(maps).forEach(function(k){maps[k].hidden=d?(k!==d.dataset.sido):false;});
+  Array.from(document.querySelectorAll('.pin')).forEach(function(p){p.classList.toggle('pin-on',!!d&&p.dataset.id===id);});
+  Array.from(document.querySelectorAll('.gu')).forEach(function(g){
+    var on=!!d&&g.dataset.gu===d.dataset.gu;g.classList.toggle('gu-hover',on);g.classList.toggle('gu-dim',!!d&&!on);});
+  if(d){document.title=d.dataset.name+' — 청약 위치';}
+};
+var fromHash=function(){var h=decodeURIComponent(location.hash||'');pick(h.indexOf('#p-')===0?h.slice(3):'');};
+window.addEventListener('hashchange',fromHash);fromHash();
+Array.from(document.querySelectorAll('.pin')).forEach(function(p){
+  p.style.pointerEvents='auto';p.style.cursor='pointer';
+  p.addEventListener('click',function(){location.hash='#p-'+p.dataset.id;});});
+Array.from(document.querySelectorAll('.pd .pd-back')).forEach(function(a){
+  a.addEventListener('click',function(ev){ev.preventDefault();history.replaceState(null,'',location.pathname);pick('');});});
+})();
+</script>"""
+
+
+def subscription_place_page(watches):
+    """청약 위치 — 대시보드/watch/청약 위치.html. 본 장·공고 목록의 제목이 여기로 온다
+    (#p-<id>). 그 공고의 시·도 지도에 점·구를 켜고 옆에 공고 상세. 해시가 없으면 지도 둘과
+    목록(2026-09-04 「제목 누르면 스크롤 말고 새 페이지에서」)."""
+    sub_gu, as_of = _sub_gu_data(watches)
+    if sub_gu is None:
+        sub_gu, as_of = {}, '—'
+    today = _TODAY
+    gu_data = _gu_map_data(watches)
+    market = _watched_market(watches)
+    maps = []
+    for sido, sfx in SIDOS:
+        gus = _sido_gus(sido)
+        svg = _gu_svg(gu_data, gus, sfx, watches).replace('data-layer="ratio"', 'data-layer="sub"', 1)
+        maps.append('<figure class="map-fig place-map" data-sido="%s">%s<figcaption>%s · 점이 공고, 누르면 그 공고</figcaption></figure>'
+                    % (sido, svg, sido))
+    items = sorted((it for lst in sub_gu.values() for it in lst),
+                   key=lambda it: it.get('pblanc_de') or '', reverse=True)
+    details, rows = [], []
+    for it in items:
+        gu = it.get('gu') or ''
+        sido = _sido_of(gu)
+        st = _sub_status(it, today)
+        body = _sub_item_html(it, today, full=True, market=market)
+        loc = ('' if it.get('lat') else
+               '<p class="cond-tail">이 공고는 주소를 좌표로 못 풀어 점이 없다 — 구만 강조한다</p>')
+        details.append('<div class="pd" data-id="%s" data-sido="%s" data-gu="%s" data-name="%s" hidden>'
+                       '<p class="lbl"><a class="pd-back" href="#">← 전체 공고</a></p>%s%s'
+                       '<p class="cond-tail">%s%s</p></div>'
+                       % (E(it.get('id') or ''), sido, E(gu), E(it.get('name') or ''), body, loc,
+                          E(it.get('addr') or ''), (' · %s' % E(st)) if st else ''))
+        rows.append('<p class="cond-lead"><a href="#p-%s">%s</a> %s · %s</p>'
+                    % (E(it.get('id') or ''), E(it.get('name') or '—'), E(gu), E(st)))
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>청약 위치 — 포트폴리오 워치</title>%s<style>%s'
+            '.place-row{display:flex;gap:24px;align-items:flex-start}.place-row .mapcol{flex:0 0 58%%}'
+            '.place-row .side{flex:1;min-width:0}@media (max-width:620px){.place-row{display:block}}'
+            '</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#subscription">← 포트폴리오 워치</a>'
+            '<header><p class="meta mono">최근 6개월 공고 %d건 · 기준 %s</p><h1>청약 위치</h1>'
+            '<p class="lede">공고가 어디에 섰나 — 점 하나가 공고 하나, 구는 그 공고가 든 구.</p></header>'
+            '<div class="place-row"><div class="mapcol">%s</div>'
+            '<div class="side">%s<div id="place-list"><p class="band-t">공고</p>%s</div></div></div>'
+            '<footer>청약홈(공공데이터포털) 공고 · 좌표는 카카오 로컬 API 로 주소를 푼 것 · 지도 원본 '
+            'southkorea/seoul-maps·southkorea-maps</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->%s'
+            '</div></body></html>'
+            % (FONTS, CSS, len(items), E(as_of or '—'), ''.join(maps), ''.join(details), ''.join(rows),
+               _PLACE_JS))
+
+
 def _all_sub_items(watches):
     """청약 제도 줄의 최근 6개월 공고 전부 — 서울 25구 + 성남 3구를 한 목록으로
     편다(권역 셋에 갇히지 않는다). 어댑터가 못 냈으면(열쇠 없음) (None, None) —
@@ -2110,7 +2188,7 @@ def subscription_now(watches, sido='서울'):
             if types_txt:
                 meta += '<br>' + E(types_txt)
             # 제목을 누르면 지도에서 그 구를 고정 강조한다(_SUB_JS). JS 가 없으면 공고 페이지로
-            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s" data-gu="%s" data-id="%s">%s</a>'
+            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 위치.html#p-%s" data-gu="%s" data-id="%s">%s</a>'
                         '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
                         '<p class="st-2 t-sub">%s</p></div>'
                         % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('id') or ''),
@@ -3485,6 +3563,15 @@ def check_detail_ui(watches):
         assert not bad, '규약 위반(청약 공고): 도해 배치 — %s' % ' · '.join(bad)
     for term in _JARGON:
         assert term not in sub_html, '규약 위반(청약 공고): 은어 "%s" 가 남아 있다' % term
+    pl_path = os.path.join(WATCH_DIR, '청약 위치.html')
+    assert os.path.exists(pl_path), '규약 위반: watch/청약 위치.html 이 없다'
+    pl_html = io.open(pl_path, encoding='utf-8').read()
+    for m in re.finditer(r'<svg[^>]*>.*?</svg>', pl_html, re.S):
+        bad = check_fig.hits(m.group(0))
+        assert not bad, '규약 위반(청약 위치): 도해 배치 — %s' % ' · '.join(bad)
+    for term in _JARGON:
+        assert term not in pl_html, '규약 위반(청약 위치): 은어 "%s" 가 남아 있다' % term
+    _assert_no_condition_chrome(pl_html, '청약 위치')
     st_path = os.path.join(WATCH_DIR, '청약 통계.html')
     assert os.path.exists(st_path), '규약 위반: watch/청약 통계.html 이 없다'
     st_html = io.open(st_path, encoding='utf-8').read()
@@ -3583,7 +3670,6 @@ def build():
     h.append('<!-- 판단은 insights/watch/, 수치는 insights/watch/_metrics/, 줄 상세는'
              ' 대시보드/watch/ 아래. 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->')
     h.append(_MAP_JS)
-    h.append(_SUB_JS)
     h.append(_SIDO_JS)
     h.append(_JUMP_JS)
     h.append('</div></body></html>')
@@ -3597,7 +3683,7 @@ def build():
     # 페이지가 site/ 로도 같이 나간다.
     os.makedirs(WATCH_DIR, exist_ok=True)
     expected = (set(w['slug'] + '.html' for w in ws)
-               | {'제도.html', '청약 공고.html', '정비사업 현황.html', '청약 통계.html'})
+               | {'제도.html', '청약 공고.html', '정비사업 현황.html', '청약 통계.html', '청약 위치.html'})
     for f in os.listdir(WATCH_DIR):
         if f.endswith('.html') and f not in expected:
             os.remove(os.path.join(WATCH_DIR, f))
@@ -3613,6 +3699,8 @@ def build():
         f.write(rebuild_page(ws))
     with io.open(os.path.join(WATCH_DIR, '청약 통계.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(subscription_stats_page(ws))
+    with io.open(os.path.join(WATCH_DIR, '청약 위치.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(subscription_place_page(ws))
     check_detail_ui(ws)
 
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))
