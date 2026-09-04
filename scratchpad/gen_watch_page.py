@@ -2171,6 +2171,39 @@ def law_summary(watches):
     return ''.join(h)
 
 
+def _sub_now_row(it, today):
+    """「지금 청약」 한 줄 — 제목·상태·마감(첫 줄), 구와 형별 분양가(둘째 줄). 분양 목록과
+    지도 구 패널이 같은 것을 쓴다(2026-09-04 「지역을 눌렀을 때 지금 청약처럼 똑같은 내용으로」).
+
+    마감(RCEPT_ENDDE)이 없으면 접수 시작일을, 주택형이 없으면 분양가 줄을 비운다 — 지어내지
+    않는다. 값은 억 단위 소수 한 자리(「9.1억」), 면적은 전용 ㎡와 평을 함께 적는다.
+    제목을 누르면 청약 위치 페이지(#p-<id>)로 간다."""
+    st = _sub_status(it, today)
+    cls = _SUB_STATUS_CLS.get(st, 't-none')
+    end = it.get('end')
+    when = ('마감 %s' % end[5:]) if end else (('접수 %s' % it['apply'][5:]) if it.get('apply') else '')
+
+    def _eok1(man):
+        v = round(man / 10000.0, 1)
+        return ('%d억' % v) if v == int(v) else ('%.1f억' % v)
+
+    def _py(ex):
+        return int(round(ex / 3.3058))
+
+    types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], _py(g['ex']), _eok1(g['top']))
+                           for g in _group_types(it.get('types') or []) if g.get('top'))
+    meta = E(it.get('gu') or '')
+    if types_txt:
+        meta += '<br>' + E(types_txt)
+    return ('<div class="sub-title"><p class="st-1">'
+            '<a href="watch/청약 위치.html#p-%s" data-gu="%s" data-id="%s">%s</a>'
+            '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
+            '<p class="st-2 t-sub">%s</p></div>'
+            % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('id') or ''),
+               E(it.get('name') or '—'), cls, E(st),
+               ('<span class="t-sub"> · %s</span>' % E(when)) if when else '', meta))
+
+
 def subscription_now(watches, sido='서울'):
     """「분양」 절의 「지금 청약」 축약 — 그 시·도의 최근 3개월 공고를 공고일 늦은 순으로
     다섯 건, 제목 줄(단지명·구·상태)만(2026-09-04 사용자 지시 「제목만 최근 3개월 다섯」).
@@ -2196,36 +2229,7 @@ def subscription_now(watches, sido='서울'):
                       key=lambda it: it.get('apply') or '')
         rest = [it for it in items if _sub_status(it, today) not in ('접수 중', '접수 예정')]
         shown = live + rest[:max(0, 5 - len(live))]
-        rows = []
-        for it in shown:
-            st = _sub_status(it, today)
-            cls = _SUB_STATUS_CLS.get(st, 't-none')
-            # 이름 옆에 마감일·평수(2026-09-04 사용자 지시). 마감(RCEPT_ENDDE)이 없으면
-            # 접수 시작일을, 주택형이 없으면 평수 자리를 비운다 — 지어내지 않는다
-            end = it.get('end')
-            when = ('마감 %s' % end[5:]) if end else (('접수 %s' % it['apply'][5:]) if it.get('apply') else '')
-            gs = _group_types(it.get('types') or [])
-            # 형마다 분양가(2026-09-04 「평마다 분양가로」) — 「59㎡(약 18평) 9억 1,000만원 ·
-            # 74㎡(약 22평) 10억 7,500만원」. 최고금액은 그 형 안에서 가장 비싼 값(LTTOT_TOP_AMOUNT).
-            # 평당가는 안 낸다 — 받는 면적이 전용뿐이라 관례(공급면적 기준)와 어긋난다
-            py = lambda ex: int(round(ex / 3.3058))
-            # 억 단위 소수 한 자리(「9.1억」, 2026-09-04 사용자 지시) — 만원 → 억, .0 은 뗀다
-            def _eok1(man):
-                v = round(man / 10000.0, 1)
-                return ('%d억' % v) if v == int(v) else ('%.1f억' % v)
-            types_txt = ' · '.join('%d㎡(약 %d평) %s' % (g['ex'], py(g['ex']), _eok1(g['top']))
-                                   for g in gs if g.get('top'))
-            # 마감일은 상태 칩 옆(제목 줄 오른쪽)으로(2026-09-04) — 둘째 줄은 구와 형별 분양가
-            meta = E(it.get('gu') or '')
-            if types_txt:
-                meta += '<br>' + E(types_txt)
-            # 제목을 누르면 지도에서 그 구를 고정 강조한다(_SUB_JS). JS 가 없으면 공고 페이지로
-            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 위치.html#p-%s" data-gu="%s" data-id="%s">%s</a>'
-                        '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
-                        '<p class="st-2 t-sub">%s</p></div>'
-                        % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('id') or ''),
-                           E(it.get('name') or '—'), cls, E(st),
-                           ('<span class="t-sub"> · %s</span>' % E(when)) if when else '', meta))
+        rows = [_sub_now_row(it, today) for it in shown]
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
         h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
@@ -3178,20 +3182,11 @@ def _gu_panel_html(name, e):
             pb_h = ['<p class="gp-row"><span class="gp-lbl">최근 공고</span>%d건 '
                     '<span class="t-sub">· 6개월 · %s 기준</span>%s</p>'
                     % (sc['value'], E(sc['as_of']), open_txt)]
-            for it in items[:3]:
-                nm = E(it.get('name') or '—')
-                # 단지명은 그 건 자신의 앵커로 건다(청약공고_스펙 추가 §2) — 청약홈
-                # 실제 링크는 여기서 안 쓴다(그 건 안 「청약홈에서 보기 →」에만 쓴다)
-                if it.get('id'):
-                    nm = ('<a href="watch/청약 공고.html#p-%s">%s</a>' % (E(it['id']), nm))
-                rate_txt = (' · 1순위 %s:1' % E(it['rate1'])) if it.get('rate1') else ''
-                st = _sub_status(it, _TODAY)
-                chip = ('<span class="tag %s gp-chip">%s</span>'
-                        % (_SUB_STATUS_CLS.get(st, 't-none'), E(st)))
-                pb_h.append('<p class="gp-row gp-sub-item">%s · 접수 %s%s %s</p>'
-                            % (nm, E(_mmdd(it.get('apply'))), rate_txt, chip))
+            # 분양 목록과 같은 줄(2026-09-04) — 제목·상태·마감, 구와 형별 분양가
+            pb_h.append('<div class="sub-list">%s</div>'
+                        % ''.join(_sub_now_row(it, _TODAY) for it in items[:3]))
             if len(items) > 3:
-                pb_h.append('<p class="gp-row gp-sub-item t-sub">+%d건</p>' % (len(items) - 3))
+                pb_h.append('<p class="gp-row t-sub">+%d건</p>' % (len(items) - 3))
         # 페이지에 구 필터가 없으므로 이 구 이름으로 걸러 보내지 않는다 — 전체
         # 목록으로 돌린다(청약공고_스펙 §5)
         pb_h.append('<a class="gp-more" href="watch/청약 공고.html">이 구 공고 전부 보기 →</a>')
