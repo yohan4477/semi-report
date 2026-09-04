@@ -140,48 +140,56 @@ FIG_POWER = _svg(W, 232, '800G 한 개 — 트랜시버와 CPO 광엔진의 전�
 
 
 # ── 도해 4a. 비중 — 클러스터에서 모듈까지, 광 부품이 차지하는 것 ─────────
-# 기둥 하나가 100%. 클러스터 기둥의 네트워킹 조각을 옆 기둥으로 펼쳐(점선) 그 안의 트랜시버 몫을
-# 보인다 — 조각 안에 조각을 넣으면 15% 의 60% 는 글자가 안 들어간다. 값은 CPO북 L112·L154·L366.
-_SC = _row(6, 40, 176, 92, gap=16)
-_SBASE = 216
+# 기둥 하나가 100%(맨 위에 적는다). 네트워킹 조각 안에 트랜시버 조각을 넣고, 조각마다 오른쪽으로
+# 지시선을 빼서 글자를 단다 — 조각 위에 글자를 쌓으면 어느 것이 어느 조각인지 안 보였다.
+# 값은 CPO북 L112·L154·L366. 안 조각의 % 는 바깥 조각 기준(원문 표기 그대로).
+_SC = [(20 + k * 154, 44, 48, 236) for k in range(4)]  # 오른쪽 글자 자리를 남기려 왼쪽으로 붙인다
+_SBASE = 280
 
 
-def _scol(c, pct, lab, name2, accent=False):
+def _piece(x, w, top, h, dark):
+    if dark:
+        return ('<rect x="%d" y="%d" width="%d" height="%d" rx="5" fill="%s" fill-opacity="0.38" stroke="none"/>'
+                % (x, top, w, h, INK3))
+    return ('<rect x="%d" y="%d" width="%d" height="%d" rx="5" fill="var(--sunk)" stroke="%s" stroke-width="2"/>'
+            % (x, top, w, h, INK))
+
+
+def _lead(x, y, lab, y0=None):
+    """조각(y0)에서 글자(y)까지 지시선. y0 이 없으면 수평선."""
+    y0 = y if y0 is None else y0
+    return ('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>' % (x, y0, x + 10, y, INK3)
+            + _lt(x + 14, y + 5, lab, 't-sm', False))
+
+
+def _scol(c, outer, outer_lab, inner=None, inner_lab='', name2=('', '')):
     x, y, w, h = c
-    ph = int(h * pct / 100.0)
-    st, sw = (INK, 2.0) if accent else (INK, 1.5)
-    return ''.join([
-        '<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="%s" stroke-width="1.5"/>'
-        % (x, y, w, h, INK3),
-        '<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="var(--sunk)" stroke="%s" stroke-width="%s"/>'
-        % (x, _SBASE - ph, w, ph, st, sw),
-        _t(x + w // 2, _SBASE - ph - 10, lab, 't-sm'),
-        _t(x + w // 2, _SBASE + 22, name2[0], 't-sm'),
-        _t(x + w // 2, _SBASE + 38, name2[1], 't-sm'),
-    ])
+    oh = int(h * outer / 100.0)
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="none" stroke="%s" stroke-width="1.5"/>'
+           % (x, y, w, h, INK3),
+           _t(x + w // 2, y - 8, '100%', 't-sm'),
+           _piece(x, w, _SBASE - oh, oh, False)]
+    oy = _SBASE - oh + 6
+    if inner is not None:
+        ih = int(oh * inner / 100.0)
+        iy = _SBASE - ih // 2
+        # 두 글자가 16px 안으로 붙으면 바깥 글자를 위로 밀고 지시선을 비스듬히 건다
+        oy2 = min(oy, iy - 18)
+        out.append(_lead(x + w, oy2, outer_lab, y0=_SBASE - oh + 2))
+        out.append(_piece(x, w, _SBASE - ih, ih, True))
+        out.append(_lead(x + w, iy, inner_lab))
+    else:
+        out.append(_lead(x + w, oy, outer_lab))
+    out.append(_t(x + w // 2, _SBASE + 22, name2[0], 't-sm'))
+    out.append(_t(x + w // 2, _SBASE + 38, name2[1], 't-sm'))
+    return ''.join(out)
 
 
-def _explode(a, b, pct):
-    """a 기둥의 아래 조각(pct)을 b 기둥 전체로 펼친다는 점선 둘."""
-    ax, ay, aw, ah = a
-    bx, by, bw, bh = b
-    top = _SBASE - int(ah * pct / 100.0)
-    return ('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1" stroke-dasharray="3 3"/>'
-            % (ax + aw, top, bx, by, INK3)
-            + '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1" stroke-dasharray="3 3"/>'
-            % (ax + aw, _SBASE, bx, _SBASE, INK3))
-
-
-FIG_SHARE = _svg(W, 262, '광 부품이 차지하는 비중 — 클러스터에서 모듈까지', ''.join([
-    _lt(_SC[0][0], 26, '기둥 하나 = 100% · 점선 = 왼쪽 조각을 펼친 것', 't-sm', False),
-    _scol(_SC[0], 15, '네트워킹 15%', ('클러스터', '총비용')),
-    _explode(_SC[0], _SC[1], 15),
-    _scol(_SC[1], 60, '트랜시버 60%', ('네트워킹', '비용 안에서'), accent=True),
-    _scol(_SC[2], 9, '네트워킹 9%', ('클러스터', '총전력')),
-    _explode(_SC[2], _SC[3], 9),
-    _scol(_SC[3], 45, '트랜시버 45%', ('네트워킹', '전력 안에서'), accent=True),
-    _scol(_SC[4], 50, 'DSP 약 50%', ('트랜시버', '한 개 전력'), accent=True),
-    _scol(_SC[5], 30, 'DSP 20~30%', ('트랜시버', '자재비'), accent=True),
+FIG_SHARE = _svg(W, 326, '광 부품이 차지하는 비중 — 클러스터에서 모듈까지', ''.join([
+    _scol(_SC[0], 15, '네트워킹 15%', 60, '트랜시버 60%', ('클러스터', '총비용')),
+    _scol(_SC[1], 9, '네트워킹 9%', 45, '트랜시버 45%', ('클러스터', '총전력')),
+    _scol(_SC[2], 50, 'DSP 약 50%', name2=('트랜시버', '한 개 전력')),
+    _scol(_SC[3], 30, 'DSP 20~30%', name2=('트랜시버', '자재비')),
 ]))
 
 
