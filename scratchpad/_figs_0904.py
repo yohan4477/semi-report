@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-"""미주사 08-28·08-30·08-31 편 도해 셋.
+"""미주사 08-28~09-04 편 도해 다섯.
 
   ① 공정 사슬   태양광 셀을 사 오던 자리를 공장 하나로 끌어오면 무엇이 바뀌나 (테슬라 크리스탈 선)
   ② 조건 격자   워시가 금리를 올려도 이상하지 않게 만드는 조건 넷            (잭슨홀)
   ③ 구성 기둥   콜을 얼마나 씌우나 — QQQ·QYLG·QYLD                          (커버드콜)
+  ④ 견줌 막대   같은 전력 부족을 두 회사가 다르게 받는다                    (독립발전사업자)
+  ⑤ 단계 배치   AI 해커가 어느 단계까지 왔을 때 누가 막나                    (사이버 보안)
 
 규칙(insight-figure):
   - 원문에 없는 값은 안 그린다. ①은 공장 규모를 칸 크기로 안 그린다(101억 달러는 글자로만).
@@ -136,7 +138,102 @@ FIG_COVERED = (
     '이 어중간함이 오히려 맞는다고 본다.')
 
 
-ALL = [FIG_CRYSTAL, FIG_WARSH, FIG_COVERED]
+
+# ── ④ 헤지가 얼마나 걸려 있나 (09-02 전력 편) ────────────────────────────
+# 원문에 있는 값은 두 회사의 연도별 헤지 비율뿐이다. 주가·밸류에이션은 안 그린다.
+_HEDGE = [('2026', 100, 85), ('2027', 94, 70), ('2028', 72, 30)]
+
+
+def fig_hedge():
+    base, top, span = 178, 62, 100          # 축선 y, 100%일 때 막대 꼭대기 y, 100% 높이
+    h = ['<svg viewBox="0 0 580 250" role="img" aria-label="비스트라와 탈렌 에너지의 '
+         '연도별 발전량 헤지 비율 비교">']
+    h.append('<text x="24" y="26" class="t-head">발전량 헤지 비율 (%) — 미리 값을 확정해 둔 몫</text>')
+    h.append('<line x1="70" y1="%d" x2="540" y2="%d" stroke="currentColor" stroke-width="1" opacity=".35"/>' % (base, base))
+    for i, (year, vst, tln) in enumerate(_HEDGE):
+        gx = 120 + i * 150
+        for j, (name, pct) in enumerate((('VST', vst), ('TLN', tln))):
+            x = gx + j * 56
+            bh = int(span * pct / 100.0)
+            cls = 'good-box' if name == 'VST' else 'bad-box'
+            h.append('<rect x="%d" y="%d" width="44" height="%d" rx="4" class="%s"/>'
+                     % (x, base - bh, bh, cls))
+            h.append('<text x="%d" y="%d" class="t-val" text-anchor="middle">%d%%</text>'
+                     % (x + 22, base - bh - 8, pct))
+            h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                     % (x + 22, base + 18, name))
+        h.append('<text x="%d" y="%d" class="t-step" text-anchor="middle">%s년</text>'
+                 % (gx + 50, base + 40, year))
+    h.append('<text x="24" y="%d" class="t-head">VST</text>' % (top - 20))
+    h.append('<text x="24" y="%d" class="t-msg">비스트라</text>' % (top + 2))
+    h.append('<text x="24" y="%d" class="t-head">TLN</text>' % (top + 34))
+    h.append('<text x="24" y="%d" class="t-msg">탈렌 에너지</text>' % (top + 56))
+    h.append('<text x="24" y="242" class="t-msg">'
+             '2028년이 벌어지는 만큼 그해 전력 가격에 실적이 휘둘린다 — 방향은 위아래 둘 다다</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_HEDGE = (
+    4, '같은 전력 부족을 두 회사가 다르게 받는다',
+    fig_hedge(),
+    '헤지는 앞으로 팔 전기의 값을 미리 확정해 두는 것이다. 비스트라는 2028년 발전량의 '
+    '<b>72%</b>까지 값을 묶어 뒀고 탈렌 에너지는 <b>30%</b>다. 전력 가격이 예상보다 내리면 '
+    '비스트라 실적이 덜 흔들리고, 반대로 부족이 심해져 가격이 뛰면 탈렌이 더 크게 번다. '
+    '필자는 전기요금이 정치 문제가 된 자리에서 가격 상한이 걸릴 가능성을 더 크게 보고 '
+    '비스트라 쪽을 균형이 낫다고 읽는다.')
+
+
+# ── ⑤ AI 해커가 어느 단계까지 왔을 때 누가 막나 (09-04 보안 편) ──────────
+_GUARD = [
+    (24, '배포 전', ('먼저 우리를', '깨 본다')),
+    (168, '문 앞', ('들어오기 전에', '막는다')),
+    (312, '통과할 때마다', ('신분과 권한을', '다시 본다')),
+    (456, '이미 들어온 뒤', ('EDR·SOC로', '잡는다')),
+]
+
+_WHO = [
+    ('배포 전 점검', 'QLYS · TENB · RPD — 실험 환경이라 마음껏 때려 봐도 된다'),
+    ('침입 뒤 대응', 'CRWD · S — 틀리면 멀쩡한 직원과 서버를 끊는다'),
+    ('문 앞 · 권한', 'NET · ZS — 막을 트래픽과 권한이 늘어나는 쪽의 수혜다'),
+    ('둘 다 하겠다', 'PANW — 앞단과 뒷단을 한 플랫폼에 묶는다'),
+    ('필자의 순위', 'QLYS · TENB · RPD &gt; CRWD · S &gt; NET · ZS'),
+]
+
+
+def fig_guard():
+    h = ['<svg viewBox="0 0 580 292" role="img" aria-label="AI 공격이 진행되는 단계별로 '
+         '어느 보안 회사가 어디를 맡는지">']
+    h.append('<text x="24" y="24" class="t-head">AI 해커가 어느 단계까지 왔을 때 누가 막나</text>')
+    for i, (x, stage, sub) in enumerate(_GUARD):
+        kind = 'good-box' if i == 0 else ('bad-box' if i == 3 else 'mid-box')
+        h.append('<rect x="%d" y="42" width="100" height="66" rx="9" class="%s"/>' % (x, kind))
+        h.append('<text x="%d" y="68" class="t-step" text-anchor="middle">%s</text>' % (x + 50, stage))
+        for j, line in enumerate(sub):
+            h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                     % (x + 50, 84 + j * 15, line))
+        if i != len(_GUARD) - 1:
+            h.append('<line class="flow" x1="%d" y1="75" x2="%d" y2="75"/>' % (x + 104, x + 140))
+    for i, (head, msg) in enumerate(_WHO):
+        y = 140 + i * 28
+        h.append('<text x="24" y="%d" class="t-head">%s</text>' % (y, head))
+        h.append('<text x="152" y="%d" class="t-msg">%s</text>' % (y, msg))
+    h.append('<text x="24" y="284" class="t-msg">'
+             '가른 기준은 AI에게 얼마나 마음껏 때려 보게 둘 수 있나다</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_GUARD = (
+    3, 'AI 해커가 어느 단계까지 왔을 때 누가 막나',
+    fig_guard(),
+    '왼쪽으로 갈수록 AI에게 자유를 많이 줄 수 있는 자리다. 배포 전 점검은 실험 환경이라 '
+    '틀려도 다시 하면 되지만, 이미 들어온 공격을 판단해 차단하는 쪽은 틀리면 멀쩡한 직원과 '
+    '서버를 끊는다. 필자가 사전 점검을 위에 둔 이유가 여기 있다 — <b>자동화가 붙는 속도가 '
+    '다르다.</b>')
+
+
+ALL = [FIG_CRYSTAL, FIG_WARSH, FIG_COVERED, FIG_HEDGE, FIG_GUARD]
 
 if __name__ == '__main__':
     import sys

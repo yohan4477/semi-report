@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-04",
-"index_fingerprint": "5dcd7f6cb728b6836685cebee53b8d01e880bd3a",
-"lines": 3263
+"index_fingerprint": "ba989beba64a53e1fd6baa62065a5ee1f6bcad01",
+"lines": 3268
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -8147,6 +8147,35 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L87": {
 "how": "명시",
 "t": "2022",
+"tense": "회고"
+},
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L48": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L57": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L81": {
+"how": "명시",
+"t": "2042",
+"tense": "전망"
+},
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L82": {
+"how": "명시",
+"span": [
+"2026",
+"2028"
+],
+"t": "2028",
+"tense": "전망"
+},
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L43": {
+"how": "명시",
+"t": "2016",
 "tense": "회고"
 },
 "content/understanding/박세익 대표/[260814] 사상 최대 실적에 증설을 발표하면 그때가 꼭지였다 - 박세익.md#L13": {

@@ -2193,6 +2193,8 @@
 "content/understanding/미국주식 사관학교/[260429] 오픈AI가 앤트로픽에 매출로 역전당했다 - 처음부터 어디를 팠느냐의 차이.md#L56",
 "content/understanding/미국주식 사관학교/[260703] 사과가 안 팔리는 것과 사과 가게가 하나 는 것 - 메타 클라우드 진출.md#L21",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L52",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L72",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L81",
 "content/understanding/회계사/[260516] 매출 20%+ 성장해도 FCF마진은 18%에서 3~8%로 눌린다 - 알파벳 - 엘곰.md#L33",
 "content/understanding/회계사/[260720] 삼성전자 영업이익 1,800% 급증에도 주가는 7% 빠졌다, CAPEX는 더 이상 성장지표가 아니다 - 엘곰.md#L25",
 "content/understanding/회계사/[260814] AI 매출 70%가 오픈AI·앤스로픽 두 곳에 걸려 있다, 순환거래의 함정 - 엘곰.md#L20",
@@ -5100,6 +5102,10 @@
 "content/understanding/미국주식 사관학교/[260727] 데이터센터 60곳 동시 이탈 - 3.1GW가 30초 만에 사라진 사고.md#L16",
 "content/understanding/미국주식 사관학교/[260727] 데이터센터 60곳 동시 이탈 - 3.1GW가 30초 만에 사라진 사고.md#L35",
 "content/understanding/미국주식 사관학교/[260727] 데이터센터 60곳 동시 이탈 - 3.1GW가 30초 만에 사라진 사고.md#L36",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L12",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L56",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L57",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L68",
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L2",
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L14",
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L16",
@@ -12186,7 +12192,7 @@
 "_meta": {
 "built": "2026-09-04",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1096,
+"files": 1098,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -13467,6 +13473,14 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md": [
 "612fa4d75116de22e711c12afab2ba9bed8b0a91",
 90
+],
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md": [
+"9e20359d0dd137d2e0243052801b9523513736a2",
+101
+],
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md": [
+"77353fa9b38bdeb51ea18db4f056ddba3f17e8c9",
+81
 ],
 "content/understanding/박세익 대표/[260814] 사상 최대 실적에 증설을 발표하면 그때가 꼭지였다 - 박세익.md": [
 "104b746ce059c2b121b67b2921ae0bb6d295b445",
@@ -16573,8 +16587,8 @@
 213
 ]
 },
-"fingerprint": "5dcd7f6cb728b6836685cebee53b8d01e880bd3a",
-"lines": 180630
+"fingerprint": "ba989beba64a53e1fd6baa62065a5ee1f6bcad01",
+"lines": 180812
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -17560,6 +17574,8 @@
 "content/understanding/미국주식 사관학교/[260826] 메타가 메모리 대란에서 혼자 웃는 이유 - 버려질 서버에서 헌 D램을 거의 공짜로 건진다.md#L31",
 "content/understanding/미국주식 사관학교/[260826] 메타가 메모리 대란에서 혼자 웃는 이유 - 버려질 서버에서 헌 D램을 거의 공짜로 건진다.md#L68",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L65",
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L43",
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L79",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L64",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L90",
 "content/understanding/박형근 실장/[260818] 휴머노이드의 병목은 지능이 아니라 부품 생태계다 (2부작 · 2부) - 박형근.md#L41",
@@ -18699,6 +18715,8 @@
 "content/understanding/미국주식 사관학교/[260828] 크리스탈 선은 태양광 사업이 아니라 우주 베팅의 공급망이다 - 셀을 사 오던 회사가 직접 만들겠다고 한 어긋남.md#L3",
 "content/understanding/미국주식 사관학교/[260830] 워시는 파월과 다르다, 물가 2%가 찍혀야 움직인다 - 잭슨홀 조정을 저가매수 신호로 읽으면 안 되는 이유.md#L3",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L3",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L3",
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L3",
 "content/understanding/언더스탠딩 백브리핑/[260814] 미국 수출통제의 구멍 셋 - 밀수·원격접속·증류.md#L4",
 "content/understanding/언더스탠딩 백브리핑/독일 신재생 전기 때문에 북유럽이 빡친 이유.md#L3",
 "content/understanding/언더스탠딩 백브리핑/미국의 석유 치킨게임...이란이 불리한 이유.md#L3",
@@ -20459,6 +20477,9 @@
 "content/understanding/부동산/[260820] 용산공원에 청년주택을 지을 수 있나 - 장순원.md#L30",
 "content/understanding/부동산/[260820] 용산공원에 청년주택을 지을 수 있나 - 장순원.md#L61",
 "content/understanding/부동산/[260821] 선분양이 키운 2천조 가계부채 - 박선영.md#L34"
+],
+"듀크에너지": [
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L23"
 ],
 "디든로보틱스": [
 "content/understanding/피지컬AI/[260702] 엔비디아 GTC와 한국 로보틱스 넷.md#L7",
@@ -22283,6 +22304,7 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L52",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L66",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L69",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L66",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L36",
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L34",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L44",
@@ -23633,6 +23655,10 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L53",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L66",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L69",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L66",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L73",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L76",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L77",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L19",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L44",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L75",
@@ -24950,6 +24976,15 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L3",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L19",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L89",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L3",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L32",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L39",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L40",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L48",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L56",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L77",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L94",
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L3",
 "content/understanding/박세익 대표/[260814] 사상 최대 실적에 증설을 발표하면 그때가 꼭지였다 - 박세익.md#L48",
 "content/understanding/박세익 대표/[260814] 사상 최대 실적에 증설을 발표하면 그때가 꼭지였다 - 박세익.md#L52",
 "content/understanding/박세익 대표/[260814] 사상 최대 실적에 증설을 발표하면 그때가 꼭지였다 - 박세익.md#L54",
@@ -27884,6 +27919,14 @@
 "content/understanding/미국주식 사관학교/[260710] 병목이 이사를 가면 협상력도 옮겨간다 - 전력형과 메모리형을 나누는 법.md#L88",
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L15",
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L58",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L22",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L23",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L71",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L79",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L82",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L85",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L94",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L97",
 "content/understanding/한주성/2026-02-15 Beast Industries  자신만의 제국을 꿈꾸고 있는 유튜버 [8608].md#L23",
 "input/clippings/AI Value Capture - The Shift To Model Labs.md#L36",
 "input/clippings/Are AI Datacenters Increasing Electric Bills for American Households.md#L36",
@@ -32101,6 +32144,7 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L52",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L65",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L69",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L66",
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L34",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L44",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L77",
@@ -46375,7 +46419,9 @@
 "content/understanding/미국주식 사관학교/[260828] 크리스탈 선은 태양광 사업이 아니라 우주 베팅의 공급망이다 - 셀을 사 오던 회사가 직접 만들겠다고 한 어긋남.md#L3",
 "content/understanding/미국주식 사관학교/[260830] 워시는 파월과 다르다, 물가 2%가 찍혀야 움직인다 - 잭슨홀 조정을 저가매수 신호로 읽으면 안 되는 이유.md#L3",
 "content/understanding/미국주식 사관학교/[260830] 워시는 파월과 다르다, 물가 2%가 찍혀야 움직인다 - 잭슨홀 조정을 저가매수 신호로 읽으면 안 되는 이유.md#L100",
-"content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L3"
+"content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L3",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L3",
+"content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L3"
 ],
 "카메코": [
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L25",
@@ -46828,6 +46874,11 @@
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L15",
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L32",
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L54",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L22",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L23",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L77",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L79",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L94",
 "content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md#L24",
 "content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md#L33",
 "input/clippings/mer/224224461638.json#L110"
@@ -47785,7 +47836,13 @@
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L544",
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L586",
 "content/understanding/미국주식 사관학교/[260724] 원자력주 옥석가리기 - 이익이 줄어 빠졌나 배수가 줄어 빠졌나.md#L51",
-"content/understanding/미국주식 사관학교/[260824] 헤지펀드는 반도체를 팔고 뮤추얼펀드는 사들인다 - 둘이 함께 산 것은 전력과 금융이었다.md#L27"
+"content/understanding/미국주식 사관학교/[260824] 헤지펀드는 반도체를 팔고 뮤추얼펀드는 사들인다 - 둘이 함께 산 것은 전력과 금융이었다.md#L27",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L22",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L24",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L81",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L84",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L94",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L97"
 ],
 "테슬라": [
 "content/linkedin/[2606] 링크드인 게시물.md#L177",
@@ -49177,6 +49234,8 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L51",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L68",
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L70",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L88",
+"content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L99",
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L27",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L44",
 "content/understanding/빌 애크먼/제가 이걸 공짜로 들어도 될까요 (빌 애크먼).md#L80",
