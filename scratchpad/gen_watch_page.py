@@ -599,6 +599,52 @@ Array.from(document.querySelectorAll('svg.fig-click')).forEach(function(svg){
 </script>"""
 
 
+def _stats_block(items, watches, mlist, mlist_desc, sido, sfx):
+    """시·도 하나의 통계 덩이 — 공급·경쟁률·분양가 그래프 셋과 누른 것만 보이는 상세.
+    청약 통계 페이지와 본 장 「통계」 층이 같은 것을 쓴다(2026-09-04)."""
+    by_id = dict((it.get('id'), it) for it in items if it.get('id'))
+    blocks, navs = [], []
+    f1, tot = _fig_supply(items, mlist, sido)
+    f2, pts = _fig_rate_price(items, sido)
+    f3, rows3 = _fig_price_vs_median(items, watches, sido)
+    # 달마다 상세 한 덩이(숨김) — 막대를 누르면 그 달만 보인다
+    month_details = ''.join(
+        '<div class="pick" data-ym="%s" hidden><p class="cond-lead">%s — %s세대 · 공고 %d건</p>%s</div>'
+        % (E(ym), E(ym), '{:,}'.format(tot[ym][sido]), tot[ym]['n'],
+           ''.join('<p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> %s · %s세대</p>'
+                   % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
+                      '{:,}'.format(int(it.get('total') or 0))) for it in tot[ym]['items']))
+        for ym in mlist_desc if ym in tot)
+    # 공고마다 상세 한 덩이(숨김) — 점·막대를 누르면 그 공고만 보인다
+    def _one(it):
+        pm = _sub_price_m2(it)
+        r = _sub_rate_max(it)
+        bits = [E(it.get('gu') or ''), '공고 %s' % E(it.get('pblanc_de') or '—')]
+        if it.get('total'):
+            bits.append('%s세대' % '{:,}'.format(int(it['total'])))
+        if pm:
+            bits.append('㎡당 %s만원 (%d㎡형)' % ('{:,}'.format(int(round(pm[0]))), pm[1]))
+        if r:
+            bits.append('1순위 최고 %s:1' % _fmt_rate(r))
+        return ('<div class="pick" data-id="%s" hidden><p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> · %s</p></div>'
+                % (E(it.get('id') or ''), E(it.get('id') or ''), E(it.get('name') or '—'), ' · '.join(bits)))
+    ids = [it.get('id') for _pm, _r, it in pts] + [it.get('id') for it, _pm, _ex in rows3]
+    item_details = ''.join(_one(by_id[i]) for i in dict.fromkeys(ids) if i in by_id)
+    navs.append('<a href="#supply%s">%s 공급</a><a href="#rate%s">%s 경쟁률</a><a href="#price%s">%s 분양가</a>'
+                % (sfx, sido, sfx, sido, sfx, sido))
+    blocks.append(
+        '<div class="band" id="supply%s"><p class="band-t">%s — 월별 공급 세대수</p>%s'
+        '<div class="picks">%s</div></div>'
+        '<div class="band" id="rate%s"><p class="band-t">%s — 경쟁률과 분양가</p>%s<div class="picks"></div></div>'
+        '<div class="band" id="price%s"><p class="band-t">%s — 분양가와 시세</p>%s<div class="picks"></div></div>'
+        '<div class="pick-store" hidden>%s</div>'
+        % (sfx, sido, f1, month_details,
+           sfx, sido, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
+           sfx, sido, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>',
+           item_details))
+    return ''.join(blocks), ''.join(navs)
+
+
 def subscription_stats_page(watches):
     """청약 통계 — 대시보드/watch/청약 통계.html. 그래프 셋과 그 밑 목록. 본 장의 도해 예산
     밖이라 여기서 그린다(2026-09-04)."""
@@ -610,46 +656,10 @@ def subscription_stats_page(watches):
     # 서울 → 경기, 시·도마다 그래프 셋(2026-09-04 「청약 통계도 서울 경기 나눠서」). 그래프 밑
     # 목록은 상시로 안 펴고, 막대·점을 누른 것만 선다(「그래프의 위치 누르면 각각 나오게」)
     blocks, navs = [], []
-    by_id = dict((it.get('id'), it) for it in items if it.get('id'))
     for sido, sfx in SIDOS:
-        f1, tot = _fig_supply(items, mlist, sido)
-        f2, pts = _fig_rate_price(items, sido)
-        f3, rows3 = _fig_price_vs_median(items, watches, sido)
-        # 달마다 상세 한 덩이(숨김) — 막대를 누르면 그 달만 보인다
-        month_details = ''.join(
-            '<div class="pick" data-ym="%s" hidden><p class="cond-lead">%s — %s세대 · 공고 %d건</p>%s</div>'
-            % (E(ym), E(ym), '{:,}'.format(tot[ym][sido]), tot[ym]['n'],
-               ''.join('<p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> %s · %s세대</p>'
-                       % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
-                          '{:,}'.format(int(it.get('total') or 0))) for it in tot[ym]['items']))
-            for ym in mlist_desc if ym in tot)
-        # 공고마다 상세 한 덩이(숨김) — 점·막대를 누르면 그 공고만 보인다
-        def _one(it):
-            pm = _sub_price_m2(it)
-            r = _sub_rate_max(it)
-            bits = [E(it.get('gu') or ''), '공고 %s' % E(it.get('pblanc_de') or '—')]
-            if it.get('total'):
-                bits.append('%s세대' % '{:,}'.format(int(it['total'])))
-            if pm:
-                bits.append('㎡당 %s만원 (%d㎡형)' % ('{:,}'.format(int(round(pm[0]))), pm[1]))
-            if r:
-                bits.append('1순위 최고 %s:1' % _fmt_rate(r))
-            return ('<div class="pick" data-id="%s" hidden><p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> · %s</p></div>'
-                    % (E(it.get('id') or ''), E(it.get('id') or ''), E(it.get('name') or '—'), ' · '.join(bits)))
-        ids = [it.get('id') for _pm, _r, it in pts] + [it.get('id') for it, _pm, _ex in rows3]
-        item_details = ''.join(_one(by_id[i]) for i in dict.fromkeys(ids) if i in by_id)
-        navs.append('<a href="#supply%s">%s 공급</a><a href="#rate%s">%s 경쟁률</a><a href="#price%s">%s 분양가</a>'
-                    % (sfx, sido, sfx, sido, sfx, sido))
-        blocks.append(
-            '<div class="band" id="supply%s"><p class="band-t">%s — 월별 공급 세대수</p>%s'
-            '<div class="picks">%s</div></div>'
-            '<div class="band" id="rate%s"><p class="band-t">%s — 경쟁률과 분양가</p>%s<div class="picks"></div></div>'
-            '<div class="band" id="price%s"><p class="band-t">%s — 분양가와 시세</p>%s<div class="picks"></div></div>'
-            '<div class="pick-store" hidden>%s</div>'
-            % (sfx, sido, f1, month_details,
-               sfx, sido, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
-               sfx, sido, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>',
-               item_details))
+        b_, n_ = _stats_block(items, watches, mlist, mlist_desc, sido, sfx)
+        blocks.append(b_)
+        navs.append(n_)
     n_rated = sum(1 for it in items if it.get('rates'))
     basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
              '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 최근 %s개월 공고 %d건 + 그 전에 '
@@ -3317,6 +3327,8 @@ Array.from(root.querySelectorAll('.layer-btn')).forEach(function(b){
       x.setAttribute('aria-pressed',on?'true':'false');});
     Array.from(root.querySelectorAll('.map-legend')).forEach(function(x){
       x.hidden=x.dataset.legend!==b.dataset.layer;});
+    var st=root.querySelector('.statsrow'),mr=root.querySelector('.maprow');
+    if(st&&mr){var on=b.dataset.layer==='stats';st.hidden=!on;mr.hidden=on;}
   });
 });
 });
@@ -3432,6 +3444,15 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
         legend_list.append(_leg('sub', _sub_legend_html(watches, gus)))
     btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
     legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
+    # 「통계」 — 지도가 아니라 그래프 셋이 지도 자리에 선다(2026-09-04 「통계는 섹션 만들어서
+    # 청약 공고 옆에」). 이력(pblanc_hist)이 있을 때만 버튼을 낸다
+    hist_items, _h_asof, _h_months = _sub_hist(watches)
+    statsrow = ''
+    if hist_items:
+        btn_list.append(_btn('stats', '통계'))
+        mlist = _month_list(24, _TODAY[:7])
+        blk, _nav = _stats_block(hist_items, watches, mlist, list(reversed(mlist)), sido, suffix)
+        statsrow = '<div class="statsrow" hidden>%s</div>' % blk
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
     head = ('서울 25구 — 어디에 청약 공고가 있나, 전세가율은 어디쯤인가' if sido == '서울'
             else '경기 — 성남·동탄·광교·평촌·남한산성, 어디에 청약 공고가 있나, 전세가율은 어디쯤인가')
@@ -3441,10 +3462,10 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s%s</div>'
         '<div class="mappanel" data-layer="%s" aria-live="polite" aria-atomic="true">%s%s'
-        '</div></div>'
+        '</div></div>%s'
         % (E(head), btns, svg.replace('data-layer="ratio"', 'data-layer="%s"' % first, 1),
            cap, below, _zone_banner(checked, gus), changed_section(watches, sido, suffix), first,
-           panels, ''.join(legend_list)))
+           panels, ''.join(legend_list), statsrow))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -3519,6 +3540,7 @@ def check_ui(html, watches):
     # <button ...class="layer-btn 으로만 센다 — 감싼 상자 class="layer-btns"(복수)도
     # "layer-btn" 을 부분 문자열로 품어 그냥 세면 하나 더 잡힌다
     n_btn = html.count('<button type="button" class="layer-btn') // 2   # 지도가 둘
+    n_btn -= html.count('data-layer="stats"') // 2 if 'class="statsrow"' in html else 0   # 통계 층은 따로
     assert html.count('class="layer-btns" role="group" aria-label="지도 층"><button type="button" class="layer-btn is-on" data-layer="sub"') == 2         or 'data-legend="sub"' not in html,         '규약 위반: 청약 공고 데이터가 있으면 그 층이 첫 버튼이자 기본 층이어야 한다 (2026-09-04)'
     # 청약 공고 층의 존재는 svg 안 data-sub-bin 이 아니라 범례 상자(data-legend="sub")
     # 로 잰다 — CSS 규칙(.seoul-map[data-layer="sub"] …)은 값과 무관하게 항상
@@ -3534,7 +3556,7 @@ def check_ui(html, watches):
     assert html.count('class="zone-banner"') == 2, \
         '규약 위반: 지정 현황 상태 배너가 없다 — 층에서 내린 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
-    n_fig = html.count('<figure')
+    n_fig = html.count('<figure') - html.count('class="statsrow"') * 3   # 통계 층 그래프 셋은 따로
     assert n_fig == 5, \
         ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
          '다섯이어야 한다 (%d개)' % n_fig)
@@ -3713,6 +3735,7 @@ def build():
     h.append('<!-- 판단은 insights/watch/, 수치는 insights/watch/_metrics/, 줄 상세는'
              ' 대시보드/watch/ 아래. 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->')
     h.append(_MAP_JS)
+    h.append(_STATS_JS)
     h.append(_SIDO_JS)
     h.append(_JUMP_JS)
     h.append('</div></body></html>')
