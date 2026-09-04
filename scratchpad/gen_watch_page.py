@@ -1229,7 +1229,9 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .mappanel[data-layer="cap"] .gp-cap{order:-1}
 .mappanel[data-layer="sub"] .gp-pblanc{order:-1}
 /* 청약 공고 층에서는 지정 현황(토허·규제·분양가상한제)을 안 보인다 — 그 층의 물음이 아니다 */
-.mappanel[data-layer="sub"] .gp-zone,.mappanel[data-layer="sub"] .gp-cap{display:none}
+/* 청약 공고 층의 구 패널은 머리·부제·공고 덩이만 — 「이 구 공고 전부 보기」 밑에 아무것도
+   안 둔다(2026-09-04 사용자 지시). 전세가율·지수·수급·지정 현황·자세히는 다른 층에서 */
+.mappanel[data-layer="sub"] .gu-panel:not([data-panel="default"])>*:not(.gp-head):not(.gp-sub):not(.gp-pblanc){display:none}
 /* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
    「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
 @media (min-width:621px){
