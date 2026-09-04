@@ -3442,14 +3442,15 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix='', below=''
     if sub_gu is not None:
         btn_list.append(_btn('sub', '청약 공고'))
         legend_list.append(_leg('sub', _sub_legend_html(watches, gus)))
-    btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
-    legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
-    # 「통계」 — 지도가 아니라 그래프 셋이 지도 자리에 선다(2026-09-04 「통계는 섹션 만들어서
-    # 청약 공고 옆에」). 이력(pblanc_hist)이 있을 때만 버튼을 낸다
+    # 「통계」 — 청약 공고 바로 옆 둘째 버튼. 지도가 아니라 그래프 셋이 지도 자리에 선다
+    # (2026-09-04 「통계를 청약 공고 옆에」). 이력(pblanc_hist)이 있을 때만 버튼을 낸다
     hist_items, _h_asof, _h_months = _sub_hist(watches)
     statsrow = ''
     if hist_items:
         btn_list.append(_btn('stats', '통계'))
+    btn_list += [_btn('ratio', '전세가율'), _btn('cap', '분양가상한제')]
+    legend_list += [_leg('ratio', _ratio_legend_html(sido_ws, gus)), _leg('cap', _cap_legend_html(gus))]
+    if hist_items:
         mlist = _month_list(24, _TODAY[:7])
         blk, _nav = _stats_block(hist_items, watches, mlist, list(reversed(mlist)), sido, suffix)
         statsrow = '<div class="statsrow" hidden>%s</div>' % blk
