@@ -946,6 +946,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .sub-list{margin:12px 0 0}
 .sub-title{padding:8px 0;border-bottom:1px solid var(--line)}
 .sub-title:last-child{border-bottom:0}
+.st-1{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0;font-weight:600}
+.st-1 a{min-width:0}
+.st-r{flex:0 0 auto;white-space:nowrap;font-weight:400}
+.st-2{margin:2px 0 0;font-size:12.5px}
 /* 정비사업 — 구 한 줄(이름·곳수)과 그 밑 사업장 셋 */
 .rb-row{padding:12px 0;border-bottom:1px solid var(--line)}
 .rb-row:last-of-type{border-bottom:0}
@@ -1770,8 +1774,14 @@ def subscription_now(watches, sido='서울'):
          '<p class="cond-lead">최근 3개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
          '접수 예정 %d건</p>' % (E(where), len(items), n_open, n_soon)]
     if items:
+        # 접수 중·접수 예정은 전부(접수 시작 가까운 순), 나머지(발표 대기·발표됨)는 공고일
+        # 늦은 순으로 다섯을 채울 만큼만(2026-09-04 사용자 지시 「접수중, 접수예정은 다」)
+        live = sorted((it for it in items if _sub_status(it, today) in ('접수 중', '접수 예정')),
+                      key=lambda it: it.get('apply') or '')
+        rest = [it for it in items if _sub_status(it, today) not in ('접수 중', '접수 예정')]
+        shown = live + rest[:max(0, 5 - len(live))]
         rows = []
-        for it in items[:5]:
+        for it in shown:
             st = _sub_status(it, today)
             cls = _SUB_STATUS_CLS.get(st, 't-none')
             # 이름 옆에 마감일·평수(2026-09-04 사용자 지시). 마감(RCEPT_ENDDE)이 없으면
@@ -1787,11 +1797,14 @@ def subscription_now(watches, sido='서울'):
             else:
                 area = ''
             meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when), E(area)) if x)
-            rows.append('<p class="si-1 sub-title"><a href="watch/청약 공고.html#p-%s">%s</a> '
-                        '<span class="si-gu">%s</span> <span class="tag %s si-chip">%s</span>'
-                        '<span class="t-sub"> · 공고 %s</span></p>'
-                        % (E(it.get('id') or ''), E(it.get('name') or '—'), meta,
-                           cls, E(st), E(it.get('pblanc_de') or it.get('apply') or '—')))
+            # 첫 줄 왼쪽 단지명, 오른쪽 상태·공고일. 둘째 줄 구·마감·평수 — 모바일에서
+            # 칩이 셋째 줄로 떨어지던 것을 고친 자리(2026-09-04 사용자 스크린샷)
+            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
+                        '<span class="st-r"><span class="tag %s si-chip">%s</span>'
+                        '<span class="t-sub"> · 공고 %s</span></span></p>'
+                        '<p class="st-2 t-sub">%s</p></div>'
+                        % (E(it.get('id') or ''), E(it.get('name') or '—'),
+                           cls, E(st), E(it.get('pblanc_de') or it.get('apply') or '—'), meta))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
         h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
