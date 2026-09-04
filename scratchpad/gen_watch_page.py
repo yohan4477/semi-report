@@ -686,7 +686,8 @@ var pick=function(id){
   var d=details.filter(function(x){return x.dataset.id===id;})[0];
   details.forEach(function(x){x.hidden=(x!==d);});
   if(list)list.hidden=!!d;
-  Object.keys(maps).forEach(function(k){maps[k].hidden=d?(k!==d.dataset.sido):false;});
+  Object.keys(maps).forEach(function(k){maps[k].hidden=d?(k!==d.dataset.sido):false;
+    var sv=maps[k].querySelector('svg');if(sv)sv.classList.toggle('picked',!!d);});
   Array.from(document.querySelectorAll('.pin')).forEach(function(p){var on=!!d&&p.dataset.id===id;
     p.classList.toggle('pin-on',on);p.setAttribute('r',on?p.dataset.rOn:p.dataset.r);
     if(on&&p.parentNode){p.parentNode.appendChild(p);}});
@@ -699,6 +700,12 @@ window.addEventListener('hashchange',fromHash);fromHash();
 Array.from(document.querySelectorAll('.pin')).forEach(function(p){
   p.style.pointerEvents='auto';p.style.cursor='pointer';
   p.addEventListener('click',function(){location.hash='#p-'+p.dataset.id;});});
+/* 원(구)을 누르면 그 구 공고 목록만 */
+Array.from(document.querySelectorAll('.bub')).forEach(function(b){
+  b.style.pointerEvents='auto';b.style.cursor='pointer';
+  b.addEventListener('click',function(){pick('');
+    var gu=b.dataset.gu;Array.from(document.querySelectorAll('#place-list p')).forEach(function(p){
+      p.hidden=!!gu&&p.dataset.gu!==gu&&p.dataset.gu!==undefined;});});});
 Array.from(document.querySelectorAll('.pd .pd-back')).forEach(function(a){
   a.addEventListener('click',function(ev){ev.preventDefault();history.replaceState(null,'',location.pathname);pick('');});});
 })();
@@ -718,8 +725,8 @@ def subscription_place_page(watches):
     maps = []
     for sido, sfx in SIDOS:
         gus = _sido_gus(sido)
-        svg = _gu_svg(gu_data, gus, sfx, watches).replace('data-layer="ratio"', 'data-layer="sub"', 1)
-        maps.append('<figure class="map-fig place-map" data-sido="%s">%s<figcaption>%s · 점이 공고, 누르면 그 공고</figcaption></figure>'
+        svg = _gu_svg(gu_data, gus, sfx, watches, pins=True).replace('data-layer="ratio"', 'data-layer="sub"', 1)
+        maps.append('<figure class="map-fig place-map" data-sido="%s">%s<figcaption>%s · 원 안 숫자는 그 구 공고 수, 누르면 그 구 목록</figcaption></figure>'
                     % (sido, svg, sido))
     items = sorted((it for lst in sub_gu.values() for it in lst),
                    key=lambda it: it.get('pblanc_de') or '', reverse=True)
@@ -736,8 +743,8 @@ def subscription_place_page(watches):
                        '<p class="cond-tail">%s%s</p></div>'
                        % (E(it.get('id') or ''), sido, E(gu), E(it.get('name') or ''), body, loc,
                           E(it.get('addr') or ''), (' · %s' % E(st)) if st else ''))
-        rows.append('<p class="cond-lead"><a href="#p-%s">%s</a> %s · %s</p>'
-                    % (E(it.get('id') or ''), E(it.get('name') or '—'), E(gu), E(st)))
+        rows.append('<p class="cond-lead" data-gu="%s"><a href="#p-%s">%s</a> %s · %s</p>'
+                    % (E(gu), E(it.get('id') or ''), E(it.get('name') or '—'), E(gu), E(st)))
     return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>청약 위치 — 포트폴리오 워치</title>%s<style>%s'
@@ -746,7 +753,7 @@ def subscription_place_page(watches):
             '</style></head><body>'
             '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#subscription">← 포트폴리오 워치</a>'
             '<header><p class="meta mono">최근 6개월 공고 %d건 · 기준 %s</p><h1>청약 위치</h1>'
-            '<p class="lede">공고가 어디에 섰나 — 점 하나가 공고 하나, 구는 그 공고가 든 구.</p></header>'
+            '<p class="lede">공고가 어디에 섰나 — 구마다 공고 수, 공고를 고르면 그 자리에 점.</p></header>'
             '<div class="place-row"><div class="mapcol">%s</div>'
             '<div class="side">%s<div id="place-list"><p class="band-t">공고</p>%s</div></div></div>'
             '<footer>청약홈(공공데이터포털) 공고 · 좌표는 카카오 로컬 API 로 주소를 푼 것 · 지도 원본 '
@@ -1172,8 +1179,14 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map .gu[data-sido="경기"]{stroke-dasharray:2.5 2}
 /* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
 .seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
-.seoul-map[data-layer="sub"] .pin{display:block}
 .seoul-map .pin.pin-on{fill:var(--up);stroke:var(--paper);stroke-width:calc(var(--gu-stroke,1px)*2.5)}
+/* 구마다 공고 수 원 — 청약 공고 층에서만. 공고를 고르면(picked) 원은 숨고 그 점만 */
+.seoul-map .bub,.seoul-map .bub-t{display:none}
+.seoul-map[data-layer="sub"] .bub{display:block;fill:var(--ink);opacity:.82;pointer-events:none}
+.seoul-map[data-layer="sub"] .bub-t{display:block;fill:var(--paper);font-weight:700;pointer-events:none}
+.seoul-map.picked .bub,.seoul-map.picked .bub-t{display:none}
+.seoul-map .pin{display:none!important}
+.seoul-map .pin.pin-on{display:block!important}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
@@ -2848,16 +2861,29 @@ def _board_xy(lat, lon):
     return x, y
 
 
-def _sub_pins(watches, gus, x0, y0, scale):
-    """청약 공고 점 — 그 시·도 구에 든 최근 6개월 공고 가운데 좌표가 있는 것. 점 하나가
-    공고 하나, data-id 로 분양 목록·패널과 만난다. 청약 공고 층에서만 보인다(CSS)."""
+def _sub_pins(watches, gus, x0, y0, scale, pins=True):
+    """청약 공고 — 구마다 큰 원 하나에 공고 수(bub). 개별 점(pin)은 pins=True 인 판(청약 위치
+    페이지)에만 두고, 거기서도 공고를 골랐을 때만 보인다(2026-09-04 「작은 원으로 다 표현하지
+    말고 큰 원에 숫자만」). 청약 공고 층에서만 보인다(CSS)."""
     sub_gu, _asof = _sub_gu_data(watches)
     if sub_gu is None:
         return ''
     o = []
+    bub = []
     r = 5.0 / scale
     r_on = 12.0 / scale   # 고른 점은 두 배 넘게 — 작아서 안 보인다(2026-09-04)
+    rb = 13.0 / scale
     for gu in gus:
+        n = len(sub_gu.get(gu) or [])
+        g = SEOUL_GU['gu'].get(gu) or {}
+        if n and g.get('cx') is not None:
+            # 구 이름 글자 바로 밑 — 이름과 겹치지 않게 한 줄 내린다
+            bx, by = g['cx'] - x0, g['cy'] - y0 + 17.0 / scale
+            bub.append('<circle class="bub" data-gu="%s" cx="%.1f" cy="%.1f" r="%.1f"/>'
+                       '<text class="bub-t" x="%.1f" y="%.1f" text-anchor="middle" font-size="%.1f">%d</text>'
+                       % (E(gu), bx, by, rb, bx, by + 4.0 / scale, 11.0 / scale, n))
+        if not pins:
+            continue
         for it in sub_gu.get(gu) or []:
             if it.get('lat') is None or it.get('lon') is None:
                 continue
@@ -2868,10 +2894,13 @@ def _sub_pins(watches, gus, x0, y0, scale):
                      'data-r="%.1f" data-r-on="%.1f"><title>%s</title></circle>'
                      % (E(it.get('id') or ''), E(gu), xy[0] - x0, xy[1] - y0, r, r, r_on,
                         E(it.get('name') or '')))
-    return ('<g class="pins">%s</g>' % ''.join(o)) if o else ''
+    out = ('<g class="bubbles">%s</g>' % ''.join(bub)) if bub else ''
+    if o:
+        out += '<g class="pins">%s</g>' % ''.join(o)
+    return out
 
 
-def _gu_svg(gu_data, gus=None, suffix='', watches=None):
+def _gu_svg(gu_data, gus=None, suffix='', watches=None, pins=False):
     """서울 25개 구 지도. 채움은 CSS 가 data-ratio-bin 으로 고른다 — 값 자체는
     여기서 속성으로 다 박아 두고 JS 는 아무 계산도 안 한다.
 
@@ -2941,7 +2970,7 @@ def _gu_svg(gu_data, gus=None, suffix='', watches=None):
         labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle" '
                       'font-size="%.1f">%s</text>'
                       % (g['cx'] - x0, g['cy'] - y0, cls, lbl_px, E(name)))
-    pins = _sub_pins(watches, gus, x0, y0, scale) if watches is not None else ''
+    pins = _sub_pins(watches, gus, x0, y0, scale, pins) if watches is not None else ''
     return ('<svg class="seoul-map%s" data-layer="ratio" viewBox="%d %d %.1f %.1f" '
             'style="width:%.0f%%;--gu-stroke:%.2fpx">%s%s'
             '<g class="gu-labels">%s</g>%s</svg>'

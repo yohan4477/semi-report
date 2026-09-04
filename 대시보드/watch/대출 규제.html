@@ -104,8 +104,14 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map .gu[data-sido="경기"]{stroke-dasharray:2.5 2}
 /* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
 .seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
-.seoul-map[data-layer="sub"] .pin{display:block}
 .seoul-map .pin.pin-on{fill:var(--up);stroke:var(--paper);stroke-width:calc(var(--gu-stroke,1px)*2.5)}
+/* 구마다 공고 수 원 — 청약 공고 층에서만. 공고를 고르면(picked) 원은 숨고 그 점만 */
+.seoul-map .bub,.seoul-map .bub-t{display:none}
+.seoul-map[data-layer="sub"] .bub{display:block;fill:var(--ink);opacity:.82;pointer-events:none}
+.seoul-map[data-layer="sub"] .bub-t{display:block;fill:var(--paper);font-weight:700;pointer-events:none}
+.seoul-map.picked .bub,.seoul-map.picked .bub-t{display:none}
+.seoul-map .pin{display:none!important}
+.seoul-map .pin.pin-on{display:block!important}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
