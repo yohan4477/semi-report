@@ -3012,6 +3012,7 @@ def check_ui(html, watches):
     assert 'class="sido-tabs"' in html and html.count('<button type="button" class="sido-tab') == 2, \
         '규약 위반: 최상위 탭(서울|경기)이 없다 — 고르는 계층은 이것 하나다'
     at_policy = html.find('id="policy"')
+    assert 'class="jump"' not in html,         '규약 위반: 본 장에 절 바로가기 줄을 두지 않는다 — 고르는 계층은 서울|경기 탭 하나다(2026-09-04)'
     for _sido, sfx in SIDOS:
         at_sub = html.find('id="subscription%s"' % sfx)
         at_map = html.find('id="map%s"' % sfx)
@@ -3176,13 +3177,8 @@ def build():
     for sido, sfx in SIDOS:
         sido_ws = _sido_watches(ws, sido)
         blk = ['<div class="sido-block" data-sido="%s"%s>' % (sido, '' if not sfx else ' hidden')]
-        blk.append('<nav class="jump" aria-label="절 바로가기 — %s">'
-                   '<a href="#subscription%s">분양</a><a href="#map%s">지도</a>'
-                   '<a href="#changed%s">달라진 것</a>%s<a href="#lines%s">보고 있는 것</a>'
-                   '<a href="#policy">제도</a><a href="#basis">자료 기준</a></nav>'
-                   % (sido, sfx, sfx, sfx,
-                      ('<a href="#rebuild%s">정비사업</a>' % sfx) if _rebuild_data(ws)[0] is not None else '',
-                      sfx))
+        # 절 바로가기 줄은 본 장에서 걷었다(2026-09-04 사용자 지시 「분양·지도·달라진 것 버튼
+        # 다 지워」) — 고르는 계층은 서울|경기 탭 하나다. 상세 페이지의 바로가기는 그대로
         blk.append(subscription_section(ws, sido, sfx))
         blk.append('<section class="hero" id="map%s">%s</section>'
                    % (sfx, seoul_map_section(ws, asof, checked, sido, sfx)))
