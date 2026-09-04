@@ -1228,6 +1228,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gu-panel{display:flex;flex-direction:column}
 .mappanel[data-layer="cap"] .gp-cap{order:-1}
 .mappanel[data-layer="sub"] .gp-pblanc{order:-1}
+/* 청약 공고 층에서는 지정 현황(토허·규제·분양가상한제)을 안 보인다 — 그 층의 물음이 아니다 */
+.mappanel[data-layer="sub"] .gp-zone,.mappanel[data-layer="sub"] .gp-cap{display:none}
 /* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
    「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
 @media (min-width:621px){
@@ -3121,10 +3123,11 @@ def _gu_panel_html(name, e):
                         E(e['sd'].get('area') or '')))
     if e['lth_value'] is not None:
         lth_as_of = ZONES.get('토지거래허가구역', {}).get('as_of') or '—'
-        h.append('<p class="gp-row"><span class="gp-lbl">토지거래허가구역</span>%s · %s 기준</p>'
+        h.append('<p class="gp-row gp-zone"><span class="gp-lbl">토지거래허가구역</span>%s · %s 기준</p>'
                  % (E(LTH_LABEL.get(e['lth_value'], e['lth_value'])), E(lth_as_of)))
     reg_as_of = ZONES.get('조정대상지역', {}).get('as_of') or '—'
-    h.append('<p class="gp-row"><span class="gp-lbl">규제지역</span>%s · %s 기준</p>'
+    # gp-zone — 청약 공고 층에서는 지정 현황 줄을 안 낸다(2026-09-04 사용자 지시). CSS 가 숨긴다
+    h.append('<p class="gp-row gp-zone"><span class="gp-lbl">규제지역</span>%s · %s 기준</p>'
              % (E(_reg_row_text(e)), E(reg_as_of)))
     # 분양가상한제 — 규제지역과 별개 지정이라 같은 구에서 답이 갈린다. 적용 주택은
     # 재당첨 제한이 10년으로 가장 길다(청약 제도 줄의 「당첨 뒤 제한」 표). gp-cap

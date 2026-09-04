@@ -153,6 +153,8 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gu-panel{display:flex;flex-direction:column}
 .mappanel[data-layer="cap"] .gp-cap{order:-1}
 .mappanel[data-layer="sub"] .gp-pblanc{order:-1}
+/* 청약 공고 층에서는 지정 현황(토허·규제·분양가상한제)을 안 보인다 — 그 층의 물음이 아니다 */
+.mappanel[data-layer="sub"] .gp-zone,.mappanel[data-layer="sub"] .gp-cap{display:none}
 /* 구 패널은 권역 요약 셋을 덮지 않고 그 위에 얹힌다 — 요약 셋이 화면에 남아야
    「어느 권역이 나은가」를 견줄 수 있다(그게 이 절이 답하는 물음이다) */
 @media (min-width:621px){
