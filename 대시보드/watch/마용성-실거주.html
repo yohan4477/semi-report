@@ -277,6 +277,11 @@ svg.fig-click .bar,svg.fig-click .dot{cursor:pointer}
 svg.fig-click .bar:hover,svg.fig-click .dot:hover{fill:var(--ink)}
 svg.fig-click .is-on{fill:var(--ink);stroke:var(--ink);stroke-width:2px}
 .picks{margin:6px 0 0}
+/* 통계 그래프의 지역 탭 — 층 버튼보다 작게, 켜진 것만 먹으로 */
+.gtabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.gtab{flex:0 0 auto;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.gtab.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .sub-title{padding:8px 0;border-bottom:1px solid var(--line)}
 .sub-title:last-child{border-bottom:0}
 .st-1{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0;font-weight:600}

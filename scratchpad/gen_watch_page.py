@@ -511,10 +511,13 @@ def _fig_rate_price(items, sido):
         o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
                  % (X0 - 6, y + 4, '{:,}'.format(10 ** e)))
     xstep = 500 if xhi - xlo > 2000 else 250
-    for g in range(xlo, xhi + 1, xstep):
+    ticks = list(range(xlo, xhi + 1, xstep))
+    for g in ticks:
         x = sx(g)
-        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
-                 % (x, Y1 + 16, '{:,}'.format(g)))
+        # 양 끝 눈금은 가운데 맞춤을 하면 판 밖으로 나간다(check_fig 「가로 넘침」) — 끝에 붙인다
+        anchor = 'start' if g == ticks[0] else ('end' if g == ticks[-1] else 'middle')
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="%s">%s</text>'
+                 % (x, Y1 + 16, anchor, '{:,}'.format(g)))
     for pm, r, it in pts:
         o.append('<circle class="dot" data-id="%s" cx="%.1f" cy="%.1f" r="5" fill="var(--ink-2)">'
                  '<title>%s · %s:1 · ㎡당 %s만원</title></circle>'
@@ -585,6 +588,17 @@ def _fig_price_vs_median(items, watches, sido, n=12):
 # 그래프 조각을 누르면 그 달·그 공고만 밑에 선다 — 계산 없음, hidden 토글뿐
 _STATS_JS = """<script>
 (function(){
+Array.from(document.querySelectorAll('.gtabs')).forEach(function(row){
+  var band=row.closest('.band');if(!band)return;
+  Array.from(row.querySelectorAll('.gtab')).forEach(function(b){
+    b.addEventListener('click',function(){
+      Array.from(row.querySelectorAll('.gtab')).forEach(function(x){x.classList.toggle('is-on',x===b);});
+      Array.from(band.querySelectorAll('.gpane')).forEach(function(p){p.hidden=p.dataset.g!==b.dataset.g;});
+      var picks=band.querySelector('.picks');
+      if(picks)Array.from(picks.children).forEach(function(c){c.hidden=true;});
+    });
+  });
+});
 Array.from(document.querySelectorAll('svg.fig-click')).forEach(function(svg){
   var band=svg.closest('.band');if(!band)return;
   var picks=band.querySelector('.picks');if(!picks)return;
@@ -606,6 +620,36 @@ Array.from(document.querySelectorAll('svg.fig-click')).forEach(function(svg){
 </script>"""
 
 
+def _stat_regions(sido):
+    """통계 그래프의 지역 탭 — (이름, 구 집합 또는 None). None 은 「전체」다. 보고 있는 권역을
+    그대로 쓰고, 그 밖의 구는 「그 밖」 하나로 묶는다(2026-09-04 「지역별로 탭을 둬서」).
+    구마다 탭을 두면 서울이 스무 칸이 돼 고르는 일이 일이 된다."""
+    areas = [(t, set(v.get('구') or [])) for t, v in AREAS.items()
+             if isinstance(v, dict) and v.get('sido') == sido and v.get('구')]
+    areas.sort(key=lambda x: x[0])
+    watched = set()
+    for _t, g in areas:
+        watched |= g
+    rest = set(g for g in SEOUL_GU['gu'] if _sido_of(g) == sido) - watched
+    out = [('전체', None)] + areas
+    if rest:
+        out.append(('그 밖', rest))
+    return out
+
+
+def _region_tabs_html(charts, key, sfx):
+    """탭 줄 + 그래프 덩이들. charts 는 [(이름, HTML), …] — 첫째가 켜진 채로 선다."""
+    if len(charts) < 2:
+        return charts[0][1] if charts else ''
+    tabs = ''.join('<button type="button" class="gtab%s" data-g="%s%s-%d">%s</button>'
+                   % (' is-on' if i == 0 else '', key, sfx, i, E(nm))
+                   for i, (nm, _h) in enumerate(charts))
+    body = ''.join('<div class="gpane" data-g="%s%s-%d"%s>%s</div>'
+                   % (key, sfx, i, '' if i == 0 else ' hidden', h)
+                   for i, (_nm, h) in enumerate(charts))
+    return '<div class="gtabs" role="group" aria-label="지역">%s</div>%s' % (tabs, body)
+
+
 def _stats_block(items, watches, mlist, mlist_desc, sido, sfx):
     """시·도 하나의 통계 덩이 — 공급·경쟁률·분양가 그래프 셋과 누른 것만 보이는 상세.
     청약 통계 페이지와 본 장 「통계」 층이 같은 것을 쓴다(2026-09-04)."""
@@ -614,6 +658,18 @@ def _stats_block(items, watches, mlist, mlist_desc, sido, sfx):
     f1, tot = _fig_supply(items, mlist, sido)
     f2, pts = _fig_rate_price(items, sido)
     f3, rows3 = _fig_price_vs_median(items, watches, sido)
+    # 지역 탭 — 전체·권역·그 밖. 그래프는 탭마다 하나씩 미리 그려 두고 hidden 만 토글한다
+    rate_charts, price_charts = [], []
+    for nm, gset in _stat_regions(sido):
+        sub = items if gset is None else [it for it in items if (it.get('gu') or '') in gset]
+        f2n, p2 = _fig_rate_price(sub, sido)
+        f3n, r3 = _fig_price_vs_median(sub, watches, sido)
+        rate_charts.append((nm, f2n or '<p class="cond-lead">이 지역엔 경쟁률이 잡힌 공고가 셋이 안 됩니다</p>'))
+        price_charts.append((nm, f3n or '<p class="cond-lead">이 지역엔 주택형 값이 든 공고가 없습니다</p>'))
+        pts = pts + [x for x in p2 if x not in pts]
+        rows3 = rows3 + [x for x in r3 if x not in rows3]
+    f2 = _region_tabs_html(rate_charts, 'rate', sfx)
+    f3 = _region_tabs_html(price_charts, 'price', sfx)
     # 달마다 상세 한 덩이(숨김) — 막대를 누르면 그 달만 보인다
     month_details = ''.join(
         '<div class="pick" data-ym="%s" hidden><p class="cond-lead">%s — %s세대 · 공고 %d건</p>%s</div>'
@@ -646,8 +702,7 @@ def _stats_block(items, watches, mlist, mlist_desc, sido, sfx):
         '<div class="band" id="price%s"><p class="band-t">%s — 분양가와 시세</p>%s<div class="picks"></div></div>'
         '<div class="pick-store" hidden>%s</div>'
         % (sfx, sido, f1, month_details,
-           sfx, sido, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
-           sfx, sido, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>',
+           sfx, sido, f2, sfx, sido, f3,
            item_details))
     return ''.join(blocks), ''.join(navs)
 
@@ -1369,6 +1424,11 @@ svg.fig-click .bar,svg.fig-click .dot{cursor:pointer}
 svg.fig-click .bar:hover,svg.fig-click .dot:hover{fill:var(--ink)}
 svg.fig-click .is-on{fill:var(--ink);stroke:var(--ink);stroke-width:2px}
 .picks{margin:6px 0 0}
+/* 통계 그래프의 지역 탭 — 층 버튼보다 작게, 켜진 것만 먹으로 */
+.gtabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.gtab{flex:0 0 auto;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.gtab.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .sub-title{padding:8px 0;border-bottom:1px solid var(--line)}
 .sub-title:last-child{border-bottom:0}
 .st-1{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0;font-weight:600}
@@ -2683,6 +2743,33 @@ def _sub_band(id_, title, items, empty_txt, market):
     return '<div class="band" id="%s"><p class="band-t">%s</p>%s</div>' % (id_, E(title), body)
 
 
+def _sub_page_block(all_items, today, market, sido, sfx):
+    """청약 공고 페이지의 시·도 한 덩이 — 상태 넷(접수 중·예정·발표 대기·발표됨)으로 가른
+    목록과 그 앞 바로가기 줄. 절 id 에 시·도 꼬리를 붙인다(둘이 한 페이지에 있다)."""
+    items = [it for it in all_items if _sido_of(it.get('gu') or '') == sido]
+    groups = {'open': [], 'soon': [], 'wait': [], 'done': []}
+    key_of = {'접수 중': 'open', '접수 예정': 'soon',
+              '접수 마감·발표 대기': 'wait', '발표됨': 'done'}
+    for it in items:
+        groups[key_of.get(_sub_status(it, today), 'done')].append(it)
+    groups['open'].sort(key=lambda it: it.get('apply') or '')
+    groups['soon'].sort(key=lambda it: it.get('apply') or '')
+    groups['wait'].sort(key=lambda it: it.get('announce') or '', reverse=True)
+    groups['done'].sort(key=lambda it: it.get('announce') or '', reverse=True)
+    nav = ('<nav class="jump" aria-label="절 바로가기 — %s">%s</nav>'
+           % (E(sido), ''.join('<a href="#%s%s">%s %d</a>' % (k, sfx, E(t), len(groups[k]))
+                               for k, t in (('open', '접수 중'), ('soon', '접수 예정'),
+                                            ('wait', '발표 대기'), ('done', '발표됨')))))
+    bands = (_sub_band('open' + sfx, '접수 중', groups['open'], _sub_verdict(items, today), market)
+             + _sub_band('soon' + sfx, '접수 예정 · 접수 시작 가까운 순', groups['soon'],
+                         _SUB_EMPTY['soon'], market)
+             + _sub_band('wait' + sfx, '발표 대기 · 발표 최근 순', groups['wait'],
+                         _SUB_EMPTY['wait'], market)
+             + _sub_band('done' + sfx, '발표됨 · 발표 최근 순', groups['done'],
+                         _SUB_EMPTY['done'], market))
+    return bands, nav
+
+
 def subscription_page(watches):
     """청약 공고 전부 — 대시보드/watch/청약 공고.html(청약공고_스펙 §4).
 
@@ -2690,9 +2777,22 @@ def subscription_page(watches):
     페이지는 상태(접수 중·예정·발표 대기·발표됨) 넷으로만 가른다. 표가 아니라
     목록이다 — 한 건에 값이 여덟이라 열이 여덟이면 모바일에서 가로로 밀린다."""
     today = _TODAY
-    items, as_of = _all_sub_items(watches)
-    if items is None:
-        items, as_of = [], '—'
+    all_items, as_of = _all_sub_items(watches)
+    if all_items is None:
+        all_items, as_of = [], '—'
+    market = _watched_market(watches)
+    # 서울·경기로 가른다(2026-09-04) — 한 목록에 섞여 있으면 어느 시·도 것인지 세면서 읽어야 한다
+    tabs = ('<div class="sido-tabs" role="tablist" aria-label="시·도">%s</div>'
+            % ''.join('<button type="button" class="sido-tab%s" role="tab" data-sido="%s" '
+                      'aria-selected="%s">%s</button>'
+                      % (' is-on' if not sfx else '', sd, 'true' if not sfx else 'false', sd)
+                      for sd, sfx in SIDOS))
+    body_all, nav_all = [], []
+    for sd, sfx in SIDOS:
+        b_, n_ = _sub_page_block(all_items, today, market, sd, sfx)
+        body_all.append('<div class="sido-block" data-sido="%s"%s>%s%s</div>'
+                        % (sd, '' if not sfx else ' hidden', n_, b_))
+    items = all_items
     groups = {'open': [], 'soon': [], 'wait': [], 'done': []}
     key_of = {'접수 중': 'open', '접수 예정': 'soon',
              '접수 마감·발표 대기': 'wait', '발표됨': 'done'}
@@ -2705,19 +2805,8 @@ def subscription_page(watches):
     groups['done'].sort(key=lambda it: it.get('announce') or '', reverse=True)
 
     verdict = _sub_verdict(items, today)
-    nav_items = [('open', '접수 중', len(groups['open'])),
-                ('soon', '접수 예정', len(groups['soon'])),
-                ('wait', '발표 대기', len(groups['wait'])),
-                ('done', '발표됨', len(groups['done']))]
-    nav = ('<nav class="jump" aria-label="절 바로가기">%s'
-          '<a href="#basis">자료 기준</a></nav>'
-          % ''.join('<a href="#%s">%s %d</a>' % (i, E(t), n) for i, t, n in nav_items))
-
-    market = _watched_market(watches)
-    bands = (_sub_band('open', '접수 중', groups['open'], verdict, market)
-            + _sub_band('soon', '접수 예정 · 접수 시작 가까운 순', groups['soon'], _SUB_EMPTY['soon'], market)
-            + _sub_band('wait', '발표 대기 · 발표 최근 순', groups['wait'], _SUB_EMPTY['wait'], market)
-            + _sub_band('done', '발표됨 · 발표 최근 순', groups['done'], _SUB_EMPTY['done'], market))
+    nav = tabs
+    bands = ''.join(body_all) + _SIDO_JS
     basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
             '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 자료 기준 %s · '
             '상태는 화면 만든 날 %s 기준 · 최근 6개월 모집공고 · 공급위치 주소로 구를 골라 '
@@ -3572,7 +3661,9 @@ def check_ui(html, watches):
     assert html.count('class="zone-banner"') == 2, \
         '규약 위반: 지정 현황 상태 배너가 없다 — 층에서 내린 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
-    n_fig = html.count('<figure') - html.count('class="statsrow"') * 3   # 통계 층 그래프 셋은 따로
+    # 통계 층 그래프는 따로 센다 — 지역 탭마다 하나씩이라 수가 늘고 준다. 그 <figure> 안에는
+    # svg.fig-s 가 꼭 하나씩 들어 있어 그 수만큼 빼면 지도·자 셋만 남는다
+    n_fig = html.count('<figure') - html.count('class="fig-s fig-click"')
     assert n_fig == 5, \
         ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
          '다섯이어야 한다 (%d개)' % n_fig)
