@@ -1796,7 +1796,11 @@ def subscription_now(watches, sido='서울'):
                         else '%d~%d㎡(약 %d~%d평)' % (lo, hi, py(lo), py(hi)))
             else:
                 area = ''
-            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when), E(area)) if x)
+            # 최고분양가 — 주택형 가운데 가장 비싼 값(LTTOT_TOP_AMOUNT). 평당가는 안 낸다 —
+            # 어댑터가 받는 면적이 전용(HOUSE_TY 정수부)뿐이라 관례(공급면적 기준)와 어긋난다
+            top = max((g['top'] for g in gs), default=0)
+            top_txt = ('최고 %s' % _fmt_eok(top)) if top else ''
+            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when), E(area), E(top_txt)) if x)
             # 첫 줄 왼쪽 단지명, 오른쪽 상태·공고일. 둘째 줄 구·마감·평수 — 모바일에서
             # 칩이 셋째 줄로 떨어지던 것을 고친 자리(2026-09-04 사용자 스크린샷)
             rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s">%s</a>'
