@@ -220,3 +220,41 @@ FIG_CHAIN = _svg(W, 166, '엔비디아 CPO 공급망 다섯 단계 — 단계마
     + [_a(_CH[i][0] + _CH[i][2], 98, _CH[i + 1][0], 98) for i in range(4)]
     + []
 ))
+
+
+# ── 도해 4b. 돈 — 스위치 한 대의 광 부품값과 클러스터 총비용 ────────────
+# 값은 CPO북 L190-192. 왼쪽 세 막대는 Q3450 급 스위치 한 대의 광 부품값(천 달러), 오른쪽 둘은
+# 클러스터 총비용 절감(%). 범위 값은 위 끝으로 그리고 캡션에 그렇게 적는다.
+_CB = 190
+
+
+def _cbar(x, h, lab1, lab2, accent=False, dash=False):
+    st, sw = (INK, 2.0) if accent else (INK3, 1.5)
+    extra = ' stroke-dasharray="6 4"' if dash else ''
+    return ''.join([
+        '<rect x="%d" y="%d" width="88" height="%d" rx="6" fill="%s" stroke="%s" stroke-width="%s"%s/>'
+        % (x, _CB - h, h, 'var(--sunk)' if accent else 'none', st, sw, extra),
+        _t(x + 44, _CB - h - 8, lab1, 't-sm'),
+        _t(x + 44, _CB + 20, lab2, 't-sm'),
+    ])
+
+
+# 왼쪽 눈금: 9만 달러 = 136px. 오른쪽 눈금: 10% = 136px.
+def _kd(v):
+    return int(136 * v / 90.0)
+
+
+def _pc(v):
+    return int(136 * v / 10.0)
+
+
+FIG_COST = _svg(W, 232, '광 부품값은 절반인데 클러스터 총비용은 3~7%만 준다', ''.join([
+    _lt(18, 18, '스위치 한 대의 광 부품값 (천 달러)', 't-sm', True),
+    _cbar(24, _kd(72), '72', '트랜시버'),
+    _cbar(136, _kd(40), '35~40', 'CPO 원가', accent=True),
+    _cbar(248, _kd(90), '80~90', '마진 얹은 CPO', dash=True),
+    '<line x1="352" y1="10" x2="352" y2="220" stroke="%s" stroke-width="1" stroke-dasharray="4 4"/>' % INK3,
+    _lt(372, 18, '클러스터 총비용 절감', 't-sm', True),
+    _cbar(384, _pc(3), '3%', '3층망 그대로'),
+    _cbar(504, _pc(7), '7%', '2층으로 평탄화', accent=True),
+]))
