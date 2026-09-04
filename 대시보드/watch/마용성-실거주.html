@@ -102,6 +102,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    똑같이 값을 따른다 — 성남만 다른 색으로 묶으면 「지금 값이 다르다」는 뜻으로
    읽힌다(여기서 말하려는 건 시·도 경계일 뿐이다) */
 .seoul-map .gu[data-sido="경기"]{stroke-dasharray:2.5 2}
+/* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
+.seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
+.seoul-map[data-layer="sub"] .pin{display:block}
+.seoul-map .pin.pin-on{fill:var(--ink);stroke:var(--paper)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}

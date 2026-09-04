@@ -286,6 +286,11 @@ def main():
         'license': LICENSE,
         'fetched': '2026-09-04',
         'viewBox': [0, 0, round(vb_w, 1), round(vb_h, 1)],
+        # 경위도 → 판 좌표(2026-09-04, 청약 공고 점). x = (lon·cos(lat0) − minx)·scale + pad,
+        # y = (maxy − lat)·scale + pad. 화면이 이 계수로 좌표를 찍는다 — 지도가 다시 구워지면
+        # 같이 바뀐다
+        'proj': {'lat0': LAT0, 'minx': minx, 'maxy': maxy, 'scale': scale,
+                 'pad_x': pad_x, 'pad_y': pad_y},
         'gu': out_gu,
     }
     io.open(OUT, 'w', encoding='utf-8').write(json.dumps(out, ensure_ascii=False))

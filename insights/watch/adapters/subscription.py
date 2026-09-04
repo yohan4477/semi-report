@@ -121,14 +121,71 @@ def _get(base, op, params, timeout=30):
     return d['data']
 
 
-def _six_months_ago():
-    """오늘부터 6개월 전 달의 1일(YYYY-MM-01). 최근 6개월치 공고만 본다."""
+def _months_ago(n):
+    """오늘부터 n개월 전 달의 1일(YYYY-MM-01)."""
     d = datetime.date.today()
-    y, m = d.year, d.month - 6
+    y, m = d.year, d.month - n
     while m <= 0:
         m += 12
         y -= 1
     return '%04d-%02d-01' % (y, m)
+
+
+def _six_months_ago():
+    """최근 6개월 — 본 장·지도·공고 페이지가 보는 창."""
+    return _months_ago(6)
+
+
+# 통계 창(2026-09-04) — 경쟁률·분양가·공급 세대수 그래프는 6개월로는 점이 몇 개 안 된다.
+# 24개월을 받고, 그 전에 받아 둔 것은 _metrics 에서 읽어 이어 붙인다(API 창 밖으로
+# 밀려난 공고도 안 잃는다). 경쟁률·주택형 호출은 이미 받아 둔 공고는 다시 안 한다.
+HIST_MONTHS = 24
+
+# 위치(2026-09-04) — 공급위치 주소를 카카오 로컬 API 로 좌표로 바꾼다. 열쇠는 환경변수
+# KAKAO_REST_KEY(사용자 환경변수, 저장소에 안 남긴다). 없으면 좌표 없이 간다 — 지도 점 층만
+# 안 선다. 주소당 한 번만 부르고, 지난번에 받은 좌표는 id 로 다시 쓴다
+KAKAO_ENV = 'KAKAO_REST_KEY'
+KAKAO_URL = 'https://dapi.kakao.com/v2/local/search/address.json'
+
+
+def geocode(addr):
+    """주소 → (lat, lon) 또는 None. 키가 없거나 못 찾으면 None — 지어내지 않는다.
+    도로명·지번 둘 다 카카오가 알아서 받는다. 「외 N필지」 같은 꼬리는 떼고 묻는다."""
+    key = os.environ.get(KAKAO_ENV)
+    if not key or not addr:
+        return None
+    q = re.sub(r'\s*(외\s*\d+\s*필지|일원|번지\s*일대|일대).*$', '', str(addr)).strip()
+    req = urllib.request.Request(KAKAO_URL + '?' + urllib.parse.urlencode({'query': q, 'size': 1}),
+                                 headers={'Authorization': 'KakaoAK ' + key})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            d = json.loads(r.read().decode('utf-8', 'replace'))
+    except Exception:                                  # noqa: BLE001 — 좌표만 없이 간다
+        return None
+    docs = d.get('documents') or []
+    if not docs:
+        # 상세 주소가 안 잡히면 동까지만 다시 묻는다(「서울특별시 성북구 장위동 68-…」→ 동)
+        m = re.match(r'^(\S+\s+\S+\s+\S+(?:동|읍|면|가|리))', q)
+        if not m or m.group(1) == q:
+            return None
+        return geocode(m.group(1))
+    try:
+        return float(docs[0]['y']), float(docs[0]['x'])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _prev_hist():
+    """지난번 _metrics/policy/청약 제도.json 의 pblanc_hist.items — id → item."""
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                     '_metrics', 'policy', '청약 제도.json')
+    try:
+        with open(p, encoding='utf-8') as f:
+            d = json.load(f)
+    except (IOError, ValueError):
+        return {}
+    items = ((d.get('pblanc_hist') or {}).get('items')) or []
+    return dict((it.get('id'), it) for it in items if it.get('id'))
 
 
 def _yn(v):
@@ -268,7 +325,7 @@ def fetch(target_name, area=None, laws=()):
     구 판정(_in_gu)은 한 번만 돈다 — 세 권역이 서로소라 나중에 권역별로 다시
     나눠 담아도 세 권역 몫은 이전과 같다."""
     try:
-        rows = pblancs('서울', since=_six_months_ago(), page_size=200)
+        rows = pblancs('서울', since=_months_ago(HIST_MONTHS), page_size=500)
     except NoKey as e:
         # 값을 못 받았다는 것을 지어낸 값으로 덮지 않는다. 빈 손이 정확한 답이다.
         fetch.last_error = str(e)
@@ -286,7 +343,7 @@ def fetch(target_name, area=None, laws=()):
     # 다음 페이지를 못 받으면 놓친 공고가 있을 수 있다는 것을 src 에 적는다.
     fetch.gg_error = None
     try:
-        gg_rows = pblancs('경기', since=_six_months_ago(), page_size=500)
+        gg_rows = pblancs('경기', since=_months_ago(HIST_MONTHS), page_size=1000)
         # 보고 있는 경기 시군구만 남긴다 — 2026-09-04 동탄(화성시)·광교(수원 영통구)·
         # 평촌(안양 동안구)·남한산성(광주시)을 더했다. 경기 sido 로 받은 행이라 「광주시」는
         # 경기 광주다(광주광역시는 sido 가 다르다)
@@ -303,6 +360,8 @@ def fetch(target_name, area=None, laws=()):
     types_ok = True   # getAPTLttotPblancMdl 이 도중에 죽으면 남은 공고는 조용히 건너뛴다
     matched = []       # [(구, row, item), …] — 구를 뽑은 공고만
     n_unmatched = 0     # 공급위치 주소에 28구 이름이 하나도 안 걸린 공고
+    prev = _prev_hist()
+    today = datetime.date.today().isoformat()
     for r in rows:
         gu_hit = _in_gu(r, ALL_GU)
         if not gu_hit:
@@ -346,21 +405,43 @@ def fetch(target_name, area=None, laws=()):
         if hmpg:
             it['hmpg'] = hmpg
         hmn, pno = r.get('HOUSE_MANAGE_NO'), r.get('PBLANC_NO')
-        if rate_ok and hmn and pno:
+        old = prev.get(it['id']) or {}
+        addr = str(r.get('HSSPLY_ADRES') or '').strip()
+        if addr:
+            it['addr'] = addr
+        if old.get('lat') is not None and old.get('lon') is not None:
+            it['lat'], it['lon'] = old['lat'], old['lon']
+        elif addr:
+            ll = geocode(addr)
+            if ll:
+                it['lat'], it['lon'] = round(ll[0], 6), round(ll[1], 6)
+        # 지난번에 받아 둔 경쟁률·주택형은 다시 안 부른다 — 경쟁률은 발표 뒤 값이 안 바뀌고
+        # 주택형은 공고 뒤 안 바뀐다. 경쟁률이 아직 없고 접수가 지났으면 다시 묻는다
+        reuse_rate = bool(old.get('rates'))
+        reuse_types = bool(old.get('types'))
+        if reuse_rate:
+            it['rates'] = old['rates']
+            it['rate1'] = old.get('rate1')
+        elif rate_ok and hmn and pno and (not it.get('apply') or it['apply'] <= today):
             try:
-                rate1 = _rate1_summary(hmn, pno)
+                pairs = rank1_rates(hmn, pno)
             except NoKey as e:
                 rate_ok = False
                 fetch.rate_error = str(e)
-                rate1 = None
+                pairs = []
             except Exception as e:            # 게이트웨이 장애 등 — 15098905 미승인 포함
                 rate_ok = False
                 fetch.rate_error = '%s: %s' % (type(e).__name__, e)
-                rate1 = None
-            if rate1:
-                it['rate1'] = rate1
-        # 평수·분양가 — 주택형별 상세(청약공고_스펙 추가 §1). 공고당 1회만 부른다
-        if types_ok and hmn and pno:
+                pairs = []
+            if pairs:
+                # 주택형별 1순위 해당지역 경쟁률 — 그래프용 수. 문자열 요약(rate1)은 화면용
+                it['rates'] = [[t, v] for t, v in pairs]
+                vals = [v for _t, v in pairs]
+                it['rate1'] = (_fmt_rate(min(vals)) if len(vals) == 1 or min(vals) == max(vals)
+                               else '%s~%s' % (_fmt_rate(min(vals)), _fmt_rate(max(vals))))
+        if reuse_types:
+            it['types'] = old['types']
+        elif types_ok and hmn and pno:
             try:
                 types = apt_types(hmn, pno)
             except NoKey as e:
@@ -374,6 +455,14 @@ def fetch(target_name, area=None, laws=()):
             if types:
                 it['types'] = types
         matched.append((gu, r, it))
+    # 통계용 이력 — 이번에 받은 것 + API 창(24개월) 밖으로 밀려난 옛 것. 같은 id 는 이번 것
+    hist = dict(prev)
+    for _g, _r, it in matched:
+        hist[it['id']] = it
+    hist_items = sorted(hist.values(), key=lambda x: x.get('pblanc_de') or '', reverse=True)
+    # 6개월 창 — 본 장·지도·공고 페이지는 여기까지만 본다(그래프만 이력을 쓴다)
+    six = _six_months_ago()
+    matched = [(g, r, it) for g, r, it in matched if (it.get('pblanc_de') or '') >= six]
 
     by_gu = {}
     for gu, r, it in matched:
@@ -384,7 +473,21 @@ def fetch(target_name, area=None, laws=()):
 
     latest_all = max((str(r.get('RCRIT_PBLANC_DE') or '') for _g, r, _it in matched),
                       default='')
+    hist_latest = max((it.get('pblanc_de') or '' for it in hist_items), default='')
     out = {
+        'pblanc_hist': {
+            'value': len(hist_items),
+            'items': hist_items,
+            'months': HIST_MONTHS,
+            'as_of': (hist_latest[:7] or '확인 못 함'),
+            'kind': '공표',
+            'unit': '건(모집공고)',
+            'src': ('공공데이터포털 15098547·15098905 · 최근 %d개월 서울+경기(보고 있는 시군구) '
+                    '공고 + 그 전에 받아 둔 것 — 통계 그래프용. 경쟁률은 1순위 해당지역, '
+                    '주택형별' % HIST_MONTHS),
+            'series': [],
+            'partial': False,
+        },
         'pblanc_gu': {
             'value': len(matched),
             'by_gu': by_gu,

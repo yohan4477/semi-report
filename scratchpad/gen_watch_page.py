@@ -381,6 +381,254 @@ def rebuild_page(watches):
             % (FONTS, CSS, total, E(as_of or '—'), len(gus), nav, ''.join(bands), basis))
 
 
+# ── 청약 통계(2026-09-04) ────────────────────────────────────────────────
+# 재료는 청약 제도 줄의 pblanc_hist(24개월 + 쌓아 둔 것). 도해는 회색만, 라벨은 축 눈금과
+# 몇 개 이름뿐 — check_fig 가 겹침을 문다. 값은 전부 원천 필드에서 계산한다(㎡당 분양가 =
+# 주택형 최고분양가 ÷ 전용면적, 경쟁률 = 1순위 해당지역 주택형별 최고).
+
+def _sub_hist(watches):
+    w = next((x for x in watches if x['kind'] == 'policy' and x['slug'] == '청약 제도'), None)
+    m = ((w or {}).get('metrics') or {}).get('pblanc_hist') if w else None
+    if not m:
+        return [], None, None
+    return (m.get('items') or []), m.get('as_of'), m.get('months')
+
+
+def _sub_price_m2(it):
+    """㎡당 분양가(만원) — 84형이 있으면 84형, 없으면 가장 큰 형. 최고분양가 ÷ 전용면적.
+    공급면적이 아니라 전용면적 기준이라 시장의 「평당 분양가」보다 높게 나온다 — 캡션에 적는다."""
+    ts = [t for t in (it.get('types') or []) if t.get('top') and t.get('ex')]
+    if not ts:
+        return None
+    pick = next((t for t in ts if 84 <= t['ex'] < 85), None) or max(ts, key=lambda t: t['ex'])
+    return pick['top'] / float(pick['ex']), pick['ex']
+
+
+def _sub_rate_max(it):
+    vals = [v for _t, v in (it.get('rates') or []) if isinstance(v, (int, float))]
+    return max(vals) if vals else None
+
+
+def _median_m2(watches, sido):
+    """그 시·도 중위 매매가(만원/㎡) — 실거주 줄의 median_sale(area 가 그 시·도인 것)."""
+    # 줄의 context 가 median_sale 을 안 골라 w['metrics'] 에는 없다 — 어댑터 산출을 그대로 읽는다
+    for w in watches:
+        if w['kind'] != 'realestate':
+            continue
+        m = (wl.metrics_of(w['kind'], w['slug']) or {}).get('median_sale')
+        if m and m.get('area') == sido and m.get('value') is not None:
+            return float(m['value']), m.get('as_of')
+    return None, None
+
+
+def _month_list(n, end_ym):
+    y, m = int(end_ym[:4]), int(end_ym[5:7])
+    out = []
+    for _ in range(n):
+        out.append('%04d-%02d' % (y, m))
+        m -= 1
+        if m == 0:
+            m, y = 12, y - 1
+    return list(reversed(out))
+
+
+def _fig_supply(items, months):
+    """월별 공급 세대수 — 서울(짙은 회색)·경기(옅은 회색) 쌓은 막대."""
+    W, H = 640, 240
+    X0, X1, Y0, Y1 = 64, W - 12, 24, H - 44   # 왼쪽 여백은 「5,000」 다섯 글자가 든다
+    tot = {}
+    for it in items:
+        ym = (it.get('pblanc_de') or '')[:7]
+        if ym not in months:
+            continue
+        n = int(it.get('total') or 0)
+        k = _sido_of(it.get('gu') or '')
+        tot.setdefault(ym, {'서울': 0, '경기': 0, 'n': 0})
+        tot[ym][k] += n
+        tot[ym]['n'] += 1
+    vmax = max((v['서울'] + v['경기'] for v in tot.values()), default=0) or 1
+    step = 500 if vmax <= 2500 else 1000 if vmax <= 5000 else 2000
+    top = ((vmax // step) + 1) * step
+    sy = lambda v: Y1 - (Y1 - Y0) * v / top
+    o = []
+    for g in range(0, top + 1, step):
+        y = sy(g)
+        o.append('<line x1="%d" y1="%.1f" x2="%d" y2="%.1f" class="grid"/>' % (X0, y, X1, y))
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
+                 % (X0 - 6, y + 4, '{:,}'.format(g)))
+    bw = (X1 - X0) / float(len(months))
+    for i, ym in enumerate(months):
+        v = tot.get(ym, {'서울': 0, '경기': 0})
+        x = X0 + bw * i + bw * 0.15
+        w = bw * 0.7
+        if v['서울']:
+            o.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="var(--ink-2)"/>'
+                     % (x, sy(v['서울']), w, Y1 - sy(v['서울'])))
+        if v['경기']:
+            o.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="var(--line)"/>'
+                     % (x, sy(v['서울'] + v['경기']), w, sy(v['서울']) - sy(v['서울'] + v['경기'])))
+        if i % 3 == 0:
+            o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                     % (x + w / 2, Y1 + 16, ym[2:].replace('-', '.')))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">세대 · 짙은 회색 서울, 옅은 회색 경기</text>'
+             % (X0, H - 8))
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="월별 공급 세대수" class="fig-w">%s</svg>'
+            '<figcaption>월별 공급 세대수 — 모집공고일 기준, 보고 있는 시군구만</figcaption></figure>'
+            % (W, H, ''.join(o))), tot
+
+
+def _fig_rate_price(items):
+    """경쟁률 × ㎡당 분양가 — 점 하나가 공고 하나. 서울은 채운 점, 경기는 빈 점. 세로는 로그."""
+    import math
+    pts = []
+    for it in items:
+        pm = _sub_price_m2(it)
+        r = _sub_rate_max(it)
+        if pm is None or r is None or r <= 0:
+            continue
+        pts.append((pm[0], r, it))
+    if len(pts) < 3:
+        return '', pts
+    W, H = 640, 300
+    X0, X1, Y0, Y1 = 78, W - 12, 16, H - 44   # 「10,000」 여섯 글자 자리
+    xs = [p[0] for p in pts]
+    xlo = (int(min(xs) // 250)) * 250
+    xhi = (int(max(xs) // 250) + 1) * 250
+    ylo, yhi = 0, max(1, math.ceil(math.log10(max(p[1] for p in pts))))
+    sx = lambda v: X0 + (X1 - X0) * (v - xlo) / float(xhi - xlo)
+    sy = lambda v: Y1 - (Y1 - Y0) * (math.log10(v) - ylo) / float(yhi - ylo)
+    o = []
+    for e in range(ylo, yhi + 1):
+        y = sy(10 ** e)
+        o.append('<line x1="%d" y1="%.1f" x2="%d" y2="%.1f" class="grid"/>' % (X0, y, X1, y))
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" text-anchor="end">%s</text>'
+                 % (X0 - 6, y + 4, '{:,}'.format(10 ** e)))
+    xstep = 500 if xhi - xlo > 2000 else 250
+    for g in range(xlo, xhi + 1, xstep):
+        x = sx(g)
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (x, Y1 + 16, '{:,}'.format(g)))
+    for pm, r, it in pts:
+        sido = _sido_of(it.get('gu') or '')
+        if sido == '서울':
+            o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--ink-2)"/>' % (sx(pm), sy(r)))
+        else:
+            o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--paper)" stroke="var(--ink-2)" '
+                     'stroke-width="1.5"/>' % (sx(pm), sy(r)))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">채운 점 서울 · 빈 점 경기</text>' % (X0, H - 8))
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="경쟁률과 분양가" class="fig-w">%s</svg>'
+            '<figcaption>1순위 경쟁률과 ㎡당 분양가 — 공고 하나가 점 하나 (%d건). 가로 ㎡당 분양가(만원, '
+            '전용 기준), 세로 1순위 최고 경쟁률(대 1, 로그 눈금)</figcaption></figure>'
+            % (W, H, ''.join(o), len(pts))), pts
+
+
+def _fig_price_vs_median(items, watches, n=12):
+    """최근 공고의 ㎡당 분양가 가로 막대 + 그 시·도 중위 매매가 세로 기준선."""
+    rows = []
+    for it in items:
+        pm = _sub_price_m2(it)
+        if pm is None:
+            continue
+        rows.append((it, pm[0], pm[1]))
+        if len(rows) >= n:
+            break
+    if not rows:
+        return '', []
+    med = {}
+    for sido in ('서울', '경기'):
+        med[sido] = _median_m2(watches, sido)
+    W = 640
+    RH = 22
+    X0, X1 = 150, W - 60
+    H = 20 + RH * len(rows) + 34
+    vmax = max([r[1] for r in rows] + [v for v, _a in med.values() if v]) or 1
+    sx = lambda v: X0 + (X1 - X0) * v / vmax
+    o = []
+    for i, (it, pm, ex) in enumerate(rows):
+        y = 20 + RH * i
+        sido = _sido_of(it.get('gu') or '')
+        nm = it.get('name') or '—'
+        nm = nm if len(nm) <= 11 else nm[:10] + '…'
+        o.append('<text x="%d" y="%.1f" class="t-sm" text-anchor="end">%s</text>' % (X0 - 8, y + 14, E(nm)))
+        o.append('<rect x="%d" y="%.1f" width="%.1f" height="%d" fill="%s"/>'
+                 % (X0, y + 3, sx(pm) - X0, RH - 8, 'var(--ink-2)' if sido == '서울' else 'var(--line)'))
+        o.append('<text x="%.1f" y="%.1f" class="t-sm t-axis">%s</text>'
+                 % (sx(pm) + 4, y + 14, '{:,}'.format(int(round(pm)))))
+    yb = 20 + RH * len(rows)
+    # 중위 매매가는 세로선이 아니라 축 밑 표식으로 — 세로선은 막대 값 라벨을 가로질러
+    # check_fig 「선에 깔림」에 걸린다(2026-09-04)
+    o.append('<line x1="%d" y1="%d" x2="%d" y2="%d" class="grid"/>' % (X0, yb + 2, X1, yb + 2))
+    for sido in ('서울', '경기'):
+        v, _a = med[sido]
+        if v:
+            x = sx(v)
+            o.append('<path d="M%.1f %d L%.1f %d L%.1f %d Z" fill="var(--ink)"/>'
+                     % (x, yb + 3, x - 5, yb + 11, x + 5, yb + 11))
+            o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s 중위 %s</text>'
+                     % (x, yb + 24, sido, '{:,}'.format(int(round(v)))))
+    cap = ' · '.join('%s 중위 매매가 %s만원/㎡ (%s)' % (sd, '{:,}'.format(int(round(v))), E(a or '—'))
+                     for sd, (v, a) in med.items() if v)
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="분양가와 시세" class="fig-w">%s</svg>'
+            '<figcaption>최근 %d건의 ㎡당 분양가(만원, 전용 기준)와 시·도 중위 매매가 — %s</figcaption></figure>'
+            % (W, H, ''.join(o), len(rows), cap)), rows
+
+
+def subscription_stats_page(watches):
+    """청약 통계 — 대시보드/watch/청약 통계.html. 그래프 셋과 그 밑 목록. 본 장의 도해 예산
+    밖이라 여기서 그린다(2026-09-04)."""
+    items, as_of, months = _sub_hist(watches)
+    today = _TODAY
+    n_months = 24
+    mlist = _month_list(n_months, today[:7])
+    mlist_desc = list(reversed(mlist))
+    f1, tot = _fig_supply(items, mlist)
+    f2, pts = _fig_rate_price(items)
+    f3, rows3 = _fig_price_vs_median(items, watches)
+    # 목록 — 그래프가 못 적는 이름·수
+    sup_rows = ''.join(
+        '<p class="cond-lead">%s — 서울 %s세대 · 경기 %s세대 · 공고 %d건</p>'
+        % (E(ym), '{:,}'.format(tot[ym]['서울']), '{:,}'.format(tot[ym]['경기']), tot[ym]['n'])
+        for ym in mlist_desc[:12] if ym in tot)
+    top_rate = sorted(pts, key=lambda p: -p[1])[:5]
+    rate_rows = ''.join(
+        '<p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> %s · 1순위 최고 %s:1 · ㎡당 %s만원</p>'
+        % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
+           _fmt_rate(r), '{:,}'.format(int(round(pm))))
+        for pm, r, it in top_rate)
+    n_rated = sum(1 for it in items if it.get('rates'))
+    basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
+             '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 최근 %s개월 공고 %d건 + 그 전에 '
+             '받아 둔 것 · 경쟁률이 잡힌 공고 %d건 · 기준 %s · ㎡당 분양가는 주택형 최고분양가 ÷ 전용면적이라 '
+             '공급면적 기준 「평당 분양가」보다 높게 나온다 · 중위 매매가는 한국부동산원 시·도 단위</p>'
+             '<p><a class="back" href="../포트폴리오 워치.html#subscription">← 포트폴리오 워치</a></p></div>'
+             % (E(str(months or n_months)), len(items), n_rated, E(as_of or '—')))
+    nav = ('<nav class="jump" aria-label="절 바로가기"><a href="#supply">공급</a><a href="#rate">경쟁률</a>'
+           '<a href="#price">분양가</a><a href="#basis">자료 기준</a></nav>')
+    body = (
+        '<div class="band" id="supply"><p class="band-t">월별 공급 세대수</p>%s%s</div>'
+        '<div class="band" id="rate"><p class="band-t">경쟁률과 분양가</p>%s'
+        '<p class="cond-t">1순위 경쟁률 높은 순 다섯</p>%s</div>'
+        '<div class="band" id="price"><p class="band-t">분양가와 시세</p>%s</div>'
+        % (f1, sup_rows, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
+           rate_rows, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>'))
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>청약 통계 — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#subscription">'
+            '← 포트폴리오 워치</a>'
+            '<header><p class="meta mono">공고 %d건 · 기준 %s</p><h1>청약 통계</h1>'
+            '<p class="lede">보고 있는 시군구의 분양 공고를 수로 — 언제 얼마나 나왔나, 어디에 몰렸나, '
+            '시세보다 싼가.</p></header>%s<div class="dbody">%s%s</div>'
+            '<footer>청약홈(공공데이터포털)에서 받습니다. 매달 다시 확인합니다.</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->'
+            '</div></body></html>'
+            % (FONTS, CSS, len(items), E(as_of or '—'), nav, body, basis))
+
+
+def _fmt_rate(v):
+    return ('%d' % v) if float(v).is_integer() else ('%.1f' % v)
+
+
 def _all_sub_items(watches):
     """청약 제도 줄의 최근 6개월 공고 전부 — 서울 25구 + 성남 3구를 한 목록으로
     편다(권역 셋에 갇히지 않는다). 어댑터가 못 냈으면(열쇠 없음) (None, None) —
@@ -794,6 +1042,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    똑같이 값을 따른다 — 성남만 다른 색으로 묶으면 「지금 값이 다르다」는 뜻으로
    읽힌다(여기서 말하려는 건 시·도 경계일 뿐이다) */
 .seoul-map .gu[data-sido="경기"]{stroke-dasharray:2.5 2}
+/* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
+.seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
+.seoul-map[data-layer="sub"] .pin{display:block}
+.seoul-map .pin.pin-on{fill:var(--ink);stroke:var(--paper)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
@@ -1806,15 +2058,17 @@ def subscription_now(watches, sido='서울'):
             if types_txt:
                 meta += '<br>' + E(types_txt)
             # 제목을 누르면 지도에서 그 구를 고정 강조한다(_SUB_JS). JS 가 없으면 공고 페이지로
-            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s" data-gu="%s">%s</a>'
+            rows.append('<div class="sub-title"><p class="st-1"><a href="watch/청약 공고.html#p-%s" data-gu="%s" data-id="%s">%s</a>'
                         '<span class="st-r"><span class="tag %s si-chip">%s</span>%s</span></p>'
                         '<p class="st-2 t-sub">%s</p></div>'
-                        % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('name') or '—'), cls, E(st),
+                        % (E(it.get('id') or ''), E(it.get('gu') or ''), E(it.get('id') or ''),
+                           E(it.get('name') or '—'), cls, E(st),
                            ('<span class="t-sub"> · %s</span>' % E(when)) if when else '', meta))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
         h.append('<p class="cond-lead">최근 3개월에 공고가 없습니다</p>')
     h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 →</a> · '
+             '<a href="watch/청약 통계.html">청약 통계 →</a> · '
              '<a href="#subscription-cond">청약 조건 →</a></p>')
     h.append('<p class="cond-tail">청약홈(공공데이터포털) · 기준 %s · 상태는 화면 만든 날 %s '
              '기준 · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
@@ -2451,7 +2705,40 @@ def _shift_d(d, dx, dy):
     return re.sub(r'-?\d+(?:\.\d+)?', _one, d)
 
 
-def _gu_svg(gu_data, gus=None, suffix=''):
+def _board_xy(lat, lon):
+    """경위도 → 지도 판 좌표. 계수는 fetch_seoul_gu.py 가 _seoul_gu.json 에 적어 둔 것."""
+    pj = SEOUL_GU.get('proj')
+    if not pj:
+        return None
+    import math
+    x = (lon * math.cos(math.radians(pj['lat0'])) - pj['minx']) * pj['scale'] + pj['pad_x']
+    y = (pj['maxy'] - lat) * pj['scale'] + pj['pad_y']
+    return x, y
+
+
+def _sub_pins(watches, gus, x0, y0, scale):
+    """청약 공고 점 — 그 시·도 구에 든 최근 6개월 공고 가운데 좌표가 있는 것. 점 하나가
+    공고 하나, data-id 로 분양 목록·패널과 만난다. 청약 공고 층에서만 보인다(CSS)."""
+    sub_gu, _asof = _sub_gu_data(watches)
+    if sub_gu is None:
+        return ''
+    o = []
+    r = 5.0 / scale
+    for gu in gus:
+        for it in sub_gu.get(gu) or []:
+            if it.get('lat') is None or it.get('lon') is None:
+                continue
+            xy = _board_xy(it['lat'], it['lon'])
+            if not xy:
+                continue
+            o.append('<circle class="pin" data-id="%s" data-gu="%s" cx="%.1f" cy="%.1f" r="%.1f">'
+                     '<title>%s</title></circle>'
+                     % (E(it.get('id') or ''), E(gu), xy[0] - x0, xy[1] - y0, r,
+                        E(it.get('name') or '')))
+    return ('<g class="pins">%s</g>' % ''.join(o)) if o else ''
+
+
+def _gu_svg(gu_data, gus=None, suffix='', watches=None):
     """서울 25개 구 지도. 채움은 CSS 가 data-ratio-bin 으로 고른다 — 값 자체는
     여기서 속성으로 다 박아 두고 JS 는 아무 계산도 안 한다.
 
@@ -2521,11 +2808,12 @@ def _gu_svg(gu_data, gus=None, suffix=''):
         labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle" '
                       'font-size="%.1f">%s</text>'
                       % (g['cx'] - x0, g['cy'] - y0, cls, lbl_px, E(name)))
+    pins = _sub_pins(watches, gus, x0, y0, scale) if watches is not None else ''
     return ('<svg class="seoul-map%s" data-layer="ratio" viewBox="%d %d %.1f %.1f" '
             'style="width:%.0f%%;--gu-stroke:%.2fpx">%s%s'
-            '<g class="gu-labels">%s</g></svg>'
+            '<g class="gu-labels">%s</g>%s</svg>'
             % (suffix and ' map%s' % suffix, vb[0], vb[1], vb[2], vb[3], width_pct,
-               stroke_px, defs, ''.join(paths), ''.join(labels)))
+               stroke_px, defs, ''.join(paths), ''.join(labels), pins))
 
 
 def _region_summary_html(watches):
@@ -2812,7 +3100,8 @@ var highlight=function(names){gus.forEach(function(g){
 var apply=function(n){if(n){highlight([n]);}else{clearHi();}showPanel(n||'default');};
 /* 밖(분양 목록)에서 구를 고정한다 — 제목을 누르면 그 구가 지도에서 강조되고 패널이 그 구로
    선다(2026-09-04 사용자 「분양 제목 하나 누르면 지도에 그 위치 표시」) */
-root.__pick=function(n){locked=n;apply(n);};
+root.__pick=function(n,id){locked=n;apply(n);
+  Array.from(svg.querySelectorAll('.pin')).forEach(function(p){p.classList.toggle('pin-on',!!id&&p.dataset.id===id);});};
 gus.forEach(function(g){
   var n=g.dataset.gu;
   g.addEventListener('mouseenter',function(){apply(n);});
@@ -2875,7 +3164,7 @@ Array.from(document.querySelectorAll('.st-1 a[data-gu]')).forEach(function(a){
     var gu=a.dataset.gu;
     if(!hero.querySelector('.gu[data-gu="'+gu+'"]'))return;
     ev.preventDefault();
-    hero.__pick(gu);
+    hero.__pick(gu,a.dataset.id||'');
     var smooth=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
     hero.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});
   });
@@ -2945,7 +3234,7 @@ def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
     800px 를 넘는다."""
     gus = _sido_gus(sido)
     gu_data = _gu_map_data(watches)
-    svg = _gu_svg(gu_data, gus, suffix)
+    svg = _gu_svg(gu_data, gus, suffix, watches)
     # 구 패널이 기본 패널보다 앞에 선다 — 골랐을 때 위에 얹히고 권역 요약은 그 아래
     # 그대로 남는다(덮으면 견줄 수가 없다). 권역 요약은 그 시·도 것만
     sido_ws = _sido_watches(watches, sido)
@@ -3144,6 +3433,16 @@ def check_detail_ui(watches):
         assert not bad, '규약 위반(청약 공고): 도해 배치 — %s' % ' · '.join(bad)
     for term in _JARGON:
         assert term not in sub_html, '규약 위반(청약 공고): 은어 "%s" 가 남아 있다' % term
+    st_path = os.path.join(WATCH_DIR, '청약 통계.html')
+    assert os.path.exists(st_path), '규약 위반: watch/청약 통계.html 이 없다'
+    st_html = io.open(st_path, encoding='utf-8').read()
+    for m in re.finditer(r'<svg[^>]*>.*?</svg>', st_html, re.S):
+        bad = check_fig.hits(m.group(0))
+        assert not bad, '규약 위반(청약 통계): 도해 배치 — %s' % ' · '.join(bad)
+    assert '<table' not in st_html, '규약 위반(청약 통계): 표가 아니라 그래프와 목록이다'
+    for term in _JARGON:
+        assert term not in st_html, '규약 위반(청약 통계): 은어 "%s" 가 남아 있다' % term
+    _assert_no_condition_chrome(st_html, '청약 통계')
     rb_path = os.path.join(WATCH_DIR, '정비사업 현황.html')
     assert os.path.exists(rb_path), '규약 위반: watch/정비사업 현황.html 이 없다'
     rb_html = io.open(rb_path, encoding='utf-8').read()
@@ -3246,7 +3545,7 @@ def build():
     # 페이지가 site/ 로도 같이 나간다.
     os.makedirs(WATCH_DIR, exist_ok=True)
     expected = (set(w['slug'] + '.html' for w in ws)
-               | {'제도.html', '청약 공고.html', '정비사업 현황.html'})
+               | {'제도.html', '청약 공고.html', '정비사업 현황.html', '청약 통계.html'})
     for f in os.listdir(WATCH_DIR):
         if f.endswith('.html') and f not in expected:
             os.remove(os.path.join(WATCH_DIR, f))
@@ -3260,6 +3559,8 @@ def build():
         f.write(subscription_page(ws))
     with io.open(os.path.join(WATCH_DIR, '정비사업 현황.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(rebuild_page(ws))
+    with io.open(os.path.join(WATCH_DIR, '청약 통계.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(subscription_stats_page(ws))
     check_detail_ui(ws)
 
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))
