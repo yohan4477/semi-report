@@ -432,8 +432,10 @@ def _month_list(n, end_ym):
     return list(reversed(out))
 
 
-def _fig_supply(items, months):
-    """월별 공급 세대수 — 서울(짙은 회색)·경기(옅은 회색) 쌓은 막대."""
+def _fig_supply(items, months, sido):
+    """월별 공급 세대수 — 그 시·도만, 막대 하나. 막대를 누르면 그 달 공고가 밑에 선다
+    (2026-09-04 「그래프의 위치 누르면 각각 나오게」) — data-ym 으로 JS 가 잇는다."""
+    items = [it for it in items if _sido_of(it.get('gu') or '') == sido]
     W, H = 640, 240
     X0, X1, Y0, Y1 = 64, W - 12, 24, H - 44   # 왼쪽 여백은 「5,000」 다섯 글자가 든다
     tot = {}
@@ -443,9 +445,10 @@ def _fig_supply(items, months):
             continue
         n = int(it.get('total') or 0)
         k = _sido_of(it.get('gu') or '')
-        tot.setdefault(ym, {'서울': 0, '경기': 0, 'n': 0})
+        tot.setdefault(ym, {'서울': 0, '경기': 0, 'n': 0, 'items': []})
         tot[ym][k] += n
         tot[ym]['n'] += 1
+        tot[ym]['items'].append(it)
     vmax = max((v['서울'] + v['경기'] for v in tot.values()), default=0) or 1
     step = 500 if vmax <= 2500 else 1000 if vmax <= 5000 else 2000
     top = ((vmax // step) + 1) * step
@@ -461,27 +464,28 @@ def _fig_supply(items, months):
         v = tot.get(ym, {'서울': 0, '경기': 0})
         x = X0 + bw * i + bw * 0.15
         w = bw * 0.7
-        if v['서울']:
-            o.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="var(--ink-2)"/>'
-                     % (x, sy(v['서울']), w, Y1 - sy(v['서울'])))
-        if v['경기']:
-            o.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="var(--line)"/>'
-                     % (x, sy(v['서울'] + v['경기']), w, sy(v['서울']) - sy(v['서울'] + v['경기'])))
+        val = v[sido]
+        if val:
+            o.append('<rect class="bar" data-ym="%s" x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
+                     'fill="var(--ink-2)"><title>%s · %s세대 · 공고 %d건</title></rect>'
+                     % (ym, x, sy(val), w, Y1 - sy(val), ym, '{:,}'.format(val), v['n']))
         if i % 3 == 0:
             o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                      % (x + w / 2, Y1 + 16, ym[2:].replace('-', '.')))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">세대 · 짙은 회색 서울, 옅은 회색 경기</text>'
-             % (X0, H - 8))
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="월별 공급 세대수" class="fig-w">%s</svg>'
-            '<figcaption>월별 공급 세대수 — 모집공고일 기준, 보고 있는 시군구만</figcaption></figure>'
-            % (W, H, ''.join(o))), tot
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">세대 · 막대를 누르면 그 달 공고</text>' % (X0, H - 8))
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 월별 공급 세대수" class="fig-w fig-click">%s</svg>'
+            '<figcaption>%s 월별 공급 세대수 — 모집공고일 기준, 보고 있는 시군구만</figcaption></figure>'
+            % (W, H, E(sido), ''.join(o), E(sido))), tot
 
 
-def _fig_rate_price(items):
-    """경쟁률 × ㎡당 분양가 — 점 하나가 공고 하나. 서울은 채운 점, 경기는 빈 점. 세로는 로그."""
+def _fig_rate_price(items, sido):
+    """경쟁률 × ㎡당 분양가 — 그 시·도 공고, 점 하나가 공고 하나. 세로는 로그. 점을 누르면
+    그 공고가 밑에 선다(data-id)."""
     import math
     pts = []
     for it in items:
+        if _sido_of(it.get('gu') or '') != sido:
+            continue
         pm = _sub_price_m2(it)
         r = _sub_rate_max(it)
         if pm is None or r is None or r <= 0:
@@ -509,23 +513,23 @@ def _fig_rate_price(items):
         o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s</text>'
                  % (x, Y1 + 16, '{:,}'.format(g)))
     for pm, r, it in pts:
-        sido = _sido_of(it.get('gu') or '')
-        if sido == '서울':
-            o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--ink-2)"/>' % (sx(pm), sy(r)))
-        else:
-            o.append('<circle cx="%.1f" cy="%.1f" r="5" fill="var(--paper)" stroke="var(--ink-2)" '
-                     'stroke-width="1.5"/>' % (sx(pm), sy(r)))
-    o.append('<text x="%d" y="%d" class="t-sm t-axis">채운 점 서울 · 빈 점 경기</text>' % (X0, H - 8))
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="경쟁률과 분양가" class="fig-w">%s</svg>'
-            '<figcaption>1순위 경쟁률과 ㎡당 분양가 — 공고 하나가 점 하나 (%d건). 가로 ㎡당 분양가(만원, '
+        o.append('<circle class="dot" data-id="%s" cx="%.1f" cy="%.1f" r="5" fill="var(--ink-2)">'
+                 '<title>%s · %s:1 · ㎡당 %s만원</title></circle>'
+                 % (E(it.get('id') or ''), sx(pm), sy(r), E(it.get('name') or ''), _fmt_rate(r),
+                    '{:,}'.format(int(round(pm)))))
+    o.append('<text x="%d" y="%d" class="t-sm t-axis">점을 누르면 그 공고</text>' % (X0, H - 8))
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 경쟁률과 분양가" class="fig-w fig-click">%s</svg>'
+            '<figcaption>%s 1순위 경쟁률과 ㎡당 분양가 — 공고 하나가 점 하나 (%d건). 가로 ㎡당 분양가(만원, '
             '전용 기준), 세로 1순위 최고 경쟁률(대 1, 로그 눈금)</figcaption></figure>'
-            % (W, H, ''.join(o), len(pts))), pts
+            % (W, H, E(sido), ''.join(o), E(sido), len(pts))), pts
 
 
-def _fig_price_vs_median(items, watches, n=12):
-    """최근 공고의 ㎡당 분양가 가로 막대 + 그 시·도 중위 매매가 세로 기준선."""
+def _fig_price_vs_median(items, watches, sido, n=12):
+    """그 시·도 최근 공고의 ㎡당 분양가 가로 막대 + 그 시·도 중위 매매가 표식(축 밑)."""
     rows = []
     for it in items:
+        if _sido_of(it.get('gu') or '') != sido:
+            continue
         pm = _sub_price_m2(it)
         if pm is None:
             continue
@@ -534,9 +538,7 @@ def _fig_price_vs_median(items, watches, n=12):
             break
     if not rows:
         return '', []
-    med = {}
-    for sido in ('서울', '경기'):
-        med[sido] = _median_m2(watches, sido)
+    med = {sido: _median_m2(watches, sido)}
     W = 640
     RH = 22
     X0, X1 = 150, W - 60
@@ -550,27 +552,51 @@ def _fig_price_vs_median(items, watches, n=12):
         nm = it.get('name') or '—'
         nm = nm if len(nm) <= 11 else nm[:10] + '…'
         o.append('<text x="%d" y="%.1f" class="t-sm" text-anchor="end">%s</text>' % (X0 - 8, y + 14, E(nm)))
-        o.append('<rect x="%d" y="%.1f" width="%.1f" height="%d" fill="%s"/>'
-                 % (X0, y + 3, sx(pm) - X0, RH - 8, 'var(--ink-2)' if sido == '서울' else 'var(--line)'))
+        o.append('<rect class="bar" data-id="%s" x="%d" y="%.1f" width="%.1f" height="%d" fill="var(--ink-2)">'
+                 '<title>%s</title></rect>'
+                 % (E(it.get('id') or ''), X0, y + 3, sx(pm) - X0, RH - 8, E(it.get('name') or '')))
         o.append('<text x="%.1f" y="%.1f" class="t-sm t-axis">%s</text>'
                  % (sx(pm) + 4, y + 14, '{:,}'.format(int(round(pm)))))
     yb = 20 + RH * len(rows)
     # 중위 매매가는 세로선이 아니라 축 밑 표식으로 — 세로선은 막대 값 라벨을 가로질러
     # check_fig 「선에 깔림」에 걸린다(2026-09-04)
     o.append('<line x1="%d" y1="%d" x2="%d" y2="%d" class="grid"/>' % (X0, yb + 2, X1, yb + 2))
-    for sido in ('서울', '경기'):
-        v, _a = med[sido]
-        if v:
-            x = sx(v)
-            o.append('<path d="M%.1f %d L%.1f %d L%.1f %d Z" fill="var(--ink)"/>'
-                     % (x, yb + 3, x - 5, yb + 11, x + 5, yb + 11))
-            o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s 중위 %s</text>'
-                     % (x, yb + 24, sido, '{:,}'.format(int(round(v)))))
+    v, _a = med[sido]
+    if v:
+        x = sx(v)
+        # 비스듬한 선(삼각형)은 check_fig 가 문다 — 세로 짧은 네모 눈금으로
+        o.append('<rect x="%.1f" y="%d" width="3" height="9" fill="var(--ink)"/>' % (x - 1.5, yb + 3))
+        o.append('<text x="%.1f" y="%d" class="t-sm t-axis" text-anchor="middle">%s 중위 매매가 %s</text>'
+                 % (x, yb + 24, sido, '{:,}'.format(int(round(v)))))
     cap = ' · '.join('%s 중위 매매가 %s만원/㎡ (%s)' % (sd, '{:,}'.format(int(round(v))), E(a or '—'))
                      for sd, (v, a) in med.items() if v)
-    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="분양가와 시세" class="fig-w">%s</svg>'
-            '<figcaption>최근 %d건의 ㎡당 분양가(만원, 전용 기준)와 시·도 중위 매매가 — %s</figcaption></figure>'
-            % (W, H, ''.join(o), len(rows), cap)), rows
+    return ('<figure><svg viewBox="0 0 %d %d" role="img" aria-label="%s 분양가와 시세" class="fig-w fig-click">%s</svg>'
+            '<figcaption>%s 최근 %d건의 ㎡당 분양가(만원, 전용 기준)와 중위 매매가 — %s · 막대를 누르면 그 공고</figcaption></figure>'
+            % (W, H, E(sido), ''.join(o), E(sido), len(rows), cap)), rows
+
+
+# 그래프 조각을 누르면 그 달·그 공고만 밑에 선다 — 계산 없음, hidden 토글뿐
+_STATS_JS = """<script>
+(function(){
+Array.from(document.querySelectorAll('svg.fig-click')).forEach(function(svg){
+  var band=svg.closest('.band');if(!band)return;
+  var picks=band.querySelector('.picks');if(!picks)return;
+  var store=band.parentNode.querySelector('.pick-store');
+  var show=function(sel){
+    Array.from(picks.children).forEach(function(c){c.hidden=true;});
+    var el=picks.querySelector(sel);
+    if(!el&&store){var src=store.querySelector(sel);if(src){el=src.cloneNode(true);picks.appendChild(el);}}
+    if(el){el.hidden=false;}
+    Array.from(svg.querySelectorAll('.is-on')).forEach(function(x){x.classList.remove('is-on');});
+  };
+  svg.addEventListener('click',function(ev){
+    var t=ev.target.closest('.bar,.dot');if(!t)return;
+    var sel=t.dataset.ym?'[data-ym="'+t.dataset.ym+'"]':'[data-id="'+t.dataset.id+'"]';
+    show(sel);t.classList.add('is-on');
+  });
+});
+})();
+</script>"""
 
 
 def subscription_stats_page(watches):
@@ -581,20 +607,49 @@ def subscription_stats_page(watches):
     n_months = 24
     mlist = _month_list(n_months, today[:7])
     mlist_desc = list(reversed(mlist))
-    f1, tot = _fig_supply(items, mlist)
-    f2, pts = _fig_rate_price(items)
-    f3, rows3 = _fig_price_vs_median(items, watches)
-    # 목록 — 그래프가 못 적는 이름·수
-    sup_rows = ''.join(
-        '<p class="cond-lead">%s — 서울 %s세대 · 경기 %s세대 · 공고 %d건</p>'
-        % (E(ym), '{:,}'.format(tot[ym]['서울']), '{:,}'.format(tot[ym]['경기']), tot[ym]['n'])
-        for ym in mlist_desc[:12] if ym in tot)
-    top_rate = sorted(pts, key=lambda p: -p[1])[:5]
-    rate_rows = ''.join(
-        '<p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> %s · 1순위 최고 %s:1 · ㎡당 %s만원</p>'
-        % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
-           _fmt_rate(r), '{:,}'.format(int(round(pm))))
-        for pm, r, it in top_rate)
+    # 서울 → 경기, 시·도마다 그래프 셋(2026-09-04 「청약 통계도 서울 경기 나눠서」). 그래프 밑
+    # 목록은 상시로 안 펴고, 막대·점을 누른 것만 선다(「그래프의 위치 누르면 각각 나오게」)
+    blocks, navs = [], []
+    by_id = dict((it.get('id'), it) for it in items if it.get('id'))
+    for sido, sfx in SIDOS:
+        f1, tot = _fig_supply(items, mlist, sido)
+        f2, pts = _fig_rate_price(items, sido)
+        f3, rows3 = _fig_price_vs_median(items, watches, sido)
+        # 달마다 상세 한 덩이(숨김) — 막대를 누르면 그 달만 보인다
+        month_details = ''.join(
+            '<div class="pick" data-ym="%s" hidden><p class="cond-lead">%s — %s세대 · 공고 %d건</p>%s</div>'
+            % (E(ym), E(ym), '{:,}'.format(tot[ym][sido]), tot[ym]['n'],
+               ''.join('<p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> %s · %s세대</p>'
+                       % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
+                          '{:,}'.format(int(it.get('total') or 0))) for it in tot[ym]['items']))
+            for ym in mlist_desc if ym in tot)
+        # 공고마다 상세 한 덩이(숨김) — 점·막대를 누르면 그 공고만 보인다
+        def _one(it):
+            pm = _sub_price_m2(it)
+            r = _sub_rate_max(it)
+            bits = [E(it.get('gu') or ''), '공고 %s' % E(it.get('pblanc_de') or '—')]
+            if it.get('total'):
+                bits.append('%s세대' % '{:,}'.format(int(it['total'])))
+            if pm:
+                bits.append('㎡당 %s만원 (%d㎡형)' % ('{:,}'.format(int(round(pm[0]))), pm[1]))
+            if r:
+                bits.append('1순위 최고 %s:1' % _fmt_rate(r))
+            return ('<div class="pick" data-id="%s" hidden><p class="cond-lead"><a href="청약 공고.html#p-%s">%s</a> · %s</p></div>'
+                    % (E(it.get('id') or ''), E(it.get('id') or ''), E(it.get('name') or '—'), ' · '.join(bits)))
+        ids = [it.get('id') for _pm, _r, it in pts] + [it.get('id') for it, _pm, _ex in rows3]
+        item_details = ''.join(_one(by_id[i]) for i in dict.fromkeys(ids) if i in by_id)
+        navs.append('<a href="#supply%s">%s 공급</a><a href="#rate%s">%s 경쟁률</a><a href="#price%s">%s 분양가</a>'
+                    % (sfx, sido, sfx, sido, sfx, sido))
+        blocks.append(
+            '<div class="band" id="supply%s"><p class="band-t">%s — 월별 공급 세대수</p>%s'
+            '<div class="picks">%s</div></div>'
+            '<div class="band" id="rate%s"><p class="band-t">%s — 경쟁률과 분양가</p>%s<div class="picks"></div></div>'
+            '<div class="band" id="price%s"><p class="band-t">%s — 분양가와 시세</p>%s<div class="picks"></div></div>'
+            '<div class="pick-store" hidden>%s</div>'
+            % (sfx, sido, f1, month_details,
+               sfx, sido, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
+               sfx, sido, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>',
+               item_details))
     n_rated = sum(1 for it in items if it.get('rates'))
     basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
              '<p class="cond-tail">청약홈(공공데이터포털 15098547·15098905) · 최근 %s개월 공고 %d건 + 그 전에 '
@@ -602,15 +657,8 @@ def subscription_stats_page(watches):
              '공급면적 기준 「평당 분양가」보다 높게 나온다 · 중위 매매가는 한국부동산원 시·도 단위</p>'
              '<p><a class="back" href="../포트폴리오 워치.html#subscription">← 포트폴리오 워치</a></p></div>'
              % (E(str(months or n_months)), len(items), n_rated, E(as_of or '—')))
-    nav = ('<nav class="jump" aria-label="절 바로가기"><a href="#supply">공급</a><a href="#rate">경쟁률</a>'
-           '<a href="#price">분양가</a><a href="#basis">자료 기준</a></nav>')
-    body = (
-        '<div class="band" id="supply"><p class="band-t">월별 공급 세대수</p>%s%s</div>'
-        '<div class="band" id="rate"><p class="band-t">경쟁률과 분양가</p>%s'
-        '<p class="cond-t">1순위 경쟁률 높은 순 다섯</p>%s</div>'
-        '<div class="band" id="price"><p class="band-t">분양가와 시세</p>%s</div>'
-        % (f1, sup_rows, f2 or '<p class="cond-lead">경쟁률이 잡힌 공고가 셋이 안 돼 그래프를 안 그린다</p>',
-           rate_rows, f3 or '<p class="cond-lead">주택형 값이 든 공고가 없다</p>'))
+    nav = ('<nav class="jump" aria-label="절 바로가기">%s<a href="#basis">자료 기준</a></nav>' % ''.join(navs))
+    body = ''.join(blocks) + _STATS_JS
     return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>청약 통계 — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
@@ -1198,6 +1246,10 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
+svg.fig-click .bar,svg.fig-click .dot{cursor:pointer}
+svg.fig-click .bar:hover,svg.fig-click .dot:hover{fill:var(--ink)}
+svg.fig-click .is-on{fill:var(--ink);stroke:var(--ink);stroke-width:2px}
+.picks{margin:6px 0 0}
 .sub-title{padding:8px 0;border-bottom:1px solid var(--line)}
 .sub-title:last-child{border-bottom:0}
 .st-1{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0;font-weight:600}
