@@ -1774,10 +1774,23 @@ def subscription_now(watches, sido='서울'):
         for it in items[:5]:
             st = _sub_status(it, today)
             cls = _SUB_STATUS_CLS.get(st, 't-none')
+            # 이름 옆에 마감일·평수(2026-09-04 사용자 지시). 마감(RCEPT_ENDDE)이 없으면
+            # 접수 시작일을, 주택형이 없으면 평수 자리를 비운다 — 지어내지 않는다
+            end = it.get('end')
+            when = ('마감 %s' % end[5:]) if end else (('접수 %s' % it['apply'][5:]) if it.get('apply') else '')
+            gs = _group_types(it.get('types') or [])
+            if gs:
+                lo, hi = gs[0]['ex'], gs[-1]['ex']
+                py = lambda ex: int(round(ex / 3.3058))
+                area = ('%d㎡(약 %d평)' % (lo, py(lo)) if lo == hi
+                        else '%d~%d㎡(약 %d~%d평)' % (lo, hi, py(lo), py(hi)))
+            else:
+                area = ''
+            meta = ' · '.join(x for x in (E(it.get('gu') or ''), E(when), E(area)) if x)
             rows.append('<p class="si-1 sub-title"><a href="watch/청약 공고.html#p-%s">%s</a> '
                         '<span class="si-gu">%s</span> <span class="tag %s si-chip">%s</span>'
                         '<span class="t-sub"> · 공고 %s</span></p>'
-                        % (E(it.get('id') or ''), E(it.get('name') or '—'), E(it.get('gu') or ''),
+                        % (E(it.get('id') or ''), E(it.get('name') or '—'), meta,
                            cls, E(st), E(it.get('pblanc_de') or it.get('apply') or '—')))
         h.append('<div class="sub-list">%s</div>' % ''.join(rows))
     else:
