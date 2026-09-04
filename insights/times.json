@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-04",
-"index_fingerprint": "ba989beba64a53e1fd6baa62065a5ee1f6bcad01",
-"lines": 3268
+"index_fingerprint": "ad124969badc5fa48295dbcdb12932e4e0c81ff7",
+"lines": 3318
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -18866,6 +18866,280 @@
 "input/clippings/mer/224388650215.json#L89": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224390987441.json#L41": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"input/clippings/mer/224390987441.json#L43": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224390987441.json#L45": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224390987441.json#L49": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224391584925.json#L156": {
+"how": "명시",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224391584925.json#L164": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"input/clippings/mer/224391584925.json#L187": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224391584925.json#L66": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"input/clippings/mer/224391584925.json#L68": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224391584925.json#L70": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224391584925.json#L74": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224392077639.json#L5": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224392077639.json#L70": {
+"how": "명시",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224392716873.json#L97": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"input/clippings/mer/224393234027.json#L93": {
+"how": "명시",
+"t": "1961",
+"tense": "회고"
+},
+"input/clippings/mer/224393234027.json#L97": {
+"how": "명시",
+"t": "1961",
+"tense": "회고"
+},
+"input/clippings/mer/224394691017.json#L3": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224394691017.json#L79": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"input/clippings/mer/224394691017.json#L87": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224394968574.json#L101": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"input/clippings/mer/224395000762.json#L114": {
+"how": "명시",
+"t": "1998",
+"tense": "회고"
+},
+"input/clippings/mer/224395000762.json#L118": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224395000762.json#L137": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224395000762.json#L32": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"input/clippings/mer/224395000762.json#L34": {
+"how": "명시",
+"t": "1960",
+"tense": "회고"
+},
+"input/clippings/mer/224395000762.json#L46": {
+"how": "명시",
+"span": [
+"2028",
+"2029"
+],
+"t": "2029",
+"tense": "전망"
+},
+"input/clippings/mer/224395000762.json#L80": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"input/clippings/mer/224395000762.json#L94": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224395022673.json#L12": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224395022673.json#L22": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"input/clippings/mer/224395022673.json#L48": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"input/clippings/mer/224395022673.json#L62": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"input/clippings/mer/224396127598.json#L125": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396127598.json#L129": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396127598.json#L19": {
+"how": "명시",
+"t": "2014",
+"tense": "회고"
+},
+"input/clippings/mer/224396127598.json#L89": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224396127598.json#L91": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396155596.json#L16": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396155596.json#L36": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396155596.json#L46": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224396155596.json#L72": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224398027941.json#L39": {
+"how": "명시",
+"span": [
+"2023",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224398051587.json#L19": {
+"how": "명시",
+"t": "1998",
+"tense": "회고"
+},
+"input/clippings/mer/224398051587.json#L91": {
+"how": "명시",
+"t": "2007",
+"tense": "회고"
+},
+"input/clippings/mer/224398540411.json#L19": {
+"how": "명시",
+"span": [
+"2009",
+"2010"
+],
+"t": "2010",
+"tense": "회고"
+},
+"input/clippings/mer/224398540411.json#L29": {
+"how": "명시",
+"span": [
+"2021",
+"2022"
+],
+"t": "2022",
+"tense": "회고"
+},
+"input/clippings/mer/224399253940.json#L103": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224399253940.json#L117": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224399253940.json#L59": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224400415287.json#L100": {
+"how": "명시",
+"t": "2019",
 "tense": "회고"
 }
 }
