@@ -1173,7 +1173,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 청약 공고 점 — 그 층에서만 보인다. 고른 것(pin-on)은 먹으로 크게 */
 .seoul-map .pin{display:none;fill:var(--paper);stroke:var(--ink);stroke-width:var(--gu-stroke,1px);pointer-events:none}
 .seoul-map[data-layer="sub"] .pin{display:block}
-.seoul-map .pin.pin-on{fill:var(--ink);stroke:var(--paper);stroke-width:calc(var(--gu-stroke,1px)*2.5)}
+.seoul-map .pin.pin-on{fill:var(--up);stroke:var(--paper);stroke-width:calc(var(--gu-stroke,1px)*2.5)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin]{stroke:var(--surface);stroke-width:1.5px}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="1"]{fill:var(--seq-1)}
 .seoul-map[data-layer="ratio"] .gu[data-ratio-bin="2"]{fill:var(--seq-2)}
