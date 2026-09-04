@@ -27,6 +27,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
 a:hover{border-bottom-color:var(--ink)}
 a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--down);outline-offset:2px}
+/* 지도 구는 테두리 상자 대신 강조 채움(gu-hover)으로 초점을 보인다 — 누른 구 둘레에
+   검은 네모가 떴다(2026-09-04 성남 판에서 두드러졌다) */
+.seoul-map .gu:focus,.seoul-map .gu:focus-visible{outline:none}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
 header{padding:34px 0 0}
 .h-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}
@@ -62,6 +65,13 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .d-down{color:var(--down)}
 /* 절 — 대문자·자간 라벨을 걷고 문장형 제목으로 */
 .hero{margin:28px 0 0}
+/* 최상위 탭 서울|경기 — 눌린 쪽만 먹으로. 절 바로가기(.jump)보다 위, sticky 아님 */
+.sido-tabs{display:flex;gap:8px;margin:18px 0 0}
+.sido-tab{flex:0 0 auto;font-size:15px;font-weight:700;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.sido-tab.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sido-block{margin:0}
+.seoul-map{margin:0 auto}
 .hero-t{font-size:15px;font-weight:600;margin:0}
 /* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
 /* 층 버튼 — 구마다 갈리는 값만 층으로 그린다. 25구가 전부 같은 범주인 것(토허·
@@ -84,7 +94,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
    바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은
    거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
-.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
+.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:var(--gu-stroke,1px);cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
 /* 성남 3구 — 서울 밖이라는 것을 옅은 점선 테두리로만 표시한다. 채움 층은 다른 구와
    똑같이 값을 따른다 — 성남만 다른 색으로 묶으면 「지금 값이 다르다」는 뜻으로
@@ -110,7 +120,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map[data-layer="sub"] .gu[data-sub-bin="4"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
-.gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
+.gu-lbl{font-weight:600;fill:var(--ink);paint-order:stroke;
   stroke:var(--paper);stroke-width:3px;pointer-events:none}
 /* 값 없는 구도 이름을 단다 — 「내가 사는 데 찾기」가 지도의 첫 동작이다. 위계는
    크기·굵기·색으로 준다 */
@@ -242,6 +252,16 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
+/* 정비사업 — 구 한 줄(이름·곳수)과 그 밑 사업장 셋 */
+.rb-row{padding:12px 0;border-bottom:1px solid var(--line)}
+.rb-row:last-of-type{border-bottom:0}
+.rb-k{margin:0;font-size:15px;font-weight:700}
+.rb-k a{color:inherit;text-decoration:none}
+.rb-k a:hover{text-decoration:underline}
+.rb-n{font-weight:600;color:var(--ink-2);font-size:13px;margin-left:6px}
+.rb-v{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
+.rb-item{padding:6px 0 0}
+.rb-item .si-1{font-size:14px}
 .sub-item{padding:12px 0;border-bottom:1px solid var(--line);scroll-margin-top:64px}
 .sub-item:last-child{border-bottom:0}
 /* 공고를 누르면 그 공고가 맨 위로 — :target 강조(청약공고_스펙 추가 §2).

@@ -112,6 +112,29 @@ ZONES = _load_json(ZONES_PATH)
 GU_REGION = dict((g, t) for t in ('강남 3구', '노도강', '마용성', '성남')
                  for g in AREAS.get(t, {}).get('구', []))
 WATCHED_GU = sorted(GU_REGION)
+# 시·도 — 첫 화면의 최상위 갈래다(2026-09-04 사용자 지시 「서울 경기 구분이 가장 상위」).
+# 성남 3구만 경기, 나머지(서울 25구)는 서울. 지도·분양·달라진 것·보고 있는 것이
+# 전부 이 갈래 아래 선다 — 제도·청약 조건·자료 기준은 전국 공통이라 밖에 남는다
+SIDOS = (('서울', ''), ('경기', '-gg'))
+_GYEONGGI_GU = set(AREAS.get('성남', {}).get('구', []))
+
+
+def _sido_of(gu):
+    return '경기' if gu in _GYEONGGI_GU else '서울'
+
+
+def _sido_gus(sido):
+    return sorted(g for g in SEOUL_GU['gu'] if _sido_of(g) == sido)
+
+
+def _area_sido(target):
+    gus = AREAS.get(target, {}).get('구') or []
+    return _sido_of(gus[0]) if gus else '서울'
+
+
+def _sido_watches(watches, sido):
+    """그 시·도의 실거주·투자 줄만 — 제도 줄(전국)은 안 든다."""
+    return [w for w in watches if w['kind'] == 'realestate' and _area_sido(w['target']) == sido]
 
 
 def _ratio_bin(v):
@@ -144,15 +167,15 @@ def _cap_info(gu):
     return e.get('value'), e.get('detail')
 
 
-def _cap_counts():
+def _cap_counts(gus=None):
     """적용·미적용·확인 안 됨. 손으로 안 센다 — _zones.json 이 바뀌면 화면이 따라간다."""
-    vals = [_cap_info(g)[0] for g in SEOUL_GU['gu']]
+    vals = [_cap_info(g)[0] for g in (gus or SEOUL_GU['gu'])]
     return (vals.count(True), vals.count(False),
             sum(1 for v in vals if v is None))
 
 
-def _cap_names():
-    return sorted(g for g in SEOUL_GU['gu'] if _cap_info(g)[0] is True)
+def _cap_names(gus=None):
+    return sorted(g for g in (gus or SEOUL_GU['gu']) if _cap_info(g)[0] is True)
 
 
 def _reg_bin(adj, hot):
@@ -166,16 +189,17 @@ def _reg_bin(adj, hot):
     return 'none'
 
 
-def _lth_counts():
+def _lth_counts(gus=None):
+    gus = list(gus or SEOUL_GU['gu'])
     gu = (ZONES.get('토지거래허가구역', {}) or {}).get('gu', {}) or {}
-    vals = [(v or {}).get('value') for v in gu.values()]
+    vals = [(gu.get(g) or {}).get('value') for g in gus]
     n_all, n_part, n_none = vals.count('전부'), vals.count('일부'), vals.count('없음')
-    return n_all, n_part, n_none, len(SEOUL_GU['gu']) - n_all - n_part - n_none
+    return n_all, n_part, n_none, len(gus) - n_all - n_part - n_none
 
 
-def _reg_counts():
+def _reg_counts(gus=None):
     cnt = {'both': 0, 'one': 0, 'none': 0, 'null': 0}
-    for name in SEOUL_GU['gu']:
+    for name in (gus or SEOUL_GU['gu']):
         cnt[_reg_bin(*_reg_info(name))] += 1
     return cnt
 
@@ -198,6 +222,150 @@ def _sub_gu_data(watches):
     if m is None:
         return None, None
     return (m.get('by_gu') or {}), m.get('as_of')
+
+
+# 정비사업 진행 단계 — 정비사업 정보몽땅(서울) 16종을 순서대로. 경기도 온누리(성남)는
+# 대분류 넷만 준다(추진주체 구성 전·추진위원회·조합(시행자)·청산위원회) — 둘을 한 자로
+# 안 섞고, 화면에는 원천이 준 낱말 그대로 낸다. 큰 묶음 다섯은 화면 요약용이다
+REBUILD_STAGES = ('정비계획수립', '재정비촉진지구수립', '안전진단', '정비구역지정', '추진위원회승인',
+                  '조합설립인가', '주민대표회의구성통지', '사업시행인가', '관리처분인가',
+                  '철거', '착공', '분양', '준공인가', '이전고시', '조합해산', '조합청산',
+                  '추진주체 구성 전', '추진위원회', '조합(시행자)', '청산위원회')
+_REBUILD_BUCKET = {'정비계획수립': '구역', '재정비촉진지구수립': '구역', '안전진단': '구역',
+                   '정비구역지정': '구역', '추진위원회승인': '구역', '추진주체 구성 전': '구역',
+                   '추진위원회': '구역',
+                   '조합설립인가': '조합', '주민대표회의구성통지': '조합', '조합(시행자)': '조합',
+                   '사업시행인가': '인가', '관리처분인가': '인가',
+                   '철거': '공사', '착공': '공사', '분양': '공사',
+                   '준공인가': '끝', '이전고시': '끝', '조합해산': '끝', '조합청산': '끝',
+                   '청산위원회': '끝'}
+REBUILD_BUCKET_ORDER = ('구역', '조합', '인가', '공사', '끝')
+REBUILD_BUCKET_LABEL = {'구역': '구역 지정·추진위까지', '조합': '조합 단계', '인가': '사업시행·관리처분 인가',
+                        '공사': '철거·착공·분양', '끝': '준공·청산'}
+REBUILD_SLUG = '정비사업'
+
+
+def _stage_rank(stage):
+    return REBUILD_STAGES.index(stage) if stage in REBUILD_STAGES else len(REBUILD_STAGES)
+
+
+def _rebuild_data(watches):
+    """정비사업 줄의 rebuild_gu — (by_gu, as_of, src). 어댑터가 못 냈으면 (None, None, None)."""
+    w = next((x for x in watches if x['kind'] == 'policy' and x['slug'] == REBUILD_SLUG), None)
+    if w is None:
+        return None, None, None
+    m = (w['metrics'] or {}).get('rebuild_gu')
+    if m is None:
+        return None, None, None
+    return (m.get('by_gu') or {}), m.get('as_of'), m.get('src')
+
+
+def _rebuild_gu_summary(items):
+    """구 하나의 수 — 사업구분별·큰 묶음별."""
+    by_type, by_bucket = {}, {}
+    for it in items:
+        by_type[it.get('type') or '기타'] = by_type.get(it.get('type') or '기타', 0) + 1
+        b = _REBUILD_BUCKET.get(it.get('stage') or '', '구역')
+        by_bucket[b] = by_bucket.get(b, 0) + 1
+    return by_type, by_bucket
+
+
+def _rebuild_item_html(it, full=False):
+    nm = E(it.get('name') or '—')
+    if full and it.get('url'):
+        nm = '<a href="%s" target="_blank" rel="noopener">%s</a>' % (E(it['url']), nm)
+    parts = [E(it.get('type') or ''), E(it.get('stage') or '')]
+    if full and it.get('addr'):
+        parts.append(E(it['addr']))
+    return ('<div class="rb-item"><p class="si-1">%s <span class="si-gu">%s</span></p>'
+            '<p class="si-2 mono">%s</p></div>'
+            % (nm, E(it.get('gu') or ''), ' · '.join(p for p in parts if p)))
+
+
+def rebuild_section(watches, sido='서울', suffix=''):
+    """시·도 상자의 「정비사업」 절 — 보고 있는 구마다 사업장 수(재건축·재개발·리모델링)와
+    단계 묶음, 인가·공사 단계에 든 사업장 이름 최대 셋. 전부는 watch/정비사업 현황.html.
+    어댑터가 못 냈으면 절 자체를 안 낸다(자리표시 금지)."""
+    by_gu, as_of, _src = _rebuild_data(watches)
+    if by_gu is None:
+        return ''
+    gus = [g for g in _sido_gus(sido) if g in WATCHED_GU]
+    total = sum(len(by_gu.get(g) or []) for g in gus)
+    tot_type = {}
+    for g in gus:
+        for it in by_gu.get(g) or []:
+            t = it.get('type') or '기타'
+            tot_type[t] = tot_type.get(t, 0) + 1
+    type_txt = ' · '.join('%s %d' % (E(t), tot_type[t])
+                          for t in ('재건축', '재개발', '리모델링') if tot_type.get(t))
+    src_txt = ('서울시 정비사업 정보몽땅' if sido == '서울' else '경기도 정비사업 종합관리시스템')
+    h = ['<div class="band" id="rebuild%s"><p class="band-t">정비사업 — 재건축·재개발·리모델링</p>'
+         '<p class="cond-lead">보고 있는 %d구 사업장 %d곳%s · %s · 기준 %s</p>'
+         % (suffix, len(gus), total, (' — ' + type_txt) if type_txt else '', E(src_txt),
+            E(as_of or '—'))]
+    for g in gus:
+        items = sorted(by_gu.get(g) or [], key=lambda it: -_stage_rank(it.get('stage') or ''))
+        by_type, by_bucket = _rebuild_gu_summary(items)
+        t_txt = ' · '.join('%s %d' % (E(t), by_type[t]) for t in ('재건축', '재개발', '리모델링')
+                           if by_type.get(t))
+        b_txt = ' · '.join('%s %d' % (E(REBUILD_BUCKET_LABEL[b]), by_bucket[b])
+                           for b in REBUILD_BUCKET_ORDER if by_bucket.get(b))
+        late = [it for it in items if _REBUILD_BUCKET.get(it.get('stage') or '') in ('인가', '공사')]
+        late_html = ''.join(_rebuild_item_html(it) for it in late[:3])
+        h.append('<div class="rb-row"><p class="rb-k"><a href="watch/정비사업 현황.html#g-%s">%s</a> '
+                 '<span class="rb-n">%d곳</span></p>'
+                 '<p class="rb-v">%s</p><p class="rb-v">%s</p>%s</div>'
+                 % (E(g), E(g), len(items), t_txt or '사업장 없음', b_txt, late_html))
+    h.append('<p class="lbl"><a href="watch/정비사업 현황.html">사업장 전부 보기 →</a></p>')
+    h.append('<p class="cond-tail">단계 이름은 원천이 준 그대로입니다. 서울은 16단계, 성남은 '
+             '추진주체 구성 전·추진위원회·조합·청산위원회 넷으로만 옵니다 — 성남 「조합」에는 '
+             '사업시행인가·관리처분인가·착공이 다 섞여 있습니다.</p>')
+    h.append('</div>')
+    return ''.join(h)
+
+
+def rebuild_page(watches):
+    """정비사업 사업장 전부 — 대시보드/watch/정비사업 현황.html. 구마다 한 절, 절 안은
+    단계 늦은 순(준공·청산이 위, 구역 지정이 아래). 표가 아니라 목록이다."""
+    by_gu, as_of, src = _rebuild_data(watches)
+    if by_gu is None:
+        by_gu, as_of, src = {}, '—', ''
+    gus = [g for g in WATCHED_GU if g in by_gu or True]
+    gus = sorted(gus, key=lambda g: (_sido_of(g) != '서울', g))
+    nav = ('<nav class="jump" aria-label="절 바로가기">%s<a href="#basis">자료 기준</a></nav>'
+           % ''.join('<a href="#g-%s">%s %d</a>' % (E(g), E(g), len(by_gu.get(g) or []))
+                     for g in gus))
+    bands = []
+    for g in gus:
+        items = sorted(by_gu.get(g) or [], key=lambda it: (-_stage_rank(it.get('stage') or ''),
+                                                          it.get('name') or ''))
+        by_type, by_bucket = _rebuild_gu_summary(items)
+        lead = ' · '.join('%s %d' % (E(t), by_type[t]) for t in sorted(by_type, key=lambda t: -by_type[t]))
+        body = (''.join(_rebuild_item_html(it, full=True) for it in items)
+                if items else '<p class="cond-lead">원천에 이 구 사업장이 없습니다</p>')
+        bands.append('<div class="band" id="g-%s"><p class="band-t">%s · %s — %d곳</p>'
+                     '<p class="cond-lead">%s</p><div class="sub-list">%s</div></div>'
+                     % (E(g), E(_sido_of(g)), E(g), len(items), lead, body))
+    total = sum(len(by_gu.get(g) or []) for g in gus)
+    basis = ('<div class="band" id="basis"><p class="band-t">자료 기준</p>'
+             '<p class="cond-tail">서울 — 서울시 정비사업 정보몽땅(cleanup.seoul.go.kr) 사업장 목록 · '
+             '성남 — 경기도 정비사업 종합관리시스템(gg.go.kr/onnuri) · 자료 기준 %s · '
+             '단계 이름은 원천이 준 그대로 · 리모델링은 서울 원천에만 갈래가 있음</p>'
+             '<p><a class="back" href="../포트폴리오 워치.html#rebuild">← 포트폴리오 워치</a></p></div>'
+             % E(as_of or '—'))
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>정비사업 현황 — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#rebuild">'
+            '← 포트폴리오 워치</a>'
+            '<header><p class="meta mono">사업장 %d곳 · 기준 %s</p><h1>정비사업 현황</h1>'
+            '<p class="lede">재건축·재개발·리모델링 사업장이 지금 어느 단계에 있나 — 보고 있는 '
+            '12구, 단계 늦은 순.</p></header>%s<div class="dbody">%s%s</div>'
+            '<footer>서울시 정비사업 정보몽땅과 경기도 정비사업 종합관리시스템에서 받습니다. '
+            '매달 다시 확인합니다.</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->'
+            '</div></body></html>'
+            % (FONTS, CSS, total, E(as_of or '—'), nav, ''.join(bands), basis))
 
 
 def _all_sub_items(watches):
@@ -538,6 +706,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
 a:hover{border-bottom-color:var(--ink)}
 a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--down);outline-offset:2px}
+/* 지도 구는 테두리 상자 대신 강조 채움(gu-hover)으로 초점을 보인다 — 누른 구 둘레에
+   검은 네모가 떴다(2026-09-04 성남 판에서 두드러졌다) */
+.seoul-map .gu:focus,.seoul-map .gu:focus-visible{outline:none}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
 header{padding:34px 0 0}
 .h-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}
@@ -573,6 +744,13 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .d-down{color:var(--down)}
 /* 절 — 대문자·자간 라벨을 걷고 문장형 제목으로 */
 .hero{margin:28px 0 0}
+/* 최상위 탭 서울|경기 — 눌린 쪽만 먹으로. 절 바로가기(.jump)보다 위, sticky 아님 */
+.sido-tabs{display:flex;gap:8px;margin:18px 0 0}
+.sido-tab{flex:0 0 auto;font-size:15px;font-weight:700;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.sido-tab.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sido-block{margin:0}
+.seoul-map{margin:0 auto}
 .hero-t{font-size:15px;font-weight:600;margin:0}
 /* 서울 지도 히어로 — 지도가 첫 화면이고 정보는 지도에서 나온다(2026-09-03) */
 /* 층 버튼 — 구마다 갈리는 값만 층으로 그린다. 25구가 전부 같은 범주인 것(토허·
@@ -595,7 +773,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* 값 없는 구는 「칠하지 않은 칸」 — 종이색 면에 선만. 흰 면(--surface)으로 두면
    바탕과 1.06:1 이라 서북부가 통째로 무형 덩어리가 된다. 값 있는 구의 경계선은
    거꾸로 흰 실선이라야 색 면 위에서 뜬다 */
-.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:1px;cursor:default}
+.seoul-map .gu{fill:var(--paper);stroke:var(--line);stroke-width:var(--gu-stroke,1px);cursor:default}
 .seoul-map .gu[data-slug]{cursor:pointer}
 /* 성남 3구 — 서울 밖이라는 것을 옅은 점선 테두리로만 표시한다. 채움 층은 다른 구와
    똑같이 값을 따른다 — 성남만 다른 색으로 묶으면 「지금 값이 다르다」는 뜻으로
@@ -621,7 +799,7 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
 .seoul-map[data-layer="sub"] .gu[data-sub-bin="4"]{fill:var(--seq-5)}
 .seoul-map .gu.gu-hover{stroke:var(--ink);stroke-width:2.5px}
 .seoul-map .gu.gu-dim{opacity:.55}
-.gu-lbl{font-size:11px;font-weight:600;fill:var(--ink);paint-order:stroke;
+.gu-lbl{font-weight:600;fill:var(--ink);paint-order:stroke;
   stroke:var(--paper);stroke-width:3px;pointer-events:none}
 /* 값 없는 구도 이름을 단다 — 「내가 사는 데 찾기」가 지도의 첫 동작이다. 위계는
    크기·굵기·색으로 준다 */
@@ -753,6 +931,16 @@ h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
    (청약공고_스펙 §4). 표가 아니라 목록이다 — 값 여덟을 열로 두면 모바일에서
    가로로 밀린다 */
 .sub-list{margin:12px 0 0}
+/* 정비사업 — 구 한 줄(이름·곳수)과 그 밑 사업장 셋 */
+.rb-row{padding:12px 0;border-bottom:1px solid var(--line)}
+.rb-row:last-of-type{border-bottom:0}
+.rb-k{margin:0;font-size:15px;font-weight:700}
+.rb-k a{color:inherit;text-decoration:none}
+.rb-k a:hover{text-decoration:underline}
+.rb-n{font-weight:600;color:var(--ink-2);font-size:13px;margin-left:6px}
+.rb-v{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
+.rb-item{padding:6px 0 0}
+.rb-item .si-1{font-size:14px}
 .sub-item{padding:12px 0;border-bottom:1px solid var(--line);scroll-margin-top:64px}
 .sub-item:last-child{border-bottom:0}
 /* 공고를 누르면 그 공고가 맨 위로 — :target 강조(청약공고_스펙 추가 §2).
@@ -1541,20 +1729,22 @@ def law_summary(watches):
     return ''.join(h)
 
 
-def subscription_now(watches):
-    """「청약 — 조건」 절의 「지금 청약」 축약(청약공고_스펙 §3). 옛 7열 표
-    (subscription_table, 2026-09-04 걷음)를 대신한다 — 세 권역에 갇히지 않고
-    서울 25구 전부를 세되, 지금 접수 중·예정만 최대 3건 보여주고 나머지는
+def subscription_now(watches, sido='서울'):
+    """「분양」 절의 「지금 청약」 축약(청약공고_스펙 §3). 옛 7열 표
+    (subscription_table, 2026-09-04 걷음)를 대신한다 — 그 시·도 구 전부를 세되
+    (서울 25구 / 성남 3구), 지금 접수 중·예정만 최대 3건 보여주고 나머지는
     「공고 전부 보기」로 새 페이지(watch/청약 공고.html)에 돌린다."""
     items, as_of = _all_sub_items(watches)
     if items is None:
         return ''
     today = _TODAY
+    items = [it for it in items if _sido_of(it.get('gu') or '') == sido]
     n_open = sum(1 for it in items if _sub_status(it, today) == '접수 중')
     n_soon = sum(1 for it in items if _sub_status(it, today) == '접수 예정')
+    where = '서울' if sido == '서울' else '성남'
     h = ['<p class="cond-t">지금 청약</p>',
-         '<p class="cond-lead">최근 6개월 서울 공고 %d건 · 지금 접수 중 %d건 · '
-         '접수 예정 %d건</p>' % (len(items), n_open, n_soon)]
+         '<p class="cond-lead">최근 6개월 %s 공고 %d건 · 지금 접수 중 %d건 · '
+         '접수 예정 %d건</p>' % (E(where), len(items), n_open, n_soon)]
     shown = (sorted((it for it in items if _sub_status(it, today) == '접수 중'),
                     key=lambda it: it.get('apply') or '')
              + sorted((it for it in items if _sub_status(it, today) == '접수 예정'),
@@ -1563,31 +1753,40 @@ def subscription_now(watches):
         market = _watched_market(watches)
         h.append('<div class="sub-list">%s</div>'
                  % ''.join(_sub_item_html(it, today, market=market) for it in shown[:3]))
-    else:
+    elif items:
         h.append('<p class="cond-lead">%s</p>' % E(_sub_verdict(items, today)))
-    h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 (%d건) →</a></p>'
-             % len(items))
+    h.append('<p class="lbl"><a href="watch/청약 공고.html">공고 전부 보기 →</a> · '
+             '<a href="#subscription-cond">청약 조건 →</a></p>')
     h.append('<p class="cond-tail">청약홈(공공데이터포털) · 기준 %s · 상태는 화면 만든 날 %s '
              '기준 · 공급위치 주소로 구를 골라 놓친 공고가 있을 수 있음</p>'
              % (E(as_of or '—'), E(today)))
     return ''.join(h)
 
 
-def subscription_section(watches):
-    """본 장의 「청약 — 조건」 절. 조건 표를 가진 정책 줄(지금은 청약 제도 하나)의
-    표를 그대로 낸다.
+def subscription_section(watches, sido='서울', suffix=''):
+    """시·도 상자 맨 위의 「분양」 절 — 그 시·도의 지금 청약(공고)만. 조건 표 셋은
+    전국 공통이라 subscription_cond_section() 으로 한 번만 낸다(2026-09-04, 「분양이
+    가장 빨리 오게」 + 「서울 경기 구분이 가장 상위」)."""
+    body = subscription_now(watches, sido)
+    if not body:
+        return ''
+    return ('<div class="band" id="subscription%s"><p class="band-t">분양 — 지금 청약</p>%s</div>'
+            % (suffix, body))
+
+
+def subscription_cond_section(watches):
+    """「청약 — 조건」 절(전국 공통, 탭 밖). 조건 표를 가진 정책 줄(지금은 청약 제도
+    하나)의 표를 그대로 낸다.
 
     이 절만 본 장에 표를 둔다. 나머지 표는 전부 상세(watch/)로 옮겼는데, 청약
-    조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더 열게 하지 않는다.
-    조건 값은 md 표에서, 공고·경쟁률은 청약홈 API(_metrics)에서 온다 — 없으면 표를 안 낸다."""
+    조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더 열게 하지 않는다."""
     for w in sorted(watches, key=lambda x: x['slug']):
         if not cond_blocks(w)[1]:
             continue
         more = ('<p class="lbl"><a href="watch/%s.html">%s 자세히 →</a></p>'
                 % (w['slug'], E(w['target'])))
-        # 상세 링크는 절 맨 끝 — 조건 표 셋과 「지금 청약」 축약 다음
-        return ('<div class="band" id="subscription"><p class="band-t">청약 — 조건</p>%s%s%s</div>'
-                % (cond_html(w, ''), subscription_now(watches), more))
+        return ('<div class="band" id="subscription-cond"><p class="band-t">청약 — 조건</p>%s%s</div>'
+                % (cond_html(w, ''), more))
     return ''
 
 
@@ -1884,10 +2083,15 @@ def _checked_note(watches):
     return '<span class="band-note">%s</span>' % E(txt)
 
 
-def line_summary_rows(watches):
+def line_summary_rows(watches, sido=None):
     """본 장의 「보고 있는 것」 목록 — 이름·verdict 만. 마지막 확인 날짜는 절 제목
     옆으로 올렸다(_checked_note). 칩(걸림·근접)은 없다 — 문턱은 독자마다 달라 뜻이
     없다."""
+    # sido 가 있으면 그 시·도의 실거주·투자 줄만, 없으면 제도 줄(전국)만
+    if sido:
+        watches = _sido_watches(watches, sido)
+    else:
+        watches = [w for w in watches if w['kind'] != 'realestate']
     ordered = sorted(watches, key=lambda w: (_line_group(w), w['slug']))
     h, cur = [], None
     for w in ordered:
@@ -2045,12 +2249,12 @@ def _src_link(src):
     return '<a href="%s">%s</a>' % (E(url), E(dm.group(1)))
 
 
-def _ratio_legend_html(watches):
+def _ratio_legend_html(watches, gus=None):
     """전세가율 범례 — 다섯 단 색 띠 + 방향 한 줄 + 값 없는 구 이름 + 전세가율 자.
 
     값 없는 구는 수만 적으면(「값 없음 — 16구」) 어느 구인지 알 길이 없다. 지도에서
     자기 동네를 못 찾은 사람이 여기서 이름을 확인한다."""
-    blanks = sorted(set(SEOUL_GU['gu']) - set(WATCHED_GU))
+    blanks = sorted(set(gus or SEOUL_GU['gu']) - set(WATCHED_GU))
     names = '·'.join(g[:-1] if g.endswith('구') else g for g in blanks)
     strip = ''.join('<span class="leg-sw" style="background:var(--seq-%d)"></span>' % i
                     for i in range(1, 6))
@@ -2062,12 +2266,12 @@ def _ratio_legend_html(watches):
             % (strip, labels, len(blanks), E(names), ratio_ruler_fig(watches)))
 
 
-def _cap_legend_html():
+def _cap_legend_html(gus=None):
     """분양가상한제 층의 범례 — 적용 구 이름을 다 적는다(넷뿐이라 든다). 수가 0인
     줄은 안 낸다 — 자리만 먹는 「0구」 줄이 범례를 늘린다."""
-    n_cap, n_no, n_null = _cap_counts()
+    n_cap, n_no, n_null = _cap_counts(gus)
     z = ZONES.get('분양가상한제', {})
-    names = '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names())
+    names = '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names(gus))
     rows = []
     if n_cap:
         rows.append('<p class="leg-item"><span class="leg-sw" '
@@ -2087,7 +2291,7 @@ def _cap_legend_html():
 _SUB_BIN_LABEL = ((0, '0건'), (1, '1건'), (2, '2건'), (3, '3~4건'), (4, '5건 이상'))
 
 
-def _sub_legend_html(watches):
+def _sub_legend_html(watches, gus=None):
     """청약 공고 층의 범례 — 구별 6개월 건수를 다섯 단으로 세어 한 줄에.
     카테고리 수가 0이면 그 칸은 안 낸다(적용 구가 없는 분양가상한제 범례와 같은
     규칙). 열쇠가 없으면(sub_gu 자체가 없으면) 빈 문자열 — 층 버튼도 같이 안 낸다."""
@@ -2095,7 +2299,7 @@ def _sub_legend_html(watches):
     if sub_gu is None:
         return ''
     counts = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
-    for name in SEOUL_GU['gu']:
+    for name in (gus or SEOUL_GU['gu']):
         n = len(sub_gu.get(name) or [])
         counts[_sub_bin(n) or 0] += 1
     parts = ['%s %d구' % (lbl, counts[b]) for b, lbl in _SUB_BIN_LABEL if counts[b]]
@@ -2115,26 +2319,27 @@ def _zone_age_chip(as_of, today):
     return ' <span class="t-old">%d개월 전 값</span>' % (b - a)
 
 
-def _zone_banner(today):
+def _zone_banner(today, gus=None):
     """지정 현황 상태 배너 — 층 버튼 둘을 대신한다.
 
     25구가 전부 같은 범주라 지도로 그리면 서울 전체가 먹 단색이 되고, 클릭 한 번을
     내고 얻는 정보는 「전부 지정」 문장 하나였다. 수와 날짜는 손으로 안 적는다 —
     insights/watch/_zones.json 에서 센다. 구마다 갈리는 날 층을 되살린다(그때 색은
     --seq-4 / hatch / --surface 3단)."""
-    total = len(SEOUL_GU['gu'])
-    n_all, n_part, n_none, n_null = _lth_counts()
+    gus = list(gus or SEOUL_GU['gu'])
+    total = len(gus)
+    n_all, n_part, n_none, n_null = _lth_counts(gus)
     lth_txt = ('%d구 전부 지정' % total if n_all == total
                else '전부 지정 %d구 · 일부 지정 %d구 · 미지정 %d구 · 확인 안 됨 %d구'
                % (n_all, n_part, n_none, n_null))
-    cnt = _reg_counts()
+    cnt = _reg_counts(gus)
     reg_txt = ('%d구 둘 다 지정' % total if cnt['both'] == total
                else '둘 다 지정 %d구 · 하나만 %d구 · 둘 다 해제 %d구 · 확인 안 됨 %d구'
                % (cnt['both'], cnt['one'], cnt['none'], cnt['null']))
     # 분양가상한제는 층으로도 그리지만(구마다 갈린다) 「몇 구인가」는 배너가 낸다
-    n_cap, _n_no, n_cnull = _cap_counts()
+    n_cap, _n_no, n_cnull = _cap_counts(gus)
     cap_txt = ('%d구 적용 (%s)'
-               % (n_cap, '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names()))
+               % (n_cap, '·'.join(g[:-1] if g.endswith('구') else g for g in _cap_names(gus)))
                if n_cap else '적용되는 구 없음')
     if n_cnull:
         cap_txt += ' · 확인 안 됨 %d구' % n_cnull
@@ -2159,7 +2364,13 @@ def _zone_banner(today):
 LABEL_SKIP = ()
 
 
-def _gu_svg(gu_data):
+def _path_bbox(d):
+    nums = [float(x) for x in re.findall(r'-?\d+(?:\.\d+)?', d)]
+    xs, ys = nums[0::2], nums[1::2]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def _gu_svg(gu_data, gus=None, suffix=''):
     """서울 25개 구 지도. 채움은 CSS 가 data-ratio-bin 으로 고른다 — 값 자체는
     여기서 속성으로 다 박아 두고 JS 는 아무 계산도 안 한다.
 
@@ -2167,7 +2378,24 @@ def _gu_svg(gu_data):
     먹 단색으로 칠해졌고, 얻는 정보는 문장 하나였다. 지도 아래 상태 배너
     (_zone_banner)가 그 문장을 대신한다. 구마다 갈리는 날 층을 되살린다 — 그때
     색은 --seq-4 / hatch / --surface 3단으로 하고, 서울 전체를 먹으로 안 칠한다."""
-    vb = SEOUL_GU['viewBox']
+    gus = list(gus or sorted(SEOUL_GU['gu']))
+    # viewBox 는 그 시·도 구들의 경계 상자 — 서울과 성남을 한 판에 두면 성남이
+    # 오른쪽 아래 귀퉁이에 작게 붙어 세 구를 손으로 못 고른다(2026-09-04). 좌표계
+    # 자체는 원본(640×688.4) 그대로라 서울 판과 성남 판의 축척이 다르다 — 성남 판은
+    # 글자·선을 축척만큼 줄여 서울 판과 같은 굵기로 보인다
+    bx = [_path_bbox(SEOUL_GU['gu'][g]['d']) for g in gus]
+    pad = 10
+    x0, y0 = min(b[0] for b in bx) - pad, min(b[1] for b in bx) - pad
+    x1, y1 = max(b[2] for b in bx) + pad, max(b[3] for b in bx) + pad
+    vb = (x0, y0, x1 - x0, y1 - y0)
+    full_w = float(SEOUL_GU['viewBox'][2])
+    # 서울 판 폭을 1로 봤을 때 이 판이 화면에서 차지할 폭 — 성남은 축척을 2.2배까지만
+    # 키운다(세 구가 손에 잡힐 만큼) 그 이상은 화면을 빈 종이로 채운다
+    zoom = min(2.2, full_w / vb[2]) if vb[2] < full_w else 1.0
+    width_pct = min(100.0, 100.0 * vb[2] / full_w * zoom)
+    scale = (width_pct / 100.0) * full_w / vb[2]   # 화면 픽셀 대비 원본 좌표 배율
+    lbl_px = 11.0 / scale
+    stroke_px = 1.0 / scale
     # 「확인 안 됨」 칸의 옅은 빗금. 지금은 0구지만 지정 공고가 PDF 로만 나와
     # 못 받는 날이 있다 — 그때 빈 칸과 구분이 되어야 한다
     defs = ('<defs><pattern id="hatch-line" width="6" height="6" '
@@ -2175,7 +2403,7 @@ def _gu_svg(gu_data):
             '<rect width="6" height="6" fill="var(--paper)"/>'
             '<path d="M0 0L0 6" stroke="var(--line)" stroke-width="2"/></pattern></defs>')
     paths, labels = [], []
-    for name in sorted(SEOUL_GU['gu']):
+    for name in gus:
         g = SEOUL_GU['gu'][name]
         e = gu_data[name]
         watched = bool(e['jeonse'])
@@ -2203,11 +2431,14 @@ def _gu_svg(gu_data):
         if name in LABEL_SKIP and not watched:
             continue
         cls = 'gu-lbl' if watched else 'gu-lbl blank'
-        labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle">%s</text>'
-                      % (g['cx'], g['cy'], cls, E(name)))
-    return ('<svg class="seoul-map" data-layer="ratio" viewBox="%d %d %d %d">%s%s'
+        labels.append('<text x="%.1f" y="%.1f" class="%s" text-anchor="middle" '
+                      'font-size="%.1f">%s</text>'
+                      % (g['cx'], g['cy'], cls, lbl_px, E(name)))
+    return ('<svg class="seoul-map%s" data-layer="ratio" viewBox="%.1f %.1f %.1f %.1f" '
+            'style="width:%.0f%%;--gu-stroke:%.2fpx">%s%s'
             '<g class="gu-labels">%s</g></svg>'
-            % (vb[0], vb[1], vb[2], vb[3], defs, ''.join(paths), ''.join(labels)))
+            % (suffix and ' map%s' % suffix, vb[0], vb[1], vb[2], vb[3], width_pct,
+               stroke_px, defs, ''.join(paths), ''.join(labels)))
 
 
 def _region_summary_html(watches):
@@ -2367,10 +2598,12 @@ def _gu_panel_html(name, e):
     cap_txt = ('적용 · %s 기준' % cap_as_of if cap_v is True
                else '미적용' if cap_v is False else '확인 안 됨')
     cap_h = ['<p class="gp-row"><span class="gp-lbl">분양가상한제</span>%s</p>' % E(cap_txt)]
-    # 원 지정이 동 단위였는데 그 목록을 못 열었다 — 구 전역으로 읽으면 안 된다
+    # 원 지정이 동 단위였는데 그 목록을 못 열었다 — 구 전역으로 읽으면 안 된다.
+    # 상세 문장을 40자에서 자르던 것을 걷었다(2026-09-04, 「분양가상한제 층을 켜고
+    # 구를 누르면 잘린 문장이 먼저 나온다」) — 뜻이 서는 한 문장으로 적는다
     if cap_d and '확인 못 함' in cap_d:
-        cap_h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">%s…</span></p>'
-                     % E(cap_d[:40]))
+        cap_h.append('<p class="gp-row"><span class="gp-d" style="font-size:12.5px">'
+                     '원 지정이 동 단위라 구 전체인지 일부 동인지는 확인 안 됨</span></p>')
     h.append('<div class="gp-cap">%s</div>' % ''.join(cap_h))
     # 청약홈 최근 공고 — 이 구 것(권역이 아니라). 열쇠가 없어 어댑터가 못 냈으면
     # (sub_cnt 없음) 덩이 자체를 안 낸다. 값이 있으면 0건이어도 낸다 — 「못 봤다」와
@@ -2427,7 +2660,7 @@ def _read_move(d):
     return '사실상 제자리입니다'
 
 
-def changed_section(watches):
+def changed_section(watches, sido='서울', suffix=''):
     """지난달과 달라진 것 — 이 장을 매달 다시 여는 이유가 이것 하나다.
 
     지도 왼쪽 아래 빈 칸에 선다(지도 그림이 그 칸의 위쪽 절반만 쓴다). 값이 없으면
@@ -2435,6 +2668,8 @@ def changed_section(watches):
     rows, base = [], None
     idx = _idx_rows(watches)
     for w in sorted(_live_areas(watches), key=lambda w: w['target']):
+        if _area_sido(w['target']) != sido:
+            continue
         avg = _avg_series(w)
         if len(avg) < 2:
             continue
@@ -2460,8 +2695,8 @@ def changed_section(watches):
     rows.append('<p class="chg-row"><span class="chg-k">제도</span>'
                 '<span class="chg-v">%s</span></p>' % E(law_txt))
     title = '지난달(%s)과 달라진 것' % base if base else '지난달과 달라진 것'
-    return ('<div class="changed" id="changed"><p class="chg-t">%s</p>%s</div>'
-            % (E(title), ''.join(rows)))
+    return ('<div class="changed" id="changed%s"><p class="chg-t">%s</p>%s</div>'
+            % (suffix, E(title), ''.join(rows)))
 
 
 # 바닐라 JS — 지도 호버=미리보기/누르기=고정(선택 모델
@@ -2470,12 +2705,14 @@ def changed_section(watches):
 # 탭=이동이면 값을 볼 길이 없다는 사용자 지적). 값은 전부 생성 때 HTML 에
 # 이미 있다 — 여기서는 hidden·class 토글만 한다(계산 없음).
 _MAP_JS = """<script>
-(function(){
-var svg=document.querySelector('.seoul-map');
+/* 지도가 시·도마다 하나라(서울·경기) 상자(.hero)마다 따로 묶는다 — 한 상자의
+   구 선택이 다른 상자 패널을 건드리면 안 된다(2026-09-04) */
+Array.from(document.querySelectorAll('.hero')).forEach(function(root){
+var svg=root.querySelector('.seoul-map');
 if(!svg)return;
 var gus=Array.from(svg.querySelectorAll('.gu'));
-var panels=Array.from(document.querySelectorAll('.gu-panel'));
-var rss=Array.from(document.querySelectorAll('.rs'));
+var panels=Array.from(root.querySelectorAll('.gu-panel'));
+var rss=Array.from(root.querySelectorAll('.rs'));
 var locked=null;
 /* 기본 패널(권역 셋)은 절대 안 감춘다 — 구 패널은 그 위에 얹힌다. 견주는 것이
    화면에서 서로를 밀어내면 「어느 권역이 나은가」에 답할 수가 없다 */
@@ -2506,7 +2743,7 @@ rss.forEach(function(a){
   a.addEventListener('mouseleave',clearHi);
   a.addEventListener('blur',clearHi);
 });
-Array.from(document.querySelectorAll('.gp-close')).forEach(function(b){
+Array.from(root.querySelectorAll('.gp-close')).forEach(function(b){
   b.addEventListener('click',function(){locked=null;apply(null);});
 });
 document.addEventListener('click',function(e){
@@ -2522,18 +2759,36 @@ document.addEventListener('keydown',function(e){
    .mappanel 쪽 data-layer 는 그 층에 맞는 덩이(gp-cap·gp-pblanc)를 CSS order 로
    맨 위에 올리는 데만 쓴다(2026-09-04) — 「청약 공고」층을 켜고 구를 골랐는데
    전세가율부터 나오던 것을 고친 자리다 */
-var mappanel=document.querySelector('.mappanel');
-Array.from(document.querySelectorAll('.layer-btn')).forEach(function(b){
+var mappanel=root.querySelector('.mappanel');
+Array.from(root.querySelectorAll('.layer-btn')).forEach(function(b){
   b.addEventListener('click',function(){
     svg.setAttribute('data-layer',b.dataset.layer);
     if(mappanel)mappanel.setAttribute('data-layer',b.dataset.layer);
-    Array.from(document.querySelectorAll('.layer-btn')).forEach(function(x){
+    Array.from(root.querySelectorAll('.layer-btn')).forEach(function(x){
       var on=(x===b);x.classList.toggle('is-on',on);
       x.setAttribute('aria-pressed',on?'true':'false');});
-    Array.from(document.querySelectorAll('.map-legend')).forEach(function(x){
+    Array.from(root.querySelectorAll('.map-legend')).forEach(function(x){
       x.hidden=x.dataset.legend!==b.dataset.layer;});
   });
 });
+});
+</script>"""
+
+# 최상위 탭 — 서울|경기. 한 번에 한 시·도만 보인다(고르는 계층은 이것 하나다).
+# 둘 다 DOM 에 있고 hidden 만 토글한다 — 계산 없음. 주소에 #경기 가 있으면 그 탭으로
+_SIDO_JS = """<script>
+(function(){
+var tabs=Array.from(document.querySelectorAll('.sido-tab'));
+var blocks=Array.from(document.querySelectorAll('.sido-block'));
+if(!tabs.length)return;
+var pick=function(sido){
+  tabs.forEach(function(t){var on=t.dataset.sido===sido;
+    t.classList.toggle('is-on',on);t.setAttribute('aria-selected',on?'true':'false');});
+  blocks.forEach(function(b){b.hidden=b.dataset.sido!==sido;});
+};
+tabs.forEach(function(t){t.addEventListener('click',function(){pick(t.dataset.sido);});});
+var h=decodeURIComponent(location.hash||'').slice(1);
+pick(tabs.some(function(t){return t.dataset.sido===h;})?h:tabs[0].dataset.sido);
 })();
 </script>"""
 
@@ -2571,7 +2826,7 @@ secs.forEach(function(s){io.observe(s);});
 </script>"""
 
 
-def seoul_map_section(watches, asof, checked):
+def seoul_map_section(watches, asof, checked, sido='서울', suffix=''):
     """지도 히어로 — 왼쪽 지도(58%, 데스크톱은 sticky) · 오른쪽 패널(42%, 기본은
     권역 셋 요약). 구를 손대면(호버) 미리보기, 누르면(클릭·Enter) 그 구로
     고정된다. 상세 이동은 패널 안 「자세히 →」로만 한다. 값은 전부
@@ -2581,14 +2836,15 @@ def seoul_map_section(watches, asof, checked):
     풀이 셋(전세가율·매매가격지수·수급동향)은 패널이 아니라 지도 캡션 줄로
     내렸다(2026-09-03) — 권역 요약+범례+자+풀이가 패널 안에 다 있으면 데스크톱
     800px 를 넘는다."""
+    gus = _sido_gus(sido)
     gu_data = _gu_map_data(watches)
-    svg = _gu_svg(gu_data)
-    # 구 패널이 기본 패널보다 앞에 선다 — 골랐을 때 위에 얹히고 권역 셋은 그 아래
-    # 그대로 남는다(덮으면 견줄 수가 없다)
-    panels = ''.join(_gu_panel_html(name, gu_data[name])
-                     for name in sorted(SEOUL_GU['gu'])) + \
+    svg = _gu_svg(gu_data, gus, suffix)
+    # 구 패널이 기본 패널보다 앞에 선다 — 골랐을 때 위에 얹히고 권역 요약은 그 아래
+    # 그대로 남는다(덮으면 견줄 수가 없다). 권역 요약은 그 시·도 것만
+    sido_ws = _sido_watches(watches, sido)
+    panels = ''.join(_gu_panel_html(name, gu_data[name]) for name in gus) + \
              ('<div class="gu-panel" data-panel="default">%s</div>'
-              % _region_summary_html(watches))
+              % _region_summary_html(sido_ws))
     cap = ('<p>지도 원본 southkorea/seoul-maps(서울)·southkorea/southkorea-maps(성남) · '
            '값 기준 %s</p>' % E(asof))
     # 층 — 구마다 갈리는 값만 층이다. 토허·규제는 25구가 전부 같은 범주라 층에서
@@ -2601,24 +2857,26 @@ def seoul_map_section(watches, asof, checked):
                 '<button type="button" class="layer-btn" data-layer="cap" '
                 'aria-pressed="false">분양가상한제</button>']
     legend_list = ['<div class="map-legend" data-legend="ratio">%s</div>'
-                   % _ratio_legend_html(watches),
+                   % _ratio_legend_html(sido_ws, gus),
                    '<div class="map-legend" data-legend="cap" hidden>%s</div>'
-                   % _cap_legend_html()]
+                   % _cap_legend_html(gus)]
     if sub_gu is not None:
         btn_list.append('<button type="button" class="layer-btn" data-layer="sub" '
                         'aria-pressed="false">청약 공고</button>')
         legend_list.append('<div class="map-legend" data-legend="sub" hidden>%s</div>'
-                           % _sub_legend_html(watches))
+                           % _sub_legend_html(watches, gus))
     btns = '<div class="layer-btns" role="group" aria-label="지도 층">%s</div>' % ''.join(btn_list)
+    head = ('서울 25구 — 지금 전세가율이 어디쯤인가' if sido == '서울'
+            else '경기 — 성남 3구, 지금 전세가율이 어디쯤인가')
     return (
-        '<p class="hero-t">서울 25구 + 성남 3구 — 지금 전세가율이 어디쯤인가</p>%s'
+        '<p class="hero-t">%s</p>%s'
         '<div class="maprow">'
         '<div class="mapcol">'
         '<figure class="map-fig">%s<figcaption>%s</figcaption></figure>%s%s</div>'
         '<div class="mappanel" data-layer="ratio" aria-live="polite" aria-atomic="true">%s%s'
-        '</div></div>%s'
-        % (btns, svg, cap, _zone_banner(checked), changed_section(watches),
-           panels, ''.join(legend_list), _MAP_JS))
+        '</div></div>'
+        % (E(head), btns, svg, cap, _zone_banner(checked, gus),
+           changed_section(watches, sido, suffix), panels, ''.join(legend_list)))
 
 
 # 은어 넷 — 저장소 안에서만 통하는 말이 화면에 그대로 나가면 안 된다. 「걸림」·「근접」은
@@ -2661,13 +2919,27 @@ def check_ui(html, watches):
         '규약 위반: 타일을 두지 않는다 — 고르는 계층은 탭 하나다'
     assert 'class="line"' not in html, \
         '규약 위반: 줄 상세는 본 장에 없다 — watch/<슬러그>.html 로 옮겼다'
-    at_map = html.find('id="map"')
-    at_changed = html.find('id="changed"')
+    # 2026-09-04 여섯 번째 개정 — 최상위가 서울|경기 탭이다. 시·도 상자마다
+    # 분양 → 지도 → 달라진 것 → 보고 있는 것 순서, 제도는 그 둘보다 뒤(탭 밖).
+    assert html.count('class="sido-block"') == 2, '규약 위반: 시·도 상자는 서울·경기 둘이다'
+    assert 'class="sido-tabs"' in html and html.count('<button type="button" class="sido-tab') == 2, \
+        '규약 위반: 최상위 탭(서울|경기)이 없다 — 고르는 계층은 이것 하나다'
     at_policy = html.find('id="policy"')
-    assert 0 < at_map < at_policy, \
-        '규약 위반: 지도 히어로(#map)가 첫 화면(제도보다 먼저)이어야 한다'
-    assert 0 < at_changed < at_policy, \
-        '규약 위반: 「달라진 것」(#changed)이 제도보다 먼저 서야 한다 — 매달 다시 여는 이유다'
+    for _sido, sfx in SIDOS:
+        at_sub = html.find('id="subscription%s"' % sfx)
+        at_map = html.find('id="map%s"' % sfx)
+        at_changed = html.find('id="changed%s"' % sfx)
+        at_lines = html.find('id="lines%s"' % sfx)
+        assert 0 < at_sub < at_map < at_changed < at_lines < at_policy, \
+            ('규약 위반(%s): 분양 → 지도 → 달라진 것 → 보고 있는 것 → 제도 순서여야 한다'
+             % _sido)
+        # 정비사업 절은 어댑터가 값을 냈을 때만 선다 — 서면 달라진 것과 보고 있는 것 사이
+        at_rb = html.find('id="rebuild%s"' % sfx)
+        if _rebuild_data(watches)[0] is not None:
+            assert at_changed < at_rb < at_lines, \
+                '규약 위반(%s): 정비사업 절은 달라진 것 다음, 보고 있는 것 앞이다' % _sido
+        else:
+            assert at_rb < 0, '규약 위반(%s): 값 없는 정비사업 절을 냈다' % _sido
     # 층은 구마다 갈리는 값만 그린다. 25구가 전부 같은 범주인 것(토허·규제)은 지도가
     # 아니라 배너 문장이고, 갈리는 것(전세가율·분양가상한제·청약 공고)만 버튼이 된다.
     # 청약 공고는 청약홈 열쇠가 있을 때만 셋째 버튼으로 더한다 — 값이 없으면(sub
@@ -2677,7 +2949,7 @@ def check_ui(html, watches):
         '규약 위반: 층 버튼에 aria-pressed 가 없다 — 어느 층이 켜졌는지가 안 전해진다'
     # <button ...class="layer-btn 으로만 센다 — 감싼 상자 class="layer-btns"(복수)도
     # "layer-btn" 을 부분 문자열로 품어 그냥 세면 하나 더 잡힌다
-    n_btn = html.count('<button type="button" class="layer-btn')
+    n_btn = html.count('<button type="button" class="layer-btn') // 2   # 지도가 둘
     # 청약 공고 층의 존재는 svg 안 data-sub-bin 이 아니라 범례 상자(data-legend="sub")
     # 로 잰다 — CSS 규칙(.seoul-map[data-layer="sub"] …)은 값과 무관하게 항상
     # <style> 안에 있어 data-layer="sub" 라는 문자열 자체는 늘 참이다
@@ -2689,18 +2961,19 @@ def check_ui(html, watches):
         assert n_btn == 2, \
             ('규약 위반: 청약 공고 데이터가 없으면 지도 층 버튼은 둘(전세가율·'
              '분양가상한제)이어야 한다 — 값 없는 버튼을 냈다 (%d개)' % n_btn)
-    assert 'class="zone-banner"' in html, \
+    assert html.count('class="zone-banner"') == 2, \
         '규약 위반: 지정 현황 상태 배너가 없다 — 층에서 내린 값이 문장으로 서야 한다'
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
     n_fig = html.count('<figure')
-    assert n_fig == 3, \
-        '규약 위반: 본 장의 <figure 는 지도 + 전세가율 자 + 자료 기준 자 셋이어야 한다 (%d개)' % n_fig
+    assert n_fig == 5, \
+        ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
+         '다섯이어야 한다 (%d개)' % n_fig)
     # 본 장의 표는 「청약 — 조건」 절 안에만 둔다. 나머지는 전부 상세(watch/)로
     # 옮겼는데, 청약 조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더
     # 열게 하지 않는다 — 그 예외가 다른 절로 새지 않게 자리까지 잰다
     n_tbl = html.count('<table')
-    at_sub = html.find('id="subscription"')
-    inside = html[at_sub:html.find('id="lines"')] if at_sub > 0 else ''
+    at_sub = html.find('id="subscription-cond"')
+    inside = html[at_sub:html.find('id="lines-policy"')] if at_sub > 0 else ''
     # 조건 표 셋 + 청약홈 공고 표 하나 — 넷까지. 전부 #subscription 안이어야 한다
     assert n_tbl <= 4, '규약 위반: 본 장의 표는 넷 이하여야 한다 (%d개)' % n_tbl
     assert n_tbl == inside.count('<table'), \
@@ -2759,6 +3032,13 @@ def check_detail_ui(watches):
         assert not bad, '규약 위반(청약 공고): 도해 배치 — %s' % ' · '.join(bad)
     for term in _JARGON:
         assert term not in sub_html, '규약 위반(청약 공고): 은어 "%s" 가 남아 있다' % term
+    rb_path = os.path.join(WATCH_DIR, '정비사업 현황.html')
+    assert os.path.exists(rb_path), '규약 위반: watch/정비사업 현황.html 이 없다'
+    rb_html = io.open(rb_path, encoding='utf-8').read()
+    assert '<table' not in rb_html, '규약 위반(정비사업 현황): 표가 아니라 목록이다'
+    for term in _JARGON:
+        assert term not in rb_html, '규약 위반(정비사업 현황): 은어 "%s" 가 남아 있다' % term
+    _assert_no_condition_chrome(rb_html, '정비사업 현황')
     assert '<table' not in sub_html, \
         '규약 위반(청약 공고): 표가 아니라 목록이다(청약공고_스펙 §4) — <table 이 있다'
     _assert_no_condition_chrome(sub_html, '청약 공고')
@@ -2796,26 +3076,43 @@ def build():
     # 전부 그대로 펼쳐 두고 그 자리로 뛰는 것만 돕는다 — 걸러 내지 않는다.
     # 2026-09-03 — 「권역」·「바뀐 것」 두 앵커는 없앴다(지도 히어로가 그 둘을
     # 흡수했다). 「지도」 하나로 판단한다.
-    h.append('<nav class="jump" aria-label="절 바로가기">'
-             '<a href="#map">지도</a><a href="#changed">달라진 것</a>'
-             '<a href="#policy">제도</a><a href="#subscription">청약</a>'
-             '<a href="#lines">보고 있는 것</a>'
-             '<a href="#basis">자료 기준</a></nav>')
-
-    # 지도가 첫 화면이고 정보는 지도에서 나온다(사용자 지시 2026-09-03) — 전세가율
-    # 자·권역 카드를 여기 한자리로 접었다(ratio_ruler_fig 는 전세가율 층 범례 안으로,
-    # area_cards 는 패널 기본 상태로 흡수됐다).
-    h.append('<section class="hero" id="map">%s</section>'
-             % seoul_map_section(ws, asof, checked))
+    # 최상위는 서울|경기 탭(2026-09-04 사용자 지시 「서울 경기 구분이 가장 상위」).
+    # 시·도 상자 안 순서 — 분양(지금 청약) → 지도 → 달라진 것 → 보고 있는 것.
+    # 「분양이 가장 빨리 오게」 — 지금 신청할 수 있는 것이 이 장을 여는 첫 이유다.
+    # 제도·청약 조건·자료 기준은 전국 공통이라 탭 밖 아래에 한 번만 선다.
+    h.append('<div class="sido-tabs" role="tablist" aria-label="시·도">%s</div>'
+             % ''.join('<button type="button" class="sido-tab%s" role="tab" data-sido="%s" '
+                       'aria-selected="%s">%s</button>'
+                       % (' is-on' if not sfx else '', sido, 'true' if not sfx else 'false',
+                          sido) for sido, sfx in SIDOS))
+    for sido, sfx in SIDOS:
+        sido_ws = _sido_watches(ws, sido)
+        blk = ['<div class="sido-block" data-sido="%s"%s>' % (sido, '' if not sfx else ' hidden')]
+        blk.append('<nav class="jump" aria-label="절 바로가기 — %s">'
+                   '<a href="#subscription%s">분양</a><a href="#map%s">지도</a>'
+                   '<a href="#changed%s">달라진 것</a>%s<a href="#lines%s">보고 있는 것</a>'
+                   '<a href="#policy">제도</a><a href="#basis">자료 기준</a></nav>'
+                   % (sido, sfx, sfx, sfx,
+                      ('<a href="#rebuild%s">정비사업</a>' % sfx) if _rebuild_data(ws)[0] is not None else '',
+                      sfx))
+        blk.append(subscription_section(ws, sido, sfx))
+        blk.append('<section class="hero" id="map%s">%s</section>'
+                   % (sfx, seoul_map_section(ws, asof, checked, sido, sfx)))
+        blk.append(rebuild_section(ws, sido, sfx))
+        blk.append('<div class="band" id="lines%s"><p class="band-t">보고 있는 것 — %s %d</p>%s</div>'
+                   % (sfx, sido, len(sido_ws), line_summary_rows(ws, sido)))
+        blk.append('</div>')
+        h.append(''.join(blk))
 
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
 
-    h.append(subscription_section(ws))
+    h.append(subscription_cond_section(ws))
 
-    h.append('<div class="band" id="lines"><p class="band-t">보고 있는 것 %d%s</p>%s</div>'
-             % (len(ws), _checked_note(ws), line_summary_rows(ws)))
+    n_pol = sum(1 for w in ws if w['kind'] != 'realestate')
+    h.append('<div class="band" id="lines-policy"><p class="band-t">보고 있는 것 — 제도 %d%s</p>%s</div>'
+             % (n_pol, _checked_note(ws), line_summary_rows(ws)))
 
     h.append('<div class="band" id="basis"><p class="band-t">값이 언제 것인가</p>%s</div>'
              % time_ruler_fig(ws))
@@ -2827,6 +3124,8 @@ def build():
              '확인합니다.</footer>' % (E(checked), E(asof)))
     h.append('<!-- 판단은 insights/watch/, 수치는 insights/watch/_metrics/, 줄 상세는'
              ' 대시보드/watch/ 아래. 이 화면은 scratchpad/gen_watch_page.py 가 만든다 -->')
+    h.append(_MAP_JS)
+    h.append(_SIDO_JS)
     h.append(_JUMP_JS)
     h.append('</div></body></html>')
     html = ''.join(h)
@@ -2839,7 +3138,7 @@ def build():
     # 페이지가 site/ 로도 같이 나간다.
     os.makedirs(WATCH_DIR, exist_ok=True)
     expected = (set(w['slug'] + '.html' for w in ws)
-               | {'제도.html', '청약 공고.html'})
+               | {'제도.html', '청약 공고.html', '정비사업 현황.html'})
     for f in os.listdir(WATCH_DIR):
         if f.endswith('.html') and f not in expected:
             os.remove(os.path.join(WATCH_DIR, f))
@@ -2851,6 +3150,8 @@ def build():
         f.write(law_page(ws))
     with io.open(os.path.join(WATCH_DIR, '청약 공고.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(subscription_page(ws))
+    with io.open(os.path.join(WATCH_DIR, '정비사업 현황.html'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(rebuild_page(ws))
     check_detail_ui(ws)
 
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))

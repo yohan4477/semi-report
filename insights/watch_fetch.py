@@ -25,6 +25,9 @@ ADAPTERS = os.path.join(wl.WATCH, 'adapters')
 # 공고 수치를 얹어 같은 _metrics/policy/청약 제도.json 에 쓴다. 다른 정책 줄(임대차
 # 제도 등)은 청약홈과 무관하니 슬러그로 딱 이 하나만 짚는다.
 SUBSCRIPTION_SLUG = '청약 제도'
+# 「정비사업」줄도 같은 꼴 — 법 판(도시정비법·주택법) 위에 rebuild 어댑터가 긁은
+# 정비사업 정보몽땅(서울)·경기도 온누리(성남) 사업장 목록을 얹는다(2026-09-04)
+REBUILD_SLUG = '정비사업'
 
 
 def adapter_for(kind):
@@ -113,6 +116,22 @@ def main(only=None, dry=False):
                 else:
                     print('  경고   %-22s 청약홈 수치 없음 — %s'
                           % (w['slug'], getattr(sub.fetch, 'last_error', None) or '사유 불명'))
+        if w['kind'] == 'policy' and w['slug'] == REBUILD_SLUG:
+            rb = adapter_for('rebuild')
+            if rb is None:
+                print('  경고   %-22s rebuild.py 어댑터가 없다 — 법 판만 쓴다' % w['slug'])
+            else:
+                try:
+                    rb_got = rb.fetch(w['target'])
+                except Exception as e:                # noqa: BLE001
+                    rb_got = {}
+                    print('  경고   %-22s 정비사업 목록을 못 얻었다: %s: %s'
+                          % (w['slug'], type(e).__name__, e))
+                if rb_got:
+                    got.update(rb_got)
+                    err = getattr(rb.fetch, 'last_error', None)
+                    if err:
+                        print('  경고   %-22s 한쪽 원천이 빠졌다: %s' % (w['slug'], err))
         if dry:
             print('  (안 씀) %-21s 열쇠 %d개 (지금 %d개)' % (w['slug'], len(got), prev_n))
             ok += 1
