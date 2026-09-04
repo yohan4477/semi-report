@@ -1115,7 +1115,10 @@ a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--down);outline-o
 /* 지도 구는 테두리 상자 대신 강조 채움(gu-hover)으로 초점을 보인다 — 누른 구 둘레에
    검은 네모가 떴다(2026-09-04 성남 판에서 두드러졌다) */
 .seoul-map .gu:focus,.seoul-map .gu:focus-visible{outline:none}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+/* 데스크톱은 화면을 꽉 채운다(2026-09-04) — 지도와 그래프가 넓을수록 낫다. 산문 줄은
+   저마다 66ch 로 묶여 있어 폭이 늘어도 한 줄이 길어지지 않는다. 3,000px 넘는 판에서
+   글자가 가운데서 흩어지지 않게 1800px 에서만 멈춘다 */
+.wrap{max-width:1800px;margin:0 auto;padding:0 28px 80px}
 header{padding:34px 0 0}
 .h-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}
 h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:0}
