@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-05",
-"index_fingerprint": "eafdd8c97a68bbbb9e58339472b443533879acfe",
-"lines": 3333
+"index_fingerprint": "bb430ec76ccf506b7ec99b1e56cb515c55839d91",
+"lines": 3340
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -12906,6 +12906,21 @@
 "t": "1992",
 "tense": "회고"
 },
+"input/clippings/mer/223967469436.json#L15": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/223967469436.json#L3": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/223968413814.json#L8": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
 "input/clippings/mer/223984701497.json#L108": {
 "how": "명시",
 "t": "2024",
@@ -13069,6 +13084,26 @@
 "tense": "회고"
 },
 "input/clippings/mer/224078812706.json#L99": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/224099889958.json#L43": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/224100335488.json#L111": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/224100335488.json#L17": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"input/clippings/mer/224100335488.json#L45": {
 "how": "명시",
 "t": "2025",
 "tense": "현재"

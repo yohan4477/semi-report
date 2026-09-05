@@ -2538,6 +2538,9 @@
 "input/clippings/AI Dark Output The Visible Cost of Invisible Output.md#L177",
 "input/clippings/AI Dark Output The Visible Cost of Invisible Output.md#L183",
 "input/clippings/The Wild Wild West Of LEGO Datacenters.md#L561",
+"input/clippings/mer/224100335488.json#L45",
+"input/clippings/mer/224100335488.json#L79",
+"input/clippings/mer/224100335488.json#L83",
 "input/clippings/mer/224363492458.json#L31",
 "input/clippings/mer/224376966792.json#L1"
 ],
@@ -12268,7 +12271,7 @@
 "_meta": {
 "built": "2026-09-05",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1120,
+"files": 1124,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -15278,6 +15281,14 @@
 "806d8c92ea334b39f0dff8b06ae0a5ec8751aca5",
 241
 ],
+"input/clippings/mer/223967469436.json": [
+"f3d69f39778d3e2841057b587d3344f918e1cadf",
+120
+],
+"input/clippings/mer/223968413814.json": [
+"90e446df0aa5c9e326607e2ca73c2e4f1cf4532e",
+48
+],
 "input/clippings/mer/223984701497.json": [
 "b62bb56c9b26e525731bb47927e29f82f8ab781b",
 182
@@ -15289,6 +15300,14 @@
 "input/clippings/mer/224078812706.json": [
 "cd7c56cbe4a353c1732b91643886787f29a58318",
 167
+],
+"input/clippings/mer/224099889958.json": [
+"33a3bb00289d0a4955b48e4041147d6a74a7fdb0",
+63
+],
+"input/clippings/mer/224100335488.json": [
+"c15afd607512598085160ada0debd2f5c036caf6",
+119
 ],
 "input/clippings/mer/224124491312.json": [
 "551e4dd4fac2faf0f247fcb69a2c04a1755f337d",
@@ -16751,8 +16770,8 @@
 213
 ]
 },
-"fingerprint": "eafdd8c97a68bbbb9e58339472b443533879acfe",
-"lines": 183472
+"fingerprint": "bb430ec76ccf506b7ec99b1e56cb515c55839d91",
+"lines": 183822
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -19075,6 +19094,9 @@
 "input/clippings/mer/223866782248.json#L7",
 "input/clippings/mer/223866782248.json#L190",
 "input/clippings/mer/223866782248.json#L193",
+"input/clippings/mer/223967469436.json#L115",
+"input/clippings/mer/223967469436.json#L118",
+"input/clippings/mer/223968413814.json#L1",
 "input/clippings/mer/223984701497.json#L1",
 "input/clippings/mer/223989778427.json#L1",
 "input/clippings/mer/223989778427.json#L4",
@@ -25819,10 +25841,26 @@
 "input/clippings/mer/223961368566.json#L95",
 "input/clippings/mer/223961368566.json#L101",
 "input/clippings/mer/223961368566.json#L241",
+"input/clippings/mer/223967469436.json#L3",
+"input/clippings/mer/223967469436.json#L15",
+"input/clippings/mer/223967469436.json#L17",
+"input/clippings/mer/223967469436.json#L19",
+"input/clippings/mer/223967469436.json#L118",
+"input/clippings/mer/223968413814.json#L1",
+"input/clippings/mer/223968413814.json#L3",
+"input/clippings/mer/223968413814.json#L8",
 "input/clippings/mer/223989778427.json#L22",
 "input/clippings/mer/223989778427.json#L48",
 "input/clippings/mer/224078812706.json#L97",
 "input/clippings/mer/224078812706.json#L123",
+"input/clippings/mer/224099889958.json#L55",
+"input/clippings/mer/224100335488.json#L13",
+"input/clippings/mer/224100335488.json#L45",
+"input/clippings/mer/224100335488.json#L67",
+"input/clippings/mer/224100335488.json#L71",
+"input/clippings/mer/224100335488.json#L85",
+"input/clippings/mer/224100335488.json#L89",
+"input/clippings/mer/224100335488.json#L117",
 "input/clippings/mer/224124491312.json#L57",
 "input/clippings/mer/224124491312.json#L83",
 "input/clippings/mer/224124491312.json#L105",
@@ -27660,6 +27698,7 @@
 "content/understanding/회계사/[260801] 美 10년물 4.71%, 실적이 가려온 금리 압박이 드러났다 - 엘곰.md#L15",
 "input/clippings/mer/223961368566.json#L51",
 "input/clippings/mer/223961368566.json#L57",
+"input/clippings/mer/224099889958.json#L55",
 "input/clippings/mer/224151558038.json#L148",
 "input/clippings/mer/224199335751.json#L19",
 "input/clippings/mer/224254690764.json#L121",
@@ -30920,6 +30959,7 @@
 "input/clippings/mer/223407396834.json#L10",
 "input/clippings/mer/223457538479.json#L4",
 "input/clippings/mer/223618679798.json#L125",
+"input/clippings/mer/224100335488.json#L111",
 "input/clippings/mer/224193608780.json#L31",
 "input/clippings/mer/224197750505.json#L20",
 "input/clippings/mer/224197750505.json#L21",
@@ -33737,6 +33777,7 @@
 "input/clippings/Unitree's Impossible Trajectory Is Still Overlooked.md#L129",
 "input/clippings/mer/223961368566.json#L17",
 "input/clippings/mer/223961368566.json#L23",
+"input/clippings/mer/224100335488.json#L117",
 "input/clippings/mer/224193608780.json#L101",
 "input/clippings/mer/224193608780.json#L103",
 "input/clippings/mer/224193608780.json#L107",
@@ -38557,6 +38598,17 @@
 "content/understanding/회계사/[260825] 한국은 전날 이미 3.12% 빠졌다, 마이크론 -5.8%를 오늘 또 반영할 필요는 없다 - 시황 - 엘곰.md#L63",
 "content/understanding/회계사/[260827] 매출도 가이던스도 넘겼는데 시간외 주가는 5%에서 1%로 꺼졌다 - 시황 - 엘곰.md#L19",
 "content/understanding/회계사/[260827] 매출도 가이던스도 넘겼는데 시간외 주가는 5%에서 1%로 꺼졌다 - 시황 - 엘곰.md#L20",
+"input/clippings/mer/223967469436.json#L25",
+"input/clippings/mer/223967469436.json#L57",
+"input/clippings/mer/223967469436.json#L61",
+"input/clippings/mer/223967469436.json#L77",
+"input/clippings/mer/223967469436.json#L101",
+"input/clippings/mer/224099889958.json#L5",
+"input/clippings/mer/224099889958.json#L17",
+"input/clippings/mer/224099889958.json#L41",
+"input/clippings/mer/224099889958.json#L59",
+"input/clippings/mer/224099889958.json#L61",
+"input/clippings/mer/224099889958.json#L63",
 "input/clippings/mer/224194901795.json#L110",
 "input/clippings/mer/224196985272.json#L10",
 "input/clippings/mer/224219215836.json#L57",
@@ -41135,6 +41187,7 @@
 "input/clippings/mer/223866782248.json#L144",
 "input/clippings/mer/223866782248.json#L146",
 "input/clippings/mer/223866782248.json#L172",
+"input/clippings/mer/224100335488.json#L103",
 "input/clippings/mer/224124491312.json#L5",
 "input/clippings/mer/224124491312.json#L115",
 "input/clippings/mer/224194901795.json#L44",
@@ -48889,6 +48942,8 @@
 "input/clippings/mer/223856070879.json#L25",
 "input/clippings/mer/223856070879.json#L31",
 "input/clippings/mer/223856070879.json#L37",
+"input/clippings/mer/223967469436.json#L105",
+"input/clippings/mer/223967469436.json#L109",
 "input/clippings/mer/224193608780.json#L119",
 "input/clippings/mer/224195618395.json#L131",
 "input/clippings/mer/224195656904.json#L66",
@@ -49624,6 +49679,7 @@
 "content/understanding/한주성/2026-03-27 창업주가 떠나면 회사도 떠난다 — 상속세가 삼킬 한국 중견기업 [9808].md#L20",
 "content/understanding/한주성/2026-08-26 K-Beauty의 진짜 승자는 브랜드가 아닐 수도 있다 [4496].md#L17",
 "input/clippings/mer/223937327745.json#L20",
+"input/clippings/mer/224100335488.json#L115",
 "input/clippings/mer/224198269794.json#L89",
 "input/clippings/mer/224198269794.json#L91",
 "input/clippings/mer/224206018331.json#L41",
@@ -51153,6 +51209,8 @@
 "input/clippings/mer/223961368566.json#L135",
 "input/clippings/mer/223961368566.json#L153",
 "input/clippings/mer/223961368566.json#L155",
+"input/clippings/mer/223967469436.json#L3",
+"input/clippings/mer/223968413814.json#L8",
 "input/clippings/mer/223984701497.json#L8",
 "input/clippings/mer/223984701497.json#L46",
 "input/clippings/mer/223984701497.json#L48",
@@ -51184,6 +51242,20 @@
 "input/clippings/mer/224078812706.json#L59",
 "input/clippings/mer/224078812706.json#L95",
 "input/clippings/mer/224078812706.json#L167",
+"input/clippings/mer/224099889958.json#L43",
+"input/clippings/mer/224100335488.json#L5",
+"input/clippings/mer/224100335488.json#L13",
+"input/clippings/mer/224100335488.json#L17",
+"input/clippings/mer/224100335488.json#L67",
+"input/clippings/mer/224100335488.json#L69",
+"input/clippings/mer/224100335488.json#L77",
+"input/clippings/mer/224100335488.json#L91",
+"input/clippings/mer/224100335488.json#L93",
+"input/clippings/mer/224100335488.json#L97",
+"input/clippings/mer/224100335488.json#L101",
+"input/clippings/mer/224100335488.json#L103",
+"input/clippings/mer/224100335488.json#L115",
+"input/clippings/mer/224100335488.json#L117",
 "input/clippings/mer/224124491312.json#L7",
 "input/clippings/mer/224124491312.json#L11",
 "input/clippings/mer/224124491312.json#L37",
@@ -52206,6 +52278,7 @@
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L268",
 "content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L16",
 "content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md#L44",
+"input/clippings/mer/224100335488.json#L103",
 "input/clippings/mer/224226092090.json#L1",
 "input/clippings/mer/224226092090.json#L16",
 "input/clippings/mer/224226092090.json#L82",

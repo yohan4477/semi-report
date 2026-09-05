@@ -1,0 +1,351 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>웨이퍼 한 장을 통째로 칩으로 쓰는 회사가 상장한다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
+ .tw thead{display:none}
+ .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
+ .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
+ .tw td:first-child{border-top:0;font-weight:600}
+ .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>웨이퍼 한 장을 통째로 칩으로 쓰는 회사가 상장한다</h1><div class="pmeta">2026-05-15 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/cerebras-ipo">https://daily.semidoped.com/p/cerebras-ipo</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-05-15-cerebras-ipo.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">웨이퍼 한 장을 칩으로 만드는 일은 40년 전에 이미 풀려 있었고, 걸린 것은 제조 성숙과 추론 수요였다</div><p>이번 Semi Doped 회차는 상장 당일 아침에 녹음됐다. <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 한 회사만 붙들고 이야기하는데, 절반은 웨이퍼 한 장을 칩 하나로 쓰는 물건이 어떻게 만들어지는지이고 나머지는 그 물건을 어떻게 팔 것인지다. 이 글은 종목 판단을 걷어 내고 그 대화에서 업계에 보이는 것을 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">청약 주문이 기술 평가보다 먼저 나왔다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">자르지 않은 웨이퍼가 성립하는 조건</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">전력을 넣고 열을 빼는 일이 설계를 정했다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">44기가바이트라는 천장</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">왜 40년이 걸렸나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">하드웨어를 팔지 않는 하드웨어 회사</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 청약 주문이 기술 평가보다 먼저 나왔다</h2>
+<p>공모가는 주당 185달러, 조달액은 55억 달러였다고 <span class="pn">진행자V</span>는 기억했다. <span class="pn">진행자V</span>는 이 숫자가 굳는 과정을 한 주 내내 봤다. 처음 들린 예상이 135달러, 그다음이 150~160달러였고, 마지막에 185달러가 나왔다. 회사가 잡았던 목표는 35억에서 40억 달러쯤이었던 것 같다는데 15억 달러가 더 들어왔다. 청약 방식도 특이했다. 몇 주를 원하고 최대 얼마까지 낼 수 있는지를 적어 넣게 했고, 마감 직전에 Arm과 소프트뱅크가 들어와 사려 했다는 블룸버그 보도까지 있었지만 그 응찰은 통하지 않았다.</p>
+<p>이 회차는 뒤에서 이 물건의 한계를 조목조목 짚는다. 메모리가 44기가바이트뿐이고, 웨이퍼 밖으로 나가는 순간 느려지고, 배치 규모를 늘릴 수 있을지 모른다. 그런데도 15억 달러가 더 들어왔다. <span class="pn">진행자A</span>가 회차 끝에서 한 말이 그 사정을 짚는다. "살 수 있는 AI 가속기가 가장 좋은 AI 가속기다".</p>
+<h2 id="s2"><span class="num">2</span> 자르지 않은 웨이퍼가 성립하는 조건</h2>
+<figure class="uc-fig"><p class="fig-title">자를 것인가, 그대로 둘 것인가</p><svg class="epoch" viewBox="0 0 520 212" role="img" aria-label="통상은 웨이퍼를 잘라 다이로 만들고 하나씩 패키징한 뒤 네트워크와 스위치로 다시 잇는다. Cerebras 는 자르지 않고 웨이퍼 위 금속 배선으로 이어 한 장을 칩 하나로 쓴다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="70" y="30" text-anchor="middle" class="fig-hd">통상</text>
+  <rect x="0" y="40" width="51" height="48" rx="9" class="fig-box"/>
+  <text x="25.5" y="70" text-anchor="middle" class="fig-b">웨이퍼</text>
+  <line x1="55" y1="64" x2="105.667" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="80.3333" y="52" text-anchor="middle" class="fig-e">자른다</text>
+  <rect x="109.667" y="40" width="51" height="48" rx="9" class="fig-box"/>
+  <text x="135.167" y="70" text-anchor="middle" class="fig-b">다이로</text>
+  <line x1="164.667" y1="64" x2="215.333" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="190" y="52" text-anchor="middle" class="fig-e">패키징</text>
+  <rect x="219.333" y="40" width="82" height="48" rx="9" class="fig-box"/>
+  <text x="260.333" y="70" text-anchor="middle" class="fig-b">칩 하나씩</text>
+  <line x1="305.333" y1="64" x2="356" y2="64" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="330.667" y="52" text-anchor="middle" class="fig-e">잇는다</text>
+  <rect x="360" y="40" width="160" height="48" rx="9" class="fig-box"/>
+  <text x="440" y="70" text-anchor="middle" class="fig-b">네트워크 · 스위치</text>
+  <text x="70" y="122" text-anchor="middle" class="fig-hd">Cerebras</text>
+  <rect x="0" y="132" width="51" height="48" rx="9" class="fig-box"/>
+  <text x="25.5" y="162" text-anchor="middle" class="fig-b">웨이퍼</text>
+  <line x1="55" y1="156" x2="145" y2="156" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="100" y="144" text-anchor="middle" class="fig-e">안 자른다</text>
+  <rect x="149" y="132" width="207" height="48" rx="9" class="fig-agent"/>
+  <text x="252.5" y="162" text-anchor="middle" class="fig-b">웨이퍼 위 배선으로 이음</text>
+  <line x1="360" y1="156" x2="450" y2="156" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="405" y="144" text-anchor="middle" class="fig-e">그대로</text>
+  <rect x="454" y="132" width="66" height="48" rx="9" class="fig-box"/>
+  <text x="487" y="162" text-anchor="middle" class="fig-b">칩 하나</text>
+</svg><figcaption>통상은 웨이퍼 위 칩들을 잘라 내 하나씩 패키징하고 다시 통신을 붙인다 — 운이 좋으면 이어 붙이고 아니면 네트워크와 스위치까지 들어간다. Cerebras 는 자르지 않고 웨이퍼 위 금속 배선으로 이어 한 장을 칩 하나로 쓴다. 레티클 84장이 한 장에 이어 붙는다.</figcaption></figure>
+<p><span class="pn">진행자V</span>가 먼저 그림을 그렸다. 웨이퍼는 큰 접시 같고 보통은 그 위에 만든 칩들을 잘라 내 하나씩 패키징해 내보낸다. Cerebras는 자르지 않고 웨이퍼 위 금속 배선으로 그 칩들을 이어 한 장을 통째로 칩 하나로 만들었다. <span class="pn">진행자A</span>는 이 발상이 낯설지 않다고 했다. NVIDIA도 다이 하나에서 둘로, 둘에서 넷으로 늘려 왔고 사람들은 여덟을 생각한다. 잘라 놓으면 다시 통신을 붙여야 하고, 운이 좋으면 이어 붙여 한 덩어리처럼 쓰지만 아니면 네트워크와 스위치까지 들어간다.</p>
+<figure class="uc-fig"><p class="fig-title">죽은 코어를 건너뛰는 순서</p><svg class="epoch" viewBox="0 0 520 378" role="img" aria-label="전원을 켜 코어를 전수 검사하고, 신호가 없는 자리를 적어 두고, 패브릭이 그 자리를 건너뛰어 예비 코어로 배선을 돌리고, 소프트웨어가 그 자리에 일을 안 보낸다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="26" width="441" height="72" rx="9" class="fig-box"/>
+  <text x="220.5" y="68" text-anchor="middle" class="fig-b">전원을 켜고 코어를 전수로 검사한다</text>
+  <line x1="220.5" y1="100" x2="220.5" y2="112" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="114" width="441" height="72" rx="9" class="fig-box"/>
+  <text x="220.5" y="156" text-anchor="middle" class="fig-b">신호가 없는 자리를 적어 둔다 — 「10행 13열」</text>
+  <line x1="220.5" y1="188" x2="220.5" y2="200" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="202" width="441" height="72" rx="9" class="fig-box"/>
+  <text x="220.5" y="232.5" text-anchor="middle" class="fig-b">웨이퍼 위 패브릭이 그 자리를 건너뛰어</text>
+  <text x="220.5" y="255.5" text-anchor="middle" class="fig-b">예비 코어로 배선을 돌린다</text>
+  <line x1="220.5" y1="276" x2="220.5" y2="288" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="290" width="441" height="72" rx="9" class="fig-box"/>
+  <text x="220.5" y="332" text-anchor="middle" class="fig-b">소프트웨어가 그 자리에 일을 안 보낸다</text>
+</svg><figcaption>코어 하나는 GPU 의 20분의 1에서 100분의 1 크기라 코어 단위 표면적이 작고, 그만큼 코어 단위 수율이 좋다. 한 장에 코어가 97만쯤 들어가 그중 90만이 돌아간다 — 상자로는 안 세고 순서만 그렸다. 결과가 SRAM 44기가바이트, 초당 21페타바이트다.</figcaption></figure>
+<p>문제는 완벽한 웨이퍼가 없다는 사실이다. 결함은 어느 웨이퍼에나 있고 Cerebras 웨이퍼에도 있다. 대신 이어 붙인 단위가 GPU만큼 크지 않다. 코어 하나는 GPU의 20분의 1이나 100분의 1 크기이고 연산 조금과 메모리 조금을 함께 가진다. 그런 코어가 한 장에 97만쯤 들어가고 그중 90만 개가 실제로 돌아간다. 나머지는 결함을 피하느라 비워 둔다. 웨이퍼 위에 깔린 네트워킹 패브릭이 죽은 코어를 건너뛰어 예비 코어로 배선을 돌린다. <span class="pn">진행자A</span>는 그 검사가 전원을 켠 뒤 코어 전수로 이뤄지는 것 같다고 봤다. 얼마나 자주 하는지는 모른다고 하면서, 신호가 없으면 10행 13열이 죽었다고 적어 두고 소프트웨어가 그 자리에 일을 보내지 않는다.</p>
+<p>칩이 커지면 표면적이 넓어져 결함을 만날 확률이 올라가지만, 코어 하나하나가 작으면 각 코어의 표면적이 작으니 코어 단위 수율은 좋다고 <span class="pn">진행자A</span>는 설명했다. 그렇게 해서 나온 물건이 44기가바이트 SRAM에 초당 21페타바이트 대역폭이다. SRAM 한 칸은 트랜지스터 여섯 개이고, 실리콘이 넓으면 트랜지스터를 연산에 줄지 빠른 메모리에 줄지 정할 수 있다. Cerebras는 절반 가까이를 메모리에 줬고, 코어 하나 안에서도 실리콘이 연산과 SRAM에 반반이다.</p>
+<h2 id="s3"><span class="num">3</span> 전력을 넣고 열을 빼는 일이 설계를 정했다</h2>
+<figure class="uc-fig"><p class="fig-title">층 셋이 저마다 다른 숙제를 진다</p><svg class="epoch" viewBox="0 0 520 300" role="img" aria-label="엔진 블록은 미세 유로로 한 장을 한꺼번에 식히고, 웨이퍼는 23킬로와트를 수백 지점에서 수직으로 받고, 기판은 웨이퍼만 늘어나 정렬이 어긋나는 자리다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="56.5" y="26" text-anchor="middle" class="fig-hd">층</text>
+  <text x="263.5" y="26" text-anchor="middle" class="fig-hd">이 층의 숙제</text>
+  <rect x="0" y="36" width="113" height="72" rx="9" class="fig-stage"/>
+  <text x="56.5" y="78" text-anchor="middle" class="fig-b">엔진 블록</text>
+  <rect x="129" y="36" width="269" height="72" rx="9" class="fig-box"/>
+  <text x="263.5" y="66.5" text-anchor="middle" class="fig-b">미세 유로가 수직으로 흘러</text>
+  <text x="263.5" y="89.5" text-anchor="middle" class="fig-b">한 장을 한꺼번에 식힌다</text>
+  <rect x="0" y="124" width="113" height="72" rx="9" class="fig-stage"/>
+  <text x="56.5" y="166" text-anchor="middle" class="fig-b">웨이퍼 한 장</text>
+  <rect x="129" y="124" width="269" height="72" rx="9" class="fig-box"/>
+  <text x="263.5" y="154.5" text-anchor="middle" class="fig-b">23킬로와트 · 수만 암페어를</text>
+  <text x="263.5" y="177.5" text-anchor="middle" class="fig-b">수백 지점에서 수직으로 받는다</text>
+  <rect x="0" y="212" width="113" height="72" rx="9" class="fig-stage"/>
+  <text x="56.5" y="254" text-anchor="middle" class="fig-b">기판</text>
+  <rect x="129" y="212" width="269" height="72" rx="9" class="fig-box"/>
+  <text x="263.5" y="242.5" text-anchor="middle" class="fig-b">열을 받으면 웨이퍼만 늘어나</text>
+  <text x="263.5" y="265.5" text-anchor="middle" class="fig-b">정렬이 어긋나고 커넥터가 뜯긴다</text>
+</svg><figcaption>웨이퍼 하나가 23킬로와트를 먹어 1볼트면 수만 암페어가 흐르는데 한쪽 커넥터로는 12인치 건너까지 못 보낸다. 그래서 수백 지점에 위에서 수직으로 꽂고, 엔진 블록의 미세 유로가 전면을 한꺼번에 식힌다. 열을 받으면 웨이퍼는 10분의 1밀리미터 늘어나는데 기판은 안 늘어나 정렬이 어긋난다 — 커넥터 개수는 전사에 없어 안 그렸다.</figcaption></figure>
+<p><span class="pn">진행자V</span>가 규모를 이렇게 잡았다. 레티클 84장이면 GPU 84개쯤이고, NVL72가 칩 72개짜리이니 웨이퍼 한 장에 랙 하나 분량이 들어앉은 셈이다. 웨이퍼 하나가 23킬로와트를 먹으니 1볼트로 공급한다면 수만 암페어가 흘러야 한다. 한쪽 옆에 커넥터를 붙여 12인치 건너까지 보낼 방법은 없다. 그래서 웨이퍼 표면 수백 지점에 위에서 수직으로 꽂는 전용 커넥터를 만들었다.</p>
+<p>냉각은 엔진 블록이라 부르는 금속 덩어리가 맡는다. 미세 유로가 수직으로 흘러 한 장을 한꺼번에 식힌다. 웨이퍼 어디에 뜨거운 자리가 생길지 모르니 전면을 동시에 식혀야 한다. 게다가 웨이퍼는 열을 받으면 0.1밀리미터쯤 늘어나는데 기판은 그만큼 늘어나지 않는다. 정렬이 어긋나고 커넥터가 뜯겨 나간다. Cerebras는 열팽창 계수를 맞추는 재료를 따로 만들어 특허를 냈고, <span class="pn">진행자V</span>는 이것이 업계 공통의 숙제가 아니라 이 회사만의 숙제라고 못 박았다.</p>
+<p><span class="pn">진행자A</span>는 비용을 물었다. 자르고 패키징하고 다시 잇는 공정을 건너뛰니 싸질 것 같은데, 저 엔진 블록이 싸 보이지 않는다. <span class="pn">진행자V</span>의 답은 짧았다. 이 일은 비용 이야기가 전혀 아니다. 레티클을 이어 붙이는 것만 해도 마스크가 한 번에 비추는 크기가 정해져 있어 패터닝을 달리해야 하고, TSMC와 10년을 들여 풀어낸 문제다. 처음부터 표준을 벗어난 웨이퍼 공정이고 전원과 냉각과 팽창과 기계까지 전부 어렵다. 이 방식을 뒤따르려면 개발비를 크게 쓰고 그 결과를 특허로 묶어 둔 회사와 붙어야 한다.</p>
+<h2 id="s4"><span class="num">4</span> 44기가바이트라는 천장</h2>
+<figure class="uc-fig"><p class="fig-title">44기가바이트 안과 밖</p><svg class="epoch" viewBox="0 0 520 364" role="img" aria-label="모델이 44기가바이트 안에 들어가면 SRAM 속도로 돌고, 넘으면 웨이퍼 밖으로 나가 파이프라인·텐서·전문가 병렬 셋 중 하나를 쓰는데 셋 다 웨이퍼 사이 통신에 기댄다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="110" y="36" width="300" height="68" rx="9" class="fig-agent"/>
+  <text x="260" y="64.5" text-anchor="middle" class="fig-b">모델이 44기가바이트 안에 들어간다</text>
+  <text x="260" y="87.5" text-anchor="middle" class="fig-b">SRAM 초당 21페타바이트로 돈다</text>
+  <line x1="260" y1="106" x2="260" y2="132" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="141" y="134" width="238" height="45" rx="9" class="fig-bad"/>
+  <text x="260" y="162.5" text-anchor="middle" class="fig-b">넘으면 웨이퍼 밖으로 나간다</text>
+  <line x1="260" y1="181" x2="260" y2="207" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="209" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="72" y="237.5" text-anchor="middle" class="fig-b">파이프라인 병렬</text>
+  <text x="72" y="260.5" text-anchor="middle" class="fig-b">층을 나눠 차례로</text>
+  <rect x="156" y="209" width="98" height="68" rx="9" class="fig-box"/>
+  <text x="205" y="237.5" text-anchor="middle" class="fig-b">텐서 병렬</text>
+  <text x="205" y="260.5" text-anchor="middle" class="fig-b">행렬을 쪼개</text>
+  <rect x="266" y="209" width="144" height="68" rx="9" class="fig-box"/>
+  <text x="338" y="237.5" text-anchor="middle" class="fig-b">전문가 병렬</text>
+  <text x="338" y="260.5" text-anchor="middle" class="fig-b">전문가마다 한 장</text>
+  <line x1="260" y1="279" x2="260" y2="301" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="117.5" y="303" width="285" height="45" rx="9" class="fig-bad"/>
+  <text x="260" y="331.5" text-anchor="middle" class="fig-b">셋 다 웨이퍼 사이 통신에 기댄다</text>
+</svg><figcaption>모델이 44기가바이트 안에 들어가면 GPU 로는 못 내는 초당 토큰이 나온다. 넘으면 웨이퍼 여러 장에 쪼개야 하는데 네트워킹은 칩 한쪽 끝으로만 나가고 웨이퍼 안 데이터 이동보다 훨씬 느리다. 병렬 셋은 <span class="pn">진행자V</span> 가 든 우회로 그대로다. 셋 다 웨이퍼 사이 통신에 기대니 웨이퍼 스케일의 기본 발상과 어긋난다.</figcaption></figure>
+<p><span class="pn">진행자A</span>는 시점을 짚었다. 이 회사가 시작한 때는 ChatGPT 이전이고, 그때 44기가바이트 SRAM은 넉넉해 보였을 것이다. 지금은 작은 모델도 그보다 크다. Llama 70B이 이미 넘고, 활성값과 KV 캐시까지 얹을 자리도 필요하다.</p>
+<p>모델이 44기가바이트 안에 들어가면 결과는 압도적이다. <span class="pn">진행자V</span>는 GPU 기반 시스템에서 꿈도 못 꿀 초당 토큰이 나온다고 했다. Groq의 LPU조차 한 장에 SRAM이 수백 메가바이트뿐이라 여러 장을 이어야 모델이 들어가고 그만큼 네트워킹 부담이 붙는다. 그러니 작은 모델을 아주 빠르게 돌려야 하는 일이 이 물건의 자리다. <span class="pn">진행자A</span>는 구글이 광고 문구를 즉석에서 다시 쓰는 작업을 예로 들었다.</p>
+<p>문제는 그 밖이다. 전력은 웨이퍼 전면으로 들어오지만 네트워킹은 칩 한쪽 끝으로만 나가고, 웨이퍼 안에서 데이터가 움직이는 속도에 견주면 훨씬 느리다. 웨이퍼 밖으로 나가는 순간 병목이다. <span class="pn">진행자V</span>가 우회로 셋을 들었다. ① 파이프라인 병렬은 첫 웨이퍼가 어텐션 몇 층, 다음 웨이퍼가 또 몇 층, 그다음이 피드포워드를 맡아 차례로 넘긴다 ② 텐서 병렬은 행렬을 다섯으로 쪼개 웨이퍼 다섯 장에 돌린다 ③ 전문가 병렬은 전문가마다 웨이퍼를 배정한다. 어느 쪽이든 웨이퍼 사이 통신 대역폭이 모자란 상태에서 문제를 쪼개는 일이고, <span class="pn">진행자V</span>는 그것이 웨이퍼 스케일 엔진의 기본 발상과 정면으로 어긋나는 근본적 약점이라고 정리했다.</p>
+<p>그래서 나온 아이디어들이 죄다 더 어렵다. <span class="pn">진행자A</span>는 전날 나온 SemiAnalysis 기사에서 웨이퍼 스케일 광연결 실험을 봤다고 전했다. 위에 광 웨이퍼를 한 장 더 올려 필요한 자리로 오르내리게 하는 그림이다. SRAM이나 DRAM 웨이퍼를 본딩해 쌓는 이야기도 나왔다. 다른 가속기 회사들은 메모리 계층으로 이 문제를 다룬다. MatX의 Reiner Pope는 가중치를 SRAM에 KV 캐시를 HBM에 두는 구성을, 퀄컴과 인텔과 d-Matrix는 DDR을 한 층 더 쓰는 방식을 말했다. 다만 Cerebras에서는 그 면으로 전력이 들어오고 냉각이 이뤄진다. 겹쳐 쌓으면 전력과 냉각을 어디로 넣을지가 다시 문제가 된다.</p>
+<h2 id="s5"><span class="num">5</span> 왜 40년이 걸렸나</h2>
+<figure class="uc-fig"><p class="fig-title">같은 발상, 40년 뒤</p><svg class="epoch" viewBox="0 0 520 476" role="img" aria-label="1980년대 트릴로지가 2.5인치 웨이퍼로 같은 발상을 시도했고, 침수와 제품 없는 상장 끝에 1989년 물러났으며, 같은 발상이 오늘 12인치 웨이퍼에서 제품이 됐다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="26" text-anchor="middle" class="fig-hd">언제</text>
+  <text x="272" y="26" text-anchor="middle" class="fig-hd">무슨 일이</text>
+  <rect x="0" y="36" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="78" text-anchor="middle" class="fig-b">1980년대</text>
+  <rect x="114" y="36" width="316" height="72" rx="9" class="fig-box"/>
+  <text x="272" y="66.5" text-anchor="middle" class="fig-b">트릴로지 — 2.5인치 웨이퍼에서</text>
+  <text x="272" y="89.5" text-anchor="middle" class="fig-b">결함을 우회해 한 장을 통째로</text>
+  <line x1="49" y1="110" x2="49" y2="122" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="124" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="166" text-anchor="middle" class="fig-b">1982</text>
+  <rect x="114" y="124" width="316" height="72" rx="9" class="fig-box"/>
+  <text x="272" y="154.5" text-anchor="middle" class="fig-b">폭풍이 공장을 잠기게 하고</text>
+  <text x="272" y="177.5" text-anchor="middle" class="fig-b">먼지가 청정실로 날려 든다</text>
+  <line x1="49" y1="198" x2="49" y2="210" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="212" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="254" text-anchor="middle" class="fig-b">1983</text>
+  <rect x="114" y="212" width="316" height="72" rx="9" class="fig-box"/>
+  <text x="272" y="242.5" text-anchor="middle" class="fig-b">제품 없이 상장해 돈을 모았지만</text>
+  <text x="272" y="265.5" text-anchor="middle" class="fig-b">아무 일도 없었다</text>
+  <line x1="49" y1="286" x2="49" y2="298" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="300" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="342" text-anchor="middle" class="fig-b">1989</text>
+  <rect x="114" y="300" width="316" height="72" rx="9" class="fig-box"/>
+  <text x="272" y="330.5" text-anchor="middle" class="fig-b">Amdahl 이 물러난다</text>
+  <text x="272" y="353.5" text-anchor="middle" class="fig-b">100년은 안 된다고 말한다</text>
+  <line x1="49" y1="374" x2="49" y2="386" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="388" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="430" text-anchor="middle" class="fig-b">오늘</text>
+  <rect x="114" y="388" width="316" height="72" rx="9" class="fig-box"/>
+  <text x="272" y="418.5" text-anchor="middle" class="fig-b">같은 발상이 12인치 웨이퍼에서 제품</text>
+  <text x="272" y="441.5" text-anchor="middle" class="fig-b">바뀐 것은 웨이퍼 제조 성숙 하나</text>
+</svg><figcaption>Gene Amdahl 이 1980년대에 2억 3천만 달러를 모아 2.5인치 웨이퍼로 같은 일을 하려 했고 결함 우회라는 해법까지 같았다. 막은 것은 그 시절 수율이다. 1982년 폭풍이 공장을 잠기게 했고 1983년 제품 없이 상장했으며 1989년 Amdahl 이 물러났다. <span class="pn">진행자V</span> 가 센 간격이 40년이다.</figcaption></figure>
+<p><span class="pn">진행자V</span>가 꺼낸 트릴로지 시스템즈 이야기가 이 회차의 무게 중심이다. 1980년대에 Gene Amdahl이 2억 3천만 달러, 오늘 값으로 10억 달러에 가까운 돈을 모아 지금 Cerebras가 해낸 것과 같은 일을 하려 했다. 웨이퍼 크기만 2.5인치였다. 결함을 우회한다는 해법까지 같았다. 실패한 이유는 발상이 아니라 그 시절의 수율이다. 2.5인치 웨이퍼조차 수율이 너무 낮았다.</p>
+<p>거기에 사고가 겹쳤다. 1982년쯤 폭풍이 3천 3백만 달러짜리 공장을 물에 잠기게 했고, 공조로 물이 스며 배관이 녹으면서 미세 먼지가 청정실로 날려 들어갔다. 수율이 떨어지는 원인을 몇 달 동안 찾지 못한 채 자본을 태웠다. 1983년에 제품도 없이 상장해 6천만 달러를 모았지만 아무 일도 없었고, 주가는 12달러에서 몇 해 뒤 0에 가깝게 내려갔다. 재무를 맡던 Clifford Madden은 위기가 가장 심할 때 뇌종양으로 죽었다. 회사는 구조조정 끝에 웨이퍼 스케일 슈퍼컴퓨터를 포기했고, Amdahl은 앞으로 100년은 안 된다고 말한 뒤 남은 돈으로 미니컴퓨터 스타트업을 사서 방향을 틀었다. 1989년에 물러났다.</p>
+<p><span class="pn">진행자V</span>가 계산한 실제 간격은 40년이다. 이 회차의 첫 번째 대답이 여기 있다. 발상은 처음부터 맞았고, 붙잡고 있던 것은 웨이퍼 제조가 얼마나 좋아지는지였다. <span class="pn">진행자A</span>는 이 회사가 돈이 떨어지기 전에 제품을 여러 세대 냈다고 보탰다.</p>
+<p>두 번째 대답은 수요다. 처음 목표는 슈퍼컴퓨팅이었다. CPU 10만 개를 묶던 일을 같은 실리콘 위에서 하면 어떻겠냐는 발상이다. LLM 훈련이 뜨자 훈련으로 옮겼는데, 훈련은 메모리 대역폭이 걸리는 문제가 아니었다고 그는 봤고 CUDA를 두고 다른 것을 프로그래밍할 이유도 마땅치 않았다. 추론으로 옮긴 뒤에야 맞는 자리가 생겼다. <span class="pn">진행자V</span>는 프리필과 디코드를 나눈 추론에서 디코드 구간이 메모리 대역폭을 요구하게 된 것을 이 회사 무릎에 떨어진 선물이라고 했다. <span class="pn">진행자A</span>가 순서를 세웠다. 오픈 모델이 Groq에 선물이었고, Groq가 Cerebras에 선물이었고, NVIDIA의 Dynamo와 프리필·디코드 분리가 그 앞에 있었다.</p>
+<h2 id="s6"><span class="num">6</span> 하드웨어를 팔지 않는 하드웨어 회사</h2>
+<figure class="uc-fig"><p class="fig-title">하드웨어를 안 파는 하드웨어 회사</p><svg class="epoch" viewBox="0 0 520 310" role="img" aria-label="제조와 공급망, 데이터센터 건설, 클라우드 운영, 토큰 공급까지 한 회사가 지고 하드웨어는 팔지 않는다. 돈은 OpenAI 가 내는 연산 시간과 토큰 값으로만 들어온다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="40" width="113" height="52" rx="9" class="fig-agent"/>
+  <text x="56.5" y="72" text-anchor="middle" class="fig-b">제조·공급망</text>
+  <line x1="117" y1="66" x2="131.667" y2="66" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="135.667" y="40" width="113" height="52" rx="9" class="fig-agent"/>
+  <text x="192.167" y="72" text-anchor="middle" class="fig-b">데이터센터</text>
+  <line x1="252.667" y1="66" x2="267.333" y2="66" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="271.333" y="40" width="113" height="52" rx="9" class="fig-agent"/>
+  <text x="327.833" y="72" text-anchor="middle" class="fig-b">클라우드 운영</text>
+  <line x1="388.333" y1="66" x2="403" y2="66" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="407" y="40" width="113" height="52" rx="9" class="fig-agent"/>
+  <text x="463.5" y="72" text-anchor="middle" class="fig-b">토큰 공급</text>
+  <line x1="463.5" y1="94" x2="463.5" y2="146" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="63" y="150" width="394" height="45" rx="9" class="fig-box"/>
+  <text x="260" y="178.5" text-anchor="middle" class="fig-b">OpenAI 가 연산 시간과 토큰에 돈을 낸다</text>
+  <rect x="164.5" y="216" width="191" height="45" rx="9" class="fig-bad"/>
+  <text x="260" y="244.5" text-anchor="middle" class="fig-b">하드웨어 판매 — 없다</text>
+  <rect x="0" y="268" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="280" class="fig-lg">Cerebras 가 지는 자리</text>
+</svg><figcaption>OpenAI 는 웨이퍼 스케일 엔진을 사지 않고 연산 시간과 토큰에 돈을 낸다. 그러면 제조와 공급망은 물론 데이터센터 건설과 클라우드 운영과 토큰 공급까지 전부 Cerebras 몫이다. <span class="pn">진행자V</span> 가 물은 자리가 여기다 — 왜 복잡한 칩을 만들면서 신생 클라우드까지 해야 하나.</figcaption></figure>
+<p>가치 제안은 저지연 추론 하나로 좁혀졌다. <span class="pn">진행자V</span>는 NVIDIA가 Groq를 인수한 뒤로 추론 엔진의 승부가 여기 모였다고 봤고, 코딩처럼 손이 계속 움직여야 하는 일에서는 빠른 추론이 제품 출시 속도를 바꿔 매출로 이어진다고 했다. 다만 이 시장을 크게 보지는 않는다. 프리미엄 토큰은 비싼 만큼 금전적 회수가 있어야 하니 금융 분석이나 코딩쯤이 남고, 대부분의 사람은 GPU로 충분해서 물 한 잔 받아 오는 동안 답이 오면 된다. <span class="pn">진행자A</span>는 에이전트를 반례로 들었다. 사슬로 엮인 작업에서는 10초씩 쌓이는 것과 1초씩 쌓이는 것이 전혀 다르다.</p>
+<p>계약의 모양이 낯설다. OpenAI는 웨이퍼 스케일 엔진을 사서 데이터센터를 짓겠다고 한 적이 없다. 연산 시간을 사고 토큰에 돈을 낸다. 워런트 조항이 붙었다. 그러면 제조와 공급망은 물론이고 데이터센터 건설과 클라우드 운영과 토큰 공급까지 전부 Cerebras가 한다. <span class="pn">진행자V</span>가 물은 것이 이 대목이다. 왜 복잡한 칩을 만들면서 신생 클라우드까지 해야 하나.</p>
+<p><span class="pn">진행자A</span>는 다른 그림을 하나 상상해 봤다. 마이크로소프트가 이 회사를 샀다면 Azure가 규모와 SLA를 맡고 Cerebras는 긴 컨텍스트와 KV 캐싱, 월드 모델을 감당할 다음 세대 웨이퍼에 집중할 수 있었다. 지금 구조에서는 Cerebras가 OpenAI에게 Azure 역할까지 해야 한다. 고객 집중도 그대로 남는다. <span class="pn">진행자A</span>는 예전 상장 시도 때 국부 투자자 겸 클라우드 구매자 하나에 기대던 그림이 사업 검증으로 보이지 않았다고 하면서, OpenAI가 들어온 지금도 집중은 집중이라고 했다.</p>
+<p>배치 규모가 마지막 물음이다. <span class="pn">진행자A</span>는 엔진 블록처럼 새로 만든 부품은 공급망 협력사와 함께 발명하는 것이니, 큰 고객이 데이터센터 하나 분량을 주문하면 그 협력사들이 갑자기 대량으로 찍어 낼 수 있느냐고 물었다. <span class="pn">진행자V</span>가 되받았다. 그건 지금 AI 데이터센터 전체의 이야기 아닌가. <span class="pn">진행자A</span>는 그쪽은 이미 대량 생산되는 부품이라는 차이를 들었고, <span class="pn">진행자V</span>는 Lumentum 레이저가 모자라면 Coherent가 만들겠다고 나서는 것처럼 두세 곳이 붙을 여지를 남겼다. <span class="pn">진행자V</span>가 앞서 던진 물음이 이 대목의 크기를 보여 준다. 내년에 웨이퍼 스케일 엔진 10만 장을 깔 수 있나.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</h2>
+<p>말하지 않은 것은 넷이다. ① 계약 조건. 워런트가 몇 주에 얼마이고 기간이 얼마인지를 <span class="pn">진행자V</span>가 지루하다며 넘겼다. ② 웨이퍼 사이를 잇는 스케일업 연결. <span class="pn">진행자A</span>가 물었고 <span class="pn">진행자V</span>는 잘 모른다고 답했다. ③ 44기가바이트 안에 실제로 무엇이 올라가 매출을 내는지. 용례는 광고 문구 재작성 하나만 나왔다. ④ 지금 운영하는 클라우드의 규모. 서비스가 있긴 하지만 그 규모로는 못 돌린다는 말까지가 전부다.</p>
+<p>판단이 바뀌는 조건은 셋이다. ① 웨이퍼 밖 대역폭. 광 웨이퍼를 얹는 방식이나 메모리 웨이퍼 본딩이 제품에 들어오면 4절의 천장이 물러나고, 웨이퍼 스케일이 작은 모델 전용이라는 지금의 자리 규정이 무너진다. ② 후발 주자의 납품. 두 진행자가 이름을 늘어놓은 회사가 여럿이다. SambaNova, MatX, Taalas, Sohu, Tenstorrent, Etched, 그리고 전날 2억 2천만 달러를 모은 Fractile. <span class="pn">진행자A</span>는 이들 제품을 아직 규모로 살 수 없다는 점이 지금 Groq와 Cerebras가 서 있는 자리라고 했고, 초당 1천 토큰을 낼 수 있는 회사가 열 곳이 되면 그 자리가 사라진다고 했다. ③ 토큰 공장이 실제로 커지는지. 하드웨어를 팔지 않는 구조에서는 제조와 데이터센터와 클라우드 중 어디 한 곳이 막히면 그 지점에서 매출이 통째로 멈춘다. <span class="pn">진행자V</span>가 남긴 말이 지켜볼 자리를 정해 준다. "풀 수 없는 문제를 계속 풀어 가고 있는 거죠, 그러길 바랍니다".</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-05-15-cerebras-ipo-strategy.md">insights/semidoped/2026-05-15-cerebras-ipo-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
