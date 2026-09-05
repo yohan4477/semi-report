@@ -1014,7 +1014,14 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   .rep-cut{margin:38px 0 0;border:0;border-top:3px solid var(--line)}
   .rep-toc{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
            border-radius:12px;font-size:13px;line-height:1.85}
-  .rep-toc a{font-weight:800}
+  .rep-toc .tl{display:block;margin-bottom:2px}
+  .rep-toc .tg{display:block;margin-top:12px;font-size:12.5px;color:var(--ink-2)}
+  .rep-toc .tt{display:block}
+  /* 차례 링크가 브라우저 기본 파랑으로 나와 회색 판에서 튀었다(2026-09-05).
+     색은 본문 잉크로 두고 밑줄만 옅게 — 눌리는 자리인 것은 밑줄이 말한다 */
+  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:underline;
+             text-decoration-color:var(--ink-3);text-underline-offset:3px}
+  .rep-toc a:hover{text-decoration-color:var(--ink)}
 """
 
 
