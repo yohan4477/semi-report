@@ -4,6 +4,7 @@
 # 카드로 쪼개지 않는다. 카드 장(수도리무브 대시보드 등)이 원문 한 편씩을 답한다면
 # 여기는 그 답들을 이어 붙인 한 편이다. 그림은 원본 생성기에서 가져다 쓴다 —
 # 여기서 다시 그리면 한쪽만 고쳐지는 사고가 난다.
+import io
 import os
 import re
 import sys
@@ -29,6 +30,7 @@ import _cpo_part1  # noqa: E402
 import _cpo_fig  # noqa: E402
 import _pkg_part1  # noqa: E402
 import _pkg_fig  # noqa: E402
+import _rep_toc  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1012,8 +1014,11 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   .rep-head .rm{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
   .rep-head .rm b{color:var(--ink)}
   .rep-cut{margin:38px 0 0;border:0;border-top:3px solid var(--line)}
-  .rep-toc{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
+  /* rep-toc 는 절 차례, rep-note 는 안내문. 규약 검사(_rep_toc.check_toc)가 앞엣것만 본다 */
+  .rep-toc,.rep-note{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
            border-radius:12px;font-size:13px;line-height:1.85}
+  .rep-note a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-note a:hover{text-decoration:underline}
   .rep-toc .tl{display:block;margin-bottom:2px}
   .rep-toc .tg{display:block;margin-top:12px;padding-left:6px;font-size:12.5px;color:var(--ink-2)}
   /* 층마다 들여쓴다 — 머리글 · 묶음 이름 · 절 목록이 눈으로 갈린다 */
@@ -1026,7 +1031,7 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
 """
 
 
-TOC = ('<p class="rep-toc"><b>이 층에 보고서가 둘 있습니다. 서로 다른 원문으로 쓴 별개의 '
+TOC = ('<p class="rep-note"><b>이 층에 보고서가 둘 있습니다. 서로 다른 원문으로 쓴 별개의 '
        '글입니다.</b> AI 비즈니스 밸류체인 리포트는 옆 타일에 따로 서 있습니다.<br>'
        '<a href="#rep-model">① 로보틱스 모델 — 관절 값을 어디서 뽑나</a> · 수도리무브 35편<br>'
        '<a href="#rep-industry">② 로봇 산업 — 무엇이 로봇을 팔리게 하나</a> · SemiAnalysis 4편</p>')
@@ -1071,7 +1076,8 @@ def report_fund_html():
 
     def sec(title):
         n[0] += 1
-        h.append('<h3 id="fund-%d">%s</h3>' % (n[0], title))
+        # 제목 문자열에 박힌 「1. 」은 _rep_toc 가 걷고 ①②③ 으로 다시 단다
+        h.append('<h3 id="fund-%d">%s</h3>' % (n[0], _rep_toc.sec_title(n[0], title)))
 
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
@@ -1246,3 +1252,9 @@ if __name__ == '__main__':
                     ('sec-pkg', '선단 패키징 — 다이를 쪼갠 뒤', 'SemiAnalysis 9편 + Semi Doped 1회차 — '
                      '다이 하나로 못 만들게 된 뒤 무엇이 그 일을 대신했나', 1, report_pkg_html())],
               extra_css=REPORT_CSS)
+
+    # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
+    _bad = _rep_toc.check_toc(io.open(OUT, encoding="utf-8").read())
+    if _bad:
+        raise SystemExit('차례 규약 위반\n  ' + '\n  '.join(_bad))
+    print("  차례 규약 OK")

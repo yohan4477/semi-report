@@ -14,6 +14,8 @@ import io
 import os
 import re
 
+import _rep_toc as rt
+
 import _pkg_fig as pf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -153,20 +155,12 @@ def load():
     return out
 
 
-def _circ(n):
-    """소단원 번호 ①②③. 대단원은 「1. 2. 3.」이고 그 아래가 동그라미다."""
-    return chr(0x2460 + n - 1) if 1 <= n <= 20 else str(n)
+LEAD = ('이 층은 물음 하나를 세 묶음으로 따라갑니다 — 왜 쪼개고 어떻게 붙이나, 누가 무엇을 내놓았나, 어디가 막히고 누가 서 있나.')
 
 
 def toc_html(titles):
-    """묶음 이름은 제 줄에, 절은 한 줄에 하나씩. 「·」로 이으면 어디서 절이 갈리는지 안 보인다(2026-09-05)."""
-    parts = ['<p class="rep-toc"><b class="tl">이 층은 물음 하나를 세 묶음으로 따라갑니다 — 왜 쪼개고 어떻게 붙이나, 누가 무엇을 내놓았나, 어디가 막히고 누가 서 있나.</b>']
-    for name, a, b in GROUPS:
-        links = '<br>'.join('<a href="#pkg-%d">%s %s</a>' % (i, _circ(i), titles[i - 1])
-                           for i in range(a, b + 1))
-        parts.append('<b class="tg">%d. %s</b><span class="tt">%s</span>'
-                     % (GROUPS.index((name, a, b)) + 1, name, links))
-    return ''.join(parts) + '</p>'
+    """규약과 코드는 _rep_toc 하나뿐이다 — 층마다 복사하면 갈린다(2026-09-05)."""
+    return rt.toc_html('pkg', LEAD, GROUPS, titles)
 
 
 def report_pkg(sec, p, fig):
@@ -179,7 +173,7 @@ def report_pkg(sec, p, fig):
             p(toc_html(titles))
             toc_done = True
         if k == 'sec':
-            sec('%s %s' % (_circ(titles.index(v) + 1), v))
+            sec(rt.sec_title(titles.index(v) + 1, v))
         elif k == 'p':
             p(_strip(v))
         elif k == 'fig':
