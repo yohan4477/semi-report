@@ -49,6 +49,10 @@ PAGES = [
     # 알리바이가 된다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-pkg',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 금리·물가 층(2026-09-05). 재료가 회계사·미국주식 사관학교·류상철·김상훈·박소연에
+    # 흩어져 있어 공통 폴더가 content/understanding 인데 그것을 통째로 넣으면 540편이
+    # 알리바이가 된다. 그래서 폴더 없이 RATE_EXTRA 에 파일을 하나씩 적는다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-rate', None),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -73,6 +77,52 @@ PKG_EXTRA = [os.path.join(ROOT, 'insights', 'semidoped', '2026-06-19-advanced-pa
                           'Microfluidic Cooling, Photonic Interconnects, and More.md'),
              os.path.join(_CLIP, 'CPUs are Back The Datacenter CPU Landscape in 2026.md')]
 
+# 금리·물가 층의 재료 마흔. 폴더째 넣지 않고 파일을 하나씩 적는다 — content/understanding 은
+# 540편이라 통째로 넣으면 이 층과 무관한 편이 알리바이가 된다. EXTRA 는 확장자를 안 가려
+# 읽으므로 메르 클리핑과 사슬(json)도 그대로 대조 대상이 된다
+RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+    'input/clippings/mer/223873166379.json',
+    'input/clippings/mer/223887755561.json',
+    'input/clippings/mer/223931247450.json',
+    'input/clippings/mer/223954627912.json',
+    'input/clippings/mer/224032232941.json',
+    'input/clippings/mer/224031770885.json',
+    'input/clippings/mer/224095422334.json',
+    'input/clippings/mer/224100335488.json',
+    'input/clippings/mer/224153982515.json',
+    'input/clippings/mer/224167473277.json',
+    'input/clippings/mer/224179162516.json',
+    'input/clippings/mer/224260820330.json',
+    'input/clippings/mer/224292480472.json',
+    'input/clippings/mer/224292701545.json',
+    'input/clippings/mer/224356110315.json',
+    'input/clippings/mer/224366267736.json',
+    'input/clippings/mer/224369325535.json',
+    'input/clippings/mer/224376966792.json',
+    'input/clippings/mer/224380392566.json',
+    'input/clippings/mer/224381241715.json',
+    'input/clippings/mer/224381744094.json',
+    'input/clippings/mer/224382901516.json',
+    'input/clippings/mer/224384006179.json',
+    'input/clippings/mer/224392077639.json',
+    'content/understanding/류상철 국장/경제 교과서 틀렸다 - 물가 때문에 금리 인상해도 주가 오른다.md',
+    'content/understanding/언더스탠딩 보고서/2026-08-24-물가-신호를-무시하면-10년이-녹는다.md',
+    'content/understanding/미국주식 사관학교/[260115] 기준금리는 내렸는데 10년물은 그대로다 - 물타기는 TLT가 아니라 단기채로.md',
+    'content/understanding/미국주식 사관학교/[260318] 인하 논쟁 - 물가가 안 죽었다 대 안 내리면 경기가 먼저 깨진다.md',
+    'content/understanding/미국주식 사관학교/[260424] 채권이 주식을 지켜주던 20년은 예외였다 - 갈림길은 물가 3%.md',
+    'content/understanding/미국주식 사관학교/[260608] 인상 소나기를 정통으로 맞는 건 중기채다 - 충격이 꽂히는 자리와 가격 반응은 다르다.md',
+    'content/understanding/미국주식 사관학교/[260823] 국채가 밀리는 동안 지방채는 물량이 안 늘었다 - 고금리 뉴노멀에서 남는 채권 셋.md',
+    'content/understanding/미국주식 사관학교/[260830] 워시는 파월과 다르다, 물가 2%가 찍혀야 움직인다 - 잭슨홀 조정을 저가매수 신호로 읽으면 안 되는 이유.md',
+    'content/understanding/회계사/[260802] 채권 자경단, 동결 속에서 30년물 금리를 5.27%로 밀어올리다 - 엘곰.md',
+    'content/understanding/회계사/[260819] 30년물이 19년 만의 고점을 찍은 이유 - 엘곰.md',
+    'content/understanding/미국주식 사관학교/[260821] 재무부가 바이백을 두 배로 늘렸는데 하루 만에 되돌아왔다 - 30년물 금리와 매수자 교체.md',
+    'content/understanding/김상훈 기자/[260806] 엔화를 지켜준 게 아니라 국채를 못 팔게 했다 - 미일 공동개입의 진짜 청구서 - 김상훈.md',
+    'content/understanding/박소연 이사/[260806] 금리 방향이 바뀔 때마다 잘하던 방식이 먼저 무너졌다 - 철도채에서 LTCM까지 - 박소연.md',
+    'insights/flows/mer/rate_cpi.json',
+    'insights/flows/mer/rate_0818.json',
+    'insights/debate/issue-2026-08-28-금리와-AI설비투자-무엇이-앞에-서나.md',
+)]
+
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
@@ -86,7 +136,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

@@ -31,6 +31,8 @@ import _cpo_fig  # noqa: E402
 import _pkg_part1  # noqa: E402
 import _pkg_fig  # noqa: E402
 import _rep_toc  # noqa: E402
+import _rate_part1  # noqa: E402
+import _rate_fig  # noqa: E402
 import dash_common as dc
 import gen_sudoremove_dashboard as sudo
 from card_lib import fig_html
@@ -1115,6 +1117,21 @@ def report_pkg_html():
     return ''.join(h)
 
 
+def report_rate_html():
+    """금리·물가 총정리 — 한 편. 본문은 insights/reports/rate-2026-09-05.md 원본에서 읽는다."""
+    h = [_rate_part1.HEAD_RATE]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="rate-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _rate_part1.report_rate(sec, p, fig)
+    return ''.join(h)
+
+
 def fold_report(head, body):
     """보고서 하나를 접는다. **제목을 누르면 그 보고서가 통째로 나온다.**
 
@@ -1228,7 +1245,8 @@ REPORT_FIGS = [(0, '로봇 한 대의 층마다 두 보고서가 무엇을 묻�
                (0, '우리 배수가 시장 범위 안에 든 회사가 없다', _val_peers_fig.FIG_BIAS, ''),
                # CPO 층(2026-09-04) — 캡션까지 _cpo_part1.CAPTION 이 정본이다
                ] + [(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()
-               ] + [(0, t, svg, '') for t, svg, _c in _pkg_part1.CAPTION.values()]
+               ] + [(0, t, svg, '') for t, svg, _c in _pkg_part1.CAPTION.values()
+               ] + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()]
 
 
 if __name__ == '__main__':
@@ -1250,7 +1268,9 @@ if __name__ == '__main__':
                     ('sec-cpo', 'CPO — 빛과 구리의 경계', 'SemiAnalysis 9편 + Semi Doped 5회차 — '
                      '빛이 데이터센터 어디까지 들어왔고 누가 그 자리에 서 있나', 1, report_cpo_html()),
                     ('sec-pkg', '선단 패키징 — 다이를 쪼갠 뒤', 'SemiAnalysis 9편 + Semi Doped 1회차 — '
-                     '다이 하나로 못 만들게 된 뒤 무엇이 그 일을 대신했나', 1, report_pkg_html())],
+                     '다이 하나로 못 만들게 된 뒤 무엇이 그 일을 대신했나', 1, report_pkg_html()),
+                    ('sec-rate', '금리·물가 — 누가 다르게 읽나', '메르 24편 + 해설 13편 — 연준이 '
+                     '내렸는데 왜 장기금리는 올랐나', 1, report_rate_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
