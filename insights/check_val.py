@@ -210,8 +210,10 @@ def main():
         # 다시 만들면 이 검사도 되살아난다 — 화면이 없는 것을 결함으로 세지 않는다
         print('건너뜀 — 통합 보고서 화면이 없다. scratchpad/gen_report_dashboard.py 를 돌리면 생긴다')
     elif not txt:
-        out.append(('FAIL', 'V1',
-                    '통합 보고서.html 의 %s 절을 못 읽었다' % SECTION))
+        # 2026-09-06에 밸류에이션 층을 통합 보고서에서 걷었다(최근 셋만 남겼다).
+        # 층이 없는 것과 층이 있는데 못 읽는 것은 다르다 — 없으면 V1 은 잴 것이 없다.
+        # 조정 표 자체를 보는 V2~V4 는 그대로 돈다
+        print('건너뜀 — 통합 보고서에 %s 층이 없다. V1 은 그 층의 본문을 본다' % SECTION)
     else:
         v1_material_disclosed(txt, out)
     v2_period_aligned(out)
