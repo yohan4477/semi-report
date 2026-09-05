@@ -357,3 +357,53 @@ FIG_SERIES = _svg(W, 300, '2026년 6월부터 9월까지 미국 국채금리 (%)
     _lt(18, 280, '엘곰이 「화요일 5.34%」라 적은 날 FRED 종가는 5.28% 다 — 장중 고점으로 보인다',
         't-sm', False),
 ]))
+
+
+# ── 도해 1c. 같은 10년물을 두 사람이 다르게 쪼갠다 ────────────────────
+# 미주사-0115 L23-27 은 둘로, 메르-유가 T55·T57 은 셋으로 쪼갠다. 겹치는 조각이
+# 기간 프리미엄이다. 미주사는 방향만 말하고 값을 안 대서 화살표만 그린다 —
+# 없는 값을 그리지 않는다(insight-figure 규칙 1). 메르 쪽은 값이 있어 적는다.
+def _term(x, y, w, lines, accent=False, arrow=None):
+    """수식의 한 항. arrow 는 'up'·'down'·None."""
+    st, sw = (INK, 2.0) if accent else (INK3, 1.5)
+    out = [(_fill if accent else _plain)(x, y, w, 52, st, sw, rx=6)]
+    for i, t in enumerate(lines):
+        out.append(_t(x + w // 2, y + 22 + i * 17, t, 't-lab' if i == 0 else 't-sm'))
+    if arrow:
+        ax, ay = x + w // 2, y - 8
+        up = arrow == 'up'
+        out.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="2.2"/>'
+                   % (ax, ay, ax, ay - 22, st))
+        out.append('<path d="M%d %d l-5 %d h10 z" fill="%s"/>'
+                   % (ax, ay - 22 if up else ay, 8 if up else -8, st))
+        out.append(_t(ax, ay - 28 if up else ay - 28, '커졌다' if up else '내려왔다', 't-sm'))
+    return ''.join(out)
+
+
+def _op(x, y, sym):
+    return _t(x, y + 32, sym, 't-lab')
+
+
+FIG_SPLIT = _svg(W, 360, '같은 10년물을 두 사람이 다르게 쪼갠다', ''.join([
+    _lt(18, 24, '미국주식 사관학교 — 둘로 쪼갠다 (2026-01)', 't-sm', True),
+    _term(20, 88, 116, ['10년물'], accent=True),
+    _op(150, 88, '='),
+    _term(168, 88, 176, ['정책금리 기대', '연준을 눈치 본다'], arrow='down'),
+    _op(358, 88, '+'),
+    _term(376, 88, 176, ['기간 프리미엄', '오래 빌려주는 값'], arrow='up'),
+    _lt(18, 178, '앞엣것은 내려왔는데 뒤엣것이 커져서 10년물이 안 내려왔다', 't-sm', False),
+
+    _lt(18, 216, '메르 — 셋으로 쪼갠다 (2026-07)', 't-sm', True),
+    _term(20, 244, 116, ['명목금리'], accent=True),
+    _op(150, 244, '='),
+    _term(168, 244, 132, ['기대인플레이션', '2.3%대']),
+    _op(314, 244, '+'),
+    _term(332, 244, 108, ['중립금리']),
+    _op(454, 244, '+'),
+    _term(472, 244, 148, ['기간 프리미엄']),
+    '<line x1="332" y1="310" x2="620" y2="310" stroke="%s" stroke-width="1.5"/>' % INK,
+    '<line x1="332" y1="310" x2="332" y2="302" stroke="%s" stroke-width="1.5"/>' % INK,
+    '<line x1="620" y1="310" x2="620" y2="302" stroke="%s" stroke-width="1.5"/>' % INK,
+    _t(476, 326, '이 둘을 합쳐 실질금리 — 2.987%', 't-sm'),
+    _lt(18, 350, '겹치는 조각이 기간 프리미엄이다. 둘 다 그것이 커졌다고 본다', 't-sm', True),
+]))
