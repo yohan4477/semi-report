@@ -8,6 +8,8 @@
   F1  더 새 문서가 들어왔는데 안 고쳤다 — 같은 주제 노트가 이 글의 최신 근거보다 뒤에 있다
   F2  근거가 통째로 낡았다 — 최신 근거가 기준일보다 오래됐다(주제마다 기준이 다르다)
   F3  as_of 가 근거보다 앞선다 — 언제 기준 글인지 표기가 틀렸다
+  F4  받아 둔 바깥 시계열이 낡았다 — data/fred/*.csv 의 fetched 날짜가 오래됐다.
+      도해의 선이 그 파일이라 낡으면 그림이 옛날을 말한다(2026-09-06)
   F4  교차 카드의 근거끼리 시차가 크다 — 대립인지 그사이 바뀐 것인지 안 밝혔다
 
   py -3.13 insights/check_fresh.py
@@ -164,6 +166,43 @@ def check(path, notes, today):
                     % (spread, oldest, latest, section or '기본', limit))
 
 
+
+FRED_WARN = 45          # 이 날수를 넘으면 WARN. 도해를 다시 그릴 때 fetch_fred.py 를 먼저 돌린다
+
+
+def check_fred(today):
+    """F4 — 받아 둔 FRED 시계열이 얼마나 묵었나.
+
+    도해의 선이 이 파일이라 낡으면 그림이 옛날을 말한다. 그런데 파일은 조용히 그대로 있어서
+    아무도 안 본다. 그래서 기계가 센다. 고치는 법은 한 줄이다 —
+    PYTHONIOENCODING=utf-8 python scripts/fetch_fred.py
+    """
+    d = os.path.join(paths.ROOT, 'data', 'fred') if hasattr(paths, 'ROOT') else         os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fred')
+    if not os.path.isdir(d):
+        return
+    for f in sorted(glob.glob(os.path.join(d, '*.csv'))):
+        got = None
+        for line in io.open(f, encoding='utf-8'):
+            if line.startswith('# fetched:'):
+                got = line.split(':', 1)[1].strip()
+                break
+            if not line.startswith('#'):
+                break
+        name = os.path.basename(f)
+        if not got:
+            findings.append(('WARN', 'data/fred/' + name, 'F4',
+                             'fetched 날짜가 없다 — fetch_fred.py 로 다시 받는다'))
+            continue
+        try:
+            y, m, dd = (int(x) for x in got.split('-'))
+            age = (today - datetime.date(y, m, dd)).days
+        except ValueError:
+            continue
+        if age > FRED_WARN:
+            findings.append(('WARN', 'data/fred/' + name, 'F4',
+                             '받은 지 %d일 됐다(%s) — 도해를 다시 그리기 전에 '
+                             'python scripts/fetch_fred.py' % (age, got)))
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -176,6 +215,7 @@ def main():
                    glob.glob(os.path.join(paths.SYNTH, '*.md')))
     for p in files:
         check(p, notes, today)
+    check_fred(today)
     for level, where, rule, msg in findings:
         print('%s %s [%s] %s' % (level, where, rule, msg))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
