@@ -230,59 +230,71 @@ FIG_WHO = _svg(W, 248, '30년물이 19년 만의 고점을 찍은 한 달, 원�
 
 
 # ── 도해 8. 값이 날짜로 어떻게 움직였나 ─────────────────────────────
-# 점은 전부 원문에 날짜와 함께 적힌 값이고, 점 사이 선은 이어 본 것이다(캡션에 밝힌다).
-# 코퍼스에 있는 값만 쓴다 — FRED 같은 바깥 시계열을 끌어오지 않았다.
-# 값 출처: 미주사-0608 L16-17 · 엘곰-0724 L13 · 엘곰-0801 L38 · 엘곰-0802 L6 ·
+# **선은 FRED 일별 종가, 점은 원문이 적은 값이다.** 둘을 갈라 그린다(fetch_fred.py 규약).
+# FRED 를 들여온 것은 금리가 날마다 움직이는 것 자체가 내용이라 원문의 몇 점으로는 안 보여서다.
+# 점 출처: 미주사-0608 L16-17 · 엘곰-0724 L13 · 엘곰-0801 L38 · 엘곰-0802 L6 ·
 #          엘곰-0818 L21 · 엘곰-0819 L7 · 엘곰-0822 L19 · 쟁점-0828 L31 · 언보-0824 L97
-_SX0, _SX1 = 92, 596          # 가로 눈금 왼쪽·오른쪽 끝
-_SY0, _SY1 = 46, 214          # 세로 눈금 위(5.4%)·아래(4.4%)
-_SHI, _SLO = 5.4, 4.4         # 세로 눈금 상·하한
+import datetime as _dt
+import os as _os
+import sys as _sys
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), 'scripts'))
+from fetch_fred import load as _fred
+
+_D0, _D1 = _dt.date(2026, 6, 1), _dt.date(2026, 9, 4)
+_SPAN = (_D1 - _D0).days
+_SX0, _SX1 = 88, 604
+_SY0, _SY1 = 44, 208
+_SHI, _SLO = 5.4, 4.4
 
 
 def _sx(d):
-    """6월 5일을 0, 8월 24일을 1 로 둔 자리. 날짜는 그 사이 일수로 잰다."""
-    return _SX0 + int((_SX1 - _SX0) * d)
+    return _SX0 + int((_SX1 - _SX0) * (d - _D0).days / float(_SPAN))
 
 
 def _sy(v):
     return _SY1 - int((_SY1 - _SY0) * (v - _SLO) / (_SHI - _SLO))
 
 
-# (이름 없는 날짜, 값) — 6/5 를 0일로 두고 8/24 까지 80일
-def _dd(day):
-    return day / 80.0
+def _series(sid, accent):
+    """FRED 일별 종가를 선으로. 값을 손대지 않는다."""
+    pts = [(_dt.date(*map(int, k.split('-'))), v) for k, v in sorted(_fred(sid).items())
+           if _D0 <= _dt.date(*map(int, k.split('-'))) <= _D1 and _SLO <= v <= _SHI]
+    if not pts:
+        return ''
+    st, sw = (INK, 2.0) if accent else (INK3, 1.5)
+    return ('<polyline points="%s" fill="none" stroke="%s" stroke-width="%s"/>'
+            % (' '.join('%d,%d' % (_sx(d), _sy(v)) for d, v in pts), st, sw))
 
 
-_T30 = [(56, 5.09, '7월 말 5.09'), (58, 5.27, '8/2 5.27'), (74, 5.31, '8/18 5.31'),
-        (74, 5.34, '5.34'), (75, 5.19, '8/19 5.19'), (76, 5.25, '8/20 5.25')]
-_T10 = [(0, 4.55, '6/5 4.55'), (49, 4.71, '7/24 4.71'), (57, 4.71, '8/1 4.71'),
-        (74, 4.72, '8/18 4.72'), (76, 4.70, '8/20 4.70'), (80, 4.75, '8/24 4.75')]
-
-
-def _line(pts, accent):
+def _dot(ymd, v, accent=True):
+    d = _dt.date(*map(int, ymd.split('-')))
     st = INK if accent else INK3
-    sw = 2.0 if accent else 1.5
-    xy = [(_sx(_dd(d)), _sy(v)) for d, v, _l in pts]
-    out = ['<polyline points="%s" fill="none" stroke="%s" stroke-width="%s"/>'
-           % (' '.join('%d,%d' % p for p in xy), st, sw)]
-    for (x, y) in xy:
-        out.append('<circle cx="%d" cy="%d" r="3.5" fill="var(--paper)" stroke="%s" '
-                   'stroke-width="2"/>' % (x, y, st))
-    return ''.join(out)
+    return ('<circle cx="%d" cy="%d" r="3.2" fill="var(--paper)" stroke="%s" stroke-width="2"/>'
+            % (_sx(d), _sy(v), st))
 
 
-FIG_SERIES = _svg(W, 292, '2026년 6월부터 8월까지 미국 국채금리가 어떻게 움직였나 (%)', ''.join(
-    [_lt(18, 24, '점은 원문에 날짜와 함께 적힌 값이다. 점 사이 선은 이어 본 것이다', 't-sm', True)]
-    # 세로 눈금 — 원문에 나온 구간만 긋는다
+# 원문이 적은 값. 날짜는 그 글이 가리킨 장 마감일이다
+_P30 = [('2026-07-28', 5.09), ('2026-08-03', 5.27), ('2026-08-17', 5.31),
+        ('2026-08-19', 5.19), ('2026-08-20', 5.25)]
+_P10 = [('2026-06-05', 4.55), ('2026-07-24', 4.71), ('2026-08-03', 4.71),
+        ('2026-08-18', 4.72), ('2026-08-20', 4.70)]
+
+FIG_SERIES = _svg(W, 300, '2026년 6월부터 9월까지 미국 국채금리 (%)', ''.join(
+    [_lt(18, 22, '선은 FRED 일별 종가, 동그라미는 원문이 짚은 값', 't-sm', True)]
     + ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1" '
        'stroke-dasharray="3 4"/>' % (_SX0, _sy(v), _SX1, _sy(v), INK3) for v in (4.5, 5.0)]
-    + [_lt(52, _sy(4.5) + 4, '4.5', 't-sm', False), _lt(52, _sy(5.0) + 4, '5.0', 't-sm', False)]
-    + [_line(_T10, False), _line(_T30, True)]
-    + [_lt(_SX0, 238, '6/5', 't-sm', False), _lt(_sx(_dd(49)) - 10, 238, '7/24', 't-sm', False),
-       _lt(_sx(_dd(74)) - 14, 238, '8/18', 't-sm', False)]
-    + [_lt(_sx(_dd(0)) + 8, _sy(4.55) + 18, '10년물', 't-lab', True),
-       _lt(_sx(_dd(56)) - 46, _sy(5.09) - 10, '30년물', 't-lab', True)]
-    + [_lt(18, 262, '8월 18일에 30년물을 두 편이 5.31%와 5.34%로 다르게 적었다. 둘 다 찍었다',
+    + [_lt(50, _sy(4.5) + 4, '4.5', 't-sm', False), _lt(50, _sy(5.0) + 4, '5.0', 't-sm', False)]
+    + [_series('DGS10', False), _series('DGS30', True)]
+    + [_dot(k, v, True) for k, v in _P30] + [_dot(k, v, False) for k, v in _P10]
+    + [_lt(_SX0 - 4, 228, '6/1', 't-sm', False),
+       _lt(_sx(_dt.date(2026, 7, 1)) - 8, 228, '7/1', 't-sm', False),
+       _lt(_sx(_dt.date(2026, 8, 1)) - 8, 228, '8/1', 't-sm', False),
+       _lt(_sx(_dt.date(2026, 9, 1)) - 8, 228, '9/1', 't-sm', False)]
+    + [_lt(_sx(_dt.date(2026, 6, 15)), _sy(5.24), '30년물', 't-lab', True),
+       _lt(_sx(_dt.date(2026, 6, 15)), _sy(4.72), '10년물', 't-lab', True)]
+    + [_lt(18, 252, '두 달 반 동안 30년물이 4.9%대에서 5.3%대로 올라섰다', 't-sm', True),
+       _lt(18, 270, '엘곰이 「화요일 5.34%」라 적은 날 FRED 종가는 5.28% 다 — 장중 고점으로 보인다',
            't-sm', False),
-       _lt(18, 280, '기준금리는 이 구간 내내 3.50~3.75% 동결이다', 't-sm', False)]
+       _lt(18, 288, '8월 19일 바이백 발표에 하루 내렸다가 이튿날 되올라온 것이 선에서 보인다',
+           't-sm', False)]
 ))

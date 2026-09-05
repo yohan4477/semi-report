@@ -234,11 +234,38 @@ def loose_ends(svg, tol=2.0):
     return bad
 
 
+_POLY = re.compile(r'<polyline[^>]*points="([^"]+)"')
+
+
+def polyline_hits(svg):
+    """꺾은선 위에 글자가 얹혔나.
+
+    직선(<line>)과 네모는 loose_ends·text_hits 가 보는데 <polyline> 은 안 봤다. 시계열
+    도해가 들어오면서 그 자리가 생겼고, 실제로 「30년물」이 선에 닿은 채 통과했다
+    (2026-09-06). 점 하나라도 글자 상자 안에 들어오면 문다.
+    """
+    pts = []
+    for m in _POLY.finditer(svg):
+        for tok in m.group(1).split():
+            try:
+                x, y = tok.split(',')
+                pts.append((float(x), float(y)))
+            except ValueError:
+                pass
+    if not pts:
+        return []
+    bad = []
+    for x0, x1, y0, y1, txt in boxes(svg):
+        if any(x0 - 2 <= px <= x1 + 2 and y0 - 2 <= py <= y1 + 2 for px, py in pts):
+            bad.append('꺾은선에 얹힘  %s' % txt[:28])
+    return bad
+
+
 def hits(svg, strict=True):
     if unreadable(svg):
         return ['배치를 못 읽는 꼴이다 — 좌표가 <text> 에 없다(mermaid 등). '
                 '좌표를 풀어 주거나 손으로 그린다']
-    bad = text_hits(svg, strict) + loose_ends(svg)
+    bad = text_hits(svg, strict) + loose_ends(svg) + polyline_hits(svg)
     if strict or 'data-fig-layout="1"' in svg:
         bad += slanted(svg)
     bs = boxes(svg)

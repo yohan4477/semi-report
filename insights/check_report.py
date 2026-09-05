@@ -121,6 +121,11 @@ RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
     'insights/flows/mer/rate_cpi.json',
     'insights/flows/mer/rate_0818.json',
     'insights/debate/issue-2026-08-28-금리와-AI설비투자-무엇이-앞에-서나.md',
+    # FRED 시계열 — 도해의 선이 이 값이다. 받은 그대로 두고 가공하지 않는다
+    'data/fred/DGS10.csv',
+    'data/fred/DGS30.csv',
+    'data/fred/T10Y2Y.csv',
+    'data/fred/DFF.csv',
     'content/understanding/회계사/[260724] 브렌트유 하루 7% 급등 100달러, 10년물 금리 4.71%로 2025년 1월來 최고 - 엘곰.md',
     'content/understanding/회계사/[260801] 美 10년물 4.71%, 실적이 가려온 금리 압박이 드러났다 - 엘곰.md',
     'content/understanding/회계사/[260818] 30년물 금리 5.31%로 19년來 최고, 브렌트유는 2주 만에 91달러 - 엘곰.md',
