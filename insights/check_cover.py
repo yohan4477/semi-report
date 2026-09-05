@@ -31,7 +31,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPORTS = os.path.join(ROOT, 'insights', 'reports', '*.md')
 
 # 본문 인용 — (라벨 L12) · (라벨 L12-14) · (라벨 L12, L15)
-_CITE = re.compile(r'\(([^()]*?)\s+L\d[\d\s,\-·L]*\)')
+# 인용 근거 — md 는 L12, json 클리핑은 T12, 사슬은 노드 id(a1·f3→f7).
+# 사슬처럼 줄 번호가 없는 재료는 노드 id 가 그 자리를 대신한다
+_CITE = re.compile(r'\(([^()]*?)\s+(?:[LT]\d|[a-z]\d)[^()]*\)')
 # 라벨 이름에 든 자리표. 긴 것부터 봐야 mmdd 가 mm 둘로 안 쪼개진다
 _SLOT = re.compile(r'mmdd|yymm|yyyy|yy|mm|dd')
 _THIN = 1                      # 인용이 이 수 이하면 WARN
