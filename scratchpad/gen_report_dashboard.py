@@ -1021,6 +1021,13 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
            border-radius:12px;font-size:13px;line-height:1.85}
   .rep-note a{font-weight:700;color:var(--ink);text-decoration:none}
   .rep-note a:hover{text-decoration:underline}
+  /* 시계열 도해의 기준금리 한 줄에만 쓰는 색. 확정 규칙 S2 는 회색만인데, 선이 셋을
+     넘으면 회색만으로는 안 갈려서 둔 예외다(2026-09-06). --fig-amber 는 epoch 도해
+     안에서만 사는 변수라 여기서는 안 먹었다 — 이 장에서 쓸 것을 따로 정의한다 */
+  :root{--rate-amber:#b8860b}
+  @media (prefers-color-scheme:dark){:root{--rate-amber:#e0a84a}}
+  [data-theme="dark"]{--rate-amber:#e0a84a}
+  [data-theme="light"]{--rate-amber:#b8860b}
   .rep-toc .tl{display:block;margin-bottom:2px}
   .rep-toc .tg{display:block;margin-top:12px;padding-left:6px;font-size:12.5px;color:var(--ink-2)}
   /* 층마다 들여쓴다 — 머리글 · 묶음 이름 · 절 목록이 눈으로 갈린다 */
