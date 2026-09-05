@@ -44,6 +44,11 @@ PAGES = [
     # 회차의 값이 다른 층의 알리바이가 된다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-cpo',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 선단 패키징 층(2026-09-05). 재료가 뉴스레터 아홉 편 + Semi Doped 한 회차 + 영문 클리핑 둘이다.
+    # 뉴스레터 밖의 셋만 파일로 EXTRA 에 올린다 — 폴더째 넣으면 이 층과 무관한 회차의 값이
+    # 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-pkg',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -62,6 +67,12 @@ CPO_EXTRA = [os.path.join(_SD, f + '.md') for f in
     os.path.join(_LI, '[2605] 링크드인 게시물.md'), os.path.join(_LI, '[2607] 링크드인 게시물.md'),
     os.path.join(_LI, '[2608] 링크드인 게시물.md'), os.path.join(_LI, '[2609] 링크드인 게시물.md')]
 
+# 선단 패키징 층의 뉴스레터 밖 재료 셋
+PKG_EXTRA = [os.path.join(ROOT, 'insights', 'semidoped', '2026-06-19-advanced-packaging-strategy.md'),
+             os.path.join(_CLIP, 'EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, '
+                          'Microfluidic Cooling, Photonic Interconnects, and More.md'),
+             os.path.join(_CLIP, 'CPUs are Back The Datacenter CPU Landscape in 2026.md')]
+
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
@@ -75,7 +86,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
