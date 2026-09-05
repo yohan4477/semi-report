@@ -27,39 +27,8 @@ def _plain(x, y, w, h, st=INK3, sw=1.5, rx=4, dash=False):
             'stroke="%s" stroke-width="%s"%s/>' % (x, y, w, h, rx, st, sw, extra))
 
 
-# ── 도해 1. 연준은 내렸는데 장기금리는 올랐다 ────────────────────────
-# 값은 엘곰-0819 L23(2024-09-18 이후 인하 1.75%p · 10년물 +1%p · 30년물 +1.3%p).
-# 화살표 길이가 변화폭에 비례한다. 1%p = 46px.
-_GB = 150                    # 화살표가 서는 기준선(변화 0)
-
-
-def _mv(v):
-    return int(46 * abs(v))
-
-
-def _arrow(x, v, lab, who, accent=False):
-    st = INK if accent else INK3
-    sw = 2.0 if accent else 1.5
-    h = _mv(v)
-    y0, y1 = (_GB, _GB - h) if v > 0 else (_GB, _GB + h)
-    return ''.join([
-        '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="%s"/>' % (x, y0, x, y1, st, sw),
-        '<path d="M%d %d l-5 %d h10 z" fill="%s"/>' % (x, y1, 8 if v > 0 else -8, st),
-        _t(x, y1 - 10 if v > 0 else y1 + 20, lab, 't-lab'),
-        _t(x, _GB + 26 if v > 0 else _GB - 14, who),
-    ])
-
-
-FIG_GAP = _svg(W, 288, '연준은 내렸는데 장기금리는 올랐다 (2024-09-18 이후 변화, %포인트)', ''.join([
-    _lt(18, 24, '2024년 9월 18일부터 2026년 8월까지의 변화폭', 't-sm', True),
-    '<line x1="40" y1="%d" x2="600" y2="%d" stroke="%s" stroke-width="1"/>' % (_GB, _GB, INK3),
-    _lt(18, _GB + 4, '0', 't-sm', False),
-    _arrow(160, -1.75, '1.75 내림', '연준 기준금리'),
-    _arrow(340, 1.0, '1.0 오름', '10년물'),
-    _arrow(500, 1.3, '1.3 오름', '30년물', accent=True),
-    _lt(18, 280, '화살표 길이는 변화폭에 비례한다', 't-sm', False),
-]))
-
+# 도해 1(화살표로 그린 변화폭)은 걷었다 — FRED 선을 들여오면서 FIG_DIVERGE 가 같은 말을
+# 더 정확히 한다. 안 실리는 도해를 파일에 두면 목록이 거짓말을 한다(2026-09-06).
 
 # ── 도해 2. 명목금리를 셋으로 쪼개면 어디가 튀었나 ──────────────────
 # 값은 메르-유가 T57·T99·T101. 30년물 실질금리 2.987%, BEI 2.3%대.
@@ -298,3 +267,116 @@ FIG_SERIES = _svg(W, 300, '2026년 6월부터 9월까지 미국 국채금리 (%)
        _lt(18, 288, '8월 19일 바이백 발표에 하루 내렸다가 이튿날 되올라온 것이 선에서 보인다',
            't-sm', False)]
 ))
+
+
+# ── 시계열 부품 — 구간과 눈금만 갈아 끼워 여러 절에 쓴다 ─────────────
+# 선은 FRED, 점은 원문(fetch_fred.py 규약). 절마다 필요한 구간이 달라 한 장으로는 안 된다.
+def _chart(d0, d1, lo, hi, lines, dots=(), marks=(), top=68, bot=196,
+           x0=88, x1=604, ticks=(), ylab=()):
+    """d0~d1 구간을 그린다.
+
+    lines  [(시리즈 id, 이름, 짙게?)] 또는 [(id, 이름, 짙게?, 점선?)]
+    dots   [(날짜, 값, 짙게?)]        원문이 짚은 값
+    marks  [(날짜, 글자)]             그 날에 세로 점선과 글자
+    ticks  [(날짜, 글자)]             가로 눈금
+    ylab   [값]                       세로 눈금
+    """
+    import datetime as dt
+    D0 = dt.date(*map(int, d0.split('-')))
+    D1 = dt.date(*map(int, d1.split('-')))
+    span = max(1, (D1 - D0).days)
+
+    def X(d):
+        return x0 + int((x1 - x0) * (d - D0).days / float(span))
+
+    def Y(v):
+        return bot - int((bot - top) * (v - lo) / float(hi - lo))
+
+    out, legend = [], []
+    for v in ylab:
+        out.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1" '
+                   'stroke-dasharray="3 4"/>' % (x0, Y(v), x1, Y(v), INK3))
+        out.append(_lt(x0 - 38, Y(v) + 4, ('%g' % v), 't-sm', False))
+    for ymd, lab in marks:
+        d = dt.date(*map(int, ymd.split('-')))
+        out.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.2" '
+                   'stroke-dasharray="5 4"/>' % (X(d), top, X(d), bot, INK3))
+        out.append(_t(X(d), bot + 38, lab, 't-sm'))
+    for spec in lines:
+        sid, name, accent = spec[0], spec[1], spec[2]
+        dash = spec[3] if len(spec) > 3 else False
+        pts = []
+        for k, v in sorted(_fred(sid).items()):
+            dd = dt.date(*map(int, k.split('-')))
+            if D0 <= dd <= D1 and lo <= v <= hi:
+                pts.append((X(dd), Y(v)))
+        if not pts:
+            continue
+        st, sw = (INK, 2.0) if accent else (INK3, 1.4)
+        dd = ' stroke-dasharray="6 3"' if dash else ''
+        out.append('<polyline points="%s" fill="none" stroke="%s" stroke-width="%s"%s/>'
+                   % (' '.join('%d,%d' % p for p in pts), st, sw, dd))
+        legend.append((name, accent, dash))
+    for ymd, v, accent in dots:
+        d = dt.date(*map(int, ymd.split('-')))
+        out.append('<circle cx="%d" cy="%d" r="3.2" fill="var(--paper)" stroke="%s" '
+                   'stroke-width="2"/>' % (X(d), Y(v), INK if accent else INK3))
+    for ymd, lab in ticks:
+        d = dt.date(*map(int, ymd.split('-')))
+        out.append(_t(X(d), bot + 20, lab, 't-sm'))
+    # 범례 — 판 위 오른쪽 끝에 이름을 붙이면 넘친다. 머리글 아래 한 줄로 둔다
+    lx = x0
+    for name, accent, dash in legend:
+        out.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="%s"%s/>'
+                   % (lx, top - 14, lx + 18, top - 14, INK if accent else INK3,
+                      2.0 if accent else 1.4,
+                      ' stroke-dasharray="6 3"' if dash else ''))
+        out.append(_lt(lx + 24, top - 10, name, 't-sm', accent))
+        lx += 30 + len(name) * 9
+    return ''.join(out)
+
+
+# ── 도해 1a. 연준은 내리는데 장기금리는 올라갔다 — 두 해를 이어서 ────────
+# 엘곰-0819 L23 의 주장을 시계열로. 값은 FRED, 점은 원문이 짚은 두 자리.
+FIG_DIVERGE = _svg(W, 300, '연준이 내리기 시작한 뒤 장기금리는 거꾸로 갔다 (%)', ''.join([
+    _lt(18, 22, '2024년 9월 18일 첫 인하부터 지금까지. 선은 FRED 일별', 't-sm', True),
+    _chart('2024-09-01', '2026-09-04', 2.8, 5.6,
+           [('DFF', '기준금리', False, True), ('DGS10', '10년물', False), ('DGS30', '30년물', True)],
+           marks=[('2024-09-18', '첫 인하')],
+           ticks=[('2024-10-01', '2024-10'), ('2025-05-01', '2025-05'),
+                  ('2025-12-01', '2025-12'), ('2026-07-01', '2026-07')],
+           ylab=[3.0, 4.0, 5.0]),
+    _lt(18, 262, '기준금리는 1.7%p 내려왔는데 30년물은 1.2%p 올라갔다', 't-sm', True),
+    _lt(18, 280, '둘이 반대로 간 것이 이 글이 설명하려는 어긋남이다', 't-sm', False),
+]))
+
+
+# ── 도해 1b. 장단기 역전과 그 해소 — 메르가 직접 짚은 시리즈 ──────────
+# 메르-역전 T40-T47 이 독자에게 FRED 의 T10Y2Y 를 열어 보라고 한다. 그 화면을 그린다.
+FIG_INVERT = _svg(W, 300, '10년물에서 2년물을 뺀 값 — 0 아래가 역전이다 (%포인트)', ''.join([
+    _lt(18, 22, '메르가 독자에게 직접 열어 보라고 짚은 FRED 시리즈다 (T10Y2Y)', 't-sm', True),
+    _chart('2021-01-01', '2026-09-04', -1.2, 1.0,
+           [('T10Y2Y', '10년-2년', True)],
+           marks=[('2023-07-03', '최저'), ('2024-09-05', '역전 해소')],
+           ticks=[('2021-06-01', '2021'), ('2023-01-01', '2023'),
+                  ('2024-09-01', '2024'), ('2026-06-01', '2026')],
+           ylab=[-1.0, 0.0, 1.0]),
+    _lt(18, 262, '2022년 4월에 뒤집혀 541거래일 만인 2024년 9월 5일에 풀렸다', 't-sm', True),
+    _lt(18, 280, '가장 깊었던 자리가 2023년 7월 3일 -1.08%p — 메르가 40년 만이라 한 107bp 다',
+        't-sm', False),
+]))
+
+
+# ── 도해 9a. 바이백 사흘 — 발표에 하루 내리고 이튿날 되올라왔다 ──────────
+# 절 9 의 사흘을 확대한다. 넓은 구간에서는 이 움직임이 안 보인다.
+FIG_ZOOM = _svg(W, 282, '재무부 바이백 발표 전후 30년물 (%)', ''.join([
+    _lt(18, 22, '8월 10일부터 9월 4일까지. 넓게 보면 안 보이는 사흘이다', 't-sm', True),
+    _chart('2026-08-10', '2026-09-04', 5.10, 5.36,
+           [('DGS30', '30년물', True)],
+           dots=[('2026-08-17', 5.31, True), ('2026-08-19', 5.19, True), ('2026-08-20', 5.23, True)],
+           marks=[('2026-08-19', '바이백 발표')],
+           ticks=[('2026-08-10', '8/10'), ('2026-08-19', '8/19'),
+                  ('2026-08-27', '8/27'), ('2026-09-03', '9/3')],
+           ylab=[5.2, 5.3]),
+    _lt(18, 262, '발표에 9bp 내렸다가 이튿날 되올라 그 주 안에 발표 이전을 넘어섰다', 't-sm', True),
+]))
