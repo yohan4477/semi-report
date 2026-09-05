@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-31",
+ "generated": "2026-09-05",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -21,7 +21,7 @@
    ],
    "date": "2026-03-01",
    "path": "content/linkedin/[2603] 링크드인 게시물.md",
-   "hash": "d7f8e5cd2740"
+   "hash": "4188ce1870ed"
   },
   {
    "id": "li:root:2604-링크드인-게시물",
@@ -43,7 +43,7 @@
    ],
    "date": "2026-05-01",
    "path": "content/linkedin/[2605] 링크드인 게시물.md",
-   "hash": "a01ce0d58dd0"
+   "hash": "227fdb73d3e0"
   },
   {
    "id": "li:root:2606-링크드인-게시물",
@@ -54,7 +54,7 @@
    ],
    "date": "2026-06-01",
    "path": "content/linkedin/[2606] 링크드인 게시물.md",
-   "hash": "9108a4828d7c"
+   "hash": "2a48c8eb7e16"
   },
   {
    "id": "li:root:2607-링크드인-게시물",
@@ -76,7 +76,18 @@
    ],
    "date": "2026-08-01",
    "path": "content/linkedin/[2608] 링크드인 게시물.md",
-   "hash": "8a30ca251232"
+   "hash": "2b878341837e"
+  },
+  {
+   "id": "li:root:2609-링크드인-게시물",
+   "corpus": "linkedin",
+   "folder": "root",
+   "categories": [
+    "root"
+   ],
+   "date": "2026-09-01",
+   "path": "content/linkedin/[2609] 링크드인 게시물.md",
+   "hash": "6fd8d40a2ed8"
   },
   {
    "id": "pod:semianalysis:Ep25-딜런-패텔-사내-AI-지출이-평평해진-이유와-보상-해킹-사고",
@@ -346,6 +357,18 @@
    "date": "2026-06-30",
    "path": "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md",
    "hash": "c8a41a224bec"
+  },
+  {
+   "id": "semi:business:한국의-조-단위-주권-AI-투자-엔비디아는-웃고-하이닉스는-운다",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/memory"
+   ],
+   "date": "2026-09-01",
+   "path": "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md",
+   "hash": "d1a059616761"
   },
   {
    "id": "semi:compute:AI-실리콘-대란-TSMC-N3부터-메모리까지",
@@ -2057,6 +2080,171 @@
    "hash": "d6eb5a0df33c"
   },
   {
+   "id": "und:raw:2026-05-04-memory-tax",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-05-04-memory-tax.md",
+   "hash": "1a53c3f45e9f"
+  },
+  {
+   "id": "und:raw:2026-05-08-power-wall",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-05-08-power-wall.md",
+   "hash": "6d2b4e1dfcc4"
+  },
+  {
+   "id": "und:raw:2026-05-15-cerebras-ipo",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-05-15-cerebras-ipo.md",
+   "hash": "b1c2b3a71438"
+  },
+  {
+   "id": "und:raw:2026-05-22-litho-masterclass",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md",
+   "hash": "712bf80bd61b"
+  },
+  {
+   "id": "und:raw:2026-06-12-computex-optics-power",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-06-12-computex-optics-power.md",
+   "hash": "aeddb566d4ce"
+  },
+  {
+   "id": "und:raw:2026-06-19-advanced-packaging",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-06-19-advanced-packaging.md",
+   "hash": "e19e7eac99ed"
+  },
+  {
+   "id": "und:raw:2026-06-29-qualcomm-hbc",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-06-29-qualcomm-hbc.md",
+   "hash": "2a51ce8c4d97"
+  },
+  {
+   "id": "und:raw:2026-07-10-weka-bercovici",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-07-10-weka-bercovici.md",
+   "hash": "ea35142732e8"
+  },
+  {
+   "id": "und:raw:2026-07-16-picojool-yuen",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-07-16-picojool-yuen.md",
+   "hash": "1e98c64c3e16"
+  },
+  {
+   "id": "und:raw:2026-07-25-datacenter-interconnects",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-07-25-datacenter-interconnects.md",
+   "hash": "34fc123b885b"
+  },
+  {
+   "id": "und:raw:2026-07-29-hyperscaler-cds",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-07-29-hyperscaler-cds.md",
+   "hash": "8fb2a3da03dc"
+  },
+  {
+   "id": "und:raw:2026-08-04-astera-labs",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-04-astera-labs.md",
+   "hash": "65d540907e5f"
+  },
+  {
+   "id": "und:raw:2026-08-07-globalfoundries-barber",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-07-globalfoundries-barber.md",
+   "hash": "4285a4b14eb7"
+  },
+  {
+   "id": "und:raw:2026-08-11-china-optical-ban",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-11-china-optical-ban.md",
+   "hash": "524d43c07fba"
+  },
+  {
+   "id": "und:raw:2026-08-18-tensordyne-rk-anand",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-08-18-tensordyne-rk-anand.md",
+   "hash": "b41359b5df15"
+  },
+  {
    "id": "und:raw:2026-08-24-grok-bots-cpu",
    "corpus": "understanding",
    "folder": "raw",
@@ -2087,7 +2275,29 @@
    ],
    "date": null,
    "path": "content/understanding/_대기 목록.md",
-   "hash": "866d1826b332"
+   "hash": "23e17b7bec1f"
+  },
+  {
+   "id": "und:권석준 교수:물량은-2028년에-밀려온다-매출은-줄지-않는다-진짜-변수는-애플과-미국-정부다-권석준-2부",
+   "corpus": "understanding",
+   "folder": "권석준 교수",
+   "categories": [
+    "권석준 교수"
+   ],
+   "date": "2026-08-27",
+   "path": "content/understanding/권석준 교수/[260827] 물량은 2028년에 밀려온다, 매출은 줄지 않는다 - 진짜 변수는 애플과 미국 정부다 - 권석준 (2부).md",
+   "hash": "27ea112c7521"
+  },
+  {
+   "id": "und:권석준 교수:중국-반도체는-미국이-키웠다-메모리-가격-폭등에-CXMT가-돈방석에-앉고-그-돈은-중국-장비사로-되돌아간다-",
+   "corpus": "understanding",
+   "folder": "권석준 교수",
+   "categories": [
+    "권석준 교수"
+   ],
+   "date": "2026-08-26",
+   "path": "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md",
+   "hash": "3628aae1b3fa"
   },
   {
    "id": "und:권효재 대표:15억-인구-밥-못-짓는다-인도-덮친-비상사태-3부",
@@ -2244,6 +2454,17 @@
    "hash": "4864d8d1d7c9"
   },
   {
+   "id": "und:김학주 교수:AI는-늦춰지지-않는다-지금-주가는-전력물반도체-병목을-푸는-기업에서-먼저-움직인다-김학주",
+   "corpus": "understanding",
+   "folder": "김학주 교수",
+   "categories": [
+    "김학주 교수"
+   ],
+   "date": "2026-08-13",
+   "path": "content/understanding/김학주 교수/[260813] AI는 늦춰지지 않는다 - 지금 주가는 전력·물·반도체 병목을 푸는 기업에서 먼저 움직인다 - 김학주.md",
+   "hash": "f1f97f620a92"
+  },
+  {
    "id": "und:류상철 국장:경제-교과서-틀렸다-물가-때문에-금리-인상해도-주가-오른다",
    "corpus": "understanding",
    "folder": "류상철 국장",
@@ -2286,6 +2507,17 @@
    "date": "2026-08-09",
    "path": "content/understanding/미국주식 사관학교/[260809] 7월 고용 지표의 왜곡 - CPI를 읽는 기준.md",
    "hash": "57f42b2fa629"
+  },
+  {
+   "id": "und:미국주식 사관학교:AI-해킹이-빨라질수록-사전-점검주가-더-번다-QLYSTENBRPD가-CRWDS보다-낫다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-09-04",
+   "path": "content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md",
+   "hash": "77353fa9b38b"
   },
   {
    "id": "und:미국주식 사관학교:CXMT는-딥시크와-다르다-수요-충격이-아니라-공급-충격이다",
@@ -2552,6 +2784,17 @@
    "hash": "584f2609b69b"
   },
   {
+   "id": "und:미국주식 사관학교:발전주는-계약을-가진-회사가-이긴다-유령-수요를-걷어내면-헤지-비율이-남는다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-09-02",
+   "path": "content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md",
+   "hash": "9e20359d0dd1"
+  },
+  {
    "id": "und:미국주식 사관학교:배당이-가장-낮은-우선주가-오히려-가장-세다-스트래티지-우선주-STRF의-교차조항",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -2772,6 +3015,17 @@
    "hash": "cb512e4a0bb3"
   },
   {
+   "id": "und:미국주식 사관학교:워시는-파월과-다르다-물가-2가-찍혀야-움직인다-잭슨홀-조정을-저가매수-신호로-읽으면-안-되는-이유",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-30",
+   "path": "content/understanding/미국주식 사관학교/[260830] 워시는 파월과 다르다, 물가 2%가 찍혀야 움직인다 - 잭슨홀 조정을 저가매수 신호로 읽으면 안 되는 이유.md",
+   "hash": "6e49495e0efa"
+  },
+  {
    "id": "und:미국주식 사관학교:원달러-급락의-정체-일회성-물량과-안-바뀐-구조",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -2882,6 +3136,17 @@
    "hash": "6c7c6ddb7ea3"
   },
   {
+   "id": "und:미국주식 사관학교:커버드콜이-미워하는-건-상승장이-아니라-급등장이다-하이퍼스케일러데이터센터-리츠QYLG로-지금-장에-맞추는-법",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-31",
+   "path": "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md",
+   "hash": "612fa4d75116"
+  },
+  {
    "id": "und:미국주식 사관학교:코딩에서-밀린-구글이-실은-유튜브로-다음-판을-준비한다-인재-유출과-주가-16-하락-뒤에-숨은-진짜-패",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -2891,6 +3156,17 @@
    "date": "2026-06-24",
    "path": "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md",
    "hash": "2943dc403982"
+  },
+  {
+   "id": "und:미국주식 사관학교:크리스탈-선은-태양광-사업이-아니라-우주-베팅의-공급망이다-셀을-사-오던-회사가-직접-만들겠다고-한-어긋남",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-08-28",
+   "path": "content/understanding/미국주식 사관학교/[260828] 크리스탈 선은 태양광 사업이 아니라 우주 베팅의 공급망이다 - 셀을 사 오던 회사가 직접 만들겠다고 한 어긋남.md",
+   "hash": "eebe7281992d"
   },
   {
    "id": "und:미국주식 사관학교:클로드가-90분-만에-전-세계에서-꺼졌다-AI-모델-수출통제와-각자도생-인프라-수요",
@@ -3958,6 +4234,1271 @@
    "date": "2025-06-10",
    "path": "content/understanding/피지컬AI/[250610] 헬릭스 물류 데모와 옵티머스 싱글 뉴럴넷.md",
    "hash": "e0f1a26e6c96"
+  },
+  {
+   "id": "und:한주성:2026-02-05-1등과-2등의-만남은-왜-금지된-사랑이-되었나-8704",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-05 1등과 2등의 만남은 왜 '금지된 사랑'이 되었나 [8704].md",
+   "hash": "c0ab660a1f69"
+  },
+  {
+   "id": "und:한주성:2026-02-06-손주은-회장의-메가스터디-매각-3수-도전-이번에는-합격권일까-6768",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-06 손주은 회장의 메가스터디 매각 ‘3수’ 도전, 이번에는 합격권일까 [6768].md",
+   "hash": "91742c4a6aa9"
+  },
+  {
+   "id": "und:한주성:2026-02-08-Professional-영어-이제-옵션이-아닌-생존-도구-8096",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-08 ​Professional 영어, 이제 옵션이 아닌 '생존 도구 [8096].md",
+   "hash": "de39c5021b49"
+  },
+  {
+   "id": "und:한주성:2026-02-09-3000닥의-환상과-주가의-본질-4528",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-09 '3000닥'의 환상과 주가의 본질 [4528].md",
+   "hash": "a581e08c23fd"
+  },
+  {
+   "id": "und:한주성:2026-02-10-배달의민족-8조-원-매각설-알짜-자산일까-독이-든-성배일까-1872",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-10 배달의민족 8조 원 매각설, '알짜 자산'일까 '독이 든 성배'일까 [1872].md",
+   "hash": "24ba617c90b9"
+  },
+  {
+   "id": "und:한주성:2026-02-11-삼양식품이-바프를-장바구니에-담은-이유-feat-불닭아몬드-1952",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-11 삼양식품이 '바프'를 장바구니에 담은 이유 (feat. 불닭아몬드) 🌶️🥜 [1952].md",
+   "hash": "ee5d04d3ea37"
+  },
+  {
+   "id": "und:한주성:2026-02-14-110억에-피자헛-영업권만-줍줍-PE가-독이-든-성배에서-독만-쏙-빼낸-기술-4272",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-14 110억에 피자헛 ‘영업권’만 줍줍  PE가 독이 든 성배에서 독만 쏙 빼낸 기술 🍷 [4272].md",
+   "hash": "035b4edec4df"
+  },
+  {
+   "id": "und:한주성:2026-02-15-Beast-Industries-자신만의-제국을-꿈꾸고-있는-유튜버-8608",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-15 Beast Industries  자신만의 제국을 꿈꾸고 있는 유튜버 [8608].md",
+   "hash": "5a5ec483a3e0"
+  },
+  {
+   "id": "und:한주성:2026-02-16-8000억의-시계는-흐른다-IMM-PE와-한샘-엑시트는-가능한가-0592",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-16 8,000억의 시계는 흐른다  IMM PE와 한샘, 엑시트는 가능한가 [0592].md",
+   "hash": "9b954a251afc"
+  },
+  {
+   "id": "und:한주성:2026-02-17-1등-한샘은-왜-1의-이익률에-갇혔을까-8881",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-17 1등 한샘은 왜 1%의 이익률에 갇혔을까 [8881].md",
+   "hash": "27f585feca98"
+  },
+  {
+   "id": "und:한주성:2026-02-18-졸리비의-K-푸드-쇼핑은-계속된다-1936",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-18 ​ 졸리비의 K-푸드 쇼핑은 계속된다 [1936].md",
+   "hash": "af101b6307d7"
+  },
+  {
+   "id": "und:한주성:2026-02-19-한샘은-서비스를-팔고-이케아는-물류를-판다-9889",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-19 한샘은 '서비스'를 팔고, 이케아는 '물류'를 판다 [9889].md",
+   "hash": "772ec468c6ea"
+  },
+  {
+   "id": "und:한주성:2026-02-22-네슬레의-하겐다즈-매각-완전한-이별일까-영리한-진화일까-7584",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-22 🍦네슬레의 하겐다즈 매각, ‘완전한 이별’일까 ‘영리한 진화’일까 [7584].md",
+   "hash": "72af459524fe"
+  },
+  {
+   "id": "und:한주성:2026-02-23-일론-머스크는-왜-그토록-X라는-한-글자에-집착하는-걸까-1952",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-23 일론 머스크는 왜 그토록 'X'라는 한 글자에 집착하는 걸까 [1952].md",
+   "hash": "ca48bdbc5d3e"
+  },
+  {
+   "id": "und:한주성:2026-02-24-현대자동차의-롯데렌탈-인수-7648",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-24 현대자동차의 롯데렌탈 인수說 [7648].md",
+   "hash": "631f49bddea4"
+  },
+  {
+   "id": "und:한주성:2026-02-25-7500억-번개장터-매각설-신세계가-인수-버튼을-누르면-벌어질-일-1152",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-25 ​⚡️ '7,500억' 번개장터 매각설, 신세계가 '인수 버튼'을 누르면 벌어질 일 [1152].md",
+   "hash": "bb8b067a3659"
+  },
+  {
+   "id": "und:한주성:2026-02-26-K-뷰티의-심장-코스맥스-이탈리아를-유럽시장-진출의-교두보로-삼다-3312",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-26 K-뷰티의 심장 코스맥스, 이탈리아를 유럽시장 진출의 교두보로 삼다 🇮🇹🇰🇷 [3312].md",
+   "hash": "cac11a0acc91"
+  },
+  {
+   "id": "und:한주성:2026-02-27-토종-OTT-왓차의-몰락-나쁜-사업이-아니라-나쁜-게임판이었다-4881",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-27 토종 OTT 왓차의 몰락 - 나쁜 사업이 아니라 나쁜 게임판이었다 [4881].md",
+   "hash": "e3b7462ab792"
+  },
+  {
+   "id": "und:한주성:2026-02-28-160조짜리-베팅-넷플릭스가-포기한-딜을-래리-엘리슨은-왜-잡았나-2848",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-02-28 160조짜리 베팅 — 넷플릭스가 포기한 딜을 래리 엘리슨은 왜 잡았나 [2848].md",
+   "hash": "e76b4b219bfe"
+  },
+  {
+   "id": "und:한주성:2026-03-02-업스테이지의-다음Daum-인수-과연-승부수인가-도박인가-6560",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-02 업스테이지의 다음(Daum) 인수, 과연 승부수인가 도박인가 [6560].md",
+   "hash": "18bdf153f3df"
+  },
+  {
+   "id": "und:한주성:2026-03-03-LG생활건강은-토리든을-인수해야-하는가-K뷰티-지각변동과-대기업의-생존-전략-8912",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-03 LG생활건강은 토리든을 인수해야 하는가  — K뷰티 지각변동과 대기업의 생존 전략 [8912].md",
+   "hash": "92bed9d39669"
+  },
+  {
+   "id": "und:한주성:2026-03-04-본격적으로-MA-관련-글-올리기-시작하면서-커리어-상담-커피챗-요청을-꽤-받게-됐는데-0",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-04 본격적으로 M&A 관련 글 올리기 시작하면서 커리어 상담 커피챗 요청을 꽤 받게 됐는데,  [0913].md",
+   "hash": "52c73c741855"
+  },
+  {
+   "id": "und:한주성:2026-03-04-탕비실-간식을-채워주던-스타트업의-MA-여정-4624",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-04 탕비실 간식을 채워주던 스타트업의 M&A 여정 [4624].md",
+   "hash": "05909493bf41"
+  },
+  {
+   "id": "und:한주성:2026-03-05-결혼이-40-줄었는데-웨딩홀에-2000억을-베팅했습니다-1376",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-05 결혼이 40% 줄었는데, 웨딩홀에 2,000억을 베팅했습니다 [1376].md",
+   "hash": "84d14651d818"
+  },
+  {
+   "id": "und:한주성:2026-03-05-데자뷔인가-착시인가-2008년-금융위기와-2026년-사모대출-위기-7856",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md",
+   "hash": "751cce0df903"
+  },
+  {
+   "id": "und:한주성:2026-03-06-분식회계로-상폐된-회사가-미국-스페셜티-커피의-아이콘을-인수했습니다-4561",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-06 분식회계로 상폐된 회사가 미국 스페셜티 커피의 아이콘을 인수했습니다 [4561].md",
+   "hash": "3725a5fa6e0f"
+  },
+  {
+   "id": "und:한주성:2026-03-07-솔직히-처음엔-그냥-웃겼습니다-6865",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-07 솔직히 처음엔 그냥 웃겼습니다. [6865].md",
+   "hash": "e4e14f33945e"
+  },
+  {
+   "id": "und:한주성:2026-03-07-외상값으로-유통사를-인수하다-3840",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-07 외상값으로 유통사를 인수하다 [3840].md",
+   "hash": "e231b56707fa"
+  },
+  {
+   "id": "und:한주성:2026-03-08-고등학교-1년-유급하고-미국으로-교환학생-간-썰-0544",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-08 고등학교 1년 유급하고 미국으로 교환학생 간 썰 [0544].md",
+   "hash": "a0e84a6c3650"
+  },
+  {
+   "id": "und:한주성:2026-03-09-The-111-Billion-Bet-Why-Larry-Ellison-Grabbed-t-2",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-09 The $111 Billion Bet — Why Larry Ellison Grabbed t [2736].md",
+   "hash": "3d06d884ce55"
+  },
+  {
+   "id": "und:한주성:2026-03-09-벼랑-끝에-선-컬리-그리고-기적-같은-반전-3136",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-09 🚨 벼랑 끝에 선 컬리, 그리고 기적 같은 반전 [3136].md",
+   "hash": "651c3d7dbed6"
+  },
+  {
+   "id": "und:한주성:2026-03-10-The-company-delisted-for-accounting-fraud-just-bo",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-10 The company delisted for accounting fraud just bou [9264].md",
+   "hash": "e2fab381d16c"
+  },
+  {
+   "id": "und:한주성:2026-03-10-최강의-무기가-짐이-되는-순간-6944",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-10 최강의 무기가 짐이 되는 순간 [6944].md",
+   "hash": "37f5fe7e4653"
+  },
+  {
+   "id": "und:한주성:2026-03-11-글로벌-사모펀드는-왜-지금-한국-상장사를-사들이고-있는가-7696",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-11 글로벌 사모펀드는 왜 지금 한국 상장사를 사들이고 있는가 [7696].md",
+   "hash": "d2520f370caf"
+  },
+  {
+   "id": "und:한주성:2026-03-12-샤킬오닐-공룡-센터-투자계의-티라노사우루스-0576",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-12 샤킬오닐  前 공룡 센터   現 투자계의 티라노사우루스 [0576].md",
+   "hash": "1527e4f9fe0b"
+  },
+  {
+   "id": "und:한주성:2026-03-13-K9-자주포-배틀그라운드를-만나다-6896",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-13 🪖K9 자주포, 배틀그라운드를 만나다🕹️ [6896].md",
+   "hash": "2f2c717f8c16"
+  },
+  {
+   "id": "und:한주성:2026-03-13-하나투어가-와그WAUG에-투자했습니다-1280",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-13 ✈️ 하나투어가 와그(WAUG)에 투자했습니다 [1280].md",
+   "hash": "3ed7cb9f354f"
+  },
+  {
+   "id": "und:한주성:2026-03-15-류현진-선수의-라스트-댄스-그리고-그날-7456",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-15 류현진 선수의 라스트 댄스, 그리고 그날 [7456].md",
+   "hash": "f4f05ad1ae07"
+  },
+  {
+   "id": "und:한주성:2026-03-16-황제주의-몰락-그리고-생존을-위한-몸부림-0832",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-16 황제주의 몰락 그리고 생존을 위한 몸부림 [0832].md",
+   "hash": "983193e6681c"
+  },
+  {
+   "id": "und:한주성:2026-03-17-극장이-야구장이-되는-날-3744",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-17 📺 극장이 야구장이 되는 날 [3744].md",
+   "hash": "74089bd474d1"
+  },
+  {
+   "id": "und:한주성:2026-03-17-대한항공은-왜-기내식-사업을-6년-만에-되찾았나-4720",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-17 대한항공은 왜 기내식 사업을 6년 만에 되찾았나 [4720].md",
+   "hash": "b47f449c6143"
+  },
+  {
+   "id": "und:한주성:2026-03-18-하나투어가-또-투자했습니다-이번엔-럭셔리-자동차-여행입니다-3120",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-18 🏎️ 하나투어가 또 투자했습니다. 이번엔 럭셔리 자동차 여행입니다 [3120].md",
+   "hash": "8735db73c9d5"
+  },
+  {
+   "id": "und:한주성:2026-03-19-교보생명-SBI저축은행-20년-인연이-만든-9000억짜리-빅딜-4896",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-19 🏦 교보생명 × SBI저축은행  20년 인연이 만든 9,000억짜리 빅딜 [4896].md",
+   "hash": "defabcd27a57"
+  },
+  {
+   "id": "und:한주성:2026-03-20-BTS-is-back-all-seven-members-after-nearly-fou-49",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-20 BTS is back — all seven members — after nearly fou [4992].md",
+   "hash": "41bcdefbe9b2"
+  },
+  {
+   "id": "und:한주성:2026-03-23-Bonchon-is-on-sales-2352",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-23 Bonchon is on sales [2352].md",
+   "hash": "7943109d56b1"
+  },
+  {
+   "id": "und:한주성:2026-03-23-뉴욕-32번가-치킨집이-3000억짜리-MA-매물이-된-이유-0656",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md",
+   "hash": "dac2052ae27f"
+  },
+  {
+   "id": "und:한주성:2026-03-24-The-Pizza-Hut-Ruling-That-Could-Reshape-Koreas-F-",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-24 The Pizza Hut Ruling That Could Reshape Korea's F& [4336].md",
+   "hash": "6222f721fa3b"
+  },
+  {
+   "id": "und:한주성:2026-03-24-피자헛이-쏘아올린-작지-않은-공-나비효과되어-돌아올까-2752",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-24 피자헛이 쏘아올린 작지 않은 공, 나비효과되어 돌아올까 [2752].md",
+   "hash": "614288c46e98"
+  },
+  {
+   "id": "und:한주성:2026-03-25-Este-Lauder-is-offloading-Dr-Jart-9744",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-25 Estée Lauder is offloading Dr. Jart+ [9744].md",
+   "hash": "3531eacf319e"
+  },
+  {
+   "id": "und:한주성:2026-03-25-K-뷰티-전성시대에-K-뷰티-원조-브랜드가-손절당할까-7041",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-25 K-뷰티 전성시대에, K-뷰티 원조 브랜드가 손절당할까 [7041].md",
+   "hash": "864fdfd3d121"
+  },
+  {
+   "id": "und:한주성:2026-03-25-오늘-통계가-하나-나왔습니다-6864",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-25 오늘 통계가 하나 나왔습니다. [6864].md",
+   "hash": "1387fd75ef14"
+  },
+  {
+   "id": "und:한주성:2026-03-26-MSC-장금마리타임-JV-비즈니스-딜인가-승계-포석인가-3952",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-26 MSC × 장금마리타임 JV — 비즈니스 딜인가, 승계 포석인가 [3952].md",
+   "hash": "28e1ae88b692"
+  },
+  {
+   "id": "und:한주성:2026-03-27-MA-실사하면서-가장-매력적으로-느꼈던-비즈모델-3가지-8736",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-27 M&A 실사하면서 가장 매력적으로 느꼈던 비즈모델 3가지🏆 [8736].md",
+   "hash": "1696fe2f2169"
+  },
+  {
+   "id": "und:한주성:2026-03-27-창업주가-떠나면-회사도-떠난다-상속세가-삼킬-한국-중견기업-9808",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-27 창업주가 떠나면 회사도 떠난다 — 상속세가 삼킬 한국 중견기업 [9808].md",
+   "hash": "0e7031f4b329"
+  },
+  {
+   "id": "und:한주성:2026-03-28-솔직히-말하면-저는-미국-유학을-꿈꿔서-간-게-아닙니다-2704",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-28 솔직히 말하면, 저는 미국 유학을 꿈꿔서 간 게 아닙니다. [2704].md",
+   "hash": "b64b23b44faf"
+  },
+  {
+   "id": "und:한주성:2026-03-29-영어-강박관념을-내려놓기까지-6272",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-29 영어 강박관념을 내려놓기까지 [6272].md",
+   "hash": "741a16f20f73"
+  },
+  {
+   "id": "und:한주성:2026-03-30-우리가-몰랐던-Red-Bull-이야기-2000",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-30 우리가 몰랐던 Red Bull 이야기 🐂 - 上 [2000].md",
+   "hash": "f4ccea145d90"
+  },
+  {
+   "id": "und:한주성:2026-03-31-우리가-몰랐던-Red-Bull-이야기-4032",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-03-31 우리가 몰랐던 Red Bull 이야기 🐂 - 中 [4032].md",
+   "hash": "cd7aeacdb3f8"
+  },
+  {
+   "id": "und:한주성:2026-04-01-레드불은-왜-광고를-만들지-않는가-8304",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-01 🐂 레드불은 왜 광고를 만들지 않는가 [8304].md",
+   "hash": "56afe21f3359"
+  },
+  {
+   "id": "und:한주성:2026-04-01-메가커피-홈플러스-익스프레스-인수전-참여-7536",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-01 메가커피, 홈플러스 익스프레스 인수전 참여 [7536].md",
+   "hash": "d8b009b35363"
+  },
+  {
+   "id": "und:한주성:2026-04-02-Private-Equity-101-사모펀드에-대하여-9312",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-02 Private Equity 101 (上) — 사모펀드에 대하여 [9312].md",
+   "hash": "d5ea01250efb"
+  },
+  {
+   "id": "und:한주성:2026-04-03-Private-Equity-101-PE-이렇게-돈-번다-4257",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-03 Private Equity 101 (下) — PE, 이렇게 돈 번다 [4257].md",
+   "hash": "3e3bf8874200"
+  },
+  {
+   "id": "und:한주성:2026-04-04-좋은-질문이-좋은-답을-만든다-9824",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-04 좋은 질문이 좋은 답을 만든다 [9824].md",
+   "hash": "d0976b93480d"
+  },
+  {
+   "id": "und:한주성:2026-04-05-일본은-금융을-소재로-한-드라마가-많습니다-메가뱅크-증권사-기업-구조조정을-다룬-작품-1",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md",
+   "hash": "6a8c50662175"
+  },
+  {
+   "id": "und:한주성:2026-04-06-KG그룹이-케이카를-품었습니다-5792",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-06 🚗 KG그룹이 케이카를 품었습니다 [5792].md",
+   "hash": "51f005199ed7"
+  },
+  {
+   "id": "und:한주성:2026-04-08-우버의-카카오모빌리티-인수설-7441",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-08 🚖 우버의 카카오모빌리티 인수설 [7441].md",
+   "hash": "c98adfb96652"
+  },
+  {
+   "id": "und:한주성:2026-04-13-지분율-499의-비밀-5232",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-13 지분율 4.99%의 비밀 [5232].md",
+   "hash": "78919ea01d9c"
+  },
+  {
+   "id": "und:한주성:2026-04-14-같은-숫자-다른-질문-실사에서-갈리는-FI와-SI의-시선-2528",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-14 같은 숫자, 다른 질문  실사에서 갈리는 FI와 SI의 시선 [2528].md",
+   "hash": "57b1d0d026b7"
+  },
+  {
+   "id": "und:한주성:2026-04-14-이-글이-짚는-핵심은-명확합니다-2112",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-14 이 글이 짚는 핵심은 명확합니다. [2112].md",
+   "hash": "00f962c806b6"
+  },
+  {
+   "id": "und:한주성:2026-04-15-FF가-디퓨저-회사를-샀습니다-그-이면에-있는-질문-2096",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-15 F&F가 디퓨저 회사를 샀습니다. 그 이면에 있는 질문 [2096].md",
+   "hash": "73c1d2e1593c"
+  },
+  {
+   "id": "und:한주성:2026-04-17-공짜-슬롯의-함정-티웨이항공은-왜-커질수록-더-힘들어졌나-8608",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-17 공짜 슬롯의 함정, 티웨이항공은 왜 커질수록 더 힘들어졌나 [8608].md",
+   "hash": "fd54057a7c43"
+  },
+  {
+   "id": "und:한주성:2026-04-18-국적도-산업도-달라도-일-못하는-사람들의-동일한-패턴-8128",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-18 🌍 국적도 산업도 달라도, 일 못하는 사람들의 동일한 패턴 [8128].md",
+   "hash": "52d24cb784d8"
+  },
+  {
+   "id": "und:한주성:2026-04-19-무명-선수가-KBL-감독이-되기까지-5968",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-19 무명 선수가 KBL 감독이 되기까지 [5968].md",
+   "hash": "2320c820456a"
+  },
+  {
+   "id": "und:한주성:2026-04-20-배틀그라운드로-번-돈-성수동에-묻는-게-최선일까-7152",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-04-20 🎮 배틀그라운드로 번 돈, 성수동에 묻는 게 최선일까 [7152].md",
+   "hash": "8e3b368e44dd"
+  },
+  {
+   "id": "und:한주성:2026-05-04-일회성-비용은-정말-일회성인가-8944",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-04 📌 일회성 비용은 정말 일회성인가 [8944].md",
+   "hash": "5b2223350598"
+  },
+  {
+   "id": "und:한주성:2026-05-11-USB-팔던-그-회사-1년-만에-주가가-40배-올랐습니다-4368",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-11 USB 팔던 그 회사, 1년 만에 주가가 40배 올랐습니다 [4368].md",
+   "hash": "fea02ba81ec0"
+  },
+  {
+   "id": "und:한주성:2026-05-12-삼일PwC-PE-Newsletter-2026년-4월호-5008",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-12 삼일PwC PE Newsletter - 2026년 4월호 [5008].md",
+   "hash": "0a25346db0bb"
+  },
+  {
+   "id": "und:한주성:2026-05-13-누가-승인했어요-이-질문을-Day30에-하면-이미-늦습니다-1216",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-13 '누가 승인했어요  이 질문을 Day30에 하면 이미 늦습니다 [1216].md",
+   "hash": "34e70373faa6"
+  },
+  {
+   "id": "und:한주성:2026-05-15-모래가-반도체-칩이-되기까지-1편-전공정-6672",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-15 모래가 반도체 칩이 되기까지  1편 '전공정' [6672].md",
+   "hash": "6b4c964baaa0"
+  },
+  {
+   "id": "und:한주성:2026-05-18-메드테크의-미래-어디로-가고-있는가-8720",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-18 메드테크의 미래, 어디로 가고 있는가 [8720].md",
+   "hash": "3ee344933068"
+  },
+  {
+   "id": "und:한주성:2026-05-18-모래가-반도체-칩이-되기까지-2편-후공정-2592",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-18 모래가 반도체 칩이 되기까지  2편 '후공정' [2592].md",
+   "hash": "c54faa87025f"
+  },
+  {
+   "id": "und:한주성:2026-05-19-모래가-반도체-칩이-되기까지-3편-비메모리-반도체-0656",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-19 모래가 반도체 칩이 되기까지  3편 비메모리 반도체 [0656].md",
+   "hash": "75cca0668a6d"
+  },
+  {
+   "id": "und:한주성:2026-05-20-AI가-전기를-먹는다-데이터센터-전력-밸류체인과-한국-기업들-8528",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-20 AI가 전기를 먹는다 — 데이터센터 전력 밸류체인과 한국 기업들 [8528].md",
+   "hash": "937bf3b0124a"
+  },
+  {
+   "id": "und:한주성:2026-05-21-넥스트에라-도미니언-에너지-100조에-인수-2320",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-21 넥스트에라, 도미니언 에너지 100조에 인수 [2320].md",
+   "hash": "9cc8a16d9eb7"
+  },
+  {
+   "id": "und:한주성:2026-05-29-당신이-투자한-회사-얼마짜리입니까-DCF로-쉽게-풀어보는-기업가치-2065",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-05-29 당신이 투자한 회사 얼마짜리입니까  DCF로 쉽게 풀어보는 기업가치 [2065].md",
+   "hash": "60d25f305a44"
+  },
+  {
+   "id": "und:한주성:2026-06-01-국민성장펀드-제대로-알고-보자-4608",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-06-01 국민성장펀드, 제대로 알고 보자 [4608].md",
+   "hash": "6cbbd108d5e5"
+  },
+  {
+   "id": "und:한주성:2026-06-04-디즈니가-픽사를-산-게-아니었다-픽사가-디즈니를-살렸다-0528",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-06-04 디즈니가 픽사를 산 게 아니었다. 픽사가 디즈니를 살렸다 [0528].md",
+   "hash": "a1ece58dd6ef"
+  },
+  {
+   "id": "und:한주성:2026-06-10-같은-위기-다른-정의-코닥의-파산과-후지필름의-생존-6432",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-06-10 같은 위기, 다른 정의  코닥의 파산과 후지필름의 생존 [6432].md",
+   "hash": "7b3823b57bba"
+  },
+  {
+   "id": "und:한주성:2026-06-17-2026년-한국-명목-GDP는-사실상-D램-가격표-4353",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-06-17 2026년 한국 명목 GDP는 사실상 'D램 가격표' [4353].md",
+   "hash": "fc4c2e29a9a2"
+  },
+  {
+   "id": "und:한주성:2026-07-06-피자헛은-왜-팔렸나-어제의-강점이-내일의-부채가-되는-순간-8273",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-06 피자헛은 왜 팔렸나  어제의 강점이 내일의 부채가 되는 순간 [8273].md",
+   "hash": "97c3fc80efc1"
+  },
+  {
+   "id": "und:한주성:2026-07-13-인수인-척하지-않는-인수-애퀴하이어의-시대-4752",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-13 인수인 척하지 않는 인수 — 애퀴하이어의 시대 [4752].md",
+   "hash": "49ba81d4d6bc"
+  },
+  {
+   "id": "und:한주성:2026-07-14-알파벳의-인터섹트-파워-인수-왜-절반만-샀을까-7873",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-14 알파벳의 인터섹트 파워 인수, 왜 절반만 샀을까 [7873].md",
+   "hash": "f4b222b7d61f"
+  },
+  {
+   "id": "und:한주성:2026-07-15-Investment-in-Korea-101-Ep-1-The-Market-That-W-41",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-15 Investment in Korea 101 – Ep. 1  The Market That W [4160].md",
+   "hash": "7976994e0106"
+  },
+  {
+   "id": "und:한주성:2026-07-21-우버-배민-인수-주주만-바뀐-딜-2416",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-21 우버, 배민 인수 … 주주만 바뀐 딜 [2416].md",
+   "hash": "f3b0a9b02efe"
+  },
+  {
+   "id": "und:한주성:2026-07-23-CoC-조항이-MA에-미치는-영향-2288",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-23 CoC 조항이 M&A에 미치는 영향 [2288].md",
+   "hash": "fe576709a0a8"
+  },
+  {
+   "id": "und:한주성:2026-07-30-Investment-in-Korea-101-Ep-2-The-Succession-Wa-48",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-30 Investment in Korea 101 – Ep. 2  The Succession Wa [4816].md",
+   "hash": "10abd2b9a6ce"
+  },
+  {
+   "id": "und:한주성:2026-07-30-카브아웃-딜-왜-주식양수도보다-훨씬-어려운가-7888",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-30 카브아웃 딜, 왜 주식양수도보다 훨씬 어려운가 [7888].md",
+   "hash": "a8289b35f2e2"
+  },
+  {
+   "id": "und:한주성:2026-07-31-카브아웃-딜을-계획하신다면-이-글부터-읽고-시작하세요-7201",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-07-31 ⚠️카브아웃 딜을 계획하신다면 이 글부터 읽고 시작하세요❗️ [7201].md",
+   "hash": "80e1a760d160"
+  },
+  {
+   "id": "und:한주성:2026-08-01-I-usually-spend-my-family-vacation-in-Bangkok-whe",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-01 I usually spend my family vacation in Bangkok, whe [3712].md",
+   "hash": "ecf02ae04943"
+  },
+  {
+   "id": "und:한주성:2026-08-03-카브아웃-Standalone-PL-과거-숫자와-미래-비용을-모두-의심하라-6928",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-03 카브아웃 Standalone PL, 과거 숫자와 미래 비용을 모두 의심하라 [6928].md",
+   "hash": "d3a79373e5bb"
+  },
+  {
+   "id": "und:한주성:2026-08-10-같은-카브아웃-딜-SI와-FI가-부르는-가격이-다른-근본적인-원인-9600",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-10 같은 카브아웃 딜, SI와 FI가 부르는 가격이 다른 근본적인 원인 [9600].md",
+   "hash": "3756d540a80e"
+  },
+  {
+   "id": "und:한주성:2026-08-11-Investment-in-Korea-101-Ep-3-Who-Youre-Really-528",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-11 Investment in Korea 101 – Ep. 3  Who You're Really [5281].md",
+   "hash": "6d6b9d8eff28"
+  },
+  {
+   "id": "und:한주성:2026-08-12-Investment-in-Korea-101-Ep-4-Why-Koreas-Best-0592",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-12 Investment in Korea 101 – Ep. 4  Why Korea's Best  [0592].md",
+   "hash": "bd4d04a99bb5"
+  },
+  {
+   "id": "und:한주성:2026-08-12-PE는-왜-VC가-되고-있을까-8896",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-12 PE는 왜 VC가 되고 있을까 [8896].md",
+   "hash": "89bc429c3420"
+  },
+  {
+   "id": "und:한주성:2026-08-13-6년간-가맹점을-운영하더니-결국-본사를-샀다-0290",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-13 6년간 가맹점을 운영하더니, 결국 본사를 샀다 [0290].md",
+   "hash": "ef363171126f"
+  },
+  {
+   "id": "und:한주성:2026-08-14-6-Years-as-a-Franchisee-Then-They-Bought-the-Bran",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-14 6 Years as a Franchisee. Then They Bought the Bran [2016].md",
+   "hash": "16ed30b2251e"
+  },
+  {
+   "id": "und:한주성:2026-08-18-MA-해부학-001-좋은-회사를-인수했는데-왜-실패할까-9664",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-18 M&A 해부학  001 - 좋은 회사를 인수했는데, 왜 실패할까 [9664].md",
+   "hash": "6e38091ab004"
+  },
+  {
+   "id": "und:한주성:2026-08-19-AI-시대-사내-데이터도-기업청산가치에-포함될-수-있다-0656",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-19 AI 시대, 사내 데이터도 기업청산가치에 포함될 수 있다 [0656].md",
+   "hash": "79227471c1b6"
+  },
+  {
+   "id": "und:한주성:2026-08-20-AI가-SaaS를-죽인다는데-PE는-왜-사고-있을까-8800",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-20 AI가 SaaS를 죽인다는데, PE는 왜 사고 있을까 [8800].md",
+   "hash": "02fc95f86461"
+  },
+  {
+   "id": "und:한주성:2026-08-21-매년-들어오는-로열티를-왜-팔았을까-FF의-디스커버리-IP-인수-2064",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-21 매년 들어오는 로열티를 왜 팔았을까  — F&F의 디스커버리 IP 인수 [2064].md",
+   "hash": "f1769c2bb12b"
+  },
+  {
+   "id": "und:한주성:2026-08-25-MA-해부학-002-7972",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-25 M&A 해부학  002 [7972].md",
+   "hash": "2c1be39010ef"
+  },
+  {
+   "id": "und:한주성:2026-08-26-K-Beauty의-진짜-승자는-브랜드가-아닐-수도-있다-4496",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-26 K-Beauty의 진짜 승자는 브랜드가 아닐 수도 있다 [4496].md",
+   "hash": "e0ab3882e25b"
+  },
+  {
+   "id": "und:한주성:2026-08-27-LA-레이커스는-어떻게-18조짜리-자산이-되었나-6674",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-08-27 LA 레이커스는 어떻게 18조짜리 자산이 되었나 [6674].md",
+   "hash": "3d6988b46663"
+  },
+  {
+   "id": "und:한주성:2026-09-01-MA-해부학-003-7377",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-09-01 M&A 해부학  003 [7377].md",
+   "hash": "e498272fae6b"
+  },
+  {
+   "id": "und:한주성:2026-09-02-미국-중소형-회계법인은-왜-스스로를-PE에-팔기-시작했을까-7248",
+   "corpus": "understanding",
+   "folder": "한주성",
+   "categories": [
+    "한주성"
+   ],
+   "date": null,
+   "path": "content/understanding/한주성/2026-09-02 미국 중소형 회계법인은 왜 스스로를 PE에 팔기 시작했을까 [7248].md",
+   "hash": "275b03a744a1"
   },
   {
    "id": "und:회계사:10년-추정65-성장으로-낸-주당-113024원-엘곰",
