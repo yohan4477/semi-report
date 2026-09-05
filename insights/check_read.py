@@ -164,12 +164,18 @@ def check_file(path):
     heads = sum(len(re.findall(r'(?m)^[-*\s]*\**' + w, body)) for w in CONNECT)
     if heads >= 5:
         add('WARN', where, 'R7', '문두 접속사가 %d번 — 문장이 스스로 이어지게 줄인다' % heads)
+    # R7·R8 은 낱개가 아니라 밀도로 잰다(1천자당). 문턱이 3천 자 노트에 맞춰져 있어서
+    # 2만 5천 자 보고서는 잘 써도 걸렸다 — check_prose 가 이미 쓰는 방식으로 맞춘다
+    # (2026-09-06). 노트 기준은 그대로다: 3천 자에 R7 3번·R8 6번이 각각 1.0·2.0 이다
+    kilo = max(1.0, len(body) / 1000.0)
     nom = sum(body.count(w) for w in NOMINAL)
-    if nom >= 3:
-        add('WARN', where, 'R7', '"~라는 것이다" 류가 %d번 — 그냥 "~다"로' % nom)
+    if nom / kilo >= 1.0:
+        add('WARN', where, 'R7', '"~라는 것이다" 류가 %d번, 1천자당 %.1f — 그냥 "~다"로'
+            % (nom, nom / kilo))
     cm = len(COMMA.findall(body))
-    if cm >= 6:
-        add('WARN', where, 'R8', '연결어미 뒤 쉼표가 %d번 — 쉼표를 뺀다' % cm)
+    if cm / kilo >= 2.0:
+        add('WARN', where, 'R8', '연결어미 뒤 쉼표가 %d번, 1천자당 %.1f — 쉼표를 뺀다'
+            % (cm, cm / kilo))
 
     # R9 — 통념을 뒤집는 단정은 눈에 잘 띄어서 쓰고 싶어진다. 근거 없이 쓰면 원문이 뒤집힌다.
     # 메모리 편에서 "수요가 늘어서가 아니다"라고 썼는데 원문은 정반대였다.
