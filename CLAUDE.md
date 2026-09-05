@@ -54,6 +54,7 @@ PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부
 PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
 PYTHONIOENCODING=utf-8 python insights/check_cover.py   # 보고서가 바탕 재료를 전수로 썼나
+PYTHONIOENCODING=utf-8 python scripts/find_materials.py 전력 기가와트  # (검사기 아님) 주제로 재료 후보 찾기 — 제목 훑기는 놓친다
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 PYTHONIOENCODING=utf-8 python insights/check_struct.py # 구조 — 앞머리·목차·물음 절·성격 열이 서 있나
 PYTHONIOENCODING=utf-8 python insights/check_frame.py # 프레임 — 남의 모델이 준 틀에서 원문 밖 주장이 카드로 샜나
