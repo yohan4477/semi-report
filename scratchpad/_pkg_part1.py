@@ -154,10 +154,10 @@ def load():
 
 
 def toc_html(titles):
-    """묶음 이름과 절 목록을 각각 제 줄에 둔다 — 한 덩어리로 붙으면 안 읽힌다(2026-09-05)."""
+    """묶음 이름은 제 줄에, 절은 한 줄에 하나씩. 「·」로 이으면 어디서 절이 갈리는지 안 보인다(2026-09-05)."""
     parts = ['<p class="rep-toc"><b class="tl">이 층은 물음 하나를 세 묶음으로 따라갑니다 — 왜 쪼개고 어떻게 붙이나, 누가 무엇을 내놓았나, 어디가 막히고 누가 서 있나.</b>']
     for name, a, b in GROUPS:
-        links = ' · '.join('<a href="#pkg-%d">%d %s</a>' % (i, i, titles[i - 1])
+        links = '<br>'.join('<a href="#pkg-%d">%d %s</a>' % (i, i, titles[i - 1])
                            for i in range(a, b + 1))
         parts.append('<b class="tg">%s</b><span class="tt">%s</span>' % (name, links))
     return ''.join(parts) + '</p>'
