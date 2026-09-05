@@ -121,6 +121,10 @@ RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
     'insights/flows/mer/rate_cpi.json',
     'insights/flows/mer/rate_0818.json',
     'insights/debate/issue-2026-08-28-금리와-AI설비투자-무엇이-앞에-서나.md',
+    'content/understanding/회계사/[260724] 브렌트유 하루 7% 급등 100달러, 10년물 금리 4.71%로 2025년 1월來 최고 - 엘곰.md',
+    'content/understanding/회계사/[260801] 美 10년물 4.71%, 실적이 가려온 금리 압박이 드러났다 - 엘곰.md',
+    'content/understanding/회계사/[260818] 30년물 금리 5.31%로 19년來 최고, 브렌트유는 2주 만에 91달러 - 엘곰.md',
+    'content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md',
 )]
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
