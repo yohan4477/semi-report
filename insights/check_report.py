@@ -99,8 +99,14 @@ def norm(t):
 
 
 def corpus(d):
+    """재료 글자를 한 덩어리로. d 가 None 이면 EXTRA 에 적은 파일만 본다.
+
+    폴더를 통째로 넣으면 그 층과 무관한 편의 값이 알리바이가 된다. 재료가 여러 폴더에
+    흩어진 층(금리·물가는 회계사·미주사·류상철·김상훈·박소연에 걸쳐 있다)은 폴더 대신
+    파일을 하나씩 적는다. EXTRA 는 확장자를 안 가려서 json 도 글자로 읽는다.
+    """
     out = []
-    for base, _dirs, files in os.walk(d):
+    for base, _dirs, files in os.walk(d) if d else []:
         for f in sorted(files):
             if f.endswith('.md'):
                 out.append(io.open(os.path.join(base, f), encoding='utf-8').read())
