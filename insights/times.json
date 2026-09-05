@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-05",
-"index_fingerprint": "d9cb7780ae0376d53ff00ea4b97a4a4255afcc0d",
-"lines": 3334
+"index_fingerprint": "eafdd8c97a68bbbb9e58339472b443533879acfe",
+"lines": 3333
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -7215,15 +7215,6 @@
 "1972"
 ],
 "t": "1972",
-"tense": "회고"
-},
-"content/understanding/김학주 교수/[260813] AI는 늦춰지지 않는다 - 지금 주가는 전력·물·반도체 병목을 푸는 기업에서 먼저 움직인다 - 김학주.md#L25": {
-"how": "명시",
-"span": [
-"2015",
-"2016"
-],
-"t": "2016",
 "tense": "회고"
 },
 "content/understanding/류상철 국장/경제 교과서 틀렸다 - 물가 때문에 금리 인상해도 주가 오른다.md#L114": {

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""2026-09-05 언더스탠딩 세 편(권석준 1·2부, 김학주)의 카드 도해.
+"""2026-09-05 언더스탠딩 권석준 교수 1·2부의 카드 도해.
 
 값은 전부 변환본 md 에 있는 것만 쓴다. 상자 개수는 원문이 센 개수와 같다
 (병목 셋은 화자가 「병목 1·2·3」으로 나눈 그대로다).
@@ -106,41 +106,6 @@ PEAK_CAP = ('같은 2028년인데 두 값이 반대로 간다. 값이 내려가�
             '관측되는 때가 아니라 그 신호가 보이기 시작하는 때에 먼저 반영된다고 보기 때문이다.')
 
 
-# ── 김학주 — 병목 셋과 지금 그것을 푸는 자리 ────────────────────────────────
-# 화자가 병목 1·2·3 으로 나눈 그대로 세 줄이다. 회사 이름은 그가 든 것만 적는다.
-def neck_svg():
-    rows = [
-        ('전력과 물', '큰 데이터센터 대신 작게 쪼개 짓고 결과를 잇는다',
-         '코닝 · 암페놀 · TE 커넥티비티 · 아리스타 · 버티브'),
-        ('전력망', '교류를 직류로 바꾸면 같은 선으로 두세 배를 보낸다',
-         'GE 버노바 · 슈나이더 일렉트릭'),
-        ('사이버 보안', '이어 붙인 자리마다 뚫릴 곳이 늘어 AI 로 감시한다',
-         '팔로알토 네트웍스 · 크라우드스트라이크 · 아이온큐'),
-    ]
-    p = ['<svg class="epoch" viewBox="0 0 640 300" role="img">']
-    p.append('<text class="t-role" x="8" y="18">막힌 곳</text>')
-    p.append('<text class="t-role" x="196" y="18">지금 푸는 방식</text>')
-    p.append('<text class="t-role" x="196" y="286">'
-             '김학주 교수는 최종단 AI 기업보다 이 줄들이 먼저 움직인다고 본다</text>')
-    y = 34
-    for name, how, who in rows:
-        p.append(_box(8, y, 172, 68, name, key=True))
-        p.append('<rect class="bx" x="196" y="%d" width="436" height="68" rx="8"/>' % y)
-        p.append('<text class="t-sm" x="212" y="%d">%s</text>' % (y + 28, how))
-        p.append('<text class="t-sm" x="212" y="%d">%s</text>' % (y + 50, who))
-        p.append('<path class="flow-svc" d="M180 %d L192 %d"/>' % (y + 34, y + 34))
-        y += 80
-    p.append('</svg>')
-    return ''.join(p)
-
-
-NECK_CAP = ('왼쪽은 빅테크가 투자를 늦출 이유로 든 세 가지이고, 오른쪽은 그것을 지금 푸는 '
-            '방식과 김학주 교수가 든 회사들이다. 그는 이미 깔아 둔 인프라를 무용지물로 만드는 '
-            '비용이 커서 <b>빅테크가 실제로 발을 빼지는 않는다</b>고 보고, 그렇다면 값이 먼저 '
-            '움직이는 자리는 최종단 AI 기업이 아니라 이 오른쪽 칸이라고 말한다. 소형원자로와 '
-            '수소는 같은 병목을 풀지만 시간이 더 걸린다는 이유로 뒤에 둔다.')
-
-
 if __name__ == '__main__':
     import io
     import sys
@@ -148,6 +113,5 @@ if __name__ == '__main__':
     sys.path.insert(0, 'scratchpad')
     import check_fig
     for name, fig in (('돈이 도는 고리', loop_svg()),
-                      ('늘어나는 것과 정점', peak_svg()),
-                      ('병목 셋', neck_svg())):
+                      ('늘어나는 것과 정점', peak_svg())):
         print(name, check_fig.hits(fig) or 'FAIL 0건')
