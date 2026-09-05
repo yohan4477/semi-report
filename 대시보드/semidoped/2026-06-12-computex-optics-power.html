@@ -126,7 +126,35 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>전시장에서 본 것 — 구리 벽과 800볼트</h1><div class="pmeta">2026-06-12 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/computex-mania-2026-optics-and-power">https://daily.semidoped.com/p/computex-mania-2026-optics-and-power</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-06-12-computex-optics-power.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-sonnet 가 씀</span></div><div class="ltitle">빛도 전원도 파운드리도, 전시장의 다음 단계는 전부 조립과 검사에서 막혀 있었다</div><p>이번 회차는 대본 없이 전시장을 걸으며 본 것을 그대로 풀어놓은 회차다. 여섯 달 만에 처음 만난 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 광학·전원·조립식 데이터센터·인텔 파운드리 부스를 차례로 짚는다. 이 글은 그 전시장이 업계에 무엇을 보여 줬는지, 그리고 어디서 아직 막혀 있는지를 읽는다.</p>
 <nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">젠슨의 한 문장이 마벨 시가총액을 흔들었다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">CPO 가 랙 안으로 들어오려면 아직 두 가지가 안 풀렸다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">빛으로 가는 길이 CPO 하나만은 아니다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">800볼트는 이미 표준인데, 소재는 전압 구간마다 다르다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">랙을 세우는 시간 자체가 경쟁력이 됐다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">인텔이 실제로 자랑한 것은 조립 능력이었다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것</a></div></nav>
 <h2 id="s1"><span class="num">1</span> 젠슨의 한 문장이 마벨 시가총액을 흔들었다</h2>
-<p><span class="pn">진행자V</span> 는 마벨 키노트 맨 앞줄에 앉아 있었다. 그 자리에 젠슨 황이 예고 없이 올라와 마벨을 "다음 1조 달러 기업"이라고 불렀다. 방금 전 마벨 CEO 매트 머피가 최근 AI 붐에서 이미 1조 달러짜리 메모리 기업이 셋 나왔다고 말한 참이라, <span class="pn">진행자V</span> 는 처음엔 인사치레로 들었다. 그런데 장이 열리자 마벨 주가가 크게 뛰었다는 소식이 왔다 — <span class="pn">진행자V</span> 는 70%라고 했고 <span class="pn">진행자A</span> 는 실제로는 30%쪽이었을 거라고 정정했다. 어느 쪽이든 시가총액이 천억 달러 가까이 문장 하나로 움직인 셈이고, <span class="pn">진행자V</span> 는 "천억 달러짜리 문장이 내 눈앞을 지나갔는데 나는 아무것도 안 했다"고 했다.</p>
+<figure class="uc-fig"><p class="fig-title">마벨이 파는 것 — 거리만 다르다</p><svg class="epoch" viewBox="0 0 520 235" role="img" aria-label="마벨은 칩 안에서 ASIC, 칩 사이에서 인터커넥트, 데이터센터 사이에서 DSP 를 판다. 거리만 다르고 셋 다 데이터를 옮기는 일이며, 이번 키노트는 인터커넥트에 무게를 실었다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="97.5" y="36" width="66" height="68" rx="9" class="fig-box"/>
+  <text x="130.5" y="64.5" text-anchor="middle" class="fig-b">칩 안</text>
+  <text x="130.5" y="87.5" text-anchor="middle" class="fig-b">ASIC</text>
+  <rect x="187.5" y="36" width="82" height="68" rx="9" class="fig-agent"/>
+  <text x="228.5" y="64.5" text-anchor="middle" class="fig-b">칩 사이</text>
+  <text x="228.5" y="87.5" text-anchor="middle" class="fig-b">인터커넥트</text>
+  <rect x="293.5" y="36" width="129" height="68" rx="9" class="fig-box"/>
+  <text x="358" y="64.5" text-anchor="middle" class="fig-b">데이터센터 사이</text>
+  <text x="358" y="87.5" text-anchor="middle" class="fig-b">DSP</text>
+  <rect x="133" y="138" width="254" height="45" rx="9" class="fig-stage"/>
+  <text x="260" y="166.5" text-anchor="middle" class="fig-b">셋 다 데이터를 옮기는 일이다</text>
+  <line x1="130.5" y1="106" x2="130.5" y2="136" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="228.5" y1="106" x2="228.5" y2="136" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="358" y1="106" x2="358" y2="136" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="199" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="211" class="fig-lg">이번에 무게를 실은 자리</text>
+</svg><figcaption><span class="pn">진행자V</span> 는 마벨의 사업을 데이터 이동 하나로 묶었다 — 칩 안에서는 ASIC, 칩 사이에서는 인터커넥트, 데이터센터 사이에서는 DSP 다. 이번 키노트는 매출 대부분이 인터커넥트에서 나온다는 것을 보이며 연결 회사 쪽에 무게를 실었다. XPU 를 만들어 주는 고객에게 인터커넥트를 얹어 파는 이야기는 하지 않았다.</figcaption></figure>
+<p><span class="pn">진행자V</span> 는 마벨 키노트 맨 앞줄에 앉아 있었다. 그 자리에 젠슨 황이 예고 없이 올라와 마벨을 "다음 1조 달러 기업"이라고 불렀다. 방금 전 마벨 CEO 매트 머피가 최근 AI 붐에서 이미 1조 달러짜리 메모리 기업이 셋 나왔다고 말한 참이라, <span class="pn">진행자V</span> 는 처음엔 인사치레로 들었다. 그런데 장이 열리자 마벨 주가가 크게 뛰었다는 소식이 왔다 — <span class="pn">진행자V</span> 는 70%라고 했고 <span class="pn">진행자A</span> 는 실제로는 30%쪽이었을 거라고 정정했다. 어느 쪽이든 시가총액이 천억 달러 가까이 문장 하나로 움직인 셈이고, <span class="pn">진행자V</span> 는 "천억 달러짜리 문장이 내 눈앞을 지나갔는데 나는 아무것도 안 했다"고 했다. <span class="pn">진행자A</span> 는 그 상승분을 어림잡아 500억 달러쯤으로 짐작했다. 젠슨의 발언 전에도 비슷한 일이 있었다. 그가 부스 앞에 잠깐 멈춰서기만 해도 주가가 들썩였다는 이야기를 <span class="pn">진행자V</span> 는 전했다 — 델타 부스 앞에 20초 서 있었다는 소식만으로 그 자리에서 사고파는 사람들이 있었다고 한다. <span class="pn">진행자A</span> 는 이를 "순간의 차익거래"라고 불렀다. 누군가 사진을 X 에 올리는 사이 먼저 사고, 뒤늦게 그 사진을 본 사람들이 따라 사는 구조라는 것이다.</p>
 <p>키노트 본론은 광학 포트폴리오였다. 매트 머피는 구리로 버틸 수 있는 경계가 이제 온-패키지(칩과 칩을 한 패키지 안에 붙이는 수준)까지 좁혀졌고, 랙 안의 연결은 전부 광학으로 넘어갈 것이라고 했다. 102.4테라비트초급 신형 스위치 테랄린스도 함께 공개했는데, 브로드컴 토마호크6 와 같은 급이다. 무대에서는 플러그형 광모듈을 큰 쟁반에 쌓아 보여 준 뒤, 손바닥만 한 CPO(칩 위에 광학 엔진을 바로 붙이는 방식)를 옆에 놓았다. 크기 차이 하나로 CPO 의 존재 이유를 설명한 셈이다. 마벨이 예전에 인수한 인파이 덕분에 이런 광학 포트폴리오를 갖출 수 있었다고 <span class="pn">진행자V</span> 는 봤다.</p>
 <p><span class="pn">진행자A</span> 는 발표 내용보다 마벨이라는 회사 자체를 봤다. 마벨은 지난 2년 동안 자신이 인터커넥트(연결) 회사인지 커스텀 ASIC 회사인지 스스로도 정리하지 못했는데, 이번엔 매출 대부분이 인터커넥트에서 나온다는 것을 보여 주며 연결 회사 쪽에 무게를 실었다. 다만 두 사업을 엮어 파는 이야기는 하지 않았다. XPU 를 만들어 주는 고객에게 인터커넥트까지 얹어 팔 수 있는데, 그 교차판매를 발표에서 짚지 않았다는 것이다. <span class="pn">진행자V</span> 는 마벨의 사업을 데이터 이동 하나로 묶었다. 칩 안에서는 ASIC, 칩 사이에서는 인터커넥트, 데이터센터 사이에서는 DSP — 세 사업이 결국 같은 일을 한다. <span class="pn">진행자A</span> 는 이걸 브로드컴과 견줘 봤다. 브로드컴도 데이터 이동 사업이 강하지만 실적 발표 때마다 화제는 늘 ASIC·XPU 쪽으로 쏠린다. 마벨과 브로드컴 둘 다 두 사업을 어떻게 하나의 이야기로 묶어 낼지 아직 못 정한 것 같다고 <span class="pn">진행자A</span> 는 봤다.</p>
 <h2 id="s2"><span class="num">2</span> CPO 가 랙 안으로 들어오려면 아직 두 가지가 안 풀렸다</h2>
@@ -269,8 +297,9 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="455.5" y="195.5" text-anchor="middle" class="fig-b">연결</text>
 </svg><figcaption>전에는 냉각·전원 설비를 현장에서 짓고 랙을 넣었다. 조립식 블록은 설비를 갖춘 컨테이너에 랙만 밀어 넣고 연결하면 끝난다. 배치 시간이 절반으로 준다는 것은 델타 부스 담당자의 말이고, 판 위에 시간 값은 없다.</figcaption></figure>
 <p>버티브 부스에는 조립식 AI 인프라 블록이 있었다. 냉각과 전원 설비를 미리 다 갖춘 컨테이너형 모듈에 랙만 밀어 넣고 연결하면 끝나는 구조다. 델타·슈나이더일렉트릭·이튼도 같은 제품을 내놨다. 델타 부스로 기억하는 곳의 담당자는 이 방식이 배치 시간을 절반으로 줄인다고 설명했다. <span class="pn">진행자A</span> 는 이걸 첫 토큰까지 걸리는 시간이라는 말로 옮겼다. 수십억 달러어치 GPU 를 사 놓고도 못 켜면 그 시간만큼 감가상각만 쌓인다. <span class="pn">진행자A</span> 는 일론 머스크가 xAI 데이터센터를 지으며 이미 수십억 달러어치 GPU 를 사들인 경우를 예로 들었다.</p>
-<p>같은 흐름이 작은 규모에서도 보였다. 케타플로우테크놀로지스는 사무실 서버실에 GPU 여덟~열여섯 개를 넣을 수 있는 냉동고형 침지 냉각 장비를 선보였다. 뚜껑을 열면 투명한 비전도성 액체 안에 랙 전체가 잠겨 있고, 만져도 안전하다. <span class="pn">진행자V</span> 는 데이터센터를 통째로 짓지 않고 사내 추론 서버 하나만 들이려는 수요가 이런 식으로 늘어날 것으로 봤다.</p>
+<p>같은 흐름이 작은 규모에서도 보였다. 케타플로우테크놀로지스는 사무실 서버실에 GPU 여덟~열여섯 개를 넣을 수 있는 냉동고형 침지 냉각 장비를 선보였다. 뚜껑을 열면 비전도성 액체 안에 랙 전체가 잠겨 있고, 만져도 안전하다. <span class="pn">진행자V</span> 는 데이터센터를 통째로 짓지 않고 사내 추론 서버 하나만 들이려는 수요가 이런 식으로 늘어날 것으로 봤다.</p>
 <h2 id="s6"><span class="num">6</span> 인텔이 실제로 자랑한 것은 조립 능력이었다</h2>
+<p>인텔 파운드리는 클리어워터포레스트를 발주한 인텔 프로덕트 사업부를 더 이상 내부 고객으로 부르지 않는다. 다른 외부 고객과 똑같이 대해 특혜를 주지 않는 것이 공식 입장이라고 <span class="pn">진행자A</span> 는 전했다 — 그래도 사실상 가장 크고 중요한 고객이라는 점은 달라지지 않는다.</p>
 <figure class="uc-fig"><p class="fig-title">클리어워터포레스트 칩렛 열일곱</p><svg class="epoch" viewBox="0 0 520 176" role="img" aria-label="칩렛 열일곱 — 인텔7 I/O 다이 둘, 인텔3 액티브 베이스 다이 셋, 그 위에 인텔18A 컴퓨트 다이 열둘">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
@@ -314,7 +343,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </svg><figcaption>아래 줄이 인텔7 I/O 다이 둘과 인텔3 액티브 베이스 다이 셋, 그 위에 인텔18A 컴퓨트 다이 열둘이 포베로스 다이렉트 3D 로 쌓인다. I/O 는 이전 세대 것을 재사용했고 최신 공정은 연산 코어에만 썼다. 칸 수가 값이다.</figcaption></figure>
 <p>인텔 키노트의 표면은 신형 서버 CPU 클리어워터포레스트였다. E코어 288개, 12채널 DDR5, 초당 8000메가전송, 큰 L3 캐시 — AMD 튜린덴스를 겨냥한 스펙이다. <span class="pn">진행자A</span> 가 눈여겨본 것은 그 아래 조립 구조였다. 칩렛 열일곱 개로 이뤄져 있는데, 인텔7 공정의 I/O 다이 두 개, 인텔3 공정의 액티브 베이스 다이 세 개(캐시·메시·패브릭 담당), 인텔18A 공정의 컴퓨트 다이 열두 개(다크몬트 E코어)로 나뉜다. I/O 다이와 베이스 다이는 EMIB(다이를 옆으로 잇는 배선)로 연결되고, 그 위에 컴퓨트 다이를 포베로스 다이렉트 3D(범프 없이 구리와 구리를 직접 붙이는 적층 방식)로 쌓는다. 활성 실리콘을 활성 실리콘 위에 그대로 쌓다 보니 방열과 전원 공급을 새로 풀어야 했고, 인텔18A 의 후면 전원 공급(파워비아)과 게이트올어라운드 트랜지스터(리본펫)가 그 답이다.</p>
 <p>이 조립 구조에는 경제 논리가 숨어 있다. I/O 다이는 이전 세대 그래나이트래피즈 것을 그대로 재사용한 것 같고, 잘 안 줄어드는 SRAM 은 굳이 최신 공정에 넣지 않고 인텔3 에 남겼다. 최신 공정인 18A 는 실제로 이득이 나는 연산 코어에만 썼다. 다이를 잘게 쪼갤수록 개별 다이의 수율이 오른다. <b>이번 발표는 CPU 자랑이 아니라 조립 능력 자랑이었다</b>는 것이 이 글의 읽기이고, <span class="pn">진행자V</span> 도 패키징을 이만큼 해낸다는 자랑이라고 정리했다. 다음 공정인 14A 에서는 리본펫과 후면 전원 공급이 2세대로 넘어간다. 인텔 파운드리는 가장 큰 고객인 인텔 제품 사업부를 상대로 이 기술을 먼저 익히는 동시에, 그 기술 자체도 계속 다듬고 있다.</p>
-<p>구글이 TPU 관련해 인텔 파운드리와 협업한다는 소식도 나왔는데, 18A 공정 자체를 쓰는지 EMIB 패키징만 빌리는지는 아직 불분명하다. <span class="pn">진행자V</span> 는 이 소식을 인텔이 이겼으면 하는 마음보다는 조립할 곳이 하나 더 생겼다는 사실로 반겼다. 조립 능력을 나눠 가질 곳이 늘면 그만큼 더 많은 칩을 세상에 내놓을 수 있다. <span class="pn">진행자A</span> 도 같은 이유를 댔다. TSMC 가 잘못한 것은 없지만 공급자가 하나뿐이면 업계 전체의 속도가 그 한 곳의 증설 속도에 묶인다. 조립 능력을 나눠 가질 공급자가 늘어야 혁신도 더 빠르고 싸게 나온다. 젠슨이나 샘 올트먼이나 일론 머스크가 오늘 당장 원한다고 해서 공장을 무작정 더 지을 수는 없다고 <span class="pn">진행자A</span> 는 봤다.</p>
+<p>구글이 TPU 관련해 인텔 파운드리와 협업한다는 소식도 나왔는데, 18A 공정 자체를 쓰는지 EMIB 패키징만 빌리는지는 아직 불분명하다. <span class="pn">진행자V</span> 는 이 소식을 인텔이 이겼으면 하는 마음보다는 조립할 곳이 하나 더 생겼다는 사실로 반겼다. 조립 능력을 나눠 가질 곳이 늘면 그만큼 더 많은 칩을 세상에 내놓을 수 있다. <span class="pn">진행자A</span> 도 같은 이유를 댔다. TSMC 가 잘못한 것은 없지만 공급자가 하나뿐이면 업계 전체의 속도가 그 한 곳의 증설 속도에 묶인다. 조립 능력을 나눠 가질 공급자가 늘어야 혁신도 더 빠르고 싸게 나온다. 젠슨이나 샘 올트먼이나 일론 머스크가 오늘 당장 원한다고 해서 공장을 무작정 더 지을 수는 없다고 <span class="pn">진행자A</span> 는 봤다. 패키징을 나눠 맡을 곳은 인텔 파운드리만이 아니다 — 원한다면 OSAT(외주 반도체 조립·검사 업체)도 EMIB 를 할 수 있다고 <span class="pn">진행자A</span> 는 짚었다.</p>
 <h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것</h2>
 <p>전시장에서 본 것은 대부분 시제품이거나 개념 시연이다. <span class="pn">진행자V</span> 스스로도 CPO 랙 시연이 "3~5년 뒤"의 모습이라고 못 박았고, 800볼트 시스템도 "지금 데이터센터에 이미 들어 있는 것은 아니다"라고 선을 그었다. 이 회차는 그 시점을 구체적인 연도로 짚지 않는다.</p>
 <p>CPO 의 수율과 검사 문제도 숫자로 확인되지는 않았다. "엔지니어링 샘플에서 99%"라는 말은 <span class="pn">진행자V</span> 가 전한 것이지, 마벨이나 TSMC 가 직접 공개한 수치가 아니다. 인텔 파운드리와 구글의 협업 범위도 두 진행자 다 정확히 모른다고 인정한 대목이다.</p>
