@@ -1020,9 +1020,9 @@ REPORT_CSS = _biz_part3.TABLE_CSS + """
   .rep-toc .tt{display:block;padding-left:16px}
   /* 차례 링크가 브라우저 기본 파랑으로 나와 회색 판에서 튀었다(2026-09-05).
      색은 본문 잉크로 두고 밑줄만 옅게 — 눌리는 자리인 것은 밑줄이 말한다 */
-  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:underline;
-             text-decoration-color:var(--ink-3);text-underline-offset:3px}
-  .rep-toc a:hover{text-decoration-color:var(--ink)}
+  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-3);
+                   text-underline-offset:3px}
 """
 
 

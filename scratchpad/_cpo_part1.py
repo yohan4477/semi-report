@@ -29,7 +29,7 @@ HEAD_CPO = (
     '막혔는지를 묻습니다. 분량 제한 없이 썼습니다.</p></div>')
 
 # 절 묶음 — 목차를 접는 단위. 절 번호는 원본 순서다.
-GROUPS = [('① 왜 빛인가', 1, 4), ('② 어디부터 쓰이나', 5, 9), ('③ 누가 서 있고 무엇이 남았나', 10, 12)]
+GROUPS = [('왜 빛인가', 1, 4), ('어디부터 쓰이나', 5, 9), ('누가 서 있고 무엇이 남았나', 10, 12)]
 
 # 도해 캡션. 값 판단은 캡션에, 판 위에는 대상만(확정 규칙 §3).
 CAPTION = {
@@ -141,13 +141,19 @@ def load():
     return out
 
 
+def _circ(n):
+    """소단원 번호 ①②③. 대단원은 「1. 2. 3.」이고 그 아래가 동그라미다."""
+    return chr(0x2460 + n - 1) if 1 <= n <= 20 else str(n)
+
+
 def toc_html(titles):
     """묶음 이름은 제 줄에, 절은 한 줄에 하나씩. 「·」로 이으면 어디서 절이 갈리는지 안 보인다(2026-09-05)."""
     parts = ['<p class="rep-toc"><b class="tl">이 층은 물음 하나를 세 묶음으로 따라갑니다 — 왜 빛인가, 어디부터 쓰이나, 누가 서 있고 무엇이 남았나.</b>']
     for name, a, b in GROUPS:
-        links = '<br>'.join('<a href="#cpo-%d">%d %s</a>' % (i, i, titles[i - 1])
+        links = '<br>'.join('<a href="#cpo-%d">%s %s</a>' % (i, _circ(i), titles[i - 1])
                            for i in range(a, b + 1))
-        parts.append('<b class="tg">%s</b><span class="tt">%s</span>' % (name, links))
+        parts.append('<b class="tg">%d. %s</b><span class="tt">%s</span>'
+                     % (GROUPS.index((name, a, b)) + 1, name, links))
     return ''.join(parts) + '</p>'
 
 
@@ -161,7 +167,7 @@ def report_cpo(sec, p, fig):
             p(toc_html(titles))
             toc_done = True
         if k == 'sec':
-            sec('%d. %s' % (titles.index(v) + 1, v))
+            sec('%s %s' % (_circ(titles.index(v) + 1), v))
         elif k == 'p':
             p(_strip(v))
         elif k == 'fig':
