@@ -11,6 +11,7 @@ check_prose 는 금지어·문장 길이·번역투를 본다. 그런데 그걸 
 
   py -3.13 insights/check_read.py
 """
+import collections
 import glob
 import io
 import os
@@ -32,6 +33,9 @@ OK_NAME = {'AMD', 'AWS', 'IBM', 'TSMC', 'SK', 'LG', 'ASML', 'BMW', 'NVIDIA', 'AR
 NAME = re.compile(r'^(?:[A-Z]{1,4}\d{1,4}[A-Za-z0-9]{0,4}|[A-Z][a-z]+[A-Za-z]*\d*|[A-Z]{2,4}v\d)$')
 ABBR = re.compile(r'\b([A-Z][A-Za-z0-9]{1,7})\b')
 LINE_REF = re.compile(r'^L\d+$')
+# 인용이 붙었나. nl.CITE 는 (라벨 L12) 만 보는데 보고서 층은 json 원문을 (라벨 T12) 로,
+# 사슬을 (사슬-CPI b4) 로 인용한다. 그것을 못 봐서 R9·R10 이 근거를 댄 문단을 물었다
+HAS_CITE = re.compile(r'\([^()]*?(?:[LT]\d|[a-z]\d)[^()]*\)')
 
 # "두 문제"라 해 놓고 무엇인지 안 밝히면 독자는 그 자리에서 막힌다
 POINTER = re.compile(r'(두 (?:리스크|문제|가지|축|요인|갈래)|세 (?:가지|요소|답|축|갈래)'
@@ -45,7 +49,7 @@ ENUM = re.compile(r'(하나는|첫째|둘째|①|②|—|·|:|\n-)')
 # 회사 이름을 「삼성전자·SK하이닉스」 꼴로 바꾸고 안전자산이라는 용어를 아예 지웠다.
 # 용어를 지우는 것은 이 저장소가 금지한 방향이다(CLAUDE.md 「용어는 남기고 괄호로 푼다」).
 #
-# 앞은 글자로, 뒤는 조사로 가른다. 뒤를 「한글이 아니면 통과」로만 막으면 「전자가」·
+# 앞은 글자로, 뒤는 조사로 나눈다. 뒤를 「한글이 아니면 통과」로만 막으면 「전자가」·
 # 「양쪽에서」처럼 조사가 붙은 진짜 지시어를 전부 놓쳐 규칙이 죽는다. 그래서 지시어
 # 뒤에 이어지는 한글 덩어리가 조사인지를 본다 — 조사면 지시어, 아니면 딴 낱말이다.
 JOSA = frozenset([
@@ -78,7 +82,7 @@ LITERAL = {'함대': 'GPU 물량 전체', '모트': '진입 장벽', '풋프린�
 
 
 # 제목에 쓰면 무슨 말인지 모르는 압축 표현
-VAGUE = ['붙었', '갈랐', '갈린 자리', '뒤집힌다', '남는다', '돌아온다', '옮겨간다',
+VAGUE = ['붙었', '나눴', '갈린 자리', '뒤집힌다', '남는다', '돌아온다', '옮겨간다',
          '협상력', '경쟁력', '역량', '구조적', '패러다임', '지형']
 
 # 아래 넷은 humanize-korean 룰북(quick-rules.md)에서 이 저장소가 실제로 어긴 것만 옮겼다.
@@ -114,6 +118,11 @@ def strip(text):
     """인용과 표 구분선을 걷어낸다 — 검사 대상은 사람이 읽는 문장이다"""
     text = nl.CITE.sub('', text)
     text = re.sub(r'\(\[\d{6}\][^()]*\)', '', text)   # 줄번호 없는 출처 표기도 문장이 아니다
+    # 보고서 층의 인용과 도해 표시. 이것을 안 걷으면 R1 이 도해 이름(SPLIT)을 약어로,
+    # R11 이 인용 괄호를 「열거 안 설명」으로 오인한다(2026-09-06 에 열한 건이 그랬다)
+    text = re.sub(r'\([^()]*?[LT]\d[^()]*\)', '', text)
+    text = re.sub(r'\(사슬-[^()]*\)|\(쟁점-[^()]*\)', '', text)
+    text = re.sub(r'\[\[fig:[^\]]+\]\]', '', text)
     return re.sub(r'^\|[-: |]+\|$', '', text, flags=re.M)
 
 
@@ -168,7 +177,8 @@ def check_file(path):
         if para.lstrip().startswith('|') or para.lstrip().startswith('##'):
             continue
         m = DENY.search(strip(para))
-        if m and not nl.CITE.search(para) and not re.search(r'\(\[\d{6}\]', para):
+        if m and not nl.CITE.search(para) and not re.search(r'\(\[\d{6}\]', para) \
+                and not HAS_CITE.search(para):
             add('FAIL', where, 'R9',
                 '근거 없는 단정 "%s" — 원문 줄을 인용하거나 문장을 뺀다: %s…'
                 % (m.group(1).strip(), strip(para).strip()[:44]))
@@ -177,7 +187,8 @@ def check_file(path):
     # 사고 셋(메모리·Helios·「값은 붙었고」)이 전부 여기서 났다. 그래서 인용을 강제한다.
     # 근거를 못 대겠으면 그 문장은 쓸 자격이 없는 문장이다.
     m = re.search(r'##\s*(?:한 줄|주장)\s*\n+(.+?)(?=\n##|\Z)', mdbody, re.S)
-    if m and not nl.CITE.search(m.group(1)) and not re.search(r'\(\[\d{6}\]', m.group(1)):
+    if m and not nl.CITE.search(m.group(1)) and not re.search(r'\(\[\d{6}\]', m.group(1)) \
+            and not HAS_CITE.search(m.group(1)):
         add('FAIL', where, 'R10',
             '첫 문단에 인용이 없다 — 원문 줄을 대거나 대지 못할 문장은 뺀다: %s…'
             % strip(m.group(1)).strip()[:44])
@@ -229,12 +240,33 @@ def main():
     files = sorted(glob.glob(os.path.join(paths.BRIEFS, '*.md')) +
                    glob.glob(os.path.join(paths.LOOP, '*.md')) +
                    glob.glob(os.path.join(paths.SYNTH, '*.md')))
+    # 보고서 층은 여태 이 검사를 안 받았다(2026-09-06 에 알았다). 넣고 보니 층마다
+    # 약어가 안 풀린 채였다. 게이트로 걸면 옛 층 둘이 통째로 막히므로 빚으로 센다
+    reports = sorted(glob.glob(os.path.join(
+        os.path.dirname(paths.SYNTH), 'reports', '*.md')))
     for p in files:
         check_file(p)
+    n_gate = len(findings)
+    for p in reports:
+        check_file(p)
+    # 보고서 층은 여태 이 검사를 안 받아 빚이 쌓여 있다. 게이트로 걸면 옛 층이 통째로
+    # 막히므로 층별 빚으로만 센다 — check_struct 가 옛 장을 다루는 방식과 같다
+    for i in range(n_gate, len(findings)):
+        findings[i] = ('빚',) + tuple(findings[i][1:])
+    debt = len(findings) - n_gate
     for level, where, rule, msg in findings:
-        print('%s %s [%s] %s' % (level, where, rule, msg))
+        if level != '빚':
+            print('%s %s [%s] %s' % (level, where, rule, msg))
+    if debt:
+        per = collections.Counter((f[1], f[2]) for f in findings if f[0] == '빚')
+        print('\n빚 — 보고서 층. 그 층을 손볼 때 함께 갚는다')
+        for w in sorted({k[0] for k in per}):
+            rr = ' · '.join('%s %d' % (r, c) for (ww, r), c in sorted(per.items()) if ww == w)
+            print('  %-26s %s' % (w, rr))
     fails = sum(1 for f in findings if f[0] == 'FAIL')
-    print('\n요약: 글 %d편 / FAIL %d / WARN %d' % (len(files), fails, len(findings) - fails))
+    warns = sum(1 for f in findings if f[0] == 'WARN')
+    print('\n요약: 글 %d편 / 보고서 %d편 / FAIL %d / WARN %d / 빚 %d'
+          % (len(files), len(reports), fails, warns, debt))
     return 1 if fails else 0
 
 
