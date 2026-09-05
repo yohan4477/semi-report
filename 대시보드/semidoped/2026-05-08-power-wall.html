@@ -126,6 +126,31 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 </style><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>전력이 AI 의 다음 물리 벽이다</h1><div class="pmeta">2026-05-08 · Austin Lyons · Vik Sekar<br>원문 <a href="https://daily.semidoped.com/p/power-as-the-next-physics-wall-for">https://daily.semidoped.com/p/power-as-the-next-physics-wall-for</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/Semi%20Doped/2026-05-08-power-wall.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-sonnet 가 씀</span></div><div class="ltitle">48볼트가 막히는 지점에서 발전소부터 GPU까지 이어지는 전력 변환 사슬 전체가 새로 경쟁 시장이 된다</div><p>이번 Semi Doped 회차는 전력을 다룬다. 진행자 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 붙든 물음은 하나다. 랙 하나가 쓰는 전력이 지금까지와는 자릿수가 다른 구간에 들어서면서, 발전소에서 GPU 까지 이어지는 변환 사슬 전체가 다시 경쟁 시장으로 바뀌고 있다. 이 글은 그 사슬을 따라가며 업계에 무엇이 보이는지 읽는다.</p>
 <nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">랙 전력이 임계점에 닿은 이유</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">저항이라는 낡은 문제가 다시 돌아왔다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">전압을 올려 전류를 낮추자 자동차 부품이 그대로 들어왔다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">전압도 광통신처럼 칩 가까이까지 끌고 간다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">발전소에서 GPU까지, 단계마다 다른 회사가 선다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">다음에 투자자들이 배울 용어는 전력 변환 토폴로지다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</a></div></nav>
 <h2 id="s1"><span class="num">1</span> 랙 전력이 임계점에 닿은 이유</h2>
+<figure class="uc-fig"><p class="fig-title">랙 하나가 먹는 전력</p><svg class="epoch" viewBox="0 0 520 236" role="img" aria-label="랙 하나가 먹는 전력이 클라우드 시대 20킬로와트에서 지금 100~120킬로와트, 카이버 세대 600킬로와트, 다음 세대 1메가와트로 올라간다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="192.6" width="110" height="3.4" rx="4" class="fig-box"/>
+  <text x="65" y="184.6" text-anchor="middle" class="fig-hd">20</text>
+  <text x="65" y="216" text-anchor="middle" class="fig-hd">클라우드 시대</text>
+  <rect x="140" y="175.6" width="110" height="20.4" rx="4" class="fig-box"/>
+  <text x="195" y="167.6" text-anchor="middle" class="fig-hd">100~120</text>
+  <text x="195" y="216" text-anchor="middle" class="fig-hd">지금</text>
+  <rect x="270" y="94" width="110" height="102" rx="4" class="fig-agent"/>
+  <text x="325" y="86" text-anchor="middle" class="fig-hd">600</text>
+  <text x="325" y="216" text-anchor="middle" class="fig-hd">카이버 세대</text>
+  <rect x="400" y="26" width="110" height="170" rx="4" class="fig-agent"/>
+  <text x="455" y="18" text-anchor="middle" class="fig-hd">1메가와트</text>
+  <text x="455" y="216" text-anchor="middle" class="fig-hd">다음 세대</text>
+  <line x1="10" y1="196" x2="510" y2="196" class="fig-arw"/>
+</svg><figcaption>클라우드 시대 랙은 20킬로와트, 지금 AI 가속기 랙은 100~120킬로와트, 카이버 세대 루빈 울트라는 600킬로와트, 다음은 1메가와트다. AI 이전 랙이 10~15킬로와트였으니 백 배다. 막대 높이가 킬로와트고 「지금」은 범위의 위쪽 값으로 그렸다.</figcaption></figure>
 <p><span class="pn">진행자V</span>가 숫자로 먼저 정리했다. 클라우드 시대에는 랙 하나가 20킬로와트를 썼다. 지금 AI 가속기 랙은 100에서 120킬로와트를 쓴다. 그리고 카이버(Kyber) 세대 루빈 울트라(Rubin Ultra)에서는 랙 하나가 600킬로와트를 쓰고, 다음 세대는 1메가와트까지 간다. AI 이전 시대 랙이 10에서 15킬로와트였던 것과 비교하면 백 배다. 이번 세대인지 다음 세대인지는 아직 확정이 아니라고 <span class="pn">진행자V</span>는 선을 그었지만, 방향은 이미 업계 여러 사람이 같이 짚고 있는 흐름이라고 했다. <span class="pn">진행자V</span>는 이런 데이터센터가 여러 개 스케일 어크로스로 이어지는 규모까지 상상해 보라고 했다.</p>
 <p><span class="pn">진행자V</span>는 이걸 서브스택 글에서 "전력이 다음 물리 벽"이라고 짚어 두었다고 밝혔다. 발전 방식이 터빈이든 원자력이든, 그 전력이 어떻게 송전되고 변전소를 거쳐 데이터센터로 들어와 결국 GPU 까지 닿는지 전 구간을 봐야 한다고 했다. 데이터센터가 쓸 수 있는 전력은 기가와트 단위로 미리 정해져 있고, 그 안에서 잃지 않고 컴퓨트로 바꿔야 한다고도 했다. 랙 하나가 쓰는 전력이 백 배로 뛰면, 지금까지 전력을 나르던 방식이 그 구간에서 버티지 못하는 지점이 먼저 나타난다.</p>
 <h2 id="s2"><span class="num">2</span> 저항이라는 낡은 문제가 다시 돌아왔다</h2>
@@ -163,12 +188,49 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="114.4" y="210" width="14" height="14" rx="3" class="fig-box fig-outside"/>
   <text x="136.4" y="222" class="fig-lg">안 되는 길</text>
 </svg><figcaption>같은 꼴 둘이다. 전력은 전압 곱하기 전류라 600킬로와트를 48볼트로 보내면 12,500암페어, 800볼트로 보내면 750암페어가 흐른다. 손실은 전류의 제곱을 따르니 그 차이가 100~200배라는 것이 <span class="pn">진행자V</span>의 셈이다.</figcaption></figure>
-<p>전력 쪽 병목은 성격이 다르다. 여기서 흐르는 것은 직류이고, 저항이 오르는 이유는 표피 효과가 아니라 그냥 옴의 법칙이다. 클라우드 시대 랙은 이 문제를 겪지 않았다. 전력이 낮아 전류도 관리할 만했고, 고전압을 다룰 특수 트랜지스터까지 쓸 이유가 없었다. 그래서 메타는 랙 전원 전압을 48볼트로 표준화했다. 문제는 그 전압을 그대로 둔 채 전력만 올릴 때다. 전력이 전압과 전류의 곱이니 전력을 올리면 전류가 오른다. 숫자로 보면 600킬로와트 랙을 48볼트로 돌릴 때 흐르는 전류는 12,500암페어다. <span class="pn">진행자V</span>는 "그 정도 전류에서는 아무리 작은 저항이라도 상당한 전력을 흩어 버린다"고 말했다. 게다가 흩어지는 전력은 전류의 제곱에 저항을 곱한 값이라, 전류가 커질수록 손실은 그 제곱만큼 불어난다.</p>
+<p>전력 쪽 병목은 성격이 다르다. 여기서 흐르는 것은 직류이고, 저항이 오르는 이유는 표피 효과가 아니라 그냥 옴의 법칙이다. 클라우드 시대 랙은 이 문제를 겪지 않았다. 전력이 낮아 전류도 관리할 만했고, 고전압을 다룰 특수 트랜지스터까지 쓸 이유가 없었다. 그래서 메타는 랙 전원 전압을 48볼트로 표준화했다. 문제는 그 전압을 그대로 둔 채 전력만 올릴 때다. 전력이 전압과 전류의 곱이니 전력을 올리면 전류가 오른다. 숫자로 보면 600킬로와트 랙을 48볼트로 돌릴 때 흐르는 전류는 12,500암페어다. <span class="pn">진행자V</span>는 "그 정도 전류에서는 아무리 작은 저항이라도 상당한 전력을 흩어 버린다"고 말했다. 게다가 흩어지는 전력은 전류의 제곱에 저항을 곱한 값이라, 전류가 커질수록 손실은 그 제곱만큼 불어난다. 같은 전력을 낼 때 전압과 전류는 정확히 반비례한다.</p>
 <h2 id="s3"><span class="num">3</span> 전압을 올려 전류를 낮추자 자동차 부품이 그대로 들어왔다</h2>
-<p>해법은 전압을 800볼트로 올리는 데 있다. 공교롭게도 전기차 트랙션 인버터가 쓰는 전압과 같다. <span class="pn">진행자V</span>는 "자동차 산업 전체가 IGBT 라 불리는 실리콘 트랜지스터나 최근의 실리콘카바이드·질화갈륨 같은 광대역갭 반도체를 이미 성숙시켜 놓았다"고 짚었다. 굳이 새로 만들 필요 없이 이미 있는 부품을 가져다 쓰면 된다는 뜻이다. <span class="pn">진행자A</span>는 데이터센터도 몹시 덥다는 점에서 자동차용 내열 부품이 그대로 맞아떨어진다고 봤다.</p>
+<p>해법은 전압을 800볼트로 올리는 데 있다. 공교롭게도 전기차 트랙션 인버터가 쓰는 전압과 같다. <span class="pn">진행자V</span>는 "자동차 산업 전체가 IGBT 라 불리는 실리콘 트랜지스터나 최근의 실리콘카바이드·질화갈륨 같은 광대역갭 반도체를 이미 성숙시켜 놓았다"고 짚었다. 굳이 새로 만들 필요 없이 이미 있는 부품을 가져다 쓰면 된다는 뜻이다. <span class="pn">진행자A</span>는 데이터센터도 몹시 덥다는 점에서 자동차용 내열 부품이 그대로 맞아떨어진다고 봤다. 이 반도체들은 1000볼트까지 버티도록 설계됐다.</p>
 <p>같은 계산을 800볼트로 다시 하면 전류는 12,500암페어에서 750암페어로 떨어진다. <span class="pn">진행자A</span>는 이걸 "12.5킬로에서 0.75킬로로 내려간 거네요"라고 정리했다. 전류가 열에서 열다섯 배 낮아지면 흩어지는 전력은 제곱 법칙 때문에 백에서 이백 배 낮아진다. <span class="pn">진행자V</span>는 전압을 올리는 것이 저항 문제를 피하는 유일한 현실적 방법이라고 했다.</p>
-<p>이 선택은 엔지니어링 문제로 끝나지 않는다. <span class="pn">진행자V</span>는 저 자동차 부품이 "이미 거친 환경에서 버티도록 만들어졌다. 자동차 안에서 온갖 조건을 견뎌야 하고 열 내성도 높고 품질 기준도 갖춰져 있다"고 했다. 그러니 데이터센터 쪽에서 굳이 다시 개발할 이유가 없고, 반대로 전기차용 전력전자(파워 일렉트로닉스) 회사에는 데이터센터 사업으로 들어올 통로가 생긴다. 이건 가정이 아니다. 엔비디아도 이미 이 방향을 들여다보고 있다고 <span class="pn">진행자V</span>는 전했다.</p>
+<p>이 선택은 엔지니어링 문제로 끝나지 않는다. <span class="pn">진행자V</span>는 저 자동차 부품이 "이미 거친 환경에서 버티도록 만들어졌다. 자동차 안에서 온갖 조건을 견뎌야 하고 열 내성도 높고 품질 기준도 갖춰져 있다"고 했다. 그러니 데이터센터 쪽에서 굳이 다시 개발할 이유가 없고, 반대로 전기차용 전력전자(파워 일렉트로닉스) 회사에는 데이터센터 사업으로 들어올 통로가 생긴다. 이건 가정이 아니다. 엔비디아도 이미 이 방향을 들여다보고 있다고 <span class="pn">진행자V</span>는 전했다. <span class="pn">진행자A</span>는 이 대목에서 투자자라면 곧바로 800볼트나 전기차용 전력전자를 이미 다루는 회사를 찾아보고 싶어질 거라고 했다.</p>
 <h2 id="s4"><span class="num">4</span> 전압도 광통신처럼 칩 가까이까지 끌고 간다</h2>
+<figure class="uc-fig"><p class="fig-title">전압을 어디서 낮추나</p><svg class="epoch" viewBox="0 0 520 316" role="img" aria-label="전압을 멀리서 낮추면 낮은 전압이 긴 구리를 지나며 손실이 붙고, 칩 가까이서 낮추면 고전압이 GPU 바로 아래까지 간다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="118" y="24" text-anchor="middle" class="fig-hd">멀리서 낮추면</text>
+  <text x="357" y="24" text-anchor="middle" class="fig-hd">칩 가까이서 낮추면</text>
+  <rect x="43" y="36" width="150" height="45" rx="9" class="fig-box"/>
+  <text x="118" y="64.5" text-anchor="middle" class="fig-b">800볼트</text>
+  <line x1="118" y1="81" x2="118" y2="99" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="43" y="101" width="150" height="45" rx="9" class="fig-outside"/>
+  <text x="118" y="129.5" text-anchor="middle" class="fig-b">멀리서 48볼트로</text>
+  <line x1="118" y1="146" x2="118" y2="164" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="43" y="166" width="150" height="45" rx="9" class="fig-outside"/>
+  <text x="118" y="194.5" text-anchor="middle" class="fig-b">긴 구리 트레이스</text>
+  <line x1="118" y1="211" x2="118" y2="229" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="43" y="231" width="150" height="45" rx="9" class="fig-box"/>
+  <text x="118" y="259.5" text-anchor="middle" class="fig-b">GPU</text>
+  <rect x="237" y="36" width="240" height="45" rx="9" class="fig-box"/>
+  <text x="357" y="64.5" text-anchor="middle" class="fig-b">800볼트</text>
+  <line x1="357" y1="81" x2="357" y2="99" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="237" y="101" width="240" height="45" rx="9" class="fig-agent"/>
+  <text x="357" y="129.5" text-anchor="middle" class="fig-b">GPU 바로 아래에서 낮춘다</text>
+  <line x1="357" y1="146" x2="357" y2="164" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="237" y="166" width="240" height="45" rx="9" class="fig-box"/>
+  <text x="357" y="194.5" text-anchor="middle" class="fig-b">GPU</text>
+  <rect x="0" y="290" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="302" class="fig-lg">가는 길</text>
+  <rect x="114.4" y="290" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="136.4" y="302" class="fig-lg">안 되는 길</text>
+</svg><figcaption>광통신에서 빛을 칩 가까이까지 끌고 가듯 전력도 고전압인 채로 칩 가까이까지 간다. 멀리서 낮추면 낮은 전압이 긴 구리를 지나며 손실이 붙는데, <span class="pn">진행자A</span>가 든 리니어 플러거블의 긴 구리 트레이스가 같은 자리다. 800볼트를 그 자리에서 바로 1볼트로 바꾸는 것은 아니고 사이에 여러 단계가 남는다.</figcaption></figure>
 <p><span class="pn">진행자V</span>는 여기서 다시 CPO(칩 위에 광학 부품을 바로 붙이는 방식)를 끌어왔다. CPO 가 신호를 광신호 상태로 최대한 칩 가까이 끌고 간 다음 마지막 순간에 전기 신호로 바꾸는 것처럼, 전력도 최대한 고전압 상태로 칩 가까이 끌고 간 다음 마지막에 낮은 전압으로 바꾸는 쪽이 유리하다. <span class="pn">진행자V</span>는 이걸 "부하가 걸리는 지점에서 변환하는 것, 전력 세계의 CPO라고 보면 된다"고 표현했다. <span class="pn">진행자A</span>는 광트랜시버 이전 방식(리니어 플러거블)은 구리 트레이스가 길어 신호가 시끄럽고 손실도 컸다고 짚었다.</p>
 <p>이 방식에 붙은 이름이 수직 전력 전달이다. 전압을 낮추는 칩을 GPU 바로 아래 두고 그 자리에서 변환한다. 다만 800볼트를 그 자리에서 바로 1볼트로 바꾸는 것은 아니다. 그 사이에도 여러 단계의 변환이 여전히 필요하다.</p>
 <p><span class="pn">진행자A</span>는 이 원리가 낯설지 않다고 했다. 동네를 가로지르는 고압 송전선도 같은 이유로 높은 전압을 유지하다가, 마을에 가까워져서야 전압을 낮춰 들여보낸다. 데이터센터 안에서 벌어지는 일도 크기만 다를 뿐 같은 논리다. 고전압을 최대한 오래 유지해 전류를 낮게 두고, 정말 필요한 마지막 순간에만 전압을 낮춘다.</p>
@@ -203,11 +265,11 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="78.5" y="361" width="363" height="45" rx="9" class="fig-agent"/>
   <text x="260" y="389.5" text-anchor="middle" class="fig-b">VRM — 1볼트 안팎, 개수가 가장 많다</text>
 </svg><figcaption>발전소의 수백 킬로볼트가 변전소에서 10~30킬로볼트, 유틸리티룸에서 400~430볼트 삼상, 랙 전원장치에서 48볼트 직류, 중간 버스 컨버터에서 12볼트, VRM 에서 1볼트 안팎으로 내려온다. 자리마다 다른 회사가 서고 VRM 이 개수가 가장 많다.</figcaption></figure>
-<p>전체 사슬을 순서대로 보면 이렇다. ① 발전소에서 나온 전력은 수백 킬로볼트로 송전된다 ② 데이터센터 부지의 변전소에서 10에서 30킬로볼트로 낮아진다. 아직 교류이고 거대한 변압기가 이 일을 한다 ③ 유틸리티실에서 400에서 430볼트 산업용 삼상 전력으로 바뀌어 데이터 홀 안 각 랙으로 분배된다 ④ 랙에서 전원장치(PSU)가 이 교류를 48볼트로 바꾸고, 중간 버스 변환기가 48볼트를 12볼트로, 다시 6볼트대 저전압 버스로 낮춘다 ⑤ 마지막으로 전압조정모듈(VRM)이 GPU 가 요구하는 정확한 전압, 1볼트나 0.8볼트나 0.65볼트로 촘촘하게 맞춘다. <span class="pn">진행자V</span>는 이 변전소 설비가 2나노미터 반도체와는 정반대로, 그냥 전력을 태우는 거대한 기계라고 했다.</p>
+<p>전체 사슬을 순서대로 보면 이렇다. ① 발전소에서 나온 전력은 수백 킬로볼트로 송전된다 ② 데이터센터 부지의 변전소에서 10에서 30킬로볼트로 낮아진다. 아직 교류이고 거대한 변압기가 이 일을 한다 ③ 유틸리티실에서 400에서 430볼트 산업용 삼상 전력으로 바뀌어 데이터 홀 안 각 랙으로 분배된다 ④ 랙에서 전원장치(PSU)가 이 교류를 48볼트로 바꾸고, 중간 버스 변환기가 48볼트를 12볼트로, 다시 6볼트대 저전압 버스로 낮춘다 ⑤ 마지막으로 전압조정모듈(VRM)이 GPU 가 요구하는 정확한 전압, 1볼트나 0.8볼트나 0.65볼트로 촘촘하게 맞춘다. <span class="pn">진행자V</span>는 이 변전소 설비가 2나노미터 반도체와는 정반대로, 그냥 전력을 태우는 거대한 기계라고 했다. 가정에서 쓰는 전압은 110볼트나 220볼트 수준으로, 산업용 400볼트대보다 낮다.</p>
 <p>이 다섯 단계마다 기술도 회사도 다르다. 변전소의 변압기와 정밀 조정이 필요 없는 LLC 변환기가 있고, 48볼트에서 12볼트로 낮추는 데만 특화한 회사가 따로 있고, VRM 은 소수 회사가 시장을 쥐고 있으면서도 데이터센터 안에서 개수가 가장 많은 부품이다. <span class="pn">진행자V</span>는 이걸 HBM 과 견줬다. <span class="q">"HBM 은 그냥 같은 세 회사가 같은 방식으로 쌓고 있을 뿐이다. 어떤 의미에서는 닫힌 문제다. 전력은 아주, 아주 넓게 열린 문제다"</span>.</p>
 <p>이 다섯 단계가 이렇게 서로 다른 이유가 앞서 나온 예산 이야기다. 데이터센터가 받을 수 있는 전력은 기가와트 단위로 정해져 있으니, 이 다섯 단계 중 어느 하나라도 비효율적이면 그만큼 컴퓨트로 못 쓰고 버리는 전력이 생긴다. 그러니 단계마다 최적화 경쟁이 붙고, 그 경쟁마다 다른 회사가 선다.</p>
 <h2 id="s6"><span class="num">6</span> 다음에 투자자들이 배울 용어는 전력 변환 토폴로지다</h2>
-<p><span class="pn">진행자V</span>가 스스로 짚은 비유가 하나 있다. 다들 이제 인듐인화물(InP)이 뭔지 알고 레이저 공급 부족을 알고 코히어런트 옵틱스와 레인 레이트를 얘기한다. 다음 차례는 전력 변환 토폴로지가 될 텐데, 다루는 범위가 광통신보다 훨씬 넓어서 더 어려울 것이라고 했다. 기본 회로만 봐도 두 갈래다. 직류를 교류로 바꿔 변압기 권선비로 낮춘 뒤 다시 직류로 되돌리는 방식과, 켜고 끄는 시간의 비율로 평균 전압을 조절하는 동기식 벅 컨버터 방식이다. 예를 들어 권선비를 10대 1로 하면 전류를 10분의 1로 낮출 수 있다고 <span class="pn">진행자V</span>는 설명했다.</p>
+<p><span class="pn">진행자V</span>가 스스로 짚은 비유가 하나 있다. 다들 이제 인듐인화물(InP)이 뭔지 알고 레이저 공급 부족을 알고 코히어런트 옵틱스와 레인 레이트를 얘기한다. 다음 차례는 전력 변환 토폴로지가 될 텐데, 다루는 범위가 광통신보다 훨씬 넓어서 더 어려울 것이라고 했다. 기본 회로만 봐도 두 갈래다. 직류를 교류로 바꿔 변압기 권선비로 낮춘 뒤 다시 직류로 되돌리는 방식과, 켜고 끄는 시간의 비율로 평균 전압을 조절하는 동기식 벅 컨버터 방식이다. 예를 들어 권선비를 10대 1로 하면 전류를 10분의 1로 낮출 수 있다고 <span class="pn">진행자V</span>는 설명했다. 벅 컨버터는 스위치를 켜 두는 시간을 길게 잡으면 평균 전압이 오르고 짧게 잡으면 내려가는 원리로 작동한다.</p>
 <figure class="uc-fig"><p class="fig-title">800볼트 다음의 두 갈래</p><svg class="epoch" viewBox="0 0 520 254" role="img" aria-label="800볼트 다음은 두 갈래다. 있던 48볼트 설비를 거쳐 12볼트·1볼트로 내려가거나, 6볼트로 바로 간다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
@@ -243,5 +305,5 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>정작 어느 경로로 갈지는 아직 정해지지 않았다. 한쪽은 800볼트를 48볼트로 낮춰 지금까지 쓰던 인프라를 그대로 재사용하자는 쪽이고, 다른 쪽은 텍사스인스트루먼트나 나비타스처럼 48볼트를 건너뛰고 바로 6볼트로 가자는 쪽이다. 변환 단계가 줄수록 효율이 오르기 때문이다. <span class="pn">진행자A</span>는 이해관계를 짧게 정리했다. "48볼트 기존 업체들은 그냥 48볼트로 가서 재사용하자고 할 거고, 6볼트·12볼트 쪽은 그거 건너뛰고 우리한테 오라고 할 것"이라고 했다. <span class="pn">진행자V</span>도 같은 말을 했다. "48볼트로 가면 그 사람들은 좋아하고, 아니면 자기네 전압을 통째로 건너뛰는 거니까 곤란해한다".</p>
 <p><span class="pn">진행자V</span>는 이 대목에서 농담처럼 한마디를 보탰다. 참여 회사가 이렇게 많으니 전력 관련 실적 발표만 따라다니는 애널리스트 부대가 따로 필요할 거라고 했다. 광통신도 몇 년 전까지는 소수 전문가만 아는 영역이었다가 지금은 실적 콜마다 나오는 상식이 됐다. 전력 변환 토폴로지도 같은 길을 갈 가능성이 있다는 뜻이다.</p>
 <h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</h2>
-<p>이 회차가 말하지 않은 것은 넷이다. ① 48볼트 재사용과 6볼트 직행 중 어느 쪽이 실제로 표준이 될지는 열려 있다. 두 진행자 모두 "아직 아무것도 정해지지 않았다"고만 했다. ② 이번 세대인지 다음 세대인지도 확정이 아니다. <span class="pn">진행자V</span>는 "이번 세대는 아닐 수도 있고, 다음 세대일 수도 있다"고 했다. ③ 800볼트에서 48볼트로 내려가는 정확한 회로 구성과 효율 계산은 이 방송에서 다루지 않았다. <span class="pn">진행자V</span>는 서브스택 글에 계산 예시가 있다고만 언급했다. ④ 변환 단계를 하나씩 줄일 때마다 효율이 정확히 얼마나 오르는지도 숫자로는 나오지 않았다. "단계마다 효율을 잃는다"는 방향만 확인됐다.</p>
+<p>이 회차가 말하지 않은 것은 넷이다. ① 48볼트 재사용과 6볼트 직행 중 어느 쪽이 실제로 표준이 될지는 열려 있다. <span class="pn">진행자V</span>는 "아직 아무것도 정해지지 않았다"고만 했다. ② 이번 세대인지 다음 세대인지도 확정이 아니다. <span class="pn">진행자V</span>는 "이번 세대는 아닐 수도 있고, 다음 세대일 수도 있다"고 했다. ③ 800볼트에서 48볼트로 내려가는 정확한 회로 구성과 효율 계산은 이 방송에서 다루지 않았다. <span class="pn">진행자V</span>는 서브스택 글에 계산 예시가 있다고만 언급했다. ④ 변환 단계를 하나씩 줄일 때마다 효율이 정확히 얼마나 오르는지도 숫자로는 나오지 않았다. "단계마다 효율을 잃는다"는 방향만 확인됐다.</p>
 <p>판단이 바뀌는 조건은 셋이다. ① 엔비디아나 다른 가속기 업체가 800볼트에서 48볼트로 가는 경로와 6볼트로 바로 가는 경로 중 하나를 표준으로 못 박으면, 6절의 싸움은 끝나고 그 표준에 맞춘 부품 회사가 이긴다. ② 지금 VRM 시장을 쥐고 있는 소수 회사의 구도가 800볼트 체계에서도 그대로 유지되는지, 아니면 전기차 부품 회사가 실제로 새로 들어오는지가 5절에서 짚은 "닫힌 문제 대 열린 문제" 구도의 향방을 정한다. ③ 4절에서 짚은 800볼트에서 48볼트로 가는 새 변환 지점을 기존 전력 반도체 회사가 차지하는지, 아니면 자동차 업계에서 넘어온 신규 진입자가 차지하는지도 아직 열려 있다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-05-08-power-wall-strategy.md">insights/semidoped/2026-05-08-power-wall-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
