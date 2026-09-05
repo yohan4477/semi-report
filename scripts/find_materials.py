@@ -31,6 +31,7 @@ Part 1 — 전기 시스템」도 「PJM 모델링 오류로 날린 120억 달�
 import argparse
 import glob
 import io
+import json
 import os
 import re
 import sys
@@ -39,14 +40,19 @@ sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 보고서 층이 재료로 삼는 자리. content/understanding 은 제3자 해설이라 기본에서 뺀다
+# 글로브는 전부 재귀로 둔다. 한 겹만 보다가 input/clippings/mer/ 430편을 통째로
+# 놓쳤다(2026-09-05, 사용자가 「메르는?」이라고 물어 걸렸다). json 도 본다 — 메르 사슬은
+# 산문이 아니라 노드·엣지라서 md 만 보면 이 주제에서 가장 정돈된 재료가 안 보인다
 SETS = {
     '뉴스레터': ['content/newsletter/**/*.md'],
-    'SemiDoped': ['insights/semidoped/*.md'],
-    '클리핑': ['input/clippings/*.md'],
+    'SemiDoped': ['insights/semidoped/**/*.md'],
+    '클리핑': ['input/clippings/**/*.md'],
     '팟캐스트': ['content/podcast/**/*.md'],
     '해설': ['content/understanding/**/*.md'],
+    '메르': ['input/clippings/mer/**/*.json'],
+    '사슬': ['insights/flows/**/*.json'],
 }
-DEFAULT = ['뉴스레터', 'SemiDoped', '클리핑', '팟캐스트']
+DEFAULT = ['뉴스레터', 'SemiDoped', '클리핑', '팟캐스트', '메르', '사슬']
 
 _DATE = re.compile(r'\[(\d{6})\]')
 _FRONT = re.compile(r'^---.*?^---', re.S | re.M)
@@ -61,10 +67,52 @@ def files(sets):
     return sorted(set(out))
 
 
+def _strings(o, out):
+    """json 안의 글자를 전부 끌어모은다. 열쇠 이름은 안 센다 — 값이 내용이다."""
+    if isinstance(o, dict):
+        for v in o.values():
+            _strings(v, out)
+    elif isinstance(o, list):
+        for v in o:
+            _strings(v, out)
+    elif isinstance(o, str):
+        out.append(o)
+    return out
+
+
+_JTITLE = ('title', 'thread', 'headline', 'question', 'subhead')
+_JDATE = ('date', 'as_of', 'published')
+
+
 def body(path):
-    """frontmatter 를 걷은 본문. 앞머리의 태그 목록이 신호를 부풀린다."""
+    """대조할 글자. md 는 frontmatter 를 걷고, json 은 값만 이어 붙인다."""
     t = io.open(path, encoding='utf-8', errors='ignore').read()
+    if path.lower().endswith('.json'):
+        try:
+            return ' '.join(_strings(json.loads(t), []))
+        except ValueError:
+            return ''
     return _FRONT.sub('', t, count=1)
+
+
+def label(path):
+    """표에 보일 제목과 때. json 은 파일명이 숫자라 안에서 꺼내 온다."""
+    name = os.path.basename(path)
+    if not path.lower().endswith('.json'):
+        return name, when(name)
+    try:
+        d = json.loads(io.open(path, encoding='utf-8', errors='ignore').read())
+    except ValueError:
+        return name, when(name)
+    if not isinstance(d, dict):
+        return name, when(name)
+    title = next((str(d[k]) for k in _JTITLE if d.get(k)), name)
+    dt = next((str(d[k])[:7] for k in _JDATE if d.get(k)), '')
+    if not dt:
+        sp = d.get('span')
+        if isinstance(sp, list) and sp:
+            dt = '%s~' % str(sp[0])[:7]
+    return title, (dt[2:] if len(dt) == 7 else (dt or '  ·  '))
 
 
 def when(name):
@@ -103,9 +151,10 @@ def main():
         dens = n * 1000.0 / len(txt)
         if dens < a.min:
             continue
-        in_title = any(p.search(name) for _w, p in pats)
+        shown_name, dt = label(path)
+        in_title = any(p.search(shown_name) for _w, p in pats)
         got = [w for w, c in hits.items() if c]
-        rows.append((dens, n, kind, when(name), in_title, name, got, path))
+        rows.append((dens, n, kind, dt, in_title, shown_name, got, path))
 
     rows.sort(reverse=True)
     shown = rows[:a.top]
