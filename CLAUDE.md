@@ -27,16 +27,18 @@
 원문에서 이름 찾기                    entity-search    grep 대신. 별칭·영문 표기를 사전이 알고 영수증이 붙는다.
                                                      개념으로 묻는 물음은 못 찾는다
 Epoch AI 글(epoch.ai/gradient-updates) epoch-gradient   링크 하나로 요약·도해·카드·검사·푸시까지. 도해는 PNG 아닌 한국어 SVG
-통합 보고서(대시보드/통합 보고서.html) insight-report   새 층은 카드가 아니라 각도에서 세운다 — structure A 로 가르고 여러 편에
-                                                     걸친 주체만 남겨, 편마다 어느 자리에 서는지를 절로. 첫 실물 sec-fund(08-28)
+통합 보고서(대시보드/통합 보고서.html) insight-report   새 층은 카드가 아니라 원문에서 바로 세운다 — sonnet 이 사실표를 뽑고 메인이
+                                                     절을 세우고 haiku 가 대조한다. 위임문은 references/위임문.md.
+                                                     첫 실물 sec-pkg(09-05). 전수는 check_cover 가 센다
 절이 여섯을 넘는 글                   doc-structure    비교표에는 「언제 것 · 성격」 열 — 없으면 공표치와 추정치가 같은 무게
 카드에 도해 붙이기·고치기             insight-figure   「없는 값을 그렸다」로 무너진다. 배치는 scratchpad/check_fig.py
-구조화(원문 각도 A · 케이스 구조 B)    structure        원문이 먼저면 A, 물음이 먼저면 B, 둘 다면 A 산출을 B 재료로.
-                                                     레인 파일 둘(references/원문-각도.md·케이스-구조.md)을 같이 열지 않는다
+구조화(케이스 구조 B)                  structure        답이 안 보이는 큰 물음을 쪼개 어디부터 팔지 고른다.
+                                                     원문 각도 A 레인은 걷혔다(2026-08-28, 9e36cbd4) — 원문이 먼저면
+                                                     insight-report 의 사실표 경로로 간다
 건강 인사이트(🩺)                     health-insight   카드 단위가 주제, 본문에 해부도
 ```
 
-**각도는 아직 노트를 대신하지 못한다** — 고르는 데는 빠른데 세우는 데는 줄 번호와 저자 논지가 모자란다(2026-08-28 실험, 원문을 여덟 번 열었다). 각도에 줄 번호 칸·「저자 논지」 절·도해 표시가 다 들어오기 전까지 교차 카드는 노트와 함께 쓴다. 진행은 `check_angles` A7·A8.
+**각도 체계는 걷혔다**(2026-08-28, 커밋 `9e36cbd4`) — 고르는 데는 빨랐는데 세우는 데는 줄 번호와 저자 논지가 모자랐다. `insights/angles/`·`check_angles.py`·`structure` 의 원문-각도 레인이 함께 지워졌다. 각도를 부르는 지시는 낡은 것이다. 원문에서 층을 세우는 길은 `insight-report` 의 사실표 경로다.
 
 ## 검사기
 
@@ -51,7 +53,7 @@ PYTHONIOENCODING=utf-8 python insights/check_index.py   # 색인 주소가 맞�
 PYTHONIOENCODING=utf-8 python scripts/check_deps.py    # 추적된 코드가 부르는 파일이 추적되나
 PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인 — 조정 표·기간 정합·박아 둔 상수
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
-PYTHONIOENCODING=utf-8 python insights/check_angles.py  # 각도 — 대상이 사전 정본인가, 성격이 여덟에 드나
+PYTHONIOENCODING=utf-8 python insights/check_cover.py   # 보고서가 바탕 재료를 전수로 썼나
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 PYTHONIOENCODING=utf-8 python insights/check_struct.py # 구조 — 앞머리·목차·물음 절·성격 열이 서 있나
 PYTHONIOENCODING=utf-8 python insights/check_frame.py # 프레임 — 남의 모델이 준 틀에서 원문 밖 주장이 카드로 샜나
