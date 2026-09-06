@@ -145,3 +145,27 @@ def test_debate_card_separates_moderator_from_voices():
     # 진행자 절 셋이 다 나온다
     for k in ('물음', '갈리는 자리', '무엇을 보면 갈리나'):
         assert k in h
+    # 사람이 둘(엘곰·SemiAnalysis)이라 이름 색이 갈린다. 답하지 않은 화자도 명단에 든다
+    assert '<b class="sp0">엘곰</b>' in h
+    assert '<b class="sp1">SemiAnalysis</b>' in h
+
+    # 같은 사람의 발언 둘은 한 색이다 — 색이 사람을 묶는다
+    two = card_lib.debate_html({
+        'question': 'q', 'moderator': {}, 'silent': [], 'figs': (),
+        'voices': [{'actor': '엘곰', 'said': '08-20', 'title': 'ㄱ', 'stance': '단독',
+                    'against': '', 'claim': '', 'body': ''},
+                   {'actor': '이선엽', 'said': '08-21', 'title': 'ㄴ', 'stance': '충돌',
+                    'against': '엘곰', 'claim': '', 'body': ''},
+                   {'actor': '엘곰', 'said': '08-22', 'title': 'ㄷ', 'stance': '단독',
+                    'against': '', 'claim': '', 'body': ''}]})
+    assert two.count('<b class="sp0">엘곰</b>') == 2
+    assert '<b class="sp1">이선엽</b>' in two
+
+    # 화자가 하나뿐이면 색을 안 준다 — 갈릴 것이 없는데 칠하면 없는 뜻이 생긴다
+    solo = card_lib.debate_html({
+        'question': 'q', 'moderator': {}, 'silent': [], 'figs': (),
+        'voices': [{'actor': '엘곰', 'said': '08-20', 'title': 'ㄱ', 'stance': '단독',
+                    'against': '', 'claim': '', 'body': ''},
+                   {'actor': '엘곰', 'said': '08-22', 'title': 'ㄷ', 'stance': '단독',
+                    'against': '', 'claim': '', 'body': ''}]})
+    assert 'class="sp' not in solo

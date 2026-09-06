@@ -491,8 +491,19 @@ def post_html(items, figs=()):
 DEBATE_CSS = '''
   :root{--dbt-risk:#dc2626;--dbt-risk-soft:#fdeaea;--dbt-good:#16a34a;--dbt-good-soft:#e8f6ec;
         --dbt-warn:#d97706;--dbt-warn-soft:#fdf1df}
-  @media (prefers-color-scheme:dark){:root{--dbt-risk:#f87171;--dbt-risk-soft:#3a1a1a;
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+        --dbt-risk:#f87171;--dbt-risk-soft:#3a1a1a;
         --dbt-good:#5ecb84;--dbt-good-soft:#173323;--dbt-warn:#f0a44e;--dbt-warn-soft:#3a2c17}}
+  [data-theme="dark"]{--dbt-risk:#f87171;--dbt-risk-soft:#3a1a1a;
+        --dbt-good:#5ecb84;--dbt-good-soft:#173323;--dbt-warn:#f0a44e;--dbt-warn-soft:#3a2c17}
+  /* 화자 이름 색 — 한 쟁점에 사람이 둘 이상일 때만 쓴다. 같은 사람의 발언 셋이
+     흩어져 있어도 색 하나로 묶여, 누가 몇 번 말했나가 읽기 전에 보인다.
+     빨강·초록·주황은 안 쓴다 — 같은 줄에 선 관계 배지(충돌·동의·결다름)가
+     그 셋을 이미 쓰고 있어서 이름 색이 배지 뜻으로 읽힌다 */
+  :root{--dbt-sp0:#2b5d8a;--dbt-sp1:#6a3d7a;--dbt-sp2:#1f6f6a;--dbt-sp3:#7a4a1e}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+        --dbt-sp0:#7fb2dd;--dbt-sp1:#c09ad0;--dbt-sp2:#5fb8b0;--dbt-sp3:#c99a63}}
+  [data-theme="dark"]{--dbt-sp0:#7fb2dd;--dbt-sp1:#c09ad0;--dbt-sp2:#5fb8b0;--dbt-sp3:#c99a63}
   /* 진행자 — 판단. 배경을 깔고 왼쪽에 굵은 선을 세워 화자 인용과 한눈에 갈린다 */
   .uc-mod{margin:16px 0;padding:13px 16px 11px;background:var(--sunk);
           border-left:4px solid var(--accent);border-radius:0 10px 10px 0}
@@ -510,6 +521,10 @@ DEBATE_CSS = '''
             border:1px solid var(--line);border-radius:10px}
   .uc-voice-head{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 6px}
   .uc-voice-head b{font-size:.9rem;font-weight:800;color:var(--ink)}
+  .uc-voice-head b.sp0,.uc-silent li b.sp0{color:var(--dbt-sp0)}
+  .uc-voice-head b.sp1,.uc-silent li b.sp1{color:var(--dbt-sp1)}
+  .uc-voice-head b.sp2,.uc-silent li b.sp2{color:var(--dbt-sp2)}
+  .uc-voice-head b.sp3,.uc-silent li b.sp3{color:var(--dbt-sp3)}
   .uc-voice-when{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
   .uc-voice-src{font-size:12px;color:var(--sub)}
   .uc-voice-claim{margin:0 0 8px;font-size:.86rem;font-weight:700;font-style:italic;
@@ -544,6 +559,29 @@ DEBATE_CSS = '''
 '''
 
 
+SPEAKER_COLORS = 4
+
+
+def speaker_classes(d):
+    """화자 이름에 붙일 색 이름표. 사람이 둘 이상일 때만 준다.
+
+    한 사람뿐인 쟁점에 색을 주면 그 색이 아무것도 안 가른다 — 갈릴 것이 없는데
+    칠하면 독자가 뜻을 찾다가 없는 뜻을 만든다. 순서는 화면에 나온 차례이고
+    답하지 않은 화자도 같은 명단에 넣는다 — 말한 자리와 빈자리가 같은 사람일 때
+    둘이 한 색으로 묶여야 「이 사람은 여기선 말하고 저기선 안 했다」가 보인다.
+    """
+    names = []
+    for v in d['voices']:
+        if v['actor'] not in names:
+            names.append(v['actor'])
+    for s in d.get('silent') or ():
+        if s['actor'] not in names:
+            names.append(s['actor'])
+    if len(names) < 2:
+        return {}
+    return {n: ' class="sp%d"' % (i % SPEAKER_COLORS) for i, n in enumerate(names)}
+
+
 def debate_html(d):
     """쟁점 카드 본문 — 진행자와 화자를 갈라 낸다.
 
@@ -551,6 +589,7 @@ def debate_html(d):
     자료구조로 갈라 놓은 것이 화면에서 도로 붙는다.
     """
     h = []
+    spc = speaker_classes(d)
     h.append('<div class="uc-mod"><span class="uc-mod-tag">진행자</span>')
     h.append('<h3>물음</h3>%s' % d['moderator'].get('물음', ''))
     h.append('</div>')
@@ -560,11 +599,12 @@ def debate_html(d):
         rel = v['stance'] if v['stance'] == '단독' else '%s ↔ %s' % (
             v['stance'], v['against'])
         h.append('<div class="uc-voice">')
-        h.append('<div class="uc-voice-head"><b>%s</b>'
+        h.append('<div class="uc-voice-head"><b%s>%s</b>'
                  '<span class="uc-voice-when">%s</span>'
                  '<span class="uc-voice-src">「%s」</span>'
                  '<span class="uc-stance is-%s">%s</span></div>'
-                 % (v['actor'], v['said'], v['title'], v['stance'], rel))
+                 % (spc.get(v['actor'], ''), v['actor'], v['said'], v['title'],
+                    v['stance'], rel))
         if v.get('claim'):
             h.append('<p class="uc-voice-claim">%s</p>' % v['claim'])
         h.append(v['body'])
@@ -572,7 +612,8 @@ def debate_html(d):
     if d.get('silent'):
         h.append('<div class="uc-silent"><h3>답하지 않은 화자</h3><ul>')
         for s in d['silent']:
-            h.append('<li><b>%s</b> — %s</li>' % (s['actor'], s['why']))
+            h.append('<li><b%s>%s</b> — %s</li>'
+                     % (spc.get(s['actor'], ''), s['actor'], s['why']))
         h.append('</ul></div>')
     h.append('<div class="uc-mod"><span class="uc-mod-tag">진행자</span>')
     h.append('<h3>갈리는 자리</h3>%s' % d['moderator'].get('갈리는 자리', ''))
