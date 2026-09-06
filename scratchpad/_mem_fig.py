@@ -49,7 +49,7 @@ _M1 = _row(1, 16, 44, 236)
 _M2 = _row(3, 104, 96, 190, gap=12)
 _M3 = _row(3, 232, 46, 190, gap=12)
 
-FIG_MAP = _svg(W, 300, '값은 올랐는데 만드는 회사 손에 안 남는 세 자리', ''.join(
+FIG_MAP = _svg(W, 318, '값은 올랐는데 만드는 회사 손에 안 남는 세 자리', ''.join(
     [_box(_M1[0][0], _M1[0][1], _M1[0][2], _M1[0][3], ['메모리 값이 오른다'], INK, 2.0)]
     + [_a(_M1[0][0] + _M1[0][2] // 2, 60, c[0] + c[2] // 2, 104) for c in _M2]
     + [_box(c[0], c[1], c[2], c[3], lines) for c, lines in zip(_M2, [
@@ -61,7 +61,7 @@ FIG_MAP = _svg(W, 300, '값은 올랐는데 만드는 회사 손에 안 남는 �
     + [_box(c[0], c[1], c[2], c[3], lines, INK3, 1.5) for c, lines in zip(_M3, [
         ['4절 · 5절'], ['6절'], ['7절 · 8절 · 9절'],
     ])]
-    + [_lt(18, 290, '상자는 이 글의 절 배열이고 원문이 센 수가 아니다', 't-sm', False)]
+    + [_lt(18, 310, '상자는 이 글의 절 배열이고 원문이 센 수가 아니다', 't-sm', False)]
 ))
 
 
@@ -79,18 +79,18 @@ def _wp(v):           # 오른쪽 눈금 — 35% = 136px
     return int(136 * v / 35.0)
 
 
-FIG_WAFER = _svg(W, 244, '같은 웨이퍼 한 장에서 HBM 은 비트를 훨씬 적게 낸다', ''.join([
-    _lt(18, 18, '웨이퍼 한 장에서 나오는 비트 (HBM 을 1 로 둔 비)', 't-sm', True),
-    _bar(26, _WB, _wq(3), 74, '3배', '범용 · HBM3E 12단'),
-    _bar(112, _WB, _wq(4), 74, '4배', '범용 · HBM4'),
-    _bar(198, _WB, _wq(1), 74, '1', 'HBM 웨이퍼', accent=True),
-    '<line x1="306" y1="10" x2="306" y2="230" stroke="%s" stroke-width="1" '
+FIG_WAFER = _svg(W, 266, '같은 웨이퍼 한 장에서 HBM 은 비트를 훨씬 적게 낸다', ''.join([
+    _lt(18, 18, '웨이퍼 한 장이 내는 비트 (HBM = 1)', 't-sm', True),
+    _bar(26, _WB, _wq(3), 74, '3배', '범용(HBM3E)'),
+    _bar(112, _WB, _wq(4), 74, '4배', '범용(HBM4)'),
+    _bar(198, _WB, _wq(1), 74, '1', 'HBM', accent=True),
+    '<line x1="306" y1="10" x2="306" y2="244" stroke="%s" stroke-width="1" '
     'stroke-dasharray="4 4"/>' % INK3,
-    _lt(326, 18, '전체 D램 생산능력에서 HBM 이 차지하는 몫', 't-sm', True),
+    _lt(326, 18, 'D램 생산능력에서 HBM 의 몫', 't-sm', True),
     _bar(336, _WB, _wp(5), 74, '5% 미만', '2022년'),
     _bar(422, _WB, _wp(20), 74, '20%', '2025년 말'),
     _bar(508, _WB, _wp(35), 74, '35%', '2027년 말', accent=True),
-    _lt(18, 236, '오른쪽 둘은 SemiAnalysis 전망치다 (2026-02)', 't-sm', False),
+    _lt(18, 258, '오른쪽 뒤 둘은 SemiAnalysis 전망치다 (2026-02)', 't-sm', False),
 ]))
 
 
@@ -137,7 +137,7 @@ FIG_CXMT = _svg(W, 258, 'CXMT 는 웨이퍼로는 3위를 노리는데 HBM 은 �
     _bar(294, _CB, _cw(350), 78, '350', 'CXMT', accent=True),
     '<line x1="396" y1="12" x2="396" y2="242" stroke="%s" stroke-width="1" '
     'stroke-dasharray="4 4"/>' % INK3,
-    _lt(416, 20, 'CXMT 웨이퍼 265kwspm 을 어디에 쓰나 (2025년 말)', 't-sm', True),
+    _lt(416, 20, 'CXMT 웨이퍼를 어디에 쓰나 (2025년 말)', 't-sm', True),
     '<rect x="470" y="50" width="60" height="150" rx="6" fill="none" stroke="%s" '
     'stroke-width="1.5"/>' % INK3,
     _t(500, 42, '100%', 't-sm'),
@@ -155,7 +155,7 @@ FIG_CXMT = _svg(W, 258, 'CXMT 는 웨이퍼로는 3위를 노리는데 HBM 은 �
 # ── 도해 5. HBM 위에 얹는 층 — 두 진영 ────────────────────────────
 # 같은 꼴 둘을 나란히 두고 맨 위 층만 다르게(확정 규칙 「견줄 때는 같은 꼴」).
 # 값은 메르NextHBM T65-T67·T118·T186·T188. 층 이름은 원문 그대로.
-_NC = _row(2, 46, 178, 250, gap=40)
+_NC = _row(2, 62, 178, 250, gap=40)
 _NH = 38
 
 
@@ -177,10 +177,10 @@ def _stack(c, head, top_name, top_note, dashed, when):
     return ''.join(out)
 
 
-FIG_NEXT = _svg(W, 262, 'HBM 위에 무엇을 한 층 더 얹을 것인가 — 두 진영', ''.join([
+FIG_NEXT = _svg(W, 278, 'HBM 위에 무엇을 한 층 더 얹을 것인가 — 두 진영', ''.join([
     _lt(18, 22, '짙은 칸이 새로 얹는 층이고 점선은 상용화 시점이 아직 없는 것', 't-sm', True),
     _stack(_NC[0], 'SK하이닉스 · 샌디스크 · 구글', 'HBF', '용량과 비용',
            False, '2026년 하반기 샘플 · 2027년 양산 목표'),
     _stack(_NC[1], '삼성전자', 'zHBM', '속도와 효율', True, '개념 모델 · 시점 미정'),
-    _lt(18, 254, '아래 두 층은 두 진영이 같다 — 다른 것은 맨 위 한 칸뿐이다', 't-sm', False),
+    _lt(18, 270, '아래 두 층은 두 진영이 같다 — 다른 것은 맨 위 한 칸뿐이다', 't-sm', False),
 ]))
