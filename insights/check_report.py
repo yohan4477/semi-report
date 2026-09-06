@@ -53,6 +53,11 @@ PAGES = [
     # 흩어져 있어 공통 폴더가 content/understanding 인데 그것을 통째로 넣으면 540편이
     # 알리바이가 된다. 그래서 폴더 없이 RATE_EXTRA 에 파일을 하나씩 적는다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-rate', None),
+    # 메모리 층(2026-09-06). 뉴스레터 다섯 편은 폴더에서 오고, 링크드인 석 달치와 메르 다섯 편,
+    # 미국주식 사관학교 여섯 편은 MEM_EXTRA 에 파일로 하나씩 적는다 — understanding 을 통째로
+    # 넣으면 이 층과 무관한 편의 값이 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-mem',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -132,6 +137,25 @@ RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
     'content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md',
 )]
 
+MEM_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+    'content/linkedin/[2607] 링크드인 게시물.md',
+    'content/linkedin/[2608] 링크드인 게시물.md',
+    'content/linkedin/[2609] 링크드인 게시물.md',
+    'input/clippings/mer/224372898270.json',
+    'input/clippings/mer/224358943114.json',
+    'input/clippings/mer/224358951791.json',
+    'input/clippings/mer/224331285266.json',
+    'input/clippings/mer/224399253940.json',
+    'content/understanding/미국주식 사관학교/[260729] SK하이닉스 실적의 역설 - HBM 1등이라 상승분을 덜 받았다.md',
+    'content/understanding/미국주식 사관학교/[260717] 가격이 논리를 만든다 - 마이크론의 「여기쯤」 선.md',
+    'content/understanding/미국주식 사관학교/[260803] 엔비디아 vs AMD 메모리 치킨게임 - 누가 이겨도 HBM이 남는다.md',
+    'content/understanding/미국주식 사관학교/[260826] 메타가 메모리 대란에서 혼자 웃는 이유 - 버려질 서버에서 헌 D램을 거의 공짜로 건진다.md',
+    'content/understanding/미국주식 사관학교/[260816] 애플이 중국산 D램을 두드린 이유 - 이익률은 깎여도 대당 이익은 지킨다.md',
+    'content/understanding/미국주식 사관학교/[260719] CXMT는 딥시크와 다르다 - 수요 충격이 아니라 공급 충격이다.md',
+    "input/clippings/Korea’s Trillion-Dollar Sovereign AI Investment Nvidia Wins, Hynix Loses.md",
+    'input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md',
+)]
+
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
@@ -145,7 +169,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

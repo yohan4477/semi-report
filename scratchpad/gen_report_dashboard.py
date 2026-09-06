@@ -20,6 +20,8 @@ import _pkg_fig  # noqa: E402
 import _rep_toc  # noqa: E402
 import _rate_part1  # noqa: E402
 import _rate_fig  # noqa: E402
+import _mem_part1  # noqa: E402
+import _mem_fig  # noqa: E402
 import dash_common as dc
 from card_lib import fig_html
 
@@ -218,21 +220,37 @@ def report_rate_html():
     return ''.join(h)
 
 
+def report_mem_html():
+    """메모리 총정리 — 한 편. 본문은 insights/reports/mem-2026-09-06.md 원본에서 읽는다."""
+    h = [_mem_part1.HEAD_MEM]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="mem-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _mem_part1.report_mem(sec, p, fig)
+    return ''.join(h)
+
+
 HEADER = '''  <header>
     <p class="eyebrow">여러 편을 한 물음으로 꿴 글</p>
     <h1>통합 보고서</h1>
   </header>'''
 
 LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 장은 그 답들을 이어 붙입니다. '
-        '지금 실린 것은 셋입니다 — <b>CPO</b>(광학을 칩 옆까지 끌어온 방식)는 빛이 '
+        '지금 실린 것은 넷입니다 — <b>CPO</b>(광학을 칩 옆까지 끌어온 방식)는 빛이 '
         '데이터센터 어디까지 들어왔는지를, <b>선단 패키징</b>은 다이 하나로 못 만들게 된 뒤 '
         '무엇이 그 일을 대신했는지를, <b>금리·물가</b>는 연준이 내렸는데 왜 장기금리는 '
-        '올랐는지를 묻습니다. 본문은 <code>insights/reports/</code> 의 원본에서 읽어 옵니다.</p>')
+        '올랐는지를, <b>메모리</b>는 40년 만에 모자란데 왜 만드는 회사 손에 안 남는지를 '
+        '묻습니다. 본문은 <code>insights/reports/</code> 의 원본에서 읽어 옵니다.</p>')
 
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
-      <span>바탕 <b>SemiAnalysis 18편 · Semi Doped 6회차 · 메르 24편 · 해설 13편</b></span>
-      <span>보고서 <b>3편</b></span>
+      <span>바탕 <b>SemiAnalysis 23편 · Semi Doped 6회차 · 메르 29편 · 해설 19편 · 링크드인 3개월</b></span>
+      <span>보고서 <b>4편</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -244,7 +262,8 @@ FOOTER = (LEDE + META_ROW
 # 검사를 통째로 빠져나간다. 캡션까지 각 층의 CAPTION 이 정본이다
 REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _pkg_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()])
 
 
 if __name__ == '__main__':
@@ -258,7 +277,10 @@ if __name__ == '__main__':
                      'SemiAnalysis 9편 + Semi Doped 1회차 — 다이 하나로 못 만들게 된 뒤 '
                      '무엇이 그 일을 대신했나', 1, report_pkg_html()),
                     ('sec-rate', '금리·물가 — 누가 다르게 읽나', '메르 24편 + 해설 13편 — 연준이 '
-                     '내렸는데 왜 장기금리는 올랐나', 1, report_rate_html())],
+                     '내렸는데 왜 장기금리는 올랐나', 1, report_rate_html()),
+                    ('sec-mem', '메모리 — 모자란데 왜 안 웃나',
+                     'SemiAnalysis 5편 + 링크드인 3개월 + 해설 11편 — 40년 만에 모자란데 왜 '
+                     '만드는 회사 손에 안 남나', 1, report_mem_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
