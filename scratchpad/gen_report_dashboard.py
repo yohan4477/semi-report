@@ -22,6 +22,7 @@ import _rate_part1  # noqa: E402
 import _rate_fig  # noqa: E402
 import _mem_part1  # noqa: E402
 import _mem_fig  # noqa: E402
+import _trump_part1  # noqa: E402
 import dash_common as dc
 from card_lib import fig_html
 
@@ -220,6 +221,21 @@ def report_rate_html():
     return ''.join(h)
 
 
+def report_trump_html():
+    """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
+    h = [_trump_part1.HEAD_TRUMP]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="trump-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _trump_part1.report_trump(sec, p, fig)
+    return ''.join(h)
+
+
 def report_mem_html():
     """메모리 총정리 — 한 편. 본문은 insights/reports/mem-2026-09-06.md 원본에서 읽는다."""
     h = [_mem_part1.HEAD_MEM]
@@ -263,7 +279,8 @@ FOOTER = (LEDE + META_ROW
 REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _pkg_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()])
 
 
 if __name__ == '__main__':
@@ -280,7 +297,10 @@ if __name__ == '__main__':
                      '내렸는데 왜 장기금리는 올랐나', 1, report_rate_html()),
                     ('sec-mem', '메모리 — 모자란데 왜 안 웃나',
                      'SemiAnalysis 5편 + 링크드인 3개월 + 해설 11편 — 40년 만에 모자란데 왜 '
-                     '만드는 회사 손에 안 남나', 1, report_mem_html())],
+                     '만드는 회사 손에 안 남나', 1, report_mem_html()),
+                    ('sec-trump', '트럼프 — 무엇을 걸어 무엇을 받아냈나',
+                     '메르 47편 — 위협하고 미루고 거래하고 청구하는 순서, 그리고 한국이 값을 낸 '
+                     '자리', 1, report_trump_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다

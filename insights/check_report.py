@@ -58,6 +58,8 @@ PAGES = [
     # 넣으면 이 층과 무관한 편의 값이 알리바이가 된다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-mem',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 트럼프 층(2026-09-06). 재료가 메르 클리핑 마흔일곱 편뿐이라 폴더 없이 TRUMP_EXTRA 로 간다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-trump', None),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -158,6 +160,58 @@ MEM_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
 
 # 회사 사실(설립·조달·밸류)은 유튜브 원문이 아니라 회사 공식 사이트에서 온다. 그 조사 파일도
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
+# 트럼프 층(2026-09-06). 재료가 메르 클리핑 마흔일곱 편뿐인데, mer 폴더를 통째로 넣으면
+# 697편이 알리바이가 된다. 금리 층과 같은 이유로 파일을 하나씩 적는다
+TRUMP_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+'input/clippings/mer/223838109591.json',
+'input/clippings/mer/223936689668.json',
+'input/clippings/mer/223979290690.json',
+'input/clippings/mer/223984718208.json',
+'input/clippings/mer/224002614977.json',
+'input/clippings/mer/224037379068.json',
+'input/clippings/mer/224056190379.json',
+'input/clippings/mer/224058011342.json',
+'input/clippings/mer/224058494349.json',
+'input/clippings/mer/224057746385.json',
+'input/clippings/mer/224059473094.json',
+'input/clippings/mer/224070917734.json',
+'input/clippings/mer/224075693844.json',
+'input/clippings/mer/224076987628.json',
+'input/clippings/mer/224089047026.json',
+'input/clippings/mer/224096308091.json',
+'input/clippings/mer/224101858436.json',
+'input/clippings/mer/224101202316.json',
+'input/clippings/mer/224132929462.json',
+'input/clippings/mer/224133459941.json',
+'input/clippings/mer/224137593241.json',
+'input/clippings/mer/224138056243.json',
+'input/clippings/mer/224161055072.json',
+'input/clippings/mer/224161591616.json',
+'input/clippings/mer/224162304086.json',
+'input/clippings/mer/224166639439.json',
+'input/clippings/mer/224183512547.json',
+'input/clippings/mer/224187679101.json',
+'input/clippings/mer/224190224535.json',
+'input/clippings/mer/224191636505.json',
+'input/clippings/mer/224226825696.json',
+'input/clippings/mer/224231051991.json',
+'input/clippings/mer/224244767604.json',
+'input/clippings/mer/224260820330.json',
+'input/clippings/mer/224267499277.json',
+'input/clippings/mer/224285418418.json',
+'input/clippings/mer/224289833145.json',
+'input/clippings/mer/224293694461.json',
+'input/clippings/mer/224306532703.json',
+'input/clippings/mer/224313465740.json',
+'input/clippings/mer/224319486464.json',
+'input/clippings/mer/224322627044.json',
+'input/clippings/mer/224321684736.json',
+'input/clippings/mer/224345852124.json',
+'input/clippings/mer/224350725486.json',
+'input/clippings/mer/224356224538.json',
+'input/clippings/mer/224399253940.json',
+)]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -169,7 +223,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
