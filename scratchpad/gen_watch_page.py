@@ -1594,16 +1594,12 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
   .wline-chip{display:inline-block;margin-left:8px;vertical-align:middle}
   .wline-v{display:block;margin:4px 0 0}
   .wline-d{display:block;margin:2px 0 0;text-align:left}
-  .tw{overflow-x:visible}
-  table,thead,tbody,tr,td{display:block;width:100%}
-  thead{display:none}
-  tr{padding:11px 0;border-bottom:1px solid var(--line)}
-  tr:last-child{border-bottom:0}
-  td{display:flex;gap:10px;align-items:baseline;border:0;padding:2px 0}
-  td::before{content:attr(data-th);flex:0 0 8.5em;font-size:12px;font-weight:600;
-    color:var(--ink-3);line-height:1.9}
-  td:first-child{font-size:1.02rem;padding-bottom:5px}
-  td:first-child::before{display:none}
+  /* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(칸마다 열 이름을 얹는 그 꼴)
+     줄끼리 견주려고 만든 표가 카드 여러 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+     좁으면 표째 옆으로 밀되 미는 것은 .tw 안이라 페이지는 안 밀린다. check_struct T1 */
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tw table{font-size:.92rem}
+  .tw th,.tw td{padding:6px 8px}
   svg.fig-w{display:none}
   svg.fig-n{display:block}
   .band{margin-top:32px}
@@ -1838,8 +1834,8 @@ def tbl(cap, head, rows):
         return ''
     body = []
     for r in rows:
-        cells = ''.join('<td data-th="%s">%s</td>' % (E(head[i]) if i < len(head) else '', c)
-                        for i, c in enumerate(r))
+        # 칸에 열 이름을 얹지 않는다 — 행 블록으로 펴던 꼴을 걷으면서 같이 걷었다(2026-09-07)
+        cells = ''.join('<td>%s</td>' % c for c in r)
         body.append('<tr>%s</tr>' % cells)
     # cap 이 비면 제목 문단을 안 낸다 — 조건 표는 제목을 절 제목 무게(cond-t)로
     # 따로 세우고 그 사이에 보충 문장이 들어간다

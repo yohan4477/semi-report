@@ -5976,6 +5976,9 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L132",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L123",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L33",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L88",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L91",
 "content/understanding/통합/D-AI반도체-전력수요.md#L33",
 "content/understanding/피지컬AI/[250610] 헬릭스 물류 데모와 옵티머스 싱글 뉴럴넷.md#L25",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L24",
@@ -12645,9 +12648,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-06",
+"built": "2026-09-07",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1433,
+"files": 1437,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -14180,6 +14183,22 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md": [
 "bd02a82d80acc9a730ec24934e866ecafe35bd42",
 133
+],
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md": [
+"b08d524ca5b4d3721047bd52bb3b0d6f86b7f2b2",
+48
+],
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md": [
+"8dfb473a7fbc90c409180cc799d53a442ec93562",
+37
+],
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md": [
+"3dafa5feb5033231b8fa4947fb4e23683b249039",
+160
+],
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md": [
+"e1d3b4a1b3cc4e435076fa0b0beb085afc2c5a91",
+122
 ],
 "content/understanding/통합/A-이란전쟁-원유수급.md": [
 "b3375b1268c20d7415b7cfef7ec1af4ff859d037",
@@ -18382,8 +18401,8 @@
 213
 ]
 },
-"fingerprint": "8c9adcdb41b03b2b0e28451c7be43f876d743af6",
-"lines": 220905
+"fingerprint": "44291f801218a95b5bf103b54abba869b6e46a43",
+"lines": 221272
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -19493,6 +19512,9 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L70",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L79",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L142",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L25",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L53",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L54",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
 "content/understanding/피지컬AI/Physical AI의 정의.md#L11",
 "content/understanding/피지컬AI/RFM & VLA란 무엇인가.md#L18",
@@ -27117,6 +27139,12 @@
 "content/understanding/회계사/[260811] 목표주가는 260만원인데 주가는 반토막 - 반도체 3사 IB 관점 - 엘곰.md#L30"
 ],
 "모더나": [
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L16",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L28",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L35",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L63",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L104",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L105",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L1",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L3",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L7",
@@ -28230,6 +28258,16 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L107",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L111",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L123",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L25",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L32",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L33",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L50",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L77",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L78",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L25",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L88",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L93",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L10",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L26",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L31",
@@ -33668,6 +33706,18 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L64",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L118",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L39",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L47",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L20",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L28",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L8",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L76",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L120",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L158",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L8",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L27",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L63",
 "content/understanding/통합/C-재생전환-진짜비용.md#L11",
 "content/understanding/통합/D-AI반도체-전력수요.md#L21",
 "content/understanding/피지컬AI/[250926] 로봇 판세와 액추에이터 병목.md#L44",
@@ -34651,6 +34701,18 @@
 ],
 "삼성바이오로직스": [
 "content/health/언더스탠딩/[251007] 질병·소화·신약 3부작 - 이승훈 레전드 모음집.md#L170",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L39",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L47",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L20",
+"content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L28",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L8",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L76",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L120",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L158",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L8",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L27",
+"content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md#L63",
 "content/understanding/회계사/[260416] 시총 75조원이 요구하는 내재성장률은 31%다 - 삼성바이오로직스 - 엘곰.md#L1",
 "content/understanding/회계사/[260416] 시총 75조원이 요구하는 내재성장률은 31%다 - 삼성바이오로직스 - 엘곰.md#L3",
 "content/understanding/회계사/[260416] 시총 75조원이 요구하는 내재성장률은 31%다 - 삼성바이오로직스 - 엘곰.md#L7",
@@ -36730,6 +36792,8 @@
 ],
 "셀트리온": [
 "content/health/언더스탠딩/[251007] 질병·소화·신약 3부작 - 이승훈 레전드 모음집.md#L170",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L47",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L158",
 "content/understanding/회계사/[260213] DCF 내재가치 7.1만원, 주가보다 70% 아래 - 셀트리온 - 엘곰.md#L1",
 "content/understanding/회계사/[260213] DCF 내재가치 7.1만원, 주가보다 70% 아래 - 셀트리온 - 엘곰.md#L3",
 "content/understanding/회계사/[260213] DCF 내재가치 7.1만원, 주가보다 70% 아래 - 셀트리온 - 엘곰.md#L7",
@@ -41647,6 +41711,7 @@
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L273",
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L302",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L92",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L50",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L14",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
 "content/understanding/피지컬AI/Physical AI의 정의.md#L9",
@@ -49549,6 +49614,8 @@
 "content/understanding/부동산/[260501] 전세사기 3분의 1 보장법 - 국가가 처음 돈을 대지만 구멍은 남았다 - 백종훈.md#L74",
 "content/understanding/언더스탠딩 백브리핑/호르무즈 해협 봉쇄 맞불... 하르그섬 뭐길래.md#L9",
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L94",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L45",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L145",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L13",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L62",
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L18",
@@ -51096,6 +51163,8 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L124",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L130",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L133",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L76",
 "content/understanding/피지컬AI/[250828] 아틀라스 LBM 데뷔.md#L32",
 "content/understanding/피지컬AI/[260621] 로봇 손 세 종 직접 비교.md#L118",
 "content/understanding/한주성/2026-03-03 LG생활건강은 토리든을 인수해야 하는가  — K뷰티 지각변동과 대기업의 생존 전략 [8912].md#L23",
@@ -53529,6 +53598,10 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L70",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L23",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L115",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L45",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L77",
+"content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L145",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L26",
 "content/understanding/통합/B-원유의존-다변화벽.md#L33",
 "content/understanding/피지컬AI/[250626] LeRobot 한 갈래를 네 편으로 본 것.md#L120",

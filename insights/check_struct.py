@@ -308,6 +308,38 @@ def check_card(where, body):
     return True
 
 
+# 표를 좁은 화면에서 행 블록으로 펴는 꼴. 칸마다 열 이름을 얹어 한 행을 카드 한 장으로
+# 세우면, 줄끼리 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다. 2026-09-07 에
+# Semi Doped·씨모어 CSS 에서 걷었고 다시 못 들어오게 여기서 문다. 표는 표로 남고,
+# 좁으면 제 상자 안에서 옆으로 민다(.tw{overflow-x:auto}).
+FLAT = (
+    ('thead{display:none}', '좁은 화면에서 표 머리를 감춘다'),
+    ("content:attr(data-label)", '칸마다 열 이름을 얹는다'),
+    ('data-label=', '칸에 열 이름을 달아 뒀다 — 행 블록으로 펼 준비다'),
+)
+
+
+def check_tables():
+    """T1 — 어느 장이든 표는 표로 남아야 한다. 게이트 목록과 무관하게 FAIL 이다."""
+    bad = 0
+    for p in sorted(glob.glob(os.path.join(paths.ROOT, '대시보드', '**', '*.html'),
+                              recursive=True)):
+        html = io.open(p, encoding='utf-8').read()
+        if '<table' not in html and 'data-label=' not in html:
+            continue
+        # 도해 SVG 의 data-label 은 표와 무관하다 — 표가 있는 화면에서 표 밖의 것은 안 본다
+        for pat, why in FLAT:
+            if pat == 'data-label=' and '<td data-label=' not in html:
+                continue
+            if pat != 'data-label=' and pat not in html:
+                continue
+            if pat == 'data-label=' or pat in html:
+                print('FAIL %s [T1] 표를 행 블록으로 편다 — %s. 표는 표로 두고 '
+                      '.tw 안에서 옆으로 민다' % (os.path.basename(p), why), file=OUT)
+                bad += 1
+    return bad
+
+
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else ''
     n = 0
@@ -324,7 +356,7 @@ def main():
             n += check_card(where, body)
     for kind, at, code, msg in rows:
         print('%s %s [%s] %s' % (kind, at, code, msg), file=OUT)
-    fail = sum(1 for r in rows if r[0] == 'FAIL')
+    fail = sum(1 for r in rows if r[0] == 'FAIL') + check_tables()
     if debt:
         print(file=OUT)
         print('빚 — 게이트에 안 올린 장. 그 장을 손볼 때 함께 갚는다', file=OUT)

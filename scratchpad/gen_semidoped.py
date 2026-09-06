@@ -141,16 +141,14 @@ def fig_block(f):
 
 
 def table_html(rows):
-    """칸마다 열 이름을 data-label 로 붙인다 — 640px 아래에서 표를 행 블록으로 세울 때
-    CSS 가 그 이름을 칸 앞에 쓴다. 안 붙이면 모바일에서 5열 표가 한 글자씩 세로로 늘어진다."""
+    """표는 표로 낸다. 칸에 열 이름을 얹지 않는다 — 좁은 화면에서 표를 행 블록으로
+    펴던 꼴을 걷으면서(2026-09-07) data-label 도 같이 걷었다. 좁으면 옆으로 민다."""
     head, body = rows[0], rows[2:]
     out = ['<table><thead><tr>']
     out += ['<th>%s</th>' % inline(c) for c in head]
     out.append('</tr></thead><tbody>')
     for r in body:
-        out.append('<tr>' + ''.join(
-            '<td data-label="%s">%s</td>' % (esc(head[k]) if k < len(head) else '', inline(c))
-            for k, c in enumerate(r)) + '</tr>')
+        out.append('<tr>' + ''.join('<td>%s</td>' % inline(c) for c in r) + '</tr>')
     out.append('</tbody></table>')
     return ''.join(out)
 
@@ -546,17 +544,17 @@ code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
 .tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
 .tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
 .lref{font-size:11px;color:#8a93a1;margin-left:4px}
-.tw{overflow-x:auto;margin:0 0 18px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
 th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
 th{background:#eef1f6;font-weight:600;white-space:nowrap}
 @media (max-width:640px){
- .tw table,.tw thead,.tw tbody,.tw tr,.tw td{display:block;min-width:0;width:auto}
- .tw thead{display:none}
- .tw tr{border:1px solid #dfe3e9;border-radius:8px;margin:0 0 10px;background:#fff}
- .tw td{border:0;border-top:1px solid #eef1f6;padding:6px 10px}
- .tw td:first-child{border-top:0;font-weight:600}
- .tw td::before{content:attr(data-label);display:block;font-size:11px;color:#8a93a1;margin-bottom:1px}
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
  .toc{grid-template-columns:1fr}
  .toc .th:nth-child(2){display:none}
  .toc .tl{white-space:normal}

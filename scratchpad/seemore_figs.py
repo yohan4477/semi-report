@@ -16,7 +16,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from aie_figs import svg, table  # noqa: E402
+from aie_figs import W, LH, box, head, svg, table  # noqa: E402
 from semidoped_figs import CSS, fig_html, values  # noqa: F401,E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,20 +37,49 @@ def _table(specs, clss, heads, arrows=True):
     return parts, h
 
 
+def spans(stages, rows, bar=None, gap=6, y0=30):
+    """공정을 칸으로 깔고, 그 아래에 누가 어디부터 어디까지 덮는지를 박스로 잡는다.
+
+    stages = ['R&D', '임상', …]  칸 이름. 폭은 판을 칸 수로 나눠 고르게 준다.
+    rows   = [(첫 칸, 끝 칸, 줄들)]  끝 칸은 포함이다. 한 줄에 겹치는 구간을 두지 않는다.
+    bar    = 판 전체를 덮는 한 줄. 여러 칸에 걸친 주체(빅파마)를 여기에 둔다.
+
+    좌표를 손으로 안 찍는다 — 칸 폭도 구간 폭도 판 폭에서 나온다."""
+    n = len(stages)
+    cw = (W - gap * (n - 1)) / n
+    def x(i):
+        return i * (cw + gap)
+    out = []
+    for i, s in enumerate(stages):
+        out += head(x(i), y0 - 10, cw, '')
+        out += box(x(i), y0, cw, 34, [s], 'fig-stage', 'fig-st')
+    y = y0 + 34 + 14
+    rh = max(len(r[2]) for r in rows) * LH + 26
+    for a, b, lines in rows:
+        out += box(x(a), y, x(b) + cw - x(a), rh, lines)
+    y += rh
+    if bar:
+        y += 12
+        out += box(0, y, W, len(bar) * LH + 24, bar, 'fig-agent')
+        y += len(bar) * LH + 24
+    return out, y
+
+
 # ── 2026-08-16 밸류체인 편 ────────────────────────────────────────────
 
 _B, _S, _P = 'fig-box', 'fig-stage', 'fig-agent'
 
-_p, _h = _table(
-    [(['R&D'], ['빅파마·바이오텍'], ['라이선스 아웃']),
-     (['임상'], ['CRO'], ['대행 수수료']),
-     (['허가'], ['CRO가 함께'], ['자료를 쥔 자리']),
-     (['생산'], ['CDMO'], ['생산 CAPA']),
-     (['판매'], ['도매·PBM'], ['통과 여부'])],
-    [_S, _B, _B], ['단계', '서 있는 회사', '받는 값'])
-FIG_CHAIN = ('1.', '다섯 칸과 그 칸에 선 회사',
-             svg(_h + 10, _p, '신약이 지나는 다섯 단계와 각 단계에 선 회사, 그리고 그 회사가 받는 값'),
-             '한 칸에 선 회사는 그 칸의 값만 받는다. 파는 물건도 흔들리는 이유도 칸마다 다르다.')
+_p, _h = spans(
+    ['R&D', '임상', '허가', '생산', '판매'],
+    [(0, 0, ['바이오텍', '물질을 판다']),
+     (1, 2, ['CRO', '대행 수수료']),
+     (3, 3, ['CDMO', '만든 양만큼']),
+     (4, 4, ['도매상과', 'PBM', '통과 여부'])],
+    bar=['빅파마 — 사 와서 팔고, 특허가 풀리면 밀린다'])
+FIG_CHAIN = ('1.', '다섯 칸과 그 칸을 덮는 회사',
+             svg(_h + 10, _p, '신약이 지나는 다섯 단계와 각 단계를 덮는 회사'),
+             '한 칸을 덮는 회사는 그 칸에서만 번다. CRO 만 임상과 허가 두 칸에 걸치고, '
+             '빅파마는 칸을 사서 덮는다.')
 
 _p, _h = _table(
     [(['1상'], ['이 약이 안전한가']),
