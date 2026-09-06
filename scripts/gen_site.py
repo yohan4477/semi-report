@@ -63,6 +63,10 @@ PAGES = [
     ('Semi Doped 대시보드.html', 'semidoped', 'Semi Doped', '🎙️',
      '칩을 만드는 사람이 나와 앉아 설계를 말하는 팟캐스트 — 회차마다 전략 판과 '
      '기술 판이 따로 읽는다', False),
+    # 유튜브 공개 영상 — 자막을 전사로 두고 그 위에 판을 세운다. 잠그지 않는다
+    ('씨모어 대시보드.html', 'seemore', '채널 씨모어', '📈',
+     '산업을 갈라 놓고 투자할 자리를 고르는 한국어 채널 — 회차마다 전략 판 하나',
+     False),
     # AI Engineer 컨퍼런스 발표 — 카드 안이 번호글이라 다른 장과 읽는 결이 다르다
     ('AI Engineer 대시보드.html', 'ai-engineer', 'AI Engineer', '🛠️',
      '에이전트를 실제로 굴려 본 사람들의 발표 — 한 편을 번호글로 옮겼다', False),
@@ -202,13 +206,15 @@ def rewrite_links(html: str, own_slug: str = '') -> str:
 
     # 카드 단독 페이지의 「← 장」 링크 — href="../<대시보드 파일명>.html#<섹션id>".
     # 사이트에서 장 주소는 /<슬러그>(확장자·슬래시 없음)라 상대 경로를 그대로 못 쓴다.
+    # 앵커는 있을 수도 없을 수도 있다 — Semi Doped·씨모어의 「← 회차 목록」은 앵커가 없다.
+    # 앵커를 필수로 보던 때(2026-09-07 이전) 그 링크가 상대 경로 그대로 나가 죽어 있었다.
     def _pback(m):
         fn = m.group(1) + '.html'
-        anchor = m.group(2)
+        anchor = m.group(2) or ''
         if fn in SLUGS:
-            return 'href="/%s#%s"' % (SLUGS[fn], anchor)
-        return 'href="%s#%s"' % (GH + quote(fn), anchor)
-    html = re.sub(r'href="\.\./([^"/:]+)\.html#([^"]*)"', _pback, html)
+            return 'href="/%s%s"' % (SLUGS[fn], anchor)
+        return 'href="%s%s"' % (GH + quote(fn), anchor)
+    html = re.sub(r'href="\.\./([^"/:]+)\.html(#[^"]*)?"', _pback, html)
 
     def repl(m):
         target = m.group(1)

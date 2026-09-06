@@ -578,7 +578,8 @@ def check_dashboards(gloss):
     # Semi Doped 아홉 편에 한 번도 안 걸렸다(진단에서 대시 20회·대구 7회가 나와 알았다)
     paths_ = sorted(glob.glob(os.path.join(DASH_DIR, '*.html')) +
                     glob.glob(os.path.join(DASH_DIR, 'watch', '*.html')) +
-                    glob.glob(os.path.join(DASH_DIR, 'semidoped', '*.html')))
+                    glob.glob(os.path.join(DASH_DIR, 'semidoped', '*.html')) +
+                    glob.glob(os.path.join(DASH_DIR, 'seemore', '*.html')))
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)
