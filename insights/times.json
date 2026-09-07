@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "d4aa8df464a613c5184591c9ea2631912d4f470e",
-"lines": 4298
+"index_fingerprint": "f69324e73358b5aaae56d8fafe75bca39407d477",
+"lines": 4305
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9649,6 +9649,21 @@
 "t": "2026",
 "tense": "전망"
 },
+"content/understanding/채널 씨모어/2026-03-08-news.md#L16": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-03-08-news.md#L23": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-03-08-news.md#L37": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L176": {
 "how": "계산",
 "t": "2025",
@@ -9778,6 +9793,30 @@
 "how": "계산",
 "t": "2026",
 "tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2026-02-08-news.md#L204": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/raw/2026-02-08-news.md#L75": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2026-03-08-news.md#L110": {
+"how": "계산",
+"span": [
+"2024",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2026-03-08-news.md#L34": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
 },
 "content/understanding/피지컬AI/Physical AI의 정의.md#L11": {
 "how": "명시",
