@@ -50,6 +50,27 @@ SECTIONS = [('news', '기사 읽기'), ('basics', '투자 원칙'), ('edu', '제
 
 STAMP = '2026-09-07'
 
+# 목록은 최신 순서 하나다. 섹션은 줄에 붙는 태그이고, 위 선택 줄은 그 태그로 줄을 고르는
+# 장치다 — 화면 순서를 바꾸지 않는다. 접는 것이 아니라 거르는 것이라 규약에 안 걸린다.
+SECJS_CSS = """
+.secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
+.secnav a.on small{color:#c8cdd6}
+"""
+SECJS = """<script>
+(function(){
+  var nav=document.querySelector('.secnav'), rows=[].slice.call(document.querySelectorAll('.row'));
+  if(!nav) return;
+  nav.addEventListener('click', function(e){
+    var a=e.target.closest('a[data-sec]'); if(!a) return;
+    e.preventDefault();
+    [].forEach.call(nav.querySelectorAll('a'), function(x){ x.classList.remove('on'); });
+    a.classList.add('on');
+    var sec=a.getAttribute('data-sec');
+    rows.forEach(function(r){ r.hidden = !!sec && r.getAttribute('data-sec')!==sec; });
+  });
+})();
+</script>""" 
+
 
 def episodes():
     eps = []
@@ -74,21 +95,38 @@ def episodes():
     return eps
 
 
+SEC_NAME = dict(SECTIONS)
+
+
+def half(one):
+    """목록의 한 줄 설명은 요약본 「한 줄」 절의 앞 절반만 싣는다.
+
+    요약본의 한 줄은 네댓 문장짜리 문단이라 목록에서는 길다. 문장 경계로 끊어
+    앞 절반만 남긴다 — 줄이는 자리가 문장 가운데면 뜻이 잘린다."""
+    sents = [s for s in re.split(r'(?<=다\.)\s+', one.strip()) if s]
+    if len(sents) < 2:
+        return one
+    return ' '.join(sents[:(len(sents) + 1) // 2])
+
+
 def row_html(ep):
     m = ep['meta']
-    tags = ['<span class="tag on">%s %s</span>' % (emo, label)
-            for key, emo, label, _sub in LANES if any(l['key'] == key for l in ep['lanes'])]
+    code = m.get('section', '')
+    tags = ['<span class="tag">%s</span>' % sd.esc(SEC_NAME.get(code, code))]
+    tags += ['<span class="tag on">%s %s</span>' % (emo, label)
+             for key, emo, label, _sub in LANES if any(l['key'] == key for l in ep['lanes'])]
     inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
              '<div class="rtitle">%s</div>'
              % (sd.esc(m.get('date', '')), sd.esc(m.get('topic', '')),
                 sd.esc(m.get('title', ep['slug']))))
     if ep['one']:
-        inner += '<div class="rone">%s</div>' % sd.esc(ep['one'])
+        inner += '<div class="rone">%s</div>' % sd.esc(half(ep['one']))
     inner += '<div class="tags">%s</div>' % ''.join(tags)
     if ep['lanes']:
-        return '<a class="row" href="seemore/%s.html">%s</a>' % (ep['slug'], inner)
+        return ('<a class="row" data-sec="%s" href="seemore/%s.html">%s</a>'
+                % (code, ep['slug'], inner))
     inner += '<div class="why">글 없음 — 아직 판이 안 섰다</div>'
-    return '<div class="row dead">%s</div>' % inner
+    return '<div class="row dead" data-sec="%s">%s</div>' % (code, inner)
 
 
 def post_html(ep):
@@ -123,32 +161,28 @@ def post_html(ep):
 
 
 def index_html(eps):
-    live = sum(1 for e in eps if e['lanes'])
-    out = [sd.HEAD % ('씨모어 대시보드', sd.CSS)]
+    live = [e for e in eps if e['lanes']]
+    out = [sd.HEAD % ('씨모어 대시보드', sd.CSS + SECJS_CSS)]
     out.append('<h1>📈 채널 씨모어</h1>')
     out.append('<div class="sub">산업을 갈라 놓고 투자할 자리를 고르는 한국어 채널. '
                '회차마다 ⚖ 전략 판 하나가 선다 — 전사를 줄 번호로 대조해 쓴 해설이다.<br>'
-               '글이 있는 회차만 싣는다 — 지금 %d편.</div>' % live)
-    groups = []
-    for code, name in SECTIONS:
-        allc = [e for e in eps if e['meta'].get('section', '') == code]
-        withl = [e for e in allc if e['lanes']]
-        if withl:
-            groups.append((code, name, allc, withl))
-    out.append('<nav class="secnav">%s</nav>' % ''.join(
-        '<a href="#sec-%s">%s <small>%d</small></a>' % (code, sd.esc(name), len(withl))
-        for code, name, _a, withl in groups))
-    for code, name, allc, withl in groups:
-        out.append('<h2 class="sec" id="sec-%s"><span>%s</span><small>글 %d편 / 회차 %d편</small></h2>'
-                   % (code, sd.esc(name), len(withl), len(allc)))
-        out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in withl))
-    stray = [e for e in eps if e['lanes'] and e['meta'].get('section', '') not in dict(SECTIONS)]
+               '글이 있는 회차만 싣는다 — 지금 %d편. 최신 회차가 맨 위다.</div>' % len(live))
+    stray = [e for e in live if e['meta'].get('section', '') not in dict(SECTIONS)]
     if stray:
         raise SystemExit('섹션 코드가 없는 회차: ' + ', '.join(e['slug'] for e in stray))
+    counts = [(code, name, sum(1 for e in live if e['meta'].get('section', '') == code))
+              for code, name in SECTIONS]
+    out.append('<nav class="secnav"><a href="#" class="on" data-sec="">전체 '
+               '<small>%d</small></a>%s</nav>'
+               % (len(live), ''.join(
+                   '<a href="#" data-sec="%s">%s <small>%d</small></a>' % (code, sd.esc(name), n)
+                   for code, name, n in counts if n)))
+    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in live))
     out.append('<div class="foot">유튜브 자동 자막을 문장 단위로 끊어 전사로 두고, 그 줄 번호를 '
                '주소 삼아 판을 쓴다. 값이 전사에 있는지는 사람이 대조한다. '
                '정리일 <b>%s</b> · 페이지 생성은 <code>scratchpad/gen_seemore.py</code></div>' % STAMP)
     out.append('</div>')
+    out.append(SECJS)
     return ''.join(out)
 
 
@@ -157,8 +191,10 @@ def check_ui(index, posts):
     bad = []
     if '<details' in index or any('<details' in p for p in posts):
         bad.append('접는 것이 있다 — 이 장은 목록과 글뿐이다')
-    if 'class="sec"' not in index:
-        bad.append('목록에 섹션 머리줄이 없다')
+    if re.search(r'<a class="row"(?![^>]*data-sec=)', index):
+        bad.append('회차 줄에 섹션 표시가 없다 — 목록은 최신 순서 하나이고 섹션은 태그다')
+    if 'class="sec"' in index:
+        bad.append('섹션 머리줄이 있다 — 이 장의 목록은 섹션으로 안 나눈다')
     if 'class="secnav"' not in index:
         bad.append('목록 위에 섹션 선택 줄이 없다')
     if 'class="tile' in index:
