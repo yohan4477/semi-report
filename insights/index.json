@@ -4504,6 +4504,7 @@
 "content/understanding/미국주식 사관학교/[260701] SK하이닉스 미국 상장 - 재평가 기대의 발목은 환율이다.md#L31",
 "content/understanding/박형근 실장/[260818] 휴머노이드의 병목은 지능이 아니라 부품 생태계다 (2부작 · 2부) - 박형근.md#L63",
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L21",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L32",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L24",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L53",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L24",
@@ -12663,7 +12664,7 @@
 "_meta": {
 "built": "2026-09-07",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1470,
+"files": 1472,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -14232,6 +14233,14 @@
 "content/understanding/채널 씨모어/2025-08-10-unity.md": [
 "6f12880bbf7f9ff72f11ad65df31e05392e46a05",
 42
+],
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md": [
+"cd3a1d90f5414272ab877a181cb53d825ba2d302",
+41
+],
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md": [
+"ea1f6ffcbc6cb0ad56395d001a249c349ffaf367",
+44
 ],
 "content/understanding/채널 씨모어/2025-08-31-viasat.md": [
 "d57b9f23db592f8614e4b2eb148fc44c5fcf3dc4",
@@ -18546,8 +18555,8 @@
 213
 ]
 },
-"fingerprint": "72f483bf45f6d2924de015a9edc76f3826667ca9",
-"lines": 223976
+"fingerprint": "255b7b265ac24449ddb7500d612dcc1452e3758e",
+"lines": 224061
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -19660,6 +19669,9 @@
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L21",
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L29",
 "content/understanding/채널 씨모어/2025-08-10-unity.md#L24",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L16",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L34",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L37",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L25",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L22",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L55",
@@ -26915,6 +26927,7 @@
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L123",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L79",
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L23",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L34",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L34",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L69",
 "content/understanding/피지컬AI/[251007] CoRL 2025 현장에서 로봇들 써봄.md#L34",
@@ -28508,6 +28521,9 @@
 "content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L31",
 "content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L32",
 "content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L37",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L32",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L35",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L39",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L12",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L16",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L20",
@@ -34156,6 +34172,7 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L21",
 "content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L43",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L38",
 "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L33",
 "content/understanding/채널 씨모어/2025-10-12-pharma-dist-wholesaler.md#L25",
 "content/understanding/채널 씨모어/2025-10-19-mckesson.md#L29",
@@ -37299,6 +37316,7 @@
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L45",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L47",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L48",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L38",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L81",
 "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L51",
 "input/clippings/mer/224136528041.json#L5"
@@ -37465,6 +37483,13 @@
 "content/understanding/미국주식 사관학교/[260527] S-1이 말하는 정체 - 매출은 스타링크인데 돈은 AI로 흐른다.md#L38",
 "content/understanding/미국주식 사관학교/[260527] S-1이 말하는 정체 - 매출은 스타링크인데 돈은 AI로 흐른다.md#L64",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L34",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L27",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L33",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L16",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L25",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L27",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L34",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L37",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L33",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L60",
 "content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L15",
@@ -38477,6 +38502,10 @@
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L29",
 "content/understanding/채널 씨모어/2025-08-03-simulation.md#L16",
 "content/understanding/채널 씨모어/2025-08-03-simulation.md#L27",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L27",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L33",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L25",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L35",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L25",
 "content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md#L23",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L34",
@@ -39357,6 +39386,7 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L70",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L142",
 "content/understanding/채널 씨모어/2025-08-10-unity.md#L22",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L38",
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L25",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L81",
 "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L82",
@@ -54217,6 +54247,7 @@
 "content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L41",
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L22",
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L33",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L33",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L45",
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L86",
@@ -58192,6 +58223,9 @@
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L16",
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L33",
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L39",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L16",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L39",
+"content/understanding/채널 씨모어/2025-08-24-space-internet.md#L34",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L24",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L48",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L72",
@@ -59711,6 +59745,10 @@
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L28",
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L30",
 "content/understanding/채널 씨모어/2025-08-03-simulation.md#L23",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L11",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L16",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L35",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L37",
 "content/understanding/채널 씨모어/2025-10-12-pharma-dist-wholesaler.md#L40",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L49",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L53",
@@ -61077,6 +61115,8 @@
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L32",
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L37",
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L38",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L32",
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L33",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L16",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L24",
 "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L27",

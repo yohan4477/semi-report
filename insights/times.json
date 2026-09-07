@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "72f483bf45f6d2924de015a9edc76f3826667ca9",
-"lines": 4291
+"index_fingerprint": "255b7b265ac24449ddb7500d612dcc1452e3758e",
+"lines": 4292
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9560,6 +9560,11 @@
 "content/understanding/채널 씨모어/2025-08-10-unity.md#L25": {
 "how": "명시",
 "t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L16": {
+"how": "명시",
+"t": "1990",
 "tense": "회고"
 },
 "content/understanding/채널 씨모어/2025-08-31-viasat.md#L16": {
