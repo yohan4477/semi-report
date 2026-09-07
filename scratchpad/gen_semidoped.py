@@ -569,11 +569,9 @@ HEAD = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
 
 def row_html(ep):
     m = ep['meta']
-    tags = []
-    # 판이 선 것만 표시한다 — 회색 「🔧 기술」 꼬리표는 「없음」을 말하는 것이라 걷었다(2026-09-02)
-    for key, emo, label, _sub in LANES:
-        if any(l['key'] == key for l in ep['lanes']):
-            tags.append('<span class="tag on">%s %s</span>' % (emo, label))
+    # 판 갈래 꼬리표는 걷었다(2026-09-07). 회색 「🔧 기술」을 먼저 걷고(2026-09-02) 남은
+    # 「⚖ 전략」은 모든 줄에 같은 말이라 표시가 아니라 소음이었다. 갈래는 글 안에서 보인다.
+    # 주제는 섹션 머리줄이 이미 말한다 — 줄마다 다시 안 적는다.
     # 윤문을 거친 글은 제목 옆에 「한글패치」 — frontmatter humanized (2026-09-03, 목록에서도 보이게)
     hk = '<span class="tag hk">한글패치</span>' if any(l['meta'].get('humanized') or l['meta'].get('rewritten') for l in ep['lanes']) else ''
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
@@ -588,7 +586,6 @@ def row_html(ep):
                 esc(m.get('title', ep['slug'])), hk))
     if ep['one']:
         inner += '<div class="rone">%s</div>' % esc(ep['one'])
-    inner += '<div class="tags">%s</div>' % ''.join(tags)
     if ep['lanes']:
         return '<a class="row" href="semidoped/%s.html">%s</a>' % (ep['slug'], inner)
     why = ep['note'] or '아직 판이 안 섰다'
