@@ -1,0 +1,227 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI가 버블 논쟁을 지나 인프라 산업이 된 이유 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>AI가 버블 논쟁을 지나 인프라 산업이 된 이유</h1><div class="pmeta">2026-05-11 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/lgl3mzme3u4">https://youtu.be/lgl3mzme3u4</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2026-05-11-ai-infra.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2026-05-11-ai-infra.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">버블이냐를 묻지 않고, 어디에 돈이 실제로 깔리고 있는지를 센다</div><p>AI 버블 논쟁이 한창일 때 그 논쟁을 접는 회차다. 진행자는 버블이냐 아니냐가 이미 지난 물음이라며 인프라 산업으로 놓고 근거 셋을 든다. 이 글은 그 셋이 각각 어떤 종류의 근거인지 가려 보고 넉 달 뒤의 값에 대조한다. 4절의 대조 값은 원문에 없는 것이라 출처를 함께 적는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">근거 셋의 성격이 서로 다르다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">축이 옮겨 가면 명단이 바뀐다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">방산에는 조건을 걸어 둔다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">(검증) 넉 달 뒤에 무엇이 맞았나</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">사실에 근거한 대목과 틀에 근거한 대목</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 근거 셋의 성격이 서로 다르다</h2>
+<figure class="uc-fig"><p class="fig-title">근거 셋의 성격이 서로 다르다</p><svg class="epoch" viewBox="0 0 520 288" role="img" aria-label="이 회차가 든 근거 셋과 각각의 검증 가능성">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="64.5" y="20" text-anchor="middle" class="fig-hd">근거</text>
+  <text x="264" y="20" text-anchor="middle" class="fig-hd">무슨 말인가</text>
+  <text x="448" y="20" text-anchor="middle" class="fig-hd">성격</text>
+  <rect x="0" y="30" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="72" text-anchor="middle" class="fig-b">산업 안의 관찰</text>
+  <rect x="145" y="30" width="238" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="72" text-anchor="middle" class="fig-b">패키징과 연결로 축이 옮겼다</text>
+  <rect x="399" y="30" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="448" y="72" text-anchor="middle" class="fig-b">확인 가능</text>
+  <rect x="0" y="118" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="160" text-anchor="middle" class="fig-b">거시 해석</text>
+  <rect x="145" y="118" width="238" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="148.5" text-anchor="middle" class="fig-b">성장이 AI</text>
+  <text x="264" y="171.5" text-anchor="middle" class="fig-b">설비투자에서 나온다</text>
+  <rect x="399" y="118" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="448" y="160" text-anchor="middle" class="fig-b">해석</text>
+  <rect x="0" y="206" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="248" text-anchor="middle" class="fig-b">국가 전략 틀</text>
+  <rect x="145" y="206" width="238" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="248" text-anchor="middle" class="fig-b">기축통화의 조건을 채운다</text>
+  <rect x="399" y="206" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="448" y="248" text-anchor="middle" class="fig-b">검증 어려움</text>
+</svg><figcaption>첫째만으로도 결론은 선다. 나머지 둘은 결론을 크게 만들 뿐 정확하게 만들지 않는다.</figcaption></figure>
+<p>첫째는 산업 안의 관찰이다. 반도체 경쟁의 축이 GPU 한 칩의 성능에서 패키징과 연결로 옮겨 가면서, TSMC와 광통신 업체, SI타임 같은 부품사부터 냉각·전력·저장장치·송배전·유틸리티·데이터센터 건설까지 밸류체인 전체로 자금이 퍼진다는 것이다.</p>
+<p>둘째는 거시 관찰이다. 리쇼어링의 성과처럼 보이는 미국 경제 성장이 실제로는 AI 설비투자에서 나오고, 사모펀드와 연기금까지 들어오면서 국채 금리가 5%를 웃도는데도 주식이 오르는 상태가 이어진다는 것이다.</p>
+<p>셋째는 국가 전략 이야기다. 기축통화의 조건을 에너지 패권·군사력·금융 네트워크·신성장 산업 선도 넷으로 놓고, 마지막 조건을 AI와 우주테크가 채워 준다는 것이다.</p>
+<p>셋의 성격이 다르다는 점을 봐야 한다. 첫째는 확인 가능한 사실이고, 둘째는 해석이며, 셋째는 틀이다. 첫째만으로도 결론은 선다. 나머지 둘은 그 결론을 크게 만들 뿐 검증이 어렵다.</p>
+<h2 id="s2"><span class="num">2</span> 축이 옮겨 가면 명단이 바뀐다</h2>
+<figure class="uc-fig"><p class="fig-title">축이 옮겨 가면 명단이 바뀐다</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="칩 자체가 아니라 칩과 칩 사이로 옮겨 간 수혜 명단">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="41" y="20" text-anchor="middle" class="fig-hd">어디에</text>
+  <text x="217" y="20" text-anchor="middle" class="fig-hd">무엇이 있나</text>
+  <rect x="0" y="30" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="60.5" text-anchor="middle" class="fig-b">칩 사이</text>
+  <rect x="98" y="30" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="217" y="60.5" text-anchor="middle" class="fig-b">광통신 · 타이밍 부품</text>
+  <line x1="41" y1="81" x2="41" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="125.5" text-anchor="middle" class="fig-b">랙 사이</text>
+  <rect x="98" y="95" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="217" y="125.5" text-anchor="middle" class="fig-b">냉각 · 저장장치</text>
+  <line x1="41" y1="146" x2="41" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="190.5" text-anchor="middle" class="fig-b">건물 밖</text>
+  <rect x="98" y="160" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="217" y="190.5" text-anchor="middle" class="fig-b">전력 · 송배전 · 유틸리티</text>
+  <line x1="41" y1="211" x2="41" y2="223" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="225" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="255.5" text-anchor="middle" class="fig-b">건물 자체</text>
+  <rect x="98" y="225" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="217" y="255.5" text-anchor="middle" class="fig-b">데이터센터 건설</text>
+</svg><figcaption>광통신은 이 채널에서 세 번째로 나온 자리인데 이번에야 회사 이름이 붙었다.</figcaption></figure>
+<p>이 회차에서 실제로 쓸모 있는 대목은 명단이다. 경쟁의 축이 단일 칩 성능에서 패키징과 연결로 옮겨 갔다고 보면, 값이 붙는 자리도 따라 옮겨 간다.</p>
+<p>그래서 나오는 이름들이 광통신(루멘텀·시에나·코닝)과 타이밍 부품(SI타임), 그리고 냉각·전력·저장장치·송배전·유틸리티·데이터센터 건설이다. 칩 자체보다 칩과 칩 사이, 랙과 랙 사이, 그리고 그 건물에 전기를 넣는 자리다.</p>
+<p>이 명단이 이 채널의 다른 회차들과 겹친다. 2026년 2월 회차에서 위성과 지상을 잇는 광섬유를 짚었고, 3월 회차에서 엔비디아의 루멘텀 투자를 근거로 광통신을 다음 갈래로 꼽았다. 세 번째로 같은 자리가 나온 셈인데, 이번에는 회사 이름이 붙었다.</p>
+<h2 id="s3"><span class="num">3</span> 방산에는 조건을 걸어 둔다</h2>
+<p>이 회차에서 조건이 붙은 판단은 방산이다. 전쟁 기간에 방산주가 이미 많이 올랐기 때문에 전쟁이 끝나는 순간 한 번 크게 빠질 것이고, 그때가 들어갈 자리라고 본다.</p>
+<p>근거로 재고 이야기를 붙인다. 토마호크와 사드 미사일 재고가 바닥난 것은 차세대 무기 개발이 끝나 기존 재래식 무기를 소진시키는 과정으로 보이며, 중국이 대만을 쳐도 미국이 못 막는다는 우려는 과장됐다고 본다.</p>
+<p>이 판단의 구조가 이 채널의 좋은 꼴이다. 값이 오른 이유(전쟁)와 앞으로 오를 이유(재고 보충)를 나누고, 그 사이에 값이 빠지는 구간을 예상해 진입 시점으로 삼는다. 사건이 끝나면 파는 것이 아니라 사건이 끝난 뒤에 사는 셈이다.</p>
+<p>산업 고르기에도 근거를 하나 더 붙인다. 대통령의 중국 회담에 동행한 기업 총수들이 속한 산업을 확인해 보니 에너지·방산·금융·AI·우주테크였고, 그 산업들이 앞으로 시장을 이끌 가능성이 높다고 본다. 누가 그 자리에 불려 갔는지를 신호로 읽는 방식이다.</p>
+<h2 id="s4"><span class="num">4</span> (검증) 넉 달 뒤에 무엇이 맞았나</h2>
+<p>이 절의 값은 원문에 없다. 2026-09-07 기준으로 따로 확인한 것이며 출처를 함께 적는다.</p>
+<p>축이 옮겨 갔다는 관찰이 맞았다. TSMC의 CoWoS 라인은 2026년 물량이 다 찼고 수요는 100만 웨이퍼 규모로 추정되며, 5.5배 크기 CoWoS의 수율이 98%를 넘었다. AI 패키징 생산능력은 올해에만 80% 넘게 늘어난다(출처: siliconanalysts 2026 파운드리 배분 자료, BigGo Finance 2026, semiengineering 2026). 병목이 칩 안이 아니라 칩을 잇는 자리에 있다는 그림이 그대로 확인됐다.</p>
+<p>전력과 건설 쪽도 맞았다. 2026년 미국에서 계획된 데이터센터의 절반가량이 지연되거나 취소될 것으로 전망됐고, 발표된 12기가와트 가운데 실제 착공은 5기가와트뿐이며 고압 변압기 납기가 5년까지 늘었다(출처: Yahoo Finance 2026, tech-insider.org 2026). 설비 쪽에서는 GE버노바의 수주잔고가 1,760억 달러에 이르렀다(출처: Motley Fool 2026-08-30).</p>
+<p>거시 관찰의 앞부분도 유지됐다. 30년물 미국채 금리는 9월에도 5.25~5.27%로 2007년 이후 가장 높은데(출처: 미 연준 H.15 2026-09-04) 나스닥은 6월 1일 27,190.21까지 올랐다(출처: Analysis.org 2026-06). 금리가 높은데 주식이 오르는 상태가 이어진 것은 맞다.</p>
+<p>다만 그 상태가 계속되지는 않았다. 나스닥은 6월 5일 하루에 4.18% 빠졌고 7월 말에는 올해 두 번째 조정에 들어갔다(출처: Analysis.org 2026-06, Motley Fool 2026-07-31). 이 회차는 5월 11일이고 고점은 3주 뒤였다.</p>
+<p>방산 판단은 아직 조건이 안 채워졌다. 미국과 이란의 교전은 7월과 8월에도 이어졌고 호르무즈 통과량은 전쟁 전의 4분의 1 수준이다(출처: Al Jazeera 2026-07-14·2026-08-12, Eastern Herald 2026-09-04). 전쟁이 끝나는 순간을 진입 시점으로 걸어 두었으니 그 시점이 아직 오지 않았다.</p>
+<h2 id="s5"><span class="num">5</span> 사실에 근거한 대목과 틀에 근거한 대목</h2>
+<p>이 회차의 성적을 판정하는 기준은 앞선 회차들과 같다.</p>
+<p>산업 안의 사실에서 나온 판단은 맞았다. 패키징으로 병목이 옮겨 갔다는 것, 전력과 건설이 막힌다는 것, 그 자리에 자금이 몰린다는 것이 넉 달 만에 숫자로 확인됐다.</p>
+<p>틀에서 나온 판단은 검증 자체가 어렵다. 기축통화의 네 조건 같은 이야기는 무엇이 나오면 틀린 것인지가 정해져 있지 않다. 큰 그림은 결론을 더 확신하게 만들 뿐 판단을 더 정확하게 만들지는 않는다.</p>
+<p>여기에 이 회차의 위치가 걸린다. 버블 논쟁을 접는다는 선언은 그 자체로 시점 판단이기도 하다. 지수는 3주 뒤 고점을 찍고 두 번 조정을 겪었다. 산업이 인프라라는 것과 지금 값이 적당하다는 것은 다른 문제인데, 이 회차는 앞의 것으로 뒤의 것을 대신한다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</h2>
+<p>빠진 것 ① 값에 대한 이야기가 없다. 인프라 산업이라는 판정과 지금 사도 되는지는 다른 물음이다.</p>
+<p>빠진 것 ② 명단에 든 회사들의 크기가 없다. 광통신과 타이밍 부품이 얼마짜리 시장인지가 있어야 그 자리의 값을 잰다.</p>
+<p>빠진 것 ③ 자금이 계속 들어온다는 판단에 반증 조건이 없다. 사모펀드와 연기금이 멈추는 경우가 다뤄지지 않는다.</p>
+<p>무엇을 더 봐야 하나 ① 패키징 물량이 상위 몇 고객에 몰려 있다는 점이 이 그림의 약한 고리다. 그 고객들의 설비투자 계획이 명단 전체를 흔든다.</p>
+<p>무엇을 더 봐야 하나 ② 방산에 걸어 둔 조건은 시점이 정해져 있다. 전쟁이 끝난 뒤 실제로 값이 빠지는지, 그때 들어가는지가 확인 대상이다.</p>
+<p>무엇을 더 봐야 하나 ③ 광통신은 이 채널에서 세 번째 언급인데 이번에야 회사 이름이 붙었다. 그 회사들의 실적이 이 판단의 성적표가 된다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2026-05-11-ai-infra-strategy.md">insights/seemore/2026-05-11-ai-infra-strategy.md</a></div></div></div>
