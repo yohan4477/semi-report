@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "3d22225fe2805b076c7813d3794c46784a687e42",
-"lines": 4292
+"index_fingerprint": "e469c86af7c8938c3839a93d09e88469b76fdd47",
+"lines": 4296
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9433,6 +9433,16 @@
 "t": "2011",
 "tense": "회고"
 },
+"content/understanding/채널 씨모어/2025-04-08-news.md#L32": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/2025-04-15-news.md#L41": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
+},
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L34": {
 "how": "명시",
 "span": [
@@ -9628,6 +9638,16 @@
 "how": "계산",
 "t": "2026",
 "tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2025-04-08-news.md#L176": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/raw/2025-04-15-news.md#L169": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
 },
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L68": {
 "how": "명시",
