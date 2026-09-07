@@ -1,7 +1,7 @@
 {
 "_meta": {
 "built": "2026-09-08",
-"index_fingerprint": "781e1ae284256307989e60b9cd3320ec146a12ef",
+"index_fingerprint": "d0af680e55e513bb9f6fa6f01380b785bcf477e7",
 "lines": 4388
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
@@ -2803,7 +2803,7 @@
 "t": "2026",
 "tense": "현재"
 },
-"content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md#L159": {
+"content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md#L172": {
 "how": "명시",
 "t": "2026",
 "tense": "현재"
@@ -2813,7 +2813,7 @@
 "t": "2029",
 "tense": "전망"
 },
-"content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md#L86": {
+"content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md#L88": {
 "how": "계산",
 "t": "2025",
 "tense": "회고"

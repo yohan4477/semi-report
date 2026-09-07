@@ -1,6 +1,6 @@
 ---
-title: 반도체 역사 한 토막 — TIL 연재 14편
-date: 2026-08-22
+title: 반도체 역사 한 토막 — TIL 연재 16편
+date: 2026-09-05
 source: https://daily.semidoped.com/
 speaker: Semi Doped
 org: Semi Doped
@@ -8,8 +8,26 @@ channel: Semi Doped
 host: Semi Doped
 section: til
 topic: 반도체 역사 · 인물 · 사고
-gain: 매주 한 편씩 나온 반도체 역사 일화 열넷을 한자리에. 금 간 실리콘이 도핑을 알려 준 이야기부터, 먼저 만들고도 이름이 안 남은 사람들, 값을 내려 시장을 죽인 뒤 되갚음당한 회사까지.
+gain: 매주 한 편씩 나온 반도체 역사 일화 열여섯을 한자리에. 금 간 실리콘이 도핑을 알려 준 이야기부터, 먼저 만들고도 이름이 안 남은 사람들, 값을 내려 시장을 죽인 뒤 되갚음당한 회사까지.
 ---
+
+## 2026-09-05 · TIL: The Chip Industry Started with Hand-Built Furnaces and a $150 Transistor
+url: https://daily.semidoped.com/p/til-the-chip-industry-started-with
+
+- **누구·무엇.** Julius Blank·Victor Grinich·Jean Hoerni·Eugene Kleiner·Jay Last·Gordon Moore·Robert Noyce·Sheldon Roberts 여덟 명. 모두 William Shockley 밑에 있다 나와 「Traitorous Eight」로 불림. 돈은 Sherman Fairchild 의 Fairchild Camera and Instrument 가 냈고 중개는 투자은행가 Arthur Rock.
+- **무슨 일이 있었나.** 1957년 9월 18일 여덟 명이 후원자 Arnold Beckman 에게 새 관리자를 요청했다 안 되자 사직. 하루 뒤 계약 — 138만 달러 대출에 회사 전체를 300만 달러에 살 수 있는 옵션을 붙인 구조였고 창업자 각자 500달러를 넣어 100주씩 받음. 10월 2일 Fairchild Camera 부사장 Richard Hodgson 이 Noyce 자택으로 3,000달러 수표를 부침. 첫 프로버와 테스트 벤치는 Grinich 의 팰로앨토 차고에서 만들었고 11월에 찰스턴로 14,000평방피트 건물로 들어감. 클린룸도 HEPA 필터도 방진복도 없었고, 이중확산 실리콘 NPN 트랜지스터를 만들 장비가 없어 직접 지음 — Roberts 가 결정 인상기로 잉곳을 길렀고 Last 와 Noyce 는 16mm 영화카메라 렌즈 셋으로 포토리소그래피(사진 노광으로 회로 패턴을 새기는 공정) 마스크를 만들었으며(Bell Labs 는 그 공정이 비현실적이라 했었음) Moore 는 확산과 알루미늄 접점, Hoerni 는 확산 프로파일, Blank·Grinich·Kleiner 는 실리콘을 1,000도 넘게 몇 시간 유지하는 노(爐)를 맡음. 1958년 초 IBM 연방시스템사업부가 기존 업체들이 사양을 못 맞추자 B-70 폭격기 컴퓨터용 고전압 실리콘 트랜지스터 100개를 개당 150달러에 주문 — 생산라인도 수율 데이터도 없는 회사에 준 주문이었고, Moore 팀(NPN)이 Hoerni 팀(PNP)을 이겨 2N696/2N697 이 됨. 1958년 여름 첫 100개 출하. 그해 말 메사 트랜지스터(접합부가 봉우리처럼 도드라진 구조)에서 금속 캔 안쪽 미세 입자가 노출된 접합에 앉아 단락시키는 고장이 나옴 — 연필로 패키지를 두드리면 멀쩡하던 소자가 죽었음. Hoerni 가 1957년 12월 노트에 적어 둔 방법으로 해결 — 확산 중 자란 이산화규소를 식각해 없애지 않고 접합 위에 남겨 표면을 봉함. 이것이 플레이너 공정이다. 1959년 1월 14일 Hoerni 가 작동본을 보였고 9일 뒤 Noyce 가 노트에 산화막이 접합을 지킬 수 있다면 그 위에 배선도 얹을 수 있다고 적음 — 알루미늄을 증착해 같은 포토리소그래피로 패턴을 내면 실리콘 한 조각 위에서 소자 여럿을 잇게 됨. Texas Instruments 의 Jack Kilby 가 앞선 9월에 단일 칩 회로를 먼저 보였지만 금선으로 손수 배선한 것이었고 Noyce 쪽은 공장에서 찍을 수 있는 꼴이었다 — 두 회사는 10년 가까이 특허 소송을 벌임. 첫 플레이너 트랜지스터 2N1613 은 1960년, 첫 집적회로 Micrologic 은 1961년.
+- **왜 남았나.** 오늘날의 반도체 산업이 스물일곱에서 서른둘 사이 여덟 명이 차고에서 영화카메라 렌즈로 마스크를 만들고 노를 손수 지어 연필로 트랜지스터를 두드려 불량을 가리던 자리에서 시작됐다는 것.
+- 숫자: 1957년 9월 18일(사직), 9월 19일(계약 — 138만 달러 대출·300만 달러 매입 옵션·창업자당 500달러 100주), 10월 2일(3,000달러 수표), 14,000평방피트, 1958년 초(IBM 주문 100개·개당 150달러), 1958년 여름(첫 출하), 1957년 12월(Hoerni 노트), 1959년 1월 14일(플레이너 시연), 1960년(2N1613), 1961년(Micrologic)
+- 인용: 없음
+
+## 2026-08-29 · TIL: The Man Whose Perseverance Made The Transistor Possible
+url: https://daily.semidoped.com/p/til-the-man-whose-perseverance-made
+
+- **누구·무엇.** 강대원(Dawon Kahng, 1931년 5월 서울 출생 — 서울대 물리학과 1955년 졸업, 오하이오주립대 박사 1959년, 같은 해 Bell Labs 머레이힐 입사). 문제를 넘겨준 사람은 Mohamed "John" Atalla.
+- **무슨 일이 있었나.** Julius Lilienfeld 가 1925년 캐나다·1926년 미국에서 게이트에 전압을 걸어 그 아래 채널의 전류를 조절하는 방법을 특허로 적어 두었지만 34년간 아무도 작동시키지 못함 — 막은 것은 표면이었다. 실리콘 표면의 트랩(전자를 붙잡는 덫)이 게이트의 전기장을 가로막았음. Atalla 가 1959년 5월 웨이퍼 위에 충분히 깨끗한 이산화규소 막을 기르는 해법을 발표하고 후속 작업을 갓 입사한 강대원에게 맡김. 강대원은 그해 11월 작동 소자를 완성 — 100나노미터 두께 산화막 위에 50분의 1밀리미터 길이 알루미늄 띠를 얹어 금속에 전압을 걸면 그 아래로 전류가 흐르는 구조. 금속(metal)·산화막(oxide)·실리콘(silicon)을 전기장(field)이 여닫는다고 해서 MOSFET 이 됨. 이듬해 6월 피츠버그 고체소자연구학회에 발표했지만 Bell Labs 는 안 썼다 — 게이트 길이 20마이크론에 당시 전화망에 수백만 개씩 들어가던 바이폴라 트랜지스터보다 약 100배 느렸고 온도와 시간에 따라 특성이 흔들렸음. Bell Labs 는 속도가 사업이라 느린 트랜지스터를 놓을 데가 없었음. 강대원은 붙잡고 있었다 — 만들기가 쉽고 공정 단계가 적으며 소자끼리 격리할 도랑이 필요 없어 웨이퍼가 다할 때까지 나란히 늘어놓을 수 있었기 때문. 1961년 1월 16일 그 내용을 메모로 적었지만 반응이 없었음. Atalla 는 인정을 못 받은 데 지쳐 1962년 Hewlett-Packard 로 옮겨 반도체 연구소를 세웠고, 강대원은 29년을 Bell Labs 에 머묾. 둘은 앞서 PMOS·NMOS 공정을 밝히고 MOS 집적회로를 제안했고, 강대원은 1967년 Simon Sze 와 함께 MOSFET 안의 고립된 게이트에 전하를 가둬 두는 방법을 찾아냄 — 전원을 끊어도 남는 전하로, 이후 모든 EPROM·EEPROM·플래시 칩의 저장 셀이 됨.
+- **왜 남았나.** 2014년 분석가 Jim Handy 가 1947년 이후 업계가 출하한 트랜지스터를 전부 세어 2.9섹틸리언(10의 21제곱, 뒤에 13섹틸리언으로 올림)을 얻었고 그중 약 99.9%가 MOSFET — 사람이 만든 어떤 물건보다 많이 만들어진 소자다. Franklin Institute 는 1975년에야 두 사람에게 Stuart Ballantine Medal 을 줬고 National Inventors Hall of Fame 헌액은 2009년, 강대원이 죽은 지 17년 뒤였다.
+- 숫자: 1925/1926년(Lilienfeld 특허), 34년(아무도 못 만든 기간), 1959년 5월(Atalla 발표), 1959년 11월(MOSFET 완성), 100나노미터(산화막)·50분의 1밀리미터(알루미늄 띠)·20마이크론(게이트 길이)·100배(속도차), 1961년 1월 16일(메모), 1962년(Atalla 가 HP 로), 29년(강대원 재직), 1967년(Sze 와 전하 저장), 1975년(Ballantine Medal), 1992년 5월 13일(강대원 사망), 2009년(Hall of Fame), 2.9→13섹틸리언(누적 출하), 99.9%(MOSFET 비중)
+- 인용: 없음
 
 ## 2026-08-22 · TIL: The First Red LED was a Laser That had Stopped Working
 url: https://daily.semidoped.com/p/til-the-first-red-led-was-a-laser
