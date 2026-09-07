@@ -1,0 +1,284 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>처방전 처리를 대행하던 PBM이 포뮬러리와 리베이트로 도매상의 자리를 빼앗은 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>처방전 처리를 대행하던 PBM이 포뮬러리와 리베이트로 도매상의 자리를 빼앗은 경위</h1><div class="pmeta">2025-09-28 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/A787UgEMDsQ">https://youtu.be/A787UgEMDsQ</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2025-09-28-pharma-dist-valuechain.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2025-09-28-pharma-dist-valuechain.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">조사를 맡겼더니 목록을 쥐게 됐다 — 대행업자가 유통의 주인이 된 경위</div><p>채널 씨모어의 <span class="pn">TJ</span>가 제약유통 연재를 열며 미국 유통 구조 한 편을 냈다. 한국 투자자에게 이 산업이 왜 안 읽히는지에서 출발해, 처방전을 대신 처리해 주던 업체가 어떻게 약이 팔릴지를 정하는 자리에 올라섰는지를 짚는다. 이 글은 그 이동이 어느 단계에서 일어났는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">처방전 한 장이 지나는 길이 왜 대행업을 낳았나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">조사를 맡긴 일이 어떻게 권한을 넘겼나</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">깎은 값과 뒤로 준 값을 나누면 누가 무엇을 얻나</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">나라가 내 준다는 조건 하나가 셈을 반대로 돌린다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">좋은 약을 만들어도 미국에 못 파는 이유</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">도매상 자리까지 넘어오면 무엇이 남나</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 처방전 한 장이 지나는 길이 왜 대행업을 낳았나</h2>
+<figure class="uc-fig"><p class="fig-title">같은 약이 지나는 길이 다르다</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="한국과 미국의 처방·판매·청구 경로 대비">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="33" y="20" text-anchor="middle" class="fig-hd">무엇이</text>
+  <text x="154" y="20" text-anchor="middle" class="fig-hd">한국</text>
+  <text x="345.5" y="20" text-anchor="middle" class="fig-hd">미국</text>
+  <rect x="0" y="30" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="33" y="60.5" text-anchor="middle" class="fig-b">보험</text>
+  <rect x="82" y="30" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="154" y="60.5" text-anchor="middle" class="fig-b">건강보험공단 하나</text>
+  <rect x="242" y="30" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="345.5" y="60.5" text-anchor="middle" class="fig-b">민영 · 주마다 여럿</text>
+  <rect x="0" y="95" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="33" y="125.5" text-anchor="middle" class="fig-b">처방</text>
+  <rect x="82" y="95" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="154" y="125.5" text-anchor="middle" class="fig-b">약 이름</text>
+  <rect x="242" y="95" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="345.5" y="125.5" text-anchor="middle" class="fig-b">성분명</text>
+  <rect x="0" y="160" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="33" y="190.5" text-anchor="middle" class="fig-b">파는 곳</text>
+  <rect x="82" y="160" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="154" y="190.5" text-anchor="middle" class="fig-b">약국</text>
+  <rect x="242" y="160" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="345.5" y="190.5" text-anchor="middle" class="fig-b">약국 · 마트 · 온라인</text>
+  <rect x="0" y="225" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="33" y="255.5" text-anchor="middle" class="fig-b">청구</text>
+  <rect x="82" y="225" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="154" y="255.5" text-anchor="middle" class="fig-b">공단에 한 번</text>
+  <rect x="242" y="225" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="345.5" y="255.5" text-anchor="middle" class="fig-b">보험사마다 따로</text>
+</svg><figcaption>어려운 일이 아니라 확인할 곳이 많은 일이다. 그래서 대신 해 주는 자리가 생겼다.</figcaption></figure>
+<p>진행자가 이 산업을 한 달에 걸쳐 다루겠다고 하면서 먼저 한 말은 이해하기가 진짜 힘들다는 것이다. 한국 사람의 상식으로는 체계가 너무 달라 산업 자체를 이해하는 데만 몇 달이 필요할 것 같다고 했다. 그 말이 엄살이 아니라 이 편의 구조를 정한다 — 회사를 세기 전에 길을 그려야 한다.</p>
+<p>한국에서 약을 타는 길은 짧다. 제약회사가 도매상에 주고, 도매상이 약국에 주고, 약국이 소비자에게 팔면서 나머지 약값을 건강보험공단에 청구한다. 청구를 받는 곳이 하나다.</p>
+<p>미국은 그 하나가 없다. 의료보험이 전부 민영이라 주마다 네다섯 개씩만 잡아도 전국에 몇백 개가 되고, 환자가 다른 주로 옮기면 그 주의 병원과 약국을 또 쓴다. 약을 파는 곳도 약국만이 아니라 식료품 유통점, 월마트, 아마존 온라인 약국, 우편 주문으로 갈린다.</p>
+<p>경우의 수가 늘어난 자리는 셋이다. ① 소비자는 처방전이 자기 보험으로 커버되는지, 어느 약국에서 사야 보험금이 나오는지를 확인해야 하고 의사는 약 이름이 아니라 성분명으로 처방한다. ② 보험사는 고객이 여러 곳에 동시 가입할 수 있어 중복 청구를 막으려면 서로 확인해야 한다. ③ 약국은 고객의 거주지와 가입 보험을 파악해 다른 주 보험사에 우편으로 청구했고 그러면 몇 달이 걸렸다.</p>
+<p>세 자리가 다 같은 성격이다. 일이 어려운 것이 아니라 확인할 곳이 많다. 어려운 일은 잘하는 회사가 가져가지만, 확인할 곳이 많은 일은 모든 곳과 연결된 회사가 가져간다. 미국 제약유통에서 값이 어디에 고이는지를 정한 것이 이 차이다.</p>
+<p>이 셋을 통째로 대신 해 주겠다고 나온 것이 PBM(파머시 베네핏 매니저 — 처방약 급여를 관리하는 대행업체)이다. 한 해 처방전이 60억 건인 시장에서 아무도 하고 싶지 않은 일을 맡은 것이다. 시작은 잡무였다.</p>
+<h2 id="s2"><span class="num">2</span> 조사를 맡긴 일이 어떻게 권한을 넘겼나</h2>
+<figure class="uc-fig"><p class="fig-title">조사를 맡긴 일이 권한이 되기까지</p><svg class="epoch" viewBox="0 0 520 349" role="img" aria-label="보험사가 PBM 에 조사를 맡긴 일이 목록 작성 권한으로 이어진 순서">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="17.5" y="20" text-anchor="middle" class="fig-hd">단계</text>
+  <text x="209" y="20" text-anchor="middle" class="fig-hd">무슨 일이 있었나</text>
+  <rect x="0" y="30" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="17.5" y="60.5" text-anchor="middle" class="fig-b">적자</text>
+  <rect x="51" y="30" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="209" y="60.5" text-anchor="middle" class="fig-b">보험사가 약값 지급으로 적자</text>
+  <line x1="17.5" y1="81" x2="17.5" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="17.5" y="125.5" text-anchor="middle" class="fig-b">조사</text>
+  <rect x="51" y="95" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="209" y="125.5" text-anchor="middle" class="fig-b">자료 많은 PBM 에 원인을 맡긴다</text>
+  <line x1="17.5" y1="146" x2="17.5" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="17.5" y="190.5" text-anchor="middle" class="fig-b">목록</text>
+  <rect x="51" y="160" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="209" y="190.5" text-anchor="middle" class="fig-b">커버할 약을 골라 포뮬러리를 만든다</text>
+  <line x1="17.5" y1="211" x2="17.5" y2="223" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="225" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="17.5" y="255.5" text-anchor="middle" class="fig-b">협상</text>
+  <rect x="51" y="225" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="209" y="255.5" text-anchor="middle" class="fig-b">그 목록을 들고 약값을 깎아 온다</text>
+  <line x1="17.5" y1="276" x2="17.5" y2="288" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="290" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="17.5" y="320.5" text-anchor="middle" class="fig-b">역전</text>
+  <rect x="51" y="290" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="209" y="320.5" text-anchor="middle" class="fig-b">목록을 쥔 쪽이 무엇이 팔릴지 정한다</text>
+</svg><figcaption>넘어간 것은 일이 아니라 권한이다. 목록에 오르는지를 정하는 쪽이 팔리는지를 정한다.</figcaption></figure>
+<p>대행을 하면 데이터가 쌓인다. 어떤 약이 많이 팔리는지, 어느 보험사가 무슨 약을 커버하는지가 PBM에 모였고, PBM은 그 자료를 들고 기업 고객 보험 영업까지 시작한다. 이때까지도 제약유통의 주도권은 도매상에 있었다.</p>
+<p>판이 뒤집힌 계기는 보험사 쪽의 사고였다. 1990년대에 보험사들이 약값 보험금 지급으로 적자를 내기 시작했고, 원인을 알아내려고 자료를 가장 많이 가진 PBM에 조사를 맡겼다. 답은 의학 기술이 발달해 새 치료제와 지속 관리약이 쏟아졌고 그 약들이 비싸다는 것이었다.</p>
+<p>여기서 보험사가 한 걸음을 더 갔다. 그러면 시중 약을 조사해 보험으로 커버할 약의 목록을 만들라고 지시한 것이다. 그것이 포뮬러리(급여 목록 — 보험이 값을 대 주는 약의 명단)다. 그리고 그 목록을 들고 제약사를 찾아가 약값을 깎아 오라는 협상 임무까지 맡긴다.</p>
+<p>넘어간 것은 일이 아니라 권한이다. 어느 약이 목록에 오르는지를 정하는 쪽이 곧 어느 약이 팔리는지를 정한다. 보험사는 자기 돈이 나가는 것을 줄이려고 대행업체에 목록을 맡겼는데, 그 목록이 산업에서 가장 값나가는 자리였다.</p>
+<h2 id="s3"><span class="num">3</span> 깎은 값과 뒤로 준 값을 나누면 누가 무엇을 얻나</h2>
+<figure class="uc-fig"><p class="fig-title">깎은 값과 뒤로 준 값이 갈라지는 자리</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="PBM 이 약값 50% 인하를 요구했을 때 표면 인하와 리베이트가 나뉘는 구조">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="25.5" y="20" text-anchor="middle" class="fig-hd">누가</text>
+  <text x="178" y="20" text-anchor="middle" class="fig-hd">무엇을 하나</text>
+  <text x="393" y="20" text-anchor="middle" class="fig-hd">어디로</text>
+  <rect x="0" y="30" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="60.5" text-anchor="middle" class="fig-b">제약사</text>
+  <rect x="67" y="30" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="60.5" text-anchor="middle" class="fig-b">표면 값은 10% 만 깎고</text>
+  <rect x="305" y="30" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="393" y="60.5" text-anchor="middle" class="fig-b">20% 를 뒤로 준다</text>
+  <line x1="25.5" y1="81" x2="25.5" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="125.5" text-anchor="middle" class="fig-b">PBM</text>
+  <rect x="67" y="95" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="125.5" text-anchor="middle" class="fig-b">받은 것을 나눈다</text>
+  <rect x="305" y="95" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="393" y="125.5" text-anchor="middle" class="fig-b">보험사 · 고객사</text>
+  <line x1="25.5" y1="146" x2="25.5" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="190.5" text-anchor="middle" class="fig-b">제약사</text>
+  <rect x="67" y="160" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="190.5" text-anchor="middle" class="fig-b">그사이 약값을 올린다</text>
+  <rect x="305" y="160" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="393" y="190.5" text-anchor="middle" class="fig-b">표시 가격</text>
+  <line x1="25.5" y1="211" x2="25.5" y2="223" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="225" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="255.5" text-anchor="middle" class="fig-b">소비자</text>
+  <rect x="67" y="225" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="255.5" text-anchor="middle" class="fig-b">오른 값을 그대로 낸다</text>
+  <rect x="305" y="225" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="393" y="255.5" text-anchor="middle" class="fig-b">고령층 밖</text>
+</svg><figcaption>고리 안의 셋은 다 얻는다. 내는 사람은 고리 밖에 있다.</figcaption></figure>
+<p>협상은 이렇게 굴러간다. PBM이 포뮬러리 등재를 걸고 약값 50% 인하를 요구하면, 제약사는 표면 약값은 10%만 깎고 나머지 20%를 뒤로 리베이트로 준다. 목록에 없는 제약사에는 비슷한 성분의 경쟁약이 이미 올라가 잘 팔리고 있다며 리베이트를 조건으로 등재를 제안한다.</p>
+<p>숫자를 나눠 보면 이 거래에서 무엇이 오가는지가 드러난다. 표면 약값은 10%만 내려간다 — 이것이 세상에 보이는 값이다. 뒤로 가는 20%는 PBM이 받는다 — 이것이 보이지 않는 값이다. 제약사는 목록에 오르고, PBM은 현금을 받고, 목록에 못 오른 약은 팔리지 않는다.</p>
+<p>그래서 이 과정이 반복될수록 도매상의 힘은 줄고 커버 여부를 쥔 PBM의 힘이 커진다. 도매상은 약을 옮기는 일을 그대로 하고 있는데 자리가 밀렸다. 옮기는 일보다 팔릴지를 정하는 일이 위에 있었기 때문이다.</p>
+<p>이 구조에서 제약사가 값을 올릴 이유도 같이 생긴다. 뒤로 나가는 20%를 표면 값에 얹어 두면 깎이고도 남는다. 그래서 목록에 오르려고 깎는 협상이 도리어 표시 가격을 밀어 올린다. 깎는 사람과 내는 사람이 다를 때 협상이 값을 낮추지 않는다는 것이 이 절에서 볼 것이다.</p>
+<h2 id="s4"><span class="num">4</span> 나라가 내 준다는 조건 하나가 셈을 반대로 돌린다</h2>
+<p>메디케이드와 메디케어는 나라가 재원만 대고 일반 보험사가 상품을 팔아 고령층 병원비와 약값을 지급한 뒤 국가에 청구하는 구조다. 여기서 조건이 하나 바뀐다. 약값을 누가 내느냐다.</p>
+<p>민간 보험에서는 약값이 오르면 보험사가 손해를 보니 PBM에 깎으라고 시킨다. 공적 보험에서는 어차피 나라가 다 낸다. 그러면 굳이 깎을 필요 없이 리베이트를 더 받으면 된다는 발상이 나오고, PBM은 그것을 실행에 옮긴다.</p>
+<p>제약회사·PBM·보험사 셋 사이에서 리베이트가 오가는 순서는 이렇게 닫힌다. 제약회사가 PBM에 리베이트를 주고, PBM은 일부를 보험사와 영업 고객사에 나눠 주고, 제약회사는 그사이 약값을 올린다. 이 고리 안의 셋은 다 얻는다.</p>
+<p>밖에 있는 사람이 낸다. 고령층이 아닌 일반 소비자가 오른 약값을 그대로 떠안고, 보험사는 커버 비율을 유지하려면 보험료를 올리라고 요구한다. 트럼프 대통령이 제약회사가 아니라 보험회사와 PBM을 약값이 비싼 원흉으로 지목한 이유가 이 고리에 있다.</p>
+<p>진행자는 그래서 약값 인하 발표로 복제약 회사가 특혜를 받을 것이라는 신문 보도를 근거 없는 얘기로 본다. 복제약이 싸다는 것과 그 약이 목록에 오른다는 것은 다른 문제이기 때문이다.</p>
+<h2 id="s5"><span class="num">5</span> 좋은 약을 만들어도 미국에 못 파는 이유</h2>
+<p>국내 바이오주가 신약 개발·FDA 승인·임상 통과 소식에 급등했다가 시간이 지나면 제자리로 돌아오는 이유를 진행자는 여기서 찾는다. 아무리 좋은 약을 만들어도 미국에 팔 수가 없다는 것이다.</p>
+<p>한국만의 사정이 아니다. 다이이치 산쿄나 다케다제약 같은 큰 글로벌 제약사도 미국에 단독으로 들어가 약을 팔지 못한다. PBM을 공략하지 못하면 유통에 들어갈 수 없는데 PBM이 요구하는 리베이트 규모가 너무 크다. 그래서 파이저·일라이릴리·애브비 같은 미국 빅파마와 파트너십을 맺어 우회하고, 그 대가로 큰 지분을 내준다.</p>
+<p>진행자가 셀트리온의 일라이릴리 미국 현지 공장 인수(4,500억 원)를 셀트리온 역사상 가장 현명한 투자로 보는 것도 같은 셈이다. 바이오시밀러도 결국 PBM을 상대해야 하는데, 일라이릴리와 엮이면 협상 자리에 앉을 수 있다.</p>
+<p>우회로에는 값이 붙는다. 파트너십의 대가로 내주는 큰 지분이 그것이다. 약을 다 만들어 놓고도 미국에 들어가려면 지분을 떼 줘야 한다면, 그 나라 시장의 값은 약을 만든 회사가 아니라 문을 여는 회사가 가져간다. 국내 제약사의 임상 성공 기사가 주가를 올렸다가 되돌리는 자리도 여기다 — 기사에는 약이 있고 문은 없다.</p>
+<p>여기서 보이는 것은 기술과 유통이 다른 자산이라는 사실이다. 임상 통과는 약이 좋다는 증명이고, 포뮬러리 등재는 그 약이 팔린다는 허가다. 국내 제약사 주가가 앞의 것에만 반응하는 동안 뒤의 것은 아무도 안 세고 있었다.</p>
+<h2 id="s6"><span class="num">6</span> 도매상 자리까지 넘어오면 무엇이 남나</h2>
+<p>상위 세 개 PBM이 시장의 80%를 잡았고 셋 다 관계사로 보험사를 두고 있다. 유나이티드헬스가 보험사와 PBM을 함께 가진 대표 사례다. 워런 버핏이 이 회사를 매수한다는 소식에 주가가 오른 것도, 약국 체인도 도매상도 아닌 회사가 순이익의 거의 절반을 제약유통에서 내고 있기 때문이다.</p>
+<p>그리고 2010년대에 PBM은 항암제 같은 고가 특수의약품 유통까지 손을 뻗는다. 목록을 쥔 쪽이 물건을 옮기는 일까지 가져가려는 움직임이다. 도매상에게는 마지막 남은 자리가 걸린 일이 된다.</p>
+<p>도매상이 쥔 것은 목록이 아니라 물건이다. 특수의약품은 온도를 지켜 옮겨야 하고 그 설비와 노하우는 목록을 만드는 회사가 하루아침에 갖출 수 없다. PBM이 이 자리로 들어오려면 남의 강점 위에서 싸워야 한다.</p>
+<p>그래서 이 회차의 마지막 그림은 한쪽이 이긴 판이 아니라 서로 다른 쪽 마당으로 넘어가는 판이다. 목록을 쥔 쪽은 물류로, 물류를 쥔 쪽은 처방으로. 이 회차는 여기서 끊고 다음 편에서 도매상의 반격을 다루겠다고 예고한다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</h2>
+<p>빠진 것이 셋이다. ① PBM 세 곳의 이름이 이 편에는 안 나온다. 80%라는 점유율만 있고 누가 얼마씩인지는 다음 편으로 미뤄진다. ② 리베이트 50·10·20이라는 수는 협상의 예시로 제시된 것이지 평균이나 공표치가 아니다. ③ 트럼프 행정부의 압박이 실제로 무엇을 바꿨는지는 없다. 지목했다는 사실만 있다.</p>
+<p>넷째로, 이 편은 도매상이 왜 밀렸는지를 PBM 쪽에서만 본다. 도매상이 그동안 무엇을 했는지, 왜 목록을 만드는 일을 자기가 안 가져갔는지는 안 나온다. 한쪽 이야기로 선 판이라 다음 편의 반격을 보고서야 균형이 잡힌다.</p>
+<p>무엇이 나오면 이 판단이 흔들리는지도 셋이다. ① 리베이트를 투명하게 공개하도록 규제가 바뀌면 3절의 20%가 설 자리가 좁아진다. 값이 보이는 순간 그 돈을 받는 근거를 대야 한다. ② 공적 보험이 약값을 직접 협상하기 시작하면 4절의 조건이 뒤집힌다. 나라가 내 준다는 전제 위에 선 셈이라 전제가 바뀌면 결론도 바뀐다. ③ PBM이 특수의약품 유통에서 실제로 자리를 잡으면 6절의 물음이 닫힌다. 다음 편이 그 반대쪽을 다룬다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2025-09-28-pharma-dist-valuechain-strategy.md">insights/seemore/2025-09-28-pharma-dist-valuechain-strategy.md</a></div></div></div>

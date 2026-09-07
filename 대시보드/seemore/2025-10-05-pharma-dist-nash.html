@@ -1,0 +1,214 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>도매상이 의사 네트워크와 차지백으로 PBM의 공세를 막아 내쉬 균형에 이른 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>도매상이 의사 네트워크와 차지백으로 PBM의 공세를 막아 내쉬 균형에 이른 경위</h1><div class="pmeta">2025-10-05 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/vYb2f8SdZuQ">https://youtu.be/vYb2f8SdZuQ</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2025-10-05-pharma-dist-nash.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2025-10-05-pharma-dist-nash.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">밀린 쪽이 처방하는 손을 잡자 싸움이 멈췄다 — 균형이 값이 되는 산업</div><p>지난 편이 PBM이 도매상의 자리를 어떻게 빼앗았는지였다면, 이 편은 도매상이 무엇으로 되받았는지다. 진행자는 반격의 수단 둘을 짚은 뒤 지금 상태를 내쉬 균형이라 부르고, 그 상태 자체가 투자 판단이 된다고 말한다. 이 글은 그 판단이 어디에 기대고 있는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">밀린 쪽이 왜 의사를 찾아갔나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">두 번째 수는 왜 계약서 한 줄이었나</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">수요를 쥔 PBM 과 공급을 쥔 도매상은 무엇이 다른가</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">균형이 안 서는 산업은 어떻게 다른가</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">균형에 기대 사는 판단은 무엇이 깨지면 무너지나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 밀린 쪽이 왜 의사를 찾아갔나</h2>
+<p>도매상이 처음 잡은 것은 제약사도 보험사도 아니고 의사다. 항암제 같은 특수의약품은 환자가 고르는 물건이 아니라 의사가 골라 처방하는 물건이라는 성질 때문이다.</p>
+<p>이 성질이 왜 반격의 지렛대가 되는지는 PBM의 힘이 어디서 오는지와 붙여 보면 보인다. PBM은 보험이 어느 약에 값을 대는지를 정한다. 그런데 보험이 값을 대 준다고 해서 그 약이 쓰이는 것은 아니다. 마지막에 무엇을 쓸지 정하는 손이 따로 있다. 도매상은 그 손을 모으기로 한다.</p>
+<p>이 지렛대가 특수의약품에서만 세게 걸린다는 점도 같이 봐야 한다. 감기약은 환자가 약국에서 고르거나 값싼 복제약으로 갈아탈 수 있어 목록이 곧 판매다. 항암제는 다르다. 무엇을 쓸지 판단할 사람이 의사뿐이고, 그 판단이 틀리면 환자가 다친다. 값으로 갈아타라고 말할 수 없으니 목록의 힘이 거기서 멈춘다.</p>
+<p>모으는 방법은 대행이다. 네트워크에 들어온 의사에게 병원 재고 관리, 세무 관리, 보험 청구 관리, 환자 이력 관리, 병원 내 고용 관리까지 대신 처리해 준다. 의사는 치료만 하면 된다. 지난 편에서 PBM이 보험사의 잡무를 맡아 발판을 얻었던 것과 같은 수다 — 남이 하기 싫은 일을 떠맡으면 그 사람의 결정에 가까워진다.</p>
+<p>대행이 유인이 되는 이유는 병원의 셈에 있다. 미국 병원에서 보험 청구와 환자 이력 관리에 붙는 사람과 시간은 진료로 버는 돈에서 그대로 빠지는 비용이다. 그것을 도매상이 가져가면 의사는 같은 시간에 환자를 더 본다. 도매상은 이미 청구와 물류를 다루던 회사라 한 병원을 더 받는 데 드는 비용이 적다. 병원에는 큰 비용인 일이 도매상에는 작은 비용이라 거래가 성립한다.</p>
+<p>네트워크가 커지면 제약사를 상대로 말이 선다. 조건을 맞추는 제약사의 약은 네트워크 의사들이 쓰게 해 주고, PBM 약국에 공급하는 제약사에는 앞으로 우리 네트워크에서 그 약을 아예 안 쓰겠다고 할 수 있다. 종양학 네트워크에는 미국 대부분의 의사가 들어 있고 그 운영자가 미국 1위 도매상이다. 이 도매상이 공급을 끊겠다고 하면 제약사가 무시할 수 없다.</p>
+<h2 id="s2"><span class="num">2</span> 두 번째 수는 왜 계약서 한 줄이었나</h2>
+<figure class="uc-fig"><p class="fig-title">되받은 수 둘은 오래가는 정도가 다르다</p><svg class="epoch" viewBox="0 0 520 154" role="img" aria-label="도매상이 PBM 에 맞선 두 수단과 각각의 성격">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="56.5" y="20" text-anchor="middle" class="fig-hd">수단</text>
+  <text x="224.5" y="20" text-anchor="middle" class="fig-hd">무엇을 하나</text>
+  <text x="400.5" y="20" text-anchor="middle" class="fig-hd">성격</text>
+  <rect x="0" y="30" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="60.5" text-anchor="middle" class="fig-b">의사 네트워크</text>
+  <rect x="129" y="30" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="224.5" y="60.5" text-anchor="middle" class="fig-b">병원 일을 대신 한다</text>
+  <rect x="336" y="30" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="60.5" text-anchor="middle" class="fig-b">쌓는 데 몇 년</text>
+  <rect x="0" y="95" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="125.5" text-anchor="middle" class="fig-b">차지백 옵션</text>
+  <rect x="129" y="95" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="224.5" y="125.5" text-anchor="middle" class="fig-b">싸게 도는 길을 막는다</text>
+  <rect x="336" y="95" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="125.5" text-anchor="middle" class="fig-b">계약서 한 줄</text>
+</svg><figcaption>하나는 쌓아 둔 자산이고 하나는 조건에 달린 장치다.</figcaption></figure>
+<p>두 번째는 차지백 옵션이다. 특수의약품은 콜드체인 같은 유통 노하우와 설비가 있어야 옮길 수 있고 PBM이 단기간에 갖추기 어렵다. 그래서 도매상은 제약사가 다른 곳에 더 싸게 공급하면 그 차액을 도매상에 돌려주게 하는 조항을 건다.</p>
+<p>이 조항이 막는 것은 값이 아니라 길이다. PBM이 제약사에서 직접 싸게 받아 우회하려 해도, 그렇게 하면 제약사가 도매상에 차액을 물어야 하니 애초에 그 거래를 안 하게 된다. 물류를 못 갖춘 PBM 이 값으로 뚫으려는 길을 계약으로 닫은 것이다.</p>
+<p>장치 둘의 성격이 다르다는 점도 봐 둘 만하다. 의사 네트워크는 쌓는 데 몇 년이 걸리고 한번 쌓이면 잘 안 무너지는 자산이고, 차지백 옵션은 계약서에 넣는 순간 서는 대신 규제나 소송으로 걷힐 수 있는 장치다. 도매상이 반격에 쓴 수 가운데 오래갈 것과 조건에 달린 것이 섞여 있다.</p>
+<p>제약사가 거부하면 도매상은 그 회사의 다른 약까지 유통을 끊겠다고 압박해 결국 받아들이게 만든다. 여기서 드러나는 것은 도매상의 힘이 약 한 종에 걸리지 않는다는 점이다. 여러 약을 한꺼번에 옮겨 주기 때문에 한 약의 협상에 다른 약을 얹을 수 있다.</p>
+<p>그래서 진행자의 정리가 나온다. 큰 제약사가 아니면 유통 사업자에게든 PBM에게든 휘둘릴 수밖에 없고, 한국 제약사도 큰 제약사와 파트너십 없이는 미국에 단독으로 못 들어간다. 지난 편의 결론이 반대편에서 한 번 더 확인된다.</p>
+<h2 id="s3"><span class="num">3</span> 수요를 쥔 PBM 과 공급을 쥔 도매상은 무엇이 다른가</h2>
+<figure class="uc-fig"><p class="fig-title">같은 약 한 통에서 두 회사가 다른 항목으로 뗀다</p><svg class="epoch" viewBox="0 0 520 154" role="img" aria-label="PBM 은 수요 쪽 도매상은 공급 쪽에서 힘을 쓴다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="25.5" y="20" text-anchor="middle" class="fig-hd">누가</text>
+  <text x="100" y="20" text-anchor="middle" class="fig-hd">어느 쪽</text>
+  <text x="268" y="20" text-anchor="middle" class="fig-hd">무엇을 정하나</text>
+  <rect x="0" y="30" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="60.5" text-anchor="middle" class="fig-b">PBM</text>
+  <rect x="67" y="30" width="66" height="49" rx="9" class="fig-agent"/>
+  <text x="100" y="60.5" text-anchor="middle" class="fig-b">수요</text>
+  <rect x="149" y="30" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="268" y="60.5" text-anchor="middle" class="fig-b">보험이 어느 약에 값을 대나</text>
+  <rect x="0" y="95" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="125.5" text-anchor="middle" class="fig-b">도매상</text>
+  <rect x="67" y="95" width="66" height="49" rx="9" class="fig-agent"/>
+  <text x="100" y="125.5" text-anchor="middle" class="fig-b">공급</text>
+  <rect x="149" y="95" width="238" height="49" rx="9" class="fig-box"/>
+  <text x="268" y="125.5" text-anchor="middle" class="fig-b">의사가 무엇을 처방하나</text>
+</svg><figcaption>겨루는 자리가 안 겹친다. 한쪽이 더 받는다고 다른 쪽이 덜 받지 않는다.</figcaption></figure>
+<p>두 사업자가 쥔 것이 갈린다. PBM은 어떤 약이 보험 적용을 받는지를 정해 수요를 움직이고, 도매상은 의사 네트워크로 환자가 실제로 무엇을 투여받는지를 정해 공급을 움직인다.</p>
+<p>수요를 쥔다는 것과 공급을 쥔다는 것은 돈을 받는 방식도 다르다. PBM은 목록에 올려 주는 대가로 제약사에서 받고, 도매상은 약을 옮기고 병원 일을 대신해 준 대가로 받는다. 같은 약 한 통에서 두 회사가 서로 다른 항목으로 값을 뗀다. PBM 이 더 받는다고 도매상이 덜 받지 않으니 싸울 이유 자체가 약하다.</p>
+<p>같은 산업 안인데 겨루는 자리가 겹치지 않는다. 둘은 경쟁도 하지만 서로의 수익 영역을 침범하지 않는 선에서 균형을 유지하며 협력에 가까운 관계를 이어 간다. 도매상이 2020년대 들어 PBM의 공세를 잘 막아 왔고 도매상 주가가 2020년 이후 계속 올랐다는 것이 그 결과다.</p>
+<p>균형이라는 말이 사이좋다는 뜻은 아니다. 서로를 칠 수 있는데 쳐 봐야 자기가 손해라서 안 치는 상태다. PBM은 특수의약품 유통으로 들어갈 수 있지만 물류와 계약이 막고, 도매상은 목록으로 갈 수 있지만 보험사와 엮인 PBM을 상대해야 한다. 둘 다 남의 마당에서 싸우면 자기 마당에서 쓰던 무기가 안 통한다.</p>
+<p>진행자는 이 상태를 영화 뷰티풀 마인드의 실제 인물 존 내시가 논문으로 낸 내쉬 균형에 빗댄다. 서로 상대의 수를 알고 있고, 그 상태에서 혼자 전략을 바꿔 봐야 더 나아지지 않으니 아무도 안 바꾸는 자리다.</p>
+<h2 id="s4"><span class="num">4</span> 균형이 안 서는 산업은 어떻게 다른가</h2>
+<p>진행자가 반대쪽 예로 든 것이 반도체다. 2000년대 중후반부터 2010년대까지 한국·일본·미국이 단가 싸움을 벌였고 디램에서는 삼성이 최종 승자가 됐다.</p>
+<p>두 산업이 갈리는 지점은 겨루는 물건이 같으냐다. 같은 제품으로 붙으면 한쪽이 떨어져 나갈 때까지 싸운다. 도매상과 PBM은 같은 산업 안에 있어도 하는 일이 달라, 담합하지 않고도 서로 전략을 안 바꾸는 상태가 유지된다.</p>
+<p>반도체가 그렇게 된 것은 파는 물건이 서로 대체되기 때문이다. 같은 규격의 디램이면 어느 회사 것이든 상관없으니 남는 무기가 값뿐이고, 값으로만 붙으면 원가를 견디는 회사만 남는다. 제약유통에서는 도매상의 창고와 PBM의 목록이 서로를 대체하지 못한다. 대체되지 않는 둘 사이에는 단가 싸움이 안 생긴다.</p>
+<p>투자자에게 이 구분은 값을 정하는 구분이다. 단가 싸움이 붙은 산업에서는 이기는 회사를 맞혀야 하고 그것을 맞히는 일은 어렵다. 균형이 선 산업에서는 누가 이길지를 안 물어도 된다. 진행자가 어떤 산업이 내쉬 균형이면 회사 몇 개만 골라 계속 들고 있어도 수익이 나고 주가가 우상향한다고 말한 근거가 여기다.</p>
+<h2 id="s5"><span class="num">5</span> 균형에 기대 사는 판단은 무엇이 깨지면 무너지나</h2>
+<p>진행자는 PBM이나 도매상 중 괜찮은 곳을 한두 개 골라 놓고 잊어버리면 어느 순간 주가가 두세 배, 네 배까지 오른다고 말한다. 사람들이 관심 없는 제약유통을 다룬 이유가 바로 이 개념을 설명하기 위해서였다고도 밝힌다.</p>
+<p>이 판단은 회사에 걸린 것이 아니라 상태에 걸려 있다. 그래서 확인할 것도 회사가 아니라 상태다. ① PBM 과 도매상이 서로의 마당을 안 건드리는지. PBM이 특수의약품 유통에 실제로 들어오면 균형이 아니라 다시 싸움이다. ② 밖에서 규칙이 바뀌지 않는지. 리베이트나 목록 작성 권한에 규제가 걸리면 한쪽의 수익 구조가 통째로 바뀐다. ③ 새로 들어오는 회사가 없는지. 균형은 참가자가 정해져 있을 때만 균형이다.</p>
+<p>앞의 셋 가운데 첫째는 이미 진행 중이라는 것을 지난 편이 말했다. PBM이 2010년대에 특수의약품 유통으로 손을 뻗었고, 이 편의 반격 둘이 바로 그 손을 막은 수다. 그러니 지금의 균형은 아무도 안 움직여서 생긴 것이 아니라 한쪽이 들어오려다 막혀서 생긴 것이다. 막은 장치가 계속 서 있는지가 곧 균형이 서 있는지다.</p>
+<p>진행자 자신도 산업과 회사를 공부해야 버티고 추가 매수할 수 있다고 덧붙인다. 영상에서 말한 회사의 다음 날 주가가 오르내리는 것은 의미가 없고, 확신이 있으면 조정이 물타기 기회가 된다는 것이다. 오래 들고 있으라는 말과 공부하라는 말이 같이 붙어야 하는 이유는 앞의 셋 때문이다. 상태가 바뀌었는지는 값이 안 알려 준다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</h2>
+<p>한 가지 덧붙일 것은 이 편의 결론이 개념 하나로 서 있다는 점이다. 진행자도 오늘 핵심은 협력과 경쟁 관계의 세부가 아니라 내쉬 균형이라는 개념 자체이며, 이런 산업을 찾으면 적당한 회사를 사서 잊어버리라고 말한다. 개념이 맞아도 그 개념이 이 산업에 붙는지는 따로 확인해야 하고, 이 편에는 그 확인에 쓸 수가 거의 없다.</p>
+<p>빠진 것이 셋이다. ① 균형이 언제부터인지가 없다. 도매상 주가가 2020년 이후 올랐다는 것만 있고 그 전 몇 년이 싸움이었는지는 안 나온다. ② 값이 없다. 도매상 마진, PBM 수익, 네트워크에 든 의사 수 어느 것도 수로 제시되지 않는다. 종양학 네트워크에 미국 대부분의 의사가 있다는 말이 가장 구체적인 대목이다. ③ 규제 이야기가 없다. 지난 편에서 트럼프 행정부가 PBM을 지목했다고 했는데, 그 압박이 이 균형에 무엇을 하는지는 이 편에 없다.</p>
+<p>무엇이 나오면 이 판단이 흔들리는지도 셋이다. ① 도매 3사끼리 붙으면. 균형은 PBM과 도매상 사이의 이야기이고 도매상들 사이의 이야기가 아니다. 셋이 같은 네트워크를 두고 겨루면 반도체와 같은 이야기가 된다. ② 의사 네트워크의 대행 서비스가 흔해지면. 지금은 그것이 가입 유인인데 남들도 다 해 주면 유인이 사라진다. ③ 차지백 옵션이 규제나 소송으로 막히면 2절이 무너진다. 계약으로 닫은 길이라 계약을 못 쓰게 되면 그대로 열린다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2025-10-05-pharma-dist-nash-strategy.md">insights/seemore/2025-10-05-pharma-dist-nash-strategy.md</a></div></div></div>

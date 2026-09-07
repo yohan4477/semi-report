@@ -1,0 +1,233 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>도매 3강이 결국 맥케슨의 의료 네트워크 방식으로 수렴한 이유 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>도매 3강이 결국 맥케슨의 의료 네트워크 방식으로 수렴한 이유</h1><div class="pmeta">2025-10-12 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/5RQUjB4fE-w">https://youtu.be/5RQUjB4fE-w</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2025-10-12-pharma-dist-wholesaler.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2025-10-12-pharma-dist-wholesaler.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">셋이 서로 다른 곳을 팠는데 한 곳으로 모였다 — 도매에서 고를 이름이 하나로 좁혀진 이유</div><p>앞의 두 편이 산업을 그렸다면 이 편은 회사를 고르기 시작한다. 진행자는 도매 셋과 PBM 셋, 여섯 회사 가운데 하나씩 따져 보겠다고 하고 도매 쪽부터 연다. 이 글은 그 고르기가 어떤 셈으로 한 이름에 닿았는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">순이익률 1%인 장사를 왜 좋은 자리로 보나</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">싸우다가 생긴 것이 왜 새 사업이 됐나</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">특수의약품 안에서도 판 자리와 안 판 자리가 갈린다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">셋이 다른 곳을 팠는데 왜 한 곳으로 모였나</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">진행자가 하나로 좁힌 근거와 그 근거가 서 있는 곳</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 순이익률 1%인 장사를 왜 좋은 자리로 보나</h2>
+<p>도매 3강은 맥케슨, 센코라, 카디널헬스이고 셋이 시장의 90% 이상을 갖고 있다. 새로 들어오려면 물류 노하우와 물류 인프라를 갖춰야 하는데 이미 완벽히 서 있는 데다 새로 만들려면 돈이 너무 많이 들어 신규 진입이 거의 불가능하다. 맥케슨의 콜드체인으로 2020~2021년 코로나19 백신이 미국 전역에 퍼졌다는 것이 그 설비의 크기를 보여 준다.</p>
+<p>이 셋이 나눠 가진 90%가 무엇을 뜻하는지부터 세어 볼 만하다. 미국에서 한 해 나가는 약이 거의 다 이 세 회사의 창고를 지난다는 말이고, 제약사도 약국도 병원도 셋 중 하나와는 반드시 거래한다는 말이다. 값을 정할 힘이 여기서 나오지는 않지만 무슨 약이 어디로 얼마나 가는지를 아는 자리는 여기밖에 없다. 뒤에서 볼 의료 네트워크가 이 자리 위에 서 있다.</p>
+<p>수익 구조는 얇다. 도매 영역의 순이익률은 대략 1%다. 이 수만 보면 안 좋은 장사인데 진행자는 반대로 읽는다. 매출 규모가 워낙 커서 1%로도 절대 금액이 5조 원을 넘기 때문이다. 맥케슨의 매출은 삼성전자 한 해 매출액보다 많고 미국 내 매출 상위 12위권이다.</p>
+<p>얇은 마진이 뜻하는 것이 둘이다. ① 값을 올려서 버는 자리가 아니다. 그러니 값 경쟁으로 흔들릴 것도 없다. ② 새로 들어오는 쪽에게는 매력이 없다. 1% 마진을 받으려고 물류망을 새로 깔 회사는 없다. 얇은 마진이 곧 담장이다.</p>
+<p>담장의 성격도 봐 둘 만하다. 특허나 기술로 세운 담장은 더 나은 기술이 나오면 넘어가지만, 창고와 배송망으로 세운 담장은 넘어가려면 같은 돈을 다시 써야 한다. 기술은 한 사람이 옮겨 가면 따라오지만 냉장 창고는 안 따라온다. 도매 3사가 90%를 오래 쥐고 있는 이유가 잘해서라기보다 이 담장의 성격 때문이다.</p>
+<p>여기에 수요 쪽 성질이 붙는다. 약은 경기와 무관한 필수재라 침체에도 수요가 꾸준하고, 의학이 발달해 예전에는 못 고치던 병까지 관리 대상이 되면서 환자 수가 오히려 늘고, 고령화로 사람들이 약을 더 먹는다. 파는 양이 줄지 않는 물건을 얇게 남기며 많이 옮기는 자리라는 뜻이다.</p>
+<h2 id="s2"><span class="num">2</span> 싸우다가 생긴 것이 왜 새 사업이 됐나</h2>
+<p>지난 편에서 도매상이 PBM과 싸우려고 의사 네트워크를 만들었다고 했다. 그 네트워크가 지금은 다른 물건이 되어 있다. 의사는 환자 치료만 하고 나머지는 도매상이 대행하면서, 도매상이 약을 옮기는 회사를 넘어 의료 플랫폼 업체로 진화했다.</p>
+<p>방어로 만든 것이 수익원이 되는 경로는 흔하지 않다. 보통 방어에 쓴 비용은 그냥 비용으로 끝난다. 여기서 달랐던 것은 방어 수단이 남의 일을 대신 해 주는 형태였기 때문이다. 대신 해 주면 그 일에 붙는 자료와 관계가 우리 쪽에 남는다. 싸움이 끝나도 남는다.</p>
+<p>대행이 자료로 남는다는 점은 값을 정하는 방식도 바꾼다. 약을 옮기고 받는 값은 옮긴 양에 비례하지만, 병원 일을 대신 해 주고 받는 값은 그 병원이 우리 없이 못 돌아가는 정도에 비례한다. 앞의 것은 매년 다시 협상하는 값이고 뒤의 것은 잘 안 끊기는 값이다. 도매상이 플랫폼이라고 불리기 시작한 자리가 여기다.</p>
+<p>그래서 지금 도매상이 힘을 쏟는 곳이 특수의약품 유통이다. 특수의약품은 종양학, 자가면역 질환, 희귀 질환, 신경학, 안과 질환을 치료하는 최신 약제를 가리킨다. 일반 약과 달리 다루기 까다롭고 값이 비싸다.</p>
+<h2 id="s3"><span class="num">3</span> 특수의약품 안에서도 판 자리와 안 판 자리가 갈린다</h2>
+<figure class="uc-fig"><p class="fig-title">크기와 판 자리가 같이 간다</p><svg class="epoch" viewBox="0 0 520 284" role="img" aria-label="특수의약품 갈래별 비중과 도매상의 진출 여부">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="56.5" y="20" text-anchor="middle" class="fig-hd">갈래</text>
+  <text x="209" y="20" text-anchor="middle" class="fig-hd">특수의약품 안 비중</text>
+  <text x="400.5" y="20" text-anchor="middle" class="fig-hd">도매상이 한 일</text>
+  <rect x="0" y="30" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="60.5" text-anchor="middle" class="fig-b">종양학</text>
+  <rect x="129" y="30" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="209" y="60.5" text-anchor="middle" class="fig-b">45%</text>
+  <rect x="305" y="30" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="60.5" text-anchor="middle" class="fig-b">제일 먼저 팠다</text>
+  <rect x="0" y="95" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="125.5" text-anchor="middle" class="fig-b">자가면역</text>
+  <rect x="129" y="95" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="209" y="125.5" text-anchor="middle" class="fig-b">20%</text>
+  <rect x="305" y="95" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="125.5" text-anchor="middle" class="fig-b">유럽 제약사가 강하다</text>
+  <rect x="0" y="160" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="190.5" text-anchor="middle" class="fig-b">안과</text>
+  <rect x="129" y="160" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="209" y="190.5" text-anchor="middle" class="fig-b">5%</text>
+  <rect x="305" y="160" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="190.5" text-anchor="middle" class="fig-b">지금 짜는 중</text>
+  <rect x="0" y="225" width="113" height="49" rx="9" class="fig-stage"/>
+  <text x="56.5" y="255.5" text-anchor="middle" class="fig-b">희귀 · 신경</text>
+  <rect x="129" y="225" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="209" y="255.5" text-anchor="middle" class="fig-b">적다</text>
+  <rect x="305" y="225" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="400.5" y="255.5" text-anchor="middle" class="fig-b">뛰어드는 제약사가 적다</text>
+</svg><figcaption>시장이 커도 상대가 유럽 제약사면 지렛대가 안 걸리고, 상대가 적으면 모을 의사도 적다.</figcaption></figure>
+<p>다섯 갈래가 같은 무게가 아니다. 종양학이 특수의약품 시장의 45%로 가장 크고, 도매상들이 가장 먼저 의료 네트워크를 세운 곳도 여기다. 크기와 진출 순서가 같이 간다.</p>
+<p>안 들어간 곳도 이유가 있다. 자가면역 질환은 시장의 20% 내외인데 유럽계 제약사가 강해 도매상이 크게 신경 쓰지 않고, 희귀 질환과 신경학은 뛰어드는 제약사가 적어 네트워크를 만들려 하지 않는다. 시장이 커도 상대가 유럽 제약사면 지렛대가 안 걸리고, 상대가 적으면 모을 의사도 적다.</p>
+<p>지금 힘을 쏟는 곳은 안과다. 전체의 5% 정도로 작지만 급성장하고 있어 최근 도매상이 이 분야 네트워크 구성에 매달리고 있고, 노안을 치료하는 안약이 개발되고 있다는 기사도 언급된다. 진행자는 노안 치료제가 나오면 전 세계 50세 이상이 거의 다 쓸 것이고 그것을 옮기는 도매상도 크게 벌 것이라고 본다.</p>
+<p>특수의약품에서 마진율은 1~3%로 여전히 얇지만 약값 자체가 비싸 절대 금액이 크다. 1절에서 본 셈이 한 번 더 반복된다 — 이 산업에서 값은 비율이 아니라 지나가는 양에서 나온다.</p>
+<h2 id="s4"><span class="num">4</span> 셋이 다른 곳을 팠는데 왜 한 곳으로 모였나</h2>
+<figure class="uc-fig"><p class="fig-title">셋이 다른 곳을 팠는데 한 곳으로 모였다</p><svg class="epoch" viewBox="0 0 520 219" role="img" aria-label="도매 3사가 PBM 압박에 각각 대응한 방식과 그 뒤의 수렴">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="41" y="20" text-anchor="middle" class="fig-hd">누가</text>
+  <text x="162.5" y="20" text-anchor="middle" class="fig-hd">처음 판 곳</text>
+  <text x="323" y="20" text-anchor="middle" class="fig-hd">지금</text>
+  <rect x="0" y="30" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="60.5" text-anchor="middle" class="fig-b">맥케슨</text>
+  <rect x="98" y="30" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="162.5" y="60.5" text-anchor="middle" class="fig-b">의료 네트워크</text>
+  <rect x="243" y="30" width="160" height="49" rx="9" class="fig-box"/>
+  <text x="323" y="60.5" text-anchor="middle" class="fig-b">먼저 자리를 잡았다</text>
+  <rect x="0" y="95" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="125.5" text-anchor="middle" class="fig-b">센코라</text>
+  <rect x="98" y="95" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="162.5" y="125.5" text-anchor="middle" class="fig-b">제약사와의 관계</text>
+  <rect x="243" y="95" width="160" height="49" rx="9" class="fig-box"/>
+  <text x="323" y="125.5" text-anchor="middle" class="fig-b">네트워크로 옮겼다</text>
+  <rect x="0" y="160" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="190.5" text-anchor="middle" class="fig-b">카디널헬스</text>
+  <rect x="98" y="160" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="162.5" y="190.5" text-anchor="middle" class="fig-b">환자와의 관계</text>
+  <rect x="243" y="160" width="160" height="49" rx="9" class="fig-box"/>
+  <text x="323" y="190.5" text-anchor="middle" class="fig-b">네트워크로 옮겼다</text>
+</svg><figcaption>제약사나 환자와 친해도 목록의 결정을 되받지 못한다. 되받는 자리는 처방하는 손 하나였다.</figcaption></figure>
+<p>PBM의 압박에 도매 셋이 다르게 대응했다. 맥케슨은 의료 네트워크, 센코라는 제약사와의 관계, 카디널헬스는 특수의약품의 최종 소비자인 환자와의 관계에 각각 힘을 쏟았다.</p>
+<p>결과는 한쪽으로 모였다. 센코라와 카디널헬스도 결국 맥케슨의 의료 네트워크 방식을 따라가고 있는데, 제약사나 환자와의 관계만으로는 PBM과의 싸움에서 큰 의미가 없다는 것을 알게 됐기 때문이다.</p>
+<p>왜 그 둘이 안 통했는지는 앞 편의 구조로 설명된다. PBM이 쥔 것은 보험이 어느 약에 값을 대는지다. 제약사와 친해 봐야 그 약이 목록에 못 오르면 안 팔리고, 환자와 친해 봐야 환자가 처방을 고르지 않는다. 세 갈래 가운데 PBM의 결정을 실제로 되받아치는 자리는 처방하는 손 하나뿐이었다.</p>
+<p>수렴이 확인해 주는 것이 하나 더 있다. 셋이 각자 다른 답을 시험했다는 것은 이 산업에 정답이 미리 있지 않았다는 뜻이다. 맥케슨이 처음부터 옳은 곳을 판 것이 아니라 셋 중 하나가 옳은 곳을 팠고 나머지가 몇 년을 들여 그것을 확인해 줬다. 뒤늦게 따라가는 두 회사의 움직임이 앞선 회사의 선택을 검증하는 자료가 된다.</p>
+<p>늦게 따라가면 자리는 이미 차 있다. 맥케슨은 미국에서 가장 큰 종양학 네트워크를 갖고 안과 쪽도 짜고 있다. 센코라는 종양학을 이미 뺏겼고 안과에서 시도 중이지만 맥케슨이 더 잘하고 있다. 그래서 특수의약품 시장이 커질수록 맥케슨과 나머지 둘의 매출 격차가 벌어진다.</p>
+<p>같은 답을 나중에 찾는 것은 답을 못 찾은 것과 다르지만, 네트워크처럼 먼저 모은 쪽이 다 가져가는 자산에서는 결과가 비슷해진다. 의사는 여러 네트워크에 나눠 들어갈 이유가 없다.</p>
+<h2 id="s5"><span class="num">5</span> 진행자가 하나로 좁힌 근거와 그 근거가 서 있는 곳</h2>
+<p>앞 절까지가 산업 이야기였다면 이 절부터는 종목 이야기다. 진행자가 이 편에서 처음으로 회사 이름 하나를 답으로 낸다.</p>
+<p>진행자는 도매 사업자 중에서는 무조건 맥케슨을 고르는 게 좋겠다고 판단한다. 근거는 앞의 넷이다. ① 셋이 같은 방식으로 수렴했고 ② 그 방식에서 맥케슨이 먼저였고 ③ 시장이 커질수록 격차가 벌어지고 ④ 시장 자체가 줄지 않는다.</p>
+<p>여기에 값 이야기가 하나 붙는다. 주가는 700달러가 넘지만 시가총액은 대략 120~130조 원이다. 시가총액 500조가 넘는 팔란티어와 견주면 그보다 훨씬 작은데 주가는 높으니, 돌아다니는 주식 수가 생각보다 많지 않다는 뜻이라고 짚는다. 시장이 꾸준히 크고 업계 1위인데 유통 주식 수까지 적으면 사야 하는 것 아니냐는 것이 진행자의 마무리다.</p>
+<p>견주는 대상이 팔란티어라는 점도 짚어 둘 만하다. 하는 일도 버는 방식도 전혀 다른 회사인데, 여기서는 시가총액과 주가만 놓고 견준다. 주식 수를 말하려는 자리라 그것으로 충분하다고 볼 수도 있고, 서로 다른 산업의 값을 나란히 놓는 것이 오해를 부른다고 볼 수도 있다. 이 편에서 유일하게 원문 밖으로 나가는 비교다.</p>
+<p>앞의 넷과 이 하나는 성격이 다르다. 넷은 이 회사가 왜 이기는지에 대한 이야기이고, 유통 주식 수는 값이 어떻게 움직이는지에 대한 이야기다. 뒤의 것은 오르는 이유로도 쓰이지만 내릴 때 더 빨리 내리는 이유로도 쓰인다. 진행자가 앞 편에서 조정을 물타기 기회로 삼으라고 한 조언과 붙여 읽어야 하는 대목이다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</h2>
+<p>빠진 것이 셋이다. ① 세 회사의 값이 나란히 놓이지 않는다. 맥케슨의 시가총액과 주가만 나오고 센코라·카디널헬스의 수는 없어, 격차가 벌어진다는 말을 이 편의 수로는 확인할 수 없다. ② 순이익률 1%와 특수의약품 1~3%가 언제 것인지 안 밝힌다. ③ PBM 셋은 아직 안 다뤘다. 여섯 중 셋만 본 상태의 결론이다.</p>
+<p>넷째로, 이 편은 도매상이 계속 이긴다는 전제 위에 서 있다. 앞 편이 균형이라 부른 상태가 유지된다는 것인데, 그 균형을 지키는 장치 가운데 하나인 차지백 옵션은 계약으로 서 있어 규제나 소송에 걸릴 수 있다. 도매 안에서 누구를 고르느냐는 물음은 도매가 자리를 지킨다는 답 위에서만 뜻이 있다.</p>
+<p>무엇이 나오면 이 판단이 흔들리는지도 셋이다. ① 안과에서 순서가 뒤집히면. 종양학은 이미 정해졌지만 안과는 지금 짜는 중이라 여기서 센코라가 먼저 자리를 잡으면 4절의 「먼저 모은 쪽이 가져간다」가 이번에는 반대로 걸린다. ② 노안 치료제가 안 나오거나 늦으면. 진행자가 든 안과의 그림은 아직 개발 중인 약에 걸려 있다. ③ PBM 쪽 회사가 더 좋아 보이면. 이 편의 결론은 도매 안에서의 1등이지 여섯 중의 1등이 아니다. 다음 편들이 그것을 마저 센다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2025-10-12-pharma-dist-wholesaler-strategy.md">insights/seemore/2025-10-12-pharma-dist-wholesaler-strategy.md</a></div></div></div>
