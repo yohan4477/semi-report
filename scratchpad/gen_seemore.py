@@ -62,6 +62,7 @@ SECJS_CSS = """
 .secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
 .secnav a.on small{color:#c8cdd6}
 .row.grp{border-left:4px solid #1b1f27;background:#f7f9fc}
+.row .tags{margin:0 0 5px}
 h2.ep{font-size:19px;margin:34px 0 6px;padding-top:14px;border-top:1px solid #e3e7ee}
 """
 SECJS = """<script>
@@ -121,17 +122,17 @@ def half(one):
 def row_html(ep, in_series=False):
     m = ep['meta']
     code = m.get('section', '')
-    # 묶음 안에서는 섹션을 다시 안 적는다 — 머리줄이 이미 말한다
-    tags = [] if in_series else ['<span class="tag">%s</span>' % sd.esc(SEC_NAME.get(code, code))]
-    tags += ['<span class="tag on">%s %s</span>' % (emo, label)
-             for key, emo, label, _sub in LANES if any(l['key'] == key for l in ep['lanes'])]
-    inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
-             '<div class="rtitle">%s</div>'
-             % (sd.esc(m.get('date', '')), sd.esc(m.get('topic', '')),
-                sd.esc(m.get('title', ep['slug']))))
+    # 갈래가 전략 하나뿐이라 그 태그는 안 단다 — 모든 줄에 같은 말이면 표시가 아니다.
+    # 남는 것은 주제 태그이고, 그것이 날짜보다 위에 선다(2026-09-07).
+    # 묶음 안에서는 주제도 다시 안 적는다 — 머리줄이 이미 말한다
+    inner = '' if in_series else ('<div class="tags"><span class="tag">%s</span></div>'
+                                  % sd.esc(SEC_NAME.get(code, code)))
+    inner += ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
+              '<div class="rtitle">%s</div>'
+              % (sd.esc(m.get('date', '')), sd.esc(m.get('topic', '')),
+                 sd.esc(m.get('title', ep['slug']))))
     if ep['one']:
         inner += '<div class="rone">%s</div>' % sd.esc(half(ep['one']))
-    inner += '<div class="tags">%s</div>' % ''.join(tags)
     if ep['lanes']:
         return ('<a class="row" data-sec="%s" href="seemore/%s.html">%s</a>'
                 % (code, ep['slug'], inner))
@@ -241,13 +242,12 @@ def series_row_html(code, group):
     names = [e['meta'].get('title', e['slug']) for e in reversed(group)]
     # 줄 하나에 여섯 제목을 다 적으면 목록이 안 읽힌다. 앞 둘만 적고 나머지는 세어 준다
     titles = ' · '.join(names[:2]) + ('' if len(names) < 3 else ' … 외 %d편' % (len(names) - 2))
-    inner = ('<div class="rmeta"><span>%s ~ %s</span><span>%d편 묶음</span></div>'
+    inner = ('<div class="tags"><span class="tag">%s</span></div>'
+             '<div class="rmeta"><span>%s ~ %s</span><span>%d편 묶음</span></div>'
              '<div class="rtitle">%s %d편</div>'
              '<div class="rone">%s</div>'
-             '<div class="tags"><span class="tag">%s</span>'
-             '<span class="tag on">⚖ 전략 %d</span></div>'
-             % (dates[-1], dates[0], len(group), sd.esc(SEC_NAME.get(code, code)), len(group),
-                sd.esc(titles), sd.esc(SEC_NAME.get(code, code)), len(group)))
+             % (sd.esc(SEC_NAME.get(code, code)), dates[-1], dates[0], len(group),
+                sd.esc(SEC_NAME.get(code, code)), len(group), sd.esc(titles)))
     return ('<a class="row grp" data-sec="%s" href="seemore/%s.html">%s</a>'
             % (code, series_slug(code, group), inner))
 
