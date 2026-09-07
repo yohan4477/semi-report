@@ -61,11 +61,8 @@ NO_SERIES = {'news'}
 SECJS_CSS = """
 .secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
 .secnav a.on small{color:#c8cdd6}
-.grp{border:1px solid #d5dae2;border-radius:10px;background:#f7f9fc;padding:10px 10px 4px;margin:0 0 10px}
-.grp .ghead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:0 4px 8px}
-.grp .ghead b{font-size:15px;color:#1b1f27}
-.grp .ghead span{font-size:12px;color:#7b8492}
-.grp .row{background:#fff}
+.row.grp{border-left:4px solid #1b1f27;background:#f7f9fc}
+h2.ep{font-size:19px;margin:34px 0 6px;padding-top:14px;border-top:1px solid #e3e7ee}
 """
 SECJS = """<script>
 (function(){
@@ -144,12 +141,7 @@ def row_html(ep, in_series=False):
 
 def post_html(ep):
     m = ep['meta']
-    # 진행자가 한 사람이라 이름 색은 한 갈래다. Semi Doped 파서의 전역을 이 회차 것으로 맞춘다
-    people = m.get('people', '')
-    sd.HOSTS[:] = [n for x in people.split(' / ')
-                   if x.strip().startswith('진행') for n in sd.PN_RE.findall(x)]
-    sd.NAMES[:] = [n for x in people.split(' / ')
-                   if not x.strip().startswith('진행') for n in sd.PN_RE.findall(x)]
+    set_names(m)
     out = [sd.HEAD % (sd.esc(m.get('title', ep['slug'])) + ' — 채널 씨모어', sd.CSS)]
     out.append('<a class="back" href="../씨모어 대시보드.html">← 회차 목록</a>')
     out.append('<h1>%s</h1>' % sd.esc(m.get('title', ep['slug'])))
@@ -158,6 +150,22 @@ def post_html(ep):
                % (sd.esc(m.get('date', '')), sd.esc(m.get('speaker', '')),
                   sd.esc(m.get('org', '')), sd.esc(m.get('source', '')),
                   sd.esc(m.get('source', '')), sd.blob(ep['raw']), sd.blob(ep['transcript'])))
+    out.append(lanes_html(ep))
+    out.append('</div>')
+    return ''.join(out)
+
+
+def set_names(m):
+    """진행자가 한 사람이라 이름 색은 한 갈래다. 파서 전역을 이 회차 것으로 맞춘다."""
+    people = m.get('people', '')
+    sd.HOSTS[:] = [n for x in people.split(' / ')
+                   if x.strip().startswith('진행') for n in sd.PN_RE.findall(x)]
+    sd.NAMES[:] = [n for x in people.split(' / ')
+                   if not x.strip().startswith('진행') for n in sd.PN_RE.findall(x)]
+
+
+def lanes_html(ep):
+    out = []
     for lane in ep['lanes']:
         lm = lane['meta']
         out.append('<div class="lane">')
@@ -169,6 +177,41 @@ def post_html(ep):
         out.append('<div class="foot">전사를 줄 번호로 대조해 쓴 글이다. '
                    '원본 <a href="%s">%s</a></div>' % (sd.blob(lane['src']), sd.esc(lane['src'])))
         out.append('</div>')
+    return ''.join(out)
+
+
+def series_slug(code, group):
+    return 'series-%s-%s' % (code, group[-1]['meta'].get('date', ''))
+
+
+def series_post_html(code, group):
+    """연달아 올린 구간은 글도 한 장이다.
+
+    채널이 한 주제를 여러 회차로 나눠 올린 것이라 판들도 앞 편을 받아 쓴다. 목록에서
+    묶었으면 글에서도 묶여야 읽힌다 — 회차 차례로(먼저 올린 것이 위) 이어 붙인다."""
+    order = list(reversed(group))          # 목록은 최신 순서, 글 안은 올린 순서
+    name = SEC_NAME.get(code, code)
+    dates = [e['meta'].get('date', '') for e in order]
+    m0 = order[0]['meta']
+    out = [sd.HEAD % ('%s 연속 %d편 — 채널 씨모어' % (sd.esc(name), len(order)), sd.CSS)]
+    out.append('<a class="back" href="../씨모어 대시보드.html">← 회차 목록</a>')
+    out.append('<h1>%s 연속 %d편</h1>' % (sd.esc(name), len(order)))
+    out.append('<div class="pmeta">%s ~ %s · %s(%s)<br>회차마다 원문·요약본·전사를 '
+               '아래에 단다</div>'
+               % (dates[0], dates[-1], sd.esc(m0.get('speaker', '')), sd.esc(m0.get('org', ''))))
+    out.append('<nav class="secnav">%s</nav>' % ''.join(
+        '<a href="#ep-%s">%s <small>%s</small></a>'
+        % (e['slug'], sd.esc(e['meta'].get('title', e['slug'])[:28]), e['meta'].get('date', ''))
+        for e in order))
+    for e in order:
+        m = e['meta']
+        set_names(m)
+        out.append('<h2 class="ep" id="ep-%s">%s</h2>' % (e['slug'], sd.esc(m.get('title', e['slug']))))
+        out.append('<div class="pmeta">%s · 원문 <a href="%s">%s</a> · '
+                   '요약본 <a href="%s">저장소</a> · 전사 <a href="%s">저장소</a></div>'
+                   % (sd.esc(m.get('date', '')), sd.esc(m.get('source', '')),
+                      sd.esc(m.get('source', '')), sd.blob(e['raw']), sd.blob(e['transcript'])))
+        out.append(lanes_html(e))
     out.append('</div>')
     return ''.join(out)
 
@@ -188,12 +231,21 @@ def runs(live):
     return out
 
 
-def series_html(code, group):
+def series_row_html(code, group):
+    """묶음은 목록에서도 한 줄이다 — 링크는 회차가 아니라 묶음 글로 간다."""
     dates = [e['meta'].get('date', '') for e in group]
-    return ('<div class="grp" data-sec="%s"><div class="ghead"><b>%s</b>'
-            '<span>연달아 %d편 · %s ~ %s</span></div>%s</div>'
-            % (code, sd.esc(SEC_NAME.get(code, code)), len(group), dates[-1], dates[0],
-               ''.join(row_html(e, in_series=True) for e in group)))
+    names = [e['meta'].get('title', e['slug']) for e in reversed(group)]
+    # 줄 하나에 여섯 제목을 다 적으면 목록이 안 읽힌다. 앞 둘만 적고 나머지는 세어 준다
+    titles = ' · '.join(names[:2]) + ('' if len(names) < 3 else ' … 외 %d편' % (len(names) - 2))
+    inner = ('<div class="rmeta"><span>%s ~ %s</span><span>연달아 %d편</span></div>'
+             '<div class="rtitle">%s 연속 %d편</div>'
+             '<div class="rone">%s</div>'
+             '<div class="tags"><span class="tag">%s</span>'
+             '<span class="tag on">⚖ 전략 %d</span></div>'
+             % (dates[-1], dates[0], len(group), sd.esc(SEC_NAME.get(code, code)), len(group),
+                sd.esc(titles), sd.esc(SEC_NAME.get(code, code)), len(group)))
+    return ('<a class="row grp" data-sec="%s" href="seemore/%s.html">%s</a>'
+            % (code, series_slug(code, group), inner))
 
 
 def index_html(eps):
@@ -217,7 +269,7 @@ def index_html(eps):
     body = []
     for code, group in runs(live):
         if len(group) > 1 and code not in NO_SERIES:
-            body.append(series_html(code, group))
+            body.append(series_row_html(code, group))
         else:
             body.extend(row_html(e) for e in group)
     out.append('<div class="rows">%s</div>' % ''.join(body))
@@ -238,10 +290,10 @@ def check_ui(index, posts):
         bad.append('회차 줄에 섹션 표시가 없다 — 목록은 최신 순서 하나이고 섹션은 태그다')
     if 'class="sec"' in index:
         bad.append('섹션 머리줄이 있다 — 이 장의 목록은 섹션으로 안 나눈다')
-    if 'class="grp"' not in index:
-        bad.append('연달아 올린 구간이 안 묶였다 — 시리즈는 한 덩어리로 선다')
-    if re.search(r'<div class="grp"(?:(?!</div>).)*<div class="grp"', index, re.S):
-        bad.append('묶음 안에 묶음이 있다')
+    if 'class="row grp"' not in index:
+        bad.append('연달아 올린 구간이 안 묶였다 — 시리즈는 줄 하나로 서고 글도 한 장이다')
+    if re.search(r'<a class="row grp"(?:(?!</a>).)*<a class="row"', index, re.S):
+        bad.append('묶음 줄 안에 회차 줄이 있다 — 묶음은 글 한 장으로 간다')
     if 'class="secnav"' not in index:
         bad.append('목록 위에 섹션 선택 줄이 없다')
     if 'class="tile' in index:
@@ -283,14 +335,27 @@ def main():
         raise SystemExit('도해 규칙 위반\n  ' + '\n  '.join(bad))
     if not os.path.isdir(POST_DIR):
         os.makedirs(POST_DIR)
-    posts = []
-    for ep in eps:
-        if not ep['lanes']:
+    posts, wrote = [], set()
+    live = [e for e in eps if e['lanes']]
+    for code, group in runs(live):
+        if len(group) > 1 and code not in NO_SERIES:
+            name, h = series_slug(code, group), series_post_html(code, group)
+        else:
+            for ep in group:
+                h = post_html(ep)
+                posts.append(h)
+                wrote.add(ep['slug'] + '.html')
+                io.open(os.path.join(POST_DIR, ep['slug'] + '.html'), 'w',
+                        encoding='utf-8', newline='').write(h)
             continue
-        h = post_html(ep)
         posts.append(h)
-        io.open(os.path.join(POST_DIR, ep['slug'] + '.html'), 'w',
+        wrote.add(name + '.html')
+        io.open(os.path.join(POST_DIR, name + '.html'), 'w',
                 encoding='utf-8', newline='').write(h)
+    # 묶이면서 자리를 잃은 회차 글은 지운다 — 같은 판이 두 주소에 서면 어느 쪽이 정본인지 모른다
+    for f in os.listdir(POST_DIR):
+        if f.endswith('.html') and f not in wrote:
+            os.remove(os.path.join(POST_DIR, f))
     idx = index_html(eps)
     bad = check_ui(idx, posts)
     if bad:
@@ -298,13 +363,13 @@ def main():
     io.open(OUT, 'w', encoding='utf-8', newline='').write(idx)
     # 모바일 폭에서 옆으로 밀리나 — 브라우저로만 잴 수 있어 Playwright 를 부른다
     import subprocess
-    targets = [OUT] + [os.path.join(POST_DIR, ep['slug'] + '.html') for ep in eps if ep['lanes']]
+    targets = [OUT] + [os.path.join(POST_DIR, f) for f in sorted(wrote)]
     r = subprocess.run(['node', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'check_scroll.js')]
                        + targets, capture_output=True, text=True, encoding='utf-8')
     if r.returncode != 0:
         raise SystemExit('모바일 가로 스크롤\n' + (r.stdout or '') + (r.stderr or ''))
-    print('씨모어 — 회차 %d줄 · 글 %d장  ->  %s'
-          % (len(eps), sum(1 for e in eps if e['lanes']), os.path.basename(OUT)))
+    print('씨모어 — 회차 %d편 · 글 %d장(묶음 포함)  ->  %s'
+          % (len(live), len(wrote), os.path.basename(OUT)))
 
 
 if __name__ == '__main__':
