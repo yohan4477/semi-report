@@ -1550,11 +1550,14 @@ figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
    도해는 색을 안 쓴다) 점의 채움만 우리 표의 지정 여부를 말한다 */
 .kmap{height:340px;border:1px solid var(--line);filter:grayscale(1) contrast(.92)}
 .kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3);filter:none}
-.kdot{display:block;width:11px;height:11px;border-radius:50%;
-  border:1.5px solid #111;background:#fff;box-shadow:0 0 0 2px #fff}
-.kdot.is-on{background:#111}
-.klbl{display:block;white-space:nowrap;font-size:11.5px;line-height:1.2;
-  padding:2px 5px;background:#fff;border:1px solid #bbb;color:#111}
+.kno{display:block;width:18px;height:18px;border-radius:50%;font-size:11px;
+  font-weight:700;line-height:18px;text-align:center;border:1.5px solid #111;
+  background:#fff;color:#111;box-shadow:0 0 0 2px #fff}
+.kno.is-on{background:#111;color:#fff}
+.kmap-leg{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;
+  color:var(--ink-2)}
+.kleg{display:inline-flex;align-items:center;gap:6px}
+.kmap-leg .kno{box-shadow:none;flex:0 0 auto}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}
 .grid{stroke:var(--line);stroke-width:1;fill:none}
@@ -2353,13 +2356,18 @@ def outside_kakao(e):
     ps = e.get('places') or []
     if not key or len(ps) < 2:
         return ''
-    pts = [{'name': p['name'], 'lat': p['lat'], 'lon': p['lon'],
-            'hit': 1 if p.get('zone') == '규제' else 0} for p in ps]
+    # 북쪽부터 번호를 매긴다. 지도 위에는 번호만 얹고 이름은 판 아래 범례로 내린다 —
+    # 영통 네 곳이 붙어 있어 이름을 점 옆에 붙이면 서로 덮고 카카오 타일의 글자와도 겹친다
+    ps = sorted(ps, key=lambda q: -q['lat'])
+    pts = [{'no': i + 1, 'name': p['name'], 'lat': p['lat'], 'lon': p['lon'],
+            'hit': 1 if p.get('zone') == '규제' else 0} for i, p in enumerate(ps)]
     # 속성 안에 든 json 이라 큰따옴표까지 바꿔야 한다(E 는 안 바꾼다) — 안 그러면
     # 속성이 첫 따옴표에서 끊기고 이름들이 태그 밖으로 샌다
     pts_attr = E(json.dumps(pts, ensure_ascii=False)).replace('"', '&quot;')
+    leg = ''.join('<span class="kleg"><b class="kno%s">%d</b>%s</span>'
+                  % (' is-on' if p['hit'] else '', p['no'], E(p['name'])) for p in pts)
     return ('<div class="kmap" id="kmap-%s" data-pts="%s"></div>'
-            % (E(e['id']), pts_attr))
+            '<p class="kmap-leg">%s</p>' % (E(e['id']), pts_attr, leg))
 
 
 def outside_kakao_js():
@@ -2381,9 +2389,7 @@ def outside_kakao_js():
         'var b=new kakao.maps.LatLngBounds();'
         'pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);'
         'new kakao.maps.CustomOverlay({map:map,position:ll,zIndex:2,'
-        'content:\'<span class="kdot\'+(p.hit?" is-on":"")+\'"></span>\'});'
-        'new kakao.maps.CustomOverlay({map:map,position:ll,yAnchor:2.0,zIndex:3,'
-        'content:\'<span class="klbl">\'+p.name+\'</span>\'});});'
+        'content:\'<span class="kno\'+(p.hit?" is-on":"")+\'">\'+p.no+\'</span>\'});});'
         'map.setBounds(b,46,46,46,46);});});})();</script>' % E(key))
 
 
@@ -2411,8 +2417,8 @@ def outside_section(watches):
             fig = svg
         if fig:
             h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
-                     '점의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
-                     '채운 점은 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
+                     '번호의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
+                     '채운 번호는 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
                      '걸린 곳입니다.</figcaption></figure>'
                      % (fig, E(e.get('clash_as_of', ''))))
         h.append('<div class="rows">')
