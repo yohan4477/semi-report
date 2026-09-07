@@ -3848,6 +3848,8 @@
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L52",
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L112",
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L114",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L32",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L44",
 "content/understanding/통합/D-AI반도체-전력수요.md#L33",
 "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md#L173",
 "input/clippings/Korea’s Trillion-Dollar Sovereign AI Investment Nvidia Wins, Hynix Loses.md#L100",
@@ -4525,6 +4527,11 @@
 "content/understanding/권효재 대표/삼성까지 뛰어들었다 4년만에 3배 급증할 에너지 시장.md#L99",
 "content/understanding/미국주식 사관학교/[260701] SK하이닉스 미국 상장 - 재평가 기대의 발목은 환율이다.md#L31",
 "content/understanding/박형근 실장/[260818] 휴머노이드의 병목은 지능이 아니라 부품 생태계다 (2부작 · 2부) - 박형근.md#L63",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L11",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L12",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L16",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L24",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L26",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L16",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L33",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L34",
@@ -4532,6 +4539,13 @@
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L21",
 "content/understanding/채널 씨모어/2025-06-22-tsmc.md#L37",
 "content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L32",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L26",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L27",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L28",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L29",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L30",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L33",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L35",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L29",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L182",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L183",
@@ -12855,7 +12869,7 @@
 "_meta": {
 "built": "2026-09-07",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1538,
+"files": 1557,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -14413,6 +14427,22 @@
 "bd02a82d80acc9a730ec24934e866ecafe35bd42",
 133
 ],
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md": [
+"eb33e1fe3f04c46675e7c1e8211c0a943c619e04",
+42
+],
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md": [
+"0c14dae3be27ec8a9a12acb8bcdac4965616c524",
+40
+],
+"content/understanding/채널 씨모어/2024-05-30-habits.md": [
+"5e02b88c3b109cdb4cf1d1401ebcc7173308bf16",
+40
+],
+"content/understanding/채널 씨모어/2024-06-06-pf-bridge.md": [
+"31e52bcd6f486090bf9d1d7c577209c060487e6c",
+36
+],
 "content/understanding/채널 씨모어/2024-06-13-power-semi.md": [
 "520de7250792ba35982c21b0d76d8cebc42f12a7",
 36
@@ -14424,6 +14454,10 @@
 "content/understanding/채널 씨모어/2024-06-24-power-demand.md": [
 "c1059ddbb5d0393c345064a71516f163c3de19a2",
 38
+],
+"content/understanding/채널 씨모어/2024-07-01-pension.md": [
+"d8745ce7b207f53ab9ab76b0c11fc9fca14a6bb2",
+40
 ],
 "content/understanding/채널 씨모어/2024-12-03-wolfspeed.md": [
 "58a7f76476d5e4da39ac42d672acccb11a5aae1e",
@@ -14541,6 +14575,22 @@
 "5a9feb7137be08cde4012a856b854476f041081c",
 40
 ],
+"content/understanding/채널 씨모어/2025-11-30-hotel-structure.md": [
+"3860b4a6fa78619e3d24de888097a83acf15f8c6",
+40
+],
+"content/understanding/채널 씨모어/2025-12-07-hotel-asterlight.md": [
+"04371079f431c50701c327ce489814839945a7de",
+43
+],
+"content/understanding/채널 씨모어/2025-12-14-marriott.md": [
+"a1da063efd19f04b37b081dd55db48ef11c6ed2f",
+44
+],
+"content/understanding/채널 씨모어/2026-01-04-hilton.md": [
+"ef527e8376ba1e899a4b05e3e2c63825c6b07091",
+41
+],
 "content/understanding/채널 씨모어/2026-02-08-news.md": [
 "4d232a42740bb94cbd384e023263a953e789687d",
 56
@@ -14605,6 +14655,26 @@
 "8dfb473a7fbc90c409180cc799d53a442ec93562",
 37
 ],
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md": [
+"1f2185ff1d0933a7289193f89ba968e23e18f796",
+96
+],
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md": [
+"ff3b2a08305b582ea5b22daa87990551c2035123",
+75
+],
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md": [
+"114853e0c37ffb7f46039aa63647f990541a5c4f",
+158
+],
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md": [
+"ff497e9cb1d7b6781fec42100090024a267feafd",
+95
+],
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md": [
+"425cc66dbe74030ac5d01098ed49e29fbaf15ebb",
+129
+],
 "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md": [
 "6f25531d50af230c688bac717eab8758df494e56",
 68
@@ -14616,6 +14686,10 @@
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md": [
 "3f85d7209ece0d38e9bf2e8df62ab6d76c994be2",
 92
+],
+"content/understanding/채널 씨모어/raw/2024-07-01-pension.md": [
+"32e3be22adf049a373f9656788887e794780d3a1",
+98
 ],
 "content/understanding/채널 씨모어/raw/2024-12-03-wolfspeed.md": [
 "88538378c67479b54e2d1e5fdbdede1660d19a03",
@@ -14729,6 +14803,18 @@
 "4d1f4737f4d3f4b4a3a62e18bcd777a4ff501805",
 125
 ],
+"content/understanding/채널 씨모어/raw/2025-11-30-hotel-structure.md": [
+"0cd4881ce7858dd538a49a80007d7da3c9db63e2",
+94
+],
+"content/understanding/채널 씨모어/raw/2025-12-07-hotel-asterlight.md": [
+"7a6e7e604824e38e1a73cda55ec728013969d2ca",
+131
+],
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md": [
+"60e396aa965f3db049c5a62fc0e1c4047a40643a",
+176
+],
 "content/understanding/채널 씨모어/raw/2025-ep01-retirement.md": [
 "fae71efcf3532a38ac86f845be44e1ecc743416e",
 96
@@ -14744,6 +14830,10 @@
 "content/understanding/채널 씨모어/raw/2025-ep04-crash.md": [
 "7e57374dc0b7b64fd9454a9022f2c2a379780dff",
 209
+],
+"content/understanding/채널 씨모어/raw/2026-01-04-hilton.md": [
+"fd73700b6a0a80adb2c84a29f42cfe4a355c9fc7",
+138
 ],
 "content/understanding/채널 씨모어/raw/2026-02-08-news.md": [
 "71cee9915f05ad5771aa5a8e58fcce3ce44a984b",
@@ -19010,8 +19100,8 @@
 213
 ]
 },
-"fingerprint": "e2f6fdafe1afd55a67fc91f9db51722cf4daa35b",
-"lines": 230437
+"fingerprint": "c5e4215e32e332a00462ea69a4474003ff3b1d3e",
+"lines": 231993
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -20855,11 +20945,22 @@
 "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md#L103",
 "content/understanding/부동산/[260620] 싱가포르 주택 모델 - 공급·연금·세금 세 축과 한국이 못 하는 이유.md#L28",
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L91",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L16",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L22",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L23",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L24",
+"content/understanding/채널 씨모어/2024-07-01-pension.md#L31",
 "content/understanding/채널 씨모어/2025-03-basics.md#L24",
 "content/understanding/채널 씨모어/2025-04-11-news.md#L16",
 "content/understanding/채널 씨모어/2025-04-11-news.md#L44",
 "content/understanding/채널 씨모어/2025-04-15-news.md#L33",
 "content/understanding/채널 씨모어/2026-03-15-news.md#L24",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L28",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L29",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L31",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L37",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L38",
+"content/understanding/채널 씨모어/raw/2024-07-01-pension.md#L70",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L140",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L141",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L143",
@@ -25101,6 +25202,8 @@
 "content/understanding/언더스탠딩 백브리핑/중동산 기름, 미국산으로 대체가 어려운 이유.md#L14",
 "content/understanding/언더스탠딩 보고서/2026-08-24-물가-신호를-무시하면-10년이-녹는다.md#L39",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L87",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L36",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L39",
 "content/understanding/채널 씨모어/2024-06-24-power-demand.md#L16",
 "content/understanding/채널 씨모어/2024-06-24-power-demand.md#L24",
 "content/understanding/채널 씨모어/2024-06-24-power-demand.md#L29",
@@ -25115,6 +25218,7 @@
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L22",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L23",
 "content/understanding/채널 씨모어/2026-03-22-news.md#L30",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L86",
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L27",
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L28",
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L42",
@@ -29235,6 +29339,9 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L107",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L111",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L123",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L31",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L16",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L36",
 "content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L11",
 "content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L16",
 "content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L19",
@@ -29360,6 +29467,7 @@
 "content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md#L31",
 "content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md#L33",
 "content/understanding/채널 씨모어/2025-11-02-pbm-big3.md#L40",
+"content/understanding/채널 씨모어/2025-12-14-marriott.md#L23",
 "content/understanding/채널 씨모어/2026-02-08-news.md#L16",
 "content/understanding/채널 씨모어/2026-02-08-news.md#L26",
 "content/understanding/채널 씨모어/2026-02-08-news.md#L45",
@@ -29428,6 +29536,16 @@
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L32",
 "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L33",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L74",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L29",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L40",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L53",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L144",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L148",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L149",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L152",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L16",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L93",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L3",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L11",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L14",
@@ -29679,6 +29797,8 @@
 "content/understanding/채널 씨모어/raw/2025-11-02-pbm-big3.md#L26",
 "content/understanding/채널 씨모어/raw/2025-11-02-pbm-big3.md#L86",
 "content/understanding/채널 씨모어/raw/2025-11-02-pbm-big3.md#L122",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L48",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L55",
 "content/understanding/채널 씨모어/raw/2025-ep01-retirement.md#L15",
 "content/understanding/채널 씨모어/raw/2025-ep01-retirement.md#L22",
 "content/understanding/채널 씨모어/raw/2026-02-08-news.md#L66",
@@ -34535,6 +34655,7 @@
 "content/understanding/신보성 연구위원/[260701] 금리가 두 배 되자 사모대출이 이자를 빌려서 낸다 - 연계성이 만드는 뇌관 - 신보성.md#L95",
 "content/understanding/신보성 연구위원/[260701] 금리가 두 배 되자 사모대출이 이자를 빌려서 낸다 - 연계성이 만드는 뇌관 - 신보성.md#L139",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L38",
+"content/understanding/채널 씨모어/raw/2025-11-30-hotel-structure.md#L65",
 "content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L12",
 "content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L17",
 "content/understanding/한주성/2026-03-05 🚨 데자뷔인가, 착시인가 — 2008년 금융위기와 2026년 사모대출 위기 [7856].md#L25",
@@ -35295,6 +35416,9 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L64",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L118",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L29",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L32",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L38",
 "content/understanding/채널 씨모어/2024-12-03-wolfspeed.md#L26",
 "content/understanding/채널 씨모어/2025-01-12-stmicro.md#L16",
 "content/understanding/채널 씨모어/2025-01-12-stmicro.md#L21",
@@ -35329,6 +35453,14 @@
 "content/understanding/채널 씨모어/2026-08-23-news.md#L42",
 "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L20",
 "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L28",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L62",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L76",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L77",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L78",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L92",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L93",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L39",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L44",
 "content/understanding/채널 씨모어/raw/2024-12-03-wolfspeed.md#L26",
 "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L18",
 "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L20",
@@ -36353,6 +36485,7 @@
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L72",
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L76",
 "content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L43",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L44",
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L158",
 "content/understanding/회계사/[260628] FCF 배수 21.65배로 낸 주주가치 74.6조, 주가보다 6.9% 아래 - 삼성물산 - 엘곰.md#L1",
 "content/understanding/회계사/[260628] FCF 배수 21.65배로 낸 주주가치 74.6조, 주가보다 6.9% 아래 - 삼성물산 - 엘곰.md#L3",
@@ -36580,6 +36713,9 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L64",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L118",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L29",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L32",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L38",
 "content/understanding/채널 씨모어/2024-12-03-wolfspeed.md#L26",
 "content/understanding/채널 씨모어/2025-01-12-stmicro.md#L16",
 "content/understanding/채널 씨모어/2025-01-12-stmicro.md#L21",
@@ -36604,6 +36740,13 @@
 "content/understanding/채널 씨모어/2026-03-29-news.md#L32",
 "content/understanding/채널 씨모어/2026-03-29-news.md#L33",
 "content/understanding/채널 씨모어/2026-05-18-ai-winner.md#L21",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L62",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L76",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L77",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L78",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L92",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L93",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L39",
 "content/understanding/채널 씨모어/raw/2024-12-03-wolfspeed.md#L26",
 "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L18",
 "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L20",
@@ -43668,6 +43811,7 @@
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L273",
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L302",
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L92",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L30",
 "content/understanding/채널 씨모어/2024-06-13-power-semi.md#L16",
 "content/understanding/채널 씨모어/2024-06-13-power-semi.md#L19",
 "content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L2",
@@ -43709,6 +43853,10 @@
 "content/understanding/채널 씨모어/2026-05-18-ai-winner.md#L20",
 "content/understanding/채널 씨모어/2026-05-18-ai-winner.md#L31",
 "content/understanding/채널 씨모어/2026-05-18-ai-winner.md#L40",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L40",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L41",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L144",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L63",
 "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L3",
 "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L11",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L3",
@@ -49310,6 +49458,15 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L115",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L117",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L119",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L32",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L22",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L20",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L24",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L32",
+"content/understanding/채널 씨모어/2024-05-30-habits.md#L33",
+"content/understanding/채널 씨모어/2024-06-06-pf-bridge.md#L19",
+"content/understanding/채널 씨모어/2024-06-06-pf-bridge.md#L36",
+"content/understanding/채널 씨모어/2024-07-01-pension.md#L20",
 "content/understanding/채널 씨모어/2025-02-17-iamgold.md#L11",
 "content/understanding/채널 씨모어/2025-02-17-iamgold.md#L12",
 "content/understanding/채널 씨모어/2025-02-17-iamgold.md#L16",
@@ -49340,6 +49497,25 @@
 "content/understanding/채널 씨모어/2026-03-22-news.md#L48",
 "content/understanding/채널 씨모어/2026-04-05-news.md#L33",
 "content/understanding/채널 씨모어/2026-04-19-news.md#L35",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L77",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L78",
+"content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md#L92",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L20",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L21",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L17",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L18",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L36",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L71",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L75",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L76",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L14",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L15",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L18",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L41",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L52",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L68",
+"content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md#L125",
+"content/understanding/채널 씨모어/raw/2024-07-01-pension.md#L20",
 "content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L12",
 "content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L20",
 "content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L21",
@@ -50735,6 +50911,7 @@
 "content/understanding/채널 씨모어/2026-04-12-news.md#L19",
 "content/understanding/채널 씨모어/2026-04-19-news.md#L16",
 "content/understanding/채널 씨모어/2026-04-19-news.md#L35",
+"content/understanding/채널 씨모어/raw/2024-05-30-habits.md#L85",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L80",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L217",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L21",
@@ -51881,6 +52058,7 @@
 "content/understanding/채널 씨모어/2025-04-15-news.md#L23",
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L22",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L19",
+"content/understanding/채널 씨모어/2025-12-14-marriott.md#L23",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L45",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L57",
 "content/understanding/채널 씨모어/raw/2025-04-15-news.md#L49",
@@ -51889,6 +52067,9 @@
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L31",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L24",
 "content/understanding/채널 씨모어/raw/2025-09-21-space-manufacturing.md#L83",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L48",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L49",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L57",
 "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L145",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L13",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L62",
@@ -52158,8 +52339,11 @@
 "content/understanding/박팀장/[260715] 경제는 멀쩡한데 환율만 외환위기 수준 - 인도네시아에서 돈이 빠지는 이유 - 박팀장.md#L78",
 "content/understanding/채널 씨모어/2025-04-11-news.md#L30",
 "content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L22",
+"content/understanding/채널 씨모어/2025-12-14-marriott.md#L23",
 "content/understanding/채널 씨모어/raw/2025-04-11-news.md#L80",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L24",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L48",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L51",
 "content/understanding/회계사/[260812] DCF 내재가치 62만원, 주가보다 169% 위 - 코스맥스 - 엘곰.md#L13",
 "input/clippings/mer/224009810599.json#L52",
 "input/clippings/mer/224039793642.json#L84",
@@ -53480,10 +53664,14 @@
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L21",
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md#L46",
 "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L33",
+"content/understanding/채널 씨모어/2025-12-14-marriott.md#L23",
 "content/understanding/채널 씨모어/2026-03-22-news.md#L25",
 "content/understanding/채널 씨모어/2026-06-14-news.md#L16",
 "content/understanding/채널 씨모어/2026-06-14-news.md#L24",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L57",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L148",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L152",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L46",
 "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L30",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L24",
@@ -53520,6 +53708,7 @@
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L188",
 "content/understanding/채널 씨모어/raw/2025-10-05-pharma-dist-nash.md#L78",
 "content/understanding/채널 씨모어/raw/2025-10-19-mckesson.md#L56",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L52",
 "content/understanding/채널 씨모어/raw/2026-03-22-news.md#L31",
 "content/understanding/채널 씨모어/raw/2026-04-12-news.md#L31",
 "content/understanding/채널 씨모어/raw/2026-06-14-news.md#L25",
@@ -55429,6 +55618,7 @@
 ],
 "주성엔지니어링": [
 "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md#L468",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L31",
 "content/understanding/회계사/[260710] DCF 내재가치 96,163원, 주가와 0.14% 차이 - 이수페타시스 - 엘곰.md#L7",
 "content/understanding/회계사/[260710] DCF 내재가치 96,163원, 주가와 0.14% 차이 - 이수페타시스 - 엘곰.md#L93",
 "content/understanding/회계사/[260809] DCF 내재가치 51,400원, 주가보다 59.8% 아래 - 주성엔지니어링 - 엘곰.md#L1",
@@ -56008,6 +56198,7 @@
 "content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L33",
 "content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L33",
 "content/understanding/채널 씨모어/2025-09-07-earth-observation.md#L22",
+"content/understanding/채널 씨모어/2025-12-14-marriott.md#L23",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L11",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L12",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L16",
@@ -56029,6 +56220,10 @@
 "content/understanding/채널 씨모어/2026-05-11-ai-infra.md#L46",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L31",
 "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md#L45",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L19",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L58",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L149",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L152",
 "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L28",
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L39",
 "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L40",
@@ -56110,6 +56305,8 @@
 "content/understanding/채널 씨모어/raw/2025-09-07-earth-observation.md#L30",
 "content/understanding/채널 씨모어/raw/2025-09-07-earth-observation.md#L32",
 "content/understanding/채널 씨모어/raw/2025-09-07-earth-observation.md#L34",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L48",
+"content/understanding/채널 씨모어/raw/2025-12-14-marriott.md#L56",
 "content/understanding/채널 씨모어/raw/2026-03-08-news.md#L30",
 "content/understanding/채널 씨모어/raw/2026-03-08-news.md#L31",
 "content/understanding/채널 씨모어/raw/2026-03-08-news.md#L32",
@@ -59213,6 +59410,12 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L137",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L24",
 "content/understanding/채널 씨모어/2026-03-08-news.md#L20",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L57",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L31",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L48",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L49",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L50",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L57",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L40",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L43",
 "content/understanding/채널 씨모어/raw/2026-03-08-news.md#L16",
@@ -60133,6 +60336,7 @@
 "content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L16",
 "content/understanding/채널 씨모어/2025-08-17-space-valuechain.md#L39",
 "content/understanding/채널 씨모어/2025-08-24-space-internet.md#L34",
+"content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md#L144",
 "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L37",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L68",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L69",
@@ -63130,6 +63334,9 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L39",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L124",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L125",
+"content/understanding/채널 씨모어/2024-05-10-shortselling.md#L31",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L16",
+"content/understanding/채널 씨모어/2024-05-16-spinoff.md#L19",
 "content/understanding/채널 씨모어/2024-06-13-power-semi.md#L20",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L21",
 "content/understanding/채널 씨모어/2025-04-08-news.md#L32",
@@ -63162,7 +63369,11 @@
 "content/understanding/채널 씨모어/2026-03-22-news.md#L23",
 "content/understanding/채널 씨모어/2026-03-22-news.md#L30",
 "content/understanding/채널 씨모어/2026-06-14-news.md#L44",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L11",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L13",
+"content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md#L14",
 "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L15",
+"content/understanding/채널 씨모어/raw/2024-07-01-pension.md#L27",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L15",
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L22",
 "content/understanding/채널 씨모어/raw/2025-04-15-news.md#L49",

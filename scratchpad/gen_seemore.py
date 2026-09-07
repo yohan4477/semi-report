@@ -42,8 +42,9 @@ LANES = [('strategy', '⚖', '전략', '전략 컨설턴트 출신 애널리스�
 
 # 섹션 — 회차 frontmatter section 코드에 이름을 얹는다. 순서가 곧 화면 순서.
 # 채널이 백 편 넘게 올려 두었지만 이 장에 서는 것은 판을 세운 회차뿐이다.
-SECTIONS = [('news', '기사 읽기'), ('basics', '투자 원칙'),
+SECTIONS = [('news', '기사 읽기'), ('basics', '투자 원칙'), ('edu', '제도와 개념'),
             ('aiinfra', 'AI 인프라'), ('power', '전력·전력반도체'), ('gold', '금'),
+            ('hotel', '호텔'),
             ('pharma', '제약·바이오'), ('dist', '제약유통'), ('space', '우주테크'),
             ('physicalai', '피지컬 AI'), ('nuclear', '원전·SMR')]
 
