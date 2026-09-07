@@ -50,10 +50,10 @@ SECTIONS = [('news', '기사 읽기'), ('basics', '투자 원칙'), ('edu', '제
 
 STAMP = '2026-09-07'
 
-# 채널이 한 주제를 연달아 올린 묶음은 목록에서 한 덩어리로 세운다. 잣대는 「연달아」다 —
-# 날짜 내림차순으로 늘어놓았을 때 같은 섹션이 끊기지 않고 이어지는 구간이 곧 시리즈다.
-# 사이에 다른 주제가 끼면 거기서 끊긴다(원전은 06-08 한 편과 06-29부터 넉 편이 따로 선다).
-# 기사 읽기는 매주 돌아오는 꼴이라 이어져도 시리즈가 아니다 — 여기서만 뺀다.
+# 채널이 한 주제를 여러 편으로 다룬 것은 목록에서 한 덩어리로 세우고 글도 한 장으로 묶는다.
+# 잣대는 섹션이다 — 사이에 다른 주제가 껴도 같은 주제면 한 시리즈로 본다(원전 06-08 센트러스
+# 편이 06-29부터 넉 편과 같은 장에 선다). 2026-09-07 에 「연달아」에서 이 잣대로 바꿨다.
+# 기사 읽기는 매주 돌아오는 꼴이라 여러 편이어도 시리즈가 아니다 — 여기서만 뺀다.
 NO_SERIES = {'news'}
 
 # 목록은 최신 순서 하나다. 섹션은 줄에 붙는 태그이고, 위 선택 줄은 그 태그로 줄을 고르는
@@ -181,21 +181,21 @@ def lanes_html(ep):
 
 
 def series_slug(code, group):
-    return 'series-%s-%s' % (code, group[-1]['meta'].get('date', ''))
+    return 'series-%s' % code
 
 
 def series_post_html(code, group):
-    """연달아 올린 구간은 글도 한 장이다.
+    """한 주제를 다룬 회차들은 글도 한 장이다.
 
-    채널이 한 주제를 여러 회차로 나눠 올린 것이라 판들도 앞 편을 받아 쓴다. 목록에서
-    묶었으면 글에서도 묶여야 읽힌다 — 회차 차례로(먼저 올린 것이 위) 이어 붙인다."""
+    판들이 앞 편을 받아 쓰기 때문에 목록에서 묶었으면 글에서도 묶여야 읽힌다.
+    회차 차례로(먼저 올린 것이 위) 이어 붙인다 — 사이에 몇 달이 비어도 순서는 같다."""
     order = list(reversed(group))          # 목록은 최신 순서, 글 안은 올린 순서
     name = SEC_NAME.get(code, code)
     dates = [e['meta'].get('date', '') for e in order]
     m0 = order[0]['meta']
-    out = [sd.HEAD % ('%s 연속 %d편 — 채널 씨모어' % (sd.esc(name), len(order)), sd.CSS)]
+    out = [sd.HEAD % ('%s %d편 — 채널 씨모어' % (sd.esc(name), len(order)), sd.CSS)]
     out.append('<a class="back" href="../씨모어 대시보드.html">← 회차 목록</a>')
-    out.append('<h1>%s 연속 %d편</h1>' % (sd.esc(name), len(order)))
+    out.append('<h1>%s %d편</h1>' % (sd.esc(name), len(order)))
     out.append('<div class="pmeta">%s ~ %s · %s(%s)<br>회차마다 원문·요약본·전사를 '
                '아래에 단다</div>'
                % (dates[0], dates[-1], sd.esc(m0.get('speaker', '')), sd.esc(m0.get('org', ''))))
@@ -217,17 +217,21 @@ def series_post_html(code, group):
 
 
 def runs(live):
-    """날짜 내림차순 목록을 「연달아 올린 같은 섹션」 구간으로 끊는다.
+    """날짜 내림차순 목록을 섹션 묶음으로 접는다.
 
-    돌려주는 것은 [(섹션 코드, [회차…])] 이고 순서는 받은 그대로다. 길이 1인 구간과
-    NO_SERIES 섹션은 묶음이 아니라 낱줄로 선다."""
-    out = []
+    돌려주는 것은 [(섹션 코드, [회차…])] 이고, 묶음은 그 섹션에서 가장 최근 회차가
+    있던 자리에 선다. 회차 하나뿐인 섹션과 NO_SERIES 섹션은 낱줄로 남는다."""
+    out, at = [], {}
     for e in live:
         code = e['meta'].get('section', '')
-        if out and out[-1][0] == code:
-            out[-1][1].append(e)
-        else:
+        if code in NO_SERIES:
             out.append((code, [e]))
+            continue
+        if code in at:
+            at[code].append(e)
+        else:
+            at[code] = [e]
+            out.append((code, at[code]))
     return out
 
 
@@ -237,8 +241,8 @@ def series_row_html(code, group):
     names = [e['meta'].get('title', e['slug']) for e in reversed(group)]
     # 줄 하나에 여섯 제목을 다 적으면 목록이 안 읽힌다. 앞 둘만 적고 나머지는 세어 준다
     titles = ' · '.join(names[:2]) + ('' if len(names) < 3 else ' … 외 %d편' % (len(names) - 2))
-    inner = ('<div class="rmeta"><span>%s ~ %s</span><span>연달아 %d편</span></div>'
-             '<div class="rtitle">%s 연속 %d편</div>'
+    inner = ('<div class="rmeta"><span>%s ~ %s</span><span>%d편 묶음</span></div>'
+             '<div class="rtitle">%s %d편</div>'
              '<div class="rone">%s</div>'
              '<div class="tags"><span class="tag">%s</span>'
              '<span class="tag on">⚖ 전략 %d</span></div>'
@@ -255,7 +259,7 @@ def index_html(eps):
     out.append('<div class="sub">산업을 갈라 놓고 투자할 자리를 고르는 한국어 채널. '
                '회차마다 ⚖ 전략 판 하나가 선다 — 전사를 줄 번호로 대조해 쓴 해설이다.<br>'
                '글이 있는 회차만 싣는다 — 지금 %d편. 최신 회차가 맨 위이고, '
-               '한 주제를 연달아 올린 구간은 한 덩어리로 묶인다.</div>' % len(live))
+               '한 주제를 여러 편으로 다룬 것은 글 한 장으로 묶인다.</div>' % len(live))
     stray = [e for e in live if e['meta'].get('section', '') not in dict(SECTIONS)]
     if stray:
         raise SystemExit('섹션 코드가 없는 회차: ' + ', '.join(e['slug'] for e in stray))
@@ -291,7 +295,7 @@ def check_ui(index, posts):
     if 'class="sec"' in index:
         bad.append('섹션 머리줄이 있다 — 이 장의 목록은 섹션으로 안 나눈다')
     if 'class="row grp"' not in index:
-        bad.append('연달아 올린 구간이 안 묶였다 — 시리즈는 줄 하나로 서고 글도 한 장이다')
+        bad.append('시리즈가 안 묶였다 — 한 주제는 줄 하나로 서고 글도 한 장이다')
     if re.search(r'<a class="row grp"(?:(?!</a>).)*<a class="row"', index, re.S):
         bad.append('묶음 줄 안에 회차 줄이 있다 — 묶음은 글 한 장으로 간다')
     if 'class="secnav"' not in index:
