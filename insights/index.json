@@ -4505,6 +4505,7 @@
 "content/understanding/박형근 실장/[260818] 휴머노이드의 병목은 지능이 아니라 부품 생태계다 (2부작 · 2부) - 박형근.md#L63",
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L21",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L24",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L53",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L24",
 "content/understanding/피지컬AI/[260114] CES 부스에서 만진 아틀라스와 Sharpa.md#L6",
 "content/understanding/피지컬AI/[260114] CES 부스에서 만진 아틀라스와 Sharpa.md#L21",
@@ -8391,6 +8392,7 @@
 "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L3",
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L3",
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L3",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L3",
 "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md#L3",
 "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md#L3",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L3",
@@ -12661,7 +12663,7 @@
 "_meta": {
 "built": "2026-09-07",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1465,
+"files": 1470,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -14059,6 +14061,10 @@
 "7335692e325a0d6272f92d26077880c73c40b43a",
 113
 ],
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md": [
+"8f12aa80504e2e42fc5d9ecd13c0305f1f4764f8",
+87
+],
 "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md": [
 "fa2d228860b6163cc673eb43c6289c16df468718",
 96
@@ -14227,6 +14233,10 @@
 "6f12880bbf7f9ff72f11ad65df31e05392e46a05",
 42
 ],
+"content/understanding/채널 씨모어/2025-08-31-viasat.md": [
+"d57b9f23db592f8614e4b2eb148fc44c5fcf3dc4",
+41
+],
 "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md": [
 "4b8a4d112935cbd25b6e348d7c27c89f5eb18469",
 48
@@ -14290,6 +14300,18 @@
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md": [
 "3d0c50e3e9ffde669d7363f3651eb374835e20a9",
 76
+],
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md": [
+"8f51d191fa142546c17b705bb620b1954fe6aed6",
+96
+],
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md": [
+"6c641374e0fe9f2988919efc907361239e53bdc0",
+134
+],
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md": [
+"9637e4d374e750f9cd7b793805e49a3df482e36a",
+79
 ],
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md": [
 "90793317f89b4600b63765ba1bad4e5d331cb436",
@@ -18524,8 +18546,8 @@
 213
 ]
 },
-"fingerprint": "d220fdbe4170cb3a2f6fd3453a198bf949dcaad7",
-"lines": 223539
+"fingerprint": "72f483bf45f6d2924de015a9edc76f3826667ca9",
+"lines": 223976
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -19643,6 +19665,9 @@
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L55",
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L33",
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L34",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L67",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L68",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L74",
 "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L53",
 "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L54",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
@@ -24458,6 +24483,7 @@
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L161",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L24",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L26",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L67",
 "content/understanding/통합/B-원유의존-다변화벽.md#L26",
 "content/understanding/한주성/2026-02-17 1등 한샘은 왜 1%의 이익률에 갇혔을까 [8881].md#L19",
 "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md#L13",
@@ -26890,6 +26916,7 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L79",
 "content/understanding/채널 씨모어/2025-06-08-centrus.md#L23",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L34",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L69",
 "content/understanding/피지컬AI/[251007] CoRL 2025 현장에서 로봇들 써봄.md#L34",
 "content/understanding/피지컬AI/[251007] CoRL 2025 현장에서 로봇들 써봄.md#L36",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L23",
@@ -28566,6 +28593,13 @@
 "content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md#L96",
 "content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md#L97",
 "content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md#L108",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L53",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L71",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L119",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L120",
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md#L18",
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md#L20",
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md#L23",
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L16",
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L17",
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L26",
@@ -32830,6 +32864,7 @@
 "content/understanding/부동산/[260423] 시골집 하나에 세금 8억 - 양도세 중과 부활 앞 네 갈래 선택 (1부) - 이장원.md#L129",
 "content/understanding/부동산/[260424] 장특공제 축소는 비실거주 1주택을 겨냥한다 - 보유 공제를 깎는 두 시나리오 - 백종훈.md#L3",
 "content/understanding/부동산/[260501] 전세사기 3분의 1 보장법 - 국가가 처음 돈을 대지만 구멍은 남았다 - 백종훈.md#L3",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L85",
 "content/understanding/부동산/[260826] 서울 한복판에 63빌딩 20개 분량이 남았다 - 오피스와 아파트 - 김열매.md#L84"
 ],
 "뱅크오브아메리카": [
@@ -34103,6 +34138,9 @@
 "content/understanding/부동산/[260420] 착공 앞두고 시공사를 갈아치우면 - 성남 상대원2구역과 두 건의 선례 - 장순원.md#L76",
 "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L62",
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L135",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L6",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L40",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L60",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L26",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L82",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L110",
@@ -34128,6 +34166,7 @@
 "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md#L28",
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L24",
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L158",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L82",
 "content/understanding/채널 씨모어/raw/2025-10-05-pharma-dist-nash.md#L80",
 "content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md#L28",
 "content/understanding/채널 씨모어/raw/2025-10-19-mckesson.md#L49",
@@ -35319,6 +35358,9 @@
 "content/understanding/백종훈 기자/[260813] 애플의 중국 메모리 요청은 아직 안 끝난 일이다 - 백종훈.md#L25",
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L66",
 "content/understanding/부동산/[260407] 땅값은 직선이 아니라 2차 함수 - 호재가 아니라 정주 인구를 보고 산다 - 김종율.md#L50",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L6",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L40",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L60",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L26",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L82",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L110",
@@ -36374,6 +36416,7 @@
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L138",
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L14",
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L60",
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L16",
 "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md#L6",
 "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md#L16",
 "content/understanding/부동산/[260729] 한국 보유세는 정말 낮은가 - 같은 집에 각 도시 세제를 붙여봤다 (1부).md#L20",
@@ -37256,6 +37299,7 @@
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L45",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L47",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L48",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L81",
 "content/understanding/피지컬AI/[260110] 2026년 예측 와글와글.md#L51",
 "input/clippings/mer/224136528041.json#L5"
 ],
@@ -37421,6 +37465,14 @@
 "content/understanding/미국주식 사관학교/[260527] S-1이 말하는 정체 - 매출은 스타링크인데 돈은 AI로 흐른다.md#L38",
 "content/understanding/미국주식 사관학교/[260527] S-1이 말하는 정체 - 매출은 스타링크인데 돈은 AI로 흐른다.md#L64",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L34",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L33",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L60",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L15",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L41",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L47",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L93",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L96",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L111",
 "content/understanding/피지컬AI/[260721] Sunday Robotics ACT-2 프리뷰.md#L29",
 "input/clippings/mer/224145317611.json#L85",
 "input/clippings/mer/224145317611.json#L87",
@@ -38433,6 +38485,12 @@
 "content/understanding/채널 씨모어/raw/2025-08-03-simulation.md#L40",
 "content/understanding/채널 씨모어/raw/2025-08-03-simulation.md#L41",
 "content/understanding/채널 씨모어/raw/2025-08-03-simulation.md#L52",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L33",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L60",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L17",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L41",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L99",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L100",
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L57",
 "content/understanding/채널 씨모어/raw/2025-10-26-cvs-walgreens.md#L60",
 "content/understanding/한주성/2026-03-12 샤킬오닐  前 공룡 센터   現 투자계의 티라노사우루스 [0576].md#L20",
@@ -39300,6 +39358,8 @@
 "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md#L142",
 "content/understanding/채널 씨모어/2025-08-10-unity.md#L22",
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L25",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L81",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L82",
 "content/understanding/피지컬AI/[250626] LeRobot 한 갈래를 네 편으로 본 것.md#L31",
 "content/understanding/피지컬AI/[251014] 물리 노동이 다음이라는 신호들.md#L83",
 "content/understanding/피지컬AI/[251018] Figure 03과 1X 네오, 손 병목.md#L8",
@@ -47451,6 +47511,7 @@
 "content/understanding/부동산/[260529] 20년 장기전세 첫 만기 - 계약대로 나가라와 갈 데가 없다 사이 - 장순원.md#L44"
 ],
 "윤태화": [
+"content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L85",
 "content/understanding/부동산/[260814] 거주해야 깎아준다 - 종부세·장특공제 기준이 보유에서 거주로 - 윤태화.md#L3",
 "content/understanding/부동산/[260814] 거주해야 깎아준다 - 종부세·장특공제 기준이 보유에서 거주로 - 윤태화.md#L6",
 "content/understanding/부동산/[260814] 거주해야 깎아준다 - 종부세·장특공제 기준이 보유에서 거주로 - 윤태화.md#L12"
@@ -49009,6 +49070,7 @@
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L232",
 "content/understanding/이선엽 대표/[260503-260828] 이기는 투자사령부 실시간 시황.md#L294",
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L102",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L76",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L3",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L6",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L10",
@@ -54166,6 +54228,7 @@
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L53",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L72",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L73",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L61",
 "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L77",
 "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md#L145",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L26",
@@ -57875,6 +57938,10 @@
 "content/understanding/Semi Doped/til-14.md#L80",
 "content/understanding/Semi Doped/til-14.md#L81",
 "content/understanding/미국주식 사관학교/[260807] 순환금융 - AI 관련주 최대 리스크와 고리 밖 기업들.md#L22",
+"content/understanding/채널 씨모어/2025-08-31-viasat.md#L16",
+"content/understanding/채널 씨모어/2025-08-31-viasat.md#L20",
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md#L15",
+"content/understanding/채널 씨모어/raw/2025-08-31-viasat.md#L16",
 "content/understanding/한주성/2026-05-19 모래가 반도체 칩이 되기까지  3편 비메모리 반도체 [0656].md#L20",
 "content/understanding/한주성/2026-05-19 모래가 반도체 칩이 되기까지  3편 비메모리 반도체 [0656].md#L23",
 "content/understanding/회계사/[250816] DS 영업이익률 2.75%, SK하이닉스 57.75% - 엘곰.md#L30",
@@ -58129,6 +58196,14 @@
 "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L48",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L72",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L90",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L80",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L83",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L84",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L85",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L15",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L41",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L93",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L96",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L12",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L22",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
@@ -59642,6 +59717,9 @@
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L57",
 "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L58",
 "content/understanding/채널 씨모어/raw/2025-08-03-simulation.md#L27",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L70",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L71",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L74",
 "content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md#L79",
 "content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md#L80",
 "input/clippings/mer/223904189513.json#L34",
@@ -59776,6 +59854,7 @@
 "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md#L147",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L24",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L117",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L27",
 "content/understanding/통합/C-재생전환-진짜비용.md#L10",
 "content/understanding/통합/C-재생전환-진짜비용.md#L25",
 "content/understanding/한주성/2026-03-23 뉴욕 32번가 치킨집이 3,000억짜리 M&A 매물이 된 이유 [0656].md#L21",
@@ -61006,6 +61085,8 @@
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L24",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L117",
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L135",
+"content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md#L27",
+"content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md#L80",
 "content/understanding/채널 씨모어/raw/2025-10-05-pharma-dist-nash.md#L78",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L8",
 "content/understanding/통합/A-이란전쟁-원유수급.md#L12",

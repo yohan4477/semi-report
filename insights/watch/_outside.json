@@ -110,7 +110,9 @@
         }
       ],
       "places_src": "카카오 로컬 API 키워드 검색(dapi.kakao.com/v2/local/search/keyword.json), 2026-09-07 조회",
-      "sido": "경기"
+      "sido": "경기",
+      "note": "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md",
+      "card": "대시보드/부동산 대시보드.html#sec-buy"
     }
   ]
 }

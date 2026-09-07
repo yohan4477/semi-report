@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc
 import _figs_0825 as figs0825
 import _cards_re_0827
+import _cards_re_0907
 
 OUT = os.path.join(dc.ROOT, '대시보드', '부동산 대시보드.html')
 blob = dc.blob
@@ -1670,6 +1671,11 @@ CARDS = [{
 SEC_FIN = _cards_re_0827.SEC_FIN
 CARDS += _cards_re_0827.cards(SEC_SUPPLY, SEC_LEASE, blob, SUM)
 
+# 09-07 처리분 하나. SEC_BUY(자금 계획 · 규제와 매수 전략)를 그 모듈이 정의한다 —
+# 「가진 돈으로 무엇을 살 수 있나」가 기존 일곱 칸 어디에도 안 들어간다.
+SEC_BUY = _cards_re_0907.SEC_BUY
+CARDS += _cards_re_0907.cards(blob, SUM)
+
 
 def upload_date(card):
     """카드 meta의 '업로드 2026-08-04'에서 날짜를 뽑는다 — 정렬 기준을 따로 적지 않는다"""
@@ -1750,11 +1756,15 @@ XSUB = '해설 여러 편을 겹쳐야 보이는 판단'
 
 # 읽는 순서는 섹션 순서와 다르다. 섹션은 클러스터·땅값부터 시작하지만, 처음 온 사람이
 # 당장 걸리는 건 세금과 전세다. 조립과 검사는 dash_common.course()가 한다.
-COURSE_LEDE = ('카드 %d장을 어디서부터 읽을지 정해 두었습니다. 앞 세 단계는 지금 집을 사거나 빌리는 '
+COURSE_LEDE = ('카드 %d장을 어디서부터 읽을지 정해 두었습니다. 앞 네 단계는 지금 집을 사거나 빌리는 '
                '사람이 바로 걸리는 자리고, 뒤로 갈수록 값이 어떻게 만들어지는지로 들어갑니다. '
                '제목을 누르면 그 카드가 열립니다.')
 
 COURSE = [
+    ('가진 돈으로 어디까지 가나',
+     '청약이 막히는 자리는 당첨이 아니라 잔금이다. 대출 한도와 규제 지역이 실수요자의 '
+     '선택지를 어디까지 좁히는지부터 본다.',
+     ['1억 5천으로 아파트를 산다']),
     ('세금부터',
      '집 하나에 세금은 세 번 붙는다. 살 때 취득세, 갖고 있는 동안 보유세, 팔 때 양도세다. '
      '공제가 깎이는 자리부터 읽는다.',
