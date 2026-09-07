@@ -217,6 +217,23 @@ def series_post_html(code, group):
     return ''.join(out)
 
 
+REDIRECT = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
+            '<meta http-equiv="refresh" content="0; url=%(to)s">'
+            '<title>%(title)s — 채널 씨모어</title>'
+            '<p>이 회차는 <a href="%(to)s">%(name)s</a> 묶음 글 안으로 들어갔다.</p>')
+
+
+def redirect_html(ep, code, group):
+    """묶이면서 제 페이지를 잃은 회차의 옛 주소를 묶음 글의 그 자리로 넘긴다.
+
+    주소가 사라지면 북마크와 검색 결과가 첫 화면으로 떨어진다(2026-09-07 확인).
+    회차마다 앵커가 있으니 넘길 자리가 있다."""
+    m = ep['meta']
+    return REDIRECT % {'to': '%s.html#ep-%s' % (series_slug(code, group), ep['slug']),
+                       'title': sd.esc(m.get('title', ep['slug'])),
+                       'name': sd.esc(SEC_NAME.get(code, code))}
+
+
 def runs(live):
     """날짜 내림차순 목록을 섹션 묶음으로 접는다.
 
@@ -339,7 +356,7 @@ def main():
         raise SystemExit('도해 규칙 위반\n  ' + '\n  '.join(bad))
     if not os.path.isdir(POST_DIR):
         os.makedirs(POST_DIR)
-    posts, wrote = [], set()
+    posts, wrote, jumps = [], set(), set()
     live = [e for e in eps if e['lanes']]
     for code, group in runs(live):
         if len(group) > 1 and code not in NO_SERIES:
@@ -356,6 +373,11 @@ def main():
         wrote.add(name + '.html')
         io.open(os.path.join(POST_DIR, name + '.html'), 'w',
                 encoding='utf-8', newline='').write(h)
+        for ep in group:
+            wrote.add(ep['slug'] + '.html')
+            jumps.add(ep['slug'] + '.html')
+            io.open(os.path.join(POST_DIR, ep['slug'] + '.html'), 'w',
+                    encoding='utf-8', newline='').write(redirect_html(ep, code, group))
     # 묶이면서 자리를 잃은 회차 글은 지운다 — 같은 판이 두 주소에 서면 어느 쪽이 정본인지 모른다
     for f in os.listdir(POST_DIR):
         if f.endswith('.html') and f not in wrote:
@@ -367,13 +389,14 @@ def main():
     io.open(OUT, 'w', encoding='utf-8', newline='').write(idx)
     # 모바일 폭에서 옆으로 밀리나 — 브라우저로만 잴 수 있어 Playwright 를 부른다
     import subprocess
-    targets = [OUT] + [os.path.join(POST_DIR, f) for f in sorted(wrote)]
+    # 넘김 쪽은 열자마자 자리를 옮겨 폭을 못 잰다 — 잴 것도 없다
+    targets = [OUT] + [os.path.join(POST_DIR, f) for f in sorted(wrote - jumps)]
     r = subprocess.run(['node', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'check_scroll.js')]
                        + targets, capture_output=True, text=True, encoding='utf-8')
     if r.returncode != 0:
         raise SystemExit('모바일 가로 스크롤\n' + (r.stdout or '') + (r.stderr or ''))
-    print('씨모어 — 회차 %d편 · 글 %d장(묶음 포함)  ->  %s'
-          % (len(live), len(wrote), os.path.basename(OUT)))
+    print('씨모어 — 회차 %d편 · 글 %d장(묶음 포함) · 넘김 %d장  ->  %s'
+          % (len(live), len(wrote - jumps), len(jumps), os.path.basename(OUT)))
 
 
 if __name__ == '__main__':
