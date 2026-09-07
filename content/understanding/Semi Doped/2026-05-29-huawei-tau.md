@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] · [[Vik Sekar]] (Semi Doped 공동 진행)
 section: fab
 topic: 스케일링 법칙 · 하이브리드 본딩 · EUV 대체
 gain: 노광 장비를 못 구하는 쪽이 내놓은 다른 셈법. 무엇을 곱해 성능을 맞추겠다는 것인지, 실제 실리콘에서 확인된 수치는 무엇인지, 그리고 그 셈이 어디서 멈추는지.

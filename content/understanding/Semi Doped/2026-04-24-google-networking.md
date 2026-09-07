@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] · [[Vik Sekar]] (Semi Doped 공동 진행)
 section: link
 topic: TPU · 광회선 스위칭 · 토폴로지
 gain: 훈련용과 추론용으로 칩을 가르면 네트워크도 갈린다는 이야기. 훈련 쪽은 3D 토러스로 16홉, 추론 쪽은 보드를 묶어 7홉. 그리고 광회선 스위칭으로 계층을 줄여 칩 13만 4천 개를 한 덩이로 묶은 셈.

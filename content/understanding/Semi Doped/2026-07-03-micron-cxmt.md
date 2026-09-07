@@ -6,6 +6,7 @@ speaker: Austin Lyons · Vik Sekar
 org: Semi Doped 공동 진행
 channel: Semi Doped
 host: Austin Lyons · Vik Sekar
+people: 진행 [[Austin Lyons]] · [[Vik Sekar]] (Semi Doped 공동 진행)
 section: mem
 topic: 메모리 실적 · 값 인상 · 수출 규제
 gain: 매출총이익률이 넉 분기 만에 45%에서 85%로 간 셈과, 그것을 폭리로 볼지 입찰 경쟁으로 볼지 진행자 둘이 갈리는 대목. 값이 오르자 휴대전화 사양이 줄고 애플이 규제 명단에 오른 회사의 메모리를 요청한 이야기까지.
