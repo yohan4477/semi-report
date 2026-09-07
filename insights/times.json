@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "c3a0e990552b840b75d20aa9e68e1fa6a93f0312",
-"lines": 4255
+"index_fingerprint": "fa71b7fe2350b4a8d95a80876d1b50cb70a244b8",
+"lines": 4277
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9433,6 +9433,93 @@
 "t": "2011",
 "tense": "회고"
 },
+"content/understanding/채널 씨모어/2025-06-08-centrus.md#L34": {
+"how": "명시",
+"span": [
+"2019",
+"2020"
+],
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L27": {
+"how": "명시",
+"t": "2011",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L37": {
+"how": "명시",
+"t": "2011",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L45": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L21": {
+"how": "명시",
+"span": [
+"2020",
+"2022"
+],
+"t": "2022",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L31": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L32": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-06-smr-structure.md#L36": {
+"how": "명시",
+"t": "1995",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-13-bwxt.md#L16": {
+"how": "명시",
+"t": "1979",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-13-bwxt.md#L23": {
+"how": "명시",
+"span": [
+"1960",
+"1962"
+],
+"t": "1962",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-13-bwxt.md#L24": {
+"how": "명시",
+"t": "1979",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-13-bwxt.md#L37": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L20": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L21": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md#L37": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
+},
 "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L33": {
 "how": "명시",
 "span": [
@@ -9480,6 +9567,49 @@
 "how": "계산",
 "t": "2026",
 "tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2025-06-08-centrus.md#L68": {
+"how": "명시",
+"span": [
+"2019",
+"2020"
+],
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L108": {
+"how": "명시",
+"t": "1995",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L19": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L78": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-13-bwxt.md#L36": {
+"how": "명시",
+"t": "1979",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md#L70": {
+"how": "계산",
+"span": [
+"2023",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md#L97": {
+"how": "계산",
+"t": "2025",
+"tense": "현재"
 },
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L173": {
 "how": "명시",

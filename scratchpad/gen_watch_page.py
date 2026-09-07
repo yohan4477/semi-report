@@ -2245,6 +2245,125 @@ def law_summary(watches):
     return ''.join(h)
 
 
+# ── 밖에서 온 판단 ────────────────────────────────────────────────────────
+# 이 화면은 값으로 판단한다. 그런데 이 장을 여는 사람이 실제로 붙들고 있는 물음
+# (「1억 5천으로 무엇을 하나」)에는 공표 통계가 답을 안 낸다. 그 자리를 비워 두면
+# 독자는 유튜브에서 답을 듣고 와서 우리 표와 따로 논다. 그래서 밖의 해설을 원문
+# 그대로 옮기고, 우리 표와 어긋나는 자리를 바로 밑에 박는다 — 옮기는 것이 곧
+# 동의는 아니라는 것이 이 절의 규약이라 「어긋나는 자리」 없이는 한 줄도 안 낸다.
+# 좌표는 카카오 로컬 API 로 한 번 받아 _outside.json 에 박아 뒀다(빌드는 네트워크를
+# 안 탄다). 자리만 정하고 값을 주장하지 않는다 — 원문 밖 값 금지는 그대로다.
+OUTSIDE_PATH = os.path.join(ROOT, 'insights', 'watch', '_outside.json')
+
+
+def _outside_items():
+    try:
+        with io.open(OUTSIDE_PATH, encoding='utf-8') as f:
+            return json.load(f).get('items') or []
+    except (IOError, ValueError):
+        return []
+
+
+def outside_map(e, W=360):
+    """해설이 지목한 곳을 카카오 좌표로 찍는다.
+
+    지도 그림은 왼쪽에 좁게 두고 이름은 오른쪽 한 칸에 세로로 세운다. 점 옆에
+    바로 붙이면 「병점 아이파크캐슬」 같은 열 자짜리가 서로 덮는다(check_fig 이
+    문다). 채움은 우리 표의 지정 여부다 — 해설의 주장이 아니라 _zones.json 이
+    낸 값이라, 원문과 어긋나면 그 어긋남이 그림에서 바로 보인다."""
+    ps = e.get('places') or []
+    if len(ps) < 2:
+        return ''
+    lats = [p['lat'] for p in ps]
+    lons = [p['lon'] for p in ps]
+    la0, la1 = min(lats), max(lats)
+    lo0, lo1 = min(lons), max(lons)
+    # 경도 1도는 위도 1도보다 짧다(북위 37도에서 약 0.8배). 그대로 그리면 동서가
+    # 늘어난다 — 두 축을 같은 배율로 놓고 남는 쪽을 가운데로 민다
+    KX = 0.8
+    PX0, PX1, PY0, PY1 = 12, 148, 24, 150
+    dx_deg = max((lo1 - lo0) * KX, 1e-6)
+    dy_deg = max(la1 - la0, 1e-6)
+    s = min((PX1 - PX0) / dx_deg, (PY1 - PY0) / dy_deg)
+    ox = (PX0 + PX1) / 2.0 - (lo0 + lo1) / 2.0 * KX * s
+    oy = (PY0 + PY1) / 2.0 + (la0 + la1) / 2.0 * s
+
+    def xy(p):
+        return (p['lon'] * KX * s + ox, oy - p['lat'] * s)
+
+    # 이름 칸 — 북쪽부터 차례로, 16px 씩 띄운다. 지시선이 제 점을 가리키므로
+    # 목록 순서가 지리 순서와 어긋나도 어느 점인지는 안 흐려진다
+    order = sorted(range(len(ps)), key=lambda i: -ps[i]['lat'])
+    LX, LY0, LGAP = 176, 32, 18
+    o = ['<rect x="%d" y="%d" width="%d" height="%d" fill="var(--surface)" '
+         'stroke="var(--line)"/>' % (PX0 - 6, PY0 - 8, PX1 - PX0 + 12, PY1 - PY0 + 16)]
+    for k, i in enumerate(order):
+        p = ps[i]
+        x, y = xy(p)
+        ly = LY0 + k * LGAP
+        hit = p.get('zone') == '규제'
+        o.append('<circle cx="%.1f" cy="%.1f" r="4.5" fill="%s" stroke="var(--ink)" '
+                 'stroke-width="1.2"/>' % (x, y, 'var(--ink)' if hit else 'var(--paper)'))
+        # 지시선은 꺾어서 간다 — 비스듬한 선은 다른 선과 구분이 안 된다
+        o.append('<path d="M%.1f %.1f L%d %.1f L%d %.1f" class="grid"/>'
+                 % (x + 6, y, LX - 26, y, LX - 26, ly - 4))
+        o.append('<circle cx="%d" cy="%.1f" r="4.5" fill="%s" stroke="var(--ink)" '
+                 'stroke-width="1.2"/>' % (LX - 12, ly - 4, 'var(--ink)' if hit else 'var(--paper)'))
+        o.append('<text x="%d" y="%.1f" class="t-sm" style="font-size:11px">%s</text>'
+                 % (LX, ly, E(p['name'])))
+    # 범례는 그림 아래 두 줄. 한 줄에 나란히 두면 열한 자짜리 둘이 물린다.
+    # 이름 칸이 짧아도 지도 네모(아래끝 PY1+8)보다는 밑으로 내린다 — 안 그러면
+    # 네모 테두리와 지시선이 범례 글자를 깔고 앉는다(check_fig 이 문다)
+    ly = max(LY0 + len(ps) * LGAP, PY1 + 8) + 22
+    for k, (fill, txt) in enumerate(((True, '우리 표에 지정돼 있는 곳'),
+                                     (False, '우리 표에는 지정이 없는 곳'))):
+        yy = ly + k * 18
+        o.append('<circle cx="%d" cy="%.1f" r="4.5" fill="%s" stroke="var(--ink)" '
+                 'stroke-width="1.2"/>' % (18, yy - 4, 'var(--ink)' if fill else 'var(--paper)'))
+        o.append('<text x="%d" y="%.1f" class="t-sm t-axis" style="font-size:11px">%s</text>'
+                 % (30, yy, E(txt)))
+    H = int(ly + 36)
+    return ('<svg viewBox="0 0 %d %d" role="img" aria-label="해설이 지목한 곳" '
+            'class="fig-s">%s</svg>' % (W, H, ''.join(o)))
+
+
+def outside_section(watches):
+    """「밖에서 온 판단」 절. 해설 하나를 원문 그대로 옮기고 어긋남을 붙인다."""
+    items = _outside_items()
+    if not items:
+        return ''
+    h = ['<div class="band" id="outside"><p class="band-t">밖에서 온 판단</p>',
+         '<p class="band-s">값이 답을 안 내는 물음 — 가진 돈이 1억 5천일 때 무엇을 하나 — '
+         '에 밖의 해설자가 낸 답입니다. 옮겨 놓는 것이 동의는 아닙니다. 말을 그대로 옮기고, '
+         '우리 표와 어긋나는 자리를 바로 밑에 답니다.</p>']
+    for e in items:
+        h.append('<p class="lbl">%s · %s · <a href="%s" rel="noopener">원문 보기 →</a></p>'
+                 % (E(e['who']), E(e['when']), E(e['url'])))
+        h.append('<p class="row-what">%s</p>' % E(e['title']))
+        h.append('<p class="band-s">%s</p>' % E(e['lede']))
+        fig = outside_map(e)
+        if fig:
+            h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도에서 '
+                     '받은 좌표이고, 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 '
+                     '아닙니다.</figcaption></figure>'
+                     % (fig, E(e.get('clash_as_of', ''))))
+        h.append('<div class="rows">')
+        for what, why in e['points']:
+            h.append('<div class="row"><span class="row-where">해설</span>'
+                     '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
+                     % (E(what), E(why)))
+        for what, why in e['clash']:
+            h.append('<div class="row"><span class="row-where">%s우리 표</span>'
+                     '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
+                     % (tag('걸림'), E(what), E(why)))
+        h.append('</div>')
+        h.append('<p class="lbl">우리 표와 견준 날 %s. 지정 현황은 시군구 단위로 받습니다 — '
+                 '그 아래로 갈린 구는 사람이 고시를 열어 확인합니다.</p>'
+                 % E(e.get('clash_as_of', '')))
+    h.append('</div>')
+    return ''.join(h)
+
+
 def _sub_now_row(it, today):
     """「지금 청약」 한 줄 — 제목·상태·마감(첫 줄), 구와 형별 분양가(둘째 줄). 분양 목록과
     지도 구 패널이 같은 것을 쓴다(2026-09-04 「지역을 눌렀을 때 지금 청약처럼 똑같은 내용으로」).
@@ -3691,9 +3810,12 @@ def check_ui(html, watches):
     # 통계 층 그래프는 따로 센다 — 지역 탭마다 하나씩이라 수가 늘고 준다. 그 <figure> 안에는
     # svg.fig-s 가 꼭 하나씩 들어 있어 그 수만큼 빼면 지도·자 셋만 남는다
     n_fig = html.count('<figure') - html.count('class="fig-s fig-click"')
-    assert n_fig == 5, \
+    # 2026-09-07 — 「밖에서 온 판단」 절이 지도 하나를 더 낸다(해설이 이름을 댄 곳).
+    # 그 절이 비면(_outside.json 이 없거나 items 가 비면) 도해도 안 서므로 다섯이다
+    n_want = 6 if 'id="outside"' in html else 5
+    assert n_fig == n_want, \
         ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
-         '다섯이어야 한다 (%d개)' % n_fig)
+         '+ (밖에서 온 판단 지도) 여야 한다 (%d개, 기대 %d개)' % (n_fig, n_want))
     # 본 장의 표는 「청약 — 조건」 절 안에만 둔다. 나머지는 전부 상세(watch/)로
     # 옮겼는데, 청약 조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더
     # 열게 하지 않는다 — 그 예외가 다른 절로 새지 않게 자리까지 잰다
@@ -3851,6 +3973,10 @@ def build():
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
+
+    # 밖에서 온 판단은 제도 다음, 청약 조건 앞이다 — 제도가 「지금 어느 판인가」를
+    # 말한 자리 바로 뒤라야 「그 판에서 무엇을 하나」가 이어진다
+    h.append(outside_section(ws))
 
     h.append(subscription_cond_section(ws))
 
