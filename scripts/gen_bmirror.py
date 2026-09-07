@@ -215,11 +215,11 @@ if start == -1:   # 옛 꼴(주 띠·날짜 그룹)에서 처음 갈아탈 때
 note_i = ds.find('    <div class="note" data-c="compute memory power model">', start)
 assert start != -1 and note_i != -1, (start, note_i)
 note_end = ds.find("</div>", note_i) + len("</div>")
-# 이 절은 「무엇이 새로 왔나」만 답한다. 「그래서 판이 어디로 갔나」는 링크드인 흐름 장이
-# 답하므로 여기서 같은 이야기를 두 번 하지 않고 링크만 건다(2026-09-06)
+# 이 절은 「무엇이 새로 왔나」만 답한다. 「그래서 판이 어디로 갔나」는 여섯 달 흐름 장이
+# 답한다. 2026-09-08 그 장이 공개 사이트에서 빠져 링크를 걷었다 — 배포본에서 죽은 링크가
+# 되기 때문이다. 저장소에는 대시보드/링크드인 흐름.html 로 남아 있다
 newnote = ('    <div class="note" data-c="compute memory power model">히스토리 미러(최근 '
-           + str(len(days)) + '일) · LinkedIn·YouTube·뉴스레터 + NVIDIA 1차 — 전체는 위 "전체 보기" · '
-           '여섯 달치를 줄기 하나로 읽은 것은 <a href="링크드인 흐름.html">링크드인 흐름</a></div>')
+           + str(len(days)) + '일) · LinkedIn·YouTube·뉴스레터 + NVIDIA 1차 — 전체는 위 "전체 보기"</div>')
 ds = ds[:start] + out + newnote + ds[note_end:]
 
 # ================= ② 뉴스레터 — 파일명 발행일 [YYMMDD] 기준 최근 N편 자동 =================

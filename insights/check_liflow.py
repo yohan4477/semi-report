@@ -32,6 +32,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FLOWS = os.path.join(ROOT, 'insights', 'li_flows')
 CLIPS = os.path.join(ROOT, 'content', 'linkedin')
+NEWS = os.path.join(ROOT, 'content', 'newsletter')
 
 LEN_MIN, LEN_MAX = 5500, 6500
 SEC_MIN, SEC_MAX = 5, 7
@@ -62,12 +63,21 @@ def normalize(s):
 
 
 NUM = re.compile(r'\d[\d.]*')
-CITE = re.compile(r'\(((?:L-\d{8}-\d+)(?:\s*·\s*L-\d{8}-\d+)*)\)')
+# 인용 갈래 둘 — 링크드인 게시물(L-20260822-4337)과 뉴스레터 변환본(N-260626).
+# 뉴스레터는 파일 하나가 통째로 한 인용이라 날짜만으로 가리키고, 같은 날 두 편이
+# 나온 날(260528·260702·260807)만 파일명에 있는 낱말을 뒤에 붙여 가른다 — N-260807-스페이스X.
+PID = r'(?:L-\d{8}-\d+|N-\d{6}(?:-[^\s()·]+)?)'
+CITE = re.compile(r'\((%s(?:\s*·\s*%s)*)\)' % (PID, PID))
 HEAD = re.compile(r'^## (L-\d{8}-\d+) ·', re.M)
 
 
 def posts():
-    """게시물 식별자 -> 그 게시물 덩어리 전문(정규화 전)."""
+    """인용 식별자 -> 그 인용이 가리키는 원문 전문(정규화 전).
+
+    L- 는 게시물 덩어리 하나, N- 는 뉴스레터 변환본 파일 하나다. 뉴스레터는 절이
+    많고 값이 표에도 흩어져 있어 파일 전체를 한 덩어리로 둔다 — 줄 번호로 좁히면
+    표에 있는 값을 본문 문장에서 찾다가 멀쩡한 인용을 문다.
+    """
     out = {}
     for path in sorted(glob.glob(os.path.join(CLIPS, '*.md'))):
         txt = io.open(path, encoding='utf-8').read()
@@ -75,6 +85,17 @@ def posts():
         for i, m in enumerate(heads):
             end = heads[i + 1].start() if i + 1 < len(heads) else len(txt)
             out[m.group(1)] = txt[m.start():end]
+    for path in sorted(glob.glob(os.path.join(NEWS, '**', '*.md'), recursive=True)):
+        name = os.path.basename(path)
+        m = re.match(r'\[(\d{6})\]', name)
+        if not m:
+            continue
+        txt = io.open(path, encoding='utf-8').read()
+        out.setdefault('N-' + m.group(1), txt)
+        # 같은 날 두 편이 나온 날을 가르는 꼬리표. 파일명에 있는 낱말이면 무엇이든 된다
+        for word in re.findall(r'[가-힣A-Za-z0-9]+', name[9:]):
+            if len(word) >= 2:
+                out['N-%s-%s' % (m.group(1), word)] = txt
     return out
 
 
@@ -104,7 +125,7 @@ def check(path):
     P = posts()
 
     # F1 길이
-    plain = re.sub(r'\(L-[\d-]+(?:\s*·\s*L-[\d-]+)*\)', '', re.sub(r'\[\[fig:[A-Z]+\]\]', '', body))
+    plain = CITE.sub('', re.sub(r'\[\[fig:[A-Z]+\]\]', '', body))
     n = len(plain.strip())
     if not LEN_MIN <= n <= LEN_MAX:
         fails.append('F1 길이 %d자 — %d~%d자여야 한다' % (n, LEN_MIN, LEN_MAX))
@@ -119,17 +140,17 @@ def check(path):
     # F3 인용한 게시물이 실재하나
     cited = set()
     for m in CITE.finditer(body):
-        for pid in re.findall(r'L-\d{8}-\d+', m.group(1)):
+        for pid in re.findall(PID, m.group(1)):
             cited.add(pid)
             if pid not in P:
-                fails.append('F3 없는 게시물을 인용했다 — %s' % pid)
+                fails.append('F3 없는 원문을 인용했다 — %s' % pid)
 
     # F4 그 문장의 숫자가 그 게시물 안에 있나
     checked = 0
     for sent in sentences(body):
         # 한 문장에 인용이 둘일 수 있다(「…됐고 (L-A), 8월 21일 … (L-B)」). 앞의 것만
         # 보면 뒤 인용이 받치는 숫자를 앞 게시물에서 찾다가 헛물을 켠다(2026-09-06)
-        ids = re.findall(r'L-\d{8}-\d+', ' '.join(m.group(1) for m in CITE.finditer(sent)))
+        ids = re.findall(PID, ' '.join(m.group(1) for m in CITE.finditer(sent)))
         blob = normalize(' '.join(P.get(i, '') for i in ids))
         text = normalize(CITE.sub('', sent))
         for tok in set(NUM.findall(text)):
