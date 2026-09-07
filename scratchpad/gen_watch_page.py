@@ -1554,15 +1554,18 @@ figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
    번호의 채움만 우리 표의 지정 여부를 말한다 */
 .kmap{height:340px;border:1px solid var(--line)}
 .kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3)}
+/* 번호 동그라미 — 파랑에 흰 숫자(2026-09-07 사용자 지시). 채운 것이 우리 표에
+   지정이 있는 곳이고, 지정이 없는 곳은 같은 파랑 테두리에 속을 비운다.
+   누르면 그 번호만 커진다 — 지도는 안 움직인다 */
 .kno{display:block;width:18px;height:18px;border-radius:50%;font-size:11px;
-  font-weight:700;line-height:18px;text-align:center;border:1.5px solid #111;
-  background:#fff;color:#111;box-shadow:0 0 0 2px #fff}
-.kno.is-on{background:#111;color:#fff}
+  font-weight:700;line-height:18px;text-align:center;border:1.5px solid #1F6FEB;
+  background:#fff;color:#1F6FEB;box-shadow:0 0 0 2px #fff;
+  transition:transform .12s ease}
+.kno.is-on{background:#1F6FEB;color:#fff}
+.kno.is-big{transform:scale(1.7);box-shadow:0 0 0 3px #fff}
 .kmap-leg{margin:8px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;
   font-size:.82rem;color:var(--ink-2)}
 .kleg{cursor:pointer}
-.kmap-all{font:inherit;font-size:.78rem;color:var(--ink-2);background:var(--surface);
-  border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
 .kmap .kno{cursor:pointer}
 .kleg{display:inline-flex;align-items:center;gap:6px}
 .kmap-leg .kno{box-shadow:none;flex:0 0 auto}
@@ -2379,10 +2382,11 @@ def outside_kakao(e):
 
 
 def outside_kakao_js():
-    """지도를 세우는 스크립트. 절에 지도가 있을 때만 낸다.
+    """지도를 세우는 스크립트.
 
-    번호나 아래 범례를 누르면 그 자리로 확대하고(레벨 3), 「전체 보기」로 되돌린다.
-    휠 확대는 막아 둔다 — 페이지를 넘기려다 지도가 잡아먹는다."""
+    2026-09-07 사용자 지시로 지도는 고정한다 — 끌어서 움직이지도, 확대되지도 않는다.
+    번호를 누르면 그 번호만 커진다(어느 점인지 짚는 용도이지 화면을 옮기는 것이 아니다).
+    휴대폰에서 페이지를 넘기려다 지도가 손가락을 잡아먹던 것도 이걸로 사라진다."""
     key = (os.environ.get(KAKAO_JS_ENV) or '').strip()
     if not key:
         return ''
@@ -2394,24 +2398,24 @@ if(!window.kakao||!kakao.maps){alt();return;}
 kakao.maps.load(function(){Array.prototype.forEach.call(els,function(el){
 var pts=JSON.parse(el.getAttribute("data-pts"));
 var map=new kakao.maps.Map(el,{center:new kakao.maps.LatLng(pts[0].lat,pts[0].lon),level:6});
-map.setZoomable(false);
-var b=new kakao.maps.LatLngBounds(),at={};
-pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);at[p.no]=ll;
+map.setZoomable(false);map.setDraggable(false);
+var b=new kakao.maps.LatLngBounds();
+pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);
 new kakao.maps.CustomOverlay({map:map,position:ll,zIndex:2,
 content:'<span class="kno'+(p.hit?" is-on":"")+'" data-no="'+p.no+'" title="'+p.name+'">'+p.no+'</span>'});});
-function all(){map.relayout();map.setBounds(b,46,46,46,46);}
-// 숨은 탭 안에서 만들어지면 크기가 0이라 엉뚱한 자리를 문다 — 탭을 누른 뒤
-// 다시 재고 화면을 맞춘다(2026-09-07 「컨텐츠」 탭)
-el.__kfit=all;
-function go(no){var ll=at[no];if(!ll)return;map.setLevel(3);map.panTo(ll);}
+function fit(){map.relayout();map.setBounds(b,46,46,46,46);}
+// 숨은 자리에서 만들어지면 크기가 0이라 엉뚱한 데를 문다 — 보이게 된 뒤 다시 잰다
+el.__kfit=fit;
+function big(no){
+Array.prototype.forEach.call(el.parentNode.querySelectorAll(".kno"),function(s){
+s.classList.toggle("is-big",+s.getAttribute("data-no")===no||
+(!s.getAttribute("data-no")&&+s.textContent===no));});}
 el.addEventListener("click",function(ev){var s=ev.target.closest(".kno");
-if(s&&s.getAttribute("data-no"))go(+s.getAttribute("data-no"));});
+if(s&&s.getAttribute("data-no"))big(+s.getAttribute("data-no"));});
 var leg=el.parentNode.querySelector(".kmap-leg");
 if(leg){leg.addEventListener("click",function(ev){var s=ev.target.closest(".kleg");
-if(!s)return;var n=s.querySelector(".kno");if(n)go(+n.textContent);});
-var btn=document.createElement("button");btn.type="button";btn.className="kmap-all";
-btn.textContent="전체 보기";btn.addEventListener("click",all);leg.appendChild(btn);}
-all();});
+if(!s)return;var n=s.querySelector(".kno");if(n)big(+n.textContent);});}
+fit();});
 document.addEventListener("click",function(ev){
 if(!ev.target.closest(".sido-tab"))return;
 setTimeout(function(){Array.prototype.forEach.call(els,function(el){
@@ -2419,6 +2423,14 @@ if(el.__kfit&&el.offsetParent)el.__kfit();});},60);});
 });})();"""
     return ('<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=%s&autoload=false">'
             '</script><script>%s</script>' % (E(key), js))
+
+
+def note_box(x, y, w, h):
+    """도해 아래 설명 상자. 회색 면에 회색 글자를 두면 안 읽힌다(2026-09-07) —
+    옅은 파랑 면에 파란 테두리로 두고 글자는 t-sm(본문 밝기)으로 올린다.
+    파랑은 지도 번호와 같은 색이라 「이건 우리가 붙인 말」이라는 표시가 된다."""
+    return ('<rect x="%s" y="%s" width="%s" height="%s" rx="6" fill="rgba(31,111,235,.10)" '
+            'stroke="#1F6FEB" stroke-opacity=".45"/>' % (x, y, w, h))
 
 
 # ── 컨텐츠 절의 도해 둘 ────────────────────────────────────────────────────
@@ -2446,12 +2458,11 @@ def fig_balance():
         o.append('<text x="%d" y="134" class="t-sm">%s</text>' % (x + 14, name))
         o.append('<text x="%d" y="156" class="t-sm t-axis">%s</text>' % (x + 14, l1))
         o.append('<text x="%d" y="176" class="t-sm t-axis">%s</text>' % (x + 14, l2))
-    o.append('<rect x="30" y="204" width="500" height="68" rx="6" fill="var(--surface)" '
-             'stroke="var(--line)"/>')
+    o.append(note_box(30, 204, 500, 68))
     o.append('<text x="46" y="228" class="t-sm">예전에는 이렇게 갔다</text>')
-    o.append('<text x="46" y="250" class="t-sm t-axis">'
+    o.append('<text x="46" y="250" class="t-sm">'
              '계약금 10%만 있으면 중도금 60%는 대출로 3년을 버텼고,</text>')
-    o.append('<text x="46" y="268" class="t-sm t-axis">'
+    o.append('<text x="46" y="268" class="t-sm">'
              '잔금은 감정가의 70%까지 대출을 받거나 전세를 놓아 그 보증금으로 치렀다</text>')
     return ('<svg viewBox="0 0 560 284" role="img" aria-label="분양가 15억 아파트의 잔금 13억을 '
             '메우던 두 길인 잔금 대출과 전세보증금이 각각 대출 한도와 실거주 의무로 막힌 그림" '
@@ -2488,11 +2499,10 @@ def fig_band():
         o.append('<rect x="28" y="%d" width="18" height="13" rx="3" fill="%s" '
                  'stroke="var(--ink)" stroke-width="1.1"/>' % (y - 10, fill))
         o.append('<text x="54" y="%d" class="t-sm t-axis">%s — %s</text>' % (y, val, name))
-    o.append('<rect x="28" y="192" width="502" height="40" rx="6" fill="var(--surface)" '
-             'stroke="var(--line)"/>')
-    o.append('<text x="44" y="209" class="t-sm t-axis">'
+    o.append(note_box(28, 192, 502, 40))
+    o.append('<text x="44" y="209" class="t-sm">'
              '1억 5천이 닿는 자리 — 비규제 갭은 매매가 3억 8천~4억,</text>')
-    o.append('<text x="44" y="227" class="t-sm t-axis">'
+    o.append('<text x="44" y="227" class="t-sm">'
              '생애최초 대출로 집값의 70%를 일으키면 5억대. 둘 다 왼쪽 구간 안이다</text>')
     return ('<svg viewBox="0 0 560 244" role="img" aria-label="매매가 구간별로 전고점 회복 '
             '상태가 갈리는 띠. 6억 이하는 전고점을 못 찍었고 7~8억은 뚫기 시작했으며 10억 '
@@ -2516,7 +2526,7 @@ def fig_rebuild_cost():
                     'ink' if last else 'line', ' stroke-width="1.4"' if last else ''))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 24, name))
         o.append('<text x="250" y="%d" class="t-sm">%s</text>' % (y + 24, val))
-        o.append('<text x="352" y="%d" class="t-sm t-axis">%s</text>' % (y + 24, why))
+        o.append('<text x="352" y="%d" class="t-sm">%s</text>' % (y + 24, why))
     o.append('<text x="26" y="%d" class="t-sm t-axis">'
              '전세는 3억~3억 3천이지만 규제 지역이라 전세를 끼고는 못 산다</text>'
              % (40 + len(rows) * 46 + 22))
@@ -2539,16 +2549,15 @@ def fig_zone_switch():
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (LX, y + 21, name))
         o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--surface)" '
                  'stroke="var(--line)"/>' % (AX - 12, y, W))
-        o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (AX, y + 21, a))
+        o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (AX, y + 21, a))
         o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--paper)" '
                  'stroke="var(--ink)"/>' % (BX - 12, y, W))
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (BX, y + 21, b))
     y = 62 + len(rows) * 46 + 16
-    o.append('<rect x="26" y="%d" width="508" height="44" rx="6" fill="var(--surface)" '
-             'stroke="var(--line)"/>' % y)
-    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+    o.append(note_box(26, y, 508, 44))
+    o.append('<text x="42" y="%d" class="t-sm">'
              '동탄 메인 단지는 22억을 넘겼는데 대출은 4억이다 —</text>' % (y + 18))
-    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+    o.append('<text x="42" y="%d" class="t-sm">'
              '사려면 자본이 18억 있어야 한다는 것이 이 편의 셈이다</text>' % (y + 36))
     return ('<svg viewBox="0 0 560 %d" role="img" aria-label="규제 지역 지정 전후로 대출 한도가 '
             '70퍼센트에서 40퍼센트로, 비과세 요건이 2년 보유에서 2년 거주로 바뀌고 토지거래허가가 '
@@ -2566,14 +2575,13 @@ def fig_capital_plan():
         o.append('<rect x="26" y="%d" width="508" height="48" rx="6" fill="%s" '
                  'stroke="var(--line)"/>' % (y, 'var(--surface)' if i == 0 else 'var(--paper)'))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 20, name))
-        o.append('<text x="42" y="%d" class="t-sm t-axis">%s</text>' % (y + 40, why))
+        o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 40, why))
         o.append('<text x="470" y="%d" class="t-sm" text-anchor="end">%s</text>' % (y + 30, val))
     y = 40 + len(ways) * 58 + 8
-    o.append('<rect x="26" y="%d" width="508" height="40" rx="6" fill="var(--surface)" '
-             'stroke="var(--line)"/>' % y)
-    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+    o.append(note_box(26, y, 508, 40))
+    o.append('<text x="42" y="%d" class="t-sm">'
              '한도는 소득도 본다 — 15억 이하에서 6억까지 받으려면</text>' % (y + 17))
-    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+    o.append('<text x="42" y="%d" class="t-sm">'
              '부부 합산 소득이 1억대는 되어야 한다는 것이 이 편의 말이다</text>' % (y + 34))
     return ('<svg viewBox="0 0 560 %d" role="img" aria-label="자본 3억으로 서울 규제 지역에서는 '
             '5억까지, 비규제 안양 만안구에서 전세를 끼면 8억까지 닿는 대비" '
@@ -2647,7 +2655,7 @@ def outside_page(e):
     if kmap:
         figs.append('<figure class="fig-out">%s<figcaption>해설이 이름을 댄 곳입니다. '
                     '자리는 카카오 지도이고, 번호의 채움은 우리 표(%s)의 지정 여부입니다 — '
-                    '해설의 주장이 아닙니다. 번호를 누르면 그 자리로 확대합니다.'
+                    '해설의 주장이 아닙니다. 번호를 누르면 그 번호가 커집니다 — 지도는 고정입니다.'
                     '</figcaption></figure>' % (kmap, E(e.get('clash_as_of', ''))))
     else:
         svg = outside_map(e)
