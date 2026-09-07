@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "fa71b7fe2350b4a8d95a80876d1b50cb70a244b8",
-"lines": 4277
+"index_fingerprint": "d220fdbe4170cb3a2f6fd3453a198bf949dcaad7",
+"lines": 4286
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9520,6 +9520,48 @@
 "t": "2025",
 "tense": "현재"
 },
+"content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L23": {
+"how": "명시",
+"t": "2025",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/2025-07-27-ai-stages.md#L30": {
+"how": "계산",
+"span": [
+"2024",
+"2025"
+],
+"t": "2025",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/2025-08-10-unity.md#L16": {
+"how": "명시",
+"span": [
+"2004",
+"2020"
+],
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-08-10-unity.md#L19": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-08-10-unity.md#L22": {
+"how": "명시",
+"span": [
+"2007",
+"2012"
+],
+"t": "2012",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-08-10-unity.md#L25": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L33": {
 "how": "명시",
 "span": [
@@ -9610,6 +9652,25 @@
 "how": "계산",
 "t": "2025",
 "tense": "현재"
+},
+"content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md#L57": {
+"how": "계산",
+"span": [
+"2024",
+"2025"
+],
+"t": "2025",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L25": {
+"how": "명시",
+"t": "2007",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L35": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
 },
 "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L173": {
 "how": "명시",

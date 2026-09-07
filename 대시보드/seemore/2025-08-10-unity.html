@@ -1,0 +1,243 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>유니티가 요금제·광고 알고리즘 악수로 무너졌다가 광고 정상화와 디지털 트윈 사업으로 되살아나는 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>유니티가 요금제·광고 알고리즘 악수로 무너졌다가 광고 정상화와 디지털 트윈 사업으로 되살아나는 경위</h1><div class="pmeta">2025-08-10 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/kqB9fK5ITT4">https://youtu.be/kqB9fK5ITT4</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2025-08-10-unity.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2025-08-10-unity.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">개발자를 벌게 해 주자던 회사가 개발자에게 걷다가 무너졌고, 갈아탈 곳이 없어서 살아났다</div><p>피지컬 AI 3부작의 마지막 편이다. 앞의 두 편이 자리를 골랐다면 이 편은 그 자리에 선 회사 하나를 연혁부터 훑는다. 진행자는 작년만 해도 상장폐지를 걱정했던 회사라고 밝히며 시작한다. 이 글은 이 회사가 무너진 방식과 되돌아온 방식이 같은 사실 하나에 걸려 있다는 것을 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">게임을 팔려다 실패하고 도구를 팔아 자리를 잡았다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">상장이 요구한 분기 성적이 요금제를 바꿨다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">두 사고는 성격이 전혀 다르다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">매출을 셋으로 갈라 놓으면 회복과 성장이 다른 자리에 있다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">개발자가 돌아온 이유가 이 회사의 값이다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 게임을 팔려다 실패하고 도구를 팔아 자리를 잡았다</h2>
+<figure class="uc-fig"><p class="fig-title">자기 물건을 못 팔아 도구를 팔았다</p><svg class="epoch" viewBox="0 0 520 414" role="img" aria-label="유니티 연혁과 두 번의 사고, 그 뒤의 수습">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="72" y="20" text-anchor="middle" class="fig-hd">언제</text>
+  <text x="318" y="20" text-anchor="middle" class="fig-hd">무슨 일이 있었나</text>
+  <rect x="0" y="30" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="60.5" text-anchor="middle" class="fig-b">2004</text>
+  <rect x="160" y="30" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="60.5" text-anchor="middle" class="fig-b">덴마크에서 셋이 창업 · 게임은 실패</text>
+  <line x1="72" y1="81" x2="72" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="125.5" text-anchor="middle" class="fig-b">2007</text>
+  <rect x="160" y="95" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="125.5" text-anchor="middle" class="fig-b">아이폰이 나오며 엔진이 퍼진다</text>
+  <line x1="72" y1="146" x2="72" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="190.5" text-anchor="middle" class="fig-b">2012</text>
+  <rect x="160" y="160" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="190.5" text-anchor="middle" class="fig-b">모바일 게임 엔진 절반 이상을 쥔다</text>
+  <line x1="72" y1="211" x2="72" y2="223" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="225" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="255.5" text-anchor="middle" class="fig-b">2020</text>
+  <rect x="160" y="225" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="255.5" text-anchor="middle" class="fig-b">나스닥 상장 · 인수를 늘린다</text>
+  <line x1="72" y1="276" x2="72" y2="288" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="290" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="320.5" text-anchor="middle" class="fig-b">2022~2023</text>
+  <rect x="160" y="290" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="320.5" text-anchor="middle" class="fig-b">런타임 피와 광고 알고리즘 사고</text>
+  <line x1="72" y1="341" x2="72" y2="353" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="355" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="72" y="385.5" text-anchor="middle" class="fig-b">지금</text>
+  <rect x="160" y="355" width="316" height="49" rx="9" class="fig-box"/>
+  <text x="318" y="385.5" text-anchor="middle" class="fig-b">요금제와 알고리즘을 되돌렸다</text>
+</svg><figcaption>도구 회사의 값은 도구를 쓰는 사람이 늘 때 커지는데, 분기 실적은 지금 쓰는 사람에게 더 걷어도 커진다.</figcaption></figure>
+<p>유니티는 2004년 덴마크에서 게임을 개발하던 친구 셋이 만든 회사다. 게임을 만들어 출시했고 게임 자체는 괜찮았는데 돈을 버는 데 실패해 계속할 수 없게 됐다.</p>
+<p>여기서 방향을 바꾼다. 자기들 게임을 내는 대신, 그 게임을 만들 때 쓴 제작 소프트웨어를 개발자들에게 파는 회사가 되기로 한다. 내건 뜻이 누구나 쉽게 개발할 수 있게 하고 게임 개발자들이 돈을 벌게 해 주자는 것이었다.</p>
+<p>그다음은 시점이 도왔다. 이 소프트웨어가 애플 매킨토시 OS 기반이었는데 2007년 아이폰이 나오면서 유니티의 게임 엔진이 급격히 퍼졌고, 모바일 게임을 만드는 사람 대부분이 유니티를 쓰게 된다. 2012년에는 모바일 게임 개발 엔진 시장의 절반 이상을 차지한다.</p>
+<p>자리를 잡은 뒤에 넓힌다. 광고 서비스 업체를 사서 개발자가 자기 게임 안에 광고를 붙여 수익을 내게 해 주고, 3D 그래픽과 AR·VR에 개발 투자를 크게 해 2016년 포켓몬고의 증강 현실 기반이 유니티의 AR 개발 소프트웨어였다. 게임 밖으로도 나간다. 구글 딥마인드가 인공지능을 학습시킬 때 유니티 소프트웨어를 썼고, 자동차·건축·영화 분야의 실시간 시뮬레이션 솔루션 업체로 자리 잡는다.</p>
+<p>여기까지가 도구 회사의 전형적인 성장이다. 자기 물건을 파는 데 실패한 회사가 남들이 물건을 만드는 도구를 팔아 성공했고, 그 도구가 쓰이는 곳이 늘면서 게임 밖으로 번졌다. 지금 이 회사가 로봇 학습에 쓰이는 것도 이 줄기의 연장이다.</p>
+<h2 id="s2"><span class="num">2</span> 상장이 요구한 분기 성적이 요금제를 바꿨다</h2>
+<p>2020년 나스닥 상장으로 자금을 모아 회사를 여럿 인수한다. 게임 밖 산업의 경쟁력을 키우기 위해서다.</p>
+<p>진행자는 상장의 반대편을 짚는다. 자본을 끌어올 수 있어 좋지만, 주주에게 매출과 이익이 늘고 있다는 것을 분기마다 보여 줘야 한다. 그러면서 유니티가 악수를 둔다는 것이다.</p>
+<p>악수의 내용이 런타임 피다. 그전까지 개발자는 라이선스 요금을 내거나 월 정액을 내고 소프트웨어를 썼는데, 유니티가 새 요금제를 들여 자기 소프트웨어로 만든 게임이 내려받길 때마다 로열티를 추가로 물리기로 한 것이다.</p>
+<p>진행자의 정리가 날카롭다. 개발자들이 돈을 벌게 해 주자며 시작한 회사가 개발자에게서 뜯어낼 수 있는 것은 다 뜯어내자로 변했다는 것이다. 개발자들이 떠나기 시작한다.</p>
+<p>이 대목이 도구 회사의 오래된 함정이다. 도구를 파는 회사의 값은 그 도구를 쓰는 사람이 늘어야 커지는데, 분기 실적은 지금 쓰는 사람에게 더 걷어도 커진다. 두 방향이 짧게는 같아 보이고 길게는 반대다. 상장은 짧은 쪽의 압력을 매 분기 만들어 낸다.</p>
+<h2 id="s3"><span class="num">3</span> 두 사고는 성격이 전혀 다르다</h2>
+<p>같은 시기에 문제가 하나 더 생긴다. 광고주는 자기 상품이 잘 먹힐 대상에게 광고가 닿기를 바라는데, 유니티의 광고 알고리즘이 도움이 안 되는 유저를 좋은 유저로 잘못 인식하고 그 상태로 계속 학습해 잘못된 방향으로 광고를 내보냈다. 2022년부터 2023년까지 1년 동안이다.</p>
+<p>결과가 소송이다. 광고주들로부터 1억 달러 이상의 손해 배상 소송을 당했고 그 금액을 전부 지출했다.</p>
+<p>이 둘을 갈라 볼 필요가 있다. 런타임 피는 회사가 고른 것이고 광고 알고리즘은 회사가 고장 난 것이다. 앞의 것은 판단을 되돌리면 되고, 뒤의 것은 기술을 고쳐야 하는 데다 고쳤다는 것을 광고주가 돈을 태워 확인해 줘야 끝난다.</p>
+<p>값에는 둘이 합쳐져 나타났다. 한때 200달러 가까이 갔던 주가가 13달러대까지 빠졌고, 진행자가 이 회사를 봤던 시점이 13~14달러였다.</p>
+<p>수습도 둘 다 한다. CEO 교체를 포함한 대규모 인력 구조 조정을 하고, 문제가 된 요금제를 개발자 친화적으로 다시 바꾸고, 광고 알고리즘도 크게 고쳐 2개월 전 유니티 벡터라는 이름으로 다시 내놓았다.</p>
+<h2 id="s4"><span class="num">4</span> 매출을 셋으로 갈라 놓으면 회복과 성장이 다른 자리에 있다</h2>
+<figure class="uc-fig"><p class="fig-title">주가를 올린 것은 광고이지 시뮬레이션이 아니다</p><svg class="epoch" viewBox="0 0 520 288" role="img" aria-label="유니티 사업 세 갈래의 상태와 크기">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="64.5" y="20" text-anchor="middle" class="fig-hd">갈래</text>
+  <text x="209.5" y="20" text-anchor="middle" class="fig-hd">지금 상태</text>
+  <text x="370" y="20" text-anchor="middle" class="fig-hd">크기</text>
+  <rect x="0" y="30" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="72" text-anchor="middle" class="fig-b">광고</text>
+  <rect x="145" y="30" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="209.5" y="60.5" text-anchor="middle" class="fig-b">알고리즘을 고쳐</text>
+  <text x="209.5" y="83.5" text-anchor="middle" class="fig-b">정상화 중</text>
+  <rect x="290" y="30" width="160" height="72" rx="9" class="fig-agent"/>
+  <text x="370" y="72" text-anchor="middle" class="fig-b">매출의 65% 이상</text>
+  <rect x="0" y="118" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="160" text-anchor="middle" class="fig-b">게임 개발 도구</text>
+  <rect x="145" y="118" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="209.5" y="148.5" text-anchor="middle" class="fig-b">이전 수준을</text>
+  <text x="209.5" y="171.5" text-anchor="middle" class="fig-b">거의 회복</text>
+  <rect x="290" y="118" width="160" height="72" rx="9" class="fig-agent"/>
+  <text x="370" y="160" text-anchor="middle" class="fig-b">—</text>
+  <rect x="0" y="206" width="129" height="72" rx="9" class="fig-stage"/>
+  <text x="64.5" y="236.5" text-anchor="middle" class="fig-b">비게임</text>
+  <text x="64.5" y="259.5" text-anchor="middle" class="fig-b">시뮬레이션</text>
+  <rect x="145" y="206" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="209.5" y="236.5" text-anchor="middle" class="fig-b">진행자가</text>
+  <text x="209.5" y="259.5" text-anchor="middle" class="fig-b">주목하는 자리</text>
+  <rect x="290" y="206" width="160" height="72" rx="9" class="fig-agent"/>
+  <text x="370" y="248" text-anchor="middle" class="fig-b">작년 55% 성장</text>
+</svg><figcaption>아래층은 원래 있던 매출이 제자리로 오는 것이고, 위층은 아직 크기를 모른다.</figcaption></figure>
+<p>사업은 크게 크리에이트 솔루션과 그로우 솔루션으로 나뉜다. 게임을 개발할 때 쓰는 소프트웨어를 팔고, 그 게임 위에 광고를 붙여 추가 수익을 낸다.</p>
+<p>게임 개발 도구는 이전 수준을 거의 회복했다. 광고는 유니티 매출의 65% 이상을 담당하는데, 알고리즘을 고친 뒤 광고 수익이 어느 정도 정상으로 돌아오고 있다. 여기에 최근 이스라엘 광고 회사 아이언소스를 인수해 고객이 게임 개발자에서 게임을 배포하는 퍼블리셔까지 넓어졌고, 그러면서 앱러빈과 게임 광고 시장에서 겨루는 상황이 됐다.</p>
+<p>진행자가 주목하는 것은 세 번째다. 지난 편에서 본 디지털 트윈과 디지털 시뮬레이션이 전부 비게임 부분의 크리에이트 솔루션에 든다. 이 부분이 최근 급성장해 작년에 전년 대비 매출이 55% 늘었고, 디지털 트윈·시뮬레이션 매출은 전년 대비 50% 이상 성장하고 있다고 본다.</p>
+<p>세 갈래를 나란히 놓으면 지금 이 회사에서 벌어지는 일이 보인다. 주가를 끌어올리고 있는 것은 광고의 정상화이지 시뮬레이션이 아니다. 진행자도 최근 주가가 바닥에서 올라온 것이 광고 정상화 덕이고, 월가도 광고 사업의 성장성을 보며 목표가를 올리고 있다고 말한다.</p>
+<p>그래서 이 종목의 셈이 두 층으로 갈린다. 아래층은 원래 있던 광고 매출이 제자리로 돌아오는 것이고, 위층은 시뮬레이션이 큰 사업이 되는 것이다. 아래층은 이미 값에 반영되는 중이고 위층은 아직 크기를 모른다.</p>
+<h2 id="s5"><span class="num">5</span> 개발자가 돌아온 이유가 이 회사의 값이다</h2>
+<p>떠났던 개발자들이 왜 돌아왔는지가 이 편에서 가장 중요한 문장이다. 모바일 게임 시장에서 유니티를 대신할 경쟁자가 많지 않아, 요금제에 불만을 품고 떠난 개발자들이 대안을 찾지 못했고 유니티가 요금제를 되돌리자 쉽게 돌아왔다.</p>
+<p>이것이 이 회사의 성격을 그대로 말해 준다. 유니티는 잘해서 돌아온 회사가 아니라 갈아탈 곳이 없어서 돌아온 회사다. 값이 어디서 나오는지도 여기서 정해진다. 게임 엔진의 값은 만듦새가 아니라 이미 그 엔진으로 만들어 놓은 프로젝트와 그것을 다룰 줄 아는 사람에게 붙어 있다. 개발자가 다른 엔진으로 옮기려면 만들던 것을 다시 만들어야 한다.</p>
+<p>같은 구조가 반대로도 작동한다. 옮기기 어려우니 회사가 요금을 올려도 당장은 버틴다. 그래서 런타임 피 같은 판단이 나올 수 있었고, 앞으로 또 나오지 않으리라는 보장도 이 구조 안에는 없다. 진행자가 짚은 것은 회사가 뉘우쳤다는 것이지 다시 그럴 수 없게 됐다는 것이 아니다.</p>
+<p>시뮬레이션 사업이 여기에 얹힌다. 로봇을 학습시키려는 회사가 유니티를 고르는 이유도 결국 그 안에서 만들어 둔 것을 다시 쓰기 때문이다. 게임에서 굳은 잠금이 공장과 창고로 옮겨 가는지가 이 회사의 다음 몇 년을 정한다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 판단이 바뀌나</h2>
+<p>빠진 것 ① 시뮬레이션 매출의 절대 규모가 끝내 안 나온다. 55%와 50% 이상이라는 성장률만 있고 분모가 없다. 광고가 매출의 65% 이상이라는 사실과 겹쳐 보면, 신성장 사업이 회사 전체 숫자를 움직이기까지 몇 년이 걸리는지 이 편에서는 잴 수 없다.</p>
+<p>빠진 것 ② 앱러빈과의 경쟁이 어떻게 될지가 안 다뤄진다. 아이언소스 인수로 퍼블리셔까지 광고주를 넓혔다는 사실만 있고, 이탈한 고객을 되찾을 수 있는지는 말하지 않는다.</p>
+<p>빠진 것 ③ 엔비디아와의 관계가 이 편에서 다시 안 나온다. 지난 편에서 시뮬레이션 시장을 둘이 하고 있다고 했는데, 유니티만 놓고 보는 이 편에서는 그 둘의 겨룸이 빠져 있다.</p>
+<p>무엇이 나오면 바뀌나 ① 광고 매출이 사고 이전 수준을 완전히 회복하고 나면 아래층의 회복이 끝난다. 그때부터 주가는 시뮬레이션의 크기로만 움직이고, 그 크기가 작으면 값이 다시 매겨진다.</p>
+<p>무엇이 나오면 바뀌나 ② 게임 엔진에서 갈아탈 만한 대안이 생기면 이 회사의 바닥이 사라진다. 유니티가 요금제 사고를 견딘 이유가 대안 없음 하나였기 때문이다.</p>
+<p>무엇이 나오면 바뀌나 ③ 진행자가 잡은 주가 라인이 깨지는 경우다. 26달러가 오래 지지선이었다가 작년 3월에 깨지면서 저항으로 바뀌었고 최근 그 저항을 뚫고 올라와 다음 저항인 40달러를 시험하는 중인데, 진행자는 이미 살 만큼 샀고 새로 들어올 사람에게는 26달러를 손절가로 두라고 말한다. 26달러 아래로 다시 내려가면 이 편의 전제인 회복이 부정된다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2025-08-10-unity-strategy.md">insights/seemore/2025-08-10-unity-strategy.md</a></div></div></div>
