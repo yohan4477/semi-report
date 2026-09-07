@@ -1546,6 +1546,15 @@ svg.fig-n{display:none}
 /* 통계 그래프 — 넓은 판·좁은 판 갈래 없이 늘 보인다(2026-09-04, 휴대폰에서 fig-w 규칙에 숨었다) */
 svg.fig-s{display:block;width:100%;height:auto}
 figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
+/* 카카오 지도 — 「밖에서 온 판단」이 이름을 댄 곳. 타일은 회색으로 깔고(이 장의
+   도해는 색을 안 쓴다) 점의 채움만 우리 표의 지정 여부를 말한다 */
+.kmap{height:340px;border:1px solid var(--line);filter:grayscale(1) contrast(.92)}
+.kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3);filter:none}
+.kdot{display:block;width:11px;height:11px;border-radius:50%;
+  border:1.5px solid #111;background:#fff;box-shadow:0 0 0 2px #fff}
+.kdot.is-on{background:#111}
+.klbl{display:block;white-space:nowrap;font-size:11.5px;line-height:1.2;
+  padding:2px 5px;background:#fff;border:1px solid #bbb;color:#111}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}
 .grid{stroke:var(--line);stroke-width:1;fill:none}
@@ -2327,6 +2336,55 @@ def outside_map(e, W=360):
             'class="fig-s">%s</svg>' % (W, H, ''.join(o)))
 
 
+# 카카오 지도를 그대로 쓴다(2026-09-07 사용자 지시). 자리를 우리가 다시 그리면
+# 「어디쯤인가」만 남고 무엇을 끼고 있는 곳인지가 안 보인다 — 역·캠퍼스·길이 함께
+# 서야 해설의 말(삼성전자 캠퍼스를 낀 구축)이 화면에서 확인된다. 지도 SDK 는 웹
+# 앱 키를 쓰고 도메인 등록이 필요하다. 키는 저장소에 안 남기고 사용자 환경변수
+# KAKAO_JS_KEY 로 빌드 때 읽는다 — 없으면 좌표만 찍은 우리 그림으로 되돌아간다.
+KAKAO_JS_ENV = 'KAKAO_JS_KEY'
+
+
+def outside_kakao(e):
+    """해설이 이름을 댄 곳을 카카오 지도 위에 찍는다.
+
+    점의 채움은 우리 표(_zones.json)의 지정 여부다 — 해설의 주장이 아니다.
+    타일은 CSS 로 회색으로 깔고, 확대·축소는 막는다(페이지 스크롤을 잡아먹는다)."""
+    key = (os.environ.get(KAKAO_JS_ENV) or '').strip()
+    ps = e.get('places') or []
+    if not key or len(ps) < 2:
+        return ''
+    pts = [{'name': p['name'], 'lat': p['lat'], 'lon': p['lon'],
+            'hit': 1 if p.get('zone') == '규제' else 0} for p in ps]
+    # 속성 안에 든 json 이라 큰따옴표까지 바꿔야 한다(E 는 안 바꾼다) — 안 그러면
+    # 속성이 첫 따옴표에서 끊기고 이름들이 태그 밖으로 샌다
+    pts_attr = E(json.dumps(pts, ensure_ascii=False)).replace('"', '&quot;')
+    return ('<div class="kmap" id="kmap-%s" data-pts="%s"></div>'
+            % (E(e['id']), pts_attr))
+
+
+def outside_kakao_js():
+    """지도 하나를 세우는 스크립트. 절에 지도가 있을 때만 낸다."""
+    key = (os.environ.get(KAKAO_JS_ENV) or '').strip()
+    if not key:
+        return ''
+    return (
+        '<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=%s&autoload=false">'
+        '</script><script>(function(){'
+        'var els=document.querySelectorAll(".kmap");'
+        'if(!els.length||!window.kakao||!kakao.maps)return;'
+        'kakao.maps.load(function(){Array.prototype.forEach.call(els,function(el){'
+        'var pts=JSON.parse(el.getAttribute("data-pts"));'
+        'var map=new kakao.maps.Map(el,{center:new kakao.maps.LatLng(pts[0].lat,pts[0].lon),'
+        'level:6});map.setZoomable(false);'
+        'var b=new kakao.maps.LatLngBounds();'
+        'pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);'
+        'new kakao.maps.CustomOverlay({map:map,position:ll,zIndex:2,'
+        'content:\'<span class="kdot\'+(p.hit?" is-on":"")+\'"></span>\'});'
+        'new kakao.maps.CustomOverlay({map:map,position:ll,yAnchor:2.0,zIndex:3,'
+        'content:\'<span class="klbl">\'+p.name+\'</span>\'});});'
+        'map.setBounds(b,46,46,46,46);});});})();</script>' % E(key))
+
+
 def outside_section(watches):
     """「밖에서 온 판단」 절. 해설 하나를 원문 그대로 옮기고 어긋남을 붙인다."""
     items = _outside_items()
@@ -2341,11 +2399,12 @@ def outside_section(watches):
                  % (E(e['who']), E(e['when']), E(e['url'])))
         h.append('<p class="row-what">%s</p>' % E(e['title']))
         h.append('<p class="band-s">%s</p>' % E(e['lede']))
-        fig = outside_map(e)
+        fig = outside_kakao(e) or outside_map(e)
         if fig:
-            h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도에서 '
-                     '받은 좌표이고, 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 '
-                     '아닙니다.</figcaption></figure>'
+            h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
+                     '점의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
+                     '채운 점은 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
+                     '걸린 곳입니다.</figcaption></figure>'
                      % (fig, E(e.get('clash_as_of', ''))))
         h.append('<div class="rows">')
         for what, why in e['points']:
@@ -2361,6 +2420,8 @@ def outside_section(watches):
                  '그 아래로 갈린 구는 사람이 고시를 열어 확인합니다.</p>'
                  % E(e.get('clash_as_of', '')))
     h.append('</div>')
+    if 'class="kmap"' in ''.join(h):
+        h.append(outside_kakao_js())
     return ''.join(h)
 
 
