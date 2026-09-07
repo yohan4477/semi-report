@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "44291f801218a95b5bf103b54abba869b6e46a43",
-"lines": 4240
+"index_fingerprint": "10c64039902af8047eef1dc39299da024864de46",
+"lines": 4255
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9432,6 +9432,97 @@
 "how": "명시",
 "t": "2011",
 "tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md#L33": {
+"how": "명시",
+"span": [
+"2000",
+"2010"
+],
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-12-pharma-dist-wholesaler.md#L23": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-19-mckesson.md#L22": {
+"how": "명시",
+"t": "1950",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-19-mckesson.md#L26": {
+"how": "명시",
+"t": "1990",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-19-mckesson.md#L41": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md#L31": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md#L33": {
+"how": "명시",
+"span": [
+"2000",
+"2018"
+],
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-11-02-pbm-big3.md#L40": {
+"how": "계산",
+"t": "2026",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L173": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md#L97": {
+"how": "명시",
+"t": "1990",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-10-05-pharma-dist-nash.md#L78": {
+"how": "명시",
+"span": [
+"2000",
+"2010"
+],
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md#L25": {
+"how": "명시",
+"span": [
+"2020",
+"2021"
+],
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-10-19-mckesson.md#L28": {
+"how": "명시",
+"t": "1950",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-10-26-cvs-walgreens.md#L109": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-11-02-pbm-big3.md#L122": {
+"how": "계산",
+"t": "2026",
+"tense": "전망"
 },
 "content/understanding/피지컬AI/Physical AI의 정의.md#L11": {
 "how": "명시",
