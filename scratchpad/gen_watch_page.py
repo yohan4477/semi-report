@@ -2599,55 +2599,83 @@ OUTSIDE_FIGS = {
 }
 
 
+def outside_slug(e):
+    """편 하나가 갈 파일 이름. 날짜만 쓴다 — 제목이 길고 조사가 섞여 슬러그가 안 선다."""
+    return '컨텐츠 %s' % e['id'].replace('flap-', '')
+
+
 def outside_section(watches):
-    """「밖에서 온 판단」 절. 해설 하나를 원문 그대로 옮기고 어긋남을 붙인다."""
+    """「컨텐츠」 탭 — 이름 목록만 낸다. 본문은 편마다 다른 페이지다.
+
+    2026-09-07 사용자 지시 「이름을 목록으로 보여주고 클릭하면 다른 페이지에서」.
+    한 편이 요지 열 줄에 어긋남 다섯, 지도와 도해까지 달아 절이 화면 열 개를 넘겼다 —
+    고르는 자리와 읽는 자리를 나눈다."""
     items = _outside_items()
     if not items:
         return ''
     h = ['<div class="band" id="outside"><p class="band-t">컨텐츠</p>',
-         '<p class="band-s">값이 답을 안 내는 물음 — 가진 돈이 1억 5천일 때 무엇을 하나 — '
-         '에 밖의 해설자가 낸 답입니다. 옮겨 놓는 것이 동의는 아닙니다. 말을 그대로 옮기고, '
-         '우리 표와 어긋나는 자리를 바로 밑에 답니다. 지도의 번호를 누르면 그 자리로 '
-         '확대합니다.</p>']
+         '<p class="band-s">값이 답을 안 내는 물음에 밖의 해설자가 낸 답입니다. '
+         '옮겨 놓는 것이 동의는 아닙니다 — 편마다 우리 표와 어긋나는 자리를 함께 답니다. '
+         '제목을 누르면 그 편이 열립니다.</p>', '<div class="rows">']
     for e in items:
-        h.append('<p class="lbl">%s · %s · <a href="%s" rel="noopener">원문 보기 →</a></p>'
-                 % (E(e['who']), E(e['when']), E(e['url'])))
-        h.append('<p class="row-what">%s</p>' % E(e['title']))
-        h.append('<p class="band-s">%s</p>' % E(e['lede']))
-        # 카카오 지도가 뜨면 그것을 보이고, 못 뜨면(도메인 미등록·차단·오프라인)
-        # 좌표만 찍은 우리 그림을 대신 보인다 — 빈 회색 상자를 내지 않는다
-        kmap = outside_kakao(e)
-        svg = outside_map(e)
-        if kmap:
-            fig = kmap + ('<div class="kmap-alt" hidden>%s</div>' % svg)
-        else:
-            fig = svg
-        if fig:
-            h.append('<figure class="fig-out">%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
-                     '번호의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
-                     '채운 번호는 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
-                     '걸린 곳입니다.</figcaption></figure>'
-                     % (fig, E(e.get('clash_as_of', ''))))
-        for build, cap in OUTSIDE_FIGS.get(e['id'], ()):
-            h.append('<figure class="fig-out">%s<figcaption>%s</figcaption></figure>'
-                     % (build(), cap))
-        h.append('<div class="rows">')
-        for what, why in e['points']:
-            h.append('<div class="row"><span class="row-where">해설</span>'
-                     '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
-                     % (E(what), E(why)))
-        for what, why in e['clash']:
-            h.append('<div class="row"><span class="row-where">%s우리 표</span>'
-                     '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
-                     % (tag('걸림'), E(what), E(why)))
-        h.append('</div>')
-        h.append('<p class="lbl">우리 표와 견준 날 %s. 지정 현황은 시군구 단위로 받습니다 — '
-                 '그 아래로 갈린 구는 사람이 고시를 열어 확인합니다.</p>'
-                 % E(e.get('clash_as_of', '')))
+        h.append('<div class="row"><span class="row-where">%s</span>'
+                 '<span class="row-what"><a href="watch/%s.html">%s</a></span>'
+                 '<span class="row-why">%s</span></div>'
+                 % (E(e['when']), E(outside_slug(e)), E(e['title']), E(e['lede'])))
     h.append('</div>')
-    if 'class="kmap"' in ''.join(h):
-        h.append(outside_kakao_js())
+    h.append('<p class="lbl">%s · 자막 전문을 기반으로 옮겼습니다</p>'
+             % E(' · '.join(sorted({e['who'] for e in items}))))
+    h.append('</div>')
     return ''.join(h)
+
+
+def outside_page(e):
+    """편 하나의 페이지 — 대시보드/watch/컨텐츠 <날짜>.html.
+
+    돌아가는 링크에 앵커(#outside)를 붙인다. 이유는 detail_page() 와 같다."""
+    rows = []
+    for what, why in e['points']:
+        rows.append('<div class="row"><span class="row-where">해설</span>'
+                    '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
+                    % (E(what), E(why)))
+    for what, why in e['clash']:
+        rows.append('<div class="row"><span class="row-where">%s우리 표</span>'
+                    '<span class="row-what">%s</span><span class="row-why">%s</span></div>'
+                    % (tag('걸림'), E(what), E(why)))
+    figs = []
+    kmap = outside_kakao(e)
+    if kmap:
+        figs.append('<figure class="fig-out">%s<figcaption>해설이 이름을 댄 곳입니다. '
+                    '자리는 카카오 지도이고, 번호의 채움은 우리 표(%s)의 지정 여부입니다 — '
+                    '해설의 주장이 아닙니다. 번호를 누르면 그 자리로 확대합니다.'
+                    '</figcaption></figure>' % (kmap, E(e.get('clash_as_of', ''))))
+    else:
+        svg = outside_map(e)
+        if svg:
+            figs.append('<figure class="fig-out">%s<figcaption>해설이 이름을 댄 곳입니다. '
+                        '채움은 우리 표의 지정 여부입니다.</figcaption></figure>' % svg)
+    for build, cap in OUTSIDE_FIGS.get(e['id'], ()):
+        figs.append('<figure class="fig-out">%s<figcaption>%s</figcaption></figure>'
+                    % (build(), cap))
+    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>%s — 포트폴리오 워치</title>%s<style>%s</style></head><body>'
+            '<div class="wrap"><a class="back" href="../포트폴리오 워치.html#outside">'
+            '← 컨텐츠 목록</a>'
+            '<header><p class="meta mono">%s · %s · <a href="%s" rel="noopener">원문 보기 →</a></p>'
+            '<h1>%s</h1><p class="verdict">%s</p></header>'
+            '<div class="dbody">%s<div class="rows">%s</div>'
+            '<p class="lbl">우리 표와 견준 날 %s. 지정 현황은 시군구 단위로 받습니다 — '
+            '그 아래로 갈린 구는 사람이 고시를 열어 확인합니다.</p></div>'
+            '<p><a class="back" href="../포트폴리오 워치.html#outside">← 컨텐츠 목록</a></p>'
+            '<footer>밖의 해설을 자막 전문에서 옮긴 화면입니다. 옮겨 놓는 것이 동의는 '
+            '아니고, 우리 표와 어긋나는 자리를 같이 답니다.</footer>'
+            '<!-- 이 화면은 scratchpad/gen_watch_page.py 가 만든다. 원문 요지는'
+            ' insights/watch/_outside.json -->%s'
+            '</div></body></html>'
+            % (E(e['title']), FONTS, CSS, E(e['who']), E(e['when']), E(e['url']),
+               E(e['title']), E(e['lede']), ''.join(figs), ''.join(rows),
+               E(e.get('clash_as_of', '')), outside_kakao_js()))
 
 
 def _sub_now_row(it, today):
@@ -4141,6 +4169,25 @@ def check_ui(html, watches):
         assert not bad, '규약 위반: 도해 배치 — %s' % ' · '.join(bad)
 
 
+def check_outside_ui(items):
+    """컨텐츠 편 페이지의 규약. 본 장이 목록만 내는 대신 여기가 본문을 진다."""
+    sys.path.insert(0, HERE)
+    import check_fig
+    for e in items:
+        path = os.path.join(WATCH_DIR, outside_slug(e) + '.html')
+        assert os.path.exists(path), '규약 위반: 컨텐츠 편 파일이 없다 — %s' % e['id']
+        html = io.open(path, encoding='utf-8').read()
+        for m in re.finditer(r'<svg[^>]*>.*?</svg>', html, re.S):
+            bad = check_fig.hits(m.group(0))
+            assert not bad, '규약 위반(%s): 도해 배치 — %s' % (e['id'], ' · '.join(bad))
+        # 옮긴 말만 두고 어긋남을 안 달면 이 절의 규약이 깨진다 — 옮기는 것이 동의는 아니다
+        assert e['clash'], '규약 위반(%s): 어긋나는 자리가 없다' % e['id']
+        assert '걸림' in html, '규약 위반(%s): 어긋남 표시가 화면에 없다' % e['id']
+        assert '원문 보기' in html, '규약 위반(%s): 원문 링크가 없다' % e['id']
+        for term in _JARGON:
+            assert term not in html, '규약 위반(%s): 은어 "%s" 가 남아 있다' % (e['id'], term)
+
+
 def check_detail_ui(watches):
     """줄 상세 페이지의 규약. 본 장에서 걷어낸 검사(도해 배치·은어·조건 UI 자국)를
     상세 파일 전부로 돌린다 — 옮겼다고 검사까지 놓치면 안 된다.
@@ -4273,7 +4320,7 @@ def build():
         blk.append('</div>')
         h.append(''.join(blk))
 
-    # 컨텐츠 탭 — 해설 한 편이 상자 하나다. 값 쪽 두 탭과 섞이지 않게 따로 선다
+    # 컨텐츠 탭 — 이름 목록만. 본문은 watch/컨텐츠 <날짜>.html 이다
     h.append('<div class="sido-block" data-sido="%s" hidden>%s</div>'
              % (OUTSIDE_TAB, outside_section(ws)))
 
@@ -4311,8 +4358,10 @@ def build():
     # 줄 이름을 바꾸거나 지운 뒤에도 옛 슬러그 파일이 그대로 남으면 아무도 안 가리키는
     # 페이지가 site/ 로도 같이 나간다.
     os.makedirs(WATCH_DIR, exist_ok=True)
+    outs = _outside_items()
     expected = (set(w['slug'] + '.html' for w in ws)
-               | {'제도.html', '청약 공고.html', '정비사업 현황.html', '청약 통계.html', '청약 위치.html'})
+               | {'제도.html', '청약 공고.html', '정비사업 현황.html', '청약 통계.html', '청약 위치.html'}
+               | set(outside_slug(e) + '.html' for e in outs))
     for f in os.listdir(WATCH_DIR):
         if f.endswith('.html') and f not in expected:
             os.remove(os.path.join(WATCH_DIR, f))
@@ -4330,10 +4379,15 @@ def build():
         f.write(subscription_stats_page(ws))
     with io.open(os.path.join(WATCH_DIR, '청약 위치.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(subscription_place_page(ws))
+    for e in outs:
+        with io.open(os.path.join(WATCH_DIR, outside_slug(e) + '.html'), 'w',
+                     encoding='utf-8', newline='\n') as f:
+            f.write(outside_page(e))
     check_detail_ui(ws)
+    check_outside_ui(outs)
 
     print('OK: 줄 %d개 -> %s' % (len(ws), OUT))
-    print('OK: 상세 %d장 -> %s' % (len(ws) + 2, WATCH_DIR))
+    print('OK: 상세 %d장 · 컨텐츠 %d편 -> %s' % (len(ws) + 5, len(outs), WATCH_DIR))
     return html
 
 
