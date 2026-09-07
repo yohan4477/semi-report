@@ -27,7 +27,7 @@ description: 제3자 해설(유튜브 자막·네이버 프리미엄 텍스트) 
 | 몸·질병·수면·대사 | `대시보드/건강 대시보드.html` | **`health-insight` 스킬로 간다** — 카드 단위가 영상이 아니라 주제다 |
 
 생성기를 새로 만들거나 고칠 때는 `scratchpad/dash_common.py` 머리의 UI 규약을 먼저 읽는다.
-첫 화면은 어느 장이든 섹션 타일이고, 조립은 `render()`만 거친다.
+첫 화면은 어느 장이든 최신순 이름 목록(줄에 태그)이고, 조립은 `render()`만 거친다.
 새 대시보드를 만들면 `scripts/build_all.py`의 `BUILD` 목록에 반드시 넣는다.
 
 기본 CSS 원본은 `scripts/dash_base_css.html`이다. 예전에는 언더스탠딩 대시보드 HTML의 `<style>`을

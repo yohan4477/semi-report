@@ -579,6 +579,33 @@
             --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 
+  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 8px}
+  .tagnav button{font:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--line);
+   border-radius:16px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+  .tagnav button:hover{background:var(--sunk)}
+  .tagnav button .cnt{color:var(--ink-3);margin-left:5px;font-size:11.5px}
+  .tagnav button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tagnav button[aria-pressed="true"] .cnt{color:var(--ink-3)}
+  .tagnav.many{max-height:76px;overflow:hidden}
+  .tagnav.many.open{max-height:none}
+  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;border:0;
+   padding:2px 0;margin:0 0 8px;cursor:pointer}
+  .layers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 10px}
+  .layers a{font-size:12.5px;color:var(--accent-ink);text-decoration:none}
+  .layers a:hover{text-decoration:underline}
+  .rq{display:block;width:100%;max-width:340px;font:inherit;font-size:13px;padding:7px 11px;
+   border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin:0 0 10px}
+  .rn{font-size:12px;color:var(--ink-3);margin:0 0 4px}
+  .rows{border-top:1px solid var(--line);margin:6px 0 26px}
+  .rows .row{display:block;padding:14px 4px;border-bottom:1px solid var(--line);
+   text-decoration:none;color:inherit}
+  .rows a.row:hover{background:var(--sunk)}
+  .rows .rtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;
+   background:var(--sunk);color:var(--ink-2)}
+  .rows .rmeta{font-size:12px;color:var(--ink-3);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .rows .rtitle{font-size:15.5px;font-weight:650;line-height:1.55;margin:4px 0 0}
+  .rows .rone{font-size:13px;color:var(--ink-2);line-height:1.7;margin:5px 0 0}
+
   .intro { margin:0 0 22px; border:1px solid var(--line); border-radius:10px;
     background:var(--sunk); padding:0 16px; }
   .intro > summary { list-style:none; cursor:pointer; padding:13px 0; display:flex;
@@ -864,14 +891,10 @@
       if(allp) allp.click();
     }
     if(sec && sec.hidden){
-      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
-      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
-      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
-      if(tile) tile.click();
-      else {
-        var all=document.querySelector('.stile.is-all');
-        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
-      }
+      // 첫 화면이 목록이라 본문 섹션은 접혀 있다. 지목받은 섹션만 편다 —
+      // 목록은 위에 그대로 있고, 편 섹션이 그 아래 선다.
+      sec.hidden=false;
+      sec.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){ l.hidden=false; });
     }
     setTimeout(function(){
       if(card && !card.classList.contains('is-open')){

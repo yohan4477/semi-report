@@ -4,13 +4,15 @@
 # 기본 CSS는 언더스탠딩 대시보드의 <style>을 통째로 물려받는다(모든 페이지가 한 벌로 보이게).
 #
 # ── UI 규약 (새 대시보드·새 섹션을 만들 때도 그대로) ──────────────────────────
-# 1. 페이지를 열면 **첫 화면은 섹션 타일**이다. 그 앞에 무엇을 읽을지 고르는 관문 버튼을
-#    두지 않는다. 2026-08-17에 부동산만 관문을 하나 더 뒀다가 대시보드마다 첫 화면이
-#    달라졌다. 성격이 다른 글(통합 인사이트)도 관문이 아니라 **타일 하나**로 넣는다.
-# 2. 화면은 둘뿐이다 — 주제를 고르는 화면, 그 주제의 카드를 읽는 화면.
-# 3. 되돌아가는 길은 「← 이전」 하나. 주제를 고른 뒤에만 나온다.
-# 4. 카드가 없는 섹션은 <section data-fixed="1">로 표시한다. NAV_JS가 .ucard 대신
-#    .ins로 세고, 국내·해외 범위 필터를 타지 않는다.
+# 1. 페이지를 열면 **첫 화면은 최신순 이름 목록**이다(2026-09-08, 씨모어 장에서 온 꼴).
+#    줄마다 태그(그 카드의 섹션)가 붙고, 목록 위 태그 줄이 그 태그로 줄을 거른다 —
+#    거르는 것이지 순서를 바꾸는 것이 아니다. 그 앞에 관문 버튼도 타일도 두지 않는다.
+#    섹션 타일은 걷었다: 주제를 먼저 고르게 해서 「무엇이 새로 들어왔나」를 보려면
+#    타일을 하나씩 눌러 봐야 했다. 쌓이는 장에서 먼저 궁금한 것은 주제가 아니라 새 글이다.
+# 2. 고르는 계층은 태그 줄 하나다. 줄을 누르면 그 카드만 있는 페이지로 간다(page_slug).
+# 3. 본문 섹션은 문서에 그대로 있되 접혀 있다 — 앵커(#card-…)로 지목받을 때만 펴진다.
+# 4. 카드가 없는 섹션은 <section data-fixed="1">로 표시한다. 날짜가 없어 최신순 목록에
+#    자리가 없으므로 목록 위 링크 줄(.layers)로 선다.
 # 5. 조립은 반드시 render()를 거친다. render()가 check_ui()로 위 규약을 검사하고
 #    어기면 파일을 쓰지 않는다. 페이지마다 손으로 조립하지 않는다.
 # 새 대시보드는 gen_realestate_dashboard.py를 본떠 CARDS와 HEADER만 갈아 끼운다.
@@ -115,6 +117,9 @@ def css():
         # FIG_CSS는 규칙만 담은 조각이라 태그를 다시 닫아 준다. 안 닫으면 문서 나머지가
         # 통째로 스타일로 먹혀 본문이 빈 페이지가 나간다.
         out = out.replace('</style>', FIG_CSS + '</style>')
+    # 최신순 목록 규칙. 첫 화면이 이것뿐이라 물려받은 CSS에는 없다
+    if '.tagnav{' not in out:
+        out = out.replace('</style>', FLAT_CSS + '</style>')
     # .xlink는 언더스탠딩 대시보드 CSS에 있다 — 페이지끼리 오가는 링크가 같은 모양이어야 한다
     assert '.xlink{' in out, '언더스탠딩 대시보드 CSS에 .xlink 규칙이 없다'
     return out
@@ -217,14 +222,10 @@ LINK_JS = """<script>
       if(allp) allp.click();
     }
     if(sec && sec.hidden){
-      // 섹션 타일을 눌러 그 섹션만 편다. 카드를 지목한 주소도 제 섹션 안에서 열린다.
-      // 타일이 없는 섹션(묶음 밖)만 「전체 보기」로 푼다.
-      var tile=document.querySelector('.sec-pick button[data-sec="'+sec.id+'"]');
-      if(tile) tile.click();
-      else {
-        var all=document.querySelector('.stile.is-all');
-        if(all) all.click();   // NAV_JS가 화면을 맨 위로 올린다
-      }
+      // 첫 화면이 목록이라 본문 섹션은 접혀 있다. 지목받은 섹션만 편다 —
+      // 목록은 위에 그대로 있고, 편 섹션이 그 아래 선다.
+      sec.hidden=false;
+      sec.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){ l.hidden=false; });
     }
     setTimeout(function(){
       if(card && !card.classList.contains('is-open')){
@@ -1051,6 +1052,167 @@ def _write_card_pages(cards, title, footer, out, page_slug, page_css):
     return n
 
 
+# ── 최신순 목록 ────────────────────────────────────────────────────────────
+# 첫 화면은 최신순 이름 목록이다. 섹션은 화면을 나누는 칸이 아니라 줄에 붙는 태그이고,
+# 위 태그 줄은 그 태그로 줄을 거르는 장치다 — 순서를 바꾸지 않는다(씨모어 장에서 온 꼴).
+# 2026-09-08 에 섹션 타일을 걷었다. 타일은 주제를 먼저 고르게 해서, 새로 올라온 글이
+# 무엇인지 보려면 타일을 하나씩 눌러 봐야 했다. 쌓이는 장에서 먼저 궁금한 것은 주제가
+# 아니라 「무엇이 새로 들어왔나」다.
+FLAT_CSS = '''
+  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 8px}
+  .tagnav button{font:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--line);
+   border-radius:16px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+  .tagnav button:hover{background:var(--sunk)}
+  .tagnav button .cnt{color:var(--ink-3);margin-left:5px;font-size:11.5px}
+  .tagnav button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tagnav button[aria-pressed="true"] .cnt{color:var(--ink-3)}
+  .tagnav.many{max-height:76px;overflow:hidden}
+  .tagnav.many.open{max-height:none}
+  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;border:0;
+   padding:2px 0;margin:0 0 8px;cursor:pointer}
+  .layers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 10px}
+  .layers a{font-size:12.5px;color:var(--accent-ink);text-decoration:none}
+  .layers a:hover{text-decoration:underline}
+  .rq{display:block;width:100%;max-width:340px;font:inherit;font-size:13px;padding:7px 11px;
+   border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin:0 0 10px}
+  .rn{font-size:12px;color:var(--ink-3);margin:0 0 4px}
+  .rows{border-top:1px solid var(--line);margin:6px 0 26px}
+  .rows .row{display:block;padding:14px 4px;border-bottom:1px solid var(--line);
+   text-decoration:none;color:inherit}
+  .rows a.row:hover{background:var(--sunk)}
+  .rows .rtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;
+   background:var(--sunk);color:var(--ink-2)}
+  .rows .rmeta{font-size:12px;color:var(--ink-3);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .rows .rtitle{font-size:15.5px;font-weight:650;line-height:1.55;margin:4px 0 0}
+  .rows .rone{font-size:13px;color:var(--ink-2);line-height:1.7;margin:5px 0 0}
+'''
+
+
+def _plain(html, limit=110):
+    """줄 아래 한 줄 설명 — 카드에서 가져오되 태그를 걷고 길면 끊는다"""
+    t = re.sub(r'<[^>]+>', '', html or '').replace('&nbsp;', ' ')
+    t = re.sub(r'\s+', ' ', t).strip()
+    return snip(t, limit) if t else ''
+
+
+def flat_rows(cards, page_slug):
+    """카드를 최신순 한 줄씩 세운다. 태그는 그 카드의 섹션 이름이다.
+
+    page_slug 가 있으면 줄은 그 카드만 있는 페이지로 간다(씨모어와 같은 꼴). 없으면
+    같은 페이지 안 앵커로 간다 — LINK_JS 가 그 카드가 든 섹션을 펴고 데려간다.
+
+    c['also'] 로 다른 섹션에도 서는 카드도 줄은 하나다. 목록은 「무엇이 있나」를 세는
+    자리라 같은 글이 두 줄이면 편수가 부풀어 보인다."""
+    seen, rows = set(), []
+    ordered = sorted(cards, key=lambda c: upload_date(c) or '', reverse=True)
+    for c in ordered:
+        if c['title'] in seen:
+            continue
+        seen.add(c['title'])
+        sid, _num, stitle, _sub = c['section']
+        date = upload_date(c) or ''
+        one = _plain(c.get('gain') or c.get('verdict') or c.get('oneliner') or '')
+        href = ('%s/%s.html' % (page_slug, slug(c['title']))) if page_slug else ('#' + anchor_of(c))
+        meta = [m for m in c.get('meta', []) if m != date][:1]
+        # 찾는 글자는 제목·태그·메타까지다. 한 줄 설명까지 넣으면 줄마다 본문 한 문단이
+        # 속성으로 한 번 더 실려 파일이 그만큼 커진다
+        q = _plain('%s %s %s' % (c['title'], stitle, ' '.join(c.get('meta', []))), 200).lower()
+        rows.append('<a class="row" href="%s" data-sec="%s"%s data-q="%s">'
+                    '<span class="rtag">%s</span>'
+                    '<div class="rtitle">%s</div>%s'
+                    '<div class="rmeta"><span>%s</span>%s</div></a>'
+                    % (href, sid,
+                       (' data-scope="%s"' % c['scope']) if c.get('scope') else '',
+                       q.replace('"', ''),
+                       stitle, c['title'],
+                       ('<div class="rone">%s</div>' % one) if one else '',
+                       date or '언제 것 없음',
+                       ''.join('<span>%s</span>' % _plain(m, 40) for m in meta)))
+    return rows
+
+
+def flat_index(cards, secs, order, layers, page_slug, search_ph=''):
+    """태그 줄 + 최신순 목록. 첫 화면에 서는 것은 이 둘뿐이다.
+
+    layers = [(sid, 제목, 설명, 편수), …]. 카드가 없는 고정 층(통합 인사이트·밸류에이션
+    지도)은 목록에 섞지 않는다 — 날짜가 없어서 「최신순」 안에 자리가 없다. 목록 위에
+    링크 한 줄로 세우고, 누르면 그 층이 목록 아래에 펴진다."""
+    rows = flat_rows(cards, page_slug)
+    tags = ['<button data-sec="" aria-pressed="true">전체<span class="cnt">%d</span></button>'
+            % len(rows)]
+    for sid in order:
+        (_id, _num, stitle, _sub), cs = secs[sid]
+        n = len([1 for c, dup in cs if not dup])
+        tags.append('<button data-sec="%s" aria-pressed="false">%s<span class="cnt">%d</span></button>'
+                    % (sid, stitle, n))
+    lay = ''
+    if layers:
+        lay = ('<div class="layers">%s</div>'
+               % ''.join('<a href="#%s">%s</a>' % (l[0], l[1]) for l in layers))
+    search = ('<input type="search" class="rq" placeholder="%s" aria-label="찾기">'
+              % (search_ph or '제목이나 태그로 찾기'))
+    # 태그가 열둘을 넘으면 두 줄만 남기고 접는다. 회계사 장은 회사가 쉰 곳이라 태그 줄만
+    # 화면 한 판을 먹는다 — 태그는 거르는 도구지 그 자체가 첫 화면은 아니다.
+    more = ''
+    if len(tags) > 12:
+        more = '<button type="button" class="tagmore">태그 모두 보기</button>'
+    return ('%s%s<div class="tagnav%s">%s</div>%s<p class="rn"></p><div class="rows">%s</div>'
+            % (lay, search, ' many' if more else '', ''.join(tags), more, ''.join(rows)))
+
+
+FLAT_JS = '''<script>
+(function(){
+  var nav=document.querySelector('.tagnav'); if(!nav) return;
+  var rows=[].slice.call(document.querySelectorAll('.rows .row'));
+  var tabs=document.querySelector('.scope-tabs');
+  var input=document.querySelector('.rq'), cnt=document.querySelector('.rn');
+  var sec='', pick='all', q='';
+  function fits(r, ignoreSec){
+    return (ignoreSec || !sec || r.dataset.sec===sec)
+        && (pick==='all' || !r.dataset.scope || r.dataset.scope===pick)
+        && (!q || (r.dataset.q||'').indexOf(q)!==-1);
+  }
+  function apply(){
+    var n=0;
+    rows.forEach(function(r){ var ok=fits(r); r.hidden=!ok; if(ok) n++; });
+    if(cnt) cnt.textContent = n + '편';
+    nav.querySelectorAll('button').forEach(function(b){
+      var s=b.dataset.sec||'';
+      b.setAttribute('aria-pressed', String(s===sec));
+      var c=b.querySelector('.cnt');
+      if(c) c.textContent = rows.filter(function(r){
+        return (!s || r.dataset.sec===s) && fits(r, true);
+      }).length;
+      // 지금 거른 조건에서 한 편도 없는 태그는 줄에서 뺀다 — 눌러도 빈 화면이다
+      b.hidden = s!=='' && b.querySelector('.cnt').textContent==='0';
+    });
+    if(tabs) tabs.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.pick===pick));
+    });
+  }
+  nav.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    sec = b.dataset.sec||'';
+    apply();
+    window.scrollTo({top:0});
+  });
+  if(tabs) tabs.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    pick=b.dataset.pick; apply();
+  });
+  var more=document.querySelector('.tagmore');
+  if(more) more.addEventListener('click', function(){
+    var on=nav.classList.toggle('open');
+    more.textContent = on ? '태그 접기' : '태그 모두 보기';
+  });
+  if(input) input.addEventListener('input', function(){
+    q=(input.value||'').replace(/\s+/g,' ').trim().toLowerCase(); apply();
+  });
+  apply();
+})();
+</script>'''
+
+
 def render(cards, title, header, footer, out, rollup='', top='', extra_css='', tops=None,
            search_ph='',
            top_n=0, top_sub='', top_title='통합 인사이트', top_id='', intro='', sec_top=None,
@@ -1058,62 +1220,44 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
            sec_fig=None, newest_first=False,
            sw_labels=('밸류에이션', '개별 포스트'), page_slug='', pick_tabs=None,
            home=''):
-    """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 섹션 타일이다** — 그 앞에 관문
-    버튼을 두지 않는다. top(통합 인사이트)이 있으면 타일 하나가 더 서고, 나머지 주제와 똑같이
-    눌러서 열고 「← 이전」으로 돌아온다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
+    """대시보드 한 장을 조립한다. **첫 화면은 어느 페이지든 최신순 이름 목록이다** —
+    줄마다 태그(그 카드의 섹션)가 붙고, 위 태그 줄이 그 태그로 줄을 거른다. 섹션 타일은
+    2026-09-08 에 걷었다: 주제를 먼저 고르게 하는 화면이라 새로 들어온 글을 보려면 타일을
+    하나씩 눌러 봐야 했다. 새 대시보드를 만들 때도 이 함수를 통해서만 조립한다.
+
+    줄을 누르면 그 카드만 있는 페이지로 간다(page_slug). page_slug 가 없으면 같은 페이지
+    안 앵커로 가고 LINK_JS 가 그 섹션을 펴 준다. 섹션은 화면을 나누는 칸이 아니라 줄에
+    붙는 태그이므로, 본문 섹션은 문서에 그대로 있되 접혀 있다(앵커·링크·검사기용).
 
     tops = [(sid, 제목, 설명, 편수, html), …]. 카드 없는 고정 층이 둘 이상인 장에서 쓴다.
-    top= 하나로는 성격이 다른 글 둘을 한 타일에 밀어 넣게 되어 타일 이름이 안과 어긋난다.
-    top= 와 같이 주면 top 이 맨 앞에 선다.
+    top= 하나로는 성격이 다른 글 둘을 한 자리에 밀어 넣게 된다. top= 와 같이 주면 top 이
+    맨 앞에 선다. 고정 층은 날짜가 없어 최신순 목록에 자리가 없다 — 목록 위 링크 줄로 선다.
 
-    intro는 타일 그리드 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않고
-    접을 수 있으며 바로 아래에 타일이 그대로 있다. 섹션을 고르고 나면 스스로 접힌다.
+    intro는 목록 위에 서는 안내다(읽는 순서 등). 관문이 아니다 — 아무것도 막지 않는다.
 
-    sec_fig = {섹션 id: HTML}. 스위치 없이 섹션 머리 바로 아래 늘 서 있는 층이다 —
-    그림처럼 고르는 대상이 아니라 그 섹션을 읽는 순서를 먼저 보여 주는 것에 쓴다.
-    sec_top 과 달리 「밸류에이션·개별 포스트」 버튼을 만들지 않는다.
-    sec_top = {섹션 id: HTML}. 그 섹션 머리 바로 아래, 카드 앞에 들어간다. 한 회사를 여러 편으로
-    평가한 것을 견주는 지도처럼 **그 섹션에만 해당하는** 층을 둘 자리다. 페이지 맨 위 롤업으로
-    두면 회사 하나 이야기가 전체 보기 맨 앞에 서서 같은 내용이 두 군데 있는 것처럼 읽힌다.
+    sec_fig = {섹션 id: HTML}. 섹션 머리 바로 아래 늘 서 있는 층이다.
+    sec_top = {섹션 id: HTML}. 그 섹션 머리 아래, 카드 앞에 들어간다(견주는 지도 등).
+    sec_bottom 은 카드 뒤다.
 
-    pick_top은 검색창 다음·타일 격자 앞에 서는 조각이다(sec_picker에 그대로 넘긴다). rollup과
-    달리 타일과 한 컨테이너(.sec-pick) 안에 있어 회사를 고르면 같이 접힌다.
+    pick_top은 목록 앞에 서는 조각이다(회계사 장의 괴리 상위 5 보드 등).
 
-    newest_first는 글이 쌓이는 아카이브 장에서 켠다 — 섹션 안 카드를 원문 업로드일 역순으로
-    세운다. 교재처럼 읽는 차례가 정해진 장(모델 가이드·알고리즘 계보·수도리무브)에서는 끈다.
-
-    tiles=False면 섹션 타일 층을 아예 안 낸다. pick_tabs 와 같은 축을 고르는 장에서
-    둘을 다 두면 같은 일을 두 번 시키는 계층이 된다 — 하나만 남긴다. 카드를 거르는 일은
-    타일보다 먼저 일어나므로(apply 앞머리) 탭은 그대로 돈다.
+    newest_first는 섹션 안 카드 차례를 원문 업로드일 역순으로 세운다. 목록은 장과 상관없이
+    늘 최신순이다 — 이 값은 문서 안 섹션 차례에만 걸린다.
 
     pick_tabs=[(scope값, 이름), …]이면 위에 그 갈래로 탭을 세운다. 국내·해외 범위 탭
-    자리를 장이 가져다 쓰는 것이고, 거르는 것은 같은 JS(카드의 scope)다. 권역처럼
-    **고르는** 축에만 쓴다 — 견주는 것은 탭이 아니라 한 화면 병렬이다(견주기 층).
+    자리를 장이 가져다 쓰는 것이고, 거르는 것은 같은 JS(줄의 scope)다.
 
-    home='all'이면 처음 들어온 사람에게 타일 고르기 대신 **전체 보기**를 낸다. 타일은
-    그대로 위에 서서 필터 노릇을 한다 — 규약(첫 화면에 섹션 타일이 선다)은 지켜진다.
-    카드가 쌓이는 아카이브는 고르는 일이 먼저라 기본은 'pick'이다. 감시 성격의 장은
-    고르러 오는 게 아니라 바뀐 것을 보러 오므로 'all'을 쓴다.
+    home= 은 남겨 두었지만 화면이 하나뿐이라 하는 일이 없다(옛 호출 호환).
 
-    page_slug가 있으면 카드마다 따로 파일을 쓴다(대시보드/<page_slug>/<카드슬러그>.html) —
-    누르면 그 글만 있는 페이지로 간다. 비면(기본값) 지금까지처럼 목록 페이지 안에서만 접혔다
-    편다. 값은 scripts/gen_site.py의 PAGES와 같은 슬러그를 쓴다."""
+    page_slug가 있으면 카드마다 따로 파일을 쓴다(대시보드/<page_slug>/<카드슬러그>.html)."""
     secs, order = sections(cards, newest_first)
     scoped = [c for c in cards if c.get('scope')]
     kr = len([c for c in scoped if c['scope'] == 'kr'])
-    # 카드가 없는 층(통합 인사이트·밸류에이션 지도)도 타일 하나로 선다. id를 바꿀 수 있게 둔다 —
-    # 한 저장소에 성격이 다른 고정 층이 여럿이라 sec-cross 하나로는 안 된다.
     tid = top_id or XSEC
-    # tops = [(sid, 제목, 설명, 편수, html), …]. 성격이 다른 고정 층이 둘 이상인 장에서 쓴다 —
-    # 로봇 보고서와 AI 비즈니스 리포트를 한 타일에 넣으면 타일 이름이 안과 어긋난다.
     layers = list(tops or [])
     if top:
         layers.insert(0, (tid, top_title, top_sub, top_n, top))
-    extra = [l[:4] for l in layers] or None
-    # 처음 화면이 「전체」라 타일에 적히는 수도 전체다(JS가 범위를 바꿀 때 다시 센다)
-    nav = sec_picker(secs, order, len(cards) + sum(l[3] for l in layers), extra,
-                     groups=sec_groups, badges=sec_badges, pick_top=pick_top,
-                     search_ph=search_ph)
+    nav = flat_index(cards, secs, order, [l[:4] for l in layers], page_slug, search_ph)
     tabs = ''
     if pick_tabs:
         # 장이 스스로 갈래를 정한 경우. 국내·해외 대신 그 갈래로 탭을 세운다
@@ -1122,11 +1266,12 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
         tabs = SCOPE_TABS % (kr, len(scoped) - kr, len(cards)) + '\n\n  '
     body = []
     for i, (lid, ltitle, _lsub, ln, lhtml) in enumerate(layers):
-        # 카드가 없는 섹션이라 data-fixed로 표시한다 — 국내·해외 범위 필터도 타지 않는다
-        # data-n은 이 층이 몇 편을 담고 있는지다. 카드가 없으니 세어 볼 수가 없다.
-        body.append('<section id="%s" data-fixed="1" data-n="%d"><div class="sec-head">'
+        # 카드가 없는 섹션이라 data-fixed로 표시한다. 목록 위 링크가 이리로 데려온다.
+        # 카드가 아예 없는 장(흐름 페이지)은 목록이 빈칸이라 이 층이 처음부터 펴져 있다 —
+        # 링크 한 줄만 있는 첫 화면은 관문과 같다.
+        body.append('<section id="%s" data-fixed="1" data-n="%d"%s><div class="sec-head">'
                     '<span class="sec-num">%02d</span><h2 class="sec-title">%s</h2>%s</div>%s</section>'
-                    % (lid, ln, i, ltitle, sec_copy(lid), lhtml))
+                    % (lid, ln, (' hidden' if cards else ''), i, ltitle, sec_copy(lid), lhtml))
     sec_top, sec_bottom = sec_top or {}, sec_bottom or {}
     sec_fig = sec_fig or {}
     unknown = [k for k in list(sec_top) + list(sec_bottom) + list(sec_fig)
@@ -1134,25 +1279,13 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
     assert not unknown, 'sec_top·sec_bottom에 없는 섹션 id가 있다: %s' % unknown
     for sid in order:
         (_, num, stitle, _sub), cs = secs[sid]
-        # 카드가 먼저다. 지도처럼 여러 편을 견주는 층은 sec_bottom으로 카드 뒤에 둔다 —
-        # 앞에 두면 「전체 보기」를 열었을 때 글 대신 도구가 먼저 나온다.
-        lead = sec_top.get(sid, '')
+        # 섹션은 접혀 있다 — 줄을 눌러 들어오거나 카드를 지목한 주소로 들어올 때만 펴진다.
+        # 갈래 버튼(secsw)은 안 만든다. 고르는 계층은 위 태그 줄 하나다.
         cards_html = ''.join(_card(c, dup, page_slug) for c, dup in cs)
-        if lead:
-            # 섹션 안이 두 갈래다. 회사를 고르면 버튼 둘만 보이고, 누른 쪽만 펴진다.
-            # 지도와 카드를 한 화면에 같이 쌓으면 회사 하나가 스크롤 여러 판이 된다.
-            lead = ('<div class="secsw" data-sec="' + sid + '" hidden>'
-                    '<button type="button" class="sw-btn" data-view="val">%s</button>'
-                    '<button type="button" class="sw-btn" data-view="posts">%s'
-                    ' <span class="sw-n">%d</span></button></div>'
-                    '<div class="sec-lead sv-val" data-sec="%s" hidden>%s</div>'
-                    % (sw_labels[0], sw_labels[1], len(cs), sid, lead))
-            cards_html = '<div class="sv-posts" data-sec="%s" hidden>%s</div>' % (sid, cards_html)
-        body.append('<section id="%s"><div class="sec-head"><span class="sec-num">%s</span>'
+        body.append('<section id="%s" hidden><div class="sec-head"><span class="sec-num">%s</span>'
                     '<h2 class="sec-title">%s</h2>%s</div>%s%s%s%s</section>'
-                    % (sid, num, stitle, sec_copy(sid), sec_fig.get(sid, ''), lead,
-                       cards_html, sec_bottom.get(sid, '')))
-    # 카드끼리 잇는 링크가 하나도 없는 페이지에는 스크립트를 싣지 않는다
+                    % (sid, num, stitle, sec_copy(sid), sec_fig.get(sid, ''),
+                       sec_top.get(sid, ''), cards_html, sec_bottom.get(sid, '')))
     page_css = css()
     if extra_css:
         page_css = page_css.replace('</style>', extra_css + '</style>')
@@ -1161,13 +1294,12 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
             + '\n<div class="wrap">\n' + header
-            # 타일이 롤업보다 먼저다. 회계사 장은 롤업 자리에 드라이버 지도가 들어 있어
-            # 타일이 화면 한참 아래로 밀렸다(2026-08-18). 첫 화면은 어느 장이든 타일이다.
-            # home='all' 표시. NAV_JS 가 처음 들어온 화면을 정할 때 이걸 본다
-            + ('\n<div id="home-all" hidden></div>' if home == 'all' else '')
-            + '\n\n  ' + intro + '\n\n  ' + tabs + nav + '\n\n  ' + rollup + '\n\n  ' + ''.join(body)
+            # 목록이 먼저다. 읽는 순서 안내(intro)와 롤업은 목록 아래로 간다 — 안내가
+            # 위에 서면 첫 화면이 안내가 되고, 새로 들어온 글은 스크롤 뒤로 밀린다
+            + '\n\n  ' + tabs + nav + '\n\n  ' + pick_top + '\n\n  ' + intro + '\n\n  ' + rollup
+            + '\n\n  ' + ''.join(body)
             + '\n\n  <footer>' + footer + '</footer>\n</div>\n'
-            + FOLD_JS + NAV_JS + LINK_JS + SW_JS + ui_bits.TOP_BTN + '\n')
+            + FOLD_JS + FLAT_JS + LINK_JS + ui_bits.TOP_BTN + '\n')
     check_labels(cards)
     check_links(cards)
     check_ui(html, bool(layers))
@@ -1298,19 +1430,32 @@ def check_labels(cards):
 # 이 규약이 깨진 채로 페이지가 나가면 대시보드마다 첫 화면이 달라진다. 2026-08-17에 부동산만
 # 관문 버튼이 하나 더 생겨 그렇게 됐다. 사람이 눈으로 지키지 말고 여기서 막는다.
 def check_ui(html, has_top):
-    must = [('sec-pick', '섹션 타일'), ('class="sback"', '현재 자리 이름표'),
-            ('class="stile is-all"', '전체 보기 타일')]
+    """첫 화면 규약을 기계가 본다. 어기면 파일을 안 쓴다.
+
+    2026-09-08 부터 규약은 「첫 화면은 최신순 이름 목록」이다. 섹션 타일은 걷었다 —
+    타일이 남아 있으면 고르는 계층이 둘이 되고, 장마다 첫 화면이 다시 갈린다."""
+    must = [('class="tagnav', '태그 줄'), ('class="rows"', '최신순 목록')]
     for key, name in must:
         assert key in html, 'UI 규약 위반: %s이 없다' % name
-    assert 'mode-pick' not in html, \
-        'UI 규약 위반: 섹션 타일 앞에 관문 버튼을 두지 않는다 — 타일 하나로 넣는다'
+    assert 'mode-pick' not in html, (
+        'UI 규약 위반: 목록 앞에 관문 버튼을 두지 않는다')
+    assert 'class="stile' not in html and 'class="sec-pick' not in html, (
+        'UI 규약 위반: 섹션 타일은 걷었다 — 고르는 계층은 태그 줄 하나다')
     if has_top:
-        assert 'data-fixed="1"' in html and 'class="stile" data-sec=' in html,             'UI 규약 위반: 카드 없는 고정 층이 타일로 안 섰다'
-    # 클래스가 'sec-pick sgrid'라 닫는 따옴표까지 찾으면 -1이 나와 문서 전체를 앞부분으로 본다
-    at = html.find('class="sec-pick')
-    assert at > 0, 'UI 규약 위반: 섹션 타일을 못 찾았다'
-    assert '<section id=' not in html[:at], \
-        'UI 규약 위반: 섹션 타일보다 먼저 나오는 본문 섹션이 있다'
+        assert 'data-fixed="1"' in html and 'class="layers"' in html, (
+            'UI 규약 위반: 카드 없는 고정 층이 목록 위 링크로 안 섰다')
+    at = html.find('class="rows"')
+    assert at > 0, 'UI 규약 위반: 최신순 목록을 못 찾았다'
+    assert '<section id=' not in html[:at], (
+        'UI 규약 위반: 목록보다 먼저 나오는 본문 섹션이 있다')
+    # 카드가 든 섹션은 접혀서 나간다. 카드가 아예 없는 장(흐름 페이지)의 고정 층만
+    # 펴진 채로 설 수 있다 — 그때는 그것이 그 장의 유일한 본문이다.
+    open_secs = [t for t in re.findall(r'<section id="[^"]+"[^>]*>', html)
+                 if ' hidden' not in t and 'data-fixed' not in t]
+    assert not open_secs, (
+        'UI 규약 위반: 펴진 채로 나가는 본문 섹션이 있다 — 첫 화면은 목록뿐이다: %s'
+        % open_secs[:2])
+
 
 
 def josa(word, pair='은는'):
