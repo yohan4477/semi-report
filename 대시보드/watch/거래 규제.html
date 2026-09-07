@@ -395,6 +395,24 @@ svg.fig-n{display:none}
 /* 통계 그래프 — 넓은 판·좁은 판 갈래 없이 늘 보인다(2026-09-04, 휴대폰에서 fig-w 규칙에 숨었다) */
 svg.fig-s{display:block;width:100%;height:auto}
 figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
+/* 카카오 지도 — 컨텐츠 절이 이름을 댄 곳. 타일은 카카오가 주는 색 그대로 둔다
+   (2026-09-07 사용자 지시). 우리 도해의 색 규약은 우리가 그린 그림에만 건다 —
+   지도에서 회색을 씌우면 물·녹지·길이 한 덩어리가 되어 자리를 못 읽는다.
+   번호의 채움만 우리 표의 지정 여부를 말한다 */
+.kmap{height:340px;border:1px solid var(--line)}
+.kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3)}
+.kno{display:block;width:18px;height:18px;border-radius:50%;font-size:11px;
+  font-weight:700;line-height:18px;text-align:center;border:1.5px solid #111;
+  background:#fff;color:#111;box-shadow:0 0 0 2px #fff}
+.kno.is-on{background:#111;color:#fff}
+.kmap-leg{margin:8px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;
+  font-size:.82rem;color:var(--ink-2)}
+.kleg{cursor:pointer}
+.kmap-all{font:inherit;font-size:.78rem;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
+.kmap .kno{cursor:pointer}
+.kleg{display:inline-flex;align-items:center;gap:6px}
+.kmap-leg .kno{box-shadow:none;flex:0 0 auto}
 .t-sm{font-size:13px;fill:var(--ink-2)}
 .t-axis{fill:var(--ink-3)}
 .grid{stroke:var(--line);stroke-width:1;fill:none}

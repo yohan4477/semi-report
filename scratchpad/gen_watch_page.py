@@ -116,6 +116,8 @@ WATCHED_GU = sorted(GU_REGION)
 # 성남 3구만 경기, 나머지(서울 25구)는 서울. 지도·분양·달라진 것·보고 있는 것이
 # 전부 이 갈래 아래 선다 — 제도·청약 조건·자료 기준은 전국 공통이라 밖에 남는다
 SIDOS = (('서울', ''), ('경기', '-gg'))
+# 값이 답을 안 내는 물음을 두는 셋째 탭. 시·도가 아니라 출처로 갈린 칸이다
+OUTSIDE_TAB = '컨텐츠'
 _GYEONGGI_GU = set(g for t, v in AREAS.items() if isinstance(v, dict)
                    and v.get('sido') == '경기' for g in v.get('구', []))
 
@@ -1546,16 +1548,22 @@ svg.fig-n{display:none}
 /* 통계 그래프 — 넓은 판·좁은 판 갈래 없이 늘 보인다(2026-09-04, 휴대폰에서 fig-w 규칙에 숨었다) */
 svg.fig-s{display:block;width:100%;height:auto}
 figcaption{font-size:.8rem;color:var(--ink-3);margin:6px 0 0}
-/* 카카오 지도 — 「밖에서 온 판단」이 이름을 댄 곳. 타일은 회색으로 깔고(이 장의
-   도해는 색을 안 쓴다) 점의 채움만 우리 표의 지정 여부를 말한다 */
-.kmap{height:340px;border:1px solid var(--line);filter:grayscale(1) contrast(.92)}
-.kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3);filter:none}
+/* 카카오 지도 — 컨텐츠 절이 이름을 댄 곳. 타일은 카카오가 주는 색 그대로 둔다
+   (2026-09-07 사용자 지시). 우리 도해의 색 규약은 우리가 그린 그림에만 건다 —
+   지도에서 회색을 씌우면 물·녹지·길이 한 덩어리가 되어 자리를 못 읽는다.
+   번호의 채움만 우리 표의 지정 여부를 말한다 */
+.kmap{height:340px;border:1px solid var(--line)}
+.kmap-off{height:auto;padding:14px;font-size:.85rem;color:var(--ink-3)}
 .kno{display:block;width:18px;height:18px;border-radius:50%;font-size:11px;
   font-weight:700;line-height:18px;text-align:center;border:1.5px solid #111;
   background:#fff;color:#111;box-shadow:0 0 0 2px #fff}
 .kno.is-on{background:#111;color:#fff}
-.kmap-leg{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;
-  color:var(--ink-2)}
+.kmap-leg{margin:8px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;
+  font-size:.82rem;color:var(--ink-2)}
+.kleg{cursor:pointer}
+.kmap-all{font:inherit;font-size:.78rem;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
+.kmap .kno{cursor:pointer}
 .kleg{display:inline-flex;align-items:center;gap:6px}
 .kmap-leg .kno{box-shadow:none;flex:0 0 auto}
 .t-sm{font-size:13px;fill:var(--ink-2)}
@@ -2371,26 +2379,124 @@ def outside_kakao(e):
 
 
 def outside_kakao_js():
-    """지도 하나를 세우는 스크립트. 절에 지도가 있을 때만 낸다."""
+    """지도를 세우는 스크립트. 절에 지도가 있을 때만 낸다.
+
+    번호나 아래 범례를 누르면 그 자리로 확대하고(레벨 3), 「전체 보기」로 되돌린다.
+    휠 확대는 막아 둔다 — 페이지를 넘기려다 지도가 잡아먹는다."""
     key = (os.environ.get(KAKAO_JS_ENV) or '').strip()
     if not key:
         return ''
-    return (
-        '<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=%s&autoload=false">'
-        '</script><script>(function(){'
-        'var els=document.querySelectorAll(".kmap");if(!els.length)return;'
-        'function alt(){Array.prototype.forEach.call(els,function(el){el.hidden=true;'
-        'var a=el.parentNode.querySelector(".kmap-alt");if(a)a.hidden=false;});}'
-        'if(!window.kakao||!kakao.maps){alt();return;}'
-        'kakao.maps.load(function(){Array.prototype.forEach.call(els,function(el){'
-        'var pts=JSON.parse(el.getAttribute("data-pts"));'
-        'var map=new kakao.maps.Map(el,{center:new kakao.maps.LatLng(pts[0].lat,pts[0].lon),'
-        'level:6});map.setZoomable(false);'
-        'var b=new kakao.maps.LatLngBounds();'
-        'pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);'
-        'new kakao.maps.CustomOverlay({map:map,position:ll,zIndex:2,'
-        'content:\'<span class="kno\'+(p.hit?" is-on":"")+\'">\'+p.no+\'</span>\'});});'
-        'map.setBounds(b,46,46,46,46);});});})();</script>' % E(key))
+    js = """(function(){
+var els=document.querySelectorAll(".kmap");if(!els.length)return;
+function alt(){Array.prototype.forEach.call(els,function(el){el.hidden=true;
+var a=el.parentNode.querySelector(".kmap-alt");if(a)a.hidden=false;});}
+if(!window.kakao||!kakao.maps){alt();return;}
+kakao.maps.load(function(){Array.prototype.forEach.call(els,function(el){
+var pts=JSON.parse(el.getAttribute("data-pts"));
+var map=new kakao.maps.Map(el,{center:new kakao.maps.LatLng(pts[0].lat,pts[0].lon),level:6});
+map.setZoomable(false);
+var b=new kakao.maps.LatLngBounds(),at={};
+pts.forEach(function(p){var ll=new kakao.maps.LatLng(p.lat,p.lon);b.extend(ll);at[p.no]=ll;
+new kakao.maps.CustomOverlay({map:map,position:ll,zIndex:2,
+content:'<span class="kno'+(p.hit?" is-on":"")+'" data-no="'+p.no+'" title="'+p.name+'">'+p.no+'</span>'});});
+function all(){map.relayout();map.setBounds(b,46,46,46,46);}
+// 숨은 탭 안에서 만들어지면 크기가 0이라 엉뚱한 자리를 문다 — 탭을 누른 뒤
+// 다시 재고 화면을 맞춘다(2026-09-07 「컨텐츠」 탭)
+el.__kfit=all;
+function go(no){var ll=at[no];if(!ll)return;map.setLevel(3);map.panTo(ll);}
+el.addEventListener("click",function(ev){var s=ev.target.closest(".kno");
+if(s&&s.getAttribute("data-no"))go(+s.getAttribute("data-no"));});
+var leg=el.parentNode.querySelector(".kmap-leg");
+if(leg){leg.addEventListener("click",function(ev){var s=ev.target.closest(".kleg");
+if(!s)return;var n=s.querySelector(".kno");if(n)go(+n.textContent);});
+var btn=document.createElement("button");btn.type="button";btn.className="kmap-all";
+btn.textContent="전체 보기";btn.addEventListener("click",all);leg.appendChild(btn);}
+all();});
+document.addEventListener("click",function(ev){
+if(!ev.target.closest(".sido-tab"))return;
+setTimeout(function(){Array.prototype.forEach.call(els,function(el){
+if(el.__kfit&&el.offsetParent)el.__kfit();});},60);});
+});})();"""
+    return ('<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=%s&autoload=false">'
+            '</script><script>%s</script>' % (E(key), js))
+
+
+# ── 컨텐츠 절의 도해 둘 ────────────────────────────────────────────────────
+# 해설의 말 가운데 글로만 두면 안 잡히는 둘을 그린다. 값은 전부 자막에 있는 것이고,
+# 자막이 말하지 않은 구간(6~7억·8~10억)은 비워 둔다 — 비운 자리가 곧 「원문이 말하지
+# 않았다」는 뜻이다. 붓은 이 장의 것을 쓴다(회색 면·선, 강조는 진한 면).
+
+
+def fig_balance():
+    """청약이 막히는 자리 — 잔금을 메우던 두 길."""
+    o = ['<text x="20" y="20" class="t-sm">분양가 15억 · 남는 잔금 13억</text>']
+    o.append('<rect x="150" y="32" width="260" height="38" rx="6" fill="var(--surface)" '
+             'stroke="var(--line)"/>')
+    o.append('<text x="280" y="56" class="t-sm" text-anchor="middle">잔금 13억을 무엇으로 메우나</text>')
+    # 지시선은 꺾어서 간다 — 비스듬한 선은 다른 선과 구분이 안 된다(check_fig 이 문다)
+    o.append('<path d="M150 88 L410 88" class="grid"/>')
+    for x1 in (150, 280, 410):
+        y0 = 72 if x1 == 280 else 88
+        o.append('<path d="M%d %d L%d %d" class="grid"/>' % (x1, y0, x1, 106 if x1 != 280 else 88))
+    box = ((30, '잔금 대출', '집값의 40%까지', '분양가가 15억을 넘으면 4억까지'),
+           (290, '전세보증금으로 잔금', '토지거래허가구역 실거주 2년', '세입자 돈으로 맞추면 조건부 대출'))
+    for x, name, l1, l2 in box:
+        o.append('<rect x="%d" y="112" width="240" height="74" rx="6" fill="var(--paper)" '
+                 'stroke="var(--ink)" stroke-dasharray="4 3"/>' % x)
+        o.append('<text x="%d" y="134" class="t-sm">%s</text>' % (x + 14, name))
+        o.append('<text x="%d" y="156" class="t-sm t-axis">%s</text>' % (x + 14, l1))
+        o.append('<text x="%d" y="176" class="t-sm t-axis">%s</text>' % (x + 14, l2))
+    o.append('<rect x="30" y="204" width="500" height="68" rx="6" fill="var(--surface)" '
+             'stroke="var(--line)"/>')
+    o.append('<text x="46" y="228" class="t-sm">예전에는 이렇게 갔다</text>')
+    o.append('<text x="46" y="250" class="t-sm t-axis">'
+             '계약금 10%만 있으면 중도금 60%는 대출로 3년을 버텼고,</text>')
+    o.append('<text x="46" y="268" class="t-sm t-axis">'
+             '잔금은 감정가의 70%까지 대출을 받거나 전세를 놓아 그 보증금으로 치렀다</text>')
+    return ('<svg viewBox="0 0 560 284" role="img" aria-label="분양가 15억 아파트의 잔금 13억을 '
+            '메우던 두 길인 잔금 대출과 전세보증금이 각각 대출 한도와 실거주 의무로 막힌 그림" '
+            'class="fig-s">%s</svg>' % ''.join(o))
+
+
+_BX0, _BX1, _BV0, _BV1 = 60.0, 520.0, 3.0, 11.0
+
+
+def _bx(v):
+    return _BX0 + (v - _BV0) * (_BX1 - _BX0) / (_BV1 - _BV0)
+
+
+_BANDS = [(3.0, 6.0, 'var(--surface)', '6억 이하', '전고점을 아직 못 찍은 구간'),
+          (7.0, 8.0, 'var(--line)', '7~8억', '전고점을 뚫기 시작한 구간'),
+          (10.0, 11.0, 'var(--ink)', '10억 초과', '많이 오른 구간')]
+_BTICKS = [(4.0, '4억'), (5.0, '5억'), (6.0, '6억'), (7.0, '7억'), (8.0, '8억'), (10.0, '10억')]
+
+
+def fig_band():
+    """값이 올랐다는 이야기가 어느 구간의 것인가 — 가격대 띠."""
+    o = ['<text x="20" y="20" class="t-sm">값이 올랐다는 이야기는 어느 구간의 것인가</text>']
+    for v0, v1, fill, val, name in _BANDS:
+        o.append('<rect x="%.1f" y="34" width="%.1f" height="32" rx="4" fill="%s" '
+                 'stroke="var(--ink)" stroke-width="1.1"/>'
+                 % (_bx(v0), _bx(v1) - _bx(v0), fill))
+    o.append('<line class="grid" x1="%.1f" y1="76" x2="%.1f" y2="76"/>' % (_BX0, _BX1))
+    for v, lab in _BTICKS:
+        o.append('<line class="grid" x1="%.1f" y1="76" x2="%.1f" y2="82"/>' % (_bx(v), _bx(v)))
+        o.append('<text x="%.1f" y="96" class="t-sm t-axis" text-anchor="middle">%s</text>'
+                 % (_bx(v), lab))
+    for i, (v0, v1, fill, val, name) in enumerate(_BANDS):
+        y = 120 + i * 22
+        o.append('<rect x="28" y="%d" width="18" height="13" rx="3" fill="%s" '
+                 'stroke="var(--ink)" stroke-width="1.1"/>' % (y - 10, fill))
+        o.append('<text x="54" y="%d" class="t-sm t-axis">%s — %s</text>' % (y, val, name))
+    o.append('<rect x="28" y="192" width="502" height="40" rx="6" fill="var(--surface)" '
+             'stroke="var(--line)"/>')
+    o.append('<text x="44" y="209" class="t-sm t-axis">'
+             '1억 5천이 닿는 자리 — 비규제 갭은 매매가 3억 8천~4억,</text>')
+    o.append('<text x="44" y="227" class="t-sm t-axis">'
+             '생애최초 대출로 집값의 70%를 일으키면 5억대. 둘 다 왼쪽 구간 안이다</text>')
+    return ('<svg viewBox="0 0 560 244" role="img" aria-label="매매가 구간별로 전고점 회복 '
+            '상태가 갈리는 띠. 6억 이하는 전고점을 못 찍었고 7~8억은 뚫기 시작했으며 10억 '
+            '초과는 많이 올랐다" class="fig-s">%s</svg>' % ''.join(o))
 
 
 def outside_section(watches):
@@ -2398,10 +2504,11 @@ def outside_section(watches):
     items = _outside_items()
     if not items:
         return ''
-    h = ['<div class="band" id="outside"><p class="band-t">밖에서 온 판단</p>',
+    h = ['<div class="band" id="outside"><p class="band-t">컨텐츠</p>',
          '<p class="band-s">값이 답을 안 내는 물음 — 가진 돈이 1억 5천일 때 무엇을 하나 — '
          '에 밖의 해설자가 낸 답입니다. 옮겨 놓는 것이 동의는 아닙니다. 말을 그대로 옮기고, '
-         '우리 표와 어긋나는 자리를 바로 밑에 답니다.</p>']
+         '우리 표와 어긋나는 자리를 바로 밑에 답니다. 지도의 번호를 누르면 그 자리로 '
+         '확대합니다.</p>']
     for e in items:
         h.append('<p class="lbl">%s · %s · <a href="%s" rel="noopener">원문 보기 →</a></p>'
                  % (E(e['who']), E(e['when']), E(e['url'])))
@@ -2421,6 +2528,11 @@ def outside_section(watches):
                      '채운 번호는 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
                      '걸린 곳입니다.</figcaption></figure>'
                      % (fig, E(e.get('clash_as_of', ''))))
+        h.append('<figure>%s<figcaption>청약이 막히는 자리는 당첨이 아니라 잔금입니다. '
+                 '값은 모두 해설에 나온 것입니다.</figcaption></figure>' % fig_balance())
+        h.append('<figure>%s<figcaption>해설이 「안 올랐다」고 말한 구간이 어디인지입니다. '
+                 '6~7억과 8~10억을 비워 둔 것은 해설이 그 자리를 말하지 않아서입니다.'
+                 '</figcaption></figure>' % fig_band())
         h.append('<div class="rows">')
         for what, why in e['points']:
             h.append('<div class="row"><span class="row-where">해설</span>'
@@ -3837,9 +3949,13 @@ def check_ui(html, watches):
         '규약 위반: 줄 상세는 본 장에 없다 — watch/<슬러그>.html 로 옮겼다'
     # 2026-09-04 여섯 번째 개정 — 최상위가 서울|경기 탭이다. 시·도 상자마다
     # 분양 → 지도 → 달라진 것 → 보고 있는 것 순서, 제도는 그 둘보다 뒤(탭 밖).
-    assert html.count('class="sido-block"') == 2, '규약 위반: 시·도 상자는 서울·경기 둘이다'
-    assert 'class="sido-tabs"' in html and html.count('<button type="button" class="sido-tab') == 2, \
-        '규약 위반: 최상위 탭(서울|경기)이 없다 — 고르는 계층은 이것 하나다'
+    n_blk = 3 if 'id="outside"' in html else 2
+    assert html.count('class="sido-block"') == n_blk, \
+        '규약 위반: 최상위 상자는 서울·경기(·컨텐츠) 다 (%d개, 기대 %d개)' % (
+            html.count('class="sido-block"'), n_blk)
+    assert 'class="sido-tabs"' in html and \
+        html.count('<button type="button" class="sido-tab') == n_blk, \
+        '규약 위반: 최상위 탭(서울|경기·컨텐츠)이 없다 — 고르는 계층은 이것 하나다'
     at_policy = html.find('id="policy"')
     assert 'class="jump"' not in html,         '규약 위반: 본 장에 절 바로가기 줄을 두지 않는다 — 고르는 계층은 서울|경기 탭 하나다(2026-09-04)'
     for _sido, sfx in SIDOS:
@@ -3886,12 +4002,12 @@ def check_ui(html, watches):
     # 통계 층 그래프는 따로 센다 — 지역 탭마다 하나씩이라 수가 늘고 준다. 그 <figure> 안에는
     # svg.fig-s 가 꼭 하나씩 들어 있어 그 수만큼 빼면 지도·자 셋만 남는다
     n_fig = html.count('<figure') - html.count('class="fig-s fig-click"')
-    # 2026-09-07 — 「밖에서 온 판단」 절이 지도 하나를 더 낸다(해설이 이름을 댄 곳).
+    # 2026-09-07 — 「컨텐츠」 절이 셋을 더 낸다(지도 하나 · 도해 둘).
     # 그 절이 비면(_outside.json 이 없거나 items 가 비면) 도해도 안 서므로 다섯이다
-    n_want = 6 if 'id="outside"' in html else 5
+    n_want = 8 if 'id="outside"' in html else 5
     assert n_fig == n_want, \
         ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
-         '+ (밖에서 온 판단 지도) 여야 한다 (%d개, 기대 %d개)' % (n_fig, n_want))
+         '+ (컨텐츠 절의 지도와 도해 둘) 여야 한다 (%d개, 기대 %d개)' % (n_fig, n_want))
     # 본 장의 표는 「청약 — 조건」 절 안에만 둔다. 나머지는 전부 상세(watch/)로
     # 옮겼는데, 청약 조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더
     # 열게 하지 않는다 — 그 예외가 다른 절로 새지 않게 자리까지 잰다
@@ -4023,11 +4139,15 @@ def build():
     # 시·도 상자 안 순서 — 분양(지금 청약) → 지도 → 달라진 것 → 보고 있는 것.
     # 「분양이 가장 빨리 오게」 — 지금 신청할 수 있는 것이 이 장을 여는 첫 이유다.
     # 제도·청약 조건·자료 기준은 전국 공통이라 탭 밖 아래에 한 번만 선다.
-    h.append('<div class="sido-tabs" role="tablist" aria-label="시·도">%s</div>'
+    # 셋째 탭은 시·도가 아니라 「컨텐츠」다(2026-09-07 사용자 지시 「서울 경기 옆에
+    # 컨텐츠 섹션」). 앞 둘은 값이 답하는 자리이고 이 칸은 값이 답을 안 내는 물음에
+    # 밖의 해설자가 낸 답을 두는 자리라, 같은 줄에서 고르게 한다
+    tab_names = [sido for sido, _s in SIDOS] + [OUTSIDE_TAB]
+    h.append('<div class="sido-tabs" role="tablist" aria-label="보는 자리">%s</div>'
              % ''.join('<button type="button" class="sido-tab%s" role="tab" data-sido="%s" '
                        'aria-selected="%s">%s</button>'
-                       % (' is-on' if not sfx else '', sido, 'true' if not sfx else 'false',
-                          sido) for sido, sfx in SIDOS))
+                       % (' is-on' if i == 0 else '', nm, 'true' if i == 0 else 'false', nm)
+                       for i, nm in enumerate(tab_names)))
     for sido, sfx in SIDOS:
         sido_ws = _sido_watches(ws, sido)
         blk = ['<div class="sido-block" data-sido="%s"%s>' % (sido, '' if not sfx else ' hidden')]
@@ -4046,13 +4166,13 @@ def build():
         blk.append('</div>')
         h.append(''.join(blk))
 
+    # 컨텐츠 탭 — 해설 한 편이 상자 하나다. 값 쪽 두 탭과 섞이지 않게 따로 선다
+    h.append('<div class="sido-block" data-sido="%s" hidden>%s</div>'
+             % (OUTSIDE_TAB, outside_section(ws)))
+
     h.append('<div class="band" id="policy"><p class="band-t">제도</p>'
              '<p class="band-s">제도는 값으로 안 옵니다. 지금 어느 판인가만 기계가 알고, '
              '바뀐 내용은 사람이 조문을 열어 읽습니다.</p>%s</div>' % law_summary(ws))
-
-    # 밖에서 온 판단은 제도 다음, 청약 조건 앞이다 — 제도가 「지금 어느 판인가」를
-    # 말한 자리 바로 뒤라야 「그 판에서 무엇을 하나」가 이어진다
-    h.append(outside_section(ws))
 
     h.append(subscription_cond_section(ws))
 
