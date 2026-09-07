@@ -50,15 +50,27 @@ SECTIONS = [('news', '기사 읽기'), ('basics', '투자 원칙'), ('edu', '제
 
 STAMP = '2026-09-07'
 
+# 채널이 한 주제를 연달아 올린 묶음은 목록에서 한 덩어리로 세운다. 잣대는 「연달아」다 —
+# 날짜 내림차순으로 늘어놓았을 때 같은 섹션이 끊기지 않고 이어지는 구간이 곧 시리즈다.
+# 사이에 다른 주제가 끼면 거기서 끊긴다(원전은 06-08 한 편과 06-29부터 넉 편이 따로 선다).
+# 기사 읽기는 매주 돌아오는 꼴이라 이어져도 시리즈가 아니다 — 여기서만 뺀다.
+NO_SERIES = {'news'}
+
 # 목록은 최신 순서 하나다. 섹션은 줄에 붙는 태그이고, 위 선택 줄은 그 태그로 줄을 고르는
 # 장치다 — 화면 순서를 바꾸지 않는다. 접는 것이 아니라 거르는 것이라 규약에 안 걸린다.
 SECJS_CSS = """
 .secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
 .secnav a.on small{color:#c8cdd6}
+.grp{border:1px solid #d5dae2;border-radius:10px;background:#f7f9fc;padding:10px 10px 4px;margin:0 0 10px}
+.grp .ghead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:0 4px 8px}
+.grp .ghead b{font-size:15px;color:#1b1f27}
+.grp .ghead span{font-size:12px;color:#7b8492}
+.grp .row{background:#fff}
 """
 SECJS = """<script>
 (function(){
-  var nav=document.querySelector('.secnav'), rows=[].slice.call(document.querySelectorAll('.row'));
+  var nav=document.querySelector('.secnav'),
+      rows=[].slice.call(document.querySelectorAll('.rows > [data-sec]'));
   if(!nav) return;
   nav.addEventListener('click', function(e){
     var a=e.target.closest('a[data-sec]'); if(!a) return;
@@ -109,10 +121,11 @@ def half(one):
     return ' '.join(sents[:(len(sents) + 1) // 2])
 
 
-def row_html(ep):
+def row_html(ep, in_series=False):
     m = ep['meta']
     code = m.get('section', '')
-    tags = ['<span class="tag">%s</span>' % sd.esc(SEC_NAME.get(code, code))]
+    # 묶음 안에서는 섹션을 다시 안 적는다 — 머리줄이 이미 말한다
+    tags = [] if in_series else ['<span class="tag">%s</span>' % sd.esc(SEC_NAME.get(code, code))]
     tags += ['<span class="tag on">%s %s</span>' % (emo, label)
              for key, emo, label, _sub in LANES if any(l['key'] == key for l in ep['lanes'])]
     inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
@@ -160,13 +173,37 @@ def post_html(ep):
     return ''.join(out)
 
 
+def runs(live):
+    """날짜 내림차순 목록을 「연달아 올린 같은 섹션」 구간으로 끊는다.
+
+    돌려주는 것은 [(섹션 코드, [회차…])] 이고 순서는 받은 그대로다. 길이 1인 구간과
+    NO_SERIES 섹션은 묶음이 아니라 낱줄로 선다."""
+    out = []
+    for e in live:
+        code = e['meta'].get('section', '')
+        if out and out[-1][0] == code:
+            out[-1][1].append(e)
+        else:
+            out.append((code, [e]))
+    return out
+
+
+def series_html(code, group):
+    dates = [e['meta'].get('date', '') for e in group]
+    return ('<div class="grp" data-sec="%s"><div class="ghead"><b>%s</b>'
+            '<span>연달아 %d편 · %s ~ %s</span></div>%s</div>'
+            % (code, sd.esc(SEC_NAME.get(code, code)), len(group), dates[-1], dates[0],
+               ''.join(row_html(e, in_series=True) for e in group)))
+
+
 def index_html(eps):
     live = [e for e in eps if e['lanes']]
     out = [sd.HEAD % ('씨모어 대시보드', sd.CSS + SECJS_CSS)]
     out.append('<h1>📈 채널 씨모어</h1>')
     out.append('<div class="sub">산업을 갈라 놓고 투자할 자리를 고르는 한국어 채널. '
                '회차마다 ⚖ 전략 판 하나가 선다 — 전사를 줄 번호로 대조해 쓴 해설이다.<br>'
-               '글이 있는 회차만 싣는다 — 지금 %d편. 최신 회차가 맨 위다.</div>' % len(live))
+               '글이 있는 회차만 싣는다 — 지금 %d편. 최신 회차가 맨 위이고, '
+               '한 주제를 연달아 올린 구간은 한 덩어리로 묶인다.</div>' % len(live))
     stray = [e for e in live if e['meta'].get('section', '') not in dict(SECTIONS)]
     if stray:
         raise SystemExit('섹션 코드가 없는 회차: ' + ', '.join(e['slug'] for e in stray))
@@ -177,7 +214,13 @@ def index_html(eps):
                % (len(live), ''.join(
                    '<a href="#" data-sec="%s">%s <small>%d</small></a>' % (code, sd.esc(name), n)
                    for code, name, n in counts if n)))
-    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in live))
+    body = []
+    for code, group in runs(live):
+        if len(group) > 1 and code not in NO_SERIES:
+            body.append(series_html(code, group))
+        else:
+            body.extend(row_html(e) for e in group)
+    out.append('<div class="rows">%s</div>' % ''.join(body))
     out.append('<div class="foot">유튜브 자동 자막을 문장 단위로 끊어 전사로 두고, 그 줄 번호를 '
                '주소 삼아 판을 쓴다. 값이 전사에 있는지는 사람이 대조한다. '
                '정리일 <b>%s</b> · 페이지 생성은 <code>scratchpad/gen_seemore.py</code></div>' % STAMP)
@@ -195,6 +238,10 @@ def check_ui(index, posts):
         bad.append('회차 줄에 섹션 표시가 없다 — 목록은 최신 순서 하나이고 섹션은 태그다')
     if 'class="sec"' in index:
         bad.append('섹션 머리줄이 있다 — 이 장의 목록은 섹션으로 안 나눈다')
+    if 'class="grp"' not in index:
+        bad.append('연달아 올린 구간이 안 묶였다 — 시리즈는 한 덩어리로 선다')
+    if re.search(r'<div class="grp"(?:(?!</div>).)*<div class="grp"', index, re.S):
+        bad.append('묶음 안에 묶음이 있다')
     if 'class="secnav"' not in index:
         bad.append('목록 위에 섹션 선택 줄이 없다')
     if 'class="tile' in index:
