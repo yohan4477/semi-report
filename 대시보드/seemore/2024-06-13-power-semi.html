@@ -1,0 +1,227 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>전력반도체가 SiC·GaN 소재로 옮겨가며 밸류체인이 수직계열화하는 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>전력반도체가 SiC·GaN 소재로 옮겨가며 밸류체인이 수직계열화하는 경위</h1><div class="pmeta">2024-06-13 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/oWHyOfz7afU">https://youtu.be/oWHyOfz7afU</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2024-06-13-power-semi.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2024-06-13-power-semi.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">소재가 바뀌면 누가 값을 가져가는지도 바뀐다는 셈, 그 위에 수요가 빠졌다</div><p>전력반도체를 처음 다루는 편이다. 진행자는 실리콘이 못 버티는 자리에 SiC(실리콘카바이드)가 들어온다는 소재 이야기에서 시작해 밸류체인을 셋으로 나누고, 그중 웨이퍼 칸이 과점이라는 이유로 그쪽을 고른다. 이 글은 그 셈의 짜임을 보고 2년 뒤의 값에 대조한다. 4절의 대조 값은 원문에 없는 것이라 출처를 함께 적는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">실리콘이 못 버티는 온도에서 갈린다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">세 칸 가운데 과점인 칸을 고른다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">이 셈에 빠진 반대편</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">(검증) 2년 뒤에 무엇이 맞았나</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">공급자를 센 판단과 수요를 안 센 판단</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 실리콘이 못 버티는 온도에서 갈린다</h2>
+<figure class="uc-fig"><p class="fig-title">소재가 바뀌는 자리는 온도에서 갈린다</p><svg class="epoch" viewBox="0 0 520 219" role="img" aria-label="실리콘과 SiC · GaN 의 성질 차이와 쓰임">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="25.5" y="20" text-anchor="middle" class="fig-hd">소재</text>
+  <text x="178" y="20" text-anchor="middle" class="fig-hd">성질</text>
+  <text x="385" y="20" text-anchor="middle" class="fig-hd">그래서</text>
+  <rect x="0" y="30" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="60.5" text-anchor="middle" class="fig-b">실리콘</text>
+  <rect x="67" y="30" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="60.5" text-anchor="middle" class="fig-b">150도를 넘으면 안 된다</text>
+  <rect x="305" y="30" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="385" y="60.5" text-anchor="middle" class="fig-b">전기차에 못 쓴다</text>
+  <rect x="0" y="95" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="125.5" text-anchor="middle" class="fig-b">SiC</text>
+  <rect x="67" y="95" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="125.5" text-anchor="middle" class="fig-b">고열 · 고전압에 강하다</text>
+  <rect x="305" y="95" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="385" y="125.5" text-anchor="middle" class="fig-b">인버터가 가벼워진다</text>
+  <rect x="0" y="160" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="190.5" text-anchor="middle" class="fig-b">GaN</text>
+  <rect x="67" y="160" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="190.5" text-anchor="middle" class="fig-b">고주파에 강하다</text>
+  <rect x="305" y="160" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="385" y="190.5" text-anchor="middle" class="fig-b">다른 자리에 쓴다</text>
+</svg><figcaption>테슬라가 인버터에 SiC 를 넣어 무게를 6kg 줄였다. 새 소재는 성능이 좋고 값이 비싸다.</figcaption></figure>
+<p>출발이 물성이다. 실리콘 반도체는 150도를 넘으면 작동하지 않을 만큼 열에 약한데 전기차는 전압이 높고 열이 많이 난다. 그래서 고열·고전압에 강한 SiC와 고주파에 강한 GaN(질화갈륨)이 대안으로 올라온다.</p>
+<p>숫자가 하나 붙는다. 2018년 테슬라 모델3가 인버터(교류와 직류를 서로 바꿔 주는 장치)에 SiC를 넣어 효율이 크게 오르고 무게가 6kg 줄었으며, 인버터 무게가 11kg 넘는 닛산 리프나 8kg 넘는 재규어 아이페이스보다 가벼워졌다는 것이다.</p>
+<p>이 대목이 소재 교체 이야기의 표준 꼴이다. 새 소재는 성능이 좋고 값이 비싸며, 값은 물량이 늘면 내려간다. 진행자도 웨이퍼 한 장이 초기에 1,500만 원까지 갔지만 전기를 많이 쓰는 산업이 늘면 단가가 내려갈 것으로 본다.</p>
+<p>여기에 이 편의 전제가 숨어 있다. 물량이 늘어야 값이 내려가고, 값이 내려가야 더 쓰인다. 그 물량을 전기차가 만들어 준다는 것이 2024년 6월의 셈이었다.</p>
+<h2 id="s2"><span class="num">2</span> 세 칸 가운데 과점인 칸을 고른다</h2>
+<figure class="uc-fig"><p class="fig-title">세 칸 가운데 공급자가 적은 칸을 고른다</p><svg class="epoch" viewBox="0 0 520 219" role="img" aria-label="전력반도체 밸류체인 세 칸과 각 칸의 경쟁 상태">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="20" text-anchor="middle" class="fig-hd">칸</text>
+  <text x="209.5" y="20" text-anchor="middle" class="fig-hd">어떤 상태</text>
+  <text x="401" y="20" text-anchor="middle" class="fig-hd">진행자의 처리</text>
+  <rect x="0" y="30" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="60.5" text-anchor="middle" class="fig-b">웨이퍼 제조</text>
+  <rect x="114" y="30" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="209.5" y="60.5" text-anchor="middle" class="fig-b">네댓 곳이 쥐었다</text>
+  <rect x="321" y="30" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="401" y="60.5" text-anchor="middle" class="fig-b">여기를 본다</text>
+  <line x1="49" y1="81" x2="49" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="125.5" text-anchor="middle" class="fig-b">칩 제조</text>
+  <rect x="114" y="95" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="209.5" y="125.5" text-anchor="middle" class="fig-b">다품종 소량이라 어렵다</text>
+  <rect x="321" y="95" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="401" y="125.5" text-anchor="middle" class="fig-b">같이 본다</text>
+  <line x1="49" y1="146" x2="49" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="190.5" text-anchor="middle" class="fig-b">고객사</text>
+  <rect x="114" y="160" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="209.5" y="190.5" text-anchor="middle" class="fig-b">전기차 · 가전</text>
+  <rect x="321" y="160" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="401" y="190.5" text-anchor="middle" class="fig-b">투자 대상이 아니다</text>
+</svg><figcaption>10년에 가까운 장기계약이 새 사업자의 진입을 더 막는다. 다만 과점은 수요가 있을 때만 값이 된다.</figcaption></figure>
+<p>투자처를 찾는 방식은 늘 같다. 밸류체인을 웨이퍼 제조, 칩 제조, 고객사로 나누고 고객사는 뺀다.</p>
+<p>웨이퍼 칸의 성격을 짚는다. 웨이퍼를 만드는 일과 그 위에 에피(결정막을 입히는 코팅)를 하는 일이 있는데 요즘은 한 회사가 둘 다 한다. 기술 난이도가 높아 네댓 곳이 세계 시장을 쥐고 있고, SK실트론이 2020년 듀폰의 사업을 사서 만들고 있지만 실제로는 울프스피드가 60% 이상을 가져간다.</p>
+<p>과점을 더 굳히는 장치도 있다. 칩 회사들이 웨이퍼를 안정적으로 받으려고 10년에 가까운 장기계약을 맺는데, 이것이 새 사업자의 진입을 더 어렵게 만든다.</p>
+<p>칩 칸도 인피니언·ST마이크로·텍사스인스트루먼트 같은 회사들이 있고 다품종 소량생산이라 진입이 어렵다.</p>
+<p>그리고 최근 움직임을 하나 더 얹는다. 칩 회사가 웨이퍼로, 웨이퍼 회사가 칩으로 서로 넘어가는 수직계열화가 빠르게 진행되고 있고 울프스피드가 그 앞에 있다는 것이다.</p>
+<p>여기까지가 이 채널의 전형적인 고르기다. 공급자가 적은 칸을 찾고, 그 적음이 유지되는 장치가 있는지 확인한다. 원전 편에서 HALEU 공급자가 둘뿐이라는 것을 근거로 삼은 것과 같은 자리다.</p>
+<h2 id="s3"><span class="num">3</span> 이 셈에 빠진 반대편</h2>
+<p>같은 회차 안에 경고가 이미 들어 있는데 결론에는 안 반영된다. 작년까지 전기차 판매가 늘며 전력반도체 회사들이 신고점을 찍었는데 최근 전기차 수요 둔화로 주가가 많이 빠졌다는 대목이다. 그런데 진행자는 그것을 저점의 근거로 읽고 5월 말부터 한 회사를 계속 사고 있으며 2년을 보고 더 사겠다고 밝힌다.</p>
+<p>과점 논리에는 조건이 하나 있다. 공급자가 적다는 사실은 수요가 있을 때만 값이 된다. 수요가 줄면 적은 공급자끼리 남은 물량을 놓고 싸우고, 설비를 미리 키운 쪽이 더 크게 다친다. 이 회차는 공급 쪽만 세고 수요가 꺾일 때 무엇이 벌어지는지는 다루지 않는다.</p>
+<h2 id="s4"><span class="num">4</span> (검증) 2년 뒤에 무엇이 맞았나</h2>
+<p>이 절의 값은 원문에 없다. 2026-09-07 기준으로 따로 확인한 것이며 출처를 함께 적는다.</p>
+<p>소재 이야기는 살아남았다. SiC는 여전히 전력반도체의 성장 축이고 시장은 계속 커지는 중이며, ST마이크로·인피니언·온세미 세 곳이 2025년 기준 세계 시장의 65.4%를 차지한다(출처: Mordor Intelligence 실리콘카바이드 전력반도체 보고서 2026, DataM Intelligence 2026).</p>
+<p>전제가 무너졌다. 미국 전기차 수요 둔화가 이어지면서 SiC 웨이퍼와 소자 시장의 판이 바뀌었다. 공급자들이 8인치 전환과 함께 설비를 계속 늘린 상태에서 수요가 안 따라왔기 때문이다. 온세미는 SiC 부문의 둔화가 이어지고 있다(출처: 24/7 Wall St. 2026-05-11, GM Insights 실리콘카바이드 시장 보고서 2026).</p>
+<p>과점의 선두가 무너졌다. 이 회차에서 웨이퍼 60% 이상을 가졌다고 짚은 울프스피드는 2025년 6월 챕터11을 신청했다. 뉴욕 공장의 생산 지연, 중국 업체와의 경쟁, 전기차 수요 둔화, 그리고 불어난 부채가 이유였다. 91일 만인 9월 29일 회생 절차를 마치고 나왔는데, 그 과정에서 67억 달러 부채 가운데 46억 달러를 털어 총부채를 약 70% 줄였고 만기를 2030년으로 미뤘다(출처: Wolfspeed 보도자료 2025-09-29, Financier Worldwide 2025-10, elevenflo 2025).</p>
+<h2 id="s5"><span class="num">5</span> 공급자를 센 판단과 수요를 안 센 판단</h2>
+<p>이 회차의 분석 자체는 정확했다. 웨이퍼 칸이 과점이라는 것도, 장기계약이 진입을 막는다는 것도, 수직계열화가 진행 중이라는 것도 사실이었다.</p>
+<p>그런데 그 사실들이 값으로 이어지지 않았다. 과점이 값이 되려면 물량이 늘어야 하는데, 늘 것으로 본 전기차가 안 늘었다. 오히려 과점의 선두가 설비를 가장 크게 늘려 놓았기 때문에 수요가 꺾였을 때 가장 크게 다쳤다.</p>
+<p>이 채널의 다른 실패와 모양이 같다. 은행주를 예대차 하나로, 해운 운임을 수요 하나로, 소프트웨어를 단가 하나로 본 것처럼, 여기서는 공급자 수 하나로 봤다. 산업의 한쪽만 세면 그 한쪽이 맞아도 결과가 반대로 나온다.</p>
+<p>다만 이 회차가 밸류체인을 정확히 그려 둔 덕에 나중에 무엇이 어긋났는지를 셀 수 있다. 그림이 틀린 것이 아니라 그림 위에 놓은 가정이 틀렸다는 것이 확인된다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</h2>
+<p>빠진 것 ① 수요가 꺾일 때 과점이 어떻게 되는지가 없다. 공급자가 적다는 사실만 있고 그 적음이 언제 값이 되는지가 없다.</p>
+<p>빠진 것 ② 설비 투자의 크기가 안 나온다. 팹을 짓는 돈이 얼마이고 그것을 무엇으로 갚는지가 이 산업의 위험을 정한다.</p>
+<p>빠진 것 ③ 중국 업체의 진입이 다뤄지지 않는다. 기술 난이도가 높다는 것이 진입 장벽인데, 그 장벽이 얼마나 오래가는지가 없다.</p>
+<p>무엇을 더 봐야 하나 ① 전기차 대신 AI 데이터센터가 SiC 수요를 만들 수 있는지가 이 산업의 다음 물음이다. 전압과 열은 데이터센터에도 있다.</p>
+<p>무엇을 더 봐야 하나 ② 과점에서 한 곳이 회생 절차를 거치면 남은 곳의 자리가 넓어진다. ST마이크로·인피니언·온세미의 점유율 변화가 그 확인 지표다.</p>
+<p>무엇을 더 봐야 하나 ③ 8인치 전환은 원가를 낮추는 대신 초기 투자가 크다. 이 전환의 속도가 다음 사이클에서 누가 남는지를 정한다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2024-06-13-power-semi-strategy.md">insights/seemore/2024-06-13-power-semi-strategy.md</a></div></div></div>

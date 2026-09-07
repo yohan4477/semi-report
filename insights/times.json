@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "9d2846204da136862feed6562b7e204e5e5e1049",
-"lines": 4334
+"index_fingerprint": "b42f6b7c84e6aff8e6503eda1e6393bf58062ff1",
+"lines": 4370
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9512,6 +9512,101 @@
 "t": "2011",
 "tense": "회고"
 },
+"content/understanding/채널 씨모어/2024-06-13-power-semi.md#L28": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-13-power-semi.md#L32": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L16": {
+"how": "명시",
+"span": [
+"1987",
+"2023"
+],
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L21": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L22": {
+"how": "명시",
+"span": [
+"1987",
+"1991"
+],
+"t": "1991",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L24": {
+"how": "명시",
+"span": [
+"2019",
+"2023"
+],
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L27": {
+"how": "명시",
+"span": [
+"2023",
+"2024"
+],
+"t": "2024",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/2024-06-17-power-candidate.md#L30": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-06-24-power-demand.md#L30": {
+"how": "계산",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2024-12-03-wolfspeed.md#L20": {
+"how": "계산",
+"t": "2025",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/2025-01-12-stmicro.md#L16": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-01-12-stmicro.md#L32": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-02-17-iamgold.md#L16": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-02-17-iamgold.md#L22": {
+"how": "명시",
+"span": [
+"2023",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-02-17-iamgold.md#L24": {
+"how": "명시",
+"t": "2015",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/2025-04-08-news.md#L32": {
 "how": "계산",
 "t": "2025",
@@ -9529,6 +9624,31 @@
 "2020"
 ],
 "t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-22-tsmc.md#L19": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-22-tsmc.md#L26": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-22-tsmc.md#L30": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2025-06-22-tsmc.md#L34": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/2025-06-22-tsmc.md#L38": {
+"how": "명시",
+"t": "2019",
 "tense": "회고"
 },
 "content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md#L27": {
@@ -9807,6 +9927,70 @@
 "t": "2025",
 "tense": "회고"
 },
+"content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L37": {
+"how": "명시",
+"t": "2018",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md#L51": {
+"how": "명시",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L16": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L24": {
+"how": "계산",
+"t": "2026",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L29": {
+"how": "명시",
+"t": "2019",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md#L46": {
+"how": "계산",
+"t": "2020",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L28": {
+"how": "계산",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md#L61": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md#L34": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L21": {
+"how": "명시",
+"span": [
+"2023",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L27": {
+"how": "명시",
+"t": "2015",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md#L54": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L176": {
 "how": "계산",
 "t": "2025",
@@ -9825,6 +10009,26 @@
 ],
 "t": "2020",
 "tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-06-22-tsmc.md#L17": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-06-22-tsmc.md#L53": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-06-22-tsmc.md#L70": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2025-06-22-tsmc.md#L90": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
 },
 "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md#L108": {
 "how": "명시",

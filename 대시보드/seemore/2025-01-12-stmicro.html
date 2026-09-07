@@ -1,0 +1,213 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ST마이크로일렉트로닉스가 범용 MCU 1위라는 기사와 달리 전력반도체 성장 축에서 뒤처진 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>ST마이크로일렉트로닉스가 범용 MCU 1위라는 기사와 달리 전력반도체 성장 축에서 뒤처진 경위</h1><div class="pmeta">2025-01-12 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/5S7m8XJlRvk">https://youtu.be/5S7m8XJlRvk</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2025-01-12-stmicro.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2025-01-12-stmicro.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">1위라는 표현을 무슨 시장의 1위인지로 되물어 회사를 다시 본다</div><p>구독자 질문에 답하는 편인데, 답이 종목 평가에서 끝나지 않는다. 진행자는 신문에 실린 「점유율 1위」라는 표현을 그대로 받지 않고 그 시장이 돈이 되는 시장인지를 되묻는다. 이 글은 그 되묻기의 논리와 함께 나온 산업 판단을 보고 1년 8개월 뒤의 값에 대조한다. 4절의 대조 값은 원문에 없는 것이라 출처를 함께 적는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">1위라는 말을 시장의 크기로 되묻는다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">산업 전체를 먼저 깔고 종목을 그 위에 놓는다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">종목 결론은 값의 자리로 정한다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">(검증) 1년 8개월 뒤에 무엇이 맞았나</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">시장을 되물은 대목과 수요처를 못 본 대목</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 1위라는 말을 시장의 크기로 되묻는다</h2>
+<figure class="uc-fig"><p class="fig-title">1위라는 말을 시장의 크기로 되묻는다</p><svg class="epoch" viewBox="0 0 520 219" role="img" aria-label="점유율 1위라는 표현을 되물어 확인한 순서">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="64.5" y="20" text-anchor="middle" class="fig-hd">무엇을</text>
+  <text x="272" y="20" text-anchor="middle" class="fig-hd">어떻게</text>
+  <rect x="0" y="30" width="129" height="49" rx="9" class="fig-stage"/>
+  <text x="64.5" y="60.5" text-anchor="middle" class="fig-b">신문이 말한 것</text>
+  <rect x="145" y="30" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="272" y="60.5" text-anchor="middle" class="fig-b">범용 MCU 시장 점유율 1위</text>
+  <line x1="64.5" y1="81" x2="64.5" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="129" height="49" rx="9" class="fig-stage"/>
+  <text x="64.5" y="125.5" text-anchor="middle" class="fig-b">되물은 것</text>
+  <rect x="145" y="95" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="272" y="125.5" text-anchor="middle" class="fig-b">그 시장이 돈이 되는 시장인가</text>
+  <line x1="64.5" y1="146" x2="64.5" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="129" height="49" rx="9" class="fig-stage"/>
+  <text x="64.5" y="190.5" text-anchor="middle" class="fig-b">확인한 것</text>
+  <rect x="145" y="160" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="272" y="190.5" text-anchor="middle" class="fig-b">매출 성장률 둔화와 주가 하락</text>
+</svg><figcaption>기사가 말하는 결과를 받지 않고 그 결과를 만든 셈을 다시 센다. 이 채널의 되풀이되는 동작이다.</figcaption></figure>
+<p>이 회차의 중심 동작은 되묻기다. 지난해 조선비즈 인터뷰 기사에서 ST마이크로일렉트로닉스가 범용 MCU(마이크로컨트롤러) 시장 점유율 1위로 소개됐다는 사실을 확인한 뒤, 그 표현이 맞기는 하지만 그 시장 자체가 돈이 안 되는 시장이라고 본다.</p>
+<p>근거는 견줌이다. 인피니언·NXP와 매출을 나란히 놓고 STM의 매출 구성이 성장이 더딘 영역에 쏠려 있음을 짚는다. 최근 5개년과 3개년 매출 성장률을 견주면 크게 둔화됐고 주가도 60% 빠졌다는 사실을 붙인다.</p>
+<p>이 방식이 이 채널의 다른 회차들과 같은 자리에 있다. 기사가 말하는 결과를 받아들이지 않고 그 결과를 만든 셈을 다시 센다. 조선이 좋다는 기사에서 로열티가 어디로 가는지 물었던 것, LG전자 매출 22조에서 이익률 5%를 짚었던 것과 같은 동작이다.</p>
+<h2 id="s2"><span class="num">2</span> 산업 전체를 먼저 깔고 종목을 그 위에 놓는다</h2>
+<p>종목 질문에 답하면서도 산업부터 깐다. 전기차·데이터센터·가전으로 수요처가 넓어지는 가운데 SiC·GaN 같은 화합물 반도체가 돈이 되는 영역으로 떠오른다는 것이다.</p>
+<p>그 안에서 두 회사를 대비한다. 울프스피드의 SiC 웨이퍼 점유율과 최근의 가격 폭락, 그리고 코히어런트의 데이터센터향 호조다. 같은 소재 산업 안에서도 어느 수요처에 붙어 있느냐로 성적이 갈린다는 그림이다.</p>
+<p>경쟁 구도도 센다. 15개 안팎이 겨루는 이 시장을 2000년대 초반 D램 치킨게임에 견주고, 중국 업체까지 들어오면 곧 치킨게임이 벌어질 수 있다고 본다. 그래서 삼성전자와 SK하이닉스가 여기에 들어가는 이유에 의문을 붙이고, SK하이닉스는 HBM 후속 개발에 집중하는 편이 낫지 않겠느냐고 말한다.</p>
+<p>그리고 구조 판단을 하나 던진다. 완성차 업체들이 직접 설계에 나서면서 수요가 파운드리로 몰려, 전력반도체도 결국 파운드리가 돈을 다 벌어 가는 구조가 될 것이라는 예상이다. 국내 대기업도 직접 설계보다 파운드리를 하는 편이 낫다고 본다.</p>
+<h2 id="s3"><span class="num">3</span> 종목 결론은 값의 자리로 정한다</h2>
+<p>투자 판단은 단순하다. 주가가 다시 30달러를 넘으면 투자할 만하고, 그렇지 않다면 12~14달러대에서 사서 30달러까지 반등할 때 차익을 노리는 것이 맞다고 본다.</p>
+<p>산업 분석은 부정적인데 매매 전략은 값의 자리로 갈린다는 점이 눈에 띈다. 회사가 좋아서 사는 것이 아니라 값이 싸서 사는 자리를 따로 둔 셈이다. 원칙 편에서 손절 자리를 먼저 잡고 그 위를 첫 진입가로 삼는다고 했던 방식과 같은 꼴이다.</p>
+<h2 id="s4"><span class="num">4</span> (검증) 1년 8개월 뒤에 무엇이 맞았나</h2>
+<p>이 절의 값은 원문에 없다. 2026-09-07 기준으로 따로 확인한 것이며 출처를 함께 적는다.</p>
+<p>치킨게임 판단은 맞았고 그 결과가 한 회사의 회생 절차로 나타났다. 울프스피드는 2025년 6월 챕터11을 신청해 9월 29일 절차를 마쳤고, 그 과정에서 총부채를 약 70% 줄였다(출처: Wolfspeed 보도자료 2025-09-29, elevenflo 2025). 미국 전기차 수요 둔화 속에 공급자들이 8인치 전환과 함께 설비를 계속 늘린 것이 배경이다(출처: 24/7 Wall St. 2026-05-11, GM Insights 2026).</p>
+<p>시장 구도는 굳었다. ST마이크로·인피니언·온세미 세 곳이 2025년 기준 세계 SiC 시장의 65.4%를 차지한다(출처: Mordor Intelligence 2026). 새로 들어온 쪽이 판을 흔들지는 못했다.</p>
+<p>STM에 대한 부정적 평가는 절반만 맞았다. 이 회사의 2026년 1분기 매출은 31억 달러로 전년 같은 기간보다 23% 늘었고 자동차 매출도 1년 전보다 15% 늘었다. 2분기 매출 전망은 34억 5천만 달러로 전년 대비 24.9% 성장을 가리킨다. 주가는 실적 발표 뒤 47달러 선까지 올랐다(출처: Investing.com 2026 STM 실적 콜, tickeron 2026, ad-hoc-news 2026).</p>
+<p>다만 회복의 이유가 이 회차가 본 자리와 다르다. 매출을 끌어올린 것은 전기차가 아니라 AI와 데이터센터다. 이 회사의 2026년 데이터센터 매출은 5억 달러를 넘어설 것으로 전망된다(출처: tickeron 2026). 30달러를 넘으면 투자할 만하다는 조건은 채워졌고, 채워진 이유는 다른 곳에 있었다.</p>
+<p>파운드리가 다 벌어 간다는 구조 판단도 방향은 맞았다. TSMC는 2026년 2분기 매출 402억 달러로 36% 늘었고 첨단 파운드리 시장의 73%를 쥐고 있다(출처: techtimes 2026-07-16, siliconanalysts 2026).</p>
+<h2 id="s5"><span class="num">5</span> 시장을 되물은 대목과 수요처를 못 본 대목</h2>
+<figure class="uc-fig"><p class="fig-title">변수를 봤는데 무게를 낮게 잡았다</p><svg class="epoch" viewBox="0 0 520 154" role="img" aria-label="전기차와 데이터센터에 둔 무게의 차이">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="25.5" y="20" text-anchor="middle" class="fig-hd">무엇을</text>
+  <text x="178" y="20" text-anchor="middle" class="fig-hd">어떻게 봤나</text>
+  <text x="385" y="20" text-anchor="middle" class="fig-hd">그 뒤</text>
+  <rect x="0" y="30" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="60.5" text-anchor="middle" class="fig-b">수요처</text>
+  <rect x="67" y="30" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="60.5" text-anchor="middle" class="fig-b">전기차를 중심에 놓았다</text>
+  <rect x="305" y="30" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="385" y="60.5" text-anchor="middle" class="fig-b">둔화가 이어졌다</text>
+  <rect x="0" y="95" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="125.5" text-anchor="middle" class="fig-b">곁가지</text>
+  <rect x="67" y="95" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="125.5" text-anchor="middle" class="fig-b">데이터센터를 짚고 넘어갔다</text>
+  <rect x="305" y="95" width="160" height="49" rx="9" class="fig-agent"/>
+  <text x="385" y="125.5" text-anchor="middle" class="fig-b">여기서 회복이 왔다</text>
+</svg><figcaption>보통은 한 변수만 보고 틀렸는데, 여기서는 여럿을 보고도 배분에서 어긋났다.</figcaption></figure>
+<p>이 회차의 성적이 무엇으로 갈렸는지는 분명하다.</p>
+<p>되묻기는 작동했다. 「1위」라는 표현을 시장의 크기로 되물어 매출 구성과 성장률을 확인한 방식은 그 자체로 옳고, 실제로 2025년 내내 이 회사의 성적이 부진했다.</p>
+<p>수요처의 이동은 못 봤다. 이 회차는 전력반도체의 수요를 전기차 중심으로 놓고 데이터센터를 곁가지로 뒀다. 그런데 그 곁가지가 2026년의 회복을 만들었다. 코히어런트의 데이터센터향 호조를 이미 짚고도 그것을 STM의 셈에는 넣지 않았다.</p>
+<p>이 어긋남은 이 채널의 다른 회차들과 성격이 다르다. 보통은 한 변수만 보고 업종을 불러 틀렸는데, 여기서는 변수를 여럿 봤으면서 그중 하나의 무게를 낮게 잡았다. 분석이 아니라 배분의 문제였다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</h2>
+<p>빠진 것 ① 데이터센터 수요가 전력반도체에서 얼마나 큰지가 없다. 전기차 둔화의 반대편에 무엇이 있는지를 세지 않는다.</p>
+<p>빠진 것 ② 치킨게임에서 누가 살아남는지의 기준이 없다. 원가와 자금력 가운데 무엇이 갈림을 만드는지가 안 나온다.</p>
+<p>빠진 것 ③ 파운드리가 다 벌어 간다는 판단에 전력반도체 파운드리의 규모가 없다. 그 시장이 얼마짜리인지가 있어야 판단이 선다.</p>
+<p>무엇을 더 봐야 하나 ① 전력반도체의 수요가 전기차에서 데이터센터로 옮겨 가는 속도가 이 산업의 다음 국면을 정한다. 회사별 데이터센터 매출 비중이 그 지표다.</p>
+<p>무엇을 더 봐야 하나 ② 한 곳이 회생 절차를 거친 뒤 남은 셋의 점유율이 어떻게 바뀌는지가 치킨게임의 결과를 보여 준다.</p>
+<p>무엇을 더 봐야 하나 ③ 값의 자리로 정한 매매 조건은 확인이 쉽다. 30달러를 넘으면 산다는 조건이 채워졌으니, 그때 실제로 샀는지를 뒤 회차에서 확인할 만하다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2025-01-12-stmicro-strategy.md">insights/seemore/2025-01-12-stmicro-strategy.md</a></div></div></div>
