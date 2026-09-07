@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+"""보고서 전력 층 — 데이터센터가 계통에 막힌 뒤 그 값을 누가 치렀나.
+
+본문은 insights/reports/power-2026-09-07.md 에서 읽는다. CPO·선단 패키징·금리 층과
+같은 규약이다. 산문은 마크다운 원본에 두고 여기서 HTML 로 바꾼다. 차례와 절 번호는
+_rep_toc 가 붙인다 — 층마다 복사하지 않는다.
+
+이 층의 성격 하나 — 화자가 사실상 SemiAnalysis 한 곳이다. 금리 층처럼 서로 다른
+필자를 맞대 놓지 못하므로, 어긋남은 같은 저자의 두 글 사이 또는 저자와 그가 인용한
+회사 사이에서 찾아 실었다. 그 한계를 12절이 스스로 밝힌다.
+"""
+import io
+import os
+import re
+
+import _power_fig as pf
+import _rep_toc as rt
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = os.path.join(ROOT, 'insights', 'reports', 'power-2026-09-07.md')
+
+HEAD_POWER = (
+    '<div class="rep-head"><span class="rn">보고서 ⑨</span>'
+    '<h2 id="rep-power">전력 총정리 — 데이터센터가 계통에 막힌 뒤, 그 값을 누가 치렀나</h2>'
+    '<p class="rm">바탕 <b>SemiAnalysis 뉴스레터 12편 · 팟캐스트 1회차 · 전략 판 1회차</b> · '
+    '원문 기간 <b>2024-03 ~ 2026-08</b><br>'
+    '재료를 한 곳이 썼습니다. 그래서 금리 층처럼 서로 다른 필자를 맞대 놓는 대신, 같은 저자의 '
+    '두 글이 어긋난 자리와 저자가 인용한 회사의 말이 저자 추정과 갈리는 자리를 찾아 실었습니다. '
+    '분량 제한 없이 썼습니다.</p></div>')
+
+GROUPS = [('무엇이 막혔나', 1, 4),
+          ('누가 값을 치르나', 5, 8),
+          ('그래서 무엇을 하나', 9, 12)]
+
+LEAD = ('이 층은 물음 하나를 세 묶음으로 따라갑니다 — 무엇이 막혔나, 누가 값을 치르나, '
+        '그래서 무엇을 하나.')
+
+CAPTION = {
+    'CHAIN': ('발전소에서 가속기까지 전압을 다섯 번 낮춘다', pf.FIG_CHAIN,
+              '다섯 상자가 전부 같은 크기입니다. 다른 것은 안에 적힌 전압뿐입니다. 마디마다 '
+              '손실이 나기 때문에 이 사슬을 줄이는 것이 800볼트 직류 전환의 목적입니다. '
+              '단계와 전압은 Semi Doped 전략 판이 나눈 것을 그대로 옮겼습니다(SD-260508 L49). '
+              '마지막 칸의 전압조정모듈이 데이터센터 안에서 개수가 가장 많은 부품이면서 '
+              '소수 회사가 쥐고 있는 자리입니다.'),
+    'PJMPRICE': ('PJM 용량 요금이 정해지는 길과 같은 기간 선물시장', pf.FIG_PJMPRICE,
+                 '왼쪽은 값이 정해지는 길이고 오른쪽은 같은 기간 실물 시장이 보인 신호입니다. '
+                 '왼쪽에서 값이 9.3배 뛰는 동안 오른쪽 선물은 12~20% 올랐습니다. 두 판을 '
+                 '나란히 놓은 것은 이 글의 배치이고, 각 값은 원문에 있습니다(전력-260303 '
+                 'L113, L114, L186, L290). 왼쪽 세 번째 칸의 테두리가 짙은 것은 그 자리가 '
+                 '요금으로 바뀌는 지점이기 때문입니다.'),
+    'GAP': ('같은 경매를 실제 청산가와 모델을 고쳤을 때로 견준다', pf.FIG_GAP,
+            '높이는 메가와트·하루당 청산가에 비례합니다. 채운 막대가 실제로 치른 값이고 빈 '
+            '막대가 저자의 역산입니다(전력-260816 L308, L310). 2025/26년은 실제로 산 물량 '
+            '차이가 14메가와트뿐인데 값이 절반이 됩니다. 공급이 조여 있어 거래가 공급곡선의 '
+            '거의 수직인 구간에서 이뤄지기 때문이라고 팟캐스트 게스트가 설명합니다'
+            '(팟-260820 L57). 두 경매 차액을 합치면 뉴스레터는 116억 달러, 팟캐스트는 '
+            '120억 달러로 값이 갈립니다 — 맞추지 않고 둘 다 본문에 적었습니다.'),
+    'THREE': ('같은 물음에 세 시장이 다르게 답한다', pf.FIG_THREE,
+              '세 판이 같은 크기이고 줄도 같은 세 줄입니다 — 누가 내나, 값이 어떻게 정해지나, '
+              '청구서에 보이나. 이 배치는 이 글이 재료를 가로질러 세운 것이고 각 값은 원문에 '
+              '있습니다(전력-260303 L221·L245-247·L272, 전력-240314 L601-602). 한국과 '
+              '대만 값은 2024년 3월 시점이고 PJM 값은 2026년 기준이라 시점이 다릅니다.'),
+}
+
+_CITE = re.compile(r'\s*\([^()]*?L[\d,\-\s]+\)')
+
+
+def _strip(s):
+    """(라벨 L12) 는 화면에서 걷는다 — 원본 파일에만 남는다(확정 규칙 S1)."""
+    s = _CITE.sub('', s)
+    return re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', s).strip()
+
+
+def load():
+    txt = io.open(SRC, encoding='utf-8').read()
+    if txt.startswith('---'):
+        txt = txt.split('---', 2)[2]
+    out, para = [], []
+
+    def flush():
+        if para:
+            out.append(('p', ' '.join(para)))
+            para.clear()
+
+    for line in txt.split('\n'):
+        s = line.rstrip()
+        if s.startswith('## '):
+            flush()
+            out.append(('sec', re.sub(r'^\d+\.\s*', '', s[3:]).strip()))
+        elif s.startswith('[[fig:'):
+            flush()
+            out.append(('fig', s[6:].rstrip(']').strip()))
+        elif not s:
+            flush()
+        elif s.startswith('#'):
+            continue
+        else:
+            para.append(s.strip())
+    flush()
+    return out
+
+
+def toc_html(titles):
+    """규약과 코드는 _rep_toc 하나뿐이다 — 층마다 복사하면 갈린다."""
+    return rt.toc_html('power', LEAD, GROUPS, titles)
+
+
+def report_power(sec, p, fig):
+    items = load()
+    titles = [t for k, t in items if k == 'sec']
+    assert len(titles) == GROUPS[-1][2], (len(titles), GROUPS)
+    toc_done = False
+    for k, v in items:
+        if k in ('sec', 'fig') and not toc_done:
+            p(toc_html(titles))
+            toc_done = True
+        if k == 'sec':
+            sec(rt.sec_title(titles.index(v) + 1, v))
+        elif k == 'p':
+            p(_strip(v))
+        elif k == 'fig':
+            fig(CAPTION[v])

@@ -21,6 +21,7 @@ import _rep_toc  # noqa: E402
 import _rate_part1  # noqa: E402
 import _rate_fig  # noqa: E402
 import _mem_part1  # noqa: E402
+import _power_part1  # noqa: E402
 import _mem_fig  # noqa: E402
 import _trump_part1  # noqa: E402
 import dash_common as dc
@@ -251,6 +252,21 @@ def report_mem_html():
     return ''.join(h)
 
 
+def report_power_html():
+    """전력 총정리 — 한 편. 본문은 insights/reports/power-2026-09-07.md 원본에서 읽는다."""
+    h = [_power_part1.HEAD_POWER]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="power-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _power_part1.report_power(sec, p, fig)
+    return ''.join(h)
+
+
 HEADER = '''  <header>
     <p class="eyebrow">여러 편을 한 물음으로 꿴 글</p>
     <h1>통합 보고서</h1>
@@ -266,7 +282,7 @@ LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 �
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
       <span>바탕 <b>SemiAnalysis 23편 · Semi Doped 6회차 · 메르 29편 · 해설 19편 · 링크드인 3개월</b></span>
-      <span>보고서 <b>4편</b></span>
+      <span>보고서 <b>6편</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -280,6 +296,7 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _pkg_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _power_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()])
 
 
@@ -300,7 +317,10 @@ if __name__ == '__main__':
                      '만드는 회사 손에 안 남나', 1, report_mem_html()),
                     ('sec-trump', '트럼프 — 무엇을 걸어 무엇을 받아냈나',
                      '메르 47편 — 위협하고 미루고 거래하고 청구하는 순서, 그리고 한국이 값을 낸 '
-                     '자리', 1, report_trump_html())],
+                     '자리', 1, report_trump_html()),
+                    ('sec-power', '전력 — 막힌 값을 누가 치렀나',
+                     'SemiAnalysis 12편 + 팟캐스트 1회차 + 전략 판 1회차 — 계통에 막힌 뒤 '
+                     '그 값이 누구 청구서로 갔나', 1, report_power_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
