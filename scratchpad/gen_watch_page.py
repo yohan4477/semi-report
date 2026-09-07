@@ -3882,6 +3882,14 @@ Array.from(document.querySelectorAll('.st-1 a[data-gu]')).forEach(function(a){
 </script>"""
 
 _SIDO_JS = """<script>
+// 새로고침하면 맨 위에서 시작한다. 브라우저가 스크롤 자리를 되살리면 탭을 고르는
+// 화면이 안 보이는 자리에서 페이지가 열려 어디에 있는지를 잃는다(2026-09-07).
+// 주소에 앵커가 붙어 온 것은 그대로 둔다 — 그건 사람이 지목한 자리다
+(function(){
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+if(!location.hash){window.scrollTo(0,0);
+  window.addEventListener('load',function(){window.scrollTo(0,0);});}
+})();
 (function(){
 var tabs=Array.from(document.querySelectorAll('.sido-tab'));
 var blocks=Array.from(document.querySelectorAll('.sido-block'));
