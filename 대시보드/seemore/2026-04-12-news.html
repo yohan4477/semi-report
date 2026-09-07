@@ -131,6 +131,51 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>같은 사실이 위치에 따라 반대로 작동한다는 것이 이 회차의 출발이다. 토큰을 파는 쪽에는 단가 하락이고, 토큰을 사서 쓰는 쪽에는 원가 하락이다. 그래서 한 기사에서 악재와 호재가 동시에 나온다.</p>
 <p>이 관점이 값어치 있는 이유는 소프트웨어 주가가 크게 빠진 국면을 다시 보게 만들기 때문이다. AI가 소프트웨어를 잡아먹는다는 이야기가 널리 퍼져 있었는데, 토큰 값이 내려가면 그 소프트웨어 회사들이 AI 기능을 싸게 붙일 수 있다는 반대 방향의 셈이 성립한다.</p>
 <h2 id="s2"><span class="num">2</span> 여섯 칸에 서로 다른 답을 붙인다</h2>
+<figure class="uc-fig"><p class="fig-title">같은 하락이 칸마다 다르게 작동한다</p><svg class="epoch" viewBox="0 0 520 349" role="img" aria-label="토큰 값 하락이 밸류체인 칸마다 어떻게 작동하는지">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="88" y="20" text-anchor="middle" class="fig-hd">어느 칸</text>
+  <text x="280" y="20" text-anchor="middle" class="fig-hd">왜</text>
+  <text x="448.5" y="20" text-anchor="middle" class="fig-hd">판단</text>
+  <rect x="0" y="30" width="176" height="49" rx="9" class="fig-stage"/>
+  <text x="88" y="60.5" text-anchor="middle" class="fig-b">AI 모델 회사</text>
+  <rect x="192" y="30" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="280" y="60.5" text-anchor="middle" class="fig-b">단가 싸움에 밀린다</text>
+  <rect x="384" y="30" width="129" height="49" rx="9" class="fig-agent"/>
+  <text x="448.5" y="60.5" text-anchor="middle" class="fig-b">부정적</text>
+  <rect x="0" y="95" width="176" height="49" rx="9" class="fig-stage"/>
+  <text x="88" y="125.5" text-anchor="middle" class="fig-b">엔비디아 · TSMC</text>
+  <rect x="192" y="95" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="280" y="125.5" text-anchor="middle" class="fig-b">대체가 어렵다</text>
+  <rect x="384" y="95" width="129" height="49" rx="9" class="fig-agent"/>
+  <text x="448.5" y="125.5" text-anchor="middle" class="fig-b">계속 좋다</text>
+  <rect x="0" y="160" width="176" height="49" rx="9" class="fig-stage"/>
+  <text x="88" y="190.5" text-anchor="middle" class="fig-b">반도체 설계</text>
+  <rect x="192" y="160" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="280" y="190.5" text-anchor="middle" class="fig-b">앞단을 쥐었다</text>
+  <rect x="384" y="160" width="129" height="49" rx="9" class="fig-agent"/>
+  <text x="448.5" y="190.5" text-anchor="middle" class="fig-b">괜찮다</text>
+  <rect x="0" y="225" width="176" height="49" rx="9" class="fig-stage"/>
+  <text x="88" y="255.5" text-anchor="middle" class="fig-b">GPU 임대</text>
+  <rect x="192" y="225" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="280" y="255.5" text-anchor="middle" class="fig-b">남과 다른 것이 없다</text>
+  <rect x="384" y="225" width="129" height="49" rx="9" class="fig-agent"/>
+  <text x="448.5" y="255.5" text-anchor="middle" class="fig-b">부정적</text>
+  <rect x="0" y="290" width="176" height="49" rx="9" class="fig-stage"/>
+  <text x="88" y="320.5" text-anchor="middle" class="fig-b">소프트웨어</text>
+  <rect x="192" y="290" width="176" height="49" rx="9" class="fig-box"/>
+  <text x="280" y="320.5" text-anchor="middle" class="fig-b">토큰을 사서 쓴다</text>
+  <rect x="384" y="290" width="129" height="49" rx="9" class="fig-agent"/>
+  <text x="448.5" y="320.5" text-anchor="middle" class="fig-b">원가가 내려간다</text>
+</svg><figcaption>대체 가능한 자리에서는 단가 하락이 손실이고, 그 값을 사서 쓰는 자리에서는 이득이다.</figcaption></figure>
 <p>밸류체인을 여섯으로 나누고 칸마다 답이 다르다.</p>
 <p>AI 모델을 직접 만드는 회사는 부정적으로 본다. 차별화 포인트나 고객 기반이 없으면 값이 내려가는 싸움에서 사라질 것이라는 이유다.</p>
 <p>엔비디아는 계속 좋다고 본다. 이미 업계의 필수 인프라가 됐기 때문이다.</p>
@@ -149,6 +194,34 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 <p>그런데 이 회차가 안 본 조건이 실제로 문제가 됐다. 단가가 내려간 만큼 사용량이 폭증해 총비용은 오히려 늘었다. 구글의 월간 토큰 처리량은 두 해 만에 9.7조에서 3,200조 이상으로 약 330배가 됐고, 2024년 단가로 예산을 짠 기업들이 에이전트형 작업에서 예상의 몇 배를 쓰게 됐다는 지적이 나왔다. AI 기반 사업의 매출총이익률은 50~60%로 전통적인 소프트웨어의 80~90%보다 낮다(출처: The GTM Newsletter 2026, Forbes 2026-07-28).</p>
 <p>임대 사업자에 대한 부정적 판단은 아직 판정이 이르다. 데이터센터 쪽에서는 오히려 전력과 장비 부족으로 공급이 막힌 상태가 이어졌다(출처: Yahoo Finance 2026 데이터센터 지연 기사).</p>
 <h2 id="s5"><span class="num">5</span> 단가를 본 대목과 총액을 안 본 대목</h2>
+<figure class="uc-fig"><p class="fig-title">단가는 봤고 총액은 안 봤다</p><svg class="epoch" viewBox="0 0 520 219" role="img" aria-label="단가 하락과 사용량 증가가 총비용에서 만나는 자리">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="41" y="20" text-anchor="middle" class="fig-hd">무엇을</text>
+  <text x="225" y="20" text-anchor="middle" class="fig-hd">어떻게</text>
+  <rect x="0" y="30" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="60.5" text-anchor="middle" class="fig-b">본 것</text>
+  <rect x="98" y="30" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="225" y="60.5" text-anchor="middle" class="fig-b">토큰 한 개당 값이 내려간다</text>
+  <line x1="41" y1="81" x2="41" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="125.5" text-anchor="middle" class="fig-b">안 본 것</text>
+  <rect x="98" y="95" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="225" y="125.5" text-anchor="middle" class="fig-b">쓰는 양이 그보다 더 늘어난다</text>
+  <line x1="41" y1="146" x2="41" y2="158" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="160" width="82" height="49" rx="9" class="fig-stage"/>
+  <text x="41" y="190.5" text-anchor="middle" class="fig-b">그래서</text>
+  <rect x="98" y="160" width="254" height="49" rx="9" class="fig-box"/>
+  <text x="225" y="190.5" text-anchor="middle" class="fig-b">비용은 오히려 늘 수 있다</text>
+</svg><figcaption>한쪽 변수만 보고 업종 전체를 부를 때 이 채널은 자주 어긋났다.</figcaption></figure>
 <p>이 회차의 성적이 반반인 이유가 분명하다.</p>
 <p>단가의 방향은 맞았고 그 방향이 누구에게 유리한지도 대체로 맞았다. 대체 가능성으로 칸을 나눈 잣대가 작동했다.</p>
 <p>총액을 안 본 것이 빈 곳이었다. 값이 싸지면 쓰는 양이 늘고, 늘어난 양이 단가 하락을 삼키면 비용은 늘어난다. 소프트웨어 회사가 AI 기능을 붙일수록 원가 구조가 무거워지는 결과가 실제로 나타났다.</p>
