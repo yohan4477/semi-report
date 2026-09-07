@@ -2453,7 +2453,7 @@ def fig_balance():
     box = ((30, '잔금 대출', '집값의 40%까지', '분양가가 15억을 넘으면 4억까지'),
            (290, '전세보증금으로 잔금', '토지거래허가구역 실거주 2년', '세입자 돈으로 맞추면 조건부 대출'))
     for x, name, l1, l2 in box:
-        o.append('<rect x="%d" y="112" width="240" height="74" rx="6" fill="var(--paper)" '
+        o.append('<rect x="%d" y="112" width="240" height="74" rx="6" fill="var(--surface)" '
                  'stroke="var(--ink)" stroke-dasharray="4 3"/>' % x)
         o.append('<text x="%d" y="134" class="t-sm">%s</text>' % (x + 14, name))
         o.append('<text x="%d" y="156" class="t-sm t-axis">%s</text>' % (x + 14, l1))
@@ -2522,8 +2522,8 @@ def fig_rebuild_cost():
         last = i == len(rows) - 1
         o.append('<rect x="26" y="%d" width="508" height="38" rx="6" fill="%s" '
                  'stroke="var(--%s)"%s/>'
-                 % (y, 'var(--surface)' if not last else 'var(--paper)',
-                    'ink' if last else 'line', ' stroke-width="1.4"' if last else ''))
+                 % (y, 'var(--surface)',
+                    'ink' if last else 'line', ' stroke-width="1.6"' if last else ''))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 24, name))
         o.append('<text x="250" y="%d" class="t-sm">%s</text>' % (y + 24, val))
         o.append('<text x="352" y="%d" class="t-sm">%s</text>' % (y + 24, why))
@@ -2550,8 +2550,8 @@ def fig_zone_switch():
         o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--surface)" '
                  'stroke="var(--line)"/>' % (AX - 12, y, W))
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (AX, y + 21, a))
-        o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--paper)" '
-                 'stroke="var(--ink)"/>' % (BX - 12, y, W))
+        o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--surface)" '
+                 'stroke="var(--ink)" stroke-width="1.6"/>' % (BX - 12, y, W))
         o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (BX, y + 21, b))
     y = 62 + len(rows) * 46 + 16
     o.append(note_box(26, y, 508, 44))
@@ -2573,7 +2573,7 @@ def fig_capital_plan():
     for i, (name, val, why) in enumerate(ways):
         y = 40 + i * 58
         o.append('<rect x="26" y="%d" width="508" height="48" rx="6" fill="%s" '
-                 'stroke="var(--line)"/>' % (y, 'var(--surface)' if i == 0 else 'var(--paper)'))
+                 'stroke="var(--line)"/>' % (y, 'var(--surface)'))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 20, name))
         o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 40, why))
         o.append('<text x="470" y="%d" class="t-sm" text-anchor="end">%s</text>' % (y + 30, val))
