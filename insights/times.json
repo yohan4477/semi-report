@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-08",
-"index_fingerprint": "d0af680e55e513bb9f6fa6f01380b785bcf477e7",
-"lines": 4388
+"index_fingerprint": "d9e9381252a1a2835264c63eb3bcf354b81aad7f",
+"lines": 4387
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -2812,11 +2812,6 @@
 "how": "명시",
 "t": "2029",
 "tense": "전망"
-},
-"content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md#L88": {
-"how": "계산",
-"t": "2025",
-"tense": "회고"
 },
 "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L125": {
 "how": "명시",
