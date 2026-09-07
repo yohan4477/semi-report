@@ -2370,8 +2370,10 @@ def outside_kakao_js():
     return (
         '<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=%s&autoload=false">'
         '</script><script>(function(){'
-        'var els=document.querySelectorAll(".kmap");'
-        'if(!els.length||!window.kakao||!kakao.maps)return;'
+        'var els=document.querySelectorAll(".kmap");if(!els.length)return;'
+        'function alt(){Array.prototype.forEach.call(els,function(el){el.hidden=true;'
+        'var a=el.parentNode.querySelector(".kmap-alt");if(a)a.hidden=false;});}'
+        'if(!window.kakao||!kakao.maps){alt();return;}'
         'kakao.maps.load(function(){Array.prototype.forEach.call(els,function(el){'
         'var pts=JSON.parse(el.getAttribute("data-pts"));'
         'var map=new kakao.maps.Map(el,{center:new kakao.maps.LatLng(pts[0].lat,pts[0].lon),'
@@ -2399,7 +2401,14 @@ def outside_section(watches):
                  % (E(e['who']), E(e['when']), E(e['url'])))
         h.append('<p class="row-what">%s</p>' % E(e['title']))
         h.append('<p class="band-s">%s</p>' % E(e['lede']))
-        fig = outside_kakao(e) or outside_map(e)
+        # 카카오 지도가 뜨면 그것을 보이고, 못 뜨면(도메인 미등록·차단·오프라인)
+        # 좌표만 찍은 우리 그림을 대신 보인다 — 빈 회색 상자를 내지 않는다
+        kmap = outside_kakao(e)
+        svg = outside_map(e)
+        if kmap:
+            fig = kmap + ('<div class="kmap-alt" hidden>%s</div>' % svg)
+        else:
+            fig = svg
         if fig:
             h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
                      '점의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
