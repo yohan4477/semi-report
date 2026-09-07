@@ -58,28 +58,14 @@ NO_SERIES = {'news'}
 
 # 목록은 최신 순서 하나다. 섹션은 줄에 붙는 태그이고, 위 선택 줄은 그 태그로 줄을 고르는
 # 장치다 — 화면 순서를 바꾸지 않는다. 접는 것이 아니라 거르는 것이라 규약에 안 걸린다.
-SECJS_CSS = """
-.secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
-.secnav a.on small{color:#c8cdd6}
+# 태그로 거르는 장치는 Semi Doped 장 것을 그대로 쓴다(sd.SECJS·sd.SECJS_CSS) — 파서·마크업을
+# 그 장에서 빌려 쓰는 것과 같은 이유로, 같은 일을 하는 JS 를 두 벌 두지 않는다. 여기서 더하는
+# 것은 이 장에만 있는 꼴뿐이다 — 시리즈 묶음 줄과 묶음 안 회차 머리.
+SECJS_CSS = sd.SECJS_CSS + """
 .row.grp{border-left:4px solid #1b1f27;background:#f7f9fc}
-.row .tags{margin:0 0 5px}
 h2.ep{font-size:19px;margin:34px 0 6px;padding-top:14px;border-top:1px solid #e3e7ee}
 """
-SECJS = """<script>
-(function(){
-  var nav=document.querySelector('.secnav'),
-      rows=[].slice.call(document.querySelectorAll('.rows > [data-sec]'));
-  if(!nav) return;
-  nav.addEventListener('click', function(e){
-    var a=e.target.closest('a[data-sec]'); if(!a) return;
-    e.preventDefault();
-    [].forEach.call(nav.querySelectorAll('a'), function(x){ x.classList.remove('on'); });
-    a.classList.add('on');
-    var sec=a.getAttribute('data-sec');
-    rows.forEach(function(r){ r.hidden = !!sec && r.getAttribute('data-sec')!==sec; });
-  });
-})();
-</script>""" 
+SECJS = sd.SECJS 
 
 
 def episodes():

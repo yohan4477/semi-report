@@ -44,6 +44,33 @@ SECTIONS = [('compute', '추론 칩'), ('link', '네트워크'), ('power', '전�
 NOT_EPISODE = {'daily-2026-04-08': '월별 회차 목록',
                'til-14': '역사 토막 모음'}
 
+SEC_NAME = dict(SECTIONS)
+
+# 목록은 최신 순서 하나다(2026-09-08). 섹션은 줄에 붙는 태그이고, 위 선택 줄은 그 태그로
+# 줄을 고르는 장치다 — 거르는 것이지 화면 순서를 바꾸지 않는다. 섹션 머리줄로 갈라 세우던
+# 꼴을 걷었다: 주제를 먼저 고르게 해서, 새로 올라온 회차가 어디 있는지 보려면 여섯 덩어리를
+# 훑어야 했다. 씨모어 장이 2026-09-07 에 먼저 이 꼴로 갔고 대시보드 스무 장이 뒤따랐다.
+SECJS_CSS = """
+.secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
+.secnav a.on small{color:#c8cdd6}
+.row .tags{margin:0 0 5px}
+"""
+SECJS = """<script>
+(function(){
+  var nav=document.querySelector('.secnav'),
+      rows=[].slice.call(document.querySelectorAll('.rows > [data-sec]'));
+  if(!nav) return;
+  nav.addEventListener('click', function(e){
+    var a=e.target.closest('a[data-sec]'); if(!a) return;
+    e.preventDefault();
+    [].forEach.call(nav.querySelectorAll('a'), function(x){ x.classList.remove('on'); });
+    a.classList.add('on');
+    var sec=a.getAttribute('data-sec');
+    rows.forEach(function(r){ r.hidden = !!sec && r.getAttribute('data-sec')!==sec; });
+  });
+})();
+</script>"""
+
 
 def esc(s):
     return _html.escape(s, quote=False)
@@ -571,7 +598,7 @@ def row_html(ep):
     m = ep['meta']
     # 판 갈래 꼬리표는 걷었다(2026-09-07). 회색 「🔧 기술」을 먼저 걷고(2026-09-02) 남은
     # 「⚖ 전략」은 모든 줄에 같은 말이라 표시가 아니라 소음이었다. 갈래는 글 안에서 보인다.
-    # 주제는 섹션 머리줄이 이미 말한다 — 줄마다 다시 안 적는다.
+    # 남는 것은 주제 태그다 — 목록이 섹션으로 안 갈리므로 그것을 줄이 말한다(2026-09-08).
     # 윤문을 거친 글은 제목 옆에 「한글패치」 — frontmatter humanized (2026-09-03, 목록에서도 보이게)
     hk = '<span class="tag hk">한글패치</span>' if any(l['meta'].get('humanized') or l['meta'].get('rewritten') for l in ep['lanes']) else ''
     # 날짜 옆에는 진행자 말고 다른 참가자(게스트·발표자)만 — 이름과 짧은 소개(2026-09-02).
@@ -580,17 +607,21 @@ def row_html(ep):
     onames = [n for x in others for n in PN_RE.findall(x)]
     who = ' · '.join(PN_RE.sub(lambda mm: '<span class="pn g%d">%s</span>' % (onames.index(mm.group(1)) % PN_COLORS, mm.group(1)), esc(x))
                     for x in others)
-    inner = ('<div class="rmeta"><span>%s</span>%s</div>'
+    code = m.get('section', '')
+    inner = ('<div class="tags"><span class="tag">%s</span></div>'
+             '<div class="rmeta"><span>%s</span>%s</div>'
              '<div class="rtitle">%s%s</div>'
-             % (esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
+             % (esc(SEC_NAME.get(code, code)),
+                esc(m.get('date', '')), ('<span>%s</span>' % who) if who else '',
                 esc(m.get('title', ep['slug'])), hk))
     if ep['one']:
         inner += '<div class="rone">%s</div>' % esc(ep['one'])
     if ep['lanes']:
-        return '<a class="row" href="semidoped/%s.html">%s</a>' % (ep['slug'], inner)
+        return ('<a class="row" data-sec="%s" href="semidoped/%s.html">%s</a>'
+                % (code, ep['slug'], inner))
     why = ep['note'] or '아직 판이 안 섰다'
     inner += '<div class="why">글 없음 — %s</div>' % esc(why)
-    return '<div class="row dead">%s</div>' % inner
+    return '<div class="row dead" data-sec="%s">%s</div>' % (code, inner)
 
 
 def post_html(ep):
@@ -636,32 +667,30 @@ def post_html(ep):
 
 def index_html(eps):
     live = sum(1 for e in eps if e['lanes'])
-    out = [HEAD % ('Semi Doped 대시보드', CSS)]
+    out = [HEAD % ('Semi Doped 대시보드', CSS + SECJS_CSS)]
     out.append('<h1>🎙️ Semi Doped</h1>')
     out.append('<div class="sub">칩을 만드는 사람이 나와 앉아 설계를 말하는 팟캐스트. '
                '회차마다 두 판이 따로 읽는다 — ⚖ 전략은 전략 컨설턴트 출신 애널리스트의 해설로, '
                '🔧 기술은 주제 아래 순서와 층위로.<br>'
                '글이 있는 회차만 싣는다 — 회차 %d편 중 %d편.</div>' % (len(eps), live))
     # 글 없는 회차는 목록에 안 싣는다 — 「글 없음」 줄이 열여덟 개 서 있으면 목록이 아니라 빈칸이다(2026-09-02)
-    # 섹션 머리줄로 갈라 세운다. 머리에 「글 m편 / 회차 n편」
-    groups = []
-    for code, name in SECTIONS:
-        allc = [e for e in eps if e['meta'].get('section', '') == code and not e['note']]
-        withl = [e for e in allc if e['lanes']]
-        if withl:
-            groups.append((code, name, allc, withl))
-    # 섹션 선택 줄 — 맨 위에서 누르면 그 섹션으로 간다. 접지 않는다(2026-09-02)
-    out.append('<nav class="secnav">%s</nav>' % ''.join(
-        '<a href="#sec-%s">%s <small>%d</small></a>' % (code, esc(name), len(withl)) for code, name, _a, withl in groups))
-    for code, name, allc, withl in groups:
-        out.append('<h2 class="sec" id="sec-%s"><span>%s</span><small>글 %d편 / 회차 %d편</small></h2>' % (code, esc(name), len(withl), len(allc)))
-        out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in withl))
-    stray = [e for e in eps if e['lanes'] and e['meta'].get('section', '') not in dict(SECTIONS)]
+    # 목록은 최신 순서 하나다(2026-09-08). 섹션은 줄에 붙는 태그이고, 위 선택 줄이 그 태그로 거른다.
+    shown = [e for e in eps if e['lanes']]
+    stray = [e for e in shown if e['meta'].get('section', '') not in SEC_NAME]
     if stray:
         raise SystemExit('섹션 코드가 없는 회차: ' + ', '.join(e['slug'] for e in stray))
+    counts = [(code, name, sum(1 for e in shown if e['meta'].get('section', '') == code))
+              for code, name in SECTIONS]
+    out.append('<nav class="secnav"><a href="#" class="on" data-sec="">전체 '
+               '<small>%d</small></a>%s</nav>'
+               % (len(shown), ''.join(
+                   '<a href="#" data-sec="%s">%s <small>%d</small></a>' % (code, esc(name), n)
+                   for code, name, n in counts if n)))
+    out.append('<div class="rows">%s</div>' % ''.join(row_html(e) for e in shown))
     out.append('<div class="foot">글은 원문 전사를 통째로 읽힌 뒤 받은 것이고 '
                '문장을 고치지 않는다. 값이 원문에 있는지는 사람이 대조한다.</div>')
     out.append('</div>')
+    out.append(SECJS)
     return ''.join(out)
 
 
@@ -670,10 +699,14 @@ def check_ui(index, posts):
     bad = []
     if '<details' in index or any('<details' in p for p in posts):
         bad.append('접는 것이 있다 — 이 장은 목록과 글뿐이다')
-    if 'class="sec"' not in index:
-        bad.append('목록에 섹션 머리줄이 없다')
+    if re.search(r'<a class="row"(?![^>]*data-sec=)', index):
+        bad.append('회차 줄에 섹션 표시가 없다 — 목록은 최신 순서 하나이고 섹션은 태그다')
+    if 'class="sec"' in index:
+        bad.append('섹션 머리줄이 있다 — 이 장의 목록은 섹션으로 안 나눈다')
     if 'class="secnav"' not in index:
         bad.append('목록 위에 섹션 선택 줄이 없다')
+    if 'data-sec' not in index.split('</nav>')[0]:
+        bad.append('선택 줄이 태그로 안 거른다 — 섹션으로 데려가는 링크는 옛 꼴이다')
     if 'class="tile' in index:
         bad.append('타일이 있다 — 첫 화면은 회차 줄이다')
     for p in posts:
