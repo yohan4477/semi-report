@@ -107,11 +107,11 @@ FIG_PRICE = _svg(W, 250, '같은 HBM4 를 누가 사느냐로 값이 갈린다 (
     _lt(18, 20, 'SK하이닉스가 파는 값', 't-sm', True),
     _bar(38, _PB, _pd(3.3), 96, '3.0~3.3', '엔비디아', accent=True),
     _bar(150, _PB, _pd(4.1), 96, '3.7~4.1', '다른 1군 고객'),
-    '<line x1="272" y1="12" x2="272" y2="234" stroke="%s" stroke-width="1" '
+    '<line x1="272" y1="12" x2="272" y2="222" stroke="%s" stroke-width="1" '
     'stroke-dasharray="4 4"/>' % INK3,
     _lt(292, 20, '삼성전자가 파는 값', 't-sm', True),
     _bar(312, _PB, _pd(3.9), 96, '3.5~3.9', '평균'),
-    '<line x1="424" y1="12" x2="424" y2="234" stroke="%s" stroke-width="1" '
+    '<line x1="424" y1="12" x2="424" y2="222" stroke="%s" stroke-width="1" '
     'stroke-dasharray="4 4"/>' % INK3,
     _lt(444, 20, '2026년 대비 인상률', 't-sm', True),
     _bar(452, _PB, int(150 * 70 / 98.0), 62, '70%', '엔비디아向', accent=True),
@@ -137,7 +137,7 @@ FIG_CXMT = _svg(W, 258, 'CXMT 는 웨이퍼로는 3위를 노리는데 HBM 은 �
     _bar(294, _CB, _cw(350), 78, '350', 'CXMT', accent=True),
     '<line x1="396" y1="12" x2="396" y2="242" stroke="%s" stroke-width="1" '
     'stroke-dasharray="4 4"/>' % INK3,
-    _lt(416, 20, 'CXMT 웨이퍼를 어디에 쓰나 (2025년 말)', 't-sm', True),
+    _lt(404, 20, 'CXMT 웨이퍼 쓰임새 (2025년 말)', 't-sm', True),
     '<rect x="470" y="50" width="60" height="150" rx="6" fill="none" stroke="%s" '
     'stroke-width="1.5"/>' % INK3,
     _t(500, 42, '100%', 't-sm'),
