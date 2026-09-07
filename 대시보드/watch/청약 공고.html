@@ -477,8 +477,14 @@ code{font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:2px
 // 주소에 앵커가 붙어 온 것은 그대로 둔다 — 그건 사람이 지목한 자리다
 (function(){
 if('scrollRestoration' in history){history.scrollRestoration='manual';}
-if(!location.hash){window.scrollTo(0,0);
-  window.addEventListener('load',function(){window.scrollTo(0,0);});}
+// 사파리는 자리를 되살리는 시점이 load 뒤라 한 번만 올려서는 다시 끌려 내려간다.
+// 그래서 DOM 이 서는 자리, load, 뒤로 가기(pageshow)까지 붙이고 짧게 두 번 더 민다
+function toTop(){if(!location.hash){window.scrollTo(0,0);}}
+toTop();
+document.addEventListener('DOMContentLoaded',toTop);
+window.addEventListener('load',function(){toTop();
+  setTimeout(toTop,0);setTimeout(toTop,150);});
+window.addEventListener('pageshow',function(){toTop();setTimeout(toTop,0);});
 })();
 (function(){
 var tabs=Array.from(document.querySelectorAll('.sido-tab'));
