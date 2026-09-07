@@ -1,0 +1,225 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELS와 ETF의 구조 차이와 ELS의 낙인·조기상환 조건을 실제 상품으로 짚는 경위 — 채널 씨모어</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><div class="wrap"><a class="back" href="../씨모어 대시보드.html">← 회차 목록</a><h1>ELS와 ETF의 구조 차이와 ELS의 낙인·조기상환 조건을 실제 상품으로 짚는 경위</h1><div class="pmeta">2024-05-23 · TJ(채널 씨모어 진행)<br>원문 <a href="https://youtu.be/Ap-hMzxz_3U">https://youtu.be/Ap-hMzxz_3U</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/2024-05-23-els-etf.md">저장소</a> · 전사 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/understanding/채널%20씨모어/raw/2024-05-23-els-etf.md">저장소</a></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설</span></div><div class="ltitle">6개월마다 조건을 확인하는 상품을 100만 원으로 끝까지 돌려 손실이 어디서 나는지 보였다</div><p>홍콩 H지수 ELS 손실이 기사에 오르내리던 2024년 5월의 회차다. 진행자는 ETF와 ELS를 나란히 놓고 시작하지만, 실제 무게는 ELS 한 상품을 3년치 시뮬레이션으로 끝까지 돌리는 데 있다. 이 글은 그 시뮬레이션이 무엇을 드러내는지 보고, 2년 뒤 확정된 손실 규모에 대조한다. 5절의 대조 값은 원문에 없는 것이라 출처를 함께 적는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">값이 어떻게 정해지느냐로 두 상품이 갈린다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">100만 원을 3년 돌려 본다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">셋을 동시에 맞혀야 하고 최악 하나로 계산된다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">이 회차가 권한 자리</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">(검증) 2년 뒤에 그 상품들이 어떻게 끝났나</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 값이 어떻게 정해지느냐로 두 상품이 갈린다</h2>
+<figure class="uc-fig"><p class="fig-title">값을 따라가느냐 문턱을 판정하느냐</p><svg class="epoch" viewBox="0 0 520 154" role="img" aria-label="지수가 얼마나 올랐는지는 ELS 수익에 반영되지 않는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="25.5" y="20" text-anchor="middle" class="fig-hd">상품</text>
+  <text x="178" y="20" text-anchor="middle" class="fig-hd">수익이 어떻게 정해지나</text>
+  <rect x="0" y="30" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="60.5" text-anchor="middle" class="fig-b">ETF</text>
+  <rect x="67" y="30" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="60.5" text-anchor="middle" class="fig-b">담긴 자산의 값을 따라간다</text>
+  <line x1="25.5" y1="81" x2="25.5" y2="93" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="95" width="51" height="49" rx="9" class="fig-stage"/>
+  <text x="25.5" y="125.5" text-anchor="middle" class="fig-b">ELS</text>
+  <rect x="67" y="95" width="222" height="49" rx="9" class="fig-box"/>
+  <text x="178" y="125.5" text-anchor="middle" class="fig-b">문턱을 넘었는지만 판정한다</text>
+</svg><figcaption>뒤에 나오는 손실 구조가 전부 이 차이에서 나온다.</figcaption></figure>
+<p>ETF는 증권사가 만든 펀드를 주식 시장에서 사고팔 수 있게 만든 것이다. 펀드와의 차이는 거래하는 자리가 있느냐, 그리고 가입하지 않은 사람도 담긴 종목을 볼 수 있느냐 둘이다.</p>
+<p>수수료를 떼는 방식도 다르다. 펀드는 계좌에서 따로 떼 가는데, ETF는 상장 가격에 이미 반영돼 있어 지수가 10% 오르면 수수료 1%를 뺀 9%만 오르고 10% 내리면 11%만큼 내린다.</p>
+<p>ELS는 성격이 다르다. 특정 주식이나 지수에 연계돼 만기와 수익률이 미리 정해지는 조건부 채권이고, 미국 국채가 4%대일 때 조건을 채우면 훨씬 높은 수익을 준다.</p>
+<p>이 대비에서 볼 것은 값이 정해지는 방식이다. ETF는 담긴 자산의 값이 그대로 따라오지만, ELS는 자산의 값이 아니라 「조건을 채웠는가」라는 판정으로 수익이 정해진다. 지수가 얼마나 올랐는지는 상관없고 문턱을 넘었는지만 본다. 뒤에서 설명하는 손실 구조가 전부 이 차이에서 나온다.</p>
+<h2 id="s2"><span class="num">2</span> 100만 원을 3년 돌려 본다</h2>
+<p>예시 상품의 조건이 넷이다. 기초자산은 S&amp;P 500과 니케이225, 홍콩 H지수 셋이고, 만기 3년에 6개월마다 조기상환을 확인하며, 조건을 채우면 연 7%를 주고 못 채우면 손실이 최대 100%까지 날 수 있으며, 낙인은 45%다.</p>
+<p>돌아가는 순서는 이렇다. 6개월 뒤 세 지수가 모두 최초 기준가의 80% 이상이면 100만 원에 3.5%를 얹은 103만 5천 원을 받고 상품이 끝난다. 못 채우면 다시 6개월 뒤에 본다. 문턱은 회차가 갈수록 낮아져 5회차에 75%, 6회차에 70%가 된다.</p>
+<p>3년을 다 가도 낙인 45%를 한 번도 안 건드렸으면 지수가 어디에 있든 원금에 21%를 더한 121만 원을 받는다. 건드렸더라도 만기일에 세 지수가 모두 70% 이상이면 역시 121만 원이다.</p>
+<p>손실은 마지막 갈림에서만 난다. 낙인을 건드렸고 만기일에 하나라도 70% 아래면 원금이 깎인다. 그것도 가장 많이 빠진 지수 하나로만 계산돼, 홍콩 지수가 60% 빠졌다면 나머지 둘이 올랐어도 40만 원만 돌아온다.</p>
+<p>이 순서를 끝까지 돌려 보면 상품의 성격이 드러난다. 이기는 경우는 여러 갈래인데 그 보상이 전부 연 7%로 같고, 지는 경우는 한 갈래인데 그 크기에 하한이 없다. 조건을 여섯 번 확인한다는 설계가 이기는 횟수를 늘려 안전해 보이게 만들지만, 늘어난 것은 횟수이지 크기가 아니다.</p>
+<h2 id="s3"><span class="num">3</span> 셋을 동시에 맞혀야 하고 최악 하나로 계산된다</h2>
+<figure class="uc-fig"><p class="fig-title">이길 때는 셋 다, 질 때는 하나만</p><svg class="epoch" viewBox="0 0 520 288" role="img" aria-label="기초자산을 늘릴수록 투자자에게 불리해지는 이유">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="20" text-anchor="middle" class="fig-hd">어느 갈래</text>
+  <text x="178.5" y="20" text-anchor="middle" class="fig-hd">판정 기준</text>
+  <text x="308" y="20" text-anchor="middle" class="fig-hd">보상의 크기</text>
+  <rect x="0" y="30" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="72" text-anchor="middle" class="fig-b">조기상환</text>
+  <rect x="114" y="30" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="178.5" y="60.5" text-anchor="middle" class="fig-b">셋 다 문턱을</text>
+  <text x="178.5" y="83.5" text-anchor="middle" class="fig-b">넘어야</text>
+  <rect x="259" y="30" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="308" y="60.5" text-anchor="middle" class="fig-b">연 7%로</text>
+  <text x="308" y="83.5" text-anchor="middle" class="fig-b">같다</text>
+  <rect x="0" y="118" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="160" text-anchor="middle" class="fig-b">만기 무손실</text>
+  <rect x="114" y="118" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="178.5" y="148.5" text-anchor="middle" class="fig-b">셋 다</text>
+  <text x="178.5" y="171.5" text-anchor="middle" class="fig-b">70% 이상</text>
+  <rect x="259" y="118" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="308" y="148.5" text-anchor="middle" class="fig-b">연 7%로</text>
+  <text x="308" y="171.5" text-anchor="middle" class="fig-b">같다</text>
+  <rect x="0" y="206" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="248" text-anchor="middle" class="fig-b">손실</text>
+  <rect x="114" y="206" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="178.5" y="236.5" text-anchor="middle" class="fig-b">가장 많이 빠진</text>
+  <text x="178.5" y="259.5" text-anchor="middle" class="fig-b">하나로</text>
+  <rect x="259" y="206" width="98" height="72" rx="9" class="fig-agent"/>
+  <text x="308" y="236.5" text-anchor="middle" class="fig-b">하한이</text>
+  <text x="308" y="259.5" text-anchor="middle" class="fig-b">없다</text>
+</svg><figcaption>여섯 번 확인하는 설계가 이기는 횟수를 늘릴 뿐 크기를 늘리지는 않는다.</figcaption></figure>
+<p>이 상품의 판정에는 방향이 둘 있다.</p>
+<p>수익 쪽에서는 세 지수가 모두 문턱을 넘어야 한다. 하나만 못 넘어도 조기상환이 안 된다.</p>
+<p>손실 쪽에서는 가장 많이 빠진 지수 하나만 본다. 둘이 올라도 반영되지 않는다.</p>
+<p>같은 상품 안에서 두 판정 기준이 반대다. 이익을 받을 때는 셋 다 좋아야 하고 손실을 낼 때는 하나만 나빠도 된다. 그래서 기초자산 수를 늘릴수록 투자자에게 불리해진다. 셋을 담은 상품이 하나를 담은 상품보다 분산된 것처럼 보이지만 실제로는 반대다.</p>
+<p>진행자는 이 대목을 확률의 말로 정리한다. 3년 동안 미국·일본·홍콩 세 시장을 모두 맞혀야 하니 웬만한 애널리스트도 어려운 상품이고, 내일 비가 올지 반반으로 맞히는 편이 차라리 쉽겠다고 한다.</p>
+<p>판매 관행도 짚는다. 판매 기관들이 세 지수가 45% 아래로 빠질 리 없다며 원금 손실 걱정이 없다는 식으로 설명해 왔는데, 미·중 무역 전쟁으로 두 시장이 반대로 움직일 수 있다는 점은 안 짚었다고 지적한다. 세 지수가 같이 움직인다는 전제 위에 팔린 상품인데, 그 전제가 깨지는 조건이 바로 손실 조건이다.</p>
+<p>개별 종목을 기초자산으로 잡은 ELS는 더 위험하다고 본다. 테슬라나 엔비디아는 한 번 빠질 때 90% 넘게 빠지기도 해서 낙인까지 걸리면 훨씬 불안하다는 것이다.</p>
+<h2 id="s4"><span class="num">4</span> 이 회차가 권한 자리</h2>
+<p>결론은 두 문장이다. ELS로 수익을 낸 사람도 운이 좋았을 뿐이니 웬만하면 건드리지 말고, 배당주나 리츠처럼 더 안전한 상품을 보라는 것이다.</p>
+<p>권한 대상이 배당주와 리츠라는 점이 이 판단의 논리를 보여 준다. ELS를 사는 사람이 원하는 것은 예금보다 높은 정해진 수익인데, 그것을 조건부 판정이 아니라 실제로 들어오는 임대료와 배당에서 얻으라는 말이다. 같은 목적을 다른 구조로 채우라는 제안이라, 「위험하니 하지 말라」보다 한 걸음 더 나간 조언이다.</p>
+<p>다만 이 대체에도 조건이 있다. 배당주와 리츠는 원금이 정해져 있지 않고 값이 매일 움직인다. ELS를 산 사람이 견딜 수 없는 것이 손실이 아니라 값의 흔들림이었다면 이 대체는 안 맞는다. 이 회차는 그 구분까지는 가지 않는다.</p>
+<h2 id="s5"><span class="num">5</span> (검증) 2년 뒤에 그 상품들이 어떻게 끝났나</h2>
+<p>이 절의 값은 원문에 없다. 2026-09-07 기준으로 따로 확인한 것이며 출처를 함께 적는다.</p>
+<p>손실은 확정됐다. 손실이 확정된 계좌의 원금이 10조 4,000억 원이고 손실금액이 4조 6,000억 원으로, 투자금의 44.2%가 사라졌다(출처: 금융위원회 자료, 한국경제 2024-10 보도). 이 회차가 시뮬레이션으로 보여 준 마지막 갈림이 실제로 그대로 일어났다.</p>
+<p>비율도 확인된다. 은행권 H지수 ELS 계좌 22만 5,000건 가운데 손실로 끝난 계좌가 17만 건으로 75.5%였고 수익으로 끝난 계좌는 5만 5,000건이었다(출처: 쿠키뉴스 2025-02 보도). 이기는 갈래가 여럿이라 안전해 보이던 설계가 실제로는 넷 중 셋이 지는 결과로 끝났다.</p>
+<p>판매 쪽 책임도 물어졌다. 5개 은행의 누적 자율배상이 1조 3,437억 원에 이르고 가입 고객의 약 97%가 대상이 됐으며, 배상 비율은 손실금액 대비 평균 31.6%였다(출처: 금융위원회 자료, 조세일보 2026 보도). 이 회차가 지적한 판매 설명의 문제가 배상 근거가 된 셈이다.</p>
+<p>제재는 아직 진행 중이다. 금융감독원이 5개 은행에 과징금과 과태료를 사전 통보했고 2026년 9월까지도 최종 의결이 안 났다(출처: 머니투데이 2026-09-07 보도).</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것, 그리고 무엇을 더 봐야 하나</h2>
+<p>빠진 것 ① 상품을 만든 쪽의 셈이 없다. 증권사가 이 구조로 무엇을 얻는지, 연 7%를 주고도 남는 이유가 무엇인지가 있어야 상품의 값을 판정한다.</p>
+<p>빠진 것 ② 과거 자료로 확률을 세지 않는다. 세 지수가 3년 안에 45%까지 빠진 적이 얼마나 있었는지를 세면 「맞히기 어렵다」가 숫자가 된다.</p>
+<p>빠진 것 ③ ETF 이야기가 ELS와 이어지지 않는다. 같은 목적을 ETF로 채우면 어떻게 다른지가 나오면 두 상품을 나란히 놓은 이유가 산다.</p>
+<p>무엇을 더 봐야 하나 ① 배상 뒤에 판매 관행이 실제로 바뀌었는지가 이 사태의 결말이다. 원금 비보장 상품의 은행 창구 판매 조건이 그 지표다.</p>
+<p>무엇을 더 봐야 하나 ② 기초자산 수가 늘수록 불리해지는 구조는 지금 팔리는 상품에도 그대로 있다. 판매 중인 ELS의 기초자산 수와 낙인 수준을 보는 것이 같은 사태를 미리 알아보는 방법이다.</p>
+<p>무엇을 더 봐야 하나 ③ 대체재로 권한 배당주와 리츠가 같은 기간에 어떤 성적을 냈는지는 따로 세야 한다. 권한 자리의 성적이 없으면 조언의 절반만 검증된다.</p><div class="foot">전사를 줄 번호로 대조해 쓴 글이다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/seemore/2024-05-23-els-etf-strategy.md">insights/seemore/2024-05-23-els-etf-strategy.md</a></div></div></div>
