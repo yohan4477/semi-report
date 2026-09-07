@@ -74,15 +74,9 @@ def episodes():
 
 def row_html(ep):
     m = ep['meta']
-    tags = ['<span class="tag on">%s %s</span>' % (emo, label)
-            for key, emo, label, _sub in LANES if any(l['key'] == key for l in ep['lanes'])]
-    inner = ('<div class="rmeta"><span>%s</span><span>%s</span></div>'
-             '<div class="rtitle">%s</div>'
-             % (sd.esc(m.get('date', '')), sd.esc(m.get('topic', '')),
-                sd.esc(m.get('title', ep['slug']))))
-    if ep['one']:
-        inner += '<div class="rone">%s</div>' % sd.esc(ep['one'])
-    inner += '<div class="tags">%s</div>' % ''.join(tags)
+    # 목록은 제목만 보인다(2026-09-07). 주제어·한 줄·갈래 표시는 회차 글 안에 다 있고,
+    # 목록에서까지 되풀이하면 무엇이 있는지 훑는 데 방해가 된다.
+    inner = '<div class="rtitle">%s</div>' % sd.esc(m.get('title', ep['slug']))
     if ep['lanes']:
         return '<a class="row" href="seemore/%s.html">%s</a>' % (ep['slug'], inner)
     inner += '<div class="why">글 없음 — 아직 판이 안 섰다</div>'

@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "8fd20646c893014df91c204d92928a25069658e4",
-"lines": 4312
+"index_fingerprint": "44c33c71d265d3fa5960823d4c157fd4832ea500",
+"lines": 4325
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -9698,6 +9698,46 @@
 "t": "2025",
 "tense": "회고"
 },
+"content/understanding/채널 씨모어/2026-04-05-news.md#L16": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-04-05-news.md#L19": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-04-05-news.md#L24": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-04-05-news.md#L28": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-04-05-news.md#L29": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-04-05-news.md#L31": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-06-07-news.md#L27": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/2026-06-14-news.md#L34": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/raw/2025-04-08-news.md#L176": {
 "how": "계산",
 "t": "2025",
@@ -9853,6 +9893,35 @@
 "tense": "회고"
 },
 "content/understanding/채널 씨모어/raw/2026-03-29-news.md#L19": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2026-04-05-news.md#L13": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2026-04-05-news.md#L47": {
+"how": "명시",
+"span": [
+"2024",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/raw/2026-06-07-news.md#L49": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/raw/2026-06-14-news.md#L26": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/understanding/채널 씨모어/raw/2026-06-14-news.md#L64": {
 "how": "계산",
 "t": "2025",
 "tense": "회고"
