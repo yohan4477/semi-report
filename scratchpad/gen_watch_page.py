@@ -2499,6 +2499,106 @@ def fig_band():
             '초과는 많이 올랐다" class="fig-s">%s</svg>' % ''.join(o))
 
 
+def fig_rebuild_cost():
+    """리모델링 단지를 살 때 드는 돈 — 매수가·승계·분담금이 총액이 되는 순서."""
+    o = ['<text x="20" y="20" class="t-sm">5억짜리를 사서 30평형 신축이 되기까지</text>']
+    rows = (('매수가', '5억', '최근 실거래 5억~5억 8천'),
+            ('이주비 대출 승계', '2억', '매도인이 받은 것을 넘겨받는다'),
+            ('그래서 초기에 드는 돈', '3억', '매수가에서 승계분을 뺀 자리'),
+            ('분담금', '3억 후반~4억', '리모델링에 더 내는 몫'),
+            ('총 매매가', '9억', '30평형(74㎡) 신축을 받는 셈'))
+    for i, (name, val, why) in enumerate(rows):
+        y = 40 + i * 46
+        last = i == len(rows) - 1
+        o.append('<rect x="26" y="%d" width="508" height="38" rx="6" fill="%s" '
+                 'stroke="var(--%s)"%s/>'
+                 % (y, 'var(--surface)' if not last else 'var(--paper)',
+                    'ink' if last else 'line', ' stroke-width="1.4"' if last else ''))
+        o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 24, name))
+        o.append('<text x="250" y="%d" class="t-sm">%s</text>' % (y + 24, val))
+        o.append('<text x="352" y="%d" class="t-sm t-axis">%s</text>' % (y + 24, why))
+    o.append('<text x="26" y="%d" class="t-sm t-axis">'
+             '전세는 3억~3억 3천이지만 규제 지역이라 전세를 끼고는 못 산다</text>'
+             % (40 + len(rows) * 46 + 22))
+    return ('<svg viewBox="0 0 560 %d" role="img" aria-label="매수가 5억에서 이주비 대출 2억을 '
+            '승계해 초기 3억이 들고, 분담금 3억 후반에서 4억을 더해 총 9억이 되는 순서" '
+            'class="fig-s">%s</svg>' % (40 + len(rows) * 46 + 40, ''.join(o)))
+
+
+def fig_zone_switch():
+    """규제 지역으로 묶이면 무엇이 바뀌나 — 지정 전후."""
+    LX, AX, BX, W = 26, 170, 356, 178
+    o = ['<text x="20" y="20" class="t-sm">묶이기 전과 뒤</text>']
+    o.append('<text x="%d" y="52" class="t-sm t-axis">묶이기 전</text>' % AX)
+    o.append('<text x="%d" y="52" class="t-sm t-axis">묶인 뒤</text>' % BX)
+    rows = (('대출 한도', '집값의 70%', '집값의 40%'),
+            ('비과세 요건', '2년 보유', '2년 거주'),
+            ('토지거래허가', '없음', '허가를 받아야 산다'))
+    for i, (name, a, b) in enumerate(rows):
+        y = 62 + i * 46
+        o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (LX, y + 21, name))
+        o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--surface)" '
+                 'stroke="var(--line)"/>' % (AX - 12, y, W))
+        o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (AX, y + 21, a))
+        o.append('<rect x="%d" y="%d" width="%d" height="32" rx="6" fill="var(--paper)" '
+                 'stroke="var(--ink)"/>' % (BX - 12, y, W))
+        o.append('<text x="%d" y="%d" class="t-sm">%s</text>' % (BX, y + 21, b))
+    y = 62 + len(rows) * 46 + 16
+    o.append('<rect x="26" y="%d" width="508" height="44" rx="6" fill="var(--surface)" '
+             'stroke="var(--line)"/>' % y)
+    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+             '동탄 메인 단지는 22억을 넘겼는데 대출은 4억이다 —</text>' % (y + 18))
+    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+             '사려면 자본이 18억 있어야 한다는 것이 이 편의 셈이다</text>' % (y + 36))
+    return ('<svg viewBox="0 0 560 %d" role="img" aria-label="규제 지역 지정 전후로 대출 한도가 '
+            '70퍼센트에서 40퍼센트로, 비과세 요건이 2년 보유에서 2년 거주로 바뀌고 토지거래허가가 '
+            '붙는 대비" class="fig-s">%s</svg>' % (y + 62, ''.join(o)))
+
+
+def fig_capital_plan():
+    """같은 자본 3억이 어디로 가느냐에 따라 닿는 값이 갈린다."""
+    o = ['<text x="20" y="20" class="t-sm">자본 3억이 닿는 집값</text>']
+    ways = (('서울 · 규제 지역', '5억', '대출이 집값의 40%까지다'),
+            ('안양 만안구 · 비규제 · 전세를 끼면', '8억', '전세 5억을 끼고 내 돈 3억'),
+            ('안양 만안구 · 비규제 · 실거주', '—', '집값의 70%까지 대출이 된다'))
+    for i, (name, val, why) in enumerate(ways):
+        y = 40 + i * 58
+        o.append('<rect x="26" y="%d" width="508" height="48" rx="6" fill="%s" '
+                 'stroke="var(--line)"/>' % (y, 'var(--surface)' if i == 0 else 'var(--paper)'))
+        o.append('<text x="42" y="%d" class="t-sm">%s</text>' % (y + 20, name))
+        o.append('<text x="42" y="%d" class="t-sm t-axis">%s</text>' % (y + 40, why))
+        o.append('<text x="470" y="%d" class="t-sm" text-anchor="end">%s</text>' % (y + 30, val))
+    y = 40 + len(ways) * 58 + 8
+    o.append('<rect x="26" y="%d" width="508" height="40" rx="6" fill="var(--surface)" '
+             'stroke="var(--line)"/>' % y)
+    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+             '한도는 소득도 본다 — 15억 이하에서 6억까지 받으려면</text>' % (y + 17))
+    o.append('<text x="42" y="%d" class="t-sm t-axis">'
+             '부부 합산 소득이 1억대는 되어야 한다는 것이 이 편의 말이다</text>' % (y + 34))
+    return ('<svg viewBox="0 0 560 %d" role="img" aria-label="자본 3억으로 서울 규제 지역에서는 '
+            '5억까지, 비규제 안양 만안구에서 전세를 끼면 8억까지 닿는 대비" '
+            'class="fig-s">%s</svg>' % (y + 62, ''.join(o)))
+
+
+# 편마다 붙는 도해. 없는 편은 도해 없이 간다 — 억지로 채우지 않는다
+OUTSIDE_FIGS = {
+    'flap-2026-07-26': ((fig_balance, '청약이 막히는 자리는 당첨이 아니라 잔금입니다. '
+                                      '값은 모두 해설에 나온 것입니다.'),
+                        (fig_band, '해설이 「안 올랐다」고 말한 구간이 어디인지입니다. '
+                                   '6~7억과 8~10억을 비워 둔 것은 해설이 그 자리를 '
+                                   '말하지 않아서입니다.')),
+    'flap-2026-07-31': ((fig_rebuild_cost, '매수가에서 시작해 총액이 되는 순서입니다. '
+                                           '분담금은 조합 공표치가 아니라 해설이 전한 '
+                                           '시장의 말이라 어긋남 칸에 따로 적었습니다.'),),
+    'flap-2026-07-05': ((fig_zone_switch, '지정으로 바뀌는 것 셋입니다. 우리 지정 표는 '
+                                          '2025-10-16 고시 기준이라 이 지정을 아직 '
+                                          '담고 있지 않습니다.'),),
+    'flap-2026-07-09': ((fig_capital_plan, '같은 돈이 어디로 가느냐에 따라 닿는 값이 '
+                                           '갈립니다. 한도는 조문 쪽 값이라 이 화면의 '
+                                           '제도 줄로는 대조되지 않습니다.'),),
+}
+
+
 def outside_section(watches):
     """「밖에서 온 판단」 절. 해설 하나를 원문 그대로 옮기고 어긋남을 붙인다."""
     items = _outside_items()
@@ -2523,16 +2623,14 @@ def outside_section(watches):
         else:
             fig = svg
         if fig:
-            h.append('<figure>%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
+            h.append('<figure class="fig-out">%s<figcaption>해설이 이름을 댄 곳입니다. 자리는 카카오 지도이고, '
                      '번호의 채움은 우리 표(%s)의 지정 여부입니다 — 해설의 주장이 아닙니다. '
                      '채운 번호는 조정대상지역·투기과열지구·토지거래허가구역 가운데 하나라도 '
                      '걸린 곳입니다.</figcaption></figure>'
                      % (fig, E(e.get('clash_as_of', ''))))
-        h.append('<figure>%s<figcaption>청약이 막히는 자리는 당첨이 아니라 잔금입니다. '
-                 '값은 모두 해설에 나온 것입니다.</figcaption></figure>' % fig_balance())
-        h.append('<figure>%s<figcaption>해설이 「안 올랐다」고 말한 구간이 어디인지입니다. '
-                 '6~7억과 8~10억을 비워 둔 것은 해설이 그 자리를 말하지 않아서입니다.'
-                 '</figcaption></figure>' % fig_band())
+        for build, cap in OUTSIDE_FIGS.get(e['id'], ()):
+            h.append('<figure class="fig-out">%s<figcaption>%s</figcaption></figure>'
+                     % (build(), cap))
         h.append('<div class="rows">')
         for what, why in e['points']:
             h.append('<div class="row"><span class="row-where">해설</span>'
@@ -4001,13 +4099,14 @@ def check_ui(html, watches):
     assert '값이 언제 것인가' in html, '규약 위반: 자료 기준 자가 없다 — 값의 나이를 먼저 보인다'
     # 통계 층 그래프는 따로 센다 — 지역 탭마다 하나씩이라 수가 늘고 준다. 그 <figure> 안에는
     # svg.fig-s 가 꼭 하나씩 들어 있어 그 수만큼 빼면 지도·자 셋만 남는다
-    n_fig = html.count('<figure') - html.count('class="fig-s fig-click"')
-    # 2026-09-07 — 「컨텐츠」 절이 셋을 더 낸다(지도 하나 · 도해 둘).
-    # 그 절이 비면(_outside.json 이 없거나 items 가 비면) 도해도 안 서므로 다섯이다
-    n_want = 8 if 'id="outside"' in html else 5
+    n_fig = (html.count('<figure') - html.count('class="fig-s fig-click"')
+             - html.count('<figure class="fig-out"'))
+    # 2026-09-07 — 「컨텐츠」 절의 도해(지도 포함)는 편 수에 따라 늘고 준다.
+    # 그쪽은 class="fig-out" 을 달고 빠지므로 여기서 세는 것은 본 장 것 다섯뿐이다
+    n_want = 5
     assert n_fig == n_want, \
         ('규약 위반: 본 장의 <figure 는 (지도 + 전세가율 자)×시·도 둘 + 자료 기준 자 '
-         '+ (컨텐츠 절의 지도와 도해 둘) 여야 한다 (%d개, 기대 %d개)' % (n_fig, n_want))
+         '여야 한다 (%d개, 기대 %d개)' % (n_fig, n_want))
     # 본 장의 표는 「청약 — 조건」 절 안에만 둔다. 나머지는 전부 상세(watch/)로
     # 옮겼는데, 청약 조건은 「지금 신청할 수 있나」에 바로 답하는 값이라 한 번 더
     # 열게 하지 않는다 — 그 예외가 다른 절로 새지 않게 자리까지 잰다

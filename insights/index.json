@@ -12707,7 +12707,7 @@
 "_meta": {
 "built": "2026-09-07",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1489,
+"files": 1492,
 "files_stat": {
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
@@ -14097,9 +14097,17 @@
 "4bd54ef87c1a22fd514e675290ee65cca689952f",
 125
 ],
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md": [
+"0b6eaf0b14cf9b0562b2d6940b1b33afca46c5c2",
+68
+],
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md": [
 "7959a5ea4a9c68940896e95d4e4f9b15ac2b6069",
 138
+],
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md": [
+"154e233920195ddd5d6b20a3316ef47aaac8e5ac",
+71
 ],
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md": [
 "7335692e325a0d6272f92d26077880c73c40b43a",
@@ -14116,6 +14124,10 @@
 "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md": [
 "c4e9551a3f08c372a2cf4367d6ef72ebffa6d533",
 78
+],
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md": [
+"21fed30e7efb6d21edc41e6b26d44be05a8721e9",
+74
 ],
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md": [
 "1da614c5f8c063a991e73e363e6d8669f838a61f",
@@ -18666,8 +18678,8 @@
 213
 ]
 },
-"fingerprint": "e469c86af7c8938c3839a93d09e88469b76fdd47",
-"lines": 225995
+"fingerprint": "d4aa8df464a613c5184591c9ea2631912d4f470e",
+"lines": 226208
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -21331,6 +21343,8 @@
 "content/understanding/미국주식 사관학교/[260831] 커버드콜이 미워하는 건 상승장이 아니라 급등장이다 - 하이퍼스케일러·데이터센터 리츠·QYLG로 지금 장에 맞추는 법.md#L3",
 "content/understanding/미국주식 사관학교/[260902] 발전주는 계약을 가진 회사가 이긴다 - 유령 수요를 걷어내면 헤지 비율이 남는다.md#L3",
 "content/understanding/미국주식 사관학교/[260904] AI 해킹이 빨라질수록 사전 점검주가 더 번다 - QLYS·TENB·RPD가 CRWD·S보다 낫다.md#L3",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L12",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L14",
 "content/understanding/언더스탠딩 백브리핑/[260814] 미국 수출통제의 구멍 셋 - 밀수·원격접속·증류.md#L4",
 "content/understanding/언더스탠딩 백브리핑/독일 신재생 전기 때문에 북유럽이 빡친 이유.md#L3",
 "content/understanding/언더스탠딩 백브리핑/미국의 석유 치킨게임...이란이 불리한 이유.md#L3",
@@ -34497,6 +34511,7 @@
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L6",
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L40",
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L60",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L20",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L26",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L82",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L110",
@@ -35725,6 +35740,7 @@
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L6",
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L40",
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L60",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L20",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L26",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L82",
 "content/understanding/성상현 부부장/[260702] 트럼프 정부가 AI와 한 배를 탔다 - 재정이 통화를 압도하는 시장 - 성상현.md#L110",
@@ -36780,9 +36796,23 @@
 "content/understanding/부동산/[260609] 토지비를 0으로 만드는 상상 - 도로 위, 물 위, 그리고 잠깐 쓰는 집 - 최상희.md#L113",
 "content/understanding/부동산/[260609] 토지비를 0으로 만드는 상상 - 도로 위, 물 위, 그리고 잠깐 쓰는 집 - 최상희.md#L114",
 "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L34",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L12",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L18",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L20",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L34",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L36",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L52",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L55",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L56",
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L67",
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L54",
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L107",
 "content/understanding/부동산/[260708] 아파트 공사비가 오른 이유 셋 - 100년 아파트는 화장실 배관에 달렸다 - 최도영.md#L138",
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L36",
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L40",
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L47",
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L59",
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L68",
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L14",
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L60",
 "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md#L16",
@@ -36818,6 +36848,7 @@
 "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md#L55",
 "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md#L71",
 "content/understanding/부동산/[260730] 전세와 거래세가 시장을 잠근다 - 필터링이 안 돌아간다 (2부).md#L76",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L72",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L34",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L36",
 "content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md#L38",
@@ -39137,6 +39168,8 @@
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L65",
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L68",
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L86",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L12",
+"content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md#L14",
 "content/understanding/채널 씨모어/raw/2025-07-13-bwxt.md#L92",
 "input/clippings/mer/224221728844.json#L7"
 ],

@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-07",
-"index_fingerprint": "e469c86af7c8938c3839a93d09e88469b76fdd47",
-"lines": 4296
+"index_fingerprint": "d4aa8df464a613c5184591c9ea2631912d4f470e",
+"lines": 4298
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -8714,6 +8714,16 @@
 "content/understanding/부동산/[260629] 조합장 성과급은 왜 매번 부결되나 - 계약이 없어서다 - 장순원.md#L14": {
 "how": "명시",
 "t": "2022",
+"tense": "회고"
+},
+"content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md#L36": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md#L40": {
+"how": "명시",
+"t": "2023",
 "tense": "회고"
 },
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L60": {
