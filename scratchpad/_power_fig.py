@@ -149,3 +149,57 @@ FIG_THREE = _svg(W, 250, '같은 물음에 세 시장이 다르게 답한다',
                  + ''.join(_panel(i, n, r) for i, (n, r) in enumerate(_THREE))
                  + _t(W // 2, 240, '어느 쪽에서도 전기가 공짜인 적은 없다 — '
                                    '청구서가 누구 앞으로 가는지가 다르다', 't-sm'))
+
+
+# ── 도해 5. 800볼트 직류 네 단계 로드맵 ──────────────────────────────
+# 네 상자가 전부 같은 크기다 — 다른 것은 안에 적힌 값과 무엇을 걷었나뿐이다.
+# 단계마다 변환 개수를 아이콘으로 세지 않는다. 원문이 센 것은 1·2단계뿐이라
+# 3·4단계 개수를 그리면 없는 값을 그리는 것이 된다(insight-figure 규칙 1).
+_PHX, _PHW, _PHH, _PHSTEP = 14, W - 28, 52, 62
+_PHASES = [
+    ('1단계 — 83.7%', '지금 꼴. 여기서 출발한다'),
+    ('2단계 — 86.5%', '무정전전원장치를 걷어 변환 7단계를 5단계로 · 상시 58메가와트'),
+    ('3단계 — 86.9%', '메가와트급 중앙 정류기와 홀 단위 800볼트 직류 · 상시 63메가와트'),
+    ('4단계 — 87.4%', '고체상태 변압기가 2단계를 장치 1개로 · 상시 69메가와트'),
+]
+
+FIG_PHASE = _svg(W, 14 + 4 * _PHSTEP + 26, '800볼트 직류 전환의 네 단계와 단계별 효율',
+                 _DEFS + ''.join(
+                     [_box(_PHX, 14 + i * _PHSTEP, _PHW, _PHH, list(lines),
+                           INK if i == 3 else INK3, 1.8 if i == 3 else 1.5)
+                      for i, lines in enumerate(_PHASES)]
+                     + [_a(W // 2, 14 + i * _PHSTEP + _PHH, W // 2, 14 + (i + 1) * _PHSTEP)
+                        for i in range(3)])
+                 + _t(W // 2, 14 + 4 * _PHSTEP + 18,
+                      '절감량은 1기가와트 시설 기준이다', 't-sm'))
+
+
+# ── 도해 6. 같은 글이 절감치를 두 값으로 적는다 ──────────────────────
+# 견줄 때는 나란한 세로 막대, 높이는 값에 비례(확정 규칙 2026-09-04).
+# 두 값 다 원문에 있고, 원문이 이 둘을 일치한다고 적은 것이 이 그림의 요점이다.
+_MMAX, _MH, _MBASE, _MW_, _MGAP = 69.0, 130, 186, 120, 110
+_MBARS = [(50, '50메가와트', '엔비디아가 밝힌', '최대 5%', True),
+          (69, '69메가와트', '단계별 계산 4단계', '6.9%', False)]
+_MX0 = (W - (2 * _MW_ + _MGAP)) // 2
+
+
+def _mbar(i, v, top, l1, l2, filled):
+    x = _MX0 + i * (_MW_ + _MGAP)
+    h = int(_MH * v / _MMAX)
+    y = _MBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="4" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _MW_, h, 'var(--sunk)' if filled else 'none',
+                                  INK3 if filled else INK),
+        _t(x + _MW_ // 2, y - 8, top, 't-lab'),
+        _t(x + _MW_ // 2, _MBASE + 18, l1, 't-sm'),
+        _t(x + _MW_ // 2, _MBASE + 34, l2, 't-sm'),
+    ])
+
+
+FIG_MW = _svg(W, 254, '같은 글이 절감치를 두 값으로 적는다', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_MX0 - 16, _MBASE, W - _MX0 + 16, _MBASE, INK3),
+     _lt(_MX0 - 16, 20, '1기가와트 시설에서 아끼는 전력', 't-sm', True)]
+    + [_mbar(i, *b) for i, b in enumerate(_MBARS)]
+    + [_t(W // 2, 246, '원문은 이 둘이 일치한다고 적는다', 't-sm')]))
