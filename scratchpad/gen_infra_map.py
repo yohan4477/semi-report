@@ -15,15 +15,14 @@ BRANCH_NOTE = {
     '빛으로 새긴다': '파장이 짧을수록 가는 선을 새긴다 — 마디 안에 그 갈래가 든다',
     '해상도를 늘린다': '같은 빛으로 더 가늘게 — 여러 번 나눠 찍는다',
     '빛을 안 쓴다': '빛 대신 틀을 찍어 누른다',
-    '장비사': '노광기를 만드는 곳',
-    '광원·광학': '빛을 만들고 모으는 부품',
+    '장비': '노광기를 파는 곳이 마디, 그 기계 안에 든 것이 잎',
     '소재': '웨이퍼에 바르고 깎이는 것',
     '마스크·펠리클': '새길 무늬를 담은 원판과 그 덮개',
     '계측·수율·통제': '얼마나 맞았나, 몇 장 나왔나, 누가 못 사나',
 }
 
-W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 140, 260
-X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 452
+W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 250, 230
+X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 558
 ROW, GAP = 30, 22          # 잎 한 줄 높이, 가지 사이 여백
 PAD_TOP = 16
 
@@ -92,13 +91,9 @@ def svg(data):
                    % (X_BR + W_BR / 2, r['cy'] + 4.5, html.escape(r['name'])))
         for m in r['mids']:
             nd, cy = m['node'], m['cy']
-            if not m['kids']:
-                # 자식이 없는 마디는 잎 칸까지 바로 뻗는다
-                out.append(curve(X_BR + W_BR, r['cy'], X_LEAF, cy,
-                                 ' dim' if nd['n'] == 0 else ''))
-                out.append(leaf_box(nd, X_LEAF, cy, W_LEAF))
-                continue
-            out.append(curve(X_BR + W_BR, r['cy'], X_MID, cy))
+            # 열이 층을 뜻한다 — 마디는 자식이 있든 없든 마디 칸에 선다
+            out.append(curve(X_BR + W_BR, r['cy'], X_MID, cy,
+                             ' dim' if nd['n'] == 0 else ''))
             out.append(leaf_box(nd, X_MID, cy, W_MID))
             for kd, ky in m['kids']:
                 out.append(curve(X_MID + W_MID, cy, X_LEAF, ky,

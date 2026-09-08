@@ -26,20 +26,23 @@ TREE = [
  ('빛을 안 쓴다', [
    ('나노임프린트', r'나노임프린트|nanoimprint|\bNIL\b'),
  ]),
- ('장비사', [
-   ('ASML', r'ASML|에이에스엠엘'),
+ # 장비를 파는 곳이 마디, 그 기계 안에 든 것이 잎이다. 원문에 없는 이름은 안 세운다 —
+ # Cymer·Trumpf 는 코퍼스에 0회라 이 가지에서 뺐다.
+ ('장비', [
+   ('ASML', r'ASML|에이에스엠엘', [
+     ('주석 플라스마 광원', r'주석\s?플라스마|tin\s?droplet|\bLPP\b'),
+     ('거울·반사광학', r'다층\s?반사|multilayer mirror|반사경|\bmirrors?\b|거울'),
+     ('진공', r'진공|vacuum'),
+     ('Zeiss', r'\bZeiss\b|자이스'),
+   ]),
    ('Canon', r'\bCanon\b|캐논'),
    ('Nikon', r'\bNikon\b|니콘'),
    ('SMEE', r'\bSMEE\b|상하이\s?마이크로'),
-   ('도쿄일렉트론', r'Tokyo Electron|도쿄\s?일렉트론'),
+   ('도쿄일렉트론', r'Tokyo Electron|도쿄\s?일렉트론', [
+     ('트랙(코터·디벨로퍼)', r'resist track|코터|디벨로퍼|도포\s?현상'),
+   ]),
    ('KLA', r'KLA[- ]?Tencor|\bKLA\b'),
- ]),
- ('광원·광학', [
-   ('Cymer', r'\bCymer\b|사이머'),
-   ('Trumpf', r'\bTrumpf\b|트룸프|트럼프사'),
-   ('Zeiss', r'\bZeiss\b|자이스'),
    ('Ushio', r'\bUshio\b|우시오'),
-   ('주석 플라스마 광원', r'주석\s?플라스마|tin\s?droplet|\bLPP\b'),
  ]),
  ('소재', [
    ('포토레지스트', r'포토레지스트|photoresist|감광액'),
@@ -72,8 +75,9 @@ KIND = {
     'EUV 다중 노광': 'tech',
     'ASML': 'co', 'Canon': 'co', 'Nikon': 'co', 'SMEE': 'co',
     '도쿄일렉트론': 'co', 'KLA': 'co',
-    'Cymer': 'co', 'Trumpf': 'co', 'Zeiss': 'co', 'Ushio': 'co',
-    '주석 플라스마 광원': 'tech',
+    'Zeiss': 'co', 'Ushio': 'co',
+    '주석 플라스마 광원': 'tech', '거울·반사광학': 'tech', '진공': 'tech',
+    '트랙(코터·디벨로퍼)': 'tech',
     '포토레지스트': 'tech', '메탈옥사이드 레지스트': 'tech',
     'JSR': 'co', '도쿄오카(TOK)': 'co', '신에쓰': 'co', 'SUMCO': 'co',
     '포토마스크': 'tech', '블랭크마스크': 'tech', '펠리클': 'tech',
