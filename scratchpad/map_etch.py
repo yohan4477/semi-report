@@ -6,8 +6,6 @@ from map_litho import scan_with  # noqa: F401
 
 KEY = 'etch'
 LABEL = '증착·식각'
-OUT_NAME = 'AI 인프라 지도 — 증착·식각.html'
-SLUG = 'map-etch'
 
 # 이 공정을 말하는 문서인지 보는 신호
 SIGNAL = re.compile(

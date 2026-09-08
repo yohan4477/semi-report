@@ -7,8 +7,6 @@ from map_litho import scan_with  # noqa: F401
 
 KEY = 'memory'
 LABEL = '메모리'
-OUT_NAME = 'AI 인프라 지도 — 메모리.html'
-SLUG = 'map-memory'
 
 SIGNAL = re.compile(
     r'\bHBM\d?\b|\bDRAM\b|디램|낸드|\bNAND\b|메모리|memory|하이닉스|마이크론|'

@@ -8,8 +8,6 @@ import re
 
 KEY = 'packaging'
 LABEL = '패키징'
-OUT_NAME = 'AI 인프라 지도 — 패키징.html'
-SLUG = 'map-packaging'
 
 # 패키징을 말하는 문서인지 보는 신호
 SIGNAL = re.compile(

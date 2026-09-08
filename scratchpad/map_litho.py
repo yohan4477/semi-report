@@ -11,8 +11,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # 이 공정 장의 이름표 — 생성기가 이것만 보고 페이지를 짓는다
 KEY = 'litho'
 LABEL = '리소그래피'
-OUT_NAME = 'AI 인프라 지도 — 리소그래피.html'
-SLUG = 'map-litho'
 
 DIRS = [os.path.join(ROOT, 'content'), os.path.join(ROOT, 'input', 'clippings')]
 
@@ -151,8 +149,14 @@ SENT_CUT = 180     # 문장을 자르는 길이
 WINDOW = 2         # 리소 신호를 찾는 앞뒤 줄 수
 
 
-def proc_docs(signal, threshold, files=None):
-    """그 공정을 말하는 문서만 고른다. 반환: ([(경로, 본문)], 전체 문서 수)"""
+_CORPUS = None
+
+
+def corpus(files=None):
+    """코퍼스를 한 번만 읽어 둔다 — 장이 늘수록 다시 읽는 값이 커진다."""
+    global _CORPUS
+    if files is None and _CORPUS is not None:
+        return _CORPUS
     if files is None:
         files = []
         for d in DIRS:
@@ -163,12 +167,18 @@ def proc_docs(signal, threshold, files=None):
     out = []
     for p in files:
         try:
-            t = io.open(p, encoding='utf-8').read()
+            out.append((p, io.open(p, encoding='utf-8').read()))
         except Exception:
             continue
-        if len(signal.findall(t)) >= threshold:
-            out.append((p, t))
-    return out, len(files)
+    if _CORPUS is None:
+        _CORPUS = out
+    return out
+
+
+def proc_docs(signal, threshold, files=None):
+    """그 장을 말하는 문서만 고른다. 반환: ([(경로, 본문)], 전체 문서 수)"""
+    docs = corpus(files)
+    return [(p, t) for p, t in docs if len(signal.findall(t)) >= threshold], len(docs)
 
 
 def _sentence(line, m):
