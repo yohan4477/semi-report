@@ -1,1 +1,220 @@
-{}
+{
+ "이더넷": {
+  "take": "인피니밴드에 뺏겼던 자리를 되찾는 중이다",
+  "cite": [
+   "input/clippings/The New AI Networks  Ultra Ethernet UEC  UALink vs Broadcom Scale Up Ethernet SUE.md:15"
+  ],
+  "asof": "2025"
+ },
+ "Ultra Ethernet": {
+  "take": "UEC 모드는 패킷을 흩뿌려도 돼 NIC 재정렬 버퍼가 필요 없다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md:541"
+  ],
+  "asof": "2025-06"
+ },
+ "인피니밴드": {
+  "take": "3계층 GB300 클러스터에서 스위치가 네트워크 전력의 86%를 먹는다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:58"
+  ],
+  "asof": "2026-01"
+ },
+ "NVLink": {
+  "take": "GB200 기준 GPU 72개까지 한 덩이로 묶는다",
+  "cite": [
+   "content/scaling-book/원문/12-gpus.md:172"
+  ],
+  "asof": "2025"
+ },
+ "NVSwitch": {
+  "take": "VR200 랙 하나에 스위치 트레이가 9개 들어간다",
+  "cite": [
+   "content/linkedin/[2606] 링크드인 게시물.md:753"
+  ],
+  "asof": "2026-06"
+ },
+ "UALink": {
+  "take": "AMD MI400은 진짜 UALink가 아니라 이더넷 위 IF를 이름만 바꿔 쓴다",
+  "cite": [
+   "input/clippings/AMD Advancing AI MI350X and MI400 UALoE72, MI500 UAL256.md:16"
+  ],
+  "asof": "2025-06"
+ },
+ "PCIe": {
+  "take": "AWS는 NVLink 대신 PCIe 신호 위에 NeuronLink를 얹었다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[251204] AWS Trainium3 딥다이브 - 다가오는 잠재적 도전자.md:40"
+  ],
+  "asof": "2025-12"
+ },
+ "RDMA·RoCE": {
+  "take": "메타 스택은 아직 엔비디아판 RoCE에 매여 있다",
+  "cite": [
+   "input/clippings/Meta’s Infrastructure Team Needs A Culture Reset.md:72"
+  ],
+  "asof": "2026-07"
+ },
+ "스케일업": {
+  "take": "구리로 GPU당 7.2Tbit/s, 루빈에서 14.4Tbit/s로 간다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:18"
+  ],
+  "asof": "2026-01"
+ },
+ "스케일아웃": {
+  "take": "CPO가 여기서도 이득이지만 대역폭을 끌어올리는 쪽은 스케일업이다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:16"
+  ],
+  "asof": "2026-01"
+ },
+ "토폴로지(팻트리)": {
+  "take": "스케일아웃 망은 팻트리, 노드 위 구조는 아직 덜 굳었다",
+  "cite": [
+   "content/scaling-book/원문/12-gpus.md:222",
+   "content/scaling-book/원문/12-gpus.md:212"
+  ],
+  "asof": "2025"
+ },
+ "스위치 ASIC": {
+  "take": "AMD 헬리오스는 102.4T 톰호크6 열둘로 GPU 72개를 한 층에 묶는다",
+  "cite": [
+   "input/clippings/Can AMD break the CUDA Moat AMD Advancing AI 2026.md:109"
+  ],
+  "asof": "2026-07"
+ },
+ "광트랜시버": {
+  "take": "미국이 중국산 수입을 막자는 안을 냈다",
+  "cite": [
+   "content/semi_doped/raw/2026-08-11-china-optical-ban.md:9"
+  ],
+  "asof": "2026-08"
+ },
+ "실리콘 포토닉스": {
+  "take": "TSMC는 하이브리드 본딩을 앞세워 COUPE로 뒤늦게 들어왔다",
+  "cite": [
+   "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md:520"
+  ],
+  "asof": "2026-01"
+ },
+ "CPO(광학 동봉)": {
+  "take": "2026년 컴퓨텍스는 CPO와 800V 전원 시연으로 찼다",
+  "cite": [
+   "content/semi_doped/raw/2026-06-12-computex-optics-power.md:11"
+  ],
+  "asof": "2026-06"
+ },
+ "LPO·LRO": {
+  "take": "DSP를 LPO로만 바꿔도 트랜시버 전력이 36% 준다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:80"
+  ],
+  "asof": "2026-01"
+ },
+ "DSP(리타이머)": {
+  "take": "아스테라 리타이머는 AI 서버마다 들어가는 부품이 됐다",
+  "cite": [
+   "content/semi_doped/raw/2026-08-04-astera-labs.md:9"
+  ],
+  "asof": "2026-08"
+ },
+ "AEC(액티브 구리)": {
+  "take": "메타는 스위치끼리는 광, NIC-ToR 구간은 1.6T AEC로 간다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md:672"
+  ],
+  "asof": "2026-02"
+ },
+ "DAC(구리 케이블)": {
+  "take": "AMD MI450X 백플레인은 DAC 9,216개, 엔비디아 GB200은 5,184개",
+  "cite": [
+   "input/clippings/AMD 2.0 - New Sense of Urgency  MI450X Chance to Beat Nvidia  Nvidia's New Moat.md:557"
+  ],
+  "asof": "2026"
+ },
+ "Broadcom": {
+  "take": "베일리 CPO는 800G당 5.4W로 플러그형 15W보다 낮다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:76"
+  ],
+  "asof": "2026-01"
+ },
+ "Marvell": {
+  "take": "27회계연도 1분기 매출 $2.41B로 28% 늘었다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-05-29--daily-update-may-29th-2026.md:48"
+  ],
+  "asof": "2026-05"
+ },
+ "Astera Labs": {
+  "take": "2027년 스케일업용 320레인 스위치를 이미 냈다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-05-06--daily-update-may-6th-2026.md:12"
+  ],
+  "asof": "2026-05"
+ },
+ "Credo": {
+  "take": "AWS는 리타이머보다 AEC에서 주식 리베이트를 더 얹어 받았다",
+  "cite": [
+   "input/clippings/AWS Trainium3 Deep Dive  A Potential Challenger Approaching.md:484"
+  ],
+  "asof": "2025-12"
+ },
+ "Arista": {
+  "take": "MI400에 아리스타를 물리면 GPU당 자본비가 엔비디아보다 12% 낮다",
+  "cite": [
+   "input/clippings/AMD Advancing AI MI350X and MI400 UALoE72, MI500 UAL256.md:377"
+  ],
+  "asof": "2025-06"
+ },
+ "Cisco": {
+  "take": "루빈 세대 스케일아웃에 CPO 스위치가 처음 붙는다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md:618"
+  ],
+  "asof": "2026-02"
+ },
+ "Coherent": {
+  "take": "중국 물량을 빼도 공급이 고정이라 당장 더 못 판다",
+  "cite": [
+   "content/semi_doped/raw/2026-08-11-china-optical-ban.md:85"
+  ],
+  "asof": "2026-08"
+ },
+ "Innolight": {
+  "take": "로이터 기준 광트랜시버 점유율 27% — 금지가 겨눈 자리다",
+  "cite": [
+   "content/semi_doped/2026-08-11-china-optical-ban.md:31"
+  ],
+  "asof": "2026-08"
+ },
+ "Eoptolink": {
+  "take": "부품을 미리 쌓아 공급에서 앞서려 한다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-25--daily-update-august-25th-2026.md:148"
+  ],
+  "asof": "2026-08"
+ },
+ "레인 속도(112G·224G)": {
+  "take": "루빈은 양방향 224Gbit/s로 레인 대역폭을 두 배로 만든다",
+  "cite": [
+   "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md:234"
+  ],
+  "asof": "2026-01"
+ },
+ "포트 수·기수": {
+  "take": "고radix OCS로 계층을 둘로 줄여 TPU 134,000개를 한 컴퓨터로 묶는다",
+  "cite": [
+   "content/semi_doped/2026-04-24-google-networking.md:30"
+  ],
+  "asof": "2026-04"
+ },
+ "지연(레이턴시)": {
+  "take": "메모리 대역폭은 세대마다 2~3배인데 지연은 그대로다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260810] 엔비디아 GPU의 초고속 상호작용성 - TileRT InferenceX.md:51"
+  ],
+  "asof": "2026-08"
+ }
+}

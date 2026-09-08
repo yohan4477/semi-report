@@ -1,1 +1,219 @@
-{}
+{
+ "HBM": {
+  "take": "HBM4는 HBM3보다 핀이 2배라 PHY에 전력 레일을 더 깔아야 한다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:53"
+  ],
+  "asof": "2026-07"
+ },
+ "HBM3E": {
+  "take": "SK하이닉스는 전력용 TSV를 6배로 늘려 전압강하를 75% 낮췄다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md:242"
+  ],
+  "asof": "2025-08"
+ },
+ "HBM4": {
+  "take": "맨 아래층을 D램 공정이 아니라 로직 공정으로 만든다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md:34"
+  ],
+  "asof": "2026-04"
+ },
+ "HBM4E": {
+  "take": "마이크론이 베이스 다이를 TSMC에 맡겼다 — 처음으로 밖에 준 것이다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-05-25--daily-update-may-25th-2026.md:50"
+  ],
+  "asof": "2026-05"
+ },
+ "커스텀 HBM": {
+  "take": "마벨은 베이스 다이만 로직으로 바꿔 가속기 안 HBM 회로를 60% 줄였다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:208"
+  ],
+  "asof": "2026-07"
+ },
+ "DRAM": {
+  "take": "애플이 제재 명단에 오른 CXMT에까지 D램을 달라고 한다",
+  "cite": [
+   "content/semi_doped/raw/2026-07-03-micron-cxmt.md:63"
+  ],
+  "asof": "2026-07"
+ },
+ "DDR5": {
+  "take": "2026년 1분기 계약가가 GB당 14달러, 한 해 전보다 638% 뛰었다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md:48"
+  ],
+  "asof": "2026-02"
+ },
+ "LPDDR": {
+  "take": "엔비디아 루빈과 AMD MI400은 5배 싼 LPDDR을 둘째 층으로 붙인다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md:780"
+  ],
+  "asof": "2025-08"
+ },
+ "GDDR": {
+  "take": "루빈 CPX는 GDDR7을 써 대역폭이 R200의 10분의 1이다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[250910] 루빈 CPX 특화 가속기와 랙 - 또 하나의 거대한 도약.md:80"
+  ],
+  "asof": "2025-09"
+ },
+ "SOCAMM": {
+  "take": "엔비디아가 랙당 용량을 55TB에서 28TB로 반 잘랐다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-06-08--daily-update-june-8-2026.md:46"
+  ],
+  "asof": "2026-06"
+ },
+ "CXL": {
+  "take": "키오시아가 AI 서버 D램을 대신할 낸드 기반 XL1 모듈을 냈다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-09-07--daily-update-september-7th-2026.md:12"
+  ],
+  "asof": "2026-09"
+ },
+ "낸드": {
+  "take": "키오시아와 샌디스크가 일본 증설을 함께 건다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-27--daily-update-august-27th-2026.md:16"
+  ],
+  "asof": "2026-08"
+ },
+ "QLC": {
+  "take": "샌디스크 QLC SSD는 이미 256TB까지 나온다",
+  "cite": [
+   "content/semi_doped/2026-05-04-memory-tax.md:27"
+  ],
+  "asof": "2026-05"
+ },
+ "eSSD": {
+  "take": "서버용 eSSD가 그 분기 낸드 출하의 48%를 가져갔다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-13--daily-update-august-13th-2026.md:32"
+  ],
+  "asof": "2026-08"
+ },
+ "TSV(실리콘 관통 전극)": {
+  "take": "HBM4 시제품에서 TSV 하나 때문에 잃는 수율이 15~20%다",
+  "cite": [
+   "content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md:61"
+  ],
+  "asof": "2026-07"
+ },
+ "하이브리드 본딩": {
+  "take": "TSMC가 HBM용 하이브리드 본딩 투자를 미루고 범프를 더 쓴다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-09-03--daily-update-september-3rd-2026.md:40"
+  ],
+  "asof": "2026-09"
+ },
+ "MR-MUF": {
+  "take": "SK하이닉스는 이 방식으로 열저항을 17% 줄였다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-06-18--daily-update-june-18th-2026.md:50"
+  ],
+  "asof": "2026-06"
+ },
+ "베이스 다이": {
+  "take": "삼성만 HBM4 논문을 냈다 — 36GB 12층에 3.3TB/s",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md:72"
+  ],
+  "asof": "2026-04"
+ },
+ "SK하이닉스": {
+  "take": "DDR4가 HBM3보다 단위면적당 용량이 85% 높다 — TSV가 자리를 먹는다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md:102"
+  ],
+  "asof": "2025-08"
+ },
+ "삼성전자": {
+  "take": "HBM보다 파운드리에 먼저 넣은 순서가 늦은 대응의 원인이다",
+  "cite": [
+   "content/understanding/회계사/[250202] 삼성전자, SK하이닉스, 마이크론테크놀로지, 엔비디아 재무지표 비교 - 엘곰.md:7"
+  ],
+  "asof": "2025-02"
+ },
+ "마이크론": {
+  "take": "한 분기 매출 415억 달러 — 50년 동안 어느 한 해보다 많다",
+  "cite": [
+   "content/semi_doped/2026-07-03-micron-cxmt.md:19"
+  ],
+  "asof": "2026-07"
+ },
+ "CXMT": {
+  "take": "DDR5 비트당 원가가 3사보다 30% 이상 높다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md:252"
+  ],
+  "asof": "2026-06"
+ },
+ "YMTC": {
+  "take": "2026년 2분기 낸드 점유율 14%로 3위에 올랐다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-13--daily-update-august-13th-2026.md:8"
+  ],
+  "asof": "2026-08"
+ },
+ "키오시아": {
+  "take": "매출총이익률 80%를 낸 분기에 자사주를 산다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-03--daily-update-august-3rd-2026.md:8"
+  ],
+  "asof": "2026-08"
+ },
+ "SanDisk": {
+  "take": "웨이퍼 공장 없이 키오시아 합작으로 받는다 — 캐펙스가 매출 1% 아래",
+  "cite": [
+   "content/understanding/회계사/[260808] 시총 1,875억 달러가 요구하는 내재성장률은 9~12%다 - 샌디스크 - 엘곰.md:40"
+  ],
+  "asof": "2026-08"
+ },
+ "대역폭": {
+  "take": "TPU v4는 PCIe로 16GB/s — HBM보다 100배 느리다",
+  "cite": [
+   "content/scaling-book/원문/02-tpus.md:56"
+  ],
+  "asof": "2025"
+ },
+ "용량": {
+  "take": "HBM 용량은 볼타 32GB에서 블랙웰 192GB로 늘었다",
+  "cite": [
+   "content/scaling-book/원문/12-gpus.md:50"
+  ],
+  "asof": "2025"
+ },
+ "전력 효율(pJ/bit)": {
+  "take": "구리에 224G SerDes를 쓰면 한쪽에서만 5pJ/bit가 든다",
+  "cite": [
+   "input/clippings/Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect.md:885"
+  ],
+  "asof": "2026-01"
+ },
+ "설비투자(캐펙스)": {
+  "take": "마이크론 캐펙스가 매출의 27%, 회계연도로 250억 달러를 넘는다",
+  "cite": [
+   "content/understanding/회계사/[260808] 시총 1,875억 달러가 요구하는 내재성장률은 9~12%다 - 샌디스크 - 엘곰.md:42"
+  ],
+  "asof": "2026-08"
+ },
+ "공급 계약": {
+  "take": "마이크론이 한 분기에 220억 달러어치를 5년 이상으로 묶었다",
+  "cite": [
+   "content/understanding/이선엽 대표/반도체 룰이 바뀌었다 주가 재평가 시작됐다.md:45"
+  ],
+  "asof": "2026"
+ },
+ "인증 통과(퀄)": {
+  "take": "한 번 붙으면 안 바뀐다 — HBM3 때 삼성은 엔비디아 인증을 못 받았다",
+  "cite": [
+   "content/semi_doped/raw/2026-05-04-memory-tax.md:91"
+  ],
+  "asof": "2026-05"
+ }
+}

@@ -1,1 +1,198 @@
-{}
+{
+ "증착": {
+  "take": "장비 투자는 매년 150억 달러로 같은데 낸드 생산능력은 30% 넘게 늘었다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md:39"
+  ],
+  "asof": "2023-07"
+ },
+ "ALD(원자층 증착)": {
+  "take": "삼성은 루테늄 결정립 99%를 한 방향으로 맞춰 키운다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md:181"
+  ],
+  "asof": "2026-01"
+ },
+ "CVD(화학 기상 증착)": {
+  "take": "CVD에 쓰는 WF6 원료 공급망은 중국이 80%를 쥔다",
+  "cite": [
+   "content/linkedin/[2606] 링크드인 게시물.md:2301"
+  ],
+  "asof": "2026-06"
+ },
+ "PVD(물리 기상 증착)": {
+  "take": "450나노 피치 웨이퍼 본딩이 배리어를 바꿔 98% 수율을 냈다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:559"
+  ],
+  "asof": "2026-07"
+ },
+ "에피택시": {
+  "take": "플립FET은 위아래 시트를 만든 뒤 위쪽 트랜지스터 에피만 먼저 한다",
+  "cite": [
+   "input/clippings/Intel 18A Details & Cost, Future of DRAM 4F2 vs 3D, Backside Power Adoption (or Not), China's FlipFET, Digital Twins from Atoms to Fabs, and More.md:149"
+  ],
+  "asof": "2025"
+ },
+ "식각": {
+  "take": "층수는 35% 늘었는데 식각 단계는 20%만 늘어 남는 장사였다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md:91"
+  ],
+  "asof": "2026-01"
+ },
+ "고종횡비 식각": {
+  "take": "AMEC이 D램 어레이와 TSV 미세피치를 이 식각으로 맡는다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md:480"
+  ],
+  "asof": "2026-06"
+ },
+ "CMP(화학기계 연마)": {
+  "take": "서브마이크론 배선으로 가려면 다마신과 CMP 평탄화가 관문이다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:721"
+  ],
+  "asof": "2026-07"
+ },
+ "세정": {
+  "take": "공정마다 되풀이되고, 세정액·식각액 국내 1위는 솔브레인이다",
+  "cite": [
+   "content/understanding/한주성/2026-05-15 모래가 반도체 칩이 되기까지  1편 '전공정' [6672].md:18"
+  ],
+  "asof": "2026-05"
+ },
+ "열처리·어닐": {
+  "take": "CEA-Leti가 플라스마 없이 100도 어닐로 수율 97%를 냈다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:583"
+  ],
+  "asof": "2026-07"
+ },
+ "이온주입": {
+  "take": "노광과 함께 중국 국산화가 가장 뒤처진 자리다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md:475"
+  ],
+  "asof": "2026-06"
+ },
+ "GAA(나노시트 트랜지스터)": {
+  "take": "TSMC 첫 GAA 공정은 N2이고, ALD가 늘어난 큰 까닭이 여기 있다",
+  "cite": [
+   "input/clippings/TSMC N2 + Next-Gen SoIC, Intel EMIB-T, Meta 3D Stacked Memory, CFET, 2D Materials, and More.md:25"
+  ],
+  "asof": "2025"
+ },
+ "백사이드 전력공급": {
+  "take": "인텔 18A는 32나노까지 설계되지만 실제로는 36나노로 낸다",
+  "cite": [
+   "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md:367"
+  ],
+  "asof": "2026-06"
+ },
+ "구리 배선(다마신)": {
+  "take": "2015년 10/10µm에서 2/2µm까지 왔고 다음 목표가 1/1µm이다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:721"
+  ],
+  "asof": "2026-07"
+ },
+ "텅스텐 배선": {
+  "take": "7나노급 아래에서는 이 콘택 한 층이 칩 저항의 가장 큰 병목이다",
+  "cite": [
+   "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md:623"
+  ],
+  "asof": "2026-06"
+ },
+ "몰리브덴 배선": {
+  "take": "삼성은 286단 V9에서 워드라인 금속을 텅스텐에서 몰리브덴으로 바꾼다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md:120"
+  ],
+  "asof": "2026-01"
+ },
+ "루테늄 배선": {
+  "take": "선폭이 좁아질수록 저항이 뛰는 구리를 대신할 후보다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md:25"
+  ],
+  "asof": "2026-01"
+ },
+ "전구체": {
+  "take": "불화수소·BOE·CMP 슬러리와 함께 삼성전자·SK하이닉스로 들어간다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-05-18--daily-update-may-18th-2026.md:46"
+  ],
+  "asof": "2026-05"
+ },
+ "램리서치": {
+  "take": "낸드 효율을 올리는 자리에서 도쿄일렉트론이 자리를 흔든다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md:39"
+  ],
+  "asof": "2023-07"
+ },
+ "어플라이드머티리얼즈": {
+  "take": "Sculpta 는 인텔과 imec 양산에 들어가 먼저 자리를 잡았다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:205"
+  ],
+  "asof": "2025"
+ },
+ "도쿄일렉트론": {
+  "take": "남은 길이 식각기 깊이 한계뿐이라 램리서치 자리를 가져갈 수 있다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md:74"
+  ],
+  "asof": "2023-07"
+ },
+ "ASM International": {
+  "take": "증착 장비 매출이 2027년 10억, 2030년 20억 달러로 간다는 셈이다",
+  "cite": [
+   "content/linkedin/[2608] 링크드인 게시물.md:587"
+  ],
+  "asof": "2026-08"
+ },
+ "KLA": {
+  "take": "KLA·테라다인·어드밴테스트·ASM이 같은 분기에 전망을 올렸다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-29--daily-update-july-29th-2026.md:42"
+  ],
+  "asof": "2026-07"
+ },
+ "Naura": {
+  "take": "중국 식각기 수입이 18% 줄고 증착은 3% 늘었다 — 그 자리를 나우라가 채웠다",
+  "cite": [
+   "content/linkedin/[2606] 링크드인 게시물.md:2049"
+  ],
+  "asof": "2026-06"
+ },
+ "AMEC": {
+  "take": "삼성전자와 SK하이닉스가 이 회사 식각기를 평가하고 있다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-06--daily-update-august-6th-2026.md:59"
+  ],
+  "asof": "2026-08"
+ },
+ "공정 스텝 수": {
+  "take": "기존 금속화는 저-NA 노광 3회에 공정 40단계가 넘었다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:55"
+  ],
+  "asof": "2025"
+ },
+ "장비 국산화": {
+  "take": "YMTC 병목은 노광이 아니라 식각·증착이었고 거기서 국산이 먹혔다",
+  "cite": [
+   "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md:35"
+  ],
+  "asof": "2026-08"
+ },
+ "수출 통제": {
+  "take": "EUV를 못 쓰게 되자 SMIC는 DUV 다중 패터닝과 DTCO로 갔다",
+  "cite": [
+   "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md:82"
+  ],
+  "asof": "2026-06"
+ }
+}

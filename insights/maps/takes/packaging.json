@@ -1,1 +1,254 @@
-{}
+{
+ "CoWoS": {
+  "take": "인텔이 EMIB에 TSV를 더한 EMIB-T로 대안 자리를 노린다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:23"
+  ],
+  "asof": "2026-07"
+ },
+ "CoWoS-S/R/L": {
+  "take": "R은 실리콘 대신 유기 인터포저라 휨에 강하다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:149"
+  ],
+  "asof": "2026-07"
+ },
+ "InFO": {
+  "take": "애플이 2016년에 자금을 넣어 만든 방식이 지금 AI 패키징의 바탕이다",
+  "cite": [
+   "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md:185"
+  ],
+  "asof": "2026-01"
+ },
+ "EMIB": {
+  "take": "판 전체를 깔지 않고 필요한 자리에만 실리콘 조각을 파묻는다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:37"
+  ],
+  "asof": "2026-07"
+ },
+ "팬아웃": {
+  "take": "브로드컴 이번 세대 광엔진은 COUPE가 아니라 팬아웃으로 간다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md:470"
+  ],
+  "asof": "2026-04"
+ },
+ "SoIC": {
+  "take": "AMD는 5년 넘게 TSMC와 이 적층을 같이 다듬어 왔다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md:599"
+  ],
+  "asof": "2025-06"
+ },
+ "Foveros": {
+  "take": "클리어워터 포레스트는 앞 세대보다 17% 빨라 인텔이 실적에서 거의 안 꺼냈다",
+  "cite": [
+   "content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md:297"
+  ],
+  "asof": "2026-02"
+ },
+ "하이브리드 본딩": {
+  "take": "화웨이는 로직 위에 로직을 쌓는 데 이 방식을 쓴다",
+  "cite": [
+   "content/semi_doped/raw/2026-05-29-huawei-tau.md:15"
+  ],
+  "asof": "2026-05"
+ },
+ "TSV(실리콘 관통 전극)": {
+  "take": "삼성은 코어 다이 TSV를 4배로 늘려 핀 속도 13Gb/s를 냈다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md:105"
+  ],
+  "asof": "2026-04"
+ },
+ "마이크로범프": {
+  "take": "TSMC는 HBM에서 당분간 범프를 유지하고 하이브리드 본딩 투자는 미룬다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-09-03--daily-update-september-3rd-2026.md:42"
+  ],
+  "asof": "2026-09"
+ },
+ "TCB(열압착 본딩)": {
+  "take": "구리 직접 본딩으로 바꿔도 시스템 열저항은 공랭 3.5%만 준다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:318"
+  ],
+  "asof": "2026-07"
+ },
+ "리플로우": {
+  "take": "MR-MUF는 한 번에 붙이고 TC-NCF는 층마다 눌러야 해 더 걸린다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md:202"
+  ],
+  "asof": "2025-08"
+ },
+ "언더필": {
+  "take": "가장자리부터 붙인 구조가 굽힘 30N을 견뎠다 — 언더필만 쓰던 것은 0.2N",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:598"
+  ],
+  "asof": "2026-07"
+ },
+ "인터포저": {
+  "take": "마벨은 채널을 6.5mm에서 1.5mm로 줄이면서 배선층 9개를 그대로 뒀다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:91"
+  ],
+  "asof": "2026-07"
+ },
+ "패키지 기판(ABF)": {
+  "take": "CoWoS 수율이 99%를 넘어도 ABF와 메모리가 병목이다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-12--daily-update-august-12th-2026.md:12"
+  ],
+  "asof": "2026-08"
+ },
+ "유리기판": {
+  "take": "TSMC가 CoWoS 다음 단계로 지목했다 — 열이 실리콘과 비슷하다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-06-17--daily-update-june-17th-2026.md:32"
+  ],
+  "asof": "2026-06"
+ },
+ "패널 레벨 패키징": {
+  "take": "파워텍이 2027년 세계 첫 패널 레벨 AI 패키징 라인을 세운다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-31--daily-update-august-31st-2026.md:106"
+  ],
+  "asof": "2026-08"
+ },
+ "RDL(재배선층)": {
+  "take": "몰딩하면 그레이팅이 막혀 마벨은 그 위에 광학 블록을 올린다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:185"
+  ],
+  "asof": "2026-07"
+ },
+ "UCIe": {
+  "take": "인터포저용 UCIe-A는 mm당 10Tbit/s, 패키지 밖은 0.4Tbit/s다",
+  "cite": [
+   "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md:451"
+  ],
+  "asof": "2026-01"
+ },
+ "칩렛": {
+  "take": "라이트매터는 칩렛 15개를 2,100mm² 인터포저에 붙였다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:508"
+  ],
+  "asof": "2026-07"
+ },
+ "HBM": {
+  "take": "화웨이는 올해는 칩을 찍어도 내년엔 HBM에서 막힌다",
+  "cite": [
+   "input/clippings/Huawei Ascend Production Ramp Die Banks, TSMC Continued Production, HBM is The Bottleneck.md:26"
+  ],
+  "asof": "2025"
+ },
+ "HBM4": {
+  "take": "HBM3E보다 웨이퍼 생산성 격차가 3배에서 4배로 벌어진다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md:334"
+  ],
+  "asof": "2026-02"
+ },
+ "베이스 다이": {
+  "take": "SK하이닉스가 HBM4E 베이스 다이를 인텔 파운드리에서 받을지 본다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-31--daily-update-august-31st-2026.md:34"
+  ],
+  "asof": "2026-08"
+ },
+ "CPO(광학 인터커넥트)": {
+  "take": "광섬유를 붙이는 FAU 공정이 CPO에서 가장 손이 많이 간다",
+  "cite": [
+   "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md:60"
+  ],
+  "asof": "2026-01"
+ },
+ "마이크로플루이딕 냉각": {
+  "take": "마이크로소프트가 GH200에서 GPU 작업 전반의 결과를 냈다",
+  "cite": [
+   "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md:169"
+  ],
+  "asof": "2026-07"
+ },
+ "ASE": {
+  "take": "AI 부품이 몰리자 첨단 패키징 견적을 20% 넘게 올렸다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-02--daily-update-july-2nd-2026.md:82"
+  ],
+  "asof": "2026-07"
+ },
+ "Amkor": {
+  "take": "엔비디아가 미국 안 첨단 패키징 자리를 잡으려 앰코에 선지급했다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-24--daily-update-july-24th-2026.md:59"
+  ],
+  "asof": "2026-07"
+ },
+ "JCET": {
+  "take": "AI 첨단 패키징 수요가 전망을 넘자 올해 투자 계획을 올렸다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-09-01--daily-update-september-1st-2026.md:66"
+  ],
+  "asof": "2026-09"
+ },
+ "Besi": {
+  "take": "하이브리드 본딩 주문이 두 배를 넘었다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-23--daily-update-july-23rd-2026.md:65"
+  ],
+  "asof": "2026-07"
+ },
+ "ASMPT": {
+  "take": "SK하이닉스 HBM3E 12단에서 이 회사 본더는 안 돌아갔다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md:300"
+  ],
+  "asof": "2025-08"
+ },
+ "Disco": {
+  "take": "이오테크닉스가 레이저 그루빙으로 다이싱 독점을 깼다",
+  "cite": [
+   "content/understanding/한주성/2026-05-18 모래가 반도체 칩이 되기까지  2편 '후공정' [2592].md:17"
+  ],
+  "asof": "2026-05"
+ },
+ "SKC·앱솔릭": {
+  "take": "SKC가 조달한 돈 가운데 일부를 유리기판 자회사 앱솔릭스에 넣는다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-09-07--daily-update-september-7th-2026.md:88"
+  ],
+  "asof": "2026-09"
+ },
+ "워피지(휨)": {
+  "take": "범프를 36µm로 좁힌 240mm 대형 패키지 샘플에서 휨이 크게 났다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:95"
+  ],
+  "asof": "2026-07"
+ },
+ "패키징 수율": {
+  "take": "「열 개 중 하나를 잃을 순 없다」 — 사실상 100%를 요구한다",
+  "cite": [
+   "content/semi_doped/2026-06-19-advanced-packaging.md:69"
+  ],
+  "asof": "2026-06"
+ },
+ "KGD·번인 검사": {
+  "take": "정상으로 도는 다이에만 값을 낸다 — 불량은 TSMC가 떠안는다",
+  "cite": [
+   "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md:47"
+  ],
+  "asof": "2026-01"
+ },
+ "CoWoS 캐파": {
+  "take": "OSAT가 늘려도 여전히 빠듯하다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-17--daily-update-july-17th-2026.md:54"
+  ],
+  "asof": "2026-07"
+ }
+}
