@@ -60,6 +60,10 @@ PAGES = [
      os.path.join(ROOT, 'content', 'newsletter')),
     # 트럼프 층(2026-09-06). 재료가 메르 클리핑 마흔일곱 편뿐이라 폴더 없이 TRUMP_EXTRA 로 간다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-trump', None),
+    # 하네스·스킬 층(2026-09-08). 재료가 AI Engineer 발표 열여섯 편 + 뉴스레터 두 편이다.
+    # content/understanding 을 통째로 넣으면 이 층과 무관한 오백 편이 알리바이가 되므로
+    # 폴더 없이 HARNESS_EXTRA 에 파일을 하나씩 적는다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-harness', None),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
@@ -212,6 +216,32 @@ TRUMP_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
 'input/clippings/mer/224399253940.json',
 )]
 
+# 하네스·스킬 층의 재료 열여덟 — AI Engineer 발표 열여섯 편과 뉴스레터 두 편
+HARNESS_EXTRA = [os.path.join(ROOT, 'content', 'understanding', 'AI Engineer', f + '.md')
+                 for f in (
+    '2025-08-26-클로드-코드와-에이전트-코딩의-진화',
+    '2025-12-26-에이전트-말고-스킬을-만들어라',
+    '2025-12-26-에이전트를-위해-바뀌는-클로드-API',
+    '2025-12-26-다음-모델에도-버티는-코딩-에이전트',
+    '2026-04-26-코드-모드-말은-코드가-한다',
+    '2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기',
+    '2026-05-26-개발자-한-명과-스무-개의-에이전트',
+    '2026-07-26-LLM에게-운전대를-주지-마라',
+    '2026-07-26-평가-없이-스킬을-내보내지-마라',
+    '2026-07-26-긴-호흡의-작업을-맡길-때',
+    '2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트',
+    '2026-07-26-코드를-쓰다가-시스템을-설계하는-일로',
+    '2026-07-31-일하면서-배우는-에이전트',
+    '2026-08-05-실패한-것은-에이전트가-아니라-하니스다',
+    '2026-08-12-코덱스-하니스-뒤편',
+    '2026-08-23-토큰을-누가-다-썼나',
+)] + [
+    os.path.join(ROOT, 'content', 'newsletter', 'ai_models', 'agents',
+                 '[260206] Claude Code, 에이전트 시대의 변곡점.md'),
+    os.path.join(ROOT, 'content', 'newsletter', 'ai_models', 'agents',
+                 '[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md'),
+]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -223,7 +253,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

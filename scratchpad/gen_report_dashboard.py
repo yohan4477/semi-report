@@ -24,6 +24,8 @@ import _mem_part1  # noqa: E402
 import _power_part1  # noqa: E402
 import _mem_fig  # noqa: E402
 import _trump_part1  # noqa: E402
+import _harness_part1  # noqa: E402
+import _harness_fig  # noqa: E402
 import dash_common as dc
 from card_lib import fig_html
 
@@ -228,6 +230,21 @@ def report_mem_html():
     return ''.join(h)
 
 
+def report_harness_html():
+    """하네스·스킬 총정리 — 한 편. 본문은 insights/reports/harness-2026-09-08.md 원본에서 읽는다."""
+    h = [_harness_part1.HEAD_HARNESS]
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="harness-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _harness_part1.report_harness(sec, p, fig)
+    return ''.join(h)
+
+
 def report_power_html():
     """전력 총정리 — 한 편. 본문은 insights/reports/power-2026-09-07.md 원본에서 읽는다."""
     h = [_power_part1.HEAD_POWER]
@@ -273,7 +290,8 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _rate_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _power_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()])
 
 
 if __name__ == '__main__':
@@ -296,7 +314,10 @@ if __name__ == '__main__':
                      '자리', 1, report_trump_html()),
                     ('sec-power', '전력 — 막힌 값을 누가 치렀나',
                      'SemiAnalysis 12편 + 팟캐스트 1회차 + 전략 판 1회차 — 계통에 막힌 뒤 '
-                     '그 값이 누구 청구서로 갔나', 1, report_power_html())],
+                     '그 값이 누구 청구서로 갔나', 1, report_power_html()),
+                    ('sec-harness', '하네스·스킬 — 판단을 걷어 낸 열두 달',
+                     'AI Engineer 발표 16편 + SemiAnalysis 2편 — 모델 안에 있던 판단이 '
+                     '바깥으로 걷혀 나간 뒤 그 값을 누가 치렀나', 1, report_harness_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
