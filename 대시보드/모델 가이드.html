@@ -579,17 +579,25 @@
             --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
   }
 
-  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 8px}
+  /* 태그 줄은 스크롤을 따라온다 — 목록 한가운데서 다른 주제로 옮기려고 맨 위까지
+     되돌아가야 하면 태그가 거르는 도구 노릇을 못 한다(2026-09-08). 배경을 깔지 않으면
+     지나가는 줄이 글자 뒤로 비친다. 접는 것은 태그 격자(.tagnav)만이다 — 「모두 보기」
+     단추까지 같이 접히면 접힌 것을 펼 길이 없다. */
+  .tagbar{position:sticky;top:0;z-index:20;background:var(--paper);
+   padding:10px 0 8px;margin:0 0 8px;border-bottom:1px solid var(--line)}
+  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0}
   .tagnav button{font:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--line);
    border-radius:16px;background:var(--surface);color:var(--ink-2);cursor:pointer}
   .tagnav button:hover{background:var(--sunk)}
   .tagnav button .cnt{color:var(--ink-3);margin-left:5px;font-size:11.5px}
   .tagnav button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
   .tagnav button[aria-pressed="true"] .cnt{color:var(--ink-3)}
-  .tagnav.many{max-height:76px;overflow:hidden}
-  .tagnav.many.open{max-height:none}
-  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;border:0;
-   padding:2px 0;margin:0 0 8px;cursor:pointer}
+  /* 두 줄만 남긴다. 칩 한 줄이 29px, 줄 사이가 7px — 반 잘린 줄이 비치면 고장으로 읽힌다 */
+  .tagnav.many{max-height:66px;overflow:hidden}
+  /* 다 펴도 화면의 반을 넘지 않는다 — 스크롤을 따라오는 줄이 화면을 덮으면 목록을 가린다 */
+  .tagnav.many.open{max-height:44vh;overflow:auto}
+  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;
+   border:0;padding:6px 2px 0;margin:0;cursor:pointer}
   .layers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 10px}
   .layers a{font-size:12.5px;color:var(--accent-ink);text-decoration:none}
   .layers a:hover{text-decoration:underline}
@@ -599,6 +607,9 @@
   .rows{border-top:1px solid var(--line);margin:6px 0 26px}
   .rows .row{display:block;padding:14px 4px;border-bottom:1px solid var(--line);
    text-decoration:none;color:inherit}
+  /* display:block 이 [hidden] 을 이긴다 — 이 줄이 없으면 태그로 걸러도 줄이 그대로 선다
+     (2026-09-08, 「눌러도 아무 일이 없다」의 정체). .sgrid 에서 한 번 겪은 자리다. */
+  .rows .row[hidden]{display:none}
   .rows a.row:hover{background:var(--sunk)}
   .rows .rtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;
    background:var(--sunk);color:var(--ink-2)}
@@ -645,7 +656,7 @@
     <h1>모델 가이드</h1>
   </header>
 
-  <input type="search" class="rq" placeholder="제목이나 태그로 찾기" aria-label="찾기"><div class="tagnav"><button data-sec="" aria-pressed="true">전체<span class="cnt">10</span></button><button data-sec="sec-what" aria-pressed="false">모델이 하는 일<span class="cnt">2</span></button><button data-sec="sec-build" aria-pressed="false">어떻게 만드나<span class="cnt">3</span></button><button data-sec="sec-cost" aria-pressed="false">돌리는 값<span class="cnt">2</span></button><button data-sec="sec-who" aria-pressed="false">누가 벌고 누가 까먹나<span class="cnt">2</span></button><button data-sec="sec-read" aria-pressed="false">숫자를 읽는 법<span class="cnt">1</span></button></div><p class="rn"></p><div class="rows"><a class="row" href="model-guide/card-모델에서-밀린-구글이-칩을-팔아-벌었다.html" data-sec="sec-who" data-q="모델에서 밀린 구글이 칩을 팔아 벌었다 누가 벌고 누가 까먹나 semianalysis 뉴스레터 · 제미나이는 끝났어도 gcp는 잘나간다 2026-08-07 출처 1편"><span class="rtag">누가 벌고 누가 까먹나</span><div class="rtitle">모델에서 밀린 구글이 칩을 팔아 벌었다</div><div class="rone">최상위 모델 경쟁에서 밀린 회사가 어떻게 돈은 더 벌게 됐는지.</div><div class="rmeta"><span>2026-08-07</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-같은-답을-싸게-내려고-구조를-바꾼다.html" data-sec="sec-what" data-q="같은 답을 싸게 내려고 구조를 바꾼다 모델이 하는 일 semianalysis 뉴스레터 · kimi k3 아키텍처 해부 2026-08-03 출처 1편"><span class="rtag">모델이 하는 일</span><div class="rtitle">같은 답을 싸게 내려고 구조를 바꾼다</div><div class="rone">전문가 혼합이 무엇이고, 중국 연구소들이 왜 하나같이 통신량부터 줄이는지.</div><div class="rmeta"><span>2026-08-03</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-모델은-다음-토큰-하나를-고르는-기계다.html" data-sec="sec-what" data-q="모델은 다음 토큰 하나를 고르는 기계다 모델이 하는 일 semianalysis 뉴스레터 · tilert inferencex · deepseek v4 2026-06 · 08 출처 2편"><span class="rtag">모델이 하는 일</span><div class="rtitle">모델은 다음 토큰 하나를 고르는 기계다</div><div class="rone">토큰이 무엇이고, 답 한 줄이 나오기까지 계산이 왜 두 단계로 갈리는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-읽히고-좁혀-읽히고-시켜-본다.html" data-sec="sec-build" data-q="읽히고, 좁혀 읽히고, 시켜 본다 어떻게 만드나 semianalysis 뉴스레터 · rl 환경 · 강화학습 스케일링 2025-06 · 2026-01 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">읽히고, 좁혀 읽히고, 시켜 본다</div><div class="rone">학습이 세 단계로 갈리는 이유와, 최근 성능을 끌어올린 것이 어느 단계인지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-강화학습에-쓸-과제는-사람이-하나씩-만든다.html" data-sec="sec-build" data-q="강화학습에 쓸 과제는 사람이 하나씩 만든다 어떻게 만드나 semianalysis 뉴스레터 · rl 환경 · 메타 슈퍼인텔리전스 2026-01 · 07 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">강화학습에 쓸 과제는 사람이 하나씩 만든다</div><div class="rone">과제를 만들어 파는 산업이 어떻게 생겼고, 왜 모델들이 서로 달라지는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-사-오는-과제보다-노는-GPU가-더-비쌌다.html" data-sec="sec-build" data-q="사 오는 과제보다 노는 gpu가 더 비쌌다 어떻게 만드나 semianalysis 뉴스레터 · rl 시스템 · rl 환경 2026-01 · 06 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">사 오는 과제보다 노는 GPU가 더 비쌌다</div><div class="rone">강화학습 값을 실제로 정하는 것이 무엇인지, 같은 장비에서 비용이 왜 두 배 넘게 갈리는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-빨리-답할수록-한-대가-감당하는-사람이-준다.html" data-sec="sec-cost" data-q="빨리 답할수록 한 대가 감당하는 사람이 준다 돌리는 값 semianalysis 뉴스레터 · tilert inferencex · deepseek v4 2026-06 · 08 출처 2편"><span class="rtag">돌리는 값</span><div class="rtitle">빨리 답할수록 한 대가 감당하는 사람이 준다</div><div class="rone">응답 속도와 처리량이 왜 맞바꿈 관계인지, 같은 GPU에서 값을 어떻게 낮추는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-토큰값은-1-000분의-1인데-청구서는-2배다.html" data-sec="sec-cost" data-q="토큰값은 1,000분의 1인데 청구서는 2배다 돌리는 값 semianalysis · 미국주식 사관학교 뉴스레터 · 코딩 어시스턴트 · 작업당 비용 2026-04 · 07 출처 2편"><span class="rtag">돌리는 값</span><div class="rtitle">토큰값은 1,000분의 1인데 청구서는 2배다</div><div class="rone">AI가 싸진다는 말과 비싸진다는 말이 같은 해에 둘 다 사실인 까닭.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis · 미국주식 사관학교</span></div></a><a class="row" href="model-guide/card-같은-시장에서-흑자와-마이너스-100-가-같이-나왔다.html" data-sec="sec-who" data-q="같은 시장에서 흑자와 마이너스 100%가 같이 나왔다 누가 벌고 누가 까먹나 semianalysis 뉴스레터 · 앤트로픽 3분기 흑자 · claude code 2026-02 · 07 출처 2편"><span class="rtag">누가 벌고 누가 까먹나</span><div class="rtitle">같은 시장에서 흑자와 마이너스 100%가 같이 나왔다</div><div class="rone">무엇을 파느냐가 손익을 어떻게 나눴고, 두 회사의 성장을 무엇이 끌었는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-시험-점수는-이미-변별력을-잃었다.html" data-sec="sec-read" data-q="시험 점수는 이미 변별력을 잃었다 숫자를 읽는 법 semianalysis 뉴스레터 · 코딩 어시스턴트 · 강화학습 스케일링 2025-06 · 2026-04 출처 2편"><span class="rtag">숫자를 읽는 법</span><div class="rtitle">시험 점수는 이미 변별력을 잃었다</div><div class="rone">널리 쓰이는 벤치마크가 왜 못 미더운지, 숫자를 볼 때 무엇을 먼저 확인해야 하는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a></div>
+  <input type="search" class="rq" placeholder="제목이나 태그로 찾기" aria-label="찾기"><div class="tagbar"><div class="tagnav"><button data-sec="" aria-pressed="true">전체<span class="cnt">10</span></button><button data-sec="sec-what" aria-pressed="false">모델이 하는 일<span class="cnt">2</span></button><button data-sec="sec-build" aria-pressed="false">어떻게 만드나<span class="cnt">3</span></button><button data-sec="sec-cost" aria-pressed="false">돌리는 값<span class="cnt">2</span></button><button data-sec="sec-who" aria-pressed="false">누가 벌고 누가 까먹나<span class="cnt">2</span></button><button data-sec="sec-read" aria-pressed="false">숫자를 읽는 법<span class="cnt">1</span></button></div></div><p class="rn"></p><div class="rows"><a class="row" href="model-guide/card-모델에서-밀린-구글이-칩을-팔아-벌었다.html" data-sec="sec-who" data-q="모델에서 밀린 구글이 칩을 팔아 벌었다 누가 벌고 누가 까먹나 semianalysis 뉴스레터 · 제미나이는 끝났어도 gcp는 잘나간다 2026-08-07 출처 1편"><span class="rtag">누가 벌고 누가 까먹나</span><div class="rtitle">모델에서 밀린 구글이 칩을 팔아 벌었다</div><div class="rone">최상위 모델 경쟁에서 밀린 회사가 어떻게 돈은 더 벌게 됐는지.</div><div class="rmeta"><span>2026-08-07</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-같은-답을-싸게-내려고-구조를-바꾼다.html" data-sec="sec-what" data-q="같은 답을 싸게 내려고 구조를 바꾼다 모델이 하는 일 semianalysis 뉴스레터 · kimi k3 아키텍처 해부 2026-08-03 출처 1편"><span class="rtag">모델이 하는 일</span><div class="rtitle">같은 답을 싸게 내려고 구조를 바꾼다</div><div class="rone">전문가 혼합이 무엇이고, 중국 연구소들이 왜 하나같이 통신량부터 줄이는지.</div><div class="rmeta"><span>2026-08-03</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-모델은-다음-토큰-하나를-고르는-기계다.html" data-sec="sec-what" data-q="모델은 다음 토큰 하나를 고르는 기계다 모델이 하는 일 semianalysis 뉴스레터 · tilert inferencex · deepseek v4 2026-06 · 08 출처 2편"><span class="rtag">모델이 하는 일</span><div class="rtitle">모델은 다음 토큰 하나를 고르는 기계다</div><div class="rone">토큰이 무엇이고, 답 한 줄이 나오기까지 계산이 왜 두 단계로 갈리는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-읽히고-좁혀-읽히고-시켜-본다.html" data-sec="sec-build" data-q="읽히고, 좁혀 읽히고, 시켜 본다 어떻게 만드나 semianalysis 뉴스레터 · rl 환경 · 강화학습 스케일링 2025-06 · 2026-01 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">읽히고, 좁혀 읽히고, 시켜 본다</div><div class="rone">학습이 세 단계로 갈리는 이유와, 최근 성능을 끌어올린 것이 어느 단계인지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-강화학습에-쓸-과제는-사람이-하나씩-만든다.html" data-sec="sec-build" data-q="강화학습에 쓸 과제는 사람이 하나씩 만든다 어떻게 만드나 semianalysis 뉴스레터 · rl 환경 · 메타 슈퍼인텔리전스 2026-01 · 07 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">강화학습에 쓸 과제는 사람이 하나씩 만든다</div><div class="rone">과제를 만들어 파는 산업이 어떻게 생겼고, 왜 모델들이 서로 달라지는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-사-오는-과제보다-노는-GPU가-더-비쌌다.html" data-sec="sec-build" data-q="사 오는 과제보다 노는 gpu가 더 비쌌다 어떻게 만드나 semianalysis 뉴스레터 · rl 시스템 · rl 환경 2026-01 · 06 출처 2편"><span class="rtag">어떻게 만드나</span><div class="rtitle">사 오는 과제보다 노는 GPU가 더 비쌌다</div><div class="rone">강화학습 값을 실제로 정하는 것이 무엇인지, 같은 장비에서 비용이 왜 두 배 넘게 갈리는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-빨리-답할수록-한-대가-감당하는-사람이-준다.html" data-sec="sec-cost" data-q="빨리 답할수록 한 대가 감당하는 사람이 준다 돌리는 값 semianalysis 뉴스레터 · tilert inferencex · deepseek v4 2026-06 · 08 출처 2편"><span class="rtag">돌리는 값</span><div class="rtitle">빨리 답할수록 한 대가 감당하는 사람이 준다</div><div class="rone">응답 속도와 처리량이 왜 맞바꿈 관계인지, 같은 GPU에서 값을 어떻게 낮추는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-토큰값은-1-000분의-1인데-청구서는-2배다.html" data-sec="sec-cost" data-q="토큰값은 1,000분의 1인데 청구서는 2배다 돌리는 값 semianalysis · 미국주식 사관학교 뉴스레터 · 코딩 어시스턴트 · 작업당 비용 2026-04 · 07 출처 2편"><span class="rtag">돌리는 값</span><div class="rtitle">토큰값은 1,000분의 1인데 청구서는 2배다</div><div class="rone">AI가 싸진다는 말과 비싸진다는 말이 같은 해에 둘 다 사실인 까닭.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis · 미국주식 사관학교</span></div></a><a class="row" href="model-guide/card-같은-시장에서-흑자와-마이너스-100-가-같이-나왔다.html" data-sec="sec-who" data-q="같은 시장에서 흑자와 마이너스 100%가 같이 나왔다 누가 벌고 누가 까먹나 semianalysis 뉴스레터 · 앤트로픽 3분기 흑자 · claude code 2026-02 · 07 출처 2편"><span class="rtag">누가 벌고 누가 까먹나</span><div class="rtitle">같은 시장에서 흑자와 마이너스 100%가 같이 나왔다</div><div class="rone">무엇을 파느냐가 손익을 어떻게 나눴고, 두 회사의 성장을 무엇이 끌었는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a><a class="row" href="model-guide/card-시험-점수는-이미-변별력을-잃었다.html" data-sec="sec-read" data-q="시험 점수는 이미 변별력을 잃었다 숫자를 읽는 법 semianalysis 뉴스레터 · 코딩 어시스턴트 · 강화학습 스케일링 2025-06 · 2026-04 출처 2편"><span class="rtag">숫자를 읽는 법</span><div class="rtitle">시험 점수는 이미 변별력을 잃었다</div><div class="rone">널리 쓰이는 벤치마크가 왜 못 미더운지, 숫자를 볼 때 무엇을 먼저 확인해야 하는지.</div><div class="rmeta"><span>언제 것 없음</span><span>SemiAnalysis</span></div></a></div>
 
   
 
@@ -861,10 +872,18 @@
     });
   }
   nav.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(!b) return;
+    var b=e.target.closest('button'); if(!b || b.classList.contains('tagmore')) return;
     sec = b.dataset.sec||'';
     apply();
-    window.scrollTo({top:0});
+    // 목록이 통째로 바뀌므로 그 목록의 첫 줄로 데려간다. 태그 줄이 스크롤을 따라오므로
+    // 그 높이만큼 뺀다 — 안 그러면 첫 줄이 태그 줄 뒤에 깔린다.
+    var box=document.querySelector('.rows');
+    if(box){
+      var top=box.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 8;
+      window.scrollTo({top: Math.max(0, top), behavior:'smooth'});
+    } else {
+      window.scrollTo({top:0});
+    }
   });
   if(tabs) tabs.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
@@ -873,6 +892,8 @@
   var more=document.querySelector('.tagmore');
   if(more) more.addEventListener('click', function(){
     var on=nav.classList.toggle('open');
+    // 펴면 첫 태그부터 보여야 한다 — 단추를 누른 자리로 안이 밀려 있으면 앞 태그가 잘린다
+    nav.scrollTop = 0;
     more.textContent = on ? '태그 접기' : '태그 모두 보기';
   });
   if(input) input.addEventListener('input', function(){

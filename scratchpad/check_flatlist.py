@@ -49,14 +49,29 @@ async def check(pg, name):
     if shown:
         bad.append('펴진 채로 서 있는 본문 섹션 %d개' % shown)
     if rows:
-        # 태그 하나를 눌러 줄이 줄어드는지
+        # 태그 하나를 눌러 줄이 줄어드는지. **눈에 보이는 줄**로 센다 — hidden 속성만 보면
+        # display:block 이 [hidden] 을 이겨 화면에는 그대로 서 있는 것을 놓친다(2026-09-08)
+        seen = 'e=>e.filter(function(r){return r.offsetHeight>0}).length'
+        shown = await pg.eval_on_selector_all('.rows .row', seen)
         tags = await pg.eval_on_selector_all('.tagnav button:not([hidden])', 'e=>e.length')
-        if tags > 1:
+        # 태그가 「전체」와 갈래 하나뿐이면 눌러도 같은 목록이다 — 걸러짐을 잴 수 없다
+        if tags > 2:
+            # 목록 한가운데서 눌러도 되어야 한다 — 태그 줄이 스크롤을 따라오는지 같이 본다
+            await pg.evaluate('window.scrollTo(0, 2000)')
+            await pg.wait_for_timeout(120)
+            h = await pg.evaluate('window.innerHeight')
+            top = await pg.eval_on_selector('.tagbar, .tagnav', 'e=>e.getBoundingClientRect().top')
+            if not (0 <= top < h):
+                bad.append('스크롤을 내리면 태그 줄이 화면에서 사라진다(top=%d)' % top)
             await pg.click('.tagnav button:nth-child(2)')
-            await pg.wait_for_timeout(150)
-            got = await pg.eval_on_selector_all('.rows .row:not([hidden])', 'e=>e.length')
-            if got == 0 or got > rows:
-                bad.append('태그를 눌렀는데 줄이 안 걸러진다(%d → %d)' % (rows, got))
+            await pg.wait_for_timeout(700)
+            got = await pg.eval_on_selector_all('.rows .row', seen)
+            if got == 0 or got >= shown:
+                bad.append('태그를 눌렀는데 화면의 줄이 안 걸러진다(%d → %d)' % (shown, got))
+            first = await pg.eval_on_selector(
+                '.rows .row:not([hidden])', 'e=>Math.round(e.getBoundingClientRect().top)')
+            if not (-10 <= first < 420):
+                bad.append('태그를 눌러도 그 목록 첫 줄로 안 데려간다(첫 줄 y=%d)' % first)
             await pg.click('.tagnav button:nth-child(1)')
         # 줄이 가리키는 글 페이지가 실제로 있는지 — 처음 다섯 줄만 본다
         hrefs = await pg.eval_on_selector_all(

@@ -127,6 +127,14 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 .secnav a.on{background:#1b1f27;color:#fff;border-color:#1b1f27}
 .secnav a.on small{color:#c8cdd6}
 .row .tags{margin:0 0 5px}
+/* .row 는 display:block 이라 [hidden] 만으로는 안 사라진다 — 이 줄이 없으면 태그로
+   걸러도 줄이 그대로 선다(2026-09-08, 「눌러도 아무 일이 없다」의 정체) */
+.rows > [data-sec][hidden]{display:none}
+/* 태그 줄은 스크롤을 따라온다 — 목록 한가운데서 다른 주제로 옮기려고 맨 위까지
+   되돌아가야 하면 태그가 거르는 도구 노릇을 못 한다(2026-09-08). 배경을 깔지 않으면
+   지나가는 줄이 글자 뒤로 비친다. */
+.secnav{position:sticky;top:0;z-index:20;background:#f6f7f9;
+ padding:10px 0 8px;margin:0 0 4px;border-bottom:1px solid #e2e5ea}
 
 .row.grp{border-left:4px solid #1b1f27;background:#f7f9fc}
 h2.ep{font-size:19px;margin:34px 0 6px;padding-top:14px;border-top:1px solid #e3e7ee}
@@ -142,6 +150,15 @@ h2.ep{font-size:19px;margin:34px 0 6px;padding-top:14px;border-top:1px solid #e3
     a.classList.add('on');
     var sec=a.getAttribute('data-sec');
     rows.forEach(function(r){ r.hidden = !!sec && r.getAttribute('data-sec')!==sec; });
+    // 목록이 통째로 바뀌므로 그 목록의 첫 줄로 데려간다. 안 하면 누른 자리에 그대로
+    // 서 있어서 「눌러도 아무 일이 없다」로 보인다(2026-09-08 지적).
+    var box=document.querySelector('.rows'),
+        nav2=document.querySelector('.secnav');
+    if(box){
+      var top=box.getBoundingClientRect().top + window.scrollY
+              - (nav2 ? nav2.offsetHeight : 0) - 8;
+      window.scrollTo({top: Math.max(0, top), behavior:'smooth'});
+    }
   });
 })();
 </script>

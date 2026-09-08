@@ -1060,17 +1060,25 @@ def _write_card_pages(cards, title, footer, out, page_slug, page_css):
 # 무엇인지 보려면 타일을 하나씩 눌러 봐야 했다. 쌓이는 장에서 먼저 궁금한 것은 주제가
 # 아니라 「무엇이 새로 들어왔나」다.
 FLAT_CSS = '''
-  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 8px}
+  /* 태그 줄은 스크롤을 따라온다 — 목록 한가운데서 다른 주제로 옮기려고 맨 위까지
+     되돌아가야 하면 태그가 거르는 도구 노릇을 못 한다(2026-09-08). 배경을 깔지 않으면
+     지나가는 줄이 글자 뒤로 비친다. 접는 것은 태그 격자(.tagnav)만이다 — 「모두 보기」
+     단추까지 같이 접히면 접힌 것을 펼 길이 없다. */
+  .tagbar{position:sticky;top:0;z-index:20;background:var(--paper);
+   padding:10px 0 8px;margin:0 0 8px;border-bottom:1px solid var(--line)}
+  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0}
   .tagnav button{font:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--line);
    border-radius:16px;background:var(--surface);color:var(--ink-2);cursor:pointer}
   .tagnav button:hover{background:var(--sunk)}
   .tagnav button .cnt{color:var(--ink-3);margin-left:5px;font-size:11.5px}
   .tagnav button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
   .tagnav button[aria-pressed="true"] .cnt{color:var(--ink-3)}
-  .tagnav.many{max-height:76px;overflow:hidden}
-  .tagnav.many.open{max-height:none}
-  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;border:0;
-   padding:2px 0;margin:0 0 8px;cursor:pointer}
+  /* 두 줄만 남긴다. 칩 한 줄이 29px, 줄 사이가 7px — 반 잘린 줄이 비치면 고장으로 읽힌다 */
+  .tagnav.many{max-height:66px;overflow:hidden}
+  /* 다 펴도 화면의 반을 넘지 않는다 — 스크롤을 따라오는 줄이 화면을 덮으면 목록을 가린다 */
+  .tagnav.many.open{max-height:44vh;overflow:auto}
+  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;
+   border:0;padding:6px 2px 0;margin:0;cursor:pointer}
   .layers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 10px}
   .layers a{font-size:12.5px;color:var(--accent-ink);text-decoration:none}
   .layers a:hover{text-decoration:underline}
@@ -1080,6 +1088,9 @@ FLAT_CSS = '''
   .rows{border-top:1px solid var(--line);margin:6px 0 26px}
   .rows .row{display:block;padding:14px 4px;border-bottom:1px solid var(--line);
    text-decoration:none;color:inherit}
+  /* display:block 이 [hidden] 을 이긴다 — 이 줄이 없으면 태그로 걸러도 줄이 그대로 선다
+     (2026-09-08, 「눌러도 아무 일이 없다」의 정체). .sgrid 에서 한 번 겪은 자리다. */
+  .rows .row[hidden]{display:none}
   .rows a.row:hover{background:var(--sunk)}
   .rows .rtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;
    background:var(--sunk);color:var(--ink-2)}
@@ -1157,7 +1168,10 @@ def flat_index(cards, secs, order, layers, page_slug, search_ph=''):
     more = ''
     if len(tags) > 12:
         more = '<button type="button" class="tagmore">태그 모두 보기</button>'
-    return ('%s%s<div class="tagnav%s">%s</div>%s<p class="rn"></p><div class="rows">%s</div>'
+    # 「태그 모두 보기」는 태그 줄 안에 둔다 — 줄이 스크롤을 따라오므로 밖에 두면
+    # 목록 한가운데서는 접힌 태그를 펼 길이 없다
+    return ('%s%s<div class="tagbar"><div class="tagnav%s">%s</div>%s</div>'
+            '<p class="rn"></p><div class="rows">%s</div>'
             % (lay, search, ' many' if more else '', ''.join(tags), more, ''.join(rows)))
 
 
@@ -1192,10 +1206,18 @@ FLAT_JS = '''<script>
     });
   }
   nav.addEventListener('click', function(e){
-    var b=e.target.closest('button'); if(!b) return;
+    var b=e.target.closest('button'); if(!b || b.classList.contains('tagmore')) return;
     sec = b.dataset.sec||'';
     apply();
-    window.scrollTo({top:0});
+    // 목록이 통째로 바뀌므로 그 목록의 첫 줄로 데려간다. 태그 줄이 스크롤을 따라오므로
+    // 그 높이만큼 뺀다 — 안 그러면 첫 줄이 태그 줄 뒤에 깔린다.
+    var box=document.querySelector('.rows');
+    if(box){
+      var top=box.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 8;
+      window.scrollTo({top: Math.max(0, top), behavior:'smooth'});
+    } else {
+      window.scrollTo({top:0});
+    }
   });
   if(tabs) tabs.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b) return;
@@ -1204,6 +1226,8 @@ FLAT_JS = '''<script>
   var more=document.querySelector('.tagmore');
   if(more) more.addEventListener('click', function(){
     var on=nav.classList.toggle('open');
+    // 펴면 첫 태그부터 보여야 한다 — 단추를 누른 자리로 안이 밀려 있으면 앞 태그가 잘린다
+    nav.scrollTop = 0;
     more.textContent = on ? '태그 접기' : '태그 모두 보기';
   });
   if(input) input.addEventListener('input', function(){
