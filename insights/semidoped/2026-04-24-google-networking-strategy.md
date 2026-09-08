@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-sonnet-5
 source: https://daily.semidoped.com/p/googles-networking-innovations
-sent: content/understanding/Semi Doped/raw/2026-04-24-google-networking.md (전문)
+sent: content/semi_doped/raw/2026-04-24-google-networking.md (전문)
 date: 2026-09-08
 title: TPU가 훈련·추론용 두 칩으로 나뉘며 메모리 배분·네트워크 토폴로지·홉 수까지 워크로드별로 다시 설계됐다
 fixed: 받은 뒤 고친 것 — ① 3D 토러스 홉 셈을 전사대로 바로잡음: 2+2+4=8홉은 TPU v7 의 4x4x8 이고 구글 블로그가 든 8x8x16 은 4+4+8=16홉(L185·L187) ② 마지막 절 제목을 「말하지 않은 것」으로 ③ 여는 절의 v1~v7 이력에 달린 L18 은 전사 그 줄이 맞아 그대로 둠

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-qualcomms-hbc-memory-alphawave
-sent: content/understanding/Semi Doped/raw/2026-06-29-qualcomm-hbc.md (전문)
+sent: content/semi_doped/raw/2026-06-29-qualcomm-hbc.md (전문)
 date: 2026-09-04
 fixed: 받은 뒤 고친 것 — 대조(2026-09-05, haiku — 인용 줄만): 값 어긋남 0, 인용 어긋남 0. ① 퀄컴의 Mellanox 를 물은 사람은 진행자A 가 아니라 진행자V(L205·L207) ② CFO 의 50억·10억 달러는 진행자V 가 기억한 값(L211) ③ 기술 자료를 「요구했다」를 「나왔으면 한다고 바랐다」로(L187·L281) ④ 행사장에서 물은 상대는 CEO Cristiano Amon 과 CFO Akash 로 줄을 달았다(L273). 대조가 짚은 「Amon·Akash 는 전사에 없다」는 L273 에 있어 그대로 뒀다. 길이를 맞추려고 Dragonwing 한 문장을 걷었다
 title: 추론이 쪼개져 랙 하나만 팔아도 되는 시장이 되자 퀄컴은 메모리를 연산 위에 얹는 설계로 들어왔다

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-20260729-astera-labs
-sent: content/understanding/Semi Doped/raw/2026-08-04-astera-labs.md (전문)
+sent: content/semi_doped/raw/2026-08-04-astera-labs.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — 귀속 다섯(① 되돌릴 수 있는 것은 심볼 간 간섭 하나이고 Vik 의 「I think」다 L67 ② 파형을 수천 장 겹친다는 설명은 Austin L77 ③ 눈을 열어 둘 수 있는 거리가 줄고 있다는 말은 Austin L85 ④ 「왜 브로드컴도 TI 도 아니었나」는 Vik 의 물음 L137, Austin 이 던진 것은 「스타트업이 어떻게 차지했나」 L131, 규격 작성자도 알았을 것이라는 말은 Austin L139 ⑤ ASP 가 높아졌다는 말은 Vik 하나 L143) · 추정을 단정으로 쓴 넷을 「봤다/기억했다」로(창업 2017년 L133 · 승리 이유 둘 L137 · Aries 6 블랙웰 채택 L143 · 트레이니엄 3 의 스코피오 X L161) · 뜻이 옮겨간 셋(30cm 는 리타이밍 문턱이 아니라 GPU–NIC/CPU 실제 거리 L81 · 「수십만」→「수만·수십만·수백만」 L139 · 「2026년 6월」→「이번 6월」 L41) · UALoE → 전사 표기 UALOE
 rewritten: 2026-09-03 문단째 한국어로 다시 씀(sonnet, 본보기 Grok 편) run 2026-09-03-014 — 문단 23 · (L) 61 · 전사 대조는 따로

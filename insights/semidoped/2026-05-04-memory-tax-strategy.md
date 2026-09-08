@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/capex-is-just-memory-tax-now-deepseek
-sent: content/understanding/Semi Doped/raw/2026-05-04-memory-tax.md (전문)
+sent: content/semi_doped/raw/2026-05-04-memory-tax.md (전문)
 date: 2026-09-03
 fixed: 받은 뒤 고친 것(2026-09-04) — haiku 대조 55줄 일치, 어긋남 0(haiku 가 짚은 「$42 billion」은 420억 달러가 맞다). 김재준 = 전사 J.June Kim
 title: 설비투자가 7천억 달러로 올라도 연산은 그만큼 늘지 않는다 — 늘어난 돈의 상당 부분이 메모리 회사로 곧장 간다

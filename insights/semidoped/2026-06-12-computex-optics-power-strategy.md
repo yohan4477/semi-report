@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-sonnet
 source: https://daily.semidoped.com/p/computex-mania-2026-optics-and-power
-sent: content/understanding/Semi Doped/raw/2026-06-12-computex-optics-power.md (전문)
+sent: content/semi_doped/raw/2026-06-12-computex-optics-power.md (전문)
 date: 2026-09-03
 fixed: 받은 뒤 고친 것(2026-09-03, haiku 대조) — 줄 표기 L229→L231 · 유보 넷(마벨·브로드컴 L121, 델타 L199, I/O 재사용 L227) · 「절충안」→당장의 대안 L131 · CoWoS 배경 덧붙임 걷음 L235 · 결론 볼드에 이 글의 읽기 표시 · 회사 이름·시가총액 수치는 전사 확인대로 · 2026-09-06 늘리면서 대조(haiku, 인용 줄만): 값·인용·귀속 어긋남 0. 「투명한 비전도성 액체」에서 전사에 없는 「투명한」을 걷었다. 늘린 자리는 델타 부스의 순간 차익거래(L83·L85) · 상승분 500억 달러 짐작(L101) · 인텔 파운드리가 내부 고객에 특혜를 안 준다는 입장(L217) · EMIB 를 OSAT 도 할 수 있다는 지적(L239)이고, 립부 탄 인사말로 채웠던 문단은 걷었다
 title: 빛도 전원도 파운드리도, 전시장의 다음 단계는 전부 조립과 검사에서 막혀 있었다

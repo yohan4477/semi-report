@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-wekas-val-bercovici-kv
-sent: content/understanding/Semi Doped/raw/2026-07-10-weka-bercovici.md (전문)
+sent: content/semi_doped/raw/2026-07-10-weka-bercovici.md (전문)
 date: 2026-09-03
 fixed: 받은 뒤 고친 것(2026-09-04) — haiku 대조 44줄 일치, 어긋남 0 · 유보 하나 살림(NVLink 128레인은 Val 의 기억 L47) · 7,494자→6,265자로 줄임(지우기만) · 슬라이더 이름은 겹낫표로
 title: KV 캐시를 아무리 압축해도 총량은 되돌아오고, 그 값을 남이 정하는 순간 소프트웨어 회사의 이익률이 남의 손에 넘어간다

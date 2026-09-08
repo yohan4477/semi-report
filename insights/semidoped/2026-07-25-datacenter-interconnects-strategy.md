@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-20260715-datacenter-interconnects
-sent: content/understanding/Semi Doped/raw/2026-07-25-datacenter-interconnects.md (전문)
+sent: content/semi_doped/raw/2026-07-25-datacenter-interconnects.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — 「성인 남자 키」→「키 큰 성인」 L45 · Rubin 세대 「같은 속도」 걷음(전사는 200GHz 양방향) L91 · 「십 년 넘게」→「십 년쯤」 L165 · 제목·6절 제목의 「길밖에 없다/길은 하나다」 걷음(전사는 3분의 1 효과값만) · 글쓴이 판단 넷을 「이 글이 읽는 것」으로 표시(성립 조건 · 세 배 셈 · 78층이 문턱을 알려 준다 · 다섯 자릿수) · 스케일어보브 설명은 Austin L57
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-003 — 변경률 3.9%

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/a-masterclass-on-ic-lithography
-sent: content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md (전문)
+sent: content/semi_doped/raw/2026-05-22-litho-masterclass.md (전문)
 date: 2026-09-04
 fixed: 2026-09-04 haiku 대조 — 유보 셋(L34 흥미로울 것 같다 · L80 CNBC 보도로 기억 · L188 지금까지의 생각) 되살림, 전사에 없음 0 · 2026-09-06 2절에 「2나노」라는 이름과 실제 최소 치수 30나노미터 안팎을 보탰다(L164, Austin 의 「may」를 「안팎」으로 살림). 6절에 EUV 와 X선을 견주는 도해를 붙였다
 title: 리소그래피 값이 진입장벽이 된 판에서 스타트업들은 장비를 이기려 하지 않고 광원과 광학을 떼어 내 셈을 바꾸려 한다

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/new-episode-openais-jalapeno-feeling
-sent: content/understanding/Semi Doped/raw/2026-08-27-openai-jalapeno.md (전문)
+sent: content/semi_doped/raw/2026-08-27-openai-jalapeno.md (전문)
 date: 2026-09-02
 rewritten: 2026-09-03 문단째 한국어로 다시 씀(메인 — sonnet 한도) run 2026-09-03-018 — 문단 22 · (L) 54 · 전사 대조는 따로
 rewritten-check: 다시 쓴 뒤 대조(2026-09-03, haiku — 인용 줄만) — 어긋남 1 고침(L103 비교 표현). haiku 가 짚은 「1,200억」은 120 billion 이 맞고, 나머지는 이미 표시됐거나 마지막 절의 글쓴이 판단

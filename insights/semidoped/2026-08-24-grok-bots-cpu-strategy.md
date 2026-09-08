@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/new-episode-grok-bots-and-how-cpus
-sent: content/understanding/Semi Doped/raw/2026-08-24-grok-bots-cpu.md (전문)
+sent: content/semi_doped/raw/2026-08-24-grok-bots-cpu.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — ① L111 인용 「the right CPU」를 「가장 좋은」으로 옮긴 것 ② 마케팅 용어라 한 것은 Vik 만(L93·L99) ③ 「둘째 자리」 문단의 화자는 Austin(L91) ④ 「앞의 5분」은 전사에 없어 걷음 ⑤ 매출 귀착 구분은 이 글의 읽기라고 적음
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-008 — 변경률 4.3%

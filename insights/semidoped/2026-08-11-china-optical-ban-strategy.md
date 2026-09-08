@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/news-take-china-optical-ban-amd-volta
-sent: content/understanding/Semi Doped/raw/2026-08-11-china-optical-ban.md (전문)
+sent: content/semi_doped/raw/2026-08-11-china-optical-ban.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — ① Applied Optoelectronics 는 일부 조립한다는 예외(L81) ② Vik 의 추측(「I would imagine」)을 결론으로 세운 것(L83) ③ 내부 관리 기능 발언은 Vik, L79. 회사명은 전사 표기 「Inlight」가 아니라 실제 표기 Innolight 로 둔다
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-006 — 변경률 2.6%

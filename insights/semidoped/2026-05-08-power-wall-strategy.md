@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-sonnet
 source: https://daily.semidoped.com/p/power-as-the-next-physics-wall-for
-sent: content/understanding/Semi Doped/raw/2026-05-08-power-wall.md (전문)
+sent: content/semi_doped/raw/2026-05-08-power-wall.md (전문)
 date: 2026-09-03
 fixed: 받은 뒤 고친 것(2026-09-03) — haiku 대조 49줄 일치, 어긋남 0 · 여는 문단에 진행자 표기 · 전사에서 문장 열을 더하고 잡담 셋은 걷음(5,667자) · 2026-09-05 늘리면서 대조(haiku, 인용 줄만): 값·인용 어긋남 2 고침 — ① 「두 진행자 모두 아직 정해지지 않았다고 했다」는 Vik 만의 말이다(L215, Austin 은 L217 에서 이해관계를 말했다) ② 「백에서 이백 배」의 줄을 L163 에서 L163·L167 로 바로잡음. 늘린 자리는 전압·전류 반비례(L131) · IGBT·SiC·GaN 의 1000볼트 내압(L151) · 벅 컨버터의 온 시간(L211) 셋이고, 잡담으로 채운 넷은 걷었다
 title: 48볼트가 막히는 지점에서 발전소부터 GPU까지 이어지는 전력 변환 사슬 전체가 새로 경쟁 시장이 된다

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/cerebras-ipo
-sent: content/understanding/Semi Doped/raw/2026-05-15-cerebras-ipo.md (전문)
+sent: content/semi_doped/raw/2026-05-15-cerebras-ipo.md (전문)
 date: 2026-09-04
 fixed: 받은 뒤 고친 것 — 대조(2026-09-05, haiku — 인용 줄만): 값·인용·귀속 어긋남 0, 유보 5건을 살림. ① 공모가·조달액은 진행자V 가 기억한 값(L57) ② 목표 35~40억 달러는 「그랬던 것 같다」(L61) ③ 코어 전수 검사는 진행자A 의 짐작이고 주기는 모른다(L93) ④ 훈련이 대역폭 문제가 아니었다는 것은 진행자V 의 판단(L211) ⑤ 남는 용례는 「금융 분석이나 코딩쯤」(L225). 길이를 맞추려고 이베이 견줌 한 문장과 7절과 겹치던 워런트 부연을 걷었다
 title: 웨이퍼 한 장을 칩으로 만드는 일은 40년 전에 이미 풀려 있었고, 걸린 것은 제조 성숙과 추론 수요였다

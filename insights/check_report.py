@@ -66,7 +66,7 @@ PAGES = [
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-harness', None),
 ]
 
-_SD = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
+_SD = os.path.join(ROOT, 'content', 'semi_doped')
 _CLIP = os.path.join(ROOT, 'input', 'clippings')
 _LI = os.path.join(ROOT, 'content', 'linkedin')
 CPO_EXTRA = [os.path.join(_SD, f + '.md') for f in

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-sonnet-5
 source: https://daily.semidoped.com/p/huaweis-tau-scaling-law-is-the-euv
-sent: content/understanding/Semi Doped/raw/2026-05-29-huawei-tau.md (전문)
+sent: content/semi_doped/raw/2026-05-29-huawei-tau.md (전문)
 date: 2026-09-08
 title: EUV를 피해 세운 셈법이 오히려 EUV 보유 진영과의 격차를 벌린다
 fixed: 받은 뒤 고친 것 — ① 여는 문단이 L33 에 없는 ASML·EUV 진영 물음을 그 줄에 묶어 뒤쪽 근거(L105·L113)로 갈라 적음 ② 로직끼리 겹치기가 어려운 이유로 든 「둘 다 열을 내는 능동 칩이라」는 전사에 없어 걷고 Vik 이 든 세 가지(발열·정렬·평탄도)만 남김(L69·L71) ③ 「ASML 에 나쁘지 않고」를 전사의 positive 대로 「오히려 긍정적이고」로(L155) ④ 여는 문단에 (이하 진행자A·V)

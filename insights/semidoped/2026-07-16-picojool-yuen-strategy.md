@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/picojools-al-yuen-the-case-for-gaas
-sent: content/understanding/Semi Doped/raw/2026-07-16-picojool-yuen.md (전문)
+sent: content/semi_doped/raw/2026-07-16-picojool-yuen.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — ① 소자 나이 25년(L9·L71) ② 「세운다」→「느리게 한다」(L71) ③ 2차원 배열은 2×4·2×12·2×16, 4×16 은 커넥터(L125·L127) ④ 12.8T 인용에 「우리가 보기에」 복원 ⑤ 백만 개는 수율 반영 어림(L141) ⑥ 세 제약의 해소 속도·판 폐기 논리·신규 진입자 일반화는 이 글의 읽기라고 적음. 진행자 성명은 전사에 없고 회차 소개에서 왔다 · 2026-09-06 늘리면서 대조(haiku, 인용 줄만): 값 2 고침 — ① 엣지 발광 배열에서 1×8 이 빠졌다(L125) ② 오류가 걸리는 시간을 「수십 나노초」로 좁혔던 것을 「수십에서 수백 나노초」로(L71). 「우리가 보기에」 유보는 이미 인용 안에 있어 그대로 뒀다. 늘린 자리는 Yuen 의 이력과 PicoJool 설립(L43·L47) · VCSEL 연혁(L59) · BOM 한 부품이 출하를 막는 기제(L63) · 게이트박스 IC 의 전력·비용·지연(L69) · XPO 12.8테라비트(L119) · 리드타임 당기기(L137) · 대형 고객 몇 곳(L145) · 인력 양성(L159)
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-002 — 변경률 2.7%

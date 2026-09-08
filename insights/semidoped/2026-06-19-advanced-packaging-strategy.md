@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-advanced-packaging
-sent: content/understanding/Semi Doped/raw/2026-06-19-advanced-packaging.md (전문)
+sent: content/semi_doped/raw/2026-06-19-advanced-packaging.md (전문)
 date: 2026-09-04
 fixed: 받은 뒤 고친 것(2026-09-04) — haiku 대조 47줄, 값·귀속·유보 어긋남 0(짚은 둘은 줄 표기를 합쳐 쓴 것과 비유 순서). 도해 다섯은 메인
 title: 다이를 더 못 키우는 벽 앞에서 인텔은 층을 하나 빼 실리콘 용량 병목을 비켜 갔고, 구글 TPU 3백만 개가 그 길을 처음 시험한다

@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-sonnet-5
 source: https://daily.semidoped.com/p/semi-doped-microns-record-profits
-sent: content/understanding/Semi Doped/raw/2026-07-03-micron-cxmt.md (전문)
+sent: content/semi_doped/raw/2026-07-03-micron-cxmt.md (전문)
 date: 2026-09-08
 title: 소비자 수요가 꺼져도 웨이퍼는 그대로 AI 수요가 채운다는 것을 이번 메모리 위기가 보여준다
 fixed: 받은 뒤 고친 것 — ① AI 때문에 메모리가 모자란다는 정리와 HBM 웨이퍼 세 배는 L107 이 아니라 L109(L107 은 절 표제줄) ② 한 분기 415억 달러는 L99 가 아니라 L27 이라 문장을 갈라 적음 ③ 회전목마가 느려지는 이유에 든 KV 캐시는 Vik 이 아니라 Austin 이 보탠 대목(L109) ④ 화자 이름을 다른 판과 같이 로마자로

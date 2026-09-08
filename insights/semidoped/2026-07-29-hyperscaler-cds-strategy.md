@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi
-sent: content/understanding/Semi Doped/raw/2026-07-29-hyperscaler-cds.md (전문)
+sent: content/semi_doped/raw/2026-07-29-hyperscaler-cds.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — ① 보험 비유의 줄(L39→L39·L41) ② 「값이 붙는 대상이 아니었다」「첫 사례다」는 이 글의 읽기라고 적음 ③ 「I'm short」를 한 뜻으로 좁힌 것 ④ ASML 2003/2008 비유의 화자는 Austin(L81). 진행자 성명은 전사에 없고 회차 소개에서 왔다 · 2026-09-02 밤 전사에서 15문장 더해(잡담 셋은 걷음) · 대조 뒤 Baker 유보 살림 L47 · 다시 쓴 뒤 대조(2026-09-03): 유보 넷 살림(L31·L57·L83·L91), 「숏」 중의성 표시 L73 · 2026-09-05 늘리면서 다시 대조(haiku): 값·인용·귀속 어긋남 0. ⑤ 7나노를 수직으로 쌓는 것을 「화웨이의 계획」으로 적었던 것을 전사대로 「그래야 한다」로 되돌림(L85) ⑥ 공개된 것이 없어 늘 회의적이라는 Austin 의 단서를 살림(L85) ⑦ 「바뀐 것이 없다」는 Austin 의 판단 표시를 붙임(L93) ⑧ 영업이익률 76% 는 그가 기억한 값(L57)
 humanized: 2026-09-03 humanize-korean standard(진단→윤문→finalize) run 2026-09-03-001 — 변경률 5.1%, 대시 25→3, 「것이다」 9→1, 의미 드리프트 0, 유보 하나 되살림

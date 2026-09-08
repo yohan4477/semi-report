@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/new-episode-globalfoundries-thomas
-sent: content/understanding/Semi Doped/raw/2026-08-07-globalfoundries-barber.md (전문)
+sent: content/semi_doped/raw/2026-08-07-globalfoundries-barber.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — 줄 표기 셋(몰타 L63 · DSP 보상 L91 · 근본 원인 L113) · 유보 둘 되살림(「의심하는 사람은 없다고 본다」 L121 · 「아마 DSP」 L127) · 「상당수」→「일부」 L119 · 조립 대상 서버→CPU L165 · CPO 손실 6dB/3dB 갈림 밝힘 L95·L97 · 절 제목 둘에서 전사에 없는 단정(「처음으로」·「병목」) 걷음 · 7절 SerDes 업체 저항은 글쓴이 짐작으로 표시 · 번역체 「몫」 둘 → 전력·부분
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-005 — 변경률 3.9%

@@ -41,8 +41,8 @@ slug · lane · persona · model · source · sent · date · title(결론 한 �
 ## 재료와 산출물
 
 ```
-회차 메타·한 줄    content/understanding/Semi Doped/<slug>.md
-전사(정본)        content/understanding/Semi Doped/raw/<slug>.md
+회차 메타·한 줄    content/semi_doped/<slug>.md
+전사(정본)        content/semi_doped/raw/<slug>.md
 받은 글           insights/semidoped/<slug>-strategy.md      (문장은 안 고친다. 값·귀속·번역체만 고치고 fixed 에 적는다)
 도해              scratchpad/semidoped_figs.py                (열쇠 「절.」 또는 「절.|문단 앞머리」)
 화면              대시보드/Semi Doped 대시보드.html · 대시보드/semidoped/<slug>.html

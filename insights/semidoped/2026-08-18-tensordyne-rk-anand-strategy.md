@@ -4,7 +4,7 @@ lane: strategy
 persona: 전략 컨설턴트 출신 애널리스트
 model: claude-opus
 source: https://daily.semidoped.com/p/new-episode-tensordynes-r-k-anand
-sent: content/understanding/Semi Doped/raw/2026-08-18-tensordyne-rk-anand.md (전문)
+sent: content/semi_doped/raw/2026-08-18-tensordyne-rk-anand.md (전문)
 date: 2026-09-02
 fixed: 받은 뒤 고친 것 — 줄 번호 둘(L297·L311), 귀속 하나(L297 은 RK), 뜻이 세진 넷(「사라진 이름」·「400년 전」·「페이로드가 줄어든다」 단정·「70개국에서 쓰인다」). 전사는 화자 라벨을 발언 첫 문단에만 붙인다 · 2026-09-02 밤 전사에서 15문장 더해 6,297자 · 대조 뒤 셋 고침(800기가 포트 어림 L185 · 균형 조건 둘 L201·L203 · 「상한」→예 L259)
 humanized: humanize-korean 윤문 한 콜(sonnet) run 2026-09-03-007 — 변경률 4.1%
