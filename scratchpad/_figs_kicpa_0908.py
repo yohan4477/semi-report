@@ -441,9 +441,209 @@ FIG_SCENARIO = (
     '같은 밤에 10년물 <b>4.78%</b>와 브렌트유 <b>96.28달러</b>도 함께 나왔기 때문이다. '
     '그래서 보는 자리를 개장가가 아니라 10시 30분 이후 외국인 매매로 잡는다.')
 
+# ── ⑪ 두 판 — 가동률과 정상화 이익률 ────────────────────────────────────
+# 값은 [260907] 2차전지 편에 있는 것만: LG에너지솔루션 가동률 47.6% · 정상 기준 70~80% ·
+# CATL 2025년 약 18% · 파나소닉 약 14% · 시나리오 3~5% / 6~8% / 9~11%
+def fig_battery():
+    h = ['<svg viewBox="0 0 560 262" role="img" aria-label="LG에너지솔루션 가동률은 '
+         '47.6퍼센트로 영업레버리지가 작동한다는 70에서 80퍼센트에 못 미치고 정상화 '
+         '영업이익률 시나리오는 3에서 11퍼센트다">']
+    h.append('<text x="26" y="22" class="t-head">가동률</text>')
+    # 가동률 띠
+    h.append('<rect class="k8-open" x="26" y="38" width="400" height="34" rx="6"/>')
+    h.append('<rect class="k8-fill" x="26" y="38" width="190" height="34" rx="6"/>')
+    h.append('<text x="42" y="60" class="t-val">47.6%</text>')
+    h.append('<line class="k8-rule" x1="280" y1="32" x2="280" y2="78"/>')
+    h.append('<line class="k8-rule" x1="320" y1="32" x2="320" y2="78"/>')
+    h.append('<text x="300" y="94" class="t-sub" text-anchor="middle">70~80%</text>')
+    h.append('<text x="440" y="60" class="t-sub">영업레버리지가</text>')
+    h.append('<text x="440" y="76" class="t-sub">도는 자리</text>')
+    h.append('<text x="26" y="116" class="t-sub">'
+             '수요는 늘었다 — 2025년 전기차 판매 20% 증가, 배터리 탑재량 1.2TWh</text>')
+    # 이익률 막대
+    base = 218
+    h.append('<text x="26" y="146" class="t-head">정상화 영업이익률</text>')
+    h.append('<line class="k8-rule" x1="34" y1="%d" x2="534" y2="%d"/>' % (base, base))
+    bars = [('보수', 4.0, '3~5%', 'k8-open'), ('기본', 7.0, '6~8%', 'k8-open'),
+            ('낙관', 10.0, '9~11%', 'k8-open'),
+            ('파나소닉 2025', 14.0, '약 14%', 'k8-fill'),
+            ('CATL 2025', 18.0, '약 18%', 'k8-fill')]
+    for i, (lab, v, txt, cls) in enumerate(bars):
+        x = 44 + i * 98
+        hgt = v * (48.0 / 18.0)
+        h.append('<rect class="%s" x="%d" y="%.1f" width="60" height="%.1f" rx="5"/>'
+                 % (cls, x, base - hgt, hgt))
+        h.append('<text x="%d" y="%.1f" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x + 30, base - hgt - 8, txt))
+        h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x + 30, base + 18, lab))
+    h.append('<text x="26" y="256" class="t-sub">'
+             '앞의 셋은 필자가 세운 시나리오, 뒤의 둘은 실제 회사 값이다</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_BATTERY = (
+    3, '가동률 47.6%로는 정상 이익률에 못 닿는다',
+    fig_battery(),
+    '위 띠가 가동률이다. LG에너지솔루션 <b>47.6%</b>는 영업레버리지가 도는 자리로 필자가 '
+    '드는 <b>70~80%</b>에 한참 못 미친다. 수요가 줄어서가 아니다 — 2025년 전기차 판매는 '
+    '<b>20%</b> 늘어 2,000만 대를 넘었고 배터리 탑재량도 <b>1.2TWh</b>였다. 아래 막대에서 '
+    '앞의 셋은 필자가 세운 정상화 이익률 시나리오이고, 뒤의 둘은 CATL <b>약 18%</b>·파나소닉 '
+    '<b>약 14%</b>라는 실제 값이다. 배터리가 본래 저마진 사업이라는 진단을 이 둘이 막는다.')
+
+
+# ── ⑫ 세 줄 — 산업·설비투자·초과이익의 지속기간은 서로 다르다 ────────────────
+# 값은 [260907] 엔비디아 편에 있는 것만: 시총 5.4조 달러 · S&P500의 약 8% ·
+# FY2028 성장률 70%(기존 예상 45%) · PER 13배 · 주가 30%와 예상 EPS 60% 예시
+def fig_duration3():
+    h = ['<svg viewBox="0 0 560 258" role="img" aria-label="AI 산업의 지속기간과 설비투자 '
+         '폭증의 지속기간과 엔비디아 초과이익의 지속기간은 서로 다르다">']
+    h.append('<text x="26" y="22" class="t-head">시장이 의심하는 것은 셋 중 아래 둘이다</text>')
+    lanes = [('AI 산업이 성장하는 기간', 470, 'k8-open'),
+             ('AI 설비투자가 폭증하는 기간', 300, 'k8-open'),
+             ('엔비디아 초과이익 기간', 200, 'k8-fill')]
+    for i, (name, w, cls) in enumerate(lanes):
+        y = 40 + i * 52
+        h.append('<text x="26" y="%d" class="t-sub">%s</text>' % (y + 14, name))
+        h.append('<rect class="%s" x="26" y="%d" width="%d" height="20" rx="5"/>'
+                 % (cls, y + 22, w))
+    h.append('<text x="26" y="212" class="t-sub">'
+             '띠 길이는 원문에 값이 없어 순서만 나타낸다 — 길이를 값으로 읽으면 안 된다</text>')
+    h.append('<rect class="k8-open" x="26" y="222" width="508" height="28" rx="8"/>')
+    h.append('<text x="42" y="241" class="t-sub">'
+             '시총 5.4조 달러 · S&amp;P500의 약 8% · FY2028 성장률 70% · 배수 13배</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_DURATION3 = (
+    3, '세 가지 지속기간을 섞으면 배수가 안 읽힌다',
+    fig_duration3(),
+    '필자가 갈라 놓은 셋이다. AI 산업이 오래 간다는 것과, 설비투자가 지금 속도로 계속 는다는 것과, '
+    '엔비디아가 지금의 초과이익을 유지한다는 것은 서로 다른 이야기다. 시장이 값을 안 주는 자리는 '
+    '아래 둘이고, 그래서 <b>FY2028 성장률 70%</b> 가이던스에도 배수가 <b>13배</b>에 머문다. '
+    '띠 길이에는 값이 없다 — 원문이 기간을 숫자로 준 적이 없어 순서만 그렸다.')
+
+
+# ── ⑬ 두 판 — 이자비용이 세수에서 차지하는 몫과 매수 주체 교체 ───────────────
+# 값은 [260907] 국채 편에 있는 것만: 부채 40조 달러 · 이자 약 1.25조 달러 ·
+# 세수의 약 18.4% · 2036년 25% 전망 · 노르웨이 국부펀드 2.3조 달러 ·
+# 빅테크 회사채 2026년 상반기 2,250억 달러
+def fig_trust():
+    base = 176
+    h = ['<svg viewBox="0 0 560 262" role="img" aria-label="미국 연방부채 이자비용이 세수의 '
+         '18.4퍼센트를 차지하고 2036년에는 25퍼센트가 될 것으로 전망된다">']
+    h.append('<text x="26" y="22" class="t-head">세수에서 이자가 가져가는 몫</text>')
+    h.append('<line class="k8-rule" x1="34" y1="%d" x2="250" y2="%d"/>' % (base, base))
+    for i, (lab, v, cls) in enumerate([('지금', 18.4, 'k8-fill'), ('2036년 전망', 25.0, 'k8-open')]):
+        x = 56 + i * 104
+        hgt = v * (112.0 / 25.0)
+        h.append('<rect class="%s" x="%d" y="%.1f" width="66" height="%.1f" rx="5"/>'
+                 % (cls, x, base - hgt, hgt))
+        h.append('<text x="%d" y="%.1f" class="t-val" text-anchor="middle">%g%%</text>'
+                 % (x + 33, base - hgt - 10, v))
+        h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x + 33, base + 18, lab))
+    h.append('<text x="34" y="220" class="t-sub">연방부채 40조 달러</text>')
+    h.append('<text x="34" y="240" class="t-sub">연간 이자 약 1.25조 달러</text>')
+    h.append('<text x="316" y="22" class="t-head">사는 쪽이 바뀐다</text>')
+    h.append('<rect class="k8-open" x="294" y="36" width="240" height="66" rx="8"/>')
+    h.append('<text x="312" y="60" class="t-sub">전에는 외국 중앙은행·기관</text>')
+    h.append('<text x="312" y="84" class="t-sub">노르웨이 국부펀드 2.3조 달러</text>')
+    h.append('<rect class="k8-fill" x="294" y="114" width="240" height="66" rx="8"/>')
+    h.append('<text x="312" y="138" class="t-sub">지금은 가격에 민감한 헤지펀드</text>')
+    h.append('<text x="312" y="162" class="t-sub">발행할 때마다 금리를 더 얹는다</text>')
+    h.append('<text x="294" y="220" class="t-sub">같은 시장에서 빅테크도 빌린다</text>')
+    h.append('<text x="294" y="240" class="t-sub">2026년 상반기 회사채 2,250억 달러</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_TRUST = (
+    4, '이자가 세수의 18.4%를 가져가고, 사는 쪽이 바뀐다',
+    fig_trust(),
+    '왼쪽 막대가 세수에서 이자가 차지하는 몫이다. 지금 <b>약 18.4%</b>이고 미 의회예산국은 '
+    '2036년까지 <b>25%</b>로 올라갈 것으로 본다. 오른쪽은 사는 쪽의 교체다 — 오래 들고 있던 '
+    '외국 중앙은행과 기관이 물러나고(노르웨이 국부펀드 <b>2.3조 달러</b>는 비중 축소를 검토 '
+    '중이다) 가격에 민감한 헤지펀드가 그 자리를 메우면, 재무부는 발행할 때마다 금리를 더 '
+    '얹어야 물량을 소화한다. 같은 시장에서 빅테크도 상반기에만 <b>2,250억 달러</b>를 빌렸다.')
+
+
+# ── ⑭ 가로 막대 — 시장이 값에 넣은 인상 확률 ────────────────────────────
+# 값은 [260908] 편에 있는 것만: 9월 FOMC 약 58% · 10월 약 70% · 일본은행 약 75% ·
+# 코스피 +4.61% · 브렌트유 약 96.45달러 · 금 약 4,426달러
+_HIKE = [('미국 9월 16일 FOMC', 58), ('미국 10월', 70), ('일본은행 9월 18일', 75)]
+
+
+def fig_hike():
+    h = ['<svg viewBox="0 0 560 250" role="img" aria-label="시장은 9월 FOMC 인상 확률을 '
+         '약 58퍼센트 10월을 약 70퍼센트 일본은행 9월 인상을 약 75퍼센트로 반영하고 있다">']
+    h.append('<text x="26" y="22" class="t-head">값에 이미 들어 있는 인상 확률</text>')
+    for i, (name, p) in enumerate(_HIKE):
+        y = 40 + i * 46
+        h.append('<text x="26" y="%d" class="t-sub">%s</text>' % (y + 16, name))
+        h.append('<rect class="k8-fill" x="216" y="%d" width="%.1f" height="24" rx="5"/>'
+                 % (y, p * 3.0))
+        h.append('<text x="%.1f" y="%d" class="t-val">%d%%</text>' % (216 + p * 3.0 + 10, y + 18, p))
+    h.append('<rect class="k8-open" x="26" y="186" width="508" height="54" rx="8"/>')
+    h.append('<text x="46" y="208" class="t-step">같은 날 반대쪽에 있던 값</text>')
+    h.append('<text x="46" y="230" class="t-sub">'
+             '코스피 +4.61% · 브렌트유 약 96.45달러 · 금 약 4,426달러</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_HIKE = (
+    4, '지수는 4.61% 올랐는데 인상 확률도 같이 올라 있다',
+    fig_hike(),
+    '막대는 시장이 값에 넣어 둔 인상 확률이다. 미국 9월 FOMC <b>약 58%</b>, 10월 '
+    '<b>약 70%</b>, 일본은행 9월 회의 <b>약 75%</b>이고 유럽중앙은행은 이번 주 2.75%로 올릴 '
+    '것으로 거의 굳어져 있다. 아래 상자가 같은 날의 반대편이다 — 코스피가 <b>4.61%</b> 오른 '
+    '날 브렌트유는 <b>약 96.45달러</b>였고 금은 <b>약 4,426달러</b>였다. 필자가 이 급등을 '
+    '전망이 밝아진 신호로 안 읽는 이유가 이 두 줄의 공존이다.')
+
+
+# ── ⑮ 세 갈래 — 열 편이 묻는 것이 요건·기간·절차로 갈린다 ──────────────────
+# 값은 [260908] 세금판례 편에 있는 것만. 편 번호와 쟁점만 옮긴다.
+_CASES = [('무엇에 매기나 — 요건', ['1편 포인트 결제와 에누리', '3편 증여세 완전포괄주의',
+                              '4편 명의신탁 주식의 반복 과세', '5편 론스타·스타타워의 세목과 세율']),
+          ('누구에게·얼마나 — 헌법', ['2편 헌법불합치로 사라진 세금', '6편 부부 합산과세',
+                                '7편 종합부동산세 두 판단']),
+          ('언제까지·어떻게 — 기간과 절차', ['8편 몰수·추징 뒤에 남는 세금',
+                                     '9편 제척기간 5년에서 10년', '10편 위법한 세무조사'])]
+
+
+def fig_taxcases():
+    h = ['<svg viewBox="0 0 560 386" role="img" aria-label="세금판례 열 편이 과세 요건과 '
+         '헌법 판단과 기간·절차 세 갈래로 갈린다">']
+    h.append('<text x="26" y="22" class="t-head">열 편이 묻는 자리</text>')
+    y = 36
+    for name, items in _CASES:
+        hgt = 26 + len(items) * 20
+        h.append('<rect class="k8-open" x="26" y="%d" width="508" height="%d" rx="8"/>' % (y, hgt))
+        h.append('<text x="44" y="%d" class="t-step">%s</text>' % (y + 20, name))
+        for j, it in enumerate(items):
+            h.append('<text x="230" y="%d" class="t-sub">%s</text>' % (y + 20 + j * 20, it))
+        y += hgt + 12
+    h.append('<text x="26" y="%d" class="t-sub">'
+             '요건이 다 맞아도 절차가 어긋나면 세금이 취소된 편이 마지막이다</text>' % (y + 14))
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_TAXCASES = (
+    3, '열 편이 요건·헌법·절차 세 자리로 갈린다',
+    fig_taxcases(),
+    '예고된 열 편을 묻는 자리로 묶었다. 위 칸은 무엇에 매기느냐(요건), 가운데는 누구에게 얼마나 '
+    '매기느냐를 헌법이 판단한 편, 아래는 언제까지 어떻게 매기느냐다. 마지막 편이 요점을 '
+    '보여준다 — 매길 요건이 다 맞아도 같은 대상을 두 번 조사하거나 고를 이유 없이 골랐다면 '
+    '법원이 그 세금을 취소했다. 개별 판결의 선고 연도와 세액은 예고편이라 아직 없다.')
+
 
 ALL = [FIG_LPDDR6, FIG_PER_GAP, FIG_TESLA, FIG_NASDAQ, FIG_SELECTIVE,
-       FIG_JOBS, FIG_ROTATE2, FIG_PER_STEPS, FIG_DURATION, FIG_SCENARIO]
+       FIG_JOBS, FIG_ROTATE2, FIG_PER_STEPS, FIG_DURATION, FIG_SCENARIO,
+       FIG_BATTERY, FIG_DURATION3, FIG_TRUST, FIG_HIKE, FIG_TAXCASES]
 
 if __name__ == '__main__':
     import sys
