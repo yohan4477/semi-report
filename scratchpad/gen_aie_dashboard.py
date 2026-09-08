@@ -69,6 +69,14 @@ TRACKS = {
         ('사람과 함께', '어디서 사람이 끼어들고 무엇을 보여 주나',
          ['fmZWvE7yDZo', 'HN-F-OQe6j0', 'ClWD8OEYgp8', 'iQ5xldZ9StU']),
     ],
+    'code': [
+        ('먼저 읽을 것', '코드를 시키기 전에 무엇을 먼저 적나',
+         ['IddXPepIAS4']),
+        ('코드 자리를 무엇이 대신하나', '하네스와 스킬이 떠맡은 것, 그래서 덜 만든 제품',
+         ['wVl6ZjELpBk', 'WE_Gnowy3uw', 'Lue8K2jqfKk']),
+        ('맡긴 뒤에 무엇으로 확인하나', '사람이 어디에 서고, 밀려드는 것을 어떻게 거르나',
+         ['dyHpnnlkTc8', 'imFedndyXYQ']),
+    ],
     'rag': [
         ('먼저 읽을 것', '언제 그래프가 값을 하고 언제 안 하나',
          ['LLuKshphGOE', '-tgQa8Fzf80']),

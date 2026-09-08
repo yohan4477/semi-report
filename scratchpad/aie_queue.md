@@ -3,30 +3,26 @@
 이어서 할 때 이 파일부터 읽는다. 규격은 `scratchpad/aie_report_brief.md`(보고서 쓰는 법)와
 `scratchpad/aie_factsheet_brief.md`(사실표 위임문 규격)에 있다.
 
-## 현황 (2026-08-27)
+## 현황 (2026-09-08)
 
-**68 / 81 편 완료.** 섹션별로는 이렇다.
+**72 / 81 편 완료.** 섹션별로는 이렇다.
 
 | 섹션 | 상태 |
 |---|---|
 | agent | 31/31 완료 · 갈래 다섯 붙임 |
 | eval | 17/17 완료 · 갈래 다섯 붙임 |
 | infra | 12/12 완료 · 갈래 넷 붙임 |
-| code | 2/6 |
+| code | 6/6 완료 · 갈래 셋 붙임 |
 | rag | 6/6 완료 · 갈래 셋 붙임 |
 | voice | 0/4 |
 | train | 0/3 |
 | product | 0/2 |
 
-## 남은 13편
+## 남은 9편
 
-rag 여섯이 다 찼고 갈래 셋도 붙였다. 남은 열셋은 **사실표가 전부 없으므로
-한 편마다 위임이 먼저다.** 섹션 하나를 닫으려면 code 넷(2/6 → 6/6)이 가장 가깝다.
+code 여섯이 다 찼고 갈래 셋도 붙였다. 남은 아홉은 **사실표가 전부 없으므로
+한 편마다 위임이 먼저다.** 섹션 하나를 닫으려면 train 셋이나 product 둘이 가깝다.
 
-| code | IddXPepIAS4 | 없음 | AI 인턴에게는 고삐가 … |
-| code | Lue8K2jqfKk | 없음 | 모델은 지수로 크는데 … |
-| code | WE_Gnowy3uw | 없음 | 1만 5천 줄짜리 워크트리 … |
-| code | imFedndyXYQ | 없음 | 취약점 찾기는 쉬워졌다 … |
 | voice | Bc6Ojl2XS1w | 없음 | 제미나이 오디오 스택 … |
 | voice | GIRpQEfYf3U | 없음 | 무엇이든 무엇으로 … |
 | voice | knH3fmGAteQ | 없음 | 밀리초 안에 답하라 … |
@@ -36,6 +32,16 @@ rag 여섯이 다 찼고 갈래 셋도 붙였다. 남은 열셋은 **사실표�
 | train | p1CmPZ2j6Lk | 없음 | 프롬프트로 안 풀리면 … |
 | product | NKwIX3CiRgU | 없음 | 생성AI 에이전트, 데이터 … |
 | product | fgkXEIbZpGc | 없음 | 프롬프트 하나로 앱을 … |
+
+2026-09-08 에 code 넷(IddXPepIAS4·Lue8K2jqfKk·WE_Gnowy3uw·imFedndyXYQ)을 옮겼다.
+그때 걸린 것 셋을 적어 둔다.
+
+- **`_chain` 의 `loop` 라벨은 줄바꿈이 없다.** 스물몇 자를 넘기면 295px 에서 가로로
+  넘친다(46px 넘쳤다). 짧게 쓰고 설명은 캡션으로 내린다.
+- **카드를 고치면 색인이 낡는다.** `check_index` 가 X1·X4 로 문다 —
+  `insights/gen_index.py` 를 돌리고 이어서 `insights/gen_times.py` 까지 돌린다(X7·X8).
+- **자막에 이름이 없으면 본문에 이름을 안 쓴다.** 커서 편(WE_Gnowy3uw)이 그렇다.
+  프런트매터의 `speaker` 는 채널 정보라 그대로 두되 본문에서는 「발표자」로만 부른다.
 
 ## 자막을 가로질러 찾기
 
