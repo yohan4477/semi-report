@@ -7,6 +7,39 @@
 
 import json
 
+# 새로고침하면 맨 위에서 다시 시작한다.
+#
+# 브라우저는 기본으로 새로고침 때 스크롤 자리를 되살린다(history.scrollRestoration='auto').
+# 예전에는 첫 화면이 짧아서(섹션 타일) 되살릴 자리가 없었는데, 첫 화면이 최신순 목록이 되면서
+# 페이지가 길어졌다 — 새로고침하면 목록 한가운데가 나온다(2026-09-08 지적). 무엇이 새로
+# 들어왔나 보러 새로고침하는 장에서 중간을 보여 주면 새로고침의 뜻이 없어진다.
+#
+# 카드·섹션을 지목한 주소(#…)로 들어온 사람은 건드리지 않는다 — 그 사람은 자리를 지정해서 왔다.
+# <head>가 아니라 몸 맨 앞에 둔다. 되살리기는 문서를 다 읽은 뒤에 일어나므로 그전에 끄면 된다.
+OPEN_AT_TOP = '''<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+'''
+
+
+def ensure_open_at_top(html):
+    """이미 만들어진 페이지에 위 규칙을 끼운다 — 있으면 그대로 둔다.
+
+    소셜 신호 히스토리·SemiAnalysis 대시보드처럼 생성기가 통째로 다시 쓰지 않고
+    가운데만 갈아 끼우는 장이 있다. 그런 장은 껍데기가 파일 안에 있어서 ui_bits 를
+    고쳐도 안 따라온다 — 갈아 끼울 때 여기를 거치게 한다."""
+    if 'scrollRestoration' in html:
+        return html
+    for anchor in ('<body>', '</head>'):
+        if anchor in html:
+            return html.replace(anchor, anchor + OPEN_AT_TOP, 1)
+    return OPEN_AT_TOP + html
+
+
 # 맨 위로 — 카드가 길어 스크롤이 깊어지면 되돌아갈 길이 필요하다
 TOP_BTN = '''
 <style>
@@ -45,6 +78,11 @@ TOP_BTN = '''
 <button class="ui-top" type="button" aria-label="맨 위로">↑</button>
 <script>
 (function(){
+  // 새로고침은 맨 위에서 다시 시작한다(OPEN_AT_TOP 과 같은 규칙). 이 단추를 단 페이지는
+  // 스크롤이 깊은 페이지라 되살리기가 그대로 걸린다 — 여기서도 한 번 끈다. 두 번 걸려도
+  // 하는 일이 같아서 탈이 없다.
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(!location.hash) window.addEventListener('load', function(){ window.scrollTo(0, 0); });
   var b=document.querySelector('.ui-top'); if(!b) return;
   var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
   window.addEventListener('scroll', show, {passive:true});

@@ -12,6 +12,7 @@ import io, os, re, json, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rollup_lib as rl
+import ui_bits
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HIST = os.path.join(ROOT, '대시보드', '소셜 신호 히스토리.html')
@@ -39,6 +40,9 @@ def splice(path, anchor, block, indent=''):
         html = html.replace(anchor, indent + '<!--ROLLUP:START--><!--ROLLUP:END-->\n' + anchor, 1)
     html = re.sub(r'<!--ROLLUP:START-->.*?<!--ROLLUP:END-->',
                   lambda m: '<!--ROLLUP:START-->' + block + '<!--ROLLUP:END-->', html, flags=re.S)
+    # 새로고침은 맨 위에서 — 이 장들은 껍데기가 파일 안에 있어 ui_bits 를 고쳐도
+    # 안 따라온다. 갈아 끼울 때 한 번 확인한다(이미 있으면 그대로 둔다)
+    html = ui_bits.ensure_open_at_top(html)
     io.open(path, 'w', encoding='utf-8').write(html)
     print('%-28s div %d %d' % (os.path.basename(path), html.count('<div'), html.count('</div>')))
 

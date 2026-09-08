@@ -663,6 +663,14 @@
   @media(max-width:640px){.lm-row{grid-template-columns:1fr;gap:2px}}
 </style>
 
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
 <a class="pback" href="../알고리즘 계보.html#sec-serve">← 알고리즘 계보</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic market">계보 · 서빙</span><h2 id="card-속도-등급을-사는-대신-있는-함대에서-오려냈다">속도 등급을 사는 대신 있는 함대에서 오려냈다</h2><p class="uc-gain">전용 칩과 GPU 함대가 갈린 지점, 그리고 그 차이가 발주서에서 굳는 이유.</p><div class="uc-meta"><span>SemiAnalysis</span><span>뉴스레터 · TileRT InferenceX</span><span>2026-08-10</span><span>출처 1편</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">초고속 디코드를 하려면 전용 칩을 사야 한다는 것이 원래 답이었다. TileRT가 그 답을 바꿨다. 이미 가진 GPU 클러스터에서 속도 등급 하나를 떼어 쓰는 길이 열렸고, 떼는 비율을 소프트웨어 설정으로 시간 단위로 바꿀 수 있다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>상용 서비스 둘이 이미 이 방식이다.</b> 샤오미 MiMo V2.5 Pro UltraSpeed와 Z.ai GLM-5.1 HighSpeed가 TileRT 디코드 엔진으로 돈다. 두 회사 모두 새 데이터플로우 칩을 사지 않았다.</li><li><b>GPU 풀은 역할을 바꿔 쓸 수 있다.</b> 프리필도 하고 중배치 디코드도 하고 이제 초고상호작용성 디코드까지 한다. 배분을 스케줄러 결정만으로 바꾼다.</li><li><b>전용 칩은 비율이 굳는다.</b> 속도 등급 용량과 나머지 용량의 비율이 구매 시점에 정해진다. 바꾸려면 물리 작업에 수개월이 든다.</li><li><b>수요 구성이 흔들린다.</b> 통상적인 대화 지연을 원하는 이용자와 극단적 속도에 웃돈을 낼 이용자의 비율에 변수가 많다. 에이전트가 늘수록 뒤쪽이 커진다.</li><li><b>예측이 틀렸을 때 값이 다르다.</b> GPU에서는 소프트웨어로 다시 맞추면 되고, 전용 실리콘에서는 놀고 있는 고속 장비에 자본이 묶이거나 노렸던 프리미엄 트래픽을 놓친다.</li><li><b>최상위 속도 시장이 사라지지는 않는다.</b> SRAM 쪽 상한이 여전히 더 높고, 특정 크기 모델과 일부 워크로드는 값을 불문하고 최대 속도를 원한다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">2개 서비스</div><div class="s-label">새 칩 없이 TileRT로 도는 상용 서비스 수</div></div><div class="stat"><div class="s-val">설정 파일</div><div class="s-label">GPU 함대에서 배분을 바꾸는 수단</div></div><div class="stat"><div class="s-val">수개월</div><div class="s-label">전용 칩 함대에서 같은 배분을 바꾸는 시간</div></div></div><p class="uc-quote">SemiAnalysis는 전용 칩 함대의 속도 등급 비율이 발주서에 서명하는 순간 하드웨어에 고정되고, 그 비율을 바꾸려면 랙을 다시 짜고 케이블을 다시 까는 데 수개월이 걸린다고 적는다.</p><div class="side-note">유동성은 자원을 상황에 맞게 바꿔 쓸 수 있는 정도를 뜻한다. 이 카드에서는 프리필과 디코드에 자원을 얼마씩 배분할지를 나중에 바꿀 수 있는지를 가리킨다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260810%5D%20%EC%97%94%EB%B9%84%EB%94%94%EC%95%84%20GPU%EC%9D%98%20%EC%B4%88%EA%B3%A0%EC%86%8D%20%EC%83%81%ED%98%B8%EC%9E%91%EC%9A%A9%EC%84%B1%20-%20TileRT%20InferenceX.md" target="_blank" rel="noopener">원문 — TileRT InferenceX</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>

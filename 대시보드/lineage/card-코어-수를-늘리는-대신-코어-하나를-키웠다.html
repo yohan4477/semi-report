@@ -663,6 +663,14 @@
   @media(max-width:640px){.lm-row{grid-template-columns:1fr;gap:2px}}
 </style>
 
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
 <a class="pback" href="../알고리즘 계보.html#sec-si">← 알고리즘 계보</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic model">계보 · 실리콘</span><h2 id="card-코어-수를-늘리는-대신-코어-하나를-키웠다">코어 수를 늘리는 대신 코어 하나를 키웠다</h2><p class="uc-gain">데이터 이동이 비싸다는 원칙 하나에서 세 가지 흐름이 갈라져 나온 과정.</p><div class="uc-meta"><span>SemiAnalysis</span><span>뉴스레터 · 엔비디아 텐서 코어 진화</span><span>2025-06-23</span><span>출처 1편</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">문제 크기를 키우면 연산량은 세제곱으로 늘고 데이터 이동량은 제곱으로 는다. 그래서 크게 계산할수록 옮긴 데이터 한 조각당 계산 횟수가 올라간다. 엔비디아는 이 성질을 쓰려고 코어 개수 대신 코어 하나의 크기를 공격적으로 키웠다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>Ampere는 코어 수를 줄이고 처리량을 올렸다.</b> SM당 코어가 Volta의 8개에서 4개로 반이 됐는데, 코어 하나가 사이클당 512번을 처리해 SM 전체로는 Volta의 두 배가 나왔다.</li><li><b>공유메모리는 커지고 레지스터는 그대로 있었다.</b> 텐서 코어 처리량이 세대마다 두 배씩 느는데 글로벌메모리 접근 지연은 줄지 않아, 미리 채워 둘 자리가 더 필요했다.</li><li><b>그 자리를 레지스터에 맡기지 않았다.</b> 엔비디아는 스테이징 버퍼 역할을 공유메모리에 넘겼다. 레지스터 파일 크기는 세대가 바뀌어도 고정이다.</li><li><b>숫자 폭 축소도 같은 뿌리다.</b> 좁은 포맷은 옮길 양 자체를 줄인다. 정밀도 궤도에서 본 흐름이 여기와 한 원칙에서 나온다.</li><li><b>정점이 TMEM이다.</b> Blackwell은 텐서 코어 전용 메모리를 SM당 256KB 신설해 레지스터 파일과 따로 두고 텐서 코어 바로 옆에 붙였다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">8 → 4개</div><div class="s-label">SM당 텐서 코어 수가 간 방향</div></div><div class="stat"><div class="s-val">2배</div><div class="s-label">같은 전환에서 SM 전체 처리량이 오른 폭</div></div><div class="stat"><div class="s-val">레지스터 고정</div><div class="s-label">공유메모리가 커지는 동안 그대로였던 것</div></div><div class="stat"><div class="s-val">256KB</div><div class="s-label">Blackwell이 SM마다 새로 둔 TMEM 용량</div></div></div><p class="uc-quote">SemiAnalysis는 코어 크기 확대와 메모리 계층 재편, 데이터 저정밀화 세 흐름이 모두 데이터 이동은 비싸다는 원칙에서 갈라져 나왔고 Blackwell의 TMEM 신설이 그 정점이라고 정리한다.</p><div class="side-note">연산집약도는 데이터를 한 번 옮길 때마다 몇 번 계산하는지를 뜻한다. 이 값이 높을수록 비싼 데이터 이동을 아껴 쓰는 셈이 된다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B250623%5D%20NVIDIA%20%ED%85%90%EC%84%9C%20%EC%BD%94%EC%96%B4%20%EC%A7%84%ED%99%94%20-%20Volta%EC%97%90%EC%84%9C%20Blackwell%EA%B9%8C%EC%A7%80.md" target="_blank" rel="noopener">원문 — 엔비디아 텐서 코어 진화</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>

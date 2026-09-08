@@ -53,5 +53,10 @@ for key, cats, kw in PANELS:
                   "<!--DOCS:" + key + "-->" + links + "<!--/DOCS:" + key + "-->",
                   html, flags=re.S)
 
+# 새로고침은 맨 위에서 — 이 장도 껍데기가 파일 안에 있다(2026-09-08)
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ui_bits
+html = ui_bits.ensure_open_at_top(html)
 open(PAGE, "w", encoding="utf-8").write(html)
 print("posts:", len(posts), "| doc links injected:", total, "| panels:", len(PANELS))

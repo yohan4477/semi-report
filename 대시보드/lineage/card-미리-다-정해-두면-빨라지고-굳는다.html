@@ -663,6 +663,14 @@
   @media(max-width:640px){.lm-row{grid-template-columns:1fr;gap:2px}}
 </style>
 
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
 <a class="pback" href="../알고리즘 계보.html#sec-moe">← 알고리즘 계보</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic market">대가 · 전문가</span><h2 id="card-미리-다-정해-두면-빨라지고-굳는다">미리 다 정해 두면 빨라지고 굳는다</h2><p class="uc-gain">TileRT가 낸 속도의 값으로 무엇이 굳었는지, 그리고 그 굳음이 알고리즘 변경과 충돌하는 지점.</p><div class="uc-meta"><span>SemiAnalysis</span><span>뉴스레터 · TileRT InferenceX</span><span>2026-08-10</span><span>출처 1편</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">TileRT는 정적 사전 컴파일로 속도를 얻는다. 타일 형태와 파이프라인 깊이, 버퍼 배치를 미리 정한다. 워프 그룹이 적재와 연산과 통신을 어떻게 나눌지도 미리 정한다. 집단통신을 어디서 합칠지까지 정하고 나면 프로그램이 굳는다. 이 결정들이 알고리즘 변경 한 번에 통째로 무효가 된다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>모델 카탈로그가 좁다.</b> GLM-5와 5.1, DeepSeek-V3.2뿐이다. GLM5.1은 이미 한 세대 뒤처졌고 InferenceX 메인라인에서는 지원이 끝났다.</li><li><b>어텐션이나 라우팅을 바꾸면 스케줄이 무효가 된다.</b> 앞의 두 궤도에서 본 변경이 바로 이것들이다. 계보가 빠르게 움직일수록 정적 컴파일이 따라가기 어려워진다.</li><li><b>ASIC 업체의 약점을 그대로 물려받았다.</b> 의존성이 특정 버전에 고정되고 새 아키텍처마다 사람 손이 들어간다. SemiAnalysis는 완전히 범용적인 경로가 없다고 못박는다.</li><li><b>줄이려는 작업은 있다.</b> TileOPs는 연산자마다 시그니처와 워크로드, 루프라인 모델을 기계가 읽을 수 있는 매니페스트로 선언하게 해서, 코드 생성과 벤치마킹이 이전 구현 대신 하드웨어 한계를 기준으로 돌게 만든다.</li><li><b>자동화도 같이 어려워졌다.</b> 커널이 하나로 합쳐지면서 커널별 프로파일러 타임라인이 쓸모를 잃었다. AI 코딩 에이전트는 알려진 템플릿 안의 튜닝만 가속하고, 새 방식으로의 변환에는 여전히 사람 판단이 든다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">3종</div><div class="s-label">TileRT가 지원하는 모델 수</div></div><div class="stat"><div class="s-val">사전 결정</div><div class="s-label">타일·파이프라인·버퍼·통신 배치를 정하는 시점</div></div><div class="stat"><div class="s-val">스케줄 무효</div><div class="s-label">어텐션이나 라우팅을 바꿨을 때 벌어지는 일</div></div></div><p class="uc-quote">SemiAnalysis는 어텐션 방식이나 라우팅 방식을 바꾸면 미리 짜 둔 스케줄 상당 부분이 무효화된다고 적는다.</p><div class="side-note">지속형 엔진 커널은 모델 전체를 미리 펼쳐 하나의 상주 프로그램으로 만드는 방식이다. 실행 중에 정하는 것이 없어 빠르고, 실행 중에 바꿀 수 있는 것도 없다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260810%5D%20%EC%97%94%EB%B9%84%EB%94%94%EC%95%84%20GPU%EC%9D%98%20%EC%B4%88%EA%B3%A0%EC%86%8D%20%EC%83%81%ED%98%B8%EC%9E%91%EC%9A%A9%EC%84%B1%20-%20TileRT%20InferenceX.md" target="_blank" rel="noopener">원문 — TileRT InferenceX</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>

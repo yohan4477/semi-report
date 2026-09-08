@@ -1034,6 +1034,7 @@ def _write_card_pages(cards, title, footer, out, page_slug, page_css):
         page = ('<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
                 '<title>%s · %s</title>\n' % (t, title) + page_css
                 + '\n' + fig_defs
+                + '\n' + ui_bits.OPEN_AT_TOP
                 + '\n<div class="wrap">\n'
                 + '<a class="pback" href="../%s#%s">← %s</a>\n' % (dash_name, sid, title)
                 + body
@@ -1293,6 +1294,7 @@ def render(cards, title, header, footer, out, rollup='', top='', extra_css='', t
             '<title>%s</title>\n' % title + page_css
             # 그림 화살촉 defs는 페이지에 한 번만 — 카드마다 되풀이하지 않는다
             + '\n' + (FIG_DEFS if any(c.get('figs') for c in cards) else '')
+            + '\n' + ui_bits.OPEN_AT_TOP
             + '\n<div class="wrap">\n' + header
             # 목록이 먼저다. 읽는 순서 안내(intro)와 롤업은 목록 아래로 간다 — 안내가
             # 위에 서면 첫 화면이 안내가 되고, 새로 들어온 글은 스크롤 뒤로 밀린다

@@ -613,6 +613,14 @@
   .uc-raw-body p{margin:0 0 .9em}
 </style>
 
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
   <header>
     <p class="eyebrow">한주성(PwC Korea)의 링크드인 — 딜로 읽는 2026</p>
@@ -839,6 +847,11 @@
 <button class="ui-top" type="button" aria-label="맨 위로">↑</button>
 <script>
 (function(){
+  // 새로고침은 맨 위에서 다시 시작한다(OPEN_AT_TOP 과 같은 규칙). 이 단추를 단 페이지는
+  // 스크롤이 깊은 페이지라 되살리기가 그대로 걸린다 — 여기서도 한 번 끈다. 두 번 걸려도
+  // 하는 일이 같아서 탈이 없다.
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(!location.hash) window.addEventListener('load', function(){ window.scrollTo(0, 0); });
   var b=document.querySelector('.ui-top'); if(!b) return;
   var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
   window.addEventListener('scroll', show, {passive:true});

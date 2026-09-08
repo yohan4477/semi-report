@@ -216,7 +216,14 @@
     .jump a{flex:1 1 100%}
   }
 </style>
-</head><body><main class="wrap">
+</head><body><script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+<main class="wrap">
 
 <header><p class="eyebrow">관리자 · 비공개</p><h1>관리자 보드</h1></header>
 <details class="fold lead" open><summary>보고서 쓰는 절차<span>단계 5 · 오류 43</span></summary>

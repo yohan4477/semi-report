@@ -819,6 +819,14 @@
   .uc-fig .fig-arw{stroke:var(--epoch-teal);stroke-width:2;fill:none}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
 <a class="pback" href="../AI Engineer 대시보드.html#sec-train">← AI Engineer</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic tech">포스트트레이닝 · 강화학습</span><h2 id="card-일하면서-배우는-에이전트-포스트트레이닝의-다음-단계">일하면서 배우는 에이전트 — 포스트트레이닝의 다음 단계</h2><p class="uc-gain">훈련 스택이 쥐고 있던 것을 한 겹씩 바깥으로 내주는 순서. 한 턴짜리 문답에서 합성 환경으로, 남의 하니스로, 배포 뒤 자기개선으로 넘어갈 때마다 무엇을 놓고 무엇을 얻나. 네트워크 탓에 도구 호출 10%가 실패하자 모델이 답을 점점 짧게 내놓은 사례가 왜 리워드 해킹과 같은 문제인지도 나온다.</p><div class="uc-meta"><span>Raymond Feng <b>Applied Compute</b></span><span>발표 2026-07-31</span><span>18분 20초</span><span>AI Engineer</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-verdict"><b>한줄 코멘트.</b> 결국 이 발표가 그리는 건 리워드 함수를 정교하게 짜는 싸움이 아니라 모델이 실패를 어떻게 우회하는지를 계속 뒤쫓는 싸움이라, 데이터 형식을 통제할 수 없는 프로덕션 환경으로 갈수록 어플라이드컴퓨트 같은 회사가 팔 자리가 넓어진다는 점이 눈에 띔.</p><ol class="uc-post" style="counter-reset:mp 0"><li>이 발표는 어플라이드컴퓨트(Applied Compute) 소속 레이먼드 펑이 AI 엔지니어 컨퍼런스에서 한 것으로, 주제는 포스트트레이닝(사전학습을 끝낸 모델을 실제로 쓸 자리에 맞게 더 훈련시키는 단계)의 미래임.</li><li>목표는 에이전트가 일을 하면서 새 기술을 현장에서 배우게 만드는 것임.</li><li>지난 1년 동안 에이전트들은 추론 능력이 크게 늘었고, 여러 턴과 도구 호출을 거치는 긴 호흡의 작업을 처리하는 에이전트 하니스(harness, 에이전트가 도구를 부르고 결과를 받는 실행 틀)를 다룰 줄 알게 됨.</li><li>기업들은 이제 에이전트를 꽂기만 하면 바로 돌아가는 형태로 쓰고 싶어함.</li><li>예를 들어 이미 자기 방식대로 에이전트를 호출해 어떤 작업을 시키고 있다면, 그 작업 전용의 커스텀 모델을 새로 훈련시켜 갈아 끼우고 싶어한다는 것임.</li><li>그러려면 포스트트레이닝을 다시 봐야 하는데, 소스 코드조차 볼 수 없는 하니스에도 맞춰 훈련할 수 있는 방법이 필요함.</li></ol><figure class="uc-fig"><p class="fig-title">단계마다 훈련 스택이 무엇을 놓는가</p><svg class="epoch" viewBox="0 0 520 408" role="img" aria-label="포스트트레이닝 네 단계에서 훈련 스택 안에 남는 것과 밖으로 나간 것">

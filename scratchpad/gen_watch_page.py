@@ -50,6 +50,8 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, 'insights'))
+sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+import ui_bits                  # noqa: E402
 import watch_lib as wl          # noqa: E402
 import watch_fig as wf          # noqa: E402
 
@@ -4382,21 +4384,21 @@ def build():
     for w in ws:
         with io.open(os.path.join(WATCH_DIR, w['slug'] + '.html'), 'w',
                      encoding='utf-8', newline='\n') as f:
-            f.write(detail_page(w))
+            f.write(ui_bits.ensure_open_at_top(detail_page(w)))
     with io.open(os.path.join(WATCH_DIR, '제도.html'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(law_page(ws))
+        f.write(ui_bits.ensure_open_at_top(law_page(ws)))
     with io.open(os.path.join(WATCH_DIR, '청약 공고.html'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(subscription_page(ws))
+        f.write(ui_bits.ensure_open_at_top(subscription_page(ws)))
     with io.open(os.path.join(WATCH_DIR, '정비사업 현황.html'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(rebuild_page(ws))
+        f.write(ui_bits.ensure_open_at_top(rebuild_page(ws)))
     with io.open(os.path.join(WATCH_DIR, '청약 통계.html'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(subscription_stats_page(ws))
+        f.write(ui_bits.ensure_open_at_top(subscription_stats_page(ws)))
     with io.open(os.path.join(WATCH_DIR, '청약 위치.html'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(subscription_place_page(ws))
+        f.write(ui_bits.ensure_open_at_top(subscription_place_page(ws)))
     for e in outs:
         with io.open(os.path.join(WATCH_DIR, outside_slug(e) + '.html'), 'w',
                      encoding='utf-8', newline='\n') as f:
-            f.write(outside_page(e))
+            f.write(ui_bits.ensure_open_at_top(outside_page(e)))
     check_detail_ui(ws)
     check_outside_ui(outs)
 

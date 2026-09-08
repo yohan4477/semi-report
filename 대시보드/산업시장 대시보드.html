@@ -646,6 +646,14 @@
   .klog .kt{display:block;margin:2px 0 3px;font-weight:850;color:var(--ink);font-size:14px}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
   <header>
     <p class="eyebrow">산업 · 시장 — 제3자 해설 아카이브</p>
@@ -876,6 +884,11 @@
 <button class="ui-top" type="button" aria-label="맨 위로">↑</button>
 <script>
 (function(){
+  // 새로고침은 맨 위에서 다시 시작한다(OPEN_AT_TOP 과 같은 규칙). 이 단추를 단 페이지는
+  // 스크롤이 깊은 페이지라 되살리기가 그대로 걸린다 — 여기서도 한 번 끈다. 두 번 걸려도
+  // 하는 일이 같아서 탈이 없다.
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(!location.hash) window.addEventListener('load', function(){ window.scrollTo(0, 0); });
   var b=document.querySelector('.ui-top'); if(!b) return;
   var show=function(){ b.classList.toggle('is-on', window.scrollY>420); };
   window.addEventListener('scroll', show, {passive:true});

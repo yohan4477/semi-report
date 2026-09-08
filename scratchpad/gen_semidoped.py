@@ -589,9 +589,18 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
 .foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
 ''' + semidoped_figs.CSS
 
+# 새로고침은 맨 위에서 다시 시작한다 — 브라우저가 되살리는 스크롤 자리를 끈다.
+# 목록이 길어진 뒤로 새로고침하면 목록 한가운데가 나왔다(2026-09-08). 카드·절을 지목한
+# 주소(#…)로 들어온 사람은 건드리지 않는다.
+TOPJS = ('<script>(function(){'
+         "if('scrollRestoration' in history) history.scrollRestoration='manual';"
+         'if(location.hash) return;'
+         "window.addEventListener('load', function(){ window.scrollTo(0, 0); });"
+         '})();</script>')
+
 HEAD = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
-        '<title>%s</title><style>%s</style><div class="wrap">')
+        '<title>%s</title><style>%s</style>' + TOPJS + '<div class="wrap">')
 
 
 def row_html(ep):

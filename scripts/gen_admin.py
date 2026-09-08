@@ -990,7 +990,7 @@ HEAD = '''<!doctype html>
 <meta name="robots" content="noindex">
 <title>관리자 보드</title>
 <style>%s%s</style>
-</head><body><main class="wrap">
+</head><body>''' + ui_bits.OPEN_AT_TOP + '''<main class="wrap">
 '''
 
 

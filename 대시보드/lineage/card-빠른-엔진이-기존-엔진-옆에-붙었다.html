@@ -663,6 +663,14 @@
   @media(max-width:640px){.lm-row{grid-template-columns:1fr;gap:2px}}
 </style>
 
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
 <div class="wrap">
 <a class="pback" href="../알고리즘 계보.html#sec-serve">← 알고리즘 계보</a>
 <div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic model">계보 · 서빙</span><h2 id="card-빠른-엔진이-기존-엔진-옆에-붙었다">빠른 엔진이 기존 엔진 옆에 붙었다</h2><p class="uc-gain">TileRT가 vLLM을 밀어내지 않고 디코드 트래픽만 나눠 받는 구조.</p><div class="uc-meta"><span>SemiAnalysis</span><span>뉴스레터 · TileRT InferenceX</span><span>2026-08-10</span><span>출처 1편</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">프리필은 처리량이 지표이고 디코드는 토큰당 지연이 지표다. 두 지표를 한 엔진에 맡기면 한쪽이 손해를 본다. 그래서 프리필 풀 하나가 성격이 다른 디코드 풀 둘에 동시에 일감을 넘기는 구성이 나왔다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>지연에 민감한 요청은 갈라져 나간다.</b> TileRT PD 라우터를 거쳐 vLLM이 첫 토큰만 만든 뒤 목적지 TileRT 노드를 표시해 넘긴다.</li><li><b>나머지는 원래 길로 간다.</b> 일반 트래픽은 vLLM의 기존 분리형 프록시를 거쳐 통상적인 vLLM 디코드 풀로 향한다.</li><li><b>두 트래픽이 프리필 서버를 공유한다.</b> vLLM의 MultiConnector API로 TileRT 커넥터를 기존 커넥터와 조합한다. TileRT 커넥터는 표시된 트래픽만 처리하고 나머지에는 손대지 않는다.</li><li><b>KV 캐시 이동은 전송 엔진이 맡는다.</b> 프리필과 디코드 사이를 Mooncake와 NIXL이 잇는다.</li><li><b>디코드 노드 하나가 요청 하나만 받는다.</b> v0.1.5 기준이다. 라우터가 배분을 통제하고 노드가 차 있으면 배압을 건다.</li></ul><p class="uc-label">주요 숫자</p><div class="stat-grid"><div class="stat"><div class="s-val">풀 2개</div><div class="s-label">프리필 하나가 먹이는 디코드 풀 수</div></div><div class="stat"><div class="s-val">요청 1건</div><div class="s-label">디코드 노드 하나가 동시에 받는 수</div></div><div class="stat"><div class="s-val">MultiConnector</div><div class="s-label">두 커넥터를 한 서버에 얹는 접점</div></div></div><p class="uc-quote">SemiAnalysis는 vLLM이 스케줄러와 청크 단위 프리필, 접두사 캐싱, API와 운영 툴링을 포함한 서빙 계층 전체를 그대로 맡고 지연시간에 민감한 디코드 트래픽만 TileRT로 넘어간다고 적는다.</p><div class="side-note">앞 궤도들에서 본 프리필과 디코드 분리가 여기서 엔진 두 개를 한 서비스에 얹는 형태로 나타난다. 한쪽이 다른 쪽을 대체하지 않는 것이 이 구조의 핵심이다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://github.com/yohan4477/semi-report/blob/main/content/newsletter/ai_infra/compute/%5B260810%5D%20%EC%97%94%EB%B9%84%EB%94%94%EC%95%84%20GPU%EC%9D%98%20%EC%B4%88%EA%B3%A0%EC%86%8D%20%EC%83%81%ED%98%B8%EC%9E%91%EC%9A%A9%EC%84%B1%20-%20TileRT%20InferenceX.md" target="_blank" rel="noopener">원문 — TileRT InferenceX</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>
