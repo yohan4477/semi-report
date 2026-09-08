@@ -72,3 +72,47 @@ def orphan_ratio(rows):
             tied.add(r['id'])
             tied.add(rel.get('to'))
     return 1.0 - len(tied & {r['id'] for r in rows}) / float(len(rows))
+
+
+def components(rows):
+    """걸림으로 이어진 덩어리들. 큰 것부터, 같으면 이른 날짜부터.
+
+    한 덩어리가 곧 물음 하나다 — 줄 A 가 B 에 걸리고 B 가 C 에 걸리면 셋은 같은
+    물음을 놓고 말한 것이다. 방향은 안 본다. 뒤에 온 주장이 앞선 주장에 걸리는
+    것만 허용되므로(validate) 방향을 보면 덩어리가 줄기 하나로 쪼개진다.
+
+    아무 데도 안 걸린 줄은 덩어리에 안 들어간다 — orphans() 가 따로 센다.
+    """
+    by_id = {r['id']: r for r in rows}
+    adj = {r['id']: set() for r in rows}
+    for r in rows:
+        for rel in r.get('rel') or ():
+            to = rel.get('to')
+            if to in adj:
+                adj[r['id']].add(to)
+                adj[to].add(r['id'])
+    seen, out = set(), []
+    for r in rows:
+        if r['id'] in seen or not adj[r['id']]:
+            continue
+        stack, got = [r['id']], []
+        while stack:
+            k = stack.pop()
+            if k in seen:
+                continue
+            seen.add(k)
+            got.append(k)
+            stack += sorted(adj[k])
+        out.append([by_id[k] for k in sorted(got, key=lambda k: (by_id[k]['date'], k))])
+    out.sort(key=lambda c: (-len(c), c[0]['date'], c[0]['id']))
+    return out
+
+
+def orphans(rows):
+    """아무 데도 안 걸린 줄. 걸림은 나가는 rel 이든 들어오는 rel 이든 센다."""
+    tied = set()
+    for r in rows:
+        for rel in r.get('rel') or ():
+            tied.add(r['id'])
+            tied.add(rel.get('to'))
+    return [r for r in rows if r['id'] not in tied]
