@@ -1,0 +1,191 @@
+# -*- coding: utf-8 -*-
+# AI 인프라 지도 — 공정 가지 하나(리소그래피)를 마인드맵으로 세운다.
+# 재료는 scratchpad/litho_scan.py 가 원문 코퍼스에서 센 빈도. 손으로 값을 적지 않는다.
+# 산출: 대시보드/AI 인프라 지도.html
+import io, os, sys, json, html
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import litho_scan
+
+OUT = os.path.join(ROOT, '대시보드', 'AI 인프라 지도.html')
+
+# 가지마다 한 줄 설명 — 그 가지가 무엇을 묶는지. 값이 아니라 이름이다.
+BRANCH_NOTE = {
+    '노광 방식': '빛을 어떻게 쬐어 회로를 새기나',
+    '장비사': '노광기를 만드는 곳',
+    '광원·광학': '빛을 만들고 모으는 부품',
+    '소재': '웨이퍼에 바르고 깎이는 것',
+    '마스크·펠리클': '새길 무늬를 담은 원판과 그 덮개',
+    '계측·수율·통제': '얼마나 맞았나, 몇 장 나왔나, 누가 못 사나',
+}
+
+W_ROOT, W_BR, W_LEAF = 96, 128, 300
+X_ROOT, X_BR, X_LEAF = 8, 132, 292
+ROW, GAP = 30, 22          # 잎 한 줄 높이, 가지 사이 여백
+PAD_TOP = 16
+
+
+def layout(branches):
+    """가지·잎의 y 좌표를 잡는다. 반환: (rows, height)"""
+    y = PAD_TOP
+    rows = []
+    for b in branches:
+        y0 = y
+        leaves = []
+        for nd in b['nodes']:
+            leaves.append((nd, y + ROW / 2))
+            y += ROW
+        rows.append({'name': b['name'], 'y0': y0, 'y1': y, 'leaves': leaves,
+                     'cy': (y0 + y) / 2})
+        y += GAP
+    return rows, y + PAD_TOP
+
+
+def svg(data):
+    rows, H = layout(data['branches'])
+    W = X_LEAF + W_LEAF + 8
+    root_y = H / 2
+    out = ['<svg class="map" viewBox="0 0 %d %d" width="%d" height="%d" '
+           'xmlns="http://www.w3.org/2000/svg" role="img" '
+           'aria-label="리소그래피 마인드맵">' % (W, H, W, H)]
+    # 루트
+    out.append('<rect x="%d" y="%.1f" width="%d" height="34" rx="8" class="n-root"/>'
+               % (X_ROOT, root_y - 17, W_ROOT))
+    out.append('<text x="%.1f" y="%.1f" class="t-root">리소그래피</text>'
+               % (X_ROOT + W_ROOT / 2, root_y + 5))
+    for r in rows:
+        # 루트 -> 가지
+        out.append('<path d="M%d %.1f C%d %.1f, %d %.1f, %d %.1f" class="link"/>'
+                   % (X_ROOT + W_ROOT, root_y, X_ROOT + W_ROOT + 18, root_y,
+                      X_BR - 18, r['cy'], X_BR, r['cy']))
+        out.append('<rect x="%d" y="%.1f" width="%d" height="30" rx="7" class="n-br"/>'
+                   % (X_BR, r['cy'] - 15, W_BR))
+        out.append('<text x="%.1f" y="%.1f" class="t-br">%s</text>'
+                   % (X_BR + W_BR / 2, r['cy'] + 4.5, html.escape(r['name'])))
+        for nd, cy in r['leaves']:
+            dim = ' dim' if nd['n'] == 0 else ''
+            out.append('<path d="M%d %.1f C%d %.1f, %d %.1f, %d %.1f" class="link%s"/>'
+                       % (X_BR + W_BR, r['cy'], X_BR + W_BR + 16, r['cy'],
+                          X_LEAF - 16, cy, X_LEAF, cy, dim))
+            gid = 'nd-' + str(abs(hash(nd['name'])) % 10**8)
+            out.append('<g class="leaf%s" data-node="%s" tabindex="0" role="button">'
+                       % (dim, html.escape(nd['name'], quote=True)))
+            out.append('<rect x="%d" y="%.1f" width="%d" height="24" rx="6" class="n-leaf"/>'
+                       % (X_LEAF, cy - 12, W_LEAF))
+            out.append('<text x="%d" y="%.1f" class="t-leaf">%s</text>'
+                       % (X_LEAF + 10, cy + 4.5, html.escape(nd['name'])))
+            cnt = ('%d회 · %d편' % (nd['n'], nd['ndoc'])) if nd['n'] else '원문 없음'
+            out.append('<text x="%d" y="%.1f" class="t-cnt">%s</text>'
+                       % (X_LEAF + W_LEAF - 10, cy + 4.5, cnt))
+            out.append('</g>')
+            del gid
+    out.append('</svg>')
+    return '\n'.join(out)
+
+
+CSS = """
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--line:#e3e7ee;--accent:#2563eb;--accent-soft:#eaf1fe;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--line:#2a3140;--accent:#7aa5f8;--accent-soft:#1e2a44;}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--line:#2a3140;--accent:#7aa5f8;--accent-soft:#1e2a44;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0;padding:16px;font-size:15px;line-height:1.6;
+ font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif}
+main{max-width:900px;margin:0 auto}
+.back{display:inline-block;color:var(--sub);font-size:.8rem;text-decoration:none;margin-bottom:12px}
+h1{font-size:1.35rem;margin:0 0 6px;letter-spacing:-.01em}
+.lead{color:var(--sub);font-size:.86rem;margin:0 0 14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px}
+.scroll{overflow-x:auto}
+svg.map{display:block;min-width:520px}
+.link{fill:none;stroke:var(--line);stroke-width:1.4}
+.link.dim{stroke-dasharray:3 3}
+.n-root{fill:#6b7280;stroke:none}
+.t-root{fill:#fff;font-size:13px;font-weight:700;text-anchor:middle}
+.n-br{fill:var(--accent-soft);stroke:var(--line)}
+.t-br{fill:var(--ink);font-size:12px;font-weight:700;text-anchor:middle}
+.n-leaf{fill:var(--card);stroke:var(--line)}
+.t-leaf{fill:var(--ink);font-size:12px}
+.t-cnt{fill:var(--sub);font-size:10.5px;text-anchor:end}
+.leaf{cursor:pointer}
+.leaf:hover .n-leaf,.leaf:focus .n-leaf{stroke:var(--accent);fill:var(--accent-soft)}
+.leaf.dim{cursor:default;opacity:.45}
+.leaf.on .n-leaf{stroke:var(--accent);stroke-width:1.8;fill:var(--accent-soft)}
+.panel h2{font-size:.95rem;margin:0 0 4px}
+.panel .hint{color:var(--sub);font-size:.82rem;margin:0}
+.panel ul{margin:8px 0 0;padding-left:18px}
+.panel li{font-size:.82rem;color:var(--sub);word-break:break-all}
+.panel li b{color:var(--ink);font-weight:600}
+.panel li .where{opacity:.7;font-size:.75rem}
+.notes{font-size:.8rem;color:var(--sub)}
+.notes b{color:var(--ink)}
+"""
+
+
+def build():
+    data = litho_scan.scan()
+    idx = {}
+    for b in data['branches']:
+        for nd in b['nodes']:
+            idx[nd['name']] = {'n': nd['n'], 'ndoc': nd['ndoc'], 'top': nd['top']}
+    notes = '\n'.join(
+        '<div><b>%s</b> — %s</div>' % (html.escape(b['name']),
+                                       html.escape(BRANCH_NOTE.get(b['name'], '')))
+        for b in data['branches'])
+    doc = """<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 인프라 지도 — 리소그래피</title>
+<style>%s</style>
+</head>
+<body>
+<main>
+<a class="back" href="SemiAnalysis 대시보드.html">← 대시보드</a>
+<h1>AI 인프라 지도 — 리소그래피</h1>
+<p class="lead">원문 %d편에서 이름을 세어 세운 가지다. 잎을 누르면 그 이름이 가장 많이 나온 원문이 아래에 선다.
+숫자는 우리 코퍼스에 몇 번, 몇 편에 나왔는지이지 업계 비중이 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
+<div class="box scroll">%s</div>
+<div class="box panel" id="panel"><h2>잎을 고르세요</h2><p class="hint">이름 하나를 누르면 그 이름이 나온 원문 목록이 여기 뜬다.</p></div>
+<div class="box notes">%s</div>
+</main>
+<script>
+var IDX = %s;
+var panel = document.getElementById('panel');
+function show(name){
+  var d = IDX[name];
+  document.querySelectorAll('.leaf').forEach(function(g){ g.classList.remove('on'); });
+  var g = document.querySelector('.leaf[data-node="' + name.replace(/"/g,'&quot;') + '"]');
+  if (g) g.classList.add('on');
+  if (!d || !d.n){
+    panel.innerHTML = '<h2>' + name + '</h2><p class="hint">우리 원문에 아직 없는 이름이다.</p>';
+    return;
+  }
+  var li = d.top.map(function(t){
+    var parts = t[0].split('/');
+    var title = parts[parts.length - 1].replace(/\.md$/, '');
+    var where = parts.slice(0, -1).join(' / ');
+    return '<li><b>' + title + '</b> — ' + t[1] + '회 <span class="where">' + where + '</span></li>';
+  }).join('');
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">원문 ' + d.ndoc + '편에 ' + d.n +
+    '회. 많이 나온 순으로:</p><ul>' + li + '</ul>';
+}
+document.querySelectorAll('.leaf').forEach(function(g){
+  if (g.classList.contains('dim')) return;
+  g.addEventListener('click', function(){ show(g.getAttribute('data-node')); });
+  g.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(g.getAttribute('data-node')); }
+  });
+});
+</script>
+</body>
+</html>
+""" % (CSS, data['nfile'], svg(data), notes,
+       json.dumps(idx, ensure_ascii=False))
+    io.open(OUT, 'w', encoding='utf-8').write(doc)
+    print('wrote', OUT, len(doc), 'bytes')
+
+
+if __name__ == '__main__':
+    build()

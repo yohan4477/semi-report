@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 인프라 지도 — 리소그래피</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1a2233;--sub:#5b6577;--line:#e3e7ee;--accent:#2563eb;--accent-soft:#eaf1fe;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--line:#2a3140;--accent:#7aa5f8;--accent-soft:#1e2a44;}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1a1f2a;--ink:#e8ecf4;--sub:#9aa5b8;--line:#2a3140;--accent:#7aa5f8;--accent-soft:#1e2a44;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0;padding:16px;font-size:15px;line-height:1.6;
+ font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif}
+main{max-width:900px;margin:0 auto}
+.back{display:inline-block;color:var(--sub);font-size:.8rem;text-decoration:none;margin-bottom:12px}
+h1{font-size:1.35rem;margin:0 0 6px;letter-spacing:-.01em}
+.lead{color:var(--sub);font-size:.86rem;margin:0 0 14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px}
+.scroll{overflow-x:auto}
+svg.map{display:block;min-width:520px}
+.link{fill:none;stroke:var(--line);stroke-width:1.4}
+.link.dim{stroke-dasharray:3 3}
+.n-root{fill:#6b7280;stroke:none}
+.t-root{fill:#fff;font-size:13px;font-weight:700;text-anchor:middle}
+.n-br{fill:var(--accent-soft);stroke:var(--line)}
+.t-br{fill:var(--ink);font-size:12px;font-weight:700;text-anchor:middle}
+.n-leaf{fill:var(--card);stroke:var(--line)}
+.t-leaf{fill:var(--ink);font-size:12px}
+.t-cnt{fill:var(--sub);font-size:10.5px;text-anchor:end}
+.leaf{cursor:pointer}
+.leaf:hover .n-leaf,.leaf:focus .n-leaf{stroke:var(--accent);fill:var(--accent-soft)}
+.leaf.dim{cursor:default;opacity:.45}
+.leaf.on .n-leaf{stroke:var(--accent);stroke-width:1.8;fill:var(--accent-soft)}
+.panel h2{font-size:.95rem;margin:0 0 4px}
+.panel .hint{color:var(--sub);font-size:.82rem;margin:0}
+.panel ul{margin:8px 0 0;padding-left:18px}
+.panel li{font-size:.82rem;color:var(--sub);word-break:break-all}
+.panel li b{color:var(--ink);font-weight:600}
+.panel li .where{opacity:.7;font-size:.75rem}
+.notes{font-size:.8rem;color:var(--sub)}
+.notes b{color:var(--ink)}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="SemiAnalysis 대시보드.html">← 대시보드</a>
+<h1>AI 인프라 지도 — 리소그래피</h1>
+<p class="lead">원문 883편에서 이름을 세어 세운 가지다. 잎을 누르면 그 이름이 가장 많이 나온 원문이 아래에 선다.
+숫자는 우리 코퍼스에 몇 번, 몇 편에 나왔는지이지 업계 비중이 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
+<div class="box scroll"><svg class="map" viewBox="0 0 600 1124" width="600" height="1124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="리소그래피 마인드맵">
+<rect x="8" y="545.0" width="96" height="34" rx="8" class="n-root"/>
+<text x="56.0" y="567.0" class="t-root">리소그래피</text>
+<path d="M104 562.0 C122 562.0, 114 121.0, 132 121.0" class="link"/>
+<rect x="132" y="106.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="125.5" class="t-br">노광 방식</text>
+<path d="M260 121.0 C276 121.0, 276 31.0, 292 31.0" class="link"/>
+<g class="leaf" data-node="EUV" tabindex="0" role="button">
+<rect x="292" y="19.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="35.5" class="t-leaf">EUV</text>
+<text x="582" y="35.5" class="t-cnt">342회 · 34편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 61.0, 292 61.0" class="link"/>
+<g class="leaf" data-node="High-NA EUV" tabindex="0" role="button">
+<rect x="292" y="49.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="65.5" class="t-leaf">High-NA EUV</text>
+<text x="582" y="65.5" class="t-cnt">101회 · 8편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 91.0, 292 91.0" class="link"/>
+<g class="leaf" data-node="DUV" tabindex="0" role="button">
+<rect x="292" y="79.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="95.5" class="t-leaf">DUV</text>
+<text x="582" y="95.5" class="t-cnt">105회 · 19편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 121.0, 292 121.0" class="link"/>
+<g class="leaf" data-node="ArF 이머전" tabindex="0" role="button">
+<rect x="292" y="109.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="125.5" class="t-leaf">ArF 이머전</text>
+<text x="582" y="125.5" class="t-cnt">36회 · 17편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 151.0, 292 151.0" class="link"/>
+<g class="leaf" data-node="KrF" tabindex="0" role="button">
+<rect x="292" y="139.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="155.5" class="t-leaf">KrF</text>
+<text x="582" y="155.5" class="t-cnt">4회 · 3편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 181.0, 292 181.0" class="link"/>
+<g class="leaf" data-node="멀티패터닝" tabindex="0" role="button">
+<rect x="292" y="169.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="185.5" class="t-leaf">멀티패터닝</text>
+<text x="582" y="185.5" class="t-cnt">92회 · 14편</text>
+</g>
+<path d="M260 121.0 C276 121.0, 276 211.0, 292 211.0" class="link"/>
+<g class="leaf" data-node="나노임프린트" tabindex="0" role="button">
+<rect x="292" y="199.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="215.5" class="t-leaf">나노임프린트</text>
+<text x="582" y="215.5" class="t-cnt">57회 · 1편</text>
+</g>
+<path d="M104 562.0 C122 562.0, 114 338.0, 132 338.0" class="link"/>
+<rect x="132" y="323.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="342.5" class="t-br">장비사</text>
+<path d="M260 338.0 C276 338.0, 276 263.0, 292 263.0" class="link"/>
+<g class="leaf" data-node="ASML" tabindex="0" role="button">
+<rect x="292" y="251.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="267.5" class="t-leaf">ASML</text>
+<text x="582" y="267.5" class="t-cnt">165회 · 29편</text>
+</g>
+<path d="M260 338.0 C276 338.0, 276 293.0, 292 293.0" class="link"/>
+<g class="leaf" data-node="Canon" tabindex="0" role="button">
+<rect x="292" y="281.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="297.5" class="t-leaf">Canon</text>
+<text x="582" y="297.5" class="t-cnt">32회 · 3편</text>
+</g>
+<path d="M260 338.0 C276 338.0, 276 323.0, 292 323.0" class="link"/>
+<g class="leaf" data-node="Nikon" tabindex="0" role="button">
+<rect x="292" y="311.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="327.5" class="t-leaf">Nikon</text>
+<text x="582" y="327.5" class="t-cnt">3회 · 2편</text>
+</g>
+<path d="M260 338.0 C276 338.0, 276 353.0, 292 353.0" class="link"/>
+<g class="leaf" data-node="SMEE" tabindex="0" role="button">
+<rect x="292" y="341.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="357.5" class="t-leaf">SMEE</text>
+<text x="582" y="357.5" class="t-cnt">1회 · 1편</text>
+</g>
+<path d="M260 338.0 C276 338.0, 276 383.0, 292 383.0" class="link"/>
+<g class="leaf" data-node="도쿄일렉트론" tabindex="0" role="button">
+<rect x="292" y="371.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="387.5" class="t-leaf">도쿄일렉트론</text>
+<text x="582" y="387.5" class="t-cnt">18회 · 8편</text>
+</g>
+<path d="M260 338.0 C276 338.0, 276 413.0, 292 413.0" class="link"/>
+<g class="leaf" data-node="KLA" tabindex="0" role="button">
+<rect x="292" y="401.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="417.5" class="t-leaf">KLA</text>
+<text x="582" y="417.5" class="t-cnt">5회 · 4편</text>
+</g>
+<path d="M104 562.0 C122 562.0, 114 525.0, 132 525.0" class="link"/>
+<rect x="132" y="510.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="529.5" class="t-br">광원·광학</text>
+<path d="M260 525.0 C276 525.0, 276 465.0, 292 465.0" class="link dim"/>
+<g class="leaf dim" data-node="Cymer" tabindex="0" role="button">
+<rect x="292" y="453.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="469.5" class="t-leaf">Cymer</text>
+<text x="582" y="469.5" class="t-cnt">원문 없음</text>
+</g>
+<path d="M260 525.0 C276 525.0, 276 495.0, 292 495.0" class="link dim"/>
+<g class="leaf dim" data-node="Trumpf" tabindex="0" role="button">
+<rect x="292" y="483.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="499.5" class="t-leaf">Trumpf</text>
+<text x="582" y="499.5" class="t-cnt">원문 없음</text>
+</g>
+<path d="M260 525.0 C276 525.0, 276 525.0, 292 525.0" class="link"/>
+<g class="leaf" data-node="Zeiss" tabindex="0" role="button">
+<rect x="292" y="513.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="529.5" class="t-leaf">Zeiss</text>
+<text x="582" y="529.5" class="t-cnt">6회 · 2편</text>
+</g>
+<path d="M260 525.0 C276 525.0, 276 555.0, 292 555.0" class="link"/>
+<g class="leaf" data-node="Ushio" tabindex="0" role="button">
+<rect x="292" y="543.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="559.5" class="t-leaf">Ushio</text>
+<text x="582" y="559.5" class="t-cnt">3회 · 2편</text>
+</g>
+<path d="M260 525.0 C276 525.0, 276 585.0, 292 585.0" class="link"/>
+<g class="leaf" data-node="주석 플라스마 광원" tabindex="0" role="button">
+<rect x="292" y="573.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="589.5" class="t-leaf">주석 플라스마 광원</text>
+<text x="582" y="589.5" class="t-cnt">17회 · 4편</text>
+</g>
+<path d="M104 562.0 C122 562.0, 114 712.0, 132 712.0" class="link"/>
+<rect x="132" y="697.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="716.5" class="t-br">소재</text>
+<path d="M260 712.0 C276 712.0, 276 637.0, 292 637.0" class="link"/>
+<g class="leaf" data-node="포토레지스트" tabindex="0" role="button">
+<rect x="292" y="625.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="641.5" class="t-leaf">포토레지스트</text>
+<text x="582" y="641.5" class="t-cnt">31회 · 10편</text>
+</g>
+<path d="M260 712.0 C276 712.0, 276 667.0, 292 667.0" class="link"/>
+<g class="leaf" data-node="메탈옥사이드 레지스트" tabindex="0" role="button">
+<rect x="292" y="655.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="671.5" class="t-leaf">메탈옥사이드 레지스트</text>
+<text x="582" y="671.5" class="t-cnt">3회 · 1편</text>
+</g>
+<path d="M260 712.0 C276 712.0, 276 697.0, 292 697.0" class="link"/>
+<g class="leaf" data-node="JSR" tabindex="0" role="button">
+<rect x="292" y="685.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="701.5" class="t-leaf">JSR</text>
+<text x="582" y="701.5" class="t-cnt">2회 · 1편</text>
+</g>
+<path d="M260 712.0 C276 712.0, 276 727.0, 292 727.0" class="link dim"/>
+<g class="leaf dim" data-node="도쿄오카(TOK)" tabindex="0" role="button">
+<rect x="292" y="715.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="731.5" class="t-leaf">도쿄오카(TOK)</text>
+<text x="582" y="731.5" class="t-cnt">원문 없음</text>
+</g>
+<path d="M260 712.0 C276 712.0, 276 757.0, 292 757.0" class="link"/>
+<g class="leaf" data-node="신에쓰" tabindex="0" role="button">
+<rect x="292" y="745.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="761.5" class="t-leaf">신에쓰</text>
+<text x="582" y="761.5" class="t-cnt">4회 · 2편</text>
+</g>
+<path d="M260 712.0 C276 712.0, 276 787.0, 292 787.0" class="link dim"/>
+<g class="leaf dim" data-node="SUMCO" tabindex="0" role="button">
+<rect x="292" y="775.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="791.5" class="t-leaf">SUMCO</text>
+<text x="582" y="791.5" class="t-cnt">원문 없음</text>
+</g>
+<path d="M104 562.0 C122 562.0, 114 869.0, 132 869.0" class="link"/>
+<rect x="132" y="854.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="873.5" class="t-br">마스크·펠리클</text>
+<path d="M260 869.0 C276 869.0, 276 839.0, 292 839.0" class="link"/>
+<g class="leaf" data-node="포토마스크" tabindex="0" role="button">
+<rect x="292" y="827.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="843.5" class="t-leaf">포토마스크</text>
+<text x="582" y="843.5" class="t-cnt">190회 · 37편</text>
+</g>
+<path d="M260 869.0 C276 869.0, 276 869.0, 292 869.0" class="link dim"/>
+<g class="leaf dim" data-node="블랭크마스크" tabindex="0" role="button">
+<rect x="292" y="857.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="873.5" class="t-leaf">블랭크마스크</text>
+<text x="582" y="873.5" class="t-cnt">원문 없음</text>
+</g>
+<path d="M260 869.0 C276 869.0, 276 899.0, 292 899.0" class="link"/>
+<g class="leaf" data-node="펠리클" tabindex="0" role="button">
+<rect x="292" y="887.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="903.5" class="t-leaf">펠리클</text>
+<text x="582" y="903.5" class="t-cnt">29회 · 1편</text>
+</g>
+<path d="M104 562.0 C122 562.0, 114 1011.0, 132 1011.0" class="link"/>
+<rect x="132" y="996.0" width="128" height="30" rx="7" class="n-br"/>
+<text x="196.0" y="1015.5" class="t-br">계측·수율·통제</text>
+<path d="M260 1011.0 C276 1011.0, 276 951.0, 292 951.0" class="link"/>
+<g class="leaf" data-node="오버레이" tabindex="0" role="button">
+<rect x="292" y="939.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="955.5" class="t-leaf">오버레이</text>
+<text x="582" y="955.5" class="t-cnt">32회 · 11편</text>
+</g>
+<path d="M260 1011.0 C276 1011.0, 276 981.0, 292 981.0" class="link"/>
+<g class="leaf" data-node="수율" tabindex="0" role="button">
+<rect x="292" y="969.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="985.5" class="t-leaf">수율</text>
+<text x="582" y="985.5" class="t-cnt">258회 · 60편</text>
+</g>
+<path d="M260 1011.0 C276 1011.0, 276 1011.0, 292 1011.0" class="link"/>
+<g class="leaf" data-node="스루풋" tabindex="0" role="button">
+<rect x="292" y="999.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="1015.5" class="t-leaf">스루풋</text>
+<text x="582" y="1015.5" class="t-cnt">5회 · 2편</text>
+</g>
+<path d="M260 1011.0 C276 1011.0, 276 1041.0, 292 1041.0" class="link"/>
+<g class="leaf" data-node="패터닝 비용" tabindex="0" role="button">
+<rect x="292" y="1029.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="1045.5" class="t-leaf">패터닝 비용</text>
+<text x="582" y="1045.5" class="t-cnt">5회 · 4편</text>
+</g>
+<path d="M260 1011.0 C276 1011.0, 276 1071.0, 292 1071.0" class="link"/>
+<g class="leaf" data-node="수출 통제" tabindex="0" role="button">
+<rect x="292" y="1059.0" width="300" height="24" rx="6" class="n-leaf"/>
+<text x="302" y="1075.5" class="t-leaf">수출 통제</text>
+<text x="582" y="1075.5" class="t-cnt">154회 · 36편</text>
+</g>
+</svg></div>
+<div class="box panel" id="panel"><h2>잎을 고르세요</h2><p class="hint">이름 하나를 누르면 그 이름이 나온 원문 목록이 여기 뜬다.</p></div>
+<div class="box notes"><div><b>노광 방식</b> — 빛을 어떻게 쬐어 회로를 새기나</div>
+<div><b>장비사</b> — 노광기를 만드는 곳</div>
+<div><b>광원·광학</b> — 빛을 만들고 모으는 부품</div>
+<div><b>소재</b> — 웨이퍼에 바르고 깎이는 것</div>
+<div><b>마스크·펠리클</b> — 새길 무늬를 담은 원판과 그 덮개</div>
+<div><b>계측·수율·통제</b> — 얼마나 맞았나, 몇 장 나왔나, 누가 못 사나</div></div>
+</main>
+<script>
+var IDX = {"EUV": {"n": 342, "ndoc": 34, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 49], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 39], ["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 35], ["content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md", 29], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 27], ["content/understanding/Semi Doped/raw/2026-05-29-huawei-tau.md", 25]]}, "High-NA EUV": {"n": 101, "ndoc": 8, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 76], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 9], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 8], ["content/understanding/Semi Doped/daily-2026-04-08.md", 4], ["content/newsletter/ai_infra/compute/[260114] CFET 1,000개와 SK하이닉스 차세대 낸드 - IEDM 2025 총정리.md", 1], ["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 1]]}, "DUV": {"n": 105, "ndoc": 19, "top": [["content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md", 16], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 15], ["content/understanding/Semi Doped/raw/2026-07-29-hyperscaler-cds.md", 13], ["input/clippings/Is SMIC N+3’s Metal Pitch Smaller than Intel 18A’s.md", 12], ["content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md", 10], ["content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md", 5]]}, "ArF 이머전": {"n": 36, "ndoc": 17, "top": [["content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md", 6], ["content/understanding/Semi Doped/raw/2026-07-29-hyperscaler-cds.md", 5], ["input/clippings/ClusterMAX™ 2.0 The Industry Standard GPU Cloud Rating System.md", 5], ["content/newsletter/ai_infra/cooling/[250214] 데이터센터 해부학 Part 2 - 냉각 시스템.md", 3], ["input/clippings/The GPU Cloud ClusterMAX™ Rating System  How to Rent GPUs.md", 3], ["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 2]]}, "KrF": {"n": 4, "ndoc": 3, "top": [["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 2], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 1], ["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 1]]}, "멀티패터닝": {"n": 92, "ndoc": 14, "top": [["content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md", 26], ["input/clippings/Is SMIC N+3’s Metal Pitch Smaller than Intel 18A’s.md", 17], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 12], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 11], ["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 8], ["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 5]]}, "나노임프린트": {"n": 57, "ndoc": 1, "top": [["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 57]]}, "ASML": {"n": 165, "ndoc": 29, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 29], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 23], ["content/understanding/Semi Doped/raw/2026-05-29-huawei-tau.md", 12], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 12], ["content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md", 10], ["content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md", 8]]}, "Canon": {"n": 32, "ndoc": 3, "top": [["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 30], ["content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md", 1], ["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 1]]}, "Nikon": {"n": 3, "ndoc": 2, "top": [["content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md", 2], ["content/understanding/피지컬AI/[260721] Sunday Robotics ACT-2 프리뷰.md", 1]]}, "SMEE": {"n": 1, "ndoc": 1, "top": [["content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md", 1]]}, "도쿄일렉트론": {"n": 18, "ndoc": 8, "top": [["content/newsletter/ai_infra/memory/[230717] 낸드플래시 독점 균열 - 도쿄일렉트론 vs 램리서치.md", 9], ["content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md", 2], ["content/understanding/부동산/[260804] 일본 지방 땅값이 오르는 곳은 전부 기업을 끼고 있다 - 박상준.md", 2], ["content/linkedin/[2608] 링크드인 게시물.md", 1], ["content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md", 1], ["content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md", 1]]}, "KLA": {"n": 5, "ndoc": 4, "top": [["content/understanding/Semi Doped/daily-2026-04-08.md", 2], ["content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md", 1], ["content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md", 1], ["input/clippings/Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md", 1]]}, "Cymer": {"n": 0, "ndoc": 0, "top": []}, "Trumpf": {"n": 0, "ndoc": 0, "top": []}, "Zeiss": {"n": 6, "ndoc": 2, "top": [["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 5], ["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 1]]}, "Ushio": {"n": 3, "ndoc": 2, "top": [["content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md", 2], ["input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md", 1]]}, "주석 플라스마 광원": {"n": 17, "ndoc": 4, "top": [["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 8], ["input/clippings/2025 AI Diffusion Export Controls - Microsoft Regulatory Capture, Oracle Tears, Impacts Quantified, Model Restrictions.md", 6], ["content/understanding/Semi Doped/2026-05-22-litho-masterclass.md", 2], ["content/understanding/Semi Doped/raw/2026-07-29-hyperscaler-cds.md", 1]]}, "포토레지스트": {"n": 31, "ndoc": 10, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 12], ["content/linkedin/[2605] 링크드인 게시물.md", 6], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 5], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 2], ["content/understanding/Semi Doped/raw/2026-05-08-power-wall.md", 1], ["content/understanding/한주성/2026-05-15 모래가 반도체 칩이 되기까지  1편 '전공정' [6672].md", 1]]}, "메탈옥사이드 레지스트": {"n": 3, "ndoc": 1, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 3]]}, "JSR": {"n": 2, "ndoc": 1, "top": [["content/linkedin/[2605] 링크드인 게시물.md", 2]]}, "도쿄오카(TOK)": {"n": 0, "ndoc": 0, "top": []}, "신에쓰": {"n": 4, "ndoc": 2, "top": [["content/linkedin/[2605] 링크드인 게시물.md", 3], ["content/linkedin/[2606] 링크드인 게시물.md", 1]]}, "SUMCO": {"n": 0, "ndoc": 0, "top": []}, "포토마스크": {"n": 190, "ndoc": 37, "top": [["content/understanding/Semi Doped/raw/2026-06-19-advanced-packaging.md", 35], ["content/understanding/Semi Doped/2026-06-19-advanced-packaging.md", 27], ["input/clippings/Cerebras — Faster Tokens Please.md", 20], ["input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md", 15], ["content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md", 12], ["input/clippings/CPUs are Back The Datacenter CPU Landscape in 2026.md", 7]]}, "블랭크마스크": {"n": 0, "ndoc": 0, "top": []}, "펠리클": {"n": 29, "ndoc": 1, "top": [["input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md", 29]]}, "오버레이": {"n": 32, "ndoc": 11, "top": [["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 9], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 8], ["input/clippings/Is SMIC N+3’s Metal Pitch Smaller than Intel 18A’s.md", 3], ["content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md", 2], ["content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md", 2], ["input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md", 2]]}, "수율": {"n": 258, "ndoc": 60, "top": [["content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md", 35], ["content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md", 28], ["content/understanding/미국주식 사관학교/[260719] CXMT는 딥시크와 다르다 - 수요 충격이 아니라 공급 충격이다.md", 13], ["content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md", 10], ["content/understanding/미국주식 사관학교/[260708] 다이 하나가 열셋을 함께 버린다 - HBM 시대 검사장비 KLA코퍼레이션.md", 10], ["content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md", 9]]}, "스루풋": {"n": 5, "ndoc": 2, "top": [["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 4], ["content/understanding/Semi Doped/2026-04-24-google-networking.md", 1]]}, "패터닝 비용": {"n": 5, "ndoc": 4, "top": [["input/clippings/TSMC Overseas Fabs – A Success.md", 2], ["content/understanding/Semi Doped/raw/2026-05-22-litho-masterclass.md", 1], ["input/clippings/How to Kill 2 Monopolies with 1 Tool.md", 1], ["input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md", 1]]}, "수출 통제": {"n": 154, "ndoc": 36, "top": [["input/clippings/Huawei Ascend Production Ramp Die Banks, TSMC Continued Production, HBM is The Bottleneck.md", 22], ["content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md", 12], ["content/understanding/미국주식 사관학교/[260615] 클로드가 90분 만에 전 세계에서 꺼졌다 - AI 모델 수출통제와 각자도생 인프라 수요.md", 11], ["input/clippings/DeepSeek Debates Chinese Leadership On Cost, True Training Cost, Closed Model Margin Impacts.md", 11], ["content/understanding/김상훈 기자/[260816] 칩을 막아도 학습은 밖에서 하고 답만 들고 온다 - 수출통제에 뚫린 구멍 셋 - 김상훈.md", 8], ["input/clippings/EDA Market Primer - Market Dynamics, Cadence, Synopsys, Siemens, China EDA Rise.md", 8]]}};
+var panel = document.getElementById('panel');
+function show(name){
+  var d = IDX[name];
+  document.querySelectorAll('.leaf').forEach(function(g){ g.classList.remove('on'); });
+  var g = document.querySelector('.leaf[data-node="' + name.replace(/"/g,'&quot;') + '"]');
+  if (g) g.classList.add('on');
+  if (!d || !d.n){
+    panel.innerHTML = '<h2>' + name + '</h2><p class="hint">우리 원문에 아직 없는 이름이다.</p>';
+    return;
+  }
+  var li = d.top.map(function(t){
+    var parts = t[0].split('/');
+    var title = parts[parts.length - 1].replace(/\.md$/, '');
+    var where = parts.slice(0, -1).join(' / ');
+    return '<li><b>' + title + '</b> — ' + t[1] + '회 <span class="where">' + where + '</span></li>';
+  }).join('');
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">원문 ' + d.ndoc + '편에 ' + d.n +
+    '회. 많이 나온 순으로:</p><ul>' + li + '</ul>';
+}
+document.querySelectorAll('.leaf').forEach(function(g){
+  if (g.classList.contains('dim')) return;
+  g.addEventListener('click', function(){ show(g.getAttribute('data-node')); });
+  g.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(g.getAttribute('data-node')); }
+  });
+});
+</script>
+</body>
+</html>
