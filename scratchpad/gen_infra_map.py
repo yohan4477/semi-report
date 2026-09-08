@@ -114,7 +114,7 @@ main{max-width:900px;margin:0 auto}
 h1{font-size:1.35rem;margin:0 0 6px;letter-spacing:-.01em}
 .lead{color:var(--sub);font-size:.86rem;margin:0 0 14px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px}
-.scroll{overflow-x:auto}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 svg.map{display:block;min-width:520px}
 .link{fill:none;stroke:var(--line);stroke-width:1.4}
 .link.dim{stroke-dasharray:3 3}
@@ -170,13 +170,17 @@ svg.map{display:block;min-width:520px}
 .notes b{color:var(--ink)}
 @media (max-width: 640px){
   body{padding:12px}
-  .wide{display:none}
-  .narrow{display:block}
-  /* 가지 설명이 목록 안에 이미 붙어 있어 아래 상자는 겹친다 */
-  .notes{display:none}
+  /* 모바일에서도 지도를 숨기지 않는다. 가로로 밀면 끝 가지까지 닿는다. */
+  .wide{display:block}
+  .narrow{display:none}
+  .scroll{margin-left:-12px;margin-right:-12px;border-radius:0;padding:10px 12px}
+  svg.map{min-width:680px}
   h1{font-size:1.2rem}
   .panel li{word-break:normal}
   .panel li .where{display:block;margin-left:0}
+  .pchip,.chip{min-height:42px;padding:8px 12px}
+  .chips,.pchips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;-webkit-overflow-scrolling:touch}
+  .maphint{display:block}
   .ovmap{min-width:610px;height:445px}
   .ovnode{width:155px;padding:8px 10px}.ovnode.litho{left:1%}.ovnode.etch{left:0}.ovnode.packaging{left:1%}
   .ovnode.memory{right:1%}.ovnode.network{right:1%}
@@ -189,6 +193,7 @@ svg.map{display:block;min-width:520px}
 .pane.off{display:none}
 .pane-h{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pane-n{font-size:.74rem;font-weight:500;color:var(--sub)}
+.maphint{display:none;color:var(--sub);font-size:.76rem;margin:0 0 6px}
 .ov-lead{color:var(--sub);font-size:.84rem;margin:0 0 12px}
 .ovmap{position:relative;min-width:760px;height:470px;margin:0 0 18px}
 .ovmap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
@@ -441,6 +446,7 @@ def pane_html(pane):
     return ("""<section class="pane off" data-proc="%s">
 <h2 class="pane-h">%s <span class="pane-n">이름 %d · 판단 %d · 원문 %d편</span></h2>
 <div class="chips" role="group" aria-label="뷰 고르기">%s</div>
+<p class="maphint">← 지도를 가로로 밀어 가지를 탐색하세요</p>
 <div class="box scroll wide">%s</div>
 <div class="narrow">%s</div>
 <div class="box takes">%s</div>
