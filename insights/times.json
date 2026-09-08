@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-08",
-"index_fingerprint": "a909b29b664d4301ccd1fcf9658321396bcdf389",
-"lines": 4412
+"index_fingerprint": "0b857f3292354b360992d06f6f9e0534bf5786fb",
+"lines": 4411
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6392,11 +6392,6 @@
 "how": "명시",
 "t": "1970",
 "tense": "회고"
-},
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L16": {
-"how": "계산",
-"t": "2025",
-"tense": "현재"
 },
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L148": {
 "how": "명시",

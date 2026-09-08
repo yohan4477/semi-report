@@ -13663,8 +13663,8 @@
 78
 ],
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md": [
-"9112110b1b2f85104530f5e0ee181f7296819803",
-144
+"79d4496d67a97f91c1dcd5ca6233e78256b69cfd",
+89
 ],
 "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md": [
 "7710a4440f34f9ff983cb7b6b1dfaf922234de0d",
@@ -13715,8 +13715,8 @@
 110
 ],
 "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md": [
-"4334a6d13a3cba406adfae589dd8a1654daa648e",
-144
+"5ea27e46e33e3e184d35dcaf45da4a45b7aa201f",
+97
 ],
 "content/understanding/AI Engineer/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md": [
 "08e708d9e498459c810845543a6e3b208aa5f85f",
@@ -19391,8 +19391,8 @@
 213
 ]
 },
-"fingerprint": "a909b29b664d4301ccd1fcf9658321396bcdf389",
-"lines": 234121
+"fingerprint": "0b857f3292354b360992d06f6f9e0534bf5786fb",
+"lines": 234019
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -20275,18 +20275,10 @@
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L69",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L70",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L18",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L32",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L34",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L48",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L54",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L62",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L92",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L94",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L96",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L104",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L29",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L41",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L50",
 "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L6",
 "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L19",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
@@ -21280,8 +21272,7 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L11",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L14",
@@ -23013,7 +23004,6 @@
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L258",
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L295",
 "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md#L23",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L72",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L16",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L22",
 "content/understanding/Semi Doped/2026-08-07-globalfoundries-barber.md#L26",
@@ -24713,9 +24703,8 @@
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L76",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L16",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L21",
 "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L6",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L6",
@@ -41412,9 +41401,6 @@
 "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md#L44",
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L36",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L52",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L56",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L114",
 "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41",
 "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L64",
 "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L72",
@@ -42447,7 +42433,7 @@
 "content/understanding/AI Engineer/2026-04-26-MCP는-어디로-가나.md#L6",
 "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L6",
 "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L19",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L52",
+"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
 "content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md#L57",
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L6",
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L12",
@@ -48789,7 +48775,7 @@
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L35",
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L49",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L148",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L52",
+"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
 "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L46",
 "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
 "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L6",
@@ -63706,7 +63692,7 @@
 "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L418",
 "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L482",
 "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L68",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L38",
+"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L31",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L62",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L65",
 "content/understanding/Semi Doped/2026-05-08-power-wall.md#L56",
