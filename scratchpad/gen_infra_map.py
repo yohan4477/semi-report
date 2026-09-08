@@ -125,6 +125,10 @@ svg.map{display:block;min-width:520px}
 .panel li{font-size:.82rem;color:var(--sub);word-break:break-all}
 .panel li b{color:var(--ink);font-weight:600}
 .panel li .where{opacity:.7;font-size:.75rem;margin-left:6px}
+.panel li{margin-bottom:9px}
+.panel .q{margin:4px 0 0;padding:5px 8px;border-left:2px solid var(--line);
+ background:var(--bg);border-radius:0 6px 6px 0;font-size:.78rem;color:var(--ink);line-height:1.5}
+.panel .q .ln{display:block;color:var(--sub);font-size:.68rem;margin-bottom:2px;word-break:break-all}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
 .chip{font:inherit;font-size:.78rem;cursor:pointer;border:1px solid var(--line);background:var(--card);
  color:var(--sub);border-radius:999px;padding:4px 11px}
@@ -314,9 +318,10 @@ def build():
 <main>
 <a class="back" href="SemiAnalysis 대시보드.html">← 대시보드</a>
 <h1>AI 인프라 지도 — 리소그래피</h1>
-<p class="lead">원문 %d편에서 이름을 세어 세운 지도다. 같은 이름을 어느 축으로 놓느냐에 따라 나무가 달라져 뷰를 넷으로 나눴다 —
-기능·부품·공급·지표. 잎을 누르면 그 이름이 가장 많이 나온 원문이 아래에 선다. 숫자는 우리 코퍼스에 몇 번, 몇 편에 나왔는지이지
-업계 비중이 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
+<p class="lead">원문 %d편 가운데 리소그래피를 말하는 %d편에서만 이름을 세어 세운 지도다 — 「수율」·「거울」 같은 흔한 말이
+딴 문맥에서 부풀지 않게 걸렀고, 그 문서 안에서도 앞뒤 두 줄에 리소 신호가 있는 줄만 셌다. 같은 이름을 어느 축으로 놓느냐에 따라 나무가 달라져 뷰를 넷으로 나눴다 — 기능·부품·공급·지표.
+잎을 누르면 그 이름이 실제로 든 문장이 파일과 줄 번호와 함께 아래에 선다. 숫자는 우리 코퍼스에 몇 번 나왔는지이지 업계 비중이
+아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
 <div class="chips" role="group" aria-label="뷰 고르기">%s</div>
 <div class="box scroll wide">%s</div>
 <div class="narrow">%s</div>
@@ -326,6 +331,9 @@ def build():
 <script>
 var IDX = %s;
 var panel = document.getElementById('panel');
+function esc(s){
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 function show(name){
   var d = IDX[name];
   document.querySelectorAll('.leaf, .tl').forEach(function(g){
@@ -339,10 +347,16 @@ function show(name){
     var parts = t[0].split('/');
     var title = parts[parts.length - 1].replace(/\.md$/, '');
     var where = parts.slice(0, -1).join(' / ');
-    return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where + '</span></li>';
+    var sents = (t[2] || []).map(function(s){
+      return '<div class="q"><span class="ln">' + t[0] + ':' + s[0] + '</span>' +
+             esc(s[1]) + '</div>';
+    }).join('');
+    return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where +
+           '</span>' + sents + '</li>';
   }).join('');
-  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">원문 ' + d.ndoc + '편에 ' + d.n +
-    '회. 많이 나온 순으로:</p><ul>' + li + '</ul>';
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">리소그래피를 말하는 원문 ' +
+    d.ndoc + '편에 ' + d.n + '회. 많이 나온 순으로, 줄마다 그 이름이 실제로 든 문장이다:</p><ul>' +
+    li + '</ul>';
 }
 document.querySelectorAll('.leaf').forEach(function(g){
   if (g.classList.contains('dim')) return;
@@ -377,7 +391,7 @@ document.querySelectorAll('.chip').forEach(function(c){
 </script>
 </body>
 </html>
-""" % (CSS, data['nfile'], chips, maps, lists, notes,
+""" % (CSS, data['nall'], data['nlitho'], chips, maps, lists, notes,
        json.dumps(idx, ensure_ascii=False))
     check_ui(doc, data, {'map': map_frag, 'list': list_frag})
     io.open(OUT, 'w', encoding='utf-8').write(doc)

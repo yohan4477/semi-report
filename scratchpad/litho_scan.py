@@ -133,8 +133,19 @@ VIEWS = [
 ]
 
 
-def count(files=None):
-    """이름마다 등장 횟수와 문서를 센다. 반환: (hits, 파일 수)"""
+# 리소그래피를 말하는 문서인지 보는 신호. 이 신호가 THRESHOLD 회 이상 나온 문서에서만
+# 센다 — 「수율」·「거울」·「진공」 같은 흔한 말이 딴 문맥에서 부풀던 것을 막는다.
+LITHO_SIGNAL = re.compile(
+    r'EUV|\bDUV\b|리소그래피|lithograph|노광|포토마스크|레티클|reticle|'
+    r'포토레지스트|photoresist|극자외선', re.I)
+THRESHOLD = 3
+SENT_MAX = 3       # 잎 하나가 문서 하나에서 보여 줄 문장 수
+SENT_CUT = 180     # 문장을 자르는 길이
+WINDOW = 2         # 리소 신호를 찾는 앞뒤 줄 수
+
+
+def litho_docs(files=None):
+    """리소그래피를 말하는 문서만 고른다. 반환: [(경로, 본문)]"""
     if files is None:
         files = []
         for d in DIRS:
@@ -142,27 +153,62 @@ def count(files=None):
                 for f in fs:
                     if f.endswith('.md'):
                         files.append(os.path.join(root, f))
-    comp = [(n, re.compile(rx, re.I)) for n, rx in NAMES.items()]
-    hits = collections.defaultdict(lambda: {'n': 0, 'docs': []})
+    out = []
     for p in files:
         try:
             t = io.open(p, encoding='utf-8').read()
         except Exception:
             continue
+        if len(LITHO_SIGNAL.findall(t)) >= THRESHOLD:
+            out.append((p, t))
+    return out, len(files)
+
+
+def _sentence(line, m):
+    """매치가 든 문장 한 도막 — 너무 길면 매치 언저리로 자른다."""
+    s = line.strip()
+    if len(s) <= SENT_CUT:
+        return s
+    i = m.start() - line.index(line.strip()[:1]) if line.strip() else m.start()
+    a = max(0, i - SENT_CUT // 2)
+    return ('…' if a else '') + s[a:a + SENT_CUT] + '…'
+
+
+def count(files=None):
+    """이름마다 등장 횟수·문서·영수증 문장을 센다. 반환: (hits, 리소 문서 수, 전체 문서 수)"""
+    docs, nall = litho_docs(files)
+    comp = [(n, re.compile(rx, re.I)) for n, rx in NAMES.items()]
+    hits = collections.defaultdict(lambda: {'n': 0, 'docs': []})
+    for p, t in docs:
         rel = os.path.relpath(p, ROOT).replace(os.sep, '/')
+        lines = t.split('\n')
+        # 문서가 리소를 말해도 문장은 패키징·메모리 수율일 수 있다. 그래서 줄 단위로도
+        # 본다 — 그 줄이나 앞뒤 두 줄에 리소 신호가 있어야 센다.
+        near = [bool(LITHO_SIGNAL.search('\n'.join(lines[max(0, i - WINDOW):
+                                                         i + WINDOW + 1])))
+                for i in range(len(lines))]
         for n, rx in comp:
-            m = rx.findall(t)
-            if m:
-                hits[n]['n'] += len(m)
-                hits[n]['docs'].append((rel, len(m)))
+            cnt, sents = 0, []
+            for i, line in enumerate(lines):
+                if not near[i]:
+                    continue
+                m = rx.search(line)
+                if not m:
+                    continue
+                cnt += len(rx.findall(line))
+                if len(sents) < SENT_MAX:
+                    sents.append([i + 1, _sentence(line, m)])
+            if cnt:
+                hits[n]['n'] += cnt
+                hits[n]['docs'].append([rel, cnt, sents])
     for h in hits.values():
         h['docs'].sort(key=lambda x: -x[1])
-    return hits, len(files)
+    return hits, len(docs), nall
 
 
 def scan():
     """뷰마다 나무를 세워 돌려준다. 잎의 숫자는 뷰가 달라도 같은 것을 본다."""
-    hits, nfile = count()
+    hits, nlitho, nall = count()
 
     def node(name):
         h = hits.get(name)
@@ -186,7 +232,7 @@ def scan():
             branches.append({'name': bname, 'note': bnote, 'nodes': nodes})
         views.append({'key': v['key'], 'label': v['label'], 'hint': v['hint'],
                       'branches': branches})
-    return {'views': views, 'nfile': nfile}
+    return {'views': views, 'nlitho': nlitho, 'nall': nall}
 
 
 if __name__ == '__main__':
@@ -202,4 +248,4 @@ if __name__ == '__main__':
                 for kd in nd['kids']:
                     print('     └ %-16s n=%-5d docs=%d'
                           % (kd['name'], kd['n'], kd['ndoc']))
-    print('files', out['nfile'])
+    print('리소 문서 %d / 전체 %d' % (out['nlitho'], out['nall']))
