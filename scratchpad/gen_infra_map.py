@@ -10,9 +10,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import map_litho
 import map_etch
 import map_packaging
+import map_memory
 
-# 공정 순서대로 — 새 공정은 모듈을 쓰고 이 줄에 넣는다
-PROCESSES = [map_litho, map_etch, map_packaging]
+# 공정 순서대로. 메모리는 공정이 아니라 제품 축이라 뒤에 둔다 —
+# 새 장은 모듈을 쓰고 이 줄에 넣는다
+PROCESSES = [map_litho, map_etch, map_packaging, map_memory]
 
 W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 250, 230
 X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 558
@@ -369,7 +371,7 @@ function show(name){
     return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where +
            '</span>' + sents + '</li>';
   }).join('');
-  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">이 공정을 말하는 원문 ' +
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">이 장을 말하는 원문 ' +
     d.ndoc + '편에 ' + d.n + '회. 많이 나온 순으로, 줄마다 그 이름이 실제로 든 문장이다:</p><ul>' +
     li + '</ul>';
 }
@@ -455,11 +457,16 @@ def selftest(proc):
     ok.append(bites('U7 CSS 가 안 들어감',
                     lambda: globals().__setitem__('CSS', real_css)))
 
-    real_leaf = globals()['leaf_box']
-    globals()['leaf_box'] = lambda nd, x, y, w: real_leaf(
-        dict(nd, n=max(nd['n'], 1)), x, y, w)
-    ok.append(bites('U6 0회인데 안 흐림',
-                    lambda: globals().__setitem__('leaf_box', real_leaf)))
+    # U6 은 0회인 이름이 있는 장에서만 시험할 수 있다. 없는 장은 SKIP —
+    # 「안 물었다」와 「물 것이 없다」는 다르다.
+    if any(nd['n'] == 0 for v in proc.scan()['views'] for nd in walk(v)):
+        real_leaf = globals()['leaf_box']
+        globals()['leaf_box'] = lambda nd, x, y, w: real_leaf(
+            dict(nd, n=max(nd['n'], 1)), x, y, w)
+        ok.append(bites('U6 0회인데 안 흐림',
+                        lambda: globals().__setitem__('leaf_box', real_leaf)))
+    else:
+        print('SKIP  U6 0회인데 안 흐림 — 이 장에는 0회인 이름이 없다')
 
     build(proc)
     print('요약: %s — 결함 %d개 중 %d개를 물었다' % (proc.LABEL, len(ok), sum(ok)))

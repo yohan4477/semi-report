@@ -430,7 +430,7 @@ function show(name){
     return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where +
            '</span>' + sents + '</li>';
   }).join('');
-  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">이 공정을 말하는 원문 ' +
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">이 장을 말하는 원문 ' +
     d.ndoc + '편에 ' + d.n + '회. 많이 나온 순으로, 줄마다 그 이름이 실제로 든 문장이다:</p><ul>' +
     li + '</ul>';
 }
