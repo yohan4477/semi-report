@@ -54,6 +54,8 @@ import driver_map_data_celltrion as dmd_celltrion
 import driver_map_data_tck as dmd_tck
 import driver_map_data_lgd as dmd_lgd
 import _cards_0827
+import _cards_0908
+import _figs_kicpa_0908 as figs_k0908
 
 OUT = os.path.join(dc.ROOT, '대시보드', '회계사 대시보드.html')
 blob = dc.blob
@@ -4477,9 +4479,13 @@ CARDS = [{
 # 엘곰 08-25~08-27 다섯 편은 별도 모듈에 있다. 이 파일이 이미 5천 줄이라 새 카드는 밖에서 붙인다.
 CARDS += _cards_0827.cards(SEC_AI, SEC_MKT, blob, SUM)
 
+# 엘곰·방구퐁 08-31~09-08 열다섯 편도 같은 이유로 밖에 둔다.
+CARDS += _cards_0908.cards({'SS': SEC_SS, 'HY': SEC_HY, 'AI': SEC_AI, 'MKT': SEC_MKT,
+                            'RATES': SEC_RATES, 'ETC': SEC_ETC, 'ACC': SEC_ACC}, blob, SUM)
+
 
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
-assert len(CARDS) == 120, '카드 수가 달라졌다'
+assert len(CARDS) == 125, '카드 수가 달라졌다'
 
 
 
@@ -5337,7 +5343,7 @@ if __name__ == '__main__':
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               page_slug='accountant',
               newest_first=True,
-              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + figs_k0908.CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
                                      + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),
