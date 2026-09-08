@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-# AI 인프라 지도 — 공정 가지 하나(리소그래피)를 마인드맵으로 세운다.
-# 재료는 scratchpad/litho_scan.py 가 원문 코퍼스에서 센 빈도. 손으로 값을 적지 않는다.
-# 산출: 대시보드/AI 인프라 지도.html
+# AI 인프라 지도 — 공정 한 장을 마인드맵으로 세운다. 공정마다 페이지 하나다.
+# 재료는 공정 모듈(map_litho.py·map_packaging.py)이 원문 코퍼스에서 센 빈도.
+# 손으로 값을 적지 않는다. 새 공정은 모듈 하나를 더 쓰고 PROCESSES 에 이름만 넣는다.
+# 쓰기: python gen_infra_map.py [litho|packaging|…]  (없으면 전부)
 import io, os, re, sys, json, html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import litho_scan
+import map_litho
+import map_packaging
 
-OUT = os.path.join(ROOT, '대시보드', 'AI 인프라 지도.html')
+PROCESSES = [map_litho, map_packaging]
 
 W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 250, 230
 X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 558
@@ -59,18 +61,18 @@ def leaf_box(nd, x, y, w):
                x + w - 10, y + 4.5, cnt))
 
 
-def svg(data):
+def svg(data, label):
     rows, H = layout(data['branches'])
     W = X_LEAF + W_LEAF + 8
     root_y = H / 2
     out = ['<svg class="map" viewBox="0 0 %d %d" width="%d" height="%d" '
            'xmlns="http://www.w3.org/2000/svg" role="img" '
-           'aria-label="리소그래피 마인드맵">' % (W, H, W, H)]
+           'aria-label="%s 마인드맵">' % (W, H, W, H, label)]
     # 루트
     out.append('<rect x="%d" y="%.1f" width="%d" height="34" rx="8" class="n-root"/>'
                % (X_ROOT, root_y - 17, W_ROOT))
-    out.append('<text x="%.1f" y="%.1f" class="t-root">리소그래피</text>'
-               % (X_ROOT + W_ROOT / 2, root_y + 5))
+    out.append('<text x="%.1f" y="%.1f" class="t-root">%s</text>'
+               % (X_ROOT + W_ROOT / 2, root_y + 5, html.escape(label)))
     for r in rows:
         # 루트 -> 가지
         out.append(curve(X_ROOT + W_ROOT, root_y, X_BR, r['cy']))
@@ -211,7 +213,7 @@ def tree_list(view):
     return '\n'.join(out)
 
 
-def check_ui(doc, data, parts):
+def check_ui(doc, data, parts, proc):
     """이 장의 규약을 기계가 보는 자리. 어기면 파일을 쓰지 않는다.
 
     다음 공정 가지(증착·식각·패키징)를 붙일 때 조용히 깨지는 자리들이다.
@@ -240,7 +242,7 @@ def check_ui(doc, data, parts):
     # U3 나무에 쓴 이름은 전부 사전에 있다 — 사전에 없는 말은 만들지 않는다
     for v in views:
         for nd in walk(v):
-            if nd['name'] not in litho_scan.NAMES:
+            if nd['name'] not in proc.NAMES:
                 bad.append('U3 「%s」가 NAMES 사전에 없다' % nd['name'])
 
     # U4 뷰마다 지도·목록·설명이 한 벌씩 — 좁은 화면에서 뷰가 사라지지 않게
@@ -273,12 +275,22 @@ def check_ui(doc, data, parts):
                 if ('data-node="%s" disabled' % esc) not in doc:
                     bad.append('U6 0회인 「%s」가 목록에서 눌린다' % nd['name'])
 
+    # U7 자리가 어긋나지 않았나 — 인자 순서가 밀리면 <title> 이 CSS 를 먹고 스타일이
+    # 통째로 사라진다. 눈으로만 보면 「검게 칠해진 상자」로 나타나 원인을 찾기 어렵다.
+    head = doc[doc.find('<title>'):doc.find('</title>')]
+    if proc.LABEL not in head or '{' in head:
+        bad.append('U7 <title> 이 「%s」가 아니다 — 인자 순서가 밀렸다' % proc.LABEL)
+    style = doc[doc.find('<style>'):doc.find('</style>')]
+    for rule in ('.narrow{display:none}', '.mapwrap.off', 'svg.map'):
+        if rule not in style:
+            bad.append('U7 <style> 안에 %s 규칙이 없다 — CSS 가 안 들어갔다' % rule)
+
     if bad:
         raise SystemExit('check_ui 규약 위반 %d건\n  ' % len(bad) + '\n  '.join(bad))
 
 
-def build():
-    data = litho_scan.scan()
+def build(proc):
+    data = proc.scan()
     views = data['views']
     idx = {}
     for v in views:
@@ -289,7 +301,7 @@ def build():
         % (' on' if i == 0 else '', v['key'], html.escape(v['label']),
            html.escape(v['hint']))
         for i, v in enumerate(views))
-    map_frag = {v['key']: svg(v) for v in views}
+    map_frag = {v['key']: svg(v, proc.LABEL) for v in views}
     list_frag = {v['key']: tree_list(v) for v in views}
     maps = '\n'.join(
         '<div class="mapwrap%s" data-view="%s">%s</div>'
@@ -311,15 +323,16 @@ def build():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI 인프라 지도 — 리소그래피</title>
+<title>AI 인프라 지도 — %s</title>
 <style>%s</style>
 </head>
 <body>
 <main>
 <a class="back" href="SemiAnalysis 대시보드.html">← 대시보드</a>
-<h1>AI 인프라 지도 — 리소그래피</h1>
-<p class="lead">원문 %d편 가운데 리소그래피를 말하는 %d편에서만 이름을 세어 세운 지도다 — 「수율」·「거울」 같은 흔한 말이
-딴 문맥에서 부풀지 않게 걸렀고, 그 문서 안에서도 앞뒤 두 줄에 리소 신호가 있는 줄만 셌다. 같은 이름을 어느 축으로 놓느냐에 따라 나무가 달라져 뷰를 넷으로 나눴다 — 기능·부품·공급·지표.
+<h1>AI 인프라 지도 — %s</h1>
+<p class="lead">원문 %d편 가운데 %s를 말하는 %d편에서만 이름을 세어 세운 지도다 — 흔한 말이 딴 문맥에서 부풀지 않게
+걸렀고, 그 문서 안에서도 앞뒤 두 줄에 그 공정의 신호가 있는 줄만 셌다. 같은 이름을 어느 축으로 놓느냐에 따라 나무가 달라져
+뷰를 넷으로 나눴다 — 기능·부품·공급·지표.
 잎을 누르면 그 이름이 실제로 든 문장이 파일과 줄 번호와 함께 아래에 선다. 숫자는 우리 코퍼스에 몇 번 나왔는지이지 업계 비중이
 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
 <div class="chips" role="group" aria-label="뷰 고르기">%s</div>
@@ -354,7 +367,7 @@ function show(name){
     return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where +
            '</span>' + sents + '</li>';
   }).join('');
-  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">리소그래피를 말하는 원문 ' +
+  panel.innerHTML = '<h2>' + name + '</h2><p class="hint">이 공정을 말하는 원문 ' +
     d.ndoc + '편에 ' + d.n + '회. 많이 나온 순으로, 줄마다 그 이름이 실제로 든 문장이다:</p><ul>' +
     li + '</ul>';
 }
@@ -391,21 +404,22 @@ document.querySelectorAll('.chip').forEach(function(c){
 </script>
 </body>
 </html>
-""" % (CSS, data['nall'], data['nlitho'], chips, maps, lists, notes,
-       json.dumps(idx, ensure_ascii=False))
-    check_ui(doc, data, {'map': map_frag, 'list': list_frag})
-    io.open(OUT, 'w', encoding='utf-8').write(doc)
-    print('wrote', OUT, len(doc), 'bytes')
+""" % (proc.LABEL, CSS, proc.LABEL, data['nall'], proc.LABEL, data['nlitho'],
+       chips, maps, lists, notes, json.dumps(idx, ensure_ascii=False))
+    check_ui(doc, data, {'map': map_frag, 'list': list_frag}, proc)
+    out = os.path.join(ROOT, '대시보드', proc.OUT_NAME)
+    io.open(out, 'w', encoding='utf-8').write(doc)
+    print('wrote', out, len(doc), 'bytes')
 
 
-def selftest():
+def selftest(proc):
     """규칙이 결함을 실제로 무는지 본다 — 규칙을 세울 때 먼저 보는 자리.
 
     통과했다는 말이 「검사기가 아무것도 못 잡는다」와 같은 뜻이 되는 것을 막는다.
     """
     def bites(label, fix):
         try:
-            build()
+            build(proc)
             print('MISS  %s — 검사기가 안 물었다' % label)
             return False
         except SystemExit as e:
@@ -415,7 +429,7 @@ def selftest():
             fix()
 
     ok = []
-    V = litho_scan.VIEWS
+    V = proc.VIEWS
 
     V[0]['branches'][0][2].append('사전에 없는 이름')
     ok.append(bites('U3 사전에 없는 이름', lambda: V[0]['branches'][0][2].pop()))
@@ -434,20 +448,31 @@ def selftest():
     ok.append(bites('U5 목록이 잎을 빠뜨림',
                     lambda: globals().__setitem__('tree_list', real_list)))
 
+    real_css = globals()['CSS']
+    globals()['CSS'] = ''
+    ok.append(bites('U7 CSS 가 안 들어감',
+                    lambda: globals().__setitem__('CSS', real_css)))
+
     real_leaf = globals()['leaf_box']
     globals()['leaf_box'] = lambda nd, x, y, w: real_leaf(
         dict(nd, n=max(nd['n'], 1)), x, y, w)
     ok.append(bites('U6 0회인데 안 흐림',
                     lambda: globals().__setitem__('leaf_box', real_leaf)))
 
-    build()
-    print('요약: 결함 %d개 중 %d개를 물었다' % (len(ok), sum(ok)))
+    build(proc)
+    print('요약: %s — 결함 %d개 중 %d개를 물었다' % (proc.LABEL, len(ok), sum(ok)))
     if not all(ok):
         raise SystemExit('selftest 실패 — 안 무는 규칙이 있다')
 
 
 if __name__ == '__main__':
-    if '--selftest' in sys.argv:
-        selftest()
-    else:
-        build()
+    argv = [a for a in sys.argv[1:] if not a.startswith('-')]
+    todo = [p for p in PROCESSES if not argv or p.KEY in argv]
+    if not todo:
+        raise SystemExit('모르는 공정이다: %s (있는 것: %s)'
+                         % (argv, [p.KEY for p in PROCESSES]))
+    for proc in todo:
+        if '--selftest' in sys.argv:
+            selftest(proc)
+        else:
+            build(proc)

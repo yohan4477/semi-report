@@ -7,6 +7,13 @@
 import io, json, os, re, collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 이 공정 장의 이름표 — 생성기가 이것만 보고 페이지를 짓는다
+KEY = 'litho'
+LABEL = '리소그래피'
+OUT_NAME = 'AI 인프라 지도 — 리소그래피.html'
+SLUG = 'map-litho'
+
 DIRS = [os.path.join(ROOT, 'content'), os.path.join(ROOT, 'input', 'clippings')]
 
 # 이름 -> 정규식. 별칭과 영문 표기를 함께 문다.
@@ -135,7 +142,7 @@ VIEWS = [
 
 # 리소그래피를 말하는 문서인지 보는 신호. 이 신호가 THRESHOLD 회 이상 나온 문서에서만
 # 센다 — 「수율」·「거울」·「진공」 같은 흔한 말이 딴 문맥에서 부풀던 것을 막는다.
-LITHO_SIGNAL = re.compile(
+SIGNAL = re.compile(
     r'EUV|\bDUV\b|리소그래피|lithograph|노광|포토마스크|레티클|reticle|'
     r'포토레지스트|photoresist|극자외선', re.I)
 THRESHOLD = 3
@@ -144,8 +151,8 @@ SENT_CUT = 180     # 문장을 자르는 길이
 WINDOW = 2         # 리소 신호를 찾는 앞뒤 줄 수
 
 
-def litho_docs(files=None):
-    """리소그래피를 말하는 문서만 고른다. 반환: [(경로, 본문)]"""
+def proc_docs(signal, threshold, files=None):
+    """그 공정을 말하는 문서만 고른다. 반환: ([(경로, 본문)], 전체 문서 수)"""
     if files is None:
         files = []
         for d in DIRS:
@@ -159,7 +166,7 @@ def litho_docs(files=None):
             t = io.open(p, encoding='utf-8').read()
         except Exception:
             continue
-        if len(LITHO_SIGNAL.findall(t)) >= THRESHOLD:
+        if len(signal.findall(t)) >= threshold:
             out.append((p, t))
     return out, len(files)
 
@@ -174,18 +181,21 @@ def _sentence(line, m):
     return ('…' if a else '') + s[a:a + SENT_CUT] + '…'
 
 
-def count(files=None):
-    """이름마다 등장 횟수·문서·영수증 문장을 센다. 반환: (hits, 리소 문서 수, 전체 문서 수)"""
-    docs, nall = litho_docs(files)
-    comp = [(n, re.compile(rx, re.I)) for n, rx in NAMES.items()]
+def count(names, signal, threshold, files=None):
+    """이름마다 등장 횟수·문서·영수증 문장을 센다. 반환: (hits, 그 공정 문서 수, 전체 수)
+
+    재는 법은 공정이 달라도 한 벌이다 — 문서 신호로 한 번, 줄 창으로 한 번 좁힌다.
+    """
+    docs, nall = proc_docs(signal, threshold, files)
+    comp = [(n, re.compile(rx, re.I)) for n, rx in names.items()]
     hits = collections.defaultdict(lambda: {'n': 0, 'docs': []})
     for p, t in docs:
         rel = os.path.relpath(p, ROOT).replace(os.sep, '/')
         lines = t.split('\n')
-        # 문서가 리소를 말해도 문장은 패키징·메모리 수율일 수 있다. 그래서 줄 단위로도
-        # 본다 — 그 줄이나 앞뒤 두 줄에 리소 신호가 있어야 센다.
-        near = [bool(LITHO_SIGNAL.search('\n'.join(lines[max(0, i - WINDOW):
-                                                         i + WINDOW + 1])))
+        # 문서가 그 공정을 말해도 문장은 딴 얘기일 수 있다(리소 문서 안의 패키징 수율).
+        # 그래서 줄 단위로도 본다 — 그 줄이나 앞뒤 두 줄에 신호가 있어야 센다.
+        near = [bool(signal.search('\n'.join(lines[max(0, i - WINDOW):
+                                                   i + WINDOW + 1])))
                 for i in range(len(lines))]
         for n, rx in comp:
             cnt, sents = 0, []
@@ -206,9 +216,12 @@ def count(files=None):
     return hits, len(docs), nall
 
 
-def scan():
-    """뷰마다 나무를 세워 돌려준다. 잎의 숫자는 뷰가 달라도 같은 것을 본다."""
-    hits, nlitho, nall = count()
+def scan_with(names, view_defs, signal, threshold):
+    """뷰마다 나무를 세워 돌려준다. 잎의 숫자는 뷰가 달라도 같은 것을 본다.
+
+    공정 모듈이 이름 사전과 나무만 넘기면 나머지는 이 한 벌이 한다.
+    """
+    hits, nlitho, nall = count(names, signal, threshold)
 
     def node(name):
         h = hits.get(name)
@@ -218,7 +231,7 @@ def scan():
                 'top': h['docs'][:6], 'kids': []}
 
     views = []
-    for v in VIEWS:
+    for v in view_defs:
         branches = []
         for bname, bnote, items in v['branches']:
             nodes = []
@@ -233,6 +246,10 @@ def scan():
         views.append({'key': v['key'], 'label': v['label'], 'hint': v['hint'],
                       'branches': branches})
     return {'views': views, 'nlitho': nlitho, 'nall': nall}
+
+
+def scan():
+    return scan_with(NAMES, VIEWS, SIGNAL, THRESHOLD)
 
 
 if __name__ == '__main__':
