@@ -177,9 +177,51 @@ TAIL = ('<p class="rep-note"><b>정리일 %s</b> · 바탕 <b>링크드인 537�
 FIGS = [(0, t, svg, '') for t, svg, _c in CAPTION.values()]
 
 
+# 이 절은 접힌 채로 선다 — 5,600자짜리 글이 펴진 채로 맨 위에 서면 그 아래 「무엇이 새로
+# 왔나」가 화면 밖으로 밀린다. 제목만 보이고 눌러야 펴진다(2026-09-08).
 SEC_HEAD = ('  <section id="li-flow-sec" data-c="all compute memory power model robot">\n'
-            '    <div class="sec-head"><h2>① 여섯 달을 줄기 하나로 — 링크드인 537건</h2>'
-            '</div>\n')
+            '    <details class="liflow"><summary>'
+            '<span class="lfh"><h2>① 여섯 달을 줄기 하나로 — 링크드인 537건</h2>'
+            '<span class="lfs">병목은 칩이 아니었다 — 절 일곱 · 도해 셋 · 5,600자</span>'
+            '</span></summary>\n')
+
+SEC_FOOT = '    </details>\n  </section>\n\n'
+
+# 앵커로 들어오면 펴 준다. ② 절 안내문이 이 절을 가리키는데, 접힌 채로 데려다 놓으면
+# 누른 사람은 제목 한 줄만 보고 아무 일도 안 일어난 줄 안다
+OPEN_JS = """  <script>
+  (function(){
+    var d = document.querySelector('#li-flow-sec details.liflow');
+    if(!d) return;
+    var open = function(){
+      var h = location.hash;
+      if(h === '#li-flow-sec' || (h.length > 1 && d.querySelector(h))) {
+        d.open = true;
+        var t = document.querySelector(h);
+        if(t) t.scrollIntoView();
+      }
+    };
+    window.addEventListener('hashchange', open);
+    open();
+  })();
+  </script>
+"""
+
+FOLD_CSS = """
+  /* 접힌 절 — 제목만 서고 눌러야 펴진다 */
+  #li-flow-sec details.liflow > summary{list-style:none; cursor:pointer;
+    display:flex; align-items:baseline; gap:10px; padding:4px 0;}
+  #li-flow-sec details.liflow > summary::-webkit-details-marker{display:none}
+  #li-flow-sec details.liflow > summary::before{content:"▸"; flex:none; color:var(--sub);
+    font-size:.8rem; line-height:1.6;}
+  #li-flow-sec details.liflow[open] > summary::before{content:"▾"}
+  #li-flow-sec details.liflow > summary:hover h2{color:var(--accent)}
+  #li-flow-sec .lfh{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  #li-flow-sec .lfh h2{margin:0}
+  #li-flow-sec .lfs{color:var(--sub); font-size:.78rem; font-weight:400;}
+  #li-flow-sec details.liflow[open] > summary{border-bottom:1px solid var(--line);
+    padding-bottom:10px; margin-bottom:14px;}
+"""
 
 S0, S1 = '  <!-- li-flow:start -->\n', '  <!-- li-flow:end -->\n'
 C0, C1 = '  /* li-flow:start */\n', '  /* li-flow:end */\n'
@@ -196,8 +238,8 @@ def _splice(txt, a, b, new, where):
 
 
 if __name__ == '__main__':
-    body = SEC_HEAD + body_html() + TAIL + '\n  </section>\n\n'
-    css = rt.CSS + FIG_CSS + LI_CSS + BRIDGE_CSS
+    body = SEC_HEAD + body_html() + TAIL + '\n' + SEC_FOOT + OPEN_JS
+    css = rt.CSS + FIG_CSS + LI_CSS + BRIDGE_CSS + FOLD_CSS
 
     ds = io.open(DASH, encoding='utf-8').read()
     ds = _splice(ds, C0, C1, css, '</style>\n<main>')
