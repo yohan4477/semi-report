@@ -19,7 +19,7 @@
 const PROTECTED = new Set(['/private', '/unified', '/semianalysis', '/usa-academy',
                            '/admin', '/und-premium', '/accountant', '/lineage',
                            '/leesunyeop', '/report', '/angles',
-                           '/map-litho', '/map-packaging']);
+                           '/map-litho', '/map-etch', '/map-packaging']);
 const COOKIE = 'ida_auth';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30일
 

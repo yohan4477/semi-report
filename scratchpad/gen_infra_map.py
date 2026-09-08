@@ -8,9 +8,11 @@ import io, os, re, sys, json, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import map_litho
+import map_etch
 import map_packaging
 
-PROCESSES = [map_litho, map_packaging]
+# 공정 순서대로 — 새 공정은 모듈을 쓰고 이 줄에 넣는다
+PROCESSES = [map_litho, map_etch, map_packaging]
 
 W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 250, 230
 X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 558
