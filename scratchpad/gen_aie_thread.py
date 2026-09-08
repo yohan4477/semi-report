@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import aie_thread_lib as lib          # noqa: E402
 import ui_bits                        # noqa: E402
 from card_lib import slug             # noqa: E402
+from gen_aie_dashboard import BOLD_RE, BOLD_TO   # noqa: E402
 
 OUT = os.path.join(ROOT, '대시보드', 'AI Engineer 주장 흐름.html')
 
@@ -81,6 +82,10 @@ def check_ui(html, rows):
         bad.append('거르개 둘(신규만·엇갈림만)이 없다')
     if 'ai-engineer/' not in html:
         bad.append('줄에서 카드로 가는 주소가 없다')
+    if '**' in html:
+        # 본문이 통째로 원문 인용이라 마크다운 표시가 그대로 새면 인용이 오염된다.
+        # 처음 나갈 때 126줄 중 35줄에 별표 148개가 실렸는데 어느 검사기도 안 물었다.
+        bad.append('원문의 굵게 표시(**)가 화면에 그대로 났다 — rich() 를 거르고 왔다')
     return bad
 
 
@@ -111,7 +116,7 @@ def build():
                 '<div class="tie%s"><b>%s</b> · %s %s 에 걸린다'
                 '<span class="q">%s</span><span class="q">%s</span></div>'
                 % (' cross' if rel['kind'] == '엇갈림' else '', rel['kind'],
-                   src['date'], esc(src['org']), esc(src['claim']), esc(r['claim'])))
+                   src['date'], esc(src['org']), rich(src['claim']), rich(r['claim'])))
         out.append(
             '<div class="row%s" data-kinds="%s" data-org="%s">'
             '<div class="mark">%s</div><div>'
@@ -120,7 +125,7 @@ def build():
             '<p class="claim"><a class="card" href="ai-engineer/%s.html">%s</a></p>'
             '%s</div></div>'
             % (faint, ' '.join(sorted(kinds)), esc(r['org']), mark, r['date'],
-               esc(r['org']), esc(r['speaker']), slug(title_of(r)), esc(r['claim']),
+               esc(r['org']), esc(r['speaker']), slug(title_of(r)), rich(r['claim']),
                ''.join(ties)))
 
     chips = ['<button class="chip" data-f="all" aria-pressed="true">전부</button>',
@@ -176,6 +181,18 @@ JS = '''<script>
 
 def esc(s):
     return (s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def rich(s):
+    """주장 인용 한 줄. 원문의 굵게 표시(**…**)를 태그로 바꾼다.
+
+    이 장의 본문은 통째로 원문 인용이라 마크다운 표시가 그대로 나오면 넷 중 하나가
+    별표에 오염된다(126줄 중 35줄). 치환은 자매 조립기 gen_aie_dashboard 의
+    BOLD_RE/BOLD_TO 를 그대로 쓴다 — 꼴이 갈라지면 한쪽만 낡는다.
+
+    순서가 뒤집히면 안 된다. esc 가 먼저고 굵게가 나중이다. 반대로 하면 방금 넣은
+    <b> 가 &lt;b&gt; 로 이스케이프돼 태그 대신 글자로 난다."""
+    return BOLD_RE.sub(BOLD_TO, esc(s))
 
 
 _TITLES = {}
