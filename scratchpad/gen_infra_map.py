@@ -2,7 +2,7 @@
 # AI 인프라 지도 — 공정 가지 하나(리소그래피)를 마인드맵으로 세운다.
 # 재료는 scratchpad/litho_scan.py 가 원문 코퍼스에서 센 빈도. 손으로 값을 적지 않는다.
 # 산출: 대시보드/AI 인프라 지도.html
-import io, os, sys, json, html
+import io, os, sys, json, html, collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -117,9 +117,32 @@ svg.map{display:block;min-width:520px}
 .panel li{font-size:.82rem;color:var(--sub);word-break:break-all}
 .panel li b{color:var(--ink);font-weight:600}
 .panel li .where{opacity:.7;font-size:.75rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.chip{font:inherit;font-size:.78rem;cursor:pointer;border:1px solid var(--line);background:var(--card);
+ color:var(--sub);border-radius:999px;padding:4px 11px}
+.chip .cnt{opacity:.6;font-size:.72rem;margin-left:3px}
+.chip:hover{border-color:var(--accent);color:var(--ink)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.on .cnt{opacity:.85}
+.mapwrap.off{display:none}
 .notes{font-size:.8rem;color:var(--sub)}
 .notes b{color:var(--ink)}
 """
+
+
+def filtered(data, kind):
+    """갈래 하나만 남긴 가지 묶음. 잎이 없어진 가지는 통째로 뺀다."""
+    if kind == 'all':
+        return data
+    out = {'nfile': data['nfile'], 'branches': []}
+    for b in data['branches']:
+        nodes = [nd for nd in b['nodes'] if nd['kind'] == kind]
+        if nodes:
+            out['branches'].append({'name': b['name'], 'nodes': nodes})
+    return out
+
+
+CHIPS = [('all', '전체'), ('tech', '기술'), ('co', '회사'), ('idx', '지표·제도')]
 
 
 def build():
@@ -128,9 +151,22 @@ def build():
     for b in data['branches']:
         for nd in b['nodes']:
             idx[nd['name']] = {'n': nd['n'], 'ndoc': nd['ndoc'], 'top': nd['top']}
+    counts = collections.Counter(nd['kind'] for b in data['branches']
+                                 for nd in b['nodes'])
+    chips = '\n'.join(
+        '<button class="chip%s" data-kind="%s">%s <span class="cnt">%d</span></button>'
+        % (' on' if k == 'all' else '', k, html.escape(lab),
+           sum(counts.values()) if k == 'all' else counts.get(k, 0))
+        for k, lab in CHIPS)
+    maps = '\n'.join(
+        '<div class="mapwrap%s" data-kind="%s">%s</div>'
+        % ('' if k == 'all' else ' off', k, svg(filtered(data, k)))
+        for k, _lab in CHIPS)
     notes = '\n'.join(
-        '<div><b>%s</b> — %s</div>' % (html.escape(b['name']),
-                                       html.escape(BRANCH_NOTE.get(b['name'], '')))
+        '<div data-branch="%s" data-kinds="%s"><b>%s</b> — %s</div>'
+        % (html.escape(b['name'], quote=True),
+           ' '.join(sorted({nd['kind'] for nd in b['nodes']})),
+           html.escape(b['name']), html.escape(BRANCH_NOTE.get(b['name'], '')))
         for b in data['branches'])
     doc = """<!doctype html>
 <html lang="ko">
@@ -146,6 +182,7 @@ def build():
 <h1>AI 인프라 지도 — 리소그래피</h1>
 <p class="lead">원문 %d편에서 이름을 세어 세운 가지다. 잎을 누르면 그 이름이 가장 많이 나온 원문이 아래에 선다.
 숫자는 우리 코퍼스에 몇 번, 몇 편에 나왔는지이지 업계 비중이 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
+<div class="chips" role="group" aria-label="갈래 고르기">%s</div>
 <div class="box scroll">%s</div>
 <div class="box panel" id="panel"><h2>잎을 고르세요</h2><p class="hint">이름 하나를 누르면 그 이름이 나온 원문 목록이 여기 뜬다.</p></div>
 <div class="box notes">%s</div>
@@ -156,8 +193,9 @@ var panel = document.getElementById('panel');
 function show(name){
   var d = IDX[name];
   document.querySelectorAll('.leaf').forEach(function(g){ g.classList.remove('on'); });
-  var g = document.querySelector('.leaf[data-node="' + name.replace(/"/g,'&quot;') + '"]');
-  if (g) g.classList.add('on');
+  document.querySelectorAll('.leaf').forEach(function(g){
+    if (g.getAttribute('data-node') === name) g.classList.add('on');
+  });
   if (!d || !d.n){
     panel.innerHTML = '<h2>' + name + '</h2><p class="hint">우리 원문에 아직 없는 이름이다.</p>';
     return;
@@ -178,10 +216,23 @@ document.querySelectorAll('.leaf').forEach(function(g){
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(g.getAttribute('data-node')); }
   });
 });
+document.querySelectorAll('.chip').forEach(function(c){
+  c.addEventListener('click', function(){
+    var k = c.getAttribute('data-kind');
+    document.querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x === c); });
+    document.querySelectorAll('.mapwrap').forEach(function(w){
+      w.classList.toggle('off', w.getAttribute('data-kind') !== k);
+    });
+    document.querySelectorAll('.notes [data-branch]').forEach(function(d){
+      var ks = d.getAttribute('data-kinds').split(' ');
+      d.hidden = (k !== 'all' && ks.indexOf(k) < 0);
+    });
+  });
+});
 </script>
 </body>
 </html>
-""" % (CSS, data['nfile'], svg(data), notes,
+""" % (CSS, data['nfile'], chips, maps, notes,
        json.dumps(idx, ensure_ascii=False))
     io.open(OUT, 'w', encoding='utf-8').write(doc)
     print('wrote', OUT, len(doc), 'bytes')

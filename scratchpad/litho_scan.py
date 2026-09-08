@@ -55,6 +55,24 @@ TREE = [
 ]
 
 
+# 잎의 갈래 — 기술(무엇을 하는가) · 회사(누가 만드나) · 지표(얼마나 맞았나, 누가 못 사나).
+# 지도 위 칩 줄이 이 갈래로 잎을 거른다.
+KIND = {
+    'EUV': 'tech', 'High-NA EUV': 'tech', 'DUV': 'tech', 'ArF 이머전': 'tech',
+    'KrF': 'tech', '멀티패터닝': 'tech', '나노임프린트': 'tech',
+    'ASML': 'co', 'Canon': 'co', 'Nikon': 'co', 'SMEE': 'co',
+    '도쿄일렉트론': 'co', 'KLA': 'co',
+    'Cymer': 'co', 'Trumpf': 'co', 'Zeiss': 'co', 'Ushio': 'co',
+    '주석 플라스마 광원': 'tech',
+    '포토레지스트': 'tech', '메탈옥사이드 레지스트': 'tech',
+    'JSR': 'co', '도쿄오카(TOK)': 'co', '신에쓰': 'co', 'SUMCO': 'co',
+    '포토마스크': 'tech', '블랭크마스크': 'tech', '펠리클': 'tech',
+    '오버레이': 'idx', '수율': 'idx', '스루풋': 'idx', '패터닝 비용': 'idx',
+    '수출 통제': 'idx',
+}
+KIND_LABEL = {'tech': '기술', 'co': '회사', 'idx': '지표·제도'}
+
+
 def scan():
     files = []
     for d in DIRS:
@@ -81,12 +99,13 @@ def scan():
         nodes = []
         for n, _rx in ns:
             h = hits.get(n)
+            k = KIND.get(n, 'tech')
             if not h:
-                nodes.append({'name': n, 'n': 0, 'ndoc': 0, 'top': []})
+                nodes.append({'name': n, 'n': 0, 'ndoc': 0, 'top': [], 'kind': k})
                 continue
             h['docs'].sort(key=lambda x: -x[1])
             nodes.append({'name': n, 'n': h['n'], 'ndoc': len(h['docs']),
-                          'top': h['docs'][:6]})
+                          'top': h['docs'][:6], 'kind': k})
         out['branches'].append({'name': br, 'nodes': nodes})
     return out
 
@@ -98,5 +117,6 @@ if __name__ == '__main__':
     for b in out['branches']:
         print('#', b['name'])
         for nd in b['nodes']:
-            print('  %-20s n=%-5d docs=%d' % (nd['name'], nd['n'], nd['ndoc']))
+            print('  %-20s %-4s n=%-5d docs=%d'
+                  % (nd['name'], KIND_LABEL[nd['kind']], nd['n'], nd['ndoc']))
     print('files', out['nfile'])
