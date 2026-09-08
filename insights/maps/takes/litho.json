@@ -1,1 +1,328 @@
-{}
+{
+ "EUV": {
+  "take": "파장이 365나노에서 13.5나노로 오는 사이 장비 한 대가 4억 달러가 됐다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:11"
+  ],
+  "asof": "2026-05"
+ },
+ "High-NA EUV": {
+  "take": "인텔이 4억 달러짜리로 팬서레이크를 찍는다 — ASML은 전망을 두 번 올렸다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-15--daily-update-july-15th-2026.md:12",
+   "content/semi_doped/clips/daily/2026-07-15--daily-update-july-15th-2026.md:48"
+  ],
+  "asof": "2026-07"
+ },
+ "Hyper-NA": {
+  "take": "장비값이 6억~8억 달러라는 소문 — ASML은 2030년대 후반을 본다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:57",
+   "content/semi_doped/clips/daily/2026-07-01--daily-update-july-1st-2026.md:38"
+  ],
+  "asof": "2026-07"
+ },
+ "EUV 다중 노광": {
+  "take": "low-NA 는 SADP 로 피치를 갈라 단일 노광 한계를 넘는다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:57"
+  ],
+  "asof": "2025"
+ },
+ "DUV": {
+  "take": "SMIC 는 EUV 없이 네 번 겹쳐 찍어 밀도를 만든다",
+  "cite": [
+   "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md:51"
+  ],
+  "asof": "2026-06"
+ },
+ "ArF 이머전": {
+  "take": "중국이 국산 이머전 DUV 양산을 알리자 한국 증시가 서킷브레이커를 맞았다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-28--daily-update-july-28th-2026.md:12"
+  ],
+  "asof": "2026-07"
+ },
+ "KrF": {
+  "take": "248나노 — i-line 365나노와 ArF 193나노 사이 세대다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:30"
+  ],
+  "asof": "2026-05"
+ },
+ "레일리 식": {
+  "take": "최소 선폭은 파장에 비례하고 NA 에 반비례한다 — K1 은 설계로 줄인다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:29"
+  ],
+  "asof": "2026-05"
+ },
+ "멀티패터닝": {
+  "take": "TSMC 23나노 M0 도 EUV 에 멀티패터닝과 컷 마스크를 겹쳐 만든다",
+  "cite": [
+   "input/clippings/How to Kill 2 Monopolies with 1 Tool.md:91"
+  ],
+  "asof": "2025"
+ },
+ "패턴 셰이핑": {
+  "take": "인텔 18A 의 32나노 M0 는 단일 패터닝에 이것을 얹는다",
+  "cite": [
+   "input/clippings/How to Kill 2 Monopolies with 1 Tool.md:91"
+  ],
+  "asof": "2025"
+ },
+ "DSA(자기조립 패터닝)": {
+  "take": "패턴 셰이핑과 함께 EUV 사용량을 줄이는 보완책으로 꼽힌다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:195"
+  ],
+  "asof": "2025"
+ },
+ "나노임프린트": {
+  "take": "「EUV 를 대체한다는 말을 그만하라」가 원문 제목이다",
+  "cite": [
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:2"
+  ],
+  "asof": "2025"
+ },
+ "주석 플라스마 광원": {
+  "take": "지름 50마이크론 주석 방울을 두 번 때려 13.5나노 빛을 낸다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:38"
+  ],
+  "asof": "2026-05"
+ },
+ "광원 출력": {
+  "take": "출력이 오를수록 펠리클이 받는 열이 문제가 된다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:175"
+  ],
+  "asof": "2025"
+ },
+ "거울·반사광학": {
+  "take": "초점까지 거울 열세 개를 지난다",
+  "cite": [
+   "content/semi_doped/raw/2026-05-22-litho-masterclass.md:186"
+  ],
+  "asof": "2026-05"
+ },
+ "아나모픽 광학": {
+  "take": "NA 를 0.33에서 0.55로 올리면 한 번에 절반 면적만 찍는다",
+  "cite": [
+   "content/semi_doped/2026-05-22-litho-masterclass.md:41"
+  ],
+  "asof": "2026-05"
+ },
+ "진공": {
+  "take": "진공과 상압 사이를 오가는 것이 펠리클에 부담을 준다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:171"
+  ],
+  "asof": "2025"
+ },
+ "포토마스크": {
+  "take": "레티클 858제곱밀리 — 다이를 무한정 키우지 못하는 이유다",
+  "cite": [
+   "content/semi_doped/2026-06-19-advanced-packaging.md:11"
+  ],
+  "asof": "2026-06"
+ },
+ "6x12 마스크": {
+  "take": "ASML 의 공통 플랫폼 전략과 부딪혀 방향을 못 튼다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:109"
+  ],
+  "asof": "2025"
+ },
+ "펠리클": {
+  "take": "어웨썸레이가 EUV 막을 앞당기려 시리즈B 브릿지를 받았다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-12--daily-update-august-12th-2026.md:143"
+  ],
+  "asof": "2026-08"
+ },
+ "포토레지스트": {
+  "take": "신에쓰·TOK·JSR 폴리머를 PGMEA 에 섞어 만든다",
+  "cite": [
+   "content/linkedin/[2605] 링크드인 게시물.md:1121"
+  ],
+  "asof": "2026-05"
+ },
+ "메탈옥사이드 레지스트": {
+  "take": "식각 선택비가 좋아 하드마스크로 패턴이 잘 넘어간다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:131"
+  ],
+  "asof": "2025"
+ },
+ "CAR(화학증폭형) 레지스트": {
+  "take": "성숙했지만 해상도·거칠기·감도에서 MOR 에 밀린다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:123"
+  ],
+  "asof": "2025"
+ },
+ "드라이 레지스트": {
+  "take": "램은 이 방식으로 크리티컬 레이어를 노리지만 젖은 도포가 아직 싸다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:139",
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:143"
+  ],
+  "asof": "2025"
+ },
+ "레지스트 두께": {
+  "take": "초점심도보다 얇아야 레지스트 전 높이에 상이 맺힌다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:131"
+  ],
+  "asof": "2025"
+ },
+ "드라이 현상": {
+  "take": "장비 둘을 새로 사야 하는데 이점이 적어 칩메이커가 안 바꾼다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:149"
+  ],
+  "asof": "2025"
+ },
+ "ASML": {
+  "take": "2026년 2분기 매출 €9.3B, 올해 전망을 두 번째로 올렸다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-15--daily-update-july-15th-2026.md:50"
+  ],
+  "asof": "2026-07"
+ },
+ "Zeiss": {
+  "take": "이 거울을 만드는 곳은 여기뿐이라 스타트업에는 안 판다",
+  "cite": [
+   "content/semi_doped/raw/2026-05-22-litho-masterclass.md:234"
+  ],
+  "asof": "2026-05"
+ },
+ "Canon": {
+  "take": "2014년 MII 를 사서 EUV 대안 자리에 섰다",
+  "cite": [
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:27"
+  ],
+  "asof": "2025"
+ },
+ "SMEE": {
+  "take": "상하이에서 이머전 DUV 를 늘리지만 ASML 보다 네 세대 뒤다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-07-31--daily-update-july-31st-2026.md:87"
+  ],
+  "asof": "2026-07"
+ },
+ "도쿄일렉트론": {
+  "take": "인도 상무장관을 만나 신흥 반도체 생태계 투자를 논의했다",
+  "cite": [
+   "content/semi_doped/clips/daily/2026-08-25--daily-update-august-25th-2026.md:126"
+  ],
+  "asof": "2026-08"
+ },
+ "KLA": {
+  "take": "공장을 밖으로 옮기고도 일부는 미국에서 만들어 관세를 맞는다",
+  "cite": [
+   "input/clippings/Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md:510"
+  ],
+  "asof": "2025"
+ },
+ "Ushio": {
+  "take": "510×515mm 패널을 이어붙임 없이 16회 노광으로 1.5µm 까지 그린다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md:747"
+  ],
+  "asof": "2026-07"
+ },
+ "JSR": {
+  "take": "PGMEA 에 이 회사 폴리머를 섞어야 감광액이 된다",
+  "cite": [
+   "content/linkedin/[2605] 링크드인 게시물.md:1125"
+  ],
+  "asof": "2026-05"
+ },
+ "신에쓰": {
+  "take": "롯데케미칼 프로필렌이 PGMEA 가 되고 거기 이 폴리머가 섞인다",
+  "cite": [
+   "content/linkedin/[2605] 링크드인 게시물.md:1121"
+  ],
+  "asof": "2026-05"
+ },
+ "오버레이": {
+  "take": "ASML 최신 EUV 는 0.9나노, Substrate 툴은 1.6나노다",
+  "cite": [
+   "input/clippings/How to Kill 2 Monopolies with 1 Tool.md:60"
+  ],
+  "asof": "2025"
+ },
+ "가장자리 어긋남(EPE)": {
+  "take": "2나노 노드 예산이 한 자릿수 나노 — 노광·마스크·CD·식각이 다 든다",
+  "cite": [
+   "input/clippings/How to Kill 2 Monopolies with 1 Tool.md:129"
+  ],
+  "asof": "2025"
+ },
+ "수율": {
+  "take": "CXMT HBM 수율은 10~20% — 열 개 만들면 여덟아홉을 버린다",
+  "cite": [
+   "content/understanding/미국주식 사관학교/[260719] CXMT는 딥시크와 다르다 - 수요 충격이 아니라 공급 충격이다.md:45"
+  ],
+  "asof": "2026-07"
+ },
+ "LER(선폭 거칠기)": {
+  "take": "8나노 라인·16나노 피치에서 초점심도가 50% 가까이 좋아졌다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:161"
+  ],
+  "asof": "2025"
+ },
+ "확률적 결함": {
+  "take": "13.5나노 광자는 92eV — 같은 노광량이면 광자 수가 줄어 노이즈가 커진다",
+  "cite": [
+   "input/clippings/How to Kill 2 Monopolies with 1 Tool.md:117"
+  ],
+  "asof": "2025"
+ },
+ "초점 심도": {
+  "take": "NA 제곱에 반비례해 줄어 하이NA 는 아주 얕다",
+  "cite": [
+   "input/clippings/High-NA is Here (for R&D), EUV Cost, Pattern Shaping Gaining Share, 6x12 Mask, Metal Oxide & Dry Resist, Hyper-NA.md:129"
+  ],
+  "asof": "2025"
+ },
+ "스루풋": {
+  "take": "ASML 은 DUV 330·EUV 220wph, 캐논 NIL 은 셀 하나에 25wph 다",
+  "cite": [
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:101",
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:103"
+  ],
+  "asof": "2025"
+ },
+ "EUV 레이어 수": {
+  "take": "메모리 3사가 신규 공정마다 레이어를 늘린다",
+  "cite": [
+   "content/newsletter/ai_infra/memory/[260207] 메모리 마니아 - 40년 만의 공급 부족이 부르는 메모리 붐.md:622"
+  ],
+  "asof": "2026-02"
+ },
+ "패터닝 비용": {
+  "take": "NIL 장비값은 EUV 의 10분의 1, 웨이퍼당 비용은 4분의 1이다",
+  "cite": [
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:113"
+  ],
+  "asof": "2025"
+ },
+ "웨이퍼당 비용": {
+  "take": "웨이퍼 스타트가 막혀 팹을 더 지으면 웨이퍼당 비용이 오른다",
+  "cite": [
+   "content/semi_doped/raw/2026-05-22-litho-masterclass.md:82"
+  ],
+  "asof": "2026-05"
+ },
+ "수출 통제": {
+  "take": "캐논 NIL 도 오버레이 성능 탓에 미국 통제 목록에 든다",
+  "cite": [
+   "input/clippings/Nanoimprint Lithography Stop Saying It Will Replace EUV.md:185"
+  ],
+  "asof": "2025"
+ }
+}
