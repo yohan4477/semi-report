@@ -38,6 +38,12 @@ eq('id 중복', any('id 중복' in m for m in lib.validate(rows + rows[:1])), Tr
 bad = [dict(rows[0], talk='없는-발표')] + rows[1:]
 eq('원문 없음', any('원문 없음' in m for m in lib.validate(bad)), True)
 
+# 8. claim 이 그 줄에 없으면 잡는다
+import check_aie_thread as chk
+eq('씨앗 인용 통과', chk.cite_fails(rows), [])
+bad = [dict(rows[0], claim='이 문장은 원문에 없다')] + rows[1:]
+eq('인용 어긋남', len(chk.cite_fails(bad)), 1)
+
 print('FAIL %d' % len(fails))
 for f in fails:
     print(' ', f)
