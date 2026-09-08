@@ -12,7 +12,9 @@ OUT = os.path.join(ROOT, '대시보드', 'AI 인프라 지도.html')
 
 # 가지마다 한 줄 설명 — 그 가지가 무엇을 묶는지. 값이 아니라 이름이다.
 BRANCH_NOTE = {
-    '노광 방식': '빛을 어떻게 쬐어 회로를 새기나',
+    '빛으로 새긴다': '파장이 짧을수록 가는 선을 새긴다 — 마디 안에 그 갈래가 든다',
+    '해상도를 늘린다': '같은 빛으로 더 가늘게 — 여러 번 나눠 찍는다',
+    '빛을 안 쓴다': '빛 대신 틀을 찍어 누른다',
     '장비사': '노광기를 만드는 곳',
     '광원·광학': '빛을 만들고 모으는 부품',
     '소재': '웨이퍼에 바르고 깎이는 것',
@@ -20,26 +22,53 @@ BRANCH_NOTE = {
     '계측·수율·통제': '얼마나 맞았나, 몇 장 나왔나, 누가 못 사나',
 }
 
-W_ROOT, W_BR, W_LEAF = 96, 128, 300
-X_ROOT, X_BR, X_LEAF = 8, 132, 292
+W_ROOT, W_BR, W_MID, W_LEAF = 96, 128, 140, 260
+X_ROOT, X_BR, X_MID, X_LEAF = 8, 132, 292, 452
 ROW, GAP = 30, 22          # 잎 한 줄 높이, 가지 사이 여백
 PAD_TOP = 16
 
 
 def layout(branches):
-    """가지·잎의 y 좌표를 잡는다. 반환: (rows, height)"""
+    """가지·마디·잎의 y 좌표를 잡는다. 자식을 거느린 마디는 자식들 한가운데 선다."""
     y = PAD_TOP
     rows = []
     for b in branches:
         y0 = y
-        leaves = []
+        mids = []
         for nd in b['nodes']:
-            leaves.append((nd, y + ROW / 2))
-            y += ROW
-        rows.append({'name': b['name'], 'y0': y0, 'y1': y, 'leaves': leaves,
-                     'cy': (y0 + y) / 2})
+            kids = nd.get('kids') or []
+            if kids:
+                ky0 = y
+                kid_rows = []
+                for kd in kids:
+                    kid_rows.append((kd, y + ROW / 2))
+                    y += ROW
+                mids.append({'node': nd, 'cy': (ky0 + y) / 2, 'kids': kid_rows})
+            else:
+                mids.append({'node': nd, 'cy': y + ROW / 2, 'kids': []})
+                y += ROW
+        rows.append({'name': b['name'], 'mids': mids, 'cy': (y0 + y) / 2})
         y += GAP
     return rows, y + PAD_TOP
+
+
+def curve(x1, y1, x2, y2, dim=''):
+    return ('<path d="M%.1f %.1f C%.1f %.1f, %.1f %.1f, %.1f %.1f" class="link%s"/>'
+            % (x1, y1, x1 + 16, y1, x2 - 16, y2, x2, y2, dim))
+
+
+def leaf_box(nd, x, y, w):
+    """잎 상자 하나 — 이름 왼쪽, 횟수 오른쪽."""
+    dim = ' dim' if nd['n'] == 0 else ''
+    cnt = ('%d회 · %d편' % (nd['n'], nd['ndoc'])) if nd['n'] else '원문 없음'
+    return ('<g class="leaf%s" data-node="%s" tabindex="0" role="button">'
+            '<rect x="%d" y="%.1f" width="%d" height="24" rx="6" class="n-leaf"/>'
+            '<text x="%d" y="%.1f" class="t-leaf">%s</text>'
+            '<text x="%d" y="%.1f" class="t-cnt">%s</text></g>'
+            % (dim, html.escape(nd['name'], quote=True),
+               x, y - 12, w,
+               x + 10, y + 4.5, html.escape(nd['name']),
+               x + w - 10, y + 4.5, cnt))
 
 
 def svg(data):
@@ -56,30 +85,25 @@ def svg(data):
                % (X_ROOT + W_ROOT / 2, root_y + 5))
     for r in rows:
         # 루트 -> 가지
-        out.append('<path d="M%d %.1f C%d %.1f, %d %.1f, %d %.1f" class="link"/>'
-                   % (X_ROOT + W_ROOT, root_y, X_ROOT + W_ROOT + 18, root_y,
-                      X_BR - 18, r['cy'], X_BR, r['cy']))
+        out.append(curve(X_ROOT + W_ROOT, root_y, X_BR, r['cy']))
         out.append('<rect x="%d" y="%.1f" width="%d" height="30" rx="7" class="n-br"/>'
                    % (X_BR, r['cy'] - 15, W_BR))
         out.append('<text x="%.1f" y="%.1f" class="t-br">%s</text>'
                    % (X_BR + W_BR / 2, r['cy'] + 4.5, html.escape(r['name'])))
-        for nd, cy in r['leaves']:
-            dim = ' dim' if nd['n'] == 0 else ''
-            out.append('<path d="M%d %.1f C%d %.1f, %d %.1f, %d %.1f" class="link%s"/>'
-                       % (X_BR + W_BR, r['cy'], X_BR + W_BR + 16, r['cy'],
-                          X_LEAF - 16, cy, X_LEAF, cy, dim))
-            gid = 'nd-' + str(abs(hash(nd['name'])) % 10**8)
-            out.append('<g class="leaf%s" data-node="%s" tabindex="0" role="button">'
-                       % (dim, html.escape(nd['name'], quote=True)))
-            out.append('<rect x="%d" y="%.1f" width="%d" height="24" rx="6" class="n-leaf"/>'
-                       % (X_LEAF, cy - 12, W_LEAF))
-            out.append('<text x="%d" y="%.1f" class="t-leaf">%s</text>'
-                       % (X_LEAF + 10, cy + 4.5, html.escape(nd['name'])))
-            cnt = ('%d회 · %d편' % (nd['n'], nd['ndoc'])) if nd['n'] else '원문 없음'
-            out.append('<text x="%d" y="%.1f" class="t-cnt">%s</text>'
-                       % (X_LEAF + W_LEAF - 10, cy + 4.5, cnt))
-            out.append('</g>')
-            del gid
+        for m in r['mids']:
+            nd, cy = m['node'], m['cy']
+            if not m['kids']:
+                # 자식이 없는 마디는 잎 칸까지 바로 뻗는다
+                out.append(curve(X_BR + W_BR, r['cy'], X_LEAF, cy,
+                                 ' dim' if nd['n'] == 0 else ''))
+                out.append(leaf_box(nd, X_LEAF, cy, W_LEAF))
+                continue
+            out.append(curve(X_BR + W_BR, r['cy'], X_MID, cy))
+            out.append(leaf_box(nd, X_MID, cy, W_MID))
+            for kd, ky in m['kids']:
+                out.append(curve(X_MID + W_MID, cy, X_LEAF, ky,
+                                 ' dim' if kd['n'] == 0 else ''))
+                out.append(leaf_box(kd, X_LEAF, ky, W_LEAF))
     out.append('</svg>')
     return '\n'.join(out)
 
@@ -141,6 +165,8 @@ svg.map{display:block;min-width:520px}
  background:none;border:0;border-top:1px solid var(--line);padding:10px 2px;cursor:pointer;text-align:left}
 .tl-name{flex:1}
 .tl-n{font-size:.74rem;color:var(--sub);white-space:nowrap}
+.tl.sub{padding-left:16px;font-size:.82rem}
+.tl.sub .tl-name::before{content:"└ ";color:var(--sub)}
 .tl.dim{opacity:.45;cursor:default}
 .tl.on{color:var(--accent);font-weight:700}
 .notes{font-size:.8rem;color:var(--sub)}
@@ -164,10 +190,25 @@ def filtered(data, kind):
         return data
     out = {'nfile': data['nfile'], 'branches': []}
     for b in data['branches']:
-        nodes = [nd for nd in b['nodes'] if nd['kind'] == kind]
+        nodes = []
+        for nd in b['nodes']:
+            kids = [kd for kd in nd.get('kids', []) if kd['kind'] == kind]
+            if nd['kind'] == kind or kids:
+                cp = dict(nd)
+                cp['kids'] = kids
+                nodes.append(cp)
         if nodes:
             out['branches'].append({'name': b['name'], 'nodes': nodes})
     return out
+
+
+def walk(data):
+    """가지의 마디와 자식을 한 줄로 편다 — 세거나 목록으로 낼 때 쓴다."""
+    for b in data['branches']:
+        for nd in b['nodes']:
+            yield nd
+            for kd in nd.get('kids', []):
+                yield kd
 
 
 CHIPS = [('all', '전체'), ('tech', '기술'), ('co', '회사'), ('idx', '지표·제도')]
@@ -181,18 +222,26 @@ def tree_list(data):
         out.append('<button class="tb-head" aria-expanded="%s"><span class="tb-name">%s</span>'
                    '<span class="tb-n">%d</span><span class="tb-caret">▾</span></button>'
                    % ('true' if i == 0 else 'false',
-                      html.escape(b['name']), len(b['nodes'])))
+                      html.escape(b['name']),
+                      sum(1 + len(nd.get('kids', [])) for nd in b['nodes'])))
         out.append('<div class="tb-body">')
         out.append('<div class="tb-note">%s</div>'
                    % html.escape(BRANCH_NOTE.get(b['name'], '')))
-        for nd in b['nodes']:
+
+        def row(nd, depth):
             cnt = ('%d회 · %d편' % (nd['n'], nd['ndoc'])) if nd['n'] else '원문 없음'
-            out.append('<button class="tl%s" data-node="%s"%s>'
-                       '<span class="tl-name">%s</span><span class="tl-n">%s</span></button>'
-                       % (' dim' if not nd['n'] else '',
-                          html.escape(nd['name'], quote=True),
-                          ' disabled' if not nd['n'] else '',
-                          html.escape(nd['name']), cnt))
+            return ('<button class="tl%s%s" data-node="%s"%s>'
+                    '<span class="tl-name">%s</span><span class="tl-n">%s</span></button>'
+                    % (' dim' if not nd['n'] else '',
+                       ' sub' if depth else '',
+                       html.escape(nd['name'], quote=True),
+                       ' disabled' if not nd['n'] else '',
+                       html.escape(nd['name']), cnt))
+
+        for nd in b['nodes']:
+            out.append(row(nd, 0))
+            for kd in nd.get('kids', []):
+                out.append(row(kd, 1))
         out.append('</div></div>')
     return '\n'.join(out)
 
@@ -200,11 +249,9 @@ def tree_list(data):
 def build():
     data = litho_scan.scan()
     idx = {}
-    for b in data['branches']:
-        for nd in b['nodes']:
-            idx[nd['name']] = {'n': nd['n'], 'ndoc': nd['ndoc'], 'top': nd['top']}
-    counts = collections.Counter(nd['kind'] for b in data['branches']
-                                 for nd in b['nodes'])
+    for nd in walk(data):
+        idx[nd['name']] = {'n': nd['n'], 'ndoc': nd['ndoc'], 'top': nd['top']}
+    counts = collections.Counter(nd['kind'] for nd in walk(data))
     chips = '\n'.join(
         '<button class="chip%s" data-kind="%s">%s <span class="cnt">%d</span></button>'
         % (' on' if k == 'all' else '', k, html.escape(lab),
@@ -221,7 +268,9 @@ def build():
     notes = '\n'.join(
         '<div data-branch="%s" data-kinds="%s"><b>%s</b> — %s</div>'
         % (html.escape(b['name'], quote=True),
-           ' '.join(sorted({nd['kind'] for nd in b['nodes']})),
+           ' '.join(sorted({nd['kind'] for nd in b['nodes']}
+                           | {kd['kind'] for nd in b['nodes']
+                              for kd in nd.get('kids', [])})),
            html.escape(b['name']), html.escape(BRANCH_NOTE.get(b['name'], '')))
         for b in data['branches'])
     doc = """<!doctype html>

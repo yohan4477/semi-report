@@ -6,15 +6,24 @@ import io, json, os, re, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIRS = [os.path.join(ROOT, 'content'), os.path.join(ROOT, 'input', 'clippings')]
 
-# 가지 -> [(표시명, 정규식)]
+# 가지 -> [(표시명, 정규식)] 또는 [(표시명, 정규식, [(자식, 정규식), …])]
+# 마디도 자기 정규식으로 센다 — 자식 합이 아니다. EUV 342회 안에 High-NA 101회가
+# 이미 들어 있어 합쳐 세면 거짓 숫자가 된다.
 TREE = [
- ('노광 방식', [
-   ('EUV', r'EUV|극자외선'),
-   ('High-NA EUV', r'High[- ]?NA|하이\s?NA'),
-   ('DUV', r'\bDUV\b|심자외선'),
-   ('ArF 이머전', r'이머전|immersion|ArFi'),
-   ('KrF', r'\bKrF\b'),
+ ('빛으로 새긴다', [
+   ('EUV', r'EUV|극자외선', [
+     ('High-NA EUV', r'High[- ]?NA|하이\s?NA'),
+     ('EUV 다중 노광', r'EUV\s?더블|double\s?patterning'),
+   ]),
+   ('DUV', r'\bDUV\b|심자외선', [
+     ('ArF 이머전', r'이머전|immersion|ArFi'),
+     ('KrF', r'\bKrF\b'),
+   ]),
+ ]),
+ ('해상도를 늘린다', [
    ('멀티패터닝', r'멀티\s?패터닝|multi[- ]?patterning|SAQP|SADP|더블\s?패터닝'),
+ ]),
+ ('빛을 안 쓴다', [
    ('나노임프린트', r'나노임프린트|nanoimprint|\bNIL\b'),
  ]),
  ('장비사', [
@@ -60,6 +69,7 @@ TREE = [
 KIND = {
     'EUV': 'tech', 'High-NA EUV': 'tech', 'DUV': 'tech', 'ArF 이머전': 'tech',
     'KrF': 'tech', '멀티패터닝': 'tech', '나노임프린트': 'tech',
+    'EUV 다중 노광': 'tech',
     'ASML': 'co', 'Canon': 'co', 'Nikon': 'co', 'SMEE': 'co',
     '도쿄일렉트론': 'co', 'KLA': 'co',
     'Cymer': 'co', 'Trumpf': 'co', 'Zeiss': 'co', 'Ushio': 'co',
@@ -80,7 +90,13 @@ def scan():
             for f in fs:
                 if f.endswith('.md'):
                     files.append(os.path.join(root, f))
-    comp = [(br, [(n, re.compile(rx, re.I)) for n, rx in ns]) for br, ns in TREE]
+    # 마디와 그 자식을 한 벌로 편다 — 세는 자리에서는 층이 없다
+    flat = []
+    for _br, ns in TREE:
+        for item in ns:
+            flat.append((item[0], re.compile(item[1], re.I)))
+            for kid in (item[2] if len(item) > 2 else []):
+                flat.append((kid[0], re.compile(kid[1], re.I)))
     hits = collections.defaultdict(lambda: {'n': 0, 'docs': []})
     for p in files:
         try:
@@ -88,24 +104,28 @@ def scan():
         except Exception:
             continue
         rel = os.path.relpath(p, ROOT).replace(os.sep, '/')
-        for _br, ns in comp:
-            for n, rx in ns:
-                m = rx.findall(t)
-                if m:
-                    hits[n]['n'] += len(m)
-                    hits[n]['docs'].append((rel, len(m)))
+        for n, rx in flat:
+            m = rx.findall(t)
+            if m:
+                hits[n]['n'] += len(m)
+                hits[n]['docs'].append((rel, len(m)))
+
+    def node_of(name):
+        h = hits.get(name)
+        k = KIND.get(name, 'tech')
+        if not h:
+            return {'name': name, 'n': 0, 'ndoc': 0, 'top': [], 'kind': k, 'kids': []}
+        h['docs'].sort(key=lambda x: -x[1])
+        return {'name': name, 'n': h['n'], 'ndoc': len(h['docs']),
+                'top': h['docs'][:6], 'kind': k, 'kids': []}
+
     out = {'branches': [], 'nfile': len(files)}
     for br, ns in TREE:
         nodes = []
-        for n, _rx in ns:
-            h = hits.get(n)
-            k = KIND.get(n, 'tech')
-            if not h:
-                nodes.append({'name': n, 'n': 0, 'ndoc': 0, 'top': [], 'kind': k})
-                continue
-            h['docs'].sort(key=lambda x: -x[1])
-            nodes.append({'name': n, 'n': h['n'], 'ndoc': len(h['docs']),
-                          'top': h['docs'][:6], 'kind': k})
+        for item in ns:
+            nd = node_of(item[0])
+            nd['kids'] = [node_of(kid[0]) for kid in (item[2] if len(item) > 2 else [])]
+            nodes.append(nd)
         out['branches'].append({'name': br, 'nodes': nodes})
     return out
 
@@ -119,4 +139,7 @@ if __name__ == '__main__':
         for nd in b['nodes']:
             print('  %-20s %-4s n=%-5d docs=%d'
                   % (nd['name'], KIND_LABEL[nd['kind']], nd['n'], nd['ndoc']))
+            for kid in nd['kids']:
+                print('    └ %-16s %-4s n=%-5d docs=%d'
+                      % (kid['name'], KIND_LABEL[kid['kind']], kid['n'], kid['ndoc']))
     print('files', out['nfile'])
