@@ -365,13 +365,14 @@ def check_ui(doc, panes, procs, takes):
                         bad.append('U6 %s 0회인 「%s」가 목록에서 눌린다'
                                    % (proc.KEY, nd['name']))
 
-        # U8 판단은 그 공정 화면에 실제로 서 있다 — 파일에만 있고 화면에 없으면
-        # 「썼는데 아무도 못 읽는」 자리가 된다
+        # U8 판단은 그 공정 화면 안에 서 있다 — 한눈에 셋만 세우고 마는 것을 막는다.
+        # 파일에만 있고 공정 화면에 없으면 「썼는데 아무도 못 읽는」 자리가 된다
+        shelf = chr(10).join(pane['take'].values())
         for name, t in (takes.get(proc.KEY) or {}).items():
             if not t.get('take'):
                 continue
-            if html.escape(t['take']) not in doc:
-                bad.append('U8 %s 「%s」의 판단이 화면에 없다' % (proc.KEY, name))
+            if html.escape(t['take']) not in shelf:
+                bad.append('U8 %s 「%s」의 판단이 공정 화면에 없다' % (proc.KEY, name))
 
     # U7 자리가 어긋나지 않았나 — 인자 순서가 밀리면 <title> 이 CSS 를 먹고 스타일이
     # 통째로 사라진다. 눈으로만 보면 「검게 칠해진 상자」로 나타나 원인을 찾기 어렵다.
