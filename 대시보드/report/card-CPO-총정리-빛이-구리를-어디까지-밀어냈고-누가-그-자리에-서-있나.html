@@ -1,0 +1,860 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPO 총정리 — 빛이 구리를 어디까지 밀어냈고, 누가 그 자리에 서 있나 · 통합 보고서</title>
+<style>
+
+  /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
+  :root {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+      --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+      --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+      --good:#5ecb84; --good-soft:#173323;
+      --warn:#f0a44e; --warn-soft:#3a2c17;
+      --risk:#f87171; --risk-soft:#3a1a1a;
+      --shadow:none;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+    --ink:#1a2233; --ink-2:#5b6577; --ink-3:#8892a3; --line:#e3e7ee;
+    --accent:#2563eb; --accent-ink:#1e40af; --accent-soft:#eaf1fe;
+    --good:#16a34a; --good-soft:#e8f6ec;
+    --warn:#d97706; --warn-soft:#fdf1df;
+    --risk:#dc2626; --risk-soft:#fdeaea;
+    --shadow:0 1px 2px rgba(26,34,51,.05);
+  }
+  :root[data-theme="dark"] {
+    --paper:#12151c; --surface:#1a1f2a; --sunk:#242b38;
+    --ink:#e8ecf4; --ink-2:#9aa5b8; --ink-3:#7e8798; --line:#2a3140;
+    --accent:#7aa5f8; --accent-ink:#9ab8fa; --accent-soft:#1e2a44;
+    --good:#5ecb84; --good-soft:#173323;
+    --warn:#f0a44e; --warn-soft:#3a2c17;
+    --risk:#f87171; --risk-soft:#3a1a1a;
+    --shadow:none;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.64; margin:0; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:840px; margin:0 auto; }
+
+  /* ── header ── */
+  header { padding:52px 0 4px; }
+  .eyebrow {
+    font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1 {
+    font-size:clamp(30px,6vw,46px); font-weight:850; letter-spacing:-.035em;
+    line-height:1.04; margin:0 0 4px; text-wrap:balance;
+  }
+  h1::after {
+    content:""; display:block; width:52px; height:3px; background:var(--accent);
+    margin-top:16px; border-radius:2px;
+  }
+  .lede { color:var(--ink-2); font-size:15px; margin:16px 0 0; max-width:60ch; line-height:1.6; }
+  .meta-row {
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+    margin:22px 0 0; padding:14px 0 0; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;
+    letter-spacing:.01em;
+  }
+  .meta-row b { color:var(--ink-2); font-weight:700; }
+
+  /* ── non-corpus banner ── */
+  .noncorpus {
+    margin:20px 0 0; padding:14px 17px;
+    background:var(--sunk); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:4px; font-size:13px; color:var(--ink-2); line-height:1.62;
+  }
+  .noncorpus .nc-tag {
+    display:block; font-size:10.5px; font-weight:800; color:var(--warn);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .noncorpus .nc-tag::before { content:none; }
+  .noncorpus b { color:var(--ink); font-weight:700; }
+
+  /* ── sections (출연자 = 구조, 순서 아님) ── */
+  section { margin-top:56px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:5px; }
+  .sec-num {
+    font-size:11px; font-weight:800; color:var(--accent);
+    font-variant-numeric:tabular-nums; letter-spacing:.08em;
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    border-radius:4px; padding:2px 7px;
+  }
+  h2.sec-title { font-size:22px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .sec-sub { color:var(--ink-3); font-size:13px; margin:0 0 22px; letter-spacing:.01em; }
+
+  .uc-series { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3); margin:0 0 9px; }
+  .uc-series::before { content:"\25C6  "; color:var(--accent); }
+
+  /* ── cards ── */
+  .ucard {
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; padding:26px 26px 22px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .uc-topic {
+    display:inline-block; font-size:10.5px; font-weight:800; white-space:nowrap;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:0 0 3px; border-bottom:2px solid var(--accent);
+    color:var(--accent); margin-bottom:13px;
+  }
+  .uc-topic::before { content:none; }
+  .uc-topic.market { color:var(--warn); border-color:var(--warn); }
+
+  .ucard h2 {
+    font-size:23px; font-weight:850; letter-spacing:-.025em;
+    /* balance는 줄 길이를 고르게 맞추려고 오른쪽 자리를 남긴 채 줄을 바꾼다.
+       카드 제목은 폭을 끝까지 쓰는 게 낫다 — pretty는 마지막 한 글자만 방지한다 */
+    line-height:1.28; margin:0 0 10px; text-wrap:pretty; color:var(--ink);
+  }
+  .uc-meta {
+    display:flex; flex-wrap:wrap; gap:3px 8px; font-size:12px; color:var(--ink-3);
+    font-variant-numeric:tabular-nums; margin:0 0 18px; padding-bottom:16px;
+    border-bottom:1px solid var(--line); letter-spacing:.01em;
+  }
+  .uc-meta span:not(:last-child)::after { content:"·"; margin-left:8px; color:var(--line); }
+  .uc-meta b { color:var(--ink-2); font-weight:700; }
+
+  .uc-oneliner {
+    font-size:16.5px; color:var(--ink); font-weight:750; line-height:1.5;
+    margin:0 0 20px; padding-left:15px; border-left:3px solid var(--accent);
+    letter-spacing:-.01em;
+  }
+
+  .uc-points { margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .uc-points li { position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-2); line-height:1.58; }
+  .uc-points li::before {
+    content:""; position:absolute; left:1px; top:9px; width:7px; height:1.5px; background:var(--accent);
+  }
+  .uc-points li b { color:var(--ink); font-weight:700; }
+
+  .uc-label {
+    font-size:10.5px; font-weight:800; color:var(--ink-3);
+    letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px;
+  }
+
+  /* signature: 숫자 데이터 스트립 */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:22px;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  @media (max-width:480px) { .stat-grid { grid-template-columns:1fr; } }
+  .stat { padding:13px 14px 12px; border-bottom:1px solid var(--line); }
+  .stat:nth-child(odd) { border-right:1px solid var(--line); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom:none; }
+  .stat .s-val {
+    font-size:19px; font-weight:800; color:var(--accent-ink);
+    font-variant-numeric:tabular-nums; line-height:1.2; letter-spacing:-.02em;
+  }
+  .stat .s-label { font-size:11px; color:var(--ink-3); margin-top:4px; line-height:1.4; }
+
+  .uc-quote {
+    font-size:13px; color:var(--ink-2); font-style:italic;
+    background:var(--sunk); border-radius:6px; padding:11px 14px; margin:0 0 20px;
+  }
+
+  .uc-links { display:flex; flex-wrap:wrap; gap:9px; }
+  .uc-links a {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    text-decoration:none; letter-spacing:.01em;
+    color:var(--surface); background:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:8px 15px;
+  }
+  /* 카드 하나를 지목하는 주소를 집어 가는 버튼 — 링크 단추와 같은 줄에 선다 */
+  .uc-copy {
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:750;
+    letter-spacing:.01em; cursor:pointer; font-family:inherit;
+    color:var(--ink-3); background:transparent; border:1px dashed var(--line);
+    border-radius:6px; padding:8px 15px;
+  }
+  .uc-copy:hover { color:var(--accent); border-color:var(--accent); }
+  /* 섹션 하나를 지목하는 주소 — 섹션 머리 오른쪽 끝에 선다 */
+  .sec-copy {
+    margin-left:auto; font-size:11.5px; font-weight:750; letter-spacing:.01em;
+    cursor:pointer; font-family:inherit; color:var(--ink-3); background:transparent;
+    border:1px dashed var(--line); border-radius:6px; padding:5px 11px;
+  }
+  .sec-copy:hover { color:var(--accent); border-color:var(--accent); }
+  .uc-links a.secondary { color:var(--accent); background:transparent; border-color:var(--line); }
+  @media (prefers-reduced-motion: no-preference) {
+    .uc-links a { transition:transform .12s ease, opacity .15s ease; }
+    .uc-links a:hover { transform:translateY(-1px); opacity:.9; }
+  }
+
+  /* 같은 영상에서 나온 카드 — 한 편이 여러 장으로 갈릴 때 읽는 순서를 카드 안에서 잇는다 */
+  .uc-kin { margin:0 0 18px; }
+  .uc-kin .kin-g { border-left:2px solid var(--line); padding-left:13px; margin-bottom:12px; }
+  .uc-kin .kin-g:last-child { margin-bottom:0; }
+  .uc-kin .kin-src { font-size:11.5px; font-weight:750; color:var(--ink-3); margin:0 0 6px; }
+  .uc-kin ol { margin:0; padding-left:19px; }
+  .uc-kin li { font-size:12.5px; line-height:1.6; color:var(--ink-2); margin-bottom:4px; }
+  .uc-kin li:last-child { margin-bottom:0; }
+  .uc-kin li.is-here { color:var(--ink); font-weight:700; }
+  .uc-kin .kin-now { font-size:10.5px; font-weight:800; color:var(--ink-3); margin-left:6px; letter-spacing:.04em; }
+  .uc-kin a.kin-link { color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line); }
+  .uc-kin a.kin-link:hover { border-bottom-color:var(--accent); }
+
+  .side-note {
+    margin-top:0; font-size:12.5px; color:var(--ink-3);
+    background:var(--sunk); border-radius:6px; padding:12px 15px; line-height:1.6;
+  }
+
+  footer {
+    margin-top:60px; padding-top:18px; border-top:2px solid var(--ink);
+    font-size:12px; color:var(--ink-3); line-height:1.7;
+  }
+  /* 페이지 설명은 맨 밑에 선다. 첫 화면은 어느 장이든 섹션 타일이라 설명이 그 위에 서면
+     타일이 화면 밖으로 밀린다 — 다 읽고 나서 「이 페이지는 무엇인가」를 확인하는 자리다. */
+  footer .lede { font-size:13px; color:var(--ink-2); line-height:1.75; margin:0 0 16px; }
+  /* 명세 줄(정리일·수록 건수·소스)도 맨 밑이다. 푸터 안에서는 위 테두리를 뗀다 —
+     푸터 자체가 이미 굵은 선으로 본문과 갈라져 있어 선이 두 겹으로 겹친다. */
+  footer .meta-row { margin:0 0 14px; padding:0; border-top:0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ucard { transition:border-color .3s cubic-bezier(.32,.72,0,1), box-shadow .3s cubic-bezier(.32,.72,0,1); }
+    .ucard:hover { border-color:var(--ink-3); box-shadow:0 6px 22px rgba(26,34,51,.08); }
+  }
+
+  /* apple-design: 진입 리빌 · 프레스 피드백 · 접근성 */
+  body.anim .ucard { opacity:0; transform:translateY(14px); will-change:opacity, transform; }
+  body.anim .ucard.in {
+    opacity:1; transform:none;
+    transition:opacity .55s cubic-bezier(.32,.72,0,1), transform .55s cubic-bezier(.32,.72,0,1);
+  }
+  .uc-links a:active { transform:scale(.96); transition:transform 80ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    body.anim .ucard, body.anim .ucard.in { opacity:1; transform:none; transition:none; }
+    .ucard { transition:none; }
+  }
+  @media (prefers-contrast: more) {
+    .ucard, .stat, .noncorpus, .side-note, .uc-quote { border:1px solid var(--ink-3); }
+  }
+
+  /* ── 섹션 점프 내비 ── */
+  .sec-nav {
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:11px 0 10px; margin:0 0 6px;
+    background:var(--paper); border-bottom:1px solid var(--line);
+  }
+  .sec-nav a {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 14px; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--ink-2); font-size:12.5px; font-weight:750;
+    text-decoration:none; white-space:nowrap; transition:border-color .15s, color .15s;
+  }
+  .sec-nav a:hover { border-color:var(--accent); color:var(--accent); }
+  .sec-nav a.active { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:800; }
+  .sec-nav a b { font-size:10.5px; font-weight:800; color:var(--ink-3); }
+  .sec-nav a.active b { color:var(--accent); }
+  section[id] { scroll-margin-top:58px; }
+  @media (max-width:560px) {
+    .sec-nav { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:7px; }
+    .sec-nav a { font-size:12px; padding:6px 12px; }
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width:560px) {
+    /* 좁은 화면의 글 왼쪽 선은 하나다. 바깥 여백(14) + 카드 안쪽 여백(18) = 32px 에
+       모든 글이 맞도록, 카드 밖에 있는 것들은 그만큼 안으로 들여 쓴다 */
+    body { padding:0 14px 64px; }
+    .wrap { max-width:100%; }
+    /* 롤업 카드는 ucard와 같은 상자라 들여 쓰지 않는다 — 상자끼리 왼쪽 선이 맞아야 한다 */
+    header, footer, .sec-head, .sec-desc { padding-left:18px; padding-right:18px; }
+    header { padding:34px 18px 4px; }
+    h1 { letter-spacing:-.03em; }
+    .lede { font-size:14px; }
+    .meta-row { gap:5px 16px; margin-top:18px; }
+    section { margin-top:40px; }
+    h2.sec-title { font-size:20px; }
+    .ucard { padding:20px 18px 18px; border-radius:12px; margin-bottom:14px; }
+    .ucard h2 { font-size:20px; line-height:1.3; }
+    .uc-oneliner { font-size:15px; padding-left:12px; margin-bottom:16px; }
+    .uc-points li { font-size:13px; line-height:1.55; }
+    .stat .s-val { font-size:17px; }
+    .stat .s-label { font-size:10.5px; }
+    .uc-links { gap:8px; }
+    .uc-links a { padding:11px 14px; font-size:13px; flex:1 1 45%; justify-content:center; }
+    footer { margin-top:44px; }
+  }
+  @media (max-width:480px) {
+    .stat-grid { grid-template-columns:1fr; }
+    .stat:nth-child(odd) { border-right:none; }
+    .stat:nth-last-child(2):nth-child(odd) { border-bottom:1px solid var(--line); }
+    .stat:last-child { border-bottom:none; }
+  }
+
+  .xlink{display:inline-block;margin-top:12px;font-size:.82rem;font-weight:700;color:var(--accent);text-decoration:none}
+  .xlink:hover{text-decoration:underline}
+
+  .tbl-wrap{overflow-x:auto;margin:8px 0 4px;-webkit-overflow-scrolling:touch}
+  .uc-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:.86rem}
+  .uc-tbl th,.uc-tbl td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .uc-tbl th{font-size:.74rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;
+             border-bottom:1px solid var(--line)}
+  .uc-tbl td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  /* 파란 글씨는 링크로 읽힌다 — 진짜 티커 열에만 쓴다 */
+  .uc-tbl.tick td:nth-child(2){font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .uc-tbl td:nth-child(2){font-weight:700;color:var(--ink)}
+  .uc-tbl tr:last-child td{border-bottom:0}
+  /* 반론·충돌 — 한 편만 읽고 결론 내리지 않게, 같은 대시보드의 다른 편이나
+     SemiAnalysis 코퍼스와 어긋나는 지점을 카드 안에 박아 둔다 */
+  .clash{margin:14px 0 0;border-left:3px solid var(--warn,#c2831f);background:var(--warnbg,#fdf6e6);
+         border-radius:0 10px 10px 0;padding:11px 14px}
+  @media (prefers-color-scheme:dark){.clash{background:#2b2416;border-left-color:#d9a441}}
+  .clash .ch{font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;color:#9a6a12;margin:0 0 6px}
+  @media (prefers-color-scheme:dark){.clash .ch{color:#e0b256}}
+  .clash ul{margin:0;padding-left:17px}
+  .clash li{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:5px}
+  .clash li:last-child{margin-bottom:0}
+  .clash li b{color:var(--ink)}
+  .clash .who{display:inline-block;font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:999px;
+              background:rgba(154,106,18,.13);color:#9a6a12;margin-right:6px;vertical-align:1px;white-space:nowrap}
+  @media (prefers-color-scheme:dark){.clash .who{background:rgba(224,178,86,.16);color:#e0b256}}
+  /* 국내·해외 필터 — 카드에 data-scope가 있을 때만 생긴다.
+     목차(.sec-nav)가 이미 sticky라 그 위에 한 층 더 붙이고 목차를 아래로 민다 */
+  .scope-tabs{position:sticky;top:0;z-index:21;display:flex;gap:8px;flex-wrap:wrap;
+              padding:10px 0 9px;margin:0;background:var(--paper)}
+  /* 섹션 고르기 — 칩을 좌우로 늘어놓는 대신 눌러서 아래로 펼치는 목록 */
+  .sec-pick{position:sticky;top:0;z-index:20;background:var(--paper);padding:0 0 10px;
+            margin:0 0 6px;border-bottom:1px solid var(--line)}
+  .scope-tabs ~ .sec-pick{top:55px}
+  .sp-btn{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:800;
+          cursor:pointer;padding:9px 14px;border-radius:12px;border:1px solid var(--line);
+          background:var(--surface);color:var(--ink);text-align:left}
+  .sp-btn:hover{border-color:var(--ink-3)}
+  .sp-btn .sp-cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-btn .sp-caret{margin-left:auto;color:var(--ink-3);transition:transform .15s ease}
+  .sec-pick.open .sp-btn{border-color:var(--accent);color:var(--accent-ink)}
+  .sec-pick.open .sp-caret{transform:rotate(180deg)}
+  .sp-list{position:absolute;left:0;right:0;top:calc(100% - 4px);margin:0;padding:6px;list-style:none;
+           background:var(--surface);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(26,34,51,.13);max-height:60vh;overflow-y:auto;z-index:30}
+  .sp-list li{margin:0}
+  .sp-list button{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:13px;font-weight:700;
+                  cursor:pointer;padding:9px 12px;border:0;border-radius:9px;background:transparent;
+                  color:var(--ink-2);text-align:left}
+  .sp-list button:hover{background:var(--sunk);color:var(--ink)}
+  .sp-list button .cnt{margin-left:auto;font-weight:700;color:var(--ink-3)}
+  .sp-list button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink)}
+  .sp-sep{height:1px;background:var(--line);margin:5px 4px}
+  .scope-tabs button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:7px 15px;
+                     border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+  .scope-tabs button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .scope-tabs button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+                                          color:var(--accent-ink)}
+  .scope-tabs .cnt{font-weight:800;opacity:.75;margin-left:5px}
+  /* 목차 칩은 이동이 아니라 그 섹션만 보는 토글이다 — 한 번 더 누르면 풀린다 */
+  section[hidden]{display:none}
+  /* 제목 밑 한 줄 — 이 편을 열면 무엇을 알게 되는지 */
+  .uc-gain{margin:5px 0 8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);font-weight:500}
+  /* 카드 접기 — 기본은 제목만, 머리를 누르면 펴진다 */
+  .uc-head{position:relative;cursor:pointer;padding-right:28px}
+  .uc-head:hover h2{color:var(--accent-ink)}
+  .uc-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+  .uc-caret{position:absolute;right:2px;top:2px;font-size:15px;color:var(--ink-3);
+            transition:transform .15s ease}
+  .ucard.is-open .uc-caret{transform:rotate(180deg)}
+  .ucard.is-fold:not(.is-open) .uc-body{display:none}
+  .ucard.is-fold:not(.is-open) .uc-meta{margin-bottom:0}
+  .ucard.is-fold:not(.is-open){padding-bottom:16px}
+
+  /* rollup:start */
+  .rollup{margin:0 0 18px;}
+  .rlrep{background:var(--card, var(--surface)); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px;}
+  .rlrep[open]{padding-bottom:14px;}
+  .rlhd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; cursor:pointer; list-style:none;}
+  .rlhd::-webkit-details-marker{display:none;}
+  .rlhd::after{content:"▾"; flex:none; color:var(--sub, var(--ink-3)); font-size:.7rem; margin-left:auto;}
+  .rlrep[open] .rlhd::after{content:"▴";}
+  .rlhd:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+  .rlk{flex:none; font-size:.68rem; font-weight:800; letter-spacing:.04em; color:var(--accent);
+    background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
+  /* 제목 + 흐린 한 줄이 한 덩어리로 움직인다 */
+  .rlttl{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .rlt{font-size:.92rem; font-weight:700; line-height:1.4; color:var(--ink);}
+  .rld{font-size:.78rem; line-height:1.55; color:var(--sub, var(--ink-3)); opacity:.85; font-weight:400;}
+  .rlmeta{color:var(--sub, var(--ink-3)); font-size:.72rem; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .rll{list-style:none; margin:10px 0 0; padding:0;}
+  .rll li{border-top:1px solid var(--line); padding:8px 0 0; margin-top:8px;}
+  .rll li:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .rll .rlh{display:block; font-size:.86rem; font-weight:700; margin-bottom:3px; color:var(--ink);}
+  .rll .rlb{display:block; font-size:.82rem; color:var(--sub, var(--ink-3)); line-height:1.6;}
+  .rll .rlb b{color:var(--ink);}
+  .rlold{margin:0 0 14px;}
+  .rlold > summary{cursor:pointer; color:var(--sub, var(--ink-3)); font-size:.78rem; font-weight:700; padding:6px 0;}
+  .rlold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  /* rollup:end */
+
+  /* 섹션 타일 — 눌러서 그 섹션만 본다(dash_common.sec_picker).
+     옛 드롭다운은 화면 위에 붙어 있었지만 타일 격자는 높아서 붙이지 않는다 */
+  .sec-pick.sgrid{position:static;border-bottom:0;padding:0}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;margin:14px 0 22px}
+  .stile{position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;
+    font:inherit;cursor:pointer;padding:13px 15px 12px;border-radius:12px;
+    border:1px solid var(--line);background:var(--surface,#fff);
+    transition:border-color .15s ease,transform .15s ease}
+  .stile:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+  /* 고른 타일에 색을 쓰지 않는다. 검정 테두리는 튀고 강조색은 링크처럼 읽힌다 —
+     지면보다 한 단 눌러 앉힌 배경(--sunk)과 조금 진한 테두리로만 표시한다.
+     aria-pressed는 JS가 관리하는 실제 상태라(필터가 없으면 「전체 보기」가 참)
+     이 규칙에 걸리는 것은 정말로 골라진 것뿐이다 */
+  .stile[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .stile .st-num{font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-3);
+    font-variant-numeric:tabular-nums}
+  .stile .st-t{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .stile .st-s{font-size:11px;color:var(--ink-3);line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .stile .st-n{position:absolute;top:12px;right:14px;font-size:12px;font-weight:800;
+    color:var(--ink);font-variant-numeric:tabular-nums}
+  /* 「전체 보기」도 다른 타일과 같은 색이다 — 제목만 파랗게 두면 링크처럼 읽힌다 */
+  .stile.is-all .st-num{color:var(--ink-2)}
+  @media (max-width:640px){
+    .sgrid{grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px}
+    .stile{padding:11px 12px 10px}
+    .stile .st-s{display:none}
+  }
+
+  /* 한글 줄바꿈 — 낱말이 쪼개지지 않게 띄어쓰기에서만 끊는다.
+     안 걸면 "에너지"가 "에 / 너지"로 갈라져 제목 오른쪽이 비어 보인다 */
+  body{word-break:keep-all; overflow-wrap:break-word}
+  h1,h2,h3,.uc-head h2,.sec-title,.st-t{word-break:keep-all}
+  @media (max-width:480px){ h1{font-size:clamp(23px,6.6vw,30px)} }
+
+  .sgrid[hidden], .sec-pick[hidden]{display:none}
+  .sgrp[hidden]{display:none}
+  .sgrp-t{font-size:11px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+          margin:16px 0 8px}
+  .sgrp:first-of-type .sgrp-t{margin-top:12px}
+  .sectpick[hidden], .sectp[hidden]{display:none}
+  /* .stile는 display:flex라 [hidden] 속성만으로는 안 사라진다(같은 우선순위에서
+     저자 스타일이 브라우저 기본 [hidden] 규칙을 이긴다) — .sgrid처럼 여기서 명시한다.
+     검색 필터·빈 회사 타일 숨기기 둘 다 이 규칙이 있어야 실제로 화면에서 사라진다. */
+  .stile[hidden]{display:none}
+  .sectp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+  .sectp-t{font-size:12.5px;font-weight:850;color:var(--ink)}
+  .sback{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+  .sback[hidden]{display:none}
+  .sb-now{font-weight:800;font-size:13.5px}
+  /* 섹션 안 두 갈래 버튼 — 회사를 고른 다음 무엇을 볼지 정한다 */
+  .secsw{display:block;margin:14px 0 4px}
+  .secsw .sw-btn{display:inline-flex;margin:0 8px 0 0}
+  .secsw[hidden]{display:none}
+  /* 색은 섹션 타일(.stile)과 같은 토큰을 쓴다 — 타일을 누르면 나오는 자리라 지면이
+     같은 색이어야 한다. --card·--soft는 대시보드 절반에만 있는 토큰이라(부동산·통합
+     인사이트) 없는 페이지에서는 배경이 통째로 비어 회색 지면이 그대로 비쳤다.
+     그래서 --surface·--accent-soft로 되짚는 사슬을 건다 */
+  .sw-btn{font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;padding:11px 20px;
+          border:1px solid var(--line);border-radius:12px;
+          background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .sw-btn:hover{border-color:var(--ink-3)}
+  /* 고른 것에 색을 쓰지 않는다 — 섹션 타일(.stile)과 같은 규칙이다 */
+  .sw-btn[aria-pressed="true"]{border-color:var(--ink-3);background:var(--sunk)}
+  .sw-n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:700;margin-left:5px}
+  /* 타일에 붙는 괴리 배지 — 그 회사의 가장 최근 평가가 주가보다 몇 % 위/아래인가.
+     한국 시장 관행대로 위는 빨강, 아래는 파랑이다. 값이 없는 편(역산처럼 값을 안 내는
+     방법)은 회색으로 방법 이름만 적는다 — 없는 숫자를 만들지 않는다 */
+  .stile .st-gap{display:inline-block;margin-top:auto;padding-top:8px;font-size:12px;font-weight:850;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stile .st-gap.up{color:var(--risk)}
+  .stile .st-gap.down{color:var(--accent)}
+  .stile .st-gap.flat{color:var(--ink-3);font-weight:800}
+  /* 숫자 앞의 말표 — 무엇과 견준 값인지 밝힌다. 값보다 작고 회색이라 숫자를 안 먹는다.
+     「주가 대비 밸류에이션」으로 적는다. 「밸류에이션 대비 현재가」로 적으면 기준이 뒤집혀 부호가
+     전부 반대가 된다 — 이 숫자는 필자가 낸 괴리율(내재가치가 주가보다 몇 % 위/아래)이다 */
+  .stile .st-gap-l{display:inline;margin-right:5px;font-size:10.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:0}
+  .sv-val[hidden], .sv-posts[hidden]{display:none}
+  /* 회사 검색창 — 타일 격자 바로 위. .sec-pick.sgrid(묶음 없는 페이지)에서는 검색창도
+     그리드 항목이 되므로 grid-column으로 한 줄 전체를 차지하게 편다. 묶음이 있는 페이지는
+     .sec-pick이 그리드가 아니라 그냥 컨테이너라 이 규칙이 없어도 한 줄로 선다. */
+  .ssearch{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .ssearch .sq{flex:1;min-width:0;font:inherit;font-size:13.5px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--card,var(--surface,#fff));color:var(--ink)}
+  .ssearch .sq::placeholder{color:var(--ink-3)}
+  .ssearch .sq:focus{outline:none;border-color:var(--accent)}
+  .ssearch .sq-n{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;
+    min-width:30px;text-align:right}
+  /* 데스크톱에서는 카드를 읽는 동안 「주제 다시 고르기」가 따라 내려온다.
+     배경이 없으면 뒤 글자가 비쳐 겹쳐 보이니 지면 색을 깔고 카드 위에 올린다. */
+  @media (min-width:820px){
+    .sback{position:sticky;top:0;z-index:40;margin:0 0 8px;padding:12px 0 10px;
+           background:var(--paper);border-bottom:1px solid var(--line)}
+  }
+
+  /* 그림 — 본문 중간중간에 들어가는 해부도. 외부 이미지 없이 인라인 SVG만 쓰고
+     색은 CSS 변수로 받아 다크모드에서도 같은 그림이 그대로 읽히게 한다 */
+  /* Epoch 원문 팔레트(밝은 화면) — 청록·자홍·파랑·주황·산호·보라 */
+  .uc-fig{--epoch-teal:#00A5A6;--epoch-pink:#E03C8F;--epoch-blue:#0058DC;
+          --epoch-amber:#EA8D00;--epoch-coral:#FD6438;--epoch-violet:#B187F0;
+          --epoch-keybg:#D6F2F2;--epoch-wrapbg:rgba(0,165,166,.10)}
+  .uc-fig{margin:16px 0;border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;
+          background:var(--fig-bg,rgba(127,127,127,.05))}
+  .uc-fig svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+  .uc-fig figcaption{margin:9px 2px 0;font-size:.78rem;line-height:1.55;color:var(--ink-3);text-align:left}
+  .uc-fig figcaption b{color:var(--ink-2)}
+  .fig-title{margin:0 0 8px;font-size:var(--t-lbl,10.5px);font-weight:800;letter-spacing:.06em;
+             color:var(--ink-3);text-transform:uppercase}
+  /* 해부도 안에서 쓰는 붓 — 장기 면·윤곽선·강조·글씨 */
+  .uc-fig .organ{fill:var(--fig-organ,#e3d3cc);stroke:var(--fig-line,#9a8078);stroke-width:1.5}
+  .uc-fig .organ2{fill:var(--fig-organ2,#f0e2d8);stroke:var(--fig-line,#9a8078);stroke-width:1.3}
+  .uc-fig .vessel{fill:none;stroke:var(--fig-vessel,#c2504a);stroke-width:3;stroke-linecap:round}
+  .uc-fig .vein{fill:none;stroke:var(--fig-vein,#4a6ec2);stroke-width:3;stroke-linecap:round}
+  .uc-fig .body{fill:var(--fig-body,rgba(127,127,127,.10));stroke:var(--fig-line,#9a8078);stroke-width:1.4}
+  .uc-fig .fat{fill:var(--fig-fat,#e6c76a);stroke:var(--fig-line,#9a8078);stroke-width:.9}
+  .uc-fig .cell{fill:var(--fig-cell,#8fb0d8);stroke:var(--fig-line,#9a8078);stroke-width:.8}
+  .uc-fig .bad{fill:var(--fig-bad,#c2504a)}
+  /* 원문 도해가 색으로 갈라 놓은 계열을 그대로 옮길 때 쓰는 붓 */
+  /* Epoch AI 원문 도해의 팔레트를 그대로 들여온다 — 값은 원본 PNG에서 뽑았다.
+     날색으로 박지 않고 토큰으로 두는 이유는 다크모드다. 어두운 배경에서는 같은 계열의
+     밝은 색으로 바뀌어야 판이 읽힌다. svg.epoch 를 단 그림에서만 물린다. */
+  /* 이 장 도해는 640 판을 카드 너비까지 늘여 쓴다. 640 에 묶어 두면 786px 짜리 카드
+     안에서 판만 가운데 작게 앉고, 10px 글자가 10px 그대로 나와 확대해야 읽힌다. */
+  .uc-fig svg.epoch{max-width:100%}
+  /* 눈금선 — Epoch 원문에서 뽑은 값이다. 원본 1026px 폭에서 #E4E4E4 2px 였고,
+     640 판으로 줄이면 1.2px 이 된다. 자료보다 먼저 깔아 뒤에 둔다 */
+  .uc-fig{--epoch-grid:#E4E4E4}
+  .uc-fig .grid{fill:none;stroke:var(--epoch-grid);stroke-width:1.2}
+  .uc-fig svg.epoch{--fig-good:var(--epoch-teal);--fig-blue:var(--epoch-blue);
+                    --fig-amber:var(--epoch-amber);--fig-violet:var(--epoch-violet)}
+  .uc-fig svg.epoch .bx-key{fill:var(--epoch-keybg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .bx-wrap{fill:var(--epoch-wrapbg);stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch .flow-cash{stroke:var(--epoch-teal)}
+  .uc-fig svg.epoch text.t-cash{fill:var(--epoch-teal)}
+
+  .uc-fig .good{fill:var(--fig-good,#2f8f6b)}
+  /* 단면 표시 — 해칭을 덮어 「여기가 잘린 면」임을 알린다. 면색 위에 겹쳐 쓴다 */
+  .uc-fig .hatch{fill:url(#fig-hatch);stroke:none}
+  .uc-fig .hatch-w{fill:url(#fig-hatch-wide);stroke:none}
+  /* 절단 가장자리는 굵게 — 겉면 윤곽과 굵기로 구분한다 */
+  .uc-fig .cut{stroke-width:2.4}
+  .uc-fig .lead-line{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig .flow{fill:none;stroke:var(--ink-3);stroke-width:1.6;marker-end:url(#fig-arrow)}
+  /* 흐름도 전용 선 세 벌 — 돈·용역·조건부. 규칙은 docs/흐름도 — 만드는 규칙.md 2절.
+     조건부 지원을 실선으로 그리면 「보증이 있다」로 읽힌다. 색이 아니라 대시로 가른다
+     (흑백 인쇄·색각 이상에서도 남는다) */
+  .uc-fig .flow-cash{fill:none;stroke:var(--fig-good,#2f8f6b);stroke-width:2.2;
+                     marker-end:url(#fig-arrow-a)}
+  .uc-fig .flow-svc{fill:none;stroke:var(--ink-3);stroke-width:2;marker-end:url(#fig-arrow)}
+  .uc-fig .flow-cond{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:5 4;
+                     marker-end:url(#fig-arrow)}
+  .uc-fig text.t-cash{fill:var(--fig-good,#2f8f6b);font-weight:700}
+  /* 역할 도랑 라벨 — 상자 밖에 서는 작은 회색 글씨(규칙 3) */
+  .uc-fig text.t-role{font-size:13px;font-weight:800;letter-spacing:.05em;fill:var(--ink-3)}
+  /* 조달 법인만 칠한다 — 그림당 강조는 한 종류(규칙 4) */
+  .uc-fig .bx-key{fill:var(--fig-keybg,#d8f0e6);stroke:var(--fig-good,#2f8f6b);stroke-width:1.6}
+  .uc-fig .bx{fill:var(--fig-bxbg,#fff);stroke:var(--line,#d8d8d8);stroke-width:1.2}
+  .uc-fig .bx-wrap{fill:var(--fig-wrapbg,rgba(47,143,107,.10));stroke:var(--fig-good,#2f8f6b);
+                   stroke-width:1;stroke-dasharray:3 3}
+  .uc-fig text{fill:var(--ink-2);font-family:inherit;font-size:15px}
+  .uc-fig text.t-lab{font-size:16px;font-weight:700;fill:var(--ink)}
+  .uc-fig text.t-sm{font-size:13.5px;fill:var(--ink-3)}
+  .uc-fig text.t-bad{fill:var(--fig-bad,#c2504a);font-weight:700}
+  @media (prefers-color-scheme:dark){
+    .uc-fig{--fig-organ:#4a3b36;--fig-organ2:#5a4740;--fig-line:#a98d83;
+            --fig-vessel:#e07b73;--fig-vein:#7b96e0;--fig-bad:#e07b73;--fig-good:#5cc39a;
+            --fig-fat:#c9a63f;--fig-cell:#5d7ba3;
+            --fig-blue:#6c9be8;--fig-amber:#e0a84a;--fig-violet:#a894dd;
+            --epoch-teal:#3BD3D4;--epoch-pink:#F274B0;--epoch-blue:#6C9BFF;
+            --epoch-amber:#F3AE3F;--epoch-coral:#FF9070;--epoch-violet:#C7A8F7;
+            --epoch-keybg:#123B3C;--epoch-wrapbg:rgba(59,211,212,.12);
+            --epoch-grid:rgba(255,255,255,.13);
+            --fig-keybg:#1f4438;--fig-bxbg:rgba(255,255,255,.04);--fig-wrapbg:rgba(92,195,154,.10)}
+  }
+
+  /* 태그 줄은 스크롤을 따라온다 — 목록 한가운데서 다른 주제로 옮기려고 맨 위까지
+     되돌아가야 하면 태그가 거르는 도구 노릇을 못 한다(2026-09-08). 배경을 깔지 않으면
+     지나가는 줄이 글자 뒤로 비친다. 접는 것은 태그 격자(.tagnav)만이다 — 「모두 보기」
+     단추까지 같이 접히면 접힌 것을 펼 길이 없다. */
+  .tagbar{position:sticky;top:0;z-index:20;background:var(--paper);
+   padding:10px 0 8px;margin:0 0 8px;border-bottom:1px solid var(--line)}
+  .tagnav{display:flex;flex-wrap:wrap;gap:7px;margin:0}
+  .tagnav button{font:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--line);
+   border-radius:16px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+  .tagnav button:hover{background:var(--sunk)}
+  .tagnav button .cnt{color:var(--ink-3);margin-left:5px;font-size:11.5px}
+  .tagnav button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tagnav button[aria-pressed="true"] .cnt{color:var(--ink-3)}
+  /* 두 줄만 남긴다. 칩 한 줄이 29px, 줄 사이가 7px — 반 잘린 줄이 비치면 고장으로 읽힌다 */
+  .tagnav.many{max-height:66px;overflow:hidden}
+  /* 다 펴도 화면의 반을 넘지 않는다 — 스크롤을 따라오는 줄이 화면을 덮으면 목록을 가린다 */
+  .tagnav.many.open{max-height:44vh;overflow:auto}
+  .tagmore{font:inherit;font-size:12px;color:var(--accent-ink);background:none;
+   border:0;padding:6px 2px 0;margin:0;cursor:pointer}
+  .layers{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 10px}
+  .layers a{font-size:12.5px;color:var(--accent-ink);text-decoration:none}
+  .layers a:hover{text-decoration:underline}
+  .rq{display:block;width:100%;max-width:340px;font:inherit;font-size:13px;padding:7px 11px;
+   border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin:0 0 10px}
+  .rn{font-size:12px;color:var(--ink-3);margin:0 0 4px}
+  .rows{border-top:1px solid var(--line);margin:6px 0 26px}
+  .rows .row{display:block;padding:14px 4px;border-bottom:1px solid var(--line);
+   text-decoration:none;color:inherit}
+  /* display:block 이 [hidden] 을 이긴다 — 이 줄이 없으면 태그로 걸러도 줄이 그대로 선다
+     (2026-09-08, 「눌러도 아무 일이 없다」의 정체). .sgrid 에서 한 번 겪은 자리다. */
+  .rows .row[hidden]{display:none}
+  .rows a.row:hover{background:var(--sunk)}
+  .rows .rtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;
+   background:var(--sunk);color:var(--ink-2)}
+  .rows .rmeta{font-size:12px;color:var(--ink-3);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .rows .rtitle{font-size:15.5px;font-weight:650;line-height:1.55;margin:4px 0 0}
+  .rows .rone{font-size:13px;color:var(--ink-2);line-height:1.7;margin:5px 0 0}
+
+  .biz-tw{overflow-x:auto;margin:14px 0 18px}
+  .biz-t{border-collapse:collapse;font-size:13px;line-height:1.65;min-width:640px}
+  .biz-t caption{caption-side:top;text-align:left;font-size:12.5px;color:var(--ink-2);
+                 padding:0 0 8px;line-height:1.7}
+  .biz-t th,.biz-t td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+  .biz-t thead th{background:var(--accent-soft);font-weight:850;white-space:nowrap}
+  .biz-t tbody td:first-child{font-weight:800;white-space:nowrap}
+
+  /* 보고서 접기. 제목을 누르면 그 보고서가 통째로 나온다. 타일을 누르면 먼저
+     보고서 제목 둘이 보이고, 거기서 볼 것을 고른다. */
+  .rrep{margin:0 0 12px}
+  .rrep > summary{list-style:none;cursor:pointer}
+  .rrep > summary::-webkit-details-marker{display:none}
+  .rrep > summary .rep-head{margin:0;position:relative;padding-left:34px;
+                            transition:border-color .12s}
+  .rrep > summary .rep-head::before{content:"▸";position:absolute;left:16px;top:20px;
+                                    color:var(--accent);font-size:15px;font-weight:800}
+  .rrep[open] > summary .rep-head::before{content:"▾"}
+  .rrep > summary:hover .rep-head{border-color:var(--accent)}
+  .rrep > summary .rep-head h2{text-decoration:underline;text-underline-offset:3px;
+                               text-decoration-thickness:1px;
+                               text-decoration-color:var(--line)}
+  .rrep > summary:hover .rep-head h2{text-decoration-color:var(--accent)}
+  .rrep-b{padding-top:10px}
+
+  /* 연도별 경로표. 재무 모형은 왼쪽에서 오른쪽으로 읽으므로 연도를 가로축에 둔다
+     (회계사 대시보드 규칙 3절). 열 폭은 colgroup 에만 준다 — th 에도 주면 둘을 합쳐
+     계산해 첫 열 글자가 다음 열과 포개진다. 좁은 화면에서는 표만 가로로 스크롤한다. */
+  .yt-wrap{overflow-x:auto;margin:2px 0 6px;-webkit-overflow-scrolling:touch}
+  .yt{border-collapse:collapse;table-layout:fixed;font-size:11.5px;
+      font-variant-numeric:tabular-nums;min-width:100%}
+  .yt th,.yt td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right;
+                white-space:nowrap}
+  .yt thead th{font-size:10.5px;font-weight:850;color:var(--ink-3);
+               border-bottom:1.5px solid var(--ink-3)}
+  .yt th[scope="row"]{text-align:left;font-weight:800;color:var(--ink-2);
+                      position:sticky;left:0;background:var(--card,var(--surface,#fff))}
+  /* 구간은 선으로만 나눈다. 한 구간만 칠하면 그 구간이 다른 성격의 값처럼 읽힌다 */
+  .yt .cut{border-left:2px solid var(--ink-3)}
+  .yt tr.hi td,.yt tr.hi th[scope="row"]{font-weight:850;color:var(--ink)}
+  .yt-memo{margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--ink-3)}
+
+  /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
+     놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다.
+     두 판은 배경도 테두리도 같다 — 한쪽에 강조색을 깔면 그쪽이 결론처럼 읽힌다.
+     나누는 것은 제목(DCF · Reverse-DCF)이지 색이 아니다. */
+  .vh2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
+  .vh-ax{padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+  .vh-ax > .k{display:block;margin-bottom:7px}
+  .vh-ax > .k .en{display:block;font-size:15px;font-weight:850;letter-spacing:.01em;
+                  color:var(--ink);line-height:1.2}
+  .vh-ax > .k .ko{display:block;font-size:11px;font-weight:700;color:var(--ink-3);
+                  line-height:1.4;margin-top:2px}
+  .vh-ax .lead{margin:0 0 6px;font-size:11.5px;line-height:1.45;color:var(--ink)}
+  .vh-ax .lead b{font-weight:850}
+  .vh-ax .top{display:flex;gap:6px;margin-bottom:6px}
+  .vh-ax .top div{flex:1;text-align:center;padding:5px 2px;border:1px solid var(--line);
+                  border-radius:7px;background:var(--card,var(--surface,#fff))}
+  .vh-ax .top .n{display:block;font-size:10px;font-weight:850;color:var(--ink-3)}
+  .vh-ax .top .p{display:block;font-size:16px;font-weight:850;color:var(--ink);
+                 font-variant-numeric:tabular-nums;line-height:1.3}
+  .vh-ax .top .g{display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);
+                 font-variant-numeric:tabular-nums}
+  .vh-ln{display:flex;justify-content:space-between;gap:7px;padding:1px 0;
+         font-size:11px;line-height:1.4;border-top:1px dashed var(--line)}
+  .vh-ln:first-of-type{border-top:0}
+  .vh-ln .a{color:var(--ink-2);min-width:0}
+  .vh-ln .b{color:var(--ink);font-weight:800;text-align:right;white-space:nowrap;
+            font-variant-numeric:tabular-nums}
+  .vh-ln.sub .a{padding-left:9px;color:var(--ink-3);font-weight:400}
+  .vh-ln.sub .b{font-weight:700}
+  @media(max-width:560px){ .vh2{grid-template-columns:1fr} }
+
+  /* 알파벳 편 머리 결론 — 스크롤 없이 한 화면에 들어가야 한다.
+     표 둘로는 캡션·헤더까지 스무 줄이 넘어 첫 화면을 넘겼다. 값만 남긴 격자로 바꾼다.
+     배경 토큰은 --card 가 없는 장이 있어(통합 보고서가 그렇다) --surface 로 되짚는다. */
+  .vhero{margin:6px 0 18px;padding:11px 13px;border:1px solid var(--line);
+         border-radius:12px;background:var(--card,var(--surface,#fff))}
+  .vhero .vh-l{font-size:11px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
+               text-transform:uppercase;margin:0 0 8px}
+  .vhero .vh-say{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:var(--ink)}
+  .vhero .vh-say b{color:var(--accent)}
+  .vh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
+  .vh-c{padding:9px 10px;border:1px solid var(--line);border-radius:9px;text-align:center}
+  .vh-c.now{border-color:var(--accent);background:var(--accent-soft)}
+  .vh-c .k{display:block;font-size:10.5px;font-weight:850;color:var(--ink-3);
+           letter-spacing:.04em}
+  .vh-c .v{display:block;font-size:19px;font-weight:850;line-height:1.25;margin-top:3px;
+           font-variant-numeric:tabular-nums;color:var(--ink)}
+  .vh-c .d{display:block;font-size:11.5px;font-weight:800;margin-top:1px;color:var(--ink-2);
+           font-variant-numeric:tabular-nums}
+  .vh-rev{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+  .vh-r{padding:8px 10px;border:1px dashed var(--line);border-radius:9px}
+  .vh-r .k{display:block;font-size:10.5px;font-weight:850;color:var(--ink-3);
+           letter-spacing:.04em;margin-bottom:2px}
+  .vh-r .t{display:block;font-size:12.5px;line-height:1.5;color:var(--ink)}
+  .vh-r .t b{font-variant-numeric:tabular-nums}
+  .vh-foot{margin:0;font-size:11.5px;line-height:1.55;color:var(--ink-2)}
+  .vh-foot a{font-weight:800}
+  @media(max-width:640px){
+    .vh-grid{grid-template-columns:repeat(2,1fr)}
+    .vh-rev{grid-template-columns:1fr}
+    .vh-c .v{font-size:17px}
+  }
+
+  /* 시계열 도해의 기준금리 한 줄에만 쓰는 색. 확정 규칙 S2 는 회색만인데, 선이 셋을
+     넘으면 회색만으로는 안 갈려서 둔 예외다(2026-09-06). --fig-amber 는 epoch 도해
+     안에서만 사는 변수라 여기서는 안 먹었다 — 이 장에서 쓸 것을 따로 정의한다 */
+  :root{--rate-amber:#b8860b}
+  @media (prefers-color-scheme:dark){:root{--rate-amber:#e0a84a}}
+  [data-theme="dark"]{--rate-amber:#e0a84a}
+  [data-theme="light"]{--rate-amber:#b8860b}
+
+  /* 보고서 표지 — 한 층에 글이 둘이라 어디서 끊기는지가 보여야 한다.
+     번호·제목·바탕·기간을 한 덩이로 세우고, 다음 보고서 앞에 굵은 선을 둔다. */
+  .rep-head{margin:8px 0 18px;padding:18px 20px;border:1px solid var(--line);
+            border-left:5px solid var(--accent);border-radius:12px;
+            background:var(--accent-soft)}
+  .rep-head .rn{display:block;font-size:11px;font-weight:850;letter-spacing:.08em;
+                color:var(--accent-ink)}
+  .rep-head h2{margin:6px 0 8px;font-size:21px;line-height:1.35}
+  .rep-head .rm{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .rep-head .rm b{color:var(--ink)}
+  .rep-cut{margin:38px 0 0;border:0;border-top:3px solid var(--line)}
+  /* rep-toc 는 절 차례, rep-note 는 안내문. 규약 검사(check_toc)가 앞엣것만 본다 */
+  .rep-toc,.rep-note{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
+           border-radius:12px;font-size:13px;line-height:1.85}
+  .rep-note a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-note a:hover{text-decoration:underline}
+  .rep-toc .tl{display:block;margin-bottom:2px}
+  .rep-toc .tg{display:block;margin-top:12px;padding-left:6px;font-size:12.5px;color:var(--ink-2)}
+  /* 층마다 들여쓴다 — 머리글 · 묶음 이름 · 절 목록이 눈으로 갈린다 */
+  .rep-toc .tt{display:block;padding-left:16px}
+  /* 차례 링크가 브라우저 기본 파랑으로 나와 회색 판에서 튀었다(2026-09-05).
+     색은 본문 잉크로 두고 밑줄만 옅게 — 눌리는 자리인 것은 밑줄이 말한다 */
+  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-3);
+                   text-underline-offset:3px}
+
+</style>
+
+<script>
+(function(){
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  if(location.hash) return;
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+})();
+</script>
+
+<div class="wrap">
+<a class="pback" href="../통합 보고서.html#sec-cpo">← 통합 보고서</a>
+<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><h2 id="card-CPO-총정리-빛이-구리를-어디까지-밀어냈고-누가-그-자리에-서-있나">CPO 총정리 — 빛이 구리를 어디까지 밀어냈고, 누가 그 자리에 서 있나</h2><p class="uc-gain">광학이 칩 옆까지 온 뒤 모듈·스위치·트랜시버 회사의 자리가 어떻게 갈렸나</p><div class="uc-meta"><span>2026-09-04</span><span>SemiAnalysis 9편 · Semi Doped 5회차 · 링크드인 4개월</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><div class="uc-rep"><p class="ins-lede">CPO(Co-Packaged Optics, 빛을 전기로 바꾸는 광엔진을 GPU나 스위치 칩과 한 패키지에 붙이는 방식) 이야기는 20년 동안 「곧 온다」는 말로만 떠돌았다. 실제로 사 올 수 있는 물건이 나온 것은 2025년이다. 이 글은 SemiAnalysis가 2025년 3월부터 2026년 9월까지 열아홉 달 동안 낸 뉴스레터 아홉 편, 팟캐스트 Semi Doped 다섯 회차, 링크드인 게시물을 한데 모아 묻는다. 빛은 데이터센터 안 어디까지 들어왔나. 어디서 막혔나. 그리고 거기에 어느 회사가 서 있나.</p><p class="ins-lede">답부터 말하면 이렇다. 빛은 랙과 랙 사이에는 이미 들어왔다. 랙 안으로는 아직 못 들어왔다. 랙 안을 지키는 것은 구리다. 엔비디아는 루빈 울트라까지 이 원칙을 지키고, 그다음 파인만에서 랙 안까지 빛으로 바뀔지는 엔비디아 안에서도 말이 갈린다. 그동안 시장을 먹는 것은 중간 단계들이다. CPO 자체는 아니다.</p><p class="ins-lede"><p class="rep-toc"><b class="tl">이 층은 물음 하나를 세 묶음으로 따라갑니다 — 왜 빛인가, 어디부터 쓰이나, 누가 서 있고 무엇이 남았나.</b><b class="tg">1. 왜 빛인가</b><span class="tt"><a href="#cpo-1">① 구리가 닿는 거리가 세대마다 반으로 준다</a><br><a href="#cpo-2">② 말부터 — 트랜시버·LPO·NPO·CPO·OCS</a><br><a href="#cpo-3">③ 광 트랜시버 한 개는 무엇으로 되어 있고 누가 만드나</a><br><a href="#cpo-4">④ CPO가 아끼는 전력과 돈은 클러스터 전체로 보면 얼마인가</a></span><b class="tg">2. 어디부터 쓰이나</b><span class="tt"><a href="#cpo-5">⑤ 스케일아웃 스위치 — 2025년에 나온 첫 실물과 메타의 신뢰성 데이터</a><br><a href="#cpo-6">⑥ 스케일업 — 엔비디아는 랙 안은 구리, 랙 사이만 빛</a><br><a href="#cpo-7">⑦ 화웨이와 구글은 다른 길로 랙을 넘었다</a><br><a href="#cpo-8">⑧ 부품 넷 — 패키징·광섬유 부착·레이저·변조기</a><br><a href="#cpo-9">⑨ CPO가 무르익기 전에 중간 단계가 시장을 먹는다</a></span><b class="tg">3. 누가 서 있고 무엇이 남았나</b><span class="tt"><a href="#cpo-10">⑩ 누가 어디 서 있나</a><br><a href="#cpo-11">⑪ 관세와 수입 금지 — 공급망은 태국과 중국에 있다</a><br><a href="#cpo-12">⑫ 원문이 말하지 않은 것과 무엇이 나오면 판단이 바뀌나</a></span></p></p><figure class="uc-fig"><p class="fig-title">데이터센터 연결 세 층과 구리·광의 경계</p><svg viewBox="0 0 640 176" role="img" aria-label="데이터센터 연결 세 층과 구리·광의 경계"><text x="10" y="26" class="t-sm" style="font-weight:850">랙 안</text><text x="222" y="26" class="t-sm" style="font-weight:850">랙과 랙 사이</text><text x="434" y="26" class="t-sm" style="font-weight:850">건물·캠퍼스 사이</text><rect x="10" y="40" width="196" height="118" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="108" y="72" text-anchor="middle" class="t-lab">스케일업</text><text x="108" y="96" text-anchor="middle" class="t-sm">GPU끼리 직접 연결</text><text x="108" y="114" text-anchor="middle" class="t-sm">구리 백플레인</text><text x="108" y="132" text-anchor="middle" class="t-sm">빛은 아직 못 들어옴</text><rect x="222" y="40" width="196" height="118" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="320" y="80" text-anchor="middle" class="t-lab">스케일아웃</text><text x="320" y="96" text-anchor="middle" class="t-sm">스위치로 묶는다</text><text x="320" y="112" text-anchor="middle" class="t-sm">플러거블 트랜시버</text><text x="320" y="128" text-anchor="middle" class="t-sm">CPO 스위치 첫 실물 2025</text><rect x="434" y="40" width="196" height="118" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="532" y="80" text-anchor="middle" class="t-lab">스케일어크로스</text><text x="532" y="96" text-anchor="middle" class="t-sm">20~50마일</text><text x="532" y="112" text-anchor="middle" class="t-sm">코히런트 광 · WDM</text><text x="532" y="128" text-anchor="middle" class="t-sm">빛만 가능</text><path d="M206 99 L222 99" class="flow"/><path d="M418 99 L434 99" class="flow"/></svg><figcaption>왼쪽 층일수록 연결 개수가 많고 오른쪽 층일수록 거리가 멉니다. 빛은 오른쪽 두 층에는 들어와 있고 맨 왼쪽 랙 안에는 아직 없습니다. 이 글은 그 경계가 어디로 움직이는지를 따라갑니다. 층 셋은 Semi Doped 진행자의 구분이고 값은 없습니다.</figcaption></figure><h3 id="cpo-1">① 구리가 닿는 거리가 세대마다 반으로 준다</h3><figure class="uc-fig"><p class="fig-title">신호 증폭 없는 직결 구리가 닿는 거리</p><svg viewBox="0 0 640 230" role="img" aria-label="신호 증폭 없는 직결 구리가 닿는 거리"><text x="18" y="64" class="t-lab" style="font-weight:850">100G/레인</text><rect x="150" y="44" width="380" height="30" rx="6" fill="var(--sunk)" stroke="var(--ink-3)" stroke-width="1.5"/><text x="540" y="64" class="t-sm" style="font-weight:850">약 2m · 랙 높이</text><text x="18" y="118" class="t-lab" style="font-weight:850">200G/레인</text><rect x="150" y="98" width="190" height="30" rx="6" fill="var(--sunk)" stroke="var(--ink-3)" stroke-width="1.5"/><text x="350" y="118" class="t-sm" style="font-weight:850">약 1m · 스위치를 랙 가운데로</text><text x="18" y="172" class="t-lab" style="font-weight:850">400G/레인</text><rect x="150" y="152" width="95" height="30" rx="6" fill="var(--sunk)" stroke="var(--ink-3)" stroke-width="1.5"/><text x="255" y="172" class="t-sm" style="font-weight:850">약 0.5m · 랙 안에서도 안 닿는다</text><line x1="530" y1="34" x2="530" y2="206" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="4 4"/><text x="470" y="222" class="t-sm">랙 높이 2m</text></svg><figcaption>글로벌파운드리 Tom Barber 가 든 값입니다(2026-08). 레인 속도가 두 배가 될 때마다 거리가 반으로 줍니다. SemiAnalysis 는 200G 에서 2m, PicoJool 은 3~4m 라고 했으니 케이블 종류에 따라 다르지만, 400G 에서 랙 안이 안 닿는다는 결론은 셋이 같습니다.</figcaption></figure><p class="ins-lede">빛으로 옮겨 가는 이유는 하나다. 신호 속도를 올릴수록 구리선이 갈 수 있는 거리가 줄어든다. 글로벌파운드리의 Tom Barber는 신호 증폭 없이 직결하는 구리 케이블의 도달 거리를 이렇게 잡았다. 레인당 100Gbit/s에서 약 2m, 200Gbit/s에서 약 1m, 400Gbit/s에서 약 0.5m다. 그가 든 보기가 NVL72다. 200G 세대에서 거리가 1m로 줄자 엔비디아는 스위치를 랙 가운데로 옮겼다. 위아래 GPU까지 거리를 절반으로 줄였다.</p><p class="ins-lede">같은 거리를 다른 사람은 다르게 말한다. SemiAnalysis의 CPO 원문은 200G 레인 기준 구리가 최대 2m까지 닿아서 스케일업 규모가 랙 한두 개로 묶인다고 썼다. PicoJool의 Al Yuen은 200G 기준 3~4m라고 말했다. 셋이 다른 이유는 케이블 종류와 신호 보정 조건이 달라서다. 그런데 어느 값을 잡아도 결론은 같다. 200G에서 이미 랙 하나가 한계다. 400G에서는 랙 안에서도 위아래 GPU끼리 안 닿는다.</p><p class="ins-lede">엔비디아가 루빈 세대에서 쓴 방법이 이 한계를 보여 준다. NVLink 6는 레인 속도를 올리지 않았다. 대신 같은 구리선에서 양방향으로 동시에 신호를 보내는 SerDes(직렬화 회로)를 써서 레인당 224G를 448G로 두 배 만들었다. 케이블 개수는 그대로 뒀다. 원래 5mm 안 칩과 칩 사이에서만 쓰던 양방향 기술을 1m 넘는 백플레인까지 늘렸다. 케이블을 1만 개로 늘리는 안, 랙 폭을 넓히는 안은 둘 다 기각됐다. 이미 5천 개인 백플레인 구리 케이블이 블랙웰 세대에서도 큰 고장 원인이었기 때문이다. 진짜 단방향 448G SerDes는 대량 양산 검증이 아직 안 됐다. 양방향까지 겹치면 에코 제거 회로가 붙어 난도가 극히 높아진다. SemiAnalysis는 엔비디아가 파인만에서는 양방향 대신 단방향 448G만 밀 것으로 봤다.</p><p class="ins-lede">그래서 구리가 갈 수 있는 마지막 단계로 공동패키지 구리(CPC, 패키지 기판에서 바로 나오는 트윈액시얼 구리 케이블)가 거론된다. 절연이 좋아 손실이 훨씬 적고, 448G SerDes를 실제로 구현할 경로로 꼽힌다. 랙 안처럼 짧은 거리에 맞는 방식이다. 엔비디아는 이 방식으로 공급망 전체를 바꿔 달라고 요청하는 중이다. 미디어텍은 구간을 셋으로 나눴다. 레인당 200G까지는 근접패키지 구리, 200~300G는 CPC, 400G를 넘으면 피치 약 130µm의 진짜 CPO가 필요하다고 봤다.</p><p class="ins-lede">공동패키지 구리는 이미 실물이 있다. 삼테크(Samtech)는 2026년 9월 대만 OCP에서 CPX 폼팩터의 공동패키지 구리 셋업을 보였다. 6.4T 플러거블 광 엔진에서 대역폭이 구리 커넥터로 빠져나가는 구조이고, 모듈 하나에 커넥터 핀 128개(64쌍 차동선, 200G 레인 32개)가 붙는다. 스케일업에서 광 시장이 커지는 중에도 TE·앰피놀·몰렉스 같은 구리 접속 업체에 기회가 남는다는 것이 SemiAnalysis의 읽기다.</p><h3 id="cpo-2">② 말부터 — 트랜시버·LPO·NPO·CPO·OCS</h3><p class="ins-lede">이름이 섞여 쓰이니 먼저 나눈다. 기존 방식은 플러거블 트랜시버다. 스위치나 GPU 칩에서 나온 전기 신호는 섀시 앞판의 트랜시버 케이지까지 15~30cm를 구리로 간다. 트랜시버 안 DSP(신호를 다시 다듬는 칩)가 신호를 복원한 뒤 빛으로 바꾼다. 이 DSP가 800G SR8 모듈 전력의 약 절반을 먹고, 자재비의 20~30%를 차지한다. 그래서 SemiAnalysis는 DSP를 「비용과 전력의 공공의 적 1호」라고 불렀다.</p><p class="ins-lede">DSP를 빼는 순서로 이름이 세 개 나온다. ① LPO(Linear Pluggable Optics)는 플러거블 꼴은 그대로 두고 DSP만 뺀다. 대신 스위치의 SerDes가 광소자를 직접 구동한다. 2023년 마벨의 Loi Nguyen은 SemiAnalysis 인터뷰에서 이 방식이 널리 안 퍼질 것이라 했고, 실제로 그렇게 됐다. ② NPO(Near-Package Optics)는 광엔진을 스위치 칩 옆 기판에 소켓으로 얹는다. 전기 경로가 짧아지는 이득은 대부분 가져가면서 현장 교체도 된다. ③ CPO는 광엔진을 칩과 한 패키지 안에 넣어 전기 배선을 수십 cm에서 수 mm로 줄인다. 그 중간에 OBO(광엔진을 섀시 안 시스템 보드에 두는 방식)가 있다. CPO의 복잡함과 트랜시버의 한계를 둘 다 물려받아 「최악의 조합」이라는 평가가 나왔다.</p><figure class="uc-fig"><p class="fig-title">플러거블에서 CPO까지 — 전기 경로가 짧아질수록 손실과 전력이 준다</p><svg viewBox="0 0 640 296" role="img" aria-label="플러거블에서 CPO까지 — 전기 경로가 짧아질수록 손실과 전력이 준다"><text x="20" y="26" class="t-sm" style="font-weight:850">플러거블 트랜시버 (앞판 케이지까지 PCB 배선)</text><rect x="20" y="34" width="96" height="56" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="68" y="67" text-anchor="middle" class="t-lab">스위치 칩</text><path d="M116 62 L356 62" class="flow"/><rect x="356" y="34" width="96" height="56" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="404" y="58" text-anchor="middle" class="t-lab">광엔진</text><text x="404" y="78" text-anchor="middle" class="t-sm">빛으로</text><text x="470" y="56" class="t-sm" style="font-weight:850">손실 약 35dB</text><text x="470" y="76" class="t-sm">20~25pJ/bit</text><text x="20" y="118" class="t-sm" style="font-weight:850">NPO (칩 옆 기판, 소켓)</text><rect x="20" y="126" width="96" height="56" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="68" y="159" text-anchor="middle" class="t-lab">스위치 칩</text><path d="M116 154 L226 154" class="flow"/><rect x="226" y="126" width="96" height="56" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="274" y="150" text-anchor="middle" class="t-lab">광엔진</text><text x="274" y="170" text-anchor="middle" class="t-sm">빛으로</text><text x="470" y="148" class="t-sm" style="font-weight:850">손실 약 15~20dB</text><text x="470" y="168" class="t-sm">약 10pJ/bit</text><text x="20" y="210" class="t-sm" style="font-weight:850">CPO (한 패키지 안)</text><rect x="20" y="218" width="96" height="56" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="68" y="251" text-anchor="middle" class="t-lab">스위치 칩</text><path d="M116 246 L130 246" class="flow"/><rect x="130" y="218" width="96" height="56" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="178" y="242" text-anchor="middle" class="t-lab">광엔진</text><text x="178" y="262" text-anchor="middle" class="t-sm">빛으로</text><text x="470" y="240" class="t-sm" style="font-weight:850">손실 약 6dB</text><text x="470" y="260" class="t-sm">5pJ/bit 미만</text></svg><figcaption>같은 스위치 칩에서 광엔진까지의 거리만 다릅니다. 손실과 비트당 전력은 Barber 의 값(2026-08)입니다. 선 길이는 전기가 가야 하는 거리의 순서만 보이고 실제 거리에 비례하지 않습니다.</figcaption></figure><p class="ins-lede">Barber는 이 사다리를 숫자로 정리했다. 손실은 플러거블 약 35dB, NPO 약 15~20dB, CPO 약 6dB이다. 비트당 전력은 완전 재타이밍 플러거블 20~25pJ, 리니어 NPO 약 10pJ, CPO 5pJ 미만이다. 플러거블에서 손실이 나는 곳은 프로세서에서 서버 가장자리까지 가는 PCB 구리 배선이다. 광학 자체의 손실이 아니다. 200G PAM4 신호는 약 55GHz 대역폭이 필요하다.</p><p class="ins-lede">OCS(Optical Circuit Switch, 광 회선 스위치)는 이 사다리 밖에 있다. 빛을 전기로 바꾸지 않고 그대로 다른 포트로 넘기는 스위치라 전력이 적고 지연이 짧다. 다만 들어온 포트를 다른 포트 하나에 이어 줄 뿐, 패킷을 보고 길을 정하지는 못한다. 구글이 TPU를 묶는 데 쓰는 물건이며, 7절에서 다룬다.</p><p class="ins-lede">세 층으로 나누는 말도 정리한다. 스케일업은 지연이 충분히 낮아 다른 GPU의 메모리를 제 것처럼 쓸 수 있는 범위다. 스케일아웃은 랙과 랙을 스위치로 묶는다. 스케일어크로스는 20~50마일 떨어진 캠퍼스를 잇는다. 스케일업의 원칙은 「구리를 쓸 수 있으면 구리, 꼭 필요할 때만 광」이다. 케이블마다 트랜시버가 붙는 광은 그만큼 전력을 먹기 때문이다.</p><h3 id="cpo-3">③ 광 트랜시버 한 개는 무엇으로 되어 있고 누가 만드나</h3><p class="ins-lede">트랜시버 안에는 송신부와 수신부 증폭기, 변환 회로, 광섬유 연결부가 들어 있다. 그중 반도체 부품인 DSP·리타이머·드라이버·TIA(수신 증폭기)는 상당수가 브로드컴과 마벨의 미국산이다. 중국이 맡는 것은 주로 조립과 케이블 마무리다. 레이저 다이는 인듐인(InP) 기판을 쓴다. 광섬유 손실과 분산이 가장 적은 1310nm·1550nm 파장을 낼 수 있는 유일한 III-V 소재라 물리가 정한 선택이다. InP 웨이퍼는 아직 3~4인치라 신규 증설에 2~3년이 걸린다.</p><figure class="uc-fig"><p class="fig-title">광 트랜시버 한 개를 세 주체가 나눠 만든다</p><svg viewBox="0 0 640 272" role="img" aria-label="광 트랜시버 한 개를 세 주체가 나눠 만든다"><text x="18" y="28" class="t-sm" style="font-weight:850">반도체 — 브로드컴 · 마벨 (미국)</text><rect x="72" y="36" width="118" height="52" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="131" y="58" text-anchor="middle" class="t-sm">DSP · 드라이버</text><text x="131" y="76" text-anchor="middle" class="t-sm">TIA</text><rect x="198" y="36" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="257" y="58" text-anchor="middle" class="t-sm">레이저</text><text x="257" y="76" text-anchor="middle" class="t-sm">InP</text><rect x="324" y="36" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="383" y="58" text-anchor="middle" class="t-sm">광섬유</text><text x="383" y="76" text-anchor="middle" class="t-sm">연결부</text><rect x="450" y="36" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="509" y="58" text-anchor="middle" class="t-sm">조립</text><text x="509" y="76" text-anchor="middle" class="t-sm">케이블</text><text x="18" y="112" class="t-sm" style="font-weight:850">레이저 — 루멘텀 · 코히어런트 (미국 공장)</text><rect x="72" y="120" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="131" y="142" text-anchor="middle" class="t-sm">DSP · 드라이버</text><text x="131" y="160" text-anchor="middle" class="t-sm">TIA</text><rect x="198" y="120" width="118" height="52" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="257" y="142" text-anchor="middle" class="t-sm">레이저</text><text x="257" y="160" text-anchor="middle" class="t-sm">InP</text><rect x="324" y="120" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="383" y="142" text-anchor="middle" class="t-sm">광섬유</text><text x="383" y="160" text-anchor="middle" class="t-sm">연결부</text><rect x="450" y="120" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="509" y="142" text-anchor="middle" class="t-sm">조립</text><text x="509" y="160" text-anchor="middle" class="t-sm">케이블</text><text x="18" y="196" class="t-sm" style="font-weight:850">조립 — 이노라이트 · 이옵토링크 (중국 · 태국)</text><rect x="72" y="204" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="131" y="226" text-anchor="middle" class="t-sm">DSP · 드라이버</text><text x="131" y="244" text-anchor="middle" class="t-sm">TIA</text><rect x="198" y="204" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="257" y="226" text-anchor="middle" class="t-sm">레이저</text><text x="257" y="244" text-anchor="middle" class="t-sm">InP</text><rect x="324" y="204" width="118" height="52" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="383" y="226" text-anchor="middle" class="t-sm">광섬유</text><text x="383" y="244" text-anchor="middle" class="t-sm">연결부</text><rect x="450" y="204" width="118" height="52" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="509" y="226" text-anchor="middle" class="t-sm">조립</text><text x="509" y="244" text-anchor="middle" class="t-sm">케이블</text></svg><figcaption>줄마다 같은 모듈을 그렸고 짙은 칸이 그 줄의 회사가 맡는 부품입니다. 반도체는 미국, 레이저는 미국 공장, 조립은 중국계 회사의 중국·태국 공장입니다(Semi Doped 2026-08-11, SemiAnalysis 2025-04). 광섬유 연결부는 어느 줄도 짙지 않습니다 — 원문이 주체를 안 댔습니다.</figcaption></figure><p class="ins-lede">이 셋을 맡은 회사가 다르다. 레이저는 루멘텀과 코히어런트가 만든다. 200G급 EML(전기흡수 변조 레이저)과 고출력 레이저 같은 상위 부품을 만들 뿐 최종 조립은 하지 않는다. 조립은 중국계가 절반을 차지한다. 이노라이트(Zhongji Innolight) 한 곳의 세계 광트랜시버 시장 점유율이 27%(로이터)에서 34%(일부 애널리스트) 사이이고, 중국계를 다 합치면 약 50%다. 미국 안에서 실제로 트랜시버를 조립하는 상장사는 어플라이드 옵토일렉트로닉스뿐이다.</p><p class="ins-lede">생산지는 태국으로 옮겨 왔다. 2025년 4월 기준 이노라이트는 방콕 북쪽 약 100km에 공장을 두고 있다. 수율이 중국 공장의 90~95%까지 올라와 전체 생산능력의 절반가량이 태국에 있고, 전기 부분(PCBA)은 중국에서 만들어 태국으로 보낸 뒤 최종 조립한다. 이옵토링크는 방콕 남쪽 약 100km에 임차 공장을 두고 있는데 아직 단순 공정 위주다. SemiAnalysis 추정으로 세계 광모듈 생산 가치의 약 60%가 중국에, 32%가 태국에 있다. 다만 중국은 미국 광트랜시버 수입의 11%뿐이다. 그러니 중국 생산 대부분은 자국 내수용이다.</p><p class="ins-lede">레이저 회사의 공장은 반대로 미국에 있다. 루멘텀은 EML을 전공정부터 후공정까지 미국 산호세 단일 공장에서 만든다. CW 레이저만 태국에서 후공정을 한다. 코히어런트는 레이저 공장 열 곳 가운데 미국이 여섯, 유럽이 넷이다. 브로드컴은 싱가포르 둘, 미국 하나다.</p><p class="ins-lede">속도 세대는 이렇게 흘렀다. 2021~22년 100·200G, 2023~24년 400G였다. 지금은 800G 비중이 늘고 400G는 2025~26년 들어 줄었으며, 다음 세대 1.6T가 점유율을 키우는 중이다. 1.6T는 보통 레인당 200G 여덟 개로 구성된다. 3.2T로 가기 전에 레인당 300G인 2.4T 세대가 먼저 나올 수 있다. 구글이 TPU 팟 때문에 이를 밀고 있다는 말을 Vik Sekar가 업계에서 들었다고 전했다.</p><h3 id="cpo-4">④ CPO가 아끼는 전력과 돈은 클러스터 전체로 보면 얼마인가</h3><figure class="uc-fig"><p class="fig-title">800G 한 개 — 트랜시버와 CPO 광엔진의 전력</p><svg viewBox="0 0 640 232" role="img" aria-label="800G 한 개 — 트랜시버와 CPO 광엔진의 전력"><text x="18" y="18" class="t-sm" style="font-weight:850">800G 한 개 (와트)</text><rect x="196" y="54" width="88" height="136" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="240" y="46" text-anchor="middle" class="t-sm">16~17W</text><text x="240" y="210" text-anchor="middle" class="t-sm">DSP 트랜시버</text><rect x="356" y="150" width="88" height="40" rx="6" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="400" y="142" text-anchor="middle" class="t-sm">4~5W</text><text x="400" y="210" text-anchor="middle" class="t-sm">CPO 광엔진+레이저</text></svg><figcaption>SemiAnalysis 추정(2026-01)입니다. 800G DSP 트랜시버 한 개는 16~17W, 같은 800G 를 CPO 광엔진과 외부 레이저로 내면 4~5W 입니다. 막대 높이는 값에 비례하고 범위는 위 끝입니다.</figcaption></figure><p class="ins-lede">CPO를 사는 이유로 가장 많이 나오는 것이 전력이다. 모듈 하나 단위로 보면 절감폭이 크다. 800G DSP 트랜시버 한 개가 16~17W를 쓰는데, CPO의 광엔진과 외부 레이저는 800G당 4~5W로 73% 낮다. 메타가 ECOC 2025에서 낸 실측값도 비슷하다. 트랜시버 15W 대 브로드컴 Bailly CPO 5.4W로 65% 절감이다. 엔비디아는 루빈 발표에서 CPO 스위치가 트랜시버 전력을 약 70%, 트랜시버 비용을 약 75% 줄인다고 밝혔다.</p><figure class="uc-fig"><p class="fig-title">광 부품이 차지하는 비중 — 클러스터에서 모듈까지</p><svg viewBox="0 0 640 326" role="img" aria-label="광 부품이 차지하는 비중 — 클러스터에서 모듈까지"><rect x="20" y="44" width="48" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="44" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="20" y="245" width="48" height="35" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="68" y1="247" x2="78" y2="251" stroke="var(--ink-3)" stroke-width="1"/><text x="82" y="256" class="t-sm">네트워킹 15%</text><rect x="20" y="259" width="48" height="21" rx="5" fill="var(--ink-3)" fill-opacity="0.38" stroke="none"/><line x1="68" y1="270" x2="78" y2="270" stroke="var(--ink-3)" stroke-width="1"/><text x="82" y="275" class="t-sm">트랜시버 60%</text><text x="44" y="302" text-anchor="middle" class="t-sm">클러스터</text><text x="44" y="318" text-anchor="middle" class="t-sm">총비용</text><rect x="174" y="44" width="48" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="198" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="174" y="259" width="48" height="21" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="222" y1="261" x2="232" y2="258" stroke="var(--ink-3)" stroke-width="1"/><text x="236" y="263" class="t-sm">네트워킹 9%</text><rect x="174" y="271" width="48" height="9" rx="5" fill="var(--ink-3)" fill-opacity="0.38" stroke="none"/><line x1="222" y1="276" x2="232" y2="276" stroke="var(--ink-3)" stroke-width="1"/><text x="236" y="281" class="t-sm">트랜시버 45%</text><text x="198" y="302" text-anchor="middle" class="t-sm">클러스터</text><text x="198" y="318" text-anchor="middle" class="t-sm">총전력</text><rect x="328" y="44" width="48" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="352" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="328" y="162" width="48" height="118" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="376" y1="168" x2="386" y2="168" stroke="var(--ink-3)" stroke-width="1"/><text x="390" y="173" class="t-sm">DSP 약 50%</text><text x="352" y="302" text-anchor="middle" class="t-sm">트랜시버</text><text x="352" y="318" text-anchor="middle" class="t-sm">한 개 전력</text><rect x="482" y="44" width="48" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="506" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="482" y="210" width="48" height="70" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="530" y1="216" x2="540" y2="216" stroke="var(--ink-3)" stroke-width="1"/><text x="544" y="221" class="t-sm">DSP 20~30%</text><text x="506" y="302" text-anchor="middle" class="t-sm">트랜시버</text><text x="506" y="318" text-anchor="middle" class="t-sm">자재비</text></svg><figcaption>기둥 하나가 100% 입니다. 클러스터 총비용에서 네트워킹이 15%(옅은 조각)이고, 그 네트워킹 안에서 트랜시버가 60%(짙은 조각)입니다. 전력도 같은 짝입니다 — 네트워킹 9%, 그 안에서 트랜시버 45%. 짙은 조각의 % 는 옅은 조각 기준이고, 클러스터 대비 몇 % 인지는 원문이 안 적어서 곱하지 않았습니다. 오른쪽 둘은 트랜시버 한 개 안에서 DSP 가 차지하는 것으로, 전력의 약 절반과 자재비의 20~30%(위 끝 높이)입니다. 전부 SemiAnalysis 추정(2026-01, GB300 NVL72 3층망 기준)입니다.</figcaption></figure><p class="ins-lede">그런데 클러스터 전체로 올라가면 이 숫자가 작아진다. GB300 NVL72 20만 대를 3층망으로 묶으면 핵심 IT 전력이 435MW 드는데, 그중 광트랜시버가 먹는 것은 17MW다. 네트워킹은 애초에 클러스터 총전력의 9%뿐이다. 그래서 CPO로 네트워킹 전력을 23% 줄여도 총전력은 2%만 준다. 스위치 포트 수가 늘어 3층을 2층으로 평탄화해도 4%다. 루빈 원문은 클러스터 전체 전력의 약 1%라고 적었다.</p><p class="ins-lede">같은 저자가 낸 값이 1년 사이 계속 내려온 이력이 있다. GTC 2025 직후 SemiAnalysis는 GB200 NVL72 40만 대 기준으로, DSP 트랜시버 3층망을 CPO 2층망으로 바꾸면 클러스터 전력을 최대 12% 아끼고 트랜시버 전력 비중이 컴퓨트의 10%에서 1%로 준다고 추정했다. 열 달 뒤 CPO 원문에서는 이 값이 2~4%로 내려갔고, 그 두 달 뒤 루빈 원문에서는 약 1%로 다시 내려갔다. 기준 클러스터가 다르고(GB200 40만 대 대 GB300 20만 대) 계산 범위도 다르지만 방향은 분명하다. 서버 자체 전력이 워낙 커서 CPO는 「게임 체인저」라기보다 「점진적 개선」에 가깝다. 루빈 원문의 평가가 그렇다.</p><figure class="uc-fig"><p class="fig-title">광 부품값은 절반인데 클러스터 총비용은 3~7%만 준다</p><svg viewBox="0 0 640 232" role="img" aria-label="광 부품값은 절반인데 클러스터 총비용은 3~7%만 준다"><text x="18" y="18" class="t-sm" style="font-weight:850">스위치 한 대의 광 부품값 (천 달러)</text><rect x="24" y="82" width="88" height="108" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="68" y="74" text-anchor="middle" class="t-sm">72</text><text x="68" y="210" text-anchor="middle" class="t-sm">트랜시버</text><rect x="136" y="130" width="88" height="60" rx="6" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="180" y="122" text-anchor="middle" class="t-sm">35~40</text><text x="180" y="210" text-anchor="middle" class="t-sm">CPO 원가</text><rect x="248" y="54" width="88" height="136" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="292" y="46" text-anchor="middle" class="t-sm">80~90</text><text x="292" y="210" text-anchor="middle" class="t-sm">마진 얹은 CPO</text><line x1="352" y1="10" x2="352" y2="220" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="4 4"/><text x="372" y="18" class="t-sm" style="font-weight:850">클러스터 총비용 절감</text><rect x="384" y="150" width="88" height="40" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="428" y="142" text-anchor="middle" class="t-sm">3%</text><text x="428" y="210" text-anchor="middle" class="t-sm">3층망 그대로</text><rect x="504" y="95" width="88" height="95" rx="6" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="548" y="87" text-anchor="middle" class="t-sm">7%</text><text x="548" y="210" text-anchor="middle" class="t-sm">2층으로 평탄화</text></svg><figcaption>SemiAnalysis 추정(2026-01)입니다. 왼쪽은 Q3450 급 스위치 한 대에 드는 광 부품값으로, 트랜시버로 채우면 7만 2천 달러, CPO 광엔진 원가는 3만 5천~4만 달러인데 스위치 회사가 60% 마진을 얹으면 8만~9만 달러가 됩니다(점선). 범위 값은 위 끝 높이로 그렸습니다. 오른쪽은 클러스터 총비용 기준 절감폭입니다.</figcaption></figure><p class="ins-lede">돈도 같은 구조로 움직인다. 엔비디아 Q3450 CPO 스위치의 광엔진 원가는 FAU(광섬유 부착 유닛)까지 합쳐 시스템당 약 3만 5천~4만 달러다. 같은 대역폭을 트랜시버로 채우면 7만 2천 달러이니 절반인 셈이다. 그런데 스위치 회사가 60% 매출총이익률을 얹으면 8만~9만 달러가 되어 오히려 트랜시버보다 비싸질 수 있다. 트랜시버 시장은 여러 회사를 경쟁시켜 값을 깎을 수 있었지만, CPO는 소수 스위치 회사가 마진을 정한다. 3층망 기준 네트워킹 총비용은 31% 내려가지만, 클러스터 총비용은 3%만 내려간다. 2층으로 평탄화해도 7%다. SemiAnalysis의 결론은 이렇다. 스케일아웃 CPO는 비용 최대 7%, 전력 최대 4%를 아끼는 물건이다. 그 정도로는 현장 정비의 어려움과 신뢰성 불안, 소수 벤더 종속을 감수할 만큼 절실하지 않다. 실제로 하이퍼스케일러 사이에서 빨리 퍼지고 있지도 않다.</p><h3 id="cpo-5">⑤ 스케일아웃 스위치 — 2025년에 나온 첫 실물과 메타의 신뢰성 데이터</h3><p class="ins-lede">그래도 첫 실물은 스케일아웃 스위치로 나왔다. 엔비디아가 GTC 2025에서 공개한 Quantum X800-Q3450은 MPO 물리 포트 144개로 800G 논리 포트 144개, 또는 1.6T 72개를 낸다. 총 115.2T이고 2025년 하반기 출시다. 외부 광원(ELS) 모듈 18개를 쓰고, 모듈마다 CW DFB 레이저 칩이 여덟 개씩 든다. 광엔진 하나는 전기 쪽 200G PAM4 SerDes 여덟 채널과 광 쪽 200G 마이크로링 변조기 여덟 개로 1.6T를 낸다. 이더넷 쪽 Spectrum-X Photonics는 2026년 하반기 출시로, 패키지 하나짜리 6810(102.4T)과 패키지 넷짜리 6800(409.6T)이 있다. 패키지 하나에 광엔진이 36개 들어가는데 32개만 쓰고 넷은 예비로 둔다. 기판에 납땜돼 있어 고장 나도 갈 수 없기 때문이다.</p><p class="ins-lede">물량은 작다. 2026년 엔비디아 CPO 총출하는 1만~1만 5천 대다. 본격 양산이 아니라 시장 시험과 공급망 길들이기 단계라고 SemiAnalysis는 판단했다. 루빈 원문도 CPO 판보다 일반 트랜시버형 SN6600이 더 널리 쓰일 것으로 봤다. 엔비디아가 루빈 울트라 스케일업이 아니라 스케일아웃 스위치에서만 먼저 CPO를 내놓는 이유는 공급망 미성숙, 제조 난도, 고객 불안 셋이다. 이 스위치들은 신뢰성과 정비 데이터를 쌓는 예행연습인 셈이다.</p><p class="ins-lede">브로드컴이 먼저였다. 실제로 CPO 시스템을 처음 출하한 회사다. 1세대 Humboldt(Tomahawk 4, 25.6T, 광은 절반인 12.8T)를 거쳐 2세대 Bailly(Tomahawk 5, 51.2T 전량 광)를 냈다. ISSCC 2026에서는 64레인 6.4T 광엔진 여덟 개를 넣은 51.2T CPO 스위치를 실증했다. 올해 나오는 Davisson은 Tomahawk 6 기반으로 6.4T 광엔진 16개를 넣어 패키지당 102.4T를 낸다. 스위치 ASIC을 파는 회사로는 브로드컴과 시스코(G300, 102.4T)가 엔비디아와 나란히 있다.</p><p class="ins-lede">신뢰성 데이터는 메타가 냈다. 메타와 브로드컴이 ECOC 2025에서 발표한 실측을 보면, Bailly 51.2T 스위치 15대를 약 325일 돌려 104.9만 포트시간까지 장애와 정정 불가 오류(UCW)가 0건이었다. 평균 고장 간격은 트랜시버(2xFR4)가 50만~100만 시간인데 CPO는 260만 시간이었다. 루빈 발표에서는 이 값이 1,500만 포트시간 무결함으로 늘었다. Barber는 메타가 약 5만 GPU 규모에서 누적 약 5천만 시간을 시험해 링크 플랩이 없었다고 전했다. 다만 Barber 본인도 확신은 없다는 투로 말한 전언이다. SemiAnalysis는 이 데이터를 두 가지 이유로 유보했다. 15대를 열한 달 돌린 것은 실험실 조건이고, 데이터센터의 온도 변동과 먼지는 다르다. 그리고 미검출 장애율 0.06%는 낮아 보여도 장애 하나가 800G 포트 64개를 한꺼번에 죽인다.</p><p class="ins-lede">Barber는 더 무거운 이야기를 하나 짚었다. 플러거블의 고장 상당수는 광학에서 나오지 않는다. 커넥터에 먼지가 들어가는 「꽂는 구조」에서 나온다. CPO는 클린룸에서 조립돼 그 문제가 없다. 대신 CPO는 GPU 패키지에 영구 부착되니 「동등한」 신뢰성이 아니라 「훨씬 높은」 신뢰성을 입증해야 채택된다. 대형 클러스터는 링크 약 100만 개를 플러거블로 운용하는데 하루 수십 건씩 링크 장애가 난다. 반품된 모듈의 80%는 「이상 없음」 판정을 받는다. CPO에는 이 원인 불명 장애를 구조적으로 줄일 잠재력이 있다.</p><h3 id="cpo-6">⑥ 스케일업 — 엔비디아는 랙 안은 구리, 랙 사이만 빛</h3><p class="ins-lede">SemiAnalysis가 CPO의 진짜 시장이라고 부르는 곳은 스케일업이다. 스케일아웃이 아니다. 블랙웰 NVLink 5는 GPU당 단방향 7,200Gbit/s로, 백엔드 스케일아웃(CX-8 NIC 800Gbit/s)의 9배다. 대역폭이 9배면 광엔진 수요도 그만큼 커진다. GTC 2025 원문은 이미 CPO의 장기 잠재력이 576 GPU를 넘는 스케일업 월드 사이즈를 여는 데 있다고 썼다.</p><figure class="uc-fig"><p class="fig-title">엔비디아 스케일업 — 어디까지 구리인가</p><svg viewBox="0 0 640 190" role="img" aria-label="엔비디아 스케일업 — 어디까지 구리인가"><text x="10" y="28" class="t-sm" style="font-weight:850">루빈 (2026~)</text><text x="222" y="28" class="t-sm" style="font-weight:850">루빈 울트라</text><text x="434" y="28" class="t-sm" style="font-weight:850">파인만</text><rect x="10" y="44" width="196" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="108" y="70" text-anchor="middle" class="t-lab">NVL72</text><text x="108" y="94" text-anchor="middle" class="t-sm">랙 하나</text><text x="108" y="114" text-anchor="middle" class="t-sm">전부 구리</text><text x="108" y="134" text-anchor="middle" class="t-sm">양방향 SerDes 448G</text><rect x="222" y="44" width="196" height="108" rx="8" fill="none" stroke="var(--ink)" stroke-width="2.0"/><text x="320" y="70" text-anchor="middle" class="t-lab">NVL576</text><text x="320" y="94" text-anchor="middle" class="t-sm">오베론 랙 8개</text><text x="320" y="114" text-anchor="middle" class="t-sm">랙 안 구리</text><text x="320" y="134" text-anchor="middle" class="t-sm">랙 사이 CPO 소량</text><rect x="434" y="44" width="196" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="532" y="70" text-anchor="middle" class="t-lab">NVL1152</text><text x="532" y="94" text-anchor="middle" class="t-sm">카이버 랙 8개</text><text x="532" y="114" text-anchor="middle" class="t-sm">랙 안 ?</text><text x="532" y="134" text-anchor="middle" class="t-sm">랙 사이 CPO</text><path d="M206 98 L222 98" class="flow"/><path d="M418 98 L434 98" class="flow"/><text x="18" y="176" class="t-sm">점선 = 로드맵만 있는 것</text></svg><figcaption>GTC 2026 에서 확인된 로드맵(2026-03)과 그 뒤 연기 소식(2026-07)입니다. 랙 안은 세 세대 내내 구리이고 CPO 는 랙과 랙 사이에만 들어옵니다. 파인만 랙 안이 구리인지는 엔비디아 기술 블로그와 젠슨 황의 말이 갈려 물음표로 뒀습니다. 카이버 NVL144 는 2028년으로 밀렸고 CPO NVSwitch 는 파인만까지 없습니다.</figcaption></figure><p class="ins-lede">그런데 엔비디아의 실제 로드맵은 그보다 느리다. GTC 2026에서 확인된 내용은 이렇다. 루빈 NVL72(오베론)까지는 전부 구리다. 루빈 울트라도 NVL72·NVL144·NVL288까지 전부 구리다. 오베론 랙 여덟 개를 묶는 NVL576에 가서야 처음 랙과 랙 사이에만 CPO를 쓰는데, 그것도 소량 시험용이다. 일부 애널리스트는 카이버 랙 안(NVL144)에 CPO가 들어갈 것으로 기대했지만 전부 구리로 나왔다. 파인만 세대의 NVL1152(카이버 랙 여덟 개)에서는 CPO가 늘어난다. 다만 랙 안까지 바뀌는지는 말이 갈린다. 기술 블로그는 「랙 간에만」이라 썼는데, 젠슨 황은 재무 애널리스트 문답에서 「전부 CPO」라고 했다. SemiAnalysis의 기본 시나리오는 랙 안은 구리, 랙 사이는 CPO다. 다만 언제든 바뀔 수 있는 잠정 전망이라고 스스로 밝혔다. 랙 안을 광으로 바꾸는 것은 기술로는 가능하지만, 실제 채택 가능성은 매우 낮다고 봤다.</p><p class="ins-lede">일정은 더 밀렸다. 2026년 7월 링크드인 게시물에 따르면 카이버 NVL144는 GTC 시연 석 달 만에 12개월 넘게 밀려 2028년으로 넘어갔다. PCB 미드플레인 제작이 어렵다는 이유다. NVL72 둘을 등 맞대는 NVL72x2도 취소됐고, CPO NVSwitch는 파인만 세대까지 나오지 않는다. 루빈 울트라의 스케일업에는 공백이 생긴 셈이다.</p><figure class="uc-fig"><p class="fig-title">루빈 울트라 NVL576 랙 지출 — HBM 을 깎자 스케일업 네트워킹이 세 배</p><svg viewBox="0 0 640 326" role="img" aria-label="루빈 울트라 NVL576 랙 지출 — HBM 을 깎자 스케일업 네트워킹이 세 배"><rect x="150" y="44" width="56" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="178" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="150" y="186" width="56" height="94" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="206" y1="233" x2="216" y2="233" stroke="var(--ink-3)" stroke-width="1"/><text x="220" y="238" class="t-sm">메모리 40%</text><rect x="150" y="177" width="56" height="9" rx="5" fill="var(--ink-3)" fill-opacity="0.38" stroke="var(--ink)" stroke-width="1.5"/><line x1="206" y1="182" x2="216" y2="182" stroke="var(--ink-3)" stroke-width="1"/><text x="220" y="187" class="t-sm">스케일업 네트워킹 4%</text><text x="178" y="302" text-anchor="middle" class="t-sm">디스펙 전</text><text x="178" y="318" text-anchor="middle" class="t-sm">HBM4E 12단 384GB</text><rect x="390" y="44" width="56" height="236" rx="6" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="418" y="36" text-anchor="middle" class="t-sm">100%</text><rect x="390" y="214" width="56" height="66" rx="5" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><line x1="446" y1="247" x2="456" y2="247" stroke="var(--ink-3)" stroke-width="1"/><text x="460" y="252" class="t-sm">메모리 28%</text><rect x="390" y="186" width="56" height="28" rx="5" fill="var(--ink-3)" fill-opacity="0.38" stroke="var(--ink)" stroke-width="1.5"/><line x1="446" y1="200" x2="456" y2="200" stroke="var(--ink-3)" stroke-width="1"/><text x="460" y="205" class="t-sm">스케일업 네트워킹 12%</text><text x="418" y="302" text-anchor="middle" class="t-sm">디스펙 후</text><text x="418" y="318" text-anchor="middle" class="t-sm">HBM4 8단 192GB</text></svg><figcaption>SemiAnalysis 링크드인 게시물(2026-09-02)의 값입니다. 엔비디아가 루빈 울트라의 HBM 을 HBM4E 12단에서 HBM4 8단으로 깎자 랙 지출에서 메모리는 40% 에서 28% 로 내려가고 스케일업 네트워킹(NVL576 NPO 구성)은 4% 에서 12% 로 오릅니다. 두 조각 밖의 나머지는 원문이 안 나눠 비워 뒀습니다.</figcaption></figure><p class="ins-lede">NVL576의 랙 사이 연결을 SemiAnalysis는 2026년 9월 게시물에서 「NPO 구성」이라고 불렀다. 그 게시물의 주제는 메모리였다. 엔비디아가 루빈 울트라의 HBM을 HBM4E 12단(384GB)에서 HBM4 8단(192GB)으로 깎았고, HBM·D램 값이 뛰어 메모리가 총소유비용의 40%까지 차지했기 때문이라는 설명이다. 디스펙으로 HBM 비용이 50% 넘게 줄어 메모리 비중은 40%에서 28%로 내려가는데, 그 돈은 사라지지 않고 스케일업 네트워킹으로 옮겨 간다. NVL576 NPO 구성에서 스케일업이 랙 지출의 4%에서 12%로 세 배가 된다. 랙 안 구리가 버티는 동안에도 랙 사이 광 부품이 랙 지출에서 차지하는 비중은 커진다.</p><p class="ins-lede">구리 백플레인을 지키는 이유는 성능에도 있다. 2026년 8월 말 SemiAnalysis는 긴 문맥 에이전트 워크로드에서 GB300 NVL72가 H200보다 달러당 성능 7배라는 InferenceX 측정을 올렸다. 프리필과 디코드를 다른 기계에 나누는 분리 구성과 전문가를 넓게 펼치는 병렬화, 둘 다 NVL72의 구리 백플레인이 받쳐 주기 때문이라는 설명이다.</p><p class="ins-lede">랙 사이 CPO가 늦어지는 이유는 CPO 원문에 있다. 루빈 울트라의 스케일아웃 CPO는 2027년 말이 목표다. 그런데 공급망이 수천만 개의 CPO 엔드포인트를 대지 못할 전망이라 진짜 전환점은 파인만이라고 봤다. 2022년에도 비슷한 일이 있었다. 엔비디아는 DGX H100 NVL256 「Ranger」를 광트랜시버 과다와 2계층 네트워크 때문에 비용·전력·신뢰성 문제로 취소한 적이 있다. 지금 있는 블랙웰 NVL576 시제품도 플러거블 광트랜시버를 쓴다.</p><p class="ins-lede">스케일업용 CPO의 신호 방식은 2026년 들어 정리됐다. 2026년 3월 결성된 OCI MSA(AMD·브로드컴·메타·마이크로소프트·엔비디아·오픈AI)는 스케일업에는 파장을 여러 개 싣는 DWDM을, 스케일아웃에는 기존 PAM4를 쓰기로 하고 200Gb/s 양방향 링크를 표준으로 정했다. Barber는 이렇게 설명했다. IEEE는 심볼당 2비트인 PAM4로 발전해 왔는데, OCI는 이를 심볼당 1비트인 NRZ로 되돌려 속도를 50GHz로 낮췄다. 대신 광섬유 한 가닥에 파장 넷을 실어 200G를 유지한다. NRZ의 고유 비트오류율이 PAM4보다 약 100만 배 낮아 등화와 오류정정 부담이 줄기 때문이다. 레이저 하나가 구동하는 광섬유 수도 플러거블의 4:1에서 8:1로 늘고, OCI에서는 최대 32:1까지 갈 수 있다. 엔비디아는 ISSCC에서 32Gb/s 파장 여덟 개를 묶고 아홉째 파장을 클럭 전용으로 쓰는 방식을 제안했다. OCI 표준은 클럭 파장 없이 전부 데이터에 쓴다.</p><p class="ins-lede">첫 스케일업 CPO 고객은 아마존일 가능성이 크다. 마벨은 셀레스티얼 AI를 인수하면서 매출 조건 둘을 걸었다. 2028년 말까지 연 매출 10억 달러 런레이트(2028 회계연도 초 5억 달러에서 두 배로)를 달성하는 것과, 누적 매출 20억 달러를 달성하면 22억 5천만 달러를 추가로 받는다. 아마존에 준 워런트(행사가 87.0029달러, 2030년 12월 31일까지)는 아마존의 Photonic Fabric 구매 실적에 따라 베스팅된다. SemiAnalysis는 이를 트레이니움 4 탑재로 읽었다. 인수 총액은 원문 어디에도 나오지 않는다.</p><h3 id="cpo-7">⑦ 화웨이와 구글은 다른 길로 랙을 넘었다</h3><p class="ins-lede">엔비디아가 구리로 버티는 사이, 랙 하나를 넘는 스케일업을 먼저 해낸 곳은 둘이다. 화웨이는 빛을 물량으로 퍼부었고, 구글은 빛을 스위치 없이 회선으로 묶었다. Barber는 구글과 화웨이가 이미 랙 6~10개, GPU 300~1,000개 규모로 스케일업을 늘렸다고 말했다.</p><figure class="uc-fig"><p class="fig-title">랙 하나를 넘는 스케일업 — 세 회사의 세 답</p><svg viewBox="0 0 640 188" role="img" aria-label="랙 하나를 넘는 스케일업 — 세 회사의 세 답"><text x="10" y="28" class="t-sm" style="font-weight:850">엔비디아 GB200</text><text x="222" y="28" class="t-sm" style="font-weight:850">화웨이 CloudMatrix 384</text><text x="434" y="28" class="t-sm" style="font-weight:850">구글 TPUv7</text><rect x="10" y="44" width="196" height="130" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="108" y="70" text-anchor="middle" class="t-lab">NVL72 · 랙 하나</text><text x="108" y="94" text-anchor="middle" class="t-sm">직결 구리 백플레인</text><text x="108" y="114" text-anchor="middle" class="t-sm">스케일업 트랜시버 0</text><text x="108" y="134" text-anchor="middle" class="t-sm">약 145kW</text><rect x="222" y="44" width="196" height="130" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="320" y="70" text-anchor="middle" class="t-lab">랙 16개 · 칩 384</text><text x="320" y="94" text-anchor="middle" class="t-sm">400G 트랜시버 6,912개</text><text x="320" y="114" text-anchor="middle" class="t-sm">GPU당 7개 물량 투입</text><text x="320" y="134" text-anchor="middle" class="t-sm">약 600kW</text><rect x="434" y="44" width="196" height="130" rx="8" fill="none" stroke="var(--ink)" stroke-width="2.0"/><text x="532" y="70" text-anchor="middle" class="t-lab">큐브 64 × OCS</text><text x="532" y="94" text-anchor="middle" class="t-sm">큐브 안 구리 · 경계 광</text><text x="532" y="114" text-anchor="middle" class="t-sm">TPU당 트랜시버 1.5개</text><text x="532" y="134" text-anchor="middle" class="t-sm">최대 9,216개</text></svg><figcaption>엔비디아는 랙 하나 안에서 구리로 끝내고, 화웨이는 트랜시버를 6,912개 넣어 랙 16개를 묶고, 구글은 큐브 64개 안은 구리·경계는 광과 OCS 로 9,216개까지 갑니다. 전력 두 값은 단위가 다릅니다(랙 대 슈퍼노드). 칩 수도 다릅니다. SemiAnalysis 2025-04 · 2025-11 값입니다.</figcaption></figure><p class="ins-lede">화웨이 CloudMatrix 384는 랙 16개(컴퓨트 12개, 스케일업 스위치 4개)에 어센드 910C 384개를 넣는다. Pod 하나에 400G 광트랜시버 6,912개를 쓰는데, 스케일업에 5,376개, 스케일아웃에 1,536개가 들어간다. GPU 하나당 단방향 2,800Gbit/s를 트랜시버 일곱 개로 채우는 「물량 투입」이다. NVL72는 같은 대역폭을 직결 구리로 낸다. 대가는 전력이다. 슈퍼노드 하나가 약 600kW로 GB200 NVL72 랙 약 145kW의 4배 이상이고, FLOP당 전력은 2.5배 나쁘다. 400G SR8 멀티모드(단가 100달러 미만) 기준으로 보면 슈퍼노드의 총소유비용은 NVL72 랙의 약 2.2배, 전력은 10배 이상이다. 다만 GPU 하나 기준으로는 총소유비용이 NVL72의 40%다. SemiAnalysis는 칩 자체는 한 세대 뒤졌지만, 광을 아낌없이 쓴 이 스케일업 설계는 엔비디아와 AMD의 현행 제품보다 한 세대 앞섰다고 평가했다.</p><p class="ins-lede">화웨이의 다음 판은 더 크다. 2026년 9월 WAIC에서 처음 보인 Atlas 950 SuperPoD는 랙 16대에 Ascend 950 NPU를 64개씩 얹어 NPU 1,024개를 한 덩어리로 묶는다. 배선은 NPU 하나의 포트를 셋으로 나눈다. 7개는 같은 트레이 안 NPU끼리 플라이오버 케이블로, 7개는 랙 안 2D 메시로, 남은 4개는 백플레인의 저기수 스위치로 간다. 랙끼리는 스위치 32대가 각각 100G 네 가닥으로 이웃 여섯 대에 붙고, 여기에 화웨이 자체 StarMatrix 800G LPO 광트랜시버를 쓴다. DSP를 안 쓰는 LPO라 값과 전력이 내려간다. 다음 세대 Ascend 960에 NPO를 넣을지 1.6T LPO로 갈지는 아직 안 정했다고 한다. CloudMatrix 384가 트랜시버 물량으로 밀었다면, Atlas 950은 랙 안은 케이블과 메시로 두고 랙 사이만 LPO로 잇는 구조다.</p><p class="ins-lede">구글은 트랜시버를 아끼고 OCS를 쓴다. TPUv7(아이언우드)의 기본 단위는 TPU 64개를 4×4×4 정육면체로 묶은 큐브다. 정육면체 안 이웃 여섯 개는 구리 케이블(DAC)로, 정육면체 경계를 넘는 연결은 광트랜시버와 OCS로 이어 최대 9,216개까지 하나로 늘린다. 평균으로 TPU 하나당 광트랜시버는 약 1.5개다. OCS는 소프트웨어로 연결을 바꿔 수천 가지 클러스터 꼴을 만들 수 있다. 다만 9,216개 슬라이스는 장애에 약해서 실전 상한은 약 8,000개다. 2026년 5월 공개된 추론용 TPUv8i는 「Boardfly」로 파드 하나에 1,152개까지 스케일업한다. TPU 그룹 36개가 그룹당 1.6T DR4 QSFP 32개로 OCS 층에 붙는 구조다. 아직 소문 단계이지만, TPUv9t는 6D 토러스로 칩당 ICI 링크를 6개에서 12개로 늘리고 랙 격자 자체를 광으로 엮는다는 말도 있다. 최악 경로가 24홉에서 12홉으로 줄지만 광부품과 OCS가 훨씬 많이 든다.</p><p class="ins-lede">구글은 CPO 자체에는 가장 소극적이다. 브로드컴의 최대 ASIC 고객인데도, 「성능보다 신뢰성」이라는 인프라 철학 때문에 CPO의 신뢰성 불확실성이 걸린다. 대신 코히런트 라이트 트랜시버가 TPUv9 스케일업에 대량 채택되기 직전이다. 이노라이트 2.4T 모듈에 마벨 커스텀 DSP를 붙인 조합인데, CPO가 무르익기 전까지 쓸 만한 대안으로 꼽힌다. 코히런트 라이트는 마벨이 ISSCC에서 낸 800G 트랜시버다. 수십 km에서 분산이 거의 없는 O밴드 파장을 써 DSP 부담을 줄였고, 실리콘 포토닉스를 뺀 비트당 3.72pJ로 완전 코히런트의 절반이다.</p><h3 id="cpo-8">⑧ 부품 넷 — 패키징·광섬유 부착·레이저·변조기</h3><p class="ins-lede">CPO가 늦은 이유를 SemiAnalysis는 네 가지로 정리했다. ① 패키징 복잡도(광엔진보다 패키징 비용이 더 크다)와 제조 난도 ② 신뢰성과 수율 ③ 광과 전기 부품이 붙어 생기는 열 ④ 표준 부재다. 여기에 고객의 근본 불안도 있다. 여러 트랜시버 회사를 경쟁시키기는 쉬운데, 소수 스위치 회사에 종속되면 그럴 수 없다. 이제 부품별로 어디가 막혔는지 본다.</p><p class="ins-lede">패키징은 TSMC의 COUPE로 수렴했다. 광엔진은 PIC(광집적회로, 변조기와 광검출기)와 EIC(전기집적회로, 드라이버와 수신 증폭기)로 나뉜다. 한 웨이퍼에서 둘 다 만드는 단일공정은 광공정이 35nm 아래로 못 내려가서 EIC 성능이 막힌다. COUPE는 EIC를 N7로, PIC를 SOI N65로 따로 만들어 범프 없는 SoIC 본딩으로 붙인다. 같은 전력에서 대역폭 밀도가 범프 방식의 23배 이상이다. 엔비디아가 GTC 2025에서 COUPE 광엔진을 처음 공개했고, 브로드컴도 로드맵을 COUPE로 돌렸다. 브로드컴이 쓰던 팬아웃 웨이퍼레벨 패키징은 기생 커패시턴스 때문에 레인당 100G를 못 넘는다는 것이 브로드컴 자체 추정이다. COUPE를 택하면 TSMC가 만든 PIC만 쓰게 된다. TSMC가 다른 파운드리의 실리콘 포토닉스 웨이퍼는 패키징해 주지 않기 때문이다. 기판도 커진다. 엔비디아 Spectrum-X 패키지는 110×110mm로 블랙웰의 70×76mm보다 훨씬 크다. 광엔진 36개를 전부 양품으로 플립칩 본딩해야 완성된다.</p><p class="ins-lede">광섬유 부착이 가장 손이 많이 간다. 1.6T 광엔진 하나에 광섬유 20가닥(송신 8, 수신 8, 레이저 4)이 붙어 Q3450 한 대에는 1,440가닥이 필요하다. 커플링 손실을 재는 검사가 자동화되지 않아, 코닝 추정으로 가닥당 10~15분 걸리는 수작업이다. 수천 가닥을 정리하는 셔플박스는 48가닥이면 약 150달러, 500가닥이면 약 1,600달러로 올라가고 Q3450 기준으로는 3,000달러를 넘는다. 커플링 방식은 둘이다. 엣지 커플링은 손실이 적고 파장 범위가 넓지만, 1차원이라 붙일 수 있는 가닥 수가 적고 다이 적층과 안 맞는다. 격자 커플링은 위에서 비스듬히 넣어 2차원으로 촘촘히 배치할 수 있고 웨이퍼 단계 검사가 쉽지만, 손실이 크고 파장 대역이 좁다. 엔비디아와 TSMC는 격자를 택했다. 글로벌파운드리는 다르다. 격자 대신 웨이퍼에 심은 마이크로 미러로 빛을 수직으로 받아 수평으로 꺾는다. 격자는 대역폭 한계 때문에 O밴드(약 1310nm) 전체를 못 덮지만 미러는 전체를 쓸 수 있어 파장을 늘리기 좋다고 Barber는 설명했다.</p><p class="ins-lede">왜 수작업인지를 2026년 9월 게시물이 풀었다. 공동패키지·근접패키지로 갈수록 광섬유를 PIC(광집적회로) 자체에 붙여야 하고, 코어가 도파관에서 0.5마이크론 안에 들어야 대역폭 손실이 없다. 신호 피크를 재 가며 서브마이크론으로 맞춰 접착하는 능동 정렬은 연속 공정이라 비현실적이고 재작업도 안 된다. 대안인 수동 정렬은 둘이다. ① 여섯 개 접촉점으로 기계적으로 위치를 잡는 운동학적 결정론 정렬은 정확하지만 재현이 어렵고 접착 오차가 그대로 대역폭 손실로 이어진다. ② 여러 접촉점의 제조 오차를 서로 상쇄시켜 평균화하는 탄성 평균법은 성형·스탬핑으로 훨씬 싸게 만들 수 있지만 반복성과 기계 설계에 제약이 있다.</p><p class="ins-lede">레이저는 밖으로 뺐다. 레이저는 시스템에서 가장 자주 고장 나는 부품이다. 칩 안에 넣으면 고장 하나의 영향 범위가 크고, 가장 뜨거운 칩 옆에 놓이게 된다. 그래서 업계는 외부 광원(ELS)을 OSFP 꼴의 탈착식 모듈로 두는 데 합의했다. 대신 커넥터와 커플링과 변조기에서 출력이 새 나가는 만큼 레이저 하나가 24.5dBm을 내야 한다. 레이저와 열전냉각기가 ELS 전력의 약 70%를 차지한다. 엔비디아의 레이저 파트너는 루멘텀(단일 고출력 DFB), Ayar Labs(DFB 어레이), Innolume, Xscape, Enlightra, Iloomina다. Q3450 초기 물량은 루멘텀 단독이고, 2026년 하반기에 코히어런트가 합류할 전망이다. 레이저 기판은 두 갈래다. 실리콘 포토닉스와 EML은 InP를, VCSEL은 갈륨비소(GaAs)를 쓴다. PicoJool의 Yuen은 InP 기판이 이미 제약된 반면 GaAs는 「제약 없음」이며, VCSEL은 25년째 월 수백만 개를 출하해 온 공급망이라고 주장했다. 그의 회사는 200G/레인 VCSEL을 다음 분기 샘플링하고, 대량 생산 목표는 2027년 초로 잡고 있다.</p><p class="ins-lede">변조기는 셋 중 고르는 문제다. MZM(마흐-젠더, 약 12,000µm²)은 크고 전력을 많이 쓰지만 온도에는 둔감하다. MRM(마이크로링, 25~225µm²)은 작고 효율이 좋지만 온도에 매우 민감하다. 70~90pm/°C라서 2°C만 변해도 공진 파장이 0.14nm 움직여 붕괴 기준선 0.1nm를 넘는다. EAM(전기흡수, 약 250µm²)은 중간 크기이고 순간 35°C 변화까지 견딘다. 엔비디아·TSMC·Ayar Labs·Lightmatter·Ranovus는 밀도 때문에 MRM을, Nubis는 상호운용성 때문에 MZM을, 셀레스티얼 AI는 열 때문에 EAM을 택했다. EAM은 밴드갭이 C밴드(1530~1565nm)에 있어 표준 O밴드(1260~1360nm) 레이저 생태계와 안 맞고, GeSi 소재의 신뢰성 우려도 있어 폐쇄형 시스템에 머무른다. 마벨은 ECTC 2026에서 셀레스티얼 AI 기술로 EAM 광엔진을 시연했다. SemiAnalysis는 대량생산 난도를 우려했고, 단기적으로는 COUPE류 수직 적층이 더 현실적이라고 봤다. 열 문제는 실측도 있다. PIC 온도 상승폭은 기판 실장이면 5°C 미만, 실리콘 브릿지면 약 20°C, 실리콘 인터포저면 약 25°C였다. 열전도율이 낮은 유기 기판이 오히려 PIC를 열에서 떼어 놓는 셈이다.</p><p class="ins-lede">웨이퍼 크기 문제도 남아 있다. Barber에 따르면 오늘날 실리콘 포토닉스 대부분이 아직 200mm 웨이퍼를 쓴다. 300mm로 가면 웨이퍼당 다이 수가 2.25배로 늘어난다. 글로벌파운드리는 뉴욕 몰타 공장을 일찍 300mm로 전환해 매출 기준 최대 실리콘 포토닉스 파운드리가 됐다고 주장했다.</p><h3 id="cpo-9">⑨ CPO가 무르익기 전에 중간 단계가 시장을 먹는다</h3><p class="ins-lede">원문 열여덟 달을 시간순으로 놓고 보면, CPO보다 먼저 시장을 차지하는 것은 중간 단계들이다. 랙 사이 스케일아웃에서는 AEC(능동형 구리 케이블)가 먼저 왔다. 메타는 Tomahawk 6 Minipack-4에 1.6T AEC를 붙여 2026년 하반기에 램프하고, xAI는 1.6T AEC를 리프·스파인·코어 전 구간에 쓴다. 엔비디아의 Groq 계열 LPU 랙도 랙과 랙을 데이지 체인으로 묶는데, 대부분 100G급 AEC로 처리하고 필요할 때만 광을 쓴다.</p><p class="ins-lede">플러거블 안에서는 코히런트 라이트와 XPO가 나왔다. 코히런트 라이트는 7절에서 본 대로 TPUv9에 들어간다. XPO는 컴퓨텍스 2026에서 Vik Sekar가 처음 실물로 본 손 크기 액체냉각 커넥터로, OSFP 여덟 개를 하나로 합쳤다. Yuen에 따르면 Andy Bechtolsheim이 만든 이 XPO는 이미 플러거블 하나에서 12.8T를 낸다.</p><p class="ins-lede">NPO는 CPO로 가기 바로 전 단계다. 컴퓨텍스에서는 첨단 패키징 없이 광엔진을 소켓에 넣는 NPO가 당장의 대안으로 논의됐다. Lightmatter의 출시 순서도 같은 흐름이다. 2026~27년 NPO, 2027~28년 COUPE 정렬 CPO, 2029년 이후 광 인터포저 M1000 순이다. 하이퍼스케일러가 CPO를 서두르지 않고 먼저 경험을 쌓게 하려는 전략이다. Q3450의 광서브어셈블리가 탈착되니 엄밀히는 NPO에 가깝다는 지적도 있다.</p><p class="ins-lede">엔비디아가 GTC 2026 카이버 전시 랙에서 보인 MBOM(미드보드 광모듈)은 이 중간 단계 가운데 가장 논란이 크다. 스케일아웃용 OSFP 케이지를 없애고 컴퓨트 트레이당 MPO 포트 넷만 남겼다. 드라이버와 TIA는 보드에 내장하고 DSP만 남긴 모듈을 LGA 소켓으로 PCB에 붙인다. MBOM 하나가 800G 포트 둘을 낸다. 문제는 일반 플러거블도 AEC도 못 꽂는다는 데 있다. 플러거블 시장 전체를 위협하는 변화라서 하이퍼스케일러가 강하게 반발했고, 최종 설계는 아직 유동적이다.</p><p class="ins-lede">스케일어크로스에서는 광이 늘어난다. 2026년 7월 링크드인 게시물은 ZR/ZR+ 코히런트 광부품과 광회선 시장이 2026년 30억 달러에서 2028년 140억 달러로 커진다고 봤다. 아마존은 ToR 스위치끼리 직접 잇지 않고, 전원이 필요 없는 수동 광부품인 셔플박스를 거치는 RNG 구조를 대규모로 상용 배포했다. 팻트리보다 최대 45% 비용을 아낀다는 것이 아마존의 주장이다.</p><h3 id="cpo-10">⑩ 누가 어디 서 있나</h3><figure class="uc-fig"><p class="fig-title">엔비디아 CPO 공급망 다섯 단계 — 단계마다 이미 소수다</p><svg viewBox="0 0 640 166" role="img" aria-label="엔비디아 CPO 공급망 다섯 단계 — 단계마다 이미 소수다"><text x="18" y="28" class="t-sm" style="font-weight:850">원문이 세운 다섯 단계 (2026-01)</text><rect x="14" y="44" width="116" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="72" y="70" text-anchor="middle" class="t-lab">레이저 · ELS</text><text x="72" y="94" text-anchor="middle" class="t-sm">루멘텀</text><text x="72" y="114" text-anchor="middle" class="t-sm">코히어런트</text><text x="72" y="134" text-anchor="middle" class="t-sm"></text><rect x="138" y="44" width="116" height="108" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2.0"/><text x="196" y="70" text-anchor="middle" class="t-lab">FAU</text><text x="196" y="94" text-anchor="middle" class="t-sm">TFC Optical</text><text x="196" y="114" text-anchor="middle" class="t-sm">Senko</text><text x="196" y="134" text-anchor="middle" class="t-sm">FOCI</text><rect x="262" y="44" width="116" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="320" y="70" text-anchor="middle" class="t-lab">셔플박스</text><text x="320" y="94" text-anchor="middle" class="t-sm">MPO 커넥터</text><text x="320" y="114" text-anchor="middle" class="t-sm">T&S · 코닝</text><text x="320" y="134" text-anchor="middle" class="t-sm">US Conec</text><rect x="386" y="44" width="116" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="444" y="70" text-anchor="middle" class="t-lab">광엔진 패키징</text><text x="444" y="94" text-anchor="middle" class="t-sm">TSMC COUPE</text><text x="444" y="114" text-anchor="middle" class="t-sm">ASE · 패브리넷</text><text x="444" y="134" text-anchor="middle" class="t-sm">Shunsin</text><rect x="510" y="44" width="116" height="108" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/><text x="568" y="70" text-anchor="middle" class="t-lab">E/O 시험</text><text x="568" y="94" text-anchor="middle" class="t-sm">키사이트</text><text x="568" y="114" text-anchor="middle" class="t-sm">Ficontec</text><text x="568" y="134" text-anchor="middle" class="t-sm">테라다인</text><path d="M130 98 L138 98" class="flow"/><path d="M254 98 L262 98" class="flow"/><path d="M378 98 L386 98" class="flow"/><path d="M502 98 L510 98" class="flow"/></svg><figcaption>SemiAnalysis 가 세운 다섯 단계(2026-01)를 끝에서 끝까지 그렸습니다. 상자 안 이름은 원문이 유력 공급사로 적은 곳만이고 순서는 원문 그대로입니다. 짙은 칸이 FAU 인 것은 이 글의 판단입니다 — 검사가 가닥당 10~15분 수작업이라 가장 막힌 자리입니다.</figcaption></figure><p class="ins-lede">CPO 원문이 그린 엔비디아 공급망은 다섯 단계다. ① 레이저와 외부 광원 ② FAU ③ 셔플박스·MPO 커넥터·MT 페룰 ④ 광엔진 제조(TSMC)와 OSAT ⑤ 전기광학 시험 장비다. 단계마다 이미 소수 회사로 좁혀졌다. 레이저는 루멘텀 단독에서 코히어런트가 합류하는 구도로 가고 있고, 후루카와와 브로드컴이 프리미엄 진영이다. 위안제·시자 같은 중국계는 고출력 CPO용에는 아직 진입장벽이 있다. FAU는 엔비디아와 3년 공동 개발한 TFC Optical이 Q3450의 유력 공급사이고, Senko는 Spectrum-X와 브로드컴 TH6를, FOCI는 스케일업 CPO를 잘 맡는다. 셔플박스는 T&S Communications가 특허 낸 자동 정렬 장비로 선두를 잡았고, 코닝이 배선 설계를 맡아 T&S에 하도급한다. MPO 커넥터는 US Conec·T&S·Senko·후쿠시마·FOCI가 나눠 맡는다. 제조와 패키징은 TSMC와 ASE/SPIL·Shunsin·패브리넷이 맡는다. ASE는 루빈 랙 CPO까지 엔비디아 공급망의 핵심이고, Shunsin은 브로드컴과 밀접하다. 패브리넷은 엔비디아 광모듈 조립에서 광엔진 패키징과 풀시스템 조립으로 영역을 넓히는 중이다. 시험 장비는 표준 시험법이 없는 상태에서 키사이트·Ficontec·테라다인이 경쟁한다.</p><p class="ins-lede">회사를 단계별로 정리하면 아래 표와 같다. 값은 그 회사가 공표했거나 SemiAnalysis가 적은 값이다. 빈칸은 원문에 없는 부분이다.</p><p class="ins-lede"><div class="biz-tw"><table class="biz-t"><caption>값은 그 회사가 공표했거나 SemiAnalysis 가 적은 것이고, 빈칸은 원문에 없는 자리입니다. 「언제 것」은 원문 발행일이며 「회사 주장」은 그 회사 사람이 말한 값입니다.</caption><thead><tr><th>회사</th><th>자리</th><th>원문이 적은 것</th><th>언제 것</th></tr></thead><tbody><tr><td>엔비디아</td><td>스위치·GPU, CPO 첫 대량 발주자</td><td>Q3450(115.2T) 2025년 하반기, Spectrum-X 2026년 하반기, 2026년 출하 1만~1.5만 대. 랙 안은 구리, 랙 사이 CPO는 NVL576부터. NVL576 NPO 구성에서 스케일업이 랙 지출 4%→12%</td><td>2026-01 · 2026-03 · 2026-09</td></tr><tr><td>브로드컴</td><td>스위치 ASIC, CPO 첫 출하</td><td>Bailly 51.2T 전량 광, Davisson 102.4T. FOWLP 100G 한계로 COUPE 전환, 사실상 재설계</td><td>2026-01 · 2026-04</td></tr><tr><td>마벨</td><td>DSP·커스텀 ASIC, 셀레스티얼 AI 인수</td><td>코히런트 라이트 800G(3.72pJ/bit), OMIB 광엔진 1.8Tbps/mm², 아마존 워런트</td><td>2026-04 · 2026-07</td></tr><tr><td>TSMC</td><td>광엔진 패키징 COUPE</td><td>엔비디아·브로드컴 모두 COUPE, 다른 파운드리 PIC는 안 받음</td><td>2026-01</td></tr><tr><td>글로벌파운드리</td><td>실리콘 포토닉스 파운드리</td><td>300mm 몰타 공장, 첫 OCI 대응 플랫폼 GF Scale, 마이크로 미러 커플링</td><td>2026-08 · 회사 주장</td></tr><tr><td>루멘텀 · 코히어런트</td><td>레이저(InP)</td><td>Q3450 ELS 루멘텀 단독, 코히어런트 2026년 하반기 합류 전망. 조립은 안 한다</td><td>2026-01 · 2026-08</td></tr><tr><td>이노라이트 · 이옵토링크</td><td>트랜시버 조립</td><td>이노라이트 점유율 27~34%, 중국계 합계 약 50%, 태국 공장</td><td>2025-04 · 2026-08</td></tr><tr><td>패브리넷</td><td>태국 최종 조립</td><td>엔비디아 광모듈에서 CPO 풀시스템으로 확장 중</td><td>2026-01</td></tr><tr><td>코닝 · TFC · T&S · Senko · FOCI</td><td>광섬유·FAU·셔플박스·커넥터</td><td>FAU 검사 가닥당 10~15분 수작업(코닝 추정), 셔플박스 3,000달러 이상</td><td>2026-01</td></tr><tr><td>셀레스티얼 AI(마벨) · Ayar Labs · Lightmatter · Nubis(시에나) · Ranovus · Xscape · Scintil</td><td>CPO 전문기업</td><td>폐쇄형(셀레스티얼·Ayar) 대 개방형(Nubis·Ranovus). Lightmatter는 NPO 먼저</td><td>2026-01</td></tr><tr><td>PicoJool</td><td>VCSEL(GaAs)</td><td>200G/레인 샘플링, 대량 생산 2027년 초 목표, 파운드리는 대만 WIN</td><td>2026-07 · 회사 주장</td></tr><tr><td>인텔</td><td>CPO 4단계 로드맵</td><td>2024년 OCI 칩렛 4T 약 5pJ/bit, 2025년 탈착식 광 커넥터, 2027년 3D 적층 목표</td><td>2026-01</td></tr><tr><td>구글</td><td>OCS, CPO에 가장 소극적</td><td>TPUv7 TPU당 트랜시버 1.5개, TPUv9 코히런트 라이트</td><td>2025-11 · 2026-07</td></tr><tr><td>메타</td><td>신뢰성 데이터</td><td>Bailly 15대 325일 UCW 0건, MTBF 260만 시간, 1.6T AEC 2026년 하반기</td><td>2026-01 · 2026-02</td></tr><tr><td>화웨이</td><td>트랜시버 물량 스케일업</td><td>CM384는 Pod당 400G 트랜시버 6,912개, 약 600kW. Atlas 950은 16랙·NPU 1,024개, 랙 사이 800G LPO</td><td>2025-04 · 2026-09</td></tr><tr><td>삼테크 · TE · 앰피놀 · 몰렉스</td><td>공동패키지 구리 커넥터</td><td>CPX 폼팩터 CPC, 모듈당 핀 128개(200G 레인 32개)</td><td>2026-09</td></tr></tbody></table></div></p><p class="ins-lede">이 표에서 두 가지가 보인다. 첫째, 병목은 광학 자체에 있지 않다. 패키징 수율, FAU 수작업, 시험법 부재, 서비스성이 막고 있는데, 이 넷은 전부 「만드는 일」에 속한다. 둘째, 같은 회사가 서로 다른 두 역할을 겸한다. 마벨은 트랜시버 DSP를 팔면서 CPO 전문기업을 샀다. 브로드컴은 CPO 출하 1위인데 정작 최대 고객인 구글이 CPO를 가장 꺼린다. 루멘텀과 코히어런트는 트랜시버 시대에도 CPO 시대에도 똑같이 레이저를 판다.</p><h3 id="cpo-11">⑪ 관세와 수입 금지 — 공급망은 태국과 중국에 있다</h3><p class="ins-lede">정책이 두 번 이 공급망을 건드렸다. 2025년 4월 2일 발표된 관세율은 광모듈 주요 수입국별로 태국 37%, 베트남 46%, 중국 145%, 대만 32%, 말레이시아 24%, 멕시코 0%였다. SemiAnalysis 추정 가중평균은 40%, 중국을 빼면 27%였다. 중국은 2024년 미국 광모듈 수입의 약 14%뿐이다. 그런데 베트남·멕시코·태국·말레이시아 네 나라가 약 60%를 차지하고, 그 공장 다수가 중국 회사 것이다. CPO 공급망도 같은 모양이다. 스위치 ASIC과 광엔진은 TSMC 대만, 레이저 조립은 TFC의 태국·중국, FAU는 TFC와 FOCI(대만), 셔플박스는 T&S 중국, 최종 조립은 패브리넷 태국이다. 태국마저 관세 대상이 되면 대안이 없다는 것이 원문의 결론이다.</p><p class="ins-lede">두 번째는 2026년 8월 4일 로이터가 보도한 중국산 광트랜시버 신모델 수입 금지안이다. 명분은 데이터 탈취와 악성코드다. 진행자 둘은 실효성을 낮게 봤다. 핵심 반도체는 미국산이고 중국이 맡는 것은 조립이기 때문이다. 「신모델」만 규제하는데 리비전 변경이 신모델인지 아닌지 기준이 없고, 이노라이트의 싱가포르 자회사 테라홉은 부품과 조립 모두 중국과 무관하다. 발표 뒤 루멘텀·코히어런트·어플라이드 옵토일렉트로닉스 주가가 올랐지만, 앞의 둘은 애초에 조립을 하지 않는다. 미국 계약생산업체가 선제적으로 설비를 늘리기도 어렵다. 규제가 몇 달 만에 철회되면 늘린 설비만 남는 「일방향 문」이기 때문이다.</p><h3 id="cpo-12">⑫ 원문이 말하지 않은 것과 무엇이 나오면 판단이 바뀌나</h3><p class="ins-lede">이 글이 세운 순서(구리 한계 → 말 나누기 → 부품 → 전력과 돈 → 스케일아웃 → 스케일업 → 중간 단계 → 회사 → 정책)는 우리가 세웠다. 원문 어느 편도 이 차례로 쓰지 않았다. 값은 전부 SemiAnalysis 원문과 Semi Doped 전사에서 왔고, 우리가 계산한 것은 없다. 원문 발행일이 2025년 3월부터 2026년 8월까지 흩어져 있어서 같은 값이 세 번 바뀐 곳이 있는데(클러스터 전력 절감 12%→2~4%→1%), 이때는 나중 값을 앞세우고 앞의 값을 함께 밝혔다. 회사가 공표한 값과 SemiAnalysis 추정, 팟캐스트 진행자가 「들었다」고 한 값은 표와 본문에서 구분했다. 다만 메타의 5천만 시간이나 CPO 99% 수율처럼 전언으로만 있는 값은 그대로 전언으로 남겨 뒀다.</p><p class="ins-lede">원문이 안 한 말도 있다. 마벨의 셀레스티얼 AI 인수 총액은 어디에도 없다. AMD의 스케일업 광 로드맵은 「자체 포토닉 IP 개발 중, 제품 미공개」 한 줄뿐이다. 삼성과 SK하이닉스는 이 열여덟 달의 광학 이야기에 등장하지 않는다. 한국 회사 가운데 원문에 이름이 나온 곳은 없고, 이 글도 그 밖에서 이름을 더하지 않았다.</p><p class="ins-lede">무엇이 나오면 판단이 바뀌나. 넷이다. ① 카이버 NVL144가 2028년에서 더 밀리거나 앞당겨지면 루빈 울트라 스케일업 공백의 길이가 바뀐다. ② 파인만 NVL1152의 랙 안이 구리인지 광인지 엔비디아가 확정하면, 기술 블로그와 젠슨 황 사이의 어긋남이 풀린다. ③ 메타 규모의 CPO 신뢰성 데이터가 15대 열한 달을 넘어 실제 데이터센터 온도와 먼지 조건에서 나오면 「훨씬 높은 신뢰성」이라는 채택 문턱을 넘는지가 정해진다. ④ FAU 검사 자동화가 가닥당 10~15분을 깨거나 시험법 표준이 서면, 병목이 광학이 아니라 조립이라는 이 글의 판단이 검증된다. 수입 금지안이 실제 시행되면 11절의 회의론은 틀린 것이 된다. 이노라이트의 태국·싱가포르 생산이 「신모델」 규정에 걸리는지가 첫 시험이 된다.</p></div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy">링크 복사</button></div></div></div>
+
+  <footer><p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 장은 그 답들을 이어 붙입니다. 지금 실린 것은 일곱입니다 — <b>CPO</b>(광학을 칩 옆까지 끌어온 방식)는 빛이 데이터센터 어디까지 들어왔는지를, <b>선단 패키징</b>은 다이 하나로 못 만들게 된 뒤 무엇이 그 일을 대신했는지를, <b>금리·물가</b>는 연준이 내렸는데 왜 장기금리는 올랐는지를, <b>메모리</b>는 40년 만에 모자란데 왜 만드는 회사 손에 안 남는지를, <b>트럼프</b>는 무엇을 걸어 무엇을 받아냈는지를, <b>전력</b>은 계통에 막힌 값을 누가 치렀는지를, <b>하네스·스킬</b>은 모델 안에 있던 판단이 바깥으로 걷혀 나간 뒤 그 값을 누가 치렀는지를 묻습니다. 본문은 <code>insights/reports/</code> 의 원본에서 읽어 옵니다.</p>    <div class="meta-row">
+      <span>정리일 <b>2026-08-24</b></span>
+      <span>바탕 <b>SemiAnalysis 25편 · Semi Doped 6회차 · 메르 29편 · 해설 35편 · 링크드인 3개월</b></span>
+      <span>보고서 <b>7편</b></span>
+    </div>
+제3자 해설을 우리가 종합한 글입니다. 투자 추천이 아닙니다.
+  페이지 생성은 <code>scratchpad/gen_report_dashboard.py</code>(공용 부품 <code>dash_common.py</code>).</footer>
+</div>
+<script>
+(function(){
+  function jump(id, smooth){
+    var h=document.getElementById(id); if(!h) return;
+    var card=h.closest('.ucard'), sec=h.closest('section');
+    // 범위 탭이 국내에 놓여 있으면 해외 카드는 숨어 있다. 지목받은 카드부터 되살린다
+    var tabs=document.querySelector('.scope-tabs');
+    if(tabs && card && card.hidden){
+      var allp=tabs.querySelector('button[data-pick="all"]');
+      if(allp) allp.click();
+    }
+    if(sec && sec.hidden){
+      // 첫 화면이 목록이라 본문 섹션은 접혀 있다. 지목받은 섹션만 편다 —
+      // 목록은 위에 그대로 있고, 편 섹션이 그 아래 선다.
+      sec.hidden=false;
+      sec.querySelectorAll('.sec-lead, .sv-posts').forEach(function(l){ l.hidden=false; });
+    }
+    setTimeout(function(){
+      if(card && !card.classList.contains('is-open')){
+        // head.click()으로 미루지 않는다 — 카드마다 파일이 따로 있는 장에서는 머리가
+        // data-href를 달고 있어 클릭이 그 페이지로 이동해 버린다(FOLD_JS). 여기서는
+        // 목록 페이지 안에서 그 자리 펼침만 하면 된다 — 직접 편다.
+        card.classList.add('is-open');
+        var head=card.querySelector('.uc-head');
+        if(head && head.getAttribute('role')==='button') head.setAttribute('aria-expanded', 'true');
+        var caret=card.querySelector('.uc-caret');
+        if(caret && caret.getAttribute('role')==='button') caret.setAttribute('aria-expanded', 'true');
+      }
+      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
+      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+    }, 140);
+  }
+  function fromHash(smooth){
+    var id=(location.hash||'').slice(1);
+    if(id) jump(decodeURIComponent(id), smooth);
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.kin-link');
+    if(a){
+      var href=a.getAttribute('href') || '';
+      // 카드마다 파일이 따로 있는 장에서는 이 링크가 진짜 다른 문서를 가리킨다 —
+      // 그때는 기본 이동에 맡긴다. #으로 시작하는 옛 앵커 링크만 여기서 대신 연다.
+      if(href.charAt(0) === '#'){
+        e.preventDefault();
+        jump(href.slice(1), true);
+      }
+      return;
+    }
+    var b=e.target.closest('.uc-copy, .sec-copy'); if(!b) return;
+    // 세 갈래다 — data-href(카드 단독 페이지를 가리키는 상대 주소) > data-anchor(같은 문서 안
+    // 앵커) > 아무 표도 없으면(카드 단독 페이지 자신의 「링크 복사」) 지금 이 주소 그대로.
+    var url;
+    if(b.dataset.href){
+      url = new URL(b.dataset.href, location.href).href;
+    } else if(b.dataset.anchor){
+      url = location.origin + location.pathname + '#' + encodeURIComponent(b.dataset.anchor);
+    } else {
+      url = location.origin + location.pathname;
+    }
+    var done=function(ok){
+      b.textContent = ok ? '복사됨' : '주소창에 있습니다';
+      setTimeout(function(){ b.textContent='링크 복사'; }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      // 클립보드를 못 쓰는 환경(비보안 문맥)에서는 주소창에 띄워 손으로 집게 한다
+      history.replaceState(null, '', url);
+      done(false);
+    }
+  });
+  // 링크를 받고 들어온 사람. 카드가 그려진 뒤라야 앵커를 찾는다
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ fromHash(false); });
+  } else {
+    fromHash(false);
+  }
+  window.addEventListener('hashchange', function(){ fromHash(true); });
+})();
+</script>

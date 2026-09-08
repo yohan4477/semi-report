@@ -155,9 +155,9 @@ REPORT_CSS = TABLE_CSS + """
 """
 
 
-def report_cpo_html():
+def report_cpo_html(head=True):
     """CPO 총정리 — 한 편. 본문은 insights/reports/cpo-2026-09-04.md 원본에서 읽는다."""
-    h = [_cpo_part1.HEAD_CPO]
+    h = [_cpo_part1.HEAD_CPO] if head else []
     n = [0]
 
     def sec(title):
@@ -170,9 +170,9 @@ def report_cpo_html():
     return ''.join(h)
 
 
-def report_pkg_html():
+def report_pkg_html(head=True):
     """선단 패키징 총정리 — 한 편. 본문은 insights/reports/pkg-2026-09-05.md 원본에서 읽는다."""
-    h = [_pkg_part1.HEAD_PKG]
+    h = [_pkg_part1.HEAD_PKG] if head else []
     n = [0]
 
     def sec(title):
@@ -185,9 +185,9 @@ def report_pkg_html():
     return ''.join(h)
 
 
-def report_rate_html():
+def report_rate_html(head=True):
     """금리·물가 총정리 — 한 편. 본문은 insights/reports/rate-2026-09-05.md 원본에서 읽는다."""
-    h = [_rate_part1.HEAD_RATE]
+    h = [_rate_part1.HEAD_RATE] if head else []
     n = [0]
 
     def sec(title):
@@ -200,9 +200,9 @@ def report_rate_html():
     return ''.join(h)
 
 
-def report_trump_html():
+def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
-    h = [_trump_part1.HEAD_TRUMP]
+    h = [_trump_part1.HEAD_TRUMP] if head else []
     n = [0]
 
     def sec(title):
@@ -215,9 +215,9 @@ def report_trump_html():
     return ''.join(h)
 
 
-def report_mem_html():
+def report_mem_html(head=True):
     """메모리 총정리 — 한 편. 본문은 insights/reports/mem-2026-09-06.md 원본에서 읽는다."""
-    h = [_mem_part1.HEAD_MEM]
+    h = [_mem_part1.HEAD_MEM] if head else []
     n = [0]
 
     def sec(title):
@@ -230,9 +230,9 @@ def report_mem_html():
     return ''.join(h)
 
 
-def report_harness_html():
+def report_harness_html(head=True):
     """하네스·스킬 총정리 — 한 편. 본문은 insights/reports/harness-2026-09-08.md 원본에서 읽는다."""
-    h = [_harness_part1.HEAD_HARNESS]
+    h = [_harness_part1.HEAD_HARNESS] if head else []
     n = [0]
 
     def sec(title):
@@ -245,9 +245,9 @@ def report_harness_html():
     return ''.join(h)
 
 
-def report_power_html():
+def report_power_html(head=True):
     """전력 총정리 — 한 편. 본문은 insights/reports/power-2026-09-07.md 원본에서 읽는다."""
-    h = [_power_part1.HEAD_POWER]
+    h = [_power_part1.HEAD_POWER] if head else []
     n = [0]
 
     def sec(title):
@@ -297,30 +297,73 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()])
 
 
+# ── 층 일곱을 카드로 세운다 ─────────────────────────────────────────────
+# 2026-09-09 이전에는 층이 전부 「카드 없는 고정 층」이었다. 그러면 첫 화면에 목록이
+# 빈칸으로 서고 층은 목록 위 링크 한 줄로만 보인다 — 어느 것이 새로 들어왔는지 안 읽힌다.
+# 대시보드 규약은 어느 장이든 첫 화면이 최신순 이름 목록이므로(dash_common.render),
+# 층 하나를 카드 하나로 옮긴다. **섹션 id 는 sec-* 그대로 둔다** — check_report 가
+# 그 id 로 층의 글자를 잘라 숫자를 대조하고, 층마다 재료가 달라 한 칸에 섞으면 안 된다.
+#
+# 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
+# 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
+LAYERS = [
+    ('sec-harness', '하네스·스킬', '2026-09-08',
+     '하네스·스킬 총정리 — 판단을 모델에서 걷어 낸 열두 달, 그 값을 누가 치렀나',
+     'AI Engineer 발표 16편 · SemiAnalysis 2편',
+     '모델 안에 있던 판단이 바깥으로 걷혀 나간 뒤 같은 해 세 답이 서로를 반박한다',
+     report_harness_html),
+    ('sec-power', '전력', '2026-09-07',
+     '전력 총정리 — 데이터센터가 계통에 막힌 뒤, 그 값을 누가 치렀나',
+     'SemiAnalysis 12편 · 팟캐스트 1회차 · 전략 판 1회차',
+     '경매와 요금제를 거쳐 그 값이 결국 어느 청구서에 실렸나',
+     report_power_html),
+    ('sec-trump', '트럼프', '2026-09-06',
+     '트럼프 총정리 — 무엇을 걸어 무엇을 받아냈고, 한국은 그 순서 어디에서 값을 치렀나',
+     '메르 47편',
+     '위협하고 미루고 거래하고 청구하는 순서가 되풀이되고, 한국은 그 끝에서 값을 낸다',
+     report_trump_html),
+    ('sec-mem', '메모리', '2026-09-06',
+     '메모리 총정리 — 40년 만에 모자란데 왜 만드는 회사가 안 웃나',
+     'SemiAnalysis 5편 · 링크드인 3개월 · 해설 11편',
+     '값은 오르는데 만드는 회사 손에 안 남는 자리를 원가와 계약 쪽에서 짚는다',
+     report_mem_html),
+    ('sec-rate', '금리·물가', '2026-09-05',
+     '금리·물가 총정리 — 연준이 내렸는데 왜 장기금리는 올랐고, 누가 그것을 다르게 읽나',
+     '메르 24편 · 해설 17편',
+     '같은 값을 놓고 필자마다 다르게 읽는 자리를 맞대 놓았다',
+     report_rate_html),
+    ('sec-pkg', '선단 패키징', '2026-09-05',
+     '선단 패키징 총정리 — 다이 하나로 못 만들게 된 뒤 무엇이 그 자리를 대신했나',
+     'SemiAnalysis 9편 · Semi Doped 1회차 · 영문 클리핑 2편',
+     '인터포저·EMIB·하이브리드 본딩이 저마다 무엇을 대신하고 무엇을 못 하나',
+     report_pkg_html),
+    ('sec-cpo', 'CPO', '2026-09-04',
+     'CPO 총정리 — 빛이 구리를 어디까지 밀어냈고, 누가 그 자리에 서 있나',
+     'SemiAnalysis 9편 · Semi Doped 5회차 · 링크드인 4개월',
+     '광학이 칩 옆까지 온 뒤 모듈·스위치·트랜시버 회사의 자리가 어떻게 갈렸나',
+     report_cpo_html),
+]
+
+
+def cards():
+    """층 하나 = 카드 하나. 본문은 층 함수가 머리 없이 낸 HTML 을 그대로 끼운다."""
+    out = []
+    for i, (sid, tag, day, title, base, gain, fn) in enumerate(LAYERS, 1):
+        out.append({
+            'section': (sid, '%02d' % i, tag, base),
+            'title': title,
+            'gain': gain,
+            'meta': [day, base],
+            # ('raw', …) 는 층 HTML 을 그대로 끼우는 자리다. 층은 자기 차례와 절 번호를
+            # _rep_toc 로 이미 붙여 놓았으므로 카드 쪽에서 다시 세우지 않는다
+            'report': [('raw', fn(head=False))],
+        })
+    return out
+
+
 if __name__ == '__main__':
-    dc.render([], '통합 보고서', HEADER, FOOTER, OUT,
+    dc.render(cards(), '통합 보고서', HEADER, FOOTER, OUT,
               page_slug='report',
-              top=report_cpo_html(), top_id='sec-cpo',
-              top_title='CPO — 빛과 구리의 경계', top_n=1,
-              top_sub='SemiAnalysis 9편 + Semi Doped 5회차 — 빛이 데이터센터 어디까지 '
-                      '들어왔고 누가 그 자리에 서 있나',
-              tops=[('sec-pkg', '선단 패키징 — 다이를 쪼갠 뒤',
-                     'SemiAnalysis 9편 + Semi Doped 1회차 — 다이 하나로 못 만들게 된 뒤 '
-                     '무엇이 그 일을 대신했나', 1, report_pkg_html()),
-                    ('sec-rate', '금리·물가 — 누가 다르게 읽나', '메르 24편 + 해설 13편 — 연준이 '
-                     '내렸는데 왜 장기금리는 올랐나', 1, report_rate_html()),
-                    ('sec-mem', '메모리 — 모자란데 왜 안 웃나',
-                     'SemiAnalysis 5편 + 링크드인 3개월 + 해설 11편 — 40년 만에 모자란데 왜 '
-                     '만드는 회사 손에 안 남나', 1, report_mem_html()),
-                    ('sec-trump', '트럼프 — 무엇을 걸어 무엇을 받아냈나',
-                     '메르 47편 — 위협하고 미루고 거래하고 청구하는 순서, 그리고 한국이 값을 낸 '
-                     '자리', 1, report_trump_html()),
-                    ('sec-power', '전력 — 막힌 값을 누가 치렀나',
-                     'SemiAnalysis 12편 + 팟캐스트 1회차 + 전략 판 1회차 — 계통에 막힌 뒤 '
-                     '그 값이 누구 청구서로 갔나', 1, report_power_html()),
-                    ('sec-harness', '하네스·스킬 — 판단을 걷어 낸 열두 달',
-                     'AI Engineer 발표 16편 + SemiAnalysis 2편 — 모델 안에 있던 판단이 '
-                     '바깥으로 걷혀 나간 뒤 그 값을 누가 치렀나', 1, report_harness_html())],
               extra_css=REPORT_CSS)
 
     # 차례 규약(_rep_toc)을 손으로 우회한 층이 있나. 있으면 커밋 사슬을 끊는다
