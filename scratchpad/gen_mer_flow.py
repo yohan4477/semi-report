@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-"""메르 흐름 — 메르 627편을 줄기 하나로 꿴 장.
+"""메르 흐름 — 메르 627편을 줄기 하나로 꿴 층.
 
-    PYTHONIOENCODING=utf-8 python scratchpad/gen_mer_flow.py
+    이 파일은 홀로 서는 장을 쓰지 않는다. `body_html()` 이 메르 대시보드의 첫 고정 층으로
+    들어간다(2026-09-08). 장을 따로 파면 같은 재료가 두 주소에 서서 어느 쪽이 최신인지
+    읽는 사람이 못 고른다 — 사슬과 줄기는 같은 627편이다.
+
+    PYTHONIOENCODING=utf-8 python scratchpad/gen_mer_dashboard.py
 
 왜 사슬(insights/flows/mer)과 따로 두나: 사슬은 연재 주제 하나에 마디와 화살표를 세우는
 꼴이라 단발 글이 갈 데가 없다. 미수록이 286편까지 쌓인 것이 그 때문이다(2026-09-06).
@@ -29,7 +33,6 @@ import dash_common as dc  # noqa: E402
 from card_lib import fig_html  # noqa: E402
 
 SRC = os.path.join(dc.ROOT, 'insights', 'mer_flows', '2026-09-07-한도가-값을-따라간다.md')
-OUT = os.path.join(dc.ROOT, '대시보드', '메르 흐름.html')
 CLIP = os.path.join(dc.ROOT, 'input', 'clippings', 'mer', '*.json')
 STAMP = '2026-09-07'
 
@@ -151,45 +154,19 @@ MER_CSS = """
   .mer-src:hover{color:var(--ink)}
 """
 
-HEADER = '''  <header>
-    <p class="eyebrow">열두 달치 글을 줄기 하나로</p>
-    <h1>메르 흐름</h1>
-  </header>'''
-
-LEDE = ('<p class="lede">블로거 메르가 2025년 10월부터 2026년 9월까지 쓴 627편을 한자리에 모아 '
-        '읽은 글입니다. 주장과 값을 1,808줄로 뽑아 날짜순으로 늘어놓고, 되풀이되는 장면 하나를 '
-        '줄기로 세웠습니다. <b>주제별 목록이 아닙니다</b> — 주제로 자르면 열두 달이 네 토막으로 '
-        '흩어지는데, 그 토막을 가로질러 같은 일이 벌어지는 것이 이 글이 다루는 것입니다. '
-        '주제 단위로 엮은 사슬은 <a href="메르 대시보드.html">메르 대시보드</a>에 있습니다. '
-        '본문은 <code>insights/mer_flows/</code> 의 원본에서 읽어 옵니다.</p>')
-
-META_ROW = '''    <div class="meta-row">
-      <span>정리일 <b>%s</b></span>
-      <span>바탕 <b>메르 627편 · 사실 1,808줄</b></span>
-      <span>인용 <b>글 40여 편</b></span>
-    </div>''' % STAMP
-
-FOOTER = (LEDE + META_ROW
-          + '\n조각은 메르가 적은 것이고, 조각을 이어 줄기로 세운 것은 우리입니다. '
-          '투자 추천이 아닙니다.\n'
-          '  페이지 생성은 <code>scratchpad/gen_mer_flow.py</code>'
-          '(공용 부품 <code>dash_common.py</code>).')
+# 이 층이 끝나는 자리. 홀로 서던 때는 장 바닥글이 하던 말인데, 층으로 들어오면서 층 안에
+# 남긴다 — 왜 주제별 목록이 아닌지는 이 층에서만 하는 이야기라 바닥글로 보내면 사라진다
+TAIL = ('<p class="rep-note"><b>정리일 %s</b> · 바탕 <b>메르 627편 · 사실 1,808줄</b> · '
+        '인용 <b>글 40여 편</b><br>'
+        '<b>주제별 목록이 아닙니다</b> — 주제로 자르면 열두 달이 네 토막으로 흩어지는데, '
+        '그 토막을 가로질러 같은 일이 벌어지는 것이 이 글이 다루는 것입니다. 주제 단위로 엮은 '
+        '사슬은 아래 카드 목록에 있습니다.<br>'
+        '조각은 메르가 적은 것이고, 조각을 이어 줄기로 세운 것은 우리입니다. 투자 추천이 '
+        '아닙니다. 본문은 <code>insights/mer_flows/</code> 의 원본에서 읽어 오고 '
+        '<code>scratchpad/gen_mer_flow.py</code> 가 이 층을 세웁니다.</p>') % STAMP
 
 FIGS = [(0, t, svg, '') for t, svg, _c in CAPTION.values()]
 
 
 if __name__ == '__main__':
-    dc.render([], '메르 흐름', HEADER, FOOTER, OUT,
-              page_slug='mer-flow',
-              top=body_html(), top_id='sec-mer-flow',
-              top_title='한도가 값을 따라간다',
-              top_n=1,
-              top_sub='메르 627편 — 값이 선을 넘으면 선이 옮겨진다. 국민연금은 상한 19.9%를 '
-                      '넘긴 뒤 상한을 28.8%로 넓혔다',
-              extra_css=MER_CSS)
-
-    html = io.open(OUT, encoding='utf-8').read()
-    bad = rt.check_toc(html)
-    if bad:
-        raise SystemExit('차례 규약 위반\n  ' + '\n  '.join(bad))
-    print('  차례 규약 OK')
+    raise SystemExit('이 층은 메르 대시보드 안에 선다 — scratchpad/gen_mer_dashboard.py 를 돌린다')

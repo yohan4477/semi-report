@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
-"""링크드인 흐름 — SemiAnalysis 링크드인 537건을 줄기 하나로 꿴 장.
+"""링크드인 흐름 — SemiAnalysis 링크드인 537건을 줄기 하나로 꿴 층.
 
     PYTHONIOENCODING=utf-8 python scratchpad/gen_li_flow.py
+
+이 파일은 홀로 서는 장을 쓰지 않는다. SemiAnalysis 대시보드의 첫 절(①)로 끼워 넣는다
+(2026-09-08). 같은 링크드인 537건이 두 주소에 서 있으면 읽는 사람이 어느 쪽이 최신인지
+못 고른다 — 그 장의 ② 소셜·영상 신호가 「무엇이 새로 왔나」를 답하고 이 절이 「그래서
+무엇이 막혔나」를 답한다.
+
+끼워 넣는 자리는 주석 표시 둘 사이다(`li-flow:start` ~ `li-flow:end`). 손으로 쓴 장이라
+표시가 없으면 처음 한 번 만들어 넣는다.
 
 왜 카드로 안 쪼개나: 섹션마다 업데이트하는 꼴로는 큰 흐름이 안 보였고, 주제를 열둘로
 나눠도 목록 열둘이라 같았다(2026-09-06). 그래서 줄기를 하나 세우고 주제를 그 아래
@@ -23,10 +31,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _li_fig as lf  # noqa: E402
 import _rep_toc as rt  # noqa: E402
 import dash_common as dc  # noqa: E402
-from card_lib import fig_html  # noqa: E402
+from card_lib import FIG_CSS, fig_html  # noqa: E402
 
 SRC = os.path.join(dc.ROOT, 'insights', 'li_flows', '2026-09-06-판이-어디로-갔나.md')
-OUT = os.path.join(dc.ROOT, '대시보드', '링크드인 흐름.html')
+DASH = os.path.join(dc.ROOT, '대시보드', 'SemiAnalysis 대시보드.html')
 STAMP = '2026-09-06'
 
 GROUPS = [('무엇이 막혔나', 1, 3),
@@ -145,45 +153,60 @@ LI_CSS = """
   .li-src::after{content:")"}
 """
 
-HEADER = '''  <header>
-    <p class="eyebrow">여섯 달치 게시물을 줄기 하나로</p>
-    <h1>링크드인 흐름</h1>
-  </header>'''
+# 손으로 쓴 장에는 dash_common 의 잉크 변수가 없다. 그 장의 변수로 다리를 놓는다.
+# 그 장에 이미 사는 `.tl`(관전 목록의 윗줄)과 이름이 겹쳐 차례 머리글에 줄이 그어졌다 —
+# 겹치는 자리만 되돌린다.
+BRIDGE_CSS = """
+  /* li-flow:vars */
+  #li-flow-sec{--ink-2:var(--ink);--ink-3:var(--sub);--accent-ink:var(--accent)}
+  #li-flow-sec .rep-toc .tl{border-top:none;padding-top:0;margin-top:0}
+  #li-flow-sec .ins-lede{margin:0 0 12px;font-size:.92rem;line-height:1.9;color:var(--ink)}
+  #li-flow-sec h3{margin:26px 0 10px;font-size:1.02rem}
+"""
 
-LEDE = ('<p class="lede">SemiAnalysis 링크드인 계정에 2026년 2월 말부터 9월 초까지 올라온 '
-        '537건과, 같은 기간 뉴스레터 변환본 53편을 한자리에 모아 읽은 글입니다. 밈·채용·행사를 '
-        '걷어 낸 자체 발화 274건에서 주장과 값을 546줄로 뽑아 날짜순으로 늘어놓았습니다. <b>건수 그래프는 싣지 '
-        '않았습니다</b> — 요지의 평균 길이가 4월 42자에서 8월 304자로 일곱 배가 되어, '
-        '월별 언급 건수가 주제 이동이 아니라 요약 길이를 그리기 때문입니다. 본문은 '
-        '<code>insights/li_flows/</code> 의 원본에서 읽어 옵니다.</p>')
-
-META_ROW = '''    <div class="meta-row">
-      <span>정리일 <b>%s</b></span>
-      <span>바탕 <b>링크드인 537건 · 자체 발화 274건 · 사실 546줄</b></span>
-      <span>인용 <b>게시물 28건 · 뉴스레터 11편</b></span>
-    </div>''' % STAMP
-
-FOOTER = (LEDE + META_ROW
-          + '\n조각은 SemiAnalysis 가 말한 것이고, 조각을 꿰어 줄기로 세운 것은 우리입니다. '
-          '투자 추천이 아닙니다.\n'
-          '  페이지 생성은 <code>scratchpad/gen_li_flow.py</code>'
-          '(공용 부품 <code>dash_common.py</code>).')
+# 이 절이 끝나는 자리. 홀로 서던 때는 장 바닥글이 하던 말인데, 절로 들어오면서 절 안에
+# 남긴다 — 건수 그래프를 왜 안 싣는지는 이 절에서만 하는 이야기라 바닥글로 보내면 사라진다
+TAIL = ('<p class="rep-note"><b>정리일 %s</b> · 바탕 <b>링크드인 537건 · 자체 발화 274건 · '
+        '사실 546줄</b> · 인용 <b>게시물 28건 · 뉴스레터 11편</b><br>'
+        '<b>건수 그래프는 싣지 않았습니다</b> — 요지의 평균 길이가 4월 42자에서 8월 304자로 '
+        '일곱 배가 되어, 월별 언급 건수가 주제 이동이 아니라 요약 길이를 그리기 때문입니다.<br>'
+        '조각은 SemiAnalysis 가 말한 것이고, 조각을 꿰어 줄기로 세운 것은 우리입니다. '
+        '투자 추천이 아닙니다. 본문은 <code>insights/li_flows/</code> 의 원본에서 읽어 오고 '
+        '<code>scratchpad/gen_li_flow.py</code> 가 이 절을 끼워 넣습니다.</p>') % STAMP
 
 FIGS = [(0, t, svg, '') for t, svg, _c in CAPTION.values()]
 
 
-if __name__ == '__main__':
-    dc.render([], '링크드인 흐름', HEADER, FOOTER, OUT,
-              page_slug='li-flow',
-              top=body_html(), top_id='sec-li-flow',
-              top_title='병목은 칩이 아니었다',
-              top_n=1,
-              top_sub='링크드인 537건 — 늘어난 것은 물량이 아니라 값이고, 값이 오르는 자리가 '
-                      '칩 바깥으로 밀려났다',
-              extra_css=LI_CSS)
+SEC_HEAD = ('  <section id="li-flow-sec" data-c="all compute memory power model robot">\n'
+            '    <div class="sec-head"><h2>① 여섯 달을 줄기 하나로 — 링크드인 537건</h2>'
+            '</div>\n')
 
-    html = io.open(OUT, encoding='utf-8').read()
-    bad = rt.check_toc(html)
+S0, S1 = '  <!-- li-flow:start -->\n', '  <!-- li-flow:end -->\n'
+C0, C1 = '  /* li-flow:start */\n', '  /* li-flow:end */\n'
+
+
+def _splice(txt, a, b, new, where):
+    """표시 둘 사이를 갈아 끼운다. 표시가 없으면 where 앞에 처음으로 만들어 넣는다."""
+    i = txt.find(a)
+    if i == -1:
+        j = txt.index(where)
+        return txt[:j] + a + new + b + txt[j:]
+    k = txt.index(b, i) + len(b)
+    return txt[:i] + a + new + b + txt[k:]
+
+
+if __name__ == '__main__':
+    body = SEC_HEAD + body_html() + TAIL + '\n  </section>\n\n'
+    css = rt.CSS + FIG_CSS + LI_CSS + BRIDGE_CSS
+
+    ds = io.open(DASH, encoding='utf-8').read()
+    ds = _splice(ds, C0, C1, css, '</style>\n<main>')
+    ds = _splice(ds, S0, S1, body, '  <section id="social-section"')
+    io.open(DASH, 'w', encoding='utf-8').write(ds)
+
+    bad = rt.check_toc(ds)
     if bad:
         raise SystemExit('차례 규약 위반\n  ' + '\n  '.join(bad))
     print('  차례 규약 OK')
+    print('  절 %d · 도해 %d -> %s'
+          % (body.count('<h3 id="li-'), body.count('<figure'), DASH))

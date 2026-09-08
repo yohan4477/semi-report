@@ -20,6 +20,8 @@ import mer_flow_lib as fl         # noqa: E402
 import mer_flow_svg as fs         # noqa: E402
 import mer_map_svg as mm          # noqa: E402
 import mer_step as ms             # noqa: E402
+import _rep_toc as rt            # noqa: E402
+import gen_mer_flow as mfw       # noqa: E402
 
 OUT = os.path.join(dc.ROOT, '대시보드', '메르 대시보드.html')
 BLOG = 'https://blog.naver.com/ranto28/%s'
@@ -348,15 +350,20 @@ if __name__ == '__main__':
               '  페이지 생성은 <code>scratchpad/gen_mer_dashboard.py</code>'
               % (len(used), len(ts), len(posts), len(ts), len(nodes), len(edges)))
 
+    fl_html = mfw.body_html() + mfw.TAIL
     dc.render(cards, '메르 인사이트', HEADER, FOOTER, OUT,
               page_slug='mer',
-              tops=[('sec-axes', '이 여섯 달의 구조',
+              tops=[('sec-flow', '한도가 값을 따라간다',
+                     '메르 627편을 줄기 하나로 — 값이 선을 넘으면 선이 옮겨진다. '
+                     '국민연금은 상한 19.9%를 넘긴 뒤 상한을 28.8%로 넓혔다', 1, fl_html),
+                    ('sec-axes', '이 여섯 달의 구조',
                      '사슬 열셋이 실제로는 축 셋이다', n_ax, ax_html),
                     ('sec-time', '연표',
                      '달마다 무슨 일이 있었나 — 사슬을 가로질러', n_ev, tl_html),
                     ('sec-entity', '개체로 보기',
                      '중국·미 재무부·국민연금 — 하나를 골라 그 흐름과 얽힘', n_en, en_html)],
               search_ph='주체나 사슬 이름으로 찾기',
-              extra_css=CSS + mm.CSS + fs.CSS + ms.CSS, newest_first=True)
+              extra_css=CSS + mm.CSS + fs.CSS + ms.CSS + rt.CSS + mfw.MER_CSS,
+              newest_first=True)
     print('카드 %d · 축 %d · 연표 %d · 개체 %d' % (len(cards), n_ax, n_ev, n_en))
     print(OUT)

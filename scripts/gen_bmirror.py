@@ -205,8 +205,8 @@ if unknown:
     print("각도 없는 신호 %d건 — data/li_angles.json 에 넣는다: %s" % (len(unknown), ", ".join(unknown[:8])))
 
 ds = open(DASH, encoding="utf-8").read()
-# ① 블록의 시작 — 시간순 기록 층 한 덩어리다
-sec_i = ds.find("<h2>\u2460 \uc18c\uc15c")
+# ② 블록의 시작 — 시간순 기록 층 한 덩어리다
+sec_i = ds.find("<h2>\u2461 \uc18c\uc15c")
 start = ds.find('    <div class="tlog">', sec_i)
 if start == -1:   # 옛 꼴(주 띠·날짜 그룹)에서 처음 갈아탈 때
     cands = [x for x in (ds.find('    <div class="wkh"', sec_i),
@@ -215,15 +215,15 @@ if start == -1:   # 옛 꼴(주 띠·날짜 그룹)에서 처음 갈아탈 때
 note_i = ds.find('    <div class="note" data-c="compute memory power model">', start)
 assert start != -1 and note_i != -1, (start, note_i)
 note_end = ds.find("</div>", note_i) + len("</div>")
-# 이 절은 「무엇이 새로 왔나」만 답한다. 「그래서 무엇이 막혔나」는 여섯 달 흐름 장이
-# 답하므로 여기서 같은 이야기를 두 번 하지 않고 링크만 건다(2026-09-06). 2026-09-08
-# 그 장도 잠겼는데, 이 장과 같은 잠금 뒤라 링크는 그대로 닿는다
+# 이 절은 「무엇이 새로 왔나」만 답한다. 「그래서 무엇이 막혔나」는 위 ① 절이 답하므로
+# 여기서 같은 이야기를 두 번 하지 않고 앵커만 건다. 2026-09-08 흐름 장을 따로 두지 않고
+# 이 장 안으로 들여왔다 — 같은 537건이 두 주소에 서면 어느 쪽이 최신인지 못 고른다
 newnote = ('    <div class="note" data-c="compute memory power model">히스토리 미러(최근 '
            + str(len(days)) + '일) · LinkedIn·YouTube·뉴스레터 + NVIDIA 1차 — 전체는 위 "전체 보기" · '
-           '여섯 달치를 줄기 하나로 읽은 것은 <a href="링크드인 흐름.html">링크드인 흐름</a></div>')
+           '여섯 달치를 줄기 하나로 읽은 것은 위 <a href="#li-flow-sec">① 여섯 달을 줄기 하나로</a></div>')
 ds = ds[:start] + out + newnote + ds[note_end:]
 
-# ================= ② 뉴스레터 — 파일명 발행일 [YYMMDD] 기준 최근 N편 자동 =================
+# ================= ③ 뉴스레터 — 파일명 발행일 [YYMMDD] 기준 최근 N편 자동 =================
 SA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#F26522"/><text x="12" y="16.5" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">SA</text></svg>'
 
 def nl_cat(cats):
@@ -270,15 +270,15 @@ for it in nlitems:
     else: groups.append((it["date"], [it]))
 newnl = "".join('    <div class="day">\n      <h3>' + d + "</h3>\n      "
                 + "\n      ".join(nl_render(i) for i in its) + "\n    </div>\n" for d, its in groups).rstrip("\n")
-nl_anchor = ds.find("<h2>② 뉴스레터")
+nl_anchor = ds.find("<h2>③ 뉴스레터")
 sh_end = ds.find("</div>", nl_anchor)
 nl_start = ds.find('    <div class="day">', sh_end)
 nl_end = ds.find("\n\n  </section>", nl_start)
 assert nl_anchor != -1 and nl_start != -1 and nl_end != -1, (nl_anchor, nl_start, nl_end)
 ds = ds[:nl_start] + newnl + ds[nl_end:]
-ds = re.sub(r"(② 뉴스레터 — 발행일순 \(최근 )\d+(편\))", r"\g<1>" + str(len(nlitems)) + r"\2", ds)
+ds = re.sub(r"(③ 뉴스레터 — 발행일순 \(최근 )\d+(편\))", r"\g<1>" + str(len(nlitems)) + r"\2", ds)
 
 open(DASH, "w", encoding="utf-8").write(ds)
-print("① days:", len(days), "| sig rows:", out.count('class="sig"'),
-      "| ② newsletters:", len(nlitems), "(" + ", ".join(i["date"] for i in nlitems) + ")",
+print("② days:", len(days), "| sig rows:", out.count('class="sig"'),
+      "| ③ newsletters:", len(nlitems), "(" + ", ".join(i["date"] for i in nlitems) + ")",
       "| div", ds.count("<div"), ds.count("</div>"))

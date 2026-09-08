@@ -23,8 +23,8 @@ DASH = os.path.join(ROOT, '대시보드')
 
 # dash_common.render() 로 조립하는 장 전부. 워치·씨모어·Semi Doped 는 제 규약이 따로 있다.
 PAGES = ['AI Engineer 대시보드.html', 'Epoch AI 대시보드.html', 'M&A 대시보드.html',
-         '건강 대시보드.html', '기타 대시보드.html', '링크드인 흐름.html',
-         '메르 대시보드.html', '메르 흐름.html', '모델 가이드.html',
+         '건강 대시보드.html', '기타 대시보드.html',
+         '메르 대시보드.html', '모델 가이드.html',
          '미국주식 사관학교 대시보드.html', '부동산 대시보드.html', '산업시장 대시보드.html',
          '수도리무브 대시보드.html', '알고리즘 계보.html', '언더스탠딩 보고서 대시보드.html',
          '언더스탠딩 프리미엄 대시보드.html', '용어사전.html', '이선엽 시황 대시보드.html',

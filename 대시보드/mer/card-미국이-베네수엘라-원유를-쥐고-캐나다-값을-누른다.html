@@ -796,6 +796,38 @@
 .mtd.lit .mp-box{opacity:.28}
 .mtd.lit .mp-box.on{opacity:1}
 
+
+  /* 보고서 표지 — 한 층에 글이 둘이라 어디서 끊기는지가 보여야 한다.
+     번호·제목·바탕·기간을 한 덩이로 세우고, 다음 보고서 앞에 굵은 선을 둔다. */
+  .rep-head{margin:8px 0 18px;padding:18px 20px;border:1px solid var(--line);
+            border-left:5px solid var(--accent);border-radius:12px;
+            background:var(--accent-soft)}
+  .rep-head .rn{display:block;font-size:11px;font-weight:850;letter-spacing:.08em;
+                color:var(--accent-ink)}
+  .rep-head h2{margin:6px 0 8px;font-size:21px;line-height:1.35}
+  .rep-head .rm{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .rep-head .rm b{color:var(--ink)}
+  .rep-cut{margin:38px 0 0;border:0;border-top:3px solid var(--line)}
+  /* rep-toc 는 절 차례, rep-note 는 안내문. 규약 검사(check_toc)가 앞엣것만 본다 */
+  .rep-toc,.rep-note{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
+           border-radius:12px;font-size:13px;line-height:1.85}
+  .rep-note a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-note a:hover{text-decoration:underline}
+  .rep-toc .tl{display:block;margin-bottom:2px}
+  .rep-toc .tg{display:block;margin-top:12px;padding-left:6px;font-size:12.5px;color:var(--ink-2)}
+  /* 층마다 들여쓴다 — 머리글 · 묶음 이름 · 절 목록이 눈으로 갈린다 */
+  .rep-toc .tt{display:block;padding-left:16px}
+  /* 차례 링크가 브라우저 기본 파랑으로 나와 회색 판에서 튀었다(2026-09-05).
+     색은 본문 잉크로 두고 밑줄만 옅게 — 눌리는 자리인 것은 밑줄이 말한다 */
+  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:none}
+  .rep-toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-3);
+                   text-underline-offset:3px}
+
+  .mer-src{font-size:10.5px;color:var(--ink-3);white-space:nowrap;
+           font-variant-numeric:tabular-nums;margin-left:3px;text-decoration:none}
+  .mer-src::before{content:"("}
+  .mer-src::after{content:")"}
+  .mer-src:hover{color:var(--ink)}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3,#8a8a8a)"/></marker><marker id="fig-arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fig-good,#2f8f6b)"/></marker><pattern id="fig-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".30"/></pattern><pattern id="fig-hatch-wide" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="var(--ink-3,#8a8a8a)" stroke-width="1" stroke-opacity=".22"/></pattern></defs></svg>
 <script>

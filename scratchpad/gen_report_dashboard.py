@@ -142,22 +142,6 @@ REPORT_CSS = TABLE_CSS + """
     .vh-c .v{font-size:17px}
   }
 
-  /* 보고서 표지 — 한 층에 글이 둘이라 어디서 끊기는지가 보여야 한다.
-     번호·제목·바탕·기간을 한 덩이로 세우고, 다음 보고서 앞에 굵은 선을 둔다. */
-  .rep-head{margin:8px 0 18px;padding:18px 20px;border:1px solid var(--line);
-            border-left:5px solid var(--accent);border-radius:12px;
-            background:var(--accent-soft)}
-  .rep-head .rn{display:block;font-size:11px;font-weight:850;letter-spacing:.08em;
-                color:var(--accent-ink)}
-  .rep-head h2{margin:6px 0 8px;font-size:21px;line-height:1.35}
-  .rep-head .rm{margin:0;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
-  .rep-head .rm b{color:var(--ink)}
-  .rep-cut{margin:38px 0 0;border:0;border-top:3px solid var(--line)}
-  /* rep-toc 는 절 차례, rep-note 는 안내문. 규약 검사(_rep_toc.check_toc)가 앞엣것만 본다 */
-  .rep-toc,.rep-note{margin:0 0 18px;padding:14px 16px;border:1px dashed var(--line);
-           border-radius:12px;font-size:13px;line-height:1.85}
-  .rep-note a{font-weight:700;color:var(--ink);text-decoration:none}
-  .rep-note a:hover{text-decoration:underline}
   /* 시계열 도해의 기준금리 한 줄에만 쓰는 색. 확정 규칙 S2 는 회색만인데, 선이 셋을
      넘으면 회색만으로는 안 갈려서 둔 예외다(2026-09-06). --fig-amber 는 epoch 도해
      안에서만 사는 변수라 여기서는 안 먹었다 — 이 장에서 쓸 것을 따로 정의한다 */
@@ -165,15 +149,7 @@ REPORT_CSS = TABLE_CSS + """
   @media (prefers-color-scheme:dark){:root{--rate-amber:#e0a84a}}
   [data-theme="dark"]{--rate-amber:#e0a84a}
   [data-theme="light"]{--rate-amber:#b8860b}
-  .rep-toc .tl{display:block;margin-bottom:2px}
-  .rep-toc .tg{display:block;margin-top:12px;padding-left:6px;font-size:12.5px;color:var(--ink-2)}
-  /* 층마다 들여쓴다 — 머리글 · 묶음 이름 · 절 목록이 눈으로 갈린다 */
-  .rep-toc .tt{display:block;padding-left:16px}
-  /* 차례 링크가 브라우저 기본 파랑으로 나와 회색 판에서 튀었다(2026-09-05).
-     색은 본문 잉크로 두고 밑줄만 옅게 — 눌리는 자리인 것은 밑줄이 말한다 */
-  .rep-toc a{font-weight:700;color:var(--ink);text-decoration:none}
-  .rep-toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-3);
-                   text-underline-offset:3px}
+""" + _rep_toc.CSS + """
 """
 
 
