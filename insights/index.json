@@ -632,6 +632,8 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L552",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L57",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L84",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L499",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L123",
 "content/semi_doped/2026-05-04-memory-tax.md#L24",
 "content/semi_doped/2026-05-04-memory-tax.md#L41",
 "content/semi_doped/2026-05-22-litho-masterclass.md#L19",
@@ -1933,6 +1935,26 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L722",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L128",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L175",
+"content/rocketblocks/2018-03-12-how-to-prepare-for-case-interviews-part-ii.md#L97",
+"content/rocketblocks/2019-09-18-what-is-mckinsey-digital.md#L198",
+"content/rocketblocks/2020-07-15-what-is-bcg-platinion.md#L139",
+"content/rocketblocks/2021-09-30-day-in-the-life-in-a-bizops-role-w-rob-reiling.md#L145",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L16",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L55",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L76",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L111",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L115",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L121",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L145",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L215",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L542",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L576",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L597",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L624",
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md#L633",
+"content/rocketblocks/2025-05-14-bcg-consulting-case-interview-auto-dealership-profitability.md#L172",
+"content/rocketblocks/2025-05-14-bcg-consulting-case-interview-auto-dealership-profitability.md#L299",
+"content/rocketblocks/2025-05-14-bcg-consulting-case-interview-auto-dealership-profitability.md#L799",
 "content/semi_doped/2026-04-24-google-networking.md#L22",
 "content/semi_doped/2026-04-24-google-networking.md#L64",
 "content/semi_doped/2026-05-15-cerebras-ipo.md#L23",
@@ -2697,6 +2719,11 @@
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L946",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L955",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L261",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L36",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L39",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L71",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L72",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L80",
 "content/semi_doped/2026-04-24-google-networking.md#L41",
 "content/semi_doped/2026-05-04-memory-tax.md#L40",
 "content/semi_doped/2026-05-04-memory-tax.md#L62",
@@ -3140,6 +3167,7 @@
 ],
 "BMW": [
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L224",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L374",
 "content/semi_doped/clips/daily/2026-07-30--daily-update-july-30th-2026.md#L148",
 "content/semi_doped/clips/daily/2026-08-06--daily-update-august-6th-2026.md#L113",
 "content/semi_doped/youtube/2026-01-22-the-music-has-stopped-innoviz-ceo-on-winning-the-lidar-marke.md#L119",
@@ -3189,6 +3217,61 @@
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L437",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L442",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L446",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L15",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L34",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L36",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L54",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L59",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L63",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L111",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L118",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L177",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L199",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L201",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L281",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L298",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L300",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L301",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L304",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L382",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L385",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L399",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L412",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L431",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L436",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L464",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L517",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L523",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L529",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L535",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L544",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L546",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L550",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L563",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L564",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L572",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L582",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L722",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L736",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L746",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L756",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L770",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L792",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L793",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L794",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L807",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L817",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L834",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L838",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L892",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L914",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L930",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L939",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L943",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L962",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L967",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L1000",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L1002",
 "content/semi_doped/clips/daily/2026-05-29--daily-update-may-29th-2026.md#L78",
 "content/semi_doped/clips/daily/2026-06-18--daily-update-june-18th-2026.md#L58",
 "content/semi_doped/clips/daily/2026-06-19--daily-update-june-19th-2026.md#L103",
@@ -3787,6 +3870,9 @@
 ],
 "Citizens": [
 "content/epoch/[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md#L38",
+"content/rocketblocks/2023-07-12-mckinsey-interviewer-led-consulting-case-interview-free-publ.md#L20",
+"content/rocketblocks/2024-08-07-mckinsey-style-interviewer-led-case-interview-nycs-trash-pro.md#L42",
+"content/rocketblocks/2025-05-28-competitive-response-consulting-case-interview-food-dye-regu.md#L465",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L9",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L15",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L40",
@@ -4513,6 +4599,7 @@
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L508",
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L518",
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L586",
+"content/rocketblocks/2025-06-25-pricing-consulting-case-interview-us-tariffs-w-mckinsey-and.md#L349",
 "content/semi_doped/clips/daily/2026-07-14--daily-update-july-14th-2026.md#L82",
 "content/semi_doped/clips/daily/2026-07-23--daily-update-july-23rd-2026.md#L8",
 "content/semi_doped/clips/daily/2026-07-23--daily-update-july-23rd-2026.md#L55",
@@ -4646,6 +4733,7 @@
 "GS": [
 "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L159",
 "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L171",
+"content/rocketblocks/2025-10-15-growth-consulting-case-interview-digital-bank-doldrums-w-bai.md#L165",
 "content/semi_doped/clips/daily/2026-08-18--daily-update-august-18th-2026.md#L74",
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L53",
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L151",
@@ -5220,6 +5308,7 @@
 "IEA": [
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L91",
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L95",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L765",
 "content/understanding/권효재 대표/이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부).md#L74",
 "content/understanding/권효재 대표/이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부).md#L124",
 "content/understanding/권효재 대표/이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부).md#L140",
@@ -5431,6 +5520,12 @@
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L97"
 ],
 "LA": [
+"content/rocketblocks/2024-08-07-mckinsey-style-interviewer-led-case-interview-nycs-trash-pro.md#L178",
+"content/rocketblocks/2024-08-07-mckinsey-style-interviewer-led-case-interview-nycs-trash-pro.md#L179",
+"content/rocketblocks/2024-12-18-strategy-consulting-case-interview-major-league-baseball-bla.md#L67",
+"content/rocketblocks/2024-12-18-strategy-consulting-case-interview-major-league-baseball-bla.md#L116",
+"content/rocketblocks/2026-01-07-mckinsey-style-consulting-case-interview-high-speed-rail-exp.md#L62",
+"content/rocketblocks/2026-03-04-turnaround-consulting-case-interview-craft-beer-decline-w-bc.md#L182",
 "content/semi_doped/raw/2026-07-25-datacenter-interconnects.md#L115",
 "content/semi_doped/youtube/2026-01-19-lidar-explained-how-it-works-and-why-it-matters.md#L384",
 "content/semi_doped/youtube/2026-01-19-lidar-explained-how-it-works-and-why-it-matters.md#L441",
@@ -5474,6 +5569,8 @@
 "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L101",
 "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L112",
 "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md#L131",
+"content/rocketblocks/2024-11-27-math-heavy-consulting-case-interview-natural-gas-mega-projec.md#L61",
+"content/rocketblocks/2024-11-27-math-heavy-consulting-case-interview-natural-gas-mega-projec.md#L90",
 "content/semi_doped/clips/daily/2026-06-24--daily-update-june-24th-2026.md#L62",
 "content/semi_doped/clips/daily/2026-06-24--daily-update-june-24th-2026.md#L64",
 "content/semi_doped/clips/daily/2026-06-29--daily-update-june-29th-2026.md#L114",
@@ -5811,6 +5908,7 @@
 "input/clippings/EMIB-T Roadmap, Custom HBM, HBM4 Packaging Challenges, Microfluidic Cooling, Photonic Interconnects, and More.md#L237"
 ],
 "MARA": [
+"content/rocketblocks/2018-03-12-how-to-prepare-for-case-interviews-part-ii.md#L168",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L15",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L31",
 "content/understanding/미국주식 사관학교/[260626] 재무가 튼튼한 순서와 전환이 빠른 순서가 반대다 - 비트코인 채굴사 넷의 AI 인프라 전환 성적표.md#L52",
@@ -5910,6 +6008,7 @@
 "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L408",
 "content/newsletter/ai_models/[260803] Kimi K3 아키텍처 해부 - 압축 메모리, 깊이 방향 어텐션, 잠재 전문가 라우팅.md#L459",
 "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L237",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L599",
 "content/semi_doped/clips/daily/2026-07-17--daily-update-july-17th-2026.md#L8",
 "content/semi_doped/clips/daily/2026-07-17--daily-update-july-17th-2026.md#L12",
 "content/semi_doped/clips/daily/2026-07-17--daily-update-july-17th-2026.md#L22",
@@ -5943,6 +6042,13 @@
 ],
 "NASA": [
 "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md#L510",
+"content/rocketblocks/2020-06-17-day-in-the-life-of-a-google-product-manager.md#L19",
+"content/rocketblocks/2020-06-25-how-to-build-a-product-roadmap-w-google-pm.md#L19",
+"content/rocketblocks/2020-07-02-3-key-skills-of-successful-product-managers-w-ex-google-pm.md#L19",
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md#L18",
+"content/rocketblocks/2023-04-26-4-ways-to-build-confidence-for-your-job-interviews-w-google.md#L18",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L19",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L471",
 "content/semi_doped/clips/daily/2026-05-08--daily-update-may-8th-2026.md#L100",
 "content/semi_doped/clips/til/2026-07-11--til-bob-proved-it-was-impossible.md#L20",
 "content/semi_doped/til-14.md#L90",
@@ -6745,6 +6851,8 @@
 "content/understanding/피지컬AI/[260316] Rhoda AI 비디오 액션 모델과 Sharpa 손안 조작.md#L41"
 ],
 "Rivian": [
+"content/rocketblocks/2025-09-03-operations-consulting-case-interview-600m-battery-plant-in-a.md#L38",
+"content/rocketblocks/2025-09-03-operations-consulting-case-interview-600m-battery-plant-in-a.md#L193",
 "content/semi_doped/clips/daily/2026-04-30--daily-update-april-30th-2026.md#L127",
 "content/semi_doped/clips/daily/2026-05-15--daily-update-may-15th-2026.md#L8",
 "content/semi_doped/clips/daily/2026-05-15--daily-update-may-15th-2026.md#L10",
@@ -6776,6 +6884,9 @@
 ],
 "SH": [
 "content/linkedin/[2605] 링크드인 게시물.md#L1005",
+"content/rocketblocks/2017-06-24-how-to-find-the-right-stories-for-the-fit-portion-of-consult.md#L75",
+"content/rocketblocks/2023-12-27-market-entry-consulting-case-interview-small-or-large-remode.md#L572",
+"content/rocketblocks/2025-03-05-m-and-a-consulting-case-interview-legacy-companies-battle-ai.md#L493",
 "content/scaling-book/원문/04-transformers.md#L71",
 "content/semi_doped/clips/daily/2026-07-28--daily-update-july-28th-2026.md#L38",
 "content/semi_doped/youtube/2026-06-19-advanced-packaging-tsmc-cowos-intel-emib.md#L1332",
@@ -12606,6 +12717,8 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L245",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L265",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L287",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L712",
+"content/rocketblocks/2025-08-20-market-entry-consulting-case-interview-should-grab-bet-on-gr.md#L516",
 "content/semi_doped/clips/daily/2026-05-07--daily-update-may-7th-2026.md#L38",
 "content/semi_doped/clips/daily/2026-05-11--daily-update-may-11th-2026.md#L52",
 "content/semi_doped/clips/daily/2026-05-18--daily-update-may-18th-2026.md#L32",
@@ -13092,6 +13205,9 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L604",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L614",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L73",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L123",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L179",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L741",
 "content/semi_doped/2026-05-15-cerebras-ipo.md#L36",
 "content/semi_doped/2026-05-22-litho-masterclass.md#L20",
 "content/semi_doped/2026-05-22-litho-masterclass.md#L25",
@@ -14566,6 +14682,12 @@
 ],
 "UBS": [
 "content/epoch/[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md#L11",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L36",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L87",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L156",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L167",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L185",
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md#L579",
 "content/semi_doped/clips/daily/2026-06-12--daily-update-june-12th-2026.md#L8",
 "content/semi_doped/clips/daily/2026-06-12--daily-update-june-12th-2026.md#L10",
 "content/semi_doped/clips/daily/2026-06-12--daily-update-june-12th-2026.md#L52",
@@ -14793,9 +14915,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-08",
+"built": "2026-09-09",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 1758,
+"files": 2014,
 "files_stat": {
 "content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -14926,7 +15048,7 @@
 78
 ],
 "content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md": [
-"6e13f3bbcefad4e220b8a578d220ac1dccfe71f7",
+"bdc03024ab2ddef3fce6ba2d6861e745f3aab0ec",
 108
 ],
 "content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md": [
@@ -15038,7 +15160,7 @@
 84
 ],
 "content/aie/2026-07-26-기기-위에서-프런티어-수준을-낸다.md": [
-"a7fe5e0f48322919ab68d59dae8253c89bb8e913",
+"95220d073e6906aaa65ef82ca3ff6b5ec494818d",
 122
 ],
 "content/aie/2026-07-26-긴-호흡의-작업을-맡길-때.md": [
@@ -15226,7 +15348,7 @@
 2407
 ],
 "content/linkedin/[2607] 링크드인 게시물.md": [
-"fdc1851ba614088404786091c998d0a5e0cd6e2f",
+"732e8c822f720b00302adec3bff1c5d6f099600a",
 1393
 ],
 "content/linkedin/[2608] 링크드인 게시물.md": [
@@ -15510,7 +15632,7 @@
 548
 ],
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md": [
-"9c3731a14f4887475bf7528a1c2fa1d416dad799",
+"607fdd02dac9838ba60da38126a2be16cd8b0c0c",
 992
 ],
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md": [
@@ -15536,6 +15658,1030 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md": [
 "796ccb873657093c890fff4cc93731735d51240e",
 100
+],
+"content/rocketblocks/2017-04-10-how-to-handle-a-math-error-in-a-case-interview.md": [
+"5e6785336cb58d90e18b2822e38520ab9329a611",
+134
+],
+"content/rocketblocks/2017-04-15-how-to-conclude-well-in-a-consulting-case-interview-part-i.md": [
+"d7c9e2b5565561751d3f5715809c282b41922447",
+185
+],
+"content/rocketblocks/2017-04-15-how-to-conclude-well-in-a-consulting-case-interview-part-ii.md": [
+"da8b6fc8e03530c959e31232bcd21eb1682089f1",
+343
+],
+"content/rocketblocks/2017-05-04-the-storytelling-framework-for-your-mckinsey-bcg-and-bain-fi.md": [
+"a53804a3412ef68ec680888804ed5ed61995fada",
+206
+],
+"content/rocketblocks/2017-05-16-what-is-the-mece-principle.md": [
+"c39640068089973ea652acf12e7be57b150ef2a2",
+325
+],
+"content/rocketblocks/2017-05-30-the-famous-airport-test-and-why-consultants-love-to-use-it.md": [
+"b3bc151ad5378818431b3a7cc1d9b18c4cef9c22",
+177
+],
+"content/rocketblocks/2017-06-07-what-are-mckinsey-bcg-and-bain-looking-for-in-the-fit-portio.md": [
+"d16f14d13d3632920954963dd94fe1bbd066cec5",
+329
+],
+"content/rocketblocks/2017-06-24-how-to-find-the-right-stories-for-the-fit-portion-of-consult.md": [
+"aa76bd25ce81f21d951194b0f0614ceda3a64f86",
+270
+],
+"content/rocketblocks/2017-08-24-bain-manager-shares-the-5-core-skills-that-matter.md": [
+"e482266d395551c4f18e50557eceb5379ef868d8",
+93
+],
+"content/rocketblocks/2017-08-29-bain-manager-shares-the-3-traits-of-great-communication.md": [
+"d390d38e185f6854f1a634ddae8fe835bba5fce4",
+46
+],
+"content/rocketblocks/2017-09-05-3-skills-candidates-often-underweight-in-case-interviews-w-f.md": [
+"c384355740a4fec20f2b91c38e2f1f4723df1844",
+93
+],
+"content/rocketblocks/2017-09-12-bain-manager-shares-key-case-interview-skills.md": [
+"e4ceb9dde360561ce46545e96b7e785cd7a9c4e6",
+77
+],
+"content/rocketblocks/2017-09-19-the-storytelling-framework-for-your-mckinsey-bcg-and-bain-fi.md": [
+"12a91626b29ca18723fd3a367cf93056890f22f9",
+423
+],
+"content/rocketblocks/2017-09-26-demonstrating-personal-impact-in-your-mckinsey-personal-expe.md": [
+"9167f968e7bc7c373875a27d80f1c515cceda4ca",
+87
+],
+"content/rocketblocks/2017-10-04-how-to-ask-great-questions-in-your-mckinsey-bcg-and-bain-int.md": [
+"6a00b0464ce68166df50782ac4be4b89b3e0c202",
+252
+],
+"content/rocketblocks/2017-10-10-how-to-avoid-common-red-flags-in-your-mckinsey-bcg-and-bain.md": [
+"80cd54f5aaacca3f96c65e6ef8ad09284ffb6b1b",
+84
+],
+"content/rocketblocks/2017-10-17-interviewers-perspective-on-mckinseys-interview-day.md": [
+"0ba9be340c128f45caa55cf35f24352948473697",
+146
+],
+"content/rocketblocks/2017-10-26-four-insights-from-the-best-case-interview-w-former-bain-man.md": [
+"95a1b0ec110508eb320ee61b78a0b933a8545fcc",
+89
+],
+"content/rocketblocks/2017-10-31-how-to-answer-walk-me-through-your-resume.md": [
+"7ed1857e390f761533bafaf9e58b2bbfb1ef9e01",
+342
+],
+"content/rocketblocks/2017-11-09-what-do-mckinsey-bcg-and-bain-do-in-laymans-terms.md": [
+"4ae85519dbf26a42e56e3e133cb63dd3ddb2ea3e",
+378
+],
+"content/rocketblocks/2017-11-14-how-to-stand-out-on-interview-day.md": [
+"651dec444706cba1d071ab90aa91ff2c5843b437",
+75
+],
+"content/rocketblocks/2017-11-21-is-life-as-a-mckinsey-bcg-or-bain-consultant-glamorous.md": [
+"8e14fc8a5eff3714b7b690c45eb9602ce6494921",
+319
+],
+"content/rocketblocks/2017-11-29-3-insights-on-the-future-of-mckinsey-bcg-and-bain.md": [
+"72d959518e50ee77e83205fc3ae515b67f829d9f",
+63
+],
+"content/rocketblocks/2017-12-12-differences-between-the-1st-and-2nd-round-case-interviews-at.md": [
+"0430e0f838f1c62f8b392fbdbc799562cc3dd465",
+112
+],
+"content/rocketblocks/2017-12-24-book-recommendations-for-aspiring-consultants.md": [
+"235f8ad1b76ed589866f8b5e50ccd5443292e5f7",
+307
+],
+"content/rocketblocks/2018-01-03-day-in-the-life-of-a-bain-and-co-associate-consultant.md": [
+"78220d4f73be91081880b23d42e5948e453a63f2",
+157
+],
+"content/rocketblocks/2018-02-08-the-importance-of-coachability-in-your-mckinsey-bcg-and-bain.md": [
+"39673116a0bb943565ee5e0133c41e236906e382",
+356
+],
+"content/rocketblocks/2018-02-22-how-to-prepare-for-case-interviews-part-i.md": [
+"8ed4aa3ca32aa5f27a63b4eee927e0d82619e78f",
+295
+],
+"content/rocketblocks/2018-03-12-how-to-prepare-for-case-interviews-part-ii.md": [
+"bbb90d1bd33332eac69bbbc414c184b37e07bb4c",
+366
+],
+"content/rocketblocks/2018-04-17-how-to-prepare-for-case-interviews-part-iii.md": [
+"1e5782942c8997eacb9ff937671312c633f40709",
+263
+],
+"content/rocketblocks/2018-05-29-consulting-terms-dont-boil-the-ocean.md": [
+"f20df04c90f50c188eb5867c5e882212b37ee9d1",
+117
+],
+"content/rocketblocks/2018-06-28-consulting-terms-applying-second-order-or-next-level-thinkin.md": [
+"a9623a096940e050fde697971ae12f5c67deb67d",
+113
+],
+"content/rocketblocks/2018-08-03-consulting-terms-10-commonly-used-terms.md": [
+"bdac2f572bb11ba2e263fdadc2486d84c0698cd4",
+196
+],
+"content/rocketblocks/2018-09-19-day-in-the-life-of-a-bain-and-co-consultant.md": [
+"79089e8d3059d28f9be1277c43865e00e80c2142",
+108
+],
+"content/rocketblocks/2018-09-26-the-hidden-criterion-consulting-interviewers-are-evaluating.md": [
+"b2580c1fbcab3b952c52150f284c5f985bf1efa7",
+58
+],
+"content/rocketblocks/2018-10-04-whats-it-really-like-to-work-at-bain-and-co.md": [
+"f9a8e32c5f2d0ecb5981c53460aad34ea5dc1a10",
+127
+],
+"content/rocketblocks/2018-10-23-how-many-unique-stories-do-you-need-for-your-mckinsey-fit-in.md": [
+"2a341162b8a16cefa892717af8625530446f9ebe",
+64
+],
+"content/rocketblocks/2018-11-01-whats-it-really-like-to-work-at-mckinsey-and-co.md": [
+"9d4c65537740f68f8262bd47d82b6d21690b6243",
+74
+],
+"content/rocketblocks/2018-11-14-consulting-mock-case-interview-market-entry-part-i.md": [
+"478bd7be5f848ff4531c2f10482531522f4f2972",
+385
+],
+"content/rocketblocks/2018-11-28-consulting-mock-case-interview-market-entry-part-ii.md": [
+"7fc0dbaf5a1b8bfdc689c01813f6daac7a1a949b",
+391
+],
+"content/rocketblocks/2018-12-18-consulting-mock-case-interview-market-entry-part-iii.md": [
+"334ac10e1c03531e32b945f902689da5574de68c",
+480
+],
+"content/rocketblocks/2019-01-08-a-unique-perspective-on-the-airport-test-from-a-mckinsey-and.md": [
+"03c746705dd89a2e28ba3e18a4cbc20151ee3f9c",
+54
+],
+"content/rocketblocks/2019-01-29-final-round-curveball-case-interview-questions-from-mckinsey.md": [
+"1e106a10f38397e60e9a9b21e747e0ee38caa8ee",
+201
+],
+"content/rocketblocks/2019-02-06-what-do-mckinsey-bcg-or-bain-interviewers-look-for.md": [
+"7acdceba360d906ff8e7113f9db1fc5bf453a69b",
+194
+],
+"content/rocketblocks/2019-02-20-why-do-you-want-to-work-for-mckinsey-bcg-or-bain.md": [
+"21c84a6fe83dda21fe206128c0894939ccc43b27",
+179
+],
+"content/rocketblocks/2019-02-27-what-is-bcg-digital-ventures.md": [
+"bdd344cfbd184cc751c20a541ca9a6f8d395e7f9",
+199
+],
+"content/rocketblocks/2019-03-12-3-tips-for-approaching-market-sizing-and-estimation-intervie.md": [
+"172cf5c0181650953be865dbc9b133516fd4eb22",
+208
+],
+"content/rocketblocks/2019-04-09-do-you-need-an-mba-to-work-at-mckinsey-bcg-or-bain.md": [
+"756d2851aa1c7a93ff232bea822996a5fec15a29",
+173
+],
+"content/rocketblocks/2019-04-30-three-questions-every-mckinsey-bcg-or-bain-interviewer-asks.md": [
+"a7b5522921ba1fb66702cf58cde2c883d5ef10c2",
+194
+],
+"content/rocketblocks/2019-06-04-what-is-the-bcg-growth-share-matrix.md": [
+"eb411e445c4ac24f7b9a4001c1969a29e1848448",
+250
+],
+"content/rocketblocks/2019-06-25-how-to-read-a-bain-and-co-relative-market-share-rms-chart.md": [
+"5ea7f652f388e5fbc8c2eeb51d2ab07654ae906e",
+202
+],
+"content/rocketblocks/2019-08-14-how-to-write-a-strong-resum.md": [
+"0dbb0a910cbf89dc93afed1225c3134614186ad5",
+287
+],
+"content/rocketblocks/2019-09-03-what-is-the-mckinsey-problem-solving-test-pst-part-i.md": [
+"55c68a281a388529a748b58651130e52dffcc02b",
+175
+],
+"content/rocketblocks/2019-09-12-what-is-the-mckinsey-problem-solving-test-sample-questions-i.md": [
+"ea656f61650ded22b71f6584cfaa19d56d0d177d",
+265
+],
+"content/rocketblocks/2019-09-18-what-is-mckinsey-digital.md": [
+"75f6f718521a9e84e574be713fa6e32cb0e6d203",
+221
+],
+"content/rocketblocks/2019-10-02-mckinsey-bcg-and-bain-and-the-future-of-management-consultin.md": [
+"2a199f1d18265631c3a698d52529ddddb75023d3",
+370
+],
+"content/rocketblocks/2019-10-16-mckinsey-bcg-and-bain-and-the-future-of-consulting-part-ii.md": [
+"2cab2ded2288e332452d20dfa4eafef3228131cb",
+275
+],
+"content/rocketblocks/2019-10-30-what-is-product-management.md": [
+"b14a1f006ecc877fdc1541aefec461ce8dff6a78",
+363
+],
+"content/rocketblocks/2019-11-06-product-management-fundamentals-three-core-pillars.md": [
+"4e992cbbd03740fbdb47e8627f82ab88581c92f6",
+293
+],
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md": [
+"d402f9a74ee644d205be19a6a14c8fff5a3cb514",
+253
+],
+"content/rocketblocks/2019-12-04-introduction-to-product-management-interviews-part-ii.md": [
+"2f4fc22eb2da20102d9a1dd393b5a39bdfebb95a",
+208
+],
+"content/rocketblocks/2019-12-19-whats-the-difference-between-a-product-manager-and-a-product.md": [
+"ff0d02a40ad09d2d0144fcd1462090d3fa3f3356",
+242
+],
+"content/rocketblocks/2020-01-02-day-in-the-life-of-a-product-manager.md": [
+"d0c53fd30e589e58abfbd31ff9e24af130abf443",
+102
+],
+"content/rocketblocks/2020-01-08-is-the-pm-the-ceo-of-the-product-w-okta-pm.md": [
+"fbc0ae78906ade735156d28f439e8dfb54a202bd",
+187
+],
+"content/rocketblocks/2020-01-22-how-technical-does-a-product-manager-need-to-be-w-twitter-pm.md": [
+"5431601c70d772b598bc6177d169f1071e3afa38",
+80
+],
+"content/rocketblocks/2020-02-04-how-to-communicate-across-the-stack-as-a-product-manager.md": [
+"628e01b264e202cd12005f7047cf54e9063e4172",
+66
+],
+"content/rocketblocks/2020-02-19-are-pms-the-ceo-of-the-product-w-twitter-pm.md": [
+"89846009768577a889d81118664ce1de98a34310",
+120
+],
+"content/rocketblocks/2020-03-11-two-types-of-case-questions-w-okta-pm.md": [
+"84a06b7d2df5c8caedcfe5f76a613c9c04836f16",
+71
+],
+"content/rocketblocks/2020-04-16-what-is-bcg-gamma.md": [
+"5fde6efd5007dd4991871a699199ac0d9db6ea31",
+295
+],
+"content/rocketblocks/2020-04-23-how-to-be-a-good-mock-interview-partner.md": [
+"7af5abb51e570904985ceddf8135b97216ee2a36",
+271
+],
+"content/rocketblocks/2020-04-30-how-to-write-and-use-a-career-networking-blurb.md": [
+"bb36ba144f1f8571ad1f7277cf1713a2f185c24f",
+207
+],
+"content/rocketblocks/2020-05-06-two-common-interview-mistakes-w-former-mckinsey-and-co-engag.md": [
+"f12e669b9e1fa8956bffc1e1ff483e2302ac1dc6",
+126
+],
+"content/rocketblocks/2020-05-13-day-in-the-life-of-a-mckinsey-engagement-manager.md": [
+"944c67b79aed470abe57eae08d43d9f08ff9b28b",
+163
+],
+"content/rocketblocks/2020-05-20-most-valuable-skill-learned-as-a-mckinsey-consultant.md": [
+"982e2062c48a6ae0559016b9519d030cab58f724",
+168
+],
+"content/rocketblocks/2020-05-27-product-sense-and-strategy-questions-in-pm-interviews-part-i.md": [
+"13fb35148357b2c69bc7ed57d2b3d0bae18bb7ba",
+330
+],
+"content/rocketblocks/2020-06-04-analytics-and-execution-questions-in-pm-interviews-part-ii.md": [
+"07e1d64d56beae9ddc59949dfe7452181a689565",
+282
+],
+"content/rocketblocks/2020-06-10-technical-fluency-questions-in-pm-interviews-part-iii.md": [
+"7091a4d953a79b984b07ca33c971ae37a4faaf20",
+223
+],
+"content/rocketblocks/2020-06-17-day-in-the-life-of-a-google-product-manager.md": [
+"c8fc9527415b19c6c623206714aa904908cfcea9",
+146
+],
+"content/rocketblocks/2020-06-25-how-to-build-a-product-roadmap-w-google-pm.md": [
+"ca10ec965f440777a4a358463514f04ff710dc32",
+277
+],
+"content/rocketblocks/2020-07-02-3-key-skills-of-successful-product-managers-w-ex-google-pm.md": [
+"bca48958d65e0ba8be98bbf7669bf79b021abc3f",
+262
+],
+"content/rocketblocks/2020-07-15-what-is-bcg-platinion.md": [
+"4fe7f228e015f3acd87ae49624e9099fd8debd89",
+289
+],
+"content/rocketblocks/2020-07-23-biggest-mistake-made-in-case-interviews.md": [
+"13f40dd576555cd3a195e9a64ded473865119bee",
+150
+],
+"content/rocketblocks/2020-07-28-specialization-is-key-for-new-consultants.md": [
+"7f74dbda632ade6fd2b3ea2932c40f7f12fccbba",
+200
+],
+"content/rocketblocks/2020-08-04-example-case-work-at-ey-parthenon.md": [
+"13297d447c96f43720b67b797e1a4ed434f53988",
+198
+],
+"content/rocketblocks/2020-08-12-how-to-approach-a-product-execution-question-w-airbnb-pm.md": [
+"4ee4e1178630a3f83a5ff5365659649057134787",
+257
+],
+"content/rocketblocks/2020-08-18-product-execution-mock-interview-user-engagement-w-microsoft.md": [
+"1fa3ee2407ccf7e210e72eef25fb440d87f3f65c",
+1038
+],
+"content/rocketblocks/2020-08-25-the-most-overrated-and-underrated-product-management-skills.md": [
+"58369cbbbb427ae137b7c972d50b8ac2fd7efac1",
+193
+],
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md": [
+"b6a2d684583e6f9810ccdf89f8d2c9d761499094",
+1759
+],
+"content/rocketblocks/2020-09-03-breaking-into-product-management-w-kevin-yien-square-product.md": [
+"e56dfa6add49b5cb02bfcf0285f3f6ff0856eba8",
+189
+],
+"content/rocketblocks/2020-09-09-marketing-yourself-as-a-pm-candidate-w-square-pm.md": [
+"155407bb89de2d84c0e9400aaceea86d266d64c3",
+244
+],
+"content/rocketblocks/2020-09-16-two-key-traits-of-successful-pms-w-square-pm.md": [
+"f90f0801dd3f63905dcca86dc15f34b95e366e2b",
+233
+],
+"content/rocketblocks/2020-09-23-what-makes-a-successful-marketplace-company-w-ex-airbnb-pm.md": [
+"32c6eb2746fc039b3cf18030049e7a314b57ce8f",
+779
+],
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md": [
+"340893ef36b576a13fa77f7b627aaa1f661dab6e",
+1533
+],
+"content/rocketblocks/2020-10-21-the-current-state-vs-the-ideal-world-of-product-management-i.md": [
+"c56d944e9f00015f542a1a1d3674dc5004528ddc",
+296
+],
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md": [
+"70081cb95b02a3e8cb64b0268a9bc18321ef126c",
+559
+],
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md": [
+"8d31fb51fa68b86261e57922d48c2de514833f91",
+1177
+],
+"content/rocketblocks/2021-01-28-pm-technical-mock-interview-explain-how-apis-work-w-microsof.md": [
+"06270b93144bc427fcaf1a9c982a6a681db165bf",
+205
+],
+"content/rocketblocks/2021-02-03-pm-technical-mock-interview-explain-how-apis-work-w-fintech.md": [
+"12a7a580c585a4acc39337fb45f448127237ab4c",
+201
+],
+"content/rocketblocks/2021-02-24-product-sense-mock-interview-whats-your-favorite-product-and.md": [
+"b3fa9af3779c104f8eff9e3e711788daaafb7a03",
+304
+],
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md": [
+"22681469bc724c3231f7852a3ccffff53ac84ef4",
+773
+],
+"content/rocketblocks/2021-03-31-product-sense-mock-interview-whats-your-favorite-product-and.md": [
+"b72d1d27b4cc752403f5fe16001f41dd625c356d",
+237
+],
+"content/rocketblocks/2021-04-07-pm-technical-mock-interview-basics-of-machine-learning-w-gla.md": [
+"824dd0f4315623f036dfc8f2d98a210b6e498426",
+138
+],
+"content/rocketblocks/2021-04-21-product-sense-mock-interview-social-video-w-facebook-pm.md": [
+"9d89fc8d0deda376ff60f19d74dbdafb8f452d97",
+868
+],
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md": [
+"15126fbd7ddeb7c805d8abe92407b6cbe32ba041",
+703
+],
+"content/rocketblocks/2021-05-18-consulting-mock-case-interview-roi-evaluation-w-ex-mckinsey.md": [
+"980ce1a77ddad7aae00c9bd575c5bf5369be618b",
+591
+],
+"content/rocketblocks/2021-05-25-product-execution-mock-interview-measuring-success-of-a-bank.md": [
+"fa47d20d6b8c91f20292a768236864584a28d435",
+762
+],
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md": [
+"64db470d39d49c1c92d9763c7f9db06f1862432d",
+1157
+],
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md": [
+"27c4bafc0f8847f512075166baa257e694d9b78c",
+386
+],
+"content/rocketblocks/2021-07-07-product-strategy-mock-interview-grow-airbnb-experiences-w-re.md": [
+"9345aae29bbe8faa8c54ad1666c1e4aa3c3f206a",
+931
+],
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md": [
+"df39c6a76c641201da4d355523066341d4afbc20",
+939
+],
+"content/rocketblocks/2021-08-05-behavioral-interview-questions-part-i-whats-your-biggest-reg.md": [
+"6601b464861e936522fe319fb680bdfd02ee5319",
+121
+],
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md": [
+"8dd992a4bd0d22e1d49103d56355d9db2c8ab5b5",
+145
+],
+"content/rocketblocks/2021-08-17-behavioral-interview-questions-part-iii-a-time-you-tried-an.md": [
+"c8ab50f7ab0a4669947ac9a291638686f0c8658c",
+148
+],
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md": [
+"ab244d2f690e1d417b21ebdb15760d46128b4348",
+372
+],
+"content/rocketblocks/2021-09-08-behavioral-interview-tips-part-ii-structuring-your-stories.md": [
+"a69350a62bffe4458c2641ef1abfe1d3d7e852a3",
+315
+],
+"content/rocketblocks/2021-09-22-behavioral-interview-tips-part-iii-framing-your-stories.md": [
+"3612d8455184749b50b9138b2738cdcc59d5df8e",
+284
+],
+"content/rocketblocks/2021-09-30-day-in-the-life-in-a-bizops-role-w-rob-reiling.md": [
+"39580945f99a3f8abaebe3019a006ff0458aa0c1",
+167
+],
+"content/rocketblocks/2021-10-07-3-key-success-criteria-for-bizops-interviews-w-rob-reiling.md": [
+"ad6b63670e88c668e27d23a5da6c76f0a507c303",
+158
+],
+"content/rocketblocks/2021-10-14-bizops-roles-in-the-career-ladder-w-paul-farris.md": [
+"a94c3760adc6e0041607d9841c6943742acf770b",
+102
+],
+"content/rocketblocks/2021-10-21-the-bizops-interview-process-w-paul-farris.md": [
+"736d03a8d92ff260afd884bfe113b197ddc80977",
+168
+],
+"content/rocketblocks/2021-10-28-mba-resume-review-i.md": [
+"4c27b579ed3eb5f5c344ff606881a12a02e6105e",
+216
+],
+"content/rocketblocks/2021-11-02-how-to-answer-whats-your-biggest-weakness.md": [
+"319b2d2a803f0f0fbe68b708f36a428ecf6ae449",
+185
+],
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md": [
+"049e21f243950ed6cf7c6a92daf90ff8c378240f",
+268
+],
+"content/rocketblocks/2021-11-16-how-to-answer-tell-me-about-a-time-you-disagreed-with-a-coll.md": [
+"b5b1c7ca9fc7fd25f1b5b9582dd14ad16b0adcd8",
+249
+],
+"content/rocketblocks/2021-11-30-day-in-the-life-of-a-product-marketing-manager-w-holly-watso.md": [
+"57687bb58fe3f54273fb5aeb28f9608a7889f5cc",
+180
+],
+"content/rocketblocks/2021-12-07-3-ways-into-product-marketing-management.md": [
+"c0440b2bf5600b7a0f5a5b1273673c115444f850",
+108
+],
+"content/rocketblocks/2021-12-14-how-to-answer-tell-me-about-a-time-you-fell-short-of-achievi.md": [
+"a87ac5d52727c39dd3975733847e4ef86e427a48",
+223
+],
+"content/rocketblocks/2021-12-21-pm-interview-question-whats-your-favorite-product-and-why-an.md": [
+"298e037fc143cd35b17c7203cfc4b78978b2e72f",
+501
+],
+"content/rocketblocks/2021-12-28-pm-product-execution-interview-instagram-home-screen-trade-o.md": [
+"d962ecff41324244ce76f2aaa39a9075d0676b81",
+434
+],
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md": [
+"c82afbbf56175f1a7fcfd15494066f692df52b39",
+885
+],
+"content/rocketblocks/2022-11-30-profitability-consulting-case-interview-land-in-jamaica-w-bc.md": [
+"c400b26979889516524716c6c7a6fea3ee49dec9",
+609
+],
+"content/rocketblocks/2022-12-07-how-to-include-relevant-outside-information-during-interview.md": [
+"3a6594a1f2735e230d1f6ad6ea0f87ef6be2ffa8",
+179
+],
+"content/rocketblocks/2022-12-21-building-awesome-mece-structures-how-do-you-know-youre-doing.md": [
+"71a27065aca3175fde2a132f1013d6165586cc6b",
+266
+],
+"content/rocketblocks/2022-12-28-consulting-case-interview-healthcare-profitability-w-bain-an.md": [
+"a1d21b3f21fdf607a9c9a6f68d241b60211cfe4c",
+786
+],
+"content/rocketblocks/2023-01-04-how-to-interpret-charts-in-case-interviews.md": [
+"f452632bea01468a2e609e042d964230eb3aca43",
+253
+],
+"content/rocketblocks/2023-01-11-consulting-case-interview-meat-processing-optimization-w-ex.md": [
+"651347ca70d139a12f0404b342f8acdde0ce4356",
+900
+],
+"content/rocketblocks/2023-01-18-how-to-structure-your-answer-in-product-management-case-inte.md": [
+"ff3d43f46e530589f45a95a09a1325be82aa8166",
+277
+],
+"content/rocketblocks/2023-01-25-mckinsey-interviewer-led-consulting-case-healthcare-w-ex-bcg.md": [
+"41239bbe655d9e01760b7d0d2915731b809379ee",
+890
+],
+"content/rocketblocks/2023-02-01-how-to-answer-mergers-and-acquisition-m-and-a-consulting-cas.md": [
+"cf6fa650217a4c8f5f44c9872ede2118873ed2c5",
+296
+],
+"content/rocketblocks/2023-02-08-tricky-consulting-case-interview-malware-attack-response-w-b.md": [
+"0769b5023d3159bbeff855803c54140bfaba85e8",
+746
+],
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md": [
+"b375979de9c9ee0364199753dd0a8d2ef4ca1615",
+310
+],
+"content/rocketblocks/2023-02-23-market-entry-consulting-case-interview-w-two-ex-bcg-consulta.md": [
+"c3a8e40b2a695fa70fc1a8efa046ca3686a8ac06",
+630
+],
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md": [
+"0f9f789b25ce1df0188c09aaac805c282aa7e48c",
+227
+],
+"content/rocketblocks/2023-03-08-consulting-case-interview-chemical-product-innovation-w-bcg.md": [
+"985e72b2febed660ce2cd5c44381a8614bf50cab",
+755
+],
+"content/rocketblocks/2023-03-15-how-to-avoid-four-common-case-interview-mistakes.md": [
+"81960465b186bf07b6268086663e1063e553462b",
+159
+],
+"content/rocketblocks/2023-03-22-profitability-consulting-case-interview-sports-bar-w-bain-an.md": [
+"a33d92c225ad7449b8bd86f0326b2fd2d6e27e4b",
+612
+],
+"content/rocketblocks/2023-03-29-product-management-interview-framework-house-of-pain.md": [
+"296dc7fbed96c5922514f18e43986b4290bbbbc8",
+339
+],
+"content/rocketblocks/2023-04-05-market-sizing-case-interview-airport-rental-w-mckinsey-engag.md": [
+"3c68d5dd338c2a14167513505b386351719f78bb",
+757
+],
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md": [
+"f56163a6ddba1b72b035ecdda3d6439397557a6f",
+113
+],
+"content/rocketblocks/2023-04-19-market-analysis-case-interview-auto-parts-manufacturer-w-bcg.md": [
+"b040ec461889a614280a45567cd4754e8923f3d1",
+808
+],
+"content/rocketblocks/2023-04-26-4-ways-to-build-confidence-for-your-job-interviews-w-google.md": [
+"53620e624fa6f9f777d1aa9f69cf180f784a649b",
+208
+],
+"content/rocketblocks/2023-05-03-operations-consulting-case-interview-grocery-distribution-w.md": [
+"c2cdc1603b8809506d35a38b2a2b6209cc6a3a49",
+640
+],
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md": [
+"bdacebfaf5dd6f64714d053beb0f27d8536449a2",
+382
+],
+"content/rocketblocks/2023-05-17-market-sizing-consulting-case-interview-helicopter-service-w.md": [
+"bb871c02130301eb82e3cfa149f6153cb810290d",
+760
+],
+"content/rocketblocks/2023-05-24-day-in-the-life-of-a-fintech-product-manager-w-ex-affirm-ex.md": [
+"e4a6276253db03da44206eabb697bde0f38efc33",
+731
+],
+"content/rocketblocks/2023-05-31-m-and-a-consulting-case-interview-buying-a-baseball-team-w-e.md": [
+"d32faa55d1a6a4a9515b54fed06440250f8bcea6",
+523
+],
+"content/rocketblocks/2023-06-07-behavioral-interview-q-a-walk-me-through-your-resume-w-bcg-a.md": [
+"0b3a81231598659f52bf5800e5c28a2714946288",
+223
+],
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md": [
+"5e172261918722a7e08182d7821850c79057dd63",
+630
+],
+"content/rocketblocks/2023-06-21-networking-tips-for-undergraduate-students-w-bcg-associate.md": [
+"c8b0462046f2baf9f3c9274959b36fda5865a24d",
+175
+],
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md": [
+"29a6664d3d70ff4a03f3f4a9fa6698ec0837d1cc",
+644
+],
+"content/rocketblocks/2023-07-05-how-to-prep-for-consulting-interviews-w-bcg-consultant-chica.md": [
+"00a14f93c1dbeb8834ec3a161b5993541ef8c8b8",
+650
+],
+"content/rocketblocks/2023-07-12-mckinsey-interviewer-led-consulting-case-interview-free-publ.md": [
+"3c4de369b4bd8010e22357e33727288304061b4c",
+581
+],
+"content/rocketblocks/2023-07-19-career-chat-why-i-decided-to-do-an-mba-w-bcg-consultant-chic.md": [
+"efff897c83363d27c105c93b95ef8c754c2f25db",
+707
+],
+"content/rocketblocks/2023-07-26-tactical-tips-to-prepare-for-consulting-case-interviews-w-bc.md": [
+"6ac3c863e690d81e40ca5a801667a657ef46287f",
+549
+],
+"content/rocketblocks/2023-08-02-how-i-switched-from-marketing-to-consulting-w-bcg-consultant.md": [
+"d1e44db67f07eb8273f24918c7b57e62c0ecc183",
+479
+],
+"content/rocketblocks/2023-08-09-key-challenges-when-breaking-into-product-management-w-dr-na.md": [
+"989caa7f0907a366514f41ed5a036a8931c94ead",
+449
+],
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md": [
+"16bf82dfe41e58d4cd7ac6d854189b7b0f556f96",
+537
+],
+"content/rocketblocks/2023-08-23-is-there-work-life-balance-in-product-management-w-dr-nancy.md": [
+"ce367160fcb9987ead0c78be2693f066c443234d",
+272
+],
+"content/rocketblocks/2023-08-30-walk-me-through-your-resume-education-to-management-consulti.md": [
+"6a2b0d3175feafe5f48bc4bad599b0c2d5ca1d02",
+178
+],
+"content/rocketblocks/2023-09-06-m-and-a-consulting-case-interview-snack-foods-acquisition-w.md": [
+"58e0c93124740178a79f2a93eafd1b0b8e6cb39a",
+433
+],
+"content/rocketblocks/2023-09-13-walk-me-through-your-resume-answer-from-marketing-to-managem.md": [
+"46159d0e548db5b96630de808d6942ee10153cac",
+182
+],
+"content/rocketblocks/2023-09-20-profitability-consulting-case-interview-streaming-revenue-is.md": [
+"d2027c517438f3e6a2ce51a97798479d9bafdaeb",
+608
+],
+"content/rocketblocks/2023-09-27-hospitality-to-consulting-how-to-answer-walk-me-through-your.md": [
+"e11cca89313a79c073937822cf2f9aa1fc71d22f",
+154
+],
+"content/rocketblocks/2023-10-04-finance-to-consulting-how-to-answer-walk-me-through-your-res.md": [
+"e2797033a24a51572f4c91c55dfbcbd8fd86b3ea",
+159
+],
+"content/rocketblocks/2023-10-11-market-sizing-consulting-case-interview-pop-stars-dilemma-w.md": [
+"553bb8a3d5bbe8470cf0f655e837f5d07cd811f8",
+1052
+],
+"content/rocketblocks/2023-10-18-product-management-apprenticeship-101-bridging-the-experienc.md": [
+"76dca1d0367fee87e15f5b0d29115086124d10e2",
+250
+],
+"content/rocketblocks/2023-10-25-market-entry-consulting-case-interview-dental-company-analys.md": [
+"d14dc1fd20fad31af30b068326986c0b7b23ab41",
+655
+],
+"content/rocketblocks/2023-11-01-operations-consulting-case-interview-beverage-giants-challen.md": [
+"61e37893b1cadc0bf97ade7221c0c99b9a3c1d3f",
+584
+],
+"content/rocketblocks/2023-11-08-how-to-improve-you-mental-math-speed-and-accuracy.md": [
+"2f91091c6d628746c5922c979d15459b9eb1e69d",
+178
+],
+"content/rocketblocks/2023-11-15-m-and-a-consulting-case-interview-social-media-acquisition-w.md": [
+"98b0dc790cad3a02f86b1934ba450d2bd713d90a",
+524
+],
+"content/rocketblocks/2023-11-22-competitive-response-consulting-case-interview-short-term-re.md": [
+"e390f8cf4a098acf77a8dd8a14d10a0a8afb1160",
+693
+],
+"content/rocketblocks/2023-11-29-profitability-consulting-case-interview-pharmacy-strategy-w.md": [
+"66d8b9b56a0c0f9e317161ef1b687a62be0aa8d9",
+559
+],
+"content/rocketblocks/2023-12-06-operations-consulting-case-interview-should-employees-return.md": [
+"487384cf9e429a1fe11c2760644393abfd47df79",
+662
+],
+"content/rocketblocks/2023-12-13-market-entry-consulting-case-interview-ice-cream-or-books-w.md": [
+"fd3a4e2ad3cbe6279c2768b53626fb7aec5930a8",
+940
+],
+"content/rocketblocks/2023-12-20-consulting-case-interview-review-profitability-case.md": [
+"7b01cea0e4cf4c4bab1874a4a7c0237d46db41aa",
+667
+],
+"content/rocketblocks/2023-12-27-market-entry-consulting-case-interview-small-or-large-remode.md": [
+"6e0ae53b48cb6a230289bf2b7f811e091e722d80",
+773
+],
+"content/rocketblocks/2024-01-10-consulting-case-interview-review-market-sizing-case.md": [
+"759d4b3fd44b6c56de930c370e769280c2891802",
+898
+],
+"content/rocketblocks/2024-01-17-consulting-case-interview-review-operations-case.md": [
+"f5b48127e1e78a962aacb361484dcc2db22e43e2",
+639
+],
+"content/rocketblocks/2024-01-24-consulting-case-interview-review-market-entry-case.md": [
+"bf475fbea0b83adfd763de453a5abb232c81e8a9",
+556
+],
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md": [
+"796dfeff624dcb3f518fa48eaa32f9a815da147e",
+755
+],
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md": [
+"3280abd0eb55a75214ff822d1625eb6677801205",
+639
+],
+"content/rocketblocks/2024-02-28-interviewer-led-product-management-interview-honeys-strategy.md": [
+"be945d6f32a4e1652ecd1b3efb4eaaeb1b8a823d",
+665
+],
+"content/rocketblocks/2024-03-06-pm-product-strategy-interview-grow-netflix-3x-w-ex-instagram.md": [
+"0f52910713912982e3d1e49bead579be2b20600c",
+967
+],
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md": [
+"2267ae6ed6226e81351d80dbad9f479331d5d281",
+969
+],
+"content/rocketblocks/2024-05-08-open-ended-pm-mock-interview-get-people-to-read-more-product.md": [
+"349773a8eb1797a9dd9d2f9844b382bc1720883d",
+784
+],
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md": [
+"e590b1f80a6d65144cd6de0ede6631f53ef6e9cc",
+860
+],
+"content/rocketblocks/2024-07-31-non-profit-consulting-case-interview-texas-education-grants.md": [
+"969a5c439399708aceaf9360511f3ae2e4ad14b6",
+571
+],
+"content/rocketblocks/2024-08-07-mckinsey-style-interviewer-led-case-interview-nycs-trash-pro.md": [
+"154c31a746921d5d333a58233fdc092db5de950a",
+853
+],
+"content/rocketblocks/2024-08-14-growth-consulting-case-interview-boost-scotlands-tourism-w-e.md": [
+"31590220c2dba84cd7b0ef64e32a75c7cb0bf1d4",
+529
+],
+"content/rocketblocks/2024-08-21-competitive-response-consulting-interview-lululemons-comebac.md": [
+"c0044f973c7704f25ec7de22559abc40a38050b8",
+652
+],
+"content/rocketblocks/2024-09-04-public-sector-consulting-case-interview-paris-olympics-w-bai.md": [
+"20ce14d204139a90f7b212ce309b6a510f933937",
+511
+],
+"content/rocketblocks/2024-09-18-bcg-technology-consulting-case-interview-airline-ai-w-mckins.md": [
+"ac3a0b6a92a3dc9345b9588d91199484533b8635",
+561
+],
+"content/rocketblocks/2024-09-25-revenue-growth-consulting-case-interview-airline-seating-w-b.md": [
+"7bae5ba525269f7426eb0961eb23dcf7c74dd307",
+677
+],
+"content/rocketblocks/2024-10-09-m-and-a-consulting-case-interview-airline-acquisition-w-bain.md": [
+"5e6672ed11e95aa59e3c49a5874ad87d72b37ee1",
+785
+],
+"content/rocketblocks/2024-10-16-m-and-a-consulting-case-interview-the-home-depot-w-bcg-and-m.md": [
+"8ccc85b413ac8f5474148490f073ee8ee8d192ab",
+712
+],
+"content/rocketblocks/2024-10-23-exhibit-heavy-consulting-case-starbucks-growth-issue-w-bcg-a.md": [
+"23b44aa79a203115fa0934a93af12797db0670ec",
+435
+],
+"content/rocketblocks/2024-10-30-market-entry-consulting-case-barbie-phones-w-bain-and-bcg-co.md": [
+"337072413d5ea031af7b7f6a009ab606253ff451",
+584
+],
+"content/rocketblocks/2024-11-06-business-response-case-nikes-reset-w-bain-and-bcg-consultant.md": [
+"0421b8a777ffb16b912b10e9bb1f5db0ccf52b92",
+701
+],
+"content/rocketblocks/2024-11-20-profitability-consulting-case-interview-self-driving-uber-w.md": [
+"20cdd45cfad87ad46ed75d1910086d44ce5a3958",
+807
+],
+"content/rocketblocks/2024-11-27-math-heavy-consulting-case-interview-natural-gas-mega-projec.md": [
+"fca220552ba6dd54241cbcbbaefd189902638bec",
+896
+],
+"content/rocketblocks/2024-12-04-market-entry-consulting-case-interview-weight-loss-drug-w-ey.md": [
+"5ef391c7c461b0249b9bb4671ac40567321eede8",
+707
+],
+"content/rocketblocks/2024-12-18-strategy-consulting-case-interview-major-league-baseball-bla.md": [
+"e88becf2ef01cac8917b0008ffb3550bf95740d6",
+706
+],
+"content/rocketblocks/2024-12-26-consulting-case-interview-doordash-vs-uber-eats-w-ey-and-bcg.md": [
+"5bec87fb84b56bb5397e54abf8fafe08c7add743",
+754
+],
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md": [
+"4f2713b8b0d51555dfe6ef785651d076a81a0f7e",
+730
+],
+"content/rocketblocks/2025-01-16-growth-consulting-case-interview-nestles-bounce-w-bcg-and-ey.md": [
+"ef5711cbabe9d25141e05436a8ff9c869d3ba90a",
+754
+],
+"content/rocketblocks/2025-02-05-market-entry-consulting-case-interview-disneys-bluey-w-bcg-a.md": [
+"79807e1f82e4114c4fbd01ccaf50bf61304436e3",
+903
+],
+"content/rocketblocks/2025-02-19-pricing-and-market-entry-case-interview-w-mckinsey-and-ey-co.md": [
+"6061c5bf83e920eac910f862247c2f12d11ebc44",
+963
+],
+"content/rocketblocks/2025-03-05-m-and-a-consulting-case-interview-legacy-companies-battle-ai.md": [
+"1977bb6115df617a66656ce1147218989cbf87a5",
+874
+],
+"content/rocketblocks/2025-03-19-m-and-a-consulting-case-interview-capital-one-acquires-disco.md": [
+"5c0ebcd312e5caf3fd99fc2bcd5158c71472cf4c",
+798
+],
+"content/rocketblocks/2025-04-02-profitability-consulting-case-interview-mcdonalds-meal-deal.md": [
+"f8e58a847af1a63cf95e8a2b4815b434ad78ae87",
+903
+],
+"content/rocketblocks/2025-04-16-beginner-consulting-case-interview-w-bcg-and-bain-consultant.md": [
+"4a07e8ec6f2e403c023ca7811ffa5b153ef5c24a",
+725
+],
+"content/rocketblocks/2025-04-30-advanced-market-entry-consulting-case-interview-w-bcg-and-ey.md": [
+"9bbdc1d132739475d9fe5516194ab9f39351e1b6",
+892
+],
+"content/rocketblocks/2025-05-14-bcg-consulting-case-interview-auto-dealership-profitability.md": [
+"5159e85817236e348bc14a75f1dd2905e8b1b771",
+916
+],
+"content/rocketblocks/2025-05-28-competitive-response-consulting-case-interview-food-dye-regu.md": [
+"3db4c49f235e38d7a64a7073c60bd92a11d29a32",
+777
+],
+"content/rocketblocks/2025-06-11-profitability-case-interview-fix-chilis-w-mckinsey-and-ey-co.md": [
+"ed7eb0f8f9bc05bc1df930e2d52dc171063b68ff",
+939
+],
+"content/rocketblocks/2025-06-25-pricing-consulting-case-interview-us-tariffs-w-mckinsey-and.md": [
+"83d52d645c4eaff2e818538cd8e0070450deed23",
+852
+],
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md": [
+"b1e405325a302cf4cdbebd9eff8f46a4271a51ae",
+896
+],
+"content/rocketblocks/2025-07-23-market-entry-consulting-case-interview-coca-colas-next-move.md": [
+"fc821c28c4f045e1e686d63db2df0fa0308953e4",
+782
+],
+"content/rocketblocks/2025-08-06-market-entry-consulting-case-interview-grow-a-hometown-resta.md": [
+"77a3af74f74bdfd66ef4dc13af2e271ae63cfed4",
+825
+],
+"content/rocketblocks/2025-08-20-market-entry-consulting-case-interview-should-grab-bet-on-gr.md": [
+"98ce25d46f90c9587ae6a2ab71806d8e16a57d5c",
+809
+],
+"content/rocketblocks/2025-09-03-operations-consulting-case-interview-600m-battery-plant-in-a.md": [
+"88e02431c5373e6d8808bc28acfdf928c2854c9e",
+844
+],
+"content/rocketblocks/2025-09-17-operations-consulting-case-interview-uk-labor-crisis-w-bain.md": [
+"0d5ded2f8ad6a8d02a30fa643d2c09761ec5c04a",
+868
+],
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md": [
+"99f4ffbaabf8b47b59efdabe404725b5d7b1e12e",
+866
+],
+"content/rocketblocks/2025-10-15-growth-consulting-case-interview-digital-bank-doldrums-w-bai.md": [
+"288ccb45654f0b7a053b187d43ccba94f4b95b1a",
+1109
+],
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md": [
+"2b1082bb57736c8940d30cab4ee5fdeb5437a0e7",
+876
+],
+"content/rocketblocks/2025-11-12-strategy-consulting-case-interview-is-a-20-minimum-wage-good.md": [
+"d85c7b4d7c3c88f54411bb0fd0bc652114f845e0",
+895
+],
+"content/rocketblocks/2025-11-26-growth-consulting-case-interview-how-should-an-urgent-care-c.md": [
+"a10abfcad24c383426d9eeb9c7407c934898fdde",
+1085
+],
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md": [
+"c52eb02728209cbcf45a11c414dff27fe416b40f",
+1033
+],
+"content/rocketblocks/2025-12-24-interviewer-led-pricing-consulting-case-interview-hotel-slum.md": [
+"1240e26e36c15dc6325e418e89f3ea4a83a94a8d",
+858
+],
+"content/rocketblocks/2026-01-07-mckinsey-style-consulting-case-interview-high-speed-rail-exp.md": [
+"ba36b32c14e1664ac7f565212a072f946442984a",
+861
+],
+"content/rocketblocks/2026-01-21-strategy-consulting-case-interview-airline-satisfaction-drop.md": [
+"887b61d14cd2bbf2c6e42ce0042995dcd02b34d5",
+778
+],
+"content/rocketblocks/2026-02-04-profitability-consulting-case-interview-commercial-seaport-s.md": [
+"6cff6bd84780d9be4bf44050a3180962160ba855",
+924
+],
+"content/rocketblocks/2026-02-18-cost-cutting-consulting-case-interview-ai-in-healthcare-w-bc.md": [
+"319a6b216c14d472f7cc1ca6468f97231c00ebb5",
+854
+],
+"content/rocketblocks/2026-03-04-turnaround-consulting-case-interview-craft-beer-decline-w-bc.md": [
+"a6e22f14c531bd68c673617ecd7d0fff73ad8817",
+1008
+],
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md": [
+"ac247a6c5c3009fc779f5f5e850b37c422365ecf",
+1218
+],
+"content/rocketblocks/2026-04-08-public-sector-consulting-case-interview-energy-subsidies-w-b.md": [
+"2c94778ef5736e9b2f3345c55350240e1807d0c9",
+818
+],
+"content/rocketblocks/2026-04-22-consulting-case-interview-ai-strategy-case-w-bcg-and-a-and-m.md": [
+"259813648e9cff9932db9dfc55dc49e3ce530b85",
+971
+],
+"content/rocketblocks/2026-05-06-good-structure-vs-bad-structure-four-common-structuring-mist.md": [
+"5acf6af3bff2872b8860dc5b89a09e232fbedced",
+282
+],
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md": [
+"90e2c0d7736ce469106262b977351f3b0abe46b9",
+1048
+],
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md": [
+"b9595b7dd4f54ae29ecfbd753af67ac2a2692e5d",
+1052
+],
+"content/rocketblocks/2026-06-17-beginner-consulting-case-interview-ai-cost-cutting-w-bcg-con.md": [
+"c7b2a6a4449aff82d8d69630421121d133d5ade5",
+855
+],
+"content/rocketblocks/2026-07-01-beginner-consulting-case-interview-campbells-soup-w-bcg-and.md": [
+"299e45efeed3695701a7a3c34c973afa0677598c",
+1147
+],
+"content/rocketblocks/2026-07-15-pricing-consulting-case-interview-fifa-dynamic-pricing-w-mck.md": [
+"4305be2751bfe4598f3801f03afdd28ce1f88758",
+798
+],
+"content/rocketblocks/2026-07-29-beginner-consulting-case-interview-should-returns-be-free-w.md": [
+"4f0999bd70d9783d336240d74f8906f54e329a02",
+823
+],
+"content/rocketblocks/2026-08-12-m-and-a-consulting-case-interview-disney-buys-elevenlabs-w-b.md": [
+"868feee06d91226faefd6933eb4f6ce95a03cde6",
+740
+],
+"content/rocketblocks/2026-08-26-beginner-consulting-case-interview-ikea-pricing-strategy-w-b.md": [
+"d6b18a7ebeaf1f9d6e4041f8f8ae7b4bbb29c513",
+840
 ],
 "content/scaling-book/00-index.md": [
 "2f49a2ef93c320afccf609011d6b11bbd325e2b5",
@@ -21830,8 +22976,8 @@
 213
 ]
 },
-"fingerprint": "c6260f4bea3cf5ae13cacd3c70954136e69a376c",
-"lines": 304717
+"fingerprint": "8a991b209212a85acb71432ee8c1660d5611430b",
+"lines": 429187
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -22736,6 +23882,398 @@
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L118",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L41",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L89",
+"content/rocketblocks/2017-06-24-how-to-find-the-right-stories-for-the-fit-portion-of-consult.md#L82",
+"content/rocketblocks/2017-09-19-the-storytelling-framework-for-your-mckinsey-bcg-and-bain-fi.md#L45",
+"content/rocketblocks/2017-09-19-the-storytelling-framework-for-your-mckinsey-bcg-and-bain-fi.md#L163",
+"content/rocketblocks/2017-09-19-the-storytelling-framework-for-your-mckinsey-bcg-and-bain-fi.md#L170",
+"content/rocketblocks/2017-10-04-how-to-ask-great-questions-in-your-mckinsey-bcg-and-bain-int.md#L93",
+"content/rocketblocks/2017-10-31-how-to-answer-walk-me-through-your-resume.md#L24",
+"content/rocketblocks/2017-10-31-how-to-answer-walk-me-through-your-resume.md#L260",
+"content/rocketblocks/2017-10-31-how-to-answer-walk-me-through-your-resume.md#L266",
+"content/rocketblocks/2017-11-29-3-insights-on-the-future-of-mckinsey-bcg-and-bain.md#L32",
+"content/rocketblocks/2018-04-17-how-to-prepare-for-case-interviews-part-iii.md#L85",
+"content/rocketblocks/2019-02-20-why-do-you-want-to-work-for-mckinsey-bcg-or-bain.md#L61",
+"content/rocketblocks/2019-02-20-why-do-you-want-to-work-for-mckinsey-bcg-or-bain.md#L121",
+"content/rocketblocks/2019-06-04-what-is-the-bcg-growth-share-matrix.md#L45",
+"content/rocketblocks/2019-08-14-how-to-write-a-strong-resum.md#L27",
+"content/rocketblocks/2019-10-16-mckinsey-bcg-and-bain-and-the-future-of-consulting-part-ii.md#L211",
+"content/rocketblocks/2019-10-30-what-is-product-management.md#L25",
+"content/rocketblocks/2019-10-30-what-is-product-management.md#L66",
+"content/rocketblocks/2019-11-06-product-management-fundamentals-three-core-pillars.md#L19",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L25",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L87",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L99",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L240",
+"content/rocketblocks/2019-12-04-introduction-to-product-management-interviews-part-ii.md#L56",
+"content/rocketblocks/2019-12-04-introduction-to-product-management-interviews-part-ii.md#L123",
+"content/rocketblocks/2020-04-23-how-to-be-a-good-mock-interview-partner.md#L23",
+"content/rocketblocks/2020-04-23-how-to-be-a-good-mock-interview-partner.md#L249",
+"content/rocketblocks/2020-06-04-analytics-and-execution-questions-in-pm-interviews-part-ii.md#L105",
+"content/rocketblocks/2020-06-04-analytics-and-execution-questions-in-pm-interviews-part-ii.md#L259",
+"content/rocketblocks/2020-06-10-technical-fluency-questions-in-pm-interviews-part-iii.md#L11",
+"content/rocketblocks/2020-06-10-technical-fluency-questions-in-pm-interviews-part-iii.md#L85",
+"content/rocketblocks/2020-06-17-day-in-the-life-of-a-google-product-manager.md#L4",
+"content/rocketblocks/2020-06-17-day-in-the-life-of-a-google-product-manager.md#L18",
+"content/rocketblocks/2020-06-17-day-in-the-life-of-a-google-product-manager.md#L37",
+"content/rocketblocks/2020-06-25-how-to-build-a-product-roadmap-w-google-pm.md#L4",
+"content/rocketblocks/2020-06-25-how-to-build-a-product-roadmap-w-google-pm.md#L18",
+"content/rocketblocks/2020-06-25-how-to-build-a-product-roadmap-w-google-pm.md#L136",
+"content/rocketblocks/2020-07-02-3-key-skills-of-successful-product-managers-w-ex-google-pm.md#L4",
+"content/rocketblocks/2020-07-02-3-key-skills-of-successful-product-managers-w-ex-google-pm.md#L18",
+"content/rocketblocks/2020-08-12-how-to-approach-a-product-execution-question-w-airbnb-pm.md#L69",
+"content/rocketblocks/2020-08-12-how-to-approach-a-product-execution-question-w-airbnb-pm.md#L77",
+"content/rocketblocks/2020-08-12-how-to-approach-a-product-execution-question-w-airbnb-pm.md#L154",
+"content/rocketblocks/2020-08-25-the-most-overrated-and-underrated-product-management-skills.md#L141",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L4",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L19",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L40",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L42",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L43",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L47",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L50",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L63",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L64",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L66",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L70",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L71",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L74",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L122",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L124",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L127",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L157",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L160",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L167",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L185",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L201",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L215",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L220",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L238",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L240",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L252",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L292",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L293",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L303",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L309",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L311",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L333",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L624",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L646",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L649",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L652",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L672",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L753",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L784",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L811",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L816",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L819",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L832",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L849",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L851",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L852",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L859",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L861",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L864",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L873",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L875",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L877",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L879",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L883",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L934",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L941",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1020",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1128",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1156",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1159",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1366",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1421",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1435",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1443",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1444",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1489",
+"content/rocketblocks/2020-08-27-product-sense-mock-interview-google-meet-for-professors-w-cs.md#L1685",
+"content/rocketblocks/2020-09-16-two-key-traits-of-successful-pms-w-square-pm.md#L174",
+"content/rocketblocks/2020-09-23-what-makes-a-successful-marketplace-company-w-ex-airbnb-pm.md#L709",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L1219",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L1224",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L1232",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L298",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L337",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L341",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L353",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L385",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L433",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L4",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L18",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L60",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L63",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L64",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L81",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L85",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L97",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L153",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L154",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L168",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L200",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L210",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L256",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L262",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L264",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L271",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L302",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L373",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L376",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L379",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L399",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L456",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L464",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L469",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L495",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L538",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L542",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L564",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L567",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L703",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L704",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L729",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L736",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L774",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L803",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L817",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L839",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L874",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L887",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L889",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L910",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L963",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L970",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1066",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1099",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1118",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1125",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1136",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1148",
+"content/rocketblocks/2021-01-26-product-design-mock-interview-help-local-business-w-ex-googl.md#L1167",
+"content/rocketblocks/2021-02-24-product-sense-mock-interview-whats-your-favorite-product-and.md#L4",
+"content/rocketblocks/2021-02-24-product-sense-mock-interview-whats-your-favorite-product-and.md#L18",
+"content/rocketblocks/2021-03-31-product-sense-mock-interview-whats-your-favorite-product-and.md#L126",
+"content/rocketblocks/2021-03-31-product-sense-mock-interview-whats-your-favorite-product-and.md#L135",
+"content/rocketblocks/2021-03-31-product-sense-mock-interview-whats-your-favorite-product-and.md#L140",
+"content/rocketblocks/2021-03-31-product-sense-mock-interview-whats-your-favorite-product-and.md#L148",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L4",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L21",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L26",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L30",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L40",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L45",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L56",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L64",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L71",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L72",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L90",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L93",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L94",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L137",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L142",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L202",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L321",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L322",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L362",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L372",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L374",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L381",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L382",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L388",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L389",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L398",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L409",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L412",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L418",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L422",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L430",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L440",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L455",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L458",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L462",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L515",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L516",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L517",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L518",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L522",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L525",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L527",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L533",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L535",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L542",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L548",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L550",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L560",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L565",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L574",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L576",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L590",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L592",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L593",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L599",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L663",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L665",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L680",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L681",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L683",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L695",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L699",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L1086",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L1096",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L66",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L74",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L89",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L98",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L247",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L4",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L37",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L55",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L63",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L100",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L107",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L515",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L516",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L683",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L686",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L687",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L745",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L779",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L782",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L783",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L786",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L796",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L828",
+"content/rocketblocks/2021-08-05-behavioral-interview-questions-part-i-whats-your-biggest-reg.md#L48",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L69",
+"content/rocketblocks/2021-08-10-behavioral-interview-questions-part-ii-whats-the-hardest-you.md#L75",
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md#L17",
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md#L119",
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md#L121",
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md#L250",
+"content/rocketblocks/2021-09-01-behavioral-interview-tips-part-i-selecting-the-right-stories.md#L266",
+"content/rocketblocks/2021-09-08-behavioral-interview-tips-part-ii-structuring-your-stories.md#L154",
+"content/rocketblocks/2021-09-30-day-in-the-life-in-a-bizops-role-w-rob-reiling.md#L32",
+"content/rocketblocks/2021-10-07-3-key-success-criteria-for-bizops-interviews-w-rob-reiling.md#L12",
+"content/rocketblocks/2021-10-07-3-key-success-criteria-for-bizops-interviews-w-rob-reiling.md#L152",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L157",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L87",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L145",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L219",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L331",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L842",
+"content/rocketblocks/2022-12-07-how-to-include-relevant-outside-information-during-interview.md#L119",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L26",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L40",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L99",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L134",
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md#L100",
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md#L101",
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md#L112",
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md#L114",
+"content/rocketblocks/2023-03-01-product-design-interviews-advanced-tips.md#L136",
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md#L4",
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md#L17",
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md#L60",
+"content/rocketblocks/2023-04-12-getting-into-product-management-w-google-pm.md#L109",
+"content/rocketblocks/2023-04-26-4-ways-to-build-confidence-for-your-job-interviews-w-google.md#L4",
+"content/rocketblocks/2023-04-26-4-ways-to-build-confidence-for-your-job-interviews-w-google.md#L17",
+"content/rocketblocks/2023-04-26-4-ways-to-build-confidence-for-your-job-interviews-w-google.md#L77",
+"content/rocketblocks/2023-05-03-operations-consulting-case-interview-grocery-distribution-w.md#L24",
+"content/rocketblocks/2023-05-03-operations-consulting-case-interview-grocery-distribution-w.md#L47",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L4",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L18",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L49",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L51",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L61",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L73",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L76",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L91",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L97",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L112",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L124",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L142",
+"content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L164",
+"content/rocketblocks/2023-05-17-market-sizing-consulting-case-interview-helicopter-service-w.md#L26",
+"content/rocketblocks/2023-05-24-day-in-the-life-of-a-fintech-product-manager-w-ex-affirm-ex.md#L4",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L16",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L104",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L205",
+"content/rocketblocks/2023-08-09-key-challenges-when-breaking-into-product-management-w-dr-na.md#L401",
+"content/rocketblocks/2023-08-09-key-challenges-when-breaking-into-product-management-w-dr-na.md#L402",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L32",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L172",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L205",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L213",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L262",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L284",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L293",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L301",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L325",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L333",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L349",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L362",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L364",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L389",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L393",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L398",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L399",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L400",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L415",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L433",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L434",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L436",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L438",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L439",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L442",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L452",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L472",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L475",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L479",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L497",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L510",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L531",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L532",
+"content/rocketblocks/2023-08-23-is-there-work-life-balance-in-product-management-w-dr-nancy.md#L221",
+"content/rocketblocks/2023-10-18-product-management-apprenticeship-101-bridging-the-experienc.md#L207",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L80",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L4",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L19",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L20",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L38",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L46",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L59",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L67",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L68",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L71",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L118",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L145",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L157",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L295",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L563",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L652",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L657",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L664",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L671",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L680",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L683",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L691",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L697",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L700",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L706",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L746",
+"content/rocketblocks/2024-03-20-pm-product-execution-interview-build-an-ad-platform-w-google.md#L908",
+"content/rocketblocks/2024-05-08-open-ended-pm-mock-interview-get-people-to-read-more-product.md#L688",
+"content/rocketblocks/2024-08-14-growth-consulting-case-interview-boost-scotlands-tourism-w-e.md#L13",
+"content/rocketblocks/2024-08-14-growth-consulting-case-interview-boost-scotlands-tourism-w-e.md#L455",
+"content/rocketblocks/2024-11-20-profitability-consulting-case-interview-self-driving-uber-w.md#L43",
+"content/rocketblocks/2024-11-20-profitability-consulting-case-interview-self-driving-uber-w.md#L48",
+"content/rocketblocks/2024-11-20-profitability-consulting-case-interview-self-driving-uber-w.md#L61",
+"content/rocketblocks/2024-11-20-profitability-consulting-case-interview-self-driving-uber-w.md#L535",
+"content/rocketblocks/2025-07-23-market-entry-consulting-case-interview-coca-colas-next-move.md#L636",
+"content/rocketblocks/2025-08-06-market-entry-consulting-case-interview-grow-a-hometown-resta.md#L130",
 "content/scaling-book/02-tpus.md#L21",
 "content/scaling-book/원문/01-roofline.md#L18",
 "content/scaling-book/원문/02-tpus.md#L24",
@@ -29648,6 +31186,73 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/rocketblocks/2019-06-04-what-is-the-bcg-growth-share-matrix.md#L45",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L87",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L240",
+"content/rocketblocks/2019-12-04-introduction-to-product-management-interviews-part-ii.md#L56",
+"content/rocketblocks/2020-06-10-technical-fluency-questions-in-pm-interviews-part-iii.md#L85",
+"content/rocketblocks/2020-08-18-product-execution-mock-interview-user-engagement-w-microsoft.md#L4",
+"content/rocketblocks/2020-08-18-product-execution-mock-interview-user-engagement-w-microsoft.md#L22",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L4",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L24",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L807",
+"content/rocketblocks/2020-09-30-product-design-mock-interview-linkedin-mentorship-w-microsof.md#L809",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L434",
+"content/rocketblocks/2021-01-28-pm-technical-mock-interview-explain-how-apis-work-w-microsof.md#L4",
+"content/rocketblocks/2021-01-28-pm-technical-mock-interview-explain-how-apis-work-w-microsof.md#L14",
+"content/rocketblocks/2021-01-28-pm-technical-mock-interview-explain-how-apis-work-w-microsof.md#L15",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L4",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L14",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L15",
+"content/rocketblocks/2021-05-11-product-estimation-mock-interview-number-of-google-docs-crea.md#L260",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L4",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L12",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L400",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L792",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L797",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L1096",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L31",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L112",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L113",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L133",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L138",
+"content/rocketblocks/2021-06-23-product-sense-mock-interview-whats-your-favorite-product-and.md#L258",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L4",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L15",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L21",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L28",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L31",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L54",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L80",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L85",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L98",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L122",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L165",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L252",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L718",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L818",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L884",
+"content/rocketblocks/2021-07-14-pm-mock-interview-defend-against-google-competition-microsof.md#L904",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L4",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L14",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L26",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L158",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L195",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L196",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L213",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L221",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L245",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L262",
+"content/rocketblocks/2021-12-21-pm-interview-question-whats-your-favorite-product-and-why-an.md#L15",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L4",
+"content/rocketblocks/2022-05-03-product-execution-mock-interview-youtube-shorts-w-microsoft.md#L15",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L26",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L32",
+"content/rocketblocks/2023-11-29-profitability-consulting-case-interview-pharmacy-strategy-w.md#L34",
+"content/rocketblocks/2024-02-28-interviewer-led-product-management-interview-honeys-strategy.md#L4",
+"content/rocketblocks/2024-02-28-interviewer-led-product-management-interview-honeys-strategy.md#L13",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L625",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L627",
 "content/scaling-book/원문/02-tpus.md#L145",
 "content/scaling-book/원문/07-inference.md#L131",
 "content/scaling-book/원문/07-inference.md#L195",
@@ -31388,6 +32993,58 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/rocketblocks/2020-05-27-product-sense-and-strategy-questions-in-pm-interviews-part-i.md#L297",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L16",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L26",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L104",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L120",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L32",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L60",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L172",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L205",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L325",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L4",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L25",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L46",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L48",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L51",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L57",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L61",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L65",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L69",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L76",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L102",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L111",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L167",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L230",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L237",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L256",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L257",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L266",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L273",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L276",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L301",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L308",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L320",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L321",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L325",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L346",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L358",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L388",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L413",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L415",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L562",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L575",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L597",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L602",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L609",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L636",
+"content/rocketblocks/2024-01-31-product-sense-mock-interview-fitness-app-for-meta-w-ex-insta.md#L671",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L440",
+"content/rocketblocks/2024-03-06-pm-product-strategy-interview-grow-netflix-3x-w-ex-instagram.md#L17",
+"content/rocketblocks/2024-05-08-open-ended-pm-mock-interview-get-people-to-read-more-product.md#L688",
+"content/rocketblocks/2025-10-15-growth-consulting-case-interview-digital-bank-doldrums-w-bai.md#L333",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L699",
 "content/scaling-book/원문/06-applied-training.md#L12",
 "content/scaling-book/원문/12-gpus.md#L212",
 "content/semi_doped/2026-05-04-memory-tax.md#L21",
@@ -40864,6 +42521,12 @@
 "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md#L431",
 "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md#L458",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L880",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L569",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L605",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L607",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L609",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L613",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L773",
 "content/semi_doped/2026-05-04-memory-tax.md#L22",
 "content/semi_doped/2026-05-04-memory-tax.md#L25",
 "content/semi_doped/2026-05-04-memory-tax.md#L46",
@@ -44768,6 +46431,227 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L118",
+"content/rocketblocks/2017-11-09-what-do-mckinsey-bcg-and-bain-do-in-laymans-terms.md#L167",
+"content/rocketblocks/2017-12-24-book-recommendations-for-aspiring-consultants.md#L282",
+"content/rocketblocks/2018-04-17-how-to-prepare-for-case-interviews-part-iii.md#L85",
+"content/rocketblocks/2019-06-04-what-is-the-bcg-growth-share-matrix.md#L45",
+"content/rocketblocks/2019-08-14-how-to-write-a-strong-resum.md#L28",
+"content/rocketblocks/2019-10-16-mckinsey-bcg-and-bain-and-the-future-of-consulting-part-ii.md#L211",
+"content/rocketblocks/2019-10-30-what-is-product-management.md#L25",
+"content/rocketblocks/2019-11-06-product-management-fundamentals-three-core-pillars.md#L19",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L25",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L57",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L72",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L99",
+"content/rocketblocks/2019-11-20-introduction-to-product-management-interviews-part-i.md#L240",
+"content/rocketblocks/2019-12-04-introduction-to-product-management-interviews-part-ii.md#L56",
+"content/rocketblocks/2020-04-23-how-to-be-a-good-mock-interview-partner.md#L250",
+"content/rocketblocks/2020-05-27-product-sense-and-strategy-questions-in-pm-interviews-part-i.md#L79",
+"content/rocketblocks/2020-06-10-technical-fluency-questions-in-pm-interviews-part-iii.md#L89",
+"content/rocketblocks/2020-10-21-the-current-state-vs-the-ideal-world-of-product-management-i.md#L173",
+"content/rocketblocks/2020-11-18-consulting-vs-product-management.md#L434",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L4",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L15",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L190",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L191",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L193",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L267",
+"content/rocketblocks/2021-03-25-product-execution-mock-interview-falling-metrics-w-amazon-pm.md#L538",
+"content/rocketblocks/2021-04-21-product-sense-mock-interview-social-video-w-facebook-pm.md#L31",
+"content/rocketblocks/2021-04-21-product-sense-mock-interview-social-video-w-facebook-pm.md#L55",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L692",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L703",
+"content/rocketblocks/2021-06-08-machine-learning-focused-pm-roles-w-microsoft-pm.md#L1096",
+"content/rocketblocks/2021-11-09-pm-interview-question-explain-cloud-computing-microsoft-azur.md#L194",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L125",
+"content/rocketblocks/2023-05-24-day-in-the-life-of-a-fintech-product-manager-w-ex-affirm-ex.md#L269",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L4",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L32",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L364",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L462",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L496",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L555",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L568",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L590",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L609",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L4",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L31",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L37",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L41",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L51",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L58",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L66",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L81",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L122",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L131",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L139",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L162",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L182",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L229",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L297",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L315",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L319",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L388",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L427",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L428",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L566",
+"content/rocketblocks/2023-06-28-how-to-write-a-product-requirements-document-prd-amazon-kind.md#L568",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L32",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L57",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L413",
+"content/rocketblocks/2023-12-27-market-entry-consulting-case-interview-small-or-large-remode.md#L93",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L4",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L24",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L25",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L28",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L32",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L49",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L79",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L85",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L90",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L92",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L93",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L542",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L560",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L591",
+"content/rocketblocks/2024-02-14-product-sense-mock-interview-amazon-ai-for-kids-w-ex-instagr.md#L607",
+"content/rocketblocks/2024-02-28-interviewer-led-product-management-interview-honeys-strategy.md#L4",
+"content/rocketblocks/2024-02-28-interviewer-led-product-management-interview-honeys-strategy.md#L120",
+"content/rocketblocks/2024-03-06-pm-product-strategy-interview-grow-netflix-3x-w-ex-instagram.md#L507",
+"content/rocketblocks/2024-03-06-pm-product-strategy-interview-grow-netflix-3x-w-ex-instagram.md#L638",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L45",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L89",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L92",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L97",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L111",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L119",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L122",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L153",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L216",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L242",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L300",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L519",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L537",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L582",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L606",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L609",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L637",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L644",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L659",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L662",
+"content/rocketblocks/2025-01-02-growth-consulting-case-interview-targets-holiday-sales-w-bcg.md#L680",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L4",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L15",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L18",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L38",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L41",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L45",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L47",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L51",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L62",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L64",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L69",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L73",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L76",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L96",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L99",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L101",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L103",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L106",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L110",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L113",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L114",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L142",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L144",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L146",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L157",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L160",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L164",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L165",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L175",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L176",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L186",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L189",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L191",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L204",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L206",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L210",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L221",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L225",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L231",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L237",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L244",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L292",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L311",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L318",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L322",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L329",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L334",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L338",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L345",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L347",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L359",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L407",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L428",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L456",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L509",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L510",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L511",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L522",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L551",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L571",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L579",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L601",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L604",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L606",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L624",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L636",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L673",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L690",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L692",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L696",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L703",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L706",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L729",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L731",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L738",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L743",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L747",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L756",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L759",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L766",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L770",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L771",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L780",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L794",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L807",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L814",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L821",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L827",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L829",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L830",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L836",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L838",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L843",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L845",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L846",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L864",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L868",
+"content/rocketblocks/2025-07-09-competitive-response-case-interview-amazon-vs-ups-w-bcg-and.md#L876",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L119",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L132",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L273",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L619",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L728",
+"content/rocketblocks/2025-10-01-market-sizing-consulting-case-interview-e-commerce-crisis-w.md#L736",
+"content/rocketblocks/2025-11-26-growth-consulting-case-interview-how-should-an-urgent-care-c.md#L247",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L475",
+"content/rocketblocks/2026-04-22-consulting-case-interview-ai-strategy-case-w-bcg-and-a-and-m.md#L150",
+"content/rocketblocks/2026-04-22-consulting-case-interview-ai-strategy-case-w-bcg-and-a-and-m.md#L184",
+"content/rocketblocks/2026-04-22-consulting-case-interview-ai-strategy-case-w-bcg-and-a-and-m.md#L313",
+"content/rocketblocks/2026-06-17-beginner-consulting-case-interview-ai-cost-cutting-w-bcg-con.md#L754",
+"content/rocketblocks/2026-06-17-beginner-consulting-case-interview-ai-cost-cutting-w-bcg-con.md#L755",
+"content/rocketblocks/2026-08-12-m-and-a-consulting-case-interview-disney-buys-elevenlabs-w-b.md#L150",
 "content/semi_doped/2026-05-04-memory-tax.md#L21",
 "content/semi_doped/2026-05-04-memory-tax.md#L38",
 "content/semi_doped/2026-05-04-memory-tax.md#L69",
@@ -45769,6 +47653,73 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L188",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L204",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L211",
+"content/rocketblocks/2018-04-17-how-to-prepare-for-case-interviews-part-iii.md#L84",
+"content/rocketblocks/2019-02-20-why-do-you-want-to-work-for-mckinsey-bcg-or-bain.md#L61",
+"content/rocketblocks/2019-12-19-whats-the-difference-between-a-product-manager-and-a-product.md#L161",
+"content/rocketblocks/2021-02-03-pm-technical-mock-interview-explain-how-apis-work-w-fintech.md#L173",
+"content/rocketblocks/2021-02-03-pm-technical-mock-interview-explain-how-apis-work-w-fintech.md#L196",
+"content/rocketblocks/2021-05-25-product-execution-mock-interview-measuring-success-of-a-bank.md#L110",
+"content/rocketblocks/2021-05-25-product-execution-mock-interview-measuring-success-of-a-bank.md#L139",
+"content/rocketblocks/2023-02-15-is-product-management-glamorous.md#L127",
+"content/rocketblocks/2023-04-19-market-analysis-case-interview-auto-parts-manufacturer-w-bcg.md#L676",
+"content/rocketblocks/2023-06-14-best-post-mba-job-consulting-or-tech-w-tuck-amazon-and-ey-pa.md#L391",
+"content/rocketblocks/2023-08-16-how-to-choose-the-right-product-management-role-w-dr-nancy-l.md#L326",
+"content/rocketblocks/2023-10-11-market-sizing-consulting-case-interview-pop-stars-dilemma-w.md#L756",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L755",
+"content/rocketblocks/2024-10-30-market-entry-consulting-case-barbie-phones-w-bain-and-bcg-co.md#L253",
+"content/rocketblocks/2024-10-30-market-entry-consulting-case-barbie-phones-w-bain-and-bcg-co.md#L254",
+"content/rocketblocks/2025-09-03-operations-consulting-case-interview-600m-battery-plant-in-a.md#L706",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L625",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L626",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L629",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L194",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L324",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L660",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L823",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L874",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L875",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L888",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L893",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L894",
+"content/rocketblocks/2025-12-10-curveball-consulting-case-interview-stravas-revenue-problem.md#L899",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L4",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L33",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L36",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L63",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L67",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L73",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L77",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L82",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L115",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L126",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L128",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L131",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L133",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L135",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L161",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L165",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L168",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L234",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L390",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L506",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L535",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L564",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L575",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L843",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L913",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L914",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L921",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L924",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L943",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L954",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L973",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1002",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1056",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1066",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1154",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1169",
+"content/rocketblocks/2026-03-25-m-and-a-consulting-case-interview-apple-vs-netflix-vs-warner.md#L1172",
+"content/rocketblocks/2026-08-12-m-and-a-consulting-case-interview-disney-buys-elevenlabs-w-b.md#L151",
 "content/semi_doped/2026-06-29-qualcomm-hbc.md#L64",
 "content/semi_doped/2026-07-03-micron-cxmt.md#L12",
 "content/semi_doped/2026-07-03-micron-cxmt.md#L16",
@@ -46968,6 +48919,8 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L86",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L92",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L100",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L732",
+"content/rocketblocks/2026-06-17-beginner-consulting-case-interview-ai-cost-cutting-w-bcg-con.md#L732",
 "content/semi_doped/2026-07-10-weka-bercovici.md#L55",
 "content/semi_doped/2026-07-29-hyperscaler-cds.md#L21",
 "content/semi_doped/2026-07-29-hyperscaler-cds.md#L30",
@@ -48882,6 +50835,43 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L84",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L89",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L91",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L4",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L13",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L30",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L39",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L46",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L52",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L56",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L70",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L91",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L96",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L123",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L127",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L166",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L179",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L269",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L309",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L318",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L401",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L412",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L547",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L567",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L579",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L584",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L590",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L597",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L606",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L610",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L674",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L709",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L714",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L733",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L737",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L779",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L815",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L823",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L841",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L847",
 "content/scaling-book/01-roofline.md#L21",
 "content/scaling-book/01-roofline.md#L63",
 "content/scaling-book/원문/00-index.md#L22",
@@ -54366,6 +56356,12 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L82",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L83",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L4",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L16",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L33",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L47",
+"content/rocketblocks/2026-06-03-consulting-case-interview-openai-data-center-strategy-w-bcg.md#L55",
+"content/rocketblocks/2026-06-17-beginner-consulting-case-interview-ai-cost-cutting-w-bcg-con.md#L734",
 "content/scaling-book/원문/12-gpus.md#L510",
 "content/semi_doped/2026-05-15-cerebras-ipo.md#L17",
 "content/semi_doped/2026-05-15-cerebras-ipo.md#L48",
@@ -59303,6 +61299,41 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L595",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L604",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L614",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L4",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L15",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L39",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L40",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L46",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L49",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L54",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L58",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L70",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L105",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L115",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L118",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L124",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L153",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L164",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L198",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L208",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L215",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L270",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L278",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L295",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L319",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L346",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L548",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L569",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L584",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L590",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L595",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L606",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L675",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L739",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L771",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L824",
+"content/rocketblocks/2025-10-29-strategy-consulting-case-interview-nvidia-intel-investment-w.md#L839",
+"content/rocketblocks/2026-02-04-profitability-consulting-case-interview-commercial-seaport-s.md#L274",
 "content/semi_doped/2026-05-08-power-wall.md#L25",
 "content/semi_doped/2026-05-22-litho-masterclass.md#L19",
 "content/semi_doped/2026-05-22-litho-masterclass.md#L22",
@@ -67533,6 +69564,18 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L117",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L126",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L741",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L188",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L278",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L279",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L473",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L493",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L497",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L528",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L532",
+"content/rocketblocks/2024-05-22-competitive-response-consulting-case-interview-general-motor.md#L804",
+"content/rocketblocks/2024-09-25-revenue-growth-consulting-case-interview-airline-seating-w-b.md#L541",
+"content/rocketblocks/2026-05-20-growth-consulting-case-interview-ev-expansion-strategy-w-bai.md#L823",
+"content/rocketblocks/2026-07-29-beginner-consulting-case-interview-should-returns-be-free-w.md#L261",
 "content/semi_doped/clips/daily/2026-05-15--daily-update-may-15th-2026.md#L64",
 "content/semi_doped/clips/daily/2026-06-09--daily-update-june-9-2026.md#L46",
 "content/semi_doped/clips/daily/2026-06-12--daily-update-june-12th-2026.md#L42",

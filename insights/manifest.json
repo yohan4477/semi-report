@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-08",
+ "generated": "2026-09-09",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -65,7 +65,7 @@
    ],
    "date": "2026-07-01",
    "path": "content/linkedin/[2607] 링크드인 게시물.md",
-   "hash": "172381665322"
+   "hash": "bea0d0b372c1"
   },
   {
    "id": "li:root:2608-링크드인-게시물",
@@ -956,249 +956,7 @@
    ],
    "date": "2026-01-08",
    "path": "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md",
-   "hash": "1d9a69f87091"
-  },
-  {
-   "id": "und:Semi Doped:2026-04-24-google-networking",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-04-24-google-networking.md",
-   "hash": "fc57c4530591"
-  },
-  {
-   "id": "und:Semi Doped:2026-05-04-memory-tax",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-05-04-memory-tax.md",
-   "hash": "e23127396bb1"
-  },
-  {
-   "id": "und:Semi Doped:2026-05-08-power-wall",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-05-08-power-wall.md",
-   "hash": "ef78052b94f3"
-  },
-  {
-   "id": "und:Semi Doped:2026-05-15-cerebras-ipo",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-05-15-cerebras-ipo.md",
-   "hash": "c863ced95b84"
-  },
-  {
-   "id": "und:Semi Doped:2026-05-22-litho-masterclass",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-05-22-litho-masterclass.md",
-   "hash": "44e806dee74b"
-  },
-  {
-   "id": "und:Semi Doped:2026-05-29-huawei-tau",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-05-29-huawei-tau.md",
-   "hash": "20c53e4737bd"
-  },
-  {
-   "id": "und:Semi Doped:2026-06-12-computex-optics-power",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-06-12-computex-optics-power.md",
-   "hash": "9a90475046f5"
-  },
-  {
-   "id": "und:Semi Doped:2026-06-19-advanced-packaging",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-06-19-advanced-packaging.md",
-   "hash": "3917b451e461"
-  },
-  {
-   "id": "und:Semi Doped:2026-06-29-qualcomm-hbc",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-06-29-qualcomm-hbc.md",
-   "hash": "48643f6ff518"
-  },
-  {
-   "id": "und:Semi Doped:2026-07-03-micron-cxmt",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-07-03-micron-cxmt.md",
-   "hash": "252b81a89835"
-  },
-  {
-   "id": "und:Semi Doped:2026-07-10-weka-bercovici",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-07-10-weka-bercovici.md",
-   "hash": "0cb3c37400bd"
-  },
-  {
-   "id": "und:Semi Doped:2026-07-16-picojool-yuen",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-07-16-picojool-yuen.md",
-   "hash": "0a415e3910fe"
-  },
-  {
-   "id": "und:Semi Doped:2026-07-25-datacenter-interconnects",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-07-25-datacenter-interconnects.md",
-   "hash": "b28271941295"
-  },
-  {
-   "id": "und:Semi Doped:2026-07-29-hyperscaler-cds",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-07-29-hyperscaler-cds.md",
-   "hash": "ab7e245c55d1"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-04-astera-labs",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-04-astera-labs.md",
-   "hash": "fe2ef4a5a1bf"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-07-globalfoundries-barber",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-07-globalfoundries-barber.md",
-   "hash": "878e6d32e456"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-11-china-optical-ban",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-11-china-optical-ban.md",
-   "hash": "7a068e0a62ae"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-18-tensordyne-rk-anand",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-18-tensordyne-rk-anand.md",
-   "hash": "fb25696207d7"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-24-grok-bots-cpu",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-24-grok-bots-cpu.md",
-   "hash": "00d2e6ee67fc"
-  },
-  {
-   "id": "und:Semi Doped:2026-08-27-openai-jalapeno",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/2026-08-27-openai-jalapeno.md",
-   "hash": "675e63ddb108"
-  },
-  {
-   "id": "und:Semi Doped:daily-2026-04-08",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/daily-2026-04-08.md",
-   "hash": "85ef90fa3b43"
-  },
-  {
-   "id": "und:Semi Doped:til-14",
-   "corpus": "understanding",
-   "folder": "Semi Doped",
-   "categories": [
-    "Semi Doped"
-   ],
-   "date": null,
-   "path": "content/semi_doped/til-14.md",
-   "hash": "5256b800d6ad"
+   "hash": "f1a35db0480b"
   },
   {
    "id": "und:raw:2024-05-10-shortselling",
@@ -1795,39 +1553,6 @@
    "hash": "1d376d429d17"
   },
   {
-   "id": "und:raw:2026-04-24-google-networking",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-04-24-google-networking.md",
-   "hash": "2d396e775be1"
-  },
-  {
-   "id": "und:raw:2026-05-04-memory-tax",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-05-04-memory-tax.md",
-   "hash": "1a53c3f45e9f"
-  },
-  {
-   "id": "und:raw:2026-05-08-power-wall",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-05-08-power-wall.md",
-   "hash": "6d2b4e1dfcc4"
-  },
-  {
    "id": "und:raw:2026-05-11-ai-infra",
    "corpus": "understanding",
    "folder": "raw",
@@ -1837,17 +1562,6 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2026-05-11-ai-infra.md",
    "hash": "3f2963ba9b77"
-  },
-  {
-   "id": "und:raw:2026-05-15-cerebras-ipo",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-05-15-cerebras-ipo.md",
-   "hash": "b1c2b3a71438"
   },
   {
    "id": "und:raw:2026-05-18-ai-winner",
@@ -1861,28 +1575,6 @@
    "hash": "c26340c6e3ee"
   },
   {
-   "id": "und:raw:2026-05-22-litho-masterclass",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-05-22-litho-masterclass.md",
-   "hash": "712bf80bd61b"
-  },
-  {
-   "id": "und:raw:2026-05-29-huawei-tau",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-05-29-huawei-tau.md",
-   "hash": "8e0f22e0c7fe"
-  },
-  {
    "id": "und:raw:2026-06-07-news",
    "corpus": "understanding",
    "folder": "raw",
@@ -1892,17 +1584,6 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2026-06-07-news.md",
    "hash": "71c0d7971a3a"
-  },
-  {
-   "id": "und:raw:2026-06-12-computex-optics-power",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-06-12-computex-optics-power.md",
-   "hash": "aeddb566d4ce"
   },
   {
    "id": "und:raw:2026-06-14-news",
@@ -1916,116 +1597,6 @@
    "hash": "5206844f190f"
   },
   {
-   "id": "und:raw:2026-06-19-advanced-packaging",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-06-19-advanced-packaging.md",
-   "hash": "e19e7eac99ed"
-  },
-  {
-   "id": "und:raw:2026-06-29-qualcomm-hbc",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-06-29-qualcomm-hbc.md",
-   "hash": "2a51ce8c4d97"
-  },
-  {
-   "id": "und:raw:2026-07-03-micron-cxmt",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-07-03-micron-cxmt.md",
-   "hash": "36241740c38d"
-  },
-  {
-   "id": "und:raw:2026-07-10-weka-bercovici",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-07-10-weka-bercovici.md",
-   "hash": "ea35142732e8"
-  },
-  {
-   "id": "und:raw:2026-07-16-picojool-yuen",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-07-16-picojool-yuen.md",
-   "hash": "1e98c64c3e16"
-  },
-  {
-   "id": "und:raw:2026-07-25-datacenter-interconnects",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-07-25-datacenter-interconnects.md",
-   "hash": "34fc123b885b"
-  },
-  {
-   "id": "und:raw:2026-07-29-hyperscaler-cds",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-07-29-hyperscaler-cds.md",
-   "hash": "8fb2a3da03dc"
-  },
-  {
-   "id": "und:raw:2026-08-04-astera-labs",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-04-astera-labs.md",
-   "hash": "65d540907e5f"
-  },
-  {
-   "id": "und:raw:2026-08-07-globalfoundries-barber",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-07-globalfoundries-barber.md",
-   "hash": "4285a4b14eb7"
-  },
-  {
-   "id": "und:raw:2026-08-11-china-optical-ban",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-11-china-optical-ban.md",
-   "hash": "524d43c07fba"
-  },
-  {
    "id": "und:raw:2026-08-16-pharma-valuechain",
    "corpus": "understanding",
    "folder": "raw",
@@ -2037,17 +1608,6 @@
    "hash": "099230afcf18"
   },
   {
-   "id": "und:raw:2026-08-18-tensordyne-rk-anand",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-18-tensordyne-rk-anand.md",
-   "hash": "b41359b5df15"
-  },
-  {
    "id": "und:raw:2026-08-23-news",
    "corpus": "understanding",
    "folder": "raw",
@@ -2057,28 +1617,6 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2026-08-23-news.md",
    "hash": "cc9b63022524"
-  },
-  {
-   "id": "und:raw:2026-08-24-grok-bots-cpu",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-24-grok-bots-cpu.md",
-   "hash": "9d729509f232"
-  },
-  {
-   "id": "und:raw:2026-08-27-openai-jalapeno",
-   "corpus": "understanding",
-   "folder": "raw",
-   "categories": [
-    "raw"
-   ],
-   "date": null,
-   "path": "content/semi_doped/raw/2026-08-27-openai-jalapeno.md",
-   "hash": "f8c514a3c7df"
   },
   {
    "id": "und:raw:2026-09-06-pharma-bottleneck",

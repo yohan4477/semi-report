@@ -24,7 +24,7 @@ from aie_figs import (W, CHW, LH, GAP, w_of, box, mid, head, arrow, down,  # noq
                       legend, svg, table, band)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RAW = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw')
+RAW = os.path.join(ROOT, 'content', 'semi_doped', 'raw')
 
 # 색 변수는 이 장 페이지에 없다(dash_common 을 안 쓴다). gen_semidoped 가 이 CSS 를 그대로 싣는다
 CSS = '''
@@ -2221,7 +2221,7 @@ FIGS = {
          'Nvidia Dynamo 팀이 정리한 네 층이다(L69). 층 사이의 지연과 대역폭이 자릿수로 벌어져 그랜드캐니언처럼 끊긴다(L71). 사람 눈은 초당 35~50토큰을 요구하고 에이전트 스웜은 초당 수천 토큰을 뽑아 간다.'),
         ('4.|그러면 캐시 적중률은', '캐시 적중률 둘 — 논리와 실제', _wk_hit(),
          '같은 꼴 둘이다. 대시보드의 논리 적중률은 내 토큰이 재사용될 수 있는 비율이라 95% 근처로 높다(L107). 사업자가 실제로 맞히는 비율은 가진 메모리 계층에 달렸고, 스토리지 계층을 붙이면 응답 목표가 무너져 인기 모델에는 잘 안 쓴다(L109).'),
-        ('5.|값을 치르는 자리는', '여유분 — 1페타바이트 사서 300~500테라바이트', _wk_provision(),
+        ('5.|값을 내는 자리는', '여유분 — 1페타바이트 사서 300~500테라바이트', _wk_provision(),
          'SLC 를 못 쓰고 TLC 나 QLC 로 버티면 드라이브가 망가지지 않게 여유 용량을 크게 잡아야 한다. 1페타바이트를 사서 전기까지 넣고도 실제로 쓰는 것은 300~500테라바이트다(L137). 짙은 조각은 그 범위의 위쪽 값이다.'),
     ],
     (MT, 'strategy'): [

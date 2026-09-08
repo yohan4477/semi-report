@@ -2465,7 +2465,7 @@ def fig_balance():
     o.append('<text x="46" y="250" class="t-sm">'
              '계약금 10%만 있으면 중도금 60%는 대출로 3년을 버텼고,</text>')
     o.append('<text x="46" y="268" class="t-sm">'
-             '잔금은 감정가의 70%까지 대출을 받거나 전세를 놓아 그 보증금으로 치렀다</text>')
+             '잔금은 감정가의 70%까지 대출을 받거나 전세를 놓아 그 보증금으로 냈다</text>')
     return ('<svg viewBox="0 0 560 284" role="img" aria-label="분양가 15억 아파트의 잔금 13억을 '
             '메우던 두 길인 잔금 대출과 전세보증금이 각각 대출 한도와 실거주 의무로 막힌 그림" '
             'class="fig-s">%s</svg>' % ''.join(o))

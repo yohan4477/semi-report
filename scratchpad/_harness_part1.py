@@ -22,7 +22,7 @@ SRC = os.path.join(ROOT, 'insights', 'reports', 'harness-2026-09-08.md')
 HEAD_HARNESS = (
     '<div class="rep-head"><span class="rn">보고서 ⑩</span>'
     '<h2 id="rep-harness">하네스·스킬 총정리 — 판단을 모델에서 걷어 낸 열두 달, '
-    '그 값을 누가 치렀나</h2>'
+    '그 값을 누가 냈나</h2>'
     '<p class="rm">바탕 <b>AI Engineer 컨퍼런스 발표 16편 · SemiAnalysis 뉴스레터 2편</b> · '
     '원문 기간 <b>2025-08 ~ 2026-08</b><br>'
     '재료를 여러 회사가 썼습니다. 그래서 어긋남을 같은 저자 안에서 찾을 필요가 없었고, '
