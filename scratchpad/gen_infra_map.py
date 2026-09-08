@@ -2,7 +2,7 @@
 # AI 인프라 지도 — 공정 가지 하나(리소그래피)를 마인드맵으로 세운다.
 # 재료는 scratchpad/litho_scan.py 가 원문 코퍼스에서 센 빈도. 손으로 값을 적지 않는다.
 # 산출: 대시보드/AI 인프라 지도.html
-import io, os, sys, json, html
+import io, os, re, sys, json, html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -207,6 +207,72 @@ def tree_list(view):
     return '\n'.join(out)
 
 
+def check_ui(doc, data, parts):
+    """이 장의 규약을 기계가 보는 자리. 어기면 파일을 쓰지 않는다.
+
+    다음 공정 가지(증착·식각·패키징)를 붙일 때 조용히 깨지는 자리들이다.
+    """
+    bad = []
+    views = data['views']
+    keys = [v['key'] for v in views]
+
+    # U1 뷰는 둘 이상이고, 처음 것 하나만 켜진 채로 연다
+    if len(views) < 2:
+        bad.append('U1 뷰가 %d개다 — 뷰가 하나뿐이면 뷰로 가를 까닭이 없다' % len(views))
+    on = re.findall(r'<div class="mapwrap" data-view="([^"]+)"', doc)
+    if on != keys[:1]:
+        bad.append('U1 처음에 켜진 지도가 %r — 첫 뷰 하나여야 한다' % (on,))
+
+    # U2 빈 가지·빈 마디 금지
+    for v in views:
+        if not v['branches']:
+            bad.append('U2 뷰 「%s」에 가지가 없다' % v['label'])
+        for b in v['branches']:
+            if not b['nodes']:
+                bad.append('U2 「%s」의 가지 「%s」가 비었다' % (v['label'], b['name']))
+            if not b['note']:
+                bad.append('U2 가지 「%s」에 한 줄 설명이 없다' % b['name'])
+
+    # U3 나무에 쓴 이름은 전부 사전에 있다 — 사전에 없는 말은 만들지 않는다
+    for v in views:
+        for nd in walk(v):
+            if nd['name'] not in litho_scan.NAMES:
+                bad.append('U3 「%s」가 NAMES 사전에 없다' % nd['name'])
+
+    # U4 뷰마다 지도·목록·설명이 한 벌씩 — 좁은 화면에서 뷰가 사라지지 않게
+    for k in keys:
+        for cls in ('mapwrap', 'listwrap', 'nview'):
+            if doc.count('class="%s" data-view="%s"' % (cls, k)) + \
+               doc.count('class="%s off" data-view="%s"' % (cls, k)) != 1:
+                bad.append('U4 뷰 %s 의 %s 가 한 벌이 아니다' % (k, cls))
+    if len(re.findall(r'class="chip[^"]*" data-view=', doc)) != len(keys):
+        bad.append('U4 칩 수와 뷰 수가 다르다')
+
+    # U5 넓은 그릇과 좁은 그릇이 같은 이름을 담는다
+    for v in views:
+        names = {nd['name'] for nd in walk(v)}
+        for tag, frag in (('지도', parts['map'][v['key']]),
+                          ('목록', parts['list'][v['key']])):
+            got = set(html.unescape(x)
+                      for x in re.findall(r'data-node="([^"]+)"', frag))
+            if got != names:
+                bad.append('U5 뷰 %s 의 %s 가 담은 이름이 다르다: %s'
+                           % (v['key'], tag, sorted(names ^ got)))
+
+    # U6 원문에 없는 이름은 흐리고 누를 수 없다 — 없는 값을 그리지 않는다
+    for v in views:
+        for nd in walk(v):
+            if nd['n'] == 0:
+                esc = html.escape(nd['name'], quote=True)
+                if ('class="leaf dim" data-node="%s"' % esc) not in doc:
+                    bad.append('U6 0회인 「%s」가 지도에서 안 흐리다' % nd['name'])
+                if ('data-node="%s" disabled' % esc) not in doc:
+                    bad.append('U6 0회인 「%s」가 목록에서 눌린다' % nd['name'])
+
+    if bad:
+        raise SystemExit('check_ui 규약 위반 %d건\n  ' % len(bad) + '\n  '.join(bad))
+
+
 def build():
     data = litho_scan.scan()
     views = data['views']
@@ -219,13 +285,15 @@ def build():
         % (' on' if i == 0 else '', v['key'], html.escape(v['label']),
            html.escape(v['hint']))
         for i, v in enumerate(views))
+    map_frag = {v['key']: svg(v) for v in views}
+    list_frag = {v['key']: tree_list(v) for v in views}
     maps = '\n'.join(
         '<div class="mapwrap%s" data-view="%s">%s</div>'
-        % ('' if i == 0 else ' off', v['key'], svg(v))
+        % ('' if i == 0 else ' off', v['key'], map_frag[v['key']])
         for i, v in enumerate(views))
     lists = '\n'.join(
         '<div class="listwrap%s" data-view="%s">%s</div>'
-        % ('' if i == 0 else ' off', v['key'], tree_list(v))
+        % ('' if i == 0 else ' off', v['key'], list_frag[v['key']])
         for i, v in enumerate(views))
     notes = '\n'.join(
         '<div class="nview%s" data-view="%s">%s</div>'
@@ -311,9 +379,61 @@ document.querySelectorAll('.chip').forEach(function(c){
 </html>
 """ % (CSS, data['nfile'], chips, maps, lists, notes,
        json.dumps(idx, ensure_ascii=False))
+    check_ui(doc, data, {'map': map_frag, 'list': list_frag})
     io.open(OUT, 'w', encoding='utf-8').write(doc)
     print('wrote', OUT, len(doc), 'bytes')
 
 
-if __name__ == '__main__':
+def selftest():
+    """규칙이 결함을 실제로 무는지 본다 — 규칙을 세울 때 먼저 보는 자리.
+
+    통과했다는 말이 「검사기가 아무것도 못 잡는다」와 같은 뜻이 되는 것을 막는다.
+    """
+    def bites(label, fix):
+        try:
+            build()
+            print('MISS  %s — 검사기가 안 물었다' % label)
+            return False
+        except SystemExit as e:
+            print('BITE  %-22s %s' % (label, str(e).split('\n')[1].strip()))
+            return True
+        finally:
+            fix()
+
+    ok = []
+    V = litho_scan.VIEWS
+
+    V[0]['branches'][0][2].append('사전에 없는 이름')
+    ok.append(bites('U3 사전에 없는 이름', lambda: V[0]['branches'][0][2].pop()))
+
+    V[-1]['branches'].append(('빈 가지', '설명', []))
+    ok.append(bites('U2 빈 가지', lambda: V[-1]['branches'].pop()))
+
+    b = V[1]['branches'][0]
+    V[1]['branches'][0] = (b[0], '', b[2])
+    ok.append(bites('U2 설명 없는 가지',
+                    lambda: V[1].__setitem__('branches',
+                                             [b] + V[1]['branches'][1:])))
+
+    real_list = globals()['tree_list']
+    globals()['tree_list'] = lambda v: real_list({'branches': v['branches'][:1]})
+    ok.append(bites('U5 목록이 잎을 빠뜨림',
+                    lambda: globals().__setitem__('tree_list', real_list)))
+
+    real_leaf = globals()['leaf_box']
+    globals()['leaf_box'] = lambda nd, x, y, w: real_leaf(
+        dict(nd, n=max(nd['n'], 1)), x, y, w)
+    ok.append(bites('U6 0회인데 안 흐림',
+                    lambda: globals().__setitem__('leaf_box', real_leaf)))
+
     build()
+    print('요약: 결함 %d개 중 %d개를 물었다' % (len(ok), sum(ok)))
+    if not all(ok):
+        raise SystemExit('selftest 실패 — 안 무는 규칙이 있다')
+
+
+if __name__ == '__main__':
+    if '--selftest' in sys.argv:
+        selftest()
+    else:
+        build()
