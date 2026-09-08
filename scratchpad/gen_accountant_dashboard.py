@@ -4485,7 +4485,7 @@ CARDS += _cards_0908.cards({'SS': SEC_SS, 'HY': SEC_HY, 'AI': SEC_AI, 'MKT': SEC
 
 
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
-assert len(CARDS) == 125, '카드 수가 달라졌다'
+assert len(CARDS) == 130, '카드 수가 달라졌다'
 
 
 

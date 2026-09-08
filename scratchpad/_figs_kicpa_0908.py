@@ -246,8 +246,204 @@ FIG_SELECTIVE = (
     '아래 줄에 값을 적었다 — 코스피 <b>−3.99%</b>에 외국인 약 <b>1.9조원</b>, 기관 약 '
     '<b>2조원</b> 순매도였다.')
 
+# ── ⑥ 두 판 — 고용은 예상의 세 배, 임금은 오히려 내려갔다 ──────────────────
+# 값은 [260905] 고용 편에 있는 것만: 예상 5.0만~5.5만 · 실제 16.2만 · 실업률 4.1% ·
+# 임금 3.2%→3.1% · 2년 4.41% · 10년 4.80% · 30년 5.25% · 인상 확률 50%→60%
+def fig_jobs():
+    base = 150
+    h = ['<svg viewBox="0 0 560 268" role="img" aria-label="8월 비농업 고용은 예상 '
+         '5만에서 5만5천 명의 세 배에 가까운 16만2천 명이었고 시간당 임금 상승률은 '
+         '3.2퍼센트에서 3.1퍼센트로 낮아졌다">']
+    h.append('<text x="26" y="22" class="t-head">8월 비농업 고용</text>')
+    h.append('<text x="316" y="22" class="t-head">같은 보고서의 임금</text>')
+    for i, (lab, v, cls) in enumerate([('시장 예상', 5.5, 'k8-open'), ('실제', 16.2, 'k8-fill')]):
+        x = 56 + i * 116
+        hgt = v * (96.0 / 16.2)
+        h.append('<rect class="%s" x="%d" y="%.1f" width="70" height="%.1f" rx="5"/>'
+                 % (cls, x, base - hgt, hgt))
+        h.append('<text x="%d" y="%.1f" class="t-val" text-anchor="middle">%s만 명</text>'
+                 % (x + 35, base - hgt - 10, ('%g' % v)))
+        h.append('<text x="%d" y="%d" class="t-sub" text-anchor="middle">%s</text>'
+                 % (x + 35, base + 18, lab))
+    h.append('<line class="k8-rule" x1="34" y1="%d" x2="256" y2="%d"/>' % (base, base))
+    h.append('<text x="34" y="192" class="t-sub">실업률 4.1% 유지 · 참가율 61.4%에서 61.6%</text>')
+    h.append('<text x="34" y="212" class="t-sub">7월도 2만3천 명 감소에서 2만1천 명 증가로 고침</text>')
+    h.append('<rect class="k8-open" x="316" y="36" width="218" height="60" rx="8"/>')
+    h.append('<text x="334" y="60" class="t-sub">시간당 평균임금 전년 대비</text>')
+    h.append('<text x="334" y="84" class="t-val">3.2% → 3.1%</text>')
+    h.append('<rect class="k8-fill" x="316" y="108" width="218" height="104" rx="8"/>')
+    h.append('<text x="334" y="132" class="t-sub">발표 직후 움직인 값</text>')
+    h.append('<text x="334" y="156" class="t-sub">9월 인상 확률 약 50% → 약 60%</text>')
+    h.append('<text x="334" y="178" class="t-sub">2년물 4.41% · 10년물 4.80%</text>')
+    h.append('<text x="334" y="200" class="t-sub">30년물 5.25% 위로</text>')
+    h.append('<text x="26" y="244" class="t-sub">'
+             '주가 낙폭은 이 크기에 비해 작았다 — 장중 다우 약 −0.5%, S&amp;P500 약 −0.3%</text>')
+    h.append('</svg>')
+    return ''.join(h)
 
-ALL = [FIG_LPDDR6, FIG_PER_GAP, FIG_TESLA, FIG_NASDAQ, FIG_SELECTIVE]
+
+FIG_JOBS = (
+    3, '고용은 예상의 세 배인데 임금은 내려갔다',
+    fig_jobs(),
+    '왼쪽 막대가 8월 비농업 고용이다. 시장 예상 <b>5만~5만5천 명</b>에 견줘 실제는 '
+    '<b>16만2천 명</b>이었다. 오른쪽 위 상자가 같은 보고서의 임금인데 전년 대비 '
+    '<b>3.2%에서 3.1%</b>로 내려갔다 — 취업자가 늘어도 임금이 안 따라 올랐다는 것이 '
+    '필자가 과열로 안 읽는 근거다. 아래 상자는 발표 직후 값이 움직인 곳으로, 주식보다 '
+    '국채가 먼저 그리고 크게 반응했다.')
+
+
+# ── ⑦ 좌우 대비 — 같은 날 반도체와 소프트웨어가 반대로 갔다 ─────────────────
+# 값은 [260905] 로테이션 편에 있는 것만: SOX 약 +3% · 소프트웨어 ETF −2.4% ·
+# Sandisk 약 +12% · Micron 6% 이상
+def fig_rotate2():
+    mid = 268
+    sc = 26.0   # 1%당 px
+    h = ['<svg viewBox="0 0 560 250" role="img" aria-label="9월 4일 필라델피아 반도체지수는 '
+         '약 3퍼센트 올랐고 소프트웨어 ETF는 2.4퍼센트 내렸다">']
+    h.append('<text x="26" y="22" class="t-head">9월 4일, 기준선을 사이에 둔 두 진영</text>')
+    h.append('<line class="k8-rule" x1="%d" y1="36" x2="%d" y2="168"/>' % (mid, mid))
+    h.append('<rect class="k8-fill" x="%d" y="52" width="%.1f" height="36" rx="6"/>'
+             % (mid, 3.0 * sc))
+    h.append('<text x="%d" y="76" class="t-sub" text-anchor="end">반도체지수</text>' % (mid - 10))
+    h.append('<text x="%.1f" y="76" class="t-val">약 +3%%</text>' % (mid + 3.0 * sc + 10))
+    h.append('<rect class="k8-open" x="%.1f" y="112" width="%.1f" height="36" rx="6"/>'
+             % (mid - 2.4 * sc, 2.4 * sc))
+    h.append('<text x="%d" y="136" class="t-sub">소프트웨어 ETF</text>' % (mid + 10))
+    h.append('<text x="%.1f" y="136" class="t-val" text-anchor="end">−2.4%%</text>'
+             % (mid - 2.4 * sc - 10))
+    h.append('<rect class="k8-open" x="26" y="182" width="508" height="52" rx="10"/>')
+    h.append('<text x="46" y="204" class="t-step">같은 날 개별 종목</text>')
+    h.append('<text x="46" y="226" class="t-sub">'
+             'Sandisk 약 +12% · Micron 6% 이상 · Seagate도 함께 올랐다</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_ROTATE2 = (
+    3, '반도체가 3% 오른 날 소프트웨어는 2.4% 내렸다',
+    fig_rotate2(),
+    '가운데 선이 그날의 0%다. 국채금리가 오른 날인데 필라델피아 반도체지수는 <b>약 +3%</b>, '
+    '소프트웨어 ETF는 <b>−2.4%</b>로 반대 방향이었다. 필자가 이 하루를 메모리 재평가가 아니라 '
+    '진영 사이의 자금 이동으로 읽는 근거가 이 반대 부호다. 아래 상자의 종목들은 원문이 값을 '
+    '준 것만 옮겼다.')
+
+
+# ── ⑧ 세 단계 — 이익이 그대로여도 배수가 오르면 값이 오른다 ──────────────────
+# 값은 [260906] PER 편의 가정 예시다. 실제 기업 실적이 아니라는 것을 캡션에 적는다.
+_STEPS = [('1단계', 'EPS 10', '15배', '150'),
+          ('2단계 — 지속기간 재평가', 'EPS 10', '20배', '200'),
+          ('3단계 — 이익도 증가', 'EPS 12', '20배', '240')]
+
+
+def fig_per_steps():
+    h = ['<svg viewBox="0 0 560 236" role="img" aria-label="같은 이익에도 배수가 15배에서 '
+         '20배로 오르면 주가가 150에서 200이 되고 이익까지 20퍼센트 늘면 240이 된다">']
+    h.append('<text x="26" y="22" class="t-head">필자가 든 가정 — 세 단계</text>')
+    for i, (name, eps, per, px) in enumerate(_STEPS):
+        x = 26 + i * 172
+        cls = 'k8-fill' if i == 2 else 'k8-open'
+        h.append('<rect class="%s" x="%d" y="40" width="156" height="128" rx="10"/>' % (cls, x))
+        h.append('<text x="%d" y="64" class="t-sub">%s</text>' % (x + 16, name))
+        h.append('<text x="%d" y="90" class="t-sub">%s</text>' % (x + 16, eps))
+        h.append('<text x="%d" y="112" class="t-sub">적용 배수 %s</text>' % (x + 16, per))
+        h.append('<text x="%d" y="146" class="t-val">주가 %s</text>' % (x + 16, px))
+        if i < 2:
+            h.append('<line class="k8-thin" x1="%d" y1="104" x2="%d" y2="104"/>'
+                     % (x + 158, x + 170))
+    h.append('<text x="26" y="196" class="t-sub">'
+             '2단계에서 이익은 그대로다. 움직인 것은 시장이 그 이익을 몇 해로 보느냐다</text>')
+    h.append('<text x="26" y="218" class="t-sub">'
+             '1단계에서 3단계로 가면 이익은 20% 느는데 주가는 60% 오른다</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_PER_STEPS = (
+    4, '이익이 그대로여도 배수가 오르면 값이 오른다',
+    fig_per_steps(),
+    '필자가 개념을 보이려고 든 가정이다(실제 기업 실적이 아니다). 1단계에서 2단계로 갈 때 '
+    'EPS는 <b>10</b>으로 같고 배수만 <b>15배에서 20배</b>로 올라 주가가 <b>150에서 200</b>이 '
+    '된다. 3단계에서 EPS가 <b>12</b>로 20% 늘면 주가는 <b>240</b>, 곧 <b>60%</b>가 된다. '
+    '반도체가 이익 정점에서 배수가 가장 낮아 보이는 이유도 같은 산수다 — 이익이 주가보다 '
+    '빨리 늘면 배수는 내려간다.')
+
+
+# ── ⑨ 두 줄 띠 — 같은 주가가 정상화 시점에 따라 6배도 18배도 된다 ────────────
+# 값은 [260906] 마이크론 편의 가정 예시: 주가 900 · 호황 EPS 150 · 정상화 EPS 50
+def fig_duration():
+    h = ['<svg viewBox="0 0 560 262" role="img" aria-label="주가 900달러는 호황기 주당순이익 '
+         '150달러 기준 PER 6배지만 정상화 이후 50달러 기준으로는 18배가 된다">']
+    h.append('<text x="26" y="22" class="t-head">같은 주가 900, 갈리는 배수</text>')
+    h.append('<rect class="k8-fill" x="26" y="38" width="240" height="86" rx="10"/>')
+    h.append('<text x="46" y="62" class="t-sub">호황기 주당순이익 150</text>')
+    h.append('<text x="46" y="94" class="t-val">PER 6배</text>')
+    h.append('<text x="46" y="114" class="t-sub">싸 보이는 자리</text>')
+    h.append('<rect class="k8-open" x="294" y="38" width="240" height="86" rx="10"/>')
+    h.append('<text x="314" y="62" class="t-sub">정상화 뒤 주당순이익 50</text>')
+    h.append('<text x="314" y="94" class="t-val">PER 18배</text>')
+    h.append('<text x="314" y="114" class="t-sub">같은 주가, 다른 값</text>')
+    h.append('<text x="26" y="152" class="t-step">그래서 관건은 150이 몇 해 가느냐다</text>')
+    h.append('<rect class="k8-open" x="26" y="164" width="150" height="34" rx="6"/>')
+    h.append('<text x="40" y="186" class="t-sub">2년으로 볼 때</text>')
+    h.append('<rect class="k8-fill" x="196" y="164" width="338" height="34" rx="6"/>')
+    h.append('<text x="212" y="186" class="t-sub">4~5년으로 볼 때 — 띠 길이가 곧 기업가치다</text>')
+    h.append('<text x="26" y="224" class="t-sub">'
+             '시장이 기다린 종료 신호 여섯은 하나도 뚜렷하지 않았다 — 빅테크 설비투자 둔화 ·</text>')
+    h.append('<text x="26" y="244" class="t-sub">'
+             'AI 서버 주문 둔화 · HBM 수요 둔화 · DRAM 가격 하락 · 재고 증가 · 신규 공급 급증</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_DURATION = (
+    3, '같은 주가가 6배도 18배도 된다',
+    fig_duration(),
+    '필자가 든 가정이다. 주가 <b>900</b>은 호황기 주당순이익 <b>150</b> 기준으로 <b>6배</b>지만 '
+    '정상화 뒤 <b>50</b> 기준으로는 <b>18배</b>다. 그래서 싸다·비싸다를 정하는 것이 배수가 '
+    '아니라 <b>150이 몇 해 가느냐</b>가 된다. 아래 띠 두 개가 그 기간이고, 9월 4일에 움직인 '
+    '것은 올해 이익 전망이 아니라 이 띠의 길이다. 시장이 기다린 종료 신호 여섯은 하나도 '
+    '뚜렷하게 나오지 않았다.')
+
+
+# ── ⑩ 가로 띠 — 필자가 매긴 오늘 시나리오 셋 ─────────────────────────────
+# 값은 [260907] 시황 편에 있는 것만: 50% / 30% / 20%, 등락 범위, SOX +3.37% 등
+_SCEN = [('반도체 주도 상승', 50, '+1.0~+3.0%'),
+         ('상승 출발 뒤 보합', 30, '0~+1%'),
+         ('유가·금리 부담으로 하락', 20, '−0.5~−1.5%')]
+
+
+def fig_scenario():
+    h = ['<svg viewBox="0 0 560 250" role="img" aria-label="필자는 반도체 주도 상승 50퍼센트 '
+         '보합 30퍼센트 하락 20퍼센트로 오늘 시나리오를 매겼다">']
+    h.append('<text x="26" y="22" class="t-head">9월 7일 한국 증시 시나리오</text>')
+    for i, (name, p, rng) in enumerate(_SCEN):
+        y = 40 + i * 52
+        h.append('<text x="26" y="%d" class="t-sub">%s</text>' % (y + 14, name))
+        h.append('<rect class="%s" x="222" y="%d" width="%.1f" height="24" rx="5"/>'
+                 % ('k8-fill' if i == 0 else 'k8-open', y, p * 2.4))
+        h.append('<text x="%.1f" y="%d" class="t-val">%d%%</text>' % (222 + p * 2.4 + 10, y + 18, p))
+        h.append('<text x="222" y="%d" class="t-sub">예상 등락 %s</text>' % (y + 44, rng))
+    h.append('<rect class="k8-open" x="26" y="196" width="508" height="50" rx="8"/>')
+    h.append('<text x="46" y="218" class="t-sub">'
+             '전날 미국 — 다우 −0.51% · S&amp;P500 −0.38%</text>')
+    h.append('<text x="46" y="238" class="t-sub">'
+             '그런데 SOX +3.37% · Micron +6.10%</text>')
+    h.append('</svg>')
+    return ''.join(h)
+
+
+FIG_SCENARIO = (
+    3, '반도체가 끌어올리되 폭은 외국인이 정한다',
+    fig_scenario(),
+    '띠 길이가 필자가 매긴 확률이다 — 반도체 주도 상승 <b>50%</b>, 보합 <b>30%</b>, 하락 '
+    '<b>20%</b>다. 아래 상자가 그 전날 미국인데, 지수는 내리고 반도체만 올랐다. 필자가 '
+    'Micron이 6.1% 올랐으니 오늘 SK하이닉스도 6%라는 식의 연결을 막는 이유가 여기 있다 — '
+    '같은 밤에 10년물 <b>4.78%</b>와 브렌트유 <b>96.28달러</b>도 함께 나왔기 때문이다. '
+    '그래서 보는 자리를 개장가가 아니라 10시 30분 이후 외국인 매매로 잡는다.')
+
+
+ALL = [FIG_LPDDR6, FIG_PER_GAP, FIG_TESLA, FIG_NASDAQ, FIG_SELECTIVE,
+       FIG_JOBS, FIG_ROTATE2, FIG_PER_STEPS, FIG_DURATION, FIG_SCENARIO]
 
 if __name__ == '__main__':
     import sys
