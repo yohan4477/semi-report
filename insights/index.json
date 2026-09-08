@@ -3639,7 +3639,6 @@
 "content/understanding/피지컬AI/[260205] Whole-Body Control 시대의 시작.md#L63"
 ],
 "Fidelity": [
-"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L76",
 "content/understanding/회계사/[260731] 아마존 잉여현금흐름 1년 새 95% 감소, 알파벳은 자사주 대신 800억 달러 신주 발행 - 엘곰.md#L7",
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L336",
 "input/clippings/AgentX - InferenceXv3 Does CUDA Moat Hold up in Agentic Inferencing.md#L589",
@@ -13620,8 +13619,8 @@
 136
 ],
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md": [
-"f9e957551771d13073b1ee0bbef891b1a7ac3feb",
-146
+"ca32b20b7724511ac642bf7ad1f4925c18a60773",
+96
 ],
 "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md": [
 "c86aefe2d25132f5d9a024a372c810f8be322c66",
@@ -13652,8 +13651,8 @@
 104
 ],
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md": [
-"458a39ad2a04420e02486749ff2b318de1e56cdc",
-124
+"9e8db9878c3702784271261f83884e90bc850814",
+91
 ],
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md": [
 "38c585a98609509111f0bc7e4d439e32bd58974c",
@@ -13844,8 +13843,8 @@
 92
 ],
 "content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md": [
-"2eb2e9a5d1149f12596134581ffc963f37075766",
-138
+"7bc203efd5f07ceb5ed5e4e21a82672a2f7fe45a",
+105
 ],
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md": [
 "903a8290a307f23701293d5815a4bdfb809d43b9",
@@ -19392,8 +19391,8 @@
 213
 ]
 },
-"fingerprint": "0189a663c9838a99bff1a548df4f379048647286",
-"lines": 234237
+"fingerprint": "a909b29b664d4301ccd1fcf9658321396bcdf389",
+"lines": 234121
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -20271,10 +20270,10 @@
 "content/scaling-book/원문/11-conclusion.md#L33",
 "content/scaling-book/원문/12-gpus.md#L104",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L14",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L26",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L82",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L108",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L19",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L25",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L69",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L70",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
@@ -21281,7 +21280,6 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L14",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
@@ -24713,8 +24711,7 @@
 "content/scaling-book/원문/07-inference.md#L559",
 "content/scaling-book/원문/11-conclusion.md#L12",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L14",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L128",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L76",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
@@ -29065,10 +29062,8 @@
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L69",
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L137",
 "content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md#L82",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L11",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L114",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L116",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L122",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L12",
+"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L65",
 "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L19",
 "content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L56",
 "content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L58",
@@ -44197,8 +44192,7 @@
 "content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L12",
 "content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L19",
 "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L100",
-"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L100",
+"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L69",
 "content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L25",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L33",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L38",
@@ -48789,10 +48783,11 @@
 "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md#L6",
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L2",
 "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L11",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L14",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L22",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L38",
+"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L12",
+"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L19",
+"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L31",
+"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L35",
+"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L49",
 "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L148",
 "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L52",
 "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L46",
@@ -52789,6 +52784,7 @@
 "content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L97",
 "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L71",
 "content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md#L12",
+"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L53",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L1",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L14",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L16",
