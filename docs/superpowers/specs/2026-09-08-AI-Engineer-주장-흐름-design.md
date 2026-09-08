@@ -1,6 +1,6 @@
 # AI Engineer — 주장 흐름 (시간순 한 줄기)
 
-2026-09-08 확정. 산출물은 `대시보드/ai-engineer/주장 흐름.html` 한 장과
+2026-09-08 확정. 산출물은 `대시보드/AI Engineer 주장 흐름.html` 한 장과
 그 재료 `insights/views/aie_thread.json`, 조립기 `scratchpad/gen_aie_thread.py`.
 
 ## 1. 무엇을 답하는 장인가
@@ -48,8 +48,9 @@ AI Engineer 발표 81편은 카드 81장으로 이미 서 있다. 카드는 한 
 
 - `claim` 은 요약이 아니라 `content/aie/<talk>.md` 의 그 줄이다. 우리 말로 다시
   쓰지 않는다 — 다시 쓰는 순간 두 주장이 맞선다는 판정의 근거가 우리 문장이 된다.
-- `line` 은 그 md 의 줄 번호. `scripts/check_jsoncite.py` 가 실재하는 줄을
-  가리키는지 문다.
+- `line` 은 그 md 의 줄 번호. `scratchpad/check_aie_thread.py` 가 그 줄에
+  `claim` 이 실제로 있는지 문다. `check_jsoncite.py` 는 메르 json 클리핑 전용이라
+  여기 못 쓴다 — 마크다운은 줄 번호가 파일에 그대로 있어 대조가 더 간단하다.
 - `id` 는 `<date>-<org소문자>-<열쇠말>`. `rel.to` 는 반드시 **자기보다 앞선 날짜**의
   `id` 여야 한다 — 조립기가 검사한다.
 - 주장을 못 뽑은 편은 줄을 안 만든다. 「81편이 다 나와야 한다」가 아니다.
@@ -69,7 +70,11 @@ AI Engineer 발표 81편은 카드 81장으로 이미 서 있다. 카드는 한 
 어떻게 지어야 하는가에 답한 대목이 있다 — 섹션으로 미리 자르지 않고 1판이 주장을
 찾은 편만 남는다.
 
-## 5. 화면 — `대시보드/ai-engineer/주장 흐름.html`
+## 5. 화면 — `대시보드/AI Engineer 주장 흐름.html`
+
+**`대시보드/ai-engineer/` 안에 두지 않는다.** 그 폴더는 `dash_common._write_card_pages`
+가 카드 슬러그가 아닌 html 을 생성 때마다 걷는다(「없어진 카드의 글 페이지를 걷는다」).
+장은 폴더 밖에 서고, 줄 클릭은 `ai-engineer/<slug(제목)>.html` 로 간다.
 
 아카이브 부품(`dash_common`)을 안 쓴다. 카드가 쌓이는 장이 아니라 한 줄기를 위에서
 아래로 읽는 장이다. 워치 장과 같은 이유이고, 같은 이유로 **규약을 조립기 안
@@ -98,7 +103,7 @@ AI Engineer 발표 81편은 카드 81장으로 이미 서 있다. 카드는 한 
 
 ```bash
 PYTHONIOENCODING=utf-8 python scratchpad/gen_aie_thread.py
-PYTHONIOENCODING=utf-8 python scripts/check_jsoncite.py   # claim 이 그 줄에 있나
+PYTHONIOENCODING=utf-8 python scratchpad/check_aie_thread.py  # claim 이 그 줄에 있나
 PYTHONIOENCODING=utf-8 python insights/check_prose.py     # 대시보드 HTML 산문
 PYTHONIOENCODING=utf-8 python scratchpad/check_fig.py     # 배치
 ```
