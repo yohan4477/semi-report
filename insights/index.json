@@ -2221,11 +2221,9 @@
 "content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L19",
 "content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L73",
 "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L6",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L11",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L14",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L26",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L46",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L48",
+"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L12",
+"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L19",
+"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L41",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L40",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L62",
@@ -3950,8 +3948,6 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L624",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L647",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L74",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L62",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L112",
 "content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L4",
 "content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L16",
 "content/understanding/Semi Doped/2026-08-24-grok-bots-cpu.md#L19",
@@ -13636,8 +13632,8 @@
 75
 ],
 "content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md": [
-"c8257a3fcfb0a4b9a5a9ba226b170bac0d99ff23",
-156
+"1b27f343433a7225643c7f9bbdcb4686f1ec5fc5",
+107
 ],
 "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md": [
 "b0fcd78271cbe757f53fcf0877c7f11bf1cc60bf",
@@ -13696,8 +13692,8 @@
 84
 ],
 "content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md": [
-"7783c822d014b0f9ffc9c264a15f9053ace5c05b",
-128
+"08231bea6113320a205d97c0cb6f1f7762bb19f0",
+95
 ],
 "content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md": [
 "768d83f376232f2a59ba94692c697b81a7a09b00",
@@ -13808,12 +13804,12 @@
 67
 ],
 "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md": [
-"e4775d92baeb7390a2bdabd0c3f0072a16733a0f",
-118
+"ed2e1f829668e1f21df05ee5d4abd83076c8b5a3",
+96
 ],
 "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md": [
-"a1751e7204022208d46b4e32c7718c81c264654c",
-152
+"8f858e18421fdd3172d198c428d64e29feb11cbc",
+110
 ],
 "content/understanding/AI Engineer/2026-07-26-벡터만으로는-기억이-안-된다.md": [
 "5b340150ae0ac654307386abe4ef11bea2763119",
@@ -19396,8 +19392,8 @@
 213
 ]
 },
-"fingerprint": "e55dc8b66504d5b63c16a972505f405c403f489a",
-"lines": 234383
+"fingerprint": "0189a663c9838a99bff1a548df4f379048647286",
+"lines": 234237
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -20279,7 +20275,6 @@
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L26",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L82",
 "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L108",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L92",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L11",
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L14",
@@ -41425,10 +41420,9 @@
 "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L52",
 "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L56",
 "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L114",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L48",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L106",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L110",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L120",
+"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41",
+"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L64",
+"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L72",
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L64",
 "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L12",
@@ -42441,11 +42435,12 @@
 "content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md#L6",
 "content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md#L19",
 "content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L6",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L11",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L14",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L64",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L84",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L100",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L12",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L15",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L19",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L53",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L65",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L71",
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L2",
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L6",
 "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
@@ -42462,12 +42457,8 @@
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L6",
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L12",
 "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L19",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L88",
 "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L6",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L11",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L14",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L30",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L152",
+"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L19",
 "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L6",
 "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L15",
 "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L19",
@@ -48808,7 +48799,6 @@
 "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
 "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L6",
 "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L12",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L88",
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L6",
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L12",
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
@@ -51574,7 +51564,6 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L486",
 "content/scaling-book/00-index.md#L19",
 "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L17",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L94",
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L20",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L17",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L39",
@@ -59857,22 +59846,20 @@
 "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L603",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L64",
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L22",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L44",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L76",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L80",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L35",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L61",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L63",
+"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L93",
 "content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L6",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L11",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L14",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L22",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L36",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L60",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L12",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L19",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L21",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L23",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L45",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L54",
 "content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L68",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L92",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L98",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L106",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L116",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L118",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L126",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L76",
+"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L78",
 "content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L43",
 "content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L55",
 "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L107",
