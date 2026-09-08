@@ -116,7 +116,7 @@ svg.map{display:block;min-width:520px}
 .panel ul{margin:8px 0 0;padding-left:18px}
 .panel li{font-size:.82rem;color:var(--sub);word-break:break-all}
 .panel li b{color:var(--ink);font-weight:600}
-.panel li .where{opacity:.7;font-size:.75rem}
+.panel li .where{opacity:.7;font-size:.75rem;margin-left:6px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
 .chip{font:inherit;font-size:.78rem;cursor:pointer;border:1px solid var(--line);background:var(--card);
  color:var(--sub);border-radius:999px;padding:4px 11px}
@@ -125,8 +125,36 @@ svg.map{display:block;min-width:520px}
 .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .chip.on .cnt{opacity:.85}
 .mapwrap.off{display:none}
+.listwrap.off{display:none}
+.narrow{display:none}
+.tb{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.tb-head{display:flex;align-items:center;gap:8px;width:100%;font:inherit;font-size:.92rem;font-weight:700;
+ color:var(--ink);background:none;border:0;padding:11px 13px;cursor:pointer;text-align:left}
+.tb-name{flex:1}
+.tb-n{font-size:.72rem;font-weight:600;color:var(--sub);background:var(--accent-soft);border-radius:999px;padding:1px 8px}
+.tb-caret{color:var(--sub);font-size:.7rem;transition:transform .15s}
+.tb.fold .tb-caret{transform:rotate(-90deg)}
+.tb.fold .tb-body{display:none}
+.tb-body{padding:0 13px 10px}
+.tb-note{font-size:.78rem;color:var(--sub);margin:0 0 8px}
+.tl{display:flex;align-items:center;gap:10px;width:100%;font:inherit;font-size:.86rem;color:var(--ink);
+ background:none;border:0;border-top:1px solid var(--line);padding:10px 2px;cursor:pointer;text-align:left}
+.tl-name{flex:1}
+.tl-n{font-size:.74rem;color:var(--sub);white-space:nowrap}
+.tl.dim{opacity:.45;cursor:default}
+.tl.on{color:var(--accent);font-weight:700}
 .notes{font-size:.8rem;color:var(--sub)}
 .notes b{color:var(--ink)}
+@media (max-width: 640px){
+  body{padding:12px}
+  .wide{display:none}
+  .narrow{display:block}
+  /* 가지 설명이 목록 안에 이미 붙어 있어 아래 상자는 겹친다 */
+  .notes{display:none}
+  h1{font-size:1.2rem}
+  .panel li{word-break:normal}
+  .panel li .where{display:block;margin-left:0}
+}
 """
 
 
@@ -145,6 +173,30 @@ def filtered(data, kind):
 CHIPS = [('all', '전체'), ('tech', '기술'), ('co', '회사'), ('idx', '지표·제도')]
 
 
+def tree_list(data):
+    """좁은 화면용 그릇 — 같은 데이터를 접이식 목록으로. 첫 가지만 펴고 연다."""
+    out = []
+    for i, b in enumerate(data['branches']):
+        out.append('<div class="tb%s">' % ('' if i == 0 else ' fold'))
+        out.append('<button class="tb-head" aria-expanded="%s"><span class="tb-name">%s</span>'
+                   '<span class="tb-n">%d</span><span class="tb-caret">▾</span></button>'
+                   % ('true' if i == 0 else 'false',
+                      html.escape(b['name']), len(b['nodes'])))
+        out.append('<div class="tb-body">')
+        out.append('<div class="tb-note">%s</div>'
+                   % html.escape(BRANCH_NOTE.get(b['name'], '')))
+        for nd in b['nodes']:
+            cnt = ('%d회 · %d편' % (nd['n'], nd['ndoc'])) if nd['n'] else '원문 없음'
+            out.append('<button class="tl%s" data-node="%s"%s>'
+                       '<span class="tl-name">%s</span><span class="tl-n">%s</span></button>'
+                       % (' dim' if not nd['n'] else '',
+                          html.escape(nd['name'], quote=True),
+                          ' disabled' if not nd['n'] else '',
+                          html.escape(nd['name']), cnt))
+        out.append('</div></div>')
+    return '\n'.join(out)
+
+
 def build():
     data = litho_scan.scan()
     idx = {}
@@ -161,6 +213,10 @@ def build():
     maps = '\n'.join(
         '<div class="mapwrap%s" data-kind="%s">%s</div>'
         % ('' if k == 'all' else ' off', k, svg(filtered(data, k)))
+        for k, _lab in CHIPS)
+    lists = '\n'.join(
+        '<div class="listwrap%s" data-kind="%s">%s</div>'
+        % ('' if k == 'all' else ' off', k, tree_list(filtered(data, k)))
         for k, _lab in CHIPS)
     notes = '\n'.join(
         '<div data-branch="%s" data-kinds="%s"><b>%s</b> — %s</div>'
@@ -183,7 +239,8 @@ def build():
 <p class="lead">원문 %d편에서 이름을 세어 세운 가지다. 잎을 누르면 그 이름이 가장 많이 나온 원문이 아래에 선다.
 숫자는 우리 코퍼스에 몇 번, 몇 편에 나왔는지이지 업계 비중이 아니다. 흐린 잎은 아직 우리 원문에 없는 이름이다.</p>
 <div class="chips" role="group" aria-label="갈래 고르기">%s</div>
-<div class="box scroll">%s</div>
+<div class="box scroll wide">%s</div>
+<div class="narrow">%s</div>
 <div class="box panel" id="panel"><h2>잎을 고르세요</h2><p class="hint">이름 하나를 누르면 그 이름이 나온 원문 목록이 여기 뜬다.</p></div>
 <div class="box notes">%s</div>
 </main>
@@ -192,9 +249,8 @@ var IDX = %s;
 var panel = document.getElementById('panel');
 function show(name){
   var d = IDX[name];
-  document.querySelectorAll('.leaf').forEach(function(g){ g.classList.remove('on'); });
-  document.querySelectorAll('.leaf').forEach(function(g){
-    if (g.getAttribute('data-node') === name) g.classList.add('on');
+  document.querySelectorAll('.leaf, .tl').forEach(function(g){
+    g.classList.toggle('on', g.getAttribute('data-node') === name);
   });
   if (!d || !d.n){
     panel.innerHTML = '<h2>' + name + '</h2><p class="hint">우리 원문에 아직 없는 이름이다.</p>';
@@ -204,7 +260,7 @@ function show(name){
     var parts = t[0].split('/');
     var title = parts[parts.length - 1].replace(/\.md$/, '');
     var where = parts.slice(0, -1).join(' / ');
-    return '<li><b>' + title + '</b> — ' + t[1] + '회 <span class="where">' + where + '</span></li>';
+    return '<li><b>' + title + '</b> — ' + t[1] + '회<span class="where">' + where + '</span></li>';
   }).join('');
   panel.innerHTML = '<h2>' + name + '</h2><p class="hint">원문 ' + d.ndoc + '편에 ' + d.n +
     '회. 많이 나온 순으로:</p><ul>' + li + '</ul>';
@@ -216,11 +272,25 @@ document.querySelectorAll('.leaf').forEach(function(g){
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(g.getAttribute('data-node')); }
   });
 });
+document.querySelectorAll('.tl').forEach(function(t){
+  if (t.classList.contains('dim')) return;
+  t.addEventListener('click', function(){
+    show(t.getAttribute('data-node'));
+    panel.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+  });
+});
+document.querySelectorAll('.tb-head').forEach(function(h){
+  h.addEventListener('click', function(){
+    var box = h.parentNode;
+    var fold = box.classList.toggle('fold');
+    h.setAttribute('aria-expanded', fold ? 'false' : 'true');
+  });
+});
 document.querySelectorAll('.chip').forEach(function(c){
   c.addEventListener('click', function(){
     var k = c.getAttribute('data-kind');
     document.querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x === c); });
-    document.querySelectorAll('.mapwrap').forEach(function(w){
+    document.querySelectorAll('.mapwrap, .listwrap').forEach(function(w){
       w.classList.toggle('off', w.getAttribute('data-kind') !== k);
     });
     document.querySelectorAll('.notes [data-branch]').forEach(function(d){
@@ -232,7 +302,7 @@ document.querySelectorAll('.chip').forEach(function(c){
 </script>
 </body>
 </html>
-""" % (CSS, data['nfile'], chips, maps, notes,
+""" % (CSS, data['nfile'], chips, maps, lists, notes,
        json.dumps(idx, ensure_ascii=False))
     io.open(OUT, 'w', encoding='utf-8').write(doc)
     print('wrote', OUT, len(doc), 'bytes')
