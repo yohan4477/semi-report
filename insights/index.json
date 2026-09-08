@@ -143,6 +143,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L731",
 "content/linkedin/[2608] 링크드인 게시물.md#L787",
 "content/linkedin/[2609] 링크드인 게시물.md#L59",
+"content/linkedin/[2609] 링크드인 게시물.md#L179",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L76",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L474",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L483",
@@ -1957,6 +1958,30 @@
 "input/clippings/mer/224379237136.json#L105"
 ],
 "AWS": [
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L2",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L6",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L15",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L19",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L48",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L74",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L77",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L80",
+"content/aie/2025-08-26-데이터가-차이를-만든다.md#L6",
+"content/aie/2025-08-26-스트랜즈-에이전트-SDK.md#L6",
+"content/aie/2025-08-26-스트랜즈-에이전트-SDK.md#L19",
+"content/aie/2025-08-26-음성-AI를-규모로-내보내기.md#L6",
+"content/aie/2025-08-26-음성-AI를-규모로-내보내기.md#L19",
+"content/aie/2025-08-26-음성-AI를-규모로-내보내기.md#L75",
+"content/aie/2025-08-26-음성-AI를-규모로-내보내기.md#L83",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L6",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L12",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L15",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L19",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L73",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L6",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L12",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L19",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L41",
 "content/epoch/[260611] 미소스의 사이버 능력은 부풀려졌나.md#L44",
 "content/linkedin/[2604] 링크드인 게시물.md#L423",
 "content/linkedin/[2605] 링크드인 게시물.md#L53",
@@ -2196,30 +2221,6 @@
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L946",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L955",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L261",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L2",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L6",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L15",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L48",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L74",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L77",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L80",
-"content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md#L6",
-"content/understanding/AI Engineer/2025-08-26-스트랜즈-에이전트-SDK.md#L6",
-"content/understanding/AI Engineer/2025-08-26-스트랜즈-에이전트-SDK.md#L19",
-"content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md#L6",
-"content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md#L75",
-"content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md#L83",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L6",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L12",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L15",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L73",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L6",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L12",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L19",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L41",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L40",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L62",
@@ -4175,6 +4176,7 @@
 "input/clippings/mer/224333859654.json#L107"
 ],
 "HuggingFace": [
+"content/aie/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md#L6",
 "content/epoch/[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md#L1",
 "content/epoch/[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md#L6",
 "content/epoch/[260722] 오픈AI 모델이 벤치마크에서 부정행위를 하려다 허깅페이스를 해킹했다.md#L9",
@@ -4213,7 +4215,6 @@
 "content/scaling-book/원문/07-inference.md#L211",
 "content/scaling-book/원문/11-conclusion.md#L40",
 "content/scaling-book/원문/12-gpus.md#L668",
-"content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md#L6",
 "content/understanding/Semi Doped/daily-2026-04-08.md#L21",
 "content/understanding/Semi Doped/daily-2026-04-08.md#L22",
 "content/understanding/Semi Doped/daily-2026-04-08.md#L29",
@@ -8024,6 +8025,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L787",
 "content/linkedin/[2609] 링크드인 게시물.md#L43",
 "content/linkedin/[2609] 링크드인 게시물.md#L147",
+"content/linkedin/[2609] 링크드인 게시물.md#L179",
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L7",
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L423",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L7",
@@ -12981,6 +12983,12 @@
 "content/understanding/피지컬AI/[260721] Sunday Robotics ACT-2 프리뷰.md#L31"
 ],
 "Wuji": [
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L37",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L15",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L21",
+"content/aie/2026-05-26-커버리지-너머의-기능-테스트.md#L65",
+"content/aie/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L60",
+"content/aie/2026-06-26-평가가-다음-연산-부품이-된다.md#L96",
 "content/health/지식인사이드/[260310] 살은 병을 이기는 자산이다 - 이승훈 (EP.108).md#L51",
 "content/health/지식인사이드/[260310] 살은 병을 이기는 자산이다 - 이승훈 (EP.108).md#L133",
 "content/health/지식인사이드/[260310] 살은 병을 이기는 자산이다 - 이승훈 (EP.108).md#L169",
@@ -12992,12 +13000,6 @@
 "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md#L55",
 "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md#L311",
 "content/newsletter/ai_infra/power/[260619] 2026년 미국 데이터센터 용량 절반 취소설은 틀렸다.md#L281",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L37",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L15",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L21",
-"content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md#L65",
-"content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L60",
-"content/understanding/AI Engineer/2026-06-26-평가가-다음-연산-부품이-된다.md#L96",
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L11",
 "content/understanding/김상훈 기자/[260819] 중국은 금리를 설계한다 - 같은 4천조를 빌려도 이자가 122조와 270조로 갈린다 - 김상훈.md#L33",
 "content/understanding/미국주식 사관학교/[260823] 국채가 밀리는 동안 지방채는 물량이 안 늘었다 - 고금리 뉴노멀에서 남는 채권 셋.md#L66",
@@ -13062,6 +13064,330 @@
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
 "files": 1580,
 "files_stat": {
+"content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
+"89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
+115
+],
+"content/aie/2025-04-01-블룸버그-에이전트-확장.md": [
+"87bc745ddb4043acd4ef54e5cd6daf7825e75ec3",
+89
+],
+"content/aie/2025-08-26-AI-레드팀-에이전트.md": [
+"1e679c363f8ae506a59f7eed057e0112004e3a79",
+94
+],
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md": [
+"0e7a4b8a77bd68545d8e25408c632d509fe6c549",
+109
+],
+"content/aie/2025-08-26-그래프와-벡터를-섞은-검색.md": [
+"bd7f1f3802e6fbb5ac8fcd62752bc0b7a45113d5",
+102
+],
+"content/aie/2025-08-26-기기-위에서-도는-파운드리-로컬.md": [
+"8f18d3b509d766ea95bf7472d196eb21b02a0da2",
+91
+],
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md": [
+"86f06f47501b928a82fd968482d6bf8f6590a25a",
+80
+],
+"content/aie/2025-08-26-더-큰-모델보다-데이터-플라이휠.md": [
+"15635237a82bbac43db772c1fc3861f6fa3f5f5c",
+77
+],
+"content/aie/2025-08-26-데이터가-차이를-만든다.md": [
+"c6ecccf75f333019894633dae8f313d0cec5644f",
+97
+],
+"content/aie/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md": [
+"e36d83498935cd3505e02ec903f991b894ba86d6",
+70
+],
+"content/aie/2025-08-26-새로운-코드는-명세다.md": [
+"2dddf850f9f3160fc2e3e8c08eb14fb2d858588c",
+111
+],
+"content/aie/2025-08-26-스트랜즈-에이전트-SDK.md": [
+"5833c419e75e1d1950d5e89b7c59f660c7a0ea34",
+71
+],
+"content/aie/2025-08-26-애저로-에이전트를-채점하기.md": [
+"7c4d681a69de227fe3230829102853236391575b",
+91
+],
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md": [
+"9f3195c8fe04f3b6c992f1c0d73ffbe6c57aa125",
+75
+],
+"content/aie/2025-08-26-에이전트에서-정말-어려운-부분.md": [
+"da87fa323a288f2f8a0a3a0666c8c1d376dd1d46",
+76
+],
+"content/aie/2025-08-26-원격-MCP를-내보내며-배운-것.md": [
+"abfa739b42803c5e3cd3ef2f7d74a3c624843094",
+104
+],
+"content/aie/2025-08-26-음성-AI를-규모로-내보내기.md": [
+"644569c7895977211c06ac88f082f4f4bfb361eb",
+102
+],
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md": [
+"ca32b20b7724511ac642bf7ad1f4925c18a60773",
+96
+],
+"content/aie/2025-08-26-추론의-파레토-경계를-밀어내기.md": [
+"c86aefe2d25132f5d9a024a372c810f8be322c66",
+108
+],
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md": [
+"6b2d51f37f4506285bd1cdd88dcb3c5c74642495",
+75
+],
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md": [
+"1b27f343433a7225643c7f9bbdcb4686f1ec5fc5",
+107
+],
+"content/aie/2025-08-26-평가에서-비싸게-배운-다섯.md": [
+"b0fcd78271cbe757f53fcf0877c7f11bf1cc60bf",
+111
+],
+"content/aie/2025-08-26-현장에서-쓰는-MCP.md": [
+"8cc24d150cdc692325134678d64481f9778b3568",
+68
+],
+"content/aie/2025-11-26-그래프로-컨텍스트를-잇기.md": [
+"a6d986f40a83aab0586a1983a818da824bdba495",
+98
+],
+"content/aie/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md": [
+"067b375a4e5f4a5b6625e594059890db09d4f62c",
+104
+],
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md": [
+"9e8db9878c3702784271261f83884e90bc850814",
+91
+],
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md": [
+"38c585a98609509111f0bc7e4d439e32bd58974c",
+81
+],
+"content/aie/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md": [
+"8dcd2171966b2ab32071d94e35014f094f663092",
+78
+],
+"content/aie/2025-12-26-제미나이-시대의-만들기.md": [
+"79d4496d67a97f91c1dcd5ca6233e78256b69cfd",
+89
+],
+"content/aie/2025-12-26-중력을-거스르다.md": [
+"7710a4440f34f9ff983cb7b6b1dfaf922234de0d",
+59
+],
+"content/aie/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md": [
+"1b461920c1425ba349af310a15477ea7aa3ee161",
+92
+],
+"content/aie/2026-04-26-MCP는-어디로-가나.md": [
+"5f2d689444f9a53c9ce9ae6fac1868d328ba9948",
+78
+],
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md": [
+"6e13f3bbcefad4e220b8a578d220ac1dccfe71f7",
+108
+],
+"content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md": [
+"6b0f0aaf0e550657c6f49007445322c940c4b23f",
+94
+],
+"content/aie/2026-04-26-코드-모드-말은-코드가-한다.md": [
+"b57f02a20c32dc74864d7d16bc6f12a693722384",
+84
+],
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md": [
+"08231bea6113320a205d97c0cb6f1f7762bb19f0",
+95
+],
+"content/aie/2026-05-26-VS-Code에서-에이전트-굴리기.md": [
+"768d83f376232f2a59ba94692c697b81a7a09b00",
+91
+],
+"content/aie/2026-05-26-개발자-한-명과-스무-개의-에이전트.md": [
+"893acc4c5e9c443e4e27f703f3f97cbfb2d468c6",
+60
+],
+"content/aie/2026-05-26-게이트웨이-하나면-된다.md": [
+"23494256fc66c0d64736e4ffff27cb3335c8185f",
+110
+],
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md": [
+"921673c7400534b7e6c7320ef0c0c5f5f566f109",
+56
+],
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md": [
+"7b66257b6fc52d99bf341b049e14922f88ca51c1",
+92
+],
+"content/aie/2026-05-26-생성AI는-데이터-과학자의-것인가.md": [
+"5ea27e46e33e3e184d35dcaf45da4a45b7aa201f",
+97
+],
+"content/aie/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md": [
+"08e708d9e498459c810845543a6e3b208aa5f85f",
+70
+],
+"content/aie/2026-05-26-엣지에서-AI를-빠르게.md": [
+"335c27efc912e2ca39cd27a3ae1c6ac95e531d0a",
+97
+],
+"content/aie/2026-05-26-제미나이-나노-온디바이스.md": [
+"ac33accebeefaa78adf22fb21da969a80a2563d2",
+95
+],
+"content/aie/2026-05-26-커버리지-너머의-기능-테스트.md": [
+"e98ccff45750800a7bb5e344cb69db7a84762737",
+95
+],
+"content/aie/2026-05-26-평가-플랫폼-만들기가-어려운-이유.md": [
+"176f45a41167a02a2979a9a70c5c5e1031e14a94",
+98
+],
+"content/aie/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md": [
+"a92b918473441887efa80ca559fa93ce9e814f3e",
+68
+],
+"content/aie/2026-06-26-관측과-평가와-실험을-한-판에.md": [
+"a953127034ea99dd6bdd6e9a351e676645a898d7",
+104
+],
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md": [
+"a7b7af46dd426382c3d30ccb287d8eb5ccd6f006",
+110
+],
+"content/aie/2026-06-26-시니어가-에이전트에서-막히는-이유.md": [
+"8ba3aa5f0a2f9980eee1dcd33645ad68563ac244",
+79
+],
+"content/aie/2026-06-26-에이전트-관측은-무엇이-다른가.md": [
+"dddb10db1970b8a2117edbcafdb66aa8f3e376c2",
+101
+],
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md": [
+"e7b61d522d7f667f9a30c65195e63de9e8f07bd1",
+115
+],
+"content/aie/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md": [
+"bfcbaa6be07f3c5be24fa7e3445dc94cb2206588",
+67
+],
+"content/aie/2026-06-26-제미나이-오디오-스택.md": [
+"150d99397a123428a9844e7b6a0ce775ca083aef",
+98
+],
+"content/aie/2026-06-26-텍스트-디퓨전.md": [
+"245a20f27a7cf719e52e14938fac8ff276e72101",
+96
+],
+"content/aie/2026-06-26-평가가-다음-연산-부품이-된다.md": [
+"86924802e8d78b180fa6664c93278bcaa9dbb19a",
+96
+],
+"content/aie/2026-06-26-평가를-굴리는-단계들.md": [
+"3cf6ca812cbf58c6a94242687a6f25a2696e9b06",
+112
+],
+"content/aie/2026-07-26-AI-엔지니어링의-황금기.md": [
+"0cb99dbc7dc2c98d5a77c25b6bf4947e83c255c5",
+80
+],
+"content/aie/2026-07-26-LLM에게-운전대를-주지-마라.md": [
+"f4f0a5a2d40c5ca3c51c6ebac5cc43eeef876d77",
+84
+],
+"content/aie/2026-07-26-기기-위에서-프런티어-수준을-낸다.md": [
+"a7fe5e0f48322919ab68d59dae8253c89bb8e913",
+122
+],
+"content/aie/2026-07-26-긴-호흡의-작업을-맡길-때.md": [
+"bb423a4bdac6a4c27635097af820d7f51eada92a",
+86
+],
+"content/aie/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md": [
+"76420fdfdae45c7cc33f87d02b9ada6c4482cc52",
+67
+],
+"content/aie/2026-07-26-명세로-이끄는-개발.md": [
+"ed2e1f829668e1f21df05ee5d4abd83076c8b5a3",
+96
+],
+"content/aie/2026-07-26-모델로-소스코드를-지키기.md": [
+"8f858e18421fdd3172d198c428d64e29feb11cbc",
+110
+],
+"content/aie/2026-07-26-벡터만으로는-기억이-안-된다.md": [
+"5b340150ae0ac654307386abe4ef11bea2763119",
+100
+],
+"content/aie/2026-07-26-신호에서-PR까지-스스로-고치는-에이전트.md": [
+"540a55de73263e7b34f13ab6c376a3637b935bc2",
+100
+],
+"content/aie/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md": [
+"8e8232143c75a736a99f953b074456f5c954296f",
+74
+],
+"content/aie/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md": [
+"1756958951e30ede0d401e28ec09b97d2dcc008f",
+84
+],
+"content/aie/2026-07-26-페이블-현장-안내서.md": [
+"72866f594c6cea45ee81f5d37d2d37bc08a8abb9",
+106
+],
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md": [
+"718c804daee85b70983d351802a18e787f29bf48",
+110
+],
+"content/aie/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md": [
+"2c1042acc88cd483da17cbcad1f8c08fcecc1fd1",
+113
+],
+"content/aie/2026-07-31-AI-슬롭을-끝내는-법.md": [
+"f6c95041edae3b249081fd95eb98d2732b1438a1",
+92
+],
+"content/aie/2026-07-31-일하면서-배우는-에이전트.md": [
+"7bc203efd5f07ceb5ed5e4e21a82672a2f7fe45a",
+105
+],
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md": [
+"903a8290a307f23701293d5815a4bdfb809d43b9",
+114
+],
+"content/aie/2026-08-12-개인용-앱을-안전하게-바이브-코딩하기.md": [
+"0c9d3deef9968663152cbdcc0e314922a4ba50de",
+102
+],
+"content/aie/2026-08-12-실시간-멀티플레이어와-자동화.md": [
+"e7f7c42eb80a8787e2a516810bc2e8c4139089b5",
+92
+],
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md": [
+"f51d4f86047c5d05398fb9c7f5bc90aeb759bec9",
+109
+],
+"content/aie/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md": [
+"4c476a39a7729bf663087f64aa7c1ba0b285d7e5",
+97
+],
+"content/aie/2026-08-23-토큰을-누가-다-썼나.md": [
+"0a8f325c8e1700e4c81c1e4b738b390af6605175",
+114
+],
+"content/aie/2026-08-23-토큰이-아니라-예산을-준다.md": [
+"9c22e16b5e71fdee2e3cd602333ba05a9e847916",
+143
+],
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md": [
 "b7fd0faffefb456a9609774673b4ad0822245f1e",
 72
@@ -13175,8 +13501,8 @@
 795
 ],
 "content/linkedin/[2609] 링크드인 게시물.md": [
-"ea4ff30a79964dddf36cc17457c2ddf36c2323dd",
-147
+"2fcca928ded1b9a289647e001abc60536a95e7e0",
+187
 ],
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md": [
 "5946dd3b204cfb4bca4f382d963aa10a864fc188",
@@ -13541,330 +13867,6 @@
 "content/scaling-book/원문/12-gpus.md": [
 "9c8a0085dd65fabf780cd86bcd0c6e09bdc472e7",
 718
-],
-"content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
-"89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
-115
-],
-"content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md": [
-"87bc745ddb4043acd4ef54e5cd6daf7825e75ec3",
-89
-],
-"content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md": [
-"1e679c363f8ae506a59f7eed057e0112004e3a79",
-94
-],
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md": [
-"0e7a4b8a77bd68545d8e25408c632d509fe6c549",
-109
-],
-"content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md": [
-"bd7f1f3802e6fbb5ac8fcd62752bc0b7a45113d5",
-102
-],
-"content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md": [
-"8f18d3b509d766ea95bf7472d196eb21b02a0da2",
-91
-],
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md": [
-"86f06f47501b928a82fd968482d6bf8f6590a25a",
-80
-],
-"content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md": [
-"15635237a82bbac43db772c1fc3861f6fa3f5f5c",
-77
-],
-"content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md": [
-"c6ecccf75f333019894633dae8f313d0cec5644f",
-97
-],
-"content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md": [
-"e36d83498935cd3505e02ec903f991b894ba86d6",
-70
-],
-"content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md": [
-"2dddf850f9f3160fc2e3e8c08eb14fb2d858588c",
-111
-],
-"content/understanding/AI Engineer/2025-08-26-스트랜즈-에이전트-SDK.md": [
-"5833c419e75e1d1950d5e89b7c59f660c7a0ea34",
-71
-],
-"content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md": [
-"7c4d681a69de227fe3230829102853236391575b",
-91
-],
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md": [
-"9f3195c8fe04f3b6c992f1c0d73ffbe6c57aa125",
-75
-],
-"content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md": [
-"da87fa323a288f2f8a0a3a0666c8c1d376dd1d46",
-76
-],
-"content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md": [
-"abfa739b42803c5e3cd3ef2f7d74a3c624843094",
-104
-],
-"content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md": [
-"644569c7895977211c06ac88f082f4f4bfb361eb",
-102
-],
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md": [
-"ca32b20b7724511ac642bf7ad1f4925c18a60773",
-96
-],
-"content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md": [
-"c86aefe2d25132f5d9a024a372c810f8be322c66",
-108
-],
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md": [
-"6b2d51f37f4506285bd1cdd88dcb3c5c74642495",
-75
-],
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md": [
-"1b27f343433a7225643c7f9bbdcb4686f1ec5fc5",
-107
-],
-"content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md": [
-"b0fcd78271cbe757f53fcf0877c7f11bf1cc60bf",
-111
-],
-"content/understanding/AI Engineer/2025-08-26-현장에서-쓰는-MCP.md": [
-"8cc24d150cdc692325134678d64481f9778b3568",
-68
-],
-"content/understanding/AI Engineer/2025-11-26-그래프로-컨텍스트를-잇기.md": [
-"a6d986f40a83aab0586a1983a818da824bdba495",
-98
-],
-"content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md": [
-"067b375a4e5f4a5b6625e594059890db09d4f62c",
-104
-],
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md": [
-"9e8db9878c3702784271261f83884e90bc850814",
-91
-],
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md": [
-"38c585a98609509111f0bc7e4d439e32bd58974c",
-81
-],
-"content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md": [
-"8dcd2171966b2ab32071d94e35014f094f663092",
-78
-],
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md": [
-"79d4496d67a97f91c1dcd5ca6233e78256b69cfd",
-89
-],
-"content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md": [
-"7710a4440f34f9ff983cb7b6b1dfaf922234de0d",
-59
-],
-"content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md": [
-"1b461920c1425ba349af310a15477ea7aa3ee161",
-92
-],
-"content/understanding/AI Engineer/2026-04-26-MCP는-어디로-가나.md": [
-"5f2d689444f9a53c9ce9ae6fac1868d328ba9948",
-78
-],
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md": [
-"1b173ef28c501a24bacd5fd2c1520d9ab532c73d",
-108
-],
-"content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md": [
-"6b0f0aaf0e550657c6f49007445322c940c4b23f",
-94
-],
-"content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md": [
-"b57f02a20c32dc74864d7d16bc6f12a693722384",
-84
-],
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md": [
-"08231bea6113320a205d97c0cb6f1f7762bb19f0",
-95
-],
-"content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md": [
-"768d83f376232f2a59ba94692c697b81a7a09b00",
-91
-],
-"content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md": [
-"893acc4c5e9c443e4e27f703f3f97cbfb2d468c6",
-60
-],
-"content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md": [
-"23494256fc66c0d64736e4ffff27cb3335c8185f",
-110
-],
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md": [
-"921673c7400534b7e6c7320ef0c0c5f5f566f109",
-56
-],
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md": [
-"7b66257b6fc52d99bf341b049e14922f88ca51c1",
-92
-],
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md": [
-"5ea27e46e33e3e184d35dcaf45da4a45b7aa201f",
-97
-],
-"content/understanding/AI Engineer/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md": [
-"08e708d9e498459c810845543a6e3b208aa5f85f",
-70
-],
-"content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md": [
-"335c27efc912e2ca39cd27a3ae1c6ac95e531d0a",
-97
-],
-"content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md": [
-"ac33accebeefaa78adf22fb21da969a80a2563d2",
-95
-],
-"content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md": [
-"e98ccff45750800a7bb5e344cb69db7a84762737",
-95
-],
-"content/understanding/AI Engineer/2026-05-26-평가-플랫폼-만들기가-어려운-이유.md": [
-"176f45a41167a02a2979a9a70c5c5e1031e14a94",
-98
-],
-"content/understanding/AI Engineer/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md": [
-"a92b918473441887efa80ca559fa93ce9e814f3e",
-68
-],
-"content/understanding/AI Engineer/2026-06-26-관측과-평가와-실험을-한-판에.md": [
-"a953127034ea99dd6bdd6e9a351e676645a898d7",
-104
-],
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md": [
-"a7b7af46dd426382c3d30ccb287d8eb5ccd6f006",
-110
-],
-"content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md": [
-"8ba3aa5f0a2f9980eee1dcd33645ad68563ac244",
-79
-],
-"content/understanding/AI Engineer/2026-06-26-에이전트-관측은-무엇이-다른가.md": [
-"dddb10db1970b8a2117edbcafdb66aa8f3e376c2",
-101
-],
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md": [
-"e7b61d522d7f667f9a30c65195e63de9e8f07bd1",
-115
-],
-"content/understanding/AI Engineer/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md": [
-"bfcbaa6be07f3c5be24fa7e3445dc94cb2206588",
-67
-],
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md": [
-"150d99397a123428a9844e7b6a0ce775ca083aef",
-98
-],
-"content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md": [
-"245a20f27a7cf719e52e14938fac8ff276e72101",
-96
-],
-"content/understanding/AI Engineer/2026-06-26-평가가-다음-연산-부품이-된다.md": [
-"86924802e8d78b180fa6664c93278bcaa9dbb19a",
-96
-],
-"content/understanding/AI Engineer/2026-06-26-평가를-굴리는-단계들.md": [
-"3cf6ca812cbf58c6a94242687a6f25a2696e9b06",
-112
-],
-"content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md": [
-"0cb99dbc7dc2c98d5a77c25b6bf4947e83c255c5",
-80
-],
-"content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md": [
-"f4f0a5a2d40c5ca3c51c6ebac5cc43eeef876d77",
-84
-],
-"content/understanding/AI Engineer/2026-07-26-기기-위에서-프런티어-수준을-낸다.md": [
-"a7fe5e0f48322919ab68d59dae8253c89bb8e913",
-122
-],
-"content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md": [
-"bb423a4bdac6a4c27635097af820d7f51eada92a",
-86
-],
-"content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md": [
-"76420fdfdae45c7cc33f87d02b9ada6c4482cc52",
-67
-],
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md": [
-"ed2e1f829668e1f21df05ee5d4abd83076c8b5a3",
-96
-],
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md": [
-"8f858e18421fdd3172d198c428d64e29feb11cbc",
-110
-],
-"content/understanding/AI Engineer/2026-07-26-벡터만으로는-기억이-안-된다.md": [
-"5b340150ae0ac654307386abe4ef11bea2763119",
-100
-],
-"content/understanding/AI Engineer/2026-07-26-신호에서-PR까지-스스로-고치는-에이전트.md": [
-"540a55de73263e7b34f13ab6c376a3637b935bc2",
-100
-],
-"content/understanding/AI Engineer/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md": [
-"8e8232143c75a736a99f953b074456f5c954296f",
-74
-],
-"content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md": [
-"1756958951e30ede0d401e28ec09b97d2dcc008f",
-84
-],
-"content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md": [
-"72866f594c6cea45ee81f5d37d2d37bc08a8abb9",
-106
-],
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md": [
-"718c804daee85b70983d351802a18e787f29bf48",
-110
-],
-"content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md": [
-"2c1042acc88cd483da17cbcad1f8c08fcecc1fd1",
-113
-],
-"content/understanding/AI Engineer/2026-07-31-AI-슬롭을-끝내는-법.md": [
-"f6c95041edae3b249081fd95eb98d2732b1438a1",
-92
-],
-"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md": [
-"7bc203efd5f07ceb5ed5e4e21a82672a2f7fe45a",
-105
-],
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md": [
-"903a8290a307f23701293d5815a4bdfb809d43b9",
-114
-],
-"content/understanding/AI Engineer/2026-08-12-개인용-앱을-안전하게-바이브-코딩하기.md": [
-"0c9d3deef9968663152cbdcc0e314922a4ba50de",
-102
-],
-"content/understanding/AI Engineer/2026-08-12-실시간-멀티플레이어와-자동화.md": [
-"e7f7c42eb80a8787e2a516810bc2e8c4139089b5",
-92
-],
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md": [
-"f51d4f86047c5d05398fb9c7f5bc90aeb759bec9",
-109
-],
-"content/understanding/AI Engineer/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md": [
-"4c476a39a7729bf663087f64aa7c1ba0b285d7e5",
-97
-],
-"content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md": [
-"0a8f325c8e1700e4c81c1e4b738b390af6605175",
-114
-],
-"content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md": [
-"9c22e16b5e71fdee2e3cd602333ba05a9e847916",
-143
 ],
 "content/understanding/Semi Doped/2026-04-24-google-networking.md": [
 "d287601b74e3b1790d43aca128e04ec87211815c",
@@ -19383,8 +19385,8 @@
 213
 ]
 },
-"fingerprint": "0ad0148b7921460f8f0687e3268e7aa779f95908",
-"lines": 233875
+"fingerprint": "bffc92a2d6528772136531ea807c19974ef10863",
+"lines": 233915
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -19814,6 +19816,41 @@
 "input/clippings/mer/224391584925.json#L94"
 ],
 "구글": [
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L19",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L25",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L69",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L70",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L6",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L19",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L29",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L41",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L50",
+"content/aie/2025-12-26-중력을-거스르다.md#L6",
+"content/aie/2025-12-26-중력을-거스르다.md#L19",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L6",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
+"content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md#L6",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L2",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L6",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L6",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L21",
+"content/aie/2026-05-26-엣지에서-AI를-빠르게.md#L6",
+"content/aie/2026-05-26-제미나이-나노-온디바이스.md#L6",
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L79",
+"content/aie/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L6",
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md#L6",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L6",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L19",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L21",
+"content/aie/2026-06-26-텍스트-디퓨전.md#L6",
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L6",
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L76",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L14",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L38",
@@ -20261,41 +20298,6 @@
 "content/scaling-book/원문/11-conclusion.md#L12",
 "content/scaling-book/원문/11-conclusion.md#L33",
 "content/scaling-book/원문/12-gpus.md#L104",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L19",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L25",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L69",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L70",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L29",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L41",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L50",
-"content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L6",
-"content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L19",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L6",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
-"content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L6",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L2",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L6",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L6",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L21",
-"content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md#L6",
-"content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md#L6",
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L79",
-"content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L6",
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md#L6",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L6",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L19",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L21",
-"content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md#L6",
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L6",
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L76",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L2",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L16",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L19",
@@ -21248,6 +21250,14 @@
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L159"
 ],
 "구글 딥마인드": [
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L19",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L19",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L21",
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
 "content/linkedin/[2607] 링크드인 게시물.md#L19",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L423",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L480",
@@ -21261,14 +21271,6 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L19",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L21",
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L90",
 "content/understanding/채널 씨모어/2025-08-10-unity.md#L24",
 "content/understanding/채널 씨모어/raw/2025-08-10-unity.md#L33",
@@ -22980,6 +22982,7 @@
 "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md#L18"
 ],
 "뉴욕": [
+"content/aie/2025-04-01-블룸버그-에이전트-확장.md#L23",
 "content/health/언더스탠딩/[260720] 비만약이 중독까지 줄인다 - 조영민.md#L55",
 "content/health/언더스탠딩/[260720] 비만약이 중독까지 줄인다 - 조영민.md#L122",
 "content/linkedin/[2602] 링크드인 게시물.md#L27",
@@ -22991,7 +22994,6 @@
 "content/newsletter/ai_infra/power/[260303] 데이터센터가 미국 가정의 전기요금을 올리는가.md#L106",
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L258",
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L295",
-"content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md#L23",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L16",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L22",
 "content/understanding/Semi Doped/2026-08-07-globalfoundries-barber.md#L26",
@@ -23268,6 +23270,7 @@
 "input/clippings/mer/224273050593.json#L51"
 ],
 "대만": [
+"content/aie/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md#L65",
 "content/linkedin/[2603] 링크드인 게시물.md#L35",
 "content/linkedin/[2604] 링크드인 게시물.md#L1437",
 "content/linkedin/[2605] 링크드인 게시물.md#L575",
@@ -23329,7 +23332,6 @@
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L970",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L972",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L977",
-"content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md#L65",
 "content/understanding/Semi Doped/2026-06-12-computex-optics-power.md#L16",
 "content/understanding/Semi Doped/2026-07-16-picojool-yuen.md#L66",
 "content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L45",
@@ -24310,6 +24312,11 @@
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L101"
 ],
 "독일": [
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L37",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L57",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L65",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L79",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L87",
 "content/linkedin/[2605] 링크드인 게시물.md#L2083",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L226",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L235",
@@ -24324,11 +24331,6 @@
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L646",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L93",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L134",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L37",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L57",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L65",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L79",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L87",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L42",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L75",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L78",
@@ -24640,6 +24642,35 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L98"
 ],
 "딥마인드": [
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L76",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L6",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L19",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L21",
+"content/aie/2025-12-26-중력을-거스르다.md#L6",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L6",
+"content/aie/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
+"content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md#L6",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L2",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L6",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L12",
+"content/aie/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L6",
+"content/aie/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
+"content/aie/2026-05-26-엣지에서-AI를-빠르게.md#L6",
+"content/aie/2026-05-26-제미나이-나노-온디바이스.md#L6",
+"content/aie/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L6",
+"content/aie/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L19",
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md#L6",
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md#L47",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L6",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L12",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L19",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L21",
+"content/aie/2026-06-26-텍스트-디퓨전.md#L6",
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L6",
+"content/aie/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L14",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L55",
@@ -24688,35 +24719,6 @@
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
 "content/scaling-book/원문/07-inference.md#L559",
 "content/scaling-book/원문/11-conclusion.md#L12",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L76",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L6",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L19",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L21",
-"content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md#L6",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L2",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L6",
-"content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md#L19",
-"content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L6",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L2",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L6",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L12",
-"content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md#L19",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L6",
-"content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md#L19",
-"content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md#L6",
-"content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md#L6",
-"content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L6",
-"content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md#L19",
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md#L6",
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md#L47",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L6",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L12",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L19",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L21",
-"content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md#L6",
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L6",
-"content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md#L19",
 "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md#L9",
 "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md#L16",
 "content/understanding/미국주식 사관학교/[260624] 코딩에서 밀린 구글이 실은 유튜브로 다음 판을 준비한다 - 인재 유출과 주가 16% 하락 뒤에 숨은 진짜 패.md#L26",
@@ -25927,12 +25929,12 @@
 "input/clippings/mer/224401859933.json#L93"
 ],
 "레나": [
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md#L44",
+"content/aie/2026-06-26-에이전트-평가를-모두에게.md#L61",
 "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L414",
 "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L465",
 "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L513",
 "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L514",
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md#L44",
-"content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md#L61",
 "content/understanding/미국주식 사관학교/[260621] 가진 주식의 70~85%는 그대로 오르게 둔다 - 커버드콜인데 커버드콜이 아닌 배당 ETF 하나.md#L85",
 "content/understanding/미국주식 사관학교/[260817] 힘든 업종의 1등만 산다 - 버크셔 2분기 매수 리스트가 걸어놓은 논리.md#L24",
 "content/understanding/미국주식 사관학교/[260817] 힘든 업종의 1등만 산다 - 버크셔 2분기 매수 리스트가 걸어놓은 논리.md#L50",
@@ -26368,6 +26370,31 @@
 "input/clippings/mer/224351546006.json#L101"
 ],
 "마이크로소프트": [
+"content/aie/2025-08-26-AI-레드팀-에이전트.md#L6",
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L6",
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19",
+"content/aie/2025-08-26-기기-위에서-도는-파운드리-로컬.md#L6",
+"content/aie/2025-08-26-기기-위에서-도는-파운드리-로컬.md#L19",
+"content/aie/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md#L6",
+"content/aie/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md#L19",
+"content/aie/2025-08-26-애저로-에이전트를-채점하기.md#L6",
+"content/aie/2025-08-26-애저로-에이전트를-채점하기.md#L19",
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L6",
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L12",
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L59",
+"content/aie/2025-08-26-현장에서-쓰는-MCP.md#L6",
+"content/aie/2026-05-26-VS-Code에서-에이전트-굴리기.md#L6",
+"content/aie/2026-05-26-커버리지-너머의-기능-테스트.md#L6",
+"content/aie/2026-05-26-커버리지-너머의-기능-테스트.md#L19",
+"content/aie/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md#L19",
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L79",
+"content/aie/2026-07-26-LLM에게-운전대를-주지-마라.md#L6",
+"content/aie/2026-07-26-LLM에게-운전대를-주지-마라.md#L19",
+"content/aie/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md#L6",
+"content/aie/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md#L6",
+"content/aie/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md#L19",
+"content/aie/2026-08-23-토큰을-누가-다-썼나.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
 "content/epoch/[260611] 미소스의 사이버 능력은 부풀려졌나.md#L44",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L94",
@@ -26577,31 +26604,6 @@
 "content/scaling-book/원문/07-inference.md#L208",
 "content/scaling-book/원문/08-applied-inference.md#L184",
 "content/scaling-book/원문/08-applied-inference.md#L185",
-"content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md#L6",
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L6",
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md#L6",
-"content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md#L19",
-"content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md#L6",
-"content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md#L19",
-"content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md#L6",
-"content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L6",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L12",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L59",
-"content/understanding/AI Engineer/2025-08-26-현장에서-쓰는-MCP.md#L6",
-"content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md#L6",
-"content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md#L6",
-"content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md#L19",
-"content/understanding/AI Engineer/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md#L19",
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L79",
-"content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md#L6",
-"content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md#L19",
-"content/understanding/AI Engineer/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md#L6",
-"content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md#L6",
-"content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md#L19",
-"content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md#L6",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L21",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L37",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L60",
@@ -27588,6 +27590,8 @@
 "content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L20"
 ],
 "메타": [
+"content/aie/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L51",
+"content/aie/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L92",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L14",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L39",
@@ -28070,8 +28074,6 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
 "content/scaling-book/원문/06-applied-training.md#L12",
 "content/scaling-book/원문/12-gpus.md#L212",
-"content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L51",
-"content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L92",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L21",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L37",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L41",
@@ -28748,6 +28750,11 @@
 "input/clippings/mer/224366873842.json#L56"
 ],
 "미국": [
+"content/aie/2025-08-26-새로운-코드는-명세다.md#L82",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L12",
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L65",
+"content/aie/2026-05-26-게이트웨이-하나면-된다.md#L19",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L47",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L20",
 "content/epoch/[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md#L35",
 "content/epoch/[260617] AI 연구 자동화를 재려면 직무 목록부터 있어야 한다.md#L13",
@@ -29038,11 +29045,6 @@
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L41",
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L69",
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L137",
-"content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md#L82",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L12",
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L65",
-"content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L19",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L47",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L40",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L49",
 "content/understanding/Semi Doped/2026-05-29-huawei-tau.md#L23",
@@ -38891,6 +38893,10 @@
 "content/understanding/성상현 부부장/[260907] 연준만 봐서는 유동성을 못 본다 - 재무부와 시중은행이 여는 물길 - 성상현.md#L7"
 ],
 "세레브라스": [
+"content/aie/2026-07-26-AI-엔지니어링의-황금기.md#L12",
+"content/aie/2026-07-26-AI-엔지니어링의-황금기.md#L34",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L12",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L84",
 "content/linkedin/[2604] 링크드인 게시물.md#L423",
 "content/linkedin/[2605] 링크드인 게시물.md#L429",
 "content/linkedin/[2605] 링크드인 게시물.md#L695",
@@ -39041,10 +39047,6 @@
 "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L83",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L131",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L57",
-"content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L12",
-"content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L34",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L12",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L84",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L4",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L17",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L21",
@@ -40256,6 +40258,8 @@
 "content/understanding/회계사/[260813] DCF 내재가치 85,100원, 주가보다 87~92% 위 - 실리콘투 - 엘곰.md#L25"
 ],
 "싱가포르": [
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L47",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L91",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L16",
 "content/linkedin/[2604] 링크드인 게시물.md#L1413",
 "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L421",
@@ -40281,8 +40285,6 @@
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L989",
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L1016",
 "content/newsletter/ai_infra/power/[241014] 데이터센터 해부학 Part 1 - 전기 시스템.md#L716",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L47",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L91",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L57",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L118",
 "content/understanding/Semi Doped/2026-08-07-globalfoundries-barber.md#L27",
@@ -40376,6 +40378,12 @@
 "input/clippings/mer/224270748678.json#L15"
 ],
 "아마존": [
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L12",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L19",
+"content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L60",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L12",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L24",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L34",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L11",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
 "content/linkedin/[2604] 링크드인 게시물.md#L1725",
@@ -40489,12 +40497,6 @@
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L106",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L184",
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L118",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L12",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L19",
-"content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L60",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L12",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L24",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L34",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L21",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L38",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L69",
@@ -41119,6 +41121,15 @@
 "content/understanding/백종훈 기자/[260824] 칩을 담보로 증권을 찍는다 - 엔비디아와 월가 6곳의 700조 원 AI 금융 - 백종훈.md#L47"
 ],
 "애플": [
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
+"content/aie/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L24",
+"content/aie/2025-08-26-평가에서-비싸게-배운-다섯.md#L44",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L36",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L41",
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L64",
+"content/aie/2026-07-26-모델로-소스코드를-지키기.md#L72",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
 "content/epoch/[260525] 컴퓨트 크런치가 오고 있나.md#L19",
 "content/epoch/[260525] 컴퓨트 크런치가 오고 있나.md#L20",
 "content/epoch/[260525] 컴퓨트 크런치가 오고 있나.md#L54",
@@ -41379,15 +41390,6 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L188",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L204",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L211",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
-"content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md#L24",
-"content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md#L44",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L36",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41",
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L64",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L72",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
 "content/understanding/Semi Doped/2026-06-29-qualcomm-hbc.md#L64",
 "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L12",
 "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L16",
@@ -41885,6 +41887,41 @@
 "input/clippings/mer/224376637342.json#L15"
 ],
 "앤트로픽": [
+"content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md#L6",
+"content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md#L19",
+"content/aie/2025-08-26-새로운-코드는-명세다.md#L19",
+"content/aie/2025-08-26-원격-MCP를-내보내며-배운-것.md#L6",
+"content/aie/2025-08-26-원격-MCP를-내보내며-배운-것.md#L19",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L6",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L12",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L15",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L19",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L53",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L65",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L71",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L2",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L6",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
+"content/aie/2025-12-26-에이전트-말고-스킬을-만들어라.md#L19",
+"content/aie/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L2",
+"content/aie/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L6",
+"content/aie/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L12",
+"content/aie/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L19",
+"content/aie/2026-04-26-MCP는-어디로-가나.md#L6",
+"content/aie/2026-05-26-게이트웨이-하나면-된다.md#L6",
+"content/aie/2026-05-26-게이트웨이-하나면-된다.md#L19",
+"content/aie/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
+"content/aie/2026-07-26-LLM에게-운전대를-주지-마라.md#L57",
+"content/aie/2026-07-26-긴-호흡의-작업을-맡길-때.md#L6",
+"content/aie/2026-07-26-긴-호흡의-작업을-맡길-때.md#L12",
+"content/aie/2026-07-26-긴-호흡의-작업을-맡길-때.md#L19",
+"content/aie/2026-07-26-모델로-소스코드를-지키기.md#L6",
+"content/aie/2026-07-26-모델로-소스코드를-지키기.md#L19",
+"content/aie/2026-07-26-페이블-현장-안내서.md#L6",
+"content/aie/2026-07-26-페이블-현장-안내서.md#L15",
+"content/aie/2026-07-26-페이블-현장-안내서.md#L19",
+"content/aie/2026-07-26-페이블-현장-안내서.md#L86",
+"content/aie/2026-08-23-토큰이-아니라-예산을-준다.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L11",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L13",
@@ -42393,41 +42430,6 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L86",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L92",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L100",
-"content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md#L6",
-"content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md#L19",
-"content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md#L19",
-"content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md#L6",
-"content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md#L19",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L6",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L12",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L15",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L19",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L53",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L65",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L71",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L2",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L12",
-"content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md#L19",
-"content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L2",
-"content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L12",
-"content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md#L19",
-"content/understanding/AI Engineer/2026-04-26-MCP는-어디로-가나.md#L6",
-"content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L6",
-"content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md#L19",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
-"content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md#L57",
-"content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L6",
-"content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L12",
-"content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md#L19",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L6",
-"content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md#L19",
-"content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L6",
-"content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L15",
-"content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L19",
-"content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md#L86",
-"content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md#L6",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L55",
 "content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L21",
 "content/understanding/Semi Doped/2026-07-29-hyperscaler-cds.md#L30",
@@ -43010,6 +43012,14 @@
 "content/understanding/언더스탠딩 백브리핑/[260814] 미국 수출통제의 구멍 셋 - 밀수·원격접속·증류.md#L77"
 ],
 "엔비디아": [
+"content/aie/2025-08-26-그래프와-벡터를-섞은-검색.md#L6",
+"content/aie/2025-08-26-그래프와-벡터를-섞은-검색.md#L19",
+"content/aie/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L6",
+"content/aie/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L12",
+"content/aie/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L19",
+"content/aie/2025-08-26-추론의-파레토-경계를-밀어내기.md#L6",
+"content/aie/2026-07-31-일하면서-배우는-에이전트.md#L69",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L25",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
 "content/epoch/[260525] 컴퓨트 크런치가 오고 있나.md#L54",
@@ -44155,14 +44165,6 @@
 "content/scaling-book/원문/12-gpus.md#L664",
 "content/scaling-book/원문/12-gpus.md#L680",
 "content/scaling-book/원문/12-gpus.md#L686",
-"content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md#L6",
-"content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md#L19",
-"content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L6",
-"content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L12",
-"content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md#L19",
-"content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md#L6",
-"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L69",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L25",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L33",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L38",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L40",
@@ -48253,6 +48255,27 @@
 "input/clippings/mer/224150555377.json#L42"
 ],
 "오픈AI": [
+"content/aie/2025-08-26-새로운-코드는-명세다.md#L6",
+"content/aie/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md#L6",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L2",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L6",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L12",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L19",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L31",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L35",
+"content/aie/2025-12-26-에이전트-강화-파인튜닝.md#L49",
+"content/aie/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L46",
+"content/aie/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
+"content/aie/2026-07-26-AI-엔지니어링의-황금기.md#L6",
+"content/aie/2026-07-26-AI-엔지니어링의-황금기.md#L12",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L6",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L12",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L101",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L6",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L15",
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L104",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L6",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L11",
@@ -48748,27 +48771,6 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L83",
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L90",
 "content/scaling-book/원문/12-gpus.md#L510",
-"content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md#L6",
-"content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L2",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L6",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L12",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L19",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L31",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L35",
-"content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md#L49",
-"content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md#L40",
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L46",
-"content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md#L62",
-"content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L6",
-"content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md#L12",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L6",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L12",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L101",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L6",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L15",
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L104",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L17",
 "content/understanding/Semi Doped/2026-05-15-cerebras-ipo.md#L48",
 "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L45",
@@ -49539,6 +49541,9 @@
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L211"
 ],
 "우버": [
+"content/aie/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
+"content/aie/2026-08-23-토큰을-누가-다-썼나.md#L107",
 "content/linkedin/[2607] 링크드인 게시물.md#L1281",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L33",
 "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md#L16",
@@ -49551,9 +49556,6 @@
 "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md#L294",
 "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md#L299",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L125",
-"content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md#L19",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L19",
-"content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md#L107",
 "content/understanding/한주성/2026-02-10 배달의민족 8조 원 매각설, '알짜 자산'일까 '독이 든 성배'일까 [1872].md#L20",
 "content/understanding/한주성/2026-02-24 현대자동차의 롯데렌탈 인수說 [7648].md#L21",
 "content/understanding/한주성/2026-02-24 현대자동차의 롯데렌탈 인수說 [7648].md#L32",
@@ -49960,6 +49962,9 @@
 "content/understanding/부동산/[260814] 거주해야 깎아준다 - 종부세·장특공제 기준이 보유에서 거주로 - 윤태화.md#L12"
 ],
 "은행": [
+"content/aie/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L12",
+"content/aie/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L21",
+"content/aie/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L64",
 "content/epoch/[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md#L11",
 "content/linkedin/[2607] 링크드인 게시물.md#L1265",
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L66",
@@ -49989,9 +49994,6 @@
 "content/newsletter/ai_models/agents/[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md#L266",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L558",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L602",
-"content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L12",
-"content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L21",
-"content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md#L64",
 "content/understanding/Semi Doped/til-14.md#L17",
 "content/understanding/Semi Doped/til-14.md#L117",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L99",
@@ -51501,6 +51503,7 @@
 "input/clippings/mer/224388650215.json#L87"
 ],
 "이란": [
+"content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md#L17",
 "content/health/언더스탠딩/[251007] 질병·소화·신약 3부작 - 이승훈 레전드 모음집.md#L9",
 "content/health/언더스탠딩/[251007] 질병·소화·신약 3부작 - 이승훈 레전드 모음집.md#L16",
 "content/health/언더스탠딩/[251007] 질병·소화·신약 3부작 - 이승훈 레전드 모음집.md#L55",
@@ -51526,7 +51529,6 @@
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L222",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L486",
 "content/scaling-book/00-index.md#L19",
-"content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L17",
 "content/understanding/Semi Doped/2026-06-19-advanced-packaging.md#L20",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L17",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L39",
@@ -52708,6 +52710,9 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L7"
 ],
 "인도": [
+"content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md#L71",
+"content/aie/2026-06-26-텍스트-디퓨전.md#L12",
+"content/aie/2026-07-31-일하면서-배우는-에이전트.md#L53",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L12",
 "content/epoch/[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md#L17",
 "content/epoch/[260812] 파이낸싱이 프런티어 컴퓨트의 병목이 될까.md#L19",
@@ -52750,9 +52755,6 @@
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L374",
 "content/newsletter/ai_infra/power/[260816] PJM 모델링 오류로 날린 120억 달러 - 그리고 다시 반복하려 한다.md#L375",
 "content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L97",
-"content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md#L71",
-"content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md#L12",
-"content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md#L53",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L1",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L14",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L16",
@@ -54188,6 +54190,9 @@
 "input/clippings/mer/224379237136.json#L105"
 ],
 "일본": [
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L15",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L37",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L75",
 "content/health/언더스탠딩/[250720] 급사는 원인이 세 개뿐이다 - 이승훈 (뇌가 멈추기 전에 1부).md#L50",
 "content/health/언더스탠딩/[250720] 급사는 원인이 세 개뿐이다 - 이승훈 (뇌가 멈추기 전에 1부).md#L134",
 "content/health/언더스탠딩/[250720] 급사는 원인이 세 개뿐이다 - 이승훈 (뇌가 멈추기 전에 1부).md#L172",
@@ -54214,9 +54219,6 @@
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L910",
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L1016",
 "content/newsletter/ai_infra/power/[260526] 800VDC 혁명 Part 1 - 전력 배전 아키텍처의 대전환.md#L862",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L15",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L37",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L75",
 "content/understanding/Semi Doped/2026-07-03-micron-cxmt.md#L36",
 "content/understanding/Semi Doped/til-14.md#L126",
 "content/understanding/_대기 목록.md#L72",
@@ -56401,6 +56403,9 @@
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L178"
 ],
 "중국": [
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L15",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L37",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L76",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L1",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L19",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L20",
@@ -56614,9 +56619,6 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L593",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L595",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L597",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L15",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L37",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L76",
 "content/understanding/Semi Doped/2026-05-22-litho-masterclass.md#L35",
 "content/understanding/Semi Doped/2026-05-29-huawei-tau.md#L32",
 "content/understanding/Semi Doped/2026-05-29-huawei-tau.md#L33",
@@ -59782,6 +59784,23 @@
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L591"
 ],
 "커서": [
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L35",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L61",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L63",
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L93",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L6",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L12",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L19",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L21",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L23",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L45",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L54",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L68",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L76",
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L78",
+"content/aie/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L43",
+"content/aie/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L55",
+"content/aie/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L107",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
 "content/linkedin/[2606] 링크드인 게시물.md#L1815",
 "content/linkedin/[2607] 링크드인 게시물.md#L19",
@@ -59814,23 +59833,6 @@
 "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L603",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L64",
 "content/podcast/semianalysis/[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md#L22",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L35",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L61",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L63",
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L93",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L6",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L12",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L19",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L21",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L23",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L45",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L54",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L68",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L76",
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L78",
-"content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L43",
-"content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md#L55",
-"content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md#L107",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L93",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L105",
 "content/understanding/Semi Doped/2026-07-10-weka-bercovici.md#L143",
@@ -60929,17 +60931,17 @@
 "content/understanding/회계사/[260820] 20년 보유 106개 구간이 전부 플러스였다, 그래도 산 가격이 수익을 가른다 - 장기투자 - 엘곰.md#L13"
 ],
 "클라우드플레어": [
+"content/aie/2025-08-26-에이전트에서-정말-어려운-부분.md#L15",
+"content/aie/2025-08-26-에이전트에서-정말-어려운-부분.md#L19",
+"content/aie/2025-08-26-에이전트에서-정말-어려운-부분.md#L73",
+"content/aie/2025-08-26-에이전트에서-정말-어려운-부분.md#L74",
+"content/aie/2026-04-26-코드-모드-말은-코드가-한다.md#L12",
+"content/aie/2026-04-26-코드-모드-말은-코드가-한다.md#L19",
+"content/aie/2026-04-26-코드-모드-말은-코드가-한다.md#L21",
 "content/epoch/[260611] 미소스의 사이버 능력은 부풀려졌나.md#L16",
 "content/epoch/[260611] 미소스의 사이버 능력은 부풀려졌나.md#L44",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L442",
 "content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md#L625",
-"content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md#L15",
-"content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md#L19",
-"content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md#L73",
-"content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md#L74",
-"content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md#L12",
-"content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md#L19",
-"content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md#L21",
 "content/understanding/미국주식 사관학교/[260731] 성공한 작업당 비용 - 모델 라우팅 수혜주 3종.md#L6",
 "content/understanding/미국주식 사관학교/[260731] 성공한 작업당 비용 - 모델 라우팅 수혜주 3종.md#L19",
 "content/understanding/미국주식 사관학교/[260731] 성공한 작업당 비용 - 모델 라우팅 수혜주 3종.md#L46",
@@ -62843,6 +62845,8 @@
 "content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md#L35"
 ],
 "프랑스": [
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L37",
+"content/aie/2026-06-26-제미나이-오디오-스택.md#L87",
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L16",
 "content/linkedin/[2604] 링크드인 게시물.md#L365",
 "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L526",
@@ -62852,8 +62856,6 @@
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L470",
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L471",
 "content/newsletter/ai_infra/power/[240314] AI 데이터센터 에너지 딜레마 - AI 데이터센터 공간 확보 경쟁.md#L909",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L37",
-"content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md#L87",
 "content/understanding/권효재 대표/싼 전기 시대 끝났다, 프랑스·독일의 미친 결정 (2부).md#L1",
 "content/understanding/권효재 대표/싼 전기 시대 끝났다, 프랑스·독일의 미친 결정 (2부).md#L22",
 "content/understanding/권효재 대표/싼 전기 시대 끝났다, 프랑스·독일의 미친 결정 (2부).md#L31",
@@ -63586,6 +63588,8 @@
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L38"
 ],
 "한국": [
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L68",
+"content/aie/2025-12-26-제미나이-시대의-만들기.md#L31",
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L3",
 "content/epoch/[260525] 컴퓨트 크런치가 오고 있나.md#L3",
 "content/epoch/[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md#L3",
@@ -63678,8 +63682,6 @@
 "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L72",
 "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L418",
 "content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md#L482",
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L68",
-"content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md#L31",
 "content/understanding/Semi Doped/2026-04-24-google-networking.md#L62",
 "content/understanding/Semi Doped/2026-05-04-memory-tax.md#L65",
 "content/understanding/Semi Doped/2026-05-08-power-wall.md#L56",

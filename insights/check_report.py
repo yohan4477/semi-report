@@ -217,7 +217,7 @@ TRUMP_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
 )]
 
 # 하네스·스킬 층의 재료 열여덟 — AI Engineer 발표 열여섯 편과 뉴스레터 두 편
-HARNESS_EXTRA = [os.path.join(ROOT, 'content', 'understanding', 'AI Engineer', f + '.md')
+HARNESS_EXTRA = [os.path.join(ROOT, 'content', 'aie', f + '.md')
                  for f in (
     '2025-08-26-클로드-코드와-에이전트-코딩의-진화',
     '2025-12-26-에이전트-말고-스킬을-만들어라',

@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))), 'scratchpad'))
 import paths  # noqa: E402
 
-SRC_DIR = os.path.join(paths.ROOT, 'content', 'understanding', 'AI Engineer')
+SRC_DIR = os.path.join(paths.ROOT, 'content', 'aie')
 TEXT_RE = re.compile(r'<text[^>]*>([^<]*)<')
 NUM_RE = re.compile(r'\d[\d,\.]*')
 # 도해 글자에 섞이는 값 아닌 수 — 순번·연차 표기·흔한 한 자리

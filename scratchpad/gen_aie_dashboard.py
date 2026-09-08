@@ -9,7 +9,7 @@
 # 메르 블로그처럼 **한 생각에 번호 하나**를 매겨 죽 늘어놓는다. 발표는 논지가 앞에서 뒤로
 # 굴러가는 글이라, 조각으로 갈라 놓으면 「그래서 앞의 것이 뒤에 어떻게 걸리나」가 사라진다.
 #
-# 카드 목록을 이 파일에 적지 않는다. `content/understanding/AI Engineer/*.md` 한 편이
+# 카드 목록을 이 파일에 적지 않는다. `content/aie/*.md` 한 편이
 # 카드 한 장이고, 어느 섹션에 설지·주제칩·gain 까지 전부 그 글의 프런트매터에 있다.
 # 글을 새로 넣고 이 파일을 다시 돌리면 카드가 는다.
 #
@@ -24,8 +24,8 @@ import dash_common as dc
 import aie_figs                 # noqa: E402  번호글에 끼우는 도해
 
 OUT = os.path.join(dc.ROOT, '대시보드', 'AI Engineer 대시보드.html')
-SRC_DIR = os.path.join(dc.ROOT, 'content', 'understanding', 'AI Engineer')
-REL = 'content/understanding/AI Engineer/%s'
+SRC_DIR = os.path.join(dc.ROOT, 'content', 'aie')
+REL = 'content/aie/%s'
 
 STAMP = '2026-08-26'
 

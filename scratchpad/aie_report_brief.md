@@ -23,7 +23,7 @@
 
 ## 산출물
 
-`content/understanding/AI Engineer/<파일명>` 한 파일.
+`content/aie/<파일명>` 한 파일.
 도해를 새로 그리면 `scratchpad/aie_figs.py`, 그 CSS는 `scratchpad/gen_aie_dashboard.py`.
 
 ## 형식

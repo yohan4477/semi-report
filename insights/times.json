@@ -1,8 +1,43 @@
 {
 "_meta": {
 "built": "2026-09-08",
-"index_fingerprint": "0ad0148b7921460f8f0687e3268e7aa779f95908",
+"index_fingerprint": "bffc92a2d6528772136531ea807c19974ef10863",
 "lines": 4410
+},
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L68": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L25": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"content/aie/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L35": {
+"how": "명시",
+"t": "1970",
+"tense": "회고"
+},
+"content/aie/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L23": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/aie/2026-07-26-명세로-이끄는-개발.md#L41": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/aie/2026-08-12-코덱스-하니스-뒤편.md#L25": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
 },
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L10": {
 "how": "명시",
@@ -6370,41 +6405,6 @@
 },
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
 "how": "명시",
-"t": "2025",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
-"how": "계산",
-"t": "2024",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L68": {
-"how": "명시",
-"t": "2024",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L25": {
-"how": "명시",
-"t": "2000",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md#L35": {
-"how": "명시",
-"t": "1970",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md#L23": {
-"how": "계산",
-"t": "2025",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md#L41": {
-"how": "계산",
-"t": "2025",
-"tense": "회고"
-},
-"content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md#L25": {
-"how": "계산",
 "t": "2025",
 "tense": "회고"
 },

@@ -51,7 +51,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUBS = os.path.join(ROOT, 'scratchpad', 'yt_subs')
 FACTS = os.path.join(ROOT, 'scratchpad', 'aie_facts')
 LEDGER = os.path.join(ROOT, 'scratchpad', '_aie_subs.json')
-CARDS = os.path.join(ROOT, 'content', 'understanding', 'AI Engineer')
+CARDS = os.path.join(ROOT, 'content', 'aie')
 
 
 def meta():

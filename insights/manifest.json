@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-05",
+ "generated": "2026-09-08",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -87,7 +87,7 @@
    ],
    "date": "2026-09-01",
    "path": "content/linkedin/[2609] 링크드인 게시물.md",
-   "hash": "6fd8d40a2ed8"
+   "hash": "c33f8149fd89"
   },
   {
    "id": "pod:semianalysis:Ep25-딜런-패텔-사내-AI-지출이-평평해진-이유와-보상-해킹-사고",
@@ -536,6 +536,18 @@
    "hash": "3f3ba9c496d1"
   },
   {
+   "id": "semi:compute:TPU-추론-외부화-전속력-질주-InferenceX-첫-실측",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/networking"
+   ],
+   "date": "2026-09-07",
+   "path": "content/newsletter/ai_infra/compute/[260907] TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측.md",
+   "hash": "1f8c2e0e5448"
+  },
+  {
    "id": "semi:compute:TPUv7-구글-AI-반도체-왕좌에-도전장을-내밀다",
    "corpus": "semianalysis",
    "folder": "compute",
@@ -947,897 +959,6 @@
    "hash": "1d9a69f87091"
   },
   {
-   "id": "und:AI Engineer:2024-08-26-프롬프트-엔지니어링의-원칙",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2024-08-26-프롬프트-엔지니어링의-원칙.md",
-   "hash": "ffb9946ac39c"
-  },
-  {
-   "id": "und:AI Engineer:2025-04-01-블룸버그-에이전트-확장",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-04-01-블룸버그-에이전트-확장.md",
-   "hash": "e34b329cd3ce"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-AI-레드팀-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-AI-레드팀-에이전트.md",
-   "hash": "a4c1f9d74d0b"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-그래프RAG로-컨텍스트-창-짜기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md",
-   "hash": "2d8a19af9d0d"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-그래프와-벡터를-섞은-검색",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-그래프와-벡터를-섞은-검색.md",
-   "hash": "a7578c360550"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-기기-위에서-도는-파운드리-로컬",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-기기-위에서-도는-파운드리-로컬.md",
-   "hash": "dd9e11aa4ffe"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-내보낼-수-있는-에이전트-만들기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-내보낼-수-있는-에이전트-만들기.md",
-   "hash": "74cc426b2271"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-더-큰-모델보다-데이터-플라이휠",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-더-큰-모델보다-데이터-플라이휠.md",
-   "hash": "fccbb522c6ce"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-데이터가-차이를-만든다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-데이터가-차이를-만든다.md",
-   "hash": "9558f6b47b16"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-반쯤-자율적인-멀티-에이전트의-UX-원칙.md",
-   "hash": "201642e01467"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-새로운-코드는-명세다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-새로운-코드는-명세다.md",
-   "hash": "f2ccf4431438"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-스트랜즈-에이전트-SDK",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-스트랜즈-에이전트-SDK.md",
-   "hash": "51feb9809872"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-애저로-에이전트를-채점하기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-애저로-에이전트를-채점하기.md",
-   "hash": "1c1c3efac888"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-에이전트로-앱을-만든다는-것",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-에이전트로-앱을-만든다는-것.md",
-   "hash": "8dc9cbad0fd6"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-에이전트에서-정말-어려운-부분",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-에이전트에서-정말-어려운-부분.md",
-   "hash": "53031ad28523"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-원격-MCP를-내보내며-배운-것",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-원격-MCP를-내보내며-배운-것.md",
-   "hash": "b8469158b125"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-음성-AI를-규모로-내보내기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-음성-AI를-규모로-내보내기.md",
-   "hash": "bed19537146b"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-제미나이가-더-깊이-생각하는-법",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-제미나이가-더-깊이-생각하는-법.md",
-   "hash": "df93fff377f2"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-추론의-파레토-경계를-밀어내기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-추론의-파레토-경계를-밀어내기.md",
-   "hash": "99f05c342ca8"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-클라우드-규모로-에이전트-굴리기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-클라우드-규모로-에이전트-굴리기.md",
-   "hash": "8917c76ae51e"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-클로드-코드와-에이전트-코딩의-진화",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-클로드-코드와-에이전트-코딩의-진화.md",
-   "hash": "c7bd02905235"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-평가에서-비싸게-배운-다섯",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-평가에서-비싸게-배운-다섯.md",
-   "hash": "e1eb81617de1"
-  },
-  {
-   "id": "und:AI Engineer:2025-08-26-현장에서-쓰는-MCP",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-08-26-현장에서-쓰는-MCP.md",
-   "hash": "123fb0decfb7"
-  },
-  {
-   "id": "und:AI Engineer:2025-11-26-그래프로-컨텍스트를-잇기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-11-26-그래프로-컨텍스트를-잇기.md",
-   "hash": "6635244221ad"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-다음-모델에도-버티는-코딩-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-다음-모델에도-버티는-코딩-에이전트.md",
-   "hash": "318423b588d9"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-에이전트-강화-파인튜닝",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-에이전트-강화-파인튜닝.md",
-   "hash": "591f14b8d1ab"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-에이전트-말고-스킬을-만들어라",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-에이전트-말고-스킬을-만들어라.md",
-   "hash": "75bbff1738c3"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-에이전트를-위해-바뀌는-클로드-API",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-에이전트를-위해-바뀌는-클로드-API.md",
-   "hash": "767f192c2de3"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-제미나이-시대의-만들기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-제미나이-시대의-만들기.md",
-   "hash": "77117f66ff96"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-중력을-거스르다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-중력을-거스르다.md",
-   "hash": "5953b9f85795"
-  },
-  {
-   "id": "und:AI Engineer:2025-12-26-프롬프트-러닝이-잘-먹히는-이유",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md",
-   "hash": "66d2f0e14728"
-  },
-  {
-   "id": "und:AI Engineer:2026-04-26-MCP는-어디로-가나",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-04-26-MCP는-어디로-가나.md",
-   "hash": "f432fb9ee05f"
-  },
-  {
-   "id": "und:AI Engineer:2026-04-26-이미지와-영상-생성-모델을-키우기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-04-26-이미지와-영상-생성-모델을-키우기.md",
-   "hash": "7ca350a5badf"
-  },
-  {
-   "id": "und:AI Engineer:2026-04-26-젬마-딥마인드의-오픈-모델",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-04-26-젬마-딥마인드의-오픈-모델.md",
-   "hash": "fb01428a42ac"
-  },
-  {
-   "id": "und:AI Engineer:2026-04-26-코드-모드-말은-코드가-한다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-04-26-코드-모드-말은-코드가-한다.md",
-   "hash": "65e6f1592b9f"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-1만2천-줄을-200줄-스킬로-바꾸기.md",
-   "hash": "71dc367bb950"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-VS-Code에서-에이전트-굴리기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-VS-Code에서-에이전트-굴리기.md",
-   "hash": "098b61562d29"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-개발자-한-명과-스무-개의-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-개발자-한-명과-스무-개의-에이전트.md",
-   "hash": "0d19c4c06c19"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-게이트웨이-하나면-된다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-게이트웨이-하나면-된다.md",
-   "hash": "ae18b270ec9f"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-딥마인드가-에이전트를-굴리는-법",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-딥마인드가-에이전트를-굴리는-법.md",
-   "hash": "2354c49dd083"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-무엇이든-무엇으로-멀티모달-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-무엇이든-무엇으로-멀티모달-에이전트.md",
-   "hash": "ec0c57a2239a"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-생성AI는-데이터-과학자의-것인가",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-생성AI는-데이터-과학자의-것인가.md",
-   "hash": "4645e04df079"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-에이전트에-맞춰-깃허브를-넓히기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-에이전트에-맞춰-깃허브를-넓히기.md",
-   "hash": "cea3119ac887"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-엣지에서-AI를-빠르게",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-엣지에서-AI를-빠르게.md",
-   "hash": "e57186118700"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-제미나이-나노-온디바이스",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-제미나이-나노-온디바이스.md",
-   "hash": "1a04d201b508"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-커버리지-너머의-기능-테스트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-커버리지-너머의-기능-테스트.md",
-   "hash": "744f5626dc03"
-  },
-  {
-   "id": "und:AI Engineer:2026-05-26-평가-플랫폼-만들기가-어려운-이유",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-05-26-평가-플랫폼-만들기가-어려운-이유.md",
-   "hash": "c007c024adf2"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-MCP-앱으로-VS-Code-안에-화면-띄우기.md",
-   "hash": "113f24dd2380"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-관측과-평가와-실험을-한-판에",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-관측과-평가와-실험을-한-판에.md",
-   "hash": "b9fb78fb0a8e"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-문서가-아니라-결정의-흔적이-필요하다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-문서가-아니라-결정의-흔적이-필요하다.md",
-   "hash": "cfb174202ecf"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-시니어가-에이전트에서-막히는-이유",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-시니어가-에이전트에서-막히는-이유.md",
-   "hash": "ea53ca29b4ca"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-에이전트-관측은-무엇이-다른가",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-에이전트-관측은-무엇이-다른가.md",
-   "hash": "f1a5752d4e09"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-에이전트-평가를-모두에게",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-에이전트-평가를-모두에게.md",
-   "hash": "dd6cbdbf1db0"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-왜-그렇게-판단했는지-설명하는-에이전트.md",
-   "hash": "9887f790a454"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-제미나이-오디오-스택",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-제미나이-오디오-스택.md",
-   "hash": "5e90da91af34"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-텍스트-디퓨전",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-텍스트-디퓨전.md",
-   "hash": "e3b01ff9c316"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-평가가-다음-연산-부품이-된다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-평가가-다음-연산-부품이-된다.md",
-   "hash": "c2a97fdd434a"
-  },
-  {
-   "id": "und:AI Engineer:2026-06-26-평가를-굴리는-단계들",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-06-26-평가를-굴리는-단계들.md",
-   "hash": "65afe662f087"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-AI-엔지니어링의-황금기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-AI-엔지니어링의-황금기.md",
-   "hash": "b684f4a2f673"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-LLM에게-운전대를-주지-마라",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-LLM에게-운전대를-주지-마라.md",
-   "hash": "99723f7a9e84"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-기기-위에서-프런티어-수준을-낸다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-기기-위에서-프런티어-수준을-낸다.md",
-   "hash": "0342fa6a3b25"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-긴-호흡의-작업을-맡길-때",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-긴-호흡의-작업을-맡길-때.md",
-   "hash": "92e7f7d3c943"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-더-똑똑한-바닥-위의-얇은-에이전트.md",
-   "hash": "dc530f35e938"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-명세로-이끄는-개발",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-명세로-이끄는-개발.md",
-   "hash": "f4420d97e0be"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-모델로-소스코드를-지키기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-모델로-소스코드를-지키기.md",
-   "hash": "6d5a2e8f57f1"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-벡터만으로는-기억이-안-된다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-벡터만으로는-기억이-안-된다.md",
-   "hash": "66fb35b438ed"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-신호에서-PR까지-스스로-고치는-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-신호에서-PR까지-스스로-고치는-에이전트.md",
-   "hash": "5b792b2a1175"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-운영에서-터진-에이전트-다시-재현하기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-운영에서-터진-에이전트-다시-재현하기.md",
-   "hash": "4ca69bca5549"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-코드를-쓰다가-시스템을-설계하는-일로",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-코드를-쓰다가-시스템을-설계하는-일로.md",
-   "hash": "7829e3555be4"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-페이블-현장-안내서",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-페이블-현장-안내서.md",
-   "hash": "a9a6d7e91cc0"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-26-평가-없이-스킬을-내보내지-마라",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-26-평가-없이-스킬을-내보내지-마라.md",
-   "hash": "79a75cf1268a"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-29-모델-200만-개를-녹지-않고-내보내기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-29-모델-200만-개를-녹지-않고-내보내기.md",
-   "hash": "ed8089a22e1a"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-31-AI-슬롭을-끝내는-법",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-31-AI-슬롭을-끝내는-법.md",
-   "hash": "a265f69380fc"
-  },
-  {
-   "id": "und:AI Engineer:2026-07-31-일하면서-배우는-에이전트",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-07-31-일하면서-배우는-에이전트.md",
-   "hash": "5bb1c3d11b1a"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-05-실패한-것은-에이전트가-아니라-하니스다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-05-실패한-것은-에이전트가-아니라-하니스다.md",
-   "hash": "ba042468912b"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-12-개인용-앱을-안전하게-바이브-코딩하기",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-12-개인용-앱을-안전하게-바이브-코딩하기.md",
-   "hash": "95de75c2f071"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-12-실시간-멀티플레이어와-자동화",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-12-실시간-멀티플레이어와-자동화.md",
-   "hash": "e2b2c4c4c1ff"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-12-코덱스-하니스-뒤편",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-12-코덱스-하니스-뒤편.md",
-   "hash": "57482d4bebbc"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-21-에이전트는-바뀌었는데-평가는-그대로다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-21-에이전트는-바뀌었는데-평가는-그대로다.md",
-   "hash": "e9c879d152a9"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-23-토큰을-누가-다-썼나",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-23-토큰을-누가-다-썼나.md",
-   "hash": "d885fc1e4110"
-  },
-  {
-   "id": "und:AI Engineer:2026-08-23-토큰이-아니라-예산을-준다",
-   "corpus": "understanding",
-   "folder": "AI Engineer",
-   "categories": [
-    "AI Engineer"
-   ],
-   "date": null,
-   "path": "content/understanding/AI Engineer/2026-08-23-토큰이-아니라-예산을-준다.md",
-   "hash": "b2164dfe72b0"
-  },
-  {
    "id": "und:Semi Doped:2026-04-24-google-networking",
    "corpus": "understanding",
    "folder": "Semi Doped",
@@ -2066,7 +1187,7 @@
    ],
    "date": null,
    "path": "content/understanding/Semi Doped/daily-2026-04-08.md",
-   "hash": "04bd347fafb4"
+   "hash": "85ef90fa3b43"
   },
   {
    "id": "und:Semi Doped:til-14",
@@ -2077,7 +1198,612 @@
    ],
    "date": null,
    "path": "content/understanding/Semi Doped/til-14.md",
-   "hash": "d6eb5a0df33c"
+   "hash": "5256b800d6ad"
+  },
+  {
+   "id": "und:raw:2024-05-10-shortselling",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md",
+   "hash": "9b24a103bf84"
+  },
+  {
+   "id": "und:raw:2024-05-16-spinoff",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-16-spinoff.md",
+   "hash": "07ee984ed779"
+  },
+  {
+   "id": "und:raw:2024-05-23-els-etf",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md",
+   "hash": "1750093374fa"
+  },
+  {
+   "id": "und:raw:2024-05-30-habits",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-30-habits.md",
+   "hash": "a45999300dda"
+  },
+  {
+   "id": "und:raw:2024-06-06-pf-bridge",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md",
+   "hash": "a15c15aab729"
+  },
+  {
+   "id": "und:raw:2024-06-13-power-semi",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-13-power-semi.md",
+   "hash": "7e7d213c17cf"
+  },
+  {
+   "id": "und:raw:2024-06-17-power-candidate",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-17-power-candidate.md",
+   "hash": "2bd0542f0b1b"
+  },
+  {
+   "id": "und:raw:2024-06-24-power-demand",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-24-power-demand.md",
+   "hash": "185d8635c2a1"
+  },
+  {
+   "id": "und:raw:2024-07-01-pension",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-07-01-pension.md",
+   "hash": "448ca195a3b7"
+  },
+  {
+   "id": "und:raw:2024-12-03-wolfspeed",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-03-wolfspeed.md",
+   "hash": "55671a6b5a43"
+  },
+  {
+   "id": "und:raw:2025-01-12-stmicro",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md",
+   "hash": "14a2f4faf50c"
+  },
+  {
+   "id": "und:raw:2025-02-17-iamgold",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md",
+   "hash": "50496a3c698b"
+  },
+  {
+   "id": "und:raw:2025-04-08-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-04-08-news.md",
+   "hash": "6bfe078b1b13"
+  },
+  {
+   "id": "und:raw:2025-04-11-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-04-11-news.md",
+   "hash": "547490a683af"
+  },
+  {
+   "id": "und:raw:2025-04-15-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-04-15-news.md",
+   "hash": "0ce6660e624f"
+  },
+  {
+   "id": "und:raw:2025-04-19-royalgold",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-04-19-royalgold.md",
+   "hash": "96cd0c6cf996"
+  },
+  {
+   "id": "und:raw:2025-06-08-centrus",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md",
+   "hash": "87d21e3bce97"
+  },
+  {
+   "id": "und:raw:2025-06-22-tsmc",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-06-22-tsmc.md",
+   "hash": "f55bf0e77402"
+  },
+  {
+   "id": "und:raw:2025-06-29-nuclear-valuechain",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-06-29-nuclear-valuechain.md",
+   "hash": "742a0272632f"
+  },
+  {
+   "id": "und:raw:2025-07-06-smr-structure",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-07-06-smr-structure.md",
+   "hash": "7327f185e430"
+  },
+  {
+   "id": "und:raw:2025-07-13-bwxt",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-07-13-bwxt.md",
+   "hash": "58dfb44da18e"
+  },
+  {
+   "id": "und:raw:2025-07-20-nuclear-utilities",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-07-20-nuclear-utilities.md",
+   "hash": "ccba1574dbe5"
+  },
+  {
+   "id": "und:raw:2025-07-27-ai-stages",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-07-27-ai-stages.md",
+   "hash": "408c6d61373e"
+  },
+  {
+   "id": "und:raw:2025-08-03-simulation",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-08-03-simulation.md",
+   "hash": "f6c3d91ca777"
+  },
+  {
+   "id": "und:raw:2025-08-10-unity",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-08-10-unity.md",
+   "hash": "1a0506fa797d"
+  },
+  {
+   "id": "und:raw:2025-08-17-space-valuechain",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md",
+   "hash": "af83e16bf23e"
+  },
+  {
+   "id": "und:raw:2025-08-24-space-internet",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-08-24-space-internet.md",
+   "hash": "009684177ff4"
+  },
+  {
+   "id": "und:raw:2025-08-31-viasat",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-08-31-viasat.md",
+   "hash": "b946859eebef"
+  },
+  {
+   "id": "und:raw:2025-09-07-earth-observation",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-09-07-earth-observation.md",
+   "hash": "817a9e83349b"
+  },
+  {
+   "id": "und:raw:2025-09-14-planet-blacksky",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-09-14-planet-blacksky.md",
+   "hash": "2fcc23cd0589"
+  },
+  {
+   "id": "und:raw:2025-09-21-space-manufacturing",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-09-21-space-manufacturing.md",
+   "hash": "5a1b772f92d0"
+  },
+  {
+   "id": "und:raw:2025-09-28-pharma-dist-valuechain",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md",
+   "hash": "cdb0cc6f0b75"
+  },
+  {
+   "id": "und:raw:2025-10-05-pharma-dist-nash",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-10-05-pharma-dist-nash.md",
+   "hash": "91a6ce547881"
+  },
+  {
+   "id": "und:raw:2025-10-12-pharma-dist-wholesaler",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md",
+   "hash": "b289cfa4dc6f"
+  },
+  {
+   "id": "und:raw:2025-10-19-mckesson",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-10-19-mckesson.md",
+   "hash": "e8935448e95c"
+  },
+  {
+   "id": "und:raw:2025-10-26-cvs-walgreens",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-10-26-cvs-walgreens.md",
+   "hash": "0bda454a7564"
+  },
+  {
+   "id": "und:raw:2025-11-02-pbm-big3",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-11-02-pbm-big3.md",
+   "hash": "4c88f8eac2a9"
+  },
+  {
+   "id": "und:raw:2025-11-30-hotel-structure",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-11-30-hotel-structure.md",
+   "hash": "af3c97fa7ecf"
+  },
+  {
+   "id": "und:raw:2025-12-07-hotel-asterlight",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-12-07-hotel-asterlight.md",
+   "hash": "d517785abaaa"
+  },
+  {
+   "id": "und:raw:2025-12-14-marriott",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-12-14-marriott.md",
+   "hash": "f24bae3d1cce"
+  },
+  {
+   "id": "und:raw:2025-ep01-retirement",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-ep01-retirement.md",
+   "hash": "73569acb0871"
+  },
+  {
+   "id": "und:raw:2025-ep02-diversify",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-ep02-diversify.md",
+   "hash": "b3191f9e9e06"
+  },
+  {
+   "id": "und:raw:2025-ep03-principles",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-ep03-principles.md",
+   "hash": "9b7ad284b94d"
+  },
+  {
+   "id": "und:raw:2025-ep04-crash",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-ep04-crash.md",
+   "hash": "5ec540fc18a9"
+  },
+  {
+   "id": "und:raw:2026-01-04-hilton",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-01-04-hilton.md",
+   "hash": "b7a92f82a407"
+  },
+  {
+   "id": "und:raw:2026-02-08-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-02-08-news.md",
+   "hash": "41ee65ce393e"
+  },
+  {
+   "id": "und:raw:2026-03-01-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-03-01-news.md",
+   "hash": "733a3d7b618e"
+  },
+  {
+   "id": "und:raw:2026-03-08-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-03-08-news.md",
+   "hash": "fb4b1a8e0ecb"
+  },
+  {
+   "id": "und:raw:2026-03-15-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-03-15-news.md",
+   "hash": "c49840dd9782"
+  },
+  {
+   "id": "und:raw:2026-03-22-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-03-22-news.md",
+   "hash": "499ed4188eb7"
+  },
+  {
+   "id": "und:raw:2026-03-29-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-03-29-news.md",
+   "hash": "b10001c48349"
+  },
+  {
+   "id": "und:raw:2026-04-05-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-04-05-news.md",
+   "hash": "36b190932fc6"
+  },
+  {
+   "id": "und:raw:2026-04-12-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-04-12-news.md",
+   "hash": "11d1ae5abb77"
+  },
+  {
+   "id": "und:raw:2026-04-19-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-04-19-news.md",
+   "hash": "1d376d429d17"
+  },
+  {
+   "id": "und:raw:2026-04-24-google-networking",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-04-24-google-networking.md",
+   "hash": "2d396e775be1"
   },
   {
    "id": "und:raw:2026-05-04-memory-tax",
@@ -2102,6 +1828,17 @@
    "hash": "6d2b4e1dfcc4"
   },
   {
+   "id": "und:raw:2026-05-11-ai-infra",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-05-11-ai-infra.md",
+   "hash": "3f2963ba9b77"
+  },
+  {
    "id": "und:raw:2026-05-15-cerebras-ipo",
    "corpus": "understanding",
    "folder": "raw",
@@ -2111,6 +1848,17 @@
    "date": null,
    "path": "content/understanding/Semi Doped/raw/2026-05-15-cerebras-ipo.md",
    "hash": "b1c2b3a71438"
+  },
+  {
+   "id": "und:raw:2026-05-18-ai-winner",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-05-18-ai-winner.md",
+   "hash": "c26340c6e3ee"
   },
   {
    "id": "und:raw:2026-05-22-litho-masterclass",
@@ -2124,6 +1872,28 @@
    "hash": "712bf80bd61b"
   },
   {
+   "id": "und:raw:2026-05-29-huawei-tau",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-05-29-huawei-tau.md",
+   "hash": "8e0f22e0c7fe"
+  },
+  {
+   "id": "und:raw:2026-06-07-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-06-07-news.md",
+   "hash": "71c0d7971a3a"
+  },
+  {
    "id": "und:raw:2026-06-12-computex-optics-power",
    "corpus": "understanding",
    "folder": "raw",
@@ -2133,6 +1903,17 @@
    "date": null,
    "path": "content/understanding/Semi Doped/raw/2026-06-12-computex-optics-power.md",
    "hash": "aeddb566d4ce"
+  },
+  {
+   "id": "und:raw:2026-06-14-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-06-14-news.md",
+   "hash": "5206844f190f"
   },
   {
    "id": "und:raw:2026-06-19-advanced-packaging",
@@ -2155,6 +1936,17 @@
    "date": null,
    "path": "content/understanding/Semi Doped/raw/2026-06-29-qualcomm-hbc.md",
    "hash": "2a51ce8c4d97"
+  },
+  {
+   "id": "und:raw:2026-07-03-micron-cxmt",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/Semi Doped/raw/2026-07-03-micron-cxmt.md",
+   "hash": "36241740c38d"
   },
   {
    "id": "und:raw:2026-07-10-weka-bercovici",
@@ -2234,6 +2026,17 @@
    "hash": "524d43c07fba"
   },
   {
+   "id": "und:raw:2026-08-16-pharma-valuechain",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md",
+   "hash": "099230afcf18"
+  },
+  {
    "id": "und:raw:2026-08-18-tensordyne-rk-anand",
    "corpus": "understanding",
    "folder": "raw",
@@ -2243,6 +2046,17 @@
    "date": null,
    "path": "content/understanding/Semi Doped/raw/2026-08-18-tensordyne-rk-anand.md",
    "hash": "b41359b5df15"
+  },
+  {
+   "id": "und:raw:2026-08-23-news",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-08-23-news.md",
+   "hash": "cc9b63022524"
   },
   {
    "id": "und:raw:2026-08-24-grok-bots-cpu",
@@ -2265,6 +2079,17 @@
    "date": null,
    "path": "content/understanding/Semi Doped/raw/2026-08-27-openai-jalapeno.md",
    "hash": "f8c514a3c7df"
+  },
+  {
+   "id": "und:raw:2026-09-06-pharma-bottleneck",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md",
+   "hash": "a284af23ccdc"
   },
   {
    "id": "und:root:대기-목록",
@@ -2993,6 +2818,17 @@
    "hash": "eaa75bc1bc97"
   },
   {
+   "id": "und:미국주식 사관학교:연준은-다음-결정을-약속하지-않고-반응-규칙만-알린다-워시와-월러가-같은-물가를-다르게-읽는다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/미국주식 사관학교/[260907] 연준은 다음 결정을 약속하지 않고 반응 규칙만 알린다 - 워시와 월러가 같은 물가를 다르게 읽는다.md",
+   "hash": "ed7c1207ed47"
+  },
+  {
    "id": "und:미국주식 사관학교:오픈AI가-앤트로픽에-매출로-역전당했다-처음부터-어디를-팠느냐의-차이",
    "corpus": "understanding",
    "folder": "미국주식 사관학교",
@@ -3079,6 +2915,17 @@
    "date": "2026-08-21",
    "path": "content/understanding/미국주식 사관학교/[260821] 재무부가 바이백을 두 배로 늘렸는데 하루 만에 되돌아왔다 - 30년물 금리와 매수자 교체.md",
    "hash": "4ca2ad285ff4"
+  },
+  {
+   "id": "und:미국주식 사관학교:저가매수는-낙폭이-아니라-검증-난이도로-고른다-HONA와-스페이스X가-같이-빠졌지만-이유가-다르다",
+   "corpus": "understanding",
+   "folder": "미국주식 사관학교",
+   "categories": [
+    "미국주식 사관학교"
+   ],
+   "date": "2026-09-06",
+   "path": "content/understanding/미국주식 사관학교/[260906] 저가매수는 낙폭이 아니라 검증 난이도로 고른다 - HONA와 스페이스X가 같이 빠졌지만 이유가 다르다.md",
+   "hash": "92c3557ac0a6"
   },
   {
    "id": "und:미국주식 사관학교:전력회사는-돈을-쓸수록-번다-1조-4천억-달러-공사판의-구조",
@@ -3279,6 +3126,28 @@
    "hash": "751b7f0aa4e6"
   },
   {
+   "id": "und:부동산:1억-5천으로-갈-수-있는-단지-영통-리모델링-앞-단지-훨훨",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-31",
+   "path": "content/understanding/부동산/[260731] 1억 5천으로 갈 수 있는 단지 - 영통 리모델링 앞 단지 - 훨훨.md",
+   "hash": "21fed30e7efb"
+  },
+  {
+   "id": "und:부동산:1억-5천으로-아파트를-산다-청약이-막힌-자리에서-남은-두-길-훨훨",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-26",
+   "path": "content/understanding/부동산/[260726] 1억 5천으로 아파트를 산다 - 청약이 막힌 자리에서 남은 두 길 - 훨훨.md",
+   "hash": "8f12aa80504e"
+  },
+  {
    "id": "und:부동산:20년-장기전세-첫-만기-계약대로-나가라와-갈-데가-없다-사이-장순원",
    "corpus": "understanding",
    "folder": "부동산",
@@ -3343,6 +3212,17 @@
    "date": "2026-03-04",
    "path": "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md",
    "hash": "b7247289bf3a"
+  },
+  {
+   "id": "und:부동산:동탄구리기흥이-묶인-날-다음-풍선은-어디로-가나-훨훨",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-05",
+   "path": "content/understanding/부동산/[260705] 동탄·구리·기흥이 묶인 날 - 다음 풍선은 어디로 가나 - 훨훨.md",
+   "hash": "0b6eaf0b14cf"
   },
   {
    "id": "und:부동산:땅값은-직선이-아니라-2차-함수-호재가-아니라-정주-인구를-보고-산다-김종율",
@@ -3532,6 +3412,17 @@
    "hash": "4bd54ef87c1a"
   },
   {
+   "id": "und:부동산:집값-오르자-임대주택을-넣어달라-고시가-끝난-단지에-온-협조-공문-장순원",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-09-05",
+   "path": "content/understanding/부동산/[260905] 집값 오르자 임대주택을 넣어달라 - 고시가 끝난 단지에 온 협조 공문 - 장순원.md",
+   "hash": "a55a25ee6d71"
+  },
+  {
    "id": "und:부동산:착공-앞두고-시공사를-갈아치우면-성남-상대원2구역과-두-건의-선례-장순원",
    "corpus": "understanding",
    "folder": "부동산",
@@ -3552,6 +3443,17 @@
    "date": "2026-06-09",
    "path": "content/understanding/부동산/[260609] 토지비를 0으로 만드는 상상 - 도로 위, 물 위, 그리고 잠깐 쓰는 집 - 최상희.md",
    "hash": "df0d80dbc1b6"
+  },
+  {
+   "id": "und:부동산:판-돈으로-같은-집을-못-산다-규제기의-갈아타기-훨훨",
+   "corpus": "understanding",
+   "folder": "부동산",
+   "categories": [
+    "부동산"
+   ],
+   "date": "2026-07-09",
+   "path": "content/understanding/부동산/[260709] 판 돈으로 같은 집을 못 산다 - 규제기의 갈아타기 - 훨훨.md",
+   "hash": "154e23392019"
   },
   {
    "id": "und:부동산:한-동만-빼고-재건축-대지지분이-커도-감정가는-시세를-따라간다-장순원",
@@ -3596,6 +3498,17 @@
    "date": "2026-08-12",
    "path": "content/understanding/산업정책/[260812] AI 시대 제조업 전환과 원유 수급 - 김정관 산업통상부 장관.md",
    "hash": "69fbbfada229"
+  },
+  {
+   "id": "und:성상현 부부장:연준만-봐서는-유동성을-못-본다-재무부와-시중은행이-여는-물길-성상현",
+   "corpus": "understanding",
+   "folder": "성상현 부부장",
+   "categories": [
+    "성상현 부부장"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/성상현 부부장/[260907] 연준만 봐서는 유동성을 못 본다 - 재무부와 시중은행이 여는 물길 - 성상현.md",
+   "hash": "c22425b90776"
   },
   {
    "id": "und:성상현 부부장:트럼프-정부가-AI와-한-배를-탔다-재정이-통화를-압도하는-시장-성상현",
@@ -3849,6 +3762,644 @@
    "date": "2026-08-11",
    "path": "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md",
    "hash": "bd02a82d80ac"
+  },
+  {
+   "id": "und:채널 씨모어:2024-05-10-shortselling",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-05-10-shortselling.md",
+   "hash": "f1ddae6a6487"
+  },
+  {
+   "id": "und:채널 씨모어:2024-05-16-spinoff",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-05-16-spinoff.md",
+   "hash": "1c3d51717260"
+  },
+  {
+   "id": "und:채널 씨모어:2024-05-23-els-etf",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-05-23-els-etf.md",
+   "hash": "a01c623ad8d4"
+  },
+  {
+   "id": "und:채널 씨모어:2024-05-30-habits",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-05-30-habits.md",
+   "hash": "516df7873cef"
+  },
+  {
+   "id": "und:채널 씨모어:2024-06-06-pf-bridge",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-06-06-pf-bridge.md",
+   "hash": "ee9995ca72d4"
+  },
+  {
+   "id": "und:채널 씨모어:2024-06-13-power-semi",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-06-13-power-semi.md",
+   "hash": "161901ae1ddb"
+  },
+  {
+   "id": "und:채널 씨모어:2024-06-17-power-candidate",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-06-17-power-candidate.md",
+   "hash": "dbf0976195a3"
+  },
+  {
+   "id": "und:채널 씨모어:2024-06-24-power-demand",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-06-24-power-demand.md",
+   "hash": "7be986c69979"
+  },
+  {
+   "id": "und:채널 씨모어:2024-07-01-pension",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-07-01-pension.md",
+   "hash": "c4453e40d4c6"
+  },
+  {
+   "id": "und:채널 씨모어:2024-12-03-wolfspeed",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2024-12-03-wolfspeed.md",
+   "hash": "6330421525f7"
+  },
+  {
+   "id": "und:채널 씨모어:2025-01-12-stmicro",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-01-12-stmicro.md",
+   "hash": "193276a23c88"
+  },
+  {
+   "id": "und:채널 씨모어:2025-02-17-iamgold",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-02-17-iamgold.md",
+   "hash": "79eff7317bfb"
+  },
+  {
+   "id": "und:채널 씨모어:2025-03-basics",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-03-basics.md",
+   "hash": "93241b893b80"
+  },
+  {
+   "id": "und:채널 씨모어:2025-04-08-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-04-08-news.md",
+   "hash": "5965c8681dc7"
+  },
+  {
+   "id": "und:채널 씨모어:2025-04-11-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-04-11-news.md",
+   "hash": "6910bbdddd7f"
+  },
+  {
+   "id": "und:채널 씨모어:2025-04-15-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-04-15-news.md",
+   "hash": "4b4ad7019f90"
+  },
+  {
+   "id": "und:채널 씨모어:2025-04-19-royalgold",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-04-19-royalgold.md",
+   "hash": "386c4e8fa832"
+  },
+  {
+   "id": "und:채널 씨모어:2025-06-08-centrus",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-06-08-centrus.md",
+   "hash": "34122aa359da"
+  },
+  {
+   "id": "und:채널 씨모어:2025-06-22-tsmc",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-06-22-tsmc.md",
+   "hash": "97958f0e660f"
+  },
+  {
+   "id": "und:채널 씨모어:2025-06-29-nuclear-valuechain",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-06-29-nuclear-valuechain.md",
+   "hash": "9ae45d5c3b88"
+  },
+  {
+   "id": "und:채널 씨모어:2025-07-06-smr-structure",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-07-06-smr-structure.md",
+   "hash": "9bc9520e2162"
+  },
+  {
+   "id": "und:채널 씨모어:2025-07-13-bwxt",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-07-13-bwxt.md",
+   "hash": "e83952810037"
+  },
+  {
+   "id": "und:채널 씨모어:2025-07-20-nuclear-utilities",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-07-20-nuclear-utilities.md",
+   "hash": "27895a9c4c89"
+  },
+  {
+   "id": "und:채널 씨모어:2025-07-27-ai-stages",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-07-27-ai-stages.md",
+   "hash": "f9ba40ccd9be"
+  },
+  {
+   "id": "und:채널 씨모어:2025-08-03-simulation",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-08-03-simulation.md",
+   "hash": "273511bec553"
+  },
+  {
+   "id": "und:채널 씨모어:2025-08-10-unity",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-08-10-unity.md",
+   "hash": "7bdf42fb9f2b"
+  },
+  {
+   "id": "und:채널 씨모어:2025-08-17-space-valuechain",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-08-17-space-valuechain.md",
+   "hash": "c94f21fbbf54"
+  },
+  {
+   "id": "und:채널 씨모어:2025-08-24-space-internet",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-08-24-space-internet.md",
+   "hash": "9f5e5309e59b"
+  },
+  {
+   "id": "und:채널 씨모어:2025-08-31-viasat",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-08-31-viasat.md",
+   "hash": "f27c21382eab"
+  },
+  {
+   "id": "und:채널 씨모어:2025-09-07-earth-observation",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-09-07-earth-observation.md",
+   "hash": "ecda9c810e92"
+  },
+  {
+   "id": "und:채널 씨모어:2025-09-14-planet-blacksky",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-09-14-planet-blacksky.md",
+   "hash": "d2a0e950070a"
+  },
+  {
+   "id": "und:채널 씨모어:2025-09-21-space-manufacturing",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-09-21-space-manufacturing.md",
+   "hash": "cbff26806b60"
+  },
+  {
+   "id": "und:채널 씨모어:2025-09-28-pharma-dist-valuechain",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-09-28-pharma-dist-valuechain.md",
+   "hash": "7a9d30104985"
+  },
+  {
+   "id": "und:채널 씨모어:2025-10-05-pharma-dist-nash",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-10-05-pharma-dist-nash.md",
+   "hash": "37f1042c9490"
+  },
+  {
+   "id": "und:채널 씨모어:2025-10-12-pharma-dist-wholesaler",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-10-12-pharma-dist-wholesaler.md",
+   "hash": "fbae54376825"
+  },
+  {
+   "id": "und:채널 씨모어:2025-10-19-mckesson",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-10-19-mckesson.md",
+   "hash": "dd6933e8edcb"
+  },
+  {
+   "id": "und:채널 씨모어:2025-10-26-cvs-walgreens",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-10-26-cvs-walgreens.md",
+   "hash": "f3989e1376d5"
+  },
+  {
+   "id": "und:채널 씨모어:2025-11-02-pbm-big3",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-11-02-pbm-big3.md",
+   "hash": "e8adc48d2a42"
+  },
+  {
+   "id": "und:채널 씨모어:2025-11-30-hotel-structure",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-11-30-hotel-structure.md",
+   "hash": "c0fb123fe482"
+  },
+  {
+   "id": "und:채널 씨모어:2025-12-07-hotel-asterlight",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-12-07-hotel-asterlight.md",
+   "hash": "1345dcdb5adf"
+  },
+  {
+   "id": "und:채널 씨모어:2025-12-14-marriott",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2025-12-14-marriott.md",
+   "hash": "ec3fc727fc97"
+  },
+  {
+   "id": "und:채널 씨모어:2026-01-04-hilton",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-01-04-hilton.md",
+   "hash": "cbc328005cc7"
+  },
+  {
+   "id": "und:채널 씨모어:2026-02-08-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-02-08-news.md",
+   "hash": "d80cf578a51e"
+  },
+  {
+   "id": "und:채널 씨모어:2026-03-01-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-03-01-news.md",
+   "hash": "84f5d7ae6fb7"
+  },
+  {
+   "id": "und:채널 씨모어:2026-03-08-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-03-08-news.md",
+   "hash": "6793e6019e01"
+  },
+  {
+   "id": "und:채널 씨모어:2026-03-15-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-03-15-news.md",
+   "hash": "9c2615c5a6f1"
+  },
+  {
+   "id": "und:채널 씨모어:2026-03-22-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-03-22-news.md",
+   "hash": "9ff93c301da7"
+  },
+  {
+   "id": "und:채널 씨모어:2026-03-29-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-03-29-news.md",
+   "hash": "06ef6792a453"
+  },
+  {
+   "id": "und:채널 씨모어:2026-04-05-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-04-05-news.md",
+   "hash": "76dd3400e28b"
+  },
+  {
+   "id": "und:채널 씨모어:2026-04-12-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-04-12-news.md",
+   "hash": "b65ba41c0ad9"
+  },
+  {
+   "id": "und:채널 씨모어:2026-04-19-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-04-19-news.md",
+   "hash": "60f2058e0ab8"
+  },
+  {
+   "id": "und:채널 씨모어:2026-05-11-ai-infra",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-05-11-ai-infra.md",
+   "hash": "5acb689ca092"
+  },
+  {
+   "id": "und:채널 씨모어:2026-05-18-ai-winner",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-05-18-ai-winner.md",
+   "hash": "60e3d17c5e6c"
+  },
+  {
+   "id": "und:채널 씨모어:2026-06-07-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-06-07-news.md",
+   "hash": "f95cb4ce140b"
+  },
+  {
+   "id": "und:채널 씨모어:2026-06-14-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-06-14-news.md",
+   "hash": "dcab21d23992"
+  },
+  {
+   "id": "und:채널 씨모어:2026-08-16-pharma-valuechain",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-08-16-pharma-valuechain.md",
+   "hash": "c4ec28c97c0b"
+  },
+  {
+   "id": "und:채널 씨모어:2026-08-23-news",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-08-23-news.md",
+   "hash": "39b140a4d417"
+  },
+  {
+   "id": "und:채널 씨모어:2026-09-06-pharma-bottleneck",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md",
+   "hash": "d3c94770ae3d"
   },
   {
    "id": "und:피지컬AI:2026년-예측-와글와글",
@@ -5611,6 +6162,17 @@
    "hash": "28246f5a16b7"
   },
   {
+   "id": "und:회계사:8월-비농업-고용이-16만2천-명-늘었는데-임금은-31로-둔화됐다-미국-고용금리-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-05",
+   "path": "content/understanding/회계사/[260905] 8월 비농업 고용이 16만2천 명 늘었는데 임금은 3.1%로 둔화됐다 - 미국 고용·금리 - 엘곰.md",
+   "hash": "c2b3501780f7"
+  },
+  {
    "id": "und:회계사:AI-CAPEX가-잉여현금을-삼켰다-빅테크-채권발행-1년-새-79-늘었다-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6029,6 +6591,17 @@
    "hash": "f6574e041079"
   },
   {
+   "id": "und:회계사:EPS가-20-늘어도-PER가-15배에서-20배로-오르면-주가는-60-뛴다-PER와-이익의-지속기간-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-06",
+   "path": "content/understanding/회계사/[260906] EPS가 20% 늘어도 PER가 15배에서 20배로 오르면 주가는 60% 뛴다 - PER와 이익의 지속기간 - 엘곰.md",
+   "hash": "ecf2def8bb3f"
+  },
+  {
    "id": "und:회계사:FCF-배수-2165배로-낸-주주가치-746조-주가보다-69-아래-삼성물산-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6062,6 +6635,17 @@
    "hash": "13797aece058"
   },
   {
+   "id": "und:회계사:LG엔솔-가동률-476-배터리-밸류는-마진이-아니라-ROIC와-FCF-흑자전환-시점이-가른다-2차전지-밸류에",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/회계사/[260907] LG엔솔 가동률 47.6%, 배터리 밸류는 마진이 아니라 ROIC와 FCF 흑자전환 시점이 가른다 - 2차전지 밸류에이션 - 엘곰.md",
+   "hash": "d9daf44cd549"
+  },
+  {
    "id": "und:회계사:OCF는-연-23인데-CAPEX는-연-70로-늘어난다-오라클은-이미-마이너스-전환-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6071,6 +6655,17 @@
    "date": "2026-07-25",
    "path": "content/understanding/회계사/[260725] OCF는 연 23%인데 CAPEX는 연 70%로 늘어난다, 오라클은 이미 마이너스 전환 - 엘곰.md",
    "hash": "0522f43834b5"
+  },
+  {
+   "id": "und:회계사:OpenAI-신모델-출시가-KOSPI-461-급등을-이끌었다-한국증시금리-전망-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-08",
+   "path": "content/understanding/회계사/[260908] OpenAI 신모델 출시가 KOSPI 4.61% 급등을 이끌었다 - 한국증시·금리 전망 - 엘곰.md",
+   "hash": "e344f162746b"
   },
   {
    "id": "und:회계사:PEG-027로-본-저평가-Peter-Lynch-평가법-1-삼성전자-엘곰",
@@ -6106,6 +6701,28 @@
    "hash": "e2cab541700d"
   },
   {
+   "id": "und:회계사:SK하이닉스-포워드-PER-471배-물량-완판에도-시장은-배수를-안-올려준다-삼성전자SK하이닉스-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-31",
+   "path": "content/understanding/회계사/[260831] SK하이닉스 포워드 PER 4.71배, 물량 완판에도 시장은 배수를 안 올려준다 - 삼성전자·SK하이닉스 - 엘곰.md",
+   "hash": "06590cf2833d"
+  },
+  {
+   "id": "und:회계사:SOX-34마이크론-61는-반도체-선택적-매수-신호이지-코스피-전체-낙관-근거가-아니다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/회계사/[260907] SOX +3.4%·마이크론 +6.1%는 반도체 선택적 매수 신호이지 코스피 전체 낙관 근거가 아니다 - 시황 - 엘곰.md",
+   "hash": "4df27ab28ac3"
+  },
+  {
    "id": "und:회계사:같은-불황에도-운전자본이-갈랐다-삼성전자-48-vs-솔브레인-135-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6115,6 +6732,17 @@
    "date": "2024-08-25",
    "path": "content/understanding/회계사/[240825] 같은 불황에도 운전자본이 갈랐다 - 삼성전자 48% vs 솔브레인 135% - 엘곰.md",
    "hash": "f537f1b5dad1"
+  },
+  {
+   "id": "und:회계사:개발은-삼성전자가-먼저-했지만-탑재는-CXMT가-20만30만대로-먼저-했다-LPDDR6-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-08-31",
+   "path": "content/understanding/회계사/[260831] 개발은 삼성전자가 먼저 했지만 탑재는 CXMT가 20만~30만대로 먼저 했다 - LPDDR6 - 엘곰.md",
+   "hash": "37039ae29266"
   },
   {
    "id": "und:회계사:공식-그대로면-113-고평가-PER-바꾸면-21-저평가-Peter-Lynch-평가법-2-삼성전자-엘곰",
@@ -6148,6 +6776,28 @@
    "date": "2026-05-23",
    "path": "content/understanding/회계사/[260523] 기업가치 54조 5,054억원이 요구하는 내재성장률은 연 24~25%다 - 삼성SDI - 엘곰.md",
    "hash": "c2bb6421e2a3"
+  },
+  {
+   "id": "und:회계사:나스닥100의-29000-방어선이-미국-10년물-5브렌트유-90달러와-함께-무너지면-밸류에이션-재조정이-온다",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-02",
+   "path": "content/understanding/회계사/[260902] 나스닥100의 29,000 방어선이 미국 10년물 5%·브렌트유 90달러와 함께 무너지면 밸류에이션 재조정이 온다 - 나스닥 밸류에이션 - 엘곰.md",
+   "hash": "d0e6a543b89b"
+  },
+  {
+   "id": "und:회계사:노르웨이-국부펀드-23조-달러-이탈이-미국-국채-40조-달러-부채의-신뢰-균열을-드러낸다-미국-국채시장-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/회계사/[260907] 노르웨이 국부펀드 2.3조 달러 이탈이 미국 국채 40조 달러 부채의 신뢰 균열을 드러낸다 - 미국 국채시장 - 엘곰.md",
+   "hash": "593b1f62e683"
   },
   {
    "id": "und:회계사:달리오가-금-1015를-권했다-매년-새로-팔아야-할-국채가-12조-달러다-자산배분-엘곰",
@@ -6458,6 +7108,17 @@
    "hash": "098a43a4147a"
   },
   {
+   "id": "und:회계사:새-뉴스-없이-6-뛴-마이크론-시장이-재평가한-건-호황의-지속기간이었다-메모리-사이클-재평가-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-06",
+   "path": "content/understanding/회계사/[260906] 새 뉴스 없이 6% 뛴 마이크론, 시장이 재평가한 건 호황의 지속기간이었다 - 메모리 사이클 재평가 - 엘곰.md",
+   "hash": "7f9dee879e7b"
+  },
+  {
    "id": "und:회계사:성장률-10면-23-저평가-Simple-DCF-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6634,6 +7295,17 @@
    "hash": "9124fa046b7e"
   },
   {
+   "id": "und:회계사:엔비디아-FY2028-매출성장률-70-가이던스에도-PER-13배인-이유는-이익의-지속기간에-대한-의심이다-엔",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-07",
+   "path": "content/understanding/회계사/[260907] 엔비디아 FY2028 매출성장률 70% 가이던스에도 PER 13배인 이유는 이익의 지속기간에 대한 의심이다 - 엔비디아 밸류에이션 - 엘곰.md",
+   "hash": "55668e051ad9"
+  },
+  {
    "id": "und:회계사:엔비디아-TSMC-삼성전자-SK하이닉스-투자지표-비교-Yahoofinancials-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6744,6 +7416,17 @@
    "hash": "8f84e2e3f46c"
   },
   {
+   "id": "und:회계사:코스피-399-급락-다음날-엔비디아-32-반등에-삼성전자SK하이닉스가-반등-출발한다-시황-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-03",
+   "path": "content/understanding/회계사/[260903] 코스피 -3.99% 급락 다음날 엔비디아 +3.2% 반등에 삼성전자·SK하이닉스가 반등 출발한다 - 시황 - 엘곰.md",
+   "hash": "f9291fb4d1d9"
+  },
+  {
    "id": "und:회계사:코스피200-야간선물-229-미국은-올랐는데-삼성전자는-애프터마켓에서-반납했다-시황-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6764,6 +7447,17 @@
    "date": "2026-07-23",
    "path": "content/understanding/회계사/[260723] 클라우드 매출 82% 늘었는데 주가는 밀렸다, CAPEX 1,950억~2,050억 달러로 재상향 - 엘곰.md",
    "hash": "8a91e227b37c"
+  },
+  {
+   "id": "und:회계사:테슬라-PER-328배인데-55-급등-사이버캡과-태양광-100GW-발언이-밀어올렸다-테슬라-엘곰",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-01",
+   "path": "content/understanding/회계사/[260901] 테슬라 PER 328배인데 5.5% 급등, 사이버캡과 태양광 100GW 발언이 밀어올렸다 - 테슬라 - 엘곰.md",
+   "hash": "870c3e2c872b"
   },
   {
    "id": "und:회계사:토큰-값이-아니라-회사-아키텍처가-AI-비용을-결정한다-AI-토크노믹스-엘곰",
@@ -6788,6 +7482,17 @@
    "hash": "a100a4ad38da"
   },
   {
+   "id": "und:회계사:판례-10편이-법에-있으면-과세-정당이라는-전제를-깬다-세금판례-시리즈-예고-방구퐁",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-08",
+   "path": "content/understanding/회계사/[260908] 판례 10편이 법에 있으면 과세 정당이라는 전제를 깬다 - 세금판례 시리즈 예고 - 방구퐁.md",
+   "hash": "558643d23ba2"
+  },
+  {
    "id": "und:회계사:판매장려금이-핵심감사사항인-이유-IFRS-15-변동대가-삼성전자-엘곰",
    "corpus": "understanding",
    "folder": "회계사",
@@ -6797,6 +7502,17 @@
    "date": "2026-04-17",
    "path": "content/understanding/회계사/[260417] 판매장려금이 핵심감사사항인 이유 - IFRS 15 변동대가 - 삼성전자 - 엘곰.md",
    "hash": "af13cd54ab15"
+  },
+  {
+   "id": "und:회계사:필라델피아-반도체지수-3-상승에-소프트웨어-ETF는-24-하락-메모리-재평가가-아니라-하드웨어-로테이션이었다",
+   "corpus": "understanding",
+   "folder": "회계사",
+   "categories": [
+    "회계사"
+   ],
+   "date": "2026-09-05",
+   "path": "content/understanding/회계사/[260905] 필라델피아 반도체지수 3% 상승에 소프트웨어 ETF는 2.4% 하락, 메모리 재평가가 아니라 하드웨어 로테이션이었다 - 반도체 로테이션 - 엘곰.md",
+   "hash": "68534037774b"
   },
   {
    "id": "und:회계사:한국-전력기기-3사-시총-26배-PER-프리미엄은-3060-엘곰",
