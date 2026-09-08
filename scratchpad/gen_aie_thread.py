@@ -21,12 +21,14 @@ dash_common._write_card_pages 가 카드 슬러그가 아닌 html 을 매 생성
 import io
 import os
 import sys
+from urllib.parse import quote
 sys.stdout.reconfigure(encoding='utf-8')
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import aie_thread_lib as lib          # noqa: E402
+import check_aie_thread as chk        # noqa: E402
 import ui_bits                        # noqa: E402
 from card_lib import slug             # noqa: E402
 from gen_aie_dashboard import BOLD_RE, BOLD_TO   # noqa: E402
@@ -50,7 +52,9 @@ CSS = '''<style>
           font-size:13px; color:var(--dim); }
   .chip[aria-pressed="true"] { border-color:var(--ink); color:var(--ink); }
   .row { display:grid; grid-template-columns:24px minmax(0,1fr); gap:10px;
-         padding:14px 0; border-bottom:1px solid var(--line); }
+         padding:14px 0; border-bottom:1px solid var(--line);
+         /* 거르개 줄이 sticky 라 앵커로 뛴 줄이 그 뒤에 숨는다. 그만큼 띄운다. */
+         scroll-margin-top:92px; }
   .row[hidden] { display:none; }
   .mark { color:var(--dim); text-align:center; }
   .when { font-size:12px; color:var(--pale); }
@@ -63,6 +67,7 @@ CSS = '''<style>
          background:#fff; font-size:14px; }
   .tie.cross { border-left-style:dashed; }
   .tie b { font-weight:600; }
+  a.to { color:inherit; text-decoration:none; border-bottom:1px solid var(--line); }
   .q { display:block; color:var(--dim); margin:2px 0; }
   a.card { color:inherit; text-decoration:none; border-bottom:1px solid var(--line); }
 </style>'''
@@ -86,6 +91,13 @@ def check_ui(html, rows):
         # 본문이 통째로 원문 인용이라 마크다운 표시가 그대로 새면 인용이 오염된다.
         # 처음 나갈 때 126줄 중 35줄에 별표 148개가 실렸는데 어느 검사기도 안 물었다.
         bad.append('원문의 굵게 표시(**)가 화면에 그대로 났다 — rich() 를 거르고 왔다')
+    # 본문이 통째로 인용이라 이 그물이 유일한 바닥이다. 검사기를 따로 돌리기 전에
+    # 여기서 먼저 멈춘다 — 재료의 claim 이 원문 줄과 다르면 생성이 안 된다.
+    bad += chk.cite_fails(rows)
+    for r in rows:
+        for rel in r.get('rel') or ():
+            if 'id="%s"' % esc(rel.get('to') or '') not in html:
+                bad.append('%s: 걸린 대상 줄로 갈 앵커가 없다 — %s' % (r.get('id'), rel.get('to')))
     return bad
 
 
@@ -113,18 +125,20 @@ def build():
         for rel in r['rel']:
             src = by_id[rel['to']]
             ties.append(
-                '<div class="tie%s"><b>%s</b> · %s %s 에 걸린다'
+                '<div class="tie%s">'
+                '<a class="to" href="#%s"><b>%s</b> · %s %s 에 걸린다</a>'
                 '<span class="q">%s</span><span class="q">%s</span></div>'
-                % (' cross' if rel['kind'] == '엇갈림' else '', rel['kind'],
+                % (' cross' if rel['kind'] == '엇갈림' else '',
+                   quote(src['id']), rel['kind'],
                    src['date'], esc(src['org']), rich(src['claim']), rich(r['claim'])))
         out.append(
-            '<div class="row%s" data-kinds="%s" data-org="%s">'
+            '<div class="row%s" id="%s" data-kinds="%s" data-org="%s">'
             '<div class="mark">%s</div><div>'
             '<div class="when">%s</div>'
             '<div class="who">%s · %s</div>'
             '<p class="claim"><a class="card" href="ai-engineer/%s.html">%s</a></p>'
             '%s</div></div>'
-            % (faint, ' '.join(sorted(kinds)), esc(r['org']), mark, r['date'],
+            % (faint, esc(r['id']), ' '.join(sorted(kinds)), esc(r['org']), mark, r['date'],
                esc(r['org']), esc(r['speaker']), slug(title_of(r)), rich(r['claim']),
                ''.join(ties)))
 
@@ -144,9 +158,19 @@ def build():
             '<p class="lede">발표 %d편에서 뽑은 주장 %d줄. 위가 오래된 것이다. '
             '뒤에 온 주장이 앞선 주장에 걸리면 그 자리에 두 인용을 나란히 둔다. '
             '아무 데도 안 걸린 주장은 옅게 뒀다.</p>\n'
+            '<p class="lede">엇갈림 다섯은 전부 같은 물음 하나에 붙어 있다. '
+            '2025-08 AWS 가 「개발자는 에이전트가 무엇을 할지에 집중하고 어떻게 할지는 '
+            '일러 주지 않는다」고 한 자리에, 1년 뒤 Microsoft 셋과 Neo4j·OpenAI 가 '
+            '제어 흐름을 모델에서 빼내라고 반대로 답했다. 나머지 관계 %d개는 다 동조다.</p>\n'
+            '<p class="lede">2025-08-26 하루에 발표 %d편·주장 %d줄이 몰려 있는데 '
+            '그날 줄끼리는 서로 안 걸린다. 걸림은 앞선 날짜만 가리킬 수 있고, '
+            '같은 무대에 선 발표들이 서로 답한 적도 없기 때문이다.</p>\n'
             '<div class="filters">%s</div>\n%s\n</div>\n%s\n'
-            % (len({r['talk'] for r in rows}), len(rows), ''.join(chips),
-               '\n'.join(out), JS))
+            % (len({r['talk'] for r in rows}), len(rows),
+               sum(1 for r in rows for x in r['rel'] if x['kind'] == '동조'),
+               len({r['talk'] for r in rows if r['date'] == '2025-08-26'}),
+               len([r for r in rows if r['date'] == '2025-08-26']),
+               ''.join(chips), '\n'.join(out), JS))
     return html
 
 

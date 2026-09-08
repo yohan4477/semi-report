@@ -24,6 +24,18 @@ ck('별표가 안 남았다', '**' not in html)
 # 그물이 실제로 무는지 — 별표를 넣은 판이 통과하면 그물이 아니라 장식이다
 ck('별표 그물이 문다', gen.check_ui(html.replace('</h1>', '</h1>**굵게**', 1), rows) != [])
 
+# 본문이 통째로 인용이라 인용 대조가 유일한 바닥이다. 어긋난 재료를 먹이면 멈춰야 한다.
+import copy
+bent = copy.deepcopy(rows)
+bent[0]['claim'] = '원문 어느 줄에도 없는 문장을 여기 박아 둔다'
+ck('인용 그물이 문다', gen.check_ui(html, bent) != [])
+
+# 걸림마다 대상 줄로 갈 앵커가 문서에 실재하나
+missing = [r['id'] for r in rows for rel in r['rel']
+           if 'id="%s"' % rel['to'] not in html]
+ck('걸림의 대상 앵커가 다 있다 (%s)' % missing[:3], not missing)
+ck('앵커 그물이 문다', gen.check_ui(html.replace('id="', 'x="'), rows) != [])
+
 print('FAIL %d' % len(fails))
 for f in fails:
     print(' ', f)
