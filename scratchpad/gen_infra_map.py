@@ -177,6 +177,9 @@ svg.map{display:block;min-width:520px}
   h1{font-size:1.2rem}
   .panel li{word-break:normal}
   .panel li .where{display:block;margin-left:0}
+  .ovmap{min-width:610px;height:445px}
+  .ovnode{width:155px;padding:8px 10px}.ovnode.litho{left:1%}.ovnode.etch{left:0}.ovnode.packaging{left:1%}
+  .ovnode.memory{right:1%}.ovnode.network{right:1%}
 }
 .pchips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
 .pchip{font:inherit;font-size:.84rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
@@ -187,6 +190,19 @@ svg.map{display:block;min-width:520px}
 .pane-h{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pane-n{font-size:.74rem;font-weight:500;color:var(--sub)}
 .ov-lead{color:var(--sub);font-size:.84rem;margin:0 0 12px}
+.ovmap{position:relative;min-width:760px;height:470px;margin:0 0 18px}
+.ovmap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.ovmap path{fill:none;stroke:var(--line);stroke-width:2}
+.ovcore,.ovnode{position:absolute;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;
+ font:inherit;text-align:left;box-shadow:0 5px 18px rgba(20,32,51,.05)}
+.ovcore{left:calc(50% - 90px);top:calc(50% - 35px);width:180px;min-height:70px;border-radius:16px;
+ background:var(--accent);border-color:var(--accent);color:#fff;text-align:center;font-weight:750;font-size:1.05rem;padding:12px}
+.ovcore span{display:block;font-size:.7rem;font-weight:500;opacity:.85;margin-top:2px}
+.ovnode{width:190px;min-height:70px;border-radius:12px;padding:10px 12px}
+.ovnode strong{display:block;font-size:.92rem}.ovnode span{display:block;color:var(--sub);font-size:.7rem;margin-top:2px}
+.ovnode:hover,.ovnode:focus{border-color:var(--accent);background:var(--accent-soft);outline:none;transform:translateY(-2px)}
+.ovnode.litho{left:4%;top:6%}.ovnode.etch{left:1%;top:43%}.ovnode.packaging{left:4%;bottom:6%}
+.ovnode.memory{right:4%;top:15%}.ovnode.network{right:4%;bottom:15%}
 .ovgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .ovbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px}
 .ov-go{font:inherit;font-size:.98rem;font-weight:700;color:var(--ink);background:none;border:0;
@@ -457,6 +473,27 @@ def overview(panes, procs):
     return '\n'.join(out)
 
 
+def overview_mindmap(panes, procs):
+    """첫 화면도 색인 카드가 아니라 공정 다섯이 뻗는 마인드맵으로 세운다."""
+    nodes = []
+    for proc in procs:
+        p = panes[proc.KEY]
+        n_live = sum(1 for d in p['idx'].values() if d['n'])
+        n_take = sum(1 for t in p['takes'].values() if t.get('take'))
+        nodes.append(
+            '<button class="ovnode %s ov-go" data-proc="%s"><strong>%s</strong>'
+            '<span>이름 %d · 판단 %d · 원문 %d편</span></button>'
+            % (proc.KEY, proc.KEY, html.escape(proc.LABEL), n_live, n_take,
+               p['data']['nlitho']))
+    lines = ('<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">'
+             '<path d="M500 250 C420 250 355 120 235 75"/><path d="M500 250 C410 250 330 250 220 250"/>'
+             '<path d="M500 250 C420 250 355 380 235 425"/><path d="M500 250 C580 250 645 155 765 125"/>'
+             '<path d="M500 250 C580 250 645 345 765 375"/></svg>')
+    return ('<div class="box scroll"><div class="ovmap">%s'
+            '<div class="ovcore">AI 인프라<span>공정 다섯의 연결 지도</span></div>%s</div></div>'
+            % (lines, '\n'.join(nodes)))
+
+
 def build():
     procs = PROCESSES
     panes = {p.KEY: pane_of(p) for p in procs}
@@ -488,7 +525,8 @@ def build():
 지도 아래 「판단」은 그 이름에 대해 원문이 말한 것을 한 줄로 줄인 것이며, 잎을 누르면 근거 문장이 줄 번호와 함께 아래에 선다.</p>
 <div class="pchips" role="group" aria-label="공정 고르기">%s</div>
 <section class="pane" data-proc="all">
-<p class="ov-lead">공정 하나를 고르면 그 공정의 나무가 선다. 아래는 공정마다 지금 서 있는 판단이다.</p>
+<p class="ov-lead">가지를 누르면 해당 공정의 기능·부품·공급·지표 마인드맵으로 이어집니다.</p>
+%s
 <div class="ovgrid">%s</div>
 </section>
 %s
@@ -589,7 +627,7 @@ panel.hidden = true;
 </script>
 </body>
 </html>
-""" % (CSS, nall, pchips, overview(panes, procs),
+""" % (CSS, nall, pchips, overview_mindmap(panes, procs), overview(panes, procs),
        '\n'.join(pane_html(panes[p.KEY]) for p in procs),
        json.dumps(idx, ensure_ascii=False), json.dumps(tk, ensure_ascii=False))
     check_ui(doc, panes, procs, takes)
