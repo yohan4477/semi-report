@@ -453,9 +453,9 @@ def fig_battery():
     h.append('<rect class="k8-open" x="26" y="38" width="400" height="34" rx="6"/>')
     h.append('<rect class="k8-fill" x="26" y="38" width="190" height="34" rx="6"/>')
     h.append('<text x="42" y="60" class="t-val">47.6%</text>')
-    h.append('<line class="k8-rule" x1="280" y1="32" x2="280" y2="78"/>')
-    h.append('<line class="k8-rule" x1="320" y1="32" x2="320" y2="78"/>')
-    h.append('<text x="300" y="94" class="t-sub" text-anchor="middle">70~80%</text>')
+    h.append('<line class="k8-rule" x1="306" y1="32" x2="306" y2="78"/>')
+    h.append('<line class="k8-rule" x1="346" y1="32" x2="346" y2="78"/>')
+    h.append('<text x="326" y="94" class="t-sub" text-anchor="middle">70~80%</text>')
     h.append('<text x="440" y="60" class="t-sub">영업레버리지가</text>')
     h.append('<text x="440" y="76" class="t-sub">도는 자리</text>')
     h.append('<text x="26" y="116" class="t-sub">'
