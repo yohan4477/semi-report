@@ -27,6 +27,7 @@ import _mem_fig  # noqa: E402
 import _trump_part1  # noqa: E402
 import _harness_part1  # noqa: E402
 import _harness_fig  # noqa: E402
+import _model_part1  # noqa: E402
 import dash_common as dc
 from card_lib import fig_html
 
@@ -201,6 +202,21 @@ def report_rate_html(head=True):
     return ''.join(h)
 
 
+def report_model_html(head=True):
+    """모델 총정리 — 한 편. 본문은 insights/reports/model-2026-09-09.md 원본에서 읽는다."""
+    h = [_model_part1.HEAD_MODEL] if head else []
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="model-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _model_part1.report_model(sec, p, fig)
+    return ''.join(h)
+
+
 def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
     h = [_trump_part1.HEAD_TRUMP] if head else []
@@ -312,7 +328,8 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _power_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _circ_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _circ_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _model_part1.CAPTION.values()])
 
 
 # ── 층 일곱을 카드로 세운다 ─────────────────────────────────────────────
@@ -325,6 +342,11 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 # 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
 # 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
 LAYERS = [
+    ('sec-model', '모델 검증', '2026-09-09',
+     '모델 총정리 — 남이 공개한 계산기를 다시 세우면 어디가 맞고 어디가 어긋나나',
+     'SemiAnalysis 영문 2편 · 표 그림 7장',
+     '발표된 표를 옮겨 적지 않고 계산을 다시 세우니 안쪽 한 층이 자기 수식과 어긋난다',
+     report_model_html),
     ('sec-circ', '순환금융', '2026-09-09',
      '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
      'SemiAnalysis 12편 · 메르 6편',

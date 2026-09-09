@@ -73,6 +73,11 @@ PAGES = [
     # 통째로 넣으면 이 층과 무관한 편이 알리바이가 된다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-circ',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 모델 층(2026-09-09). 재료가 영문 클리핑 둘 + 그 안의 표 그림 일곱 + 한국어 변환본 하나다.
+    # 표 그림의 값은 픽셀이라 클리핑 마크다운에 없다 — 읽은 값을 model_facts.md 에 남겨
+    # 그 파일이 출처가 된다(googl_facts·peers_facts 와 같은 자리). 모델이 낸 파생값도 같다.
+    # 폴더를 안 넣는다 — 뉴스레터 전체를 넣으면 이 층과 무관한 편이 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-model', None),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'semi_doped')
@@ -267,6 +272,16 @@ CIRC_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
     'input/clippings/mer/224375780479.json',
 )]
 
+# 모델 층의 재료 셋 — 영문 클리핑 둘과 한국어 변환본 하나. 표 그림에서 읽은 값과
+# 모델이 낸 값은 EXTRA 의 model_facts.md 가 맡는다
+MODEL_EXTRA = [
+    os.path.join(_CLIP, 'How Much Do GPU Clusters Really Cost.md'),
+    os.path.join(_CLIP, 'AMD vs NVIDIA Inference Benchmark Who Wins - Performance & '
+                 'Cost Per Million Tokens.md'),
+    os.path.join(ROOT, 'content', 'newsletter', 'ai_infra', 'business',
+                 '[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md'),
+]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -278,7 +293,9 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md'),
+         # 모델 층이 그림에서 읽은 발표치와 우리 모델이 낸 파생값
+         os.path.join(ROOT, 'scratchpad', 'model_facts.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
