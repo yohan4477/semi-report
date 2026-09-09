@@ -1,245 +1,245 @@
 {
- "as_of": "2026.09.08 기준(KRX 장마감)",
+ "as_of": "2026.09.09 기준(KRX 장마감)",
  "items": {
   "sec-apr": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "278470",
    "name": "에이피알",
-   "price": 377000
+   "price": 368500
   },
   "sec-bobcat": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "241560",
    "name": "두산밥캣",
-   "price": 62700
+   "price": 63600
   },
   "sec-celltrion": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "068270",
    "name": "셀트리온",
    "price": 183100
   },
   "sec-cosmax": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "192820",
    "name": "코스맥스",
-   "price": 265000
+   "price": 266500
   },
   "sec-ecopro": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "247540",
    "name": "에코프로비엠",
-   "price": 104800
+   "price": 114900
   },
   "sec-hanmi": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "042700",
    "name": "한미반도체",
-   "price": 244500
+   "price": 250500
   },
   "sec-hdel": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "267260",
    "name": "HD현대일렉트릭",
-   "price": 728000
+   "price": 751000
   },
   "sec-hdhi": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "329180",
    "name": "HD현대중공업",
-   "price": 444500
+   "price": 463500
   },
   "sec-hmc": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "005380",
    "name": "현대차",
-   "price": 385000
+   "price": 388000
   },
   "sec-hugel": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "145020",
    "name": "휴젤",
-   "price": 238000
+   "price": 236000
   },
   "sec-hwocean": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "042660",
    "name": "한화오션",
-   "price": 86100
+   "price": 88100
   },
   "sec-hws": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "272210",
    "name": "한화시스템",
-   "price": 69700
+   "price": 71100
   },
   "sec-hynix": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "000660",
    "name": "SK하이닉스",
-   "price": 1793000
+   "price": 1856000
   },
   "sec-hyosung": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "298040",
    "name": "효성중공업",
-   "price": 2834000
+   "price": 2931000
   },
   "sec-isu": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "007660",
    "name": "이수페타시스",
-   "price": 110300
+   "price": 112300
   },
   "sec-jeju": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "080220",
    "name": "제주반도체",
-   "price": 73000
+   "price": 75000
   },
   "sec-jusung": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "036930",
    "name": "주성엔지니어링",
-   "price": 194600
+   "price": 206500
   },
   "sec-kia": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "000270",
    "name": "기아",
-   "price": 125400
+   "price": 126800
   },
   "sec-kolmar": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "161890",
    "name": "한국콜마",
-   "price": 141000
+   "price": 140300
   },
   "sec-kzinc": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "010130",
    "name": "고려아연",
-   "price": 1213000
+   "price": 1227000
   },
   "sec-leeno": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "058470",
    "name": "리노공업",
-   "price": 68900
+   "price": 70100
   },
   "sec-lgcns": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "064400",
    "name": "LG씨엔에스",
-   "price": 73400
+   "price": 72100
   },
   "sec-lgd": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "034220",
    "name": "LG디스플레이",
-   "price": 8940
+   "price": 8950
   },
   "sec-lge": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "066570",
    "name": "LG전자",
-   "price": 205000
+   "price": 204500
   },
   "sec-lnf": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "066970",
    "name": "엘앤에프",
-   "price": 113700
+   "price": 127000
   },
   "sec-lselectric": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "010120",
    "name": "LS ELECTRIC",
-   "price": 200500
+   "price": 211500
   },
   "sec-mobis": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "012330",
    "name": "현대모비스",
-   "price": 415000
+   "price": 417500
   },
   "sec-naver": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "035420",
    "name": "NAVER",
-   "price": 214500
+   "price": 210000
   },
   "sec-orion": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "271560",
    "name": "오리온",
-   "price": 121100
+   "price": 120000
   },
   "sec-samsung": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "005930",
    "name": "삼성전자",
    "price": 269500
   },
   "sec-sbl": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "207940",
    "name": "삼성바이오로직스",
-   "price": 1440000
+   "price": 1452000
   },
   "sec-scnt": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "028260",
    "name": "삼성물산",
-   "price": 382000
+   "price": 376000
   },
   "sec-sdi": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "006400",
    "name": "삼성SDI",
-   "price": 530000
+   "price": 574000
   },
   "sec-sds": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "018260",
    "name": "삼성에스디에스",
-   "price": 230000
+   "price": 224500
   },
   "sec-semco": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "009150",
    "name": "삼성전기",
-   "price": 1370000
+   "price": 1404000
   },
   "sec-shinhan": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "055550",
    "name": "신한지주",
-   "price": 113200
+   "price": 110600
   },
   "sec-silicon2": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "257720",
    "name": "실리콘투",
-   "price": 46250
+   "price": 44600
   },
   "sec-skt": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "017670",
    "name": "SK텔레콤",
-   "price": 92400
+   "price": 91300
   },
   "sec-tck": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "064760",
    "name": "티씨케이",
-   "price": 264500
+   "price": 257500
   },
   "sec-wontech": {
-   "basis": "2026.09.08 기준(KRX 장마감)",
+   "basis": "2026.09.09 기준(KRX 장마감)",
    "code": "336570",
    "name": "원텍",
-   "price": 4950
+   "price": 4940
   }
  },
  "skipped": {
