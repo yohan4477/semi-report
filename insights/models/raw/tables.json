@@ -667,6 +667,78 @@
         }
       },
       "redacted": []
+    },
+    {
+      "id": "amd-throughput-anchors",
+      "source": "amd",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-10",
+      "title": "AMD 대 엔비디아 — 원문 본문에 글로 적힌 처리량 값",
+      "note": "곡선 그래프에서 읽은 값이 아니라 저자가 문장으로 적은 값만 옮겼다. 「대략」·「거의」로 적힌 값이라 자릿수가 아니라 자리의 크기로 쓴다.",
+      "columns": [
+        "model",
+        "seq",
+        "engine",
+        "sku",
+        "tokens_per_s_per_gpu",
+        "latency_s",
+        "kind",
+        "cite"
+      ],
+      "rows": {
+        "a1": [
+          "Llama3 70B",
+          "1k/4k",
+          "미상",
+          "H100 SXM",
+          900,
+          null,
+          "plateau",
+          "AMD영문 L162"
+        ],
+        "a2": [
+          "Llama3 405B FP8",
+          "1k/1k",
+          "미상",
+          "H100 SXM",
+          400,
+          150,
+          "at_latency",
+          "AMD영문 L172"
+        ],
+        "a3": [
+          "Llama3 405B FP8",
+          "1k/1k",
+          "TensorRT-LLM",
+          "H200 SXM",
+          1000,
+          150,
+          "at_latency",
+          "AMD영문 L174"
+        ],
+        "a4": [
+          "Llama3 405B FP8",
+          "1k/1k",
+          "미상",
+          "H100 SXM",
+          350,
+          null,
+          "plateau",
+          "AMD영문 L184"
+        ],
+        "a5": [
+          "Llama3 405B FP8",
+          "1k/1k",
+          "vLLM",
+          "H200 SXM",
+          600,
+          null,
+          "plateau",
+          "AMD영문 L184"
+        ]
+      },
+      "redacted": []
     }
   ],
   "not_captured": [
