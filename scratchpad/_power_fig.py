@@ -171,7 +171,7 @@ def _phrow(i, col, name, eff):
     ])
 
 
-FIG_PHASE = _svg(W, _PHY + 4 * _PHSTEP - 2, '변환이 일어나는 자리가 단계마다 상류로 옮겨간다',
+FIG_PHASE = _svg(W, _PHY + 4 * _PHSTEP - 2, '800볼트 직류 네 단계 · 단계마다 변환이 어느 마디에서 일어나나',
                  _DEFS + ''.join(
                      [_lt(8, 30, '들어오는 쪽', 't-sm', True),
                       _lt(W - 84, 30, '쓰는 쪽', 't-sm', True)]
@@ -221,7 +221,7 @@ _FIXCELLS = [['겨울 인증치 반영안'],
              ['26일 뒤 30.7% 부결']]
 
 FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 12,
-               '고치자는 안이 곡선을 겨눴다가 위원회에서 멈췄다',
+               '요금이 정해지는 길과 그것을 고치려던 절차',
                _DEFS + ''.join([
                    _lt(_LX, 26, '값을 정하는 길', 't-lab', True),
                    _lt(_RX, 26, '규칙을 고치는 길', 't-lab', True),
@@ -318,7 +318,7 @@ def _lbar(i, v, lab, when, hot):
     ])
 
 
-FIG_DELAY = _svg(W, 234, '같은 50메가와트가 세 번 길어진다', ''.join(
+FIG_DELAY = _svg(W, 234, '첫 50메가와트를 켜기까지 걸린 개월 수', ''.join(
     ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
      % (_LX0 - 16, _LBASE, W - _LX0 + 16, _LBASE, INK3),
      _lt(_LX0 - 16, 22, '첫 50메가와트까지 (개월)', 't-sm', True)]
@@ -368,7 +368,7 @@ def _skipbox(i, cell):
             .replace('stroke-width="1.5"', 'stroke-width="1.5" stroke-dasharray="5 4"'))
 
 
-FIG_SKIP = _svg(W, 128, '대형 변압기 마디를 건너뛰고 곧바로 낮춘다', _DEFS + ''.join(
+FIG_SKIP = _svg(W, 128, '전압 사슬에서 대형 변압기 마디를 건너뛴 자리', _DEFS + ''.join(
     [_lt(8, 30, '들어오는 쪽', 't-sm', True), _lt(W - 84, 30, '쓰는 쪽', 't-sm', True)]
     + [_skipbox(i, c) for i, c in enumerate(_SKIP_CELLS)]
     + [_a(_C[i - 1][0] + _C[i - 1][2], 83, _C[i][0], 83) for i in (1, 3, 4)]
@@ -491,7 +491,7 @@ def _npanel(i, name, rows):
     return ''.join(out)
 
 
-FIG_NRG = _svg(W, 216, '같은 회사에서 두 말이 나온다',
+FIG_NRG = _svg(W, 216, '한 회사 임원 둘이 반대로 말한 자리',
                ''.join([_lt(4, _NY + 62 + k * 32, s, 't-sm', False)
                         for k, s in enumerate(_NROWS)])
                + ''.join(_npanel(i, n, r) for i, (n, r) in enumerate(_NPANES)))
@@ -564,7 +564,7 @@ def _opanel(i, name, rows):
     return ''.join(out)
 
 
-FIG_ORBITSITE = _svg(W, 212, '궤도 자리 셋이 저마다 다른 것에 걸린다',
+FIG_ORBITSITE = _svg(W, 212, '궤도 자리 셋 — 햇빛과 걸림돌',
                      ''.join([_lt(4, _OY2 + 62 + k * 32, s, 't-sm', False)
                               for k, s in enumerate(_OROWS)])
                      + ''.join(_opanel(i, n, r) for i, (n, r) in enumerate(_OPANES)))
@@ -761,3 +761,45 @@ FIG_COLO = _svg(W, 240, '텍사스 공동입지 규모', ''.join(
      % (_LX02 - 16, _LBASE2, W - _LX02 + 16, _LBASE2, INK3),
      _lt(_LX02 - 16, 22, '메가와트', 't-sm', True)]
     + [_lbar2(i, *b) for i, b in enumerate(_LBARS2)]))
+
+
+# ── 도해 27. 규칙을 고치려면 몇이 찬성해야 하나 ──────────────────────
+# 부문 이름은 원문에 없다 — 개수만 원문이 센 수다(다섯). 그래서 이름을 짓지 않고
+# 번호로 둔다. 짙은 둘이 「어느 두 부문만 뭉쳐도 막는다」를 보이는 자리다.
+_GVY, _GVH = 66, 52
+_GVC = _row(5, _GVY, _GVH, 108, gap=14)
+
+FIG_GOVERN = _svg(W, 134, '규칙을 고치려면 다섯 부문 가운데 셋이 넘게 찬성해야 한다', ''.join(
+    [_lt(8, 30, '회원 부문 다섯 · 가중치가 모두 같다', 't-sm', True)]
+    + [_box(x, y, w, h, ['부문 %d' % (i + 1)], INK if i >= 3 else INK3,
+            1.8 if i >= 3 else 1.5)
+       for i, (x, y, w, h) in enumerate(_GVC)]))
+
+
+# ── 도해 28. 기준안과 머스크안 ───────────────────────────────────────
+# 견줄 때는 같은 꼴. 두 판이 같은 크기이고 줄도 같은 네 줄이다.
+_SPW, _SPLAB, _SPGAP = 236, 108, 24
+_SPH, _SPY = 184, 44
+_SPROWS = ['역전 시점', '지상 자본비용', '발사 비용', '2035년 지상 용량']
+_SPPANES = [('기준안', ['2040년쯤', '메가와트당 1,200만~1,400만 달러',
+                      '기준으로 둔 값', '1,150기가와트']),
+            ('머스크안', ['2034년', '메가와트당 약 5,500만 달러',
+                        '기준안보다 85% 낮게', '576기가와트'])]
+
+
+def _sppanel(i, name, rows):
+    x = _SPLAB + i * (_SPW + _SPGAP)
+    hot = i == 1
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" fill="none" stroke="%s" '
+           'stroke-width="%.1f"/>' % (x, _SPY, _SPW, _SPH, INK if hot else INK3,
+                                      1.8 if hot else 1.5),
+           _t(x + _SPW // 2, _SPY + 26, name, 't-lab')]
+    for k, s in enumerate(rows):
+        out.append(_t(x + _SPW // 2, _SPY + 62 + k * 34, s, 't-sm'))
+    return ''.join(out)
+
+
+FIG_SPACECASE = _svg(W, 248, '우주가 지상을 따라잡는 시점을 두 가정으로 잡는다',
+                     ''.join([_lt(4, _SPY + 62 + k * 34, s, 't-sm', False)
+                              for k, s in enumerate(_SPROWS)])
+                     + ''.join(_sppanel(i, n, r) for i, (n, r) in enumerate(_SPPANES)))
