@@ -22,6 +22,7 @@ import _rate_part1  # noqa: E402
 import _rate_fig  # noqa: E402
 import _mem_part1  # noqa: E402
 import _power_part1  # noqa: E402
+import _circ_part1  # noqa: E402
 import _mem_fig  # noqa: E402
 import _trump_part1  # noqa: E402
 import _harness_part1  # noqa: E402
@@ -260,25 +261,41 @@ def report_power_html(head=True):
     return ''.join(h)
 
 
+def report_circ_html(head=True):
+    """순환금융 총정리 — 한 편. 본문은 insights/reports/circ-2026-09-09.md 원본에서 읽는다."""
+    h = [_circ_part1.HEAD_CIRC] if head else []
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="circ-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _circ_part1.report_circ(sec, p, fig)
+    return ''.join(h)
+
+
 HEADER = '''  <header>
     <p class="eyebrow">여러 편을 한 물음으로 꿴 글</p>
     <h1>통합 보고서</h1>
   </header>'''
 
 LEDE = ('<p class="lede">카드 장이 원문 한 편씩을 답한다면, 이 장은 그 답들을 이어 붙입니다. '
-        '지금 실린 것은 일곱입니다 — <b>CPO</b>(광학을 칩 옆까지 끌어온 방식)는 빛이 '
+        '지금 실린 것은 여덟입니다 — <b>CPO</b>(광학을 칩 옆까지 끌어온 방식)는 빛이 '
         '데이터센터 어디까지 들어왔는지를, <b>선단 패키징</b>은 다이 하나로 못 만들게 된 뒤 '
         '무엇이 그 일을 대신했는지를, <b>금리·물가</b>는 연준이 내렸는데 왜 장기금리는 '
         '올랐는지를, <b>메모리</b>는 40년 만에 모자란데 왜 만드는 회사 손에 안 남는지를, '
         '<b>트럼프</b>는 무엇을 걸어 무엇을 받아냈는지를, <b>전력</b>은 계통에 막힌 값을 '
         '누가 냈는지를, <b>하네스·스킬</b>은 모델 안에 있던 판단이 바깥으로 걷혀 나간 뒤 '
-        '그 값을 누가 냈는지를 묻습니다. 본문은 <code>insights/reports/</code> 의 '
+        '그 값을 누가 냈는지를, <b>순환금융</b>은 파는 쪽이 사는 쪽에 돈을 빌려주는 '
+        '고리가 어디서 끊기는지를 묻습니다. 본문은 <code>insights/reports/</code> 의 '
         '원본에서 읽어 옵니다.</p>')
 
 META_ROW = '''    <div class="meta-row">
       <span>정리일 <b>%s</b></span>
-      <span>바탕 <b>SemiAnalysis 25편 · Semi Doped 6회차 · 메르 29편 · 해설 35편 · 링크드인 3개월</b></span>
-      <span>보고서 <b>7편</b></span>
+      <span>바탕 <b>SemiAnalysis 37편 · Semi Doped 6회차 · 메르 35편 · 해설 35편 · 링크드인 3개월</b></span>
+      <span>보고서 <b>8편</b></span>
     </div>''' % STAMP
 
 FOOTER = (LEDE + META_ROW
@@ -294,7 +311,8 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _mem_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _power_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _circ_part1.CAPTION.values()])
 
 
 # ── 층 일곱을 카드로 세운다 ─────────────────────────────────────────────
@@ -307,6 +325,11 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 # 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
 # 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
 LAYERS = [
+    ('sec-circ', '순환금융', '2026-09-09',
+     '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
+     'SemiAnalysis 12편 · 메르 6편',
+     '지분과 보증과 계약이 한 고리 위에 겹쳐 있어 어느 마디가 약한지가 안 보인다',
+     report_circ_html),
     ('sec-harness', '하네스·스킬', '2026-09-08',
      '하네스·스킬 총정리 — 판단을 모델에서 걷어 낸 열두 달, 그 값을 누가 냈나',
      'AI Engineer 발표 16편 · SemiAnalysis 2편',

@@ -68,6 +68,11 @@ PAGES = [
     # 뉴스레터는 폴더에서 오고 나머지 둘만 POWER_EXTRA 에 파일로 적는다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-power',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # 순환금융 층(2026-09-09). 재료가 뉴스레터 열두 편 + 메르 클리핑 여섯 편이다.
+    # 뉴스레터는 폴더에서 오고 메르는 CIRC_EXTRA 에 파일로 하나씩 적는다 — mer 폴더를
+    # 통째로 넣으면 이 층과 무관한 편이 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-circ',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'semi_doped')
@@ -252,6 +257,16 @@ POWER_EXTRA = [os.path.join(ROOT, 'content', 'podcast', 'semianalysis',
                os.path.join(ROOT, 'insights', 'semidoped',
                             '2026-05-08-power-wall-strategy.md')]
 
+# 순환금융 층의 뉴스레터 밖 재료 여섯 — 메르 클리핑
+CIRC_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+    'input/clippings/mer/224088297516.json',
+    'input/clippings/mer/224171369464.json',
+    'input/clippings/mer/224193608780.json',
+    'input/clippings/mer/224308296478.json',
+    'input/clippings/mer/224359986701.json',
+    'input/clippings/mer/224375780479.json',
+)]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -263,7 +278,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
