@@ -123,6 +123,9 @@ TBL_NOTE = {
             '발표된 월 자본비에서 거꾸로 푼 값입니다. 여섯이 0.004%포인트 안에 모입니다.',
     'VERDICT': '손익분기 임대료는 원문이 글로 밝힌 값(L298·L302·L306)이고, 실측 처리량은 '
                '그것을 H200 시세 2.5달러로 나눈 비율입니다. 문턱과 결론은 원문에 없습니다.',
+    'GAP': '「MI300X 대비 차이」만 원문 값에서 바로 나옵니다. 기타 서버 비용이 SKU 마다 '
+           '같다고 보면 그 차이가 곧 GPU 원가의 차이입니다. 오른쪽 세 열의 기타 값은 '
+           '우리가 고른 가정이고 원문에 없습니다 — 절대값이 아니라 폭을 보는 자리입니다.',
     'CAPEX': 'WACC 는 표에 찍힌 13.3%가 아니라 역산한 13.25%입니다(7절). B200 의 '
              '서버당 선불이 발표치보다 1달러 큰 것은 발표 표의 항목별 반올림 때문입니다.',
     'OPEX': '전기는 정격이 아니라 가동률과 PUE 를 거친 값입니다. 여섯 SKU 가 같은 '
@@ -152,7 +155,7 @@ def _numeric_cols(head, body):
     「차이」 열의 「일치」가 왼쪽에 붙고 「+27.30%p」가 오른쪽에 붙었다(2026-09-09)."""
     out = []
     for i in range(len(head)):
-        vals = [r[i] for r in body if i < len(r) and r[i]]
+        vals = [r[i] for r in body if i < len(r) and r[i]]  # None 은 빠진다
         hit = sum(1 for v in vals if _is_num(v))
         # 숫자가 하나라도 있고 나머지가 「일치」 같은 짧은 말뿐이면 숫자 열이다.
         # 과반으로 정하면 일곱 줄 중 넷이 「일치」인 「차이」 열이 글자 열이 되어
@@ -167,8 +170,11 @@ def _numeric_cols(head, body):
 def _cell(txt, num):
     """숫자 칸은 오른쪽으로 맞춘다. 자릿수가 세로로 서야 크기가 눈에 들어온다.
 
+    None 은 원문이 가린 값이라 어두운 칸으로 칠한다 — 빈칸으로 두면 0 으로 읽힌다.
     0 은 「—」로 낸다. 원문 표가 그 자리에 included 라고 적었고, $0.00 을 스무 칸
     깔면 값이 있는 칸이 안 보인다."""
+    if txt is None:
+        return '<td class="red" title="원문이 가린 값"></td>' 
     if num and txt in ('$0.00', '$0', '0.00%'):
         txt = '—'
     return '<td%s>%s</td>' % (' class="num"' if num else '', txt)
@@ -186,8 +192,8 @@ def table_html(key):
     h.append('</tr></thead><tbody>')
     for r in body:
         # 「차이」 칸이 「일치」가 아니면 어긋난 줄이다 — 왼쪽에 굵은 선을 세운다
-        off = any(c.endswith('%p') for c in r)
-        klass = ' class="sum"' if any(k in r[0] for k in _SUM) else (
+        off = any(c and c.endswith('%p') for c in r)
+        klass = ' class="sum"' if any(k in (r[0] or '') for k in _SUM) else (
             ' class="off"' if off else '')
         h.append('<tr%s>' % klass
                  + ''.join(_cell(c, nums[i]) for i, c in enumerate(r)) + '</tr>')

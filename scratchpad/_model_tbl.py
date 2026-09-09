@@ -130,6 +130,10 @@ def _refit():
                               wacc=0.1325), s.opex) for s in I.SKUS]
 
 
+# 원문이 검은 막대로 지운 세 줄. 값 자리에 None 을 두면 표가 어두운 칸으로 칠한다 —
+# 「모르는 값」과 「0」은 다르므로 빈칸으로 두면 안 된다
+_REDACTED = ['GPU 원가 (GPU당)', 'GPU 원가 + 보증 (서버당)', '기타 서버 비용']
+
 _CAPEX_ROWS = [
     ('서버 값', lambda s: s.capex.server_cost),
     ('서비스·망·저장·소프트웨어', lambda s: s.capex.other_cluster_cost),
@@ -147,10 +151,11 @@ _OPEX_ROWS = [
 ]
 
 
-def _sku_table(rows, tail):
+def _sku_table(rows, tail, redacted=()):
     skus = _refit()
     head = ['항목'] + [s.name for s in skus]
-    body = [[label] + [_m(fn(s)) for s in skus] for label, fn in rows]
+    body = [[label] + [None] * len(skus) for label in redacted]
+    body += [[label] + [_m(fn(s)) for s in skus] for label, fn in rows]
     for label, fn, unit in tail:
         body.append([label] + [_m(fn(s), unit) for s in skus])
     return head, body
@@ -158,7 +163,28 @@ def _sku_table(rows, tail):
 
 def capex_table():
     return _sku_table(_CAPEX_ROWS,
-                      [('GPU 시간당 자본비', lambda s: s.capex.hourly_per_gpu(), '$')])
+                      [('GPU 시간당 자본비', lambda s: s.capex.hourly_per_gpu(), '$')],
+                      redacted=_REDACTED)
+
+
+# 가려진 줄을 어디까지 좁힐 수 있나. 「기타 서버 비용」 하나를 모르면 절대값이 안
+# 나오지만, 서버 값의 차이는 원문 값에서 바로 나온다 — 기타가 SKU 마다 같다고 보면
+# 그 차이가 곧 GPU 원가의 차이다. 가정 값 셋은 우리가 고른 것이고 원문에 없다
+_OTHER_ASSUMED = (20_000, 30_000, 40_000)
+
+
+def gap_table():
+    skus = _refit()
+    base = skus[0].capex.server_cost
+    head = ['SKU', '서버 값', 'MI300X 대비 차이'] + [
+        'GPU 원가/장 (기타 %s 가정)' % _m(v) for v in _OTHER_ASSUMED]
+    body = []
+    for s in skus:
+        sc = s.capex.server_cost
+        row = [s.name, _m(sc), _m(sc - base)]
+        row += [_m((sc - other) / 8) for other in _OTHER_ASSUMED]
+        body.append(row)
+    return head, body
 
 
 def opex_table():
@@ -229,6 +255,7 @@ TABLES = {
     'WACC': ('표에 찍힌 13.3%에서 역산한 실제 할인율', wacc_table),
     'VERDICT': ('작업 성격마다 갈리는 소유의 답', verdict_table),
     'CAPEX': ('추론 원가 — 자본지출 (그림 049 재현)', capex_table),
+    'GAP': ('가려진 줄을 어디까지 좁힐 수 있나', gap_table),
     'OPEX': ('추론 원가 — 운영비 (그림 050 재현)', opex_table),
     'TOTAL': ('추론 원가 — GPU 시간당 합계 (그림 016 뒷장 재현)', total_table),
 }
@@ -242,7 +269,7 @@ def rows_text():
         out.append('### 표 %s — %s' % (key, title))
         out.append(' · '.join(head))
         for r in body:
-            out.append(' · '.join(r))
+            out.append(' · '.join('가려짐' if c is None else c for c in r))
         out.append('')
     return '\n'.join(out)
 

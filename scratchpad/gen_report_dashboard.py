@@ -111,6 +111,9 @@ REPORT_CSS = TABLE_CSS + """
   .xl td.num{text-align:right;font-weight:600;color:var(--ink)}
   .xl tr.sum td{font-weight:850;color:var(--ink);
                 border-top:1.5px solid var(--ink-3);background:rgba(127,127,127,.09)}
+  /* 원문이 검은 막대로 지운 칸. 빈칸으로 두면 0 으로 읽히므로 칠해서 「모르는 값」
+     임을 눈에 보이게 한다. 원문 표의 검은 막대와 같은 자리다 */
+  .xl td.red{background:var(--ink-2);opacity:.62}
   .xl tr.off td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
   .xl tr.off td.num{color:var(--ink);font-weight:850}
   .xl-memo{margin:4px 0 12px;font-size:10.5px;line-height:1.55;color:var(--ink-3)}
