@@ -10,10 +10,10 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-# 파일명을 ASCII 로 둔다 — 한글 경로는 URL 이 통째로 퍼센트 인코딩돼
-# 카카오 말풍선이 링크를 대표 도메인으로 갈아치웠다
-OUT = ROOT / '대시보드' / 'source-new.html'
-PUBLIC = 'https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/source-new.html'
+# 주소에 퍼센트 인코딩이 한 조각이라도 들어가면 카카오가 링크를 통째로
+# 앱 대표 도메인으로 갈아치운다 — 폴더도 파일도 ASCII 로 둔다
+OUT = ROOT / 'status' / 'source-new.html'
+PUBLIC = 'https://insight-dashboard.com/source-new.html'
 
 CSS = """
 :root { --bg:#fbfbfa; --fg:#1d1d1b; --dim:#6b6b66; --line:#e2e2dd; --card:#ffffff; }

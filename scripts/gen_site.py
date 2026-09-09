@@ -471,6 +471,15 @@ def main():
                                          encoding='utf-8')
         print(f'  /{old}  ->  /{slug} (넘김)')
 
+    # status/ 는 카드가 아니라 알림이 걸어 오는 장이다. 첫 화면에는 안 세운다.
+    # 카카오 말풍선은 앱에 등록되지 않은 도메인의 링크를 대표 도메인으로 갈아치우므로
+    # 이 장이 insight-dashboard.com 아래 있어야 「자세히 보기」가 제자리로 온다
+    status_dir = ROOT / 'status'
+    if status_dir.is_dir():
+        for f in sorted(status_dir.glob('*.html')):
+            shutil.copy2(f, OUT / f.name)
+            print(f'  status/{f.name}  ->  /{f.name}')
+
     (OUT / 'index.html').write_text(build_index(), encoding='utf-8')
     (OUT / f'{PRIVATE_SLUG}.html').write_text(build_private(), encoding='utf-8')
     (OUT / '.nojekyll').write_text('', encoding='utf-8')
