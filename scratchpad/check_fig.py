@@ -30,7 +30,8 @@ sys.path.insert(0, os.path.join(ROOT, 'scratchpad'))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 OUT = io.TextIOWrapper(open(1, 'wb', closefd=False), encoding='utf-8', line_buffering=True)
 
-CH = 9.0            # 한 글자 폭 어림
+CH = 13.0           # 한글 한 글자 폭. .t-sm 이 font-size:13px 이고 한글은 그 폭을 다 쓴다
+NARROW = 0.5        # 영문·숫자·기호·빈칸은 한글의 절반쯤이다
 ASC, DESC = 9.0, 3.0    # 글자 상자의 위·아래 여유. 두 줄 라벨이 14px 간격이라
                         # 이보다 키우면 정상 배치가 겹침으로 잡힌다
 TEXT = re.compile(r'<text x="(-?[\d.]+)" y="(-?[\d.]+)"([^>]*)>([^<]*)<')
@@ -46,6 +47,17 @@ LINE = re.compile('<line x1="(-?[0-9.]+)" y1="(-?[0-9.]+)" x2="(-?[0-9.]+)" y2="
 CLASS_CH = {"fig-b": 15.6, "fig-st": 15.6, "fig-hd": 15.6, "fig-e": 15.6, "fig-lg": 15.6}
 
 
+def text_width(txt, ch):
+    """글자 종류로 갈라 잰다. 한 벌로 재면 한글이 많은 줄을 좁게 어림한다.
+
+    2026-09-09 에 176픽셀 칸을 넘은 수식이 통과했다 — 한글 열한 자에 기호 아홉이라
+    한 글자 9픽셀로는 175 가 나와 칸 안에 들어가는 것으로 보였다. 실제로는 한글이
+    13픽셀이라 191 이었고 눈으로 보면 테두리를 넘어 있었다.
+    """
+    wide = sum(1 for c in txt if ord(c) > 0x2000)
+    return ch * (wide + NARROW * (len(txt) - wide))
+
+
 def boxes(svg):
     """글자 하나하나의 상자. (x0, x1, y0, y1, 글)"""
     out = []
@@ -58,7 +70,7 @@ def boxes(svg):
             if 'class="' + cls + '"' in attr:
                 ch, asc, desc = cw, cw * 0.77, cw * 0.3
                 break
-        w = len(txt) * ch
+        w = text_width(txt, ch)
         x0 = x - w / 2 if 'middle' in attr else (x - w if 'end' in attr else x)
         out.append((x0, x0 + w, y - asc, y + desc, txt))
     return out
@@ -445,8 +457,42 @@ def selftest():
         if got != want:
             print('선테스트 실패 — %s' % name, file=OUT)
             ok = False
+    # W1 — 176픽셀 칸에 한글 열한 자짜리 수식을 넣으면 테두리를 넘는다.
+    # 한 글자 9픽셀로 재던 때는 175 가 나와 통과했다(2026-09-09).
+    import _biz_fig as _bf
+    narrow = _bf._svg(640, 160, 'x', _bf._box(
+        20, 40, 176, 62, ['작업 크기 × (인지+체크포인트/2', '+초기화+수리)'],
+        'var(--ink-3)', 1.5))
+    wide = _bf._svg(640, 160, 'x', _bf._box(
+        20, 40, 600, 40, ['작업 크기 × (인지 + 체크포인트/2 + 초기화 + 수리)'],
+        'var(--ink-3)', 1.5))
+    for name, svg, want in (('W1 좁은 칸', narrow, True), ('W1 넓은 칸', wide, False)):
+        got = any('삐짐' in b or '테두리에 깔림' in b for b in hits(svg))
+        if got != want:
+            print('선테스트 실패 — %s' % name, file=OUT)
+            ok = False
     print('선테스트 %s' % ('OK' if ok else 'FAIL'), file=OUT)
     return 0 if ok else 1
+
+
+# 글자 폭을 글자 종류로 가른 날(2026-09-09) 새로 걸린 도해 열셋. 다른 장의 옛 도해라
+# 한꺼번에 고치지 않고 빚으로 센다 — check_struct 가 장별 빚을 세는 것과 같은 자리다.
+# 새로 그리거나 손댄 도해는 이 목록에 없으므로 그대로 FAIL 이 된다. 갚은 것은 지운다.
+WIDE_DEBT = {
+    '공장을 짓기 전에 종이부터 모은다',
+    '쪼갠 쪽은 30개월째부터 돈이 들어온다',
+    '병목 셋에서 갈라진 다섯 경로',
+    '신호 증폭 없는 직결 구리가 닿는 거리',
+    '연준이 내리기 시작한 뒤 장기금리는 거꾸로 갔다',
+    '우주가 지상을 따라잡는 시점을 두 가정으로 잡는다',
+    '전력을 어디서 받을지 두 길이 갈린다',
+    '한 회사 임원 둘이 반대로 말한 자리',
+    '같은 물음에 세 시장이 다르게 답한다',
+    '앤트로픽이 앞에 내놓은 현금은 없다',
+    '공고 화면이 곧 증거다 — 딥시크가 데이터센터를 짓는다',
+    '중국도 몰려 있지만 미국만큼은 아니다',
+    '현금으로 줄 것인가, 자본으로 줄 것인가',
+}
 
 
 def main():
@@ -454,7 +500,7 @@ def main():
     if want == '--selftest':
         return selftest()
     figs = all_figs()
-    fails, asks = 0, 0
+    fails, asks, debts = 0, 0, 0
     for _card, (_anchor, title, svg, cap) in figs:
         if want and want not in title:
             continue
@@ -464,18 +510,23 @@ def main():
         # 기계가 못 가리므로 확인 필요로만 낸다
         bad += double_ring(svg)
         ask = caption_points(svg, cap)
-        print('%s %s' % ('FAIL' if bad else 'OK  ', title), file=OUT)
+        owed = bool(bad) and title in WIDE_DEBT
+        mark = '빚  ' if owed else ('FAIL' if bad else 'OK  ')
+        print('%s %s' % (mark, title), file=OUT)
         for b in bad:
             print('       ! %s' % b, file=OUT)
         for b in ask:
             print('       ? %s' % b, file=OUT)
         asks += len(ask)
-        fails += bool(bad)
+        if owed:
+            debts += 1
+        else:
+            fails += bool(bad)
     lead = lead_figs()
     for b in lead:
         print('FAIL 앞머리 도해 — %s' % b, file=OUT)
     fails += len(lead)
-    print('\nFAIL %d건 / 확인 필요 %d건' % (fails, asks), file=OUT)
+    print('\nFAIL %d건 / 확인 필요 %d건 / 빚 %d건' % (fails, asks, debts), file=OUT)
     return 1 if fails else 0
 
 
