@@ -264,19 +264,31 @@ def report_rate_html(head=True):
     return ''.join(h)
 
 
-def report_model_html(head=True):
-    """모델 총정리 — 한 편. 본문은 insights/reports/model-2026-09-09.md 원본에서 읽는다."""
-    h = [_model_part1.HEAD_MODEL] if head else []
+def _report_model_html(head_html, fn, anchor, head=True):
+    """모델링 섹션의 층 둘이 같은 꼴이라 한 함수로 낸다."""
+    h = [head_html] if head else []
     n = [0]
 
     def sec(title):
         n[0] += 1
-        h.append('<h3 id="model-%d">%s</h3>' % (n[0], title))
+        h.append('<h3 id="%s-%d">%s</h3>' % (anchor, n[0], title))
 
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
-    _model_part1.report_model(sec, p, fig)
+    fn(sec, p, fig)
     return ''.join(h)
+
+
+def report_model_cluster_html(head=True):
+    """클러스터 총소유비용. 본문은 insights/reports/model-cluster-2026-09-09.md."""
+    return _report_model_html(_model_part1.HEAD_CLUSTER, _model_part1.report_cluster,
+                              'model-cluster', head)
+
+
+def report_model_infer_html(head=True):
+    """추론 원가. 본문은 insights/reports/model-infer-2026-09-09.md."""
+    return _report_model_html(_model_part1.HEAD_INFER, _model_part1.report_infer,
+                              'model-infer', head)
 
 
 def report_trump_html(head=True):
@@ -404,11 +416,18 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 # 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
 # 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
 LAYERS = [
-    ('sec-model', '모델 검증', '2026-09-09',
-     '모델 총정리 — 남이 공개한 계산기를 다시 세우면 어디가 맞고 어디가 어긋나나',
-     'SemiAnalysis 영문 2편 · 표 그림 7장',
-     '발표된 표를 옮겨 적지 않고 계산을 다시 세우니 안쪽 한 층이 자기 수식과 어긋난다',
-     report_model_html),
+    # 모델링 섹션 — 카드 둘이 한 섹션에 선다. 재료도 어긋난 자리도 달라 한 글로
+    # 묶으면 절이 열넷이 된다. 섹션 id 가 같으면 dash_common 이 한 <section> 으로 묶는다
+    ('sec-model', '모델링', '2026-09-09',
+     '클러스터 총소유비용 — 발표된 계산기를 다시 세우면 굿풋에서 어긋난다',
+     'SemiAnalysis 영문 1편 · 표 그림 4장',
+     '총소유비용은 달러까지 맞는데 그 안의 굿풋 표가 자기 공표 수식과 어긋난다',
+     report_model_cluster_html),
+    ('sec-model', '모델링', '2026-09-09',
+     '추론 원가 — 13.3퍼센트는 왜 13.25퍼센트이고, 빌릴 때와 살 때 답이 왜 뒤집히나',
+     'SemiAnalysis 영문 1편 · 표 그림 3장',
+     '어긋난 모양이 반올림의 지문이라 역산으로 풀렸고, 소유 기준에서는 답이 뒤집힌다',
+     report_model_infer_html),
     ('sec-circ', '순환금융', '2026-09-09',
      '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
      'SemiAnalysis 12편 · 메르 6편',

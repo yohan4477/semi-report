@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""보고서 「모델 총정리」 층. 본문은 insights/reports/model-2026-09-09.md 에서 읽는다.
+"""보고서 「모델링」 섹션의 층 둘. 본문은 insights/reports/model-*-2026-09-09.md 다.
+
+한 섹션에 카드 둘이다. 클러스터 총소유비용과 추론 원가는 재료도 다르고 어긋난
+자리도 달라 한 글로 묶으면 절이 열넷이 된다. 섹션 id 를 같이 쓰면 dash_common 이
+한 <section> 으로 묶어 준다 — check_report 는 그 섹션을 통째로 잘라 숫자를 본다.
 
 트럼프 층(_trump_part1)과 같은 규약이다. 산문은 마크다운 원본에 두고 여기서 HTML 로
 바꾼다. 차례와 절 번호는 _rep_toc 가 붙인다 — 층마다 복사하지 않는다.
@@ -19,27 +23,44 @@ import _model_tbl as mt
 import _model_eq as me
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'insights', 'reports', 'model-2026-09-09.md')
+SRC_C = os.path.join(ROOT, 'insights', 'reports', 'model-cluster-2026-09-09.md')
+SRC_I = os.path.join(ROOT, 'insights', 'reports', 'model-infer-2026-09-09.md')
 
-HEAD_MODEL = (
-    '<div class="rep-head"><span class="rn">보고서 ⑪</span>'
-    '<h2 id="rep-model">모델 총정리 — 남이 공개한 계산기를 다시 세우면 어디가 맞고 '
-    '어디가 어긋나나</h2>'
-    '<p class="rm">바탕 <b>SemiAnalysis 영문 클리핑 2편</b>과 그 안의 표 그림 7장 · '
-    '한국어 변환본 1편<br>'
-    '값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 읽은 값은 '
-    '몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열에 적었습니다. 그림에서 읽은 '
-    '값은 픽셀이라 자릿수 오독 가능성이 남습니다. 모델 코드는 '
-    '<code>insights/models/</code> 에 있고 검사기가 매번 발표치와 대조합니다.</p></div>')
+_NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
+         '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
+         '캡션에 적었습니다. 그림에서 읽은 값은 픽셀이라 자릿수 오독 가능성이 남습니다. '
+         '모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
+         '대조합니다.')
 
-GROUPS = [('무엇을 왜 다시 세우나', 1, 2),
-          ('학습 클러스터 — 고장이 원가가 되는 길', 3, 5),
-          ('추론 — 서버 값이 원가가 되는 길', 6, 8),
-          ('남은 것', 9, 9)]
 
-LEAD = ('리서치 회사가 낸 표를 옮겨 적는 대신 그 표를 만든 계산을 다시 세웠습니다. '
-        '큰 층은 달러 단위까지 맞았고, 두 글 모두 안쪽 한 층에서 어긋났습니다. '
-        '어긋난 방식이 서로 달랐다는 것이 이 글의 물음입니다.')
+def _head(num, anchor, title, base):
+    return ('<div class="rep-head"><span class="rn">보고서 %s</span>'
+            '<h2 id="rep-%s">%s</h2>'
+            '<p class="rm">바탕 <b>%s</b><br>%s</p></div>' % (num, anchor, title, base, _NOTE))
+
+
+HEAD_CLUSTER = _head('⑪', 'model-cluster',
+                     '클러스터 총소유비용 — 발표된 계산기를 다시 세우면 굿풋에서 어긋난다',
+                     'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 4장 · 한국어 변환본 1편')
+HEAD_INFER = _head('⑫', 'model-infer',
+                   '추론 원가 — 13.3퍼센트는 왜 13.25퍼센트이고, 빌릴 때와 살 때 답이 왜 뒤집히나',
+                   'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 3장')
+
+GROUPS_CLUSTER = [('무엇을 왜 다시 세우나', 1, 2),
+                  ('고장이 원가가 되는 길', 3, 5),
+                  ('남은 것', 6, 6)]
+
+GROUPS_INFER = [('서버 값에서 시간당 단가까지', 1, 2),
+                ('답이 갈리는 자리', 3, 3),
+                ('남은 것', 4, 4)]
+
+LEAD_CLUSTER = ('리서치 회사가 낸 표를 옮겨 적는 대신 그 표를 만든 계산을 다시 세웠습니다. '
+                '총소유비용 표는 달러 단위까지 맞았고, 그 안에 든 굿풋 표는 세 칸이 자기네 '
+                '공표 수식과 어긋났습니다. 빠진 항이 시나리오마다 다릅니다.')
+
+LEAD_INFER = ('같은 방법을 추론 칩 비교에 씁니다. 자본비가 어긋난 모양이 반올림의 지문이라 '
+              '역산으로 풀렸고, 원문이 임대 시장으로만 답한 물음을 소유 기준으로 다시 풀면 '
+              '작업 종류에 따라 답이 뒤집힙니다.')
 
 CAPTION = {
     'STACK': ('청구서에 찍히는 다섯 줄과 안 찍히는 세 줄', mf.FIG_STACK,
@@ -57,7 +78,7 @@ CAPTION = {
     'CHAIN': ('서버 값 한 줄이 GPU 시간당 단가가 되기까지', mf.FIG_CHAIN,
               '값은 MI300X 열이고 출처는 그림 049 와 050 입니다. 점선 상자는 이 글이 안 '
               '다루는 마디입니다 — 추론 원가 글에는 굿풋 항이 없습니다. WACC 13.25% 는 '
-              '표에 찍힌 13.3% 가 아니라 우리가 발표된 월 자본비에서 역산한 값입니다(7절). '
+              '표에 찍힌 13.3% 가 아니라 우리가 발표된 월 자본비에서 역산한 값입니다(2절). '
               '아래 상자의 월 시간 차이는 두 글을 섞을 때 실제로 걸리는 자리입니다.'),
     'THRESHOLD': ('문턱 0.82를 넘느냐로 소유의 답이 갈린다', mf.FIG_THRESHOLD,
                   '점과 가로 막대는 원문이 낸 손익분기 임대료(L298·L302·L306)를 H200 시세 '
@@ -67,6 +88,7 @@ CAPTION = {
                   '원문에 없고 우리가 자기 TCO 로 계산한 문턱입니다. 오른쪽 점선 1.00 은 '
                   '빌릴 때의 문턱입니다.'),
 }
+
 
 _CITE = re.compile(r'\s*\(([^()]*?\b(?:[LT]\d|[a-z]\d)[^()]*)\)')
 
@@ -160,8 +182,8 @@ def table_html(key):
     return ''.join(h)
 
 
-def load():
-    txt = io.open(SRC, encoding='utf-8').read()
+def load(src):
+    txt = io.open(src, encoding='utf-8').read()
     if txt.startswith('---'):
         txt = txt.split('---', 2)[2]
     out, para, tbl = [], [], []
@@ -202,19 +224,19 @@ def load():
     return out
 
 
-def toc_html(titles):
+def toc_html(anchor, lead, groups, titles):
     """규약과 코드는 _rep_toc 하나뿐이다 — 층마다 복사하면 갈린다(2026-09-05)."""
-    return rt.toc_html('model', LEAD, GROUPS, titles)
+    return rt.toc_html(anchor, lead, groups, titles)
 
 
-def report_model(sec, p, fig):
-    items = load()
+def _report(src, anchor, lead, groups, sec, p, fig):
+    items = load(src)
     titles = [t for k, t in items if k == 'sec']
-    assert len(titles) == GROUPS[-1][2], (len(titles), GROUPS)
+    assert len(titles) == groups[-1][2], (len(titles), groups)
     toc_done = False
     for k, v in items:
         if k in ('sec', 'fig', 'tbl', 'eq') and not toc_done:
-            p(toc_html(titles))
+            p(toc_html(anchor, lead, groups, titles))
             toc_done = True
         if k == 'sec':
             sec(rt.sec_title(titles.index(v) + 1, v))
@@ -229,3 +251,11 @@ def report_model(sec, p, fig):
         elif k == 'table':
             p(_table(v))
     return titles
+
+
+def report_cluster(sec, p, fig):
+    return _report(SRC_C, 'model-cluster', LEAD_CLUSTER, GROUPS_CLUSTER, sec, p, fig)
+
+
+def report_infer(sec, p, fig):
+    return _report(SRC_I, 'model-infer', LEAD_INFER, GROUPS_INFER, sec, p, fig)

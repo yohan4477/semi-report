@@ -85,7 +85,9 @@ def toc_html(anchor, lead, groups, titles):
 
 _TOC = re.compile(r'<p class="rep-toc">(.*?)</p>', re.S)
 _TG = re.compile(r'<b class="tg">(\d+)\.\s')
-_LINK = re.compile(r'<a href="#[a-z]+-\d+">(.)')
+# 앵커에 하이픈이 든다(model-cluster). [a-z]+ 만 받으면 그 층의 링크를
+# 하나도 못 세어 「절 링크가 없다」로 잡힌다(2026-09-09)
+_LINK = re.compile(r'<a href="#[a-z-]+-\d+">(.)')
 _CIRC = set(chr(0x2460 + i) for i in range(20))
 
 
