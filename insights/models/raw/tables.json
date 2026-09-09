@@ -55,6 +55,16 @@
       "read_on": "2026-09-10",
       "korean": null,
       "hours_per_month": null
+    },
+    "cerebras": {
+      "clipping": "input/clippings/Cerebras — Faster Tokens Please.md",
+      "title": "Cerebras — Faster Tokens Please",
+      "publisher": "SemiAnalysis",
+      "url": "https://newsletter.semianalysis.com/p/cerebras-faster-tokens-please",
+      "published": "2026-08-19",
+      "read_on": "2026-09-10",
+      "korean": null,
+      "hours_per_month": null
     }
   },
   "tables": [
@@ -994,6 +1004,143 @@
           3.0,
           "GW",
           "PJM영문 L304"
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "wse3-spec",
+      "source": "cerebras",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-10",
+      "title": "WSE-3 — 원문이 글로 밝힌 사양",
+      "columns": [
+        "what",
+        "value",
+        "unit",
+        "cite"
+      ],
+      "rows": {
+        "sram_gb": [
+          "웨이퍼 한 장의 SRAM",
+          44,
+          "GB",
+          "세레브라스영문 L91"
+        ],
+        "flops_sparse_pf": [
+          "마케팅에 쓰는 FP16 연산량 (희소)",
+          125,
+          "PFLOPS",
+          "세레브라스영문 L93"
+        ],
+        "flops_dense_pf": [
+          "개발자가 실제로 쓰는 FP16·INT8 연산량 (조밀)",
+          15.625,
+          "PFLOPS",
+          "세레브라스영문 L191"
+        ],
+        "ridge": [
+          "원문이 낸 최적 산술 강도",
+          0.74,
+          "FLOP/byte",
+          "세레브라스영문 L227"
+        ],
+        "io_gbs": [
+          "웨이퍼 밖 대역폭",
+          150,
+          "GB/s",
+          "세레브라스영문 L97·L309"
+        ],
+        "io_per_mm": [
+          "가장자리 1mm 가 나르는 양",
+          0.17,
+          "GB/s/mm",
+          "세레브라스영문 L279"
+        ],
+        "nvidia_denser": [
+          "엔비디아 칩의 가장자리 밀도 배수",
+          130,
+          "배",
+          "세레브라스영문 L279"
+        ],
+        "area_mm2": [
+          "웨이퍼 면적",
+          46225,
+          "mm²",
+          "세레브라스영문 L141"
+        ],
+        "side_mm": [
+          "웨이퍼 한 변",
+          215,
+          "mm",
+          "세레브라스영문 L143"
+        ],
+        "power_kw": [
+          "웨이퍼 하나가 먹는 전력",
+          25,
+          "kW",
+          "세레브라스영문 L141"
+        ],
+        "power_density": [
+          "제곱센티미터당 전력",
+          50,
+          "W/cm²",
+          "세레브라스영문 L141"
+        ],
+        "dies": [
+          "웨이퍼 위 다이 수",
+          84,
+          "개",
+          "세레브라스영문 L81"
+        ],
+        "sram_share": [
+          "실리콘 면적 중 SRAM 몫",
+          50,
+          "%",
+          "세레브라스영문 L81"
+        ],
+        "nvlink5_gbs": [
+          "블랙웰 NVLink5 의 GPU 한 장당 대역폭",
+          900,
+          "GB/s",
+          "세레브라스영문 L309"
+        ],
+        "groq_tbs": [
+          "Groq LP30 의 칩 밖 대역폭",
+          9.6,
+          "Tb/s",
+          "세레브라스영문 L275"
+        ],
+        "hbm3e_stack_gb": [
+          "HBM3E 12단 한 스택의 용량",
+          36,
+          "GB",
+          "세레브라스영문 L107"
+        ],
+        "wafer_cost_k": [
+          "TSMC N5 웨이퍼 한 장 값",
+          20,
+          "천 달러",
+          "세레브라스영문 L177"
+        ],
+        "cs3_tco_hr": [
+          "CS-3 한 대의 시간당 총소유비용",
+          23.35,
+          "달러/시간",
+          "세레브라스영문 L387"
+        ],
+        "cs3_rental_hr": [
+          "오픈AI 계약이 함의하는 시간당 임대료",
+          41.96,
+          "달러/시간",
+          "세레브라스영문 L373"
+        ],
+        "cs3_asp_m": [
+          "외부 고객 판매가 가정",
+          1.3,
+          "백만 달러",
+          "세레브라스영문 L389"
         ]
       },
       "redacted": []
