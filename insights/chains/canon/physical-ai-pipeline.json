@@ -1,0 +1,85 @@
+{
+  "canon_slug": "physical-ai-pipeline",
+  "section": "physicalai",
+  "chain_name": "물리적 AI(휴머노이드) 작동 파이프라인",
+  "one_line": "디지털 시뮬레이션 구간은 엔비디아·유니티 두 회사가 사실상 양분해 가장 유망하고, 액추에이터는 스위스·독일·일본 기계 업체가 이미 장악해 투자 대상에서 제외한다.",
+  "sources": [
+    {"src": "2025-07-27-ai-stages", "date": "2025-07-27"},
+    {"src": "2025-08-03-simulation", "date": "2025-08-03"}
+  ],
+  "parent": "ai-evolution-stages", "parent_stage": "물리적 AI",
+  "stages": [
+    {
+      "order": 1,
+      "name": "환경 인식(센서)",
+      "desc": "카메라, 라이다, 레이더 등 센서로 외부 환경을 인식하는 구간.",
+      "refs": [
+        {"src": "2025-07-27-ai-stages", "lines": "L80~L82"},
+        {"src": "2025-08-03-simulation", "lines": "L21~L23"}
+      ],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "스마트폰 시절부터 카메라 모듈을 만드는 회사가 이미 너무 많고 자율주행용 라이다·레이더 업체도 많아 투자하기 애매해 투자 대상에서 제외한다"
+    },
+    {
+      "order": 2,
+      "name": "상황 판단(에이전틱 AI 모델)",
+      "desc": "인식된 환경을 바탕으로 AI 모델이 상황을 판단하는 구간으로, 팔란티어 같은 에이전틱 AI 회사가 담당한다.",
+      "refs": [
+        {"src": "2025-07-27-ai-stages", "lines": "L82~L83"},
+        {"src": "2025-08-03-simulation", "lines": "L26~L28"}
+      ],
+      "companies": [
+        {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "에이전틱 AI", "numbers": "",
+         "refs": [{"src": "2025-08-03-simulation", "lines": "L27"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "산업 밸류체인을 정확히 알아야 투자할 수 있는 영역이고, 산업마다 에이전틱 AI를 표방하는 업체가 너무 많아 그때그때 분석이 필요하다"
+    },
+    {
+      "order": 3,
+      "name": "디지털 시뮬레이션(디지털 트윈)",
+      "desc": "휴머노이드 로봇이 짧은 기간에 새로운 동작을 익히는 원동력으로, 현실과 비슷한 가상 세계(디지털 트윈)를 만들어 로봇을 수천~수만 번 시뮬레이션한다. 아마존은 물류창고 자동화(피킹 로봇·컨베이어 벨트)를, 닛산은 자동차 조립 공정을 디지털 트윈으로 복제해 시뮬레이션하고 있으며, 스마트 팩토리에는 이런 산업용 로봇(피지컬 AI)이 수십~수천 대 배치된다.",
+      "refs": [
+        {"src": "2025-07-27-ai-stages", "lines": "L87~L100"},
+        {"src": "2025-08-03-simulation", "lines": "L32~L57"}
+      ],
+      "companies": [
+        {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "피지컬 AI·휴머노이드용 디지털 시뮬레이션 시장 담당", "numbers": "",
+         "refs": [{"src": "2025-08-03-simulation", "lines": "L53"}]},
+        {"name": "유니티", "raw_name": "유니티", "country": "", "role": "피지컬 AI·휴머노이드용 디지털 시뮬레이션 담당, 원래 게임 소프트웨어·광고 플랫폼 회사였으나 현재는 디지털 시뮬레이션이 매출 성장률이 가장 높은 사업으로 무게중심이 옮겨짐", "numbers": "",
+         "refs": [{"src": "2025-08-03-simulation", "lines": "L53, L70~L71"}]},
+        {"name": "지멘스", "raw_name": "지멘스", "country": "", "role": "물리 구조·전기·열 등 목적 지향적 시뮬레이션 소프트웨어 제공, 피지컬 AI 학습용 시뮬레이션 업체로 보기는 어려움", "numbers": "",
+         "refs": [{"src": "2025-08-03-simulation", "lines": "L54~L56"}]},
+        {"name": "앤시스", "raw_name": "앤시스", "country": "", "role": "목적 지향적 시뮬레이션 소프트웨어 제공(도시 교통 등)", "numbers": "",
+         "refs": [{"src": "2025-08-03-simulation", "lines": "L54~L56"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "피지컬 AI·휴머노이드 관련 디지털 시뮬레이션·디지털 트윈 시장을 지금은 엔비디아와 유니티 두 업체가 사실상 담당하고 있다",
+      "bottleneck_refs": [{"src": "2025-08-03-simulation", "lines": "L53"}],
+      "judgment": "원래 도식에서 빠뜨렸던 구간으로, 아직 시장을 완전히 장악한 사업자가 없고 두세 개 업체가 막 부상하는 상황이라 지금 투자하면 3~4년 뒤 수익률이 좋을 것으로 본다(2025-07-27). 이후 시장을 조사한 결과 이 구간이 피지컬 AI·휴머노이드 관련해서 가장 유망하다고 판단하며, 특히 유니티를 모건스탠리 리포트도 유망하게 본다고 언급한다(2025-08-03)"
+    },
+    {
+      "order": 4,
+      "name": "물리적 행동(액추에이터)",
+      "desc": "액추에이터는 로봇을 움직이게 하는 관절 등을 통칭하며, 이를 통해 실제 물리적 행동을 수행한다.",
+      "refs": [
+        {"src": "2025-07-27-ai-stages", "lines": "L83~L86"},
+        {"src": "2025-08-03-simulation", "lines": "L28~L29"}
+      ],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "스위스·독일·일본의 튼튼한 기계 업체들이 액추에이터 시장을 거의 다 장악하고 있어 신규 진입 회사를 찾기 어렵다",
+      "bottleneck_refs": [
+        {"src": "2025-07-27-ai-stages", "lines": "L84~L86"},
+        {"src": "2025-08-03-simulation", "lines": "L29"}
+      ],
+      "judgment": "이 영역은 투자 대상에서 제외한다"
+    }
+  ],
+  "notes": "진행자는 이 피지컬 AI 파이프라인이 업계에서 통용되는 정식 밸류체인이 아니라 자신이 임의로 구성한 것이라고 밝힌다(2025-08-03, L15~L17)."
+}

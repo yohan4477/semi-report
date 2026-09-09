@@ -1,0 +1,77 @@
+{
+  "canon_slug": "ai-evolution-stages",
+  "section": "physicalai",
+  "chain_name": "AI 진화 4단계(젠슨 황 CES 발표 기반)",
+  "one_line": "생성형 단계는 오픈AI·딥시크 모두 비상장이라 투자할 회사가 거의 없고, 팔란티어(1년여 약 10배 상승) 같은 에이전틱 단계와 이제 막 시작하는 물리적 단계에만 투자할 상장사가 있다.",
+  "sources": [
+    {"src": "2025-07-27-ai-stages", "date": "2025-07-27"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "인식형 AI",
+      "desc": "아이폰 시리, 지문·얼굴 인식으로 사용자를 인증하는 수준의 단순한 AI.",
+      "refs": [{"src": "2025-07-27-ai-stages", "lines": "L43~L45"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "생성형 AI",
+      "desc": "챗GPT처럼 온라인 정보를 수집해 답을 생성해 주는 단계.",
+      "refs": [{"src": "2025-07-27-ai-stages", "lines": "L46~L48"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "오픈AI, 딥시크 모두 비상장이라 이 단계는 투자할 만한 회사가 거의 없다"
+    },
+    {
+      "order": 3,
+      "name": "에이전틱 AI",
+      "desc": "기존 정보로 답을 생성하는 수준을 넘어 AI가 의사결정까지 하는 단계.",
+      "refs": [{"src": "2025-07-27-ai-stages", "lines": "L49, L55"}],
+      "companies": [
+        {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "에이전틱 AI 대표 기업, 최근 1년여간 약 10배 상승", "numbers": "약 10배 상승",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L49, L57"}]},
+        {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "에이전틱 AI 영역의 주요 하이퍼스케일러", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L55"}]},
+        {"name": "구글", "raw_name": "구글", "country": "", "role": "에이전틱 AI 영역의 주요 하이퍼스케일러", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L55"}]},
+        {"name": "아마존", "raw_name": "아마존", "country": "", "role": "에이전틱 AI 영역의 주요 하이퍼스케일러", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L55"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "투자할 만한 회사가 비교적 많은 단계다"
+    },
+    {
+      "order": 4,
+      "name": "물리적 AI",
+      "desc": "AI가 디지털 세상에서 현실 세계로 나오는 단계로, 자율주행차·휴머노이드·산업용 로봇이 대표적이다.",
+      "refs": [{"src": "2025-07-27-ai-stages", "lines": "L50~L51, L69~L74"}],
+      "companies": [
+        {"name": "테슬라", "raw_name": "테슬라", "country": "", "role": "휴머노이드(옵티머스)", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L72"}]},
+        {"name": "피규어 AI", "raw_name": "피규어 AI", "country": "", "role": "휴머노이드", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L72"}]},
+        {"name": "앱트로닉", "raw_name": "앱트로닉", "country": "", "role": "휴머노이드", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L72"}]},
+        {"name": "보스턴 다이나믹스", "raw_name": "보스턴 다이나믹스", "country": "", "role": "휴머노이드, 현대차가 지분 보유", "numbers": "",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L72"}]},
+        {"name": "유니트리 로보틱스", "raw_name": "유니트리 로보틱스", "country": "중국", "role": "휴머노이드 로봇 1대 1만6천 달러 저가 공급 계획", "numbers": "1만6천 달러",
+         "refs": [{"src": "2025-07-27-ai-stages", "lines": "L72~L73"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "이제 막 시작하는 산업이라 좋은 회사를 선점하면 급등 기회가 있을 것으로 본다"
+    }
+  ],
+  "notes": ""
+}

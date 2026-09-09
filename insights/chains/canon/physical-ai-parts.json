@@ -1,0 +1,58 @@
+{
+  "canon_slug": "physical-ai-parts",
+  "section": "physicalai",
+  "chain_name": "피지컬 AI 부품 스택",
+  "one_line": "액추에이터·추론칩(브로드컴·마벨)은 이미 부각됐지만, 사람의 눈·촉각 역할을 하는 센서(소니·코그넥스·암브렐라)는 아직 주가가 많이 오르지 않았다.",
+  "sources": [
+    {"src": "2026-05-18-ai-winner", "date": "2026-05-18"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "액추에이터",
+      "desc": "휴머노이드 로봇의 움직임을 만드는 부품.",
+      "refs": [{"src": "2026-05-18-ai-winner", "lines": "L146"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "추론칩(LPU·TPU)",
+      "desc": "피지컬 AI가 움직이는 데 필요한 추론용 반도체.",
+      "refs": [{"src": "2026-05-18-ai-winner", "lines": "L147~L149"}],
+      "companies": [
+        {"name": "브로드컴", "raw_name": "브로드컴", "country": "", "role": "LPU·TPU 계열 추론칩 제조", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L149"}]},
+        {"name": "마벨", "raw_name": "마벨", "country": "", "role": "LPU·TPU 계열 추론칩 제조", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L149"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "센서",
+      "desc": "로봇·자율주행차가 현실 세계를 인지하도록 이미지·힘·압력·촉각을 디지털화하는 부품. 아직 주가가 많이 오르지 않은 영역.",
+      "refs": [{"src": "2026-05-18-ai-winner", "lines": "L150~L165"}],
+      "companies": [
+        {"name": "소니", "raw_name": "소니", "country": "", "role": "TSMC와 이미지 센서 파운드리 공장 건설, 반도체 사업 본격화", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L153~L154"}]},
+        {"name": "코그넥스", "raw_name": "코그넥스", "country": "", "role": "센서 관련 업체", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L161"}]},
+        {"name": "암브렐라", "raw_name": "암브렐라", "country": "", "role": "센서 관련 업체", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L161"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "피지컬 AI가 현실을 인지하려면 센서가 사람의 눈·촉각 역할을 해야 하는데, 이 영역 회사들은 아직 주가가 많이 안 올랐다"
+    }
+  ],
+  "notes": ""
+}

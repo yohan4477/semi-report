@@ -1,0 +1,74 @@
+{
+  "canon_slug": "autonomous-driving-image-sensor",
+  "section": "physicalai",
+  "chain_name": "자율주행 병목 사슬 — 이미지 센서",
+  "one_line": "구글 웨이모·아마존 죽스·테슬라 사이버캡 3파전에서 누가 이겨도 카메라(이미지 센서)가 필요하고, 그 시장 대부분을 소니가 장악하고 있다.",
+  "sources": [
+    {"src": "2026-08-02-why-you-fail-en", "date": "2026-08-02"},
+    {"src": "2026-08-09-news-to-ideas-en", "date": "2026-08-09"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "자율주행 서비스",
+      "desc": "구글 웨이모, 아마존 죽스, 테슬라 사이버캡의 3파전이 본격화된다.",
+      "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L247~L249"}],
+      "companies": [
+        {"name": "웨이모", "raw_name": "웨이모", "country": "", "role": "구글의 자율주행 서비스", "numbers": "",
+         "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L247"}]},
+        {"name": "죽스", "raw_name": "죽스", "country": "", "role": "아마존의 자율주행 서비스", "numbers": "",
+         "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L247"}]},
+        {"name": "사이버캡", "raw_name": "사이버캡", "country": "", "role": "테슬라의 자율주행 서비스", "numbers": "",
+         "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L247"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "이미지 센서(카메라)",
+      "desc": "자율주행차가 바깥 세상을 인식하려면 어떤 회사든 카메라(이미지 센서)를 쓸 수밖에 없다. 카메라 안에는 이미지 센서가 들어간다.",
+      "refs": [
+        {"src": "2026-08-02-why-you-fail-en", "lines": "L60~L64"},
+        {"src": "2026-08-09-news-to-ideas-en", "lines": "L250~L254"}
+      ],
+      "companies": [
+        {"name": "소니", "raw_name": "소니", "country": "", "role": "전 세계 이미지 센서 시장 대부분을 장악", "numbers": "",
+         "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L252"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "테슬라가 이기든 구글 웨이모가 이기든 양쪽 다 카메라(이미지 센서)를 쓸 수밖에 없는 첫 번째 병목 지점이고, 그 이미지 센서 시장 대부분을 소니가 장악하고 있다",
+      "bottleneck_refs": [
+        {"src": "2026-08-02-why-you-fail-en", "lines": "L59~L64"},
+        {"src": "2026-08-09-news-to-ideas-en", "lines": "L252"}
+      ],
+      "judgment": "이미 수익을 많이 낸 데이터센터·반도체 병목 투자에서 벗어나 이제는 자율주행 쪽 병목(이미지 센서, 소니)을 찾아야 한다"
+    },
+    {
+      "order": 3,
+      "name": "판단 반도체(디지털화·실시간 판단)",
+      "desc": "이미지 센서로 들어온 아날로그 데이터를 디지털화하고 실시간으로 판단하는 반도체 단계.",
+      "refs": [{"src": "2026-08-02-why-you-fail-en", "lines": "L65~L66"}],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "아날로그 데이터를 디지털화해 실시간 판단하는 이 반도체 영역에서 병목이 발생할 가능성이 크다고 본다",
+      "bottleneck_refs": [{"src": "2026-08-02-why-you-fail-en", "lines": "L65~L66"}],
+      "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "통신 칩",
+      "desc": "자율주행차가 도로·신호등·다른 차량과 정보를 주고받으려면 통신이 필요한 단계.",
+      "refs": [{"src": "2026-08-02-why-you-fail-en", "lines": "L67~L71"}],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "도로·신호등·다른 자율주행차와 정보를 주고받으려면 통신 칩이 엄청나게 많이 쓰일 것이라 이 영역에서도 병목이 발생할 가능성이 크다고 본다",
+      "bottleneck_refs": [{"src": "2026-08-02-why-you-fail-en", "lines": "L69~L71"}],
+      "judgment": "AI 쪽에서 반도체·HBM이 병목이라 말하는 시기는 이미 지났다 — 전 세계 반도체 회사들이 증설 중이라 조만간 공급이 쏟아질 것"
+    }
+  ],
+  "notes": "진행자는 '1등 회사를 맞추는 것'보다 '병목을 찾는 것'이 개인 투자자에게 더 현실적인 전략이라고 강조하며 이 자율주행 사슬을 그 예시로 든다(2026-08-02, L50~L55)."
+}
