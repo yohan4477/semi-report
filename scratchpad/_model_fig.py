@@ -45,10 +45,12 @@ def _vline(x, y1, y2, dash=False):
 _CW, _CH, _CGAP = 132, 46, 14
 _CY = 52
 _CELL = [(20 + i * (_CW + _CGAP), _CY, _CW, _CH) for i in range(4)]
-_STAGE = [['① 사는 값', '자본지출'],
-          ['② 매달 나가는 값', '운영비'],
-          ['③ 헛돈 시간', '굿풋 손실'],
-          ['④ 시간당 단가', 'GPU-시간']]
+# 판 상자에는 번호를 안 단다. 동그라미 번호는 화살표 범례가 쓰는 기호라
+# 상자에도 달면 같은 ①이 두 뜻이 된다(2026-09-09)
+_STAGE = [['사는 값', '자본지출'],
+          ['매달 나가는 값', '운영비'],
+          ['헛돈 시간', '굿풋 손실'],
+          ['시간당 단가', 'GPU-시간']]
 
 
 def _stage_board(accent=(), skip=()):
@@ -79,9 +81,12 @@ _ITEMS = [('GPU', '14,929,920', True),
           ('굿풋 손실 10.53%', '1,571,424', False),
           ('설치(36개월 상각)', '416,572', False),
           ('디버깅', '8,333', False)]
-_IX, _IY, _IH = 20, 62, 30
+_IX, _IH = 20, 30
 _IBAR, _IBARW = 228, 244
 _IMAX = 14_929_920
+# 묶음 둘. 세로 구분선을 그으면 왼쪽 항목 이름을 가로지른다(2026-09-09) —
+# 선 대신 묶음 머리글과 빈 줄로 가른다
+_G1Y, _G2Y = 62, 232
 
 
 def _ibar(v):
@@ -89,8 +94,7 @@ def _ibar(v):
     return _IBARW * (v / _IMAX) ** 0.5
 
 
-def _item_row(i, name, val, billed):
-    y = _IY + i * _IH
+def _item_row(y, name, val, billed):
     v = float(val.replace(',', ''))
     col = INK3 if billed else INK
     return ''.join([
@@ -101,12 +105,13 @@ def _item_row(i, name, val, billed):
     ])
 
 
-FIG_STACK = _svg(W, 386, '청구서에 찍히는 다섯 줄과 안 찍히는 세 줄', ''.join(
-    [_lt(_IX, 30, '월 비용 항목'), _lt(_IBAR, 30, '금액 (막대는 제곱근 눈금)')]
-    + [_item_row(i, *it) for i, it in enumerate(_ITEMS)]
-    + [_vline(_IX + 4, 52, 62 + 5 * _IH),
-       _lt(_IX + 12, 316, '위 다섯은 청구서에 찍힌다. 아래 셋은 안 찍힌다', 't-sm', False),
-       _box(_IX, 328, W - 40, 44,
+FIG_STACK = _svg(W, 420, '청구서에 찍히는 다섯 줄과 안 찍히는 세 줄', ''.join(
+    [_lt(_IX, 30, '월 비용 항목'), _lt(_IBAR, 30, '금액 (막대는 제곱근 눈금)'),
+     _lt(_IX, _G1Y - 8, '청구서에 찍힌다', 't-lab', False)]
+    + [_item_row(_G1Y + i * _IH, *it) for i, it in enumerate(_ITEMS[:5])]
+    + [_lt(_IX, _G2Y - 8, '청구서에 안 찍힌다', 't-lab', False)]
+    + [_item_row(_G2Y + i * _IH, *it) for i, it in enumerate(_ITEMS[5:])]
+    + [_box(_IX, 340, W - 40, 44,
             ['굿풋 손실은 GPU 비용에만 붙는다. 저장·망·컨트롤 플레인에는 안 붙는다',
              '이 규칙은 표에 안 적혀 있고 결과 값에서 거꾸로 읽어야 나온다'])]
 ))
@@ -161,7 +166,7 @@ def _chain_fig():
     out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" fill="var(--paper)" '
                'stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="5 4"/>'
                % (x3, y3, w3, h3))
-    out.append(_t(x3 + w3 // 2, y3 + 20, '③ 헛돈 시간', 't-lab'))
+    out.append(_t(x3 + w3 // 2, y3 + 20, '헛돈 시간', 't-lab'))
     out.append(_t(x3 + w3 // 2, y3 + 36, '이 글은 안 다룸'))
     # 위 — 자본지출로 들어가는 둘. 상자로 세우면 ①과 값 글자가 테두리에 깔린다.
     # 더하기 한 줄이면 충분한 자리라 글자만 얹는다
@@ -197,7 +202,10 @@ FIG_CHAIN = _svg(W, 316, '서버 값 한 줄이 GPU 시간당 단가가 되기�
 # ── 절 8. 빌릴 때와 살 때 문턱이 다르다 ─────────────────────────────────
 # 가로 축은 H200 대비 처리량 비율 하나뿐이다. 문턱 둘을 세로선으로 세우고
 # 작업 셋의 실측 구간을 그 위에 얹는다.
-_TX0, _TXW = 130, 420
+# 값 글자는 판 오른쪽 고정 칸에 세운다. 막대 끝에 붙이면 1.00 점선을,
+# 막대 왼쪽에 붙이면 0.82 문턱선을 넘어 겹친다(2026-09-09)
+_TX0, _TXW = 130, 350
+_TVAL = 496
 _TLO, _THI = 0.70, 1.05
 
 
@@ -215,11 +223,16 @@ def _work_row(i):
     name, lo, hi = _WORK[i]
     x1, x2 = _tx(lo), _tx(hi)
     win = lo > 0.82
+    col = INK if win else INK3
+    # 구간이 아니라 값 하나면 막대가 실 한 오라기로 보인다 — 점으로 찍는다
+    mark = ('<circle cx="%.1f" cy="%d" r="7" fill="%s"/>' % (x1, y + 12, col)
+            if lo == hi else
+            '<rect x="%.1f" y="%d" width="%.1f" height="20" rx="3" fill="%s"/>'
+            % (x1, y + 2, x2 - x1, col))
     return ''.join([
         _lt(20, y + 18, name, bold=False),
-        '<rect x="%.1f" y="%d" width="%.1f" height="20" rx="3" fill="%s"/>'
-        % (x1, y + 2, max(x2 - x1, 5.0), INK if win else INK3),
-        _lt(int(x2) + 10, y + 18,
+        mark,
+        _lt(_TVAL, y + 18,
             '%.2f' % lo if lo == hi else '%.2f~%.2f' % (lo, hi), 't-sm', False),
     ])
 
@@ -240,5 +253,5 @@ FIG_THRESHOLD = _svg(W, 306, '문턱 0.82를 넘느냐로 소유의 답이 갈�
        _t(_tx(1.00), 250, '빌릴 때 문턱 1.00', 't-lab'),
        _box(20, 258, W - 40, 44,
             ['왼쪽 문턱은 우리가 자기 TCO 로 계산한 것이고 원문에는 없다',
-             '가로 막대의 값은 원문이 낸 손익분기 임대료를 뒤집어 낸 비율이다'])]
+             '점과 막대의 값은 원문이 낸 손익분기 임대료를 뒤집어 낸 비율이다'])]
 ))
