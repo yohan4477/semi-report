@@ -55,9 +55,13 @@ NUM = '①②③④⑤⑥⑦⑧⑨'
 
 
 def _mark(x, y, n):
-    """화살표에 붙는 동그라미 번호. 설명은 판 위에 안 얹고 아래 범례로 내린다."""
-    return ('<circle cx="%d" cy="%d" r="10" fill="var(--paper)" stroke="%s" '
-            'stroke-width="1.5"/>%s' % (x, y, INK3, _t(x, y + 5, NUM[n - 1], 't-lab')))
+    """화살표에 붙는 동그라미 번호. 설명은 판 위에 안 얹고 아래 범례로 내린다.
+
+    ①은 그 자체가 동그라미다. 테두리를 두르면 동그라미가 두 겹으로 보인다 —
+    선을 가리려고 까는 바탕 원은 테두리 없이 종이색으로만 둔다.
+    """
+    return ('<circle cx="%d" cy="%d" r="10" fill="var(--paper)"/>%s'
+            % (x, y, _t(x, y + 5, NUM[n - 1], 't-lab')))
 
 
 def _legend(y, items):
