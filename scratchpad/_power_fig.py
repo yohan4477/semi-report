@@ -10,6 +10,7 @@
 import _biz_fig as bf
 
 _svg, _box, _a, _lt, _row = bf._svg, bf._box, bf._a, bf._lt, bf._row
+_elbow = bf._elbow
 W = 640
 INK, INK3 = 'var(--ink)', 'var(--ink-3)'
 
@@ -375,3 +376,195 @@ FIG_SKIP = _svg(W, 128, '대형 변압기 마디를 건너뛰고 곧바로 낮�
        'marker-end="url(#fig-arrow)"/>'
        % (_C[0][0] + _C[0][2], 68, W // 2 - 66, 24, _C[2][0], 68, INK)]
 ))
+
+
+# ── 도해 13. 발전 설비 단가 ──────────────────────────────────────────
+# 값을 견줄 때는 나란한 세로 막대, 범위는 위 끝(확정 규칙 2026-09-04).
+# 리드타임은 축이 달라 여기 안 넣는다 — 축이 둘이면 그림을 둘로 나눈다.
+_KMAX, _KH, _KBASE = 4000.0, 150, 206
+_KBARS = [(1800, '1,500~1,800', '산업용', '가스터빈', False),
+          (2000, '1,700~2,000', '항공유도', '가스터빈', False),
+          (2000, '1,700~2,000', '왕복엔진', '', False),
+          (4000, '3,000~4,000', '연료전지', '', True)]
+_KW2, _KG = 110, 26
+_KX0 = (W - (4 * _KW2 + 3 * _KG)) // 2
+
+
+def _kbar(i, v, lab, n1, n2, hot):
+    x = _KX0 + i * (_KW2 + _KG)
+    h = int(_KH * v / _KMAX)
+    y = _KBASE - h
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+           'stroke-width="1.6"/>' % (x, y, _KW2, h, 'var(--sunk)' if hot else 'none',
+                                     INK if hot else INK3),
+           _t(x + _KW2 // 2, y - 8, lab, 't-lab'),
+           _t(x + _KW2 // 2, _KBASE + 18, n1, 't-sm')]
+    if n2:
+        out.append(_t(x + _KW2 // 2, _KBASE + 34, n2, 't-sm'))
+    return ''.join(out)
+
+
+FIG_KW = _svg(W, 250, '자가발전 설비 단가', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_KX0 - 16, _KBASE, W - _KX0 + 16, _KBASE, INK3),
+     _lt(_KX0 - 16, 22, '킬로와트당 달러 (위 끝)', 't-sm', True)]
+    + [_kbar(i, *b) for i, b in enumerate(_KBARS)]))
+
+
+# ── 도해 14. 벤더가 말한 단축폭과 저자가 잰 값 ───────────────────────
+_VMAX, _VH, _VBASE = 85.0, 140, 196
+_VBARS = [(85, '85%', '버티브', '일부 제품군', False),
+          (60, '60%', '슈나이더', '전력·냉각 모듈', False),
+          (50, '50%', '버티브', '모듈 배포 단계', False),
+          (36, '36%', '저자 실측', '홀 하나 전체', True)]
+_VW, _VG = 116, 22
+_VX0 = (W - (4 * _VW + 3 * _VG)) // 2
+
+
+def _vbar(i, v, lab, who, scope, hot):
+    x = _VX0 + i * (_VW + _VG)
+    h = int(_VH * v / _VMAX)
+    y = _VBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _VW, h, 'var(--sunk)' if hot else 'none',
+                                  INK if hot else INK3),
+        _t(x + _VW // 2, y - 8, lab, 't-lab'),
+        _t(x + _VW // 2, _VBASE + 18, who, 't-sm'),
+        _t(x + _VW // 2, _VBASE + 34, scope, 't-sm'),
+    ])
+
+
+FIG_VENDOR = _svg(W, 240, '벤더가 말한 단축폭과 저자가 잰 값', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_VX0 - 16, _VBASE, W - _VX0 + 16, _VBASE, INK3),
+     _lt(_VX0 - 16, 22, '기간 단축폭', 't-sm', True)]
+    + [_vbar(i, *b) for i, b in enumerate(_VBARS)]))
+
+
+# ── 도해 15. 가속기 한 장을 한 시간 돌리는 값 ────────────────────────
+# 같은 축(시간당 달러)만 담는다. 자본비용과 월 총소유비용은 축이 달라 산문에 남긴다.
+_OMAX, _OH, _OBASE = 10.91, 150, 200
+_OBARS = [(2.37, '2.37달러', '지상', '', True), (2.49, '2.49달러', '지상', '할증 뒤', True),
+          (8.64, '8.64달러', '우주', '', False), (10.91, '10.91달러', '우주', '할증 뒤', False)]
+_OW, _OG, _OPAIR = 104, 20, 56
+_OX0 = (W - (4 * _OW + 2 * _OG + _OPAIR)) // 2
+
+
+def _obar(i, v, lab, who, note, ground):
+    x = _OX0 + i * (_OW + _OG) + (_OPAIR - _OG if i >= 2 else 0)
+    h = int(_OH * v / _OMAX)
+    y = _OBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _OW, h, 'var(--sunk)' if ground else 'none',
+                                  INK3 if ground else INK),
+        _t(x + _OW // 2, y - 8, lab, 't-lab'),
+        _t(x + _OW // 2, _OBASE + 18, who, 't-sm'),
+        _t(x + _OW // 2, _OBASE + 34, note, 't-sm'),
+    ])
+
+
+FIG_ORBIT = _svg(W, 244, '가속기 한 장을 한 시간 돌리는 값', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_OX0 - 16, _OBASE, W - _OX0 + 16, _OBASE, INK3),
+     _lt(_OX0 - 16, 22, '시간당 달러', 't-sm', True)]
+    + [_obar(i, *b) for i, b in enumerate(_OBARS)]))
+
+
+# ── 도해 16. 한 회사 안에서 갈리는 두 말 ─────────────────────────────
+# 견줄 때는 같은 꼴. 두 판이 같은 크기이고 줄도 같은 세 줄이다.
+_NW, _NLAB, _NGAP = 244, 92, 20
+_NH, _NY = 152, 44
+_NROWS = ['언제 말했나', '어디에 짓나', '무엇을 최우선으로']
+_NPANES = [('래리 코벤', ['2026년 2월 24일', 'PJM 밖에 5.4기가와트', '계통 밖 자체 발전']),
+           ('롭 고데트', ['2026년 5월 6일', '계통에 연결해서', '계통 연결형이 옳다'])]
+
+
+def _npanel(i, name, rows):
+    x = _NLAB + i * (_NW + _NGAP)
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" fill="none" stroke="%s" '
+           'stroke-width="1.5"/>' % (x, _NY, _NW, _NH, INK3),
+           _t(x + _NW // 2, _NY + 26, name, 't-lab')]
+    for k, s in enumerate(rows):
+        out.append(_t(x + _NW // 2, _NY + 62 + k * 32, s, 't-sm'))
+    return ''.join(out)
+
+
+FIG_NRG = _svg(W, 216, '같은 회사에서 두 말이 나온다',
+               ''.join([_lt(4, _NY + 62 + k * 32, s, 't-sm', False)
+                        for k, s in enumerate(_NROWS)])
+               + ''.join(_npanel(i, n, r) for i, (n, r) in enumerate(_NPANES)))
+
+
+# ── 도해 17. 텍사스에서 전력을 받는 길 ───────────────────────────────
+# 축이 둘이다 — 전력을 어디서 가져오나(둘)와 계통에 어떻게 붙나(셋). 앞뒤 관계가
+# 아니라 나란한 두 갈래라 위아래로 잇지 않는다. 개수는 원문이 센 수다.
+_EL, _EY_A, _EY_B = 104, 44, 128
+# 줄 이름 자리(_EL)를 비우고 그 오른쪽부터 상자를 놓는다 — 가운데 정렬하면 이름과 겹친다
+_EROWA = [(_EL + i * (248 + 24), _EY_A, 248, 46) for i in range(2)]
+_EROWB = [(_EL + i * (164 + 14), _EY_B, 164, 46) for i in range(3)]
+_EA = [['순계량'], ['자체 발전 설비']]
+_EB = [['계량점을 하나로'], ['인출 상한까지'], ['혼잡할 때 줄인다']]
+
+FIG_ERCOTWAY = _svg(W, 194, '텍사스에서 전력을 받는 길', ''.join(
+    [_lt(4, _EY_A + 28, '전력을 어디서', 't-sm', True),
+     _lt(4, _EY_B + 28, '계통에 어떻게', 't-sm', True)]
+    + [_box(x, y, w, h, c, INK3, 1.5) for (x, y, w, h), c in zip(_EROWA, _EA)]
+    + [_box(x, y, w, h, c, INK3, 1.5) for (x, y, w, h), c in zip(_EROWB, _EB)]))
+
+
+# ── 도해 18. 자체 발전소가 다섯 달 만에 커진 폭 ──────────────────────
+_SMAX, _SH, _SBASE = 1700.0, 150, 200
+_SBARS = [(495, '495메가와트', '2026년 2월', '터빈 27대', False),
+          (1700, '1.7기가와트', '2026년 7월', '터빈 69대', True)]
+_SW, _SG2 = 150, 90
+_SX0 = (W - (2 * _SW + _SG2)) // 2
+
+
+def _sbar(i, v, lab, when, what, hot):
+    x = _SX0 + i * (_SW + _SG2)
+    h = int(_SH * v / _SMAX)
+    y = _SBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _SW, h, 'var(--sunk)' if hot else 'none',
+                                  INK if hot else INK3),
+        _t(x + _SW // 2, y - 8, lab, 't-lab'),
+        _t(x + _SW // 2, _SBASE + 18, when, 't-sm'),
+        _t(x + _SW // 2, _SBASE + 34, what, 't-sm'),
+    ])
+
+
+FIG_SOUTH = _svg(W, 244, '허가 밖에 세운 발전소가 다섯 달 만에 커진 폭', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_SX0 - 16, _SBASE, W - _SX0 + 16, _SBASE, INK3),
+     _lt(_SX0 - 16, 22, '사우스헤이븐 발전소', 't-sm', True)]
+    + [_sbar(i, *b) for i, b in enumerate(_SBARS)]))
+
+
+# ── 도해 19. 궤도 자리 셋 ────────────────────────────────────────────
+_OW2, _OLAB2, _OGAP2 = 160, 88, 16
+_OH2, _OY2 = 148, 44
+_OROWS = ['어디에', '햇빛', '걸리는 것']
+_OPANES = [('저궤도', ['400~500킬로미터', '하루의 60%', '하루 열다섯 바퀴']),
+           ('밤낮 경계선', ['같은 저궤도', '하루 35분만 그늘', '전력전자가 복잡']),
+           ('라그랑주 L1', ['훨씬 멀리', '24시간', '빛이 왕복 10초'])]
+
+
+def _opanel(i, name, rows):
+    x = _OLAB2 + i * (_OW2 + _OGAP2)
+    hot = i == 2
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="8" fill="none" stroke="%s" '
+           'stroke-width="%.1f"/>' % (x, _OY2, _OW2, _OH2, INK if hot else INK3,
+                                      1.8 if hot else 1.5),
+           _t(x + _OW2 // 2, _OY2 + 26, name, 't-lab')]
+    for k, s in enumerate(rows):
+        out.append(_t(x + _OW2 // 2, _OY2 + 62 + k * 32, s, 't-sm'))
+    return ''.join(out)
+
+
+FIG_ORBITSITE = _svg(W, 212, '궤도 자리 셋이 저마다 다른 것에 걸린다',
+                     ''.join([_lt(4, _OY2 + 62 + k * 32, s, 't-sm', False)
+                              for k, s in enumerate(_OROWS)])
+                     + ''.join(_opanel(i, n, r) for i, (n, r) in enumerate(_OPANES)))
