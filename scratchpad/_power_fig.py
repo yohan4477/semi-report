@@ -198,6 +198,7 @@ def _mbar(i, v, top, l1, l2, filled):
     h = int(_MH * v / _MMAX)
     y = _MBASE - h
     return ''.join([
+        bf._mark(x + _MW_ // 2, y - 32, i + 1),
         '<rect x="%d" y="%d" width="%d" height="%d" rx="4" fill="%s" stroke="%s" '
         'stroke-width="1.6"/>' % (x, y, _MW_, h, 'var(--sunk)' if filled else 'none',
                                   INK3 if filled else INK),

@@ -11,6 +11,22 @@ _svg, _box, _a, _lt = sudo._svg, sudo._box, sudo._a, sudo._lt
 W = 640
 
 
+NUM = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮'
+
+
+def _mark(x, y, n):
+    """판 위에 얹는 동그라미 번호. 설명은 판에 안 쓰고 캡션이 이 번호를 푼다.
+
+    2026-09-09 확정 규칙 — 판에 남기는 글자는 값 라벨과 이름뿐이고, 설명이 붙을
+    자리에는 번호만 둔다. `_circ_fig` 의 화살표 번호를 판 전체로 넓힌 것이라
+    꼴을 같이 쓴다: ① 은 그 자체가 동그라미라 테두리를 두르면 두 겹으로 보인다.
+    선을 가리려고 까는 바탕 원은 테두리 없이 종이색으로만 둔다.
+    """
+    return ('<circle cx="%d" cy="%d" r="10" fill="var(--paper)"/>'
+            '<text x="%d" y="%d" text-anchor="middle" class="t-lab">%s</text>'
+            % (x, y, x, y + 5, NUM[n - 1]))
+
+
 def _row(n, y, h, w, gap=10, y0=None):
     """가운데 정렬한 상자 n개의 (x, y, w, h) 목록. x를 손으로 찍지 않으려고 둔 함수."""
     total = n * w + (n - 1) * gap
