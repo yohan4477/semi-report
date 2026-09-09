@@ -45,6 +45,16 @@
       "korean": "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md",
       "read_on": "2026-09-10",
       "hours_per_month": null
+    },
+    "pjm": {
+      "clipping": "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md",
+      "title": "$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again",
+      "publisher": "SemiAnalysis",
+      "url": "https://newsletter.semianalysis.com/p/12b-of-us-ratepayers-money-wasted",
+      "published": "2026-08-20",
+      "read_on": "2026-09-10",
+      "korean": null,
+      "hours_per_month": null
     }
   },
   "tables": [
@@ -787,6 +797,203 @@
           13,
           35,
           "InferenceX영문 L526"
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "pjm-auctions",
+      "source": "pjm",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-10",
+      "title": "PJM 용량 경매 — 실제와 개선 모델의 반사실",
+      "note": "가격은 메가와트·일당 달러, 용량은 기가와트. 반사실은 원문이 자기 모델로 낸 값이다. 2027/28 과 2028/29 는 가격 상한에 붙어 개선해도 안 달라진다고 원문이 적었다.",
+      "columns": [
+        "season",
+        "cleared_gw",
+        "price_usd_mw_day",
+        "required_gw",
+        "shift_gw",
+        "cf_target_gw",
+        "cf_cleared_gw",
+        "cf_price",
+        "stated_saving_bn",
+        "cite"
+      ],
+      "rows": {
+        "s2025_26": [
+          "2025/26",
+          135.7,
+          270,
+          133.6,
+          2.7,
+          130.9,
+          135.7,
+          135,
+          6.7,
+          "PJM영문 L276·L280"
+        ],
+        "s2026_27": [
+          "2026/27",
+          134.2,
+          329,
+          null,
+          3.1,
+          131.4,
+          133.6,
+          230,
+          4.9,
+          "PJM영문 L286·L290"
+        ],
+        "s2027_28": [
+          "2027/28",
+          null,
+          333.44,
+          null,
+          4.5,
+          null,
+          null,
+          null,
+          0,
+          "PJM영문 L300"
+        ],
+        "s2028_29": [
+          "2028/29",
+          null,
+          325.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          "PJM영문 L304"
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "pjm-context",
+      "source": "pjm",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-10",
+      "title": "PJM — 원문이 글로 밝힌 배경 값",
+      "columns": [
+        "what",
+        "value",
+        "unit",
+        "cite"
+      ],
+      "rows": {
+        "residents": [
+          "PJM 권역 주민",
+          66,
+          "백만 명",
+          "PJM영문 L16"
+        ],
+        "total_waste": [
+          "2025~2027 낭비했다고 본 금액",
+          12,
+          "십억 달러",
+          "PJM영문 L16"
+        ],
+        "four_auction_total": [
+          "최근 네 경매의 합계 비용",
+          63.6,
+          "십억 달러",
+          "PJM영문 L89"
+        ],
+        "pre_delay_cost": [
+          "지연 전 경매 한 번의 비용",
+          2.2,
+          "십억 달러",
+          "PJM영문 L89"
+        ],
+        "peak_auction_cost": [
+          "가장 비쌌던 경매 한 번의 비용",
+          16.4,
+          "십억 달러",
+          "PJM영문 L89"
+        ],
+        "pre_delay_price": [
+          "지연 전 낙찰 가격",
+          28.92,
+          "달러/MW·일",
+          "PJM영문 L89"
+        ],
+        "new_capacity": [
+          "네 경매에서 새로 산 용량",
+          4.8,
+          "GW",
+          "PJM영문 L91"
+        ],
+        "existing_bid_low": [
+          "기존 발전소의 입찰 하단",
+          8,
+          "달러/MW·일",
+          "PJM영문 L93"
+        ],
+        "existing_bid_high": [
+          "기존 발전소의 입찰 상단",
+          14,
+          "달러/MW·일",
+          "PJM영문 L93"
+        ],
+        "gb_existing": [
+          "영국이 기존 발전에 준 값",
+          18,
+          "달러/MW·일",
+          "PJM영문 L93"
+        ],
+        "cold_air_gw": [
+          "찬 공기 효과만 반영했을 때 줄어드는 요구 용량",
+          1.5,
+          "GW",
+          "PJM영문 L204"
+        ],
+        "weatherize_gw": [
+          "내한 보강만 반영했을 때 (60% 만 적용)",
+          2.5,
+          "GW",
+          "PJM영문 L204"
+        ],
+        "combined_gw": [
+          "둘을 함께 반영했을 때",
+          3.1,
+          "GW",
+          "PJM영문 L204"
+        ],
+        "share_at_clearing": [
+          "낙찰 가격으로 정산되는 설비 비중",
+          93,
+          "%",
+          "PJM영문 L258"
+        ],
+        "miso_share": [
+          "MISO 잔여 경매의 같은 비중",
+          15,
+          "%",
+          "PJM영문 L258"
+        ],
+        "lole_standard": [
+          "신뢰도 기준",
+          0.1,
+          "일/년",
+          "PJM영문 L254"
+        ],
+        "backstop_now": [
+          "현재 인정된 부족분",
+          6.8,
+          "GW",
+          "PJM영문 L304"
+        ],
+        "backstop_fixed": [
+          "개선 모델에서의 부족분",
+          3.0,
+          "GW",
+          "PJM영문 L304"
         ]
       },
       "redacted": []
