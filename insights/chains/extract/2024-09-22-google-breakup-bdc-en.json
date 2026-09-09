@@ -1,0 +1,148 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2024-09-22-google-breakup-bdc-en.md",
+  "slug": "2024-09-22-google-breakup-bdc-en",
+  "date": "2024-09-22",
+  "title": "구글 해체 위기? 버핏도 투자하는 BDC, 메타버스 시즌2, 올해만 3배 상승 중인 앱플로빈, 배당세 없이 투자하기, 빅컷 최대 수혜는 중국 등 주요 경제 이슈 정리",
+  "chains": [
+    {
+      "industry": "BDC(기업성장집합투자기구)·사모대출",
+      "chain_name": "BDC 자금 중개 구조",
+      "chain_lines": "L48~L63",
+      "summary": "진행자가 국내 도입이 논의되는 BDC라는 금융 구조를 투자자에서 중소기업으로 이어지는 자금 흐름으로 설명한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "투자자",
+          "desc": "대기업과 달리 중소형 기업은 은행 대출이 쉽지 않은데, BDC는 투자자로부터 자금을 모아 그 중소기업에 투자·대출하고 수익을 분배하는 회사",
+          "lines": "L48~L53",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "BDC(중개·대출)",
+          "desc": "중소형 기업에 대출해주는 구조라 위험이 있는 만큼 배당 수익률이 높고, 법적으로 수익의 90%를 배당으로 지급해야 한다",
+          "lines": "L53~L58",
+          "companies": [
+            {"name": "RS캐피탈", "raw_name": "RS 캐피탈", "country": "", "role": "워런 버핏도 자회사를 통해 투자", "numbers": "배당률 9.44%", "lines": "L54~L55"},
+            {"name": "FS KKR캐피탈", "raw_name": "FS kkr 캐피탈", "country": "", "role": "빌려준 금액의 85%가 선순위 채권", "numbers": "배당 수익률 14.5%", "lines": "L55~L56, L62~L63"},
+            {"name": "메인스트리트캐피탈", "raw_name": "메인스트리트 캐피탈", "country": "", "role": "국내 투자자 관심 종목", "numbers": "배당 수익률 88.2%", "lines": "L56~L57"},
+            {"name": "OCCI", "raw_name": "occi", "country": "", "role": "월배당 지급", "numbers": "배당 수익 18%", "lines": "L57"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "선순위·후순위 채권 구성을 확인하면 부도 시 자금 회수 가능성을 가늠할 수 있다"
+        },
+        {
+          "order": 3,
+          "name": "중소기업(대출 수령)",
+          "desc": "은행 대출이 어려운 중소형·벤처 기업이 BDC로부터 자금을 조달받는다",
+          "lines": "L50~L53",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "법적으로 BDC는 수익의 90%를 무조건 배당으로 써야 한다"
+    },
+    {
+      "industry": "게임 플랫폼",
+      "chain_name": "로블록스 매출 배분 구조",
+      "chain_lines": "L66~L71",
+      "summary": "진행자가 로블록스 매출 100불 중 13불만 순익으로 남는 이유를 앱스토어·개발자·R&D로 이어지는 배분 구조로 설명한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "앱스토어(유통 플랫폼)",
+          "desc": "앱을 다운받으려면 앱스토어·구글 플레이스토어를 거쳐야 하며 여기에 유통 플랫폼 수수료를 지급한다",
+          "lines": "L67~L68",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "",
+          "numbers": "매출의 23%"
+        },
+        {
+          "order": 2,
+          "name": "게임 개발자",
+          "desc": "로블록스가 제공하는 소프트웨어로 게임을 만드는 개발자에게 수수료를 지급한다",
+          "lines": "L68",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "",
+          "numbers": "매출의 26%"
+        },
+        {
+          "order": 3,
+          "name": "R&D(소프트웨어·서버)",
+          "desc": "게임 제작 소프트웨어 개발과 서버 운영에 드는 R&D 투자 비용",
+          "lines": "L69~L71",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "매출을 늘리기도 비용을 줄이기도 어려운 구조라 수익을 내지 못하고 있다는 판단",
+          "numbers": "매출의 44%"
+        }
+      ],
+      "notes": "매출 100불 중 순익은 13불만 남는다"
+    },
+    {
+      "industry": "온라인 광고 기술",
+      "chain_name": "온라인 광고 중개 구조",
+      "chain_lines": "L128~L130",
+      "summary": "진행자가 미국에서 막 시작된 구글 온라인 광고 반독점 소송을 광고주-게시자를 잇는 세 단계 중개 구조로 설명한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "애드 네트워크",
+          "desc": "광고주와 광고 게시자를 중계하는 역할. 구글이 더블클릭·드멜 같은 광고 회사를 인수해 확보",
+          "lines": "L128~L129",
+          "companies": [
+            {"name": "구글", "raw_name": "구글", "country": "미국", "role": "더블클릭·드멜 인수를 통해 애드 네트워크 확보", "numbers": "", "lines": "L128~L129"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "구글이 이 영역에서 독점하고 있다는 내용으로 소송이 진행 중",
+          "bottleneck_lines": "L130",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "애드 익스체인지(광고 경매 플랫폼)",
+          "desc": "광고 경매가 이뤄지는 플랫폼",
+          "lines": "L129",
+          "companies": [
+            {"name": "구글", "raw_name": "구글", "country": "미국", "role": "애드 익스체인지 운영", "numbers": "", "lines": "L128~L129"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "온라인 광고 세 가지 영역 모두에서 구글이 독점하고 있다는 소송 내용",
+          "bottleneck_lines": "L130",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "애드 서버",
+          "desc": "광고 배치와 게시를 돕는 역할",
+          "lines": "L129",
+          "companies": [
+            {"name": "구글", "raw_name": "구글", "country": "미국", "role": "애드 서버 운영", "numbers": "", "lines": "L128~L129"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "온라인 광고 세 가지 영역 모두에서 구글이 독점하고 있다는 소송 내용",
+          "bottleneck_lines": "L130",
+          "judgment": "이 소송은 이제 막 시작되어 유럽 사례처럼 결론까지 오래 걸릴 것이라는 판단"
+        }
+      ],
+      "notes": "유럽에서는 비슷한 소송에서 구글이 애드 익스체인지 매각을 제안했으나 EU가 받아들이지 않아 소송이 계속되고 있다"
+    }
+  ]
+}

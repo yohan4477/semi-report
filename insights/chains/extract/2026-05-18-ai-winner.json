@@ -1,0 +1,94 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-05-18-ai-winner.md",
+  "slug": "2026-05-18-ai-winner",
+  "date": "2026-05-18",
+  "title": "AI 산업의 진짜 승자는 인프라 기업인가 플랫폼 기업인가",
+  "chains": [
+    {
+      "industry": "AI 인프라",
+      "chain_name": "챗봇에서 데이터센터 건설까지 확장된 AI 인프라 스택",
+      "chain_lines": "L41~L68",
+      "summary": "지난 회차(2026-05-11)에서 짚은 인프라 스택을 다시 GPU부터 건설까지 단계별로 정리한다.",
+      "stages": [
+        {"order": 1, "name": "GPU 성능", "desc": "챗봇 모델 성능을 위해 GPU가 필요했던 첫 단계.", "lines": "L44~L46",
+         "companies": [{"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "GPU 성능 경쟁의 초기 수혜 업체", "numbers": "", "lines": "L46"}],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "HBM(고대역폭 메모리)", "desc": "GPU 효용을 높이려면 데이터 공급이 필요해 HBM이 요구되는 단계.", "lines": "L47~L48",
+         "companies": [{"name": "삼성전자", "raw_name": "삼성전자", "country": "", "role": "HBM 제조사", "numbers": "", "lines": "L48"},
+                        {"name": "SK하이닉스", "raw_name": "하이닉스", "country": "", "role": "HBM 제조사", "numbers": "", "lines": "L48"}],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 3, "name": "전력 생산·분배", "desc": "데이터 처리량이 급증하며 전력이 부족해져 전력 생산·전력 반도체 업체가 주목받는 단계.", "lines": "L49~L51",
+         "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 4, "name": "서버 내 연결(광통신)", "desc": "서버 안 GPU·HBM 간 데이터를 빠르게 주고받아야 해 연결 관련 업체가 오르는 단계.", "lines": "L52~L55",
+         "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 5, "name": "냉각", "desc": "데이터가 많이 오가며 발생하는 열을 식혀 주는 냉각 관련 업체가 오르는 단계.", "lines": "L56~L58",
+         "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 6, "name": "전력·GPU 확보 임대업체", "desc": "과거 비트코인 채굴업체였다가 전력과 GPU를 미리 확보해 놓은 임대업체가 주목받는 단계.", "lines": "L59~L61",
+         "companies": [{"name": "코어위브", "raw_name": "코어위브", "country": "", "role": "전력·GPU를 미리 확보한 임대 사업자(과거 비트코인 채굴업체)", "numbers": "", "lines": "L64"}],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 7, "name": "데이터센터 설계·건설", "desc": "데이터센터를 전력 효율적으로 설계하고 장비를 조달·건설하는 'C 업체'가 뜨는 단계.", "lines": "L62~L64",
+         "companies": [{"name": "이튼", "raw_name": "이튼", "country": "", "role": "데이터센터 설계·조달·건설 업체", "numbers": "", "lines": "L67~L68"}],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "챗봇에서 시작한 AI 산업이 이제는 건설 산업급으로 확장됐다"}
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "ICT·빅테크",
+      "chain_name": "ICT 밸류체인 CPNT — 플랫폼·병목·터미널",
+      "chain_lines": "L84~L135",
+      "summary": "진행자는 ICT 산업의 밸류체인에서 최종 승자는 플랫폼이나 고객 접점(터미널)을 쥔 쪽이라 말하고, 빅테크 각사가 그중 어느 자리를 노리는지 짚는다.",
+      "stages": [
+        {"order": 1, "name": "플랫폼", "desc": "AI 모델·서비스를 올려 두고 고객이 골라 쓰게 하는 플랫폼 단계.", "lines": "L88~L98",
+         "companies": [
+           {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "자율주행·전기차·신약개발 등 20개가 넘는 플랫폼 운영", "numbers": "플랫폼 20개+", "lines": "L88~L89"},
+           {"name": "아마존", "raw_name": "아마존", "country": "", "role": "베드락 플랫폼에 챗GPT·클로드·코파일럿·제미나이 등 AI 모델을 올려 유통", "numbers": "", "lines": "L90~L95"},
+           {"name": "구글", "raw_name": "구글", "country": "", "role": "안드로이드·크롬·구글 클라우드·제미나이를 하나로 묶는 AIOS화 추진", "numbers": "", "lines": "L96~L98"}
+         ],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "ICT 산업의 승자는 플랫폼을 가지고 있는 쪽 또는 고객 접점을 가지고 있는 쪽"},
+        {"order": 2, "name": "관문(병목)", "desc": "소프트웨어 사업자·기업이 반드시 거쳐야 하는 관문을 만들어 그 자리에서 돈을 버는 단계.", "lines": "L99~L112",
+         "companies": [
+           {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "PC 시절 윈도우, 클라우드 시절 애저로 반드시 거쳐야 하는 관문을 쥐었고, 기업용 소프트웨어(워드·엑셀·팀즈 등)가 거쳐가는 관문으로 코파일럿을 쓰고 있다", "numbers": "", "lines": "L100~L108"}
+         ],
+         "bottleneck": "high",
+         "bottleneck_why": "PC 시절엔 인터넷 접속 전 반드시 거치는 윈도우, 클라우드 시절엔 소프트웨어 판매 전 반드시 거치는 애저로 병목 지점을 만들어 돈을 벌어 온 회사",
+         "bottleneck_lines": "L100~L101",
+         "judgment": "AI 요금제가 사용량 기반 정량제로 바뀌면 마이크로소프트 수익이 기하급수적으로 늘어날 것"},
+        {"order": 3, "name": "터미널(고객 접점)", "desc": "ICT 밸류체인 CPNT 중 마지막 단계인 터미널을 쥐고 고객 접점 경쟁력으로 승부하는 단계.", "lines": "L113~L123",
+         "companies": [
+           {"name": "애플", "raw_name": "애플", "country": "", "role": "아이폰이라는 고객 접점으로 ICT 산업 내 위치를 확고히 했고, 하드웨어 엔지니어 출신 CEO가 새 기기를 준비 중", "numbers": "", "lines": "L116~L117"}
+         ],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "애플을 AI 모델 경쟁력으로 논하는 건 의미가 없다 — 기기 경쟁력과 락인된 고객 기반으로 승부하는 회사"},
+        {"order": 4, "name": "플랫폼(오프라인 고객 접점 확장)", "desc": "온라인 광고 플랫폼 사업자가 휴머노이드 로봇을 통해 오프라인 고객 접점까지 넓히려는 단계.", "lines": "L124~L128",
+         "companies": [
+           {"name": "메타", "raw_name": "메타", "country": "", "role": "페이스북·인스타그램 광고 플랫폼 사업자, 휴머노이드 로봇 투자로 오프라인 고객 접점 확보 시도", "numbers": "", "lines": "L124~L128"}
+         ],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""}
+      ],
+      "notes": "진행자는 PC·인터넷·닷컴·클라우드·모바일 시대 각각의 최종 승자(마이크로소프트·구글·아마존·애플) 주가가 300~400배 올랐던 전례를 근거로, 지금의 빅테크가 다시 그 자리에 있다고 판단한다(L129~L135)."
+    },
+    {
+      "industry": "피지컬 AI",
+      "chain_name": "피지컬 AI 부품 스택",
+      "chain_lines": "L142~L166",
+      "summary": "진행자는 AI 관련 마지막 남은 영역으로 피지컬 AI(휴머노이드·자율주행)를 꼽고, 그 부품 단계 중 아직 시장 주목을 못 받은 센서를 짚는다.",
+      "stages": [
+        {"order": 1, "name": "액추에이터", "desc": "휴머노이드 로봇의 움직임을 만드는 부품.", "lines": "L146",
+         "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "추론칩(LPU·TPU)", "desc": "피지컬 AI가 움직이는 데 필요한 추론용 반도체.", "lines": "L147~L149",
+         "companies": [
+           {"name": "브로드컴", "raw_name": "브로드컴", "country": "", "role": "LPU·TPU 계열 추론칩 제조", "numbers": "", "lines": "L149"},
+           {"name": "마벨", "raw_name": "마벨", "country": "", "role": "LPU·TPU 계열 추론칩 제조", "numbers": "", "lines": "L149"}
+         ],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 3, "name": "센서", "desc": "로봇·자율주행차가 현실 세계를 인지하도록 이미지·힘·압력·촉각을 디지털화하는 부품. 아직 주가가 많이 오르지 않은 영역.", "lines": "L150~L165",
+         "companies": [
+           {"name": "소니", "raw_name": "소니", "country": "", "role": "TSMC와 이미지 센서 파운드리 공장 건설, 반도체 사업 본격화", "numbers": "", "lines": "L153~L154"},
+           {"name": "코그넥스", "raw_name": "코그넥스", "country": "", "role": "센서 관련 업체", "numbers": "", "lines": "L161"},
+           {"name": "암브렐라", "raw_name": "암브렐라", "country": "", "role": "센서 관련 업체", "numbers": "", "lines": "L161"}
+         ],
+         "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "피지컬 AI가 현실을 인지하려면 센서가 사람의 눈·촉각 역할을 해야 하는데, 이 영역 회사들은 아직 주가가 많이 안 올랐다"}
+      ],
+      "notes": ""
+    }
+  ]
+}

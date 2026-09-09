@@ -1,0 +1,153 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-09-28-pharma-dist-valuechain.md",
+  "slug": "2025-09-28-pharma-dist-valuechain",
+  "date": "2025-09-28",
+  "title": "제약유통 산업 밸류체인 분석: PBM이 시장을 장악하게 된 과정 이해",
+  "chains": [
+    {
+      "industry": "제약유통",
+      "chain_name": "미국 제약 유통 물류 사슬",
+      "chain_lines": "L45~L82",
+      "summary": "한국과 미국의 제약 유통 구조를 비교하며 미국에서 약이 물리적으로 소비자에게 도달하는 경로를 설명한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "제약사(제조)",
+          "desc": "약을 제조해 도매상에 공급",
+          "lines": "L50~L50",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "도매상(유통)",
+          "desc": "제약사로부터 약을 받아 약국에 공급. 1990년대 이전에는 도매상이 제약 유통 시장의 주도권을 쥐고 있었음",
+          "lines": "L50~L50, L95~L96",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "1990년대 이전, 도매상이 어떤 약국에 얼마나 물량을 배분할지 결정하는 권한을 가지고 있었음",
+          "bottleneck_lines": "L95~L96",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "약국·다양한 소매 채널(판매)",
+          "desc": "한국은 약국에서만 약을 팔지만 미국은 약국 외에 식료품 유통점, 월마트 같은 대형마트, 아마존 온라인 약국, 메일오더(택배) 등 다양한 채널에서 약을 판매",
+          "lines": "L56~L59",
+          "companies": [
+            {"name": "아마존", "raw_name": "아마존", "country": "미국", "role": "온라인 약국을 인수해 온라인으로 약 판매", "numbers": "", "lines": "L57~L57"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "소비자·보험사 정산",
+          "desc": "미국은 의료보험이 전부 민영화돼 있고 보험사가 수백 개에 이르며, 소비자가 어느 주에 있든 처방·구매를 할 수 있어 보험 커버 여부·지정 약국 여부를 소비자가 직접 확인해야 함",
+          "lines": "L60~L79",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "한 해 미국에서 발행되는 처방전이 60억 건에 달해 소비자·약국·보험사 모두가 복잡한 정산 절차에 시달린다는 문제의식(L79~L80)"
+        }
+      ],
+      "notes": "이 물류 사슬이 너무 복잡해서 PBM이라는 새로운 사업자가 등장하게 됐다는 것이 다음 자금 사슬의 출발점(L80~L82)"
+    },
+    {
+      "industry": "제약유통",
+      "chain_name": "미국 제약 유통 자금 사슬 (PBM 권력 이동)",
+      "parent_chain": "미국 제약 유통 물류 사슬",
+      "parent_stage": "도매상(유통)",
+      "chain_lines": "L80~L172",
+      "summary": "PBM이 복잡한 정산 대행업으로 출발해 포뮬러리 작성 권한을 쥐고 도매상의 주도권을 빼앗아 오는 자금 흐름을 설명한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "PBM 등장 — 정산 대행",
+          "desc": "소비자·약국·보험사가 처방전 정산 절차로 복잡해지자, 이 업무를 대행하는 PBM(파머시 베네핏 매니저)이 등장",
+          "lines": "L80~L94",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "PBM의 보험 영업 확장",
+          "desc": "PBM이 정산 데이터를 축적하며 기업 고객 대상 보험 영업까지 사업을 확장",
+          "lines": "L89~L93",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "PBM의 포뮬러리 작성 권한 획득",
+          "desc": "1990년대 신약 급증으로 보험사 적자가 심해지자 보험사가 PBM에 조사를 의뢰했고, 그 결과 보험이 커버할 약 목록인 '포뮬러리'를 PBM이 제작하게 됨",
+          "lines": "L97~L114",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "포뮬러리에 들어간 약만 보험 커버가 되므로 포뮬러리에서 빠지면 그 약을 소비자가 사 먹지 않게 되는 구조 — PBM이 어떤 약이 시장에서 팔릴지 결정하는 권한을 가지게 됨",
+          "bottleneck_lines": "L116~L128",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "제약사→PBM 리베이트 흐름",
+          "desc": "PBM이 포뮬러리를 무기로 제약사에 약값 할인을 요구하면, 제약사는 정가는 소폭만 깎고 나머지를 리베이트로 PBM에 뒤로 지급",
+          "lines": "L120~L134",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 5,
+          "name": "PBM의 메디케어·메디케이드 확장",
+          "desc": "PBM은 고령층 대상 공적 보험(메디케이드·메디케어)에서는 국가가 약값을 대신 내준다는 점을 이용해 약값을 낮추기보다 리베이트를 더 받는 쪽으로 방향을 틀었고, 이로 인해 일반 소비자의 약값과 보험료가 오름",
+          "lines": "L136~L158",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "피해는 결국 소비자와 국가가 보고 있다는 비판(L153~L158)"
+        },
+        {
+          "order": 6,
+          "name": "PBM-보험사 계열화 및 시장 장악",
+          "desc": "상위 3개 PBM 업체가 시장의 80%를 장악했고, 이들이 모두 계열 보험사를 보유해 PBM과 보험사가 한 회사에서 약값을 좌지우지",
+          "lines": "L160~L164",
+          "companies": [
+            {"name": "유나이티드헬스", "raw_name": "유나이티드헬스", "country": "미국", "role": "보험사와 PBM을 동시에 보유한 세계적 회사 중 하나, 워런 버핏이 매수", "numbers": "", "lines": "L163~L164"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "상위 3개 PBM이 시장 80%를 점유하고 계열 보험사를 함께 소유해 약값 결정력을 독점",
+          "bottleneck_lines": "L160~L163",
+          "judgment": "워런 버핏이 유나이티드헬스를 매수한 이유가 단순 주가 하락이 아니라 이런 PBM-보험 계열화 구조 때문이라는 판단(L164~L166)"
+        },
+        {
+          "order": 7,
+          "name": "PBM의 특수의약품 유통 진입",
+          "desc": "PBM이 도매상 영역까지 확장해 항암제 등 고가 특수의약품 유통을 직접 시작",
+          "lines": "L167~L172",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "이 자금 사슬 때문에 한국·일본 제약사가 미국 시장에 단독으로 못 들어가고 빅파마(화이자·일라이릴리·애브비 등)와 파트너십을 맺으며 지분을 상당수 내줘야 한다는 결론(L176~L189). 셀트리온의 일라이릴리 미국 현지 공장 인수도 이 자금 사슬(PBM 협상력 확보) 관점에서 현명한 투자라는 판단(L190~L195)"
+    }
+  ]
+}

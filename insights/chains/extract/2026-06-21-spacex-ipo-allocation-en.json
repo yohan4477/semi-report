@@ -1,0 +1,68 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-06-21-spacex-ipo-allocation-en.md",
+  "slug": "2026-06-21-spacex-ipo-allocation-en",
+  "date": "2026-06-21",
+  "title": "스페이스X IPO, 한국은 왜 0주를 받았을까? (ft. IPO 물량 배정 기준)",
+  "chains": [
+    {
+      "industry": "증권·투자은행",
+      "chain_name": "IPO 물량이 대표주관사에서 신디케이트까지 배정되는 구조",
+      "chain_lines": "L85~L142",
+      "summary": "스페이스X IPO에서 미래에셋이 물량을 배정받지 못한 이유를, IPO 주관 구조(대표주관사·북러너·공동주관사·신디케이트)와 배정 기준(관계·자금 출처)으로 설명한다.",
+      "stages": [
+        {
+          "order": 1, "name": "대표 주관사",
+          "desc": "IPO 전체를 총괄하는 역할. 이번 스페이스X IPO는 다섯 개 은행이 공동으로 맡았다.",
+          "lines": "L86~L88, L108~L109",
+          "companies": [
+            {"name": "골드만삭스", "raw_name": "골드만삭스", "country": "", "role": "대표 주관사이자 북러너 역할까지 겸해 영향력이 가장 컸다", "numbers": "", "lines": "L88, L109"},
+            {"name": "모건스탠리", "raw_name": "모건 스탠니", "country": "", "role": "대표 주관사 중 하나. 스페이스X 초기 투자자라 원래 대표 주관사로 예상됐었다", "numbers": "", "lines": "L95, L109"},
+            {"name": "JP모건", "raw_name": "JP모건", "country": "", "role": "대표 주관사 중 하나", "numbers": "", "lines": "L109"},
+            {"name": "뱅크오브아메리카", "raw_name": "뱅크오브 아메리카", "country": "", "role": "대표 주관사 중 하나", "numbers": "", "lines": "L109"},
+            {"name": "시티그룹", "raw_name": "시티 그룹", "country": "", "role": "대표 주관사 중 하나", "numbers": "", "lines": "L109"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 2, "name": "북 러너",
+          "desc": "IPO 시장에서 가장 중요한 역할. 기관 투자자들을 모으고 IPO 공모가를 정한다.",
+          "lines": "L98~L105",
+          "companies": [
+            {"name": "골드만삭스", "raw_name": "골드만삭스", "country": "", "role": "북러너 역할을 겸해 이번 딜을 좌지우지하게 됐다", "numbers": "", "lines": "L98, L105"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "가격 설정과 기관 투자자 모집을 좌우해 실패하면 IPO 자체가 실패하는, IPO 시장에서 제일 중요한 역할",
+          "bottleneck_lines": "L99~L104",
+          "judgment": ""
+        },
+        {
+          "order": 3, "name": "공동 주관사",
+          "desc": "딜에 참여하지만 큰 주도권은 가지지 않는 회사들.",
+          "lines": "L106",
+          "companies": [],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 4, "name": "신디케이트",
+          "desc": "주관사로부터 IPO 물량을 받아 자신들이 보유한 기관투자자·큰손에게 판매하는 역할. 스페이스X IPO에는 총 16개 글로벌 투자은행이 신디케이트로 참여했다.",
+          "lines": "L86, L106~L107, L111",
+          "companies": [
+            {"name": "미래에셋", "raw_name": "미래셋", "country": "한국", "role": "신디케이트 회사 중 하나로 참여, 물량을 배정받지 못함", "numbers": "신디케이트 16개사 중 1곳", "lines": "L86, L111"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 5, "name": "물량 배정 기준(자금 출처 심사)",
+          "desc": "주관사가 신디케이트에 물량을 나눠줄 때, 그 신디케이트가 모은 투자 자금이 오래 보유하는 '스티키 머니'인지 바로 차익 실현하는 '핫머니'인지를 본다.",
+          "lines": "L134~L142",
+          "companies": [
+            {"name": "미래에셋", "raw_name": "미래셋", "country": "한국", "role": "투자 자금 출처가 대부분 단기 차익 실현하는 핫머니 성격이라 물량 배정에서 우선순위가 낮았다", "numbers": "", "lines": "L141~L142"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "",
+          "judgment": "상장 후 주가가 유지돼야 주관사가 발행사에 체면이 서기 때문에, 물량을 오래 들고 있을 자금(연기금·보험사)에 우선 배정하고 바로 팔 자금에는 배정을 꺼린다"
+        }
+      ],
+      "notes": "미래에셋이 물량을 못 받은 것은 '한국 패싱'이 아니라 ① 해외 IPO 주관 실적이 없어 골드만삭스와 상호 호혜 관계가 없고 ② 자금 출처가 핫머니 성격이며 ③ 비상장 스페이스X 투자로 이미 큰 수익을 냈다고 자랑해 조만간 매도할 것으로 보였기 때문이라는 게 진행자의 판단(L112~L208). 참고로 일본 증권사 미즈호·노무라·MUFG는 2010년대부터 동남아 IPO 시장 강자를 인수해 글로벌 신디케이트 관계를 쌓아 왔다는 비교가 나온다(L149~L220)."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-09-07-earth-observation.md",
+  "slug": "2025-09-07-earth-observation",
+  "date": "2025-09-07",
+  "title": "위성 관측 시장 성장과 투자 기회: 민간 수요 확대의 의미",
+  "chains": [
+    {
+      "industry": "우주테크(위성관측)",
+      "chain_name": "위성 관측 사슬 (컨텐츠 영역)",
+      "parent_chain": "CPNT 밸류체인 (컨텐츠·플랫폼·네트워크·터미널)",
+      "parent_stage": "컨텐츠",
+      "chain_lines": "L56~L121",
+      "summary": "위성 관측 산업을 위성 궤도, 관측 센서 방식, 응용분야 순으로 나눠 투자 후보 기업을 좁혀가는 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "위성 궤도 유형 (LEO·GEO)",
+          "desc": "관측 위성은 주로 LEO와 GEO를 사용. GEO는 지구에서 3만km 이상 떨어져 화질이 좋을 수 없어 최근엔 LEO 사업자가 더 주목받음",
+          "lines": "L60~L66",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "GEO는 화질 한계로 최근 LEO 사업자가 시장 관심을 더 받는다는 판단(L66)"
+        },
+        {
+          "order": 2,
+          "name": "관측 센서 방식 (광학 vs 레이더)",
+          "desc": "광학 센서는 가시광선·적외선으로 사람 눈처럼 촬영하고, 레이더는 전파로 관측해 밤낮·날씨·연기와 무관하게 관측 가능하지만 데이터 후처리에 AI·머신러닝이 필수적으로 필요",
+          "lines": "L69~L78",
+          "companies": [
+            {"name": "맥사", "raw_name": "맥사", "country": "미국", "role": "광학+레이더 관측 모두로 확장한 대표 사업자, 사모펀드에 피인수돼 상장폐지됨", "numbers": "", "lines": "L79~L79, L87~L88"},
+            {"name": "블랙스카이", "raw_name": "블랙스카이", "country": "미국", "role": "광학+레이더 확장 사업자", "numbers": "", "lines": "L79~L79"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "레이더 방식은 해석 난이도가 높지만 악천후·연기에도 관측 가능한 장점 때문에 광학 사업자들이 레이더 쪽으로 서비스를 확대 중(L77~L78)"
+        },
+        {
+          "order": 3,
+          "name": "응용 분야 (국방→민간 확장)",
+          "desc": "초창기 국방 중심 고객에서 최근 민간 고객으로 확장되는 중이나, 아직 대부분 사업자가 적자 상태",
+          "lines": "L80~L85",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "민간 고객 확장으로 투자 가능한 산업이 되어가고 있고, 적자 규모가 줄어드는 회사는 2~3년 뒤를 보고 투자해도 괜찮다는 판단(L82~L85)"
+        },
+        {
+          "order": 4,
+          "name": "상장 후보 기업 압축",
+          "desc": "맥사는 상장폐지로 투자 불가, 새틀로직은 스타트업 규모를 못 벗어나 저가 수주 위주, 스파이어글로벌은 재무 악화로 핵심 사업(해양 관측)을 매각해 투자 매력이 낮음. 남은 것은 플래닛랩스와 블랙스카이",
+          "lines": "L87~L99",
+          "companies": [
+            {"name": "플래닛랩스", "raw_name": "플래닛랩스", "country": "미국", "role": "넓게 자주 관측(위성 약 200개), 제곱km당 약 1.5불 가격, 민간 고객 중심", "numbers": "위성 약 200개, 제곱km당 1.5불", "lines": "L108~L118"},
+            {"name": "블랙스카이", "raw_name": "블랙스카이", "country": "미국", "role": "드물지만 정밀하게 관측(초고성능 위성 14대), 제곱km당 20불 가격, 방산 고객 중심", "numbers": "위성 14대, 제곱km당 20불", "lines": "L107~L117"},
+            {"name": "스파이어글로벌", "raw_name": "스파이어글로벌", "country": "미국", "role": "재무 상태 악화로 강점이던 해양 관측 사업을 매각", "numbers": "", "lines": "L94~L95"},
+            {"name": "새틀로직", "raw_name": "새틀로직", "country": "", "role": "스타트업 규모를 못 벗어나 저가 수주 위주", "numbers": "", "lines": "L93~L94"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "플래닛랩스와 블랙스카이 중 어디에 투자할지는 다음 편에서 전략 방향 차이로 판단(L97~L99, L119)"
+        }
+      ],
+      "notes": "맥사가 사모펀드에 피인수돼 상장폐지된 것이 투자자 입장에서 아쉽다는 언급(L87~L88)"
+    }
+  ]
+}

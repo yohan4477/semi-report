@@ -1,0 +1,66 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-03-08-news.md",
+  "slug": "2026-03-08-news",
+  "date": "2026-03-08",
+  "title": "경제신문으로 내공 키우기 — 드러켄밀러·세스 클라만, 가치주와 필수소비재, BDC 환매 이슈",
+  "chains": [
+    {
+      "industry": "클라우드/AI 인프라",
+      "chain_name": "클라우드 서버 인프라 사슬(물류창고 비유)",
+      "chain_lines": "L82~L93",
+      "summary": "진행자가 마이크로소프트의 서버 AI 투자 영역을 물류창고에 비유해, 서버를 짓는 단계부터 보안까지 이어지는 순서를 설명한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "서버 인프라 구축(창고 짓기)",
+          "desc": "아마존이나 마이크로소프트 같은 회사가 서버(물류창고에 해당)를 짓는다.",
+          "lines": "L83",
+          "companies": [
+            {"name": "아마존", "raw_name": "아마존", "country": "", "role": "서버 인프라 구축", "numbers": "", "lines": "L83"},
+            {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "서버 인프라 구축", "numbers": "", "lines": "L83"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "저장 공간 구획 설정",
+          "desc": "스노우플레이크 같은 회사가 창고(서버) 안 저장 공간의 구역을 설정한다.",
+          "lines": "L84~L86",
+          "companies": [
+            {"name": "스노우플레이크", "raw_name": "스노우플레이크", "country": "", "role": "저장 공간 구획 설정", "numbers": "", "lines": "L84~L86"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "데이터 저장",
+          "desc": "소프트웨어 회사들이 구획된 공간에 데이터를 저장한다.",
+          "lines": "L87",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "보안",
+          "desc": "보안 회사들이 저장된 데이터의 보안을 담당한다.",
+          "lines": "L88~L89",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "마이크로소프트가 투자 중인 AI 영역은 이 전체(서버~보안)를 AI로 한꺼번에 통합하려는 것이라고 진행자는 짚으며, 이 영역은 B2B라 일반 소비자 눈에는 보이지 않는다고 설명한다. (L90~L93)"
+    }
+  ]
+}

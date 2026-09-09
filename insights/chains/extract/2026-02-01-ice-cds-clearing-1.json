@@ -1,0 +1,76 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-02-01-ice-cds-clearing-1.md",
+  "slug": "2026-02-01-ice-cds-clearing-1",
+  "date": "2026-02-01",
+  "title": "금융 위기가 만든 승자: ICE의 CDS 중앙 청산과 네팅의 구조_Part 1",
+  "chains": [
+    {
+      "industry": "금융 데이터 / CDS 파생상품",
+      "chain_name": "리먼 사태 이전 CDS 신용위험 이전·재유동화 사슬",
+      "chain_lines": "L79~L181",
+      "summary": "진행자가 2008년 금융위기 이전 CDS(신용부도스와프) 계약이 은행에서 보험사로, 다시 여러 금융사를 거쳐 재유동화되며 위험이 어떻게 퍼졌는지 예시(개인 ABC-은행 A-보험사 B-금융사 C·D)로 설명한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "개인의 부동산 담보 대출",
+          "desc": "개인 ABC가 은행 A를 찾아가 10억 원을 금리 10%, 기간 10년으로 담보 대출받는다.",
+          "lines": "L79~L83",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "은행의 신용위험 이전(CDS 계약)",
+          "desc": "은행 A는 개인 ABC의 파산(크레딧 디폴트) 위험을 넘기기 위해 보험사 B와 CDS 계약을 체결한다. 은행 A는 매년 이자 10% 중 3%(연 3천만 원)를 보험료로 보험사에 낸다. 은행 A가 CDS 매수자, 보험사 B가 매도자다. 실제 사례에서 이 은행 A 역할을 한 곳은 리먼 브라더스다.",
+          "lines": "L86~L99",
+          "companies": [
+            {"name": "리먼 브라더스", "raw_name": "리먼 브라더스", "country": "", "role": "CDS 매수자(개인 신용위험을 보험사에 이전)", "numbers": "", "lines": "L170~L171"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "보험사의 CDS 매도·미래수익 재유동화",
+          "desc": "보험사 B는 10년간 총 3억 원을 받기로 한 CDS 계약에서, 그중 2억 원을 지금 당장 1억 원에 넘기겠다고 제안한다. 이 제안을 보고 금융사 C가 나타나 1억을 주고 10년간 2억을 받기로 계약을 체결한다. 실제 사례에서 이 보험사 B 역할을 한 곳은 AIG다.",
+          "lines": "L147~L158",
+          "companies": [
+            {"name": "AIG", "raw_name": "AI 지", "country": "", "role": "CDS 매도자, 미래수익권을 재유동화", "numbers": "10년간 3억 원 중 2억 원을 1억 원에 매각", "lines": "L172~L173"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "금융사 간 CDS 파생상품 연쇄 재판매",
+          "desc": "금융사 C도 10년 뒤 1억 원보다 지금 당장 5천만 원을 원해 금융사 D에게 판매하고, 이런 재유동화가 계속 반복돼 결국 우리나라 은행까지 흘러들어가 개인들에게까지 판매됐다.",
+          "lines": "L159~L168",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 5,
+          "name": "연쇄 부도",
+          "desc": "개인 차주 수만 명이 파산하기 시작하자 대출해준 은행(리먼 브라더스)이 무너지고, CDS 계약 상대방(AIG)이 몰락 직전까지 갔으며, 이 상품을 계속 유동화해서 샀던 금융사들까지 연쇄 부도로 이어졌다.",
+          "lines": "L176~L180",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "문제는 금융사가 몇 개나 연관됐는지 알 수가 없었다는 점이다. 이게 전부 장외 시장에서 페이퍼로 왔다 갔다 한 거라서 디지털 기록이 없어 리먼 브라더스에서 CDS를 무엇을 샀고 무엇을 팔았고 무엇을 정리해야 할지 알 수가 없었다."
+        }
+      ],
+      "notes": "이 체인 전체가 장외시장(OTC)에서 페이퍼 계약으로만 이뤄져 디지털 기록이 없었던 것이 2008년 금융위기의 핵심 문제였다고 진행자는 짚는다. Part 2에서 다루는 ICE의 중앙청산 구조는 이 문제에 대한 해법으로 제시된다. (L180~L182)"
+    }
+  ]
+}

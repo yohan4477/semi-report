@@ -1,0 +1,121 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-10-26-cvs-walgreens.md",
+  "slug": "2025-10-26-cvs-walgreens",
+  "date": "2025-10-26",
+  "title": "약국 비즈니스 모델의 승자와 패자: CVS 성공 요인과 월그린 부진 원인",
+  "chains": [
+    {
+      "industry": "제약유통(소매)",
+      "chain_name": "미국 소매 약국 채널 사슬",
+      "parent_chain": "미국 제약 유통 물류 사슬",
+      "parent_stage": "약국·다양한 소매 채널(판매)",
+      "chain_lines": "L47~L97",
+      "summary": "미국 소매 약국을 채널 유형별로 나누고 어떤 채널이 주력이고 어떤 채널이 부수적인지 정리한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "리테일 파머시(일반 약국)",
+          "desc": "일반 의약품을 주로 취급하는 약국 채널. 독립·체인 약국(CVS·월그린)이 대표적이며, 빅박스 리테일(월마트 내 약국), 클럽형 멤버십 약국(코스트코), 슈퍼마켓 내 약국도 포함",
+          "lines": "L48~L49, L63~L97",
+          "companies": [
+            {"name": "CVS 파머시", "raw_name": "CBS 파머시", "country": "미국", "role": "독립 약국 체인, 2007년 PBM(케어마크) 인수 후 수직계열화 방향으로 전환", "numbers": "", "lines": "L98~L99, L106~L107"},
+            {"name": "월그린", "raw_name": "월그린", "country": "미국", "role": "독립 약국 체인, 소매 유통점 확장에 올인", "numbers": "", "lines": "L98~L99, L112~L113"},
+            {"name": "라이트에이드", "raw_name": "라이데이드", "country": "미국", "role": "2018년 파산, 2025년 10월 마지막 매장까지 폐업", "numbers": "한때 포춘 500대 기업 142위", "lines": "L100~L102"},
+            {"name": "월마트", "raw_name": "월마트", "country": "미국", "role": "빅박스 리테일 매장 내 약국 운영", "numbers": "", "lines": "L76~L76"},
+            {"name": "코스트코", "raw_name": "코스트코", "country": "미국", "role": "클럽형 멤버십 기반 약국 운영, 가격은 싼 대신 수령까지 시간이 오래 걸림", "numbers": "급행료 3일 내 11불, 2일 내 14불", "lines": "L79~L86"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "메일오더 파머시(물류 창구)",
+          "desc": "실제 매장 없이 물류 창구 역할만 하며 만성질환자에게 정기 배송·자동 리필·전화 상담을 제공",
+          "lines": "L51~L55",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "특수의약품 약국",
+          "desc": "도매상의 콜드체인을 통해 병원이나 가정으로 직접 배송되는 채널",
+          "lines": "L45~L46, L50~L50",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "온라인 약국",
+          "desc": "리테일·메일오더·특수의약품 사이에 걸쳐 있는 신흥 채널이나 아직 시장에서 크게 두각을 나타내지 못함",
+          "lines": "L56~L60",
+          "companies": [
+            {"name": "아마존", "raw_name": "아마존", "country": "미국", "role": "필팩 인수 후 온라인 약국 사업을 밀고 있으나 아직 시장에서 두각을 못 나타냄", "numbers": "", "lines": "L60~L60"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "미국은 약을 아무 곳에서나 팔 수 있어 채널이 극도로 세분화돼 있다는 점이 한국과의 핵심 차이(L64~L67)"
+    },
+    {
+      "industry": "제약유통(소매)",
+      "chain_name": "CVS 수직계열화 사슬",
+      "parent_chain": "미국 제약 유통 자금 사슬 (PBM 권력 이동)",
+      "parent_stage": "PBM-보험사 계열화 및 시장 장악",
+      "chain_lines": "L106~L125",
+      "summary": "CVS가 약국 하나에 머물지 않고 PBM과 보험사를 차례로 인수해 매출을 3분할 균등 구조로 만든 수직계열화 과정 — 소매 확장에만 집중한 월그린과 대비되는 사례",
+      "stages": [
+        {
+          "order": 1,
+          "name": "CVS 약국(소매)",
+          "desc": "CVS의 원래 사업인 소매 약국. 2000년대 중반 이후 소매 확장 대신 수직계열화로 방향 전환",
+          "lines": "L106~L106",
+          "companies": [
+            {"name": "CVS", "raw_name": "CBS", "country": "미국", "role": "2000년대 중반 이후 소매 확장 대신 수직계열화로 방향 전환", "numbers": "", "lines": "L106~L106"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "케어마크 PBM 인수(2007년)",
+          "desc": "2007년 PBM 회사 케어마크를 인수, 현재 미국 내 1위 PBM 사업자",
+          "lines": "L107~L108",
+          "companies": [
+            {"name": "케어마크", "raw_name": "케어마크", "country": "미국", "role": "CVS가 2007년 인수한 미국 1위 PBM", "numbers": "", "lines": "L107~L108"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "애트나 보험사 인수(2018년)",
+          "desc": "2018년 미국 내 3위 보험사 애트나를 인수, 이로써 약국·PBM·보험 매출 비중이 각 1/3로 균등 분포",
+          "lines": "L109~L110",
+          "companies": [
+            {"name": "애트나", "raw_name": "애트나", "country": "미국", "role": "CVS가 2018년 인수한 미국 3위 보험사", "numbers": "매출 비중 약국·PBM·보험 각 약 33%", "lines": "L109~L110"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "수직계열화 전략으로 CVS는 잘 나가는 반면, 소매 확장에만 올인한 월그린은 배당귀족주 지위를 잃고 사모펀드에 피인수돼 상장폐지 예정이라는 대비(L112~L125)"
+        }
+      ],
+      "notes": "진행자는 CVS 주식을 보유 중이나 PBM 투자 대상은 CVS 외에 유나이티드헬스와 다른 제3의 회사('시그널')도 비교 대상으로 언급하며 다음 편에서 다룰 예정(L126~L136)"
+    }
+  ]
+}

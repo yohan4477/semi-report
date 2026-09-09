@@ -1,0 +1,113 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2024-11-03-bigtech-earnings-en.md",
+  "slug": "2024-11-03-bigtech-earnings-en",
+  "date": "2024-11-03",
+  "title": "빅테크(구글, 아마존, 테슬라 등) 실적 리뷰 및 향후 전망, Ai 반도체 최종 승자는 삼성이 될 수도?, 미국 대선 이후 가상화폐 수혜주, 사악함의 끝판왕 국내 리츠 등",
+  "chains": [
+    {
+      "industry": "AI 반도체",
+      "chain_name": "AI 반도체 밸류체인",
+      "chain_lines": "L76~L98",
+      "summary": "진행자가 직접 'AI 반도체 밸류체인'이라 부르며, 빅테크가 엔비디아 GPU 의존을 벗어나 자체 칩을 만들려는 흐름을 설계-파운드리 단계로 짚은 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "빅테크(설계 의뢰자)",
+          "desc": "엔비디아 GPU 독식 구도에서 벗어나 자체 AI 반도체를 만들려는 빅테크들. 설계 기술이 지식재산권으로 막혀 있어 독자적으로 설계하기 어렵다",
+          "lines": "L76~L81",
+          "companies": [
+            {"name": "구글", "raw_name": "구글", "country": "미국", "role": "자체 AI 반도체 개발", "numbers": "", "lines": "L77"},
+            {"name": "아마존", "raw_name": "아마존", "country": "미국", "role": "자체 AI 반도체 개발", "numbers": "", "lines": "L77"},
+            {"name": "마이크로소프트", "raw_name": "MS", "country": "미국", "role": "자체 AI 반도체 개발", "numbers": "", "lines": "L77"},
+            {"name": "메타", "raw_name": "메타", "country": "미국", "role": "자체 AI 반도체 개발, 브로드컴과 제휴", "numbers": "", "lines": "L77, L82"},
+            {"name": "오픈AI", "raw_name": "오픈 AI", "country": "미국", "role": "브로드컴과 제휴해 설계", "numbers": "", "lines": "L82"},
+            {"name": "네이버", "raw_name": "네이버", "country": "한국", "role": "자체 반도체 설계 예정", "numbers": "", "lines": "L79"},
+            {"name": "카카오", "raw_name": "카카오", "country": "한국", "role": "자체 반도체 설계 예정", "numbers": "", "lines": "L79"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "설계 전문 기업",
+          "desc": "빅테크가 설계 기술을 자체 확보하기 어려워 제휴하는 설계 전문 기업들. 모바일 설계 전문이던 ARM도 서버 시장으로 진출 중",
+          "lines": "L80~L84",
+          "companies": [
+            {"name": "브로드컴", "raw_name": "브로드컴", "country": "미국", "role": "구글·메타·오픈AI와 제휴해 설계, 주가 급등", "numbers": "", "lines": "L81~L82"},
+            {"name": "마벨", "raw_name": "마벨", "country": "미국", "role": "설계 기술 보유", "numbers": "", "lines": "L81"},
+            {"name": "인텔", "raw_name": "인텔", "country": "미국", "role": "설계 기술 보유", "numbers": "", "lines": "L83"},
+            {"name": "AMD", "raw_name": "AMD", "country": "미국", "role": "설계 기술 보유", "numbers": "", "lines": "L83"},
+            {"name": "미디어텍", "raw_name": "미디어텍", "country": "대만", "role": "설계 기술 보유", "numbers": "", "lines": "L83"},
+            {"name": "ARM", "raw_name": "AR", "country": "영국", "role": "모바일 반도체 설계 전문에서 서버 시장으로 진출 중", "numbers": "", "lines": "L83~L84"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "설계 기술이 지식재산권으로 이미 묶여 있어 독자적으로 설계할 수 있는 회사가 거의 없다",
+          "bottleneck_lines": "L80~L81",
+          "judgment": "AI 반도체 밸류체인 중 설계 영역의 경쟁도 앞으로 굉장히 심해질 것"
+        },
+        {
+          "order": 3,
+          "name": "파운드리(생산)",
+          "desc": "설계가 끝난 반도체를 의뢰받아 생산하는 곳. 이 역할을 할 수 있는 회사가 세 곳뿐",
+          "lines": "L86~L91",
+          "companies": [
+            {"name": "TSMC", "raw_name": "tsmc", "country": "대만", "role": "압도적 1위", "numbers": "", "lines": "L88"},
+            {"name": "삼성전자", "raw_name": "삼성", "country": "한국", "role": "TSMC보다 3나노 공정을 먼저 개발했으나 D램에 투자하다 파운드리 주도권을 뺏겼다는 판단, 수율 미흡", "numbers": "", "lines": "L88, L91~L93"},
+            {"name": "인텔", "raw_name": "인텔", "country": "미국", "role": "파운드리 3사 중 하나, 수율 미흡", "numbers": "", "lines": "L88, L91"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "반도체 생산을 의뢰받아 해줄 수 있는 파운드리가 세 곳밖에 없어 이 영역의 쏠림이 심화될 것",
+          "bottleneck_lines": "L87~L89",
+          "judgment": "삼성전자는 파운드리를 분사시켜 집중하는 편이 낫지 않겠냐는 개인 의견"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "부동산·리츠",
+      "chain_name": "국내 대기업 리츠 자산유동화 구조",
+      "chain_lines": "L106~L119",
+      "summary": "진행자가 삼성·SK 등 대기업의 리츠 진출 기사를 두고 계열사 건물을 되사는 자금 흐름으로 구조를 비판적으로 짚은 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "투자자",
+          "desc": "리츠에 돈을 넣는 투자자. 유상증자에도 참여하게 된다",
+          "lines": "L108~L109, L114~L115",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "국내 투자자를 대상으로 자기네 건물을 비싸게 팔 수 있을 때까지 버티려는 의도로 보이며 투자하지 말라는 권고"
+        },
+        {
+          "order": 2,
+          "name": "리츠(대기업이 세운)",
+          "desc": "대기업이 세운 리츠가 투자자로부터 돈을 모아 그 돈으로 계열사 건물을 사들인다",
+          "lines": "L108~L109",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "결국은 자산 유동화이며, 건물을 싸게 팔기 싫어 투자자 자금으로 대신 비싸게 처리하려는 구조"
+        },
+        {
+          "order": 3,
+          "name": "대기업 계열사(건물 매도·재임대)",
+          "desc": "자금이 필요한 대기업 계열사가 보유 건물을 리츠에 매각하고, 그 건물에 다시 재임대해 들어간다",
+          "lines": "L108~L110",
+          "companies": [
+            {"name": "한화 금융 계열사", "raw_name": "하화 그룹의 금융 계열사", "country": "한국", "role": "리츠 유상증자에 참여 예정", "numbers": "", "lines": "L115~L116"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "유상증자가 실패하면 다른 계열사 자금으로 메우게 되고, 그러면 그 계열사에 투자했던 투자자가 피해를 본다"
+        }
+      ],
+      "notes": "하나 리츠는 유상증자 물량이 기존 발행 주식 수보다 많았다는 지적"
+    }
+  ]
+}

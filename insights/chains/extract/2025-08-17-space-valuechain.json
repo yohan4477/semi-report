@@ -1,0 +1,135 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-08-17-space-valuechain.md",
+  "slug": "2025-08-17-space-valuechain",
+  "date": "2025-08-17",
+  "title": "우주테크 산업 밸류체인 분석과 영역별 투자 핵심 포인트 찾기",
+  "chains": [
+    {
+      "industry": "우주테크",
+      "chain_name": "우주테크 산업 밸류체인 (단계별 나열)",
+      "chain_lines": "L24~L37",
+      "summary": "진행자가 처음 그려본 단계별 밸류체인이지만 스스로 '투자자 입장에서 아무 의미가 없다'고 평가한 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "위성·탐사선·우주 인프라 제조",
+          "desc": "위성이나 탐사선이나 우주 인프라를 만드는 단계",
+          "lines": "L24~L24",
+          "companies": [
+            {"name": "보잉", "raw_name": "보잉", "country": "미국", "role": "항공기 제조사, 위성 제조에도 참여", "numbers": "", "lines": "L27~L27"},
+            {"name": "에어버스", "raw_name": "에어버스", "country": "유럽", "role": "위성 제조 참여", "numbers": "", "lines": "L27~L27"},
+            {"name": "록히드마틴", "raw_name": "록히드 마틴", "country": "미국", "role": "방산 회사, 위성 제조 참여", "numbers": "", "lines": "L27~L27"},
+            {"name": "노스럽그러먼", "raw_name": "노스럽 그러먼", "country": "미국", "role": "방산 회사, 위성 제조 참여", "numbers": "", "lines": "L27~L27"},
+            {"name": "탈레스", "raw_name": "탈레스", "country": "프랑스", "role": "유럽 방산 회사, 위성 제조 참여", "numbers": "", "lines": "L27~L27"},
+            {"name": "인튜이티브 머신스", "raw_name": "인튜이티브 머신", "country": "미국", "role": "달 탐사 스타트업", "numbers": "", "lines": "L29~L29"},
+            {"name": "파이어플라이 에어로스페이스", "raw_name": "파이어플라이 에어로스페이스", "country": "미국", "role": "최근 상장한 스타트업", "numbers": "", "lines": "L30~L30"},
+            {"name": "레드와이어", "raw_name": "레드와이어", "country": "미국", "role": "스타트업", "numbers": "", "lines": "L30~L30"},
+            {"name": "모멘터스", "raw_name": "모멘터스", "country": "미국", "role": "스타트업", "numbers": "", "lines": "L30~L30"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "발사체 제작 및 발사 서비스",
+          "desc": "발사체를 만드는 기업이 위성을 우주로 발사하는 서비스를 제공하는 단계",
+          "lines": "L24~L24",
+          "companies": [
+            {"name": "스페이스엑스", "raw_name": "스페이스엑스", "country": "미국", "role": "발사 서비스", "numbers": "", "lines": "L31~L31"},
+            {"name": "로켓랩", "raw_name": "로켓랩", "country": "미국", "role": "발사 서비스", "numbers": "", "lines": "L31~L31"},
+            {"name": "블루오리진", "raw_name": "블루오리진", "country": "미국", "role": "발사 서비스", "numbers": "", "lines": "L31~L31"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "데이터 수집·분석",
+          "desc": "위성에서 관측한 데이터를 수집하고 분석해 유의미한 내용을 뽑아내는 단계",
+          "lines": "L17~L17, L25~L25",
+          "companies": [
+            {"name": "플래닛랩스", "raw_name": "플래닛랩스", "country": "미국", "role": "데이터 수집·분석", "numbers": "", "lines": "L31~L31"},
+            {"name": "L3해리스", "raw_name": "L3해리스", "country": "미국", "role": "방산 회사, 데이터 가공", "numbers": "", "lines": "L31~L31"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "위성 통신 서비스(전송)",
+          "desc": "위성 데이터를 지구상 사용자들에게 전송하는 위성 통신 사업",
+          "lines": "L25~L25, L32~L33",
+          "companies": [
+            {"name": "스타링크", "raw_name": "스타링크", "country": "미국", "role": "위성 통신 사업자", "numbers": "", "lines": "L33~L33"},
+            {"name": "아마존 프로젝트 카이퍼", "raw_name": "아마존의 프로젝트 카이퍼", "country": "미국", "role": "위성 통신 사업자", "numbers": "", "lines": "L33~L33"},
+            {"name": "AST 스페이스모바일", "raw_name": "AST 스페이스모바일", "country": "미국", "role": "위성 통신 사업자, 최근 시장에서 핫한 업체", "numbers": "", "lines": "L33~L33"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "진행자가 이런 식의 나열형 밸류체인은 투자자 입장에서 아무 의미가 없고 단순 기업 나열에 불과하다고 판단(L34~L37) — 이후 CPNT 프레임으로 재구성한다"
+    },
+    {
+      "industry": "우주테크",
+      "chain_name": "CPNT 밸류체인 (컨텐츠·플랫폼·네트워크·터미널)",
+      "chain_lines": "L39~L96",
+      "summary": "진행자가 ICT 산업 분석에 쓰던 CPNT 프레임을 우주테크에 적용해 투자 유망 영역을 다시 나눈 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "컨텐츠(Content)",
+          "desc": "위성에서 데이터를 수집하거나 분석하는 영역",
+          "lines": "L43~L44",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "닷컴 시절 야후·구글·페이스북·팔란티어처럼 콘텐츠로 플랫폼화에 성공하는 사업자가 나올 것이나 주가 폭등까지 시간이 오래 걸리므로 서두르지 않아도 된다는 판단(L64~L78)"
+        },
+        {
+          "order": 2,
+          "name": "플랫폼(Platform)",
+          "desc": "우주테크 쪽에서는 아직 플랫폼 영역이 존재하지 않는다고 지적",
+          "lines": "L44~L45",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "네트워크(Network)",
+          "desc": "위성을 띄워 데이터를 전송하는 위성 통신 사업자들이 해당하는 영역",
+          "lines": "L46~L46",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "2000년대 초 인터넷 접속사업자들처럼 초기엔 사업자가 난립하다 소수가 과점하며 배당주(경기방어주)로 자리잡을 것이므로, 마지막까지 살아남을 회사를 미리 골라 투자하고 과점 이후엔 배당을 누리라는 전략(L48~L62, L91~L92)"
+        },
+        {
+          "order": 4,
+          "name": "터미널(Terminal)",
+          "desc": "인공위성 제조, 발사체 제작, 달 탐사선 제작 등 터미널 기기를 만드는 회사들이 해당",
+          "lines": "L46~L46",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "애플 아이폰·테슬라 전기차처럼 가장 먼저 좋은 제품으로 시장 룰을 세운 회사가 초기 단물을 다 먹고, 후발주자가 몰리면 단가 싸움이 된다는 판단(L80~L89)"
+        }
+      ],
+      "notes": "이 CPNT 프레임이 이후 위성통신·위성관측·제조 등 모든 우주테크 편의 상위 구조로 쓰인다(L90~L96)"
+    }
+  ]
+}

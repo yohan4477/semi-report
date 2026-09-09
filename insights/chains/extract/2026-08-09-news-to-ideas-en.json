@@ -1,0 +1,73 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-08-09-news-to-ideas-en.md",
+  "slug": "2026-08-09-news-to-ideas-en",
+  "date": "2026-08-09",
+  "title": "경제신문을 투자로 연결하는 법 (기사에서 종목과 산업을 찾는 실제 과정)",
+  "chains": [
+    {
+      "industry": "결제·핀테크",
+      "chain_name": "AI 자동 쇼핑이 지나가는 결제망",
+      "chain_lines": "L115~L125",
+      "summary": "아마존 쇼핑 AI봇이 법적 문제없다는 판결 기사를 보고, AI가 대신 결제해도 결국 카드 결제망을 거칠 수밖에 없다는 점을 짚는다.",
+      "stages": [
+        {"order": 1, "name": "AI 자동 쇼핑·결제", "desc": "사람이 검색·결제하는 대신 AI가 알아서 검색하고 결제까지 대신한다.", "lines": "L115~L118", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "카드 결제망", "desc": "AI가 결제하든 사람이 결제하든 결제는 결국 카드로 이뤄지고, 모든 카드사는 이 결제망을 통할 수밖에 없다.", "lines": "L119~L125",
+          "companies": [
+            {"name": "비자", "raw_name": "비자", "country": "", "role": "카드 결제망 운영사", "numbers": "", "lines": "L119, L122"},
+            {"name": "마스터카드", "raw_name": "마스터 카드", "country": "", "role": "카드 결제망 운영사", "numbers": "", "lines": "L119, L122"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "AI 자동 결제가 늘어도 모든 카드사가 비자·마스터카드 결제망을 통할 수밖에 없다",
+          "bottleneck_lines": "L119",
+          "judgment": "AI 쇼핑 자동화가 늘어날수록 비자·마스터카드는 더 좋아질 수밖에 없다"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "클라우드·게임",
+      "chain_name": "클라우드 게임이 지나가는 서버 운영사",
+      "chain_lines": "L138~L151",
+      "summary": "반도체 가격 상승으로 PC·콘솔 가격이 오르자 게임을 클라우드에 올려 사용량만큼 과금하는 방식이 뜨고 있다는 기사를 짚는다.",
+      "stages": [
+        {"order": 1, "name": "게임 소프트웨어", "desc": "PC·콘솔 대신 온라인에 게임 소프트웨어를 올려 사용한 만큼 과금하는 구조로 이동.", "lines": "L138~L141", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "클라우드 서버 운영", "desc": "게임 소프트웨어가 결국 클라우드 서버에 올라가고, 그 서버를 운영하는 회사가 수혜를 받는다.", "lines": "L142~L144",
+          "companies": [
+            {"name": "아마존", "raw_name": "아마존", "country": "", "role": "클라우드 서버 운영사", "numbers": "", "lines": "L144"},
+            {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "클라우드 서버 운영사", "numbers": "", "lines": "L144"},
+            {"name": "구글", "raw_name": "구글", "country": "", "role": "클라우드 서버 운영사", "numbers": "", "lines": "L144"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "",
+          "judgment": "클라우드 게임이 뜨면 결국 클라우드 서버 운영사들이 좋아질 수밖에 없다"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "자율주행",
+      "chain_name": "자율주행 3파전이 지나가는 이미지 센서 병목",
+      "chain_lines": "L243~L254",
+      "summary": "웨이모·죽스·사이버캡의 자율주행 3파전이 본격화된다는 기사를 보고, 누가 이기든 카메라 속 이미지 센서가 필요하다는 병목을 다시 짚는다.",
+      "stages": [
+        {"order": 1, "name": "자율주행 서비스", "desc": "구글 웨이모, 아마존 죽스, 테슬라 사이버캡의 3파전이 본격화된다.", "lines": "L247~L249",
+          "companies": [
+            {"name": "웨이모", "raw_name": "웨이모", "country": "", "role": "구글의 자율주행 서비스", "numbers": "", "lines": "L247"},
+            {"name": "죽스", "raw_name": "죽스", "country": "", "role": "아마존의 자율주행 서비스", "numbers": "", "lines": "L247"},
+            {"name": "사이버캡", "raw_name": "사이버캡", "country": "", "role": "테슬라의 자율주행 서비스", "numbers": "", "lines": "L247"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {"order": 2, "name": "카메라(이미지 센서)", "desc": "누가 이기든 카메라가 필요하고, 카메라 안에는 이미지 센서가 들어간다.", "lines": "L250~L254",
+          "companies": [
+            {"name": "소니", "raw_name": "소니", "country": "", "role": "전 세계 이미지 센서 시장 대부분을 장악", "numbers": "", "lines": "L252"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "이미지 센서 전 세계 시장 대부분을 소니가 장악하고 있다",
+          "bottleneck_lines": "L252",
+          "judgment": "이미 수익을 많이 낸 데이터센터·반도체 병목 투자에서 벗어나 이제는 자율주행 쪽 병목(이미지 센서, 소니)을 찾아야 한다"
+        }
+      ],
+      "notes": ""
+    }
+  ]
+}

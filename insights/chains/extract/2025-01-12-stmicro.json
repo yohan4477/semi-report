@@ -1,0 +1,78 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-01-12-stmicro.md",
+  "slug": "2025-01-12-stmicro",
+  "date": "2025-01-12",
+  "title": "ST마이크로일렉트로닉스 사업성과 전력반도체 시장 분석",
+  "chains": [
+    {
+      "industry": "전력 반도체",
+      "chain_name": "전력 반도체 밸류체인 (웨이퍼→설계·제조→파운드리→적용 분야)",
+      "chain_lines": "L16~L60",
+      "summary": "진행자가 SiC 웨이퍼 공급, 완성차의 자체 설계 전환, 파운드리 외주 확대를 순서대로 짚으며 결국 파운드리가 돈을 다 벌어가는 산업 구조가 될 거라고 판단한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "SiC 웨이퍼",
+          "desc": "차량용·데이터센터용 화합물(SiC) 전력 반도체의 원재료 웨이퍼 공급 단계. 최근 1년 사이 경쟁자와 중국 업체가 늘며 가격이 폭락했다.",
+          "lines": "L24~L37",
+          "companies": [
+            {"name": "울프스피드", "raw_name": "울프 스피드", "country": "미국", "role": "SiC 웨이퍼 글로벌 1위 공급자, 차량용 화합물 반도체에 집중", "numbers": "8인치 웨이퍼 세계 시장 점유율 60%, 6인치는 코히어런트와 합쳐 70%; SiC 웨이퍼 가격 한 장당 5,000불대에서 2,000불 초반대로 폭락", "lines": "L30~L37"},
+            {"name": "코히어런트", "raw_name": "코히어런트", "country": "", "role": "6인치 SiC 웨이퍼를 울프스피드와 함께 점유, 데이터센터向 SiC 화합물 반도체에 집중해 주가가 좋음", "numbers": "6인치 웨이퍼 울프스피드와 합산 점유율 70%", "lines": "L32~L33, L38~L40"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "과거에는 SiC 웨이퍼가 기술적 장벽으로 작용했지만, 지금은 중국 업체들이 다 따라와 가격이 폭락했다고 본다."
+        },
+        {
+          "order": 2,
+          "name": "칩 설계·제조 (IDM 및 완성차 자체 설계)",
+          "desc": "전통 IDM 업체들이 차량용·산업용·가전·통신을 다 다루고 있고, 최근에는 완성차 메이커들도 자체 설계로 들어가고 있다.",
+          "lines": "L40~L42, L55~L58",
+          "companies": [
+            {"name": "텍사스 인스트루먼트", "raw_name": "텍사스 인스트루먼트", "country": "미국", "role": "전 영역(차량용·산업용·가전·통신)을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "온세미컨덕터", "raw_name": "온 세미콘덕터", "country": "미국", "role": "전 영역을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "롬", "raw_name": "롬", "country": "일본", "role": "전 영역을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "르네사스", "raw_name": "르네사스", "country": "일본", "role": "전 영역을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "ST마이크로일렉트로닉스", "raw_name": "stm", "country": "유럽", "role": "전 영역을 다루는 전력 반도체 업체, 범용 MCU 시장 점유율 1위지만 돈이 안 되는 영역 비중이 높음. 폭스바겐과 설계 제휴", "numbers": "범용 MCU 시장 점유율 1위", "lines": "L41, L56~L57, L62~L64"},
+            {"name": "NXP", "raw_name": "NXP", "country": "유럽", "role": "전 영역을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "인피니언", "raw_name": "인피니언", "country": "유럽", "role": "전 영역을 다루는 전력 반도체 업체", "numbers": "", "lines": "L41"},
+            {"name": "폭스바겐", "raw_name": "복스바겐", "country": "독일", "role": "STM과 설계 제휴, 제조는 TSMC에 의뢰", "numbers": "", "lines": "L56~L57"},
+            {"name": "벤츠", "raw_name": "벤츠", "country": "독일", "role": "독일 btb테크와 반도체 개발", "numbers": "", "lines": "L57"},
+            {"name": "현대차", "raw_name": "현대차", "country": "한국", "role": "2022년 자체적으로 반도체를 만들겠다고 선언", "numbers": "2022년", "lines": "L58"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "글로벌 완성차 메이커들이 자체적으로 반도체를 설계하기 시작하면서 제조 수요가 파운드리로 몰리고 있다고 본다."
+        },
+        {
+          "order": 3,
+          "name": "파운드리",
+          "desc": "완성차·팹리스가 설계한 전력 반도체를 위탁 제조하는 단계. 완성차의 자체 설계 확대로 파운드리 수요가 몰리고 있다.",
+          "lines": "L48~L60",
+          "companies": [
+            {"name": "TSMC", "raw_name": "tsmc", "country": "대만", "role": "폭스바겐 등이 설계한 전력 반도체를 제조 위탁받음", "numbers": "", "lines": "L57, L59"},
+            {"name": "SMIC", "raw_name": "smic", "country": "중국", "role": "차량용 반도체 외주를 받아 만들어주는 파운드리 사업으로 급성장, TSMC가 소화 못하는 물량을 만듦", "numbers": "", "lines": "L49, L59"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "전력 반도체 고객들이 자체적으로 반도체를 설계하기 시작하면서 제조 수요가 파운드리로 몰리고 있어, 결국 파운드리가 돈을 다 벌어가는 상황이 될 것으로 본다.",
+          "bottleneck_lines": "L58~L60",
+          "judgment": "전력반도체 산업도 결국 파운드리가 돈을 다 벌어가는 구조가 될 것이라 판단한다."
+        },
+        {
+          "order": 4,
+          "name": "적용 분야",
+          "desc": "전력 반도체가 최종적으로 쓰이는 네 가지 영역.",
+          "lines": "L16~L19, L28",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "전력반도체 시장이 2000년대 초반 디램 시장과 비슷한 치킨 게임 국면에 들어갈 수 있다고 보고, 삼성전자·SK하이닉스가 이 시점에 차량용 전력 반도체 시장에 뛰어드는 이유를 이해하기 어렵다고 판단한다."
+    }
+  ]
+}

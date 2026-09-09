@@ -1,0 +1,67 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2024-12-07-ginkgo-bioworks-en.md",
+  "slug": "2024-12-07-ginkgo-bioworks-en",
+  "date": "2024-12-07",
+  "title": "깅코바이오웍스. 사업구조 및 향후 전망, 그리고 투자 가능 시점 질문에 대한 답변",
+  "chains": [
+    {
+      "industry": "제약·바이오",
+      "chain_name": "제약 신약개발 밸류체인",
+      "chain_lines": "L20~L41",
+      "summary": "진행자가 직접 '제약 밸류체인'이라 부르며(본인이 편의상 만든 것이라 전제) 아스피린을 예로 성분 발견부터 대량 생산까지 단계를 나누고, 깅코바이오웍스(DNA)가 그중 어디에 속하는지 짚은 대목",
+      "stages": [
+        {
+          "order": 1,
+          "name": "성분·물질 발견",
+          "desc": "열을 내리는 효과가 있는 성분을 찾아내거나 만들어내는 단계. 아스피린은 버드나무 껍질에서 추출한 성분이 예시로 제시됨",
+          "lines": "L22~L24",
+          "companies": [
+            {"name": "모더나", "raw_name": "모더나", "country": "미국", "role": "특정 성분이 코로나 바이러스에 효과가 있다는 것을 찾아낸 회사", "numbers": "", "lines": "L32~L33,L35"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "제약 밸류체인상 돈이 많이 벌리는 영역 중 하나로 지목됨"
+        },
+        {
+          "order": 2,
+          "name": "물질 배양·조합·전달 방법 연구",
+          "desc": "발견된 성분을 경구·주사 등 인체에 투여할 수 있는 방식으로 배양·조합·전달하는 방법을 연구하는 단계. 깅코바이오웍스(DNA)가 속한 영역",
+          "lines": "L24~L27, L29~L31",
+          "companies": [
+            {"name": "깅코바이오웍스", "raw_name": "DNA", "country": "미국", "role": "모더나의 의뢰를 받아 랩·컴퓨터로 수만 가지 조합을 시뮬레이션해 답을 제공", "numbers": "", "lines": "L29~L31, L34~L35"}
+          ],
+          "bottleneck": "low",
+          "bottleneck_why": "대형 제약사는 이 업무를 자체적으로 하고, 돈이 없는 벤처 회사만 외주를 주기 때문에 계약 규모가 크지 않다",
+          "bottleneck_lines": "L37~L40",
+          "judgment": "제약 밸류체인상 큰돈을 만질 수 없는 영역이며, 코로나 같은 긴박한 상황이 아닌 이상 사업 전망이 밝지 않다"
+        },
+        {
+          "order": 3,
+          "name": "임상 실험",
+          "desc": "조합된 물질의 안전성·효능을 확인하는 단계. 모더나는 코로나 팬데믹 당시 긴박한 상황이라 이 단계를 거치지 않고 바로 약을 출시했다고 언급됨",
+          "lines": "L27~L28, L35~L36",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "대량 생산",
+          "desc": "임상이 끝난 물질을 대량으로 생산하는 단계. 국내 삼성바이오로직스 같은 회사에 의뢰한다고 예시로 언급됨",
+          "lines": "L28~L29",
+          "companies": [
+            {"name": "삼성바이오로직스", "raw_name": "삼성바이오로직스", "country": "한국", "role": "대량 생산 의뢰를 받는 회사로 예시 언급", "numbers": "", "lines": "L28~L29"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "제약 밸류체인상 돈이 많이 벌리는 영역 중 하나로 지목됨"
+        }
+      ],
+      "notes": "진행자 본인이 만든 편의상의 밸류체인이며 일반적으로 통용되는 표준 밸류체인은 아니라고 전제함"
+    }
+  ]
+}

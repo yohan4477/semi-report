@@ -1,0 +1,68 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-10-12-pharma-dist-wholesaler.md",
+  "slug": "2025-10-12-pharma-dist-wholesaler",
+  "date": "2025-10-12",
+  "title": "PBM이 흔든 판, 도매사업자가 제약유통을 되찾는다",
+  "chains": [
+    {
+      "industry": "제약유통",
+      "chain_name": "특수의약품 시장 사슬 (질환별)",
+      "parent_chain": "미국 제약 유통 자금 사슬 (PBM 권력 이동)",
+      "parent_stage": "PBM의 특수의약품 유통 진입",
+      "chain_lines": "L46~L76",
+      "summary": "특수의약품 시장을 질환별 규모 순으로 나누고 각 영역에서 어느 도매상이 앞서 있는지 짚은 대목 — 결론은 맥케슨이 도매 영역 1위",
+      "stages": [
+        {
+          "order": 1,
+          "name": "종양학 (항암제) — 45%",
+          "desc": "특수의약품 시장에서 규모가 가장 커서 도매상들이 가장 먼저 의료 네트워크를 구축한 영역",
+          "lines": "L48~L50",
+          "companies": [
+            {"name": "맥케슨", "raw_name": "맥케슨", "country": "미국", "role": "미국 내 가장 큰 종양학 네트워크 보유", "numbers": "특수의약품 시장 내 종양학 비중 45%", "lines": "L49~L49, L72~L72"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "맥케슨이 미국 내 최대 종양학 네트워크를 보유해 나머지 도매상 대비 매출 격차를 계속 벌리고 있음",
+          "bottleneck_lines": "L72~L75",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "자가면역 질환 — 20%",
+          "desc": "미국 업체보다 유럽 제약사가 강세인 영역이라 도매상들이 크게 신경 쓰지 않는 영역",
+          "lines": "L51~L53",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "희귀질환·신경학",
+          "desc": "많은 제약사가 달려들지 않아 도매상도 네트워크 구성을 시도하지 않는 영역",
+          "lines": "L54~L54",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "안과 — 5%, 급성장",
+          "desc": "전체 특수의약품 시장의 5%에 불과하지만 고령화로 급성장 중이며, 도매상이 최근 이 영역에서 의료 네트워크 구성을 적극 시도",
+          "lines": "L54~L62",
+          "companies": [
+            {"name": "맥케슨", "raw_name": "맥케슨", "country": "미국", "role": "안과 쪽 네트워크 구성에 가장 앞서 있음", "numbers": "특수의약품 시장 내 안과 비중 5%(급성장)", "lines": "L55~L56, L72~L73"},
+            {"name": "센코라", "raw_name": "센코라", "country": "미국", "role": "안과 쪽에서 맥케슨을 따라가려 노력 중", "numbers": "", "lines": "L73~L73"}
+          ],
+          "bottleneck": "mid",
+          "bottleneck_why": "아직 시장 규모는 작지만 고령화로 급성장 중이라 선점 경쟁이 벌어지는 영역",
+          "bottleneck_lines": "L56~L62",
+          "judgment": "노안 치료 안약이 출시되면 전 세계 50세 이상 인구가 다 쓸 것이므로 이를 유통하는 도매상이 큰 수익을 볼 것이라는 전망(L57~L62)"
+        }
+      ],
+      "notes": "도매 영역은 맥케슨·센코라·카디널헬스 3사가 시장의 90% 이상을 점유하는 과점 구조. PBM 공세에 맥케슨은 의료 네트워크 구축으로, 센코라는 제약사 관계로, 카디널헬스는 환자 관계로 각각 대응했으나 결국 나머지 두 곳도 맥케슨 방식을 따라가고 있다는 평가(L22~L24, L67~L76)"
+    }
+  ]
+}

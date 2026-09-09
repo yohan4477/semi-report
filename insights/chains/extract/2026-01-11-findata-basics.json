@@ -1,0 +1,83 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-01-11-findata-basics.md",
+  "slug": "2026-01-11-findata-basics",
+  "date": "2026-01-11",
+  "title": "금융 데이터: 금융 및 핀테크 산업의  보이지 않는 핵심",
+  "chains": [
+    {
+      "industry": "금융 데이터",
+      "chain_name": "금융 데이터 산업 밸류체인",
+      "chain_lines": "L38~L104",
+      "summary": "진행자가 금융 데이터 산업을 이해하기 위해 데이터가 만들어져 소비되기까지의 흐름을 단계별로 나눠 설명한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "데이터 생성·수집·저장·처리",
+          "desc": "주식·채권·ETF·선물·옵션·외환의 호가 자료, 기업 공시·재무제표, 기업·증시 관련 뉴스가 생성되며, 거래소가 이런 데이터를 생성·수집하는 대표 업체다. 이런 데이터를 수집해서 저장하고 사용하기 편하게 분류하는 업체들이 있다.",
+          "lines": "L39~L43,L48~L52",
+          "companies": [
+            {"name": "아마존 웹서비스", "raw_name": "아마존 웹서비스", "country": "", "role": "데이터 저장·클라우드", "numbers": "", "lines": "L50"},
+            {"name": "데이터브릭스", "raw_name": "데이터 브릭스", "country": "", "role": "데이터 저장·클라우드", "numbers": "", "lines": "L50"},
+            {"name": "스노우플레이크", "raw_name": "스노우플레이크", "country": "", "role": "데이터 저장·클라우드", "numbers": "", "lines": "L50"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "데이터 표준화·가공",
+          "desc": "나라마다 다른 티커·국제증권식별번호(ISIN)·통화·시간대·회계기준·세법 기준을 하나의 형태로 표준화하고, 뉴스도 종목별로 태깅해 정리하는 업체들이 속한 영역.",
+          "lines": "L54~L66",
+          "companies": [
+            {"name": "팩트셋", "raw_name": "팩트셋", "country": "", "role": "데이터 표준화·가공", "numbers": "", "lines": "L68"},
+            {"name": "ICE", "raw_name": "아이스", "country": "", "role": "시카고 선물거래소 운영, 데이터 표준화·가공", "numbers": "", "lines": "L69"},
+            {"name": "S&P", "raw_name": "SMP", "country": "", "role": "데이터 표준화·가공", "numbers": "", "lines": "L70"},
+            {"name": "블룸버그", "raw_name": "블룸버그", "country": "", "role": "데이터 표준화·가공", "numbers": "", "lines": "L70"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "데이터 분석·인사이트 제공",
+          "desc": "가공된 데이터를 분석해 통계를 내거나 AI를 학습시키고 시나리오 플래닝·퀀트 전략 검증을 하는 업체, 투자 리서치 페이퍼·인사이트 요약·산업 트렌드 분석을 내놓는 업체, 신용평가 업체, 인덱스·벤치마크를 제공하는 업체가 이 영역에 있다.",
+          "lines": "L71~L85",
+          "companies": [
+            {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "데이터 분석·모델링", "numbers": "", "lines": "L73"},
+            {"name": "MSCI", "raw_name": "MSCI", "country": "", "role": "지표·지수 개발", "numbers": "", "lines": "L73"},
+            {"name": "무디스", "raw_name": "무디스", "country": "", "role": "신용평가", "numbers": "", "lines": "L74,L80"},
+            {"name": "S&P", "raw_name": "SMP", "country": "", "role": "세계 3대 신용평가기관 중 하나, 인덱스(S&P500) 제공", "numbers": "", "lines": "L80,L84"},
+            {"name": "피치", "raw_name": "피치", "country": "", "role": "세계 3대 신용평가기관 중 하나", "numbers": "", "lines": "L80"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "의사결정 지원",
+          "desc": "인사이트·정보를 가지고 의사결정을 내리거나 AI로 의사결정을 지원·시뮬레이션해주는 업체들의 영역.",
+          "lines": "L86~L94",
+          "companies": [
+            {"name": "C3.ai", "raw_name": "A3 AI", "country": "", "role": "AI 의사결정 지원", "numbers": "", "lines": "L89"},
+            {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "에이전틱 AI", "numbers": "", "lines": "L90"},
+            {"name": "오라클", "raw_name": "오라클", "country": "", "role": "IT 업체", "numbers": "", "lines": "L91"},
+            {"name": "IBM", "raw_name": "IBM", "country": "", "role": "IT 업체", "numbers": "", "lines": "L91"},
+            {"name": "세일즈포스", "raw_name": "세일스보스", "country": "", "role": "IT 업체", "numbers": "", "lines": "L91"},
+            {"name": "블랙록", "raw_name": "블랙록", "country": "", "role": "자산운용사, 자체 의사결정 AI '알라딘' 개발", "numbers": "", "lines": "L93~L94"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "진행자는 마지막에 전체를 데이터 인프라 저장·유통 / 금융 데이터 생성·분석·평가 / AI 기반 의사결정 지원의 세 그룹으로 재단순화하고, 이 중 두 번째 그룹에 속하는 회사들을 FDMI(Financial Data and Market Infrastructure) 8개사로 지칭하며 다음 영상부터 다룰 예정이라고 밝힌다. FDMI 8개사의 개별 이름은 이 편에서 언급되지 않는다. (L95~L104)"
+    }
+  ]
+}

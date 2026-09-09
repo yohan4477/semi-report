@@ -1,0 +1,88 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-08-16-pharma-valuechain.md",
+  "slug": "2026-08-16-pharma-valuechain",
+  "date": "2026-08-16",
+  "title": "제약·바이오 산업 분석의 시작 | R&D부터 CRO·CDMO까지 밸류체인 이해하기",
+  "chains": [
+    {
+      "industry": "제약·바이오",
+      "chain_name": "신약이 나오기까지의 제약·바이오 밸류체인",
+      "chain_lines": "L27~L134",
+      "summary": "진행자가 헬스케어(제약·바이오) 산업 분석의 첫 회로, 신약이 R&D부터 환자에게 닿기까지 거치는 다섯 단계와 각 단계의 투자 포인트를 정리한다.",
+      "stages": [
+        {
+          "order": 1, "name": "R&D(후보물질 발굴·최적화)",
+          "desc": "질병에 듣는 후보 물질을 찾고(4~5년 소요, AI 도입으로 1년으로 단축 중), 그 물질을 약으로 만들 수 있도록 최적화하는 단계. 빅테크 AI가 시뮬레이션으로 최적화를 돕는다.",
+          "lines": "L30~L54",
+          "companies": [
+            {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "신약 개발 AI 플랫폼에 투자하는 빅테크 중 하나", "numbers": "", "lines": "L49~L50"},
+            {"name": "구글 알파폴드", "raw_name": "구글의 알파폴드", "country": "", "role": "후보 물질 최적화를 시뮬레이션해 주는 빅테크 플랫폼", "numbers": "", "lines": "L53~L54"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "이 단계(R&D 중심 바이오텍)는 임상 성공 시 초대박, 실패 시 부도로 이어지는 도박에 가까운 산업이라 개인적으로는 투자를 피한다"
+        },
+        {
+          "order": 2, "name": "전임상",
+          "desc": "사람 임상 전에 동물을 대상으로 먼저 테스트하는 단계.",
+          "lines": "L55~L57",
+          "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 3, "name": "임상시험(1~3상)",
+          "desc": "1상은 안전성, 2상은 효과 유무, 3상은 기존 치료제 대비 우수성을 본다.",
+          "lines": "L58~L65",
+          "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 4, "name": "CRO(임상 대행)",
+          "desc": "임상시험과 규제당국 허가 절차를 동시에 대행해 주는 업체. 환자 선별 능력과 글로벌 병원 네트워크가 있어야 임상 환자를 모집할 수 있다.",
+          "lines": "L71~L72, L107~L115",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "몇 개 회사가 글로벌 시장을 거의 반독점하고 있고, 임상 이력과 병원 네트워크가 없으면 신규 업체가 진입하는 것 자체가 불가능하다",
+          "bottleneck_lines": "L111~L112",
+          "judgment": "R&D보다 CRO 쪽에 개인적으로 더 주목하고 있다"
+        },
+        {
+          "order": 5, "name": "허가",
+          "desc": "규제당국(식약처·FDA)의 허가를 받는 단계. 요구되는 자료 수준이 논문·박사논문급이라 아무나 할 수 없다.",
+          "lines": "L66~L70",
+          "companies": [
+            {"name": "FDA", "raw_name": "FDA", "country": "미국", "role": "신약 허가 규제당국", "numbers": "", "lines": "L68~L70"},
+            {"name": "식약처", "raw_name": "식약처", "country": "한국", "role": "신약 허가 규제당국", "numbers": "", "lines": "L68"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 6, "name": "생산(CDMO)",
+          "desc": "허가받은 신약을 대신 생산해 주는 위탁생산 단계. 생산 기술보다 생산 CAPA(효율적으로 싸게 만드는 능력)가 핵심이며, 바이오의약품은 만들기가 특히 까다롭다.",
+          "lines": "L73~L77, L116~L124",
+          "companies": [
+            {"name": "론자", "raw_name": "론자", "country": "", "role": "CDMO 1위 업체", "numbers": "", "lines": "L76"},
+            {"name": "삼성바이오로직스", "raw_name": "삼성바이오로직스", "country": "한국", "role": "CDMO 세계 톱클래스, 생산 CAPA 기준 세계 1위, 론자를 맹추격 중", "numbers": "생산 CAPA 세계 1위", "lines": "L76, L120~L121"},
+            {"name": "후지", "raw_name": "후지", "country": "일본", "role": "CDMO를 잘하는 업체(과거 카메라 필름 제조사)", "numbers": "", "lines": "L76"},
+            {"name": "우시", "raw_name": "우시", "country": "중국", "role": "CDMO 업체", "numbers": "", "lines": "L77"},
+            {"name": "써모피셔 사이언티픽", "raw_name": "써모피셔 사이언티픽", "country": "미국", "role": "CDMO 업체", "numbers": "", "lines": "L77"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "바이오의약품은 만들기 까다로워 전 세계 몇 개 업체가 거의 과점하고 있다",
+          "bottleneck_lines": "L119~L121",
+          "judgment": "AI로 후보 물질이 늘어나 허가받는 약이 많아지면 결국 생산을 대행하는 CDMO에 물량이 몰릴 것이라 유망한 투자처로 본다"
+        },
+        {
+          "order": 7, "name": "유통·판매",
+          "desc": "허가·생산된 약을 시중에 유통·판매하는 단계.",
+          "lines": "L78~L79",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "미국 제약 유통에서 도매상과 PBM이 시장을 완전히 장악하고 있어, 이들이 팔아 주기로 결정하지 않으면 아무리 좋은 약도 시중 유통이 불가능하다",
+          "bottleneck_lines": "L78~L79",
+          "judgment": ""
+        }
+      ],
+      "notes": "빅파마(제약사) 단계는 자체 개발보다 블록버스터 의약품(연매출 10억 달러 이상)을 꾸준히 내는 게 핵심이며, 특허가 풀리면(특허 절벽) 수익이 급감해 후속 신약이나 바이오텍 M&A·라이선스 인으로 대응한다(L125~L134). 신약(최초 개발)·제네릭(화학 복제약, 인도·중국 업체가 장악)·바이오시밀러(바이오의약품 복제, 삼성바이오에피스·셀트리온 등 소수만 가능)의 구분도 다뤄진다(L135~L158). 이 회차는 시리즈의 첫 편으로, 다음 편에서 성장·투자 사이클을 다룰 예정이라고 예고한다(L159)."
+    }
+  ]
+}

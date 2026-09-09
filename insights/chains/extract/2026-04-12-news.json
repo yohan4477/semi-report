@@ -1,0 +1,100 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-04-12-news.md",
+  "slug": "2026-04-12-news",
+  "date": "2026-04-12",
+  "title": "AI 토큰 가격 하락이 만드는 진짜 수혜주",
+  "chains": [
+    {
+      "industry": "AI 인프라",
+      "chain_name": "토큰 가격 하락이 지나가는 AI 스택 6영역",
+      "chain_lines": "L92~L158",
+      "summary": "진행자가 토큰당 가격 하락이 AI 스택의 어느 영역에 득이 되고 어느 영역에 해가 되는지 여섯 영역으로 나눠 짚는다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "AI 모델 개발",
+          "desc": "토큰 가격 하락으로 차별화 포인트나 확실한 고객 기반이 없는 모델 개발사가 비용 압박을 받는 영역.",
+          "lines": "L93~L96",
+          "companies": [
+            {"name": "A3, AI", "raw_name": "A3, AI", "country": "", "role": "몇 년 전 핫했던 AI 모델 개발사", "numbers": "", "lines": "L95"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "차별화 포인트를 갖추지 못하면 토큰 가격 하락이 비용 압박으로 이어져 시장에서 사라질 것"
+        },
+        {
+          "order": 2,
+          "name": "GPU 제조",
+          "desc": "학습이든 추론이든 GPU가 반드시 필요한 영역. 엔비디아는 추론칩도 생산 중.",
+          "lines": "L98~L102",
+          "companies": [
+            {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "GPU 제조, 추론칩도 생산", "numbers": "", "lines": "L98~L100"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "이미 인프라가 되어버려 모든 업체가 다 필요로 하는 필수재가 됐다",
+          "bottleneck_lines": "L102",
+          "judgment": "앞으로도 계속 좋을 것"
+        },
+        {
+          "order": 3,
+          "name": "반도체 설계",
+          "desc": "토큰 가격 하락으로 반도체를 더 효율적으로 설계해야 하는 경쟁이 벌어지는 영역.",
+          "lines": "L103~L106",
+          "companies": [
+            {"name": "시놉시스", "raw_name": "신시스", "country": "", "role": "반도체 설계 업체", "numbers": "", "lines": "L105"},
+            {"name": "케이던스", "raw_name": "케이던스", "country": "", "role": "반도체 설계 업체", "numbers": "", "lines": "L105"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "반도체 설계 효율화 경쟁이 벌어지면 이쪽 회사들은 앞으로 괜찮을 것"
+        },
+        {
+          "order": 4,
+          "name": "GPU·데이터센터 임대",
+          "desc": "과거 비트코인 채굴을 하다가 지금은 AI GPU·데이터센터를 임대하는 사업으로 바꾼 업체들. 전력과 GPU를 직접 제공해야 해 비용 부담이 크다.",
+          "lines": "L108~L116",
+          "companies": [
+            {"name": "코어위브", "raw_name": "코이브", "country": "", "role": "GPU·데이터센터 임대 사업자", "numbers": "", "lines": "L108"},
+            {"name": "아이렌", "raw_name": "아이나", "country": "", "role": "GPU·데이터센터 임대 사업자", "numbers": "", "lines": "L108"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "토큰 가격 하락 속도가 임대업체 비용 하락 속도보다 빨라 시간이 갈수록 마진 압박에 시달릴 것 — 사업성이 좋아 보이지 않음"
+        },
+        {
+          "order": 5,
+          "name": "파운드리(제조)",
+          "desc": "너도나도 자기네 추론칩을 직접 설계하지만, 그걸 만들어 주는 곳은 한 곳뿐이라고 짚는 대목.",
+          "lines": "L117~L123",
+          "companies": [
+            {"name": "TSMC", "raw_name": "TSMC", "country": "", "role": "직접 설계한 추론칩을 위탁 제조해 주는 유일한 회사", "numbers": "", "lines": "L122"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "다들 자체 추론칩을 설계해도 결국 만들어 주는 회사는 TSMC 하나뿐",
+          "bottleneck_lines": "L121~L122",
+          "judgment": "TSMC는 앞으로도 계속 좋을 것"
+        },
+        {
+          "order": 6,
+          "name": "소프트웨어 응용",
+          "desc": "AI 비용(토큰 가격) 하락이 소프트웨어 회사의 부가 상품·광고·유통·자동화 수익 구조에 미치는 영향을 회사별로 짚는다.",
+          "lines": "L124~L158",
+          "companies": [
+            {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "AI 위에 오피스·코파일럿 등 소프트웨어를 얹어 애드온으로 추가 판매", "numbers": "", "lines": "L126~L138"},
+            {"name": "구글", "raw_name": "구글", "country": "", "role": "토큰 가격 하락으로 비용이 줄면 광고 수익이 늘어나는 구조", "numbers": "", "lines": "L139~L140"},
+            {"name": "아마존", "raw_name": "아마존", "country": "", "role": "베드록이라는 AI 플랫폼 위에 여러 AI 모델을 올려 유통하는 사업자", "numbers": "", "lines": "L141~L148"},
+            {"name": "ServiceNow", "raw_name": "서비스나", "country": "", "role": "AI로 사람 손이 들어가던 업무 처리를 대체해 비용을 절감시켜 주는 소프트웨어 제공", "numbers": "", "lines": "L149~L158"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "토큰 가격 하락이 지속되면 이들 소프트웨어 회사, 특히 주가가 많이 빠진 곳은 저가 매수 기회가 될 수 있다"
+        }
+      ],
+      "notes": "진행자는 학습(캐펙스)과 추론(오펙스)의 성격 차이를 먼저 설명한 뒤, 토큰 가격 하락이 이 여섯 영역 각각에 어떻게 다르게 작용하는지 판단한다."
+    }
+  ]
+}

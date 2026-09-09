@@ -1,0 +1,129 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-04-08-news.md",
+  "slug": "2025-04-08-news",
+  "date": "2025-04-08",
+  "title": "향후 주가 전망, 외국인의 은행주 투매 원인, 금값 하락 이유, 분할 상장 이슈, BDC 투자 주의",
+  "chains": [
+    {
+      "industry": "조선업(군함)",
+      "chain_name": "미국 군함 발주 밸류체인",
+      "chain_lines": "L150~L154",
+      "summary": "진행자는 미국이 한국에 군함 건조를 맡기더라도 철강·전자장비는 미국산을 쓰게 하고 한국은 조립만 맡게 될 것이며, 군함 제조가 가능한 나라도 많아 한국에 큰 물량을 주지 않을 것이라 판단",
+      "stages": [
+        {
+          "order": 1,
+          "name": "철강 공급",
+          "desc": "군함을 발주하더라도 철강은 US 스틸 제품을 갖다 쓰라고 요구할 것",
+          "lines": "L150~L152",
+          "companies": [
+            {"name": "US 스틸", "raw_name": "US 스틸", "country": "미국",
+             "role": "군함용 철강 공급업체로 지정될 것으로 예상됨", "numbers": "", "lines": "L152"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "전자장비 공급",
+          "desc": "군함 내부 전자장비도 미국 내 군수 장비 업체 것을 갖다 쓰라고 요구할 것",
+          "lines": "L152~L153",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "조립(건조)",
+          "desc": "철강·전자장비를 뺀 나머지, 배를 조립하는 일만 한국 업체가 맡게 될 것",
+          "lines": "L150~L151, L153~L154",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "군함 제조가 가능한 나라가 한국 외에도 독일·일본 등 여럿이라, 한국에 큰 물량을 다 주지는 않을 것이라는 판단",
+          "bottleneck_lines": "L153~L154",
+          "judgment": "조선이 매우 좋다는 시장 컨센서스와 달리, 실제로 한국이 가져가는 몫은 조립뿐이라는 판단"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "조선업(LNG선)",
+      "chain_name": "LNG 운반선 밸류체인",
+      "chain_lines": "L154~L164",
+      "summary": "진행자는 한국이 LNG선 건조는 잘하지만, 천연가스를 액화해 담는 탱크의 핵심 원천기술은 외국 업체가 쥐고 있어 로열티를 다 가져가므로 LNG선 발주가 늘어도 한국 조선업에 실속이 없다고 판단",
+      "stages": [
+        {
+          "order": 1,
+          "name": "조선(건조)",
+          "desc": "한국이 LNG 선박을 잘 만든다",
+          "lines": "L154",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "LNG 탱크 원천기술(로열티)",
+          "desc": "천연가스를 액화해 배 안 탱크에 담는 기술의 원천 특허를 프랑스·스웨덴 업체가 갖고 있다. 스웨덴은 모스형, 프랑스 GTT는 멤브레인형 기술로 배 한 척당 로열티를 받아가며, 그 액수가 120억원에서 관세전쟁 국면에 200억원 넘게 올랐다",
+          "lines": "L155~L162",
+          "companies": [
+            {"name": "GTT", "raw_name": "GT", "country": "프랑스",
+             "role": "멤브레인형 LNG 탱크 원천기술 보유, 배 한 척당 로열티를 수취",
+             "numbers": "척당 로열티 120억원 → 관세전쟁 이후 200억원 초과", "lines": "L158, L162"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "진행자는 GTT를 반도체 산업의 ASML급 '슈퍼갑'으로 비유함 — 관세전쟁이 났을 때 GTT CEO가 미국산 LNG선을 만드는 업체에는 로열티를 안 주겠다고 공언할 정도의 협상력을 가짐",
+          "bottleneck_lines": "L159~L160",
+          "judgment": "LNG선 발주가 늘어도 핵심 기술의 로열티는 외국 업체가 다 가져가므로, 한국 조선업에 실속이 없다는 판단(L163~L164)"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "바이오·신약 개발",
+      "chain_name": "신약 개발 밸류체인 중 돈이 되는 두 영역",
+      "chain_lines": "L307~L309",
+      "summary": "진행자는 바이오산업에서 돈이 되는 곳은 신약 물질을 찾는 발굴 단계와 마지막의 CDMO(위탁생산) 단계이며, 정책이 드라이브를 걸고 있는 바이오파운드리는 돈이 안 되는 영역이라고 판단",
+      "stages": [
+        {
+          "order": 1,
+          "name": "신약 물질 발굴",
+          "desc": "AI를 활용해 신약 물질을 찾는 단계에서 돈이 벌리며, 빅테크들이 이 분야에 투자를 늘리고 있다",
+          "lines": "L307~L308",
+          "companies": [
+            {"name": "엔비디아", "raw_name": "비비디아", "country": "미국",
+             "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자 중", "numbers": "", "lines": "L308"},
+            {"name": "구글", "raw_name": "구글", "country": "미국",
+             "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자 중", "numbers": "", "lines": "L308"},
+            {"name": "아마존", "raw_name": "아마존", "country": "미국",
+             "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자 중", "numbers": "", "lines": "L308"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "CDMO(위탁생산)",
+          "desc": "신약 물질이 찾아진 뒤 마지막 단계로, CDMO 업체가 약을 만들어준다",
+          "lines": "L307",
+          "companies": [
+            {"name": "삼성바이오로직스", "raw_name": "삼성바이오로직스", "country": "한국",
+             "role": "CDMO(위탁생산) 단계에서 신약을 만들어주는 대표 회사", "numbers": "", "lines": "L307"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "바이오파운드리(합성생물학 인프라)에 법을 만들어 드라이브를 거는 것보다, 실제 돈이 벌리는 신약 물질 발굴과 CDMO 쪽에 포커스를 두는 게 낫다는 판단. 바이오파운드리는 코로나 시절 이미 과잉투자됐다 거품이 꺼진 상태"
+        }
+      ],
+      "notes": "바이오파운드리(합성생물학 인프라)는 돈이 안 되는 영역으로 지목됨(L308~L309)"
+    }
+  ]
+}

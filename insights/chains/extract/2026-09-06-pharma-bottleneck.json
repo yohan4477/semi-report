@@ -1,0 +1,71 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md",
+  "slug": "2026-09-06-pharma-bottleneck",
+  "date": "2026-09-06",
+  "title": "AI 시대 헬스케어 투자 | 제약·바이오의 병목과 차세대 성장 영역",
+  "chains": [
+    {
+      "industry": "제약·바이오",
+      "chain_name": "제약·바이오 밸류체인 복기와 병목 판정",
+      "chain_lines": "L14~L69",
+      "summary": "지난 회차(2026-08-16)의 제약·바이오 밸류체인을 복기한 뒤, AI 도입으로 지금 실제 병목이 어디인지(임상·생산·유통)를 다시 판정한다.",
+      "stages": [
+        {
+          "order": 1, "name": "R&D(후보물질 발굴·최적화)",
+          "desc": "빅파마·바이오텍이 후보 물질을 발굴하고 최적화하는 단계. AI 도입으로 이 단계에서 후보 물질이 쏟아져 나오고 있다.",
+          "lines": "L15~L18, L31~L35",
+          "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "빅파마 분석 시 파이프라인(후보 물질 개수와 진행 상황)이 핵심 체크포인트"
+        },
+        {
+          "order": 2, "name": "전임상",
+          "desc": "동물을 대상으로 먼저 진행하는 단계.",
+          "lines": "L18~L19",
+          "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 3, "name": "임상(1~3상)",
+          "desc": "1상 안전성, 2상 효과, 3상 기존 약 대비 우수성을 검증하는 단계. 보통 외부 업체(CRO)에 외주를 준다.",
+          "lines": "L19~L24, L51~L62",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "AI로 쏟아지는 후보 물질이 결국 임상을 거쳐야 하는데, 임상을 대행하는 업체가 몇 개 없어 거의 글로벌 과점 상태다",
+          "bottleneck_lines": "L51~L56",
+          "judgment": "올해 5월 말~6월 초 임상업체에 투자했고, 병목 상태가 계속될 것 같아 사람들이 몰리기 전까지 계속 들고 갈 계획"
+        },
+        {
+          "order": 4, "name": "허가",
+          "desc": "한국은 식약처, 미국은 FDA의 허가를 받는 단계.",
+          "lines": "L24~L25",
+          "companies": [
+            {"name": "FDA", "raw_name": "FDA", "country": "미국", "role": "신약 허가 규제당국", "numbers": "", "lines": "L25"},
+            {"name": "식약처", "raw_name": "식약처", "country": "한국", "role": "신약 허가 규제당국", "numbers": "", "lines": "L25"}
+          ],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""
+        },
+        {
+          "order": 5, "name": "생산(CDMO)",
+          "desc": "허가받은 약을 생산하는 단계. 대량생산과 맞춤형 소량생산(모더나 암백신 등)으로 나뉘기 시작했다.",
+          "lines": "L25~L28, L63~L66",
+          "companies": [
+            {"name": "삼성바이오로직스", "raw_name": "삼성바이오로직스", "country": "한국", "role": "CDMO 업체, 최근 유상증자 이슈", "numbers": "", "lines": "L27"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "한 달 전까지는 생산이 확실한 병목이라 보고 삼성바이오로직스 투자를 고려했으나, 모더나 암백신 이후 생산이 대량·맞춤형 소량으로 갈릴 것 같아 생각이 바뀌었다 — 기존 대량생산 CDMO 투자가 답이 아닐 수도 있다"
+        },
+        {
+          "order": 6, "name": "유통",
+          "desc": "생산된 약을 판매하는 단계. 유통 도매 사업자와 PBM이 핵심.",
+          "lines": "L29, L67~L69",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "제약·바이오 산업에서 전통적으로 병목은 유통(PBM·도매 사업자)이다",
+          "bottleneck_lines": "L67",
+          "judgment": "작년에 유통사에 투자해 첫 번째 사이클에서 40% 수익을 냈고, 지금 두 번째 사이클을 노리고 다시 매입한 상태"
+        }
+      ],
+      "notes": "이 회차는 빅파마 분석 포인트(파이프라인·블록버스터·특허 만료)를 재확인하며, 한미약품(비만 치료 신약 라이선스 아웃, 3.2조원)과 SK바이오팜(미국 바이오텍으로부터 라이선스 인, 두 번째 블록버스터 확보 목적) 사례를 대비시킨다(L87~L93). 차세대 성장 영역으로 전달 기술(LNP 대비 AAV, 경구제·피하주사 전환)을 짚는다(L100~L118). 다음 회차는 임상 대행업체(CRO)를 다룰 예정이라고 예고한다(L121)."
+    }
+  ]
+}

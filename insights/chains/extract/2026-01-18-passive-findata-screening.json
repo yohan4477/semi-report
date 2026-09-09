@@ -1,0 +1,90 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-01-18-passive-findata-screening.md",
+  "slug": "2026-01-18-passive-findata-screening",
+  "date": "2026-01-18",
+  "title": "패시브 펀드 시대, 금융데이터 산업은 어떻게 바뀌었을까 (ft. 산업 동향 분석 및 투자 대상 기업 스크리닝)",
+  "chains": [
+    {
+      "industry": "금융 데이터",
+      "chain_name": "금융데이터 표준화 사슬의 병목 이동",
+      "chain_lines": "L28~L46",
+      "summary": "진행자가 원천 데이터를 보유한 업체와 이를 표준화·가공하는 업체 사이에서, AI 때문에 병목(마진 우위)이 표준화 업체 쪽에서 원천 데이터 보유 업체 쪽으로 옮겨가고 있다고 판단한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "원천 데이터 생성·보유",
+          "desc": "거래소를 운영하며 호가 정보·거래량 등 원천(로우) 데이터를 만들어내는 업체들.",
+          "lines": "L35~L37",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "원천 데이터를 만들어낼 수 있는 업체가 자체적으로 AI를 개발해 표준화까지 직접 하면서, 중간 단계(표준화)에 있던 업체를 위협하고 있다.",
+          "bottleneck_lines": "L38~L40",
+          "judgment": "데이터 자체보다 데이터를 보유하고 있는 업체가 훨씬 더 중요해지고 있다."
+        },
+        {
+          "order": 2,
+          "name": "데이터 표준화·가공",
+          "desc": "흩어진 원천 데이터를 모아 표준화하고 가공해서 고객에게 전달하는 업체들. 대표적으로 팩트셋, 블룸버그.",
+          "lines": "L31~L32",
+          "companies": [
+            {"name": "팩트셋", "raw_name": "팩트셋", "country": "", "role": "원천 데이터를 표준화·가공해 고객에게 전달", "numbers": "", "lines": "L32"},
+            {"name": "블룸버그", "raw_name": "블룸버그", "country": "", "role": "원천 데이터를 표준화·가공해 고객에게 전달", "numbers": "", "lines": "L32"}
+          ],
+          "bottleneck": "low",
+          "bottleneck_why": "데이터만 수집할 수 있으면 AI가 알아서 표준화·정리해줄 수 있게 되면서, 이 단계 업체들의 위상이 애매해지고 있다.",
+          "bottleneck_lines": "L33~L34,L39",
+          "judgment": "과거에는 이 업체들이 크게 각광받았지만 지금은 위상이 애매해져 가고 있다."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "금융 데이터",
+      "chain_name": "ETF 로열티 사슬",
+      "chain_lines": "L82~L105",
+      "summary": "진행자가 ETF 판매·운용에서 발생하는 돈이 결국 지수개발사로 흘러가는 로열티 구조를 설명한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "투자자의 ETF 매수",
+          "desc": "투자자가 S&P500을 추종하는 SPY, IVV, VOO 같은 ETF를 매수한다.",
+          "lines": "L84~L87",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "자산운용사의 ETF 출시·운용",
+          "desc": "자산운용사가 ETF를 출시해 판매·운용한다. SPY는 스테이트 스트리트, IVV는 블랙록, VOO는 뱅가드가 만들었다.",
+          "lines": "L86~L87",
+          "companies": [
+            {"name": "스테이트 스트리트", "raw_name": "스테이트 스트리트", "country": "", "role": "SPY 출시·운용", "numbers": "", "lines": "L86~L87"},
+            {"name": "블랙록", "raw_name": "블랙록", "country": "", "role": "IVV 출시·운용", "numbers": "", "lines": "L86"},
+            {"name": "뱅가드", "raw_name": "뱅가드", "country": "", "role": "VOO 출시·운용", "numbers": "", "lines": "L86"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "지수개발사에 로열티 지급",
+          "desc": "자산운용사는 지수를 만든 지수개발사에 매년 운용자산 규모의 0.02%에서 0.05%를 로열티로 낸다.",
+          "lines": "L88~L90",
+          "companies": [
+            {"name": "S&P(스탠더드앤드푸어스)", "raw_name": "스탠더드 푸어스", "country": "", "role": "S&P500 지수 개발, 로열티 수취", "numbers": "운용자산 규모의 0.02%~0.05%", "lines": "L88~L90"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "ETF 판매·마케팅은 자산운용사가 하지만, 돈은 결국 지수개발사가 다 가져간다.",
+          "bottleneck_lines": "L81,L96~L97",
+          "judgment": "판매는 운용사가 홍보·마케팅으로 하고 있는데 돈은 결국 스탠더드앤드푸어스가 다 가져간다."
+        }
+      ],
+      "notes": "ETF 자산 규모가 커질수록(매수 증가 또는 가격 상승) 로열티도 커져 운용사의 수수료 압박이 커진다. 이 때문에 블랙록·뱅가드 같은 대형 운용사는 직접 지수를 만들기 시작했고, 규모가 작은 운용사는 그해그해 더 싼 지수 공급사로 옮겨 타는 방식으로 대응하고 있다. (L98~L105)"
+    }
+  ]
+}

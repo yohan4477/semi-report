@@ -1,0 +1,71 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-11-09-sports-odds-gatekeepers-en.md",
+  "slug": "2025-11-09-sports-odds-gatekeepers-en",
+  "date": "2025-11-09",
+  "title": "확률을 파는 회사들: 스포츠 베팅 산업의 게이트키퍼 (ft. Sportradar, SRAD, Genius Sports, GENI)",
+  "chains": [
+    {
+      "industry": "스포츠 베팅",
+      "chain_name": "스포츠 북(스포츠 베팅) 밸류체인",
+      "chain_lines": "L40~L124",
+      "summary": "리그·스포츠 단체가 데이터 사용권을 데이터 공급사에 넘기고, 데이터 공급사가 그 데이터·확률·영상을 플랫폼 운영사(북메이커)와 대형 미디어에 공급하는 구조에서, 진행자는 데이터 공급사를 산업의 게이트키퍼로 지목했다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "리그·스포츠 단체",
+          "desc": "NBA, MLB, MLS 같은 스포츠 단체가 데이터 공급사와 데이터 사용에 대한 독점 계약을 체결한다.",
+          "lines": "L49~L56",
+          "companies": [
+            {"name": "NBA", "raw_name": "MBA", "country": "미국",
+             "role": "10년간 데이터 사용권 계약 규모가 약 1조원", "numbers": "10년 계약 약 1조원", "lines": "L72~L74"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "데이터 공급사",
+          "desc": "리그로부터 데이터 사용권을 받아 경기장에 스카우터를 보내 실시간 데이터를 수집·가공하고, 이를 리포트나 실시간 배팅용 피드로 플랫폼 운영사에 배포한다. 영상 콘텐츠 공급, 부정행위(승부조작) 감지, AI 솔루션 제공도 겸한다.",
+          "lines": "L55~L120",
+          "companies": [
+            {"name": "스포츠레이더", "raw_name": "스포츠 레이더", "country": "",
+             "role": "데이터 공급 3사 중 하나, 11월 1일 IMG 아레나를 흡수해 사실상 지니어스 스포츠와 양강 체제(거의 반독점)", "numbers": "", "lines": "L123~L129"},
+            {"name": "지니어스 스포츠", "raw_name": "제니어스 스포츠", "country": "",
+             "role": "데이터 공급 2대 사업자 중 하나", "numbers": "", "lines": "L123~L128"},
+            {"name": "IMG 아레나", "raw_name": "img 아레나", "country": "",
+             "role": "11월 1일부로 스포츠레이더에 인수합병됨", "numbers": "", "lines": "L124~L126"}
+          ],
+          "bottleneck": "high",
+          "bottleneck_why": "플랫폼 운영사는 데이터 공급사 없이는 운영이 불가능하고 매출 자체가 데이터 공급사에 달려 있어, 진행자는 데이터 공급사를 스포츠 베팅 산업의 게이트키퍼로 지목했다.",
+          "bottleneck_lines": "L117~L121",
+          "judgment": "스포츠 베팅 산업 내 게이트키퍼, 즉 목줄을 쥐고 있는 사업자는 데이터 공급사다."
+        },
+        {
+          "order": 3,
+          "name": "플랫폼 운영사(북메이커)",
+          "desc": "온라인에 돈을 걸 수 있는 배팅 플랫폼(웹사이트·앱)을 만들어 운영하며, 데이터 공급사가 제공하는 실시간 데이터·확률로 경기 승패 외에도 수십~수백 개의 세부 배팅 섹션을 만든다.",
+          "lines": "L58~L107",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "대형 미디어",
+          "desc": "폭스·ESPN 같은 대형 방송사가 플랫폼 운영사로부터 플랫폼을 빌려 자사 온라인 채널 내에 스포츠 베팅 기능을 구축한다. 중계 화면의 경기 기록도 데이터 공급사가 제공한다.",
+          "lines": "L85~L89, L108~L111",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": "북메이커라는 단어는 과거 영국 경마장에서 배팅 내용을 노트(북)에 기록하던 사람에서 유래했다(L90~L91)."
+    }
+  ]
+}

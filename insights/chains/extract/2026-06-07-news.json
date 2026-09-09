@@ -1,0 +1,54 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-06-07-news.md",
+  "slug": "2026-06-07-news",
+  "date": "2026-06-07",
+  "title": "데이터센터 건설 지연, 버크셔의 주택 관련 인수",
+  "chains": [
+    {
+      "industry": "주택",
+      "chain_name": "버크셔 해서웨이가 계열사로 쥔 주택 밸류체인",
+      "chain_lines": "L15~L27",
+      "summary": "버크셔의 최대 주택 건설사 인수를 계기로, 집 한 채가 지어질 때마다 버크셔 계열사들이 단계마다 수익을 올리는 구조를 짚는다.",
+      "stages": [
+        {"order": 1, "name": "주택 건설", "desc": "버크셔가 이번에 미국 최대 주택 건설사를 인수했다.", "lines": "L16, L20~L21", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "바닥재 제조", "desc": "버크셔가 이미 바닥재 만드는 회사를 보유하고 있다.", "lines": "L22", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 3, "name": "페인트 제조", "desc": "버크셔가 페인트 회사도 보유하고 있다.", "lines": "L23", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 4, "name": "수영장 관리", "desc": "미국 주택에 딸린 가족용 수영장을 관리하는 업체도 버크셔 소유다.", "lines": "L23~L24", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 5, "name": "가구 제조", "desc": "가구 제조사도 버크셔 계열사다.", "lines": "L25", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 6, "name": "보험", "desc": "버크셔는 보험 회사를 여러 개 보유하고 있다.", "lines": "L25", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 7, "name": "주택 금융(모기지)", "desc": "버크셔 자회사 중에 주택 금융을 하는 회사도 있다.", "lines": "L26", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "집 한 채가 지어지면 이 단계들을 거치며 버크셔 계열사들이 계속 수익을 올리는 구조 — 미국 구조적 주택 공급 부족을 보고 이 시점에 건설사를 인수한 것"}
+      ],
+      "notes": "진행자는 이를 버핏 특유의 '사람들에게 꼭 필요한 것'에 투자하는 스타일로 판단한다(L34~L35)."
+    },
+    {
+      "industry": "AI 인프라",
+      "chain_name": "진행자가 좇아온 AI 병목 사슬 — 데이터센터 계산 수요에서 파운드리까지",
+      "chain_lines": "L63~L82",
+      "summary": "진행자가 신기술이 나올 때마다 병목을 찾아 투자해 온 자신의 방식을 AI 사례로 설명한다.",
+      "stages": [
+        {"order": 1, "name": "데이터센터 계산 수요", "desc": "AI가 확산되면 계산량이 늘어나고 데이터센터에서 이 계산을 처리하게 된다.", "lines": "L69", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "GPU", "desc": "데이터센터 계산에 GPU가 필요해지는 지점.", "lines": "L69~L71", "companies": [], "bottleneck": "high", "bottleneck_why": "AI가 확산되면 계산량 증가가 데이터센터의 GPU 수요로 직결되는 첫 번째 병목이라고 판단해 GPU에 투자했다", "bottleneck_lines": "L69", "judgment": ""},
+        {"order": 3, "name": "파운드리", "desc": "GPU 수요가 늘어나면 그것을 만드는 곳이 필요하다.", "lines": "L70~L73", "companies": [{"name": "TSMC", "raw_name": "TSMC", "country": "", "role": "GPU를 제조하는 파운드리", "numbers": "", "lines": "L72"}],
+          "bottleneck": "high", "bottleneck_why": "GPU를 만드는 파운드리가 결국 TSMC라고 보고 투자해 수익을 봤다", "bottleneck_lines": "L70~L73", "judgment": ""},
+        {"order": 4, "name": "데이터센터 용지 개발·운영(리츠)", "desc": "데이터센터 용지를 개발하거나 운영하는 리츠 업체들. 이미 데이터센터를 많이 보유하고 전력도 이미 계약된 상태.", "lines": "L81",
+          "companies": [{"name": "에퀴닉스", "raw_name": "에큐닉스", "country": "", "role": "데이터센터 리츠 업체", "numbers": "", "lines": "L81"},
+                         {"name": "디지털 리얼티", "raw_name": "디지털 리얼티", "country": "", "role": "데이터센터 리츠 업체", "numbers": "", "lines": "L81"}],
+          "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": "이미 데이터센터와 전력 계약을 확보하고 있어 관심 있게 봐야 할 영역"}
+      ],
+      "notes": "진행자는 자신의 투자 방식이 '누가 1등 AI 모델이냐'가 아니라 병목을 찾는 것이라고 말한다(L63~L69)."
+    },
+    {
+      "industry": "원전·SMR",
+      "chain_name": "SMR 연료 병목",
+      "chain_lines": "L74~L76",
+      "summary": "SMR 자체보다 SMR에 들어가는 연료를 만드는 회사에 병목이 있다고 보고 투자한 사례.",
+      "stages": [
+        {"order": 1, "name": "SMR(소형모듈원전)", "desc": "작년에 테마가 붙었던 SMR 원전.", "lines": "L74", "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_lines": "", "judgment": ""},
+        {"order": 2, "name": "SMR 연료 제조", "desc": "SMR에 들어가는 연료를 만드는 회사.", "lines": "L75~L76",
+          "companies": [{"name": "센트러스 에너지", "raw_name": "센트러스 에너지", "country": "", "role": "SMR 연료 제조사", "numbers": "투자 시점 대비 4~5배(500불 이상) 상승", "lines": "L75~L76"}],
+          "bottleneck": "high", "bottleneck_why": "SMR 자체보다 SMR에 들어가는 연료를 만드는 곳에 병목이 생길 것으로 판단해 투자했다", "bottleneck_lines": "L75", "judgment": ""}
+      ],
+      "notes": ""
+    }
+  ]
+}

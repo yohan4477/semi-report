@@ -1,0 +1,93 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-02-10-samsung-deepseek-en.md",
+  "slug": "2025-02-10-samsung-deepseek-en",
+  "date": "2025-02-10",
+  "title": "딥시크(DeepSeek)발 Ai 지각변동의 최대 수혜주는 삼성전자!!",
+  "chains": [
+    {
+      "industry": "AI 반도체·메모리",
+      "chain_name": "HBM 패키징 밸류체인",
+      "chain_lines": "L26~L32",
+      "summary": "진행자가 HBM이 만들어져 GPU에 붙기까지 하이닉스와 TSMC를 거치는 제조 순서를 설명한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "HBM 램 적층·패키징",
+          "desc": "GDDR 램을 다이라는 선반 위에 계속 쌓아 하나로 패키징한 것이 HBM이다.",
+          "lines": "L26~L28",
+          "companies": [
+            {"name": "SK하이닉스", "raw_name": "하이닉스", "country": "한국", "role": "GDDR 램을 적층해 HBM으로 패키징", "numbers": "", "lines": "L28"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "GPU 기판 부착",
+          "desc": "패키징된 HBM을 TSMC로 보내면, TSMC가 엔비디아 GPU가 달린 기판 위에 HBM을 다시 붙인다.",
+          "lines": "L28~L29",
+          "companies": [
+            {"name": "TSMC", "raw_name": "tsmc", "country": "대만", "role": "하이닉스가 만든 HBM을 엔비디아 GPU 기판 위에 붙이는 작업", "numbers": "", "lines": "L28~L29"},
+            {"name": "엔비디아", "raw_name": "엔비디아", "country": "미국", "role": "GPU 기판 제공, 최종 완제품", "numbers": "", "lines": "L28~L29"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "industry": "AI 맞춤형 반도체",
+      "chain_name": "오픈AI 맞춤형 반도체 동맹 밸류체인 (설계→파운드리)",
+      "chain_lines": "L57~L64",
+      "summary": "삼성전자·소프트뱅크·오픈AI 3사 동맹설을 두고, 설계 기술 제공에서 파운드리 제조까지 이어지는 구조를 짚으며 삼성전자에 기회라고 판단한다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "설계 기술 제공",
+          "desc": "오픈AI가 맞춤형 반도체를 개발하려면 설계 기술이 필요한데, 이를 소프트뱅크가 최대 주주로 있는 ARM의 설계 기술로 가져다 쓴다.",
+          "lines": "L57~L59",
+          "companies": [
+            {"name": "ARM", "raw_name": "amm", "country": "영국", "role": "오픈AI 맞춤형 반도체 설계 기술 제공, 소프트뱅크가 최대 주주", "numbers": "", "lines": "L58~L59"},
+            {"name": "소프트뱅크", "raw_name": "소프트뱅크", "country": "일본", "role": "ARM의 최대 주주, 3사 동맹의 한 축", "numbers": "", "lines": "L57~L59"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "반도체 설계",
+          "desc": "오픈AI가 자사 맞춤형 반도체를 개발한다.",
+          "lines": "L57~L58",
+          "companies": [
+            {"name": "오픈AI", "raw_name": "오픈 AI", "country": "미국", "role": "자사 맞춤형 반도체 개발, 조니 아이브와 함께 AI 기술이 탑재된 기기도 개발 중", "numbers": "", "lines": "L57~L63"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "파운드리 제조",
+          "desc": "오픈AI가 설계한 반도체는 결국 누군가 만들어 줘야 하는데, 동맹이 체결되면 삼성전자가 이를 제조하고, 조니 아이브와 함께 개발 중인 AI 기기도 삼성전자가 만들 수 있다.",
+          "lines": "L59~L64",
+          "companies": [
+            {"name": "삼성전자", "raw_name": "삼성전자", "country": "한국", "role": "동맹 체결 시 오픈AI용 반도체와 AI 기기를 제조하는 파운드리 역할", "numbers": "", "lines": "L60~L64"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "삼성전자·소프트뱅크·오픈AI 동맹이 체결되면 삼성전자가 얻는 이익이 어마어마할 것이라고 본다."
+        }
+      ],
+      "notes": ""
+    }
+  ]
+}

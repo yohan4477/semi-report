@@ -1,0 +1,54 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2025-03-10-pension-defense-shipbuilding.md",
+  "slug": "2025-03-10-pension-defense-shipbuilding",
+  "date": "2025-03-10",
+  "title": "국민연금! 또 다시 호구 인증, 전 세계 방산주 랠리, 공매도 타겟 조선주, 유럽 회사 저가 매수 기회 등",
+  "chains": [
+    {
+      "industry": "조선업(군함)",
+      "chain_name": "미국 군함 발주 밸류체인",
+      "chain_lines": "L46~L53",
+      "summary": "진행자는 미국이 한국에 군함 건조를 맡기더라도 철강·전자장비는 미국산을 쓰게 하고 한국은 조립만 맡게 될 것이라, 시장이 기대하는 만큼 조선업에 실속이 없다고 봄",
+      "stages": [
+        {
+          "order": 1,
+          "name": "철강 공급",
+          "desc": "배를 만들려면 철강이 필요한데, 군함을 발주하더라도 철강은 US 스틸 제품을 갖다 쓰라고 요구할 것",
+          "lines": "L46~L48",
+          "companies": [
+            {"name": "US 스틸", "raw_name": "US 스틸", "country": "미국",
+             "role": "군함용 철강 공급업체로 지정될 것으로 예상됨. 실적이 안 좋아 일본이 인수하려는 상황",
+             "numbers": "", "lines": "L47~L48"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 2,
+          "name": "전자장비 공급",
+          "desc": "군함 내부에 들어가는 전자 장비도 미국산을 집어넣으라고 요구할 것",
+          "lines": "L48~L49",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "조립(건조)",
+          "desc": "철강과 전자장비를 뺀 나머지, 배를 조립하는 일만 한국 업체에 맡길 것이라는 판단",
+          "lines": "L49~L50",
+          "companies": [],
+          "bottleneck": "high",
+          "bottleneck_why": "핵심 부가가치인 철강·전자장비는 미국이 쥐고 한국은 조립만 맡게 되며, 군함 제조가 가능한 나라도 한국 외에 독일·일본 등 여럿이라 협상력이 약함",
+          "bottleneck_lines": "L46~L50",
+          "judgment": "조선업이 좋다는 애널리스트·언론 컨센서스와 달리, 실제로 뜯어보면 한국이 가져가는 몫은 돈이 안 되는 조립뿐이라 걱정되고, 공매도 재개 시 조선주가 1차 타겟이 될 수 있어 조심해야 한다"
+        }
+      ],
+      "notes": "나중에 조립 이상의 더 많은 부분을 한국 업체에 의뢰한다는 사실이 나오면 그때 다시 투자를 고려해도 늦지 않다는 판단(L52~L53)"
+    }
+  ]
+}

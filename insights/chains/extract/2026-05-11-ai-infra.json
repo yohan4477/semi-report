@@ -1,0 +1,139 @@
+{
+  "file": "content/understanding/채널 씨모어/raw/2026-05-11-ai-infra.md",
+  "slug": "2026-05-11-ai-infra",
+  "date": "2026-05-11",
+  "title": "AI는 버블이 아니라 새로운 인프라 산업이다",
+  "chains": [
+    {
+      "industry": "AI 인프라",
+      "chain_name": "GPU 성능 경쟁에서 데이터센터 건설까지 확장된 AI 스택",
+      "chain_lines": "L31~L61",
+      "summary": "진행자는 AI 산업의 경쟁 축이 단일 GPU 성능에서 반도체 연결·패키징을 거쳐 데이터센터 냉각·전력·건설까지 확장됐다고 짚는다.",
+      "stages": [
+        {
+          "order": 1,
+          "name": "GPU 단일칩 성능",
+          "desc": "AI 초기에는 챗봇을 돌리기 위한 GPU 성능 경쟁이 반도체 시장의 평가 기준이었다.",
+          "lines": "L32~L35",
+          "companies": [
+            {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "GPU 성능 경쟁의 중심 업체", "numbers": "", "lines": "L32"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "단일칩 성능 경쟁 시대는 지났고, 여러 반도체를 잘 붙이고 연결하는 싸움으로 확대됐다"
+        },
+        {
+          "order": 2,
+          "name": "반도체 패키징·연결",
+          "desc": "GPU와 HBM을 한 판에 잘 붙이는 업체, 서버 안 반도체끼리 데이터를 주고받게 하는 업체가 주목받고 있다.",
+          "lines": "L39~L40",
+          "companies": [
+            {"name": "TSMC", "raw_name": "TSMC", "country": "", "role": "GPU와 HBM을 한 판에 붙이는 패키징 회사", "numbers": "", "lines": "L39~L40"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 3,
+          "name": "광통신 연결",
+          "desc": "반도체와 반도체 사이 데이터를 주고받는 광통신 업체들의 주가가 몇 배씩 올랐다.",
+          "lines": "L41~L42",
+          "companies": [
+            {"name": "루멘텀", "raw_name": "루멘텀", "country": "", "role": "광통신 업체", "numbers": "", "lines": "L42"},
+            {"name": "시에나", "raw_name": "시에나", "country": "", "role": "광통신 업체", "numbers": "", "lines": "L42"},
+            {"name": "코닝", "raw_name": "코닝", "country": "", "role": "광통신 업체", "numbers": "", "lines": "L42"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 4,
+          "name": "데이터 타이밍 제어",
+          "desc": "반도체 간 데이터가 들어가고 나가는 타이밍을 조절해 주는 업체까지 수혜를 보고 있다.",
+          "lines": "L43~L45",
+          "companies": [
+            {"name": "SI타임", "raw_name": "SI 타임", "country": "", "role": "데이터 타이밍 조절 업체, 올해 1분기 매출 88% 성장", "numbers": "매출 성장률 88%", "lines": "L44"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 5,
+          "name": "냉각",
+          "desc": "데이터센터 내 열이 많이 나면서 냉각 관련 업체에 돈이 몰리고 있다.",
+          "lines": "L46~L47",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 6,
+          "name": "전력 분배(배관·전선)",
+          "desc": "전기가 계속 부족하다는 얘기가 나오는 가운데, 배관·전선을 효율적으로 연결하는 영역도 주목받고 있다.",
+          "lines": "L49~L52",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 7,
+          "name": "저장 장치",
+          "desc": "데이터센터 안 저장 공간이 필요해 하드디스크·SSD 만드는 업체의 주가가 또 날아가고 있다.",
+          "lines": "L53",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 8,
+          "name": "송배전",
+          "desc": "데이터센터 건물 밖으로 시선을 돌리면 전기를 효율적으로 끌어들이고 분배하는 송배전 업체가 핫하다.",
+          "lines": "L54~L55",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 9,
+          "name": "발전·유틸리티",
+          "desc": "송배전 앞단인 발전소를 가진 전력 사업자, 원전을 보유한 유틸리티 사업자의 주가가 급등했다.",
+          "lines": "L56",
+          "companies": [],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": ""
+        },
+        {
+          "order": 10,
+          "name": "데이터센터 설계·건설",
+          "desc": "데이터센터를 설계하고 부품·장비를 조달해 건설하는 이른바 'C 업체'들까지 수혜를 보고 있다.",
+          "lines": "L57~L60",
+          "companies": [
+            {"name": "이튼", "raw_name": "이튼", "country": "", "role": "데이터센터 설계·부품 조달·건설 업체", "numbers": "", "lines": "L59"}
+          ],
+          "bottleneck": "",
+          "bottleneck_why": "",
+          "bottleneck_lines": "",
+          "judgment": "AI 투자가 이미 건설·인프라·SOC 프로젝트급으로 확장됐고, 빅테크 수익성 논란은 이 시점에서 이미 의미가 없다"
+        }
+      ],
+      "notes": "진행자는 이 흐름을 미국 서부개척 시대 철도 혁명(다음 회차 2026-05-18에서 재확인)에 빗대며, AI가 버블이냐 아니냐를 논하는 시점은 지났다고 결론짓는다."
+    }
+  ]
+}
