@@ -15,7 +15,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'scratchpad', '_readertest')
 SRC = [('cluster', 'model-cluster-2026-09-09.md'),
-       ('infer', 'model-infer-2026-09-09.md')]
+       ('infer', 'model-infer-2026-09-09.md'),
+       ('torus', 'model-torus-2026-09-10.md')]
 
 sys.path.insert(0, os.path.join(ROOT, 'scratchpad'))
 import _model_tbl as mt          # noqa: E402
