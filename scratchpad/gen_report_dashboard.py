@@ -300,6 +300,12 @@ def report_model_infer_html(head=True):
                               'model-infer', head)
 
 
+def report_model_lat_html(head=True):
+    """추론 지연. 본문은 insights/reports/model-latency-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_LAT, _model_part1.report_lat,
+                              'model-lat', head)
+
+
 def report_model_torus_html(head=True):
     """토러스 배선. 본문은 insights/reports/model-torus-2026-09-10.md."""
     return _report_model_html(_model_part1.HEAD_TORUS, _model_part1.report_torus,
@@ -443,6 +449,11 @@ LAYERS = [
      'SemiAnalysis 영문 1편 · 표 그림 3장',
      '원문은 임대 시세로만 답했는데, 같은 데이터를 소유 기준으로 풀면 답이 뒤집힌다',
      report_model_infer_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '추론 지연 — 「150초에 초당 1,000토큰」이 실제로 무엇을 뜻하나',
+     'SemiAnalysis 영문 2편의 본문 값',
+     '원문이 낸 식 하나에서 대화 속도와 동시 요청과 토큰당 원가가 따라 나온다',
+     report_model_lat_html),
     ('sec-model', '모델링', '2026-09-10',
      '토러스 배선 — 랙이 커지면 칩 한 장에 붙는 광 부품이 준다',
      'SemiAnalysis 영문 1편 · 표 그림 1장',

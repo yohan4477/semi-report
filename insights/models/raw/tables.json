@@ -35,6 +35,16 @@
       "published": "2025-05-23",
       "publisher": "SemiAnalysis",
       "korean": null
+    },
+    "inferencex": {
+      "clipping": "input/clippings/InferenceX v2 NVIDIA Blackwell Vs AMD vs Hopper - Formerly InferenceMAX.md",
+      "title": "InferenceX v2: NVIDIA Blackwell Vs AMD vs Hopper",
+      "publisher": "SemiAnalysis",
+      "published": "2026-02-16",
+      "url": "https://newsletter.semianalysis.com/p/inferencex-v2-nvidia-blackwell-vs-amd-vs-hopper",
+      "korean": "content/newsletter/ai_infra/compute/[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md",
+      "read_on": "2026-09-10",
+      "hours_per_month": null
     }
   },
   "tables": [
@@ -736,6 +746,47 @@
           null,
           "plateau",
           "AMD영문 L184"
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "interactivity-anchors",
+      "source": "inferencex",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-10",
+      "title": "대화 속도 — 원문 본문에 글로 적힌 값",
+      "columns": [
+        "what",
+        "tok_s_per_user_low",
+        "tok_s_per_user_high",
+        "cite"
+      ],
+      "rows": {
+        "market_mid": [
+          "오픈라우터 중간 사업자가 서비스하는 속도",
+          35,
+          35,
+          "InferenceX영문 L222"
+        ],
+        "analysis_point": [
+          "원문이 원가 비교 기준으로 삼은 속도",
+          35,
+          35,
+          "InferenceX영문 L226"
+        ],
+        "h200_range": [
+          "H200 이 낼 수 있는 속도 범위",
+          30,
+          90,
+          "InferenceX영문 L526"
+        ],
+        "mi325x_range": [
+          "MI325X 가 낼 수 있는 속도 범위",
+          13,
+          35,
+          "InferenceX영문 L526"
         ]
       },
       "redacted": []

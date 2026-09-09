@@ -80,8 +80,9 @@ def _draw(node, out):
 def tree_svg(label, widths, root, marks=()):
     """분해 트리 하나. marks 는 (상자 라벨 첫 줄, 번호) — 캡션이 그 번호를 푼다.
 
-    번호는 상자 왼쪽 위 모서리에 걸친다. 상자 밖 왼쪽에 두면 잇는 선과 겹치고,
-    어느 상자를 가리키는지가 한 칸 떨어져 흐려진다.
+    번호는 상자 안 왼쪽 위에 앉힌다. 상자 밖 왼쪽에 두면 잇는 선과 겹치고,
+    어느 상자를 가리키는지가 한 칸 떨어져 흐려진다. 모서리 한가운데에 얹으면
+    이번에는 테두리를 문다.
     """
     cols = _cols(widths)
     _place(root, cols, 0, [0])
@@ -96,7 +97,9 @@ def tree_svg(label, widths, root, marks=()):
     _walk(root)
     for lab, num in marks:
         n = seen[lab]
-        out.append(bf._mark(n['x'], n['y'] - BH // 2, num))
+        # 모서리 한가운데에 얹으면 원이 왼쪽·위 테두리를 함께 문다(check_fig).
+        # 반지름 10 만큼 안으로 들여 상자 안 왼쪽 위에 앉힌다
+        out.append(bf._mark(n['x'] + 14, n['y'] - BH // 2 + 13, num))
     leaves = [0]
 
     def _cnt(n):

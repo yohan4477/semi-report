@@ -204,6 +204,88 @@ def torus_source_lines():
                src['url'], ko)]
 
 
+# ── 지연 모델 표 셋 ────────────────────────────────────────────────────
+_LAT_OSL = {'1k/1k': 1000, '1k/4k': 4000, '4k/1k': 1000}
+
+
+def _lat():
+    import sys as _s
+    _s.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'insights', 'models'))
+    import latency_model as lm
+    return lm
+
+
+def _anchor_rows():
+    t = RAW_T = None
+    for x in RAW['tables']:
+        if x['id'] == 'amd-throughput-anchors':
+            t = x
+    del RAW_T
+    cols = t['columns']
+    return [dict(zip(cols, v)) for v in t['rows'].values()]
+
+
+def lat_anchor_table():
+    """원문이 문장으로 적은 처리량. 곡선에서 읽은 값이 아니다."""
+    head = ['모델', '길이', '엔진', 'SKU', '토큰/초/GPU', '지연(초)', '어떤 값', '인용']
+    kind = {'plateau': '더 안 오르는 자리', 'at_latency': '그 지연에서'}
+    body = []
+    for r in _anchor_rows():
+        body.append([r['model'], r['seq'], r['engine'], r['sku'],
+                     format(r['tokens_per_s_per_gpu'], ','),
+                     '—' if r['latency_s'] is None else str(r['latency_s']),
+                     kind.get(r['kind'], r['kind']), r['cite']])
+    return head, body
+
+
+def lat_derived_table():
+    """원문이 안 낸 값 셋. 지연이 적힌 줄만 낼 수 있다."""
+    lm = _lat()
+    import check_inference_tco as I
+    from inference_tco import Capex, Sku
+    hourly = {}
+    for sku in I.SKUS:
+        f = Sku(sku.name, Capex(sku.capex.server_cost, sku.capex.other_cluster_cost,
+                                wacc=0.1325), sku.opex)
+        hourly[sku.name] = f.tco_hourly_per_gpu()
+    head = ['SKU', '엔진', '토큰/초/GPU', '토큰 사이(ms)', '대화 속도(토큰/초)',
+            '동시 요청/GPU', '$/GPU-시간', '$/백만 토큰']
+    body = []
+    for r in _anchor_rows():
+        if r['latency_s'] is None:
+            continue
+        osl = _LAT_OSL[r['seq']]
+        tbot = lm.tbot_from_e2e(r['latency_s'], osl, 0.0)
+        h = hourly[r['sku']]
+        body.append([
+            r['sku'], r['engine'], format(r['tokens_per_s_per_gpu'], ','),
+            '%.0f' % (tbot * 1000), '%.1f' % lm.interactivity(tbot),
+            '%.0f' % lm.concurrency_per_gpu(r['tokens_per_s_per_gpu'], osl,
+                                            r['latency_s']),
+            '%.2f' % h,
+            '%.3f' % lm.cost_per_million_tokens(h, r['tokens_per_s_per_gpu'])])
+    return head, body
+
+
+def lat_speed_table():
+    """벤치마크 운영점의 대화 속도를 시장 값과 견준다."""
+    lm = _lat()
+    t = None
+    for x in RAW['tables']:
+        if x['id'] == 'interactivity-anchors':
+            t = x
+    head = ['무엇', '토큰/초/사용자', '출처']
+    body = []
+    tbot = lm.tbot_from_e2e(150, 1000, 0.0)
+    body.append(['이 벤치마크의 150초 운영점 (출력 1,000토큰)',
+                 '%.1f' % lm.interactivity(tbot), '우리 계산'])
+    for v in t['rows'].values():
+        what, lo, hi, cite = v
+        body.append([what, '%g' % lo if lo == hi else '%g~%g' % (lo, hi), cite])
+    return head, body
+
+
 def _m(v, unit='$'):
     """돈은 자리를 끊는다. 단가는 센트까지 봐야 하므로 천 달러 미만은 소수 둘째.
 
@@ -437,6 +519,9 @@ TABLES = {
     'TRACK': ('랙 64장 합계 — 무엇을 나누고 무엇을 안 나누나', torus_rack_table),
     'TSCALE': ('격자를 키우면 부착률이 어떻게 움직이나', torus_scale_table),
     'EXT': ('가려진 칸을 박으려면 어디서 가져와야 하나', ext_table),
+    'LAT': ('원문이 문장으로 적은 처리량 다섯', lat_anchor_table),
+    'LDER': ('그 운영점에서 따라 나오는 값 셋', lat_derived_table),
+    'LSPEED': ('그 운영점의 대화 속도는 시장 어디쯤인가', lat_speed_table),
     'TCO': ('GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)', tco_table),
     'GOOD': ('굿풋 계산기 세 시나리오 (그림 019·022·025 재현)', goodput_table),
     'IMPACT': ('굿풋 어긋남이 3년 값에 미치는 폭', impact_table),

@@ -138,6 +138,53 @@ Optical Transceivers           96           96         1.50          1.5
 총 FAIL 0
 ```
 
+## 추론 지연 모델 출력
+
+```
+── 원문이 낸 것 — 식 하나와 처리량 다섯 ────────────────────────
+E2E 지연 = 첫 토큰까지 시간 + 출력 토큰 수 × 토큰 사이 시간 (AMD영문 L98)
+모델               길이      엔진             SKU         토큰/초/GPU     지연(초)  인용
+Llama3 70B       1k/4k   미상             H100 SXM         900         —  AMD영문 L162
+Llama3 405B FP8  1k/1k   미상             H100 SXM         400       150  AMD영문 L172
+Llama3 405B FP8  1k/1k   TensorRT-LLM   H200 SXM       1,000       150  AMD영문 L174
+Llama3 405B FP8  1k/1k   미상             H100 SXM         350         —  AMD영문 L184
+Llama3 405B FP8  1k/1k   vLLM           H200 SXM         600         —  AMD영문 L184
+
+── 식이 서로 어긋나지 않나 ────────────────────────────────────
+항등식이라 대조할 발표치가 없다. 원문 값을 넣어 되돌아오는지만 본다.
+  H100 SXM  지연 150s · 출력 1000토큰 → 토큰 사이 150.0ms → 되돌리면 150.0s
+  H200 SXM  지연 150s · 출력 1000토큰 → 토큰 사이 150.0ms → 되돌리면 150.0s
+
+── 원문이 안 낸 값 ① 그 운영점의 대화 속도 ────────────────────
+첫 토큰까지 시간을 0 으로 놓은 값이다 — 원문이 그 값을 안 밝혔다.
+실제 첫 토큰 시간이 있으면 대화 속도는 이보다 조금 빨라진다.
+SKU       길이             지연(초)      토큰 사이(ms)        대화 속도(토큰/초)
+H100 SXM  1k/1k            150          150.0                6.7
+H200 SXM  1k/1k            150          150.0                6.7
+
+── 원문이 안 낸 값 ② GPU 한 장이 붙들고 있는 요청 수 ────────────
+리틀의 법칙 — 처리량 ÷ 요청당 출력 토큰 × 지연.
+SKU       엔진                 토큰/초/GPU        동시 요청/GPU
+H100 SXM  미상                      400               60
+H200 SXM  TensorRT-LLM          1,000              150
+
+── 원문이 안 낸 값 ③ 그 운영점의 백만 토큰당 원가 ──────────────
+시간당 원가는 추론 원가 모델에서 온다(자기 TCO, WACC 13.25%).
+SKU       엔진                 토큰/초/GPU     $/GPU-시간        $/백만 토큰
+H100 SXM  미상                      900         1.58          0.486
+H100 SXM  미상                      400         1.58          1.094
+H200 SXM  TensorRT-LLM          1,000         1.63          0.453
+H100 SXM  미상                      350         1.58          1.250
+H200 SXM  vLLM                    600         1.63          0.754
+
+── 같은 워크로드 안에서 견준다 ────────────────────────────────
+Llama3 405B FP8 · 1k/1k · 지연 150초 — 원문이 두 값을 한 자리에서 말했다.
+  H200 SXM·TensorRT-LLM 가 H100 SXM·미상 보다 토큰당 2.42 배 싸다 (0.453 대 1.094 달러)
+  처리량은 2.50 배인데 시간당 원가는 1.03 배라 그렇다.
+
+총 FAIL 0
+```
+
 ## 본문에 실린 표 — 모델이 계산해서 낸 값
 
 보고서 본문의 표와 이 글자는 `scratchpad/_model_tbl.py` 한 함수에서 나온다.
@@ -153,6 +200,8 @@ AI Cloud Capital Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Win
 AI Cloud Operating Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 050 · 050_4d53c878-5a98-4668-9a33-56b3810b7703_2560x955.png · 38개 · 없음 · 2026-09-09
 AI Cloud Total Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 016 · 016_af4815c0-77f8-4527-b5ea-fb96e44bc4c1_2560x445.png · 24개 · 없음 · 2026-09-09
 AMD 손익분기 임대료 — 원문 본문에 글로 적힌 값 · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 본문 · — · 3개 · 없음 · 2026-09-09
+AMD 대 엔비디아 — 원문 본문에 글로 적힌 처리량 값 · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 본문 · — · 40개 · 없음 · 2026-09-10
+대화 속도 — 원문 본문에 글로 적힌 값 · InferenceX v2: NVIDIA Blackwell Vs AMD vs Hopper · 2026-02-16 · 본문 · — · 16개 · 없음 · 2026-09-10
 SKU 별 초당 토큰 처리량 · AMD영문 · 파레토 곡선 그래프 · — · — · — · 못 읽음 · — · —
 GPU 자체 원가와 기타 서버 비용 · AMD영문 그림 049 · — · — · — · 못 읽음 · — · —
 
@@ -192,6 +241,27 @@ WACC (그림 049 의 13.25%) · 미 재무부 일별 국채 수익률 곡선 · 
 GPU 무고장 시간 (그림 019 — Gold·Hyperscaler 2만 5천 시간, Silver 1만 5천 시간) · 대규모 학습 실행 보고서 — 메타 라마 3 학습 로그 등 고장 통계를 실은 논문 · 논문 · arXiv · 후보 · 위치 미확인
 GPU 임대 시세 (본문의 H200 시간당 2.5달러) · 우리 코퍼스의 임대 지수 편 · 이미 가진 것 · content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md · 가지고 있음
 서버 값 층 교차 검증 · 우리 코퍼스의 학습 벤치마크 편 — H100 서버 대당 약 19만 달러 · 이미 가진 것 · content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md · 확인함
+
+### 표 LAT — 원문이 문장으로 적은 처리량 다섯
+모델 · 길이 · 엔진 · SKU · 토큰/초/GPU · 지연(초) · 어떤 값 · 인용
+Llama3 70B · 1k/4k · 미상 · H100 SXM · 900 · — · 더 안 오르는 자리 · AMD영문 L162
+Llama3 405B FP8 · 1k/1k · 미상 · H100 SXM · 400 · 150 · 그 지연에서 · AMD영문 L172
+Llama3 405B FP8 · 1k/1k · TensorRT-LLM · H200 SXM · 1,000 · 150 · 그 지연에서 · AMD영문 L174
+Llama3 405B FP8 · 1k/1k · 미상 · H100 SXM · 350 · — · 더 안 오르는 자리 · AMD영문 L184
+Llama3 405B FP8 · 1k/1k · vLLM · H200 SXM · 600 · — · 더 안 오르는 자리 · AMD영문 L184
+
+### 표 LDER — 그 운영점에서 따라 나오는 값 셋
+SKU · 엔진 · 토큰/초/GPU · 토큰 사이(ms) · 대화 속도(토큰/초) · 동시 요청/GPU · $/GPU-시간 · $/백만 토큰
+H100 SXM · 미상 · 400 · 150 · 6.7 · 60 · 1.58 · 1.094
+H200 SXM · TensorRT-LLM · 1,000 · 150 · 6.7 · 150 · 1.63 · 0.453
+
+### 표 LSPEED — 그 운영점의 대화 속도는 시장 어디쯤인가
+무엇 · 토큰/초/사용자 · 출처
+이 벤치마크의 150초 운영점 (출력 1,000토큰) · 6.7 · 우리 계산
+오픈라우터 중간 사업자가 서비스하는 속도 · 35 · InferenceX영문 L222
+원문이 원가 비교 기준으로 삼은 속도 · 35 · InferenceX영문 L226
+H200 이 낼 수 있는 속도 범위 · 30~90 · InferenceX영문 L526
+MI325X 가 낼 수 있는 속도 범위 · 13~35 · InferenceX영문 L526
 
 ### 표 TCO — GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)
 항목 · 수량·단위 · Gold-tier · Hyperscaler · Silver-tier
@@ -284,6 +354,7 @@ H200 대비 처리량 문턱 · 0.82배 · 0.94배 · 1.01배 · 0.97배 · 1.00
 
 How Much Do GPU Clusters Really Cost, SemiAnalysis, 2026-04-20 발행 — <a href="https://newsletter.semianalysis.com/p/how-much-do-gpu-clusters-really-cost">https://newsletter.semianalysis.com/p/how-much-do-gpu-clusters-really-cost</a> · 한국어 변환본 <code>[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md</code>
 AMD vs NVIDIA Inference Benchmark: Who Wins?, SemiAnalysis, 2025-05-23 발행 — <a href="https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens">https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens</a>
+InferenceX v2: NVIDIA Blackwell Vs AMD vs Hopper, SemiAnalysis, 2026-02-16 발행 — <a href="https://newsletter.semianalysis.com/p/inferencex-v2-nvidia-blackwell-vs-amd-vs-hopper">https://newsletter.semianalysis.com/p/inferencex-v2-nvidia-blackwell-vs-amd-vs-hopper</a> · 한국어 변환본 <code>[260216] InferenceX v2 - Nvidia Blackwell vs AMD vs Hopper.md</code>
 ## 본문에 실린 수식 — 원문이 공표한 것을 기호까지 그대로
 
 ### 수식 TCO — 월 총비용은 여덟 항의 합이다 (클러스터영문 L92·L96·L98)
@@ -319,6 +390,13 @@ $_백만 토큰 = $_GPU-시간 ÷ (초당 토큰 × 3,600) × 1,000,000 — 원�
 구리_칩당 = 6 − 2 − 광_칩당 — 나머지가 구리다
 케이블_랙 = ∑(칩 × 구리_칩당) ÷ 2 — 두 칩을 잇는 한 물건이라 끝 수의 절반이 물건 수다
 트랜시버_랙 = ∑(칩 × 광_칩당) — 연결 양끝에 하나씩 붙는 부품이라 안 나눈다. 여기가 갈리는 자리다
+
+### 수식 LAT — 지연 하나에서 넷이 따라 나온다 (AMD영문 L98 + 리틀의 법칙)
+E2E 지연 = t_첫 토큰 + 출력 토큰 수 × t_토큰 사이 — 원문이 공표한 식이다. 나머지 넷은 이 식과 산수에서 나온다
+t_토큰 사이 = (E2E 지연 − t_첫 토큰) ÷ 출력 토큰 수 — 지연 목표를 정하면 거꾸로 풀린다
+대화 속도 = 1 ÷ t_토큰 사이 — 사용자가 초당 몇 토큰을 받나. 초당 6.7 과 35 는 다른 경험이다
+동시 요청_GPU당 = (토큰/초/GPU ÷ 출력 토큰 수) × E2E 지연 — 리틀의 법칙 — 시스템 안에 든 요청 수는 도착률 곱하기 머무는 시간이다
+$_백만 토큰 = $_GPU-시간 ÷ 3,600 ÷ (토큰/초/GPU) × 1,000,000 — 시간당 원가는 추론 원가 모델에서 온다
 
 ### 수식 OURS — 원문에 없고 이 글이 세운 식 둘 (우리 계산)
 상대 처리량 = 손익분기 임대료 ÷ 기준 SKU 임대료 — 토큰당 원가가 같아지려면 시간당 값의 비율이 처리량 비율과 같아야 한다

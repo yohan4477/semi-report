@@ -282,6 +282,9 @@ MODEL_EXTRA = [
                  '[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md'),
     # 토러스 층(2026-09-10)의 재료 — 표 그림 한 장이 든 영문 클리핑
     os.path.join(_CLIP, 'TPUv7 Google Takes a Swing at the King.md'),
+    # 지연 층(2026-09-10)의 재료 — 대화 속도 값이 든 편
+    os.path.join(_CLIP, 'InferenceX v2 NVIDIA Blackwell Vs AMD vs Hopper - '
+                 'Formerly InferenceMAX.md'),
 ]
 
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
