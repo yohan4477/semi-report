@@ -568,3 +568,118 @@ FIG_ORBITSITE = _svg(W, 212, '궤도 자리 셋이 저마다 다른 것에 걸�
                      ''.join([_lt(4, _OY2 + 62 + k * 32, s, 't-sm', False)
                               for k, s in enumerate(_OROWS)])
                      + ''.join(_opanel(i, n, r) for i, (n, r) in enumerate(_OPANES)))
+
+
+# ── 도해 20. 데이터센터를 빼고 경매를 다시 돌리면 ────────────────────
+# 축 하나(용량대금이 줄어드는 액수)만 담는다. 피크부하 감소는 축이 달라 산문에 남긴다.
+_IMAX, _IH, _IBASE = 9.33, 140, 190
+_IBARS = [(9.33, '93억 3,000만 달러', '모든 데이터센터를', '빼면 64% 감소', True),
+          (7.74, '77억 4,000만 달러', '이미 가동 중인 것만', '넣으면 53% 감소', False)]
+_IW, _IG = 180, 90
+_IX0 = (W - (2 * _IW + _IG)) // 2
+
+
+def _ibar(i, v, lab, l1, l2, hot):
+    x = _IX0 + i * (_IW + _IG)
+    h = int(_IH * v / _IMAX)
+    y = _IBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _IW, h, 'var(--sunk)' if hot else 'none',
+                                  INK if hot else INK3),
+        _t(x + _IW // 2, y - 8, lab, 't-lab'),
+        _t(x + _IW // 2, _IBASE + 18, l1, 't-sm'),
+        _t(x + _IW // 2, _IBASE + 34, l2, 't-sm'),
+    ])
+
+
+FIG_IMM = _svg(W, 234, '데이터센터를 빼고 같은 경매를 다시 돌리면', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_IX0 - 16, _IBASE, W - _IX0 + 16, _IBASE, INK3),
+     _lt(_IX0 - 16, 22, '용량대금이 줄어드는 액수', 't-sm', True)]
+    + [_ibar(i, *b) for i, b in enumerate(_IBARS)]))
+
+
+# ── 도해 21. 완화 설비 값 ────────────────────────────────────────────
+_CMAX, _CH2, _CBASE = 157.0, 140, 196
+_CBARS = [(80, '3,800만~8,000만', '배터리 100메가와트', '2시간'),
+          (157, '7,600만~1억 5,700만', '같은 배터리', '4시간'),
+          (20, '1,000만~2,000만', '동기조상기', '1기가와트 기준')]
+_CW, _CG2 = 168, 24
+_CX0 = (W - (3 * _CW + 2 * _CG2)) // 2
+
+
+def _cbar(i, v, lab, l1, l2):
+    x = _CX0 + i * (_CW + _CG2)
+    h = int(_CH2 * v / _CMAX)
+    y = _CBASE - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="none" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _CW, h, INK3),
+        _t(x + _CW // 2, y - 8, lab, 't-lab'),
+        _t(x + _CW // 2, _CBASE + 18, l1, 't-sm'),
+        _t(x + _CW // 2, _CBASE + 34, l2, 't-sm'),
+    ])
+
+
+FIG_MITIGATE = _svg(W, 240, '계통 흔들림을 잡는 설비 값', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_CX0 - 16, _CBASE, W - _CX0 + 16, _CBASE, INK3),
+     _lt(_CX0 - 16, 22, '설치비 달러 (위 끝)', 't-sm', True)]
+    + [_cbar(i, *b) for i, b in enumerate(_CBARS)]))
+
+
+# ── 도해 22. 나라별 전기요금 ─────────────────────────────────────────
+# 범위는 위 끝. 보조가 섞인 값은 그 사실을 라벨에 적고 값은 원문 표기 그대로 둔다.
+_TMAX, _TH2, _TBASE2 = 23.0, 150, 206
+_TBARS = [(8.3, '8.3', '미국', ''), (12, '10~12', '한국·대만', '보조 섞인 값'),
+          (15.2, '15.2', '일본', ''), (18, '18', '유럽 산업용', ''),
+          (23, '23', '싱가포르', '')]
+_TW2, _TG2 = 96, 20
+_TX02 = (W - (5 * _TW2 + 4 * _TG2)) // 2
+
+
+def _tbar(i, v, lab, who, note):
+    x = _TX02 + i * (_TW2 + _TG2)
+    h = int(_TH2 * v / _TMAX)
+    y = _TBASE2 - h
+    hot = who == '한국·대만'
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+           'stroke-width="1.6"/>' % (x, y, _TW2, h, 'var(--sunk)' if hot else 'none',
+                                     INK if hot else INK3),
+           _t(x + _TW2 // 2, y - 8, lab, 't-lab'),
+           _t(x + _TW2 // 2, _TBASE2 + 18, who, 't-sm')]
+    if note:
+        out.append(_t(x + _TW2 // 2, _TBASE2 + 34, note, 't-sm'))
+    return ''.join(out)
+
+
+FIG_TARIFF = _svg(W, 250, '나라별 전기요금', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_TX02 - 16, _TBASE2, W - _TX02 + 16, _TBASE2, INK3),
+     _lt(_TX02 - 16, 22, '킬로와트시당 센트 (위 끝)', 't-sm', True)]
+    + [_tbar(i, *b) for i, b in enumerate(_TBARS)]))
+
+
+# ── 도해 23. 긴급경매 대금이 흘러가는 길 ─────────────────────────────
+# 돈이 도는 길을 판으로 세운다. 아직 안 일어난 자리는 점선(확정 규칙 S2).
+_QY, _QSTEP, _QH = 14, 62, 44
+_QCELLS = [(['신규 발전과 2043년까지 장기계약'], False),
+           (['비용을 지역별로 나눈다 · 15년 고정 · 사후 정산 없음'], False),
+           (['주가 비용배분 정책을 통과시킨다'], True),
+           (['새 대형 부하가 서명한다'], True),
+           (['서명이 없으면 요금청구서로 간다'], False)]
+
+
+def _qbox(i, lines, pending):
+    y = _QY + i * _QSTEP
+    b = _box(14, y, W - 28, _QH, lines, INK if i == 4 else INK3,
+             1.8 if i == 4 else 1.5)
+    return b.replace('stroke-width="1.5"', 'stroke-width="1.5" stroke-dasharray="5 4"') \
+        if pending else b
+
+
+FIG_EMERGENCY = _svg(W, _QY + 5 * _QSTEP - 4, '긴급경매 대금이 흘러가는 길', _DEFS + ''.join(
+    [_qbox(i, c, p) for i, (c, p) in enumerate(_QCELLS)]
+    + [_a(W // 2, _QY + i * _QSTEP + _QH, W // 2, _QY + (i + 1) * _QSTEP)
+       for i in range(4)]))
