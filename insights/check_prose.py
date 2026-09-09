@@ -72,7 +72,7 @@ def load_glossary():
             if not k.startswith('_')}
 
 
-def check_density(text, where, actor=True, claims=False):
+def check_density(text, where, actor=True, claims=False, gate=False):
     """P8~P11 — 낱말이 아니라 밀도를 본다.
 
     금지어를 세던 자리를 대신한다. 2026-08-17 건강 대시보드를 쓰면서 드러난 것들이다.
@@ -98,6 +98,9 @@ def check_density(text, where, actor=True, claims=False):
     # 길이는 P3 이 이미 잰다 — 같은 것을 두 번 재면 둘 다 안 믿게 된다.
     check_vague(text, where)
     check_money(text, where)
+    # P20 은 빚을 다 갚은 층부터 게이트로 올린다. 2026-09-09 기준 인사이트가 0건이라
+    # 거기만 FAIL 이고, 노트 32·고리 19·브리핑 1·대시보드 758 은 빚으로 센다
+    check_bare_value(text, where, gate=gate)
     # P19 는 우리가 쓴 화면에만 댄다. 노트와 제3자 요약본에 대면 필자의
     # 전칭 주장까지 끌고 와 110건이 쏟아진다 — 읽을 자리를 좁히는 검사가
     # 넓히는 검사가 되어 버린다.
@@ -265,6 +268,36 @@ def check_money(text, where):
         # 2026-08-30 에 빚 열셋을 다 갚고 게이트로 올렸다
         add('FAIL', where, 'P18',
             '「%s」 — 무엇을 하는지로 쓴다: 빌려준다·낸다·건다·마련한다' % m.group(0))
+
+
+# P20 — 한정어 없이 홀로 선 「값」. 2026-09-09 에 대시보드 575장을 훑어 「값」 8,628건을
+# 세었고, 그 가운데 앞에 아무것도 없이 조사만 붙은 자리가 758건이었다. 사용자가
+# 「값 단독으로 주어로 쓰이는 것을 금지해야 한다」고 지목한 자리다. 「값이 오른다」·
+# 「값을 만든 것은」·「값은 뒤로 밀린다」는 매끄럽게 읽히는데 무엇의 값인지가 없다 —
+# 주가인지 계약가인지 마진인지 몸값인지가 전부 한 글자로 뭉개진다. 앞에 이름이나
+# 관형절이 붙은 자리는 안 잡는다. 「국채값이 오르고」·「메모리 값이 뛰어」·「잰 값」·
+# 「그 값」·「같은 값」은 무엇의 값인지 문장이 이미 말한다.
+#
+# 앞 어절이 조사·연결어미로 끝나면 그 어절은 값을 꾸미지 않는다는 뜻이다. 다만
+# 「은·는·이·가」는 뺐다 — 조사이기도 하고 관형형 어미이기도 해서 「적은 값」·
+# 「빌리는 값」·「높은 값」을 함께 문다. 시안에서 1,320건이 걸렸고 그중 절반이
+# 그 넷 때문이었다. 애매한 표지를 넣으면 규칙이 오탐 기계가 된다.
+BARE_VALUE_BOUND = ('를|에|에서|로|으로|와|과|만|까지|부터|보다|처럼|마다|'
+                    '면|니|고|며|나|라|다|요|죠|지만|대로|뒤|때|서|록')
+BARE_VALUE = re.compile('(?:^|(?<=[.,;:!?()\\[\\]—·])\\s*|'
+                        '[가-힣](?:' + BARE_VALUE_BOUND + ')\\s+)'
+                        '값[은이를을]')
+
+
+def check_bare_value(text, where, gate=False):
+    """P20 — 맨 「값」이 주어·목적어 자리에 선 자리. 인용 안은 보지 않는다."""
+    bare = QUOTE_SPAN.sub(' ', text or '')
+    for m in BARE_VALUE.finditer(bare):
+        i = bare.index('값', m.start())
+        snip = ' '.join(bare[max(0, i - 25):i + 35].split())
+        add('FAIL' if gate else 'WARN', where, 'P20',
+            '맨 「값」이 홀로 섰다 — 무엇의 값인지 이름을 댄다(주가·계약가·마진·'
+            '단가·몸값): …%s…' % snip)
 
 
 # P19 — 전칭 주장. 「전부·모두·하나도·어떤 …도」로 묶은 문장은 예외가 하나만 나와도
@@ -599,11 +632,48 @@ def check_dashboards(gloss):
     return paths_
 
 
+# P20 이 실제로 무는지 본다. 규칙을 세울 때 결함을 넣어 보지 않으면 「번호가 하나라도
+# 있으면 통과」 같은 구멍이 그대로 남는다(S12 가 그렇게 ①만 남긴 문단을 지나쳤다).
+P20_SELFTEST = [
+    # (문장, 물어야 하나)
+    ('공급이 모자라서 값이 올랐다.', True),
+    ('값을 만든 것은 종목 고르기가 아니라 나라를 골랐다는 결정이다.', True),
+    ('앞 칸만 빨라지면 값은 뒤로 밀린다.', True),
+    # 「X는 값이 …」는 지나친다. 앞머리가 무엇의 값인지 이미 말했고, 「적은 값이」·
+    # 「빌리는 값이」와 글자 꼴이 같아 둘을 갈라낼 방법이 없다
+    ('메모리는 값이 오르면 이익이 더 빠르게 는다.', False),
+    ('국채값이 오르고 금리는 내린다.', False),
+    ('HBM·D램 값이 뛰어 총소유비용의 40%를 차지했다.', False),
+    ('DCF로 잰 값은 257,381원이다.', False),
+    ('그 값이 내려가면서 계획과 검토가 한자리로 붙는다.', False),
+    ('같은 값을 두 번 세지 않는다.', False),
+    ('원가가 높은 회사일수록 값이 오를 때 이익이 크게 는다.', True),
+    ('"값이 오르면 손실에 상한이 없다"고 진행자가 말했다.', False),
+]
+
+
+def selftest():
+    bad = 0
+    for text, want in P20_SELFTEST:
+        before = len(findings)
+        check_bare_value(text, 'selftest')
+        got = len(findings) > before
+        del findings[before:]
+        if got != want:
+            bad += 1
+            print('SELFTEST 어긋남 (기대 %s, 결과 %s): %s'
+                  % ('물어야' if want else '지나쳐야', '물었다' if got else '지나쳤다', text))
+    print('P20 자가시험 %d개 중 어긋남 %d' % (len(P20_SELFTEST), bad))
+    return 1 if bad else 0
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
+    if '--selftest' in sys.argv:
+        return selftest()
     gloss = load_glossary()
     files = sorted(glob.glob(os.path.join(paths.SYNTH, '*.md')))
     # 노트는 문체만 본다. 절 순서·headline 검사(P5~P7)는 인사이트 형식이라
@@ -667,7 +737,7 @@ def main():
         meta, mdbody = parse_synth(raw)
         sec = sections(strip_refs(raw)) if meta else sections(body)
         names = [n for n in sec.keys()]
-        check_density(body, where)
+        check_density(body, where, gate=True)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
