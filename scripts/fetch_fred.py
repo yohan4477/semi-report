@@ -4,7 +4,7 @@
     PYTHONIOENCODING=utf-8 python scripts/fetch_fred.py
     PYTHONIOENCODING=utf-8 python scripts/fetch_fred.py DGS10 DGS30
 
-왜 있나 — 이 저장소는 원문에 없는 값을 안 그린다(insight-figure 규칙 1). 그런데 금리는
+왜 있나 — 이 저장소는 원문에 없는 값을 안 그린다(yohan-figure 규칙 1). 그런데 금리는
 값이 날마다 움직이는 것이 내용이라, 원문이 짚은 몇 점만으로는 움직임이 안 보인다. 그래서
 FRED 를 **정식 재료로 등록해** 들여온다. 워치 장이 부동산 데이터를 어댑터로 들여오는 것과
 같은 자리다.

@@ -101,7 +101,7 @@ def _box(x, y, w, h, lines, st='var(--ink-3)', sw=1.5):
 
 
 # 로봇 팔을 그리는 부품. 관절 각도를 손으로 어림하면 팔이 컵에 안 닿는다 —
-# 손끝이 갈 자리를 정하고 팔꿈치는 역기구학으로 푼다(insight-figure 규칙 2).
+# 손끝이 갈 자리를 정하고 팔꿈치는 역기구학으로 푼다(yohan-figure 규칙 2).
 def _ik(bx, by, tx, ty, l1, l2):
     """어깨(bx,by)에서 손끝(tx,ty)까지 두 마디로 갈 때 팔꿈치 자리. 팔꿈치는 위로 꺾는다."""
     import math

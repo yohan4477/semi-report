@@ -27,18 +27,18 @@
 원문에서 이름 찾기                    entity-search    grep 대신. 별칭·영문 표기를 사전이 알고 영수증이 붙는다.
                                                      개념으로 묻는 물음은 못 찾는다
 Epoch AI 글(epoch.ai/gradient-updates) epoch-gradient   링크 하나로 요약·도해·카드·검사·푸시까지. 도해는 PNG 아닌 한국어 SVG
-통합 보고서(대시보드/통합 보고서.html) insight-report   새 층은 카드가 아니라 원문에서 바로 세운다 — sonnet 이 사실표를 뽑고 메인이
+통합 보고서(대시보드/통합 보고서.html) yohan-report   새 층은 카드가 아니라 원문에서 바로 세운다 — sonnet 이 사실표를 뽑고 메인이
                                                      절을 세우고 haiku 가 대조한다. 위임문은 references/위임문.md.
                                                      첫 실물 sec-pkg(09-05). 전수는 check_cover 가 센다
 절이 여섯을 넘는 글                   doc-structure    비교표에는 「언제 것 · 성격」 열 — 없으면 공표치와 추정치가 같은 무게
-카드에 도해 붙이기·고치기             insight-figure   「없는 값을 그렸다」로 무너진다. 배치는 scratchpad/check_fig.py
+카드에 도해 붙이기·고치기             yohan-figure   「없는 값을 그렸다」로 무너진다. 배치는 scratchpad/check_fig.py
 구조화(케이스 구조 B)                  structure        답이 안 보이는 큰 물음을 쪼개 어디부터 팔지 고른다.
                                                      원문 각도 A 레인은 걷혔다(2026-08-28, 9e36cbd4) — 원문이 먼저면
-                                                     insight-report 의 사실표 경로로 간다
+                                                     yohan-report 의 사실표 경로로 간다
 건강 인사이트(🩺)                     health-insight   카드 단위가 주제, 본문에 해부도
 ```
 
-**각도 체계는 걷혔다**(2026-08-28, 커밋 `9e36cbd4`) — 고르는 데는 빨랐는데 세우는 데는 줄 번호와 저자 논지가 모자랐다. `insights/angles/`·`check_angles.py`·`structure` 의 원문-각도 레인이 함께 지워졌다. 각도를 부르는 지시는 낡은 것이다. 원문에서 층을 세우는 길은 `insight-report` 의 사실표 경로다.
+**각도 체계는 걷혔다**(2026-08-28, 커밋 `9e36cbd4`) — 고르는 데는 빨랐는데 세우는 데는 줄 번호와 저자 논지가 모자랐다. `insights/angles/`·`check_angles.py`·`structure` 의 원문-각도 레인이 함께 지워졌다. 각도를 부르는 지시는 낡은 것이다. 원문에서 층을 세우는 길은 `yohan-report` 의 사실표 경로다.
 
 ## 검사기
 

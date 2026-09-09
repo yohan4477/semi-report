@@ -68,29 +68,34 @@ def main():
     args = ap.parse_args()
 
     done = processed_ids()
-    lines, total = [], 0
+    sources, total = [], 0
     for name, cid in CHANNELS.items():
         try:
             items = feed(cid)
         except Exception as exc:  # noqa: BLE001
-            lines.append(f"· {name} — 피드 실패 ({type(exc).__name__})")
+            sources.append((name, f"피드를 못 읽었다 ({type(exc).__name__})"))
             continue
         new = [i for i in items if i[1] not in done]
         total += len(new)
-        head = f"· {name} {len(new)}편"
-        if new:
-            head += f" (최신 {new[0][0]})"
-        lines.append(head)
-        for d, _, t in new[:3]:
-            lines.append(f"   {d} {t[:44]}")
+        sources.append((name, new))
 
-    msg = f"[소스별 미처리 신규 {total}편]\n최근 15편 기준\n\n" + "\n".join(lines)
+    sys.path.insert(0, "scripts")
+    import gen_newsrc_page
+
+    path = gen_newsrc_page.write(sources, total)
+    print(f"목록 -> {path}")
+
+    tally = " · ".join(
+        f"{n} {len(v) if isinstance(v, list) else '?'}" for n, v in sources)
+    msg = f"[아직 처리 안 한 것 {total}편]
+{tally}
+
+말풍선을 누르면 목록이 열린다."
     print(msg)
     if args.kakao:
-        sys.path.insert(0, "scripts")
         import kakao_send
 
-        kakao_send.send(msg)
+        kakao_send.send(msg, gen_newsrc_page.PUBLIC)
 
 
 if __name__ == "__main__":

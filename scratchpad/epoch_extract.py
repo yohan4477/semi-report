@@ -2,7 +2,7 @@
 """원문 도해에서 값을 읽어 data/epoch_fig_data.json 으로 굽는다.
 
 Epoch AI 원문 그림을 한국어로 다시 그릴 때, 점과 막대의 자리를 눈으로 어림해
-옮기면 반드시 어긋난다(insight-figure 규칙 2). 이미지에서 색으로 도형을 찾아
+옮기면 반드시 어긋난다(yohan-figure 규칙 2). 이미지에서 색으로 도형을 찾아
 데이터 좌표로 되돌린 값만 그림이 쓴다.
 
   py -3.13 scratchpad/epoch_extract.py

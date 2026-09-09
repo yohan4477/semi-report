@@ -9,7 +9,7 @@
 ## 붙일 것 (이게 전부다)
 
 ```
-「<주제>」로 통합 보고서 층을 한 편 쓴다. insight-report 스킬을 따른다.
+「<주제>」로 통합 보고서 층을 한 편 쓴다. yohan-report 스킬을 따른다.
 재료 후보를 먼저 보여 주고, 내가 자르라고 하면 그때 진행해.
 ```
 
@@ -30,12 +30,12 @@
 ## 안 적어도 되는 것 — 이미 어딘가에 있다
 
 ```
-본보기        insight-report 가 sec-pkg 를 가리킨다
+본보기        yohan-report 가 sec-pkg 를 가리킨다
 재료 찾기     scripts/find_materials.py. 스킬 경로의 0단계
 절 구성       스킬의 「절을 세우는 법」과 doc-structure
 차례·번호     scratchpad/_rep_toc.py 가 붙이고 check_toc 가 문다
-도해 규칙     insight-figure 와 확정 규칙 §3. 부품은 _pkg_fig 를 본다
-위임문        insight-report/references/위임문.md 에 두 벌
+도해 규칙     yohan-figure 와 확정 규칙 §3. 부품은 _pkg_fig 를 본다
+위임문        yohan-report/references/위임문.md 에 두 벌
 검사기 목록   CLAUDE.md. 전부 돌린다
 전수          check_cover 가 labels 와 인용을 맞춰 본다
 커밋·푸시     의미 단위마다. 승인 안 묻는다

@@ -4,7 +4,7 @@
 
 ## 먼저 읽을 것 (순서대로, 전부)
 1. `docs/글과 도해 — 확정 규칙.md` — 글·그림 규칙. 이것이 최우선.
-2. `.claude/skills/insight-figure/SKILL.md` — 도해 규칙.
+2. `.claude/skills/yohan-figure/SKILL.md` — 도해 규칙.
 3. `content/understanding/언더스탠딩 보고서/2026-08-24-물가-신호를-무시하면-10년이-녹는다.md` 앞 60줄 — 보고서 형식 본보기 (프런트매터 · 한줄 코멘트 · `## N.` 절 · `표:` 표 · `[[fig:열쇠]]`).
 4. `scratchpad/und_figs.py` 전체 — 도해 파일 본보기. `aie_figs`의 `_chain / _fan / _fanout / table / band / box / mid / head / arrow / svg` 부품을 쓴다. 필요하면 `scratchpad/aie_figs.py`에서 함수 본문을 본다.
 5. 원문: `content/scaling-book/원문/NN-slug.md` (담당 참조). 수식은 LaTeX 그대로 들어 있다.

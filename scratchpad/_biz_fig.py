@@ -2,7 +2,7 @@
 """AI 비즈니스 리포트 도해 — 레일 지도.
 
 값을 하나도 안 그린다. 상자 개수는 우리 층 구분이고 원문이 센 수가 아니라서,
-캡션에 그렇게 적는다(insight-figure 규칙 1). 자리는 아래 _row 가 계산한다 —
+캡션에 그렇게 적는다(yohan-figure 규칙 1). 자리는 아래 _row 가 계산한다 —
 손으로 찍지 않는다(규칙 2)."""
 import gen_sudoremove_dashboard as sudo
 

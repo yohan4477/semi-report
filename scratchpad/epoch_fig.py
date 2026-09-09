@@ -3,7 +3,7 @@
 
 원문(epoch.ai) 도해는 라벨이 전부 영어라 그대로 실으면 카드 본문만 한국어가 된다.
 그래서 값과 구조는 원문 그대로 두고 판을 새로 짠다. 규칙은 둘이다.
-  · insight-figure 스킬 — 없는 값 금지·좌표 계산·판 위 글자 금지·검사기
+  · yohan-figure 스킬 — 없는 값 금지·좌표 계산·판 위 글자 금지·검사기
   · docs/흐름도 — 만드는 규칙.md — 선 세 종류·역할 도랑·강조 한 종류·숫자는 상자 안
 
 글자 폭은 여기서 재서 상자 밖으로 나가면 그 자리에서 멈춘다. check_fig.py는 한 글자를
@@ -899,7 +899,7 @@ def _panel(x0, y0, pw, ph, title, ymax, xmax, lines, ylab, xlab):
              % (x0 + pw // 2, y0 + ph + 22, esc(xlab)))
     o.append('<text x="%d" y="%d" class="t-sm t-axis">%s</text>' % (x0 - 4, y0 - 46, esc(ylab)))
     # 계열 이름은 선 위에 얹지 않는다 — 오르막 선이 글자 자리를 지나며 올라온다.
-    # 판 위쪽에 색 딱지로 내놓는다(insight-figure 규칙 3과 같은 뜻이다)
+    # 판 위쪽에 색 딱지로 내놓는다(yohan-figure 규칙 3과 같은 뜻이다)
     kx = x0
     for name, key in keys:
         col = 'var(--fig-good,#2f8f6b)' if key else 'var(--ink-3)'
@@ -1403,7 +1403,7 @@ def fig_cn_map():
     """원문대로 도시별 공고 수에 비례한 버블 지도.
 
     나라 윤곽과 도시 좌표는 data/world_robinson.json에서 가져와 중국 경계 상자에
-    맞춰 옮긴다 — 손으로 찍은 자리가 없다(insight-figure 규칙 2).
+    맞춰 옮긴다 — 손으로 찍은 자리가 없다(yohan-figure 규칙 2).
     버블 넓이가 공고 수에 비례하고, 그 수는 원문 도해에 적힌 값 그대로다."""
     import io as _io
     import json
@@ -2063,7 +2063,7 @@ if __name__ == '__main__':
             for k, v in SRC.items()}
 
     def num_check(svg_, key):
-        """그림 글자의 숫자가 원문에 있는지 전수 대조한다(insight-figure 규칙 1).
+        """그림 글자의 숫자가 원문에 있는지 전수 대조한다(yohan-figure 규칙 1).
 
         축 눈금·항목 이름(t-axis)은 뺀다 — 0·80·160이나 「2024년 말」은 원문에서
         가져온 값이 아니라 자를 읽는 눈금이다. 막대 길이가 주장이고, 그 길이의 근거인

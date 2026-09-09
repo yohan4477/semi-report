@@ -3,7 +3,7 @@
 
     PYTHONIOENCODING=utf-8 py -3.13 scratchpad/cited_lines.py <slug> [<출력 파일>]
 
-insights/semidoped/<slug>-strategy.md 의 (L줄) 표기를 모두 모아, content/understanding/Semi Doped/raw/<slug>.md
+insights/semidoped/<slug>-strategy.md 의 (L줄) 표기를 모두 모아, content/semi_doped/raw/<slug>.md
 의 그 줄과 앞뒤 한 줄을 줄 번호와 함께 낸다. 출력 파일을 안 주면 _workspace/cited/<slug>.md 에 쓴다.
 비용 — 인용 40~60줄이면 전사의 1/5 안팎이다(2026-09-03).
 """
@@ -18,7 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def main(slug, out=None, lane_path=None):
     # --lane <경로> 로 다른 판(견주기용 초안)을 읽을 수 있다
     lane = io.open(lane_path or os.path.join(ROOT, 'insights', 'semidoped', slug + '-strategy.md'), encoding='utf-8').read()
-    raw = io.open(os.path.join(ROOT, 'content', 'understanding', 'Semi Doped', 'raw', slug + '.md'), encoding='utf-8').read().split('\n')
+    raw = io.open(os.path.join(ROOT, 'content', 'semi_doped', 'raw', slug + '.md'), encoding='utf-8').read().split('\n')
     nums = set()
     # 「(Austin 의 설명, L57)」처럼 괄호 안에 다른 말이 있어도 잡는다(2026-09-03 인터커넥트 대조에서 놓쳤다)
     for m in re.finditer(r'\(([^)]*L\d[^)]*)\)', lane):

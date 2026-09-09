@@ -3,10 +3,10 @@
 
 루빈 울트라 랙 지출(_cpo_fig.FIG_RACK)과 HBM4 베이스 다이(_pkg_fig.FIG_BASE)는 여기서
 다시 그리지 않고 원본 모듈에서 가져다 쓴다 — 같은 그림을 두 곳에 두면 한쪽만 고쳐진다
-(insight-report 규칙).
+(yohan-report 규칙).
 
 값은 전부 원문에 있는 것만. 범위 값(3.0~3.3)은 위 끝으로 그리고 캡션에 그렇게 적는다.
-자리는 _row 와 아래 눈금 함수가 계산하고 손으로 찍지 않는다(insight-figure 규칙 2).
+자리는 _row 와 아래 눈금 함수가 계산하고 손으로 찍지 않는다(yohan-figure 규칙 2).
 """
 import _biz_fig as bf
 
