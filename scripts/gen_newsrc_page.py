@@ -10,9 +10,10 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / '대시보드' / '소스 신규.html'
-PUBLIC = ('https://yohan4477.github.io/semi-report/'
-          '%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/' + urllib.parse.quote('소스 신규.html'))
+# 파일명을 ASCII 로 둔다 — 한글 경로는 URL 이 통째로 퍼센트 인코딩돼
+# 카카오 말풍선이 링크를 대표 도메인으로 갈아치웠다
+OUT = ROOT / '대시보드' / 'source-new.html'
+PUBLIC = 'https://yohan4477.github.io/semi-report/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C/source-new.html'
 
 CSS = """
 :root { --bg:#fbfbfa; --fg:#1d1d1b; --dim:#6b6b66; --line:#e2e2dd; --card:#ffffff; }
