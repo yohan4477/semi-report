@@ -692,6 +692,12 @@
   .xl td.red{background:var(--ink-2);opacity:.62}
   .xl tr.off td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
   .xl tr.off td.num{color:var(--ink);font-weight:850}
+  /* 추정 배지. 원문 값이 아니라 우리가 고른 가정 위에 선 대목임을 그 자리에서 밝힌다.
+     문단 맨 앞과 표 머리 띠에만 붙인다 — 값마다 붙이면 배지가 배경이 된다 */
+  .tag-est{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:9px;
+           font-size:10px;font-weight:850;letter-spacing:.02em;
+           color:var(--paper,#fff);background:var(--ink-2);vertical-align:2px}
+  .xlt .tag-est{vertical-align:1px}
   .xl-memo{margin:4px 0 12px;font-size:10.5px;line-height:1.55;color:var(--ink-3)}
 
   /* ── 수식 블록. 원문이 공표한 식을 기호까지 그대로 낸다 ─────────────────

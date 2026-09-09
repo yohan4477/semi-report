@@ -102,6 +102,19 @@ MI300X 를 사서 쓸 때 넘어야 할 처리량 비율: 0.82
 보고서 본문의 표와 이 글자는 `scratchpad/_model_tbl.py` 한 함수에서 나온다.
 표를 고치면 이 사실표가 같이 바뀌므로 둘이 갈릴 수 없다.
 
+### 표 RAW — 이 층이 쓴 원자료와 그 출처
+원자료 · 출처 글 · 펴낸 날 · 그림 · 이미지 파일 · 읽은 값 · 가려진 줄 · 읽은 날
+GPU Cluster TCO Calculator · How Much Do GPU Clusters Really Cost · 2026-04-20 · 016 · 016_db80aba2-a7cb-4232-ac9b-110aa0ec0863_973x841.png · 63개 · 없음 · 2026-09-09
+Goodput Expense Calculator — 대규모 학습 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 019 · 019_b5c164ad-c9ad-41c0-bb77-d6f9222735f6_713x730.png · 44개 · 없음 · 2026-09-09
+Goodput Expense Calculator — 소규모 학습 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 022 · 022_78b79a3d-d312-4b20-bf27-4139dcaeb63e_713x732.png · 32개 · 없음 · 2026-09-09
+Goodput Expense Calculator — 추론 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 025 · 025_b25b0369-df66-40b3-8ee7-077a22e96c58_714x729.png · 32개 · 없음 · 2026-09-09
+AI Cloud Capital Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 049 · 049_a659b5c7-9c7c-4cc9-b06f-dbd1cc67e8f6_2560x999.png · 41개 · 3줄 · 2026-09-09
+AI Cloud Operating Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 050 · 050_4d53c878-5a98-4668-9a33-56b3810b7703_2560x955.png · 38개 · 없음 · 2026-09-09
+AI Cloud Total Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 016 · 016_af4815c0-77f8-4527-b5ea-fb96e44bc4c1_2560x445.png · 24개 · 없음 · 2026-09-09
+AMD 손익분기 임대료 — 원문 본문에 글로 적힌 값 · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 본문 · — · 3개 · 없음 · 2026-09-09
+SKU 별 초당 토큰 처리량 · AMD영문 · 파레토 곡선 그래프 · — · — · — · 못 읽음 · — · —
+GPU 자체 원가와 기타 서버 비용 · AMD영문 그림 049 · — · — · — · 못 읽음 · — · —
+
 ### 표 TCO — GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)
 항목 · 수량·단위 · Gold-tier · Hyperscaler · Silver-tier
 GPU · GB300 NVL72 5,184장 · $4/GPU-시간 · $14,929,920 · $14,929,920 · $14,929,920
@@ -187,6 +200,10 @@ GPU 시간당 합계 · $1.34 · $1.53 · $1.64 · $1.58 · $1.63 · $2.23
 자본비 비중 · 70.48% · 68.75% · 69.30% · 75.57% · 76.39% · 78.60%
 H200 대비 처리량 문턱 · 0.82배 · 0.94배 · 1.01배 · 0.97배 · 1.00배 · 1.37배
 
+## 원자료가 온 글의 주소
+
+How Much Do GPU Clusters Really Cost, SemiAnalysis, 2026-04-20 발행 — <a href="https://newsletter.semianalysis.com/p/how-much-do-gpu-clusters-really-cost">https://newsletter.semianalysis.com/p/how-much-do-gpu-clusters-really-cost</a> · 한국어 변환본 <code>[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md</code>
+AMD vs NVIDIA Inference Benchmark: Who Wins?, SemiAnalysis, 2025-05-23 발행 — <a href="https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens">https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens</a>
 ## 본문에 실린 수식 — 원문이 공표한 것을 기호까지 그대로
 
 ### 수식 TCO — 월 총비용은 여덟 항의 합이다 (클러스터영문 L92·L96·L98)

@@ -93,12 +93,25 @@ CAPTION = {
 _CITE = re.compile(r'\s*\(([^()]*?\b(?:[LT]\d|[a-z]\d)[^()]*)\)')
 
 
+EST = '<span class="tag-est">추정</span>'
+
+# 값이 원문에서 바로 안 나오고 우리가 고른 가정 위에 서는 표. 머리 띠에 배지를 단다
+TBL_EST = {'GAP'}
+
+
 def _strip(s):
-    """(라벨 L12) 를 걷고 마크다운 굵게를 <b> 로, 백틱을 <code> 로."""
+    """(라벨 L12) 를 걷고 마크다운 굵게를 <b> 로, 백틱을 <code> 로.
+
+    문단이 [추정] 으로 시작하면 그 자리에 배지를 단다 — 가정 위에 선 대목은
+    읽기 시작할 때 알아야 한다(2026-09-09).
+    """
+    est = s.startswith('[추정] ')
+    if est:
+        s = s[len('[추정] '):]
     s = _CITE.sub('', s)
     s = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', s)
     s = re.sub(r'`([^`]+)`', r'<code>\1</code>', s)
-    return s.strip()
+    return (EST if est else '') + s.strip()
 
 
 def _table(rows):
@@ -123,6 +136,9 @@ TBL_NOTE = {
             '발표된 월 자본비에서 거꾸로 푼 값입니다. 여섯이 0.004%포인트 안에 모입니다.',
     'VERDICT': '손익분기 임대료는 원문이 글로 밝힌 값(L298·L302·L306)이고, 실측 처리량은 '
                '그것을 H200 시세 2.5달러로 나눈 비율입니다. 문턱과 결론은 원문에 없습니다.',
+    'RAW': '값을 그림에서 코드로 바로 넣지 않고 이 파일을 거칩니다. 못 읽은 것도 「없음」이 '
+           '아니라 「못 읽음」으로 남깁니다 — 나중에 그 값을 말한 자료가 나오면 거기에 채워 '
+           '넣으면 모델과 표와 도해가 함께 따라옵니다.',
     'GAP': '「MI300X 대비 차이」만 원문 값에서 바로 나옵니다. 기타 서버 비용이 SKU 마다 '
            '같다고 보면 그 차이가 곧 GPU 원가의 차이입니다. 오른쪽 세 열의 기타 값은 '
            '우리가 고른 가정이고 원문에 없습니다 — 절대값이 아니라 폭을 보는 자리입니다.',
@@ -185,7 +201,8 @@ def table_html(key):
     title, fn = mt.TABLES[key]
     head, body = fn()
     nums = _numeric_cols(head, body)
-    h = ['<div class="xls"><div class="xlt">%s</div><div class="xlw">' % title,
+    h = ['<div class="xls"><div class="xlt">%s%s</div><div class="xlw">'
+         % (EST if key in TBL_EST else '', title),
          '<table class="xl"><thead><tr>']
     h += ['<th%s>%s</th>' % (' class="num"' if nums[i] else '', c)
           for i, c in enumerate(head)]
@@ -199,6 +216,10 @@ def table_html(key):
                  + ''.join(_cell(c, nums[i]) for i, c in enumerate(r)) + '</tr>')
     h.append('</tbody></table></div></div>')
     h.append('<p class="xl-memo">%s</p>' % TBL_NOTE[key])
+    if key == 'RAW':
+        # 출처는 표 아래에 한 줄씩. 표 안에 넣으면 열이 하나 더 늘어 가로로 넘친다
+        h.append('<p class="xl-memo"><b>출처</b><br>'
+                 + '<br>'.join(mt.source_lines()) + '</p>')
     return ''.join(h)
 
 

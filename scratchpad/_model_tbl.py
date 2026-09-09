@@ -9,8 +9,10 @@
 사실표에 떨어뜨려 check_report 의 대조 재료로 쓴다. 표와 사실표가 한 함수에서
 나오므로 갈릴 수 없다.
 """
+import json
 import os
 import sys
+import io
 
 _MODELS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                        'insights', 'models')
@@ -21,6 +23,48 @@ from gpu_cluster_tco import goodput_breakdown                    # noqa: E402
 from inference_tco import Capex, Opex, Sku                        # noqa: E402
 import check_gpu_tco as G                                         # noqa: E402
 import check_inference_tco as I                                   # noqa: E402
+
+
+RAW = json.loads(io.open(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'insights', 'models', 'raw', 'tables.json'), encoding='utf-8').read())
+
+
+def _count(t):
+    """표 하나에 든 값의 개수. 열 목록이 있으면 행마다 열 수만큼 센다."""
+    n = 0
+    for v in t.get('rows', {}).values():
+        n += len(v) if isinstance(v, (list, tuple)) else 1
+    n += len(t.get('shared_inputs', {}))
+    return n
+
+
+def raw_table():
+    """이 층이 쓴 원자료. 그림에서 읽은 값이 어디서 왔고 몇 개인지, 못 읽은 칸이 몇인지."""
+    head = ['원자료', '출처 글', '펴낸 날', '그림', '이미지 파일', '읽은 값',
+            '가려진 줄', '읽은 날']
+    body = []
+    for t in RAW['tables']:
+        src = RAW['sources'][t['source']]
+        img = (t['image'] or '').rsplit('/', 1)[-1] or '—'
+        body.append([t['title'], src['title'], src['published'], t['figure'], img,
+                     '%d개' % _count(t),
+                     '%d줄' % len(t['redacted']) if t['redacted'] else '없음',
+                     t['read_on']])
+    for m in RAW['not_captured']:
+        body.append([m['what'], m['where'], '—', '—', '—', '못 읽음', '—', '—'])
+    return head, body
+
+
+def source_lines():
+    """원자료가 온 글의 주소. 표 아래에 한 줄씩 낸다."""
+    out = []
+    for key, s in RAW['sources'].items():
+        ko = (' · 한국어 변환본 <code>%s</code>' % s['korean'].rsplit('/', 1)[-1]
+              if s.get('korean') else '')
+        out.append('%s, %s, %s 발행 — <a href="%s">%s</a>%s'
+                   % (s['title'], s['publisher'], s['published'], s['url'], s['url'], ko))
+    return out
 
 
 def _m(v, unit='$'):
@@ -249,6 +293,7 @@ def verdict_table():
 
 
 TABLES = {
+    'RAW': ('이 층이 쓴 원자료와 그 출처', raw_table),
     'TCO': ('GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)', tco_table),
     'GOOD': ('굿풋 계산기 세 시나리오 (그림 019·022·025 재현)', goodput_table),
     'IMPACT': ('굿풋 어긋남이 3년 값에 미치는 폭', impact_table),

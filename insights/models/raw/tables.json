@@ -1,0 +1,674 @@
+{
+  "_about": "SemiAnalysis 원문이 그림으로만 실은 표를 읽어 옮긴 원자료. 글자가 아니라 픽셀이라 마크다운 대조로는 안 잡히므로 여기가 그 값의 출처다. 모델과 표는 이 파일을 읽고, 다음에 추정을 하거나 현황을 갱신할 때도 여기서 시작한다.",
+  "_읽는 법": {
+    "redacted": "원문이 검은 막대로 지운 칸. 값을 모른다는 뜻이고 0 이 아니다",
+    "read_on": "이미지를 사람이 읽어 옮긴 날. 값이 아니라 읽기의 날짜다",
+    "image": "input/clip-images/ 아래 상대 경로. scripts/fetch_clip_images.py 가 다시 받는다",
+    "units": "달러는 USD, 시간은 명시한 단위, 비율은 퍼센트"
+  },
+  "sources": {
+    "cluster": {
+      "clipping": "input/clippings/How Much Do GPU Clusters Really Cost.md",
+      "title": "How Much Do GPU Clusters Really Cost",
+      "hours_per_month": 720,
+      "figures": [
+        "016",
+        "019",
+        "022",
+        "025"
+      ],
+      "url": "https://newsletter.semianalysis.com/p/how-much-do-gpu-clusters-really-cost",
+      "published": "2026-04-20",
+      "publisher": "SemiAnalysis",
+      "korean": "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md"
+    },
+    "amd": {
+      "clipping": "input/clippings/AMD vs NVIDIA Inference Benchmark Who Wins - Performance & Cost Per Million Tokens.md",
+      "title": "AMD vs NVIDIA Inference Benchmark: Who Wins?",
+      "hours_per_month": 730,
+      "figures": [
+        "016",
+        "049",
+        "050"
+      ],
+      "url": "https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens",
+      "published": "2025-05-23",
+      "publisher": "SemiAnalysis",
+      "korean": null
+    }
+  },
+  "tables": [
+    {
+      "id": "cluster-tco",
+      "source": "cluster",
+      "figure": "016",
+      "image": "How Much Do GPU Clusters Really Cost/016_db80aba2-a7cb-4232-ac9b-110aa0ec0863_973x841.png",
+      "read_on": "2026-09-09",
+      "title": "GPU Cluster TCO Calculator",
+      "columns": [
+        "Gold-tier",
+        "Hyperscaler",
+        "Silver-tier"
+      ],
+      "shared_inputs": {
+        "gpu_model": "GB300 NVL72",
+        "gpu_count": 5184,
+        "gpu_price_hr": 4.0,
+        "hot_storage_tib": 500,
+        "cold_storage_pib": 10,
+        "ctrl_plane_vms": 3,
+        "ctrl_plane_vm_hr": 1.536,
+        "engineer_cost_year": 200000,
+        "contract_months": 36
+      },
+      "rows": {
+        "hot_storage_gib_mo": [
+          0.035,
+          0.0725,
+          0.055
+        ],
+        "cold_storage_gib_mo": [
+          0.01,
+          0.02,
+          0.015
+        ],
+        "storage_cost": [
+          122778,
+          246835,
+          185446
+        ],
+        "network_cost": [
+          0,
+          19,
+          0
+        ],
+        "ctrl_plane_cost": [
+          0,
+          3318,
+          0
+        ],
+        "support_uplift_pct": [
+          0,
+          3.0,
+          0
+        ],
+        "support_cost": [
+          0,
+          455403,
+          0
+        ],
+        "goodput_pct": [
+          6.14,
+          10.53,
+          20.91
+        ],
+        "goodput_cost": [
+          917088,
+          1571424,
+          3121349
+        ],
+        "setup_eng_months": [
+          0,
+          4,
+          2
+        ],
+        "poc_weeks": [
+          0,
+          4,
+          0
+        ],
+        "setup_onetime": [
+          0,
+          14996587,
+          33333
+        ],
+        "debug_eng_months": [
+          0,
+          0.5,
+          0.25
+        ],
+        "debug_cluster_pct": [
+          0,
+          0,
+          0.83
+        ],
+        "debugging_cost": [
+          0,
+          8333,
+          128583
+        ],
+        "monthly_amortized": [
+          15969785,
+          17631823,
+          18366224
+        ],
+        "total_36mo": [
+          574912276,
+          634745636,
+          661184050
+        ],
+        "relative_to_gold": [
+          1.0,
+          1.1,
+          1.15
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "goodput-large-training",
+      "source": "cluster",
+      "figure": "019",
+      "image": "How Much Do GPU Clusters Really Cost/019_b5c164ad-c9ad-41c0-bb77-d6f9222735f6_713x730.png",
+      "read_on": "2026-09-09",
+      "title": "Goodput Expense Calculator — 대규모 학습",
+      "columns": [
+        "Gold-tier",
+        "Hyperscaler",
+        "Silver-tier"
+      ],
+      "shared_inputs": {
+        "cluster_size": 5184,
+        "j_size": 4096,
+        "b_radius": 64,
+        "t_chkpt_min": 60,
+        "t_failover_min": 5
+      },
+      "rows": {
+        "gpu_mtbf_hr": [
+          25000,
+          25000,
+          15000
+        ],
+        "mode": [
+          "tolerant",
+          "tolerant",
+          "chkpt_hot"
+        ],
+        "repair_policy": [
+          "TorchPass",
+          "HyperPod Ckptless",
+          "Hot spare (idle)"
+        ],
+        "t_id_min": [
+          15,
+          15,
+          60
+        ],
+        "t_repair_hr": [
+          0.25,
+          0.25,
+          1
+        ],
+        "t_init_min": [
+          10,
+          10,
+          15
+        ],
+        "idle_spare_gpus": [
+          32,
+          0,
+          0
+        ],
+        "perf_overhead_pct": [
+          0,
+          5.0,
+          0
+        ],
+        "cluster_mtbf_hr": [
+          4.8,
+          4.8,
+          2.9
+        ],
+        "failures_per_month": [
+          149.3,
+          149.3,
+          248.8
+        ],
+        "downtime_pct": [
+          5.53,
+          5.53,
+          20.91
+        ],
+        "idle_spare_pct": [
+          0.62,
+          0,
+          0
+        ],
+        "total_pct": [
+          6.14,
+          10.53,
+          20.91
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "goodput-small-training",
+      "source": "cluster",
+      "figure": "022",
+      "image": "How Much Do GPU Clusters Really Cost/022_78b79a3d-d312-4b20-bf27-4139dcaeb63e_713x732.png",
+      "read_on": "2026-09-09",
+      "title": "Goodput Expense Calculator — 소규모 학습",
+      "columns": [
+        "Gold-tier",
+        "Hyperscaler",
+        "Silver-tier"
+      ],
+      "shared_inputs": {
+        "cluster_size": 2048,
+        "j_size": 64,
+        "b_radius": 8,
+        "t_chkpt_min": 60,
+        "t_failover_min": 5
+      },
+      "rows": {
+        "gpu_mtbf_hr": [
+          25000,
+          25000,
+          15000
+        ],
+        "mode": [
+          "chkpt_cold",
+          "chkpt_cold",
+          "chkpt_cold"
+        ],
+        "repair_policy": [
+          "Cold spare",
+          "Cold spare",
+          "Cold spare"
+        ],
+        "t_id_min": [
+          15,
+          15,
+          60
+        ],
+        "t_repair_hr": [
+          0.25,
+          0.25,
+          1
+        ],
+        "t_init_min": [
+          10,
+          10,
+          15
+        ],
+        "cluster_mtbf_hr": [
+          12.2,
+          12.2,
+          7.3
+        ],
+        "failures_per_month": [
+          59.0,
+          59.0,
+          98.3
+        ],
+        "total_pct": [
+          0.23,
+          0.23,
+          0.96
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "goodput-inference",
+      "source": "cluster",
+      "figure": "025",
+      "image": "How Much Do GPU Clusters Really Cost/025_b25b0369-df66-40b3-8ee7-077a22e96c58_714x729.png",
+      "read_on": "2026-09-09",
+      "title": "Goodput Expense Calculator — 추론",
+      "columns": [
+        "Gold-tier",
+        "Hyperscaler",
+        "Silver-tier"
+      ],
+      "shared_inputs": {
+        "cluster_size": 512,
+        "j_size": 8,
+        "b_radius": 8,
+        "t_chkpt_min": 60,
+        "t_failover_min": 7.5
+      },
+      "rows": {
+        "gpu_mtbf_hr": [
+          25000,
+          25000,
+          15000
+        ],
+        "mode": [
+          "tolerant",
+          "tolerant",
+          "tolerant"
+        ],
+        "repair_policy": [
+          "Inference FW",
+          "Inference FW",
+          "Inference FW"
+        ],
+        "t_id_min": [
+          15,
+          15,
+          60
+        ],
+        "t_repair_hr": [
+          0.25,
+          0.25,
+          8
+        ],
+        "t_init_min": [
+          15,
+          15,
+          15
+        ],
+        "cluster_mtbf_hr": [
+          48.8,
+          48.8,
+          29.3
+        ],
+        "failures_per_month": [
+          14.7,
+          14.7,
+          24.6
+        ],
+        "total_pct": [
+          0.02,
+          0.02,
+          0.49
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "amd-capex",
+      "source": "amd",
+      "figure": "049",
+      "image": "AMD vs NVIDIA Inference Benchmark Who Wins - Performance & Cost Per Million Tokens/049_a659b5c7-9c7c-4cc9-b06f-dbd1cc67e8f6_2560x999.png",
+      "read_on": "2026-09-09",
+      "title": "AI Cloud Capital Cost of Ownership",
+      "columns": [
+        "MI300X",
+        "MI325X",
+        "MI355X",
+        "H100 SXM",
+        "H200 SXM",
+        "B200"
+      ],
+      "shared_inputs": {
+        "cluster_chips": 2048,
+        "gpus_per_server": 8,
+        "wacc_printed_pct": 13.3,
+        "wacc_implied_pct": 13.25,
+        "useful_life_years": 4
+      },
+      "rows": {
+        "server_cost": [
+          162802,
+          185214,
+          204409,
+          199290,
+          211073,
+          316273
+        ],
+        "other_cluster_cost": [
+          41928,
+          42264,
+          42376,
+          58665,
+          58665,
+          63031
+        ],
+        "upfront_per_server": [
+          204730,
+          227478,
+          246785,
+          257955,
+          269738,
+          379303
+        ],
+        "upfront_per_gpu": [
+          25591,
+          28435,
+          30848,
+          32244,
+          33717,
+          47413
+        ],
+        "monthly_capital": [
+          5518,
+          6131,
+          6651,
+          6952,
+          7270,
+          10223
+        ],
+        "hourly_per_gpu": [
+          0.94,
+          1.05,
+          1.14,
+          1.19,
+          1.24,
+          1.75
+        ]
+      },
+      "redacted": [
+        {
+          "row": "gpu_provider_content_per_gpu",
+          "label": "GPU Provider Content (per GPU)"
+        },
+        {
+          "row": "gpu_provider_content_warranty_per_server",
+          "label": "GPU Provider Content + Warranty (per Server)"
+        },
+        {
+          "row": "other_server_costs",
+          "label": "Other Server Costs"
+        }
+      ],
+      "identity": "server_cost = gpu_provider_content_warranty_per_server + other_server_costs",
+      "external_checks": [
+        {
+          "claim": "B200 서버 데뷔 가격 31만~33만 달러",
+          "cite": "AMD영문 L438",
+          "table_value": 316273,
+          "verdict": "범위 안"
+        },
+        {
+          "claim": "H100 서버당 선불이 MI300X보다 25% 높다",
+          "cite": "AMD영문 L436",
+          "table_value": 1.26,
+          "verdict": "표로는 26%"
+        },
+        {
+          "claim": "H100 서버 대당 약 19만 달러, 서버당 초기 투자 약 25만 달러",
+          "cite": "[250820] H100 vs GB200 NVL72 학습 벤치마크",
+          "table_value": 199290,
+          "verdict": "열두 달 차이를 감안하면 맞물린다"
+        }
+      ]
+    },
+    {
+      "id": "amd-opex",
+      "source": "amd",
+      "figure": "050",
+      "image": "AMD vs NVIDIA Inference Benchmark Who Wins - Performance & Cost Per Million Tokens/050_4d53c878-5a98-4668-9a33-56b3810b7703_2560x955.png",
+      "read_on": "2026-09-09",
+      "title": "AI Cloud Operating Cost of Ownership",
+      "columns": [
+        "MI300X",
+        "MI325X",
+        "MI355X",
+        "H100 SXM",
+        "H200 SXM",
+        "B200"
+      ],
+      "shared_inputs": {
+        "electricity_kwh": 0.087,
+        "utilization_pct": 80,
+        "pue": 1.35,
+        "electricity_kw_month": 68.6,
+        "colocation_kw_month": 130.0,
+        "hosting_kw_month": 198.6,
+        "remote_hands_month": 131,
+        "internet_month": 39
+      },
+      "rows": {
+        "power_kw": [
+          10.78,
+          13.18,
+          13.98,
+          10.46,
+          10.46,
+          13.16
+        ],
+        "hosting_per_server_month": [
+          2141,
+          2618,
+          2776,
+          2078,
+          2078,
+          2614
+        ],
+        "monthly_per_server": [
+          2311,
+          2788,
+          2946,
+          2248,
+          2248,
+          2784
+        ],
+        "monthly_per_gpu": [
+          289,
+          348,
+          368,
+          281,
+          281,
+          348
+        ],
+        "hourly_per_gpu": [
+          0.4,
+          0.48,
+          0.5,
+          0.38,
+          0.38,
+          0.48
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "amd-tco",
+      "source": "amd",
+      "figure": "016",
+      "image": "AMD vs NVIDIA Inference Benchmark Who Wins - Performance & Cost Per Million Tokens/016_af4815c0-77f8-4527-b5ea-fb96e44bc4c1_2560x445.png",
+      "read_on": "2026-09-09",
+      "title": "AI Cloud Total Cost of Ownership",
+      "columns": [
+        "MI300X",
+        "MI325X",
+        "MI355X",
+        "H100 SXM",
+        "H200 SXM",
+        "B200"
+      ],
+      "rows": {
+        "capital_hourly_per_gpu": [
+          0.94,
+          1.05,
+          1.14,
+          1.19,
+          1.24,
+          1.75
+        ],
+        "operating_hourly_per_gpu": [
+          0.4,
+          0.48,
+          0.5,
+          0.38,
+          0.38,
+          0.48
+        ],
+        "total_hourly_per_gpu": [
+          1.34,
+          1.53,
+          1.64,
+          1.58,
+          1.63,
+          2.23
+        ],
+        "capital_share_pct": [
+          70.5,
+          68.7,
+          69.3,
+          75.6,
+          76.4,
+          78.6
+        ]
+      },
+      "redacted": []
+    },
+    {
+      "id": "amd-rental-breakeven",
+      "source": "amd",
+      "figure": "본문",
+      "image": null,
+      "read_on": "2026-09-09",
+      "title": "AMD 손익분기 임대료 — 원문 본문에 글로 적힌 값",
+      "reference": {
+        "sku": "H200 SXM",
+        "rental_hr": 2.5,
+        "term": "1개월 계약",
+        "as_of": "2025 2분기",
+        "cite": "AMD영문 L294"
+      },
+      "rows": {
+        "번역·대화 1k/1k": {
+          "MI300X": [
+            1.9,
+            1.9
+          ],
+          "MI325X": [
+            2.5,
+            2.5
+          ],
+          "cite": "AMD영문 L298"
+        },
+        "추론형 1k/4k": {
+          "MI300X": [
+            2.1,
+            2.4
+          ],
+          "MI325X": [
+            2.75,
+            3.0
+          ],
+          "cite": "AMD영문 L302"
+        },
+        "요약 4k/1k": {
+          "MI300X": [
+            2.1,
+            2.4
+          ],
+          "MI325X": [
+            2.75,
+            3.0
+          ],
+          "cite": "AMD영문 L306"
+        }
+      },
+      "redacted": []
+    }
+  ],
+  "not_captured": [
+    {
+      "what": "SKU 별 초당 토큰 처리량",
+      "where": "AMD영문 · 파레토 곡선 그래프",
+      "why": "표가 아니라 곡선이라 눈금 사이를 짐작해야 한다. 대신 손익분기 임대료를 뒤집어 상대 비율만 썼다"
+    },
+    {
+      "what": "GPU 자체 원가와 기타 서버 비용",
+      "where": "AMD영문 그림 049",
+      "why": "원문이 검은 막대로 지웠다. 코퍼스 78편에도 이 여섯 SKU 의 GPU 단가를 말한 대목이 없어 앵커가 없다"
+    }
+  ]
+}
