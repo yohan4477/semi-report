@@ -10,28 +10,38 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load_raw, table                                    # noqa: E402
 from inference_tco import (Capex, Opex, Sku, implied_throughput_ratio,  # noqa: E402
                            implied_wacc)
 
-# 그림 049·050 의 입력 칸
-SKUS = [
-    Sku("MI300X",   Capex(162_802, 41_928), Opex(10.78)),
-    Sku("MI325X",   Capex(185_214, 42_264), Opex(13.18)),
-    Sku("MI355X",   Capex(204_409, 42_376), Opex(13.98)),
-    Sku("H100 SXM", Capex(199_290, 58_665), Opex(10.46)),
-    Sku("H200 SXM", Capex(211_073, 58_665), Opex(10.46)),
-    Sku("B200",     Capex(316_273, 63_031), Opex(13.16)),
-]
+# 발표치는 코드에 안 적는다. 그림에서 읽은 값은 `insights/models/raw/tables.json`
+# 이 정본이고 여기서는 그것을 읽는다 — 두 곳에 적으면 갈린다(check_model M3).
+_RAW = load_raw('tables')
+_CAPEX = table(_RAW, 'amd-capex')
+_OPEX = table(_RAW, 'amd-opex')
+_TCO = table(_RAW, 'amd-tco')
+NAMES = _CAPEX['columns']
 
-# 그림 049·050·016 의 발표치
+
+def _v(t, row):
+    """표 한 줄을 SKU 차례대로. 원자료의 열 차례가 곧 이 목록의 차례다."""
+    return t['rows'][row]
+
+
+SKUS = [Sku(n,
+            Capex(_v(_CAPEX, 'server_cost')[i], _v(_CAPEX, 'other_cluster_cost')[i]),
+            Opex(_v(_OPEX, 'power_kw')[i]))
+        for i, n in enumerate(NAMES)]
+
+# (선불/서버, 선불/GPU, 월자본, 자본$/hr, 호스팅/월, 운영/월, 운영/GPU,
+#  운영$/hr, TCO$/hr, 자본비중) — 전부 그림에서 읽어 원자료에 옮긴 값이다
 PUBLISHED = {
-    #            선불/서버  선불/GPU  월자본  자본$/hr  호스팅/월  운영/월  운영/GPU  운영$/hr  TCO$/hr  자본비중
-    "MI300X":   (204_730, 25_591, 5_518, 0.94, 2_141, 2_311, 289, 0.40, 1.34, 70.5),
-    "MI325X":   (227_478, 28_435, 6_131, 1.05, 2_618, 2_788, 348, 0.48, 1.53, 68.7),
-    "MI355X":   (246_785, 30_848, 6_651, 1.14, 2_776, 2_946, 368, 0.50, 1.64, 69.3),
-    "H100 SXM": (257_955, 32_244, 6_952, 1.19, 2_078, 2_248, 281, 0.38, 1.58, 75.6),
-    "H200 SXM": (269_738, 33_717, 7_270, 1.24, 2_078, 2_248, 281, 0.38, 1.63, 76.4),
-    "B200":     (379_303, 47_413, 10_223, 1.75, 2_614, 2_784, 348, 0.48, 2.23, 78.6),
+    n: (_v(_CAPEX, 'upfront_per_server')[i], _v(_CAPEX, 'upfront_per_gpu')[i],
+        _v(_CAPEX, 'monthly_capital')[i], _v(_CAPEX, 'hourly_per_gpu')[i],
+        _v(_OPEX, 'hosting_per_server_month')[i], _v(_OPEX, 'monthly_per_server')[i],
+        _v(_OPEX, 'monthly_per_gpu')[i], _v(_OPEX, 'hourly_per_gpu')[i],
+        _v(_TCO, 'total_hourly_per_gpu')[i], _v(_TCO, 'capital_share_pct')[i])
+    for i, n in enumerate(NAMES)
 }
 
 FIELDS = [
@@ -47,16 +57,13 @@ FIELDS = [
     ("자본비중%", lambda s: s.capital_share(), 0.05),
 ]
 
-# 원문이 글로 밝힌 손익분기 임대료. H200 1개월 계약 $2.5/hr/GPU 가 기준.
-H200_RENTAL = 2.5
-BREAKEVEN = [
-    ("번역·대화 1k/1k", "MI300X", 1.9, 1.9),
-    ("번역·대화 1k/1k", "MI325X", 2.5, 2.5),
-    ("추론형 1k/4k", "MI300X", 2.1, 2.4),
-    ("추론형 1k/4k", "MI325X", 2.75, 3.0),
-    ("요약 4k/1k", "MI300X", 2.1, 2.4),
-    ("요약 4k/1k", "MI325X", 2.75, 3.0),
-]
+# 원문이 글로 밝힌 손익분기 임대료. 이것도 원자료가 정본이다
+_RENT = table(_RAW, 'amd-rental-breakeven')
+H200_RENTAL = _RENT['reference']['rental_hr']
+BREAKEVEN = [(work, sku, lo, hi)
+             for work, per in _RENT['rows'].items()
+             for sku, (lo, hi) in sorted(
+                 (k, v) for k, v in per.items() if isinstance(v, list))]
 
 
 def main() -> int:

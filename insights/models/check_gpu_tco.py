@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load_raw, table                                       # noqa: E402
 from gpu_cluster_tco import GoodputInputs, TcoInputs, goodput_breakdown  # noqa: E402
 
 TOL_PCT = 0.01   # 발표치가 소수 둘째 자리까지라 그 폭 안이면 일치로 본다
@@ -18,97 +19,79 @@ TOL_PCT = 0.01   # 발표치가 소수 둘째 자리까지라 그 폭 안이면 
 # ── Goodput 시나리오 셋 (그림 019·022·025) ──────────────────────────────
 # 값은 (입력, 발표된 결과) 짝. 발표치는 그림에서 읽은 그대로 적는다.
 
-SCENARIOS = [
-    # ── 019: 대규모 학습. 5184장 클러스터에 4096장짜리 작업 하나
-    ("대규모 학습 / Gold", GoodputInputs(
-        cluster_size=5184, j_size=4096, b_radius=64, t_chkpt_min=60,
-        t_failover_min=5, gpu_mtbf_hr=25000, mode="tolerant",
-        t_id_min=15, t_repair_hr=0.25, t_init_min=10, idle_spare_gpus=32,
-    ), {"cluster_mtbf_hr": 4.8, "failures_per_month": 149.3,
-        "downtime_pct": 5.53, "idle_spare_pct": 0.62, "total_pct": 6.14}),
-
-    ("대규모 학습 / Hyperscaler", GoodputInputs(
-        cluster_size=5184, j_size=4096, b_radius=64, t_chkpt_min=60,
-        t_failover_min=5, gpu_mtbf_hr=25000, mode="tolerant",
-        t_id_min=15, t_repair_hr=0.25, t_init_min=10, perf_overhead_pct=5.0,
-    ), {"cluster_mtbf_hr": 4.8, "failures_per_month": 149.3,
-        "downtime_pct": 5.53, "idle_spare_pct": 0.0, "total_pct": 10.53}),
-
-    ("대규모 학습 / Silver", GoodputInputs(
-        cluster_size=5184, j_size=4096, b_radius=64, t_chkpt_min=60,
-        t_failover_min=5, gpu_mtbf_hr=15000, mode="chkpt_hot",
-        t_id_min=60, t_repair_hr=1, t_init_min=15,
-    ), {"cluster_mtbf_hr": 2.9, "failures_per_month": 248.8,
-        "downtime_pct": 20.91, "idle_spare_pct": 0.0, "total_pct": 20.91}),
-
-    # ── 022: 소규모 학습. 2048장 클러스터에 64장짜리 작업들
-    ("소규모 학습 / Gold", GoodputInputs(
-        cluster_size=2048, j_size=64, b_radius=8, t_chkpt_min=60,
-        t_failover_min=5, gpu_mtbf_hr=25000, mode="chkpt_cold",
-        t_id_min=15, t_repair_hr=0.25, t_init_min=10,
-    ), {"cluster_mtbf_hr": 12.2, "failures_per_month": 59.0,
-        "downtime_pct": 0.23, "idle_spare_pct": 0.0, "total_pct": 0.23}),
-
-    ("소규모 학습 / Silver", GoodputInputs(
-        cluster_size=2048, j_size=64, b_radius=8, t_chkpt_min=60,
-        t_failover_min=5, gpu_mtbf_hr=15000, mode="chkpt_cold",
-        t_id_min=60, t_repair_hr=1, t_init_min=15,
-    ), {"cluster_mtbf_hr": 7.3, "failures_per_month": 98.3,
-        "downtime_pct": 0.96, "idle_spare_pct": 0.0, "total_pct": 0.96}),
-
-    # ── 025: 추론. 512장 클러스터에 8장짜리 작업들
-    ("추론 / Gold", GoodputInputs(
-        cluster_size=512, j_size=8, b_radius=8, t_chkpt_min=60,
-        t_failover_min=7.5, gpu_mtbf_hr=25000, mode="tolerant",
-        t_id_min=15, t_repair_hr=0.25, t_init_min=15,
-    ), {"cluster_mtbf_hr": 48.8, "failures_per_month": 14.7,
-        "downtime_pct": 0.02, "idle_spare_pct": 0.0, "total_pct": 0.02}),
-
-    ("추론 / Silver", GoodputInputs(
-        cluster_size=512, j_size=8, b_radius=8, t_chkpt_min=60,
-        t_failover_min=7.5, gpu_mtbf_hr=15000, mode="tolerant",
-        t_id_min=60, t_repair_hr=8, t_init_min=15,
-    ), {"cluster_mtbf_hr": 29.3, "failures_per_month": 24.6,
-        "downtime_pct": 0.49, "idle_spare_pct": 0.0, "total_pct": 0.49}),
-]
+# 발표치는 코드에 안 적는다. 그림에서 읽은 값은 `insights/models/raw/tables.json`
+# 이 정본이다 — 두 곳에 적으면 갈린다(check_model M3).
+_RAW = load_raw('tables')
+_TIER = ['Gold', 'Hyperscaler', 'Silver']
+_SCEN = [('대규모 학습', 'goodput-large-training'),
+         ('소규모 학습', 'goodput-small-training'),
+         ('추론', 'goodput-inference')]
+# 굿풋 표에서 대조에 쓸 열. 원자료에 없는 줄은 건너뛴다
+_WANT = ('cluster_mtbf_hr', 'failures_per_month', 'downtime_pct',
+         'idle_spare_pct', 'total_pct')
 
 
-# ── TCO 세 티어 (그림 016) ──────────────────────────────────────────────
+def _scenarios():
+    """원자료의 굿풋 표 셋을 (이름, 입력, 발표치) 목록으로 편다."""
+    out = []
+    for label, tid in _SCEN:
+        t = table(_RAW, tid)
+        sh, rows = t['shared_inputs'], t['rows']
+        for i, tier in enumerate(_TIER):
+            if 'total_pct' not in rows:
+                continue
+            g = GoodputInputs(
+                cluster_size=sh['cluster_size'], j_size=sh['j_size'],
+                b_radius=sh['b_radius'], t_chkpt_min=sh['t_chkpt_min'],
+                t_failover_min=sh['t_failover_min'],
+                gpu_mtbf_hr=rows['gpu_mtbf_hr'][i], mode=rows['mode'][i],
+                t_id_min=rows['t_id_min'][i], t_repair_hr=rows['t_repair_hr'][i],
+                t_init_min=rows['t_init_min'][i],
+                idle_spare_gpus=rows.get('idle_spare_gpus', [0, 0, 0])[i],
+                perf_overhead_pct=rows.get('perf_overhead_pct', [0, 0, 0])[i])
+            want = {k: rows[k][i] for k in _WANT if k in rows}
+            out.append(('%s / %s' % (label, tier), g, want))
+    return out
 
-NETWORK_HYPERSCALER = [(100, 0.09), (100, 0.045), (500, 0.01)]
 
-TIERS = [
-    ("Gold-tier", TcoInputs(
-        gpu_count=5184, gpu_price_hr=4.0,
-        hot_storage_tib=500, hot_storage_gib_mo=0.035,
-        cold_storage_pib=10, cold_storage_gib_mo=0.01,
-        goodput_pct=6.14,
-    ), {"storage": 122_778, "support": 0, "goodput": 917_088,
-        "setup": 0, "debugging": 0,
-        "monthly": 15_969_785, "total36": 574_912_276, "relative": 1.00}),
+SCENARIOS = _scenarios()
 
-    ("Hyperscaler", TcoInputs(
-        gpu_count=5184, gpu_price_hr=4.0,
-        hot_storage_tib=500, hot_storage_gib_mo=0.0725,
-        cold_storage_pib=10, cold_storage_gib_mo=0.02,
-        network_items=NETWORK_HYPERSCALER,
-        ctrl_plane_vms=3, ctrl_plane_vm_hr=1.536,
-        support_uplift_pct=3.0, goodput_pct=10.53,
-        setup_eng_months=4, poc_weeks=4, debug_eng_months=0.5,
-    ), {"storage": 246_835, "support": 455_403, "goodput": 1_571_424,
-        "setup": 14_996_587, "debugging": 8_333,
-        "monthly": 17_631_823, "total36": 634_745_636, "relative": 1.10}),
 
-    ("Silver-tier", TcoInputs(
-        gpu_count=5184, gpu_price_hr=4.0,
-        hot_storage_tib=500, hot_storage_gib_mo=0.055,
-        cold_storage_pib=10, cold_storage_gib_mo=0.015,
-        goodput_pct=20.91,
-        setup_eng_months=2, debug_eng_months=0.25, debug_cluster_pct=0.8333,
-    ), {"storage": 185_446, "support": 0, "goodput": 3_121_349,
-        "setup": 33_333, "debugging": 128_583,
-        "monthly": 18_366_224, "total36": 661_184_050, "relative": 1.15}),
-]
+def _tiers():
+    """TCO 표를 (이름, 입력, 발표치) 셋으로 편다."""
+    t = table(_RAW, 'cluster-tco')
+    sh, r = t['shared_inputs'], t['rows']
+    net = [(100, 0.09), (100, 0.045), (500, 0.01)]
+    out = []
+    for i, name in enumerate(t['columns']):
+        inp = TcoInputs(
+            gpu_count=sh['gpu_count'], gpu_price_hr=sh['gpu_price_hr'],
+            hot_storage_tib=sh['hot_storage_tib'],
+            hot_storage_gib_mo=r['hot_storage_gib_mo'][i],
+            cold_storage_pib=sh['cold_storage_pib'],
+            cold_storage_gib_mo=r['cold_storage_gib_mo'][i],
+            network_items=net if r['network_cost'][i] else [],
+            ctrl_plane_vms=sh['ctrl_plane_vms'] if r['ctrl_plane_cost'][i] else 0,
+            ctrl_plane_vm_hr=sh['ctrl_plane_vm_hr'],
+            support_uplift_pct=r['support_uplift_pct'][i],
+            goodput_pct=r['goodput_pct'][i],
+            setup_eng_months=r['setup_eng_months'][i],
+            poc_weeks=r['poc_weeks'][i],
+            debug_eng_months=r['debug_eng_months'][i],
+            debug_cluster_pct=r['debug_cluster_pct'][i] and 0.8333,
+            eng_cost_year=sh['engineer_cost_year'],
+            contract_months=sh['contract_months'])
+        want = {'storage': r['storage_cost'][i], 'support': r['support_cost'][i],
+                'goodput': r['goodput_cost'][i], 'setup': r['setup_onetime'][i],
+                'debugging': r['debugging_cost'][i],
+                'monthly': r['monthly_amortized'][i],
+                'total36': r['total_36mo'][i],
+                'relative': r['relative_to_gold'][i]}
+        out.append((name, inp, want))
+    return out
+
+
+TIERS = _tiers()
 
 
 def near(got: float, want: float, tol: float) -> bool:

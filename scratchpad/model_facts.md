@@ -12,9 +12,11 @@
 대규모 학습 / Silver              total_pct        48.213     20.910   +27.303  FAIL
 소규모 학습 / Gold                downtime_pct      0.299      0.230    +0.069  FAIL
 소규모 학습 / Gold                total_pct         0.299      0.230    +0.069  FAIL
+소규모 학습 / Hyperscaler         downtime_pct      0.299      0.230    +0.069  FAIL
+소규모 학습 / Hyperscaler         total_pct         0.299      0.230    +0.069  FAIL
 소규모 학습 / Silver              downtime_pct      1.173      0.960    +0.213  FAIL
 소규모 학습 / Silver              total_pct         1.173      0.960    +0.213  FAIL
-  Goodput 어긋난 칸: 6
+  Goodput 어긋난 칸: 8
 
 ── TCO 계산기 재현 (그림 016) ──────────────────────────────────────
 Gold-tier      월     15,969,395   36개월      574,898,209
@@ -39,7 +41,7 @@ Gold-tier      1.00x  /  1.00x
 Hyperscaler    1.10x  /  1.10x
 Silver-tier    1.15x  /  1.41x
 
-총 FAIL 6
+총 FAIL 8
 ```
 
 ## 추론 원가 모델 출력
@@ -145,8 +147,8 @@ Optical Transceivers           96           96         1.50          1.5
 원자료 · 출처 글 · 펴낸 날 · 그림 · 이미지 파일 · 읽은 칸 · 가려진 줄 · 읽은 날
 GPU Cluster TCO Calculator · How Much Do GPU Clusters Really Cost · 2026-04-20 · 016 · 016_db80aba2-a7cb-4232-ac9b-110aa0ec0863_973x841.png · 63개 · 없음 · 2026-09-09
 Goodput Expense Calculator — 대규모 학습 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 019 · 019_b5c164ad-c9ad-41c0-bb77-d6f9222735f6_713x730.png · 44개 · 없음 · 2026-09-09
-Goodput Expense Calculator — 소규모 학습 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 022 · 022_78b79a3d-d312-4b20-bf27-4139dcaeb63e_713x732.png · 32개 · 없음 · 2026-09-09
-Goodput Expense Calculator — 추론 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 025 · 025_b25b0369-df66-40b3-8ee7-077a22e96c58_714x729.png · 32개 · 없음 · 2026-09-09
+Goodput Expense Calculator — 소규모 학습 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 022 · 022_78b79a3d-d312-4b20-bf27-4139dcaeb63e_713x732.png · 35개 · 없음 · 2026-09-09
+Goodput Expense Calculator — 추론 · How Much Do GPU Clusters Really Cost · 2026-04-20 · 025 · 025_b25b0369-df66-40b3-8ee7-077a22e96c58_714x729.png · 35개 · 없음 · 2026-09-09
 AI Cloud Capital Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 049 · 049_a659b5c7-9c7c-4cc9-b06f-dbd1cc67e8f6_2560x999.png · 41개 · 3줄 · 2026-09-09
 AI Cloud Operating Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 050 · 050_4d53c878-5a98-4668-9a33-56b3810b7703_2560x955.png · 38개 · 없음 · 2026-09-09
 AI Cloud Total Cost of Ownership · AMD vs NVIDIA Inference Benchmark: Who Wins? · 2025-05-23 · 016 · 016_af4815c0-77f8-4527-b5ea-fb96e44bc4c1_2560x445.png · 24개 · 없음 · 2026-09-09
@@ -212,8 +214,10 @@ Gold 대비 ·  · 1.00배 · 1.10배 · 1.15배
 대규모 학습 / Hyperscaler · 5,184 / 4,096 / 64 · 고장 견딤 · 149.3회 · 10.53% · 10.53% · 일치 · 
 대규모 학습 / Silver · 5,184 / 4,096 / 64 · 뜨거운 예비 · 248.8회 · 20.91% · 48.21% · +27.30%p · 고장 인지 시간을 빼야
 소규모 학습 / Gold · 2,048 / 64 / 8 · 차가운 예비 · 59.0회 · 0.23% · 0.30% · +0.07%p · 인지 시간이나 수리 시간을 빼야 (둘이 같은 값이라 안 갈림)
+소규모 학습 / Hyperscaler · 2,048 / 64 / 8 · 차가운 예비 · 59.0회 · 0.23% · 0.30% · +0.07%p · 인지 시간이나 수리 시간을 빼야 (Gold 와 입력이 같다)
 소규모 학습 / Silver · 2,048 / 64 / 8 · 차가운 예비 · 98.3회 · 0.96% · 1.17% · +0.21%p · 체크포인트 손실을 빼야
 추론 / Gold · 512 / 8 / 8 · 고장 견딤 · 14.7회 · 0.02% · 0.02% · 일치 · 
+추론 / Hyperscaler · 512 / 8 / 8 · 고장 견딤 · 14.7회 · 0.02% · 0.02% · 일치 · 
 추론 / Silver · 512 / 8 / 8 · 고장 견딤 · 24.6회 · 0.49% · 0.49% · 일치 · 
 
 ### 표 IMPACT — 굿풋 어긋남이 3년 값에 미치는 폭
