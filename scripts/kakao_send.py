@@ -25,7 +25,7 @@ from pathlib import Path
 TOKEN_PATH = Path.home() / ".kakao_token.json"
 REDIRECT_URI = "http://localhost/oauth"
 TEXT_LIMIT = 190  # 텍스트 템플릿 text 상한 200자, 여유 10자
-DEFAULT_LINK = "https://insight-dashboard.com"
+DEFAULT_LINK = "none"  # 말풍선에 링크를 안 붙인다
 
 
 def rest_key():
@@ -131,7 +131,8 @@ def send(text, link=DEFAULT_LINK):
         payload = {
             "object_type": "text",
             "text": head + part,
-            "link": {"web_url": link, "mobile_web_url": link},
+            # link 를 비우면 말풍선을 눌러도 아무 데도 가지 않는다
+            "link": {} if link in (None, "", "none") else {"web_url": link, "mobile_web_url": link},
         }
         res = post(
             "https://kapi.kakao.com/v2/api/talk/memo/default/send",
