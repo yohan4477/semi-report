@@ -1,0 +1,160 @@
+{
+  "canon_slug": "pharma-drug-development",
+  "section": "pharma",
+  "chain_name": "신약이 나오기까지의 제약·바이오 밸류체인",
+  "one_line": "임상 대행(CRO)과 유통(PBM·도매상)이 굳은 병목으로 남았지만, 생산(CDMO) 투자 판단은 모더나 맞춤형 백신 등장 이후 흔들리기 시작했다.",
+  "sources": [
+    {"src": "2024-12-07-ginkgo-bioworks-en", "date": "2024-12-07"},
+    {"src": "2025-04-08-news", "date": "2025-04-08"},
+    {"src": "2026-08-16-pharma-valuechain", "date": "2026-08-16"},
+    {"src": "2026-09-06-pharma-bottleneck", "date": "2026-09-06"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "R&D(후보물질 발굴·최적화)",
+      "desc": "질병에 듣는 후보 물질을 찾고(4~5년 소요, AI 도입으로 1년으로 단축 중), 그 물질을 약으로 만들 수 있도록 최적화하는 단계. 빅테크 AI가 시뮬레이션으로 최적화를 돕는다. AI 도입으로 후보 물질이 쏟아져 나오고 있다.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L30~L54"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L15~L18, L31~L35"}
+      ],
+      "companies": [
+        {"name": "모더나", "raw_name": "모더나", "country": "미국",
+         "role": "특정 성분이 코로나 바이러스에 효과가 있다는 것을 찾아낸 회사 — 성분·물질 발견의 예시",
+         "numbers": "", "refs": [{"src": "2024-12-07-ginkgo-bioworks-en", "lines": "L32~L33,L35"}]},
+        {"name": "깅코바이오웍스", "raw_name": "DNA", "country": "미국",
+         "role": "모더나의 의뢰를 받아 랩·컴퓨터로 수만 가지 조합을 시뮬레이션해 물질 전달 방법을 연구 — 대형 제약사는 이 업무를 자체적으로 하고 돈이 없는 벤처 회사만 외주를 줘 계약 규모가 크지 않다",
+         "numbers": "", "refs": [{"src": "2024-12-07-ginkgo-bioworks-en", "lines": "L29~L31, L34~L35"}]},
+        {"name": "엔비디아", "raw_name": "", "country": "미국",
+         "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자 중",
+         "numbers": "", "refs": [
+           {"src": "2025-04-08-news", "lines": "L308"},
+           {"src": "2026-08-16-pharma-valuechain", "lines": "L49~L50"}
+         ]},
+        {"name": "구글", "raw_name": "", "country": "미국",
+         "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자(2025-04-08); 알파폴드로 후보 물질 최적화를 시뮬레이션해 주는 플랫폼(2026-08-16)",
+         "numbers": "", "refs": [
+           {"src": "2025-04-08-news", "lines": "L308"},
+           {"src": "2026-08-16-pharma-valuechain", "lines": "L53~L54"}
+         ]},
+        {"name": "아마존", "raw_name": "아마존", "country": "미국",
+         "role": "AI를 활용한 신약 개발·신약 물질 발굴에 투자 중",
+         "numbers": "", "refs": [{"src": "2025-04-08-news", "lines": "L308"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "2026-08-16: 이 단계(R&D 중심 바이오텍)는 임상 성공 시 초대박, 실패 시 부도로 이어지는 도박에 가까운 산업이라 개인적으로는 투자를 피한다. / 2026-09-06: 빅파마 분석 시 파이프라인(후보 물질 개수와 진행 상황)이 핵심 체크포인트다."
+    },
+    {
+      "order": 2,
+      "name": "전임상",
+      "desc": "사람 임상 전에 동물을 대상으로 먼저 테스트하는 단계.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L55~L57"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L18~L19"}
+      ],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "임상시험(1~3상)",
+      "desc": "1상은 안전성, 2상은 효과 유무, 3상은 기존 치료제 대비 우수성을 본다. 보통 빅파마가 직접 하기보다 외부 업체(CRO)에 외주를 준다. 모더나는 코로나 팬데믹 당시 긴박한 상황이라 이 단계를 거치지 않고 바로 약을 출시한 예외 사례가 있다.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L58~L65"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L19~L24"},
+        {"src": "2024-12-07-ginkgo-bioworks-en", "lines": "L27~L28, L35~L36"}
+      ],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "CRO(임상 대행)",
+      "desc": "임상시험과 규제당국 허가 절차를 동시에 대행해 주는 업체. 환자 선별 능력과 글로벌 병원 네트워크가 있어야 임상 환자를 모집할 수 있다.",
+      "refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L71~L72, L107~L115"}],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "몇 개 회사가 글로벌 시장을 거의 반독점하고 있고, 임상 이력과 병원 네트워크가 없으면 신규 업체가 진입하는 것 자체가 불가능하다. AI로 쏟아지는 후보 물질이 결국 임상을 거쳐야 하는데, 임상을 대행하는 업체가 몇 개 없어 거의 글로벌 과점 상태다.",
+      "bottleneck_refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L111~L112"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L51~L56"}
+      ],
+      "judgment": "2026-08-16: R&D보다 CRO 쪽에 개인적으로 더 주목하고 있다. / 2026-09-06: 올해 5월 말~6월 초 임상업체에 투자했고, 병목 상태가 계속될 것 같아 사람들이 몰리기 전까지 계속 들고 갈 계획이다."
+    },
+    {
+      "order": 5,
+      "name": "허가",
+      "desc": "규제당국(식약처·FDA)의 허가를 받는 단계. 요구되는 자료 수준이 논문·박사논문급이라 아무나 할 수 없다.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L66~L70"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L24~L25"}
+      ],
+      "companies": [
+        {"name": "FDA", "raw_name": "FDA", "country": "미국", "role": "신약 허가 규제당국", "numbers": "",
+         "refs": [
+           {"src": "2026-08-16-pharma-valuechain", "lines": "L68~L70"},
+           {"src": "2026-09-06-pharma-bottleneck", "lines": "L25"}
+         ]},
+        {"name": "식약처", "raw_name": "식약처", "country": "한국", "role": "신약 허가 규제당국", "numbers": "",
+         "refs": [
+           {"src": "2026-08-16-pharma-valuechain", "lines": "L68"},
+           {"src": "2026-09-06-pharma-bottleneck", "lines": "L25"}
+         ]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 6,
+      "name": "생산(CDMO)",
+      "desc": "허가받은 신약을 대신 생산해 주는 위탁생산 단계. 생산 기술보다 생산 CAPA(효율적으로 싸게 만드는 능력)가 핵심이며, 바이오의약품은 만들기가 특히 까다롭다. 최근 대량생산과 맞춤형 소량생산(모더나 암백신 등)으로 나뉘기 시작했다.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L73~L77, L116~L124"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L25~L28, L63~L66"}
+      ],
+      "companies": [
+        {"name": "론자", "raw_name": "론자", "country": "", "role": "CDMO 1위 업체", "numbers": "",
+         "refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L76"}]},
+        {"name": "삼성바이오로직스", "raw_name": "삼성바이오로직스", "country": "한국",
+         "role": "대량 생산 의뢰를 받는 예시 회사(2024-12-07); CDMO 단계에서 신약을 만들어주는 대표 회사(2025-04-08); CDMO 세계 톱클래스, 생산 CAPA 기준 세계 1위, 론자를 맹추격 중(2026-08-16); 최근 유상증자 이슈(2026-09-06)",
+         "numbers": "생산 CAPA 세계 1위",
+         "refs": [
+           {"src": "2024-12-07-ginkgo-bioworks-en", "lines": "L28~L29"},
+           {"src": "2025-04-08-news", "lines": "L307"},
+           {"src": "2026-08-16-pharma-valuechain", "lines": "L76, L120~L121"},
+           {"src": "2026-09-06-pharma-bottleneck", "lines": "L27"}
+         ]},
+        {"name": "후지", "raw_name": "후지", "country": "일본", "role": "CDMO를 잘하는 업체(과거 카메라 필름 제조사)", "numbers": "",
+         "refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L76"}]},
+        {"name": "우시", "raw_name": "우시", "country": "중국", "role": "CDMO 업체", "numbers": "",
+         "refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L77"}]},
+        {"name": "써모피셔 사이언티픽", "raw_name": "써모피셔 사이언티픽", "country": "미국", "role": "CDMO 업체", "numbers": "",
+         "refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L77"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "바이오의약품은 만들기 까다로워 전 세계 몇 개 업체가 거의 과점하고 있다",
+      "bottleneck_refs": [{"src": "2026-08-16-pharma-valuechain", "lines": "L119~L121"}],
+      "judgment": "2026-08-16: AI로 후보 물질이 늘어나 허가받는 약이 많아지면 결국 생산을 대행하는 CDMO에 물량이 몰릴 것이라 유망한 투자처로 본다. / 2026-09-06: 한 달 전까지는 생산이 확실한 병목이라 보고 삼성바이오로직스 투자를 고려했으나, 모더나 암백신 이후 생산이 대량·맞춤형 소량으로 갈릴 것 같아 생각이 바뀌었다 — 기존 대량생산 CDMO 투자가 답이 아닐 수도 있다."
+    },
+    {
+      "order": 7,
+      "name": "유통·판매",
+      "desc": "허가·생산된 약을 시중에 유통·판매하는 단계. 유통 도매 사업자와 PBM이 핵심.",
+      "refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L78~L79"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L29, L67~L69"}
+      ],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "미국 제약 유통에서 도매상과 PBM이 시장을 완전히 장악하고 있어, 이들이 팔아 주기로 결정하지 않으면 아무리 좋은 약도 시중 유통이 불가능하다. 제약·바이오 산업에서 전통적으로 병목은 유통(PBM·도매 사업자)이다.",
+      "bottleneck_refs": [
+        {"src": "2026-08-16-pharma-valuechain", "lines": "L78~L79"},
+        {"src": "2026-09-06-pharma-bottleneck", "lines": "L67"}
+      ],
+      "judgment": "2026-09-06: 작년에 유통사에 투자해 첫 번째 사이클에서 40% 수익을 냈고, 지금 두 번째 사이클을 노리고 다시 매입한 상태다."
+    }
+  ],
+  "notes": "빅파마(제약사) 단계는 자체 개발보다 블록버스터 의약품(연매출 10억 달러 이상)을 꾸준히 내는 게 핵심이며, 특허가 풀리면(특허 절벽) 수익이 급감해 후속 신약이나 바이오텍 M&A·라이선스 인으로 대응한다. 신약(최초 개발)·제네릭(화학 복제약, 인도·중국 업체가 장악)·바이오시밀러(바이오의약품 복제, 삼성바이오에피스·셀트리온 등 소수만 가능)의 구분도 있다. 2026-09-06 회차는 빅파마 분석 포인트(파이프라인·블록버스터·특허 만료)를 재확인하며 한미약품(비만 치료 신약 라이선스 아웃, 3.2조원)과 SK바이오팜(미국 바이오텍으로부터 라이선스 인, 두 번째 블록버스터 확보 목적) 사례를 대비시키고, 차세대 성장 영역으로 전달 기술(LNP 대비 AAV, 경구제·피하주사 전환)을 짚는다."
+}

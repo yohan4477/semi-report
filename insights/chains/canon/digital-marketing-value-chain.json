@@ -1,0 +1,69 @@
+{
+  "canon_slug": "digital-marketing-value-chain",
+  "section": "platform",
+  "chain_name": "디지털 마케팅 밸류체인",
+  "one_line": "제타는 허브스팟 매출의 10분의 1인 세컨 티어라, 결국 CRM 대형사와 경쟁하게 될 구조다",
+  "sources": [
+    {"src": "2024-12-30-zeta-global-qa", "date": "2024-12-30"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "광고 매체 발송 (초창기 방식)",
+      "desc": "광고주·광고 대행사가 고객 정보를 가진 광고 매체 운영사를 찾아가 전체메일·전체 메시지를 쏴 달라고 요청하던 초기 형태.",
+      "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L25~L26"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "소비자 데이터 마이닝 업체",
+      "desc": "자사 고객 정보가 없는 업체를 대상으로, 서비스·제품에 타겟팅된 소비자 리스트를 만들어 파는 업체가 생겨났다.",
+      "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L28~L30"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "소비자 데이터 분석 업체",
+      "desc": "소비자 데이터 마이닝 업체로부터 데이터를 산 뒤, 광고주에게 필요한 타겟으로 더 세분화해 발라내는 역할. 제타 글로벌 홀딩스가 이 영역에서 출발했다.",
+      "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L31~L34"}],
+      "companies": [
+        {"name": "제타 글로벌 홀딩스", "raw_name": "제타", "country": "",
+         "role": "소비자 데이터 분석 영역에서 출발, 세컨 티어 업체",
+         "numbers": "허브스팟 매출의 약 10분의 1", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L33~L39"}]},
+        {"name": "허브스팟", "raw_name": "허브스팟", "country": "",
+         "role": "이 영역에서 가장 주목받는 업체, 퍼스트 티어",
+         "numbers": "제타 대비 매출 약 10배", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L38~L39"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "세컨 티어 업체들 간 인수합병이 빈번한 이유는 규모의 경제를 먼저 확보하는 업체가 살아남는 시장 구조 때문이라고 본다."
+    },
+    {
+      "order": 4,
+      "name": "CRM (사후 관리)",
+      "desc": "광고 노출 이후 소비자가 구매하면, 구매 고객을 대상으로 사후 관리를 하는 CRM 영역으로 밸류체인이 확장된다.",
+      "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L47~L50"}],
+      "companies": [
+        {"name": "세일즈포스", "raw_name": "스포스", "country": "",
+         "role": "CRM 대형 업체, 마케팅 영역으로 진입 중",
+         "numbers": "", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L49~L50"}]},
+        {"name": "오라클", "raw_name": "오라클", "country": "",
+         "role": "CRM 대형 업체, 마케팅 영역으로 진입 중",
+         "numbers": "", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L49~L50"}]},
+        {"name": "어도비", "raw_name": "아도비", "country": "",
+         "role": "CRM 대형 업체, 마케팅 영역으로 진입 중",
+         "numbers": "", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L50"}]},
+        {"name": "IBM", "raw_name": "IBM", "country": "",
+         "role": "CRM 대형 업체, 마케팅 영역으로 진입 중",
+         "numbers": "", "refs": [{"src": "2024-12-30-zeta-global-qa", "lines": "L50"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "구매 고객 리스트와 소비자 성향 정보를 가진 CRM 업체들이 결국 기존 마케팅 업체보다 마케팅을 더 잘할 수 있어, 밸류체인 하류의 경쟁이 마케팅 업체 간 경쟁보다 더 어려울 것으로 본다."
+    }
+  ],
+  "notes": "마케팅 밸류체인 내 경계가 사라지고 있고(세분화 업체가 서로 인수합병), 이 경쟁이 정리되면 다음은 CRM 업체와의 경쟁이 시작될 것이라 판단해 제타를 장기 투자 대상으로는 보지 않는다. 이 사슬은 광고 노출·타겟팅용 소비자 데이터가 지나가는 길이고, online-ad-intermediation(구글의 애드 네트워크·익스체인지·서버)은 광고가 실제로 경매·게시되는 별도의 기술 파이프라 원문에 겹치는 마디가 없어 따로 세운다."
+}

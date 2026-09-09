@@ -1,0 +1,109 @@
+{
+  "canon_slug": "space-manufacturing",
+  "section": "space",
+  "chain_name": "우주테크 제조 사슬 (터미널 영역)",
+  "one_line": "로켓랩·파이어플라이·인튜이티브머신스·레드와이어에 2:3:1:1로 분산 투자하며 상업화까지 10년 이상 걸리는 영역이라 장기 보유한다",
+  "sources": [
+    {"src": "2025-09-21-space-manufacturing", "date": "2025-09-21"}
+  ],
+  "parent": "space-cpnt", "parent_stage": "터미널(Terminal)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "발사체 (지구→우주 발사)",
+      "desc": "지구에서 발사체를 우주로 발사하는 영역. 로켓랩·파이어플라이는 위성 껍데기만 만들어 여러 고객이 나눠 쓰는 '위성 버스'와, 위성 견인·우주 택배(연료 보충·궤도 복귀·수리) 사업도 함께 함",
+      "refs": [
+        {"src": "2025-09-21-space-manufacturing", "lines": "L36~L36, L47~L53, L61~L109"}
+      ],
+      "companies": [
+        {"name": "로켓랩", "raw_name": "로켓랩", "country": "미국",
+         "role": "발사체 제작·위성 버스·우주 견인/택배 사업",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L61~L67, L106~L107"}]},
+        {"name": "파이어플라이", "raw_name": "파이어플라이", "country": "미국",
+         "role": "로켓랩과 동일 사업 + 달 착륙선 제작, 민간 최초로 달 착륙 및 임무 수행 성공",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L106~L116"}]},
+        {"name": "ULA", "raw_name": "ULA", "country": "미국",
+         "role": "록히드마틴·보잉 합작 전통 강자",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L52~L52"}]},
+        {"name": "스페이스엑스", "raw_name": "스페이스엑스", "country": "미국",
+         "role": "발사체 시장 선두, 비상장",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L16~L16, L52~L53"}]},
+        {"name": "블루오리진", "raw_name": "블루 오리진", "country": "미국",
+         "role": "발사체 사업자",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L53~L53"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "위성 버스 개념은 좋아 보이지만 고객마다 원하는 궤도 고도가 달라 아직 활성화되지 않았다는 평가"
+    },
+    {
+      "order": 2,
+      "name": "궤도상 기기 (위성·궤도운송선·탐사선·우주정거장)",
+      "desc": "발사체 안에서 궤도상에 뿌려지는 위성, 궤도 운송선, 탐사선, 우주 정거장 등 우주상에 떠다니는 기기들을 만드는 영역",
+      "refs": [
+        {"src": "2025-09-21-space-manufacturing", "lines": "L36~L38, L117~L118"}
+      ],
+      "companies": [
+        {"name": "모멘터스", "raw_name": "모멘터스", "country": "미국",
+         "role": "우주 택배(연료 보충·궤도 복귀·위성 수리)를 전문으로 하는 상장사",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L118~L118"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "모멘터스의 사업 모델은 로켓랩·파이어플라이가 이미 하는 영역이라 결국 잠식당할 것 같아 투자 가치가 없다고 판단"
+    },
+    {
+      "order": 3,
+      "name": "달 착륙선·로버",
+      "desc": "달 표면에 착륙하는 착륙선과 달 표면을 이동하는 로버(자동차)를 만드는 영역",
+      "refs": [
+        {"src": "2025-09-21-space-manufacturing", "lines": "L39~L42, L110~L116"}
+      ],
+      "companies": [
+        {"name": "아스트로보틱 테크놀로지", "raw_name": "아스트로보틱", "country": "미국",
+         "role": "상업 회사 최초로 달 착륙 시도했으나 궤도 진입 중 통신 두절로 실패, 비상장",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L111~L112"}]},
+        {"name": "인튜이티브 머신스", "raw_name": "인튜이티브 머신스", "country": "미국",
+         "role": "두 차례 달 탐사선 발사 — 1차는 고도 계산 실패, 2차는 착륙에는 성공했으나 기울어져 임무 수행 실패",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L111~L113"}]},
+        {"name": "파이어플라이", "raw_name": "파이어플라이", "country": "미국",
+         "role": "유일하게 달 착륙과 임무 수행까지 성공한 민간 회사",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L114~L114"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "인튜이티브 머신스가 3차 탐사선의 착륙·임무 수행에 성공하면 주가가 오를 것이라 보고 계속 보유"
+    },
+    {
+      "order": 4,
+      "name": "ISRU (달 현지자원 활용)",
+      "desc": "달 현지에 있는 자원을 활용해 구조물을 구축하는 영역",
+      "refs": [
+        {"src": "2025-09-21-space-manufacturing", "lines": "L43~L44, L119~L120"}
+      ],
+      "companies": [
+        {"name": "레드와이어 스페이스", "raw_name": "레드와이어 스페이스", "country": "미국",
+         "role": "3D 프린팅 기술로 우주·달 표면 자원을 활용해 구조물을 설치, 여러 회사를 계속 인수합병하며 성장",
+         "numbers": "",
+         "refs": [{"src": "2025-09-21-space-manufacturing", "lines": "L119~L119, L130~L130"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "레드와이어는 인수합병 중심 성장이 진행자 취향은 아니지만, 어떤 기술이 뜰지 몰라 버리기 애매하다고 판단"
+    }
+  ],
+  "notes": "진행자는 로켓랩·파이어플라이·인튜이티브머신스·레드와이어 4개사에 2:3:1:1 비율로 분산 투자(캐시우드 방식), 상업화까지 최소 10년 이상 걸리는 영역이라 장기 보유를 권함"
+}

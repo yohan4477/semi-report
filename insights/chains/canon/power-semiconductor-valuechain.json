@@ -1,0 +1,106 @@
+{
+  "canon_slug": "power-semiconductor-valuechain",
+  "section": "energy",
+  "chain_name": "전력 반도체 밸류체인 (SiC 웨이퍼→칩 설계·제조→파운드리→적용 분야)",
+  "one_line": "SiC 웨이퍼 가격이 5,000불대에서 2,000불 초반대로 폭락하는 사이, 완성차의 자체 설계 확대로 결국 파운드리(TSMC·SMIC)가 돈을 다 벌어가는 구조로 바뀐다.",
+  "sources": [
+    {"src": "2024-06-13-power-semi", "date": "2024-06-13"},
+    {"src": "2025-01-12-stmicro", "date": "2025-01-12"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "SiC 웨이퍼",
+      "desc": "실리콘 카바이드(SiC) 웨이퍼를 만드는 단계. 웨이퍼 제조업체가 그 위에 epi 코팅까지 겸하는 경우가 대부분이다. 차량용·데이터센터용 화합물 전력 반도체의 원재료 공급 단계이며, 최근 1년 사이 경쟁자와 중국 업체가 늘며 가격이 폭락했다.",
+      "refs": [
+        {"src": "2024-06-13-power-semi", "lines": "L46~L49"},
+        {"src": "2025-01-12-stmicro", "lines": "L24~L37"}
+      ],
+      "companies": [
+        {"name": "울프스피드", "raw_name": "울프 스피드", "country": "미국",
+         "role": "SiC 웨이퍼 글로벌 시장을 사실상 장악한 1위 업체, 칩 제조 쪽까지 수직계열화를 완성. 차량용 화합물 반도체에 집중",
+         "numbers": "점유율 60% 이상; 8인치 웨이퍼 세계 시장 점유율 60%, 6인치는 코히어런트와 합쳐 70%; SiC 웨이퍼 가격 한 장당 5,000불대에서 2,000불 초반대로 폭락",
+         "refs": [
+           {"src": "2024-06-13-power-semi", "lines": "L52~L54, L62~L63"},
+           {"src": "2025-01-12-stmicro", "lines": "L30~L37"}
+         ]},
+        {"name": "SK실트론", "raw_name": "SK 실트론", "country": "한국", "role": "2020년 듀폰의 SiC 웨이퍼 사업을 인수해 생산 중",
+         "numbers": "", "refs": [{"src": "2024-06-13-power-semi", "lines": "L51~L52"}]},
+        {"name": "코히어런트", "raw_name": "코히어런트", "country": "",
+         "role": "6인치 SiC 웨이퍼를 울프스피드와 함께 점유, 데이터센터向 SiC 화합물 반도체에 집중해 주가가 좋음",
+         "numbers": "6인치 웨이퍼 울프스피드와 합산 점유율 70%",
+         "refs": [{"src": "2025-01-12-stmicro", "lines": "L32~L33, L38~L40"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "네다섯 개 업체만 웨이퍼를 만들고 그중 울프스피드가 시장 대부분을 차지하며, 칩 메이커들이 이들과 10년 가까운 장기계약을 맺어 신규 사업자가 들어오기 어렵다(2024-06-13). 다만 이후 회차(2025-01-12)에서는 중국 업체들이 따라붙어 SiC 웨이퍼 가격이 5,000불대에서 2,000불 초반대로 폭락했다고 짚는다.",
+      "bottleneck_refs": [
+        {"src": "2024-06-13-power-semi", "lines": "L50~L57"},
+        {"src": "2025-01-12-stmicro", "lines": "L30~L37"}
+      ],
+      "judgment": "2024-06-13: 소수의 업체가 시장을 장악하고 장기계약까지 묶여 있어 갈수록 신규 사업자가 들어오기 어려운 영역이라는 판단. 2025-01-12: 과거에는 SiC 웨이퍼가 기술적 장벽으로 작용했지만, 지금은 중국 업체들이 다 따라와 가격이 폭락했다고 판단이 바뀜."
+    },
+    {
+      "order": 2,
+      "name": "SiC 칩 설계·제조",
+      "desc": "인피니언, ST마이크로, 텍사스 인스트루먼트 같은 전통 IDM 업체들이 SiC 칩을 만드는 단계로, 기술력과 다품종 소량생산 특성 때문에 새 업체가 들어오기 힘들다. 최근에는 완성차 메이커들도 자체 설계로 들어가고 있다.",
+      "refs": [
+        {"src": "2024-06-13-power-semi", "lines": "L58~L60"},
+        {"src": "2025-01-12-stmicro", "lines": "L40~L42, L55~L58"}
+      ],
+      "companies": [
+        {"name": "인피니언", "raw_name": "인피니언", "country": "유럽", "role": "SiC 칩 제조사; 차량용·산업용·가전·통신 전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2024-06-13-power-semi", "lines": "L58"}, {"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "ST마이크로일렉트로닉스", "raw_name": "stm", "country": "유럽",
+         "role": "SiC 칩 제조사; 범용 MCU 시장 점유율 1위지만 돈이 안 되는 영역 비중이 높음. 폭스바겐과 설계 제휴",
+         "numbers": "범용 MCU 시장 점유율 1위",
+         "refs": [{"src": "2024-06-13-power-semi", "lines": "L58"}, {"src": "2025-01-12-stmicro", "lines": "L41, L56~L57, L62~L64"}]},
+        {"name": "텍사스인스트루먼트", "raw_name": "텍사스 인스트루먼트", "country": "미국", "role": "SiC 칩 제조사; 차량용·산업용·가전·통신 전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2024-06-13-power-semi", "lines": "L58"}, {"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "온세미컨덕터", "raw_name": "온 세미콘덕터", "country": "미국", "role": "전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "롬", "raw_name": "롬", "country": "일본", "role": "전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "르네사스", "raw_name": "르네사스", "country": "일본", "role": "전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "NXP", "raw_name": "NXP", "country": "유럽", "role": "전 영역을 다루는 전력 반도체 업체",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L41"}]},
+        {"name": "폭스바겐", "raw_name": "복스바겐", "country": "독일", "role": "STM과 설계 제휴, 제조는 TSMC에 의뢰",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L56~L57"}]},
+        {"name": "벤츠", "raw_name": "벤츠", "country": "독일", "role": "독일 btb테크와 반도체 개발",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L57"}]},
+        {"name": "현대차", "raw_name": "현대차", "country": "한국", "role": "2022년 자체적으로 반도체를 만들겠다고 선언",
+         "numbers": "2022년", "refs": [{"src": "2025-01-12-stmicro", "lines": "L58"}]}
+      ],
+      "bottleneck": "mid",
+      "bottleneck_why": "칩 제조는 기술력이 필요하고 다품종 소량생산 특성 때문에 새로운 업체가 들어오기 힘들다(2024-06-13). 다만 완성차 메이커들이 자체 설계로 들어가며 제조 수요가 파운드리로 옮겨가는 변화가 겹친다(2025-01-12).",
+      "bottleneck_refs": [{"src": "2024-06-13-power-semi", "lines": "L58~L60"}],
+      "judgment": "글로벌 완성차 메이커들이 자체적으로 반도체를 설계하기 시작하면서 제조 수요가 파운드리로 몰리고 있다는 판단(2025-01-12)."
+    },
+    {
+      "order": 3,
+      "name": "파운드리",
+      "desc": "완성차·팹리스가 설계한 전력 반도체를 위탁 제조하는 단계. 완성차의 자체 설계 확대로 파운드리 수요가 몰리고 있다.",
+      "refs": [{"src": "2025-01-12-stmicro", "lines": "L48~L60"}],
+      "companies": [
+        {"name": "TSMC", "raw_name": "tsmc", "country": "대만", "role": "폭스바겐 등이 설계한 전력 반도체를 제조 위탁받음",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L57, L59"}]},
+        {"name": "SMIC", "raw_name": "smic", "country": "중국", "role": "차량용 반도체 외주를 받아 만들어주는 파운드리 사업으로 급성장, TSMC가 소화 못하는 물량을 만듦",
+         "numbers": "", "refs": [{"src": "2025-01-12-stmicro", "lines": "L49, L59"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "전력 반도체 고객들이 자체적으로 반도체를 설계하기 시작하면서 제조 수요가 파운드리로 몰리고 있어, 결국 파운드리가 돈을 다 벌어가는 상황이 될 것으로 본다.",
+      "bottleneck_refs": [{"src": "2025-01-12-stmicro", "lines": "L58~L60"}],
+      "judgment": "전력반도체 산업도 결국 파운드리가 돈을 다 벌어가는 구조가 될 것이라 판단한다."
+    },
+    {
+      "order": 4,
+      "name": "적용 분야",
+      "desc": "전력 반도체가 최종적으로 쓰이는 네 가지 영역(차량용·데이터센터용 등).",
+      "refs": [{"src": "2025-01-12-stmicro", "lines": "L16~L19, L28"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    }
+  ],
+  "notes": "SiC 웨이퍼 제조사가 칩 제조 쪽으로, 칩 제조사가 웨이퍼 제조 쪽으로 서로 영역을 넓히는 수직계열화가 빠르게 진행 중이며 울프스피드가 이 과정에서 단연 앞서 있다(2024-06-13). 전력반도체 시장이 2000년대 초반 디램 시장과 비슷한 치킨 게임 국면에 들어갈 수 있다고 보고, 삼성전자·SK하이닉스가 이 시점에 차량용 전력 반도체 시장에 뛰어드는 이유를 이해하기 어렵다고 판단한다(2025-01-12)."
+}

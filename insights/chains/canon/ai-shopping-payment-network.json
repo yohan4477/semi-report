@@ -1,0 +1,37 @@
+{
+  "canon_slug": "ai-shopping-payment-network",
+  "section": "finance",
+  "chain_name": "AI 자동 쇼핑이 지나가는 결제망",
+  "one_line": "AI가 대신 검색하고 결제해도 결국 모든 카드사가 통해야 하는 결제망은 비자·마스터카드뿐이라, AI 쇼핑 자동화가 늘어날수록 이 두 회사는 더 좋아질 수밖에 없다.",
+  "sources": [
+    {"src": "2026-08-09-news-to-ideas-en", "date": "2026-08-09"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "AI 자동 쇼핑·결제",
+      "desc": "사람이 검색·결제하는 대신 AI가 알아서 검색하고 결제까지 대신한다.",
+      "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L115~L118"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "카드 결제망",
+      "desc": "AI가 결제하든 사람이 결제하든 결제는 결국 카드로 이뤄지고, 모든 카드사는 이 결제망을 통할 수밖에 없다.",
+      "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L119~L125"}],
+      "companies": [
+        {"name": "비자", "raw_name": "비자", "country": "", "role": "카드 결제망 운영사",
+         "numbers": "", "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L119,L122"}]},
+        {"name": "마스터카드", "raw_name": "마스터 카드", "country": "", "role": "카드 결제망 운영사",
+         "numbers": "", "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L119,L122"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "AI 자동 결제가 늘어도 모든 카드사가 비자·마스터카드 결제망을 통할 수밖에 없다.",
+      "bottleneck_refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L119"}],
+      "judgment": "AI 쇼핑 자동화가 늘어날수록 비자·마스터카드는 더 좋아질 수밖에 없다."
+    }
+  ],
+  "notes": "이 원문(2026-08-09)에는 이 밖에도 클라우드 게임이 지나가는 서버 운영사·자율주행 3파전이 지나가는 이미지 센서 병목 체인이 더 있으나 각각 클라우드·게임 섹션, 피지컬 AI·자율주행 섹션 소관이라 이 정본에는 넣지 않는다."
+}

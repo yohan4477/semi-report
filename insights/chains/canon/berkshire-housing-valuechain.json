@@ -1,0 +1,35 @@
+{
+  "canon_slug": "berkshire-housing-valuechain",
+  "section": "realestate",
+  "chain_name": "버크셔 해서웨이가 계열사로 쥔 주택 밸류체인",
+  "one_line": "집 한 채가 지어질 때마다 버크셔 계열사 일곱 곳이 건설·바닥재·페인트·수영장·가구·보험·모기지 단계마다 수익을 낸다.",
+  "sources": [
+    {"src": "2026-06-07-news", "date": "2026-06-07"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {"order": 1, "name": "주택 건설", "desc": "버크셔가 이번에 미국 최대 주택 건설사를 인수했다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L16, L20~L21"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 2, "name": "바닥재 제조", "desc": "버크셔가 이미 바닥재 만드는 회사를 보유하고 있다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L22"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 3, "name": "페인트 제조", "desc": "버크셔가 페인트 회사도 보유하고 있다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L23"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 4, "name": "수영장 관리", "desc": "미국 주택에 딸린 가족용 수영장을 관리하는 업체도 버크셔 소유다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L23~L24"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 5, "name": "가구 제조", "desc": "가구 제조사도 버크셔 계열사다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L25"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 6, "name": "보험", "desc": "버크셔는 보험 회사를 여러 개 보유하고 있다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L25"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""},
+    {"order": 7, "name": "주택 금융(모기지)", "desc": "버크셔 자회사 중에 주택 금융을 하는 회사도 있다.",
+     "refs": [{"src": "2026-06-07-news", "lines": "L26"}], "companies": [],
+     "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+     "judgment": "집 한 채가 지어지면 이 단계들을 거치며 버크셔 계열사들이 계속 수익을 올리는 구조 — 미국 구조적 주택 공급 부족을 보고 이 시점에 건설사를 인수한 것"}
+  ],
+  "notes": "진행자는 이를 버핏 특유의 '사람들에게 꼭 필요한 것'에 투자하는 스타일로 판단한다(L34~L35)."
+}

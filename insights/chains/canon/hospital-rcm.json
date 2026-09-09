@@ -1,0 +1,36 @@
+{
+  "canon_slug": "hospital-rcm",
+  "section": "health",
+  "chain_name": "병원 수익 사이클(RCM)",
+  "one_line": "진료→코드 입력→보험 청구→승인·거절로 이어지는 병원 RCM 행정에 AI 투자 큰손 자금이 반도체보다 먼저 옮겨가고 있다.",
+  "sources": [{"src": "2026-06-14-news", "date": "2026-06-14"}],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1, "name": "진료",
+      "desc": "병원에서 환자를 진료한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L67"}],
+      "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2, "name": "질병 코드 입력",
+      "desc": "진료 내용에 맞는 질병 코드를 입력한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L67"}],
+      "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3, "name": "보험 청구",
+      "desc": "입력된 코드를 근거로 보험회사에 청구한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L67"}],
+      "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 4, "name": "보험사 승인·거절",
+      "desc": "보험회사가 승인하면 돈을 받고, 거절하면 미수금을 관리해야 한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L67"}],
+      "companies": [], "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "이 행정 절차 전체를 RCM이라 부르며, 사모펀드 자금이 반도체보다 이런 헬스케어 행정 자동화 영역으로 옮겨가고 있다."
+    }
+  ],
+  "notes": "미국 제약·헬스케어 산업이 절차가 복잡해 AI로 비용을 줄일 수 있는 1순위 산업으로 꼽힌다는 진행자의 판단."
+}

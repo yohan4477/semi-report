@@ -1,0 +1,51 @@
+{
+  "canon_slug": "findata-etf-royalty",
+  "section": "findata",
+  "chain_name": "ETF 로열티 사슬",
+  "one_line": "SPY·IVV·VOO 판매는 자산운용사가 홍보·마케팅으로 하지만, 운용자산의 0.02~0.05%는 매년 지수를 만든 S&P가 로열티로 가져간다.",
+  "sources": [
+    {"src": "2026-01-18-passive-findata-screening", "date": "2026-01-18"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "투자자의 ETF 매수",
+      "desc": "투자자가 S&P500을 추종하는 SPY, IVV, VOO 같은 ETF를 매수한다.",
+      "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L84~L87"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "자산운용사의 ETF 출시·운용",
+      "desc": "자산운용사가 ETF를 출시해 판매·운용한다. SPY는 스테이트 스트리트, IVV는 블랙록, VOO는 뱅가드가 만들었다.",
+      "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L86~L87"}],
+      "companies": [
+        {"name": "스테이트 스트리트", "raw_name": "스테이트 스트리트", "country": "", "role": "SPY 출시·운용",
+         "numbers": "", "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L86~L87"}]},
+        {"name": "블랙록", "raw_name": "블랙록", "country": "", "role": "IVV 출시·운용",
+         "numbers": "", "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L86"}]},
+        {"name": "뱅가드", "raw_name": "뱅가드", "country": "", "role": "VOO 출시·운용",
+         "numbers": "", "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L86"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "지수개발사에 로열티 지급",
+      "desc": "자산운용사는 지수를 만든 지수개발사에 매년 운용자산 규모의 0.02%에서 0.05%를 로열티로 낸다.",
+      "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L88~L90"}],
+      "companies": [
+        {"name": "S&P(스탠더드앤드푸어스)", "raw_name": "스탠더드 푸어스", "country": "", "role": "S&P500 지수 개발, 로열티 수취",
+         "numbers": "운용자산 규모의 0.02%~0.05%",
+         "refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L88~L90"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "ETF 판매·마케팅은 자산운용사가 하지만, 돈은 결국 지수개발사가 다 가져간다.",
+      "bottleneck_refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L81,L96~L97"}],
+      "judgment": "판매는 운용사가 홍보·마케팅으로 하고 있는데 돈은 결국 스탠더드앤드푸어스가 다 가져간다."
+    }
+  ],
+  "notes": "ETF 자산 규모가 커질수록(매수 증가 또는 가격 상승) 로열티도 커져 운용사의 수수료 압박이 커진다. 이 때문에 블랙록·뱅가드 같은 대형 운용사는 직접 지수를 만들기 시작했고, 규모가 작은 운용사는 그해그해 더 싼 지수 공급사로 옮겨 타는 방식으로 대응하고 있다."
+}

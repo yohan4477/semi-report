@@ -1,0 +1,48 @@
+{
+  "canon_slug": "offshore-oil-valuechain",
+  "section": "energy",
+  "chain_name": "오프쇼어(해저) 석유 개발 밸류체인",
+  "one_line": "드릴십 하루 렌탈 요금이 작년 초 30만 달러에서 1년 만에 45만 달러까지 오르며, 50만 달러를 넘으면 개발 회사들이 본격 투자에 몰릴 시점이라는 판단.",
+  "sources": [
+    {"src": "2026-03-01-news", "date": "2026-03-01"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "드릴러",
+      "desc": "바다 밑바닥에 구멍을 뚫는 기계를 보유하거나 렌트해 주는 업체들.",
+      "refs": [{"src": "2026-03-01-news", "lines": "L122"}],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "드릴십을 렌탈해 주는 업체가 글로벌 시장에서 몇 개가 안 되고, 1등 업체와 3등 업체가 최근 합병했다.",
+      "bottleneck_refs": [{"src": "2026-03-01-news", "lines": "L142~L143"}],
+      "judgment": "드릴십 하루 렌탈 요금이 50만 달러를 넘어가면 오프쇼어 개발 회사들이 몰리기 시작해 본격적으로 투자해도 되는 시점으로 판단한다. 작년 초 30만 달러였던 요금이 1년 만에 45만 달러까지 올랐다."
+    },
+    {
+      "order": 2,
+      "name": "EPCI/SURF",
+      "desc": "구멍을 뚫은 뒤 전력케이블·파이프 같은 것을 박아 석유를 빼내는 공사를 하는 업체들.",
+      "refs": [{"src": "2026-03-01-news", "lines": "L123~L125"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "서비스 장비 업체",
+      "desc": "시추·생산 과정에서 필요한 기술 서비스를 제공하는 업체들.",
+      "refs": [{"src": "2026-03-01-news", "lines": "L126"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "지원(서포트)",
+      "desc": "현장 유지보수 등을 위해 배 같은 것들을 제공하며 지원하는 영역.",
+      "refs": [{"src": "2026-03-01-news", "lines": "L127~L128"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    }
+  ],
+  "notes": "오늘 신문에 나온 테크닉(Technip)이라는 회사가 이 밸류체인의 대표 회사라고 언급되지만, 네 단계 중 정확히 어느 단계에 해당하는지는 원문에 명시돼 있지 않다(L129~L131)."
+}

@@ -1,0 +1,40 @@
+{
+  "canon_slug": "roblox-revenue-split",
+  "section": "platform",
+  "chain_name": "로블록스 매출 배분 구조",
+  "one_line": "매출 100달러 중 앱스토어 23달러·개발자 26달러·R&D 44달러가 빠져 순익은 13달러만 남는다",
+  "sources": [
+    {"src": "2024-09-22-google-breakup-bdc-en", "date": "2024-09-22"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "앱스토어(유통 플랫폼)",
+      "desc": "앱을 다운받으려면 앱스토어·구글 플레이스토어를 거쳐야 하며 여기에 유통 플랫폼 수수료(매출의 23%)를 지급한다.",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L67~L68"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "게임 개발자",
+      "desc": "로블록스가 제공하는 소프트웨어로 게임을 만드는 개발자에게 수수료(매출의 26%)를 지급한다.",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L68"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "R&D(소프트웨어·서버)",
+      "desc": "게임 제작 소프트웨어 개발과 서버 운영에 드는 R&D 투자 비용(매출의 44%).",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L69~L71"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "매출을 늘리기도 비용을 줄이기도 어려운 구조라 수익을 내지 못하고 있다는 판단."
+    }
+  ],
+  "notes": "매출 100불 중 순익은 13불만 남는다."
+}

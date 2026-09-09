@@ -1,0 +1,308 @@
+{
+  "canon_slug": "ai-infra-stack",
+  "section": "aiinfra",
+  "chain_name": "GPU 성능 경쟁에서 데이터센터 건설·리츠·소프트웨어까지 확장된 AI 인프라 스택",
+  "one_line": "엔비디아 GPU 성능 경쟁에서 시작한 사슬이 열일곱 마디를 거쳐 이튼의 데이터센터 건설, 에퀴닉스·디지털 리얼티의 리츠 운영, 마이크로소프트·구글·아마존의 소프트웨어 응용까지 번졌다.",
+  "sources": [
+    {"src": "2026-03-08-news", "date": "2026-03-08"},
+    {"src": "2026-04-12-news", "date": "2026-04-12"},
+    {"src": "2026-05-11-ai-infra", "date": "2026-05-11"},
+    {"src": "2026-05-18-ai-winner", "date": "2026-05-18"},
+    {"src": "2026-06-07-news", "date": "2026-06-07"}
+  ],
+  "parent": "",
+  "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "AI 모델 개발(수요)",
+      "desc": "토큰 가격 하락으로 차별화 포인트나 확실한 고객 기반이 없는 모델 개발사가 비용 압박을 받고(2026-04-12), AI가 확산되며 데이터센터에서 처리할 계산량 자체가 늘어난다(2026-06-07).",
+      "refs": [
+        {"src": "2026-04-12-news", "lines": "L93~L96"},
+        {"src": "2026-06-07-news", "lines": "L69"}
+      ],
+      "companies": [
+        {"name": "A3, AI", "raw_name": "A3, AI", "country": "", "role": "몇 년 전 핫했던 AI 모델 개발사", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L95"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "2026-04-12: 차별화 포인트를 갖추지 못하면 토큰 가격 하락이 비용 압박으로 이어져 시장에서 사라질 것."
+    },
+    {
+      "order": 2,
+      "name": "GPU 단일칩 성능",
+      "desc": "AI 초기에는 챗봇을 돌리기 위한 GPU 성능 경쟁이 반도체 시장의 평가 기준이었고(2026-05-11, 2026-05-18), 학습이든 추론이든 GPU가 반드시 필요하며 엔비디아는 추론칩도 만든다(2026-04-12). 계산량 증가가 데이터센터의 GPU 수요로 직결되는 첫 병목이다(2026-06-07).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L32~L35"},
+        {"src": "2026-05-18-ai-winner", "lines": "L44~L46"},
+        {"src": "2026-04-12-news", "lines": "L98~L102"},
+        {"src": "2026-06-07-news", "lines": "L69~L71"}
+      ],
+      "companies": [
+        {"name": "엔비디아", "raw_name": "엔비디아", "country": "", "role": "GPU 성능 경쟁의 중심 업체, GPU 제조, 추론칩도 생산", "numbers": "",
+         "refs": [
+           {"src": "2026-05-11-ai-infra", "lines": "L32"},
+           {"src": "2026-05-18-ai-winner", "lines": "L46"},
+           {"src": "2026-04-12-news", "lines": "L98~L100"}
+         ]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "이미 인프라가 되어버려 모든 업체가 다 필요로 하는 필수재가 됐고(2026-04-12), AI 확산에 따른 계산량 증가가 곧바로 GPU 수요로 이어지는 첫 병목이다(2026-06-07).",
+      "bottleneck_refs": [
+        {"src": "2026-04-12-news", "lines": "L102"},
+        {"src": "2026-06-07-news", "lines": "L69"}
+      ],
+      "judgment": "2026-05-11: 단일칩 성능 경쟁 시대는 지났고, 여러 반도체를 잘 붙이고 연결하는 싸움으로 확대됐다. / 2026-04-12: 앞으로도 계속 좋을 것."
+    },
+    {
+      "order": 3,
+      "name": "반도체 설계(EDA)",
+      "desc": "토큰 가격 하락으로 반도체를 더 효율적으로 설계해야 하는 경쟁이 벌어지는 영역.",
+      "refs": [{"src": "2026-04-12-news", "lines": "L103~L106"}],
+      "companies": [
+        {"name": "시놉시스", "raw_name": "신시스", "country": "", "role": "반도체 설계 업체", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L105"}]},
+        {"name": "케이던스", "raw_name": "케이던스", "country": "", "role": "반도체 설계 업체", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L105"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "반도체 설계 효율화 경쟁이 벌어지면 이쪽 회사들은 앞으로 괜찮을 것."
+    },
+    {
+      "order": 4,
+      "name": "파운드리(제조)",
+      "desc": "너도나도 자기네 추론칩을 직접 설계하지만, 그걸 만들어 주는 곳은 TSMC 한 곳뿐이다(2026-04-12). GPU 수요가 늘어나면 그것을 만드는 곳이 필요하다(2026-06-07).",
+      "refs": [
+        {"src": "2026-04-12-news", "lines": "L117~L123"},
+        {"src": "2026-06-07-news", "lines": "L70~L73"}
+      ],
+      "companies": [
+        {"name": "TSMC", "raw_name": "TSMC", "country": "", "role": "직접 설계한 추론칩을 위탁 제조해 주는 유일한 회사, GPU를 제조하는 파운드리", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L122"}, {"src": "2026-06-07-news", "lines": "L72"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "다들 자체 추론칩을 설계해도 결국 만들어 주는 회사는 TSMC 하나뿐이고(2026-04-12), GPU를 만드는 파운드리도 결국 TSMC라 이를 보고 투자해 수익을 봤다(2026-06-07).",
+      "bottleneck_refs": [
+        {"src": "2026-04-12-news", "lines": "L121~L122"},
+        {"src": "2026-06-07-news", "lines": "L70~L73"}
+      ],
+      "judgment": "2026-04-12: TSMC는 앞으로도 계속 좋을 것. / 2026-06-07: GPU를 만드는 파운드리가 결국 TSMC라고 보고 투자해 수익을 봤다."
+    },
+    {
+      "order": 5,
+      "name": "반도체 패키징·연결(HBM 포함)",
+      "desc": "GPU와 HBM을 한 판에 잘 붙이는 업체가 주목받고(2026-05-11), HBM(고대역폭 메모리) 자체는 삼성전자·SK하이닉스가 만든다(2026-05-18).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L39~L40"},
+        {"src": "2026-05-18-ai-winner", "lines": "L47~L48"}
+      ],
+      "companies": [
+        {"name": "TSMC", "raw_name": "TSMC", "country": "", "role": "GPU와 HBM을 한 판에 붙이는 패키징 회사", "numbers": "",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L39~L40"}]},
+        {"name": "삼성전자", "raw_name": "삼성전자", "country": "", "role": "HBM 제조사", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L48"}]},
+        {"name": "SK하이닉스", "raw_name": "하이닉스", "country": "", "role": "HBM 제조사", "numbers": "",
+         "refs": [{"src": "2026-05-18-ai-winner", "lines": "L48"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 6,
+      "name": "광통신 연결",
+      "desc": "반도체와 반도체 사이 데이터를 주고받는 광통신 업체들의 주가가 몇 배씩 올랐고(2026-05-11), 서버 안 GPU·HBM 간 데이터를 빠르게 주고받아야 해 연결 관련 업체가 오른다(2026-05-18).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L41~L42"},
+        {"src": "2026-05-18-ai-winner", "lines": "L52~L55"}
+      ],
+      "companies": [
+        {"name": "루멘텀", "raw_name": "루멘텀", "country": "", "role": "광통신 업체", "numbers": "",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L42"}]},
+        {"name": "시에나", "raw_name": "시에나", "country": "", "role": "광통신 업체", "numbers": "",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L42"}]},
+        {"name": "코닝", "raw_name": "코닝", "country": "", "role": "광통신 업체", "numbers": "",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L42"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 7,
+      "name": "데이터 타이밍 제어",
+      "desc": "반도체 간 데이터가 들어가고 나가는 타이밍을 조절해 주는 업체까지 수혜를 보고 있다.",
+      "refs": [{"src": "2026-05-11-ai-infra", "lines": "L43~L45"}],
+      "companies": [
+        {"name": "SI타임", "raw_name": "SI 타임", "country": "", "role": "데이터 타이밍 조절 업체, 올해 1분기 매출 88% 성장", "numbers": "매출 성장률 88%",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L44"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 8,
+      "name": "냉각",
+      "desc": "데이터센터 내 열이 많이 나면서 냉각 관련 업체에 돈이 몰리고(2026-05-11), 데이터가 많이 오가며 발생하는 열을 식혀 주는 냉각 관련 업체가 오른다(2026-05-18).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L46~L47"},
+        {"src": "2026-05-18-ai-winner", "lines": "L56~L58"}
+      ],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 9,
+      "name": "전력 분배(배관·전선)",
+      "desc": "전기가 계속 부족하다는 얘기가 나오는 가운데, 배관·전선을 효율적으로 연결하는 영역도 주목받고 있다.",
+      "refs": [{"src": "2026-05-11-ai-infra", "lines": "L49~L52"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 10,
+      "name": "저장 장치(스토리지)",
+      "desc": "데이터센터 안 저장 공간이 필요해 하드디스크·SSD 만드는 업체의 주가가 또 날아가고 있고(2026-05-11), 스노우플레이크 같은 회사가 서버 안 저장 공간의 구역을 설정하며 소프트웨어 회사들이 그 공간에 데이터를 저장한다(2026-03-08, 물류창고 비유는 걷고 실제 단계·회사만 가져왔다).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L53"},
+        {"src": "2026-03-08-news", "lines": "L84~L87"}
+      ],
+      "companies": [
+        {"name": "스노우플레이크", "raw_name": "스노우플레이크", "country": "", "role": "저장 공간 구획 설정", "numbers": "",
+         "refs": [{"src": "2026-03-08-news", "lines": "L84~L86"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 11,
+      "name": "송배전",
+      "desc": "데이터센터 건물 밖으로 시선을 돌리면 전기를 효율적으로 끌어들이고 분배하는 송배전 업체가 핫하다.",
+      "refs": [{"src": "2026-05-11-ai-infra", "lines": "L54~L55"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 12,
+      "name": "발전·유틸리티",
+      "desc": "송배전 앞단인 발전소를 가진 전력 사업자, 원전을 보유한 유틸리티 사업자의 주가가 급등했고(2026-05-11), 데이터 처리량 급증으로 전력이 부족해져 전력 생산·분배 관련 업체가 주목받는다(2026-05-18).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L56"},
+        {"src": "2026-05-18-ai-winner", "lines": "L49~L51"}
+      ],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 13,
+      "name": "GPU·데이터센터 임대업체",
+      "desc": "과거 비트코인 채굴을 하다가 지금은 AI GPU·데이터센터를 임대하는 사업으로 바꾼 업체들 — 전력과 GPU를 직접 제공해야 해 비용 부담이 크다(2026-04-12). 전력과 GPU를 미리 확보해 놓은 임대업체가 주목받는다(2026-05-18).",
+      "refs": [
+        {"src": "2026-04-12-news", "lines": "L108~L116"},
+        {"src": "2026-05-18-ai-winner", "lines": "L59~L61"}
+      ],
+      "companies": [
+        {"name": "코어위브", "raw_name": "코이브/코어위브", "country": "", "role": "GPU·데이터센터 임대 사업자, 과거 비트코인 채굴업체", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L108"}, {"src": "2026-05-18-ai-winner", "lines": "L64"}]},
+        {"name": "아이렌", "raw_name": "아이나", "country": "", "role": "GPU·데이터센터 임대 사업자", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L108"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "2026-04-12: 토큰 가격 하락 속도가 임대업체 비용 하락 속도보다 빨라 시간이 갈수록 마진 압박에 시달릴 것 — 사업성이 좋아 보이지 않음."
+    },
+    {
+      "order": 14,
+      "name": "데이터센터 설계·건설",
+      "desc": "데이터센터를 설계하고 부품·장비를 조달해 건설하는 이른바 'C 업체'들까지 수혜를 보고(2026-05-11), 전력 효율적으로 설계·조달·건설하는 업체가 뜬다(2026-05-18). 아마존이나 마이크로소프트 같은 회사가 서버(창고)를 짓는다(2026-03-08, 물류창고 비유는 걷고 실제 회사만 가져왔다).",
+      "refs": [
+        {"src": "2026-05-11-ai-infra", "lines": "L57~L60"},
+        {"src": "2026-05-18-ai-winner", "lines": "L62~L64"},
+        {"src": "2026-03-08-news", "lines": "L83"}
+      ],
+      "companies": [
+        {"name": "이튼", "raw_name": "이튼", "country": "", "role": "데이터센터 설계·부품 조달·건설 업체", "numbers": "",
+         "refs": [{"src": "2026-05-11-ai-infra", "lines": "L59"}, {"src": "2026-05-18-ai-winner", "lines": "L67~L68"}]},
+        {"name": "아마존", "raw_name": "아마존", "country": "", "role": "서버 인프라 구축", "numbers": "",
+         "refs": [{"src": "2026-03-08-news", "lines": "L83"}]},
+        {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "서버 인프라 구축", "numbers": "",
+         "refs": [{"src": "2026-03-08-news", "lines": "L83"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "2026-05-11: AI 투자가 이미 건설·인프라·SOC 프로젝트급으로 확장됐고, 빅테크 수익성 논란은 이 시점에서 이미 의미가 없다. / 2026-05-18: 챗봇에서 시작한 AI 산업이 이제는 건설 산업급으로 확장됐다."
+    },
+    {
+      "order": 15,
+      "name": "데이터센터 리츠(운영)",
+      "desc": "데이터센터 용지를 개발하거나 운영하는 리츠 업체들. 이미 데이터센터를 많이 보유하고 전력도 이미 계약된 상태.",
+      "refs": [{"src": "2026-06-07-news", "lines": "L81"}],
+      "companies": [
+        {"name": "에퀴닉스", "raw_name": "에큐닉스", "country": "", "role": "데이터센터 리츠 업체", "numbers": "",
+         "refs": [{"src": "2026-06-07-news", "lines": "L81"}]},
+        {"name": "디지털 리얼티", "raw_name": "디지털 리얼티", "country": "", "role": "데이터센터 리츠 업체", "numbers": "",
+         "refs": [{"src": "2026-06-07-news", "lines": "L81"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "이미 데이터센터와 전력 계약을 확보하고 있어 관심 있게 봐야 할 영역."
+    },
+    {
+      "order": 16,
+      "name": "소프트웨어 응용",
+      "desc": "AI 비용(토큰 가격) 하락이 소프트웨어 회사의 부가 상품·광고·유통·자동화 수익 구조에 미치는 영향을 회사별로 짚는다.",
+      "refs": [{"src": "2026-04-12-news", "lines": "L124~L158"}],
+      "companies": [
+        {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "AI 위에 오피스·코파일럿 등 소프트웨어를 얹어 애드온으로 추가 판매", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L126~L138"}]},
+        {"name": "구글", "raw_name": "구글", "country": "", "role": "토큰 가격 하락으로 비용이 줄면 광고 수익이 늘어나는 구조", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L139~L140"}]},
+        {"name": "아마존", "raw_name": "아마존", "country": "", "role": "베드록이라는 AI 플랫폼 위에 여러 AI 모델을 올려 유통하는 사업자", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L141~L148"}]},
+        {"name": "ServiceNow", "raw_name": "서비스나", "country": "", "role": "AI로 사람 손이 들어가던 업무 처리를 대체해 비용을 절감시켜 주는 소프트웨어 제공", "numbers": "",
+         "refs": [{"src": "2026-04-12-news", "lines": "L149~L158"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "토큰 가격 하락이 지속되면 이들 소프트웨어 회사, 특히 주가가 많이 빠진 곳은 저가 매수 기회가 될 수 있다."
+    },
+    {
+      "order": 17,
+      "name": "보안",
+      "desc": "보안 회사들이 저장된 데이터의 보안을 담당한다.",
+      "refs": [{"src": "2026-03-08-news", "lines": "L88~L89"}],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    }
+  ],
+  "notes": "사슬은 2024-11-03 3마디(설계→파운드리, 하위 정본 chip-design-foundry로 분리)에서 2025-02-10 HBM 패키징(하위 정본 hbm-packaging)·오픈AI 동맹으로 세분화됐고, 2025-03-17 데이터센터 네트워킹(하위 정본 dc-gpu-networking)이 더해졌다. 2026-03-08 물류창고 비유(저장·건설·보안, 비유는 걷고 실제 내용만 반영)를 거쳐 2026-04-12 토큰 가격 하락 6영역, 2026-05-11 GPU 성능~데이터센터 건설 10마디(정본의 뼈대), 2026-05-18 7마디 재정리, 2026-06-07 데이터센터 리츠까지 더해지며 최종 17마디로 늘었다. 반도체 설계·제조 단계의 병목 판단이 2024-11-03(파운드리 자체)에서 2026-03-29(파운드리 앞단 EDA 재설계, 하위 정본 chip-design-foundry 참고)로 옮겨간 것도 이 성장의 일부다."
+}

@@ -1,0 +1,47 @@
+{
+  "canon_slug": "hbm-packaging",
+  "section": "aiinfra",
+  "chain_name": "HBM 패키징 밸류체인",
+  "one_line": "SK하이닉스가 쌓은 HBM을 TSMC가 엔비디아 GPU 기판에 붙여야 완제품이 된다.",
+  "sources": [
+    {"src": "2025-02-10-samsung-deepseek-en", "date": "2025-02-10"}
+  ],
+  "parent": "ai-infra-stack",
+  "parent_stage": "반도체 패키징·연결(HBM 포함)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "HBM 램 적층·패키징",
+      "desc": "GDDR 램을 다이라는 선반 위에 계속 쌓아 하나로 패키징한 것이 HBM이다.",
+      "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L26~L28"}],
+      "companies": [
+        {"name": "SK하이닉스", "raw_name": "하이닉스", "country": "한국",
+         "role": "GDDR 램을 적층해 HBM으로 패키징", "numbers": "",
+         "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L28"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "GPU 기판 부착",
+      "desc": "패키징된 HBM을 TSMC로 보내면, TSMC가 엔비디아 GPU가 달린 기판 위에 HBM을 다시 붙인다.",
+      "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L28~L29"}],
+      "companies": [
+        {"name": "TSMC", "raw_name": "tsmc", "country": "대만",
+         "role": "하이닉스가 만든 HBM을 엔비디아 GPU 기판 위에 붙이는 작업", "numbers": "",
+         "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L28~L29"}]},
+        {"name": "엔비디아", "raw_name": "엔비디아", "country": "미국",
+         "role": "GPU 기판 제공, 최종 완제품", "numbers": "",
+         "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L28~L29"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    }
+  ],
+  "notes": ""
+}

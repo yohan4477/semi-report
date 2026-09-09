@@ -1,0 +1,74 @@
+{
+  "canon_slug": "space-satellite-internet",
+  "section": "space",
+  "chain_name": "위성 통신 사슬 (LEO·MEO·GEO)",
+  "one_line": "LEO는 사업자 난립에 저가 출혈 경쟁, MEO는 민간 사업자가 없어 GEO 과점사업자 비아샛에 투자를 결정했다",
+  "sources": [
+    {"src": "2025-08-24-space-internet", "date": "2025-08-24"}
+  ],
+  "parent": "space-cpnt", "parent_stage": "네트워크(Network)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "LEO(저궤도) 위성 통신",
+      "desc": "지표면에서 가깝게 띄운 위성. 지구 전체를 커버하려면 수백 기가 필요하고 지연시간이 왕복 0.01초로 짧아 금융거래·원격제어·자율주행·드론 등 지연에 민감한 고객이 사용",
+      "refs": [
+        {"src": "2025-08-24-space-internet", "lines": "L29~L30, L40~L52, L70~L70"}
+      ],
+      "companies": [
+        {"name": "스타링크", "raw_name": "스타링크", "country": "미국",
+         "role": "LEO 위성 9,000개 이상 발사·8,000개 운영, 유나이티드에어라인과 초저가 기내 와이파이 계약",
+         "numbers": "위성 9,000개 이상 발사, 8,000개 운영",
+         "refs": [{"src": "2025-08-24-space-internet", "lines": "L41~L41, L93~L98"}]},
+        {"name": "아마존 프로젝트 카이퍼", "raw_name": "아마존의 프로젝트 카이퍼", "country": "미국",
+         "role": "LEO 위성 2,000개 발사, 드론 배송 자체 수요가 우선이라 굳이 흑자를 낼 필요가 없음",
+         "numbers": "위성 2,000개",
+         "refs": [{"src": "2025-08-24-space-internet", "lines": "L41~L41, L99~L101"}]},
+        {"name": "AST 스페이스모바일", "raw_name": "AST 스페이스모바일", "country": "미국",
+         "role": "일반 스마트폰으로 위성전화가 가능케 하는 서비스, 위성 6개 운영 중 50~60개 추가 계획",
+         "numbers": "위성 6개 운영, 추가 50~60개 계획",
+         "refs": [{"src": "2025-08-24-space-internet", "lines": "L105~L109"}]}
+      ],
+      "bottleneck": "low",
+      "bottleneck_why": "사업자가 너무 많고 스타링크·프로젝트 카이퍼 모두 캡티브 수요가 있어 저가 수주 경쟁이 심해지는 악순환 구조",
+      "bottleneck_refs": [{"src": "2025-08-24-space-internet", "lines": "L89~L104"}],
+      "judgment": "경쟁이 심하고 단가가 계속 싸지는 악순환이라 투자할 이유가 전혀 없는 영역. AST 스페이스모바일도 스타링크의 텍스트메시지 서비스 확장 위협 때문에 패스"
+    },
+    {
+      "order": 2,
+      "name": "MEO(중궤도) 위성 통신",
+      "desc": "GPS와 이동통신 기준 연결 등에 쓰이는 위성. 민간 사업자가 거의 없이 대부분 정부 기관이 운영",
+      "refs": [
+        {"src": "2025-08-24-space-internet", "lines": "L81~L86"}
+      ],
+      "companies": [],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "민간 사업자가 없어 투자할 만한 회사가 없다"
+    },
+    {
+      "order": 3,
+      "name": "GEO(정지궤도) 위성 통신",
+      "desc": "지구와 같은 속도로 돌아 정지한 것처럼 보이는 위성. 위성 한 기가 지구의 1/3을 커버해 3기면 지구 전체 커버 가능. 왕복 지연 0.5초로 길어 방위산업·해양감시·정찰 등 지연에 둔감하지만 장시간 모니터링이 필요한 고객이 사용",
+      "refs": [
+        {"src": "2025-08-24-space-internet", "lines": "L32~L39, L50~L52, L71~L80"}
+      ],
+      "companies": [
+        {"name": "비아샛", "raw_name": "비아샛", "country": "미국",
+         "role": "영국 인마샛을 인수해 미국·유럽 시장을 동시 서비스, GEO 초고성능 위성 3기 발사 계획 중 1기 이미 발사",
+         "numbers": "인마샛 인수, 첫 위성 성능 10%만 발휘",
+         "refs": [{"src": "2025-08-24-space-internet", "lines": "L117~L127"}]},
+        {"name": "인마샛", "raw_name": "인마샛", "country": "영국",
+         "role": "유럽 1위 위성통신 사업자, 비아샛에 인수됨",
+         "numbers": "",
+         "refs": [{"src": "2025-08-24-space-internet", "lines": "L119~L119"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "GEO 위성 가격이 1기당 약 5천억원으로 비싸 신규 사업자가 들어오기 어렵고, 민간 사업자 수가 적어 소수가 과점하는 구조",
+      "bottleneck_refs": [{"src": "2025-08-24-space-internet", "lines": "L42~L44, L115~L117"}],
+      "judgment": "MEO·LEO를 제외하면 남는 GEO가 진행자가 선호하는 스타일이라 판단, 비아샛에 투자 결정"
+    }
+  ],
+  "notes": "행동주의 펀드가 비아샛의 방산·상업 부문 분할을 요구했고 경영진도 긍정 검토 중이라는 대목이 이 편의 결론"
+}

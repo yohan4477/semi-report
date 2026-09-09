@@ -1,0 +1,61 @@
+{
+  "canon_slug": "warship-order-valuechain",
+  "section": "ship",
+  "chain_name": "미국 군함 발주 밸류체인",
+  "one_line": "미국이 한국에 군함 건조를 맡기더라도 철강(US 스틸)·전자장비는 미국산으로 고정해, 한국은 협상력 없는 조립만 맡을 것이라는 판단.",
+  "sources": [
+    {"src": "2025-03-10-pension-defense-shipbuilding", "date": "2025-03-10"},
+    {"src": "2025-04-08-news", "date": "2025-04-08"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "철강 공급",
+      "desc": "배를 만들려면 철강이 필요한데, 군함을 발주하더라도 철강은 US 스틸 제품을 갖다 쓰라고 요구할 것.",
+      "refs": [
+        {"src": "2025-03-10-pension-defense-shipbuilding", "lines": "L46~L48"},
+        {"src": "2025-04-08-news", "lines": "L150~L152"}
+      ],
+      "companies": [
+        {"name": "US 스틸", "raw_name": "US 스틸", "country": "미국",
+         "role": "군함용 철강 공급업체로 지정될 것으로 예상됨. 실적이 안 좋아 일본이 인수하려는 상황",
+         "numbers": "",
+         "refs": [
+           {"src": "2025-03-10-pension-defense-shipbuilding", "lines": "L47~L48"},
+           {"src": "2025-04-08-news", "lines": "L152"}
+         ]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "전자장비 공급",
+      "desc": "군함 내부에 들어가는 전자 장비도 미국산(미국 내 군수 장비 업체 것)을 집어넣으라고 요구할 것.",
+      "refs": [
+        {"src": "2025-03-10-pension-defense-shipbuilding", "lines": "L48~L49"},
+        {"src": "2025-04-08-news", "lines": "L152~L153"}
+      ],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "조립(건조)",
+      "desc": "철강과 전자장비를 뺀 나머지, 배를 조립하는 일만 한국 업체에 맡길 것이라는 판단.",
+      "refs": [
+        {"src": "2025-03-10-pension-defense-shipbuilding", "lines": "L49~L50"},
+        {"src": "2025-04-08-news", "lines": "L150~L151, L153~L154"}
+      ],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "핵심 부가가치인 철강·전자장비는 미국이 쥐고 한국은 조립만 맡게 되며, 군함 제조가 가능한 나라도 한국 외에 독일·일본 등 여럿이라 협상력이 약하다 — 두 회차 모두 같은 판단을 반복한다.",
+      "bottleneck_refs": [
+        {"src": "2025-03-10-pension-defense-shipbuilding", "lines": "L46~L50"},
+        {"src": "2025-04-08-news", "lines": "L153~L154"}
+      ],
+      "judgment": "조선업이 좋다는 애널리스트·언론 컨센서스와 달리, 실제로 뜯어보면 한국이 가져가는 몫은 돈이 안 되는 조립뿐이라 걱정되고, 공매도 재개 시 조선주가 1차 타겟이 될 수 있어 조심해야 한다(2025-03-10). 군함 제조가 가능한 나라가 여럿이라 한국에 큰 물량을 다 주지는 않을 것이라는 판단이 이후 회차(2025-04-08)에서도 그대로 반복된다."
+    }
+  ],
+  "notes": "나중에 조립 이상의 더 많은 부분을 한국 업체에 의뢰한다는 사실이 나오면 그때 다시 투자를 고려해도 늦지 않다는 판단(2025-03-10-pension-defense-shipbuilding L52~L53)."
+}

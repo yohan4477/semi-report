@@ -1,0 +1,58 @@
+{
+  "canon_slug": "online-ad-intermediation",
+  "section": "platform",
+  "chain_name": "온라인 광고 중개 구조 — 애드 네트워크·익스체인지·서버",
+  "one_line": "구글이 애드 네트워크·익스체인지·서버 세 자리를 다 쥐고 있다는 게 미국 반독점 소송의 골자다",
+  "sources": [
+    {"src": "2024-09-22-google-breakup-bdc-en", "date": "2024-09-22"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "애드 네트워크",
+      "desc": "광고주와 광고 게시자를 중계하는 역할. 구글이 더블클릭·드멜 같은 광고 회사를 인수해 확보.",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L128~L129"}],
+      "companies": [
+        {"name": "구글", "raw_name": "구글", "country": "미국",
+         "role": "더블클릭·드멜 인수를 통해 애드 네트워크 확보",
+         "numbers": "", "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L128~L129"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "구글이 이 영역에서 독점하고 있다는 내용으로 소송이 진행 중.",
+      "bottleneck_refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L130"}],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "애드 익스체인지(광고 경매 플랫폼)",
+      "desc": "광고 경매가 이뤄지는 플랫폼.",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L129"}],
+      "companies": [
+        {"name": "구글", "raw_name": "구글", "country": "미국",
+         "role": "애드 익스체인지 운영",
+         "numbers": "", "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L128~L129"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "온라인 광고 세 가지 영역 모두에서 구글이 독점하고 있다는 소송 내용.",
+      "bottleneck_refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L130"}],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "애드 서버",
+      "desc": "광고 배치와 게시를 돕는 역할.",
+      "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L129"}],
+      "companies": [
+        {"name": "구글", "raw_name": "구글", "country": "미국",
+         "role": "애드 서버 운영",
+         "numbers": "", "refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L128~L129"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "온라인 광고 세 가지 영역 모두에서 구글이 독점하고 있다는 소송 내용.",
+      "bottleneck_refs": [{"src": "2024-09-22-google-breakup-bdc-en", "lines": "L130"}],
+      "judgment": "이 소송은 이제 막 시작되어 유럽 사례처럼 결론까지 오래 걸릴 것이라는 판단."
+    }
+  ],
+  "notes": "유럽에서는 비슷한 소송에서 구글이 애드 익스체인지 매각을 제안했으나 EU가 받아들이지 않아 소송이 계속되고 있다."
+}

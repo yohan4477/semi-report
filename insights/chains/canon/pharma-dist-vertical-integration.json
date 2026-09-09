@@ -1,0 +1,73 @@
+{
+  "canon_slug": "pharma-dist-vertical-integration",
+  "section": "pharmadist",
+  "chain_name": "제약 유통 수직계열화 — 약국·PBM·보험",
+  "one_line": "CVS는 약국에서 PBM(케어마크, 2007년)·보험(애트나, 2018년) 순으로, 유나이티드헬스는 보험에서 PBM(옵텀RX)·병원 순으로 거꾸로 같은 세 단계를 계열화해 매출을 3등분했다",
+  "sources": [{"src": "2025-10-26-cvs-walgreens", "date": "2025-10-26"},
+              {"src": "2025-11-02-pbm-big3", "date": "2025-11-02"}],
+  "parent": "pharma-dist-money", "parent_stage": "PBM-보험사 계열화 및 시장 장악",
+  "stages": [
+    {
+      "order": 1,
+      "name": "약국(리테일)",
+      "desc": "CVS는 월그린과 함께 약국 체인으로 시작한 회사다. 2000년대 중반 이후 소매 확장 대신 수직계열화로 방향을 틀었다.",
+      "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L38"},
+               {"src": "2025-10-26-cvs-walgreens", "lines": "L106"}],
+      "companies": [
+        {"name": "CVS", "raw_name": "CVS", "country": "미국",
+         "role": "약국 체인으로 출발, 이후 약국내 클리닉까지 확장. 2000년대 중반 이후 소매 확장 대신 수직계열화로 방향 전환",
+         "numbers": "약국·클리닉·PBM·보험 매출 비중 3:4:3",
+         "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L38~L43"},
+                  {"src": "2025-10-26-cvs-walgreens", "lines": "L106"}]},
+        {"name": "월그린", "raw_name": "월그린", "country": "미국",
+         "role": "CVS와 함께 약국 체인으로 출발했으나 소매 유통점 확장에만 올인 — 배당귀족주 지위를 잃고 사모펀드(스컬러 파트너스)에 피인수돼 상장폐지 예정",
+         "numbers": "", "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L38"},
+                                {"src": "2025-10-26-cvs-walgreens", "lines": "L112~L125"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "수직계열화 전략으로 CVS는 잘 나가는 반면, 소매 확장에만 올인한 월그린은 배당귀족주 지위를 잃고 사모펀드에 피인수돼 상장폐지 예정이라는 대비(2025-10-26)."
+    },
+    {
+      "order": 2,
+      "name": "PBM(처방약 급여관리)",
+      "desc": "PBM이 제약 유통의 수요 쪽을 컨트롤한다. CVS는 2007년 케어마크 인수로 PBM 산업 1위 사업자가 됐고, 유나이티드헬스는 2011년 옵텀 브랜드 출시 뒤 자체 PBM 업무를 옵텀RX로 브랜드화하고 2015년 카타마란 인수로 PBM 3위로 올라섰다(전체 매출의 25%).",
+      "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L32~L33, L39~L40, L65~L67, L72"},
+               {"src": "2025-10-26-cvs-walgreens", "lines": "L107~L108"}],
+      "companies": [
+        {"name": "CVS 케어마크", "raw_name": "케어마크", "country": "미국",
+         "role": "CVS가 2007년 인수, 미국 내 1위 PBM 사업자",
+         "numbers": "2007년 인수", "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L39~L40"},
+                                        {"src": "2025-10-26-cvs-walgreens", "lines": "L107~L108"}]},
+        {"name": "유나이티드헬스 옵텀RX", "raw_name": "옵텀 RX", "country": "미국",
+         "role": "PBM 내 3위 사업자, 카타마란 인수로 급부상",
+         "numbers": "2015년 카타마란 인수, 전체 회사 매출의 25%",
+         "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L65~L67, L72"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "PBM이 제약 유통 사업의 수요 쪽을 컨트롤하며, 이를 위해선 환자와의 접점(클리닉)이 있어야 한다고 진행자가 판단했다.",
+      "bottleneck_refs": [{"src": "2025-11-02-pbm-big3", "lines": "L32~L33"}],
+      "judgment": "PBM 회사와 환자들 간의 접점이 있어야 수요 쪽을 컨트롤할 수 있는데, CVS와 유나이티드헬스는 클리닉을 운영해 환자 접점이 많은 반면 시그나는 그렇지 못해 앞으로 힘들어질 것이라고 봤다(2025-11-02)."
+    },
+    {
+      "order": 3,
+      "name": "보험",
+      "desc": "CVS는 2018년 애트나(보험사) 인수로 보험·PBM·약국 수직계열을 완성했고, 유나이티드헬스는 반대로 1974년 보험사로 출발해 병원·의료서비스(옵텀)·PBM·약국(특수약품 관리업체 인수)으로 확장했다.",
+      "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L41~L42, L56~L69"},
+               {"src": "2025-10-26-cvs-walgreens", "lines": "L109~L110"}],
+      "companies": [
+        {"name": "CVS 애트나", "raw_name": "애트나", "country": "미국",
+         "role": "보험사, 2018년 인수로 CVS의 수직계열화 완성 — 약국·PBM·보험 매출 비중이 각 약 33%로 균등",
+         "numbers": "2018년 인수, 매출 비중 약국·PBM·보험 각 약 33%",
+         "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L41~L42"},
+                  {"src": "2025-10-26-cvs-walgreens", "lines": "L109~L110"}]},
+        {"name": "유나이티드헬스", "raw_name": "유나이티드헬스", "country": "미국",
+         "role": "1974년 보험사로 설립, 병원·PBM·약국까지 내재화, 의료진 9만 명 이상 보유",
+         "numbers": "1974년 설립, 의료진 9만 명 이상",
+         "refs": [{"src": "2025-11-02-pbm-big3", "lines": "L56~L70"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    }
+  ],
+  "notes": "시그나는 공적 보험(메디케어·메디케이드)이 약하고 환자 접점(클리닉)도 없어 PBM 산업 2등 자리를 유나이티드헬스에 내줄 것이라는 판단(2025-11-02-pbm-big3). CVS 쪽 진행자는 CVS 주식을 보유 중이며 PBM 투자 대상으로 유나이티드헬스와 제3의 회사('시그널')도 비교 대상으로 언급했다(2025-10-26-cvs-walgreens L126~L136)."
+}

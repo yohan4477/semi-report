@@ -28,7 +28,7 @@ PAGES = ['AI Engineer 대시보드.html', 'Epoch AI 대시보드.html', 'M&A 대
          '미국주식 사관학교 대시보드.html', '부동산 대시보드.html', '산업시장 대시보드.html',
          '수도리무브 대시보드.html', '알고리즘 계보.html', '언더스탠딩 보고서 대시보드.html',
          '언더스탠딩 프리미엄 대시보드.html', '용어사전.html', '이선엽 시황 대시보드.html',
-         '통합 보고서.html', '회계사 대시보드.html']
+         '체인 대시보드.html', '통합 보고서.html', '회계사 대시보드.html']
 
 
 async def check(pg, name):

@@ -1,0 +1,56 @@
+{
+  "canon_slug": "refining-petrochemical-valuechain",
+  "section": "energy",
+  "chain_name": "정유화학 밸류체인 — 업스트림·미드스트림·다운스트림",
+  "one_line": "정유화학은 사이클 산업이라, 정제설비 부족 기사나 화학사들의 잇단 폐쇄로 공급 부족이 확인된 뒤에 투자하는 게 좋다는 판단.",
+  "sources": [
+    {"src": "2026-06-14-news", "date": "2026-06-14"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "업스트림(원유 탐사·생산)",
+      "desc": "유전을 새로 개발해 원유·천연가스를 뽑아내는 단계. 유전 개발 업체가 아니라 시추 장비를 공급하는 업체, 해양 시추에 필요한 드릴십을 임대해 주는 업체가 수혜를 받을 것으로 본다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L74~L84"}],
+      "companies": [
+        {"name": "SLB", "raw_name": "SLB", "country": "", "role": "석유 시추 장비 공급 업체",
+         "numbers": "", "refs": [{"src": "2026-06-14-news", "lines": "L78"}]},
+        {"name": "핼리버튼", "raw_name": "홀리버튼", "country": "", "role": "석유 시추 장비 공급 업체",
+         "numbers": "", "refs": [{"src": "2026-06-14-news", "lines": "L78"}]},
+        {"name": "베이커휴즈", "raw_name": "베이클, 허기스", "country": "", "role": "석유 시추 장비 공급 업체",
+         "numbers": "", "refs": [{"src": "2026-06-14-news", "lines": "L78"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "해양 시추용 드릴십은 값이 비싸고 단기간만 필요해 유전 개발 업체가 직접 보유하기보다 임대해 쓰는 구조라, 드릴십을 가진 임대 업체의 하루 임대료(데이 레이트)가 계속 오르고 있다"
+    },
+    {
+      "order": 2,
+      "name": "미드스트림(원유·가스 이동)",
+      "desc": "뽑아낸 석유·천연가스를 파이프라인 등으로 이동시키는 단계. 배당주가 많은 영역.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L91, L96~L110, L116"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "배당 투자를 좋아하는 사람들이 하는 영역이지만, 미국 외 투자자는 PTP(공개거래파트너십) 세제 때문에 매도 시 손익과 무관하게 전체 금액의 10%를 원천징수당해 불리하다"
+    },
+    {
+      "order": 3,
+      "name": "다운스트림 — 정유",
+      "desc": "정유부터 시작되는 영역. 정유화학 산업 안에서는 정유 쪽이 다시 업스트림에 해당한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L92~L94, L116~L117"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "글로벌 정제 설비(CAPA)가 부족하다는 기사가 나오기 시작할 때 투자하는 게 좋다"
+    },
+    {
+      "order": 4,
+      "name": "다운스트림 — 석유화학",
+      "desc": "나프타를 기준으로 그 이후 나오는 화학 산업. 정유화학 산업에서는 다운스트림에 해당한다.",
+      "refs": [{"src": "2026-06-14-news", "lines": "L95, L118~L128"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "석유화학은 제품 종류가 워낙 많아 하나만 수급이 틀어져도 주가가 크게 흔들린다 — 아무 때나 들어가지 말고 글로벌 화학사들이 여러 곳 문을 닫아 공급 부족이 확인된 뒤에 투자하는 게 좋다"
+    }
+  ],
+  "notes": "정유화학 산업 전체가 대표적인 사이클 산업이라 몇 년에 한 번씩 공급 부족 국면이 오며, 공급이 부족해질 때(가격 급등이 아니라) 투자하는 게 공통 원칙이라고 정리한다(L129~L134)."
+}

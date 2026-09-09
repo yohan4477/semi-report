@@ -1,0 +1,52 @@
+{
+  "canon_slug": "ess-fluence-cashflow",
+  "section": "energy",
+  "chain_name": "발전 입찰→ESS 납품→수익 회수 사슬",
+  "one_line": "AES가 의결권 71%를 쥐고 발전 입찰가를 낮추려 ESS 공급가를 누르는 한, 플루언스 에너지는 비싸게 납품하지 못해 수익성이 낮다.",
+  "sources": [
+    {"src": "2024-08-18-fluence-energy", "date": "2024-08-18"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "정부·지자체 발전 입찰",
+      "desc": "발전 사업자는 정부나 지자체가 낸 발전 입찰에 참여해 낙찰을 받으면 보조금을 받고, 발전소를 지은 뒤 40~50년에 걸쳐 운영하며 투자비와 수익을 회수하는 구조다.",
+      "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L33~L34"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "발전 사업자(AES) — 입찰·운영",
+      "desc": "AES는 발전 사업자로, 신재생 에너지 프로젝트 입찰에서 낙찰받으려면 최대한 가격을 낮게 써내야 한다. 그 저장장치는 플루언스 에너지가 납품하는데, AES 입장에서는 플루언스에게 높은 가격을 지불할 수 없다.",
+      "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L32~L33,L41~L43"}],
+      "companies": [
+        {"name": "AES", "raw_name": "AS", "country": "미국",
+         "role": "발전 사업자, 플루언스 에너지 지분·의결권 각 71%(합작 출자는 4대4지만 의결권은 AES가 71%, 지멘스가 14%) 보유",
+         "numbers": "의결권 71%", "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L32~L33,L39~L40"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "발전 입찰에서 낙찰받으려는 AES의 저가 압박이 플루언스 에너지의 납품 단가와 수익성을 누른다고 진행자가 판단한다",
+      "bottleneck_refs": [{"src": "2024-08-18-fluence-energy", "lines": "L41~L44"}],
+      "judgment": "AES 프로젝트에 들어갔을 때 플루언스 에너지는 비싸게 납품할 수 없어 수익성이 좋을 수 없다"
+    },
+    {
+      "order": 3,
+      "name": "ESS 공급업체(플루언스 에너지) — 납품",
+      "desc": "플루언스 에너지는 미국 전력 사업자 AES와 독일 대기업 지멘스가 2017년 조인트벤처 협약을 맺어 세운 순수 ESS 사업자로, 2018년 1월부터 영업을 시작했다. 카타르투자청도 지분 11%를 투자했다. 2021년 나스닥 상장 이후 2022~2023년 사이 지멘스와 카타르투자청 모두 보유 지분 일부를 매각했다.",
+      "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L21~L27"}],
+      "companies": [
+        {"name": "플루언스 에너지", "raw_name": "런스 에너지", "country": "미국", "role": "AES·지멘스 합작 ESS 전문업체, 생산능력 기준 세계 1위",
+         "numbers": "", "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L20~L23,L30"}]},
+        {"name": "지멘스", "raw_name": "지멘스", "country": "독일", "role": "발전 설비를 팔아 판매 시점에 수익을 즉시 창출하는 사업 모델, 플루언스 지분 매각",
+         "numbers": "의결권 14%", "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L22,L34~L37"}]},
+        {"name": "카타르투자청", "raw_name": "카타르 투자청", "country": "카타르", "role": "지분 11% 투자 후 일부 매각",
+         "numbers": "지분 11%", "refs": [{"src": "2024-08-18-fluence-energy", "lines": "L24~L25,L27"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "AES는 40~50년에 걸쳐 투자비를 회수하는 회사고 지멘스는 팔자마자 수익을 회수해야 하는 회사라, 두 모회사가 애초에 수익 창출 방식부터 갈등할 수밖에 없었을 것"
+    }
+  ],
+  "notes": "경쟁사로 테슬라·삼성SDI·LG에너지솔루션·스위스 ABB가 언급되며, 이들은 오래전부터 영업해 고객 관계가 끈끈해 신생업체인 플루언스가 뚫고 들어가기 쉽지 않을 것이라는 판단이 붙는다(L59,L73~L75). 플루언스의 모회사 매출 의존도가 약 50%에 달해 다른 업체에 더 비싸게 팔기도 어렵다는 판단도 있다(L67~L68)."
+}

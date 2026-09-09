@@ -1,0 +1,51 @@
+{
+  "canon_slug": "findata-sp-mobility",
+  "section": "findata",
+  "chain_name": "S&P 글로벌 모빌리티 데이터 활용 사슬",
+  "one_line": "S&P 글로벌의 자동차 판매량 리서치 한 편이 완성차 생산 계획부터 부품·반도체 발주, 자동차보험료 산정까지 좌우한다.",
+  "sources": [
+    {"src": "2026-01-25-sp-global", "date": "2026-01-25"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "S&P 글로벌의 모빌리티 리서치 발간",
+      "desc": "S&P 글로벌이 매년 전 세계 자동차·전기차 판매량 전망 리서치 페이퍼를 발간한다.",
+      "refs": [{"src": "2026-01-25-sp-global", "lines": "L74~L79"}],
+      "companies": [
+        {"name": "S&P 글로벌", "raw_name": "SP 글로벌", "country": "", "role": "모빌리티 리서치 페이퍼 발간",
+         "numbers": "", "refs": [{"src": "2026-01-25-sp-global", "lines": "L74~L79"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "금융 경제나 실물 경제에 투자하려면 반드시 S&P 글로벌을 거쳐 가야 하는, 투자의 길목을 잡고 있는 회사라고 진행자가 판단한다.",
+      "bottleneck_refs": [{"src": "2026-01-25-sp-global", "lines": "L19~L20"}],
+      "judgment": "투자에 길목을 딱 잡고 있는 회사다."
+    },
+    {
+      "order": 2,
+      "name": "완성차 업체의 생산 결정",
+      "desc": "완성차 회사가 S&P 글로벌의 자료를 사서 보고 한 해 얼마나 생산할지, 어떤 전략을 세울지 결정한다.",
+      "refs": [{"src": "2026-01-25-sp-global", "lines": "L79"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "부품·전장·반도체 업체의 생산 계획",
+      "desc": "완성차 업체가 전략을 세우면 그에 맞춰 부품 회사, 그리고 자동차 전장·텔레매틱스 반도체를 만드는 업체들이 생산 계획을 잡는다.",
+      "refs": [{"src": "2026-01-25-sp-global", "lines": "L80~L83"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "자동차보험 업체의 보험료 산정",
+      "desc": "한 해 특정 국가에서 자동차가 얼마나 보급될지를 근거로, 보험사가 확보 가능한 고객 비중과 사고율을 계산해 보험금을 책정한다.",
+      "refs": [{"src": "2026-01-25-sp-global", "lines": "L84~L85"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    }
+  ],
+  "notes": "2022년 IHS 마켓 인수(에너지·LNG 등 원자재, 산업 공급망, 모빌리티 데이터의 글로벌 표준이던 회사) 이후 S&P 글로벌이 금융 데이터에서 실물 경제 데이터까지 아우르는 회사가 됐고, IHS 마켓의 매출 80% 이상이 정기 구독이라 회사 전체 매출의 70% 이상이 경기와 무관한 정기 구독형으로 바뀌었다."
+}

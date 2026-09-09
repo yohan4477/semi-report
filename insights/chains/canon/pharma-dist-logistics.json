@@ -1,0 +1,52 @@
+{
+  "canon_slug": "pharma-dist-logistics",
+  "section": "pharmadist",
+  "chain_name": "미국 제약 유통 물류 사슬",
+  "one_line": "약이 제약사에서 소비자에게 가는 길이 도매상·다양한 소매 채널·보험 정산까지 네 마디로 나뉘고, 그중 도매상이 한때 물량 배분권을 쥐었다",
+  "sources": [{"src": "2025-09-28-pharma-dist-valuechain", "date": "2025-09-28"}],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "제약사(제조)",
+      "desc": "약을 제조해 도매상에 공급한다.",
+      "refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L50"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "도매상(유통)",
+      "desc": "제약사로부터 약을 받아 약국에 공급한다. 1990년대 이전에는 도매상이 제약 유통 시장의 주도권을 쥐고 있었다.",
+      "refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L50, L95~L96"}],
+      "companies": [],
+      "bottleneck": "high",
+      "bottleneck_why": "1990년대 이전, 도매상이 어떤 약국에 얼마나 물량을 배분할지 결정하는 권한을 가지고 있었다.",
+      "bottleneck_refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L95~L96"}],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "약국·다양한 소매 채널(판매)",
+      "desc": "한국은 약국에서만 약을 팔지만 미국은 약국 외에 식료품 유통점, 월마트 같은 대형마트, 아마존 온라인 약국, 메일오더(택배) 등 다양한 채널에서 약을 판매한다.",
+      "refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L56~L59"}],
+      "companies": [
+        {"name": "아마존", "raw_name": "아마존", "country": "미국", "role": "온라인 약국을 인수해 온라인으로 약을 판매",
+         "numbers": "", "refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L57"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "소비자·보험사 정산",
+      "desc": "미국은 의료보험이 전부 민영화돼 있고 보험사가 수백 개에 이르며, 소비자가 어느 주에 있든 처방·구매를 할 수 있어 보험 커버 여부·지정 약국 여부를 소비자가 직접 확인해야 한다.",
+      "refs": [{"src": "2025-09-28-pharma-dist-valuechain", "lines": "L60~L79"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "한 해 미국에서 발행되는 처방전이 60억 건에 달해 소비자·약국·보험사 모두가 복잡한 정산 절차에 시달린다는 문제의식."
+    }
+  ],
+  "notes": "이 물류 사슬이 너무 복잡해서 PBM이라는 새로운 사업자가 등장했다는 것이 자금 사슬(pharma-dist-money)의 출발점이다. 약국 마디는 pharma-dist-pharmacy-channel, 도매상 마디는 pharma-dist-wholesaler-fightback 에서 확대해 다룬다."
+}

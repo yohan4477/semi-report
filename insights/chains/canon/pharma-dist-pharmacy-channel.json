@@ -1,0 +1,66 @@
+{
+  "canon_slug": "pharma-dist-pharmacy-channel",
+  "section": "pharmadist",
+  "chain_name": "미국 소매 약국 채널 사슬",
+  "one_line": "미국은 약을 아무 곳에서나 팔 수 있어 리테일·메일오더·특수의약품·온라인 네 채널로 판매가 극도로 세분화돼 있다",
+  "sources": [{"src": "2025-10-26-cvs-walgreens", "date": "2025-10-26"}],
+  "parent": "pharma-dist-logistics", "parent_stage": "약국·다양한 소매 채널(판매)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "리테일 파머시(일반 약국)",
+      "desc": "일반 의약품을 주로 취급하는 약국 채널. 독립·체인 약국(CVS·월그린)이 대표적이며, 빅박스 리테일(월마트 내 약국), 클럽형 멤버십 약국(코스트코), 슈퍼마켓 내 약국도 포함한다.",
+      "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L48~L49, L63~L97"}],
+      "companies": [
+        {"name": "CVS 파머시", "raw_name": "CBS 파머시", "country": "미국",
+         "role": "독립 약국 체인, 2007년 PBM(케어마크) 인수 후 수직계열화 방향으로 전환",
+         "numbers": "", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L98~L99, L106~L107"}]},
+        {"name": "월그린", "raw_name": "월그린", "country": "미국",
+         "role": "독립 약국 체인, 소매 유통점 확장에 올인",
+         "numbers": "", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L98~L99, L112~L113"}]},
+        {"name": "라이트에이드", "raw_name": "라이데이드", "country": "미국",
+         "role": "2018년 파산, 2025년 10월 마지막 매장까지 폐업",
+         "numbers": "한때 포춘 500대 기업 142위", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L100~L102"}]},
+        {"name": "월마트", "raw_name": "월마트", "country": "미국", "role": "빅박스 리테일 매장 내 약국 운영",
+         "numbers": "", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L76"}]},
+        {"name": "코스트코", "raw_name": "코스트코", "country": "미국",
+         "role": "클럽형 멤버십 기반 약국 운영, 가격은 싼 대신 수령까지 시간이 오래 걸림",
+         "numbers": "급행료 3일 내 11불, 2일 내 14불", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L79~L86"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "메일오더 파머시(물류 창구)",
+      "desc": "실제 매장 없이 물류 창구 역할만 하며 만성질환자에게 정기 배송·자동 리필·전화 상담을 제공한다.",
+      "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L51~L55"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 3,
+      "name": "특수의약품 약국",
+      "desc": "도매상의 콜드체인을 통해 병원이나 가정으로 직접 배송되는 채널이다.",
+      "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L45~L46, L50"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "온라인 약국",
+      "desc": "리테일·메일오더·특수의약품 사이에 걸쳐 있는 신흥 채널이나 아직 시장에서 크게 두각을 나타내지 못하고 있다.",
+      "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L56~L60"}],
+      "companies": [
+        {"name": "아마존", "raw_name": "아마존", "country": "미국",
+         "role": "필팩 인수 후 온라인 약국 사업을 밀고 있으나 아직 시장에서 두각을 못 나타냄",
+         "numbers": "", "refs": [{"src": "2025-10-26-cvs-walgreens", "lines": "L60"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    }
+  ],
+  "notes": "미국은 약을 아무 곳에서나 팔 수 있어 채널이 극도로 세분화돼 있다는 점이 한국과의 핵심 차이(2025-10-26-cvs-walgreens L64~L67)."
+}

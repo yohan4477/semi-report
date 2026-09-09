@@ -1,0 +1,43 @@
+{
+  "canon_slug": "reit-securitization-korea",
+  "section": "realestate",
+  "chain_name": "국내 대기업 리츠 자산유동화 구조",
+  "one_line": "대기업이 세운 리츠가 투자자 돈으로 계열사 건물을 사들이는 구조는 결국 자산 유동화이며, 유상증자가 실패하면 다른 계열사 자금으로 메운다.",
+  "sources": [
+    {"src": "2024-11-03-bigtech-earnings-en", "date": "2024-11-03"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "투자자",
+      "desc": "리츠에 돈을 넣는 투자자. 유상증자에도 참여하게 된다.",
+      "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L108~L109, L114~L115"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "국내 투자자를 대상으로 자기네 건물을 비싸게 팔 수 있을 때까지 버티려는 의도로 보이며 투자하지 말라는 권고"
+    },
+    {
+      "order": 2,
+      "name": "리츠(대기업이 세운)",
+      "desc": "대기업이 세운 리츠가 투자자로부터 돈을 모아 그 돈으로 계열사 건물을 사들인다.",
+      "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L108~L109"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "결국은 자산 유동화이며, 건물을 싸게 팔기 싫어 투자자 자금으로 대신 비싸게 처리하려는 구조"
+    },
+    {
+      "order": 3,
+      "name": "대기업 계열사(건물 매도·재임대)",
+      "desc": "자금이 필요한 대기업 계열사가 보유 건물을 리츠에 매각하고, 그 건물에 다시 재임대해 들어간다.",
+      "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L108~L110"}],
+      "companies": [
+        {"name": "한화 금융 계열사", "raw_name": "하화 그룹의 금융 계열사", "country": "한국", "role": "리츠 유상증자에 참여 예정",
+         "numbers": "", "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L115~L116"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "유상증자가 실패하면 다른 계열사 자금으로 메우게 되고, 그러면 그 계열사에 투자했던 투자자가 피해를 본다"
+    }
+  ],
+  "notes": "하나 리츠는 유상증자 물량이 기존 발행 주식 수보다 많았다는 지적."
+}

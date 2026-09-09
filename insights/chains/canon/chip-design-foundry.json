@@ -1,0 +1,110 @@
+{
+  "canon_slug": "chip-design-foundry",
+  "section": "aiinfra",
+  "chain_name": "AI 반도체 설계·생산 사슬",
+  "one_line": "파운드리는 TSMC·삼성전자·인텔 셋뿐이지만, 2026-03-29 판단은 병목을 파운드리 자체보다 그 앞단 EDA 재설계 업체 시놉시스로 옮겨 짚는다 — 엔비디아의 3조원도 그쪽으로 갔다.",
+  "sources": [
+    {"src": "2024-11-03-bigtech-earnings-en", "date": "2024-11-03"},
+    {"src": "2025-02-10-samsung-deepseek-en", "date": "2025-02-10"},
+    {"src": "2026-03-29-news", "date": "2026-03-29"}
+  ],
+  "parent": "ai-infra-stack",
+  "parent_stage": "반도체 설계(EDA)·파운드리(제조)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "빅테크의 설계 의뢰·자체 설계",
+      "desc": "엔비디아 GPU 독식 구도에서 벗어나려는 빅테크가 자체 AI 반도체를 만들려 하고(2024-11-03), 오픈AI는 소프트뱅크가 최대주주인 ARM의 설계 기술을 가져다 쓰며(2025-02-10), 구글·메타·아마존은 자체 추론칩(TPU 등)을 설계·출시하기 시작했다(2026-03-29).",
+      "refs": [
+        {"src": "2024-11-03-bigtech-earnings-en", "lines": "L76~L81"},
+        {"src": "2025-02-10-samsung-deepseek-en", "lines": "L57~L59"},
+        {"src": "2025-02-10-samsung-deepseek-en", "lines": "L57~L58"},
+        {"src": "2026-03-29-news", "lines": "L36~L38"}
+      ],
+      "companies": [
+        {"name": "구글", "raw_name": "구글", "country": "미국", "role": "자체 AI 반도체 개발, 자체 추론칩(TPU) 설계·출시", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L77"}, {"src": "2026-03-29-news", "lines": "L37"}]},
+        {"name": "아마존", "raw_name": "아마존", "country": "미국", "role": "자체 AI 반도체 개발, 자체 칩 설계·출시", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L77"}, {"src": "2026-03-29-news", "lines": "L38"}]},
+        {"name": "마이크로소프트", "raw_name": "MS", "country": "미국", "role": "자체 AI 반도체 개발", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L77"}]},
+        {"name": "메타", "raw_name": "메타", "country": "미국", "role": "자체 AI 반도체 개발, 브로드컴과 제휴, 자체 칩 설계·출시", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L77, L82"}, {"src": "2026-03-29-news", "lines": "L38"}]},
+        {"name": "오픈AI", "raw_name": "오픈 AI", "country": "미국", "role": "브로드컴과 제휴해 설계, ARM 설계 기술로 자사 맞춤형 반도체 개발", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L82"}, {"src": "2025-02-10-samsung-deepseek-en", "lines": "L57~L63"}]},
+        {"name": "네이버", "raw_name": "네이버", "country": "한국", "role": "자체 반도체 설계 예정", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L79"}]},
+        {"name": "카카오", "raw_name": "카카오", "country": "한국", "role": "자체 반도체 설계 예정", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L79"}]},
+        {"name": "ARM", "raw_name": "amm", "country": "영국", "role": "오픈AI 맞춤형 반도체 설계 기술 제공, 소프트뱅크가 최대 주주", "numbers": "",
+         "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L58~L59"}]},
+        {"name": "소프트뱅크", "raw_name": "소프트뱅크", "country": "일본", "role": "ARM의 최대 주주, 3사 동맹의 한 축", "numbers": "",
+         "refs": [{"src": "2025-02-10-samsung-deepseek-en", "lines": "L57~L59"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "설계 전문 기업·EDA 재설계",
+      "desc": "빅테크가 설계 기술을 자체 확보하기 어려워 브로드컴·마벨·인텔·AMD·미디어텍·ARM 같은 설계 전문 기업과 제휴하고(2024-11-03), 파운드리에 넘기기 전에는 생산에 맞게 재설계해 줄 EDA 업체 시놉시스를 거쳐야 한다 — 엔비디아는 이 회사에 3조원을 투자했다(2026-03-29).",
+      "refs": [
+        {"src": "2024-11-03-bigtech-earnings-en", "lines": "L80~L84"},
+        {"src": "2026-03-29-news", "lines": "L39,L42"}
+      ],
+      "companies": [
+        {"name": "브로드컴", "raw_name": "브로드컴", "country": "미국", "role": "구글·메타·오픈AI와 제휴해 설계, 주가 급등", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L81~L82"}]},
+        {"name": "마벨", "raw_name": "마벨", "country": "미국", "role": "설계 기술 보유", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L81"}]},
+        {"name": "인텔", "raw_name": "인텔", "country": "미국", "role": "설계 기술 보유", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L83"}]},
+        {"name": "AMD", "raw_name": "AMD", "country": "미국", "role": "설계 기술 보유", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L83"}]},
+        {"name": "미디어텍", "raw_name": "미디어텍", "country": "대만", "role": "설계 기술 보유", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L83"}]},
+        {"name": "ARM", "raw_name": "AR", "country": "영국", "role": "모바일 반도체 설계 전문에서 서버 시장으로 진출 중", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L83~L84"}]},
+        {"name": "시놉시스", "raw_name": "시놉시스/신시스", "country": "", "role": "빅테크가 설계한 반도체를 파운드리 생산용으로 재설계", "numbers": "엔비디아 투자 3조원",
+         "refs": [{"src": "2026-03-29-news", "lines": "L39,L42"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "설계 기술이 지식재산권으로 이미 묶여 있어 독자적으로 설계할 수 있는 회사가 거의 없고(2024-11-03), 빅테크가 추론칩을 아무리 자유롭게 설계해도 결국 파운드리에 맡기기 전 시놉시스를 거칠 수밖에 없어 엔비디아가 이 회사에 투자해 빅테크의 목을 잡으려는 전략이다(2026-03-29).",
+      "bottleneck_refs": [
+        {"src": "2024-11-03-bigtech-earnings-en", "lines": "L80~L81"},
+        {"src": "2026-03-29-news", "lines": "L44~L47"}
+      ],
+      "judgment": "2024-11-03: AI 반도체 밸류체인 중 설계 영역의 경쟁도 앞으로 굉장히 심해질 것. / 2026-03-29: 너네 추론칩 만들고 싶은 대로 만들어라, 결국은 파운드리 넘어가기 전에 무조건 시놉시스를 거칠 수밖에 없다 — 엔비디아는 시놉시스에 투자해서 빅테크의 목을 잡으려 한다."
+    },
+    {
+      "order": 3,
+      "name": "파운드리(생산·제조)",
+      "desc": "설계가 끝난 반도체를 의뢰받아 생산하는 곳은 TSMC·삼성전자·인텔 세 곳뿐이다(2024-11-03). 삼성전자·소프트뱅크·오픈AI 3사 동맹이 성사되면 삼성전자가 오픈AI용 반도체를 제조하는 파운드리 역할을 맡는다(2025-02-10). 재설계된 반도체는 삼성전자·인텔·TSMC가 위탁 생산한다(2026-03-29).",
+      "refs": [
+        {"src": "2024-11-03-bigtech-earnings-en", "lines": "L86~L91"},
+        {"src": "2025-02-10-samsung-deepseek-en", "lines": "L59~L64"},
+        {"src": "2026-03-29-news", "lines": "L40~L41"}
+      ],
+      "companies": [
+        {"name": "TSMC", "raw_name": "tsmc", "country": "대만", "role": "압도적 1위, 파운드리 생산", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L88"}, {"src": "2026-03-29-news", "lines": "L41"}]},
+        {"name": "삼성전자", "raw_name": "삼성", "country": "한국",
+         "role": "TSMC보다 3나노 공정을 먼저 개발했으나 D램에 투자하다 파운드리 주도권을 뺏겼다는 판단, 수율 미흡. 오픈AI·소프트뱅크 동맹 체결 시 오픈AI용 반도체·AI 기기 제조", "numbers": "",
+         "refs": [
+           {"src": "2024-11-03-bigtech-earnings-en", "lines": "L88, L91~L93"},
+           {"src": "2025-02-10-samsung-deepseek-en", "lines": "L60~L64"},
+           {"src": "2026-03-29-news", "lines": "L41"}
+         ]},
+        {"name": "인텔", "raw_name": "인텔", "country": "미국", "role": "파운드리 3사 중 하나, 수율 미흡", "numbers": "",
+         "refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L88, L91"}, {"src": "2026-03-29-news", "lines": "L41"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "반도체 생산을 의뢰받아 해줄 수 있는 파운드리가 세 곳밖에 없어 이 영역의 쏠림이 심화될 것(2024-11-03).",
+      "bottleneck_refs": [{"src": "2024-11-03-bigtech-earnings-en", "lines": "L87~L89"}],
+      "judgment": "2024-11-03: 삼성전자는 파운드리를 분사시켜 집중하는 편이 낫지 않겠냐는 개인 의견. / 2025-02-10: 삼성전자·소프트뱅크·오픈AI 동맹이 체결되면 삼성전자가 얻는 이익이 어마어마할 것."
+    }
+  ],
+  "notes": "2024-11-03에는 파운드리 세 곳 자체가 병목이라 짚었지만, 2026-03-29에는 병목이 파운드리 앞단인 EDA 재설계(시놉시스)로 옮겨갔다고 판단이 바뀌었다 — 엔비디아의 실제 투자(3조원)도 파운드리가 아닌 시놉시스로 향했다. 최신 판단이 이전 판단을 지우지 않으므로 둘 다 남긴다."
+}

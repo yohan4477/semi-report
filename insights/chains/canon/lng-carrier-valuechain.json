@@ -1,0 +1,36 @@
+{
+  "canon_slug": "lng-carrier-valuechain",
+  "section": "ship",
+  "chain_name": "LNG 운반선 밸류체인",
+  "one_line": "GTT가 멤브레인형 LNG 탱크 원천기술로 척당 로열티를 120억원에서 200억원 넘게 올려 받으며, 한국 조선업의 실속을 가져간다.",
+  "sources": [
+    {"src": "2025-04-08-news", "date": "2025-04-08"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "조선(건조)",
+      "desc": "한국이 LNG 선박을 잘 만든다.",
+      "refs": [{"src": "2025-04-08-news", "lines": "L154"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "LNG 탱크 원천기술(로열티)",
+      "desc": "천연가스를 액화해 배 안 탱크에 담는 기술의 원천 특허를 프랑스·스웨덴 업체가 갖고 있다. 스웨덴은 모스형, 프랑스 GTT는 멤브레인형 기술로 배 한 척당 로열티를 받아가며, 그 액수가 120억원에서 관세전쟁 국면에 200억원 넘게 올랐다.",
+      "refs": [{"src": "2025-04-08-news", "lines": "L155~L162"}],
+      "companies": [
+        {"name": "GTT", "raw_name": "GT", "country": "프랑스", "role": "멤브레인형 LNG 탱크 원천기술 보유, 배 한 척당 로열티를 수취",
+         "numbers": "척당 로열티 120억원 → 관세전쟁 이후 200억원 초과",
+         "refs": [{"src": "2025-04-08-news", "lines": "L158, L162"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "진행자는 GTT를 반도체 산업의 ASML급 '슈퍼갑'으로 비유함 — 관세전쟁이 났을 때 GTT CEO가 미국산 LNG선을 만드는 업체에는 로열티를 안 주겠다고 공언할 정도의 협상력을 가짐.",
+      "bottleneck_refs": [{"src": "2025-04-08-news", "lines": "L159~L160"}],
+      "judgment": "LNG선 발주가 늘어도 핵심 기술의 로열티는 외국 업체가 다 가져가므로, 한국 조선업에 실속이 없다는 판단."
+    }
+  ],
+  "notes": ""
+}

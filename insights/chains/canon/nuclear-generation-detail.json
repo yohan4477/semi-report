@@ -1,0 +1,165 @@
+{
+  "canon_slug": "nuclear-generation-detail",
+  "section": "nuclear",
+  "chain_name": "발전 단계 세부 사슬(설계~해체)",
+  "one_line": "설계·기기 제조는 이미 주가가 오른 반면, 시공·운영·해체는 아직 관심을 못 받고 있다",
+  "sources": [
+    {"src": "2025-06-29-nuclear-valuechain", "date": "2025-06-29"},
+    {"src": "2025-06-08-centrus", "date": "2025-06-08"}
+  ],
+  "parent": "nuclear-fuel-cycle", "parent_stage": "발전(발전소 건설·운영)",
+  "stages": [
+    {
+      "order": 1,
+      "name": "설계",
+      "desc": "최근 주목받는 SMR 관련 업체들이 몰려 있는 영역이다. GE, 웨스팅하우스, 히타치는 기존 원전을 설계해온 회사고, GE는 SMR도 함께 준비 중이다. 뉴스케일 파워와 오클로는 상장돼 있고, X에너지·테라파워·카이로스 파워 등은 아직 미상장이다. BWX는 상장돼 있으며 주로 군사용 SMR 시장을 겨냥한다. 2025-06-08 회차는 뉴스케일 파워·오클로·테라파워를 「발전소를 짓는 SMR 신생 제작사」로 소개했으나 회사 구성은 동일하다.",
+      "refs": [
+        {"src": "2025-06-29-nuclear-valuechain", "lines": "L139~L145"},
+        {"src": "2025-06-08-centrus", "lines": "L31~L32"}
+      ],
+      "companies": [
+        {"name": "GE", "raw_name": "지", "country": "", "role": "기존 원전 설계사, SMR도 준비 중",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L141"}]},
+        {"name": "웨스팅하우스", "raw_name": "웨스팅하우스", "country": "", "role": "기존 원전 설계사",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L141"}]},
+        {"name": "히타치", "raw_name": "히타치", "country": "일본", "role": "기존 원전 설계사",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L141"}]},
+        {"name": "뉴스케일 파워", "raw_name": "뉴케 파워", "country": "", "role": "SMR 설계사, 상장",
+         "numbers": "",
+         "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L143"},
+                  {"src": "2025-06-08-centrus", "lines": "L32"}]},
+        {"name": "오클로", "raw_name": "오클로", "country": "", "role": "SMR 설계사, 상장",
+         "numbers": "",
+         "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L143"},
+                  {"src": "2025-06-08-centrus", "lines": "L32"}]},
+        {"name": "X에너지", "raw_name": "X에너지", "country": "", "role": "SMR 설계사, 미상장",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L143"}]},
+        {"name": "테라파워", "raw_name": "테라파워", "country": "", "role": "SMR 설계사, 미상장",
+         "numbers": "",
+         "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L143"},
+                  {"src": "2025-06-08-centrus", "lines": "L32"}]},
+        {"name": "카이로스 파워", "raw_name": "카이로스 파워", "country": "", "role": "SMR 설계사, 미상장",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L143"}]},
+        {"name": "BWX", "raw_name": "BWX", "country": "", "role": "상장, 주로 군사용 SMR 시장 겨냥",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L144"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "설계 영역은 회사 수가 많아 경쟁이 매우 치열하다"
+    },
+    {
+      "order": 2,
+      "name": "발주(발전 사업자·하이퍼스케일러)",
+      "desc": "기존 발전 사업자와 하이퍼스케일러들이 SMR 업체에 자사가 필요한 전기를 생산할 발전소를 지어 달라고 의뢰한다.",
+      "refs": [{"src": "2025-06-08-centrus", "lines": "L33~L34"}],
+      "companies": [
+        {"name": "비스트라 에너지", "raw_name": "비스스트라 에너지", "country": "", "role": "발전 사업자, 발전소 건설 의뢰",
+         "numbers": "", "refs": [{"src": "2025-06-08-centrus", "lines": "L34"}]},
+        {"name": "컨스텔레이션 에너지", "raw_name": "컨스텔레이션 에너지", "country": "", "role": "발전 사업자, 발전소 건설 의뢰",
+         "numbers": "", "refs": [{"src": "2025-06-08-centrus", "lines": "L34"}]},
+        {"name": "아마존", "raw_name": "아마존", "country": "", "role": "하이퍼스케일러, 발전소 건설 의뢰",
+         "numbers": "", "refs": [{"src": "2025-06-08-centrus", "lines": "L34"}]},
+        {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "", "role": "하이퍼스케일러, 발전소 건설 의뢰",
+         "numbers": "", "refs": [{"src": "2025-06-08-centrus", "lines": "L34"}]},
+        {"name": "메타", "raw_name": "메타", "country": "", "role": "하이퍼스케일러, 발전소 건설 의뢰",
+         "numbers": "", "refs": [{"src": "2025-06-08-centrus", "lines": "L34"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "발전 사업자(유틸리티)는 주가가 꾸준히 오르되 급등하지는 않을 것으로 본다"
+    },
+    {
+      "order": 3,
+      "name": "기기 제조",
+      "desc": "주기기(연료를 가열해 증기를 만들고 그 증기로 터빈을 돌려 전기를 생산하는 데 관련된 기기)와 보조기기로 나뉜다. 한국의 두산 에너빌리티·현대중공업·효성중공업, 일본의 미쓰비시·IHI, 프랑스의 GE스팀·아레바, 스페인의 엔사, 중국 업체 등이 있다.",
+      "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L146~L154"}],
+      "companies": [
+        {"name": "두산 에너빌리티", "raw_name": "두산 에너빌리티", "country": "한국", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147, L154"}]},
+        {"name": "현대중공업", "raw_name": "현대중공업", "country": "한국", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "효성중공업", "raw_name": "효송중공업", "country": "한국", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "미쓰비시", "raw_name": "미스비C", "country": "일본", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "GE스팀", "raw_name": "G스톰", "country": "", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "아레바", "raw_name": "아레바", "country": "프랑스", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "엔사", "raw_name": "엔사", "country": "스페인", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147"}]},
+        {"name": "우진", "raw_name": "우진", "country": "한국", "role": "기기 제조",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L154"}]}
+      ],
+      "bottleneck": "mid",
+      "bottleneck_why": "원전이 전 세계에 자주 빠르게 지어지지 않아 기기 제조는 과점 시장이라고 진행자는 말한다",
+      "bottleneck_refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L147~L148"}],
+      "judgment": "우리나라 업체들이 잘하고 있는 영역이며, 두산 에너빌리티 주가가 이미 많이 올랐다"
+    },
+    {
+      "order": 4,
+      "name": "시공",
+      "desc": "벡텔과 플루어가 시공에서도 글로벌 최상위 업체다. 한국의 삼성물산, DL이앤씨(옛 대림산업), 현대건설도 시공을 잘하고 있으며, 특히 현대건설은 북유럽에서 수주 소식이 이어지고 있다. 러시아 로사톰도 시공을 하지만 투자할 수 없다.",
+      "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L155~L160"}],
+      "companies": [
+        {"name": "벡텔", "raw_name": "백텔", "country": "미국", "role": "시공, 글로벌 최상위",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L157"}]},
+        {"name": "플루어", "raw_name": "블루오르", "country": "미국", "role": "시공, 글로벌 최상위",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L157"}]},
+        {"name": "삼성물산", "raw_name": "삼성물산", "country": "한국", "role": "시공",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L158"}]},
+        {"name": "DL이앤씨", "raw_name": "DL 현대", "country": "한국", "role": "시공(옛 대림산업)",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L158"}]},
+        {"name": "현대건설", "raw_name": "현대 건설", "country": "한국", "role": "시공, 북유럽 수주",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L158~L159"}]},
+        {"name": "로사톰", "raw_name": "로사톰", "country": "러시아", "role": "시공, 투자 불가",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L160"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 5,
+      "name": "운영",
+      "desc": "발전소를 운영하는 회사는 대부분 원자력 발전을 보유한 국가에 포진돼 있다. 한국의 한수원·한전KPS, 러시아의 로사톰, 미국의 엑슬론(자회사 컨스텔레이션 에너지)이 대표적이다.",
+      "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L160~L168"}],
+      "companies": [
+        {"name": "한수원", "raw_name": "한수", "country": "한국", "role": "발전소 운영",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L161"}]},
+        {"name": "한전KPS", "raw_name": "한정 KPS", "country": "한국", "role": "발전소 운영",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L161"}]},
+        {"name": "엑슬론", "raw_name": "엑슬론", "country": "미국", "role": "발전소 운영, 컨스텔레이션 에너지의 모회사",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L161~L162"}]},
+        {"name": "컨스텔레이션 에너지", "raw_name": "컨스텔레이션 에너지", "country": "미국",
+         "role": "엑슬론의 청정에너지·원전 운영 자회사, 2022년 상장",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L161~L166"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 6,
+      "name": "해체",
+      "desc": "전 세계에서 영구정지된 원전이 215기이고 2050년까지 약 600기가 추가로 영구정지될 것으로 예상돼 시장이 계속 커질 전망이다. 원전 1기 해체 비용은 3~4조 원 수준이며, 지금까지 전 세계에서 25기가 해체됐는데 그중 대형 상업 원전은 20기뿐이고 전부 미국에서 이뤄졌다. 미국의 20기 중 40%를 플루어가 맡았고, 홀텍은 해체와 함께 해체 부지에 SMR을 설치하는 작업도 하고 있다.",
+      "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L169~L181"}],
+      "companies": [
+        {"name": "플루어", "raw_name": "플루어", "country": "미국", "role": "미국 해체 20기 중 40% 관여",
+         "numbers": "40%", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L177"}]},
+        {"name": "홀텍 인터내셔널", "raw_name": "홀텍", "country": "미국",
+         "role": "원전 해체 및 해체 부지에 SMR 설치, 아직 미상장",
+         "numbers": "", "refs": [{"src": "2025-06-29-nuclear-valuechain", "lines": "L178~L181"}]}
+      ],
+      "bottleneck": "",
+      "bottleneck_why": "",
+      "bottleneck_refs": [],
+      "judgment": "해체 시장은 아직 관심을 못 받고 있지만 앞으로 주목받을 것이며, 그중 홀텍과 플루어 두 회사가 유망하다"
+    }
+  ],
+  "notes": "진행자는 발전 단계 여섯 영역 중 설계·기기 제조는 이미 주가가 오른 반면, 발주·시공·운영·해체는 아직 관심을 못 받고 있어 앞으로가 더 중요하다고 본다(2025-06-29, L182~L190). 발주(발전 사업자·하이퍼스케일러) 마디는 2025-06-08 회차에서만 다뤄져 별도 마디로 끼워 넣었다."
+}

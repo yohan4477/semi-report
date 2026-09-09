@@ -1,0 +1,100 @@
+{
+  "canon_slug": "findata-value-chain",
+  "section": "findata",
+  "chain_name": "금융 데이터 산업 밸류체인",
+  "one_line": "AI가 표준화를 대신하면서 병목이 팩트셋·블룸버그 같은 가공업체에서 거래소 같은 원천 데이터 보유업체 쪽으로 옮겨간다.",
+  "sources": [
+    {"src": "2026-01-11-findata-basics", "date": "2026-01-11"},
+    {"src": "2026-01-18-passive-findata-screening", "date": "2026-01-18"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "데이터 생성·수집·저장·처리",
+      "desc": "주식·채권·ETF·선물·옵션·외환의 호가 자료, 기업 공시·재무제표, 기업·증시 관련 뉴스가 생성되며, 거래소가 이런 원천(로우) 데이터를 만들어내는 대표 업체다. 이런 데이터를 수집해서 저장하고 사용하기 편하게 분류하는 업체들이 있다.",
+      "refs": [
+        {"src": "2026-01-11-findata-basics", "lines": "L39~L43,L48~L52"},
+        {"src": "2026-01-18-passive-findata-screening", "lines": "L35~L37"}
+      ],
+      "companies": [
+        {"name": "아마존 웹서비스", "raw_name": "아마존 웹서비스", "country": "", "role": "데이터 저장·클라우드",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L50"}]},
+        {"name": "데이터브릭스", "raw_name": "데이터 브릭스", "country": "", "role": "데이터 저장·클라우드",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L50"}]},
+        {"name": "스노우플레이크", "raw_name": "스노우플레이크", "country": "", "role": "데이터 저장·클라우드",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L50"}]}
+      ],
+      "bottleneck": "high",
+      "bottleneck_why": "원천 데이터를 만들어낼 수 있는 업체(거래소)가 자체적으로 AI를 개발해 표준화까지 직접 하면서, 중간 단계(표준화)에 있던 업체를 위협하고 있다.",
+      "bottleneck_refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L38~L40"}],
+      "judgment": "데이터 자체보다 데이터를 보유하고 있는 업체가 훨씬 더 중요해지고 있다."
+    },
+    {
+      "order": 2,
+      "name": "데이터 표준화·가공",
+      "desc": "나라마다 다른 티커·국제증권식별번호(ISIN)·통화·시간대·회계기준·세법 기준을 하나의 형태로 표준화하고, 뉴스도 종목별로 태깅해 정리하는 업체들의 영역. 흩어진 원천 데이터를 모아 표준화·가공해서 고객에게 전달한다.",
+      "refs": [
+        {"src": "2026-01-11-findata-basics", "lines": "L54~L66"},
+        {"src": "2026-01-18-passive-findata-screening", "lines": "L31~L32"}
+      ],
+      "companies": [
+        {"name": "팩트셋", "raw_name": "팩트셋", "country": "", "role": "원천 데이터를 표준화·가공해 고객에게 전달",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L68"},
+                                  {"src": "2026-01-18-passive-findata-screening", "lines": "L32"}]},
+        {"name": "ICE", "raw_name": "아이스", "country": "", "role": "시카고 선물거래소 운영, 데이터 표준화·가공",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L69"}]},
+        {"name": "S&P", "raw_name": "SMP", "country": "", "role": "데이터 표준화·가공",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L70"}]},
+        {"name": "블룸버그", "raw_name": "블룸버그", "country": "", "role": "원천 데이터를 표준화·가공해 고객에게 전달",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L70"},
+                                  {"src": "2026-01-18-passive-findata-screening", "lines": "L32"}]}
+      ],
+      "bottleneck": "low",
+      "bottleneck_why": "데이터만 수집할 수 있으면 AI가 알아서 표준화·정리해줄 수 있게 되면서, 이 단계 업체들의 위상이 애매해지고 있다.",
+      "bottleneck_refs": [{"src": "2026-01-18-passive-findata-screening", "lines": "L33~L34,L39"}],
+      "judgment": "과거에는 이 업체들이 크게 각광받았지만 지금은 위상이 애매해져 가고 있다(2026-01-18)."
+    },
+    {
+      "order": 3,
+      "name": "데이터 분석·인사이트 제공",
+      "desc": "가공된 데이터를 분석해 통계를 내거나 AI를 학습시키고 시나리오 플래닝·퀀트 전략 검증을 하는 업체, 투자 리서치 페이퍼·인사이트 요약·산업 트렌드 분석을 내놓는 업체, 신용평가 업체, 인덱스·벤치마크를 제공하는 업체가 이 영역에 있다.",
+      "refs": [{"src": "2026-01-11-findata-basics", "lines": "L71~L85"}],
+      "companies": [
+        {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "데이터 분석·모델링",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L73"}]},
+        {"name": "MSCI", "raw_name": "MSCI", "country": "", "role": "지표·지수 개발",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L73"}]},
+        {"name": "무디스", "raw_name": "무디스", "country": "", "role": "신용평가",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L74,L80"}]},
+        {"name": "S&P", "raw_name": "SMP", "country": "", "role": "세계 3대 신용평가기관 중 하나, 인덱스(S&P500) 제공",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L80,L84"}]},
+        {"name": "피치", "raw_name": "피치", "country": "", "role": "세계 3대 신용평가기관 중 하나",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L80"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    },
+    {
+      "order": 4,
+      "name": "의사결정 지원",
+      "desc": "인사이트·정보를 가지고 의사결정을 내리거나 AI로 의사결정을 지원·시뮬레이션해주는 업체들의 영역.",
+      "refs": [{"src": "2026-01-11-findata-basics", "lines": "L86~L94"}],
+      "companies": [
+        {"name": "C3.ai", "raw_name": "A3 AI", "country": "", "role": "AI 의사결정 지원",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L89"}]},
+        {"name": "팔란티어", "raw_name": "팔란티어", "country": "", "role": "에이전틱 AI",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L90"}]},
+        {"name": "오라클", "raw_name": "오라클", "country": "", "role": "IT 업체",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L91"}]},
+        {"name": "IBM", "raw_name": "IBM", "country": "", "role": "IT 업체",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L91"}]},
+        {"name": "세일즈포스", "raw_name": "세일스보스", "country": "", "role": "IT 업체",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L91"}]},
+        {"name": "블랙록", "raw_name": "블랙록", "country": "", "role": "자산운용사, 자체 의사결정 AI '알라딘' 개발",
+         "numbers": "", "refs": [{"src": "2026-01-11-findata-basics", "lines": "L93~L94"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [], "judgment": ""
+    }
+  ],
+  "notes": "2026-01-11 회차는 전체를 데이터 인프라 저장·유통 / 금융 데이터 생성·분석·평가 / AI 기반 의사결정 지원의 세 그룹으로 재단순화하고, 두 번째 그룹(표준화·분석 단계)에 속한 회사들을 FDMI(Financial Data and Market Infrastructure) 8개사로 지칭하며 다음 편부터 다룰 예정이라고 밝힌다(개별 사명은 이 편에 없음). 일주일 뒤(2026-01-18) 회차에서 진행자는 이 표준화 단계(2번 마디)의 마진 우위가 AI 자동화 때문에 원천 데이터를 쥔 1번 마디(거래소)로 옮겨가고 있다고 판단을 뒤집는다 — 표준화 업체의 위상이 예전만 못하다는 것."
+}

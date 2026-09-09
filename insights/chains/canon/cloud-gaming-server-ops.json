@@ -1,0 +1,41 @@
+{
+  "canon_slug": "cloud-gaming-server-ops",
+  "section": "platform",
+  "chain_name": "클라우드 게임이 지나가는 서버 운영사",
+  "one_line": "PC·콘솔 가격이 오를수록 게임이 클라우드로 옮겨가고, 그 서버를 아마존·마이크로소프트·구글이 돌린다",
+  "sources": [
+    {"src": "2026-08-09-news-to-ideas-en", "date": "2026-08-09"}
+  ],
+  "parent": "", "parent_stage": "",
+  "stages": [
+    {
+      "order": 1,
+      "name": "게임 소프트웨어",
+      "desc": "반도체 가격 상승으로 PC·콘솔 가격이 오르자, PC·콘솔 대신 온라인에 게임 소프트웨어를 올려 사용한 만큼 과금하는 구조로 이동.",
+      "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L138~L141"}],
+      "companies": [],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": ""
+    },
+    {
+      "order": 2,
+      "name": "클라우드 서버 운영",
+      "desc": "게임 소프트웨어가 결국 클라우드 서버에 올라가고, 그 서버를 운영하는 회사가 수혜를 받는다.",
+      "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L142~L144"}],
+      "companies": [
+        {"name": "아마존", "raw_name": "아마존", "country": "",
+         "role": "클라우드 서버 운영사",
+         "numbers": "", "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L144"}]},
+        {"name": "마이크로소프트", "raw_name": "마이크로소프트", "country": "",
+         "role": "클라우드 서버 운영사",
+         "numbers": "", "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L144"}]},
+        {"name": "구글", "raw_name": "구글", "country": "",
+         "role": "클라우드 서버 운영사",
+         "numbers": "", "refs": [{"src": "2026-08-09-news-to-ideas-en", "lines": "L144"}]}
+      ],
+      "bottleneck": "", "bottleneck_why": "", "bottleneck_refs": [],
+      "judgment": "클라우드 게임이 뜨면 결국 클라우드 서버 운영사들이 좋아질 수밖에 없다."
+    }
+  ],
+  "notes": ""
+}
