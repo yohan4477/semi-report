@@ -23,11 +23,28 @@ def _box(x, y, w, h, label, sub='', key=False, rx=8):
     return ''.join(out)
 
 
+NUM = '①②③④⑤⑥⑦⑧⑨'
+
+
+def _num(x, y, n):
+    """화살표에 붙는 동그라미 번호. ①은 그 자체가 동그라미라 테두리를 두르지 않는다
+    — 선을 가리는 바탕만 종이색 원으로 깐다(yohan-report 규칙, 2026-09-09)."""
+    return ('<circle cx="%.0f" cy="%.0f" r="10" fill="var(--paper,#fff)"/>'
+            '<text class="t-lab" x="%.0f" y="%.0f" text-anchor="middle">%s</text>'
+            % (x, y, x, y + 5, NUM[n - 1]))
+
+
+def _legend(y, items):
+    """판 아래 범례. 화살표 옆에 문장을 붙이지 않고 여기로 내린다."""
+    return ''.join('<text class="t-sm" x="20" y="%.0f">%s %s</text>'
+                   % (y + i * 22, NUM[i], t) for i, t in enumerate(items))
+
+
 # ── 1부 — 번 돈이 어디로 가나 ────────────────────────────────────────────────
 # 예전에는 증산이 곧 미국 장비 구매였고, 지금은 그 돈이 중국 안에서 한 바퀴 돈다.
 # 화자가 「승수 효과」라 부른 대목이라 오른쪽에만 되돌아오는 선을 둔다.
 def loop_svg():
-    p = ['<svg class="epoch" viewBox="0 0 640 330" role="img">']
+    p = ['<svg class="epoch" viewBox="0 0 640 396" role="img">']
     p.append('<text class="t-role" x="8" y="18">예전 (5~10년 전)</text>')
     p.append('<text class="t-role" x="336" y="18">지금</text>')
     p.append('<line x1="320" y1="30" x2="320" y2="320" stroke="var(--line,#d8d8d8)" '
@@ -36,23 +53,27 @@ def loop_svg():
     # 왼쪽 — 돈이 밖으로 나간다
     p.append(_box(20, 40, 280, 56, 'CXMT 가 번 돈', '메모리 값이 4배에서 5~6배로 올랐다'))
     p.append('<path class="flow-cash" d="M160 96 L160 158"/>')
-    p.append('<text class="t-cash t-sm" x="170" y="132">장비를 사러 나간다</text>')
+    p.append(_num(160, 127, 1))
     p.append(_box(20, 166, 280, 56, '미국·일본·네덜란드 장비사',
                   'ASML · 도쿄일렉트론 · 미국 장비회사'))
-    p.append('<text class="t-sm" x="160" y="252" text-anchor="middle">'
-             '증산은 곧 해외 장비 구매였다</text>')
+
 
     # 오른쪽 — 돈이 중국 안에서 돈다
     p.append(_box(348, 40, 272, 50, 'CXMT 가 번 돈', key=True))
     p.append('<path class="flow-cash" d="M484 90 L484 132"/>')
-    p.append(_box(348, 140, 272, 50, '중국 장비사 · 화웨이 · 중국 AI 데이터센터'))
+    p.append(_num(484, 111, 2))
+    p.append(_box(348, 138, 272, 56, '중국 장비사 · 화웨이', '중국 AI 데이터센터'))
     p.append('<path class="flow-cash" d="M484 190 L484 232"/>')
+    p.append(_num(484, 211, 3))
     p.append(_box(348, 240, 272, 50, '중국 안에서 장비가 만들어진다',
                   'AMEC · 나우라, R&D 급 DUV 까지 왔다'))
     # 되돌아오는 고리 — 오른쪽 바깥을 타고 위로
     p.append('<path class="flow-cash" d="M620 265 C 636 265 636 65 624 65"/>')
-    p.append('<text class="t-cash t-sm" x="612" y="176" text-anchor="end">'
-             'CXMT 경쟁력으로 되돌아온다</text>')
+    p.append(_num(629, 215, 4))
+    p.append(_legend(320, ['번 돈이 해외 장비사로 나간다',
+                           '번 돈이 중국 장비사·화웨이·중국 AI 데이터센터로 간다',
+                           '그 돈으로 중국 안에서 장비가 만들어진다',
+                           '그 장비가 CXMT 경쟁력으로 되돌아온다']))
     p.append('</svg>')
     return ''.join(p)
 
