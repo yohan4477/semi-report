@@ -18,7 +18,7 @@ BH = 34             # 한 줄짜리 상자 높이
 LINE = 15           # 상자 안 줄 간격
 VGAP = 14           # 잎 상자와 잎 상자 사이. 두 줄 상자도 이만큼은 떨어진다
 GAP = 34            # 열과 열 사이. 연산자 동그라미가 이 사이에 선다
-MARK_IN = 0         # 번호는 상자 왼쪽 끝, 위 테두리 위에 얹는다
+MARK_IN = 12        # 번호가 상자 안에서 왼쪽·위 테두리에서 떨어지는 거리
 
 
 def _node(label, op=None, kids=()):
@@ -111,8 +111,8 @@ def tree_svg(label, widths, root, marks=()):
     _walk(root)
     for lab, num in marks:
         n = seen[lab]
-        # 왼쪽 끝 위 테두리에 얹는다 — 글자 줄보다 위라 이름과 안 부딪친다
-        out.append(bf._mark(n['x'] + MARK_IN, n['y'] - _h(n) // 2, num))
+        # 상자 안 왼쪽 위 구석에 붙인다. 테두리를 물지 않을 만큼만 들인다
+        out.append(bf._mark(n['x'] + MARK_IN, n['y'] - _h(n) // 2 + MARK_IN, num))
     return _svg(W, root['bot'] - VGAP + TOP, label, ''.join(out))
 
 
