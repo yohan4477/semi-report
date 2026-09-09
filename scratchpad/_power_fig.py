@@ -683,3 +683,81 @@ FIG_EMERGENCY = _svg(W, _QY + 5 * _QSTEP - 4, '긴급경매 대금이 흘러가�
     [_qbox(i, c, p) for i, (c, p) in enumerate(_QCELLS)]
     + [_a(W // 2, _QY + i * _QSTEP + _QH, W // 2, _QY + (i + 1) * _QSTEP)
        for i in range(4)]))
+
+
+# ── 도해 24. 용량 청산가가 뛴 폭 ─────────────────────────────────────
+# 같은 축(메가와트·하루당 달러) 하나. 상한은 가로 점선으로 얹는다 — 막대가 아니라 선이다.
+_PMAX, _PH2, _PBASE = 450.0, 150, 210
+_PBARS = [(29, '29달러', '2024/25년', '', True), (270, '270달러', '2025/26년', '', True),
+          (450, '450달러', '2025/26년', '일부 지역', False)]
+_PW2, _PG3 = 130, 40
+_PX0 = (W - (3 * _PW2 + 2 * _PG3)) // 2
+_PCAP = _PBASE - int(_PH2 * 329 / _PMAX)
+
+
+def _pbar(i, v, lab, when, note, solid):
+    x = _PX0 + i * (_PW2 + _PG3)
+    h = int(_PH2 * v / _PMAX)
+    y = _PBASE - h
+    out = ['<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+           'stroke-width="1.6"/>' % (x, y, _PW2, h, 'var(--sunk)' if solid else 'none',
+                                     INK if i == 1 else INK3),
+           _t(x + _PW2 // 2, y - 8, lab, 't-lab'),
+           _t(x + _PW2 // 2, _PBASE + 18, when, 't-sm')]
+    if note:
+        out.append(_t(x + _PW2 // 2, _PBASE + 34, note, 't-sm'))
+    return ''.join(out)
+
+
+FIG_CLEAR = _svg(W, 250, '용량 청산가가 뛴 폭', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_PX0 - 16, _PBASE, W - _PX0 + 16, _PBASE, INK3),
+     _lt(_PX0 - 16, 22, '메가와트·하루당 달러', 't-sm', True),
+     '<path d="M%d %d H%d" stroke="%s" stroke-width="1.2" stroke-dasharray="6 4"/>'
+     % (_PX0 - 16, _PCAP, W - _PX0 + 16, INK3),
+     _lt(W - _PX0 + 22, _PCAP + 4, '상한 329', 't-sm', False)]
+    + [_pbar(i, *b) for i, b in enumerate(_PBARS)]))
+
+
+# ── 도해 25. 낙찰가가 가구 청구서가 되는 계산 ────────────────────────
+# 저자가 밝힌 환산 순서를 그대로 사슬로 세운다. 사슬 상자는 한 크기.
+_BSTEP, _BH, _BY = 58, 44, 14
+_BCELLS = [['청산가 하루 329달러'], ['용량대금 160억 달러 · 메가와트당 12만 달러'],
+           ['부하율 40%를 적용 · 메가와트시당 34달러'], ['킬로와트시당 3.4센트'],
+           ['월 880킬로와트시를 곱하면 월 29.9달러']]
+
+FIG_BILL = _svg(W, _BY + 5 * _BSTEP - 4, '낙찰가가 가구 청구서가 되기까지', _DEFS + ''.join(
+    [_box(60, _BY + i * _BSTEP, W - 120, _BH, c, INK if i == 4 else INK3,
+          1.8 if i == 4 else 1.5) for i, c in enumerate(_BCELLS)]
+    + [_a(W // 2, _BY + i * _BSTEP + _BH, W // 2, _BY + (i + 1) * _BSTEP)
+       for i in range(4)]))
+
+
+# ── 도해 26. 텍사스 공동입지 규모 ────────────────────────────────────
+_LMAX2, _LH3, _LBASE2 = 2885.0, 140, 196
+_LBARS2 = [(2885, '2,885', '알려진 전체', '2026년 6월', True),
+           (1200, '1,200', 'AWS 코만치피크', '순계량', False),
+           (525.5, '525.5', '크루소 굿나이트', '순계량', False)]
+_LW2, _LG3 = 168, 30
+_LX02 = (W - (3 * _LW2 + 2 * _LG3)) // 2
+
+
+def _lbar2(i, v, lab, who, note, hot):
+    x = _LX02 + i * (_LW2 + _LG3)
+    h = int(_LH3 * v / _LMAX2)
+    y = _LBASE2 - h
+    return ''.join([
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s" '
+        'stroke-width="1.6"/>' % (x, y, _LW2, h, 'var(--sunk)' if hot else 'none',
+                                  INK if hot else INK3),
+        _t(x + _LW2 // 2, y - 8, lab, 't-lab'),
+        _t(x + _LW2 // 2, _LBASE2 + 18, who, 't-sm'),
+        _t(x + _LW2 // 2, _LBASE2 + 34, note, 't-sm'),
+    ])
+
+
+FIG_COLO = _svg(W, 240, '텍사스 공동입지 규모', ''.join(
+    ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
+     % (_LX02 - 16, _LBASE2, W - _LX02 + 16, _LBASE2, INK3),
+     _lt(_LX02 - 16, 22, '메가와트', 't-sm', True)]
+    + [_lbar2(i, *b) for i, b in enumerate(_LBARS2)]))
