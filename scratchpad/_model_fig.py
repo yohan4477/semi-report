@@ -118,38 +118,55 @@ FIG_STACK = _svg(W, 420, '청구서에 찍히는 다섯 줄과 안 찍히는 세
 
 
 # ── 절 4. 고장 한 번이 몇 장의 시간을 먹나 ──────────────────────────────
-# 곱해지는 대상이 다르다는 것이 이 그림의 전부다. 셋을 가로로 세우면 176픽셀 칸에
-# 수식이 안 들어가 글자가 테두리를 넘는다(2026-09-09) — 세로로 쌓아 한 줄을 넓게 쓴다.
-_MODE = [('차가운 예비', '작업 크기 × (인지 + 체크포인트/2 + 초기화 + 수리)',
-          '4,096장이 통째로 멎는다', 4096),
-         ('뜨거운 예비', '작업 크기 × (인지 + 체크포인트/2 + 초기화) + 폭발 반경 × 수리',
-          '4,096장이 멎고 수리만 64장', 4096),
-         ('고장 견딤', '작업 크기 × (인지 + 전환) + 폭발 반경 × 수리',
-          '64장만 수리를 기다린다', 64)]
-_MY, _MSTEP, _MW = 76, 74, 600
-_MBX, _MBW = 430, 190          # 막대가 놓이는 자리
+# 수식 셋을 줄로 늘어놓으면 어느 항이 다른지 눈이 못 찾는다(2026-09-10). 시간 항을
+# 세로 열로 세우고 줄마다 그 항에 곱해지는 장수를 적으면, 다른 자리가 열로 맞춰진다.
+_DRV = ['인지', '체크포인트 ÷2', '초기화', '전환', '수리']
+_JOB, _RAD, _NONE = '작업 크기', '폭발 반경', '·'
+# 원문 L131·L143 의 식 셋을 항별로 편 것이다. 값이 아니라 곱해지는 대상이다
+_MODE = [('차가운 예비', '작업이 통째로 수리를 기다린다',
+          [_JOB, _JOB, _JOB, _NONE, _JOB]),
+         ('뜨거운 예비', '수리만 폭발 반경으로 줄어든다',
+          [_JOB, _JOB, _JOB, _NONE, _RAD]),
+         ('고장 견딤', '체크포인트 손실이 없다',
+          [_JOB, _NONE, _NONE, _JOB, _RAD])]
+_GX, _GLAB, _GCW = 20, 168, 88       # 왼쪽 여백 · 이름 칸 폭 · 항 한 칸 폭
+_GHY, _GY, _GRH = 78, 96, 62         # 머리 줄 · 첫 줄 · 줄 높이
 
 
-def _mode_row(i):
-    name, formula, note, n = _MODE[i]
-    y = _MY + i * _MSTEP
+def _gcol(j):
+    """항 j 번째 칸의 왼쪽 x. 손으로 안 찍는다(yohan-figure 규칙 2)."""
+    return _GX + _GLAB + j * _GCW
+
+
+def _grid_row(i):
+    name, note, cells = _MODE[i]
+    y = _GY + i * _GRH
     on = (i == 2)
-    return ''.join([
-        _lt(20, y + 14, '%s — %s' % (name, note), bold=on),
-        '<rect x="%d" y="%d" width="%.1f" height="14" rx="2" fill="%s"/>'
-        % (_MBX, y + 2, _MBW * (n / 4096.0) ** 0.5, INK if on else INK3),
-        _box(20, y + 22, _MW, 36, [formula], INK if on else INK3, 2.0 if on else 1.5),
-    ])
+    out = [_lt(_GX, y + 22, name, bold=on),
+           _lt(_GX, y + 40, note, 't-sm', False)]
+    for j, v in enumerate(cells):
+        x = _gcol(j)
+        # 윗줄과 달라진 칸만 테두리를 두른다. 어디서 갈리는지가 이 그림의 전부다
+        if i and v != _MODE[i - 1][2][j]:
+            out.append('<rect x="%d" y="%d" width="%d" height="34" rx="6" fill="none" '
+                       'stroke="%s" stroke-width="1.8"/>' % (x + 4, y + 6, _GCW - 8, INK))
+        out.append(_t(x + _GCW // 2, y + 28, v,
+                      't-lab' if v != _NONE else 't-sm'))
+    return ''.join(out)
 
 
-FIG_GOODPUT = _svg(W, 392, '같은 고장인데 곱해지는 장수가 예순네 배 다르다', ''.join(
-    [_lt(20, 30, '고장 한 번 → 잃는 GPU-시간'),
-     _lt(20, 52, '클러스터 5,184장 · 평균 작업 4,096장 · 폭발 반경 64장 (그림 019)',
+FIG_GOODPUT = _svg(W, 350, '식 셋을 항별로 세우면 다른 자리가 세 칸뿐이다', ''.join(
+    [_lt(_GX, 30, '고장 한 번 → 잃는 GPU-시간. 칸에 적힌 것은 그 시간에 곱해지는 장수'),
+     _lt(_GX, 52, '클러스터 5,184장 · 평균 작업 4,096장 · 폭발 반경 64장 (그림 019)',
          't-sm', False)]
-    + [_mode_row(i) for i in range(3)]
-    + [_legend(316, ['위 둘은 작업 전체가 멎는다 — 체크포인트 이후 계산이 날아간다',
-                     '아래는 작업이 계속 돈다 — 고장 난 랙 하나만 수리를 기다린다',
-                     '막대는 수리 시간에 곱해지는 장수, 제곱근 눈금이다'])]
+    + [_t(_gcol(j) + _GCW // 2, _GHY, d, 't-lab') for j, d in enumerate(_DRV)]
+    + ['<path d="M%d %d H%d" stroke="var(--line)" stroke-width="1"/>'
+       % (_GX, _GHY + 10, _gcol(len(_DRV)))]
+    + [_grid_row(i) for i in range(3)]
+    + [_mark(_gcol(3) + _GCW // 2, _GY + 2 * _GRH - 8, 1),
+       _mark(_gcol(4) + _GCW // 2, _GY + _GRH - 8, 2)]
+    + [_legend(286, ['전환이 수리를 대신한다 — 예비 노드로 넘어가고 작업은 계속 돈다',
+                     '수리 시간에 작업 전체가 아니라 고장 난 랙만 곱해진다'])]
 ))
 
 
