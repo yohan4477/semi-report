@@ -200,58 +200,87 @@ FIG_CHAIN = _svg(W, 316, '서버 값 한 줄이 GPU 시간당 단가가 되기�
 
 
 # ── 절 8. 빌릴 때와 살 때 문턱이 다르다 ─────────────────────────────────
-# 가로 축은 H200 대비 처리량 비율 하나뿐이다. 문턱 둘을 세로선으로 세우고
-# 작업 셋의 실측 구간을 그 위에 얹는다.
-# 값 글자는 판 오른쪽 고정 칸에 세운다. 막대 끝에 붙이면 1.00 점선을,
-# 막대 왼쪽에 붙이면 0.82 문턱선을 넘어 겹친다(2026-09-09)
-_TX0, _TXW = 130, 350
-_TVAL = 496
-_TLO, _THI = 0.70, 1.05
+# 값만 늘어놓으면 문턱을 넘는 것이 무슨 뜻인지 안 읽힌다(2026-09-09 지적).
+# 문턱 둘이 축을 세 구간으로 가르고, 구간마다 결론이 다르다 — 그것이 이 그림이다.
+# 구간 이름을 축 위에 적고, 문턱이 어디서 나온 값인지도 그 자리에 적는다.
+_TX0, _TXW = 96, 448
+# 오른쪽 끝을 1.22 까지 늘린다. 1.06 에서 끊으면 셋째 구간이 75픽셀이라
+# 「MI300X가 싸다」가 띠를 넘는다(2026-09-09)
+_TLO, _THI = 0.70, 1.22
+_TVAL = 560
 
 
 def _tx(v):
     return _TX0 + _TXW * (v - _TLO) / (_THI - _TLO)
 
 
+# (이름, 낮은 값, 높은 값) — 원문이 낸 손익분기 임대료를 H200 시세로 나눈 비율
 _WORK = [('번역·대화 1k/1k', 0.76, 0.76),
          ('추론형 1k/4k', 0.84, 0.96),
          ('요약 4k/1k', 0.84, 0.96)]
+_OWN, _RENT = 0.82, 1.00
+_ZONE = [(_TLO, _OWN, '사도 빌려도', 'H200이 싸다'),
+         (_OWN, _RENT, '사면 MI300X', '빌리면 H200'),
+         (_RENT, _THI, '사도 빌려도', 'MI300X가 싸다')]
+_ZY, _ROWY, _ROWSTEP = 52, 126, 40
+
+
+def _zone(i):
+    """구간 띠와 그 구간의 결론. 가운데 구간만 짙게 — 답이 갈리는 자리다."""
+    lo, hi, l1, l2 = _ZONE[i]
+    x0, x1 = _tx(lo), _tx(hi)
+    mid = (x0 + x1) / 2
+    return ''.join([
+        # 가운데 구간은 채우기를 짙게 하지 않는다 — 회색 위 회색 글자가 안 읽힌다
+        # (2026-09-09). 채우기는 옅게 두고 테두리로 강조한다
+        '<rect x="%.1f" y="%d" width="%.1f" height="34" rx="4" fill="%s" '
+        'fill-opacity="%s" stroke="%s" stroke-width="%s"/>'
+        % (x0, _ZY, x1 - x0, INK3, '.16' if i == 1 else '.07',
+           INK if i == 1 else 'none', '1.8' if i == 1 else '0'),
+        _t(mid, _ZY + 15, l1, 't-sm'),
+        _t(mid, _ZY + 29, l2, 't-lab'),
+    ])
 
 
 def _work_row(i):
-    y = 96 + i * 46
     name, lo, hi = _WORK[i]
+    y = _ROWY + i * _ROWSTEP
     x1, x2 = _tx(lo), _tx(hi)
-    win = lo > 0.82
-    col = INK if win else INK3
-    # 구간이 아니라 값 하나면 막대가 실 한 오라기로 보인다 — 점으로 찍는다
-    mark = ('<circle cx="%.1f" cy="%d" r="7" fill="%s"/>' % (x1, y + 12, col)
+    col = INK if lo > _OWN else INK3
+    mark = ('<circle cx="%.1f" cy="%d" r="7" fill="%s"/>' % (x1, y + 11, col)
             if lo == hi else
-            '<rect x="%.1f" y="%d" width="%.1f" height="20" rx="3" fill="%s"/>'
+            '<rect x="%.1f" y="%d" width="%.1f" height="18" rx="3" fill="%s"/>'
             % (x1, y + 2, x2 - x1, col))
     return ''.join([
-        _lt(20, y + 18, name, bold=False),
+        _lt(20, y + 16, name, bold=False),
         mark,
-        _lt(_TVAL, y + 18,
+        _lt(_TVAL, y + 16,
             '%.2f' % lo if lo == hi else '%.2f~%.2f' % (lo, hi), 't-sm', False),
     ])
 
 
-FIG_THRESHOLD = _svg(W, 306, '문턱 0.82를 넘느냐로 소유의 답이 갈린다', ''.join(
-    [_lt(20, 30, 'MI300X 의 H200 대비 처리량'),
-     _lt(20, 52, '가로축은 H200 을 1 로 놓은 비율이다', 't-sm', False)]
-    + ['<path d="M%.1f 64 V236" stroke="var(--line)" stroke-width="1"/>' % _tx(v)
-       for v in (0.70, 0.80, 0.90, 1.00)]
-    + ['<text x="%.1f" y="80" text-anchor="middle" class="t-sm">%.2f</text>' % (_tx(v), v)
-       for v in (0.70, 0.80, 0.90, 1.00)]
+_TICKS = (0.70, 0.80, 0.90, 1.00, 1.10)
+_BOT = _ROWY + 3 * _ROWSTEP
+
+FIG_THRESHOLD = _svg(W, 358, '문턱 둘이 축을 세 구간으로 나눈다', ''.join(
+    [_lt(20, 26, 'MI300X 가 H200 대비 내는 처리량 — 오른쪽으로 갈수록 빠르다'),
+     _lt(20, 44, 'H200 을 1 로 놓은 비율이다', 't-sm', False)]
+    + [_zone(i) for i in range(3)]
+    # 눈금은 띠 아래에서 시작해 마지막 줄까지
+    + ['<path d="M%.1f %d V%d" stroke="var(--line)" stroke-width="1"/>'
+       % (_tx(v), _ZY + 34, _BOT) for v in _TICKS]
+    + ['<text x="%.1f" y="%d" text-anchor="middle" class="t-sm">%.2f</text>'
+       % (_tx(v), _ZY + 48, v) for v in _TICKS]
     + [_work_row(i) for i in range(3)]
-    # 문턱 둘 — 사는 값과 빌리는 값
-    + ['<path d="M%.1f 88 V236" stroke="%s" stroke-width="2"/>' % (_tx(0.82), INK),
-       _t(_tx(0.82), 250, '사서 쓸 때 문턱 0.82', 't-lab'),
-       '<path d="M%.1f 88 V236" stroke="%s" stroke-width="1.5" '
-       'stroke-dasharray="5 4"/>' % (_tx(1.00), INK3),
-       _t(_tx(1.00), 250, '빌릴 때 문턱 1.00', 't-lab'),
-       _box(20, 258, W - 40, 44,
-            ['왼쪽 문턱은 우리가 자기 TCO 로 계산한 것이고 원문에는 없다',
-             '점과 막대의 값은 원문이 낸 손익분기 임대료를 뒤집어 낸 비율이다'])]
+    # 문턱 둘. 어디서 나온 값인지를 선 아래에 바로 적는다
+    + ['<path d="M%.1f %d V%d" stroke="%s" stroke-width="2.4"/>'
+       % (_tx(_OWN), _ZY, _BOT, INK),
+       _t(_tx(_OWN), _BOT + 18, '0.82', 't-lab'),
+       _t(_tx(_OWN), _BOT + 34, '$1.34 ÷ $1.63', 't-sm'),
+       _t(_tx(_OWN), _BOT + 48, '자기 TCO 비', 't-sm'),
+       '<path d="M%.1f %d V%d" stroke="%s" stroke-width="1.6" '
+       'stroke-dasharray="5 4"/>' % (_tx(_RENT), _ZY, _BOT, INK3),
+       _t(_tx(_RENT), _BOT + 18, '1.00', 't-lab'),
+       _t(_tx(_RENT), _BOT + 34, '$2.50 ÷ $2.50', 't-sm'),
+       _t(_tx(_RENT), _BOT + 48, '임대료 비', 't-sm')]
 ))
