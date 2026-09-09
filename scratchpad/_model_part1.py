@@ -43,7 +43,7 @@ HEAD_CLUSTER = _head('⑪', 'model-cluster',
                      '클러스터 총소유비용 — 발표된 계산기를 다시 세우면 굿풋에서 어긋난다',
                      'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 4장 · 한국어 변환본 1편')
 HEAD_INFER = _head('⑫', 'model-infer',
-                   '추론 원가 — 어긋난 여덟 칸은 반올림이었고, 빌릴 때와 살 때 답이 뒤집힌다',
+                   '추론 원가 — AMD 와 엔비디아 중 어느 쪽이 싼지는 빌리느냐 사느냐로 갈린다',
                    'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 3장')
 
 GROUPS_CLUSTER = [('무엇을 왜 다시 세우나', 1, 2),
