@@ -129,13 +129,17 @@ _MODE = [('차가운 예비', '작업이 통째로 수리를 기다린다',
           [_JOB, _JOB, _JOB, _NONE, _RAD]),
          ('고장 견딤', '체크포인트 손실이 없다',
           [_JOB, _NONE, _NONE, _JOB, _RAD])]
-_GX, _GLAB, _GCW = 20, 148, 94       # 왼쪽 여백 · 이름 칸 폭 · 항 한 칸 폭
+_GX, _GLAB, _GCW = 20, 132, 94       # 왼쪽 여백 · 이름 칸 폭 · 항 한 칸 기본 폭
+# 열 폭은 그 열에서 가장 넓은 글자에 맞춘다. 한 폭으로 두면 「체크포인트」가
+# 다음 열의 + 를 물었다(2026-09-10)
+_GWS = [_GCW, _GCW + 14, _GCW, _GCW, _GCW]
+_GTX = 7                             # 칸 안 글자의 왼쪽 들여쓰기
 _GHY, _GY, _GRH = 76, 104, 62         # 머리 줄 · 첫 줄 · 줄 높이
 
 
 def _gcol(j):
     """항 j 번째 칸의 왼쪽 x. 손으로 안 찍는다(yohan-figure 규칙 2)."""
-    return _GX + _GLAB + j * _GCW
+    return _GX + _GLAB + sum(_GWS[:j])
 
 
 def _grid_row(i):
@@ -144,16 +148,17 @@ def _grid_row(i):
     y = _GY + i * _GRH
     on = (i == 2)
     out = [_lt(_GX, y + 22, name, bold=on),
-           _lt(_GX, y + 40, note, 't-sm', False)]
+           _lt(_GX, y + 46, note, 't-sm', False)]
     for j, v in enumerate(cells):
         x = _gcol(j)
         # 윗줄과 달라진 칸만 테두리를 두른다. 어디서 갈리는지가 이 그림의 전부다
         if i and v != _MODE[i - 1][2][j]:
             out.append('<rect x="%d" y="%d" width="%d" height="34" rx="6" fill="none" '
-                       'stroke="%s" stroke-width="1.8"/>' % (x + 3, y + 6, _GCW - 6, INK))
-        out.append(_t(x + _GCW // 2, y + 28,
-                      '×%s' % v if v != _NONE else _NONE,
-                      't-lab' if v != _NONE else 't-sm'))
+                       'stroke="%s" stroke-width="1.8"/>' % (x + 1, y + 8, _GWS[j] - 6, INK))
+        # 칸 글자는 왼쪽에 붙인다. 가운데로 두면 줄마다 × 자리가 어긋나 세로로 안 읽힌다
+        out.append(_lt(x + _GTX, y + 28,
+                       '×%s' % v if v != _NONE else _NONE,
+                       't-lab' if v != _NONE else 't-sm', False))
     return ''.join(out)
 
 
@@ -161,15 +166,15 @@ FIG_GOODPUT = _svg(W, 358, '식 셋을 항별로 세우면 다른 자리가 세 
     [_lt(_GX, 30, '고장 한 번 → 잃는 GPU-시간. 열이 시간 항, 칸이 거기 곱해지는 장수'),
      _lt(_GX, 52, '클러스터 5,184장 · 평균 작업 4,096장 · 폭발 반경 64장 (그림 019)',
          't-sm', False)]
-    + [_t(_gcol(j) + _GCW // 2, _GHY + k * 15, d, 't-lab')
+    + [_lt(_gcol(j) + _GTX, _GHY + k * 15, d, 't-lab')
        for j, lines in enumerate(_DRV) for k, d in enumerate(lines)]
     # 항끼리는 더한다. 줄마다 같은 셈이라 머리 줄에 한 번만 적는다
-    + [_t(_gcol(j), _GHY + 15, '+', 't-sm') for j in range(1, len(_DRV))]
+    + [_lt(_gcol(j) - 7, _GHY, '+', 't-sm', False) for j in range(1, len(_DRV))]
     + ['<path d="M%d %d H%d" stroke="var(--line)" stroke-width="1"/>'
        % (_GX, _GHY + 22, _gcol(len(_DRV)))]
     + [_grid_row(i) for i in range(3)]
-    + [_mark(_gcol(3) + _GCW // 2, _GY + 2 * _GRH - 8, 1),
-       _mark(_gcol(4) + _GCW // 2, _GY + _GRH - 8, 2)]
+    + [_mark(_gcol(3) + _GWS[3] - 12, _GY + 2 * _GRH - 6, 1),
+       _mark(_gcol(4) + _GWS[4] - 12, _GY + _GRH - 6, 2)]
     + [_legend(294, ['전환이 수리를 대신한다 — 예비 노드로 넘어가고 작업은 계속 돈다',
                      '수리 시간에 작업 전체가 아니라 고장 난 랙만 곱해진다'])]
 ))
@@ -383,4 +388,72 @@ FIG_TSCALE = _svg(W, 288, '격자가 커질수록 칩 한 장에 붙는 트랜�
     + [_sc_row(i) for i in range(5)]
     + [_box(20, 250, W - 40, 30,
             ['끝에 걸린 칩의 몫이 줄기 때문이다 — 4×4×4 는 88%, 16×16×16 은 33%'])]
+))
+
+
+# ── 지연 도해 둘 ────────────────────────────────────────────────────────
+# 판은 요청 하나가 지나는 시간이다. 그 위에 세 값을 얹는다.
+# 첫 칸은 길이를 모르는 자리다. 6% 로 그렸더니 30픽셀이라 아래 설명이 판 밖으로
+# 나갔다(2026-09-10) — 칸을 넓히지 않고 설명을 판 아래 범례로 내린다
+_LX0, _LXW, _LY = 24, 500, 78
+_LSEG = [('?', 0.10, ''), ('토큰 1,000개를 한 톨씩', 0.90, '')]
+
+
+def _lat_board():
+    out, x = [], _LX0
+    for i, (name, frac, note) in enumerate(_LSEG):
+        w = _LXW * frac
+        out.append('<rect x="%.1f" y="%d" width="%.1f" height="38" rx="5" fill="%s" '
+                   'fill-opacity="%s" stroke="%s" stroke-width="1.4"/>'
+                   % (x, _LY, w, INK3, '.10' if i == 0 else '.24', INK3))
+        out.append(_t(x + w / 2, _LY + 24, name, 't-lab'))
+        x += w
+    out.append(_a(_LX0, _LY - 16, _LX0 + _LXW, _LY - 16))
+    out.append(_t(_LX0 + _LXW / 2, _LY - 24, 'E2E 지연 150초', 't-lab'))
+    return ''.join(out)
+
+
+FIG_LAT = _svg(W, 308, '지연 하나를 쪼개면 대화 속도와 동시 요청이 나온다', ''.join([
+    _lt(20, 30, '요청 하나가 지나는 시간 — 출력 1,000토큰, 지연 150초'),
+    _lat_board(),
+    _box(24, 150, W - 48, 50,
+         ['토큰 사이 150ms → 대화 속도 초당 6.7토큰',
+          '초당 1,000토큰 ÷ 요청당 1,000토큰 × 150초 → GPU 한 장이 150요청을 붙든다']),
+    _legend(222, ['「?」는 첫 토큰까지 걸린 시간이다 — 원문이 안 밝혀 길이를 모른다',
+                  '가로 길이는 시간이지 값의 크기가 아니다',
+                  '「?」를 0 으로 놓고 계산했다 — 실제 값이 있으면 속도는 조금 빨라진다']),
+]))
+
+
+# ── 대화 속도 견주기. 가로 순위 막대 ────────────────────────────────────
+_SPD = [('이 벤치마크의 150초 운영점', 6.7, 6.7, True),
+        ('MI325X 가 낼 수 있는 범위', 13, 35, False),
+        ('오픈라우터 중간 사업자', 35, 35, False),
+        ('H200 이 낼 수 있는 범위', 30, 90, False)]
+_SPX, _SPW, _SPMAX = 210, 320, 90.0
+
+
+def _spd_row(i):
+    name, lo, hi, on = _SPD[i]
+    y = 66 + i * 40
+    x1 = _SPX + _SPW * lo / _SPMAX
+    x2 = _SPX + _SPW * hi / _SPMAX
+    return ''.join([
+        _lt(20, y + 20, name, bold=on),
+        ('<circle cx="%.1f" cy="%d" r="8" fill="%s"/>' % (x1, y + 12, INK if on else INK3)
+         if lo == hi else
+         '<rect x="%.1f" y="%d" width="%.1f" height="20" rx="3" fill="%s"/>'
+         % (x1, y + 2, x2 - x1, INK if on else INK3)),
+        _lt(int(max(x2, x1)) + 12, y + 20,
+            '%g' % lo if lo == hi else '%g~%g' % (lo, hi), 't-sm', on),
+    ])
+
+
+FIG_SPEED = _svg(W, 268, '벤치마크가 선 자리는 시장이 파는 속도보다 느리다', ''.join(
+    [_lt(20, 30, '사용자가 받는 속도 — 초당 토큰'),
+     _lt(20, 48, '위 하나만 우리가 계산했고 아래 셋은 원문이 글로 적은 값이다',
+         't-sm', False)]
+    + [_spd_row(i) for i in range(4)]
+    + [_box(20, 230, W - 40, 30,
+            ['초당 6.7토큰은 시장 중간의 다섯 분의 일이다'])]
 ))
