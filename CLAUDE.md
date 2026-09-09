@@ -57,6 +57,8 @@ PYTHONIOENCODING=utf-8 python insights/check_cover.py   # 보고서가 바탕 �
 PYTHONIOENCODING=utf-8 python scripts/check_jsoncite.py # json 원문 인용이 실재하는 줄을 가리키나
 PYTHONIOENCODING=utf-8 python scripts/find_materials.py 전력 기가와트  # (검사기 아님) 주제로 재료 후보 찾기 — 제목 훑기는 놓친다
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
+PYTHONIOENCODING=utf-8 python insights/check_figdup.py # 도해 설명 — 판은 번호, 캡션은 그 풀이. 본문과 겹치나
+PYTHONIOENCODING=utf-8 python insights/check_figdup.py --selftest # 그 규칙들이 결함을 실제로 무는가
 PYTHONIOENCODING=utf-8 python insights/check_struct.py # 구조 — 앞머리·목차·물음 절·성격 열이 서 있나
 PYTHONIOENCODING=utf-8 python insights/check_frame.py # 프레임 — 남의 모델이 준 틀에서 원문 밖 주장이 카드로 샜나
 PYTHONIOENCODING=utf-8 python insights/check_watch.py # 워치 — 문턱이 신호인가, 어댑터가 내는 열쇠인가
@@ -76,6 +78,7 @@ FAIL 0이어야 푸시한다. **전부 돌린다 — 일부만 돌리지 않는�
 - **한줄 코멘트는 결론만.** 물음·바탕·축은 본문 맨 위 앞머리 상자(`('lead', …)`)에.
 - **번호는 층마다 다르다.** 단원은 「1. 2. 3.」(카드는 `card_lib.toc_html`, 보고서 층은 `scratchpad/_rep_toc.py`가 붙인다 — 손으로 안 적는다), 그 아래 절과 나열은 ①②③. 「첫째·둘째」는 안 쓴다. 차례 꼴(한 줄에 절 하나·들여쓰기·색)은 `docs/규칙 — 화면.md` 「차례」가 정본이고, 어긴 층은 `_rep_toc.check_toc`가 물어 생성기를 멈춘다.
 - **도해는 그 절의 글보다 앞에.** 원문에 없는 값은 안 그린다.
+- **판 위는 번호, 캡션은 그 번호 풀이.** 판에 남기는 글자는 값 라벨과 이름뿐이고, 설명이 붙을 자리에는 ①②③만 얹는다. 캡션은 그 번호를 한 줄씩 풀 뿐 산문을 담지 않는다 — 판단과 유보는 본문이 맡는다. 2026-09-09 전수 조사에서 겹침률 0.17 이상 222쌍 중 217쌍이 캡션과 본문 사이에 겹쳤다. `check_figdup`, 규칙은 `docs/규칙 — 도해.md` §5·§7.
 - **용어는 남기고 첫 등장에 괄호로 푼다.** 쉬운 말로 치환하지 않는다(지웠다가 되돌린 이력 있음). 별도 「용어」 절로 몰지 않는다 — 예: HBC(고대역폭 컴퓨트 — 연산 다이 위에 메모리를 쌓는 방식).
 - **대시보드 산문도 같은 규칙.** `check_prose`가 `대시보드/*.html`까지 본다. 금지어 목록 대신 밀도를 본다 — 대시(P8)·「A가 아니라 B」 대구(P9)·볼드(P10), **1천자당**으로 잰다. 뜻이 안 닿는 자리(P12 무엇을 먹는지 안 밝힌 조건절·P13 숫자 없이 정도만 말하는 주장)는 WARN.
 - **「돈을 댄다」로 뭉개지 않는다.** 빌려준다·낸다·건다·마련한다로. P18 FAIL. 번역투 낱말 넷(P4)도 같다. **인용 안은 안 본다** — 고칠 수 없는 자리다.
