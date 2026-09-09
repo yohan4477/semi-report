@@ -41,7 +41,7 @@ def _count(t):
 
 def raw_table():
     """이 층이 쓴 원자료. 그림에서 읽은 값이 어디서 왔고 몇 개인지, 못 읽은 칸이 몇인지."""
-    head = ['원자료', '출처 글', '펴낸 날', '그림', '이미지 파일', '읽은 값',
+    head = ['원자료', '출처 글', '펴낸 날', '그림', '이미지 파일', '읽은 칸',
             '가려진 줄', '읽은 날']
     body = []
     for t in RAW['tables']:
@@ -84,6 +84,124 @@ def ext_lines():
         link = (' — <a href="%s">%s</a>' % (e['url'], e['url'])) if e.get('url') else ''
         out.append('<b>%s</b> · %s%s' % (e['pins'], e['how'], link))
     return out
+
+
+# ── 토러스 모델 표 넷 ──────────────────────────────────────────────────
+_TPU = json.loads(io.open(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'insights', 'models', 'raw', 'tpuv7.json'), encoding='utf-8').read())
+
+_TDIMS = (4, 4, 4)
+_TSPOT = [('꼭짓점', 'Corner'), ('모서리', 'Edge'), ('면', 'Face'), ('안쪽', 'Interior')]
+_TKIND = [('구리 케이블', 'copper', 'Copper Cables'),
+          ('기판 배선', 'pcb', 'PCB Traces'),
+          ('광 트랜시버', 'optical', 'Optical Transceivers')]
+
+
+def _torus():
+    import sys as _s
+    _s.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'insights', 'models'))
+    import torus_attach as ta
+    return ta
+
+
+def _pub_torus():
+    """그림 034 의 발표치를 (자리, 갈래) → (칩당, 랙 합계) 로 편다."""
+    t = _TPU['tables'][0]
+    per, tot = {}, {}
+    for row, vals in t['rows'].items():
+        a, b = float(vals[0]), float(vals[1])
+        if row.startswith('Total'):
+            tot[row.split('—')[1].strip()] = (a, b)
+        else:
+            head, kind = [x.strip() for x in row.split('—')]
+            per[(head.split()[1], kind)] = (a, b)
+    return per, tot
+
+
+def torus_pos_table():
+    """자리마다 칩 수와 칩 한 장당 연결. 발표치를 나란히 둔다."""
+    ta = _torus()
+    g = {v['name']: v for v in ta.classify(_TDIMS).values()}
+    pub, _ = _pub_torus()
+    head = ['자리', '끝에 걸린 축', '칩'] + [k for k, _a, _b in _TKIND] + ['합']
+    body = []
+    for ko, en in _TSPOT:
+        v = g[ko]
+        cells = []
+        for _ko, key, en_kind in _TKIND:
+            got = v[key]
+            want = pub.get((en, en_kind))
+            cells.append('%d' % got if want and abs(got - want[0]) < 1e-9
+                         else '%d (발표 %g)' % (got, want[0]) if want else '%d' % got)
+        body.append([ko, '%d' % v['optical'], '%d' % v['chips']] + cells
+                    + ['%d' % (v['copper'] + v['pcb'] + v['optical'])])
+    return head, body
+
+
+def torus_rack_table():
+    """랙 합계. 케이블은 반으로 나누고 트랜시버는 안 나눈다."""
+    ta = _torus()
+    r = ta.rack(_TDIMS)
+    _, pub = _pub_torus()
+    head = ['갈래', '연결 끝의 수', '세는 법', '랙 합계', '발표 합계', '칩당', '발표 칩당']
+    rows = [('구리 케이블', 'Copper Cable', r['copper_cables'], r['copper_per_chip'],
+             '두 칩을 잇는 한 물건 — 반으로 나눈다'),
+            ('기판 배선', 'PCB', r['pcb_traces'], r['pcb_per_chip'],
+             '두 칩을 잇는 한 물건 — 반으로 나눈다'),
+            ('광 트랜시버', 'Optical Transceivers', r['transceivers'],
+             r['transceivers_per_chip'], '연결 양끝에 하나씩 — 안 나눈다')]
+    body = []
+    for ko, en, tot, per, how in rows:
+        w = pub.get(en)
+        ends = tot * 2 if '반으로' in how else tot
+        body.append([ko, '%g' % ends, how, '%g' % tot,
+                     '%g' % w[1] if w else '—', '%.2f' % per,
+                     '%g' % w[0] if w else '—'])
+    return head, body
+
+
+def torus_scale_table():
+    """격자를 키우면 부착률이 어떻게 움직이나. 원문에 없는 값이다."""
+    ta = _torus()
+    head = ['격자', '칩', '끝에 걸린 칩', '광 트랜시버', '칩당 트랜시버', '구리 케이블']
+    body = []
+    for dims in [(2, 2, 2), (4, 4, 4), (4, 4, 8), (8, 8, 8), (16, 16, 16)]:
+        x = ta.rack(dims)
+        edge = sum(v['chips'] for k, v in ta.classify(dims).items() if k)
+        body.append(['×'.join(map(str, dims)), format(x['chips'], ','),
+                     '%s (%.0f%%)' % (format(edge, ','), edge / x['chips'] * 100),
+                     format(int(x['transceivers']), ','),
+                     '%.2f' % x['transceivers_per_chip'],
+                     format(int(x['copper_cables']), ',')])
+    return head, body
+
+
+def torus_raw_table():
+    """이 글이 쓴 원자료. 표 하나와 표 아닌 것 열하나."""
+    src = _TPU['source']
+    head = ['원자료', '출처 글', '펴낸 날', '그림', '읽은 칸', '가려진 줄', '읽은 날']
+    body = []
+    for t in _TPU['tables']:
+        n = sum(len(v) if isinstance(v, list) else 1 for v in t['rows'].values())
+        body.append([t['title'], src['title'], src['published'], t['figure'],
+                     '%d개' % n,
+                     '%d줄' % len(t.get('redacted', [])) if t.get('redacted') else '없음',
+                     t.get('read_on', src.get('read_on', ''))])
+    body.append(['표 후보였으나 표가 아니었던 그림',
+                 src['title'], src['published'], '11장', '—', '—',
+                 src.get('read_on', '')])
+    return head, body
+
+
+def torus_source_lines():
+    src = _TPU['source']
+    ko = (' · 한국어 변환본 <code>%s</code>' % src['korean'].rsplit('/', 1)[-1]
+          if src.get('korean') else '')
+    return ['%s, %s, %s 발행 — <a href="%s">%s</a>%s'
+            % (src['title'], src['publisher'], src['published'], src['url'],
+               src['url'], ko)]
 
 
 def _m(v, unit='$'):
@@ -313,6 +431,10 @@ def verdict_table():
 
 TABLES = {
     'RAW': ('이 층이 쓴 원자료와 그 출처', raw_table),
+    'RAWT': ('이 글이 쓴 원자료와 그 출처', torus_raw_table),
+    'TPOS': ('자리가 배선을 정한다 (그림 034 재현)', torus_pos_table),
+    'TRACK': ('랙 64장 합계 — 무엇을 나누고 무엇을 안 나누나', torus_rack_table),
+    'TSCALE': ('격자를 키우면 부착률이 어떻게 움직이나', torus_scale_table),
     'EXT': ('가려진 칸을 박으려면 어디서 가져와야 하나', ext_table),
     'TCO': ('GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)', tco_table),
     'GOOD': ('굿풋 계산기 세 시나리오 (그림 019·022·025 재현)', goodput_table),

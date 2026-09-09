@@ -1,7 +1,12 @@
 {
   "source": {
     "clipping": "input/clippings/TPUv7 Google Takes a Swing at the King.md",
-    "title": "TPUv7: Google Takes a Swing at the King"
+    "title": "TPUv7: Google Takes a Swing at the King",
+    "publisher": "SemiAnalysis",
+    "url": "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the",
+    "published": "2025-11-28",
+    "korean": "content/newsletter/ai_infra/compute/[251128] TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다.md",
+    "read_on": "2026-09-10"
   },
   "tables": [
     {
@@ -9,40 +14,122 @@
       "image": "034_68c6923d-2032-4c7d-b630-0adb7ac4a272_710x787.png",
       "figure": "034",
       "title": "Google TPU v7 3D Torus Connections Attach Rates",
-      "columns": ["Per TPU", "Rack Total"],
+      "columns": [
+        "Per TPU",
+        "Rack Total"
+      ],
       "rows": {
-        "8 Interior TPUs — Copper Cables": ["4", "32"],
-        "8 Interior TPUs — PCB Traces": ["2", "16"],
-        "8 Interior TPUs — Optical Transceivers": ["0", "0"],
-        "8 Corner TPUs — Copper Cables": ["1", "8"],
-        "8 Corner TPUs — PCB Traces": ["2", "16"],
-        "8 Corner TPUs — Optical Transceivers": ["3", "24"],
-        "24 Edge TPUs — Copper Cables": ["2", "48"],
-        "24 Edge TPUs — PCB Traces": ["2", "48"],
-        "24 Edge TPUs — Optical Transceivers": ["2", "48"],
-        "24 Face TPUs — Copper Cables": ["3", "72"],
-        "24 Face TPUs — PCB Traces": ["2", "48"],
-        "24 Face TPUs — Optical Transceivers": ["1", "24"],
-        "Total for 64 TPU Rack — Copper Cable": ["1.25", "80"],
-        "Total for 64 TPU Rack — PCB": ["1.00", "64"],
-        "Total for 64 TPU Rack — Optical Transceivers": ["1.50", "96"]
+        "8 Interior TPUs — Copper Cables": [
+          "4",
+          "32"
+        ],
+        "8 Interior TPUs — PCB Traces": [
+          "2",
+          "16"
+        ],
+        "8 Interior TPUs — Optical Transceivers": [
+          "0",
+          "0"
+        ],
+        "8 Corner TPUs — Copper Cables": [
+          "1",
+          "8"
+        ],
+        "8 Corner TPUs — PCB Traces": [
+          "2",
+          "16"
+        ],
+        "8 Corner TPUs — Optical Transceivers": [
+          "3",
+          "24"
+        ],
+        "24 Edge TPUs — Copper Cables": [
+          "2",
+          "48"
+        ],
+        "24 Edge TPUs — PCB Traces": [
+          "2",
+          "48"
+        ],
+        "24 Edge TPUs — Optical Transceivers": [
+          "2",
+          "48"
+        ],
+        "24 Face TPUs — Copper Cables": [
+          "3",
+          "72"
+        ],
+        "24 Face TPUs — PCB Traces": [
+          "2",
+          "48"
+        ],
+        "24 Face TPUs — Optical Transceivers": [
+          "1",
+          "24"
+        ],
+        "Total for 64 TPU Rack — Copper Cable": [
+          "1.25",
+          "80"
+        ],
+        "Total for 64 TPU Rack — PCB": [
+          "1.00",
+          "64"
+        ],
+        "Total for 64 TPU Rack — Optical Transceivers": [
+          "1.50",
+          "96"
+        ]
       },
       "units": "케이블/트레이스/트랜시버 연결 수 — TPU 1개당, 랙(64 TPU) 합계",
       "redacted": [],
-      "cite": "클리핑 L278 — \"The diagram above, as well as the table below, summarizes the number of respective location types for TPUs and can be used to derive the attach ratio of 1.5 Optical Transceivers per TPU v7.\""
+      "cite": "클리핑 L278 — \"The diagram above, as well as the table below, summarizes the number of respective location types for TPUs and can be used to derive the attach ratio of 1.5 Optical Transceivers per TPU v7.\"",
+      "read_on": "2026-09-10"
     }
   ],
   "not_tables": [
-    {"image": "001_b6fb8cda-5f23-477e-b4f3-27245364be1e_1088x828.png", "what": "액체냉각 TPU 트레이 보드 사진 (콜드플레이트·OSFP/CDFP 케이지, 케이블 연결 실물)"},
-    {"image": "027_5881ed93-4ea2-4447-8fe3-a611f6f03abb_793x1143.png", "what": "TPU v7 Ironwood 랙 구조도 (Power Shelves·ToR Switch·Optical Patch Panels·TPU/CPU Tray·BBU 배치)"},
-    {"image": "028_5e62de47-9252-4c5b-b221-49581764b9d0_788x917.png", "what": "TPU v7 Ironwood 트레이 구조도 (TPU v7 칩 4개, OSFP 케이지 16개, CDFP PCIe 케이지 4개)"},
-    {"image": "029_3346625c-6b2b-4335-8467-6a109fb64ace_1478x1288.png", "what": "TPU v7 4칩 보드 다이 노출 근접 사진"},
-    {"image": "030_faf8d0b1-f36c-456a-ab5b-34a4c8f30e40_744x900.png", "what": "사람이 든 TPU 트레이 보드 사진, 'Liquid Cooled VRM Modules' 콜드플레이트 라벨"},
-    {"image": "031_0de048fb-89a6-4865-8ff7-dbcbb7d2cda9_1740x2338.png", "what": "TPU v7 64칩 4x4x4 큐브 논리 배치 3D 구조도 (X,Y,Z 좌표 라벨)"},
-    {"image": "032_e0428839-ac3f-4ffc-923a-48295d2b9b19_2074x2144.png", "what": "TPU 유닛 연결 구조도 — 이웃 큐브 좌표 간 800G 구리/광 연결 라벨"},
-    {"image": "033_0fd47a1d-3376-47a7-81c7-464e09a3909c_1302x1153.png", "what": "4x4x4 큐브 내 TPU 위치 구조도 — 코너 8·면 24·모서리 24·내부 8 TPU 색상 구분 (표 아님, 034 표를 설명하는 그림)"},
-    {"image": "040_00598db9-454f-4788-b769-7994f4089016_1212x1176.png", "what": "TPU v7 64칩 슬라이스 4x4x4 토폴로지 구조도 — X/Y/Z축 OCS 랩어라운드 연결 표시"},
-    {"image": "043_427d34ea-5af3-45f5-ad19-d5b8070f0650_1560x1375.png", "what": "TPU v7 4,096칩 슬라이스 16x16x16 토폴로지 구조도, 옆에 수치 주석(64개 큐브, 48개 144x144 OCS, 큐브당 96개 트랜시버 등)"},
-    {"image": "047_526d2520-9342-492d-a4c5-98b0db6122ad_1341x1108.png", "what": "147,456 DCN 토폴로지 네트워크 구조도 (9,216 ICI 클러스터, 300x300 OCS, Spine/Leaf/ToR 배치)"}
+    {
+      "image": "001_b6fb8cda-5f23-477e-b4f3-27245364be1e_1088x828.png",
+      "what": "액체냉각 TPU 트레이 보드 사진 (콜드플레이트·OSFP/CDFP 케이지, 케이블 연결 실물)"
+    },
+    {
+      "image": "027_5881ed93-4ea2-4447-8fe3-a611f6f03abb_793x1143.png",
+      "what": "TPU v7 Ironwood 랙 구조도 (Power Shelves·ToR Switch·Optical Patch Panels·TPU/CPU Tray·BBU 배치)"
+    },
+    {
+      "image": "028_5e62de47-9252-4c5b-b221-49581764b9d0_788x917.png",
+      "what": "TPU v7 Ironwood 트레이 구조도 (TPU v7 칩 4개, OSFP 케이지 16개, CDFP PCIe 케이지 4개)"
+    },
+    {
+      "image": "029_3346625c-6b2b-4335-8467-6a109fb64ace_1478x1288.png",
+      "what": "TPU v7 4칩 보드 다이 노출 근접 사진"
+    },
+    {
+      "image": "030_faf8d0b1-f36c-456a-ab5b-34a4c8f30e40_744x900.png",
+      "what": "사람이 든 TPU 트레이 보드 사진, 'Liquid Cooled VRM Modules' 콜드플레이트 라벨"
+    },
+    {
+      "image": "031_0de048fb-89a6-4865-8ff7-dbcbb7d2cda9_1740x2338.png",
+      "what": "TPU v7 64칩 4x4x4 큐브 논리 배치 3D 구조도 (X,Y,Z 좌표 라벨)"
+    },
+    {
+      "image": "032_e0428839-ac3f-4ffc-923a-48295d2b9b19_2074x2144.png",
+      "what": "TPU 유닛 연결 구조도 — 이웃 큐브 좌표 간 800G 구리/광 연결 라벨"
+    },
+    {
+      "image": "033_0fd47a1d-3376-47a7-81c7-464e09a3909c_1302x1153.png",
+      "what": "4x4x4 큐브 내 TPU 위치 구조도 — 코너 8·면 24·모서리 24·내부 8 TPU 색상 구분 (표 아님, 034 표를 설명하는 그림)"
+    },
+    {
+      "image": "040_00598db9-454f-4788-b769-7994f4089016_1212x1176.png",
+      "what": "TPU v7 64칩 슬라이스 4x4x4 토폴로지 구조도 — X/Y/Z축 OCS 랩어라운드 연결 표시"
+    },
+    {
+      "image": "043_427d34ea-5af3-45f5-ad19-d5b8070f0650_1560x1375.png",
+      "what": "TPU v7 4,096칩 슬라이스 16x16x16 토폴로지 구조도, 옆에 수치 주석(64개 큐브, 48개 144x144 OCS, 큐브당 96개 트랜시버 등)"
+    },
+    {
+      "image": "047_526d2520-9342-492d-a4c5-98b0db6122ad_1341x1108.png",
+      "what": "147,456 DCN 토폴로지 네트워크 구조도 (9,216 ICI 클러스터, 300x300 OCS, Spine/Leaf/ToR 배치)"
+    }
   ]
 }

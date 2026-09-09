@@ -284,3 +284,81 @@ FIG_THRESHOLD = _svg(W, 358, '문턱 둘이 축을 세 구간으로 나눈다', 
        _t(_tx(_RENT), _BOT + 34, '$2.50 ÷ $2.50', 't-sm'),
        _t(_tx(_RENT), _BOT + 48, '임대료 비', 't-sm')]
 ))
+
+
+# ── 토러스 도해 둘 ──────────────────────────────────────────────────────
+# 판은 4×4 한 층인데 두 장을 나란히 둔다. 한 층만 그리면 칸의 수가 0~2 로 끝나
+# 오른쪽 자리 이름(꼭짓점 3)과 안 맞물린다(2026-09-10 지적). 끝 층과 가운데 층을
+# 같이 두면 0~3 이 다 나오고 자리 넷이 그대로 보인다.
+_GC = 34                                   # 칸 크기
+_GY = 92
+_PANE = [(28, '끝 층 — z 가 격자 끝', 1), (196, '가운데 층 — z 가 안쪽', 0)]
+_SPOTNAME = {3: '꼭짓점', 2: '모서리', 1: '면', 0: '안쪽'}
+
+
+def _cell_k(r, c, zbump):
+    """이 칸의 좌표 가운데 격자 끝에 걸린 축의 수. zbump 는 세 번째 축 몫."""
+    return (r in (0, 3)) + (c in (0, 3)) + zbump
+
+
+def _pane(x0, title, zbump):
+    out = [_t(x0 + 2 * _GC, _GY - 12, title, 't-lab')]
+    for r in range(4):
+        for c in range(4):
+            k = _cell_k(r, c, zbump)
+            x, y = x0 + c * _GC, _GY + r * _GC
+            out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" '
+                       'fill="%s" fill-opacity="%s" stroke="%s" stroke-width="1.1"/>'
+                       % (x, y, _GC - 5, _GC - 5, INK3, ('.03', '.10', '.20', '.34')[k],
+                          INK3))
+            out.append(_t(x + (_GC - 5) // 2, y + (_GC - 5) // 2 + 5, '%d' % k, 't-lab'))
+    return ''.join(out)
+
+
+def _spot_rows():
+    out = []
+    for i, k in enumerate((3, 2, 1, 0)):
+        y = _GY + i * 34
+        cop = 6 - 2 - k
+        out.append(_lt(368, y + 12, '%d — %s' % (k, _SPOTNAME[k])))
+        out.append(_lt(368, y + 28,
+                       '구리 %d · 기판 2 · 광 %d' % (cop, k), 't-sm', False))
+    return ''.join(out)
+
+
+FIG_TPOS = _svg(W, 276, '칸에 적힌 수가 곧 그 칩의 광 연결 수다', ''.join([
+    _lt(20, 30, '4×4×4 격자를 층 둘로 잘라 본 것 — 칸 안의 수는 격자 끝에 걸린 축의 수'),
+    _lt(20, 48, '끝 층은 z 축이 이미 끝에 걸려 있어 수가 하나씩 크다', 't-sm', False),
+    _pane(*_PANE[0]), _pane(*_PANE[1]), _spot_rows(),
+    _box(20, 238, W - 40, 30,
+         ['칩마다 연결은 여섯으로 같다. 무엇으로 잇느냐만 자리가 정한다']),
+]))
+
+
+# ── 격자를 키우면 부착률이 내려간다. 가로 순위 막대 ──────────────────────
+_SC = [('2×2×2', 8, 3.00), ('4×4×4', 64, 1.50), ('4×4×8', 128, 1.25),
+       ('8×8×8', 512, 0.75), ('16×16×16', 4096, 0.38)]
+_SBX, _SBW, _SMAX = 190, 300, 3.0
+
+
+def _sc_row(i):
+    name, chips, rate = _SC[i]
+    y = 66 + i * 40
+    on = i == 1
+    return ''.join([
+        _lt(20, y + 20, name, bold=on),
+        _lt(104, y + 20, format(chips, ',') + '장', 't-sm', False),
+        '<rect x="%d" y="%d" width="%.1f" height="22" rx="3" fill="%s"/>'
+        % (_SBX, y + 2, _SBW * rate / _SMAX, INK if on else INK3),
+        _lt(int(_SBX + _SBW * rate / _SMAX) + 8, y + 20, '%.2f' % rate, 't-sm', on),
+    ])
+
+
+FIG_TSCALE = _svg(W, 288, '격자가 커질수록 칩 한 장에 붙는 트랜시버가 준다', ''.join(
+    [_lt(20, 30, '칩 한 장당 광 트랜시버 수'),
+     _lt(20, 48, '원문은 4×4×4 하나만 냈다. 나머지는 같은 규칙으로 우리가 낸 값이다',
+         't-sm', False)]
+    + [_sc_row(i) for i in range(5)]
+    + [_box(20, 250, W - 40, 30,
+            ['끝에 걸린 칩의 몫이 줄기 때문이다 — 4×4×4 는 88%, 16×16×16 은 33%'])]
+))

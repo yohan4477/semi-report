@@ -26,6 +26,7 @@ import _model_eqtree as et
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_C = os.path.join(ROOT, 'insights', 'reports', 'model-cluster-2026-09-09.md')
 SRC_I = os.path.join(ROOT, 'insights', 'reports', 'model-infer-2026-09-09.md')
+SRC_T = os.path.join(ROOT, 'insights', 'reports', 'model-torus-2026-09-10.md')
 
 _NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
          '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
@@ -46,6 +47,19 @@ HEAD_CLUSTER = _head('⑪', 'model-cluster',
 HEAD_INFER = _head('⑫', 'model-infer',
                    '추론 원가 — AMD 는 빌리면 엔비디아에 지고, 사서 쓰면 작업에 따라 이긴다',
                    'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 3장')
+
+HEAD_TORUS = _head('⑬', 'model-torus',
+                   '토러스 배선 — 랙이 커지면 칩 한 장에 붙는 광 부품이 준다',
+                   'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 1장')
+
+GROUPS_TORUS = [('재료와 규칙', 1, 2),
+                ('세는 법이 갈리는 자리', 3, 3),
+                ('원문이 안 낸 자리', 4, 4),
+                ('남은 것', 5, 5)]
+
+LEAD_TORUS = ('원가가 아니라 물건의 수를 셉니다. 칩이 랙 안 어디에 놓였느냐가 배선을 '
+              '정하고, 거기서 「칩 한 장당 광 트랜시버 1.5개」가 나옵니다. 그 1.5 는 랙 '
+              '크기에 매인 값이라 격자를 키우면 내려갑니다.')
 
 GROUPS_CLUSTER = [('무엇을 왜 다시 세우나', 1, 2),
                   ('고장이 원가가 되는 길', 3, 5),
@@ -90,6 +104,16 @@ CAPTION = {
               '① 원리금 균등 상환이라 선불액을 개월 수로 나누는 것이 아닙니다. '
               '② 전기와 코로케이션을 더한 kW·월 단가에 서버 전력을 곱한 자리입니다. '
               '③ 한 달을 몇 시간으로 세는지가 글마다 다릅니다.'),
+    'TPOS': ('칸에 적힌 수가 곧 그 칩의 광 연결 수다', mf.FIG_TPOS,
+             '4×4×4 격자를 층 둘로 잘랐습니다. 왼쪽은 z 축이 이미 격자 끝에 걸린 층이라 '
+             '칸의 수가 하나씩 크고, 오른쪽은 z 축이 안쪽인 층입니다. 칸 색이 짙을수록 '
+             '끝에 많이 걸린 자리입니다. 오른쪽 목록이 그 수에 붙는 자리 이름과 여섯 '
+             '연결의 구성이고, 연결 수는 그림 034 와 같습니다.'),
+    'TSCALE': ('격자가 커질수록 칩 한 장에 붙는 트랜시버가 준다', mf.FIG_TSCALE,
+               '막대 길이가 칩 한 장당 광 트랜시버 수입니다. 짙은 줄 4×4×4 만 원문이 낸 '
+               '값이고 나머지 넷은 같은 규칙으로 우리가 낸 값입니다 — 견줄 발표치가 '
+               '없습니다. 한 변을 두 배로 늘릴 때마다 절반이 되는데, 끝에 걸린 칩의 몫이 '
+               '그만큼 줄기 때문입니다.'),
     'THRESHOLD': ('문턱 둘이 축을 세 구간으로 나눈다', mf.FIG_THRESHOLD,
                   '왼쪽에서 오른쪽으로 읽습니다. 가로축은 MI300X 가 H200 대비 내는 '
                   '처리량이고, 세로선 둘이 축을 세 구간으로 나눕니다. 왼쪽 굵은 선 0.82 는 '
@@ -148,6 +172,13 @@ TBL_NOTE = {
             '발표된 월 자본비에서 거꾸로 푼 값입니다. 여섯이 0.004%포인트 안에 모입니다.',
     'VERDICT': '손익분기 임대료는 원문이 글로 밝힌 값(L298·L302·L306)이고, 실측 처리량은 '
                '그것을 H200 시세 2.5달러로 나눈 비율입니다. 문턱과 결론은 원문에 없습니다.',
+    'RAWT': '표 후보 열둘을 다 열어 본 결과입니다. 크기로만 거르면 세로가 긴 구조도와 '
+            '랙 사진이 표와 같은 꼴로 걸립니다.',
+    'TPOS': '「끝에 걸린 축」이 그 칩의 광 연결 수입니다. 「합」이 네 자리 모두 6 인 것이 '
+            '3차원 토러스라는 뜻이고, 어긋난 칸이 있으면 괄호에 발표치를 적었습니다.',
+    'TRACK': '「연결 끝의 수」는 칩마다 세어 더한 값입니다. 케이블과 배선은 그 절반이 '
+             '물건 수이고, 트랜시버는 끝마다 붙으므로 그대로입니다.',
+    'TSCALE': '4×4×4 만 원문이 낸 것이고 나머지 넷은 같은 규칙으로 우리가 낸 것입니다.',
     'RAW': '값을 그림에서 코드로 바로 넣지 않고 이 파일을 거칩니다. 못 읽은 것도 「없음」이 '
            '아니라 「못 읽음」으로 남깁니다 — 나중에 그 값을 말한 자료가 나오면 거기에 채워 '
            '넣으면 모델과 표와 도해가 함께 따라옵니다.',
@@ -234,6 +265,9 @@ def table_html(key):
     if key == 'EXT':
         h.append('<p class="xl-memo"><b>어떻게 쓰나</b><br>'
                  + '<br>'.join(mt.ext_lines()) + '</p>')
+    if key == 'RAWT':
+        h.append('<p class="xl-memo"><b>출처</b><br>'
+                 + '<br>'.join(mt.torus_source_lines()) + '</p>')
     if key == 'RAW':
         # 출처는 표 아래에 한 줄씩. 표 안에 넣으면 열이 하나 더 늘어 가로로 넘친다
         h.append('<p class="xl-memo"><b>출처</b><br>'
@@ -318,3 +352,7 @@ def report_cluster(sec, p, fig):
 
 def report_infer(sec, p, fig):
     return _report(SRC_I, 'model-infer', LEAD_INFER, GROUPS_INFER, sec, p, fig)
+
+
+def report_torus(sec, p, fig):
+    return _report(SRC_T, 'model-torus', LEAD_TORUS, GROUPS_TORUS, sec, p, fig)

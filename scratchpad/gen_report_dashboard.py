@@ -300,6 +300,12 @@ def report_model_infer_html(head=True):
                               'model-infer', head)
 
 
+def report_model_torus_html(head=True):
+    """토러스 배선. 본문은 insights/reports/model-torus-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_TORUS, _model_part1.report_torus,
+                              'model-torus', head)
+
+
 def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
     h = [_trump_part1.HEAD_TRUMP] if head else []
@@ -437,6 +443,11 @@ LAYERS = [
      'SemiAnalysis 영문 1편 · 표 그림 3장',
      '원문은 임대 시세로만 답했는데, 같은 데이터를 소유 기준으로 풀면 답이 뒤집힌다',
      report_model_infer_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '토러스 배선 — 랙이 커지면 칩 한 장에 붙는 광 부품이 준다',
+     'SemiAnalysis 영문 1편 · 표 그림 1장',
+     '칩이 놓인 자리가 배선을 정하고, 거기서 나온 부착률은 랙 크기에 매여 있다',
+     report_model_torus_html),
     ('sec-circ', '순환금융', '2026-09-09',
      '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
      'SemiAnalysis 12편 · 메르 6편',
