@@ -285,6 +285,9 @@ MODEL_EXTRA = [
     # 지연 층(2026-09-10)의 재료 — 대화 속도 값이 든 편
     os.path.join(_CLIP, 'InferenceX v2 NVIDIA Blackwell Vs AMD vs Hopper - '
                  'Formerly InferenceMAX.md'),
+    # PJM 층·루프라인 층(2026-09-10)의 재료
+    os.path.join(_CLIP, "$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md"),
+    os.path.join(_CLIP, 'Cerebras — Faster Tokens Please.md'),
 ]
 
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),

@@ -286,6 +286,200 @@ def lat_speed_table():
     return head, body
 
 
+# ── PJM 표 넷 ──────────────────────────────────────────────────────────
+_PJM_A = None
+_PJM_C = None
+for _t in RAW['tables']:
+    if _t['id'] == 'pjm-auctions':
+        _PJM_A = _t
+    elif _t['id'] == 'pjm-context':
+        _PJM_C = _t
+
+
+def _pjm():
+    import sys as _s
+    _s.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'insights', 'models'))
+    import pjm_capacity as pc
+    return pc
+
+
+def _auctions():
+    cols = _PJM_A['columns']
+    return [dict(zip(cols, v)) for v in _PJM_A['rows'].values()]
+
+
+def _ctx(k):
+    return _PJM_C['rows'][k][1]
+
+
+def pjm_save_table():
+    """발표 절감액을 다시 낸다. 비용은 용량 곱하기 가격 곱하기 365일."""
+    pc = _pjm()
+    head = ['시즌', '낙찰 용량', '낙찰 가격', '실제 비용', '반사실 용량',
+            '반사실 가격', '반사실 비용', '모델 절감', '발표 절감']
+    body = []
+    for r in _auctions():
+        if r['cf_price'] is None:
+            continue
+        real = pc.auction_cost(r['cleared_gw'], r['price_usd_mw_day']) / 1e9
+        cf = pc.auction_cost(r['cf_cleared_gw'], r['cf_price']) / 1e9
+        body.append([r['season'], '%.1fGW' % r['cleared_gw'],
+                     '$%g' % r['price_usd_mw_day'], '$%.2f십억' % real,
+                     '%.1fGW' % r['cf_cleared_gw'], '$%g' % r['cf_price'],
+                     '$%.2f십억' % cf, '$%.2f십억' % (real - cf),
+                     '$%.1f십억' % r['stated_saving_bn']])
+    return head, body
+
+
+def pjm_split_table():
+    """절감액이 가격에서 오나 용량에서 오나."""
+    pc = _pjm()
+    head = ['시즌', '민 폭', '가격 몫', '용량 몫', '가격 비중', '줄어든 용량']
+    body = []
+    for r in _auctions():
+        if r['cf_price'] is None:
+            continue
+        s = pc.split_saving(r['cleared_gw'], r['price_usd_mw_day'],
+                            r['cf_cleared_gw'], r['cf_price'])
+        body.append([r['season'], '%.1fGW' % r['shift_gw'],
+                     '$%.2f십억' % (s['price'] / 1e9),
+                     '$%.2f십억' % (s['volume'] / 1e9),
+                     '%.1f%%' % (s['price'] / s['total'] * 100),
+                     '%.3fGW' % (r['cleared_gw'] - r['cf_cleared_gw'])])
+    return head, body
+
+
+def pjm_lever_table():
+    """기가와트당 가격 지렛대. 원문에 없는 값이다."""
+    pc = _pjm()
+    head = ['시즌', '민 폭', '내려간 가격', 'GW당 가격', '가격 상한에 붙었나']
+    body = []
+    for r in _auctions():
+        if r['cf_price'] is None:
+            body.append([r['season'],
+                         '—' if r['shift_gw'] is None else '%.1fGW' % r['shift_gw'],
+                         '—', '—', '붙었다 — 밀어도 안 내려간다'])
+            continue
+        drop = r['price_usd_mw_day'] - r['cf_price']
+        body.append([r['season'], '%.1fGW' % r['shift_gw'], '$%g' % drop,
+                     '$%.0f' % pc.price_sensitivity(r['shift_gw'], drop),
+                     '안 붙었다'])
+    return head, body
+
+
+def pjm_ctx_table():
+    """원문이 글로 밝힌 배경 값."""
+    head = ['무엇', '값', '단위', '인용']
+    body = []
+    for v in _PJM_C['rows'].values():
+        what, val, unit, cite = v
+        body.append([what, format(val, ','), unit, cite])
+    return head, body
+
+
+def pjm_source_lines():
+    s = RAW['sources']['pjm']
+    return ['%s, %s, %s 발행 — <a href="%s">%s</a>'
+            % (s['title'], s['publisher'], s['published'], s['url'], s['url'])]
+
+
+# ── 세레브라스 표 넷 ──────────────────────────────────────────────────
+_WSE = None
+for _t in RAW['tables']:
+    if _t['id'] == 'wse3-spec':
+        _WSE = _t
+
+
+def _rf():
+    import sys as _s
+    _s.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), 'insights', 'models'))
+    import roofline as rf
+    return rf
+
+
+def _w(k):
+    return _WSE['rows'][k][1]
+
+
+def cbr_spec_table():
+    """원문이 글로 밝힌 WSE-3 사양."""
+    head = ['무엇', '값', '단위', '인용']
+    body = []
+    for v in _WSE['rows'].values():
+        what, val, unit, cite = v
+        body.append([what, format(val, ','), unit, cite])
+    return head, body
+
+
+def cbr_check_table():
+    """원문 값이 서로 어긋나지 않나. 넷을 견준다."""
+    rf = _rf()
+    head = ['확인한 것', '모델', '발표', '판정']
+    rows = [
+        ('웨이퍼 면적 (mm²)', rf.area_mm2(_w('side_mm')), _w('area_mm2'), 1),
+        ('제곱센티미터당 전력 (W/cm²)',
+         rf.power_density(_w('power_kw') * 1000, _w('side_mm')),
+         _w('power_density'), 5),
+        ('가장자리 밀도 (GB/s/mm)',
+         rf.shoreline_density(_w('io_gbs'), _w('side_mm')), _w('io_per_mm'), 0.005),
+        ('마케팅 대 실제 연산량 (배)',
+         _w('flops_sparse_pf') / _w('flops_dense_pf'), 8, 0.01),
+    ]
+    body = []
+    for label, got, want, tol in rows:
+        body.append([label, '%.4f' % got, '%.4f' % want,
+                     '일치' if abs(got - want) <= tol else '어긋남'])
+    return head, body
+
+
+def cbr_ai_table():
+    """정사각 행렬의 산술 강도. 크기에 비례한다."""
+    rf = _rf()
+    head = ['한 변', 'FP8 산술 강도', 'FP16 산술 강도', 'FP8 은 어디에 막히나']
+    body = []
+    peak = _w('flops_dense_pf') * 1e15
+    bw = rf.implied_bandwidth(peak, _w('ridge'))
+    for n in (2, 8, 64, 512, 4096):
+        a8 = rf.square_intensity(n, 1)
+        a16 = rf.square_intensity(n, 2)
+        body.append([format(n, ','), '%.2f' % a8, '%.2f' % a16,
+                     rf.bound_by(peak, bw, a8)])
+    return head, body
+
+
+def cbr_bw_table():
+    """능선에서 역산한 대역폭과 안팎의 격차. 원문에 없는 값이다."""
+    rf = _rf()
+    peak = _w('flops_dense_pf') * 1e15
+    bw = rf.implied_bandwidth(peak, _w('ridge'))
+    nv = rf.shoreline_density(_w('io_gbs'), _w('side_mm')) * _w('nvidia_denser')
+    head = ['무엇', '값', '어떻게 나왔나']
+    body = [
+        ['웨이퍼 안 SRAM 대역폭', '%.1f PB/s' % (bw / 1e15),
+         '조밀 연산량 ÷ 공표된 능선 0.74'],
+        ['웨이퍼 밖 대역폭', '%g GB/s' % _w('io_gbs'), '원문이 적은 값'],
+        ['안과 밖의 배수', '%.0f만 배' % (bw / (_w('io_gbs') * 1e9) / 10000),
+         '앞의 둘을 나눈 값'],
+        ['엔비디아 쪽 가장자리 밀도', '%.1f GB/s/mm' % nv,
+         '웨이퍼 밀도 × 원문이 적은 130배'],
+        ['그 밀도에서 NVLink5 의 유효 변 길이',
+         '%.0f mm' % (_w('nvlink5_gbs') / (4 * nv)),
+         'GPU 한 장 900GB/s ÷ (둘레 × 밀도)'],
+        ['웨이퍼 변 길이', '%g mm' % _w('side_mm'), '원문이 적은 값'],
+        ['웨이퍼가 나르는 양', '%.2f 배' % (_w('io_gbs') / _w('nvlink5_gbs')),
+         'GPU 한 장 대비'],
+    ]
+    return head, body
+
+
+def cbr_source_lines():
+    s = RAW['sources']['cerebras']
+    return ['%s, %s, %s 발행 — <a href="%s">%s</a>'
+            % (s['title'], s['publisher'], s['published'], s['url'], s['url'])]
+
+
 def _m(v, unit='$'):
     """돈은 자리를 끊는다. 단가는 센트까지 봐야 하므로 천 달러 미만은 소수 둘째.
 
@@ -519,6 +713,14 @@ TABLES = {
     'TRACK': ('랙 64장 합계 — 무엇을 나누고 무엇을 안 나누나', torus_rack_table),
     'TSCALE': ('격자를 키우면 부착률이 어떻게 움직이나', torus_scale_table),
     'EXT': ('가려진 칸을 박으려면 어디서 가져와야 하나', ext_table),
+    'CBRSPEC': ('WSE-3 — 원문이 글로 밝힌 사양', cbr_spec_table),
+    'CBRCHK': ('원문 값이 서로 어긋나지 않나', cbr_check_table),
+    'CBRAI': ('정사각 행렬의 산술 강도는 크기에 비례한다', cbr_ai_table),
+    'CBRBW': ('능선에서 역산한 대역폭과 안팎의 격차', cbr_bw_table),
+    'PJMSAVE': ('발표 절감액을 다시 낸다', pjm_save_table),
+    'PJMSPLIT': ('절감액은 가격에서 오나 용량에서 오나', pjm_split_table),
+    'PJMLEV': ('수요곡선을 1기가와트 밀면 가격이 얼마나 내려가나', pjm_lever_table),
+    'PJMCTX': ('원문이 글로 밝힌 배경 값', pjm_ctx_table),
     'LAT': ('원문이 문장으로 적은 처리량 다섯', lat_anchor_table),
     'LDER': ('그 운영점에서 따라 나오는 값 셋', lat_derived_table),
     'LSPEED': ('그 운영점의 대화 속도는 시장 어디쯤인가', lat_speed_table),

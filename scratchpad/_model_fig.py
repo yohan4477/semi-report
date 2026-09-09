@@ -439,3 +439,185 @@ FIG_SPEED = _svg(W, 268, '벤치마크가 선 자리는 시장이 파는 속도�
     + [_box(20, 230, W - 40, 30,
             ['초당 6.7토큰은 시장 중간의 다섯 분의 일이다'])]
 ))
+
+
+# ── PJM 도해 둘 ────────────────────────────────────────────────────────
+# 판은 공급곡선이다. 오른쪽 끝에서 수직으로 서는 것이 이 글의 전부라, 그 꼴을
+# 먼저 세우고 수요선 둘을 그 위에 얹는다. 값은 원문 L274·L276·L280.
+_PX0, _PY0, _PW, _PH = 96, 60, 420, 150     # 판 왼쪽 아래와 크기
+_PMAX = 400.0                                # 세로축 상한 $/MW·일
+_PSEG = [(0.79, 5), (0.99, 105), (1.00, 352)]   # (누적 비중, 그 구간 끝 가격)
+
+
+def _py(price):
+    return _PY0 + _PH - _PH * min(price, _PMAX) / _PMAX
+
+
+def _px(frac):
+    return _PX0 + _PW * frac
+
+
+def _supply():
+    """공급곡선 — 79%가 2~5달러, 다음 20%가 105달러까지, 마지막 1%가 352달러."""
+    pts, x0, y0 = [], 0.0, 2.0
+    for frac, price in _PSEG:
+        pts.append('%.1f,%.1f' % (_px(x0), _py(y0)))
+        pts.append('%.1f,%.1f' % (_px(frac), _py(price)))
+        x0, y0 = frac, price
+    return ('<polyline points="%s" fill="none" stroke="%s" stroke-width="2.2"/>'
+            % (' '.join(pts), INK))
+
+
+def _demand(frac, price, dash, num):
+    """수요선 — 그 자리에서 세로로 서고, 만나는 높이가 낙찰 가격이다."""
+    return ''.join([
+        # 수요선은 바닥에서 올라와 곡선을 만난다. 위에서 내려오게 그리면
+        # 만나는 자리가 어디인지 안 읽힌다(2026-09-10)
+        '<path d="M%.1f %d V%.1f" stroke="%s" stroke-width="%s"%s/>'
+        % (_px(frac), _PY0 + _PH, _py(price), INK if not dash else INK3,
+           '2.0' if not dash else '1.6',
+           ' stroke-dasharray="5 4"' if dash else ''),
+        '<path d="M%d %.1f H%.1f" stroke="%s" stroke-width="1.2" '
+        'stroke-dasharray="3 3"/>' % (_PX0, _py(price), _px(frac), INK3),
+        _lt(20, _py(price) + 5, '$%d' % price, 't-lab', not dash),
+        _mark(_px(frac) + (0 if num == 2 else -26), _PY0 + _PH + 16, num),
+    ])
+
+
+FIG_CLIFF = _svg(W, 344, '공급곡선이 끝에서 수직이라 수요가 조금만 밀려도 값이 반토막 난다',
+                 ''.join([
+    _lt(20, 30, '2025/26 경매 — 세로는 낙찰 가격, 가로는 낙찰된 용량의 누적 비중'),
+    _lt(20, 48, '세로축 상한은 400달러다. 마지막 1%는 352달러까지 오른다', 't-sm', False),
+    '<path d="M%d %d V%d H%d" stroke="var(--line)" stroke-width="1.2" fill="none"/>'
+    % (_PX0, _PY0, _PY0 + _PH, _PX0 + _PW),
+    _supply(),
+    _demand(0.955, 135, True, 1),
+    _demand(1.00, 270, False, 2),
+    _lt(_PX0 + 40, _PY0 + _PH + 32, '← 적게 사는 자리', 't-sm', False),
+    _legend(254, ['요구 용량을 2.7GW 낮췄을 때 — 135달러에 만난다',
+                  '실제 요구 용량 — 절벽 위 270달러에 만난다',
+                  '산 용량은 0.014GW 밖에 안 줄었다. 가격만 반이 됐다']),
+]))
+
+
+# ── 절감액이 가격에서 오나 용량에서 오나. 가로 막대 둘 ──────────────────
+_PSP = [('2025/26', 6.69, 0.00), ('2026/27', 4.85, 0.05)]
+_PSX, _PSW, _PSMAX = 150, 250, 7.0
+
+
+def _psp_row(i):
+    name, price, vol = _PSP[i]
+    y = 72 + i * 56
+    wp = _PSW * price / _PSMAX
+    wv = max(_PSW * vol / _PSMAX, 2.0)
+    return ''.join([
+        _lt(20, y + 20, name),
+        '<rect x="%d" y="%d" width="%.1f" height="24" rx="3" fill="%s"/>'
+        % (_PSX, y + 2, wp, INK),
+        '<rect x="%.1f" y="%d" width="%.1f" height="24" rx="3" fill="%s"/>'
+        % (_PSX + wp, y + 2, wv, INK3),
+        _lt(int(_PSX + wp + wv) + 10, y + 14, '가격 $%.2f십억' % price, 't-sm', True),
+        _lt(int(_PSX + wp + wv) + 10, y + 30, '용량 $%.2f십억' % vol, 't-sm', False),
+    ])
+
+
+FIG_PSPLIT = _svg(W, 218, '아낀 돈은 거의 전부 값에서 왔다', ''.join(
+    [_lt(20, 30, '절감액을 가격 몫과 용량 몫으로 가른 것'),
+     _lt(20, 48, '짙은 칸이 가격 몫, 옅은 칸이 용량 몫이다', 't-sm', False)]
+    + [_psp_row(i) for i in range(2)]
+    + [_box(20, 176, W - 40, 32,
+            ['2025/26 은 용량 몫이 0 이다 — 같은 양을 반값에 샀다는 뜻이다'])]
+))
+
+
+# ── 세레브라스 도해 둘 ──────────────────────────────────────────────────
+# 판은 루프라인이다. 가로가 산술 강도, 세로가 실현 연산량. 능선에서 꺾인다.
+# 로그 눈금이라 칸 사이 거리가 곱하기다 — 캡션이 그렇게 밝힌다.
+import math as _math
+
+_RX0, _RY0, _RW, _RH = 90, 60, 470, 150
+_RAI = (0.1, 1, 10, 100, 1000)          # 가로 눈금 — 산술 강도
+_RFL = (0.1, 1, 10, 100)                # 세로 눈금 — PFLOPS
+_RIDGE, _PEAK = 0.74, 15.625
+
+
+def _rx(ai):
+    lo, hi = _math.log10(_RAI[0]), _math.log10(_RAI[-1])
+    return _RX0 + _RW * (_math.log10(ai) - lo) / (hi - lo)
+
+
+def _ry(pf):
+    lo, hi = _math.log10(_RFL[0]), _math.log10(_RFL[-1])
+    return _RY0 + _RH - _RH * (_math.log10(pf) - lo) / (hi - lo)
+
+
+def _roof_line():
+    """왼쪽은 기울기 1 의 대각선(메모리), 오른쪽은 수평선(연산)."""
+    lo = _RAI[0]
+    return ''.join([
+        '<path d="M%.1f %.1f L%.1f %.1f H%.1f" fill="none" stroke="%s" '
+        'stroke-width="2.4"/>'
+        % (_rx(lo), _ry(_PEAK * lo / _RIDGE), _rx(_RIDGE), _ry(_PEAK),
+           _rx(_RAI[-1]), INK),
+        '<path d="M%.1f %d V%.1f" stroke="%s" stroke-width="1.6" '
+        'stroke-dasharray="5 4"/>' % (_rx(_RIDGE), _RY0, _ry(_PEAK), INK3),
+        _t(_rx(_RIDGE), _RY0 + _RH + 34, '능선 0.74', 't-lab'),
+    ])
+
+
+def _roof_marks():
+    out = []
+    for ai, name in ((2.0, '디코드 예 (AI 2)'), (42.67, '정사각 n=64')):
+        y = _ry(min(_PEAK, _PEAK * ai / _RIDGE))
+        out.append('<circle cx="%.1f" cy="%.1f" r="6" fill="%s"/>'
+                   % (_rx(ai), y, INK))
+        out.append(_t(_rx(ai), y - 14, name, 't-sm'))
+    return ''.join(out)
+
+
+FIG_ROOF = _svg(W, 318, '능선 왼쪽은 메모리에, 오른쪽은 연산에 막힌다', ''.join(
+    [_lt(20, 30, 'WSE-3 루프라인 — 가로는 산술 강도, 세로는 실현 연산량(PFLOPS)'),
+     _lt(20, 48, '가로세로 다 로그 눈금이다. 한 칸이 열 배다', 't-sm', False),
+     '<path d="M%d %d V%d H%d" stroke="var(--line)" stroke-width="1.2" fill="none"/>'
+     % (_RX0, _RY0, _RY0 + _RH, _RX0 + _RW)]
+    + ['<text x="%.1f" y="%d" text-anchor="middle" class="t-sm">%g</text>'
+       % (_rx(a), _RY0 + _RH + 16, a) for a in _RAI]
+    + ['<text x="%d" y="%.1f" text-anchor="end" class="t-sm">%g</text>'
+       % (_RX0 - 8, _ry(f) + 4, f) for f in _RFL]
+    + [_roof_line(), _roof_marks(),
+       _box(20, 258, W - 40, 46,
+            ['능선이 0.74 로 아주 왼쪽이다 — 웬만한 커널은 다 연산에 막힌다',
+             '이 칩이 겨냥한 자리는 그 왼쪽, 배치가 아주 작은 디코드다'])]
+))
+
+
+# ── 면적은 이기고 둘레는 지는 자리 ──────────────────────────────────────
+_EDGE = [('WSE-3 웨이퍼', 215, 150), ('엔비디아 칩 (역산)', 10, 900)]
+_EBX, _EMAX = 300, 215.0
+
+
+def _edge_row(i):
+    name, side, gbs = _EDGE[i]
+    y = 74 + i * 84
+    w = _EBX * side / _EMAX
+    on = i == 0
+    return ''.join([
+        _lt(20, y + 14, name, bold=on),
+        '<rect x="%d" y="%d" width="%.1f" height="%.1f" rx="4" fill="%s" '
+        'fill-opacity=".12" stroke="%s" stroke-width="1.6"/>'
+        % (150, y, w, min(w, 56), INK3, INK if on else INK3),
+        _lt(20, y + 34, '한 변 %gmm' % side, 't-sm', False),
+        _lt(20, y + 52, '밖으로 %g GB/s' % gbs, 't-sm', False),
+        _lt(int(150 + w) + 14, y + 30,
+            '가장자리 1mm 당 %.2f GB/s' % (gbs / (4.0 * side)), 't-sm', on),
+    ])
+
+
+FIG_EDGE = _svg(W, 268, '면적은 웨이퍼가 이기고 둘레는 진다', ''.join(
+    [_lt(20, 30, '네모의 가로 길이가 칩 한 변이다 — 세로는 같은 비로 줄여 그렸다'),
+     _lt(20, 48, '엔비디아 쪽 변 길이는 원문의 「130배 촘촘하다」에서 역산한 값이다',
+         't-sm', False)]
+    + [_edge_row(i) for i in range(2)]
+    + [_box(20, 232, W - 40, 30,
+            ['데이터가 나가는 통로는 면적이 아니라 가장자리에 붙는다'])]
+))

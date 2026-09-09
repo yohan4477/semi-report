@@ -300,6 +300,18 @@ def report_model_infer_html(head=True):
                               'model-infer', head)
 
 
+def report_model_pjm_html(head=True):
+    """PJM 용량 경매. 본문은 insights/reports/model-pjm-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_PJM, _model_part1.report_pjm,
+                              'model-pjm', head)
+
+
+def report_model_roof_html(head=True):
+    """웨이퍼 루프라인. 본문은 insights/reports/model-roofline-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_ROOF, _model_part1.report_roof,
+                              'model-roof', head)
+
+
 def report_model_lat_html(head=True):
     """추론 지연. 본문은 insights/reports/model-latency-2026-09-10.md."""
     return _report_model_html(_model_part1.HEAD_LAT, _model_part1.report_lat,
@@ -449,6 +461,16 @@ LAYERS = [
      'SemiAnalysis 영문 1편 · 표 그림 3장',
      '원문은 임대 시세로만 답했는데, 같은 데이터를 소유 기준으로 풀면 답이 뒤집힌다',
      report_model_infer_html),
+    ('sec-model', '모델링', '2026-09-10',
+     'PJM 용량 경매 — 모델링 가정 하나가 6,600만 명의 전기요금이 되는 길',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '공급곡선이 끝에서 수직이라, 요구 용량을 조금만 낮춰도 값이 반토막 난다',
+     report_model_pjm_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '웨이퍼 한 장짜리 칩 — 면적은 이기고 둘레는 지는 자리',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '데이터가 나가는 통로는 면적이 아니라 가장자리에 붙는다',
+     report_model_roof_html),
     ('sec-model', '모델링', '2026-09-10',
      '추론 지연 — 「150초에 초당 1,000토큰」이 실제로 무엇을 뜻하나',
      'SemiAnalysis 영문 2편의 본문 값',

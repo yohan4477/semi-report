@@ -28,6 +28,8 @@ SRC_C = os.path.join(ROOT, 'insights', 'reports', 'model-cluster-2026-09-09.md')
 SRC_I = os.path.join(ROOT, 'insights', 'reports', 'model-infer-2026-09-09.md')
 SRC_T = os.path.join(ROOT, 'insights', 'reports', 'model-torus-2026-09-10.md')
 SRC_L = os.path.join(ROOT, 'insights', 'reports', 'model-latency-2026-09-10.md')
+SRC_P = os.path.join(ROOT, 'insights', 'reports', 'model-pjm-2026-09-10.md')
+SRC_R = os.path.join(ROOT, 'insights', 'reports', 'model-roofline-2026-09-10.md')
 
 _NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
          '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
@@ -52,6 +54,32 @@ HEAD_INFER = _head('⑫', 'model-infer',
 HEAD_TORUS = _head('⑬', 'model-torus',
                    '토러스 배선 — 랙이 커지면 칩 한 장에 붙는 광 부품이 준다',
                    'SemiAnalysis 영문 클리핑 1편과 그 안의 표 그림 1장')
+
+HEAD_PJM = _head('⑮', 'model-pjm',
+                 'PJM 용량 경매 — 모델링 가정 하나가 6,600만 명의 전기요금이 되는 길',
+                 'SemiAnalysis 영문 클리핑 1편의 본문 값')
+
+HEAD_ROOF = _head('⑯', 'model-roof',
+                  '웨이퍼 한 장짜리 칩 — 면적은 이기고 둘레는 지는 자리',
+                  'SemiAnalysis 영문 클리핑 1편의 본문 값')
+
+GROUPS_PJM = [('사슬과 절벽', 1, 2),
+              ('발표치를 다시 낸다', 3, 4),
+              ('원문에 없는 값', 5, 7),
+              ('남은 것', 8, 8)]
+
+GROUPS_ROOF = [('규칙과 검증', 1, 2),
+               ('능선에서 나오는 것', 3, 4),
+               ('통로가 좁은 이유', 5, 6),
+               ('남은 것', 7, 7)]
+
+LEAD_PJM = ('십 년에 하루만 정전되도록 정한 기준 하나가 사야 할 발전 설비를 정하고, '
+            '그 양이 경매 가격을 정합니다. 공급곡선이 끝에서 수직이라 조금만 밀려도 '
+            '값이 반토막 납니다 — 아낀 돈이 거의 전부 값에서 왔습니다.')
+
+LEAD_ROOF = ('웨이퍼를 통째로 칩으로 쓰면 면적은 462배가 되는데 밖으로 나가는 통로는 '
+             '오히려 좁아집니다. 데이터가 나가는 자리는 면적이 아니라 가장자리이기 '
+             '때문입니다.')
 
 HEAD_LAT = _head('⑭', 'model-lat',
                  '추론 지연 — 「150초에 초당 1,000토큰」이 실제로 무엇을 뜻하나',
@@ -124,6 +152,26 @@ CAPTION = {
                '두 항을 묶는 셈이고 수치는 안 그렸습니다. ① 장비가 실제로 돌아간 '
                '시간의 몫입니다. ② IT 장비 1와트에 실제로 끌어오는 전력의 배수입니다. '
                '③ 상면을 빌리는 값이라 전기와 달리 가동률을 안 탑니다.'),
+    'CLIFF': ('공급곡선이 끝에서 수직이라 수요가 조금만 밀려도 값이 반토막 난다',
+              mf.FIG_CLIFF,
+              '2025/26 경매입니다. 꺾인 선이 공급곡선이고 그 꼴은 원문 L274 의 서술을 '
+              '그대로 옮긴 것입니다 — 첫 79%가 2~5달러, 다음 20%가 105달러까지, 마지막 '
+              '1%가 352달러입니다. 세로선 둘이 요구 용량이고 만나는 높이가 낙찰 '
+              '가격입니다. 가로축의 정확한 자리는 원문이 곡선으로만 냈으므로 이 그림은 '
+              '꼴을 보이는 것이지 좌표를 재는 것이 아닙니다.'),
+    'PSPLIT': ('아낀 돈은 거의 전부 값에서 왔다', mf.FIG_PSPLIT,
+               '막대 길이가 절감액입니다. 짙은 칸이 가격이 내려가 아낀 몫, 옅은 칸이 '
+               '용량을 덜 사서 아낀 몫입니다. 2025/26 은 옅은 칸이 사실상 0 이라 '
+               '보이지 않습니다 — 산 용량이 14메가와트밖에 안 줄었습니다.'),
+    'ROOF': ('능선 왼쪽은 메모리에, 오른쪽은 연산에 막힌다', mf.FIG_ROOF,
+             '가로세로 다 로그 눈금이라 한 칸이 열 배입니다. 꺾인 선이 이론 상한이고, '
+             '왼쪽 대각선은 대역폭이 정하는 몫, 오른쪽 수평선은 연산량이 정하는 몫입니다. '
+             '능선 0.74 는 원문 L227 의 값이고, 세로축의 15.625 페타플롭스는 조밀 '
+             '연산량입니다. 점 둘은 원문이 든 디코드 예와 정사각 n=64 입니다.'),
+    'EDGE': ('면적은 웨이퍼가 이기고 둘레는 진다', mf.FIG_EDGE,
+             '네모의 가로 길이가 칩 한 변이고 세로는 같은 비로 줄여 그렸습니다 — 넓이가 '
+             '실제 면적 비는 아닙니다. 엔비디아 쪽 한 변 10밀리미터는 원문의 '
+             '「130배 촘촘하다」에서 역산한 값이라 실제 칩 치수가 아닙니다.'),
     'LAT': ('지연 하나를 쪼개면 대화 속도와 동시 요청이 나온다', mf.FIG_LAT,
             '요청 하나가 지나는 150초를 가로로 편 것입니다. 왼쪽 「?」 칸은 첫 토큰까지 '
             '걸린 시간인데 원문이 안 밝혀 길이를 모릅니다 — 그려 넣은 폭은 자리를 '
@@ -202,6 +250,16 @@ TBL_NOTE = {
             '발표된 월 자본비에서 거꾸로 푼 값입니다. 여섯이 0.004%포인트 안에 모입니다.',
     'VERDICT': '손익분기 임대료는 원문이 글로 밝힌 값(L298·L302·L306)이고, 실측 처리량은 '
                '그것을 H200 시세 2.5달러로 나눈 비율입니다. 문턱과 결론은 원문에 없습니다.',
+    'PJMCTX': '전부 원문 본문에 글로 적힌 값입니다. 표 그림에서 읽은 것이 아닙니다.',
+    'PJMSAVE': '반사실 용량과 가격은 원문이 자기 모형으로 낸 값입니다. 그 둘을 우리 식에 '
+               '넣어 절감액을 다시 냈습니다.',
+    'PJMSPLIT': '가격 몫은 실제로 산 용량 전부에 걸리고, 용량 몫은 줄어든 만큼에만 '
+                '걸립니다.',
+    'PJMLEV': '상수가 아닙니다. 가격 상한에 붙은 해는 밀어도 안 내려갑니다.',
+    'CBRSPEC': '전부 원문 본문에 글로 적힌 값입니다.',
+    'CBRCHK': '원문이 여기저기 흩어 적은 값들이 한 몸인지 본 것입니다. 넷 다 맞물립니다.',
+    'CBRAI': '「어디에 막히나」는 공표된 능선 0.74 를 기준으로 나눈 것입니다.',
+    'CBRBW': '전부 원문에 없는 값입니다. 공표된 능선과 연산량에서 거꾸로 푼 것입니다.',
     'LAT': '곡선에서 눈으로 읽은 값이 아니라 저자가 문장으로 적은 값만 옮겼습니다. '
            '「대략」·「거의」로 적힌 값이라 자리의 크기로만 씁니다.',
     'LDER': '지연이 함께 적힌 두 줄만 계산할 수 있습니다. 대화 속도는 첫 토큰까지 시간을 '
@@ -301,6 +359,12 @@ def table_html(key):
     if key == 'EXT':
         h.append('<p class="xl-memo"><b>어떻게 쓰나</b><br>'
                  + '<br>'.join(mt.ext_lines()) + '</p>')
+    if key == 'PJMCTX':
+        h.append('<p class="xl-memo"><b>출처</b><br>'
+                 + '<br>'.join(mt.pjm_source_lines()) + '</p>')
+    if key == 'CBRSPEC':
+        h.append('<p class="xl-memo"><b>출처</b><br>'
+                 + '<br>'.join(mt.cbr_source_lines()) + '</p>')
     if key == 'RAWT':
         h.append('<p class="xl-memo"><b>출처</b><br>'
                  + '<br>'.join(mt.torus_source_lines()) + '</p>')
@@ -388,6 +452,14 @@ def report_cluster(sec, p, fig):
 
 def report_infer(sec, p, fig):
     return _report(SRC_I, 'model-infer', LEAD_INFER, GROUPS_INFER, sec, p, fig)
+
+
+def report_pjm(sec, p, fig):
+    return _report(SRC_P, 'model-pjm', LEAD_PJM, GROUPS_PJM, sec, p, fig)
+
+
+def report_roof(sec, p, fig):
+    return _report(SRC_R, 'model-roof', LEAD_ROOF, GROUPS_ROOF, sec, p, fig)
 
 
 def report_lat(sec, p, fig):
