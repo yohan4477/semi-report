@@ -6,6 +6,7 @@ sources: SemiAnalysis 영문 클리핑 1편 + 그 안의 표 그림 4장 · 한�
 labels: 굿풋편=[260420] GPU 클러스터 진짜 비용 계산법 · 클러스터영문=clippings/How Much Do GPU Clusters Really Cost
 model: claude-opus-5 (메인) — 모델 코드 · 검사기 · 절 얼개 · 초안 · 도해
 fixed: 모델 출력은 `insights/models/check_gpu_tco.py` 가 매번 다시 낸다. 본문의 파생값과 그림에서 읽은 발표치는 `scratchpad/model_facts.md` 가 정본이고, 그 파일은 `scratchpad/gen_model_facts.py` 가 모델을 돌려 다시 쓴다.
+fixed2: 초안 대조(haiku, 2026-09-09) — 인용 12건 전부 일치. 줄번호 오류 0 · 원문 밖 0 · 과장 0 · 축소 0. 메인이 표본 셋(클러스터영문 L36·L74·L137)을 직접 열어 확인했고, L137 의 「4k+ GPU scale」과 「2-6%」와 「spare pool」이 그 줄에 실물로 있었다. 대조 결과를 그대로 믿지 않는 이유는 트럼프 층에서 haiku 가 49건 중 23건을 어긋남으로 냈다가 여섯이 헛짚은 것으로 드러난 이력 때문이다 — 이번에는 헛짚은 것이 없었다.
 cite: 영문 클리핑은 마크다운이라 L숫자가 파일의 줄 번호다. 표 그림에서 읽은 값은 줄 번호가 없으므로 몇 번 그림인지 밝힌다.
 ---
 
