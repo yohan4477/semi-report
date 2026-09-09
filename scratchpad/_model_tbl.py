@@ -71,11 +71,20 @@ def tco_table():
     return head, body
 
 
+# 어긋난 줄마다 어느 항을 빼야 발표치가 나오나. 항을 하나씩·둘씩·셋씩 꺼서
+# 전부 시험한 결과이고 판단이 아니다 — insights/models/ 의 대조로 나온다
+_MISSING = {
+    '대규모 학습 / Silver': '고장 인지 시간을 빼야',
+    '소규모 학습 / Silver': '체크포인트 손실을 빼야',
+    '소규모 학습 / Gold': '인지 시간이나 수리 시간을 빼야 (둘이 같은 값이라 안 갈림)',
+}
+
+
 # ── 표 2. 굿풋 계산기 세 시나리오 (그림 019·022·025) ────────────────────
 # 여기만 발표치와 모델값을 나란히 둔다 — 이 표가 어긋나는 자리이기 때문이다.
 def goodput_table():
     head = ['시나리오', '클러스터 / 작업 / 반경', '복원 방식',
-            '월 중단', '발표 손실', '수식대로', '차이']
+            '월 중단', '발표 손실', '수식대로', '차이', '발표치가 나오려면']
     body = []
     for name, g, want in G.SCENARIOS:
         mode = {'tolerant': '고장 견딤', 'chkpt_hot': '뜨거운 예비',
@@ -91,6 +100,7 @@ def goodput_table():
             _m(want['total_pct'], '%'),
             _m(got['total_pct'], '%'),
             '일치' if abs(d) < 0.01 else '%+.2f%%p' % d,
+            _MISSING.get(name, ''),
         ])
     return head, body
 
@@ -171,10 +181,53 @@ def total_table():
     return head, body
 
 
+def wacc_table():
+    """발표된 월 자본비에서 역산한 WACC. 표에 찍힌 13.3% 는 소수 한 자리 표시값이다."""
+    from inference_tco import implied_wacc, levelized_monthly
+    head = ['SKU', '서버당 선불', '발표 월 자본비', '13.3%로 계산', '차이', '역산 WACC']
+    body = []
+    for sku in I.SKUS:
+        up = sku.capex.upfront_per_server()
+        want = I.PUBLISHED[sku.name][2]
+        got = levelized_monthly(up, 0.133, 4)
+        r = implied_wacc(up, want, 4)
+        body.append([sku.name, _m(up), _m(want), _m(got),
+                     '%+.4f%%' % ((want / got - 1) * 100), '%.4f%%' % (r * 100)])
+    return head, body
+
+
+# 원문이 글로 밝힌 손익분기 임대료(AMD영문 L298·L302·L306)와 H200 시세 2.5달러.
+# 비율은 그 둘로 나온 값이라 손으로 적지 않는다
+_WORKLOAD = [('번역·대화 1k/1k', 1.9, 1.9), ('추론형 1k/4k', 2.1, 2.4),
+             ('요약 4k/1k', 2.1, 2.4)]
+
+
+def verdict_table():
+    """작업 성격마다 사서 쓸 때의 답. 문턱은 두 SKU 의 시간당 원가 비다."""
+    from inference_tco import implied_throughput_ratio
+    by = {s.name: s for s in _refit()}
+    thr = by['MI300X'].tco_hourly_per_gpu() / by['H200 SXM'].tco_hourly_per_gpu()
+    head = ['작업 성격', '손익분기 임대료', 'MI300X 실측 처리량', '사서 쓸 때 문턱', '결론']
+    body = []
+    for name, lo, hi in _WORKLOAD:
+        r_lo = implied_throughput_ratio(I.H200_RENTAL, lo)
+        r_hi = implied_throughput_ratio(I.H200_RENTAL, hi)
+        verdict = ('사서 쓰면 MI300X가 싸다' if r_lo > thr
+                   else ('빌려도 사도 H200이 싸다' if r_hi < thr else '문턱을 걸친다'))
+        body.append([
+            name,
+            '$%.2f' % lo if lo == hi else '$%.2f~$%.2f' % (lo, hi),
+            '%.2f' % r_lo if lo == hi else '%.2f~%.2f' % (r_lo, r_hi),
+            '%.2f' % thr, verdict])
+    return head, body
+
+
 TABLES = {
     'TCO': ('GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)', tco_table),
     'GOOD': ('굿풋 계산기 세 시나리오 (그림 019·022·025 재현)', goodput_table),
     'IMPACT': ('굿풋 어긋남이 3년 값에 미치는 폭', impact_table),
+    'WACC': ('표에 찍힌 13.3%에서 역산한 실제 할인율', wacc_table),
+    'VERDICT': ('작업 성격마다 갈리는 소유의 답', verdict_table),
     'CAPEX': ('추론 원가 — 자본지출 (그림 049 재현)', capex_table),
     'OPEX': ('추론 원가 — 운영비 (그림 050 재현)', opex_table),
     'TOTAL': ('추론 원가 — GPU 시간당 합계 (그림 016 뒷장 재현)', total_table),

@@ -119,6 +119,10 @@ TBL_NOTE = {
             '세 줄이 어긋나고 빠진 항이 줄마다 다릅니다.',
     'IMPACT': '「36개월 발표」는 그림 016 에서 읽은 값이고 「36개월 수식」은 굿풋을 '
               '원문 식으로 다시 계산해 넣은 값입니다.',
+    'WACC': '「13.3%로 계산」은 표에 찍힌 값을 그대로 넣었을 때이고, 「역산 WACC」는 '
+            '발표된 월 자본비에서 거꾸로 푼 값입니다. 여섯이 0.004%포인트 안에 모입니다.',
+    'VERDICT': '손익분기 임대료는 원문이 글로 밝힌 값(L298·L302·L306)이고, 실측 처리량은 '
+               '그것을 H200 시세 2.5달러로 나눈 비율입니다. 문턱과 결론은 원문에 없습니다.',
     'CAPEX': 'WACC 는 표에 찍힌 13.3%가 아니라 역산한 13.25%입니다(7절). B200 의 '
              '서버당 선불이 발표치보다 1달러 큰 것은 발표 표의 항목별 반올림 때문입니다.',
     'OPEX': '전기는 정격이 아니라 가동률과 PUE 를 거친 값입니다. 여섯 SKU 가 같은 '
@@ -128,7 +132,17 @@ TBL_NOTE = {
 }
 
 
-_NUM = re.compile(r'^[$+-]?[\d,.]+(%|배|회|%p)?$|^[+-]?[\d,.]+%p$|^\$[+-]?[\d,.]+$')
+_ONE = re.compile(r'^[$+-]?[\d,.]+(%p|%|배|회)?$')
+
+
+def _is_num(txt):
+    """값 칸인가. 「0.84~0.96」이나 「$2.10~$2.40」 같은 구간도 값이다.
+
+    물결을 지우고 한 덩어리로 재면 「$2.10$2.40」이 되어 달러 표가 안 걸린다 —
+    그 열이 통째로 글자 열로 잡혀 왼쪽에 붙고 흐려졌다(2026-09-09).
+    """
+    parts = [t.strip() for t in txt.split('~')]
+    return bool(parts) and all(_ONE.match(t) for t in parts if t)
 # 합계·마지막 줄로 보는 이름. 원문 표에서 굵게 찍힌 줄과 같은 자리다
 _SUM = ('합계', 'Gold 대비', '문턱')
 
@@ -139,11 +153,11 @@ def _numeric_cols(head, body):
     out = []
     for i in range(len(head)):
         vals = [r[i] for r in body if i < len(r) and r[i]]
-        hit = sum(1 for v in vals if _NUM.match(v.replace('~', '')))
+        hit = sum(1 for v in vals if _is_num(v))
         # 숫자가 하나라도 있고 나머지가 「일치」 같은 짧은 말뿐이면 숫자 열이다.
         # 과반으로 정하면 일곱 줄 중 넷이 「일치」인 「차이」 열이 글자 열이 되어
         # 그 열의 숫자만 왼쪽에 붙는다(2026-09-09)
-        rest_ok = all(len(v) <= 3 for v in vals if not _NUM.match(v.replace('~', '')))
+        rest_ok = all(len(v) <= 3 for v in vals if not _is_num(v))
         # 첫 열만 이름 열로 못 박는다. 둘째 열을 함께 뺐더니 SKU 표의 첫 값 열이
         # 글자 열로 잡혀 왼쪽에 붙고 흐리게 나왔다(2026-09-09)
         out.append(bool(i >= 1 and vals and hit and rest_ok))
