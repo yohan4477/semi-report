@@ -15,3 +15,6 @@ input/3pro/
 # 포트폴리오 워치 — 로컬 스케줄러 로그. 저장소에 안 든다
 insights/watch/_local.log
 _workspace/
+
+# 클리핑 원본 이미지 — 스크립트로 다시 받는다 (scripts/fetch_clip_images.py)
+input/clip-images/
