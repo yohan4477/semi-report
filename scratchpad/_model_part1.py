@@ -15,6 +15,7 @@ import re
 
 import _rep_toc as rt
 import _model_fig as mf
+import _model_tbl as mt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'insights', 'reports', 'model-2026-09-09.md')
@@ -87,6 +88,37 @@ def _table(rows):
     return ''.join(h)
 
 
+TBL_NOTE = {
+    'TCO': '굿풋 줄은 발표된 백분율(소수 둘째 자리)로 계산했습니다. 그 반올림 때문에 '
+           '발표치와 최대 700달러 차이가 납니다. 나머지 칸은 달러까지 같습니다.',
+    'GOOD': '「수식대로」는 원문 L131 의 식에 그림의 입력을 그대로 넣은 값입니다. '
+            '세 줄이 어긋나고 빠진 항이 줄마다 다릅니다.',
+    'IMPACT': '「36개월 발표」는 그림 016 에서 읽은 값이고 「36개월 수식」은 굿풋을 '
+              '원문 식으로 다시 계산해 넣은 값입니다.',
+    'CAPEX': 'WACC 는 표에 찍힌 13.3%가 아니라 역산한 13.25%입니다(7절). B200 의 '
+             '서버당 선불이 발표치보다 1달러 큰 것은 발표 표의 항목별 반올림 때문입니다.',
+    'OPEX': '전기는 정격이 아니라 가동률과 PUE 를 거친 값입니다. 여섯 SKU 가 같은 '
+            '단가를 쓰므로 차이는 서버 전력에서만 납니다.',
+    'TOTAL': '맨 아래 줄은 원문에 없습니다. H200 을 1 로 놓고 각 SKU 가 사서 쓸 때 '
+             '넘어야 할 처리량 비율을 우리가 계산한 것입니다.',
+}
+
+
+def table_html(key):
+    """원문 계산기의 칸을 그대로 세운다. 값은 _model_tbl 의 모델이 낸 것이다."""
+    title, fn = mt.TABLES[key]
+    head, body = fn()
+    h = ['<p class="ins-lede"><b>%s</b></p>' % title,
+         '<div class="biz-tw"><table class="biz-t"><thead><tr>']
+    h += ['<th>%s</th>' % c for c in head]
+    h.append('</tr></thead><tbody>')
+    for r in body:
+        h.append('<tr>' + ''.join('<td>%s</td>' % c for c in r) + '</tr>')
+    h.append('</tbody></table></div>')
+    h.append('<p class="ins-lede">%s</p>' % TBL_NOTE[key])
+    return ''.join(h)
+
+
 def load():
     txt = io.open(SRC, encoding='utf-8').read()
     if txt.startswith('---'):
@@ -106,6 +138,9 @@ def load():
         if s.startswith('## '):
             flush()
             out.append(('sec', re.sub(r'^\d+\.\s*', '', s[3:]).strip()))
+        elif s.startswith('[[tbl:'):
+            flush()
+            out.append(('tbl', s[6:].rstrip(']').strip()))
         elif s.startswith('[[fig:'):
             flush()
             out.append(('fig', s[6:].rstrip(']').strip()))
@@ -134,7 +169,7 @@ def report_model(sec, p, fig):
     assert len(titles) == GROUPS[-1][2], (len(titles), GROUPS)
     toc_done = False
     for k, v in items:
-        if k in ('sec', 'fig') and not toc_done:
+        if k in ('sec', 'fig', 'tbl') and not toc_done:
             p(toc_html(titles))
             toc_done = True
         if k == 'sec':
@@ -143,6 +178,8 @@ def report_model(sec, p, fig):
             p(_strip(v))
         elif k == 'fig':
             fig(CAPTION[v])
+        elif k == 'tbl':
+            p(table_html(v))
         elif k == 'table':
             p(_table(v))
     return titles
