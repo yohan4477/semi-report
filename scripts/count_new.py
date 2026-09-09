@@ -39,7 +39,7 @@ def processed_ids():
     return seen
 
 
-def feed(channel_id, tries=6):
+def feed(channel_id, tries=10):
     """유튜브가 곧잘 404를 던진다 — 간격을 늘려 가며 다시 묻는다."""
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
     last = None
@@ -86,9 +86,16 @@ def main():
     print(f"목록 -> {path}")
 
     tally = " · ".join(
-        f"{n} {len(v) if isinstance(v, list) else '?'}" for n, v in sources)
-    msg = (f"[아직 처리 안 한 것 {total}편]\n{tally}\n\n"
-           "말풍선을 누르면 목록이 열린다.")
+        f"{n} {len(v)}" if isinstance(v, list) else f"{n} 실패" for n, v in sources)
+    failed = [n for n, v in sources if not isinstance(v, list)]
+    # 실패한 채널을 뺀 채로 합계만 보내면 적게 나온 수를 사실로 읽는다
+    head = f"[아직 처리 안 한 것 {total}편]"
+    if failed:
+        head = f"[아직 처리 안 한 것 {total}편 이상]"
+    msg = f"{head}\n{tally}\n\n"
+    if failed:
+        msg += f"{'·'.join(failed)} 는 못 셌다. 합계에 안 들어갔다.\n\n"
+    msg += "말풍선을 누르면 목록이 열린다."
     print(msg)
     if args.kakao:
         import kakao_send
