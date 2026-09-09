@@ -670,5 +670,80 @@
       "where": "AMD영문 그림 049",
       "why": "원문이 검은 막대로 지웠다. 코퍼스 78편에도 이 여섯 SKU 의 GPU 단가를 말한 대목이 없어 앵커가 없다"
     }
+  ],
+  "_외부 1차 자료": "뉴스레터가 아니라 우리가 직접 가져올 수 있는 자료. 가려진 칸을 박거나 현황을 갱신할 때 여기서 가져온다. status 가 「후보」면 아직 안 가져온 것이고, 주소가 없는 줄은 문서 이름만 알고 정확한 위치를 아직 확인 안 한 것이다.",
+  "external_sources": [
+    {
+      "pins": "GPU 자체 원가 (그림 049 가려진 줄)",
+      "source": "엔비디아·AMD 분기보고서 — 데이터센터 부문 매출과 출하 대수",
+      "kind": "공시",
+      "where": "SEC EDGAR",
+      "url": "https://www.sec.gov/edgar/search/",
+      "how": "부문 매출을 추정 출하량으로 나누면 평균 판매가가 나온다. 출하량은 공시에 없어 또 하나의 가정이 붙는다",
+      "status": "후보"
+    },
+    {
+      "pins": "서버 값과 기타 서버 비용의 분리",
+      "source": "슈퍼마이크로·델 분기보고서 — 서버 부문 매출·원가·재고",
+      "kind": "공시",
+      "where": "SEC EDGAR",
+      "url": "https://www.sec.gov/edgar/search/",
+      "how": "가속기를 뺀 서버 원가율이 나오면 기타 서버 비용의 폭이 좁아진다",
+      "status": "후보"
+    },
+    {
+      "pins": "코로케이션 kW·월 단가 (그림 050 의 130달러)",
+      "source": "디지털리얼티·에퀴닉스 분기보고서 — 임대 단가와 가동률",
+      "kind": "공시",
+      "where": "SEC EDGAR",
+      "url": "https://www.sec.gov/edgar/search/",
+      "how": "실제 계약 단가와 견줘 130달러가 어느 구간인지 잰다",
+      "status": "후보"
+    },
+    {
+      "pins": "전기 kWh 단가 (그림 050 의 0.087달러)",
+      "source": "미국 에너지정보청 Electric Power Monthly — 주별 산업용 요금",
+      "kind": "정부 통계",
+      "where": "EIA",
+      "url": "https://www.eia.gov/electricity/monthly/",
+      "how": "데이터센터가 몰린 주의 산업용 요금과 견준다. 월 단위로 갱신되므로 현황 갱신에 바로 쓴다",
+      "status": "후보"
+    },
+    {
+      "pins": "WACC (그림 049 의 13.25%)",
+      "source": "미 재무부 일별 국채 수익률 곡선",
+      "kind": "정부 통계",
+      "where": "US Treasury",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
+      "how": "무위험 이자율이 바뀌면 자본비가 따라 움직인다. 현황 갱신의 첫 입력이다",
+      "status": "후보"
+    },
+    {
+      "pins": "GPU 무고장 시간 (그림 019 의 2만 5천·1만 5천 시간)",
+      "source": "대규모 학습 실행 보고서 — 메타 라마 3 학습 로그 등 고장 통계를 실은 논문",
+      "kind": "논문",
+      "where": "arXiv",
+      "url": null,
+      "how": "발표된 MTBF 가정이 실측과 얼마나 벌어지는지 잰다. 정확한 문헌 위치는 아직 확인 안 했다",
+      "status": "후보 · 위치 미확인"
+    },
+    {
+      "pins": "GPU 임대 시세 (본문의 H200 시간당 2.5달러)",
+      "source": "우리 코퍼스의 임대 지수 편",
+      "kind": "이미 가진 것",
+      "where": "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md",
+      "url": null,
+      "how": "시세는 달마다 움직인다. 손익분기 임대료를 다시 계산할 때 이 편이 기준선이 된다",
+      "status": "가지고 있음"
+    },
+    {
+      "pins": "서버 값 층 교차 검증",
+      "source": "우리 코퍼스의 학습 벤치마크 편 — H100 서버 대당 약 19만 달러",
+      "kind": "이미 가진 것",
+      "where": "content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md",
+      "url": null,
+      "how": "열두 달 앞선 다른 글의 값과 맞물리는지 본다. 이미 맞물리는 것을 확인했다",
+      "status": "확인함"
+    }
   ]
 }

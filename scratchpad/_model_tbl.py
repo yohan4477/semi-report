@@ -67,6 +67,25 @@ def source_lines():
     return out
 
 
+def ext_table():
+    """가려진 칸을 박거나 현황을 갱신할 때 가져올 자료. 뉴스레터 밖의 것이다."""
+    head = ['무엇을 박나', '자료', '갈래', '어디', '지금 상태']
+    body = []
+    for e in RAW['external_sources']:
+        body.append([e['pins'], e['source'], e['kind'],
+                     e['where'], e['status']])
+    return head, body
+
+
+def ext_lines():
+    """자료마다 어떻게 쓰는지와 주소. 표에 넣으면 열이 넘쳐 아래로 내린다."""
+    out = []
+    for e in RAW['external_sources']:
+        link = (' — <a href="%s">%s</a>' % (e['url'], e['url'])) if e.get('url') else ''
+        out.append('<b>%s</b> · %s%s' % (e['pins'], e['how'], link))
+    return out
+
+
 def _m(v, unit='$'):
     """돈은 자리를 끊는다. 단가는 센트까지 봐야 하므로 천 달러 미만은 소수 둘째.
 
@@ -294,6 +313,7 @@ def verdict_table():
 
 TABLES = {
     'RAW': ('이 층이 쓴 원자료와 그 출처', raw_table),
+    'EXT': ('가려진 칸을 박으려면 어디서 가져와야 하나', ext_table),
     'TCO': ('GPU 클러스터 TCO 계산기 — 월 비용 (그림 016 재현)', tco_table),
     'GOOD': ('굿풋 계산기 세 시나리오 (그림 019·022·025 재현)', goodput_table),
     'IMPACT': ('굿풋 어긋남이 3년 값에 미치는 폭', impact_table),
