@@ -719,7 +719,7 @@
       "status": "후보"
     },
     {
-      "pins": "GPU 무고장 시간 (그림 019 의 2만 5천·1만 5천 시간)",
+      "pins": "GPU 무고장 시간 (그림 019 — Gold·Hyperscaler 2만 5천 시간, Silver 1만 5천 시간)",
       "source": "대규모 학습 실행 보고서 — 메타 라마 3 학습 로그 등 고장 통계를 실은 논문",
       "kind": "논문",
       "where": "arXiv",

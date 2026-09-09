@@ -122,7 +122,7 @@ GPU 자체 원가 (그림 049 가려진 줄) · 엔비디아·AMD 분기보고�
 코로케이션 kW·월 단가 (그림 050 의 130달러) · 디지털리얼티·에퀴닉스 분기보고서 — 임대 단가와 가동률 · 공시 · SEC EDGAR · 후보
 전기 kWh 단가 (그림 050 의 0.087달러) · 미국 에너지정보청 Electric Power Monthly — 주별 산업용 요금 · 정부 통계 · EIA · 후보
 WACC (그림 049 의 13.25%) · 미 재무부 일별 국채 수익률 곡선 · 정부 통계 · US Treasury · 후보
-GPU 무고장 시간 (그림 019 의 2만 5천·1만 5천 시간) · 대규모 학습 실행 보고서 — 메타 라마 3 학습 로그 등 고장 통계를 실은 논문 · 논문 · arXiv · 후보 · 위치 미확인
+GPU 무고장 시간 (그림 019 — Gold·Hyperscaler 2만 5천 시간, Silver 1만 5천 시간) · 대규모 학습 실행 보고서 — 메타 라마 3 학습 로그 등 고장 통계를 실은 논문 · 논문 · arXiv · 후보 · 위치 미확인
 GPU 임대 시세 (본문의 H200 시간당 2.5달러) · 우리 코퍼스의 임대 지수 편 · 이미 가진 것 · content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md · 가지고 있음
 서버 값 층 교차 검증 · 우리 코퍼스의 학습 벤치마크 편 — H100 서버 대당 약 19만 달러 · 이미 가진 것 · content/newsletter/ai_infra/compute/[250820] H100 vs GB200 NVL72 학습 벤치마크 - 전력, TCO, 신뢰성 분석.md · 확인함
 
@@ -229,7 +229,7 @@ GPU_$/월 = $_GPU·시간 × #GPU × 720_시간/월 — 월을 720시간으로 �
 
 ### 수식 GOOD — 고장이 원가로 바뀌는 식은 셋이다 (클러스터영문 L131·L143)
 G_chkpt-cold = [(t_id + t_chkpt/2) + t_init + t_repair] × j_size × #failures × $_GPU-hr — 작업이 수리를 기다린다. 원문이 최악이라고 부른 경우다
-G_chkpt-hot = {[(t_id + t_chkpt/2) + t_init] × j_size + t_repair × b_radius} × #failures × $_GPU-hr — 수리 시간은 폭발 반경만큼만 문다
+G_chkpt-hot = {[(t_id + t_chkpt/2) + t_init] × j_size + t_repair × b_radius} × #failures × $_GPU-hr — 수리 시간에는 폭발 반경만 곱한다
 G_tolerant = [(t_id + t_failover) × j_size + t_repair × b_radius] × #failures × $_GPU-hr — 체크포인트 손실이 없다. 작업이 계속 돈다
 클러스터 MTBF = GPU MTBF ÷ 클러스터 장수 — 원문 L110. 클수록 고장 사이가 짧아진다
 #failures = 720_시간/월 ÷ 클러스터 MTBF
@@ -237,7 +237,7 @@ G_tolerant = [(t_id + t_failover) × j_size + t_repair × b_radius] × #failures
 ### 수식 INF — 서버 값이 시간당 단가가 되는 식 (AMD영문 L442·L446 + 그림 049·050)
 선불_서버당 = 서버 값 + 서비스·망·저장·소프트웨어
 월 자본비 = 선불 × r ÷ [1 − (1 + r)^−n] — r = WACC ÷ 12, n = 4년 × 12. 단순히 48로 나누는 것이 아니다
-전기_kW·월 = $_kWh × 730_시간/월 × 가동률 × PUE — 이 글은 월을 730시간으로 센다. 클러스터 글의 720과 다르다
+전기_kW·월 = $_kWh × 730_시간/월 × 가동률 × PUE — 이 글은 월을 730시간으로 센다. 앞 글의 클러스터 원가 글은 720시간이다
 호스팅_서버·월 = (전기_kW·월 + 코로케이션_kW·월) × 서버 전력_kW
 운영비_서버·월 = 호스팅 + 상면 인건비 + 회선
 $_GPU-시간 = (월 자본비 + 월 운영비) ÷ (8 × 730) — 서버 한 대에 GPU 여덟 장

@@ -44,7 +44,7 @@ EQ = {
          ('G<sub>chkpt-hot</sub>',
           '{[(t<sub>id</sub> + t<sub>chkpt</sub>/2) + t<sub>init</sub>] × j<sub>size</sub> '
           '+ t<sub>repair</sub> × b<sub>radius</sub>} × #failures × $<sub>GPU-hr</sub>',
-          '수리 시간은 폭발 반경만큼만 문다'),
+          '수리 시간에는 폭발 반경만 곱한다'),
          ('G<sub>tolerant</sub>',
           '[(t<sub>id</sub> + t<sub>failover</sub>) × j<sub>size</sub> '
           '+ t<sub>repair</sub> × b<sub>radius</sub>] × #failures × $<sub>GPU-hr</sub>',
@@ -71,7 +71,7 @@ EQ = {
           'r = WACC ÷ 12, n = 4년 × 12. 단순히 48로 나누는 것이 아니다'),
          ('전기<sub>kW·월</sub>',
           '$<sub>kWh</sub> × 730<sub>시간/월</sub> × 가동률 × PUE',
-          '이 글은 월을 730시간으로 센다. 클러스터 글의 720과 다르다'),
+          '이 글은 월을 730시간으로 센다. 앞 글의 클러스터 원가 글은 720시간이다'),
          ('호스팅<sub>서버·월</sub>', '(전기<sub>kW·월</sub> + 코로케이션<sub>kW·월</sub>)'
           ' × 서버 전력<sub>kW</sub>', ''),
          ('운영비<sub>서버·월</sub>', '호스팅 + 상면 인건비 + 회선', ''),
