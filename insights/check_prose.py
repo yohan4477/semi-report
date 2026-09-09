@@ -622,6 +622,7 @@ def check_dashboards(gloss):
                     glob.glob(os.path.join(DASH_DIR, 'watch', '*.html')) +
                     glob.glob(os.path.join(DASH_DIR, 'semidoped', '*.html')) +
                     glob.glob(os.path.join(DASH_DIR, 'seemore', '*.html')))
+    base = p20_baseline()
     for p in paths_:
         where = os.path.basename(p)
         body = dashboard_text(p)
@@ -630,7 +631,39 @@ def check_dashboards(gloss):
         check_translationese(body, where)
         # 볼드는 태그를 떼기 전 원본에서 센다
         check_bold(io.open(p, encoding='utf-8').read(), where)
+        check_p20_growth(body, where, base)
     return paths_
+
+
+# 대시보드의 P20 빚은 758건에서 시작했다. 다 갚기 전에는 FAIL 로 못 올리는데,
+# 그동안 새 글이 같은 꼴을 계속 들여오면 규칙이 있으나 마나다. 그래서 장별로
+# 지금 개수를 적어 두고 그보다 늘면 그 자리에서 막는다 — 갚는 것은 천천히,
+# 새로 들이는 것은 오늘부터다. 줄면 적어 둔 수를 낮춰 되돌아갈 길을 닫는다.
+P20_BASELINE = os.path.join(paths.ROOT, 'insights', 'views', 'p20_baseline.json')
+
+
+def p20_baseline():
+    if not os.path.exists(P20_BASELINE):
+        return {}
+    return json.load(io.open(P20_BASELINE, encoding='utf-8'))
+
+
+def check_p20_growth(body, where, base):
+    n = len(BARE_VALUE.findall(QUOTE_SPAN.sub(' ', body or '')))
+    was = base.get(where)
+    if was is None:
+        if n:
+            add('FAIL', where, 'P20',
+                '새 장인데 맨 「값」이 %d개다 — 무엇의 값인지 이름을 댄다' % n)
+        return
+    if n > was:
+        add('FAIL', where, 'P20',
+            '맨 「값」이 %d개에서 %d개로 늘었다 — 새로 들인 %d개를 이름으로 바꾼다'
+            % (was, n, n - was))
+    elif n < was:
+        add('INFO', where, 'P20',
+            '맨 「값」이 %d개에서 %d개로 줄었다 — p20_baseline.json 을 %d 로 낮춘다'
+            % (was, n, n))
 
 
 # P20 이 실제로 무는지 본다. 규칙을 세울 때 결함을 넣어 보지 않으면 「번호가 하나라도
