@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _model_tbl as mt  # noqa: E402
+import _model_eq as me  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'scratchpad', 'model_facts.md')
@@ -39,6 +40,8 @@ def main():
         '보고서 본문의 표와 이 글자는 `scratchpad/_model_tbl.py` 한 함수에서 나온다.',
         '표를 고치면 이 사실표가 같이 바뀌므로 둘이 갈릴 수 없다.\n',
         mt.rows_text(),
+        '## 본문에 실린 수식 — 원문이 공표한 것을 기호까지 그대로\n',
+        me.all_text(),
         '## 표 그림에서 읽은 발표치 — 원문 본문에는 없고 그림 안에만 있는 값\n',
         '이 값들의 출처는 클리핑이 참조하는 이미지다. 글자가 아니라 픽셀이라',
         '원문 마크다운 대조로는 안 잡힌다. 읽은 자리를 여기 남긴다.\n',

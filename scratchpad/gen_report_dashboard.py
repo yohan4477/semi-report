@@ -83,6 +83,68 @@ REPORT_CSS = TABLE_CSS + """
   .yt tr.hi td,.yt tr.hi th[scope="row"]{font-weight:850;color:var(--ink)}
   .yt-memo{margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--ink-3)}
 
+  /* ── 계산기 표. 원문이 실은 것이 스프레드시트라 그 꼴을 지킨다 ──────────
+     머리 띠 · 줄무늬 · 숫자 오른쪽 정렬 · 합계 줄 굵게. 색은 강조색 하나만 쓰고
+     그것도 머리 띠와 합계 줄에만 둔다 — 칸마다 칠하면 어느 값이 중요한지 안 보인다.
+     어긋난 칸(모델과 발표치가 다른 줄)만 왼쪽에 굵은 선을 세운다. */
+  .xls{margin:2px 0 4px}
+  .xlt{display:block;font-size:11.5px;font-weight:850;color:var(--ink);
+       padding:6px 10px;border:1px solid var(--ink-3);border-bottom:none;
+       border-radius:8px 8px 0 0;background:var(--sunk,#f3f4f6)}
+  .xlw{overflow-x:auto;-webkit-overflow-scrolling:touch;
+       border:1px solid var(--ink-3);border-radius:0 0 8px 8px}
+  .xl{border-collapse:collapse;font-size:11px;min-width:100%;
+      font-variant-numeric:tabular-nums}
+  .xl th,.xl td{padding:5px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+  /* 머리 칸 정렬은 그 열이 숫자 열인지가 정한다(.num). 자리로 정하면 「복원 방식」
+     같은 글자 열의 머리만 오른쪽에 붙어 아래 칸과 어긋난다 */
+  .xl thead th{font-size:10.5px;font-weight:850;color:var(--ink);text-align:left;
+               background:var(--sunk,#f3f4f6);
+               border-bottom:1.5px solid var(--ink-3);position:sticky;top:0}
+  .xl thead th.num{text-align:right}
+  .xl tbody tr:nth-child(even){background:rgba(127,127,127,.055)}
+  .xl td{text-align:left}
+  .xl td:first-child{color:var(--ink)}
+  /* 둘째 열이 「수량·단위」인 표가 있어 흐리게 두는데, 숫자 열이면 값이므로
+     흐리게 하지 않는다 — SKU 표의 첫 값 열이 통째로 흐려졌다(2026-09-09) */
+  .xl td:nth-child(2):not(.num){color:var(--ink-3)}
+  .xl td.num{text-align:right;font-weight:600;color:var(--ink)}
+  .xl tr.sum td{font-weight:850;color:var(--ink);
+                border-top:1.5px solid var(--ink-3);background:rgba(127,127,127,.09)}
+  .xl tr.off td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+  .xl tr.off td.num{color:var(--ink);font-weight:850}
+  .xl-memo{margin:4px 0 12px;font-size:10.5px;line-height:1.55;color:var(--ink-3)}
+
+  /* ── 수식 블록. 원문이 공표한 식을 기호까지 그대로 낸다 ─────────────────
+     왼쪽에 이름, 오른쪽에 식. 등호를 세로로 맞춰 눈이 한 줄로 훑게 한다. */
+  .eqbox{border:1px solid var(--ink-3);border-radius:10px;margin:6px 0 12px;
+         overflow:hidden}
+  .eqhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+          padding:7px 10px;background:var(--sunk,#f3f4f6);
+          border-bottom:1.5px solid var(--ink-3);font-size:11.5px}
+  .eqsrc{font-size:10px;color:var(--ink-3);font-weight:700;white-space:nowrap}
+  .eqrow{display:grid;grid-template-columns:minmax(96px,150px) 1fr;gap:10px;
+         padding:7px 10px;border-bottom:1px solid var(--line);align-items:baseline}
+  .eqrow:last-of-type{border-bottom:none}
+  .eqlhs{font-size:11.5px;font-weight:850;color:var(--ink);text-align:right}
+  .eqrhs{font-size:12px;color:var(--ink);line-height:1.55;
+         font-variant-numeric:tabular-nums;word-break:keep-all}
+  .eqop{color:var(--ink-3);font-weight:800;margin-right:4px}
+  .eqrhs sub{font-size:.72em;color:var(--ink-2)}
+  .eqrhs sup{font-size:.72em}
+  .eqnote{margin-top:3px;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+  .eqterms{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+           gap:2px 14px;padding:8px 10px;border-top:1.5px solid var(--line);
+           background:rgba(127,127,127,.045)}
+  .eqterm{font-size:10.5px;color:var(--ink-2);line-height:1.6}
+  .eqsym{display:inline-block;min-width:64px;font-weight:850;color:var(--ink)}
+  .eqcode{padding:6px 10px;border-top:1px solid var(--line);font-size:10px;
+          color:var(--ink-3)}
+  @media (max-width:520px){
+    .eqrow{grid-template-columns:1fr;gap:2px}
+    .eqlhs{text-align:left}
+  }
+
   /* 결론을 두 축으로 가른 판. 왼쪽은 우리가 값을 내는 축, 오른쪽은 시장가를 정답으로
      놓고 되돌리는 축이다. 좁은 화면에서는 세로로 쌓인다.
      두 판은 배경도 테두리도 같다 — 한쪽에 강조색을 깔면 그쪽이 결론처럼 읽힌다.

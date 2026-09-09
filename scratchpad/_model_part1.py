@@ -16,6 +16,7 @@ import re
 import _rep_toc as rt
 import _model_fig as mf
 import _model_tbl as mt
+import _model_eq as me
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'insights', 'reports', 'model-2026-09-09.md')
@@ -105,18 +106,57 @@ TBL_NOTE = {
 }
 
 
+_NUM = re.compile(r'^[$+-]?[\d,.]+(%|배|회|%p)?$|^[+-]?[\d,.]+%p$|^\$[+-]?[\d,.]+$')
+# 합계·마지막 줄로 보는 이름. 원문 표에서 굵게 찍힌 줄과 같은 자리다
+_SUM = ('합계', 'Gold 대비', '문턱')
+
+
+def _numeric_cols(head, body):
+    """열마다 숫자 열인지 정한다. 칸 하나씩 보면 같은 열에서 정렬이 갈린다 —
+    「차이」 열의 「일치」가 왼쪽에 붙고 「+27.30%p」가 오른쪽에 붙었다(2026-09-09)."""
+    out = []
+    for i in range(len(head)):
+        vals = [r[i] for r in body if i < len(r) and r[i]]
+        hit = sum(1 for v in vals if _NUM.match(v.replace('~', '')))
+        # 숫자가 하나라도 있고 나머지가 「일치」 같은 짧은 말뿐이면 숫자 열이다.
+        # 과반으로 정하면 일곱 줄 중 넷이 「일치」인 「차이」 열이 글자 열이 되어
+        # 그 열의 숫자만 왼쪽에 붙는다(2026-09-09)
+        rest_ok = all(len(v) <= 3 for v in vals if not _NUM.match(v.replace('~', '')))
+        # 첫 열만 이름 열로 못 박는다. 둘째 열을 함께 뺐더니 SKU 표의 첫 값 열이
+        # 글자 열로 잡혀 왼쪽에 붙고 흐리게 나왔다(2026-09-09)
+        out.append(bool(i >= 1 and vals and hit and rest_ok))
+    return out
+
+
+def _cell(txt, num):
+    """숫자 칸은 오른쪽으로 맞춘다. 자릿수가 세로로 서야 크기가 눈에 들어온다.
+
+    0 은 「—」로 낸다. 원문 표가 그 자리에 included 라고 적었고, $0.00 을 스무 칸
+    깔면 값이 있는 칸이 안 보인다."""
+    if num and txt in ('$0.00', '$0', '0.00%'):
+        txt = '—'
+    return '<td%s>%s</td>' % (' class="num"' if num else '', txt)
+
+
 def table_html(key):
     """원문 계산기의 칸을 그대로 세운다. 값은 _model_tbl 의 모델이 낸 것이다."""
     title, fn = mt.TABLES[key]
     head, body = fn()
-    h = ['<p class="ins-lede"><b>%s</b></p>' % title,
-         '<div class="biz-tw"><table class="biz-t"><thead><tr>']
-    h += ['<th>%s</th>' % c for c in head]
+    nums = _numeric_cols(head, body)
+    h = ['<div class="xls"><div class="xlt">%s</div><div class="xlw">' % title,
+         '<table class="xl"><thead><tr>']
+    h += ['<th%s>%s</th>' % (' class="num"' if nums[i] else '', c)
+          for i, c in enumerate(head)]
     h.append('</tr></thead><tbody>')
     for r in body:
-        h.append('<tr>' + ''.join('<td>%s</td>' % c for c in r) + '</tr>')
-    h.append('</tbody></table></div>')
-    h.append('<p class="ins-lede">%s</p>' % TBL_NOTE[key])
+        # 「차이」 칸이 「일치」가 아니면 어긋난 줄이다 — 왼쪽에 굵은 선을 세운다
+        off = any(c.endswith('%p') for c in r)
+        klass = ' class="sum"' if any(k in r[0] for k in _SUM) else (
+            ' class="off"' if off else '')
+        h.append('<tr%s>' % klass
+                 + ''.join(_cell(c, nums[i]) for i, c in enumerate(r)) + '</tr>')
+    h.append('</tbody></table></div></div>')
+    h.append('<p class="xl-memo">%s</p>' % TBL_NOTE[key])
     return ''.join(h)
 
 
@@ -139,6 +179,9 @@ def load():
         if s.startswith('## '):
             flush()
             out.append(('sec', re.sub(r'^\d+\.\s*', '', s[3:]).strip()))
+        elif s.startswith('[[eq:'):
+            flush()
+            out.append(('eq', s[5:].rstrip(']').strip()))
         elif s.startswith('[[tbl:'):
             flush()
             out.append(('tbl', s[6:].rstrip(']').strip()))
@@ -170,7 +213,7 @@ def report_model(sec, p, fig):
     assert len(titles) == GROUPS[-1][2], (len(titles), GROUPS)
     toc_done = False
     for k, v in items:
-        if k in ('sec', 'fig', 'tbl') and not toc_done:
+        if k in ('sec', 'fig', 'tbl', 'eq') and not toc_done:
             p(toc_html(titles))
             toc_done = True
         if k == 'sec':
@@ -181,6 +224,8 @@ def report_model(sec, p, fig):
             fig(CAPTION[v])
         elif k == 'tbl':
             p(table_html(v))
+        elif k == 'eq':
+            p(me.eq_html(v))
         elif k == 'table':
             p(_table(v))
     return titles
