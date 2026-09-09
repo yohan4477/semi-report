@@ -269,7 +269,10 @@ def _fund_link(y_from, y_to):
     가로로 꺾는 자리를 「왜 줬나」 줄보다 아래로 내린다. 처음에는 줄 바로 밑에서 꺾어
     글자를 가로질렀다 -- 글자끼리만 검사하고 선은 안 봐서 놓쳤다(2026-08-23)."""
     _x0, _x1, x2, _x3, x4, x5 = _FD_COLS
-    a, b, mid = (x4 + x5) // 2, (x2 + 40), y_from + 32
+    # 세로로 내려가는 자리를 「왜 줬나」 글자 오른쪽으로 뺀다. 칸 가운데(517)로 내리면
+    # 그 글자를 세로로 가로지른다 — 가로로 꺾는 자리만 내렸던 2026-08-23 수정이
+    # 반쪽이었다(2026-09-09). 글자는 x2 에서 시작해 552 까지 간다
+    a, b, mid = x5 - 62, (x2 + 40), y_from + 32
     return ('<path d="M%d %d L%d %d L%d %d L%d %d" fill="none" '
             'stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="4 4" '
             'marker-end="url(#fdarw)"/>'
@@ -379,7 +382,7 @@ TRAIN_FIG = (
     + '<text x="8" y="207" class="t-sm">(더 작게는 36기)</text>'
     + _bar(0, 30, 168, 34, 'body', '30개월')
     + _bar(30, 66, 168, 34, 'fat')
-    + '<text x="%.0f" y="189" text-anchor="middle" class="t-sm">한 기가 끝나는 대로 팔아 다음 기를 짓는다</text>' % _tx(49)
+    + '<text x="%.0f" y="189" text-anchor="middle" class="t-sm">한 기 끝나면 팔아 다음을 짓는다</text>' % _tx(49)
     + '<text x="%.0f" y="220" class="t-sm">여기서부터 계속 들어온다</text>' % (_tx(30) + 4)
     # 가로축
     + '<path d="M%.0f 238 L%.0f 238" stroke="var(--line)" stroke-width="1.2" fill="none"/>'

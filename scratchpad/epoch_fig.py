@@ -45,12 +45,18 @@ def esc(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
 
+SLACK = 6          # 줄을 상자 끝까지 붙이지 않고 남기는 여유
+
 def wrap_lines(text, bw, fs=13.5):
     """설명 한 줄을 상자 폭 안으로 자른다. 띄어쓰기에서만 끊는다.
 
     글자를 키우면 예전에 한 줄로 들어가던 문장이 넘친다. 손으로 다시 감는 대신
-    폭을 재서 자른다 — box() 의 assert 와 같은 자로 잰다."""
-    lim = bw - PAD * 2
+    폭을 재서 자른다 — box() 의 assert 와 같은 자로 잰다.
+
+    상자 끝까지 꽉 채우지 않고 6px 을 남긴다. 여유가 0 이면 재는 법이 조금만 달라도
+    넘친다 — check_fig 는 한글을 13px 로 어림하고 이 장은 잰 표로 13.5px 을 쓰는데,
+    그 2.6% 차이로 한 줄이 상자를 나갔다(2026-09-09)."""
+    lim = bw - PAD * 2 - SLACK
     out, cur = [], ''
     for word in text.split(' '):
         trial = word if not cur else cur + ' ' + word
@@ -91,7 +97,7 @@ def reflow(lines, bw, fs=13.5):
         groups.append(buf)
     if len(groups) > 1 and not any(_new_item(g) for g in groups):
         one = ' · '.join(groups)
-        if w(one, fs) < bw - PAD * 2:
+        if w(one, fs) < bw - PAD * 2 - SLACK:
             return [one]
     out = []
     for g in groups:
@@ -583,9 +589,11 @@ def fig_funding_mix():
              'style="font-weight:850;fill:#fff">TPU 345억 달러</text>' % ((X0 + px(345)) // 2, Y + 25))
     o.append('<text x="%d" y="%d" class="t-sm" text-anchor="middle" '
              'style="font-weight:850">데이터센터 152억</text>' % ((px(345) + px(497)) // 2, Y + 25))
-    o.append(lab(X0, Y + H + 30, '앤트로픽이 앞에 내놓은 현금은 없다 — 둘 다 기관투자자가 빌려준 '
-                                 '돈이고, 리스료와 임대료로 갚는다', fs=13))
-    return svg(Y + H + 44, ''.join(o))
+    # 한 줄로 두면 판 오른쪽을 넘는다(2026-09-09) — 끊어서 두 줄로 낸다
+    o.append(lab(X0, Y + H + 30, '앤트로픽이 앞에 내놓은 현금은 없다 — 둘 다 기관투자자가 '
+                                 '빌려준 돈이고,', fs=13))
+    o.append(lab(X0, Y + H + 48, '리스료와 임대료로 갚는다', fs=13))
+    return svg(Y + H + 62, ''.join(o))
 
 
 def fig_revenue_jump():
@@ -1393,9 +1401,10 @@ def fig_cn_hubs():
                         x0=170, x1=400, y=52, bh=26, step=40)
     o += body
     o.append(lab(170, bottom + 6, '중국은 세 도시를 합쳐야 93%인데 미국은 한 도시가 85%다', fs=13))
-    o.append(lab(170, bottom + 22, '성마다 자기 지역 기업을 밀어 주는 경쟁과, 상하이·저장·베이징 '
-                                   '명문대의 인력이', fs=13))
-    o.append(lab(170, bottom + 38, '허브를 여럿으로 만든 것으로 필자들은 본다', fs=13))
+    o.append(lab(170, bottom + 22, '성마다 자기 지역 기업을 밀어 주는 경쟁과, '
+                                   '상하이·저장·베이징', fs=13))
+    o.append(lab(170, bottom + 38, '명문대의 인력이 허브를 여럿으로 만든 것으로 '
+                                   '필자들은 본다', fs=13))
     return svg(bottom + 50, ''.join(o))
 
 
@@ -1703,9 +1712,10 @@ def fig_cash_or_kind():
     """현금이냐 현물이냐. 현물로 주자는 근거 셋."""
     o = [lab(16, 24, '국가가 자본을 사 줘야 하나, 현금을 주고 알아서 사게 할 것인가', fs=13)]
     s0, h0 = box(8, 44, 626, '현금으로 주면', ['사람들은 채권을, 무의결권 주식을, 조금 더 비싼 '
-                                        '의결권 주식을, 또는 가족농장 같은',
-                                        '생산 단위를 살 수 있다. 아무 자본도 안 사고 다음 수표를 '
-                                        '믿을 수도 있다'])
+                                        '의결권 주식을,',
+                                        '또는 가족농장 같은 생산 단위를 살 수 있다. '
+                                        '아무 자본도 안 사고',
+                                        '다음 수표를 믿을 수도 있다'])
     o.append(s0)
     y = 44 + h0 + 26
     reasons = [('행동 편향', ['너무 적게 저축하거나', '잘못 투자할 수 있다']),

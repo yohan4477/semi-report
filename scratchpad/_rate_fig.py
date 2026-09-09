@@ -287,7 +287,10 @@ def _chart(d0, d1, lo, hi, lines, dots=(), marks=(), top=68, bot=196,
                       col or (INK if accent else INK3), 2.0 if accent else 1.4,
                       ' stroke-dasharray="6 3"' if dash else ''))
         out.append(_lt(lx + 24, top - 10, name, 't-sm', accent))
-        lx += 30 + len(name) * 9
+        # 다음 이름표까지의 간격. 한 글자 9px 로 세면 한글 이름이 실제보다 좁게
+        # 나와 다음 색선이 앞 이름 위에 얹힌다(2026-09-09). 한글은 13px 을 다 쓴다
+        wide = sum(1 for c in name if ord(c) > 0x2000)
+        lx += 36 + int(13 * (wide + 0.5 * (len(name) - wide)))
     return ''.join(out)
 
 
