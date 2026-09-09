@@ -34,12 +34,11 @@ _CHAIN_CELLS = [
     ['랙 전원장치', '48·12·6볼트'],
     ['전압조정모듈', '1볼트 아래'],
 ]
-FIG_CHAIN = _svg(W, 150, '발전소에서 가속기까지 전압을 다섯 번 낮춘다', _DEFS + ''.join(
+FIG_CHAIN = _svg(W, 128, '발전소에서 가속기까지 전압을 다섯 번 낮춘다', _DEFS + ''.join(
     [_lt(8, 30, '들어오는 쪽', 't-sm', True), _lt(W - 84, 30, '쓰는 쪽', 't-sm', True)]
     + [_box(x, y, w, h, lines, INK3, 1.5)
        for (x, y, w, h), lines in zip(_C, _CHAIN_CELLS)]
-    + [_a(_C[i - 1][0] + _C[i - 1][2], 83, _C[i][0], 83) for i in range(1, 5)]
-    + [_t(W // 2, 138, '마디마다 손실이 난다 — 800볼트 직류는 이 사슬을 줄이려는 것', 't-sm')]))
+    + [_a(_C[i - 1][0] + _C[i - 1][2], 83, _C[i][0], 83) for i in range(1, 5)]))
 
 
 # ── 도해 2. PJM 용량 요금이 정해지는 길 ──────────────────────────────
@@ -64,15 +63,14 @@ def _col(x, cells, accent):
     return ''.join(out)
 
 
-FIG_PJMPRICE = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 34,
+FIG_PJMPRICE = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 12,
                     'PJM 용량 요금이 정해지는 길과 같은 기간 선물시장',
                     _DEFS + ''.join([
                         _lt(_LX, 26, '값을 정하는 길', 't-lab', True),
                         _lt(_RX, 26, '같은 기간 실물 신호', 't-lab', True),
                         _col(_LX, _LEFT, 2),
                         _col(_RX, _RIGHT, 1),
-                    ]) + _t(W // 2, 40 + 4 * _PSTEP - 4,
-                            '왼쪽은 9.3배, 오른쪽은 12~20%', 't-sm'))
+                    ]))
 
 
 # ── 도해 3. 모델을 고쳤다면 얼마였나 ─────────────────────────────────
@@ -103,14 +101,12 @@ def _gbar(i, when, what, v, actual):
     ])
 
 
-FIG_GAP = _svg(W, 292, '같은 경매를 실제 청산가와 모델을 고쳤을 때로 견준다',
+FIG_GAP = _svg(W, 270, '같은 경매를 실제 청산가와 모델을 고쳤을 때로 견준다',
                ''.join([
                    '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
                    % (_GX0 - 16, _GBASE, W - _GX0 + 16, _GBASE, INK3),
                    _lt(_GX0 - 16, 20, '메가와트·하루당 청산가', 't-sm', True),
-               ] + [_gbar(i, *b) for i, b in enumerate(_GBARS)]
-                   + [_t(W // 2, 284,
-                         '채운 막대가 실제로 낸 값, 빈 막대가 저자의 역산', 't-sm')]))
+               ] + [_gbar(i, *b) for i, b in enumerate(_GBARS)]))
 
 
 # ── 도해 4. 같은 물음에 답이 셋 ──────────────────────────────────────
@@ -143,12 +139,10 @@ def _panel(i, name, rows):
     return ''.join(out)
 
 
-FIG_THREE = _svg(W, 250, '같은 물음에 세 시장이 다르게 답한다',
+FIG_THREE = _svg(W, 214, '같은 물음에 세 시장이 다르게 답한다',
                  ''.join([_lt(4, _TY + 64 + k * 34, s, 't-sm', False)
                           for k, s in enumerate(_TROWS)])
-                 + ''.join(_panel(i, n, r) for i, (n, r) in enumerate(_THREE))
-                 + _t(W // 2, 240, '어느 쪽에서도 전기가 공짜인 적은 없다 — '
-                                   '청구서가 누구 앞으로 가는지가 다르다', 't-sm'))
+                 + ''.join(_panel(i, n, r) for i, (n, r) in enumerate(_THREE)))
 
 
 # ── 도해 5. 변환 지점이 사슬 위에서 상류로 옮겨간다 ──────────────────
@@ -176,7 +170,7 @@ def _phrow(i, col, name, eff):
     ])
 
 
-FIG_PHASE = _svg(W, _PHY + 4 * _PHSTEP + 22, '변환이 일어나는 자리가 단계마다 상류로 옮겨간다',
+FIG_PHASE = _svg(W, _PHY + 4 * _PHSTEP - 2, '변환이 일어나는 자리가 단계마다 상류로 옮겨간다',
                  _DEFS + ''.join(
                      [_lt(8, 30, '들어오는 쪽', 't-sm', True),
                       _lt(W - 84, 30, '쓰는 쪽', 't-sm', True)]
@@ -184,17 +178,15 @@ FIG_PHASE = _svg(W, _PHY + 4 * _PHSTEP + 22, '변환이 일어나는 자리가 �
                         for (x, y, w, h), lines in zip(_C, _CHAIN_CELLS)]
                      + [_a(_C[i - 1][0] + _C[i - 1][2], 83, _C[i][0], 83) for i in range(1, 5)]
                      + [_lt(8, 134, '변환이 일어나는 자리', 't-sm', True)]
-                     + [_phrow(i, *r) for i, r in enumerate(_PHASE_AT)])
-                 + _t(W // 2, _PHY + 4 * _PHSTEP + 14,
-                      '자리가 왼쪽으로 갈수록 사슬이 짧아지고 효율이 오른다', 't-sm'))
+                     + [_phrow(i, *r) for i, r in enumerate(_PHASE_AT)]))
 
 
 # ── 도해 6. 같은 글이 절감치를 두 값으로 적는다 ──────────────────────
 # 견줄 때는 나란한 세로 막대, 높이는 값에 비례(확정 규칙 2026-09-04).
 # 두 값 다 원문에 있고, 원문이 이 둘을 일치한다고 적은 것이 이 그림의 요점이다.
 _MMAX, _MH, _MBASE, _MW_, _MGAP = 69.0, 130, 186, 120, 110
-_MBARS = [(50, '50메가와트', '엔비디아가 밝힌', '최대 5%', True),
-          (69, '69메가와트', '단계별 계산 4단계', '6.9%', False)]
+_MBARS = [(50, '50메가와트', '엔비디아 발표', '최대 5%', True),
+          (69, '69메가와트', '단계별 계산', '6.9%', False)]
 _MX0 = (W - (2 * _MW_ + _MGAP)) // 2
 
 
@@ -212,23 +204,22 @@ def _mbar(i, v, top, l1, l2, filled):
     ])
 
 
-FIG_MW = _svg(W, 254, '같은 글이 절감치를 두 값으로 적는다', ''.join(
+FIG_MW = _svg(W, 232, '같은 글이 절감치를 두 값으로 적는다', ''.join(
     ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
      % (_MX0 - 16, _MBASE, W - _MX0 + 16, _MBASE, INK3),
-     _lt(_MX0 - 16, 20, '1기가와트 시설에서 아끼는 전력', 't-sm', True)]
-    + [_mbar(i, *b) for i, b in enumerate(_MBARS)]
-    + [_t(W // 2, 246, '원문은 이 둘이 일치한다고 적는다', 't-sm')]))
+     _lt(_MX0 - 16, 20, '1기가와트에서 아끼는 전력', 't-sm', True)]
+    + [_mbar(i, *b) for i, b in enumerate(_MBARS)]))
 
 
 # ── 도해 7. 고치자는 안이 어느 마디를 겨눴고 어디서 멈췄나 ────────────
 # 도해 2의 왼쪽 판(값을 정하는 길)을 같은 좌표로 다시 깔고, 규칙을 고치는 길을
 # 그 옆에 세워 두 번째 마디로 잇는다. 부결됐으므로 잇는 선은 점선이다.
 _FIXY = [40, 106, 172]
-_FIXCELLS = [['고치자는 안', '겨울 인증치를 반영'],
-             ['태스크포스 178대 54', '77% 통과'],
-             ['26일 뒤 상위 위원회', '30.7% 부결']]
+_FIXCELLS = [['겨울 인증치 반영안'],
+             ['태스크포스 178대 54'],
+             ['26일 뒤 30.7% 부결']]
 
-FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 34,
+FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 12,
                '고치자는 안이 곡선을 겨눴다가 위원회에서 멈췄다',
                _DEFS + ''.join([
                    _lt(_LX, 26, '값을 정하는 길', 't-lab', True),
@@ -241,9 +232,7 @@ FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 34,
                       for i in range(2)]
                    + ['<path d="M%d %d H%d" stroke="%s" stroke-width="1.4" '
                       'stroke-dasharray="5 4" marker-end="url(#fig-arrow)"/>'
-                      % (_RX - 6, _FIXY[1] + 22, _LX + 250 + 6, INK3)])
-               + _t(W // 2, 40 + 4 * _PSTEP - 4,
-                    '곡선은 그대로 남았다 — 점선은 닿지 못한 길', 't-sm'))
+                      % (_RX - 6, _FIXY[1] + 22, _LX + 250 + 6, INK3)]))
 
 
 # ── 도해 8. 작업시간이 현장에서 공장으로 옮겨간다 ─────────────────────
@@ -251,8 +240,8 @@ FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 34,
 # 다른 그림 둘로 읽힌다. 값은 50메가와트 수랭 홀 기준이다(건설-260729 L444·L445).
 _MW2, _MGAP2, _MLAB = 250, 16, 96
 _MY, _MSTEP2, _MH2 = 52, 74, 56
-_MROWS = [('관행 시공', ['공장에서 하는 일 없음'], ['현장 메가와트당 12,000시간'], '30~35개월', 1),
-          ('완전 모듈러', ['기계·전기 설치를 공장에서'], ['현장 메가와트당 4,500시간'], '24~30개월', 0)]
+_MROWS = [('관행 시공', ['없음'], ['12,000시간', '메가와트당'], '30~35개월', 1),
+          ('완전 모듈러', ['기계·전기 설치'], ['4,500시간', '메가와트당'], '24~30개월', 0)]
 
 
 def _mrow(i, name, left, right, dur, accent):
@@ -269,12 +258,10 @@ def _mrow(i, name, left, right, dur, accent):
     return ''.join(out)
 
 
-FIG_MODULAR = _svg(W, _MY + 2 * _MSTEP2 + 16, '작업시간이 현장에서 공장으로 옮겨간다',
+FIG_MODULAR = _svg(W, _MY + 2 * _MSTEP2 - 8, '작업시간이 현장에서 공장으로 옮겨간다',
                    ''.join([_lt(_MLAB, 34, '공장', 't-lab', True),
                             _lt(_MLAB + _MW2 + _MGAP2, 34, '현장', 't-lab', True)]
-                           + [_mrow(i, *r) for i, r in enumerate(_MROWS)])
-                   + _t(W // 2, _MY + 2 * _MSTEP2 + 8,
-                        '전기공 면허가 필요한 작업시간은 약 85% 줄어든다', 't-sm'))
+                           + [_mrow(i, *r) for i, r in enumerate(_MROWS)]))
 
 
 # ── 도해 9. 랙 하나가 짊어지는 전력 ──────────────────────────────────
@@ -301,19 +288,18 @@ def _dbar(i, v, lab, when):
     ])
 
 
-FIG_DENSITY = _svg(W, 258, '랙 하나가 짊어지는 전력이 세대마다 뛴다', ''.join(
+FIG_DENSITY = _svg(W, 240, '랙 하나가 짊어지는 전력이 세대마다 뛴다', ''.join(
     ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
      % (_DX0 - 16, _DBASE, W - _DX0 + 16, _DBASE, INK3),
      _lt(_DX0 - 16, 22, '랙 하나의 전력 (킬로와트)', 't-sm', True)]
-    + [_dbar(i, *b) for i, b in enumerate(_DBARS)]
-    + [_t(W // 2, 250, '마지막 세대는 이번인지 다음인지 화자가 유보를 달았다', 't-sm')]))
+    + [_dbar(i, *b) for i, b in enumerate(_DBARS)]))
 
 
 # ── 도해 10. 일정이 어느 마디에서 늘어났나 ───────────────────────────
 # 네비우스 뉴저지 한 부지의 첫 50메가와트. 같은 일을 계획과 실제로 견준다.
 _LMAX, _LH2, _LBASE = 11.0, 150, 208
-_LBARS = [(4, '4개월', '처음 발표', False), (6, '6개월', '장비가 늦어', False),
-          (11, '10~11개월', '냉각기·배전반까지', True)]
+_LBARS = [(4, '4개월', '발표', False), (6, '6개월', '장비 지연', False),
+          (11, '10~11개월', '실제', True)]
 _LW, _LG2 = 120, 40
 _LX0 = (W - (3 * _LW + 2 * _LG2)) // 2
 
@@ -331,12 +317,11 @@ def _lbar(i, v, lab, when, hot):
     ])
 
 
-FIG_DELAY = _svg(W, 252, '같은 50메가와트가 세 번 길어진다', ''.join(
+FIG_DELAY = _svg(W, 234, '같은 50메가와트가 세 번 길어진다', ''.join(
     ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1"/>'
      % (_LX0 - 16, _LBASE, W - _LX0 + 16, _LBASE, INK3),
-     _lt(_LX0 - 16, 22, '첫 50메가와트를 켜기까지', 't-sm', True)]
-    + [_lbar(i, *b) for i, b in enumerate(_LBARS)]
-    + [_t(W // 2, 244, '취소가 아니라 지연이다 — 껍데기를 올린 뒤가 더 걸렸다', 't-sm')]))
+     _lt(_LX0 - 16, 22, '첫 50메가와트까지 (개월)', 't-sm', True)]
+    + [_lbar(i, *b) for i, b in enumerate(_LBARS)]))
 
 
 # ── 도해 11. 두 길 ──────────────────────────────────────────────────
@@ -344,8 +329,8 @@ FIG_DELAY = _svg(W, 252, '같은 50메가와트가 세 번 길어진다', ''.joi
 _2W, _2LAB, _2GAP = 244, 92, 20
 _2H, _2Y = 148, 44
 _2ROWS = ['무엇을 기다리나', '언제 켜나', '값']
-_2PANES = [('계통에 연결한다', ['접속 대기열과 허가', '걸핏하면 2030년', '계통 요금을 낸다']),
-           ('계통 뒤편에 짓는다', ['장비와 인력', '2027~2028년', '종종 훨씬 비싸다'])]
+_2PANES = [('계통에 연결한다', ['접속 대기열·허가', '2030년', '계통 요금']),
+           ('계통 뒤편에 짓는다', ['장비·인력', '2027~2028년', '더 비싸다'])]
 
 
 def _2panel(i, name, rows):
@@ -360,19 +345,17 @@ def _2panel(i, name, rows):
     return ''.join(out)
 
 
-FIG_TWOPATH = _svg(W, 246, '전력을 어디서 받을지 두 길이 갈린다',
+FIG_TWOPATH = _svg(W, 210, '전력을 어디서 받을지 두 길이 갈린다',
                    ''.join([_lt(4, _2Y + 62 + k * 30, s, 't-sm', False)
                             for k, s in enumerate(_2ROWS)])
-                   + ''.join(_2panel(i, n, r) for i, (n, r) in enumerate(_2PANES))
-                   + _t(W // 2, 236,
-                        '비싼 줄 알면서 오른쪽을 사는 이유는 켜는 날짜다', 't-sm'))
+                   + ''.join(_2panel(i, n, r) for i, (n, r) in enumerate(_2PANES)))
 
 
 # ── 도해 12. 사슬 한 마디를 건너뛴다 ─────────────────────────────────
 # 도해 1의 판을 같은 좌표로 다시 깔고, 건너뛴 마디만 점선으로 바꾼다
 # (점선 = 문제·없는 것, 확정 규칙 S2). 스페이스X·xAI 가 한 일이다.
 _SKIP = 1
-_SKIP_CELLS = [['부지 변전소', '건너뛴다'] if i == _SKIP else c
+_SKIP_CELLS = [['부지 변전소'] if i == _SKIP else c
                for i, c in enumerate(_CHAIN_CELLS)]
 
 
@@ -384,12 +367,11 @@ def _skipbox(i, cell):
             .replace('stroke-width="1.5"', 'stroke-width="1.5" stroke-dasharray="5 4"'))
 
 
-FIG_SKIP = _svg(W, 176, '대형 변압기 마디를 건너뛰고 곧바로 낮춘다', _DEFS + ''.join(
+FIG_SKIP = _svg(W, 128, '대형 변압기 마디를 건너뛰고 곧바로 낮춘다', _DEFS + ''.join(
     [_lt(8, 30, '들어오는 쪽', 't-sm', True), _lt(W - 84, 30, '쓰는 쪽', 't-sm', True)]
     + [_skipbox(i, c) for i, c in enumerate(_SKIP_CELLS)]
     + [_a(_C[i - 1][0] + _C[i - 1][2], 83, _C[i][0], 83) for i in (1, 3, 4)]
     + ['<path d="M%d %d Q%d %d %d %d" stroke="%s" stroke-width="1.6" fill="none" '
        'marker-end="url(#fig-arrow)"/>'
        % (_C[0][0] + _C[0][2], 68, W // 2 - 66, 24, _C[2][0], 68, INK)]
-    + [_t(W // 2, 148, '중전압을 저전압으로 곧바로 바꾼다', 't-sm'),
-       _t(W // 2, 166, '대형 변압기는 2년치가 품절이다', 't-sm')]))
+))
