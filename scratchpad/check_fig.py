@@ -342,19 +342,140 @@ def all_figs():
     return out
 
 
+# ── 확정 규칙 셋을 기계가 문다 (2026-09-09) ─────────────────────────
+# 좌표 겹침 말고도 규칙이 있는데 눈으로만 봐 왔다. 하루에 여섯을 놓치고 나서 옮겼다.
+# 규칙 원문은 `docs/규칙 — 도해.md` 다 — 여기는 그것을 기계가 보는 자리다.
+CIRCNUM = '①②③④⑤⑥⑦⑧⑨⑩'
+CIRCLE = re.compile(r'<circle cx="(-?[\d.]+)" cy="(-?[\d.]+)" r="([\d.]+)"([^>]*)/>')
+VPATH = re.compile(r'\bV-?[\d.]+')
+
+
+def double_ring(svg):
+    """G1 — ① 에 테두리 있는 원을 겹쳐 그렸나. ①은 그 자체가 동그라미다.
+
+    바탕을 까는 것은 규칙이 허락한다 — stroke 가 붙은 원만 문다.
+    """
+    rings = [(float(m.group(1)), float(m.group(2)), float(m.group(3)))
+             for m in CIRCLE.finditer(svg) if 'stroke=' in m.group(4)]
+    out = []
+    for m in TEXT.finditer(svg):
+        txt = m.group(4)
+        if not any(c in txt for c in CIRCNUM):
+            continue
+        x, y = float(m.group(1)), float(m.group(2))
+        for cx, cy, r in rings:
+            if abs(cx - x) <= r + 2 and abs(cy - (y - 5)) <= r + 2:
+                out.append('동그라미가 두 겹 — %s 에 테두리 원을 겹쳤다 (%.0f,%.0f)'
+                           % (txt.strip(), x, y))
+                break
+    return out
+
+
+def has_vertical(svg):
+    if VPATH.search(svg):
+        return True
+    for m in LINE.finditer(svg):
+        if float(m.group(1)) == float(m.group(3)) and float(m.group(2)) != float(m.group(4)):
+            return True
+    return False
+
+
+def caption_points(svg, cap):
+    """G2 — 캡션이 그림에 없는 것을 가리키나.
+
+    「가운데 세로줄이 역할 이름입니다」라고 적어 놓고 세로줄을 안 그린 캡션이 나갔다.
+    성기게만 본다 — 낱말 셋만 보고, 없으면 확인 필요로 낸다.
+    """
+    if not cap:
+        return []
+    # 점선은 dasharray 로도 그리고 붓 이름(flow-cond·dash)으로도 그린다. 둘 다 본다
+    dashed = 'dasharray' in svg or 'cond' in svg or 'dash' in svg
+    out = []
+    if ('세로줄' in cap or '세로선' in cap) and not has_vertical(svg):
+        out.append('캡션이 「세로줄」을 가리키는데 그림에 세로선이 없다')
+    if '점선' in cap and not dashed:
+        out.append('캡션이 「점선」을 가리키는데 그림에 점선이 없다')
+    if '화살표' in cap and 'flow' not in svg and 'marker' not in svg:
+        out.append('캡션이 「화살표」를 가리키는데 그림에 화살표가 없다')
+    return out
+
+
+def lead_figs():
+    """G3 — 층의 첫 도해가 첫 절보다 앞에 있나.
+
+    보고서 층은 첫 절이나 첫 도해 바로 앞에 차례 상자가 끼어든다. 앞머리에 도해를 두면
+    그 사이에 차례가 들어가 도해와 설명이 한 화면에 안 들어온다.
+    """
+    import glob
+    out = []
+    for f in sorted(glob.glob(os.path.join(ROOT, 'insights', 'reports', '*.md'))):
+        txt = io.open(f, encoding='utf-8').read()
+        if txt.startswith('---'):
+            txt = txt.split('---', 2)[2]
+        lines = txt.split('\n')
+        sec = next((i for i, l in enumerate(lines) if l.startswith('## ')), len(lines))
+        fig = next((i for i, l in enumerate(lines) if l.startswith('[[fig:')), None)
+        if fig is not None and fig < sec:
+            out.append('%s — 첫 도해가 첫 절보다 앞에 있다(줄 %d). 차례가 그 사이에 낀다'
+                       % (os.path.basename(f), fig + 1))
+    return out
+
+
+def selftest():
+    """규칙이 결함을 실제로 무는지 본다. 안 물면 규칙이 아니라 장식이다."""
+    ok = True
+    bad_ring = ('<circle cx="100" cy="50" r="10" fill="none" stroke="var(--ink)"/>'
+                '<text x="100" y="55" class="t-lab">①</text>')
+    good_ring = ('<circle cx="100" cy="50" r="10" fill="var(--paper)"/>'
+                 '<text x="100" y="55" class="t-lab">①</text>')
+    for name, svg, want in (('G1 두 겹', bad_ring, True), ('G1 한 겹', good_ring, False)):
+        got = bool(double_ring(svg))
+        if got != want:
+            print('선테스트 실패 — %s' % name, file=OUT)
+            ok = False
+    plain = '<text x="10" y="20">가</text>'
+    cases = [('G2 없는 세로줄', plain, '가운데 세로줄이 역할 이름입니다', True),
+             ('G2 있는 세로줄', plain + '<line x1="5" y1="0" x2="5" y2="40"/>',
+              '가운데 세로줄이 역할 이름입니다', False),
+             ('G2 없는 점선', plain, '점선은 조건부입니다', True),
+             ('G2 있는 점선', plain + '<path d="M0 0 H9" style="stroke-dasharray:5 4"/>',
+              '점선은 조건부입니다', False)]
+    for name, svg, cap, want in cases:
+        got = bool(caption_points(svg, cap))
+        if got != want:
+            print('선테스트 실패 — %s' % name, file=OUT)
+            ok = False
+    print('선테스트 %s' % ('OK' if ok else 'FAIL'), file=OUT)
+    return 0 if ok else 1
+
+
 def main():
     want = sys.argv[1] if len(sys.argv) > 1 else None
+    if want == '--selftest':
+        return selftest()
     figs = all_figs()
-    fails = 0
-    for _card, (_anchor, title, svg, _cap) in figs:
+    fails, asks = 0, 0
+    for _card, (_anchor, title, svg, cap) in figs:
         if want and want not in title:
             continue
         bad = hits(svg, any(k in _card for k in STRICT_FIG))
+        # 좌표 겹침 말고 확정 규칙도 여기서 문다(2026-09-09). 동그라미 두 겹은
+        # 판정이 명확해 FAIL 이고, 캡션 대조는 옆 도해를 가리키는 캡션이 있어
+        # 기계가 못 가리므로 확인 필요로만 낸다
+        bad += double_ring(svg)
+        ask = caption_points(svg, cap)
         print('%s %s' % ('FAIL' if bad else 'OK  ', title), file=OUT)
         for b in bad:
             print('       ! %s' % b, file=OUT)
+        for b in ask:
+            print('       ? %s' % b, file=OUT)
+        asks += len(ask)
         fails += bool(bad)
-    print('\nFAIL %d건' % fails, file=OUT)
+    lead = lead_figs()
+    for b in lead:
+        print('FAIL 앞머리 도해 — %s' % b, file=OUT)
+    fails += len(lead)
+    print('\nFAIL %d건 / 확인 필요 %d건' % (fails, asks), file=OUT)
     return 1 if fails else 0
 
 
