@@ -87,10 +87,8 @@ def main():
 
     tally = " · ".join(
         f"{n} {len(v) if isinstance(v, list) else '?'}" for n, v in sources)
-    msg = f"[아직 처리 안 한 것 {total}편]
-{tally}
-
-말풍선을 누르면 목록이 열린다."
+    msg = (f"[아직 처리 안 한 것 {total}편]\n{tally}\n\n"
+           "말풍선을 누르면 목록이 열린다.")
     print(msg)
     if args.kakao:
         import kakao_send
