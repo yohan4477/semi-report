@@ -98,8 +98,9 @@ def check_density(text, where, actor=True, claims=False, gate=False):
     # 길이는 P3 이 이미 잰다 — 같은 것을 두 번 재면 둘 다 안 믿게 된다.
     check_vague(text, where)
     check_money(text, where)
-    # P20 은 빚을 다 갚은 층부터 게이트로 올린다. 2026-09-09 기준 인사이트가 0건이라
-    # 거기만 FAIL 이고, 노트 32·고리 19·브리핑 1·대시보드 758 은 빚으로 센다
+    # P20 은 빚을 다 갚은 층부터 게이트로 올린다. 2026-09-09 에 노트 32·고리 19·
+    # 브리핑 1·인사이트 0·쟁점 0 을 갚고 그 다섯 층을 FAIL 로 올렸다. 대시보드
+    # 758 건은 아직 빚이다 — 장별로 갚는 대로 check_dashboards 쪽도 올린다
     check_bare_value(text, where, gate=gate)
     # P19 는 우리가 쓴 화면에만 댄다. 노트와 제3자 요약본에 대면 필자의
     # 전칭 주장까지 끌고 와 110건이 쏟아진다 — 읽을 자리를 좁히는 검사가
@@ -682,7 +683,7 @@ def main():
     for p in notes:
         where = os.path.basename(p)
         body = strip_refs(io.open(p, encoding='utf-8').read())
-        check_density(body, where, actor=False)
+        check_density(body, where, actor=False, gate=True)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
@@ -693,7 +694,7 @@ def main():
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
         meta, _ = parse_synth(raw)
-        check_density(body, where)
+        check_density(body, where, gate=True)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
@@ -708,7 +709,7 @@ def main():
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
         meta, _ = parse_synth(raw)
-        check_density(body, where)
+        check_density(body, where, gate=True)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
@@ -723,7 +724,7 @@ def main():
         raw = io.open(p, encoding='utf-8').read()
         body = strip_refs(raw)
         meta, _ = parse_synth(raw)
-        check_density(body, where)
+        check_density(body, where, gate=True)
         check_glossary(body, where, gloss)
         check_length(body, where)
         check_translationese(body, where)
