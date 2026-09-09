@@ -39,15 +39,24 @@ def processed_ids():
     return seen
 
 
-def feed(channel_id, tries=10):
+def _raw(url):
+    """먼저 브라우저에 묻는다 — 파이썬으로 몰아 부르면 유튜브가 채널을 막는다."""
+    import cdp_fetch
+
+    if cdp_fetch.ensure_chrome():
+        return cdp_fetch.fetch(url)
+    return urllib.request.urlopen(
+        urllib.request.Request(url, headers=UA), timeout=30
+    ).read().decode("utf-8", "replace")
+
+
+def feed(channel_id, tries=4):
     """유튜브가 곧잘 404를 던진다 — 간격을 늘려 가며 다시 묻는다."""
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
     last = None
     for attempt in range(tries):
         try:
-            raw = urllib.request.urlopen(
-                urllib.request.Request(url, headers=UA), timeout=30
-            ).read().decode("utf-8", "replace")
+            raw = _raw(url)
             out = []
             for entry in re.findall(r"<entry>(.*?)</entry>", raw, re.S):
                 vid = re.search(r"<yt:videoId>(.*?)</yt:videoId>", entry)
@@ -67,17 +76,38 @@ def main():
     ap.add_argument("--kakao", action="store_true", help="결과를 카카오톡으로 보낸다")
     args = ap.parse_args()
 
+    sys.path.insert(0, "scripts")
     done = processed_ids()
+    got = {}
+    # 유튜브는 몰아서 부르면 채널을 통째로 막는다. 실패한 채널만 뜸을 들여 다시 묻는다
+    for rnd in range(3):
+        left = [(n, c) for n, c in CHANNELS.items() if n not in got]
+        if not left:
+            break
+        if rnd:
+            print(f"{len(left)}개 채널 재시도 — {60 * rnd}초 쉰다")
+            time.sleep(60 * rnd)
+        for name, cid in left:
+            try:
+                got[name] = feed(cid)
+            except Exception as exc:  # noqa: BLE001
+                got[name] = f"피드를 못 읽었다 ({type(exc).__name__})"
+        got = {n: v for n, v in got.items() if isinstance(v, list)}
+
     sources, total = [], 0
-    for name, cid in CHANNELS.items():
-        try:
-            items = feed(cid)
-        except Exception as exc:  # noqa: BLE001
-            sources.append((name, f"피드를 못 읽었다 ({type(exc).__name__})"))
+    for name in CHANNELS:
+        items = got.get(name)
+        if items is None:
+            sources.append((name, "피드를 못 읽었다"))
             continue
         new = [i for i in items if i[1] not in done]
         total += len(new)
         sources.append((name, new))
+
+    # 전부 실패하면 0편짜리 장이 멀쩡한 장을 덮어쓴다. 그럴 바엔 아무것도 안 한다
+    if not got:
+        print("모든 채널이 막혔다. 목록도 안 고치고 카톡도 안 보낸다.")
+        return 1
 
     sys.path.insert(0, "scripts")
     import gen_newsrc_page
@@ -101,7 +131,8 @@ def main():
         import kakao_send
 
         kakao_send.send(msg, gen_newsrc_page.PUBLIC)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

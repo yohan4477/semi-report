@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # 주소에 퍼센트 인코딩이 한 조각이라도 들어가면 카카오가 링크를 통째로
 # 앱 대표 도메인으로 갈아치운다 — 폴더도 파일도 ASCII 로 둔다
 OUT = ROOT / 'status' / 'source-new.html'
-PUBLIC = 'https://insight-dashboard.com/source-new.html'
+PUBLIC = 'https://insight-dashboard.com/source-new'
 
 CSS = """
 :root { --bg:#fbfbfa; --fg:#1d1d1b; --dim:#6b6b66; --line:#e2e2dd; --card:#ffffff; }
