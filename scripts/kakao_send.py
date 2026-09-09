@@ -35,6 +35,19 @@ def rest_key():
     return key
 
 
+SECRET_PATH = Path.home() / ".kakao_secret"
+
+
+def with_secret(data):
+    """클라이언트 시크릿이 켜진 앱은 토큰 요청에 코드를 함께 보내야 한다."""
+    secret = os.environ.get("KAKAO_CLIENT_SECRET")
+    if not secret and SECRET_PATH.exists():
+        secret = SECRET_PATH.read_text(encoding="utf-8").strip()
+    if secret:
+        data = dict(data, client_secret=secret)
+    return data
+
+
 def post(url, data, headers=None):
     body = urllib.parse.urlencode(data).encode()
     req = urllib.request.Request(url, data=body, headers=headers or {})
@@ -43,7 +56,7 @@ def post(url, data, headers=None):
         return json.loads(resp.read().decode())
 
 
-def auth():
+def auth(code=None):
     key = rest_key()
     params = urllib.parse.urlencode({
         "client_id": key,
@@ -51,15 +64,16 @@ def auth():
         "response_type": "code",
         "scope": "talk_message",
     })
-    print("아래 주소를 브라우저에 붙여 동의하고, 되돌아온 주소의 code= 값을 붙여넣는다.\n")
-    print(f"https://kauth.kakao.com/oauth/authorize?{params}\n")
-    code = input("code: ").strip()
-    tok = post("https://kauth.kakao.com/oauth/token", {
+    if not code:
+        print("아래 주소를 브라우저에 붙여 동의하고, 되돌아온 주소의 code= 값을 붙여넣는다.\n")
+        print(f"https://kauth.kakao.com/oauth/authorize?{params}\n")
+        code = input("code: ").strip()
+    tok = post("https://kauth.kakao.com/oauth/token", with_secret({
         "grant_type": "authorization_code",
         "client_id": key,
         "redirect_uri": REDIRECT_URI,
         "code": code,
-    })
+    }))
     save_token(tok)
     print(f"토큰 저장: {TOKEN_PATH}")
 
@@ -80,11 +94,11 @@ def access_token():
     age = int(time.time()) - tok.get("obtained_at", 0)
     if age < tok.get("expires_in", 21600) - 300:
         return tok["access_token"]
-    fresh = post("https://kauth.kakao.com/oauth/token", {
+    fresh = post("https://kauth.kakao.com/oauth/token", with_secret({
         "grant_type": "refresh_token",
         "client_id": rest_key(),
         "refresh_token": tok["refresh_token"],
-    })
+    }))
     fresh.setdefault("refresh_token", tok["refresh_token"])
     save_token(fresh)
     return fresh["access_token"]
@@ -132,11 +146,12 @@ def send(text, link=DEFAULT_LINK):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--auth", action="store_true", help="최초 토큰 발급")
+    ap.add_argument("--code", help="동의 후 돌아온 주소의 code 값 (붙이면 대화 없이 교환)")
     ap.add_argument("--file", help="보낼 텍스트 파일")
     ap.add_argument("--link", default=DEFAULT_LINK, help="말풍선에 붙는 링크")
     args = ap.parse_args()
-    if args.auth:
-        auth()
+    if args.auth or args.code:
+        auth(args.code)
         return
     text = Path(args.file).read_text(encoding="utf-8") if args.file else sys.stdin.read()
     if not text.strip():
