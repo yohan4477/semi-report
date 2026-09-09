@@ -64,6 +64,10 @@ PAGES = [
     # content/understanding 을 통째로 넣으면 이 층과 무관한 오백 편이 알리바이가 되므로
     # 폴더 없이 HARNESS_EXTRA 에 파일을 하나씩 적는다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-harness', None),
+    # 전력 층(2026-09-07). 재료가 뉴스레터 열두 편 + 팟캐스트 한 회차 + 전략 판 한 회차다.
+    # 뉴스레터는 폴더에서 오고 나머지 둘만 POWER_EXTRA 에 파일로 적는다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-power',
+     os.path.join(ROOT, 'content', 'newsletter')),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'semi_doped')
@@ -242,6 +246,12 @@ HARNESS_EXTRA = [os.path.join(ROOT, 'content', 'aie', f + '.md')
                  '[260425] 코딩 어시스턴트 해부 - 토큰을 더 주세요.md'),
 ]
 
+# 전력 층의 뉴스레터 밖 재료 둘 — 팟캐스트 한 회차와 전략 판 한 회차
+POWER_EXTRA = [os.path.join(ROOT, 'content', 'podcast', 'semianalysis',
+                            '[260820] Ep.26 로버트 보스웰 - PJM이 요금 납부자 120억 달러를 더 쓰게 만든 모델링 오류.md'),
+               os.path.join(ROOT, 'insights', 'semidoped',
+                            '2026-05-08-power-wall-strategy.md')]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -253,7 +263,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'adjust_facts.md'),
          # 빅테크 여섯 비교의 계산 결과
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
-         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'nvda_facts.md')] + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
@@ -291,7 +301,11 @@ def body(html, sec):
         return ''
     seg = h[i:h.find('</section>', i)]
     seg = re.sub(r'<script.*?</script>', ' ', seg, flags=re.S)
-    return re.sub(r'<[^>]+>', ' ', seg)
+    seg = re.sub(r'<[^>]+>', ' ', seg)
+    # 인용 표시 (라벨 L12) 는 값이 아니다. 전력 층처럼 라벨에 날짜가 박힌 층에서는
+    # 라벨의 260619 가 값으로 잡혀 전부 확인 필요로 뜬다. 괄호 안에 L숫자가 있으면
+    # 인용으로 보고 걷는다 — 그 괄호에는 라벨과 줄 번호 말고 다른 값이 안 들어간다
+    return re.sub(r'\([^()]*L[0-9]+[^()]*\)', ' ', seg)
 
 
 def main():
