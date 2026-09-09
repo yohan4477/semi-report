@@ -154,7 +154,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="479" y="91.5" text-anchor="middle" class="fig-b">8T·8I</text>
   <rect x="0" y="124" width="14" height="14" rx="3" class="fig-box fig-agent"/>
   <text x="22" y="136" class="fig-lg">칩이 나뉜 세대</text>
-</svg><figcaption>v1 은 추론 전용이었고 v2~v4 는 훈련과 서빙을 한 칩에 담았다. v5 에서 효율칩과 성능칩으로 나뉘었다가 v6·v7 은 다시 한 칩이었고, v8 에서 훈련용 8T 와 추론용 8I 로 갈렸다. 색이 다른 것이 나뉜 세대다.</figcaption></figure>
+</svg><figcaption>색이 다른 것이 나뉜 세대다.</figcaption></figure>
 <p>TPU는 원래 하나의 칩으로 훈련과 추론을 모두 맡아 왔다. v1은 추론 전용이었고, v2부터 v4까지는 훈련과 서빙을 한 칩에 담았다. v5에서 효율칩과 성능칩으로 한 번 나뉘었다가 v6에서 다시 단일 칩으로 돌아왔고, v7도 단일 칩이었다(추론 위주로 홍보됐을 뿐이다). v8에 와서야 훈련용 8T와 추론용 8I로 다시 나뉘었다.</p>
 <p><span class="pn">진행자A</span>는 이 분리가 칩에서 끝나지 않는다고 짚었다. 8T는 3D 토러스(TPU를 3차원 격자 모양으로 연결하는 방식)로, 8I는 Boardfly라는 새 방식으로 스케일업(칩 사이를 메모리처럼 촘촘히 묶는 근거리 연결)한다. 컴퓨트가 병목이던 시절에는 하나의 칩과 하나의 망으로 버틸 수 있었다. 이제는 훈련과 추론이 주고받는 트래픽의 성격 자체가 달라, 칩을 나눈 논리 그대로 망도 나눴다.</p>
 <h2 id="s2"><span class="num">2</span> 메모리를 어디에 쌓을지는 워크로드가 정한다</h2>
@@ -257,7 +257,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <text x="433.333" y="212" text-anchor="middle" class="fig-hd">Boardfly</text>
   <line x1="10" y1="190" x2="510" y2="190" class="fig-arw"/>
   <text x="260" y="238" text-anchor="middle" class="fig-hd">보드 4칩 · 랙 8보드 · 파드 36그룹 = 1,152칩</text>
-</svg><figcaption>TPU v7 구성인 4x4x8 토러스는 2+2+4 해서 8홉, 구글 블로그가 든 8x8x16 은 4+4+8 해서 16홉이다. Boardfly 는 보드에 TPU 넷, 랙에 보드 여덟, 파드에 그룹 서른여섯을 두고 그룹 간을 광회선 스위치로 이어 같은 거리를 일곱 홉에 간다.</figcaption></figure>
+</svg><figcaption>Boardfly 는 보드에 TPU 넷, 랙에 보드 여덟, 파드에 그룹 서른여섯을 두고 그룹 간을 광회선 스위치로 이어 같은 거리를 일곱 홉에 간다.</figcaption></figure>
 <p>TPU v7 구성인 4x4x8 배치를 예로 들면, 한 축에서 2홉, 다른 축에서 2홉, 나머지 축에서 4홉을 더해 8홉이 나온다. 구글 블로그가 든 예는 8x8x16이고, 같은 셈으로 4+4+8 해서 16홉이 나온다.</p>
 <p>훈련에서는 이 구조가 문제되지 않는다. 모든 TPU가 항상 서로 통신하기 때문이다. 문제는 추론, 그중에서도 MoE(전문가 혼합 모델 — 토큰마다 일부 전문가만 활성화하는 구조)다. 토큰마다 활성화되는 전문가가 달라 통신 패턴이 이웃끼리 규칙적으로 오가는 대신 여기저기로 튄다. 16홉이라는 지연이 그대로 추론 시간에 얹힌다.</p>
 <h2 id="s6"><span class="num">6</span> Boardfly가 홉을 16에서 7로 줄인 방법</h2>

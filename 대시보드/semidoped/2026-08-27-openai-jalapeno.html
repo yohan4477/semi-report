@@ -188,7 +188,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="391" y="144" width="129" height="68" rx="9" class="fig-box"/>
   <text x="455.5" y="172.5" text-anchor="middle" class="fig-b">3세대</text>
   <text x="455.5" y="195.5" text-anchor="middle" class="fig-b">구상 중</text>
-</svg><figcaption>잘라낸 기능이 다음 판에 붙는 간격이 곧 욕심의 크기다. 통상은 2~3년이라 무리해서 넣게 되고, 아홉 달이면 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이라 곧 다시 붙는다.</figcaption></figure>
+</svg><figcaption>통상은 2~3년이라 무리해서 넣게 되고, 아홉 달이면 2세대가 이미 테이프아웃에 다가섰고 3세대를 구상 중이라 곧 다시 붙는다.</figcaption></figure>
 <p>설계 셈법도 달라진다. <span class="pn g1">Ravi</span>의 기준은 둘을 견주는 것이다. ① 기능 하나를 더 넣는 데 드는 한계비용과 ② 그 기능이 없어서 못 받는 기회비용. 기회비용이 훨씬 크다(<span class="pn">진행자A</span>가 전함). <span class="pn g1">Ravi</span>가 가장 어려웠다고 한 결정도 무엇을 뺄지 고르는 일이었다. 2세대가 이미 테이프아웃에 다가가 있으니, 이번에 잘라낸 것은 곧 다음 판에 붙는다. 주기가 짧으면 <b>설계마다 덜 욕심내도 된다.</b></p>
 <p>그래서 아홉 달이 뜻하는 것은 「누구나 칩을 만들 수 있다」가 아니다. <b>첫 칩을 버리지 않아도 되게 됐다</b>는 것이다. 보통 첫 칩은 거의 버리는 셈이고 진짜 경쟁은 두세 번째부터인데, OpenAI는 1세대부터 경쟁력을 내고 나왔다. 첫 칩이 수업료가 아니라 제품이 되면, 새로 들어오는 회사의 손익 계산이 통째로 바뀐다.</p>
 <h2 id="s2"><span class="num">2</span> 잣대가 TCO에서 요청당 에너지로 옮기면 순위가 흔들린다</h2>
@@ -309,7 +309,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="320" y="126" width="129" height="68" rx="9" class="fig-agent"/>
   <text x="384.5" y="154.5" text-anchor="middle" class="fig-b">큰 모델이 검증</text>
   <text x="384.5" y="177.5" text-anchor="middle" class="fig-b">가볍다</text>
-</svg><figcaption>작은 초안 모델이 토큰을 뱉고 큰 모델이 검증한다. 덜 똑똑하면 여덟 개를 뱉어 검증이 무겁고, 똑똑하면 두 개만 뱉어 가볍다(<span class="pn">진행자V</span>). 여덟과 둘은 <span class="pn">진행자V</span>가 든 수다. 이 비율이 워크로드마다 움직이니 칩을 고정 배분하면 한쪽이 논다.</figcaption></figure>
+</svg><figcaption>여덟과 둘은 <span class="pn">진행자V</span>가 든 수다. 이 비율이 워크로드마다 움직이니 칩을 고정 배분하면 한쪽이 논다.</figcaption></figure>
 <p><span class="pn">진행자V</span>는 균형을 잡아 뒀다. Rubin 시스템에 Groq LPU를 붙이면 같은 곡선을 낼 수 있다. 그런 하드웨어가 없는 게 아니라 다른 꼴로 있다는 말이다. <span class="pn">진행자A</span>는 거기에 값을 물었다. NVL72 랙 하나에 Groq 랙 아홉을 붙이는 구성과 Jalapeño 랙 한둘 중 어느 쪽이 비용과 전력에서 맞느냐. 수명도 다르다. 특정 형태의 디코드에 맞춘 LPU는 형태가 바뀌면 쓸 데가 좁아지지만, 균형 잡힌 칩은 2세대 뒤에도 오래 쓴다. 업계가 볼 것은 SRAM 전용 칩이 틀렸다는 게 아니다. <b>그들이 서 있던 자리의 근거가 「GPU가 그 속도에 못 닿는다」였는데, 그 전제가 GPU 아닌 칩에서 깨졌다</b>는 것이다.</p>
 <h2 id="s4"><span class="num">4</span> HBM을 다 못 쓰고 있다는 고백이 메모리 로드맵에 붙는다</h2>
 <p>가장 값이 큰 관측은 성능이 아니라 미달이다. <span class="pn">진행자V</span>의 산수는 이렇다. 칩 128개의 HBM4 대역폭을 다 더하면 초당 1페타바이트다. FP4(4비트 부동소수점)로 1조 파라미터 모델을 얹으면 0.5테라바이트쯤이니, 초당 2,000토큰쯤이 나와야 한다. 그런데 실제로는 안 나온다. "왜 우리는 HBM을 최대로 쓰지도 못하고 있나?".</p>
@@ -461,7 +461,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="4" y="234" width="512" height="68" rx="9" class="fig-agent"/>
   <text x="260" y="262.5" text-anchor="middle" class="fig-b">랙 하나 = 128칩</text>
   <text x="260" y="285.5" text-anchor="middle" class="fig-b">Tomahawk 6 · 칩당 초당 600기가비트</text>
-</svg><figcaption>랙 16대가 한 스케일업 도메인이다. 랙 하나 128칩은 Tomahawk 6 로 칩당 초당 600기가비트, 16대 2,048칩은 ESUN 으로 초당 200기가비트다. 스케일업은 메모리를 나눠 쓰는 가속기들의 범위이지 랙 경계가 아니라는 것이 <span class="pn">진행자A</span>의 말이다.</figcaption></figure>
+</svg></figure>
 <p>망이 가장 구체적이다. Jalapeño 128개가 하나의 스케일업 도메인 안에서 Broadcom Tomahawk 6 스위치로 붙고, 칩당 초당 600기가비트로 통신한다. 그 위로 2,048개까지 넓히는 200기가비트 도메인이 있다. 프로토콜은 Broadcom이 이끈 ESUN이고, UALink와는 다른 갈래다. 배치로는 128개가 랙 하나, 2,048개가 랙 16개다. <span class="pn">진행자A</span>는 스케일업의 정의도 고쳐 잡았다. 랙 안이 아니라 메모리를 나눠 쓰는 가속기들을 뜻하며, 이 구성은 랙 16개에 걸친다. 그 시장을 랙 안으로 잡아 온 계산은 다시 세워야 한다.</p>
 <p>모델랩이 실리콘까지 내려와도 <b>밸류체인 아래쪽 전부에 새 수요가 생기는 게 아니라, 어긋난 자리에만 생긴다.</b> CPU처럼 대체재가 널린 자리는 비싸게 팔리지 않고, 파운드리처럼 대안이 없는 자리는 하던 대로 간다. 새 수요가 생기는 곳은 둘이다. ① 세대 차이가 성능 비교를 뒤집을 만큼 큰 메모리 ② 프로토콜이 아직 갈라져 있는 스케일업 망.</p>
 <h2 id="s6"><span class="num">6</span> 범용으로 남긴 선택이 남에게 뜻하는 것</h2>
@@ -495,7 +495,7 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <line x1="463.5" y1="100" x2="463.5" y2="120" class="fig-arw"/>
   <text x="60" y="144" text-anchor="middle" class="fig-hd">범용</text>
   <text x="460" y="144" text-anchor="middle" class="fig-hd">전용</text>
-</svg><figcaption>범용 GPU 의 논거는 모델 모양이 바뀌어도 하드웨어가 죽지 않는다는 것, 한 모델 전용은 <span class="pn">진행자V</span>가 말한 극단 코디자인이다. 구글 TPU 가 중간에 있었고 할라페뇨가 그 중간에 하나 더 앉았다. 자리는 이 회차의 말이고 값은 없다.</figcaption></figure>
+</svg><figcaption>범용 GPU 의 논거는 모델 모양이 바뀌어도 하드웨어가 죽지 않는다는 것, 한 모델 전용은 <span class="pn">진행자V</span>가 말한 극단 코디자인이다. 자리는 이 회차의 말이고 값은 없다.</figcaption></figure>
 <p>Jalapeño는 자사 모델만 도는 칩이 아니다. GPT-OSS부터 형태가 다른 Kimi K2.5까지 돌렸고, 둠(Doom)까지 돌렸다는 것을 SemiAnalysis가 짚었다. <span class="pn">진행자A</span>는 이것을 작은 모델부터 아주 큰 모델까지 받는 일반화된 LLM 추론 칩으로 정리했다. <span class="pn">진행자V</span>는 반대편에 섰다. 팔 게 아니라면 왜 남의 모델에서도 돈다는 걸 보여주는지 모르겠다는 것이다. OpenAI의 무기는 자기 토큰과 워크로드 데이터인데, 극단적인 코디자인으로 Cerebras급까지 밀어붙일 우위를 버리는 일이라고 했다. 그런데 같은 사람이 뒤에서 뒤집었다. 범용성이 있어야 자기들의 다음 모델을 그 칩 위에서 개발할 수 있다는 것이다. 저울질이라는 뜻이다.</p>
 <p>남에게 걸리는 것은 <span class="pn">진행자A</span>의 물음이다. 이 칩이 다른 모델도 돌린다면 Nvidia·AMD의 범용 GPU 논거와 구글 TPU의 자리에는 무엇이 남을까. 범용 GPU의 논거는 모델 모양이 바뀌어도 하드웨어가 죽지 않는다는 것이었고, TPU는 특화됐으면서도 특정 모델에 묶이지 않는 중간 자리였다. 그 중간에 Jalapeño가 하나 더 앉았다. 「팔 것인가」는 아직 안 닫혔다. <span class="pn">진행자A</span>는 안 팔 논거(수직 통합·마진·속도)와 팔 논거(테이프아웃과 양산 준비에 든 돈을 상각하고 싶어진다)를 나란히 놓고, 시간이 답할 것이라고 했다. 볼 것은 답이 아니라 <b>선례가 있다는 사실</b>이다. AWS가 자사 XPU 위에서 모델을 굴려 GPU 중간 마진 없이 더 싸게 서비스하는 예를 <span class="pn">진행자A</span>가 들었다. 그래서 <span class="pn">진행자V</span>가 회차 끝에 던진 물음이 남는다. 그럼 Anthropic의 칩은 어디 있나.</p>
 <h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 이 글이 바뀌나</h2>
