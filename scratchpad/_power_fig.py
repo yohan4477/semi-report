@@ -218,3 +218,60 @@ FIG_MW = _svg(W, 254, '같은 글이 절감치를 두 값으로 적는다', ''.j
      _lt(_MX0 - 16, 20, '1기가와트 시설에서 아끼는 전력', 't-sm', True)]
     + [_mbar(i, *b) for i, b in enumerate(_MBARS)]
     + [_t(W // 2, 246, '원문은 이 둘이 일치한다고 적는다', 't-sm')]))
+
+
+# ── 도해 7. 고치자는 안이 어느 마디를 겨눴고 어디서 멈췄나 ────────────
+# 도해 2의 왼쪽 판(값을 정하는 길)을 같은 좌표로 다시 깔고, 규칙을 고치는 길을
+# 그 옆에 세워 두 번째 마디로 잇는다. 부결됐으므로 잇는 선은 점선이다.
+_FIXY = [40, 106, 172]
+_FIXCELLS = [['고치자는 안', '겨울 인증치를 반영'],
+             ['태스크포스 178대 54', '77% 통과'],
+             ['26일 뒤 상위 위원회', '30.7% 부결']]
+
+FIG_FIX = _svg(W, 40 + 4 * _PSTEP - (_PSTEP - 44) + 34,
+               '고치자는 안이 곡선을 겨눴다가 위원회에서 멈췄다',
+               _DEFS + ''.join([
+                   _lt(_LX, 26, '값을 정하는 길', 't-lab', True),
+                   _lt(_RX, 26, '규칙을 고치는 길', 't-lab', True),
+                   _col(_LX, _LEFT, 1),
+               ] + [_box(_RX, y, 250, 44, lines, INK if i == 2 else INK3,
+                         1.8 if i == 2 else 1.5)
+                    for i, (y, lines) in enumerate(zip(_FIXY, _FIXCELLS))]
+                   + [_a(_RX + 125, _FIXY[i] + 44, _RX + 125, _FIXY[i + 1])
+                      for i in range(2)]
+                   + ['<path d="M%d %d H%d" stroke="%s" stroke-width="1.4" '
+                      'stroke-dasharray="5 4" marker-end="url(#fig-arrow)"/>'
+                      % (_RX - 6, _FIXY[1] + 22, _LX + 250 + 6, INK3)])
+               + _t(W // 2, 40 + 4 * _PSTEP - 4,
+                    '곡선은 그대로 남았다 — 점선은 닿지 못한 길', 't-sm'))
+
+
+# ── 도해 8. 작업시간이 현장에서 공장으로 옮겨간다 ─────────────────────
+# 같은 판(공장·현장 두 마디)을 줄마다 한 번씩 그린다 — 줄마다 다른 것만 그리면
+# 다른 그림 둘로 읽힌다. 값은 50메가와트 수랭 홀 기준이다(건설-260729 L444·L445).
+_MW2, _MGAP2, _MLAB = 250, 16, 96
+_MY, _MSTEP2, _MH2 = 52, 74, 56
+_MROWS = [('관행 시공', ['공장에서 하는 일 없음'], ['현장 메가와트당 12,000시간'], '30~35개월', 1),
+          ('완전 모듈러', ['기계·전기 설치를 공장에서'], ['현장 메가와트당 4,500시간'], '24~30개월', 0)]
+
+
+def _mrow(i, name, left, right, dur, accent):
+    y = _MY + i * _MSTEP2
+    xs = [_MLAB, _MLAB + _MW2 + _MGAP2]
+    cells = [left, right]
+    # 기간을 줄 밑에 적었더니 다음 줄 상자 테두리에 깔렸다 — 줄 이름 밑으로 옮긴다
+    out = [_lt(6, y + _MH2 // 2 - 4, name, 't-sm', True),
+           _lt(6, y + _MH2 // 2 + 14, dur, 't-sm', False)]
+    for k, (x, lines) in enumerate(zip(xs, cells)):
+        hot = k == accent
+        out.append(_box(x, y, _MW2, _MH2, lines, INK if hot else INK3,
+                        1.8 if hot else 1.2))
+    return ''.join(out)
+
+
+FIG_MODULAR = _svg(W, _MY + 2 * _MSTEP2 + 16, '작업시간이 현장에서 공장으로 옮겨간다',
+                   ''.join([_lt(_MLAB, 34, '공장', 't-lab', True),
+                            _lt(_MLAB + _MW2 + _MGAP2, 34, '현장', 't-lab', True)]
+                           + [_mrow(i, *r) for i, r in enumerate(_MROWS)])
+                   + _t(W // 2, _MY + 2 * _MSTEP2 + 8,
+                        '전기공 면허가 필요한 작업시간은 약 85% 줄어든다', 't-sm'))
