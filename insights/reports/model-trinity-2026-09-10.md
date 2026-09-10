@@ -1,5 +1,5 @@
 ---
-title: GPU 금융 — 바닥값을 깔아 주면 이익이 어디로 가나
+title: GPU 임대 바닥값(엔비디아 백스톱) — 깔아 준 대가로 청구가의 18퍼센트를 가져간다
 date: 2026-09-10
 layer: sec-model
 sources: SemiAnalysis 영문 클리핑 1편의 본문 값

@@ -1,5 +1,5 @@
 ---
-title: 웨이퍼 한 장짜리 칩 — 면적은 이기고 둘레는 지는 자리
+title: 웨이퍼 한 장짜리 칩(세레브라스) — 면적은 462배인데 바깥으로 나가는 통로는 안 는다
 date: 2026-09-10
 layer: sec-model
 sources: SemiAnalysis 영문 클리핑 1편의 본문 값

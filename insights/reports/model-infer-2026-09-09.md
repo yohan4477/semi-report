@@ -1,5 +1,5 @@
 ---
-title: 추론 원가 — AMD 는 빌리면 엔비디아에 지고, 사서 쓰면 작업에 따라 이긴다
+title: 추론 원가 AMD 대 엔비디아 — 빌리면 지고 사서 쓰면 작업에 따라 이긴다
 date: 2026-09-09
 layer: sec-model
 sources: SemiAnalysis 영문 클리핑 1편 + 그 안의 표 그림 3장

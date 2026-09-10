@@ -1,5 +1,5 @@
 ---
-title: 토러스 배선 — 랙이 커지면 칩 한 장에 붙는 광 부품이 준다
+title: TPU 토러스 배선 — 칩 한 장에 광 트랜시버 1.5개, 격자를 키우면 절반이 된다
 date: 2026-09-10
 layer: sec-model
 sources: SemiAnalysis 영문 클리핑 1편 + 그 안의 표 그림 1장
