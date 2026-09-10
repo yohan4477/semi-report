@@ -915,3 +915,993 @@ NVIDIA 공시로 확정 가능한 것은:
 이 방법의 장점은 특정 기업명을 맞히는 것 자체보다 왜 해당 기업이 후보인지, 어떤 가정을 사용했는지, 무엇이 틀리면 결론이 바뀌는지까지 설명할 수 있다는 점이다.
 
 최종적으로 NVIDIA의 밸류체인은 하나의 정적인 그림보다, 각 node와 edge가 period + metric + source + confidence + estimation logic을 보유하는 time-dependent value-chain database로 관리하는 것이 가장 적합하다.
+
+---
+
+# Appendix. NVIDIA Value Chain Estimation Methodology
+
+## A. 분석 원칙
+
+본 분석에서 가장 중요한 원칙은 관측값(Observed), 계산값(Derived), 추정값(Estimated)을 구분하는 것이다.
+
+### A.1 Observed — 회사가 직접 공시한 값
+
+예:
+
+* NVIDIA FY27 H1 revenue = $177.837B
+* FY27 H1 direct customers = 16%, 15%, 13%
+* FY27 Q2 direct customer = 16%
+* FY27 H1 non-US headquartered customer revenue = 30%
+* Hyperscale revenue = $91.761B
+* ACIE revenue = $72.508B
+
+이 값에는 별도의 추정이 들어가지 않는다. NVIDIA SEC filing이 source of truth다.
+
+### A.2 Derived — 공시값에서 단순 계산한 값
+
+예:
+
+```
+FY27 H1 Customer #1 revenue
+= $177.837B × 16%
+= $28.45B
+```
+
+이는 NVIDIA가 $28.45B라고 직접 공시한 것은 아니지만, 공시된 매출과 비중으로 직접 계산할 수 있다.
+
+따라서 confidence는 Confirmed-derived로 분류한다.
+
+### A.3 Estimated — 외부 데이터와 가정을 결합한 값
+
+예:
+
+```
+Direct Customer #1 = Microsoft
+```
+
+이는 NVIDIA가 공개하지 않았으므로 추정이다.
+
+추정에는:
+
+* 규모
+* 분기별 trajectory
+* 본사 소재지
+* NVIDIA 의존도
+* procurement structure
+* 자체 accelerator 사용 여부
+
+등을 이용한다.
+
+따라서 반드시 ESTIMATED 상태로 저장한다.
+
+---
+
+## B. NVIDIA Customer Concentration 원데이터
+
+### B.1 FY27 H1
+
+NVIDIA FY27 H1:
+
+```
+Revenue              $177.837B
+Customer #1              16%
+Customer #2              15%
+Customer #3              13%
+Top 3                    44%
+```
+
+NVIDIA는 세 고객 모두 주로 Compute & Networking segment 매출에 기여했다고 밝혔다.
+
+금액으로 환산하면:
+
+```
+#1
+177.837 × 16%
+= $28.454B
+
+#2
+177.837 × 15%
+= $26.676B
+
+#3
+177.837 × 13%
+= $23.119B
+```
+
+따라서 후보 회사가 Top 3가 되기 위한 첫 번째 필요조건은 약 $23B~$28B의 H1 NVIDIA direct purchases를 설명할 수 있어야 한다는 것이다.
+
+---
+
+## C. 가장 중요한 추론: Quarter Continuity
+
+단순히 16/15/13%를 보는 것보다 Q1과 Q2를 연결하면 훨씬 강한 fingerprint를 얻을 수 있다.
+
+FY27 Q1 direct-customer concentration:
+
+```
+21%
+17%
+16%
+```
+
+FY27 Q2:
+
+```
+16%
+그 외 개별 direct customer < 10%
+```
+
+H1:
+
+```
+16%
+15%
+13%
+```
+
+이다. NVIDIA는 Q2 한 고객만 전체 revenue의 16%였다고 공시한다.
+
+### C.1 Customer A
+
+Q1 16% 고객이 H1 16% 고객이라고 가정한다.
+
+```
+Q1 NVIDIA revenue      $81.615B
+$81.615B × 16%
+= $13.058B
+```
+
+H1 customer value:
+
+```
+$177.837B × 16%
+= $28.454B
+```
+
+따라서 Q2 implied purchase:
+
+```
+$28.454B
+- 13.058B
+----------------
+= $15.396B
+```
+
+Q2 NVIDIA revenue는 $96.221B이므로:
+
+```
+$15.396 / $96.221
+= 16.0%
+```
+
+실제 NVIDIA 공시는 Q2 16% 고객이다.
+
+따라서 가장 자연스러운 설명은:
+
+```
+Anonymous A
+Q1       Q2       H1
+16%  →   16%  →   16%
+```
+
+이다.
+
+Confidence
+
+```
+Very High
+```
+
+단, SEC 비율은 정수 반올림이므로 동일 고객임을 100% 증명하는 것은 아니다.
+
+### C.2 Customer B
+
+Q1 21% 고객을 H1 15% 고객으로 가정한다.
+
+```
+Q1:
+81.615 × 21%
+≈ $17.139B
+
+H1:
+177.837 × 15%
+≈ $26.676B
+
+Q2 implied:
+26.676 - 17.139
+≈ $9.537B
+```
+
+Q2 revenue 대비:
+
+```
+9.537 / 96.221
+≈ 9.9%
+```
+
+즉 10% 공시 threshold 바로 아래다.
+
+```
+Anonymous B
+Q1        Q2        H1
+21%  →   ~9.9%  →   15%
+```
+
+NVIDIA가 Q2에서 해당 고객을 별도로 공개하지 않은 것과 일치한다.
+
+### C.3 Customer C
+
+동일하게 Q1 17% 고객을 H1 13% 고객으로 놓으면:
+
+```
+Q1:
+81.615 × 17%
+≈ $13.875B
+
+H1:
+177.837 × 13%
+≈ $23.119B
+
+Q2 implied:
+≈ $9.244B
+```
+
+Q2 share:
+
+```
+9.244 / 96.221
+≈ 9.6%
+```
+
+따라서:
+
+```
+Anonymous C
+Q1        Q2        H1
+17%  →   ~9.6%  →   13%
+```
+
+역시 공시 내용과 일치한다.
+
+---
+
+## D. Anonymous Customer Fingerprint
+
+따라서 향후 실명 후보를 검증할 때 사용할 fingerprint는:
+
+| Anonymous customer | Q1 | Q2 implied | H1 | H1 purchase |
+|---|---|---|---|---|
+| A | ~16% | ~16% | 16% | ~$28.5B |
+| B | ~21% | ~9.9% | 15% | ~$26.7B |
+| C | ~17% | ~9.6% | 13% | ~$23.1B |
+
+즉 단순히 "$28B 살 수 있는 회사인가?"만 보면 부족하다.
+
+후보 기업은 동시에:
+
+```
+규모 + Q1/Q2 구매 timing
+```
+
+을 만족해야 한다.
+
+이것이 본 추정 방법의 가장 중요한 차별점이다.
+
+---
+
+## E. Geography를 이용한 Constraint
+
+NVIDIA FY27 H1 revenue 중 미국 외 본사 고객이 차지한 비중은 **30%**다.
+
+따라서:
+
+```
+US-headquartered customers
+≈ 70%
+
+Non-US headquartered customers
+≈ 30%
+```
+
+이다.
+
+이 geography는 제품 배송지역이 아니라 direct customer headquarters 기준이다.
+
+### E.1 대만 ODM Top-3 가설 검증
+
+가령:
+
+```
+16% = Foxconn
+15% = Quanta
+```
+
+라고 가정한다.
+
+두 회사는 모두 대만 본사다.
+
+그러면:
+
+```
+16 + 15 = 31%
+```
+
+가 되어 이미 NVIDIA 전체 non-US customer revenue 약 30%와 비슷하거나 이를 초과한다.
+
+그런데 실제로는:
+
+* 다른 Taiwan customers
+* China customers
+* European customers
+* 기타 non-US customers
+
+도 존재해야 한다.
+
+따라서:
+
+```
+16%와 15%가 동시에 대만 ODM일 가능성은 매우 낮다.
+```
+
+이것은 단순 정성적 판단보다 강한 mathematical exclusion condition이다.
+
+---
+
+## F. Candidate Identification Framework
+
+후보 실명은 다섯 가지 축으로 평가한다.
+
+### F.1 Revenue Capacity Fit — 30점
+
+질문:
+
+```
+후보 회사가 H1에 $23~28B 수준의 NVIDIA 직접 구매를 할 수 있는가?
+```
+
+평가:
+
+```
+매우 충분       25~30
+가능            18~24
+공격적 가정 필요 10~17
+규모상 어려움     0~9
+```
+
+### F.2 Quarterly Trajectory Fit — 25점
+
+후보의 구매/AI infrastructure deployment 흐름이 Anonymous A/B/C의 fingerprint와 일치하는지 평가한다.
+
+예:
+
+```
+A = steady high purchase
+Q1 16
+Q2 16
+```
+
+또는:
+
+```
+B/C = front-loaded
+Q1 21/17
+→
+Q2 <10
+```
+
+등이다.
+
+현재 공개 데이터에서 가장 어려운 부분이며 향후 supplier shipment data가 추가되면 identification accuracy가 가장 크게 개선되는 변수다.
+
+### F.3 Geography Fit — 20점
+
+미국 본사 회사이면 FY27 H1 전체 매출의 70%라는 NVIDIA geography와 일관성이 높다.
+
+다만 geography 자체가 identity proof는 아니다.
+
+### F.4 Procurement Evidence — 20점
+
+다음과 같은 evidence가 존재하는지를 본다.
+
+```
+NVIDIA → Customer
+```
+
+직접 구매 evidence가 있는 경우 가장 높게 평가한다.
+
+반면:
+
+```
+NVIDIA
+ ↓
+Dell / Foxconn / QCT
+ ↓
+End Customer
+```
+
+구조가 더 강하게 확인된다면 direct-customer candidate score를 낮춘다.
+
+중요한 점은 NVIDIA가 direct customers에 CSP와 AI model maker까지 포함하며, 일부 direct customer가 third-party system integrator를 사용할 수 있다고 직접 설명하고 있다는 것이다.
+
+따라서 제조업체와 구매주체를 동일하게 취급하지 않는다.
+
+### F.5 Product Mix Fit — 5점
+
+자체 accelerator가 존재하면 NVIDIA spending 추정치를 낮추는 방향으로 반영한다.
+
+예:
+
+```
+Google
+TPU + NVIDIA GPU
+
+AWS
+Trainium / Inferentia + NVIDIA GPU
+```
+
+반면 NVIDIA 기반 infrastructure 비중이 높은 고객은 상대적으로 높은 점수를 받을 수 있다.
+
+---
+
+## G. Candidate Scoring — 현재 버전
+
+현재 공개 evidence에 기반한 working score다.
+
+이 점수 자체는 공시 수치가 아니라 추정 우선순위를 체계화하기 위한 분석 모델이다.
+
+| Candidate | Capacity 30 | Trajectory 25 | Geography 20 | Procurement 20 | Mix 5 | Total |
+|---|---|---|---|---|---|---|
+| Microsoft | 29 | 15 | 20 | 14 | 4 | 82 |
+| Meta | 27 | 14 | 20 | 13 | 4 | 78 |
+| Dell | 25 | 10 | 20 | 18 | 4 | 77 |
+| Google | 30 | 12 | 20 | 11 | 2 | 75 |
+| Amazon | 30 | 11 | 20 | 10 | 2 | 73 |
+| Foxconn | 27 | 14 | 5 | 19 | 4 | 69 |
+| Quanta/QCT | 23 | 13 | 5 | 18 | 4 | 63 |
+| Wistron/Wiwynn | 18 | 12 | 5 | 17 | 4 | 56 |
+| Supermicro | 12 | 10 | 20 | 17 | 4 | 63 |
+
+해석
+
+Microsoft / Meta / Dell은 우선 검증해야 할 후보군이다.
+
+하지만 점수 차이가 충분히 크지 않으므로 현재 데이터만으로 exact identity를 확정하지 않는다.
+
+특히 Microsoft와 Meta는 최종 NVIDIA 수요가 크다는 것과 NVIDIA에 직접 돈을 지급한다는 것이 동일하지 않다는 문제가 남아 있다.
+
+---
+
+## H. Microsoft 상세 검증
+
+Microsoft FY26 Q3 capex는 $31.9B였으며 약 2/3가 short-lived assets, 주로 GPUs와 CPUs였다.
+
+다음 분기 FY26 Q4:
+
+```
+Capex = $41B
+```
+
+이며 역시 약 2/3가 주로 GPU와 CPU인 short-lived assets였다.
+
+따라서 calendar 2026 H1에 대응하는 대략적인 infrastructure spending은:
+
+```
+$31.9B + $41.0B
+= $72.9B
+```
+
+Short-lived portion:
+
+```
+$72.9B × ~67%
+≈ $48.6B
+```
+
+이다.
+
+NVIDIA H1 anonymous customers와 비교:
+
+```
+#1 $28.45B / $48.6B = ~59%
+#2 $26.68B / $48.6B = ~55%
+#3 $23.12B / $48.6B = ~48%
+```
+
+따라서 Microsoft의 short-lived infrastructure purchases 중 약 절반 이상이 NVIDIA로 연결된다면 Top-3 규모를 설명할 수 있다.
+
+의미
+
+```
+Capacity condition: PASS
+```
+
+하지만 해당 $48.6B에는 NVIDIA GPU 외 CPU 및 기타 short-lived equipment가 포함된다.
+
+따라서:
+
+```
+Microsoft가 #1일 수 있다.
+```
+
+는 말은 가능하지만,
+
+```
+Microsoft가 #1이다.
+```
+
+라고 결론 내릴 수는 없다.
+
+---
+
+## I. Meta 상세 검증
+
+Meta는 2026년 capex guidance를 $130~145B로 제시하고 있으며 AI efforts와 core business 지원을 위해 infrastructure investment를 확대하고 있다고 밝혔다.
+
+따라서 NVIDIA customer #1의 $28.45B는 Meta annual capex midpoint 약 $137.5B의 약:
+
+```
+28.45 / 137.5
+≈ 20.7%
+```
+
+수준이다.
+
+H1에 집중될 경우 비율은 더 높아진다.
+
+의미
+
+Meta 역시 NVIDIA Top-3를 설명할 경제적 capacity가 충분하다.
+
+그러나 Meta capex에는:
+
+```
+accelerators
+servers
+network
+storage
+buildings
+power
+cooling
+```
+
+등이 모두 들어가므로 총 capex로 NVIDIA purchases를 직접 산출하지 않는다.
+
+```
+Capacity condition: PASS
+Identity condition: unresolved
+```
+
+---
+
+## J. Dell 상세 검증
+
+Dell FY27 Q1:
+
+```
+AI server revenue = $16.1B
+AI orders         = $24.4B
+```
+
+로 공식 발표했다.
+
+H1 AI-server revenue 약 $32.5B를 기준으로 하면 NVIDIA Customer #3 $23.1B를 설명하기 위해 필요한 NVIDIA content ratio는:
+
+```
+23.1 / 32.5
+≈ 71%
+```
+
+이다.
+
+반면 16% customer를 설명하려면:
+
+```
+28.45 / 32.5
+≈ 88%
+```
+
+가 필요하다.
+
+따라서 단순 BOM sanity check에서는 13% 고객이 16%보다 더 자연스럽다.
+
+하지만 Dell AI server revenue 자체는 Q1→Q2에 크게 떨어지지 않았기 때문에, NVIDIA anonymous B/C의:
+
+```
+Q1 high
+→
+Q2 <10%
+```
+
+trajectory와 완벽히 맞지 않는다.
+
+그래서 Dell에는:
+
+```
+Capacity Fit       High
+Procurement Fit    High
+Trajectory Fit     Weak/Medium
+```
+
+을 부여한다.
+
+---
+
+## K. ODM 가설 평가
+
+NVIDIA는 Foxconn이 Houston에서 advanced AI server systems를 제조하고 있고, Wistron 역시 Dallas에서 AI supercomputers를 제조한다고 공식적으로 밝히고 있다. TSMC에서는 NVIDIA Blackwell production도 진행되고 있다.
+
+또한 NVIDIA의 대만 ecosystem에는:
+
+* Foxconn
+* Pegatron
+* QCT
+* Wistron
+* Inventec
+
+등이 Vera Rubin infrastructure 제조에 참여한다.
+
+따라서 NVIDIA → ODM 제조 관계 자체는 매우 높은 confidence다.
+
+그러나 이것은:
+
+```
+relationship confidence = HIGH
+```
+
+라는 의미이지:
+
+```
+revenue share = 16%
+```
+
+를 의미하지 않는다.
+
+특히 geography constraint 때문에 Top 3를 다수의 대만 ODM으로 채우는 것은 어렵다.
+
+---
+
+## L. NVIDIA End-Market 데이터와 Customer Concentration 연결
+
+FY27 H1 NVIDIA revenue:
+
+```
+Total                      $177.837B
+Hyperscale                  $91.761B
+ACIE                        $72.508B
+Edge                        $13.568B
+```
+
+이다.
+
+비중으로 환산하면:
+
+```
+Hyperscale ≈ 51.6%
+ACIE       ≈ 40.8%
+Edge       ≈  7.6%
+```
+
+이다.
+
+여기서 매우 중요한 것은:
+
+```
+16 / 15 / 13
+```
+
+과
+
+```
+51.6 / 40.8 / 7.6
+```
+
+이 같은 분류가 아니라는 것이다.
+
+첫 번째는:
+
+```
+누가 NVIDIA에서 직접 구매했는가?
+```
+
+두 번째는:
+
+```
+어떤 market platform에서 revenue가 발생했는가?
+```
+
+이다.
+
+따라서 Microsoft가 Hyperscale end demand에 속한다고 하더라도 Microsoft가 anonymous 16% direct customer라는 결론은 자동으로 나오지 않는다.
+
+NVIDIA는 FY27 Q2에 한 기업의 business model 변화에 따라 해당 기업을 ACIE에서 Hyperscale로 재분류하고 과거 수치까지 재작성했다. 따라서 이 taxonomy 역시 고정된 산업분류가 아니라 NVIDIA의 customer/business-model classification이라는 점을 고려해야 한다.
+
+---
+
+## M. Confidence Framework
+
+최종 데이터에는 단순히 confidence = 80%처럼 넣기보다 근거 단계를 보존한다.
+
+### Level 5 — Confirmed
+
+SEC, 10-K/10-Q, 공식 IR에서 직접 확인.
+
+예:
+
+```
+NVIDIA FY27 H1 Customer #1 = 16%
+```
+
+### Level 4 — Strongly Derived
+
+공식 수치 두 개 이상의 단순 수학적 결합.
+
+예:
+
+```
+16% × $177.837B
+≈ $28.45B
+```
+
+### Level 3 — Strong Inference
+
+여러 독립적인 evidence가 같은 방향을 가리키지만 회사가 확인하지 않음.
+
+예:
+
+```
+Top-3 중 미국 회사가 다수일 가능성이 높음
+```
+
+### Level 2 — Candidate Hypothesis
+
+합리적이나 대안 설명이 존재.
+
+예:
+
+```
+Customer #1 candidate = Microsoft
+```
+
+### Level 1 — Speculative
+
+관계 가능성은 있으나 충분한 quantitative evidence가 없음.
+
+이 수준의 데이터는 그래프 기본 화면에는 표시하지 않고 상세 분석에서만 제공한다.
+
+---
+
+## N. Source Hierarchy
+
+추정 시 source priority는 다음과 같이 한다.
+
+```
+1. SEC filing / regulatory filing
+       ↓
+2. Company earnings / IR
+       ↓
+3. Company official technical announcement
+       ↓
+4. Counterparty filing
+       ↓
+5. Reuters 등 신뢰도 높은 보도
+       ↓
+6. Industry research
+       ↓
+7. Analyst/model estimate
+```
+
+하위 source가 상위 source와 충돌하면 원칙적으로 상위 source를 사용한다.
+
+---
+
+## O. DB에 저장할 핵심: Fact와 Hypothesis 분리
+
+잘못된 구조:
+
+```json
+{
+  "source": "NVIDIA",
+  "target": "Microsoft",
+  "share": 0.16
+}
+```
+
+이렇게 저장하면 추정을 사실처럼 만들어버린다.
+
+올바른 구조는 다음과 같다.
+
+```json
+{
+  "edge_id": "nvda_direct_customer_fy27h1_01",
+  "source": "NVIDIA",
+  "target": "Anonymous Direct Customer #1",
+  "relationship_type": "direct_sale",
+  "period": {
+    "fiscal_period": "FY2027 H1",
+    "end_date": "2026-07-26"
+  },
+  "metric": {
+    "type": "revenue_share",
+    "value": 0.16,
+    "denominator": "NVIDIA total revenue",
+    "derived_revenue_usd_bn": 28.45
+  },
+  "evidence": {
+    "status": "confirmed",
+    "source_type": "SEC 10-Q"
+  },
+  "identity_estimates": [
+    {
+      "company": "Microsoft",
+      "status": "estimated",
+      "confidence": "medium_high"
+    },
+    {
+      "company": "Meta",
+      "status": "estimated",
+      "confidence": "medium"
+    }
+  ]
+}
+```
+
+---
+
+## P. 실제 밸류체인 Edge는 별도 저장
+
+예:
+
+```json
+{
+  "source": "NVIDIA",
+  "target": "Foxconn",
+  "relationship_type": "manufacturing_partner",
+  "metric": null,
+  "status": "confirmed",
+  "confidence": "high",
+  "evidence": "NVIDIA official manufacturing disclosure"
+}
+```
+
+NVIDIA는 Foxconn의 미국 AI server 제조와 Wistron의 AI supercomputer 생산을 공식적으로 밝히고 있다.
+
+따라서 이런 relationship edge는 익명 direct-customer 추정과 독립적으로 존재한다.
+
+---
+
+## Q. 최종 그래프 데이터 모델
+
+전체 구조는 다음처럼 세 레이어로 분리한다.
+
+```
+                LAYER 1
+          ACCOUNTING / REVENUE
+
+NVIDIA
+  │
+  ├── Anonymous Direct #1 16%
+  ├── Anonymous Direct #2 15%
+  └── Anonymous Direct #3 13%
+
+                LAYER 2
+       PRODUCT / MANUFACTURING
+
+NVIDIA
+  │
+  ├── Dell
+  ├── Foxconn
+  ├── QCT
+  ├── Wistron
+  └── Other OEM/ODM
+
+                LAYER 3
+           ECONOMIC DEMAND
+
+NVIDIA ecosystem
+  │
+  ├── Hyperscalers
+  │      Microsoft
+  │      Meta
+  │      Google
+  │      AWS
+  │
+  ├── AI Clouds
+  │      CoreWeave
+  │      Lambda
+  │      Nebius
+  │
+  └── AI Model Companies
+         OpenAI
+         Anthropic
+         etc.
+```
+
+이 구조를 사용하면 사용자가 NVIDIA node를 클릭했을 때:
+
+```
+[Revenue]
+[Manufacturing]
+[End Demand]
+```
+
+세 가지 view를 선택해서 볼 수 있다.
+
+---
+
+## R. 최종 결론 및 현재 추정 수준
+
+현재 공개된 증거로 확정 가능한 내용은 다음과 같다.
+
+FY27 H1 Top 3 direct customers는 NVIDIA 전체 revenue의 44%를 차지한다.
+
+각 고객은 약:
+
+```
+$28.5B
+$26.7B
+$23.1B
+```
+
+규모다.
+
+또한 Q1/Q2/H1 concentration을 연결하면 가장 자연스러운 trajectory는:
+
+```
+Customer A
+16 → 16 → 16
+
+Customer B
+21 → ~9.9 → 15
+
+Customer C
+17 → ~9.6 → 13
+```
+
+으로 복원된다.
+
+그리고 NVIDIA H1 revenue의 약 70%가 미국 본사 고객에서 발생했으므로 Top 3가 Foxconn·Quanta·Wistron과 같은 대만 ODM들로 구성된다는 가설은 매우 약하다.
+
+현재 실명 후보의 우선순위는:
+
+```
+Tier 1
+Microsoft
+Meta
+Dell
+
+Tier 2
+Google
+Amazon
+Foxconn
+
+Tier 3
+Quanta/QCT
+Wistron/Wiwynn
+Supermicro
+```
+
+정도로 보는 것이 적절하다.
+
+그러나 가장 중요한 최종 표현은:
+
+```
+Customer #1 = Microsoft
+```
+
+가 아니라,
+
+```
+Customer #1 = Anonymous
+Reported share = 16%
+Reported revenue equivalent ≈ $28.5B
+Leading identity candidate:
+Microsoft
+Identity status:
+Estimated
+Required next evidence:
+Direct procurement / shipment trajectory
+```
+
+이다.
+
+이 방식이 공개정보를 넘어서는 부분을 명확히 표시하면서도 추론 자체는 최대한 공격적으로 수행할 수 있는 방식이다.
