@@ -3168,6 +3168,8 @@
 ],
 "BMW": [
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L224",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L319",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L356",
 "content/rocketblocks/2023-05-10-pm-war-stories-how-to-launch-a-product-at-google-w-ex-google.md#L374",
 "content/semi_doped/clips/daily/2026-07-30--daily-update-july-30th-2026.md#L148",
 "content/semi_doped/clips/daily/2026-08-06--daily-update-august-6th-2026.md#L113",
@@ -3191,6 +3193,7 @@
 "content/understanding/회계사/[260523] 기업가치 54조 5,054억원이 요구하는 내재성장률은 연 24~25%다 - 삼성SDI - 엘곰.md#L125",
 "input/clippings/Quadruped State of The Market - Unitree, Boston Dynamics, ANYbotics, DEEP Robotics, and The Rising Application Ecosystem.md#L404",
 "input/clippings/Unitree's Impossible Trajectory Is Still Overlooked.md#L127",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L176",
 "input/clippings/mer/224288716966.json#L43",
 "input/clippings/mer/224288716966.json#L47"
 ],
@@ -4173,6 +4176,14 @@
 "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md#L40"
 ],
 "DreamZero": [
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L72",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L74",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L83",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L175",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L176",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L191",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L316",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L325",
 "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md#L6",
 "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md#L24",
 "content/understanding/피지컬AI/[260315] GTC 앞두고 쏟아진 로봇 모델 다섯 편.md#L26",
@@ -4182,7 +4193,12 @@
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L12",
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L14",
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L29",
-"content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L36"
+"content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L36",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L30",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L36",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L78",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L142",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L144"
 ],
 "E3": [
 "content/linkedin/[2607] 링크드인 게시물.md#L941",
@@ -4468,7 +4484,8 @@
 "input/clippings/$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md#L336",
 "input/clippings/AgentX - InferenceXv3 Does CUDA Moat Hold up in Agentic Inferencing.md#L589",
 "input/clippings/How to Kill 2 Monopolies with 1 Tool.md#L115",
-"input/clippings/SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md#L28"
+"input/clippings/SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md#L28",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L98"
 ],
 "Figure AI": [
 "content/semi_doped/clips/daily/2026-09-04--daily-update-september-4th-2026.md#L62",
@@ -6075,6 +6092,7 @@
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L593",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L625",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L753",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L94",
 "input/clippings/mer/224043439573.json#L57",
 "input/clippings/mer/224047752331.json#L91",
 "input/clippings/mer/224047752331.json#L137",
@@ -6665,6 +6683,9 @@
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L252"
 ],
 "Physical Intelligence": [
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L72",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L74",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L82",
 "content/understanding/피지컬AI/Action Data Scaling 문제.md#L33",
 "content/understanding/피지컬AI/Physical AI의 정의.md#L12",
 "content/understanding/피지컬AI/RFM & VLA란 무엇인가.md#L18",
@@ -6698,7 +6719,9 @@
 "content/understanding/피지컬AI/[260812] 제미나이 로보틱스 2의 하니스 구조.md#L28",
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L39",
 "content/understanding/피지컬AI/[260819] DYNA-2 월드 액션 모델과 170년 휴먼 데이터.md#L49",
-"input/clippings/Robotics Levels of Autonomy.md#L538"
+"input/clippings/Robotics Levels of Autonomy.md#L538",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L30",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L36"
 ],
 "Prime Intellect": [
 "content/linkedin/[2608] 링크드인 게시물.md#L563",
@@ -9920,6 +9943,7 @@
 "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L178",
 "content/newsletter/ai_models/rl/[260616] RL 시스템, 틈새를 조심하라 - 학습기와 생성기 처리량 맞추기.md#L464",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L7",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L7",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L7",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L62",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L985",
@@ -12573,6 +12597,28 @@
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L257",
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L259",
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L269",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L3",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L32",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L54",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L70",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L80",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L82",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L110",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L114",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L118",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L120",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L124",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L128",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L134",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L138",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L152",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L164",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L168",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L172",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L178",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L182",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L190",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L196",
 "input/clippings/mer/224349989423.json#L21",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L3",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L14",
@@ -13062,6 +13108,8 @@
 "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L478",
 "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L408",
 "content/newsletter/ai_models/rl/[250609] 강화학습(RL) 스케일링 - 환경, 보상 해킹, 에이전트, 데이터 스케일링.md#L431",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L258",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L274",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L5",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L7",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L17",
@@ -14298,6 +14346,7 @@
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L346",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L348",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L354",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L116",
 "input/clippings/mer/223407396834.json#L14",
 "input/clippings/mer/223407396834.json#L22",
 "input/clippings/mer/223407396834.json#L32",
@@ -14954,9 +15003,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-09",
+"built": "2026-09-10",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 2070,
+"files": 2072,
 "files_stat": {
 "content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -15669,6 +15718,10 @@
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md": [
 "b2254764a82d23e739ca6577b712fb594abf21fc",
 548
+],
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md": [
+"d4e014a2f8b9d8d3b398e87f9046e1c6d7bfd986",
+441
 ],
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md": [
 "a15ee31aa1f3d4c0723c8aece93d5800dd177f8c",
@@ -20446,6 +20499,10 @@
 "49ec96cdd8c9a0d9ac98a7b4a32b24d2c15bb8ee",
 269
 ],
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md": [
+"eab2e4fa5b60518a81b7c97efd8619b07b6ba551",
+224
+],
 "input/clippings/mer/223407396834.json": [
 "2659bc3734ecd6ecffb4864a124e345a3ae958e9",
 106
@@ -23239,8 +23296,8 @@
 213
 ]
 },
-"fingerprint": "48c3fb0963f182a6bc4354455d39d81ecbfbbe40",
-"lines": 434883
+"fingerprint": "a792e833a32a8a577c5824d3ccc82e83dcec7fa4",
+"lines": 435548
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -24148,6 +24205,7 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L614",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L630",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L634",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L75",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L870",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L500",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L579",
@@ -25738,6 +25796,7 @@
 "input/clippings/Ultra-High Interactivity on NVIDIA GPUs - TileRT InferenceX.md#L38",
 "input/clippings/Ultra-High Interactivity on NVIDIA GPUs - TileRT InferenceX.md#L42",
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L22",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L38",
 "input/clippings/mer/224034921131.json#L109",
 "input/clippings/mer/224034921131.json#L113",
 "input/clippings/mer/224034921131.json#L115",
@@ -25945,6 +26004,7 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L298",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L302",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L75",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
 "content/understanding/박형근 실장/[260817] 테슬라가 막힌 자리가 피지컬 AI 전체가 막힌 자리다 (2부작 · 1부) - 박형근.md#L90",
@@ -28960,6 +29020,7 @@
 "input/clippings/mer/224400415287.json#L182"
 ],
 "도요타": [
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L132",
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L26",
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L28",
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L32",
@@ -29511,6 +29572,7 @@
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L446",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L481",
 "content/newsletter/ai_models/rl/[260107] RL 환경과 과학을 위한 RL - 데이터 파운드리와 멀티 에이전트 아키텍처.md#L544",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L75",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L879",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L891",
 "content/scaling-book/원문/07-inference.md#L559",
@@ -29575,6 +29637,7 @@
 "input/clippings/The Future of Meta Superintelligence A 1 Year Progress Update.md#L188",
 "input/clippings/The Future of Meta Superintelligence A 1 Year Progress Update.md#L194",
 "input/clippings/The GPU Cloud ClusterMAX™ Rating System  How to Rent GPUs.md#L786",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L38",
 "input/clippings/mer/224034921131.json#L137",
 "input/clippings/mer/224055055179.json#L63",
 "input/clippings/mer/224088297516.json#L13",
@@ -34724,6 +34787,7 @@
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L458",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L473",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L478",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L398",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L333",
 "content/newsletter/semiconductors/[260512] EDA 입문 - RTL에서 실리콘까지.md#L78",
 "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md#L562",
@@ -42022,6 +42086,8 @@
 "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L774",
 "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L800",
 "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md#L805",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L258",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L274",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L137",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L138",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L140",
@@ -44388,6 +44454,7 @@
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L234",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L354",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L356",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L116",
 "input/clippings/mer/223879733584.json#L65",
 "input/clippings/mer/223961368566.json#L17",
 "input/clippings/mer/223961368566.json#L23",
@@ -46334,6 +46401,8 @@
 "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md#L138",
 "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md#L579",
 "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md#L584",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L377",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L386",
 "content/understanding/미국주식 사관학교/[260409] 스페이스X를 어떤 회사로 보느냐에 따라 값이 35배 달라진다.md#L37",
 "content/understanding/미국주식 사관학교/[260409] 스페이스X를 어떤 회사로 보느냐에 따라 값이 35배 달라진다.md#L61",
 "content/understanding/미국주식 사관학교/[260409] 스페이스X를 어떤 회사로 보느냐에 따라 값이 35배 달라진다.md#L69",
@@ -51858,6 +51927,16 @@
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L507",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L537",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L543",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L40",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L72",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L74",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L75",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L83",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L175",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L256",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L257",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L265",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L416",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L37",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L48",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L97",
@@ -54889,6 +54968,16 @@
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L165",
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L183",
 "input/clippings/Vera Rubin NVL72 vs GB200 NVL72 Inference TCO & Architecture Analysis.md#L243",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L30",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L36",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L38",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L78",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L108",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L112",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L116",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L142",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L148",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L222",
 "input/clippings/mer/223879733584.json#L111",
 "input/clippings/mer/223879733584.json#L155",
 "input/clippings/mer/223984701497.json#L1",
@@ -66244,6 +66333,7 @@
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L506",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L507",
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L543",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L398",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L387",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L396",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L443",
@@ -73637,6 +73727,8 @@
 "content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L176",
 "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L313",
 "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L322",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L50",
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L65",
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L729",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L54",
 "content/newsletter/semiconductors/[260521] EDA 시장 개관 - 시장 역학, 케이던스·시놉시스·지멘스, 중국 EDA의 부상.md#L77",
@@ -74008,6 +74100,7 @@
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L412",
 "input/clippings/To Boldly Go The Case for Space Datacenters.md#L535",
 "input/clippings/TokenBudgeting Our Conversations with Enterprises on Token Spend.md#L109",
+"input/clippings/Where Does a Robot Think – On-Device vs Datacenter Inference.md#L26",
 "input/clippings/mer/224291989573.json#L57",
 "input/clippings/mer/224291989573.json#L59",
 "input/clippings/mer/224291989573.json#L63",

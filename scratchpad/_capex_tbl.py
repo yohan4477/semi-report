@@ -21,6 +21,7 @@ import lego_capex as LG                                          # noqa: E402
 import ground_capex as GC                                        # noqa: E402
 import trinity_debt as TD                                        # noqa: E402
 import spacex_payback as SX                                      # noqa: E402
+import bridge_capex as BR                                        # noqa: E402
 
 RAW = json.loads(io.open(os.path.join(_MODELS, 'raw', 'capex.json'),
                          encoding='utf-8').read())
@@ -42,6 +43,8 @@ _G = _tbl('ground-assump')
 _B = _tbl('trinity-backstop')
 _D = _tbl('trinity-debt')
 _X = _tbl('spacex-econ')
+_FR = _tbl('frame-capex')
+_SH = _tbl('frame-sheet')
 
 
 def _v(t, k):
@@ -291,6 +294,125 @@ def spacex_deal_table():
     return head, body
 
 
+
+# ── 다리 — 하향 총액과 상향 단가 ─────────────────────────────────────────
+_GPUS_PER_SERVER = 8
+_KW_PER_GPU = 2.10
+
+
+def _amd(col, row):
+    import json as _j
+    import io as _io
+    import os as _os
+    raw = _j.loads(_io.open(_os.path.join(_MODELS, 'raw', 'tables.json'),
+                            encoding='utf-8').read())
+    for t in raw['tables']:
+        if t['id'] == 'amd-capex':
+            return t['rows'][row][t['columns'].index(col)]
+    raise KeyError(row)
+
+
+def _it_per_mw():
+    per_gpu = BR.gpu_capex(_amd('B200', 'server_cost'),
+                           _amd('B200', 'other_cluster_cost'), _GPUS_PER_SERVER)
+    return per_gpu, BR.it_capex_per_mw(_KW_PER_GPU, per_gpu)
+
+
+def bridge_frame_table():
+    """엑셀이 낸 2026년 값. 전부 프레임 값이라 성격 열에 그렇게 적는다."""
+    head = ['무엇', '값', '어느 칸', '성격']
+    body = []
+    for k in ('total_2025', 'total_2026', 'server_2026', 'dc_2026', 'five_year',
+              'capex_to_sales', 'capex_to_ocf', 'fcf_2026', 'lease_jv_2026',
+              'new_debt_2026', 'gap_2028'):
+        what, val, unit, cite = _SH['rows'][k]
+        body.append([what, '%s %s' % (format(val, ','), unit),
+                     cite.replace('프레임 엑셀 ', ''), '프레임 값'])
+    return head, body
+
+
+def bridge_unit_table():
+    """우리 원문이 그 틀의 빈칸에 넣는 값."""
+    per_gpu, it = _it_per_mw()
+    head = ['빈칸', '우리가 넣는 값', '어디서 왔나', '성격']
+    return head, [
+        ['GPU 한 장이 끄는 전력', '%.2fkW' % _KW_PER_GPU,
+         'GPU 금융 층 — 우발채무와 바닥값에서 되짚었다', '모델이 낸 값'],
+        ['메가와트당 칩 수', '%s장' % format(int(BR.gpus_per_mw(_KW_PER_GPU)), ','),
+         '위 전력으로 나눴다', '모델이 낸 값'],
+        ['칩 한 장의 선불 자본', '$%s' % format(int(per_gpu), ','),
+         '추론 원가 모델 B200 열 — 서버 값에 망·저장·소프트웨어를 더해 여덟으로 나눴다',
+         '원문 표 그림에서 읽은 값으로 계산'],
+        ['메가와트당 IT 자본', '$%.1f백만' % it, '앞 둘의 곱', '모델이 낸 값'],
+        ['메가와트당 시설·전력', '$10~20백만', '지상 층 — 전력을 끄는 층마다 다르다', '원문 값'],
+        ['전부 포함 단가', '$%g백만' % _v(_X, 'capex_per_gw'),
+         '회수 층 — 기가와트당 500억 달러', '원문 값'],
+        ['자산 수명', '데이터센터 15년 · IT 5년', '지상 층 가정', '원문 값'],
+        ['담보인정비율·부채상환비율', '70~80%% · 1.3배',
+         'GPU 금융 층 — 은행이 요구하는 값', '원문 값'],
+    ]
+
+
+def bridge_gw_table():
+    """용량을 세는 길 넷. 같은 해를 네 자로 잰다."""
+    per_gpu, it = _it_per_mw()
+    head = ['세는 길', '나누는 값', '단가', '신규 용량', '성격']
+    dc = _v(_SH, 'dc_2026')
+    srv = _v(_SH, 'server_2026')
+    tot = _v(_SH, 'total_2026')
+    return head, [
+        ['시설 단가 상한으로', '데이터센터·전력 $%g십억' % dc, '$20백만/MW',
+         '%.1fGW' % (dc / 20.0), '모델이 낸 값'],
+        ['시설 단가 하한으로', '같은 값', '$10백만/MW', '%.1fGW' % (dc / 10.0),
+         '모델이 낸 값'],
+        ['우리 IT 단가로', '서버·칩 $%g십억' % srv, '$%.1f백만/MW' % it,
+         '%.1fGW' % (srv / it), '모델이 낸 값'],
+        ['전부 포함 단가로', '합산 $%g십억' % tot,
+         '$%g백만/MW' % _v(_X, 'capex_per_gw'),
+         '%.1fGW' % BR.implied_gw(tot, _v(_X, 'capex_per_gw')), '모델이 낸 값'],
+        ['엑셀의 칩 수로', '가속기 %g백만 개' % _v(_SH, 'accel_units'),
+         '%.2fkW/칩' % _KW_PER_GPU,
+         '%.1fGW' % BR.gw_from_chips(_v(_SH, 'accel_units'), _KW_PER_GPU),
+         '모델이 낸 값'],
+    ]
+
+
+def bridge_chip_table():
+    """칩 한 개 값이 두 배 갈리는 자리."""
+    per_gpu, _it = _it_per_mw()
+    asp = BR.blended_asp(_v(_SH, 'accel_capex'), _v(_SH, 'accel_units'))
+    head = ['칩 한 개 값', '값', '무엇을 담나', '성격']
+    return head, [
+        ['엑셀의 블렌드', '$%.1f천' % asp,
+         '가속기 자본지출 $%g십억을 %g백만 개로 나눈 값'
+         % (_v(_SH, 'accel_capex'), _v(_SH, 'accel_units')), '프레임 값'],
+        ['엑셀의 블랙웰', '$%g천' % _v(_SH, 'asp_blackwell'), '랙 시스템가를 GPU 수로 나눔',
+         '프레임 값'],
+        ['엑셀의 구글 TPU', '$%g천' % _v(_SH, 'asp_tpu'), '같은 방식', '프레임 값'],
+        ['엑셀의 AWS 트레이니엄', '$%g천' % _v(_SH, 'asp_trainium'), '같은 방식', '프레임 값'],
+        ['우리 B200', '$%.1f천' % (per_gpu / 1000),
+         '서버 값에 망·저장·소프트웨어까지', '원문 표 그림'],
+        ['배수', '%.1f배' % (per_gpu / (asp * 1000)), '우리 값이 블렌드보다 이만큼 크다',
+         '모델이 낸 값'],
+    ]
+
+
+def bridge_hbm_table():
+    """메가와트에 실리는 HBM."""
+    _per_gpu, it = _it_per_mw()
+    chips = BR.gpus_per_mw(_KW_PER_GPU)
+    gb = _v(_SH, 'hbm_per_gb')
+    head = ['칩', '칩당 HBM', '메가와트당 용량', '메가와트당 값', 'IT 자본에서 차지하는 몫']
+    body = []
+    for label, key in (('블랙웰 블렌드', 'hbm_blackwell_gb'), ('루빈', 'hbm_rubin_gb'),
+                       ('구글 TPU', 'hbm_tpu_gb')):
+        v = _v(_SH, key)
+        cost = BR.hbm_cost_per_mw(v, chips, gb)
+        body.append([label, '%gGB' % v, '%.1fTB' % BR.hbm_per_mw(v, chips),
+                     '$%.2f백만' % cost, '%.0f%%' % (cost / it * 100)])
+    return head, body
+
+
 TABLES = {
     'LEGOCOST': ('발표된 8퍼센트를 다시 낸다', lego_cost_table),
     'LEGOLAB': ('그 차이 가운데 인건비는 얼마인가', lego_labor_table),
@@ -305,6 +427,11 @@ TABLES = {
     'SXPAY': ('파는 값마다 회수가 몇 해인가', spacex_payback_table),
     'SXARR': ('발표된 매출 목표가 전제하는 값', spacex_arr_table),
     'SXDEAL': ('묶인 계약은 지금 임대가로 몇 해치인가', spacex_deal_table),
+    'BRFRAME': ('받은 엑셀이 낸 2026년 값', bridge_frame_table),
+    'BRUNIT': ('그 틀의 빈칸에 우리 원문이 넣는 값', bridge_unit_table),
+    'BRGW': ('같은 해를 네 자로 재면', bridge_gw_table),
+    'BRCHIP': ('칩 한 개 값이 두 배 갈린다', bridge_chip_table),
+    'BRHBM': ('메가와트에 실리는 HBM', bridge_hbm_table),
 }
 
 

@@ -348,6 +348,12 @@ def report_model_sx_html(head=True):
                               'model-sx', head)
 
 
+def report_model_br_html(head=True):
+    """하향과 상향의 다리. 본문은 insights/reports/model-bridge-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_BR, _model_part1.report_br,
+                              'model-br', head)
+
+
 def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
     h = [_trump_part1.HEAD_TRUMP] if head else []
@@ -525,6 +531,11 @@ LAYERS = [
      'SemiAnalysis 영문 1편의 본문 값',
      '그 1년은 매출에서 비용을 빼기 전의 값이다',
      report_model_sx_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '하향 총액과 상향 단가 — 같은 해를 네 자로 재면 14기가와트에서 30기가와트로 갈린다',
+     '밖에서 받은 하향 모델 1편 · 앞 네 글의 원문 값',
+     '돈만 세는 모델과 단가만 있는 모델을 나눠 보면 용량이 나온다',
+     report_model_br_html),
     ('sec-circ', '순환금융', '2026-09-09',
      '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
      'SemiAnalysis 12편 · 메르 6편',

@@ -1,0 +1,3745 @@
+# 엑셀 두 개 — 시트와 값
+
+openpyxl 로 직접 읽었다. 수식은 `data_only=False`, 계산값은 `data_only=True`로 각각 불러와 나란히 적는다. 값이 없는 셀은 적지 않는다(빈 행·빈 열은 생략). 채우기 색이 있는 셀은 뒤에 표시했다 — 노란 채우기(`FFFFFF00`)가 README에서 말하는 입력 셀, 남색(`FF1F3864`)은 열 헤더 행, 회색(`FFF2F2F2`)은 섹션 구분 행, 주황(`FFFCE4D6`)은 조달 갭 출력 강조다.
+
+
+## 파일 A — AI_DC_Capex_Big4.xlsx
+
+경로: `C:\Users\y\.claude\uploads\9417c49f-7730-4847-97af-ae9effa47479\4cafbfd3-AI_DC_Capex_Big4.xlsx`
+
+시트 목록: ['README', 'Consolidated', 'Sheet', 'MSFT', 'GOOGL', 'AMZN', 'META']
+
+
+### 시트 `README` (25행 × 1열, 범위 A1:A25)
+
+- 연도 헤더: 없음(이 시트에서 `YYYY A/E` 패턴 미검출)
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 21
+
+
+- README!A1 | 값: AI DC Capex 모델 — 빅4 (MSFT · GOOGL · AMZN · META)
+- README!A2 | 값: 작성 기준일 2026-09-10. 2026년 7월 말 2분기 실적 발표 기준 가이던스 반영.
+- README!A4 | 값: 시트 구성
+- README!A5 | 값:   Consolidated: 4사 합산, 회사별 비중·조달 갭
+- README!A6 | 값:   MSFT / GOOGL / AMZN / META: 회사별 매출→OCF→Capex→조달 모델 (동일 구조)
+- README!A8 | 값: 범례
+- README!A9 | 값:   파란 글씨 + 노란 셀 = 입력값 (수정 가능)
+- README!A10 | 값:   검정 = 계산식, 초록 = 타 시트 링크, 주황 셀 = 조달 갭 출력
+- README!A12 | 값: 주의사항
+- README!A13 | 값:   1. Capex 정의가 회사마다 다름: MSFT=현금PP&E+금융리스, META=현금PP&E+금융리스 원금상환, GOOGL/AMZN=현금PP&E만. 합산 시 정의 차이 존재.
+- README!A14 | 값:   2. MSFT는 6월 결산 → CY 환산은 근사치. 2026E $175B는 리스 재분류 후 금액(경제적 투자 ~$190B).
+- README!A15 | 값:   3. 2025A 매출·OCF·현금·부채는 근사치이므로 10-K/10-Q로 확인 후 교체 권장.
+- README!A16 | 값:   4. 2027E 이후 성장률, OCF 마진, 부채 발행, 리스/JV 비율, 주주환원은 전부 가정값.
+- README!A17 | 값:   5. AMZN capex는 리테일·물류 포함 총액. AI/AWS만 보려면 서버·칩 비중 등으로 분해 필요.
+- README!A18 | 값:   6. 검색된 2차 소스 간 수치가 상충하는 항목(예: MSFT FY27 가이던스)은 회사 공식 콜 트랜스크립트를 우선 적용.
+- README!A20 | 값: 주요 출처
+- README!A21 | 값:   Microsoft FY26 Q4 earnings call, 2026-07-29 (microsoft.com/investor)
+- README!A22 | 값:   Alphabet Q2 2026 earnings call, 2026-07-22 (abc.xyz/investor)
+- README!A23 | 값:   Meta Q2 2026 earnings call transcript, 2026-07-29 (investor.atmeta.com)
+- README!A24 | 값:   Amazon Q2 2026 earnings call, 2026-07-30 (ir.aboutamazon.com)
+- README!A25 | 값:   2025 합산 capex ~$410B, 2026 ~$725B+ (CNBC/업계 집계) — 교차 검증용
+
+
+### 시트 `Consolidated` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [4], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B4=2025A, C4=2026E, D4=2027E, E4=2028E, F4=2029E, G4=2030E
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 245
+
+
+- Consolidated!A1 | 값: 빅4 합산 — Capex & 자금조달 ($B)
+- Consolidated!A2 | 값: MSFT·GOOGL·AMZN·META 시트 합산. 달력연도 기준. MSFT는 FY→CY 환산 근사.
+- Consolidated!A4 | 값: 항목 (헤더 행 — 남색 채우기)
+- Consolidated!B4 | 값: 2025A (헤더 행 — 남색 채우기)
+- Consolidated!C4 | 값: 2026E (헤더 행 — 남색 채우기)
+- Consolidated!D4 | 값: 2027E (헤더 행 — 남색 채우기)
+- Consolidated!E4 | 값: 2028E (헤더 행 — 남색 채우기)
+- Consolidated!F4 | 값: 2029E (헤더 행 — 남색 채우기)
+- Consolidated!G4 | 값: 2030E (헤더 행 — 남색 채우기)
+- Consolidated!H4 | 값: 5년 합계(26E~30E) (헤더 행 — 남색 채우기)
+- Consolidated!A5 | 값: 합산 Capex (섹션 구분 행 — 회색 채우기)
+- Consolidated!A6 | 값: 총 Capex
+- Consolidated!B6 | 수식: `=MSFT!B14+GOOGL!B14+AMZN!B14+META!B14` | 계산값: 412
+- Consolidated!C6 | 수식: `=MSFT!C14+GOOGL!C14+AMZN!C14+META!C14` | 계산값: 732.5
+- Consolidated!D6 | 수식: `=MSFT!D14+GOOGL!D14+AMZN!D14+META!D14` | 계산값: 907.75
+- Consolidated!E6 | 수식: `=MSFT!E14+GOOGL!E14+AMZN!E14+META!E14` | 계산값: 1031.0425
+- Consolidated!F6 | 수식: `=MSFT!F14+GOOGL!F14+AMZN!F14+META!F14` | 계산값: 1124.53715
+- Consolidated!G6 | 수식: `=MSFT!G14+GOOGL!G14+AMZN!G14+META!G14` | 계산값: 1180.7640075
+- Consolidated!H6 | 수식: `=SUM(C6:G6)` | 계산값: 4976.5936575
+- Consolidated!A7 | 값:   서버·칩
+- Consolidated!B7 | 수식: `=MSFT!B19+GOOGL!B19+AMZN!B19+META!B19` | 계산값: 237.05
+- Consolidated!C7 | 수식: `=MSFT!C19+GOOGL!C19+AMZN!C19+META!C19` | 계산값: 444.875
+- Consolidated!D7 | 수식: `=MSFT!D19+GOOGL!D19+AMZN!D19+META!D19` | 계산값: 551.7125
+- Consolidated!E7 | 수식: `=MSFT!E19+GOOGL!E19+AMZN!E19+META!E19` | 계산값: 621.963625
+- Consolidated!F7 | 수식: `=MSFT!F19+GOOGL!F19+AMZN!F19+META!F19` | 계산값: 678.5790275
+- Consolidated!G7 | 수식: `=MSFT!G19+GOOGL!G19+AMZN!G19+META!G19` | 계산값: 712.507978875
+- Consolidated!H7 | 수식: `=SUM(C7:G7)` | 계산값: 3009.638131375
+- Consolidated!A8 | 값:   DC·전력·네트워크
+- Consolidated!B8 | 수식: `=MSFT!B20+GOOGL!B20+AMZN!B20+META!B20` | 계산값: 174.95
+- Consolidated!C8 | 수식: `=MSFT!C20+GOOGL!C20+AMZN!C20+META!C20` | 계산값: 287.625
+- Consolidated!D8 | 수식: `=MSFT!D20+GOOGL!D20+AMZN!D20+META!D20` | 계산값: 356.0375
+- Consolidated!E8 | 수식: `=MSFT!E20+GOOGL!E20+AMZN!E20+META!E20` | 계산값: 409.078875
+- Consolidated!F8 | 수식: `=MSFT!F20+GOOGL!F20+AMZN!F20+META!F20` | 계산값: 445.9581225
+- Consolidated!G8 | 수식: `=MSFT!G20+GOOGL!G20+AMZN!G20+META!G20` | 계산값: 468.256028625
+- Consolidated!H8 | 수식: `=SUM(C8:G8)` | 계산값: 1966.955526125
+- Consolidated!A9 | 값:   Capex YoY
+- Consolidated!C9 | 수식: `=IF(B6=0,0,C6/B6-1)` | 계산값: 0.777912621359223
+- Consolidated!D9 | 수식: `=IF(C6=0,0,D6/C6-1)` | 계산값: 0.239249146757679
+- Consolidated!E9 | 수식: `=IF(D6=0,0,E6/D6-1)` | 계산값: 0.135822087579179
+- Consolidated!F9 | 수식: `=IF(E6=0,0,F6/E6-1)` | 계산값: 0.0906797246476261
+- Consolidated!G9 | 수식: `=IF(F6=0,0,G6/F6-1)` | 계산값: 0.05
+- Consolidated!A10 | 값: 매출 합계
+- Consolidated!B10 | 수식: `=MSFT!B8+GOOGL!B8+AMZN!B8+META!B8` | 계산값: 1625
+- Consolidated!C10 | 수식: `=MSFT!C8+GOOGL!C8+AMZN!C8+META!C8` | 계산값: 1941.55
+- Consolidated!D10 | 수식: `=MSFT!D8+GOOGL!D8+AMZN!D8+META!D8` | 계산값: 2228.2008
+- Consolidated!E10 | 수식: `=MSFT!E8+GOOGL!E8+AMZN!E8+META!E8` | 계산값: 2504.1885
+- Consolidated!F10 | 수식: `=MSFT!F8+GOOGL!F8+AMZN!F8+META!F8` | 계산값: 2768.84674092
+- Consolidated!G10 | 수식: `=MSFT!G8+GOOGL!G8+AMZN!G8+META!G8` | 계산값: 3033.848671524
+- Consolidated!H10 | 수식: `=SUM(C10:G10)` | 계산값: 12476.634712444
+- Consolidated!A11 | 값: OCF 합계
+- Consolidated!B11 | 수식: `=MSFT!B10+GOOGL!B10+AMZN!B10+META!B10` | 계산값: 552.27
+- Consolidated!C11 | 수식: `=MSFT!C10+GOOGL!C10+AMZN!C10+META!C10` | 계산값: 647.5266
+- Consolidated!D11 | 수식: `=MSFT!D10+GOOGL!D10+AMZN!D10+META!D10` | 계산값: 753.869076
+- Consolidated!E11 | 수식: `=MSFT!E10+GOOGL!E10+AMZN!E10+META!E10` | 계산값: 847.83869256
+- Consolidated!F11 | 수식: `=MSFT!F10+GOOGL!F10+AMZN!F10+META!F10` | 계산값: 938.6163751032
+- Consolidated!G11 | 수식: `=MSFT!G10+GOOGL!G10+AMZN!G10+META!G10` | 계산값: 1029.74498161128
+- Consolidated!H11 | 수식: `=SUM(C11:G11)` | 계산값: 4217.59572527448
+- Consolidated!A12 | 값:   Capex / 매출
+- Consolidated!B12 | 수식: `=IF(B10=0,0,B6/B10)` | 계산값: 0.253538461538462
+- Consolidated!C12 | 수식: `=IF(C10=0,0,C6/C10)` | 계산값: 0.377275887821586
+- Consolidated!D12 | 수식: `=IF(D10=0,0,D6/D10)` | 계산값: 0.407391470284007
+- Consolidated!E12 | 수식: `=IF(E10=0,0,E6/E10)` | 계산값: 0.411727192262084
+- Consolidated!F12 | 수식: `=IF(F10=0,0,F6/F10)` | 계산값: 0.406139181840867
+- Consolidated!G12 | 수식: `=IF(G10=0,0,G6/G10)` | 계산값: 0.389196738315515
+- Consolidated!H12 | 수식: `=IF(H10=0,0,H6/H10)` | 계산값: 0.398873075328271
+- Consolidated!A13 | 값:   Capex / OCF
+- Consolidated!B13 | 수식: `=IF(B11=0,0,B6/B11)` | 계산값: 0.746011914462129
+- Consolidated!C13 | 수식: `=IF(C11=0,0,C6/C11)` | 계산값: 1.13122765921894
+- Consolidated!D13 | 수식: `=IF(D11=0,0,D6/D11)` | 계산값: 1.20412154961507
+- Consolidated!E13 | 수식: `=IF(E11=0,0,E6/E11)` | 계산값: 1.21608332934986
+- Consolidated!F13 | 수식: `=IF(F11=0,0,F6/F11)` | 계산값: 1.19807961998996
+- Consolidated!G13 | 수식: `=IF(G11=0,0,G6/G11)` | 계산값: 1.14665672432063
+- Consolidated!H13 | 수식: `=IF(H11=0,0,H6/H11)` | 계산값: 1.17995985904413
+- Consolidated!A15 | 값: 합산 자금조달 (섹션 구분 행 — 회색 채우기)
+- Consolidated!A16 | 값: 현금 capex
+- Consolidated!B16 | 수식: `=MSFT!B23+GOOGL!B23+AMZN!B23+META!B23` | 계산값: 375.05
+- Consolidated!C16 | 수식: `=MSFT!C23+GOOGL!C23+AMZN!C23+META!C23` | 계산값: 660.825
+- Consolidated!D16 | 수식: `=MSFT!D23+GOOGL!D23+AMZN!D23+META!D23` | 계산값: 807.151875
+- Consolidated!E16 | 수식: `=MSFT!E23+GOOGL!E23+AMZN!E23+META!E23` | 계산값: 915.22969375
+- Consolidated!F16 | 수식: `=MSFT!F23+GOOGL!F23+AMZN!F23+META!F23` | 계산값: 998.364591125
+- Consolidated!G16 | 수식: `=MSFT!G23+GOOGL!G23+AMZN!G23+META!G23` | 계산값: 1048.28282068125
+- Consolidated!H16 | 수식: `=SUM(C16:G16)` | 계산값: 4429.85398055625
+- Consolidated!A17 | 값: 리스/JV 조달
+- Consolidated!B17 | 수식: `=MSFT!B22+GOOGL!B22+AMZN!B22+META!B22` | 계산값: 36.95
+- Consolidated!C17 | 수식: `=MSFT!C22+GOOGL!C22+AMZN!C22+META!C22` | 계산값: 71.675
+- Consolidated!D17 | 수식: `=MSFT!D22+GOOGL!D22+AMZN!D22+META!D22` | 계산값: 100.598125
+- Consolidated!E17 | 수식: `=MSFT!E22+GOOGL!E22+AMZN!E22+META!E22` | 계산값: 115.81280625
+- Consolidated!F17 | 수식: `=MSFT!F22+GOOGL!F22+AMZN!F22+META!F22` | 계산값: 126.172558875
+- Consolidated!G17 | 수식: `=MSFT!G22+GOOGL!G22+AMZN!G22+META!G22` | 계산값: 132.48118681875
+- Consolidated!H17 | 수식: `=SUM(C17:G17)` | 계산값: 546.73967694375
+- Consolidated!A18 | 값: 신규 부채 발행
+- Consolidated!B18 | 수식: `=MSFT!B28+GOOGL!B28+AMZN!B28+META!B28` | 계산값: 0
+- Consolidated!C18 | 수식: `=MSFT!C28+GOOGL!C28+AMZN!C28+META!C28` | 계산값: 150
+- Consolidated!D18 | 수식: `=MSFT!D28+GOOGL!D28+AMZN!D28+META!D28` | 계산값: 140
+- Consolidated!E18 | 수식: `=MSFT!E28+GOOGL!E28+AMZN!E28+META!E28` | 계산값: 135
+- Consolidated!F18 | 수식: `=MSFT!F28+GOOGL!F28+AMZN!F28+META!F28` | 계산값: 110
+- Consolidated!G18 | 수식: `=MSFT!G28+GOOGL!G28+AMZN!G28+META!G28` | 계산값: 105
+- Consolidated!H18 | 수식: `=SUM(C18:G18)` | 계산값: 640
+- Consolidated!A19 | 값: 주주환원
+- Consolidated!B19 | 수식: `=MSFT!B31+GOOGL!B31+AMZN!B31+META!B31` | 계산값: 0
+- Consolidated!C19 | 수식: `=MSFT!C31+GOOGL!C31+AMZN!C31+META!C31` | 계산값: 60.5
+- Consolidated!D19 | 수식: `=MSFT!D31+GOOGL!D31+AMZN!D31+META!D31` | 계산값: 63
+- Consolidated!E19 | 수식: `=MSFT!E31+GOOGL!E31+AMZN!E31+META!E31` | 계산값: 69
+- Consolidated!F19 | 수식: `=MSFT!F31+GOOGL!F31+AMZN!F31+META!F31` | 계산값: 76
+- Consolidated!G19 | 수식: `=MSFT!G31+GOOGL!G31+AMZN!G31+META!G31` | 계산값: 83
+- Consolidated!H19 | 수식: `=SUM(C19:G19)` | 계산값: 351.5
+- Consolidated!A20 | 값: FCF (OCF − 현금 capex)
+- Consolidated!B20 | 수식: `=MSFT!B38+GOOGL!B38+AMZN!B38+META!B38` | 계산값: 177.22
+- Consolidated!C20 | 수식: `=MSFT!C38+GOOGL!C38+AMZN!C38+META!C38` | 계산값: -13.2984
+- Consolidated!D20 | 수식: `=MSFT!D38+GOOGL!D38+AMZN!D38+META!D38` | 계산값: -53.282799
+- Consolidated!E20 | 수식: `=MSFT!E38+GOOGL!E38+AMZN!E38+META!E38` | 계산값: -67.39100119
+- Consolidated!F20 | 수식: `=MSFT!F38+GOOGL!F38+AMZN!F38+META!F38` | 계산값: -59.7482160217999
+- Consolidated!G20 | 수식: `=MSFT!G38+GOOGL!G38+AMZN!G38+META!G38` | 계산값: -18.5378390699699
+- Consolidated!H20 | 수식: `=SUM(C20:G20)` | 계산값: -212.25825528177
+- Consolidated!A21 | 값: 기말 현금 합계
+- Consolidated!B21 | 수식: `=MSFT!B36+GOOGL!B36+AMZN!B36+META!B36` | 계산값: 0
+- Consolidated!C21 | 수식: `=MSFT!C36+GOOGL!C36+AMZN!C36+META!C36` | 계산값: 613.8766
+- Consolidated!D21 | 수식: `=MSFT!D36+GOOGL!D36+AMZN!D36+META!D36` | 계산값: 679.051276
+- Consolidated!E21 | 수식: `=MSFT!E36+GOOGL!E36+AMZN!E36+META!E36` | 계산값: 763.12344056
+- Consolidated!F21 | 수식: `=MSFT!F36+GOOGL!F36+AMZN!F36+META!F36` | 계산값: 831.8303855832
+- Consolidated!G21 | 수식: `=MSFT!G36+GOOGL!G36+AMZN!G36+META!G36` | 계산값: 925.93846290648
+- Consolidated!H21 | 수식: `=G21` | 계산값: 925.93846290648
+- Consolidated!A22 | 값: 추가 조달 필요액
+- Consolidated!B22 | 수식: `=MSFT!B35+GOOGL!B35+AMZN!B35+META!B35` | 계산값: 0 (출력 강조 — 주황 채우기)
+- Consolidated!C22 | 수식: `=MSFT!C35+GOOGL!C35+AMZN!C35+META!C35` | 계산값: 0 (출력 강조 — 주황 채우기)
+- Consolidated!D22 | 수식: `=MSFT!D35+GOOGL!D35+AMZN!D35+META!D35` | 계산값: 0.859350000000063 (출력 강조 — 주황 채우기)
+- Consolidated!E22 | 수식: `=MSFT!E35+GOOGL!E35+AMZN!E35+META!E35` | 계산값: 29.6503595 (출력 강조 — 주황 채우기)
+- Consolidated!F22 | 수식: `=MSFT!F35+GOOGL!F35+AMZN!F35+META!F35` | 계산값: 28.28260217 (출력 강조 — 주황 채우기)
+- Consolidated!G22 | 수식: `=MSFT!G35+GOOGL!G35+AMZN!G35+META!G35` | 계산값: 18.1647295744999 (출력 강조 — 주황 채우기)
+- Consolidated!H22 | 수식: `=SUM(C22:G22)` | 계산값: 76.9570412444999 (출력 강조 — 주황 채우기)
+- Consolidated!A23 | 값: 총부채 (온밸런스)
+- Consolidated!B23 | 수식: `=MSFT!B39+GOOGL!B39+AMZN!B39+META!B39` | 계산값: 356
+- Consolidated!C23 | 수식: `=MSFT!C39+GOOGL!C39+AMZN!C39+META!C39` | 계산값: 485
+- Consolidated!D23 | 수식: `=MSFT!D39+GOOGL!D39+AMZN!D39+META!D39` | 계산값: 600.85935
+- Consolidated!E23 | 수식: `=MSFT!E39+GOOGL!E39+AMZN!E39+META!E39` | 계산값: 740.5097095
+- Consolidated!F23 | 수식: `=MSFT!F39+GOOGL!F39+AMZN!F39+META!F39` | 계산값: 853.79231167
+- Consolidated!G23 | 수식: `=MSFT!G39+GOOGL!G39+AMZN!G39+META!G39` | 계산값: 951.9570412445
+- Consolidated!H23 | 수식: `=G23` | 계산값: 951.9570412445
+- Consolidated!A24 | 값: 누적 리스/JV 잔액
+- Consolidated!B24 | 수식: `=MSFT!B40+GOOGL!B40+AMZN!B40+META!B40` | 계산값: 0
+- Consolidated!C24 | 수식: `=MSFT!C40+GOOGL!C40+AMZN!C40+META!C40` | 계산값: 71.675
+- Consolidated!D24 | 수식: `=MSFT!D40+GOOGL!D40+AMZN!D40+META!D40` | 계산값: 172.273125
+- Consolidated!E24 | 수식: `=MSFT!E40+GOOGL!E40+AMZN!E40+META!E40` | 계산값: 288.08593125
+- Consolidated!F24 | 수식: `=MSFT!F40+GOOGL!F40+AMZN!F40+META!F40` | 계산값: 414.258490125
+- Consolidated!G24 | 수식: `=MSFT!G40+GOOGL!G40+AMZN!G40+META!G40` | 계산값: 546.73967694375
+- Consolidated!H24 | 수식: `=G24` | 계산값: 546.73967694375
+- Consolidated!A26 | 값: 회사별 Capex ($B) (섹션 구분 행 — 회색 채우기)
+- Consolidated!A27 | 값: MSFT
+- Consolidated!B27 | 수식: `=MSFT!B14` | 계산값: 118
+- Consolidated!C27 | 수식: `=MSFT!C14` | 계산값: 175
+- Consolidated!D27 | 수식: `=MSFT!D14` | 계산값: 218.75
+- Consolidated!E27 | 수식: `=MSFT!E14` | 계산값: 251.5625
+- Consolidated!F27 | 수식: `=MSFT!F14` | 계산값: 276.71875
+- Consolidated!G27 | 수식: `=MSFT!G14` | 계산값: 290.5546875
+- Consolidated!H27 | 수식: `=SUM(C27:G27)` | 계산값: 1212.5859375
+- Consolidated!A28 | 값: GOOGL
+- Consolidated!B28 | 수식: `=GOOGL!B14` | 계산값: 91
+- Consolidated!C28 | 수식: `=GOOGL!C14` | 계산값: 200
+- Consolidated!D28 | 수식: `=GOOGL!D14` | 계산값: 260
+- Consolidated!E28 | 수식: `=GOOGL!E14` | 계산값: 299
+- Consolidated!F28 | 수식: `=GOOGL!F14` | 계산값: 328.9
+- Consolidated!G28 | 수식: `=GOOGL!G14` | 계산값: 345.345
+- Consolidated!H28 | 수식: `=SUM(C28:G28)` | 계산값: 1433.245
+- Consolidated!A29 | 값: AMZN
+- Consolidated!B29 | 수식: `=AMZN!B14` | 계산값: 131
+- Consolidated!C29 | 수식: `=AMZN!C14` | 계산값: 220
+- Consolidated!D29 | 수식: `=AMZN!D14` | 계산값: 264
+- Consolidated!E29 | 수식: `=AMZN!E14` | 계산값: 295.68
+- Consolidated!F29 | 수식: `=AMZN!F14` | 계산값: 319.3344
+- Consolidated!G29 | 수식: `=AMZN!G14` | 계산값: 335.30112
+- Consolidated!H29 | 수식: `=SUM(C29:G29)` | 계산값: 1434.31552
+- Consolidated!A30 | 값: META
+- Consolidated!B30 | 수식: `=META!B14` | 계산값: 72
+- Consolidated!C30 | 수식: `=META!C14` | 계산값: 137.5
+- Consolidated!D30 | 수식: `=META!D14` | 계산값: 165
+- Consolidated!E30 | 수식: `=META!E14` | 계산값: 184.8
+- Consolidated!F30 | 수식: `=META!F14` | 계산값: 199.584
+- Consolidated!G30 | 수식: `=META!G14` | 계산값: 209.5632
+- Consolidated!H30 | 수식: `=SUM(C30:G30)` | 계산값: 896.4472
+- Consolidated!A32 | 값: 회사별 Capex 비중 (섹션 구분 행 — 회색 채우기)
+- Consolidated!A33 | 값: MSFT
+- Consolidated!B33 | 수식: `=IF(B$6=0,0,B27/B$6)` | 계산값: 0.286407766990291
+- Consolidated!C33 | 수식: `=IF(C$6=0,0,C27/C$6)` | 계산값: 0.238907849829352
+- Consolidated!D33 | 수식: `=IF(D$6=0,0,D27/D$6)` | 계산값: 0.240980446158083
+- Consolidated!E33 | 수식: `=IF(E$6=0,0,E27/E$6)` | 계산값: 0.243988487380491
+- Consolidated!F33 | 수식: `=IF(F$6=0,0,F27/F$6)` | 계산값: 0.246073462312917
+- Consolidated!G33 | 수식: `=IF(G$6=0,0,G27/G$6)` | 계산값: 0.246073462312917
+- Consolidated!H33 | 수식: `=IF(H$6=0,0,H27/H$6)` | 계산값: 0.243657815154863
+- Consolidated!A34 | 값: GOOGL
+- Consolidated!B34 | 수식: `=IF(B$6=0,0,B28/B$6)` | 계산값: 0.220873786407767
+- Consolidated!C34 | 수식: `=IF(C$6=0,0,C28/C$6)` | 계산값: 0.273037542662116
+- Consolidated!D34 | 수식: `=IF(D$6=0,0,D28/D$6)` | 계산값: 0.286422473147893
+- Consolidated!E34 | 수식: `=IF(E$6=0,0,E28/E$6)` | 계산값: 0.289997745000812
+- Consolidated!F34 | 수식: `=IF(F$6=0,0,F28/F$6)` | 계산값: 0.292475886634781
+- Consolidated!G34 | 수식: `=IF(G$6=0,0,G28/G$6)` | 계산값: 0.292475886634781
+- Consolidated!H34 | 수식: `=IF(H$6=0,0,H28/H$6)` | 계산값: 0.287997192183859
+- Consolidated!A35 | 값: AMZN
+- Consolidated!B35 | 수식: `=IF(B$6=0,0,B29/B$6)` | 계산값: 0.317961165048544
+- Consolidated!C35 | 수식: `=IF(C$6=0,0,C29/C$6)` | 계산값: 0.300341296928328
+- Consolidated!D35 | 수식: `=IF(D$6=0,0,D29/D$6)` | 계산값: 0.290828972734784
+- Consolidated!E35 | 수식: `=IF(E$6=0,0,E29/E$6)` | 계산값: 0.286777703149967
+- Consolidated!F35 | 수식: `=IF(F$6=0,0,F29/F$6)` | 계산값: 0.283969631416801
+- Consolidated!G35 | 수식: `=IF(G$6=0,0,G29/G$6)` | 계산값: 0.283969631416801
+- Consolidated!H35 | 수식: `=IF(H$6=0,0,H29/H$6)` | 계산값: 0.288212303176171
+- Consolidated!A36 | 값: META
+- Consolidated!B36 | 수식: `=IF(B$6=0,0,B30/B$6)` | 계산값: 0.174757281553398
+- Consolidated!C36 | 수식: `=IF(C$6=0,0,C30/C$6)` | 계산값: 0.187713310580205
+- Consolidated!D36 | 수식: `=IF(D$6=0,0,D30/D$6)` | 계산값: 0.18176810795924
+- Consolidated!E36 | 수식: `=IF(E$6=0,0,E30/E$6)` | 계산값: 0.179236064468729
+- Consolidated!F36 | 수식: `=IF(F$6=0,0,F30/F$6)` | 계산값: 0.177481019635501
+- Consolidated!G36 | 수식: `=IF(G$6=0,0,G30/G$6)` | 계산값: 0.177481019635501
+- Consolidated!H36 | 수식: `=IF(H$6=0,0,H30/H$6)` | 계산값: 0.180132689485107
+- Consolidated!A38 | 값: 회사별 추가 조달 필요액 ($B) (섹션 구분 행 — 회색 채우기)
+- Consolidated!A39 | 값: MSFT
+- Consolidated!B39 | 수식: `=MSFT!B35` | 계산값: 0
+- Consolidated!C39 | 수식: `=MSFT!C35` | 계산값: 0
+- Consolidated!D39 | 수식: `=MSFT!D35` | 계산값: 0.859350000000063
+- Consolidated!E39 | 수식: `=MSFT!E35` | 계산값: 29.6503595
+- Consolidated!F39 | 수식: `=MSFT!F35` | 계산값: 28.28260217
+- Consolidated!G39 | 수식: `=MSFT!G35` | 계산값: 18.1647295744999
+- Consolidated!H39 | 수식: `=SUM(C39:G39)` | 계산값: 76.9570412444999
+- Consolidated!A40 | 값: GOOGL
+- Consolidated!B40 | 수식: `=GOOGL!B35` | 계산값: 0
+- Consolidated!C40 | 수식: `=GOOGL!C35` | 계산값: 0
+- Consolidated!D40 | 수식: `=GOOGL!D35` | 계산값: 0
+- Consolidated!E40 | 수식: `=GOOGL!E35` | 계산값: 0
+- Consolidated!F40 | 수식: `=GOOGL!F35` | 계산값: 0
+- Consolidated!G40 | 수식: `=GOOGL!G35` | 계산값: 0
+- Consolidated!H40 | 수식: `=SUM(C40:G40)` | 계산값: 0
+- Consolidated!A41 | 값: AMZN
+- Consolidated!B41 | 수식: `=AMZN!B35` | 계산값: 0
+- Consolidated!C41 | 수식: `=AMZN!C35` | 계산값: 0
+- Consolidated!D41 | 수식: `=AMZN!D35` | 계산값: 0
+- Consolidated!E41 | 수식: `=AMZN!E35` | 계산값: 0
+- Consolidated!F41 | 수식: `=AMZN!F35` | 계산값: 0
+- Consolidated!G41 | 수식: `=AMZN!G35` | 계산값: 0
+- Consolidated!H41 | 수식: `=SUM(C41:G41)` | 계산값: 0
+- Consolidated!A42 | 값: META
+- Consolidated!B42 | 수식: `=META!B35` | 계산값: 0
+- Consolidated!C42 | 수식: `=META!C35` | 계산값: 0
+- Consolidated!D42 | 수식: `=META!D35` | 계산값: 0
+- Consolidated!E42 | 수식: `=META!E35` | 계산값: 0
+- Consolidated!F42 | 수식: `=META!F35` | 계산값: 0
+- Consolidated!G42 | 수식: `=META!G35` | 계산값: 0
+- Consolidated!H42 | 수식: `=SUM(C42:G42)` | 계산값: 0
+
+
+### 시트 `Sheet` (1행 × 1열, 범위 A1:A1)
+
+- 연도 헤더: 없음(이 시트에서 `YYYY A/E` 패턴 미검출)
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 0
+
+
+
+
+### 시트 `MSFT` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- MSFT!A1 | 값: Microsoft (MSFT) — Capex & 자금조달 ($B)
+- MSFT!A2 | 값: 회계연도 6월 결산 → 달력연도(CY)로 환산. 2026E $175B는 FY27부터 DC 내용연수 15→25년 변경으로 금융리스→운용리스 재분류 반영(경제적 투자액은 ~$190B 유지). Capex에 금융리스 포함.
+- MSFT!A3 | 값: 출처: Microsoft FY26 Q4 earnings call (2026-07-29): Q4 capex $41B, 2/3 short-lived assets, CY2026 capex ≈$175B(리스 재분류 후), FY27 capex YoY 증가, FY26 주주환원 $43B+, FY26 매출 $331B
+- MSFT!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- MSFT!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- MSFT!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- MSFT!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- MSFT!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- MSFT!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- MSFT!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- MSFT!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- MSFT!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- MSFT!A7 | 값: 매출 성장률
+- MSFT!C7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- MSFT!D7 | 값: 0.14 (입력 셀 — 노란 채우기)
+- MSFT!E7 | 값: 0.12 (입력 셀 — 노란 채우기)
+- MSFT!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- MSFT!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- MSFT!A8 | 값: 매출 ($B)
+- MSFT!B8 | 값: 305 (입력 셀 — 노란 채우기)
+- MSFT!C8 | 수식: `=B8*(1+C7)` | 계산값: 353.8
+- MSFT!D8 | 수식: `=C8*(1+D7)` | 계산값: 403.332
+- MSFT!E8 | 수식: `=D8*(1+E7)` | 계산값: 451.73184
+- MSFT!F8 | 수식: `=E8*(1+F7)` | 계산값: 501.4223424
+- MSFT!G8 | 수식: `=F8*(1+G7)` | 계산값: 551.56457664
+- MSFT!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- MSFT!A9 | 값: OCF 마진
+- MSFT!B9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!C9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!D9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!E9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!F9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!G9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!A10 | 값: 영업현금흐름 OCF ($B)
+- MSFT!B10 | 수식: `=B8*B9` | 계산값: 137.25
+- MSFT!C10 | 수식: `=C8*C9` | 계산값: 159.21
+- MSFT!D10 | 수식: `=D8*D9` | 계산값: 181.4994
+- MSFT!E10 | 수식: `=E8*E9` | 계산값: 203.279328
+- MSFT!F10 | 수식: `=F8*F9` | 계산값: 225.64005408
+- MSFT!G10 | 수식: `=G8*G9` | 계산값: 248.204059488
+- MSFT!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- MSFT!A13 | 값: Capex 성장률 (2027E~)
+- MSFT!D13 | 값: 0.25 (입력 셀 — 노란 채우기)
+- MSFT!E13 | 값: 0.15 (입력 셀 — 노란 채우기)
+- MSFT!F13 | 값: 0.1 (입력 셀 — 노란 채우기)
+- MSFT!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- MSFT!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- MSFT!A14 | 값: 총 Capex ($B)
+- MSFT!B14 | 값: 118 (입력 셀 — 노란 채우기)
+- MSFT!C14 | 값: 175 (입력 셀 — 노란 채우기)
+- MSFT!D14 | 수식: `=C14*(1+D13)` | 계산값: 218.75
+- MSFT!E14 | 수식: `=D14*(1+E13)` | 계산값: 251.5625
+- MSFT!F14 | 수식: `=E14*(1+F13)` | 계산값: 276.71875
+- MSFT!G14 | 수식: `=F14*(1+G13)` | 계산값: 290.5546875
+- MSFT!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- MSFT!A15 | 값:   Capex YoY
+- MSFT!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.483050847457627
+- MSFT!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.25
+- MSFT!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.15
+- MSFT!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.1
+- MSFT!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- MSFT!A16 | 값:   Capex / 매출
+- MSFT!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.386885245901639
+- MSFT!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.494629734313171
+- MSFT!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.542357164817074
+- MSFT!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.556884588874674
+- MSFT!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.551867610596524
+- MSFT!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.526782719205773
+- MSFT!A17 | 값:   Capex / OCF
+- MSFT!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.859744990892532
+- MSFT!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.0991771873626
+- MSFT!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.20523814403794
+- MSFT!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.23752130861039
+- MSFT!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.22637246799227
+- MSFT!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.17062826490172
+- MSFT!A18 | 값: 서버·칩(단기자산) 비중
+- MSFT!B18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- MSFT!C18 | 값: 0.67 (입력 셀 — 노란 채우기)
+- MSFT!D18 | 값: 0.67 (입력 셀 — 노란 채우기)
+- MSFT!E18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!F18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!G18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- MSFT!A19 | 값:   서버·칩 capex ($B)
+- MSFT!B19 | 수식: `=B14*B18` | 계산값: 70.8
+- MSFT!C19 | 수식: `=C14*C18` | 계산값: 117.25
+- MSFT!D19 | 수식: `=D14*D18` | 계산값: 146.5625
+- MSFT!E19 | 수식: `=E14*E18` | 계산값: 163.515625
+- MSFT!F19 | 수식: `=F14*F18` | 계산값: 179.8671875
+- MSFT!G19 | 수식: `=G14*G18` | 계산값: 188.860546875
+- MSFT!A20 | 값:   DC·전력·네트워크 capex ($B)
+- MSFT!B20 | 수식: `=B14-B19` | 계산값: 47.2
+- MSFT!C20 | 수식: `=C14-C19` | 계산값: 57.75
+- MSFT!D20 | 수식: `=D14-D19` | 계산값: 72.1875
+- MSFT!E20 | 수식: `=E14-E19` | 계산값: 88.046875
+- MSFT!F20 | 수식: `=F14-F19` | 계산값: 96.8515625
+- MSFT!G20 | 수식: `=G14-G19` | 계산값: 101.694140625
+- MSFT!A21 | 값: DC capex 중 리스/JV 조달 비율
+- MSFT!B21 | 값: 0.25 (입력 셀 — 노란 채우기)
+- MSFT!C21 | 값: 0.3 (입력 셀 — 노란 채우기)
+- MSFT!D21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!E21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!F21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!G21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- MSFT!A22 | 값:   리스/JV 조달액 ($B)
+- MSFT!B22 | 수식: `=B20*B21` | 계산값: 11.8
+- MSFT!C22 | 수식: `=C20*C21` | 계산값: 17.325
+- MSFT!D22 | 수식: `=D20*D21` | 계산값: 25.265625
+- MSFT!E22 | 수식: `=E20*E21` | 계산값: 30.81640625
+- MSFT!F22 | 수식: `=F20*F21` | 계산값: 33.898046875
+- MSFT!G22 | 수식: `=G20*G21` | 계산값: 35.59294921875
+- MSFT!A23 | 값:   현금 지출 capex ($B)
+- MSFT!B23 | 수식: `=B14-B22` | 계산값: 106.2
+- MSFT!C23 | 수식: `=C14-C22` | 계산값: 157.675
+- MSFT!D23 | 수식: `=D14-D22` | 계산값: 193.484375
+- MSFT!E23 | 수식: `=E14-E22` | 계산값: 220.74609375
+- MSFT!F23 | 수식: `=F14-F22` | 계산값: 242.820703125
+- MSFT!G23 | 수식: `=G14-G22` | 계산값: 254.96173828125
+- MSFT!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- MSFT!A26 | 값: 기초 현금 ($B)
+- MSFT!B26 | 값: 95 (입력 셀 — 노란 채우기)
+- MSFT!C26 | 수식: `=B26` | 계산값: 95
+- MSFT!D26 | 수식: `=C36` | 계산값: 65.86
+- MSFT!E26 | 수식: `=D36` | 계산값: 40
+- MSFT!F26 | 수식: `=E36` | 계산값: 40
+- MSFT!G26 | 수식: `=F36` | 계산값: 40
+- MSFT!H26 | 값: 2025년말 현금·유가증권 (근사)
+- MSFT!A27 | 값: (+) OCF
+- MSFT!C27 | 수식: `=C10` | 계산값: 159.21
+- MSFT!D27 | 수식: `=D10` | 계산값: 181.4994
+- MSFT!E27 | 수식: `=E10` | 계산값: 203.279328
+- MSFT!F27 | 수식: `=F10` | 계산값: 225.64005408
+- MSFT!G27 | 수식: `=G10` | 계산값: 248.204059488
+- MSFT!A28 | 값: (+) 신규 부채 발행
+- MSFT!C28 | 값: 10 (입력 셀 — 노란 채우기)
+- MSFT!D28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!E28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!F28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!G28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!H28 | 값: 회사채·은행차입 가정 (입력)
+- MSFT!A29 | 값: (+) 리스/JV 조달
+- MSFT!C29 | 수식: `=C22` | 계산값: 17.325
+- MSFT!D29 | 수식: `=D22` | 계산값: 25.265625
+- MSFT!E29 | 수식: `=E22` | 계산값: 30.81640625
+- MSFT!F29 | 수식: `=F22` | 계산값: 33.898046875
+- MSFT!G29 | 수식: `=G22` | 계산값: 35.59294921875
+- MSFT!A30 | 값: (−) 현금 capex
+- MSFT!C30 | 수식: `=C23` | 계산값: 157.675
+- MSFT!D30 | 수식: `=D23` | 계산값: 193.484375
+- MSFT!E30 | 수식: `=E23` | 계산값: 220.74609375
+- MSFT!F30 | 수식: `=F23` | 계산값: 242.820703125
+- MSFT!G30 | 수식: `=G23` | 계산값: 254.96173828125
+- MSFT!A31 | 값: (−) 주주환원 (배당+자사주)
+- MSFT!C31 | 값: 43 (입력 셀 — 노란 채우기)
+- MSFT!D31 | 값: 45 (입력 셀 — 노란 채우기)
+- MSFT!E31 | 값: 48 (입력 셀 — 노란 채우기)
+- MSFT!F31 | 값: 50 (입력 셀 — 노란 채우기)
+- MSFT!G31 | 값: 52 (입력 셀 — 노란 채우기)
+- MSFT!A32 | 값: (−) 부채 상환 · 기타 투자
+- MSFT!C32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!D32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!E32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!F32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!G32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- MSFT!A33 | 값: 조달 전 기말 현금 ($B)
+- MSFT!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 65.86
+- MSFT!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 39.1406499999999
+- MSFT!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 10.3496405000001
+- MSFT!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 11.71739783
+- MSFT!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 21.8352704255001
+- MSFT!A34 | 값: 최소 유지 현금
+- MSFT!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- MSFT!C34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!D34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!E34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!F34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!G34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- MSFT!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- MSFT!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0.859350000000063 (출력 강조 — 주황 채우기)
+- MSFT!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 29.6503595 (출력 강조 — 주황 채우기)
+- MSFT!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 28.28260217 (출력 강조 — 주황 채우기)
+- MSFT!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 18.1647295744999 (출력 강조 — 주황 채우기)
+- MSFT!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- MSFT!A36 | 값: 기말 현금 ($B)
+- MSFT!C36 | 수식: `=C33+C35` | 계산값: 65.86
+- MSFT!D36 | 수식: `=D33+D35` | 계산값: 40
+- MSFT!E36 | 수식: `=E33+E35` | 계산값: 40
+- MSFT!F36 | 수식: `=F33+F35` | 계산값: 40
+- MSFT!G36 | 수식: `=G33+G35` | 계산값: 40
+- MSFT!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- MSFT!A38 | 값: FCF (OCF − 현금 capex)
+- MSFT!B38 | 수식: `=B10-B23` | 계산값: 31.05
+- MSFT!C38 | 수식: `=C10-C23` | 계산값: 1.53499999999997
+- MSFT!D38 | 수식: `=D10-D23` | 계산값: -11.984975
+- MSFT!E38 | 수식: `=E10-E23` | 계산값: -17.46676575
+- MSFT!F38 | 수식: `=F10-F23` | 계산값: -17.1806490449999
+- MSFT!G38 | 수식: `=G10-G23` | 계산값: -6.75767879324994
+- MSFT!A39 | 값: 총부채 (온밸런스, $B)
+- MSFT!B39 | 값: 45 (입력 셀 — 노란 채우기)
+- MSFT!C39 | 수식: `=B39+C28+C35-5` | 계산값: 50
+- MSFT!D39 | 수식: `=C39+D28+D35-5` | 계산값: 65.8593500000001
+- MSFT!E39 | 수식: `=D39+E28+E35-5` | 계산값: 110.5097095
+- MSFT!F39 | 수식: `=E39+F28+F35-5` | 계산값: 153.79231167
+- MSFT!G39 | 수식: `=F39+G28+G35-5` | 계산값: 186.9570412445
+- MSFT!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 5,5,5,5,5)
+- MSFT!A40 | 값: 누적 리스/JV 잔액 ($B)
+- MSFT!B40 | 값: 0
+- MSFT!C40 | 수식: `=B40+C29` | 계산값: 17.325
+- MSFT!D40 | 수식: `=C40+D29` | 계산값: 42.590625
+- MSFT!E40 | 수식: `=D40+E29` | 계산값: 73.40703125
+- MSFT!F40 | 수식: `=E40+F29` | 계산값: 107.305078125
+- MSFT!G40 | 수식: `=F40+G29` | 계산값: 142.89802734375
+- MSFT!A41 | 값: 총부채 / OCF
+- MSFT!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.327868852459016
+- MSFT!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.314050624960744
+- MSFT!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.362862632052778
+- MSFT!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.543634763983478
+- MSFT!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.681582497828481
+- MSFT!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.753239256562356
+- MSFT!A42 | 값: (총부채+리스/JV) / OCF
+- MSFT!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.327868852459016
+- MSFT!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 0.422869166509641
+- MSFT!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 0.597522498696966
+- MSFT!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 0.904748862363417
+- MSFT!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.15714114171604
+- MSFT!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.3289672589106
+
+
+### 시트 `GOOGL` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- GOOGL!A1 | 값: Alphabet (GOOGL) — Capex & 자금조달 ($B)
+- GOOGL!A2 | 값: 12월 결산. Capex = 현금 PP&E 기준(리스 미포함). 2026 가이던스 $195~205B 중간값 사용. 2027은 'significantly increase' 코멘트만 있어 성장률 가정.
+- GOOGL!A3 | 값: 출처: Alphabet Q2 2026 earnings call (2026-07-22): 2026 capex $195~205B(종전 180~190), Q2 capex $44.9B 중 ~60% 서버/40% DC·네트워크, 2027 capex 큰 폭 증가 예정, 현금·유가증권 $242.5B, 장기부채 $98.2B, Q2 FCF -$5.9B
+- GOOGL!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- GOOGL!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- GOOGL!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- GOOGL!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- GOOGL!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- GOOGL!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- GOOGL!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- GOOGL!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- GOOGL!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- GOOGL!A7 | 값: 매출 성장률
+- GOOGL!C7 | 값: 0.22 (입력 셀 — 노란 채우기)
+- GOOGL!D7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- GOOGL!E7 | 값: 0.13 (입력 셀 — 노란 채우기)
+- GOOGL!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- GOOGL!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!A8 | 값: 매출 ($B)
+- GOOGL!B8 | 값: 402 (입력 셀 — 노란 채우기)
+- GOOGL!C8 | 수식: `=B8*(1+C7)` | 계산값: 490.44
+- GOOGL!D8 | 수식: `=C8*(1+D7)` | 계산값: 568.9104
+- GOOGL!E8 | 수식: `=D8*(1+E7)` | 계산값: 642.868752
+- GOOGL!F8 | 수식: `=E8*(1+F7)` | 계산값: 713.58431472
+- GOOGL!G8 | 수식: `=F8*(1+G7)` | 계산값: 784.942746192
+- GOOGL!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- GOOGL!A9 | 값: OCF 마진
+- GOOGL!B9 | 값: 0.38 (입력 셀 — 노란 채우기)
+- GOOGL!C9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!D9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!E9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!F9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!G9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!A10 | 값: 영업현금흐름 OCF ($B)
+- GOOGL!B10 | 수식: `=B8*B9` | 계산값: 152.76
+- GOOGL!C10 | 수식: `=C8*C9` | 계산값: 176.5584
+- GOOGL!D10 | 수식: `=D8*D9` | 계산값: 204.807744
+- GOOGL!E10 | 수식: `=E8*E9` | 계산값: 231.43275072
+- GOOGL!F10 | 수식: `=F8*F9` | 계산값: 256.8903532992
+- GOOGL!G10 | 수식: `=G8*G9` | 계산값: 282.57938862912
+- GOOGL!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- GOOGL!A13 | 값: Capex 성장률 (2027E~)
+- GOOGL!D13 | 값: 0.3 (입력 셀 — 노란 채우기)
+- GOOGL!E13 | 값: 0.15 (입력 셀 — 노란 채우기)
+- GOOGL!F13 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- GOOGL!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- GOOGL!A14 | 값: 총 Capex ($B)
+- GOOGL!B14 | 값: 91 (입력 셀 — 노란 채우기)
+- GOOGL!C14 | 값: 200 (입력 셀 — 노란 채우기)
+- GOOGL!D14 | 수식: `=C14*(1+D13)` | 계산값: 260
+- GOOGL!E14 | 수식: `=D14*(1+E13)` | 계산값: 299
+- GOOGL!F14 | 수식: `=E14*(1+F13)` | 계산값: 328.9
+- GOOGL!G14 | 수식: `=F14*(1+G13)` | 계산값: 345.345
+- GOOGL!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- GOOGL!A15 | 값:   Capex YoY
+- GOOGL!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 1.1978021978022
+- GOOGL!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.3
+- GOOGL!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.15
+- GOOGL!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.1
+- GOOGL!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- GOOGL!A16 | 값:   Capex / 매출
+- GOOGL!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.22636815920398
+- GOOGL!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.407797080172906
+- GOOGL!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.457013969159291
+- GOOGL!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.46510271197627
+- GOOGL!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.460912597453961
+- GOOGL!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.439962024842417
+- GOOGL!A17 | 값:   Capex / OCF
+- GOOGL!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.595705682115737
+- GOOGL!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.13276966714696
+- GOOGL!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.2694832476647
+- GOOGL!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.29195197771186
+- GOOGL!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.28031277070545
+- GOOGL!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.22211673567338
+- GOOGL!A18 | 값: 서버·칩(단기자산) 비중
+- GOOGL!B18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!C18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!D18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!E18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!F18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!G18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- GOOGL!A19 | 값:   서버·칩 capex ($B)
+- GOOGL!B19 | 수식: `=B14*B18` | 계산값: 54.6
+- GOOGL!C19 | 수식: `=C14*C18` | 계산값: 120
+- GOOGL!D19 | 수식: `=D14*D18` | 계산값: 156
+- GOOGL!E19 | 수식: `=E14*E18` | 계산값: 179.4
+- GOOGL!F19 | 수식: `=F14*F18` | 계산값: 197.34
+- GOOGL!G19 | 수식: `=G14*G18` | 계산값: 207.207
+- GOOGL!A20 | 값:   DC·전력·네트워크 capex ($B)
+- GOOGL!B20 | 수식: `=B14-B19` | 계산값: 36.4
+- GOOGL!C20 | 수식: `=C14-C19` | 계산값: 80
+- GOOGL!D20 | 수식: `=D14-D19` | 계산값: 104
+- GOOGL!E20 | 수식: `=E14-E19` | 계산값: 119.6
+- GOOGL!F20 | 수식: `=F14-F19` | 계산값: 131.56
+- GOOGL!G20 | 수식: `=G14-G19` | 계산값: 138.138
+- GOOGL!A21 | 값: DC capex 중 리스/JV 조달 비율
+- GOOGL!B21 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!C21 | 값: 0.15 (입력 셀 — 노란 채우기)
+- GOOGL!D21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!E21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!F21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!G21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- GOOGL!A22 | 값:   리스/JV 조달액 ($B)
+- GOOGL!B22 | 수식: `=B20*B21` | 계산값: 3.64
+- GOOGL!C22 | 수식: `=C20*C21` | 계산값: 12
+- GOOGL!D22 | 수식: `=D20*D21` | 계산값: 20.8
+- GOOGL!E22 | 수식: `=E20*E21` | 계산값: 23.92
+- GOOGL!F22 | 수식: `=F20*F21` | 계산값: 26.312
+- GOOGL!G22 | 수식: `=G20*G21` | 계산값: 27.6276
+- GOOGL!A23 | 값:   현금 지출 capex ($B)
+- GOOGL!B23 | 수식: `=B14-B22` | 계산값: 87.36
+- GOOGL!C23 | 수식: `=C14-C22` | 계산값: 188
+- GOOGL!D23 | 수식: `=D14-D22` | 계산값: 239.2
+- GOOGL!E23 | 수식: `=E14-E22` | 계산값: 275.08
+- GOOGL!F23 | 수식: `=F14-F22` | 계산값: 302.588
+- GOOGL!G23 | 수식: `=G14-G22` | 계산값: 317.7174
+- GOOGL!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- GOOGL!A26 | 값: 기초 현금 ($B)
+- GOOGL!B26 | 값: 242 (입력 셀 — 노란 채우기)
+- GOOGL!C26 | 수식: `=B26` | 계산값: 242
+- GOOGL!D26 | 수식: `=C36` | 계산값: 245.5584
+- GOOGL!E26 | 수식: `=D36` | 계산값: 244.966144
+- GOOGL!F26 | 수식: `=E36` | 계산값: 235.23889472
+- GOOGL!G26 | 수식: `=F36` | 계산값: 210.8532480192
+- GOOGL!H26 | 값: 2025년말 현금·유가증권 (근사)
+- GOOGL!A27 | 값: (+) OCF
+- GOOGL!C27 | 수식: `=C10` | 계산값: 176.5584
+- GOOGL!D27 | 수식: `=D10` | 계산값: 204.807744
+- GOOGL!E27 | 수식: `=E10` | 계산값: 231.43275072
+- GOOGL!F27 | 수식: `=F10` | 계산값: 256.8903532992
+- GOOGL!G27 | 수식: `=G10` | 계산값: 282.57938862912
+- GOOGL!A28 | 값: (+) 신규 부채 발행
+- GOOGL!C28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- GOOGL!E28 | 값: 40 (입력 셀 — 노란 채우기)
+- GOOGL!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!G28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!H28 | 값: 회사채·은행차입 가정 (입력)
+- GOOGL!A29 | 값: (+) 리스/JV 조달
+- GOOGL!C29 | 수식: `=C22` | 계산값: 12
+- GOOGL!D29 | 수식: `=D22` | 계산값: 20.8
+- GOOGL!E29 | 수식: `=E22` | 계산값: 23.92
+- GOOGL!F29 | 수식: `=F22` | 계산값: 26.312
+- GOOGL!G29 | 수식: `=G22` | 계산값: 27.6276
+- GOOGL!A30 | 값: (−) 현금 capex
+- GOOGL!C30 | 수식: `=C23` | 계산값: 188
+- GOOGL!D30 | 수식: `=D23` | 계산값: 239.2
+- GOOGL!E30 | 수식: `=E23` | 계산값: 275.08
+- GOOGL!F30 | 수식: `=F23` | 계산값: 302.588
+- GOOGL!G30 | 수식: `=G23` | 계산값: 317.7174
+- GOOGL!A31 | 값: (−) 주주환원 (배당+자사주)
+- GOOGL!C31 | 값: 12 (입력 셀 — 노란 채우기)
+- GOOGL!D31 | 값: 12 (입력 셀 — 노란 채우기)
+- GOOGL!E31 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!F31 | 값: 20 (입력 셀 — 노란 채우기)
+- GOOGL!G31 | 값: 25 (입력 셀 — 노란 채우기)
+- GOOGL!A32 | 값: (−) 부채 상환 · 기타 투자
+- GOOGL!C32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!D32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!E32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!F32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!G32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- GOOGL!A33 | 값: 조달 전 기말 현금 ($B)
+- GOOGL!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 245.5584
+- GOOGL!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 244.966144
+- GOOGL!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 235.23889472
+- GOOGL!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 210.8532480192
+- GOOGL!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 193.34283664832
+- GOOGL!A34 | 값: 최소 유지 현금
+- GOOGL!B34 | 값: 60 (입력 셀 — 노란 채우기)
+- GOOGL!C34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!D34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!E34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!F34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!G34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- GOOGL!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- GOOGL!A36 | 값: 기말 현금 ($B)
+- GOOGL!C36 | 수식: `=C33+C35` | 계산값: 245.5584
+- GOOGL!D36 | 수식: `=D33+D35` | 계산값: 244.966144
+- GOOGL!E36 | 수식: `=E33+E35` | 계산값: 235.23889472
+- GOOGL!F36 | 수식: `=F33+F35` | 계산값: 210.8532480192
+- GOOGL!G36 | 수식: `=G33+G35` | 계산값: 193.34283664832
+- GOOGL!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- GOOGL!A38 | 값: FCF (OCF − 현금 capex)
+- GOOGL!B38 | 수식: `=B10-B23` | 계산값: 65.4
+- GOOGL!C38 | 수식: `=C10-C23` | 계산값: -11.4416
+- GOOGL!D38 | 수식: `=D10-D23` | 계산값: -34.392256
+- GOOGL!E38 | 수식: `=E10-E23` | 계산값: -43.64724928
+- GOOGL!F38 | 수식: `=F10-F23` | 계산값: -45.6976467008
+- GOOGL!G38 | 수식: `=G10-G23` | 계산값: -35.13801137088
+- GOOGL!A39 | 값: 총부채 (온밸런스, $B)
+- GOOGL!B39 | 값: 98 (입력 셀 — 노란 채우기)
+- GOOGL!C39 | 수식: `=B39+C28+C35-5` | 계산값: 123
+- GOOGL!D39 | 수식: `=C39+D28+D35-5` | 계산값: 158
+- GOOGL!E39 | 수식: `=D39+E28+E35-5` | 계산값: 193
+- GOOGL!F39 | 수식: `=E39+F28+F35-5` | 계산값: 218
+- GOOGL!G39 | 수식: `=F39+G28+G35-5` | 계산값: 243
+- GOOGL!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 5,5,5,5,5)
+- GOOGL!A40 | 값: 누적 리스/JV 잔액 ($B)
+- GOOGL!B40 | 값: 0
+- GOOGL!C40 | 수식: `=B40+C29` | 계산값: 12
+- GOOGL!D40 | 수식: `=C40+D29` | 계산값: 32.8
+- GOOGL!E40 | 수식: `=D40+E29` | 계산값: 56.72
+- GOOGL!F40 | 수식: `=E40+F29` | 계산값: 83.032
+- GOOGL!G40 | 수식: `=F40+G29` | 계산값: 110.6596
+- GOOGL!A41 | 값: 총부채 / OCF
+- GOOGL!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.64152919612464
+- GOOGL!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.696653345295381
+- GOOGL!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.771455204350086
+- GOOGL!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.833935557519696
+- GOOGL!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.848611079397347
+- GOOGL!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.859935330665368
+- GOOGL!A42 | 값: (총부채+리스/JV) / OCF
+- GOOGL!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.64152919612464
+- GOOGL!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 0.764619525324199
+- GOOGL!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 0.931605398670863
+- GOOGL!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.07901755141875
+- GOOGL!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.17183069015203
+- GOOGL!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.25154067929622
+
+
+### 시트 `AMZN` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- AMZN!A1 | 값: Amazon (AMZN) — Capex & 자금조달 ($B)
+- AMZN!A2 | 값: 12월 결산. Capex = 현금 capex 기준(금융리스 별도). 리테일·물류 capex 포함 총액이므로 AI/AWS 비중 가정 필요. 2026 $220B 중 ~$20B는 메모리 가격 상승분(용량 증가 없음).
+- AMZN!A3 | 값: 출처: Amazon Q2 2026 earnings call (2026-07-30): 2026 현금 capex ≈$220B(종전 ~$200B, 메모리 가격 상승), Q2 capex $53.1B, TTM FCF -$7.6B, TTM capex $169B, 장기부채 $128.9B(6개월간 ~2배), AWS 백로그 $496B
+- AMZN!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- AMZN!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- AMZN!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- AMZN!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- AMZN!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- AMZN!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- AMZN!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- AMZN!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- AMZN!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- AMZN!A7 | 값: 매출 성장률
+- AMZN!C7 | 값: 0.18 (입력 셀 — 노란 채우기)
+- AMZN!D7 | 값: 0.14 (입력 셀 — 노란 채우기)
+- AMZN!E7 | 값: 0.12 (입력 셀 — 노란 채우기)
+- AMZN!F7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- AMZN!G7 | 값: 0.09 (입력 셀 — 노란 채우기)
+- AMZN!A8 | 값: 매출 ($B)
+- AMZN!B8 | 값: 717 (입력 셀 — 노란 채우기)
+- AMZN!C8 | 수식: `=B8*(1+C7)` | 계산값: 846.06
+- AMZN!D8 | 수식: `=C8*(1+D7)` | 계산값: 964.5084
+- AMZN!E8 | 수식: `=D8*(1+E7)` | 계산값: 1080.249408
+- AMZN!F8 | 수식: `=E8*(1+F7)` | 계산값: 1188.2743488
+- AMZN!G8 | 수식: `=F8*(1+G7)` | 계산값: 1295.219040192
+- AMZN!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- AMZN!A9 | 값: OCF 마진
+- AMZN!B9 | 값: 0.22 (입력 셀 — 노란 채우기)
+- AMZN!C9 | 값: 0.22 (입력 셀 — 노란 채우기)
+- AMZN!D9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!E9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!F9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!G9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!A10 | 값: 영업현금흐름 OCF ($B)
+- AMZN!B10 | 수식: `=B8*B9` | 계산값: 157.74
+- AMZN!C10 | 수식: `=C8*C9` | 계산값: 186.1332
+- AMZN!D10 | 수식: `=D8*D9` | 계산값: 221.836932
+- AMZN!E10 | 수식: `=E8*E9` | 계산값: 248.45736384
+- AMZN!F10 | 수식: `=F8*F9` | 계산값: 273.303100224
+- AMZN!G10 | 수식: `=G8*G9` | 계산값: 297.90037924416
+- AMZN!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- AMZN!A13 | 값: Capex 성장률 (2027E~)
+- AMZN!D13 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!E13 | 값: 0.12 (입력 셀 — 노란 채우기)
+- AMZN!F13 | 값: 0.08 (입력 셀 — 노란 채우기)
+- AMZN!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- AMZN!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- AMZN!A14 | 값: 총 Capex ($B)
+- AMZN!B14 | 값: 131 (입력 셀 — 노란 채우기)
+- AMZN!C14 | 값: 220 (입력 셀 — 노란 채우기)
+- AMZN!D14 | 수식: `=C14*(1+D13)` | 계산값: 264
+- AMZN!E14 | 수식: `=D14*(1+E13)` | 계산값: 295.68
+- AMZN!F14 | 수식: `=E14*(1+F13)` | 계산값: 319.3344
+- AMZN!G14 | 수식: `=F14*(1+G13)` | 계산값: 335.30112
+- AMZN!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- AMZN!A15 | 값:   Capex YoY
+- AMZN!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.679389312977099
+- AMZN!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.2
+- AMZN!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.12
+- AMZN!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.0800000000000001
+- AMZN!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- AMZN!A16 | 값:   Capex / 매출
+- AMZN!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.182705718270572
+- AMZN!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.260028839562206
+- AMZN!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.273714567960217
+- AMZN!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.273714567960217
+- AMZN!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.268737939451849
+- AMZN!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.258875996719671
+- AMZN!A17 | 값:   Capex / OCF
+- AMZN!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.830480537593508
+- AMZN!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.1819492707373
+- AMZN!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.19006333895746
+- AMZN!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.19006333895746
+- AMZN!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.16842582370369
+- AMZN!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.12554781182466
+- AMZN!A18 | 값: 서버·칩(단기자산) 비중
+- AMZN!B18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- AMZN!C18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!D18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!E18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!F18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!G18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- AMZN!A19 | 값:   서버·칩 capex ($B)
+- AMZN!B19 | 수식: `=B14*B18` | 계산값: 72.05
+- AMZN!C19 | 수식: `=C14*C18` | 계산값: 132
+- AMZN!D19 | 수식: `=D14*D18` | 계산값: 158.4
+- AMZN!E19 | 수식: `=E14*E18` | 계산값: 177.408
+- AMZN!F19 | 수식: `=F14*F18` | 계산값: 191.60064
+- AMZN!G19 | 수식: `=G14*G18` | 계산값: 201.180672
+- AMZN!A20 | 값:   DC·전력·네트워크 capex ($B)
+- AMZN!B20 | 수식: `=B14-B19` | 계산값: 58.95
+- AMZN!C20 | 수식: `=C14-C19` | 계산값: 88
+- AMZN!D20 | 수식: `=D14-D19` | 계산값: 105.6
+- AMZN!E20 | 수식: `=E14-E19` | 계산값: 118.272
+- AMZN!F20 | 수식: `=F14-F19` | 계산값: 127.73376
+- AMZN!G20 | 수식: `=G14-G19` | 계산값: 134.120448
+- AMZN!A21 | 값: DC capex 중 리스/JV 조달 비율
+- AMZN!B21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!C21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!D21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!E21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!F21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!G21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- AMZN!A22 | 값:   리스/JV 조달액 ($B)
+- AMZN!B22 | 수식: `=B20*B21` | 계산값: 11.79
+- AMZN!C22 | 수식: `=C20*C21` | 계산값: 17.6
+- AMZN!D22 | 수식: `=D20*D21` | 계산값: 21.12
+- AMZN!E22 | 수식: `=E20*E21` | 계산값: 23.6544
+- AMZN!F22 | 수식: `=F20*F21` | 계산값: 25.546752
+- AMZN!G22 | 수식: `=G20*G21` | 계산값: 26.8240896
+- AMZN!A23 | 값:   현금 지출 capex ($B)
+- AMZN!B23 | 수식: `=B14-B22` | 계산값: 119.21
+- AMZN!C23 | 수식: `=C14-C22` | 계산값: 202.4
+- AMZN!D23 | 수식: `=D14-D22` | 계산값: 242.88
+- AMZN!E23 | 수식: `=E14-E22` | 계산값: 272.0256
+- AMZN!F23 | 수식: `=F14-F22` | 계산값: 293.787648
+- AMZN!G23 | 수식: `=G14-G22` | 계산값: 308.4770304
+- AMZN!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- AMZN!A26 | 값: 기초 현금 ($B)
+- AMZN!B26 | 값: 95 (입력 셀 — 노란 채우기)
+- AMZN!C26 | 수식: `=B26` | 계산값: 95
+- AMZN!D26 | 수식: `=C36` | 계산값: 143.3332
+- AMZN!E26 | 수식: `=D36` | 계산값: 163.410132
+- AMZN!F26 | 수식: `=E36` | 계산값: 183.49629584
+- AMZN!G26 | 수식: `=F36` | 계산값: 198.558500064
+- AMZN!H26 | 값: 2025년말 현금·유가증권 (근사)
+- AMZN!A27 | 값: (+) OCF
+- AMZN!C27 | 수식: `=C10` | 계산값: 186.1332
+- AMZN!D27 | 수식: `=D10` | 계산값: 221.836932
+- AMZN!E27 | 수식: `=E10` | 계산값: 248.45736384
+- AMZN!F27 | 수식: `=F10` | 계산값: 273.303100224
+- AMZN!G27 | 수식: `=G10` | 계산값: 297.90037924416
+- AMZN!A28 | 값: (+) 신규 부채 발행
+- AMZN!C28 | 값: 65 (입력 셀 — 노란 채우기)
+- AMZN!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!E28 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- AMZN!G28 | 값: 30 (입력 셀 — 노란 채우기)
+- AMZN!H28 | 값: 회사채·은행차입 가정 (입력)
+- AMZN!A29 | 값: (+) 리스/JV 조달
+- AMZN!C29 | 수식: `=C22` | 계산값: 17.6
+- AMZN!D29 | 수식: `=D22` | 계산값: 21.12
+- AMZN!E29 | 수식: `=E22` | 계산값: 23.6544
+- AMZN!F29 | 수식: `=F22` | 계산값: 25.546752
+- AMZN!G29 | 수식: `=G22` | 계산값: 26.8240896
+- AMZN!A30 | 값: (−) 현금 capex
+- AMZN!C30 | 수식: `=C23` | 계산값: 202.4
+- AMZN!D30 | 수식: `=D23` | 계산값: 242.88
+- AMZN!E30 | 수식: `=E23` | 계산값: 272.0256
+- AMZN!F30 | 수식: `=F23` | 계산값: 293.787648
+- AMZN!G30 | 수식: `=G23` | 계산값: 308.4770304
+- AMZN!A31 | 값: (−) 주주환원 (배당+자사주)
+- AMZN!C31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!D31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!E31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!F31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!G31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!A32 | 값: (−) 부채 상환 · 기타 투자
+- AMZN!C32 | 값: 18 (입력 셀 — 노란 채우기)
+- AMZN!D32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!E32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!F32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!G32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- AMZN!A33 | 값: 조달 전 기말 현금 ($B)
+- AMZN!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 143.3332
+- AMZN!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 163.410132
+- AMZN!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 183.49629584
+- AMZN!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 198.558500064
+- AMZN!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 224.80593850816
+- AMZN!A34 | 값: 최소 유지 현금
+- AMZN!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!C34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!D34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!E34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!F34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!G34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- AMZN!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- AMZN!A36 | 값: 기말 현금 ($B)
+- AMZN!C36 | 수식: `=C33+C35` | 계산값: 143.3332
+- AMZN!D36 | 수식: `=D33+D35` | 계산값: 163.410132
+- AMZN!E36 | 수식: `=E33+E35` | 계산값: 183.49629584
+- AMZN!F36 | 수식: `=F33+F35` | 계산값: 198.558500064
+- AMZN!G36 | 수식: `=G33+G35` | 계산값: 224.80593850816
+- AMZN!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- AMZN!A38 | 값: FCF (OCF − 현금 capex)
+- AMZN!B38 | 수식: `=B10-B23` | 계산값: 38.53
+- AMZN!C38 | 수식: `=C10-C23` | 계산값: -16.2668
+- AMZN!D38 | 수식: `=D10-D23` | 계산값: -21.043068
+- AMZN!E38 | 수식: `=E10-E23` | 계산값: -23.56823616
+- AMZN!F38 | 수식: `=F10-F23` | 계산값: -20.4845477759999
+- AMZN!G38 | 수식: `=G10-G23` | 계산값: -10.57665115584
+- AMZN!A39 | 값: 총부채 (온밸런스, $B)
+- AMZN!B39 | 값: 129 (입력 셀 — 노란 채우기)
+- AMZN!C39 | 수식: `=B39+C28+C35-8` | 계산값: 186
+- AMZN!D39 | 수식: `=C39+D28+D35-10` | 계산값: 216
+- AMZN!E39 | 수식: `=D39+E28+E35-10` | 계산값: 246
+- AMZN!F39 | 수식: `=E39+F28+F35-10` | 계산값: 266
+- AMZN!G39 | 수식: `=F39+G28+G35-10` | 계산값: 286
+- AMZN!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 8,10,10,10,10)
+- AMZN!A40 | 값: 누적 리스/JV 잔액 ($B)
+- AMZN!B40 | 값: 0
+- AMZN!C40 | 수식: `=B40+C29` | 계산값: 17.6
+- AMZN!D40 | 수식: `=C40+D29` | 계산값: 38.72
+- AMZN!E40 | 수식: `=D40+E29` | 계산값: 62.3744
+- AMZN!F40 | 수식: `=E40+F29` | 계산값: 87.921152
+- AMZN!G40 | 수식: `=F40+G29` | 계산값: 114.7452416
+- AMZN!A41 | 값: 총부채 / OCF
+- AMZN!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.817801445416508
+- AMZN!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.999284383441536
+- AMZN!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.973688186419744
+- AMZN!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.990109514960553
+- AMZN!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.973278384994483
+- AMZN!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.960052487095337
+- AMZN!A42 | 값: (총부채+리스/JV) / OCF
+- AMZN!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.817801445416508
+- AMZN!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 1.09384032510052
+- AMZN!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 1.14823080946684
+- AMZN!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.24115620979777
+- AMZN!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.29497671892461
+- AMZN!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.34523239821574
+
+
+### 시트 `META` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- META!A1 | 값: Meta (META) — Capex & 자금조달 ($B)
+- META!A2 | 값: 12월 결산. Capex에 금융리스 원금상환 포함. 클라우드 매출 없이 광고 OCF로 조달 → 부채·JV(Hyperion/Blue Owl, El Paso/BlackRock 등) 의존도 최고. 자사주 매입 중단.
+- META!A3 | 값: 출처: Meta Q2 2026 earnings call (2026-07-29): 2026 capex $130~145B(금융리스 원금 포함), Q2 capex $31.1B vs OCF $31.9B(FCF $0.8B), 현금 $90.3B·부채 $83.7B, 상반기 순부채발행 $24.9B, El Paso $14B(BlackRock JV), Hyperion >$50B
+- META!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- META!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- META!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- META!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- META!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- META!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- META!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- META!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- META!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- META!A7 | 값: 매출 성장률
+- META!C7 | 값: 0.25 (입력 셀 — 노란 채우기)
+- META!D7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- META!E7 | 값: 0.13 (입력 셀 — 노란 채우기)
+- META!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- META!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- META!A8 | 값: 매출 ($B)
+- META!B8 | 값: 201 (입력 셀 — 노란 채우기)
+- META!C8 | 수식: `=B8*(1+C7)` | 계산값: 251.25
+- META!D8 | 수식: `=C8*(1+D7)` | 계산값: 291.45
+- META!E8 | 수식: `=D8*(1+E7)` | 계산값: 329.3385
+- META!F8 | 수식: `=E8*(1+F7)` | 계산값: 365.565735
+- META!G8 | 수식: `=F8*(1+G7)` | 계산값: 402.1223085
+- META!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- META!A9 | 값: OCF 마진
+- META!B9 | 값: 0.52 (입력 셀 — 노란 채우기)
+- META!C9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!D9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!E9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!F9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!G9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!A10 | 값: 영업현금흐름 OCF ($B)
+- META!B10 | 수식: `=B8*B9` | 계산값: 104.52
+- META!C10 | 수식: `=C8*C9` | 계산값: 125.625
+- META!D10 | 수식: `=D8*D9` | 계산값: 145.725
+- META!E10 | 수식: `=E8*E9` | 계산값: 164.66925
+- META!F10 | 수식: `=F8*F9` | 계산값: 182.7828675
+- META!G10 | 수식: `=G8*G9` | 계산값: 201.06115425
+- META!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- META!A13 | 값: Capex 성장률 (2027E~)
+- META!D13 | 값: 0.2 (입력 셀 — 노란 채우기)
+- META!E13 | 값: 0.12 (입력 셀 — 노란 채우기)
+- META!F13 | 값: 0.08 (입력 셀 — 노란 채우기)
+- META!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- META!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- META!A14 | 값: 총 Capex ($B)
+- META!B14 | 값: 72 (입력 셀 — 노란 채우기)
+- META!C14 | 값: 137.5 (입력 셀 — 노란 채우기)
+- META!D14 | 수식: `=C14*(1+D13)` | 계산값: 165
+- META!E14 | 수식: `=D14*(1+E13)` | 계산값: 184.8
+- META!F14 | 수식: `=E14*(1+F13)` | 계산값: 199.584
+- META!G14 | 수식: `=F14*(1+G13)` | 계산값: 209.5632
+- META!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- META!A15 | 값:   Capex YoY
+- META!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.909722222222222
+- META!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.2
+- META!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.12
+- META!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.0800000000000001
+- META!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- META!A16 | 값:   Capex / 매출
+- META!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.358208955223881
+- META!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.54726368159204
+- META!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.566134843026248
+- META!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.561124800167609
+- META!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.545959265027944
+- META!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.521142934799401
+- META!A17 | 값:   Capex / OCF
+- META!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.68886337543054
+- META!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.09452736318408
+- META!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.1322696860525
+- META!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.12224960033522
+- META!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.09191853005589
+- META!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.0422858695988
+- META!A18 | 값: 서버·칩(단기자산) 비중
+- META!B18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!C18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!D18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!E18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!F18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!G18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- META!A19 | 값:   서버·칩 capex ($B)
+- META!B19 | 수식: `=B14*B18` | 계산값: 39.6
+- META!C19 | 수식: `=C14*C18` | 계산값: 75.625
+- META!D19 | 수식: `=D14*D18` | 계산값: 90.75
+- META!E19 | 수식: `=E14*E18` | 계산값: 101.64
+- META!F19 | 수식: `=F14*F18` | 계산값: 109.7712
+- META!G19 | 수식: `=G14*G18` | 계산값: 115.25976
+- META!A20 | 값:   DC·전력·네트워크 capex ($B)
+- META!B20 | 수식: `=B14-B19` | 계산값: 32.4
+- META!C20 | 수식: `=C14-C19` | 계산값: 61.875
+- META!D20 | 수식: `=D14-D19` | 계산값: 74.25
+- META!E20 | 수식: `=E14-E19` | 계산값: 83.16
+- META!F20 | 수식: `=F14-F19` | 계산값: 89.8128
+- META!G20 | 수식: `=G14-G19` | 계산값: 94.30344
+- META!A21 | 값: DC capex 중 리스/JV 조달 비율
+- META!B21 | 값: 0.3 (입력 셀 — 노란 채우기)
+- META!C21 | 값: 0.4 (입력 셀 — 노란 채우기)
+- META!D21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!E21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!F21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!G21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- META!A22 | 값:   리스/JV 조달액 ($B)
+- META!B22 | 수식: `=B20*B21` | 계산값: 9.72
+- META!C22 | 수식: `=C20*C21` | 계산값: 24.75
+- META!D22 | 수식: `=D20*D21` | 계산값: 33.4125
+- META!E22 | 수식: `=E20*E21` | 계산값: 37.422
+- META!F22 | 수식: `=F20*F21` | 계산값: 40.41576
+- META!G22 | 수식: `=G20*G21` | 계산값: 42.436548
+- META!A23 | 값:   현금 지출 capex ($B)
+- META!B23 | 수식: `=B14-B22` | 계산값: 62.28
+- META!C23 | 수식: `=C14-C22` | 계산값: 112.75
+- META!D23 | 수식: `=D14-D22` | 계산값: 131.5875
+- META!E23 | 수식: `=E14-E22` | 계산값: 147.378
+- META!F23 | 수식: `=F14-F22` | 계산값: 159.16824
+- META!G23 | 수식: `=G14-G22` | 계산값: 167.126652
+- META!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- META!A26 | 값: 기초 현금 ($B)
+- META!B26 | 값: 90 (입력 셀 — 노란 채우기)
+- META!C26 | 수식: `=B26` | 계산값: 90
+- META!D26 | 수식: `=C36` | 계산값: 159.125
+- META!E26 | 수식: `=D36` | 계산값: 230.675
+- META!F26 | 수식: `=E36` | 계산값: 304.38825
+- META!G26 | 수식: `=F36` | 계산값: 382.4186375
+- META!H26 | 값: 2025년말 현금·유가증권 (근사)
+- META!A27 | 값: (+) OCF
+- META!C27 | 수식: `=C10` | 계산값: 125.625
+- META!D27 | 수식: `=D10` | 계산값: 145.725
+- META!E27 | 수식: `=E10` | 계산값: 164.66925
+- META!F27 | 수식: `=F10` | 계산값: 182.7828675
+- META!G27 | 수식: `=G10` | 계산값: 201.06115425
+- META!A28 | 값: (+) 신규 부채 발행
+- META!C28 | 값: 45 (입력 셀 — 노란 채우기)
+- META!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- META!E28 | 값: 35 (입력 셀 — 노란 채우기)
+- META!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- META!G28 | 값: 25 (입력 셀 — 노란 채우기)
+- META!H28 | 값: 회사채·은행차입 가정 (입력)
+- META!A29 | 값: (+) 리스/JV 조달
+- META!C29 | 수식: `=C22` | 계산값: 24.75
+- META!D29 | 수식: `=D22` | 계산값: 33.4125
+- META!E29 | 수식: `=E22` | 계산값: 37.422
+- META!F29 | 수식: `=F22` | 계산값: 40.41576
+- META!G29 | 수식: `=G22` | 계산값: 42.436548
+- META!A30 | 값: (−) 현금 capex
+- META!C30 | 수식: `=C23` | 계산값: 112.75
+- META!D30 | 수식: `=D23` | 계산값: 131.5875
+- META!E30 | 수식: `=E23` | 계산값: 147.378
+- META!F30 | 수식: `=F23` | 계산값: 159.16824
+- META!G30 | 수식: `=G23` | 계산값: 167.126652
+- META!A31 | 값: (−) 주주환원 (배당+자사주)
+- META!C31 | 값: 5.5 (입력 셀 — 노란 채우기)
+- META!D31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!E31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!F31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!G31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!A32 | 값: (−) 부채 상환 · 기타 투자
+- META!C32 | 값: 8 (입력 셀 — 노란 채우기)
+- META!D32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!E32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!F32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!G32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- META!A33 | 값: 조달 전 기말 현금 ($B)
+- META!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 159.125
+- META!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 230.675
+- META!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 304.38825
+- META!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 382.4186375
+- META!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 467.78968775
+- META!A34 | 값: 최소 유지 현금
+- META!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- META!C34 | 수식: `=$B$34` | 계산값: 40
+- META!D34 | 수식: `=$B$34` | 계산값: 40
+- META!E34 | 수식: `=$B$34` | 계산값: 40
+- META!F34 | 수식: `=$B$34` | 계산값: 40
+- META!G34 | 수식: `=$B$34` | 계산값: 40
+- META!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- META!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- META!A36 | 값: 기말 현금 ($B)
+- META!C36 | 수식: `=C33+C35` | 계산값: 159.125
+- META!D36 | 수식: `=D33+D35` | 계산값: 230.675
+- META!E36 | 수식: `=E33+E35` | 계산값: 304.38825
+- META!F36 | 수식: `=F33+F35` | 계산값: 382.4186375
+- META!G36 | 수식: `=G33+G35` | 계산값: 467.78968775
+- META!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- META!A38 | 값: FCF (OCF − 현금 capex)
+- META!B38 | 수식: `=B10-B23` | 계산값: 42.24
+- META!C38 | 수식: `=C10-C23` | 계산값: 12.875
+- META!D38 | 수식: `=D10-D23` | 계산값: 14.1375
+- META!E38 | 수식: `=E10-E23` | 계산값: 17.29125
+- META!F38 | 수식: `=F10-F23` | 계산값: 23.6146275
+- META!G38 | 수식: `=G10-G23` | 계산값: 33.93450225
+- META!A39 | 값: 총부채 (온밸런스, $B)
+- META!B39 | 값: 84 (입력 셀 — 노란 채우기)
+- META!C39 | 수식: `=B39+C28+C35-3` | 계산값: 126
+- META!D39 | 수식: `=C39+D28+D35-5` | 계산값: 161
+- META!E39 | 수식: `=D39+E28+E35-5` | 계산값: 191
+- META!F39 | 수식: `=E39+F28+F35-5` | 계산값: 216
+- META!G39 | 수식: `=F39+G28+G35-5` | 계산값: 236
+- META!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 3,5,5,5,5)
+- META!A40 | 값: 누적 리스/JV 잔액 ($B)
+- META!B40 | 값: 0
+- META!C40 | 수식: `=B40+C29` | 계산값: 24.75
+- META!D40 | 수식: `=C40+D29` | 계산값: 58.1625
+- META!E40 | 수식: `=D40+E29` | 계산값: 95.5845
+- META!F40 | 수식: `=E40+F29` | 계산값: 136.00026
+- META!G40 | 수식: `=F40+G29` | 계산값: 178.436808
+- META!A41 | 값: 총부채 / OCF
+- META!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.803673938002296
+- META!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 1.00298507462687
+- META!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 1.10482072396638
+- META!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 1.1599008315153
+- META!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 1.181730010883
+- META!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 1.17377223303193
+- META!A42 | 값: (총부채+리스/JV) / OCF
+- META!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.803673938002296
+- META!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 1.2
+- META!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 1.50394578829988
+- META!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.74036439711725
+- META!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.92578366241026
+- META!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 2.06124753210502
+
+
+## 파일 B — AI_DC_Capex_Big4_HBM.xlsx
+
+경로: `C:\Users\y\.claude\uploads\9417c49f-7730-4847-97af-ae9effa47479\1900983c-AI_DC_Capex_Big4_HBM.xlsx`
+
+시트 목록: ['README', 'Consolidated', 'Sheet', 'MSFT', 'GOOGL', 'AMZN', 'META', 'HBM_Inputs', 'HBM_Demand']
+
+
+### 시트 `README` (31행 × 1열, 범위 A1:A31)
+
+- 연도 헤더: 없음(이 시트에서 `YYYY A/E` 패턴 미검출)
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 26
+
+
+- README!A1 | 값: AI DC Capex 모델 — 빅4 (MSFT · GOOGL · AMZN · META)
+- README!A2 | 값: 작성 기준일 2026-09-10. 2026년 7월 말 2분기 실적 발표 기준 가이던스 반영.
+- README!A4 | 값: 시트 구성
+- README!A5 | 값:   Consolidated: 4사 합산, 회사별 비중·조달 갭
+- README!A6 | 값:   MSFT / GOOGL / AMZN / META: 회사별 매출→OCF→Capex→조달 모델 (동일 구조)
+- README!A8 | 값: 범례
+- README!A9 | 값:   파란 글씨 + 노란 셀 = 입력값 (수정 가능)
+- README!A10 | 값:   검정 = 계산식, 초록 = 타 시트 링크, 주황 셀 = 조달 갭 출력
+- README!A12 | 값: 주의사항
+- README!A13 | 값:   1. Capex 정의가 회사마다 다름: MSFT=현금PP&E+금융리스, META=현금PP&E+금융리스 원금상환, GOOGL/AMZN=현금PP&E만. 합산 시 정의 차이 존재.
+- README!A14 | 값:   2. MSFT는 6월 결산 → CY 환산은 근사치. 2026E $175B는 리스 재분류 후 금액(경제적 투자 ~$190B).
+- README!A15 | 값:   3. 2025A 매출·OCF·현금·부채는 근사치이므로 10-K/10-Q로 확인 후 교체 권장.
+- README!A16 | 값:   4. 2027E 이후 성장률, OCF 마진, 부채 발행, 리스/JV 비율, 주주환원은 전부 가정값.
+- README!A17 | 값:   5. AMZN capex는 리테일·물류 포함 총액. AI/AWS만 보려면 서버·칩 비중 등으로 분해 필요.
+- README!A18 | 값:   6. 검색된 2차 소스 간 수치가 상충하는 항목(예: MSFT FY27 가이던스)은 회사 공식 콜 트랜스크립트를 우선 적용.
+- README!A20 | 값: 주요 출처
+- README!A21 | 값:   Microsoft FY26 Q4 earnings call, 2026-07-29 (microsoft.com/investor)
+- README!A22 | 값:   Alphabet Q2 2026 earnings call, 2026-07-22 (abc.xyz/investor)
+- README!A23 | 값:   Meta Q2 2026 earnings call transcript, 2026-07-29 (investor.atmeta.com)
+- README!A24 | 값:   Amazon Q2 2026 earnings call, 2026-07-30 (ir.aboutamazon.com)
+- README!A25 | 값:   2025 합산 capex ~$410B, 2026 ~$725B+ (CNBC/업계 집계) — 교차 검증용
+- README!A27 | 값: HBM 모듈 (추가)
+- README!A28 | 값:   HBM_Inputs: 칩 스펙·ASP·HBM 세대, $/GB, 공급사 점유율, 회사별 가속기 비중·칩 믹스
+- README!A29 | 값:   HBM_Demand: 회사별 서버capex→가속기 대수→EB→$B, 빅4 합산, 글로벌 환산, 공급사 매출
+- README!A30 | 값:   체인: 회사시트 서버·칩 capex(19행) × 가속기 비중 × 칩 믹스 ÷ ASP = 대수 → × GB/칩 = EB → × $/GB(세대별) = 금액 → ÷ 빅4 비중 = 글로벌 → × 점유율 = 공급사 매출
+- README!A31 | 값:   출처: Counterpoint 2Q26 점유율(SK 50/삼성 33/마이크론 18), TrendForce 2026-06(Rubin Ultra 384GB, ASIC 216/288GB, 2027 계약가 급등), Silicon Analysts 2026-08 스택 가격
+
+
+### 시트 `Consolidated` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [4], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B4=2025A, C4=2026E, D4=2027E, E4=2028E, F4=2029E, G4=2030E
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 245
+
+
+- Consolidated!A1 | 값: 빅4 합산 — Capex & 자금조달 ($B)
+- Consolidated!A2 | 값: MSFT·GOOGL·AMZN·META 시트 합산. 달력연도 기준. MSFT는 FY→CY 환산 근사.
+- Consolidated!A4 | 값: 항목 (헤더 행 — 남색 채우기)
+- Consolidated!B4 | 값: 2025A (헤더 행 — 남색 채우기)
+- Consolidated!C4 | 값: 2026E (헤더 행 — 남색 채우기)
+- Consolidated!D4 | 값: 2027E (헤더 행 — 남색 채우기)
+- Consolidated!E4 | 값: 2028E (헤더 행 — 남색 채우기)
+- Consolidated!F4 | 값: 2029E (헤더 행 — 남색 채우기)
+- Consolidated!G4 | 값: 2030E (헤더 행 — 남색 채우기)
+- Consolidated!H4 | 값: 5년 합계(26E~30E) (헤더 행 — 남색 채우기)
+- Consolidated!A5 | 값: 합산 Capex (섹션 구분 행 — 회색 채우기)
+- Consolidated!A6 | 값: 총 Capex
+- Consolidated!B6 | 수식: `=MSFT!B14+GOOGL!B14+AMZN!B14+META!B14` | 계산값: 412
+- Consolidated!C6 | 수식: `=MSFT!C14+GOOGL!C14+AMZN!C14+META!C14` | 계산값: 732.5
+- Consolidated!D6 | 수식: `=MSFT!D14+GOOGL!D14+AMZN!D14+META!D14` | 계산값: 907.75
+- Consolidated!E6 | 수식: `=MSFT!E14+GOOGL!E14+AMZN!E14+META!E14` | 계산값: 1031.0425
+- Consolidated!F6 | 수식: `=MSFT!F14+GOOGL!F14+AMZN!F14+META!F14` | 계산값: 1124.53715
+- Consolidated!G6 | 수식: `=MSFT!G14+GOOGL!G14+AMZN!G14+META!G14` | 계산값: 1180.7640075
+- Consolidated!H6 | 수식: `=SUM(C6:G6)` | 계산값: 4976.5936575
+- Consolidated!A7 | 값:   서버·칩
+- Consolidated!B7 | 수식: `=MSFT!B19+GOOGL!B19+AMZN!B19+META!B19` | 계산값: 237.05
+- Consolidated!C7 | 수식: `=MSFT!C19+GOOGL!C19+AMZN!C19+META!C19` | 계산값: 444.875
+- Consolidated!D7 | 수식: `=MSFT!D19+GOOGL!D19+AMZN!D19+META!D19` | 계산값: 551.7125
+- Consolidated!E7 | 수식: `=MSFT!E19+GOOGL!E19+AMZN!E19+META!E19` | 계산값: 621.963625
+- Consolidated!F7 | 수식: `=MSFT!F19+GOOGL!F19+AMZN!F19+META!F19` | 계산값: 678.5790275
+- Consolidated!G7 | 수식: `=MSFT!G19+GOOGL!G19+AMZN!G19+META!G19` | 계산값: 712.507978875
+- Consolidated!H7 | 수식: `=SUM(C7:G7)` | 계산값: 3009.638131375
+- Consolidated!A8 | 값:   DC·전력·네트워크
+- Consolidated!B8 | 수식: `=MSFT!B20+GOOGL!B20+AMZN!B20+META!B20` | 계산값: 174.95
+- Consolidated!C8 | 수식: `=MSFT!C20+GOOGL!C20+AMZN!C20+META!C20` | 계산값: 287.625
+- Consolidated!D8 | 수식: `=MSFT!D20+GOOGL!D20+AMZN!D20+META!D20` | 계산값: 356.0375
+- Consolidated!E8 | 수식: `=MSFT!E20+GOOGL!E20+AMZN!E20+META!E20` | 계산값: 409.078875
+- Consolidated!F8 | 수식: `=MSFT!F20+GOOGL!F20+AMZN!F20+META!F20` | 계산값: 445.9581225
+- Consolidated!G8 | 수식: `=MSFT!G20+GOOGL!G20+AMZN!G20+META!G20` | 계산값: 468.256028625
+- Consolidated!H8 | 수식: `=SUM(C8:G8)` | 계산값: 1966.955526125
+- Consolidated!A9 | 값:   Capex YoY
+- Consolidated!C9 | 수식: `=IF(B6=0,0,C6/B6-1)` | 계산값: 0.777912621359223
+- Consolidated!D9 | 수식: `=IF(C6=0,0,D6/C6-1)` | 계산값: 0.239249146757679
+- Consolidated!E9 | 수식: `=IF(D6=0,0,E6/D6-1)` | 계산값: 0.135822087579179
+- Consolidated!F9 | 수식: `=IF(E6=0,0,F6/E6-1)` | 계산값: 0.0906797246476261
+- Consolidated!G9 | 수식: `=IF(F6=0,0,G6/F6-1)` | 계산값: 0.05
+- Consolidated!A10 | 값: 매출 합계
+- Consolidated!B10 | 수식: `=MSFT!B8+GOOGL!B8+AMZN!B8+META!B8` | 계산값: 1625
+- Consolidated!C10 | 수식: `=MSFT!C8+GOOGL!C8+AMZN!C8+META!C8` | 계산값: 1941.55
+- Consolidated!D10 | 수식: `=MSFT!D8+GOOGL!D8+AMZN!D8+META!D8` | 계산값: 2228.2008
+- Consolidated!E10 | 수식: `=MSFT!E8+GOOGL!E8+AMZN!E8+META!E8` | 계산값: 2504.1885
+- Consolidated!F10 | 수식: `=MSFT!F8+GOOGL!F8+AMZN!F8+META!F8` | 계산값: 2768.84674092
+- Consolidated!G10 | 수식: `=MSFT!G8+GOOGL!G8+AMZN!G8+META!G8` | 계산값: 3033.848671524
+- Consolidated!H10 | 수식: `=SUM(C10:G10)` | 계산값: 12476.634712444
+- Consolidated!A11 | 값: OCF 합계
+- Consolidated!B11 | 수식: `=MSFT!B10+GOOGL!B10+AMZN!B10+META!B10` | 계산값: 552.27
+- Consolidated!C11 | 수식: `=MSFT!C10+GOOGL!C10+AMZN!C10+META!C10` | 계산값: 647.5266
+- Consolidated!D11 | 수식: `=MSFT!D10+GOOGL!D10+AMZN!D10+META!D10` | 계산값: 753.869076
+- Consolidated!E11 | 수식: `=MSFT!E10+GOOGL!E10+AMZN!E10+META!E10` | 계산값: 847.83869256
+- Consolidated!F11 | 수식: `=MSFT!F10+GOOGL!F10+AMZN!F10+META!F10` | 계산값: 938.6163751032
+- Consolidated!G11 | 수식: `=MSFT!G10+GOOGL!G10+AMZN!G10+META!G10` | 계산값: 1029.74498161128
+- Consolidated!H11 | 수식: `=SUM(C11:G11)` | 계산값: 4217.59572527448
+- Consolidated!A12 | 값:   Capex / 매출
+- Consolidated!B12 | 수식: `=IF(B10=0,0,B6/B10)` | 계산값: 0.253538461538462
+- Consolidated!C12 | 수식: `=IF(C10=0,0,C6/C10)` | 계산값: 0.377275887821586
+- Consolidated!D12 | 수식: `=IF(D10=0,0,D6/D10)` | 계산값: 0.407391470284007
+- Consolidated!E12 | 수식: `=IF(E10=0,0,E6/E10)` | 계산값: 0.411727192262084
+- Consolidated!F12 | 수식: `=IF(F10=0,0,F6/F10)` | 계산값: 0.406139181840867
+- Consolidated!G12 | 수식: `=IF(G10=0,0,G6/G10)` | 계산값: 0.389196738315515
+- Consolidated!H12 | 수식: `=IF(H10=0,0,H6/H10)` | 계산값: 0.398873075328271
+- Consolidated!A13 | 값:   Capex / OCF
+- Consolidated!B13 | 수식: `=IF(B11=0,0,B6/B11)` | 계산값: 0.746011914462129
+- Consolidated!C13 | 수식: `=IF(C11=0,0,C6/C11)` | 계산값: 1.13122765921894
+- Consolidated!D13 | 수식: `=IF(D11=0,0,D6/D11)` | 계산값: 1.20412154961507
+- Consolidated!E13 | 수식: `=IF(E11=0,0,E6/E11)` | 계산값: 1.21608332934986
+- Consolidated!F13 | 수식: `=IF(F11=0,0,F6/F11)` | 계산값: 1.19807961998996
+- Consolidated!G13 | 수식: `=IF(G11=0,0,G6/G11)` | 계산값: 1.14665672432063
+- Consolidated!H13 | 수식: `=IF(H11=0,0,H6/H11)` | 계산값: 1.17995985904413
+- Consolidated!A15 | 값: 합산 자금조달 (섹션 구분 행 — 회색 채우기)
+- Consolidated!A16 | 값: 현금 capex
+- Consolidated!B16 | 수식: `=MSFT!B23+GOOGL!B23+AMZN!B23+META!B23` | 계산값: 375.05
+- Consolidated!C16 | 수식: `=MSFT!C23+GOOGL!C23+AMZN!C23+META!C23` | 계산값: 660.825
+- Consolidated!D16 | 수식: `=MSFT!D23+GOOGL!D23+AMZN!D23+META!D23` | 계산값: 807.151875
+- Consolidated!E16 | 수식: `=MSFT!E23+GOOGL!E23+AMZN!E23+META!E23` | 계산값: 915.22969375
+- Consolidated!F16 | 수식: `=MSFT!F23+GOOGL!F23+AMZN!F23+META!F23` | 계산값: 998.364591125
+- Consolidated!G16 | 수식: `=MSFT!G23+GOOGL!G23+AMZN!G23+META!G23` | 계산값: 1048.28282068125
+- Consolidated!H16 | 수식: `=SUM(C16:G16)` | 계산값: 4429.85398055625
+- Consolidated!A17 | 값: 리스/JV 조달
+- Consolidated!B17 | 수식: `=MSFT!B22+GOOGL!B22+AMZN!B22+META!B22` | 계산값: 36.95
+- Consolidated!C17 | 수식: `=MSFT!C22+GOOGL!C22+AMZN!C22+META!C22` | 계산값: 71.675
+- Consolidated!D17 | 수식: `=MSFT!D22+GOOGL!D22+AMZN!D22+META!D22` | 계산값: 100.598125
+- Consolidated!E17 | 수식: `=MSFT!E22+GOOGL!E22+AMZN!E22+META!E22` | 계산값: 115.81280625
+- Consolidated!F17 | 수식: `=MSFT!F22+GOOGL!F22+AMZN!F22+META!F22` | 계산값: 126.172558875
+- Consolidated!G17 | 수식: `=MSFT!G22+GOOGL!G22+AMZN!G22+META!G22` | 계산값: 132.48118681875
+- Consolidated!H17 | 수식: `=SUM(C17:G17)` | 계산값: 546.73967694375
+- Consolidated!A18 | 값: 신규 부채 발행
+- Consolidated!B18 | 수식: `=MSFT!B28+GOOGL!B28+AMZN!B28+META!B28` | 계산값: 0
+- Consolidated!C18 | 수식: `=MSFT!C28+GOOGL!C28+AMZN!C28+META!C28` | 계산값: 150
+- Consolidated!D18 | 수식: `=MSFT!D28+GOOGL!D28+AMZN!D28+META!D28` | 계산값: 140
+- Consolidated!E18 | 수식: `=MSFT!E28+GOOGL!E28+AMZN!E28+META!E28` | 계산값: 135
+- Consolidated!F18 | 수식: `=MSFT!F28+GOOGL!F28+AMZN!F28+META!F28` | 계산값: 110
+- Consolidated!G18 | 수식: `=MSFT!G28+GOOGL!G28+AMZN!G28+META!G28` | 계산값: 105
+- Consolidated!H18 | 수식: `=SUM(C18:G18)` | 계산값: 640
+- Consolidated!A19 | 값: 주주환원
+- Consolidated!B19 | 수식: `=MSFT!B31+GOOGL!B31+AMZN!B31+META!B31` | 계산값: 0
+- Consolidated!C19 | 수식: `=MSFT!C31+GOOGL!C31+AMZN!C31+META!C31` | 계산값: 60.5
+- Consolidated!D19 | 수식: `=MSFT!D31+GOOGL!D31+AMZN!D31+META!D31` | 계산값: 63
+- Consolidated!E19 | 수식: `=MSFT!E31+GOOGL!E31+AMZN!E31+META!E31` | 계산값: 69
+- Consolidated!F19 | 수식: `=MSFT!F31+GOOGL!F31+AMZN!F31+META!F31` | 계산값: 76
+- Consolidated!G19 | 수식: `=MSFT!G31+GOOGL!G31+AMZN!G31+META!G31` | 계산값: 83
+- Consolidated!H19 | 수식: `=SUM(C19:G19)` | 계산값: 351.5
+- Consolidated!A20 | 값: FCF (OCF − 현금 capex)
+- Consolidated!B20 | 수식: `=MSFT!B38+GOOGL!B38+AMZN!B38+META!B38` | 계산값: 177.22
+- Consolidated!C20 | 수식: `=MSFT!C38+GOOGL!C38+AMZN!C38+META!C38` | 계산값: -13.2984
+- Consolidated!D20 | 수식: `=MSFT!D38+GOOGL!D38+AMZN!D38+META!D38` | 계산값: -53.282799
+- Consolidated!E20 | 수식: `=MSFT!E38+GOOGL!E38+AMZN!E38+META!E38` | 계산값: -67.39100119
+- Consolidated!F20 | 수식: `=MSFT!F38+GOOGL!F38+AMZN!F38+META!F38` | 계산값: -59.7482160217999
+- Consolidated!G20 | 수식: `=MSFT!G38+GOOGL!G38+AMZN!G38+META!G38` | 계산값: -18.5378390699699
+- Consolidated!H20 | 수식: `=SUM(C20:G20)` | 계산값: -212.25825528177
+- Consolidated!A21 | 값: 기말 현금 합계
+- Consolidated!B21 | 수식: `=MSFT!B36+GOOGL!B36+AMZN!B36+META!B36` | 계산값: 0
+- Consolidated!C21 | 수식: `=MSFT!C36+GOOGL!C36+AMZN!C36+META!C36` | 계산값: 613.8766
+- Consolidated!D21 | 수식: `=MSFT!D36+GOOGL!D36+AMZN!D36+META!D36` | 계산값: 679.051276
+- Consolidated!E21 | 수식: `=MSFT!E36+GOOGL!E36+AMZN!E36+META!E36` | 계산값: 763.12344056
+- Consolidated!F21 | 수식: `=MSFT!F36+GOOGL!F36+AMZN!F36+META!F36` | 계산값: 831.8303855832
+- Consolidated!G21 | 수식: `=MSFT!G36+GOOGL!G36+AMZN!G36+META!G36` | 계산값: 925.93846290648
+- Consolidated!H21 | 수식: `=G21` | 계산값: 925.93846290648
+- Consolidated!A22 | 값: 추가 조달 필요액
+- Consolidated!B22 | 수식: `=MSFT!B35+GOOGL!B35+AMZN!B35+META!B35` | 계산값: 0 (출력 강조 — 주황 채우기)
+- Consolidated!C22 | 수식: `=MSFT!C35+GOOGL!C35+AMZN!C35+META!C35` | 계산값: 0 (출력 강조 — 주황 채우기)
+- Consolidated!D22 | 수식: `=MSFT!D35+GOOGL!D35+AMZN!D35+META!D35` | 계산값: 0.859350000000063 (출력 강조 — 주황 채우기)
+- Consolidated!E22 | 수식: `=MSFT!E35+GOOGL!E35+AMZN!E35+META!E35` | 계산값: 29.6503595 (출력 강조 — 주황 채우기)
+- Consolidated!F22 | 수식: `=MSFT!F35+GOOGL!F35+AMZN!F35+META!F35` | 계산값: 28.28260217 (출력 강조 — 주황 채우기)
+- Consolidated!G22 | 수식: `=MSFT!G35+GOOGL!G35+AMZN!G35+META!G35` | 계산값: 18.1647295744999 (출력 강조 — 주황 채우기)
+- Consolidated!H22 | 수식: `=SUM(C22:G22)` | 계산값: 76.9570412444999 (출력 강조 — 주황 채우기)
+- Consolidated!A23 | 값: 총부채 (온밸런스)
+- Consolidated!B23 | 수식: `=MSFT!B39+GOOGL!B39+AMZN!B39+META!B39` | 계산값: 356
+- Consolidated!C23 | 수식: `=MSFT!C39+GOOGL!C39+AMZN!C39+META!C39` | 계산값: 485
+- Consolidated!D23 | 수식: `=MSFT!D39+GOOGL!D39+AMZN!D39+META!D39` | 계산값: 600.85935
+- Consolidated!E23 | 수식: `=MSFT!E39+GOOGL!E39+AMZN!E39+META!E39` | 계산값: 740.5097095
+- Consolidated!F23 | 수식: `=MSFT!F39+GOOGL!F39+AMZN!F39+META!F39` | 계산값: 853.79231167
+- Consolidated!G23 | 수식: `=MSFT!G39+GOOGL!G39+AMZN!G39+META!G39` | 계산값: 951.9570412445
+- Consolidated!H23 | 수식: `=G23` | 계산값: 951.9570412445
+- Consolidated!A24 | 값: 누적 리스/JV 잔액
+- Consolidated!B24 | 수식: `=MSFT!B40+GOOGL!B40+AMZN!B40+META!B40` | 계산값: 0
+- Consolidated!C24 | 수식: `=MSFT!C40+GOOGL!C40+AMZN!C40+META!C40` | 계산값: 71.675
+- Consolidated!D24 | 수식: `=MSFT!D40+GOOGL!D40+AMZN!D40+META!D40` | 계산값: 172.273125
+- Consolidated!E24 | 수식: `=MSFT!E40+GOOGL!E40+AMZN!E40+META!E40` | 계산값: 288.08593125
+- Consolidated!F24 | 수식: `=MSFT!F40+GOOGL!F40+AMZN!F40+META!F40` | 계산값: 414.258490125
+- Consolidated!G24 | 수식: `=MSFT!G40+GOOGL!G40+AMZN!G40+META!G40` | 계산값: 546.73967694375
+- Consolidated!H24 | 수식: `=G24` | 계산값: 546.73967694375
+- Consolidated!A26 | 값: 회사별 Capex ($B) (섹션 구분 행 — 회색 채우기)
+- Consolidated!A27 | 값: MSFT
+- Consolidated!B27 | 수식: `=MSFT!B14` | 계산값: 118
+- Consolidated!C27 | 수식: `=MSFT!C14` | 계산값: 175
+- Consolidated!D27 | 수식: `=MSFT!D14` | 계산값: 218.75
+- Consolidated!E27 | 수식: `=MSFT!E14` | 계산값: 251.5625
+- Consolidated!F27 | 수식: `=MSFT!F14` | 계산값: 276.71875
+- Consolidated!G27 | 수식: `=MSFT!G14` | 계산값: 290.5546875
+- Consolidated!H27 | 수식: `=SUM(C27:G27)` | 계산값: 1212.5859375
+- Consolidated!A28 | 값: GOOGL
+- Consolidated!B28 | 수식: `=GOOGL!B14` | 계산값: 91
+- Consolidated!C28 | 수식: `=GOOGL!C14` | 계산값: 200
+- Consolidated!D28 | 수식: `=GOOGL!D14` | 계산값: 260
+- Consolidated!E28 | 수식: `=GOOGL!E14` | 계산값: 299
+- Consolidated!F28 | 수식: `=GOOGL!F14` | 계산값: 328.9
+- Consolidated!G28 | 수식: `=GOOGL!G14` | 계산값: 345.345
+- Consolidated!H28 | 수식: `=SUM(C28:G28)` | 계산값: 1433.245
+- Consolidated!A29 | 값: AMZN
+- Consolidated!B29 | 수식: `=AMZN!B14` | 계산값: 131
+- Consolidated!C29 | 수식: `=AMZN!C14` | 계산값: 220
+- Consolidated!D29 | 수식: `=AMZN!D14` | 계산값: 264
+- Consolidated!E29 | 수식: `=AMZN!E14` | 계산값: 295.68
+- Consolidated!F29 | 수식: `=AMZN!F14` | 계산값: 319.3344
+- Consolidated!G29 | 수식: `=AMZN!G14` | 계산값: 335.30112
+- Consolidated!H29 | 수식: `=SUM(C29:G29)` | 계산값: 1434.31552
+- Consolidated!A30 | 값: META
+- Consolidated!B30 | 수식: `=META!B14` | 계산값: 72
+- Consolidated!C30 | 수식: `=META!C14` | 계산값: 137.5
+- Consolidated!D30 | 수식: `=META!D14` | 계산값: 165
+- Consolidated!E30 | 수식: `=META!E14` | 계산값: 184.8
+- Consolidated!F30 | 수식: `=META!F14` | 계산값: 199.584
+- Consolidated!G30 | 수식: `=META!G14` | 계산값: 209.5632
+- Consolidated!H30 | 수식: `=SUM(C30:G30)` | 계산값: 896.4472
+- Consolidated!A32 | 값: 회사별 Capex 비중 (섹션 구분 행 — 회색 채우기)
+- Consolidated!A33 | 값: MSFT
+- Consolidated!B33 | 수식: `=IF(B$6=0,0,B27/B$6)` | 계산값: 0.286407766990291
+- Consolidated!C33 | 수식: `=IF(C$6=0,0,C27/C$6)` | 계산값: 0.238907849829352
+- Consolidated!D33 | 수식: `=IF(D$6=0,0,D27/D$6)` | 계산값: 0.240980446158083
+- Consolidated!E33 | 수식: `=IF(E$6=0,0,E27/E$6)` | 계산값: 0.243988487380491
+- Consolidated!F33 | 수식: `=IF(F$6=0,0,F27/F$6)` | 계산값: 0.246073462312917
+- Consolidated!G33 | 수식: `=IF(G$6=0,0,G27/G$6)` | 계산값: 0.246073462312917
+- Consolidated!H33 | 수식: `=IF(H$6=0,0,H27/H$6)` | 계산값: 0.243657815154863
+- Consolidated!A34 | 값: GOOGL
+- Consolidated!B34 | 수식: `=IF(B$6=0,0,B28/B$6)` | 계산값: 0.220873786407767
+- Consolidated!C34 | 수식: `=IF(C$6=0,0,C28/C$6)` | 계산값: 0.273037542662116
+- Consolidated!D34 | 수식: `=IF(D$6=0,0,D28/D$6)` | 계산값: 0.286422473147893
+- Consolidated!E34 | 수식: `=IF(E$6=0,0,E28/E$6)` | 계산값: 0.289997745000812
+- Consolidated!F34 | 수식: `=IF(F$6=0,0,F28/F$6)` | 계산값: 0.292475886634781
+- Consolidated!G34 | 수식: `=IF(G$6=0,0,G28/G$6)` | 계산값: 0.292475886634781
+- Consolidated!H34 | 수식: `=IF(H$6=0,0,H28/H$6)` | 계산값: 0.287997192183859
+- Consolidated!A35 | 값: AMZN
+- Consolidated!B35 | 수식: `=IF(B$6=0,0,B29/B$6)` | 계산값: 0.317961165048544
+- Consolidated!C35 | 수식: `=IF(C$6=0,0,C29/C$6)` | 계산값: 0.300341296928328
+- Consolidated!D35 | 수식: `=IF(D$6=0,0,D29/D$6)` | 계산값: 0.290828972734784
+- Consolidated!E35 | 수식: `=IF(E$6=0,0,E29/E$6)` | 계산값: 0.286777703149967
+- Consolidated!F35 | 수식: `=IF(F$6=0,0,F29/F$6)` | 계산값: 0.283969631416801
+- Consolidated!G35 | 수식: `=IF(G$6=0,0,G29/G$6)` | 계산값: 0.283969631416801
+- Consolidated!H35 | 수식: `=IF(H$6=0,0,H29/H$6)` | 계산값: 0.288212303176171
+- Consolidated!A36 | 값: META
+- Consolidated!B36 | 수식: `=IF(B$6=0,0,B30/B$6)` | 계산값: 0.174757281553398
+- Consolidated!C36 | 수식: `=IF(C$6=0,0,C30/C$6)` | 계산값: 0.187713310580205
+- Consolidated!D36 | 수식: `=IF(D$6=0,0,D30/D$6)` | 계산값: 0.18176810795924
+- Consolidated!E36 | 수식: `=IF(E$6=0,0,E30/E$6)` | 계산값: 0.179236064468729
+- Consolidated!F36 | 수식: `=IF(F$6=0,0,F30/F$6)` | 계산값: 0.177481019635501
+- Consolidated!G36 | 수식: `=IF(G$6=0,0,G30/G$6)` | 계산값: 0.177481019635501
+- Consolidated!H36 | 수식: `=IF(H$6=0,0,H30/H$6)` | 계산값: 0.180132689485107
+- Consolidated!A38 | 값: 회사별 추가 조달 필요액 ($B) (섹션 구분 행 — 회색 채우기)
+- Consolidated!A39 | 값: MSFT
+- Consolidated!B39 | 수식: `=MSFT!B35` | 계산값: 0
+- Consolidated!C39 | 수식: `=MSFT!C35` | 계산값: 0
+- Consolidated!D39 | 수식: `=MSFT!D35` | 계산값: 0.859350000000063
+- Consolidated!E39 | 수식: `=MSFT!E35` | 계산값: 29.6503595
+- Consolidated!F39 | 수식: `=MSFT!F35` | 계산값: 28.28260217
+- Consolidated!G39 | 수식: `=MSFT!G35` | 계산값: 18.1647295744999
+- Consolidated!H39 | 수식: `=SUM(C39:G39)` | 계산값: 76.9570412444999
+- Consolidated!A40 | 값: GOOGL
+- Consolidated!B40 | 수식: `=GOOGL!B35` | 계산값: 0
+- Consolidated!C40 | 수식: `=GOOGL!C35` | 계산값: 0
+- Consolidated!D40 | 수식: `=GOOGL!D35` | 계산값: 0
+- Consolidated!E40 | 수식: `=GOOGL!E35` | 계산값: 0
+- Consolidated!F40 | 수식: `=GOOGL!F35` | 계산값: 0
+- Consolidated!G40 | 수식: `=GOOGL!G35` | 계산값: 0
+- Consolidated!H40 | 수식: `=SUM(C40:G40)` | 계산값: 0
+- Consolidated!A41 | 값: AMZN
+- Consolidated!B41 | 수식: `=AMZN!B35` | 계산값: 0
+- Consolidated!C41 | 수식: `=AMZN!C35` | 계산값: 0
+- Consolidated!D41 | 수식: `=AMZN!D35` | 계산값: 0
+- Consolidated!E41 | 수식: `=AMZN!E35` | 계산값: 0
+- Consolidated!F41 | 수식: `=AMZN!F35` | 계산값: 0
+- Consolidated!G41 | 수식: `=AMZN!G35` | 계산값: 0
+- Consolidated!H41 | 수식: `=SUM(C41:G41)` | 계산값: 0
+- Consolidated!A42 | 값: META
+- Consolidated!B42 | 수식: `=META!B35` | 계산값: 0
+- Consolidated!C42 | 수식: `=META!C35` | 계산값: 0
+- Consolidated!D42 | 수식: `=META!D35` | 계산값: 0
+- Consolidated!E42 | 수식: `=META!E35` | 계산값: 0
+- Consolidated!F42 | 수식: `=META!F35` | 계산값: 0
+- Consolidated!G42 | 수식: `=META!G35` | 계산값: 0
+- Consolidated!H42 | 수식: `=SUM(C42:G42)` | 계산값: 0
+
+
+### 시트 `Sheet` (1행 × 1열, 범위 A1:A1)
+
+- 연도 헤더: 없음(이 시트에서 `YYYY A/E` 패턴 미검출)
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 0
+
+
+
+
+### 시트 `MSFT` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- MSFT!A1 | 값: Microsoft (MSFT) — Capex & 자금조달 ($B)
+- MSFT!A2 | 값: 회계연도 6월 결산 → 달력연도(CY)로 환산. 2026E $175B는 FY27부터 DC 내용연수 15→25년 변경으로 금융리스→운용리스 재분류 반영(경제적 투자액은 ~$190B 유지). Capex에 금융리스 포함.
+- MSFT!A3 | 값: 출처: Microsoft FY26 Q4 earnings call (2026-07-29): Q4 capex $41B, 2/3 short-lived assets, CY2026 capex ≈$175B(리스 재분류 후), FY27 capex YoY 증가, FY26 주주환원 $43B+, FY26 매출 $331B
+- MSFT!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- MSFT!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- MSFT!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- MSFT!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- MSFT!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- MSFT!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- MSFT!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- MSFT!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- MSFT!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- MSFT!A7 | 값: 매출 성장률
+- MSFT!C7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- MSFT!D7 | 값: 0.14 (입력 셀 — 노란 채우기)
+- MSFT!E7 | 값: 0.12 (입력 셀 — 노란 채우기)
+- MSFT!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- MSFT!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- MSFT!A8 | 값: 매출 ($B)
+- MSFT!B8 | 값: 305 (입력 셀 — 노란 채우기)
+- MSFT!C8 | 수식: `=B8*(1+C7)` | 계산값: 353.8
+- MSFT!D8 | 수식: `=C8*(1+D7)` | 계산값: 403.332
+- MSFT!E8 | 수식: `=D8*(1+E7)` | 계산값: 451.73184
+- MSFT!F8 | 수식: `=E8*(1+F7)` | 계산값: 501.4223424
+- MSFT!G8 | 수식: `=F8*(1+G7)` | 계산값: 551.56457664
+- MSFT!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- MSFT!A9 | 값: OCF 마진
+- MSFT!B9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!C9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!D9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!E9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!F9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!G9 | 값: 0.45 (입력 셀 — 노란 채우기)
+- MSFT!A10 | 값: 영업현금흐름 OCF ($B)
+- MSFT!B10 | 수식: `=B8*B9` | 계산값: 137.25
+- MSFT!C10 | 수식: `=C8*C9` | 계산값: 159.21
+- MSFT!D10 | 수식: `=D8*D9` | 계산값: 181.4994
+- MSFT!E10 | 수식: `=E8*E9` | 계산값: 203.279328
+- MSFT!F10 | 수식: `=F8*F9` | 계산값: 225.64005408
+- MSFT!G10 | 수식: `=G8*G9` | 계산값: 248.204059488
+- MSFT!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- MSFT!A13 | 값: Capex 성장률 (2027E~)
+- MSFT!D13 | 값: 0.25 (입력 셀 — 노란 채우기)
+- MSFT!E13 | 값: 0.15 (입력 셀 — 노란 채우기)
+- MSFT!F13 | 값: 0.1 (입력 셀 — 노란 채우기)
+- MSFT!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- MSFT!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- MSFT!A14 | 값: 총 Capex ($B)
+- MSFT!B14 | 값: 118 (입력 셀 — 노란 채우기)
+- MSFT!C14 | 값: 175 (입력 셀 — 노란 채우기)
+- MSFT!D14 | 수식: `=C14*(1+D13)` | 계산값: 218.75
+- MSFT!E14 | 수식: `=D14*(1+E13)` | 계산값: 251.5625
+- MSFT!F14 | 수식: `=E14*(1+F13)` | 계산값: 276.71875
+- MSFT!G14 | 수식: `=F14*(1+G13)` | 계산값: 290.5546875
+- MSFT!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- MSFT!A15 | 값:   Capex YoY
+- MSFT!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.483050847457627
+- MSFT!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.25
+- MSFT!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.15
+- MSFT!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.1
+- MSFT!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- MSFT!A16 | 값:   Capex / 매출
+- MSFT!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.386885245901639
+- MSFT!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.494629734313171
+- MSFT!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.542357164817074
+- MSFT!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.556884588874674
+- MSFT!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.551867610596524
+- MSFT!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.526782719205773
+- MSFT!A17 | 값:   Capex / OCF
+- MSFT!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.859744990892532
+- MSFT!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.0991771873626
+- MSFT!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.20523814403794
+- MSFT!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.23752130861039
+- MSFT!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.22637246799227
+- MSFT!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.17062826490172
+- MSFT!A18 | 값: 서버·칩(단기자산) 비중
+- MSFT!B18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- MSFT!C18 | 값: 0.67 (입력 셀 — 노란 채우기)
+- MSFT!D18 | 값: 0.67 (입력 셀 — 노란 채우기)
+- MSFT!E18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!F18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!G18 | 값: 0.65 (입력 셀 — 노란 채우기)
+- MSFT!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- MSFT!A19 | 값:   서버·칩 capex ($B)
+- MSFT!B19 | 수식: `=B14*B18` | 계산값: 70.8
+- MSFT!C19 | 수식: `=C14*C18` | 계산값: 117.25
+- MSFT!D19 | 수식: `=D14*D18` | 계산값: 146.5625
+- MSFT!E19 | 수식: `=E14*E18` | 계산값: 163.515625
+- MSFT!F19 | 수식: `=F14*F18` | 계산값: 179.8671875
+- MSFT!G19 | 수식: `=G14*G18` | 계산값: 188.860546875
+- MSFT!A20 | 값:   DC·전력·네트워크 capex ($B)
+- MSFT!B20 | 수식: `=B14-B19` | 계산값: 47.2
+- MSFT!C20 | 수식: `=C14-C19` | 계산값: 57.75
+- MSFT!D20 | 수식: `=D14-D19` | 계산값: 72.1875
+- MSFT!E20 | 수식: `=E14-E19` | 계산값: 88.046875
+- MSFT!F20 | 수식: `=F14-F19` | 계산값: 96.8515625
+- MSFT!G20 | 수식: `=G14-G19` | 계산값: 101.694140625
+- MSFT!A21 | 값: DC capex 중 리스/JV 조달 비율
+- MSFT!B21 | 값: 0.25 (입력 셀 — 노란 채우기)
+- MSFT!C21 | 값: 0.3 (입력 셀 — 노란 채우기)
+- MSFT!D21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!E21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!F21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!G21 | 값: 0.35 (입력 셀 — 노란 채우기)
+- MSFT!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- MSFT!A22 | 값:   리스/JV 조달액 ($B)
+- MSFT!B22 | 수식: `=B20*B21` | 계산값: 11.8
+- MSFT!C22 | 수식: `=C20*C21` | 계산값: 17.325
+- MSFT!D22 | 수식: `=D20*D21` | 계산값: 25.265625
+- MSFT!E22 | 수식: `=E20*E21` | 계산값: 30.81640625
+- MSFT!F22 | 수식: `=F20*F21` | 계산값: 33.898046875
+- MSFT!G22 | 수식: `=G20*G21` | 계산값: 35.59294921875
+- MSFT!A23 | 값:   현금 지출 capex ($B)
+- MSFT!B23 | 수식: `=B14-B22` | 계산값: 106.2
+- MSFT!C23 | 수식: `=C14-C22` | 계산값: 157.675
+- MSFT!D23 | 수식: `=D14-D22` | 계산값: 193.484375
+- MSFT!E23 | 수식: `=E14-E22` | 계산값: 220.74609375
+- MSFT!F23 | 수식: `=F14-F22` | 계산값: 242.820703125
+- MSFT!G23 | 수식: `=G14-G22` | 계산값: 254.96173828125
+- MSFT!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- MSFT!A26 | 값: 기초 현금 ($B)
+- MSFT!B26 | 값: 95 (입력 셀 — 노란 채우기)
+- MSFT!C26 | 수식: `=B26` | 계산값: 95
+- MSFT!D26 | 수식: `=C36` | 계산값: 65.86
+- MSFT!E26 | 수식: `=D36` | 계산값: 40
+- MSFT!F26 | 수식: `=E36` | 계산값: 40
+- MSFT!G26 | 수식: `=F36` | 계산값: 40
+- MSFT!H26 | 값: 2025년말 현금·유가증권 (근사)
+- MSFT!A27 | 값: (+) OCF
+- MSFT!C27 | 수식: `=C10` | 계산값: 159.21
+- MSFT!D27 | 수식: `=D10` | 계산값: 181.4994
+- MSFT!E27 | 수식: `=E10` | 계산값: 203.279328
+- MSFT!F27 | 수식: `=F10` | 계산값: 225.64005408
+- MSFT!G27 | 수식: `=G10` | 계산값: 248.204059488
+- MSFT!A28 | 값: (+) 신규 부채 발행
+- MSFT!C28 | 값: 10 (입력 셀 — 노란 채우기)
+- MSFT!D28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!E28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!F28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!G28 | 값: 20 (입력 셀 — 노란 채우기)
+- MSFT!H28 | 값: 회사채·은행차입 가정 (입력)
+- MSFT!A29 | 값: (+) 리스/JV 조달
+- MSFT!C29 | 수식: `=C22` | 계산값: 17.325
+- MSFT!D29 | 수식: `=D22` | 계산값: 25.265625
+- MSFT!E29 | 수식: `=E22` | 계산값: 30.81640625
+- MSFT!F29 | 수식: `=F22` | 계산값: 33.898046875
+- MSFT!G29 | 수식: `=G22` | 계산값: 35.59294921875
+- MSFT!A30 | 값: (−) 현금 capex
+- MSFT!C30 | 수식: `=C23` | 계산값: 157.675
+- MSFT!D30 | 수식: `=D23` | 계산값: 193.484375
+- MSFT!E30 | 수식: `=E23` | 계산값: 220.74609375
+- MSFT!F30 | 수식: `=F23` | 계산값: 242.820703125
+- MSFT!G30 | 수식: `=G23` | 계산값: 254.96173828125
+- MSFT!A31 | 값: (−) 주주환원 (배당+자사주)
+- MSFT!C31 | 값: 43 (입력 셀 — 노란 채우기)
+- MSFT!D31 | 값: 45 (입력 셀 — 노란 채우기)
+- MSFT!E31 | 값: 48 (입력 셀 — 노란 채우기)
+- MSFT!F31 | 값: 50 (입력 셀 — 노란 채우기)
+- MSFT!G31 | 값: 52 (입력 셀 — 노란 채우기)
+- MSFT!A32 | 값: (−) 부채 상환 · 기타 투자
+- MSFT!C32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!D32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!E32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!F32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!G32 | 값: 15 (입력 셀 — 노란 채우기)
+- MSFT!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- MSFT!A33 | 값: 조달 전 기말 현금 ($B)
+- MSFT!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 65.86
+- MSFT!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 39.1406499999999
+- MSFT!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 10.3496405000001
+- MSFT!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 11.71739783
+- MSFT!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 21.8352704255001
+- MSFT!A34 | 값: 최소 유지 현금
+- MSFT!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- MSFT!C34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!D34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!E34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!F34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!G34 | 수식: `=$B$34` | 계산값: 40
+- MSFT!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- MSFT!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- MSFT!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0.859350000000063 (출력 강조 — 주황 채우기)
+- MSFT!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 29.6503595 (출력 강조 — 주황 채우기)
+- MSFT!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 28.28260217 (출력 강조 — 주황 채우기)
+- MSFT!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 18.1647295744999 (출력 강조 — 주황 채우기)
+- MSFT!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- MSFT!A36 | 값: 기말 현금 ($B)
+- MSFT!C36 | 수식: `=C33+C35` | 계산값: 65.86
+- MSFT!D36 | 수식: `=D33+D35` | 계산값: 40
+- MSFT!E36 | 수식: `=E33+E35` | 계산값: 40
+- MSFT!F36 | 수식: `=F33+F35` | 계산값: 40
+- MSFT!G36 | 수식: `=G33+G35` | 계산값: 40
+- MSFT!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- MSFT!A38 | 값: FCF (OCF − 현금 capex)
+- MSFT!B38 | 수식: `=B10-B23` | 계산값: 31.05
+- MSFT!C38 | 수식: `=C10-C23` | 계산값: 1.53499999999997
+- MSFT!D38 | 수식: `=D10-D23` | 계산값: -11.984975
+- MSFT!E38 | 수식: `=E10-E23` | 계산값: -17.46676575
+- MSFT!F38 | 수식: `=F10-F23` | 계산값: -17.1806490449999
+- MSFT!G38 | 수식: `=G10-G23` | 계산값: -6.75767879324994
+- MSFT!A39 | 값: 총부채 (온밸런스, $B)
+- MSFT!B39 | 값: 45 (입력 셀 — 노란 채우기)
+- MSFT!C39 | 수식: `=B39+C28+C35-5` | 계산값: 50
+- MSFT!D39 | 수식: `=C39+D28+D35-5` | 계산값: 65.8593500000001
+- MSFT!E39 | 수식: `=D39+E28+E35-5` | 계산값: 110.5097095
+- MSFT!F39 | 수식: `=E39+F28+F35-5` | 계산값: 153.79231167
+- MSFT!G39 | 수식: `=F39+G28+G35-5` | 계산값: 186.9570412445
+- MSFT!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 5,5,5,5,5)
+- MSFT!A40 | 값: 누적 리스/JV 잔액 ($B)
+- MSFT!B40 | 값: 0
+- MSFT!C40 | 수식: `=B40+C29` | 계산값: 17.325
+- MSFT!D40 | 수식: `=C40+D29` | 계산값: 42.590625
+- MSFT!E40 | 수식: `=D40+E29` | 계산값: 73.40703125
+- MSFT!F40 | 수식: `=E40+F29` | 계산값: 107.305078125
+- MSFT!G40 | 수식: `=F40+G29` | 계산값: 142.89802734375
+- MSFT!A41 | 값: 총부채 / OCF
+- MSFT!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.327868852459016
+- MSFT!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.314050624960744
+- MSFT!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.362862632052778
+- MSFT!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.543634763983478
+- MSFT!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.681582497828481
+- MSFT!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.753239256562356
+- MSFT!A42 | 값: (총부채+리스/JV) / OCF
+- MSFT!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.327868852459016
+- MSFT!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 0.422869166509641
+- MSFT!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 0.597522498696966
+- MSFT!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 0.904748862363417
+- MSFT!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.15714114171604
+- MSFT!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.3289672589106
+
+
+### 시트 `GOOGL` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- GOOGL!A1 | 값: Alphabet (GOOGL) — Capex & 자금조달 ($B)
+- GOOGL!A2 | 값: 12월 결산. Capex = 현금 PP&E 기준(리스 미포함). 2026 가이던스 $195~205B 중간값 사용. 2027은 'significantly increase' 코멘트만 있어 성장률 가정.
+- GOOGL!A3 | 값: 출처: Alphabet Q2 2026 earnings call (2026-07-22): 2026 capex $195~205B(종전 180~190), Q2 capex $44.9B 중 ~60% 서버/40% DC·네트워크, 2027 capex 큰 폭 증가 예정, 현금·유가증권 $242.5B, 장기부채 $98.2B, Q2 FCF -$5.9B
+- GOOGL!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- GOOGL!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- GOOGL!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- GOOGL!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- GOOGL!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- GOOGL!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- GOOGL!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- GOOGL!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- GOOGL!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- GOOGL!A7 | 값: 매출 성장률
+- GOOGL!C7 | 값: 0.22 (입력 셀 — 노란 채우기)
+- GOOGL!D7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- GOOGL!E7 | 값: 0.13 (입력 셀 — 노란 채우기)
+- GOOGL!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- GOOGL!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!A8 | 값: 매출 ($B)
+- GOOGL!B8 | 값: 402 (입력 셀 — 노란 채우기)
+- GOOGL!C8 | 수식: `=B8*(1+C7)` | 계산값: 490.44
+- GOOGL!D8 | 수식: `=C8*(1+D7)` | 계산값: 568.9104
+- GOOGL!E8 | 수식: `=D8*(1+E7)` | 계산값: 642.868752
+- GOOGL!F8 | 수식: `=E8*(1+F7)` | 계산값: 713.58431472
+- GOOGL!G8 | 수식: `=F8*(1+G7)` | 계산값: 784.942746192
+- GOOGL!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- GOOGL!A9 | 값: OCF 마진
+- GOOGL!B9 | 값: 0.38 (입력 셀 — 노란 채우기)
+- GOOGL!C9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!D9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!E9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!F9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!G9 | 값: 0.36 (입력 셀 — 노란 채우기)
+- GOOGL!A10 | 값: 영업현금흐름 OCF ($B)
+- GOOGL!B10 | 수식: `=B8*B9` | 계산값: 152.76
+- GOOGL!C10 | 수식: `=C8*C9` | 계산값: 176.5584
+- GOOGL!D10 | 수식: `=D8*D9` | 계산값: 204.807744
+- GOOGL!E10 | 수식: `=E8*E9` | 계산값: 231.43275072
+- GOOGL!F10 | 수식: `=F8*F9` | 계산값: 256.8903532992
+- GOOGL!G10 | 수식: `=G8*G9` | 계산값: 282.57938862912
+- GOOGL!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- GOOGL!A13 | 값: Capex 성장률 (2027E~)
+- GOOGL!D13 | 값: 0.3 (입력 셀 — 노란 채우기)
+- GOOGL!E13 | 값: 0.15 (입력 셀 — 노란 채우기)
+- GOOGL!F13 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- GOOGL!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- GOOGL!A14 | 값: 총 Capex ($B)
+- GOOGL!B14 | 값: 91 (입력 셀 — 노란 채우기)
+- GOOGL!C14 | 값: 200 (입력 셀 — 노란 채우기)
+- GOOGL!D14 | 수식: `=C14*(1+D13)` | 계산값: 260
+- GOOGL!E14 | 수식: `=D14*(1+E13)` | 계산값: 299
+- GOOGL!F14 | 수식: `=E14*(1+F13)` | 계산값: 328.9
+- GOOGL!G14 | 수식: `=F14*(1+G13)` | 계산값: 345.345
+- GOOGL!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- GOOGL!A15 | 값:   Capex YoY
+- GOOGL!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 1.1978021978022
+- GOOGL!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.3
+- GOOGL!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.15
+- GOOGL!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.1
+- GOOGL!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- GOOGL!A16 | 값:   Capex / 매출
+- GOOGL!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.22636815920398
+- GOOGL!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.407797080172906
+- GOOGL!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.457013969159291
+- GOOGL!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.46510271197627
+- GOOGL!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.460912597453961
+- GOOGL!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.439962024842417
+- GOOGL!A17 | 값:   Capex / OCF
+- GOOGL!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.595705682115737
+- GOOGL!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.13276966714696
+- GOOGL!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.2694832476647
+- GOOGL!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.29195197771186
+- GOOGL!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.28031277070545
+- GOOGL!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.22211673567338
+- GOOGL!A18 | 값: 서버·칩(단기자산) 비중
+- GOOGL!B18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!C18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!D18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!E18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!F18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!G18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- GOOGL!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- GOOGL!A19 | 값:   서버·칩 capex ($B)
+- GOOGL!B19 | 수식: `=B14*B18` | 계산값: 54.6
+- GOOGL!C19 | 수식: `=C14*C18` | 계산값: 120
+- GOOGL!D19 | 수식: `=D14*D18` | 계산값: 156
+- GOOGL!E19 | 수식: `=E14*E18` | 계산값: 179.4
+- GOOGL!F19 | 수식: `=F14*F18` | 계산값: 197.34
+- GOOGL!G19 | 수식: `=G14*G18` | 계산값: 207.207
+- GOOGL!A20 | 값:   DC·전력·네트워크 capex ($B)
+- GOOGL!B20 | 수식: `=B14-B19` | 계산값: 36.4
+- GOOGL!C20 | 수식: `=C14-C19` | 계산값: 80
+- GOOGL!D20 | 수식: `=D14-D19` | 계산값: 104
+- GOOGL!E20 | 수식: `=E14-E19` | 계산값: 119.6
+- GOOGL!F20 | 수식: `=F14-F19` | 계산값: 131.56
+- GOOGL!G20 | 수식: `=G14-G19` | 계산값: 138.138
+- GOOGL!A21 | 값: DC capex 중 리스/JV 조달 비율
+- GOOGL!B21 | 값: 0.1 (입력 셀 — 노란 채우기)
+- GOOGL!C21 | 값: 0.15 (입력 셀 — 노란 채우기)
+- GOOGL!D21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!E21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!F21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!G21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- GOOGL!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- GOOGL!A22 | 값:   리스/JV 조달액 ($B)
+- GOOGL!B22 | 수식: `=B20*B21` | 계산값: 3.64
+- GOOGL!C22 | 수식: `=C20*C21` | 계산값: 12
+- GOOGL!D22 | 수식: `=D20*D21` | 계산값: 20.8
+- GOOGL!E22 | 수식: `=E20*E21` | 계산값: 23.92
+- GOOGL!F22 | 수식: `=F20*F21` | 계산값: 26.312
+- GOOGL!G22 | 수식: `=G20*G21` | 계산값: 27.6276
+- GOOGL!A23 | 값:   현금 지출 capex ($B)
+- GOOGL!B23 | 수식: `=B14-B22` | 계산값: 87.36
+- GOOGL!C23 | 수식: `=C14-C22` | 계산값: 188
+- GOOGL!D23 | 수식: `=D14-D22` | 계산값: 239.2
+- GOOGL!E23 | 수식: `=E14-E22` | 계산값: 275.08
+- GOOGL!F23 | 수식: `=F14-F22` | 계산값: 302.588
+- GOOGL!G23 | 수식: `=G14-G22` | 계산값: 317.7174
+- GOOGL!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- GOOGL!A26 | 값: 기초 현금 ($B)
+- GOOGL!B26 | 값: 242 (입력 셀 — 노란 채우기)
+- GOOGL!C26 | 수식: `=B26` | 계산값: 242
+- GOOGL!D26 | 수식: `=C36` | 계산값: 245.5584
+- GOOGL!E26 | 수식: `=D36` | 계산값: 244.966144
+- GOOGL!F26 | 수식: `=E36` | 계산값: 235.23889472
+- GOOGL!G26 | 수식: `=F36` | 계산값: 210.8532480192
+- GOOGL!H26 | 값: 2025년말 현금·유가증권 (근사)
+- GOOGL!A27 | 값: (+) OCF
+- GOOGL!C27 | 수식: `=C10` | 계산값: 176.5584
+- GOOGL!D27 | 수식: `=D10` | 계산값: 204.807744
+- GOOGL!E27 | 수식: `=E10` | 계산값: 231.43275072
+- GOOGL!F27 | 수식: `=F10` | 계산값: 256.8903532992
+- GOOGL!G27 | 수식: `=G10` | 계산값: 282.57938862912
+- GOOGL!A28 | 값: (+) 신규 부채 발행
+- GOOGL!C28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- GOOGL!E28 | 값: 40 (입력 셀 — 노란 채우기)
+- GOOGL!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!G28 | 값: 30 (입력 셀 — 노란 채우기)
+- GOOGL!H28 | 값: 회사채·은행차입 가정 (입력)
+- GOOGL!A29 | 값: (+) 리스/JV 조달
+- GOOGL!C29 | 수식: `=C22` | 계산값: 12
+- GOOGL!D29 | 수식: `=D22` | 계산값: 20.8
+- GOOGL!E29 | 수식: `=E22` | 계산값: 23.92
+- GOOGL!F29 | 수식: `=F22` | 계산값: 26.312
+- GOOGL!G29 | 수식: `=G22` | 계산값: 27.6276
+- GOOGL!A30 | 값: (−) 현금 capex
+- GOOGL!C30 | 수식: `=C23` | 계산값: 188
+- GOOGL!D30 | 수식: `=D23` | 계산값: 239.2
+- GOOGL!E30 | 수식: `=E23` | 계산값: 275.08
+- GOOGL!F30 | 수식: `=F23` | 계산값: 302.588
+- GOOGL!G30 | 수식: `=G23` | 계산값: 317.7174
+- GOOGL!A31 | 값: (−) 주주환원 (배당+자사주)
+- GOOGL!C31 | 값: 12 (입력 셀 — 노란 채우기)
+- GOOGL!D31 | 값: 12 (입력 셀 — 노란 채우기)
+- GOOGL!E31 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!F31 | 값: 20 (입력 셀 — 노란 채우기)
+- GOOGL!G31 | 값: 25 (입력 셀 — 노란 채우기)
+- GOOGL!A32 | 값: (−) 부채 상환 · 기타 투자
+- GOOGL!C32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!D32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!E32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!F32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!G32 | 값: 15 (입력 셀 — 노란 채우기)
+- GOOGL!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- GOOGL!A33 | 값: 조달 전 기말 현금 ($B)
+- GOOGL!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 245.5584
+- GOOGL!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 244.966144
+- GOOGL!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 235.23889472
+- GOOGL!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 210.8532480192
+- GOOGL!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 193.34283664832
+- GOOGL!A34 | 값: 최소 유지 현금
+- GOOGL!B34 | 값: 60 (입력 셀 — 노란 채우기)
+- GOOGL!C34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!D34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!E34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!F34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!G34 | 수식: `=$B$34` | 계산값: 60
+- GOOGL!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- GOOGL!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- GOOGL!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- GOOGL!A36 | 값: 기말 현금 ($B)
+- GOOGL!C36 | 수식: `=C33+C35` | 계산값: 245.5584
+- GOOGL!D36 | 수식: `=D33+D35` | 계산값: 244.966144
+- GOOGL!E36 | 수식: `=E33+E35` | 계산값: 235.23889472
+- GOOGL!F36 | 수식: `=F33+F35` | 계산값: 210.8532480192
+- GOOGL!G36 | 수식: `=G33+G35` | 계산값: 193.34283664832
+- GOOGL!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- GOOGL!A38 | 값: FCF (OCF − 현금 capex)
+- GOOGL!B38 | 수식: `=B10-B23` | 계산값: 65.4
+- GOOGL!C38 | 수식: `=C10-C23` | 계산값: -11.4416
+- GOOGL!D38 | 수식: `=D10-D23` | 계산값: -34.392256
+- GOOGL!E38 | 수식: `=E10-E23` | 계산값: -43.64724928
+- GOOGL!F38 | 수식: `=F10-F23` | 계산값: -45.6976467008
+- GOOGL!G38 | 수식: `=G10-G23` | 계산값: -35.13801137088
+- GOOGL!A39 | 값: 총부채 (온밸런스, $B)
+- GOOGL!B39 | 값: 98 (입력 셀 — 노란 채우기)
+- GOOGL!C39 | 수식: `=B39+C28+C35-5` | 계산값: 123
+- GOOGL!D39 | 수식: `=C39+D28+D35-5` | 계산값: 158
+- GOOGL!E39 | 수식: `=D39+E28+E35-5` | 계산값: 193
+- GOOGL!F39 | 수식: `=E39+F28+F35-5` | 계산값: 218
+- GOOGL!G39 | 수식: `=F39+G28+G35-5` | 계산값: 243
+- GOOGL!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 5,5,5,5,5)
+- GOOGL!A40 | 값: 누적 리스/JV 잔액 ($B)
+- GOOGL!B40 | 값: 0
+- GOOGL!C40 | 수식: `=B40+C29` | 계산값: 12
+- GOOGL!D40 | 수식: `=C40+D29` | 계산값: 32.8
+- GOOGL!E40 | 수식: `=D40+E29` | 계산값: 56.72
+- GOOGL!F40 | 수식: `=E40+F29` | 계산값: 83.032
+- GOOGL!G40 | 수식: `=F40+G29` | 계산값: 110.6596
+- GOOGL!A41 | 값: 총부채 / OCF
+- GOOGL!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.64152919612464
+- GOOGL!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.696653345295381
+- GOOGL!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.771455204350086
+- GOOGL!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.833935557519696
+- GOOGL!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.848611079397347
+- GOOGL!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.859935330665368
+- GOOGL!A42 | 값: (총부채+리스/JV) / OCF
+- GOOGL!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.64152919612464
+- GOOGL!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 0.764619525324199
+- GOOGL!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 0.931605398670863
+- GOOGL!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.07901755141875
+- GOOGL!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.17183069015203
+- GOOGL!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.25154067929622
+
+
+### 시트 `AMZN` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- AMZN!A1 | 값: Amazon (AMZN) — Capex & 자금조달 ($B)
+- AMZN!A2 | 값: 12월 결산. Capex = 현금 capex 기준(금융리스 별도). 리테일·물류 capex 포함 총액이므로 AI/AWS 비중 가정 필요. 2026 $220B 중 ~$20B는 메모리 가격 상승분(용량 증가 없음).
+- AMZN!A3 | 값: 출처: Amazon Q2 2026 earnings call (2026-07-30): 2026 현금 capex ≈$220B(종전 ~$200B, 메모리 가격 상승), Q2 capex $53.1B, TTM FCF -$7.6B, TTM capex $169B, 장기부채 $128.9B(6개월간 ~2배), AWS 백로그 $496B
+- AMZN!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- AMZN!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- AMZN!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- AMZN!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- AMZN!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- AMZN!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- AMZN!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- AMZN!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- AMZN!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- AMZN!A7 | 값: 매출 성장률
+- AMZN!C7 | 값: 0.18 (입력 셀 — 노란 채우기)
+- AMZN!D7 | 값: 0.14 (입력 셀 — 노란 채우기)
+- AMZN!E7 | 값: 0.12 (입력 셀 — 노란 채우기)
+- AMZN!F7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- AMZN!G7 | 값: 0.09 (입력 셀 — 노란 채우기)
+- AMZN!A8 | 값: 매출 ($B)
+- AMZN!B8 | 값: 717 (입력 셀 — 노란 채우기)
+- AMZN!C8 | 수식: `=B8*(1+C7)` | 계산값: 846.06
+- AMZN!D8 | 수식: `=C8*(1+D7)` | 계산값: 964.5084
+- AMZN!E8 | 수식: `=D8*(1+E7)` | 계산값: 1080.249408
+- AMZN!F8 | 수식: `=E8*(1+F7)` | 계산값: 1188.2743488
+- AMZN!G8 | 수식: `=F8*(1+G7)` | 계산값: 1295.219040192
+- AMZN!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- AMZN!A9 | 값: OCF 마진
+- AMZN!B9 | 값: 0.22 (입력 셀 — 노란 채우기)
+- AMZN!C9 | 값: 0.22 (입력 셀 — 노란 채우기)
+- AMZN!D9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!E9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!F9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!G9 | 값: 0.23 (입력 셀 — 노란 채우기)
+- AMZN!A10 | 값: 영업현금흐름 OCF ($B)
+- AMZN!B10 | 수식: `=B8*B9` | 계산값: 157.74
+- AMZN!C10 | 수식: `=C8*C9` | 계산값: 186.1332
+- AMZN!D10 | 수식: `=D8*D9` | 계산값: 221.836932
+- AMZN!E10 | 수식: `=E8*E9` | 계산값: 248.45736384
+- AMZN!F10 | 수식: `=F8*F9` | 계산값: 273.303100224
+- AMZN!G10 | 수식: `=G8*G9` | 계산값: 297.90037924416
+- AMZN!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- AMZN!A13 | 값: Capex 성장률 (2027E~)
+- AMZN!D13 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!E13 | 값: 0.12 (입력 셀 — 노란 채우기)
+- AMZN!F13 | 값: 0.08 (입력 셀 — 노란 채우기)
+- AMZN!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- AMZN!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- AMZN!A14 | 값: 총 Capex ($B)
+- AMZN!B14 | 값: 131 (입력 셀 — 노란 채우기)
+- AMZN!C14 | 값: 220 (입력 셀 — 노란 채우기)
+- AMZN!D14 | 수식: `=C14*(1+D13)` | 계산값: 264
+- AMZN!E14 | 수식: `=D14*(1+E13)` | 계산값: 295.68
+- AMZN!F14 | 수식: `=E14*(1+F13)` | 계산값: 319.3344
+- AMZN!G14 | 수식: `=F14*(1+G13)` | 계산값: 335.30112
+- AMZN!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- AMZN!A15 | 값:   Capex YoY
+- AMZN!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.679389312977099
+- AMZN!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.2
+- AMZN!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.12
+- AMZN!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.0800000000000001
+- AMZN!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- AMZN!A16 | 값:   Capex / 매출
+- AMZN!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.182705718270572
+- AMZN!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.260028839562206
+- AMZN!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.273714567960217
+- AMZN!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.273714567960217
+- AMZN!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.268737939451849
+- AMZN!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.258875996719671
+- AMZN!A17 | 값:   Capex / OCF
+- AMZN!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.830480537593508
+- AMZN!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.1819492707373
+- AMZN!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.19006333895746
+- AMZN!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.19006333895746
+- AMZN!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.16842582370369
+- AMZN!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.12554781182466
+- AMZN!A18 | 값: 서버·칩(단기자산) 비중
+- AMZN!B18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- AMZN!C18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!D18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!E18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!F18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!G18 | 값: 0.6 (입력 셀 — 노란 채우기)
+- AMZN!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- AMZN!A19 | 값:   서버·칩 capex ($B)
+- AMZN!B19 | 수식: `=B14*B18` | 계산값: 72.05
+- AMZN!C19 | 수식: `=C14*C18` | 계산값: 132
+- AMZN!D19 | 수식: `=D14*D18` | 계산값: 158.4
+- AMZN!E19 | 수식: `=E14*E18` | 계산값: 177.408
+- AMZN!F19 | 수식: `=F14*F18` | 계산값: 191.60064
+- AMZN!G19 | 수식: `=G14*G18` | 계산값: 201.180672
+- AMZN!A20 | 값:   DC·전력·네트워크 capex ($B)
+- AMZN!B20 | 수식: `=B14-B19` | 계산값: 58.95
+- AMZN!C20 | 수식: `=C14-C19` | 계산값: 88
+- AMZN!D20 | 수식: `=D14-D19` | 계산값: 105.6
+- AMZN!E20 | 수식: `=E14-E19` | 계산값: 118.272
+- AMZN!F20 | 수식: `=F14-F19` | 계산값: 127.73376
+- AMZN!G20 | 수식: `=G14-G19` | 계산값: 134.120448
+- AMZN!A21 | 값: DC capex 중 리스/JV 조달 비율
+- AMZN!B21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!C21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!D21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!E21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!F21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!G21 | 값: 0.2 (입력 셀 — 노란 채우기)
+- AMZN!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- AMZN!A22 | 값:   리스/JV 조달액 ($B)
+- AMZN!B22 | 수식: `=B20*B21` | 계산값: 11.79
+- AMZN!C22 | 수식: `=C20*C21` | 계산값: 17.6
+- AMZN!D22 | 수식: `=D20*D21` | 계산값: 21.12
+- AMZN!E22 | 수식: `=E20*E21` | 계산값: 23.6544
+- AMZN!F22 | 수식: `=F20*F21` | 계산값: 25.546752
+- AMZN!G22 | 수식: `=G20*G21` | 계산값: 26.8240896
+- AMZN!A23 | 값:   현금 지출 capex ($B)
+- AMZN!B23 | 수식: `=B14-B22` | 계산값: 119.21
+- AMZN!C23 | 수식: `=C14-C22` | 계산값: 202.4
+- AMZN!D23 | 수식: `=D14-D22` | 계산값: 242.88
+- AMZN!E23 | 수식: `=E14-E22` | 계산값: 272.0256
+- AMZN!F23 | 수식: `=F14-F22` | 계산값: 293.787648
+- AMZN!G23 | 수식: `=G14-G22` | 계산값: 308.4770304
+- AMZN!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- AMZN!A26 | 값: 기초 현금 ($B)
+- AMZN!B26 | 값: 95 (입력 셀 — 노란 채우기)
+- AMZN!C26 | 수식: `=B26` | 계산값: 95
+- AMZN!D26 | 수식: `=C36` | 계산값: 143.3332
+- AMZN!E26 | 수식: `=D36` | 계산값: 163.410132
+- AMZN!F26 | 수식: `=E36` | 계산값: 183.49629584
+- AMZN!G26 | 수식: `=F36` | 계산값: 198.558500064
+- AMZN!H26 | 값: 2025년말 현금·유가증권 (근사)
+- AMZN!A27 | 값: (+) OCF
+- AMZN!C27 | 수식: `=C10` | 계산값: 186.1332
+- AMZN!D27 | 수식: `=D10` | 계산값: 221.836932
+- AMZN!E27 | 수식: `=E10` | 계산값: 248.45736384
+- AMZN!F27 | 수식: `=F10` | 계산값: 273.303100224
+- AMZN!G27 | 수식: `=G10` | 계산값: 297.90037924416
+- AMZN!A28 | 값: (+) 신규 부채 발행
+- AMZN!C28 | 값: 65 (입력 셀 — 노란 채우기)
+- AMZN!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!E28 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- AMZN!G28 | 값: 30 (입력 셀 — 노란 채우기)
+- AMZN!H28 | 값: 회사채·은행차입 가정 (입력)
+- AMZN!A29 | 값: (+) 리스/JV 조달
+- AMZN!C29 | 수식: `=C22` | 계산값: 17.6
+- AMZN!D29 | 수식: `=D22` | 계산값: 21.12
+- AMZN!E29 | 수식: `=E22` | 계산값: 23.6544
+- AMZN!F29 | 수식: `=F22` | 계산값: 25.546752
+- AMZN!G29 | 수식: `=G22` | 계산값: 26.8240896
+- AMZN!A30 | 값: (−) 현금 capex
+- AMZN!C30 | 수식: `=C23` | 계산값: 202.4
+- AMZN!D30 | 수식: `=D23` | 계산값: 242.88
+- AMZN!E30 | 수식: `=E23` | 계산값: 272.0256
+- AMZN!F30 | 수식: `=F23` | 계산값: 293.787648
+- AMZN!G30 | 수식: `=G23` | 계산값: 308.4770304
+- AMZN!A31 | 값: (−) 주주환원 (배당+자사주)
+- AMZN!C31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!D31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!E31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!F31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!G31 | 값: 0 (입력 셀 — 노란 채우기)
+- AMZN!A32 | 값: (−) 부채 상환 · 기타 투자
+- AMZN!C32 | 값: 18 (입력 셀 — 노란 채우기)
+- AMZN!D32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!E32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!F32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!G32 | 값: 20 (입력 셀 — 노란 채우기)
+- AMZN!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- AMZN!A33 | 값: 조달 전 기말 현금 ($B)
+- AMZN!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 143.3332
+- AMZN!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 163.410132
+- AMZN!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 183.49629584
+- AMZN!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 198.558500064
+- AMZN!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 224.80593850816
+- AMZN!A34 | 값: 최소 유지 현금
+- AMZN!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- AMZN!C34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!D34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!E34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!F34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!G34 | 수식: `=$B$34` | 계산값: 40
+- AMZN!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- AMZN!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- AMZN!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- AMZN!A36 | 값: 기말 현금 ($B)
+- AMZN!C36 | 수식: `=C33+C35` | 계산값: 143.3332
+- AMZN!D36 | 수식: `=D33+D35` | 계산값: 163.410132
+- AMZN!E36 | 수식: `=E33+E35` | 계산값: 183.49629584
+- AMZN!F36 | 수식: `=F33+F35` | 계산값: 198.558500064
+- AMZN!G36 | 수식: `=G33+G35` | 계산값: 224.80593850816
+- AMZN!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- AMZN!A38 | 값: FCF (OCF − 현금 capex)
+- AMZN!B38 | 수식: `=B10-B23` | 계산값: 38.53
+- AMZN!C38 | 수식: `=C10-C23` | 계산값: -16.2668
+- AMZN!D38 | 수식: `=D10-D23` | 계산값: -21.043068
+- AMZN!E38 | 수식: `=E10-E23` | 계산값: -23.56823616
+- AMZN!F38 | 수식: `=F10-F23` | 계산값: -20.4845477759999
+- AMZN!G38 | 수식: `=G10-G23` | 계산값: -10.57665115584
+- AMZN!A39 | 값: 총부채 (온밸런스, $B)
+- AMZN!B39 | 값: 129 (입력 셀 — 노란 채우기)
+- AMZN!C39 | 수식: `=B39+C28+C35-8` | 계산값: 186
+- AMZN!D39 | 수식: `=C39+D28+D35-10` | 계산값: 216
+- AMZN!E39 | 수식: `=D39+E28+E35-10` | 계산값: 246
+- AMZN!F39 | 수식: `=E39+F28+F35-10` | 계산값: 266
+- AMZN!G39 | 수식: `=F39+G28+G35-10` | 계산값: 286
+- AMZN!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 8,10,10,10,10)
+- AMZN!A40 | 값: 누적 리스/JV 잔액 ($B)
+- AMZN!B40 | 값: 0
+- AMZN!C40 | 수식: `=B40+C29` | 계산값: 17.6
+- AMZN!D40 | 수식: `=C40+D29` | 계산값: 38.72
+- AMZN!E40 | 수식: `=D40+E29` | 계산값: 62.3744
+- AMZN!F40 | 수식: `=E40+F29` | 계산값: 87.921152
+- AMZN!G40 | 수식: `=F40+G29` | 계산값: 114.7452416
+- AMZN!A41 | 값: 총부채 / OCF
+- AMZN!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.817801445416508
+- AMZN!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 0.999284383441536
+- AMZN!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 0.973688186419744
+- AMZN!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 0.990109514960553
+- AMZN!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 0.973278384994483
+- AMZN!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 0.960052487095337
+- AMZN!A42 | 값: (총부채+리스/JV) / OCF
+- AMZN!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.817801445416508
+- AMZN!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 1.09384032510052
+- AMZN!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 1.14823080946684
+- AMZN!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.24115620979777
+- AMZN!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.29497671892461
+- AMZN!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 1.34523239821574
+
+
+### 시트 `META` (42행 × 8열, 범위 A1:H42)
+
+- 연도 헤더: 행 [5], 열 ['B', 'C', 'D', 'E', 'F', 'G'] — B5=2025A, C5=2026E, D5=2027E, E5=2028E, F5=2029E, G5=2030E
+
+- 노란 입력 셀(총 48개): C7, D7, E7, F7, G7, B8, B9, C9, D9, E9, F9, G9, D13, E13, F13, G13, B14, C14, B18, C18, D18, E18, F18, G18, B21, C21, D21, E21, F21, G21, B26, C28, D28, E28, F28, G28, C31, D31, E31, F31, G31, C32, D32, E32, F32, G32, B34, B39
+
+- 값이 든 셀 개수: 229
+
+
+- META!A1 | 값: Meta (META) — Capex & 자금조달 ($B)
+- META!A2 | 값: 12월 결산. Capex에 금융리스 원금상환 포함. 클라우드 매출 없이 광고 OCF로 조달 → 부채·JV(Hyperion/Blue Owl, El Paso/BlackRock 등) 의존도 최고. 자사주 매입 중단.
+- META!A3 | 값: 출처: Meta Q2 2026 earnings call (2026-07-29): 2026 capex $130~145B(금융리스 원금 포함), Q2 capex $31.1B vs OCF $31.9B(FCF $0.8B), 현금 $90.3B·부채 $83.7B, 상반기 순부채발행 $24.9B, El Paso $14B(BlackRock JV), Hyperion >$50B
+- META!A5 | 값: 항목 (헤더 행 — 남색 채우기)
+- META!B5 | 값: 2025A (헤더 행 — 남색 채우기)
+- META!C5 | 값: 2026E (헤더 행 — 남색 채우기)
+- META!D5 | 값: 2027E (헤더 행 — 남색 채우기)
+- META!E5 | 값: 2028E (헤더 행 — 남색 채우기)
+- META!F5 | 값: 2029E (헤더 행 — 남색 채우기)
+- META!G5 | 값: 2030E (헤더 행 — 남색 채우기)
+- META!H5 | 값: 메모 (헤더 행 — 남색 채우기)
+- META!A6 | 값: 매출 · 영업현금흐름 (섹션 구분 행 — 회색 채우기)
+- META!A7 | 값: 매출 성장률
+- META!C7 | 값: 0.25 (입력 셀 — 노란 채우기)
+- META!D7 | 값: 0.16 (입력 셀 — 노란 채우기)
+- META!E7 | 값: 0.13 (입력 셀 — 노란 채우기)
+- META!F7 | 값: 0.11 (입력 셀 — 노란 채우기)
+- META!G7 | 값: 0.1 (입력 셀 — 노란 채우기)
+- META!A8 | 값: 매출 ($B)
+- META!B8 | 값: 201 (입력 셀 — 노란 채우기)
+- META!C8 | 수식: `=B8*(1+C7)` | 계산값: 251.25
+- META!D8 | 수식: `=C8*(1+D7)` | 계산값: 291.45
+- META!E8 | 수식: `=D8*(1+E7)` | 계산값: 329.3385
+- META!F8 | 수식: `=E8*(1+F7)` | 계산값: 365.565735
+- META!G8 | 수식: `=F8*(1+G7)` | 계산값: 402.1223085
+- META!H8 | 값: 2025A는 추정치 — 10-K 확인 필요
+- META!A9 | 값: OCF 마진
+- META!B9 | 값: 0.52 (입력 셀 — 노란 채우기)
+- META!C9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!D9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!E9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!F9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!G9 | 값: 0.5 (입력 셀 — 노란 채우기)
+- META!A10 | 값: 영업현금흐름 OCF ($B)
+- META!B10 | 수식: `=B8*B9` | 계산값: 104.52
+- META!C10 | 수식: `=C8*C9` | 계산값: 125.625
+- META!D10 | 수식: `=D8*D9` | 계산값: 145.725
+- META!E10 | 수식: `=E8*E9` | 계산값: 164.66925
+- META!F10 | 수식: `=F8*F9` | 계산값: 182.7828675
+- META!G10 | 수식: `=G8*G9` | 계산값: 201.06115425
+- META!A12 | 값: Capex (섹션 구분 행 — 회색 채우기)
+- META!A13 | 값: Capex 성장률 (2027E~)
+- META!D13 | 값: 0.2 (입력 셀 — 노란 채우기)
+- META!E13 | 값: 0.12 (입력 셀 — 노란 채우기)
+- META!F13 | 값: 0.08 (입력 셀 — 노란 채우기)
+- META!G13 | 값: 0.05 (입력 셀 — 노란 채우기)
+- META!H13 | 값: 2027E 이후는 가정 (컨센서스/경영진 코멘트 참고)
+- META!A14 | 값: 총 Capex ($B)
+- META!B14 | 값: 72 (입력 셀 — 노란 채우기)
+- META!C14 | 값: 137.5 (입력 셀 — 노란 채우기)
+- META!D14 | 수식: `=C14*(1+D13)` | 계산값: 165
+- META!E14 | 수식: `=D14*(1+E13)` | 계산값: 184.8
+- META!F14 | 수식: `=E14*(1+F13)` | 계산값: 199.584
+- META!G14 | 수식: `=F14*(1+G13)` | 계산값: 209.5632
+- META!H14 | 값: 2025A 실적(근사), 2026E 회사 가이던스 중간값
+- META!A15 | 값:   Capex YoY
+- META!C15 | 수식: `=IF(B14=0,0,C14/B14-1)` | 계산값: 0.909722222222222
+- META!D15 | 수식: `=IF(C14=0,0,D14/C14-1)` | 계산값: 0.2
+- META!E15 | 수식: `=IF(D14=0,0,E14/D14-1)` | 계산값: 0.12
+- META!F15 | 수식: `=IF(E14=0,0,F14/E14-1)` | 계산값: 0.0800000000000001
+- META!G15 | 수식: `=IF(F14=0,0,G14/F14-1)` | 계산값: 0.05
+- META!A16 | 값:   Capex / 매출
+- META!B16 | 수식: `=IF(B8=0,0,B14/B8)` | 계산값: 0.358208955223881
+- META!C16 | 수식: `=IF(C8=0,0,C14/C8)` | 계산값: 0.54726368159204
+- META!D16 | 수식: `=IF(D8=0,0,D14/D8)` | 계산값: 0.566134843026248
+- META!E16 | 수식: `=IF(E8=0,0,E14/E8)` | 계산값: 0.561124800167609
+- META!F16 | 수식: `=IF(F8=0,0,F14/F8)` | 계산값: 0.545959265027944
+- META!G16 | 수식: `=IF(G8=0,0,G14/G8)` | 계산값: 0.521142934799401
+- META!A17 | 값:   Capex / OCF
+- META!B17 | 수식: `=IF(B10=0,0,B14/B10)` | 계산값: 0.68886337543054
+- META!C17 | 수식: `=IF(C10=0,0,C14/C10)` | 계산값: 1.09452736318408
+- META!D17 | 수식: `=IF(D10=0,0,D14/D10)` | 계산값: 1.1322696860525
+- META!E17 | 수식: `=IF(E10=0,0,E14/E10)` | 계산값: 1.12224960033522
+- META!F17 | 수식: `=IF(F10=0,0,F14/F10)` | 계산값: 1.09191853005589
+- META!G17 | 수식: `=IF(G10=0,0,G14/G10)` | 계산값: 1.0422858695988
+- META!A18 | 값: 서버·칩(단기자산) 비중
+- META!B18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!C18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!D18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!E18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!F18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!G18 | 값: 0.55 (입력 셀 — 노란 채우기)
+- META!H18 | 값: GPU/CPU/메모리 등 3~6년 자산. 나머지는 DC·전력·네트워크(장기자산)
+- META!A19 | 값:   서버·칩 capex ($B)
+- META!B19 | 수식: `=B14*B18` | 계산값: 39.6
+- META!C19 | 수식: `=C14*C18` | 계산값: 75.625
+- META!D19 | 수식: `=D14*D18` | 계산값: 90.75
+- META!E19 | 수식: `=E14*E18` | 계산값: 101.64
+- META!F19 | 수식: `=F14*F18` | 계산값: 109.7712
+- META!G19 | 수식: `=G14*G18` | 계산값: 115.25976
+- META!A20 | 값:   DC·전력·네트워크 capex ($B)
+- META!B20 | 수식: `=B14-B19` | 계산값: 32.4
+- META!C20 | 수식: `=C14-C19` | 계산값: 61.875
+- META!D20 | 수식: `=D14-D19` | 계산값: 74.25
+- META!E20 | 수식: `=E14-E19` | 계산값: 83.16
+- META!F20 | 수식: `=F14-F19` | 계산값: 89.8128
+- META!G20 | 수식: `=G14-G19` | 계산값: 94.30344
+- META!A21 | 값: DC capex 중 리스/JV 조달 비율
+- META!B21 | 값: 0.3 (입력 셀 — 노란 채우기)
+- META!C21 | 값: 0.4 (입력 셀 — 노란 채우기)
+- META!D21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!E21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!F21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!G21 | 값: 0.45 (입력 셀 — 노란 채우기)
+- META!H21 | 값: 오프밸런스·파트너 자본(JV, 빌드투수트 리스, 사모채)
+- META!A22 | 값:   리스/JV 조달액 ($B)
+- META!B22 | 수식: `=B20*B21` | 계산값: 9.72
+- META!C22 | 수식: `=C20*C21` | 계산값: 24.75
+- META!D22 | 수식: `=D20*D21` | 계산값: 33.4125
+- META!E22 | 수식: `=E20*E21` | 계산값: 37.422
+- META!F22 | 수식: `=F20*F21` | 계산값: 40.41576
+- META!G22 | 수식: `=G20*G21` | 계산값: 42.436548
+- META!A23 | 값:   현금 지출 capex ($B)
+- META!B23 | 수식: `=B14-B22` | 계산값: 62.28
+- META!C23 | 수식: `=C14-C22` | 계산값: 112.75
+- META!D23 | 수식: `=D14-D22` | 계산값: 131.5875
+- META!E23 | 수식: `=E14-E22` | 계산값: 147.378
+- META!F23 | 수식: `=F14-F22` | 계산값: 159.16824
+- META!G23 | 수식: `=G14-G22` | 계산값: 167.126652
+- META!A25 | 값: 자금조달 (Sources & Uses) (섹션 구분 행 — 회색 채우기)
+- META!A26 | 값: 기초 현금 ($B)
+- META!B26 | 값: 90 (입력 셀 — 노란 채우기)
+- META!C26 | 수식: `=B26` | 계산값: 90
+- META!D26 | 수식: `=C36` | 계산값: 159.125
+- META!E26 | 수식: `=D36` | 계산값: 230.675
+- META!F26 | 수식: `=E36` | 계산값: 304.38825
+- META!G26 | 수식: `=F36` | 계산값: 382.4186375
+- META!H26 | 값: 2025년말 현금·유가증권 (근사)
+- META!A27 | 값: (+) OCF
+- META!C27 | 수식: `=C10` | 계산값: 125.625
+- META!D27 | 수식: `=D10` | 계산값: 145.725
+- META!E27 | 수식: `=E10` | 계산값: 164.66925
+- META!F27 | 수식: `=F10` | 계산값: 182.7828675
+- META!G27 | 수식: `=G10` | 계산값: 201.06115425
+- META!A28 | 값: (+) 신규 부채 발행
+- META!C28 | 값: 45 (입력 셀 — 노란 채우기)
+- META!D28 | 값: 40 (입력 셀 — 노란 채우기)
+- META!E28 | 값: 35 (입력 셀 — 노란 채우기)
+- META!F28 | 값: 30 (입력 셀 — 노란 채우기)
+- META!G28 | 값: 25 (입력 셀 — 노란 채우기)
+- META!H28 | 값: 회사채·은행차입 가정 (입력)
+- META!A29 | 값: (+) 리스/JV 조달
+- META!C29 | 수식: `=C22` | 계산값: 24.75
+- META!D29 | 수식: `=D22` | 계산값: 33.4125
+- META!E29 | 수식: `=E22` | 계산값: 37.422
+- META!F29 | 수식: `=F22` | 계산값: 40.41576
+- META!G29 | 수식: `=G22` | 계산값: 42.436548
+- META!A30 | 값: (−) 현금 capex
+- META!C30 | 수식: `=C23` | 계산값: 112.75
+- META!D30 | 수식: `=D23` | 계산값: 131.5875
+- META!E30 | 수식: `=E23` | 계산값: 147.378
+- META!F30 | 수식: `=F23` | 계산값: 159.16824
+- META!G30 | 수식: `=G23` | 계산값: 167.126652
+- META!A31 | 값: (−) 주주환원 (배당+자사주)
+- META!C31 | 값: 5.5 (입력 셀 — 노란 채우기)
+- META!D31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!E31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!F31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!G31 | 값: 6 (입력 셀 — 노란 채우기)
+- META!A32 | 값: (−) 부채 상환 · 기타 투자
+- META!C32 | 값: 8 (입력 셀 — 노란 채우기)
+- META!D32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!E32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!F32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!G32 | 값: 10 (입력 셀 — 노란 채우기)
+- META!H32 | 값: 부채 상환 + M&A/전략투자 등 가정 (입력)
+- META!A33 | 값: 조달 전 기말 현금 ($B)
+- META!C33 | 수식: `=C26+C27+C28+C29-C30-C31-C32` | 계산값: 159.125
+- META!D33 | 수식: `=D26+D27+D28+D29-D30-D31-D32` | 계산값: 230.675
+- META!E33 | 수식: `=E26+E27+E28+E29-E30-E31-E32` | 계산값: 304.38825
+- META!F33 | 수식: `=F26+F27+F28+F29-F30-F31-F32` | 계산값: 382.4186375
+- META!G33 | 수식: `=G26+G27+G28+G29-G30-G31-G32` | 계산값: 467.78968775
+- META!A34 | 값: 최소 유지 현금
+- META!B34 | 값: 40 (입력 셀 — 노란 채우기)
+- META!C34 | 수식: `=$B$34` | 계산값: 40
+- META!D34 | 수식: `=$B$34` | 계산값: 40
+- META!E34 | 수식: `=$B$34` | 계산값: 40
+- META!F34 | 수식: `=$B$34` | 계산값: 40
+- META!G34 | 수식: `=$B$34` | 계산값: 40
+- META!A35 | 값: 추가 조달 필요액 — 플러그 ($B)
+- META!C35 | 수식: `=MAX(0,C34-C33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!D35 | 수식: `=MAX(0,D34-D33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!E35 | 수식: `=MAX(0,E34-E33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!F35 | 수식: `=MAX(0,F34-F33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!G35 | 수식: `=MAX(0,G34-G33)` | 계산값: 0 (출력 강조 — 주황 채우기)
+- META!H35 | 값: 조달 전 현금이 최소치 미만이면 부족분을 자동 조달(부채 가정)해 기말현금에 가산. 총부채에도 반영
+- META!A36 | 값: 기말 현금 ($B)
+- META!C36 | 수식: `=C33+C35` | 계산값: 159.125
+- META!D36 | 수식: `=D33+D35` | 계산값: 230.675
+- META!E36 | 수식: `=E33+E35` | 계산값: 304.38825
+- META!F36 | 수식: `=F33+F35` | 계산값: 382.4186375
+- META!G36 | 수식: `=G33+G35` | 계산값: 467.78968775
+- META!A37 | 값: 지표 (섹션 구분 행 — 회색 채우기)
+- META!A38 | 값: FCF (OCF − 현금 capex)
+- META!B38 | 수식: `=B10-B23` | 계산값: 42.24
+- META!C38 | 수식: `=C10-C23` | 계산값: 12.875
+- META!D38 | 수식: `=D10-D23` | 계산값: 14.1375
+- META!E38 | 수식: `=E10-E23` | 계산값: 17.29125
+- META!F38 | 수식: `=F10-F23` | 계산값: 23.6146275
+- META!G38 | 수식: `=G10-G23` | 계산값: 33.93450225
+- META!A39 | 값: 총부채 (온밸런스, $B)
+- META!B39 | 값: 84 (입력 셀 — 노란 채우기)
+- META!C39 | 수식: `=B39+C28+C35-3` | 계산값: 126
+- META!D39 | 수식: `=C39+D28+D35-5` | 계산값: 161
+- META!E39 | 수식: `=D39+E28+E35-5` | 계산값: 191
+- META!F39 | 수식: `=E39+F28+F35-5` | 계산값: 216
+- META!G39 | 수식: `=F39+G28+G35-5` | 계산값: 236
+- META!H39 | 값: 2025A 입력; 이후 = 전기 + 발행 + 플러그 − 상환(상환액 고정: 3,5,5,5,5)
+- META!A40 | 값: 누적 리스/JV 잔액 ($B)
+- META!B40 | 값: 0
+- META!C40 | 수식: `=B40+C29` | 계산값: 24.75
+- META!D40 | 수식: `=C40+D29` | 계산값: 58.1625
+- META!E40 | 수식: `=D40+E29` | 계산값: 95.5845
+- META!F40 | 수식: `=E40+F29` | 계산값: 136.00026
+- META!G40 | 수식: `=F40+G29` | 계산값: 178.436808
+- META!A41 | 값: 총부채 / OCF
+- META!B41 | 수식: `=IF(B10=0,0,B39/B10)` | 계산값: 0.803673938002296
+- META!C41 | 수식: `=IF(C10=0,0,C39/C10)` | 계산값: 1.00298507462687
+- META!D41 | 수식: `=IF(D10=0,0,D39/D10)` | 계산값: 1.10482072396638
+- META!E41 | 수식: `=IF(E10=0,0,E39/E10)` | 계산값: 1.1599008315153
+- META!F41 | 수식: `=IF(F10=0,0,F39/F10)` | 계산값: 1.181730010883
+- META!G41 | 수식: `=IF(G10=0,0,G39/G10)` | 계산값: 1.17377223303193
+- META!A42 | 값: (총부채+리스/JV) / OCF
+- META!B42 | 수식: `=IF(B10=0,0,(B39+B40)/B10)` | 계산값: 0.803673938002296
+- META!C42 | 수식: `=IF(C10=0,0,(C39+C40)/C10)` | 계산값: 1.2
+- META!D42 | 수식: `=IF(D10=0,0,(D39+D40)/D10)` | 계산값: 1.50394578829988
+- META!E42 | 수식: `=IF(E10=0,0,(E39+E40)/E10)` | 계산값: 1.74036439711725
+- META!F42 | 수식: `=IF(F10=0,0,(F39+F40)/F10)` | 계산값: 1.92578366241026
+- META!G42 | 수식: `=IF(G10=0,0,(G39+G40)/G10)` | 계산값: 2.06124753210502
+
+
+### 시트 `HBM_Inputs` (77행 × 12열, 범위 A1:L77)
+
+- 연도 헤더: 행 [15, 23, 41, 50, 59, 68], 열 ['C', 'D', 'E', 'F', 'G'] — C15=2026E, D15=2027E, E15=2028E, F15=2029E, G15=2030E, C23=2026E, D23=2027E, E23=2028E, F23=2029E, G23=2030E, C41=2026E, D41=2027E, E41=2028E, F41=2029E, G41=2030E, C50=2026E, D50=2027E, E50=2028E, F50=2029E, G50=2030E, C59=2026E, D59=2027E, E59=2028E, F59=2029E, G59=2030E, C68=2026E, D68=2027E, E68=2028E, F68=2029E, G68=2030E
+
+- 노란 입력 셀(총 230개): B6, C6, D6, E6, F6, G6, H6, I6, J6, K6, L6, B7, C7, D7, E7, F7, G7, H7, I7, J7, K7, L7, B8, C8, D8, E8, F8, G8, H8, I8, J8, K8, L8, B9, C9, D9, E9, F9, G9, H9, I9, J9, K9, L9, B10, C10, D10, E10, F10, G10, H10, I10, J10, K10, L10, B11, C11, D11, E11, F11, G11, H11, I11, J11, K11, L11, C16, D16, E16, F16, G16, C17, D17, E17, F17, G17, C18, D18, E18, F18, G18, C19, D19, E19, F19, G19, C24, D24, E24, F24, G24, C25, D25, E25, F25, G25, C26, D26, E26, F26, G26, C31, D31, E31, F31, G31, B35, B36, B37, B38, C42, D42, E42, F42, G42, C43, D43, E43, F43, G43, C44, D44, E44, F44, G44, C45, D45, E45, F45, G45, C46, D46, E46, F46, G46, C47, D47, E47, F47, G47, C51, D51, E51, F51, G51, C52, D52, E52, F52, G52, C53, D53, E53, F53, G53, C54, D54, E54, F54, G54, C55, D55, E55, F55, G55, C56, D56, E56, F56, G56, C60, D60, E60, F60, G60, C61, D61, E61, F61, G61, C62, D62, E62, F62, G62, C63, D63, E63, F63, G63, C64, D64, E64, F64, G64, C65, D65, E65, F65, G65, C69, D69, E69, F69, G69, C70, D70, E70, F70, G70, C71, D71, E71, F71, G71, C72, D72, E72, F72, G72, C73, D73, E73, F73, G73, C74, D74, E74, F74, G74
+
+- 값이 든 셀 개수: 364
+
+
+- HBM_Inputs!A1 | 값: HBM 수요 모델 — 가정 (HBM_Inputs)
+- HBM_Inputs!A2 | 값: 빅4 서버·칩 capex → AI 가속기 대수 → HBM GB → 금액 → 공급사 매출. 노란 셀 = 입력. 수치는 2026-09 기준 공개 자료 + 가정.
+- HBM_Inputs!A4 | 값: A. 칩 스펙: HBM 용량 / 시스템 ASP(칩 1개당 서버 all-in, $K) / HBM 세대 (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A5 | 값: 칩 패밀리 (헤더 행 — 남색 채우기)
+- HBM_Inputs!B5 | 값: HBM GB/칩 (헤더 행 — 남색 채우기)
+- HBM_Inputs!C5 | 값: ASP 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D5 | 값: ASP 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E5 | 값: ASP 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F5 | 값: ASP 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G5 | 값: ASP 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!H5 | 값: 세대 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!I5 | 값: 세대 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!J5 | 값: 세대 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!K5 | 값: 세대 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!L5 | 값: 세대 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A6 | 값: NVIDIA Blackwell (B200/B300)
+- HBM_Inputs!B6 | 값: 240 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C6 | 값: 40 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D6 | 값: 36 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E6 | 값: 32 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F6 | 값: 30 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G6 | 값: 28 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H6 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!I6 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!J6 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!K6 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!L6 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!A7 | 값: NVIDIA Rubin (VR200)
+- HBM_Inputs!B7 | 값: 288 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C7 | 값: 50 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D7 | 값: 47 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E7 | 값: 44 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F7 | 값: 41 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G7 | 값: 38 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H7 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!I7 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!J7 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!K7 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!L7 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A8 | 값: NVIDIA Rubin Ultra / Feynman
+- HBM_Inputs!B8 | 값: 384 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C8 | 값: 60 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D8 | 값: 60 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E8 | 값: 56 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F8 | 값: 52 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G8 | 값: 48 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H8 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!I8 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!J8 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!K8 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!L8 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!A9 | 값: Google TPU (v7 Ironwood~)
+- HBM_Inputs!B9 | 값: 216 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C9 | 값: 12 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D9 | 값: 12 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E9 | 값: 11 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F9 | 값: 11 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G9 | 값: 10 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H9 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!I9 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!J9 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!K9 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!L9 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!A10 | 값: AWS Trainium (2/3)
+- HBM_Inputs!B10 | 값: 144 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C10 | 값: 8 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D10 | 값: 9 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E10 | 값: 9 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F10 | 값: 9 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G10 | 값: 9 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H10 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!I10 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!J10 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!K10 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!L10 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!A11 | 값: 기타 (AMD MI/ MTIA / Maia)
+- HBM_Inputs!B11 | 값: 256 (입력 셀 — 노란 채우기)
+- HBM_Inputs!C11 | 값: 30 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D11 | 값: 30 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E11 | 값: 28 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F11 | 값: 26 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G11 | 값: 24 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H11 | 값: HBM3E (입력 셀 — 노란 채우기)
+- HBM_Inputs!I11 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!J11 | 값: HBM4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!K11 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!L11 | 값: HBM4E (입력 셀 — 노란 채우기)
+- HBM_Inputs!A12 | 값: 출처/메모: B200 192GB→B300 288GB HBM3E(블렌드 240GB), Rubin 288GB HBM4, Rubin Ultra 384GB(TrendForce 2026-06), ASIC HBM/칩 96/192→216/288GB 업그레이드(TrendForce). ASP는 랙 시스템가 ÷ GPU 수 기준 추정.
+- HBM_Inputs!A14 | 값: B. HBM 가격 ($/GB) — 세대별 (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A15 | 값: 세대 (헤더 행 — 남색 채우기)
+- HBM_Inputs!C15 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D15 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E15 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F15 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G15 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A16 | 값: HBM3E
+- HBM_Inputs!C16 | 값: 10 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D16 | 값: 13 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E16 | 값: 12 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F16 | 값: 11 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G16 | 값: 10 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A17 | 값: HBM4
+- HBM_Inputs!C17 | 값: 15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D17 | 값: 20 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E17 | 값: 18 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F17 | 값: 16 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G17 | 값: 14 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A18 | 값: HBM4E
+- HBM_Inputs!C18 | 값: 22 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D18 | 값: 24 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E18 | 값: 22 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F18 | 값: 20 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G18 | 값: 18 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A19 | 값: 평균 스택 용량 (GB/스택)
+- HBM_Inputs!C19 | 값: 36 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D19 | 값: 40 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E19 | 값: 44 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F19 | 값: 48 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G19 | 값: 48 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A20 | 값: 출처/메모: HBM3E ~$300/36GB 스택(≈$8~10/GB), HBM4 ~$550/36GB(≈$15/GB) (Silicon Analysts 2026-08). TrendForce(2026-06): 2027 HBM 계약가 '수 배' 급등 전망 → 2027 피크 후 완만 하락 가정. 12-Hi 36GB → 16-Hi 48GB 전환.
+- HBM_Inputs!A22 | 값: C. 공급사 점유율 (매출 기준) (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A23 | 값: 공급사 (헤더 행 — 남색 채우기)
+- HBM_Inputs!C23 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D23 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E23 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F23 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G23 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A24 | 값: SK hynix
+- HBM_Inputs!C24 | 값: 0.5 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D24 | 값: 0.47 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E24 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F24 | 값: 0.44 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G24 | 값: 0.43 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A25 | 값: Samsung
+- HBM_Inputs!C25 | 값: 0.32 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D25 | 값: 0.34 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E25 | 값: 0.35 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F25 | 값: 0.36 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G25 | 값: 0.36 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A26 | 값: Micron
+- HBM_Inputs!C26 | 값: 0.18 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D26 | 값: 0.19 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E26 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F26 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G26 | 값: 0.21 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A27 | 값:   합계 체크 (=100%)
+- HBM_Inputs!C27 | 수식: `=SUM(C24:C26)` | 계산값: 1
+- HBM_Inputs!D27 | 수식: `=SUM(D24:D26)` | 계산값: 1
+- HBM_Inputs!E27 | 수식: `=SUM(E24:E26)` | 계산값: 1
+- HBM_Inputs!F27 | 수식: `=SUM(F24:F26)` | 계산값: 1
+- HBM_Inputs!G27 | 수식: `=SUM(G24:G26)` | 계산값: 1
+- HBM_Inputs!A28 | 값: 출처: Counterpoint 2Q26 HBM 매출 점유율 SK hynix 50% / Samsung 33% / Micron 18% (2026-09-03). 삼성 HBM4 선행 양산으로 점유율 상승 추세 반영.
+- HBM_Inputs!A30 | 값: D. 시장 범위 (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A31 | 값: 빅4가 전체 HBM 수요에서 차지하는 비중
+- HBM_Inputs!C31 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D31 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E31 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F31 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G31 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A32 | 값: 메모: 나머지는 오라클·네오클라우드·소버린·xAI/OpenAI 자체·중국·엔터프라이즈 등. 전체 시장 환산용 가정.
+- HBM_Inputs!A34 | 값: E. 회사별: 서버·칩 capex 중 AI 가속기(GPU/ASIC 시스템) 비중 (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A35 | 값: MSFT
+- HBM_Inputs!B35 | 값: 0.7 (입력 셀 — 노란 채우기)
+- HBM_Inputs!H35 | 값: 메모: 서버 capex에는 CPU 서버·스토리지·메모리 단품 등도 포함. AMZN은 리테일 IT 포함이라 낮게.
+- HBM_Inputs!A36 | 값: GOOGL
+- HBM_Inputs!B36 | 값: 0.75 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A37 | 값: AMZN
+- HBM_Inputs!B37 | 값: 0.6 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A38 | 값: META
+- HBM_Inputs!B38 | 값: 0.8 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A40 | 값: F. 회사별 AI 가속기 capex 칩 믹스 (금액 기준, 합계 100%) (섹션 구분 행 — 회색 채우기)
+- HBM_Inputs!A41 | 값: MSFT (헤더 행 — 남색 채우기)
+- HBM_Inputs!C41 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D41 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E41 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F41 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G41 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A42 | 값: NVIDIA Blackwell (B200/B300)
+- HBM_Inputs!C42 | 값: 0.6 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D42 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E42 | 값: 0.05 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F42 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G42 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A43 | 값: NVIDIA Rubin (VR200)
+- HBM_Inputs!C43 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D43 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E43 | 값: 0.4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F43 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G43 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A44 | 값: NVIDIA Rubin Ultra / Feynman
+- HBM_Inputs!C44 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D44 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E44 | 값: 0.35 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F44 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G44 | 값: 0.5 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A45 | 값: Google TPU (v7 Ironwood~)
+- HBM_Inputs!C45 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D45 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E45 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F45 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G45 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A46 | 값: AWS Trainium (2/3)
+- HBM_Inputs!C46 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D46 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E46 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F46 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G46 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A47 | 값: 기타 (AMD MI/ MTIA / Maia)
+- HBM_Inputs!C47 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D47 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E47 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F47 | 값: 0.3 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G47 | 값: 0.35 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A48 | 값:   합계 체크 (=100%)
+- HBM_Inputs!C48 | 수식: `=SUM(C42:C47)` | 계산값: 1
+- HBM_Inputs!D48 | 수식: `=SUM(D42:D47)` | 계산값: 1
+- HBM_Inputs!E48 | 수식: `=SUM(E42:E47)` | 계산값: 1
+- HBM_Inputs!F48 | 수식: `=SUM(F42:F47)` | 계산값: 1
+- HBM_Inputs!G48 | 수식: `=SUM(G42:G47)` | 계산값: 1
+- HBM_Inputs!A50 | 값: GOOGL (헤더 행 — 남색 채우기)
+- HBM_Inputs!C50 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D50 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E50 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F50 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G50 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A51 | 값: NVIDIA Blackwell (B200/B300)
+- HBM_Inputs!C51 | 값: 0.3 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D51 | 값: 0.1 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E51 | 값: 0.03 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F51 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G51 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A52 | 값: NVIDIA Rubin (VR200)
+- HBM_Inputs!C52 | 값: 0.1 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D52 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E52 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F52 | 값: 0.1 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G52 | 값: 0.08 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A53 | 값: NVIDIA Rubin Ultra / Feynman
+- HBM_Inputs!C53 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D53 | 값: 0.08 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E53 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F53 | 값: 0.18 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G53 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A54 | 값: Google TPU (v7 Ironwood~)
+- HBM_Inputs!C54 | 값: 0.6 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D54 | 값: 0.6 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E54 | 값: 0.62 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F54 | 값: 0.65 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G54 | 값: 0.65 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A55 | 값: AWS Trainium (2/3)
+- HBM_Inputs!C55 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D55 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E55 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F55 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G55 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A56 | 값: 기타 (AMD MI/ MTIA / Maia)
+- HBM_Inputs!C56 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D56 | 값: 0.02 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E56 | 값: 0.05 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F56 | 값: 0.07 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G56 | 값: 0.07 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A57 | 값:   합계 체크 (=100%)
+- HBM_Inputs!C57 | 수식: `=SUM(C51:C56)` | 계산값: 1
+- HBM_Inputs!D57 | 수식: `=SUM(D51:D56)` | 계산값: 1
+- HBM_Inputs!E57 | 수식: `=SUM(E51:E56)` | 계산값: 1
+- HBM_Inputs!F57 | 수식: `=SUM(F51:F56)` | 계산값: 1
+- HBM_Inputs!G57 | 수식: `=SUM(G51:G56)` | 계산값: 1
+- HBM_Inputs!A59 | 값: AMZN (헤더 행 — 남색 채우기)
+- HBM_Inputs!C59 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D59 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E59 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F59 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G59 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A60 | 값: NVIDIA Blackwell (B200/B300)
+- HBM_Inputs!C60 | 값: 0.4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D60 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E60 | 값: 0.05 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F60 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G60 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A61 | 값: NVIDIA Rubin (VR200)
+- HBM_Inputs!C61 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D61 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E61 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F61 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G61 | 값: 0.1 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A62 | 값: NVIDIA Rubin Ultra / Feynman
+- HBM_Inputs!C62 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D62 | 값: 0.08 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E62 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F62 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G62 | 값: 0.22 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A63 | 값: Google TPU (v7 Ironwood~)
+- HBM_Inputs!C63 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D63 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E63 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F63 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G63 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A64 | 값: AWS Trainium (2/3)
+- HBM_Inputs!C64 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D64 | 값: 0.5 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E64 | 값: 0.55 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F64 | 값: 0.58 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G64 | 값: 0.6 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A65 | 값: 기타 (AMD MI/ MTIA / Maia)
+- HBM_Inputs!C65 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D65 | 값: 0.02 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E65 | 값: 0.05 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F65 | 값: 0.07 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G65 | 값: 0.08 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A66 | 값:   합계 체크 (=100%)
+- HBM_Inputs!C66 | 수식: `=SUM(C60:C65)` | 계산값: 1
+- HBM_Inputs!D66 | 수식: `=SUM(D60:D65)` | 계산값: 1
+- HBM_Inputs!E66 | 수식: `=SUM(E60:E65)` | 계산값: 1
+- HBM_Inputs!F66 | 수식: `=SUM(F60:F65)` | 계산값: 1
+- HBM_Inputs!G66 | 수식: `=SUM(G60:G65)` | 계산값: 1
+- HBM_Inputs!A68 | 값: META (헤더 행 — 남색 채우기)
+- HBM_Inputs!C68 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Inputs!D68 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Inputs!E68 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Inputs!F68 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Inputs!G68 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Inputs!A69 | 값: NVIDIA Blackwell (B200/B300)
+- HBM_Inputs!C69 | 값: 0.65 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D69 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E69 | 값: 0.05 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F69 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G69 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A70 | 값: NVIDIA Rubin (VR200)
+- HBM_Inputs!C70 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D70 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E70 | 값: 0.4 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F70 | 값: 0.25 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G70 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A71 | 값: NVIDIA Rubin Ultra / Feynman
+- HBM_Inputs!C71 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D71 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E71 | 값: 0.35 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F71 | 값: 0.45 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G71 | 값: 0.5 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A72 | 값: Google TPU (v7 Ironwood~)
+- HBM_Inputs!C72 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D72 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E72 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F72 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G72 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A73 | 값: AWS Trainium (2/3)
+- HBM_Inputs!C73 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D73 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E73 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F73 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G73 | 값: 0 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A74 | 값: 기타 (AMD MI/ MTIA / Maia)
+- HBM_Inputs!C74 | 값: 0.1 (입력 셀 — 노란 채우기)
+- HBM_Inputs!D74 | 값: 0.15 (입력 셀 — 노란 채우기)
+- HBM_Inputs!E74 | 값: 0.2 (입력 셀 — 노란 채우기)
+- HBM_Inputs!F74 | 값: 0.3 (입력 셀 — 노란 채우기)
+- HBM_Inputs!G74 | 값: 0.35 (입력 셀 — 노란 채우기)
+- HBM_Inputs!A75 | 값:   합계 체크 (=100%)
+- HBM_Inputs!C75 | 수식: `=SUM(C69:C74)` | 계산값: 1
+- HBM_Inputs!D75 | 수식: `=SUM(D69:D74)` | 계산값: 1
+- HBM_Inputs!E75 | 수식: `=SUM(E69:E74)` | 계산값: 1
+- HBM_Inputs!F75 | 수식: `=SUM(F69:F74)` | 계산값: 1
+- HBM_Inputs!G75 | 수식: `=SUM(G69:G74)` | 계산값: 1
+- HBM_Inputs!A77 | 값: 메모: GOOGL은 TPU, AMZN은 Trainium 자체 칩 비중이 높고 MSFT/META는 NVIDIA 중심(+Maia/MTIA/AMD). 세대 전환(Blackwell→Rubin→Rubin Ultra) 속도는 가정.
+
+
+### 시트 `HBM_Demand` (166행 × 12열, 범위 A1:L166)
+
+- 연도 헤더: 행 [4, 40, 72, 104, 136], 열 ['C', 'D', 'E', 'F', 'G'] — C4=2026E, D4=2027E, E4=2028E, F4=2029E, G4=2030E, C40=2026E, D40=2027E, E40=2028E, F40=2029E, G40=2030E, C72=2026E, D72=2027E, E72=2028E, F72=2029E, G72=2030E, C104=2026E, D104=2027E, E104=2028E, F104=2029E, G104=2030E, C136=2026E, D136=2027E, E136=2028E, F136=2029E, G136=2030E
+
+- 노란 입력 셀: 없음
+
+- 값이 든 셀 개수: 819
+
+
+- HBM_Demand!A1 | 값: HBM 수요 및 공급사 매출 추정
+- HBM_Demand!A2 | 값: 단위: 가속기 백만 개, HBM EB(엑사바이트), 스택 백만 개, $B. 초록 = 링크, 검정 = 계산.
+- HBM_Demand!A4 | 값: 요약 (헤더 행 — 남색 채우기)
+- HBM_Demand!C4 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Demand!D4 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Demand!E4 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Demand!F4 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Demand!G4 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Demand!A5 | 값: 빅4 합산 (섹션 구분 행 — 회색 채우기)
+- HBM_Demand!A6 | 값: AI 가속기 capex ($B)
+- HBM_Demand!C6 | 수식: `=C42+C74+C106+C138` | 계산값: 311.775
+- HBM_Demand!D6 | 수식: `=D42+D74+D106+D138` | 계산값: 387.23375
+- HBM_Demand!E6 | 수식: `=E42+E74+E106+E138` | 계산값: 436.7677375
+- HBM_Demand!F6 | 수식: `=F42+F74+F106+F138` | 계산값: 476.68937525
+- HBM_Demand!G6 | 수식: `=G42+G74+G106+G138` | 계산값: 500.5238440125
+- HBM_Demand!A7 | 값: AI 가속기 대수 (백만 개)
+- HBM_Demand!C7 | 수식: `=C50+C82+C114+C146` | 계산값: 14.3787666666667
+- HBM_Demand!D7 | 수식: `=D50+D82+D114+D146` | 계산값: 17.4864476122931
+- HBM_Demand!E7 | 수식: `=E50+E82+E114+E146` | 계산값: 21.1071588988941
+- HBM_Demand!F7 | 수식: `=F50+F82+F114+F146` | 계산값: 24.2171223659862
+- HBM_Demand!G7 | 수식: `=G50+G82+G114+G146` | 계산값: 27.3458706203882
+- HBM_Demand!A8 | 값: HBM 수요 (EB)
+- HBM_Demand!C8 | 수식: `=C58+C90+C122+C154` | 계산값: 2.97927946666667
+- HBM_Demand!D8 | 수식: `=D58+D90+D122+D154` | 계산값: 3.79820409567376
+- HBM_Demand!E8 | 수식: `=E58+E90+E122+E154` | 계산값: 4.68831270143263
+- HBM_Demand!F8 | 수식: `=F58+F90+F122+F154` | 계산값: 5.44562135177786
+- HBM_Demand!G8 | 수식: `=G58+G90+G122+G154` | 계산값: 6.19709267745179
+- HBM_Demand!A9 | 값:   YoY
+- HBM_Demand!D9 | 수식: `=IF(C8=0,0,D8/C8-1)` | 계산값: 0.274873384041188
+- HBM_Demand!E9 | 수식: `=IF(D8=0,0,E8/D8-1)` | 계산값: 0.234349862023667
+- HBM_Demand!F9 | 수식: `=IF(E8=0,0,F8/E8-1)` | 계산값: 0.161531173062287
+- HBM_Demand!G9 | 수식: `=IF(F8=0,0,G8/F8-1)` | 계산값: 0.13799551550322
+- HBM_Demand!A10 | 값: HBM 스택 수 (백만 개)
+- HBM_Demand!C10 | 수식: `=C8*1000/HBM_Inputs!C19` | 계산값: 82.757762962963
+- HBM_Demand!D10 | 수식: `=D8*1000/HBM_Inputs!D19` | 계산값: 94.955102391844
+- HBM_Demand!E10 | 수식: `=E8*1000/HBM_Inputs!E19` | 계산값: 106.552561396196
+- HBM_Demand!F10 | 수식: `=F8*1000/HBM_Inputs!F19` | 계산값: 113.450444828705
+- HBM_Demand!G10 | 수식: `=G8*1000/HBM_Inputs!G19` | 계산값: 129.106097446912
+- HBM_Demand!A11 | 값: HBM 금액 ($B)
+- HBM_Demand!C11 | 수식: `=C66+C98+C130+C162` | 계산값: 31.4206786666667
+- HBM_Demand!D11 | 수식: `=D66+D98+D130+D162` | 계산값: 73.8158767501419
+- HBM_Demand!E11 | 수식: `=E66+E98+E130+E162` | 계산값: 86.3989378792695
+- HBM_Demand!F11 | 수식: `=F66+F98+F130+F162` | 계산값: 102.24344295135
+- HBM_Demand!G11 | 수식: `=G66+G98+G130+G162` | 계산값: 109.784356697789
+- HBM_Demand!A12 | 값:   평균 $/GB (블렌드)
+- HBM_Demand!C12 | 수식: `=IF(C8=0,0,C11/C8)` | 계산값: 10.5464019130174
+- HBM_Demand!D12 | 수식: `=IF(D8=0,0,D11/D8)` | 계산값: 19.434415552924
+- HBM_Demand!E12 | 수식: `=IF(E8=0,0,E11/E8)` | 계산값: 18.4285783354144
+- HBM_Demand!F12 | 수식: `=IF(F8=0,0,F11/F8)` | 계산값: 18.7753492846083
+- HBM_Demand!G12 | 수식: `=IF(G8=0,0,G11/G8)` | 계산값: 17.7154614932969
+- HBM_Demand!A13 | 값:   HBM / AI 가속기 capex
+- HBM_Demand!C13 | 수식: `=IF(C6=0,0,C11/C6)` | 계산값: 0.100779981289926
+- HBM_Demand!D13 | 수식: `=IF(D6=0,0,D11/D6)` | 계산값: 0.190623561996189
+- HBM_Demand!E13 | 수식: `=IF(E6=0,0,E11/E6)` | 계산값: 0.197814376981701
+- HBM_Demand!F13 | 수식: `=IF(F6=0,0,F11/F6)` | 계산값: 0.21448651524429
+- HBM_Demand!G13 | 수식: `=IF(G6=0,0,G11/G6)` | 계산값: 0.219338914641292
+- HBM_Demand!A14 | 값:   HBM3E 금액 ($B)
+- HBM_Demand!C14 | 수식: `=C68+C100+C132+C164` | 계산값: 26.5370266666667
+- HBM_Demand!D14 | 수식: `=D68+D100+D132+D164` | 계산값: 6.04538458333333
+- HBM_Demand!E14 | 수식: `=E68+E100+E132+E164` | 계산값: 1.72326481875
+- HBM_Demand!F14 | 수식: `=F68+F100+F132+F164` | 계산값: 0
+- HBM_Demand!G14 | 수식: `=G68+G100+G132+G164` | 계산값: 0
+- HBM_Demand!A15 | 값:   HBM4 금액 ($B)
+- HBM_Demand!C15 | 수식: `=C69+C101+C133+C165` | 계산값: 4.883652
+- HBM_Demand!D15 | 수식: `=D69+D101+D133+D165` | 계산값: 61.1284806468085
+- HBM_Demand!E15 | 수식: `=E69+E101+E133+E165` | 계산값: 68.8854939148052
+- HBM_Demand!F15 | 수식: `=F69+F101+F133+F165` | 계산값: 26.6759363368273
+- HBM_Demand!G15 | 수식: `=G69+G101+G133+G165` | 계산값: 6.17159023720105
+- HBM_Demand!A16 | 값:   HBM4E 금액 ($B)
+- HBM_Demand!C16 | 수식: `=C70+C102+C134+C166` | 계산값: 0
+- HBM_Demand!D16 | 수식: `=D70+D102+D134+D166` | 계산값: 6.64201152
+- HBM_Demand!E16 | 수식: `=E70+E102+E134+E166` | 계산값: 15.7901791457143
+- HBM_Demand!F16 | 수식: `=F70+F102+F134+F166` | 계산값: 75.5675066145231
+- HBM_Demand!G16 | 수식: `=G70+G102+G134+G166` | 계산값: 103.612766460588
+- HBM_Demand!A18 | 값: 회사별 HBM 금액 ($B) (섹션 구분 행 — 회색 채우기)
+- HBM_Demand!A19 | 값: MSFT
+- HBM_Demand!C19 | 수식: `=C66` | 계산값: 5.77808
+- HBM_Demand!D19 | 수식: `=D66` | 계산값: 12.8709607535461
+- HBM_Demand!E19 | 수식: `=E66` | 계산값: 15.7202435369318
+- HBM_Demand!F19 | 수식: `=F66` | 계산값: 19.3438554878049
+- HBM_Demand!G19 | 수식: `=G66` | 계산값: 20.5066769802632
+- HBM_Demand!A20 | 값: GOOGL
+- HBM_Demand!C20 | 수식: `=C98` | 계산값: 12.1176
+- HBM_Demand!D20 | 수식: `=D98` | 계산값: 30.9908006808511
+- HBM_Demand!E20 | 수식: `=E98` | 계산값: 36.3785106623377
+- HBM_Demand!F20 | 수식: `=F98` | 계산값: 45.419919804878
+- HBM_Demand!G20 | 수식: `=G98` | 계산값: 47.1574777357895
+- HBM_Demand!A21 | 값: AMZN
+- HBM_Demand!C21 | 수식: `=C130` | 계산값: 9.342432
+- HBM_Demand!D21 | 수식: `=D130` | 계산값: 20.8460385497872
+- HBM_Demand!E21 | 수식: `=E130` | 계산값: 23.13266688
+- HBM_Demand!F21 | 수식: `=F130` | 계산값: 23.9878192149902
+- HBM_Demand!G21 | 수식: `=G130` | 계산값: 27.8173150481785
+- HBM_Demand!A22 | 값: META
+- HBM_Demand!C22 | 수식: `=C162` | 계산값: 4.18256666666667
+- HBM_Demand!D22 | 수식: `=D162` | 계산값: 9.10807676595745
+- HBM_Demand!E22 | 수식: `=E162` | 계산값: 11.1675168
+- HBM_Demand!F22 | 수식: `=F162` | 계산값: 13.4918484436773
+- HBM_Demand!G22 | 수식: `=G162` | 계산값: 14.3028869335579
+- HBM_Demand!A24 | 값: 전체 시장 환산 및 공급사 매출 (섹션 구분 행 — 회색 채우기)
+- HBM_Demand!A25 | 값: 글로벌 HBM 시장 ($B) = 빅4 ÷ 빅4 비중
+- HBM_Demand!C25 | 수식: `=IF(HBM_Inputs!C31=0,0,C11/HBM_Inputs!C31)` | 계산값: 57.1285066666667
+- HBM_Demand!D25 | 수식: `=IF(HBM_Inputs!D31=0,0,D11/HBM_Inputs!D31)` | 계산값: 134.210685000258
+- HBM_Demand!E25 | 수식: `=IF(HBM_Inputs!E31=0,0,E11/HBM_Inputs!E31)` | 계산값: 157.088977962308
+- HBM_Demand!F25 | 수식: `=IF(HBM_Inputs!F31=0,0,F11/HBM_Inputs!F31)` | 계산값: 185.897169002455
+- HBM_Demand!G25 | 수식: `=IF(HBM_Inputs!G31=0,0,G11/HBM_Inputs!G31)` | 계산값: 199.607921268707
+- HBM_Demand!A26 | 값:   YoY
+- HBM_Demand!D26 | 수식: `=IF(C25=0,0,D25/C25-1)` | 계산값: 1.34927696926073
+- HBM_Demand!E26 | 수식: `=IF(D25=0,0,E25/D25-1)` | 계산값: 0.170465510715531
+- HBM_Demand!F26 | 수식: `=IF(E25=0,0,F25/E25-1)` | 계산값: 0.183387729768407
+- HBM_Demand!G26 | 수식: `=IF(F25=0,0,G25/F25-1)` | 계산값: 0.0737544973913569
+- HBM_Demand!A27 | 값: 글로벌 HBM 수요 (EB)
+- HBM_Demand!C27 | 수식: `=IF(HBM_Inputs!C31=0,0,C8/HBM_Inputs!C31)` | 계산값: 5.41687175757576
+- HBM_Demand!D27 | 수식: `=IF(HBM_Inputs!D31=0,0,D8/HBM_Inputs!D31)` | 계산값: 6.90582562849774
+- HBM_Demand!E27 | 수식: `=IF(HBM_Inputs!E31=0,0,E8/HBM_Inputs!E31)` | 계산값: 8.52420491169569
+- HBM_Demand!F27 | 수식: `=IF(HBM_Inputs!F31=0,0,F8/HBM_Inputs!F31)` | 계산값: 9.9011297305052
+- HBM_Demand!G27 | 수식: `=IF(HBM_Inputs!G31=0,0,G8/HBM_Inputs!G31)` | 계산값: 11.2674412317305
+- HBM_Demand!A28 | 값: SK hynix HBM 매출 ($B)
+- HBM_Demand!C28 | 수식: `=C25*HBM_Inputs!C24` | 계산값: 28.5642533333333
+- HBM_Demand!D28 | 수식: `=D25*HBM_Inputs!D24` | 계산값: 63.0790219501212
+- HBM_Demand!E28 | 수식: `=E25*HBM_Inputs!E24` | 계산값: 70.6900400830387
+- HBM_Demand!F28 | 수식: `=F25*HBM_Inputs!F24` | 계산값: 81.7947543610803
+- HBM_Demand!G28 | 수식: `=G25*HBM_Inputs!G24` | 계산값: 85.8314061455442
+- HBM_Demand!A29 | 값: Samsung HBM 매출 ($B)
+- HBM_Demand!C29 | 수식: `=C25*HBM_Inputs!C25` | 계산값: 18.2811221333333
+- HBM_Demand!D29 | 수식: `=D25*HBM_Inputs!D25` | 계산값: 45.6316329000877
+- HBM_Demand!E29 | 수식: `=E25*HBM_Inputs!E25` | 계산값: 54.9811422868079
+- HBM_Demand!F29 | 수식: `=F25*HBM_Inputs!F25` | 계산값: 66.9229808408839
+- HBM_Demand!G29 | 수식: `=G25*HBM_Inputs!G25` | 계산값: 71.8588516567347
+- HBM_Demand!A30 | 값: Micron HBM 매출 ($B)
+- HBM_Demand!C30 | 수식: `=C25*HBM_Inputs!C26` | 계산값: 10.2831312
+- HBM_Demand!D30 | 수식: `=D25*HBM_Inputs!D26` | 계산값: 25.500030150049
+- HBM_Demand!E30 | 수식: `=E25*HBM_Inputs!E26` | 계산값: 31.4177955924616
+- HBM_Demand!F30 | 수식: `=F25*HBM_Inputs!F26` | 계산값: 37.179433800491
+- HBM_Demand!G30 | 수식: `=G25*HBM_Inputs!G26` | 계산값: 41.9176634664286
+- HBM_Demand!A31 | 값:   (참고) 빅4 향 매출만: 위 × 빅4 비중
+- HBM_Demand!A32 | 값:   SK hynix — 빅4 향 ($B)
+- HBM_Demand!C32 | 수식: `=C11*HBM_Inputs!C24` | 계산값: 15.7103393333333
+- HBM_Demand!D32 | 수식: `=D11*HBM_Inputs!D24` | 계산값: 34.6934620725667
+- HBM_Demand!E32 | 수식: `=E11*HBM_Inputs!E24` | 계산값: 38.8795220456713
+- HBM_Demand!F32 | 수식: `=F11*HBM_Inputs!F24` | 계산값: 44.9871148985942
+- HBM_Demand!G32 | 수식: `=G11*HBM_Inputs!G24` | 계산값: 47.2072733800493
+- HBM_Demand!A33 | 값:   Samsung — 빅4 향 ($B)
+- HBM_Demand!C33 | 수식: `=C11*HBM_Inputs!C25` | 계산값: 10.0546171733333
+- HBM_Demand!D33 | 수식: `=D11*HBM_Inputs!D25` | 계산값: 25.0973980950482
+- HBM_Demand!E33 | 수식: `=E11*HBM_Inputs!E25` | 계산값: 30.2396282577443
+- HBM_Demand!F33 | 수식: `=F11*HBM_Inputs!F25` | 계산값: 36.8076394624861
+- HBM_Demand!G33 | 수식: `=G11*HBM_Inputs!G25` | 계산값: 39.5223684112041
+- HBM_Demand!A34 | 값:   Micron — 빅4 향 ($B)
+- HBM_Demand!C34 | 수식: `=C11*HBM_Inputs!C26` | 계산값: 5.65572216
+- HBM_Demand!D34 | 수식: `=D11*HBM_Inputs!D26` | 계산값: 14.025016582527
+- HBM_Demand!E34 | 수식: `=E11*HBM_Inputs!E26` | 계산값: 17.2797875758539
+- HBM_Demand!F34 | 수식: `=F11*HBM_Inputs!F26` | 계산값: 20.4486885902701
+- HBM_Demand!G34 | 수식: `=G11*HBM_Inputs!G26` | 계산값: 23.0547149065357
+- HBM_Demand!A36 | 값: 메모: 교차검증 — TrendForce 2026 HBM 수요 +70% 전망, HBM4 가 2027 주력. 모델의 글로벌 HBM 금액이 업계 전망($50~70B 수준, 2026)과 크게 다르면 ASP/가속기 비중/$/GB를 먼저 점검.
+- HBM_Demand!A40 | 값: MSFT — 서버·칩 capex → 가속기 → HBM (헤더 행 — 남색 채우기)
+- HBM_Demand!C40 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Demand!D40 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Demand!E40 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Demand!F40 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Demand!G40 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Demand!A41 | 값: 서버·칩 capex ($B)
+- HBM_Demand!C41 | 수식: `=MSFT!C19` | 계산값: 117.25
+- HBM_Demand!D41 | 수식: `=MSFT!D19` | 계산값: 146.5625
+- HBM_Demand!E41 | 수식: `=MSFT!E19` | 계산값: 163.515625
+- HBM_Demand!F41 | 수식: `=MSFT!F19` | 계산값: 179.8671875
+- HBM_Demand!G41 | 수식: `=MSFT!G19` | 계산값: 188.860546875
+- HBM_Demand!A42 | 값: AI 가속기 capex ($B)
+- HBM_Demand!C42 | 수식: `=C41*HBM_Inputs!$B$35` | 계산값: 82.075
+- HBM_Demand!D42 | 수식: `=D41*HBM_Inputs!$B$35` | 계산값: 102.59375
+- HBM_Demand!E42 | 수식: `=E41*HBM_Inputs!$B$35` | 계산값: 114.4609375
+- HBM_Demand!F42 | 수식: `=F41*HBM_Inputs!$B$35` | 계산값: 125.90703125
+- HBM_Demand!G42 | 수식: `=G41*HBM_Inputs!$B$35` | 계산값: 132.2023828125
+- HBM_Demand!A43 | 값: 가속기 대수 (백만 개)
+- HBM_Demand!A44 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C44 | 수식: `=IF(HBM_Inputs!C6=0,0,C42*HBM_Inputs!C42/HBM_Inputs!C6)` | 계산값: 1.231125
+- HBM_Demand!D44 | 수식: `=IF(HBM_Inputs!D6=0,0,D42*HBM_Inputs!D42/HBM_Inputs!D6)` | 계산값: 0.712456597222222
+- HBM_Demand!E44 | 수식: `=IF(HBM_Inputs!E6=0,0,E42*HBM_Inputs!E42/HBM_Inputs!E6)` | 계산값: 0.17884521484375
+- HBM_Demand!F44 | 수식: `=IF(HBM_Inputs!F6=0,0,F42*HBM_Inputs!F42/HBM_Inputs!F6)` | 계산값: 0
+- HBM_Demand!G44 | 수식: `=IF(HBM_Inputs!G6=0,0,G42*HBM_Inputs!G42/HBM_Inputs!G6)` | 계산값: 0
+- HBM_Demand!A45 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C45 | 수식: `=IF(HBM_Inputs!C7=0,0,C42*HBM_Inputs!C43/HBM_Inputs!C7)` | 계산값: 0.410375
+- HBM_Demand!D45 | 수식: `=IF(HBM_Inputs!D7=0,0,D42*HBM_Inputs!D43/HBM_Inputs!D7)` | 계산값: 0.982280585106383
+- HBM_Demand!E45 | 수식: `=IF(HBM_Inputs!E7=0,0,E42*HBM_Inputs!E43/HBM_Inputs!E7)` | 계산값: 1.04055397727273
+- HBM_Demand!F45 | 수식: `=IF(HBM_Inputs!F7=0,0,F42*HBM_Inputs!F43/HBM_Inputs!F7)` | 계산값: 0.767725800304878
+- HBM_Demand!G45 | 수식: `=IF(HBM_Inputs!G7=0,0,G42*HBM_Inputs!G43/HBM_Inputs!G7)` | 계산값: 0.521851511101974
+- HBM_Demand!A46 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C46 | 수식: `=IF(HBM_Inputs!C8=0,0,C42*HBM_Inputs!C44/HBM_Inputs!C8)` | 계산값: 0
+- HBM_Demand!D46 | 수식: `=IF(HBM_Inputs!D8=0,0,D42*HBM_Inputs!D44/HBM_Inputs!D8)` | 계산값: 0.256484375
+- HBM_Demand!E46 | 수식: `=IF(HBM_Inputs!E8=0,0,E42*HBM_Inputs!E44/HBM_Inputs!E8)` | 계산값: 0.715380859375
+- HBM_Demand!F46 | 수식: `=IF(HBM_Inputs!F8=0,0,F42*HBM_Inputs!F44/HBM_Inputs!F8)` | 계산값: 1.089580078125
+- HBM_Demand!G46 | 수식: `=IF(HBM_Inputs!G8=0,0,G42*HBM_Inputs!G44/HBM_Inputs!G8)` | 계산값: 1.37710815429687
+- HBM_Demand!A47 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C47 | 수식: `=IF(HBM_Inputs!C9=0,0,C42*HBM_Inputs!C45/HBM_Inputs!C9)` | 계산값: 0
+- HBM_Demand!D47 | 수식: `=IF(HBM_Inputs!D9=0,0,D42*HBM_Inputs!D45/HBM_Inputs!D9)` | 계산값: 0
+- HBM_Demand!E47 | 수식: `=IF(HBM_Inputs!E9=0,0,E42*HBM_Inputs!E45/HBM_Inputs!E9)` | 계산값: 0
+- HBM_Demand!F47 | 수식: `=IF(HBM_Inputs!F9=0,0,F42*HBM_Inputs!F45/HBM_Inputs!F9)` | 계산값: 0
+- HBM_Demand!G47 | 수식: `=IF(HBM_Inputs!G9=0,0,G42*HBM_Inputs!G45/HBM_Inputs!G9)` | 계산값: 0
+- HBM_Demand!A48 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C48 | 수식: `=IF(HBM_Inputs!C10=0,0,C42*HBM_Inputs!C46/HBM_Inputs!C10)` | 계산값: 0
+- HBM_Demand!D48 | 수식: `=IF(HBM_Inputs!D10=0,0,D42*HBM_Inputs!D46/HBM_Inputs!D10)` | 계산값: 0
+- HBM_Demand!E48 | 수식: `=IF(HBM_Inputs!E10=0,0,E42*HBM_Inputs!E46/HBM_Inputs!E10)` | 계산값: 0
+- HBM_Demand!F48 | 수식: `=IF(HBM_Inputs!F10=0,0,F42*HBM_Inputs!F46/HBM_Inputs!F10)` | 계산값: 0
+- HBM_Demand!G48 | 수식: `=IF(HBM_Inputs!G10=0,0,G42*HBM_Inputs!G46/HBM_Inputs!G10)` | 계산값: 0
+- HBM_Demand!A49 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C49 | 수식: `=IF(HBM_Inputs!C11=0,0,C42*HBM_Inputs!C47/HBM_Inputs!C11)` | 계산값: 0.410375
+- HBM_Demand!D49 | 수식: `=IF(HBM_Inputs!D11=0,0,D42*HBM_Inputs!D47/HBM_Inputs!D11)` | 계산값: 0.51296875
+- HBM_Demand!E49 | 수식: `=IF(HBM_Inputs!E11=0,0,E42*HBM_Inputs!E47/HBM_Inputs!E11)` | 계산값: 0.817578125
+- HBM_Demand!F49 | 수식: `=IF(HBM_Inputs!F11=0,0,F42*HBM_Inputs!F47/HBM_Inputs!F11)` | 계산값: 1.4527734375
+- HBM_Demand!G49 | 수식: `=IF(HBM_Inputs!G11=0,0,G42*HBM_Inputs!G47/HBM_Inputs!G11)` | 계산값: 1.92795141601562
+- HBM_Demand!A50 | 값:   소계
+- HBM_Demand!C50 | 수식: `=SUM(C44:C49)` | 계산값: 2.051875
+- HBM_Demand!D50 | 수식: `=SUM(D44:D49)` | 계산값: 2.46419030732861
+- HBM_Demand!E50 | 수식: `=SUM(E44:E49)` | 계산값: 2.75235817649148
+- HBM_Demand!F50 | 수식: `=SUM(F44:F49)` | 계산값: 3.31007931592988
+- HBM_Demand!G50 | 수식: `=SUM(G44:G49)` | 계산값: 3.82691108141447
+- HBM_Demand!A51 | 값: HBM 수요 (EB)
+- HBM_Demand!A52 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C52 | 수식: `=C44*HBM_Inputs!$B$6/1000` | 계산값: 0.29547
+- HBM_Demand!D52 | 수식: `=D44*HBM_Inputs!$B$6/1000` | 계산값: 0.170989583333333
+- HBM_Demand!E52 | 수식: `=E44*HBM_Inputs!$B$6/1000` | 계산값: 0.0429228515625
+- HBM_Demand!F52 | 수식: `=F44*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!G52 | 수식: `=G44*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!A53 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C53 | 수식: `=C45*HBM_Inputs!$B$7/1000` | 계산값: 0.118188
+- HBM_Demand!D53 | 수식: `=D45*HBM_Inputs!$B$7/1000` | 계산값: 0.282896808510638
+- HBM_Demand!E53 | 수식: `=E45*HBM_Inputs!$B$7/1000` | 계산값: 0.299679545454545
+- HBM_Demand!F53 | 수식: `=F45*HBM_Inputs!$B$7/1000` | 계산값: 0.221105030487805
+- HBM_Demand!G53 | 수식: `=G45*HBM_Inputs!$B$7/1000` | 계산값: 0.150293235197368
+- HBM_Demand!A54 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C54 | 수식: `=C46*HBM_Inputs!$B$8/1000` | 계산값: 0
+- HBM_Demand!D54 | 수식: `=D46*HBM_Inputs!$B$8/1000` | 계산값: 0.09849
+- HBM_Demand!E54 | 수식: `=E46*HBM_Inputs!$B$8/1000` | 계산값: 0.27470625
+- HBM_Demand!F54 | 수식: `=F46*HBM_Inputs!$B$8/1000` | 계산값: 0.41839875
+- HBM_Demand!G54 | 수식: `=G46*HBM_Inputs!$B$8/1000` | 계산값: 0.52880953125
+- HBM_Demand!A55 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C55 | 수식: `=C47*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!D55 | 수식: `=D47*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!E55 | 수식: `=E47*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!F55 | 수식: `=F47*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!G55 | 수식: `=G47*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!A56 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C56 | 수식: `=C48*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!D56 | 수식: `=D48*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!E56 | 수식: `=E48*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!F56 | 수식: `=F48*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!G56 | 수식: `=G48*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!A57 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C57 | 수식: `=C49*HBM_Inputs!$B$11/1000` | 계산값: 0.105056
+- HBM_Demand!D57 | 수식: `=D49*HBM_Inputs!$B$11/1000` | 계산값: 0.13132
+- HBM_Demand!E57 | 수식: `=E49*HBM_Inputs!$B$11/1000` | 계산값: 0.2093
+- HBM_Demand!F57 | 수식: `=F49*HBM_Inputs!$B$11/1000` | 계산값: 0.37191
+- HBM_Demand!G57 | 수식: `=G49*HBM_Inputs!$B$11/1000` | 계산값: 0.4935555625
+- HBM_Demand!A58 | 값:   소계
+- HBM_Demand!C58 | 수식: `=SUM(C52:C57)` | 계산값: 0.518714
+- HBM_Demand!D58 | 수식: `=SUM(D52:D57)` | 계산값: 0.683696391843972
+- HBM_Demand!E58 | 수식: `=SUM(E52:E57)` | 계산값: 0.826608647017045
+- HBM_Demand!F58 | 수식: `=SUM(F52:F57)` | 계산값: 1.0114137804878
+- HBM_Demand!G58 | 수식: `=SUM(G52:G57)` | 계산값: 1.17265832894737
+- HBM_Demand!A59 | 값: HBM 금액 ($B)
+- HBM_Demand!A60 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C60 | 수식: `=IFERROR(C52*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.9547
+- HBM_Demand!D60 | 수식: `=IFERROR(D52*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.22286458333333
+- HBM_Demand!E60 | 수식: `=IFERROR(E52*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.51507421875
+- HBM_Demand!F60 | 수식: `=IFERROR(F52*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G60 | 수식: `=IFERROR(G52*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A61 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C61 | 수식: `=IFERROR(C53*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.77282
+- HBM_Demand!D61 | 수식: `=IFERROR(D53*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 5.65793617021277
+- HBM_Demand!E61 | 수식: `=IFERROR(E53*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 5.39423181818182
+- HBM_Demand!F61 | 수식: `=IFERROR(F53*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.53768048780488
+- HBM_Demand!G61 | 수식: `=IFERROR(G53*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.10410529276316
+- HBM_Demand!A62 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C62 | 수식: `=IFERROR(C54*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D62 | 수식: `=IFERROR(D54*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.36376
+- HBM_Demand!E62 | 수식: `=IFERROR(E54*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 6.0435375
+- HBM_Demand!F62 | 수식: `=IFERROR(F54*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 8.367975
+- HBM_Demand!G62 | 수식: `=IFERROR(G54*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 9.5185715625
+- HBM_Demand!A63 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C63 | 수식: `=IFERROR(C55*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D63 | 수식: `=IFERROR(D55*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E63 | 수식: `=IFERROR(E55*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F63 | 수식: `=IFERROR(F55*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G63 | 수식: `=IFERROR(G55*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A64 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C64 | 수식: `=IFERROR(C56*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D64 | 수식: `=IFERROR(D56*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E64 | 수식: `=IFERROR(E56*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F64 | 수식: `=IFERROR(F56*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G64 | 수식: `=IFERROR(G56*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A65 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C65 | 수식: `=IFERROR(C57*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.05056
+- HBM_Demand!D65 | 수식: `=IFERROR(D57*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.6264
+- HBM_Demand!E65 | 수식: `=IFERROR(E57*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.7674
+- HBM_Demand!F65 | 수식: `=IFERROR(F57*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 7.4382
+- HBM_Demand!G65 | 수식: `=IFERROR(G57*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 8.884000125
+- HBM_Demand!A66 | 값:   소계
+- HBM_Demand!C66 | 수식: `=SUM(C60:C65)` | 계산값: 5.77808
+- HBM_Demand!D66 | 수식: `=SUM(D60:D65)` | 계산값: 12.8709607535461
+- HBM_Demand!E66 | 수식: `=SUM(E60:E65)` | 계산값: 15.7202435369318
+- HBM_Demand!F66 | 수식: `=SUM(F60:F65)` | 계산값: 19.3438554878049
+- HBM_Demand!G66 | 수식: `=SUM(G60:G65)` | 계산값: 20.5066769802632
+- HBM_Demand!A67 | 값:   세대별 금액 ($B)
+- HBM_Demand!A68 | 값:     HBM3E
+- HBM_Demand!C68 | 수식: `=IF(HBM_Inputs!H6="HBM3E",C60,0)+IF(HBM_Inputs!H7="HBM3E",C61,0)+IF(HBM_Inputs!H8="HBM3E",C62,0)+IF(HBM_Inputs!H9="HBM3E",C63,0)+IF(HBM_Inputs!H10="HBM3E",C64,0)+IF(HBM_Inputs!H11="HBM3E",C65,0)` | 계산값: 4.00526
+- HBM_Demand!D68 | 수식: `=IF(HBM_Inputs!I6="HBM3E",D60,0)+IF(HBM_Inputs!I7="HBM3E",D61,0)+IF(HBM_Inputs!I8="HBM3E",D62,0)+IF(HBM_Inputs!I9="HBM3E",D63,0)+IF(HBM_Inputs!I10="HBM3E",D64,0)+IF(HBM_Inputs!I11="HBM3E",D65,0)` | 계산값: 2.22286458333333
+- HBM_Demand!E68 | 수식: `=IF(HBM_Inputs!J6="HBM3E",E60,0)+IF(HBM_Inputs!J7="HBM3E",E61,0)+IF(HBM_Inputs!J8="HBM3E",E62,0)+IF(HBM_Inputs!J9="HBM3E",E63,0)+IF(HBM_Inputs!J10="HBM3E",E64,0)+IF(HBM_Inputs!J11="HBM3E",E65,0)` | 계산값: 0.51507421875
+- HBM_Demand!F68 | 수식: `=IF(HBM_Inputs!K6="HBM3E",F60,0)+IF(HBM_Inputs!K7="HBM3E",F61,0)+IF(HBM_Inputs!K8="HBM3E",F62,0)+IF(HBM_Inputs!K9="HBM3E",F63,0)+IF(HBM_Inputs!K10="HBM3E",F64,0)+IF(HBM_Inputs!K11="HBM3E",F65,0)` | 계산값: 0
+- HBM_Demand!G68 | 수식: `=IF(HBM_Inputs!L6="HBM3E",G60,0)+IF(HBM_Inputs!L7="HBM3E",G61,0)+IF(HBM_Inputs!L8="HBM3E",G62,0)+IF(HBM_Inputs!L9="HBM3E",G63,0)+IF(HBM_Inputs!L10="HBM3E",G64,0)+IF(HBM_Inputs!L11="HBM3E",G65,0)` | 계산값: 0
+- HBM_Demand!A69 | 값:     HBM4
+- HBM_Demand!C69 | 수식: `=IF(HBM_Inputs!H6="HBM4",C60,0)+IF(HBM_Inputs!H7="HBM4",C61,0)+IF(HBM_Inputs!H8="HBM4",C62,0)+IF(HBM_Inputs!H9="HBM4",C63,0)+IF(HBM_Inputs!H10="HBM4",C64,0)+IF(HBM_Inputs!H11="HBM4",C65,0)` | 계산값: 1.77282
+- HBM_Demand!D69 | 수식: `=IF(HBM_Inputs!I6="HBM4",D60,0)+IF(HBM_Inputs!I7="HBM4",D61,0)+IF(HBM_Inputs!I8="HBM4",D62,0)+IF(HBM_Inputs!I9="HBM4",D63,0)+IF(HBM_Inputs!I10="HBM4",D64,0)+IF(HBM_Inputs!I11="HBM4",D65,0)` | 계산값: 8.28433617021277
+- HBM_Demand!E69 | 수식: `=IF(HBM_Inputs!J6="HBM4",E60,0)+IF(HBM_Inputs!J7="HBM4",E61,0)+IF(HBM_Inputs!J8="HBM4",E62,0)+IF(HBM_Inputs!J9="HBM4",E63,0)+IF(HBM_Inputs!J10="HBM4",E64,0)+IF(HBM_Inputs!J11="HBM4",E65,0)` | 계산값: 9.16163181818182
+- HBM_Demand!F69 | 수식: `=IF(HBM_Inputs!K6="HBM4",F60,0)+IF(HBM_Inputs!K7="HBM4",F61,0)+IF(HBM_Inputs!K8="HBM4",F62,0)+IF(HBM_Inputs!K9="HBM4",F63,0)+IF(HBM_Inputs!K10="HBM4",F64,0)+IF(HBM_Inputs!K11="HBM4",F65,0)` | 계산값: 3.53768048780488
+- HBM_Demand!G69 | 수식: `=IF(HBM_Inputs!L6="HBM4",G60,0)+IF(HBM_Inputs!L7="HBM4",G61,0)+IF(HBM_Inputs!L8="HBM4",G62,0)+IF(HBM_Inputs!L9="HBM4",G63,0)+IF(HBM_Inputs!L10="HBM4",G64,0)+IF(HBM_Inputs!L11="HBM4",G65,0)` | 계산값: 2.10410529276316
+- HBM_Demand!A70 | 값:     HBM4E
+- HBM_Demand!C70 | 수식: `=IF(HBM_Inputs!H6="HBM4E",C60,0)+IF(HBM_Inputs!H7="HBM4E",C61,0)+IF(HBM_Inputs!H8="HBM4E",C62,0)+IF(HBM_Inputs!H9="HBM4E",C63,0)+IF(HBM_Inputs!H10="HBM4E",C64,0)+IF(HBM_Inputs!H11="HBM4E",C65,0)` | 계산값: 0
+- HBM_Demand!D70 | 수식: `=IF(HBM_Inputs!I6="HBM4E",D60,0)+IF(HBM_Inputs!I7="HBM4E",D61,0)+IF(HBM_Inputs!I8="HBM4E",D62,0)+IF(HBM_Inputs!I9="HBM4E",D63,0)+IF(HBM_Inputs!I10="HBM4E",D64,0)+IF(HBM_Inputs!I11="HBM4E",D65,0)` | 계산값: 2.36376
+- HBM_Demand!E70 | 수식: `=IF(HBM_Inputs!J6="HBM4E",E60,0)+IF(HBM_Inputs!J7="HBM4E",E61,0)+IF(HBM_Inputs!J8="HBM4E",E62,0)+IF(HBM_Inputs!J9="HBM4E",E63,0)+IF(HBM_Inputs!J10="HBM4E",E64,0)+IF(HBM_Inputs!J11="HBM4E",E65,0)` | 계산값: 6.0435375
+- HBM_Demand!F70 | 수식: `=IF(HBM_Inputs!K6="HBM4E",F60,0)+IF(HBM_Inputs!K7="HBM4E",F61,0)+IF(HBM_Inputs!K8="HBM4E",F62,0)+IF(HBM_Inputs!K9="HBM4E",F63,0)+IF(HBM_Inputs!K10="HBM4E",F64,0)+IF(HBM_Inputs!K11="HBM4E",F65,0)` | 계산값: 15.806175
+- HBM_Demand!G70 | 수식: `=IF(HBM_Inputs!L6="HBM4E",G60,0)+IF(HBM_Inputs!L7="HBM4E",G61,0)+IF(HBM_Inputs!L8="HBM4E",G62,0)+IF(HBM_Inputs!L9="HBM4E",G63,0)+IF(HBM_Inputs!L10="HBM4E",G64,0)+IF(HBM_Inputs!L11="HBM4E",G65,0)` | 계산값: 18.4025716875
+- HBM_Demand!A72 | 값: GOOGL — 서버·칩 capex → 가속기 → HBM (헤더 행 — 남색 채우기)
+- HBM_Demand!C72 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Demand!D72 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Demand!E72 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Demand!F72 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Demand!G72 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Demand!A73 | 값: 서버·칩 capex ($B)
+- HBM_Demand!C73 | 수식: `=GOOGL!C19` | 계산값: 120
+- HBM_Demand!D73 | 수식: `=GOOGL!D19` | 계산값: 156
+- HBM_Demand!E73 | 수식: `=GOOGL!E19` | 계산값: 179.4
+- HBM_Demand!F73 | 수식: `=GOOGL!F19` | 계산값: 197.34
+- HBM_Demand!G73 | 수식: `=GOOGL!G19` | 계산값: 207.207
+- HBM_Demand!A74 | 값: AI 가속기 capex ($B)
+- HBM_Demand!C74 | 수식: `=C73*HBM_Inputs!$B$36` | 계산값: 90
+- HBM_Demand!D74 | 수식: `=D73*HBM_Inputs!$B$36` | 계산값: 117
+- HBM_Demand!E74 | 수식: `=E73*HBM_Inputs!$B$36` | 계산값: 134.55
+- HBM_Demand!F74 | 수식: `=F73*HBM_Inputs!$B$36` | 계산값: 148.005
+- HBM_Demand!G74 | 수식: `=G73*HBM_Inputs!$B$36` | 계산값: 155.40525
+- HBM_Demand!A75 | 값: 가속기 대수 (백만 개)
+- HBM_Demand!A76 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C76 | 수식: `=IF(HBM_Inputs!C6=0,0,C74*HBM_Inputs!C51/HBM_Inputs!C6)` | 계산값: 0.675
+- HBM_Demand!D76 | 수식: `=IF(HBM_Inputs!D6=0,0,D74*HBM_Inputs!D51/HBM_Inputs!D6)` | 계산값: 0.325
+- HBM_Demand!E76 | 수식: `=IF(HBM_Inputs!E6=0,0,E74*HBM_Inputs!E51/HBM_Inputs!E6)` | 계산값: 0.126140625
+- HBM_Demand!F76 | 수식: `=IF(HBM_Inputs!F6=0,0,F74*HBM_Inputs!F51/HBM_Inputs!F6)` | 계산값: 0
+- HBM_Demand!G76 | 수식: `=IF(HBM_Inputs!G6=0,0,G74*HBM_Inputs!G51/HBM_Inputs!G6)` | 계산값: 0
+- HBM_Demand!A77 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C77 | 수식: `=IF(HBM_Inputs!C7=0,0,C74*HBM_Inputs!C52/HBM_Inputs!C7)` | 계산값: 0.18
+- HBM_Demand!D77 | 수식: `=IF(HBM_Inputs!D7=0,0,D74*HBM_Inputs!D52/HBM_Inputs!D7)` | 계산값: 0.497872340425532
+- HBM_Demand!E77 | 수식: `=IF(HBM_Inputs!E7=0,0,E74*HBM_Inputs!E52/HBM_Inputs!E7)` | 계산값: 0.458693181818182
+- HBM_Demand!F77 | 수식: `=IF(HBM_Inputs!F7=0,0,F74*HBM_Inputs!F52/HBM_Inputs!F7)` | 계산값: 0.360987804878049
+- HBM_Demand!G77 | 수식: `=IF(HBM_Inputs!G7=0,0,G74*HBM_Inputs!G52/HBM_Inputs!G7)` | 계산값: 0.327168947368421
+- HBM_Demand!A78 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C78 | 수식: `=IF(HBM_Inputs!C8=0,0,C74*HBM_Inputs!C53/HBM_Inputs!C8)` | 계산값: 0
+- HBM_Demand!D78 | 수식: `=IF(HBM_Inputs!D8=0,0,D74*HBM_Inputs!D53/HBM_Inputs!D8)` | 계산값: 0.156
+- HBM_Demand!E78 | 수식: `=IF(HBM_Inputs!E8=0,0,E74*HBM_Inputs!E53/HBM_Inputs!E8)` | 계산값: 0.360401785714286
+- HBM_Demand!F78 | 수식: `=IF(HBM_Inputs!F8=0,0,F74*HBM_Inputs!F53/HBM_Inputs!F8)` | 계산값: 0.512325
+- HBM_Demand!G78 | 수식: `=IF(HBM_Inputs!G8=0,0,G74*HBM_Inputs!G53/HBM_Inputs!G8)` | 계산값: 0.647521875
+- HBM_Demand!A79 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C79 | 수식: `=IF(HBM_Inputs!C9=0,0,C74*HBM_Inputs!C54/HBM_Inputs!C9)` | 계산값: 4.5
+- HBM_Demand!D79 | 수식: `=IF(HBM_Inputs!D9=0,0,D74*HBM_Inputs!D54/HBM_Inputs!D9)` | 계산값: 5.85
+- HBM_Demand!E79 | 수식: `=IF(HBM_Inputs!E9=0,0,E74*HBM_Inputs!E54/HBM_Inputs!E9)` | 계산값: 7.58372727272727
+- HBM_Demand!F79 | 수식: `=IF(HBM_Inputs!F9=0,0,F74*HBM_Inputs!F54/HBM_Inputs!F9)` | 계산값: 8.74575
+- HBM_Demand!G79 | 수식: `=IF(HBM_Inputs!G9=0,0,G74*HBM_Inputs!G54/HBM_Inputs!G9)` | 계산값: 10.10134125
+- HBM_Demand!A80 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C80 | 수식: `=IF(HBM_Inputs!C10=0,0,C74*HBM_Inputs!C55/HBM_Inputs!C10)` | 계산값: 0
+- HBM_Demand!D80 | 수식: `=IF(HBM_Inputs!D10=0,0,D74*HBM_Inputs!D55/HBM_Inputs!D10)` | 계산값: 0
+- HBM_Demand!E80 | 수식: `=IF(HBM_Inputs!E10=0,0,E74*HBM_Inputs!E55/HBM_Inputs!E10)` | 계산값: 0
+- HBM_Demand!F80 | 수식: `=IF(HBM_Inputs!F10=0,0,F74*HBM_Inputs!F55/HBM_Inputs!F10)` | 계산값: 0
+- HBM_Demand!G80 | 수식: `=IF(HBM_Inputs!G10=0,0,G74*HBM_Inputs!G55/HBM_Inputs!G10)` | 계산값: 0
+- HBM_Demand!A81 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C81 | 수식: `=IF(HBM_Inputs!C11=0,0,C74*HBM_Inputs!C56/HBM_Inputs!C11)` | 계산값: 0
+- HBM_Demand!D81 | 수식: `=IF(HBM_Inputs!D11=0,0,D74*HBM_Inputs!D56/HBM_Inputs!D11)` | 계산값: 0.078
+- HBM_Demand!E81 | 수식: `=IF(HBM_Inputs!E11=0,0,E74*HBM_Inputs!E56/HBM_Inputs!E11)` | 계산값: 0.240267857142857
+- HBM_Demand!F81 | 수식: `=IF(HBM_Inputs!F11=0,0,F74*HBM_Inputs!F56/HBM_Inputs!F11)` | 계산값: 0.398475
+- HBM_Demand!G81 | 수식: `=IF(HBM_Inputs!G11=0,0,G74*HBM_Inputs!G56/HBM_Inputs!G11)` | 계산값: 0.4532653125
+- HBM_Demand!A82 | 값:   소계
+- HBM_Demand!C82 | 수식: `=SUM(C76:C81)` | 계산값: 5.355
+- HBM_Demand!D82 | 수식: `=SUM(D76:D81)` | 계산값: 6.90687234042553
+- HBM_Demand!E82 | 수식: `=SUM(E76:E81)` | 계산값: 8.7692307224026
+- HBM_Demand!F82 | 수식: `=SUM(F76:F81)` | 계산값: 10.017537804878
+- HBM_Demand!G82 | 수식: `=SUM(G76:G81)` | 계산값: 11.5292973848684
+- HBM_Demand!A83 | 값: HBM 수요 (EB)
+- HBM_Demand!A84 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C84 | 수식: `=C76*HBM_Inputs!$B$6/1000` | 계산값: 0.162
+- HBM_Demand!D84 | 수식: `=D76*HBM_Inputs!$B$6/1000` | 계산값: 0.078
+- HBM_Demand!E84 | 수식: `=E76*HBM_Inputs!$B$6/1000` | 계산값: 0.03027375
+- HBM_Demand!F84 | 수식: `=F76*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!G84 | 수식: `=G76*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!A85 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C85 | 수식: `=C77*HBM_Inputs!$B$7/1000` | 계산값: 0.05184
+- HBM_Demand!D85 | 수식: `=D77*HBM_Inputs!$B$7/1000` | 계산값: 0.143387234042553
+- HBM_Demand!E85 | 수식: `=E77*HBM_Inputs!$B$7/1000` | 계산값: 0.132103636363636
+- HBM_Demand!F85 | 수식: `=F77*HBM_Inputs!$B$7/1000` | 계산값: 0.103964487804878
+- HBM_Demand!G85 | 수식: `=G77*HBM_Inputs!$B$7/1000` | 계산값: 0.0942246568421053
+- HBM_Demand!A86 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C86 | 수식: `=C78*HBM_Inputs!$B$8/1000` | 계산값: 0
+- HBM_Demand!D86 | 수식: `=D78*HBM_Inputs!$B$8/1000` | 계산값: 0.059904
+- HBM_Demand!E86 | 수식: `=E78*HBM_Inputs!$B$8/1000` | 계산값: 0.138394285714286
+- HBM_Demand!F86 | 수식: `=F78*HBM_Inputs!$B$8/1000` | 계산값: 0.1967328
+- HBM_Demand!G86 | 수식: `=G78*HBM_Inputs!$B$8/1000` | 계산값: 0.2486484
+- HBM_Demand!A87 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C87 | 수식: `=C79*HBM_Inputs!$B$9/1000` | 계산값: 0.972
+- HBM_Demand!D87 | 수식: `=D79*HBM_Inputs!$B$9/1000` | 계산값: 1.2636
+- HBM_Demand!E87 | 수식: `=E79*HBM_Inputs!$B$9/1000` | 계산값: 1.63808509090909
+- HBM_Demand!F87 | 수식: `=F79*HBM_Inputs!$B$9/1000` | 계산값: 1.889082
+- HBM_Demand!G87 | 수식: `=G79*HBM_Inputs!$B$9/1000` | 계산값: 2.18188971
+- HBM_Demand!A88 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C88 | 수식: `=C80*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!D88 | 수식: `=D80*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!E88 | 수식: `=E80*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!F88 | 수식: `=F80*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!G88 | 수식: `=G80*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!A89 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C89 | 수식: `=C81*HBM_Inputs!$B$11/1000` | 계산값: 0
+- HBM_Demand!D89 | 수식: `=D81*HBM_Inputs!$B$11/1000` | 계산값: 0.019968
+- HBM_Demand!E89 | 수식: `=E81*HBM_Inputs!$B$11/1000` | 계산값: 0.0615085714285714
+- HBM_Demand!F89 | 수식: `=F81*HBM_Inputs!$B$11/1000` | 계산값: 0.1020096
+- HBM_Demand!G89 | 수식: `=G81*HBM_Inputs!$B$11/1000` | 계산값: 0.11603592
+- HBM_Demand!A90 | 값:   소계
+- HBM_Demand!C90 | 수식: `=SUM(C84:C89)` | 계산값: 1.18584
+- HBM_Demand!D90 | 수식: `=SUM(D84:D89)` | 계산값: 1.56485923404255
+- HBM_Demand!E90 | 수식: `=SUM(E84:E89)` | 계산값: 2.00036533441558
+- HBM_Demand!F90 | 수식: `=SUM(F84:F89)` | 계산값: 2.29178888780488
+- HBM_Demand!G90 | 수식: `=SUM(G84:G89)` | 계산값: 2.64079868684211
+- HBM_Demand!A91 | 값: HBM 금액 ($B)
+- HBM_Demand!A92 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C92 | 수식: `=IFERROR(C84*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.62
+- HBM_Demand!D92 | 수식: `=IFERROR(D84*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.014
+- HBM_Demand!E92 | 수식: `=IFERROR(E84*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.363285
+- HBM_Demand!F92 | 수식: `=IFERROR(F84*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G92 | 수식: `=IFERROR(G84*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A93 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C93 | 수식: `=IFERROR(C85*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.7776
+- HBM_Demand!D93 | 수식: `=IFERROR(D85*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.86774468085106
+- HBM_Demand!E93 | 수식: `=IFERROR(E85*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.37786545454546
+- HBM_Demand!F93 | 수식: `=IFERROR(F85*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.66343180487805
+- HBM_Demand!G93 | 수식: `=IFERROR(G85*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.31914519578947
+- HBM_Demand!A94 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C94 | 수식: `=IFERROR(C86*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D94 | 수식: `=IFERROR(D86*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.437696
+- HBM_Demand!E94 | 수식: `=IFERROR(E86*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.04467428571429
+- HBM_Demand!F94 | 수식: `=IFERROR(F86*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.934656
+- HBM_Demand!G94 | 수식: `=IFERROR(G86*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 4.4756712
+- HBM_Demand!A95 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C95 | 수식: `=IFERROR(C87*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 9.72
+- HBM_Demand!D95 | 수식: `=IFERROR(D87*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 25.272
+- HBM_Demand!E95 | 수식: `=IFERROR(E87*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 29.4855316363636
+- HBM_Demand!F95 | 수식: `=IFERROR(F87*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 37.78164
+- HBM_Demand!G95 | 수식: `=IFERROR(G87*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 39.27401478
+- HBM_Demand!A96 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C96 | 수식: `=IFERROR(C88*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D96 | 수식: `=IFERROR(D88*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E96 | 수식: `=IFERROR(E88*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F96 | 수식: `=IFERROR(F88*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G96 | 수식: `=IFERROR(G88*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A97 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C97 | 수식: `=IFERROR(C89*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D97 | 수식: `=IFERROR(D89*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.39936
+- HBM_Demand!E97 | 수식: `=IFERROR(E89*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.10715428571429
+- HBM_Demand!F97 | 수식: `=IFERROR(F89*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.040192
+- HBM_Demand!G97 | 수식: `=IFERROR(G89*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.08864656
+- HBM_Demand!A98 | 값:   소계
+- HBM_Demand!C98 | 수식: `=SUM(C92:C97)` | 계산값: 12.1176
+- HBM_Demand!D98 | 수식: `=SUM(D92:D97)` | 계산값: 30.9908006808511
+- HBM_Demand!E98 | 수식: `=SUM(E92:E97)` | 계산값: 36.3785106623377
+- HBM_Demand!F98 | 수식: `=SUM(F92:F97)` | 계산값: 45.419919804878
+- HBM_Demand!G98 | 수식: `=SUM(G92:G97)` | 계산값: 47.1574777357895
+- HBM_Demand!A99 | 값:   세대별 금액 ($B)
+- HBM_Demand!A100 | 값:     HBM3E
+- HBM_Demand!C100 | 수식: `=IF(HBM_Inputs!H6="HBM3E",C92,0)+IF(HBM_Inputs!H7="HBM3E",C93,0)+IF(HBM_Inputs!H8="HBM3E",C94,0)+IF(HBM_Inputs!H9="HBM3E",C95,0)+IF(HBM_Inputs!H10="HBM3E",C96,0)+IF(HBM_Inputs!H11="HBM3E",C97,0)` | 계산값: 11.34
+- HBM_Demand!D100 | 수식: `=IF(HBM_Inputs!I6="HBM3E",D92,0)+IF(HBM_Inputs!I7="HBM3E",D93,0)+IF(HBM_Inputs!I8="HBM3E",D94,0)+IF(HBM_Inputs!I9="HBM3E",D95,0)+IF(HBM_Inputs!I10="HBM3E",D96,0)+IF(HBM_Inputs!I11="HBM3E",D97,0)` | 계산값: 1.014
+- HBM_Demand!E100 | 수식: `=IF(HBM_Inputs!J6="HBM3E",E92,0)+IF(HBM_Inputs!J7="HBM3E",E93,0)+IF(HBM_Inputs!J8="HBM3E",E94,0)+IF(HBM_Inputs!J9="HBM3E",E95,0)+IF(HBM_Inputs!J10="HBM3E",E96,0)+IF(HBM_Inputs!J11="HBM3E",E97,0)` | 계산값: 0.363285
+- HBM_Demand!F100 | 수식: `=IF(HBM_Inputs!K6="HBM3E",F92,0)+IF(HBM_Inputs!K7="HBM3E",F93,0)+IF(HBM_Inputs!K8="HBM3E",F94,0)+IF(HBM_Inputs!K9="HBM3E",F95,0)+IF(HBM_Inputs!K10="HBM3E",F96,0)+IF(HBM_Inputs!K11="HBM3E",F97,0)` | 계산값: 0
+- HBM_Demand!G100 | 수식: `=IF(HBM_Inputs!L6="HBM3E",G92,0)+IF(HBM_Inputs!L7="HBM3E",G93,0)+IF(HBM_Inputs!L8="HBM3E",G94,0)+IF(HBM_Inputs!L9="HBM3E",G95,0)+IF(HBM_Inputs!L10="HBM3E",G96,0)+IF(HBM_Inputs!L11="HBM3E",G97,0)` | 계산값: 0
+- HBM_Demand!A101 | 값:     HBM4
+- HBM_Demand!C101 | 수식: `=IF(HBM_Inputs!H6="HBM4",C92,0)+IF(HBM_Inputs!H7="HBM4",C93,0)+IF(HBM_Inputs!H8="HBM4",C94,0)+IF(HBM_Inputs!H9="HBM4",C95,0)+IF(HBM_Inputs!H10="HBM4",C96,0)+IF(HBM_Inputs!H11="HBM4",C97,0)` | 계산값: 0.7776
+- HBM_Demand!D101 | 수식: `=IF(HBM_Inputs!I6="HBM4",D92,0)+IF(HBM_Inputs!I7="HBM4",D93,0)+IF(HBM_Inputs!I8="HBM4",D94,0)+IF(HBM_Inputs!I9="HBM4",D95,0)+IF(HBM_Inputs!I10="HBM4",D96,0)+IF(HBM_Inputs!I11="HBM4",D97,0)` | 계산값: 28.5391046808511
+- HBM_Demand!E101 | 수식: `=IF(HBM_Inputs!J6="HBM4",E92,0)+IF(HBM_Inputs!J7="HBM4",E93,0)+IF(HBM_Inputs!J8="HBM4",E94,0)+IF(HBM_Inputs!J9="HBM4",E95,0)+IF(HBM_Inputs!J10="HBM4",E96,0)+IF(HBM_Inputs!J11="HBM4",E97,0)` | 계산값: 32.9705513766234
+- HBM_Demand!F101 | 수식: `=IF(HBM_Inputs!K6="HBM4",F92,0)+IF(HBM_Inputs!K7="HBM4",F93,0)+IF(HBM_Inputs!K8="HBM4",F94,0)+IF(HBM_Inputs!K9="HBM4",F95,0)+IF(HBM_Inputs!K10="HBM4",F96,0)+IF(HBM_Inputs!K11="HBM4",F97,0)` | 계산값: 1.66343180487805
+- HBM_Demand!G101 | 수식: `=IF(HBM_Inputs!L6="HBM4",G92,0)+IF(HBM_Inputs!L7="HBM4",G93,0)+IF(HBM_Inputs!L8="HBM4",G94,0)+IF(HBM_Inputs!L9="HBM4",G95,0)+IF(HBM_Inputs!L10="HBM4",G96,0)+IF(HBM_Inputs!L11="HBM4",G97,0)` | 계산값: 1.31914519578947
+- HBM_Demand!A102 | 값:     HBM4E
+- HBM_Demand!C102 | 수식: `=IF(HBM_Inputs!H6="HBM4E",C92,0)+IF(HBM_Inputs!H7="HBM4E",C93,0)+IF(HBM_Inputs!H8="HBM4E",C94,0)+IF(HBM_Inputs!H9="HBM4E",C95,0)+IF(HBM_Inputs!H10="HBM4E",C96,0)+IF(HBM_Inputs!H11="HBM4E",C97,0)` | 계산값: 0
+- HBM_Demand!D102 | 수식: `=IF(HBM_Inputs!I6="HBM4E",D92,0)+IF(HBM_Inputs!I7="HBM4E",D93,0)+IF(HBM_Inputs!I8="HBM4E",D94,0)+IF(HBM_Inputs!I9="HBM4E",D95,0)+IF(HBM_Inputs!I10="HBM4E",D96,0)+IF(HBM_Inputs!I11="HBM4E",D97,0)` | 계산값: 1.437696
+- HBM_Demand!E102 | 수식: `=IF(HBM_Inputs!J6="HBM4E",E92,0)+IF(HBM_Inputs!J7="HBM4E",E93,0)+IF(HBM_Inputs!J8="HBM4E",E94,0)+IF(HBM_Inputs!J9="HBM4E",E95,0)+IF(HBM_Inputs!J10="HBM4E",E96,0)+IF(HBM_Inputs!J11="HBM4E",E97,0)` | 계산값: 3.04467428571429
+- HBM_Demand!F102 | 수식: `=IF(HBM_Inputs!K6="HBM4E",F92,0)+IF(HBM_Inputs!K7="HBM4E",F93,0)+IF(HBM_Inputs!K8="HBM4E",F94,0)+IF(HBM_Inputs!K9="HBM4E",F95,0)+IF(HBM_Inputs!K10="HBM4E",F96,0)+IF(HBM_Inputs!K11="HBM4E",F97,0)` | 계산값: 43.756488
+- HBM_Demand!G102 | 수식: `=IF(HBM_Inputs!L6="HBM4E",G92,0)+IF(HBM_Inputs!L7="HBM4E",G93,0)+IF(HBM_Inputs!L8="HBM4E",G94,0)+IF(HBM_Inputs!L9="HBM4E",G95,0)+IF(HBM_Inputs!L10="HBM4E",G96,0)+IF(HBM_Inputs!L11="HBM4E",G97,0)` | 계산값: 45.83833254
+- HBM_Demand!A104 | 값: AMZN — 서버·칩 capex → 가속기 → HBM (헤더 행 — 남색 채우기)
+- HBM_Demand!C104 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Demand!D104 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Demand!E104 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Demand!F104 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Demand!G104 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Demand!A105 | 값: 서버·칩 capex ($B)
+- HBM_Demand!C105 | 수식: `=AMZN!C19` | 계산값: 132
+- HBM_Demand!D105 | 수식: `=AMZN!D19` | 계산값: 158.4
+- HBM_Demand!E105 | 수식: `=AMZN!E19` | 계산값: 177.408
+- HBM_Demand!F105 | 수식: `=AMZN!F19` | 계산값: 191.60064
+- HBM_Demand!G105 | 수식: `=AMZN!G19` | 계산값: 201.180672
+- HBM_Demand!A106 | 값: AI 가속기 capex ($B)
+- HBM_Demand!C106 | 수식: `=C105*HBM_Inputs!$B$37` | 계산값: 79.2
+- HBM_Demand!D106 | 수식: `=D105*HBM_Inputs!$B$37` | 계산값: 95.04
+- HBM_Demand!E106 | 수식: `=E105*HBM_Inputs!$B$37` | 계산값: 106.4448
+- HBM_Demand!F106 | 수식: `=F105*HBM_Inputs!$B$37` | 계산값: 114.960384
+- HBM_Demand!G106 | 수식: `=G105*HBM_Inputs!$B$37` | 계산값: 120.7084032
+- HBM_Demand!A107 | 값: 가속기 대수 (백만 개)
+- HBM_Demand!A108 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C108 | 수식: `=IF(HBM_Inputs!C6=0,0,C106*HBM_Inputs!C60/HBM_Inputs!C6)` | 계산값: 0.792
+- HBM_Demand!D108 | 수식: `=IF(HBM_Inputs!D6=0,0,D106*HBM_Inputs!D60/HBM_Inputs!D6)` | 계산값: 0.396
+- HBM_Demand!E108 | 수식: `=IF(HBM_Inputs!E6=0,0,E106*HBM_Inputs!E60/HBM_Inputs!E6)` | 계산값: 0.16632
+- HBM_Demand!F108 | 수식: `=IF(HBM_Inputs!F6=0,0,F106*HBM_Inputs!F60/HBM_Inputs!F6)` | 계산값: 0
+- HBM_Demand!G108 | 수식: `=IF(HBM_Inputs!G6=0,0,G106*HBM_Inputs!G60/HBM_Inputs!G6)` | 계산값: 0
+- HBM_Demand!A109 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C109 | 수식: `=IF(HBM_Inputs!C7=0,0,C106*HBM_Inputs!C61/HBM_Inputs!C7)` | 계산값: 0.2376
+- HBM_Demand!D109 | 수식: `=IF(HBM_Inputs!D7=0,0,D106*HBM_Inputs!D61/HBM_Inputs!D7)` | 계산값: 0.505531914893617
+- HBM_Demand!E109 | 수식: `=IF(HBM_Inputs!E7=0,0,E106*HBM_Inputs!E61/HBM_Inputs!E7)` | 계산값: 0.48384
+- HBM_Demand!F109 | 수식: `=IF(HBM_Inputs!F7=0,0,F106*HBM_Inputs!F61/HBM_Inputs!F7)` | 계산값: 0.420586770731707
+- HBM_Demand!G109 | 수식: `=IF(HBM_Inputs!G7=0,0,G106*HBM_Inputs!G61/HBM_Inputs!G7)` | 계산값: 0.317653692631579
+- HBM_Demand!A110 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C110 | 수식: `=IF(HBM_Inputs!C8=0,0,C106*HBM_Inputs!C62/HBM_Inputs!C8)` | 계산값: 0
+- HBM_Demand!D110 | 수식: `=IF(HBM_Inputs!D8=0,0,D106*HBM_Inputs!D62/HBM_Inputs!D8)` | 계산값: 0.12672
+- HBM_Demand!E110 | 수식: `=IF(HBM_Inputs!E8=0,0,E106*HBM_Inputs!E62/HBM_Inputs!E8)` | 계산값: 0.28512
+- HBM_Demand!F110 | 수식: `=IF(HBM_Inputs!F8=0,0,F106*HBM_Inputs!F62/HBM_Inputs!F8)` | 계산값: 0.442155323076923
+- HBM_Demand!G110 | 수식: `=IF(HBM_Inputs!G8=0,0,G106*HBM_Inputs!G62/HBM_Inputs!G8)` | 계산값: 0.553246848
+- HBM_Demand!A111 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C111 | 수식: `=IF(HBM_Inputs!C9=0,0,C106*HBM_Inputs!C63/HBM_Inputs!C9)` | 계산값: 0
+- HBM_Demand!D111 | 수식: `=IF(HBM_Inputs!D9=0,0,D106*HBM_Inputs!D63/HBM_Inputs!D9)` | 계산값: 0
+- HBM_Demand!E111 | 수식: `=IF(HBM_Inputs!E9=0,0,E106*HBM_Inputs!E63/HBM_Inputs!E9)` | 계산값: 0
+- HBM_Demand!F111 | 수식: `=IF(HBM_Inputs!F9=0,0,F106*HBM_Inputs!F63/HBM_Inputs!F9)` | 계산값: 0
+- HBM_Demand!G111 | 수식: `=IF(HBM_Inputs!G9=0,0,G106*HBM_Inputs!G63/HBM_Inputs!G9)` | 계산값: 0
+- HBM_Demand!A112 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C112 | 수식: `=IF(HBM_Inputs!C10=0,0,C106*HBM_Inputs!C64/HBM_Inputs!C10)` | 계산값: 4.455
+- HBM_Demand!D112 | 수식: `=IF(HBM_Inputs!D10=0,0,D106*HBM_Inputs!D64/HBM_Inputs!D10)` | 계산값: 5.28
+- HBM_Demand!E112 | 수식: `=IF(HBM_Inputs!E10=0,0,E106*HBM_Inputs!E64/HBM_Inputs!E10)` | 계산값: 6.50496
+- HBM_Demand!F112 | 수식: `=IF(HBM_Inputs!F10=0,0,F106*HBM_Inputs!F64/HBM_Inputs!F10)` | 계산값: 7.40855808
+- HBM_Demand!G112 | 수식: `=IF(HBM_Inputs!G10=0,0,G106*HBM_Inputs!G64/HBM_Inputs!G10)` | 계산값: 8.04722688
+- HBM_Demand!A113 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C113 | 수식: `=IF(HBM_Inputs!C11=0,0,C106*HBM_Inputs!C65/HBM_Inputs!C11)` | 계산값: 0
+- HBM_Demand!D113 | 수식: `=IF(HBM_Inputs!D11=0,0,D106*HBM_Inputs!D65/HBM_Inputs!D11)` | 계산값: 0.06336
+- HBM_Demand!E113 | 수식: `=IF(HBM_Inputs!E11=0,0,E106*HBM_Inputs!E65/HBM_Inputs!E11)` | 계산값: 0.19008
+- HBM_Demand!F113 | 수식: `=IF(HBM_Inputs!F11=0,0,F106*HBM_Inputs!F65/HBM_Inputs!F11)` | 계산값: 0.309508726153846
+- HBM_Demand!G113 | 수식: `=IF(HBM_Inputs!G11=0,0,G106*HBM_Inputs!G65/HBM_Inputs!G11)` | 계산값: 0.402361344
+- HBM_Demand!A114 | 값:   소계
+- HBM_Demand!C114 | 수식: `=SUM(C108:C113)` | 계산값: 5.4846
+- HBM_Demand!D114 | 수식: `=SUM(D108:D113)` | 계산값: 6.37161191489362
+- HBM_Demand!E114 | 수식: `=SUM(E108:E113)` | 계산값: 7.63032
+- HBM_Demand!F114 | 수식: `=SUM(F108:F113)` | 계산값: 8.58080889996248
+- HBM_Demand!G114 | 수식: `=SUM(G108:G113)` | 계산값: 9.32048876463158
+- HBM_Demand!A115 | 값: HBM 수요 (EB)
+- HBM_Demand!A116 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C116 | 수식: `=C108*HBM_Inputs!$B$6/1000` | 계산값: 0.19008
+- HBM_Demand!D116 | 수식: `=D108*HBM_Inputs!$B$6/1000` | 계산값: 0.09504
+- HBM_Demand!E116 | 수식: `=E108*HBM_Inputs!$B$6/1000` | 계산값: 0.0399168
+- HBM_Demand!F116 | 수식: `=F108*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!G116 | 수식: `=G108*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!A117 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C117 | 수식: `=C109*HBM_Inputs!$B$7/1000` | 계산값: 0.0684288
+- HBM_Demand!D117 | 수식: `=D109*HBM_Inputs!$B$7/1000` | 계산값: 0.145593191489362
+- HBM_Demand!E117 | 수식: `=E109*HBM_Inputs!$B$7/1000` | 계산값: 0.13934592
+- HBM_Demand!F117 | 수식: `=F109*HBM_Inputs!$B$7/1000` | 계산값: 0.121128989970732
+- HBM_Demand!G117 | 수식: `=G109*HBM_Inputs!$B$7/1000` | 계산값: 0.0914842634778948
+- HBM_Demand!A118 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C118 | 수식: `=C110*HBM_Inputs!$B$8/1000` | 계산값: 0
+- HBM_Demand!D118 | 수식: `=D110*HBM_Inputs!$B$8/1000` | 계산값: 0.04866048
+- HBM_Demand!E118 | 수식: `=E110*HBM_Inputs!$B$8/1000` | 계산값: 0.10948608
+- HBM_Demand!F118 | 수식: `=F110*HBM_Inputs!$B$8/1000` | 계산값: 0.169787644061538
+- HBM_Demand!G118 | 수식: `=G110*HBM_Inputs!$B$8/1000` | 계산값: 0.212446789632
+- HBM_Demand!A119 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C119 | 수식: `=C111*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!D119 | 수식: `=D111*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!E119 | 수식: `=E111*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!F119 | 수식: `=F111*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!G119 | 수식: `=G111*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!A120 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C120 | 수식: `=C112*HBM_Inputs!$B$10/1000` | 계산값: 0.64152
+- HBM_Demand!D120 | 수식: `=D112*HBM_Inputs!$B$10/1000` | 계산값: 0.76032
+- HBM_Demand!E120 | 수식: `=E112*HBM_Inputs!$B$10/1000` | 계산값: 0.93671424
+- HBM_Demand!F120 | 수식: `=F112*HBM_Inputs!$B$10/1000` | 계산값: 1.06683236352
+- HBM_Demand!G120 | 수식: `=G112*HBM_Inputs!$B$10/1000` | 계산값: 1.15880067072
+- HBM_Demand!A121 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C121 | 수식: `=C113*HBM_Inputs!$B$11/1000` | 계산값: 0
+- HBM_Demand!D121 | 수식: `=D113*HBM_Inputs!$B$11/1000` | 계산값: 0.01622016
+- HBM_Demand!E121 | 수식: `=E113*HBM_Inputs!$B$11/1000` | 계산값: 0.04866048
+- HBM_Demand!F121 | 수식: `=F113*HBM_Inputs!$B$11/1000` | 계산값: 0.0792342338953846
+- HBM_Demand!G121 | 수식: `=G113*HBM_Inputs!$B$11/1000` | 계산값: 0.103004504064
+- HBM_Demand!A122 | 값:   소계
+- HBM_Demand!C122 | 수식: `=SUM(C116:C121)` | 계산값: 0.9000288
+- HBM_Demand!D122 | 수식: `=SUM(D116:D121)` | 계산값: 1.06583383148936
+- HBM_Demand!E122 | 수식: `=SUM(E116:E121)` | 계산값: 1.27412352
+- HBM_Demand!F122 | 수식: `=SUM(F116:F121)` | 계산값: 1.43698323144765
+- HBM_Demand!G122 | 수식: `=SUM(G116:G121)` | 계산값: 1.56573622789389
+- HBM_Demand!A123 | 값: HBM 금액 ($B)
+- HBM_Demand!A124 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C124 | 수식: `=IFERROR(C116*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.9008
+- HBM_Demand!D124 | 수식: `=IFERROR(D116*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.23552
+- HBM_Demand!E124 | 수식: `=IFERROR(E116*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.4790016
+- HBM_Demand!F124 | 수식: `=IFERROR(F116*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G124 | 수식: `=IFERROR(G116*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A125 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C125 | 수식: `=IFERROR(C117*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.026432
+- HBM_Demand!D125 | 수식: `=IFERROR(D117*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.91186382978724
+- HBM_Demand!E125 | 수식: `=IFERROR(E117*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.50822656
+- HBM_Demand!F125 | 수식: `=IFERROR(F117*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.93806383953171
+- HBM_Demand!G125 | 수식: `=IFERROR(G117*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.28077968869053
+- HBM_Demand!A126 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C126 | 수식: `=IFERROR(C118*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D126 | 수식: `=IFERROR(D118*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.16785152
+- HBM_Demand!E126 | 수식: `=IFERROR(E118*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.40869376
+- HBM_Demand!F126 | 수식: `=IFERROR(F118*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.39575288123077
+- HBM_Demand!G126 | 수식: `=IFERROR(G118*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.824042213376
+- HBM_Demand!A127 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C127 | 수식: `=IFERROR(C119*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D127 | 수식: `=IFERROR(D119*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E127 | 수식: `=IFERROR(E119*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F127 | 수식: `=IFERROR(F119*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G127 | 수식: `=IFERROR(G119*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A128 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C128 | 수식: `=IFERROR(C120*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 6.4152
+- HBM_Demand!D128 | 수식: `=IFERROR(D120*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 15.2064
+- HBM_Demand!E128 | 수식: `=IFERROR(E120*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 16.86085632
+- HBM_Demand!F128 | 수식: `=IFERROR(F120*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 17.06931781632
+- HBM_Demand!G128 | 수식: `=IFERROR(G120*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 20.85841207296
+- HBM_Demand!A129 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C129 | 수식: `=IFERROR(C121*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D129 | 수식: `=IFERROR(D121*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.3244032
+- HBM_Demand!E129 | 수식: `=IFERROR(E121*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.87588864
+- HBM_Demand!F129 | 수식: `=IFERROR(F121*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.58468467790769
+- HBM_Demand!G129 | 수식: `=IFERROR(G121*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.854081073152
+- HBM_Demand!A130 | 값:   소계
+- HBM_Demand!C130 | 수식: `=SUM(C124:C129)` | 계산값: 9.342432
+- HBM_Demand!D130 | 수식: `=SUM(D124:D129)` | 계산값: 20.8460385497872
+- HBM_Demand!E130 | 수식: `=SUM(E124:E129)` | 계산값: 23.13266688
+- HBM_Demand!F130 | 수식: `=SUM(F124:F129)` | 계산값: 23.9878192149902
+- HBM_Demand!G130 | 수식: `=SUM(G124:G129)` | 계산값: 27.8173150481785
+- HBM_Demand!A131 | 값:   세대별 금액 ($B)
+- HBM_Demand!A132 | 값:     HBM3E
+- HBM_Demand!C132 | 수식: `=IF(HBM_Inputs!H6="HBM3E",C124,0)+IF(HBM_Inputs!H7="HBM3E",C125,0)+IF(HBM_Inputs!H8="HBM3E",C126,0)+IF(HBM_Inputs!H9="HBM3E",C127,0)+IF(HBM_Inputs!H10="HBM3E",C128,0)+IF(HBM_Inputs!H11="HBM3E",C129,0)` | 계산값: 8.316
+- HBM_Demand!D132 | 수식: `=IF(HBM_Inputs!I6="HBM3E",D124,0)+IF(HBM_Inputs!I7="HBM3E",D125,0)+IF(HBM_Inputs!I8="HBM3E",D126,0)+IF(HBM_Inputs!I9="HBM3E",D127,0)+IF(HBM_Inputs!I10="HBM3E",D128,0)+IF(HBM_Inputs!I11="HBM3E",D129,0)` | 계산값: 1.23552
+- HBM_Demand!E132 | 수식: `=IF(HBM_Inputs!J6="HBM3E",E124,0)+IF(HBM_Inputs!J7="HBM3E",E125,0)+IF(HBM_Inputs!J8="HBM3E",E126,0)+IF(HBM_Inputs!J9="HBM3E",E127,0)+IF(HBM_Inputs!J10="HBM3E",E128,0)+IF(HBM_Inputs!J11="HBM3E",E129,0)` | 계산값: 0.4790016
+- HBM_Demand!F132 | 수식: `=IF(HBM_Inputs!K6="HBM3E",F124,0)+IF(HBM_Inputs!K7="HBM3E",F125,0)+IF(HBM_Inputs!K8="HBM3E",F126,0)+IF(HBM_Inputs!K9="HBM3E",F127,0)+IF(HBM_Inputs!K10="HBM3E",F128,0)+IF(HBM_Inputs!K11="HBM3E",F129,0)` | 계산값: 0
+- HBM_Demand!G132 | 수식: `=IF(HBM_Inputs!L6="HBM3E",G124,0)+IF(HBM_Inputs!L7="HBM3E",G125,0)+IF(HBM_Inputs!L8="HBM3E",G126,0)+IF(HBM_Inputs!L9="HBM3E",G127,0)+IF(HBM_Inputs!L10="HBM3E",G128,0)+IF(HBM_Inputs!L11="HBM3E",G129,0)` | 계산값: 0
+- HBM_Demand!A133 | 값:     HBM4
+- HBM_Demand!C133 | 수식: `=IF(HBM_Inputs!H6="HBM4",C124,0)+IF(HBM_Inputs!H7="HBM4",C125,0)+IF(HBM_Inputs!H8="HBM4",C126,0)+IF(HBM_Inputs!H9="HBM4",C127,0)+IF(HBM_Inputs!H10="HBM4",C128,0)+IF(HBM_Inputs!H11="HBM4",C129,0)` | 계산값: 1.026432
+- HBM_Demand!D133 | 수식: `=IF(HBM_Inputs!I6="HBM4",D124,0)+IF(HBM_Inputs!I7="HBM4",D125,0)+IF(HBM_Inputs!I8="HBM4",D126,0)+IF(HBM_Inputs!I9="HBM4",D127,0)+IF(HBM_Inputs!I10="HBM4",D128,0)+IF(HBM_Inputs!I11="HBM4",D129,0)` | 계산값: 18.4426670297872
+- HBM_Demand!E133 | 수식: `=IF(HBM_Inputs!J6="HBM4",E124,0)+IF(HBM_Inputs!J7="HBM4",E125,0)+IF(HBM_Inputs!J8="HBM4",E126,0)+IF(HBM_Inputs!J9="HBM4",E127,0)+IF(HBM_Inputs!J10="HBM4",E128,0)+IF(HBM_Inputs!J11="HBM4",E129,0)` | 계산값: 20.24497152
+- HBM_Demand!F133 | 수식: `=IF(HBM_Inputs!K6="HBM4",F124,0)+IF(HBM_Inputs!K7="HBM4",F125,0)+IF(HBM_Inputs!K8="HBM4",F126,0)+IF(HBM_Inputs!K9="HBM4",F127,0)+IF(HBM_Inputs!K10="HBM4",F128,0)+IF(HBM_Inputs!K11="HBM4",F129,0)` | 계산값: 19.0073816558517
+- HBM_Demand!G133 | 수식: `=IF(HBM_Inputs!L6="HBM4",G124,0)+IF(HBM_Inputs!L7="HBM4",G125,0)+IF(HBM_Inputs!L8="HBM4",G126,0)+IF(HBM_Inputs!L9="HBM4",G127,0)+IF(HBM_Inputs!L10="HBM4",G128,0)+IF(HBM_Inputs!L11="HBM4",G129,0)` | 계산값: 1.28077968869053
+- HBM_Demand!A134 | 값:     HBM4E
+- HBM_Demand!C134 | 수식: `=IF(HBM_Inputs!H6="HBM4E",C124,0)+IF(HBM_Inputs!H7="HBM4E",C125,0)+IF(HBM_Inputs!H8="HBM4E",C126,0)+IF(HBM_Inputs!H9="HBM4E",C127,0)+IF(HBM_Inputs!H10="HBM4E",C128,0)+IF(HBM_Inputs!H11="HBM4E",C129,0)` | 계산값: 0
+- HBM_Demand!D134 | 수식: `=IF(HBM_Inputs!I6="HBM4E",D124,0)+IF(HBM_Inputs!I7="HBM4E",D125,0)+IF(HBM_Inputs!I8="HBM4E",D126,0)+IF(HBM_Inputs!I9="HBM4E",D127,0)+IF(HBM_Inputs!I10="HBM4E",D128,0)+IF(HBM_Inputs!I11="HBM4E",D129,0)` | 계산값: 1.16785152
+- HBM_Demand!E134 | 수식: `=IF(HBM_Inputs!J6="HBM4E",E124,0)+IF(HBM_Inputs!J7="HBM4E",E125,0)+IF(HBM_Inputs!J8="HBM4E",E126,0)+IF(HBM_Inputs!J9="HBM4E",E127,0)+IF(HBM_Inputs!J10="HBM4E",E128,0)+IF(HBM_Inputs!J11="HBM4E",E129,0)` | 계산값: 2.40869376
+- HBM_Demand!F134 | 수식: `=IF(HBM_Inputs!K6="HBM4E",F124,0)+IF(HBM_Inputs!K7="HBM4E",F125,0)+IF(HBM_Inputs!K8="HBM4E",F126,0)+IF(HBM_Inputs!K9="HBM4E",F127,0)+IF(HBM_Inputs!K10="HBM4E",F128,0)+IF(HBM_Inputs!K11="HBM4E",F129,0)` | 계산값: 4.98043755913846
+- HBM_Demand!G134 | 수식: `=IF(HBM_Inputs!L6="HBM4E",G124,0)+IF(HBM_Inputs!L7="HBM4E",G125,0)+IF(HBM_Inputs!L8="HBM4E",G126,0)+IF(HBM_Inputs!L9="HBM4E",G127,0)+IF(HBM_Inputs!L10="HBM4E",G128,0)+IF(HBM_Inputs!L11="HBM4E",G129,0)` | 계산값: 26.536535359488
+- HBM_Demand!A136 | 값: META — 서버·칩 capex → 가속기 → HBM (헤더 행 — 남색 채우기)
+- HBM_Demand!C136 | 값: 2026E (헤더 행 — 남색 채우기)
+- HBM_Demand!D136 | 값: 2027E (헤더 행 — 남색 채우기)
+- HBM_Demand!E136 | 값: 2028E (헤더 행 — 남색 채우기)
+- HBM_Demand!F136 | 값: 2029E (헤더 행 — 남색 채우기)
+- HBM_Demand!G136 | 값: 2030E (헤더 행 — 남색 채우기)
+- HBM_Demand!A137 | 값: 서버·칩 capex ($B)
+- HBM_Demand!C137 | 수식: `=META!C19` | 계산값: 75.625
+- HBM_Demand!D137 | 수식: `=META!D19` | 계산값: 90.75
+- HBM_Demand!E137 | 수식: `=META!E19` | 계산값: 101.64
+- HBM_Demand!F137 | 수식: `=META!F19` | 계산값: 109.7712
+- HBM_Demand!G137 | 수식: `=META!G19` | 계산값: 115.25976
+- HBM_Demand!A138 | 값: AI 가속기 capex ($B)
+- HBM_Demand!C138 | 수식: `=C137*HBM_Inputs!$B$38` | 계산값: 60.5
+- HBM_Demand!D138 | 수식: `=D137*HBM_Inputs!$B$38` | 계산값: 72.6
+- HBM_Demand!E138 | 수식: `=E137*HBM_Inputs!$B$38` | 계산값: 81.312
+- HBM_Demand!F138 | 수식: `=F137*HBM_Inputs!$B$38` | 계산값: 87.81696
+- HBM_Demand!G138 | 수식: `=G137*HBM_Inputs!$B$38` | 계산값: 92.207808
+- HBM_Demand!A139 | 값: 가속기 대수 (백만 개)
+- HBM_Demand!A140 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C140 | 수식: `=IF(HBM_Inputs!C6=0,0,C138*HBM_Inputs!C69/HBM_Inputs!C6)` | 계산값: 0.983125
+- HBM_Demand!D140 | 수식: `=IF(HBM_Inputs!D6=0,0,D138*HBM_Inputs!D69/HBM_Inputs!D6)` | 계산값: 0.504166666666667
+- HBM_Demand!E140 | 수식: `=IF(HBM_Inputs!E6=0,0,E138*HBM_Inputs!E69/HBM_Inputs!E6)` | 계산값: 0.12705
+- HBM_Demand!F140 | 수식: `=IF(HBM_Inputs!F6=0,0,F138*HBM_Inputs!F69/HBM_Inputs!F6)` | 계산값: 0
+- HBM_Demand!G140 | 수식: `=IF(HBM_Inputs!G6=0,0,G138*HBM_Inputs!G69/HBM_Inputs!G6)` | 계산값: 0
+- HBM_Demand!A141 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C141 | 수식: `=IF(HBM_Inputs!C7=0,0,C138*HBM_Inputs!C70/HBM_Inputs!C7)` | 계산값: 0.3025
+- HBM_Demand!D141 | 수식: `=IF(HBM_Inputs!D7=0,0,D138*HBM_Inputs!D70/HBM_Inputs!D7)` | 계산값: 0.695106382978723
+- HBM_Demand!E141 | 수식: `=IF(HBM_Inputs!E7=0,0,E138*HBM_Inputs!E70/HBM_Inputs!E7)` | 계산값: 0.7392
+- HBM_Demand!F141 | 수식: `=IF(HBM_Inputs!F7=0,0,F138*HBM_Inputs!F70/HBM_Inputs!F7)` | 계산값: 0.535469268292683
+- HBM_Demand!G141 | 수식: `=IF(HBM_Inputs!G7=0,0,G138*HBM_Inputs!G70/HBM_Inputs!G7)` | 계산값: 0.363978189473684
+- HBM_Demand!A142 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C142 | 수식: `=IF(HBM_Inputs!C8=0,0,C138*HBM_Inputs!C71/HBM_Inputs!C8)` | 계산값: 0
+- HBM_Demand!D142 | 수식: `=IF(HBM_Inputs!D8=0,0,D138*HBM_Inputs!D71/HBM_Inputs!D8)` | 계산값: 0.1815
+- HBM_Demand!E142 | 수식: `=IF(HBM_Inputs!E8=0,0,E138*HBM_Inputs!E71/HBM_Inputs!E8)` | 계산값: 0.5082
+- HBM_Demand!F142 | 수식: `=IF(HBM_Inputs!F8=0,0,F138*HBM_Inputs!F71/HBM_Inputs!F8)` | 계산값: 0.759954461538462
+- HBM_Demand!G142 | 수식: `=IF(HBM_Inputs!G8=0,0,G138*HBM_Inputs!G71/HBM_Inputs!G8)` | 계산값: 0.960498
+- HBM_Demand!A143 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C143 | 수식: `=IF(HBM_Inputs!C9=0,0,C138*HBM_Inputs!C72/HBM_Inputs!C9)` | 계산값: 0
+- HBM_Demand!D143 | 수식: `=IF(HBM_Inputs!D9=0,0,D138*HBM_Inputs!D72/HBM_Inputs!D9)` | 계산값: 0
+- HBM_Demand!E143 | 수식: `=IF(HBM_Inputs!E9=0,0,E138*HBM_Inputs!E72/HBM_Inputs!E9)` | 계산값: 0
+- HBM_Demand!F143 | 수식: `=IF(HBM_Inputs!F9=0,0,F138*HBM_Inputs!F72/HBM_Inputs!F9)` | 계산값: 0
+- HBM_Demand!G143 | 수식: `=IF(HBM_Inputs!G9=0,0,G138*HBM_Inputs!G72/HBM_Inputs!G9)` | 계산값: 0
+- HBM_Demand!A144 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C144 | 수식: `=IF(HBM_Inputs!C10=0,0,C138*HBM_Inputs!C73/HBM_Inputs!C10)` | 계산값: 0
+- HBM_Demand!D144 | 수식: `=IF(HBM_Inputs!D10=0,0,D138*HBM_Inputs!D73/HBM_Inputs!D10)` | 계산값: 0
+- HBM_Demand!E144 | 수식: `=IF(HBM_Inputs!E10=0,0,E138*HBM_Inputs!E73/HBM_Inputs!E10)` | 계산값: 0
+- HBM_Demand!F144 | 수식: `=IF(HBM_Inputs!F10=0,0,F138*HBM_Inputs!F73/HBM_Inputs!F10)` | 계산값: 0
+- HBM_Demand!G144 | 수식: `=IF(HBM_Inputs!G10=0,0,G138*HBM_Inputs!G73/HBM_Inputs!G10)` | 계산값: 0
+- HBM_Demand!A145 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C145 | 수식: `=IF(HBM_Inputs!C11=0,0,C138*HBM_Inputs!C74/HBM_Inputs!C11)` | 계산값: 0.201666666666667
+- HBM_Demand!D145 | 수식: `=IF(HBM_Inputs!D11=0,0,D138*HBM_Inputs!D74/HBM_Inputs!D11)` | 계산값: 0.363
+- HBM_Demand!E145 | 수식: `=IF(HBM_Inputs!E11=0,0,E138*HBM_Inputs!E74/HBM_Inputs!E11)` | 계산값: 0.5808
+- HBM_Demand!F145 | 수식: `=IF(HBM_Inputs!F11=0,0,F138*HBM_Inputs!F74/HBM_Inputs!F11)` | 계산값: 1.01327261538462
+- HBM_Demand!G145 | 수식: `=IF(HBM_Inputs!G11=0,0,G138*HBM_Inputs!G74/HBM_Inputs!G11)` | 계산값: 1.3446972
+- HBM_Demand!A146 | 값:   소계
+- HBM_Demand!C146 | 수식: `=SUM(C140:C145)` | 계산값: 1.48729166666667
+- HBM_Demand!D146 | 수식: `=SUM(D140:D145)` | 계산값: 1.74377304964539
+- HBM_Demand!E146 | 수식: `=SUM(E140:E145)` | 계산값: 1.95525
+- HBM_Demand!F146 | 수식: `=SUM(F140:F145)` | 계산값: 2.30869634521576
+- HBM_Demand!G146 | 수식: `=SUM(G140:G145)` | 계산값: 2.66917338947369
+- HBM_Demand!A147 | 값: HBM 수요 (EB)
+- HBM_Demand!A148 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C148 | 수식: `=C140*HBM_Inputs!$B$6/1000` | 계산값: 0.23595
+- HBM_Demand!D148 | 수식: `=D140*HBM_Inputs!$B$6/1000` | 계산값: 0.121
+- HBM_Demand!E148 | 수식: `=E140*HBM_Inputs!$B$6/1000` | 계산값: 0.030492
+- HBM_Demand!F148 | 수식: `=F140*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!G148 | 수식: `=G140*HBM_Inputs!$B$6/1000` | 계산값: 0
+- HBM_Demand!A149 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C149 | 수식: `=C141*HBM_Inputs!$B$7/1000` | 계산값: 0.08712
+- HBM_Demand!D149 | 수식: `=D141*HBM_Inputs!$B$7/1000` | 계산값: 0.200190638297872
+- HBM_Demand!E149 | 수식: `=E141*HBM_Inputs!$B$7/1000` | 계산값: 0.2128896
+- HBM_Demand!F149 | 수식: `=F141*HBM_Inputs!$B$7/1000` | 계산값: 0.154215149268293
+- HBM_Demand!G149 | 수식: `=G141*HBM_Inputs!$B$7/1000` | 계산값: 0.104825718568421
+- HBM_Demand!A150 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C150 | 수식: `=C142*HBM_Inputs!$B$8/1000` | 계산값: 0
+- HBM_Demand!D150 | 수식: `=D142*HBM_Inputs!$B$8/1000` | 계산값: 0.069696
+- HBM_Demand!E150 | 수식: `=E142*HBM_Inputs!$B$8/1000` | 계산값: 0.1951488
+- HBM_Demand!F150 | 수식: `=F142*HBM_Inputs!$B$8/1000` | 계산값: 0.291822513230769
+- HBM_Demand!G150 | 수식: `=G142*HBM_Inputs!$B$8/1000` | 계산값: 0.368831232
+- HBM_Demand!A151 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C151 | 수식: `=C143*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!D151 | 수식: `=D143*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!E151 | 수식: `=E143*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!F151 | 수식: `=F143*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!G151 | 수식: `=G143*HBM_Inputs!$B$9/1000` | 계산값: 0
+- HBM_Demand!A152 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C152 | 수식: `=C144*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!D152 | 수식: `=D144*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!E152 | 수식: `=E144*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!F152 | 수식: `=F144*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!G152 | 수식: `=G144*HBM_Inputs!$B$10/1000` | 계산값: 0
+- HBM_Demand!A153 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C153 | 수식: `=C145*HBM_Inputs!$B$11/1000` | 계산값: 0.0516266666666667
+- HBM_Demand!D153 | 수식: `=D145*HBM_Inputs!$B$11/1000` | 계산값: 0.092928
+- HBM_Demand!E153 | 수식: `=E145*HBM_Inputs!$B$11/1000` | 계산값: 0.1486848
+- HBM_Demand!F153 | 수식: `=F145*HBM_Inputs!$B$11/1000` | 계산값: 0.259397789538462
+- HBM_Demand!G153 | 수식: `=G145*HBM_Inputs!$B$11/1000` | 계산값: 0.3442424832
+- HBM_Demand!A154 | 값:   소계
+- HBM_Demand!C154 | 수식: `=SUM(C148:C153)` | 계산값: 0.374696666666667
+- HBM_Demand!D154 | 수식: `=SUM(D148:D153)` | 계산값: 0.483814638297872
+- HBM_Demand!E154 | 수식: `=SUM(E148:E153)` | 계산값: 0.5872152
+- HBM_Demand!F154 | 수식: `=SUM(F148:F153)` | 계산값: 0.705435452037524
+- HBM_Demand!G154 | 수식: `=SUM(G148:G153)` | 계산값: 0.817899433768421
+- HBM_Demand!A155 | 값: HBM 금액 ($B)
+- HBM_Demand!A156 | 값:   NVIDIA Blackwell (B200/B300)
+- HBM_Demand!C156 | 수식: `=IFERROR(C148*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.3595
+- HBM_Demand!D156 | 수식: `=IFERROR(D148*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.573
+- HBM_Demand!E156 | 수식: `=IFERROR(E148*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.365904
+- HBM_Demand!F156 | 수식: `=IFERROR(F148*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G156 | 수식: `=IFERROR(G148*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L6,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A157 | 값:   NVIDIA Rubin (VR200)
+- HBM_Demand!C157 | 수식: `=IFERROR(C149*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.3068
+- HBM_Demand!D157 | 수식: `=IFERROR(D149*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 4.00381276595745
+- HBM_Demand!E157 | 수식: `=IFERROR(E149*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 3.8320128
+- HBM_Demand!F157 | 수식: `=IFERROR(F149*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.46744238829268
+- HBM_Demand!G157 | 수식: `=IFERROR(G149*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L7,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.4675600599579
+- HBM_Demand!A158 | 값:   NVIDIA Rubin Ultra / Feynman
+- HBM_Demand!C158 | 수식: `=IFERROR(C150*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D158 | 수식: `=IFERROR(D150*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.672704
+- HBM_Demand!E158 | 수식: `=IFERROR(E150*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 4.2932736
+- HBM_Demand!F158 | 수식: `=IFERROR(F150*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 5.83645026461539
+- HBM_Demand!G158 | 수식: `=IFERROR(G150*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L8,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 6.638962176
+- HBM_Demand!A159 | 값:   Google TPU (v7 Ironwood~)
+- HBM_Demand!C159 | 수식: `=IFERROR(C151*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D159 | 수식: `=IFERROR(D151*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E159 | 수식: `=IFERROR(E151*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F159 | 수식: `=IFERROR(F151*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G159 | 수식: `=IFERROR(G151*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L9,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A160 | 값:   AWS Trainium (2/3)
+- HBM_Demand!C160 | 수식: `=IFERROR(C152*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!D160 | 수식: `=IFERROR(D152*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!E160 | 수식: `=IFERROR(E152*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!F160 | 수식: `=IFERROR(F152*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!G160 | 수식: `=IFERROR(G152*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L10,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0
+- HBM_Demand!A161 | 값:   기타 (AMD MI/ MTIA / Maia)
+- HBM_Demand!C161 | 수식: `=IFERROR(C153*INDEX(HBM_Inputs!C$16:C$18,MATCH(HBM_Inputs!H11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 0.516266666666667
+- HBM_Demand!D161 | 수식: `=IFERROR(D153*INDEX(HBM_Inputs!D$16:D$18,MATCH(HBM_Inputs!I11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 1.85856
+- HBM_Demand!E161 | 수식: `=IFERROR(E153*INDEX(HBM_Inputs!E$16:E$18,MATCH(HBM_Inputs!J11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 2.6763264
+- HBM_Demand!F161 | 수식: `=IFERROR(F153*INDEX(HBM_Inputs!F$16:F$18,MATCH(HBM_Inputs!K11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 5.18795579076923
+- HBM_Demand!G161 | 수식: `=IFERROR(G153*INDEX(HBM_Inputs!G$16:G$18,MATCH(HBM_Inputs!L11,HBM_Inputs!$A$16:$A$18,0)),0)` | 계산값: 6.1963646976
+- HBM_Demand!A162 | 값:   소계
+- HBM_Demand!C162 | 수식: `=SUM(C156:C161)` | 계산값: 4.18256666666667
+- HBM_Demand!D162 | 수식: `=SUM(D156:D161)` | 계산값: 9.10807676595745
+- HBM_Demand!E162 | 수식: `=SUM(E156:E161)` | 계산값: 11.1675168
+- HBM_Demand!F162 | 수식: `=SUM(F156:F161)` | 계산값: 13.4918484436773
+- HBM_Demand!G162 | 수식: `=SUM(G156:G161)` | 계산값: 14.3028869335579
+- HBM_Demand!A163 | 값:   세대별 금액 ($B)
+- HBM_Demand!A164 | 값:     HBM3E
+- HBM_Demand!C164 | 수식: `=IF(HBM_Inputs!H6="HBM3E",C156,0)+IF(HBM_Inputs!H7="HBM3E",C157,0)+IF(HBM_Inputs!H8="HBM3E",C158,0)+IF(HBM_Inputs!H9="HBM3E",C159,0)+IF(HBM_Inputs!H10="HBM3E",C160,0)+IF(HBM_Inputs!H11="HBM3E",C161,0)` | 계산값: 2.87576666666667
+- HBM_Demand!D164 | 수식: `=IF(HBM_Inputs!I6="HBM3E",D156,0)+IF(HBM_Inputs!I7="HBM3E",D157,0)+IF(HBM_Inputs!I8="HBM3E",D158,0)+IF(HBM_Inputs!I9="HBM3E",D159,0)+IF(HBM_Inputs!I10="HBM3E",D160,0)+IF(HBM_Inputs!I11="HBM3E",D161,0)` | 계산값: 1.573
+- HBM_Demand!E164 | 수식: `=IF(HBM_Inputs!J6="HBM3E",E156,0)+IF(HBM_Inputs!J7="HBM3E",E157,0)+IF(HBM_Inputs!J8="HBM3E",E158,0)+IF(HBM_Inputs!J9="HBM3E",E159,0)+IF(HBM_Inputs!J10="HBM3E",E160,0)+IF(HBM_Inputs!J11="HBM3E",E161,0)` | 계산값: 0.365904
+- HBM_Demand!F164 | 수식: `=IF(HBM_Inputs!K6="HBM3E",F156,0)+IF(HBM_Inputs!K7="HBM3E",F157,0)+IF(HBM_Inputs!K8="HBM3E",F158,0)+IF(HBM_Inputs!K9="HBM3E",F159,0)+IF(HBM_Inputs!K10="HBM3E",F160,0)+IF(HBM_Inputs!K11="HBM3E",F161,0)` | 계산값: 0
+- HBM_Demand!G164 | 수식: `=IF(HBM_Inputs!L6="HBM3E",G156,0)+IF(HBM_Inputs!L7="HBM3E",G157,0)+IF(HBM_Inputs!L8="HBM3E",G158,0)+IF(HBM_Inputs!L9="HBM3E",G159,0)+IF(HBM_Inputs!L10="HBM3E",G160,0)+IF(HBM_Inputs!L11="HBM3E",G161,0)` | 계산값: 0
+- HBM_Demand!A165 | 값:     HBM4
+- HBM_Demand!C165 | 수식: `=IF(HBM_Inputs!H6="HBM4",C156,0)+IF(HBM_Inputs!H7="HBM4",C157,0)+IF(HBM_Inputs!H8="HBM4",C158,0)+IF(HBM_Inputs!H9="HBM4",C159,0)+IF(HBM_Inputs!H10="HBM4",C160,0)+IF(HBM_Inputs!H11="HBM4",C161,0)` | 계산값: 1.3068
+- HBM_Demand!D165 | 수식: `=IF(HBM_Inputs!I6="HBM4",D156,0)+IF(HBM_Inputs!I7="HBM4",D157,0)+IF(HBM_Inputs!I8="HBM4",D158,0)+IF(HBM_Inputs!I9="HBM4",D159,0)+IF(HBM_Inputs!I10="HBM4",D160,0)+IF(HBM_Inputs!I11="HBM4",D161,0)` | 계산값: 5.86237276595745
+- HBM_Demand!E165 | 수식: `=IF(HBM_Inputs!J6="HBM4",E156,0)+IF(HBM_Inputs!J7="HBM4",E157,0)+IF(HBM_Inputs!J8="HBM4",E158,0)+IF(HBM_Inputs!J9="HBM4",E159,0)+IF(HBM_Inputs!J10="HBM4",E160,0)+IF(HBM_Inputs!J11="HBM4",E161,0)` | 계산값: 6.5083392
+- HBM_Demand!F165 | 수식: `=IF(HBM_Inputs!K6="HBM4",F156,0)+IF(HBM_Inputs!K7="HBM4",F157,0)+IF(HBM_Inputs!K8="HBM4",F158,0)+IF(HBM_Inputs!K9="HBM4",F159,0)+IF(HBM_Inputs!K10="HBM4",F160,0)+IF(HBM_Inputs!K11="HBM4",F161,0)` | 계산값: 2.46744238829268
+- HBM_Demand!G165 | 수식: `=IF(HBM_Inputs!L6="HBM4",G156,0)+IF(HBM_Inputs!L7="HBM4",G157,0)+IF(HBM_Inputs!L8="HBM4",G158,0)+IF(HBM_Inputs!L9="HBM4",G159,0)+IF(HBM_Inputs!L10="HBM4",G160,0)+IF(HBM_Inputs!L11="HBM4",G161,0)` | 계산값: 1.4675600599579
+- HBM_Demand!A166 | 값:     HBM4E
+- HBM_Demand!C166 | 수식: `=IF(HBM_Inputs!H6="HBM4E",C156,0)+IF(HBM_Inputs!H7="HBM4E",C157,0)+IF(HBM_Inputs!H8="HBM4E",C158,0)+IF(HBM_Inputs!H9="HBM4E",C159,0)+IF(HBM_Inputs!H10="HBM4E",C160,0)+IF(HBM_Inputs!H11="HBM4E",C161,0)` | 계산값: 0
+- HBM_Demand!D166 | 수식: `=IF(HBM_Inputs!I6="HBM4E",D156,0)+IF(HBM_Inputs!I7="HBM4E",D157,0)+IF(HBM_Inputs!I8="HBM4E",D158,0)+IF(HBM_Inputs!I9="HBM4E",D159,0)+IF(HBM_Inputs!I10="HBM4E",D160,0)+IF(HBM_Inputs!I11="HBM4E",D161,0)` | 계산값: 1.672704
+- HBM_Demand!E166 | 수식: `=IF(HBM_Inputs!J6="HBM4E",E156,0)+IF(HBM_Inputs!J7="HBM4E",E157,0)+IF(HBM_Inputs!J8="HBM4E",E158,0)+IF(HBM_Inputs!J9="HBM4E",E159,0)+IF(HBM_Inputs!J10="HBM4E",E160,0)+IF(HBM_Inputs!J11="HBM4E",E161,0)` | 계산값: 4.2932736
+- HBM_Demand!F166 | 수식: `=IF(HBM_Inputs!K6="HBM4E",F156,0)+IF(HBM_Inputs!K7="HBM4E",F157,0)+IF(HBM_Inputs!K8="HBM4E",F158,0)+IF(HBM_Inputs!K9="HBM4E",F159,0)+IF(HBM_Inputs!K10="HBM4E",F160,0)+IF(HBM_Inputs!K11="HBM4E",F161,0)` | 계산값: 11.0244060553846
+- HBM_Demand!G166 | 수식: `=IF(HBM_Inputs!L6="HBM4E",G156,0)+IF(HBM_Inputs!L7="HBM4E",G157,0)+IF(HBM_Inputs!L8="HBM4E",G158,0)+IF(HBM_Inputs!L9="HBM4E",G159,0)+IF(HBM_Inputs!L10="HBM4E",G160,0)+IF(HBM_Inputs!L11="HBM4E",G161,0)` | 계산값: 12.8353268736

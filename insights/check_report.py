@@ -310,7 +310,10 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'peers_facts.md'),
          os.path.join(ROOT, 'scratchpad', 'nvda_facts.md'),
          # 모델 층이 그림에서 읽은 발표치와 우리 모델이 낸 파생값
-         os.path.join(ROOT, 'scratchpad', 'model_facts.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'model_facts.md'),
+         # 다리 층(2026-09-10)의 재료 — 밖에서 받은 하향 모델과 그 엑셀 전사
+         os.path.join(ROOT, 'insights', 'frames', '2026-09-10-dc-capex-topdown.md'),
+         os.path.join(ROOT, 'scratchpad', 'capex_frame_xlsx.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-09-09",
-"index_fingerprint": "48c3fb0963f182a6bc4354455d39d81ecbfbbe40",
-"lines": 4533
+"built": "2026-09-10",
+"index_fingerprint": "a792e833a32a8a577c5824d3ccc82e83dcec7fa4",
+"lines": 4535
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -5118,6 +5118,20 @@
 "how": "명시",
 "t": "2025",
 "tense": "회고"
+},
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L256": {
+"how": "명시",
+"span": [
+"2024",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md#L265": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
 },
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L110": {
 "how": "명시",

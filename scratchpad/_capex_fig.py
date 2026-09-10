@@ -236,3 +236,51 @@ FIG_EQ_SX = tree_svg(
         ]),
     ]),
     marks=(('MW당 연 비용', 1),))
+
+# ── ⑤ 다리. 같은 해를 네 자로 재면 ────────────────────────────────────────
+def _gw_ways():
+    x0, top, bh, gap = 210, 126, 26, 18
+    full, top_v = 300.0, 30.2
+    rows = [('엑셀의 칩 수로', 30.2, False, 1),
+            ('시설 단가 하한으로', 28.8, True, 0),
+            ('우리 IT 단가로', 19.7, True, 0),
+            ('전부 포함 단가로', 14.7, True, 0),
+            ('시설 단가 상한으로', 14.4, True, 0)]
+    out = [_board(accent=(0, 3)),
+           _lt(20, 112, '2026년 빅4 자본지출 7,325억 달러가 몇 기가와트인가',
+               't-lab', False)]
+    for i, (name, v, filled, mark) in enumerate(rows):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 18, name, 't-sm', False))
+        out.append(_hbar(x0, y, full * v / top_v, bh, filled))
+        out.append(_lt(x0 + full * v / top_v + 8, y + 18, '%.1fGW' % v, 't-sm', False))
+        if mark:
+            out.append(_mark(x0 + 24, y + bh // 2, mark))
+    y = top + 5 * (bh + gap) + 6
+    out.append(_legend(y, [
+        '이 줄만 칩 수를 세어 나왔다. 자체 칩이 섞여 칩당 값이 절반이라 대수가 두 배다',
+    ]))
+    return ''.join(out)
+
+
+FIG_BRGW = _svg(W, 356, '같은 해를 네 자로 재면 14에서 30기가와트로 갈린다', _gw_ways())
+
+
+FIG_EQ_BR = tree_svg(
+    '총액에서 용량으로 가는 길은 어떤 항으로 쪼개지나', _W4,
+    _node(['신규 용량'], '÷', [
+        _node(['자본지출 총액'], '←', [
+            _node(['회사별 가이던스']),
+        ]),
+        _node(['MW당 자본'], '+', [
+            _node(['시설·전력'], '←', [
+                _node(['전력을 끄는 층']),
+            ]),
+            _node(['IT'], '×', [
+                _node(['MW당 칩 수']),
+                _node(['칩 한 개 값']),
+            ]),
+        ]),
+    ]),
+    marks=(('자본지출 총액', 1), ('칩 한 개 값', 2)))
+
