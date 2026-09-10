@@ -147,7 +147,7 @@ stroke-width:2.6!important}
 .lgd{position:absolute;z-index:6;right:8px;bottom:8px;max-width:calc(100% - 16px);
 display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;padding:6px 10px;
 background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:7px;
-font-size:11.5px;color:var(--ink2)}
+font-size:11.5px;color:var(--ink2);pointer-events:none}
 .lgd span{display:inline-flex;align-items:center;gap:6px}
 .lgd b{font-weight:600;color:var(--ink1);font-size:11.5px}
 .grp-node{width:170px;background:#f4f6f9;border:1px dashed var(--ink4);border-radius:8px;
@@ -339,7 +339,7 @@ var NODE_W = 236;
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
   g.setDefaultEdgeLabel(function(){ return {}; });
-  g.setGraph({ rankdir:'LR', nodesep:18, ranksep:112, marginx:20, marginy:20 });
+  g.setGraph({ rankdir:'LR', nodesep: 26, ranksep: 150, marginx:20, marginy:20 });
   nodes.forEach(function(n){ g.setNode(n.id, { width:NODE_W, height:n.__h }); });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
