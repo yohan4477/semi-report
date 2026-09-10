@@ -72,9 +72,31 @@ FIG_WACC = tree_svg(
     marks=[('자기자본 비중', 1), ('Kd 세후', 2)])
 
 
+# ── ④ 역산 — 시총이 요구하는 성장률이 어느 칸으로 들어가나 ─────────────────
+# 원문 L43~L44 의 두 식을 그림으로. 되짚는 미지수(r)는 NOPAT5 안에만 든다.
+FIG_REVERSE = tree_svg(
+    '되짚기에서 성장률이 들어가는 칸은 하나다',
+    [84, 100, 92, 108, 120],
+    _node(['추정 EV', '753,027억원'], '+', [
+        _node(['명시적 5년', '139,307억원']),
+        _node(['영구가치 몫', '613,720억원'], '÷', [
+            _node(['영구가치', '944,188억원'], '÷', [
+                _node(['NOPAT₅ ×', '(1 + g)'], '×', [
+                    _node(['NOPAT₅', '59,868억원']),
+                    _node(['1 + g', 'g 2.5%']),
+                ]),
+                _node(['WACC − g', '9.0% − 2.5%']),
+            ]),
+            _node(['(1+WACC)⁵', 'WACC 9.0%']),
+        ]),
+    ]),
+    marks=[('NOPAT₅', 1)])
+
+
 if __name__ == '__main__':
     import sys
     sys.path.insert(0, 'scratchpad')
     import check_fig
-    for name, fig in [('per_share', FIG_PER_SHARE), ('fcf', FIG_FCF), ('wacc', FIG_WACC)]:
+    for name, fig in [('per_share', FIG_PER_SHARE), ('fcf', FIG_FCF), ('wacc', FIG_WACC),
+                      ('reverse', FIG_REVERSE)]:
         print(name, check_fig.hits(fig) or 'FAIL 0건')
