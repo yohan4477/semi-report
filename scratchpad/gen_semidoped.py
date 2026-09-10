@@ -7,7 +7,7 @@
   판   전략(⚖) 전략 컨설턴트 출신 애널리스트의 해설   ·   기술(🔧) 주제 + 순서·층위
        판은 주제가 서는 회차에만 생긴다. 둘 다 안 서면 그 줄은 링크가 안 걸린다.
 
-  재료 content/understanding/Semi Doped/*.md   회차 메타와 한 줄
+  재료 content/semi_doped/*.md   회차 메타와 한 줄
        insights/semidoped/<slug>-{strategy,tech}.md   받은 글 원본
 
   이 화면   py -3.13 scratchpad/gen_semidoped.py
@@ -26,7 +26,7 @@ import semidoped_figs  # noqa: E402
 import check_fig  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
+SRC = os.path.join(ROOT, 'content', 'semi_doped')
 LANE_DIR = os.path.join(ROOT, 'insights', 'semidoped')
 OUT = os.path.join(ROOT, '대시보드', 'Semi Doped 대시보드.html')
 POST_DIR = os.path.join(ROOT, '대시보드', 'semidoped')
@@ -499,7 +499,7 @@ def episodes():
         eps.append({'slug': slug, 'meta': meta, 'lanes': lanes,
                     'one': one_line(body),
                     'note': NOT_EPISODE.get(slug, ''),
-                    'raw': 'content/understanding/Semi Doped/%s.md' % slug})
+                    'raw': 'content/semi_doped/%s.md' % slug})
     eps.sort(key=lambda e: e['meta'].get('date', ''), reverse=True)
     return eps
 

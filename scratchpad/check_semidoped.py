@@ -22,7 +22,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANES = os.path.join(ROOT, 'insights', 'semidoped')
 PAGES = os.path.join(ROOT, '대시보드', 'semidoped')
-META = os.path.join(ROOT, 'content', 'understanding', 'Semi Doped')
+META = os.path.join(ROOT, 'content', 'semi_doped')
 
 BAD = [(r'값이 움직', '값이 움직인다'), (r'(자리|시장|수요|기회)[가이] 열리', '자리가 열린다'),
        (r'(?<![가-힣])몫', '몫'), (r'(아래|위|세|두|다섯|여러|그) 단(?=[ 을이에의로,.)])', '공급망 층을 「단」으로')]
