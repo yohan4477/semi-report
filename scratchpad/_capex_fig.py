@@ -284,3 +284,182 @@ FIG_EQ_BR = tree_svg(
     ]),
     marks=(('자본지출 총액', 1), ('칩 한 개 값', 2)))
 
+# ── ⑥ 레고. 공법마다 착공에서 준비까지 ────────────────────────────────────
+def _sched():
+    x0, top, bh, gap = 150, 122, 24, 20
+    full, top_v = 250.0, 35.0
+    rows = [('현장시공', 18, 24, 30, 35, 0),
+            ('MEP 스킷만', 17, 17, None, None, 0),
+            ('완전 모듈러', 12, 18, 24, 30, 1),
+            ('올인원 프리팹', 12, 12, None, None, 0)]
+    out = [_board(accent=(0,)),
+           _lt(20, 108, '착공에서 IT 준비까지 걸리는 달 (짙은 칸)과 허가까지 더한 폭',
+               't-lab', False)]
+    for i, (name, lo, hi, alo, ahi, mark) in enumerate(rows):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 16, name, 't-sm', False))
+        if alo:
+            out.append(_hbar(x0 + full * lo / top_v, y,
+                             full * (ahi - lo) / top_v, bh, False))
+        out.append(_hbar(x0 + full * lo / top_v, y,
+                         max(full * (hi - lo) / top_v, 3), bh, True))
+        lab = '%g~%g' % (lo, hi) if lo != hi else '%g' % lo
+        if alo:
+            lab += ' · 허가까지 %g~%g' % (alo, ahi)
+        out.append(_lt(x0 + full * (ahi or hi) / top_v + 6, y + 16, lab, 't-sm', False))
+        if mark:
+            out.append(_mark(x0 + full * lo / top_v - 14, y + bh // 2, mark))
+    y = top + 4 * (bh + gap) + 2
+    out.append(_lt(20, y, '가로축은 달이다. 왼쪽 끝이 착공이고 0에서 시작한다.',
+                   't-sm', False))
+    out.append(_legend(y + 20, [
+        '원문이 36퍼센트 짧다고 적은 자리. 우리가 개월 수로 세면 25~33퍼센트다',
+    ]))
+    return ''.join(out)
+
+
+FIG_LEGOSCH = _svg(W, 348, '공장에서 만들어 오면 착공에서 준비까지 여섯 달이 준다',
+                   _sched())
+
+
+# ── ⑦ 지상. 매출에서 자본과 전기가 먹는 몫 ────────────────────────────────
+def _grd_cost():
+    x0, top, bh, gap = 150, 126, 30, 26
+    full = 300.0                      # 매출 1,200만 달러가 이 길이다
+    rows = [('계통 연결', 2.01, 1.42, 1),
+            ('배후 자체발전', 2.67, 1.42, 0),
+            ('산업 생산 확충', 2.67, 1.42, 0)]
+    out = [_board(accent=(0, 2)),
+           _lt(20, 112, '메가와트당 연 매출 1,200만 달러를 무엇이 먹나', 't-lab', False)]
+    for i, (name, cap, pw, mark) in enumerate(rows):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 20, name, 't-sm', False))
+        w1 = full * cap / 12.0
+        w2 = full * pw / 12.0
+        out.append(_hbar(x0, y, w1, bh, True))
+        out.append(_hbar(x0 + w1, y, w2, bh, False))
+        out.append('<path d="M%d %d V%d" stroke="var(--ink-3)" stroke-width="1" '
+                   'stroke-dasharray="4 3" fill="none"/>' % (x0 + full, y - 4, y + bh + 4))
+        out.append(_lt(x0 + full + 8, y + 20, '합 %.2f' % (cap + pw), 't-sm', False))
+        out.append(_t(x0 + w1 / 2, y + 20, '%.2f' % cap))
+        out.append(_t(x0 + w1 + w2 / 2, y + 20, '%.2f' % pw))
+        if mark:
+            out.append(_mark(x0 + w1 + w2 + 22, y + bh // 2, mark))
+    y = top + 3 * (bh + gap) + 4
+    out.append(_lt(20, y, '점선이 매출 1,200만 달러다. 남는 칸으로 GPU 값과 사람 값을 댄다.',
+                   't-sm', False))
+    out.append(_legend(y + 20, [
+        '짙은 칸이 연 자본비, 옅은 칸이 전기값. 전기는 계통 시장가로 셌다',
+    ]))
+    return ''.join(out)
+
+
+FIG_GRDCOST = _svg(W, 348, '자본과 전기만으로 매출의 3분의 1이 나간다', _grd_cost())
+
+
+# ── ⑧ 트리니티. 금리가 이익률을 깎는다 ────────────────────────────────────
+def _debt():
+    x0, top, bh, gap = 200, 124, 26, 26
+    full = 260.0
+    out = [_board(accent=(1,)),
+           _lt(20, 110, '담보를 붙일 때와 안 붙일 때 (GPU 임대 사업)', 't-lab', False)]
+    rows = [('조달 금리', 5.62, 10.0, '%', 10.0, 1),
+            ('세전이익률', 14.8, 5.4, '%', 14.8, 2)]
+    for i, (name, a, b, unit, top_v, mark) in enumerate(rows):
+        y = top + i * (bh * 2 + gap)
+        out.append(_lt(20, y + 16, name + ' 담보', 't-sm', False))
+        out.append(_hbar(x0, y, full * a / top_v, bh - 4, True))
+        out.append(_lt(x0 + full * a / top_v + 8, y + 16, '%g%s' % (a, unit), 't-sm', False))
+        out.append(_lt(20, y + bh + 16, name + ' 무담보', 't-sm', False))
+        out.append(_hbar(x0, y + bh, full * b / top_v, bh - 4, False))
+        out.append(_lt(x0 + full * b / top_v + 8, y + bh + 16, '%g%s' % (b, unit),
+                       't-sm', False))
+        out.append(_mark(x0 - 24, y + bh, mark))
+    y = top + 2 * (bh * 2 + gap) + 2
+    out.append(_legend(y, [
+        '담보가 빠지면 금리가 4.38퍼센트포인트 오른다',
+        '같은 사업의 이익률이 9.4퍼센트포인트 깎인다 — 그 둘을 잇는 부채가 연 매출의 2.15배다',
+    ]))
+    return ''.join(out)
+
+
+FIG_TRDEBT = _svg(W, 340, '담보가 빠지면 금리 4.4퍼센트포인트가 이익률 9.4퍼센트포인트가 된다',
+                  _debt())
+
+
+# ── ⑨ 스페이스X. 파는 층마다 값이 다르다 ──────────────────────────────────
+def _ladder():
+    x0, top, bh, gap = 190, 124, 28, 22
+    full, top_v = 300.0, 100.0
+    rows = [('토큰을 판다 (API 추론)', 100, 1),
+            ('클러스터를 짧게 빌려준다', 50, 0),
+            ('같은 것을 낮은 값에', 30, 0),
+            ('상면과 전력을 빌려준다', 14, 0)]
+    out = [_board(accent=(2,)),
+           _lt(20, 110, '같은 1메가와트를 무엇으로 파나 (연 매출, 백만 달러)',
+               't-lab', False)]
+    for i, (name, v, mark) in enumerate(rows):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 18, name, 't-sm', False))
+        out.append(_hbar(x0, y, full * v / top_v, bh, i != 3))
+        out.append(_lt(x0 + full * v / top_v + 8, y + 18, '$%g백만' % v, 't-sm', False))
+        if mark:
+            out.append(_mark(x0 + 22, y + bh // 2, mark))
+    y = top + 4 * (bh + gap) + 4
+    out.append(_lt(20, y, '맨 아래가 지금 오픈AI 에 임대되는 값이고 맨 위가 7.1배다.',
+                   't-sm', False))
+    out.append(_legend(y + 20, [
+        '자본 5,000만 달러를 매출로 갚는 데 0.50년, 비용을 빼면 0.57년이 걸리는 자리',
+    ]))
+    return ''.join(out)
+
+
+FIG_SXLADDER = _svg(W, 372, '같은 전력을 파는 층이 올라갈수록 매출이 일곱 배가 된다',
+                    _ladder())
+
+
+# ── ⑩ 다리. 케이스 셋이 벌어지는 길 ───────────────────────────────────────
+def _scn():
+    x0, y0, w, h = 96, 118, 420, 170
+    top_v = 1600.0
+    years = ['2026E', '2027E', '2028E', '2029E', '2030E']
+    series = [('Bull', [732.5, 981, 1212.31, 1419.18, 1561.1], True, 1),
+              ('Base', [732.5, 907.75, 1031.04, 1124.54, 1180.76], True, 0),
+              ('Bear', [732.5, 834.5, 864.43, 873.69, 873.69], False, 2)]
+    out = [_board(accent=(0,)),
+           _lt(20, 108, '빅4 자본지출 (십억 달러)', 't-lab', False)]
+    # 축
+    out.append('<path d="M%d %d V%d H%d" stroke="var(--ink-3)" stroke-width="1" '
+               'fill="none"/>' % (x0, y0, y0 + h, x0 + w))
+    for v in (500, 1000, 1500):
+        yy = y0 + h - h * v / top_v
+        out.append('<path d="M%d %d H%d" stroke="var(--ink-3)" stroke-width="0.6" '
+                   'stroke-dasharray="3 4" fill="none"/>' % (x0, yy, x0 + w))
+        out.append(_lt(28, yy + 4, '%g' % v, 't-sm', False))
+    for i, yr in enumerate(years):
+        xx = x0 + w * i / (len(years) - 1.0)
+        out.append(_t(xx, y0 + h + 18, yr))
+    for name, vals, solid, mark in series:
+        pts = []
+        for i, v in enumerate(vals):
+            xx = x0 + w * i / (len(vals) - 1.0)
+            yy = y0 + h - h * v / top_v
+            pts.append('%d %d' % (xx, yy))
+        dash = '' if solid else ' stroke-dasharray="6 4"'
+        out.append('<path d="M%s" stroke="var(--ink)" stroke-width="%s" fill="none"%s/>'
+                   % (' L'.join(pts), '2' if name == 'Base' else '1.4', dash))
+        lx = x0 + w + 6
+        ly = y0 + h - h * vals[-1] / top_v
+        out.append(_lt(lx, ly + 4, '%s %g' % (name, vals[-1]), 't-sm', False))
+        if mark:
+            out.append(_mark(x0 + w * 3 / 4.0,
+                             y0 + h - h * vals[3] / top_v - 16, mark))
+    out.append(_legend(y0 + h + 38, [
+        '위아래 폭이 기준 케이스의 35퍼센트다 — 다섯 해 누적으로 84~118기가와트',
+        '2026년은 셋이 같다. 그 해는 회사가 이미 가이던스를 냈다',
+    ]))
+    return ''.join(out)
+
+
+FIG_BRSCN = _svg(W, 386, '케이스가 갈리는 것은 2027년부터다', _scn())
+

@@ -92,6 +92,8 @@ cite: 프레임 값의 인용 L숫자는 `insights/frames/2026-09-10-dc-capex-to
 
 ## 7. 케이스 셋을 우리 자로 재면
 
+[[fig:BRSCN]]
+
 [[tbl:BRSCN]]
 
 세 번째 엑셀은 같은 모델에 케이스 스위치를 붙인 판이다. Bear·Base·Bull 을 고르면 레버 일곱이 함께 움직인다 (프레임 L72).
