@@ -113,6 +113,11 @@ background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:7px;
 font-size:11.5px;color:var(--ink2)}
 .lgd span{display:inline-flex;align-items:center;gap:6px}
 .lgd b{font-weight:600;color:var(--ink1);font-size:11.5px}
+.grp-node{width:170px;background:#f4f6f9;border:1px dashed var(--ink4);border-radius:8px;
+padding:9px 11px;cursor:pointer;text-align:center}
+.grp-node:hover{background:var(--hi);border-color:var(--hiline)}
+.grp-node .gn{font-size:12.5px;font-weight:600;color:var(--ink1)}
+.grp-node .gc{font-size:10.5px;color:var(--ink3);margin-top:3px}
 .only-narrow{display:none}
 @media (max-width:720px){.lgd{left:8px;right:8px;bottom:56px;justify-content:flex-start;font-size:11px;padding:5px 8px}}
 @media (max-width:860px){
@@ -207,6 +212,20 @@ var PERIODS = (function(){
 })();
 var LATEST = PERIODS[PERIODS.length - 1];
 
+var CAT_KO = {
+  'Foundry': '파운드리', 'Memory': '메모리', 'Assembly & Test': '조립·시험·패키징',
+  'Contract manufacturing': '수탁 제조', 'Lithography': '노광 장비',
+  'Deposition & etch': '증착·식각 장비', 'Metrology': '계측·검사 장비',
+  'Silicon wafer': '원판 웨이퍼', 'Optics': '광학', 'Light source': '광원',
+  'Precision modules': '정밀 모듈', 'Direct sales': '직접 판매',
+  'Systems': '서버·시스템', 'AI accelerator': 'AI 가속기',
+  'AI infrastructure': 'AI 인프라', 'Market platform': '시장 구분',
+  'Financing': '금융·보증', 'Cloud capacity': '클라우드 용량',
+  'Cloud purchase': '클라우드 매입', 'Datacenter': '데이터센터',
+  'Datacenter & console': '데이터센터·콘솔', 'Console': '게임 콘솔'
+};
+function catName(k){ return CAT_KO[k] || k; }
+
 var CONF_LABEL = { high: '공시로 확인', medium: '한쪽만 공시', low: '추정' };
 var CONF_DOTS = { high: '●●●', medium: '●●○', low: '●○○' };
 var CONF_STYLE = {
@@ -272,7 +291,17 @@ function CoNode(p){
   }, '+' + d.hidden));
   return h('div', { className: cls, onClick: function(){ d.onOpen(c.id); } }, kids);
 }
-var NODE_TYPES = { co: CoNode };
+function GrpNode(p){
+  var d = p.data;
+  return h('div', { className:'grp-node', title:'눌러서 ' + d.count + '곳을 펼친다',
+                    onClick: function(){ d.onExpand(d.gid); } }, [
+    h(Handle, { key:'t', type:'target', position: Position.Left }),
+    h(Handle, { key:'s', type:'source', position: Position.Right }),
+    h('div', { key:'n', className:'gn' }, d.name),
+    h('div', { key:'c', className:'gc' }, d.count + '곳 · 눌러 펼치기')
+  ]);
+}
+var NODE_TYPES = { co: CoNode, grp: GrpNode };
 
 // ── 배치 ──────────────────────────────────────────────────────────
 var NODE_W = 236;
@@ -301,6 +330,7 @@ function App(){
   var s6 = useState(false), onlyOfficial = s6[0], setOnlyOfficial = s6[1];
   var s7 = useState(false), drawer = s7[0], setDrawer = s7[1];
   var s8 = useState(false), sheet = s8[0], setSheet = s8[1];
+  var s9 = useState({}), openGrp = s9[0], setOpenGrp = s9[1];
 
   var per = perOne ? [perOne] : PERIODS;
   // 좁은 화면에서는 무엇을 눌렀든 바닥 시트가 따라 올라온다
@@ -317,13 +347,62 @@ function App(){
   function down(id){ return rels.filter(function(r){ return r.source_company_id === id; }); }
 
   var graph = useMemo(function(){
-    var keep = {}; keep[center] = 1;
-    [center].concat(Object.keys(open)).forEach(function(id){
-      up(id).forEach(function(r){ keep[r.source_company_id] = 1; });
-      down(id).forEach(function(r){ keep[r.target_company_id] = 1; });
+    // 중심에서 뻗는 줄이 스물을 넘으면 판이 안 읽힌다. 갈래로 먼저 묶고
+    // 그 묶음을 눌렀을 때 회사가 갈라져 나오게 한다
+    var roots = [center].concat(Object.keys(open));
+    function fan(root, dir){
+      var rs = dir === 'up' ? up(root) : down(root);
+      var by = {};
+      rs.forEach(function(r){ (by[r.category] = by[r.category] || []).push(r); });
+      return by;
+    }
+    var keep = {}; roots.forEach(function(id){ keep[id] = 1; });
+    // 1차 — 한 곳뿐이거나 펼친 갈래는 회사를 바로 세운다
+    roots.forEach(function(root){
+      ['up', 'down'].forEach(function(dir){
+        var by = fan(root, dir);
+        Object.keys(by).forEach(function(cat){
+          var gid = 'g|' + root + '|' + dir + '|' + cat;
+          if (by[cat].length >= 2 && !openGrp[gid]) return;
+          by[cat].forEach(function(r){
+            keep[dir === 'up' ? r.source_company_id : r.target_company_id] = 1;
+          });
+        });
+      });
+    });
+    // 2차 — 남은 갈래는 묶음 노드 하나로
+    var grpNodes = [], grpEdges = [], absorbed = {};
+    roots.forEach(function(root){
+      ['up', 'down'].forEach(function(dir){
+        var by = fan(root, dir);
+        Object.keys(by).forEach(function(cat){
+          var gid = 'g|' + root + '|' + dir + '|' + cat;
+          if (by[cat].length < 2 || openGrp[gid]) return;
+          var hid = by[cat].filter(function(r){
+            var o = dir === 'up' ? r.source_company_id : r.target_company_id;
+            if (keep[o]) return false;
+            absorbed[r.id] = 1;
+            return true;
+          });
+          if (!hid.length) return;
+          grpNodes.push({
+            id: gid, type: 'grp', position: { x:0, y:0 }, __h: 52,
+            data: { gid: gid, name: catName(cat), count: hid.length,
+                    onExpand: function(g){ setOpenGrp(function(o){
+                      var n = Object.assign({}, o); n[g] = 1; return n; }); } }
+          });
+          grpEdges.push({
+            id: gid, source: dir === 'up' ? gid : root,
+            target: dir === 'up' ? root : gid,
+            type: 'smoothstep', style: { stroke: '#b9c0cc', strokeWidth: 1.4 },
+            markerEnd: { type: MarkerType.ArrowClosed, width: 12, height: 12,
+                         color: '#b9c0cc' }
+          });
+        });
+      });
     });
     var eds = rels.filter(function(r){
-      return keep[r.source_company_id] && keep[r.target_company_id];
+      return keep[r.source_company_id] && keep[r.target_company_id] && !absorbed[r.id];
     }).map(function(r){
       var m = latest(r.id, per);
       return {
@@ -336,28 +415,30 @@ function App(){
         markerEnd: { type: MarkerType.ArrowClosed, width: 13, height: 13,
                      color: CONF_STYLE[r.confidence].stroke }
       };
-    });
+    }).concat(grpEdges);
     var nds = Object.keys(keep).filter(function(id){ return CO[id]; }).map(function(id){
       var c = CO[id];
-      var shown = 0, total = 0, sh = null;
+      var hid = 0, sh = null;
       up(id).forEach(function(r){
-        total++; if (keep[r.source_company_id]) shown++;
+        if (!keep[r.source_company_id] && !absorbed[r.id]) hid++;
         var m = latest(r.id, per);
         if (m && !sh && m.unit === '%') sh = m.value + '% · ' + metName(m.metric);
       });
-      down(id).forEach(function(r){ total++; if (keep[r.target_company_id]) shown++; });
+      down(id).forEach(function(r){
+        if (!keep[r.target_company_id] && !absorbed[r.id]) hid++;
+      });
       var lines = label(c).length > 13 ? 2 : 1;
       return {
         id: id, type: 'co', position: { x:0, y:0 },
         __h: 18 + lines * 19 + 21 + (sh ? 28 : 0),
-        data: { co: c, isCenter: id === center, share: sh, hidden: total - shown,
+        data: { co: c, isCenter: id === center, share: sh, hidden: hid,
                 onOpen: function(x){ setSel({ kind:'co', id:x }); },
                 onExpand: function(x){ setOpen(function(o){
                   var n = Object.assign({}, o); n[x] = 1; return n; }); } }
       };
-    });
+    }).concat(grpNodes);
     return { nodes: place(nds, eds), edges: eds };
-  }, [center, open, rels, perOne]);
+  }, [center, open, openGrp, rels, perOne]);
 
   // 고른 선은 굵게 — 옆판이 어느 선을 풀고 있는지 보이게 한다
   var edges = useMemo(function(){
@@ -368,7 +449,8 @@ function App(){
   }, [graph, sel]);
 
   function focus(id){
-    setCenter(id); setOpen({}); setSel({ kind:'co', id:id }); setQ(''); setDrawer(false);
+    setCenter(id); setOpen({}); setOpenGrp({}); setSel({ kind:'co', id:id });
+    setQ(''); setDrawer(false);
   }
 
   var hits = q.trim() ? DB.companies.filter(function(c){
