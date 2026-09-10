@@ -6,16 +6,21 @@
 재료 content/rocketblocks/*.md (유튜브 자막). 산출 대시보드/RocketBlocks 대시보드.html
 와 대시보드/rocketblocks/<슬러그>.html.
 
+**화면에 나가는 글은 전부 영어다**(2026-09-10). 케이스 면접은 영어로 치르고
+연습도 영어로 하는 것이라, 대본을 한국어로 옮기면 정작 입으로 낼 말이 안 남는다.
+코드 주석과 검사기 메시지만 한국어로 둔다.
+
 이 장의 본체는 대본이다. 면접관과 지원자가 주고받은 말을 실제 순서대로 끝까지
 적는다 — 요지만 추리면 케이스가 어떻게 굴러가는지가 안 남는다. 판단은 대본을
-끊고 들어오는 짧은 해설과 맨 끝 평가표가 맡는다.
+끊고 들어오는 짧은 해설(Coach)과 요약 노트, 맨 끝 평가표가 맡는다.
 
 이 3부작은 같은 케이스를 세 지원자가 세 번 푸는 꼴이라, 우수 답 한 줄기를 세
 편에 걸쳐 이어 붙이면 프롬프트부터 시장 규모 검증까지 한 번 통과하는 대본이
 된다. 원문에 권고 대목은 없다.
 
-수식은 math-tree(_mathtree)로 쪼갠다 — 곱셈을 줄로 늘어놓으면 어느 가정이
-어느 값을 낳는지가 안 보인다.
+수식은 math-tree(_mathtree)로 쪼갠다. 연산자 동그라미만 빼면 같은 부품이 이슈
+트리가 된다 — 곱셈 트리는 오른쪽 칸이 왼쪽 값을 낳고, 이슈 트리는 오른쪽 칸이
+왼쪽 물음에 답한다.
 """
 import io
 import os
@@ -43,61 +48,60 @@ _node = mt._node
 # 지원자가 입으로 돌린 곱셈. 사슬을 한 열에 몰았다 — 단계마다 열을 하나씩
 # 세우면 여섯 열이 되고 640px 안에서 상자가 글자보다 좁아진다.
 FIG_TREE = mt.tree_svg(
-    '지원자가 연 320억 달러에 이른 길',
-    [116, 126, 118, 158],
-    _node(['연 320억 달러'], '×', [
-        _node(['일 8,000만 달러', '7,800만을 올림'], '×', [
-            _node(['1,300만 명', '1,320만을 내림'], '×', [
-                _node(['미국 인구 3억 명']),
-                _node(['매일 조식 25%']),
-                _node(['18세 이상 80%']),
-                _node(['출근길 구매 55%']),
-                _node(['건강 감액 40%']),
+    'How the candidate got to $32B a year',
+    [104, 128, 116, 176],
+    _node(['Annual $32B'], '×', [
+        _node(['Daily $80M', 'up from $78M'], '×', [
+            _node(['13M people', 'from 13.2M'], '×', [
+                _node(['US population 300M']),
+                _node(['Eat breakfast daily 25%']),
+                _node(['Age 18 and over 80%']),
+                _node(['Buy on commute 55%']),
+                _node(['Health haircut 40%']),
             ]),
-            _node(['한 끼 6달러']),
+            _node(['Ticket $6']),
         ]),
-        _node(['연 400일']),
+        _node(['400 days/yr']),
     ]),
     # 번호는 맨 오른쪽 두 열의 짧은 상자에만 얹는다. 왼쪽 결과 상자는 이름이 길어
     # 동그라미가 글자를 문다(check_fig 「글자끼리 겹침」, 2026-09-10)
-    marks=[('18세 이상 80%', 1), ('출근길 구매 55%', 2), ('건강 감액 40%', 3),
-           ('한 끼 6달러', 4), ('연 400일', 5)])
+    marks=[('Age 18 and over 80%', 1), ('Buy on commute 55%', 2),
+           ('Health haircut 40%', 3), ('Ticket $6', 4), ('400 days/yr', 5)])
 
 # 이슈 트리. math-tree 에서 연산자 동그라미만 빼면 그대로 이슈 트리가 된다 —
-# 왼쪽에 답할 물음을 두고 오른쪽으로 갈수록 잘게 쪼갠다는 꼴이 같다. 곱셈 트리는
-# 아래 칸이 위 칸을 낳고, 이슈 트리는 아래 칸이 위 칸에 답한다.
+# 왼쪽에 답할 물음을 두고 오른쪽으로 갈수록 잘게 쪼갠다는 꼴이 같다.
 FIG_ISSUE = mt.tree_svg(
-    '지원자가 2막에서 세운 갈래 넷',
-    [200, 104, 214],
-    _node(['매출 10%를 더 낼 수 있나'], None, [
-        _node(['시장 규모'], None, [
-            _node(['시장이 얼마나 두터운가']),
-            _node(['기회가 얼마나 매력적인가']),
+    'The four branches the candidate built in Act 2',
+    [196, 112, 202],
+    _node(['Can they add 10% revenue?'], None, [
+        _node(['Market size'], None, [
+            _node(['How robust is the market?']),
+            _node(['How attractive is it?']),
         ]),
-        _node(['운영'], None, [
-            _node(['매장을 더 일찍 연다']),
-            _node(['새 원재료를 들인다']),
-            _node(['새 메뉴를 만든다']),
+        _node(['Operations'], None, [
+            _node(['Open stores earlier']),
+            _node(['Source new ingredients']),
+            _node(['Build new menu items']),
         ]),
-        _node(['마케팅'], None, [
-            _node(['자리 잡은 브랜드가 많다']),
-            _node(['캠페인 비용은 얼마인가']),
+        _node(['Marketing'], None, [
+            _node(['Crowded with brands']),
+            _node(['What does a campaign cost?']),
         ]),
-        _node(['재무'], None, [
-            _node(['10%를 달성할 수 있나']),
-            _node(['남기면서 할 수 있나']),
+        _node(['Financials'], None, [
+            _node(['Can they hit 10%?']),
+            _node(['Can they do it profitably?']),
         ]),
     ]),
-    marks=[('시장 규모', 1), ('운영', 2), ('마케팅', 3), ('재무', 4)])
+    marks=[('Market size', 1), ('Operations', 2), ('Marketing', 3), ('Financials', 4)])
 
 # 대목 사슬 — 판 위에 세 답의 성적을 겹쳐 얹는다. 기호는 아홉 기준 표를 대목
 # 단위로 접은 것이라 표와 어긋나면 안 된다(2026-09-10 판이 표보다 짜게 나왔다).
 _BW, _GAP, _X0, _BY, _BH = 86, 8, 70, 26, 50
 _CELLS = [(_X0 + i * (_BW + _GAP), _BY, _BW, _BH) for i in range(6)]
-_NAMES = [['프롬프트'], ['명확화'], ['구조'], ['캐묻기'], ['계산'], ['물음에', '잇기']]
-_LANES = [('약함', 108, '××××××'),
-          ('보통', 136, '△△△×△×'),
-          ('우수', 164, '○○○○○○')]
+_NAMES = [['Prompt'], ['Clarify'], ['Structure'], ['Probe'], ['Math'], ['Tie', 'back']]
+_LANES = [('Weak', 108, '××××××'),
+          ('Okay', 136, '△△△×△×'),
+          ('Great', 164, '○○○○○○')]
 
 
 def _board():
@@ -111,7 +115,7 @@ def _board():
             cx = _CELLS[i][0] + _BW // 2
             out.append('<circle cx="%d" cy="%d" r="9" fill="var(--paper)"/>' % (cx, y))
             out.append(bf.sudo._t(cx, y + 4, m, 't-lab'))
-    return bf._svg(640, 190, '여섯 대목에 세 답의 성적을 겹쳐 얹은 판', ''.join(out))
+    return bf._svg(640, 190, 'Three answers scored across the six stages', ''.join(out))
 
 
 FIG_BOARD = _board()
@@ -120,345 +124,407 @@ FIG_BOARD = _board()
 # ── 앞머리 ────────────────────────────────────────────────────────────
 
 LEAD = [
-    ('무엇', '전략컨설팅 케이스 면접 한 번을 처음부터 끝까지 옮긴 대본. '
-             '풋롱 서브 샌드위치를 파는 퀵서비스 레스토랑이 미국 조식 시장에 '
-             '들어갈 것인가.'),
-    ('바탕', 'RocketBlocks 모의 케이스 면접 3부작(2018-11-14 · 11-28 · 12-18). '
-             '진행자 켄튼 크바스가 면접관을 맡고, 같은 케이스를 세 지원자가 '
-             '약함·보통·우수로 세 번 푼다. 아래 대본은 우수 답 한 줄기를 세 편에 '
-             '걸쳐 이어 붙인 것이라 실제 한 번의 면접과 같은 순서로 흐른다.'),
-    ('읽는 법', '왼쪽에 말한 사람, 오른쪽에 그 말. 기울인 줄은 그 자리에서 벌어진 일이다. '
-                '가라앉은 상자는 우리 해설이고 대본이 아니다. 판정은 맨 끝 평가표에 '
-                '몰아 뒀다 — 먼저 대본을 그냥 읽는 편이 낫다.'),
-    ('끝나는 자리', '원문은 시장 규모를 검증하는 데서 멈춘다. 운영·마케팅·재무 갈래와 '
-                    '최종 권고는 3부작에 없다.'),
+    ('WHAT THIS IS',
+     'One strategy-consulting case interview written out turn by turn. A quick-service '
+     'restaurant known for footlong subs is weighing a move into breakfast.'),
+    ('SOURCE',
+     'RocketBlocks mock case interview, three parts (2018-11-14, 11-28, 12-18). '
+     'Kenton Kvass plays the interviewer, and three candidates run the same case as a '
+     'weak, an okay and a great answer. The script below follows the great answer '
+     'across all three parts, so it reads as one continuous interview.'),
+    ('HOW TO READ IT',
+     'Speaker on the left, what they said on the right. Italic lines are stage '
+     'directions. Grey boxes marked Coach are our commentary, not part of the '
+     'interview. Scoring is held to the end on purpose, so read the run first.'),
+    ('WHERE IT STOPS',
+     'The source ends just after the market-sizing sanity check. Operations, marketing '
+     'and financials are never opened, and no final recommendation is given.'),
 ]
 
 TOC = [
-    ('a1', '1막 — 프롬프트와 명확화 질문'),
-    ('a2', '2막 — 구조 세우기'),
-    ('a3', '3막 — 캐묻기'),
-    ('a4', '4막 — 시장 규모 계산'),
-    ('a5', '5막 — 검증, 그리고 끝'),
-    ('m', '노트 — 이 케이스에서 건질 것'),
-    ('x', '같은 자리, 약한 답은 이렇게 갔다'),
-    ('e', '평가표 — 진행자가 댄 아홉 기준'),
+    ('a1', 'Act 1 — The prompt and clarifying questions'),
+    ('a2', 'Act 2 — Building the structure'),
+    ('a3', 'Act 3 — Probing for data'),
+    ('a4', 'Act 4 — Sizing the market'),
+    ('a5', 'Act 5 — Sanity check, and the end'),
+    ('m', 'Takeaways — what to carry into the next case'),
+    ('x', 'Same moment, the weak answer'),
+    ('e', 'Scorecard — nine things the coach watched'),
 ]
+
+I = 'Interviewer'
+C = 'Candidate'
 
 
 # ── 대본 ──────────────────────────────────────────────────────────────
 
 def act1():
     return sh.script([
-        sh.act('1막 · 프롬프트와 명확화 질문'),
-        sh.turn('면접관', '케이스 시작할 준비 되셨습니까.'),
-        sh.turn('지원자', '네.'),
-        sh.turn('면접관',
-                '오늘 케이스는 퀵서비스 레스토랑입니다. 이 회사는 풋롱 서브로 알려져 '
-                '있습니다. 조식 시장에 들어갈지를 놓고 고민하는 중이고, 그 투자를 해야 '
-                '하는지 판단해 달라며 우리 팀을 불렀습니다. 같이 생각해 주시면 좋겠습니다.'),
-        sh.turn('지원자',
-                '좋습니다. 사실 저는 샌드위치를 주로 하는 퀵서비스 체인들이 왜 여태 조식에 '
-                '안 들어갔는지 늘 궁금했습니다. 그래서 이 물음이 말이 되네요.',
-                '세부로 들어가기 전에 하나 여쭙겠습니다. 이 일의 주된 목표가 무엇입니까. '
-                '매출을 더 내려는 것입니까, 아니면 경쟁 위협을 막는 것 같은 부수적인 '
-                '고려가 있습니까.'),
-        sh.turn('면접관',
-                '좋은 질문입니다. 우선 핵심 목표는 매출을 10% 늘리는 것입니다.',
-                '경쟁 쪽은, 샌드위치를 주로 하는 직접 경쟁사 가운데 지금 조식을 하는 곳은 '
-                '없습니다. 물론 더 넓은 퀵서비스 범주에는 조식을 파는 곳이 있습니다.'),
-        sh.turn('지원자',
-                '알겠습니다. 그리고 이 일을 시작할 때 바로 전 세계로 펼치려는 것입니까, '
-                '아니면 미국 같은 한 시장에 집중하려는 것입니까.'),
-        sh.turn('면접관',
-                '지금은 미국에 집중하고 싶어 합니다. 잘되면 해외를 검토하겠지만, 이 '
-                '연습에서는 미국으로 두겠습니다.'),
-        sh.turn('지원자',
-                '좋습니다. 물어볼 것이 더 있습니다만, 시작하기 전에 잠깐 생각을 정리해도 '
-                '되겠습니까.'),
-        sh.turn('면접관', '그러시죠.'),
-        sh.direction('지원자가 말을 멈추고 메모를 한다.'),
-        sh.note('질문 둘의 내용은 평범하다. 목표와 범위. 보통 답을 한 지원자도 같은 둘을 '
-                '물었다. 다른 것은 순서다. 목표를 먼저 물었기 때문에 이 사람은 매출 10%를 '
-                '손에 쥔 채로 범위를 물었다.',
-                '앞머리에 얹은 한 마디도 그냥 인사가 아니다. 경쟁사가 왜 안 들어갔는지 '
-                '궁금했다고 말한 사람은 뒤에서 운영 제약을 볼 사람이다.'),
+        sh.act('ACT 1 · THE PROMPT AND CLARIFYING QUESTIONS'),
+        sh.turn(I, 'Ready for a case?'),
+        sh.turn(C, 'Ready.'),
+        sh.turn(I,
+                'Our client is a quick-service restaurant, best known for footlong '
+                'subs. They are weighing whether to break into the breakfast market, '
+                'and they have brought our team in to work out whether the investment '
+                'is worth making. I would like you to help us think it through.'),
+        sh.turn(C,
+                'Sounds good. I have always wondered why none of the sandwich-led '
+                'chains have gone after breakfast, so the question makes sense to me.',
+                'Before I get into the details, can I ask what their primary goal is '
+                'here? Is this about driving incremental revenue, or are there side '
+                'concerns like fending off a competitive threat?'),
+        sh.turn(I,
+                'Good question. The key goal is a 10 percent increase in revenue.',
+                'On competition, none of their direct competitors, meaning the '
+                'sandwich-led chains, serve breakfast today. There are of course other '
+                'quick-service players in the wider category that do.'),
+        sh.turn(C,
+                'Understood. And when they launch, are they rolling out globally right '
+                'away, or focusing on one market such as the US?'),
+        sh.turn(I,
+                'They want to focus on the US for now. If it proves out they would look '
+                'wider, but for this exercise let us stay in the US.'),
+        sh.turn(C,
+                'Great. I have more questions, but would it be alright if I took a '
+                'moment to gather my thoughts first?'),
+        sh.turn(I, 'Go ahead.'),
+        sh.direction('The candidate stops talking and writes.'),
+        sh.note('The two questions themselves are ordinary: goal and scope. The okay '
+                'candidate asked the same two. What differed was the order. Asking about '
+                'the goal first meant this candidate held the 10 percent target before '
+                'asking anything else.',
+                'The opening remark is not small talk either. Someone who wonders why '
+                'competitors stayed out is someone who will press on operating '
+                'constraints later.'),
     ])
 
 
 def act2():
     return sh.script([
-        sh.act('2막 · 구조 세우기'),
+        sh.act('ACT 2 · BUILDING THE STRUCTURE'),
         sh.fig(FIG_ISSUE,
-               '왼쪽이 답할 물음, 오른쪽으로 갈수록 잘게 쪼갠 것. ① 들어갈 만한 판인가 '
-               '② 지금 가게로 할 수 있나 ③ 손님이 우리를 알아보게 만들 수 있나 '
-               '④ 남으면서 되는가. 약한 답을 한 지원자는 갈래를 셋만 세웠고 그 오른쪽 칸이 '
-               '비어 있었다 — 이름만 있고 무엇을 물을지가 없었다.'),
-        sh.turn('지원자',
-                '재미있는 케이스입니다. 핵심 물음은 이 회사가 조식 범주에 들어가서 매출을 '
-                '10% 더 낼 수 있는가라고 봅니다. 그것을 보려고 네 가지를 보겠습니다.',
-                '첫째, 미국 조식 시장 전체 규모입니다. 우리가 볼 시장이니 얼마나 두터운지, '
-                '기회가 얼마나 매력적인지부터 알아야 합니다.',
-                '둘째, 운영 쪽 고려입니다. 조식을 처음 한다면 매장을 더 일찍 열어야 하고, '
-                '새 원재료를 들여야 하고, 새 메뉴를 만들어야 합니다. 볼 것이 많아서 여기는 '
-                '좀 파고 싶습니다.',
-                '셋째, 마케팅입니다. 퀵서비스 판은 경쟁이 심하기로 유명하고 자리 잡은 '
-                '브랜드가 많습니다. 이 회사가 자기 자리를 만들려면 어떤 캠페인이 필요하고 '
-                '돈이 얼마나 드는지 감을 잡아야 합니다.',
-                '넷째로 앞의 셋을 묶어 재무를 봅니다. 매출을 10% 더 낼 수 있는지, 그리고 '
-                '중요한 것은 그것을 남기면서 할 수 있는지입니다. 이익에 실제로 보태져야 '
-                '하니까요.'),
-        sh.turn('면접관', '좋습니다.'),
-        sh.note('갈래 이름은 셋 다 비슷하다. 시장 규모, 운영, 마케팅, 재무. 이 답만 다른 것은 '
-                '갈래마다 왜 그것을 보는지 한 줄씩 붙였다는 점이다. 위 판에서 오른쪽 칸에 '
-                '해당하는 자리다.',
-                '4막의 시장 규모 판과 이 판은 같은 꼴이다. 왼쪽에 답할 것을 두고 오른쪽으로 '
-                '갈수록 잘게 쪼갠다. 다른 것은 잇는 자리에 연산자가 붙느냐뿐이다 — 곱셈 '
-                '트리는 오른쪽 칸이 왼쪽 값을 낳고, 이슈 트리는 오른쪽 칸이 왼쪽 물음에 '
-                '답한다.',
-                '넷째 갈래는 뒤에서 값으로 돌아온다. 5막에서 320억 달러를 다시 매출 10%에 '
-                '붙이는데, 붙일 자리를 여기서 미리 만들어 둔 것이다.'),
+               'The question to answer sits on the left, split finer as you move right. '
+               '① Is this a market worth entering? ② Can these stores actually do it? '
+               '③ Can they get noticed? ④ Does it pay? The weak candidate named three '
+               'branches and left the right-hand column empty, which is to say the '
+               'labels were there but the questions under them were not.'),
+        sh.turn(C,
+                'This is an interesting one. The key question, as I see it, is whether '
+                'this client can drive 10 percent incremental revenue by breaking into '
+                'breakfast. To get there I would like to look at four things.',
+                'First, the size of the US breakfast market. That is the market we care '
+                'about, and I want to understand how robust it is and how attractive the '
+                'opportunity looks.',
+                'Second, operational considerations. If they are doing breakfast for the '
+                'first time they will have to open stores earlier, source new raw '
+                'materials and create new menu items. There is a lot there I would like '
+                'to dig into.',
+                'Third, marketing. The quick-service space is famously competitive and '
+                'full of established brands, so I want a sense of what kind of campaign '
+                'it would take to establish themselves and what that would cost.',
+                'Fourth, tying it together, the financials. Can they drive an '
+                'incremental 10 percent, and just as importantly can they do it '
+                'profitably so it actually adds to the bottom line.'),
+        sh.turn(I, 'That sounds good.'),
+        sh.note('All three candidates named similar branches: market size, operations, '
+                'marketing, financials. What only this answer did was attach a reason to '
+                'each one. That is the right-hand column of the board above.',
+                'The board in Act 4 has the same shape as this one. The thing to answer '
+                'sits on the left and gets split finer to the right. The only difference '
+                'is whether an operator hangs on the join: in the multiplication tree the '
+                'right-hand cells produce the left-hand value, and in the issue tree they '
+                'answer the left-hand question.'),
     ])
 
 
 def act3():
     return sh.script([
-        sh.act('3막 · 캐묻기'),
-        sh.turn('지원자',
-                '시장 규모부터 재겠습니다. 세부로 들어가기 전에, 고객사가 미국인 조식 습관을 '
-                '미리 조사한 것이 있는지, 있다면 나눠 주실 수 있는지 여쭙겠습니다.'),
-        sh.turn('면접관',
-                '초기 조사를 했습니다. 더 자세히 파 달라고 우리를 부른 것이고요. 지금까지 '
-                '나온 것은 미국인의 25%가 매일 아침을 먹는다는 것, 그리고 그 가운데 30%만 '
-                '집에서 먹는다는 것입니다.'),
-        sh.turn('지원자',
-                '흥미롭네요. 짧게 두 가지를 이어 묻겠습니다.',
-                '하나, 매일 안 먹는 나머지 75%는 어떻게 됩니까. 둘, 매일 먹는 25% 가운데 '
-                '30%가 집에서 먹는다면 나머지 70%가 어디서 먹는지 아는 것이 있습니까.'),
-        sh.turn('면접관',
-                '첫 번째는, 계산을 단순하게 두려고 이번 연습에서는 매일 안 먹는 75%는 빼고 '
-                '보시죠.',
-                '두 번째, 그 70% 가운데 50%는 출근길에 사서 먹고, 10%는 집에서 챙겨 나와 '
-                '가는 길에 먹습니다.'),
-        sh.turn('지원자',
-                '알겠습니다. 그리고 고객사의 최종 목표가 연 매출을 10% 더 내는 것이니 한 '
-                '가지가 걸립니다. 이 비중들이 지금 움직이고 있습니까. 한쪽으로 쏠리는 큰 '
-                '흐름을 고객사가 본 것이 있습니까.'),
-        sh.turn('면접관',
-                '지금은 그 자료가 없습니다. 그런데 어떻게 보시는지 궁금하네요.'),
-        sh.turn('지원자',
-                '중요한 물음이라고 봅니다. 눈에 띄는 것은 미국인이 전반적으로 일을 많이 '
-                '한다는 점입니다. 다른 부유한 나라와 견주면 특히 그렇고, 그 추세는 오히려 '
-                '빨라지는 것 같습니다.',
-                '그러면 오늘 집에서 먹는 30%가 5년 뒤에는 20% 정도로 줄 수 있다고 봅니다.'),
-        sh.direction('20년이라고 말했다가 스스로 5년으로 고친다.'),
-        sh.turn('면접관', '그럴듯한 가정입니다.'),
-        sh.turn('지원자',
-                '시작하기 전에 마지막으로 하나만 더 여쭙겠습니다. 다른 퀵서비스 업체들이 '
-                '조식으로 무엇을 하는지 고객사가 본 것이 있습니까. 퀴즈노스나 맥도날드 '
-                '같은 곳이요.'),
-        sh.turn('면접관',
-                '아주 초기 수준의 경쟁 조사를 했습니다. 내부 추정으로는 맥도날드가 전체 '
-                '매출의 18% 정도를 조식에서 낸다고 봅니다.',
-                '고객사 손님들의 조식 습관이 특별한지도 봤는데, 다른 미국인과 비슷하게 '
-                '움직인다고 두셔도 됩니다.'),
-        sh.turn('지원자',
-                '좋습니다. 추정에 들어갈 정보는 다 얻은 것 같습니다.',
-                '하나만 덧붙이면, 고객사 연 매출 추정치가 있으면 좋겠습니다. 시장의 몇 %를 '
-                '가져와야 10% 목표에 닿는지 알 수 있어서요. 이제 시장 규모를 재겠습니다.'),
-        sh.note('이 막에서 지원자가 한 일은 셋이다. 묻기 전에 몇 개를 묻겠다고 예고했고, '
-                '수치가 움직이는지를 물으면서 그 물음을 5년이라는 케이스의 시계에 대 놓고 '
-                '붙였고, 정보를 다 받은 뒤에도 쓸 데를 밝히며 하나를 더 얻었다.',
-                '보통 답을 한 지원자도 수치가 안정적이냐고 똑같이 물었다. 다만 왜 그것이 '
-                '궁금한지를 말하지 않았다. 면접관 쪽에서 보면 호기심과 필요를 구분할 수 없다.'),
+        sh.act('ACT 3 · PROBING FOR DATA'),
+        sh.turn(C,
+                'I would like to start with market sizing. Before I dive in, has the '
+                'client done any preliminary research on American breakfast habits, and '
+                'if so could you share what they found?'),
+        sh.turn(I,
+                'They have done some initial work, and part of why they hired us is to '
+                'take it further. What they found is that 25 percent of Americans eat '
+                'breakfast daily, and of that group only 30 percent eat at home.'),
+        sh.turn(C,
+                'Interesting. Two quick follow-ups.',
+                'First, what is going on with the other 75 percent? Second, if 30 percent '
+                'of those daily eaters eat at home, do we know where the remaining 70 '
+                'percent eat?'),
+        sh.turn(I,
+                'On the first, let us set aside the 75 percent who do not eat breakfast '
+                'daily, just to keep the math simple.',
+                'On the second, 50 percent of that group pick up breakfast on their way '
+                'to work, and 10 percent bring something from home and eat it on the way.'),
+        sh.turn(C,
+                'Got it. And since the ultimate goal is a 10 percent bump in annual '
+                'revenue, one thing on my mind is whether these numbers are shifting. Has '
+                'the client looked at whether there are trends running one way or the '
+                'other?'),
+        sh.turn(I,
+                'We do not have anything on that right now. I am curious what you think, '
+                'though.'),
+        sh.turn(C,
+                'I think it matters. What jumps out is that Americans work a lot, '
+                'especially relative to other wealthy countries, and if anything that '
+                'trend seems to be accelerating.',
+                'So if 30 percent eat breakfast at home today, I would expect that to '
+                'fall to something like 20 percent in five years.'),
+        sh.direction('The candidate says twenty years, then corrects to five.'),
+        sh.turn(I, 'That seems like a fair assumption.'),
+        sh.turn(C,
+                'One last thing before I start. Has the client done any competitive '
+                'research on what other quick-service players are doing at breakfast, '
+                'Quiznos or McDonald’s for example?'),
+        sh.turn(I,
+                'Some early work. Their internal estimate is that McDonald’s gets '
+                'about 18 percent of overall revenue from breakfast items.',
+                'They also looked at whether their own customers are unusual in their '
+                'breakfast habits, and you can assume they behave the way other '
+                'Americans do.'),
+        sh.turn(C,
+                'Great. I think I have what I need to run an estimate.',
+                'One more thing that would help is any estimate of the client’s '
+                'annual revenue, because that tells me what share of the market they '
+                'would need to capture to hit the 10 percent goal. I will get started on '
+                'the sizing now.'),
+        sh.note('Three things happen in this act. The candidate says how many questions '
+                'are coming before asking them, ties the question about shifting numbers '
+                'directly to the five-year clock of the case, and then asks for one more '
+                'thing after saying the information is sufficient, giving the reason.',
+                'The okay candidate asked the same question about whether the numbers '
+                'were stable. What was missing was why it was being asked. From the '
+                'interviewer’s side, curiosity and need look the same.'),
     ])
 
 
 def act4():
     return sh.script([
-        sh.act('4막 · 시장 규모 계산'),
-        sh.turn('지원자',
-                '추정을 시작하겠습니다. 팀이 조사로 모아 둔 값을 쓰고, 중간에 몇 가지는 '
-                '제가 가정하겠습니다.',
-                '첫 가정은 미국 인구를 3억 명으로 두는 것입니다. 실제보다 조금 낮은 줄 '
-                '압니다만 계산을 단순하게 두려고 합니다.'),
-        sh.turn('지원자',
-                '둘째, 아침을 먹는 비중은 고객사 조사대로 25%입니다. 다만 우리가 보는 것은 '
-                '밖에서 사 먹는 쪽이라, 그 가운데 20% 정도는 너무 어려서 자기 지갑으로 고르지 '
-                '못한다고 보겠습니다. 18세 미만을 대략 20%로 잡고 빼겠습니다.'),
-        sh.turn('지원자',
-                '셋째로 짚을 것이 있습니다. 고객사가 보는 기간이 5년이라고 하셨는데, 아까 '
-                '집에서 먹는 비중이 움직인다는 이야기를 했습니다. 오늘 30%가 5년 뒤 20%가 '
-                '된다면 그 10%p는 아침을 계속 먹되 다른 쪽으로 옮겨 간다고 보겠습니다.',
-                '절반인 5%p는 집에서 챙겨 나오는 쪽으로, 나머지 5%p는 가는 길에 사 먹는 '
-                '쪽으로 가겠습니다. 그러면 우리가 볼 출근길 구매가 50%에서 55%가 됩니다.'),
-        sh.turn('면접관', '말이 됩니다.'),
-        sh.turn('지원자',
-                '마지막으로 하나 더 있습니다. 미국에서 건강 흐름이 큽니다. 소비자들이 그쪽을 '
-                '훨씬 신경 쓰고, 고객사에는 이것이 큰 문제가 될 겁니다.',
-                '그래서 출근길에 아침을 사는 사람 가운데 상당수는 우리 고객사 같은 선택지를 '
-                '아예 고려하지 않는다고 보겠습니다. 40% 정도만 고려한다고 두겠습니다. '
-                '감액이 큰 줄 압니다만 보수적으로 잡는 편이 낫고, 고객사가 건강한 메뉴를 낼 '
-                '길을 찾으면 위로 남는 여지가 된다는 뜻이기도 합니다.'),
-        sh.turn('면접관', '타당해 보입니다.'),
-        sh.turn('지원자',
-                '이제 숫자를 돌리겠습니다. 미국인 3억 명, 그 가운데 25%가 아침을 먹으니 '
-                '7,500만 명. 여기서 18세 미만 20%를 빼면 6,000만 명입니다.',
-                '아까 말씀드린 대로 그 가운데 55%가 가는 길에 사서 먹으니 3,300만 명. '
-                '그다음 그 가운데 40%가 우리 고객사 같은 데서 아침을 살 만하다고 했으니 '
-                '1,320만 명입니다. 어중간한 숫자라 1,300만으로 내리겠습니다.'),
-        sh.turn('면접관', '따라가고 있습니다.'),
-        sh.turn('지원자',
-                '마지막은 단가입니다. 스타벅스에 들어가 계란 샌드위치와 커피를 사던 경험으로 '
-                '보면 6달러 정도가 무난해 보입니다. 6달러에 1,300만 명이면 7,800만 달러이고 '
-                '이건 하루치입니다.',
-                '괜찮으시면 연으로 올리겠습니다. 1년 일수도 어림으로 쓰겠습니다. 조금 '
-                '과대추정이 되겠지만 아까 건강 흐름으로 잡은 큰 감액과 상쇄될 겁니다. '
-                '7,800만을 8,000만으로 올리고 연 400일로 잡겠습니다.',
-                '그러면 미국 조식 범주의 연 시장 규모는 320억 달러입니다.'),
+        sh.act('ACT 4 · SIZING THE MARKET'),
+        sh.turn(C,
+                'I will use the data the team has already collected and make a few '
+                'assumptions along the way.',
+                'First assumption: 300 million people in the US. I know that is on the '
+                'low side, but it keeps the math simple as we go.'),
+        sh.turn(C,
+                'Second, the share who eat breakfast is 25 percent, from the client '
+                'study. But since the segment we care about is people buying food out, I '
+                'will assume roughly 20 percent of them do not get to vote with their '
+                'wallet because they are too young. I will take out everyone under 18 and '
+                'call that 20 percent.'),
+        sh.turn(C,
+                'Third, something I want to flag. The time frame the client cares about '
+                'is five years, and we talked about these behaviors shifting. If 30 '
+                'percent eat at home today and that goes to 20 percent, I will assume '
+                'those 10 points still eat breakfast but get reallocated.',
+                'I will put half of it, 5 points, into bringing something from home, and '
+                'the other 5 points into buying on the way to work. That takes the '
+                'segment we care about from 50 percent to 55 percent.'),
+        sh.turn(I, 'That makes sense.'),
+        sh.turn(C,
+                'One last thing. The health trend is big in the US. Consumers care about '
+                'it much more, and it is going to be a real issue for our client.',
+                'So of the people buying food on the way to work, I will assume a big '
+                'chunk will not even consider a quick-service option like ours. I will '
+                'say 40 percent would consider it. I know that is a big haircut, but I '
+                'would rather err conservative, and it also means there is upside for the '
+                'client if they find ways to offer healthier options.'),
+        sh.turn(I, 'That sounds reasonable.'),
+        sh.turn(C,
+                'Let me run the numbers. 300 million Americans, 25 percent of them '
+                'breakfast eaters, gives 75 million. Take out 20 percent for the '
+                'under-18s and we are at 60 million.',
+                'Of those, 55 percent buy something on the way to work, so 33 million. '
+                'Then 40 percent of those would consider a client like ours, which is '
+                '13.2 million. That is an awkward number, so I will round it down to 13 '
+                'million.'),
+        sh.turn(I, 'I am with you.'),
+        sh.turn(C,
+                'The last piece is price. Based on walking into a Starbucks and buying an '
+                'egg sandwich and a coffee, six dollars feels like a fair estimate. Six '
+                'dollars times 13 million is 78 million, and that is a daily number.',
+                'If it is alright with you I will scale to annual, and I will use a round '
+                'number of days in a year. That overestimates a little, but it should '
+                'counterbalance the big haircut I took on the health trend. I will round '
+                '78 million up to 80 million and use 400 days.',
+                'So the annual expected market for breakfast in this category in the US '
+                'would be 32 billion dollars.'),
         sh.fig(FIG_TREE,
-               '① 18세 미만을 빼는 가정. 이 답에만 있다. ② 출근길 구매는 원래 절반이었다. '
-               '5년 뒤 재택 조식이 30%에서 20%로 줄고 그 10%p 중 5%p가 출근길로 옮긴다고 '
-               '봐서 55%가 됐다. ③ 덜 건강한 메뉴를 고를 사람만 남긴 감액. ④ 스타벅스에서 '
-               '사 본 경험으로 잡은 단가. ⑤ 주말을 얇게 세어 연 400일.'),
-        sh.note('가정을 계산 앞에 다 몰아 놓고 시작했다. 그리고 곱할 때마다 무엇을 하는 '
-                '중인지 말로 짚었다. 이렇게 하면 면접관이 중간에 끼어들 수 있다 — 가정이 '
-                '틀렸으면 곱하기 전에 잡힌다.',
-                '반올림이 두 번 들어가는데 방향까지 밝혔다. 1,320만을 1,300만으로 내렸고 '
-                '7,800만을 8,000만으로 올렸다. 올림이 과대추정 쪽이라는 것과 건강 감액을 '
-                '크게 잡은 것이 상쇄된다는 말을 스스로 붙였다.'),
+               '① Taking out the under-18s. Only this answer does it. ② Buying on the '
+               'commute started at half. Home breakfast falls from 30 to 20 percent over '
+               'five years, and 5 of those 10 points move to the commute, which is how it '
+               'becomes 55 percent. ③ What is left after cutting the people who will not '
+               'consider a less healthy option. ④ A ticket priced off personal experience. '
+               '⑤ 400 days, counting weekends thin.'),
+        sh.note('Every assumption is stated up front, before a single multiplication. Then '
+                'each step is voiced while it happens. That is what lets the interviewer '
+                'interrupt: a bad assumption gets caught before it is multiplied through.',
+                'There are two roundings and the direction is given for both. 13.2 million '
+                'goes down to 13 million, 78 million goes up to 80 million. The candidate '
+                'says out loud that the rounding up overstates and that it offsets the '
+                'large health haircut.'),
     ])
 
 
 def act5():
     return sh.script([
-        sh.act('5막 · 검증, 그리고 끝'),
-        sh.turn('면접관', '그 정도면 맞는 범위로 보입니까.'),
-        sh.turn('지원자',
-                '전에 들은 바로는 미국 퀵서비스 시장 전체가 연 2,000억 달러쯤 됩니다. '
-                '320억이면 그 15%를 조금 넘습니다. 범위는 맞아 보입니다.',
-                '또 하나 좋은 것은 이 시장이 꽤 크다는 점입니다. 고객사가 작은 몫만 가져와도 '
-                '내부 목표인 매출 10% 증대에는 유리해 보입니다.'),
-        sh.turn('면접관', '좋습니다. 다음으로 넘어가죠.'),
-        sh.direction('원문은 여기서 끝난다. 2막에서 세운 네 갈래 가운데 운영·마케팅·재무는 '
-                     '열리지 않고, 최종 권고도 3부작에 없다.'),
-        sh.note('숫자를 내고 멈추지 않았다. 320억을 전체 시장 2,000억에 대 보고 범위가 맞는지 '
-                '확인한 다음, 1막에서 받아 둔 매출 10% 목표로 되돌렸다.',
-                '보통 답을 한 지원자는 360억을 구하고 전체 시장을 언급하는 데서 멈췄다. '
-                '목표로 돌아가지 않았다. 진행자가 보통과 우수를 가른 가장 큰 차이로 꼽은 '
-                '것이 이 자리다.'),
+        sh.act('ACT 5 · SANITY CHECK, AND THE END'),
+        sh.turn(I, 'Does that feel like it is in the right ballpark to you?'),
+        sh.turn(C,
+                'I have heard the overall US quick-service market is around 200 billion '
+                'a year. At 32 billion we are a little over 15 percent of that, so it '
+                'does feel like the right ballpark.',
+                'The other thing worth saying is that this is a sizable market. Even a '
+                'small share of it would bode well for their internal target of 10 '
+                'percent incremental revenue.'),
+        sh.turn(I, 'That is great. Let us move on.'),
+        sh.direction('The source ends here. Of the four branches built in Act 2, '
+                     'operations, marketing and financials are never opened, and no '
+                     'recommendation is given.'),
+        sh.note('The number is produced and then not left alone. It gets checked against '
+                'something large, and then carried back to the 10 percent goal collected '
+                'in Act 1.',
+                'The okay candidate reached 36 billion, mentioned the size of the overall '
+                'market, and stopped there. No return to the goal. The coach names this as '
+                'the single biggest gap between an okay answer and a great one.'),
     ])
 
 
 def memo():
     """케이스마다 하나. 대본을 다 읽고 손에 남길 것만."""
-    return ('<section class="beat" id="m"><h2>노트 — 이 케이스에서 건질 것</h2>'
-            '<p class="watch">다음 케이스에 그대로 들고 가는 것</p>'
+    return ('<section class="beat" id="m"><h2>Takeaways — what to carry into the next '
+            'case</h2><p class="watch">Lines, assumptions and traps worth reusing</p>'
             + sh.memo([
-                ('그대로 쓸 문장', sh.lines([
-                    ('세부로 들어가기 전에 하나 여쭙겠습니다. 이 일의 주된 목표가 '
-                     '무엇입니까.',
-                     '프롬프트 직후. 목표를 범위보다 먼저 묻는다'),
-                    ('물어볼 것이 더 있습니다만, 시작하기 전에 잠깐 생각을 정리해도 '
-                     '되겠습니까.',
-                     '구조를 세우기 전. 침묵을 미리 예고해 두면 멈춤이 공백이 아니게 된다'),
-                    ('짧게 두 가지를 이어 묻겠습니다.',
-                     '질문을 던지기 전. 몇 개를 물을지 예고해 면접관이 따라올 길을 깐다'),
-                    ('고객사가 보는 기간이 5년이라고 하셨는데, 이 비중이 그동안 '
-                     '움직입니까.',
-                     '자료를 받은 직후. 받은 값을 케이스의 시계에 대 놓고 붙인다'),
-                    ('팀이 모은 값을 쓰고, 중간에 몇 가지는 제가 가정하겠습니다.',
-                     '계산 첫 마디. 어디까지가 주어진 값이고 어디부터가 내 가정인지 가른다'),
-                    ('어중간한 숫자라 1,300만으로 내리겠습니다.',
-                     '반올림할 때마다. 방향을 말해야 면접관이 검산할 수 있다'),
-                    ('전체 시장이 2,000억쯤이니 320억이면 15%를 조금 넘습니다. 범위는 '
-                     '맞아 보입니다.',
-                     '값을 낸 직후. 큰 수에 대 보고 나서 목표로 돌아간다'),
+                ('LINES TO REUSE', sh.lines([
+                    ('Before I get into the details, can I ask what their primary goal '
+                     'is here?',
+                     'Right after the prompt. Goal before scope.'),
+                    ('Would it be alright if I took a moment to gather my thoughts?',
+                     'Before building structure. Announcing the pause keeps it from '
+                     'reading as a blank.'),
+                    ('Two quick follow-ups.',
+                     'Before asking. Saying how many are coming gives the interviewer a '
+                     'path to follow.'),
+                    ('You mentioned the client cares about five years. Are these numbers '
+                     'shifting?',
+                     'Right after receiving data. Tie what you were handed to the clock '
+                     'of the case.'),
+                    ('I will use the data the team collected and make a few assumptions '
+                     'along the way.',
+                     'First line of the math. Separates what was given from what you are '
+                     'inventing.'),
+                    ('That is an awkward number, so I will round it down to 13 million.',
+                     'Every time you round. Say the direction or the interviewer cannot '
+                     'check you.'),
+                    ('At 32 billion we are a little over 15 percent of a 200 billion '
+                     'market, so it feels like the right ballpark.',
+                     'Right after producing a number. Check it against something large, '
+                     'then return to the goal.'),
                 ])),
-                ('쓴 가정과 그 출처', sh.table(
-                    ['가정', '값', '어디서 왔나'], [
-                        ('미국 인구', '3억 명', '지원자. 실제보다 낮게 잡아 계산을 단순화'),
-                        ('매일 조식', '25%', '고객사 조사'),
-                        ('18세 이상', '80%', '지원자. 자기 지갑으로 고르는 사람만 남긴다'),
-                        ('출근길 구매', '55%', '원문 50%에 지원자가 5%p를 더했다'),
-                        ('건강 감액', '40%', '지원자. 보수적으로 잡고 그렇다고 밝혔다'),
-                        ('한 끼 단가', '6달러', '지원자. 자기 경험'),
-                        ('연 일수', '400일', '지원자. 계산을 쉽게 하려는 어림'),
+                ('ASSUMPTIONS AND WHERE THEY CAME FROM', sh.table(
+                    ['Assumption', 'Value', 'Source'], [
+                        ('US population', '300M',
+                         'Candidate. Deliberately low to keep the math simple'),
+                        ('Eat breakfast daily', '25%', 'Client study'),
+                        ('Age 18 and over', '80%',
+                         'Candidate. Keeps only those who pay for themselves'),
+                        ('Buy on commute', '55%',
+                         'Candidate added 5 points to the 50% given'),
+                        ('Health haircut', '40%',
+                         'Candidate. Conservative, and said so'),
+                        ('Ticket', '$6', 'Candidate. Personal experience'),
+                        ('Days a year', '400', 'Candidate. A round number for speed'),
                     ], numcols=(1,))),
-                ('계산 골격', sh.chain(
-                    '3억 × 25% × 80% × 55% × 40% = 1,320만 명 → 1,300만 × 6달러 '
-                    '= 일 7,800만 → 8,000만 × 400일 = 연 320억 달러')),
-                ('이 케이스가 판 함정 셋', sh.gloss([
-                    '프롬프트에 숫자가 하나도 없다. 목표 10%도, 조식 25%도 물어야 나온다. '
-                    '목표를 안 물으면 나중에 320억을 구해도 그것이 큰지 작은지 댈 기준이 '
-                    '없다.',
-                    '5년이라는 시계를 안 물으면 출근길 구매 55%를 못 쓴다. 50%로 계산해도 '
-                    '틀린 것은 아니지만, 고객사가 5년을 본다고 한 이상 오늘 값으로 재는 것은 '
-                    '물음에 안 맞는 답이다.',
-                    '반올림 방향을 말하지 않으면 검산이 막힌다. 약한 답이 이 자리에서 '
-                    '떨어졌다 — 산수는 맞았는데 면접관이 두 번 캐물어야 했다.',
+                ('THE MATH IN ONE LINE', sh.chain(
+                    '300M × 25% × 80% × 55% × 40% = 13.2M → 13M × $6 = $78M/day '
+                    '→ $80M × 400 days = $32B a year')),
+                ('THREE TRAPS THIS CASE SETS', sh.gloss([
+                    'The prompt carries no numbers at all. The 10 percent target and the '
+                    '25 percent breakfast figure both have to be asked for. Skip the goal '
+                    'and you can produce 32 billion with nothing to judge it against.',
+                    'Miss the five-year window and you cannot use the 55 percent. Sizing '
+                    'on 50 percent is not wrong arithmetic, but once the client says five '
+                    'years, sizing today’s market answers a different question than '
+                    'the one asked.',
+                    'Round without naming the direction and the interviewer cannot check '
+                    'the work. That is where the weak answer lost the room, with correct '
+                    'arithmetic.',
                 ])),
             ]) + '</section>')
 
 
 def weak():
-    return ('<section class="beat" id="x"><h2>같은 자리, 약한 답은 이렇게 갔다</h2>'
-            '<p class="watch">4막과 같은 대목. 답을 먼저 말하고 가정은 캐물려서 나왔다</p>'
+    return ('<section class="beat" id="x"><h2>Same moment, the weak answer</h2>'
+            '<p class="watch">The Act 4 exchange. Answer first, assumptions dragged out '
+            'afterwards</p>'
             + sh.script([
-                sh.turn('지원자', '연 290억 달러입니다.'),
-                sh.turn('면접관', '어떻게 그 답에 이르셨습니까.'),
-                sh.turn('지원자',
-                        '인구 3억, 아침 먹는 비중 25%, 출근길 50%, 건강 감액 40%, '
-                        '한 끼 6달러입니다.'),
-                sh.turn('면접관',
-                        '그 가정대로면 하루 9,000만 달러, 연 360억이 나옵니다. 290억은 '
-                        '어디서 나온 값입니까.'),
-                sh.turn('지원자', '18세 미만 20%를 빼고 계산했습니다.'),
+                sh.turn(C, '29 billion a year.'),
+                sh.turn(I, 'How did you get there?'),
+                sh.turn(C,
+                        '300 million people, 25 percent breakfast eaters, 50 percent '
+                        'buying on the way to work, a 40 percent health haircut, and six '
+                        'dollars a meal.'),
+                sh.turn(I,
+                        'On those assumptions I get 90 million a day, or 36 billion a '
+                        'year. Where does 29 billion come from?'),
+                sh.turn(C, 'I took out 20 percent for people under 18.'),
             ])
             + sh.gloss([
-                '면접관이 역산한 360억이 맞다. 3억에 25%·50%·40%를 곱하면 1,500만 명이고 '
-                '6달러를 곱해 하루 9,000만, 400일로 연 360억이다. 그런데 뒤늦게 밝힌 18세 '
-                '미만 20% 제외를 넣으면 1,200만 명, 하루 7,200만, 연 288억이 된다. 처음에 '
-                '말한 290억과 맞는다.',
-                '이 사람의 산수는 틀리지 않았다. 문제는 그 가정을 말하지 않은 채 답만 '
-                '내놓아서 면접관이 두 번 캐물어야 했다는 것이다. 맞는 답을 내고도 떨어질 수 '
-                '있다 — 면접관이 검산할 수 없는 답은 맞았다고 세어 주지 않는다.',
+                'The 36 billion is right. 300 million times 25, 50 and 40 percent gives 15 '
+                'million people, times six dollars is 90 million a day, times 400 days is '
+                '36 billion. But add the under-18 cut that surfaced late and it becomes 12 '
+                'million people, 72 million a day, 28.8 billion a year, which matches the '
+                '29 billion stated at the start.',
+                'The arithmetic was never wrong. The problem is that the answer arrived '
+                'without its assumptions, so the interviewer had to ask twice. You can be '
+                'right and still lose the room: an answer nobody can check does not get '
+                'counted as correct.',
             ]) + '</section>')
 
 
 def evaluation():
-    return ('<section class="beat" id="e"><h2>평가표 — 진행자가 댄 아홉 기준</h2>'
-            '<p class="watch">세 편에서 면접관이 무엇을 보고 있다고 말했나</p>'
-            + sh.table(['대목', '기준', '약함', '보통', '우수'], [
-                ('오프닝', '열의를 보이나', '×', '△', '○'),
-                ('오프닝', '질문의 질과 순서', '×', '△', '○'),
-                ('오프닝', '구조를 세워 전하나', '×', '△', '○'),
-                ('캐묻기', '먼저 움직이나', '×', '△', '○'),
-                ('캐묻기', '질문에 쓸 데를 붙이나', '×', '△', '○'),
-                ('캐묻기', '5년 시계에 잇나', '×', '×', '○'),
-                ('계산', '가정을 밝히나', '×', '△', '○'),
-                ('계산', '생각을 소리 내나', '×', '△', '○'),
-                ('계산', '다음 단계로 잇나', '×', '×', '○'),
+    return ('<section class="beat" id="e"><h2>Scorecard — nine things the coach '
+            'watched</h2><p class="watch">What the coach said he was looking for, across '
+            'all three parts</p>'
+            + sh.table(['Stage', 'What the coach watched', 'Weak', 'Okay', 'Great'], [
+                ('Opening', 'Energy and interest', '×', '△', '○'),
+                ('Opening', 'Quality and order of questions', '×', '△', '○'),
+                ('Opening', 'Structure and delivery', '×', '△', '○'),
+                ('Probing', 'Driving rather than waiting', '×', '△', '○'),
+                ('Probing', 'Giving context for each question', '×', '△', '○'),
+                ('Probing', 'Tying questions to the five-year clock', '×', '×', '○'),
+                ('Math', 'Stating assumptions', '×', '△', '○'),
+                ('Math', 'Voicing the thinking', '×', '△', '○'),
+                ('Math', 'Carrying the insight forward', '×', '×', '○'),
             ], numcols=(2, 3, 4))
             + sh.gloss([
-                '아홉 가운데 답이 맞았는지를 보는 기준이 없다. 진행자는 방향이 맞고 그럴듯해 '
-                '보이면 된다고 두 번 말했다. 세 답이 288억에서 360억 사이에 있고 퀵서비스 '
-                '시장 전체가 2,000억이니, 어느 답이든 14%에서 18% 사이다. 가정 하나를 넣고 '
-                '빼는 것으로 움직이는 폭 안에서 소수점을 다투는 일은 의미가 없다.',
-                '보통 답이 ×를 받은 자리는 둘뿐이고 둘 다 같은 것이다. 지금 하는 일을 큰 '
-                '물음에 안 이었다.',
+                'Not one of the nine asks whether the answer was right. The coach says '
+                'twice that being directionally correct and passing a smell check is '
+                'enough. The three answers land between 28.8 and 36 billion against a 200 '
+                'billion quick-service market, so every one of them is somewhere between '
+                '14 and 18 percent of it. Arguing decimals inside a range that a single '
+                'assumption moves is not worth the time.',
+                'The okay answer takes a cross in exactly two places, and both are the '
+                'same thing: what is in hand never got carried back to the question being '
+                'asked.',
             ])
             + sh.fig(FIG_BOARD,
-                     '위 표의 아홉 기준을 대목 단위로 접은 것이다. 약함 답은 여섯 대목 모두 '
-                     '×. 보통 답이 ×인 두 자리는 캐묻기와 잇기이고, 둘 다 같은 것을 묻는다 '
-                     '— 지금 하는 일을 큰 물음에 붙였는가.')
+                     'The nine criteria above, folded down to the six stages. The weak '
+                     'answer takes a cross at every one. The okay answer takes crosses at '
+                     'Probe and Tie back, which are two ways of asking the same thing: did '
+                     'you connect what you are doing to the question being asked?')
             + sh.gloss([
-                '진행자는 우수와 보통의 차이가 미묘하다고 적었다. 같은 질문을 하고 같은 '
-                '갈래를 세우기 때문이다. 세 편을 붙여 보면 그 미묘한 차이가 매번 같은 자리에 '
-                '있다. 지금 묻는 것이 어디에 쓰이는지 말했는가, 지금 구한 것을 무엇에 '
-                '붙였는가.',
-                '그래서 연습할 것은 질문 목록이나 프레임워크 이름이 아니다. 한 동작을 할 '
-                '때마다 그것이 핵심 물음의 어느 대목인지 한 문장으로 대는 습관이다.',
+                'The coach calls the gap between okay and great minor, and it is, because '
+                'the questions asked and the branches built are nearly identical. Put the '
+                'three parts side by side and that minor gap sits in the same place every '
+                'time. Did you say what the question you are asking is for, and did you say '
+                'what the number you produced is for?',
+                'So the thing to practise is not a list of questions or the name of a '
+                'framework. It is the habit of stating, for every move you make, which part '
+                'of the key question it serves.',
             ]) + '</section>')
 
 
@@ -471,28 +537,28 @@ def body():
 def post_html():
     lead = ''.join('<dt>%s</dt><dd>%s</dd>' % (sh.esc(k), sh.esc(v)) for k, v in LEAD)
     toc = ''.join('<li><a href="#%s">%s</a></li>' % (aid, sh.esc(t)) for aid, t in TOC)
-    src = ' · '.join('<a href="%s%s.md">%d편</a>' % (BLOB, s, i + 1)
+    src = ' · '.join('<a href="%s%s.md">Part %d</a>' % (BLOB, s, i + 1)
                      for i, s in enumerate(SRC))
-    head = ('<header><h1>시장 진입 케이스 — 면접 한 번을 통째로</h1>'
-            '<p class="meta">RocketBlocks 모의 케이스 면접 · 2018-11-14 ~ 12-18 · '
-            '자막 %s</p>'
-            '<p class="lede">퀵서비스 레스토랑이 미국 조식 시장에 들어갈 것인가. '
-            '프롬프트를 받는 순간부터 시장 규모를 검증하는 데까지, 오간 말을 순서대로 '
-            '옮겼다.</p>'
+    head = ('<header><h1>Market Entry — One Case Interview, Start to Finish</h1>'
+            '<p class="meta">RocketBlocks mock case interview · 2018-11-14 to 12-18 · '
+            'transcripts %s</p>'
+            '<p class="lede">You can get the number right and still lose. Of the nine '
+            'things the coach says he is watching, not one of them is whether the answer '
+            'was correct.</p>'
             '<dl class="lead">%s</dl><nav class="toc"><ol>%s</ol></nav></header>'
             % (src, lead, toc))
-    back = '<a class="back" href="../RocketBlocks 대시보드.html">← 목록으로</a>'
-    return sh.page('시장 진입 케이스 — 면접 한 번을 통째로',
+    back = '<a class="back" href="../RocketBlocks 대시보드.html">← Back to the list</a>'
+    return sh.page('Market Entry — One Case Interview, Start to Finish',
                    head + body() + back,
-                   '풋롱 서브 QSR의 미국 조식 시장 진입 케이스. 면접관과 지원자가 오간 '
-                   '말을 5막 대본으로 옮기고, 판정은 맨 끝 평가표에 몰았다.')
+                   'A footlong-sub QSR weighs entering US breakfast. The full interview '
+                   'as a five-act script, with the scorecard held to the end.')
 
 
-ROWS = [('시장 진입 케이스 — 면접 한 번을 통째로',
+ROWS = [('Market Entry — One Case Interview, Start to Finish',
          'market-entry-three-answers',
-         ['시장 진입', '시장 규모', '대본'],
-         '2018-11-14 ~ 12-18 · 3부작',
-         '프롬프트부터 시장 규모 검증까지 5막. 평가표는 맨 끝에.')]
+         ['Market entry', 'Market sizing', 'Full script'],
+         '2018-11-14 to 12-18 · three parts',
+         'Five acts, prompt through sanity check. Scorecard at the end.')]
 
 
 def index_html():
@@ -503,13 +569,14 @@ def index_html():
            ''.join('<span class="tag">%s</span>' % sh.esc(t) for t in tags),
            sh.esc(meta), sh.esc(one))
         for title, slug, tags, meta, one in ROWS)
-    head = ('<header><h1>RocketBlocks — 모의면접을 대본으로</h1>'
-            '<p class="meta">최신순 · %d장</p>'
-            '<p class="lede">케이스 면접 모의 영상 한 편에서 오간 말을 순서대로 옮긴다. '
-            '요지만 추리면 케이스가 어떻게 굴러가는지가 안 남는다. 판정은 글 맨 끝에 '
-            '몰아 둔다.</p></header>' % len(ROWS))
-    return sh.page('RocketBlocks 대시보드', head + '<div class="rows">%s</div>' % rows,
-                   '케이스 면접 모의 영상을 대본으로 옮긴 장.')
+    head = ('<header><h1>RocketBlocks — Mock Interviews as Scripts</h1>'
+            '<p class="meta">Newest first · %d case%s</p>'
+            '<p class="lede">Each case interview is written out turn by turn, the way it '
+            'actually ran. Summarising it away loses the thing worth studying, which is '
+            'how the case moves. Judgement is held to the end of each script.</p>'
+            '</header>' % (len(ROWS), '' if len(ROWS) == 1 else 's'))
+    return sh.page('RocketBlocks', head + '<div class="rows">%s</div>' % rows,
+                   'Consulting case interviews written out as full scripts.')
 
 
 def check_ui(idx, posts):
@@ -537,6 +604,8 @@ def check_ui(idx, posts):
             bad.append('차례가 없다')
         if p.count('<figure>') < 3:
             bad.append('도해가 셋보다 적다 — 이슈 트리·곱셈 트리·대목 판')
+        if 'lang="en"' not in p:
+            bad.append('화면 글은 영어다 — lang 이 en 이 아니다')
     return bad
 
 

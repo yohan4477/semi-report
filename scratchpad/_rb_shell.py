@@ -179,7 +179,7 @@ def esc(s):
 
 
 def page(title, body, desc=''):
-    return ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+    return ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             '<title>%s</title>%s<style>%s</style></head><body>%s%s'
             '<div class="wrap">%s</div></body></html>'
@@ -194,8 +194,8 @@ def act(name):
 
 
 def turn(who, *paras):
-    """대본 한 턴. who 는 '면접관' 또는 '지원자'."""
-    cls = 'q' if who == '면접관' else 'a'
+    """대본 한 턴. who 가 Interviewer 로 시작하면 면접관 줄기."""
+    cls = 'q' if who.startswith('Interviewer') else 'a'
     return ('<div class="turn %s"><div class="who">%s</div><div class="line">%s</div></div>'
             % (cls, esc(who), ''.join('<p>%s</p>' % esc(p) for p in paras)))
 
@@ -207,7 +207,7 @@ def direction(text):
 
 def note(*paras):
     """해설. 대본을 끊고 들어오므로 짧게 둔다."""
-    return ('<div class="note"><b>해설</b>%s</div>'
+    return ('<div class="note"><b>Coach</b>%s</div>'
             % ''.join('<p>%s</p>' % esc(p) for p in paras))
 
 
