@@ -1,0 +1,328 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>메타 광고 추천 시스템은 GPU와 다른 실리콘(MTIA)을 요구했고, 이제 LLM이 그 하드웨어별 커널을 직접 짠다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>메타 광고 추천 시스템은 GPU와 다른 실리콘(MTIA)을 요구했고, 이제 LLM이 그 하드웨어별 커널을 직접 짠다</h1><div class="pmeta">2026-04-20 · Matt Steiner<br>원문 <a href="https://www.youtube.com/watch?v=5dWovJ4YHTY">https://www.youtube.com/watch?v=5dWovJ4YHTY</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-04-20-meta-steiner.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Semi Doped)</div><div class="who"><b>게스트</b> <span class="pn g0">Matt Steiner</span> (Meta 수익화 인프라·랭킹·AI 파운데이션 부문 VP)</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">광고 추천이 1조 파라미터에 닿으면서, 추론 수요를 정하는 것은 사용자 수가 아니라 이력이 긴 소수가 된다</div><p>Meta에서 수익화 인프라·랭킹·AI 파운데이션을 맡은 <span class="pn g0">Matt Steiner</span>가 Semi Doped에 나왔다. 진행자는 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)이고, 광고가 어떻게 돌아가는지부터 물어 데이터센터 하드웨어 결정까지 내려간다. 이 글은 그 대화에서 Meta 한 회사의 사정이 아니라 업계에 보이는 것을 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">1초 안에 끝내야 하는 두 단계</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">모델을 흩어 두지 않고 하나로 모아 온 방향</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">사람마다 연산량을 달리 쓴다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">워크로드의 모양이 부품 비율을 정한다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">LLM이 커널을 쓰면 이종 하드웨어의 셈이 바뀐다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">광고라는 사업이 이 최적화 문제를 풀 수 있게 만든다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 1초 안에 끝내야 하는 두 단계</h2>
+<p>광고주는 소재와 목표를 올린다. 목표는 웹사이트 방문일 수도 있고, 장바구니에 담기일 수도 있고, 구매 버튼을 누르는 것일 수도 있다. 그러면 Meta는 사람마다 작은 데이터베이스를 만들어 이 사람에게 나갈 수 있는 광고를 적어 둔다. 그 목록은 아주 길다.</p>
+<figure class="uc-fig"><p class="fig-title">광고 하나가 뜨기까지</p><svg class="epoch" viewBox="0 0 520 454" role="img" aria-label="앞단의 요청을 받아 검색이 후보를 추리고 랭킹이 순서를 정해 노출까지 가는데 검색 요청은 1초 아래에서 끝나야 한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="127" y="26" text-anchor="middle" class="fig-hd">단계</text>
+  <text x="358" y="26" text-anchor="middle" class="fig-hd">하는 일</text>
+  <rect x="0" y="36" width="254" height="72" rx="9" class="fig-box"/>
+  <text x="127" y="78" text-anchor="middle" class="fig-b">① 앞단이 묻는다</text>
+  <rect x="270" y="36" width="176" height="72" rx="9" class="fig-stage"/>
+  <text x="358" y="66.5" text-anchor="middle" class="fig-b">다음에 보여줄</text>
+  <text x="358" y="89.5" text-anchor="middle" class="fig-b">가장 좋은 광고</text>
+  <line x1="127" y1="110" x2="127" y2="122" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="124" width="254" height="72" rx="9" class="fig-box"/>
+  <text x="127" y="166" text-anchor="middle" class="fig-b">② 검색 — Andromeda</text>
+  <rect x="270" y="124" width="176" height="72" rx="9" class="fig-stage"/>
+  <text x="358" y="154.5" text-anchor="middle" class="fig-b">긴 목록에서</text>
+  <text x="358" y="177.5" text-anchor="middle" class="fig-b">흥미로울 것만</text>
+  <line x1="127" y1="198" x2="127" y2="210" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="212" width="254" height="72" rx="9" class="fig-box"/>
+  <text x="127" y="254" text-anchor="middle" class="fig-b">③ 랭킹</text>
+  <rect x="270" y="212" width="176" height="72" rx="9" class="fig-stage"/>
+  <text x="358" y="242.5" text-anchor="middle" class="fig-b">전환 확률 ×</text>
+  <text x="358" y="265.5" text-anchor="middle" class="fig-b">기대 가치</text>
+  <line x1="127" y1="286" x2="127" y2="298" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="300" width="254" height="72" rx="9" class="fig-box"/>
+  <text x="127" y="342" text-anchor="middle" class="fig-b">④ 노출</text>
+  <rect x="270" y="300" width="176" height="72" rx="9" class="fig-stage"/>
+  <text x="358" y="342" text-anchor="middle" class="fig-b">하루 30억 명 이상</text>
+  <rect x="164.5" y="394" width="191" height="44" rx="9" class="fig-agent"/>
+  <text x="260" y="422" text-anchor="middle" class="fig-b">검색 요청은 1초 아래</text>
+</svg><figcaption>검색과 랭킹이 갈리는 자리와 그 위에 걸린 시간 제약이다. 단계마다 걸리는 시간은 전사에 없다.</figcaption></figure>
+<p>누가 앱을 열면 앞단이 뒷단에 묻는다. 다음에 보여줄 가장 좋은 광고를 달라고. 여기서 일이 둘로 나뉜다. ① 나갈 수 있는 광고를 그 긴 목록에서 건져 올리는 검색(retrieval) ② 건져 올린 것을 순서대로 세우는 랭킹. 검색을 맡은 것이 Andromeda다. 관심사와 과거 상호작용을 담은 모델로 흥미로울 만한 것만 추려 랭킹으로 넘긴다. 랭킹은 전환 확률에 광고주가 기대하는 가치를 곱한 값으로 순서를 정한다.</p>
+<p>Andromeda가 왜 필요해졌는지도 대화에 나온다. 예전에는 한 사람에게 나갈 수 있는 광고 목록이 훨씬 짧았다. 지금은 그 목록이 아주 길어져서, 전체를 훑어 처리하려면 상당히 힘센 시스템이 있어야 한다. 그래서 Nvidia와 함께 GPU를 넣은 전용 하드웨어 SKU를 설계했고, 그 SKU 위에서 돌 기계학습 모델을 같이 설계했다. 순서를 뒤집어 읽으면 안 된다. 광고 재고가 늘어난 결과가 하드웨어 요구로 내려온 것이다.</p>
+<p>이 전부에 붙은 제약은 시간이다. 피드와 그 안의 광고가 뜨는 데 대략 1초이고, 광고 검색 요청은 모두 1초 아래에서 끝내는 것이 목표다. 그리고 이 시스템이 상대하는 사람은 하루 30억 명이 넘는다. 업계가 볼 대목은 여기다. 광고 추천은 생성형 AI가 오기 한참 전부터 실시간 추론이었고, 지연 예산이 모델 크기의 천장을 정해 왔다.</p>
+<h2 id="s2"><span class="num">2</span> 모델을 흩어 두지 않고 하나로 모아 온 방향</h2>
+<figure class="uc-fig"><p class="fig-title">모델을 합쳤다가 다시 줄이기까지</p><svg class="epoch" viewBox="0 0 520 384" role="img" aria-label="목적마다 따로 서 있던 랭킹 모델을 Lattice 로 합치고 GEM 까지 키운 뒤 증류해서 서비스에 올린다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="103.5" y="26" text-anchor="middle" class="fig-hd">모델</text>
+  <text x="303" y="26" text-anchor="middle" class="fig-hd">그래서</text>
+  <rect x="0" y="36" width="207" height="72" rx="9" class="fig-box"/>
+  <text x="103.5" y="66.5" text-anchor="middle" class="fig-b">목적마다 따로 선</text>
+  <text x="103.5" y="89.5" text-anchor="middle" class="fig-b">랭킹 모델 여럿</text>
+  <rect x="223" y="36" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="303" y="66.5" text-anchor="middle" class="fig-b">사본과 계산이</text>
+  <text x="303" y="89.5" text-anchor="middle" class="fig-b">되풀이된다</text>
+  <line x1="103.5" y1="110" x2="103.5" y2="122" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="124" width="207" height="72" rx="9" class="fig-box"/>
+  <text x="103.5" y="166" text-anchor="middle" class="fig-b">Lattice — 하나로</text>
+  <rect x="223" y="124" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="303" y="154.5" text-anchor="middle" class="fig-b">비용이 줄고</text>
+  <text x="303" y="177.5" text-anchor="middle" class="fig-b">성능이 오른다</text>
+  <line x1="103.5" y1="198" x2="103.5" y2="210" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="212" width="207" height="72" rx="9" class="fig-box"/>
+  <text x="103.5" y="254" text-anchor="middle" class="fig-b">GEM — 가장 큰 모델</text>
+  <rect x="223" y="212" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="303" y="242.5" text-anchor="middle" class="fig-b">그대로는</text>
+  <text x="303" y="265.5" text-anchor="middle" class="fig-b">못 올린다</text>
+  <line x1="103.5" y1="286" x2="103.5" y2="298" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="300" width="207" height="72" rx="9" class="fig-box"/>
+  <text x="103.5" y="342" text-anchor="middle" class="fig-b">증류한 작은 모델</text>
+  <rect x="223" y="300" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="303" y="342" text-anchor="middle" class="fig-b">올릴 수 있는 크기</text>
+</svg><figcaption>Lattice 로 합친 이유가 둘, GEM 을 그대로 못 올리는 이유가 둘이다. 모델 크기는 전사에 없다.</figcaption></figure>
+<p>Meta는 목적마다 따로 서 있던 랭킹 모델을 하나로 합쳐 왔다. 그 기술 이름이 Lattice다. 합치면 좋은 이유가 둘이다. ① 비용이 준다. 한 사람의 관심사 사본을 모델 수만큼 들고 있지 않아도 되고, 같은 서브넷 계산을 모델마다 되풀이하지 않는다. ② 성능이 오른다. 더 많은 데이터와 더 다양한 목표로 훈련한 모델이 하나의 목표만 보고 훈련한 작은 모델보다 낫다. 데이터 한 조각마다 다른 목표에 쓸 신호가 얹혀 있기 때문이다.</p>
+<p>그 방향의 끝에 세운 것이 GEM(생성형 광고 추천 모델)이다. 훈련에 쓸 수 있는 데이터를 전부 먹여 가장 크고 예측이 정확한 모델을 만든다. 그런데 이 모델은 그대로 서비스에 못 올린다. 너무 크고, 일부 구획은 효율이 좋지 않다. 그래서 증류(큰 모델이 배운 것을 작은 모델에 옮겨 담는 과정) 단계를 거쳐 올릴 수 있는 크기로 줄인다.</p>
+<p>여기까지는 생성형 AI를 따라온 독자에게 익숙한 그림이다. <span class="pn">진행자A</span>도 큰 모델은 못 올리고 작은 모델은 덜 똑똑하다는 맞바꿈으로 정리했다. 이 회차에서 새로운 것은 그다음 대목이다.</p>
+<h2 id="s3"><span class="num">3</span> 사람마다 연산량을 달리 쓴다</h2>
+<figure class="uc-fig"><p class="fig-title">같은 예산 안에서 연산을 달리 쓴다</p><svg class="epoch" viewBox="0 0 520 218" role="img" aria-label="같은 1초 예산 안에서 이력이 긴 사람에게 훨씬 많은 연산을 쓰고 추론 시점 파라미터는 대략 1조다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">이력이 짧은 사람</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">이력이 긴 사람</text>
+  <rect x="4" y="38" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="80" text-anchor="middle" class="fig-b">적은 연산</text>
+  <rect x="276" y="38" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="68.5" text-anchor="middle" class="fig-b">많은 연산</text>
+  <text x="396" y="91.5" text-anchor="middle" class="fig-b">예측이 더 맞는다</text>
+  <rect x="117.5" y="132" width="285" height="44" rx="9" class="fig-stage"/>
+  <text x="260" y="160" text-anchor="middle" class="fig-b">같은 1초 예산 · 파라미터 1조</text>
+  <rect x="0" y="192" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="204" class="fig-lg">연산을 더 쓰는 쪽</text>
+</svg><figcaption>이력이 긴 사람에게 훨씬 많은 연산을 쓴다. 몇 배인지는 전사에 없다. 파라미터 1조는 추론 시점 값이다.</figcaption></figure>
+<p>Meta가 최근 올린 것은 적응형 랭킹 모델이다. 그 사람의 상호작용 이력이 얼마나 긴지에 따라 모델을 한 번 돌리는 데 쓰는 연산량을 크게 바꾼다. 이력이 긴 사람에게는 훨씬 많은 연산을 쓰고, 다음에 무엇에 반응할지에 대한 예측 정확도를 끌어올린다.</p>
+<p>왜 길이가 중요한지를 게스트는 결혼기념일로 설명한다. 어떤 사람이 해마다 9월에 특정 부류의 물건을 산다면, 그게 기념일 때문인지 몰라도 9월 예측은 훨씬 나아진다. 아이 생일이나 명절도 같은 꼴이다. 다만 조건이 둘이다. ① 긴 이력을 실제로 저장해 뒀어야 하고 ② 서비스 시점에 그 이력 전체를 처리할 연산 능력이 있어야 한다.</p>
+<p>원래 구조에서는 그 연산이 모자랐다. 지연 예산이 빡빡해서 상호작용을 다 보지 못했다. 지금 적응형 랭킹 모델은 추론 시점 파라미터가 대략 1조이고, 그것을 1초 아래에서 끝낸다. 게스트는 이것을 Meta의 추천 모델이 LLM 규모와 복잡도에 닿은 사건으로 표현했다.</p>
+<p>업계 쪽에서 보면 이 설계는 추론 수요의 성격을 바꾼다. 필요한 연산은 사용자 수에 요청 수를 곱한 값으로 늘지 않는다. 이력이 긴 소수에게 큰 연산이 몰린다. 요청 하나가 평균 얼마를 먹느냐가 아니라 분포의 오른쪽 끝이 하드웨어 사양을 정한다.</p>
+<p>게스트는 이 일 전체를 중매로 요약했다. "우리는 사려는 사람과 팔 물건을 가진 광고주를 맞춰 줄 뿐이다". <span class="pn">진행자A</span>도 Meta가 사용자와 사업자 사이 장터 한가운데에 앉아 있고, 연산으로 예측을 개선해 온 것이 이 사업의 역사라고 정리했다.</p>
+<h2 id="s4"><span class="num">4</span> 워크로드의 모양이 부품 비율을 정한다</h2>
+<p>전에는 검색도 랭킹도 CPU에서 돌았다. 그 뒤로 작은 CPU, 중간 CPU, 큰 CPU, 커스텀 ASIC, GPU, 더 강한 GPU와 더 강한 ASIC 순서로 옮겨 왔다. 연산이 늘면 더 크고 복잡한 모델을 돌릴 수 있고, 더 긴 사용자 이력을 모델에 넣을 수 있다. 게스트는 하드웨어·네트워크·데이터센터 설계·칩·모델·소프트웨어를 함께 최적화해 온 기간을 최소 10년으로 잡았다.</p>
+<p>Nvidia와 짠 코디자인은 이렇게 굴러갔다. 목표 연산량과 지연 예산을 들고 파트너에게 가서, 그쪽 포트폴리오의 구성 블록 중 이 용도에 맞는 SKU를 만들 수 있는지 묻는다. 게스트는 그렇게 나온 것으로 Grace Hopper 를 들었다. 검색은 연산보다 메모리에 먼저 걸리는 문제라 메모리가 많이 필요하고, GPU를 놀리지 않으려면 고대역폭 메모리 채널이 넉넉해야 한다. 그렇게 나온 SKU는 랭킹용이나 웹페이지 서빙용과 모양이 다르다.</p>
+<p>이 조율에는 시간축이 붙는다. 하드웨어는 소프트웨어보다 리드타임이 훨씬 길다. 그래서 한쪽에서는 앞으로 몇 년 사이 소프트웨어와 AI 스택이 갈 방향을 짐작해 하드웨어 설계에 반영시키고, 다른 쪽에서는 이번 반기와 이번 분기, 올해와 내년에 들어올 하드웨어의 성능을 다 쓰도록 소프트웨어 스택을 끌고 간다. 하드웨어 돌파가 먼저 나오면 소프트웨어 스택을 거기 맞춰 발전시킨다. 섞어 쓰는 칩마다 걸리는 자리도 제각각이다. 어떤 구성은 지연에서, 어떤 구성은 비용에서, 어떤 구성은 전력에서 걸린다.</p>
+<p>MTIA(Meta 훈련·추론 가속기)로 간 근거도 같은 자리에서 나온다. 추천 시스템은 대형 언어 모델과 문제 성격이 다르다. 언어 모델은 업계에서 임베러싱리 패럴렐(embarrassingly parallel, 나눠서 따로 돌리기 쉽고 가중치를 자주 맞출 필요가 없는 문제)이라 부르는 부류다. 문장 완성에는 영어를 아는 사람이면 대체로 같게 고를 가장 확률 높은 답이 있다. 추천에는 그런 답이 없다. 누가 그 광고 자리를 보느냐가 정답을 정한다.</p>
+<figure class="uc-fig"><p class="fig-title">예제 하나의 크기가 부품 비율을 정한다</p><svg class="epoch" viewBox="0 0 520 294" role="img" aria-label="추천 훈련은 예제마다 개인화 덩어리가 실려서 더 굵은 네트워크와 더 많은 온보드 메모리, 낮은 연산 대비 메모리 비율을 요구한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">언어 모델 훈련 예제</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">추천 훈련 예제</text>
+  <rect x="4" y="32" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="74" text-anchor="middle" class="fig-b">예제 하나가 작다</text>
+  <rect x="276" y="32" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="62.5" text-anchor="middle" class="fig-b">예제마다</text>
+  <text x="396" y="85.5" text-anchor="middle" class="fig-b">개인화 덩어리가 붙는다</text>
+  <rect x="0" y="180" width="66" height="72" rx="9" class="fig-stage"/>
+  <text x="33" y="210.5" text-anchor="middle" class="fig-b">더 굵은</text>
+  <text x="33" y="233.5" text-anchor="middle" class="fig-b">네트워크</text>
+  <rect x="76" y="180" width="113" height="72" rx="9" class="fig-stage"/>
+  <text x="132.5" y="210.5" text-anchor="middle" class="fig-b">더 많은</text>
+  <text x="132.5" y="233.5" text-anchor="middle" class="fig-b">온보드 메모리</text>
+  <rect x="199" y="180" width="144" height="72" rx="9" class="fig-stage"/>
+  <text x="271" y="210.5" text-anchor="middle" class="fig-b">연산 대비</text>
+  <text x="271" y="233.5" text-anchor="middle" class="fig-b">메모리 비율 낮게</text>
+  <line x1="396" y1="108" x2="396" y2="144" class="fig-arw"/>
+  <line x1="33" y1="144" x2="396" y2="144" class="fig-arw"/>
+  <line x1="33" y1="144" x2="33" y2="178" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="132.5" y1="144" x2="132.5" y2="178" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="271" y1="144" x2="271" y2="178" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="268" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="280" class="fig-lg">추천 쪽에만 붙는 짐</text>
+</svg><figcaption>추천 예제에는 개인화 덩어리가 실린다. 아래 셋은 그래서 달라지는 것이다. 비율의 값은 전사에 없다.</figcaption></figure>
+<p>그래서 훈련 예제마다 개인화 덩어리가 붙는다. 이 사람이 원예와 자전거를 좋아하고 유아용품과 청소용품을 많이 산다는 정보가 예제 하나하나에 실린다. 예제마다 실려 오는 데이터가 크면 칩을 굶기지 않기 위해 필요한 것이 달라진다. 더 굵은 네트워크, 더 많은 온보드 메모리, 그리고 연산 대비 메모리 비율을 낮게 잡은 구성이다. 그러니 추천 시스템 훈련에 맞는 SKU는 언어 모델 훈련용 GPU와 같지 않을 수 있다. 모든 워크로드가 그렇다는 말은 아니고, 일부 모델에 한해 표준 GPU 패키지와 다른 구성이 이치에 맞는다는 뜻이다.</p>
+<h2 id="s5"><span class="num">5</span> LLM이 커널을 쓰면 이종 하드웨어의 셈이 바뀐다</h2>
+<figure class="uc-fig"><p class="fig-title">이종 하드웨어를 다루는 세 갈래</p><svg class="epoch" viewBox="0 0 520 243" role="img" aria-label="하드웨어별 손 최적화와 번역 계층에 더해 모델이 커널을 직접 짜는 갈래가 생겼고 그쪽은 커널을 100배 원한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="49" y="40" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="113.5" y="70.5" text-anchor="middle" class="fig-b">① 하드웨어별로</text>
+  <text x="113.5" y="93.5" text-anchor="middle" class="fig-b">손으로 최적화</text>
+  <rect x="188" y="40" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="252.5" y="70.5" text-anchor="middle" class="fig-b">② 번역 계층을</text>
+  <text x="252.5" y="93.5" text-anchor="middle" class="fig-b">끼워 넣는다</text>
+  <rect x="327" y="40" width="144" height="72" rx="9" class="fig-agent"/>
+  <text x="399" y="70.5" text-anchor="middle" class="fig-b">③ 모델이 커널을</text>
+  <text x="399" y="93.5" text-anchor="middle" class="fig-b">직접 짠다</text>
+  <line x1="113.5" y1="114" x2="113.5" y2="150" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="49" y="152" width="129" height="49" rx="9" class="fig-stage"/>
+  <text x="113.5" y="182.5" text-anchor="middle" class="fig-b">느리고 비싸다</text>
+  <line x1="252.5" y1="114" x2="252.5" y2="150" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="188" y="152" width="129" height="49" rx="9" class="fig-stage"/>
+  <text x="252.5" y="182.5" text-anchor="middle" class="fig-b">성능이 가려진다</text>
+  <line x1="399" y1="114" x2="399" y2="150" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="327" y="152" width="144" height="49" rx="9" class="fig-stage"/>
+  <text x="399" y="182.5" text-anchor="middle" class="fig-b">커널을 100배로</text>
+  <rect x="0" y="217" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="229" class="fig-lg">최근에 생긴 갈래</text>
+</svg><figcaption>① 과 ② 는 전부터 있던 선택지다. ③ 은 최근에 생겼고, 커널 100배를 원한다는 말이 여기 붙는다.</figcaption></figure>
+<p>여러 종류의 칩을 섞어 쓰는 것은 원래 어려운 문제다. 바이너리가 그 하드웨어에서 돌기만 해서는 안 되고, 성능과 비용까지 맞아야 하기 때문이다. 그동안 선택지는 둘이었다. ① 하드웨어별로 바이너리를 직접 최적화한다. 느리고 비싸지만 한번 해 두면 성능이 좋다. ② 번역 계층을 끼운다. 배포는 쉬워지지만 그 하드웨어만의 성능도 함께 가려진다.</p>
+<p>여기에 최근 변화가 생겼다. 대형 언어 모델이 특정 바이너리와 특정 하드웨어 짝에 맞는 커널을 직접 짜기 시작했다. 게스트는 관련 논문을 냈다고 하면서 이름을 Alpha Evolve 또는 Alpha Kernel로 기억했다. 전에는 모델 수와 하드웨어 종류를 곱한 만큼의 칸을 전문가가 손으로 채워야 했고, 그래서 한 하드웨어에 맞춰 둔 바이너리를 다른 하드웨어로 옮기지 않았다. 비용이 이득을 넘었기 때문이다. 지금은 모델에게 커널을 시키면 되고, 비용은 사람이 붙는 것보다 훨씬 낮다.</p>
+<p>가장 눈에 띄는 것은 이 변화가 수요에 한 일이다. 게스트의 말은 이렇다. "소프트웨어 엔지니어링 수요는 값이 내려가면서 오히려 폭증했다". 전에는 하드웨어마다 제한된 수의 최적화 커널에만 투자했는데, 지금은 하드웨어 하나당 100배 많은 커널을 원한다. 전문 성능 튜너는 최적화를 직접 쓰는 대신 모델을 감독한다. <span class="pn">진행자A</span>는 앞에서 같은 자리를 소프트웨어 인건비 쪽에서 짚었다. 예전에는 실리콘 종류를 늘리면 최적화할 엔지니어가 그만큼 더 필요해서 안 늘렸다는 것이다.</p>
+<p>업계에 보이는 것은 자체 칩 손익의 구성 항목 하나가 줄었다는 사실이다. 이종 실리콘의 비용은 칩값과 소프트웨어 인건비로 나뉘어 있었고, 뒤쪽이 가로막고 있었다. 그 항목이 작아지면 자기 워크로드 모양을 잘 아는 대형 수요처가 표준 GPU 바깥의 구성을 시도할 문턱이 낮아진다. 다만 게스트는 아직 갈 길이 멀다고 붙였다.</p>
+<h2 id="s6"><span class="num">6</span> 광고라는 사업이 이 최적화 문제를 풀 수 있게 만든다</h2>
+<p>앞으로 2년을 물었을 때 게스트가 든 것은 새 구조가 아니라 같은 방향의 확대다. 데이터센터를 짓고 연산·메모리·저장을 대량으로 사들여 더 나은 모델을 찾는다. 성능 개선을 찾는 일 자체가 모델을 아주 많이 훈련시켜 보고, 최적화 파라미터를 바꿔 보고, 새 구조를 만들어 시험하는 과정이기 때문이다. 추론 쪽 목표도 분명하다. 서비스 시점에 쓸 수 있는 연산과 메모리를 늘려 더 긴 이력과 더 큰 컨텍스트 창을 모델에 넣는 것이다.</p>
+<p>게스트가 여기 붙인 표현은 종단 최적화다. 데이터센터 설계, 네트워크 설계, SKU 설계, 분산 시스템 소프트웨어, 모델 인프라, 모델 자체, 모델에 들어가는 데이터를 함께 최적화한다. 잣대는 둘로 좁혀진다. ① 1달러당 결과 ② 데이터센터에서 쓴 1와트당 결과.</p>
+<p><span class="pn">진행자A</span>가 회차 끝에서 짚은 대목이 이 글에서 가장 무겁다. 광고 사업에는 풀어야 할 최적화 함수가 뚜렷하다. 얼마를 지출할 의향이 있는지, 상대는 얼마를 낼 의향이 있는지, 결과가 나아지면 그것이 더 큰 지불로 이어지거나 시장 자체가 커지는지가 다 계산에 들어온다. <span class="pn">진행자A</span>는 이것을 생성형 AI 쪽 다른 참가자들의 경제성과 견줬다. 그쪽은 같은 종류의 결정을 내릴 때 셈이 이만큼 단순하지 않다.</p>
+<p>업계에 보이는 것이 이 차이다. 같은 하드웨어를 사고 같은 종단 최적화를 말해도, 지출을 정당화하는 계산이 이미 서 있는 회사와 그 계산을 아직 세우는 중인 회사가 나뉜다. Meta에서는 연산을 더 넣으면 예측이 나아지고, 예측이 나아지면 광고주가 얻는 결과가 좋아지고, 그것이 다시 지출로 돌아온다. 이 경로가 이미 이어져 있다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것</h2>
+<p>숫자가 거의 없다. 이 대화 전체에서 나온 값은 하루 사용자 30억 명 이상, 지연 예산 약 1초, 적응형 랭킹 모델 파라미터 약 1조 셋뿐이다. <span class="pn">진행자A</span>가 MTIA의 사업적·경제적 근거를 물었을 때 게스트가 답한 것은 워크로드 성격의 차이였고, 비율이나 금액은 나오지 않았다. 그래서 이 회차로는 셋을 세지 못한다. ① MTIA가 Meta 전체 연산에서 차지하는 비중 ② GPU 대비 자체 칩의 원가 차이 ③ Broadcom과 짠 로드맵의 시기와 물량. <span class="pn">진행자A</span>가 Broadcom 제휴와 로드맵 공개를 언급하기는 했다.</p>
+<p>커널을 쓰는 모델이 실제로 얼마를 아꼈는지도 없다. 게스트는 "사람이 앉아서 하나씩 짚어 가는 것보다 훨씬, 훨씬 싸다"라고만 말했고, 논문 이름조차 확실히 기억하지 못했다. 생성형 AI 조직과 추천 조직의 관계도 대화·협업·공동 투자 수준에서 그쳤다. 어느 쪽 예산이 어느 쪽을 받쳐 주는지는 이 회차에 없다.</p>
+<p>무엇이 나오면 판단이 바뀌나. ① MTIA 세대별 물량과 워크로드 배분이 공개되면, 5절에서 말한 문턱이 실제로 낮아졌는지가 확인된다. 지금은 논리만 있다. ② 적응형 랭킹 모델의 연산 분포가 나오면, 3절의 오른쪽 끝 이야기가 하드웨어 수요로 얼마나 옮겨 가는지 계산할 수 있다. ③ 커널을 쓰는 모델이 손으로 튜닝한 커널의 성능에 얼마나 근접하는지 공개되면, 이종 실리콘 확대 논거의 실제 크기가 정해진다. 근접도가 낮으면 번역 계층 시절의 맞바꿈이 이름만 바꿔 돌아온다.</p>
+<p>하나 더. 이 전사는 유튜브 자막에서 옮긴 것이고 화자 표시가 없다. 마지막에 진행자가 게스트를 Matt으로 부르며 인사하는데, 답례에서는 진행자를 Allison으로 부른다. 앞에서는 <span class="pn">진행자A</span>으로 불렀다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-04-20-meta-steiner-strategy.md">insights/semidoped/2026-04-20-meta-steiner-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>

@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-10",
-"index_fingerprint": "c6de0ad0556530136004fc31e5b6b6673c6e6441",
-"lines": 4535
+"index_fingerprint": "afc9176a8b2527d49ed953b218815823999a67da",
+"lines": 4536
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6530,6 +6530,11 @@
 "content/semi_doped/2026-05-04-memory-tax.md#L63": {
 "how": "명시",
 "t": "2016",
+"tense": "회고"
+},
+"content/semi_doped/2026-05-12-gimlet-inference-cloud.md#L33": {
+"how": "계산",
+"t": "2023",
 "tense": "회고"
 },
 "content/semi_doped/2026-05-15-cerebras-ipo.md#L17": {

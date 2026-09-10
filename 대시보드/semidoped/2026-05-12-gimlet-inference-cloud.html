@@ -1,0 +1,310 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gimlet Labs, 서로 다른 칩을 하나의 추론 클라우드로 엮어 처리량-지연 곡선을 4배 밀어낸다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>Gimlet Labs, 서로 다른 칩을 하나의 추론 클라우드로 엮어 처리량-지연 곡선을 4배 밀어낸다</h1><div class="pmeta">2026-05-12 · Austin Lyons · Natalie · Baltier (Gimlet Labs)<br>원문 <a href="https://www.youtube.com/watch?v=-f6oyMeN4rY">https://www.youtube.com/watch?v=-f6oyMeN4rY</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-05-12-gimlet-inference-cloud.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Semi Doped 진행자)</div><div class="who"><b>게스트</b> <span class="pn g0">Natalie</span> (Gimlet Labs 공동창업자) · <span class="pn g1">Baltier</span> (Gimlet Labs, 합류 5개월차 — 이전 인텔에서 포트폴리오사로 담당)</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">추론을 한 덩어리로 보던 전제가 깨지면 칩 고르기가 아니라 워크로드 쪼개기가 경쟁의 자리가 된다</div><p>Semi Doped 진행자 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)가 Gimlet Labs의 공동창업자 <span class="pn g0">Natalie</span>와 다섯 달 전 인텔에서 옮겨 온 <span class="pn g1">Baltier</span>를 불렀다. 이 회사가 만드는 것은 여러 회사의 칩을 한 데이터센터에 섞어 놓고 그 위로 하나의 추론 워크로드를 굴리는 소프트웨어다. 이 글은 그 대화에서 한 회사의 사업 계획이 아니라 추론 인프라 업계에 무엇이 보이는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">추론을 한 덩어리로 본 전제가 깨진다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">이 회사가 파는 물건은 컴파일러와 스케줄러다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">도구 호출을 어디서 돌리느냐가 지연을 정한다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">세 갈래 고객이 서로 다른 이유로 같은 물건을 산다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">D-Matrix 실험에서 4배가 나온 자리</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">네오클라우드의 장부가 무엇을 살지를 미리 정해 놓았다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 추론을 한 덩어리로 본 전제가 깨진다</h2>
+<p><span class="pn g0">Natalie</span>가 배경으로 든 소식은 둘이다. ① 프런티어 랩이 칩 회사와 용량 계약을 맺었다는 발표가 거의 매일 나온다. ② 추론 전용으로 설계했다는 가속기 회사도 거의 매일 새로 나온다. 그래서 업계의 물음은 보통 "이 새 칩이 GPU 킬러가 되나"로 좁아진다. Gimlet은 그 물음 자체를 워크로드 쪽으로 바꿔 든다.</p>
+<p>"거대한 추론은 균일한 워크로드가 아니다. 부분마다 연산 요구가 다르고 병목도 다르다". 어텐션, 투기적 디코더, 도구 호출은 각각 다른 균형점을 쥔 하드웨어에서 이득을 본다. 그래서 <span class="pn g0">Natalie</span>는 잘라 말한다. "이 전부에 최적인 칩 하나는 있을 수 없다. 문자 그대로 불가능하다". 그런데 어느 단계도 빼놓을 수 없다.</p>
+<figure class="uc-fig"><p class="fig-title">한 덩어리로 볼 때와 조각으로 나눌 때</p><svg class="epoch" viewBox="0 0 520 308" role="img" aria-label="추론을 한 덩어리로 보면 칩도 한 종류지만, 프리필·디코드·도구 호출로 나누면 조각마다 맞는 칩이 다르다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">한 덩어리로 볼 때</text>
+  <rect x="125.5" y="32" width="269" height="46" rx="9" class="fig-bad"/>
+  <text x="260" y="61" text-anchor="middle" class="fig-b">추론 한 덩어리 · 칩 한 종류</text>
+  <text x="260" y="118" text-anchor="middle" class="fig-hd">조각으로 나눌 때</text>
+  <rect x="150" y="128" width="51" height="49" rx="9" class="fig-box"/>
+  <text x="175.5" y="158.5" text-anchor="middle" class="fig-b">프리필</text>
+  <rect x="219" y="128" width="51" height="49" rx="9" class="fig-box"/>
+  <text x="244.5" y="158.5" text-anchor="middle" class="fig-b">디코드</text>
+  <rect x="288" y="128" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="329" y="158.5" text-anchor="middle" class="fig-b">도구 호출</text>
+  <line x1="175.5" y1="179" x2="175.5" y2="215" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="150" y="217" width="51" height="49" rx="9" class="fig-agent"/>
+  <text x="175.5" y="247.5" text-anchor="middle" class="fig-b">GPU</text>
+  <line x1="244.5" y1="179" x2="244.5" y2="215" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="219" y="217" width="51" height="49" rx="9" class="fig-agent"/>
+  <text x="244.5" y="247.5" text-anchor="middle" class="fig-b">GPU</text>
+  <line x1="329" y1="179" x2="329" y2="215" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="288" y="217" width="82" height="49" rx="9" class="fig-agent"/>
+  <text x="329" y="247.5" text-anchor="middle" class="fig-b">CPU</text>
+  <rect x="0" y="282" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="294" class="fig-lg">깨진다고 본 전제</text>
+  <rect x="192.4" y="282" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="214.4" y="294" class="fig-lg">조각마다 다른 칩</text>
+</svg><figcaption>조각은 이 회차가 이름을 댄 셋이다. 프리필 하나만 놓고도 더 나눌 수 있다고 <span class="pn g0">Natalie</span> 는 봤고, 칩과 칩 사이로 데이터를 보내는 비용 때문에 끝없이 나누지는 않는다. 몇 조각이 맞는지는 전사에 없다.</figcaption></figure>
+<p>남는 길은 워크로드를 조각으로 나눠 조각마다 가장 맞는 칩에 올리는 것이다. <span class="pn g0">Natalie</span>는 지금 쓰는 구분조차 거칠다고 봤다. 프리필 하나만 놓고도 병목이 서로 다른 조각으로 더 나눌 수 있다. 다만 끝없이 나누지는 않는다. 칩과 칩 사이로 데이터를 보내는 데 비용이 들기 때문에, 어디서 끊을지를 고르는 일 자체가 기술이 된다.</p>
+<p>에이전트가 이 문제를 키운다. 사람이 모델과 한 번 주고받던 자리에, 여러 단계를 밟고 검색을 돌리고 다른 에이전트를 부르는 흐름이 들어왔다. 모델 종류도 입출력 형태도 섞인다. "균일한 스택의 비효율은 완전히 감당 못 할 지경이 된다".</p>
+<h2 id="s2"><span class="num">2</span> 이 회사가 파는 물건은 컴파일러와 스케줄러다</h2>
+<figure class="uc-fig"><p class="fig-title">받아서 나누고 내려보내기까지 넷</p><svg class="epoch" viewBox="0 0 520 131" role="img" aria-label="PyTorch 실행을 추적해 그래프로 옮기고 어디서 끊을지 정해 나눈 뒤 조각마다 대상 하드웨어로 컴파일한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="40" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="41" y="70.5" text-anchor="middle" class="fig-b">① 추적</text>
+  <line x1="86" y1="64.5" x2="142" y2="64.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="146" y="40" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="187" y="70.5" text-anchor="middle" class="fig-b">② 그래프</text>
+  <line x1="232" y1="64.5" x2="288" y2="64.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="292" y="40" width="82" height="49" rx="9" class="fig-agent"/>
+  <text x="333" y="70.5" text-anchor="middle" class="fig-b">③ 나누기</text>
+  <line x1="378" y1="64.5" x2="434" y2="64.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="438" y="40" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="479" y="70.5" text-anchor="middle" class="fig-b">④ 컴파일</text>
+  <rect x="0" y="105" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="117" class="fig-lg">이 회사의 성격이 드러나는 자리</text>
+</svg><figcaption>③ 이 이 회사의 성격이 드러나는 자리다. 어디서 끊을지를 여기서 정한다. 상자 크기는 같게 뒀고 단계마다 드는 시간은 전사에 없다.</figcaption></figure>
+<p>동작 순서는 네 단계다. ① PyTorch 같은 것을 받아 실행을 추적한다. ② 그것을 그래프로 옮긴다. ③ 오케스트레이터와 스케줄러가 그래프를 걸어 다니며 어디서 끊을지 정하고 조각으로 나눈다. ④ 조각마다 대상 하드웨어로 내려 컴파일한다.</p>
+<p>④에 들어 있는 선택이 이 회사의 성격을 정한다. Gimlet은 칩마다 새 프로그래밍 언어를 만들지 않는다. 하드웨어 회사가 이미 가진 저수준 틀을 그대로 쓴다. Nvidia면 TensorRT로 내려보내고, 다른 하드웨어면 그쪽의 비슷한 틀로 내려보낸다. 그래서 칩 회사와 가까이 붙어 일하는 것이 선택이 아니라 전제가 된다. <span class="pn g0">Natalie</span>의 표현으로 "제품 규모의 워크로드를 돌린다면 그 하드웨어를 만든 회사와 아주 가까운 관계가 필요하다".</p>
+<p>여기서 진입 장벽의 모양이 드러난다. 하나에서 성능을 내는 일도 어렵고, 다른 하나로 옮기는 일은 또 한 계단이며, 쪼개서 여러 하드웨어에 걸치는 일은 그 위 계단이다. <span class="pn">진행자A</span>는 칩을 파는 회사가 도와줄 수 있는 상대의 수에도 한도가 있다고 보탰다.</p>
+<p>하드웨어 회사 쪽에서 보면 셈이 다르게 선다. <span class="pn g0">Natalie</span>는 GPU가 대단히 다재다능하다는 것을 인정하면서 이렇게 정리했다. 추론의 여러 대목을 아주 잘하는 다른 하드웨어를 GPU 옆에 나란히 놓으면, 그 칩이 가장 잘하는 일에서 빛난다. 혼자 서서 GPU 전부를 대신하겠다고 겨루는 자리와, 옆에 붙어 한 구간을 맡는 자리는 요구하는 성능이 다르다.</p>
+<h2 id="s3"><span class="num">3</span> 도구 호출을 어디서 돌리느냐가 지연을 정한다</h2>
+<figure class="uc-fig"><p class="fig-title">도구 호출이 어디서 도나</p><svg class="epoch" viewBox="0 0 520 307" role="img" aria-label="도구 실행이 노트북에 있으면 모델과 계속 오가고 모델 옆으로 옮기면 그 왕복이 사라진다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">도구가 내 노트북에</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">도구가 모델 옆에</text>
+  <rect x="4" y="38" width="240" height="49" rx="9" class="fig-box"/>
+  <text x="124" y="68.5" text-anchor="middle" class="fig-b">모델 — 남의 서버</text>
+  <rect x="4" y="150" width="240" height="49" rx="9" class="fig-box"/>
+  <text x="124" y="180.5" text-anchor="middle" class="fig-b">도구 — 내 노트북</text>
+  <line x1="158" y1="89" x2="158" y2="148" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="90" y1="148" x2="90" y2="89" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="4" y="221" width="240" height="44" rx="9" class="fig-bad"/>
+  <text x="124" y="249" text-anchor="middle" class="fig-b">왕복이 지연을 정한다</text>
+  <rect x="276" y="38" width="240" height="121" rx="9" class="fig-agent"/>
+  <text x="396" y="93" text-anchor="middle" class="fig-b">모델과 도구가</text>
+  <text x="396" y="116" text-anchor="middle" class="fig-b">같은 서버 안</text>
+  <rect x="276" y="221" width="240" height="44" rx="9" class="fig-agent"/>
+  <text x="396" y="249" text-anchor="middle" class="fig-b">종단 지연이 낫다</text>
+  <rect x="0" y="281" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="293" class="fig-lg">네트워크에 묶이는 자리</text>
+  <rect x="239.2" y="281" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="261.2" y="293" class="fig-lg">이 회차가 든 구성</text>
+</svg><figcaption><span class="pn g0">Natalie</span> 가 든 오늘의 코딩 에이전트다. 왼쪽은 모델이 남의 서버에 있고 도구 실행이 내 노트북에 있어 계속 오간다. 오른쪽은 그 실행을 모델 옆으로 옮긴 것이다. 지연이 몇 배 낫다는 값은 전사에 없다.</figcaption></figure>
+<p>CPU 이야기가 나온 자리에서 <span class="pn g0">Natalie</span>가 든 예는 오늘의 코딩 에이전트다. 모델은 남의 서버에서 돌고, 그 모델이 "이 파일 내용을 봐 달라" 또는 "웹을 검색해 달라"고 하면 그 실행은 내 노트북에서 일어난다. 그래서 워크로드가 네트워크에 묶인다. 노트북과 모델이 있는 곳 사이를 계속 오간다. 도구 실행을 모델이 있는 서버 쪽에서 하면 종단 지연이 훨씬 좋아진다.</p>
+<p>그래서 CPU가 에이전트 워크로드의 일꾼 자리에 들어온다. 도구 호출이 가장 뚜렷한 쓰임이고, 작은 모델이나 데이터 처리도 CPU의 균형점에 맞는다.</p>
+<p>배치가 여기에 따라온다. Gimlet은 하드웨어 종류별로 데이터센터를 따로 두지 않는다. 랙을 물리적으로 이어 붙인다. 이유는 지연이다. 지금 시장에는 토큰이 빨리 나오기를 바라는 수요가 크고, 그 요구를 들어주면 대개 처리량을 깎아야 한다. 전력도 용량도 모자란 상황에서 어느 쪽을 버릴지 고르는 일이 사업자에게 남는다. 여러 종류의 하드웨어를 같은 데이터센터에 넣고 고속 패브릭으로 이어 두면, 그 선택을 강요하는 벽이 뒤로 밀린다.</p>
+<p>다만 가까움이 필요한 정도는 나누는 방식마다 다르다. 프리필과 디코드를 떼어 놓는 정도라면 한 번의 홉을 견딜 만하다. 문맥을 다 받아 첫 토큰을 내놓을 때 한 번 건너뛰고 그다음부터는 한쪽에서 계속 나오기 때문이다. 더 잘게 나눌수록 이 거리가 중요해진다.</p>
+<h2 id="s4"><span class="num">4</span> 세 갈래 고객이 서로 다른 이유로 같은 물건을 산다</h2>
+<p><span class="pn g1">Baltier</span>가 나눈 고객은 셋이다. ① 여러 실리콘 회사와 계약을 맺어 둔 프런티어 랩. 전력과 용량에 묶여 있고, 빠른 토큰과 처리량 사이의 문제가 끝나지 않는다. 기준선이 계속 올라가기 때문이다. ② 공급망 다변화를 원하는 소버린 클라우드. 계약은 여럿 맺었는데 규모로 서비스할 능력이 모자란다. ③ 토큰을 대량으로 사들이는 신흥 AI 회사들. 11 Labs, Notion, Glean, Harvey 같은 부류로 <span class="pn g1">Baltier</span>가 성격을 짚었다. 앞의 둘에는 소프트웨어를 그들의 데이터센터에 배치하고, 셋째에는 Gimlet 자체 클라우드에서 토큰을 판다.</p>
+<p>②의 사정이 가장 구체적이다. 하드웨어 회사 하나를 새로 띄우는 데 드는 일이 많다. 같은 워크로드를 Nvidia에서 AMD로, 다시 D-Matrix로 옮기는 것도 마찬가지다. <span class="pn g1">Baltier</span>가 제안하는 것은 옮겨 주겠다는 약속이 아니다. 어느 하드웨어인지를 고객이 신경 쓸 필요가 없게 만드는 것이다. "엔지니어가 하드웨어마다 커널을 쓰는 대신" API 호출 하나로 끝나야 한다는 말이다. 그리고 Nvidia와 AMD 둘을 갖췄다고 공급망 다변화가 되지는 않는다. 미국 바깥에도 하드웨어 혁신이 있고, <span class="pn g1">Baltier</span>는 한국 생태계에서 나온 칩 회사들과 지금 이야기하는 중이라고 밝혔다. 유럽·중동·인도·아시아에 들어오는 정부 자금은 인프라를 세우는 데만 쓰이는 것이 아니라 혁신 생태계 안에 들어가려는 목적을 함께 갖는다.</p>
+<p>①에는 <span class="pn">진행자A</span>가 반론을 세웠다. 하이퍼스케일러는 엔지니어가 넘친다. 왜 남에게 맡기나. <span class="pn g1">Baltier</span>의 답은 시점에 있다. 3년 전에는 이 수준의 분해를 말하지 않았고, 프리필·디코드 분리조차 박사 논문 초기 단계였다. 지금은 흔해졌고 훨씬 복잡한 방법을 이야기한다. 회사마다 그 여정의 다른 지점에 서 있다는 것이다. 어떤 곳은 사내에서 만들면서 다른 우선순위와 다투고, 어떤 곳은 지금 자기 강점이 아니라고 말한다. 다음 세대 학습 경쟁에 자원을 쓰고 싶어 한다.</p>
+<p>여기에 회계가 하나 더 붙는다. 데이터센터에 설비 투자를 늘릴수록 이익률이 얇아지고, 그래서 그 투자 부담까지 밖으로 넘기려는 움직임이 보인다. 인프라를 만드는 일과 그 위에서 실험하는 일이 같은 회사 안에 있을 이유가 없다는 판단이다.</p>
+<h2 id="s5"><span class="num">5</span> D-Matrix 실험에서 4배가 나온 자리</h2>
+<p><span class="pn g1">Baltier</span>가 짝지은 것은 B200이나 GB200 같은 처리량 기계와 SRAM(칩 안에 두는 빠른 메모리) 기반 아키텍처다. SRAM 계열은 디코드에 뛰어나고 지연 한계를 GPU 계열의 몇 배까지 밀어낸다. Gimlet은 자체 데이터센터에서 D-Matrix의 Corsair 카드를 B200과 같은 랙에 넣고 직접 이었다. D-Matrix는 지금 공개적으로 이름을 댈 수 있는 유일한 파트너이고, 같은 계열의 다른 회사들과도 일하는 중이다.</p>
+<p><span class="pn g0">Natalie</span>가 그린 곡선의 두 축을 먼저 잡아야 한다. 세로는 킬로와트당 초당 토큰으로, 50메가와트짜리 데이터센터가 초당 몇 토큰을 밀어내는지를 뜻한다. 가로는 상호작용성, 사용자 한 사람이 토큰을 얼마나 빨리 받는지다. 언뜻 두 축은 같이 갈 것 같은데 실제로는 어긋난다. 토큰 하나를 만들 시간을 길게 주면 그만큼 효율적으로 만들 수 있고, 당장 내놓으라고 하면 모든 수를 다 써야 한다. 오른쪽 위 구석에 동시에 가는 구성은 없다.</p>
+<figure class="uc-fig"><p class="fig-title">세 구성과 그 곡선</p><svg class="epoch" viewBox="0 0 520 296" role="img" aria-label="GPT-OSS 120B 를 같은 조건에 두고 세 구성을 견줬고 초안 모델만 Corsair 로 옮긴 구성이 다시 4배로 갔다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="17.5" y="26" text-anchor="middle" class="fig-hd">구성</text>
+  <text x="146.5" y="26" text-anchor="middle" class="fig-hd">무엇을 바꿨나</text>
+  <text x="322.5" y="26" text-anchor="middle" class="fig-hd">곡선에서</text>
+  <rect x="0" y="36" width="35" height="72" rx="9" class="fig-stage"/>
+  <text x="17.5" y="78" text-anchor="middle" class="fig-b">①</text>
+  <rect x="51" y="36" width="191" height="72" rx="9" class="fig-box"/>
+  <text x="146.5" y="66.5" text-anchor="middle" class="fig-b">프리필·디코드를</text>
+  <text x="146.5" y="89.5" text-anchor="middle" class="fig-b">GPU 에서 나눔</text>
+  <rect x="258" y="36" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="322.5" y="78" text-anchor="middle" class="fig-b">바탕</text>
+  <rect x="0" y="124" width="35" height="72" rx="9" class="fig-stage"/>
+  <text x="17.5" y="166" text-anchor="middle" class="fig-b">②</text>
+  <rect x="51" y="124" width="191" height="72" rx="9" class="fig-box"/>
+  <text x="146.5" y="154.5" text-anchor="middle" class="fig-b">거기에 투기적 디코딩,</text>
+  <text x="146.5" y="177.5" text-anchor="middle" class="fig-b">전부 GPU 에서</text>
+  <rect x="258" y="124" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="322.5" y="166" text-anchor="middle" class="fig-b">①보다 위</text>
+  <rect x="0" y="212" width="35" height="72" rx="9" class="fig-stage"/>
+  <text x="17.5" y="254" text-anchor="middle" class="fig-b">③</text>
+  <rect x="51" y="212" width="191" height="72" rx="9" class="fig-box"/>
+  <text x="146.5" y="242.5" text-anchor="middle" class="fig-b">초안 1.6B 만</text>
+  <text x="146.5" y="265.5" text-anchor="middle" class="fig-b">Corsair 로</text>
+  <rect x="258" y="212" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="322.5" y="242.5" text-anchor="middle" class="fig-b">②의 선 위에서</text>
+  <text x="322.5" y="265.5" text-anchor="middle" class="fig-b">다시 4배</text>
+</svg><figcaption>모델은 GPT-OSS 120B, 입력 8K·출력 1K 다. 4배는 ③ 이 ② 의 최적화된 선 위에서 다시 벌어 준 폭이다. 곡선의 좌표값은 전사에 없어 그리지 않았다.</figcaption></figure>
+<p>같은 워크로드에 대해 세 구성을 견줬다. 모델은 GPT-OSS 120B, 입력 8K·출력 1K다. ① GPU에서 프리필과 디코드를 갈라 놓은 전통적 구성. ② 거기에 투기적 디코딩을 얹되 전부 GPU에서 도는 구성. 작은 모델이 다음 토큰 몇 개를 미리 찍고 큰 모델이 한꺼번에 맞는지 확인하는 방식인데, 다섯 개를 한 번에 확인하는 편이 하나씩 만드는 것보다 훨씬 싸다. ③ 그 미리 찍는 1.6B 모델만 Corsair로 옮긴 구성이다.</p>
+<p>③이 벌어 준 것이 ②의 최적화된 선 위에서 다시 4배쯤이다. Corsair가 그 일을 잘하는 이유는 온칩 SRAM이 많아 모델 가중치를 메모리에 담아 둘 수 있다는 데 있다. 미리 찍는 모델은 작아서 통째로 들어간다. <span class="pn g0">Natalie</span>는 이 이득을 두 가지 중 하나로 쓸 수 있다고 정리했다. 고객이 토큰을 4배 빨리 받게 하든지, 같은 지연에서 2~3배 많은 고객을 받든지다.</p>
+<p><span class="pn g1">Baltier</span>는 여기서 순서를 뒤집는다. 고객마다 워크로드가 다르고, MoE인지 희소한 구조인지에 따라 어떤 방식으로 나눌지가 달라지며, 그에 따라 맞는 하드웨어 조합도 달라진다. 그래서 무한한 선택지를 주는 것은 답이 아니다. 고객의 제약이 지연인지 전력인지 처리량인지를 먼저 확인하고, 시뮬레이션을 돌려 하드웨어 조합을 제안하고, 그다음에 되풀이해 찍어낼 수 있는 가장 작은 데이터센터 단위와 그 안의 네트워크 구조를 설계한다.</p>
+<h2 id="s6"><span class="num">6</span> 네오클라우드의 장부가 무엇을 살지를 미리 정해 놓았다</h2>
+<figure class="uc-fig"><p class="fig-title">네오클라우드 연간 비용의 구성</p><svg class="epoch" viewBox="0 0 520 276" role="img" aria-label="네오클라우드 연간 비용에서 하드웨어 상각이 70% 이고 나머지를 조여도 비용 구조가 크게 바뀌지 않는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="180" y="30" text-anchor="middle" class="fig-hd">연간 비용 전부</text>
+  <rect x="120" y="46" width="120" height="140" rx="4" class="fig-agent"/>
+  <rect x="120" y="186" width="120" height="60" rx="4" class="fig-stage"/>
+  <text x="180" y="122" text-anchor="middle" class="fig-b">70%</text>
+  <line x1="240" y1="116" x2="270" y2="116" class="fig-arw"/>
+  <text x="278" y="121" class="fig-e">하드웨어 상각</text>
+  <line x1="240" y1="216" x2="270" y2="216" class="fig-arw"/>
+  <text x="278" y="221" class="fig-e">나머지 전부</text>
+</svg><figcaption>하드웨어 상각이 70% 다. 나머지 30% 의 속은 전사에 없어 한 칸으로 뒀다.</figcaption></figure>
+<p><span class="pn g1">Baltier</span>가 꺼낸 숫자 하나가 이 회차에서 가장 멀리 간다. 하드웨어 상각이 네오클라우드 연간 비용의 70%다. 남은 30%를 아무리 조여도 비용 구조가 크게 바뀌지 않는다는 뜻이다.</p>
+<p>그 위에 지분이 얹힌다. 네오클라우드 대부분은 실리콘 회사 하나가 뒤를 받치고, 그 대가로 지분의 상당 부분을 넘겼다. 그래서 실리콘 생태계를 넓히기 어렵고 협상력도 없다. 추론 가격은 내려가는 중이라 매출 쪽에서도 눌린다. <span class="pn g1">Baltier</span>는 네오클라우드들이 저마다 분해 방식을 발표하는 이유를 여기서 찾았다. 소프트웨어 말고는 손댈 데가 없다.</p>
+<p>Gimlet이 세운 축은 둘이다. ① 큰 고객의 데이터센터에 소프트웨어를 넣고 함께 규모를 키우는 일. ② 아직 약정하기 어려운 신흥 고객을 위해 직접 운영하는 클라우드. ②는 여러 회사의 칩을 섞어 쓰기 때문에 비용 구조가 다르고, 다른 데서 못 내는 토큰 성능을 내니 가격 경쟁의 바닥으로 내려가지 않고 비싸게 팔 수 있다. 한 축이 다른 축의 설비 투자를 받쳐 준다고 <span class="pn g1">Baltier</span>는 말했다. 방향은 안 밝혔다.</p>
+<p>지금 네오클라우드가 서 있는 자리도 둘로 정리했다. ① CoreWeave처럼 GPU와 데이터센터를 사서 베어메탈로 빌려주는 회사들. 강점은 거기까지고 전체 스택 경험이 없어 인수로 메우려 하는데, 인수를 이어 붙여 하나의 스택을 만드는 일은 오래 걸린다. ② Together나 Fireworks처럼 소프트웨어만 하고 용량은 대개 한 실리콘 회사나 인프라 사업자에게서 사 오는 회사들.</p>
+<p>같은 문제가 칩 회사 쪽에도 있다. 고객이 자기 칩을 쓰기 주저하니 여러 실리콘 회사가 직접 클라우드를 세웠다. 그런데 규모 있는 고객에게는 한 회사의 클라우드로 워크로드를 옮기는 일 자체가 큰 공학 부담이라 그 클라우드들이 크지 않는다. 신흥 하드웨어 회사에는 자체 클라우드 없이 시장에 나갈 통로가 필요하다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것</h2>
+<p>빠진 것은 넷이다. ① 비용이 없다. 4배는 상호작용성 축에서 잰 이득이고, Corsair 카드를 B200 랙에 넣는 데 드는 값과 전력을 포함한 비교는 나오지 않는다. 상각이 비용의 70%라고 말한 회차에서 자기 구성의 상각 부담은 계산되지 않았다. ② 조건이 하나다. 곡선은 GPT-OSS 120B, 입력 8K·출력 1K 한 조합에서 나왔다. 나누는 방식이 모델 구조에 따라 달라진다고 <span class="pn g1">Baltier</span>가 직접 말했으니, 긴 문맥이나 다른 구조에서 같은 모양이 나온다는 근거는 이 회차에 없다. ③ 오케스트레이션이 언제 손해가 되는지가 없다. 조각 사이 전송에 비용이 든다고 짚었지만 어느 지점에서 이득이 사라지는지는 말하지 않았다. ④ 규모가 없다. 시리즈 A를 3월에 알렸다는 언급만 있고 액수는 없다.</p>
+<p>무엇이 나오면 이 글의 판단이 바뀌는지는 셋이다. ① 여러 종류의 워크로드에서 같은 곡선이 나오면, 5절의 4배가 한 번의 시연인지 되풀이되는 성질인지가 정해진다. ② 전력과 비용으로 정규화한 비교가 나오면, 섞어 쓰는 구성이 단일 벤더 구성보다 실제로 싼지가 드러난다. 지금은 지연 축의 이득만 확인됐다. ③ 하이퍼스케일러가 자기 오케스트레이션 스택을 공개하면, 4절의 "회사마다 여정의 다른 지점에 있다"는 논거가 어디까지 서는지 보인다. 그들이 이미 비슷한 것을 갖고 있다면 남는 고객은 소버린과 신흥 AI 회사들이고, 그 둘의 지불 능력은 프런티어 랩과 다르다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-05-12-gimlet-inference-cloud-strategy.md">insights/semidoped/2026-05-12-gimlet-inference-cloud-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
