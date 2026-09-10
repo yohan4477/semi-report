@@ -542,3 +542,76 @@ FIG_BRHBMSCN = _svg(W, 386, 'HBM 금액은 케이스마다 다섯 배까지 갈�
                         marks=['레버 셋이 한꺼번에 걸린다',
                                '칩 수와 칩당 용량과 단가가 같은 방향으로 움직인다']))
 
+# ── ⑪ 웨이퍼. 자본에서 웨이퍼까지 다섯 마디 ───────────────────────────────
+_WCELL = _row(5, 148, 56, 112, gap=10)
+_WNAME = [['자본지출', '$732.5십억'], ['용량', '14.7GW'],
+          ['웨이퍼 투입', '연 519만 장'], ['그중 메모리', '연 311만 장'],
+          ['세계 몫', '10.8%']]
+
+
+def _wchain():
+    out = [_lt(20, 116, '빅4 2026년 자본지출이 웨이퍼가 되기까지', 't-lab', False)]
+    for i, (x, y, w_, h) in enumerate(_WCELL):
+        st, sw = ((INK, 1.8) if i in (0, 2) else (INK3, 1.4))
+        out.append(_box(x, y, w_, h, _WNAME[i], st, sw))
+        if i:
+            px = _WCELL[i - 1][0] + _WCELL[i - 1][2]
+            out.append(_a(px, y + h // 2, x, y + h // 2))
+            out.append(_mark((px + x) // 2, y + h + 14, i))
+    out.append(_legend(238, [
+        'MW당 전부 포함 자본 5,000만 달러로 나눈다 (회수 층)',
+        '기가와트당 웨이퍼 35만 4,000장을 곱한다 (우주영문)',
+        '메모리 몫 60퍼센트를 곱한다 (우주영문)',
+        '열둘로 나눠 월로 펴고 세계 300밀리 용량 400만 장으로 나눈다',
+    ]))
+    return ''.join(out)
+
+
+FIG_WAFCHAIN = _svg(W, 344, '자본지출 7,325억 달러는 세계 파운드리의 10.8퍼센트다',
+                    _wchain())
+
+
+def _waf_scn():
+    x0, top, bh, gap = 180, 126, 28, 24
+    full, top_v = 300.0, 24.0
+    rows = [('Bull', 11.05, 23.0, True, 1),
+            ('Base', 8.36, 17.4, True, 0),
+            ('Bear', 6.19, 12.9, False, 0)]
+    out = [_lt(20, 112, '2030년 연 웨이퍼 투입 (백만 장)과 세계 파운드리 몫',
+               't-lab', False)]
+    for i, (name, v, share, filled, mark) in enumerate(rows):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 18, name, 't-sm', False))
+        out.append(_hbar(x0, y, full * v / top_v, bh, filled))
+        out.append(_lt(x0 + full * v / top_v + 8, y + 18,
+                       '%.2f백만 장 · 세계의 %.1f%%' % (v, share), 't-sm', False))
+        if mark:
+            out.append(_mark(x0 + 22, y + bh // 2, mark))
+    y = top + 3 * (bh + gap) + 4
+    out.append(_lt(20, y, '세계 용량이 2025년의 400만 장에서 안 는다고 놓은 값이다.',
+                   't-sm', False))
+    out.append(_legend(y + 20, [
+        '상방이면 빅4 하나로 세계 파운드리의 4분의 1을 쓴다',
+    ]))
+    return ''.join(out)
+
+
+FIG_WAFSCN = _svg(W, 336, '상방 케이스면 빅4가 세계 파운드리의 23퍼센트를 쓴다',
+                  _waf_scn())
+
+
+FIG_EQ_WAF = tree_svg(
+    '연 웨이퍼 투입은 어떤 항으로 쪼개지나', _W4,
+    _node(['연 웨이퍼 투입'], '×', [
+        _node(['신규 용량'], '÷', [
+            _node(['자본지출 총액']),
+            _node(['MW당 자본']),
+        ]),
+        _node(['GW당 웨이퍼'], '←', [
+            _node(['로직']),
+            _node(['메모리']),
+            _node(['패키징']),
+        ]),
+    ]),
+    marks=(('자본지출 총액', 1), ('메모리', 2)))
+

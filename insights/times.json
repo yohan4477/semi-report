@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-10",
-"index_fingerprint": "911e6115d61e13f8e9db81840d0f90128050d2b2",
-"lines": 4542
+"index_fingerprint": "841d200f613368ea98b0f71b9ceb2f9e7af2d209",
+"lines": 4545
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6425,6 +6425,21 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-09-matx-reiner-pope.md#L20": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-09-matx-reiner-pope.md#L32": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-09-matx-reiner-pope.md#L56": {
+"how": "명시",
+"t": "2022",
 "tense": "회고"
 },
 "content/semi_doped/2026-04-10-intel-openclaw.md#L35": {

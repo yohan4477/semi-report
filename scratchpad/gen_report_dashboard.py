@@ -354,6 +354,12 @@ def report_model_br_html(head=True):
                               'model-br', head)
 
 
+def report_model_waf_html(head=True):
+    """자본에서 웨이퍼까지. 본문은 insights/reports/model-wafer-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_WAF, _model_part1.report_waf,
+                              'model-waf', head)
+
+
 def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
     h = [_trump_part1.HEAD_TRUMP] if head else []

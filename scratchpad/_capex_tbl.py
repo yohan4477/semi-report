@@ -22,6 +22,7 @@ import ground_capex as GC                                        # noqa: E402
 import trinity_debt as TD                                        # noqa: E402
 import spacex_payback as SX                                      # noqa: E402
 import bridge_capex as BR                                        # noqa: E402
+import wafer_chain as WF                                         # noqa: E402
 
 RAW = json.loads(io.open(os.path.join(_MODELS, 'raw', 'capex.json'),
                          encoding='utf-8').read())
@@ -47,6 +48,7 @@ _FR = _tbl('frame-capex')
 _SH = _tbl('frame-sheet')
 _SC = _tbl('frame-scn')
 _LV = _tbl('frame-lever')
+_WF = _tbl('wafer-coef')
 
 
 def _v(t, k):
@@ -454,6 +456,101 @@ def bridge_lever_table():
     return head, body
 
 
+# ── 웨이퍼 사슬 ─────────────────────────────────────────────────────────
+def _gw_2026():
+    return BR.implied_gw(_v(_SH, 'total_2026'), _v(_X, 'capex_per_gw'))
+
+
+def wafer_coef_table():
+    """원문이 준 계수와 그것으로 되짚은 값."""
+    head = ['무엇', '값', '성격']
+    a = WF.implied_tsmc(_v(_WF, 'tw_wafers') * 1e6, _v(_WF, 'tw_multiple')) / 12 / 1e6
+    b = (_v(_WF, 'terafab_full') * 1e6 / (_v(_WF, 'terafab_tsmc_share') / 100.0)) / 1e6
+    g = WF.implied_global(_v(_WF, 'terafab_entry') * 1000,
+                          _v(_WF, 'terafab_entry_share')) / 1e6
+    return head, [
+        ['기가와트당 연 웨이퍼 투입', '%s장' % format(_v(_WF, 'wafers_per_gw'), ','), '원문 값'],
+        ['그 가운데 메모리 몫', '%g%% 이상' % _v(_WF, 'memory_share'), '원문 값'],
+        ['기가와트당 웨이퍼 가치', '$%g십억' % _v(_WF, 'value_per_gw'), '원문 값'],
+        ['세계 300밀리 파운드리 용량(2025년)', '%g백만 장/월' % _v(_WF, 'global_wspm'),
+         '원문 값'],
+        ['테라팹 초기 투입과 그 몫', '%g천 장/월 · 세계의 %g%%'
+         % (_v(_WF, 'terafab_entry'), _v(_WF, 'terafab_entry_share')), '원문 값'],
+        ['그 둘로 되짚은 세계 용량', '%.1f백만 장/월' % g, '모델이 낸 값'],
+        ['1테라와트를 TSMC 배수로 되짚으면', '%.2f백만 장/월' % a, '모델이 낸 값'],
+        ['테라팹을 TSMC 비중으로 되짚으면', '%.2f백만 장/월' % b, '모델이 낸 값'],
+        ['두 값의 차이', '%.1f%%' % (abs(a - b) / b * 100), '모델이 낸 값'],
+    ]
+
+
+def wafer_gw_table():
+    """자본지출에서 웨이퍼까지 마디마다 얼마인가."""
+    gw = _gw_2026()
+    ann = WF.wafers_from_gw(gw, _v(_WF, 'wafers_per_gw'))
+    mo = WF.wspm(ann)
+    head = ['마디', '값', '어디서 왔나']
+    return head, [
+        ['빅4 2026년 자본지출', '$%g십억' % _v(_SH, 'total_2026'), '프레임 값'],
+        ['메가와트당 전부 포함 자본', '$%g백만' % _v(_X, 'capex_per_gw'), '회수 층'],
+        ['신규 용량', '%.1fGW' % gw, '앞 둘의 나눗셈'],
+        ['연 웨이퍼 투입', '%.2f백만 장' % (ann / 1e6), '기가와트당 계수를 곱했다'],
+        ['월 웨이퍼 투입', '%.0f천 장' % (mo / 1000), '열둘로 나눴다'],
+        ['세계 파운드리에서 차지하는 몫',
+         '%.1f%%' % WF.share_of_global(mo, _v(_WF, 'global_wspm') * 1e6),
+         '세계 용량이 2025년 그대로일 때'],
+    ]
+
+
+def wafer_val_table():
+    """웨이퍼 가치와 메모리 몫, 그리고 프레임의 HBM 금액."""
+    gw = _gw_2026()
+    val = WF.wafer_value(gw, _v(_WF, 'value_per_gw'))
+    mem = val * _v(_WF, 'memory_share') / 100.0
+    hbm = _v(_SH, 'hbm_value')
+    head = ['무엇', '값', '자본지출에서 차지하는 몫', '성격']
+    return head, [
+        ['웨이퍼 가치', '$%.1f십억' % val,
+         '%.1f%%' % WF.value_share(val, _v(_SH, 'total_2026')), '모델이 낸 값'],
+        ['그 가운데 메모리', '$%.1f십억 위' % mem,
+         '%.1f%%' % WF.value_share(mem, _v(_SH, 'total_2026')), '모델이 낸 값'],
+        ['프레임 엑셀의 HBM 금액', '$%g십억' % hbm,
+         '%.1f%%' % WF.value_share(hbm, _v(_SH, 'total_2026')), '프레임 값'],
+        ['두 값의 차이', '%.1f%%' % (abs(mem - hbm) / hbm * 100), '—', '모델이 낸 값'],
+    ]
+
+
+def wafer_mem_table():
+    """메모리가 장수를 먹는 이유."""
+    head = ['무엇', '값', '성격']
+    return head, [
+        ['HBM 이 범용 D램 대비 비트당 먹는 웨이퍼', '%g배' % _v(_WF, 'hbm_bit_multiple'),
+         '원문 값'],
+        ['범용 D램 100장어치 비트를 HBM 으로 만들면',
+         '%g장' % WF.hbm_bit_penalty(100, _v(_WF, 'hbm_bit_multiple')), '모델이 낸 값'],
+        ['AI 수요가 TSMC N3 출력에서 차지하는 몫(2026년)',
+         '%g%% 미만' % _v(_WF, 'n3_2026'), '원문 값'],
+        ['같은 몫(2027년)', '%g%%' % _v(_WF, 'n3_2027'), '원문 값'],
+        ['테라팹 완전 가동이 세계에서 차지하는 몫',
+         '%g%%' % _v(_WF, 'terafab_full_share'), '원문 값'],
+    ]
+
+
+def wafer_scn_table():
+    """케이스 셋을 웨이퍼로 옮기면."""
+    head = ['케이스', '2030년 자본지출', '신규 용량', '연 웨이퍼', '세계 파운드리 몫']
+    body = []
+    per_mw = _v(_X, 'capex_per_gw')
+    for k in ('capex_bear', 'capex_base', 'capex_bull'):
+        r = _SC['rows'][k]
+        v = r[5]
+        gw = BR.implied_gw(v, per_mw)
+        ann = WF.wafers_from_gw(gw, _v(_WF, 'wafers_per_gw'))
+        body.append([r[0], '$%g십억' % v, '%.1fGW' % gw, '%.2f백만 장' % (ann / 1e6),
+                     '%.1f%%' % WF.share_of_global(WF.wspm(ann),
+                                                   _v(_WF, 'global_wspm') * 1e6)])
+    return head, body
+
+
 TABLES = {
     'LEGOCOST': ('발표된 8퍼센트를 다시 낸다', lego_cost_table),
     'LEGOLAB': ('그 차이 가운데 인건비는 얼마인가', lego_labor_table),
@@ -475,6 +572,11 @@ TABLES = {
     'BRHBM': ('메가와트에 실리는 HBM', bridge_hbm_table),
     'BRSCN': ('케이스 셋을 우리 단가로 재면', bridge_scn_table),
     'BRLEVER': ('시나리오를 흔드는 레버 일곱', bridge_lever_table),
+    'WAFCOEF': ('원문이 준 계수와 그것으로 되짚은 숫자', wafer_coef_table),
+    'WAFGW': ('자본지출에서 웨이퍼까지 마디마다', wafer_gw_table),
+    'WAFVAL': ('웨이퍼 가치와 메모리 몫', wafer_val_table),
+    'WAFMEM': ('메모리가 장수를 먹는 이유', wafer_mem_table),
+    'WAFSCN': ('케이스 셋을 웨이퍼로 옮기면', wafer_scn_table),
 }
 
 

@@ -52,6 +52,8 @@ def main():
         '```', run('check_trinity.py').rstrip(), '```\n',
         '## 다리 모델 출력 — 하향 총액과 상향 단가\n',
         '```', run('check_bridge.py').rstrip(), '```\n',
+        '## 웨이퍼 사슬 모델 출력\n',
+        '```', run('check_wafer.py').rstrip(), '```\n',
         '## 회수 기간 모델 출력\n',
         '```', run('check_spacex.py').rstrip(), '```\n',
         '## 본문에 실린 표 — 모델이 계산해서 낸 값\n',
