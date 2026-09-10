@@ -26,9 +26,6 @@ BUILD = [
     ('Epoch AI 대시보드', ['scratchpad/gen_epoch_dashboard.py']),
     ('Semi Doped 대시보드', ['scratchpad/gen_semidoped.py']),
     ('AI Engineer 대시보드', ['scratchpad/gen_aie_dashboard.py']),
-    # 주장 흐름은 대시보드에서 링크로만 닿는 장이라 빠뜨리기 쉽다. 재료(aie_thread.json)가
-    # 바뀌면 물음 묶음이 갈라지고 그때 생성기가 멈춘다 — 여기 세워 둬야 그날 걸린다.
-    ('AI Engineer 주장 흐름', ['scratchpad/gen_aie_thread.py']),
     ('통합 보고서', ['scratchpad/gen_report_dashboard.py']),
     ('회계사 대시보드', ['scratchpad/gen_accountant_dashboard.py']),
     # 카드 원고(content/understanding/한주성)는 check_manda 를 먼저 통과해야 한다
