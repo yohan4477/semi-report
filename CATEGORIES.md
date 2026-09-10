@@ -53,16 +53,16 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-infra/compute | 31 |
 | ai-infra/memory | 11 |
 | ai-infra/networking | 14 |
-| ai-infra/business | 22 |
-| ai-infra/power | 11 |
+| ai-infra/business | 23 |
+| ai-infra/power | 12 |
 | ai-infra/cooling | 3 |
-| ai-infra/construction | 3 |
+| ai-infra/construction | 4 |
 | ai-infra/security | 1 |
 | ai-models/rl | 4 |
 | ai-models/agents | 4 |
 | ai-models | 3 |
 | robotics | 2 |
-| semiconductors | 3 |
+| semiconductors | 4 |
 | semiconductors/process | 1 |
 | ai-economy | 1 |
 
@@ -102,6 +102,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 ## 버전 히스토리
 
+- (2026-09-11) [260910] What is So Hard About Behind-The-Meter Power For Datacenters? Part 1(데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1) 신규 변환 완료 — ai-infra/power 11→12, ai-infra/business 22→23, ai-infra/construction 3→4. 확정발주 75GW 규모로 불어난 BTM(계량기 뒤 자가발전)을 연결 구성 네 갈래와 섬 운전 정의에서 시작해 여섯 관문(계약·인허가·가스·장비·건설·섬 운전)으로 쌓은 문서. PTE·PSD 등급 사다리와 Project Jupiter의 합성 소규모 전략, 파이프라인 세 사례, 터빈 매진에 따른 왕복동 엔진(레시프)·연료전지 이동과 BoP 병목, 섬 운전의 관성·고장전류 물리(xAI 진동 사례)는 power. 계약과 뱅커빌리티(닭과 달걀 문제, EaaS)·승자와 패자 투자 논증은 business, 28만 8천명 인력 부족과 모듈러 절감·직군별 격차·EPC 시공 축은 construction으로 3중 분류. 전체 12개 섹션 완료. 전력 통합 리포트 §1.3(BTM 확산) 갱신 예정
+- (2026-09-11) [241028] Fab Whack-A-Mole: Chinese Companies are Evading U.S. Sanctions(팹 두더지잡기 - 중국 기업의 대미 제재 회피) 신규 변환 완료 — semiconductors 3→4. 백로그 메우기로 들어온 2024-10-28 발행문(사이트맵의 2026-09-03은 재편집일). 기존 규제의 세 구멍(역외 생산·용도 우회·CXMT식 개명·재분류), 화웨이가 펜진·PXW·펜썬·SMIC 를 거친 팹 네트워크와 73억 달러 WFE 지출 경로, 장비업체가 정말 타격받았는가를 실적 발표 발언과 대조한 대목, de minimis 0% 문턱과 상하공정 비대칭·EUV 광학계를 들어 쌓은 네 가지 권고까지 전체 5개 섹션 완료. 수출통제·파운드리 산업구조 문서라 단일 분류
 - (2026-09-10) [260910] Where Does a Robot Think – On-Device vs Datacenter Inference(로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론) 신규 변환 완료 — robotics 1→2, ai-infra/compute 30→31, ai-infra/memory 10→11. 로봇공학에서는 LLM과 반대로 하드웨어가 모델을 결정한다는 임바디먼트 문제(시간·비용 제약)에서 출발해, 계획층·행동층 2단 구조 중 무거운 계획층만 데이터센터로 옮기는 논증, VLA·WAM(세계 행동 모델)의 연산 요구량과 젯슨 토르의 한계(B300의 약 14분의 1), 전력 제약(배터리 2kWh vs 블랙웰 1.2\~1.4kW)까지는 robotics 단일 축. 로봇용 칩(젯슨 토르)이 데이터센터 가속기와 같은 공정 노드(TSMC N4→N3→N2)로 수렴하면서도 낮은 마진(60%대 중반 vs 블랙웰 70%대 중후반)으로 웨이퍼 배정에서 밀리고 실리콘 효율 교차점이 로봇 7대당 GPU 1대라는 진단은 ai-infra/compute, 로봇용 D램(LPDDR)이 HBM에 밀려 줄어드는 비HBM 웨이퍼를 두고 경쟁하며 교차점이 로봇 5대당 GPU 1대라는 진단은 ai-infra/memory로 이중 분류. RoboArena 1위 모델 DreamZero 실측(B300 1대로 로봇 7대 시간분할 처리, p99 1.16초)을 바탕으로 로봇 56대 기준 오프로드 대 온로봇 TCO를 비교해 가동률 반영 시 오프로드가 온로봇의 약 60%(가정용 배치는 약 15%) 비용으로 유리해짐을 실증한 TCO 판정까지 전체 12개 섹션 완료. 컴퓨트·메모리 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류 — 로봇이라는 단일 수요처 관점의 첫 문서)
 - (2026-09-07) [260907] TPU Inference Externalization Full Steam Ahead(TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측) 신규 변환 완료 — ai-infra/compute 29→30, ai-infra/networking 13→14. InferenceX(SemiAnalysis 제3자 추론 벤치마크) 최초 공개로 TPUv7 Ironwood가 엔비디아 B200·B300 대비 최대 50% 나은 성능당 비용(초당 100토큰/사용자 기준 $0.181 vs $0.222 vs $0.276)을 실측, 구글 내부 비용 기준 동시성 256에서 우위가 76.7\~130.2%까지 커지되 TTFT가 늘어나는 트레이드오프까지 분석, GB300 NVL72 분리형 서빙 대 TPUv7 통합 서빙 "사과 대 바나나" 비교(중간 지연구간 GB300 약 30% 우위)라는 하드웨어·비즈니스 축은 compute, 새 TorchTPU 백엔드(TorchAX 번역 계층을 대체하는 네이티브 파이토치 지원)와 DP 어텐션·MoE 라우팅·GDN 커널·레인 레이아웃 등 커널 단위 최적화 딥다이브, Ironwood 칩 설계(MegaCore 폐기·별도 다이 2개, MXU 256×256 헤드차원 패딩 문제)와 3차원 토러스·OCS·차세대 TPUv8i Boardfly 네트워크 토폴로지라는 시스템·네트워킹 축은 networking으로 이중 분류. 추측 디코딩(MTP)·PD 분리(TPU-Sync·Mooncake Store)·AgentX 로드맵과 TPUv7 TCO(서버 원가 블랙웰 대비 절반 미만) 분석까지 전체 8개 섹션 완료. 컴퓨트·네트워킹 통합 리포트 문서별 요약에 추가
 - (2026-09-02) [260901] Korea's Trillion-Dollar Sovereign AI Investment: Nvidia Wins, Hynix Loses(한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다) 신규 변환 완료 — ai-infra/business 21→22, ai-infra/memory 9→10. 한국의 "독자 AI 파운데이션 모델" 국가대표 토너먼트(6개월 주기 탈락·자원 재분배 구조, 네이버 탈락 논란, 30명 미만 스타트업 모티프 3가 미국 최고 오픈소스 모델(잉클링·넴트론 3 울트라)을 능가하고도 벤치마크 외 심사에서 최하위로 탈락한 이변), 9,190억 달러 규모 1조 달러급 데이터센터 투자 계획(2029년 8.4GW·2035년 18.4GW), 젠슨 황의 오픈소스·주권 AI 지지 배경(컴플리먼트 상품화 전략, 실질 고객 2\~7곳뿐인 엔비디아의 다변화 필요성)까지 사업 축은 business, SK하이닉스·삼성의 2027년 HBM4 가격 격차(엔비디아向 Gb당 3.0\~3.3달러 vs 삼성 3.5\~3.9달러)와 SK그룹-엔비디아 암묵적 특가·GPU 우선배정 거래, 두 회사 마진 격차 축소(10%대→한 자릿수 퍼센트포인트) 전망, SOCAMM 장기 공급계약 추정까지 메모리 가격·수익성 축은 memory로 이중 분류. 전체 7개 섹션 완료, 메모리 통합 리포트 갱신

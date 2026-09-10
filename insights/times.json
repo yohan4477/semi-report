@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-11",
-"index_fingerprint": "fd42be4aa7c97c6b688626568fd8c9f3b49b6586",
-"lines": 4557
+"index_fingerprint": "1705dc7f1aa9e43995c56acb58110f9b3805e4bc",
+"lines": 4589
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -4681,6 +4681,124 @@
 "t": "2024",
 "tense": "회고"
 },
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L117": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L119": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L223": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L302": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L353": {
+"how": "명시",
+"span": [
+"2026",
+"2028"
+],
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L354": {
+"how": "명시",
+"span": [
+"2027",
+"2028"
+],
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L360": {
+"how": "명시",
+"span": [
+"2026",
+"2028"
+],
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L367": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L368": {
+"how": "명시",
+"span": [
+"2024",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L436": {
+"how": "명시",
+"span": [
+"2027",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L463": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L49": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L51": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L52": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L528": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L58": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L610": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md#L68": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
 "content/newsletter/ai_infra/security/[260830] 네오클라우드 대다수는 보안이 엉망이다.md#L124": {
 "how": "명시",
 "span": [
@@ -5137,6 +5255,72 @@
 "how": "명시",
 "t": "2026",
 "tense": "현재"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L130": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L132": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L151": {
+"how": "명시",
+"span": [
+"2022",
+"2024"
+],
+"t": "2024",
+"tense": "현재"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L182": {
+"how": "명시",
+"span": [
+"2022",
+"2024"
+],
+"t": "2024",
+"tense": "현재"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L188": {
+"how": "계산",
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L225": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L228": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L231": {
+"how": "명시",
+"span": [
+"2022",
+"2024"
+],
+"t": "2024",
+"tense": "현재"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L90": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L97": {
+"how": "명시",
+"span": [
+"2018",
+"2023"
+],
+"t": "2023",
+"tense": "회고"
 },
 "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md#L110": {
 "how": "명시",
@@ -6426,6 +6610,26 @@
 "how": "명시",
 "t": "2025",
 "tense": "회고"
+},
+"content/semi_doped/2026-03-17-nvidia-gtc-keynote.md#L42": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-03-20-microled-micron.md#L28": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-03-20-microled-micron.md#L36": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/semi_doped/2026-03-20-microled-micron.md#L58": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
 },
 "content/semi_doped/2026-03-27-arm-cpu-turboquant.md#L28": {
 "how": "명시",
