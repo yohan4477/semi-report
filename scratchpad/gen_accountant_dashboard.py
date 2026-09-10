@@ -11,6 +11,7 @@ import _figs_0825 as figs0825
 import _figs_kicpa_0825 as figs_k0825
 import _fig_rates as fig_rates
 import _fig_dcf as fig_dcf
+import _fig_dcf_tree as fig_tree
 import driver_map
 import driver_map_data_hynix as dmd_hynix
 import driver_map_data_cosmax as dmd_cosmax
@@ -348,6 +349,20 @@ CARDS = [{
     'section': SEC_SS,
     'topic': ('market', '삼성전자 · 005930'),
     'title': '8년 사이클을 통째로 넣은 DCF, 주당 361,000원',
+    'figs': [
+        (0, '주당 적정가는 어떤 항들로 갈라지나', fig_tree.FIG_PER_SHARE,
+         '금액은 아래 표가 낸다. '
+         '① 8년 FCF 현재가치 합계([260716] 8년 L86) ② 영구성장률을 적용한 잔존가치의 현재가치(같은 줄) '
+         '③ 보통주 발행주식수로 나눈다([260716] 8년 L88)'),
+        (1, '해마다의 FCF 는 매출에서 어떻게 나오나', fig_tree.FIG_FCF,
+         '오른쪽 끝 잎이 입력이다. '
+         '① 세후 영업이익 — 법인세율은 본문에 없고 WACC 계산에만 나온다([260716] 8년 L78) '
+         '② 직전 4개년 CAPEX 평균으로 근사한 값([260716] 8년 L46)'),
+        (2, 'WACC 는 다섯 입력으로 갈라진다', fig_tree.FIG_WACC,
+         '비율은 원문 표 그대로다([260716] 8년 L74~L80). '
+         '① 원문이 안 적어 안 그렸다 — 부채 비중만 적혀 있다 '
+         '② 세전 3.80%에 (1 − 26.4%)를 곱한 값([260716] 8년 L78)'),
+    ],
     'gain': ('필자가 직접 짠 유일한 삼성전자 DCF다. 2026~2033년 매출과 마진을 해마다 깔고 '
              'FCF까지 굴린 사슬, 그리고 필자가 자기 계산을 반박하는 대목을 편다.'),
     'meta': ['엘곰 <b>회계사</b>', '업로드 2026-07-16', '유료 텍스트', '네이버 프리미엄'],

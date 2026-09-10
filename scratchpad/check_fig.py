@@ -318,7 +318,10 @@ def hits(svg, strict=True):
 # 도해를 가진 생성기를 여기 적는다. 빠뜨리면 그 장은 검사를 통째로 안 받는다 —
 # 2026-08-23에 수도리무브 도해 서른 장이 이 목록에 없어서 한 번도 안 걸러졌다.
 GENERATORS = ['gen_industry_dashboard', 'gen_sudoremove_dashboard', 'gen_glossary',
-              'gen_report_dashboard', 'gen_epoch_dashboard']
+              'gen_report_dashboard', 'gen_epoch_dashboard',
+              # 회계사 장 도해도 걷는다 — 2026-09-10 에 math tree 를 붙이며 넣었다.
+              # 여기 없는 동안 이 장 도해는 검사를 통째로 빠져나갔다
+              'gen_accountant_dashboard']
 
 
 def all_figs():

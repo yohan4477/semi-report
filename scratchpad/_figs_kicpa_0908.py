@@ -59,8 +59,6 @@ def fig_lpddr6():
              % (_LANE_X['2026-08'] + 36))
     h.append('<text x="%d" y="204" class="t-val" text-anchor="end">20만~30만대</text>'
              % (_LANE_X['2026-08'] + 36))
-    h.append('<text x="26" y="240" class="t-sub">점선 상자는 시점이 아직 안 나온 것이다. '
-             'SK하이닉스 탑재는 하반기 예정이라 눈금에 못 세웠다</text>')
     h.append('</svg>')
     return ''.join(h)
 
@@ -614,7 +612,7 @@ _CASES = [('무엇에 매기나 — 요건', ['1편 포인트 결제와 에누�
 
 
 def fig_taxcases():
-    h = ['<svg viewBox="0 0 560 386" role="img" aria-label="세금판례 열 편이 과세 요건과 '
+    h = ['<svg viewBox="0 0 560 358" role="img" aria-label="세금판례 열 편이 과세 요건과 '
          '헌법 판단과 기간·절차 세 갈래로 갈린다">']
     h.append('<text x="26" y="22" class="t-head">열 편이 묻는 자리</text>')
     y = 36
@@ -623,10 +621,8 @@ def fig_taxcases():
         h.append('<rect class="k8-open" x="26" y="%d" width="508" height="%d" rx="8"/>' % (y, hgt))
         h.append('<text x="44" y="%d" class="t-step">%s</text>' % (y + 20, name))
         for j, it in enumerate(items):
-            h.append('<text x="230" y="%d" class="t-sub">%s</text>' % (y + 20 + j * 20, it))
+            h.append('<text x="286" y="%d" class="t-sub">%s</text>' % (y + 20 + j * 20, it))
         y += hgt + 12
-    h.append('<text x="26" y="%d" class="t-sub">'
-             '요건이 다 맞아도 절차가 어긋나면 세금이 취소된 편이 마지막이다</text>' % (y + 14))
     h.append('</svg>')
     return ''.join(h)
 

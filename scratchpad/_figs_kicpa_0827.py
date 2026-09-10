@@ -223,8 +223,6 @@ def fig_loop():
              '오라클과는 3,000억 달러 규모 Stargate 계약을 맺고 있다</text>')
     # 바깥 레일 — 매출로 잡혀 위로 돌아간다
     h.append('<path class="flow-cash" d="M526,356 H600 V100 H530"/>')
-    h.append('<text x="620" y="230" class="t-cash" text-anchor="middle" '
-             'transform="rotate(-90 620 230)">매출로 잡힌다</text>')
     h.append('</svg>')
     return ''.join(h)
 
