@@ -143,7 +143,9 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L731",
 "content/linkedin/[2608] 링크드인 게시물.md#L787",
 "content/linkedin/[2609] 링크드인 게시물.md#L59",
+"content/linkedin/[2609] 링크드인 게시물.md#L171",
 "content/linkedin/[2609] 링크드인 게시물.md#L179",
+"content/linkedin/[2609] 링크드인 게시물.md#L235",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L76",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L474",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L483",
@@ -9516,7 +9518,8 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L787",
 "content/linkedin/[2609] 링크드인 게시물.md#L43",
 "content/linkedin/[2609] 링크드인 게시물.md#L147",
-"content/linkedin/[2609] 링크드인 게시물.md#L179",
+"content/linkedin/[2609] 링크드인 게시물.md#L235",
+"content/linkedin/[2609] 링크드인 게시물.md#L291",
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L7",
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md#L423",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L7",
@@ -15509,8 +15512,8 @@
 795
 ],
 "content/linkedin/[2609] 링크드인 게시물.md": [
-"2fcca928ded1b9a289647e001abc60536a95e7e0",
-187
+"2df0bbe66313be0b1a2d3e9e20810ce641a5fb9b",
+339
 ],
 "content/newsletter/ai_economy/[260529] AI 다크 아웃풋 - 보이지 않는 산출물의 보이는 비용.md": [
 "5946dd3b204cfb4bca4f382d963aa10a864fc188",
@@ -23393,8 +23396,8 @@
 213
 ]
 },
-"fingerprint": "ab8fa348f601c232e9ebb8443468c60f3a40f824",
-"lines": 436738
+"fingerprint": "911e6115d61e13f8e9db81840d0f90128050d2b2",
+"lines": 436890
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -23940,6 +23943,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L435",
 "content/linkedin/[2608] 링크드인 게시물.md#L507",
 "content/linkedin/[2609] 링크드인 게시물.md#L43",
+"content/linkedin/[2609] 링크드인 게시물.md#L259",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L37",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L35",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L219",
@@ -28166,6 +28170,7 @@
 "content/understanding/박팀장/[260715] 경제는 멀쩡한데 환율만 외환위기 수준 - 인도네시아에서 돈이 빠지는 이유 - 박팀장.md#L73"
 ],
 "다리오 아모데이": [
+"content/linkedin/[2609] 링크드인 게시물.md#L331",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L55",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L59",
 "content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md#L605",
@@ -28190,6 +28195,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L571",
 "content/linkedin/[2608] 링크드인 게시물.md#L739",
 "content/linkedin/[2609] 링크드인 게시물.md#L51",
+"content/linkedin/[2609] 링크드인 게시물.md#L331",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L37",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L35",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L278",
@@ -45841,6 +45847,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L651",
 "content/linkedin/[2608] 링크드인 게시물.md#L731",
 "content/linkedin/[2609] 링크드인 게시물.md#L35",
+"content/linkedin/[2609] 링크드인 게시물.md#L275",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L159",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L184",
 "content/newsletter/ai_infra/compute/[260513] 세레브라스 - 더 빠른 토큰을 주세요.md#L5",
@@ -51220,6 +51227,11 @@
 "content/linkedin/[2609] 링크드인 게시물.md#L112",
 "content/linkedin/[2609] 링크드인 게시물.md#L115",
 "content/linkedin/[2609] 링크드인 게시물.md#L131",
+"content/linkedin/[2609] 링크드인 게시물.md#L155",
+"content/linkedin/[2609] 링크드인 게시물.md#L163",
+"content/linkedin/[2609] 링크드인 게시물.md#L203",
+"content/linkedin/[2609] 링크드인 게시물.md#L275",
+"content/linkedin/[2609] 링크드인 게시물.md#L323",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L223",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L435",
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L455",
@@ -57354,6 +57366,8 @@
 "content/linkedin/[2609] 링크드인 게시물.md#L104",
 "content/linkedin/[2609] 링크드인 게시물.md#L112",
 "content/linkedin/[2609] 링크드인 게시물.md#L131",
+"content/linkedin/[2609] 링크드인 게시물.md#L155",
+"content/linkedin/[2609] 링크드인 게시물.md#L195",
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L56",
 "content/newsletter/ai_infra/business/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md#L116",
 "content/newsletter/ai_infra/business/[260528] 앤트로픽 성장과 베드락 믹스로 나 홀로 앞서가는 AWS 마진.md#L132",
@@ -62618,6 +62632,7 @@
 "content/linkedin/[2607] 링크드인 게시물.md#L1305",
 "content/linkedin/[2608] 링크드인 게시물.md#L571",
 "content/linkedin/[2608] 링크드인 게시물.md#L795",
+"content/linkedin/[2609] 링크드인 게시물.md#L179",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L5",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L7",
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L18",
@@ -66471,6 +66486,7 @@
 "content/linkedin/[2608] 링크드인 게시물.md#L755",
 "content/linkedin/[2609] 링크드인 게시물.md#L67",
 "content/linkedin/[2609] 링크드인 게시물.md#L115",
+"content/linkedin/[2609] 링크드인 게시물.md#L187",
 "content/newsletter/ai_infra/business/[260603] 우주로 담대하게 - 우주 데이터센터의 경제성.md#L129",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L90",
 "content/newsletter/ai_infra/business/[260709] 메타 슈퍼인텔리전스의 미래 - 출범 1주년 성과 점검.md#L72",
@@ -69229,6 +69245,7 @@
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L98",
 "content/linkedin/[2603] 링크드인 게시물.md#L179",
 "content/linkedin/[2606] 링크드인 게시물.md#L2225",
+"content/linkedin/[2609] 링크드인 게시물.md#L187",
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L90",
 "content/newsletter/ai_infra/compute/[260824] AgentX InferenceXv3 - 에이전틱 추론에서도 CUDA 해자는 버티는가.md#L77",
 "content/newsletter/ai_models/[260821] 오픈 모델은 정말 따라잡고 있는가 - 세 시대로 본 오픈-클로즈드 격차.md#L237",
