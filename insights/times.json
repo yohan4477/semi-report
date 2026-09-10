@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-10",
-"index_fingerprint": "afc9176a8b2527d49ed953b218815823999a67da",
-"lines": 4536
+"index_fingerprint": "ab8fa348f601c232e9ebb8443468c60f3a40f824",
+"lines": 4541
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6420,6 +6420,31 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-10-intel-openclaw.md#L35": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-17-credo-dustphotonics.md#L21": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-17-credo-dustphotonics.md#L36": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/semi_doped/2026-04-17-credo-dustphotonics.md#L42": {
+"how": "명시",
+"t": "2016",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-17-credo-dustphotonics.md#L70": {
+"how": "명시",
+"t": "2021",
 "tense": "회고"
 },
 "content/semi_doped/2026-04-24-google-networking.md#L25": {

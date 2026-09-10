@@ -1,0 +1,321 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>에이전트 토큰 비용이 오르자 사람은 싼 모델로 옮기고 추론 칩은 메모리를 섞어 칩을 줄인다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>에이전트 토큰 비용이 오르자 사람은 싼 모델로 옮기고 추론 칩은 메모리를 섞어 칩을 줄인다</h1><div class="pmeta">2026-04-10 · Austin Lyons · Vik Sekar<br>원문 <a href="https://www.youtube.com/watch?v=rFf8ABolyi0">https://www.youtube.com/watch?v=rFf8ABolyi0</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-04-10-intel-openclaw.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">에이전트가 늘 켜져 있으면 요금제도 CPU 수요도 칩 구성도 같은 방향으로 다시 짜인다</div><p>이 회차는 진행자 한 사람의 요금 고지서에서 시작해 인텔 시가총액 3천억 달러로 끝난다. 진행은 둘이다. Chipstrat의 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 Vik's Newsletter의 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 게스트 없이 한 회차를 채웠다. 잡담처럼 흐르지만 앞뒤가 한 줄로 이어져 있어서, 이 글은 그 줄을 따라 업계에 보이는 것을 추린다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">구독 요금제가 끊기자 요금 구조가 드러났다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">정액 무제한이라는 상품과 기계를 사서 갖는 길</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">인텔 주가가 여섯 달 만에 세 배가 된 이유 두 가지</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">에이전트가 늘리는 것은 GPU 수요만이 아니다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">ARM이 데이터센터를 다 가져간다는 말의 실제 무게</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">결정론적 데이터 경로가 칩 수를 줄인다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 구독 요금제가 끊기자 요금 구조가 드러났다</h2>
+<p>4월 8일 Anthropic이 메일을 보냈다. 구독 요금제로 OpenClaw 같은 에이전트 껍데기를 돌리던 것을 앞으로 막을 테니 다른 사용자처럼 API 크레딧을 사라는 내용이었다. <span class="pn">진행자V</span>가 그 대상이었다. 월 200달러짜리 요금제에 Opus를 붙여 코딩을 시키고, 비서 노릇을 시키고, 팟캐스트와 뉴스레터에 쓸 자료를 계속 긁어 오게 하고 있었다.</p>
+<p><span class="pn">진행자A</span>가 그 자리에서 셈을 세워 보였다. 월 200달러를 내면 실제로는 얼마어치인지 모르는 토큰이 딸려 왔고, 아마 천 달러어치쯤을 이백 달러에 받고 있었을 것이다. 사람이 손으로 쓸 때는 그 천 달러를 다 쓸 일이 없어서 아무 문제가 없었다. 기계가 하루 종일 돌기 시작하자 다 써 버리는 사람이 생겼다. 그래서 통보의 내용은 사람을 막는 것이 아니었다. "당신 인간은 계속 써도 됩니다. 다만 당신의 OpenClaw가 당신인 척 로그인할 수는 없습니다".</p>
+<figure class="uc-fig"><p class="fig-title">토큰을 얻는 세 길과 그 값</p><svg class="epoch" viewBox="0 0 520 227" role="img" aria-label="월 200달러 정액이 막히자 API 종량으로는 5분에 5~7달러가 나갔고 주 7달러짜리 무제한으로 내려갔다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="26" text-anchor="middle" class="fig-hd">얻는 길</text>
+  <text x="186" y="26" text-anchor="middle" class="fig-hd">값</text>
+  <text x="369.5" y="26" text-anchor="middle" class="fig-hd">그래서</text>
+  <rect x="0" y="36" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="66.5" text-anchor="middle" class="fig-b">정액 구독</text>
+  <rect x="114" y="36" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="186" y="66.5" text-anchor="middle" class="fig-b">월 200달러</text>
+  <rect x="274" y="36" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="369.5" y="66.5" text-anchor="middle" class="fig-b">기계가 돌자 막혔다</text>
+  <rect x="0" y="101" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="131.5" text-anchor="middle" class="fig-b">API 종량</text>
+  <rect x="114" y="101" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="186" y="131.5" text-anchor="middle" class="fig-b">5분에 5~7달러</text>
+  <rect x="274" y="101" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="369.5" y="131.5" text-anchor="middle" class="fig-b">월 2만 달러였을 수도</text>
+  <rect x="0" y="166" width="98" height="49" rx="9" class="fig-stage"/>
+  <text x="49" y="196.5" text-anchor="middle" class="fig-b">정액 무제한</text>
+  <rect x="114" y="166" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="186" y="196.5" text-anchor="middle" class="fig-b">주 7달러</text>
+  <rect x="274" y="166" width="191" height="49" rx="9" class="fig-box"/>
+  <text x="369.5" y="196.5" text-anchor="middle" class="fig-b">최전선이 아닌 모델</text>
+</svg><figcaption>월 200달러 정액은 사람이 손으로 쓸 때를 전제로 짜여 있었다. API 종량은 <span class="pn">진행자V</span> 가 잠깐 돌려 본 값이고, 월 2만 달러는 <span class="pn">진행자A</span> 가 그 속도로 환산한 어림이다. 주 7달러는 Fireworks AI 의 fire pass 다.</figcaption></figure>
+<p>토큰 요금을 대 보면 차이가 크다. <span class="pn">진행자V</span>가 API로 잠깐 돌려 보니 5분에 5~7달러가 나갔다. <span class="pn">진행자A</span>는 그 속도를 분당 1달러로 환산하면서, 그동안 월 2만 달러어치를 쓰고 있었을지도 모른다고 했다. 정액제 하나가 끊긴 사건으로 보이지만, 사람 한 명의 손놀림을 전제로 짜여 있던 값은 늘 켜진 기계 앞에서 그대로 서지 못한다.</p>
+<h2 id="s2"><span class="num">2</span> 정액 무제한이라는 상품과 기계를 사서 갖는 길</h2>
+<p><span class="pn">진행자V</span>는 더 싼 API로 가지 않았다. Fireworks AI의 fire pass는 주당 7달러에 Kimi K2.5 Turbo를 사실상 무제한으로 준다. 본인 표현으로 자기 지능도 최전선이 아니니 모델도 그 수준에 맞추겠다고 했다. 아침에 깨우면 그 주의 할 일을 훑어 세 가지를 먼저 끝내라고 일러 주는 비서, 그것이 주 7달러로 얻는 것이다. "내가 필요한 지능을 실제보다 높게 잡고 있었다".</p>
+<p><span class="pn">진행자A</span>는 여기서 모델 등급 대신 요금 꼴을 봤다. <span class="pn">진행자V</span>가 반가워한 대목은 싸다는 것보다 <b>고정 금액에 무제한</b>이라는 구조였고, 그건 토큰 생성기를 하나 사서 책상에 두는 것과 닮았다. DGX Spark 같은 물건이 곧바로 떠오르지만, 연산이 충분한지 메모리가 충분한지는 따로 따져야 한다. 정리하면 하나다. 사람들이 에이전트에 쓴 만큼 내는 방식을 그리 좋아하지 않는다.</p>
+<p>실제로 사는 길도 <span class="pn">진행자V</span>가 재 봤다. ① Gemma의 310억 파라미터 모델은 램 30기가쯤을 요구하고, 사양을 올린 Mac mini면 닿는다. ② 더 작은 E4B·E2B도 쓸 만해 보인다. ③ OpenRouter에 20~25달러를 넣고 Xiaomi Mimo V2 Pro를 써 봤는데, 이 모델은 OpenRouter의 기술 분야에서 토큰 사용량 1위였다. 비용 회수 셈도 붙였다. 기계값이 5천 달러쯤이라 치고(본인도 1만인지 5천인지 헷갈렸다) 5년 쓰는 동안 생산성으로 그만큼을 만들면 본전이다.</p>
+<figure class="uc-fig"><p class="fig-title">빌려 쓸 때와 사서 가질 때</p><svg class="epoch" viewBox="0 0 520 285" role="img" aria-label="빌려 쓰면 매달 나가지만 사서 가지면 5천 달러를 5년에 걸쳐 거두고 되팔 때 남는 값이 하나 더 붙는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="22" text-anchor="middle" class="fig-hd">빌려 쓴다</text>
+  <rect x="211" y="32" width="98" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="61" text-anchor="middle" class="fig-b">매달 나간다</text>
+  <text x="260" y="118" text-anchor="middle" class="fig-hd">사서 갖는다</text>
+  <rect x="105" y="128" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="146" y="158.5" text-anchor="middle" class="fig-b">5천 달러</text>
+  <rect x="211" y="128" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="252" y="158.5" text-anchor="middle" class="fig-b">5년 쓴다</text>
+  <rect x="317" y="128" width="98" height="49" rx="9" class="fig-agent"/>
+  <text x="366" y="158.5" text-anchor="middle" class="fig-b">되팔면 회수</text>
+  <line x1="189" y1="152.5" x2="209" y2="152.5" class="fig-arw"/>
+  <line x1="295" y1="152.5" x2="315" y2="152.5" class="fig-arw"/>
+  <rect x="102" y="199" width="316" height="44" rx="9" class="fig-stage"/>
+  <text x="260" y="227" text-anchor="middle" class="fig-b">300달러에 사서 530달러에 팔았다</text>
+  <rect x="0" y="259" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="271" class="fig-lg">빌려 쓸 때는 없는 항</text>
+</svg><figcaption>기계값은 본인도 1만인지 5천인지 헷갈렸다. 되판 값은 <span class="pn">진행자V</span> 가 실제로 겪은 그래픽 카드다. 메모리 값이 오르는 중이라 1년 쓰고 같은 값에 팔 수도 있다고 봤다.</figcaption></figure>
+<p>기계를 사서 갖는 길에는 되팔 때의 값이 하나 더 붙는다. <span class="pn">진행자A</span>가 든 예가 중고차인데, 코로나 시기에는 산 값보다 비싸게 팔리기도 했다. 이유는 공급 부족이었다. <span class="pn">진행자V</span>는 300달러에 산 그래픽 카드를 530달러에 팔았다. 그래서 나온 농담이 진지한 관측이 된다. 메모리를 잔뜩 넣은 기계는 지금 사서 1년 쓰고 같은 값에 팔 수도 있다, 메모리 가격이 오르고 있으니까.</p>
+<h2 id="s3"><span class="num">3</span> 인텔 주가가 여섯 달 만에 세 배가 된 이유 두 가지</h2>
+<p>인텔 시가총액이 3천억 달러를 넘었다. 여섯 달 전의 세 배이고, 4월 한 달에만 50% 올랐다. 주가는 30달러대에서 60달러가 됐다. 20년 동안 옆으로 누워 있다가 내리막을 걷고 나서 갑자기 올라온 모양이다.</p>
+<p><span class="pn">진행자V</span>는 이유를 둘로 들었다. ① Terafab 발표. 앞선 회차에서 <span class="pn">진행자A</span>가 일론 머스크의 Terafab이 인텔에 칩 주문을 넣는 그림을 짚었고, 1테라와트가 아니라 그 10~20%만 되어도 대형 고객 하나가 생기는 것이라고 했다. 인텔에 절실했던 것이 바로 그런 고객이다. ② 인텔과 구글의 제온 다년 계약.</p>
+<p>그런데 <span class="pn">진행자A</span>는 자기 말에 스스로 유보를 달았다. Terafab 건은 인텔에게 가장 좋은 경우를 가정한 추측이고 발표문에 세부가 거의 없다. 연구개발을 거들어 주는 정도일 수도 있다. 다만 인텔이 하려는 사업이 파운드리인 이상, 가장 단순한 설명은 칩을 만들어 주거나 패키징을 해 주는 것이다.</p>
+<p>구글 계약은 읽어 보니 기대와 달랐다. 처음에는 AI용 CPU 랙 이야기인 줄 알았는데, 발표문에서 언급된 제품은 구글 Cloud Next에서 2년 전에 내놓은 C4·N4 머신이고 그 안에 든 것은 에메랄드 래피즈였다. 곧 구세대인 인텔 7 공정 CPU를 더 사겠다는 내용이다. <span class="pn">진행자A</span>의 반응이 솔직하다. 처음의 흥분이 가라앉았고, 이것은 AI 이야기라기보다 구글의 클라우드 부문이 서버용 CPU를 더 사겠다는 것이다. 그래도 의미는 남는다. 인텔이 급여를 주고 파운드리 투자금을 마련하는 돈은 CPU 판매에서 나온다.</p>
+<h2 id="s4"><span class="num">4</span> 에이전트가 늘리는 것은 GPU 수요만이 아니다</h2>
+<figure class="uc-fig"><p class="fig-title">IPU 가 CPU 에서 떼어 가는 것 셋</p><svg class="epoch" viewBox="0 0 520 377" role="img" aria-label="스토리지와 네트워킹과 보안을 호스트 CPU 에서 떼어 IPU 가 맡으면 CPU 에는 코어와 연산을 더 채울 수 있다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="203.5" y="30" width="113" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="59" text-anchor="middle" class="fig-b">호스트 CPU</text>
+  <rect x="160.5" y="150" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="193.5" y="180.5" text-anchor="middle" class="fig-b">스토리지</text>
+  <rect x="242.5" y="150" width="66" height="49" rx="9" class="fig-stage"/>
+  <text x="275.5" y="180.5" text-anchor="middle" class="fig-b">네트워킹</text>
+  <rect x="324.5" y="150" width="35" height="49" rx="9" class="fig-stage"/>
+  <text x="342" y="180.5" text-anchor="middle" class="fig-b">보안</text>
+  <line x1="193.5" y1="78" x2="193.5" y2="148" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="275.5" y1="78" x2="275.5" y2="148" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="342" y1="78" x2="342" y2="148" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="188" y="221" width="144" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="250" text-anchor="middle" class="fig-b">IPU 가 맡는다</text>
+  <line x1="193.5" y1="201" x2="193.5" y2="219" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="275.5" y1="201" x2="275.5" y2="219" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="342" y1="201" x2="342" y2="219" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="260" y1="269" x2="260" y2="287" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="102" y="289" width="316" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="318" text-anchor="middle" class="fig-b">CPU 에는 코어와 연산을 더 채운다</text>
+  <rect x="0" y="351" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="363" class="fig-lg">구글과 인텔이 함께 설계한 칩</text>
+</svg><figcaption>구글과 인텔이 함께 설계한다. AWS 의 Nitro 나 DPU 와 같은 발상이라고 <span class="pn">진행자A</span> 가 짚었다. 언제 얼마나 배치되는지는 전사에 없다.</figcaption></figure>
+<p>같은 발표에 IPU가 들어 있었다. 인프라 처리 장치(infrastructure processing unit), 곧 스토리지·네트워킹·보안 처리를 호스트 CPU에서 떼어 내 맡는 별도 칩이고 구글과 인텔이 함께 설계한다. 잡일을 덜어 내면 CPU 안에 코어와 연산을 더 채울 수 있다. <span class="pn">진행자V</span>는 여기서 코어 하나의 성능이든 코어 수든 CPU를 최대한 짜내는 일이 여전히 중요하다고 봤다.</p>
+<p><span class="pn">진행자A</span>는 같은 물건을 다른 이름으로 알아봤다. AWS Nitro이고 DPU다. 그는 네트워크와 관련된 일은 네트워크 안에서 끝내야 한다고 오래 생각해 왔다. 권한 확인 같은 것까지 포함해 CPU까지 올라오지 못하게 막는다.</p>
+<p>CPU 수요 자체를 보는 눈도 이 회차에서 한 번 넓어진다. AI 때문에 CPU가 더 필요하다고 할 때 보통 떠올리는 것은 GPU 클러스터의 헤드 노드를 늘리는 일이다. 에이전트가 늘 켜져 있으면 다른 수요가 하나 더 생긴다. <span class="pn">진행자V</span>의 비서가 아침마다 깨어나 어딘가의 평범한 클라우드 CPU를 두드리고 자료를 긁는다. 그래서 SaaS를 돌리는 데이터홀에도 CPU가 더 들어간다. 1절의 요금 이야기와 여기가 같은 사건의 앞뒤다.</p>
+<h2 id="s5"><span class="num">5</span> ARM이 데이터센터를 다 가져간다는 말의 실제 무게</h2>
+<p>어딘가에서 나온 주장이 있다. 데이터센터나 AI 용도로 배치되는 CPU의 90%가 ARM 기반이 될 것이라는 이야기다. <span class="pn">진행자V</span>는 그렇게 되지 않는다고 봤다. x86은 계속 쓰이고, 한쪽이 다른 쪽을 몰아낼 이유가 없다. 구글의 Axion을 예로 들면서, 그것은 첨단 CPU는 아니고 전력 효율이 좋아 클라우드 배치에 잘 맞는 물건이며 제온이 갖고 있는 힘과는 성격이 다르다고 했다.</p>
+<p><span class="pn">진행자A</span>는 반대편 논거를 먼저 세우고 무너뜨린다. ARM에 낙관적인 사람이라면 이제 포팅이 쉬워졌다고 말할 것이다. LLM이 코드를 옮겨 주니 소프트웨어를 쓰는 일이 거의 공짜에 가까워졌고, 메타도 공개 자리에서 그렇게 말했다. 그런데 ARM의 Mohamed Awad와 나눈 대화에서 나온 이야기가 다르다. 기업이 오래된 시스템에서 새 시스템으로 옮길 때 힘든 부분은 기술 난이도가 아니다. 옛 업무 흐름을 통째로 들고 가야 하고, 옮기다 보면 그 흐름 자체를 다시 짜야 한다는 것을 깨닫는다. 그런 일은 몇 년이 걸리고 사람이 많이 든다.</p>
+<p>그래서 <span class="pn">진행자A</span>는 업계 밖 독자에게 사양 비교를 조심하라고 일러 둔다. IT 부서 담당자는 사양이 좋다고 바꾸지 않는다. 기회비용을 따지고, 솔직히 말하면 그 골치 아픈 이전 작업을 내가 떠맡을 것인가라는 개인의 유인도 따진다. <span class="pn">진행자V</span>는 자기 말도 한 번 좁혔다. 두 명령어 집합이 서로 바꿔 쓸 수 있다는 뜻은 아니고, 워크로드마다 나눠 얹으면서 하드웨어로는 한 데이터센터 안에 같이 있을 수 있다는 뜻이다.</p>
+<h2 id="s6"><span class="num">6</span> 결정론적 데이터 경로가 칩 수를 줄인다</h2>
+<p>인텔과 SambaNova가 새 추론 구조를 발표했다. 제온 CPU에 SambaNova의 RDU(재구성 가능 데이터 장치 — 작업에 맞춰 내부 데이터 경로를 다시 짜는 칩)를 붙이는 구성이고, 디코드(토큰을 하나씩 생성하는 구간)를 RDU가 맡는다. <span class="pn">진행자V</span>는 이것을 Vera CPU에 Groq LPU를 붙이는 그림에 견줬다. 기능으로 보면 비슷하고 구조로 보면 전혀 다르다.</p>
+<figure class="uc-fig"><p class="fig-title">메모리를 한 종류로 두나, 섞나</p><svg class="epoch" viewBox="0 0 520 340" role="img" aria-label="전부 SRAM 인 쪽은 칩이 수천 개 필요하고 SRAM·HBM·DRAM 을 섞고 경로를 미리 정한 쪽은 256개로 같은 일을 한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">Groq LPU</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">SambaNova RDU</text>
+  <rect x="4" y="38" width="240" height="49" rx="9" class="fig-box"/>
+  <text x="124" y="68.5" text-anchor="middle" class="fig-b">SRAM 뿐</text>
+  <rect x="276" y="38" width="240" height="95" rx="9" class="fig-agent"/>
+  <text x="396" y="68.5" text-anchor="middle" class="fig-b">SRAM</text>
+  <text x="396" y="91.5" text-anchor="middle" class="fig-b">HBM</text>
+  <text x="396" y="114.5" text-anchor="middle" class="fig-b">DRAM</text>
+  <rect x="4" y="155" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="185.5" text-anchor="middle" class="fig-b">연산과 메모리가</text>
+  <text x="124" y="208.5" text-anchor="middle" class="fig-b">물리적으로 붙는다</text>
+  <rect x="276" y="155" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="185.5" text-anchor="middle" class="fig-b">오갈 경로를</text>
+  <text x="396" y="208.5" text-anchor="middle" class="fig-b">미리 정해 둔다</text>
+  <rect x="4" y="249" width="240" height="49" rx="9" class="fig-stage"/>
+  <text x="124" y="279.5" text-anchor="middle" class="fig-b">수천 개</text>
+  <rect x="276" y="249" width="240" height="49" rx="9" class="fig-stage"/>
+  <text x="396" y="279.5" text-anchor="middle" class="fig-b">256개</text>
+  <rect x="0" y="314" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="326" class="fig-lg">메모리를 섞은 쪽</text>
+  <rect x="192.4" y="314" width="14" height="14" rx="3" class="fig-box fig-stage"/>
+  <text x="214.4" y="326" class="fig-lg">같은 일을 하는 칩 수</text>
+</svg><figcaption>섞으면 데이터가 어디서 오는지 예측이 어려워지는데, 계층마다 지연을 알고 경로를 작업 전에 정해 두는 것이 이쪽의 답이다. 256개와 수천 개는 전사의 값이고, 랙으로는 열 개가 한 개가 된다.</figcaption></figure>
+<p>핵심 차이는 메모리다. Groq은 전부 SRAM이다. RDU에는 SRAM도 있고 HBM도 있고 DRAM도 있다. 여러 종류를 섞으면 보통 어디서 데이터가 오는지 예측이 어려워지는데, SambaNova는 반대로 갔다. 메모리 계층마다 지연이 얼마인지 알고 있으니 데이터가 오갈 경로를 작업 전에 미리 정해 둔다. HBM에서 이것, SRAM에서 저것, DRAM에서 나머지를 정해진 시각에 가져오는 식이다. 그 결과가 칩 수로 나온다. 256개로 Groq LPU 수천 개가 해야 하는 일을 한다.</p>
+<p><span class="pn">진행자A</span>는 여기서 늘릴 수 있느냐를 봤다. 캐시 계층이 여럿이면 캐시 미스가 생기고 예측이 어긋난다. LLM 추론은 가중치와 KV 캐시(이미 처리한 토큰의 중간 계산을 재사용하려고 쥐고 있는 데이터)를 옮기는 일이 거의 전부이니 예측 가능성이 크게 작용한다. Groq의 약점은 연산과 메모리가 물리적으로 붙어 있다는 데 있다. 메모리를 늘리려면 연산도 같이 늘려야 하고, 그래서 칩이 아주 많이 필요하다. 메모리 설계를 달리 하면 랙 열 개 대신 한 개로 끝난다. <span class="pn">진행자V</span>의 표현으로는 그 늘어나지 않는 성질이 Groq의 아킬레스건이다.</p>
+<p>다만 두 사람 다 유보를 달았다. <span class="pn">진행자V</span>는 Groq의 VLIW(매우 긴 명령어 — 컴파일러가 클록 단위까지 실행 순서를 미리 박아 넣는 방식)가 클록 단위로 결정론적이라는 것은 알지만, SambaNova가 그보다 얼마나 더 결정론적인지는 모른다고 했다. <span class="pn">진행자A</span>도 자기가 들은 것은 메모리 종류를 가로지르는 관리 쪽이었다면서, 직접 물어보자고 했다.</p>
+<figure class="uc-fig"><p class="fig-title">이름은 여섯인데 자리는 몇인가</p><svg class="epoch" viewBox="0 0 520 400" role="img" aria-label="이름이 나온 여섯 곳이 손익분기 물량이라는 좁은 목을 지나야 하고 그만한 물량을 움직일 고객은 다섯이나 여섯이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="78.5" y="34" width="66" height="49" rx="9" class="fig-box"/>
+  <text x="111.5" y="64.5" text-anchor="middle" class="fig-b">Groq</text>
+  <rect x="156.5" y="34" width="129" height="49" rx="9" class="fig-box"/>
+  <text x="221" y="64.5" text-anchor="middle" class="fig-b">Cerebras</text>
+  <rect x="297.5" y="34" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="369.5" y="64.5" text-anchor="middle" class="fig-b">SambaNova</text>
+  <rect x="101.5" y="93" width="98" height="49" rx="9" class="fig-box"/>
+  <text x="150.5" y="123.5" text-anchor="middle" class="fig-b">Etched</text>
+  <rect x="211.5" y="93" width="113" height="49" rx="9" class="fig-box"/>
+  <text x="268" y="123.5" text-anchor="middle" class="fig-b">Mad Max</text>
+  <rect x="336.5" y="93" width="82" height="49" rx="9" class="fig-box"/>
+  <text x="377.5" y="123.5" text-anchor="middle" class="fig-b">Talos</text>
+  <rect x="172" y="168" width="176" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="197" text-anchor="middle" class="fig-b">손익분기에 닿을 물량</text>
+  <line x1="260" y1="144" x2="260" y2="166" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="102" y="240" width="316" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="269" text-anchor="middle" class="fig-b">그만한 물량을 움직일 고객 다섯 여섯</text>
+  <line x1="260" y1="216" x2="260" y2="238" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="133" y="312" width="254" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="341" text-anchor="middle" class="fig-b">서버에서 못 뜨면 소비자용으로</text>
+  <line x1="260" y1="288" x2="260" y2="310" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="374" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="386" class="fig-lg">조합 수를 정하는 자리</text>
+</svg><figcaption>여섯은 이 회차에 이름이 나온 곳이다. 칩 하나를 만드는 비용이 커서 손익분기 물량이 필요하고, 그만한 물량을 움직일 고객은 다섯이나 여섯이다. 누가 남는지는 이 회차도 모른다고 했다.</figcaption></figure>
+<p>여러 업체의 칩을 섞는 구성이 늘면 그다음 물음은 소프트웨어다. Nvidia에는 Dynamo가 있는데 인텔은 무엇을 내놓는가, 모두가 하나의 조율 계층으로 모일 것인가. 그리고 승자 수에 관한 <span class="pn">진행자A</span>의 셈이 냉정하다. 칩 하나를 만드는 비용이 워낙 커서 손익분기에 닿을 물량이 필요하고, 그만한 물량을 움직일 고객은 다섯이나 여섯쯤이다. 그러니 조합도 몇 가지에서 끝난다. Groq·Cerebras·SambaNova·Etched·Mad Max·Talos 중 누가 남는지는 아직 모른다. <span class="pn">진행자V</span>가 붙인 출구는 소비자용이다. 서버에서 못 뜬 설계 자산은 더 싼 제품으로 내려가고, Talos 같은 하드코딩 LLM 칩이 말대꾸하는 어린이 장난감에 들어가는 미래도 있다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것</h2>
+<p>네 가지가 빠져 있다. ① Terafab 주문의 실체가 없다. <span class="pn">진행자A</span> 스스로 인텔 발표에 세부가 없어서 추측이라고 못 박았다. ② 구글 계약에서 IPU가 언제 얼마나 배치되는지, 어느 공정으로 만드는지가 없다. IPU를 두고 나눈 대화는 개념 설명에 머문다. ③ SambaNova의 결정론이 Groq의 VLIW보다 실제로 나은지를 둘 다 모른다. 256개면 된다는 수치도 <span class="pn">진행자V</span>가 전한 것이고 이 회차에서 검증되지 않았다. ④ 시가총액이 세 배가 됐다는 이야기에 실적 숫자가 하나도 붙지 않았다.</p>
+<p>무엇이 나오면 판단이 바뀌는지도 넷이다. ① Terafab이 인텔에 넣은 주문의 성격과 규모가 공개되면 3절이 통째로 다시 서거나 무너진다. 연구개발 협력으로 판명되면 시가총액 세 배의 근거 절반이 사라진다. ② 구글이 사는 제온이 구세대를 벗어나 신세대로 옮겨 가면 4절의 CPU 수요 이야기가 훨씬 강해진다. ③ SambaNova RDU와 Groq LPU를 같은 잣대로 잰 수치가 나오면 6절의 칩 수 견줌이 확인되거나 뒤집힌다. ④ 정액 무제한 상품을 파는 Fireworks AI가 그 값을 유지하는지가 남는다. <span class="pn">진행자A</span>가 회차 안에서 이미 물었다. 이 업체도 손해를 보고 있는 것 아닌가, 아니면 더 싼 모델이라 괜찮은 것인가. 앞의 요금제 하나가 이미 그렇게 끊겼다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-04-10-intel-openclaw-strategy.md">insights/semidoped/2026-04-10-intel-openclaw-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>

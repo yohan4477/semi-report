@@ -2267,7 +2267,226 @@ def _met_kernel():
                '하드웨어별 손 최적화와 번역 계층에 더해 모델이 커널을 직접 짜는 갈래가 생겼고 그쪽은 커널을 100배 원한다')
 
 
+# ══ 인텔·오픈클로 (2026-04-10) 전략 판 ═════════════════════════════════
+# 값은 전사에 있는 것만 — 월 200달러, 5분에 5~7달러, 월 2만 달러, 주 7달러,
+# 5천 달러·5년, 300→530달러, 칩 256개.
+
+INT = '2026-04-10-intel-openclaw'
+
+
+def _int_price():
+    parts, y_end = table(
+        [[['정액 구독'], ['월 200달러'], ['기계가 돌자 막혔다']],
+         [['API 종량'], ['5분에 5~7달러'], ['월 2만 달러였을 수도']],
+         [['정액 무제한'], ['주 7달러'], ['최전선이 아닌 모델']]],
+        ['fig-stage', 'fig-box', 'fig-box'], heads=['얻는 길', '값', '그래서'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '월 200달러 정액이 막히자 API 종량으로는 5분에 5~7달러가 나갔고 주 7달러짜리 무제한으로 내려갔다')
+
+
+def _int_buy():
+    """빌려 쓰기와 사서 갖기. 아래 줄에만 되팔 때의 값이 붙는다."""
+    parts = head(0, 22, W, '빌려 쓴다')
+    parts += mid(32, 46, ['매달 나간다'], 'fig-box')
+    parts += head(0, 118, W, '사서 갖는다')
+    items = [(['5천 달러'], 'fig-box'), (['5년 쓴다'], 'fig-box'), (['되팔면 회수'], 'fig-agent')]
+    wsum = sum(w_of(l) for l, _ in items) + 2 * 24
+    row, _x, cs, hh = panel_boxes((W - wsum) / 2, 128, items, gap=24, h=LH + 26)
+    parts += row
+    for i in range(len(cs) - 1):
+        cx, w = cs[i]
+        parts += hline(cx + w / 2 + 2, cs[i + 1][0] - cs[i + 1][1] / 2 - 2, 128 + hh / 2)
+    y = 128 + hh
+    parts += mid(y + 22, 44, ['300달러에 사서 530달러에 팔았다'], 'fig-stage')
+    y2 = y + 22 + 44
+    parts += legend([('fig-agent', '빌려 쓸 때는 없는 항')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '빌려 쓰면 매달 나가지만 사서 가지면 5천 달러를 5년에 걸쳐 거두고 되팔 때 남는 값이 하나 더 붙는다')
+
+
+def _int_ipu():
+    parts = mid(30, 46, ['호스트 CPU'], 'fig-box')
+    items = [(['스토리지'], 'fig-stage'), (['네트워킹'], 'fig-stage'), (['보안'], 'fig-stage')]
+    wsum = sum(w_of(l) for l, _ in items) + 2 * 16
+    row, _x, cs, hh = panel_boxes((W - wsum) / 2, 150, items, gap=16, h=LH + 26)
+    parts += row
+    for cx, _w in cs:
+        parts += vline(cx, 78, 148)
+    y = 150 + hh
+    parts += mid(y + 22, 46, ['IPU 가 맡는다'], 'fig-agent')
+    for cx, _w in cs:
+        parts += vline(cx, y + 2, y + 20)
+    y2 = y + 22 + 46
+    parts += vline(W / 2, y2 + 2, y2 + 20)
+    parts += mid(y2 + 22, 46, ['CPU 에는 코어와 연산을 더 채운다'], 'fig-box')
+    y3 = y2 + 22 + 46
+    parts += legend([('fig-agent', '구글과 인텔이 함께 설계한 칩')], y3 + 16)
+    return svg(y3 + 42, parts,
+               '스토리지와 네트워킹과 보안을 호스트 CPU 에서 떼어 IPU 가 맡으면 CPU 에는 코어와 연산을 더 채울 수 있다')
+
+
+def _int_memory():
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, 'Groq LPU') + head(R, 22, 248, 'SambaNova RDU')
+    parts += box(L + 4, 38, 240, LH + 26, ['SRAM 뿐'], 'fig-box')
+    parts += box(R + 4, 38, 240, 3 * LH + 26, ['SRAM', 'HBM', 'DRAM'], 'fig-agent')
+    y = 38 + 3 * LH + 26
+    parts += box(L + 4, y + 22, 240, 2 * LH + 26, ['연산과 메모리가', '물리적으로 붙는다'], 'fig-box')
+    parts += box(R + 4, y + 22, 240, 2 * LH + 26, ['오갈 경로를', '미리 정해 둔다'], 'fig-agent')
+    y2 = y + 22 + 2 * LH + 26
+    parts += box(L + 4, y2 + 22, 240, LH + 26, ['수천 개'], 'fig-stage')
+    parts += box(R + 4, y2 + 22, 240, LH + 26, ['256개'], 'fig-stage')
+    y3 = y2 + 22 + LH + 26
+    parts += legend([('fig-agent', '메모리를 섞은 쪽'), ('fig-stage', '같은 일을 하는 칩 수')], y3 + 16)
+    return svg(y3 + 42, parts,
+               '전부 SRAM 인 쪽은 칩이 수천 개 필요하고 SRAM·HBM·DRAM 을 섞고 경로를 미리 정한 쪽은 256개로 같은 일을 한다')
+
+
+def _int_winners():
+    items = [(['Groq'], 'fig-box'), (['Cerebras'], 'fig-box'), (['SambaNova'], 'fig-box')]
+    w1 = sum(w_of(l) for l, _ in items) + 2 * 12
+    row, _x, cs, hh = panel_boxes((W - w1) / 2, 34, items, gap=12, h=LH + 26)
+    parts = list(row)
+    items2 = [(['Etched'], 'fig-box'), (['Mad Max'], 'fig-box'), (['Talos'], 'fig-box')]
+    w2 = sum(w_of(l) for l, _ in items2) + 2 * 12
+    row2, _x2, cs2, hh2 = panel_boxes((W - w2) / 2, 34 + hh + 10, items2, gap=12, h=LH + 26)
+    parts += row2
+    y = 34 + hh + 10 + hh2
+    parts += mid(y + 26, 46, ['손익분기에 닿을 물량'], 'fig-stage')
+    parts += vline(W / 2, y + 2, y + 24)
+    y2 = y + 26 + 46
+    parts += mid(y2 + 26, 46, ['그만한 물량을 움직일 고객 다섯 여섯'], 'fig-agent')
+    parts += vline(W / 2, y2 + 2, y2 + 24)
+    y3 = y2 + 26 + 46
+    parts += mid(y3 + 26, 46, ['서버에서 못 뜨면 소비자용으로'], 'fig-box')
+    parts += vline(W / 2, y3 + 2, y3 + 24)
+    y4 = y3 + 26 + 46
+    parts += legend([('fig-agent', '조합 수를 정하는 자리')], y4 + 16)
+    return svg(y4 + 42, parts,
+               '이름이 나온 여섯 곳이 손익분기 물량이라는 좁은 목을 지나야 하고 그만한 물량을 움직일 고객은 다섯이나 여섯이다')
+
+
+# ══ Credo·더스트포토닉스 (2026-04-17) 전략 판 ═══════════════════════════
+# 값은 전사에 있는 것만 — 2030년, 1.6Tbps·12.8Tbps, 200Gbps 채널 64개, 400W.
+
+CRD = '2026-04-17-credo-dustphotonics'
+
+
+def _crd_portfolio():
+    parts, y_end = table(
+        [[['서데스 IP'], ['빌려주는 데서 시작']],
+         [['AEC 구리 케이블'], ['손수 만든다']],
+         [['광학 DSP·트랜시버'], ['갖췄다']],
+         [['파일럿 소프트웨어'], ['끊길 링크를 미리 간다']],
+         [['광집적회로 설계'], ['없던 칸 — 이번에 채웠다']]],
+        ['fig-box', 'fig-stage'], heads=['칸', '상태'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '서데스와 구리 케이블과 광학 DSP 와 감시 소프트웨어를 갖췄는데 광집적회로 설계만 없었고 이번 인수로 그 칸이 채워졌다')
+
+
+def _crd_vectors():
+    row, _x = eband([(['스케일 업'], 'fig-box'), ('>', ''),
+                     (['스케일 아웃'], 'fig-box'), ('>', ''),
+                     (['스케일 어크로스'], 'fig-agent')], 40, LH + 26)
+    parts = list(row)
+    y = 40 + LH + 26
+    items = [(['랙 안', '구리는 2030년까지'], 'fig-stage'),
+             (['랙 사이', '여전히 구리로'], 'fig-stage'),
+             (['데이터센터 사이', '코히런트 광통신'], 'fig-stage')]
+    row2, _x2, cs2, hh2 = panel_boxes(0, y + 30, items, gap=12, h=2 * LH + 26)
+    parts += row2
+    for cx, _w in cs2:
+        parts += vline(cx, y + 2, y + 28)
+    y2 = y + 30 + hh2
+    parts += legend([('fig-agent', '다음 성장 축으로 꼽힌 구간')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '랙 안은 구리가 2030년까지 남고 랙 사이도 여전히 구리로 갈 수 있으며 다음 성장 축은 데이터센터 사이를 잇는 코히런트 광통신이다')
+
+
+def _crd_laser():
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, '레이저를 칩 위에 얹는다') + head(R, 22, 248, '레이저를 칩 옆에 놓는다')
+    parts += box(L + 4, 38, 240, 2 * LH + 26, ['그 레이저 회사와', '공급망에 묶인다'], 'fig-box')
+    parts += box(R + 4, 38, 240, 2 * LH + 26, ['아무 연속파 레이저나', '손실 없이 결합'], 'fig-agent')
+    y = 38 + 2 * LH + 26
+    parts += box(L + 4, y + 22, 240, LH + 26, ['사이에 공기 틈'], 'fig-bad')
+    parts += box(R + 4, y + 22, 240, LH + 26, ['공기 틈 없음'], 'fig-agent')
+    y2 = y + 22 + LH + 26
+    parts += mid(y2 + 24, 46, ['액체 냉각에 그대로 넣을 수 있나'], 'fig-stage')
+    y3 = y2 + 24 + 46
+    parts += legend([('fig-bad', '냉각을 막는 자리'), ('fig-agent', '더스트포토닉스의 방식')], y3 + 16)
+    return svg(y3 + 42, parts,
+               '레이저를 칩 위에 얹으면 공급망에 묶이고 사이에 공기 틈이 남는데 옆에 놓고 결합하면 공기 틈이 없어 액체 냉각에 그대로 넣는다')
+
+
+def _crd_bars():
+    """커넥터 하나가 내는 대역폭. 나란한 세로 막대 둘, 높이는 값의 비율이다."""
+    base, top = 250.0, 40.0
+    bw = 96.0
+    xs = [140.0, 290.0]
+    vals = [('OSFP', '1.6Tbps', 1.6), ('XPO', '12.8Tbps', 12.8)]
+    parts = []
+    for x, (name, lab, v) in zip(xs, vals):
+        h = (base - top) * v / 12.8
+        cls = 'fig-agent' if name == 'XPO' else 'fig-box'
+        parts += _rect(x, base - h, bw, h, cls)
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+                  % (x + bw / 2, base - h - 10, lab)]
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+                  % (x + bw / 2, base + 22, name)]
+    parts += hline(110, 420, base)
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
+              % (W / 2, base + 52, '200Gbps 채널 64개를 한 커넥터에')]
+    parts += legend([('fig-agent', '올해 나온 규격')], base + 70)
+    return svg(base + 100, parts,
+               '커넥터 하나가 내는 대역폭이 OSFP 는 1.6Tbps 이고 XPO 는 200Gbps 채널 64개를 몰아 12.8Tbps 다')
+
+
+def _crd_place():
+    parts, y_end = table(
+        [[['CPO'], ['스위치 실리콘과', '한 패키지 안'], ['못 갈아 끼운다']],
+         [['XPO'], ['랙 앞면에 꽂는다'], ['빼서 갈아 끼운다']],
+         [['CPX'], ['칩 옆 소켓에 꽂는다'], ['소켓째 갈아 끼운다']]],
+        ['fig-stage', 'fig-box', 'fig-agent'], heads=['이름', '광학 엔진이 앉는 자리', '고장 나면'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               'CPO 는 광학 엔진을 스위치 칩과 한 패키지에 넣고 XPO 는 랙 앞면에 꽂으며 CPX 는 칩 옆 소켓에 꽂아 갈아 끼운다')
+
+
 FIGS = {
+    (CRD, 'strategy'): [
+        ('1.|Credo가 원래 잘', 'Credo 포트폴리오에서 비어 있던 칸', _crd_portfolio(),
+         '서데스에서 시작해 구리 케이블과 광학 DSP·트랜시버, 링크 감시 소프트웨어까지 갖췄다(L93·L99·L101). '
+         '광집적회로 설계 하나가 없었고 이번 인수로 채워졌다(L103). 칸마다의 매출은 전사에 없다.'),
+        ('2.|진행자V가 투자자', '연결이 자라는 구간 셋', _crd_vectors(),
+         '투자자 개빈 베이커의 글을 진행자V 가 옮긴 것이다. 구리가 2030년까지 남고(L137), 랙 사이도 여전히 구리로 갈 수 있으며(L165), '
+         '다음 성장 축은 데이터센터 사이다(L145·L149). 구간마다의 크기는 전사에 없다.'),
+        ('3.|더스트포토닉스가 가', '레이저를 어디에 놓나', _crd_laser(),
+         '위에 얹으면 그 레이저를 만드는 회사와 공급망에 묶인다(L185·L187). 옆에 놓고 결합하면 공기 틈이 남지 않아 '
+         '액체 냉각에 그대로 넣을 수 있다(L185·L189). 손실이 얼마나 주는지는 전사에 없다.'),
+        ('4.|수치가 차이를', '커넥터 하나가 내는 대역폭', _crd_bars(),
+         '막대 높이는 두 값의 비율이다(L197·L199). XPO 는 200Gbps 채널 예순넷을 한 커넥터에 몰아넣었고, 그만큼 열이 올라 '
+         '400W 를 액체 냉각으로 받는다(L201).'),
+        ('6.|CPO 쪽으로 가더라도', '광학 엔진이 앉는 자리 셋', _crd_place(),
+         'CPO 는 스위치 실리콘과 한 패키지에 들어가 갈아 끼울 수 없다(L221). XPO 는 랙 앞면에 꽂아 하던 대로 갈아 끼우고(L225·L227), '
+         'CPX 는 칩 옆에 소켓을 남긴다(L243·L245). 어느 쪽이 얼마나 퍼졌는지는 전사에 없다.'),
+    ],
+    (INT, 'strategy'): [
+        ('1.|토큰 요금을 대', '토큰을 얻는 세 길과 그 값', _int_price(),
+         '월 200달러 정액은 사람이 손으로 쓸 때를 전제로 짜여 있었다(L37·L39). API 종량은 진행자V 가 잠깐 돌려 본 값이고(L21), '
+         '월 2만 달러는 진행자A 가 그 속도로 환산한 어림이다(L47). 주 7달러는 Fireworks AI 의 fire pass 다(L25).'),
+        ('2.|기계를 사서', '빌려 쓸 때와 사서 가질 때', _int_buy(),
+         '기계값은 본인도 1만인지 5천인지 헷갈렸다(L67). 되판 값은 진행자V 가 실제로 겪은 그래픽 카드다(L115). '
+         '메모리 값이 오르는 중이라 1년 쓰고 같은 값에 팔 수도 있다고 봤다(L107·L121).'),
+        ('4.|같은 발표에', 'IPU 가 CPU 에서 떼어 가는 것 셋', _int_ipu(),
+         '구글과 인텔이 함께 설계한다(L183). AWS 의 Nitro 나 DPU 와 같은 발상이라고 진행자A 가 짚었다(L187). '
+         '언제 얼마나 배치되는지는 전사에 없다.'),
+        ('6.|핵심 차이는', '메모리를 한 종류로 두나, 섞나', _int_memory(),
+         '섞으면 데이터가 어디서 오는지 예측이 어려워지는데, 계층마다 지연을 알고 경로를 작업 전에 정해 두는 것이 이쪽의 답이다(L221·L223). '
+         '256개와 수천 개는 전사의 값이고(L225), 랙으로는 열 개가 한 개가 된다(L233).'),
+        ('6.|여러 업체의', '이름은 여섯인데 자리는 몇인가', _int_winners(),
+         '여섯은 이 회차에 이름이 나온 곳이다(L243). 칩 하나를 만드는 비용이 커서 손익분기 물량이 필요하고, '
+         '그만한 물량을 움직일 고객은 다섯이나 여섯이다(L241·L247). 누가 남는지는 이 회차도 모른다고 했다.'),
+    ],
     (GIM, 'strategy'): [
         ('1.|남는 길은 워크로', '한 덩어리로 볼 때와 조각으로 나눌 때', _gim_pieces(),
          '조각은 이 회차가 이름을 댄 셋이다. 프리필 하나만 놓고도 더 나눌 수 있다고 Natalie 는 봤고(L37), '
