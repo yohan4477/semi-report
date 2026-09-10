@@ -1,0 +1,342 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GTC 키노트, 추론을 무료·중간·프리미엄 등급으로 나누고 Groq를 해독 전담 랙에 끼워 넣다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>GTC 키노트, 추론을 무료·중간·프리미엄 등급으로 나누고 Groq를 해독 전담 랙에 끼워 넣다</h1><div class="pmeta">2026-03-17 · Austin Lyons · Vik Sekar<br>원문 <a href="https://www.youtube.com/watch?v=UfaIU6h0YdY">https://www.youtube.com/watch?v=UfaIU6h0YdY</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-03-17-nvidia-gtc-keynote.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">엔비디아가 자랑하던 추론 곡선 하나를 등급으로 자르자, 칸마다 다른 랙이 붙고 그중 하나는 남의 칩이 됐다</div><p>젠슨 황의 GTC 키노트는 두 시간 반이었고, 그것을 받아 옮긴 이 회차는 한 시간이다. Semi Doped 진행자 둘, <span class="pn">Austin Lyons</span>(Chipstrat)(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(Vik's Newsletter)(이하 <span class="pn">진행자V</span>)가 폭설로 항공편이 취소된 <span class="pn">진행자A</span>의 이동 직후 밤늦게 급히 녹음했다. 소식은 많지만 하나로 꿰인다. 엔비디아는 추론을 한 덩어리로 다루기를 그만두고 등급으로 나눴고, 나눈 칸마다 다른 랙을 붙였다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">자랑하던 곡선 하나를 요금표로 잘랐다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">맨 윗칸에는 남의 칩을 끼웠다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">아랫칸은 그대로 HBM이다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">CPU가 랙 하나를 받았다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">랙 안은 구리, 랙 사이는 빛, 그래도 스케일업</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">토큰 예산은 실리콘밸리에서만 통하는 말이다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 자랑하던 곡선 하나를 요금표로 잘랐다</h2>
+<p>젠슨은 세로축에 처리량, 가로축에 토큰 속도를 놓고 전력을 같게 맞춘 곡선을 보였다. <span class="pn">진행자A</span>가 기억하는 예전 판본에서 이 곡선의 쓸모는 단순했다. "어느 쪽으로 최적화하든 그 경계선은 우리가 갖고 있고 나머지는 전부 뒤에 있다". 곡선 위 어디를 골라도 답은 하나였다.</p>
+<figure class="uc-fig"><p class="fig-title">곡선 하나를 세 칸으로</p><svg class="epoch" viewBox="0 0 520 368" role="img" aria-label="처리량과 토큰 속도를 두 축으로 놓고 전력을 같게 맞춘 곡선 하나를 세 칸으로 잘랐다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="26" text-anchor="middle" class="fig-hd">등급</text>
+  <text x="170.5" y="26" text-anchor="middle" class="fig-hd">곡선에서</text>
+  <text x="299.5" y="26" text-anchor="middle" class="fig-hd">붙은 조건</text>
+  <rect x="0" y="36" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="78" text-anchor="middle" class="fig-b">① 무료</text>
+  <rect x="114" y="36" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="170.5" y="66.5" text-anchor="middle" class="fig-b">처리량 높고</text>
+  <text x="170.5" y="89.5" text-anchor="middle" class="fig-b">속도 낮다</text>
+  <rect x="243" y="36" width="113" height="72" rx="9" class="fig-agent"/>
+  <text x="299.5" y="66.5" text-anchor="middle" class="fig-b">Qwen 3</text>
+  <text x="299.5" y="89.5" text-anchor="middle" class="fig-b">짧은 컨텍스트</text>
+  <rect x="0" y="124" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="166" text-anchor="middle" class="fig-b">② 중간</text>
+  <rect x="114" y="124" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="170.5" y="154.5" text-anchor="middle" class="fig-b">조금 더 크고</text>
+  <text x="170.5" y="177.5" text-anchor="middle" class="fig-b">빠르다</text>
+  <rect x="243" y="124" width="113" height="72" rx="9" class="fig-agent"/>
+  <text x="299.5" y="154.5" text-anchor="middle" class="fig-b">백만 토큰당</text>
+  <text x="299.5" y="177.5" text-anchor="middle" class="fig-b">3달러</text>
+  <rect x="0" y="212" width="98" height="72" rx="9" class="fig-stage"/>
+  <text x="49" y="254" text-anchor="middle" class="fig-b">③ 프리미엄</text>
+  <rect x="114" y="212" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="170.5" y="254" text-anchor="middle" class="fig-b">가장 빠르다</text>
+  <rect x="243" y="212" width="113" height="72" rx="9" class="fig-agent"/>
+  <text x="299.5" y="254" text-anchor="middle" class="fig-b">전사에 없음</text>
+  <rect x="156.5" y="306" width="207" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="335" text-anchor="middle" class="fig-b">같은 곡선 · 같은 전력</text>
+</svg><figcaption>무료 등급을 주는 이유는 간단한 물음에 답해 새 고객을 들이는 것이다. 백만 토큰당 3달러는 중간 등급에 붙은 예시다. 상위·프리미엄에 붙은 금액은 전사에 없다.</figcaption></figure>
+<p>이번에는 같은 곡선을 칸으로 잘랐다. ① 무료 등급은 처리량이 높고 속도가 낮다. 예로 든 모델은 Qwen 3이고 컨텍스트가 짧은데, 공짜로 주는 이유는 간단한 물음에 답해 새 고객을 들이는 것이다. ② 중간 등급은 조금 더 크고 빠르고 컨텍스트가 길며 백만 토큰당 3달러가 예시로 나왔다. ③ 그 위에 상위와 프리미엄이 있다. 세대 구분도 이 칸에 맞춰 다시 설명됐다. 호퍼는 아래 칸까지가 한계였고, Grace Blackwell은 HBM(고대역폭 메모리) 용량과 NVL72(NVLink로 GPU 72개를 하나처럼 묶는 스케일업 랙) 덕에 큰 모델을 빠르게 긴 컨텍스트로 돌리는 위 칸까지 감당한다.</p>
+<p><span class="pn">진행자A</span>는 이 쪼갬 자체를 인정으로 읽었다. 훈련에도 좋고 추론에도 완벽한 하나짜리 물건이라는 말에서, 쓰임새마다 지능과 컨텍스트와 속도 요구가 다르니 시스템을 그에 맞춰 손보겠다는 말로 옮겨 왔다. <span class="pn">진행자V</span>는 맨 아래 칸에 사람을 붙였다. 자기 어머니가 다음 달 여행 계획을 짜는 데는 이 등급이면 충분하다는 것이다.</p>
+<p>곡선을 칸으로 자르면 칸마다 다른 하드웨어를 붙여도 된다는 허락이 따라온다. 이번 키노트에서 새로 나온 랙 셋은 전부 그 허락의 결과다.</p>
+<h2 id="s2"><span class="num">2</span> 맨 윗칸에는 남의 칩을 끼웠다</h2>
+<p>이번 GTC의 일곱 번째 칩은 엔비디아가 설계한 것이 아니다. 직전 CES까지 여섯 번째였고, 여기에 Groq의 LP30이 붙었다. 컴퓨트 트레이 하나에 Groq 칩 여덟이 꽂히고 CPU 하나와 D램 스틱 넷이 함께 실린 사진을 <span class="pn">진행자A</span>가 봤다는데, 칩 개수는 "그런 것 같다"고만 했다. 사진에 표시된 FPGA 하나는 무엇에 쓰는 것인지 모르겠다고 했다.</p>
+<p>젠슨이 설명한 Groq의 장점은 기다림이 없다는 것이다. 결정론적 데이터플로 프로세서이고, 정적으로 컴파일돼 컴파일러가 스케줄을 다 끝내 놓으므로 연산과 데이터가 같은 시점에 준비돼 메모리를 기다리지 않는다. 동적 스케줄링이 없으니 SRAM(칩 안에 두는 빠른 메모리)만으로 연산이 흘러 대역폭이 아주 높다. 약점도 같은 자리에서 말했다. 칩 하나에 든 SRAM이 아주 적어서 70B 모델 하나에 칩 576개, 랙으로 열두 개쯤이 필요하고, 이것이 지금껏 Groq를 붙잡아 왔다.</p>
+<figure class="uc-fig"><p class="fig-title">추론 한 번을 두 랙에 나눠 앉힌다</p><svg class="epoch" viewBox="0 0 520 253" role="img" aria-label="사전연산과 KV 캐시와 어텐션은 HBM 이 많은 랙이 맡고 활성값만 넘겨 순차 피드포워드를 시킨 뒤 토큰을 뽑는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="44" width="148" height="95" rx="9" class="fig-box"/>
+  <text x="74" y="74.5" text-anchor="middle" class="fig-b">Vera</text>
+  <text x="74" y="97.5" text-anchor="middle" class="fig-b">Rubin</text>
+  <text x="74" y="120.5" text-anchor="middle" class="fig-b">HBM</text>
+  <line x1="152" y1="91.5" x2="182" y2="91.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="186" y="44" width="148" height="95" rx="9" class="fig-agent"/>
+  <text x="260" y="74.5" text-anchor="middle" class="fig-b">Groq 랙</text>
+  <text x="260" y="97.5" text-anchor="middle" class="fig-b">SRAM</text>
+  <text x="260" y="120.5" text-anchor="middle" class="fig-b"></text>
+  <line x1="338" y1="91.5" x2="368" y2="91.5" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="372" y="44" width="148" height="95" rx="9" class="fig-box"/>
+  <text x="446" y="74.5" text-anchor="middle" class="fig-b">토큰</text>
+  <text x="446" y="97.5" text-anchor="middle" class="fig-b"></text>
+  <text x="446" y="120.5" text-anchor="middle" class="fig-b"></text>
+  <text x="74" y="34" text-anchor="middle" class="fig-hd">사전연산·캐시</text>
+  <text x="260" y="34" text-anchor="middle" class="fig-hd">순차 피드포워드</text>
+  <rect x="117.5" y="165" width="285" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="194" text-anchor="middle" class="fig-b">이더넷으로 붙이고 지연 절반 모드</text>
+  <rect x="0" y="227" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="239" class="fig-lg">남의 칩이 들어온 자리</text>
+</svg><figcaption>화살표를 타고 넘어가는 것은 활성값뿐이다. Dynamo 가 사전연산과 해독을 떼어 배치하는 층이고, 젠슨은 이 층이 Groq 를 해독 자리에 세울 수 있게 했다고 말했다. 두 시스템은 오늘 이더넷으로 밀결합돼 있고 지연을 절반으로 줄이는 특수 모드가 있다.</figcaption></figure>
+<p>붙이는 방법이 이번 발표의 핵심이다. 엔비디아의 Dynamo는 사전연산(프리필)과 해독(디코드)을 떼어 배치하는 소프트웨어인데, 젠슨은 이 층이 Groq를 해독 자리에 세울 수 있게 했다고 말했다. 사전연산과 KV 캐시(앞서 처리한 토큰의 중간 계산값을 쥐고 있다가 재사용하는 메모리), 해독 중 어텐션 부분까지는 HBM이 많은 Vera Rubin이 맡고, 활성값만 Groq 랙으로 넘겨 대역폭에 막히는 순차 피드포워드 연산을 시킨 뒤 토큰을 뽑는다. 칩이 많이 든다는 약점은 랙을 통째로 그 용도에 주면 사라진다.</p>
+<p>표현도 조심스러웠다. 인수라고 하지 않았다. "저희는 사실상 Groq의 기술을 라이선스하고 팀을 인수한 거예요". 두 시스템은 오늘 이더넷으로 밀결합돼 있고 지연을 절반으로 줄이는 특수 모드를 쓴다고 했는데, <span class="pn">진행자A</span>는 이더넷이 여전히 스케일아웃처럼 느껴진다고 했다. <span class="pn">진행자V</span>는 나중에 NVLink 퓨전으로 바뀔 수 있다고 봤다. 다른 업체 하드웨어를 반대편에 꽂으려면 그쪽이 낫기 때문인데, 본인도 "모르겠다"를 붙였다. 예전에 이 자리에 있던 Rubin CPX 계열은 이날 언급되지 않았다.</p>
+<h2 id="s3"><span class="num">3</span> 아랫칸은 그대로 HBM이다</h2>
+<p><span class="pn">진행자V</span>는 투자자들에게 같은 질문을 거듭 받았다고 밝혔다. Groq가 HBM 수요를 가져가는가, 메모리 압력이 풀리는가. 그의 답은 아니다였다. SRAM 기반 기술은 대다수 쓰임새에 가장 쓸모 있는 물건이 아니고, 중간의 모든 등급은 여전히 HBM 기반 시스템을 쓴다. Vera Rubin GPU도, 다른 회사가 HBM 위에 만드는 것들도 그대로 필요하다.</p>
+<p>숫자는 둘이 어긋난 채로 남았다. 메타는 초고속 추론이 필요한 비중을 처음에 10% 정도로 말했고, 젠슨은 이번 발표에서 25% 정도라고 했다. <span class="pn">진행자V</span>는 둘을 하나로 맞추지 않고 10에서 25% 사이로 묶어 두자고 했다. 조건은 누가 그 요금을 내느냐다. 시간이 곧 돈인 기업은 초프리미엄 토큰 가격을 낼 수 있는데, 여행 계획을 짜는 사람의 투자 회수와는 셈이 다르다.</p>
+<p>경계값은 흐릿한 채로 남았다. <span class="pn">진행자V</span>는 사용자당 초당 4,000토큰으로 모자라면, 1,000을 원하면, 10,000을 원하면 어떻게 하느냐고 물었는데 순서가 뒤섞여 단계로 읽을 수 없다. 앞서 <span class="pn">진행자A</span>가 든 숫자는 400토큰과 1,000토큰이었다. 칸과 칸을 무엇으로 나누는지는 이 회차에서 확정되지 않았다.</p>
+<h2 id="s4"><span class="num">4</span> CPU가 랙 하나를 받았다</h2>
+<figure class="uc-fig"><p class="fig-title">데이터센터 한 벌의 랙 넷</p><svg class="epoch" viewBox="0 0 520 384" role="img" aria-label="데이터센터 한 벌이 GPU 랙과 CPU 전용 랙과 해독 전담 랙과 저장 랙으로 나뉜다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="80" y="26" text-anchor="middle" class="fig-hd">랙</text>
+  <text x="264" y="26" text-anchor="middle" class="fig-hd">무엇이</text>
+  <text x="432.5" y="26" text-anchor="middle" class="fig-hd">하는 일</text>
+  <rect x="0" y="36" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="80" y="78" text-anchor="middle" class="fig-b">GPU 랙</text>
+  <rect x="176" y="36" width="176" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="66.5" text-anchor="middle" class="fig-b">GPU +</text>
+  <text x="264" y="89.5" text-anchor="middle" class="fig-b">헤드노드 CPU</text>
+  <rect x="368" y="36" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="432.5" y="66.5" text-anchor="middle" class="fig-b">GPU 에</text>
+  <text x="432.5" y="89.5" text-anchor="middle" class="fig-b">데이터를 먹인다</text>
+  <rect x="0" y="124" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="80" y="166" text-anchor="middle" class="fig-b">Vera CPU 랙</text>
+  <rect x="176" y="124" width="176" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="166" text-anchor="middle" class="fig-b">CPU 만</text>
+  <rect x="368" y="124" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="432.5" y="154.5" text-anchor="middle" class="fig-b">툴 호출과</text>
+  <text x="432.5" y="177.5" text-anchor="middle" class="fig-b">오케스트레이션</text>
+  <rect x="0" y="212" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="80" y="254" text-anchor="middle" class="fig-b">Groq LP 랙</text>
+  <rect x="176" y="212" width="176" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="254" text-anchor="middle" class="fig-b">SRAM</text>
+  <rect x="368" y="212" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="432.5" y="254" text-anchor="middle" class="fig-b">해독 전담</text>
+  <rect x="0" y="300" width="160" height="72" rx="9" class="fig-stage"/>
+  <text x="80" y="342" text-anchor="middle" class="fig-b">STX 랙</text>
+  <rect x="176" y="300" width="176" height="72" rx="9" class="fig-box"/>
+  <text x="264" y="342" text-anchor="middle" class="fig-b">BlueField 4</text>
+  <rect x="368" y="300" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="432.5" y="342" text-anchor="middle" class="fig-b">저장장치</text>
+</svg><figcaption>Vera CPU 랙이 하나인지 여럿인지는 기억이 안 난다고 했다. STX 랙과 ICMS 의 관계는 두 사람의 해석이고 젠슨은 거의 말하지 않았다. 랙마다의 대수와 금액은 전사에 없다.</figcaption></figure>
+<p>Vera Rubin은 이제 GPU 랙 하나가 아니라 데이터센터 한 벌을 가리킨다. GPU 트레이에는 GPU와 헤드노드 CPU가 있고, 그 옆에 Vera CPU만으로 채운 랙이 따로 서는데 하나인지 여럿인지는 기억이 안 난다고 했다. 나누는 기준은 하는 일이다. 헤드노드는 GPU에 데이터를 먹이는 일만 하고, 툴 호출과 오케스트레이션은 CPU가 맡는데 그 CPU가 다른 데이터센터에 있으면 안 된다.</p>
+<p>젠슨이 Vera에 붙인 말은 셋이다. 극도로 높은 단일 스레드 성능, 데이터 처리에 매우 강함, 극도의 전력 효율. "이건 세계에서 유일하게 LPDDR5, 그러니까 모바일용 메모리를 쓰는 데이터센터 CPU예요. 그래서 와트당 성능이 압도적입니다". 양산 중이라고 못 박았고 사업 크기도 직접 말했다. "저희는 CPU를 단독으로 팔게 될 줄은 몰랐어요. 그런데 지금 단독으로 많이 팔고 있고, 이게 수십억 달러 규모 사업이 될 겁니다". <span class="pn">진행자A</span>는 AMD와 인텔의 CPU 매출이 연 수백억 달러대라는 것을 옆에 놓았다.</p>
+<p><span class="pn">진행자V</span>는 이 자랑을 그대로 받지 않았다. Vera의 올림푸스 코어는 88개이고 멀티스레딩으로 176스레드인데(마케팅 명칭은 기억이 안 난다고 했다), 올해 후반에 나올 AMD 베니스는 512스레드에 단일 코어 성능도 좋다. LPDDR5가 정말 유일한 차별점인지도 의심했다. 자기가 만들어 둔 데이터센터 CPU 비교표를 다시 열어 보겠다면서 "왜 그런지 모르겠다, 나한테는 그렇게 보이지 않는다"고 했다.</p>
+<p>코어 수가 왜 중요한지는 <span class="pn">진행자A</span>가 청취자용으로 풀었다. 코어가 많다는 것은 그 CPU에서 동시에 돌릴 수 있는 에이전트가 많다는 뜻이다. 여기에 <span class="pn">진행자V</span>가 자기 기고의 이론을 얹었다. 랙 규모에서 CPU 수가 GPU 수를 넘어서는 경우도 나올 수 있다는 것이다. 본인이 "적어도 내 이론"이라고 못 박았고, 둘은 젠슨의 참고 도면에서 CPU를 직접 세어 보자고 하고 넘어갔다.</p>
+<h2 id="s5"><span class="num">5</span> 랙 안은 구리, 랙 사이는 빛, 그래도 스케일업</h2>
+<p>젠슨이 CPO(공동패키지광학, 광 부품을 스위치 칩 옆에 함께 붙이는 방식)를 소개할 때 용도를 스케일아웃으로 못 박았다고 <span class="pn">진행자A</span>가 전했다. 그다음이 뒤집기다. 로드맵 슬라이드에서 랙 코드명을 "오퍼트론"이라 잘못 부른 뒤 오베론으로 고쳤고, 구리냐 광이냐는 논쟁에는 둘 다 한다고 답했다.</p>
+<p>지금 쓰는 Oberon(NVL72)에서는 구리 케이블 스파인이 랙 안을 잇는다. 세로로 들어가는 Kyber는 그 스파인 대신 미드플레인 PCB를 쓴다. 보통 PCB는 손에 쥐는 물건인데 이 판은 둘이 들어야 하고 층이 52장이라, 이만큼 복잡한 판을 만드는 일 자체가 공학 작품이라고 <span class="pn">진행자V</span>는 묘사했다. 구조는 버거다. 한쪽 빵이 컴퓨트, 다른 쪽이 백엔드 네트워크, 가운데가 이 판이다.</p>
+<figure class="uc-fig"><p class="fig-title">랙이 달라도 한 도메인이다</p><svg class="epoch" viewBox="0 0 520 324" role="img" aria-label="캐니스터 넷을 빛으로 묶어 GPU 576개가 한 도메인이 되는데 캐니스터 안은 구리이고 사이가 어느 방식인지는 안 밝혀졌다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="30" text-anchor="middle" class="fig-hd">같은 스케일업 도메인 — GPU 576개</text>
+  <rect x="19" y="42" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="75.5" y="72.5" text-anchor="middle" class="fig-b">캐니스터</text>
+  <text x="75.5" y="95.5" text-anchor="middle" class="fig-b">GPU 144</text>
+  <rect x="142" y="42" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="198.5" y="72.5" text-anchor="middle" class="fig-b">캐니스터</text>
+  <text x="198.5" y="95.5" text-anchor="middle" class="fig-b">GPU 144</text>
+  <rect x="265" y="42" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="321.5" y="72.5" text-anchor="middle" class="fig-b">캐니스터</text>
+  <text x="321.5" y="95.5" text-anchor="middle" class="fig-b">GPU 144</text>
+  <rect x="388" y="42" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="444.5" y="72.5" text-anchor="middle" class="fig-b">캐니스터</text>
+  <text x="444.5" y="95.5" text-anchor="middle" class="fig-b">GPU 144</text>
+  <line x1="134" y1="78" x2="140" y2="78" class="fig-arw"/>
+  <line x1="257" y1="78" x2="263" y2="78" class="fig-arw"/>
+  <line x1="380" y1="78" x2="386" y2="78" class="fig-arw"/>
+  <rect x="60" y="140" width="180" height="72" rx="9" class="fig-box"/>
+  <text x="150" y="170.5" text-anchor="middle" class="fig-b">캐니스터 안</text>
+  <text x="150" y="193.5" text-anchor="middle" class="fig-b">구리 52층 PCB</text>
+  <rect x="280" y="140" width="180" height="72" rx="9" class="fig-bad"/>
+  <text x="370" y="170.5" text-anchor="middle" class="fig-b">캐니스터 사이</text>
+  <text x="370" y="193.5" text-anchor="middle" class="fig-b">빛, 방식은 모름</text>
+  <rect x="125.5" y="236" width="269" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="265" text-anchor="middle" class="fig-b">랙이 달라도 스케일아웃이 아니다</text>
+  <rect x="0" y="298" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="310" class="fig-lg">이 회차가 답을 못 낸 자리</text>
+</svg><figcaption>캐니스터 사이가 플러거블 트랜시버인지 CPO 인지는 <span class="pn">진행자V</span> 도 「정말 모르겠다」고 했고, 케이블 수와 트랜시버 전력을 세어 봐야 안다고 했다. 미드플레인 PCB 는 52층이고 둘이 들어야 한다.</figcaption></figure>
+<p>경계가 옮겨지는 대목은 그다음이다. Oberon도 Kyber도 576-GPU 도메인까지 늘어난다. NVL72 랙을 나란히 놓고 광 링크로 잇거나, Kyber라면 144-GPU 캐니스터 넷을 광으로 묶는다. 물리적으로 랙이 다르지만 스케일아웃이 아니다. 같은 포드 안이고, 서로 원격 메모리에 접근하며 HBM을 나눠 쓰고 스스로를 하나의 시스템으로 여긴다.</p>
+<p><span class="pn">진행자V</span>는 여기서 답을 내지 않았다. 캐니스터 사이를 잇는 것이 플러거블 트랜시버인지 CPO인지 모르겠다는 것이다. 젠슨이 그 연결에 NVLink 6을 쓴다고 했는데 CPO를 하려면 스위치 쪽 하드웨어가 있어야 하니 지금은 플러거블일 것으로 짐작했다. 다만 케이블이 몇 가닥이고 트랜시버가 전력을 얼마나 먹는지 세어 봐야 안다며 정말 모르겠다고 했다.</p>
+<h2 id="s6"><span class="num">6</span> 토큰 예산은 실리콘밸리에서만 통하는 말이다</h2>
+<p>젠슨의 문장 하나가 회차 뒷부분을 다 끌고 갔다. "앞으로는 모든 엔지니어에게 토큰 예산이 필요할 겁니다". 기본급이 몇십만 달러라면 그 절반쯤을 토큰 예산으로 얹어 생산성을 열 배로 만들고, 실리콘밸리에서는 이것이 채용 조건이 된다. <span class="pn">진행자A</span>는 공감했다. 월 200달러 앤트로픽 맥스 플랜을 늘 쓰고 있고 없어지면 있는 직장으로 옮기겠다고 했다.</p>
+<p>같은 <span class="pn">진행자A</span>가 엔비디아에 "부드러운 피드백"이라며 붙인 지적은 프레이밍을 겨눈다. 처리량 대 응답성 그래프가 앞으로 당신 회사의 매출을 정의한다는 말은 추론 자체를 파는 회사에 맞다. 드워케시 팟캐스트에서 다리오 아모데이는 가진 추론 컴퓨트만큼 돈을 번다고 말했다. 그러나 대부분의 회사는 트랙터와 식료품과 호텔 객실과 커피를 판다. AI를 입력으로 쓰는 것과 토큰 생산량이 사업 모델이 되는 것은 다르다.</p>
+<figure class="uc-fig"><p class="fig-title">같은 말이 고객 두 무리에 다르게 닿는다</p><svg class="epoch" viewBox="0 0 520 361" role="img" aria-label="고객의 60%에는 추론 컴퓨트만큼 번다는 셈이 맞지만 나머지에게는 연 500만 달러를 어떻게 나눠 쓰느냐가 남는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="203.5" y="30" width="113" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="59" text-anchor="middle" class="fig-b">엔비디아 고객</text>
+  <rect x="20" y="130" width="240" height="95" rx="9" class="fig-agent"/>
+  <text x="140" y="160.5" text-anchor="middle" class="fig-b">60% — CSP 와</text>
+  <text x="140" y="183.5" text-anchor="middle" class="fig-b">하이퍼스케일러</text>
+  <text x="140" y="206.5" text-anchor="middle" class="fig-b">추론 컴퓨트만큼 번다</text>
+  <rect x="280" y="130" width="220" height="95" rx="9" class="fig-box"/>
+  <text x="390" y="160.5" text-anchor="middle" class="fig-b">나머지 — 일반 기업</text>
+  <text x="390" y="183.5" text-anchor="middle" class="fig-b">트랙터도 커피도</text>
+  <text x="390" y="206.5" text-anchor="middle" class="fig-b">판다</text>
+  <line x1="140" y1="78" x2="140" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="390" y1="78" x2="390" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="280" y="247" width="220" height="72" rx="9" class="fig-bad"/>
+  <text x="390" y="277.5" text-anchor="middle" class="fig-b">연 500만 달러를</text>
+  <text x="390" y="300.5" text-anchor="middle" class="fig-b">어떻게 나눠 쓰나</text>
+  <line x1="390" y1="227" x2="390" y2="245" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="335" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="347" class="fig-lg">답이 안 나온 쪽</text>
+</svg><figcaption>고객의 60%가 CSP 와 하이퍼스케일러이고 가장 큰 워크로드는 트랜스포머 기반 LLM 추론이다. 나머지에게는 트랙터도 식료품도 파는 회사에 토큰 사업 모델을 얹는 셈이 안 맞는다는 것이 <span class="pn">진행자A</span> 의 지적이다.</figcaption></figure>
+<p>여기서 60%가 다시 쓰인다. 엔비디아 고객의 60%는 AI 랩에 서비스하는 CSP와 하이퍼스케일러이고, 규모가 가장 큰 워크로드는 트랜스포머 기반 LLM 추론이다. 다리오식 셈은 그 60%에 맞는다. <span class="pn">진행자A</span>가 듣고 싶어 한 것은 나머지 40%를 향한 메시지다. RTX 6000 프로를 왜 사야 하는지, DGX 스테이션은 어떤 자리인지, 연 500만 달러를 첫 달에 다 쓰지 않으려면 자본지출과 운영지출을 어떻게 잡아야 하는지.</p>
+<p><span class="pn">진행자V</span>의 예측은 더 나갔다. 개인별 현금성 토큰 예산은 실제 모델이 되지 않는다. 어느 업무가 토큰을 얼마나 먹는지 미리 알 수 없기 때문이다. 대신 DGX 시스템처럼 감가되는 자본재를 사서 팀 수에 맞춰 라이선스를 늘리고 줄이는 꼴로 가고, 토큰이 더 필요하면 랙을 한 대 더 붙인다. 그리고 젠슨의 발상을 지역으로 묶었다. 실리콘밸리에서는 통해도 동부와 중부와 유럽의 CFO는 다르게 생각한다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것</h2>
+<p>가장 크게 빈 자리는 저장장치다. BlueField 4 기반 STX 랙이 AI 네이티브 스토리지로 소개됐는데, <span class="pn">진행자A</span>는 이것이 전에 다룬 ICMS(추론 컨텍스트 메모리 스토리지)와 같은 것인지 헷갈렸다고 했다. 둘은 STX가 ICMS를 구현한 스토리지 랙일 것이라고 정리했고, 젠슨이 그것에 대해서는 거의 말을 안 했다고 <span class="pn">진행자A</span>가 짚었다. 긴 컨텍스트와 KV 캐시가 어디에 앉느냐는 2절의 나눔이 실제로 서는지를 정하는 자리인데, 이 회차에는 근거가 없다.</p>
+<p>이름도 여러 개가 뜬 채로 남았다. 젠슨은 Groq LP3 칩을 삼성이 만든다며 3분기쯤 출하한다고 밝혔고, <span class="pn">진행자A</span> 는 그 공정이 삼성 4나노쯤인 것 같다면서 "아마도"를 두 번 달았다. LP35와 LP40이 예고된 것 같다면서도 메모했는지 모르겠다고 했다. 다음 CPU 이름이 로절린드 프랭클린에서 왔다는 것까지는 확인됐지만, 무엇이 구조적으로 달라지는지는 나오지 않았다. Groq 트레이에 실린 CPU도 엔비디아가 밝히지 않았다. 전사에는 CPU 를 많이 다뤄 본 사람이 인텔 제온으로 보인다고 장담했다는 대목이 나오는데, 어느 버전인지는 기억 못 했다.</p>
+<p>DSX는 시연만 있었다. 데이터센터 파트너와 옴니버스 안에서 열과 전력망 부하를 시뮬레이션해 설계하고, 실제 운영 데이터를 다시 시뮬레이션에 먹인다는 그림이다. <span class="pn">진행자V</span>는 소프트웨어 도구 발표를 여러 번 봐 왔다며 회의적이었다. 시연은 늘 놀랍지만 막상 쓰면 이 내보내기가 안 되고 저 인터페이스가 안 맞는다.</p>
+<p>무엇이 나오면 이 글의 판단이 바뀌는가. ① 초고속 추론이 필요한 비중이 10%에 가까운지 25%에 가까운지가 정해지면, 2절의 Groq 랙은 선택 사항으로 남거나 표준 구성이 된다. ② Groq 랙과 GPU 랙 사이가 이더넷에서 NVLink 계열로 바뀌면, 엔비디아가 강조한 수평 개방이 말인지 배선인지 드러난다. ③ Vera CPU 랙의 실제 판매가 수십억 달러에 닿으면 4절의 CPU 대 GPU 비율 이론이 숫자로 확인된다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-03-17-nvidia-gtc-keynote-strategy.md">insights/semidoped/2026-03-17-nvidia-gtc-keynote-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
