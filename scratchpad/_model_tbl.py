@@ -736,6 +736,12 @@ TABLES = {
 }
 
 
+# 자본지출 층 넷의 표를 합친다. 파일을 나눈 것은 원자료가 다른 json 이기 때문이고,
+# 부르는 쪽에서는 한 사전으로 보여야 본문 표와 사실표가 갈리지 않는다
+import _capex_tbl as _ct                                          # noqa: E402
+TABLES.update(_ct.TABLES)
+
+
 def rows_text():
     """같은 값을 글자로. 사실표가 이것을 받아 check_report 의 대조 재료가 된다."""
     out = []

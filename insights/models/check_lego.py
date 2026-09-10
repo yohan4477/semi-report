@@ -67,9 +67,10 @@ def main():
     print('  아끼는 인건비는 MW당 %s 달러이고, 발표된 차이 %s 달러의 %.0f%% 다.'
           % (format(int(s['saving']), ','),
              format(int(c('stated_delta') * 1e6), ','), share))
-    print('  나머지 %.0f%% 는 인건비가 아니다 — 원문은 공기가 짧아져 에스컬레이션과'
-          % (100 - share))
-    print('  컨틴전시와 현장관리비가 준다고 적었다(레고영문 L563).')
+    rest = c('stated_delta') * 1e6 - s['saving']
+    print('  나머지는 MW당 %s 달러, %.0f%% 다 — 인건비가 아니다. 원문은 공기가 짧아져'
+          % (format(int(rest), ','), 100 - share))
+    print('  에스컬레이션과 컨틴전시와 현장관리비가 준다고 적었다(레고영문 L563).')
 
     print()
     print('── 원문에 없는 값 ② 시간이 준 만큼 값이 주나 ' + '─' * 20)

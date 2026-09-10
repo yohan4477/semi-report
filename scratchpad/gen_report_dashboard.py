@@ -324,6 +324,30 @@ def report_model_torus_html(head=True):
                               'model-torus', head)
 
 
+def report_model_lego_html(head=True):
+    """모듈러 자본지출. 본문은 insights/reports/model-lego-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_LEGO, _model_part1.report_lego,
+                              'model-lego', head)
+
+
+def report_model_grd_html(head=True):
+    """지상 데이터센터 자본. 본문은 insights/reports/model-ground-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_GRD, _model_part1.report_grd,
+                              'model-grd', head)
+
+
+def report_model_trn_html(head=True):
+    """GPU 금융. 본문은 insights/reports/model-trinity-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_TRN, _model_part1.report_trn,
+                              'model-trn', head)
+
+
+def report_model_sx_html(head=True):
+    """회수 기간. 본문은 insights/reports/model-payback-2026-09-10.md."""
+    return _report_model_html(_model_part1.HEAD_SX, _model_part1.report_sx,
+                              'model-sx', head)
+
+
 def report_trump_html(head=True):
     """트럼프 총정리 — 한 편. 본문은 insights/reports/trump-2026-09-06.md 원본에서 읽는다."""
     h = [_trump_part1.HEAD_TRUMP] if head else []
@@ -481,6 +505,26 @@ LAYERS = [
      'SemiAnalysis 영문 1편 · 표 그림 1장',
      '칩이 놓인 자리가 배선을 정하고, 거기서 나온 부착률은 랙 크기에 매여 있다',
      report_model_torus_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '모듈러 데이터센터 — 8퍼센트가 인건비에서 나온다는 생각이 틀린 자리',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '현장 시간은 62퍼센트가 주는데 값은 8퍼센트만 준다',
+     report_model_lego_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '지상 데이터센터 자본 — 전력을 어렵게 끌수록 매출의 몇 할이 자본으로 가나',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '자본과 전기만으로 매출의 3분의 1이 나가고, 그 나머지로 GPU 값을 대야 한다',
+     report_model_grd_html),
+    ('sec-model', '모델링', '2026-09-10',
+     'GPU 금융 — 바닥값을 깔아 주면 이익이 어디로 가나',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '바닥값을 받으면 청구가의 18퍼센트를 떼 주고, 안 받으면 이익률에서 9퍼센트포인트가 깎인다',
+     report_model_trn_html),
+    ('sec-model', '모델링', '2026-09-10',
+     '회수 기간 — 기가와트당 500억 달러를 1년에 갚는다는 말이 서는 자리',
+     'SemiAnalysis 영문 1편의 본문 값',
+     '그 1년은 매출에서 비용을 빼기 전의 값이다',
+     report_model_sx_html),
     ('sec-circ', '순환금융', '2026-09-09',
      '순환금융 총정리 — 파는 쪽이 사는 쪽에 돈을 빌려주면, 그 고리는 어디서 끊기나',
      'SemiAnalysis 12편 · 메르 6편',

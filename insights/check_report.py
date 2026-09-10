@@ -288,6 +288,13 @@ MODEL_EXTRA = [
     # PJM 층·루프라인 층(2026-09-10)의 재료
     os.path.join(_CLIP, "$12B of US ratepayers' money wasted on a modeling mistake and PJM wants to do it again.md"),
     os.path.join(_CLIP, 'Cerebras — Faster Tokens Please.md'),
+    # 자본지출 층 넷(2026-09-10)의 재료 — 모듈러·지상 층·GPU 금융·회수기간
+    os.path.join(_CLIP, 'The Wild Wild West Of LEGO Datacenters.md'),
+    os.path.join(_CLIP, 'To Boldly Go The Case for Space Datacenters.md'),
+    os.path.join(_CLIP, 'Nvidia GPU Debt Backstop Unleashes the AI Project Trinity '
+                 'Capital, Offtake and Datacenters.md'),
+    os.path.join(_CLIP, 'SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR '
+                 'for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md'),
 ]
 
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
