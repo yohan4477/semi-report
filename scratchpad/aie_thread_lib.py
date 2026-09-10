@@ -116,3 +116,23 @@ def orphans(rows):
             tied.add(r['id'])
             tied.add(rel.get('to'))
     return [r for r in rows if r['id'] not in tied]
+
+
+def months(a, b):
+    """두 날짜(YYYY-MM-DD) 사이 개월 수."""
+    return (int(b[:4]) - int(a[:4])) * 12 + (int(b[5:7]) - int(a[5:7]))
+
+
+def span(comp):
+    """덩어리가 걸쳐 있는 개월 수. 절을 어느 순서로 세울지 여기서 나온다."""
+    return months(comp[0]['date'], comp[-1]['date'])
+
+
+def move_pair(comp):
+    """(그 물음을 연 줄, 마지막으로 받은 줄). 절마다 대조 쌍을 세우는 재료다.
+
+    받은 줄은 날짜가 가장 늦으면서 앞선 줄에 걸린 줄이다. 그냥 마지막 줄을 쓰면
+    같은 덩어리에 섞여 든 신규 줄이 「1년 뒤 답」 자리에 설 수 있다.
+    """
+    late = [r for r in comp if r.get('rel')]
+    return comp[0], (late[-1] if late else comp[-1])

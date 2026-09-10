@@ -16,7 +16,12 @@ def ck(name, cond):
 
 ck('규약 통과', gen.check_ui(html, rows) == [])
 ck('줄이 다 났다', html.count('class="claim"') == len(rows))
-ck('거르개 둘', '신규만' in html and '엇갈림만' in html)
+# 거르개는 조직만 남았다(2026-09-09). 「신규만·엇갈림만」을 찾던 줄이 그대로 남아
+# 이 시험이 계속 FAIL 이었다 — 규약이 바뀌면 시험도 같이 옮긴다.
+ck('조직 거르개', 'data-org=' in html)
+ck('절마다 대조 쌍', html.count('class="move"') == len(gen.SECTIONS))
+ck('대조 쌍 그물이 문다', gen.check_ui(html.replace('class="move"', 'class="x"', 1), rows) != [])
+ck('맨 위 시간 판', 'aria-label="물음 열일곱이 1년 사이 걸쳐 온 시간"' in html)
 ck('색을 안 쓴다', gen.check_ui(html.replace('#555', '#c00'), rows) != [])
 ck('반박이라는 말이 없다', '반박' not in html)
 ck('카드로 가는 주소', 'ai-engineer/' in html)
