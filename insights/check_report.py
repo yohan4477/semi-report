@@ -77,7 +77,11 @@ PAGES = [
     # 표 그림의 값은 픽셀이라 클리핑 마크다운에 없다 — 읽은 값을 model_facts.md 에 남겨
     # 그 파일이 출처가 된다(googl_facts·peers_facts 와 같은 자리). 모델이 낸 파생값도 같다.
     # 폴더를 안 넣는다 — 뉴스레터 전체를 넣으면 이 층과 무관한 편이 알리바이가 된다
-    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-model', None),
+    (os.path.join(ROOT, '대시보드', '모델링 대시보드.html'), 'sec-cost', None),
+    (os.path.join(ROOT, '대시보드', '모델링 대시보드.html'), 'sec-phys', None),
+    (os.path.join(ROOT, '대시보드', '모델링 대시보드.html'), 'sec-dc', None),
+    (os.path.join(ROOT, '대시보드', '모델링 대시보드.html'), 'sec-fin', None),
+    (os.path.join(ROOT, '대시보드', '모델링 대시보드.html'), 'sec-meet', None),
 ]
 
 _SD = os.path.join(ROOT, 'content', 'semi_doped')
