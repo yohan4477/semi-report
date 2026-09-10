@@ -8,7 +8,7 @@ const path = require('path');
   const pg = await b.newPage({ viewport: { width: 900, height: 1100 } });
   await pg.goto('file:///' + path.resolve(file).split(path.sep).join('/'));
   await pg.waitForTimeout(300);
-  for (const [name, sel] of [['head', 'header'], ['a1', '#a1'], ['a3', '#a3'],
+  for (const [name, sel] of [['head', 'header'], ['a1', '#a1'], ['a2', '#a2'], ['a3', '#a3'],
                              ['a4', '#a4'], ['a5', '#a5'], ['x', '#x'], ['e', '#e']]) {
     const el = await pg.$(sel);
     await el.scrollIntoViewIfNeeded();
