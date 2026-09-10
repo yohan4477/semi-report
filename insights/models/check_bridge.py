@@ -12,6 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import load_raw, table                                   # noqa: E402
 from bridge_capex import (all_in_per_mw, blended_asp, chips_from_capex,  # noqa: E402
+                          cumulative, gw_series,
                           gpu_capex, gpus_per_mw, gw_from_chips,
                           hbm_cost_per_mw, hbm_per_mw, implied_gw,
                           it_capex_per_mw, life_change, server_share,
@@ -21,6 +22,7 @@ CAPEX = load_raw('capex')
 TBL = load_raw('tables')
 F = table(CAPEX, 'frame-capex')
 S = table(CAPEX, 'frame-sheet')
+SC = table(CAPEX, 'frame-scn')
 LY = table(CAPEX, 'ground-layers')
 G = table(CAPEX, 'ground-assump')
 B = table(CAPEX, 'trinity-backstop')
@@ -40,6 +42,10 @@ def g(k):
 
 def sh(k):
     return S['rows'][k][1]
+
+
+def _v_x(k):
+    return X['rows'][k][1]
 
 
 def sku(name, row):
@@ -209,6 +215,35 @@ def main():
     print('  2028년에 추가 조달이 %g십억 달러 필요하다고 냈다.' % sh('gap_2028'))
     print('  GPU 금융 층은 그 돈을 빌릴 때 은행이 무엇을 보는지를 준다 — 담보인정비율')
     print('  70~80퍼센트, 부채상환비율 1.3배, 담보가 없으면 금리가 4.38퍼센트포인트 오른다.')
+
+    print()
+    print('── 케이스 셋을 우리 단가로 재면 ' + '─' * 34)
+    print('%-8s %10s %10s %12s %14s' % ('케이스', '2026E', '2030E', '5년 누적', '누적 용량'))
+    for k in ('capex_bear', 'capex_base', 'capex_bull'):
+        r = SC['rows'][k]
+        vals = r[1:6]
+        cum = cumulative(vals)
+        print('%-8s %8g십억 %8g십억 %10.1f십억 %10.0f GW'
+              % (r[0], vals[0], vals[4], cum,
+                 implied_gw(cum, _v_x('capex_per_gw'))))
+    base = cumulative(SC['rows']['capex_base'][1:6])
+    bear = cumulative(SC['rows']['capex_bear'][1:6])
+    bull = cumulative(SC['rows']['capex_bull'][1:6])
+    print('  세 케이스가 누적으로 %.0f~%.0f기가와트다. 위아래 폭이 기준의 %.0f퍼센트다.'
+          % (implied_gw(bear, _v_x('capex_per_gw')),
+             implied_gw(bull, _v_x('capex_per_gw')),
+             (bull - bear) / base * 100))
+    print('  지상 층의 원문은 2027년까지 세계 데이터센터가 새로 붙이는 발전 용량을')
+    print('  약 106기가와트로 봤다(우주영문 L274). 빅4 다섯 해 누적이 그 자리에 선다.')
+
+    print()
+    print('── 케이스마다 갈리는 것은 용량이 아니라 조달이다 ' + '─' * 14)
+    for k in ('gap_bear', 'gap_base', 'gap_bull'):
+        r = SC['rows'][k]
+        print('  %-16s 5년 합계 $%.1f십억' % (r[0], cumulative(r[1:6])))
+    print('  세 케이스의 2026년 자본지출은 똑같이 %g십억이다 — 그 해는 이미 가이던스가'
+          % SC['rows']['capex_base'][1])
+    print('  나와 있어 레버가 안 붙는다. 갈리는 것은 2027년부터다.')
 
     print('\n총 FAIL %d' % fails)
     return 1 if fails else 0

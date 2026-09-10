@@ -45,6 +45,8 @@ _D = _tbl('trinity-debt')
 _X = _tbl('spacex-econ')
 _FR = _tbl('frame-capex')
 _SH = _tbl('frame-sheet')
+_SC = _tbl('frame-scn')
+_LV = _tbl('frame-lever')
 
 
 def _v(t, k):
@@ -413,6 +415,45 @@ def bridge_hbm_table():
     return head, body
 
 
+def bridge_scn_table():
+    """케이스 셋의 자본지출과 그것을 우리 단가로 나눈 용량."""
+    head = ['케이스', '2026E', '2028E', '2030E', '5년 누적', '누적을 우리 단가로']
+    body = []
+    for k in ('capex_bear', 'capex_base', 'capex_bull'):
+        r = _SC['rows'][k]
+        vals = r[1:6]
+        cum = BR.cumulative(vals)
+        body.append([r[0], '$%g십억' % vals[0], '$%g십억' % vals[2],
+                     '$%g십억' % vals[4], '$%.1f십억' % cum,
+                     '%.0fGW' % BR.implied_gw(cum, _v(_X, 'capex_per_gw'))])
+    for k, name in (('gap_bear', 'Bear 추가 조달'), ('gap_base', 'Base 추가 조달'),
+                    ('gap_bull', 'Bull 추가 조달')):
+        r = _SC['rows'][k]
+        body.append([r[0], '$%g십억' % r[1], '$%g십억' % r[3], '$%g십억' % r[5],
+                     '$%.1f십억' % BR.cumulative(r[1:6]), '—'])
+    return head, body
+
+
+def bridge_lever_table():
+    """시나리오를 흔드는 레버 일곱과, 우리 원문이 그 자리를 받쳐 주나."""
+    back = {
+        '자본지출 증감률 조정(2027년 이후)': '없다 — 우리 원문에 연도별 성장률이 없다',
+        'AI 가속기 비중 조정': '간접 — 서버 몫 53~69%가 우리 단가에서 나온다',
+        'HBM 기가바이트당 단가 배수': '없다 — HBM 값은 프레임 재료에만 있다',
+        '칩당 HBM 용량 배수': '없다 — 칩 세대 로드맵은 이 층 재료 밖이다',
+        '가속기 평균판매가격 배수': '있다 — 우리 칩당 자본 $47,413 이 이 칸의 값이다',
+        '빅4 글로벌 비중 조정': '없다',
+        '삼성 점유율 조정(SK하이닉스에서 이전)': '없다',
+    }
+    head = ['레버', 'Bear', 'Base', 'Bull', '단위', '우리 원문이 받쳐 주나']
+    body = []
+    for v in _LV['rows'].values():
+        name, bear, base, bull, unit = v[0], v[1], v[2], v[3], v[4]
+        body.append([name, '%g' % bear, '%g' % base, '%g' % bull, unit,
+                     back.get(name, '없다')])
+    return head, body
+
+
 TABLES = {
     'LEGOCOST': ('발표된 8퍼센트를 다시 낸다', lego_cost_table),
     'LEGOLAB': ('그 차이 가운데 인건비는 얼마인가', lego_labor_table),
@@ -432,6 +473,8 @@ TABLES = {
     'BRGW': ('같은 해를 네 자로 재면', bridge_gw_table),
     'BRCHIP': ('칩 한 개 값이 두 배 갈린다', bridge_chip_table),
     'BRHBM': ('메가와트에 실리는 HBM', bridge_hbm_table),
+    'BRSCN': ('케이스 셋을 우리 단가로 재면', bridge_scn_table),
+    'BRLEVER': ('시나리오를 흔드는 레버 일곱', bridge_lever_table),
 }
 
 

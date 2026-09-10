@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-09",
+ "generated": "2026-09-10",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -914,6 +914,19 @@
    "hash": "6ab738197abb"
   },
   {
+   "id": "semi:robotics:로봇은-어디서-생각하는가-온디바이스-대-데이터센터-추론",
+   "corpus": "semianalysis",
+   "folder": "robotics",
+   "categories": [
+    "robotics",
+    "ai-infra/compute",
+    "ai-infra/memory"
+   ],
+   "date": "2026-09-09",
+   "path": "content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md",
+   "hash": "005bd11395f8"
+  },
+  {
    "id": "semi:security:네오클라우드-대다수는-보안이-엉망이다",
    "corpus": "semianalysis",
    "folder": "security",
@@ -959,6 +972,28 @@
    "hash": "f1a35db0480b"
   },
   {
+   "id": "und:raw:2024-05-02-dea-reit",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-02-dea-reit.md",
+   "hash": "2cd6462850a6"
+  },
+  {
+   "id": "und:raw:2024-05-06-cannabis-legalization",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-06-cannabis-legalization.md",
+   "hash": "6488baf7e3f8"
+  },
+  {
    "id": "und:raw:2024-05-10-shortselling",
    "corpus": "understanding",
    "folder": "raw",
@@ -968,6 +1003,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2024-05-10-shortselling.md",
    "hash": "9b24a103bf84"
+  },
+  {
+   "id": "und:raw:2024-05-13-myomo",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-13-myomo.md",
+   "hash": "e362b3dc57c7"
   },
   {
    "id": "und:raw:2024-05-16-spinoff",
@@ -981,6 +1027,17 @@
    "hash": "07ee984ed779"
   },
   {
+   "id": "und:raw:2024-05-20-spirit-airlines",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-20-spirit-airlines.md",
+   "hash": "20cc29126aa1"
+  },
+  {
    "id": "und:raw:2024-05-23-els-etf",
    "corpus": "understanding",
    "folder": "raw",
@@ -990,6 +1047,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2024-05-23-els-etf.md",
    "hash": "1750093374fa"
+  },
+  {
+   "id": "und:raw:2024-05-27-flg-nycb",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-05-27-flg-nycb.md",
+   "hash": "73166cec803e"
   },
   {
    "id": "und:raw:2024-05-30-habits",
@@ -1003,6 +1071,17 @@
    "hash": "a45999300dda"
   },
   {
+   "id": "und:raw:2024-06-03-sea-limited",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-03-sea-limited.md",
+   "hash": "a3e8f0f7355f"
+  },
+  {
    "id": "und:raw:2024-06-06-pf-bridge",
    "corpus": "understanding",
    "folder": "raw",
@@ -1012,6 +1091,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2024-06-06-pf-bridge.md",
    "hash": "a15c15aab729"
+  },
+  {
+   "id": "und:raw:2024-06-10-fiverr",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-06-10-fiverr.md",
+   "hash": "49371527606c"
   },
   {
    "id": "und:raw:2024-06-13-power-semi",
@@ -1058,6 +1148,171 @@
    "hash": "448ca195a3b7"
   },
   {
+   "id": "und:raw:2024-07-08-druckenmiller-palantir",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-07-08-druckenmiller-palantir.md",
+   "hash": "ce072e424f7e"
+  },
+  {
+   "id": "und:raw:2024-07-14-vw-investment",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-07-14-vw-investment.md",
+   "hash": "84eecddae84f"
+  },
+  {
+   "id": "und:raw:2024-07-21-quantumscape-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-07-21-quantumscape-en.md",
+   "hash": "45c2706d673b"
+  },
+  {
+   "id": "und:raw:2024-07-28-election-neutral-pick",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-07-28-election-neutral-pick.md",
+   "hash": "40520f75c67d"
+  },
+  {
+   "id": "und:raw:2024-08-04-3m",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-08-04-3m.md",
+   "hash": "de4c3378dc1e"
+  },
+  {
+   "id": "und:raw:2024-08-11-tesla-ess",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-08-11-tesla-ess.md",
+   "hash": "d0161ab3c2d8"
+  },
+  {
+   "id": "und:raw:2024-08-18-fluence-energy",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-08-18-fluence-energy.md",
+   "hash": "6fad53e60573"
+  },
+  {
+   "id": "und:raw:2024-08-25-low-vol-dividend",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-08-25-low-vol-dividend.md",
+   "hash": "856cf04292a7"
+  },
+  {
+   "id": "und:raw:2024-09-01-robinhood",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-09-01-robinhood.md",
+   "hash": "38080444acbe"
+  },
+  {
+   "id": "und:raw:2024-09-08-postcut-reit-ev-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-09-08-postcut-reit-ev-en.md",
+   "hash": "ad465ae0bcb9"
+  },
+  {
+   "id": "und:raw:2024-09-22-google-breakup-bdc-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-09-22-google-breakup-bdc-en.md",
+   "hash": "ecd366b08a1a"
+  },
+  {
+   "id": "und:raw:2024-09-29-nike-china-fx-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-09-29-nike-china-fx-en.md",
+   "hash": "e7fca2815fdb"
+  },
+  {
+   "id": "und:raw:2024-11-03-bigtech-earnings-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-11-03-bigtech-earnings-en.md",
+   "hash": "f3c2dd850595"
+  },
+  {
+   "id": "und:raw:2024-11-11-consultant-know-how",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-11-11-consultant-know-how.md",
+   "hash": "853e63206312"
+  },
+  {
+   "id": "und:raw:2024-12-01-qa-open-notice",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-01-qa-open-notice.md",
+   "hash": "9df579b7617c"
+  },
+  {
    "id": "und:raw:2024-12-03-wolfspeed",
    "corpus": "understanding",
    "folder": "raw",
@@ -1067,6 +1322,72 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2024-12-03-wolfspeed.md",
    "hash": "55671a6b5a43"
+  },
+  {
+   "id": "und:raw:2024-12-07-ginkgo-bioworks-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-07-ginkgo-bioworks-en.md",
+   "hash": "03e3820d0266"
+  },
+  {
+   "id": "und:raw:2024-12-13-ceragon",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-13-ceragon.md",
+   "hash": "a51bb9b50707"
+  },
+  {
+   "id": "und:raw:2024-12-16-sentinelone-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-16-sentinelone-qa.md",
+   "hash": "10311f38f4c9"
+  },
+  {
+   "id": "und:raw:2024-12-25-soundhound-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-25-soundhound-qa.md",
+   "hash": "10edb3aa747d"
+  },
+  {
+   "id": "und:raw:2024-12-30-zeta-global-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2024-12-30-zeta-global-qa.md",
+   "hash": "e3798a9178fe"
+  },
+  {
+   "id": "und:raw:2025-01-05-planet-labs-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-05-planet-labs-qa.md",
+   "hash": "8d7f7206a654"
   },
   {
    "id": "und:raw:2025-01-12-stmicro",
@@ -1080,6 +1401,83 @@
    "hash": "14a2f4faf50c"
   },
   {
+   "id": "und:raw:2025-01-13-2025-picks-china-telecom",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-13-2025-picks-china-telecom.md",
+   "hash": "5217e8c4e24f"
+  },
+  {
+   "id": "und:raw:2025-01-14-tesla-top-signal",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-14-tesla-top-signal.md",
+   "hash": "e2e0fe1da96d"
+  },
+  {
+   "id": "und:raw:2025-01-17-palantir-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-17-palantir-qa.md",
+   "hash": "c13e07512ddd"
+  },
+  {
+   "id": "und:raw:2025-01-19-grab",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-19-grab.md",
+   "hash": "55ed8b99606a"
+  },
+  {
+   "id": "und:raw:2025-01-26-kratos",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-01-26-kratos.md",
+   "hash": "0e178f8bac1c"
+  },
+  {
+   "id": "und:raw:2025-02-03-twilio",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-02-03-twilio.md",
+   "hash": "a5e4ea5b7084"
+  },
+  {
+   "id": "und:raw:2025-02-10-samsung-deepseek-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-02-10-samsung-deepseek-en.md",
+   "hash": "34f15d19fa89"
+  },
+  {
    "id": "und:raw:2025-02-17-iamgold",
    "corpus": "understanding",
    "folder": "raw",
@@ -1089,6 +1487,72 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2025-02-17-iamgold.md",
    "hash": "50496a3c698b"
+  },
+  {
+   "id": "und:raw:2025-02-23-trump-endgame-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-02-23-trump-endgame-en.md",
+   "hash": "077c7242653a"
+  },
+  {
+   "id": "und:raw:2025-03-03-portfolio-reset",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-03-03-portfolio-reset.md",
+   "hash": "0f75842df142"
+  },
+  {
+   "id": "und:raw:2025-03-10-pension-defense-shipbuilding",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-03-10-pension-defense-shipbuilding.md",
+   "hash": "9ffd296a5fee"
+  },
+  {
+   "id": "und:raw:2025-03-17-credo-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-03-17-credo-qa.md",
+   "hash": "7f469b64f8fb"
+  },
+  {
+   "id": "und:raw:2025-03-17-gurus-picks",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-03-17-gurus-picks.md",
+   "hash": "445b89a894a9"
+  },
+  {
+   "id": "und:raw:2025-03-19-tesla-short-term-qa",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-03-19-tesla-short-term-qa.md",
+   "hash": "ad0b4dfbc0e8"
   },
   {
    "id": "und:raw:2025-04-08-news",
@@ -1135,6 +1599,39 @@
    "hash": "96cd0c6cf996"
   },
   {
+   "id": "und:raw:2025-04-26-dollar-treasury-doubt",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-04-26-dollar-treasury-doubt.md",
+   "hash": "dab70bd1ee07"
+  },
+  {
+   "id": "und:raw:2025-05-04-v-rebound-or-drop",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-05-04-v-rebound-or-drop.md",
+   "hash": "2b5b00b61ee5"
+  },
+  {
+   "id": "und:raw:2025-06-03-rates-weak-dollar",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-06-03-rates-weak-dollar.md",
+   "hash": "e3b22503346c"
+  },
+  {
    "id": "und:raw:2025-06-08-centrus",
    "corpus": "understanding",
    "folder": "raw",
@@ -1144,6 +1641,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2025-06-08-centrus.md",
    "hash": "87d21e3bce97"
+  },
+  {
+   "id": "und:raw:2025-06-15-robotaxi-tesla-waymo",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-06-15-robotaxi-tesla-waymo.md",
+   "hash": "b7de0c9d66f4"
   },
   {
    "id": "und:raw:2025-06-22-tsmc",
@@ -1366,6 +1874,39 @@
    "hash": "4c88f8eac2a9"
   },
   {
+   "id": "und:raw:2025-11-09-sports-odds-gatekeepers-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-11-09-sports-odds-gatekeepers-en.md",
+   "hash": "8fb56879348a"
+  },
+  {
+   "id": "und:raw:2025-11-16-sportradar",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-11-16-sportradar.md",
+   "hash": "1e30a32fb0c2"
+  },
+  {
+   "id": "und:raw:2025-11-23-sportsbetting-bookmakers",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2025-11-23-sportsbetting-bookmakers.md",
+   "hash": "b2a801b88a2b"
+  },
+  {
    "id": "und:raw:2025-11-30-hotel-structure",
    "corpus": "understanding",
    "folder": "raw",
@@ -1452,6 +1993,61 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2026-01-04-hilton.md",
    "hash": "b7a92f82a407"
+  },
+  {
+   "id": "und:raw:2026-01-11-findata-basics",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-01-11-findata-basics.md",
+   "hash": "66e2489064af"
+  },
+  {
+   "id": "und:raw:2026-01-18-passive-findata-screening",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-01-18-passive-findata-screening.md",
+   "hash": "a05b5515ee9d"
+  },
+  {
+   "id": "und:raw:2026-01-25-sp-global",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-01-25-sp-global.md",
+   "hash": "b34138af75c0"
+  },
+  {
+   "id": "und:raw:2026-02-01-ice-cds-clearing-1",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-02-01-ice-cds-clearing-1.md",
+   "hash": "ea1af4a30c4f"
+  },
+  {
+   "id": "und:raw:2026-02-01-ice-cds-clearing-2",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-02-01-ice-cds-clearing-2.md",
+   "hash": "6bf5d09bfa85"
   },
   {
    "id": "und:raw:2026-02-08-news",
@@ -1597,6 +2193,39 @@
    "hash": "5206844f190f"
   },
   {
+   "id": "und:raw:2026-06-21-spacex-ipo-allocation-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-06-21-spacex-ipo-allocation-en.md",
+   "hash": "17bafe619238"
+  },
+  {
+   "id": "und:raw:2026-08-02-why-you-fail-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-08-02-why-you-fail-en.md",
+   "hash": "2dedcc10c6bb"
+  },
+  {
+   "id": "und:raw:2026-08-09-news-to-ideas-en",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-08-09-news-to-ideas-en.md",
+   "hash": "1fc173bff088"
+  },
+  {
    "id": "und:raw:2026-08-16-pharma-valuechain",
    "corpus": "understanding",
    "folder": "raw",
@@ -1638,7 +2267,7 @@
    ],
    "date": null,
    "path": "content/understanding/_대기 목록.md",
-   "hash": "23e17b7bec1f"
+   "hash": "47dbe1a12247"
   },
   {
    "id": "und:권석준 교수:물량은-2028년에-밀려온다-매출은-줄지-않는다-진짜-변수는-애플과-미국-정부다-권석준-2부",

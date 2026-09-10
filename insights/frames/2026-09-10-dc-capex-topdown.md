@@ -8,7 +8,7 @@ asked: 「ai dc capex modeling」 — 범위는 하이퍼스케일러 전체 자
 model: claude (그 대화의 모델). 우리 저장소의 원문은 안 줬다 — 회사 공시와 웹 검색으로 세운 값이다
 warn: **검증 안 된 원본이다.** 여기 숫자는 우리 코퍼스 대조를 안 거쳤다. 카드나 보고서 본문으로 옮길 때는 우리 원문이 받쳐 주는 것만 옮기고, 아닌 것은 「프레임 값」이라고 밝힌다.
 named: 업계 집계치 7,250억 달러 — 2차 출처 두 곳이 받쳐 준다. 그 대화 화면에는 출처가 없었고 사용자가 뒤에 목록을 줬다.
-xlsx: 엑셀 두 개를 받았다 — AI_DC_Capex_Big4.xlsx 와 AI_DC_Capex_Big4_HBM.xlsx. 시트와 값은 scratchpad/capex_frame_xlsx.md 에 옮겼다
+xlsx: 엑셀 세 개를 받았다 — AI_DC_Capex_Big4.xlsx · AI_DC_Capex_Big4_HBM.xlsx · AI_DC_Capex_Big4_HBM_Scn.xlsx. 전사는 scratchpad/capex_frame_xlsx.md 와 scratchpad/capex_frame_scn.md 다
 ---
 
 ## 받은 그대로 — 모델 구조
@@ -64,6 +64,17 @@ xlsx: 엑셀 두 개를 받았다 — AI_DC_Capex_Big4.xlsx 와 AI_DC_Capex_Big4
 - 칩당 HBM 용량 — 블랙웰 블렌드 240GB, 루빈 288GB, TPU 216GB (HBM_Inputs!B6·B7·B9)
 - 마이크로소프트 데이터센터 내용연수 15년에서 25년으로 변경 (실적 콜)
 - 시설·전력은 차년도 가동분의 50퍼센트 선지출, IT 갱신 주기 5년 (첫 판 모델 가정)
+
+## 받은 시나리오 엑셀에서 읽은 값
+
+세 번째 엑셀은 케이스 스위치를 붙인 판이다. 전사는 `scratchpad/capex_frame_scn.md` 가 정본이다.
+
+- 케이스 스위치 Bear·Base·Bull, 레버 일곱을 INDEX 로 한꺼번에 바꾼다 (Scenario!B4·C4)
+- 빅4 총 자본지출 2026년 732.5십억으로 세 케이스가 같고, 2030년 Bear 873.69 · Base 1180.76 · Bull 1561.1십억 (Scenario!C52:G54)
+- 빅4 잉여현금흐름 2030년 Bear 254.01 · Base 마이너스 18.54 · Bull 마이너스 356.09십억 (Scenario!C56:G58)
+- 추가 조달 필요액 2030년 Bear 0 · Base 18.16 · Bull 219.14십억 (Scenario!C60:G62)
+- 레버 일곱 — 자본지출 증감률 ±10퍼센트포인트, AI 가속기 비중 ±5퍼센트포인트, HBM 기가바이트당 단가 0.9~1.1배, 칩당 HBM 용량 0.95~1.05배, 가속기 평균판매가격 1.05~0.95배, 빅4 글로벌 비중 ±5퍼센트포인트, 삼성 점유율 ±5퍼센트포인트 (Scenario!A7~A47)
+- SK하이닉스 HBM 매출 2026년 Base 28.56십억, 2030년 85.83십억 (Scenario!C81:G81)
 
 ## 1차 출처 — 회사 공시와 실적 콜 (사용자가 준 목록 그대로)
 

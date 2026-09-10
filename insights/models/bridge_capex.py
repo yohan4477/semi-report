@@ -94,3 +94,13 @@ def hbm_per_mw(gb_per_chip, chips_per_mw):
 def hbm_cost_per_mw(gb_per_chip, chips_per_mw, usd_per_gb):
     """메가와트당 HBM 값. 백만 달러로 낸다."""
     return gb_per_chip * chips_per_mw * usd_per_gb / 1e6
+
+
+def cumulative(values):
+    """연도별 값을 더한다. 시나리오 스냅샷은 다섯 해다."""
+    return sum(values)
+
+
+def gw_series(values, per_mw_musd):
+    """연도별 자본지출을 우리 단가로 나눠 해마다 몇 기가와트인지 낸다."""
+    return [implied_gw(v, per_mw_musd) for v in values]
