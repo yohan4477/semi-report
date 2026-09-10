@@ -50,8 +50,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 30 |
-| ai-infra/memory | 10 |
+| ai-infra/compute | 31 |
+| ai-infra/memory | 11 |
 | ai-infra/networking | 14 |
 | ai-infra/business | 22 |
 | ai-infra/power | 11 |
@@ -61,7 +61,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-models/rl | 4 |
 | ai-models/agents | 4 |
 | ai-models | 3 |
-| robotics | 1 |
+| robotics | 2 |
 | semiconductors | 3 |
 | semiconductors/process | 1 |
 | ai-economy | 1 |
@@ -102,6 +102,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 ## 버전 히스토리
 
+- (2026-09-10) [260910] Where Does a Robot Think – On-Device vs Datacenter Inference(로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론) 신규 변환 완료 — robotics 1→2, ai-infra/compute 30→31, ai-infra/memory 10→11. 로봇공학에서는 LLM과 반대로 하드웨어가 모델을 결정한다는 임바디먼트 문제(시간·비용 제약)에서 출발해, 계획층·행동층 2단 구조 중 무거운 계획층만 데이터센터로 옮기는 논증, VLA·WAM(세계 행동 모델)의 연산 요구량과 젯슨 토르의 한계(B300의 약 14분의 1), 전력 제약(배터리 2kWh vs 블랙웰 1.2\~1.4kW)까지는 robotics 단일 축. 로봇용 칩(젯슨 토르)이 데이터센터 가속기와 같은 공정 노드(TSMC N4→N3→N2)로 수렴하면서도 낮은 마진(60%대 중반 vs 블랙웰 70%대 중후반)으로 웨이퍼 배정에서 밀리고 실리콘 효율 교차점이 로봇 7대당 GPU 1대라는 진단은 ai-infra/compute, 로봇용 D램(LPDDR)이 HBM에 밀려 줄어드는 비HBM 웨이퍼를 두고 경쟁하며 교차점이 로봇 5대당 GPU 1대라는 진단은 ai-infra/memory로 이중 분류. RoboArena 1위 모델 DreamZero 실측(B300 1대로 로봇 7대 시간분할 처리, p99 1.16초)을 바탕으로 로봇 56대 기준 오프로드 대 온로봇 TCO를 비교해 가동률 반영 시 오프로드가 온로봇의 약 60%(가정용 배치는 약 15%) 비용으로 유리해짐을 실증한 TCO 판정까지 전체 12개 섹션 완료. 컴퓨트·메모리 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류 — 로봇이라는 단일 수요처 관점의 첫 문서)
 - (2026-09-07) [260907] TPU Inference Externalization Full Steam Ahead(TPU 추론 외부화 전속력 질주 - InferenceX 첫 실측) 신규 변환 완료 — ai-infra/compute 29→30, ai-infra/networking 13→14. InferenceX(SemiAnalysis 제3자 추론 벤치마크) 최초 공개로 TPUv7 Ironwood가 엔비디아 B200·B300 대비 최대 50% 나은 성능당 비용(초당 100토큰/사용자 기준 $0.181 vs $0.222 vs $0.276)을 실측, 구글 내부 비용 기준 동시성 256에서 우위가 76.7\~130.2%까지 커지되 TTFT가 늘어나는 트레이드오프까지 분석, GB300 NVL72 분리형 서빙 대 TPUv7 통합 서빙 "사과 대 바나나" 비교(중간 지연구간 GB300 약 30% 우위)라는 하드웨어·비즈니스 축은 compute, 새 TorchTPU 백엔드(TorchAX 번역 계층을 대체하는 네이티브 파이토치 지원)와 DP 어텐션·MoE 라우팅·GDN 커널·레인 레이아웃 등 커널 단위 최적화 딥다이브, Ironwood 칩 설계(MegaCore 폐기·별도 다이 2개, MXU 256×256 헤드차원 패딩 문제)와 3차원 토러스·OCS·차세대 TPUv8i Boardfly 네트워크 토폴로지라는 시스템·네트워킹 축은 networking으로 이중 분류. 추측 디코딩(MTP)·PD 분리(TPU-Sync·Mooncake Store)·AgentX 로드맵과 TPUv7 TCO(서버 원가 블랙웰 대비 절반 미만) 분석까지 전체 8개 섹션 완료. 컴퓨트·네트워킹 통합 리포트 문서별 요약에 추가
 - (2026-09-02) [260901] Korea's Trillion-Dollar Sovereign AI Investment: Nvidia Wins, Hynix Loses(한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다) 신규 변환 완료 — ai-infra/business 21→22, ai-infra/memory 9→10. 한국의 "독자 AI 파운데이션 모델" 국가대표 토너먼트(6개월 주기 탈락·자원 재분배 구조, 네이버 탈락 논란, 30명 미만 스타트업 모티프 3가 미국 최고 오픈소스 모델(잉클링·넴트론 3 울트라)을 능가하고도 벤치마크 외 심사에서 최하위로 탈락한 이변), 9,190억 달러 규모 1조 달러급 데이터센터 투자 계획(2029년 8.4GW·2035년 18.4GW), 젠슨 황의 오픈소스·주권 AI 지지 배경(컴플리먼트 상품화 전략, 실질 고객 2\~7곳뿐인 엔비디아의 다변화 필요성)까지 사업 축은 business, SK하이닉스·삼성의 2027년 HBM4 가격 격차(엔비디아向 Gb당 3.0\~3.3달러 vs 삼성 3.5\~3.9달러)와 SK그룹-엔비디아 암묵적 특가·GPU 우선배정 거래, 두 회사 마진 격차 축소(10%대→한 자릿수 퍼센트포인트) 전망, SOCAMM 장기 공급계약 추정까지 메모리 가격·수익성 축은 memory로 이중 분류. 전체 7개 섹션 완료, 메모리 통합 리포트 갱신
 - (2026-08-31) `ai-infra/security` 신규 하위 카테고리 신설 + [260830] Most Neoclouds Suck At Security(네오클라우드 대다수는 보안이 엉망이다) 신규 변환 완료 — ai-infra/security 0→1, ai-infra/business 20→21. CVE 분기별 실측(엔비디아 드라이버·CUDA·PyTorch·K8s·Docker는 변화 없음, Glasswing 참여 조직만 유의미한 급증)으로 "AI가 사이버보안을 근본적으로 바꿨다"는 서사를 데이터로 반박, 오픈AI 학습 모델이 허깅페이스 인프라를 연쇄 침해한 실제 보안 사고 전말, 임베고·버그바운티 생태계 비교(네오클라우드 중 유료 버그바운티는 Together 하나뿐), ClusterMAX 3.0 테스트(25개 공급자·32개 클러스터)에서 실증한 5가지 침해 패턴(vCluster 공유 K8s發 크로스테넌트 RCE, 멀티테넌트 Grafana의 God-level Prometheus 키, InfiniBand 보안 키(P_Key·M_Key·SA_Key 등) 오설정, NVIDIAscape 컨테이너 탈옥, BlueField DPU RShim 관리채널 노출), 폐쇄형 모델의 보안 PoC 가드레일이 방어 연구를 오픈 모델로 떠미는 역설, 엔비디아·AMD·칩 스타트업이 네오클라우드가 될 때 지는 보안·금융 조달 함의까지 전체 10개 섹션 완료. 기존 `ai-infra` 하위 카테고리 어디에도 없던 "멀티테넌트 인프라 보안 운영" 축이라 신설, 세레브라스·샘바노바 등 칩 스타트업의 네오클라우드화 금융 조달 논증이 ai-infra/business와도 겹쳐 이중 분류. business·security 모두 아직 통합 리포트가 없어 리포트 갱신은 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용)
