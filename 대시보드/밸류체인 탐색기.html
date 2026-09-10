@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>밸류체인 탐색기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11.11.4/dist/style.css">
+<style>
+:root{--paper:#fff;--ink1:#1a2233;--ink2:#39415a;--ink3:#6b7488;--ink4:#98a0b0;
+--line:#d6dae2;--bg:#f7f8fa;--hi:#e8eef7;--hiline:#39415a}
+*{box-sizing:border-box}
+html,body,#root{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink1);
+font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
+.app{display:flex;flex-direction:column;height:100%}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;
+background:var(--paper);border-bottom:1px solid var(--line)}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.2px;margin-right:4px}
+.brand small{display:block;font-size:11.5px;font-weight:400;color:var(--ink3)}
+.search{position:relative}
+.search input{width:230px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;
+font:inherit;font-size:13px;background:var(--paper);color:var(--ink1)}
+.sug{position:absolute;z-index:30;top:36px;left:0;width:300px;max-height:280px;overflow:auto;
+background:var(--paper);border:1px solid var(--line);border-radius:6px;
+box-shadow:0 6px 20px rgba(26,34,51,.10)}
+.sug div{padding:7px 10px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f2f6}
+.sug div:hover{background:var(--hi)}
+.sug em{font-style:normal;color:var(--ink3);font-size:11.5px;margin-left:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:5px 10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);
+font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.chip:hover{background:var(--hi)}
+.chip.on{background:var(--hiline);border-color:var(--hiline);color:#fff}
+.grp{display:flex;align-items:center;gap:6px}
+.grp b{font-size:11.5px;color:var(--ink3);font-weight:600}
+.main{flex:1;display:flex;min-height:0}
+.canvas{flex:1;min-width:0;position:relative}
+.side{width:330px;flex:none;background:var(--paper);border-left:1px solid var(--line);
+overflow:auto;padding:16px 16px 40px}
+.side h2{font-size:17px;margin:0 0 2px;letter-spacing:-.2px}
+.side .tk{font-size:12px;color:var(--ink3);margin-bottom:10px}
+.side p{margin:0 0 12px;font-size:13px;color:var(--ink2)}
+.side .rev{font-size:13px;font-weight:600;color:var(--ink1);margin-bottom:10px}
+.side h3{font-size:12px;color:var(--ink3);margin:18px 0 6px;letter-spacing:.3px}
+.rel{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:6px;
+cursor:pointer;font-size:12.5px}
+.rel:hover{background:var(--hi)}
+.rel b{display:block;font-size:13px;margin-bottom:2px}
+.rel span{color:var(--ink3)}
+.rel .src{display:block;color:var(--ink4);font-size:11px;margin-top:4px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}
+.btn{padding:6px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);
+font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.btn:hover{background:var(--hi)}
+.btn.pri{background:var(--hiline);border-color:var(--hiline);color:#fff}
+.empty{color:var(--ink3);font-size:13px}
+/* 노드 */
+.co{width:210px;background:var(--paper);border:1px solid var(--line);border-radius:7px;
+padding:8px 10px;position:relative;cursor:pointer}
+.co:hover{border-color:var(--ink4)}
+.co.center{background:var(--hi);border-color:var(--hiline);border-width:1.6px}
+.co.anon{background:#f4eef4;border-style:dashed}
+.co .nm{font-size:12.5px;font-weight:600;line-height:1.35;padding-right:22px}
+.co .ind{font-size:10.5px;color:var(--ink3);margin-top:2px}
+.co .sh{font-size:10.5px;color:var(--ink2);margin-top:3px}
+.co .ex{position:absolute;top:6px;right:6px;width:18px;height:18px;line-height:16px;
+text-align:center;border:1px solid var(--line);border-radius:4px;background:var(--paper);
+font-size:12px;color:var(--ink3)}
+.co .ex:hover{background:var(--hiline);color:#fff;border-color:var(--hiline)}
+.react-flow__handle{opacity:0;width:1px;height:1px;min-width:0;min-height:0;border:0}
+.lgd{position:absolute;left:12px;top:12px;z-index:5;background:rgba(255,255,255,.94);
+border:1px solid var(--line);border-radius:7px;padding:9px 11px;font-size:11.5px;color:var(--ink2)}
+.lgd div{display:flex;align-items:center;gap:7px;margin-top:3px}
+.lgd div:first-child{margin-top:0}
+.lgd b{font-weight:600;color:var(--ink3);font-size:11px}
+@media (max-width:860px){.main{flex-direction:column}.side{width:auto;border-left:0;
+border-top:1px solid var(--line);max-height:44%}.search input{width:150px}}
+</style>
+</head><body>
+<div id="root"></div>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reactflow@11.11.4/dist/umd/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@dagrejs/dagre@1.1.4/dist/dagre.min.js"></script>
+<script>window.__VC__ = {"companies":[{"id":"nvidia","name":"NVIDIA","name_ko":"엔비디아","ticker":"NVDA","industry":"팹리스 GPU","country":"미국","revenue":"FY2026 매출 2,159.38억 달러","desc":"가속 컴퓨팅·네트워킹이 매출의 89.6%. 웨이퍼는 전량 외부 파운드리."},{"id":"amd","name":"AMD","name_ko":"AMD","ticker":"AMD","industry":"팹리스 CPU·GPU","country":"미국","revenue":"FY2025 매출 346.39억 달러","desc":"데이터센터 48.0% · 클라이언트와 게이밍 42.0% · 임베디드 10.0%."},{"id":"tsmc","name":"TSMC","name_ko":"TSMC","ticker":"TSM","industry":"파운드리","country":"대만","revenue":"FY2025 매출 3조 8,090억 대만달러","desc":"7nm 이하가 웨이퍼 매출의 74%. 상위 10사가 매출의 78%."},{"id":"asml","name":"ASML","name_ko":"ASML","ticker":"ASML","industry":"노광 장비","country":"네덜란드","revenue":"FY2025 매출 326.67억 유로","desc":"장비 535대 출하, EUV 48대. 자재의 약 80%가 외부 공급망."},{"id":"samsung","name":"Samsung Electronics","name_ko":"삼성전자","ticker":"005930","industry":"종합 반도체","country":"한국","revenue":null,"desc":"NVIDIA에 파운드리 웨이퍼와 메모리를 함께 댄다."},{"id":"skhynix","name":"SK hynix","name_ko":"SK하이닉스","ticker":"000660","industry":"메모리","country":"한국","revenue":null,"desc":"NVIDIA 10-K가 메모리 공급사로 실명을 적었다."},{"id":"micron","name":"Micron Technology","name_ko":"마이크론","ticker":"MU","industry":"메모리","country":"미국","revenue":null,"desc":"NVIDIA 10-K가 메모리 공급사로 실명을 적었다."},{"id":"globalfoundries","name":"GlobalFoundries","name_ko":"글로벌파운드리","ticker":"GFS","industry":"파운드리","country":"미국","revenue":null,"desc":"AMD와 웨이퍼 공급계약. 연간 최소 물량과 2026년까지의 가격을 정해 뒀다."},{"id":"umc","name":"United Microelectronics","name_ko":"UMC","ticker":"UMC","industry":"파운드리","country":"대만","revenue":null,"desc":"AMD의 프로그래머블 로직 IC를 만든다."},{"id":"foxconn","name":"Hon Hai Precision","name_ko":"홍하이정밀(폭스콘)","ticker":"2317","industry":"수탁 제조","country":"대만","revenue":null,"desc":"NVIDIA 완제품 조립·시험·패키징."},{"id":"wistron","name":"Wistron","name_ko":"위스트론","ticker":"3231","industry":"수탁 제조","country":"대만","revenue":null,"desc":"NVIDIA 완제품 조립·시험·패키징."},{"id":"fabrinet","name":"Fabrinet","name_ko":"파브리넷","ticker":"FN","industry":"수탁 제조","country":"태국","revenue":null,"desc":"NVIDIA 완제품 조립·시험·패키징. 광부품 비중이 크다."},{"id":"spil","name":"Siliconware Precision","name_ko":"SPIL","ticker":"2325","industry":"후공정","country":"대만","revenue":null,"desc":"AMD 조립·시험·패키징."},{"id":"kyec","name":"King Yuan Electronics","name_ko":"KYEC","ticker":"2449","industry":"후공정","country":"대만","revenue":null,"desc":"AMD 조립·시험·패키징."},{"id":"tongfu","name":"Tongfu Microelectronics","name_ko":"퉁푸 마이크로일렉트로닉스","ticker":"002156","industry":"후공정","country":"중국","revenue":null,"desc":"AMD와 조립·시험·패키징 합작사 두 곳을 함께 운영한다."},{"id":"sanmina","name":"Sanmina","name_ko":"산미나","ticker":"SANM","industry":"수탁 제조","country":"미국","revenue":null,"desc":"2025년 10월 AMD의 ZT 제조사업을 인수하고 AI 랙 제조 우선 파트너가 됐다."},{"id":"zeiss","name":"Carl Zeiss SMT","name_ko":"칼 자이스 SMT","ticker":null,"industry":"광학","country":"독일","revenue":null,"desc":"ASML의 렌즈·거울·조명계 유일 공급사. 공급이 끊기면 ASML 사업이 멈춘다고 공시에 적혀 있다."},{"id":"cymer","name":"Cymer","name_ko":"사이머","ticker":null,"industry":"광원","country":"미국","revenue":null,"desc":"ASML이 2013년에 인수한 광원 자회사. 외부 공급사가 아니라 내부 조직이다."},{"id":"trumpf","name":"TRUMPF","name_ko":"트룸프","ticker":null,"industry":"레이저","country":"독일","revenue":null,"desc":"EUV 광원용 이산화탄소 레이저. ASML 공시에 이름이 없다."},{"id":"vdl","name":"VDL Groep","name_ko":"VDL 그룹","ticker":null,"industry":"정밀 기계","country":"네덜란드","revenue":null,"desc":"ASML 기계 모듈. ASML 공시에 이름이 없다."},{"id":"amat","name":"Applied Materials","name_ko":"어플라이드 머티리얼즈","ticker":"AMAT","industry":"반도체 장비","country":"미국","revenue":null,"desc":"증착·식각 장비. TSMC 20-F에 공급사로 등장하지 않는다."},{"id":"lam","name":"Lam Research","name_ko":"램리서치","ticker":"LRCX","industry":"반도체 장비","country":"미국","revenue":null,"desc":"식각·증착 장비. TSMC 20-F에 공급사로 등장하지 않는다."},{"id":"kla","name":"KLA","name_ko":"KLA","ticker":"KLAC","industry":"계측·검사 장비","country":"미국","revenue":null,"desc":"TSMC 20-F에 공급사로 등장하지 않는다."},{"id":"tel","name":"Tokyo Electron","name_ko":"도쿄일렉트론","ticker":"8035","industry":"반도체 장비","country":"일본","revenue":null,"desc":"TSMC 20-F에 공급사로 등장하지 않는다."},{"id":"shinetsu","name":"Shin-Etsu Chemical","name_ko":"신에쓰화학","ticker":"4063","industry":"실리콘 웨이퍼","country":"일본","revenue":null,"desc":"TSMC 20-F는 원판 웨이퍼 공급사를 국가로만 적는다."},{"id":"sumco","name":"SUMCO","name_ko":"섬코","ticker":"3436","industry":"실리콘 웨이퍼","country":"일본","revenue":null,"desc":"TSMC 20-F는 원판 웨이퍼 공급사를 국가로만 적는다."},{"id":"openai","name":"OpenAI","name_ko":"오픈AI","ticker":null,"industry":"AI 모델","country":"미국","revenue":null,"desc":"2025년 10월 AMD와 GPU 6기가와트 공급 계약. AMD 10-K에 적혀 있다."},{"id":"microsoft","name":"Microsoft","name_ko":"마이크로소프트","ticker":"MSFT","industry":"클라우드","country":"미국","revenue":null,"desc":"AI 인프라 고객으로 널리 거론되나 어느 쪽 공시도 상대를 지명하지 않는다."},{"id":"amazon","name":"Amazon","name_ko":"아마존","ticker":"AMZN","industry":"클라우드","country":"미국","revenue":null,"desc":"AI 인프라 고객으로 널리 거론되나 어느 쪽 공시도 상대를 지명하지 않는다."},{"id":"alphabet","name":"Alphabet","name_ko":"알파벳","ticker":"GOOGL","industry":"클라우드","country":"미국","revenue":null,"desc":"AI 인프라 고객으로 널리 거론되나 어느 쪽 공시도 상대를 지명하지 않는다."},{"id":"meta","name":"Meta Platforms","name_ko":"메타","ticker":"META","industry":"플랫폼","country":"미국","revenue":null,"desc":"AI 인프라 고객으로 널리 거론되나 어느 쪽 공시도 상대를 지명하지 않는다."},{"id":"oracle","name":"Oracle","name_ko":"오라클","ticker":"ORCL","industry":"클라우드","country":"미국","revenue":null,"desc":"AI 인프라 고객으로 널리 거론되나 어느 쪽 공시도 상대를 지명하지 않는다."},{"id":"coreweave","name":"CoreWeave","name_ko":"코어위브","ticker":"CRWV","industry":"네오클라우드","country":"미국","revenue":null,"desc":"NVIDIA 10-K가 「네오클라우드」를 간접고객군으로 적었으나 이름은 없다."},{"id":"supermicro","name":"Super Micro Computer","name_ko":"슈퍼마이크로","ticker":"SMCI","industry":"서버","country":"미국","revenue":null,"desc":"NVIDIA가 「직접고객」으로 부르는 시스템 인테그레이터 후보."},{"id":"dell","name":"Dell Technologies","name_ko":"델","ticker":"DELL","industry":"서버·PC","country":"미국","revenue":null,"desc":"NVIDIA가 「직접고객」으로 부르는 OEM 후보."},{"id":"hpe","name":"Hewlett Packard Enterprise","name_ko":"HPE","ticker":"HPE","industry":"서버","country":"미국","revenue":null,"desc":"NVIDIA가 「직접고객」으로 부르는 OEM 후보."},{"id":"apple","name":"Apple","name_ko":"애플","ticker":"AAPL","industry":"완제품","country":"미국","revenue":null,"desc":"TSMC 최대 고객 후보. 20-F는 A·B·C로만 적는다."},{"id":"broadcom","name":"Broadcom","name_ko":"브로드컴","ticker":"AVGO","industry":"팹리스","country":"미국","revenue":null,"desc":"TSMC 고객 후보. 20-F에 이름이 없다."},{"id":"qualcomm","name":"Qualcomm","name_ko":"퀄컴","ticker":"QCOM","industry":"팹리스","country":"미국","revenue":null,"desc":"TSMC 고객 후보. 20-F에 이름이 없다."},{"id":"mediatek","name":"MediaTek","name_ko":"미디어텍","ticker":"2454","industry":"팹리스","country":"대만","revenue":null,"desc":"TSMC 고객 후보. 20-F에 이름이 없다."},{"id":"intel","name":"Intel","name_ko":"인텔","ticker":"INTC","industry":"종합 반도체","country":"미국","revenue":null,"desc":"ASML 장비 고객 후보. ASML 공시는 고객을 익명으로 적는다."},{"id":"sony","name":"Sony","name_ko":"소니","ticker":"6758","industry":"완제품","country":"일본","revenue":null,"desc":"AMD 콘솔 SoC 고객 후보. AMD 10-K에 이름이 없다."},{"id":"anon_nv_1","name":"NVIDIA 직접고객 갑","name_ko":"NVIDIA 직접고객 갑","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"FY2026 총매출의 22%, 매출채권 잔액의 25%. 10-K가 이름을 적지 않는다."},{"id":"anon_nv_2","name":"NVIDIA 직접고객 을","name_ko":"NVIDIA 직접고객 을","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"FY2026 총매출의 14%, 매출채권 잔액의 18%. 10-K가 이름을 적지 않는다."},{"id":"anon_nv_3","name":"NVIDIA 직접고객 병","name_ko":"NVIDIA 직접고객 병","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"매출채권 잔액의 13%. 총매출 비중은 10% 미만."},{"id":"anon_ts_a","name":"TSMC 고객 A","name_ko":"TSMC 고객 A","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"FY2025 매출의 19%(7,270억 대만달러). 2024년 12%에서 올라섰다."},{"id":"anon_ts_b","name":"TSMC 고객 B","name_ko":"TSMC 고객 B","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"FY2025 매출의 17%(6,452억 대만달러). 2023년 25%에서 내려왔다."},{"id":"anon_as_1","name":"ASML 최대 고객","name_ko":"ASML 최대 고객","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"FY2025 매출의 23.9%(77.97억 유로). 2024년 16.6%에서 올라섰다."},{"id":"anon_am_1","name":"AMD 매출채권 집중 고객","name_ko":"AMD 매출채권 집중 고객","ticker":null,"industry":"익명","country":null,"anon":true,"revenue":null,"desc":"2025년 말 매출채권 잔액의 11%. AMD는 FY2025·FY2024에 매출 10%를 넘긴 고객이 없다."}],"relationships":[{"source":"tsmc","target":"nvidia","product":"웨이퍼 파운드리 · CoWoS 패키징","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business — 「We utilize foundries, such as TSMC…」"]},{"source":"samsung","target":"nvidia","product":"웨이퍼 파운드리 · 메모리","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business"]},{"source":"skhynix","target":"nvidia","product":"메모리","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business — 「We purchase memory from SK Hynix…」"]},{"source":"micron","target":"nvidia","product":"메모리","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business"]},{"source":"foxconn","target":"nvidia","product":"완제품 조립·시험·패키징","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business"]},{"source":"wistron","target":"nvidia","product":"완제품 조립·시험·패키징","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business"]},{"source":"fabrinet","target":"nvidia","product":"완제품 조립·시험·패키징","period":"FY2026","share":null,"confidence":"high","sources":["NVIDIA FY2026 10-K, Item 1 Business"]},{"source":"nvidia","target":"anon_nv_1","product":"직접 판매","period":"FY2026","share":"NVIDIA 매출의 22%","confidence":"high","sources":["NVIDIA FY2026 10-K, Segment Information 주석"]},{"source":"nvidia","target":"anon_nv_2","product":"직접 판매","period":"FY2026","share":"NVIDIA 매출의 14%","confidence":"high","sources":["NVIDIA FY2026 10-K, Segment Information 주석"]},{"source":"nvidia","target":"anon_nv_3","product":"직접 판매","period":"FY2026","share":"매출채권의 13%","confidence":"high","sources":["NVIDIA FY2026 10-K, Balance Sheet Components 주석"]},{"source":"nvidia","target":"supermicro","product":"GPU·시스템","period":"FY2026","share":null,"confidence":"low","sources":["익명 직접고객 후보. 어느 쪽 공시도 상대를 지명하지 않는다"]},{"source":"nvidia","target":"dell","product":"GPU·시스템","period":"FY2026","share":null,"confidence":"low","sources":["익명 직접고객 후보. 어느 쪽 공시도 상대를 지명하지 않는다"]},{"source":"nvidia","target":"hpe","product":"GPU·시스템","period":"FY2026","share":null,"confidence":"low","sources":["익명 직접고객 후보. 어느 쪽 공시도 상대를 지명하지 않는다"]},{"source":"nvidia","target":"microsoft","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K는 간접고객군을 「CSP·네오클라우드·AI 모델 회사」로만 적는다"]},{"source":"nvidia","target":"amazon","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K는 간접고객군을 「CSP·네오클라우드·AI 모델 회사」로만 적는다"]},{"source":"nvidia","target":"alphabet","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K는 간접고객군을 「CSP·네오클라우드·AI 모델 회사」로만 적는다"]},{"source":"nvidia","target":"meta","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K는 간접고객군을 「CSP·네오클라우드·AI 모델 회사」로만 적는다"]},{"source":"nvidia","target":"oracle","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K는 간접고객군을 「CSP·네오클라우드·AI 모델 회사」로만 적는다"]},{"source":"nvidia","target":"coreweave","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["10-K가 「네오클라우드」를 간접고객군으로 적었으나 이름은 없다"]},{"source":"nvidia","target":"openai","product":"AI 가속기","period":"FY2026","share":null,"confidence":"low","sources":["NVIDIA 10-K는 「AI 모델 회사」로만 적는다"]},{"source":"tsmc","target":"amd","product":"7nm 이하 CPU·GPU 웨이퍼 전량","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1A — 「TSMC manufactures all of our microprocessor and GPU products at 7nm and below」"]},{"source":"globalfoundries","target":"amd","product":"12nm·14nm HPC 웨이퍼","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1 Business · Item 1A 웨이퍼 공급계약"]},{"source":"umc","target":"amd","product":"프로그래머블 로직 IC","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1A"]},{"source":"samsung","target":"amd","product":"프로그래머블 로직 IC","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1A"]},{"source":"tongfu","target":"amd","product":"조립·시험·패키징 (합작 2사)","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1 Business"]},{"source":"spil","target":"amd","product":"조립·시험·패키징","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1 Business"]},{"source":"kyec","target":"amd","product":"조립·시험·패키징","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 1 Business"]},{"source":"sanmina","target":"amd","product":"AI 랙 수탁 제조","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K — 2025년 10월 ZT 제조사업 매각과 우선 파트너 지정"]},{"source":"amd","target":"openai","product":"GPU 6기가와트 공급 계약","period":"FY2025","share":null,"confidence":"high","sources":["AMD FY2025 10-K, Item 7 — MI450 시리즈부터 배치"]},{"source":"amd","target":"anon_am_1","product":"직접 판매","period":"FY2025","share":"매출채권의 11%","confidence":"high","sources":["AMD FY2025 10-K, Note 11 Concentrations of Credit Risk"]},{"source":"amd","target":"microsoft","product":"서버 CPU·GPU · 콘솔 SoC","period":"FY2025","share":null,"confidence":"low","sources":["AMD 10-K는 FY2025에 10% 넘는 고객이 없다고만 적는다"]},{"source":"amd","target":"sony","product":"콘솔 SoC","period":"FY2025","share":null,"confidence":"low","sources":["AMD 10-K에 이름이 없다. FY2023 18% 고객이 클라이언트·게이밍 부문이었다"]},{"source":"amd","target":"oracle","product":"서버 CPU·GPU","period":"FY2025","share":null,"confidence":"low","sources":["AMD 10-K는 하이퍼스케일러를 이름 없이 적는다"]},{"source":"amd","target":"meta","product":"서버 CPU·GPU","period":"FY2025","share":null,"confidence":"low","sources":["AMD 10-K는 하이퍼스케일러를 이름 없이 적는다"]},{"source":"amd","target":"dell","product":"서버·PC 프로세서","period":"FY2025","share":null,"confidence":"low","sources":["AMD 10-K는 OEM을 이름 없이 적는다"]},{"source":"asml","target":"tsmc","product":"EUV·DUV 노광 장비","period":"FY2025","share":null,"confidence":"medium","sources":["TSMC 20-F는 장비 공급사를 「한정된 수의 공급사」로만 적고, ASML 20-F는 고객을 익명으로 적는다"]},{"source":"amat","target":"tsmc","product":"증착·식각 장비","period":"FY2025","share":null,"confidence":"medium","sources":["TSMC 20-F에 이름 없음"]},{"source":"lam","target":"tsmc","product":"식각·증착 장비","period":"FY2025","share":null,"confidence":"medium","sources":["TSMC 20-F에 이름 없음"]},{"source":"kla","target":"tsmc","product":"계측·검사 장비","period":"FY2025","share":null,"confidence":"medium","sources":["TSMC 20-F에 이름 없음"]},{"source":"tel","target":"tsmc","product":"코터·디벨로퍼·식각 장비","period":"FY2025","share":null,"confidence":"medium","sources":["TSMC 20-F에 이름 없음"]},{"source":"shinetsu","target":"tsmc","product":"원판 실리콘 웨이퍼","period":"FY2025","share":null,"confidence":"low","sources":["TSMC 20-F는 원판 웨이퍼 공급사를 대만·일본·독일·싱가포르로만 적는다"]},{"source":"sumco","target":"tsmc","product":"원판 실리콘 웨이퍼","period":"FY2025","share":null,"confidence":"low","sources":["TSMC 20-F는 원판 웨이퍼 공급사를 대만·일본·독일·싱가포르로만 적는다"]},{"source":"tsmc","target":"anon_ts_a","product":"웨이퍼 제조","period":"FY2025","share":"TSMC 매출의 19%","confidence":"high","sources":["TSMC FY2025 20-F, 재무제표 주석 — 10% 이상 고객"]},{"source":"tsmc","target":"anon_ts_b","product":"웨이퍼 제조","period":"FY2025","share":"TSMC 매출의 17%","confidence":"high","sources":["TSMC FY2025 20-F, 재무제표 주석 — 10% 이상 고객"]},{"source":"tsmc","target":"apple","product":"웨이퍼 제조","period":"FY2025","share":null,"confidence":"low","sources":["고객 A·B 후보. 20-F는 이름을 적지 않는다"]},{"source":"tsmc","target":"broadcom","product":"웨이퍼 제조","period":"FY2025","share":null,"confidence":"low","sources":["20-F에 이름 없음"]},{"source":"tsmc","target":"qualcomm","product":"웨이퍼 제조","period":"FY2025","share":null,"confidence":"low","sources":["20-F에 이름 없음"]},{"source":"tsmc","target":"mediatek","product":"웨이퍼 제조","period":"FY2025","share":null,"confidence":"low","sources":["20-F에 이름 없음"]},{"source":"zeiss","target":"asml","product":"렌즈·거울·조명계 (유일 공급사)","period":"FY2025","share":null,"confidence":"high","sources":["ASML FY2025 연차보고서 — 「our sole supplier of lenses, mirrors, illuminators, collectors」"]},{"source":"cymer","target":"asml","product":"EUV·DUV 광원 (자회사)","period":"FY2025","share":null,"confidence":"medium","sources":["2013년 ASML이 인수한 자회사. 외부 공급사 위험으로는 적히지 않는다"]},{"source":"trumpf","target":"asml","product":"EUV 광원용 이산화탄소 레이저","period":"FY2025","share":null,"confidence":"low","sources":["ASML 공시에 이름 없음"]},{"source":"vdl","target":"asml","product":"정밀 기계 모듈","period":"FY2025","share":null,"confidence":"low","sources":["ASML 공시에 이름 없음"]},{"source":"asml","target":"anon_as_1","product":"노광 장비·서비스","period":"FY2025","share":"ASML 매출의 23.9%","confidence":"high","sources":["ASML FY2025 연차보고서 — 최대 고객 77.97억 유로"]},{"source":"asml","target":"samsung","product":"EUV·DUV 노광 장비","period":"FY2025","share":null,"confidence":"medium","sources":["ASML은 고객을 익명으로 적는다. 한국향 매출 81.60억 유로"]},{"source":"asml","target":"skhynix","product":"EUV·DUV 노광 장비","period":"FY2025","share":null,"confidence":"medium","sources":["ASML은 고객을 익명으로 적는다. 한국향 매출 81.60억 유로"]},{"source":"asml","target":"intel","product":"EUV High-NA·DUV 노광 장비","period":"FY2025","share":null,"confidence":"medium","sources":["ASML은 고객을 익명으로 적는다. 미국향 매출 40.89억 유로"]},{"source":"asml","target":"micron","product":"EUV·DUV 노광 장비","period":"FY2025","share":null,"confidence":"medium","sources":["ASML은 고객을 익명으로 적는다"]}]};</script>
+<script>
+(function(){
+var h = React.createElement;
+var RFlib = window.ReactFlow;
+var RF = RFlib.default || RFlib.ReactFlow;
+var Background = RFlib.Background, Controls = RFlib.Controls, MiniMap = RFlib.MiniMap;
+var Handle = RFlib.Handle, Position = RFlib.Position, MarkerType = RFlib.MarkerType;
+var useState = React.useState, useMemo = React.useMemo, useCallback = React.useCallback;
+
+var DATA = window.__VC__;
+var CO = {};
+DATA.companies.forEach(function(c){ CO[c.id] = c; });
+var RELS = DATA.relationships;
+
+var PERIODS = (function(){
+  var s = {}; RELS.forEach(function(r){ s[r.period] = 1; });
+  return Object.keys(s).sort();
+})();
+
+var CONF_LABEL = { high: '공시로 확인', medium: '한쪽만 공시', low: '추정' };
+var CONF_STYLE = {
+  high:   { stroke: '#6b7488', strokeWidth: 1.7 },
+  medium: { stroke: '#8b93a5', strokeWidth: 1.4, strokeDasharray: '6 4' },
+  low:    { stroke: '#b0b6c2', strokeWidth: 1.3, strokeDasharray: '2 4' }
+};
+
+function label(c){ return c.name_ko || c.name; }
+function up(id, f){ return RELS.filter(function(r){ return r.target === id && f(r); }); }
+function down(id, f){ return RELS.filter(function(r){ return r.source === id && f(r); }); }
+
+// ── 노드 ──────────────────────────────────────────────────────────
+function CoNode(p){
+  var d = p.data, c = d.co;
+  var cls = 'co' + (d.isCenter ? ' center' : '') + (c.anon ? ' anon' : '');
+  var kids = [
+    h(Handle, { key:'t', type:'target', position: Position.Left }),
+    h(Handle, { key:'s', type:'source', position: Position.Right }),
+    h('div', { key:'n', className:'nm' }, label(c)),
+    h('div', { key:'i', className:'ind' }, c.industry + (c.country ? ' · ' + c.country : ''))
+  ];
+  if (d.share) kids.push(h('div', { key:'sh', className:'sh' }, d.share));
+  if (d.hidden > 0) kids.push(h('div', {
+    key:'x', className:'ex', title: '이웃 ' + d.hidden + '곳 더 펼치기',
+    onClick: function(e){ e.stopPropagation(); d.onExpand(c.id); }
+  }, '+'));
+  return h('div', { className: cls, onClick: function(){ d.onOpen(c.id); } }, kids);
+}
+var NODE_TYPES = { co: CoNode };
+
+// ── 배치 ──────────────────────────────────────────────────────────
+function place(nodes, edges){
+  var g = new dagre.graphlib.Graph();
+  g.setDefaultEdgeLabel(function(){ return {}; });
+  g.setGraph({ rankdir:'LR', nodesep:16, ranksep:120, marginx:24, marginy:24 });
+  nodes.forEach(function(n){ g.setNode(n.id, { width:210, height:n.__h }); });
+  edges.forEach(function(e){ g.setEdge(e.source, e.target); });
+  dagre.layout(g);
+  return nodes.map(function(n){
+    var p = g.node(n.id);
+    return Object.assign({}, n, { position: { x: p.x - 105, y: p.y - n.__h / 2 } });
+  });
+}
+
+// ── 앱 ────────────────────────────────────────────────────────────
+function App(){
+  var s0 = useState('nvidia'), center = s0[0], setCenter = s0[1];
+  var s1 = useState({}), open = s1[0], setOpen = s1[1];          // 펼친 회사
+  var s2 = useState('nvidia'), sel = s2[0], setSel = s2[1];      // 옆판에 띄운 회사
+  var s3 = useState(''), q = s3[0], setQ = s3[1];
+  var s4 = useState(PERIODS.slice()), per = s4[0], setPer = s4[1];
+  var s5 = useState(['high','medium','low']), conf = s5[0], setConf = s5[1];
+
+  var pass = useCallback(function(r){
+    return per.indexOf(r.period) >= 0 && conf.indexOf(r.confidence) >= 0;
+  }, [per, conf]);
+
+  var graph = useMemo(function(){
+    var keep = {}; keep[center] = 1;
+    var roots = [center].concat(Object.keys(open));
+    roots.forEach(function(id){
+      up(id, pass).forEach(function(r){ keep[r.source] = 1; });
+      down(id, pass).forEach(function(r){ keep[r.target] = 1; });
+    });
+    var ids = Object.keys(keep).filter(function(id){ return CO[id]; });
+    var eds = RELS.filter(function(r){
+      return pass(r) && keep[r.source] && keep[r.target];
+    }).map(function(r, i){
+      return {
+        id: 'e' + i + r.source + r.target, source: r.source, target: r.target,
+        type: 'smoothstep', style: CONF_STYLE[r.confidence],
+        markerEnd: { type: MarkerType.ArrowClosed, width: 13, height: 13,
+                     color: CONF_STYLE[r.confidence].stroke },
+        data: r
+      };
+    });
+    var nds = ids.map(function(id){
+      var c = CO[id];
+      var shown = 0, total = 0;
+      up(id, pass).forEach(function(r){ total++; if (keep[r.source]) shown++; });
+      down(id, pass).forEach(function(r){ total++; if (keep[r.target]) shown++; });
+      var sh = null;
+      var inbound = RELS.filter(function(r){ return pass(r) && r.target === id && r.share; });
+      if (inbound.length) sh = inbound[0].share;
+      var lines = 2 + (sh ? 1 : 0);
+      var nameLen = label(c).length;
+      var nameRows = nameLen > 14 ? 2 : 1;
+      var hgt = 16 + nameRows * 17 + (lines - 1) * 15;
+      return {
+        id: id, type: 'co', position: { x:0, y:0 }, __h: hgt,
+        data: { co: c, isCenter: id === center, share: sh,
+                hidden: total - shown,
+                onOpen: function(x){ setSel(x); },
+                onExpand: function(x){ setOpen(function(o){
+                  var n = Object.assign({}, o); n[x] = 1; return n; }); } }
+      };
+    });
+    return { nodes: place(nds, eds), edges: eds };
+  }, [center, open, pass]);
+
+  function focus(id){
+    setCenter(id); setOpen({}); setSel(id); setQ('');
+  }
+
+  var hits = q.trim() ? DATA.companies.filter(function(c){
+    var t = (c.name + ' ' + (c.name_ko||'') + ' ' + (c.ticker||'') + ' ' + c.industry).toLowerCase();
+    return t.indexOf(q.trim().toLowerCase()) >= 0;
+  }).slice(0, 12) : [];
+
+  function toggle(arr, v, set){
+    set(arr.indexOf(v) >= 0 ? arr.filter(function(x){ return x !== v; }) : arr.concat([v]));
+  }
+
+  // ── 옆판 ──
+  var c = CO[sel];
+  var ups = up(sel, pass), dws = down(sel, pass);
+  function relRow(r, other, dir){
+    return h('div', { key: dir + other + r.product, className:'rel',
+                      onClick: function(){ setSel(other); } }, [
+      h('b', { key:'b' }, label(CO[other])),
+      h('span', { key:'p' }, r.product + (r.share ? ' · ' + r.share : '')),
+      h('span', { key:'c' }, ' · ' + CONF_LABEL[r.confidence]),
+      h('span', { key:'s', className:'src' }, r.sources.join(' / '))
+    ]);
+  }
+
+  var side = h('div', { className:'side' }, [
+    h('h2', { key:'h' }, label(c)),
+    h('div', { key:'t', className:'tk' },
+      [c.ticker, c.industry, c.country].filter(Boolean).join(' · ')),
+    c.revenue ? h('div', { key:'r', className:'rev' }, c.revenue) : null,
+    h('p', { key:'d' }, c.desc),
+    h('div', { key:'bt', className:'btns' }, [
+      h('button', { key:'1', className:'btn pri', onClick: function(){ focus(sel); } }, '중심으로'),
+      h('button', { key:'2', className:'btn', onClick: function(){
+        setOpen(function(o){ var n = Object.assign({}, o); n[sel] = 1; return n; }); } },
+        '이웃 펼치기')
+    ]),
+    h('h3', { key:'hu' }, '공급받는 곳 ' + ups.length),
+    ups.length ? ups.map(function(r){ return relRow(r, r.source, 'u'); })
+               : h('div', { key:'eu', className:'empty' }, '데이터에 없다'),
+    h('h3', { key:'hd' }, '공급하는 곳 ' + dws.length),
+    dws.length ? dws.map(function(r){ return relRow(r, r.target, 'd'); })
+               : h('div', { key:'ed', className:'empty' }, '데이터에 없다')
+  ]);
+
+  var legend = h('div', { className:'lgd' }, [
+    h('b', { key:'b' }, '선'),
+    h('div', { key:'1' }, [svgLine('high'), '공시가 양쪽을 잇는다']),
+    h('div', { key:'2' }, [svgLine('medium'), '한쪽 공시만 있거나 익명이다']),
+    h('div', { key:'3' }, [svgLine('low'), '추정이다'])
+  ]);
+  function svgLine(k){
+    var st = CONF_STYLE[k];
+    return h('svg', { key:'s'+k, width:30, height:8 },
+      h('line', { x1:0, y1:4, x2:30, y2:4, stroke:st.stroke,
+                  strokeWidth:st.strokeWidth, strokeDasharray:st.strokeDasharray }));
+  }
+
+  return h('div', { className:'app' }, [
+    h('div', { key:'top', className:'top' }, [
+      h('div', { key:'br', className:'brand' }, ['밸류체인 탐색기',
+        h('small', { key:'s' }, '회사를 눌러 상류와 하류를 펼친다')]),
+      h('div', { key:'se', className:'search' }, [
+        h('input', { key:'i', value:q, placeholder:'회사 이름·티커로 찾기',
+                     onChange: function(e){ setQ(e.target.value); } }),
+        hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(x){
+          return h('div', { key:x.id, onClick: function(){ focus(x.id); } },
+            [label(x), h('em', { key:'e' }, x.industry)]);
+        })) : null
+      ]),
+      h('div', { key:'ch', className:'chips' }, ['nvidia','amd','tsmc','asml'].map(function(id){
+        return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
+                             onClick: function(){ focus(id); } }, label(CO[id]));
+      })),
+      h('div', { key:'pf', className:'grp' }, [h('b', { key:'b' }, '기간')].concat(
+        PERIODS.map(function(p){
+          return h('button', { key:p, className:'chip' + (per.indexOf(p) >= 0 ? ' on' : ''),
+                               onClick: function(){ toggle(per, p, setPer); } }, p);
+        }))),
+      h('div', { key:'cf', className:'grp' }, [h('b', { key:'b' }, '근거')].concat(
+        ['high','medium','low'].map(function(k){
+          return h('button', { key:k, className:'chip' + (conf.indexOf(k) >= 0 ? ' on' : ''),
+                               onClick: function(){ toggle(conf, k, setConf); } },
+                   CONF_LABEL[k]);
+        })))
+    ]),
+    h('div', { key:'main', className:'main' }, [
+      h('div', { key:'cv', className:'canvas' }, [
+        h(RF, { key:'rf', nodes: graph.nodes, edges: graph.edges, nodeTypes: NODE_TYPES,
+                fitView: true, fitViewOptions: { padding: 0.18 },
+                minZoom: 0.2, maxZoom: 1.8, proOptions: { hideAttribution: false },
+                nodesDraggable: true, nodesConnectable: false, elementsSelectable: true }, [
+          h(Background, { key:'bg', gap: 22, size: 1, color: '#dfe3ea' }),
+          h(Controls, { key:'ct', showInteractive: false }),
+          h(MiniMap, { key:'mm', pannable: true, zoomable: true,
+                       nodeColor: function(n){ return n.data.isCenter ? '#39415a' : '#c9cfda'; } })
+        ]),
+        legend
+      ]),
+      side
+    ])
+  ]);
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+})();
+</script>
+</body></html>
