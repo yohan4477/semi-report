@@ -44,12 +44,25 @@ def main():
     turns = [re.sub(r'\s+', ' ', t).strip() for t in turns if t.strip()]
     note = '유튜브 자막에서 옮긴 전사. 화자 바뀜(>>)마다 한 줄.'
 
+    def sent4(text):
+        sents = re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', text)
+        sents = [x.strip() for x in sents if x.strip()]
+        return [' '.join(sents[i:i + 4]) for i in range(0, len(sents), 4)]
+
     if len(turns) < 5:  # 화자 바뀜 표시가 없는 자막 — 문장 넷씩 묶는다
         flat = re.sub(r'\s+', ' ', body.replace('\n', ' ')).strip()
         sents = re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', flat)
         sents = [x.strip() for x in sents if x.strip()]
         turns = [' '.join(sents[i:i + 4]) for i in range(0, len(sents), 4)]
         note = '유튜브 자막에서 옮긴 전사. 화자 표시가 없어 문장 넷씩 한 줄.'
+
+    # 한 발언이 너무 길면 인용에 붙는 (L줄) 이 가리키는 자리가 넓어진다 — 문장 넷씩 더 쪼갠다
+    if any(len(t) > 600 for t in turns):
+        split = []
+        for t in turns:
+            split += sent4(t) if len(t) > 600 else [t]
+        turns = split
+        note += ' 600자 넘는 발언은 문장 넷씩 더 쪼갰다.'
 
     meta = dict(re.findall(r'^(\w+): (.*)$', fm, re.M))
     out = ['---',
