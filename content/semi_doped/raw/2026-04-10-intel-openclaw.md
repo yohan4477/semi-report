@@ -22,7 +22,7 @@ I I did it a little bit. It used up like five or $7 in like five minutes. Yeah. 
 
 do this, man. I'm not you know, I'm not that you know, that level of billionaire to like just burn tokens this way. I can't do it. So what I did was
 
-Yeah, I mean I love frontier models and all, but I consider my own intelligence not frontier. So I'm going to make my open claw kind of match my own level of non-frontier intelligence and a Fireworks AI has this thing called like fire pass which allows you to use like $7 a week and it gives you basically unlimited tokens to uh use Kimiko 2. 5 Turbo. Hm.
+Yeah, I mean I love frontier models and all, but I consider my own intelligence not frontier. So I'm going to make my open claw kind of match my own level of non-frontier intelligence and a Fireworks AI has this thing called like fire pass which allows you to use like $7 a week and it gives you basically unlimited tokens to uh use Kimiko 2.5 Turbo. Hm.
 
 Which I'd say is slightly worse than Sonnet. But you know, it does something it does a non-zero amount of work for me which is just fine I actually for what I can afford to spend on agentic AI systems like this. And uh what I did recently this week was I turned on this thing called dreaming mode in open claw which is in its latest latest release. So what it does is all the instructions and experience your agents have with you like you're telling it, "Hey, do this.
 

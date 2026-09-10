@@ -82,9 +82,9 @@ Yeah, I had not either. But apparently this is a company that was had investors 
 
 Which is interesting because the moment you say they're fabulous, you have to ask, so who is the fab? And in all likelihood, it's Tower. So, there's like this common beneficiary of Tower Semiconductor becoming the photonics TSMC. Still that narrative keeps happening.
 
-Anyway, they have about 70 employees. And they've been doing photonic chips. They have this whole photonic IC portfolio that does all the way 400 gig, 800 gig, 1. 6 T.
+Anyway, they have about 70 employees. And they've been doing photonic chips. They have this whole photonic IC portfolio that does all the way 400 gig, 800 gig, 1.6 T.
 
-They have a roadmap up to even 3. 2 T. So, they're a very interesting company. But to me it seems like, yeah, they have a couple of core IP.
+They have a roadmap up to even 3.2 T. So, they're a very interesting company. But to me it seems like, yeah, they have a couple of core IP.
 
 We'll talk about it for sure. But essentially they're a photonic IC company that seemingly has some hyperscaler design wins already. I don't know what it is exactly. But seems like it's a successful company that was basically up for grabs by somebody like Credo.
 
@@ -128,9 +128,7 @@ The reason is he explains clearly like where all this falls now given in the opt
 
 And this is something we can even talk about a little bit more in depth, but micro LEDs are an option where we could put, you know, this slow but wide approach. You know, micro LEDs can't run really fast on a per lane basis. They are not like lasers. Lasers can run at 200 gigs modulated waveforms data rates with the the PAM4 modulation, but micro LEDs can't do that.
 
-They run at like 100 the speed. You can you can run at 2 Gbps or 4 Gbps or at most 10 Gbps, something like that. So, you put a lot of strands of fiber next to each other and make it like a big pipe. And that's how you communicate at like 1.
-
-6 T. It's a far simpler technology and it's it's an ongoing piece of work for me to understand the thermal effects and the reliability effects in my micro LEDs. So, all of these benefits exist. And so, I don't think it's out of the running yet, but it's interesting that Credo also has this active LED cable ALC technology based on their Hyperloom acquisition from late last year.
+They run at like 100 the speed. You can you can run at 2 Gbps or 4 Gbps or at most 10 Gbps, something like that. So, you put a lot of strands of fiber next to each other and make it like a big pipe. And that's how you communicate at like 1.6 T. It's a far simpler technology and it's it's an ongoing piece of work for me to understand the thermal effects and the reliability effects in my micro LEDs. So, all of these benefits exist. And so, I don't think it's out of the running yet, but it's interesting that Credo also has this active LED cable ALC technology based on their Hyperloom acquisition from late last year.
 
 Think about it, right? They have everything from copper interconnect all the way through micro LEDs, which is not really optic, not really optics optics, and not really terrible like copper. Then they have the optical portfolio that is like ZF optics that goes up, you know, like to longer reach. They also have the ability to do like photonics and near near reach for CPO or NPO or LPO.
 
@@ -194,11 +192,9 @@ This cartridge contains all the electronics, the optical transceivers, the AEC, 
 
 But people aren't really talking too much about it. And I think it's very important. The reason XPO is so important now is because per bandwidth of XPO, but like per connector, it acts as if this is like eight of the OSFP connectors, the previous gen. It's like you can put eight of them together in one connector.
 
-It is that much bandwidth. You can get 12. 8 terabits per second out of single connector. Think about that.
+It is that much bandwidth. You can get 12.8 terabits per second out of single connector. Think about that.
 
-For an OSFP, you would only get like 1. 6, right? It has 64 channels times 200 gigs. If you multiply that out, you'll get 12.
-
-8 T. And it can support 400 watts of power dissipation. And the reason it can support 400 watts of power dissipation per connector is because it allows for liquid cooling. Okay, so now this ties into why Dust Photonics is so important, that it's it's L3C technology does not have an air gap.
+For an OSFP, you would only get like 1.6, right? It has 64 channels times 200 gigs. If you multiply that out, you'll get 12.8 T. And it can support 400 watts of power dissipation. And the reason it can support 400 watts of power dissipation per connector is because it allows for liquid cooling. Okay, so now this ties into why Dust Photonics is so important, that it's it's L3C technology does not have an air gap.
 
 And that now it can actually be liquid cooled and put into an XPO module that couldn't be done in the past. Fascinating. Okay, so with XPO, we're able to bring liquid cooling actually to the transceivers ports themselves. And zooming way out, why would we want to do that?
 

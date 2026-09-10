@@ -45,13 +45,16 @@ def main():
     note = '유튜브 자막에서 옮긴 전사. 화자 바뀜(>>)마다 한 줄.'
 
     def sent4(text):
-        sents = re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', text)
+        # 「18.4 billion」의 마침표에서 끊으면 값이 갈린다 — 숫자 사이 마침표는 문장 끝이 아니다
+        text = re.sub(r'(?<=\d)\.(?=\d)', '․', text)
+        sents = [x.replace('․', '.') for x in re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', text)]
         sents = [x.strip() for x in sents if x.strip()]
         return [' '.join(sents[i:i + 4]) for i in range(0, len(sents), 4)]
 
     if len(turns) < 5:  # 화자 바뀜 표시가 없는 자막 — 문장 넷씩 묶는다
         flat = re.sub(r'\s+', ' ', body.replace('\n', ' ')).strip()
-        sents = re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', flat)
+        flat = re.sub(r'(?<=\d)\.(?=\d)', '․', flat)
+        sents = [x.replace('․', '.') for x in re.findall(r'[^.!?]+[.!?]+|[^.!?]+$', flat)]
         sents = [x.strip() for x in sents if x.strip()]
         turns = [' '.join(sents[i:i + 4]) for i in range(0, len(sents), 4)]
         note = '유튜브 자막에서 옮긴 전사. 화자 표시가 없어 문장 넷씩 한 줄.'

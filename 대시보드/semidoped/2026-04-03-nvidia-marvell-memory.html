@@ -1,0 +1,305 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>엔비디아의 마벨 투자는 경쟁 칩 지원이 아니라 NVLink 표준 장악을 위한 포석이다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>엔비디아의 마벨 투자는 경쟁 칩 지원이 아니라 NVLink 표준 장악을 위한 포석이다</h1><div class="pmeta">2026-04-03 · Austin Lyons · Vik Sekar<br>원문 <a href="https://www.youtube.com/watch?v=oWQG207QPvk">https://www.youtube.com/watch?v=oWQG207QPvk</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-04-03-nvidia-marvell-memory.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">세 화제 모두 되돌릴 수 있는 자리를 얼마에 팔고 얼마에 되사는지를 묻는다</div><p>엔비디아가 마벨에 20억 달러쯤을 냈고, DRAM 계약가가 한 분기에 95% 올랐고, 인텔이 2년 전 넘겼던 아일랜드 팹 지분을 30억 달러 더 얹어 되사들였다. Semi Doped 진행 둘, <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)가 한 회차에서 이 셋을 이어 다뤘다. 화제는 셋인데 밑에 깔린 물음은 하나다. 나중에 이익이 지나갈 길목을 지금 얼마에 사고, 한번 사고 나면 되돌아올 수 있나.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">20억 달러 쿠키는 무엇을 사려고 낸 돈인가</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">NVLink는 구리에 묶여 있지 않다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">둘 다 되는 자리가 왜 안전한가</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">HBM으로 바꾼 라인은 돌아오지 않는다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">이번 사이클이 다르다면 그 이유는 계약서에 있다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">인텔이 되사기에 얹은 30억 달러가 말하는 것</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 20억 달러 쿠키는 무엇을 사려고 낸 돈인가</h2>
+<p><span class="pn">진행자A</span>가 보도자료를 읽었다. 마벨이 NVLink Fusion(엔비디아가 외부에 연 랙 규모 인터커넥트 플랫폼)에 맞는 커스텀 XPU(특정 작업에 맞춘 맞춤 칩)와 스케일업 네트워킹을 내놓고, 엔비디아는 Vera CPU와 ConnectX NIC, BlueField DPU, NVLink, Spectrum-X 스위치를 받쳐 준다. <span class="pn">진행자V</span>의 첫 반응은 의문이었다. "이걸 들었을 때 가장 먼저 떠오른 생각은, 엔비디아가 왜 경쟁자에 투자하냐는 거였어요". 커스텀 ASIC은 GPU를 밀어낼 물건인데 그걸 더 잘 만들라고 돈을 보태는 꼴이었다.</p>
+<p>두 사람이 이 투자에 붙인 농담이 성격을 잘 보여 준다. "엔비디아 20억 달러 쿠키. 다들 하나씩 받아 간다". 회차 끝에서도 금액은 "뭐 20억 달러쯤이었나"로 흐릿하게 남는다.</p>
+<p><span class="pn">진행자A</span>가 세운 가설은 고객 쪽에서 시작한다. AWS가 NVLink를 원했고, 마벨 혼자서는 그걸 구현할 수 없어 엔비디아를 찾아갔다. 엔비디아 쪽에서 보면 AWS에 GPU를 계속 팔면서 인터커넥트와 이를 받치는 CPU 랙으로 커지는 XPU 시장에 발을 들이는 길이다. 아마존 Trainium은 이미 마벨을 백엔드 파트너로 쓰고, Project Rainier 하나가 XPU 100만 개 규모다. 스스로 못을 박은 자리가 둘이다. 발표 문구는 다시 확인해야 한다고 했고, 가설 전체에도 이렇게 달았다. "이건 제 추측이에요. 아마존이 성사시키자며 끌어당긴 힘이 있었다는 게 흥미로운 관점이라고 느껴지긴 하는데, 실제로 맞는지는 지켜봐야죠".</p>
+<p>온라인의 읽기는 달랐다. "젠슨은 갤럭시 브레인"이라는 반응이다. 랙 하나에 들어가는 칩 수는 정해져 있으니 연산에서 다투는 대신 그 밑에 깔리는 망에 건다는 풀이인데, <span class="pn">진행자V</span> 본인은 필요에서 출발한 이야기가 더 그럴듯하다고 했다.</p>
+<h2 id="s2"><span class="num">2</span> NVLink는 구리에 묶여 있지 않다</h2>
+<p>보도자료에는 실리콘 포토닉스(빛으로 칩 사이 데이터를 주고받는 기술) 협력도 들어 있다. <span class="pn">진행자V</span>는 마벨이 사들인 Celestial AI의 포토닉 패브릭을 떠올렸다. 인텔 EMIB를 견줌으로 들었다. 작은 기판을 사이에 끼워 칩렛 둘의 어느 부분끼리든 금속 배선으로 잇는 물건인데, 같은 일을 빛으로 하는 것이 포토닉 패브릭이다. 세부는 자신도 다시 확인해야 한다고 전제를 달았고, Celestial의 큰 고객이 Trainium이었다는 기억도 확실하지 않다고 밝혔다.</p>
+<figure class="uc-fig"><p class="fig-title">NVLink 아래에서 매체만 갈린다</p><svg class="epoch" viewBox="0 0 520 244" role="img" aria-label="지금 NVLink 는 구리 위에서 SerDes 가 비트를 실어 보내는데 매체가 빛이어도 안 될 이유가 없다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="156.5" y="30" width="207" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="59" text-anchor="middle" class="fig-b">NVLink — 프로토콜</text>
+  <rect x="142.5" y="130" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="207" y="160.5" text-anchor="middle" class="fig-b">구리 배선</text>
+  <text x="207" y="183.5" text-anchor="middle" class="fig-b">+ SerDes</text>
+  <rect x="295.5" y="130" width="82" height="72" rx="9" class="fig-outside"/>
+  <text x="336.5" y="160.5" text-anchor="middle" class="fig-b">빛</text>
+  <text x="336.5" y="183.5" text-anchor="middle" class="fig-b">이론적으로</text>
+  <line x1="207" y1="78" x2="207" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="336.5" y1="78" x2="336.5" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="218" width="14" height="14" rx="3" class="fig-box fig-outside"/>
+  <text x="22" y="230" class="fig-lg">아직 안 된 자리</text>
+</svg><figcaption>지금은 구리 위에서 SerDes 가 비트를 실어 보낸다. 빛으로 가는 것은 「이론적으로」라고 단서를 달았고, HBM 과 GPU 를 광 링크로 붙이는 데까지 가느냐는 물음은 답 없이 남았다.</figcaption></figure>
+<p>여기서 나온 물음이 이 회차에서 가장 멀리 간다. 앞으로 NVLink가 광학이 될 수 있나. 지금 NVLink는 구리 위에서 돈다. 양쪽 끝에 붙은 SerDes 회로가 금속 선으로 비트를 실어 보낸다. 그런데 매체가 빛이면 안 될 이유가 없다. "이론적으로 NVLink는 광학 위에서도 돌 수 있어요". <span class="pn">진행자V</span>는 한 걸음 더 나가 HBM과 GPU를 광 링크로 붙이는 데까지 갈지 물었다.</p>
+<p>업계가 볼 것은 엔비디아가 산 물건의 성격이다. 특정 세대의 배선이 아니라 프로토콜의 자리라면, 구리에서 빛으로 넘어가는 순간에도 그 자리는 그대로 남는다.</p>
+<h2 id="s3"><span class="num">3</span> 둘 다 되는 자리가 왜 안전한가</h2>
+<figure class="uc-fig"><p class="fig-title">누가 어느 규격을 받쳐 주나</p><svg class="epoch" viewBox="0 0 520 208" role="img" aria-label="마벨은 NVLink 와 UALink 를 둘 다 지원해 고객이 어느 생태계를 고르든 받고 브로드컴에는 NVLink 가 없다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="33" y="26" text-anchor="middle" class="fig-hd">누가</text>
+  <text x="131" y="26" text-anchor="middle" class="fig-hd">지원 규격</text>
+  <text x="284" y="26" text-anchor="middle" class="fig-hd">그래서</text>
+  <rect x="0" y="36" width="66" height="72" rx="9" class="fig-stage"/>
+  <text x="33" y="78" text-anchor="middle" class="fig-b">마벨</text>
+  <rect x="82" y="36" width="98" height="72" rx="9" class="fig-box"/>
+  <text x="131" y="66.5" text-anchor="middle" class="fig-b">NVLink</text>
+  <text x="131" y="89.5" text-anchor="middle" class="fig-b">UALink</text>
+  <rect x="196" y="36" width="176" height="72" rx="9" class="fig-agent"/>
+  <text x="284" y="66.5" text-anchor="middle" class="fig-b">어느 쪽을 골라도</text>
+  <text x="284" y="89.5" text-anchor="middle" class="fig-b">받는다</text>
+  <rect x="0" y="124" width="66" height="72" rx="9" class="fig-stage"/>
+  <text x="33" y="166" text-anchor="middle" class="fig-b">브로드컴</text>
+  <rect x="82" y="124" width="98" height="72" rx="9" class="fig-box"/>
+  <text x="131" y="154.5" text-anchor="middle" class="fig-b">UALink</text>
+  <text x="131" y="177.5" text-anchor="middle" class="fig-b">ESUN</text>
+  <rect x="196" y="124" width="176" height="72" rx="9" class="fig-agent"/>
+  <text x="284" y="166" text-anchor="middle" class="fig-b">NVLink 가 없다</text>
+</svg><figcaption>ESUN 은 자막이 「E-Sun」으로 받아 적은 것이라 이더넷 계열 스케일업 규격으로 보일 뿐 확정할 수 없다. 점유율이나 물량은 전사에 숫자가 없다.</figcaption></figure>
+<p><span class="pn">진행자V</span>가 얹은 이득은 마벨 쪽에 있다. 이제 NVLink와 UALink(엔비디아 밖의 개방형 스케일업 규격)를 둘 다 지원하니 고객이 어느 생태계를 고르든 마벨이 받는다. 브로드컴은 UALink 쪽에 묶여 있고 NVLink가 없다. <span class="pn">진행자A</span>는 브로드컴이 ESUN을 밀고 있다고 덧붙였는데, 이 이름은 자막이 <span class="q">"E-Sun"</span>으로 받아 적은 것이라 이더넷 계열 스케일업 규격으로 보일 뿐 확정할 수 없다.</p>
+<p>마벨이 그 자리를 만든 순서도 <span class="pn">진행자A</span>가 짚었다. 2025년 6월 커스텀 UALink 스케일업 스위치를 발표했고, 자막에 <span class="q">"XCON"</span>으로 들리는 회사를 5억 4천만 달러에 조용히 인수했고, 260레인 PCIe 6.0 스위치(<span class="q">"Strata S"</span>)도 갖고 있다. 회사 이름과 제품 이름 둘 다 자막 오인식일 수 있어 그대로 남긴다.</p>
+<p>같은 생각을 극단까지 민 회사가 스타트업 Upscale AI다. 스위치 실리콘 하나(Skyhammer)로 어느 프로토콜이든 돌린다는 것이 이 회사의 주장이다. 대가는 소프트웨어로 프로토콜을 정하느라 붙는 부담과 조금 커지는 칩 크기인데, 회사마다 프로토콜별로 마스크와 팀을 따로 두는 것보다 낫다는 주장이다. 그러고는 2개월 전 엔비디아가 이 회사 창립 멤버인 칩 아키텍트를 NVLink Fusion 팀으로 데려갔다는 기사를 봤다며 "음모론이 자란다"고 농을 쳤다.</p>
+<p><span class="pn">진행자V</span>의 물음은 규격이 하나로 좁혀지는 경우를 겨눈다. NVLink만 남으면 UALink와 ESUN과 Upscale AI는 어떻게 되나. <span class="pn">진행자A</span>는 그렇게까지 안 갈 것으로 봤다. AMD 는 자기 랙을 팔면서 엔비디아에 조각을 떼어 줄 이유가 없고, 한 곳이 이기면 프리미엄을 걷게 되니 그 세금에 지친 누군가가 또 나온다. <span class="pn">진행자V</span>는 역사로 받았다. 인터커넥트 규격이 하나로 정리된 적이 없고 USB 가 아직 여러 갈래인 이유가 그것이다. 규격 하나가 더 필요하다며 열세 번째를 만들면 규격이 열세 개가 된다는 XKCD 만화도 들었다.</p>
+<h2 id="s4"><span class="num">4</span> HBM으로 바꾼 라인은 돌아오지 않는다</h2>
+<p>화제를 옮기며 <span class="pn">진행자V</span>가 던진 말이 이 절의 전부다. "메모리가 미쳤어요. 제가 할 수 있는 말은 그게 전부예요". 2026년 1분기 DRAM 계약가가 전분기 대비 95% 올랐고, NAND도 60%쯤 올랐고, TrendForce는 2분기에 1분기 대비 58~60%가 더 오를 것으로 봤다. 2017~2018년 사이클 이후 이런 속도는 없었다. 라즈베리파이는 작년 12월 이후 석 달 동안 세 번 올렸고 살 수도 없다.</p>
+<p>완제품 회사가 택하는 길은 둘이다. ① 저가와 중가를 접고 프리미엄만 만든다. 100달러 이하 폰과 500달러 이하 노트북은 포기한다. ② 사양을 낮춘다. 8GB이던 중급기가 다음 판에서 4GB가 된다. RAM이 자재비의 20~30%까지 먹을 수 있다는 계산이 그 배경이다.</p>
+<p><span class="pn">진행자V</span>는 이 패턴에 이름을 붙여 뒀다. 돼지고기 값이 오르면 농가가 몰려 돼지를 키우고, 다 자란 돼지가 한꺼번에 시장에 나오면 과잉이 되어 값이 무너지고, 그럼 다들 키우기를 그만둬 다시 부족해진다. 메모리에서 여러 번 반복됐고, 노련한 사람들은 소비자 수요가 꺾이는 이 지점을 꼭지로 읽는다.</p>
+<figure class="uc-fig"><p class="fig-title">예전 라인과 HBM 으로 바꾼 라인</p><svg class="epoch" viewBox="0 0 520 339" role="img" aria-label="예전 라인은 폰과 GPU 와 PC 용 메모리를 서로 바꿔 쓸 수 있었는데 HBM 은 같은 비트에 웨이퍼가 3배 들고 되돌아오지 않는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">예전 DRAM 라인</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">HBM 으로 바꾼 라인</text>
+  <rect x="4" y="38" width="240" height="95" rx="9" class="fig-box"/>
+  <text x="124" y="68.5" text-anchor="middle" class="fig-b">LPDDR</text>
+  <text x="124" y="91.5" text-anchor="middle" class="fig-b">GDDR</text>
+  <text x="124" y="114.5" text-anchor="middle" class="fig-b">표준 DDR</text>
+  <rect x="276" y="38" width="240" height="95" rx="9" class="fig-agent"/>
+  <text x="396" y="68.5" text-anchor="middle" class="fig-b">TSV 둘레 여백</text>
+  <text x="396" y="91.5" text-anchor="middle" class="fig-b">여러 장 쌓기</text>
+  <text x="396" y="114.5" text-anchor="middle" class="fig-b">검사 공정 추가</text>
+  <rect x="4" y="155" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="185.5" text-anchor="middle" class="fig-b">같은 웨이퍼 공급</text>
+  <text x="124" y="208.5" text-anchor="middle" class="fig-b">서로 바꿔 쓴다</text>
+  <rect x="276" y="155" width="240" height="72" rx="9" class="fig-bad"/>
+  <text x="396" y="185.5" text-anchor="middle" class="fig-b">같은 비트에</text>
+  <text x="396" y="208.5" text-anchor="middle" class="fig-b">웨이퍼 3배, 앞으로 4배</text>
+  <rect x="156.5" y="251" width="207" height="46" rx="9" class="fig-bad"/>
+  <text x="260" y="280" text-anchor="middle" class="fig-b">한번 바꾸면 안 돌아온다</text>
+  <rect x="0" y="313" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="325" class="fig-lg">되돌릴 수 없게 만드는 자리</text>
+</svg><figcaption>TSV 둘레에는 트랜지스터를 못 놓는 여백이 있어 같은 면적에 담기는 용량이 떨어진다. 웨이퍼 3배와 앞으로 4배는 전사의 값이다.</figcaption></figure>
+<p>가장 값진 설명은 그 전환이 되돌아오지 않는다는 대목이다. 예전 DRAM 라인은 서로 바꿔 쓸 수 있었다. 폰의 LPDDR, GPU의 GDDR, PC용 표준 DDR이 대체로 같은 웨이퍼 공급에서 나왔다. HBM은 다르다. TSV(관통 실리콘 비아 — 칩을 수직으로 꿰어 잇는 구멍) 둘레에는 트랜지스터를 못 놓는 여백이 있어 같은 면적에 담기는 용량이 떨어지고, 그 칩을 여러 장 쌓아야 한 덩어리가 된다. 같은 비트를 만드는 데 웨이퍼가 3배 들고 앞으로 4배까지 갈 수 있으며, 검사 공정도 따로 붙는다. 자본이 많이 드는 일방통행 전환이라 회사가 의식적으로 결심해야 하는 일이다.</p>
+<h2 id="s5"><span class="num">5</span> 이번 사이클이 다르다면 그 이유는 계약서에 있다</h2>
+<p>핵심 물음은 소비자 수요가 꺾일 때 AI가 그 물량을 받아 주느냐다. <span class="pn">진행자A</span>는 걱정할 일이 아니라고 봤다. 폰에 안 들어간 웨이퍼는 그대로 데이터센터로 넘어간다. 다만 그 웨이퍼가 HBM으로 가느냐 표준 DRAM으로 가느냐는 별개이고, 이 물음을 <span class="pn">진행자V</span>가 냈다고 <span class="pn">진행자A</span>가 되짚었다. 지금은 표준 DDR과 서버용 비HBM DDR 가격이 워낙 올라 마이크론이 HBM보다 비HBM에서 더 벌고 있다.</p>
+<p><span class="pn">진행자V</span>는 표현을 스스로 고쳤다. "이제 마진이라는 말은 잘 안 써요. 조심스러운 말이에요. ASP가 높은 메모리라고 하는 게 맞아요". 마이크론은 소비자용 Crucial을 접었고, SK하이닉스와 삼성도 DRAM 라인을 HBM으로 돌리는 중이다.</p>
+<p>과거에는 흡수가 안 됐다. 클라우드 서버 사이클도, 암호화폐 채굴 붐이 꺾였을 때도 다른 수요가 받아 주지 못해 과잉으로 갔다. "이번엔 조금 달라요. 한동안은 흡수할 수 있을 것 같아요". 그러면서 증설이 지금도 이어지니 시점은 몰라도 과잉 문제는 오리라 짐작한다고 붙였다.</p>
+<figure class="uc-fig"><p class="fig-title">메모리 계약이 길어졌다</p><svg class="epoch" viewBox="0 0 520 291" role="img" aria-label="분기나 연 단위였던 메모리 계약이 3~5년으로 길어지고 공급사가 하단을 못 박는 최저가 조항이 들어간다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">클라우드 시대</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">지금</text>
+  <rect x="4" y="38" width="240" height="49" rx="9" class="fig-box"/>
+  <text x="124" y="68.5" text-anchor="middle" class="fig-b">분기나 연 단위</text>
+  <rect x="276" y="38" width="240" height="49" rx="9" class="fig-agent"/>
+  <text x="396" y="68.5" text-anchor="middle" class="fig-b">3~5년</text>
+  <rect x="4" y="107" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="137.5" text-anchor="middle" class="fig-b">누가 발을 빼면</text>
+  <text x="124" y="160.5" text-anchor="middle" class="fig-b">거기서 사이클이 끝</text>
+  <rect x="276" y="107" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="137.5" text-anchor="middle" class="fig-b">공급사가 하단을 못 박는</text>
+  <text x="396" y="160.5" text-anchor="middle" class="fig-b">최저가 조항</text>
+  <rect x="102" y="203" width="316" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="232" text-anchor="middle" class="fig-b">줄에서 밀리면 HBM 배정이 경쟁사로</text>
+  <rect x="0" y="265" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="277" class="fig-lg">이번 사이클이 다르다면 그 근거</text>
+</svg><figcaption>길게 가는 이유는 양쪽 다 물량 가시성을 원해서다. 하이퍼스케일러가 과다하게 잡아 두고 있을 수 있다면서도 실제로 과잉 구독인지는 모르겠다고 달았다.</figcaption></figure>
+<p>달라진 자리는 계약이다. 클라우드 시대에는 분기나 연 단위였고 누가 발을 빼면 거기서 사이클이 끝났다. 지금은 3~5년짜리이고, 공급사가 하단을 못 박는 최저가 조항이 들어간다. 수요가 오르는 국면이면 짧게 끊는 편이 공급사에 유리한데도 길게 가는 이유는 양쪽 다 물량 가시성을 원해서다. 구매사 쪽에서는 줄에서 밀리면 HBM 배정이 경쟁사로 넘어간다. <span class="pn">진행자V</span>는 하이퍼스케일러가 과다하게 잡아 두고 있을 수 있다면서도 "그게 실제로 과잉 구독인지는 모르겠다"고 달았다.</p>
+<p>수요 쪽에는 새 얼굴이 하나 늘었다. 엔비디아 Vera CPU가 폰과 같은 LPDDR을 쓴다. 엔비디아가 CPU를 많이 팔수록 폰과 같은 물량을 놓고 다투는 구매자가 커진다. PC 출하량은 2026년에 12~13% 줄어든다는 전망이다. 애플이 DRAM을 비싸게 사들여 경쟁사를 공급에서 밀어낸다는 이야기는 <span class="pn">진행자V</span>가 "인용하지 말아 주세요. 완전히 소문일 수도 있어요"라고 못 박은 뒤 전한 것이다.</p>
+<h2 id="s6"><span class="num">6</span> 인텔이 되사기에 얹은 30억 달러가 말하는 것</h2>
+<p>인텔이 사모펀드 아폴로가 가진 Fab 34 지분 49%를 142억 달러에 되산다. 현금에 신규 채무 65억 달러를 얹었다. <span class="pn">진행자A</span>는 이 팹의 위치가 아일랜드가 맞느냐고 스스로 되물으며 확신 없이 말했다.</p>
+<figure class="uc-fig"><p class="fig-title">Fab 34 지분이 오간 순서</p><svg class="epoch" viewBox="0 0 520 226" role="img" aria-label="184억 달러를 들여 지은 팹의 지분 49%를 112억 달러에 넘겼다가 2년 뒤 142억 달러에 되사면서 차익 30억 달러를 남겨 줬다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="40" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="64.5" y="70.5" text-anchor="middle" class="fig-b">짓는 데</text>
+  <text x="64.5" y="93.5" text-anchor="middle" class="fig-b">184억 달러</text>
+  <line x1="133" y1="76" x2="191.5" y2="76" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="162.25" y="64" text-anchor="middle" class="fig-e">1년 뒤</text>
+  <rect x="195.5" y="40" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="260" y="70.5" text-anchor="middle" class="fig-b">지분 49%</text>
+  <text x="260" y="93.5" text-anchor="middle" class="fig-b">112억 달러에</text>
+  <line x1="328.5" y1="76" x2="387" y2="76" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="357.75" y="64" text-anchor="middle" class="fig-e">2년 뒤</text>
+  <rect x="391" y="40" width="129" height="72" rx="9" class="fig-agent"/>
+  <text x="455.5" y="70.5" text-anchor="middle" class="fig-b">되사는 데</text>
+  <text x="455.5" y="93.5" text-anchor="middle" class="fig-b">142억 달러</text>
+  <rect x="94" y="138" width="332" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="167" text-anchor="middle" class="fig-b">아폴로가 2년에 남긴 차익 30억 달러</text>
+  <rect x="0" y="200" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="212" class="fig-lg">이번에 도로 사 온 자리</text>
+</svg><figcaption>지분을 넘긴 것은 겔싱어의 스마트 캐피털 전략 아래였다. 유럽 안에서 인텔의 유일한 EUV 팹이다.</figcaption></figure>
+<p>시간 순서로 보면 이 팹 지분에 붙은 금액이 뚜렷이 움직인다. 팹을 짓는 데 184억 달러가 들었고, 1년 뒤 겔싱어의 스마트 캐피털 전략 아래 지분 49%가 112억 달러에 아폴로로 넘어갔고, 2년 뒤 142억 달러에 돌아온다. 아폴로가 2년 동안 남긴 차익이 30억 달러다. 유럽 안에서 인텔의 유일한 EUV 팹이라 전략적으로 중요하다고 <span class="pn">진행자V</span>가 덧붙였다.</p>
+<p><span class="pn">진행자V</span>의 계산은 앞으로 나올 이익을 겨눈다. 되사지 않으면 Fab 34에서 나오는 Intel 3·Intel 4 공정의 서버급 칩마다 이익의 49%가 계속 아폴로로 간다. "이익의 49%를 계속 내주기 싫고, 오늘 30억 달러를 더 얹어 되사는 편이 낫다고 판단한 게 아니라면, 왜 그 돈을 쓰겠어요?". <span class="pn">진행자A</span>는 좋은 틀이라며 받았다. 수천만 개 칩에 걸친 49%가 지금 나가는 30억 달러보다 크다고 본 셈이고, 3년 미루면 되사는 값은 더 오른다.</p>
+<p><span class="pn">진행자V</span>가 든 그림이 이 거래의 성격을 한 번에 보여 준다. 모노폴리에서 형편이 좋을 때 부동산을 사 모으다 나빠지면 카드를 뒤집어 저당을 잡히는데, 저당 잡힌 칸은 남이 밟아도 돈을 못 받는다. 상대가 자꾸 그 칸에 걸릴 것 같으면 10%를 더 물고서라도 카드를 도로 뒤집는다.</p>
+<p>신호를 읽는 자리에서 둘은 갈렸다. <span class="pn">진행자A</span>는 파운드리와 고객에게서 보이는 신호에 자신이 있다는 뜻으로 읽고 18A P와 14A까지 이었다. <span class="pn">진행자V</span>는 선을 그었다. "그렇게까지는 안 가겠어요. 조심하는 쪽에 서겠습니다. 정말 모르겠어요". 18A 수율이 좋아서 이렇게 했다는 식으로 선을 이어 그리고 싶지 않다고 했다. 전사에는 Intel 3·Intel 4 팹을 되사면서 비싼 채무를 덜어 낸 것으로도 설명된다는 반대편 읽기가 함께 나온다.</p>
+<h2 id="s7"><span class="num">7</span> 이 회차가 말하지 않은 것, 그리고 무엇이 나오면 판단이 바뀌나</h2>
+<p>빠진 것이 셋이다. ① 마벨 투자의 금액과 조건이 없다. 두 사람 다 20억 달러쯤으로만 불렀고 지분율도 기간도 나오지 않는다. 이게 없으면 1절의 필요 가설은 검증할 방법이 없다. ② 마벨이 NVLink 스위치를 실제로 낼 수 있는지, 엔비디아가 어디까지 열어 주는지가 없다. <span class="pn">진행자V</span> 가 화제를 닫으며 말했다. "실제 제품이나 뭔가 나오는 걸 보고 싶어요. 아니면 우리는 그냥 추측하고 훈계하고 음모론을 지어내는 거죠". ③ 증설의 규모와 시점이 없다. 흡수 여부는 월 웨이퍼 시작량으로 정해지는데 "언제 실제로 닥칠지는 모르겠다"고만 했다.</p>
+<p>판단이 바뀌는 자리도 셋이다. ① 마벨의 NVLink 대응 스위치 실리콘이 실물로 나오면, 3절의 두 프로토콜 대응이 말인지 물건인지 드러난다. ② 소비자용에서 빠진 웨이퍼가 HBM과 표준 DRAM 중 어디로 갔는지 분기 실적에 잡히면, 4절의 일방통행 판단이 시험대에 오른다. ③ 3~5년 계약에서 첫 재협상이나 파기가 나오면, 최저가 조항이 하단을 실제로 받치는지 확인된다.</p>
+<p>셋을 꿰면 남는 물음은 하나다. 지금 무엇을 되돌릴 수 있게 남겨 두느냐. 마벨은 프로토콜 둘을 다 쥐어 되돌릴 자리를 남겼고, 메모리 회사는 라인을 HBM으로 돌려 그 자리를 스스로 없앴고, 인텔은 2년 전 넘긴 자리를 30억 달러를 얹어 되샀다. 세 화제에서 돈이 오간 대상은 칩도 웨이퍼도 팹도 아니고 마음을 바꿀 수 있는 여지였다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-04-03-nvidia-marvell-memory-strategy.md">insights/semidoped/2026-04-03-nvidia-marvell-memory-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>

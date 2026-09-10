@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-09-10",
-"index_fingerprint": "841d200f613368ea98b0f71b9ceb2f9e7af2d209",
-"lines": 4545
+"built": "2026-09-11",
+"index_fingerprint": "fd42be4aa7c97c6b688626568fd8c9f3b49b6586",
+"lines": 4557
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6425,6 +6425,70 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-27-arm-cpu-turboquant.md#L28": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-27-arm-cpu-turboquant.md#L39": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-27-arm-cpu-turboquant.md#L53": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/semi_doped/2026-03-27-arm-cpu-turboquant.md#L78": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L16": {
+"how": "계산",
+"t": "2024",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L26": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L29": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L46": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L51": {
+"how": "계산",
+"span": [
+"2024",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L59": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L62": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-04-03-nvidia-marvell-memory.md#L74": {
+"how": "명시",
+"t": "2024",
 "tense": "회고"
 },
 "content/semi_doped/2026-04-09-matx-reiner-pope.md#L20": {

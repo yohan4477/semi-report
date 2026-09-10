@@ -212,9 +212,9 @@ Yeah. Essentially, Apple could help right now. We're already hearing that the lo
 
 It's a hyper-aggressive move, but yeah, this business is like that. Right. Totally. Okay, so let's move on from memory.
 
-We have just a few minutes left. I think the last topic, Intel buys back Ireland fab from Apollo. So the news is that Intel is paying 14. 2 billion for the 49% stake that Apollo bought just back in 2024.
+We have just a few minutes left. I think the last topic, Intel buys back Ireland fab from Apollo. So the news is that Intel is paying 14.2 billion for the 49% stake that Apollo bought just back in 2024.
 
-Um the funding is cash plus like 6. 5 billion of new debt. What was your reaction when you saw this news? Uh I mean, it's not mine, but everybody believes this is great for Intel and that Intel's fab strategy and you know, the their Intel A everything is looking good and this is great news.
+Um the funding is cash plus like 6.5 billion of new debt. What was your reaction when you saw this news? Uh I mean, it's not mine, but everybody believes this is great for Intel and that Intel's fab strategy and you know, the their Intel A everything is looking good and this is great news.
 
 So everybody's like hyper bullish on this. It definitely does feel like a confident signal from Intel that like, "Hey, 2 years ago we're bleeding cash. It's not clear how the future's going to work out. We have to get very creative on how to finance these build-outs.
 
@@ -234,17 +234,17 @@ Yeah. I don't want to draw and extrapolate a line to say that A18A yields are go
 
 Like 2 years ago they sold it uh for 11. What is it? 2 billion, right? To a part this private equity firm called Apollo.
 
-Before that, like 1 year before that, that's when they opened this fab. The fab 34 in Ireland was like there was like an 18. 4 billion dollar investment, which is also by the way Intel's only EUV fab in Europe. So it's strategically important too.
+Before that, like 1 year before that, that's when they opened this fab. The fab 34 in Ireland was like there was like an 18.4 billion dollar investment, which is also by the way Intel's only EUV fab in Europe. So it's strategically important too.
 
-But then like a year later under Gelsinger's smart capital strategy, they sold it for 11. 2 billion and they rebuy it back in 2 years for 14. 2 billion. Like you said, the private equity firm has to have something in this and what they have here is 3 billion dollars in profit in 2 years.
+But then like a year later under Gelsinger's smart capital strategy, they sold it for 11.2 billion and they rebuy it back in 2 years for 14.2 billion. Like you said, the private equity firm has to have something in this and what they have here is 3 billion dollars in profit in 2 years.
 
 Totally. Yeah, right. Someone's going out for dinner and fancy steak and champagne to celebrate that. Right.
 
 Right. So in the you know, down times of like Intel in 2024, this was a good way the smart capital strategy to get some money by did selling 49% of the stake uh of this fab to Apollo and get it back. But then uh the question is why now? Like and it's like you said in the press release too.
 
-It's not like an all cash deal either. So they have they put some cash down and then they have like 6. 5 billion dollars in debt. So the question is, what if they didn't do it now?
+It's not like an all cash deal either. So they have they put some cash down and then they have like 6.5 billion dollars in debt. So the question is, what if they didn't do it now?
 
-Apollo owns 49% of it, right? So every core Ultra and Xeon chip that is out of fab 34, which I think these are like at least the server grade chips and the one the the CPUs coming in Intel 3 and Intel 4, Apollo will take 49% of the profit. So unless Intel believes that they don't want to give 49% of the profits and that it is better to pay today the the 3 billion dollars extra to buy it back and spend the 14. 2 billion dollars so that they can have 100% of all the benefits of all the output of this fab going forward then why would they spend the money?
+Apollo owns 49% of it, right? So every core Ultra and Xeon chip that is out of fab 34, which I think these are like at least the server grade chips and the one the the CPUs coming in Intel 3 and Intel 4, Apollo will take 49% of the profit. So unless Intel believes that they don't want to give 49% of the profits and that it is better to pay today the the 3 billion dollars extra to buy it back and spend the 14.2 billion dollars so that they can have 100% of all the benefits of all the output of this fab going forward then why would they spend the money?
 
 Yeah, that's a really good framing. Like hey, we're just going to give that 3 billion now because we want those profits which means they think that they're going to sell a lot of these chips and they want Yeah, that's the upside of the 49% across tens of millions of chips to them is better than that 3 billion dollars now. Also, you don't want to be like paying another extra 3 billion dollars if you delay this by 3 years.
 

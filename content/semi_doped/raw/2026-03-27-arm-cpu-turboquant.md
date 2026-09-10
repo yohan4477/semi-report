@@ -160,7 +160,7 @@ Fascinating. So, it the end of the day, it it's it's just a clever way to ask, "
 
 Totally. So, then of course, the implications are interesting because now we're saying, "Oh, you use less bits to store your KV cache. " So, of course, uh the one sort of skeptical response is like, "Oh, no, we don't need as much memory. " But, of course, actually, like if you think of it like a product manager, if an engineer, if I'm a product manager, an engineer comes to me and says, "Hey Austin, guess what?
 
-I reduced our KV cache size by 50%, let's say. " Then I'll say, "Great, shipping tomorrow, instead of 1 million token uh context, can I have 2 million tokens of context? " And they're going to say, "Oh, yeah, maybe not quite 2 million, but maybe 1. 5 million or something.
+I reduced our KV cache size by 50%, let's say. " Then I'll say, "Great, shipping tomorrow, instead of 1 million token uh context, can I have 2 million tokens of context? " And they're going to say, "Oh, yeah, maybe not quite 2 million, but maybe 1.5 million or something.
 
 " I'm going to ship it. Let's go, right? Yes, precisely the right interpretation to make. Totally.
 

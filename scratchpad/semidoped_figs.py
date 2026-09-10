@@ -2661,7 +2661,214 @@ def _ieo_three():
                '셋이 큰 금액을 치르고 산 것은 정보 자체가 아니라 남이 대신 못 하는 말을 할 수 있는 자리다')
 
 
+# ══ 엔비디아·마벨·메모리 (2026-04-03) 전략 판 ═══════════════════════════
+# 값은 전사에 있는 것만 — 웨이퍼 3배·4배, 3~5년, 184억·112억·142억·30억 달러.
+
+NVM = '2026-04-03-nvidia-marvell-memory'
+
+
+def _nvm_nvlink():
+    """NVLink 는 프로토콜이고 그 아래 매체만 갈아 끼운다."""
+    parts = mid(30, 46, ['NVLink — 프로토콜'], 'fig-agent')
+    items = [(['구리 배선', '+ SerDes'], 'fig-box'), (['빛', '이론적으로'], 'fig-outside')]
+    wsum = sum(w_of(l) for l, _ in items) + 24
+    row, _x, cs, hh = panel_boxes((W - wsum) / 2, 130, items, gap=24, h=2 * LH + 26)
+    parts += row
+    for cx, _w in cs:
+        parts += vline(cx, 78, 128)
+    y = 130 + hh
+    parts += legend([('fig-outside', '아직 안 된 자리')], y + 16)
+    return svg(y + 42, parts,
+               '지금 NVLink 는 구리 위에서 SerDes 가 비트를 실어 보내는데 매체가 빛이어도 안 될 이유가 없다')
+
+
+def _nvm_support():
+    parts, y_end = table(
+        [[['마벨'], ['NVLink', 'UALink'], ['어느 쪽을 골라도', '받는다']],
+         [['브로드컴'], ['UALink', 'ESUN'], ['NVLink 가 없다']]],
+        ['fig-stage', 'fig-box', 'fig-agent'], heads=['누가', '지원 규격', '그래서'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '마벨은 NVLink 와 UALink 를 둘 다 지원해 고객이 어느 생태계를 고르든 받고 브로드컴에는 NVLink 가 없다')
+
+
+def _nvm_hbm():
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, '예전 DRAM 라인') + head(R, 22, 248, 'HBM 으로 바꾼 라인')
+    parts += box(L + 4, 38, 240, 3 * LH + 26, ['LPDDR', 'GDDR', '표준 DDR'], 'fig-box')
+    parts += box(R + 4, 38, 240, 3 * LH + 26, ['TSV 둘레 여백', '여러 장 쌓기', '검사 공정 추가'], 'fig-agent')
+    y = 38 + 3 * LH + 26
+    parts += box(L + 4, y + 22, 240, 2 * LH + 26, ['같은 웨이퍼 공급', '서로 바꿔 쓴다'], 'fig-box')
+    parts += box(R + 4, y + 22, 240, 2 * LH + 26, ['같은 비트에', '웨이퍼 3배, 앞으로 4배'], 'fig-bad')
+    y2 = y + 22 + 2 * LH + 26
+    parts += mid(y2 + 24, 46, ['한번 바꾸면 안 돌아온다'], 'fig-bad')
+    y3 = y2 + 24 + 46
+    parts += legend([('fig-bad', '되돌릴 수 없게 만드는 자리')], y3 + 16)
+    return svg(y3 + 42, parts,
+               '예전 라인은 폰과 GPU 와 PC 용 메모리를 서로 바꿔 쓸 수 있었는데 HBM 은 같은 비트에 웨이퍼가 3배 들고 되돌아오지 않는다')
+
+
+def _nvm_contract():
+    L, R = 0.0, 272.0
+    parts = head(L, 22, 248, '클라우드 시대') + head(R, 22, 248, '지금')
+    parts += box(L + 4, 38, 240, LH + 26, ['분기나 연 단위'], 'fig-box')
+    parts += box(R + 4, 38, 240, LH + 26, ['3~5년'], 'fig-agent')
+    y = 38 + LH + 26
+    parts += box(L + 4, y + 20, 240, 2 * LH + 26, ['누가 발을 빼면', '거기서 사이클이 끝'], 'fig-box')
+    parts += box(R + 4, y + 20, 240, 2 * LH + 26, ['공급사가 하단을 못 박는', '최저가 조항'], 'fig-agent')
+    y2 = y + 20 + 2 * LH + 26
+    parts += mid(y2 + 24, 46, ['줄에서 밀리면 HBM 배정이 경쟁사로'], 'fig-stage')
+    y3 = y2 + 24 + 46
+    parts += legend([('fig-agent', '이번 사이클이 다르다면 그 근거')], y3 + 16)
+    return svg(y3 + 42, parts,
+               '분기나 연 단위였던 메모리 계약이 3~5년으로 길어지고 공급사가 하단을 못 박는 최저가 조항이 들어간다')
+
+
+def _nvm_fab():
+    row, _x = eband([(['짓는 데', '184억 달러'], 'fig-box'), ('>', '1년 뒤'),
+                     (['지분 49%', '112억 달러에'], 'fig-box'), ('>', '2년 뒤'),
+                     (['되사는 데', '142억 달러'], 'fig-agent')], 40, 2 * LH + 26)
+    parts = list(row)
+    y = 40 + 2 * LH + 26
+    parts += mid(y + 26, 46, ['아폴로가 2년에 남긴 차익 30억 달러'], 'fig-stage')
+    y2 = y + 26 + 46
+    parts += legend([('fig-agent', '이번에 도로 사 온 자리')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '184억 달러를 들여 지은 팹의 지분 49%를 112억 달러에 넘겼다가 2년 뒤 142억 달러에 되사면서 차익 30억 달러를 남겨 줬다')
+
+
+# ══ Arm·터보퀀트 (2026-03-27) 전략 판 ═══════════════════════════════════
+# 값은 전사에 있는 것만 — 16자리→3자리, 코어 3천만·1억2천만, 트레이 42·CPU 8·코어 4만5천,
+# 코어 136개·CPU 330개·60개, 5%·10%·50%, 98~99%.
+
+ARM = '2026-03-27-arm-cpu-turboquant'
+
+
+def _arm_quant():
+    row, _x = eband([(['① 무작위 행렬'], 'fig-box'), ('>', ''),
+                     (['② 거리와 각도'], 'fig-box'), ('>', ''),
+                     (['③ QJL 변환'], 'fig-agent')], 40, LH + 26)
+    parts = list(row)
+    y = 40 + LH + 26
+    L, R = 60.0, 300.0
+    parts += box(L, y + 30, 160, 2 * LH + 26, ['원래', '16자리'], 'fig-box')
+    parts += box(R, y + 30, 160, 2 * LH + 26, ['줄인 뒤', '3자리'], 'fig-agent')
+    parts += hline(L + 164, R - 4, y + 30 + LH + 13)
+    y2 = y + 30 + 2 * LH + 26
+    parts += legend([('fig-agent', '이 논문이 새로 얹은 자리')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '무작위 행렬로 큰 값을 펴고 좌표를 거리와 각도로 바꾼 뒤 QJL 변환을 거치면 16자리로 적던 것이 3자리가 된다')
+
+
+def _arm_slack():
+    parts = mid(30, 46, ['KV 캐시를 6배 줄여 생긴 여유'], 'fig-agent')
+    items = [(['① 컨텍스트를', '늘린다'], 'fig-box'),
+             (['② 같은 설비로', '사용자를 더'], 'fig-box'),
+             (['③ 노트북·엣지로', '내린다'], 'fig-box')]
+    wsum = sum(w_of(l) for l, _ in items) + 2 * 10
+    row, _x, cs, hh = panel_boxes((W - wsum) / 2, 130, items, gap=10, h=2 * LH + 26)
+    parts += row
+    for cx, _w in cs:
+        parts += vline(cx, 78, 128)
+    y = 130 + hh
+    parts += mid(y + 24, 46, ['셋 다 메모리를 덜 사는 데로 안 간다'], 'fig-bad')
+    y2 = y + 24 + 46
+    parts += legend([('fig-bad', '절감으로 안 가는 이유')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '캐시를 줄여 생긴 여유는 컨텍스트와 동시 사용자와 엣지로 흘러가고 메모리를 덜 사는 결과에는 닿지 않는다')
+
+
+def _arm_cores():
+    """기가와트당 코어 수. 나란한 세로 막대, 높이는 값의 비율이다."""
+    base, top = 250.0, 40.0
+    bw = 96.0
+    xs = [140.0, 290.0]
+    vals = [('에이전틱 AI 이전', '3천만', 30.0), ('이후', '1억2천만', 120.0)]
+    parts = []
+    for x, (name, lab, v) in zip(xs, vals):
+        h = (base - top) * v / 120.0
+        cls = 'fig-agent' if v == 120.0 else 'fig-box'
+        parts += _rect(x, base - h, bw, h, cls)
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+                  % (x + bw / 2, base - h - 10, lab)]
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+                  % (x + bw / 2, base + 22, name)]
+    parts += hline(110, 420, base)
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
+              % (W / 2, base + 52, '같은 전력 안에서 기가와트당 CPU 코어')]
+    parts += legend([('fig-agent', 'Arm 이 든 수')], base + 70)
+    return svg(base + 100, parts,
+               '같은 전력 안에서 필요한 기가와트당 CPU 코어가 3천만 개에서 1억2천만 개로 네 배가 된다는 주장이다')
+
+
+def _arm_rack():
+    parts, y_end = table(
+        [[['랙 하나'], ['트레이 42개 × CPU 8개']],
+         [['코어'], ['4만5천 개쯤']],
+         [['칩 하나'], ['Neoverse V3 코어 136개']],
+         [['그래서 CPU'], ['액체냉각 330개 · 공기냉각 60개']]],
+        ['fig-stage', 'fig-box'], heads=['무엇을', '얼마나'], y0=36)
+    return svg(y_end + 12, parts,
+               '트레이 42개에 CPU 를 여덟 개씩 얹어 코어가 4만5천 개쯤 되고 칩 하나가 136코어이니 CPU 는 330개다')
+
+
+def _arm_take():
+    """같은 매출에서 Arm 이 가져가는 금액. 나란한 세로 막대 셋."""
+    base, top = 250.0, 40.0
+    bw = 86.0
+    xs = [80.0, 220.0, 360.0]
+    vals = [('IP 만', '5%', 5.0), ('CSS 까지', '10%', 10.0), ('직접 만들어 팔면', '50%', 50.0)]
+    parts = []
+    for x, (name, lab, v) in zip(xs, vals):
+        h = (base - top) * v / 50.0
+        cls = 'fig-agent' if v == 50.0 else 'fig-box'
+        parts += _rect(x, base - h, bw, h, cls)
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+                  % (x + bw / 2, base - h - 10, lab)]
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+                  % (x + bw / 2, base + 22, name)]
+    parts += hline(60, 470, base)
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
+              % (W / 2, base + 52, 'CPU 가 10억 달러어치 팔릴 때')]
+    parts += legend([('fig-agent', '이번에 고른 길')], base + 70)
+    return svg(base + 100, parts,
+               'CPU 가 10억 달러어치 팔릴 때 IP 만 빌려주면 5%, CSS 까지 얹으면 10%, 직접 만들어 팔면 50%를 가져간다')
+
+
 FIGS = {
+    (ARM, 'strategy'): [
+        ('2.|원리는 두 겹', '16자리를 3자리로 줄이는 손질', _arm_quant(),
+         '무작위 행렬은 점들 사이 거리와 각도는 그대로 두면서 유난히 큰 값 몇 개를 고르게 편다(L139·L143). '
+         'QJL 을 거치면 거리는 한 자리, 각도는 두세 자리가 된다(L145·L153). 각도가 0에서 128까지 흩어지면 일곱 자리인데 '
+         '여덟 개로 몰면 세 자리다(L149).'),
+        ('3.|여유가 흘러가는', '줄여서 생긴 여유가 가는 곳 셋', _arm_slack(),
+         '엣지로 내리는 길은 정보 손실 없이 된다며 「건초더미에서 바늘 찾기」 벤치마크를 근거로 들었다(L175). '
+         '셋 중 어느 쪽으로 가도 메모리를 덜 사는 결과에는 닿지 않는다.'),
+        ('4.|행사에서 Arm이', '기가와트당 CPU 코어', _arm_cores(),
+         '에이전틱 AI 가 도구 호출과 웹 탐색 같은 조율 작업을 CPU 에 얹는다는 것이 앞의 논리다(L215). '
+         '막대 높이는 두 값의 비율이다(L217). 이 수를 무엇으로 셌는지는 전사에 없다.'),
+        ('4.|수를 코어에서', '코어 수를 칩 수로 옮겨 보면', _arm_rack(),
+         '코어 4만5천은 화자가 「그게 얼마였더라」 하며 더듬은 근사치다(L305). 칩당 136코어로 나눈 것은 진행자V 의 계산이고(L309·L311), '
+         '베라 루빈 랙이 이미 1대1이라 4배 주장이 맞으면 4대1까지 간다는 데까지만 갔다(L313·L315·L321).'),
+        ('6.|Arm이 보여준', '같은 매출에서 가져가는 금액', _arm_take(),
+         '막대 높이는 세 값의 비율이다(L321·L323·L325). 라이선스 사업의 순이익률은 이미 98~99%에 가깝고(L325), '
+         '직접 팔면 이익률은 절반으로 내려가지만 들어오는 금액은 크게 는다(L327).'),
+    ],
+    (NVM, 'strategy'): [
+        ('2.|여기서 나온', 'NVLink 아래에서 매체만 갈린다', _nvm_nvlink(),
+         '지금은 구리 위에서 SerDes 가 비트를 실어 보낸다(L43). 빛으로 가는 것은 「이론적으로」라고 단서를 달았고(L43), '
+         'HBM 과 GPU 를 광 링크로 붙이는 데까지 가느냐는 물음은 답 없이 남았다(L39).'),
+        ('3.|진행자V가 얹은', '누가 어느 규격을 받쳐 주나', _nvm_support(),
+         'ESUN 은 자막이 「E-Sun」으로 받아 적은 것이라 이더넷 계열 스케일업 규격으로 보일 뿐 확정할 수 없다(L79). '
+         '점유율이나 물량은 전사에 숫자가 없다.'),
+        ('4.|가장 값진', '예전 라인과 HBM 으로 바꾼 라인', _nvm_hbm(),
+         'TSV 둘레에는 트랜지스터를 못 놓는 여백이 있어 같은 면적에 담기는 용량이 떨어진다(L181·L183). '
+         '웨이퍼 3배와 앞으로 4배는 전사의 값이다(L155·L181).'),
+        ('5.|달라진 자리는', '메모리 계약이 길어졌다', _nvm_contract(),
+         '길게 가는 이유는 양쪽 다 물량 가시성을 원해서다(L193·L195). 하이퍼스케일러가 과다하게 잡아 두고 있을 수 있다면서도 '
+         '실제로 과잉 구독인지는 모르겠다고 달았다(L187·L189).'),
+        ('6.|시간 순서로 보면', 'Fab 34 지분이 오간 순서', _nvm_fab(),
+         '지분을 넘긴 것은 겔싱어의 스마트 캐피털 전략 아래였다(L235·L239). 유럽 안에서 인텔의 유일한 EUV 팹이다(L237).'),
+    ],
     (IEO, 'strategy'): [
         ('1.|테라팹 구상 자체는', '웨이퍼 투입 목표 둘', _ieo_wafer(),
          '막대 높이는 두 값의 비율이다(L23·L25). 언제까지 그 규모에 닿겠다는 시점은 전사에 없다.'),
