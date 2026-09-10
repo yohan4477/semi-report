@@ -45,40 +45,54 @@ CSS = u'''
 --line:#d6dae2;--bg:#f7f8fa;--hi:#e8eef7;--hiline:#39415a}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
-body{background:var(--bg);color:var(--ink1);
+body{background:var(--bg);color:var(--ink1);overflow:hidden;
 font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
 .app{display:flex;flex-direction:column;height:100%}
-.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;
+.top{display:flex;align-items:center;gap:10px;padding:8px 14px;position:relative;z-index:40;
 background:var(--paper);border-bottom:1px solid var(--line)}
-.brand{font-size:15px;font-weight:700;letter-spacing:-.2px;margin-right:4px}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
 .brand small{display:block;font-size:11.5px;font-weight:400;color:var(--ink3)}
 .brand a{color:var(--ink3);text-decoration:none;border-bottom:1px solid var(--line)}
-.search{position:relative}
-.search input{width:220px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;
+.search{position:relative;flex:1;min-width:90px;max-width:320px}
+.top .chips.wide-only{flex:1;overflow:hidden}
+.wide-only{display:flex}
+.narrow-only{display:none}
+@media (max-width:1000px){.wide-only{display:none!important}.narrow-only{display:block}}
+.search input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;
 font:inherit;font-size:13px;background:var(--paper);color:var(--ink1)}
-.sug{position:absolute;z-index:30;top:36px;left:0;width:300px;max-height:280px;overflow:auto;
-background:var(--paper);border:1px solid var(--line);border-radius:6px;
-box-shadow:0 6px 20px rgba(26,34,51,.10)}
-.sug div{padding:7px 10px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f2f6}
+.sug{position:absolute;z-index:30;top:38px;left:0;width:100%;min-width:230px;max-height:300px;
+overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.sug div{padding:8px 10px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f2f6}
 .sug div:hover{background:var(--hi)}
 .sug em{font-style:normal;color:var(--ink3);font-size:11.5px;margin-left:6px}
+.sel{flex:none;max-width:132px;padding:8px 8px;border:1px solid var(--line);border-radius:6px;
+background:var(--paper);font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{padding:5px 10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);
-font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
+font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer;white-space:nowrap}
 .chip:hover{background:var(--hi)}
 .chip.on{background:var(--hiline);border-color:var(--hiline);color:#fff}
-.grp{display:flex;align-items:center;gap:6px}
-.grp b{font-size:11.5px;color:var(--ink3);font-weight:600}
-.main{flex:1;display:flex;min-height:0}
+/* 필터 서랍 */
+.drw{position:absolute;top:calc(100% + 6px);right:10px;z-index:45;padding:12px 14px 14px;
+width:min(420px,calc(100vw - 20px));background:var(--paper);border:1px solid var(--line);
+border-radius:8px}
+.drw h4{margin:0 0 6px;font-size:11.5px;font-weight:600;color:var(--ink3);letter-spacing:.3px}
+.drw .row{margin-bottom:12px}
+.drw .row:last-child{margin-bottom:0}
+.drwx{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.drwx b{font-size:13px}
+.main{flex:1;display:flex;min-height:0;position:relative}
 .canvas{flex:1;min-width:0;position:relative}
-.side{width:360px;flex:none;background:var(--paper);border-left:1px solid var(--line);
+.side{width:380px;flex:none;background:var(--paper);border-left:1px solid var(--line);
 overflow:auto;padding:16px 16px 40px}
+.shx{display:none}
 .side h2{font-size:17px;margin:0 0 2px;letter-spacing:-.2px}
 .side .tk{font-size:12px;color:var(--ink3);margin-bottom:10px}
 .side p{margin:0 0 12px;font-size:13px;color:var(--ink2)}
 .side .rev{font-size:13px;font-weight:600;color:var(--ink1);margin-bottom:10px}
 .side h3{font-size:12px;color:var(--ink3);margin:18px 0 6px;letter-spacing:.3px}
 .side a{color:var(--ink2)}
+.hint{font-size:11.5px;color:var(--ink3);margin:0 0 8px}
 .rel{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:6px;
 cursor:pointer;font-size:12.5px}
 .rel:hover{background:var(--hi)}
@@ -93,8 +107,9 @@ font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
 .flow{font-size:13.5px;font-weight:600;margin-bottom:2px}
 .flow span{color:var(--ink3);font-weight:400}
 .dots{font-size:11.5px;color:var(--ink3);margin-bottom:10px}
-table.m{border-collapse:collapse;width:100%;font-size:12px;margin:4px 0 10px}
-table.m th,table.m td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;
+.tw{overflow-x:auto;margin:4px 0 10px}
+table.m{border-collapse:collapse;width:100%;font-size:12.5px}
+table.m th,table.m td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;
 vertical-align:top;color:var(--ink2)}
 table.m th{color:var(--ink3);font-weight:600;font-size:11px;white-space:nowrap}
 table.m td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
@@ -107,44 +122,61 @@ font-size:10.5px;color:var(--ink3);margin-right:4px}
 .meth{font-size:11.5px;color:var(--ink3);background:#f4f6f9;border-radius:5px;
 padding:7px 9px;margin:0 0 10px}
 /* 노드 */
-.co{width:210px;background:var(--paper);border:1px solid var(--line);border-radius:7px;
-padding:8px 10px;position:relative;cursor:pointer}
+.co{width:236px;background:var(--paper);border:1px solid var(--line);border-radius:7px;
+padding:9px 11px;position:relative;cursor:pointer}
 .co:hover{border-color:var(--ink4)}
 .co.center{background:var(--hi);border-color:var(--hiline);border-width:1.6px}
 .co.anon{background:#f4eef4;border-style:dashed}
-.co .nm{font-size:12.5px;font-weight:600;line-height:1.35;padding-right:22px}
-.co .ind{font-size:10.5px;color:var(--ink3);margin-top:2px}
-.co .sh{font-size:10.5px;color:var(--ink2);margin-top:3px}
-.co .ex{position:absolute;top:6px;right:6px;width:18px;height:18px;line-height:16px;
-text-align:center;border:1px solid var(--line);border-radius:4px;background:var(--paper);
-font-size:12px;color:var(--ink3)}
+.co .nm{font-size:13.5px;font-weight:600;line-height:1.4;padding-right:30px}
+.co .ind{font-size:11px;color:var(--ink3);margin-top:3px;line-height:1.6}
+.co .sh{display:inline-block;margin-top:6px;padding:1px 7px;border:1px solid var(--line);
+border-radius:10px;background:var(--bg);font-size:11px;line-height:1.6;color:var(--ink2)}
+.co .ex{position:absolute;top:7px;right:7px;min-width:22px;height:20px;padding:0 5px;
+line-height:18px;text-align:center;border:1px solid var(--line);border-radius:5px;
+background:var(--paper);font-size:11px;color:var(--ink3)}
 .co .ex:hover{background:var(--hiline);color:#fff;border-color:var(--hiline)}
 .react-flow__handle{opacity:0;width:1px;height:1px;min-width:0;min-height:0;border:0}
 .react-flow__edge{cursor:pointer}
-.react-flow__minimap{width:150px!important;height:96px!important;
-border:1px solid var(--line);border-radius:6px}
+.react-flow__edge:hover .react-flow__edge-path{stroke:var(--hiline)!important}
+.react-flow__edge.pick .react-flow__edge-path{stroke:var(--hiline)!important;
+stroke-width:2.6!important}
 .react-flow__controls{box-shadow:none;border:1px solid var(--line);border-radius:6px}
-.react-flow__controls button{width:22px;height:22px}
+.react-flow__controls button{width:24px;height:24px}
 .react-flow__attribution{font-size:9px;opacity:.5}
-.lgd{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:7px 16px;
-background:var(--paper);border-bottom:1px solid var(--line);font-size:11.5px;
-color:var(--ink2)}
+/* 범례 — 화면 세로를 먹지 않게 판 위에 얹는다 */
+.lgd{position:absolute;z-index:6;right:8px;bottom:8px;max-width:calc(100% - 16px);
+display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;padding:6px 10px;
+background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:7px;
+font-size:11.5px;color:var(--ink2)}
 .lgd span{display:inline-flex;align-items:center;gap:6px}
-.lgd b{font-weight:600;color:var(--ink3);font-size:11px}
+.lgd b{font-weight:600;color:var(--ink1);font-size:11.5px}
 .only-narrow{display:none}
-@media (max-width:860px){.main{flex-direction:column}.side{width:auto;border-left:0;
-border-top:1px solid var(--line);max-height:50%}}
-@media (max-width:720px){
-.top{gap:8px;padding:8px 12px}
-.brand{font-size:14px;width:100%;margin:0}
-.search{flex:1}.search input{width:100%}
-.chip{padding:4px 9px;font-size:12px}
+@media (max-width:720px){.lgd{left:8px;right:8px;bottom:56px;justify-content:flex-start;font-size:11px;padding:5px 8px}}
+@media (max-width:860px){
+.main{display:block}
+.canvas{position:absolute;top:0;left:0;right:0;bottom:0}
+/* 옆판을 바닥 시트로 — 접으면 손잡이만 남고 판이 화면을 다 쓴다 */
+.side{position:absolute;left:0;right:0;bottom:0;width:auto;height:46vh;
+border-left:0;border-top:1px solid var(--line);padding:0 14px 30px;
+transform:translateY(calc(100% - 43px));transition:transform .18s ease}
+.side.up{transform:translateY(0)}
+.shx{display:flex;position:sticky;top:0;z-index:2;width:100%;gap:10px;align-items:center;
+justify-content:space-between;padding:11px 0;background:var(--paper);border:0;
+border-bottom:1px solid var(--line);font:inherit;font-size:13px;font-weight:600;
+color:var(--ink1);text-align:left;cursor:pointer}
+.shx em{font-style:normal;font-weight:400;font-size:12px;color:var(--ink3);white-space:nowrap}
+.side h2{font-size:16px}
 .only-narrow{display:inline-block}
-.narrow-hide{display:none}
-.grp{width:100%}
-.lgd{gap:10px;padding:6px 12px;font-size:11px}
-.canvas{min-height:52vh}
 }
+@media (max-width:720px){
+.top{gap:8px;padding:7px 10px}
+.brand{font-size:14px}
+.brand small{display:none}
+.chip{padding:5px 9px;font-size:12px}
+.sel{max-width:104px;padding:8px 4px}
+.drw{right:6px;left:6px;width:auto}
+}
+@media (max-width:420px){.brand{font-size:0}.brand:before{content:"밸류체인";font-size:14px}}
 '''
 
 APP = u'''
@@ -180,6 +212,19 @@ DB.evidence.forEach(function(e){
   if (e.hypothesis_id) (EV_BY_HYP[e.hypothesis_id] = EV_BY_HYP[e.hypothesis_id] || []).push(e);
 });
 
+// 바로 가기 — 이름을 박지 않고 관계가 많은 회사 넷을 데이터에서 고른다
+var QUICK = (function(){
+  var deg = {};
+  DB.relationships.forEach(function(r){
+    deg[r.source_company_id] = (deg[r.source_company_id] || 0) + 1;
+    deg[r.target_company_id] = (deg[r.target_company_id] || 0) + 1;
+  });
+  var rest = Object.keys(deg).filter(function(id){
+    return CO[id] && !CO[id].anon && id !== 'nvidia';
+  }).sort(function(a, b){ return deg[b] - deg[a]; });
+  return (CO['nvidia'] ? ['nvidia'] : []).concat(rest).slice(0, 4);
+})();
+
 var PERIODS = (function(){
   var e = {}, st = {};
   DB.relationship_metrics.forEach(function(m){
@@ -209,7 +254,8 @@ var EV_LABEL = { direct: '직접 서술', indirect: '간접 근거', estimate_in
 var MET_LABEL = { customer_revenue_share: '고객 매출 비중',
   receivables_share: '매출채권 비중', supply_share: '공급 점유',
   revenue_share: '매출 비중', commitment_value: '약정 총액',
-  guarantee_cap: '보증 상한' };
+  guarantee_cap: '보증 상한', supplier_purchase_share: '매입액 비중',
+  investment_value: '투자 금액', contract_value: '계약 금액' };
 function metName(k){ return MET_LABEL[k] || k; }
 var HYP_STATUS = { estimated: '추정', confirmed: '확인됨', rejected: '기각' };
 function stars(v){
@@ -254,35 +300,42 @@ function CoNode(p){
   if (d.hidden > 0) kids.push(h('div', {
     key:'x', className:'ex', title: '이웃 ' + d.hidden + '곳 더 펼치기',
     onClick: function(e){ e.stopPropagation(); d.onExpand(c.id); }
-  }, '+'));
+  }, '+' + d.hidden));
   return h('div', { className: cls, onClick: function(){ d.onOpen(c.id); } }, kids);
 }
 var NODE_TYPES = { co: CoNode };
 
 // ── 배치 ──────────────────────────────────────────────────────────
+var NODE_W = 236;
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
   g.setDefaultEdgeLabel(function(){ return {}; });
-  g.setGraph({ rankdir:'LR', nodesep:16, ranksep:130, marginx:24, marginy:24 });
-  nodes.forEach(function(n){ g.setNode(n.id, { width:210, height:n.__h }); });
+  g.setGraph({ rankdir:'LR', nodesep:18, ranksep:112, marginx:20, marginy:20 });
+  nodes.forEach(function(n){ g.setNode(n.id, { width:NODE_W, height:n.__h }); });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
   return nodes.map(function(n){
     var p = g.node(n.id);
-    return Object.assign({}, n, { position: { x: p.x - 105, y: p.y - n.__h / 2 } });
+    return Object.assign({}, n, { position: { x: p.x - NODE_W / 2, y: p.y - n.__h / 2 } });
   });
 }
 
 // ── 앱 ────────────────────────────────────────────────────────────
 function App(){
-  var s0 = useState('nvidia'), center = s0[0], setCenter = s0[1];
+  var HOME = CO['nvidia'] ? 'nvidia' : QUICK[0];
+  var s0 = useState(HOME), center = s0[0], setCenter = s0[1];
   var s1 = useState({}), open = s1[0], setOpen = s1[1];
-  var s2 = useState({ kind:'co', id:'nvidia' }), sel = s2[0], setSel = s2[1];
+  var s2 = useState({ kind:'co', id: HOME }), sel = s2[0], setSelRaw = s2[1];
   var s3 = useState(''), q = s3[0], setQ = s3[1];
-  var s4 = useState([LATEST]), per = s4[0], setPer = s4[1];
+  var s4 = useState(LATEST), perOne = s4[0], setPerOne = s4[1];
   var s5 = useState(['high','medium','low']), conf = s5[0], setConf = s5[1];
   var s6 = useState(false), onlyOfficial = s6[0], setOnlyOfficial = s6[1];
-  var s7 = useState(false), showFilters = s7[0], setShowFilters = s7[1];
+  var s7 = useState(false), drawer = s7[0], setDrawer = s7[1];
+  var s8 = useState(false), sheet = s8[0], setSheet = s8[1];
+
+  var per = perOne ? [perOne] : PERIODS;
+  // 좁은 화면에서는 무엇을 눌렀든 바닥 시트가 따라 올라온다
+  function setSel(v){ setSelRaw(v); setSheet(true); }
 
   var pass = useCallback(function(r){
     if (conf.indexOf(r.confidence) < 0) return false;
@@ -306,7 +359,7 @@ function App(){
       var m = latest(r.id, per);
       return {
         id: r.id, source: r.source_company_id, target: r.target_company_id,
-        type: 'smoothstep', style: CONF_STYLE[r.confidence],
+        type: 'smoothstep', style: CONF_STYLE[r.confidence], interactionWidth: 26,
         label: m ? (m.value + m.unit) : undefined,
         labelStyle: { fontSize: 10, fill: '#39415a' },
         labelBgStyle: { fill: '#fff', fillOpacity: .85 },
@@ -324,9 +377,10 @@ function App(){
         if (m && !sh && m.unit === '%') sh = m.value + '% · ' + metName(m.metric);
       });
       down(id).forEach(function(r){ total++; if (keep[r.target_company_id]) shown++; });
-      var rows = 2 + (sh ? 1 : 0) + (label(c).length > 14 ? 1 : 0);
+      var lines = label(c).length > 13 ? 2 : 1;
       return {
-        id: id, type: 'co', position: { x:0, y:0 }, __h: 16 + 17 + (rows - 1) * 15,
+        id: id, type: 'co', position: { x:0, y:0 },
+        __h: 18 + lines * 19 + 21 + (sh ? 28 : 0),
         data: { co: c, isCenter: id === center, share: sh, hidden: total - shown,
                 onOpen: function(x){ setSel({ kind:'co', id:x }); },
                 onExpand: function(x){ setOpen(function(o){
@@ -334,9 +388,19 @@ function App(){
       };
     });
     return { nodes: place(nds, eds), edges: eds };
-  }, [center, open, rels, per]);
+  }, [center, open, rels, perOne]);
 
-  function focus(id){ setCenter(id); setOpen({}); setSel({ kind:'co', id:id }); setQ(''); }
+  // 고른 선은 굵게 — 옆판이 어느 선을 풀고 있는지 보이게 한다
+  var edges = useMemo(function(){
+    return graph.edges.map(function(e){
+      return (sel.kind === 'rel' && sel.id === e.id)
+        ? Object.assign({}, e, { className:'pick' }) : e;
+    });
+  }, [graph, sel]);
+
+  function focus(id){
+    setCenter(id); setOpen({}); setSel({ kind:'co', id:id }); setQ(''); setDrawer(false);
+  }
 
   var hits = q.trim() ? DB.companies.filter(function(c){
     var t = (c.name + ' ' + (c.name_ko||'') + ' ' + (c.ticker||'') + ' ' +
@@ -384,22 +448,24 @@ function App(){
     if (r.notes) kids.push(h('div', { key:'n', className:'meth' }, r.notes));
     kids.push(h('h3', { key:'hm' }, '시점별 지표 ' + ms.length));
     if (ms.length) {
-      kids.push(h('table', { key:'tb', className:'m' }, [
+      // 좁은 판에서 글자가 뭉개지지 않게 표는 세 칸만 쓰고
+      // 나머지(무엇의 비중인가·어떻게 얻었나)는 기간별 설명 줄로 내린다
+      kids.push(h('div', { key:'tw', className:'tw' },
+        h('table', { className:'m' }, [
         h('thead', { key:'h' }, h('tr', null, [
           h('th', { key:'1' }, '기간'), h('th', { key:'2' }, '지표'),
-          h('th', { key:'3' }, '값'), h('th', { key:'4' }, '무엇의 비중인가'),
-          h('th', { key:'5' }, '어떻게 얻었나')])),
+          h('th', { key:'3' }, '값')])),
         h('tbody', { key:'b' }, ms.map(function(m){
           return h('tr', { key:m.id }, [
             h('td', { key:'1' }, m.period),
             h('td', { key:'2' }, metName(m.metric)),
-            h('td', { key:'3', className:'n' }, m.value + m.unit),
-            h('td', { key:'4' }, m.basis),
-            h('td', { key:'5' }, EST_LABEL[m.estimate_type] || m.estimate_type)]);
-        }))]));
+            h('td', { key:'3', className:'n' }, m.value + m.unit)]);
+        }))])));
       ms.forEach(function(m){
-        if (m.method) kids.push(h('div', { key:'me'+m.id, className:'meth' },
-          m.period + ' 계산 — ' + m.method));
+        kids.push(h('div', { key:'bs'+m.id, className:'meth' },
+          m.period + ' — ' + m.basis + ' 에 대한 비중, ' +
+          (EST_LABEL[m.estimate_type] || m.estimate_type) +
+          (m.method ? '. 계산은 ' + m.method : '')));
         var evs = EV_BY_MET[m.id] || [];
         if (evs.length) {
           kids.push(h('h3', { key:'he'+m.id }, m.period + ' 지표의 근거 ' + evs.length));
@@ -460,6 +526,9 @@ function App(){
           })
         : (c.anon ? h('div', { key:'ey', className:'empty' }, '아직 후보를 세우지 않았다') : null),
       h('h3', { key:'hu' }, '공급받는 곳 ' + ups.length),
+      (ups.length || dws.length)
+        ? h('div', { key:'ht', className:'hint' }, '한 줄을 누르면 그 관계의 숫자와 근거가 열린다')
+        : null,
       ups.length ? ups.map(function(r){ return row(r, r.source_company_id, 'u'); })
                  : h('div', { key:'eu', className:'empty' }, '데이터에 없다'),
       h('h3', { key:'hd' }, '공급하는 곳 ' + dws.length),
@@ -469,8 +538,12 @@ function App(){
     return kids;
   }
 
-  var body = sel.kind === 'rel' && REL[sel.id]
-    ? edgePanel(REL[sel.id]) : coPanel(CO[sel.id] || CO[center]);
+  var selRel = sel.kind === 'rel' && REL[sel.id] ? REL[sel.id] : null;
+  var selCo = selRel ? null : (CO[sel.id] || CO[center]);
+  var body = selRel ? edgePanel(selRel) : coPanel(selCo);
+  var sheetTitle = selRel
+    ? (label(CO[selRel.source_company_id]) + ' → ' + label(CO[selRel.target_company_id]))
+    : label(selCo);
 
   function svgLine(k){
     var st = CONF_STYLE[k];
@@ -485,6 +558,35 @@ function App(){
     h('span', { key:'3' }, [svgLine('low'), '추정이다'])
   ]);
 
+  // 걸어 둔 필터 수 — 서랍을 닫아 두어도 무엇이 켜졌는지 보이게 한다
+  var nFilter = (conf.length < 3 ? 1 : 0) + (onlyOfficial ? 1 : 0);
+  var drawer_ = drawer ? h('div', { key:'dw', className:'drw' }, [
+    h('div', { key:'x', className:'drwx' }, [
+      h('b', { key:'t' }, '무엇을 보여줄까'),
+      h('button', { key:'c', className:'chip',
+                    onClick: function(){ setDrawer(false); } }, '닫기')
+    ]),
+    h('div', { key:'j', className:'row narrow-only' }, [
+      h('h4', { key:'h' }, '바로 가기'),
+      h('div', { key:'c', className:'chips' }, QUICK.map(function(id){
+        return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
+                             onClick: function(){ focus(id); } }, label(CO[id]));
+      }))
+    ]),
+    h('div', { key:'g', className:'row' }, [
+      h('h4', { key:'h' }, '근거의 세기'),
+      h('div', { key:'c', className:'chips' },
+        ['high','medium','low'].map(function(k){
+          return h('button', { key:k, className:'chip' + (conf.indexOf(k) >= 0 ? ' on' : ''),
+                               onClick: function(){ toggle(conf, k, setConf); } },
+                   CONF_LABEL[k]);
+        }).concat([
+          h('button', { key:'of', className:'chip' + (onlyOfficial ? ' on' : ''),
+                        onClick: function(){ setOnlyOfficial(!onlyOfficial); } },
+            '공식 출처만')]))
+    ])
+  ]) : null;
+
   return h('div', { className:'app' }, [
     h('div', { key:'top', className:'top' }, [
       h('div', { key:'br', className:'brand' }, ['밸류체인 탐색기',
@@ -498,44 +600,54 @@ function App(){
             [label(x), h('em', { key:'e' }, x.company_type || x.industry)]);
         })) : null
       ]),
-      h('div', { key:'ch', className:'chips' }, ['nvidia','amd','tsmc','asml'].map(function(id){
+      h('div', { key:'qk', className:'chips wide-only' }, QUICK.map(function(id){
         return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
                              onClick: function(){ focus(id); } }, label(CO[id]));
       })),
-      h('button', { key:'ft', className:'chip only-narrow',
-                    onClick: function(){ setShowFilters(!showFilters); } },
-        showFilters ? '필터 접기' : '기간·근거 필터'),
-      h('div', { key:'pf', className:'grp' + (showFilters ? '' : ' narrow-hide') },
-        [h('b', { key:'b' }, '기간')].concat(
-        PERIODS.map(function(p){
-          return h('button', { key:p, className:'chip' + (per.indexOf(p) >= 0 ? ' on' : ''),
-                               onClick: function(){ toggle(per, p, setPer); } }, p);
+      h('select', { key:'pd', className:'sel', value:perOne, title:'어느 시점의 숫자를 볼까',
+                    onChange: function(e){ setPerOne(e.target.value); } },
+        [h('option', { key:'all', value:'' }, '기간 전체')].concat(
+        PERIODS.slice().reverse().map(function(p){
+          return h('option', { key:p, value:p }, p);
         }))),
-      h('div', { key:'cf', className:'grp' + (showFilters ? '' : ' narrow-hide') },
-        [h('b', { key:'b' }, '근거')].concat(
-        ['high','medium','low'].map(function(k){
-          return h('button', { key:k, className:'chip' + (conf.indexOf(k) >= 0 ? ' on' : ''),
-                               onClick: function(){ toggle(conf, k, setConf); } },
-                   CONF_LABEL[k]);
-        })).concat([
-          h('button', { key:'of', className:'chip' + (onlyOfficial ? ' on' : ''),
-                        onClick: function(){ setOnlyOfficial(!onlyOfficial); } },
-            '공식 출처만')]))
+      h('button', { key:'ft', className:'chip' + (drawer || nFilter ? ' on' : ''),
+                    onClick: function(){ setDrawer(!drawer); } },
+        nFilter ? '필터 ' + nFilter : '필터'),
+      drawer_
     ]),
-    legend,
-    h('div', { key:'main', className:'main' }, [
+    h('div', { key:'main', className:'main',
+               onClick: function(){ if (drawer) setDrawer(false); } }, [
       h('div', { key:'cv', className:'canvas' }, [
-        h(RF, { key:'rf', nodes: graph.nodes, edges: graph.edges, nodeTypes: NODE_TYPES,
-                fitView: true, fitViewOptions: { padding: 0.18 },
-                minZoom: 0.2, maxZoom: 1.8,
+        h(RF, { key:'rf', nodes: graph.nodes, edges: edges, nodeTypes: NODE_TYPES,
+                // 다 담으려다 글자가 뭉개진다. 읽히는 배율을 바닥으로 두고
+                // 나머지는 밀어서 본다 — 전체는 아래 맞춤 단추로 돌아온다
+                fitView: true,
+                fitViewOptions: { padding: 0.12, minZoom: 0.5, maxZoom: 1 },
+                minZoom: 0.2, maxZoom: 2.2,
                 onEdgeClick: function(ev, e){ setSel({ kind:'rel', id: e.id }); },
+                onInit: function(inst){
+                  // 좁은 화면에서는 중심 회사를 왼쪽으로 밀어 고객 쪽을 먼저 보여준다
+                  if (window.innerWidth > 720) return;
+                  var n = graph.nodes.filter(function(x){ return x.id === center; })[0];
+                  if (!n) return;
+                  var z = 0.62;
+                  inst.setCenter(n.position.x + NODE_W / 2 + window.innerWidth * 0.2 / z,
+                                 n.position.y + n.__h / 2, { zoom: z });
+                },
                 nodesDraggable: true, nodesConnectable: false }, [
           h(Background, { key:'bg', gap: 22, size: 1, color: '#dfe3ea' }),
           h(Controls, { key:'ct', showInteractive: false, position:'bottom-right' }),
           null
-        ])
+        ]),
+        legend
       ]),
-      h('div', { key:'sd', className:'side' }, body)
+      h('div', { key:'sd', className:'side' + (sheet ? ' up' : '') }, [
+        h('button', { key:'hd', className:'shx',
+                      onClick: function(e){ e.stopPropagation(); setSheet(!sheet); } }, [
+          h('span', { key:'t' }, sheetTitle),
+          h('em', { key:'e' }, sheet ? '내리기' : '자세히 보기')
+        ])
+      ].concat(body))
     ])
   ]);
 }

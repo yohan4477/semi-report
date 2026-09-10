@@ -225,141 +225,6 @@
   "hypothesis_id": null
  },
  {
-  "id": "e026",
-  "relationship_id": "r021",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "TSMC manufactures all of our microprocessor and GPU products at 7nm and below.",
-  "hypothesis_id": null
- },
- {
-  "id": "e027",
-  "relationship_id": "r022",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "We are party to a wafer supply agreement with GF where GF will provide a minimum annual capacity allocation to us and set pricing through 2026.",
-  "hypothesis_id": null
- },
- {
-  "id": "e028",
-  "relationship_id": "r023",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices.",
-  "hypothesis_id": null
- },
- {
-  "id": "e029",
-  "relationship_id": "r024",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices.",
-  "hypothesis_id": null
- },
- {
-  "id": "e030",
-  "relationship_id": "r025",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "We are party to two ATMP joint ventures with Tongfu Microelectronics Co., Ltd.",
-  "hypothesis_id": null
- },
- {
-  "id": "e031",
-  "relationship_id": "r026",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
-  "hypothesis_id": null
- },
- {
-  "id": "e032",
-  "relationship_id": "r027",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "SPIL and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
-  "hypothesis_id": null
- },
- {
-  "id": "e033",
-  "relationship_id": "r028",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "2025년 10월 ZT 제조사업을 현금 24억 달러와 Sanmina 보통주 120만 주로 넘기고 Sanmina 를 제조 우선 파트너로 삼았다",
-  "hypothesis_id": null
- },
- {
-  "id": "e034",
-  "relationship_id": "r029",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "2025년 10월 OpenAI 와 6GW 규모 AMD GPU 공급계약을 맺고 MI450 시리즈부터 배치한다",
-  "hypothesis_id": null
- },
- {
-  "id": "e035",
-  "relationship_id": "r030",
-  "metric_id": "m006",
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "direct",
-  "evidence": "One customer accounted for approximately 11% of the total consolidated accounts receivable balance as of December 27, 2025.",
-  "hypothesis_id": null
- },
- {
-  "id": "e036",
-  "relationship_id": "r031",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "absent",
-  "evidence": "No customer accounted for at least 10% of the Company’s consolidated net revenue in fiscal years 2025 and 2024.",
-  "hypothesis_id": null
- },
- {
-  "id": "e037",
-  "relationship_id": "r032",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "indirect",
-  "evidence": "One Client and Gaming segment customer accounted for 18% of consolidated net revenue in fiscal year 2023.",
-  "hypothesis_id": null
- },
- {
-  "id": "e038",
-  "relationship_id": "r033",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "absent",
-  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다",
-  "hypothesis_id": null
- },
- {
-  "id": "e039",
-  "relationship_id": "r034",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "absent",
-  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다",
-  "hypothesis_id": null
- },
- {
-  "id": "e040",
-  "relationship_id": "r035",
-  "metric_id": null,
-  "source_id": "sec_amd_10k_fy2025",
-  "evidence_type": "absent",
-  "evidence": "10-K 는 OEM 을 이름 없이 적는다",
-  "hypothesis_id": null
- },
- {
   "id": "e041",
   "relationship_id": "r036",
   "metric_id": null,
@@ -477,42 +342,6 @@
   "hypothesis_id": null
  },
  {
-  "id": "e054",
-  "relationship_id": "r045",
-  "metric_id": null,
-  "source_id": "sec_tsmc_20f_fy2025",
-  "evidence_type": "absent",
-  "evidence": "Our ten largest customers in 2025 accounted for approximately 78% of our net revenue.",
-  "hypothesis_id": null
- },
- {
-  "id": "e055",
-  "relationship_id": "r046",
-  "metric_id": null,
-  "source_id": "sec_tsmc_20f_fy2025",
-  "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다",
-  "hypothesis_id": null
- },
- {
-  "id": "e056",
-  "relationship_id": "r047",
-  "metric_id": null,
-  "source_id": "sec_tsmc_20f_fy2025",
-  "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다",
-  "hypothesis_id": null
- },
- {
-  "id": "e057",
-  "relationship_id": "r048",
-  "metric_id": null,
-  "source_id": "sec_tsmc_20f_fy2025",
-  "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다",
-  "hypothesis_id": null
- },
- {
   "id": "e058",
   "relationship_id": "r049",
   "metric_id": null,
@@ -582,15 +411,6 @@
   "source_id": "sec_asml_20f_fy2025",
   "evidence_type": "indirect",
   "evidence": "한국향 순매출 81억 5,960만 유로",
-  "hypothesis_id": null
- },
- {
-  "id": "e066",
-  "relationship_id": "r056",
-  "metric_id": null,
-  "source_id": "sec_asml_20f_fy2025",
-  "evidence_type": "indirect",
-  "evidence": "미국향 순매출 40억 8,910만 유로",
   "hypothesis_id": null
  },
  {

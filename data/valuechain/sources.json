@@ -10,16 +10,6 @@
   "note": "accession 0001045810-26-000021 · 회계연도 2026-01-25 종료"
  },
  {
-  "id": "sec_amd_10k_fy2025",
-  "publisher": "AMD",
-  "title": "Form 10-K (FY2025)",
-  "published_date": "2026-02-03",
-  "accessed_date": "2026-09-10",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
-  "note": "accession 0000002488-26-000018 · 회계연도 2025-12-27 종료"
- },
- {
   "id": "sec_tsmc_20f_fy2025",
   "publisher": "TSMC",
   "title": "Form 20-F (FY2025)",
@@ -138,15 +128,5 @@
   "source_type": "primary_official",
   "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000069/nvda-20260817.htm",
   "note": "accession 0001045810-26-000069"
- },
- {
-  "id": "nvda_pr_vera_rubin",
-  "publisher": "NVIDIA",
-  "title": "Vera Rubin 플랫폼 보도자료",
-  "published_date": "2026-03-16",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_company",
-  "url": "https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform",
-  "note": "시스템 제조사와 클라우드 사업자 명단. 2026-01-05·05-31 자에 명단이 다르다"
  }
 ]
