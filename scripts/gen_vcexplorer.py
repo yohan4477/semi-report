@@ -5,6 +5,7 @@
   companies.json             회사
   relationships.json         관계 (source 가 target 에게 준다). 숫자를 박지 않는다
   relationship_metrics.json  시점별 비중. 같은 관계에 기간을 계속 덧붙인다
+  identity_hypotheses.json   익명 고객에 붙는 실명 후보. 확정치와 섞지 않는다
   sources.json               원문 메타데이터와 등급
   evidence.json              관계와 지표 각각에 붙는 근거
 """
@@ -13,7 +14,8 @@ import io, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
-TABLES = ['companies', 'relationships', 'relationship_metrics', 'sources', 'evidence']
+TABLES = ['companies', 'relationships', 'relationship_metrics', 'sources', 'evidence',
+          'identity_hypotheses']
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -119,13 +121,30 @@ font-size:12px;color:var(--ink3)}
 .co .ex:hover{background:var(--hiline);color:#fff;border-color:var(--hiline)}
 .react-flow__handle{opacity:0;width:1px;height:1px;min-width:0;min-height:0;border:0}
 .react-flow__edge{cursor:pointer}
-.lgd{position:absolute;left:12px;top:12px;z-index:5;background:rgba(255,255,255,.94);
-border:1px solid var(--line);border-radius:7px;padding:9px 11px;font-size:11.5px;color:var(--ink2)}
-.lgd div{display:flex;align-items:center;gap:7px;margin-top:3px}
-.lgd div:first-child{margin-top:0}
+.react-flow__minimap{width:150px!important;height:96px!important;
+border:1px solid var(--line);border-radius:6px}
+.react-flow__controls{box-shadow:none;border:1px solid var(--line);border-radius:6px}
+.react-flow__controls button{width:22px;height:22px}
+.react-flow__attribution{font-size:9px;opacity:.5}
+.lgd{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:7px 16px;
+background:var(--paper);border-bottom:1px solid var(--line);font-size:11.5px;
+color:var(--ink2)}
+.lgd span{display:inline-flex;align-items:center;gap:6px}
 .lgd b{font-weight:600;color:var(--ink3);font-size:11px}
+.only-narrow{display:none}
 @media (max-width:860px){.main{flex-direction:column}.side{width:auto;border-left:0;
-border-top:1px solid var(--line);max-height:46%}.search input{width:150px}}
+border-top:1px solid var(--line);max-height:50%}}
+@media (max-width:720px){
+.top{gap:8px;padding:8px 12px}
+.brand{font-size:14px;width:100%;margin:0}
+.search{flex:1}.search input{width:100%}
+.chip{padding:4px 9px;font-size:12px}
+.only-narrow{display:inline-block}
+.narrow-hide{display:none}
+.grp{width:100%}
+.lgd{gap:10px;padding:6px 12px;font-size:11px}
+.canvas{min-height:52vh}
+}
 '''
 
 APP = u'''
@@ -149,13 +168,30 @@ DB.relationship_metrics.forEach(function(m){
   (MET_BY_REL[m.relationship_id] = MET_BY_REL[m.relationship_id] || []).push(m);
 });
 DB.evidence.forEach(function(e){
+  if (e.hypothesis_id) return;
   if (e.metric_id) (EV_BY_MET[e.metric_id] = EV_BY_MET[e.metric_id] || []).push(e);
   else (EV_BY_REL[e.relationship_id] = EV_BY_REL[e.relationship_id] || []).push(e);
 });
+var HYP_BY_ANON = {}, EV_BY_HYP = {};
+(DB.identity_hypotheses || []).forEach(function(x){
+  (HYP_BY_ANON[x.anon_company_id] = HYP_BY_ANON[x.anon_company_id] || []).push(x);
+});
+DB.evidence.forEach(function(e){
+  if (e.hypothesis_id) (EV_BY_HYP[e.hypothesis_id] = EV_BY_HYP[e.hypothesis_id] || []).push(e);
+});
+
 var PERIODS = (function(){
-  var s = {}; DB.relationship_metrics.forEach(function(m){ s[m.period] = 1; });
-  return Object.keys(s).sort();
+  var e = {}, st = {};
+  DB.relationship_metrics.forEach(function(m){
+    if (!e[m.period] || m.period_end > e[m.period]) e[m.period] = m.period_end;
+    if (!st[m.period] || m.period_start < st[m.period]) st[m.period] = m.period_start;
+  });
+  return Object.keys(e).sort(function(a, b){
+    if (e[a] !== e[b]) return e[a] < e[b] ? -1 : 1;
+    return st[a] > st[b] ? -1 : 1;   // 같은 날 끝나면 긴 쪽을 뒤에
+  });
 })();
+var LATEST = PERIODS[PERIODS.length - 1];
 
 var CONF_LABEL = { high: '공시로 확인', medium: '한쪽만 공시', low: '추정' };
 var CONF_DOTS = { high: '●●●', medium: '●●○', low: '●○○' };
@@ -171,7 +207,16 @@ var OFFICIAL = { primary_official: 1, primary_company: 1 };
 var EV_LABEL = { direct: '직접 서술', indirect: '간접 근거', estimate_input: '추정 입력값',
   absent: '공시에 없음' };
 var MET_LABEL = { customer_revenue_share: '고객 매출 비중',
-  receivables_share: '매출채권 비중', supply_share: '공급 점유' };
+  receivables_share: '매출채권 비중', supply_share: '공급 점유',
+  revenue_share: '매출 비중', commitment_value: '약정 총액',
+  guarantee_cap: '보증 상한' };
+function metName(k){ return MET_LABEL[k] || k; }
+var HYP_STATUS = { estimated: '추정', confirmed: '확인됨', rejected: '기각' };
+function stars(v){
+  var n = Math.round((v || 0) * 2) / 2, out = '';
+  for (var i = 1; i <= 5; i++) out += (n >= i ? '★' : (n >= i - 0.5 ? '☆' : '·'));
+  return out;
+}
 var EST_LABEL = { disclosed: '공시 그대로', derived: '공시에서 계산',
   analyst_estimate: '애널리스트 추정', industry_knowledge: '업계 통설' };
 
@@ -234,9 +279,10 @@ function App(){
   var s1 = useState({}), open = s1[0], setOpen = s1[1];
   var s2 = useState({ kind:'co', id:'nvidia' }), sel = s2[0], setSel = s2[1];
   var s3 = useState(''), q = s3[0], setQ = s3[1];
-  var s4 = useState(PERIODS.slice()), per = s4[0], setPer = s4[1];
+  var s4 = useState([LATEST]), per = s4[0], setPer = s4[1];
   var s5 = useState(['high','medium','low']), conf = s5[0], setConf = s5[1];
   var s6 = useState(false), onlyOfficial = s6[0], setOnlyOfficial = s6[1];
+  var s7 = useState(false), showFilters = s7[0], setShowFilters = s7[1];
 
   var pass = useCallback(function(r){
     if (conf.indexOf(r.confidence) < 0) return false;
@@ -275,7 +321,7 @@ function App(){
       up(id).forEach(function(r){
         total++; if (keep[r.source_company_id]) shown++;
         var m = latest(r.id, per);
-        if (m && !sh) sh = m.value + m.unit + ' · ' + MET_LABEL[m.metric];
+        if (m && !sh && m.unit === '%') sh = m.value + '% · ' + metName(m.metric);
       });
       down(id).forEach(function(r){ total++; if (keep[r.target_company_id]) shown++; });
       var rows = 2 + (sh ? 1 : 0) + (label(c).length > 14 ? 1 : 0);
@@ -346,7 +392,7 @@ function App(){
         h('tbody', { key:'b' }, ms.map(function(m){
           return h('tr', { key:m.id }, [
             h('td', { key:'1' }, m.period),
-            h('td', { key:'2' }, MET_LABEL[m.metric] || m.metric),
+            h('td', { key:'2' }, metName(m.metric)),
             h('td', { key:'3', className:'n' }, m.value + m.unit),
             h('td', { key:'4' }, m.basis),
             h('td', { key:'5' }, EST_LABEL[m.estimate_type] || m.estimate_type)]);
@@ -398,6 +444,21 @@ function App(){
         c.website ? h('a', { key:'3', className:'btn', href:c.website,
                              target:'_blank', rel:'noreferrer' }, '회사 사이트') : null
       ]),
+      c.anon ? h('h3', { key:'hy' }, '실명 후보 ' + (HYP_BY_ANON[c.id] || []).length) : null,
+      (c.anon && (HYP_BY_ANON[c.id] || []).length)
+        ? (HYP_BY_ANON[c.id] || []).slice().sort(function(a, b){
+            return (b.likelihood || 0) - (a.likelihood || 0); }).map(function(x){
+            var cand = CO[x.candidate_company_id];
+            var kids2 = [
+              h('b', { key:'b' }, label(cand)),
+              h('span', { key:'s' }, stars(x.likelihood) + ' · ' +
+                (HYP_STATUS[x.status] || x.status) + ' · ' + x.period)
+            ];
+            if (x.method) kids2.push(h('span', { key:'m', style:{ display:'block' } }, x.method));
+            return h('div', { key:x.id, className:'rel',
+                              onClick: function(){ setSel({ kind:'co', id:cand.id }); } }, kids2);
+          })
+        : (c.anon ? h('div', { key:'ey', className:'empty' }, '아직 후보를 세우지 않았다') : null),
       h('h3', { key:'hu' }, '공급받는 곳 ' + ups.length),
       ups.length ? ups.map(function(r){ return row(r, r.source_company_id, 'u'); })
                  : h('div', { key:'eu', className:'empty' }, '데이터에 없다'),
@@ -417,11 +478,11 @@ function App(){
       h('line', { x1:0, y1:4, x2:30, y2:4, stroke:st.stroke,
                   strokeWidth:st.strokeWidth, strokeDasharray:st.strokeDasharray }));
   }
-  var legend = h('div', { className:'lgd' }, [
+  var legend = h('div', { key:'lg', className:'lgd' }, [
     h('b', { key:'b' }, '선을 누르면 근거가 열린다'),
-    h('div', { key:'1' }, [svgLine('high'), '공시가 양쪽을 잇는다']),
-    h('div', { key:'2' }, [svgLine('medium'), '한쪽 공시만 있거나 고객이 익명이다']),
-    h('div', { key:'3' }, [svgLine('low'), '추정이다'])
+    h('span', { key:'1' }, [svgLine('high'), '공시가 양쪽을 잇는다']),
+    h('span', { key:'2' }, [svgLine('medium'), '한쪽 공시만 있거나 고객이 익명이다']),
+    h('span', { key:'3' }, [svgLine('low'), '추정이다'])
   ]);
 
   return h('div', { className:'app' }, [
@@ -441,12 +502,17 @@ function App(){
         return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
                              onClick: function(){ focus(id); } }, label(CO[id]));
       })),
-      h('div', { key:'pf', className:'grp' }, [h('b', { key:'b' }, '기간')].concat(
+      h('button', { key:'ft', className:'chip only-narrow',
+                    onClick: function(){ setShowFilters(!showFilters); } },
+        showFilters ? '필터 접기' : '기간·근거 필터'),
+      h('div', { key:'pf', className:'grp' + (showFilters ? '' : ' narrow-hide') },
+        [h('b', { key:'b' }, '기간')].concat(
         PERIODS.map(function(p){
           return h('button', { key:p, className:'chip' + (per.indexOf(p) >= 0 ? ' on' : ''),
                                onClick: function(){ toggle(per, p, setPer); } }, p);
         }))),
-      h('div', { key:'cf', className:'grp' }, [h('b', { key:'b' }, '근거')].concat(
+      h('div', { key:'cf', className:'grp' + (showFilters ? '' : ' narrow-hide') },
+        [h('b', { key:'b' }, '근거')].concat(
         ['high','medium','low'].map(function(k){
           return h('button', { key:k, className:'chip' + (conf.indexOf(k) >= 0 ? ' on' : ''),
                                onClick: function(){ toggle(conf, k, setConf); } },
@@ -456,6 +522,7 @@ function App(){
                         onClick: function(){ setOnlyOfficial(!onlyOfficial); } },
             '공식 출처만')]))
     ]),
+    legend,
     h('div', { key:'main', className:'main' }, [
       h('div', { key:'cv', className:'canvas' }, [
         h(RF, { key:'rf', nodes: graph.nodes, edges: graph.edges, nodeTypes: NODE_TYPES,
@@ -464,11 +531,9 @@ function App(){
                 onEdgeClick: function(ev, e){ setSel({ kind:'rel', id: e.id }); },
                 nodesDraggable: true, nodesConnectable: false }, [
           h(Background, { key:'bg', gap: 22, size: 1, color: '#dfe3ea' }),
-          h(Controls, { key:'ct', showInteractive: false, position:'bottom-left' }),
-          h(MiniMap, { key:'mm', pannable: true, zoomable: true,
-                       nodeColor: function(n){ return n.data.isCenter ? '#39415a' : '#c9cfda'; } })
-        ]),
-        legend
+          h(Controls, { key:'ct', showInteractive: false, position:'bottom-right' }),
+          null
+        ])
       ]),
       h('div', { key:'sd', className:'side' }, body)
     ])
@@ -493,9 +558,16 @@ def build():
         assert r['source_company_id'] in cids and r['target_company_id'] in cids, r['id']
     for m in db['relationship_metrics']:
         assert m['relationship_id'] in rids, m['id']
+    hids = set(x['id'] for x in db['identity_hypotheses'])
+    for x in db['identity_hypotheses']:
+        assert x['anon_company_id'] in cids and x['candidate_company_id'] in cids, x['id']
     for e in db['evidence']:
-        assert e['relationship_id'] in rids and e['source_id'] in sids, e['id']
+        # 가설에만 붙는 근거는 관계를 갖지 않는다
+        assert e['relationship_id'] is None or e['relationship_id'] in rids, e['id']
+        assert e['source_id'] in sids, e['id']
+        assert e['relationship_id'] or e.get('hypothesis_id'), e['id']
         assert e['metric_id'] is None or e['metric_id'] in mids, e['id']
+        assert e.get('hypothesis_id') is None or e['hypothesis_id'] in hids, e['id']
 
     payload = json.dumps(db, ensure_ascii=False, separators=(',', ':'))
     scripts = '\n'.join('<script src="%s"></script>' % u for u in LIBS)

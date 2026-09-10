@@ -7,7 +7,11 @@
   "category": "Foundry",
   "product": "첨단 노드 GPU 웨이퍼 · CoWoS 패키징",
   "confidence": "high",
-  "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다"
+  "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r002",
@@ -17,7 +21,11 @@
   "category": "Foundry",
   "product": "웨이퍼 파운드리 · 메모리",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r003",
@@ -27,7 +35,11 @@
   "category": "Memory",
   "product": "메모리",
   "confidence": "high",
-  "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다"
+  "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r004",
@@ -37,7 +49,11 @@
   "category": "Memory",
   "product": "메모리",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r005",
@@ -47,7 +63,11 @@
   "category": "Assembly & Test",
   "product": "완제품 조립·시험·패키징",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r006",
@@ -57,7 +77,11 @@
   "category": "Assembly & Test",
   "product": "완제품 조립·시험·패키징",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r007",
@@ -67,7 +91,11 @@
   "category": "Assembly & Test",
   "product": "완제품 조립·시험·패키징",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r008",
@@ -77,7 +105,10 @@
   "category": "Direct sales",
   "product": "직접 판매",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r009",
@@ -87,7 +118,10 @@
   "category": "Direct sales",
   "product": "직접 판매",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r010",
@@ -97,7 +131,10 @@
   "category": "Direct sales",
   "product": "직접 판매",
   "confidence": "high",
-  "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다"
+  "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다",
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r011",
@@ -107,7 +144,11 @@
   "category": "Systems",
   "product": "GPU·서버 시스템",
   "confidence": "low",
-  "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다"
+  "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r012",
@@ -117,7 +158,11 @@
   "category": "Systems",
   "product": "GPU·서버 시스템",
   "confidence": "low",
-  "notes": "익명 직접고객 후보"
+  "notes": "익명 직접고객 후보",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r013",
@@ -127,7 +172,11 @@
   "category": "Systems",
   "product": "GPU·서버 시스템",
   "confidence": "low",
-  "notes": "익명 직접고객 후보"
+  "notes": "익명 직접고객 후보",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r014",
@@ -137,7 +186,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다"
+  "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다",
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r015",
@@ -147,7 +199,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r016",
@@ -157,7 +212,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r017",
@@ -167,7 +225,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r018",
@@ -177,7 +238,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r019",
@@ -187,7 +251,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다"
+  "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다",
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r020",
@@ -197,7 +264,10 @@
   "category": "AI accelerator",
   "product": "AI 가속기",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r021",
@@ -207,7 +277,11 @@
   "category": "Foundry",
   "product": "7nm 이하 CPU·GPU 웨이퍼 전량",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r022",
@@ -217,7 +291,11 @@
   "category": "Foundry",
   "product": "12nm·14nm HPC 웨이퍼",
   "confidence": "high",
-  "notes": "최소 구매 금액은 10-K 에 없다"
+  "notes": "최소 구매 금액은 10-K 에 없다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r023",
@@ -227,7 +305,11 @@
   "category": "Foundry",
   "product": "프로그래머블 로직 IC",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r024",
@@ -237,7 +319,11 @@
   "category": "Foundry",
   "product": "프로그래머블 로직 IC",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r025",
@@ -247,7 +333,11 @@
   "category": "Assembly & Test",
   "product": "조립·시험·패키징 합작 2사",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r026",
@@ -257,7 +347,11 @@
   "category": "Assembly & Test",
   "product": "조립·시험·패키징",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r027",
@@ -267,7 +361,11 @@
   "category": "Assembly & Test",
   "product": "조립·시험·패키징",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r028",
@@ -277,7 +375,11 @@
   "category": "Contract manufacturing",
   "product": "AI 랙 수탁 제조",
   "confidence": "high",
-  "notes": "설계 인력과 지적재산은 AMD 가 남겼다"
+  "notes": "설계 인력과 지적재산은 AMD 가 남겼다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r029",
@@ -287,7 +389,11 @@
   "category": "AI accelerator",
   "product": "GPU 6기가와트 공급 계약",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "end_demand"
+  ]
  },
  {
   "id": "r030",
@@ -297,7 +403,10 @@
   "category": "Direct sales",
   "product": "직접 판매",
   "confidence": "high",
-  "notes": "AMD 는 FY2025·FY2024 에 매출 10% 를 넘긴 고객이 없다"
+  "notes": "AMD 는 FY2025·FY2024 에 매출 10% 를 넘긴 고객이 없다",
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r031",
@@ -307,7 +416,10 @@
   "category": "Datacenter & console",
   "product": "서버 프로세서 · 콘솔 SoC",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r032",
@@ -317,7 +429,10 @@
   "category": "Console",
   "product": "콘솔 SoC",
   "confidence": "low",
-  "notes": "FY2023 의 18% 고객이 누구인지는 10-K 에 없다"
+  "notes": "FY2023 의 18% 고객이 누구인지는 10-K 에 없다",
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r033",
@@ -327,7 +442,10 @@
   "category": "Datacenter",
   "product": "서버 프로세서·GPU",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r034",
@@ -337,7 +455,10 @@
   "category": "Datacenter",
   "product": "서버 프로세서·GPU",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r035",
@@ -347,7 +468,11 @@
   "category": "Systems",
   "product": "서버·PC 프로세서",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r036",
@@ -357,7 +482,11 @@
   "category": "Lithography",
   "product": "EUV·DUV 노광 장비",
   "confidence": "medium",
-  "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다"
+  "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r037",
@@ -367,7 +496,11 @@
   "category": "Deposition & etch",
   "product": "증착·식각 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r038",
@@ -377,7 +510,11 @@
   "category": "Deposition & etch",
   "product": "식각·증착 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r039",
@@ -387,7 +524,11 @@
   "category": "Metrology",
   "product": "계측·검사 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r040",
@@ -397,7 +538,11 @@
   "category": "Deposition & etch",
   "product": "코터·디벨로퍼·식각 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r041",
@@ -407,7 +552,11 @@
   "category": "Silicon wafer",
   "product": "원판 실리콘 웨이퍼",
   "confidence": "low",
-  "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다"
+  "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r042",
@@ -417,7 +566,11 @@
   "category": "Silicon wafer",
   "product": "원판 실리콘 웨이퍼",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r043",
@@ -427,7 +580,10 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "high",
-  "notes": "2023년에는 10% 미만이라 표에 안 나온다"
+  "notes": "2023년에는 10% 미만이라 표에 안 나온다",
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r044",
@@ -437,7 +593,10 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "high",
-  "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다"
+  "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다",
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r045",
@@ -447,7 +606,11 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "low",
-  "notes": "고객 A·B 후보. 20-F 는 이름을 적지 않는다"
+  "notes": "고객 A·B 후보. 20-F 는 이름을 적지 않는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r046",
@@ -457,7 +620,11 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r047",
@@ -467,7 +634,11 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r048",
@@ -477,7 +648,11 @@
   "category": "Foundry",
   "product": "웨이퍼 제조",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r049",
@@ -487,7 +662,11 @@
   "category": "Optics",
   "product": "렌즈·거울·조명계 (유일 공급사)",
   "confidence": "high",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r050",
@@ -497,7 +676,11 @@
   "category": "Light source",
   "product": "EUV·DUV 광원",
   "confidence": "medium",
-  "notes": "2013년 ASML 이 인수한 자회사라 외부 공급사로 적히지 않는다"
+  "notes": "2013년 ASML 이 인수한 자회사라 외부 공급사로 적히지 않는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r051",
@@ -507,7 +690,11 @@
   "category": "Light source",
   "product": "EUV 광원용 이산화탄소 레이저",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r052",
@@ -517,7 +704,11 @@
   "category": "Precision modules",
   "product": "정밀 기계 모듈",
   "confidence": "low",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r053",
@@ -527,7 +718,10 @@
   "category": "Lithography",
   "product": "노광 장비·서비스",
   "confidence": "high",
-  "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다"
+  "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다",
+  "flows": [
+   "revenue"
+  ]
  },
  {
   "id": "r054",
@@ -537,7 +731,11 @@
   "category": "Lithography",
   "product": "EUV·DUV 노광 장비",
   "confidence": "medium",
-  "notes": "ASML 은 고객을 익명으로 적는다"
+  "notes": "ASML 은 고객을 익명으로 적는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r055",
@@ -547,7 +745,11 @@
   "category": "Lithography",
   "product": "EUV·DUV 노광 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
  },
  {
   "id": "r056",
@@ -557,7 +759,10 @@
   "category": "Lithography",
   "product": "EUV High-NA·DUV 노광 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
  },
  {
   "id": "r057",
@@ -567,6 +772,179 @@
   "category": "Lithography",
   "product": "EUV·DUV 노광 장비",
   "confidence": "medium",
-  "notes": null
+  "notes": null,
+  "flows": [
+   "revenue",
+   "physical"
+  ]
+ },
+ {
+  "id": "r101",
+  "source_company_id": "nvidia",
+  "target_company_id": "nv27_x",
+  "relationship_type": "customer",
+  "category": "Direct sales",
+  "product": "직접 판매",
+  "confidence": "high",
+  "notes": "세 기간 모두 공시에 나온 유일한 고객이다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r102",
+  "source_company_id": "nvidia",
+  "target_company_id": "nv27_y",
+  "relationship_type": "customer",
+  "category": "Direct sales",
+  "product": "직접 판매",
+  "confidence": "high",
+  "notes": "Q1 21% 와 H1 15% 가 같은 고객이라는 것은 공시가 아니라 역산이다. Q2 에 10% 를 넘은 고객이 하나뿐이므로 다른 배열이 서지 않는다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r103",
+  "source_company_id": "nvidia",
+  "target_company_id": "nv27_z",
+  "relationship_type": "customer",
+  "category": "Direct sales",
+  "product": "직접 판매",
+  "confidence": "high",
+  "notes": "Q1 17% 와 H1 13% 를 잇는 것도 같은 역산이다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r104",
+  "source_company_id": "nvidia",
+  "target_company_id": "mkt_hyper",
+  "relationship_type": "end_market",
+  "category": "Market platform",
+  "product": "데이터센터 매출 중 하이퍼스케일 몫",
+  "confidence": "high",
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r105",
+  "source_company_id": "nvidia",
+  "target_company_id": "mkt_acie",
+  "relationship_type": "end_market",
+  "category": "Market platform",
+  "product": "데이터센터 매출 중 AI 클라우드·산업·기업 몫",
+  "confidence": "high",
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r106",
+  "source_company_id": "nvidia",
+  "target_company_id": "mkt_edge",
+  "relationship_type": "end_market",
+  "category": "Market platform",
+  "product": "데이터센터 바깥 매출",
+  "confidence": "high",
+  "notes": null,
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r107",
+  "source_company_id": "quanta",
+  "target_company_id": "nvidia",
+  "relationship_type": "contract_manufacturer",
+  "category": "Assembly & Test",
+  "product": "AI 서버 조립",
+  "confidence": "medium",
+  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다",
+  "flows": [
+   "physical"
+  ]
+ },
+ {
+  "id": "r108",
+  "source_company_id": "wiwynn",
+  "target_company_id": "nvidia",
+  "relationship_type": "contract_manufacturer",
+  "category": "Assembly & Test",
+  "product": "AI 서버 조립",
+  "confidence": "medium",
+  "notes": null,
+  "flows": [
+   "physical"
+  ]
+ },
+ {
+  "id": "r109",
+  "source_company_id": "nvidia",
+  "target_company_id": "sbenergy",
+  "relationship_type": "credit_support",
+  "category": "Financing",
+  "product": "OpenAI 계열사 리스에 대한 신용보강 (최대 1,050억 달러)",
+  "confidence": "high",
+  "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다",
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r110",
+  "source_company_id": "nvidia",
+  "target_company_id": "openai",
+  "relationship_type": "credit_support",
+  "category": "Financing",
+  "product": "SB Energy 리스 신용보강의 수혜자",
+  "confidence": "high",
+  "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다",
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r111",
+  "source_company_id": "nvidia",
+  "target_company_id": "anon_ai_cloud",
+  "relationship_type": "customer",
+  "category": "AI infrastructure",
+  "product": "데이터센터 인프라 제품 판매",
+  "confidence": "high",
+  "notes": "파는 동시에 그 클라우드 용량을 되산다. 방향이 다른 줄 두 개가 같은 상대에 붙는다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r112",
+  "source_company_id": "anon_ai_cloud",
+  "target_company_id": "nvidia",
+  "relationship_type": "supplier",
+  "category": "Cloud capacity",
+  "product": "클라우드 용량 (NVIDIA 가 사는 쪽)",
+  "confidence": "high",
+  "notes": "AI 클라우드 쪽이 일방적으로 공급을 끊고 제3자에게 더 좋은 값에 팔 수 있는 구조다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r113",
+  "source_company_id": "anon_ai_res",
+  "target_company_id": "nvidia",
+  "relationship_type": "end_user",
+  "category": "Cloud purchase",
+  "product": "NVIDIA 고객들에게서 클라우드 서비스를 사들인다",
+  "confidence": "high",
+  "notes": "직접 사는 것이 아니라 고객을 거쳐 산다. NVIDIA 가 간접고객으로 따로 적었다",
+  "flows": [
+   "end_demand"
+  ]
  }
 ]

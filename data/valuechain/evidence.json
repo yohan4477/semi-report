@@ -5,7 +5,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers."
+  "evidence": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers.",
+  "hypothesis_id": null
  },
  {
   "id": "e002",
@@ -13,7 +14,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We utilize CoWoS technology for semiconductor packaging."
+  "evidence": "We utilize CoWoS technology for semiconductor packaging.",
+  "hypothesis_id": null
  },
  {
   "id": "e003",
@@ -21,7 +23,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We utilize foundries, such as TSMC and Samsung, to produce our semiconductor wafers."
+  "evidence": "We utilize foundries, such as TSMC and Samsung, to produce our semiconductor wafers.",
+  "hypothesis_id": null
  },
  {
   "id": "e004",
@@ -29,7 +32,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+  "hypothesis_id": null
  },
  {
   "id": "e005",
@@ -37,7 +41,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+  "hypothesis_id": null
  },
  {
   "id": "e006",
@@ -45,7 +50,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
+  "evidence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+  "hypothesis_id": null
  },
  {
   "id": "e007",
@@ -53,7 +59,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products."
+  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.",
+  "hypothesis_id": null
  },
  {
   "id": "e008",
@@ -61,7 +68,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai, Wistron Corporation, and Fabrinet…"
+  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai, Wistron Corporation, and Fabrinet…",
+  "hypothesis_id": null
  },
  {
   "id": "e009",
@@ -69,7 +77,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai, Wistron, and Fabrinet…"
+  "evidence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai, Wistron, and Fabrinet…",
+  "hypothesis_id": null
  },
  {
   "id": "e010",
@@ -77,7 +86,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "Some of our direct customers include original equipment manufacturers, or OEMs, original device manufacturers, or ODMs, system integrators and distributors."
+  "evidence": "Some of our direct customers include original equipment manufacturers, or OEMs, original device manufacturers, or ODMs, system integrators and distributors.",
+  "hypothesis_id": null
  },
  {
   "id": "e011",
@@ -85,7 +95,8 @@
   "metric_id": "m001",
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "One direct customer accounted for 22% of total revenue in fiscal year 2026, attributable primarily to the Compute & Networking segment."
+  "evidence": "One direct customer accounted for 22% of total revenue in fiscal year 2026, attributable primarily to the Compute & Networking segment.",
+  "hypothesis_id": null
  },
  {
   "id": "e012",
@@ -93,7 +104,8 @@
   "metric_id": "m002",
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "직접고객 세 곳이 매출채권 잔액의 25%·18%·13%를 차지한다"
+  "evidence": "직접고객 세 곳이 매출채권 잔액의 25%·18%·13%를 차지한다",
+  "hypothesis_id": null
  },
  {
   "id": "e013",
@@ -101,7 +113,8 @@
   "metric_id": "m003",
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "Another direct customer accounted for 14% of total revenue in fiscal year 2026."
+  "evidence": "Another direct customer accounted for 14% of total revenue in fiscal year 2026.",
+  "hypothesis_id": null
  },
  {
   "id": "e014",
@@ -109,7 +122,8 @@
   "metric_id": "m004",
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "FY2025 에는 직접고객 한 곳이 12%, 나머지 두 곳이 각 11%였다"
+  "evidence": "FY2025 에는 직접고객 한 곳이 12%, 나머지 두 곳이 각 11%였다",
+  "hypothesis_id": null
  },
  {
   "id": "e015",
@@ -117,7 +131,8 @@
   "metric_id": "m005",
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "direct",
-  "evidence": "직접고객 한 곳이 매출채권 잔액의 13%를 차지한다"
+  "evidence": "직접고객 한 곳이 매출채권 잔액의 13%를 차지한다",
+  "hypothesis_id": null
  },
  {
   "id": "e016",
@@ -125,7 +140,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "absent",
-  "evidence": "10-K 는 직접고객을 익명으로만 적는다"
+  "evidence": "10-K 는 직접고객을 익명으로만 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e017",
@@ -133,7 +149,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "absent",
-  "evidence": "10-K 는 직접고객을 익명으로만 적는다"
+  "evidence": "10-K 는 직접고객을 익명으로만 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e018",
@@ -141,7 +158,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "absent",
-  "evidence": "10-K 는 직접고객을 익명으로만 적는다"
+  "evidence": "10-K 는 직접고객을 익명으로만 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e019",
@@ -149,7 +167,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers, enterprises, and public sector entities."
+  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers, enterprises, and public sector entities.",
+  "hypothesis_id": null
  },
  {
   "id": "e020",
@@ -157,7 +176,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…"
+  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…",
+  "hypothesis_id": null
  },
  {
   "id": "e021",
@@ -165,7 +185,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…"
+  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…",
+  "hypothesis_id": null
  },
  {
   "id": "e022",
@@ -173,7 +194,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…"
+  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…",
+  "hypothesis_id": null
  },
  {
   "id": "e023",
@@ -181,7 +203,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…"
+  "evidence": "Our indirect customers include CSPs, Neocloud builders, AI model makers…",
+  "hypothesis_id": null
  },
  {
   "id": "e024",
@@ -189,7 +212,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include CSPs, Neocloud builders…"
+  "evidence": "Our indirect customers include CSPs, Neocloud builders…",
+  "hypothesis_id": null
  },
  {
   "id": "e025",
@@ -197,7 +221,8 @@
   "metric_id": null,
   "source_id": "sec_nvda_10k_fy2026",
   "evidence_type": "indirect",
-  "evidence": "Our indirect customers include … AI model makers …"
+  "evidence": "Our indirect customers include … AI model makers …",
+  "hypothesis_id": null
  },
  {
   "id": "e026",
@@ -205,7 +230,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "TSMC manufactures all of our microprocessor and GPU products at 7nm and below."
+  "evidence": "TSMC manufactures all of our microprocessor and GPU products at 7nm and below.",
+  "hypothesis_id": null
  },
  {
   "id": "e027",
@@ -213,7 +239,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "We are party to a wafer supply agreement with GF where GF will provide a minimum annual capacity allocation to us and set pricing through 2026."
+  "evidence": "We are party to a wafer supply agreement with GF where GF will provide a minimum annual capacity allocation to us and set pricing through 2026.",
+  "hypothesis_id": null
  },
  {
   "id": "e028",
@@ -221,7 +248,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices."
+  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices.",
+  "hypothesis_id": null
  },
  {
   "id": "e029",
@@ -229,7 +257,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices."
+  "evidence": "TSMC, UMC and Samsung manufacture our integrated circuits in the form of programmable logic devices.",
+  "hypothesis_id": null
  },
  {
   "id": "e030",
@@ -237,7 +266,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "We are party to two ATMP joint ventures with Tongfu Microelectronics Co., Ltd."
+  "evidence": "We are party to two ATMP joint ventures with Tongfu Microelectronics Co., Ltd.",
+  "hypothesis_id": null
  },
  {
   "id": "e031",
@@ -245,7 +275,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide ATMP services for our products."
+  "evidence": "The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
+  "hypothesis_id": null
  },
  {
   "id": "e032",
@@ -253,7 +284,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "SPIL and King Yuan Electronics Company (KYEC) provide ATMP services for our products."
+  "evidence": "SPIL and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
+  "hypothesis_id": null
  },
  {
   "id": "e033",
@@ -261,7 +293,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "2025년 10월 ZT 제조사업을 현금 24억 달러와 Sanmina 보통주 120만 주로 넘기고 Sanmina 를 제조 우선 파트너로 삼았다"
+  "evidence": "2025년 10월 ZT 제조사업을 현금 24억 달러와 Sanmina 보통주 120만 주로 넘기고 Sanmina 를 제조 우선 파트너로 삼았다",
+  "hypothesis_id": null
  },
  {
   "id": "e034",
@@ -269,7 +302,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "2025년 10월 OpenAI 와 6GW 규모 AMD GPU 공급계약을 맺고 MI450 시리즈부터 배치한다"
+  "evidence": "2025년 10월 OpenAI 와 6GW 규모 AMD GPU 공급계약을 맺고 MI450 시리즈부터 배치한다",
+  "hypothesis_id": null
  },
  {
   "id": "e035",
@@ -277,7 +311,8 @@
   "metric_id": "m006",
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "One customer accounted for approximately 11% of the total consolidated accounts receivable balance as of December 27, 2025."
+  "evidence": "One customer accounted for approximately 11% of the total consolidated accounts receivable balance as of December 27, 2025.",
+  "hypothesis_id": null
  },
  {
   "id": "e036",
@@ -285,7 +320,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "absent",
-  "evidence": "No customer accounted for at least 10% of the Company’s consolidated net revenue in fiscal years 2025 and 2024."
+  "evidence": "No customer accounted for at least 10% of the Company’s consolidated net revenue in fiscal years 2025 and 2024.",
+  "hypothesis_id": null
  },
  {
   "id": "e037",
@@ -293,7 +329,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "indirect",
-  "evidence": "One Client and Gaming segment customer accounted for 18% of consolidated net revenue in fiscal year 2023."
+  "evidence": "One Client and Gaming segment customer accounted for 18% of consolidated net revenue in fiscal year 2023.",
+  "hypothesis_id": null
  },
  {
   "id": "e038",
@@ -301,7 +338,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "absent",
-  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다"
+  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e039",
@@ -309,7 +347,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "absent",
-  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다"
+  "evidence": "10-K 는 하이퍼스케일러를 이름 없이 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e040",
@@ -317,7 +356,8 @@
   "metric_id": null,
   "source_id": "sec_amd_10k_fy2025",
   "evidence_type": "absent",
-  "evidence": "10-K 는 OEM 을 이름 없이 적는다"
+  "evidence": "10-K 는 OEM 을 이름 없이 적는다",
+  "hypothesis_id": null
  },
  {
   "id": "e041",
@@ -325,7 +365,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "Our operations and ongoing expansion plans depend on our ability to obtain necessary equipment and related services available from a limited number of suppliers."
+  "evidence": "Our operations and ongoing expansion plans depend on our ability to obtain necessary equipment and related services available from a limited number of suppliers.",
+  "hypothesis_id": null
  },
  {
   "id": "e042",
@@ -333,7 +374,8 @@
   "metric_id": null,
   "source_id": "asml_ar_2025",
   "evidence_type": "absent",
-  "evidence": "ASML 은 고객을 익명으로만 적는다. 대만향 순매출 83억 3,790만 유로"
+  "evidence": "ASML 은 고객을 익명으로만 적는다. 대만향 순매출 83억 3,790만 유로",
+  "hypothesis_id": null
  },
  {
   "id": "e043",
@@ -341,7 +383,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 본문에 공급사로 등장하지 않는다"
+  "evidence": "20-F 본문에 공급사로 등장하지 않는다",
+  "hypothesis_id": null
  },
  {
   "id": "e044",
@@ -349,7 +392,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 본문에 공급사로 등장하지 않는다"
+  "evidence": "20-F 본문에 공급사로 등장하지 않는다",
+  "hypothesis_id": null
  },
  {
   "id": "e045",
@@ -357,7 +401,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 본문에 공급사로 등장하지 않는다"
+  "evidence": "20-F 본문에 공급사로 등장하지 않는다",
+  "hypothesis_id": null
  },
  {
   "id": "e046",
@@ -365,7 +410,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 본문에 공급사로 등장하지 않는다"
+  "evidence": "20-F 본문에 공급사로 등장하지 않는다",
+  "hypothesis_id": null
  },
  {
   "id": "e047",
@@ -373,7 +419,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "The majority of our raw wafers are supplied by a limited number of suppliers located in Taiwan, Japan, Germany, and Singapore."
+  "evidence": "The majority of our raw wafers are supplied by a limited number of suppliers located in Taiwan, Japan, Germany, and Singapore.",
+  "hypothesis_id": null
  },
  {
   "id": "e048",
@@ -381,7 +428,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "The majority of our raw wafers are supplied by a limited number of suppliers located in Taiwan, Japan, Germany, and Singapore."
+  "evidence": "The majority of our raw wafers are supplied by a limited number of suppliers located in Taiwan, Japan, Germany, and Singapore.",
+  "hypothesis_id": null
  },
  {
   "id": "e049",
@@ -389,7 +437,8 @@
   "metric_id": "m007",
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "direct",
-  "evidence": "Customer A: 2025년 7,269억 7,430만 대만달러, 순매출의 19%"
+  "evidence": "Customer A: 2025년 7,269억 7,430만 대만달러, 순매출의 19%",
+  "hypothesis_id": null
  },
  {
   "id": "e050",
@@ -397,7 +446,8 @@
   "metric_id": "m008",
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "direct",
-  "evidence": "Customer A: 2024년 3,522억 7,120만 대만달러, 순매출의 12%"
+  "evidence": "Customer A: 2024년 3,522억 7,120만 대만달러, 순매출의 12%",
+  "hypothesis_id": null
  },
  {
   "id": "e051",
@@ -405,7 +455,8 @@
   "metric_id": "m009",
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "direct",
-  "evidence": "Customer B: 2025년 6,451억 7,870만 대만달러, 순매출의 17%"
+  "evidence": "Customer B: 2025년 6,451억 7,870만 대만달러, 순매출의 17%",
+  "hypothesis_id": null
  },
  {
   "id": "e052",
@@ -413,7 +464,8 @@
   "metric_id": "m010",
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "direct",
-  "evidence": "Customer B: 2024년 6,243억 4,550만 대만달러, 순매출의 22%"
+  "evidence": "Customer B: 2024년 6,243억 4,550만 대만달러, 순매출의 22%",
+  "hypothesis_id": null
  },
  {
   "id": "e053",
@@ -421,7 +473,8 @@
   "metric_id": "m011",
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "direct",
-  "evidence": "Customer B: 2023년 5,465억 5,090만 대만달러, 순매출의 25%"
+  "evidence": "Customer B: 2023년 5,465억 5,090만 대만달러, 순매출의 25%",
+  "hypothesis_id": null
  },
  {
   "id": "e054",
@@ -429,7 +482,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "Our ten largest customers in 2025 accounted for approximately 78% of our net revenue."
+  "evidence": "Our ten largest customers in 2025 accounted for approximately 78% of our net revenue.",
+  "hypothesis_id": null
  },
  {
   "id": "e055",
@@ -437,7 +491,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다"
+  "evidence": "20-F 에 고객 이름이 없다",
+  "hypothesis_id": null
  },
  {
   "id": "e056",
@@ -445,7 +500,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다"
+  "evidence": "20-F 에 고객 이름이 없다",
+  "hypothesis_id": null
  },
  {
   "id": "e057",
@@ -453,7 +509,8 @@
   "metric_id": null,
   "source_id": "sec_tsmc_20f_fy2025",
   "evidence_type": "absent",
-  "evidence": "20-F 에 고객 이름이 없다"
+  "evidence": "20-F 에 고객 이름이 없다",
+  "hypothesis_id": null
  },
  {
   "id": "e058",
@@ -461,7 +518,8 @@
   "metric_id": null,
   "source_id": "asml_ar_2025",
   "evidence_type": "direct",
-  "evidence": "Carl Zeiss SMT, our sole supplier of lenses, mirrors, illuminators, collectors and other critical optical components… if Carl Zeiss SMT were to terminate its supply relationship with us… we would effectively cease to be able to conduct our business."
+  "evidence": "Carl Zeiss SMT, our sole supplier of lenses, mirrors, illuminators, collectors and other critical optical components… if Carl Zeiss SMT were to terminate its supply relationship with us… we would effectively cease to be able to conduct our business.",
+  "hypothesis_id": null
  },
  {
   "id": "e059",
@@ -469,7 +527,8 @@
   "metric_id": null,
   "source_id": "asml_ar_2025",
   "evidence_type": "absent",
-  "evidence": "외부 공급사 위험 서술에 이름이 없다"
+  "evidence": "외부 공급사 위험 서술에 이름이 없다",
+  "hypothesis_id": null
  },
  {
   "id": "e060",
@@ -477,7 +536,8 @@
   "metric_id": null,
   "source_id": "asml_ar_2025",
   "evidence_type": "absent",
-  "evidence": "Many of these parts are single-sourced or supplied by a limited number of vendors."
+  "evidence": "Many of these parts are single-sourced or supplied by a limited number of vendors.",
+  "hypothesis_id": null
  },
  {
   "id": "e061",
@@ -485,7 +545,8 @@
   "metric_id": null,
   "source_id": "asml_ar_2025",
   "evidence_type": "indirect",
-  "evidence": "approximately 80% of our bill of materials sourced from a global network of suppliers"
+  "evidence": "approximately 80% of our bill of materials sourced from a global network of suppliers",
+  "hypothesis_id": null
  },
  {
   "id": "e062",
@@ -493,7 +554,8 @@
   "metric_id": "m012",
   "source_id": "asml_ar_2025",
   "evidence_type": "direct",
-  "evidence": "Total net sales to our largest customer amounted to €7,796.7 million, or 23.9% of total net sales in 2025."
+  "evidence": "Total net sales to our largest customer amounted to €7,796.7 million, or 23.9% of total net sales in 2025.",
+  "hypothesis_id": null
  },
  {
   "id": "e063",
@@ -501,7 +563,8 @@
   "metric_id": "m013",
   "source_id": "asml_ar_2025",
   "evidence_type": "direct",
-  "evidence": "2024년 최대 고객 매출은 46억 8,240만 유로로 총매출의 16.6% 였다"
+  "evidence": "2024년 최대 고객 매출은 46억 8,240만 유로로 총매출의 16.6% 였다",
+  "hypothesis_id": null
  },
  {
   "id": "e064",
@@ -509,7 +572,8 @@
   "metric_id": null,
   "source_id": "sec_asml_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "한국향 순매출 81억 5,960만 유로"
+  "evidence": "한국향 순매출 81억 5,960만 유로",
+  "hypothesis_id": null
  },
  {
   "id": "e065",
@@ -517,7 +581,8 @@
   "metric_id": null,
   "source_id": "sec_asml_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "한국향 순매출 81억 5,960만 유로"
+  "evidence": "한국향 순매출 81억 5,960만 유로",
+  "hypothesis_id": null
  },
  {
   "id": "e066",
@@ -525,7 +590,8 @@
   "metric_id": null,
   "source_id": "sec_asml_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "미국향 순매출 40억 8,910만 유로"
+  "evidence": "미국향 순매출 40억 8,910만 유로",
+  "hypothesis_id": null
  },
  {
   "id": "e067",
@@ -533,6 +599,295 @@
   "metric_id": null,
   "source_id": "sec_asml_20f_fy2025",
   "evidence_type": "indirect",
-  "evidence": "Memory 최종용도 순매출 84억 2,020만 유로 · 171대"
+  "evidence": "Memory 최종용도 순매출 84억 2,020만 유로 · 171대",
+  "hypothesis_id": null
+ },
+ {
+  "id": "e267",
+  "relationship_id": "r101",
+  "metric_id": "m201",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first quarter of fiscal year 2027, three direct customers represented 21%, 17%, and 16% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e268",
+  "relationship_id": "r101",
+  "metric_id": "m202",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the second quarter of fiscal year 2027, one direct customer represented 16% of total revenue, which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e269",
+  "relationship_id": "r101",
+  "metric_id": "m203",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first half of fiscal year 2027, three direct customers represented 16%, 15%, and 13% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e270",
+  "relationship_id": "r102",
+  "metric_id": "m204",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first quarter of fiscal year 2027, three direct customers represented 21%, 17%, and 16% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e271",
+  "relationship_id": "r102",
+  "metric_id": "m205",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "estimate_input",
+  "evidence": "For the first quarter of fiscal year 2027, three direct customers represented 21%, 17%, and 16% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e272",
+  "relationship_id": "r102",
+  "metric_id": "m205",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "estimate_input",
+  "evidence": "For the first half of fiscal year 2027, three direct customers represented 16%, 15%, and 13% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e273",
+  "relationship_id": "r102",
+  "metric_id": "m205",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "estimate_input",
+  "evidence": "For the second quarter of fiscal year 2027, one direct customer represented 16% of total revenue, which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e274",
+  "relationship_id": "r102",
+  "metric_id": "m206",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first half of fiscal year 2027, three direct customers represented 16%, 15%, and 13% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e275",
+  "relationship_id": "r103",
+  "metric_id": "m207",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first quarter of fiscal year 2027, three direct customers represented 21%, 17%, and 16% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e276",
+  "relationship_id": "r103",
+  "metric_id": "m208",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "estimate_input",
+  "evidence": "For the first quarter of fiscal year 2027, three direct customers represented 21%, 17%, and 16% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e277",
+  "relationship_id": "r103",
+  "metric_id": "m208",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "estimate_input",
+  "evidence": "For the first half of fiscal year 2027, three direct customers represented 16%, 15%, and 13% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e278",
+  "relationship_id": "r103",
+  "metric_id": "m209",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the first half of fiscal year 2027, three direct customers represented 16%, 15%, and 13% of total revenue, all of which was primarily attributable to the Compute & Networking segment."
+ },
+ {
+  "id": "e279",
+  "relationship_id": "r104",
+  "metric_id": "m210",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q1 Hyperscale 매출 378.69억 달러"
+ },
+ {
+  "id": "e280",
+  "relationship_id": "r104",
+  "metric_id": "m211",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q2 Hyperscale 매출 487.10억 달러"
+ },
+ {
+  "id": "e281",
+  "relationship_id": "r104",
+  "metric_id": "m212",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 H1 Hyperscale 매출 917.61억 달러"
+ },
+ {
+  "id": "e282",
+  "relationship_id": "r105",
+  "metric_id": "m213",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q1 ACIE 매출 373.77억 달러"
+ },
+ {
+  "id": "e283",
+  "relationship_id": "r105",
+  "metric_id": "m214",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q2 ACIE 매출 403.13억 달러"
+ },
+ {
+  "id": "e284",
+  "relationship_id": "r105",
+  "metric_id": "m215",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 H1 ACIE 매출 725.08억 달러"
+ },
+ {
+  "id": "e285",
+  "relationship_id": "r106",
+  "metric_id": "m216",
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q1 Edge Computing 매출 63.69억 달러"
+ },
+ {
+  "id": "e286",
+  "relationship_id": "r106",
+  "metric_id": "m217",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 Q2 Edge Computing 매출 71.98억 달러"
+ },
+ {
+  "id": "e287",
+  "relationship_id": "r106",
+  "metric_id": "m218",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "FY2027 H1 Edge Computing 매출 135.68억 달러"
+ },
+ {
+  "id": "e288",
+  "relationship_id": "r112",
+  "metric_id": "m219",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "Our commitments, which are typically six years in duration, totaled $36 billion as of July 26, 2026, and decrease as capacity is used by third-party customers or by us for our research and development efforts."
+ },
+ {
+  "id": "e289",
+  "relationship_id": "r109",
+  "metric_id": "m220",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In August 2026, we entered into guarantees, capped at a total of $105 billion, to provide credit support on a land, power, and shell buildout with affiliates of SB Energy Corp. on behalf of a customer, an affiliate of OpenAI Group PBC (OpenAI), related to leases for approximately 4.25 gigawatts of IT load."
+ },
+ {
+  "id": "e290",
+  "relationship_id": "r110",
+  "metric_id": "m221",
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In August 2026, we entered into guarantees, capped at a total of $105 billion, to provide credit support on a land, power, and shell buildout with affiliates of SB Energy Corp. on behalf of a customer, an affiliate of OpenAI Group PBC (OpenAI), related to leases for approximately 4.25 gigawatts of IT load."
+ },
+ {
+  "id": "e291",
+  "relationship_id": "r113",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "We estimate that one AI research and deployment company contributed a meaningful amount of our revenue by purchasing cloud services from our customers in the second quarter and first half of fiscal year 2027."
+ },
+ {
+  "id": "e292",
+  "relationship_id": "r111",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "Our commitments, which are typically six years in duration, totaled $36 billion as of July 26, 2026, and decrease as capacity is used by third-party customers or by us for our research and development efforts."
+ },
+ {
+  "id": "e293",
+  "relationship_id": "r104",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In the first quarter of fiscal year 2027, we changed our presentation of revenue by market platform, and the comparable periods were recast."
+ },
+ {
+  "id": "e294",
+  "relationship_id": "r105",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In the first quarter of fiscal year 2027, we changed our presentation of revenue by market platform, and the comparable periods were recast."
+ },
+ {
+  "id": "e295",
+  "relationship_id": "r106",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q1",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In the first quarter of fiscal year 2027, we changed our presentation of revenue by market platform, and the comparable periods were recast."
+ },
+ {
+  "id": "e296",
+  "relationship_id": "r104",
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "During the second quarter of fiscal year 2027, we reclassified a company from AI Clouds, Industrial, & Enterprise (ACIE) to Hyperscale due to a change in their business model and recast the prior period revenue associated with this company."
+ },
+ {
+  "id": "e297",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": "h007",
+  "evidence_type": "indirect",
+  "evidence": "We estimate that one AI research and deployment company contributed a meaningful amount of our revenue by purchasing cloud services from our customers in the second quarter and first half of fiscal year 2027."
+ },
+ {
+  "id": "e298",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_nvda_10q_fy2027q2",
+  "hypothesis_id": "h007",
+  "evidence_type": "direct",
+  "evidence": "In August 2026, we entered into guarantees, capped at a total of $105 billion, to provide credit support on a land, power, and shell buildout with affiliates of SB Energy Corp. on behalf of a customer, an affiliate of OpenAI Group PBC (OpenAI), related to leases for approximately 4.25 gigawatts of IT load."
  }
 ]

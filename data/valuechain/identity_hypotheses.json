@@ -1,0 +1,82 @@
+[
+ {
+  "id": "h001",
+  "anon_company_id": "nv27_x",
+  "candidate_company_id": "microsoft",
+  "period": "FY2027 H1",
+  "likelihood": 4.5,
+  "status": "estimated",
+  "method": "상반기 자본지출 729억 달러 가운데 3분의 2가 단기 자산이라고 회사가 밝혔다. 그 486억의 절반 남짓이면 285억이 나온다.",
+  "notes": "분기마다 16%를 지킨 자리라 매입이 고른 대형 구매자에 맞는다"
+ },
+ {
+  "id": "h002",
+  "anon_company_id": "nv27_x",
+  "candidate_company_id": "meta",
+  "period": "FY2027 H1",
+  "likelihood": 4.0,
+  "status": "estimated",
+  "method": "상반기 자본지출 509억 달러. 285억이면 그 56%가 NVIDIA 여야 한다.",
+  "notes": "자본지출에 건물·전력·자체 칩이 섞여 있어 비율 가정이 공격적이다"
+ },
+ {
+  "id": "h003",
+  "anon_company_id": "nv27_x",
+  "candidate_company_id": "wistron",
+  "period": "FY2027 H1",
+  "likelihood": 3.0,
+  "status": "estimated",
+  "method": "분기 매출이 228억에서 290억 달러로 27.6% 늘어 넷 중 가장 가팔랐다. AI 가 서버 매출의 95%를 넘는다고 실적발표에서 밝혔다.",
+  "notes": "비중을 지킨 자리와 매출 증가 방향이 맞는 유일한 ODM 이다"
+ },
+ {
+  "id": "h004",
+  "anon_company_id": "nv27_y",
+  "candidate_company_id": "meta",
+  "period": "FY2027 H1",
+  "likelihood": 3.5,
+  "status": "estimated",
+  "method": "규모는 닿지만 Q1 에서 Q2 로 비중이 반토막 나는 궤적을 자본지출로 설명하기 어렵다.",
+  "notes": null
+ },
+ {
+  "id": "h005",
+  "anon_company_id": "nv27_y",
+  "candidate_company_id": "microsoft",
+  "period": "FY2027 H1",
+  "likelihood": 3.5,
+  "status": "estimated",
+  "method": "X 자리와 후보가 겹친다. 둘 중 하나만 참일 수 있다.",
+  "notes": null
+ },
+ {
+  "id": "h006",
+  "anon_company_id": "nv27_z",
+  "candidate_company_id": "dell",
+  "period": "FY2027 H1",
+  "likelihood": 3.5,
+  "status": "estimated",
+  "method": "상반기 AI 서버 매출 325억 달러. 231억이면 그 71%가 NVIDIA 몫이어야 한다.",
+  "notes": "Q1 161억에서 Q2 164억으로 늘었는데 NVIDIA 쪽 비중은 10% 아래로 내려갔다. 매출 인식 시점과 매입 시점이 다르다는 설명이 따로 있어야 한다"
+ },
+ {
+  "id": "h007",
+  "anon_company_id": "anon_ai_res",
+  "candidate_company_id": "openai",
+  "period": "FY2027 H1",
+  "likelihood": 4.0,
+  "status": "estimated",
+  "method": "NVIDIA 공시에서 OpenAI 이름이 나오는 자리는 SB Energy 보증 주석 하나뿐이다. 거기서 OpenAI 계열사를 「a customer」로 부른다.",
+  "notes": "익명의 AI 연구·배포 회사와 같은 곳이라고 적힌 문장은 없다"
+ },
+ {
+  "id": "h008",
+  "anon_company_id": "nv27_z",
+  "candidate_company_id": "quanta",
+  "period": "FY2027 H1",
+  "likelihood": 3.0,
+  "status": "estimated",
+  "method": "분기 매출 290억에서 335억 달러, 서버가 80% 이상이고 그중 AI 서버가 75~80%. 138억 안팎이 나와 Q1 17%(138.7억)에 가깝게 떨어진다.",
+  "notes": "다만 Q1 에서 Q2 로 매출이 15.7% 늘어 비중이 내려가는 궤적과 어긋난다"
+ }
+]

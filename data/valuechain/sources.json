@@ -48,5 +48,25 @@
   "source_type": "primary_company",
   "url": "https://www.asml.com/en/investors/annual-report",
   "note": "20-F 의 서술 파트와 같은 내용. 20-F 원문 용량 때문에 이 경로로 확인했다"
+ },
+ {
+  "id": "sec_nvda_10q_fy2027q1",
+  "publisher": "NVIDIA",
+  "title": "Form 10-Q (FY2027 Q1)",
+  "published_date": "2026-05-20",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+  "note": "accession 0001045810-26-000052 · 2026-04-26 종료"
+ },
+ {
+  "id": "sec_nvda_10q_fy2027q2",
+  "publisher": "NVIDIA",
+  "title": "Form 10-Q (FY2027 Q2)",
+  "published_date": "2026-08-26",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "note": "accession 0001045810-26-000075 · 2026-07-26 종료"
  }
 ]
