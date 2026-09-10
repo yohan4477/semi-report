@@ -463,3 +463,82 @@ def _scn():
 
 FIG_BRSCN = _svg(W, 386, '케이스가 갈리는 것은 2027년부터다', _scn())
 
+def _lines(title, series, top_v, years, marks=(), zero=False, unit=''):
+    """케이스 셋을 선으로 그린다. 굵은 선이 기준, 점선이 하방이다.
+
+    0 선을 그려야 하는 판(현금흐름)은 zero=True 로 부른다 — 마이너스가 있는 판에서
+    0 을 안 그리면 어디가 적자인지가 안 보인다.
+    """
+    x0, y0, w, h = 96, 118, 410, 168
+    lo = min(min(v) for _n, v, _s, _m in series)
+    lo = min(lo, 0) if zero else 0
+    span = top_v - lo
+    out = [_lt(20, 108, title, 't-lab', False),
+           '<path d="M%d %d V%d H%d" stroke="var(--ink-3)" stroke-width="1" fill="none"/>'
+           % (x0, y0, y0 + h, x0 + w)]
+    step = 10 ** len(str(int(top_v // 4))) // 2 or 1
+    grid = [g for g in range(int(lo // step) * step, int(top_v) + 1, max(step, 1))]
+    for g in grid[::max(1, len(grid) // 4)]:
+        yy = y0 + h - h * (g - lo) / span
+        if not (y0 - 2 <= yy <= y0 + h + 2):
+            continue
+        heavy = (g == 0 and zero)
+        out.append('<path d="M%d %d H%d" stroke="var(--ink-3)" stroke-width="%s" '
+                   '%sfill="none"/>'
+                   % (x0, yy, x0 + w, '1.2' if heavy else '0.6',
+                      '' if heavy else 'stroke-dasharray="3 4" '))
+        out.append(_lt(24, yy + 4, '%g' % g, 't-sm', False))
+    for i, yr in enumerate(years):
+        xx = x0 + w * i / (len(years) - 1.0)
+        out.append(_t(xx, y0 + h + 18, yr))
+    for name, vals, solid, mark in series:
+        pts = []
+        for i, v in enumerate(vals):
+            xx = x0 + w * i / (len(vals) - 1.0)
+            yy = y0 + h - h * (v - lo) / span
+            pts.append('%d %d' % (xx, yy))
+        dash = '' if solid else ' stroke-dasharray="6 4"'
+        out.append('<path d="M%s" stroke="var(--ink)" stroke-width="%s" fill="none"%s/>'
+                   % (' L'.join(pts), '2' if name == 'Base' else '1.4', dash))
+        ly = y0 + h - h * (vals[-1] - lo) / span
+        out.append(_lt(x0 + w + 6, ly + 4, '%s %g%s' % (name, vals[-1], unit),
+                       't-sm', False))
+        if mark:
+            out.append(_mark(x0 + w * 3 / 4.0,
+                             y0 + h - h * (vals[3] - lo) / span - 16, mark))
+    out.append(_legend(y0 + h + 38, marks))
+    return ''.join(out)
+
+
+YEARS = ['2026E', '2027E', '2028E', '2029E', '2030E']
+
+FIG_BRFCF = _svg(W, 386, '기준 케이스에서 빅4 잉여현금흐름이 다섯 해 내내 마이너스다',
+                 _board(accent=(1,)) + _lines(
+                     '빅4 잉여현금흐름 (십억 달러)',
+                     [('Bull', [-13.3, -118.37, -228.22, -321.23, -356.09], True, 1),
+                      ('Base', [-13.3, -53.28, -67.39, -59.75, -18.54], True, 0),
+                      ('Bear', [-13.3, 11.8, 80.44, 162.88, 254.01], False, 2)],
+                     300.0, YEARS, zero=True,
+                     marks=['더 지으면 더 모자란다 — 자본지출이 영업현금흐름을 앞지른 몫이다',
+                            '덜 지으면 2027년부터 흑자로 돌아선다']))
+
+FIG_BRUNITS = _svg(W, 386, '칩 수는 케이스마다 두 배 넘게 갈린다',
+                   _board(accent=(0, 2)) + _lines(
+                       'AI 가속기 대수 (백만 개)',
+                       [('Bull', [16.24, 21.34, 28.02, 34.5, 40.8], True, 1),
+                        ('Base', [14.38, 17.49, 21.11, 24.22, 27.35], True, 0),
+                        ('Bear', [12.69, 14.2, 15.63, 16.62, 17.88], False, 0)],
+                       45.0, YEARS,
+                       marks=['2030년에 상방과 하방이 2.3배 벌어진다',
+                              '우리 칩당 전력으로 세면 38기가와트와 86기가와트다']))
+
+FIG_BRHBMSCN = _svg(W, 386, 'HBM 금액은 케이스마다 다섯 배까지 갈린다',
+                    _board(accent=(2,)) + _lines(
+                        '빅4 HBM 금액 (십억 달러)',
+                        [('Bull', [40.95, 148.4, 184.34, 217.24, 225.67], True, 1),
+                         ('Base', [31.42, 73.82, 86.4, 102.24, 109.78], True, 0),
+                         ('Bear', [23.74, 40.53, 40.39, 44.34, 45.32], False, 0)],
+                        240.0, YEARS,
+                        marks=['레버 셋이 한꺼번에 걸린다',
+                               '칩 수와 칩당 용량과 단가가 같은 방향으로 움직인다']))
+
