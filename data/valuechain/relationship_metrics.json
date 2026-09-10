@@ -440,5 +440,83 @@
   "basis": "OpenAI 계열사를 대신해 선 보증의 상한",
   "estimate_type": "disclosed",
   "method": null
+ },
+ {
+  "id": "m301",
+  "relationship_id": "r201",
+  "period": "FY2026",
+  "period_start": "2025-07-01",
+  "period_end": "2026-06-30",
+  "metric": "supplier_purchase_share",
+  "value": 63.1,
+  "unit": "%",
+  "basis": "슈퍼마이크로 FY2026 총 매입액",
+  "estimate_type": "disclosed",
+  "method": "공시는 공급사 이름을 대지 않는다. 매출원가 348.4억 달러에 곱하면 연간 약 220억, 6개월로는 약 110억 달러다. 상위 셋의 가장 작은 자리 231억의 절반이다"
+ },
+ {
+  "id": "m302",
+  "relationship_id": "r203",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "metric": "supplier_purchase_share",
+  "value": 23,
+  "unit": "%",
+  "basis": "코어위브 2025년 총 매입액 (상위 공급사 1위)",
+  "estimate_type": "disclosed",
+  "method": "공시는 세 공급사의 이름을 대지 않는다. 어느 쪽이 NVIDIA 인지 적혀 있지 않다"
+ },
+ {
+  "id": "m303",
+  "relationship_id": "r203",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "metric": "commitment_value",
+  "value": 6.3,
+  "unit": "십억 달러",
+  "basis": "NVIDIA 가 사야 하는 코어위브 잔여 용량의 초기 가치",
+  "estimate_type": "disclosed",
+  "method": "8-K 에는 있으나 10-K·10-Q 의 재무제표 주석에는 이 계약이 나오지 않는다"
+ },
+ {
+  "id": "m304",
+  "relationship_id": "r204",
+  "period": "FY2026",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
+  "metric": "investment_value",
+  "value": 2.0,
+  "unit": "십억 달러",
+  "basis": "NVIDIA 의 코어위브 보통주 취득액",
+  "estimate_type": "disclosed",
+  "method": null
+ },
+ {
+  "id": "m305",
+  "relationship_id": "r205",
+  "period": "FY2026",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
+  "metric": "contract_value",
+  "value": 1.6,
+  "unit": "십억 달러",
+  "basis": "IREN 이 델에서 사는 블랙웰 시스템 일체",
+  "estimate_type": "disclosed",
+  "method": "대금은 선적 후 지급이고 GPU 파이낸싱으로 조달한다. 2027년 초 가동 목표"
+ },
+ {
+  "id": "m306",
+  "relationship_id": "r109",
+  "period": "FY2027 H1",
+  "period_start": "2026-01-26",
+  "period_end": "2026-07-26",
+  "metric": "guarantee_cap",
+  "value": 105.0,
+  "unit": "십억 달러",
+  "basis": "SB Energy 리스 보증 상한 (8-K 기준)",
+  "estimate_type": "disclosed",
+  "method": "확정 4.25기가와트에 더해 약 3.8기가와트에 재량으로 신용보강을 더 줄 수 있는 옵션이 따로 있다. OpenAI 는 NVIDIA 가 낸 금액을 상환하기로 했다"
  }
 ]

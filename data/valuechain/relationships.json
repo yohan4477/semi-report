@@ -946,5 +946,99 @@
   "flows": [
    "end_demand"
   ]
+ },
+ {
+  "id": "r201",
+  "source_company_id": "nvidia",
+  "target_company_id": "supermicro",
+  "relationship_type": "customer",
+  "category": "Systems",
+  "product": "GPU·서버 시스템",
+  "confidence": "high",
+  "notes": "슈퍼마이크로 10-K 가 「one supplier 63.1%」로 적는 익명 공급사가 NVIDIA 라는 것은 우리 추정이다. 공시는 이름을 대지 않는다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
+ },
+ {
+  "id": "r202",
+  "source_company_id": "nvidia",
+  "target_company_id": "coreweave",
+  "relationship_type": "customer",
+  "category": "AI infrastructure",
+  "product": "GPU·시스템",
+  "confidence": "high",
+  "notes": "코어위브가 쓰는 GPU 가 전부 NVIDIA 것이라고 10-K 에 적혀 있다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
+ },
+ {
+  "id": "r203",
+  "source_company_id": "coreweave",
+  "target_company_id": "nvidia",
+  "relationship_type": "supplier",
+  "category": "Cloud capacity",
+  "product": "팔리지 않은 클라우드 용량",
+  "confidence": "high",
+  "notes": "8-K 에 NVIDIA 가 2032-04-13 까지 잔여 용량을 사야 한다고 적혀 있다",
+  "flows": [
+   "revenue"
+  ]
+ },
+ {
+  "id": "r204",
+  "source_company_id": "nvidia",
+  "target_company_id": "coreweave",
+  "relationship_type": "strategic_investment",
+  "category": "Financing",
+  "product": "보통주 지분 투자 20억 달러",
+  "confidence": "high",
+  "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다",
+  "flows": [
+   "end_demand"
+  ]
+ },
+ {
+  "id": "r205",
+  "source_company_id": "dell",
+  "target_company_id": "iren",
+  "relationship_type": "customer",
+  "category": "Systems",
+  "product": "블랙웰 시스템 일체",
+  "confidence": "high",
+  "notes": "NVIDIA 관점에서는 델이 직접고객이고 IREN 은 간접고객이 되는 경로다",
+  "flows": [
+   "revenue",
+   "physical"
+  ]
+ },
+ {
+  "id": "r206",
+  "source_company_id": "nvidia",
+  "target_company_id": "lambda_labs",
+  "relationship_type": "customer",
+  "category": "AI infrastructure",
+  "product": "Vera Rubin 인스턴스",
+  "confidence": "medium",
+  "notes": "보도자료가 클라우드 파트너로 이름을 적었다. 매입 규모는 없다",
+  "flows": [
+   "physical"
+  ]
+ },
+ {
+  "id": "r207",
+  "source_company_id": "nvidia",
+  "target_company_id": "nebius",
+  "relationship_type": "customer",
+  "category": "AI infrastructure",
+  "product": "Vera Rubin 인스턴스",
+  "confidence": "medium",
+  "notes": null,
+  "flows": [
+   "physical"
+  ]
  }
 ]

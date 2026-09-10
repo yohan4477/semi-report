@@ -889,5 +889,140 @@
   "hypothesis_id": "h007",
   "evidence_type": "direct",
   "evidence": "In August 2026, we entered into guarantees, capped at a total of $105 billion, to provide credit support on a land, power, and shell buildout with affiliates of SB Energy Corp. on behalf of a customer, an affiliate of OpenAI Group PBC (OpenAI), related to leases for approximately 4.25 gigawatts of IT load."
+ },
+ {
+  "id": "e399",
+  "relationship_id": "r201",
+  "metric_id": "m301",
+  "source_id": "sec_smci_10k_fy2026",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "One supplier accounted for 63.1%, 64.4%, and 65.4% of total purchases for the fiscal years ended June 30, 2026, 2025, and 2024."
+ },
+ {
+  "id": "e3100",
+  "relationship_id": "r203",
+  "metric_id": "m302",
+  "source_id": "sec_crwv_10k_fy2025",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "For the year ended December 31, 2025, three suppliers accounted for 23%, 20%, and 17% of total purchases."
+ },
+ {
+  "id": "e3101",
+  "relationship_id": "r203",
+  "metric_id": "m303",
+  "source_id": "sec_crwv_8k_20250915",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "NVIDIA is obligated to purchase the residual unsold capacity through April 13, 2032."
+ },
+ {
+  "id": "e3102",
+  "relationship_id": "r204",
+  "metric_id": "m304",
+  "source_id": "sec_crwv_10k_fy2025",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "In January 2026, NVIDIA Corporation invested $2 billion in the Company's Class A common stock at a purchase price of $87.20 per share."
+ },
+ {
+  "id": "e3103",
+  "relationship_id": "r205",
+  "metric_id": "m305",
+  "source_id": "sec_iren_8k_20260526",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "approximately $1.6bn, inclusive of GPUs, servers, storage, networking, ancillary equipment, integration services, and warranties"
+ },
+ {
+  "id": "e3104",
+  "relationship_id": "r109",
+  "metric_id": "m306",
+  "source_id": "sec_nvda_8k_20260817",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "NVIDIA's aggregate payment obligation is cumulatively capped at $105 billion."
+ },
+ {
+  "id": "e3105",
+  "relationship_id": "r109",
+  "metric_id": "m306",
+  "source_id": "sec_nvda_8k_20260817",
+  "hypothesis_id": null,
+  "evidence_type": "direct",
+  "evidence": "An affiliate of OpenAI Group PBC will be the tenant."
+ },
+ {
+  "id": "e3106",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_smci_10k_fy2026",
+  "hypothesis_id": "h101",
+  "evidence_type": "indirect",
+  "evidence": "One supplier accounted for 63.1% of total purchases for the fiscal year ended June 30, 2026."
+ },
+ {
+  "id": "e3107",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_hpe_10q_fy2026q3",
+  "hypothesis_id": "h104",
+  "evidence_type": "absent",
+  "evidence": "공급자 매입 집중도 공시가 없다. 있는 것은 유통사(고객) 집중 공시다"
+ },
+ {
+  "id": "e3108",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_smci_10k_fy2026",
+  "hypothesis_id": "h102",
+  "evidence_type": "indirect",
+  "evidence": "One supplier accounted for 63.1% of total purchases for the fiscal year ended June 30, 2026."
+ },
+ {
+  "id": "e3109",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_hpe_10q_fy2026q3",
+  "hypothesis_id": "h105",
+  "evidence_type": "absent",
+  "evidence": "공급자 매입 집중도 공시가 없다. 있는 것은 유통사(고객) 집중 공시다"
+ },
+ {
+  "id": "e3110",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_smci_10k_fy2026",
+  "hypothesis_id": "h103",
+  "evidence_type": "indirect",
+  "evidence": "One supplier accounted for 63.1% of total purchases for the fiscal year ended June 30, 2026."
+ },
+ {
+  "id": "e3111",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_hpe_10q_fy2026q3",
+  "hypothesis_id": "h106",
+  "evidence_type": "absent",
+  "evidence": "공급자 매입 집중도 공시가 없다. 있는 것은 유통사(고객) 집중 공시다"
+ },
+ {
+  "id": "e3112",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_dell_10q_fy2027q2",
+  "hypothesis_id": "h107",
+  "evidence_type": "indirect",
+  "evidence": "FY2027 1분기 AI 서버 매출 161.3억, 2분기 164.0억 달러"
+ },
+ {
+  "id": "e3113",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "sec_nvda_8k_20260817",
+  "hypothesis_id": "h108",
+  "evidence_type": "direct",
+  "evidence": "An affiliate of OpenAI Group PBC will be the tenant."
  }
 ]

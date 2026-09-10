@@ -78,5 +78,85 @@
   "status": "estimated",
   "method": "분기 매출 290억에서 335억 달러, 서버가 80% 이상이고 그중 AI 서버가 75~80%. 138억 안팎이 나와 Q1 17%(138.7억)에 가깝게 떨어진다.",
   "notes": "다만 Q1 에서 Q2 로 매출이 15.7% 늘어 비중이 내려가는 궤적과 어긋난다"
+ },
+ {
+  "id": "h101",
+  "anon_company_id": "nv27_x",
+  "candidate_company_id": "supermicro",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "익명 공급사 매입 63.1%를 매출원가 348.4억 달러에 곱하면 연간 220억, 6개월 110억. 가장 작은 자리 231억의 절반이다.",
+  "notes": "회계연도가 6월 말 종료라 NVIDIA 의 2~7월 구간과 겹치는 분기도 없다"
+ },
+ {
+  "id": "h104",
+  "anon_company_id": "nv27_x",
+  "candidate_company_id": "hpe",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "NVIDIA 구간과 겹치는 6개월 회사 전체 매출이 228.91억 달러로 가장 작은 자리 231.19억에 못 미친다. 제품 매출원가 합계는 100.75억이다.",
+  "notes": "HPE 에는 공급자 매입 집중도 공시 자체가 없다"
+ },
+ {
+  "id": "h102",
+  "anon_company_id": "nv27_y",
+  "candidate_company_id": "supermicro",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "익명 공급사 매입 63.1%를 매출원가 348.4억 달러에 곱하면 연간 220억, 6개월 110억. 가장 작은 자리 231억의 절반이다.",
+  "notes": "회계연도가 6월 말 종료라 NVIDIA 의 2~7월 구간과 겹치는 분기도 없다"
+ },
+ {
+  "id": "h105",
+  "anon_company_id": "nv27_y",
+  "candidate_company_id": "hpe",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "NVIDIA 구간과 겹치는 6개월 회사 전체 매출이 228.91억 달러로 가장 작은 자리 231.19억에 못 미친다. 제품 매출원가 합계는 100.75억이다.",
+  "notes": "HPE 에는 공급자 매입 집중도 공시 자체가 없다"
+ },
+ {
+  "id": "h103",
+  "anon_company_id": "nv27_z",
+  "candidate_company_id": "supermicro",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "익명 공급사 매입 63.1%를 매출원가 348.4억 달러에 곱하면 연간 220억, 6개월 110억. 가장 작은 자리 231억의 절반이다.",
+  "notes": "회계연도가 6월 말 종료라 NVIDIA 의 2~7월 구간과 겹치는 분기도 없다"
+ },
+ {
+  "id": "h106",
+  "anon_company_id": "nv27_z",
+  "candidate_company_id": "hpe",
+  "period": "FY2027 H1",
+  "likelihood": 0.5,
+  "status": "rejected",
+  "method": "NVIDIA 구간과 겹치는 6개월 회사 전체 매출이 228.91억 달러로 가장 작은 자리 231.19억에 못 미친다. 제품 매출원가 합계는 100.75억이다.",
+  "notes": "HPE 에는 공급자 매입 집중도 공시 자체가 없다"
+ },
+ {
+  "id": "h107",
+  "anon_company_id": "nv27_z",
+  "candidate_company_id": "dell",
+  "period": "FY2027 H1",
+  "likelihood": 3.5,
+  "status": "estimated",
+  "method": "NVIDIA 구간과 정확히 겹치는 FY2027 1·2분기 합산 AI 서버 매출 325.3억 달러, 총매출원가 731.9억 달러. 231억을 담을 여지가 있는 유일한 미국 OEM 이다.",
+  "notes": "델도 NVIDIA 매입액 자체는 공시하지 않는다"
+ },
+ {
+  "id": "h108",
+  "anon_company_id": "anon_ai_res",
+  "candidate_company_id": "openai",
+  "period": "FY2027 H1",
+  "likelihood": 4.5,
+  "status": "estimated",
+  "method": "NVIDIA 8-K 가 SB Energy 부지의 임차인을 「an affiliate of OpenAI Group PBC」로 못 박았다. NVIDIA 공시에 OpenAI 이름이 나오는 자리가 둘로 늘었다.",
+  "notes": "익명의 AI 연구·배포 회사와 같은 곳이라고 적힌 문장은 여전히 없다"
  }
 ]

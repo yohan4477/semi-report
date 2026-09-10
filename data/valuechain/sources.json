@@ -68,5 +68,85 @@
   "source_type": "primary_official",
   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
   "note": "accession 0001045810-26-000075 · 2026-07-26 종료"
+ },
+ {
+  "id": "sec_smci_10k_fy2026",
+  "publisher": "Super Micro Computer",
+  "title": "Form 10-K (FY2026)",
+  "published_date": "2026-08-29",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1375365&type=10-K",
+  "note": "accession 0001375365-26-000022 · 회계연도 2026-06-30 종료"
+ },
+ {
+  "id": "sec_hpe_10q_fy2026q3",
+  "publisher": "Hewlett Packard Enterprise",
+  "title": "Form 10-Q (FY2026 Q3)",
+  "published_date": "2026-09-03",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1645590&type=10-Q",
+  "note": "accession 0001645590-26-000080 · 2026-07-31 종료"
+ },
+ {
+  "id": "sec_dell_10q_fy2027q2",
+  "publisher": "Dell Technologies",
+  "title": "Form 10-Q (FY2027 Q2)",
+  "published_date": "2026-09-04",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1571996&type=10-Q",
+  "note": "accession 0001571996-26-000046 · 2026-07-31 종료"
+ },
+ {
+  "id": "sec_crwv_10k_fy2025",
+  "publisher": "CoreWeave",
+  "title": "Form 10-K (FY2025)",
+  "published_date": "2026-03-02",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+  "note": "accession 0001769628-26-000104"
+ },
+ {
+  "id": "sec_crwv_8k_20250915",
+  "publisher": "CoreWeave",
+  "title": "Form 8-K — NVIDIA 잔여 용량 매입 계약",
+  "published_date": "2025-09-15",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000047/crwv-20250909.htm",
+  "note": "2023년 4월 MSA 산하 신규 주문서, 2025-09-09 체결"
+ },
+ {
+  "id": "sec_iren_8k_20260526",
+  "publisher": "IREN",
+  "title": "Form 8-K EX-99.1 — Childress 블랙웰 배치",
+  "published_date": "2026-05-26",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/0001878848/000187884826000030/irentrgts44bninarrwithbl.htm",
+  "note": "accession 0001878848-26-000030"
+ },
+ {
+  "id": "sec_nvda_8k_20260817",
+  "publisher": "NVIDIA",
+  "title": "Form 8-K — SB Energy 보증",
+  "published_date": "2026-08-17",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000069/nvda-20260817.htm",
+  "note": "accession 0001045810-26-000069"
+ },
+ {
+  "id": "nvda_pr_vera_rubin",
+  "publisher": "NVIDIA",
+  "title": "Vera Rubin 플랫폼 보도자료",
+  "published_date": "2026-03-16",
+  "accessed_date": "2026-09-11",
+  "source_type": "primary_company",
+  "url": "https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform",
+  "note": "시스템 제조사와 클라우드 사업자 명단. 2026-01-05·05-31 자에 명단이 다르다"
  }
 ]

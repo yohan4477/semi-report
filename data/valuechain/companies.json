@@ -849,5 +849,50 @@
   "logo_url": null,
   "anon": false,
   "is_segment": false
+ },
+ {
+  "id": "iren",
+  "name": "IREN",
+  "name_ko": "IREN",
+  "ticker": "IREN",
+  "industry": "AI 클라우드",
+  "country": "호주",
+  "revenue": null,
+  "desc": "텍사스 차일드리스에 블랙웰을 깐다. 델에서 약 16억 달러어치를 사고 대금은 선적 후에 낸다. 5년 34억 달러짜리 관리형 AI 클라우드 계약을 이행하려는 것이다.",
+  "company_type": "Neocloud",
+  "website": "https://iren.com",
+  "logo_url": null,
+  "anon": false,
+  "is_segment": false
+ },
+ {
+  "id": "lambda_labs",
+  "name": "Lambda",
+  "name_ko": "Lambda",
+  "ticker": null,
+  "industry": "AI 클라우드",
+  "country": "미국",
+  "revenue": null,
+  "desc": "NVIDIA 가 Vera Rubin 클라우드 파트너로 이름을 적었다.",
+  "company_type": "Neocloud",
+  "website": "https://lambda.ai",
+  "logo_url": null,
+  "anon": false,
+  "is_segment": false
+ },
+ {
+  "id": "nebius",
+  "name": "Nebius",
+  "name_ko": "Nebius",
+  "ticker": "NBIS",
+  "industry": "AI 클라우드",
+  "country": "네덜란드",
+  "revenue": null,
+  "desc": "NVIDIA 가 Vera Rubin 클라우드 파트너로 이름을 적었다.",
+  "company_type": "Neocloud",
+  "website": "https://nebius.com",
+  "logo_url": null,
+  "anon": false,
+  "is_segment": false
  }
 ]
