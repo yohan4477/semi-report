@@ -9,7 +9,7 @@ const path = require('path');
   await pg.goto('file:///' + path.resolve(file).split(path.sep).join('/'));
   await pg.waitForTimeout(300);
   for (const [name, sel] of [['head', 'header'], ['a1', '#a1'], ['a2', '#a2'], ['a3', '#a3'],
-                             ['a4', '#a4'], ['a5', '#a5'], ['x', '#x'], ['e', '#e']]) {
+                             ['a4', '#a4'], ['a5', '#a5'], ['m', '#m'], ['x', '#x'], ['e', '#e']]) {
     const el = await pg.$(sel);
     await el.scrollIntoViewIfNeeded();
     await pg.waitForTimeout(120);
