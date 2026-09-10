@@ -112,6 +112,9 @@ def tree_svg(label, widths, root, marks=()):
     for lab, num in marks:
         n = seen[lab]
         # 상자 안 왼쪽 위 구석에 붙인다. 테두리를 물지 않을 만큼만 들인다
+        # 번호를 상자 밖으로 옮겨 봤다가 되돌렸다(2026-09-10). 왼쪽 밖은 어미의
+        # 연산자 동그라미와, 위쪽 밖은 윗줄 상자와 부딪친다. 이름이 긴 상자에는
+        # 번호를 안 다는 쪽으로 푼다 — 다는 자리는 부르는 쪽이 고른다
         out.append(bf._mark(n['x'] + MARK_IN, n['y'] - _h(n) // 2 + MARK_IN, num))
     return _svg(W, root['bot'] - VGAP + TOP, label, ''.join(out))
 
