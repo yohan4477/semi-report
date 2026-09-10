@@ -2500,7 +2500,200 @@ def _crd_place():
                'CPO 는 광학 엔진을 스위치 칩과 한 패키지에 넣고 XPO 는 랙 앞면에 꽂으며 CPX 는 칩 옆 소켓에 꽂아 갈아 끼운다')
 
 
+# ══ MatX (2026-04-09) 전략 판 ═══════════════════════════════════════════
+# 값은 전사에 있는 것만 — 100기가와트, 기가와트당 150억~200억 달러, 10배·100배, 인원 100명 대 1만~2만.
+
+MTX = '2026-04-09-matx-reiner-pope'
+
+
+def _mtx_split():
+    parts, y_end = table(
+        [[['HBM 에'], ['엔비디아 · 구글', '· 아마존'], ['많이 담는다']],
+         [['SRAM 에'], ['Cerebras', '· Groq'], ['아주 빠르다']],
+         [['둘을 합친다'], ['MatX'], ['균형이 어렵다']]],
+        ['fig-box', 'fig-stage', 'fig-box'], heads=['가중치 자리', '그렇게 한 곳', '그 성질'],
+        y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '가중치를 HBM 에 두면 많이 담고 SRAM 에 두면 아주 빠른데 MatX 는 둘을 한 시스템에 합쳤다')
+
+
+def _mtx_bandwidth():
+    """HBM 이 낼 수 있는 통행량을 무엇이 쓰나. 기둥 둘, 나눠 쓰는 쪽과 통째 쓰는 쪽."""
+    x0, x1, w = 110.0, 300.0, 110.0
+    y0, h = 46.0, 190.0
+    parts = ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+             % (x0 + w / 2, 30, '가중치가 HBM 에')]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+              % (x1 + w / 2, 30, '가중치가 SRAM 에')]
+    parts += _rect(x0, y0, w, h * 0.6, 'fig-bad')
+    parts += _rect(x0, y0 + h * 0.6, w, h * 0.4, 'fig-stage')
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+              % (x0 + w / 2, y0 + h * 0.3 + 6, '가중치')]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+              % (x0 + w / 2, y0 + h * 0.8 + 6, 'KV 캐시')]
+    parts += _rect(x1, y0, w, h, 'fig-agent')
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+              % (x1 + w / 2, y0 + h / 2 + 6, 'KV 캐시')]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
+              % (W / 2, y0 + h + 30, 'HBM 이 낼 수 있는 통행량')]
+    parts += legend([('fig-bad', '토큰마다 되풀이되는 왕복')], y0 + h + 44)
+    return svg(y0 + h + 74, parts,
+               '가중치가 HBM 에 있으면 통행량의 대부분을 가중치 왕복이 잡아먹고 SRAM 에 올리면 그 통행이 통째로 사라진다')
+
+
+def _mtx_loop():
+    rows = [('① 지연이 짧아진다', ''), ('② 동시에 처리 중인 요청이 준다', ''),
+            ('③ HBM 에 쌓이는 KV 캐시가 준다', ''), ('④ 그 자리를 문맥에 내준다', '')]
+    w = w_of([r[0] for r in rows])
+    parts, y, h = [], 34.0, 46.0
+    for i, (t, _n) in enumerate(rows):
+        cls = 'fig-agent' if i == len(rows) - 1 else 'fig-box'
+        parts += box((W - w) / 2, y, w, h, [t], cls)
+        if i < len(rows) - 1:
+            parts += vline(W / 2, y + h + 2, y + h + 18)
+        y += h + 20
+    parts += legend([('fig-agent', '지연을 줄여 얻는 것')], y + 4)
+    return svg(y + 30, parts,
+               '지연이 짧아지면 동시 처리 요청이 줄고 KV 캐시가 차지하던 자리가 비어 같은 메모리로 더 긴 문맥을 담는다')
+
+
+def _mtx_five():
+    parts, y_end = table(
+        [[['① HBM 대역폭'], ['엔비디아 수준에 맞춘다']],
+         [['② HBM 용량'], ['엔비디아 수준에 맞춘다']],
+         [['③ 행렬곱 처리량'], ['크게 앞선다']],
+         [['④ SRAM 대역폭·용량'], ['크게 앞선다']],
+         [['⑤ 인터커넥트'], ['크게 앞선다']]],
+        ['fig-box', 'fig-stage'], heads=['칩을 재는 다섯 잣대', 'MatX 의 방침'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '다섯 잣대 전부에서 엔비디아 수준에 최소한 맞추고 행렬곱과 SRAM 과 인터커넥트 셋에서 크게 앞서는 것이 방침이다')
+
+
+def _mtx_scale():
+    parts = mid(30, 46, ['데이터센터 수요 — 수십 기가와트로'], 'fig-box')
+    parts += vline(W / 2, 78, 96)
+    parts += mid(98, 46, ['엔비디아 칩은 기가와트당 200억 달러 안팎'], 'fig-box')
+    parts += vline(W / 2, 146, 164)
+    parts += mid(166, 46, ['여기에 10배나 100배'], 'fig-agent')
+    parts += mid(232, 46, ['MatX 는 100명 남짓, 상대는 1만~2만 명'], 'fig-stage')
+    parts += legend([('fig-agent', '감당해야 할 규모')], 292)
+    return svg(318, parts,
+               '수십 기가와트 수요에 기가와트당 200억 달러 안팎을 곱하고 다시 10배나 100배를 곱한 규모를 100명 남짓이 감당해야 한다')
+
+
+# ══ 인텔·일론·오픈AI (2026-04-07) 전략 판 ══════════════════════════════
+# 값은 전사에 있는 것만 — 월 100만 장·10만 장, 2억 달러, 7만 명, 1억~3억 달러.
+
+IEO = '2026-04-07-intel-elon-openai'
+
+
+def _ieo_wafer():
+    """웨이퍼 투입 목표 둘. 나란한 세로 막대, 높이는 값의 비율이다."""
+    base, top = 250.0, 40.0
+    bw = 96.0
+    xs = [140.0, 290.0]
+    vals = [('시제품 공장', '월 10만 장', 10.0), ('장기 목표', '월 100만 장', 100.0)]
+    parts = []
+    for x, (name, lab, v) in zip(xs, vals):
+        h = (base - top) * v / 100.0
+        cls = 'fig-agent' if v == 10.0 else 'fig-box'
+        parts += _rect(x, base - h, bw, h, cls)
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-b">%s</text>'
+                  % (x + bw / 2, base - h - 10, lab)]
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-hd">%s</text>'
+                  % (x + bw / 2, base + 22, name)]
+    parts += hline(110, 420, base)
+    parts += legend([('fig-agent', '오스틴 기가사이트에 세운다')], base + 40)
+    return svg(base + 70, parts,
+               '장기 목표가 월 100만 장 웨이퍼 투입이고 오스틴에 세울 시제품 공장은 그 십분의 일인 월 10만 장이다')
+
+
+def _ieo_reunite():
+    parts = mid(30, 46, ['한 집에서 설계와 제조를 같이 했다'], 'fig-box')
+    parts += vline(W / 2, 78, 96)
+    parts += mid(98, 46, ['갈라졌다 — 고정비를 설계사 수백 곳이 나눠 낸다'], 'fig-box')
+    parts += vline(W / 2, 146, 170)
+    parts += head(0, 192, W, '되돌리려면 둘 중 하나가 참이어야 한다')
+    items = [(['① 한 고객이', '고정비를 다 채운다'], 'fig-agent'),
+             (['② 제조에서', '비용 구조가 풀린다'], 'fig-agent')]
+    wsum = sum(w_of(l) for l, _ in items) + 16
+    row, _x, cs, hh = panel_boxes((W - wsum) / 2, 204, items, gap=16, h=2 * LH + 26)
+    parts += row
+    y = 204 + hh
+    parts += mid(y + 22, 46, ['②는 EUV 지출이 막고 있다'], 'fig-bad')
+    y2 = y + 22 + 46
+    parts += legend([('fig-bad', '이 회차가 셈이 안 맞는다고 본 자리')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '설계와 제조가 갈라진 이유가 고정비인데 되돌리려면 한 고객이 그 고정비를 채우거나 제조 비용 구조가 풀려야 한다')
+
+
+def _ieo_scope():
+    row, _x = eband([(['칩'], 'fig-box'), ('>', ''),
+                     (['패키징'], 'fig-box'), ('>', ''),
+                     (['부품 조립'], 'fig-outside'), ('>', ''),
+                     (['기판'], 'fig-outside')], 40, LH + 26)
+    parts = list(row)
+    y = 40 + LH + 26
+    parts += mid(y + 26, 46, ['어디서 멈추는지를 안 밝혔다'], 'fig-bad')
+    y2 = y + 26 + 46
+    parts += legend([('fig-outside', '이 회차가 물었는데 답이 없는 구간')], y2 + 16)
+    return svg(y2 + 42, parts,
+               '칩과 패키징까지는 하겠다고 했는데 부품 조립과 기판을 직접 하는지는 물음만 남고 답이 없었다')
+
+
+def _ieo_audience():
+    parts, y_end = table(
+        [[['조 로건'], ['수백만~수억 명'], ['2억 달러']],
+         [['TBPN'], ['7만 명'], ['1억~3억 달러']]],
+        ['fig-stage', 'fig-box', 'fig-agent'], heads=['누구', '청중', '치른 금액'], y0=36, arrows=False)
+    parts += mid(y_end + 22, 46, ['청중은 세 자릿수 차이, 금액은 같은 자릿수'], 'fig-box')
+    return svg(y_end + 22 + 46 + 16, parts,
+               '청중 수는 세 자릿수가 다른데 치른 금액은 같은 자릿수다')
+
+
+def _ieo_three():
+    parts, y_end = table(
+        [[['인텔'], ['자기 이름을 공개적으로', '불러 줄 고객']],
+         [['OpenAI'], ['결정권 쥔 7만 명 앞에서', '말하는 자리']],
+         [['시트리니'], ['아무도 못 본 것을', '말할 자격']]],
+        ['fig-stage', 'fig-agent'], heads=['누가', '무엇을 샀나'], y0=36, arrows=False)
+    return svg(y_end + 12, parts,
+               '셋이 큰 금액을 치르고 산 것은 정보 자체가 아니라 남이 대신 못 하는 말을 할 수 있는 자리다')
+
+
 FIGS = {
+    (IEO, 'strategy'): [
+        ('1.|테라팹 구상 자체는', '웨이퍼 투입 목표 둘', _ieo_wafer(),
+         '막대 높이는 두 값의 비율이다(L23·L25). 언제까지 그 규모에 닿겠다는 시점은 전사에 없다.'),
+        ('2.|그러면 되돌리는', '갈라진 이유와 되돌릴 조건', _ieo_reunite(),
+         '고정비를 설계사 수백 곳이 나눠 내는 구조가 분업의 이유다(L39·L41). ② 는 리소그래피에 비용이 몰려 있어 '
+         'ASML 의 EUV 지출을 덜어낼 방법이 안 보인다고 했고, 말하다 말고 「셈이 안 맞는다」로 닫았다(L43).'),
+        ('3.|진행자V는 범위를', '수직 통합이 어디서 멈추나', _ieo_scope(),
+         '광트랜시버를 만들면 부품 조립도 하나, 저항과 커패시터는 어디서 구하나, 기판은 직접 만드나까지 물었다(L45·L47·L49). '
+         '두 사람이 웃은 자리이고 답은 안 나왔다(L51).'),
+        ('4.|진행자V가 견줄', '청중 수와 치른 금액', _ieo_audience(),
+         '조 로건은 2020년 스포티파이와 여러 해에 걸쳐 2억 달러였다(L153). TBPN 금액은 진행자들이 1억에서 3억 달러로 어림한 것이다(L81). '
+         '로건의 재계약 금액은 전사에 없다.'),
+        ('6.|셋을 겹쳐 보면', '셋이 산 것은 같은 물건이다', _ieo_three(),
+         '이 글이 세 화제를 한 물음으로 꿴 자리다. 7만 명은 TBPN 시청자 수이고(L153), 나머지 둘은 숫자가 아니라 상태다.'),
+    ],
+    (MTX, 'strategy'): [
+        ('2.|칩 안에서 모델', '가중치를 어디에 두나', _mtx_split(),
+         'SRAM 은 응답이 아주 빠른 대신 담을 수 있는 양이 적다(L89·L91). Pope 는 둘을 합치는 일을 「테이블 위에 그냥 놓여 있던 공짜 돈」이라 불렀다(L89). '
+         '어느 쪽이 얼마나 빠르고 얼마나 담는지는 전사에 숫자가 없다.'),
+        ('2.|디코드에서 벌', 'HBM 통행량을 무엇이 쓰나', _mtx_bandwidth(),
+         '토큰 하나를 뱉을 때마다 가중치 전체를 다시 실어 와야 한다. 가중치가 SRAM 에 올라가면 그 왕복이 통째로 사라지고 통행량 전부가 KV 캐시로 간다(L171·L173). '
+         '기둥을 나눈 비율은 보기용이다 — 전사에 숫자가 없다.'),
+        ('3.|여기서 Pope가', '지연을 줄이면 문맥이 길어지는 사슬', _mtx_loop(),
+         '대기 줄의 길이는 도착 속도에 처리 시간을 곱한 값이라는 리틀의 법칙 그대로다(L175). '
+         '「저지연은 쓰기 편하다는 이점만이 아니라 처리량 자체를 올린다」는 것이 이 사슬의 결론이다(L177). 몇 배인지는 전사에 없다.'),
+        ('4.|칩을 평가하는', '칩을 재는 다섯 잣대와 그 방침', _mtx_five(),
+         '다섯은 Pope 가 든 것이다(L139). 크게 앞선다고 꼽은 셋 말고 큰 항목에서 뒤지는 데는 없다고 했고, '
+         'LLM 과 덜 붙는 항목에서는 뒤질 수도 있다는 유보를 달았다(L141). 잣대마다의 측정치는 이 회차에 없다.'),
+        ('7.|가장 큰 회의론', '감당해야 할 규모의 크기', _mtx_scale(),
+         '100기가와트에 언제 닿을지는 자신도 모르겠다고 했다(L261). 기가와트당 금액은 150억에서 200억 달러 사이로 말했고 곱하는 배수도 어림이다(L263). '
+         '인원은 MatX 100명 남짓 대 상대 1만~2만 명이다(L195).'),
+    ],
     (CRD, 'strategy'): [
         ('1.|Credo가 원래 잘', 'Credo 포트폴리오에서 비어 있던 칸', _crd_portfolio(),
          '서데스에서 시작해 구리 케이블과 광학 DSP·트랜시버, 링크 감시 소프트웨어까지 갖췄다(L93·L99·L101). '
@@ -2732,7 +2925,7 @@ FIGS = {
          '③ 크로스토크 — 옆 배선의 구슬이 끼어든다(L57). '
          '④ 심볼 간 간섭 — 구슬이 설탕처럼 서로 달라붙어 한 덩어리가 된다(L59·L61). '
          '⑤ 지터 — 읽으려고 보는 그 시각(점선)에 구슬이 없다(L63). '
-         '구슬 수와 줄어드는 폭은 보기용이다 — 전사에 값이 없다.'),
+         '구슬 수와 줄어드는 폭은 보기용이다 — 전사에 숫자가 없다.'),
         ('1.|얼마나 빠른지부터', 'PCIe 세대와 초당 전송 수', _al_gen(),
          '블랙웰 세대에 들어간 것은 Gen6 제품이었을 것이라고 Vik 은 봤다(L143).'),
         ('1.|이 다섯이 한 그림으로', '눈 다이어그램 — 열린 눈과 닫힌 눈', _al_eye(),

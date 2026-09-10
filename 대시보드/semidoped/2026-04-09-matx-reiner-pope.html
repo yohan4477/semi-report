@@ -1,0 +1,303 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MatX 는 SRAM 과 HBM 을 한 칩에 합쳐 지연시간과 처리량을 함께 잡는 쪽에 걸었다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>MatX 는 SRAM 과 HBM 을 한 칩에 합쳐 지연시간과 처리량을 함께 잡는 쪽에 걸었다</h1><div class="pmeta">2026-04-09 · Reiner Pope<br>원문 <a href="https://www.youtube.com/watch?v=7Ph9i1KYHxY">https://www.youtube.com/watch?v=7Ph9i1KYHxY</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-04-09-matx-reiner-pope.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter)</div><div class="who"><b>게스트</b> <span class="pn g0">Reiner Pope</span> (MatX 공동창업자 겸 CEO)</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">소프트웨어 해자가 컴퓨팅 지출에 밀려 무너진 자리에서, 메모리를 어디에 두느냐가 새 승부처가 됐다</div><p>MatX 공동창업자 겸 CEO <span class="pn g0">Reiner Pope</span>가 Semi Doped에 나와 자기 회사가 만드는 칩을 처음부터 끝까지 설명했다. 진행은 <span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)와 <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>) 둘이 맡았다. 이 글은 MatX가 성공할지를 점치지 않는다. 이 대화에 업계 전체의 어떤 사정이 비쳤는지를 읽는다.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">CUDA 해자를 약하게 만든 것은 회계다</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">메모리를 어디에 두느냐로 갈렸던 두 진영을 한 패키지에 합친다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">지연시간을 줄이면 처리량이 따라 올라간다는 되먹임</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">전환을 막는 것은 평균 점수가 아니라 가장 약한 항목이다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">프런티어 랩만 문을 여는 이유, 그리고 신뢰를 얻는 값</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">에이전트가 바꾼 것은 문맥을 얼마나 오래 들고 있느냐다</a></div><div class="tr one"><span class="num">7</span> <a href="#s7">남은 관문은 물리, 그리고 이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> CUDA 해자를 약하게 만든 것은 회계다</h2>
+<p>2022년 MatX가 투자를 받으러 다닐 때 돌아온 회의론은 두 갈래였다고 <span class="pn g0">Pope</span>는 정리했다. ① 다들 CUDA로 코드를 짜는데 GPU가 아닌 하드웨어를 누가 사겠느냐 ② 세계에서 가장 큰 회사와 어떻게 겨루겠느냐. <span class="pn g0">Pope</span> 는 앞쪽을 길게 다뤘다. 엔비디아의 소프트웨어 해자가 걸려 있고, 지난 수십 년 소프트웨어 산업이 개발 환경 잠금을 어떻게 겪었는지가 그대로 물음이 됐다.</p>
+<p><span class="pn g0">Pope</span>의 답은 지금은 이미 결판이 났다는 것이다. 오래전부터 TPU만 쓰는 구글을 빼면 OpenAI, Anthropic, Meta, X가 모두 엔비디아 위에 있으면서 동시에 다른 플랫폼도 함께 굴린다. TPU를 쓰는 곳도 여럿이고 Cerebras 발표도 있었으며 AMD와 Broadcom 계열 칩도 들어가 있다. 아무도 한 벤더에 묶여 있지 않다는 사실 자체가 종속이 약하다는 증거라는 뜻이다.</p>
+<p>왜 이번엔 다른가. <span class="pn g0">Pope</span>는 종속의 세기를 하드웨어에 쓰는 돈과 그 하드웨어를 떠받치는 소프트웨어 인건비의 비율로 봤다. 서비스형 소프트웨어 시대에는 비싼 엔지니어 팀이 인건비의 큰 덩어리였고 컴퓨팅 비용은 그중 일부에 그쳤다. 그래서 엔지니어의 시간이 귀하다는 말이 업계의 상식이 됐다. 지금 프런티어 랩은 컴퓨팅에만 수백억 달러 단위를 쓴다. 커널을 짜는 사람들의 연봉이 아무리 높아도 그 옆에 놓으면 작다.</p>
+<p>비율이 뒤집히면 계산도 뒤집힌다. "합리적인 선택은 무엇을 해서든 하드웨어 비용을 낮추는 겁니다". 여기서 업계가 읽을 것은 특정 회사의 우열이 아니다. <b>소프트웨어 해자의 수명은 그 소프트웨어를 지탱하는 인건비가 하드웨어 청구서보다 클 동안만이라는 것</b>이다. 여러 플랫폼을 같이 쓰는 데는 협상력이라는 덤도 따라온다.</p>
+<h2 id="s2"><span class="num">2</span> 메모리를 어디에 두느냐로 갈렸던 두 진영을 한 패키지에 합친다</h2>
+<figure class="uc-fig"><p class="fig-title">가중치를 어디에 두나</p><svg class="epoch" viewBox="0 0 520 296" role="img" aria-label="가중치를 HBM 에 두면 많이 담고 SRAM 에 두면 아주 빠른데 MatX 는 둘을 한 시스템에 합쳤다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="49" y="26" text-anchor="middle" class="fig-hd">가중치 자리</text>
+  <text x="186" y="26" text-anchor="middle" class="fig-hd">그렇게 한 곳</text>
+  <text x="330.5" y="26" text-anchor="middle" class="fig-hd">그 성질</text>
+  <rect x="0" y="36" width="98" height="72" rx="9" class="fig-box"/>
+  <text x="49" y="78" text-anchor="middle" class="fig-b">HBM 에</text>
+  <rect x="114" y="36" width="144" height="72" rx="9" class="fig-stage"/>
+  <text x="186" y="66.5" text-anchor="middle" class="fig-b">엔비디아 · 구글</text>
+  <text x="186" y="89.5" text-anchor="middle" class="fig-b">· 아마존</text>
+  <rect x="274" y="36" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="330.5" y="78" text-anchor="middle" class="fig-b">많이 담는다</text>
+  <rect x="0" y="124" width="98" height="72" rx="9" class="fig-box"/>
+  <text x="49" y="166" text-anchor="middle" class="fig-b">SRAM 에</text>
+  <rect x="114" y="124" width="144" height="72" rx="9" class="fig-stage"/>
+  <text x="186" y="154.5" text-anchor="middle" class="fig-b">Cerebras</text>
+  <text x="186" y="177.5" text-anchor="middle" class="fig-b">· Groq</text>
+  <rect x="274" y="124" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="330.5" y="166" text-anchor="middle" class="fig-b">아주 빠르다</text>
+  <rect x="0" y="212" width="98" height="72" rx="9" class="fig-box"/>
+  <text x="49" y="254" text-anchor="middle" class="fig-b">둘을 합친다</text>
+  <rect x="114" y="212" width="144" height="72" rx="9" class="fig-stage"/>
+  <text x="186" y="254" text-anchor="middle" class="fig-b">MatX</text>
+  <rect x="274" y="212" width="113" height="72" rx="9" class="fig-box"/>
+  <text x="330.5" y="254" text-anchor="middle" class="fig-b">균형이 어렵다</text>
+</svg><figcaption>SRAM 은 응답이 아주 빠른 대신 담을 수 있는 양이 적다. <span class="pn g0">Pope</span> 는 둘을 합치는 일을 「테이블 위에 그냥 놓여 있던 공짜 돈」이라 불렀다. 어느 쪽이 얼마나 빠르고 얼마나 담는지는 전사에 숫자가 없다.</figcaption></figure>
+<p>칩 안에서 모델 가중치를 어디에 두느냐를 놓고 시장은 두 갈래로 나뉘어 있었다. 엔비디아, 구글, 아마존은 계산에 쓰는 숫자 뭉치를 전부 HBM(고대역폭 메모리, 칩 옆에 쌓아 붙인 큰 메모리)에 넣었다. Cerebras와 Groq은 가중치를 SRAM(칩 안에 직접 새겨 넣은 아주 빠른 메모리)에 올렸다. SRAM 쪽은 응답이 매우 빠른 대신 담을 수 있는 양이 적다.</p>
+<p><span class="pn g0">Pope</span>는 이 둘을 한 시스템에 합치는 일을 "테이블 위에 그냥 놓여 있던 공짜 돈"이라고 불렀다. 균형을 맞추기가 까다로울 뿐 못 할 일은 아니라고 봤다. 무슨 이득이 있는지는 토큰을 하나씩 만들어 내는 디코드 단계에서 가장 잘 드러난다.</p>
+<figure class="uc-fig"><p class="fig-title">HBM 통행량을 무엇이 쓰나</p><svg class="epoch" viewBox="0 0 520 310" role="img" aria-label="가중치가 HBM 에 있으면 통행량의 대부분을 가중치 왕복이 잡아먹고 SRAM 에 올리면 그 통행이 통째로 사라진다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="165" y="30" text-anchor="middle" class="fig-hd">가중치가 HBM 에</text>
+  <text x="355" y="30" text-anchor="middle" class="fig-hd">가중치가 SRAM 에</text>
+  <rect x="110" y="46" width="110" height="114" rx="4" class="fig-bad"/>
+  <rect x="110" y="160" width="110" height="76" rx="4" class="fig-stage"/>
+  <text x="165" y="109" text-anchor="middle" class="fig-b">가중치</text>
+  <text x="165" y="204" text-anchor="middle" class="fig-b">KV 캐시</text>
+  <rect x="300" y="46" width="110" height="190" rx="4" class="fig-agent"/>
+  <text x="355" y="147" text-anchor="middle" class="fig-b">KV 캐시</text>
+  <text x="260" y="266" text-anchor="middle" class="fig-e">HBM 이 낼 수 있는 통행량</text>
+  <rect x="0" y="280" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="292" class="fig-lg">토큰마다 되풀이되는 왕복</text>
+</svg><figcaption>토큰 하나를 뱉을 때마다 가중치 전체를 다시 실어 와야 한다. 가중치가 SRAM 에 올라가면 그 왕복이 통째로 사라지고 통행량 전부가 KV 캐시로 간다. 기둥을 나눈 비율은 보기용이다 — 전사에 숫자가 없다.</figcaption></figure>
+<p>디코드에서 벌어지는 일은 이렇다. 토큰 하나를 뱉을 때마다 모델 가중치 전체를 메모리에서 연산기 쪽으로 다시 실어 와야 한다. 가중치가 HBM에 있으면 그 왕복이 HBM이 낼 수 있는 통행량의 대부분을 잡아먹는다. 가중치를 SRAM에 미리 올려 두면 그 통행이 통째로 사라진다. <span class="q">"HBM 대역폭을 가중치 불러오는 데 하나도 안 씁니다. 그 대역폭 전부를 KV 캐시에만 씁니다"</span>.</p>
+<p>KV 캐시는 이미 읽은 문맥을 다시 계산하지 않으려고 쥐고 있는 중간 결과다. 결국 HBM은 문맥을 나르는 데만 쓰이고, 지연시간은 SRAM에 가중치를 둔 Cerebras나 Groq 수준으로 내려간다. 엔비디아도 성격이 다른 랙을 나란히 붙여 비슷한 그림을 만들지만, <span class="pn g0">Pope</span>는 서로 다른 패키지에 나뉘어 있는 데서 오는 손실을 지적했다. 하나의 패키지에 다 넣는 설계가 원리에 더 맞는다고 했다.</p>
+<h2 id="s3"><span class="num">3</span> 지연시간을 줄이면 처리량이 따라 올라간다는 되먹임</h2>
+<figure class="uc-fig"><p class="fig-title">지연을 줄이면 문맥이 길어지는 사슬</p><svg class="epoch" viewBox="0 0 520 328" role="img" aria-label="지연이 짧아지면 동시 처리 요청이 줄고 KV 캐시가 차지하던 자리가 비어 같은 메모리로 더 긴 문맥을 담는다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="94" y="34" width="332" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="63" text-anchor="middle" class="fig-b">① 지연이 짧아진다</text>
+  <line x1="260" y1="82" x2="260" y2="98" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="94" y="100" width="332" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="129" text-anchor="middle" class="fig-b">② 동시에 처리 중인 요청이 준다</text>
+  <line x1="260" y1="148" x2="260" y2="164" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="94" y="166" width="332" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="195" text-anchor="middle" class="fig-b">③ HBM 에 쌓이는 KV 캐시가 준다</text>
+  <line x1="260" y1="214" x2="260" y2="230" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="94" y="232" width="332" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="261" text-anchor="middle" class="fig-b">④ 그 자리를 문맥에 내준다</text>
+  <rect x="0" y="302" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="314" class="fig-lg">지연을 줄여 얻는 것</text>
+</svg><figcaption>대기 줄의 길이는 도착 속도에 처리 시간을 곱한 값이라는 리틀의 법칙 그대로다. 「저지연은 쓰기 편하다는 이점만이 아니라 처리량 자체를 올린다」는 것이 이 사슬의 결론이다. 몇 배인지는 전사에 없다.</figcaption></figure>
+<p>여기서 <span class="pn g0">Pope</span>가 꺼낸 대목이 이 회차에서 가장 덜 알려진 이야기다. 지연시간이 낮으면 동시에 처리 중인 요청 수가 적어진다. 대기 줄의 길이는 도착 속도에 처리 시간을 곱한 값이라는 오래된 규칙, 리틀의 법칙 그대로다. 처리 시간이 짧으면 줄이 짧아진다.</p>
+<p>동시에 처리 중인 요청이 적으면 HBM에 쌓아 둘 KV 캐시도 적어진다. 그 자리를 문맥에 내줄 수 있다. 같은 용량의 HBM으로 더 긴 문맥을 담게 된다는 뜻이다. "저지연은 쓰기 편하다는 이점만이 아니라 처리량 자체를 올립니다". 지연시간과 처리량을 맞바꾸는 대상으로 놓고 보던 습관이 여기서 흔들린다.</p>
+<p>같은 메모리 선택이 병렬화 방식의 순위도 바꿨다. 모델을 여러 칩에 나눠 태우는 방법에는 텐서 병렬화, 전문가 병렬화, 파이프라인 병렬화가 있는데 마지막 것은 오래 "천덕꾸러기" 취급을 받았다. 지연시간과 메모리 사용량을 줄이는 이점이 다른 방식만 못했기 때문이다. <span class="pn g0">Pope</span>는 그것이 실은 메모리 시스템을 어떻게 짜느냐의 문제였다고 말한다. SRAM과 HBM을 합치자 파이프라인 병렬화가 처음으로 다른 방식만큼 잘 돌았다.</p>
+<h2 id="s4"><span class="num">4</span> 전환을 막는 것은 평균 점수가 아니라 가장 약한 항목이다</h2>
+<figure class="uc-fig"><p class="fig-title">칩을 재는 다섯 잣대와 그 방침</p><svg class="epoch" viewBox="0 0 520 357" role="img" aria-label="다섯 잣대 전부에서 엔비디아 수준에 최소한 맞추고 행렬곱과 SRAM 과 인터커넥트 셋에서 크게 앞서는 것이 방침이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="103.5" y="26" text-anchor="middle" class="fig-hd">칩을 재는 다섯 잣대</text>
+  <text x="318.5" y="26" text-anchor="middle" class="fig-hd">MatX 의 방침</text>
+  <rect x="0" y="36" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="103.5" y="66.5" text-anchor="middle" class="fig-b">① HBM 대역폭</text>
+  <rect x="223" y="36" width="191" height="49" rx="9" class="fig-stage"/>
+  <text x="318.5" y="66.5" text-anchor="middle" class="fig-b">엔비디아 수준에 맞춘다</text>
+  <rect x="0" y="101" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="103.5" y="131.5" text-anchor="middle" class="fig-b">② HBM 용량</text>
+  <rect x="223" y="101" width="191" height="49" rx="9" class="fig-stage"/>
+  <text x="318.5" y="131.5" text-anchor="middle" class="fig-b">엔비디아 수준에 맞춘다</text>
+  <rect x="0" y="166" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="103.5" y="196.5" text-anchor="middle" class="fig-b">③ 행렬곱 처리량</text>
+  <rect x="223" y="166" width="191" height="49" rx="9" class="fig-stage"/>
+  <text x="318.5" y="196.5" text-anchor="middle" class="fig-b">크게 앞선다</text>
+  <rect x="0" y="231" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="103.5" y="261.5" text-anchor="middle" class="fig-b">④ SRAM 대역폭·용량</text>
+  <rect x="223" y="231" width="191" height="49" rx="9" class="fig-stage"/>
+  <text x="318.5" y="261.5" text-anchor="middle" class="fig-b">크게 앞선다</text>
+  <rect x="0" y="296" width="207" height="49" rx="9" class="fig-box"/>
+  <text x="103.5" y="326.5" text-anchor="middle" class="fig-b">⑤ 인터커넥트</text>
+  <rect x="223" y="296" width="191" height="49" rx="9" class="fig-stage"/>
+  <text x="318.5" y="326.5" text-anchor="middle" class="fig-b">크게 앞선다</text>
+</svg><figcaption>다섯은 <span class="pn g0">Pope</span> 가 든 것이다. 크게 앞선다고 꼽은 셋 말고 큰 항목에서 뒤지는 데는 없다고 했고, LLM 과 덜 붙는 항목에서는 뒤질 수도 있다는 유보를 달았다. 잣대마다의 측정치는 이 회차에 없다.</figcaption></figure>
+<p>칩을 평가하는 잣대가 몇 개냐는 물음에 <span class="pn g0">Pope</span>는 다섯을 들었다. ① HBM 대역폭 ② HBM 용량 ③ 행렬곱 처리량 ④ SRAM 대역폭과 용량 ⑤ 칩과 랙 사이를 잇는 인터커넥트 성능이다. MatX의 방침은 이 전부에서 엔비디아 수준에 최소한 맞추고 그중 몇 개에서 크게 앞서는 것이다. 앞선다고 꼽은 곳은 행렬곱, 인터커넥트, SRAM 셋이다. 이 큰 항목들에서 크게 뒤지는 데는 없다고 했고, LLM 과 덜 붙는 항목에서는 뒤질 수도 있다는 유보를 달았다.</p>
+<p>왜 전부를 맞춰야 하는지가 이 절의 핵심이다. 고객이 새 칩으로 옮길지 말지는 잘하는 항목이 몇 개냐로 정해지지 않는다. 도저히 못 봐줄 만큼 나쁜 항목이 하나라도 있으면 나머지가 아무리 좋아도 결심이 안 선다. 다섯 곳 어디에도 구멍이 없으면 갈아탈 때 치르는 대가가 크지 않다는 것이 <span class="pn g0">Pope</span>의 논리다. <span class="pn">진행자A</span>는 이 말을 그대로 되짚어 확인했고 <span class="pn g0">Pope</span>는 맞다고 답했다.</p>
+<p>그 위에 얹히는 것이 여유분이다. 이득을 최대로 뽑고 싶으면 모델 쪽을 손보면 된다. 어텐션 비중을 줄이고 MLP 비중을 늘리거나, MatX가 제공하는 여러 정밀도 중 낮은 쪽을 쓰는 식이다. 다만 <span class="pn g0">Pope</span>는 고객을 편안한 자리 밖으로 너무 끌어내지 않겠다고 못 박았다. 제품이 시장에 맞으려면 고객이 서 있는 자리로 대체로 찾아가야 한다는 것이다.</p>
+<p>인터커넥트에 유독 많이 투자한 이유도 모델 쪽 사정에서 나왔다. 전문가 하나하나가 작고 그중 극히 일부만 켜지는 MoE 모델이 통신량을 결정한다. 전문가를 고르는 라우팅은 되도록 촘촘히 묶인 영역 안에서 끝내는 것이 모두의 방식이고, 그 영역이 클수록 더 큰 MoE 층을 받아낼 수 있다. 엔비디아가 스위치로 모든 트래픽을 모으고 구글이 토러스 배선을 쓰는 것과 달리, MatX는 MoE 층에 맞춘 배선을 따로 설계했다고만 밝혔다.</p>
+<h2 id="s5"><span class="num">5</span> 프런티어 랩만 문을 여는 이유, 그리고 신뢰를 얻는 값</h2>
+<p>가장 관심을 보인 쪽이 프런티어 랩이라는 것은 놀랍지 않다. <span class="pn g0">Pope</span>가 든 이유는 둘이다. ① 지출 규모가 가장 커서 새 소프트웨어 스택을 떠안을 셈이 맞아떨어지고 ② 3년에서 5년 앞을 내다보는 시야를 갖고 있다. 맞춤 하드웨어를 사면서 함께 설계하려면 그만한 시간 감각이 있어야 한다. 오늘 선반에 있는 것을 사겠다는 자세로는 이 거래가 성립하지 않는다.</p>
+<p>신생 업체에게 남는 문제는 믿음이다. <span class="pn g0">Pope</span>는 믿어 달라는 말이 가는 거리를 냉정하게 봤다. 대신 증거를 내민다. 핵심 아키텍처, 칩 안에서 데이터를 흘려보내며 계산하는 시스톨릭 어레이의 구조, 연산 단위끼리 어떻게 연결되는지, 명령어 집합, 고객에게 주는 소프트웨어 개발 도구까지 비밀유지계약을 걸고 전부 보여 준다. 그러기가 불편하지만 믿음을 얻는 데 크게 보탬이 된다고 했다.</p>
+<p>옮겨 붙이는 데 드는 실제 인력도 숫자로 나왔다. 여러 플랫폼을 함께 지원하는 회사들이 플랫폼 하나당 붙이는 인원이 50명에서 100명 선이고, 커널을 짜고 컴파일러와 디버깅 도구를 만드는 상급 인력이다. MatX 위에서도 비슷한 규모를 예상한다. MatX 자체는 100명을 조금 넘는 규모로, 비슷한 프로젝트에 1만에서 2만 명을 붙이는 회사와 대비된다.</p>
+<p>그 인력을 누가 대느냐에도 선이 있다. 컴파일러와 디버깅 기반 같은 첫 구간은 MatX가 대신 해 줄 수 있지만, 마지막 구간인 커널 개발은 프런티어 랩이 직접 쥔다. 거기에 모델 아키텍처가 그대로 드러나기 때문이다. 업계에 보이는 것은 이것이다. <b>맞춤 칩 사업에서 고객이 넘겨주지 않는 것은 물량이 아니라 자기 모델의 모양</b>이고, 공급자가 준비해야 하는 것은 그 마지막 구간이 남을 자리다.</p>
+<h2 id="s6"><span class="num">6</span> 에이전트가 바꾼 것은 문맥을 얼마나 오래 들고 있느냐다</h2>
+<p><span class="pn">진행자A</span>가 에이전틱 AI와 폭증하는 추론 수요를 두고 다음 칩을 다르게 설계해야 하느냐고 물었다. <span class="pn g0">Pope</span>의 답은 뜻밖에 담담하다. 모델과 사용 방식이 바뀌는 속도는 확실히 빠른데, 그것을 하드웨어에 필요한 변화라는 체로 거르고 나면 "95퍼센트가 잡음"이다. 에이전트도 결국 프리필과 디코드를 할 뿐이다.</p>
+<p>수요의 세기는 올라갔다. 에이전트가 오래 생각하는 동안 사용자가 5분이 아니라 30초만 기다리게 하고 싶어졌다. 다만 이건 늘 있던 일이라 놀랄 대목이 아니라고 <span class="pn g0">Pope</span>는 정리했다. 성능 요구가 계속 높아지는 자리에 서 있는 것은 좋은 일이라고 덧붙였다.</p>
+<p>정말 바뀐 것은 모델이 놀고 있는 시간의 성격이다. 챗봇에서는 사람이 답을 읽고 다음 메시지를 칠 때까지 30초에서 1분쯤 문맥을 어딘가에 들고 있으면 됐다. 아예 안 돌아올 수도 있었다. 에이전트는 사람 대신 바깥 도구의 응답을 기다린다. 이메일 확인은 몇 초면 끝나지만, 컴파일러를 돌리거나 배치·배선 도구를 돌리는 일은 몇 시간이 걸린다.</p>
+<p>그래서 KV 캐시가 실제로 쓰이지 않으면서도 버려서는 안 되는 구간이 길고 들쭉날쭉해졌다. <span class="pn g0">Pope</span>가 에이전트 시대의 가장 큰 변화로 꼽은 것이 여기서 생기는 별도의 보관 시스템 수요다. 메모리 계층에 새 칸이 하나 생긴다는 뜻이고, 이 수요는 연산 성능 경쟁과 다른 곳에서 온다.</p>
+<p>MatX가 자기 칩을 설계하면서 AI를 쓰는 방식도 같은 결이다. 칩 설계는 사실상 소프트웨어 개발이고, Verilog는 이상하게 생겼을 뿐 프로그래밍 언어다. AI가 가장 잘 먹히는 자리는 목표가 숫자로 딱 떨어지는 곳이다. 컴파일이 되는가, 면적은 작은가, 전력은 낮은가, 테스트를 몇 개나 통과하는가. MatX는 개발 과정 자체를 그런 꼴에 가깝게 바꾸는 방향으로 손보고 있다. 함수형 프로그래밍에서 나온 소수 언어 Bluespec을 쓰는 이유는 거의 농담처럼 나왔다. "세상에 Bluespec 프로그래머가 워낙 적어서, 그들을 전부 채용하면 그 자체로 경쟁우위가 됩니다".</p>
+<h2 id="s7"><span class="num">7</span> 남은 관문은 물리, 그리고 이 회차가 말하지 않은 것</h2>
+<figure class="uc-fig"><p class="fig-title">감당해야 할 규모의 크기</p><svg class="epoch" viewBox="0 0 520 318" role="img" aria-label="수십 기가와트 수요에 기가와트당 200억 달러 안팎을 곱하고 다시 10배나 100배를 곱한 규모를 100명 남짓이 감당해야 한다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="110" y="30" width="300" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="59" text-anchor="middle" class="fig-b">데이터센터 수요 — 수십 기가와트로</text>
+  <line x1="260" y1="78" x2="260" y2="96" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="71" y="98" width="378" height="46" rx="9" class="fig-box"/>
+  <text x="260" y="127" text-anchor="middle" class="fig-b">엔비디아 칩은 기가와트당 200억 달러 안팎</text>
+  <line x1="260" y1="146" x2="260" y2="164" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="156.5" y="166" width="207" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="195" text-anchor="middle" class="fig-b">여기에 10배나 100배</text>
+  <rect x="47.5" y="232" width="425" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="261" text-anchor="middle" class="fig-b">MatX 는 100명 남짓, 상대는 1만~2만 명</text>
+  <rect x="0" y="292" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="304" class="fig-lg">감당해야 할 규모</text>
+</svg><figcaption>100기가와트에 언제 닿을지는 자신도 모르겠다고 했다. 기가와트당 금액은 150억에서 200억 달러 사이로 말했고 곱하는 배수도 어림이다. 인원은 MatX 100명 남짓 대 상대 1만~2만 명이다.</figcaption></figure>
+<p>가장 큰 회의론이 무엇이냐는 물음에 <span class="pn g0">Pope</span>가 꺼낸 것은 양의 문제였다. 신생 기업이 대량 생산 체제를 얼마나 빨리 갖추느냐가 앞으로 몇 년의 숙제다. 규모 감각은 이렇게 잡았다. 데이터센터 수요 전망이 여러 기가와트에서 수십 기가와트로 가고 있고, 100기가와트에 언제 닿을지는 자신도 모르겠다고 했다. 엔비디아 칩이 기가와트당 150억에서 200억 달러쯤 팔리니, 여기에 10배나 100배를 곱하면 감당해야 할 규모가 나온다.</p>
+<p>이 회차가 말하지 않은 것도 적지 않다. ① 네트워크 배선을 구체적으로 어떻게 짰는지는 밝히지 않겠다고 분명히 했다. ② 지난 10년간 칩 성능 향상의 가장 큰 요인이었다고 본 수치 정밀도 기법도 공개 대상이 아니다. 칩을 낸 뒤 1년이나 2년 늦춰 낼 생각이라고 했다. 어텐션 연구만 내놓는데, 이건 모델 설계자들에게 앞으로 나올 하드웨어의 성격을 미리 알리려는 목적이다.</p>
+<p>숫자로 남은 빈칸이 더 크다. ① 칩이 언제 나오는지 ② 어느 공정에서 만드는지 ③ 성능이 실제로 얼마인지 ④ 칩 하나가 얼마에 팔리는지가 이 회차에 하나도 없다. 앞에서 다섯 항목 전부에서 엔비디아 수준 이상이라고 말했지만 그 근거가 되는 측정치는 나오지 않았다. 돈에 관해 나온 숫자는 진행자가 물음에 얹은 투자 유치액 1억 달러와 5억 달러뿐이다.</p>
+<p>무엇이 나오면 이 글의 판단이 달라지나. ① SRAM과 HBM을 합친 설계의 이점은 아직 논리로만 서 있으므로, 전력과 비용까지 정규화한 비교치가 나와야 2절과 3절이 검증된다. ② 다섯 항목 전부에서 뒤지지 않는다는 4절의 주장은 엔비디아의 다음 세대가 같은 표에 올라오는 순간 다시 재야 한다. ③ 7절의 생산 관문은 첫 대량 출하가 실제로 이뤄지는 시점이 답한다. 설계에서 이겼다는 말과 기가와트를 채웠다는 말 사이의 거리가 이 회사의 남은 이야기 전부다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-04-09-matx-reiner-pope-strategy.md">insights/semidoped/2026-04-09-matx-reiner-pope-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
