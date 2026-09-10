@@ -60,6 +60,40 @@ h1{font-size:23px;font-weight:700;letter-spacing:-.01em;margin:0}
 .beat .watch{font-size:13px;color:var(--ink-3);margin:6px 0 0}
 .beat p{max-width:66ch}
 
+/* 대본 — 이 장의 본체. 턴이 끊기지 않게 바탕을 깔지 않고 왼쪽 띠로만 가른다.
+   말한 사람 이름은 줄 위가 아니라 왼쪽 칸에 둔다 — 위에 얹으면 턴마다 줄이
+   하나씩 늘어 대본이 두 배로 길어 보인다 */
+.script{margin:18px 0 0}
+.act{display:flex;align-items:center;gap:12px;margin:34px 0 14px}
+.act:first-child{margin-top:18px}
+.act-n{font-size:11.5px;font-weight:850;letter-spacing:.06em;color:var(--ink-3);
+  white-space:nowrap}
+.act-r{flex:1;height:1px;background:var(--line)}
+.turn{display:grid;grid-template-columns:64px 1fr;gap:0 14px;margin:12px 0}
+.turn .who{font-size:11.5px;font-weight:850;letter-spacing:.03em;padding-top:4px;
+  text-align:right;color:var(--ink-3)}
+.turn .line{border-left:3px solid var(--line);padding-left:14px;max-width:62ch}
+.turn.q .line{border-left-color:var(--ink-3);color:var(--ink-2)}
+.turn.a .line{border-left-color:var(--accent)}
+.turn .line p{margin:0 0 10px}
+.turn .line p:last-child{margin-bottom:0}
+/* 지문 — 말이 아니라 그 자리에서 벌어진 일 */
+.dir{grid-column:2;font-size:13px;color:var(--ink-3);font-style:italic;
+  padding-left:17px;margin:10px 0}
+/* 해설 — 대본을 끊고 들어오는 자리라 들여쓰고 이름을 붙인다 */
+.note{margin:16px 0 0 78px;padding:12px 16px;background:var(--sunk);
+  border-radius:10px;font-size:13.5px;max-width:60ch}
+.note b{display:block;font-size:11px;font-weight:850;letter-spacing:.04em;
+  color:var(--ink-3);margin-bottom:4px}
+.note p{margin:0 0 8px}
+.note p:last-child{margin-bottom:0}
+@media (max-width:640px){
+  .turn{grid-template-columns:1fr;gap:2px}
+  .turn .who{text-align:left;padding-top:0}
+  .dir{grid-column:1}
+  .note{margin-left:0}
+}
+
 /* 발화 줄기 — 가라앉은 바탕. 지원자와 면접관은 왼쪽 띠 색으로 가른다 */
 .said{background:var(--sunk);border-radius:12px;padding:4px 18px;margin:16px 0 0}
 .sp{margin:14px 0;padding-left:14px;border-left:3px solid var(--line);
@@ -129,6 +163,33 @@ def page(title, body, desc=''):
             % (esc(title),
                '<meta name="description" content="%s">' % esc(desc) if desc else '',
                CSS, AH, '', body))
+
+
+def act(name):
+    """막 구분. 대목 이름 하나와 가로줄."""
+    return '<div class="act"><span class="act-n">%s</span><i class="act-r"></i></div>' % esc(name)
+
+
+def turn(who, *paras):
+    """대본 한 턴. who 는 '면접관' 또는 '지원자'."""
+    cls = 'q' if who == '면접관' else 'a'
+    return ('<div class="turn %s"><div class="who">%s</div><div class="line">%s</div></div>'
+            % (cls, esc(who), ''.join('<p>%s</p>' % esc(p) for p in paras)))
+
+
+def direction(text):
+    """지문 — 말이 아니라 그 자리에서 벌어진 일."""
+    return '<div class="turn"><div class="dir">%s</div></div>' % esc(text)
+
+
+def note(*paras):
+    """해설. 대본을 끊고 들어오므로 짧게 둔다."""
+    return ('<div class="note"><b>해설</b>%s</div>'
+            % ''.join('<p>%s</p>' % esc(p) for p in paras))
+
+
+def script(blocks):
+    return '<div class="script">%s</div>' % ''.join(blocks)
 
 
 def said(turns):

@@ -1,4 +1,4 @@
-// RocketBlocks 글 한 장을 위·중·아래로 찍는다.
+// RocketBlocks 대본 한 장을 막마다 찍는다.
 //   node scratchpad/_shot_rb.js
 const { chromium } = require('playwright');
 const path = require('path');
@@ -8,15 +8,19 @@ const path = require('path');
   const pg = await b.newPage({ viewport: { width: 900, height: 1100 } });
   await pg.goto('file:///' + path.resolve(file).split(path.sep).join('/'));
   await pg.waitForTimeout(300);
-  for (const [name, sel] of [['head', 'header'], ['b3', '#b3'], ['b6', '#b6'], ['b8', '#b8']]) {
+  for (const [name, sel] of [['head', 'header'], ['a1', '#a1'], ['a3', '#a3'],
+                             ['a4', '#a4'], ['a5', '#a5'], ['x', '#x'], ['e', '#e']]) {
     const el = await pg.$(sel);
     await el.scrollIntoViewIfNeeded();
     await pg.waitForTimeout(120);
     await pg.screenshot({ path: 'scratchpad/_rb_' + name + '.png' });
   }
-  const idx = '대시보드/RocketBlocks 대시보드.html';
-  await pg.goto('file:///' + path.resolve(idx).split(path.sep).join('/'));
-  await pg.screenshot({ path: 'scratchpad/_rb_idx.png' });
+  // 좁은 폭에서 이름 칸이 접히는지
+  await pg.setViewportSize({ width: 400, height: 900 });
+  const el = await pg.$('#a1');
+  await el.scrollIntoViewIfNeeded();
+  await pg.waitForTimeout(200);
+  await pg.screenshot({ path: 'scratchpad/_rb_narrow.png' });
   console.log('ok');
   await b.close();
 })();
