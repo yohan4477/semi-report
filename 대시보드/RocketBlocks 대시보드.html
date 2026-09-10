@@ -96,6 +96,29 @@ h1{font-size:23px;font-weight:700;letter-spacing:-.01em;margin:0}
 .gloss p{margin:12px 0 0}
 .gloss p:first-child{margin-top:0}
 
+/* 요약 노트 — 케이스마다 하나. 대본을 다 읽고 손에 남길 것만 담는다.
+   해설(.note)과 달리 테두리를 두른다 — 흐름을 끊고 들어오는 자리가 아니라
+   다시 찾아올 자리다 */
+.memo{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  padding:6px 22px 22px;margin:18px 0 0}
+.memo section{margin:22px 0 0}
+.memo h3{font-size:12px;font-weight:850;letter-spacing:.05em;color:var(--ink-3);
+  margin:0 0 10px}
+.memo p{margin:0 0 10px;max-width:62ch}
+.memo p:last-child{margin-bottom:0}
+.memo table{margin-top:0}
+/* 그대로 쓸 문장 — 따옴표 대신 왼쪽 띠로 세운다 */
+.lines{margin:0;padding:0;list-style:none}
+.lines li{border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:0 0 12px;
+  max-width:60ch}
+.lines li:last-child{margin-bottom:0}
+.lines em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-3);
+  margin-top:3px}
+/* 계산 골격 — 한 줄로 늘어놓는 곱셈 */
+.chain{font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;font-size:13px;
+  background:var(--sunk);border-radius:8px;padding:12px 14px;overflow-x:auto;
+  white-space:nowrap;margin:0}
+
 /* 판정 줄 — 잘한 수·빠진 수 */
 .calls{margin:16px 0 0;padding:0;list-style:none;font-size:14px}
 .calls li{margin:7px 0;padding-left:22px;position:relative;max-width:64ch}
