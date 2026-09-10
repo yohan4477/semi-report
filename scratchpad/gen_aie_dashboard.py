@@ -372,13 +372,10 @@ def cross_cards():
     gen_aie_thread 는 이 파일에서 BOLD_RE 를 가져간다. 그래서 여기서는 함수 안에서
     부른다 — 모듈 자리에 두면 서로 부르다 멈춘다."""
     import aie_thread_lib as tlib
-    import gen_aie_thread as thread
 
     rows = tlib.load()
     comps = tlib.components(rows)
     lone = tlib.orphans(rows)
-    order = thread.order_sections({c[0]['id']: c for c in comps})
-    by_anchor = {c[0]['id']: c for c in comps}
     early = len([c for c in comps if c[0]['date'] < '2025-09'])
     back = sum(1 for r in rows for rel in r['rel']
                if next(x for x in rows if x['id'] == rel['to'])['date'][:7] == '2025-08')
@@ -396,9 +393,6 @@ def cross_cards():
         '<b>아무 데도 안 걸린 주장이 %d줄(%d%%)이다.</b> 뒤에 온 발표가 아직 받지도 맞서지도 '
         '않은 자리라 판이 굳지 않았다.' % (len(lone), round(100.0 * len(lone) / len(rows))),
     ]
-    fig = ('물음 열일곱이 걸쳐 온 시간', thread.flow_fig(order, by_anchor),
-           '가로가 날짜이고 점 하나가 주장 한 줄이다. ① 그 물음을 연 줄 ② 뒤에 온 발표가 '
-           '받은 줄 ③ 앞선 주장과 갈린 줄. 같은 달에 여러 줄이 있으면 하나로 겹쳐 찍었다.')
     return [{
         'section': SEC['cross'],
         'topic': ('tech', '주장 흐름 · 걸림'),
@@ -406,15 +400,18 @@ def cross_cards():
         'gain': '발표 %d편에서 주장 %d줄을 뽑아 뒤에 온 주장이 앞선 주장에 걸리는지 따진 결과. '
                 '물음 %d개 가운데 갈린 것은 하나다.'
                 % (len({r['talk'] for r in rows}), len(rows), len(comps)),
+        # 목록 줄의 날짜는 meta 에서 처음 만나는 날짜다(dash_common.upload_date).
+        # 기간을 먼저 적으면 가장 이른 날이 잡혀 카드가 목록 맨 아래로 내려간다.
         'meta': ['발표 %d편 · 주장 %d줄' % (len({r['talk'] for r in rows}), len(rows)),
-                 '재료 %s ~ %s' % (rows[0]['date'], rows[-1]['date']),
-                 '걸림 %d개' % sum(len(r['rel']) for r in rows),
+                 '마지막 발표 %s' % rows[-1]['date'],
+                 '걸림 %d개 · 물음 %d개' % (sum(len(r['rel']) for r in rows), len(comps)),
                  'AI Engineer'],
         'points': points,
         'verdict': '한 컨퍼런스 하루가 물음을 열고 1년 뒤 여러 회사가 답했다. '
                    '갈린 자리는 어떻게까지 모델에 맡기나 하나뿐이다.',
-        'figs': [(1,) + fig],
         'links': [('주장 흐름 전문 ↗', 'AI Engineer 주장 흐름.html', '')],
+        # 제목을 누르면 요약 페이지가 아니라 글 자체로 간다.
+        '_href': 'AI Engineer 주장 흐름.html',
         '_date': rows[-1]['date'],
         # 영상 하나에서 온 카드가 아니다. 갈래 차례(TRACK_POS)에도 안 든다.
         '_vid': '',

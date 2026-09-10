@@ -353,6 +353,13 @@ def _head_open(c, page_slug='', standalone=False):
     if standalone:
         head = '<div class="uc-head" role="button" tabindex="0" aria-expanded="true">'
         caret = '<span class="uc-caret" aria-hidden="true">▾</span>'
+    elif c.get('_href'):
+        # 카드가 요약이고 본문은 다른 장에 있는 자리. 제목을 누르면 그 장으로 간다 —
+        # 카드 페이지를 한 장 더 만들면 같은 글이 두 곳에 서고 한쪽만 고쳐진다.
+        head = ('<div class="uc-head" role="link" tabindex="0" data-href="%s">'
+                % c['_href'])
+        caret = '<span class="uc-caret" role="button" tabindex="0" aria-expanded="false">▾</span>'
+        return wrap_cls, head, caret
     elif page_slug:
         head = ('<div class="uc-head" role="link" tabindex="0" data-href="%s/%s.html">'
                 % (page_slug, anchor_of(c)))

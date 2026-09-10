@@ -1027,6 +1027,8 @@ def _write_card_pages(cards, title, footer, out, page_slug, page_css):
         t = c['title']
         if t in seen:      # 'also'로 다른 섹션에도 서는 카드는 원본 목록에서 한 번만 온다
             continue
+        if c.get('_href'):  # 본문이 다른 장에 있는 카드. 여기에 또 쓰면 두 곳이 갈린다
+            continue
         seen.add(t)
         sid = c['section'][0]
         body = card_html(c, standalone=True)
@@ -1124,7 +1126,9 @@ def flat_rows(cards, page_slug):
         sid, _num, stitle, _sub = c['section']
         date = upload_date(c) or ''
         one = _plain(c.get('gain') or c.get('verdict') or c.get('oneliner') or '')
-        href = ('%s/%s.html' % (page_slug, slug(c['title']))) if page_slug else ('#' + anchor_of(c))
+        # 본문이 다른 장에 있는 카드(_href)는 목록 줄도 그 장으로 보낸다.
+        href = c.get('_href') or (
+            ('%s/%s.html' % (page_slug, slug(c['title']))) if page_slug else ('#' + anchor_of(c)))
         meta = [m for m in c.get('meta', []) if m != date][:1]
         # 찾는 글자는 제목·태그·메타까지다. 한 줄 설명까지 넣으면 줄마다 본문 한 문단이
         # 속성으로 한 번 더 실려 파일이 그만큼 커진다
