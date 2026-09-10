@@ -317,7 +317,8 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'model_facts.md'),
          # 다리 층(2026-09-10)의 재료 — 밖에서 받은 하향 모델과 그 엑셀 전사
          os.path.join(ROOT, 'insights', 'frames', '2026-09-10-dc-capex-topdown.md'),
-         os.path.join(ROOT, 'scratchpad', 'capex_frame_xlsx.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'capex_frame_xlsx.md'),
+         os.path.join(ROOT, 'scratchpad', 'capex_frame_scn.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
@@ -355,6 +356,11 @@ def body(html, sec):
         return ''
     seg = h[i:h.find('</section>', i)]
     seg = re.sub(r'<script.*?</script>', ' ', seg, flags=re.S)
+    # 「받은 그대로」 상자는 남의 시트를 편 자리라 우리 주장이 아니다. 엑셀이 화면에
+    # 반올림해 보여 주므로 전사본의 444.875 가 여기서 444.88 로 나오는데, 그것을
+    # 어긋남으로 세면 인용을 실을 수 없는 검사기가 된다(2026-09-10 모델링 부록)
+    seg = re.sub(r'<div class="xls" data-quote="1">.*?</div>\s*</div>', ' ', seg,
+                 flags=re.S)
     seg = re.sub(r'<[^>]+>', ' ', seg)
     # 인용 표시 (라벨 L12) 는 값이 아니다. 전력 층처럼 라벨에 날짜가 박힌 층에서는
     # 라벨의 260619 가 값으로 잡혀 전부 확인 필요로 뜬다. 괄호 안에 L숫자가 있으면

@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc          # noqa: E402
 import gen_report_dashboard as rp  # noqa: E402
 import _rep_toc                    # noqa: E402
+import _xlsx_card                  # noqa: E402  받은 엑셀 부록
 
 OUT = os.path.join(dc.ROOT, '대시보드', '모델링 대시보드.html')
 
@@ -52,6 +53,11 @@ SEC = {
 
 # (섹션, 날짜, 제목, 바탕, 한줄, 층 함수)
 LAYERS = [
+    ('sec-meet', '2026-09-10',
+     '받은 엑셀 — 시트 그대로 보기',
+     '밖에서 받은 엑셀 3개 · 숫자를 안 고쳤다',
+     '우리가 다시 세운 계산이 아니라 남이 낸 표를 그대로 펴 놓은 부록이다',
+     _xlsx_card.card_html),
     ('sec-meet', '2026-09-10',
      '자본에서 웨이퍼까지 — 빅4가 쓰는 돈이 세계 파운드리의 10.8퍼센트가 된다',
      'SemiAnalysis 영문 1편의 계수 · 앞 층들의 단가 · 하향 모델의 총액',

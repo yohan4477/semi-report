@@ -471,6 +471,11 @@ def main():
             if n:
                 print(f'    글 페이지 {n}장  ->  {slug}/')
                 total_pages += n
+            # 그 장이 내려받게 하는 파일(받은 엑셀 등)도 같이 낸다. html 만 복사하면
+            # 화면의 내려받기 줄이 404 가 된다(2026-09-10 모델링 장)
+            for f in sorted(card_dir.glob('*.xlsx')):
+                shutil.copy2(f, out_dir / f.name)
+                print(f'    파일 {f.name}  ->  {slug}/')
 
     for old, (slug, title) in REDIRECTS.items():
         (OUT / f'{old}.html').write_text(REDIRECT_PAGE % {'slug': slug, 'title': title},

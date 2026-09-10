@@ -32,6 +32,10 @@ STAMP = '2026-08-26'
 # 섹션은 「무엇을 만드는 이야기인가」로 나눈다. 회사로 나누지 않는다 —
 # 같은 회사가 훈련 이야기도 하고 제품 이야기도 하는데 회사로 묶으면 그게 한 칸에 뭉친다.
 SEC = {
+    # 발표 한 편이 아니라 발표들을 가로지른 글이 서는 자리. 카드 한 장이 원문 한 편인
+    # 다른 섹션과 재료가 다르다 — 여기 카드는 insights/views/*.json 을 읽어 세운다.
+    'cross':   ('sec-cross', '00', '통합 — 발표를 가로질러',
+                '카드 낱장으로는 안 보이는 것. 뒤에 온 발표가 앞선 말을 받았나 갈랐나'),
     'agent':   ('sec-agent', '01', '에이전트 만들기 · 운영',
                 '데모에서 운영으로 넘어갈 때 무엇이 먼저 깨지나. 붙잡는 쪽이 만든 장치들'),
     'code':    ('sec-code', '02', '코딩 에이전트 · 개발 도구',
@@ -359,6 +363,65 @@ def vid_of(url):
     return (url or '').rsplit('/', 1)[-1].split('?')[0]
 
 
+def cross_cards():
+    """통합 섹션에 서는 카드. 발표 한 편이 아니라 주장 흐름 재료 전체가 재료다.
+
+    숫자는 재료에서 센다 — 손으로 적으면 자료가 바뀔 때 카드만 낡는다. 본문을 여기
+    옮겨 담지 않고 장으로 보낸다. 한 장을 두 곳에 두면 한쪽만 고쳐진다.
+
+    gen_aie_thread 는 이 파일에서 BOLD_RE 를 가져간다. 그래서 여기서는 함수 안에서
+    부른다 — 모듈 자리에 두면 서로 부르다 멈춘다."""
+    import aie_thread_lib as tlib
+    import gen_aie_thread as thread
+
+    rows = tlib.load()
+    comps = tlib.components(rows)
+    lone = tlib.orphans(rows)
+    order = thread.order_sections({c[0]['id']: c for c in comps})
+    by_anchor = {c[0]['id']: c for c in comps}
+    early = len([c for c in comps if c[0]['date'] < '2025-09'])
+    back = sum(1 for r in rows for rel in r['rel']
+               if next(x for x in rows if x['id'] == rel['to'])['date'][:7] == '2025-08')
+    cross = sum(1 for r in rows for rel in r['rel'] if rel['kind'] == '엇갈림')
+    fair = len({r['talk'] for r in rows if r['date'] == '2025-08-26'})
+
+    points = [
+        '<b>물음 %d개 중 %d개를 2025-08 이전 발표가 열었다.</b> 걸림 %d개 가운데 %d개가 '
+        '2025-08 하루의 발표 %d편으로 되돌아간다. 이 장이 보는 것은 그 하루가 1년 뒤 '
+        '어떻게 됐나다.' % (len(comps), early, sum(len(r['rel']) for r in rows), back, fair),
+        '<b>갈린 물음은 하나뿐이다.</b> 어떻게까지 모델에 맡길 것인가 — 엇갈림 %d개가 전부 '
+        '거기 붙는다. 나머지 물음에서는 뒤에 온 발표가 앞선 말을 받기만 했다.' % cross,
+        '<b>2026 에 새로 생긴 물음은 둘이고 둘 다 평가 이야기다.</b> 망가지는 갈래를 내보낸 '
+        '자취에서 찾는 일과, 평가를 시험 돌리기가 아니라 되감기로 보는 일이다.',
+        '<b>아무 데도 안 걸린 주장이 %d줄(%d%%)이다.</b> 뒤에 온 발표가 아직 받지도 맞서지도 '
+        '않은 자리라 판이 굳지 않았다.' % (len(lone), round(100.0 * len(lone) / len(rows))),
+    ]
+    fig = ('물음 열일곱이 걸쳐 온 시간', thread.flow_fig(order, by_anchor),
+           '가로가 날짜이고 점 하나가 주장 한 줄이다. ① 그 물음을 연 줄 ② 뒤에 온 발표가 '
+           '받은 줄 ③ 앞선 주장과 갈린 줄. 같은 달에 여러 줄이 있으면 하나로 겹쳐 찍었다.')
+    return [{
+        'section': SEC['cross'],
+        'topic': ('tech', '주장 흐름 · 걸림'),
+        'title': '주장 흐름 — 2025-08 하루가 1년 뒤 어떻게 됐나',
+        'gain': '발표 %d편에서 주장 %d줄을 뽑아 뒤에 온 주장이 앞선 주장에 걸리는지 따진 결과. '
+                '물음 %d개 가운데 갈린 것은 하나다.'
+                % (len({r['talk'] for r in rows}), len(rows), len(comps)),
+        'meta': ['발표 %d편 · 주장 %d줄' % (len({r['talk'] for r in rows}), len(rows)),
+                 '재료 %s ~ %s' % (rows[0]['date'], rows[-1]['date']),
+                 '걸림 %d개' % sum(len(r['rel']) for r in rows),
+                 'AI Engineer'],
+        'points': points,
+        'verdict': '한 컨퍼런스 하루가 물음을 열고 1년 뒤 여러 회사가 답했다. '
+                   '갈린 자리는 어떻게까지 모델에 맡기나 하나뿐이다.',
+        'figs': [(1,) + fig],
+        'links': [('주장 흐름 전문 ↗', 'AI Engineer 주장 흐름.html', '')],
+        '_date': rows[-1]['date'],
+        # 영상 하나에서 온 카드가 아니다. 갈래 차례(TRACK_POS)에도 안 든다.
+        '_vid': '',
+        '_sec': 'cross',
+    }]
+
+
 def build():
     cards, bad = [], []
     for fn in sorted(os.listdir(SRC_DIR)):
@@ -403,6 +466,7 @@ def build():
             '_vid': vid_of(meta.get('source', '')),
             '_sec': meta['section'],
         })
+    cards += cross_cards()
     cards.sort(key=lambda c: c['_date'], reverse=True)
     # 섹션 차례는 SEC에 적은 번호다. 날짜로 두면 섹션 순서가 새 글이 들어올 때마다 바뀐다.
     cards.sort(key=lambda c: (c['section'][1],
@@ -623,8 +687,7 @@ INTRO = ('<p>발표 한 편이 카드 한 장입니다. 글의 형식은 둘입�
          '그 아래가 거기까지 가는 걸음입니다.</p>'
          '<p>자막 전문에서 옮겼고, 발표자가 자기 회사를 파는 대목은 그렇다고 밝혀 두었습니다. '
          '숫자는 발표에 나온 것만 싣습니다.</p>'
-         '<p>카드 낱장이 아니라 발표들이 서로 어떻게 이어지는지는 따로 봅니다. '
-         '<a href="AI Engineer 주장 흐름.html">주장 흐름 — 누가 앞사람 말을 밀고 누가 엇갈렸나</a>.</p>')
+         '<p>카드 낱장이 아니라 발표들이 서로 어떻게 이어지는지는 「통합」 섹션이 맡습니다.</p>')
 
 if __name__ == '__main__':
     CARDS = build()
