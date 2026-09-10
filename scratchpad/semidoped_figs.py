@@ -1030,6 +1030,54 @@ def _al_order():
                        'UALink 스위치가 없어 브로드컴 이더넷으로 갔고, 소켓을 잡은 브로드컴이 UALink 에서 나갔다. 2027 년 UALink 스위치가 나올 때 갈아타는지가 물음이다')
 
 
+def _al_beads():
+    """실에 꿴 구슬 — 보낸 줄과 받은 줄. 받은 줄에서 흐려지고 붙고 어긋난 자리가 보인다.
+    구슬 여섯은 보기용 수다. 전사에는 몇 개인지 없다."""
+    y1, y2 = 74.0, 150.0
+    x0, x1 = 40.0, 480.0
+    xs = [70.0, 152.0, 234.0, 316.0, 398.0]
+    parts = head(0, 34, W, '보낸 줄')
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"/>' % (x0, y1, x1, y1)]
+    for x in xs:
+        parts += ['  <circle cx="%g" cy="%g" r="11" class="fig-box"/>' % (x, y1)]
+    parts += head(0, 122, W, '받은 줄')
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw"/>' % (x0, y2, x1, y2)]
+    parts += ['  <circle cx="%g" cy="%g" r="10" class="fig-box"/>' % (xs[0], y2)]
+    parts += ['  <circle cx="%g" cy="%g" r="8" class="fig-stage"/>' % (xs[1], y2)]
+    parts += ['  <ellipse cx="%g" cy="%g" rx="47" ry="8" class="fig-stage"/>' % ((xs[2] + xs[3]) / 2, y2)]
+    parts += ['  <circle cx="%g" cy="%g" r="6" class="fig-stage"/>' % (xs[4] + 22, y2)]
+    for cx, mark in ((xs[1], '①'), ((xs[2] + xs[3]) / 2, '④'), (xs[4] + 22, '⑤')):
+        parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">%s</text>'
+                  % (cx, y2 + 30, mark)]
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" '
+              'style="stroke-dasharray:4 3" marker-end="none"/>' % (xs[4], y2 - 26, xs[4], y2 + 26)]
+    # ② 반사 — 배선 끝에서 되돌아온다
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" '
+              'marker-end="url(#aieArw)"/>' % (x1 - 4, y2 - 28, x1 - 56, y2 - 28)]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">②</text>' % (x1 - 30, y2 - 36)]
+    # ③ 크로스토크 — 옆 배선에서 끼어든다
+    y3 = y2 + 54
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" '
+              'style="stroke-dasharray:4 3"/>' % (x0, y3, x1, y3)]
+    parts += ['  <text x="%g" y="%g" class="fig-e">옆 배선</text>' % (x0, y3 + 22)]
+    parts += ['  <line x1="%g" y1="%g" x2="%g" y2="%g" class="fig-arw" '
+              'marker-end="url(#aieArw)"/>' % (110, y3 - 6, 110, y2 + 12)]
+    parts += ['  <text x="%g" y="%g" text-anchor="middle" class="fig-e">③</text>' % (128, y3 - 8)]
+    y = y3 + 40
+    items = [(['① 감쇠'], 'fig-box'), (['② 반사'], 'fig-box'),
+             (['③ 크로스토크'], 'fig-box')]
+    w1 = sum(w_of(l) for l, _ in items) + 2 * 12
+    row, _x, cs, hh = panel_boxes((W - w1) / 2, y, items, gap=12, h=LH + 26)
+    parts += row
+    items2 = [(['④ 심볼 간 간섭'], 'fig-box'), (['⑤ 지터'], 'fig-box')]
+    w2 = sum(w_of(l) for l, _ in items2) + 12
+    row2, _x2, cs2, hh2 = panel_boxes((W - w2) / 2, y + hh + 10, items2, gap=12, h=LH + 26)
+    parts += row2
+    y4 = y + hh + 10 + hh2
+    return svg(y4 + 16, parts,
+               '보낸 줄에서는 같은 크기의 구슬이 고른 간격으로 놓이는데 받은 줄에서는 흐려지고 둘이 붙고 하나는 읽는 시각에서 어긋나 있다')
+
+
 AL = '2026-08-04-astera-labs'
 
 
@@ -2678,7 +2726,14 @@ FIGS = {
          '위에서 아래로 전자 IC·광자 IC·마이크로 광학과 탈착식 파이버 커넥터(L165).'),
     ],
     (AL, 'strategy'): [
-        ('1.|얼마나 빠른지가', 'PCIe 세대와 초당 전송 수', _al_gen(),
+        ('1.|Vik은 이 신호를', '실에 꿴 구슬이 무너지는 다섯 자리', _al_beads(),
+         '① 감쇠 — 가는 동안 구슬이 흐려진다. '
+         '② 반사 — 배선 끝에서 되튀다. '
+         '③ 크로스토크 — 옆 배선의 구슬이 끼어든다(L57). '
+         '④ 심볼 간 간섭 — 구슬이 설탕처럼 서로 달라붙어 한 덩어리가 된다(L59·L61). '
+         '⑤ 지터 — 읽으려고 보는 그 시각(점선)에 구슬이 없다(L63). '
+         '구슬 수와 줄어드는 폭은 보기용이다 — 전사에 값이 없다.'),
+        ('1.|얼마나 빠른지부터', 'PCIe 세대와 초당 전송 수', _al_gen(),
          '블랙웰 세대에 들어간 것은 Gen6 제품이었을 것이라고 Vik 은 봤다(L143).'),
         ('1.|이 다섯이 한 그림으로', '눈 다이어그램 — 열린 눈과 닫힌 눈', _al_eye(),
          '같은 네 궤적을 두 판에 그렸다. 왼쪽은 0 으로 읽을 아래와 1 로 읽을 위 사이에 틈이 있고(L73·L75), 오른쪽은 궤적이 시간(지터)과 전압에서 흔들려 그 틈이 메워졌다. 값은 없는 그림이다 — 파형을 천 장쯤 겹쳐 그리면 이 모양이 된다는 것이 Austin 의 설명이다(L77).'),

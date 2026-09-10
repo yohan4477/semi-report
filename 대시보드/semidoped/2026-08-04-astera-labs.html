@@ -155,7 +155,53 @@ th{background:#eef1f6;font-weight:600;white-space:nowrap}
   <rect x="145.6" y="120" width="14" height="14" rx="3" class="fig-box fig-outside"/>
   <text x="167.6" y="132" class="fig-lg">앞으로</text>
 </svg><figcaption>블랙웰 세대에 들어간 것은 Gen6 제품이었을 것이라고 <span class="pn">진행자V</span>는 봤다.</figcaption></figure>
-<p>얼마나 빠른지가 왜 어려운지를 그대로 말해 준다. PCIe Gen5는 초당 32기가전송이라 심볼 하나가 31.25피코초 간격으로 지나가고, Gen6는 64기가전송에 PAM4(전압을 네 단계로 갈라 심볼 하나에 두 비트를 싣는 변조)로 가며, 앞으로 Gen7은 128기가전송이다. 구리 위에서 이 신호가 무너지는 방식은 다섯이다. ① 보낸 세기를 잃는 감쇠 ② 끝에서 되튀는 반사 ③ 옆 배선이 끼어드는 크로스토크 ④ 앞뒤 심볼이 서로 번져 겹치는 심볼 간 간섭 ⑤ 신호가 기다리는 시점에 안 오는 지터다. <span class="pn">진행자V</span>는 심볼 간 간섭은 어느 정도 결정적이라 알아낼 수 있을 것 같다고 했고, 지터는 무작위라 손쓸 데가 적다고 나눠 말했다.</p>
+<p>얼마나 빠른지부터 잡아야 한다. PCIe Gen5는 배선 하나로 1초에 320억 번 신호를 보낸다. 이것을 초당 32기가전송이라 적는다. 신호 한 번이 지나는 시간이 31.25피코초, 곧 1조분의 1초를 다시 서른둘로 나눈 길이다. Gen6는 그 두 배인 64기가전송으로 가면서 PAM4(전압을 두 단계가 아니라 네 단계로 나눠 신호 한 번에 두 비트를 싣는 방식)를 쓴다. 그다음 Gen7은 128기가전송이다.</p>
+<figure class="uc-fig"><p class="fig-title">실에 꿴 구슬이 무너지는 다섯 자리</p><svg class="epoch" viewBox="0 0 520 368" role="img" aria-label="보낸 줄에서는 같은 크기의 구슬이 고른 간격으로 놓이는데 받은 줄에서는 흐려지고 둘이 붙고 하나는 읽는 시각에서 어긋나 있다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="34" text-anchor="middle" class="fig-hd">보낸 줄</text>
+  <line x1="40" y1="74" x2="480" y2="74" class="fig-arw"/>
+  <circle cx="70" cy="74" r="11" class="fig-box"/>
+  <circle cx="152" cy="74" r="11" class="fig-box"/>
+  <circle cx="234" cy="74" r="11" class="fig-box"/>
+  <circle cx="316" cy="74" r="11" class="fig-box"/>
+  <circle cx="398" cy="74" r="11" class="fig-box"/>
+  <text x="260" y="122" text-anchor="middle" class="fig-hd">받은 줄</text>
+  <line x1="40" y1="150" x2="480" y2="150" class="fig-arw"/>
+  <circle cx="70" cy="150" r="10" class="fig-box"/>
+  <circle cx="152" cy="150" r="8" class="fig-stage"/>
+  <ellipse cx="275" cy="150" rx="47" ry="8" class="fig-stage"/>
+  <circle cx="420" cy="150" r="6" class="fig-stage"/>
+  <text x="152" y="180" text-anchor="middle" class="fig-e">①</text>
+  <text x="275" y="180" text-anchor="middle" class="fig-e">④</text>
+  <text x="420" y="180" text-anchor="middle" class="fig-e">⑤</text>
+  <line x1="398" y1="124" x2="398" y2="176" class="fig-arw" style="stroke-dasharray:4 3" marker-end="none"/>
+  <line x1="476" y1="122" x2="424" y2="122" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="450" y="114" text-anchor="middle" class="fig-e">②</text>
+  <line x1="40" y1="204" x2="480" y2="204" class="fig-arw" style="stroke-dasharray:4 3"/>
+  <text x="40" y="226" class="fig-e">옆 배선</text>
+  <line x1="110" y1="198" x2="110" y2="162" class="fig-arw" marker-end="url(#aieArw)"/>
+  <text x="128" y="196" text-anchor="middle" class="fig-e">③</text>
+  <rect x="125.5" y="244" width="66" height="49" rx="9" class="fig-box"/>
+  <text x="158.5" y="274.5" text-anchor="middle" class="fig-b">① 감쇠</text>
+  <rect x="203.5" y="244" width="66" height="49" rx="9" class="fig-box"/>
+  <text x="236.5" y="274.5" text-anchor="middle" class="fig-b">② 반사</text>
+  <rect x="281.5" y="244" width="113" height="49" rx="9" class="fig-box"/>
+  <text x="338" y="274.5" text-anchor="middle" class="fig-b">③ 크로스토크</text>
+  <rect x="149" y="303" width="144" height="49" rx="9" class="fig-box"/>
+  <text x="221" y="333.5" text-anchor="middle" class="fig-b">④ 심볼 간 간섭</text>
+  <rect x="305" y="303" width="66" height="49" rx="9" class="fig-box"/>
+  <text x="338" y="333.5" text-anchor="middle" class="fig-b">⑤ 지터</text>
+</svg><figcaption>① 감쇠 — 가는 동안 구슬이 흐려진다. ② 반사 — 배선 끝에서 되튀다. ③ 크로스토크 — 옆 배선의 구슬이 끼어든다. ④ 심볼 간 간섭 — 구슬이 설탕처럼 서로 달라붙어 한 덩어리가 된다. ⑤ 지터 — 읽으려고 보는 그 시각(점선)에 구슬이 없다. 구슬 수와 줄어드는 폭은 보기용이다 — 전사에 값이 없다.</figcaption></figure>
+<p><span class="pn">진행자V</span>는 이 신호를 실에 꿴 구슬로 그렸다. 구슬 하나가 0이나 1이고, 받는 쪽은 정해진 시각마다 실을 들여다보며 구슬을 하나씩 읽는다. 구리 배선 위에서 이 구슬 줄이 무너지는 방식이 다섯이다. ① 감쇠 — 가는 동안 구슬이 흐려진다 ② 반사 — 배선 끝에서 되튄다 ③ 크로스토크 — 옆 배선의 구슬이 끼어든다 ④ 심볼 간 간섭 — 구슬이 설탕처럼 서로 달라붙어 한 덩어리가 된다 ⑤ 지터 — 읽으려고 보는 그 시각에 구슬이 아직 안 왔거나 이미 지나갔다. <span class="pn">진행자V</span>는 ④는 구리가 어떻게 번지는지 규칙이 있어 되돌릴 여지가 있고 ⑤는 무작위라 손쓸 데가 적다고 나눴다.</p>
 <figure class="uc-fig"><p class="fig-title">눈 다이어그램 — 열린 눈과 닫힌 눈</p><svg class="epoch" viewBox="0 0 520 172" role="img" aria-label="왼쪽은 0 과 1 사이 틈이 열려 있고, 오른쪽은 궤적이 시간과 전압에서 흔들려 틈이 메워졌다">
   <defs>
     <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
