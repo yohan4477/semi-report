@@ -1,0 +1,52 @@
+[
+ {
+  "id": "sec_nvda_10k_fy2026",
+  "publisher": "NVIDIA",
+  "title": "Form 10-K (FY2026)",
+  "published_date": "2026-02-25",
+  "accessed_date": "2026-09-10",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "note": "accession 0001045810-26-000021 · 회계연도 2026-01-25 종료"
+ },
+ {
+  "id": "sec_amd_10k_fy2025",
+  "publisher": "AMD",
+  "title": "Form 10-K (FY2025)",
+  "published_date": "2026-02-03",
+  "accessed_date": "2026-09-10",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+  "note": "accession 0000002488-26-000018 · 회계연도 2025-12-27 종료"
+ },
+ {
+  "id": "sec_tsmc_20f_fy2025",
+  "publisher": "TSMC",
+  "title": "Form 20-F (FY2025)",
+  "published_date": "2026-04-16",
+  "accessed_date": "2026-09-10",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+  "note": "accession 0001628280-26-025362 · 회계연도 2025-12-31 종료"
+ },
+ {
+  "id": "sec_asml_20f_fy2025",
+  "publisher": "ASML",
+  "title": "Form 20-F (FY2025)",
+  "published_date": "2026-02-25",
+  "accessed_date": "2026-09-10",
+  "source_type": "primary_official",
+  "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+  "note": "accession 0001628280-26-011378 · 본문 24.8MB 라 XBRL 주석으로 확인했다"
+ },
+ {
+  "id": "asml_ar_2025",
+  "publisher": "ASML Holding N.V.",
+  "title": "2025 Annual Report — Strategic report",
+  "published_date": "2026-02-25",
+  "accessed_date": "2026-09-10",
+  "source_type": "primary_company",
+  "url": "https://www.asml.com/en/investors/annual-report",
+  "note": "20-F 의 서술 파트와 같은 내용. 20-F 원문 용량 때문에 이 경로로 확인했다"
+ }
+]

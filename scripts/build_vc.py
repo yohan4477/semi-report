@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_valuechain import Plate, page, esc
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, '대시보드', '밸류체인 — NVIDIA·AMD·TSMC·ASML.html')
+OUT = os.path.join(ROOT, '대시보드', 'valuechain', '네 회사를 한 장씩.html')
 
 L6 = ['공급사', '회사', '사업부문', '채널', '고객', '최종 수요처']
 
@@ -318,6 +318,8 @@ LEGEND = ('<div class="lg"><b>계층</b>'
 
 
 def build():
+    if not os.path.isdir(os.path.dirname(OUT)):
+        os.makedirs(os.path.dirname(OUT))
     blocks = []
     for name, fn in PLATES:
         blocks.append('<h2>%s</h2><div class="card">%s</div>' % (esc(name), fn().render()))
