@@ -1673,5 +1673,89 @@
   ],
   "desc": "어느 매출원에서 나왔는지 공개되지 않은 고객이 앉는 자리",
   "anon": false
+ },
+ {
+  "id": "daeduck-electronics",
+  "name": "Daeduck Electronics",
+  "name_ko": "대덕전자",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "FC-CSP·FC-BGA·AI 기판. 2026년 증설에 8,000억 원 넘게 쓴다",
+  "anon": false
+ },
+ {
+  "id": "samsung-electro-mechanics",
+  "name": "Samsung Electro-Mechanics",
+  "name_ko": "삼성전기",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "패키지 기판",
+  "anon": false
+ },
+ {
+  "id": "simmtech",
+  "name": "Simmtech",
+  "name_ko": "심텍",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "패키지 기판",
+  "anon": false
+ },
+ {
+  "id": "hana-micron",
+  "name": "Hana Micron",
+  "name_ko": "하나마이크론",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "OSAT"
+  ],
+  "desc": "외주 패키징·테스트",
+  "anon": false
+ },
+ {
+  "id": "nepes",
+  "name": "Nepes",
+  "name_ko": "네패스",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "OSAT"
+  ],
+  "desc": "외주 패키징·테스트",
+  "anon": false
+ },
+ {
+  "id": "eo-technics",
+  "name": "EO Technics",
+  "name_ko": "이오테크닉스",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Equipment"
+  ],
+  "desc": "레이저 그루빙·스텔스 다이싱 장비. 일본 디스코 독점을 깼다",
+  "anon": false
+ },
+ {
+  "id": "hanmi-semiconductor",
+  "name": "Hanmi Semiconductor",
+  "name_ko": "한미반도체",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Equipment"
+  ],
+  "desc": "TC 본더. HBM 핵심 장비 점유율 1위",
+  "anon": false
  }
 ]

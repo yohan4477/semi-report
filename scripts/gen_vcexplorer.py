@@ -17,7 +17,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
 
 # 화면에 싣는 사슬. 구조는 여러 사슬을 받지만 지금 내보내는 것은 이 하나다
-SHIP = ['bloom-energy']
+SHIP = ['bloom-energy', 'kr-substrate']
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -669,9 +669,9 @@ function place(nodes, edges){
       geo[it.id] = { x:x, y:y, h:it.h, col:i };
       if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
-    out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
-      connectable:false, position:{ x:x, y:0 },
-      data:{ label: COLS[c] ? COLS[c].label : '' } });
+    if (COLS[c])
+      out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
+        connectable:false, position:{ x:x, y:0 }, data:{ label: COLS[c].label } });
   });
 
   // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
@@ -809,7 +809,11 @@ function buildGraph(focal, year, open, expanded, focusOn){
     var g = groups[gk];
     var act = g.rels.filter(function(r){ return activeIn(r, year); });
     nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
-      col: g.up ? COL_OF.SUBSYSTEM : COL_OF.REVENUE_TYPE,
+      // 다운스트림 묶음은 그 안 관계의 층 바로 앞 반 칸에 선다.
+      // 같은 칸에 두면 묶음과 그 안 회사가 나란히 서서 사슬이 안 읽힌다
+      col: g.up ? COL_OF.SUBSYSTEM
+                : ((COL_OF[g.rels[0].target_tier] !== undefined
+                    ? COL_OF[g.rels[0].target_tier] : COL_OF.CONTRACTUAL_CUSTOMER) - 0.5),
       sub: act.length + '곳 · ' + (g.lane === 'MANUFACTURING_BOM'
         ? (g.up ? '들어온다' : '나간다') : LANE_KO[g.lane]), gone: !act.length,
       ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,

@@ -1,0 +1,25 @@
+[
+ {
+  "id": "o-daeduck-capex-2026",
+  "relationship_id": "daeduck-hanamicron",
+  "metric": "capex_investment",
+  "value": 800,
+  "value_low": null,
+  "value_high": null,
+  "unit": "KRW B",
+  "period": "2026",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
+  "as_of_date": "2026-05-22",
+  "denominator": "대덕전자 기판 증설 투자액",
+  "status": "CURRENT",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.9,
+  "method_id": null,
+  "source_ids": [
+   "semidoped_2026_05_22"
+  ],
+  "method_note": "FC-CSP·FC-BGA·AI 기판을 함께 늘린다. 어느 고객향인지는 밝혀지지 않았다",
+  "denominator_scope": "EDGE"
+ }
+]

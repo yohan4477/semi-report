@@ -1,0 +1,65 @@
+[
+ {
+  "id": "kr-e001",
+  "relationship_id": "daeduck-hanamicron",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "indirect",
+  "evidence": "원문은 기판 회사와 OSAT 가 다이 어태치 단계를 나눠 맡는다고만 적는다. 두 회사를 잇는 계약 문장은 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e002",
+  "relationship_id": "daeduck-nepes",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e003",
+  "relationship_id": "samsungem-hanamicron",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "indirect",
+  "evidence": "같은 단계에 선 기판 회사다. 대덕전자와 나란히 둔다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e004",
+  "relationship_id": "simmtech-hanamicron",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e005",
+  "relationship_id": "eotechnics-hanamicron",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "direct",
+  "evidence": "다이싱 단계 국산화",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e006",
+  "relationship_id": "hanmi-hanamicron",
+  "metric_id": null,
+  "source_id": "hanjuseong_backend_2026_05_18",
+  "evidence_type": "direct",
+  "evidence": "HBM 본딩 장비 점유율 1위",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e007",
+  "relationship_id": "daeduck-hanamicron",
+  "metric_id": "o-daeduck-capex-2026",
+  "source_id": "semidoped_2026_05_22",
+  "evidence_type": "direct",
+  "evidence": "FC-CSP·FC-BGA·AI 기판을 함께 늘린다. 어느 고객향인지는 밝혀지지 않았다",
+  "hypothesis_id": null
+ }
+]
