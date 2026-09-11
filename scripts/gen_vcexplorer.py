@@ -337,6 +337,18 @@ var MET_KO = { sourcing_share:'조달 점유율', sourcing_volume_share:'물량 
   supplier_purchase_share:'매입액 비중', supply_share:'공급 점유',
   commitment_value:'약정 총액', guarantee_cap:'보증 상한', investment_value:'투자 금액' };
 function metKo(k){ return MET_KO[k] || k; }
+var REL_KO = { SUPPLIES:'공급', PROCESSED_INTO:'가공', INPUT_TO:'투입', FEEDS:'넘김',
+  FUELS:'연료', EQUIPMENT_SUPPLY:'장비 공급', ELECTRICAL_BOP_SUPPLY:'부지 전기 공급',
+  PROJECT_SUPPLY:'프로젝트 공급', JV_ASSEMBLY:'합작 조립', OPERATES_THROUGH:'운영 자회사',
+  DEVELOPS:'개발', FINANCES:'금융', HOLDS_PROJECT:'프로젝트 보유',
+  PROJECT_FINANCE:'프로젝트 금융', DISTRIBUTION_PARTNERSHIP:'유통·EPC 제휴',
+  EXECUTES_THROUGH:'실행 법인', SELLS_TO:'판매', REVENUE_FROM:'매출원',
+  UTILITY_SERVES:'전력 공급', DIRECT_CUSTOMER:'직접 고객',
+  CUSTOMERS_CUSTOMER:'고객의 고객', END_USER_DEPLOYMENT:'설치·배치',
+  DEPLOYS_AT:'설치 부지', SUBSIDIARY_OF:'자회사', CONTRACT_MANUFACTURES:'수탁 제조',
+  SERVES_END_MARKET:'최종 시장', SERVES_END_USER:'최종 사용자',
+  CREDIT_SUPPORT:'신용 보강', INVESTS_IN:'투자' };
+function relKo(k){ return REL_KO[k] || k; }
 var PCT = { 'percent':1, '%':1 };
 
 function y4(d){ return d ? parseInt(d.slice(0, 4), 10) : null; }
@@ -917,7 +929,8 @@ function ObsRow(o){
       metKo(o.metric) + ' — ' + val),
     h('div', { key:'r', className:'rowk' }, [
       h('div', { key:'a' }, '언제 것'),
-      h('div', { key:'b' }, o.period + ' · 기준일 ' + o.as_of_date),
+      h('div', { key:'b' }, o.period + ' · 기준일 ' + o.as_of_date
+        + (o.source_date ? ' · 출처 ' + o.source_date : '')),
       h('div', { key:'c' }, '분모'), h('div', { key:'d' }, o.denominator || '—'),
       h('div', { key:'e' }, '근거'), h('div', { key:'f' }, [
         h('span', { key:'x',
@@ -989,6 +1002,8 @@ function Drawer(p){
     h('div', { key:'r', className:'role' },
       [e.entity_type, e.country,
        (e.categories || []).map(subKo).join(' · ')].filter(Boolean).join(' · ')),
+    e.parent_entity_id ? h('div', { key:'p', className:'v', style:{ color:'#6b7488' } },
+      '모회사 ' + nm(e.parent_entity_id)) : null,
     e.desc ? h('div', { key:'d', className:'v' }, e.desc) : null,
     h('div', { key:'btns',
       style:{ display:'flex', gap:'6px', flexWrap:'wrap', margin:'8px 0' } }, [
@@ -1002,7 +1017,7 @@ function Drawer(p){
         onClick: function(){ p.onTimeline(eid); } }, '시점별로 보기')
     ]),
     r ? h('section', { key:'rel' }, [
-      h('div', { key:'k', className:'k' }, '관계'),
+      h('div', { key:'k', className:'k' }, '관계 · ' + relKo(r.relationship_type)),
       h('div', { key:'v', className:'v' }, nm(r.source_entity) + ' → ' + nm(r.target_entity)),
       h('div', { key:'rk', className:'rowk' }, [
         h('div', { key:1 }, '부품·역무'), h('div', { key:2 }, r.component || '—'),

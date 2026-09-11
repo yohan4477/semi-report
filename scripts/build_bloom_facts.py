@@ -65,11 +65,11 @@ O = [
   '2026-01-01', '2026-12-31', '2026-09-11', 'Bloom 전해질 세라믹 기판 조달 물량(2026 추정)',
   'CURRENT', 'ESTIMATED', 0.75, None, ['cctc_yicai'],
   '업계·증권 조사 수치를 모은 값이다. 회사 공시가 아니다'),
- ('o-amosense-share-2026q3', 'amosense-bloom-substrate', 'sourcing_volume_share', 15, None,
+ ('o-amosense-share-2026q3', 'amosense-bloom-substrate', 'capacity_equivalent_share', 15, None,
   None, PCT, '2026 Q3', '2026-07-01', '2026-09-30', '2026-09-11',
   'Bloom 1.2GW 가동률 기준 월 세라믹 기판 수요', 'CURRENT', 'ESTIMATED', 0.7,
   'method-amosense-share-1p2gw', ['sedaily_kr_suppliers'],
-  '설비 능력에서 나온 값이다. 실제 가동률과 출하는 공개되지 않았다'),
+  '설비 능력을 수요로 나눈 값이다. 실제 조달 점유율이 아니다'),
  ('o-amosense-share-2026e', 'amosense-bloom-substrate', 'capacity_volume_share', 9, None, None,
   PCT, '2026E', '2026-01-01', '2026-12-31', '2026-09-11',
   'Bloom 2GW 최대 생산 기준 세라믹 기판 수요', 'CURRENT', 'ESTIMATED', 0.65,
@@ -78,7 +78,7 @@ O = [
   'sheets/month', '2026 Q3', '2026-07-01', '2026-09-30', '2026-07-29',
   'AMOsense 월 생산 능력', 'CURRENT', 'CONFIRMED', 0.9, None, ['sedaily_kr_suppliers'],
   '20만 장에서 60만 장으로 확대 계획'),
- ('o-amosense-share-2025', 'amosense-bloom-substrate', 'sourcing_volume_share', 0, None, None,
+ ('o-amosense-share-2025', 'amosense-bloom-substrate', 'capacity_equivalent_share', 0, None, None,
   PCT, '2025', '2025-01-01', '2025-12-31', '2025-12-31',
   'Bloom 세라믹 기판 조달 물량', 'NOT_YET_ACTIVE', 'CONFIRMED', 0.8, None,
   ['sedaily_kr_suppliers'], '2026 진입 전이다'),
@@ -157,14 +157,14 @@ O = [
   PCT, 'FY2025', '2025-01-01', '2025-12-31', '2026-02-09', 'Bloom FY2025 총매출', 'HISTORICAL',
   'CONFIRMED', 0.99, 'method-fundjv-share', ['be_10k_fy2025'],
   '공시 최대 고객 43% 와 맞는다'),
- ('o-aep-share-fy2025', 'bloom-aep', 'customer_revenue_share', 13, None, None, PCT, 'FY2025',
-  '2025-01-01', '2025-12-31', '2026-02-09', 'Bloom FY2025 총매출', 'HISTORICAL', 'ESTIMATED',
-  0.75, 'method-aep-13', ['be_10k_fy2025', 'be_aep_1gw'],
-  '2위 고객이 AEP 매입 법인이라는 가설. 확정이 아니다'),
- ('o-eternix-share-fy2025', 'bloom-eternix', 'customer_revenue_share', 12, None, None, PCT,
+ ('o-be25c2-share-fy2025', 'bloom-be25c2', 'customer_revenue_share', 13, None, None, PCT,
   'FY2025', '2025-01-01', '2025-12-31', '2026-02-09', 'Bloom FY2025 총매출', 'HISTORICAL',
-  'ESTIMATED', 0.7, 'method-sk-12', ['be_10k_fy2025', 'be_sk_eternix_80mw'],
-  '본사인지 프로젝트 법인인지도 확정되지 않았다'),
+  'CONFIRMED', 1.0, None, ['be_10k_fy2025'],
+  '비중 자체는 공시다. 이 자리에 앉은 법인이 누구인지는 별도 가설로 관리한다'),
+ ('o-be25c3-share-fy2025', 'bloom-be25c3', 'customer_revenue_share', 12, None, None, PCT,
+  'FY2025', '2025-01-01', '2025-12-31', '2026-02-09', 'Bloom FY2025 총매출', 'HISTORICAL',
+  'CONFIRMED', 1.0, None, ['be_10k_fy2025'],
+  '비중 자체는 공시다. SK 계열이라는 것은 가설이다'),
  ('o-be26c1-share-2026q2', 'bloom-be26c1', 'customer_revenue_share', 44, None, None, PCT,
   '2026 Q2', '2026-04-01', '2026-06-30', '2026-07-31', 'Bloom 2026 2분기 총매출', 'HISTORICAL',
   'UNDISCLOSED', None, None, ['be_10q_2026q2'], None),
@@ -312,11 +312,11 @@ BOM = {
 
 # 익명 고객에 붙는 실명 후보. 확정치와 섞지 않는다
 HYP = [
- {'id': 'h-be25-2nd-aep', 'anon_company_id': 'be24_c2', 'candidate_company_id': 'aep',
+ {'id': 'h-be25-2nd-aep', 'anon_company_id': 'be25_c2', 'candidate_company_id': 'aep',
   'period': 'FY2025', 'likelihood': 3.75, 'status': 'estimated',
   'method': '초기 100MW 에 MW 당 250~300만 달러를 곱하면 2.5~3.0억 달러로 13% 몫 2.63억 달러와 겹친다',
   'notes': '금액이 겹친다는 것이 법인 확인은 아니다'},
- {'id': 'h-be25-3rd-eternix', 'anon_company_id': 'be24_c3', 'candidate_company_id': 'sk-eternix',
+ {'id': 'h-be25-3rd-eternix', 'anon_company_id': 'be25_c3', 'candidate_company_id': 'sk-eternix',
   'period': 'FY2025', 'likelihood': 3.5, 'status': 'estimated',
   'method': '80MW 에 MW 당 300만 달러를 곱하면 2.4억 달러로 12% 몫 2.43억 달러와 겹친다',
   'notes': '본사인지 프로젝트 법인인지 갈리지 않는다'},
@@ -385,6 +385,20 @@ def claim(t):
             'evidence_level': t[5], 'confidence': t[6], 'source_ids': t[7], 'note': t[8]}
 
 
+SRC_DATE = None
+
+
+def src_date(ids):
+    global SRC_DATE
+    if SRC_DATE is None:
+        rows = json.load(io.open(os.path.join(DATA, 'sources.json'), encoding='utf-8'))
+        SRC_DATE = dict((r['id'], r.get('published_date')) for r in rows)
+    for i in ids or []:
+        if SRC_DATE.get(i):
+            return SRC_DATE[i]
+    return None
+
+
 def obs(t):
     return {'id': t[0], 'relationship_id': t[1], 'metric': t[2], 'value': t[3],
             'value_low': t[4], 'value_high': t[5], 'unit': t[6], 'period': t[7],
@@ -393,6 +407,7 @@ def obs(t):
             'confidence': t[14], 'method_id': t[15], 'source_ids': t[16],
             'method_note': t[17],
             # 고객 집중도는 총매출 기준이다. 그 선의 몫이 아니므로 선에 적지 않는다 (05 §28-4)
+            'source_date': src_date(t[16]),
             'denominator_scope': ('FOCAL_TOTAL_REVENUE'
                                   if t[2] == 'customer_revenue_share' else 'EDGE')}
 

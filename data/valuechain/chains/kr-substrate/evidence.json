@@ -76,8 +76,8 @@
   "relationship_id": "ddmem-samsung",
   "metric_id": null,
   "source_id": "dealsite_2025_05_28",
-  "evidence_type": "direct",
-  "evidence": "기사가 고객사로 이름을 든다. 매출원 안에서 이 고객이 차지하는 몫은 공개되지 않았다",
+  "evidence_type": "indirect",
+  "evidence": "언론만 이름을 든다. 공시로 확인한 것이 아니고, 매출원 안에서 이 고객의 몫도 공개되지 않았다",
   "hypothesis_id": null
  },
  {
@@ -85,8 +85,8 @@
   "relationship_id": "ddmem-hynix",
   "metric_id": null,
   "source_id": "dealsite_2025_05_28",
-  "evidence_type": "direct",
-  "evidence": "",
+  "evidence_type": "indirect",
+  "evidence": "언론 보도만 있다",
   "hypothesis_id": null
  },
  {

@@ -100,12 +100,12 @@ R = [
   'Revenue type', 'FC-BGA', '기판 제조', '매출원', None, None, 'ACTIVE', 'CONFIRMED',
   None, 'REVENUE_TYPE', ['dealsite_2025_05_28'], None),
  ('ddmem-samsung', 'dd-rev-memory', 'samsung-electronics', 'SELLS_TO', 'DOWNSTREAM',
-  'Chip maker', '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED',
+  'Chip maker', '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'ESTIMATED',
   None, 'CONTRACTUAL_CUSTOMER', ['dealsite_2025_05_28'],
-  '기사가 고객사로 이름을 든다. 매출원 안에서 이 고객이 차지하는 몫은 공개되지 않았다'),
+  '언론만 이름을 든다. 공시로 확인한 것이 아니고, 매출원 안에서 이 고객의 몫도 공개되지 않았다'),
  ('ddmem-hynix', 'dd-rev-memory', 'sk-hynix', 'SELLS_TO', 'DOWNSTREAM', 'Chip maker',
-  '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED',
-  None, 'CONTRACTUAL_CUSTOMER', ['dealsite_2025_05_28'], None),
+  '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'ESTIMATED',
+  None, 'CONTRACTUAL_CUSTOMER', ['dealsite_2025_05_28'], '언론 보도만 있다'),
  ('ddfcbga-auto', 'dd-rev-fcbga', 'dd-auto-customer', 'SELLS_TO', 'DOWNSTREAM',
   'Automotive', '인포테인먼트·디지털 클러스터·자율주행용 FC-BGA', '매출원', '고객',
   None, None, 'ACTIVE', 'UNDISCLOSED', None, 'CONTRACTUAL_CUSTOMER',
@@ -177,9 +177,16 @@ CLAIMS = [
 ]
 
 
+REGION = {'한국':'Korea', '일본':'Japan', '대만':'Taiwan', '중국':'China', '미국':'North America'}
+
+
 def ent(t):
-    return {'id': t[0], 'name': t[1], 'name_ko': t[2], 'entity_type': t[3], 'country': t[4],
-            'categories': t[5], 'desc': t[6], 'anon': False}
+    return {'id': t[0], 'name': t[1], 'name_ko': t[2], 'entity_type': t[3],
+            'legal_name': t[1], 'display_name': t[2] or t[1],
+            'region': REGION.get(t[4]) if t[4] else None, 'parent_entity_id': None,
+            'primary_role': (t[5] or [None])[0], 'other_roles': (t[5] or [])[1:],
+            'country': t[4], 'categories': t[5], 'desc': t[6],
+            'anon': t[0] == 'dd-auto-customer'}
 
 
 def src(t):
@@ -205,7 +212,8 @@ def obs(t):
             'period_start': t[8], 'period_end': t[9], 'as_of_date': t[10],
             'denominator': t[11], 'status': t[12], 'evidence_level': t[13],
             'confidence': t[14], 'method_id': t[15], 'source_ids': t[16],
-            'method_note': t[17], 'denominator_scope': 'EDGE'}
+            'method_note': t[17], 'denominator_scope': 'EDGE',
+            'source_date': dict((x[0], x[4]) for x in SOURCES).get((t[16] or [None])[0])}
 
 
 def claim(t):
@@ -223,14 +231,14 @@ def dump(path, o):
 
 
 def merge(name, rows, key='id'):
+    """이 스크립트가 맡은 항목은 덮어쓴다. 남의 항목은 건드리지 않는다."""
     p = os.path.join(DATA, name)
     cur = json.load(io.open(p, encoding='utf-8'))
-    have = set(x[key] for x in cur)
-    for r in rows:
-        if r[key] not in have:
-            cur.append(r)
-    dump(p, cur)
-    return len(cur)
+    mine = dict((r[key], r) for r in rows)
+    out = [mine.pop(x[key], x) for x in cur]
+    out += [mine[k] for k in mine]
+    dump(p, out)
+    return len(out)
 
 
 def evidence():

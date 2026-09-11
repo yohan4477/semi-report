@@ -220,18 +220,18 @@
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
+  "evidence_level": "ESTIMATED",
   "source_tier": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "high",
+  "confidence_band": "medium",
   "flows": [],
   "source_ids": [
    "dealsite_2025_05_28"
   ],
-  "notes": "기사가 고객사로 이름을 든다. 매출원 안에서 이 고객이 차지하는 몫은 공개되지 않았다"
+  "notes": "언론만 이름을 든다. 공시로 확인한 것이 아니고, 매출원 안에서 이 고객의 몫도 공개되지 않았다"
  },
  {
   "id": "ddmem-hynix",
@@ -246,18 +246,18 @@
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
+  "evidence_level": "ESTIMATED",
   "source_tier": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "high",
+  "confidence_band": "medium",
   "flows": [],
   "source_ids": [
    "dealsite_2025_05_28"
   ],
-  "notes": null
+  "notes": "언론 보도만 있다"
  },
  {
   "id": "ddfcbga-auto",

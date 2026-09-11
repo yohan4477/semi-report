@@ -13,6 +13,9 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C9 다운스트림 관계에 층이 붙었나
   C10 업스트림(제품 BOM) 관계에 층이 붙었나
   C11 총매출 기준 집중도가 선의 몫으로 새지 않나
+  C12 엔티티에 법인명·표시명이 있고 모회사 참조가 실재하나
+  C13 비중에 출처 발행일이 붙었나
+  C14 계약상 구매자 근거 없이 직접 고객으로 적지 않았나
 """
 import io, json, os, sys
 
@@ -71,6 +74,14 @@ def main():
         E[e['id']] = e
         if e.get('entity_type') not in ENTITY_TYPE:
             fail('entities/' + e['id'], u'entity_type 이 %r' % e.get('entity_type'))
+        # C12 — 법인 식별에 필요한 칸이 비었나 (프레임워크 §8)
+        for k in ('legal_name', 'display_name'):
+            if not e.get(k):
+                fail('entities/' + e['id'], u'%s 가 비었다' % k)
+    for e in ents:
+        if e.get('parent_entity_id') and e['parent_entity_id'] not in E:
+            fail('entities/' + e['id'],
+                 u'모회사 %r 가 엔티티에 없다' % e['parent_entity_id'])
     S = {}
     for s in srcs:
         S[s['id']] = s
@@ -106,6 +117,11 @@ def main():
             if r.get('status') not in REL_STATUS:
                 fail(w, u'status 가 %r' % r.get('status'))
             # C9 — 다운스트림은 층이 있어야 한다. 없으면 전부 한 홉으로 납작해진다
+            # C14 — 계약상 구매자 근거 없이 직접 고객으로 적지 않는다 (프레임워크 §3-C)
+            if r.get('relationship_type') == 'DIRECT_CUSTOMER' and (
+                    r.get('evidence_level') != 'CONFIRMED'
+                    or r.get('target_tier') != 'CONTRACTUAL_CUSTOMER'):
+                fail(w, u'DIRECT_CUSTOMER 인데 계약상 고객 근거가 약하다')
             if r.get('lane') == 'DOWNSTREAM' and r.get('target_tier') not in TIER:
                 fail(w, u'다운스트림인데 target_tier 가 %r' % r.get('target_tier'))
             if r.get('lane') != 'DOWNSTREAM' and r.get('target_tier'):

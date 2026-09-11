@@ -248,6 +248,10 @@ ENTITIES = [
   'FY2024 매출의 16%. 공개 자료로 법인 특정 불가'),
  ('be24_c3', '미상 고객 #3 (FY2024)', '미상 고객 #3 (FY2024)', 'company', None, [],
   'FY2024 매출의 14%. 공개 자료로 법인 특정 불가'),
+ ('be25_c2', '미상 고객 #2 (FY2025)', '미상 고객 #2 (FY2025)', 'company', None, [],
+  'FY2025 총매출의 13%. SEC 가 법인명을 밝히지 않는다'),
+ ('be25_c3', '미상 고객 #3 (FY2025)', '미상 고객 #3 (FY2025)', 'company', None, [],
+  'FY2025 총매출의 12%. SEC 가 법인명을 밝히지 않는다'),
  ('be26_c1', '미상 고객 #1 (2026 H1)', '미상 고객 #1 (2026 H1)', 'company', None, [],
   '2026 상반기 매출의 73%. 비특수관계. SEC 가 법인명을 밝히지 않았다'),
  ('undisclosed-scandium-suppliers', '비공개 스칸듐 공급사', '비공개 스칸듐 공급사', 'company',
@@ -255,10 +259,39 @@ ENTITIES = [
 ]
 
 
+# 법인 관계 — 브랜드가 같아도 법인이 다르면 다른 노드다 (§3-A)
+PARENT = {
+ 'bloom-energy-india': 'bloom-energy',
+ 'sk-ecoplant-americas': 'sk-ecoplant',
+ 'aep-ohio': 'aep',
+ 'brookfield-fund-jvs': 'brookfield',
+}
+REGION = {
+ '미국': 'North America', '캐나다': 'North America', '한국': 'Korea', '중국': 'China',
+ '대만': 'Taiwan', '일본': 'Japan', '인도': 'India', '이탈리아': 'Europe',
+ '네덜란드': 'Europe', '글로벌': 'Global',
+}
+
+
+def region_of(country):
+    if not country:
+        return None
+    rs = []
+    for part in country.split('·'):
+        r = REGION.get(part.strip())
+        if r and r not in rs:
+            rs.append(r)
+    return '·'.join(rs) or None
+
+
 def ent(t):
     e = {'id': t[0], 'name': t[1], 'name_ko': t[2], 'entity_type': t[3],
+         'legal_name': t[1], 'display_name': t[2] or t[1],
+         'region': region_of(t[4]), 'parent_entity_id': PARENT.get(t[0]),
+         'primary_role': (t[5] or [None])[0], 'other_roles': (t[5] or [])[1:],
          'country': t[4], 'categories': t[5], 'desc': t[6],
          'anon': t[0].startswith('be24_c') or t[0].startswith('be26_c')
+                 or t[0].startswith('be25_c')
                  or t[0] in ('undisclosed-scandium-suppliers', 'bfjv-spv-unknown')}
     return e
 
@@ -277,18 +310,33 @@ def dump(path, obj):
         f.write(u'\n')
 
 
+def normalize(e):
+    """프레임워크 §8 이 요구하는 칸을 채운다. 다른 사슬이 넣은 항목도 여기서 맞춘다."""
+    e.setdefault('legal_name', e.get('name') or e['id'])
+    e.setdefault('display_name', e.get('name_ko') or e.get('name') or e['id'])
+    if not e.get('legal_name'):
+        e['legal_name'] = e.get('name') or e['id']
+    if not e.get('display_name'):
+        e['display_name'] = e.get('name_ko') or e.get('name') or e['id']
+    e.setdefault('region', region_of(e.get('country')))
+    e.setdefault('parent_entity_id', PARENT.get(e['id']))
+    cats = e.get('categories') or []
+    e.setdefault('primary_role', cats[0] if cats else None)
+    e.setdefault('other_roles', cats[1:])
+    return e
+
+
 def merge_global():
-    """전역 레지스트리에 덧붙인다. 기존 사슬(NVIDIA)의 항목을 지우지 않는다."""
+    """전역 레지스트리를 갱신한다. 이 스크립트가 맡은 항목은 덮어쓴다."""
     ents = json.load(io.open(os.path.join(DATA, 'entities.json'), encoding='utf-8'))
     srcs = json.load(io.open(os.path.join(DATA, 'sources.json'), encoding='utf-8'))
-    have_e = set(e['id'] for e in ents)
-    have_s = set(s['id'] for s in srcs)
-    for t in ENTITIES:
-        if t[0] not in have_e:
-            ents.append(ent(t))
-    for t in SOURCES:
-        if t[0] not in have_s:
-            srcs.append(src(t))
+    mine_e = dict((t[0], ent(t)) for t in ENTITIES)
+    mine_s = dict((t[0], src(t)) for t in SOURCES)
+    ents = [mine_e.pop(e['id'], e) for e in ents]
+    ents += [mine_e[k] for k in mine_e]
+    srcs = [mine_s.pop(x['id'], x) for x in srcs]
+    srcs += [mine_s[k] for k in mine_s]
+    ents = [normalize(e) for e in ents]
     dump(os.path.join(DATA, 'entities.json'), ents)
     dump(os.path.join(DATA, 'sources.json'), srcs)
     return len(ents), len(srcs)
