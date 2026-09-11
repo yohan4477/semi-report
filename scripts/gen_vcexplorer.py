@@ -145,6 +145,9 @@ letter-spacing:-.2px;padding:4px 6px;background:var(--hi);border:1px solid var(-
 border-radius:5px;pointer-events:none;white-space:nowrap;overflow:hidden;
 text-overflow:ellipsis}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.nd .val{display:inline-block;margin-left:5px;padding:0 4px;border-radius:4px;
+background:var(--hi);border:1px solid var(--line);color:var(--ink2);font-weight:700;
+font-size:10.5px}
 .nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;padding:11px 14px;
 box-shadow:0 3px 12px rgba(20,26,40,.22)}
 .nd.focal .nm{font-size:15px}
@@ -454,10 +457,12 @@ function Nd(p){
       ? [h('span', { key:'f', className: flagCls(d.flag), title: flagTitle(d.flag) }, d.flag),
          h('span', { key:'t' }, d.title)]
       : d.title),
-    (d.sub || d.isNew) ? h('div', { key:'s', className:'sub' }, [
+    (d.sub || d.isNew || d.share) ? h('div', { key:'s', className:'sub' }, [
       d.sub ? h('span', { key:'t2' }, d.sub) : null,
+      d.share ? h('span', { key:'v', className:'val',
+        style:{ marginLeft: d.sub ? '5px' : 0 } }, d.share) : null,
       d.isNew ? h('span', { key:'b', className:'badge new',
-        style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
+        style:{ marginLeft: (d.sub || d.share) ? '5px' : 0 } }, 'NEW') : null,
     ]) : null
   ];
   return h('div', { className: cls }, ports('t').concat(mid).concat(ports('s')));
@@ -488,6 +493,9 @@ var EDGE_TYPES = { chan: ChanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 24, DUMMY_H = 10;
+// 칸 머리글과 첫 상자 사이 숨통. HDR_H 는 머리글 상자 높이와 같아서
+// 그것만 쓰면 둘이 맞닿는다
+var HDR_GAP = 34;
 
 // 상자 높이를 미리 어림한다. 한글은 두 칸, 영숫자는 한 칸으로 센다
 function cw(s){
@@ -502,7 +510,7 @@ function boxH(d){
   var per = d.focal ? 13 : 16;
   var lines = Math.ceil((cw(d.title || '') + (d.flag ? 3 : 0)) / per) || 1;
   return 16 + lines * (d.focal ? 21 : 18)
-       + ((d.sub || d.isNew) ? 17 : 0) + (d.focal ? 14 : 0);
+       + ((d.sub || d.isNew || d.share) ? 17 : 0) + (d.focal ? 14 : 0);
 }
 
 // 칸 사이 빈 띠를 레인으로 쪼개고, 노드 변에는 포트를 나눠 꽂는다
@@ -696,7 +704,7 @@ function place(nodes, edges){
   used.forEach(function(c, i){
     var x = i * (COL_W + COL_GAP);
     byCol[c].forEach(function(it){
-      var y = it.top - mid + (hi - lo) / 2 + HDR_H;
+      var y = it.top - mid + (hi - lo) / 2 + HDR_H + HDR_GAP;
       geo[it.id] = { x:x, y:y, h:it.h, col:i };
       if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
@@ -801,10 +809,15 @@ function buildGraph(focal, year, sel){
     var on = activeIn(r, year), fy = firstYear(r);
     var st = Object.assign({}, evStyle(r.evidence_level));
     if (!on) st.opacity = 0.28;
+    var lbl = shareLabel(r.id, year);
+    if (lbl) {
+      // 값은 focal 이 아닌 쪽 상자에 붙인다. 선 위에 얹으면 선을 가린다
+      var holder = r.target_entity === focal ? r.source_entity : r.target_entity;
+      var hn = nodes.filter(function(n){ return n.id === holder; })[0];
+      if (hn && !hn.data.share) hn.data.share = lbl;
+    }
     edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
-      label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
-      labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1], style: st,
-      data:{ rel: r.id, on: on },
+      style: st, data:{ rel: r.id, on: on },
       markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
                   color: evStyle(r.evidence_level).stroke },
       type:'smoothstep' });
@@ -836,7 +849,7 @@ function buildGraph(focal, year, sel){
     edges = edges.map(function(e){
       var hit = e.source === selId || e.target === selId;
       return Object.assign({}, e, { style: Object.assign({}, e.style,
-        { opacity: hit ? 1 : 0.18 }), label: hit ? e.label : null });
+        { opacity: hit ? 1 : 0.18 }) });
     });
   }
   return { nodes: place(nodes, edges), edges: edges };
