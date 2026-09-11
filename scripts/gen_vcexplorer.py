@@ -327,7 +327,10 @@ function place(nodes, edges){
 
 function readUrl(){
   var q = new URLSearchParams(location.search);
-  return { focal: q.get('focal') || HOME, year: q.get('year') || NOW,
+  // 기본은 늘 가장 최신 해다. 주소에 남은 옛 해가 축에 없으면 버린다
+  var y = q.get('year');
+  if (YEARS.indexOf(y) < 0) y = NOW;
+  return { focal: q.get('focal') || HOME, year: y,
            mode: q.get('mode') || 'current',
            open: (q.get('open') || '').split(',').filter(Boolean),
            sel: q.get('sel') || '' };
