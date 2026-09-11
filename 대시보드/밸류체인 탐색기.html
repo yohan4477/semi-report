@@ -1197,7 +1197,8 @@ function Bom(p){
     b ? h('h2', { key:'t' }, nm(p.focal) + ' — 제품 원가 구성 (' + b.period + ')') : null,
     b ? h('p', { key:'n', className:'note' }, [
       h('span', { key:'a', className:'badge est' }, '전부 추정'),
-      h('span', { key:'b' }, ' ' + b.note + ' 분모는 ' + b.denominator + '.') ]) : null,
+      h('span', { key:'b' }, ' ' + b.note + ' 아래 비중의 분모는 ' + b.denominator
+        + ' 전체(약 ' + b.total.central + ' ' + b.unit + ')이고 매출이 아니다.') ]) : null,
     b ? h('div', { key:'bar', className:'bom' }, b.components.map(function(c, i){
       return h('div', { key:c.id, title:c.label,
         onClick: function(){ if (c.subsystem) p.onDrill(c.subsystem); },
@@ -1232,18 +1233,22 @@ function Bom(p){
     fins.length ? h('div', { key:'fin' }, [
       h('h2', { key:'t', style:{ marginTop:'20px' } }, '재무 앵커'),
       h('p', { key:'n', className:'note' },
-        '매출 환산 MW 는 출하 공시가 아니라 ASP 앵커로 나눈 값이다. 원가를 나눌 분모로만 쓴다.'),
+        '원가율은 제품 원가를 제품 매출로 나눈 값이다. 두 숫자 모두 공시다. '
+        + '매출 환산 MW 는 출하 공시가 아니라 ASP 앵커로 나눈 값이라 원가를 나눌 분모로만 쓴다.'),
       h('table', { key:'x', className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '기간'),
           h('th', { key:2 }, '총매출'), h('th', { key:3 }, '제품 매출'),
-          h('th', { key:4 }, '제품 원가'), h('th', { key:5 }, '매출 환산 MW'),
-          h('th', { key:6 }, 'MW 당 원가') ])),
+          h('th', { key:4 }, '제품 원가'), h('th', { key:'r' }, '원가율'),
+          h('th', { key:5 }, '매출 환산 MW'), h('th', { key:6 }, 'MW 당 원가') ])),
         h('tbody', { key:'b' }, fins.map(function(f, k){
           return h('tr', { key:k }, [
             h('td', { key:1 }, f.period),
             h('td', { key:2 }, fmt(f.total_revenue_usd_m) + ' M'),
             h('td', { key:3 }, fmt(f.product_revenue_usd_m) + ' M'),
             h('td', { key:4 }, fmt(f.product_cogs_usd_m) + ' M'),
+            h('td', { key:'r' }, (f.product_revenue_usd_m
+              ? (Math.round(f.product_cogs_usd_m / f.product_revenue_usd_m * 1000) / 10) + '%'
+              : '—')),
             h('td', { key:5 }, [ h('span', { key:'v' },
               fmt(f.revenue_equivalent_mw.value) + ' MW '),
               h('span', { key:'b', className:'badge est' }, '추정') ]),
