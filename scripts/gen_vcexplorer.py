@@ -178,20 +178,30 @@ margin:10px 0 6px}
 .bomleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2)}
 .bomleg span.it{display:flex;align-items:center;gap:5px;cursor:pointer}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
-.nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:7px 10px;
-min-width:100px;max-width:128px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
-.nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
+/* 상자는 크기가 다 같다(128×60). 이름은 두 줄까지 보이고 넘치면 줄임표, 아래 줄은 한 줄.
+   크기가 제각각이면 같은 칸의 상자가 서로 다른 것으로 읽히고 선이 닿는 높이가 흔들린다 */
+.nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:5px 9px;
+width:128px;height:60px;box-sizing:border-box;display:flex;flex-direction:column;
+justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
+.nd .nm{font-size:12px;font-weight:600;line-height:1.25;display:-webkit-box;
+-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
 .hdr{width:128px;text-align:center;padding:4px 6px;background:var(--hi);
-border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden}
+border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
+box-sizing:border-box}
+.hdrbar{position:absolute;left:0;top:0;right:0;height:50px;pointer-events:none;z-index:5;
+overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(232,235,240,0))}
+.hdrbar .hdr .hl{font-size:1em}
+.hdrbar .hdr .hn{font-size:.9em}
 .hdr .hl{font-size:11px;color:var(--ink2);font-weight:700;letter-spacing:-.2px;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hdr .hn{font-size:10px;color:var(--ink3);font-weight:500;letter-spacing:-.2px;
 margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.nd .sub{font-size:10.5px;color:var(--ink3);margin-top:1px;white-space:nowrap;overflow:hidden;
+text-overflow:ellipsis;line-height:1.3}
 .proj{border:1px dashed #aab2c2;border-radius:10px;background:rgba(255,255,255,.45);
 pointer-events:none;box-sizing:border-box}
 .proj .plab{position:absolute;top:6px;left:10px;font-size:9.5px;font-weight:700;
@@ -201,18 +211,21 @@ margin-top:1px}
 .nd .val{display:inline-block;margin-left:5px;padding:0 4px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink2);font-weight:700;
 font-size:10.5px}
-.nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;padding:11px 14px;
+.nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;
 box-shadow:0 3px 12px rgba(20,26,40,.22)}
-.nd.focal .nm{font-size:15px}
-.nd.focal .sub{font-size:12px}
+.nd.focal .nm{font-size:13px}
+.nd.focal .sub{font-size:11px}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 /* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
-.nd.lane{background:#f7f8fb;border:1px dashed #9aa3b5;border-radius:14px;text-align:center;
-padding:5px 9px;min-width:100px;box-shadow:none}
-.nd.lane .nm{font-size:11.5px;font-weight:600;color:var(--ink2)}
-.nd.lane .sub{margin-top:1px}
+.nd.lane{background:#f7f8fb;border:1px dashed #9aa3b5;border-radius:19px;text-align:center;
+padding:2px 9px;height:38px;box-shadow:none;align-items:center}
+.nd.lane .nm{font-size:11.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:1}
+.nd.lane .sub{margin-top:0;font-size:10px}
 .nd.lane.un{border-color:#c6ccd8}
 .nd.lane.un .nm{color:var(--ink3)}
+.nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
+.nd.lane.sel{background:#e9edf5;border-style:solid;border-color:var(--ink1)}
+.nd.lane.sel .nm{color:var(--ink1)}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
 .legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:6px 14px;
@@ -569,7 +582,7 @@ function ports(kind){
 function Nd(p){
   var d = p.data;
   var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.kind === 'lane' ? ' lane' : '')
-          + (d.un ? ' un' : '') + (d.focal ? ' focal' : '')
+          + (d.un ? ' un' : '') + (d.focal ? ' focal' : '') + (d.sel ? ' sel' : '')
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
   var mid = [
     h('div', { key:'n', className:'nm' }, d.flag
@@ -587,11 +600,22 @@ function Nd(p){
   return h('div', { className: cls },
     ports('t').concat(ports('sl')).concat(mid).concat(ports('s')).concat(ports('tr')));
 }
+// 판 안의 머리글 자리는 비워 둔다(fitView 가 그 여백을 세게). 글자는 HdrBar 가 판 위에
+// 겹쳐 그린다 — 아래로 끌어도 머리글이 화면 위에 그대로 남아 어느 칸인지 잃지 않는다
 function Hdr(p){
-  return h('div', { className:'hdr' }, [
-    h('div', { key:'l', className:'hl' }, p.data.label),
-    p.data.note ? h('div', { key:'n', className:'hn' }, p.data.note) : null
-  ]);
+  return h('div', { className:'hdr', style:{ visibility:'hidden' } }, [
+    h('div', { key:'l', className:'hl' }, p.data.label) ]);
+}
+function HdrBar(p){
+  var z = p.vp.zoom, hs = p.nodes.filter(function(n){ return n.type === 'hdr'; });
+  var fz = Math.max(.72, Math.min(1, z));
+  return h('div', { className:'hdrbar' }, hs.map(function(n){
+    return h('div', { key:n.id, className:'hdr',
+      style:{ position:'absolute', top:'6px', left:(n.position.x * z + p.vp.x) + 'px',
+              width:(COL_W * z) + 'px', transform:'none', fontSize:(fz * 100) + '%' } }, [
+      h('div', { key:'l', className:'hl' }, n.data.label),
+      n.data.note ? h('div', { key:'n', className:'hn' }, n.data.note) : null ]);
+  }));
 }
 // 꺾어지는 자리마다 모서리를 둥글린 직교 경로를 만든다
 function orth(pts, r){
@@ -672,13 +696,10 @@ function cw(s){
   }
   return w;
 }
+// 상자 높이는 고정이다 — 회사 60, 알약 38. 어림도 재기도 필요 없다
+var BOX_H = 60, LANE_H = 38;
 function boxH(d){
-  // 브라우저가 잰 높이가 있으면 그것을 쓴다. 어림은 첫 그림에서만
-  if (d.measured) return d.measured;
-  var per = d.focal ? 13 : 16;
-  var lines = Math.ceil((cw(d.title || '') + (d.flag ? 3 : 0)) / per) || 1;
-  return 16 + lines * (d.focal ? 21 : 18)
-       + ((d.sub || d.isNew || d.share) ? 17 : 0) + (d.focal ? 14 : 0);
+  return d.kind === 'lane' ? LANE_H : BOX_H;
 }
 
 // 칸 사이 빈 띠를 레인으로 쪼개고, 노드 변에는 포트를 나눠 꽂는다.
@@ -1482,6 +1503,8 @@ function buildGraph(focal, year, sel, axis, sizes){
       if (e.target === selId) near[e.source] = 1;
     });
     nodes = nodes.map(function(n){
+      if (n.id === selId)
+        return Object.assign({}, n, { data: Object.assign({}, n.data, { sel:true }) });
       return near[n.id] ? n
         : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
     });
@@ -1508,7 +1531,10 @@ function buildGraph(focal, year, sel, axis, sizes){
       return Object.assign({}, e, { style: Object.assign({}, e.style,
         { opacity: on ? (e.style.opacity === undefined ? 1 : e.style.opacity) : 0.1 }) });
     });
+    var axLane = 'lane|' + axis.slice(0, 2) + '|' + axis.slice(3);
     nodes = nodes.map(function(n){
+      if (n.id === axLane)
+        return Object.assign({}, n, { data: Object.assign({}, n.data, { sel:true }) });
       return keep[n.id] ? n
         : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
     });
@@ -2072,6 +2098,8 @@ function App(){
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
   // 회사 목록에서 고른 뒤 판이 설 때까지. 자리 잡기가 끝나면 fit 효과가 내린다
   var s2 = useState(null), busy = s2[0], setBusy = s2[1];
+  // 판의 이동·확대 — 머리글 띠가 가로로 따라가게 한다
+  var v2 = useState({ x:0, y:0, zoom:1 }), vp = v2[0], setVp = v2[1];
   useEffect(function(){
     if (!busy) return;
     var t = setTimeout(function(){ setBusy(null); }, 3000);
@@ -2182,7 +2210,16 @@ function App(){
     writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id }, true);
   }
   function onNodeClick(_, node){
-    // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다
+    // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
+    // 공급원·매출원 알약은 상자가 아니라 분류라 띠의 칩과 같은 일을 한다 — 그 분류에
+    // 걸린 줄만 남기고 칩이 켜진다. 다시 누르면 푼다
+    if (node.data.kind === 'lane') {
+      var key = node.data.ref && node.data.ref.cls;
+      setAxis(axis === key ? null : key);
+      setSel({ kind:'ent', id: focal });
+      setDrw(true);
+      return;
+    }
     setSel(node.data.ref); setDrw(true);
   }
   function drill(subsystem){
@@ -2303,11 +2340,14 @@ function App(){
   else if (mode === 'evidence') body = h(Evidence, null);
   else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
+    h(HdrBar, { key:'hb', nodes: gr.nodes, vp: vp }),
     busy ? h('div', { key:'busy', className:'busy' }, [ h('i', { key:'i' }),
       h('span', { key:'t' }, nm(busy) + ' 판을 세우는 중') ]) : null,
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
       edgeTypes:EDGE_TYPES,
-      onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
+      onNodeClick:onNodeClick, onInit:function(inst){ setRf(inst);
+        if (inst.getViewport) setVp(inst.getViewport()); },
+      onMove:function(_, v){ setVp(v); }, fitView:true, maxZoom:1.6,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
       minZoom: window.innerWidth < 720 ? .28 : .2,
       translateExtent: extent,
