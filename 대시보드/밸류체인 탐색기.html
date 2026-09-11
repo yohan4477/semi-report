@@ -85,6 +85,17 @@ font-size:11px;color:var(--ink2);margin-right:4px;background:var(--paper)}
 padding:2px 0;border-bottom:1px dashed var(--line2)}
 .steps div:last-child{border-bottom:0;font-weight:600}
 table.t{border-collapse:collapse;width:100%;font-size:12.5px}
+table.t tr.pick{cursor:pointer;-webkit-tap-highlight-color:rgba(20,26,40,.12);
+transition:background .12s}
+table.t tr.pick:hover{background:var(--hi)}
+table.t tr.pick:active,table.t tr.pick.on{background:var(--ink1);color:#fff}
+table.t tr.pick.on td,table.t tr.pick:active td{color:#fff}
+.busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+gap:9px;background:rgba(232,235,240,.72);z-index:20;font-size:13px;color:var(--ink2);
+pointer-events:none}
+.busy i{width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--ink1);
+border-radius:50%;animation:vcspin .8s linear infinite}
+@keyframes vcspin{to{transform:rotate(360deg)}}
 table.t th,table.t td{border-bottom:1px solid var(--line2);padding:5px 6px;text-align:left;
 vertical-align:top}
 table.t th{color:var(--ink3);font-weight:500;font-size:11.5px}
@@ -1711,6 +1722,13 @@ function chainKo(k){
 // ── 회사 목록 ───────────────────────────────────────────────────────
 // 기본은 사슬의 중심 회사만. 「전부 보기」를 누르면 판에 선 이름을 다 편다
 function Roster(p){
+  // 누른 줄을 먼저 진하게 보여 주고 잠깐 뒤에 판으로 넘어간다. 바로 넘어가면 눌린 티가
+  // 안 나서 두 번 누르게 된다
+  var ps = useState(null), pressed = ps[0], setPressed = ps[1];
+  function pick(id){
+    setPressed(id);
+    setTimeout(function(){ p.onPick(id); }, 140);
+  }
   var anchors = {};
   Object.keys(CHAINS).forEach(function(ck){
     var m = CHAINS[ck].meta || {};
@@ -1756,8 +1774,8 @@ function Roster(p){
           h('th', { key:4, className:'nw' }, '유형'),
           h('th', { key:5, className:'nw' }, '사슬') ])),
         h('tbody', { key:'b' }, view.map(function(r){
-          return h('tr', { key:r.id, style:{ cursor:'pointer' },
-            onClick: function(){ p.onPick(r.id); } }, [
+          return h('tr', { key:r.id, className:'pick' + (pressed === r.id ? ' on' : ''),
+            onClick: function(){ pick(r.id); } }, [
             h('td', { key:1, className:'nw' }, (function(){
               var f = flagOf(r.id);
               // 나라를 모르면 물음표 하나로 끝낸다. 뒤에 줄표까지 달면 두 번 말한다
@@ -1973,6 +1991,13 @@ function App(){
   // 좁은 화면인가. 돌리거나 창을 줄이면 따라간다
   var q2 = useState(window.innerWidth < 720), narrow = q2[0], setNarrow = q2[1];
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
+  // 회사 목록에서 고른 뒤 판이 설 때까지. 자리 잡기가 끝나면 fit 효과가 내린다
+  var s2 = useState(null), busy = s2[0], setBusy = s2[1];
+  useEffect(function(){
+    if (!busy) return;
+    var t = setTimeout(function(){ setBusy(null); }, 3000);
+    return function(){ clearTimeout(t); };
+  }, [busy]);
   useEffect(function(){
     function onR(){ setNarrow(window.innerWidth < 720); }
     window.addEventListener('resize', onR);
@@ -2021,7 +2046,8 @@ function App(){
       }
       rf.fitView({ padding:0.12, duration:220 });
     }, 90);
-    return function(){ clearTimeout(t); };
+    var t2 = setTimeout(function(){ setBusy(null); }, 380);
+    return function(){ clearTimeout(t); clearTimeout(t2); };
   // 중심을 바꾸거나 화면을 갈아탈 때만 자리를 다시 잡는다.
   // 상자를 누를 때마다 원점으로 돌아가면 보던 자리를 잃는다
   }, [rf, focal, mode]);
@@ -2190,13 +2216,15 @@ function App(){
   var body;
   if (mode === 'roster') body = h(Roster, { q:q, all:allNames,
     onToggleAll: function(){ setAllNames(!allNames); },
-    onPick: function(id){ setQ(''); setMode('current'); goFocal(id); } });
+    onPick: function(id){ setQ(''); setBusy(id); setMode('current'); goFocal(id); } });
   else if (mode === 'timeline')
     body = h(Swim, { focal:focal,
       onSel: function(ref){ setSel(ref); setDrw(true); } });
   else if (mode === 'evidence') body = h(Evidence, null);
   else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
+    busy ? h('div', { key:'busy', className:'busy' }, [ h('i', { key:'i' }),
+      h('span', { key:'t' }, nm(busy) + ' 판을 세우는 중') ]) : null,
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
       edgeTypes:EDGE_TYPES,
       onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
