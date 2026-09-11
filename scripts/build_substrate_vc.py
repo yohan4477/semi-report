@@ -24,6 +24,11 @@ SOURCES = [
   '2026 물량이 전부 예약됐고 공급사 여섯 곳 리드타임이 12~14개월. 재료도 빡빡하다 — '
   'T-glass 공급이 닛토보 한 곳에서 다섯 곳 이상으로 늘고, 기판용 CCL 은 거의 레조낙 '
   '한 곳에서만 나온다'),
+ ('dealsite_2025_05_28', '딜사이트', "대덕전자, '득보다 실 컸던' FC-BGA…올해는 숨통",
+  'reputable_media', '2025-05-28', 'https://dealsite.co.kr/articles/142211',
+  '고객사로 삼성전자와 SK하이닉스를 든다. 메모리 패키지기판이 전체 매출의 약 90%. '
+  'FC-BGA 매출은 1,781억 원으로 전년 대비 20% 줄었고 분기 400억 원대. '
+  '인포테인먼트·디지털 클러스터·자율주행용 FC-BGA 고객사는 이름을 밝히지 않는다'),
  ('hanjuseong_backend_2026_05_18', '한주성', '모래가 반도체 칩이 되기까지 2편 후공정',
   'reputable_media', '2026-05-18', None,
   '삼성전기·대덕전자·심텍이 기판을 만들고 하나마이크론·네패스 같은 OSAT 가 패키징을 맡는다. '
@@ -44,6 +49,15 @@ ENTITIES = [
   '기판용 CCL 을 사실상 혼자 댄다'),
  ('nittobo', 'Nittobo', '닛토보', 'company', '일본', ['Material'],
   'T-글라스. 공급이 이 한 곳에서 다섯 곳 이상으로 늘고 있다'),
+ ('dd-rev-memory', 'Memory package substrate revenue', '메모리 패키지기판 매출',
+  'revenue_type', None, ['Revenue type'], '대덕전자 매출의 대부분'),
+ ('dd-rev-fcbga', 'FC-BGA revenue', 'FC-BGA 매출', 'revenue_type', None, ['Revenue type'],
+  '플립칩 볼그리드어레이 기판'),
+ ('samsung-electronics', 'Samsung Electronics', '삼성전자', 'end_user', '한국',
+  ['Chip maker'], None),
+ ('sk-hynix', 'SK hynix', 'SK하이닉스', 'end_user', '한국', ['Chip maker'], None),
+ ('dd-auto-customer', '미상 자율주행 고객사', '미상 자율주행 고객사', 'company', None,
+  ['Automotive'], '인포테인먼트·디지털 클러스터·자율주행용 FC-BGA 를 받는다고만 적힌다'),
  ('hana-micron', 'Hana Micron', '하나마이크론', 'company', '한국', ['OSAT'],
   '외주 패키징·테스트'),
  ('nepes', 'Nepes', '네패스', 'company', '한국', ['OSAT'], '외주 패키징·테스트'),
@@ -78,7 +92,25 @@ R = [
  ('ccl-simmtech', 'ccl-substrate', 'simmtech', 'INPUT_TO', 'MANUFACTURING_BOM', 'Material',
   '기판용 CCL', '소재', '기판 제조', None, None, 'ACTIVE', 'INFERRED',
   'MATERIAL_PROCESSING', None, ['semianalysis_li_2026_08_27'], None),
- # ── 다운스트림 ───────────────────────────────────────────────────
+ # ── 다운스트림 1층: 매출원 ───────────────────────────────────────
+ ('dd-rev-memory-edge', 'daeduck-electronics', 'dd-rev-memory', 'REVENUE_FROM', 'DOWNSTREAM',
+  'Revenue type', '메모리 패키지기판', '기판 제조', '매출원', None, None, 'ACTIVE',
+  'CONFIRMED', None, 'REVENUE_TYPE', ['dealsite_2025_05_28'], None),
+ ('dd-rev-fcbga-edge', 'daeduck-electronics', 'dd-rev-fcbga', 'REVENUE_FROM', 'DOWNSTREAM',
+  'Revenue type', 'FC-BGA', '기판 제조', '매출원', None, None, 'ACTIVE', 'CONFIRMED',
+  None, 'REVENUE_TYPE', ['dealsite_2025_05_28'], None),
+ ('ddmem-samsung', 'dd-rev-memory', 'samsung-electronics', 'SELLS_TO', 'DOWNSTREAM',
+  'Chip maker', '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED',
+  None, 'CONTRACTUAL_CUSTOMER', ['dealsite_2025_05_28'],
+  '기사가 고객사로 이름을 든다. 매출원 안에서 이 고객이 차지하는 몫은 공개되지 않았다'),
+ ('ddmem-hynix', 'dd-rev-memory', 'sk-hynix', 'SELLS_TO', 'DOWNSTREAM', 'Chip maker',
+  '메모리 패키지기판', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED',
+  None, 'CONTRACTUAL_CUSTOMER', ['dealsite_2025_05_28'], None),
+ ('ddfcbga-auto', 'dd-rev-fcbga', 'dd-auto-customer', 'SELLS_TO', 'DOWNSTREAM',
+  'Automotive', '인포테인먼트·디지털 클러스터·자율주행용 FC-BGA', '매출원', '고객',
+  None, None, 'ACTIVE', 'UNDISCLOSED', None, 'CONTRACTUAL_CUSTOMER',
+  ['dealsite_2025_05_28'], '기사가 고객사 이름을 밝히지 않는다'),
+ # ── 다운스트림: 후공정 ───────────────────────────────────────────
  ('daeduck-hanamicron', 'daeduck-electronics', 'hana-micron', 'SUPPLIES', 'DOWNSTREAM',
   'OSAT', '패키지 기판', '기판 제조', '패키징', None, None, 'ACTIVE', 'INFERRED',
   None, 'CONTRACTUAL_CUSTOMER', ['hanjuseong_backend_2026_05_18'],
@@ -105,6 +137,13 @@ R = [
 ]
 
 O = [
+ ('o-dd-memory-share-2024', 'dd-rev-memory-edge', 'revenue_type_share', 90, None, None,
+  'percent', '2024', '2024-01-01', '2024-12-31', '2025-05-28', '대덕전자 총매출',
+  'HISTORICAL', 'CONFIRMED', 0.8, None, ['dealsite_2025_05_28'],
+  '기사가 「전체 매출의 약 90%」라고 적는다'),
+ ('o-dd-fcbga-rev-2024', 'dd-rev-fcbga-edge', 'annual_revenue', 178.1, None, None, 'KRW B',
+  '2024', '2024-01-01', '2024-12-31', '2025-05-28', 'FC-BGA 부문 연간 매출', 'HISTORICAL',
+  'CONFIRMED', 0.9, None, ['dealsite_2025_05_28'], '전년 대비 20% 줄었다. 분기 400억 원대'),
  ('o-daeduck-capex-2026', 'daeduck-hanamicron', 'capex_investment', 800, None, None, 'KRW B',
   '2026', '2026-01-01', '2026-12-31', '2026-05-22', '대덕전자 기판 증설 투자액', 'CURRENT',
   'CONFIRMED', 0.9, None, ['semidoped_2026_05_22'],
@@ -112,6 +151,11 @@ O = [
 ]
 
 CLAIMS = [
+ ('clm-dd-customers', '대덕전자의 고객사로 삼성전자와 SK하이닉스가 거론된다.',
+  'daeduck-electronics', 'samsung-electronics', '2025-05', 'CONFIRMED', 0.8,
+  ['dealsite_2025_05_28'], '기사가 든 이름은 이 둘뿐이고 나머지는 「고객사」로만 적는다'),
+ ('clm-dd-memory-90', '메모리 패키지기판이 대덕전자 전체 매출의 약 90%를 차지한다.',
+  'daeduck-electronics', None, '2024', 'CONFIRMED', 0.8, ['dealsite_2025_05_28'], None),
  ('clm-daeduck-capex', '대덕전자는 FC-CSP·FC-BGA·AI 기판 증설에 8,000억 원 넘게 쓴다.',
   'daeduck-electronics', None, '2026', 'CONFIRMED', 0.9, ['semidoped_2026_05_22'], None),
  ('clm-ccl-bottleneck',

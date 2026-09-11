@@ -1,5 +1,51 @@
 [
  {
+  "id": "o-dd-memory-share-2024",
+  "relationship_id": "dd-rev-memory-edge",
+  "metric": "revenue_type_share",
+  "value": 90,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-05-28",
+  "denominator": "대덕전자 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "method_id": null,
+  "source_ids": [
+   "dealsite_2025_05_28"
+  ],
+  "method_note": "기사가 「전체 매출의 약 90%」라고 적는다",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-dd-fcbga-rev-2024",
+  "relationship_id": "dd-rev-fcbga-edge",
+  "metric": "annual_revenue",
+  "value": 178.1,
+  "value_low": null,
+  "value_high": null,
+  "unit": "KRW B",
+  "period": "2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-05-28",
+  "denominator": "FC-BGA 부문 연간 매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.9,
+  "method_id": null,
+  "source_ids": [
+   "dealsite_2025_05_28"
+  ],
+  "method_note": "전년 대비 20% 줄었다. 분기 400억 원대",
+  "denominator_scope": "EDGE"
+ },
+ {
   "id": "o-daeduck-capex-2026",
   "relationship_id": "daeduck-hanamicron",
   "metric": "capex_investment",

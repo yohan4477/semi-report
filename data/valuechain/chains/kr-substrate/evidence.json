@@ -55,6 +55,51 @@
  },
  {
   "id": "kr-e007",
+  "relationship_id": "dd-rev-memory-edge",
+  "metric_id": null,
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e008",
+  "relationship_id": "dd-rev-fcbga-edge",
+  "metric_id": null,
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e009",
+  "relationship_id": "ddmem-samsung",
+  "metric_id": null,
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "기사가 고객사로 이름을 든다. 매출원 안에서 이 고객이 차지하는 몫은 공개되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e010",
+  "relationship_id": "ddmem-hynix",
+  "metric_id": null,
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e011",
+  "relationship_id": "ddfcbga-auto",
+  "metric_id": null,
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "indirect",
+  "evidence": "기사가 고객사 이름을 밝히지 않는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e012",
   "relationship_id": "daeduck-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -63,7 +108,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e008",
+  "id": "kr-e013",
   "relationship_id": "daeduck-nepes",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -72,7 +117,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e009",
+  "id": "kr-e014",
   "relationship_id": "samsungem-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -81,7 +126,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e010",
+  "id": "kr-e015",
   "relationship_id": "simmtech-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -90,7 +135,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e011",
+  "id": "kr-e016",
   "relationship_id": "eotechnics-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -99,7 +144,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e012",
+  "id": "kr-e017",
   "relationship_id": "hanmi-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -108,7 +153,25 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e013",
+  "id": "kr-e018",
+  "relationship_id": "dd-rev-memory-edge",
+  "metric_id": "o-dd-memory-share-2024",
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "기사가 「전체 매출의 약 90%」라고 적는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e019",
+  "relationship_id": "dd-rev-fcbga-edge",
+  "metric_id": "o-dd-fcbga-rev-2024",
+  "source_id": "dealsite_2025_05_28",
+  "evidence_type": "direct",
+  "evidence": "전년 대비 20% 줄었다. 분기 400억 원대",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e020",
   "relationship_id": "daeduck-hanamicron",
   "metric_id": "o-daeduck-capex-2026",
   "source_id": "semidoped_2026_05_22",

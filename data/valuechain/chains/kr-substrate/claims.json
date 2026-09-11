@@ -1,5 +1,31 @@
 [
  {
+  "id": "clm-dd-customers",
+  "statement": "대덕전자의 고객사로 삼성전자와 SK하이닉스가 거론된다.",
+  "subject": "daeduck-electronics",
+  "object": "samsung-electronics",
+  "period": "2025-05",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "source_ids": [
+   "dealsite_2025_05_28"
+  ],
+  "note": "기사가 든 이름은 이 둘뿐이고 나머지는 「고객사」로만 적는다"
+ },
+ {
+  "id": "clm-dd-memory-90",
+  "statement": "메모리 패키지기판이 대덕전자 전체 매출의 약 90%를 차지한다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2024",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "source_ids": [
+   "dealsite_2025_05_28"
+  ],
+  "note": null
+ },
+ {
   "id": "clm-daeduck-capex",
   "statement": "대덕전자는 FC-CSP·FC-BGA·AI 기판 증설에 8,000억 원 넘게 쓴다.",
   "subject": "daeduck-electronics",

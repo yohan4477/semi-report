@@ -1805,5 +1805,65 @@
   ],
   "desc": "T-글라스. 공급이 이 한 곳에서 다섯 곳 이상으로 늘고 있다",
   "anon": false
+ },
+ {
+  "id": "dd-rev-memory",
+  "name": "Memory package substrate revenue",
+  "name_ko": "메모리 패키지기판 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "대덕전자 매출의 대부분",
+  "anon": false
+ },
+ {
+  "id": "dd-rev-fcbga",
+  "name": "FC-BGA revenue",
+  "name_ko": "FC-BGA 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "플립칩 볼그리드어레이 기판",
+  "anon": false
+ },
+ {
+  "id": "samsung-electronics",
+  "name": "Samsung Electronics",
+  "name_ko": "삼성전자",
+  "entity_type": "end_user",
+  "country": "한국",
+  "categories": [
+   "Chip maker"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "sk-hynix",
+  "name": "SK hynix",
+  "name_ko": "SK하이닉스",
+  "entity_type": "end_user",
+  "country": "한국",
+  "categories": [
+   "Chip maker"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "dd-auto-customer",
+  "name": "미상 자율주행 고객사",
+  "name_ko": "미상 자율주행 고객사",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Automotive"
+  ],
+  "desc": "인포테인먼트·디지털 클러스터·자율주행용 FC-BGA 를 받는다고만 적힌다",
+  "anon": false
  }
 ]
