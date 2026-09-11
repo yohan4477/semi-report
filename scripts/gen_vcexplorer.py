@@ -464,32 +464,44 @@ function route(edges, geo){
     a.forEach(function(e, i){ e.targetHandle = 't' + slot(i, a.length); });
   });
 
-  // y 구간이 겹치는 선끼리만 서로 다른 레인을 준다
+  // ② 줄기 — 같은 상자에서 나가는 선은 세로 길을 같이 쓴다.
+  // 엣지마다 레인을 주면 나란한 여러 줄이 되고, 그게 겹쳐 보이는 정체다
   var gut = {};
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
-    if (!a || !b || a.col >= b.col) return;
-    (gut[a.col] = gut[a.col] || []).push(e);
+    if (!a || !b || a.col >= b.col) return;          // 같은 칸·역방향은 그대로 둔다
+    var g = gut[a.col] = gut[a.col] || {};
+    (g[e.source] = g[e.source] || []).push(e);
   });
+  var MID = (HANDLE_N - 1) / 2 | 0;
   Object.keys(gut).forEach(function(gk){
     var g = parseInt(gk, 10);
-    var x0 = g * (COL_W + COL_GAP) + COL_W;
-    var items = gut[gk].map(function(e){
-      var y1 = cy(e.source), y2 = cy(e.target);
-      return { e:e, lo: Math.min(y1, y2), hi: Math.max(y1, y2) };
+    var x0 = g * (COL_W + COL_GAP) + COL_W;          // 띠 왼쪽 끝
+    var trunks = Object.keys(gut[gk]).map(function(sid){
+      var es = gut[gk][sid], lo = cy(sid), hi = lo;
+      es.forEach(function(e){
+        var y = cy(e.target);
+        if (y < lo) lo = y;
+        if (y > hi) hi = y;
+      });
+      return { es:es, lo:lo, hi:hi };
     }).sort(function(p, q){ return p.lo - q.lo; });
-    var tail = [];
-    items.forEach(function(it){
+    var tail = [];                                   // 레인마다 마지막으로 쓴 아래끝
+    trunks.forEach(function(it){
       var k = 0;
-      while (k < tail.length && tail[k] > it.lo - 6) k++;
+      while (k < tail.length && tail[k] > it.lo - 8) k++;
       tail[k] = it.hi;
       it.lane = k;
     });
     var n = Math.max(1, tail.length);
-    items.forEach(function(it){
-      it.e.type = 'chan';
-      it.e.data = Object.assign({}, it.e.data,
-        { cx: x0 + (it.lane + 1) * (COL_GAP / (n + 1)) });
+    trunks.forEach(function(it){
+      var cx = x0 + (it.lane + 1) * (COL_GAP / (n + 1));
+      it.es.forEach(function(e){
+        e.type = 'chan';
+        e.data = Object.assign({}, e.data, { cx: cx });
+        // 줄기를 나눠 쓰면 출발 포트도 하나로 모은다. 안 그러면 뿌리가 흩어진다
+        if (it.es.length > 1) e.sourceHandle = 's' + MID;
+      });
     });
   });
 }
@@ -532,16 +544,31 @@ function place(nodes, edges){
   function sweep(dir){
     var seq = dir > 0 ? used.slice(1) : used.slice(0, -1).reverse();
     seq.forEach(function(c){
-      var ref = {};
-      byCol[used[at[c] - dir]].forEach(function(it, k){ ref[it.id] = k; });
-      byCol[c].forEach(function(it){
+      var refCol = byCol[used[at[c] - dir]], ref = {};
+      refCol.forEach(function(it, k){ ref[it.id] = k; });
+      var span = Math.max(1, refCol.length - 1);
+      var list = byCol[c];
+      list.forEach(function(it){
         var ks = (nbr[it.id] || []).filter(function(x){ return ref[x] !== undefined; });
+        // 0~1 로 맞춘다. 참조 칸에 더미가 몇 개 끼든 눈금이 안 흔들린다
         it.bary = ks.length
-          ? ks.reduce(function(a, x){ return a + ref[x]; }, 0) / ks.length
-          : it.ord;
+          ? ks.reduce(function(a, x){ return a + ref[x]; }, 0) / ks.length / span
+          : null;
       });
-      byCol[c].sort(function(a, b){ return (a.bary - b.bary) || (a.ord - b.ord); });
-      byCol[c].forEach(function(it, k){ it.ord = k; });
+      // 이웃이 없는 상자는 위아래로 가장 가까운 상자 사이에 고르게 끼운다
+      var prev = 0;
+      for (var i = 0; i < list.length; i++){
+        if (list[i].bary !== null) { prev = list[i].bary; continue; }
+        var j = i;
+        while (j < list.length && list[j].bary === null) j++;
+        var next = j < list.length ? list[j].bary : 1;
+        var n = j - i + 1;
+        for (var k = i; k < j; k++)
+          list[k].bary = prev + (next - prev) * (k - i + 1) / n;
+        i = j - 1;
+      }
+      list.sort(function(a, b){ return (a.bary - b.bary) || (a.ord - b.ord); });
+      list.forEach(function(it, k){ it.ord = k; });
     });
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
