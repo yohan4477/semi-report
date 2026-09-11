@@ -194,7 +194,13 @@ ENTITIES = [
   '유틸리티이자 채널이자 금융 파트너. 역할은 엣지마다 다르다'),
  ('aep-ohio', 'AEP Ohio', 'AEP 오하이오', 'utility', '미국', ['Utility'],
   '중부 오하이오 온사이트 연료전지 프로젝트'),
- # 프로젝트
+ # 프로젝트·SPV
+ ('sk-eternix-80mw', 'SK Eternix 80MW Korea project', '충주·대소원 80MW 프로젝트',
+  'project_spv', '한국', ['Project'],
+  '충주 40MW + 대소원 40MW. 산업은행 주도 PF'),
+ ('bfjv-spv-unknown', 'Fund JV project SPV (미상)', '펀드 JV 프로젝트 법인 (미상)',
+  'project_spv', None, ['Project'],
+  '펀드 JV 아래에 프로젝트 법인이 선다고 원문이 말하지만 법인명은 공개되지 않았다'),
  ('project-jupiter', 'Project Jupiter', '프로젝트 주피터', 'project_spv', '미국', ['Project'],
   '뉴멕시코. Oracle·BorderPlex·Bloom 구조, 최대 2.45GW 마이크로그리드 계획'),
  ('borderplex', 'BorderPlex', '보더플렉스', 'company', '미국', ['Project'],
@@ -237,7 +243,7 @@ def ent(t):
     e = {'id': t[0], 'name': t[1], 'name_ko': t[2], 'entity_type': t[3],
          'country': t[4], 'categories': t[5], 'desc': t[6],
          'anon': t[0].startswith('be24_c') or t[0].startswith('be26_c')
-                 or t[0] == 'undisclosed-scandium-suppliers'}
+                 or t[0] in ('undisclosed-scandium-suppliers', 'bfjv-spv-unknown')}
     return e
 
 

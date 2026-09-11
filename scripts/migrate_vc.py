@@ -28,6 +28,10 @@ LANE = {
 }
 # 관계의 근거 등급. 확정치가 아니라 그 관계를 어디까지 확인했는지다
 EV_FROM_CONF = {'high': 'CONFIRMED', 'medium': 'ESTIMATED', 'low': 'INFERRED'}
+# 다운스트림 층. 판매 사슬이 한 홉으로 납작해지지 않게 관계 종류에서 뽑는다
+TIER = {'SELLS_TO': 'CONTRACTUAL_CUSTOMER', 'SERVES_END_MARKET': 'END_USER',
+        'SERVES_END_USER': 'END_USER', 'CREDIT_SUPPORT': 'INTERMEDIARY',
+        'INVESTS_IN': 'INTERMEDIARY'}
 # 관측의 근거 등급
 EV_FROM_EST = {'disclosed': 'CONFIRMED', 'derived': 'ESTIMATED',
                'analyst_estimate': 'ESTIMATED', 'industry_knowledge': 'INFERRED'}
@@ -85,6 +89,8 @@ def main():
             'valid_from': None,
             'valid_to': None,
             'status': 'ACTIVE',
+            'target_tier': (TIER.get(t, 'CONTRACTUAL_CUSTOMER')
+                            if LANE[t] == 'DOWNSTREAM' else None),
             'evidence_level': EV_FROM_CONF[r['confidence']],
             'confidence_band': r['confidence'],
             'notes': r.get('notes'),

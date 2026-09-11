@@ -225,6 +225,8 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
   'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합' };
 function subKo(k){ return SUB_KO[k] || k; }
+var TIER_KO = { CONTRACTUAL_CUSTOMER:'계약 상대', INTERMEDIARY:'중개',
+  PROJECT:'프로젝트·부지', END_USER:'최종 사용자' };
 var LANE_KO = { MANUFACTURING_BOM:'제품 BOM', MANUFACTURING_EQUIPMENT:'제조 장비',
   SITE_ELECTRICAL_BOP:'부지 전기', OPERATIONAL_INPUT:'운영 투입',
   DOWNSTREAM:'다운스트림', CORPORATE:'기업 구조' };
@@ -325,6 +327,37 @@ function writeUrl(s, push){
 
 // ── 그래프 ──────────────────────────────────────────────────────────
 // 모든 해를 합쳐 자리를 잡고, 그 해에 없는 것은 흐리게 둔다. 연도를 옮겨도 자리가 안 튄다
+// 상대 노드 하나와 그 관계선. host 쪽이 중심에 가까운 칸이다
+function addRelNode(nodes, edges, r, nid, host, up, year){
+  if (nodes.some(function(n){ return n.id === nid; })) return;
+  var on = activeIn(r, year), fy = firstYear(r);
+  var tier = r.target_tier ? TIER_KO[r.target_tier] : null;
+  nodes.push({ id: nid, type:'nd', data:{ title: nm(up ? r.source_entity : r.target_entity),
+    kind:'ent', sub: tier || r.component || null, gone: !on,
+    isNew: on && fy === year && fy !== YEARS[0],
+    ref:{ kind:'rel', id:r.id, entity: up ? r.source_entity : r.target_entity } } });
+  edges.push({ id:'e-' + r.id + '-' + host, source: up ? nid : host, target: up ? host : nid,
+    label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
+    labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
+    style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
+    markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
+                color: evStyle(r.evidence_level).stroke },
+    type:'smoothstep' });
+}
+
+// 판매 사슬은 층이 있다 — 계약 상대 → 중개 → 프로젝트 → 최종 사용자.
+// 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
+function chainDown(nodes, edges, eid, host, year, depth, seen){
+  if (depth > 3 || seen[eid]) return;
+  seen[eid] = 1;
+  relsOf(eid).forEach(function(r){
+    if (r.source_entity !== eid || r.lane !== 'DOWNSTREAM') return;
+    var nid = 'c|' + r.id;
+    addRelNode(nodes, edges, r, nid, host, false, year);
+    chainDown(nodes, edges, r.target_entity, nid, year, depth + 1, seen);
+  });
+}
+
 function buildGraph(focal, year, open, expanded, focusOn){
   var groups = {}, nodes = [], edges = [];
   relsOf(focal).forEach(function(r){
@@ -347,19 +380,9 @@ function buildGraph(focal, year, open, expanded, focusOn){
     if (open.indexOf(gk) < 0) return;
     g.rels.forEach(function(r){
       var other = g.up ? r.source_entity : r.target_entity;
-      var on = activeIn(r, year), fy = firstYear(r);
       var nid = gk + '|' + other;
-      nodes.push({ id: nid, type:'nd', data:{ title: nm(other), kind:'ent',
-        sub: r.component || null, gone: !on,
-        isNew: on && fy === year && fy !== YEARS[0],
-        ref:{ kind:'rel', id:r.id, entity: other } } });
-      edges.push({ id:'e-' + r.id, source: g.up ? nid : gk, target: g.up ? gk : nid,
-        label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
-        labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
-        style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
-        markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
-                    color: evStyle(r.evidence_level).stroke },
-        type:'smoothstep' });
+      addRelNode(nodes, edges, r, nid, gk, g.up, year);
+      if (!g.up) chainDown(nodes, edges, other, nid, year, 1, {});
     });
   });
   // 누른 회사에서 한 홉만 더. 저절로 번지지 않는다
@@ -483,7 +506,7 @@ function Drawer(p){
       h('table', { key:'x', className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '회사'),
           h('th', { key:2 }, '부품·역무'), h('th', { key:3 }, year + ' 비중'),
-          h('th', { key:4 }, '근거') ])),
+          h('th', { key:5 }, '층'), h('th', { key:4 }, '근거') ])),
         h('tbody', { key:'b' }, rels.map(function(r){
           var other = ref.up ? r.source_entity : r.target_entity;
           return h('tr', { key:r.id, style:{ cursor:'pointer' },
@@ -491,6 +514,7 @@ function Drawer(p){
             h('td', { key:1 }, nm(other)),
             h('td', { key:2 }, r.component || '—'),
             h('td', { key:3 }, shareLabel(r.id, year) || '—'),
+            h('td', { key:5 }, r.target_tier ? TIER_KO[r.target_tier] : '—'),
             h('td', { key:4 }, h('span', {
               className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
               EV_KO[r.evidence_level])) ]);
@@ -537,6 +561,8 @@ function Drawer(p){
         h('div', { key:4 }, subKo(r.subsystem || '—') + ' · ' + LANE_KO[r.lane]),
         h('div', { key:5 }, '역할'),
         h('div', { key:6 }, (r.source_role || '—') + ' → ' + (r.target_role || '—')),
+        h('div', { key:'t1' }, '사슬 층'),
+        h('div', { key:'t2' }, r.target_tier ? TIER_KO[r.target_tier] : '—'),
         h('div', { key:7 }, '기간'),
         h('div', { key:8 }, (r.valid_from || '?') + ' ~ ' + (r.valid_to || '현재')),
         h('div', { key:9 }, '근거'), h('div', { key:10 }, [
@@ -873,7 +899,8 @@ function App(){
       h('i', { key:2 }, '갈색 실선 — 추정. 분모가 붙는다'),
       h('i', { key:3 }, '파선 — 정황 추론'),
       h('i', { key:4 }, '점선 — 비공개·과거 관측'),
-      h('i', { key:5 }, '물음표 — 관계는 있고 그 해 값이 없다')
+      h('i', { key:5 }, '물음표 — 관계는 있고 그 해 값이 없다'),
+      h('i', { key:6 }, '오른쪽으로 갈수록 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
     ] : [ h('b', { key:'b', style:{ margin:0 } }, '범례') ])
   ]);
 

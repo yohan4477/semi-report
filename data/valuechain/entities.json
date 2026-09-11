@@ -1565,5 +1565,29 @@
   ],
   "desc": "복수 국가의 복수 업체라고만 공개",
   "anon": true
+ },
+ {
+  "id": "sk-eternix-80mw",
+  "name": "SK Eternix 80MW Korea project",
+  "name_ko": "충주·대소원 80MW 프로젝트",
+  "entity_type": "project_spv",
+  "country": "한국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "충주 40MW + 대소원 40MW. 산업은행 주도 PF",
+  "anon": false
+ },
+ {
+  "id": "bfjv-spv-unknown",
+  "name": "Fund JV project SPV (미상)",
+  "name_ko": "펀드 JV 프로젝트 법인 (미상)",
+  "entity_type": "project_spv",
+  "country": null,
+  "categories": [
+   "Project"
+  ],
+  "desc": "펀드 JV 아래에 프로젝트 법인이 선다고 원문이 말하지만 법인명은 공개되지 않았다",
+  "anon": true
  }
 ]

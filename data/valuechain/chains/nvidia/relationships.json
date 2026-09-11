@@ -164,7 +164,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r009",
@@ -184,7 +185,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r010",
@@ -204,7 +206,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다"
+  "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r011",
@@ -225,7 +228,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다"
+  "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r012",
@@ -246,7 +250,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "익명 직접고객 후보"
+  "notes": "익명 직접고객 후보",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r013",
@@ -267,7 +272,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "익명 직접고객 후보"
+  "notes": "익명 직접고객 후보",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r014",
@@ -287,7 +293,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다"
+  "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r015",
@@ -307,7 +314,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r016",
@@ -327,7 +335,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r017",
@@ -347,7 +356,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r018",
@@ -367,7 +377,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r019",
@@ -387,7 +398,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다"
+  "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r020",
@@ -407,7 +419,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r036",
@@ -574,7 +587,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "2023년에는 10% 미만이라 표에 안 나온다"
+  "notes": "2023년에는 10% 미만이라 표에 안 나온다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r044",
@@ -594,7 +608,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다"
+  "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r049",
@@ -698,7 +713,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다"
+  "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r054",
@@ -719,7 +735,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": "ASML 은 고객을 익명으로 적는다"
+  "notes": "ASML 은 고객을 익명으로 적는다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r055",
@@ -740,7 +757,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r057",
@@ -761,7 +779,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r101",
@@ -781,7 +800,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "세 기간 모두 공시에 나온 유일한 고객이다"
+  "notes": "세 기간 모두 공시에 나온 유일한 고객이다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r102",
@@ -801,7 +821,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "Q1 21% 와 H1 15% 가 같은 고객이라는 것은 공시가 아니라 역산이다. Q2 에 10% 를 넘은 고객이 하나뿐이므로 다른 배열이 서지 않는다"
+  "notes": "Q1 21% 와 H1 15% 가 같은 고객이라는 것은 공시가 아니라 역산이다. Q2 에 10% 를 넘은 고객이 하나뿐이므로 다른 배열이 서지 않는다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r103",
@@ -821,7 +842,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "Q1 17% 와 H1 13% 를 잇는 것도 같은 역산이다"
+  "notes": "Q1 17% 와 H1 13% 를 잇는 것도 같은 역산이다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r104",
@@ -841,7 +863,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "target_tier": "END_USER"
  },
  {
   "id": "r105",
@@ -861,7 +884,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "target_tier": "END_USER"
  },
  {
   "id": "r106",
@@ -881,7 +905,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "target_tier": "END_USER"
  },
  {
   "id": "r107",
@@ -941,7 +966,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다"
+  "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다",
+  "target_tier": "INTERMEDIARY"
  },
  {
   "id": "r110",
@@ -961,7 +987,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다"
+  "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다",
+  "target_tier": "INTERMEDIARY"
  },
  {
   "id": "r111",
@@ -981,7 +1008,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "파는 동시에 그 클라우드 용량을 되산다. 방향이 다른 줄 두 개가 같은 상대에 붙는다"
+  "notes": "파는 동시에 그 클라우드 용량을 되산다. 방향이 다른 줄 두 개가 같은 상대에 붙는다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r112",
@@ -1021,7 +1049,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "직접 사는 것이 아니라 고객을 거쳐 산다. NVIDIA 가 간접고객으로 따로 적었다"
+  "notes": "직접 사는 것이 아니라 고객을 거쳐 산다. NVIDIA 가 간접고객으로 따로 적었다",
+  "target_tier": "END_USER"
  },
  {
   "id": "r201",
@@ -1042,7 +1071,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "슈퍼마이크로 10-K 가 「one supplier 63.1%」로 적는 익명 공급사가 NVIDIA 라는 것은 우리 추정이다. 공시는 이름을 대지 않는다"
+  "notes": "슈퍼마이크로 10-K 가 「one supplier 63.1%」로 적는 익명 공급사가 NVIDIA 라는 것은 우리 추정이다. 공시는 이름을 대지 않는다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r202",
@@ -1063,7 +1093,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "코어위브가 쓰는 GPU 가 전부 NVIDIA 것이라고 10-K 에 적혀 있다"
+  "notes": "코어위브가 쓰는 GPU 가 전부 NVIDIA 것이라고 10-K 에 적혀 있다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r203",
@@ -1103,7 +1134,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다"
+  "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다",
+  "target_tier": "INTERMEDIARY"
  },
  {
   "id": "r205",
@@ -1124,7 +1156,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "NVIDIA 관점에서는 델이 직접고객이고 IREN 은 간접고객이 되는 경로다"
+  "notes": "NVIDIA 관점에서는 델이 직접고객이고 IREN 은 간접고객이 되는 경로다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r206",
@@ -1144,7 +1177,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": "보도자료가 클라우드 파트너로 이름을 적었다. 매입 규모는 없다"
+  "notes": "보도자료가 클라우드 파트너로 이름을 적었다. 매입 규모는 없다",
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  },
  {
   "id": "r207",
@@ -1164,6 +1198,7 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER"
  }
 ]

@@ -676,11 +676,11 @@
  },
  {
   "id": "be-e076",
-  "relationship_id": "aepohio-aep",
+  "relationship_id": "aep-aepohio",
   "metric_id": null,
   "source_id": "aep_ohio_release",
   "evidence_type": "direct",
-  "evidence": "",
+  "evidence": "기업 구조이자 전력이 흘러가는 한 층이다",
   "hypothesis_id": null
  },
  {
@@ -712,6 +712,15 @@
  },
  {
   "id": "be-e080",
+  "relationship_id": "fundjv-spv",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "원문이 펀드 JV 아래 프로젝트·SPV 층을 말하지만 법인명은 공개되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e081",
   "relationship_id": "kdb-eternix-pf",
   "metric_id": null,
   "source_id": "be_sk_eternix_80mw",
@@ -720,7 +729,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e081",
+  "id": "be-e082",
   "relationship_id": "southern-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -729,7 +738,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e082",
+  "id": "be-e083",
   "relationship_id": "duke-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -738,7 +747,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e083",
+  "id": "be-e084",
   "relationship_id": "exelon-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -747,7 +756,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e084",
+  "id": "be-e085",
   "relationship_id": "bloom-skecoplant",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -756,7 +765,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e085",
+  "id": "be-e086",
   "relationship_id": "bloom-skecoplant",
   "metric_id": null,
   "source_id": "be_sk_500mw_2023",
@@ -765,16 +774,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e086",
-  "relationship_id": "bloom-skamericas",
+  "id": "be-e087",
+  "relationship_id": "skecoplant-americas",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
   "evidence_type": "direct",
-  "evidence": "",
+  "evidence": "Bloom 의 상거래 상대는 SK에코플랜트이고 미국 현장 실행은 이 법인이 맡는다",
   "hypothesis_id": null
  },
  {
-  "id": "be-e087",
+  "id": "be-e088",
   "relationship_id": "bloom-eternix",
   "metric_id": null,
   "source_id": "be_sk_eternix_80mw",
@@ -783,7 +792,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e088",
+  "id": "be-e089",
+  "relationship_id": "eternix-80mw-spv",
+  "metric_id": null,
+  "source_id": "be_sk_eternix_80mw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e090",
   "relationship_id": "bloom-aep",
   "metric_id": null,
   "source_id": "be_aep_1gw",
@@ -792,7 +810,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e089",
+  "id": "be-e091",
   "relationship_id": "bloom-aep",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -801,7 +819,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e090",
+  "id": "be-e092",
   "relationship_id": "aepohio-aws",
   "metric_id": null,
   "source_id": "aep_ohio_release",
@@ -810,7 +828,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e091",
+  "id": "be-e093",
   "relationship_id": "aepohio-cologix",
   "metric_id": null,
   "source_id": "aep_ohio_release",
@@ -819,7 +837,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e092",
+  "id": "be-e094",
   "relationship_id": "bloom-oracle",
   "metric_id": null,
   "source_id": "be_oracle_28gw",
@@ -828,7 +846,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e093",
+  "id": "be-e095",
   "relationship_id": "bloom-oracle",
   "metric_id": null,
   "source_id": "be_oracle_2025",
@@ -837,8 +855,8 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e094",
-  "relationship_id": "bloom-jupiter",
+  "id": "be-e096",
+  "relationship_id": "oracle-jupiter",
   "metric_id": null,
   "source_id": "oracle_jupiter",
   "evidence_type": "direct",
@@ -846,7 +864,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e095",
+  "id": "be-e097",
+  "relationship_id": "bloom-jupiter",
+  "metric_id": null,
+  "source_id": "oracle_jupiter",
+  "evidence_type": "direct",
+  "evidence": "상거래는 오라클을 거치고 설비는 현장으로 직접 간다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e098",
   "relationship_id": "bloom-equinix",
   "metric_id": null,
   "source_id": "be_equinix_100mw",
@@ -855,7 +882,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e096",
+  "id": "be-e099",
   "relationship_id": "bloom-nebius",
   "metric_id": null,
   "source_id": "nebius_be_328mw",
@@ -864,7 +891,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e097",
+  "id": "be-e100",
   "relationship_id": "bloom-coreweave",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -873,7 +900,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e098",
+  "id": "be-e101",
   "relationship_id": "bloom-intel",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -882,7 +909,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e099",
+  "id": "be-e102",
   "relationship_id": "bloom-att",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -891,7 +918,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e100",
+  "id": "be-e103",
   "relationship_id": "bloom-verizon",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -900,7 +927,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e101",
+  "id": "be-e104",
   "relationship_id": "bloom-quanta",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -909,7 +936,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e102",
+  "id": "be-e105",
   "relationship_id": "bloom-walmart",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -918,7 +945,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e103",
+  "id": "be-e106",
   "relationship_id": "bloom-homedepot",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -927,7 +954,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e104",
+  "id": "be-e107",
   "relationship_id": "bloom-ferrari",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -936,7 +963,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e105",
+  "id": "be-e108",
   "relationship_id": "bloom-fedex",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -945,7 +972,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e106",
+  "id": "be-e109",
   "relationship_id": "bloom-be24c2",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -954,7 +981,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e107",
+  "id": "be-e110",
   "relationship_id": "bloom-be24c3",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -963,7 +990,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e108",
+  "id": "be-e111",
   "relationship_id": "bloom-be26c1",
   "metric_id": null,
   "source_id": "be_10q_2026q2",

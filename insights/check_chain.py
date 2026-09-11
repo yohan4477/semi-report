@@ -10,6 +10,7 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C6 BOM 구성 합이 총액 범위 안인가
   C7 수량 없는 계약에서 단가를 뽑았나
   C8 주장에 주어·근거등급·출처가 붙었나
+  C9 다운스트림 관계에 층이 붙었나
 """
 import io, json, os, sys
 
@@ -25,6 +26,7 @@ EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
 OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
                   'NOT_YET_ACTIVE', 'UNKNOWN'])
 REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
+TIER = set(['CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
 PCT = set(['%', 'percent'])
 
 fails = []
@@ -98,6 +100,11 @@ def main():
                 fail(w, u'evidence_level 이 %r' % r.get('evidence_level'))
             if r.get('status') not in REL_STATUS:
                 fail(w, u'status 가 %r' % r.get('status'))
+            # C9 — 다운스트림은 층이 있어야 한다. 없으면 전부 한 홉으로 납작해진다
+            if r.get('lane') == 'DOWNSTREAM' and r.get('target_tier') not in TIER:
+                fail(w, u'다운스트림인데 target_tier 가 %r' % r.get('target_tier'))
+            if r.get('lane') != 'DOWNSTREAM' and r.get('target_tier'):
+                fail(w, u'다운스트림이 아닌데 target_tier 가 붙었다')
 
         O = {}
         latest = {}

@@ -135,8 +135,9 @@ R = [
  ('bloom-sk-jv', BE, 'bloom-sk-fuel-cell', 'JV_ASSEMBLY', 'CORPORATE', 'Assembly',
   '한국 완제품 조립', '기술·지분', 'JV', '2019-01-01', None, 'ACTIVE', 'CONFIRMED',
   None, None, ['be_10k_fy2025'], '2020 가동, 2023 범위를 full assembly 로 확대'),
- ('aepohio-aep', 'aep-ohio', 'aep', 'SUBSIDIARY_OF', 'CORPORATE', 'Utility', None,
-  '자회사', '모회사', None, None, 'ACTIVE', 'CONFIRMED', None, None, ['aep_ohio_release'], None),
+ ('aep-aepohio', 'aep', 'aep-ohio', 'OPERATES_THROUGH', 'DOWNSTREAM', 'Utility',
+  '오하이오 온사이트 프로젝트 운영', '모회사', '운영 자회사', None, None, 'ACTIVE', 'CONFIRMED',
+  None, None, ['aep_ohio_release'], '기업 구조이자 전력이 흘러가는 한 층이다'),
  ('borderplex-jupiter', 'borderplex', 'project-jupiter', 'DEVELOPS', 'DOWNSTREAM', 'Project',
   '부지·개발', '개발사', '프로젝트', '2026-04-27', None, 'ACTIVE', 'CONFIRMED', None, None,
   ['oracle_jupiter'], None),
@@ -148,6 +149,10 @@ R = [
   'Energy Server·설치', '제조사', '계약상 고객·자산 보유', '2025-01-01', None, 'ACTIVE',
   'CONFIRMED', None, None, ['be_10k_fy2025'],
   '계약상 고객이다. 스폰서(Brookfield)와도, 최종 사용자와도 다른 주체다'),
+ ('fundjv-spv', 'brookfield-fund-jvs', 'bfjv-spv-unknown', 'HOLDS_PROJECT', 'DOWNSTREAM',
+  'Project', 'AI 인프라 프로젝트 자산', '펀드 JV', '프로젝트 법인', '2025-01-01', None,
+  'ACTIVE', 'UNDISCLOSED', None, None, ['be_10k_fy2025'],
+  '원문이 펀드 JV 아래 프로젝트·SPV 층을 말하지만 법인명은 공개되지 않았다'),
  ('kdb-eternix-pf', 'kdb', 'sk-eternix', 'PROJECT_FINANCE', 'DOWNSTREAM', 'Financing',
   '80MW 프로젝트 금융', '주선 금융기관', '개발사', '2024-01-01', '2025-12-31', 'ACTIVE',
   'CONFIRMED', None, None, ['be_sk_eternix_80mw'], None),
@@ -165,12 +170,16 @@ R = [
   'EPC / Distribution', 'Energy Server 유통·EPC', '제조사', '유통·EPC', '2019-01-01', None,
   'ACTIVE', 'CONFIRMED', None, None, ['be_10k_fy2025', 'be_sk_500mw_2023'],
   '과거 500MW take-or-pay 와 후속 물량 약정. 2025-07-10 까지 특수관계였다'),
- ('bloom-skamericas', BE, 'sk-ecoplant-americas', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
-  'EPC / Distribution', '미국 시공 관리·EPC·금융 서비스', '제조사', 'EPC', None, None,
-  'ACTIVE', 'CONFIRMED', None, None, ['be_10k_fy2025'], None),
+ ('skecoplant-americas', 'sk-ecoplant', 'sk-ecoplant-americas', 'EXECUTES_THROUGH',
+  'DOWNSTREAM', 'EPC / Distribution', '미국 시공 관리·EPC·금융 서비스', '전략 파트너',
+  '미국 실행 법인', None, None, 'ACTIVE', 'CONFIRMED', None, None, ['be_10k_fy2025'],
+  'Bloom 의 상거래 상대는 SK에코플랜트이고 미국 현장 실행은 이 법인이 맡는다'),
  ('bloom-eternix', BE, 'sk-eternix', 'SELLS_TO', 'DOWNSTREAM', 'EPC / Distribution',
   'Energy Server', '제조사', '개발·유통', '2024-03-01', None, 'ACTIVE', 'CONFIRMED',
   None, None, ['be_sk_eternix_80mw'], '충주 40MW + 대소원 40MW'),
+ ('eternix-80mw-spv', 'sk-eternix', 'sk-eternix-80mw', 'DEVELOPS', 'DOWNSTREAM', 'Project',
+  '충주 40MW + 대소원 40MW 연료전지 단지', '개발·유통', '프로젝트', '2024-11-07', None,
+  'ACTIVE', 'CONFIRMED', None, None, ['be_sk_eternix_80mw'], None),
  # ── 다운스트림: 유틸리티 ──────────────────────────────────────────
  ('bloom-aep', BE, 'aep', 'SELLS_TO', 'DOWNSTREAM', 'Utility', 'Energy Server 조달 계약',
   '제조사', '유틸리티·채널·금융', '2024-11-14', None, 'ACTIVE', 'CONFIRMED', None, None,
@@ -186,9 +195,12 @@ R = [
  ('bloom-oracle', BE, 'oracle', 'DIRECT_CUSTOMER', 'DOWNSTREAM', 'Data center',
   'AI 데이터센터용 Energy Server', '제조사', '최종 사용자', '2025-07-24', None, 'ACTIVE',
   'CONFIRMED', None, None, ['be_oracle_28gw', 'be_oracle_2025'], None),
+ ('oracle-jupiter', 'oracle', 'project-jupiter', 'DEPLOYS_AT', 'DOWNSTREAM', 'Project',
+  '뉴멕시코 연료전지 마이크로그리드 부지', '최종 사용자', '프로젝트', '2026-04-27', None,
+  'PLANNED', 'CONFIRMED', None, None, ['oracle_jupiter'], '최대 2.45GW 계획'),
  ('bloom-jupiter', BE, 'project-jupiter', 'SUPPLIES', 'DOWNSTREAM', 'Project',
-  '연료전지 마이크로그리드', '제조사', '프로젝트', '2026-04-27', None, 'PLANNED', 'CONFIRMED',
-  None, None, ['oracle_jupiter'], '최대 2.45GW 계획'),
+  '연료전지 설비 공급', '제조사', '프로젝트', '2026-04-27', None, 'PLANNED', 'CONFIRMED',
+  None, None, ['oracle_jupiter'], '상거래는 오라클을 거치고 설비는 현장으로 직접 간다'),
  ('bloom-equinix', BE, 'equinix', 'DIRECT_CUSTOMER', 'DOWNSTREAM', 'Data center',
   'Energy Server', '제조사', '최종 사용자', '2025-02-20', None, 'ACTIVE', 'CONFIRMED',
   None, None, ['be_equinix_100mw'], None),
@@ -229,12 +241,45 @@ R = [
 ]
 
 
+# 다운스트림 층 — 상대가 사슬의 어느 칸인지. 코드가 아니라 데이터로 정한다
+TIER = {
+ 'bloom-fundjv-sales': 'CONTRACTUAL_CUSTOMER',
+ 'brookfield-fundjv': 'INTERMEDIARY',
+ 'fundjv-spv': 'PROJECT',
+ 'kdb-eternix-pf': 'INTERMEDIARY',
+ 'southern-bloom-legacy': 'INTERMEDIARY',
+ 'duke-bloom-legacy': 'INTERMEDIARY',
+ 'exelon-bloom-legacy': 'INTERMEDIARY',
+ 'bloom-skecoplant': 'CONTRACTUAL_CUSTOMER',
+ 'skecoplant-americas': 'INTERMEDIARY',
+ 'bloom-eternix': 'CONTRACTUAL_CUSTOMER',
+ 'eternix-80mw-spv': 'PROJECT',
+ 'bloom-aep': 'CONTRACTUAL_CUSTOMER',
+ 'aep-aepohio': 'INTERMEDIARY',
+ 'aepohio-aws': 'END_USER',
+ 'aepohio-cologix': 'END_USER',
+ 'bloom-oracle': 'CONTRACTUAL_CUSTOMER',
+ 'oracle-jupiter': 'PROJECT',
+ 'bloom-jupiter': 'PROJECT',
+ 'borderplex-jupiter': 'PROJECT',
+ 'bloom-be24c2': 'CONTRACTUAL_CUSTOMER',
+ 'bloom-be24c3': 'CONTRACTUAL_CUSTOMER',
+ 'bloom-be26c1': 'CONTRACTUAL_CUSTOMER',
+}
+DIRECT_END_USER = ['bloom-equinix', 'bloom-nebius', 'bloom-coreweave', 'bloom-intel',
+                   'bloom-att', 'bloom-verizon', 'bloom-quanta', 'bloom-walmart',
+                   'bloom-homedepot', 'bloom-ferrari', 'bloom-fedex']
+for _rid in DIRECT_END_USER:
+    TIER[_rid] = 'END_USER'
+
+
 def rel(t):
     return {'id': t[0], 'source_entity': t[1], 'target_entity': t[2],
             'relationship_type': t[3], 'lane': t[4], 'subsystem': t[5], 'component': t[6],
             'source_role': t[7], 'target_role': t[8], 'valid_from': t[9], 'valid_to': t[10],
             'status': t[11], 'evidence_level': t[12],
             'economic_importance': t[13], 'capacity_criticality': t[14],
+            'target_tier': TIER.get(t[0]) if t[4] == 'DOWNSTREAM' else None,
             'confidence_band': {'CONFIRMED': 'high', 'ESTIMATED': 'medium'}.get(t[12], 'low'),
             'flows': [], 'source_ids': t[15], 'notes': t[16]}
 

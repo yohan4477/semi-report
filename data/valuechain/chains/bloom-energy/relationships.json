@@ -15,6 +15,7 @@
   "evidence_level": "UNDISCLOSED",
   "economic_importance": "LOW",
   "capacity_criticality": "HIGH",
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -38,6 +39,7 @@
   "evidence_level": "UNDISCLOSED",
   "economic_importance": "LOW",
   "capacity_criticality": "HIGH",
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -61,6 +63,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -84,6 +87,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -107,6 +111,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -130,6 +135,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": "VERY_HIGH",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -153,6 +159,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": "MEDIUM",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -176,6 +183,7 @@
   "evidence_level": "INFERRED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -199,6 +207,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -222,6 +231,7 @@
   "evidence_level": "ESTIMATED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "medium",
   "flows": [],
   "source_ids": [
@@ -245,6 +255,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -268,6 +279,7 @@
   "evidence_level": "INFERRED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -291,6 +303,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -314,6 +327,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -338,6 +352,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -361,6 +376,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -384,6 +400,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -407,6 +424,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -430,6 +448,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -453,6 +472,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "MEDIUM",
   "capacity_criticality": "MEDIUM",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -477,6 +497,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -500,6 +521,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -523,6 +545,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -546,6 +569,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -569,6 +593,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -592,6 +617,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -615,6 +641,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -638,6 +665,7 @@
   "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
   "economic_importance": "LOW",
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -661,6 +689,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": "LOW",
   "capacity_criticality": "VERY_HIGH",
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -685,6 +714,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -708,6 +738,7 @@
   "evidence_level": "INFERRED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -732,6 +763,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -740,27 +772,28 @@
   "notes": "2020 가동, 2023 범위를 full assembly 로 확대"
  },
  {
-  "id": "aepohio-aep",
-  "source_entity": "aep-ohio",
-  "target_entity": "aep",
-  "relationship_type": "SUBSIDIARY_OF",
-  "lane": "CORPORATE",
+  "id": "aep-aepohio",
+  "source_entity": "aep",
+  "target_entity": "aep-ohio",
+  "relationship_type": "OPERATES_THROUGH",
+  "lane": "DOWNSTREAM",
   "subsystem": "Utility",
-  "component": null,
-  "source_role": "자회사",
-  "target_role": "모회사",
+  "component": "오하이오 온사이트 프로젝트 운영",
+  "source_role": "모회사",
+  "target_role": "운영 자회사",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "aep_ohio_release"
   ],
-  "notes": null
+  "notes": "기업 구조이자 전력이 흘러가는 한 층이다"
  },
  {
   "id": "borderplex-jupiter",
@@ -778,6 +811,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "PROJECT",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -801,6 +835,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -824,12 +859,37 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "be_10k_fy2025"
   ],
   "notes": "계약상 고객이다. 스폰서(Brookfield)와도, 최종 사용자와도 다른 주체다"
+ },
+ {
+  "id": "fundjv-spv",
+  "source_entity": "brookfield-fund-jvs",
+  "target_entity": "bfjv-spv-unknown",
+  "relationship_type": "HOLDS_PROJECT",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Project",
+  "component": "AI 인프라 프로젝트 자산",
+  "source_role": "펀드 JV",
+  "target_role": "프로젝트 법인",
+  "valid_from": "2025-01-01",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "PROJECT",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": "원문이 펀드 JV 아래 프로젝트·SPV 층을 말하지만 법인명은 공개되지 않았다"
  },
  {
   "id": "kdb-eternix-pf",
@@ -847,6 +907,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -870,6 +931,7 @@
   "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -893,6 +955,7 @@
   "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -916,6 +979,7 @@
   "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -939,6 +1003,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -948,27 +1013,28 @@
   "notes": "과거 500MW take-or-pay 와 후속 물량 약정. 2025-07-10 까지 특수관계였다"
  },
  {
-  "id": "bloom-skamericas",
-  "source_entity": "bloom-energy",
+  "id": "skecoplant-americas",
+  "source_entity": "sk-ecoplant",
   "target_entity": "sk-ecoplant-americas",
-  "relationship_type": "DISTRIBUTION_PARTNERSHIP",
+  "relationship_type": "EXECUTES_THROUGH",
   "lane": "DOWNSTREAM",
   "subsystem": "EPC / Distribution",
   "component": "미국 시공 관리·EPC·금융 서비스",
-  "source_role": "제조사",
-  "target_role": "EPC",
+  "source_role": "전략 파트너",
+  "target_role": "미국 실행 법인",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "INTERMEDIARY",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "be_10k_fy2025"
   ],
-  "notes": null
+  "notes": "Bloom 의 상거래 상대는 SK에코플랜트이고 미국 현장 실행은 이 법인이 맡는다"
  },
  {
   "id": "bloom-eternix",
@@ -986,12 +1052,37 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "be_sk_eternix_80mw"
   ],
   "notes": "충주 40MW + 대소원 40MW"
+ },
+ {
+  "id": "eternix-80mw-spv",
+  "source_entity": "sk-eternix",
+  "target_entity": "sk-eternix-80mw",
+  "relationship_type": "DEVELOPS",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Project",
+  "component": "충주 40MW + 대소원 40MW 연료전지 단지",
+  "source_role": "개발·유통",
+  "target_role": "프로젝트",
+  "valid_from": "2024-11-07",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "PROJECT",
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_sk_eternix_80mw"
+  ],
+  "notes": null
  },
  {
   "id": "bloom-aep",
@@ -1009,6 +1100,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1033,6 +1125,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1056,6 +1149,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1079,6 +1173,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1088,13 +1183,37 @@
   "notes": null
  },
  {
+  "id": "oracle-jupiter",
+  "source_entity": "oracle",
+  "target_entity": "project-jupiter",
+  "relationship_type": "DEPLOYS_AT",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Project",
+  "component": "뉴멕시코 연료전지 마이크로그리드 부지",
+  "source_role": "최종 사용자",
+  "target_role": "프로젝트",
+  "valid_from": "2026-04-27",
+  "valid_to": null,
+  "status": "PLANNED",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "PROJECT",
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "oracle_jupiter"
+  ],
+  "notes": "최대 2.45GW 계획"
+ },
+ {
   "id": "bloom-jupiter",
   "source_entity": "bloom-energy",
   "target_entity": "project-jupiter",
   "relationship_type": "SUPPLIES",
   "lane": "DOWNSTREAM",
   "subsystem": "Project",
-  "component": "연료전지 마이크로그리드",
+  "component": "연료전지 설비 공급",
   "source_role": "제조사",
   "target_role": "프로젝트",
   "valid_from": "2026-04-27",
@@ -1103,12 +1222,13 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "PROJECT",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "oracle_jupiter"
   ],
-  "notes": "최대 2.45GW 계획"
+  "notes": "상거래는 오라클을 거치고 설비는 현장으로 직접 간다"
  },
  {
   "id": "bloom-equinix",
@@ -1126,6 +1246,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1149,6 +1270,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1172,6 +1294,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1195,6 +1318,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1218,6 +1342,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1241,6 +1366,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1264,6 +1390,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1287,6 +1414,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1310,6 +1438,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1333,6 +1462,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1356,6 +1486,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "END_USER",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1379,6 +1510,7 @@
   "evidence_level": "UNDISCLOSED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -1402,6 +1534,7 @@
   "evidence_level": "UNDISCLOSED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -1425,6 +1558,7 @@
   "evidence_level": "UNDISCLOSED",
   "economic_importance": null,
   "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
