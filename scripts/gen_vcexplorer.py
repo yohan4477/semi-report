@@ -194,26 +194,53 @@ box-shadow:0 3px 12px rgba(20,26,40,.22)}
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
+/* 좁은 화면 — 우선순위는 그래프 > 공급원·매출원 띠 > 연도 > 나머지 길찾기.
+   그래프가 첫 화면의 70% 이상을 차지하도록 머리줄 한 줄(≈40px)·띠 두 줄(≈56px)·
+   연도 한 줄(≈28px)만 남긴다. 사슬 단계 칸과 공급원·매출원 축은 어느 크기에서도 안 뺀다 */
+.iconbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink2);
+border-radius:5px;width:30px;height:30px;padding:0;font:inherit;font-size:14px;
+cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.iconbtn.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
+.iconbtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;
+stroke-linecap:round;stroke-linejoin:round}
+.searchpop{position:absolute;left:0;right:0;top:100%;padding:6px 8px;background:var(--paper);
+border-bottom:1px solid var(--line);z-index:50;box-shadow:0 6px 16px rgba(20,26,40,.12)}
+.searchpop .search{max-width:none;width:100%}
+.searchpop .sug{top:38px}
+.yearbar{display:flex;align-items:center;justify-content:center;gap:4px;padding:3px 8px;
+background:var(--paper);border-bottom:1px solid var(--line);font-size:12.5px;
+font-weight:700;color:var(--ink1);user-select:none}
+.yearbar button{border:0;background:transparent;color:var(--ink2);font:inherit;
+font-size:16px;line-height:1;padding:2px 10px;cursor:pointer}
+.yearbar button:disabled{color:var(--line);cursor:default}
+.yearbar .yv{min-width:84px;text-align:center}
 @media (max-width:720px){
   .main{flex-direction:column}
-  .canvas{flex:1 1 auto;min-height:44vh}
+  .canvas{flex:1 1 auto;min-height:60vh}
   .drw{width:100%;max-width:none;min-width:0;flex:0 0 52%;border-left:0;
        border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(20,26,40,.1);
        padding:10px 14px 28px}
   .drw h3{font-size:14.5px}
   .legend{display:none}
-  .scrub{padding:7px 10px}
+  .crumb{display:none}
   .sw th:first-child{width:auto}
-  /* 좁은 화면 머리줄 — 두 줄로 접고 어느 것도 화면 밖으로 안 나간다 */
-  .top{gap:6px;padding:8px 10px;overflow-x:hidden;flex-wrap:wrap}
-  .brand{font-size:13px;flex:0 0 auto}
+  /* 머리줄 한 줄 — 이름 · 콤팩트 분절 탭 · 검색 아이콘 · 서랍 아이콘 */
+  .top{gap:6px;padding:5px 8px;flex-wrap:nowrap;align-items:center;height:40px}
+  .brand{font-size:12.5px;flex:0 0 auto;letter-spacing:-.3px}
   .brand small{display:none}
-  .search{flex:1 1 120px;min-width:0;max-width:none;order:1}
-  .modes{order:2;flex:1 1 100%}
-  .modes button{flex:1;padding:6px 4px;font-size:12px;min-width:0}
+  .modes{flex:1 1 auto;min-width:0;border-radius:6px}
+  .modes button{flex:1;padding:4px 0;font-size:11.5px;min-width:0;letter-spacing:-.3px}
   .spacer{display:none}
-  .top .btn{order:3;flex:1 1 0;padding:6px 6px;font-size:12px;min-width:0;
-            white-space:nowrap}
+  /* 띠 — 이름은 고정, 칩은 가로로 민다. 두 줄에 한 줄씩 */
+  .axis{padding:4px 8px;gap:3px;max-height:none;overflow:visible}
+  .axrow{gap:6px;align-items:center}
+  .axrow b{flex:0 0 38px;font-size:11px;padding-top:0}
+  .axchips{flex-wrap:nowrap;overflow-x:auto;min-width:0;padding-bottom:1px;
+           scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .axchips::-webkit-scrollbar{display:none}
+  .axchip{padding:1px 8px;font-size:11px;flex:0 0 auto}
+  .axnote{padding-left:0;font-size:11px;white-space:nowrap;overflow:hidden;
+          text-overflow:ellipsis}
 }
 '''
 
@@ -1903,16 +1930,27 @@ function App(){
   // 상자 높이는 어림으로 먼저 그리고, 브라우저가 잰 높이로 한 번 더 앉힌다. 어림이
   // 실제보다 낮으면 선이 지나는 빈 자리를 상자가 침범한다
   var p2 = useState({}), sizes = p2[0], setSizes = p2[1];
+  // 좁은 화면인가. 돌리거나 창을 줄이면 따라간다
+  var q2 = useState(window.innerWidth < 720), narrow = q2[0], setNarrow = q2[1];
+  var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
+  useEffect(function(){
+    function onR(){ setNarrow(window.innerWidth < 720); }
+    window.addEventListener('resize', onR);
+    return function(){ window.removeEventListener('resize', onR); };
+  }, []);
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
-      if (window.innerWidth < 720 && rf.getNodes && !open.length) {
-        // 첫 화면은 읽을 수 있는 크기로. 타겟을 가운데 놓고 양옆 칸은 가장자리에 걸친다
+      if (window.innerWidth < 720 && rf.getNodes && rf.setViewport) {
+        // 첫 화면 — 칸 머리글을 맨 위에 붙이고 타겟 칸을 가운데 두어 양옆 칸이 함께
+        // 보인다. 타겟을 세로 가운데에 놓으면 위 절반이 빈 판이 된다
         var me0 = null;
         rf.getNodes().forEach(function(n){ if (n.id === focal) me0 = n; });
         if (me0) {
-          rf.setCenter(me0.position.x + COL_W / 2, me0.position.y + 24,
-                       { zoom:1, duration:240 });
+          var vw = window.innerWidth;
+          var z = Math.min(1, Math.max(.55, (vw - 12) / (3 * COL_W + 2 * COL_GAP)));
+          rf.setViewport({ x: vw / 2 - (me0.position.x + COL_W / 2) * z, y: 6, zoom: z },
+                         { duration:240 });
           return;
         }
       }
@@ -2018,32 +2056,52 @@ function App(){
       return REL_BY_ENT[id] && s.indexOf(q.toLowerCase()) >= 0;
     }).slice(0, 14) : [];
 
-  var top = h('div', { key:'top', className:'top' }, [
-    h('div', { key:'b', className:'brand' }, [ '밸류체인 탐색기',
-      h('small', { key:'s' }, '회사를 고르고 눌러 넓히고 시점을 옮긴다') ]),
-    h('div', { key:'s', className:'search' }, [
-      h('input', { key:'i', value:q, placeholder:'회사 이름으로 찾기',
-        onChange: function(ev){ setQ(ev.target.value); } }),
-      hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(id){
-        return h('div', { key:id, onClick: function(){ setQ(''); goFocal(id); } }, [
-          h('span', { key:'a' }, withFlag(id)),
-          h('span', { key:'b', className:'k' },
-            (ENT[id].categories || []).map(subKo).join(' · ')) ]);
-      })) : null
-    ]),
-    h('div', { key:'m', className:'modes' }, [
-      ['roster', '회사'], ['current', '현재'], ['timeline', '시점'], ['bom', '원가'],
-      ['evidence', '근거']
-    ].map(function(x){
-      return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
-        onClick: function(){ setMode(x[0]); } }, x[1]);
-    })),
-    h('div', { key:'sp', className:'spacer' }),
-
-    (mode === 'current' || mode === 'timeline')
-      ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
-      onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
+  var searchBox = h('div', { key:'s', className:'search' }, [
+    h('input', { key:'i', value:q, placeholder:'회사 이름으로 찾기', autoFocus: narrow,
+      onChange: function(ev){ setQ(ev.target.value); } }),
+    hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(id){
+      return h('div', { key:id, onClick: function(){
+        setQ(''); setSopen(false); goFocal(id); } }, [
+        h('span', { key:'a' }, withFlag(id)),
+        h('span', { key:'b', className:'k' },
+          (ENT[id].categories || []).map(subKo).join(' · ')) ]);
+    })) : null
   ]);
+  var modes = h('div', { key:'m', className:'modes' }, [
+    ['roster', '회사'], ['current', '현재'], ['timeline', '시점'], ['bom', '원가'],
+    ['evidence', '근거']
+  ].map(function(x){
+    return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
+      onClick: function(){ setMode(x[0]); } }, x[1]);
+  }));
+  var ICON_SEARCH = h('svg', { viewBox:'0 0 24 24' }, [
+    h('circle', { key:'c', cx:11, cy:11, r:7 }), h('path', { key:'l', d:'M20 20l-3.5-3.5' }) ]);
+  var ICON_DRAWER = h('svg', { viewBox:'0 0 24 24' }, [
+    h('rect', { key:'r', x:3, y:4, width:18, height:16, rx:2 }),
+    h('path', { key:'l', d:'M15 4v16M17.5 9h1M17.5 12h1' }) ]);
+  var canDrw = mode === 'current' || mode === 'timeline';
+  // 좁은 화면 머리줄은 한 줄이다 — 검색은 아이콘으로 접고 서랍도 아이콘, 탭은 분절 컨트롤
+  var top = narrow
+    ? h('div', { key:'top', className:'top' }, [
+        h('div', { key:'b', className:'brand' }, '밸류체인'),
+        modes,
+        h('button', { key:'sb', className:'iconbtn' + (sopen ? ' on' : ''), title:'회사 찾기',
+          'aria-label':'회사 찾기',
+          onClick: function(){ setSopen(!sopen); if (sopen) setQ(''); } }, ICON_SEARCH),
+        canDrw ? h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
+          title:'근거 서랍', 'aria-label':'근거 서랍',
+          onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) : null,
+        sopen ? h('div', { key:'sp', className:'searchpop' }, searchBox) : null
+      ])
+    : h('div', { key:'top', className:'top' }, [
+        h('div', { key:'b', className:'brand' }, [ '밸류체인 탐색기',
+          h('small', { key:'s' }, '회사를 고르고 눌러 넓히고 시점을 옮긴다') ]),
+        searchBox,
+        modes,
+        h('div', { key:'sp', className:'spacer' }),
+        canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
+          onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
+      ]);
 
   var crumb = h('div', { key:'c', className:'crumb' }, path.map(function(id, i){
     return h('span', { key:id, onClick: function(){ goFocal(id); } },
@@ -2065,7 +2123,16 @@ function App(){
     if (i > YEARS.length - 1) i = YEARS.length - 1;
     if (YEARS[i] !== year) setYear(YEARS[i]);
   }
-  var scrub = h('div', { key:'s', className:'scrub', tabIndex:0,
+  // 좁은 화면 연도는 ‹ 2026 현재 › 한 줄이다. 굴림·끌기 대신 누른다
+  var yi = YEARS.indexOf(year);
+  var yearbar = h('div', { key:'s', className:'yearbar' }, [
+    h('button', { key:'l', disabled: yi <= 0, 'aria-label':'이전 해',
+      onClick: function(){ stepYear(-1); } }, '\u2039'),
+    h('span', { key:'v', className:'yv' }, year === NOW ? year + ' 현재' : year),
+    h('button', { key:'r', disabled: yi >= YEARS.length - 1, 'aria-label':'다음 해',
+      onClick: function(){ stepYear(1); } }, '\u203a')
+  ]);
+  var scrub = narrow ? yearbar : h('div', { key:'s', className:'scrub', tabIndex:0,
     title:'굴리거나 끌어서 연도를 옮긴다',
     onWheel: function(ev){ stepYear((ev.deltaY || ev.deltaX) > 0 ? 1 : -1); },
     onMouseDown: function(ev){ yearAtX(ev); },
