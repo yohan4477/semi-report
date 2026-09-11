@@ -80,6 +80,20 @@ box-shadow:0 8px 24px rgba(20,26,40,.1)}
 font:inherit;font-size:12.5px;cursor:pointer;border-right:1px solid var(--line)}
 .modes button:last-child{border-right:0}
 .modes button.on{background:var(--ink1);color:#fff}
+.modes button .car{font-size:9px;margin-left:5px;opacity:.7}
+/* 회사 목록 — 머리줄 아래로 펼쳐지고 많아지면 안에서 민다 */
+.menu{position:absolute;top:100%;left:0;right:0;max-height:62vh;overflow:auto;
+background:var(--paper);border-bottom:1px solid var(--line);z-index:55;
+box-shadow:0 10px 24px rgba(20,26,40,.14);padding:4px 0}
+.menu .row{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;
+font-size:13px;border-bottom:1px solid var(--line2);transition:background .28s ease-out;
+-webkit-tap-highlight-color:transparent}
+.menu .row:last-child{border-bottom:0}
+@media (hover:hover){ .menu .row:hover{background:#f0f1f4;transition-duration:.08s} }
+.menu .row:active{background:#e3e5ea;transition-duration:.05s}
+.menu .row.cur{font-weight:700}
+.menu .row .k{color:var(--ink3);font-size:11.5px;margin-left:auto;white-space:nowrap}
+.menu .hd{padding:6px 16px 2px;font-size:11px;color:var(--ink4)}
 .spacer{flex:1}
 .btn{border:1px solid var(--line);background:var(--paper);color:var(--ink2);
 padding:6px 10px;border-radius:5px;font:inherit;font-size:12.5px;cursor:pointer}
@@ -1140,7 +1154,7 @@ function readUrl(first){
   if (YEARS.indexOf(y) < 0) y = NOW;
   // 장을 열면 늘 회사 목록부터다. 주소에 탭이 적혀 있을 때만 그 탭으로 연다
   // (새로고침·북마크로 들어와도 같다 — 주소에 남은 focal·year 는 그대로 지킨다)
-  var md = q.get('mode') || (first ? 'roster' : 'current');
+  var md = q.get('mode') || 'current';
   return { focal: q.get('focal') || HOME, year: y,
            mode: md,
            open: (q.get('open') || '').split(',').filter(Boolean),
@@ -2096,6 +2110,7 @@ function App(){
   // 좁은 화면인가. 돌리거나 창을 줄이면 따라간다
   var q2 = useState(window.innerWidth < 720), narrow = q2[0], setNarrow = q2[1];
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
+  var u2 = useState(false), menu = u2[0], setMenu = u2[1];
   // 회사 목록에서 고른 뒤 판이 설 때까지. 자리 잡기가 끝나면 fit 효과가 내린다
   var s2 = useState(null), busy = s2[0], setBusy = s2[1];
   // 판의 이동·확대 — 머리글 띠가 가로로 따라가게 한다
@@ -2251,12 +2266,29 @@ function App(){
   ]);
   // 탭은 회사·현재 둘뿐이다. 시점·원가·근거 화면은 코드에 남아 주소(mode=)로는 열리지만
   // 탭에서 뺐다(2026-09-11) — 첫 화면에서 고를 것이 셋이나 더 있으면 판이 뒤로 밀린다
+  // 왼쪽은 지금 보는 회사 이름(판 탭), 오른쪽은 「회사」 — 누르면 아래로 목록이 펼쳐진다
   var modes = h('div', { key:'m', className:'modes' }, [
-    ['roster', '회사'], ['current', '현재']
-  ].map(function(x){
-    return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
-      onClick: function(){ setMode(x[0]); } }, x[1]);
-  }));
+    h('button', { key:'cur', className: (mode === 'current' && !menu) ? 'on' : '',
+      onClick: function(){ setMode('current'); setMenu(false); } }, nm(focal)),
+    h('button', { key:'co', className: menu ? 'on' : '',
+      onClick: function(){ setMenu(!menu); setSopen(false); } },
+      [ '회사', h('span', { key:'c', className:'car' }, menu ? '▲' : '▼') ])
+  ]);
+  // 사슬의 타겟 회사들. 많아지면 목록 안에서 민다
+  var anchors = [];
+  Object.keys(CHAINS).forEach(function(ck){
+    var m = CHAINS[ck].meta || {};
+    if (m.focal_entity && ENT[m.focal_entity]) anchors.push({ id: m.focal_entity, chain: ck });
+  });
+  anchors.sort(function(a, b){ return nm(a.id) < nm(b.id) ? -1 : 1; });
+  var menuBox = menu ? h('div', { key:'menu', className:'menu' }, [
+    h('div', { key:'h', className:'hd' }, '분석한 회사 ' + anchors.length + '곳') ].concat(
+    anchors.map(function(a){
+      return h('div', { key:a.id, className:'row' + (a.id === focal ? ' cur' : ''),
+        onClick: function(){ setMenu(false); setBusy(a.id); setMode('current'); goFocal(a.id); } },
+        [ h('span', { key:'n' }, withFlag(a.id, 'm')),
+          h('span', { key:'k', className:'k' }, chainKo(a.chain)) ]);
+    }))) : null;
   var ICON_SEARCH = h('svg', { viewBox:'0 0 24 24' }, [
     h('circle', { key:'c', cx:11, cy:11, r:7 }), h('path', { key:'l', d:'M20 20l-3.5-3.5' }) ]);
   var ICON_DRAWER = h('svg', { viewBox:'0 0 24 24' }, [
@@ -2274,7 +2306,8 @@ function App(){
         canDrw ? h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
           title:'근거 서랍', 'aria-label':'근거 서랍',
           onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) : null,
-        sopen ? h('div', { key:'sp', className:'searchpop' }, searchBox) : null
+        sopen ? h('div', { key:'sp', className:'searchpop' }, searchBox) : null,
+        menuBox
       ])
     : h('div', { key:'top', className:'top' }, [
         h('div', { key:'b', className:'brand' }, [ '밸류체인 탐색기',
@@ -2283,7 +2316,8 @@ function App(){
         modes,
         h('div', { key:'sp', className:'spacer' }),
         canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
-          onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
+          onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null,
+        menuBox
       ]);
 
   var crumb = h('div', { key:'c', className:'crumb' }, path.map(function(id, i){
