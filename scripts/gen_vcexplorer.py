@@ -138,15 +138,15 @@ min-width:118px;max-width:196px;box-shadow:0 1px 2px rgba(20,26,40,.05);cursor:p
 .nd.grp{background:var(--bg);border-style:dashed}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
-.legend{position:absolute;left:12px;bottom:12px;cursor:pointer;background:rgba(255,255,255,.94);
-border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:11.5px;
-color:var(--ink2);z-index:5;max-width:270px}
-.legend b{display:block;margin-bottom:4px;font-size:11px;color:var(--ink3);font-weight:500}
-.legend i{font-style:normal;display:block;margin:2px 0}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:6px 14px;
+background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
+.legend b{font-size:11px;color:var(--ink4);font-weight:500}
+.legend i{font-style:normal;white-space:nowrap}
 @media (max-width:980px){
   .drw{position:absolute;right:0;top:0;bottom:0;width:88%;max-width:none;z-index:30;
        box-shadow:-8px 0 24px rgba(20,26,40,.12)}
   .legend{display:none}
+  .scrub{padding:7px 10px}
   .sw th:first-child{width:auto}
 }
 '''
@@ -921,18 +921,19 @@ function App(){
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#e3e6ec' }),
       h(Controls, { key:'ct', showInteractive:false })
-    ]),
-    h('div', { key:'lg', className:'legend', onClick: function(){ setLeg(!leg); } },
-      leg ? [
-      h('b', { key:'b' }, '선이 말하는 것 (누르면 접힌다)'),
-      h('i', { key:1 }, '굵은 실선 — 공시로 확인'),
-      h('i', { key:2 }, '갈색 실선 — 추정. 분모가 붙는다'),
-      h('i', { key:3 }, '파선 — 정황 추론'),
-      h('i', { key:4 }, '점선 — 비공개·과거 관측'),
-      h('i', { key:5 }, '물음표 — 관계는 있고 그 해 값이 없다'),
-      h('i', { key:6 }, '왼쪽은 원재료 → 소재·가공 → 부품 → 계통 → 이 회사'),
-      h('i', { key:7 }, '오른쪽은 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
-    ] : [ h('b', { key:'b', style:{ margin:0 } }, '범례') ])
+    ])
+  ]);
+
+  var legend = h('div', { key:'lg', className:'legend' }, [
+    h('b', { key:'b' }, '선'),
+    h('i', { key:1 }, '굵은 실선 공시로 확인'),
+    h('i', { key:2 }, '갈색 실선 추정 (분모 있음)'),
+    h('i', { key:3 }, '파선 정황 추론'),
+    h('i', { key:4 }, '점선 비공개·과거 관측'),
+    h('i', { key:5 }, '? 그 해 값 없음'),
+    h('b', { key:'c' }, '가로'),
+    h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통'),
+    h('i', { key:7 }, '오른쪽 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
   ]);
 
   return h('div', { className:'app' }, [ top, crumb,
@@ -948,7 +949,8 @@ function App(){
             var y = Object.assign({}, x); y[id + '@' + dir] = 1; return y;
           });
         } }) : null
-    ])
+    ]),
+    mode === 'current' ? legend : null
   ]);
 }
 
