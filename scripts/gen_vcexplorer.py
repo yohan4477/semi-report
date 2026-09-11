@@ -1479,8 +1479,8 @@ function App(){
       })) : null
     ]),
     h('div', { key:'m', className:'modes' }, [
-      ['current', '현재'], ['timeline', '시점'], ['bom', '원가'], ['evidence', '근거'],
-      ['roster', '회사']
+      ['roster', '회사'], ['current', '현재'], ['timeline', '시점'], ['bom', '원가'],
+      ['evidence', '근거']
     ].map(function(x){
       return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
         onClick: function(){ setMode(x[0]); } }, x[1]);
