@@ -326,10 +326,12 @@ function place(nodes, edges){
   });
 }
 
-function readUrl(){
+function readUrl(first){
   var q = new URLSearchParams(location.search);
-  // 기본은 늘 가장 최신 해다. 주소에 남은 옛 해가 축에 없으면 버린다
+  // 처음 열 때는 늘 가장 최신 해다. 주소에 옛 해가 남아 있어도 최신으로 연다.
+  // 앱 안에서 오간 뒤(뒤로 가기)에는 그때 보던 해를 지킨다
   var y = q.get('year');
+  if (first && !history.state) y = NOW;
   if (YEARS.indexOf(y) < 0) y = NOW;
   return { focal: q.get('focal') || HOME, year: y,
            mode: q.get('mode') || 'current',
@@ -829,7 +831,7 @@ function Bom(p){
 
 // ── 앱 ──────────────────────────────────────────────────────────────
 function App(){
-  var u0 = readUrl();
+  var u0 = readUrl(true);
   var a = useState(u0.focal), focal = a[0], setFocal = a[1];
   var b = useState(u0.year), year = b[0], setYear = b[1];
   var c = useState(u0.mode), mode = c[0], setMode = c[1];
