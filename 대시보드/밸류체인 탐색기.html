@@ -74,6 +74,9 @@ table.t{border-collapse:collapse;width:100%;font-size:12.5px}
 table.t th,table.t td{border-bottom:1px solid var(--line2);padding:5px 6px;text-align:left;
 vertical-align:top}
 table.t th{color:var(--ink3);font-weight:500;font-size:11.5px}
+/* 좁은 화면에서 나라·이름·유형이 두 줄로 쪼개지면 읽는 데가 아니라 세는 데가 된다.
+   표는 감싼 칸이 가로로 밀린다 */
+table.t th.nw,table.t td.nw{white-space:nowrap}
 .pane{flex:1;overflow:auto;padding:16px 20px 60px;background:var(--paper)}
 .steps{background:#f4f6fa}
 .pane h2{font-size:15px;margin:0 0 4px}
@@ -467,7 +470,45 @@ function ChanEdge(p){
         color:'#39415a' } }, p.label)) : null
   ]);
 }
-var EDGE_TYPES = { chan: ChanEdge };
+// 꺾어지는 자리마다 모서리를 둥글린 직교 경로를 만든다
+function orth(pts, r){
+  var d = 'M ' + pts[0].x + ' ' + pts[0].y;
+  for (var i = 1; i < pts.length - 1; i++){
+    var a = pts[i - 1], b = pts[i], c = pts[i + 1];
+    var d1 = Math.hypot(b.x - a.x, b.y - a.y), d2 = Math.hypot(c.x - b.x, c.y - b.y);
+    var rr = Math.max(0, Math.min(r, d1 / 2, d2 / 2));
+    if (!rr) continue;
+    var p1 = { x: b.x + (a.x - b.x) / d1 * rr, y: b.y + (a.y - b.y) / d1 * rr };
+    var p2 = { x: b.x + (c.x - b.x) / d2 * rr, y: b.y + (c.y - b.y) / d2 * rr };
+    d += ' L ' + p1.x + ' ' + p1.y + ' Q ' + b.x + ' ' + b.y + ' ' + p2.x + ' ' + p2.y;
+  }
+  var last = pts[pts.length - 1];
+  return d + ' L ' + last.x + ' ' + last.y;
+}
+// 칸을 건너뛰는 선 — 중간 칸마다 잡아 둔 빈 자리 높이로 지나간다
+function SpanEdge(p){
+  var d = p.data || {}, pts = d.pts || [];
+  var gap = d.gap || 48, w = d.w || 128;
+  var path = [{ x:p.sourceX, y:p.sourceY }], prev = p.sourceY;
+  pts.forEach(function(q){
+    var bend = q.x - gap / 2;
+    path.push({ x:bend, y:prev });
+    path.push({ x:bend, y:q.y });
+    path.push({ x:q.x + w, y:q.y });
+    prev = q.y;
+  });
+  var lastBend = p.targetX - gap / 2;
+  path.push({ x:lastBend, y:prev });
+  path.push({ x:lastBend, y:p.targetY });
+  path.push({ x:p.targetX, y:p.targetY });
+  // 같은 높이로 이어지는 자리는 꺾을 것이 없다. 겹친 점은 걷는다
+  var clean = path.filter(function(q, i){
+    return i === 0 || Math.abs(q.x - path[i-1].x) > 0.5 || Math.abs(q.y - path[i-1].y) > 0.5;
+  });
+  return h('path', { id:p.id, d:orth(clean, 8), fill:'none',
+    className:'react-flow__edge-path', style:p.style, markerEnd:p.markerEnd });
+}
+var EDGE_TYPES = { chan: ChanEdge, span: SpanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 10;
@@ -521,6 +562,9 @@ function route(edges, geo){
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
     if (!a || !b || a.col >= b.col) return;
+    // 제 자리를 따라가는 선은 줄기에 안 든다. 줄기에 들면 꺾는 자리를 빼앗겨
+    // 다시 상자 높이로 그어진다
+    if (e.data && e.data.pts) return;
     (pool[a.col] = pool[a.col] || []).push(e);
   });
   var MID = (HANDLE_N - 1) / 2 | 0;
@@ -597,7 +641,7 @@ function place(nodes, edges){
   var at = {};
   used.forEach(function(c, i){ at[c] = i; });
 
-  var nbr = {};
+  var nbr = {}, span = {};
   function link(a, b){
     (nbr[a] = nbr[a] || []).push(b);
     (nbr[b] = nbr[b] || []).push(a);
@@ -608,9 +652,11 @@ function place(nodes, edges){
     if (a === undefined || b === undefined) return;
     if (Math.abs(b - a) <= 1) { link(e.source, e.target); return; }
     var step = b > a ? 1 : -1, prev = e.source;
+    var mine = span[e.id] = [];
     for (var i = a + step; i !== b; i += step){
       var did = '~' + e.id + '@' + i;
       byCol[used[i]].push({ id:did, n:null, h:DUMMY_H, dummy:true });
+      mine.push(did);
       link(prev, did);
       prev = did;
     }
@@ -698,6 +744,22 @@ function place(nodes, edges){
       out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
         connectable:false, position:{ x:x, y:0 },
         data:{ label: COLS[c].label, note: COLS[c].note || null } });
+  });
+
+  // 칸을 건너뛰는 선은 제 몫으로 잡아 둔 빈 자리를 따라간다. 그러지 않으면 긴 가로줄이
+  // 닿을 상자 높이로만 그어져 중간 칸 상자의 옆구리를 스친다 — 그러면 그 상자에서
+  // 선이 나가는 것처럼 읽힌다
+  edges.forEach(function(e){
+    var ids = span[e.id];
+    if (!ids || !ids.length) return;
+    var pts = [];
+    for (var i = 0; i < ids.length; i++){
+      var g = geo[ids[i]];
+      if (!g) return;
+      pts.push({ x: g.x, y: g.y + g.h / 2 });
+    }
+    e.type = 'span';
+    e.data = Object.assign({}, e.data, { pts: pts, gap: COL_GAP, w: COL_W });
   });
 
   // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
@@ -1143,13 +1205,15 @@ function Roster(p){
     ]),
     h('div', { key:'w', style:{ overflowX:'auto' } },
       h('table', { className:'t' }, [
-        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '나라'),
-          h('th', { key:2 }, '이름'), h('th', { key:3 }, '갈래'), h('th', { key:4 }, '유형'),
-          h('th', { key:5 }, '사슬') ])),
+        h('thead', { key:'h' }, h('tr', null, [
+          h('th', { key:1, className:'nw' }, '나라'),
+          h('th', { key:2, className:'nw' }, '이름'), h('th', { key:3 }, '갈래'),
+          h('th', { key:4, className:'nw' }, '유형'),
+          h('th', { key:5, className:'nw' }, '사슬') ])),
         h('tbody', { key:'b' }, view.map(function(r){
           return h('tr', { key:r.id, style:{ cursor:'pointer' },
             onClick: function(){ p.onPick(r.id); } }, [
-            h('td', { key:1 }, (function(){
+            h('td', { key:1, className:'nw' }, (function(){
               var f = flagOf(r.id);
               // 나라를 모르면 물음표 하나로 끝낸다. 뒤에 줄표까지 달면 두 번 말한다
               if (!f) return r.e.country || '—';
@@ -1157,10 +1221,10 @@ function Roster(p){
                                   title: flagTitle(f) }, f),
                       r.e.country ? h('span', { key:'c' }, r.e.country) : null];
             })()),
-            h('td', { key:2 }, nm(r.id)),
+            h('td', { key:2, className:'nw' }, nm(r.id)),
             h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
-            h('td', { key:4 }, TYPE_KO[r.e.entity_type] || r.e.entity_type),
-            h('td', { key:5 }, r.chain)
+            h('td', { key:4, className:'nw' }, TYPE_KO[r.e.entity_type] || r.e.entity_type),
+            h('td', { key:5, className:'nw' }, r.chain)
           ]);
         }))
       ]))
