@@ -24,7 +24,6 @@ LIBS = [
     CDN + '/react@18.3.1/umd/react.production.min.js',
     CDN + '/react-dom@18.3.1/umd/react-dom.production.min.js',
     CDN + '/reactflow@11.11.4/dist/umd/index.js',
-    CDN + '/@dagrejs/dagre@1.1.4/dist/dagre.min.js',
 ]
 RF_CSS = CDN + '/reactflow@11.11.4/dist/style.css'
 
@@ -178,6 +177,8 @@ var RFlib = window.ReactFlow;
 var RF = RFlib.default || RFlib.ReactFlow;
 var Background = RFlib.Background, Controls = RFlib.Controls;
 var Handle = RFlib.Handle, Position = RFlib.Position, MarkerType = RFlib.MarkerType;
+var getSmoothStepPath = RFlib.getSmoothStepPath;
+var EdgeLabelRenderer = RFlib.EdgeLabelRenderer;
 var useState = React.useState, useMemo = React.useMemo, useEffect = React.useEffect;
 
 var DB = window.__VC__;
@@ -365,12 +366,24 @@ function shareLabel(rid, yr){
 }
 
 // ── 노드 ────────────────────────────────────────────────────────────
+var HANDLE_N = 7;
+function ports(kind){
+  var out = [];
+  for (var i = 0; i < HANDLE_N; i++){
+    out.push(h(Handle, { key: kind + i, id: kind + i,
+      type: kind === 't' ? 'target' : 'source',
+      position: kind === 't' ? Position.Left : Position.Right,
+      isConnectable: false,
+      style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0,
+              top: Math.round((i + 1) * 100 / (HANDLE_N + 1)) + '%' } }));
+  }
+  return out;
+}
 function Nd(p){
   var d = p.data;
   var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.focal ? ' focal' : '')
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
-  return h('div', { className: cls }, [
-    h(Handle, { key:'t', type:'target', position:Position.Left, style:{opacity:0} }),
+  var mid = [
     h('div', { key:'n', className:'nm' }, d.flag
       ? [h('span', { key:'f', className: flagCls(d.flag), title: flagTitle(d.flag) }, d.flag),
          h('span', { key:'t' }, d.title)]
@@ -380,91 +393,186 @@ function Nd(p){
       d.isNew ? h('span', { key:'b', className:'badge new',
         style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
       d.more ? h('span', { key:'m', className:'more' }, '+') : null
-    ]) : null,
-    h(Handle, { key:'s2', type:'source', position:Position.Right, style:{opacity:0} })
-  ]);
+    ]) : null
+  ];
+  return h('div', { className: cls }, ports('t').concat(mid).concat(ports('s')));
 }
 function Hdr(p){
   return h('div', { className:'hdr' }, p.data.label);
 }
+// 세로 구간 x 를 data.cx 로 못박는다. 기본 smoothstep 은 늘 한가운데로 꺾어
+// 같은 칸 쌍의 선이 전부 한 줄에 포개진다
+function ChanEdge(p){
+  var d = p.data || {};
+  var r = getSmoothStepPath({
+    sourceX: p.sourceX, sourceY: p.sourceY, sourcePosition: p.sourcePosition,
+    targetX: p.targetX, targetY: p.targetY, targetPosition: p.targetPosition,
+    borderRadius: 8,
+    centerX: (d.cx === undefined || d.cx === null) ? undefined : d.cx });
+  return h(React.Fragment, null, [
+    h('path', { key:'p', id:p.id, d:r[0], fill:'none',
+      className:'react-flow__edge-path', style:p.style, markerEnd:p.markerEnd }),
+    p.label ? h(EdgeLabelRenderer, { key:'l' },
+      h('div', { style:{ position:'absolute', pointerEvents:'none',
+        transform:'translate(-50%,-50%) translate(' + r[1] + 'px,' + r[2] + 'px)',
+        background:'#fff', padding:'0 3px', fontSize:'10.5px', lineHeight:1.3,
+        color:'#39415a' } }, p.label)) : null
+  ]);
+}
+var EDGE_TYPES = { chan: ChanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
-var COL_W = 128, COL_GAP = 22, ROW_GAP = 11, HDR_H = 24;
-function place(nodes, edges){
-  var g = new dagre.graphlib.Graph();
-  // 칸 사이를 좁게 — 판이 가로로 퍼질수록 맞춰 넣을 때 글자가 작아진다
-  g.setGraph({ rankdir:'LR', nodesep:20, ranksep:52, marginx:16, marginy:16 });
-  g.setDefaultEdgeLabel(function(){ return {}; });
-  nodes.forEach(function(n){
-    var d = n.data;
-    // 제목 줄수(한 줄 15자 남짓) + 부제 한 줄 + 테두리·여백
-    var lines = Math.ceil((d.title || '').length / 11) || 1;
-    var hgt = 16 + lines * 18 + ((d.sub || d.isNew) ? 17 : 0);
-    if (d.focal) { hgt += 14; }
-    g.setNode(n.id, { width: COL_W, height:hgt });
+var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 24, DUMMY_H = 10;
+
+// 상자 높이를 미리 어림한다. 한글은 두 칸, 영숫자는 한 칸으로 센다
+function cw(s){
+  var w = 0;
+  for (var i = 0; i < s.length; i++){
+    var c = s.charCodeAt(i);
+    w += ((c >= 0x1100 && c <= 0xD7FF) || (c >= 0x3000 && c <= 0x9FFF)) ? 2 : 1;
+  }
+  return w;
+}
+function boxH(d){
+  var per = d.focal ? 13 : 16;
+  var lines = Math.ceil((cw(d.title || '') + (d.flag ? 3 : 0)) / per) || 1;
+  return 16 + lines * (d.focal ? 21 : 18)
+       + ((d.sub || d.isNew) ? 17 : 0) + (d.focal ? 14 : 0);
+}
+
+// 칸 사이 빈 띠를 레인으로 쪼개고, 노드 변에는 포트를 나눠 꽂는다
+function route(edges, geo){
+  function cy(id){ var g = geo[id]; return g ? g.y + g.h / 2 : 0; }
+
+  var outg = {}, inn = {};
+  edges.forEach(function(e){
+    if (!geo[e.source] || !geo[e.target]) return;
+    (outg[e.source] = outg[e.source] || []).push(e);
+    (inn[e.target] = inn[e.target] || []).push(e);
   });
-  edges.forEach(function(e){ g.setEdge(e.source, e.target); });
-  dagre.layout(g);
-  // 가로 자리는 단계 칸에 못박고, 세로 차례는 이어진 상자 자리의 평균으로 정한다.
-  // 그래야 선이 칸을 건너뛰며 엇갈리지 않는다
-  var byCol = {}, colOf = {};
+  function slot(i, n){
+    if (n <= 1) return (HANDLE_N - 1) / 2 | 0;
+    if (n <= HANDLE_N) return ((HANDLE_N - n) / 2 | 0) + i;
+    return Math.round(i * (HANDLE_N - 1) / (n - 1));
+  }
+  Object.keys(outg).forEach(function(id){
+    var a = outg[id].sort(function(p, q){ return cy(p.target) - cy(q.target); });
+    a.forEach(function(e, i){ e.sourceHandle = 's' + slot(i, a.length); });
+  });
+  Object.keys(inn).forEach(function(id){
+    var a = inn[id].sort(function(p, q){ return cy(p.source) - cy(q.source); });
+    a.forEach(function(e, i){ e.targetHandle = 't' + slot(i, a.length); });
+  });
+
+  // y 구간이 겹치는 선끼리만 서로 다른 레인을 준다
+  var gut = {};
+  edges.forEach(function(e){
+    var a = geo[e.source], b = geo[e.target];
+    if (!a || !b || a.col >= b.col) return;
+    (gut[a.col] = gut[a.col] || []).push(e);
+  });
+  Object.keys(gut).forEach(function(gk){
+    var g = parseInt(gk, 10);
+    var x0 = g * (COL_W + COL_GAP) + COL_W;
+    var items = gut[gk].map(function(e){
+      var y1 = cy(e.source), y2 = cy(e.target);
+      return { e:e, lo: Math.min(y1, y2), hi: Math.max(y1, y2) };
+    }).sort(function(p, q){ return p.lo - q.lo; });
+    var tail = [];
+    items.forEach(function(it){
+      var k = 0;
+      while (k < tail.length && tail[k] > it.lo - 6) k++;
+      tail[k] = it.hi;
+      it.lane = k;
+    });
+    var n = Math.max(1, tail.length);
+    items.forEach(function(it){
+      it.e.type = 'chan';
+      it.e.data = Object.assign({}, it.e.data,
+        { cx: x0 + (it.lane + 1) * (COL_GAP / (n + 1)) });
+    });
+  });
+}
+
+function place(nodes, edges){
+  // 가로는 단계 칸에 못박는다. dagre 는 부르지 않는다
+  var colOf = {}, byCol = {};
   nodes.forEach(function(n){
     var c = n.data.col === undefined ? COL_OF.FOCAL : n.data.col;
     colOf[n.id] = c;
-    (byCol[c] = byCol[c] || []).push({ n:n, y:g.node(n.id).y, h:g.node(n.id).height });
+    (byCol[c] = byCol[c] || []).push(
+      { id:n.id, n:n, h: boxH(n.data), dummy:false });
   });
   var used = Object.keys(byCol).map(Number).sort(function(a, b){ return a - b; });
-  used.forEach(function(c){
-    byCol[c].sort(function(a, b){ return a.y - b.y; });
+  var at = {};
+  used.forEach(function(c, i){ at[c] = i; });
+
+  var nbr = {};
+  function link(a, b){
+    (nbr[a] = nbr[a] || []).push(b);
+    (nbr[b] = nbr[b] || []).push(a);
+  }
+  // 칸을 건너뛰는 선에는 중간 칸마다 보이지 않는 자리를 잡아 둔다
+  edges.forEach(function(e){
+    var a = at[colOf[e.source]], b = at[colOf[e.target]];
+    if (a === undefined || b === undefined) return;
+    if (Math.abs(b - a) <= 1) { link(e.source, e.target); return; }
+    var step = b > a ? 1 : -1, prev = e.source;
+    for (var i = a + step; i !== b; i += step){
+      var did = '~' + e.id + '@' + i;
+      byCol[used[i]].push({ id:did, n:null, h:DUMMY_H, dummy:true });
+      link(prev, did);
+      prev = did;
+    }
+    link(prev, e.target);
   });
 
-  var nbr = {};   // 상자마다 이어진 상대
-  edges.forEach(function(e){
-    (nbr[e.source] = nbr[e.source] || []).push(e.target);
-    (nbr[e.target] = nbr[e.target] || []).push(e.source);
-  });
-  function order(c, from){
-    var ref = {};
-    byCol[from].forEach(function(it, i){ ref[it.n.id] = i; });
-    byCol[c].forEach(function(it){
-      var ks = (nbr[it.n.id] || []).filter(function(x){ return ref[x] !== undefined; });
-      it.bary = ks.length
-        ? ks.reduce(function(a, x){ return a + ref[x]; }, 0) / ks.length
-        : 999;
+  // 세로 차례 — 앞뒤로 여러 번 쓸어야 교차가 준다
+  used.forEach(function(c){ byCol[c].forEach(function(it, i){ it.ord = i; }); });
+  function sweep(dir){
+    var seq = dir > 0 ? used.slice(1) : used.slice(0, -1).reverse();
+    seq.forEach(function(c){
+      var ref = {};
+      byCol[used[at[c] - dir]].forEach(function(it, k){ ref[it.id] = k; });
+      byCol[c].forEach(function(it){
+        var ks = (nbr[it.id] || []).filter(function(x){ return ref[x] !== undefined; });
+        it.bary = ks.length
+          ? ks.reduce(function(a, x){ return a + ref[x]; }, 0) / ks.length
+          : it.ord;
+      });
+      byCol[c].sort(function(a, b){ return (a.bary - b.bary) || (a.ord - b.ord); });
+      byCol[c].forEach(function(it, k){ it.ord = k; });
     });
-    byCol[c].sort(function(a, b){ return a.bary - b.bary; });
   }
-  var fc = COL_OF.FOCAL;
-  used.filter(function(c){ return c > fc; }).forEach(function(c, i, arr){
-    order(c, i === 0 ? fc : arr[i - 1]);
-  });
-  var left = used.filter(function(c){ return c < fc; }).reverse();
-  left.forEach(function(c, i){ order(c, i === 0 ? fc : left[i - 1]); });
+  for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
 
   var heights = {};
   used.forEach(function(c){
     var y = 0;
     byCol[c].forEach(function(it){ it.top = y; y += it.h + ROW_GAP; });
-    heights[c] = y - ROW_GAP;
+    heights[c] = Math.max(0, y - ROW_GAP);
   });
   var tall = Math.max.apply(null, used.map(function(c){ return heights[c]; }));
-  var out = [];
+
+  var out = [], geo = {};
   used.forEach(function(c, i){
-    var off = (tall - heights[c]) / 2;
+    var off = (tall - heights[c]) / 2, x = i * (COL_W + COL_GAP);
     byCol[c].forEach(function(it){
-      out.push(Object.assign({}, it.n, {
-        position:{ x: i * (COL_W + COL_GAP), y: it.top + off + HDR_H } }));
+      var y = it.top + off + HDR_H;
+      geo[it.id] = { x:x, y:y, h:it.h, col:i };
+      if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
-    out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false, connectable:false,
-      position:{ x: i * (COL_W + COL_GAP), y: 0 },
+    out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
+      connectable:false, position:{ x:x, y:0 },
       data:{ label: COLS[c] ? COLS[c].label : '' } });
   });
+
   // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
   edges.forEach(function(e){
-    if (colOf[e.source] !== undefined && colOf[e.source] === colOf[e.target]) {
+    if (colOf[e.source] !== undefined && colOf[e.source] === colOf[e.target])
       e.type = 'default';
-    }
   });
+  route(edges, geo);
   return out;
 }
 
@@ -1175,6 +1283,7 @@ function App(){
   else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
+      edgeTypes:EDGE_TYPES,
       onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
       minZoom: window.innerWidth < 720 ? .28 : .2,
