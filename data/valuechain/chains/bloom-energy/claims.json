@@ -1,0 +1,239 @@
+[
+ {
+  "id": "clm-be-fy2025-revenue",
+  "statement": "Bloom 의 FY2025 총매출은 20억 2,399만 달러다.",
+  "subject": "bloom-energy",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "note": "제품 15억 3,128만 · 설치 2억 410만 · 서비스 2억 2,830만 · 전력 6,035만"
+ },
+ {
+  "id": "clm-fundjv-43",
+  "statement": "FY2025 최대 고객 43% 는 브룩필드 계열 펀드 JV 다.",
+  "subject": "brookfield-fund-jvs",
+  "object": "bloom-energy",
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.99,
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "note": "제품 8억 980만 + 설치 5,230만 = 8억 6,210만 달러, 총매출의 42.6%"
+ },
+ {
+  "id": "clm-aep-13",
+  "statement": "FY2025 2위 고객 13% 는 AEP 매입 법인일 가능성이 크다.",
+  "subject": "aep",
+  "object": "bloom-energy",
+  "period": "FY2025",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.75,
+  "source_ids": [
+   "be_10k_fy2025",
+   "be_aep_1gw"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-eternix-12",
+  "statement": "FY2025 3위 고객 12% 는 SK 에너닉스 또는 그 프로젝트 법인일 수 있다.",
+  "subject": "sk-eternix",
+  "object": "bloom-energy",
+  "period": "FY2025",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "be_sk_eternix_80mw"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-cctc-share",
+  "statement": "CCTC 는 Bloom 전해질 세라믹의 주요 공급사이며 2026 조달 점유율은 75~80% 로 추정된다.",
+  "subject": "cctc",
+  "object": "bloom-energy",
+  "period": "2026E",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.75,
+  "source_ids": [
+   "cctc_yicai"
+  ],
+  "note": "관계는 확인. 점유율은 2차 조사"
+ },
+ {
+  "id": "clm-amosense-15",
+  "statement": "AMOsense 의 세라믹 기판 물량 점유율은 Bloom 1.2GW 가동률 기준 약 15% 다.",
+  "subject": "amosense",
+  "object": "bloom-energy",
+  "period": "2026 Q3",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "sedaily_kr_suppliers"
+  ],
+  "note": "월 60만 장 ÷ 추정 수요 400만 장"
+ },
+ {
+  "id": "clm-amosense-9",
+  "statement": "AMOsense 의 점유율은 Bloom 2GW 최대 생산 기준으로는 약 9% 다.",
+  "subject": "amosense",
+  "object": "bloom-energy",
+  "period": "2026E",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.65,
+  "source_ids": [
+   "sedaily_kr_suppliers"
+  ],
+  "note": "앞 항목과 분모가 다르다"
+ },
+ {
+  "id": "clm-mtar-5060",
+  "statement": "MTAR 은 Bloom 핫박스 요구량의 약 50~60% 를 공급한다.",
+  "subject": "mtar-technologies",
+  "object": "bloom-energy",
+  "period": "FY2024-FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "source_ids": [
+   "mtar_ar_fy2425",
+   "mtar_ar_fy2024"
+  ],
+  "note": "회사 공시. 전해조 유닛은 단독 공급으로 설명된다"
+ },
+ {
+  "id": "clm-coseus-100m",
+  "statement": "Coseus 는 1억 달러 규모 전극셀 코팅 자동화 장비를 공급한다.",
+  "subject": "coseus",
+  "object": "bloom-energy",
+  "period": "2026-07-10~2026-10-29",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "coseus_kind"
+  ],
+  "note": "제품 BOM 이 아니라 설비"
+ },
+ {
+  "id": "clm-seojin-52m",
+  "statement": "서진시스템은 5,263.8만 달러 규모 SOFC 모듈·부품을 공급한다.",
+  "subject": "seojin-system",
+  "object": "bloom-energy",
+  "period": "2026-07-15~2027-03-22",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "seojin_kind"
+  ],
+  "note": "베트남 EXW, 미국 공급, 대응 MW 비공개"
+ },
+ {
+  "id": "clm-ls-216m",
+  "statement": "LS일렉트릭은 뉴멕시코 데이터센터에 2억 1,652.6만 달러 규모 전기 기자재를 공급한다.",
+  "subject": "ls-electric",
+  "object": "bloom-energy",
+  "period": "2026-04-28~2027-03-29",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "lselectric_kind"
+  ],
+  "note": "배전반과 배전 변압기"
+ },
+ {
+  "id": "clm-ls-jupiter",
+  "statement": "그 뉴멕시코 계약은 프로젝트 주피터를 향한 것으로 보인다.",
+  "subject": "ls-electric",
+  "object": "project-jupiter",
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 0.95,
+  "source_ids": [
+   "lselectric_kind",
+   "oracle_jupiter"
+  ],
+  "note": "지역과 시점이 붙지만 직접 서술은 없다"
+ },
+ {
+  "id": "clm-brookfield-25b",
+  "statement": "브룩필드의 AI 인프라 전력 금융 프레임워크는 250억 달러로 커졌다.",
+  "subject": "brookfield",
+  "object": "bloom-energy",
+  "period": "2026-06",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_brookfield_25b"
+  ],
+  "note": "50억 달러에서 확대"
+ },
+ {
+  "id": "clm-oracle-28gw",
+  "statement": "오라클 계약은 최대 2.8GW 이고 초기 1.2GW 가 계약·배치 중이다.",
+  "subject": "oracle",
+  "object": "bloom-energy",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_oracle_28gw"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-equinix-100mw",
+  "statement": "에퀴닉스와의 관계는 100MW 를 넘는다.",
+  "subject": "equinix",
+  "object": "bloom-energy",
+  "period": "2025-02",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_equinix_100mw"
+  ],
+  "note": "약 75MW 가동 + 30MW 공사 중"
+ },
+ {
+  "id": "clm-nebius-328mw",
+  "statement": "네비우스의 첫 미국 배치 계획 용량은 328MW 다.",
+  "subject": "nebius",
+  "object": "bloom-energy",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nebius_be_328mw"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-aep-1gw",
+  "statement": "AEP 조달 계약은 최대 1GW 이고 초기 주문은 100MW 다.",
+  "subject": "aep",
+  "object": "bloom-energy",
+  "period": "2024-11 이후",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_aep_1gw"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-eternix-80mw",
+  "statement": "SK 에너닉스의 한국 프로젝트는 80MW 이고 산업은행이 금융을 주선했다.",
+  "subject": "sk-eternix",
+  "object": "bloom-energy",
+  "period": "2024-2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_sk_eternix_80mw"
+  ],
+  "note": "충주 40MW + 대소원 40MW"
+ }
+]

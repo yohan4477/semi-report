@@ -851,5 +851,719 @@
   "is_segment": false,
   "entity_type": "company",
   "categories": []
+ },
+ {
+  "id": "bloom-energy",
+  "name": "Bloom Energy",
+  "name_ko": "블룸에너지",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "Integrator"
+  ],
+  "desc": "SOFC·SOEC 제조와 시스템 통합. 셀/공정 IP·제어·설치·서비스를 쥔 중심 노드",
+  "anon": false
+ },
+ {
+  "id": "bloom-sk-fuel-cell",
+  "name": "Bloom SK Fuel Cell LLC",
+  "name_ko": "블룸SK퓨얼셀",
+  "entity_type": "jv",
+  "country": "한국",
+  "categories": [
+   "Assembly"
+  ],
+  "desc": "2019 설립, 2020 가동, 2023 한국 시설 범위를 full assembly 로 확대",
+  "anon": false
+ },
+ {
+  "id": "bloom-energy-india",
+  "name": "Bloom Energy India",
+  "name_ko": "블룸에너지 인도",
+  "entity_type": "company",
+  "country": "인도",
+  "categories": [
+   "Power electronics"
+  ],
+  "desc": "전력 조절·제어 시스템 활동 확인",
+  "anon": false
+ },
+ {
+  "id": "scandium-oxide",
+  "name": "Scandium oxide",
+  "name_ko": "산화스칸듐",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Raw material"
+  ],
+  "desc": "복수국 복수 공급사, 업체명·물량 비공개. 산업 부산물 회수 기반",
+  "anon": false
+ },
+ {
+  "id": "zirconium-oxide",
+  "name": "Zirconium oxide",
+  "name_ko": "산화지르코늄",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Raw material"
+  ],
+  "desc": "초박형 세라믹 기판의 기반 물질. 벤더 비공개",
+  "anon": false
+ },
+ {
+  "id": "natural-gas",
+  "name": "Natural gas",
+  "name_ko": "천연가스",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Operational input"
+  ],
+  "desc": "제조 BOM 이 아니라 운영 투입",
+  "anon": false
+ },
+ {
+  "id": "biogas",
+  "name": "Biogas",
+  "name_ko": "바이오가스",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Operational input"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "hydrogen",
+  "name": "Hydrogen",
+  "name_ko": "수소",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Operational input"
+  ],
+  "desc": "혼소 수소 포함",
+  "anon": false
+ },
+ {
+  "id": "cctc",
+  "name": "Chaozhou Three-Circle Group (CCTC)",
+  "name_ko": "차오저우 싼환",
+  "entity_type": "company",
+  "country": "중국",
+  "categories": [
+   "Cell"
+  ],
+  "desc": "전해질 세라믹 격막 주요 공급사. 공식 점유율 비공개",
+  "anon": false
+ },
+ {
+  "id": "amosense",
+  "name": "AMOsense",
+  "name_ko": "아모센스",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Cell"
+  ],
+  "desc": "2026 신규 진입. 월 20만 → 60만 장",
+  "anon": false
+ },
+ {
+  "id": "yongzhou-mingrui",
+  "name": "Yongzhou Mingrui Ceramic",
+  "name_ko": "융저우 밍루이 세라믹",
+  "entity_type": "company",
+  "country": "중국",
+  "categories": [
+   "Other ceramic"
+  ],
+  "desc": "세라믹 플레이트·심. 전해질 기판과 별개",
+  "anon": false
+ },
+ {
+  "id": "cumi",
+  "name": "Carborundum Universal (CUMI)",
+  "name_ko": "CUMI",
+  "entity_type": "company",
+  "country": "인도",
+  "categories": [
+   "Other ceramic"
+  ],
+  "desc": "고알루미나 엔지니어링·내화 세라믹. 실 공급사로 단정하지 않는다",
+  "anon": false
+ },
+ {
+  "id": "unicorn-insulations",
+  "name": "Unicorn Insulations",
+  "name_ko": "유니콘 인슐레이션",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Thermal"
+  ],
+  "desc": "단열재",
+  "anon": false
+ },
+ {
+  "id": "porite-taiwan",
+  "name": "Porite Taiwan",
+  "name_ko": "포리테 대만",
+  "entity_type": "company",
+  "country": "대만",
+  "categories": [
+   "Interconnect"
+  ],
+  "desc": "크롬 합금 인터커넥트 플레이트 장기 공급사",
+  "anon": false
+ },
+ {
+  "id": "stackpole-intl",
+  "name": "Stackpole International Powder Metal",
+  "name_ko": "스택폴",
+  "entity_type": "company",
+  "country": "캐나다",
+  "categories": [
+   "Interconnect"
+  ],
+  "desc": "Bloom 과의 금속 인터커넥트 공동 특허로 추정한 캐나다 공급사 후보",
+  "anon": false
+ },
+ {
+  "id": "plus-metal-tech",
+  "name": "Plus Metal Tech",
+  "name_ko": "플러스메탈텍",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Interconnect"
+  ],
+  "desc": "인터커넥트 표면 코팅·관련 플레이트",
+  "anon": false
+ },
+ {
+  "id": "mtar-technologies",
+  "name": "MTAR Technologies",
+  "name_ko": "MTAR",
+  "entity_type": "company",
+  "country": "인도",
+  "categories": [
+   "Hotbox"
+  ],
+  "desc": "핫박스·파워유닛·판금·인클로저·ASP 어셈블리·SOEC 부품",
+  "anon": false
+ },
+ {
+  "id": "kaori-heat-treatment",
+  "name": "Kaori Heat Treatment",
+  "name_ko": "가오리",
+  "entity_type": "company",
+  "country": "대만",
+  "categories": [
+   "Hotbox"
+  ],
+  "desc": "Bloom 핫박스 주요 공급사. 현재 조달 점유율 비공개",
+  "anon": false
+ },
+ {
+  "id": "acbel-polytech",
+  "name": "AcBel Polytech",
+  "name_ko": "캐벨",
+  "entity_type": "company",
+  "country": "대만",
+  "categories": [
+   "Power electronics"
+  ],
+  "desc": "전력 변환·전원 공급",
+  "anon": false
+ },
+ {
+  "id": "sanmina-sci-india",
+  "name": "Sanmina-SCI India",
+  "name_ko": "산미나 인도",
+  "entity_type": "company",
+  "country": "인도",
+  "categories": [
+   "Power electronics"
+  ],
+  "desc": "정지형 컨버터와 DC-DC 어셈블리 반복 공급",
+  "anon": false
+ },
+ {
+  "id": "cypress-industries",
+  "name": "Cypress Industries",
+  "name_ko": "사이프러스 인더스트리스",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Power electronics"
+  ],
+  "desc": "와이어 하네스",
+  "anon": false
+ },
+ {
+  "id": "seojin-system",
+  "name": "Seojin System",
+  "name_ko": "서진시스템",
+  "entity_type": "company",
+  "country": "한국·베트남",
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "셀 제외 주요 부품·모듈. 베트남 공장 EXW 로 미국 공급",
+  "anon": false
+ },
+ {
+  "id": "nash-industries",
+  "name": "Nash Industries",
+  "name_ko": "내시 인더스트리스",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "인클로저·섀시·기계 조립",
+  "anon": false
+ },
+ {
+  "id": "texon",
+  "name": "Texon",
+  "name_ko": "텍손",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "강판 전기·기계 인클로저, 도어, KPE 인클로저",
+  "anon": false
+ },
+ {
+  "id": "hansun-engineering",
+  "name": "Hansun Engineering",
+  "name_ko": "한선엔지니어링",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "연료·가스 분배 배관 모듈, 피팅, 밸브",
+  "anon": false
+ },
+ {
+  "id": "technoflex-tf-vietnam",
+  "name": "Technoflex / TF Vietnam",
+  "name_ko": "테크노플렉스",
+  "entity_type": "company",
+  "country": "중국·베트남",
+  "categories": [
+   "Thermal"
+  ],
+  "desc": "발전기 배기 연결",
+  "anon": false
+ },
+ {
+  "id": "zhejiang-chunhui",
+  "name": "Zhejiang Chunhui Instrumentation",
+  "name_ko": "저장 춘후이",
+  "entity_type": "company",
+  "country": "중국",
+  "categories": [
+   "Instrumentation"
+  ],
+  "desc": "열전대",
+  "anon": false
+ },
+ {
+  "id": "okazaki-mfg",
+  "name": "Okazaki Manufacturing",
+  "name_ko": "오카자키 제작소",
+  "entity_type": "company",
+  "country": "일본",
+  "categories": [
+   "Instrumentation"
+  ],
+  "desc": "열전대",
+  "anon": false
+ },
+ {
+  "id": "micro-sensor",
+  "name": "Micro Sensor",
+  "name_ko": "마이크로센서",
+  "entity_type": "company",
+  "country": "중국",
+  "categories": [
+   "Instrumentation"
+  ],
+  "desc": "레벨 트랜스미터",
+  "anon": false
+ },
+ {
+  "id": "protechnic-wujiang",
+  "name": "Protechnic Electric Wujiang",
+  "name_ko": "프로테크닉",
+  "entity_type": "company",
+  "country": "중국",
+  "categories": [
+   "Thermal"
+  ],
+  "desc": "DC 팬 공급 이력. 현재 주력 여부 불확실",
+  "anon": false
+ },
+ {
+  "id": "coseus",
+  "name": "Coseus",
+  "name_ko": "코세스",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "Manufacturing equipment"
+  ],
+  "desc": "전극셀 코팅 자동화 장비. 제품 BOM 이 아니라 설비 투자",
+  "anon": false
+ },
+ {
+  "id": "ls-electric",
+  "name": "LS ELECTRIC",
+  "name_ko": "LS일렉트릭",
+  "entity_type": "company",
+  "country": "한국·미국",
+  "categories": [
+   "Site electrical BoP"
+  ],
+  "desc": "배전반과 배전 변압기",
+  "anon": false
+ },
+ {
+  "id": "brookfield",
+  "name": "Brookfield",
+  "name_ko": "브룩필드",
+  "entity_type": "company",
+  "country": "글로벌",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "펀드 스폰서. 250억 달러 프레임워크",
+  "anon": false
+ },
+ {
+  "id": "brookfield-fund-jvs",
+  "name": "Brookfield-related Fund JVs",
+  "name_ko": "브룩필드 계열 펀드 JV",
+  "entity_type": "fund_jv",
+  "country": "미국·글로벌",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "계약상 고객이자 자산 보유 주체. 스폰서와 분리해 둔다",
+  "anon": false
+ },
+ {
+  "id": "kdb",
+  "name": "Korea Development Bank",
+  "name_ko": "산업은행",
+  "entity_type": "financial_institution",
+  "country": "한국",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "SK 에너닉스 80MW 프로젝트 금융 주선",
+  "anon": false
+ },
+ {
+  "id": "southern-company",
+  "name": "Southern Company",
+  "name_ko": "서던컴퍼니",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "과거 제3자 금융 관계",
+  "anon": false
+ },
+ {
+  "id": "duke-energy",
+  "name": "Duke Energy",
+  "name_ko": "듀크에너지",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "과거 제3자 금융 관계",
+  "anon": false
+ },
+ {
+  "id": "exelon",
+  "name": "Exelon",
+  "name_ko": "엑셀론",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "Financing"
+  ],
+  "desc": "과거 제3자 금융 관계",
+  "anon": false
+ },
+ {
+  "id": "sk-ecoplant",
+  "name": "SK ecoplant",
+  "name_ko": "SK에코플랜트",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "EPC / Distribution"
+  ],
+  "desc": "한국 우선 유통·EPC 이자 전략 파트너",
+  "anon": false
+ },
+ {
+  "id": "sk-ecoplant-americas",
+  "name": "SK ecoplant Americas",
+  "name_ko": "SK에코플랜트 아메리카스",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "EPC / Distribution"
+  ],
+  "desc": "미국 프로젝트 시공 관리·EPC·금융 서비스",
+  "anon": false
+ },
+ {
+  "id": "sk-eternix",
+  "name": "SK Eternix",
+  "name_ko": "SK에너닉스",
+  "entity_type": "company",
+  "country": "한국",
+  "categories": [
+   "EPC / Distribution"
+  ],
+  "desc": "한국 개발사·유통사. 충주 40MW + 대소원 40MW",
+  "anon": false
+ },
+ {
+  "id": "aep",
+  "name": "American Electric Power",
+  "name_ko": "AEP",
+  "entity_type": "utility",
+  "country": "미국",
+  "categories": [
+   "Utility"
+  ],
+  "desc": "유틸리티이자 채널이자 금융 파트너. 역할은 엣지마다 다르다",
+  "anon": false
+ },
+ {
+  "id": "aep-ohio",
+  "name": "AEP Ohio",
+  "name_ko": "AEP 오하이오",
+  "entity_type": "utility",
+  "country": "미국",
+  "categories": [
+   "Utility"
+  ],
+  "desc": "중부 오하이오 온사이트 연료전지 프로젝트",
+  "anon": false
+ },
+ {
+  "id": "project-jupiter",
+  "name": "Project Jupiter",
+  "name_ko": "프로젝트 주피터",
+  "entity_type": "project_spv",
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "뉴멕시코. Oracle·BorderPlex·Bloom 구조, 최대 2.45GW 마이크로그리드 계획",
+  "anon": false
+ },
+ {
+  "id": "borderplex",
+  "name": "BorderPlex",
+  "name_ko": "보더플렉스",
+  "entity_type": "company",
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "프로젝트 주피터 개발 주체",
+  "anon": false
+ },
+ {
+  "id": "equinix",
+  "name": "Equinix",
+  "name_ko": "에퀴닉스",
+  "entity_type": "end_user",
+  "country": "미국·글로벌",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "약 75MW 가동 + 30MW 공사 중",
+  "anon": false
+ },
+ {
+  "id": "aws",
+  "name": "AWS",
+  "name_ko": "AWS",
+  "entity_type": "end_user",
+  "country": "미국·글로벌",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "AEP 오하이오 프로젝트. 장기 계약으로 비용 부담",
+  "anon": false
+ },
+ {
+  "id": "cologix",
+  "name": "Cologix",
+  "name_ko": "콜로직스",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "AEP 오하이오 프로젝트",
+  "anon": false
+ },
+ {
+  "id": "intel",
+  "name": "Intel",
+  "name_ko": "인텔",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "att",
+  "name": "AT&T",
+  "name_ko": "AT&T",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "verizon",
+  "name": "Verizon",
+  "name_ko": "버라이즌",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "quanta-computer",
+  "name": "Quanta Computer",
+  "name_ko": "콴타컴퓨터",
+  "entity_type": "end_user",
+  "country": "대만",
+  "categories": [
+   "C&I"
+  ],
+  "desc": "2024 기존 계약 확대. AI 하드웨어 제조 시설 용량 150% 이상 증가",
+  "anon": false
+ },
+ {
+  "id": "walmart",
+  "name": "Walmart",
+  "name_ko": "월마트",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "C&I"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "home-depot",
+  "name": "The Home Depot",
+  "name_ko": "홈디포",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "C&I"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "ferrari",
+  "name": "Ferrari",
+  "name_ko": "페라리",
+  "entity_type": "end_user",
+  "country": "이탈리아",
+  "categories": [
+   "C&I"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "fedex",
+  "name": "FedEx",
+  "name_ko": "페덱스",
+  "entity_type": "end_user",
+  "country": "미국",
+  "categories": [
+   "C&I"
+  ],
+  "desc": null,
+  "anon": false
+ },
+ {
+  "id": "be24_c2",
+  "name": "미상 고객 #2 (FY2024)",
+  "name_ko": "미상 고객 #2 (FY2024)",
+  "entity_type": "company",
+  "country": null,
+  "categories": [],
+  "desc": "FY2024 매출의 16%. 공개 자료로 법인 특정 불가",
+  "anon": true
+ },
+ {
+  "id": "be24_c3",
+  "name": "미상 고객 #3 (FY2024)",
+  "name_ko": "미상 고객 #3 (FY2024)",
+  "entity_type": "company",
+  "country": null,
+  "categories": [],
+  "desc": "FY2024 매출의 14%. 공개 자료로 법인 특정 불가",
+  "anon": true
+ },
+ {
+  "id": "be26_c1",
+  "name": "미상 고객 #1 (2026 H1)",
+  "name_ko": "미상 고객 #1 (2026 H1)",
+  "entity_type": "company",
+  "country": null,
+  "categories": [],
+  "desc": "2026 상반기 매출의 73%. 비특수관계. SEC 가 법인명을 밝히지 않았다",
+  "anon": true
+ },
+ {
+  "id": "undisclosed-scandium-suppliers",
+  "name": "비공개 스칸듐 공급사",
+  "name_ko": "비공개 스칸듐 공급사",
+  "entity_type": "company",
+  "country": null,
+  "categories": [
+   "Raw material"
+  ],
+  "desc": "복수 국가의 복수 업체라고만 공개",
+  "anon": true
  }
 ]

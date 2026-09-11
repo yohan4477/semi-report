@@ -128,5 +128,235 @@
   "source_type": "primary_official",
   "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000069/nvda-20260817.htm",
   "note": "accession 0001045810-26-000069"
+ },
+ {
+  "id": "be_10k_fy2025",
+  "publisher": "Bloom Energy",
+  "title": "Form 10-K (FY2025)",
+  "source_type": "primary_official",
+  "published_date": "2026-02-09",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm",
+  "accessed_date": "2026-09-11",
+  "note": "매출·고객 집중도·Fund JV·공급망·JV·AEP 역할. 03 의 SRC001"
+ },
+ {
+  "id": "be_10k_fy2024",
+  "publisher": "Bloom Energy",
+  "title": "Form 10-K (FY2024)",
+  "source_type": "primary_official",
+  "published_date": "2025-02",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828025008747/be-20241231.htm",
+  "accessed_date": "2026-09-11",
+  "note": "2024 매출·원가·고객 집중도 23/16/14"
+ },
+ {
+  "id": "be_10q_2026q2",
+  "publisher": "Bloom Energy",
+  "title": "Form 10-Q (2026 Q2)",
+  "source_type": "primary_official",
+  "published_date": "2026-07",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026050325/be-20260630.htm",
+  "accessed_date": "2026-09-11",
+  "note": "2026 상반기 매출·고객 집중도 44/21, 비특수관계 고객 73%"
+ },
+ {
+  "id": "be_scandium_blog",
+  "publisher": "Bloom Energy",
+  "title": "Demystifying scandium oxide",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://www.bloomenergy.com/blog/demystifying-scandium-oxide-why-it-matters-in-bloom-fuel-cells/",
+  "accessed_date": "2026-09-11",
+  "note": "스칸듐·지르코니아, 복수국 조달, 25GW, 중국 비의존. 03 의 SRC002"
+ },
+ {
+  "id": "sedaily_kr_suppliers",
+  "publisher": "Seoul Economic Daily",
+  "title": "US AI data-center power crunch drives Korean suppliers",
+  "source_type": "reputable_media",
+  "published_date": "2026-07-29",
+  "url": "https://en.sedaily.com/finance/2026/07/29/us-ai-data-center-power-crunch-drives-korean-suppliers",
+  "accessed_date": "2026-09-11",
+  "note": "AMOsense·Coseus·Seojin·Bloom 증설. 03 의 SRC003"
+ },
+ {
+  "id": "cctc_yicai",
+  "publisher": "Yicai",
+  "title": "CCTC Bloom 공급 관계 보도",
+  "source_type": "industry_research",
+  "published_date": "2025-2026",
+  "url": "https://www.yicai.com/brief/102939658.html",
+  "accessed_date": "2026-09-11",
+  "note": "CCTC 가 전해질 세라믹 주요 공급사. 점유율은 2차 조사. 03 의 SRC004"
+ },
+ {
+  "id": "mtar_ar_fy2425",
+  "publisher": "MTAR Technologies",
+  "title": "Annual Report FY2024-25",
+  "source_type": "primary_company",
+  "published_date": "2025-08",
+  "url": "https://mtar.in/wp-content/uploads/2025/08/Annual-Report-FY-2024-25.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "Bloom 핫박스 요구량의 50~60%, 전해조 유닛 단독 공급. 03 의 SRC005"
+ },
+ {
+  "id": "mtar_ar_fy2024",
+  "publisher": "MTAR Technologies",
+  "title": "Annual Report FY2024",
+  "source_type": "primary_company",
+  "published_date": "2024-08-17",
+  "url": "https://mtar.in/wp-content/uploads/2025/03/Annual-Report-FY-2024-Aug-17-2024.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "FY24 파워유닛·판금·인클로저 실행액, ASP 어셈블리"
+ },
+ {
+  "id": "coseus_kind",
+  "publisher": "KRX KIND",
+  "title": "Coseus 공급계약 공시",
+  "source_type": "primary_official",
+  "published_date": "2026-07-13",
+  "url": "https://kind.krx.co.kr/external/2026/07/13/000131/20260713000113/70370.htm",
+  "accessed_date": "2026-09-11",
+  "note": "전극셀 코팅 자동화 장비 1억 달러. 03 의 SRC006"
+ },
+ {
+  "id": "seojin_kind",
+  "publisher": "KRX KIND",
+  "title": "서진시스템 공급계약 공시",
+  "source_type": "primary_official",
+  "published_date": "2026-07-15",
+  "url": "https://kind.krx.co.kr/external/2026/07/15/000165/20260715000002/70012.htm",
+  "accessed_date": "2026-09-11",
+  "note": "SOFC 모듈·부품 5,263.8만 달러. 03 의 SRC007"
+ },
+ {
+  "id": "lselectric_kind",
+  "publisher": "KRX KIND",
+  "title": "LS ELECTRIC 공급계약 공시",
+  "source_type": "primary_official",
+  "published_date": "2026-04-29",
+  "url": "https://kind.krx.co.kr/external/2026/04/29/000110/20260428001034/91370.htm",
+  "accessed_date": "2026-09-11",
+  "note": "뉴멕시코 배전반·변압기 2억 1,652.6만 달러. 03 의 SRC008"
+ },
+ {
+  "id": "be_aep_1gw",
+  "publisher": "Bloom Energy",
+  "title": "Gigawatt fuel cell procurement agreement with AEP",
+  "source_type": "primary_company",
+  "published_date": "2024-11-14",
+  "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Gigawatt-Fuel-Cell-Procurement-Agreement-with-AEP-to-Power-AI-Data-Centers/default.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "최대 1GW, 초기 100MW. 03 의 SRC009"
+ },
+ {
+  "id": "be_sk_eternix_80mw",
+  "publisher": "Bloom Energy",
+  "title": "World's largest fuel cell installation",
+  "source_type": "primary_company",
+  "published_date": "2024-11-07",
+  "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Worlds-Largest-Fuel-Cell-Installation-in-History/default.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "한국 80MW, KDB 주도 PF. 03 의 SRC010"
+ },
+ {
+  "id": "be_brookfield_25b",
+  "publisher": "Bloom Energy",
+  "title": "Brookfield and Bloom Energy expand AI infrastructure partnership",
+  "source_type": "primary_company",
+  "published_date": "2026-06-30",
+  "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-expand-ai-infrastructure-partnership/",
+  "accessed_date": "2026-09-11",
+  "note": "250억 달러 금융 프레임워크. 03 의 SRC011"
+ },
+ {
+  "id": "oracle_jupiter",
+  "publisher": "Oracle",
+  "title": "Oracle, BorderPlex and Bloom Energy to power Project Jupiter",
+  "source_type": "primary_company",
+  "published_date": "2026-04-27",
+  "url": "https://www.oracle.com/news/announcement/oracle-borderplex-and-bloom-energy-to-power-project-jupiter-with-fuel-cell-technology-2026-04-27/",
+  "accessed_date": "2026-09-11",
+  "note": "뉴멕시코 프로젝트 주피터 최대 2.45GW. 03 의 SRC012"
+ },
+ {
+  "id": "be_oracle_28gw",
+  "publisher": "Bloom Energy",
+  "title": "Bloom Energy and Oracle expand strategic partnership",
+  "source_type": "primary_company",
+  "published_date": "2026-04-13",
+  "url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/",
+  "accessed_date": "2026-09-11",
+  "note": "최대 2.8GW, 초기 1.2GW. 03 의 SRC013"
+ },
+ {
+  "id": "be_oracle_2025",
+  "publisher": "Bloom Energy",
+  "title": "Oracle and Bloom Energy collaborate",
+  "source_type": "primary_company",
+  "published_date": "2025-07-24",
+  "url": "https://www.bloomenergy.com/news/oracle-and-bloom-energy-collaborate-to-deliver-power-to-data-centers-at-the-speed-of-ai/",
+  "accessed_date": "2026-09-11",
+  "note": "오라클 관계 최초 공식 발표"
+ },
+ {
+  "id": "be_equinix_100mw",
+  "publisher": "Bloom Energy",
+  "title": "Bloom expands data center power agreement with Equinix",
+  "source_type": "primary_company",
+  "published_date": "2025-02-20",
+  "url": "https://www.bloomenergy.com/news/bloom-energy-expands-data-center-power-agreement-with-equinix-surpassing-100mw/",
+  "accessed_date": "2026-09-11",
+  "note": "100MW 초과, 미국 19개 데이터센터. 03 의 SRC014"
+ },
+ {
+  "id": "nebius_be_328mw",
+  "publisher": "Nebius",
+  "title": "Nebius and Bloom Energy partner",
+  "source_type": "primary_company",
+  "published_date": "2026-05-20",
+  "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+  "accessed_date": "2026-09-11",
+  "note": "첫 미국 배치 328MW. 03 의 SRC015"
+ },
+ {
+  "id": "be_sk_500mw_2023",
+  "publisher": "Bloom Energy",
+  "title": "Bloom Energy and SK ecoplant announce 500MW sales agreement",
+  "source_type": "primary_company",
+  "published_date": "2023",
+  "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2023/Bloom-Energy-and-SK-ecoplant-Announce-500-MW-Sales-Agreement-Strengthening-Existing-Partnership/default.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "ASP 앵커로 쓰는 500MW / 약 15억 달러"
+ },
+ {
+  "id": "cw_porite_2024",
+  "publisher": "CommonWealth Magazine",
+  "title": "Taiwan supply chain 현장 취재",
+  "source_type": "industry_research",
+  "published_date": "2024-10-02",
+  "url": "https://english.cw.com.tw/article/article.action?id=3781",
+  "accessed_date": "2026-09-11",
+  "note": "Porite 와 캐나다 공급사가 당시 대략 50:50, 연 1,000만 장 근처, 650kW 당 3만 장"
+ },
+ {
+  "id": "kgi_kaori_2024",
+  "publisher": "KGI",
+  "title": "Kaori Heat Treatment (8996 TT)",
+  "source_type": "analyst_estimate",
+  "published_date": "2024-06-06",
+  "url": "https://www.kgi.com.hk/en/-/media/files/kgishk/research-reports/tw-reports/2024/01/kaori-heat-treatment_8996-tt_06062024.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "Kaori 의 Bloom 관련 매출 전망 2024F~2026F. 실적이 아니라 2024년 시점 전망"
+ },
+ {
+  "id": "aep_ohio_release",
+  "publisher": "AEP Ohio",
+  "title": "AEP Ohio 온사이트 연료전지 프로젝트 발표",
+  "source_type": "primary_company",
+  "published_date": "2025",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "04 에 URL 없이 이름만 적혀 있다"
  }
 ]

@@ -1,0 +1,32 @@
+[
+ {
+  "id": "h-be25-2nd-aep",
+  "anon_company_id": "be24_c2",
+  "candidate_company_id": "aep",
+  "period": "FY2025",
+  "likelihood": 3.75,
+  "status": "estimated",
+  "method": "초기 100MW 에 MW 당 250~300만 달러를 곱하면 2.5~3.0억 달러로 13% 몫 2.63억 달러와 겹친다",
+  "notes": "금액이 겹친다는 것이 법인 확인은 아니다"
+ },
+ {
+  "id": "h-be25-3rd-eternix",
+  "anon_company_id": "be24_c3",
+  "candidate_company_id": "sk-eternix",
+  "period": "FY2025",
+  "likelihood": 3.5,
+  "status": "estimated",
+  "method": "80MW 에 MW 당 300만 달러를 곱하면 2.4억 달러로 12% 몫 2.43억 달러와 겹친다",
+  "notes": "본사인지 프로젝트 법인인지 갈리지 않는다"
+ },
+ {
+  "id": "h-be26-73pct-oracle",
+  "anon_company_id": "be26_c1",
+  "candidate_company_id": "oracle",
+  "period": "2026 H1",
+  "likelihood": 4.0,
+  "status": "estimated",
+  "method": "SEC 가 오라클 워런트를 「고객의 고객」 대가로 회계처리하고 그 계약에 딸린 Energy Server 인도를 적시한다",
+  "notes": "계약 상대방과 오라클을 한 칸에 넣지 않는다. 오라클은 최종 사용자 쪽이다"
+ }
+]

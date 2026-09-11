@@ -6,17 +6,18 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C2 percent 에 분모가 붙었나
   C3 관측에 기간과 기준일이 있나
   C4 열거값이 정해진 것인가
-  C5 과거 관측이 CURRENT 로 올라왔나
+  C5 과거 비중이 CURRENT 로 올라왔나 (분모가 같은 시계열 안에서)
   C6 BOM 구성 합이 총액 범위 안인가
   C7 수량 없는 계약에서 단가를 뽑았나
+  C8 주장에 주어·근거등급·출처가 붙었나
 """
 import io, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 
-ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv',
-                   'financial_institution', 'utility', 'end_user'])
+ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv', 'financial_institution',
+                   'utility', 'end_user', 'material'])
 LANE = set(['MANUFACTURING_BOM', 'MANUFACTURING_EQUIPMENT', 'SITE_ELECTRICAL_BOP',
             'OPERATIONAL_INPUT', 'DOWNSTREAM', 'CORPORATE'])
 EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
@@ -120,12 +121,16 @@ def main():
             for sid in o.get('source_ids') or []:
                 if sid not in S:
                     fail(w, u'없는 출처 %s' % sid)
-            key = (o.get('relationship_id'), o.get('metric'))
-            end = o.get('period_end') or o.get('as_of_date') or ''
-            if end > latest.get(key, ''):
-                latest[key] = end
+            # 비중만 시계열로 본다. 계약·용량은 같은 시점에 여러 건이 설 수 있다
+            if o.get('unit') in PCT:
+                key = (o.get('relationship_id'), o.get('metric'), o.get('denominator'))
+                end = o.get('period_end') or o.get('as_of_date') or ''
+                if end > latest.get(key, ''):
+                    latest[key] = end
         for o in obss:
-            key = (o.get('relationship_id'), o.get('metric'))
+            if o.get('unit') not in PCT:
+                continue
+            key = (o.get('relationship_id'), o.get('metric'), o.get('denominator'))
             end = o.get('period_end') or o.get('as_of_date') or ''
             if o.get('status') == 'CURRENT' and end < latest.get(key, ''):
                 fail(ch + '/' + o['id'],
@@ -149,6 +154,22 @@ def main():
                 fail(w, u'익명 엔티티 %r 가 없다' % x.get('anon_company_id'))
             if x.get('candidate_company_id') not in E:
                 fail(w, u'후보 엔티티 %r 가 없다' % x.get('candidate_company_id'))
+
+        for c in load(os.path.join(base, 'claims.json'), []) or []:
+            w = ch + '/' + c['id']
+            if not c.get('statement'):
+                fail(w, u'주장 문장이 비었다')
+            if c.get('subject') not in E:
+                fail(w, u'주어 %r 가 엔티티에 없다' % c.get('subject'))
+            if c.get('object') and c['object'] not in E:
+                fail(w, u'목적어 %r 가 엔티티에 없다' % c['object'])
+            if c.get('evidence_level') not in EV_LEVEL:
+                fail(w, u'evidence_level 이 %r' % c.get('evidence_level'))
+            if not c.get('source_ids'):
+                fail(w, u'출처가 없다')
+            for sid in c.get('source_ids') or []:
+                if sid not in S:
+                    fail(w, u'없는 출처 %s' % sid)
 
         bdir = os.path.join(base, 'bom')
         if os.path.isdir(bdir):

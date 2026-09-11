@@ -1,0 +1,23 @@
+{
+ "company": "bloom-energy",
+ "period": "FY2025",
+ "total_revenue_usd_m": 2023.994,
+ "product_revenue_usd_m": 1531.281,
+ "product_cogs_usd_m": 992.841,
+ "product_gross_margin_pct": 35.2,
+ "revenue_equivalent_mw": {
+  "value": 510,
+  "status": "ESTIMATED",
+  "method_id": "method-rev-equiv-mw"
+ },
+ "cogs_per_equivalent_mw": {
+  "value": 0.002,
+  "unit": "USD M/MW",
+  "status": "ESTIMATED",
+  "method_id": "method-cogs-per-mw"
+ },
+ "as_of_date": "2026-02-09",
+ "source_ids": [
+  "be_10k_fy2025"
+ ]
+}

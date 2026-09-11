@@ -1,0 +1,101 @@
+{
+ "company": "bloom-energy",
+ "period": "2026-current",
+ "as_of_date": "2026-09-11",
+ "unit": "USD M/MW",
+ "status": "ESTIMATED",
+ "denominator": "매출 환산 MW 당 제품 원가",
+ "total": {
+  "low": 1.8,
+  "high": 1.95,
+  "central": 1.85
+ },
+ "note": "Bloom 이 공개한 BOM 이 아니다. 전부 추정이며 화면에도 그렇게 적는다",
+ "method_id": "method-cogs-per-mw",
+ "components": [
+  {
+   "id": "cell",
+   "label": "셀·전기화학",
+   "central": 0.22,
+   "low": 0.18,
+   "high": 0.25,
+   "share_pct": 12,
+   "subsystem": "Cell",
+   "evidence_level": "ESTIMATED",
+   "confidence": "MEDIUM",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "interconnect",
+   "label": "인터커넥트",
+   "central": 0.45,
+   "low": 0.36,
+   "high": 0.56,
+   "share_pct": 24,
+   "subsystem": "Interconnect",
+   "evidence_level": "ESTIMATED",
+   "confidence": "MEDIUM",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "hotbox",
+   "label": "핫박스·파워유닛",
+   "central": 0.35,
+   "low": 0.3,
+   "high": 0.38,
+   "share_pct": 19,
+   "subsystem": "Hotbox",
+   "evidence_level": "ESTIMATED",
+   "confidence": "MEDIUM_HIGH",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "power-electronics",
+   "label": "전력 전자",
+   "central": 0.25,
+   "low": 0.2,
+   "high": 0.3,
+   "share_pct": 14,
+   "subsystem": "Power electronics",
+   "evidence_level": "ESTIMATED",
+   "confidence": "LOW_MEDIUM",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "mechanical",
+   "label": "기계·모듈",
+   "central": 0.12,
+   "low": 0.08,
+   "high": 0.15,
+   "share_pct": 6,
+   "subsystem": "Mechanical",
+   "evidence_level": "ESTIMATED",
+   "confidence": "LOW_MEDIUM",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "internal",
+   "label": "Bloom 내부 전환",
+   "central": 0.2,
+   "low": null,
+   "high": null,
+   "share_pct": 11,
+   "subsystem": null,
+   "evidence_level": "INFERRED",
+   "confidence": "LOW",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  },
+  {
+   "id": "residual",
+   "label": "잔여·중복 조정",
+   "central": 0.26,
+   "low": null,
+   "high": null,
+   "share_pct": 14,
+   "subsystem": null,
+   "evidence_level": "INFERRED",
+   "confidence": "LOW",
+   "denominator": "매출 환산 MW 당 제품 원가"
+  }
+ ]
+}

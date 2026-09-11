@@ -1,1 +1,303 @@
-[]
+[
+ {
+  "id": "method-porite-content",
+  "title": "Porite 몫 1MW 당 값",
+  "steps": [
+   {
+    "label": "650kW 파워유닛 한 대당 플레이트",
+    "value": 30000,
+    "unit": "장"
+   },
+   {
+    "label": "÷ 0.65MW",
+    "value": 46154,
+    "unit": "장/MW"
+   },
+   {
+    "label": "× 장당 약 $6",
+    "value": 277000,
+    "unit": "USD/MW"
+   }
+  ],
+  "result": 277000,
+  "result_unit": "USD/MW",
+  "denominator": "Bloom 시스템 1MW",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "cw_porite_2024"
+  ],
+  "note": "장당 단가는 공급사 실적에서 역산한 값이다"
+ },
+ {
+  "id": "method-amosense-share-1p2gw",
+  "title": "AMOsense 기판 물량 점유율 (1.2GW 가동률)",
+  "steps": [
+   {
+    "label": "월 생산 능력",
+    "value": 600000,
+    "unit": "장/월"
+   },
+   {
+    "label": "÷ 1.2GW 가동률 기준 월 수요 약 400만 장",
+    "value": 15,
+    "unit": "%"
+   }
+  ],
+  "result": 15,
+  "result_unit": "%",
+  "denominator": "Bloom 1.2GW 가동률 기준 월 세라믹 기판 수요",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "sedaily_kr_suppliers"
+  ],
+  "note": "기판 한 장을 25W 로 보는 가정에서 나온 수요다. 다른 자료는 1GW 당 3,000~3,300만 장으로 잡아 값이 달라진다"
+ },
+ {
+  "id": "method-amosense-share-2gw",
+  "title": "AMOsense 기판 물량 점유율 (2GW 최대)",
+  "steps": [
+   {
+    "label": "연 생산 능력",
+    "value": 7200000,
+    "unit": "장/년"
+   },
+   {
+    "label": "÷ 2GW 최대 생산 기준 수요 약 6,670만 장",
+    "value": 9,
+    "unit": "%"
+   }
+  ],
+  "result": 9,
+  "result_unit": "%",
+  "denominator": "Bloom 2GW 최대 생산 기준 세라믹 기판 수요",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "sedaily_kr_suppliers"
+  ],
+  "note": "앞의 15% 와 분모가 다르다"
+ },
+ {
+  "id": "method-kaori-complement",
+  "title": "Kaori 잔여 몫",
+  "steps": [
+   {
+    "label": "Bloom 핫박스 요구량",
+    "value": 100,
+    "unit": "%"
+   },
+   {
+    "label": "− MTAR 50~60%",
+    "value": 45,
+    "unit": "%"
+   }
+  ],
+  "result": 45,
+  "result_unit": "%",
+  "denominator": "Bloom 핫박스 요구량",
+  "result_status": "INFERRED",
+  "source_ids": [
+   "mtar_ar_fy2425"
+  ],
+  "note": "나머지를 한 회사가 다 맡는다는 보장이 없다"
+ },
+ {
+  "id": "method-fundjv-share",
+  "title": "FY2025 최대 고객 43% 의 정체",
+  "steps": [
+   {
+    "label": "펀드 JV 제품 매출",
+    "value": 809.8,
+    "unit": "USD M"
+   },
+   {
+    "label": "+ 설치 매출",
+    "value": 52.3,
+    "unit": "USD M"
+   },
+   {
+    "label": "= 합계",
+    "value": 862.1,
+    "unit": "USD M"
+   },
+   {
+    "label": "÷ 총매출 2,024.0",
+    "value": 42.6,
+    "unit": "%"
+   }
+  ],
+  "result": 42.6,
+  "result_unit": "%",
+  "denominator": "Bloom FY2025 총매출",
+  "result_status": "CONFIRMED",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "note": "공시 43% 와 사실상 일치한다"
+ },
+ {
+  "id": "method-aep-13",
+  "title": "FY2025 2위 고객 13% 의 후보",
+  "steps": [
+   {
+    "label": "초기 주문",
+    "value": 100,
+    "unit": "MW"
+   },
+   {
+    "label": "× 약 $2.5~3.0M/MW",
+    "value": 300,
+    "unit": "USD M"
+   },
+   {
+    "label": "vs 총매출의 13%",
+    "value": 263,
+    "unit": "USD M"
+   }
+  ],
+  "result": 13,
+  "result_unit": "%",
+  "denominator": "Bloom FY2025 총매출",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "be_aep_1gw",
+   "be_10k_fy2025"
+  ],
+  "note": "금액이 맞는다는 것이 법인 확인은 아니다"
+ },
+ {
+  "id": "method-sk-12",
+  "title": "FY2025 3위 고객 12% 의 후보",
+  "steps": [
+   {
+    "label": "한국 프로젝트",
+    "value": 80,
+    "unit": "MW"
+   },
+   {
+    "label": "× 약 $3.0M/MW",
+    "value": 240,
+    "unit": "USD M"
+   },
+   {
+    "label": "vs 총매출의 12%",
+    "value": 243,
+    "unit": "USD M"
+   }
+  ],
+  "result": 12,
+  "result_unit": "%",
+  "denominator": "Bloom FY2025 총매출",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "be_sk_eternix_80mw",
+   "be_10k_fy2025"
+  ],
+  "note": "SK 에너닉스 본사인지 프로젝트 법인인지 모른다"
+ },
+ {
+  "id": "method-sk-2024-match",
+  "title": "FY2024 최대 고객 23% 의 정체",
+  "steps": [
+   {
+    "label": "총매출 1,473.9 × 23%",
+    "value": 339,
+    "unit": "USD M"
+   },
+   {
+    "label": "vs 특수관계 매출",
+    "value": 338.6,
+    "unit": "USD M"
+   }
+  ],
+  "result": 23,
+  "result_unit": "%",
+  "denominator": "Bloom FY2024 총매출",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "note": "두 값이 사실상 같아 SK 계열로 본다"
+ },
+ {
+  "id": "method-rev-equiv-mw",
+  "title": "매출 환산 MW",
+  "steps": [
+   {
+    "label": "제품 매출",
+    "value": null,
+    "unit": "USD M"
+   },
+   {
+    "label": "÷ ASP 앵커 $3.0M/MW",
+    "value": null,
+    "unit": "MW"
+   }
+  ],
+  "result": null,
+  "result_unit": "MW",
+  "denominator": "SK 500MW / 약 15억 달러에서 뽑은 $3.0M/MW 앵커",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "be_sk_500mw_2023"
+  ],
+  "note": "출하 MW 공시가 아니다. 원가를 나눌 분모로만 쓴다"
+ },
+ {
+  "id": "method-cogs-per-mw",
+  "title": "매출 환산 MW 당 제품 원가",
+  "steps": [
+   {
+    "label": "제품 원가",
+    "value": null,
+    "unit": "USD M"
+   },
+   {
+    "label": "÷ 매출 환산 MW",
+    "value": null,
+    "unit": "USD M/MW"
+   }
+  ],
+  "result": null,
+  "result_unit": "USD M/MW",
+  "denominator": "매출 환산 MW",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "note": "2024 약 1.90 → 2025 약 1.95 → 2026 상반기 약 1.93 으로 거의 움직이지 않았다"
+ },
+ {
+  "id": "method-seojin-sensitivity",
+  "title": "서진 몫 1MW 당 값의 시나리오 폭",
+  "steps": [
+   {
+    "label": "계약 금액",
+    "value": 52.638,
+    "unit": "USD M"
+   },
+   {
+    "label": "÷ 8개월 667MW 시나리오",
+    "value": 79000,
+    "unit": "USD/MW"
+   },
+   {
+    "label": "÷ 1.0GW 시나리오",
+    "value": 53000,
+    "unit": "USD/MW"
+   },
+   {
+    "label": "÷ 1.33GW 시나리오",
+    "value": 40000,
+    "unit": "USD/MW"
+   }
+  ],
+  "result": null,
+  "result_unit": "USD/MW",
+  "denominator": "8개월 생산량 시나리오",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "seojin_kind"
+  ],
+  "note": "계약에 MW 가 없으므로 중앙값을 세우지 않는다"
+ }
+]

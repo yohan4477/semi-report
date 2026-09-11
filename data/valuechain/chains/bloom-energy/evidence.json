@@ -1,0 +1,974 @@
+[
+ {
+  "id": "be-e001",
+  "relationship_id": "porite-bloom-interconnect",
+  "metric_id": "o-porite-share-2024",
+  "source_id": "cw_porite_2024",
+  "evidence_type": "indirect",
+  "evidence": "2024-10 현장 취재의 「Porite 와 캐나다 공급사가 대략 50:50」. 그 시점 관측이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e002",
+  "relationship_id": "porite-bloom-interconnect",
+  "metric_id": "o-porite-content-2024",
+  "source_id": "cw_porite_2024",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e003",
+  "relationship_id": "stackpole-bloom-interconnect",
+  "metric_id": "o-stackpole-share-2026",
+  "source_id": "cw_porite_2024",
+  "evidence_type": "indirect",
+  "evidence": "캐나다 공급사의 정체 자체가 추론이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e004",
+  "relationship_id": "mtar-bloom-hotbox",
+  "metric_id": "o-mtar-share-2024",
+  "source_id": "mtar_ar_fy2024",
+  "evidence_type": "direct",
+  "evidence": "MTAR 연차보고서의 직접 공시",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e005",
+  "relationship_id": "mtar-bloom-hotbox",
+  "metric_id": "o-mtar-share-2025",
+  "source_id": "mtar_ar_fy2425",
+  "evidence_type": "direct",
+  "evidence": "회사가 말한 통상 요구량 기준값으로 다룬다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e006",
+  "relationship_id": "mtar-bloom-hotbox",
+  "metric_id": "o-mtar-share-2026",
+  "source_id": "mtar_ar_fy2425",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e007",
+  "relationship_id": "kaori-bloom-hotbox",
+  "metric_id": "o-kaori-share-2026",
+  "source_id": "kgi_kaori_2024",
+  "evidence_type": "indirect",
+  "evidence": "MTAR 의 나머지를 그대로 읽은 값이다. 공식 수치가 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e008",
+  "relationship_id": "cctc-bloom-electrolyte",
+  "metric_id": "o-cctc-share-2026",
+  "source_id": "cctc_yicai",
+  "evidence_type": "indirect",
+  "evidence": "업계·증권 조사 수치를 모은 값이다. 회사 공시가 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e009",
+  "relationship_id": "amosense-bloom-substrate",
+  "metric_id": "o-amosense-share-2026q3",
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "indirect",
+  "evidence": "설비 능력에서 나온 값이다. 실제 가동률과 출하는 공개되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e010",
+  "relationship_id": "amosense-bloom-substrate",
+  "metric_id": "o-amosense-share-2026e",
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "indirect",
+  "evidence": "분모가 앞의 것과 다르다. 나란히 비교하지 않는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e011",
+  "relationship_id": "amosense-bloom-substrate",
+  "metric_id": "o-amosense-capa-2026q3",
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "direct",
+  "evidence": "20만 장에서 60만 장으로 확대 계획",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e012",
+  "relationship_id": "amosense-bloom-substrate",
+  "metric_id": "o-amosense-share-2025",
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "direct",
+  "evidence": "2026 진입 전이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e013",
+  "relationship_id": "coseus-bloom-equipment",
+  "metric_id": "o-coseus-contract-2026",
+  "source_id": "coseus_kind",
+  "evidence_type": "direct",
+  "evidence": "₩1,504.2억",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e014",
+  "relationship_id": "coseus-bloom-equipment",
+  "metric_id": "o-coseus-cumulative-2026",
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "indirect",
+  "evidence": "보도 기준. 공시 합산이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e015",
+  "relationship_id": "seojin-bloom-module",
+  "metric_id": "o-seojin-contract-2026",
+  "source_id": "seojin_kind",
+  "evidence_type": "direct",
+  "evidence": "₩785.47억, 베트남 공장 EXW",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e016",
+  "relationship_id": "seojin-bloom-module",
+  "metric_id": "o-seojin-content-2026",
+  "source_id": "seojin_kind",
+  "evidence_type": "indirect",
+  "evidence": "계약에 MW 가 없다. 중앙값을 세우지 않고 시나리오 폭만 남긴다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e017",
+  "relationship_id": "lselectric-bloom-bop",
+  "metric_id": "o-ls-contract-nm-2026",
+  "source_id": "lselectric_kind",
+  "evidence_type": "direct",
+  "evidence": "₩3,189.6억, 뉴멕시코 하이퍼스케일 데이터센터",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e018",
+  "relationship_id": "lselectric-bloom-bop",
+  "metric_id": "o-ls-contract-wy-2026",
+  "source_id": "lselectric_kind",
+  "evidence_type": "direct",
+  "evidence": "와이오밍 하이퍼스케일 데이터센터 추가 계약",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e019",
+  "relationship_id": "bloom-skecoplant",
+  "metric_id": "o-skecoplant-share-fy2024",
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "23% 몫 약 3.39억 달러가 특수관계 매출 3.386억 달러와 사실상 같다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e020",
+  "relationship_id": "bloom-be24c2",
+  "metric_id": "o-be24c2-share-fy2024",
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "약 2.36억 달러. 법인 특정 불가",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e021",
+  "relationship_id": "bloom-be24c3",
+  "metric_id": "o-be24c3-share-fy2024",
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "약 2.06억 달러. 법인 특정 불가",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e022",
+  "relationship_id": "bloom-fundjv-sales",
+  "metric_id": "o-fundjv-share-fy2025",
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "공시 최대 고객 43% 와 맞는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e023",
+  "relationship_id": "bloom-aep",
+  "metric_id": "o-aep-share-fy2025",
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "2위 고객이 AEP 매입 법인이라는 가설. 확정이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e024",
+  "relationship_id": "bloom-aep",
+  "metric_id": "o-aep-share-fy2025",
+  "source_id": "be_aep_1gw",
+  "evidence_type": "indirect",
+  "evidence": "2위 고객이 AEP 매입 법인이라는 가설. 확정이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e025",
+  "relationship_id": "bloom-eternix",
+  "metric_id": "o-eternix-share-fy2025",
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "본사인지 프로젝트 법인인지도 확정되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e026",
+  "relationship_id": "bloom-eternix",
+  "metric_id": "o-eternix-share-fy2025",
+  "source_id": "be_sk_eternix_80mw",
+  "evidence_type": "indirect",
+  "evidence": "본사인지 프로젝트 법인인지도 확정되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e027",
+  "relationship_id": "bloom-be26c1",
+  "metric_id": "o-be26c1-share-2026q2",
+  "source_id": "be_10q_2026q2",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e028",
+  "relationship_id": "bloom-be26c1",
+  "metric_id": "o-be26c1-share-2026h1",
+  "source_id": "be_10q_2026q2",
+  "evidence_type": "indirect",
+  "evidence": "비특수관계 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e029",
+  "relationship_id": "bloom-fundjv-sales",
+  "metric_id": "o-fundjv-share-2026q2",
+  "source_id": "be_10q_2026q2",
+  "evidence_type": "indirect",
+  "evidence": "2분기 특수관계 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e030",
+  "relationship_id": "bloom-aep",
+  "metric_id": "o-aep-capacity-max",
+  "source_id": "be_aep_1gw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e031",
+  "relationship_id": "bloom-aep",
+  "metric_id": "o-aep-capacity-initial",
+  "source_id": "be_aep_1gw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e032",
+  "relationship_id": "bloom-oracle",
+  "metric_id": "o-oracle-capacity-max",
+  "source_id": "be_oracle_28gw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e033",
+  "relationship_id": "bloom-oracle",
+  "metric_id": "o-oracle-capacity-initial",
+  "source_id": "be_oracle_28gw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e034",
+  "relationship_id": "bloom-equinix",
+  "metric_id": "o-equinix-capacity-2025",
+  "source_id": "be_equinix_100mw",
+  "evidence_type": "direct",
+  "evidence": "약 75MW 가동 + 30MW 공사 중",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e035",
+  "relationship_id": "bloom-nebius",
+  "metric_id": "o-nebius-capacity-2026",
+  "source_id": "nebius_be_328mw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e036",
+  "relationship_id": "bloom-eternix",
+  "metric_id": "o-eternix-capacity",
+  "source_id": "be_sk_eternix_80mw",
+  "evidence_type": "direct",
+  "evidence": "충주 40MW + 대소원 40MW",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e037",
+  "relationship_id": "bloom-jupiter",
+  "metric_id": "o-jupiter-capacity",
+  "source_id": "oracle_jupiter",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e038",
+  "relationship_id": "brookfield-fundjv",
+  "metric_id": "o-brookfield-framework-2025",
+  "source_id": "be_brookfield_25b",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e039",
+  "relationship_id": "brookfield-fundjv",
+  "metric_id": "o-brookfield-framework-2026",
+  "source_id": "be_brookfield_25b",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e040",
+  "relationship_id": "scandium-undisclosed-bloom",
+  "metric_id": null,
+  "source_id": "be_scandium_blog",
+  "evidence_type": "indirect",
+  "evidence": "복수국 복수 업체라고만 공개. 업체명·물량·조달 전략 비공개",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e041",
+  "relationship_id": "zirconia-bloom",
+  "metric_id": null,
+  "source_id": "be_scandium_blog",
+  "evidence_type": "indirect",
+  "evidence": "초박형 세라믹 기판의 기반 물질. 벤더 비공개",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e042",
+  "relationship_id": "natgas-bloom-fleet",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "제조 원가가 아니라 가동 중인 설비의 투입",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e043",
+  "relationship_id": "biogas-bloom-fleet",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e044",
+  "relationship_id": "hydrogen-bloom-fleet",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e045",
+  "relationship_id": "cctc-bloom-electrolyte",
+  "metric_id": null,
+  "source_id": "cctc_yicai",
+  "evidence_type": "direct",
+  "evidence": "관계는 확인. 조달 점유율은 공식 비공개이고 2차 조사 추정만 있다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e046",
+  "relationship_id": "amosense-bloom-substrate",
+  "metric_id": null,
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "direct",
+  "evidence": "2026 신규 진입. 세라믹 공급망 다변화 신호",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e047",
+  "relationship_id": "yongzhou-bloom-ceramic",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "전해질 기판과 분리한다. 어느 하위 계통에 쓰이는지는 추론",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e048",
+  "relationship_id": "cumi-bloom-alumina",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "제품은 확인. 핫존 구조·단열 용도는 추론이며 실(seal) 공급사로 단정하지 않는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e049",
+  "relationship_id": "unicorn-bloom-insulation",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e050",
+  "relationship_id": "porite-bloom-interconnect",
+  "metric_id": null,
+  "source_id": "cw_porite_2024",
+  "evidence_type": "direct",
+  "evidence": "장기 공급사. 2024 의 50% 는 그 시점 관측일 뿐 현재 점유율이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e051",
+  "relationship_id": "stackpole-bloom-interconnect",
+  "metric_id": null,
+  "source_id": "cw_porite_2024",
+  "evidence_type": "indirect",
+  "evidence": "2024 취재의 「캐나다 공급사」 후보. 공동 특허가 근거이며 현재 점유율은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e052",
+  "relationship_id": "plusmetal-bloom-coating",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e053",
+  "relationship_id": "mtar-bloom-hotbox",
+  "metric_id": null,
+  "source_id": "mtar_ar_fy2425",
+  "evidence_type": "direct",
+  "evidence": "전해조 유닛은 단독 공급으로 설명된다. 인클로저·하네스가 섞여 기계 계통과 겹칠 수 있다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e054",
+  "relationship_id": "mtar-bloom-hotbox",
+  "metric_id": null,
+  "source_id": "mtar_ar_fy2024",
+  "evidence_type": "direct",
+  "evidence": "전해조 유닛은 단독 공급으로 설명된다. 인클로저·하네스가 섞여 기계 계통과 겹칠 수 있다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e055",
+  "relationship_id": "kaori-bloom-hotbox",
+  "metric_id": null,
+  "source_id": "kgi_kaori_2024",
+  "evidence_type": "direct",
+  "evidence": "MTAR 50~60% 의 나머지를 그대로 Kaori 몫으로 읽는 것은 보수적 추론일 뿐이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e056",
+  "relationship_id": "acbel-bloom-power",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e057",
+  "relationship_id": "sanmina-bloom-converter",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "AcBel·Sanmina·Bloom 인도를 단순히 더하면 부품과 조립과 통합이 겹쳐 이중계산된다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e058",
+  "relationship_id": "cypress-bloom-harness",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e059",
+  "relationship_id": "bloomindia-bloom-power",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e060",
+  "relationship_id": "seojin-bloom-module",
+  "metric_id": null,
+  "source_id": "seojin_kind",
+  "evidence_type": "direct",
+  "evidence": "계약에 MW·수량이 없다. 통합 경계는 추론이며 조달 점유율은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e061",
+  "relationship_id": "seojin-bloom-module",
+  "metric_id": null,
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "direct",
+  "evidence": "계약에 MW·수량이 없다. 통합 경계는 추론이며 조달 점유율은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e062",
+  "relationship_id": "nash-bloom-enclosure",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e063",
+  "relationship_id": "texon-bloom-enclosure",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e064",
+  "relationship_id": "hansun-bloom-plumbing",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "조달 점유율은 공개되지 않았다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e065",
+  "relationship_id": "technoflex-bloom-exhaust",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e066",
+  "relationship_id": "chunhui-bloom-thermocouple",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "통관 자료에서 반복 선적 확인",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e067",
+  "relationship_id": "okazaki-bloom-thermocouple",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e068",
+  "relationship_id": "microsensor-bloom-level",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e069",
+  "relationship_id": "protechnic-bloom-fan",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "공급 이력은 있으나 현재 주력 여부가 불확실하다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e070",
+  "relationship_id": "coseus-bloom-equipment",
+  "metric_id": null,
+  "source_id": "coseus_kind",
+  "evidence_type": "direct",
+  "evidence": "제품 BOM 이 아니라 설비 투자. 원가 비중은 낮고 증설 병목으로서 중요도는 높다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e071",
+  "relationship_id": "coseus-bloom-equipment",
+  "metric_id": null,
+  "source_id": "sedaily_kr_suppliers",
+  "evidence_type": "direct",
+  "evidence": "제품 BOM 이 아니라 설비 투자. 원가 비중은 낮고 증설 병목으로서 중요도는 높다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e072",
+  "relationship_id": "lselectric-bloom-bop",
+  "metric_id": null,
+  "source_id": "lselectric_kind",
+  "evidence_type": "direct",
+  "evidence": "제품 BOM 이 아니라 부지 전기 인프라 층",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e073",
+  "relationship_id": "lselectric-jupiter",
+  "metric_id": null,
+  "source_id": "lselectric_kind",
+  "evidence_type": "indirect",
+  "evidence": "지역과 시점이 붙지만 LS 와 오라클을 직접 잇는 문장은 찾지 못했다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e074",
+  "relationship_id": "lselectric-jupiter",
+  "metric_id": null,
+  "source_id": "oracle_jupiter",
+  "evidence_type": "indirect",
+  "evidence": "지역과 시점이 붙지만 LS 와 오라클을 직접 잇는 문장은 찾지 못했다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e075",
+  "relationship_id": "bloom-sk-jv",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "2020 가동, 2023 범위를 full assembly 로 확대",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e076",
+  "relationship_id": "aepohio-aep",
+  "metric_id": null,
+  "source_id": "aep_ohio_release",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e077",
+  "relationship_id": "borderplex-jupiter",
+  "metric_id": null,
+  "source_id": "oracle_jupiter",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e078",
+  "relationship_id": "brookfield-fundjv",
+  "metric_id": null,
+  "source_id": "be_brookfield_25b",
+  "evidence_type": "direct",
+  "evidence": "2025 50억 → 2026-06 250억 달러",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e079",
+  "relationship_id": "bloom-fundjv-sales",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "계약상 고객이다. 스폰서(Brookfield)와도, 최종 사용자와도 다른 주체다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e080",
+  "relationship_id": "kdb-eternix-pf",
+  "metric_id": null,
+  "source_id": "be_sk_eternix_80mw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e081",
+  "relationship_id": "southern-bloom-legacy",
+  "metric_id": null,
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "과거 제3자 금융 구조. 현재 핵심 구조와 구분한다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e082",
+  "relationship_id": "duke-bloom-legacy",
+  "metric_id": null,
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e083",
+  "relationship_id": "exelon-bloom-legacy",
+  "metric_id": null,
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e084",
+  "relationship_id": "bloom-skecoplant",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "과거 500MW take-or-pay 와 후속 물량 약정. 2025-07-10 까지 특수관계였다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e085",
+  "relationship_id": "bloom-skecoplant",
+  "metric_id": null,
+  "source_id": "be_sk_500mw_2023",
+  "evidence_type": "direct",
+  "evidence": "과거 500MW take-or-pay 와 후속 물량 약정. 2025-07-10 까지 특수관계였다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e086",
+  "relationship_id": "bloom-skamericas",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e087",
+  "relationship_id": "bloom-eternix",
+  "metric_id": null,
+  "source_id": "be_sk_eternix_80mw",
+  "evidence_type": "direct",
+  "evidence": "충주 40MW + 대소원 40MW",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e088",
+  "relationship_id": "bloom-aep",
+  "metric_id": null,
+  "source_id": "be_aep_1gw",
+  "evidence_type": "direct",
+  "evidence": "한 회사가 유틸리티이자 채널이자 금융이다. 역할은 엔티티가 아니라 이 엣지에 붙는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e089",
+  "relationship_id": "bloom-aep",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "한 회사가 유틸리티이자 채널이자 금융이다. 역할은 엔티티가 아니라 이 엣지에 붙는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e090",
+  "relationship_id": "aepohio-aws",
+  "metric_id": null,
+  "source_id": "aep_ohio_release",
+  "evidence_type": "direct",
+  "evidence": "고객이 장기 계약으로 프로젝트 비용을 부담",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e091",
+  "relationship_id": "aepohio-cologix",
+  "metric_id": null,
+  "source_id": "aep_ohio_release",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e092",
+  "relationship_id": "bloom-oracle",
+  "metric_id": null,
+  "source_id": "be_oracle_28gw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e093",
+  "relationship_id": "bloom-oracle",
+  "metric_id": null,
+  "source_id": "be_oracle_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e094",
+  "relationship_id": "bloom-jupiter",
+  "metric_id": null,
+  "source_id": "oracle_jupiter",
+  "evidence_type": "direct",
+  "evidence": "최대 2.45GW 계획",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e095",
+  "relationship_id": "bloom-equinix",
+  "metric_id": null,
+  "source_id": "be_equinix_100mw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e096",
+  "relationship_id": "bloom-nebius",
+  "metric_id": null,
+  "source_id": "nebius_be_328mw",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e097",
+  "relationship_id": "bloom-coreweave",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e098",
+  "relationship_id": "bloom-intel",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e099",
+  "relationship_id": "bloom-att",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e100",
+  "relationship_id": "bloom-verizon",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e101",
+  "relationship_id": "bloom-quanta",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "AI 하드웨어 제조 시설 용량을 150% 이상 늘렸다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e102",
+  "relationship_id": "bloom-walmart",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e103",
+  "relationship_id": "bloom-homedepot",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e104",
+  "relationship_id": "bloom-ferrari",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e105",
+  "relationship_id": "bloom-fedex",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e106",
+  "relationship_id": "bloom-be24c2",
+  "metric_id": null,
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "FY2024 16%. 법인 특정 불가",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e107",
+  "relationship_id": "bloom-be24c3",
+  "metric_id": null,
+  "source_id": "be_10k_fy2024",
+  "evidence_type": "indirect",
+  "evidence": "FY2024 14%. 법인 특정 불가",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e108",
+  "relationship_id": "bloom-be26c1",
+  "metric_id": null,
+  "source_id": "be_10q_2026q2",
+  "evidence_type": "indirect",
+  "evidence": "2026 상반기 73%, 비특수관계. SEC 가 법인명을 밝히지 않았다",
+  "hypothesis_id": null
+ }
+]
