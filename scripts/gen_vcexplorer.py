@@ -1003,6 +1003,16 @@ function App(){
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
+      if (window.innerWidth < 720 && rf.getNodes && !open.length) {
+        // 첫 화면은 읽을 수 있는 크기로. 타겟을 가운데 놓고 양옆 칸은 가장자리에 걸친다
+        var me0 = null;
+        rf.getNodes().forEach(function(n){ if (n.id === focal) me0 = n; });
+        if (me0) {
+          rf.setCenter(me0.position.x + COL_W / 2, me0.position.y + 24,
+                       { zoom:1, duration:240 });
+          return;
+        }
+      }
       if (window.innerWidth < 720 && rf.getNodes) {
         // 중심과 바로 옆 칸까지를 한 화면에 담는다. 나머지는 끌어서 본다
         var all = rf.getNodes(), me = null;
