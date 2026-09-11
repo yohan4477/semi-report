@@ -1154,10 +1154,11 @@ function Roster(p){
             onClick: function(){ p.onPick(r.id); } }, [
             h('td', { key:1 }, (function(){
               var f = flagOf(r.id);
-              return f ? [h('span', { key:'f', className: flagCls(f),
-                                      title: flagTitle(f) }, f),
-                          h('span', { key:'c' }, r.e.country || '—')]
-                       : (r.e.country || '—');
+              // 나라를 모르면 물음표 하나로 끝낸다. 뒤에 줄표까지 달면 두 번 말한다
+              if (!f) return r.e.country || '—';
+              return [h('span', { key:'f', className: flagCls(f),
+                                  title: flagTitle(f) }, f),
+                      r.e.country ? h('span', { key:'c' }, r.e.country) : null];
             })()),
             h('td', { key:2 }, nm(r.id)),
             h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
