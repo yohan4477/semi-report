@@ -557,7 +557,7 @@ function route(edges, geo){
       // 하나에서 하나로만 가는 선은 줄기에 넣지 않는다.
       // 높이가 같으면 곧은 선, 어긋나면 제 홈으로만 내려간다
       if (outd[e.source] === 1 && ind[e.target] === 1) {
-        if (Math.abs(cy(e.source) - cy(e.target)) <= 4) {
+        if (Math.abs(cy(e.source) - cy(e.target)) <= 8) {
           e.type = 'straight';
           e.data = {};
         } else {
@@ -616,10 +616,11 @@ function place(nodes, edges){
   var at = {};
   used.forEach(function(c, i){ at[c] = i; });
 
-  var nbr = {};
+  var nbr = {}, pairs = [];
   function link(a, b){
     (nbr[a] = nbr[a] || []).push(b);
     (nbr[b] = nbr[b] || []).push(a);
+    pairs.push([a, b]);   // a 에서 b 로 흐른다. 자리를 잡을 때 방향을 본다
   }
   // 칸을 건너뛰는 선에는 중간 칸마다 보이지 않는 자리를 잡아 둔다
   edges.forEach(function(e){
@@ -670,25 +671,53 @@ function place(nodes, edges){
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
 
-  // 자리는 차례대로 붙여 앉힌다. 선 때문에 상자를 아래로 밀지 않는다 —
-  // 밀기 시작하면 고객이 늘수록 판이 세로로 길어지고 선이 판 바닥을 한 바퀴 돈다.
+  // 타겟은 제 칸 맨 위에 앉는다. 그래야 왼쪽은 전부 타겟보다 아래에 서고(선이 위로만
+  // 꺾인다), 오른쪽도 전부 아래에 서서(선이 아래로만 꺾인다) 흐름이 한 방향으로 읽힌다
+  used.forEach(function(c){
+    var list = byCol[c], fi = -1;
+    for (var i = 0; i < list.length; i++)
+      if (list[i].n && list[i].n.data && list[i].n.data.focal) { fi = i; break; }
+    if (fi > 0) list.unshift(list.splice(fi, 1)[0]);
+  });
+
+  // 자리는 차례대로 붙여 앉힌다. 칸마다 위에서 아래로 채우고, 타겟 칸에서 바깥으로
+  // 한 칸씩 나간다. 한 상자는 제 앞 칸 이웃보다 위로 올라가지 않는다 — 그래야 왼쪽 선은
+  // 위로만, 오른쪽 선은 아래로만 꺾인다. 자리를 보는 것은 여기까지고,
   // 꺾는 일은 route 가 칸 사이 빈 띠에서만 맡는다
-  var colH = {}, maxH = 0;
-  used.forEach(function(c){
-    var y = 0;
-    byCol[c].forEach(function(it, k){
+  // 더미까지 칸 번호를 안다
+  var colOf2 = {};
+  used.forEach(function(c, i){
+    byCol[c].forEach(function(it){ colOf2[it.id] = i; });
+  });
+  // 자리를 미는 것은 왼쪽에서 오른쪽으로 흐르는 선뿐이다. 되돌아가는 선(고객이 다시
+  // 타겟을 먹이는 관계)까지 세면 칸마다 바닥이 밀려 판이 몇 곱절 길어진다
+  var flow = {};
+  pairs.forEach(function(pr){
+    var ca = colOf2[pr[0]], cb = colOf2[pr[1]];
+    if (ca === undefined || cb === undefined || cb !== ca + 1) return;
+    (flow[pr[0]] = flow[pr[0]] || []).push(pr[1]);
+    (flow[pr[1]] = flow[pr[1]] || []).push(pr[0]);
+  });
+  var topOf = {};
+  var fcol = at[COL_OF.FOCAL] !== undefined ? at[COL_OF.FOCAL] : 0;
+  function packCol(i, prev){
+    var list = byCol[used[i]], y = 0;
+    list.forEach(function(it, k){
       it.ord = k;
-      it.top = y;
-      y += it.h + ROW_GAP;
+      var floor = 0;
+      if (prev !== null)
+        (flow[it.id] || []).forEach(function(x){
+          if (topOf[x] !== undefined && colOf2[x] === prev && topOf[x] > floor)
+            floor = topOf[x];
+        });
+      it.top = Math.max(y, floor);
+      topOf[it.id] = it.top;
+      y = it.top + it.h + ROW_GAP;
     });
-    colH[c] = Math.max(0, y - ROW_GAP);
-    if (colH[c] > maxH) maxH = colH[c];
-  });
-  // 칸마다 높이가 달라서, 가장 높은 칸을 기준으로 가운데를 맞춘다
-  used.forEach(function(c){
-    var off = (maxH - colH[c]) / 2;
-    byCol[c].forEach(function(it){ it.top += off; });
-  });
+  }
+  packCol(fcol, null);
+  for (var i2 = fcol + 1; i2 < used.length; i2++) packCol(i2, i2 - 1);
+  for (var i3 = fcol - 1; i3 >= 0; i3--) packCol(i3, i3 + 1);
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
   var lo = 1e9, hi = -1e9;
@@ -1107,12 +1136,9 @@ function Roster(p){
     if (!rs.length) return;
     if (!p.all && !anchors[id]) return;
     var e = ENT[id];
-    var inn = 0, out = 0, chains = {};
-    rs.forEach(function(r){
-      if (r.target_entity === id) inn++; else out++;
-      chains[CHAIN_OF[r.id]] = 1;
-    });
-    rows.push({ id:id, e:e, inn:inn, out:out, deg: rs.length,
+    var chains = {};
+    rs.forEach(function(r){ chains[CHAIN_OF[r.id]] = 1; });
+    rows.push({ id:id, e:e, deg: rs.length,
                 chain: Object.keys(chains).map(chainKo).join('·') });
   });
   rows.sort(function(a, b){
@@ -1138,20 +1164,17 @@ function Roster(p){
     ]),
     h('div', { key:'w', style:{ overflowX:'auto' } },
       h('table', { className:'t' }, [
-        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '이름'),
-          h('th', { key:2 }, '나라'), h('th', { key:3 }, '갈래'), h('th', { key:4 }, '유형'),
-          h('th', { key:5 }, '사슬'), h('th', { key:6 }, '들어옴'),
-          h('th', { key:7 }, '나감') ])),
+        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '나라'),
+          h('th', { key:2 }, '이름'), h('th', { key:3 }, '갈래'), h('th', { key:4 }, '유형'),
+          h('th', { key:5 }, '사슬') ])),
         h('tbody', { key:'b' }, view.map(function(r){
           return h('tr', { key:r.id, style:{ cursor:'pointer' },
             onClick: function(){ p.onPick(r.id); } }, [
-            h('td', { key:1 }, withFlag(r.id)),
-            h('td', { key:2 }, r.e.country || '—'),
+            h('td', { key:1 }, r.e.country || '—'),
+            h('td', { key:2 }, nm(r.id)),
             h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
             h('td', { key:4 }, TYPE_KO[r.e.entity_type] || r.e.entity_type),
-            h('td', { key:5 }, r.chain),
-            h('td', { key:6 }, r.inn || '—'),
-            h('td', { key:7 }, r.out || '—')
+            h('td', { key:5 }, r.chain)
           ]);
         }))
       ]))
@@ -1360,7 +1383,7 @@ function App(){
   }, [gr]);
 
   function goFocal(id){
-    setFocal(id); setOpen([]); setExpanded({}); setSel({ kind:'ent', id:id });
+    setFocal(id); setOpen([]); setSel({ kind:'ent', id:id });
     setPath(function(p){
       return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
     });
