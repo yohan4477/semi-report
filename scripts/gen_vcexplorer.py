@@ -1668,9 +1668,7 @@ function Drawer(p){
     h('div', { key:'btns',
       style:{ display:'flex', gap:'6px', flexWrap:'wrap', margin:'8px 0' } }, [
       h('button', { key:'f', className:'btn',
-        onClick: function(){ p.onFocus(eid); } }, '이 회사 중심으로'),
-      h('button', { key:'t2', className:'btn',
-        onClick: function(){ p.onTimeline(eid); } }, '시점별로 보기')
+        onClick: function(){ p.onFocus(eid); } }, '이 회사 중심으로')
     ]),
     r ? h('section', { key:'rel' }, [
       h('div', { key:'k', className:'k' }, '관계 · ' + relKo(r.relationship_type)),
@@ -2214,9 +2212,10 @@ function App(){
           (ENT[id].categories || []).map(subKo).join(' · ')) ]);
     })) : null
   ]);
+  // 탭은 회사·현재 둘뿐이다. 시점·원가·근거 화면은 코드에 남아 주소(mode=)로는 열리지만
+  // 탭에서 뺐다(2026-09-11) — 첫 화면에서 고를 것이 셋이나 더 있으면 판이 뒤로 밀린다
   var modes = h('div', { key:'m', className:'modes' }, [
-    ['roster', '회사'], ['current', '현재'], ['timeline', '시점'], ['bom', '원가'],
-    ['evidence', '근거']
+    ['roster', '회사'], ['current', '현재']
   ].map(function(x){
     return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
       onClick: function(){ setMode(x[0]); } }, x[1]);
