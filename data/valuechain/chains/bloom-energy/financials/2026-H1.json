@@ -11,7 +11,7 @@
   "method_id": "method-rev-equiv-mw"
  },
  "cogs_per_equivalent_mw": {
-  "value": 0.002,
+  "value": 1.93,
   "unit": "USD M/MW",
   "status": "ESTIMATED",
   "method_id": "method-cogs-per-mw"

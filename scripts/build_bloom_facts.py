@@ -364,7 +364,7 @@ def fin(t):
             'product_gross_margin_pct': t[4],
             'revenue_equivalent_mw': {'value': t[5], 'status': 'ESTIMATED',
                                       'method_id': 'method-rev-equiv-mw'},
-            'cogs_per_equivalent_mw': {'value': round(t[3] / t[5] / 1000.0, 3),
+            'cogs_per_equivalent_mw': {'value': round(t[3] / t[5], 2),
                                        'unit': 'USD M/MW', 'status': 'ESTIMATED',
                                        'method_id': 'method-cogs-per-mw'},
             'as_of_date': t[6], 'source_ids': t[7]}

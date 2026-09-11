@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-"""밸류체인 탐색기 — data/valuechain/*.json 다섯 장을 읽어 한 장짜리 HTML 로 굽는다.
+"""밸류체인 탐색기 — data/valuechain 을 읽어 한 장짜리 HTML 로 굽는다.
 
-원본은 JSON 다섯 장이다. HTML 은 생성물이니 손으로 고치지 않는다.
-  companies.json             회사
-  relationships.json         관계 (source 가 target 에게 준다). 숫자를 박지 않는다
-  relationship_metrics.json  시점별 비중. 같은 관계에 기간을 계속 덧붙인다
-  identity_hypotheses.json   익명 고객에 붙는 실명 후보. 확정치와 섞지 않는다
-  sources.json               원문 메타데이터와 등급
-  evidence.json              관계와 지표 각각에 붙는 근거
+원본은 JSON 이다. HTML 은 생성물이니 손으로 고치지 않는다.
+  entities.json / sources.json / methods.json        전역
+  chains/<사슬>/relationships.json                    지속적인 관계. 숫자를 박지 않는다
+  chains/<사슬>/observations.json                     시점별 값. 분모·기준일·근거등급이 붙는다
+  chains/<사슬>/claims.json · hypotheses.json
+  chains/<사슬>/bom/*.json · financials/*.json
+
+어느 회사도 코드에 박지 않는다. 시작 회사는 관계가 가장 많은 엔티티에서 고른다.
 """
 import io, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
-FOCAL = 'nvidia'
+
+# 화면에 싣는 사슬. 구조는 여러 사슬을 받지만 지금 내보내는 것은 이 하나다
+SHIP = ['bloom-energy']
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -40,147 +43,112 @@ __SCRIPTS__
 '''
 
 CSS = u'''
-:root{--paper:#fff;--ink1:#1a2233;--ink2:#39415a;--ink3:#6b7488;--ink4:#98a0b0;
---line:#d6dae2;--bg:#f7f8fa;--hi:#e8eef7;--hiline:#39415a}
+:root{--paper:#fff;--ink1:#151b28;--ink2:#39415a;--ink3:#6b7488;--ink4:#9aa2b1;
+--line:#dcdfe6;--line2:#eceef2;--bg:#f6f7f9;--hi:#eef2f8;--warm:#8a6a3d}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink1);overflow:hidden;
-font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
+font:13.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+font-variant-numeric:tabular-nums}
 .app{display:flex;flex-direction:column;height:100%}
-.top{display:flex;align-items:center;gap:10px;padding:8px 14px;position:relative;z-index:40;
-background:var(--paper);border-bottom:1px solid var(--line)}
-.brand{font-size:15px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
-.brand small{display:block;font-size:11.5px;font-weight:400;color:var(--ink3)}
-.brand a{color:var(--ink3);text-decoration:none;border-bottom:1px solid var(--line)}
-.search{position:relative;flex:1;min-width:90px;max-width:320px}
-.top .chips.wide-only{flex:1;overflow:hidden}
-.wide-only{display:flex}
-.narrow-only{display:none}
-@media (max-width:1000px){.wide-only{display:none!important}.narrow-only{display:block}}
-.search input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;
+.top{display:flex;align-items:center;gap:12px;padding:9px 14px;background:var(--paper);
+border-bottom:1px solid var(--line);position:relative;z-index:40;flex-wrap:wrap}
+.brand{font-size:14.5px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
+.brand small{display:block;font-size:11px;font-weight:400;color:var(--ink3)}
+.search{position:relative;flex:1;min-width:150px;max-width:330px}
+.search input{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:5px;
 font:inherit;font-size:13px;background:var(--paper);color:var(--ink1)}
-.sug{position:absolute;z-index:30;top:38px;left:0;width:100%;min-width:230px;max-height:300px;
-overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:6px}
-.sug div{padding:8px 10px;cursor:pointer;font-size:13px;border-bottom:1px solid #f0f2f6}
+.search input:focus{outline:none;border-color:var(--ink3)}
+.sug{position:absolute;top:36px;left:0;right:0;background:var(--paper);
+border:1px solid var(--line);border-radius:5px;max-height:320px;overflow:auto;z-index:60;
+box-shadow:0 8px 24px rgba(20,26,40,.1)}
+.sug div{padding:7px 10px;cursor:pointer;font-size:12.5px;border-bottom:1px solid var(--line2)}
 .sug div:hover{background:var(--hi)}
-.sug em{font-style:normal;color:var(--ink3);font-size:11.5px;margin-left:6px}
-.sel{flex:none;max-width:132px;padding:8px 8px;border:1px solid var(--line);border-radius:6px;
-background:var(--paper);font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{padding:5px 10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);
-font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer;white-space:nowrap}
-.chip:hover{background:var(--hi)}
-.chip.on{background:var(--hiline);border-color:var(--hiline);color:#fff}
-/* 필터 서랍 */
-.drw{position:absolute;top:calc(100% + 6px);right:10px;z-index:45;padding:12px 14px 14px;
-width:min(420px,calc(100vw - 20px));background:var(--paper);border:1px solid var(--line);
-border-radius:8px}
-.drw h4{margin:0 0 6px;font-size:11.5px;font-weight:600;color:var(--ink3);letter-spacing:.3px}
-.drw .row{margin-bottom:12px}
-.drw .row:last-child{margin-bottom:0}
-.drwx{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.drwx b{font-size:13px}
+.sug .k{color:var(--ink3);font-size:11px;margin-left:6px}
+.modes{display:flex;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.modes button{border:0;background:var(--paper);color:var(--ink2);padding:6px 11px;
+font:inherit;font-size:12.5px;cursor:pointer;border-right:1px solid var(--line)}
+.modes button:last-child{border-right:0}
+.modes button.on{background:var(--ink1);color:#fff}
+.spacer{flex:1}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink2);
+padding:6px 10px;border-radius:5px;font:inherit;font-size:12.5px;cursor:pointer}
+.btn.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
+.crumb{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--paper);
+border-bottom:1px solid var(--line);font-size:12px;color:var(--ink3);overflow-x:auto;
+white-space:nowrap}
+.crumb b{color:var(--ink1);font-weight:600}
+.crumb span{cursor:pointer}
+.crumb span:hover{text-decoration:underline}
+.scrub{display:flex;align-items:center;gap:0;padding:7px 14px;background:var(--paper);
+border-bottom:1px solid var(--line);overflow-x:auto}
+.scrub .yr{position:relative;padding:4px 16px;font-size:12.5px;color:var(--ink3);
+cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
+.scrub .yr.on{color:var(--ink1);font-weight:700;border-bottom-color:var(--ink1)}
+.scrub .rail{flex:1;height:1px;background:var(--line);min-width:10px}
 .main{flex:1;display:flex;min-height:0;position:relative}
 .canvas{flex:1;min-width:0;position:relative}
-.side{width:380px;flex:none;background:var(--paper);border-left:1px solid var(--line);
-overflow:auto;padding:16px 16px 40px}
-.shx{display:none}
-.side h2{font-size:17px;margin:0 0 2px;letter-spacing:-.2px}
-.side .tk{font-size:12px;color:var(--ink3);margin-bottom:10px}
-.side p{margin:0 0 12px;font-size:13px;color:var(--ink2)}
-.side .rev{font-size:13px;font-weight:600;color:var(--ink1);margin-bottom:10px}
-.side h3{font-size:12px;color:var(--ink3);margin:18px 0 6px;letter-spacing:.3px}
-.side a{color:var(--ink2)}
-.hint{font-size:11.5px;color:var(--ink3);margin:0 0 8px}
-.rel{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:6px;
-cursor:pointer;font-size:12.5px}
-.rel:hover{background:var(--hi)}
-.rel b{display:block;font-size:13px;margin-bottom:2px}
-.rel span{color:var(--ink3)}
-.btns{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}
-.btn{padding:6px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);
-font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer}
-.btn:hover{background:var(--hi)}
-.btn.pri{background:var(--hiline);border-color:var(--hiline);color:#fff}
-.empty{color:var(--ink3);font-size:13px}
-.flow{font-size:13.5px;font-weight:600;margin-bottom:2px}
-.flow span{color:var(--ink3);font-weight:400}
-.dots{font-size:11.5px;color:var(--ink3);margin-bottom:10px}
-.tw{overflow-x:auto;margin:4px 0 10px}
-table.m{border-collapse:collapse;width:100%;font-size:12.5px}
-table.m th,table.m td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;
-vertical-align:top;color:var(--ink2)}
-table.m th{color:var(--ink3);font-weight:600;font-size:11px;white-space:nowrap}
-table.m td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
-font-weight:600;color:var(--ink1)}
-.ev{border-left:2px solid var(--line);padding:2px 0 2px 9px;margin:0 0 9px}
-.ev .q{font-size:12px;color:var(--ink2)}
-.ev .m{font-size:11px;color:var(--ink4);margin-top:3px}
-.badge{display:inline-block;border:1px solid var(--line);border-radius:3px;padding:0 4px;
-font-size:10.5px;color:var(--ink3);margin-right:4px}
-.meth{font-size:11.5px;color:var(--ink3);background:#f4f6f9;border-radius:5px;
-padding:7px 9px;margin:0 0 10px}
-/* 노드 */
-.co{width:236px;background:var(--paper);border:1px solid var(--line);border-radius:7px;
-padding:9px 11px;position:relative;cursor:pointer}
-.co:hover{border-color:var(--ink4)}
-.co.center{background:var(--hi);border-color:var(--hiline);border-width:1.6px}
-.co.anon{background:#f4eef4;border-style:dashed}
-.co .nm{font-size:13.5px;font-weight:600;line-height:1.4;padding-right:30px}
-.co .ind{font-size:11px;color:var(--ink3);margin-top:3px;line-height:1.6}
-.co .sh{display:inline-block;margin-top:6px;padding:1px 7px;border:1px solid var(--line);
-border-radius:10px;background:var(--bg);font-size:11px;line-height:1.6;color:var(--ink2)}
-.co .ex{position:absolute;top:7px;right:7px;min-width:22px;height:20px;padding:0 5px;
-line-height:18px;text-align:center;border:1px solid var(--line);border-radius:5px;
-background:var(--paper);font-size:11px;color:var(--ink3)}
-.co .ex:hover{background:var(--hiline);color:#fff;border-color:var(--hiline)}
-.react-flow__handle{opacity:0;width:1px;height:1px;min-width:0;min-height:0;border:0}
-.react-flow__edge{cursor:pointer}
-.react-flow__edge:hover .react-flow__edge-path{stroke:var(--hiline)!important}
-.react-flow__edge.pick .react-flow__edge-path{stroke:var(--hiline)!important;
-stroke-width:2.6!important}
-.react-flow__controls{box-shadow:none;border:1px solid var(--line);border-radius:6px}
-.react-flow__controls button{width:24px;height:24px}
-.react-flow__attribution{font-size:9px;opacity:.5}
-/* 범례 — 화면 세로를 먹지 않게 판 위에 얹는다 */
-.lgd{position:absolute;z-index:6;right:8px;bottom:8px;max-width:calc(100% - 16px);
-display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;padding:6px 10px;
-background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:7px;
-font-size:11.5px;color:var(--ink2);pointer-events:none}
-.lgd span{display:inline-flex;align-items:center;gap:6px}
-.lgd b{font-weight:600;color:var(--ink1);font-size:11.5px}
-.grp-node{width:170px;background:#f4f6f9;border:1px dashed var(--ink4);border-radius:8px;
-padding:9px 11px;cursor:pointer;text-align:center}
-.grp-node:hover{background:var(--hi);border-color:var(--hiline)}
-.grp-node .gn{font-size:12.5px;font-weight:600;color:var(--ink1)}
-.grp-node .gc{font-size:10.5px;color:var(--ink3);margin-top:3px}
-.only-narrow{display:none}
-@media (max-width:720px){.lgd{left:8px;right:8px;bottom:56px;justify-content:flex-start;font-size:11px;padding:5px 8px}}
-@media (max-width:860px){
-.main{display:block}
-.canvas{position:absolute;top:0;left:0;right:0;bottom:0}
-/* 옆판을 바닥 시트로 — 접으면 손잡이만 남고 판이 화면을 다 쓴다 */
-.side{position:absolute;left:0;right:0;bottom:0;width:auto;height:46vh;
-border-left:0;border-top:1px solid var(--line);padding:0 14px 30px;
-transform:translateY(calc(100% - 43px));transition:transform .18s ease}
-.side.up{transform:translateY(0)}
-.shx{display:flex;position:sticky;top:0;z-index:2;width:100%;gap:10px;align-items:center;
-justify-content:space-between;padding:11px 0;background:var(--paper);border:0;
-border-bottom:1px solid var(--line);font:inherit;font-size:13px;font-weight:600;
-color:var(--ink1);text-align:left;cursor:pointer}
-.shx em{font-style:normal;font-weight:400;font-size:12px;color:var(--ink3);white-space:nowrap}
-.side h2{font-size:16px}
-.only-narrow{display:inline-block}
+.drw{width:34%;min-width:300px;max-width:460px;background:var(--paper);
+border-left:1px solid var(--line);overflow:auto;padding:14px 16px 40px}
+.drw h3{margin:0 0 2px;font-size:15px}
+.drw .role{color:var(--ink3);font-size:12px;margin-bottom:12px}
+.drw section{border-top:1px solid var(--line2);padding:10px 0}
+.drw .k{color:var(--ink3);font-size:11.5px}
+.drw .v{font-size:13px;margin-bottom:7px}
+.drw a{color:var(--ink2)}
+.rowk{display:grid;grid-template-columns:92px 1fr;gap:4px 10px;font-size:12.5px}
+.rowk div:nth-child(odd){color:var(--ink3)}
+.badge{display:inline-block;padding:1px 6px;border:1px solid var(--line);border-radius:3px;
+font-size:11px;color:var(--ink2);margin-right:4px;background:var(--paper)}
+.badge.est{border-color:var(--warm);color:var(--warm)}
+.badge.new{border-color:var(--ink1);color:#fff;background:var(--ink1)}
+.steps{border:1px solid var(--line2);border-radius:5px;padding:8px 10px;background:var(--bg)}
+.steps div{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;
+padding:2px 0;border-bottom:1px dashed var(--line2)}
+.steps div:last-child{border-bottom:0;font-weight:600}
+table.t{border-collapse:collapse;width:100%;font-size:12.5px}
+table.t th,table.t td{border-bottom:1px solid var(--line2);padding:5px 6px;text-align:left;
+vertical-align:top}
+table.t th{color:var(--ink3);font-weight:500;font-size:11.5px}
+.pane{flex:1;overflow:auto;padding:16px 20px 60px;background:var(--paper)}
+.pane h2{font-size:15px;margin:0 0 4px}
+.pane p.note{color:var(--ink3);font-size:12px;margin:0 0 14px}
+.sw{border-collapse:collapse;width:100%;font-size:12.5px}
+.sw th{font-weight:500;color:var(--ink3);font-size:11.5px;padding:4px 8px;text-align:center;
+border-bottom:1px solid var(--line)}
+.sw th:first-child{text-align:left;width:230px}
+.sw td{padding:5px 8px;text-align:center;border-bottom:1px solid var(--line2)}
+.sw td:first-child{text-align:left;color:var(--ink1)}
+.sw td small{color:var(--ink3)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ink2)}
+.dot.o{display:inline-block;width:9px;height:9px;border-radius:50%;background:transparent;
+border:1px solid var(--ink4)}
+.bom{display:flex;height:34px;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+margin:10px 0 6px}
+.bom div{border-right:1px solid var(--paper);cursor:pointer}
+.bom div:last-child{border-right:0}
+.bomleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2)}
+.bomleg span.it{display:flex;align-items:center;gap:5px;cursor:pointer}
+.sq{width:10px;height:10px;border-radius:2px;display:inline-block}
+.nd{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:7px 10px;
+min-width:118px;max-width:196px;box-shadow:0 1px 2px rgba(20,26,40,.05);cursor:pointer}
+.nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
+.nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.nd.focal{border-color:var(--ink1);border-width:1.6px;background:var(--hi)}
+.nd.grp{background:var(--bg);border-style:dashed}
+.nd.dim{opacity:.28}
+.nd.gone{opacity:.32;border-style:dotted}
+.legend{position:absolute;left:12px;bottom:12px;cursor:pointer;background:rgba(255,255,255,.94);
+border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:11.5px;
+color:var(--ink2);z-index:5;max-width:270px}
+.legend b{display:block;margin-bottom:4px;font-size:11px;color:var(--ink3);font-weight:500}
+.legend i{font-style:normal;display:block;margin:2px 0}
+@media (max-width:980px){
+  .drw{position:absolute;right:0;top:0;bottom:0;width:88%;max-width:none;z-index:30;
+       box-shadow:-8px 0 24px rgba(20,26,40,.12)}
+  .legend{display:none}
+  .sw th:first-child{width:auto}
 }
-@media (max-width:720px){
-.top{gap:8px;padding:7px 10px}
-.brand{font-size:14px}
-.brand small{display:none}
-.chip{padding:5px 9px;font-size:12px}
-.sel{max-width:104px;padding:8px 4px}
-.drw{right:6px;left:6px;width:auto}
-}
-@media (max-width:420px){.brand{font-size:0}.brand:before{content:"밸류체인";font-size:14px}}
 '''
 
 APP = u'''
@@ -188,547 +156,739 @@ APP = u'''
 var h = React.createElement;
 var RFlib = window.ReactFlow;
 var RF = RFlib.default || RFlib.ReactFlow;
-var Background = RFlib.Background, Controls = RFlib.Controls, MiniMap = RFlib.MiniMap;
+var Background = RFlib.Background, Controls = RFlib.Controls;
 var Handle = RFlib.Handle, Position = RFlib.Position, MarkerType = RFlib.MarkerType;
-var useState = React.useState, useMemo = React.useMemo, useCallback = React.useCallback;
+var useState = React.useState, useMemo = React.useMemo, useEffect = React.useEffect;
 
 var DB = window.__VC__;
-var CO = {}, SRC = {}, REL = {};
-DB.companies.forEach(function(c){ CO[c.id] = c; });
-DB.sources.forEach(function(s){ SRC[s.id] = s; });
-DB.relationships.forEach(function(r){ REL[r.id] = r; });
+var ENT = DB.entities, SRC = DB.sources, METH = DB.methods, CHAINS = DB.chains;
 
-// 관계마다 지표와 근거를 미리 묶어 둔다
-var MET_BY_REL = {}, EV_BY_REL = {}, EV_BY_MET = {};
-DB.relationship_metrics.forEach(function(m){
-  (MET_BY_REL[m.relationship_id] = MET_BY_REL[m.relationship_id] || []).push(m);
-});
-DB.evidence.forEach(function(e){
-  if (e.hypothesis_id) return;
-  if (e.metric_id) (EV_BY_MET[e.metric_id] = EV_BY_MET[e.metric_id] || []).push(e);
-  else (EV_BY_REL[e.relationship_id] = EV_BY_REL[e.relationship_id] || []).push(e);
-});
-var HYP_BY_ANON = {}, EV_BY_HYP = {};
-(DB.identity_hypotheses || []).forEach(function(x){
-  (HYP_BY_ANON[x.anon_company_id] = HYP_BY_ANON[x.anon_company_id] || []).push(x);
-});
-DB.evidence.forEach(function(e){
-  if (e.hypothesis_id) (EV_BY_HYP[e.hypothesis_id] = EV_BY_HYP[e.hypothesis_id] || []).push(e);
-});
-
-// 바로 가기 — 이름을 박지 않고 관계가 많은 회사 넷을 데이터에서 고른다
-var QUICK = (function(){
-  var deg = {};
-  DB.relationships.forEach(function(r){
-    deg[r.source_company_id] = (deg[r.source_company_id] || 0) + 1;
-    deg[r.target_company_id] = (deg[r.target_company_id] || 0) + 1;
+// ── 색인 ────────────────────────────────────────────────────────────
+var REL = {}, OBS_BY_REL = {}, REL_BY_ENT = {}, CHAIN_OF = {};
+Object.keys(CHAINS).forEach(function(ck){
+  var c = CHAINS[ck];
+  c.relationships.forEach(function(r){
+    REL[r.id] = r; CHAIN_OF[r.id] = ck;
+    (REL_BY_ENT[r.source_entity] = REL_BY_ENT[r.source_entity] || []).push(r.id);
+    (REL_BY_ENT[r.target_entity] = REL_BY_ENT[r.target_entity] || []).push(r.id);
   });
-  var rest = Object.keys(deg).filter(function(id){
-    return CO[id] && !CO[id].anon && id !== 'nvidia';
-  }).sort(function(a, b){ return deg[b] - deg[a]; });
-  return (CO['nvidia'] ? ['nvidia'] : []).concat(rest).slice(0, 4);
-})();
-
-var PERIODS = (function(){
-  var e = {}, st = {};
-  DB.relationship_metrics.forEach(function(m){
-    if (!e[m.period] || m.period_end > e[m.period]) e[m.period] = m.period_end;
-    if (!st[m.period] || m.period_start < st[m.period]) st[m.period] = m.period_start;
+  (c.observations || []).forEach(function(o){
+    (OBS_BY_REL[o.relationship_id] = OBS_BY_REL[o.relationship_id] || []).push(o);
   });
-  return Object.keys(e).sort(function(a, b){
-    if (e[a] !== e[b]) return e[a] < e[b] ? -1 : 1;
-    return st[a] > st[b] ? -1 : 1;   // 같은 날 끝나면 긴 쪽을 뒤에
+});
+function relsOf(id){
+  var seen = {}, out = [];
+  (REL_BY_ENT[id] || []).forEach(function(rid){
+    if (seen[rid]) return; seen[rid] = 1; out.push(REL[rid]);
   });
-})();
-var LATEST = PERIODS[PERIODS.length - 1];
-
-var CAT_KO = {
-  'Foundry': '파운드리', 'Memory': '메모리', 'Assembly & Test': '조립·시험·패키징',
-  'Contract manufacturing': '수탁 제조', 'Lithography': '노광 장비',
-  'Deposition & etch': '증착·식각 장비', 'Metrology': '계측·검사 장비',
-  'Silicon wafer': '원판 웨이퍼', 'Optics': '광학', 'Light source': '광원',
-  'Precision modules': '정밀 모듈', 'Direct sales': '직접 판매',
-  'Systems': '서버·시스템', 'AI accelerator': 'AI 가속기',
-  'AI infrastructure': 'AI 인프라', 'Market platform': '시장 구분',
-  'Financing': '금융·보증', 'Cloud capacity': '클라우드 용량',
-  'Cloud purchase': '클라우드 매입', 'Datacenter': '데이터센터',
-  'Datacenter & console': '데이터센터·콘솔', 'Console': '게임 콘솔'
-};
-function catName(k){ return CAT_KO[k] || k; }
-
-var CONF_LABEL = { high: '공시로 확인', medium: '한쪽만 공시', low: '추정' };
-var CONF_DOTS = { high: '●●●', medium: '●●○', low: '●○○' };
-var CONF_STYLE = {
-  high:   { stroke: '#6b7488', strokeWidth: 1.7 },
-  medium: { stroke: '#8b93a5', strokeWidth: 1.4, strokeDasharray: '6 4' },
-  low:    { stroke: '#b0b6c2', strokeWidth: 1.3, strokeDasharray: '2 4' }
-};
-var SRC_GRADE = { primary_official: '공식 공시', primary_company: '회사 발표',
-  industry_research: '업계 조사', reputable_media: '언론', analyst_estimate: '애널리스트 추정',
-  our_estimate: '우리 추정' };
-var OFFICIAL = { primary_official: 1, primary_company: 1 };
-var EV_LABEL = { direct: '직접 서술', indirect: '간접 근거', estimate_input: '추정 입력값',
-  absent: '공시에 없음' };
-var MET_LABEL = { customer_revenue_share: '고객 매출 비중',
-  receivables_share: '매출채권 비중', supply_share: '공급 점유',
-  revenue_share: '매출 비중', commitment_value: '약정 총액',
-  guarantee_cap: '보증 상한', supplier_purchase_share: '매입액 비중',
-  investment_value: '투자 금액', contract_value: '계약 금액' };
-function metName(k){ return MET_LABEL[k] || k; }
-var HYP_STATUS = { estimated: '추정', confirmed: '확인됨', rejected: '기각' };
-function stars(v){
-  var n = Math.round((v || 0) * 2) / 2, out = '';
-  for (var i = 1; i <= 5; i++) out += (n >= i ? '★' : (n >= i - 0.5 ? '☆' : '·'));
   return out;
 }
-var EST_LABEL = { disclosed: '공시 그대로', derived: '공시에서 계산',
-  analyst_estimate: '애널리스트 추정', industry_knowledge: '업계 통설' };
+function nm(id){ var e = ENT[id]; return e ? (e.name_ko || e.name) : id; }
 
-function label(c){ return c.name_ko || c.name; }
-function metsOf(rid, per){
-  return (MET_BY_REL[rid] || []).filter(function(m){ return per.indexOf(m.period) >= 0; });
+var YEARS = (function(){
+  var s = {};
+  Object.keys(CHAINS).forEach(function(ck){
+    // 값을 「알게 된 시점」으로 축을 세운다. 계약 종료일이 미래라고 그 해가 생기지 않는다
+    (CHAINS[ck].observations || []).forEach(function(o){
+      var d = o.as_of_date || o.period_end || '';
+      if (d) s[d.slice(0, 4)] = 1;
+    });
+  });
+  return Object.keys(s).sort();
+})();
+var NOW = YEARS[YEARS.length - 1];
+
+var HOME = (function(){
+  var best = null, n = -1;
+  Object.keys(REL_BY_ENT).forEach(function(id){
+    if (REL_BY_ENT[id].length > n) { n = REL_BY_ENT[id].length; best = id; }
+  });
+  return best;
+})();
+
+var EV_KO = { CONFIRMED:'공시로 확인', ESTIMATED:'추정', INFERRED:'정황 추론',
+  UNDISCLOSED:'비공개', HISTORICAL_CURRENT_UNKNOWN:'과거 관측·현재 미상' };
+var EV_STYLE = {
+  CONFIRMED: { stroke:'#5b6377', strokeWidth:1.8 },
+  ESTIMATED: { stroke:'#8a6a3d', strokeWidth:1.5 },
+  INFERRED:  { stroke:'#8b93a5', strokeWidth:1.4, strokeDasharray:'6 4' },
+  UNDISCLOSED:{ stroke:'#b6bcc7', strokeWidth:1.2, strokeDasharray:'2 4' },
+  HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#c2c7d1', strokeWidth:1.2, strokeDasharray:'1 5' }
+};
+function evStyle(k){ return EV_STYLE[k] || EV_STYLE.INFERRED; }
+var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
+  'Cell':'셀·세라믹', 'Other ceramic':'기타 세라믹', 'Thermal':'열·단열',
+  'Interconnect':'인터커넥트', 'Hotbox':'핫박스', 'Power electronics':'전력 전자',
+  'Mechanical':'기계·모듈', 'Instrumentation':'계측',
+  'Manufacturing equipment':'제조 장비', 'Site electrical BoP':'부지 전기',
+  'Financing':'금융', 'EPC / Distribution':'EPC·유통', 'Utility':'유틸리티',
+  'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
+  'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합' };
+function subKo(k){ return SUB_KO[k] || k; }
+var LANE_KO = { MANUFACTURING_BOM:'제품 BOM', MANUFACTURING_EQUIPMENT:'제조 장비',
+  SITE_ELECTRICAL_BOP:'부지 전기', OPERATIONAL_INPUT:'운영 투입',
+  DOWNSTREAM:'다운스트림', CORPORATE:'기업 구조' };
+var MET_KO = { sourcing_share:'조달 점유율', sourcing_volume_share:'물량 점유율',
+  capacity_volume_share:'설비 기준 점유율', customer_revenue_share:'고객 매출 비중',
+  contract_value:'계약 금액', cumulative_orders:'누적 수주', content_per_mw:'1MW 당 값',
+  supplier_capacity:'공급사 생산 능력', agreement_capacity_max:'계약 상한',
+  initial_order_capacity:'초기 주문', contracted_capacity:'계약·배치 용량',
+  relationship_capacity:'관계 용량', planned_capacity:'계획 용량',
+  project_capacity:'프로젝트 용량', financing_framework:'금융 프레임워크',
+  revenue_share:'매출 비중', receivables_share:'매출채권 비중',
+  supplier_purchase_share:'매입액 비중', supply_share:'공급 점유',
+  commitment_value:'약정 총액', guarantee_cap:'보증 상한', investment_value:'투자 금액' };
+function metKo(k){ return MET_KO[k] || k; }
+var PCT = { 'percent':1, '%':1 };
+
+function y4(d){ return d ? parseInt(d.slice(0, 4), 10) : null; }
+function activeIn(r, yr){
+  var y = parseInt(yr, 10), f = y4(r.valid_from), t = y4(r.valid_to);
+  if (r.status === 'ENDED' && !t) return false;   // 끝난 관계인데 언제 끝났는지 모른다
+  if (f && y < f) return false;
+  if (t && y > t) return false;
+  return true;
 }
-function latest(rid, per){
-  var ms = metsOf(rid, per).slice().sort(function(a, b){
-    return a.period_end < b.period_end ? 1 : -1; });
-  return ms[0] || null;
-}
-function isOfficial(rid){
-  var evs = (EV_BY_REL[rid] || []).concat(
-    (MET_BY_REL[rid] || []).reduce(function(a, m){
-      return a.concat(EV_BY_MET[m.id] || []); }, []));
-  return evs.some(function(e){
-    var s = SRC[e.source_id];
-    return s && OFFICIAL[s.source_type] && e.evidence_type !== 'absent';
+function endedOpen(r){ return r.status === 'ENDED' && !y4(r.valid_to); }
+function firstYear(r){ var f = y4(r.valid_from); return f ? String(f) : null; }
+function obsIn(rid, yr){
+  var y = parseInt(yr, 10);
+  return (OBS_BY_REL[rid] || []).filter(function(o){
+    var a = y4(o.period_start) || y4(o.as_of_date), b = y4(o.period_end) || y4(o.as_of_date);
+    return a <= y && y <= b;
   });
 }
-
-// ── 노드 ──────────────────────────────────────────────────────────
-function CoNode(p){
-  var d = p.data, c = d.co;
-  var cls = 'co' + (d.isCenter ? ' center' : '') + (c.anon ? ' anon' : '');
-  var kids = [
-    h(Handle, { key:'t', type:'target', position: Position.Left }),
-    h(Handle, { key:'s', type:'source', position: Position.Right }),
-    h('div', { key:'n', className:'nm' }, label(c)),
-    h('div', { key:'i', className:'ind' },
-      [c.company_type, c.country].filter(Boolean).join(' · '))
-  ];
-  if (d.share) kids.push(h('div', { key:'sh', className:'sh' }, d.share));
-  if (d.hidden > 0) kids.push(h('div', {
-    key:'x', className:'ex', title: '이웃 ' + d.hidden + '곳 더 펼치기',
-    onClick: function(e){ e.stopPropagation(); d.onExpand(c.id); }
-  }, '+' + d.hidden));
-  return h('div', { className: cls, onClick: function(){ d.onOpen(c.id); } }, kids);
+function shareIn(rid, yr){
+  var os = obsIn(rid, yr).filter(function(o){ return PCT[o.unit]; });
+  return os.length ? os[0] : null;
 }
-function GrpNode(p){
+function hasShareEver(rid){
+  return (OBS_BY_REL[rid] || []).some(function(o){ return PCT[o.unit]; });
+}
+function fmt(v){
+  if (v === null || v === undefined) return '?';
+  return (Math.round(v * 1000) / 1000).toLocaleString('en-US');
+}
+function shareLabel(rid, yr){
+  var o = shareIn(rid, yr);
+  if (!o) return hasShareEver(rid) ? '?' : null;
+  if (o.value === null || o.value === undefined) return '?';
+  if (o.value_low !== null && o.value_low !== undefined)
+    return o.value_low + '~' + o.value_high + '%';
+  return fmt(o.value) + '%';
+}
+
+// ── 노드 ────────────────────────────────────────────────────────────
+function Nd(p){
   var d = p.data;
-  return h('div', { className:'grp-node', title:'눌러서 ' + d.count + '곳을 펼친다',
-                    onClick: function(){ d.onExpand(d.gid); } }, [
-    h(Handle, { key:'t', type:'target', position: Position.Left }),
-    h(Handle, { key:'s', type:'source', position: Position.Right }),
-    h('div', { key:'n', className:'gn' }, d.name),
-    h('div', { key:'c', className:'gc' }, d.count + '곳 · 눌러 펼치기')
+  var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.focal ? ' focal' : '')
+          + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
+  return h('div', { className: cls }, [
+    h(Handle, { key:'t', type:'target', position:Position.Left, style:{opacity:0} }),
+    h('div', { key:'n', className:'nm' }, d.title),
+    d.sub ? h('div', { key:'s', className:'sub' }, d.sub) : null,
+    d.isNew ? h('span', { key:'b', className:'badge new' }, 'NEW') : null,
+    h(Handle, { key:'s2', type:'source', position:Position.Right, style:{opacity:0} })
   ]);
 }
-var NODE_TYPES = { co: CoNode, grp: GrpNode };
+var NODE_TYPES = { nd: Nd };
 
-// ── 배치 ──────────────────────────────────────────────────────────
-var NODE_W = 236;
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
+  g.setGraph({ rankdir:'LR', nodesep:16, ranksep:96, marginx:24, marginy:24 });
   g.setDefaultEdgeLabel(function(){ return {}; });
-  g.setGraph({ rankdir:'LR', nodesep: 26, ranksep: 150, marginx:20, marginy:20 });
-  nodes.forEach(function(n){ g.setNode(n.id, { width:NODE_W, height:n.__h }); });
+  nodes.forEach(function(n){ g.setNode(n.id, { width:176, height:n.data.sub ? 52 : 38 }); });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
   return nodes.map(function(n){
     var p = g.node(n.id);
-    return Object.assign({}, n, { position: { x: p.x - NODE_W / 2, y: p.y - n.__h / 2 } });
+    return Object.assign({}, n, { position:{ x:p.x - 88, y:p.y - 19 } });
   });
 }
 
-// ── 앱 ────────────────────────────────────────────────────────────
-function App(){
-  var HOME = CO['nvidia'] ? 'nvidia' : QUICK[0];
-  var s0 = useState(HOME), center = s0[0], setCenter = s0[1];
-  var s1 = useState({}), open = s1[0], setOpen = s1[1];
-  var s2 = useState({ kind:'co', id: HOME }), sel = s2[0], setSelRaw = s2[1];
-  var s3 = useState(''), q = s3[0], setQ = s3[1];
-  var s4 = useState(LATEST), perOne = s4[0], setPerOne = s4[1];
-  var s5 = useState(['high','medium','low']), conf = s5[0], setConf = s5[1];
-  var s6 = useState(false), onlyOfficial = s6[0], setOnlyOfficial = s6[1];
-  var s7 = useState(false), drawer = s7[0], setDrawer = s7[1];
-  var s8 = useState(false), sheet = s8[0], setSheet = s8[1];
-  var s9 = useState({}), openGrp = s9[0], setOpenGrp = s9[1];
+function readUrl(){
+  var q = new URLSearchParams(location.search);
+  return { focal: q.get('focal') || HOME, year: q.get('year') || NOW,
+           mode: q.get('mode') || 'current',
+           open: (q.get('open') || '').split(',').filter(Boolean),
+           sel: q.get('sel') || '' };
+}
+function writeUrl(s, push){
+  var q = new URLSearchParams();
+  q.set('focal', s.focal); q.set('year', s.year);
+  if (s.mode && s.mode !== 'current') q.set('mode', s.mode);
+  if (s.open && s.open.length) q.set('open', s.open.join(','));
+  if (s.sel) q.set('sel', s.sel);
+  var u = location.pathname + '?' + q.toString();
+  if (push) history.pushState(s, '', u); else history.replaceState(s, '', u);
+}
 
-  var per = perOne ? [perOne] : PERIODS;
-  // 좁은 화면에서는 무엇을 눌렀든 바닥 시트가 따라 올라온다
-  function setSel(v){ setSelRaw(v); setSheet(true); }
-
-  var pass = useCallback(function(r){
-    if (conf.indexOf(r.confidence) < 0) return false;
-    if (onlyOfficial && !isOfficial(r.id)) return false;
-    return true;
-  }, [conf, onlyOfficial]);
-
-  var rels = useMemo(function(){ return DB.relationships.filter(pass); }, [pass]);
-  function up(id){ return rels.filter(function(r){ return r.target_company_id === id; }); }
-  function down(id){ return rels.filter(function(r){ return r.source_company_id === id; }); }
-
-  var graph = useMemo(function(){
-    // 중심에서 뻗는 줄이 스물을 넘으면 판이 안 읽힌다. 갈래로 먼저 묶고
-    // 그 묶음을 눌렀을 때 회사가 갈라져 나오게 한다
-    var roots = [center].concat(Object.keys(open));
-    function fan(root, dir){
-      var rs = dir === 'up' ? up(root) : down(root);
-      var by = {};
-      rs.forEach(function(r){ (by[r.category] = by[r.category] || []).push(r); });
-      return by;
+// ── 그래프 ──────────────────────────────────────────────────────────
+// 모든 해를 합쳐 자리를 잡고, 그 해에 없는 것은 흐리게 둔다. 연도를 옮겨도 자리가 안 튄다
+function buildGraph(focal, year, open, expanded, focusOn){
+  var groups = {}, nodes = [], edges = [];
+  relsOf(focal).forEach(function(r){
+    var up = r.target_entity === focal;
+    var key = (up ? 'u:' : 'd:') + (r.subsystem || LANE_KO[r.lane] || '기타');
+    (groups[key] = groups[key] || { up: up, label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
+                                    lane: r.lane, rels: [] }).rels.push(r);
+  });
+  nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), kind:'ent', focal:true,
+    sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
+  Object.keys(groups).forEach(function(gk){
+    var g = groups[gk];
+    var act = g.rels.filter(function(r){ return activeIn(r, year); });
+    nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
+      sub: act.length + '곳 · ' + LANE_KO[g.lane], gone: !act.length,
+      ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
+            rels: g.rels.map(function(r){ return r.id; }) } } });
+    edges.push({ id:'g-' + gk, source: g.up ? gk : focal, target: g.up ? focal : gk,
+      style:{ stroke:'#c2c7d1', strokeWidth:1.2 }, type:'smoothstep' });
+    if (open.indexOf(gk) < 0) return;
+    g.rels.forEach(function(r){
+      var other = g.up ? r.source_entity : r.target_entity;
+      var on = activeIn(r, year), fy = firstYear(r);
+      var nid = gk + '|' + other;
+      nodes.push({ id: nid, type:'nd', data:{ title: nm(other), kind:'ent',
+        sub: r.component || null, gone: !on,
+        isNew: on && fy === year && fy !== YEARS[0],
+        ref:{ kind:'rel', id:r.id, entity: other } } });
+      edges.push({ id:'e-' + r.id, source: g.up ? nid : gk, target: g.up ? gk : nid,
+        label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
+        labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
+        style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
+        markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
+                    color: evStyle(r.evidence_level).stroke },
+        type:'smoothstep' });
+    });
+  });
+  // 누른 회사에서 한 홉만 더. 저절로 번지지 않는다
+  Object.keys(expanded).forEach(function(k){
+    var sp = k.split('@'), eid = sp[0], dir = sp[1];
+    var host = null;
+    nodes.forEach(function(n){
+      if (host) return;
+      if (n.id === eid || n.id.split('|').pop() === eid) host = n.id;
+    });
+    if (!host) return;
+    relsOf(eid).forEach(function(r){
+      var up = r.target_entity === eid;
+      if (dir === 'up' && !up) return;
+      if (dir === 'down' && up) return;
+      var other = up ? r.source_entity : r.target_entity;
+      if (other === focal) return;
+      var nid = 'x|' + eid + '|' + other;
+      if (nodes.some(function(n){ return n.id === nid; })) return;
+      var on = activeIn(r, year);
+      nodes.push({ id: nid, type:'nd', data:{ title: nm(other), kind:'ent',
+        sub: r.component || null, gone: !on, ref:{ kind:'rel', id:r.id, entity: other } } });
+      edges.push({ id:'x-' + r.id + '-' + eid, source: up ? nid : host,
+        target: up ? host : nid, label: shareLabel(r.id, year),
+        labelStyle:{ fontSize:10.5 }, labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
+        style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
+        markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
+                    color: evStyle(r.evidence_level).stroke },
+        type:'smoothstep' });
+    });
+  });
+  if (focusOn) {
+    var adj = {}, keep = {};
+    keep[focal] = 1;
+    edges.forEach(function(e){
+      (adj[e.source] = adj[e.source] || []).push(e.target);
+      (adj[e.target] = adj[e.target] || []).push(e.source);
+    });
+    var front = [focal], d = 0;
+    while (d < 2) {
+      var nx = [];
+      front.forEach(function(n){
+        (adj[n] || []).forEach(function(m){ if (!keep[m]) { keep[m] = 1; nx.push(m); } });
+      });
+      front = nx; d++;
     }
-    var keep = {}; roots.forEach(function(id){ keep[id] = 1; });
-    // 1차 — 한 곳뿐이거나 펼친 갈래는 회사를 바로 세운다
-    roots.forEach(function(root){
-      ['up', 'down'].forEach(function(dir){
-        var by = fan(root, dir);
-        Object.keys(by).forEach(function(cat){
-          var gid = 'g|' + root + '|' + dir + '|' + cat;
-          if (by[cat].length >= 2 && !openGrp[gid]) return;
-          by[cat].forEach(function(r){
-            keep[dir === 'up' ? r.source_company_id : r.target_company_id] = 1;
-          });
-        });
-      });
+    nodes = nodes.map(function(n){
+      return keep[n.id] ? n
+        : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
     });
-    // 2차 — 남은 갈래는 묶음 노드 하나로
-    var grpNodes = [], grpEdges = [], absorbed = {};
-    roots.forEach(function(root){
-      ['up', 'down'].forEach(function(dir){
-        var by = fan(root, dir);
-        Object.keys(by).forEach(function(cat){
-          var gid = 'g|' + root + '|' + dir + '|' + cat;
-          if (by[cat].length < 2 || openGrp[gid]) return;
-          var hid = by[cat].filter(function(r){
-            var o = dir === 'up' ? r.source_company_id : r.target_company_id;
-            if (keep[o]) return false;
-            absorbed[r.id] = 1;
-            return true;
-          });
-          if (!hid.length) return;
-          grpNodes.push({
-            id: gid, type: 'grp', position: { x:0, y:0 }, __h: 52,
-            data: { gid: gid, name: catName(cat), count: hid.length,
-                    onExpand: function(g){ setOpenGrp(function(o){
-                      var n = Object.assign({}, o); n[g] = 1; return n; }); } }
-          });
-          grpEdges.push({
-            id: gid, source: dir === 'up' ? gid : root,
-            target: dir === 'up' ? root : gid,
-            type: 'smoothstep', style: { stroke: '#b9c0cc', strokeWidth: 1.4 },
-            markerEnd: { type: MarkerType.ArrowClosed, width: 12, height: 12,
-                         color: '#b9c0cc' }
-          });
-        });
-      });
-    });
-    var eds = rels.filter(function(r){
-      return keep[r.source_company_id] && keep[r.target_company_id] && !absorbed[r.id];
-    }).map(function(r){
-      var m = latest(r.id, per);
-      return {
-        id: r.id, source: r.source_company_id, target: r.target_company_id,
-        type: 'smoothstep', style: CONF_STYLE[r.confidence], interactionWidth: 26,
-        label: m ? (m.value + m.unit) : undefined,
-        labelStyle: { fontSize: 10, fill: '#39415a' },
-        labelBgStyle: { fill: '#fff', fillOpacity: .85 },
-        labelBgPadding: [3, 1],
-        markerEnd: { type: MarkerType.ArrowClosed, width: 13, height: 13,
-                     color: CONF_STYLE[r.confidence].stroke }
-      };
-    }).concat(grpEdges);
-    var nds = Object.keys(keep).filter(function(id){ return CO[id]; }).map(function(id){
-      var c = CO[id];
-      var hid = 0, sh = null;
-      up(id).forEach(function(r){
-        if (!keep[r.source_company_id] && !absorbed[r.id]) hid++;
-        var m = latest(r.id, per);
-        if (m && !sh && m.unit === '%') sh = m.value + '% · ' + metName(m.metric);
-      });
-      down(id).forEach(function(r){
-        if (!keep[r.target_company_id] && !absorbed[r.id]) hid++;
-      });
-      var lines = label(c).length > 13 ? 2 : 1;
-      return {
-        id: id, type: 'co', position: { x:0, y:0 },
-        __h: 18 + lines * 19 + 21 + (sh ? 28 : 0),
-        data: { co: c, isCenter: id === center, share: sh, hidden: hid,
-                onOpen: function(x){ setSel({ kind:'co', id:x }); },
-                onExpand: function(x){ setOpen(function(o){
-                  var n = Object.assign({}, o); n[x] = 1; return n; }); } }
-      };
-    }).concat(grpNodes);
-    return { nodes: place(nds, eds), edges: eds };
-  }, [center, open, openGrp, rels, perOne]);
-
-  // 고른 선은 굵게 — 옆판이 어느 선을 풀고 있는지 보이게 한다
-  var edges = useMemo(function(){
-    return graph.edges.map(function(e){
-      return (sel.kind === 'rel' && sel.id === e.id)
-        ? Object.assign({}, e, { className:'pick' }) : e;
-    });
-  }, [graph, sel]);
-
-  function focus(id){
-    setCenter(id); setOpen({}); setOpenGrp({}); setSel({ kind:'co', id:id });
-    setQ(''); setDrawer(false);
   }
+  return { nodes: place(nodes, edges), edges: edges };
+}
 
-  var hits = q.trim() ? DB.companies.filter(function(c){
-    var t = (c.name + ' ' + (c.name_ko||'') + ' ' + (c.ticker||'') + ' ' +
-             (c.company_type||'') + ' ' + c.industry).toLowerCase();
-    return t.indexOf(q.trim().toLowerCase()) >= 0;
-  }).slice(0, 12) : [];
-
-  function toggle(arr, v, set){
-    set(arr.indexOf(v) >= 0 ? arr.filter(function(x){ return x !== v; }) : arr.concat([v]));
-  }
-
-  // ── 근거 한 줄 ──
-  function evRow(e, i){
-    var s = SRC[e.source_id];
-    return h('div', { key: e.id || i, className:'ev' }, [
-      h('div', { key:'q', className:'q' }, '「' + e.evidence + '」'),
-      h('div', { key:'m', className:'m' }, [
-        h('span', { key:'b', className:'badge' }, SRC_GRADE[s.source_type]),
-        h('span', { key:'t', className:'badge' }, EV_LABEL[e.evidence_type]),
-        s.publisher + ' · ',
-        h('a', { key:'a', href: s.url, target:'_blank', rel:'noreferrer' }, s.title),
-        ' · ' + s.published_date
+// ── 서랍 ────────────────────────────────────────────────────────────
+function srcLine(sid){
+  var s = SRC[sid];
+  if (!s) return sid;
+  var t = (s.publisher ? s.publisher + ' · ' : '') + s.title
+        + (s.published_date ? ' (' + s.published_date + ')' : '');
+  return s.url ? h('a', { href:s.url, target:'_blank', rel:'noopener' }, t) : t;
+}
+function Method(p){
+  var m = METH[p.id];
+  if (!m) return null;
+  var rows = (m.steps || []).map(function(s, i){
+    return h('div', { key:i }, [ h('span', { key:'a' }, s.label),
+      h('span', { key:'b' }, (s.value === null || s.value === undefined ? '' : fmt(s.value))
+        + (s.unit ? ' ' + s.unit : '')) ]);
+  });
+  return h('div', null, [
+    h('div', { key:'s', className:'steps' }, rows),
+    m.note ? h('div', { key:'n', className:'v',
+      style:{ color:'#6b7488', marginTop:'5px' } }, m.note) : null
+  ]);
+}
+function ObsRow(o){
+  var val = (o.value === null || o.value === undefined)
+    ? ((o.value_low !== null && o.value_low !== undefined)
+        ? fmt(o.value_low) + '~' + fmt(o.value_high) + ' ' + (o.unit || '') : '미상')
+    : ((o.value_low !== null && o.value_low !== undefined)
+        ? o.value_low + '~' + o.value_high + (PCT[o.unit] ? '%' : ' ' + o.unit)
+        : fmt(o.value) + (PCT[o.unit] ? '%' : ' ' + (o.unit || '')));
+  return h('div', { key:o.id, style:{ marginBottom:'12px' } }, [
+    h('div', { key:'h', style:{ fontSize:'13px', fontWeight:600 } },
+      metKo(o.metric) + ' — ' + val),
+    h('div', { key:'r', className:'rowk' }, [
+      h('div', { key:'a' }, '언제 것'),
+      h('div', { key:'b' }, o.period + ' · 기준일 ' + o.as_of_date),
+      h('div', { key:'c' }, '분모'), h('div', { key:'d' }, o.denominator || '—'),
+      h('div', { key:'e' }, '근거'), h('div', { key:'f' }, [
+        h('span', { key:'x',
+          className:'badge' + (o.evidence_level === 'CONFIRMED' ? '' : ' est') },
+          EV_KO[o.evidence_level] || o.evidence_level),
+        h('span', { key:'y', className:'badge' },
+          o.status === 'CURRENT' ? '현재' : o.status === 'HISTORICAL' ? '과거'
+          : o.status === 'NOT_YET_ACTIVE' ? '진입 전' : '현재 미상'),
+        o.confidence ? h('span', { key:'z', className:'badge' },
+          '확신 ' + Math.round(o.confidence * 100) + '%') : null ])
+    ]),
+    o.method_id ? h('div', { key:'m', style:{ marginTop:'6px' } },
+      h(Method, { id:o.method_id })) : null,
+    o.method_note ? h('div', { key:'n', className:'v',
+      style:{ color:'#6b7488', marginTop:'5px' } }, o.method_note) : null,
+    (o.source_ids || []).length ? h('div', { key:'s', className:'v' },
+      o.source_ids.map(function(sid, i){ return h('div', { key:i }, srcLine(sid)); })) : null
+  ]);
+}
+function Drawer(p){
+  var ref = p.sel, year = p.year;
+  if (!ref) return null;
+  if (ref.kind === 'grp') {
+    var rels = ref.rels.map(function(id){ return REL[id]; });
+    return h('div', { className:'drw' }, [
+      h('button', { key:'x', className:'btn', style:{ float:'right' },
+        onClick: p.onClose }, '닫기'),
+      h('h3', { key:'t' }, ref.label),
+      h('div', { key:'r', className:'role' },
+        LANE_KO[ref.lane] + ' · ' + rels.length + '곳 · ' + (ref.up ? '업스트림' : '다운스트림')),
+      h('table', { key:'x', className:'t' }, [
+        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '회사'),
+          h('th', { key:2 }, '부품·역무'), h('th', { key:3 }, year + ' 비중'),
+          h('th', { key:4 }, '근거') ])),
+        h('tbody', { key:'b' }, rels.map(function(r){
+          var other = ref.up ? r.source_entity : r.target_entity;
+          return h('tr', { key:r.id, style:{ cursor:'pointer' },
+            onClick: function(){ p.onSel({ kind:'rel', id:r.id, entity:other }); } }, [
+            h('td', { key:1 }, nm(other)),
+            h('td', { key:2 }, r.component || '—'),
+            h('td', { key:3 }, shareLabel(r.id, year) || '—'),
+            h('td', { key:4 }, h('span', {
+              className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
+              EV_KO[r.evidence_level])) ]);
+        }))
       ])
     ]);
   }
-
-  // ── 옆판: 관계 ──
-  function edgePanel(r){
-    var a = CO[r.source_company_id], b = CO[r.target_company_id];
-    var ms = metsOf(r.id, per).slice().sort(function(x, y){
-      return x.period_end < y.period_end ? 1 : -1; });
-    var kids = [
-      h('div', { key:'f', className:'flow' },
-        [label(a), h('span', { key:'s' }, ' 에서 '), label(b), h('span', { key:'e' }, ' 로')]),
-      h('div', { key:'t', className:'tk' }, r.category + ' · ' + r.product),
-      h('div', { key:'d', className:'dots' },
-        CONF_DOTS[r.confidence] + '  ' + CONF_LABEL[r.confidence]),
-      h('div', { key:'bt', className:'btns' }, [
-        h('button', { key:'1', className:'btn', onClick: function(){ focus(a.id); } },
-          label(a) + ' 중심으로'),
-        h('button', { key:'2', className:'btn', onClick: function(){ focus(b.id); } },
-          label(b) + ' 중심으로')
-      ])
-    ];
-    if (r.notes) kids.push(h('div', { key:'n', className:'meth' }, r.notes));
-    kids.push(h('h3', { key:'hm' }, '시점별 지표 ' + ms.length));
-    if (ms.length) {
-      // 좁은 판에서 글자가 뭉개지지 않게 표는 세 칸만 쓰고
-      // 나머지(무엇의 비중인가·어떻게 얻었나)는 기간별 설명 줄로 내린다
-      kids.push(h('div', { key:'tw', className:'tw' },
-        h('table', { className:'m' }, [
-        h('thead', { key:'h' }, h('tr', null, [
-          h('th', { key:'1' }, '기간'), h('th', { key:'2' }, '지표'),
-          h('th', { key:'3' }, '값')])),
-        h('tbody', { key:'b' }, ms.map(function(m){
-          return h('tr', { key:m.id }, [
-            h('td', { key:'1' }, m.period),
-            h('td', { key:'2' }, metName(m.metric)),
-            h('td', { key:'3', className:'n' }, m.value + m.unit)]);
-        }))])));
-      ms.forEach(function(m){
-        kids.push(h('div', { key:'bs'+m.id, className:'meth' },
-          m.period + ' — ' + m.basis + ' 에 대한 비중, ' +
-          (EST_LABEL[m.estimate_type] || m.estimate_type) +
-          (m.method ? '. 계산은 ' + m.method : '')));
-        var evs = EV_BY_MET[m.id] || [];
-        if (evs.length) {
-          kids.push(h('h3', { key:'he'+m.id }, m.period + ' 지표의 근거 ' + evs.length));
-          evs.forEach(function(e, i){ kids.push(evRow(e, m.id + i)); });
-        }
-      });
-    } else {
-      kids.push(h('div', { key:'em', className:'empty' }, '이 기간에 잡힌 숫자가 없다'));
-    }
-    var re = EV_BY_REL[r.id] || [];
-    kids.push(h('h3', { key:'hr' }, '관계 자체의 근거 ' + re.length));
-    if (re.length) re.forEach(function(e, i){ kids.push(evRow(e, i)); });
-    else kids.push(h('div', { key:'er', className:'empty' }, '근거가 아직 없다'));
-    return kids;
-  }
-
-  // ── 옆판: 회사 ──
-  function coPanel(c){
-    var ups = up(c.id), dws = down(c.id);
-    function row(r, other, dir){
-      var m = latest(r.id, per);
-      return h('div', { key: dir + r.id, className:'rel',
-                        onClick: function(){ setSel({ kind:'rel', id:r.id }); } }, [
-        h('b', { key:'b' }, label(CO[other])),
-        h('span', { key:'p' }, r.category + ' · ' + r.product),
-        m ? h('span', { key:'m' }, ' · ' + m.value + m.unit + ' (' + m.period + ')') : null,
-        h('span', { key:'c' }, ' · ' + CONF_LABEL[r.confidence])
-      ]);
-    }
-    var kids = [
-      h('h2', { key:'h' }, label(c)),
-      h('div', { key:'t', className:'tk' },
-        [c.ticker, c.company_type, c.country].filter(Boolean).join(' · ')),
-      c.revenue ? h('div', { key:'r', className:'rev' }, c.revenue) : null,
-      h('p', { key:'d' }, c.desc),
-      h('div', { key:'bt', className:'btns' }, [
-        h('button', { key:'1', className:'btn pri',
-                      onClick: function(){ focus(c.id); } }, '중심으로'),
-        h('button', { key:'2', className:'btn', onClick: function(){
-          setOpen(function(o){ var n = Object.assign({}, o); n[c.id] = 1; return n; }); } },
-          '이웃 펼치기'),
-        c.website ? h('a', { key:'3', className:'btn', href:c.website,
-                             target:'_blank', rel:'noreferrer' }, '회사 사이트') : null
+  var r = ref.kind === 'rel' ? REL[ref.id] : null;
+  var eid = ref.kind === 'ent' ? ref.id : ref.entity;
+  var e = ENT[eid] || {};
+  var obs = r ? (OBS_BY_REL[r.id] || []) : [];
+  var claims = [], hyps = [];
+  Object.keys(CHAINS).forEach(function(k){
+    (CHAINS[k].claims || []).forEach(function(c){
+      if (c.subject === eid || c.object === eid) claims.push(c); });
+    (CHAINS[k].hypotheses || []).forEach(function(x){
+      if (x.anon_company_id === eid || x.candidate_company_id === eid) hyps.push(x); });
+  });
+  return h('div', { className:'drw' }, [
+    h('button', { key:'x', className:'btn', style:{ float:'right' },
+      onClick: p.onClose }, '닫기'),
+    h('h3', { key:'t' }, nm(eid)),
+    h('div', { key:'r', className:'role' },
+      [e.entity_type, e.country,
+       (e.categories || []).map(subKo).join(' · ')].filter(Boolean).join(' · ')),
+    e.desc ? h('div', { key:'d', className:'v' }, e.desc) : null,
+    h('div', { key:'btns',
+      style:{ display:'flex', gap:'6px', flexWrap:'wrap', margin:'8px 0' } }, [
+      h('button', { key:'u', className:'btn',
+        onClick: function(){ p.onExpand(eid, 'up'); } }, '업스트림 한 홉'),
+      h('button', { key:'d', className:'btn',
+        onClick: function(){ p.onExpand(eid, 'down'); } }, '다운스트림 한 홉'),
+      h('button', { key:'f', className:'btn',
+        onClick: function(){ p.onFocus(eid); } }, '이 회사 중심으로'),
+      h('button', { key:'t2', className:'btn',
+        onClick: function(){ p.onTimeline(eid); } }, '시점별로 보기')
+    ]),
+    r ? h('section', { key:'rel' }, [
+      h('div', { key:'k', className:'k' }, '관계'),
+      h('div', { key:'v', className:'v' }, nm(r.source_entity) + ' → ' + nm(r.target_entity)),
+      h('div', { key:'rk', className:'rowk' }, [
+        h('div', { key:1 }, '부품·역무'), h('div', { key:2 }, r.component || '—'),
+        h('div', { key:3 }, '계통'),
+        h('div', { key:4 }, subKo(r.subsystem || '—') + ' · ' + LANE_KO[r.lane]),
+        h('div', { key:5 }, '역할'),
+        h('div', { key:6 }, (r.source_role || '—') + ' → ' + (r.target_role || '—')),
+        h('div', { key:7 }, '기간'),
+        h('div', { key:8 }, (r.valid_from || '?') + ' ~ ' + (r.valid_to || '현재')),
+        h('div', { key:9 }, '근거'), h('div', { key:10 }, [
+          h('span', { key:'a',
+            className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
+            EV_KO[r.evidence_level]),
+          r.economic_importance ? h('span', { key:'b', className:'badge' },
+            '원가 비중 ' + r.economic_importance) : null,
+          r.capacity_criticality ? h('span', { key:'c', className:'badge' },
+            '증설 병목 ' + r.capacity_criticality) : null ])
       ]),
-      c.anon ? h('h3', { key:'hy' }, '실명 후보 ' + (HYP_BY_ANON[c.id] || []).length) : null,
-      (c.anon && (HYP_BY_ANON[c.id] || []).length)
-        ? (HYP_BY_ANON[c.id] || []).slice().sort(function(a, b){
-            return (b.likelihood || 0) - (a.likelihood || 0); }).map(function(x){
-            var cand = CO[x.candidate_company_id];
-            var kids2 = [
-              h('b', { key:'b' }, label(cand)),
-              h('span', { key:'s' }, stars(x.likelihood) + ' · ' +
-                (HYP_STATUS[x.status] || x.status) + ' · ' + x.period)
-            ];
-            if (x.method) kids2.push(h('span', { key:'m', style:{ display:'block' } }, x.method));
-            return h('div', { key:x.id, className:'rel',
-                              onClick: function(){ setSel({ kind:'co', id:cand.id }); } }, kids2);
-          })
-        : (c.anon ? h('div', { key:'ey', className:'empty' }, '아직 후보를 세우지 않았다') : null),
-      h('h3', { key:'hu' }, '공급받는 곳 ' + ups.length),
-      (ups.length || dws.length)
-        ? h('div', { key:'ht', className:'hint' }, '한 줄을 누르면 그 관계의 숫자와 근거가 열린다')
-        : null,
-      ups.length ? ups.map(function(r){ return row(r, r.source_company_id, 'u'); })
-                 : h('div', { key:'eu', className:'empty' }, '데이터에 없다'),
-      h('h3', { key:'hd' }, '공급하는 곳 ' + dws.length),
-      dws.length ? dws.map(function(r){ return row(r, r.target_company_id, 'd'); })
-                 : h('div', { key:'ed', className:'empty' }, '데이터에 없다')
-    ];
-    return kids;
+      r.notes ? h('div', { key:'n', className:'v',
+        style:{ color:'#6b7488', marginTop:'6px' } }, r.notes) : null
+    ]) : null,
+    obs.length ? h('section', { key:'obs' }, [
+      h('div', { key:'k', className:'k', style:{ marginBottom:'8px' } }, '시점별 값'),
+      obs.slice().sort(function(a, b){ return a.as_of_date < b.as_of_date ? 1 : -1; })
+         .map(function(o){ return ObsRow(o); })
+    ]) : null,
+    claims.length ? h('section', { key:'clm' }, [
+      h('div', { key:'k', className:'k', style:{ marginBottom:'6px' } }, '주장'),
+      claims.map(function(c){
+        return h('div', { key:c.id, style:{ marginBottom:'9px' } }, [
+          h('div', { key:'s', className:'v' }, c.statement),
+          h('div', { key:'m' }, [
+            h('span', { key:'a',
+              className:'badge' + (c.evidence_level === 'CONFIRMED' ? '' : ' est') },
+              EV_KO[c.evidence_level]),
+            h('span', { key:'b', className:'badge' }, c.period) ]),
+          h('div', { key:'src', className:'v' }, (c.source_ids || []).map(function(sid, i){
+            return h('div', { key:i }, srcLine(sid)); }))
+        ]);
+      })
+    ]) : null,
+    hyps.length ? h('section', { key:'hyp' }, [
+      h('div', { key:'k', className:'k', style:{ marginBottom:'6px' } }, '실명 후보'),
+      hyps.map(function(x){
+        return h('div', { key:x.id, style:{ marginBottom:'9px' } }, [
+          h('div', { key:'a', className:'v' },
+            nm(x.anon_company_id) + ' = ' + nm(x.candidate_company_id) + ' ?'),
+          h('div', { key:'b', className:'v', style:{ color:'#6b7488' } }, x.method),
+          h('div', { key:'c' },
+            h('span', { className:'badge est' }, '가능성 ' + x.likelihood + '/5')) ]);
+      })
+    ]) : null,
+    r && (r.source_ids || []).length ? h('section', { key:'src' }, [
+      h('div', { key:'k', className:'k', style:{ marginBottom:'6px' } }, '출처'),
+      r.source_ids.map(function(sid, i){
+        return h('div', { key:i, className:'v' }, srcLine(sid)); })
+    ]) : null
+  ]);
+}
+
+// ── 스윔레인 ────────────────────────────────────────────────────────
+function Swim(p){
+  var focal = p.focal;
+  var rows = relsOf(focal).map(function(r){
+    var up = r.target_entity === focal;
+    return { r:r, other: up ? r.source_entity : r.target_entity, up:up };
+  });
+  rows.sort(function(a, b){
+    if (a.up !== b.up) return a.up ? -1 : 1;
+    return (a.r.subsystem || '') < (b.r.subsystem || '') ? -1 : 1;
+  });
+  return h('div', { className:'pane' }, [
+    h('h2', { key:'t' }, nm(focal) + ' — 시점별 관계'),
+    h('p', { key:'n', className:'note' },
+      '값이 있는 해만 숫자를 적는다. 물음표는 관계는 이어지는데 그 해 수치가 공개되지 않았다는 뜻이다. '
+      + '빈 동그라미는 그 해에 관계가 없었다는 뜻이다.'),
+    h('table', { key:'x', className:'sw' }, [
+      h('thead', { key:'h' }, h('tr', null, [ h('th', { key:'n' }, '상대') ].concat(
+        YEARS.map(function(y){ return h('th', { key:y }, y === NOW ? y + ' 현재' : y); })))),
+      h('tbody', { key:'b' }, rows.map(function(row){
+        return h('tr', { key:row.r.id, style:{ cursor:'pointer' },
+          onClick: function(){ p.onSel({ kind:'rel', id:row.r.id, entity:row.other }); } },
+          [ h('td', { key:'n' }, [ h('span', { key:'a' }, nm(row.other)),
+              h('small', { key:'b' }, ' · ' + subKo(row.r.subsystem || LANE_KO[row.r.lane])) ]) ]
+          .concat(YEARS.map(function(y){
+            var on = activeIn(row.r, y), lbl = on ? shareLabel(row.r.id, y) : null;
+            var isNew = firstYear(row.r) === y && y !== YEARS[0];
+            if (endedOpen(row.r))
+              return h('td', { key:y }, y === YEARS[0]
+                ? h('span', { className:'badge' }, '과거') : h('span', { className:'dot o' }));
+            return h('td', { key:y }, on
+              ? (lbl ? h('span', null, [ h('span', { key:'v' }, lbl),
+                        isNew ? h('span', { key:'n', className:'badge new',
+                          style:{ marginLeft:'4px' } }, 'NEW') : null ])
+                     : (isNew ? h('span', { className:'badge new' }, 'NEW')
+                              : h('span', { className:'dot' })))
+              : h('span', { className:'dot o' }));
+          })));
+      }))
+    ])
+  ]);
+}
+
+// ── 근거 ────────────────────────────────────────────────────────────
+function Evidence(){
+  var rows = [];
+  Object.keys(CHAINS).forEach(function(k){
+    (CHAINS[k].claims || []).forEach(function(c){ rows.push(c); });
+  });
+  return h('div', { className:'pane' }, [
+    h('h2', { key:'t' }, '주장과 출처'),
+    h('p', { key:'n', className:'note' },
+      '공시 그대로인 것과 우리가 계산한 것을 갈라 둔다. 추정에는 분모와 방법이 붙는다.'),
+    h('table', { key:'x', className:'t' }, [
+      h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '주장'),
+        h('th', { key:2 }, '언제 것'), h('th', { key:3 }, '근거'),
+        h('th', { key:4 }, '출처') ])),
+      h('tbody', { key:'b' }, rows.map(function(c){
+        return h('tr', { key:c.id }, [
+          h('td', { key:1 }, c.statement),
+          h('td', { key:2 }, c.period),
+          h('td', { key:3 }, h('span', {
+            className:'badge' + (c.evidence_level === 'CONFIRMED' ? '' : ' est') },
+            EV_KO[c.evidence_level])),
+          h('td', { key:4 }, (c.source_ids || []).map(function(sid, i){
+            return h('div', { key:i }, srcLine(sid)); }))
+        ]);
+      }))
+    ])
+  ]);
+}
+
+// ── 원가 ────────────────────────────────────────────────────────────
+var TONE = ['#3d4557','#575f73','#6f7688','#888e9d','#a0a6b3','#b8bcc6','#cfd2d9'];
+function Bom(p){
+  var ch = CHAINS[p.chain] || {};
+  var keys = Object.keys(ch.bom || {});
+  var fin = ch.financials || {};
+  if (!keys.length && !Object.keys(fin).length)
+    return h('div', { className:'pane' }, '이 회사에는 원가 자료가 없다.');
+  var b = keys.length ? ch.bom[keys[keys.length - 1]] : null;
+  var sum = b ? b.components.reduce(function(a, c){ return a + c.central; }, 0) : 0;
+  return h('div', { className:'pane' }, [
+    b ? h('h2', { key:'t' }, nm(p.focal) + ' — 제품 원가 구성 (' + b.period + ')') : null,
+    b ? h('p', { key:'n', className:'note' }, [
+      h('span', { key:'a', className:'badge est' }, '전부 추정'),
+      h('span', { key:'b' }, ' ' + b.note + ' 분모는 ' + b.denominator + '.') ]) : null,
+    b ? h('div', { key:'bar', className:'bom' }, b.components.map(function(c, i){
+      return h('div', { key:c.id, title:c.label,
+        onClick: function(){ if (c.subsystem) p.onDrill(c.subsystem); },
+        style:{ width:(c.central / sum * 100) + '%', background:TONE[i % TONE.length] } });
+    })) : null,
+    b ? h('div', { key:'leg', className:'bomleg' }, b.components.map(function(c, i){
+      return h('span', { key:c.id, className:'it',
+        onClick: function(){ if (c.subsystem) p.onDrill(c.subsystem); } }, [
+        h('i', { key:'s', className:'sq', style:{ background:TONE[i % TONE.length] } }),
+        h('span', { key:'l' }, c.label + ' ' + c.share_pct + '%') ]);
+    })) : null,
+    b ? h('table', { key:'t2', className:'t', style:{ marginTop:'16px' } }, [
+      h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '구성'),
+        h('th', { key:2 }, '중앙값'), h('th', { key:3 }, '범위'), h('th', { key:4 }, '비중'),
+        h('th', { key:5 }, '근거'), h('th', { key:6 }, '공급사') ])),
+      h('tbody', { key:'b' }, b.components.map(function(c){
+        var sup = c.subsystem ? relsOf(p.focal).filter(function(r){
+          return r.subsystem === c.subsystem && r.target_entity === p.focal;
+        }).map(function(r){ return nm(r.source_entity); }) : [];
+        return h('tr', { key:c.id,
+          style:{ cursor: c.subsystem ? 'pointer' : 'default' },
+          onClick: function(){ if (c.subsystem) p.onDrill(c.subsystem); } }, [
+          h('td', { key:1 }, c.label),
+          h('td', { key:2 }, c.central + ' ' + b.unit),
+          h('td', { key:3 }, c.low ? (c.low + '~' + c.high) : '—'),
+          h('td', { key:4 }, c.share_pct + '%'),
+          h('td', { key:5 }, h('span', { className:'badge est' }, EV_KO[c.evidence_level])),
+          h('td', { key:6 }, sup.join(' · ') || '—')
+        ]);
+      }))
+    ]) : null,
+    Object.keys(fin).length ? h('div', { key:'fin' }, [
+      h('h2', { key:'t', style:{ marginTop:'20px' } }, '재무 앵커'),
+      h('p', { key:'n', className:'note' },
+        '매출 환산 MW 는 출하 공시가 아니라 ASP 앵커로 나눈 값이다. 원가를 나눌 분모로만 쓴다.'),
+      h('table', { key:'x', className:'t' }, [
+        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '기간'),
+          h('th', { key:2 }, '총매출'), h('th', { key:3 }, '제품 매출'),
+          h('th', { key:4 }, '제품 원가'), h('th', { key:5 }, '매출 환산 MW'),
+          h('th', { key:6 }, 'MW 당 원가') ])),
+        h('tbody', { key:'b' }, Object.keys(fin).sort(function(a, b){
+          return fin[a].as_of_date < fin[b].as_of_date ? -1 : 1;
+        }).map(function(k){
+          var f = fin[k];
+          return h('tr', { key:k }, [
+            h('td', { key:1 }, f.period),
+            h('td', { key:2 }, fmt(f.total_revenue_usd_m) + ' M'),
+            h('td', { key:3 }, fmt(f.product_revenue_usd_m) + ' M'),
+            h('td', { key:4 }, fmt(f.product_cogs_usd_m) + ' M'),
+            h('td', { key:5 }, [ h('span', { key:'v' },
+              fmt(f.revenue_equivalent_mw.value) + ' MW '),
+              h('span', { key:'b', className:'badge est' }, '추정') ]),
+            h('td', { key:6 },
+              f.cogs_per_equivalent_mw.value + ' ' + f.cogs_per_equivalent_mw.unit)
+          ]);
+        }))
+      ])
+    ]) : null
+  ]);
+}
+
+// ── 앱 ──────────────────────────────────────────────────────────────
+function App(){
+  var u0 = readUrl();
+  var a = useState(u0.focal), focal = a[0], setFocal = a[1];
+  var b = useState(u0.year), year = b[0], setYear = b[1];
+  var c = useState(u0.mode), mode = c[0], setMode = c[1];
+  var d = useState(u0.open), open = d[0], setOpen = d[1];
+  var e = useState({}), expanded = e[0], setExpanded = e[1];
+  var f = useState({ kind:'ent', id: u0.sel || u0.focal }), sel = f[0], setSel = f[1];
+  var g = useState(''), q = g[0], setQ = g[1];
+  var i2 = useState(false), focusOn = i2[0], setFocusOn = i2[1];
+  var j = useState([u0.focal]), path = j[0], setPath = j[1];
+  var k2 = useState(true), leg = k2[0], setLeg = k2[1];
+  // 좁은 화면에서는 서랍을 닫고 시작한다. 열면 그래프를 덮기 때문이다
+  var l2 = useState(window.innerWidth >= 980), drw = l2[0], setDrw = l2[1];
+
+  useEffect(function(){
+    writeUrl({ focal:focal, year:year, mode:mode, open:open,
+               sel: sel ? (sel.entity || sel.id) : '' }, false);
+  }, [focal, year, mode, open, sel]);
+  useEffect(function(){
+    function pop(){
+      var s = readUrl();
+      setFocal(s.focal); setYear(s.year); setMode(s.mode); setOpen(s.open);
+      setSel({ kind:'ent', id: s.sel || s.focal });
+    }
+    window.addEventListener('popstate', pop);
+    return function(){ window.removeEventListener('popstate', pop); };
+  }, []);
+
+  var chainOfFocal = useMemo(function(){
+    var best = null;
+    Object.keys(CHAINS).forEach(function(k){
+      if (best) return;
+      if (CHAINS[k].relationships.some(function(r){
+        return r.source_entity === focal || r.target_entity === focal; })) best = k;
+    });
+    return best;
+  }, [focal]);
+
+  var gr = useMemo(function(){
+    return buildGraph(focal, year, open, expanded, focusOn);
+  }, [focal, year, open, expanded, focusOn]);
+
+  function goFocal(id){
+    setFocal(id); setOpen([]); setExpanded({}); setSel({ kind:'ent', id:id });
+    setPath(function(p){
+      return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
+    });
+    writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id }, true);
+  }
+  function toggleGroup(gk){
+    setOpen(function(o){
+      return o.indexOf(gk) >= 0 ? o.filter(function(x){ return x !== gk; }) : o.concat([gk]);
+    });
+  }
+  function onNodeClick(_, node){
+    var ref = node.data.ref;
+    if (ref.kind === 'grp') toggleGroup(ref.id);
+    setSel(ref); setDrw(true);
+  }
+  function drill(subsystem){
+    var rels = relsOf(focal).filter(function(r){
+      return r.subsystem === subsystem && r.target_entity === focal;
+    });
+    if (!rels.length) return;
+    var gk = 'u:' + subsystem;
+    setMode('current');
+    setOpen(function(o){ return o.indexOf(gk) >= 0 ? o : o.concat([gk]); });
+    setSel({ kind:'grp', id:gk, label:subsystem, lane:rels[0].lane, up:true,
+             rels: rels.map(function(r){ return r.id; }) });
   }
 
-  var selRel = sel.kind === 'rel' && REL[sel.id] ? REL[sel.id] : null;
-  var selCo = selRel ? null : (CO[sel.id] || CO[center]);
-  var body = selRel ? edgePanel(selRel) : coPanel(selCo);
-  var sheetTitle = selRel
-    ? (label(CO[selRel.source_company_id]) + ' → ' + label(CO[selRel.target_company_id]))
-    : label(selCo);
+  var hits = q ? Object.keys(ENT).filter(function(id){
+      var x = ENT[id];
+      var s = (x.name + ' ' + (x.name_ko || '') + ' ' + id).toLowerCase();
+      return REL_BY_ENT[id] && s.indexOf(q.toLowerCase()) >= 0;
+    }).slice(0, 14) : [];
 
-  function svgLine(k){
-    var st = CONF_STYLE[k];
-    return h('svg', { key:'s'+k, width:30, height:8 },
-      h('line', { x1:0, y1:4, x2:30, y2:4, stroke:st.stroke,
-                  strokeWidth:st.strokeWidth, strokeDasharray:st.strokeDasharray }));
-  }
-  var legend = h('div', { key:'lg', className:'lgd' }, [
-    h('b', { key:'b' }, '선을 누르면 근거가 열린다'),
-    h('span', { key:'1' }, [svgLine('high'), '공시가 양쪽을 잇는다']),
-    h('span', { key:'2' }, [svgLine('medium'), '한쪽 공시만 있거나 고객이 익명이다']),
-    h('span', { key:'3' }, [svgLine('low'), '추정이다'])
+  var top = h('div', { key:'top', className:'top' }, [
+    h('div', { key:'b', className:'brand' }, [ '밸류체인 탐색기',
+      h('small', { key:'s' }, '회사를 고르고 눌러 넓히고 시점을 옮긴다') ]),
+    h('div', { key:'s', className:'search' }, [
+      h('input', { key:'i', value:q, placeholder:'회사 이름으로 찾기',
+        onChange: function(ev){ setQ(ev.target.value); } }),
+      hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(id){
+        return h('div', { key:id, onClick: function(){ setQ(''); goFocal(id); } }, [
+          h('span', { key:'a' }, nm(id)),
+          h('span', { key:'b', className:'k' },
+            (ENT[id].categories || []).map(subKo).join(' · ')) ]);
+      })) : null
+    ]),
+    h('div', { key:'m', className:'modes' }, [
+      ['current', '현재'], ['timeline', '시점'], ['bom', '원가'], ['evidence', '근거']
+    ].map(function(x){
+      return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
+        onClick: function(){ setMode(x[0]); } }, x[1]);
+    })),
+    h('div', { key:'sp', className:'spacer' }),
+    h('button', { key:'f', className:'btn' + (focusOn ? ' on' : ''),
+      onClick: function(){ setFocusOn(!focusOn); } }, '포커스'),
+    mode === 'current' ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
+      onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
   ]);
 
-  // 걸어 둔 필터 수 — 서랍을 닫아 두어도 무엇이 켜졌는지 보이게 한다
-  var nFilter = (conf.length < 3 ? 1 : 0) + (onlyOfficial ? 1 : 0);
-  var drawer_ = drawer ? h('div', { key:'dw', className:'drw' }, [
-    h('div', { key:'x', className:'drwx' }, [
-      h('b', { key:'t' }, '무엇을 보여줄까'),
-      h('button', { key:'c', className:'chip',
-                    onClick: function(){ setDrawer(false); } }, '닫기')
-    ]),
-    h('div', { key:'j', className:'row narrow-only' }, [
-      h('h4', { key:'h' }, '바로 가기'),
-      h('div', { key:'c', className:'chips' }, QUICK.map(function(id){
-        return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
-                             onClick: function(){ focus(id); } }, label(CO[id]));
-      }))
-    ]),
-    h('div', { key:'g', className:'row' }, [
-      h('h4', { key:'h' }, '근거의 세기'),
-      h('div', { key:'c', className:'chips' },
-        ['high','medium','low'].map(function(k){
-          return h('button', { key:k, className:'chip' + (conf.indexOf(k) >= 0 ? ' on' : ''),
-                               onClick: function(){ toggle(conf, k, setConf); } },
-                   CONF_LABEL[k]);
-        }).concat([
-          h('button', { key:'of', className:'chip' + (onlyOfficial ? ' on' : ''),
-                        onClick: function(){ setOnlyOfficial(!onlyOfficial); } },
-            '공식 출처만')]))
-    ])
-  ]) : null;
+  var crumb = h('div', { key:'c', className:'crumb' }, path.map(function(id, i){
+    return h('span', { key:id, onClick: function(){ goFocal(id); } },
+      [ i ? ' › ' : '', i === path.length - 1 ? h('b', { key:'b' }, nm(id)) : nm(id) ]);
+  }));
 
-  return h('div', { className:'app' }, [
-    h('div', { key:'top', className:'top' }, [
-      h('div', { key:'br', className:'brand' }, ['밸류체인 탐색기',
-        h('small', { key:'s' }, ['회사와 선을 눌러 펼친다 · ',
-          h('a', { key:'a', href:'valuechain/네 회사를 한 장씩.html' }, '정적 판')])]),
-      h('div', { key:'se', className:'search' }, [
-        h('input', { key:'i', value:q, placeholder:'회사 이름·티커로 찾기',
-                     onChange: function(e){ setQ(e.target.value); } }),
-        hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(x){
-          return h('div', { key:x.id, onClick: function(){ focus(x.id); } },
-            [label(x), h('em', { key:'e' }, x.company_type || x.industry)]);
-        })) : null
-      ]),
-      h('div', { key:'qk', className:'chips wide-only' }, QUICK.map(function(id){
-        return h('button', { key:id, className:'chip' + (center === id ? ' on' : ''),
-                             onClick: function(){ focus(id); } }, label(CO[id]));
-      })),
-      h('select', { key:'pd', className:'sel', value:perOne, title:'어느 시점의 숫자를 볼까',
-                    onChange: function(e){ setPerOne(e.target.value); } },
-        [h('option', { key:'all', value:'' }, '기간 전체')].concat(
-        PERIODS.slice().reverse().map(function(p){
-          return h('option', { key:p, value:p }, p);
-        }))),
-      h('button', { key:'ft', className:'chip' + (drawer || nFilter ? ' on' : ''),
-                    onClick: function(){ setDrawer(!drawer); } },
-        nFilter ? '필터 ' + nFilter : '필터'),
-      drawer_
+  var scrub = h('div', { key:'s', className:'scrub' }, YEARS.reduce(function(acc, y, i){
+    if (i) acc.push(h('div', { key:'r' + i, className:'rail' }));
+    acc.push(h('div', { key:y, className:'yr' + (y === year ? ' on' : ''),
+      onClick: function(){ setYear(y); } }, y === NOW ? y + ' 현재' : y));
+    return acc;
+  }, []));
+
+  var body;
+  if (mode === 'timeline') body = h(Swim, { focal:focal, onSel:setSel });
+  else if (mode === 'evidence') body = h(Evidence, null);
+  else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
+  else body = h('div', { key:'cv', className:'canvas' }, [
+    h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
+      onNodeClick:onNodeClick, fitView:true, minZoom:.25, maxZoom:1.6,
+      nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
+      h(Background, { key:'bg', gap:22, size:1, color:'#e3e6ec' }),
+      h(Controls, { key:'ct', showInteractive:false })
     ]),
-    h('div', { key:'main', className:'main',
-               onClick: function(){ if (drawer) setDrawer(false); } }, [
-      h('div', { key:'cv', className:'canvas' }, [
-        h(RF, { key:'rf', nodes: graph.nodes, edges: edges, nodeTypes: NODE_TYPES,
-                // 다 담으려다 글자가 뭉개진다. 읽히는 배율을 바닥으로 두고
-                // 나머지는 밀어서 본다 — 전체는 아래 맞춤 단추로 돌아온다
-                fitView: true,
-                fitViewOptions: { padding: 0.12, minZoom: 0.5, maxZoom: 1 },
-                minZoom: 0.2, maxZoom: 2.2,
-                onEdgeClick: function(ev, e){ setSel({ kind:'rel', id: e.id }); },
-                onInit: function(inst){
-                  // 좁은 화면에서는 중심 회사를 왼쪽으로 밀어 고객 쪽을 먼저 보여준다
-                  if (window.innerWidth > 720) return;
-                  var n = graph.nodes.filter(function(x){ return x.id === center; })[0];
-                  if (!n) return;
-                  var z = 0.62;
-                  inst.setCenter(n.position.x + NODE_W / 2 + window.innerWidth * 0.2 / z,
-                                 n.position.y + n.__h / 2, { zoom: z });
-                },
-                nodesDraggable: true, nodesConnectable: false }, [
-          h(Background, { key:'bg', gap: 22, size: 1, color: '#dfe3ea' }),
-          h(Controls, { key:'ct', showInteractive: false, position:'bottom-right' }),
-          null
-        ]),
-        legend
-      ]),
-      h('div', { key:'sd', className:'side' + (sheet ? ' up' : '') }, [
-        h('button', { key:'hd', className:'shx',
-                      onClick: function(e){ e.stopPropagation(); setSheet(!sheet); } }, [
-          h('span', { key:'t' }, sheetTitle),
-          h('em', { key:'e' }, sheet ? '내리기' : '자세히 보기')
-        ])
-      ].concat(body))
+    h('div', { key:'lg', className:'legend', onClick: function(){ setLeg(!leg); } },
+      leg ? [
+      h('b', { key:'b' }, '선이 말하는 것 (누르면 접힌다)'),
+      h('i', { key:1 }, '굵은 실선 — 공시로 확인'),
+      h('i', { key:2 }, '갈색 실선 — 추정. 분모가 붙는다'),
+      h('i', { key:3 }, '파선 — 정황 추론'),
+      h('i', { key:4 }, '점선 — 비공개·과거 관측'),
+      h('i', { key:5 }, '물음표 — 관계는 있고 그 해 값이 없다')
+    ] : [ h('b', { key:'b', style:{ margin:0 } }, '범례') ])
+  ]);
+
+  return h('div', { className:'app' }, [ top, crumb,
+    (mode === 'current' || mode === 'timeline') ? scrub : null,
+    h('div', { key:'m', className:'main' }, [
+      body,
+      (mode === 'current' && drw) ? h(Drawer, { key:'d', sel:sel, year:year, onSel:setSel,
+        onClose: function(){ setDrw(false); },
+        onFocus: goFocal,
+        onTimeline: function(id){ goFocal(id); setMode('timeline'); },
+        onExpand: function(id, dir){
+          setExpanded(function(x){
+            var y = Object.assign({}, x); y[id + '@' + dir] = 1; return y;
+          });
+        } }) : null
     ])
   ]);
 }
@@ -738,65 +898,57 @@ ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(
 '''
 
 
-def load_chain(focal):
-    """새 구조(entities/sources/chains/<focal>/*)를 읽어 앱이 쓰는 옛 이름으로 되돌린다.
-
-    데이터 원본은 data/valuechain 이고 무결성은 insights/check_chain.py 가 본다.
-    """
-    def j(*parts):
-        return json.load(io.open(os.path.join(DATA, *parts), encoding='utf-8'))
-
-    base = ('chains', focal)
-    ents = j('entities.json')
-    rels = j(base[0], base[1], 'relationships.json')
-    obss = j(base[0], base[1], 'observations.json')
-    cos = []
-    for e in ents:
-        c = dict(e)
-        c.pop('entity_type', None)
-        c.pop('categories', None)
-        cos.append(c)
-    rr = []
-    for r in rels:
-        rr.append({
-            'id': r['id'],
-            'source_company_id': r['source_entity'],
-            'target_company_id': r['target_entity'],
-            'relationship_type': r['relationship_type'],
-            'category': r.get('subsystem'),
-            'product': r.get('component'),
-            'confidence': r.get('confidence_band'),
-            'notes': r.get('notes'),
-            'flows': r.get('flows') or [],
-        })
-    mm = []
-    for o in obss:
-        mm.append({
-            'id': o['id'],
-            'relationship_id': o['relationship_id'],
-            'period': o['period'],
-            'period_start': o.get('period_start'),
-            'period_end': o.get('period_end'),
-            'metric': o['metric'],
-            'value': o['value'],
-            'unit': o.get('unit'),
-            'basis': o.get('denominator'),
-            'estimate_type': ('disclosed' if o.get('evidence_level') == 'CONFIRMED'
-                              else 'derived'),
-            'method': o.get('method_note'),
-        })
-    return {
-        'companies': cos,
-        'relationships': rr,
-        'relationship_metrics': mm,
-        'sources': j('sources.json'),
-        'evidence': j(base[0], base[1], 'evidence.json'),
-        'identity_hypotheses': j(base[0], base[1], 'hypotheses.json'),
-    }
+def load(*parts):
+    p = os.path.join(DATA, *parts)
+    if not os.path.exists(p):
+        return None
+    with io.open(p, encoding='utf-8') as f:
+        return json.load(f)
 
 
-def build(focal='nvidia'):
-    db = load_chain(focal)
+def by_id(rows):
+    return dict((r['id'], r) for r in (rows or []))
+
+
+def read_dir(base, sub):
+    d = os.path.join(base, sub)
+    out = {}
+    if os.path.isdir(d):
+        for fn in sorted(os.listdir(d)):
+            if fn.endswith('.json'):
+                with io.open(os.path.join(d, fn), encoding='utf-8') as f:
+                    out[fn[:-5]] = json.load(f)
+    return out
+
+
+def build():
+    db = {'entities': by_id(load('entities.json')),
+          'sources': by_id(load('sources.json')),
+          'methods': by_id(load('methods.json')),
+          'chains': {}}
+    cdir = os.path.join(DATA, 'chains')
+    for ck in sorted(os.listdir(cdir)):
+        base = os.path.join(cdir, ck)
+        if not os.path.isdir(base) or ck not in SHIP:
+            continue
+        db['chains'][ck] = {
+            'relationships': load('chains', ck, 'relationships.json') or [],
+            'observations': load('chains', ck, 'observations.json') or [],
+            'claims': load('chains', ck, 'claims.json') or [],
+            'hypotheses': load('chains', ck, 'hypotheses.json') or [],
+            'bom': read_dir(base, 'bom'),
+            'financials': read_dir(base, 'financials'),
+        }
+    # 실은 사슬이 쓰는 엔티티만 내보낸다
+    used = set()
+    for c in db['chains'].values():
+        for r in c['relationships']:
+            used.add(r['source_entity'])
+            used.add(r['target_entity'])
+        for x in c['hypotheses']:
+            used.add(x['anon_company_id'])
+            used.add(x['candidate_company_id'])
+    db['entities'] = dict((k, v) for k, v in db['entities'].items() if k in used)
 
     payload = json.dumps(db, ensure_ascii=False, separators=(',', ':'))
     scripts = '\n'.join('<script src="%s"></script>' % u for u in LIBS)
@@ -813,6 +965,6 @@ def build(focal='nvidia'):
 if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
     p, db = build()
-    print('%s\n회사 %d · 관계 %d · 지표 %d · 출처 %d · 근거 %d'
-          % (p, len(db['companies']), len(db['relationships']),
-             len(db['relationship_metrics']), len(db['sources']), len(db['evidence'])))
+    n = sum(len(c['relationships']) for c in db['chains'].values())
+    print('%s\n사슬 %d · 엔티티 %d · 관계 %d · 출처 %d'
+          % (p, len(db['chains']), len(db['entities']), n, len(db['sources'])))
