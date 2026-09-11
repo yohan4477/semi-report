@@ -102,9 +102,10 @@ min-width:100px;max-width:128px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:p
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
-.hdr{width:128px;text-align:center;font-size:11px;color:var(--ink3);font-weight:600;
-letter-spacing:-.2px;border-bottom:1px solid var(--line);padding-bottom:4px;
-text-transform:none;pointer-events:none}
+.hdr{width:128px;text-align:center;font-size:11px;color:var(--ink2);font-weight:700;
+letter-spacing:-.2px;padding:4px 6px;background:var(--hi);border:1px solid var(--line);
+border-radius:5px;pointer-events:none;white-space:nowrap;overflow:hidden;
+text-overflow:ellipsis}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
 .nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;padding:11px 14px;
 box-shadow:0 3px 12px rgba(20,26,40,.22)}
@@ -1377,6 +1378,19 @@ function App(){
     return buildGraph(focal, year, open, expanded, focusOn);
   }, [focal, year, open, expanded, focusOn]);
 
+  // 칸 머리(원재료·소재·가공…) 위로는 못 올라가게 막는다. 아래·좌우는 넉넉히 둔다
+  var extent = useMemo(function(){
+    var x0 = 1e9, x1 = -1e9, y1 = -1e9;
+    gr.nodes.forEach(function(n){
+      var w = n.type === 'hdr' ? COL_W : COL_W;
+      if (n.position.x < x0) x0 = n.position.x;
+      if (n.position.x + w > x1) x1 = n.position.x + w;
+      if (n.position.y > y1) y1 = n.position.y;
+    });
+    if (x0 > x1) return undefined;
+    return [[x0 - 420, -12], [x1 + 420, y1 + 600]];
+  }, [gr]);
+
   function goFocal(id){
     setFocal(id); setOpen([]); setExpanded({}); setSel({ kind:'ent', id:id });
     setPath(function(p){
@@ -1495,6 +1509,7 @@ function App(){
       onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
       minZoom: window.innerWidth < 720 ? .28 : .2,
+      translateExtent: extent,
       onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
