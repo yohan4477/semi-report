@@ -306,7 +306,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
     var g = groups[gk];
     var act = g.rels.filter(function(r){ return activeIn(r, year); });
     nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
-      sub: act.length + '곳 · ' + LANE_KO[g.lane], gone: !act.length,
+      sub: act.length + '곳 · ' + (g.up ? '들어온다' : '나간다'), gone: !act.length,
       ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
             rels: g.rels.map(function(r){ return r.id; }) } } });
     edges.push({ id:'g-' + gk, source: g.up ? gk : focal, target: g.up ? focal : gk,
@@ -445,7 +445,8 @@ function Drawer(p){
         onClick: p.onClose }, '닫기'),
       h('h3', { key:'t' }, ref.label),
       h('div', { key:'r', className:'role' },
-        LANE_KO[ref.lane] + ' · ' + rels.length + '곳 · ' + (ref.up ? '업스트림' : '다운스트림')),
+        LANE_KO[ref.lane] + ' · ' + rels.length + '곳 · '
+        + (ref.up ? '이 회사로 들어온다' : '이 회사에서 나간다')),
       h('table', { key:'x', className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '회사'),
           h('th', { key:2 }, '부품·역무'), h('th', { key:3 }, year + ' 비중'),

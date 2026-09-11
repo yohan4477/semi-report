@@ -65,6 +65,7 @@ PYTHONIOENCODING=utf-8 python insights/check_watch.py # 워치 — 문턱이 신
 PYTHONIOENCODING=utf-8 python insights/check_watch.py --selftest # 그 규칙들이 결함을 실제로 무는가
 PYTHONIOENCODING=utf-8 python insights/check_model.py # 모델 — 월 시간을 박았나, 원자료에 출처가 붙었나
 PYTHONIOENCODING=utf-8 python insights/check_model.py --selftest # 그 규칙이 결함을 실제로 무는가
+PYTHONIOENCODING=utf-8 python insights/check_chain.py # 밸류체인 — 분모 없는 비중, 과거 관측의 현재 승격, 끊어진 참조
 ```
 
 FAIL 0이어야 푸시한다. **전부 돌린다 — 일부만 돌리지 않는다.** 앞의 셋만 돌리고 푸시한 날(2026-08-15) `check_fresh` FAIL 3건·`check_cite` 확인필요 6건이 그대로 나갔다. 콘솔이 cp949라 `PYTHONIOENCODING=utf-8`을 붙인다.
