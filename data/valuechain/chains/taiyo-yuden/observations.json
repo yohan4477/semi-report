@@ -1,53 +1,5 @@
 [
  {
-  "id": "o-ty-capacitor-share",
-  "relationship_id": "ty-rev-capacitor-edge",
-  "metric": "capacitor_revenue_share",
-  "value": 70.9,
-  "value_low": null,
-  "value_high": null,
-  "unit": "percent",
-  "period": "FY2026",
-  "period_start": "2025-04-01",
-  "period_end": "2026-03-31",
-  "as_of_date": "2026-03-31",
-  "denominator": "회사 총매출",
-  "status": "CURRENT",
-  "evidence_level": "CONFIRMED",
-  "confidence": null,
-  "method_id": null,
-  "method_note": null,
-  "source_ids": [
-   "ty_product_2026"
-  ],
-  "denominator_scope": "EDGE",
-  "source_date": "2026"
- },
- {
-  "id": "o-ty-inductor-share",
-  "relationship_id": "ty-rev-inductor-edge",
-  "metric": "inductor_revenue_share",
-  "value": 18.1,
-  "value_low": null,
-  "value_high": null,
-  "unit": "percent",
-  "period": "FY2026",
-  "period_start": "2025-04-01",
-  "period_end": "2026-03-31",
-  "as_of_date": "2026-03-31",
-  "denominator": "회사 총매출",
-  "status": "CURRENT",
-  "evidence_level": "CONFIRMED",
-  "confidence": null,
-  "method_id": null,
-  "method_note": null,
-  "source_ids": [
-   "ty_product_2026"
-  ],
-  "denominator_scope": "EDGE",
-  "source_date": "2026"
- },
- {
   "id": "o-ty-it-infra-share",
   "relationship_id": "ty-app-it-infra-industrial",
   "metric": "IT_infra_industrial_share",

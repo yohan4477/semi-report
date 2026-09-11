@@ -1,0 +1,153 @@
+{
+ "chain": "kr-substrate",
+ "focal_entity": "daeduck-electronics",
+ "supply_sources": [
+  {
+   "id": "ss-abf-film",
+   "kind": "SUPPLY_SOURCE",
+   "label": "ABF 빌드업 필름",
+   "label_en": "Ajinomoto build-up film",
+   "level": "MATERIAL",
+   "note": "매입 비중은 6.7%지만 FC-BGA 절연층의 핵심이라 전략 중요도가 가장 높다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-ccl-substrate",
+   "kind": "SUPPLY_SOURCE",
+   "label": "동박적층판(CCL)",
+   "label_en": "Copper clad laminate",
+   "level": "MATERIAL",
+   "note": "FY2025 원재료 매입의 62.2%",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-pgc-plating",
+   "kind": "SUPPLY_SOURCE",
+   "label": "도금 재료(PGC)",
+   "label_en": "Plating chemicals (PGC)",
+   "level": "MATERIAL",
+   "note": "부재료 매입의 42.2%. 미세회로·도금 품질과 직결된다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-prepreg",
+   "kind": "SUPPLY_SOURCE",
+   "label": "프리프레그",
+   "label_en": "Prepreg",
+   "level": "MATERIAL",
+   "note": "FY2025 원재료 매입의 26.0%",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  }
+ ],
+ "revenue_types": [
+  {
+   "id": "rt-dd-rev-fcbga",
+   "kind": "REVENUE_TYPE",
+   "label": "FC-BGA",
+   "label_en": "FC-BGA",
+   "note": "자동차에서 데이터센터·네트워크로 전방이 넓어지는 중",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "utilization",
+     "value": 90,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-06-30",
+     "denominator": "FC-BGA 라인 가동률",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.6,
+     "method_note": "전사 평균 가동률 76%를 FC-BGA 가동률로 읽지 않는다",
+     "source_ids": [
+      "dd_ir_util"
+     ]
+    },
+    {
+     "metric": "application_mix",
+     "value": 25,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "4Q2025",
+     "period_start": "2025-10-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-01-30",
+     "denominator": "FC-BGA 전방 구성",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.6,
+     "method_note": "네트워크 갈래. 고객별로 나눌 근거가 없어 FC-BGA 매출원에 건다. 03 의 CLM007",
+     "source_ids": [
+      "dd_ir_fcbga_mix"
+     ]
+    }
+   ],
+   "source_ids": [
+    "dd_ir_fcbga_mix",
+    "dd_ir_util"
+   ]
+  },
+  {
+   "id": "rt-dd-rev-memory",
+   "kind": "REVENUE_TYPE",
+   "label": "메모리 패키지기판",
+   "label_en": "Memory package substrate",
+   "note": "CSP·FCBOC 계열",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 53.4,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2025-06-30",
+     "denominator": "대덕전자 총매출",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.7,
+     "method_note": "약 4,764억 원. 회사 공식 분해가 아니다",
+     "source_ids": [
+      "dd_ir_mix"
+     ]
+    }
+   ],
+   "source_ids": [
+    "dd_ir_mix"
+   ]
+  },
+  {
+   "id": "rt-dd-rev-mlb",
+   "kind": "REVENUE_TYPE",
+   "label": "고다층 MLB",
+   "label_en": "High-layer MLB",
+   "note": "AI 가속기·스위치·항공우주",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "rt-dd-rev-unallocated",
+   "kind": "REVENUE_TYPE",
+   "label": "배분 미상",
+   "label_en": "Unallocated / undisclosed",
+   "note": "공시가 고객을 익명으로만 밝힌 자리",
+   "unallocated": true,
+   "shares": [],
+   "source_ids": []
+  }
+ ]
+}

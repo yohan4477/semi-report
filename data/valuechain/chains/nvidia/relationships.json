@@ -19,7 +19,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-foundry"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r002",
@@ -41,7 +45,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-foundry"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r003",
@@ -63,7 +71,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-memory"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r004",
@@ -85,7 +97,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-memory"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r005",
@@ -107,7 +123,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-assembly-test"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r006",
@@ -129,7 +149,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-assembly-test"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r007",
@@ -151,7 +175,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-assembly-test"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r008",
@@ -172,7 +200,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r009",
@@ -193,7 +225,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r010",
@@ -214,7 +250,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r011",
@@ -236,7 +276,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r012",
@@ -258,7 +302,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "익명 직접고객 후보",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r013",
@@ -280,7 +328,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "익명 직접고객 후보",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r014",
@@ -301,7 +353,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r015",
@@ -322,7 +378,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r016",
@@ -343,7 +403,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r017",
@@ -364,7 +428,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r018",
@@ -385,7 +453,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r019",
@@ -406,7 +478,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r020",
@@ -427,7 +503,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r036",
@@ -449,7 +529,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-lithography"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r037",
@@ -471,7 +555,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-deposition-etch"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r038",
@@ -493,7 +581,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-deposition-etch"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r039",
@@ -515,7 +607,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-metrology"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r040",
@@ -537,7 +633,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-deposition-etch"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r041",
@@ -559,7 +659,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-silicon-wafer"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r042",
@@ -581,7 +685,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-silicon-wafer"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r043",
@@ -602,7 +710,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "2023년에는 10% 미만이라 표에 안 나온다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r044",
@@ -623,7 +735,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r049",
@@ -645,7 +761,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-optics"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r050",
@@ -666,7 +786,9 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": "2013년 ASML 이 인수한 자회사라 외부 공급사로 적히지 않는다"
+  "notes": "2013년 ASML 이 인수한 자회사라 외부 공급사로 적히지 않는다",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r051",
@@ -688,7 +810,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-light-source"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r052",
@@ -710,7 +836,11 @@
   "evidence_level": "INFERRED",
   "confidence_band": "low",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-precision-modules"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r053",
@@ -731,7 +861,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r054",
@@ -753,7 +887,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": "ASML 은 고객을 익명으로 적는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r055",
@@ -775,7 +913,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r057",
@@ -797,7 +939,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r101",
@@ -818,7 +964,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "세 기간 모두 공시에 나온 유일한 고객이다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r102",
@@ -839,7 +989,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "Q1 21% 와 H1 15% 가 같은 고객이라는 것은 공시가 아니라 역산이다. Q2 에 10% 를 넘은 고객이 하나뿐이므로 다른 배열이 서지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r103",
@@ -860,7 +1014,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "Q1 17% 와 H1 13% 를 잇는 것도 같은 역산이다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r104",
@@ -881,7 +1039,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "target_tier": "END_USER"
+  "target_tier": "END_USER",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r105",
@@ -902,7 +1062,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "target_tier": "END_USER"
+  "target_tier": "END_USER",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r106",
@@ -923,7 +1085,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": null,
-  "target_tier": "END_USER"
+  "target_tier": "END_USER",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r107",
@@ -944,7 +1108,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-assembly-test"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r108",
@@ -965,7 +1133,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-assembly-test"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r109",
@@ -986,7 +1158,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다",
-  "target_tier": "INTERMEDIARY"
+  "target_tier": "INTERMEDIARY",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r110",
@@ -1007,7 +1181,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다",
-  "target_tier": "INTERMEDIARY"
+  "target_tier": "INTERMEDIARY",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r111",
@@ -1028,7 +1204,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "파는 동시에 그 클라우드 용량을 되산다. 방향이 다른 줄 두 개가 같은 상대에 붙는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r112",
@@ -1049,7 +1229,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "AI 클라우드 쪽이 일방적으로 공급을 끊고 제3자에게 더 좋은 값에 팔 수 있는 구조다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-cloud-capacity"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r113",
@@ -1070,7 +1254,10 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "직접 사는 것이 아니라 고객을 거쳐 산다. NVIDIA 가 간접고객으로 따로 적었다",
-  "target_tier": "END_USER"
+  "target_tier": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "source_tier": "END_USER"
  },
  {
   "id": "r201",
@@ -1092,7 +1279,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "슈퍼마이크로 10-K 가 「one supplier 63.1%」로 적는 익명 공급사가 NVIDIA 라는 것은 우리 추정이다. 공시는 이름을 대지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r202",
@@ -1114,7 +1305,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "코어위브가 쓰는 GPU 가 전부 NVIDIA 것이라고 10-K 에 적혀 있다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r203",
@@ -1135,7 +1330,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "8-K 에 NVIDIA 가 2032-04-13 까지 잔여 용량을 사야 한다고 적혀 있다",
-  "source_tier": "COMPONENT_SUPPLIER"
+  "source_tier": "COMPONENT_SUPPLIER",
+  "supply_source_ids": [
+   "ss-cloud-capacity"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "r204",
@@ -1156,7 +1355,9 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다",
-  "target_tier": "INTERMEDIARY"
+  "target_tier": "INTERMEDIARY",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "r205",
@@ -1178,7 +1379,11 @@
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
   "notes": "NVIDIA 관점에서는 델이 직접고객이고 IREN 은 간접고객이 되는 경로다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r206",
@@ -1199,7 +1404,11 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": "보도자료가 클라우드 파트너로 이름을 적었다. 매입 규모는 없다",
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
  },
  {
   "id": "r207",
@@ -1220,6 +1429,79 @@
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
   "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER"
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ]
+ },
+ {
+  "id": "close-coreweave",
+  "source_entity": "coreweave",
+  "target_entity": "nvidia-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-openai",
+  "source_entity": "openai",
+  "target_entity": "nvidia-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-sbenergy",
+  "source_entity": "sbenergy",
+  "target_entity": "nvidia-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
  }
 ]

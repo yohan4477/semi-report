@@ -1192,96 +1192,6 @@
   "anon": false
  },
  {
-  "id": "scandium-oxide",
-  "name": "Scandium oxide",
-  "name_ko": "산화스칸듐",
-  "entity_type": "material",
-  "legal_name": "Scandium oxide",
-  "display_name": "산화스칸듐",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Raw material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Raw material"
-  ],
-  "desc": "복수국 복수 공급사, 업체명·물량 비공개. 산업 부산물 회수 기반",
-  "anon": false
- },
- {
-  "id": "zirconium-oxide",
-  "name": "Zirconium oxide",
-  "name_ko": "산화지르코늄",
-  "entity_type": "material",
-  "legal_name": "Zirconium oxide",
-  "display_name": "산화지르코늄",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Raw material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Raw material"
-  ],
-  "desc": "초박형 세라믹 기판의 기반 물질. 벤더 비공개",
-  "anon": false
- },
- {
-  "id": "natural-gas",
-  "name": "Natural gas",
-  "name_ko": "천연가스",
-  "entity_type": "material",
-  "legal_name": "Natural gas",
-  "display_name": "천연가스",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Operational input",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Operational input"
-  ],
-  "desc": "제조 BOM 이 아니라 운영 투입",
-  "anon": false
- },
- {
-  "id": "biogas",
-  "name": "Biogas",
-  "name_ko": "바이오가스",
-  "entity_type": "material",
-  "legal_name": "Biogas",
-  "display_name": "바이오가스",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Operational input",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Operational input"
-  ],
-  "desc": null,
-  "anon": false
- },
- {
-  "id": "hydrogen",
-  "name": "Hydrogen",
-  "name_ko": "수소",
-  "entity_type": "material",
-  "legal_name": "Hydrogen",
-  "display_name": "수소",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Operational input",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Operational input"
-  ],
-  "desc": "혼소 수소 포함",
-  "anon": false
- },
- {
   "id": "cctc",
   "name": "Chaozhou Three-Circle Group (CCTC)",
   "name_ko": "차오저우 싼환",
@@ -2248,132 +2158,6 @@
   "anon": true
  },
  {
-  "id": "scsz-electrolyte",
-  "name": "Scandia-stabilized zirconia electrolyte",
-  "name_ko": "스칸디아 안정화 지르코니아",
-  "entity_type": "material",
-  "legal_name": "Scandia-stabilized zirconia electrolyte",
-  "display_name": "스칸디아 안정화 지르코니아",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material processing",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material processing"
-  ],
-  "desc": "지르코니아에 산화스칸듐을 조금 섞은 전해질 소재. 조성과 공정은 Bloom 핵심 기술",
-  "anon": false
- },
- {
-  "id": "cr-fe-alloy",
-  "name": "Cr / Fe alloy",
-  "name_ko": "크롬·철 합금",
-  "entity_type": "material",
-  "legal_name": "Cr / Fe alloy",
-  "display_name": "크롬·철 합금",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Raw material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Raw material"
-  ],
-  "desc": "인터커넥트 플레이트의 모재. 공급사는 공개되지 않았다",
-  "anon": false
- },
- {
-  "id": "be-rev-product",
-  "name": "Product revenue",
-  "name_ko": "제품 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Product revenue",
-  "display_name": "제품 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "Energy Server·전해조 장비 판매",
-  "anon": false
- },
- {
-  "id": "be-rev-installation",
-  "name": "Installation revenue",
-  "name_ko": "설치 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Installation revenue",
-  "display_name": "설치 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "현장 설치 역무",
-  "anon": false
- },
- {
-  "id": "be-rev-service",
-  "name": "Service revenue",
-  "name_ko": "서비스 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Service revenue",
-  "display_name": "서비스 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "유지·보수와 성능 보증",
-  "anon": false
- },
- {
-  "id": "be-rev-electricity",
-  "name": "Electricity revenue",
-  "name_ko": "전력 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Electricity revenue",
-  "display_name": "전력 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "직접 보유·운영 설비에서 파는 전기",
-  "anon": false
- },
- {
-  "id": "be-rev-unallocated",
-  "name": "Unallocated / undisclosed",
-  "name_ko": "배분 미상",
-  "entity_type": "revenue_type",
-  "legal_name": "Unallocated / undisclosed",
-  "display_name": "배분 미상",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "어느 매출원에서 나왔는지 공개되지 않은 고객이 앉는 자리",
-  "anon": false
- },
- {
   "id": "daeduck-electronics",
   "name": "Daeduck Electronics",
   "name_ko": "대덕전자",
@@ -2500,42 +2284,6 @@
   "anon": false
  },
  {
-  "id": "ccl-substrate",
-  "name": "Copper clad laminate",
-  "name_ko": "동박적층판(CCL)",
-  "entity_type": "material",
-  "legal_name": "Copper clad laminate",
-  "display_name": "동박적층판(CCL)",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material"
-  ],
-  "desc": "FY2025 원재료 매입의 62.2%",
-  "anon": false
- },
- {
-  "id": "t-glass",
-  "name": "T-glass",
-  "name_ko": "T-글라스",
-  "entity_type": "material",
-  "legal_name": "T-glass",
-  "display_name": "T-글라스",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material"
-  ],
-  "desc": "ABF 기판의 두꺼운 제품과 BT 기판의 얇은 제품에 함께 쓰인다",
-  "anon": false
- },
- {
   "id": "resonac",
   "name": "Resonac",
   "name_ko": "레조낙",
@@ -2569,42 +2317,6 @@
    "Material"
   ],
   "desc": "T-글라스. 공급이 이 한 곳에서 다섯 곳 이상으로 늘고 있다",
-  "anon": false
- },
- {
-  "id": "dd-rev-memory",
-  "name": "Memory package substrate",
-  "name_ko": "메모리 패키지기판",
-  "entity_type": "revenue_type",
-  "legal_name": "Memory package substrate",
-  "display_name": "메모리 패키지기판",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "CSP·FCBOC 계열",
-  "anon": false
- },
- {
-  "id": "dd-rev-fcbga",
-  "name": "FC-BGA",
-  "name_ko": "FC-BGA",
-  "entity_type": "revenue_type",
-  "legal_name": "FC-BGA",
-  "display_name": "FC-BGA",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "자동차에서 데이터센터·네트워크로 전방이 넓어지는 중",
   "anon": false
  },
  {
@@ -2694,132 +2406,6 @@
   "anon": true
  },
  {
-  "id": "cmp-electrolyte-substrate",
-  "name": "SOFC ceramic electrolyte substrate",
-  "name_ko": "SOFC 전해질 세라믹 기판",
-  "entity_type": "component",
-  "legal_name": "SOFC ceramic electrolyte substrate",
-  "display_name": "SOFC 전해질 세라믹 기판",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Cell",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Cell"
-  ],
-  "desc": "셀 공급사의 관측이 붙는 자리. 블룸 셀 공정으로 들어간다",
-  "anon": false
- },
- {
-  "id": "cmp-interconnect-plate",
-  "name": "SOFC metallic interconnect plate",
-  "name_ko": "SOFC 금속 인터커넥트 플레이트",
-  "entity_type": "component",
-  "legal_name": "SOFC metallic interconnect plate",
-  "display_name": "SOFC 금속 인터커넥트 플레이트",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Interconnect",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Interconnect"
-  ],
-  "desc": "성형과 표면 처리를 거쳐 인터커넥트 계통으로 간다",
-  "anon": false
- },
- {
-  "id": "sub-cell",
-  "name": "Cell / electrochemical subsystem",
-  "name_ko": "셀·전기화학 계통",
-  "entity_type": "subsystem",
-  "legal_name": "Cell / electrochemical subsystem",
-  "display_name": "셀·전기화학 계통",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Cell",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Cell"
-  ],
-  "desc": null,
-  "anon": false
- },
- {
-  "id": "sub-interconnect",
-  "name": "Interconnect system",
-  "name_ko": "인터커넥트 계통",
-  "entity_type": "subsystem",
-  "legal_name": "Interconnect system",
-  "display_name": "인터커넥트 계통",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Interconnect",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Interconnect"
-  ],
-  "desc": "원가 모델의 계통 층이다. 공급사 조달 배분과 섞지 않는다",
-  "anon": false
- },
- {
-  "id": "sub-hotbox",
-  "name": "Hotbox / power unit",
-  "name_ko": "핫박스·파워유닛 계통",
-  "entity_type": "subsystem",
-  "legal_name": "Hotbox / power unit",
-  "display_name": "핫박스·파워유닛 계통",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Hotbox",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Hotbox"
-  ],
-  "desc": "MTAR·가오리 점유율의 분모가 여기 있다",
-  "anon": false
- },
- {
-  "id": "sub-power-electronics",
-  "name": "Power electronics / power conditioning",
-  "name_ko": "전력 전자 계통",
-  "entity_type": "subsystem",
-  "legal_name": "Power electronics / power conditioning",
-  "display_name": "전력 전자 계통",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Power electronics",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Power electronics"
-  ],
-  "desc": "캐벨에서 산미나로 가는 계층은 근거가 없어 안 잇는다",
-  "anon": false
- },
- {
-  "id": "sub-mechanical",
-  "name": "Mechanical / module BoP",
-  "name_ko": "기계·모듈 계통",
-  "entity_type": "subsystem",
-  "legal_name": "Mechanical / module BoP",
-  "display_name": "기계·모듈 계통",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Mechanical",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Mechanical"
-  ],
-  "desc": "서진·내시·텍슨의 상하 관계는 미확정이라 나란히 둔다",
-  "anon": false
- },
- {
   "id": "ls-electric-america",
   "name": "LS ELECTRIC AMERICA Inc.",
   "name_ko": "LS일렉트릭 아메리카",
@@ -2853,60 +2439,6 @@
    "Mechanical"
   ],
   "desc": "텍슨의 베트남 제조 법인",
-  "anon": false
- },
- {
-  "id": "prepreg",
-  "name": "Prepreg",
-  "name_ko": "프리프레그",
-  "entity_type": "material",
-  "legal_name": "Prepreg",
-  "display_name": "프리프레그",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material"
-  ],
-  "desc": "FY2025 원재료 매입의 26.0%",
-  "anon": false
- },
- {
-  "id": "abf-film",
-  "name": "Ajinomoto build-up film",
-  "name_ko": "ABF 빌드업 필름",
-  "entity_type": "material",
-  "legal_name": "Ajinomoto build-up film",
-  "display_name": "ABF 빌드업 필름",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material"
-  ],
-  "desc": "매입 비중은 6.7%지만 FC-BGA 절연층의 핵심이라 전략 중요도가 가장 높다",
-  "anon": false
- },
- {
-  "id": "pgc-plating",
-  "name": "Plating chemicals (PGC)",
-  "name_ko": "도금 재료(PGC)",
-  "entity_type": "material",
-  "legal_name": "Plating chemicals (PGC)",
-  "display_name": "도금 재료(PGC)",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Material",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Material"
-  ],
-  "desc": "부재료 매입의 42.2%. 미세회로·도금 품질과 직결된다",
   "anon": false
  },
  {
@@ -2979,42 +2511,6 @@
    "Material"
   ],
   "desc": "도금 재료 계열",
-  "anon": false
- },
- {
-  "id": "dd-rev-mlb",
-  "name": "High-layer MLB",
-  "name_ko": "고다층 MLB",
-  "entity_type": "revenue_type",
-  "legal_name": "High-layer MLB",
-  "display_name": "고다층 MLB",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "AI 가속기·스위치·항공우주",
-  "anon": false
- },
- {
-  "id": "dd-rev-unallocated",
-  "name": "Unallocated / undisclosed",
-  "name_ko": "배분 미상",
-  "entity_type": "revenue_type",
-  "legal_name": "Unallocated / undisclosed",
-  "display_name": "배분 미상",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "공시가 고객을 익명으로만 밝힌 자리",
   "anon": false
  },
  {
@@ -3660,60 +3156,6 @@
   "anon": false
  },
  {
-  "id": "ty-rev-capacitor",
-  "name": "Capacitors",
-  "name_ko": "커패시터 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Capacitors",
-  "display_name": "커패시터 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "FY2026 매출의 70.9%. MLCC 가 중심이다",
-  "anon": false
- },
- {
-  "id": "ty-rev-inductor",
-  "name": "Inductors",
-  "name_ko": "인덕터 매출",
-  "entity_type": "revenue_type",
-  "legal_name": "Inductors",
-  "display_name": "인덕터 매출",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "FY2026 매출의 18.1%. 페라이트·금속 파워인덕터가 중심이다",
-  "anon": false
- },
- {
-  "id": "ty-rev-unallocated",
-  "name": "Unallocated / undisclosed",
-  "name_ko": "배분 미상",
-  "entity_type": "revenue_type",
-  "legal_name": "Unallocated / undisclosed",
-  "display_name": "배분 미상",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Revenue type",
-  "other_roles": [],
-  "country": null,
-  "categories": [
-   "Revenue type"
-  ],
-  "desc": "제품별 귀속 근거가 없는 고객·유통이 앉는 자리. 커패시터·인덕터 비중과 더하는 매출 항목이 아니다",
-  "anon": false
- },
- {
   "id": "app-it-infra-industrial",
   "name": "IT Infrastructure / Industrial",
   "name_ko": "IT 인프라·산업용",
@@ -3912,39 +3354,78 @@
   "anon": false
  },
  {
-  "id": "cmp-engineering-ceramics",
-  "name": "Engineering ceramics",
-  "name_ko": "엔지니어링 세라믹",
-  "entity_type": "material",
-  "legal_name": "Engineering ceramics",
-  "display_name": "엔지니어링 세라믹",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Other ceramic",
-  "other_roles": [],
+  "id": "bloom-energy-supplier-undisclosed",
+  "name": "Undisclosed supplier",
+  "name_ko": "공급사 미상",
+  "entity_type": "company",
+  "anon": true,
   "country": null,
-  "categories": [
-   "Other ceramic"
-  ],
-  "desc": "CUMI 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
-  "anon": false
+  "legal_name": null,
+  "display_name": "공급사 미상",
+  "desc": "그 품목을 누가 대는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
  },
  {
-  "id": "cmp-ceramic-plate",
-  "name": "Technical ceramic plate / shim",
-  "name_ko": "기술 세라믹 플레이트·심",
-  "entity_type": "material",
-  "legal_name": "Technical ceramic plate / shim",
-  "display_name": "기술 세라믹 플레이트·심",
-  "region": null,
-  "parent_entity_id": null,
-  "primary_role": "Other ceramic",
-  "other_roles": [],
+  "id": "bloom-energy-indirect-undisclosed",
+  "name": "Undisclosed indirect customer",
+  "name_ko": "간접 고객 미상",
+  "entity_type": "end_user",
+  "anon": true,
   "country": null,
-  "categories": [
-   "Other ceramic"
-  ],
-  "desc": "밍루이 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
-  "anon": false
+  "legal_name": null,
+  "display_name": "간접 고객 미상",
+  "desc": "중개 뒤에 누가 쓰는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
+ },
+ {
+  "id": "kr-substrate-supplier-undisclosed",
+  "name": "Undisclosed supplier",
+  "name_ko": "공급사 미상",
+  "entity_type": "company",
+  "anon": true,
+  "country": null,
+  "legal_name": null,
+  "display_name": "공급사 미상",
+  "desc": "그 품목을 누가 대는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
+ },
+ {
+  "id": "nvidia-indirect-undisclosed",
+  "name": "Undisclosed indirect customer",
+  "name_ko": "간접 고객 미상",
+  "entity_type": "end_user",
+  "anon": true,
+  "country": null,
+  "legal_name": null,
+  "display_name": "간접 고객 미상",
+  "desc": "중개 뒤에 누가 쓰는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
+ },
+ {
+  "id": "taiyo-yuden-indirect-undisclosed",
+  "name": "Undisclosed indirect customer",
+  "name_ko": "간접 고객 미상",
+  "entity_type": "end_user",
+  "anon": true,
+  "country": null,
+  "legal_name": null,
+  "display_name": "간접 고객 미상",
+  "desc": "중개 뒤에 누가 쓰는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
  }
 ]

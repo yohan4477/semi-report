@@ -1,0 +1,139 @@
+{
+ "chain": "nvidia",
+ "focal_entity": "nvidia",
+ "supply_sources": [
+  {
+   "id": "ss-assembly-test",
+   "kind": "SUPPLY_SOURCE",
+   "label": "후공정(조립·시험)",
+   "label_en": "Assembly & Test",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cloud-capacity",
+   "kind": "SUPPLY_SOURCE",
+   "label": "클라우드 용량",
+   "label_en": "Cloud capacity",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-deposition-etch",
+   "kind": "SUPPLY_SOURCE",
+   "label": "증착·식각",
+   "label_en": "Deposition & etch",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-foundry",
+   "kind": "SUPPLY_SOURCE",
+   "label": "파운드리",
+   "label_en": "Foundry",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-light-source",
+   "kind": "SUPPLY_SOURCE",
+   "label": "광원",
+   "label_en": "Light source",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-lithography",
+   "kind": "SUPPLY_SOURCE",
+   "label": "노광",
+   "label_en": "Lithography",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-memory",
+   "kind": "SUPPLY_SOURCE",
+   "label": "메모리",
+   "label_en": "Memory",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-metrology",
+   "kind": "SUPPLY_SOURCE",
+   "label": "계측 장비",
+   "label_en": "Metrology",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-optics",
+   "kind": "SUPPLY_SOURCE",
+   "label": "광 모듈",
+   "label_en": "Optics",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-precision-modules",
+   "kind": "SUPPLY_SOURCE",
+   "label": "정밀 모듈",
+   "label_en": "Precision modules",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-silicon-wafer",
+   "kind": "SUPPLY_SOURCE",
+   "label": "실리콘 웨이퍼",
+   "label_en": "Silicon wafer",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  }
+ ],
+ "revenue_types": [
+  {
+   "id": "rt-unallocated",
+   "kind": "REVENUE_TYPE",
+   "label": "배분 미상",
+   "label_en": "Unallocated",
+   "unallocated": true,
+   "note": "고객인 것은 맞는데 어느 매출에 드는지 근거가 없다",
+   "shares": [],
+   "source_ids": []
+  }
+ ]
+}

@@ -486,3 +486,9 @@ if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
     ne, ns = merge_global()
     print('전역 엔티티 %d · 출처 %d' % (ne, ns))
+
+    # 재료를 다시 쌓았으면 v2 꼴로 바로 옮긴다 — 옮기는 일을 사람 손에 맡기면
+    # 다음 build 때 공급원·매출원이 상자로 되살아난다(프레임워크 §13)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import vc_norm
+    vc_norm.main()

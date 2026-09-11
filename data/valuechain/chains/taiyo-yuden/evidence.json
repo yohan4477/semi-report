@@ -154,6 +154,33 @@
  },
  {
   "id": "ty-e018",
+  "relationship_id": "ty-arrow-distribution",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e019",
+  "relationship_id": "ty-avnet-distribution",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e020",
+  "relationship_id": "ty-mouser-distribution",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e021",
   "relationship_id": "ty-rev-capacitor-edge",
   "metric_id": null,
   "source_id": "ty_product_2026",
@@ -162,7 +189,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "ty-e019",
+  "id": "ty-e022",
   "relationship_id": "ty-rev-inductor-edge",
   "metric_id": null,
   "source_id": "ty_product_2026",
@@ -171,7 +198,52 @@
   "hypothesis_id": null
  },
  {
-  "id": "ty-e020",
+  "id": "ty-e023",
+  "relationship_id": "ty-app-it-infra-industrial",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e024",
+  "relationship_id": "ty-app-automotive",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e025",
+  "relationship_id": "ty-app-communication",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e026",
+  "relationship_id": "ty-app-information-equipment",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e027",
+  "relationship_id": "ty-app-consumer",
+  "metric_id": null,
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e028",
   "relationship_id": "ty-rev-capacitor-edge",
   "metric_id": "o-ty-capacitor-share",
   "source_id": "ty_product_2026",
@@ -180,7 +252,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "ty-e021",
+  "id": "ty-e029",
   "relationship_id": "ty-rev-inductor-edge",
   "metric_id": "o-ty-inductor-share",
   "source_id": "ty_product_2026",
@@ -189,7 +261,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "ty-e022",
+  "id": "ty-e030",
   "relationship_id": "ty-app-it-infra-industrial",
   "metric_id": "o-ty-ai-exposure-scenario",
   "source_id": "ai_share_scenario",

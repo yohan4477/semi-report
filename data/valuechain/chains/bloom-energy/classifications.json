@@ -1,0 +1,514 @@
+{
+ "chain": "bloom-energy",
+ "focal_entity": "bloom-energy",
+ "supply_sources": [
+  {
+   "id": "ss-assembly",
+   "kind": "SUPPLY_SOURCE",
+   "label": "조립",
+   "label_en": "Assembly",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-biogas",
+   "kind": "SUPPLY_SOURCE",
+   "label": "바이오가스",
+   "label_en": "Biogas",
+   "level": "MATERIAL",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cmp-ceramic-plate",
+   "kind": "SUPPLY_SOURCE",
+   "label": "기술 세라믹 플레이트·심",
+   "label_en": "Technical ceramic plate / shim",
+   "level": "MATERIAL",
+   "note": "밍루이 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cmp-electrolyte-substrate",
+   "kind": "SUPPLY_SOURCE",
+   "label": "SOFC 전해질 세라믹 기판",
+   "label_en": "SOFC ceramic electrolyte substrate",
+   "level": "COMPONENT",
+   "note": "셀 공급사의 관측이 붙는 자리. 블룸 셀 공정으로 들어간다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cmp-engineering-ceramics",
+   "kind": "SUPPLY_SOURCE",
+   "label": "엔지니어링 세라믹",
+   "label_en": "Engineering ceramics",
+   "level": "MATERIAL",
+   "note": "CUMI 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cmp-interconnect-plate",
+   "kind": "SUPPLY_SOURCE",
+   "label": "SOFC 금속 인터커넥트 플레이트",
+   "label_en": "SOFC metallic interconnect plate",
+   "level": "COMPONENT",
+   "note": "성형과 표면 처리를 거쳐 인터커넥트 계통으로 간다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-cr-fe-alloy",
+   "kind": "SUPPLY_SOURCE",
+   "label": "크롬·철 합금",
+   "label_en": "Cr / Fe alloy",
+   "level": "MATERIAL",
+   "note": "인터커넥트 플레이트의 모재. 공급사는 공개되지 않았다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-hydrogen",
+   "kind": "SUPPLY_SOURCE",
+   "label": "수소",
+   "label_en": "Hydrogen",
+   "level": "MATERIAL",
+   "note": "혼소 수소 포함",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-instrumentation",
+   "kind": "SUPPLY_SOURCE",
+   "label": "계측",
+   "label_en": "Instrumentation",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-manufacturing-equipment",
+   "kind": "SUPPLY_SOURCE",
+   "label": "제조 장비",
+   "label_en": "Manufacturing equipment",
+   "level": "EQUIPMENT",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-natural-gas",
+   "kind": "SUPPLY_SOURCE",
+   "label": "천연가스",
+   "label_en": "Natural gas",
+   "level": "MATERIAL",
+   "note": "제조 BOM 이 아니라 운영 투입",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-power-electronics",
+   "kind": "SUPPLY_SOURCE",
+   "label": "전력 전자",
+   "label_en": "Power electronics",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-scandium-oxide",
+   "kind": "SUPPLY_SOURCE",
+   "label": "산화스칸듐",
+   "label_en": "Scandium oxide",
+   "level": "MATERIAL",
+   "note": "복수국 복수 공급사, 업체명·물량 비공개. 산업 부산물 회수 기반",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-scsz-electrolyte",
+   "kind": "SUPPLY_SOURCE",
+   "label": "스칸디아 안정화 지르코니아",
+   "label_en": "Scandia-stabilized zirconia electrolyte",
+   "level": "MATERIAL",
+   "note": "지르코니아에 산화스칸듐을 조금 섞은 전해질 소재. 조성과 공정은 Bloom 핵심 기술",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-site-electrical-bop",
+   "kind": "SUPPLY_SOURCE",
+   "label": "부지 전기",
+   "label_en": "Site electrical BoP",
+   "level": "INFRA",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-sub-hotbox",
+   "kind": "SUPPLY_SOURCE",
+   "label": "핫박스·파워유닛 계통",
+   "label_en": "Hotbox / power unit",
+   "level": "SUBSYSTEM",
+   "note": "MTAR·가오리 점유율의 분모가 여기 있다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-sub-interconnect",
+   "kind": "SUPPLY_SOURCE",
+   "label": "인터커넥트 계통",
+   "label_en": "Interconnect system",
+   "level": "SUBSYSTEM",
+   "note": "원가 모델의 계통 층이다. 공급사 조달 배분과 섞지 않는다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-sub-mechanical",
+   "kind": "SUPPLY_SOURCE",
+   "label": "기계·모듈 계통",
+   "label_en": "Mechanical / module BoP",
+   "level": "SUBSYSTEM",
+   "note": "서진·내시·텍슨의 상하 관계는 미확정이라 나란히 둔다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-sub-power-electronics",
+   "kind": "SUPPLY_SOURCE",
+   "label": "전력 전자 계통",
+   "label_en": "Power electronics / power conditioning",
+   "level": "SUBSYSTEM",
+   "note": "캐벨에서 산미나로 가는 계층은 근거가 없어 안 잇는다",
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-thermal",
+   "kind": "SUPPLY_SOURCE",
+   "label": "열·단열",
+   "label_en": "Thermal",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  }
+ ],
+ "revenue_types": [
+  {
+   "id": "rt-be-rev-electricity",
+   "kind": "REVENUE_TYPE",
+   "label": "전력 매출",
+   "label_en": "Electricity revenue",
+   "note": "직접 보유·운영 설비에서 파는 전기",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 3.6,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2025-02-01",
+     "denominator": "Bloom FY2024 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10k_fy2024"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 3.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "전력 6,035만 달러",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 1.1,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 상반기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2024",
+    "be_10k_fy2025",
+    "be_10q_2026q2"
+   ]
+  },
+  {
+   "id": "rt-be-rev-installation",
+   "kind": "REVENUE_TYPE",
+   "label": "설치 매출",
+   "label_en": "Installation revenue",
+   "note": "현장 설치 역무",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 8.3,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2025-02-01",
+     "denominator": "Bloom FY2024 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10k_fy2024"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 10.1,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "설치 2억 410만 달러",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 4.2,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 상반기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2024",
+    "be_10k_fy2025",
+    "be_10q_2026q2"
+   ]
+  },
+  {
+   "id": "rt-be-rev-product",
+   "kind": "REVENUE_TYPE",
+   "label": "제품 매출",
+   "label_en": "Product revenue",
+   "note": "Energy Server·전해조 장비 판매",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 73.6,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2025-02-01",
+     "denominator": "Bloom FY2024 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "제품 10억 8,515만 달러",
+     "source_ids": [
+      "be_10k_fy2024"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 75.7,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "제품 15억 3,128만 달러",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 87.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 상반기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "제품 15억 8,876만 달러",
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2024",
+    "be_10k_fy2025",
+    "be_10q_2026q2"
+   ]
+  },
+  {
+   "id": "rt-be-rev-service",
+   "kind": "REVENUE_TYPE",
+   "label": "서비스 매출",
+   "label_en": "Service revenue",
+   "note": "유지·보수와 성능 보증",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 14.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2025-02-01",
+     "denominator": "Bloom FY2024 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10k_fy2024"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 11.3,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "서비스 2억 2,830만 달러",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 7.2,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 상반기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2024",
+    "be_10k_fy2025",
+    "be_10q_2026q2"
+   ]
+  },
+  {
+   "id": "rt-be-rev-unallocated",
+   "kind": "REVENUE_TYPE",
+   "label": "배분 미상",
+   "label_en": "Unallocated / undisclosed",
+   "note": "어느 매출원에서 나왔는지 공개되지 않은 고객이 앉는 자리",
+   "unallocated": true,
+   "shares": [],
+   "source_ids": []
+  }
+ ]
+}

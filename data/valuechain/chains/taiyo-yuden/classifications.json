@@ -1,0 +1,124 @@
+{
+ "chain": "taiyo-yuden",
+ "focal_entity": "taiyo-yuden",
+ "supply_sources": [
+  {
+   "id": "ss-ceramic-powder",
+   "kind": "SUPPLY_SOURCE",
+   "label": "세라믹 분말",
+   "label_en": "Ceramic powder",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-inductor-material",
+   "kind": "SUPPLY_SOURCE",
+   "label": "인덕터 소재",
+   "label_en": "Inductor material",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-mlcc-manufacturing",
+   "kind": "SUPPLY_SOURCE",
+   "label": "MLCC 생산",
+   "label_en": "MLCC manufacturing",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  },
+  {
+   "id": "ss-plating",
+   "kind": "SUPPLY_SOURCE",
+   "label": "도금",
+   "label_en": "Plating",
+   "level": "SUBSYSTEM",
+   "note": null,
+   "unallocated": false,
+   "shares": [],
+   "source_ids": []
+  }
+ ],
+ "revenue_types": [
+  {
+   "id": "rt-ty-rev-capacitor",
+   "kind": "REVENUE_TYPE",
+   "label": "커패시터 매출",
+   "label_en": "Capacitors",
+   "note": "FY2026 매출의 70.9%. MLCC 가 중심이다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "capacitor_revenue_share",
+     "value": 70.9,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-04-01",
+     "period_end": "2026-03-31",
+     "as_of_date": "2026-03-31",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_product_2026"
+     ]
+    }
+   ],
+   "source_ids": [
+    "ty_product_2026"
+   ]
+  },
+  {
+   "id": "rt-ty-rev-inductor",
+   "kind": "REVENUE_TYPE",
+   "label": "인덕터 매출",
+   "label_en": "Inductors",
+   "note": "FY2026 매출의 18.1%. 페라이트·금속 파워인덕터가 중심이다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "inductor_revenue_share",
+     "value": 18.1,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-04-01",
+     "period_end": "2026-03-31",
+     "as_of_date": "2026-03-31",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_product_2026"
+     ]
+    }
+   ],
+   "source_ids": [
+    "ty_product_2026"
+   ]
+  },
+  {
+   "id": "rt-unallocated",
+   "kind": "REVENUE_TYPE",
+   "label": "배분 미상",
+   "label_en": "Unallocated",
+   "unallocated": true,
+   "note": "고객인 것은 맞는데 어느 매출에 드는지 근거가 없다",
+   "shares": [],
+   "source_ids": []
+  }
+ ]
+}

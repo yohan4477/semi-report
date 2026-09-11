@@ -2,7 +2,7 @@
  {
   "id": "ajinomoto-abf",
   "source_entity": "ajinomoto-fine-techno",
-  "target_entity": "abf-film",
+  "target_entity": "daeduck-electronics",
   "relationship_type": "MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
@@ -24,12 +24,16 @@
    "dd_ar_fy2025",
    "dd_product_page"
   ],
-  "notes": "공급 생태계가 좁고 인증 장벽이 높다"
+  "notes": "공급 생태계가 좁고 인증 장벽이 높다",
+  "supply_source_ids": [
+   "ss-abf-film"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "lgchem-ccl",
   "source_entity": "lg-chem",
-  "target_entity": "ccl-substrate",
+  "target_entity": "daeduck-electronics",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
@@ -50,12 +54,16 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": "공급 생태계로 확인된다. 이 회사가 대덕전자 안에서 차지하는 몫은 공개되지 않았다"
+  "notes": "공급 생태계로 확인된다. 이 회사가 대덕전자 안에서 차지하는 몫은 공개되지 않았다",
+  "supply_source_ids": [
+   "ss-ccl-substrate"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "doosan-ccl",
   "source_entity": "doosan-electronics",
-  "target_entity": "ccl-substrate",
+  "target_entity": "daeduck-electronics",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
@@ -76,12 +84,16 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": null
+  "notes": null,
+  "supply_source_ids": [
+   "ss-ccl-substrate"
+  ],
+  "revenue_type_ids": []
  },
  {
   "id": "heesung-pgc",
   "source_entity": "heesung-catalysts",
-  "target_entity": "pgc-plating",
+  "target_entity": "daeduck-electronics",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
@@ -102,219 +114,183 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": null
- },
- {
-  "id": "ccl-dd",
-  "source_entity": "ccl-substrate",
-  "target_entity": "daeduck-electronics",
-  "relationship_type": "INPUT_TO",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Material",
-  "component": "CCL",
-  "source_role": "소재",
-  "target_role": "기판 제조",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "source_tier": "MATERIAL_PROCESSING",
-  "target_tier": null,
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
+  "notes": null,
+  "supply_source_ids": [
+   "ss-pgc-plating"
   ],
-  "notes": "FY2025 원재료 매입 1,404억 원"
+  "revenue_type_ids": []
  },
  {
-  "id": "prepreg-dd",
-  "source_entity": "prepreg",
-  "target_entity": "daeduck-electronics",
-  "relationship_type": "INPUT_TO",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Material",
-  "component": "프리프레그",
-  "source_role": "소재",
-  "target_role": "기판 제조",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "source_tier": "MATERIAL_PROCESSING",
-  "target_tier": null,
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
-  ],
-  "notes": "FY2025 원재료 매입 587억 원"
- },
- {
-  "id": "abf-dd",
-  "source_entity": "abf-film",
-  "target_entity": "daeduck-electronics",
-  "relationship_type": "INPUT_TO",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Material",
-  "component": "ABF",
-  "source_role": "소재",
-  "target_role": "기판 제조",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "source_tier": "MATERIAL_PROCESSING",
-  "target_tier": null,
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
-  ],
-  "notes": "FY2025 원재료 매입 151억 원. 금액은 작지만 FC-BGA 병목이다"
- },
- {
-  "id": "pgc-dd",
-  "source_entity": "pgc-plating",
-  "target_entity": "daeduck-electronics",
-  "relationship_type": "INPUT_TO",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Material",
-  "component": "도금 재료",
-  "source_role": "소재",
-  "target_role": "기판 제조",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "source_tier": "MATERIAL_PROCESSING",
-  "target_tier": null,
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
-  ],
-  "notes": "부재료 매입의 42.2%"
- },
- {
-  "id": "dd-rev-memory-edge",
-  "source_entity": "daeduck-electronics",
-  "target_entity": "dd-rev-memory",
-  "relationship_type": "REVENUE_FROM",
+  "id": "mem-app",
+  "source_entity": "samsung-electronics",
+  "target_entity": "app-server-mobile",
+  "relationship_type": "END_USER_DEPLOYMENT",
   "lane": "DOWNSTREAM",
-  "subsystem": "Revenue type",
-  "component": "메모리 패키지기판",
-  "source_role": "기판 제조",
-  "target_role": "매출원",
+  "subsystem": "Application",
+  "component": "DDR5·GDDR7·LPDDR·NAND·SoCAMM",
+  "source_role": "고객",
+  "target_role": "전방",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
+  "evidence_level": "ESTIMATED",
   "source_tier": null,
-  "target_tier": "REVENUE_TYPE",
+  "target_tier": "END_MARKET",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "high",
+  "confidence_band": "medium",
   "flows": [],
   "source_ids": [
    "dd_ir_mix"
   ],
-  "notes": null
+  "notes": "메모리 기판이 실리는 자리",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
-  "id": "dd-rev-fcbga-edge",
-  "source_entity": "daeduck-electronics",
-  "target_entity": "dd-rev-fcbga",
-  "relationship_type": "REVENUE_FROM",
+  "id": "fcbga-app-auto",
+  "source_entity": "tesla",
+  "target_entity": "app-automotive",
+  "relationship_type": "END_USER_DEPLOYMENT",
   "lane": "DOWNSTREAM",
-  "subsystem": "Revenue type",
-  "component": "FC-BGA",
-  "source_role": "기판 제조",
-  "target_role": "매출원",
+  "subsystem": "Application",
+  "component": "자율주행 프로세서",
+  "source_role": "고객",
+  "target_role": "전방",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "ESTIMATED",
+  "source_tier": null,
+  "target_tier": "END_MARKET",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "medium",
+  "flows": [],
+  "source_ids": [
+   "zdnet_tesla_2026"
+  ],
+  "notes": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "fcbga-app-dc",
+  "source_entity": "dd-ssd-cust-a",
+  "target_entity": "app-ai-datacenter",
+  "relationship_type": "END_USER_DEPLOYMENT",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 데이터센터 컨트롤러",
+  "source_role": "고객",
+  "target_role": "전방",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "ESTIMATED",
+  "source_tier": null,
+  "target_tier": "END_MARKET",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "medium",
+  "flows": [],
+  "source_ids": [
+   "dd_ir_ssd_optical"
+  ],
+  "notes": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "mlb-app-ai",
+  "source_entity": "amd",
+  "target_entity": "app-ai-datacenter",
+  "relationship_type": "END_USER_DEPLOYMENT",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 가속기",
+  "source_role": "고객",
+  "target_role": "전방",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "ESTIMATED",
+  "source_tier": null,
+  "target_tier": "END_MARKET",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "medium",
+  "flows": [],
+  "source_ids": [
+   "dd_ir_amd"
+  ],
+  "notes": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "mlb-app-800g",
+  "source_entity": "dd-800g-cust-a",
+  "target_entity": "app-800g-network",
+  "relationship_type": "END_USER_DEPLOYMENT",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "800G 스위치",
+  "source_role": "고객",
+  "target_role": "전방",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "source_tier": null,
-  "target_tier": "REVENUE_TYPE",
+  "target_tier": "END_MARKET",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "dd_product_page"
+   "dd_ir_800g"
   ],
-  "notes": null
+  "notes": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
-  "id": "dd-rev-mlb-edge",
-  "source_entity": "daeduck-electronics",
-  "target_entity": "dd-rev-mlb",
-  "relationship_type": "REVENUE_FROM",
+  "id": "mlb-app-space",
+  "source_entity": "spacex",
+  "target_entity": "app-aerospace",
+  "relationship_type": "END_USER_DEPLOYMENT",
   "lane": "DOWNSTREAM",
-  "subsystem": "Revenue type",
-  "component": "고다층 MLB",
-  "source_role": "기판 제조",
-  "target_role": "매출원",
+  "subsystem": "Application",
+  "component": "위성·방산",
+  "source_role": "고객",
+  "target_role": "전방",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
+  "evidence_level": "ESTIMATED",
   "source_tier": null,
-  "target_tier": "REVENUE_TYPE",
+  "target_tier": "END_MARKET",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "high",
+  "confidence_band": "medium",
   "flows": [],
   "source_ids": [
-   "dd_ir_mix"
+   "eugene_spacex_2026"
   ],
-  "notes": null
- },
- {
-  "id": "dd-rev-unalloc-edge",
-  "source_entity": "daeduck-electronics",
-  "target_entity": "dd-rev-unallocated",
-  "relationship_type": "REVENUE_FROM",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Revenue type",
-  "component": "매출원 배분이 공개되지 않은 몫",
-  "source_role": "기판 제조",
-  "target_role": "매출원",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": null,
-  "target_tier": "REVENUE_TYPE",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "low",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
-  ],
-  "notes": "공시가 상위 고객을 익명으로만 밝힌다"
+  "notes": null,
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
   "id": "mem-samsung",
-  "source_entity": "dd-rev-memory",
+  "source_entity": "daeduck-electronics",
   "target_entity": "samsung-electronics",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -336,11 +312,15 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": "2024 반기 공시가 이름을 든다. 매출원 안의 몫은 공개되지 않았다"
+  "notes": "2024 반기 공시가 이름을 든다. 매출원 안의 몫은 공개되지 않았다",
+  "revenue_type_ids": [
+   "rt-dd-rev-memory"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mem-hynix",
-  "source_entity": "dd-rev-memory",
+  "source_entity": "daeduck-electronics",
   "target_entity": "sk-hynix",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -362,11 +342,15 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-memory"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mem-amkor",
-  "source_entity": "dd-rev-memory",
+  "source_entity": "daeduck-electronics",
   "target_entity": "amkor-korea",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -388,11 +372,15 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-memory"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mem-stats",
-  "source_entity": "dd-rev-memory",
+  "source_entity": "daeduck-electronics",
   "target_entity": "stats-chippac-korea",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -414,37 +402,15 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null
- },
- {
-  "id": "mem-app",
-  "source_entity": "samsung-electronics",
-  "target_entity": "app-server-mobile",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "DDR5·GDDR7·LPDDR·NAND·SoCAMM",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "medium",
-  "flows": [],
-  "source_ids": [
-   "dd_ir_mix"
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-memory"
   ],
-  "notes": "메모리 기판이 실리는 자리"
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-tesla",
-  "source_entity": "dd-rev-fcbga",
+  "source_entity": "daeduck-electronics",
   "target_entity": "tesla",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -466,11 +432,15 @@
   "source_ids": [
    "zdnet_tesla_2026"
   ],
-  "notes": "복수 업계 보도로 공급망 포함이 확인된다. 회사가 공시한 고객명은 아니다"
+  "notes": "복수 업계 보도로 공급망 포함이 확인된다. 회사가 공시한 고객명은 아니다",
+  "revenue_type_ids": [
+   "rt-dd-rev-fcbga"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-ssd",
-  "source_entity": "dd-rev-fcbga",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-ssd-cust-a",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -492,11 +462,15 @@
   "source_ids": [
    "dd_ir_ssd_optical"
   ],
-  "notes": "IR 가 거래와 물량 증가를 밝혔다. 비공개인 것은 상대 실명뿐이다"
+  "notes": "IR 가 거래와 물량 증가를 밝혔다. 비공개인 것은 상대 실명뿐이다",
+  "revenue_type_ids": [
+   "rt-dd-rev-fcbga"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-optical",
-  "source_entity": "dd-rev-fcbga",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-optical-cust-a",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -518,11 +492,15 @@
   "source_ids": [
    "dd_ir_ssd_optical"
   ],
-  "notes": "IR 가 거래를 밝혔다. 비공개인 것은 상대 실명뿐이다"
+  "notes": "IR 가 거래를 밝혔다. 비공개인 것은 상대 실명뿐이다",
+  "revenue_type_ids": [
+   "rt-dd-rev-fcbga"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-pcie",
-  "source_entity": "dd-rev-fcbga",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-pcie-cust-a",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -544,63 +522,15 @@
   "source_ids": [
    "dd_ir_pcie"
   ],
-  "notes": "2026 하반기 이후 로드맵. IR 가 밝힌 것은 계획이고 상대 실명은 비공개다"
- },
- {
-  "id": "fcbga-app-auto",
-  "source_entity": "tesla",
-  "target_entity": "app-automotive",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "자율주행 프로세서",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "medium",
-  "flows": [],
-  "source_ids": [
-   "zdnet_tesla_2026"
+  "notes": "2026 하반기 이후 로드맵. IR 가 밝힌 것은 계획이고 상대 실명은 비공개다",
+  "revenue_type_ids": [
+   "rt-dd-rev-fcbga"
   ],
-  "notes": null
- },
- {
-  "id": "fcbga-app-dc",
-  "source_entity": "dd-ssd-cust-a",
-  "target_entity": "app-ai-datacenter",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "AI 데이터센터 컨트롤러",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "medium",
-  "flows": [],
-  "source_ids": [
-   "dd_ir_ssd_optical"
-  ],
-  "notes": null
+  "supply_source_ids": []
  },
  {
   "id": "mlb-amd",
-  "source_entity": "dd-rev-mlb",
+  "source_entity": "daeduck-electronics",
   "target_entity": "amd",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -623,11 +553,15 @@
    "dd_ir_amd",
    "dd_bk_amd"
   ],
-  "notes": "증권사 자료가 양산과 Helios 연계를 적는다. 회사 공시 고객명은 아니다"
+  "notes": "증권사 자료가 양산과 Helios 연계를 적는다. 회사 공시 고객명은 아니다",
+  "revenue_type_ids": [
+   "rt-dd-rev-mlb"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mlb-spacex",
-  "source_entity": "dd-rev-mlb",
+  "source_entity": "daeduck-electronics",
   "target_entity": "spacex",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -649,11 +583,15 @@
   "source_ids": [
    "eugene_spacex_2026"
   ],
-  "notes": null
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-mlb"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mlb-800g",
-  "source_entity": "dd-rev-mlb",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-800g-cust-a",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -675,11 +613,15 @@
   "source_ids": [
    "dd_ir_800g"
   ],
-  "notes": "IR 가 신규 고객 확보와 양산 진입을 밝혔다. 비공개인 것은 실명뿐이다"
+  "notes": "IR 가 신규 고객 확보와 양산 진입을 밝혔다. 비공개인 것은 실명뿐이다",
+  "revenue_type_ids": [
+   "rt-dd-rev-mlb"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "mlb-cisco",
-  "source_entity": "dd-rev-mlb",
+  "source_entity": "daeduck-electronics",
   "target_entity": "cisco",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -701,89 +643,15 @@
   "source_ids": [
    "dd_cisco_legacy"
   ],
-  "notes": "과거 관계를 시사하는 2차자료뿐이다. 800G 신규 고객과 같다는 근거는 없다"
- },
- {
-  "id": "mlb-app-ai",
-  "source_entity": "amd",
-  "target_entity": "app-ai-datacenter",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "AI 가속기",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "medium",
-  "flows": [],
-  "source_ids": [
-   "dd_ir_amd"
+  "notes": "과거 관계를 시사하는 2차자료뿐이다. 800G 신규 고객과 같다는 근거는 없다",
+  "revenue_type_ids": [
+   "rt-dd-rev-mlb"
   ],
-  "notes": null
- },
- {
-  "id": "mlb-app-800g",
-  "source_entity": "dd-800g-cust-a",
-  "target_entity": "app-800g-network",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "800G 스위치",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ir_800g"
-  ],
-  "notes": null
- },
- {
-  "id": "mlb-app-space",
-  "source_entity": "spacex",
-  "target_entity": "app-aerospace",
-  "relationship_type": "END_USER_DEPLOYMENT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Application",
-  "component": "위성·방산",
-  "source_role": "고객",
-  "target_role": "전방",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "source_tier": null,
-  "target_tier": "END_USER",
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "medium",
-  "flows": [],
-  "source_ids": [
-   "eugene_spacex_2026"
-  ],
-  "notes": null
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon1",
-  "source_entity": "dd-rev-unallocated",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-anon-1",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -805,11 +673,15 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": "공시가 (가)로만 밝힌다. 삼성전자·SK하이닉스 등으로 임의 매핑하지 않는다"
+  "notes": "공시가 (가)로만 밝힌다. 삼성전자·SK하이닉스 등으로 임의 매핑하지 않는다",
+  "revenue_type_ids": [
+   "rt-dd-rev-unallocated"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon2",
-  "source_entity": "dd-rev-unallocated",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-anon-2",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -831,11 +703,15 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": null
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-unallocated"
+  ],
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon3",
-  "source_entity": "dd-rev-unallocated",
+  "source_entity": "daeduck-electronics",
   "target_entity": "dd-anon-3",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -857,6 +733,40 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "notes": null
+  "notes": null,
+  "revenue_type_ids": [
+   "rt-dd-rev-unallocated"
+  ],
+  "supply_source_ids": []
+ },
+ {
+  "id": "prepreg-dd-src",
+  "source_entity": "kr-substrate-supplier-undisclosed",
+  "target_entity": "daeduck-electronics",
+  "relationship_type": "INPUT_TO",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material",
+  "component": "프리프레그",
+  "source_role": "소재",
+  "target_role": "기판 제조",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "RAW_MATERIAL",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "notes": "FY2025 원재료 매입 587억 원",
+  "supply_source_ids": [
+   "ss-prepreg"
+  ],
+  "revenue_type_ids": []
  }
 ]

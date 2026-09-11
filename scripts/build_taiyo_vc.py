@@ -68,6 +68,10 @@ SOURCES = [
   'https://www.yuden.co.jp/en/ir/',
   '유럽·미국·중국·한국·일본 주요 1차 협력사와 폭넓게 거래한다고 공시. 개별 실명은 '
   '비공개(원표기: company disclosure)'),
+ ('ty_ledger_04', u'조사 원장', u'04 Entities & Edges · 03 Evidence & Sources (Drive)',
+  'research_ledger', None, None,
+  u'공식 유통 파트너 목록과 FY2027 1분기 전방별 매출 비중이 원장에 E015~E017·O002~O008 로 '
+  u'적혀 있다. 개별 공시 번호는 원장에만 있고 공개 주소로는 아직 못 박았다'),
  ('vw_qual', 'TAIYO YUDEN', '제품 뉴스 — VW80808 인증', 'primary_company', None,
   'https://www.yuden.co.jp/en/news/',
   '일부 자동차용 MLCC 가 VW80808 인증을 받았다. 직접고객·매출 관계의 근거는 '
@@ -207,13 +211,13 @@ R = [
   'TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)'),
  ('ty-arrow-distribution', TY, 'arrow-electronics', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', [], '공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
  ('ty-avnet-distribution', TY, 'avnet', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', [], '공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
  ('ty-mouser-distribution', TY, 'mouser-electronics', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', [], '공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
  # ── 구조 보강: 제품·전방 매출 축(04 원 목록에는 없다. O002~O008·O011 을 얹는 자리)──
  ('ty-rev-capacitor-edge', TY, 'ty-rev-capacitor', 'REVENUE_FROM', 'DOWNSTREAM',
   'Revenue type', '커패시터', '본사', '매출원', None, None, 'ACTIVE', 'CONFIRMED', None,
@@ -223,19 +227,19 @@ R = [
   'REVENUE_TYPE', ['ty_product_2026'], 'FY2026 제품별 매출 축이다'),
  ('ty-app-it-infra-industrial', TY, 'app-it-infra-industrial', 'SERVES_END_MARKET',
   'DOWNSTREAM', 'Application', 'IT 인프라·산업용', '본사', '전방', None, None, 'ACTIVE',
-  'CONFIRMED', None, 'END_USER', [],
+  'CONFIRMED', None, 'END_USER', ['ty_ledger_04'],
   'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
  ('ty-app-automotive', TY, 'app-automotive', 'SERVES_END_MARKET', 'DOWNSTREAM',
   'Application', '자동차', '본사', '전방', None, None, 'ACTIVE', 'CONFIRMED', None, 'END_USER',
-  [], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
+  ['ty_ledger_04'], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
  ('ty-app-communication', TY, 'app-communication', 'SERVES_END_MARKET', 'DOWNSTREAM',
   'Application', '통신', '본사', '전방', None, None, 'ACTIVE', 'CONFIRMED', None, 'END_USER',
-  [], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
+  ['ty_ledger_04'], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
  ('ty-app-information-equipment', TY, 'app-information-equipment', 'SERVES_END_MARKET',
   'DOWNSTREAM', 'Application', '정보기기', '본사', '전방', None, None, 'ACTIVE', 'CONFIRMED',
-  None, 'END_USER', [], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
+  None, 'END_USER', ['ty_ledger_04'], 'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
  ('ty-app-consumer', TY, 'app-consumer', 'SERVES_END_MARKET', 'DOWNSTREAM', 'Application',
-  '소비자가전', '본사', '전방', None, None, 'ACTIVE', 'CONFIRMED', None, 'END_USER', [],
+  '소비자가전', '본사', '전방', None, None, 'ACTIVE', 'CONFIRMED', None, 'END_USER', ['ty_ledger_04'],
   'FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다'),
 ]
 
@@ -424,3 +428,9 @@ if __name__ == '__main__':
     dump(os.path.join(CHAIN, 'evidence.json'), evidence())
     print('전역 엔티티 %d · 출처 %d · 관계 %d · 관측 %d · 주장 %d'
           % (ne, ns, len(R), len(O), len(CLAIMS)))
+
+    # 재료를 다시 쌓았으면 v2 꼴로 바로 옮긴다 — 옮기는 일을 사람 손에 맡기면
+    # 다음 build 때 공급원·매출원이 상자로 되살아난다(프레임워크 §13)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import vc_norm
+    vc_norm.main()
