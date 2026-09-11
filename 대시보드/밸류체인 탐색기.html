@@ -112,6 +112,12 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hdr .hn{font-size:10px;color:var(--ink3);font-weight:500;letter-spacing:-.2px;
 margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.proj{border:1px dashed #aab2c2;border-radius:10px;background:rgba(255,255,255,.45);
+pointer-events:none;box-sizing:border-box}
+.proj .plab{position:absolute;top:6px;left:10px;font-size:9.5px;font-weight:700;
+letter-spacing:.4px;color:var(--ink3)}
+.proj .pn{font-size:11.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink2);
+margin-top:1px}
 .nd .val{display:inline-block;margin-left:5px;padding:0 4px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink2);font-weight:700;
 font-size:10.5px}
@@ -298,7 +304,7 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Integrator':'통합', 'OSAT':'후공정(OSAT)' };
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'직접 고객', INTERMEDIARY:'중개',
-  PROJECT:'프로젝트·부지', END_USER:'간접 고객',
+  PROJECT:'프로젝트', END_USER:'간접 고객',
   REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
@@ -318,7 +324,6 @@ var COLS = [
   { key:'REVENUE_TYPE', label:'매출원', note:'제품별 매출 축' },
   { key:'CONTRACTUAL_CUSTOMER', label:'직접 고객', note:'직접 거래' },
   { key:'INTERMEDIARY', label:'중개', note:'유통·중개' },
-  { key:'PROJECT', label:'프로젝트·부지', note:'배치처' },
   { key:'END_USER', label:'간접 고객', note:'중개 뒤·전방 축' }
 ];
 var COL_OF = {};
@@ -495,7 +500,22 @@ function GutEdge(p){
   ]);
 }
 var EDGE_TYPES = { gut: GutEdge };
-var NODE_TYPES = { nd: Nd, hdr: Hdr };
+// 프로젝트는 사슬의 한 단계가 아니라 여러 상자를 묶는 테두리다. 상자는 제 자리에
+// 그대로 서고, 테두리는 그 뒤에 깔려 누가 한 프로젝트에 얽혔는지만 보여 준다
+function Proj(p){
+  var d = p.data;
+  return h('div', { className:'proj', style:{ width:d.w + 'px', height:d.h + 'px' } }, [
+    h(Handle, { key:'t', type:'target', position:Position.Left, isConnectable:false,
+      style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0 } }),
+    h('div', { key:'l', className:'plab' }, [
+      h('div', { key:'a' }, '프로젝트'),
+      h('div', { key:'b', className:'pn' }, d.title) ]),
+    h(Handle, { key:'s', type:'source', position:Position.Right, isConnectable:false,
+      style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0 } })
+  ]);
+}
+var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
+var PROJ_PAD_X = 18, PROJ_PAD_Y = 34;
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 10;
 // 칸 사이 빈 띠 한가운데가 통로다. 세로 이동은 오직 여기서만 한다 — 상자가 선 칸
@@ -538,13 +558,19 @@ function route(edges, geo){
     if (n <= HANDLE_N) return ((HANDLE_N - n) / 2 | 0) + i;
     return Math.round(i * (HANDLE_N - 1) / (n - 1));
   }
+  // 프로젝트 테두리에는 포트를 나누지 않는다. 테두리 한가운데로 든다
+  function isBox(id){ return geo[id] && geo[id].proj; }
   Object.keys(outg).forEach(function(id){
     var a = outg[id].sort(function(p, q){ return cy(p.target) - cy(q.target); });
-    a.forEach(function(e, i){ e.sourceHandle = 's' + slot(i, a.length); });
+    a.forEach(function(e, i){
+      e.sourceHandle = isBox(id) ? null : 's' + slot(i, a.length);
+    });
   });
   Object.keys(inn).forEach(function(id){
     var a = inn[id].sort(function(p, q){ return cy(p.source) - cy(q.source); });
-    a.forEach(function(e, i){ e.targetHandle = 't' + slot(i, a.length); });
+    a.forEach(function(e, i){
+      e.targetHandle = isBox(id) ? null : 't' + slot(i, a.length);
+    });
   });
 
   // ② 통로 — 세로 이동은 칸 사이 빈 띠 한가운데의 통로에서만 일어난다. 같은 상자에서
@@ -623,6 +649,9 @@ function route(edges, geo){
 function place(nodes, edges){
   // 가로는 단계 칸에 못박는다. dagre 는 부르지 않는다
   var colOf = {}, byCol = {};
+  // 프로젝트 테두리는 칸에 안 든다. 식구를 다 앉힌 뒤 그 둘레로 잡는다
+  var projs = nodes.filter(function(n){ return n.type === 'proj'; });
+  nodes = nodes.filter(function(n){ return n.type !== 'proj'; });
   nodes.forEach(function(n){
     var c = n.data.col === undefined ? COL_OF.FOCAL : n.data.col;
     colOf[n.id] = c;
@@ -688,6 +717,31 @@ function place(nodes, edges){
     });
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
+
+  // 한 프로젝트의 식구는 붙여 앉힌다. 사이에 남이 끼면 테두리가 그 남까지 두른다
+  var ofProj = {};
+  projs.forEach(function(pn){
+    (pn.data.mem || []).forEach(function(m){ ofProj[m] = pn.id; });
+  });
+  used.forEach(function(c){
+    var list = byCol[c], key = {}, mean = {};
+    list.forEach(function(it){
+      var k = ofProj[it.id] || ('~' + it.id);
+      key[it.id] = k;
+      (mean[k] = mean[k] || []).push(it.ord);
+    });
+    Object.keys(mean).forEach(function(k){
+      mean[k] = mean[k].reduce(function(a, b){ return a + b; }, 0) / mean[k].length;
+    });
+    list.sort(function(a, b){
+      var ka = key[a.id], kb = key[b.id];
+      // 무게중심이 같으면 같은 프로젝트끼리 먼저 묶는다. 차례로만 가르면 남이 사이에
+      // 낀 채로 남는다
+      return (mean[ka] - mean[kb]) || (ka < kb ? -1 : ka > kb ? 1 : 0)
+          || (a.ord - b.ord);
+    });
+    list.forEach(function(it, k){ it.ord = k; });
+  });
 
   // 타겟은 제 칸 맨 위에 앉는다. 그래야 왼쪽은 전부 타겟보다 아래에 서고(선이 위로만
   // 꺾인다), 오른쪽도 전부 아래에 서서(선이 아래로만 꺾인다) 흐름이 한 방향으로 읽힌다
@@ -758,6 +812,27 @@ function place(nodes, edges){
         data:{ label: COLS[c].label, note: COLS[c].note || null } });
   });
 
+  // 프로젝트 테두리 — 식구 상자의 둘레에 여백을 둘러 잡는다. 식구는 그 프로젝트에
+  // 실제로 선이 닿은 상자뿐이고, 타겟보다 왼쪽에 서는 상자(부품을 대는 쪽)는 넣지
+  // 않는다. 넣으면 테두리가 판을 가로질러 타겟까지 삼킨다
+  projs.forEach(function(pn){
+    var ids = (pn.data.mem || []).filter(function(id){ return geo[id]; });
+    if (!ids.length) return;
+    var x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9, col = 99;
+    ids.forEach(function(id){
+      var g = geo[id];
+      x1 = Math.min(x1, g.x); x2 = Math.max(x2, g.x + COL_W);
+      y1 = Math.min(y1, g.y); y2 = Math.max(y2, g.y + g.h);
+      col = Math.min(col, g.col);
+    });
+    var px = x1 - PROJ_PAD_X, py = y1 - PROJ_PAD_Y;
+    var pw = (x2 - x1) + PROJ_PAD_X * 2, ph = (y2 - y1) + PROJ_PAD_Y + PROJ_PAD_X;
+    geo[pn.id] = { x:px, y:py, h:ph, col:col, proj:true };
+    out.push(Object.assign({}, pn, { position:{ x:px, y:py }, zIndex:-1,
+      draggable:false, selectable:false,
+      data: Object.assign({}, pn.data, { w:pw, h:ph }) }));
+  });
+
   // 칸을 건너뛰는 선은 중간 칸마다 제 몫으로 잡아 둔 빈 자리 높이를 지난다. 그 높이를
   // 선에 넘겨 둔다 — 통로 자리는 route 가 정한다
   edges.forEach(function(e){
@@ -808,7 +883,7 @@ function writeUrl(s, push){
 // 같은 회사가 사슬 여러 갈래에 나오면 노드를 하나로 합치고 선만 더한다.
 // 반환값은 그 회사가 앉은 노드 id 다
 
-// 판매 사슬은 층이 있다 — 직접 고객 → 중개 → 프로젝트 → 간접 고객.
+// 판매 사슬은 층이 있다 — 직접 고객 → 중개 → 간접 고객. 프로젝트는 층이 아니라 테두리다.
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
 // 한 상자를 누르면 그 상자의 다음 한 칸만 열린다. 저절로 번지지 않는다
 
@@ -933,6 +1008,54 @@ function buildGraph(focal, year, sel){
       return;
     n.data.col = COL_OF[tier];
     n.data.sub = TIER_KO[tier];
+  });
+
+  // 프로젝트는 칸을 차지하지 않는다. 테두리가 되어 제 식구를 두른다
+  var PROJ_ROLE = { DEVELOPS:'개발', HOLDS_PROJECT:'보유', OWNS_SITE:'부지 소유',
+    OPERATES_SITE:'부지 운영', USES_SITE:'부지 이용',
+    ULTIMATE_COMMERCIAL_USER:'최종 수요처', PROJECT_SUPPLY:'프로젝트 납품' };
+  function isProj(id){ return (ENT[id] || {}).entity_type === 'project_spv'; }
+  // 프로젝트에 얽힌 회사는 그 프로젝트가 아니라 제 노릇으로 자리를 받는다.
+  // 다운스트림에서 프로젝트에 붙은 회사는 간접 고객 칸에 선다 — 부지를 가졌거나
+  // 굴리거나 쓰는 쪽이라 타겟과 바로 거래하지 않는다
+  rels.forEach(function(r){
+    if (!isProj(r.target_entity) || r.lane !== 'DOWNSTREAM') return;
+    if (r.source_entity === focal || (ENT[r.source_entity] || {}).entity_type === 'revenue_type')
+      return;
+    var n = nodes.filter(function(x){ return x.id === r.source_entity; })[0];
+    if (!n || n.type === 'proj') return;
+    n.data.col = COL_OF.END_USER;
+    n.data.sub = PROJ_ROLE[r.relationship_type] || n.data.sub;
+  });
+  // 테두리가 되려면 제 식구가 있어야 하고, 그 식구를 다른 프로젝트와 나눠 갖지 않아야
+  // 한다. 한 상자가 프로젝트 둘에 걸리면 테두리 둘이 같은 자리에 겹쳐 무슨 그림인지
+  // 알 수 없다 — 그때는 프로젝트도 제 상자로 선다
+  var pmem = {}, seenMem = {};
+  nodes.forEach(function(n){
+    if (!isProj(n.id)) return;
+    var mem = [];
+    rels.forEach(function(r){
+      var other = r.source_entity === n.id ? r.target_entity
+                : (r.target_entity === n.id ? r.source_entity : null);
+      if (!other || other === focal || isProj(other)) return;
+      if ((ENT[other] || {}).entity_type === 'revenue_type') return;
+      var mn = nodes.filter(function(x){ return x.id === other; })[0];
+      if (!mn || mn.data.col === undefined || mn.data.col <= COL_OF.FOCAL) return;
+      if (mem.indexOf(other) < 0) mem.push(other);
+    });
+    pmem[n.id] = mem;
+    mem.forEach(function(m){ seenMem[m] = (seenMem[m] || 0) + 1; });
+  });
+  nodes.forEach(function(n){
+    if (!isProj(n.id)) return;
+    var mem = (pmem[n.id] || []).filter(function(m){ return seenMem[m] === 1; });
+    if (mem.length !== (pmem[n.id] || []).length || !mem.length) {
+      n.data.col = COL_OF.END_USER;
+      n.data.sub = '프로젝트·부지';
+      return;
+    }
+    n.type = 'proj';
+    n.data.mem = mem;
   });
 
   // 그 해에 걸린 선이 하나도 없는 상자는 흐리게 둔다
@@ -1603,7 +1726,7 @@ function App(){
     h('i', { key:'p' }, '상자를 누르면 그 줄기만 진해짐'),
     h('b', { key:'c' }, '가로'),
     h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
-    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 프로젝트 → 간접 고객')
+    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 간접 고객, 프로젝트는 테두리')
   ]);
 
   return h('div', { className:'app' }, [ top,

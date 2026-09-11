@@ -7,11 +7,14 @@ FAIL 0 이어야 푸시한다. 규약은 scripts/gen_vcexplorer.py 의 gutterX.
   R3 타겟 왼쪽에서 타겟으로 가는 선이 아래로 꺾었나 (왼쪽은 위로만)
   R4 타겟 오른쪽에서 타겟에서 나가는 선이 위로 꺾었나 (오른쪽은 아래로만)
 
+타겟 칸을 가로지르는 선은 방향을 안 본다 — 왼쪽 공급사가 오른쪽 프로젝트에 바로
+대는 꼴이라 한쪽 규칙으로 재면 반대쪽이 늘 어긋난다.
+
 방향은 선이 가는 쪽으로 잰다. 타겟에서 왼쪽으로 나가는 선(합작사·법인)은 같은 자리를
 거꾸로 지나므로 아래로 꺾는 것이 맞다 — 상자 차례가 같으면 두 꼴은 한 규칙이다.
 
 브라우저로 사슬을 하나씩 열어 그려진 경로를 읽는다. 곧은 선(같은 높이)과 같은 칸끼리
-잇는 곡선은 세로 구간이 아니라 안 본다.
+잇는 곡선은 세로 구간이 아니라 안 본다. 프로젝트 테두리는 칸이 아니라 세지 않는다.
 """
 import os
 import re
@@ -64,7 +67,9 @@ def check(page, label):
         var m = /translate\((-?[\d.]+)px, *(-?[\d.]+)px\)/.exec(box.style.transform || '');
         return m ? parseFloat(m[1]) : null;
       })(),
-      cols: Array.from(document.querySelectorAll('.react-flow__node')).map(function(n){
+      cols: Array.from(document.querySelectorAll('.react-flow__node'))
+        .filter(function(n){ return !n.querySelector('.proj'); })
+        .map(function(n){
         var m = /translate\\((-?[\\d.]+)px, *(-?[\\d.]+)px\\)/.exec(n.style.transform || '');
         return m ? parseFloat(m[1]) : null;
       }).filter(function(x){ return x !== null; }),
@@ -89,6 +94,10 @@ def check(page, label):
             continue
         # 선이 가는 쪽 — 오른쪽으로 가면 1, 왼쪽으로 가면 -1
         dirx = 1 if segs[-1][1][0] >= segs[0][0][0] else -1
+        # 타겟 칸을 가로지르는 선(왼쪽 공급사가 오른쪽 프로젝트에 바로 대는 꼴)은
+        # 한쪽 규칙으로 못 잰다. 어느 쪽에서 보든 반대쪽이 어긋난다
+        ax, bx = segs[0][0][0], segs[-1][1][0]
+        crosses = min(ax, bx) < fx and max(ax, bx) > fx + COL_W
         for (x0, y0), (x1, y1) in segs:
             if abs(x1 - x0) > 0.6 or abs(y1 - y0) <= 2:
                 continue
@@ -103,6 +112,8 @@ def check(page, label):
                 fails.append(u'FAIL %s — 세로 구간이 통로 밖이다 (x=%.1f)' % (label, x))
                 continue
             # 왼쪽은 타겟 쪽으로 갈 때 위로만, 오른쪽은 타겟에서 멀어질 때 아래로만
+            if crosses:
+                continue
             dy = y1 - y0
             if x < fx and dirx * dy > TOL:
                 fails.append(u'FAIL %s — 타겟 왼쪽에서 꺾는 쪽이 거꾸로다 (x=%.1f, %.1f→%.1f)'
