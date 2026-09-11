@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-11",
-"index_fingerprint": "1705dc7f1aa9e43995c56acb58110f9b3805e4bc",
-"lines": 4589
+"index_fingerprint": "242ac59645225407686f99fcabbf17b914e242a5",
+"lines": 4597
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6609,6 +6609,50 @@
 "content/podcast/semianalysis/[260829] Ep.27 브라이언 샨·마이런 시 - 오픈AI 할라페뇨는 왜 블랙웰보다 낫나.md#L46": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-06-optics-copper-crossroads.md#L23": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-06-optics-copper-crossroads.md#L38": {
+"how": "명시",
+"span": [
+"2028",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L102": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L12": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L16": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L30": {
+"how": "명시",
+"t": "2011",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L56": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"content/semi_doped/2026-03-13-meta-mtia-aaoi.md#L58": {
+"how": "명시",
+"t": "2017",
 "tense": "회고"
 },
 "content/semi_doped/2026-03-17-nvidia-gtc-keynote.md#L42": {
