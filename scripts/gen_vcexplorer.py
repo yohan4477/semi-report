@@ -135,13 +135,13 @@ margin:10px 0 6px}
 .bomleg span.it{display:flex;align-items:center;gap:5px;cursor:pointer}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
 .nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:7px 10px;
-min-width:110px;max-width:150px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
+min-width:100px;max-width:128px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
-.hdr{width:150px;text-align:center;font-size:11px;color:var(--ink3);font-weight:600;
+.hdr{width:128px;text-align:center;font-size:11px;color:var(--ink3);font-weight:600;
 letter-spacing:-.2px;border-bottom:1px solid var(--line);padding-bottom:4px;
 text-transform:none;pointer-events:none}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
@@ -389,7 +389,7 @@ function Hdr(p){
 }
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
-var COL_W = 150, COL_GAP = 44, ROW_GAP = 12, HDR_H = 26;
+var COL_W = 128, COL_GAP = 22, ROW_GAP = 11, HDR_H = 24;
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
   // 칸 사이를 좁게 — 판이 가로로 퍼질수록 맞춰 넣을 때 글자가 작아진다
@@ -398,7 +398,7 @@ function place(nodes, edges){
   nodes.forEach(function(n){
     var d = n.data;
     // 제목 줄수(한 줄 15자 남짓) + 부제 한 줄 + 테두리·여백
-    var lines = Math.ceil((d.title || '').length / 14) || 1;
+    var lines = Math.ceil((d.title || '').length / 11) || 1;
     var hgt = 16 + lines * 18 + ((d.sub || d.isNew) ? 17 : 0);
     if (d.focal) { hgt += 14; }
     g.setNode(n.id, { width: COL_W, height:hgt });
@@ -980,7 +980,7 @@ function App(){
           all.forEach(function(n){
             if (n.type === 'hdr' || n.data.col === undefined) return;
             if (Math.abs(n.data.col - myCol) > 1) return;
-            var w = n.width || 150, hh = n.height || 44;
+            var w = n.width || 128, hh = n.height || 44;
             var b = { x:n.position.x, y:n.position.y, x2:n.position.x + w,
                       y2:n.position.y + hh };
             if (!box) box = b;
