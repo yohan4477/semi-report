@@ -1,0 +1,76 @@
+[
+ {
+  "id": "ne-proj-vineland",
+  "name": "Vineland AI infrastructure site",
+  "name_ko": "바인랜드 부지",
+  "site": "ne-vineland",
+  "developer": "dataone",
+  "ultimate_end_user": "microsoft",
+  "members": [
+   "ne-vineland",
+   "dataone",
+   "northeast-precast",
+   "nebius-inc"
+  ],
+  "note": "블룸 1차 프로젝트가 328MW 지만 그 용량을 이 부지로 잇는 문장은 원문에 없다",
+  "from_relationships": [
+   "dataone-vineland",
+   "ne-inc-vineland",
+   "precast-vineland"
+  ]
+ },
+ {
+  "id": "ne-proj-pa10",
+  "name": "Paris AI cloud deployment",
+  "name_ko": "파리 배치",
+  "site": "ne-pa10",
+  "developer": "equinix",
+  "members": [
+   "ne-pa10",
+   "equinix"
+  ],
+  "from_relationships": [
+   "equinix-pa10",
+   "ne-pa10-deploy"
+  ]
+ },
+ {
+  "id": "ne-proj-mantsala",
+  "name": "Mäntsälä core data center",
+  "name_ko": "만찰라",
+  "site": "ne-mantsala",
+  "developer": "nebius",
+  "members": [
+   "ne-mantsala"
+  ],
+  "from_relationships": [
+   "ne-mantsala-deploy"
+  ]
+ },
+ {
+  "id": "ne-proj-lappeenranta",
+  "name": "Lappeenranta AI factory",
+  "name_ko": "라펜란타",
+  "site": "ne-lappeenranta",
+  "developer": "nebius",
+  "members": [
+   "ne-lappeenranta"
+  ],
+  "from_relationships": [
+   "ne-lappeenranta-deploy"
+  ]
+ },
+ {
+  "id": "ne-proj-independence",
+  "name": "Independence AI factory",
+  "name_ko": "인디펜던스",
+  "site": "ne-independence",
+  "developer": "nebius",
+  "members": [
+   "ne-independence"
+  ],
+  "from_relationships": [
+   "ne-independence-deploy"
+  ]
+ }
+]

@@ -1,0 +1,562 @@
+[
+ {
+  "id": "ne-e001",
+  "relationship_id": "unalloc-cust-c",
+  "metric_id": "o-ne-cust-c-q2",
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "실명은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e002",
+  "relationship_id": "unalloc-cust-c",
+  "metric_id": "o-ne-cust-c-h1",
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e003",
+  "relationship_id": "unalloc-cust-d",
+  "metric_id": "o-ne-cust-d-q2",
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e004",
+  "relationship_id": "unalloc-cust-d",
+  "metric_id": "o-ne-cust-d-h1",
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e005",
+  "relationship_id": "unalloc-cust-e",
+  "metric_id": "o-ne-cust-e-q2",
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e006",
+  "relationship_id": "bloom-power",
+  "metric_id": "o-ne-bloom-328mw",
+  "source_id": "ne_bloom",
+  "evidence_type": "direct",
+  "evidence": "부지를 바인랜드로 특정하는 문장은 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e007",
+  "relationship_id": "ne-mantsala-deploy",
+  "metric_id": "o-ne-mantsala-75mw",
+  "source_id": "ne_finland",
+  "evidence_type": "direct",
+  "evidence": "확장을 마쳤다고 회사가 밝혔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e008",
+  "relationship_id": "ne-lappeenranta-deploy",
+  "metric_id": "o-ne-lappeenranta-310mw",
+  "source_id": "ne_finland",
+  "evidence_type": "direct",
+  "evidence": "첫 용량은 2027년",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e009",
+  "relationship_id": "ne-independence-deploy",
+  "metric_id": "o-ne-independence-1200mw",
+  "source_id": "ne_missouri",
+  "evidence_type": "direct",
+  "evidence": "잠재 용량이라 설치 용량으로 읽지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e010",
+  "relationship_id": "ded-microsoft",
+  "metric_id": "o-ne-microsoft-value",
+  "source_id": "ne_microsoft",
+  "evidence_type": "direct",
+  "evidence": "선택 서비스까지 더하면 약 19,400",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e011",
+  "relationship_id": "ded-meta",
+  "metric_id": "o-ne-meta-value",
+  "source_id": "ne_meta",
+  "evidence_type": "direct",
+  "evidence": "잔여 용량 구매 약정 최대 15,000 은 따로다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e012",
+  "relationship_id": "nv-invest",
+  "metric_id": "o-ne-nvidia-invest",
+  "source_id": "ne_nvidia",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e013",
+  "relationship_id": "nv-gpu",
+  "metric_id": null,
+  "source_id": "ne_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "공시가 집중된 공급사 셋을 밝히지만 어느 자리가 엔비디아인지는 적지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e014",
+  "relationship_id": "nv-gpu",
+  "metric_id": null,
+  "source_id": "ne_nvidia",
+  "evidence_type": "direct",
+  "evidence": "공시가 집중된 공급사 셋을 밝히지만 어느 자리가 엔비디아인지는 적지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e016",
+  "relationship_id": "nv-net",
+  "metric_id": null,
+  "source_id": "ne_nvidia",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e018",
+  "relationship_id": "weka-sw",
+  "metric_id": null,
+  "source_id": "ne_weka",
+  "evidence_type": "direct",
+  "evidence": "쓰는 돈이나 용량의 몫은 공개되지 않았다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e019",
+  "relationship_id": "vast-sw",
+  "metric_id": null,
+  "source_id": "ne_vast",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e022",
+  "relationship_id": "bloom-power",
+  "metric_id": null,
+  "source_id": "ne_bloom",
+  "evidence_type": "direct",
+  "evidence": "1차 프로젝트가 328MW 다. 그 용량을 바인랜드 것으로 단정하지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e024",
+  "relationship_id": "ne-inc-sub",
+  "metric_id": null,
+  "source_id": "ne_microsoft",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e025",
+  "relationship_id": "nv-partner",
+  "metric_id": null,
+  "source_id": "ne_nvidia",
+  "evidence_type": "direct",
+  "evidence": "2030년 말까지 5GW 넘는 엔비디아 시스템을 세우는 목표를 함께 적었다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e026",
+  "relationship_id": "nv-invest",
+  "metric_id": null,
+  "source_id": "ne_nvidia",
+  "evidence_type": "direct",
+  "evidence": "총액 20억 달러",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e027",
+  "relationship_id": "nv-invest",
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "총액 20억 달러",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e028",
+  "relationship_id": "equinix-pa10",
+  "metric_id": null,
+  "source_id": "ne_paris",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e029",
+  "relationship_id": "ne-pa10-deploy",
+  "metric_id": null,
+  "source_id": "ne_paris",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e030",
+  "relationship_id": "dataone-vineland",
+  "metric_id": null,
+  "source_id": "ne_vineland",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e031",
+  "relationship_id": "ne-inc-vineland",
+  "metric_id": null,
+  "source_id": "ne_microsoft",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e032",
+  "relationship_id": "ne-inc-vineland",
+  "metric_id": null,
+  "source_id": "ne_vineland",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e033",
+  "relationship_id": "precast-vineland",
+  "metric_id": null,
+  "source_id": "ne_vineland",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e034",
+  "relationship_id": "ne-mantsala-deploy",
+  "metric_id": null,
+  "source_id": "ne_finland",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e035",
+  "relationship_id": "ne-mantsala-deploy",
+  "metric_id": null,
+  "source_id": "ne_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e036",
+  "relationship_id": "ne-lappeenranta-deploy",
+  "metric_id": null,
+  "source_id": "ne_finland",
+  "evidence_type": "direct",
+  "evidence": "첫 용량이 2027년이라 계획이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e037",
+  "relationship_id": "ne-independence-deploy",
+  "metric_id": null,
+  "source_id": "ne_missouri",
+  "evidence_type": "direct",
+  "evidence": "승인까지 났고 용량은 잠재치다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e038",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_microsoft",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-dedicated"
+ },
+ {
+  "id": "ne-e039",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_meta",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-dedicated"
+ },
+ {
+  "id": "ne-e040",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex991",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-ai-cloud"
+ },
+ {
+  "id": "ne-e041",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_revolut",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-token-factory"
+ },
+ {
+  "id": "ne-e042",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_sword",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-token-factory"
+ },
+ {
+  "id": "ne-e043",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_palantir",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-managed-inference"
+ },
+ {
+  "id": "ne-e044",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_prima_mente",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-reserved"
+ },
+ {
+  "id": "ne-e045",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "indirect",
+  "evidence": "공시가 상위 고객을 알파벳으로만 밝힌다",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-unallocated"
+ },
+ {
+  "id": "ne-e046",
+  "relationship_id": "ded-microsoft",
+  "metric_id": null,
+  "source_id": "ne_microsoft",
+  "evidence_type": "direct",
+  "evidence": "계약 당사자는 미국 법인이다. 약 174억 달러, 선택 서비스까지 더하면 약 194억 달러",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e047",
+  "relationship_id": "ded-meta",
+  "metric_id": null,
+  "source_id": "ne_meta",
+  "evidence_type": "direct",
+  "evidence": "5년 120억 달러. 인도는 2027년 초에 시작한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e048",
+  "relationship_id": "cloud-revolut",
+  "metric_id": null,
+  "source_id": "ne_revolut",
+  "evidence_type": "direct",
+  "evidence": "쓰는 것은 확인되고 거래 규모는 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e049",
+  "relationship_id": "cloud-recraft",
+  "metric_id": null,
+  "source_id": "ne_recraft",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e050",
+  "relationship_id": "cloud-sword",
+  "metric_id": null,
+  "source_id": "ne_sword",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e051",
+  "relationship_id": "cloud-prime",
+  "metric_id": null,
+  "source_id": "ne_prime_intellect",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e052",
+  "relationship_id": "cloud-lynx",
+  "metric_id": null,
+  "source_id": "ne_lynx",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e053",
+  "relationship_id": "cloud-roboforce",
+  "metric_id": null,
+  "source_id": "ne_roboforce",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e054",
+  "relationship_id": "cloud-basecamp",
+  "metric_id": null,
+  "source_id": "ne_uk",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e055",
+  "relationship_id": "token-revolut",
+  "metric_id": null,
+  "source_id": "ne_revolut",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e056",
+  "relationship_id": "token-sword",
+  "metric_id": null,
+  "source_id": "ne_sword",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e057",
+  "relationship_id": "reserved-prima",
+  "metric_id": null,
+  "source_id": "ne_prima_mente",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e058",
+  "relationship_id": "inference-palantir",
+  "metric_id": null,
+  "source_id": "ne_palantir",
+  "evidence_type": "direct",
+  "evidence": "제휴는 확인된다. 계약상 구매 주체라는 근거는 없어 직접 고객으로 적지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e059",
+  "relationship_id": "unalloc-cust-c",
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "실명을 마이크로소프트나 메타로 잇지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e060",
+  "relationship_id": "unalloc-cust-d",
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e061",
+  "relationship_id": "unalloc-cust-e",
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex992",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ }
+]

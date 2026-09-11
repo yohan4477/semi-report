@@ -232,7 +232,7 @@ box-shadow:0 3px 12px rgba(20,26,40,.22)}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 /* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
 .nd.lane{background:#f7f8fb;border:1px dashed #9aa3b5;border-radius:19px;text-align:center;
-padding:2px 9px;height:38px;box-shadow:none;align-items:center}
+padding:2px 9px;height:60px;box-shadow:none;align-items:center}
 .nd.lane .nm{font-size:11.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:1}
 .nd.lane .sub{margin-top:0;font-size:10px}
 .nd.lane.un{border-color:#c6ccd8}
@@ -696,7 +696,9 @@ function Proj(p){
 var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
 var PROJ_PAD_X = 18, PROJ_PAD_Y = 34;
 
-var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 10;
+// 칸을 건너뛰는 선이 지나갈 빈 자리는 상자와 같은 높이로 잡는다. 10px 만 비우면
+// 그 띠가 상자 높이를 못 덮어 선이 중간 칸 상자를 가로지른다
+var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 60;
 // 칸 사이 빈 띠 한가운데가 통로다. 세로 이동은 오직 여기서만 한다 — 상자가 선 칸
 // 안에서 세로로 움직이면 선이 상자 옆구리를 스쳐 그 상자에서 나가는 것처럼 읽힌다
 function gutterX(bd, lane){
@@ -716,7 +718,9 @@ function cw(s){
   return w;
 }
 // 상자 높이는 고정이다 — 회사 60, 알약 38. 어림도 재기도 필요 없다
-var BOX_H = 60, LANE_H = 38;
+// 상자는 갈래를 가리지 않고 한 크기다. 높이가 갈리면 같은 줄에 선 것들이
+// 층이 어긋나 보이고 선도 같은 눈금에 못 선다
+var BOX_H = 60, LANE_H = 60;
 function boxH(d){
   return d.kind === 'lane' ? LANE_H : BOX_H;
 }

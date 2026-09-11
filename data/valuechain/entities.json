@@ -1121,20 +1121,20 @@
  },
  {
   "id": "nebius",
-  "name": "Nebius",
+  "name": "Nebius Group N.V.",
   "name_ko": "네비우스",
-  "entity_type": "end_user",
-  "legal_name": "Nebius",
+  "entity_type": "company",
+  "legal_name": "Nebius Group N.V.",
   "display_name": "네비우스",
-  "region": "North America·Global",
+  "region": "Europe",
   "parent_entity_id": null,
-  "primary_role": "Data center",
+  "primary_role": "AI cloud",
   "other_roles": [],
-  "country": "미국·글로벌",
+  "country": "네덜란드",
   "categories": [
-   "Data center"
+   "AI cloud"
   ],
-  "desc": "첫 미국 배치 328MW",
+  "desc": "AI 클라우드 운영사이자 그룹 모법인. 매출의 거의 전부가 AI 클라우드 부문에서 난다",
   "anon": false
  },
  {
@@ -3525,5 +3525,416 @@
   ],
   "desc": "이바라키 실증 부지. 블룸 연료전지에 히타치 제어를 붙여 원격 출력 조정과 상태 감시를 확인했다. 용량은 비공개",
   "anon": false
+ },
+ {
+  "id": "nebius-inc",
+  "name": "Nebius, Inc.",
+  "name_ko": "네비우스 미국법인",
+  "entity_type": "company",
+  "legal_name": "Nebius, Inc.",
+  "display_name": "네비우스 미국법인",
+  "region": "North America",
+  "parent_entity_id": "nebius",
+  "primary_role": "AI cloud",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI cloud"
+  ],
+  "desc": "미국 운영 법인. 마이크로소프트 계약의 당사자이고 바인랜드 부지의 임차인이다",
+  "anon": false
+ },
+ {
+  "id": "palantir",
+  "name": "Palantir Technologies Inc.",
+  "name_ko": "팔란티어",
+  "entity_type": "company",
+  "legal_name": "Palantir Technologies Inc.",
+  "display_name": "팔란티어",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Channel partner",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Channel partner"
+  ],
+  "desc": "주권 AI 우선 파트너. 제 고객 울타리 안에서 네비우스 연산·추론을 쓰게 한다",
+  "anon": false
+ },
+ {
+  "id": "dataone",
+  "name": "DataOne",
+  "name_ko": "데이터원",
+  "entity_type": "company",
+  "legal_name": "DataOne",
+  "display_name": "데이터원",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Data center",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "바인랜드 맞춤 시설의 소유·운영자. 공시된 법인명은 없다",
+  "anon": false
+ },
+ {
+  "id": "weka",
+  "name": "WEKA",
+  "name_ko": "WEKA",
+  "entity_type": "company",
+  "legal_name": "WEKA",
+  "display_name": "WEKA",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Storage software",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Storage software"
+  ],
+  "desc": "NeuralMesh 스토리지 소프트웨어를 네비우스 하드웨어에 얹는다",
+  "anon": false
+ },
+ {
+  "id": "vast-data",
+  "name": "VAST Data, Inc.",
+  "name_ko": "VAST 데이터",
+  "entity_type": "company",
+  "legal_name": "VAST Data, Inc.",
+  "display_name": "VAST 데이터",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Storage software",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Storage software"
+  ],
+  "desc": "VAST Data Platform 을 스토리지 층에 통합한다",
+  "anon": false
+ },
+ {
+  "id": "northeast-precast",
+  "name": "Northeast Precast",
+  "name_ko": "노스이스트 프리캐스트",
+  "entity_type": "company",
+  "legal_name": "Northeast Precast",
+  "display_name": "노스이스트 프리캐스트",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Construction",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Construction"
+  ],
+  "desc": "바인랜드 부지 시공을 이끈다",
+  "anon": false
+ },
+ {
+  "id": "revolut",
+  "name": "Revolut Ltd.",
+  "name_ko": "레볼루트",
+  "entity_type": "end_user",
+  "legal_name": "Revolut Ltd.",
+  "display_name": "레볼루트",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "영국",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "AI 클라우드와 토큰 팩토리 이용사. H100 200기 넘게 쓴다",
+  "anon": false
+ },
+ {
+  "id": "recraft",
+  "name": "Recraft",
+  "name_ko": "리크래프트",
+  "entity_type": "end_user",
+  "legal_name": "Recraft",
+  "display_name": "리크래프트",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "200억 변수 기반 모델을 네비우스에서 학습했다",
+  "anon": false
+ },
+ {
+  "id": "sword-health",
+  "name": "Sword Health",
+  "name_ko": "소드 헬스",
+  "entity_type": "end_user",
+  "legal_name": "Sword Health",
+  "display_name": "소드 헬스",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "블랙웰 전용 엔드포인트와 토큰 팩토리를 쓴다",
+  "anon": false
+ },
+ {
+  "id": "prime-intellect",
+  "name": "Prime Intellect",
+  "name_ko": "프라임 인텔렉트",
+  "entity_type": "end_user",
+  "legal_name": "Prime Intellect",
+  "display_name": "프라임 인텔렉트",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "분산 학습과 강화학습에 쓰고 최신 시스템을 시험하는 자리로도 쓴다",
+  "anon": false
+ },
+ {
+  "id": "lynx-analytics",
+  "name": "Lynx Analytics",
+  "name_ko": "링크스 애널리틱스",
+  "entity_type": "end_user",
+  "legal_name": "Lynx Analytics",
+  "display_name": "링크스 애널리틱스",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "그래프 AI 작업을 돌린다",
+  "anon": false
+ },
+ {
+  "id": "roboforce",
+  "name": "RoboForce",
+  "name_ko": "로보포스",
+  "entity_type": "end_user",
+  "legal_name": "RoboForce",
+  "display_name": "로보포스",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "물리 AI 학습과 평가에 쓴다",
+  "anon": false
+ },
+ {
+  "id": "basecamp-research",
+  "name": "Basecamp Research",
+  "name_ko": "베이스캠프 리서치",
+  "entity_type": "end_user",
+  "legal_name": "Basecamp Research",
+  "display_name": "베이스캠프 리서치",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "영국",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "영국 첫 배치의 파트너로 이름이 들어갔다",
+  "anon": false
+ },
+ {
+  "id": "prima-mente",
+  "name": "Prima Mente",
+  "name_ko": "프리마 멘테",
+  "entity_type": "end_user",
+  "legal_name": "Prima Mente",
+  "display_name": "프리마 멘테",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "영국",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "H200 32기 예약 클러스터로 대규모 사전학습을 돌린다",
+  "anon": false
+ },
+ {
+  "id": "ne-cust-c",
+  "name": "Anonymous Customer C",
+  "name_ko": "익명 고객 C",
+  "entity_type": "company",
+  "legal_name": "Anonymous Customer C",
+  "display_name": "익명 고객 C",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Customer",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Customer"
+  ],
+  "desc": "공시가 비중만 밝힌 고객. 실명은 비공개다",
+  "anon": true
+ },
+ {
+  "id": "ne-cust-d",
+  "name": "Anonymous Customer D",
+  "name_ko": "익명 고객 D",
+  "entity_type": "company",
+  "legal_name": "Anonymous Customer D",
+  "display_name": "익명 고객 D",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Customer",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Customer"
+  ],
+  "desc": "공시가 비중만 밝힌 고객. 실명은 비공개다",
+  "anon": true
+ },
+ {
+  "id": "ne-cust-e",
+  "name": "Anonymous Customer E",
+  "name_ko": "익명 고객 E",
+  "entity_type": "company",
+  "legal_name": "Anonymous Customer E",
+  "display_name": "익명 고객 E",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Customer",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Customer"
+  ],
+  "desc": "공시가 비중만 밝힌 고객. 실명은 비공개다",
+  "anon": true
+ },
+ {
+  "id": "ne-mantsala",
+  "name": "Mäntsälä AI data center",
+  "name_ko": "만찰라 데이터센터",
+  "entity_type": "project_spv",
+  "legal_name": "Mäntsälä AI data center",
+  "display_name": "만찰라 데이터센터",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "핀란드",
+  "categories": [
+   "Project"
+  ],
+  "desc": "네비우스가 소유한 핵심 데이터센터. 2026년 3월에 75MW 로 확장을 마쳤다",
+  "anon": false
+ },
+ {
+  "id": "ne-vineland",
+  "name": "Vineland AI infrastructure site",
+  "name_ko": "바인랜드 부지",
+  "entity_type": "project_spv",
+  "legal_name": "Vineland AI infrastructure site",
+  "display_name": "바인랜드 부지",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "데이터원이 소유·운영하고 네비우스가 임차한다. 마이크로소프트 용량이 앉는 자리",
+  "anon": false
+ },
+ {
+  "id": "ne-pa10",
+  "name": "Equinix PA10",
+  "name_ko": "에퀴닉스 PA10",
+  "entity_type": "project_spv",
+  "legal_name": "Equinix PA10",
+  "display_name": "에퀴닉스 PA10",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "프랑스",
+  "categories": [
+   "Project"
+  ],
+  "desc": "파리 생드니 코로케이션 부지",
+  "anon": false
+ },
+ {
+  "id": "ne-lappeenranta",
+  "name": "Lappeenranta AI factory",
+  "name_ko": "라펜란타 AI 팩토리",
+  "entity_type": "project_spv",
+  "legal_name": "Lappeenranta AI factory",
+  "display_name": "라펜란타 AI 팩토리",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "핀란드",
+  "categories": [
+   "Project"
+  ],
+  "desc": "최대 310MW. 첫 용량은 2027년으로 예고됐다",
+  "anon": false
+ },
+ {
+  "id": "ne-independence",
+  "name": "Independence AI factory",
+  "name_ko": "인디펜던스 AI 팩토리",
+  "entity_type": "project_spv",
+  "legal_name": "Independence AI factory",
+  "display_name": "인디펜던스 AI 팩토리",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "미주리. 잠재 용량 최대 1.2GW",
+  "anon": false
+ },
+ {
+  "id": "nebius-indirect-undisclosed",
+  "name": "Undisclosed indirect customer",
+  "name_ko": "간접 고객 미상",
+  "entity_type": "end_user",
+  "anon": true,
+  "country": null,
+  "legal_name": "간접 고객 미상(비공개)",
+  "display_name": "간접 고객 미상",
+  "desc": "중개 뒤에 누가 쓰는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null
  }
 ]

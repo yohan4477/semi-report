@@ -1,0 +1,470 @@
+[
+ {
+  "id": "clm-ne-q2-revenue",
+  "statement": "네비우스의 2026년 2분기 총매출은 5억 8,230만 달러다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex991"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-q2-cloud",
+  "statement": "그 가운데 AI 클라우드 부문 매출이 5억 7,490만 달러다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex991"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-cloud-share",
+  "statement": "AI 클라우드가 총매출의 98.7%를 차지한다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.9,
+  "source_ids": [
+   "ne_6k_q2_ex991"
+  ],
+  "note": "574.9 를 582.3 으로 나눈 값이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-h1-revenue",
+  "statement": "2026년 상반기 총매출은 9억 8,130만 달러, AI 클라우드는 9억 6,460만 달러다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "H1 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex991"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-rpo",
+  "statement": "2026년 6월 말 잔여 이행 의무가 374억 9,060만 달러이고 전부 AI 클라우드 부문에서 나온다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026-06-30",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex992"
+  ],
+  "note": "공시가 고객별로 나누지 않았으니 실명에 배분하지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-supplier-3",
+  "statement": "설비투자 익스포저가 공급사 세 곳에 몰려 있다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026-06-30",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex992"
+  ],
+  "note": "실명과 각 몫은 비공개다. 엔비디아를 그 셋 중 하나로 지목할 근거는 없다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-nvidia",
+  "statement": "엔비디아는 GPU·네트워크 공급사이자 전략 파트너이며 투자자다.",
+  "subject": "nvidia",
+  "object": "nebius",
+  "period": "2026-03~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_nvidia",
+   "ne_20f_2025"
+  ],
+  "note": "2030년 말까지 5GW 넘는 시스템 목표와 20억 달러 투자가 같은 발표에 있다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-microsoft",
+  "statement": "마이크로소프트와 맺은 전용 GPU 인프라 계약은 약 174억 달러 규모의 5년짜리다.",
+  "subject": "microsoft",
+  "object": "nebius-inc",
+  "period": "2025-09~2031",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_microsoft"
+  ],
+  "note": "선택 서비스까지 더하면 약 194억 달러",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-meta",
+  "statement": "메타와 맺은 전용 용량 계약은 5년 120억 달러이고 인도는 2027년 초에 시작한다.",
+  "subject": "meta",
+  "object": "nebius",
+  "period": "2026-03~2032",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_meta"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-meta-commit",
+  "statement": "메타는 일부 신규 클러스터의 잔여 용량을 최대 150억 달러까지 사기로 약정했다.",
+  "subject": "meta",
+  "object": "nebius",
+  "period": "2026-03~2032",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_meta"
+  ],
+  "note": "약정이지 인식될 매출이 아니다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-bloom",
+  "statement": "블룸에너지와의 전력 제휴에서 1차 프로젝트 용량이 328MW다.",
+  "subject": "bloom-energy",
+  "object": "nebius",
+  "period": "2026-05~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_bloom"
+  ],
+  "note": "이 용량을 바인랜드 부지로 잇는 문장은 원문에 없다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-vineland",
+  "statement": "바인랜드 시설은 데이터원이 소유·운영하고 네비우스가 임차한다.",
+  "subject": "dataone",
+  "object": "nebius-inc",
+  "period": "2026~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_vineland"
+  ],
+  "note": "시공은 노스이스트 프리캐스트가 이끈다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-paris",
+  "statement": "파리 배치는 에퀴닉스 PA10 코로케이션에 있다.",
+  "subject": "equinix",
+  "object": "nebius",
+  "period": "2024~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_paris"
+  ],
+  "note": "생드니",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-storage",
+  "statement": "WEKA 와 VAST 데이터의 스토리지 소프트웨어가 네비우스 하드웨어에 얹힌다.",
+  "subject": "weka",
+  "object": "nebius",
+  "period": "2025~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_weka",
+   "ne_vast"
+  ],
+  "note": "쓰는 돈과 용량의 몫은 비공개다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-asset-light",
+  "statement": "파트너가 인프라와 하드웨어를 사고 소유하는 자산 경량 모델을 내놨다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026-07~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_partnership_model"
+  ],
+  "note": "네비우스는 설계·공급망·플랫폼·영업을 댄다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-palantir",
+  "statement": "팔란티어와 주권 AI 우선 파트너 관계를 맺었다.",
+  "subject": "palantir",
+  "object": "nebius",
+  "period": "2026-09~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_palantir"
+  ],
+  "note": "계약 근거가 없으니 팔란티어를 직접 고객으로 적지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-palantir-indirect",
+  "statement": "통합을 마친 팔란티어 상용 고객이 네비우스 연산·추론을 쓸 수 있다.",
+  "subject": "palantir",
+  "object": null,
+  "period": "2026-09~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_palantir"
+  ],
+  "note": "개별 고객 실명은 비공개다. 자리표로 닫고 이름을 짓지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-lappeenranta",
+  "statement": "라펜란타 AI 팩토리는 최대 310MW로 발표됐고 첫 용량은 2027년이다.",
+  "subject": "ne-lappeenranta",
+  "object": "nebius",
+  "period": "2026-03",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_finland"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-independence",
+  "statement": "미주리 인디펜던스 AI 팩토리의 잠재 용량은 최대 1.2GW다.",
+  "subject": "ne-independence",
+  "object": "nebius",
+  "period": "2026-03",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_missouri"
+  ],
+  "note": "2026년 5월 12일에 착공했다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-mantsala",
+  "statement": "만찰라 데이터센터는 2026년 3월 말 기준 75MW로 확장을 마쳤다.",
+  "subject": "ne-mantsala",
+  "object": "nebius",
+  "period": "2026-03-31",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_finland",
+   "ne_20f_2025"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-revolut",
+  "statement": "레볼루트는 AI 클라우드와 토큰 팩토리를 쓰며 H100 을 200기 넘게 돌린다.",
+  "subject": "revolut",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_revolut"
+  ],
+  "note": "사기 방지·고객 응대·모델 작업에 쓴다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-recraft",
+  "statement": "리크래프트는 네비우스에서 200억 변수 기반 모델을 학습했다.",
+  "subject": "recraft",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_recraft"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-sword",
+  "statement": "소드 헬스는 블랙웰 전용 엔드포인트와 토큰 팩토리를 쓴다.",
+  "subject": "sword-health",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_sword"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-prime",
+  "statement": "프라임 인텔렉트는 최신 시스템을 시험하는 자리로도 네비우스를 쓴다.",
+  "subject": "prime-intellect",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_prime_intellect"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-lynx",
+  "statement": "링크스 애널리틱스는 그래프 AI 작업에 네비우스 인프라를 쓴다.",
+  "subject": "lynx-analytics",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_lynx"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-roboforce",
+  "statement": "로보포스는 물리 AI 학습과 평가에 AI 클라우드를 쓴다.",
+  "subject": "roboforce",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_roboforce"
+  ],
+  "note": "고객 사례는 준비 시간이 70% 줄었다고 적는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-prima",
+  "statement": "프리마 멘테는 H200 32기 예약 클러스터로 대규모 사전학습을 돌린다.",
+  "subject": "prima-mente",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_prima_mente"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-basecamp",
+  "statement": "베이스캠프 리서치는 영국 첫 배치의 이용사로 이름이 올랐다.",
+  "subject": "basecamp-research",
+  "object": "nebius",
+  "period": "2025-11~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_uk"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-debt",
+  "statement": "GPU 를 담보로 잡은 선순위 담보부 차입 약 7억 7,500만 달러를 일으켰다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026-07",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_debt_775"
+  ],
+  "note": "SOFR 에 2.50%를 얹고 2030년 10월 31일에 만기가 온다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-convertible",
+  "statement": "전환사채 두 갈래로 원금 합계 57억 5,000만 달러를 조달했다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026-08",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_convertible"
+  ],
+  "note": "2030년 만기 0.50% 34억 5,000만 달러와 2034년 만기 4.50% 23억 달러",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-anon-nomap",
+  "statement": "익명 고객 C·D·E 를 공개 실명 고객에 잇는 근거는 공시에 없다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex992"
+  ],
+  "note": "01 조사도 매핑을 거부했다. 이 사슬에는 가설표가 없다",
+  "subject_classification": null,
+  "object_classification": null
+ }
+]

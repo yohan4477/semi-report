@@ -1078,5 +1078,265 @@
   "url": "https://www.hankyung.com/article/202607168611O",
   "accessed_date": "2026-09-11",
   "note": "1억 달러 자동화 패키지가 4GW 양산 라인용이라는 2차 보도. 공시 문구가 아니다. 03 의 SRC050"
+ },
+ {
+  "id": "ne_20f_2025",
+  "publisher": "SEC / Nebius Group",
+  "title": "Nebius Group N.V. 2025 Form 20-F",
+  "source_type": "primary_official",
+  "published_date": "2026-04",
+  "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+  "accessed_date": "2026-09-12",
+  "note": "사업 구조·공급사 의존·고객 집중도의 원천. 03 의 S001"
+ },
+ {
+  "id": "ne_6k_q2_ex991",
+  "publisher": "SEC / Nebius Group",
+  "title": "Q2 2026 Form 6-K Exhibit 99.1",
+  "source_type": "primary_official",
+  "published_date": "2026-08-12",
+  "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm",
+  "accessed_date": "2026-09-12",
+  "note": "2026 2분기 매출과 부문 매출. 03 의 S002"
+ },
+ {
+  "id": "ne_6k_q2_ex992",
+  "publisher": "SEC / Nebius Group",
+  "title": "Q2 2026 Form 6-K Exhibit 99.2",
+  "source_type": "primary_official",
+  "published_date": "2026-08-12",
+  "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm",
+  "accessed_date": "2026-09-12",
+  "note": "고객 집중도 C·D·E, 잔여 이행 의무, 공급사 수. 03 의 S003"
+ },
+ {
+  "id": "ne_microsoft",
+  "publisher": "Nebius",
+  "title": "Nebius announces multi-billion dollar agreement with Microsoft for AI infrastructure",
+  "source_type": "primary_company",
+  "published_date": "2025-09-08",
+  "url": "https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure",
+  "accessed_date": "2026-09-12",
+  "note": "뉴저지 바인랜드 전용 GPU 인프라 5년 계약. 03 의 S004"
+ },
+ {
+  "id": "ne_meta",
+  "publisher": "Nebius",
+  "title": "Nebius signs new AI infrastructure agreement with Meta",
+  "source_type": "primary_company",
+  "published_date": "2026-03-16",
+  "url": "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta",
+  "accessed_date": "2026-09-12",
+  "note": "5년 120억 달러와 잔여 용량 최대 150억 달러 구매 약정. 03 의 S005"
+ },
+ {
+  "id": "ne_nvidia",
+  "publisher": "Nebius / NVIDIA",
+  "title": "NVIDIA and Nebius partner to scale full-stack AI cloud",
+  "source_type": "primary_company",
+  "published_date": "2026-03-11",
+  "url": "https://nebius.com/newsroom/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud",
+  "accessed_date": "2026-09-12",
+  "note": "20억 달러 투자와 2030년 말까지 5GW 넘는 시스템 목표. 03 의 S006"
+ },
+ {
+  "id": "ne_bloom",
+  "publisher": "Nebius / Bloom Energy",
+  "title": "Nebius and Bloom Energy partner to power AI infrastructure build-out",
+  "source_type": "primary_company",
+  "published_date": "2026-05-20",
+  "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+  "accessed_date": "2026-09-12",
+  "note": "1차 프로젝트 328MW 계량기 뒤 전력. 03 의 S007"
+ },
+ {
+  "id": "ne_vineland",
+  "publisher": "Nebius",
+  "title": "Vineland, New Jersey AI infrastructure site",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/vinelandnj",
+  "accessed_date": "2026-09-12",
+  "note": "데이터원이 소유·운영하고 네비우스가 임차한다. 시공은 노스이스트 프리캐스트. 03 의 S008"
+ },
+ {
+  "id": "ne_paris",
+  "publisher": "Nebius",
+  "title": "Nebius launches GPU cluster in Paris, France",
+  "source_type": "primary_company",
+  "published_date": "2024",
+  "url": "https://nebius.com/blog/posts/nebius-launches-gpu-cluster-in-paris-france",
+  "accessed_date": "2026-09-12",
+  "note": "파리 생드니 에퀴닉스 PA10 배치. 03 의 S009"
+ },
+ {
+  "id": "ne_weka",
+  "publisher": "Nebius",
+  "title": "WEKA partner integration",
+  "source_type": "primary_company",
+  "published_date": "2025",
+  "url": "https://nebius.com/partner-catalog/weka",
+  "accessed_date": "2026-09-12",
+  "note": "NeuralMesh 를 네비우스 하드웨어에 얹는다. 03 의 S010"
+ },
+ {
+  "id": "ne_vast",
+  "publisher": "Nebius",
+  "title": "VAST Data partner integration",
+  "source_type": "primary_company",
+  "published_date": "2025",
+  "url": "https://nebius.com/partner-catalog/vast",
+  "accessed_date": "2026-09-12",
+  "note": "VAST Data Platform 통합. 03 의 S011"
+ },
+ {
+  "id": "ne_partnership_model",
+  "publisher": "Nebius",
+  "title": "Nebius introduces business model to scale AI cloud globally through infrastructure partnerships",
+  "source_type": "primary_company",
+  "published_date": "2026-07-15",
+  "url": "https://nebius.com/newsroom/nebius-introduces-business-model-to-scale-ai-cloud-globally-through-infrastructure-partnerships",
+  "accessed_date": "2026-09-12",
+  "note": "파트너가 인프라와 하드웨어를 사고 소유하는 자산 경량 모델. 03 의 S012"
+ },
+ {
+  "id": "ne_palantir",
+  "publisher": "Nebius / Palantir",
+  "title": "Palantir and Nebius partner to deliver a complete sovereign AI stack",
+  "source_type": "primary_company",
+  "published_date": "2026-09-08",
+  "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+  "accessed_date": "2026-09-12",
+  "note": "주권 AI 우선 파트너. 03 의 S013"
+ },
+ {
+  "id": "ne_q2_results",
+  "publisher": "Nebius",
+  "title": "Nebius reports second quarter 2026 financial results",
+  "source_type": "primary_company",
+  "published_date": "2026-08-12",
+  "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results",
+  "accessed_date": "2026-09-12",
+  "note": "2026 2분기 실적 발표. 03 의 S014"
+ },
+ {
+  "id": "ne_finland",
+  "publisher": "Nebius",
+  "title": "Nebius to construct 310 MW AI factory in Finland",
+  "source_type": "primary_company",
+  "published_date": "2026-03-31",
+  "url": "https://nebius.com/newsroom/nebius-to-construct-310-mw-ai-factory-in-finland",
+  "accessed_date": "2026-09-12",
+  "note": "라펜란타 최대 310MW, 첫 용량은 2027년. 만찰라 75MW 확장 완료도 같은 발표. 03 의 S015"
+ },
+ {
+  "id": "ne_missouri",
+  "publisher": "Nebius",
+  "title": "Nebius secures approval for its first gigawatt-scale AI factory",
+  "source_type": "primary_company",
+  "published_date": "2026-03-03",
+  "url": "https://nebius.com/newsroom/nebius-secures-approval-for-its-first-gigawatt-scale-ai-factory",
+  "accessed_date": "2026-09-12",
+  "note": "미주리 인디펜던스 최대 1.2GW 잠재 용량. 03 의 S016"
+ },
+ {
+  "id": "ne_revolut",
+  "publisher": "Nebius",
+  "title": "Revolut on the Inference Frontier",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/revolut",
+  "accessed_date": "2026-09-12",
+  "note": "H100 200기 넘는 사용. 03 의 S017"
+ },
+ {
+  "id": "ne_recraft",
+  "publisher": "Nebius",
+  "title": "Training a 20B foundational model: Recraft's journey",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/recraft",
+  "accessed_date": "2026-09-12",
+  "note": "200억 변수 모델 학습. 03 의 S018"
+ },
+ {
+  "id": "ne_sword",
+  "publisher": "Nebius",
+  "title": "Building Dawn: AI-powered mental health wellbeing support",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/swordhealth",
+  "accessed_date": "2026-09-12",
+  "note": "블랙웰 전용 엔드포인트와 토큰 팩토리. 03 의 S019"
+ },
+ {
+  "id": "ne_prime_intellect",
+  "publisher": "Nebius",
+  "title": "Prime Intellect: Distributed training and RL with NVIDIA GB200 NVL72",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/prime-intellect",
+  "accessed_date": "2026-09-12",
+  "note": "분산 학습과 강화학습. 03 의 S020"
+ },
+ {
+  "id": "ne_lynx",
+  "publisher": "Nebius",
+  "title": "Lynx Analytics: Scaling Graph AI to solve complex business problems",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/lynx-analytics",
+  "accessed_date": "2026-09-12",
+  "note": "그래프 AI 작업. 03 의 S021"
+ },
+ {
+  "id": "ne_roboforce",
+  "publisher": "Nebius",
+  "title": "Building Robo-Labor: How RoboForce is turning Physical AI into work",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/roboforce",
+  "accessed_date": "2026-09-12",
+  "note": "물리 AI 학습·평가. 03 의 S022"
+ },
+ {
+  "id": "ne_prima_mente",
+  "publisher": "Nebius",
+  "title": "Scaling Pleiades: Uncovering the brain's biology with Prima Mente",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://nebius.com/customer-stories/prima-mente",
+  "accessed_date": "2026-09-12",
+  "note": "H200 32기 예약 클러스터. 03 의 S023"
+ },
+ {
+  "id": "ne_uk",
+  "publisher": "Nebius",
+  "title": "Nebius AI Cloud arrives in UK with advanced NVIDIA AI infrastructure deployment",
+  "source_type": "primary_company",
+  "published_date": "2025-11-06",
+  "url": "https://nebius.com/newsroom/nebius-ai-cloud-arrives-in-uk-with-one-of-the-country-s-first-advanced-nvidia-ai-infrastructure-deployments",
+  "accessed_date": "2026-09-12",
+  "note": "영국 첫 배치 파트너로 베이스캠프 리서치·프리마 멘테. 03 의 S024"
+ },
+ {
+  "id": "ne_debt_775",
+  "publisher": "Nebius",
+  "title": "Nebius raises $775 million in first secured debt financing",
+  "source_type": "primary_company",
+  "published_date": "2026-07-17",
+  "url": "https://nebius.com/newsroom/nebius-raises-775-million-in-first-secured-debt-financing-to-accelerate-global-buildout",
+  "accessed_date": "2026-09-12",
+  "note": "GPU 를 담보로 잡은 선순위 담보부 7억 7,500만 달러. 03 의 S025"
+ },
+ {
+  "id": "ne_convertible",
+  "publisher": "Nebius Group",
+  "title": "Nebius Group closes $5.75B convertible senior notes offering",
+  "source_type": "primary_company",
+  "published_date": "2026-08-24",
+  "url": "https://nebius.com/newsroom/nebius-group-announces-closing-of-private-offering-of-convertible-senior-notes-with-aggregate-gross-proceeds-of-approximately-5-75-billion",
+  "accessed_date": "2026-09-12",
+  "note": "전환사채 두 갈래 합계 57억 5,000만 달러. 03 의 S026"
  }
 ]
