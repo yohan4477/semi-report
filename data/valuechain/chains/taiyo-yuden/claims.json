@@ -1,0 +1,133 @@
+[
+ {
+  "id": "clm-ty-revenue-fy2026",
+  "statement": "태양유전의 FY2026(2026년 3월 결산) 매출은 355,341백만엔, 매출원가는 273,412백만엔, 매출총이익은 81,928백만엔이다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ty_fin_2026"
+  ],
+  "note": "매출총이익률은 약 23.1%다. FY2025(2025년 3월 결산) 매출은 341,438백만엔·매출원가는 269,867백만엔이었다(04의 O001)"
+ },
+ {
+  "id": "clm-ty-forecast-fy2027",
+  "statement": "태양유전은 FY2027(2027년 3월 결산) 매출 424,000백만엔·영업이익 45,000백만엔을 전망한다(2026-08-05 발표).",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "FY2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ty_forecast_2027"
+  ],
+  "note": "FY2027 1분기 매출은 939억 엔이며 회사는 AI 서버 수요를 핵심 성장동인으로 꼽는다"
+ },
+ {
+  "id": "clm-ty-product-mix",
+  "statement": "FY2026 제품별 매출은 Capacitors 251,771백만엔(70.9%)·Inductors 64,319백만엔(18.1%)·Integrated Modules & Devices 14,796백만엔(4.2%)·Others 24,453백만엔(6.9%)이다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ty_product_2026"
+  ],
+  "note": "Integrated Modules·Others 두 갈래는 04 표에 관측 번호가 없어 관측이 아니라 이 주장으로만 남긴다"
+ },
+ {
+  "id": "clm-ty-vertical-integration",
+  "statement": "태양유전은 Haruna·Yawatabara 공장의 세라믹 분말, Nakanojo 공장의 인덕터 코어·분말, TY Chemical Technology 의 도금까지 소재·공정을 그룹 안에 갖췄다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": null,
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ty_internal_material"
+  ],
+  "note": "외부 분말 공급사에서 사들여 최종 조립만 한다는 단순한 구조가 아니다"
+ },
+ {
+  "id": "clm-ty-supplier-undisclosed",
+  "statement": "태양유전은 약 2,600개 공급사와 거래하고 2025년 중요 공급사 약 500개를 관리하지만 개별 핵심 원재료 공급사의 실명·구매비중은 공개하지 않는다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ty_procurement",
+   "ty_material_risk"
+  ],
+  "note": "일부 원재료는 특정 공급사 의존도가 높아 장기공급계약으로 조달한다고만 밝힌다"
+ },
+ {
+  "id": "clm-ty-candidates-excluded",
+  "statement": "Sumitomo Metal Mining 등 니켈·BaTiO3 계열 업체는 제품 정합성만 있는 산업 후보일 뿐 태양유전과의 직접 거래 근거가 없어 공급사 노드로 넣지 않는다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": null,
+  "source_ids": [
+   "ty_material_risk"
+  ],
+  "note": "근거 없는 공급사 이름을 그래프에 올리지 않는다는 원칙을 지킨 결과다"
+ },
+ {
+  "id": "clm-ty-sakai-historical",
+  "statement": "Sakai Chemical BT04 BaTiO3 는 과거 태양유전 관련 MLCC 연구에 쓰인 사례일 뿐 현재 공급사 관계를 확인해 주지 않는다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": null,
+  "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
+  "confidence": null,
+  "source_ids": [
+   "sakai_hist"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-ty-shipments-202606",
+  "statement": "2026년 6월 태양유전 MLCC 출하는 약 400억 개로 5년래 월간 최고치다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "2026-06",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ai_tf_20260728"
+  ],
+  "note": "TrendForce 조사 기준 산업 추정치다. 회사 분기 실적의 수주·출하 지표와 정의가 다르다(원표기: CONFIRMED industry estimate · 04의 O009)"
+ },
+ {
+  "id": "clm-ty-bb-ratio-202606",
+  "statement": "2026년 6월 말 기준 태양유전 BB(수주잔고) 비율은 1.25배다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "2026-06",
+  "evidence_level": "CONFIRMED",
+  "confidence": null,
+  "source_ids": [
+   "ai_bb_202607"
+  ],
+  "note": "TrendForce 조사 기준 산업 추정치이며 회사 분기 실적 자료의 BB 지표와는 정의·기간이 달라 섞지 않는다(원표기: CONFIRMED industry estimate · 04의 O010)"
+ },
+ {
+  "id": "clm-ty-ai-exposure-scenario",
+  "statement": "IT 인프라·산업용 27% 가운데 AI 서버 비중을 40/50/60%로 가정하면 회사 매출 노출은 10.8/13.5/16.2%로 추정된다. 실제 AI 전용 매출은 공개되지 않는다.",
+  "subject": "taiyo-yuden",
+  "object": null,
+  "period": "FY2027 Q1 vicinity",
+  "evidence_level": "ESTIMATED",
+  "confidence": null,
+  "source_ids": [
+   "ai_share_scenario"
+  ],
+  "note": "시나리오일 뿐 확정치가 아니다(04의 O011)"
+ }
+]

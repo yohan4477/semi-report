@@ -17,7 +17,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
 
 # 화면에 싣는 사슬. 구조는 여러 사슬을 받지만 지금 내보내는 것은 이 하나다
-SHIP = ['bloom-energy', 'kr-substrate']
+SHIP = ['bloom-energy', 'kr-substrate', 'taiyo-yuden']
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -1088,7 +1088,8 @@ function Swim(p){
 }
 
 // ── 근거 ────────────────────────────────────────────────────────────
-var CHAIN_KO = { 'bloom-energy':'블룸에너지', 'kr-substrate':'반도체 기판', 'nvidia':'엔비디아' };
+var CHAIN_KO = { 'bloom-energy':'블룸에너지', 'kr-substrate':'반도체 기판',
+  'taiyo-yuden':'태양유전', 'nvidia':'엔비디아' };
 function chainKo(k){ return CHAIN_KO[k] || k; }
 
 // ── 회사 목록 ───────────────────────────────────────────────────────

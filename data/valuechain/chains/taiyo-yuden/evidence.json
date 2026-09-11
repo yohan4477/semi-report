@@ -1,0 +1,200 @@
+[
+ {
+  "id": "ty-e001",
+  "relationship_id": "haruna-ceramic-powder",
+  "metric_id": null,
+  "source_id": "ty_internal_material",
+  "evidence_type": "direct",
+  "evidence": "그룹 안 공정이다(04의 E001·신뢰도 0.95)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e002",
+  "relationship_id": "yawatabara-ceramic-powder",
+  "metric_id": null,
+  "source_id": "ty_internal_material",
+  "evidence_type": "direct",
+  "evidence": "그룹 안 공정이다(04의 E002·신뢰도 0.95)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e003",
+  "relationship_id": "tychem-plating",
+  "metric_id": null,
+  "source_id": "ty_internal_material",
+  "evidence_type": "direct",
+  "evidence": "자회사가 맡는 도금 공정이다(04의 E003·신뢰도 0.95)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e004",
+  "relationship_id": "nakanojo-inductor-material",
+  "metric_id": null,
+  "source_id": "ty_internal_material",
+  "evidence_type": "direct",
+  "evidence": "그룹 안 소재 공정이다(04의 E004·신뢰도 0.95)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e005",
+  "relationship_id": "niigata-mlcc",
+  "metric_id": null,
+  "source_id": "ty_capacity",
+  "evidence_type": "direct",
+  "evidence": "생산 자회사다(04의 E005·신뢰도 0.98)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e006",
+  "relationship_id": "korea-mlcc",
+  "metric_id": null,
+  "source_id": "ty_capacity",
+  "evidence_type": "direct",
+  "evidence": "생산 자회사다(04의 E006·신뢰도 0.98)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e007",
+  "relationship_id": "guangdong-mlcc",
+  "metric_id": null,
+  "source_id": "ty_capacity",
+  "evidence_type": "direct",
+  "evidence": "생산 자회사다(04의 E007·신뢰도 0.98)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e008",
+  "relationship_id": "changzhou-mlcc",
+  "metric_id": null,
+  "source_id": "ty_capacity",
+  "evidence_type": "direct",
+  "evidence": "새로 늘린 생산능력이다(04의 E008·신뢰도 0.98)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e009",
+  "relationship_id": "sarawak-mlcc",
+  "metric_id": null,
+  "source_id": "ty_capacity",
+  "evidence_type": "direct",
+  "evidence": "새로 늘린 생산능력이다(04의 E009·신뢰도 0.98)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e010",
+  "relationship_id": "ty-apple-supply-chain",
+  "metric_id": null,
+  "source_id": "apple_supplier",
+  "evidence_type": "direct",
+  "evidence": "Apple 공급사 명단에 오른 관계다. 매출 비중은 공개되지 않았다(04의 E010·신뢰도 0.9)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e011",
+  "relationship_id": "ty-apple-supply-chain",
+  "metric_id": null,
+  "source_id": "apple_tf",
+  "evidence_type": "direct",
+  "evidence": "Apple 공급사 명단에 오른 관계다. 매출 비중은 공개되지 않았다(04의 E010·신뢰도 0.9)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e012",
+  "relationship_id": "ty-vw-qualification",
+  "metric_id": null,
+  "source_id": "vw_qual",
+  "evidence_type": "direct",
+  "evidence": "인증일 뿐 직접고객 관계의 근거는 아니다(04의 E011·신뢰도 0.85)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e013",
+  "relationship_id": "ty-nvidia-platform-exposure",
+  "metric_id": null,
+  "source_id": "ai_platform",
+  "evidence_type": "indirect",
+  "evidence": "직접 구매 근거는 없다(04의 E012·신뢰도 0.55)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e014",
+  "relationship_id": "ty-google-platform-exposure",
+  "metric_id": null,
+  "source_id": "ai_platform",
+  "evidence_type": "indirect",
+  "evidence": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E013·신뢰도 0.6)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e015",
+  "relationship_id": "ty-google-platform-exposure",
+  "metric_id": null,
+  "source_id": "ai_tf_20260728",
+  "evidence_type": "indirect",
+  "evidence": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E013·신뢰도 0.6)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e016",
+  "relationship_id": "ty-aws-platform-exposure",
+  "metric_id": null,
+  "source_id": "ai_platform",
+  "evidence_type": "indirect",
+  "evidence": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e017",
+  "relationship_id": "ty-aws-platform-exposure",
+  "metric_id": null,
+  "source_id": "ai_tf_20260728",
+  "evidence_type": "indirect",
+  "evidence": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e018",
+  "relationship_id": "ty-rev-capacitor-edge",
+  "metric_id": null,
+  "source_id": "ty_product_2026",
+  "evidence_type": "direct",
+  "evidence": "FY2026 제품별 매출 축이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e019",
+  "relationship_id": "ty-rev-inductor-edge",
+  "metric_id": null,
+  "source_id": "ty_product_2026",
+  "evidence_type": "direct",
+  "evidence": "FY2026 제품별 매출 축이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e020",
+  "relationship_id": "ty-rev-capacitor-edge",
+  "metric_id": "o-ty-capacitor-share",
+  "source_id": "ty_product_2026",
+  "evidence_type": "direct",
+  "evidence": "251,771백만엔(04의 O002)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e021",
+  "relationship_id": "ty-rev-inductor-edge",
+  "metric_id": "o-ty-inductor-share",
+  "source_id": "ty_product_2026",
+  "evidence_type": "direct",
+  "evidence": "64,319백만엔(04의 O003)",
+  "hypothesis_id": null
+ },
+ {
+  "id": "ty-e022",
+  "relationship_id": "ty-app-it-infra-industrial",
+  "metric_id": "o-ty-ai-exposure-scenario",
+  "source_id": "ai_share_scenario",
+  "evidence_type": "direct",
+  "evidence": "시나리오일 뿐 실제 AI 전용 매출은 공개되지 않는다(04의 O011)",
+  "hypothesis_id": null
+ }
+]

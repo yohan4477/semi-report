@@ -398,5 +398,455 @@
   "url": "https://dealsite.co.kr/articles/142211",
   "accessed_date": "2026-09-11",
   "note": "고객사로 삼성전자와 SK하이닉스를 든다. 메모리 패키지기판이 전체 매출의 약 90%. FC-BGA 매출은 1,781억 원으로 전년 대비 20% 줄었고 분기 400억 원대. 인포테인먼트·디지털 클러스터·자율주행용 FC-BGA 고객사는 이름을 밝히지 않는다"
+ },
+ {
+  "id": "be_10qa_2026q2",
+  "publisher": "Bloom Energy",
+  "title": "Form 10-Q/A (2026 Q2 정정)",
+  "source_type": "primary_official",
+  "published_date": "2026-07-29",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026050325/be-20260630.htm",
+  "accessed_date": "2026-09-11",
+  "note": "정정 공시. 상반기 44%·21%, 2분기 73%. 오라클은 「고객의 고객」 회계처리"
+ },
+ {
+  "id": "be_424b7_2026",
+  "publisher": "Bloom Energy",
+  "title": "Form 424B7 (오라클 워런트)",
+  "source_type": "primary_official",
+  "published_date": "2026-04-27",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000119312526179296/d253699d424b7.htm",
+  "accessed_date": "2026-09-11",
+  "note": "2025-07 오라클 공급계약과 2026-03 마스터 서비스 계약"
+ },
+ {
+  "id": "aep_ohio_2025",
+  "publisher": "AEP Ohio",
+  "title": "AEP 오하이오 온사이트 전력 프로젝트 발표",
+  "source_type": "primary_company",
+  "published_date": "2025-06-05",
+  "url": "https://www.aep.com/news/stories/view/10262/",
+  "accessed_date": "2026-09-11",
+  "note": "AEP 오하이오가 AWS·콜로직스 부지에 블룸 연료전지를 설치한다. 최종 고객이 비용을 댄다"
+ },
+ {
+  "id": "kaori_ar_fy2025",
+  "publisher": "Kaori Heat Treatment",
+  "title": "2025 연차보고서",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://www.kaori.com.tw/tw/uploads/filelist/1000/2/1778739932_dc80eed76adc9748.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "블룸향 매출 NT$26.496억으로 Kaori 순매출의 40.26%. 2024 년은 NT$18.735억·28.47%"
+ },
+ {
+  "id": "cctc_ipo_2014",
+  "publisher": "CCTC",
+  "title": "IPO 공모설명서 고객 공시",
+  "source_type": "primary_official",
+  "published_date": "2014",
+  "url": "https://money.finance.sina.com.cn/corp/view/vISSUE_RaiseExplanationDetail.php?id=1558553",
+  "accessed_date": "2026-09-11",
+  "note": "2014 상반기 블룸이 CCTC 1위 고객이고 매출의 9.54%"
+ },
+ {
+  "id": "customs_sanmina_2026",
+  "publisher": "ImportInfo",
+  "title": "산미나 인도 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.importinfo.com/sanmina-sci-india-private-limited",
+  "accessed_date": "2026-09-11",
+  "note": "정지형 컨버터·CCE CORVA 직접 선적. 선적 건수는 조달 비중이 아니다"
+ },
+ {
+  "id": "customs_acbel_2026",
+  "publisher": "ImportInfo",
+  "title": "캐벨 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.importinfo.com/acbel-polytech-inc",
+  "accessed_date": "2026-09-11",
+  "note": "캐벨의 블룸 직접 선적. 캐벨에서 산미나로 가는 계층 증거는 없다"
+ },
+ {
+  "id": "customs_nash_2026",
+  "publisher": "ImportInfo",
+  "title": "내시 인더스트리스 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.importinfo.com/nash-industries-i-pvt-ltd",
+  "accessed_date": "2026-09-11",
+  "note": "KPE·CM2 산타크루즈와 CCE+1 인클로저 직접 선적"
+ },
+ {
+  "id": "customs_texon_2026",
+  "publisher": "Seair",
+  "title": "텍슨 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.seair.co.in/us-import/i-bloom-energy/e-texon-co-limited.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "강판 전기 인클로저·KPE 도어·측면 패널 직접 선적"
+ },
+ {
+  "id": "texon_history",
+  "publisher": "Texon",
+  "title": "회사 연혁",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://www.texon.co.kr/en/history/",
+  "accessed_date": "2026-09-11",
+  "note": "2015-12 최대주주가 서진시스템으로 바뀌었다"
+ },
+ {
+  "id": "seojin_ar_2025",
+  "publisher": "KRX KIND",
+  "title": "서진시스템 2025 사업보고서",
+  "source_type": "primary_official",
+  "published_date": "2026-03-23",
+  "url": "https://kind.krx.co.kr/external/2026/03/23/002251/20260323009399/11011.htm",
+  "accessed_date": "2026-09-11",
+  "note": "텍슨과 텍슨 반도체가 서진 연결 자회사다"
+ },
+ {
+  "id": "patent_stackpole",
+  "publisher": "Google Patents",
+  "title": "블룸·스택폴 금속 인터커넥트 공동 특허",
+  "source_type": "primary_official",
+  "published_date": "2015",
+  "url": "https://patents.google.com/patent/US20150244004A1/en",
+  "accessed_date": "2026-09-11",
+  "note": "2014~2018 기술 공동개발을 확인한다. 조달 점유율 근거는 아니다"
+ },
+ {
+  "id": "porite_2026_note",
+  "publisher": "Porite Taiwan",
+  "title": "SOFC 공급사 공지",
+  "source_type": "primary_company",
+  "published_date": "2026-05-11",
+  "url": "https://tw.porite.com/en-US/newsc27-the-growing-demand-for-sofc-systems-in-taiwan-and-the-role-of-powder-metallurgy-components",
+  "accessed_date": "2026-09-11",
+  "note": "블룸 인터커넥트 플레이트 장기 공급사임을 회사가 밝힌다"
+ },
+ {
+  "id": "customs_porite_2026",
+  "publisher": "Seair",
+  "title": "포리테 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2025-2026",
+  "url": "https://www.seair.co.in/us-import/i-bloom-energy-corp/e-por.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "2026 년 8월까지 직접 선적. 관계가 살아 있다는 신호일 뿐 점유율이 아니다"
+ },
+ {
+  "id": "dd_ar_fy2025",
+  "publisher": "대덕전자 / KRX KIND",
+  "title": "FY2025 사업보고서",
+  "source_type": "primary_official",
+  "published_date": "2026-03-18",
+  "url": "https://kind.krx.co.kr/",
+  "accessed_date": "2026-09-11",
+  "note": "매출·원재료 매입 구조·고객 집중도·생산능력"
+ },
+ {
+  "id": "dd_filing_1h2024",
+  "publisher": "대덕전자 / KRX KIND",
+  "title": "2024 반기보고서 주요 거래처",
+  "source_type": "primary_official",
+  "published_date": "2024-08-14",
+  "url": "https://kind.krx.co.kr/",
+  "accessed_date": "2026-09-11",
+  "note": "주요 거래처로 삼성전자·SK하이닉스·앰코테크놀로지코리아·스태츠칩팩코리아를 든다"
+ },
+ {
+  "id": "dd_ir_mix",
+  "publisher": "증권사 리서치",
+  "title": "메모리·비메모리·MLB 매출 구성",
+  "source_type": "analyst_estimate",
+  "published_date": "2025",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "FY2024 메모리 패키지기판 비중"
+ },
+ {
+  "id": "dd_ir_fcbga_mix",
+  "publisher": "증권사 리서치",
+  "title": "FC-BGA 전방 구성",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-01-30",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "4Q2025 자동차 45 · 데이터센터 30 · 네트워크 25"
+ },
+ {
+  "id": "dd_ir_util",
+  "publisher": "증권사 리서치",
+  "title": "2026 가동률·증설",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-06-30",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "FC-BGA 가동률 약 90%"
+ },
+ {
+  "id": "dd_product_page",
+  "publisher": "대덕전자",
+  "title": "FC-BGA 제품 소개",
+  "source_type": "primary_company",
+  "published_date": "2026",
+  "url": "https://www.daeduck.com/",
+  "accessed_date": "2026-09-11",
+  "note": "FC-BGA 기술과 전방 산업"
+ },
+ {
+  "id": "zdnet_tesla_2026",
+  "publisher": "ZDNet Korea",
+  "title": "테슬라 AI4 기판 공급망",
+  "source_type": "reputable_media",
+  "published_date": "2026-05-06",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "대덕전자가 AI4 자율주행용 FC-BGA 공급망에 포함됐다는 보도"
+ },
+ {
+  "id": "eugene_spacex_2026",
+  "publisher": "유진투자증권",
+  "title": "주간 경제·전략",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-06-15",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "MLB 안에서 스페이스X향 항공우주 물량이 는다"
+ },
+ {
+  "id": "dd_cisco_legacy",
+  "publisher": "업계 2차자료",
+  "title": "네트워크 PCB 과거 관계",
+  "source_type": "industry_research",
+  "published_date": "2024",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "시스코와의 과거 관계를 시사하나 현재 제품·비중은 확인되지 않는다"
+ },
+ {
+  "id": "dd_ir_800g",
+  "publisher": "증권사 리서치",
+  "title": "800G 스위치 MLB 신규 고객",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-03-06",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "2025 2분기 신규 고객 확보와 물량 확대"
+ },
+ {
+  "id": "dd_ir_ssd_optical",
+  "publisher": "증권사 리서치",
+  "title": "AI 데이터센터 컨트롤러·광모듈 FC-BGA",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-03-19",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "수요는 확인되나 고객 실명은 비공개"
+ },
+ {
+  "id": "dd_ir_pcie",
+  "publisher": "증권사 리서치",
+  "title": "PCIe 스위치·대면적 FC-BGA 로드맵",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-06-10",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "2026 하반기 이후. 고객 실명 비공개"
+ },
+ {
+  "id": "dd_ir_amd",
+  "publisher": "증권사 리서치",
+  "title": "AMD AI 가속기 MLB 양산",
+  "source_type": "analyst_estimate",
+  "published_date": "2025-06-10",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "AMD향 AI 가속기 MLB 양산과 Helios 연계"
+ },
+ {
+  "id": "dd_ir_mlb_forecast",
+  "publisher": "증권사 리서치",
+  "title": "AI 가속기향 MLB 매출 전망",
+  "source_type": "analyst_estimate",
+  "published_date": "2026-06-10",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "2025E 350억 → 2026E 1,550억 → 2027E 3,300억"
+ },
+ {
+  "id": "dd_bk_amd",
+  "publisher": "BusinessKorea",
+  "title": "AMD AI 가속기 MLB 샘플 관계",
+  "source_type": "reputable_media",
+  "published_date": "2025",
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "2024~2025 샘플 단계 보도. 03 의 SRC006"
+ },
+ {
+  "id": "ty_fin_2026",
+  "publisher": "TAIYO YUDEN",
+  "title": "Financial Statements",
+  "source_type": "primary_official",
+  "published_date": "2026-03-31",
+  "url": "https://www.yuden.co.jp/en/ir/financial/financial_data.html",
+  "accessed_date": "2026-09-11",
+  "note": "FY2026(2026년 3월 결산) 매출 355,341백만엔·매출원가 273,412백만엔·매출총이익 81,928백만엔"
+ },
+ {
+  "id": "ty_product_2026",
+  "publisher": "TAIYO YUDEN",
+  "title": "연차 주주 자료 — 제품별 매출",
+  "source_type": "primary_official",
+  "published_date": "2026",
+  "url": "https://www.yuden.co.jp/en/ir/financial/summary.html",
+  "accessed_date": "2026-09-11",
+  "note": "FY2026 Capacitors 251,771백만엔(70.9%)·Inductors 64,319백만엔(18.1%)·Integrated Modules & Devices 14,796백만엔(4.2%)·Others 24,453백만엔(6.9%). 제품·매출 축이며 고객 비중 축이 아니다"
+ },
+ {
+  "id": "ty_forecast_2027",
+  "publisher": "TAIYO YUDEN",
+  "title": "Forecasts",
+  "source_type": "primary_official",
+  "published_date": "2026-08-05",
+  "url": "https://www.yuden.co.jp/en/ir/financial/achievement_forecast.html",
+  "accessed_date": "2026-09-11",
+  "note": "FY2027 전망 매출 424,000백만엔·영업이익 45,000백만엔"
+ },
+ {
+  "id": "ty_procurement",
+  "publisher": "TAIYO YUDEN",
+  "title": "CSR Procurement",
+  "source_type": "primary_official",
+  "published_date": "2025",
+  "url": "https://www.yuden.co.jp/en/sustainability/society/procurement/initiative/",
+  "accessed_date": "2026-09-11",
+  "note": "공급사 약 2,600개, 2025년 관리 대상 중요 공급사 약 500개. 개별 실명·구매비중은 비공개"
+ },
+ {
+  "id": "ty_material_risk",
+  "publisher": "TAIYO YUDEN",
+  "title": "Business Risks",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": "https://www.yuden.co.jp/en/ir/management/risk.html",
+  "accessed_date": "2026-09-11",
+  "note": "일부 원재료는 특정 공급사 의존도가 높고 장기공급계약으로 조달한다고 회사가 공시. 실명·비중은 비공개(원표기: current disclosure)"
+ },
+ {
+  "id": "ty_internal_material",
+  "publisher": "TAIYO YUDEN",
+  "title": "Management System Certification Status",
+  "source_type": "primary_official",
+  "published_date": "2026-08",
+  "url": "https://www.yuden.co.jp/en/sustainability/society/QA/certification/",
+  "accessed_date": "2026-09-11",
+  "note": "Haruna·Yawatabara 세라믹 분말, Nakanojo 인덕터 코어·분말, TY Chemical Technology 도금 — 수직계열화의 핵심 근거"
+ },
+ {
+  "id": "ty_capacity",
+  "publisher": "TAIYO YUDEN",
+  "title": "Integrated Report 2025",
+  "source_type": "primary_official",
+  "published_date": "2025",
+  "url": "https://www.yuden.co.jp/en/ir/2025ar/",
+  "accessed_date": "2026-09-11",
+  "note": "중국·말레이시아 신규 MLCC 공장 증설, 자동차·AI 서버향 대형·고용량 제품에 투자 초점 이동"
+ },
+ {
+  "id": "apple_supplier",
+  "publisher": "Apple",
+  "title": "Apple Supplier List",
+  "source_type": "primary_company",
+  "published_date": "2024",
+  "url": "https://www.supplychainreports.apple/files/doc_downloads/2024/04/Apple-Supplier-List.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "태양유전이 명단에 오르고 중국·일본·말레이시아·필리핀·한국 제조지역이 함께 공개된다. 매출 비중과 결제 경로는 비공개"
+ },
+ {
+  "id": "apple_tf",
+  "publisher": "TrendForce",
+  "title": "Apple 향 MLCC 생산 보도",
+  "source_type": "industry_research",
+  "published_date": null,
+  "url": "https://www.trendforce.com/research/download/RP240711DB",
+  "accessed_date": "2026-09-11",
+  "note": "태양유전 라인이 Apple·아이폰 수요향 MLCC 를 만든다고 보도. 2024-07·2025-10 두 시점 자료다(원표기: CONFIRMED industry evidence)"
+ },
+ {
+  "id": "ty_auto_tier1",
+  "publisher": "TAIYO YUDEN",
+  "title": "Integrated Report / CEO 자료",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": "https://www.yuden.co.jp/en/ir/",
+  "accessed_date": "2026-09-11",
+  "note": "유럽·미국·중국·한국·일본 주요 1차 협력사와 폭넓게 거래한다고 공시. 개별 실명은 비공개(원표기: company disclosure)"
+ },
+ {
+  "id": "vw_qual",
+  "publisher": "TAIYO YUDEN",
+  "title": "제품 뉴스 — VW80808 인증",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": "https://www.yuden.co.jp/en/news/",
+  "accessed_date": "2026-09-11",
+  "note": "일부 자동차용 MLCC 가 VW80808 인증을 받았다. 직접고객·매출 관계의 근거는 아니다(원표기: current product release)"
+ },
+ {
+  "id": "ai_tf_20260728",
+  "publisher": "TrendForce",
+  "title": "2026년 6월 MLCC 출하 보도",
+  "source_type": "industry_research",
+  "published_date": "2026-07-28",
+  "url": "https://www.trendforce.com/presscenter/news/20260728-13155.html",
+  "accessed_date": "2026-09-11",
+  "note": "2026년 6월 태양유전 MLCC 출하 약 400억 개, 5년래 월간 최고. AI TPU·Trainium 수요를 원인으로 든다. 출하량이지 매출 비중이 아니다(원표기: CONFIRMED industry estimate)"
+ },
+ {
+  "id": "ai_bb_202607",
+  "publisher": "TrendForce",
+  "title": "2026년 6월 말 BB 비율 보도",
+  "source_type": "industry_research",
+  "published_date": "2026-07-06",
+  "url": "https://www.trendforce.com/presscenter/news/20260706-13136.html",
+  "accessed_date": "2026-09-11",
+  "note": "2026년 6월 말 기준 태양유전 BB 비율 1.25. 회사 분기 실적 자료의 BB 정의·기간과 다르므로 섞지 않는다(원표기: CONFIRMED industry estimate)"
+ },
+ {
+  "id": "ai_platform",
+  "publisher": "TrendForce · TAIYO YUDEN",
+  "title": "AI 플랫폼 수요 연결",
+  "source_type": "industry_research",
+  "published_date": null,
+  "url": "https://www.trendforce.com/presscenter/",
+  "accessed_date": "2026-09-11",
+  "note": "NVIDIA·Google·AWS 는 AI 플랫폼 수요 노출 노드일 뿐 확인된 직접고객이 아니다. 매출 배분은 비공개(원표기: INFERRED topology, 시점 2026 current)"
+ },
+ {
+  "id": "sakai_hist",
+  "publisher": "학계 기술 자료",
+  "title": "Sakai Chemical BT04 BaTiO3 연구 사례",
+  "source_type": "industry_research",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "과거 태양유전 관련 MLCC 연구에 쓰인 사례일 뿐 현재 공급사임을 확인해 주지 않는다(원표기: HISTORICAL_CURRENT_UNKNOWN)"
+ },
+ {
+  "id": "ai_share_scenario",
+  "publisher": "자체 민감도 모델",
+  "title": "AI 매출 노출 시나리오",
+  "source_type": "analyst_estimate",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-11",
+  "note": "IT Infrastructure/Industrial 27% 가운데 AI 비중을 40/50/60%로 가정하면 회사 매출 노출은 10.8/13.5/16.2%. 시나리오일 뿐 공식치가 아니다(원표기: ESTIMATED, 시점 FY2027 Q1 vicinity)"
  }
 ]
