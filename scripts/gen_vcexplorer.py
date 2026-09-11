@@ -327,6 +327,9 @@ var TIER_KO = { CONTRACTUAL_CUSTOMER:'고객', INTERMEDIARY:'중개',
   REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
+// 상자 꼴 — 회사는 실선, 층(소재·부품·계통·매출원)은 파선
+var KIND_OF = { material:'grp', component:'grp', subsystem:'grp', revenue_type:'grp',
+                application:'grp' };
 // 세로 한 줄에는 같은 단계만 선다. 왼쪽부터 오른쪽으로 사슬 순서다
 var COLS = [
   { key:'RAW_MATERIAL', label:'원재료' },
@@ -450,7 +453,6 @@ function Nd(p){
       d.sub ? h('span', { key:'t2' }, d.sub) : null,
       d.isNew ? h('span', { key:'b', className:'badge new',
         style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
-      d.more ? h('span', { key:'m', className:'more' }, '+') : null
     ]) : null
   ];
   return h('div', { className: cls }, ports('t').concat(mid).concat(ports('s')));
@@ -481,9 +483,6 @@ var EDGE_TYPES = { chan: ChanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 24, DUMMY_H = 10;
-// true 로 두면 모이는 자리까지 아래로만 민다. 선은 한 번도 위로 안 꺾이지만
-// 중심 회사가 판 바닥까지 내려간다. false 면 모이는 자리만 가운데를 본다
-var STRICT_DOWN = false;
 
 // 상자 높이를 미리 어림한다. 한글은 두 칸, 영숫자는 한 칸으로 센다
 function cw(s){
@@ -542,8 +541,18 @@ function route(edges, geo){
     });
     var g = gut[gk] = {};
     pool[gk].forEach(function(e){
-      var key = outd[e.source] > 1 ? 'S|' + e.source
-              : (ind[e.target] > 1 ? 'T|' + e.target : 'S|' + e.source);
+      // 하나에서 하나로만 가는 선은 줄기에 넣지 않는다.
+      // 높이가 같으면 곧은 선, 어긋나면 제 홈으로만 내려간다
+      if (outd[e.source] === 1 && ind[e.target] === 1) {
+        if (Math.abs(cy(e.source) - cy(e.target)) <= 4) {
+          e.type = 'straight';
+          e.data = {};
+        } else {
+          e.type = 'chan';
+        }
+        return;
+      }
+      var key = outd[e.source] > 1 ? 'S|' + e.source : 'T|' + e.target;
       (g[key] = g[key] || []).push(e);
     });
   });
@@ -672,10 +681,9 @@ function place(nodes, edges){
     list.forEach(function(it){
       var ps = (inEdge[it.id] || []).map(function(x){ return ctrOf[x]; })
         .filter(function(v){ return v !== undefined; });
-      if (!ps.length) it.want = 0;
-      else if (ps.length === 1) it.want = ps[0];
-      else if (STRICT_DOWN) it.want = Math.max.apply(null, ps);
-      else it.want = ps.reduce(function(a, v){ return a + v; }, 0) / ps.length;
+      // 들어오는 선의 출발점 중 가장 아래를 기준으로 잡는다. 평균을 쓰면 그보다
+      // 아래에 있던 출발점의 선이 위로 꺾인다
+      it.want = ps.length ? Math.max.apply(null, ps) : 0;
     });
     list.sort(function(a, b){ return (a.want - b.want) || (a.ord - b.ord); });
     var y = -1e9;
@@ -752,167 +760,97 @@ function writeUrl(s, push){
 // 상대 노드 하나와 그 관계선. host 쪽이 중심에 가까운 칸이다.
 // 같은 회사가 사슬 여러 갈래에 나오면 노드를 하나로 합치고 선만 더한다.
 // 반환값은 그 회사가 앉은 노드 id 다
-function hasMore(eid, up){
-  return relsOf(eid).some(function(r){
-    return up ? (r.target_entity === eid && r.lane === 'MANUFACTURING_BOM')
-              : (r.source_entity === eid && r.lane === 'DOWNSTREAM');
-  });
-}
-function addRelNode(ctx, r, nid, host, up, year){
-  var eid = up ? r.source_entity : r.target_entity;
-  var have = ctx.byEnt[eid];
-  if (!have) {
-    var on0 = activeIn(r, year), fy0 = firstYear(r);
-    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), flag: flagOf(eid),
-      kind:'ent', col: colOfRel(r, up),
-      sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
-      isNew: on0 && fy0 === year && fy0 !== YEARS[0],
-      more: hasMore(eid, up)
-            && ctx.open.indexOf('e|' + eid + '|' + (up ? 'up' : 'down')) < 0,
-      ref:{ kind:'rel', id:r.id, entity: eid, up: up } } });
-    ctx.byEnt[eid] = nid;
-    have = nid;
-  }
-  var eidge = 'e-' + r.id + '-' + host;
-  if (ctx.edges.some(function(x){ return x.id === eidge; })) return have;
-  var on = activeIn(r, year);
-  ctx.edges.push({ id: eidge, source: up ? have : host, target: up ? host : have,
-    label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
-    labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
-    style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
-    markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
-                color: evStyle(r.evidence_level).stroke },
-    type:'smoothstep' });
-  return have;
-}
 
 // 판매 사슬은 층이 있다 — 계약 상대 → 중개 → 프로젝트 → 최종 사용자.
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
 // 한 상자를 누르면 그 상자의 다음 한 칸만 열린다. 저절로 번지지 않는다
-function chainDown(ctx, eid, host, year, open, seen){
-  if (seen[eid] || open.indexOf('e|' + eid + '|down') < 0) return;
-  seen[eid] = 1;
-  relsOf(eid).forEach(function(r){
-    if (r.source_entity !== eid || r.lane !== 'DOWNSTREAM') return;
-    var nid = addRelNode(ctx, r, 'x|' + r.target_entity, host, false, year);
-    chainDown(ctx, r.target_entity, nid, year, open, seen);
-  });
-}
 
 // 05 §16 — 공급사를 전부 중심에 바로 붙이지 않는다. 확인된 만큼만 위로 올라간다
-function chainUp(ctx, eid, host, year, open, seen){
-  if (seen[eid] || open.indexOf('e|' + eid + '|up') < 0) return;
-  seen[eid] = 1;
-  relsOf(eid).forEach(function(r){
-    if (r.target_entity !== eid || r.lane !== 'MANUFACTURING_BOM') return;
-    var nid = addRelNode(ctx, r, 'x|' + r.source_entity, host, true, year);
-    chainUp(ctx, r.source_entity, nid, year, open, seen);
+
+// 사슬 하나를 통째로 세운다. 연도가 무엇이 보일지 정하고, 고른 상자가 무엇이 진할지 정한다.
+// 눌러야 노드가 생기는 방식은 걷었다
+function chainOf(focal){
+  var best = null;
+  Object.keys(CHAINS).forEach(function(ck){
+    if (best) return;
+    var m = CHAINS[ck].meta || {};
+    if (m.focal_entity === focal) best = ck;
   });
+  if (best) return best;
+  Object.keys(CHAINS).forEach(function(ck){
+    if (best) return;
+    if (CHAINS[ck].relationships.some(function(r){
+      return r.source_entity === focal || r.target_entity === focal; })) best = ck;
+  });
+  return best;
 }
 
-function buildGraph(focal, year, open, expanded, focusOn){
-  var groups = {}, nodes = [], edges = [];
-  var ctx = { nodes: nodes, edges: edges, byEnt: {}, open: open };
-  ctx.byEnt[focal] = focal;
-  var revRels = relsOf(focal).filter(function(r){
-    return r.source_entity === focal && r.target_tier === 'REVENUE_TYPE';
+function buildGraph(focal, year, sel){
+  var ck = chainOf(focal);
+  var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
+  var nodes = [], edges = [], seen = {};
+  var selId = sel ? (sel.entity || sel.id) : null;
+
+  function nodeFor(eid, r, up){
+    if (seen[eid]) return;
+    seen[eid] = 1;
+    var isFocal = eid === focal;
+    var tier = r ? tierOf(r, up) : null;
+    nodes.push({ id: eid, type:'nd', data:{
+      title: nm(eid), flag: flagOf(eid), kind: KIND_OF[(ENT[eid] || {}).entity_type] || 'ent',
+      focal: isFocal, col: isFocal ? COL_OF.FOCAL : colOfRel(r, up),
+      sub: isFocal ? ((ENT[focal] || {}).country || null)
+                   : (TIER_KO[tier] || (r ? r.component : null) || null),
+      ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : eid, entity: eid, up: up } } });
+  }
+
+  nodeFor(focal, null, false);
+  rels.forEach(function(r){
+    var up = (colOfRel(r, true) !== undefined) && r.lane !== 'DOWNSTREAM';
+    nodeFor(r.source_entity, r, true);
+    nodeFor(r.target_entity, r, false);
   });
-  relsOf(focal).forEach(function(r){
-    if (r.target_tier === 'REVENUE_TYPE' && r.source_entity === focal) return;
-    var up = r.target_entity === focal;
-    var key = (up ? 'u:' : 'd:') + r.lane + ':' + (r.subsystem || LANE_KO[r.lane] || '기타');
-    (groups[key] = groups[key] || { up: up, key: r.subsystem || '기타',
-                                    label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
-                                    lane: r.lane, rels: [] }).rels.push(r);
+
+  rels.forEach(function(r){
+    var on = activeIn(r, year), fy = firstYear(r);
+    var st = Object.assign({}, evStyle(r.evidence_level));
+    if (!on) st.opacity = 0.28;
+    edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
+      label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
+      labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1], style: st,
+      data:{ rel: r.id, on: on },
+      markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
+                  color: evStyle(r.evidence_level).stroke },
+      type:'smoothstep' });
+    var t = nodes.filter(function(n){ return n.id === r.target_entity; })[0];
+    if (t && on && fy === year && fy !== YEARS[0]) t.data.isNew = true;
   });
-  nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), flag: flagOf(focal),
-    kind:'ent', focal:true, col: COL_OF.FOCAL,
-    sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
-  // 매출원 — 눌러야 그 매출원에 근거가 붙는 고객이 열린다 (05 §28)
-  revRels.forEach(function(r){
-    var rt = r.target_entity, nid = 'rev|' + rt;
-    var o = shareIn(r.id, year);
-    var pct = o && o.value !== null && o.value !== undefined ? fmt(o.value) + '%' : '?';
-    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(rt), kind:'grp',
-      col: COL_OF.REVENUE_TYPE, sub: pct + ' · 총매출 대비', gone: !o,
-      ref:{ kind:'rel', id:r.id, entity: rt, revtype:true } } });
-    ctx.byEnt[rt] = nid;
-    ctx.edges.push({ id:'rev-' + r.id, source: focal, target: nid,
-      style:{ stroke:'#9aa3b5', strokeWidth:1.3 }, type:'smoothstep' });
-    if (open.indexOf(nid) < 0) return;
-    relsOf(rt).forEach(function(c){
-      if (c.source_entity !== rt) return;
-      var cid = addRelNode(ctx, c, 'rc|' + c.target_entity, nid, false, year);
-      chainDown(ctx, c.target_entity, cid, year, open, {});
-    });
+
+  // 그 해에 걸린 선이 하나도 없는 상자는 흐리게 둔다
+  var live = {};
+  edges.forEach(function(e){
+    if (e.data && e.data.on) { live[e.source] = 1; live[e.target] = 1; }
   });
-  Object.keys(groups).sort(function(a, b){
-    return ordOf(groups[a]) - ordOf(groups[b]);
-  }).forEach(function(gk){
-    var g = groups[gk];
-    var act = g.rels.filter(function(r){ return activeIn(r, year); });
-    nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
-      // 다운스트림 묶음은 그 안 관계의 층 바로 앞 반 칸에 선다.
-      // 같은 칸에 두면 묶음과 그 안 회사가 나란히 서서 사슬이 안 읽힌다
-      col: g.up ? COL_OF.SUBSYSTEM
-                : ((COL_OF[g.rels[0].target_tier] !== undefined
-                    ? COL_OF[g.rels[0].target_tier] : COL_OF.CONTRACTUAL_CUSTOMER) - 0.5),
-      sub: act.length + '곳 · ' + (function(){
-        // 매출원에 비중이 붙듯 공급 계통에도 원가 몫을 적는다. 없으면 방향만 적는다
-        var bs = g.up && g.lane === 'MANUFACTURING_BOM' ? bomShare(focal, g.key) : null;
-        if (bs) return bs.pct + '% 원가(추정)';
-        return g.lane === 'MANUFACTURING_BOM' ? (g.up ? '들어온다' : '나간다')
-                                              : LANE_KO[g.lane];
-      })(), gone: !act.length,
-      ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
-            bom: g.up && g.lane === 'MANUFACTURING_BOM' ? bomShare(focal, g.key) : null,
-            rels: g.rels.map(function(r){ return r.id; }) } } });
-    edges.push({ id:'g-' + gk, source: g.up ? gk : focal, target: g.up ? focal : gk,
-      style:{ stroke:'#c2c7d1', strokeWidth:1.2 }, type:'smoothstep' });
-    if (open.indexOf(gk) < 0) return;
-    g.rels.forEach(function(r){
-      var other = g.up ? r.source_entity : r.target_entity;
-      var nid = addRelNode(ctx, r, gk + '|' + other, gk, g.up, year);
-      if (g.up) chainUp(ctx, other, nid, year, open, {});
-      else chainDown(ctx, other, nid, year, open, {});
-    });
+  nodes.forEach(function(n){
+    if (n.id !== focal && !live[n.id]) n.data.gone = true;
   });
-  // 누른 회사에서 한 홉만 더. 저절로 번지지 않는다
-  Object.keys(expanded).forEach(function(k){
-    var sp = k.split('@'), eid = sp[0], dir = sp[1];
-    var host = null;
-    nodes.forEach(function(n){
-      if (host) return;
-      if (n.id === eid || n.id.split('|').pop() === eid) host = n.id;
-    });
-    if (!host) return;
-    relsOf(eid).forEach(function(r){
-      var up = r.target_entity === eid;
-      if (dir === 'up' && !up) return;
-      if (dir === 'down' && up) return;
-      var other = up ? r.source_entity : r.target_entity;
-      if (other === focal) return;
-      addRelNode(ctx, r, 'x|' + other, host, up, year);
-    });
-  });
-  if (focusOn) {
-    var adj = {}, keep = {};
-    keep[focal] = 1;
+
+  // 고른 상자와 거기 바로 닿는 것만 진하게
+  if (selId && seen[selId]) {
+    var near = {};
+    near[selId] = 1;
     edges.forEach(function(e){
-      (adj[e.source] = adj[e.source] || []).push(e.target);
-      (adj[e.target] = adj[e.target] || []).push(e.source);
+      if (e.source === selId) near[e.target] = 1;
+      if (e.target === selId) near[e.source] = 1;
     });
-    var front = [focal], d = 0;
-    while (d < 2) {
-      var nx = [];
-      front.forEach(function(n){
-        (adj[n] || []).forEach(function(m){ if (!keep[m]) { keep[m] = 1; nx.push(m); } });
-      });
-      front = nx; d++;
-    }
     nodes = nodes.map(function(n){
-      return keep[n.id] ? n
+      return near[n.id] ? n
         : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
+    });
+    edges = edges.map(function(e){
+      var hit = e.source === selId || e.target === selId;
+      return Object.assign({}, e, { style: Object.assign({}, e.style,
+        { opacity: hit ? 1 : 0.18 }), label: hit ? e.label : null });
     });
   }
   return { nodes: place(nodes, edges), edges: edges };
@@ -1035,10 +973,6 @@ function Drawer(p){
     e.desc ? h('div', { key:'d', className:'v' }, e.desc) : null,
     h('div', { key:'btns',
       style:{ display:'flex', gap:'6px', flexWrap:'wrap', margin:'8px 0' } }, [
-      h('button', { key:'u', className:'btn',
-        onClick: function(){ p.onExpand(eid, 'up'); } }, '업스트림 한 홉'),
-      h('button', { key:'d', className:'btn',
-        onClick: function(){ p.onExpand(eid, 'down'); } }, '다운스트림 한 홉'),
       h('button', { key:'f', className:'btn',
         onClick: function(){ p.onFocus(eid); } }, '이 회사 중심으로'),
       h('button', { key:'t2', className:'btn',
@@ -1339,11 +1273,9 @@ function App(){
   var a = useState(u0.focal), focal = a[0], setFocal = a[1];
   var b = useState(u0.year), year = b[0], setYear = b[1];
   var c = useState(u0.mode), mode = c[0], setMode = c[1];
-  var d = useState(u0.open), open = d[0], setOpen = d[1];
-  var e = useState({}), expanded = e[0], setExpanded = e[1];
+  var d = useState(u0.open), open = d[0], setOpen = d[1];   // 주소 호환용
   var f = useState({ kind:'ent', id: u0.sel || u0.focal }), sel = f[0], setSel = f[1];
   var g = useState(''), q = g[0], setQ = g[1];
-  var i2 = useState(false), focusOn = i2[0], setFocusOn = i2[1];
   var j = useState([u0.focal]), path = j[0], setPath = j[1];
   var k2 = useState(true), leg = k2[0], setLeg = k2[1];
   // 좁은 화면에서는 서랍을 닫고 시작한다. 열면 그래프를 덮기 때문이다
@@ -1410,8 +1342,8 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, open, expanded, focusOn);
-  }, [focal, year, open, expanded, focusOn]);
+    return buildGraph(focal, year, sel);
+  }, [focal, year, sel]);
 
   // 칸 머리(원재료·소재·가공…) 위로는 못 올라가게 막는다. 아래·좌우는 넉넉히 둔다
   var extent = useMemo(function(){
@@ -1433,30 +1365,18 @@ function App(){
     });
     writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id }, true);
   }
-  function toggleGroup(gk){
-    setOpen(function(o){
-      return o.indexOf(gk) >= 0 ? o.filter(function(x){ return x !== gk; }) : o.concat([gk]);
-    });
-  }
   function onNodeClick(_, node){
-    var ref = node.data.ref;
-    if (ref.kind === 'grp') toggleGroup(ref.id);
-    else if (ref.revtype) toggleGroup('rev|' + ref.entity);
-    else if (ref.entity)
-      toggleGroup('e|' + ref.entity + '|' + (ref.up ? 'up' : 'down'));
-    setSel(ref); setDrw(true);
+    // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다
+    setSel(node.data.ref); setDrw(true);
   }
   function drill(subsystem){
+    // 그 계통에 속한 상자 하나를 골라 판에서 진하게 보여 준다
     var rels = relsOf(focal).filter(function(r){
       return r.subsystem === subsystem && r.target_entity === focal;
     });
     if (!rels.length) return;
-    // 묶음 열쇠는 방향·lane·계통 셋으로 만든다. 그래프 쪽과 같은 꼴이어야 열린다
-    var gk = 'u:' + rels[0].lane + ':' + subsystem;
     setMode('current');
-    setOpen(function(o){ return o.indexOf(gk) >= 0 ? o : o.concat([gk]); });
-    setSel({ kind:'grp', id:gk, label:subKo(subsystem), lane:rels[0].lane, up:true,
-             rels: rels.map(function(r){ return r.id; }) });
+    setSel({ kind:'rel', id: rels[0].id, entity: rels[0].source_entity, up:true });
   }
 
   var hits = q ? Object.keys(ENT).filter(function(id){
@@ -1486,9 +1406,7 @@ function App(){
         onClick: function(){ setMode(x[0]); } }, x[1]);
     })),
     h('div', { key:'sp', className:'spacer' }),
-    mode === 'roster' ? null
-      : h('button', { key:'f', className:'btn' + (focusOn ? ' on' : ''),
-          onClick: function(){ setFocusOn(!focusOn); } }, '포커스'),
+
     (mode === 'current' || mode === 'timeline')
       ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
       onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
@@ -1560,7 +1478,7 @@ function App(){
     h('i', { key:4 }, '점선 비공개·과거 관측'),
     h('i', { key:5 }, '? 그 해 값 없음'),
     h('i', { key:'q' }, '이름 앞 ? 원문이 나라를 안 밝힘'),
-    h('i', { key:'p' }, '+ 누르면 다음 칸이 열림'),
+    h('i', { key:'p' }, '상자를 누르면 그 줄기만 진해짐'),
     h('b', { key:'c' }, '가로'),
     h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
     h('i', { key:7 }, '오른쪽 고객 → 중개 → 프로젝트 → 최종 사용자')
@@ -1576,13 +1494,7 @@ function App(){
         onClose: function(){ setDrw(false); },
         onFocus: goFocal,
         onTimeline: function(id){ goFocal(id); setMode('timeline'); },
-        onExpand: function(id, dir){
-          var k = 'e|' + id + '|' + dir;
-          setOpen(function(o){ return o.indexOf(k) >= 0 ? o : o.concat([k]); });
-          setExpanded(function(x){
-            var y = Object.assign({}, x); y[id + '@' + dir] = 1; return y;
-          });
-        } }) : null
+        onExpand: null }) : null
     ]),
     mode === 'current' ? legend : null
   ]);
