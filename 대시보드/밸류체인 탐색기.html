@@ -127,8 +127,16 @@ background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:
   .legend{display:none}
   .scrub{padding:7px 10px}
   .sw th:first-child{width:auto}
-  .top{gap:8px;padding:8px 10px}
+  /* 좁은 화면 머리줄 — 두 줄로 접고 어느 것도 화면 밖으로 안 나간다 */
+  .top{gap:6px;padding:8px 10px;overflow-x:hidden;flex-wrap:wrap}
+  .brand{font-size:13px;flex:0 0 auto}
   .brand small{display:none}
+  .search{flex:1 1 120px;min-width:0;max-width:none;order:1}
+  .modes{order:2;flex:1 1 100%}
+  .modes button{flex:1;padding:6px 4px;font-size:12px;min-width:0}
+  .spacer{display:none}
+  .top .btn{order:3;flex:1 1 0;padding:6px 6px;font-size:12px;min-width:0;
+            white-space:nowrap}
 }
 </style>
 </head><body>
