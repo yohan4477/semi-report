@@ -140,6 +140,13 @@ box-shadow:0 3px 12px rgba(20,26,40,.22)}
 .nd.focal .nm{font-size:15px}
 .nd.focal .sub{font-size:12px}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
+/* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
+.nd.lane{background:#f7f8fb;border:1px dashed #9aa3b5;border-radius:14px;text-align:center;
+padding:5px 9px;min-width:100px;box-shadow:none}
+.nd.lane .nm{font-size:11.5px;font-weight:600;color:var(--ink2)}
+.nd.lane .sub{margin-top:1px}
+.nd.lane.un{border-color:#c6ccd8}
+.nd.lane.un .nm{color:var(--ink3)}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
 .legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:6px 14px;
@@ -376,7 +383,9 @@ var COLS = [
   { key:'MATERIAL_PROCESSING', label:'소재·가공', note:'사슬 단계' },
   { key:'COMPONENT_SUPPLIER', label:'부품 공급', note:'사슬 단계' },
   { key:'SUBSYSTEM', label:'계통·모듈', note:'사슬 단계' },
+  { key:'SUPPLY_AXIS', label:'공급원', note:'분석축 · 갈림목' },
   { key:'FOCAL', label:'타겟', note:null },
+  { key:'REVENUE_AXIS', label:'매출원', note:'분석축 · 갈림목' },
   { key:'CONTRACTUAL_CUSTOMER', label:'직접 고객', note:'사슬 단계' },
   { key:'INTERMEDIARY', label:'중개', note:'사슬 단계' },
   { key:'END_USER', label:'간접 고객', note:'중개 뒤' },
@@ -498,7 +507,8 @@ function ports(kind){
 }
 function Nd(p){
   var d = p.data;
-  var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.focal ? ' focal' : '')
+  var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.kind === 'lane' ? ' lane' : '')
+          + (d.un ? ' un' : '') + (d.focal ? ' focal' : '')
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
   var mid = [
     h('div', { key:'n', className:'nm' }, d.flag
@@ -1111,6 +1121,34 @@ var CONTRACT_NOTE = { CONFIRMED:'계약상 구매 주체라는 근거가 있다'
   NOT_CONTRACTUAL:'원문이 구매 주체가 아니라고 한다(고객의 고객)',
   UNVERIFIED:'설치처·수요 노출·인증·공급망 목록 — 계약상 구매 주체라는 근거가 없다' };
 
+// 띠와 갈림목에 적는 값은 한 갈래뿐이다 — 매출원은 총매출 대비 비중, 공급원은 조달 비중.
+// 가동률·전방 구성처럼 다른 것을 세는 값은 숫자를 안 적고 손 얹었을 때만 보여 준다
+var SHARE_METRIC = { rt:/revenue.*share$/, ss:/(sourcing|purchase|supply).*share$/ };
+function isShare(kind, sh){
+  return PCT[sh.unit] && SHARE_METRIC[kind].test(sh.metric || '');
+}
+function pickShare(kind, x, year){
+  var y = parseInt(year, 10);
+  return (x.shares || []).filter(function(sh){
+    if (!isShare(kind, sh) || sh.value === null || sh.value === undefined) return false;
+    var a = y4(sh.period_start) || y4(sh.as_of_date);
+    var b = y4(sh.period_end) || y4(sh.as_of_date) || a;
+    return a && a <= y && y <= b;
+  })[0] || null;
+}
+// 한 줄의 분모는 하나다. 그 줄에서 가장 많이 쓰인 분모의 값만 적고, 분모가 다른
+// 값(가동률·전방 구성)은 손 얹었을 때만 분모와 함께 보여 준다 — 나란히 찍으면 더한다
+function rowDen(kind, list, year){
+  var cnt = {}, best = null;
+  list.forEach(function(x){
+    var sh = pickShare(kind, x, year);
+    if (!sh || !sh.denominator) return;
+    cnt[sh.denominator] = (cnt[sh.denominator] || 0) + 1;
+    if (best === null || cnt[sh.denominator] > cnt[best]) best = sh.denominator;
+  });
+  return best;
+}
+
 // ── 자리 매기기 — 타겟에서 실제로 이어진 꼴로 ──────────────────────
 // 다운스트림 칸은 관계 종류가 아니라 타겟에서 몇 홉 떨어졌나와 사이에 중개가 끼었나로
 // 정한다(프레임워크 §22-B). 1홉이면 직접 고객, 2홉부터는 간접 고객, 중개 노릇(데이터가
@@ -1256,6 +1294,44 @@ function buildGraph(focal, year, sel, axis, sizes){
   addNode(focal);
   rels.forEach(function(r){ addNode(r.source_entity); addNode(r.target_entity); });
 
+  // 공급원·매출원은 선이 지나는 갈림목이다. 소재·가공에서 타겟으로 드는 선은 공급원을,
+  // 타겟에서 직접 고객으로 나가는 선은 매출원을 거친다 — 타겟에서 고객으로 바로 가지
+  // 않는다. 갈림목은 회사가 아니라 분류라 회사 상자는 복제되지 않고, 한 회사가 두 분류에
+  // 들면 갈림목 둘에서 선이 온다(N:M). 귀속 근거가 없으면 「미상」 갈림목을 지난다.
+  // 사슬의 타겟일 때만 선다 — 분류가 그 타겟 기준이라 다른 회사 중심에는 못 쓴다
+  var m = clsOf(ck), laneOf = {}, trunk = {};
+  function laneId(kind, id){ return 'lane|' + kind + '|' + id; }
+  if (!rooted) {
+    [['ss', m.ssList, COL_OF.SUPPLY_AXIS], ['rt', m.rtList, COL_OF.REVENUE_AXIS]]
+    .forEach(function(row){
+      var kind = row[0], list = row[1], den = rowDen(kind, list, year);
+      list.forEach(function(x){
+        var sh = pickShare(kind, x, year), lid = laneId(kind, x.id);
+        var rl = [];
+        laneOf[lid] = { kind: kind, cls: x, rels: rl };
+        seen[lid] = 1;
+        nodes.push({ id: lid, type:'nd', data:{
+          measured: (sizes && sizes[lid]) || null,
+          title: x.label, kind:'lane', col: row[2], un: !!x.unallocated,
+          share: (sh && den && sh.denominator === den) ? sh.value + '%' : null,
+          ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
+                lane: kind === 'ss' ? 'MANUFACTURING_BOM' : 'DOWNSTREAM',
+                cls: kind + ':' + x.id } } });
+      });
+    });
+  }
+  function bandOf(r){
+    if (rooted) return null;
+    if (r.target_entity === focal && r.lane !== 'DOWNSTREAM'
+        && (r.supply_source_ids || []).length) return 'ss';
+    if (r.source_entity === focal && r.lane === 'DOWNSTREAM'
+        && (r.revenue_type_ids || []).length) return 'rt';
+    return null;
+  }
+  function marker(color){
+    return { type: MarkerType.ArrowClosed, width:13, height:13, color: color };
+  }
+
   rels.forEach(function(r){
     if (!seen[r.source_entity] || !seen[r.target_entity]) return;
     var on = activeIn(r, year), fy = firstYear(r);
@@ -1268,13 +1344,43 @@ function buildGraph(focal, year, sel, axis, sizes){
       var hn = nodes.filter(function(n){ return n.id === holder; })[0];
       if (hn && !hn.data.share) hn.data.share = lbl;
     }
-    edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
-      style: st, data:{ rel: r.id, on: on },
-      markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
-                  color: evStyle(r.evidence_level).stroke },
-      type:'smoothstep' });
+    var band = bandOf(r);
+    if (!band) {
+      edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
+        style: st, data:{ rel: r.id, on: on },
+        markerEnd: marker(evStyle(r.evidence_level).stroke), type:'smoothstep' });
+    } else {
+      var ids = band === 'ss' ? r.supply_source_ids : r.revenue_type_ids;
+      ids.forEach(function(cid){
+        var lid = laneId(band, cid);
+        if (!laneOf[lid]) return;
+        laneOf[lid].rels.push(r.id);
+        var key = band + ':' + cid;
+        edges.push({ id:'e-' + r.id + '|' + cid,
+          source: band === 'ss' ? r.source_entity : lid,
+          target: band === 'ss' ? lid : r.target_entity,
+          style: st, data:{ rel: r.id, on: on, cls: key },
+          markerEnd: marker(evStyle(r.evidence_level).stroke), type:'smoothstep' });
+        // 갈림목과 타겟 사이 줄기는 갈림목마다 하나다. 그 갈림목을 지나는 선이 하나라도
+        // 그 해에 살아 있으면 진하다
+        var tk = trunk[lid];
+        if (!tk) {
+          tk = trunk[lid] = { id:'e-trunk|' + lid,
+            source: band === 'ss' ? lid : focal, target: band === 'ss' ? focal : lid,
+            style: Object.assign({}, EV_STYLE.CONFIRMED),
+            data:{ rel: null, cls: key, on: false, rels: [] },
+            markerEnd: marker(EV_STYLE.CONFIRMED.stroke), type:'smoothstep' };
+          edges.push(tk);
+        }
+        tk.data.rels.push(r.id);
+        if (on) tk.data.on = true;
+      });
+    }
     var t = nodes.filter(function(n){ return n.id === r.target_entity; })[0];
     if (t && on && fy === year && fy !== YEARS[0]) t.data.isNew = true;
+  });
+  Object.keys(trunk).forEach(function(k){
+    if (!trunk[k].data.on) trunk[k].style.opacity = 0.28;
   });
 
   // 프로젝트는 칸도 상자도 아니다. projects.json 이 명시한 식구를 두르는 테두리다.
@@ -1318,13 +1424,14 @@ function buildGraph(focal, year, sel, axis, sizes){
   if (axis) {
     var keep = {};
     keep[focal] = 1;
+    keep['lane|' + axis.slice(0, 2) + '|' + axis.slice(3)] = 1;
     rels.forEach(function(r){
       if (!axisHit(r, axis)) return;
       keep[r.source_entity] = 1; keep[r.target_entity] = 1;
     });
     edges = edges.map(function(e){
-      var r = REL[e.data.rel];
-      var on = r && axisHit(r, axis);
+      var r = e.data.rel ? REL[e.data.rel] : null;
+      var on = e.data.cls ? e.data.cls === axis : (r && axisHit(r, axis));
       // 고른 상자 강조가 이미 흐려 놓은 선은 더 진해지지 않는다. 둘 다 만족해야 진하다
       return Object.assign({}, e, { style: Object.assign({}, e.style,
         { opacity: on ? (e.style.opacity === undefined ? 1 : e.style.opacity) : 0.1 }) });
@@ -1790,19 +1897,7 @@ function Axis(p){
   // 나머지는 손 얹었을 때만 분모와 함께 보여 준다
   // 띠에 적는 값은 한 갈래뿐이다 — 매출원은 총매출 대비 비중, 공급원은 조달 비중.
   // 가동률·전방 구성처럼 다른 것을 세는 값은 숫자를 안 적고 손 얹었을 때만 보여 준다
-  var SHARE_METRIC = { rt:/revenue.*share$/, ss:/(sourcing|purchase|supply).*share$/ };
-  function isShare(kind, sh){
-    return PCT[sh.unit] && SHARE_METRIC[kind].test(sh.metric || '');
-  }
-  function pick(kind, x){
-    var y = parseInt(p.year, 10);
-    return (x.shares || []).filter(function(sh){
-      if (!isShare(kind, sh) || sh.value === null || sh.value === undefined) return false;
-      var a = y4(sh.period_start) || y4(sh.as_of_date);
-      var b = y4(sh.period_end) || y4(sh.as_of_date) || a;
-      return a && a <= y && y <= b;
-    })[0] || null;
-  }
+  function pick(kind, x){ return pickShare(kind, x, p.year); }
   function tip(x){
     var t = x.note ? [x.note] : [];
     (x.shares || []).forEach(function(sh){
@@ -1813,21 +1908,9 @@ function Axis(p){
     });
     return t.join('\n') || null;
   }
-  // 한 줄의 분모는 하나다. 그 줄에서 가장 많이 쓰인 분모의 값만 칩에 적고, 분모가 다른
-  // 값(가동률·전방 구성)은 손 얹었을 때만 분모와 함께 보여 준다 — 나란히 찍으면 더한다
-  function rowDen(kind, list){
-    var cnt = {}, best = null;
-    list.forEach(function(x){
-      var sh = pick(kind, x);
-      if (!sh || !sh.denominator) return;
-      cnt[sh.denominator] = (cnt[sh.denominator] || 0) + 1;
-      if (best === null || cnt[sh.denominator] > cnt[best]) best = sh.denominator;
-    });
-    return best;
-  }
   function chips(kind, list, label){
     if (!list.length) return null;
-    var den = rowDen(kind, list);
+    var den = rowDen(kind, list, p.year);
     var mine = p.axis && p.axis.slice(0, 2) === kind;
     // 「전체」는 고른 것이 없다는 뜻을 칩으로 명시한다. 이 줄의 선택이 없으면 전체가 켜진다
     var all = h('button', { key:'*all', className:'axchip' + (mine ? '' : ' on'),
@@ -2137,8 +2220,9 @@ function App(){
     h('i', { key:'q' }, '이름 앞 ? 원문이 나라를 안 밝힘'),
     h('i', { key:'p' }, '상자를 누르면 그 줄기만 진해짐'),
     h('b', { key:'c' }, '가로'),
-    h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
-    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 간접 고객, 프로젝트는 테두리'),
+    h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 공급원 → 타겟'),
+    h('i', { key:7 }, '오른쪽 타겟 → 매출원 → 직접 고객 → 중개 → 간접 고객, 프로젝트는 테두리'),
+    h('i', { key:'ln' }, '공급원·매출원 알약은 회사가 아니라 갈림목. 한 회사가 두 분류에 들면 선이 둘'),
     h('b', { key:'x' }, '띠'),
     h('i', { key:8 }, '공급원 타겟에 들어가는 품목'),
     h('i', { key:9 }, '매출원 타겟에서 나가는 매출 갈래'),
