@@ -1,0 +1,293 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>브로드컴의 코퍼 400기가 주장이 CPO 스케일업 시점을 늦출 조짐을 보인다 — Semi Doped</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;color:#1b1f27;
+ font:15px/1.8 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:26px;margin:0 0 6px}
+.sub{color:#66707f;font-size:13px;margin:0 0 28px;line-height:1.7}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.secnav a{text-decoration:none;font-size:13px;padding:5px 12px;border:1px solid #d5dae2;border-radius:16px;background:#fff;color:#3a4150}
+.secnav a:hover{background:#eef1f6}
+.secnav a small{color:#8a93a1;margin-left:4px}
+.sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px;font-size:17px;scroll-margin-top:16px}
+.sec small{font-size:12px;color:#8a93a1;font-weight:400}
+.rows{border-top:1px solid #e2e5ea}
+.row{display:block;padding:16px 4px;border-bottom:1px solid #e2e5ea;
+ text-decoration:none;color:inherit}
+a.row:hover{background:#eef1f6}
+.rmeta{font-size:12px;color:#8a93a1;display:flex;gap:10px;flex-wrap:wrap}
+.rtitle{font-size:16px;font-weight:600;margin:3px 0 4px;line-height:1.5}
+.rone{font-size:13px;color:#5b6472;line-height:1.7}
+.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:11px;background:#e7ebf1;color:#4c5563}
+.tag.on{background:#1b1f27;color:#fff}
+.tag.hk{background:#fff;color:#2b5d8a;border:1px solid #2b5d8a}
+.rtitle .tag.hk,h1 .tag.hk{margin-left:8px;vertical-align:middle;font-weight:600}
+.row.dead{opacity:.62}
+.why{font-size:12px;color:#8a93a1;margin-top:6px}
+.back{display:inline-block;font-size:13px;color:#66707f;margin-bottom:18px;
+ text-decoration:none}
+.whobox{margin:12px 0 4px;padding:10px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:8px}
+.who{font-size:13px;color:#4c5563;line-height:1.8}
+.who b{color:#1b1f27;margin-right:6px}
+.pn{color:#2b5d8a;font-weight:600}
+.pn.g0{color:#7a4a1e}.pn.g1{color:#3d6b3a}.pn.g2{color:#6a3d7a}.pn.g3{color:#8a3a3a}
+.pmeta{font-size:12px;color:#8a93a1;line-height:1.9;margin:0 0 26px;
+ padding-bottom:18px;border-bottom:1px solid #e2e5ea}
+.lane{margin:0 0 44px}
+.lhead{display:flex;align-items:baseline;gap:9px;margin:0 0 4px}
+.lhead b{font-size:19px;white-space:nowrap}
+.lhead span{font-size:12px;color:#8a93a1}
+.ltitle{font-size:15px;font-weight:600;line-height:1.6;margin:10px 0 20px;
+ padding:12px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0}
+.lane h2{font-size:20px;margin:44px 0 12px;line-height:1.45;padding-top:18px;border-top:1px solid #e2e5ea;scroll-margin-top:22px}
+.lane h2.apx{color:#66707f}
+.lane h3{font-size:16px;margin:26px 0 8px;line-height:1.5}
+.lane p{margin:0 0 20px}
+.lane ul{margin:0 0 14px;padding-left:20px}
+.lane li{margin:0 0 6px}
+.q{color:#5b6472}
+.num{display:inline-block;min-width:22px;padding:0 6px;margin-right:4px;border-radius:5px;
+ background:#e7ebf1;color:#3a4150;font-size:12px;font-weight:700;line-height:20px;text-align:center;vertical-align:2px}
+h3 .num{background:#e7ebf1;color:#3a4150}
+.chip{display:inline-block;padding:0 7px;margin-left:2px;border-radius:10px;background:#eef1f6;color:#3a4150;
+ font-size:11px;font-weight:700;line-height:18px;vertical-align:2px;white-space:nowrap}
+.mv{font-size:12px;color:#66707f;margin-left:4px}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 22px;padding:12px 14px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.7}
+.lk{font-weight:700;color:#66707f;white-space:nowrap}
+.toc{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0 0 30px;padding:14px 16px;
+ background:#fff;border:1px solid #e2e5ea;border-radius:8px;font-size:14px;line-height:1.6}
+.toc.one{grid-template-columns:1fr;gap:6px}
+.toc .th{font-size:11px;font-weight:700;color:#8a93a1;letter-spacing:.04em}
+.toc .tl{white-space:nowrap}
+.toc .tr a{text-decoration:none;font-weight:600;border-bottom:1px solid #c9ced6}
+.toc .tsub{font-size:13px;color:#66707f;margin-top:2px}
+.toc .tq{margin-right:8px}
+.insights{display:grid;gap:10px;margin:0 0 10px}
+.ins{padding:12px 14px;background:#fff;border:1px solid #e2e5ea;border-left:4px solid #9aa3b2;border-radius:0 8px 8px 0}
+.ins-c{font-weight:700;line-height:1.65}
+.ins-n{color:#3a4150;margin-right:6px}
+.ins-m{font-size:13px;color:#66707f;margin-top:6px;line-height:1.65}
+.sowhat{margin:4px 0 18px;padding:10px 14px;background:#fff;border-left:3px solid #1b1f27;border-radius:0 6px 6px 0;line-height:1.7}
+.sw{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#66707f;margin-right:8px;vertical-align:1px}
+code{background:#e9edf2;padding:1px 5px;border-radius:4px;font-size:.9em}
+.tree{margin:0 0 18px;padding:12px 14px;background:#fff;border:1px solid #dfe3e9;border-radius:8px;font-size:13.5px;line-height:1.6}
+.tn{padding:3px 0 3px 0;border-left:2px solid #e2e5ea}
+.tn.d0{border:0;font-weight:700;font-size:14px;margin-bottom:6px}
+.tn.d1{margin-left:0;padding-left:10px;font-weight:600;margin-top:8px}
+.tn.d2{margin-left:14px;padding-left:10px}
+.tn.d3{margin-left:28px;padding-left:10px;color:#3a4150}
+.tn.d4{margin-left:42px;padding-left:10px;color:#3a4150}
+.tn.d5,.tn.d6{margin-left:56px;padding-left:10px;color:#3a4150}
+.lref{font-size:11px;color:#8a93a1;margin-left:4px}
+/* 표는 좁은 화면에서도 표로 남는다. 행 블록으로 펴면(td 마다 열 이름을 얹는 그 꼴)
+   한 줄을 견주려고 만든 표가 카드 넉 장이 되어 견줄 수가 없다 — 2026-09-07 에 걷었다.
+   좁으면 표째 옆으로 밀리게 두고, 미는 것은 .tw 안이라 페이지는 안 밀린다 */
+.tw{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:13px;background:#fff;min-width:100%}
+th,td{border:1px solid #dfe3e9;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef1f6;font-weight:600;white-space:nowrap}
+@media (max-width:640px){
+ .tw{margin:0 -20px 18px;padding:0 20px}
+ .tw table{font-size:12.5px}
+ .tw th,.tw td{padding:6px 8px}
+ .toc{grid-template-columns:1fr}
+ .toc .th:nth-child(2){display:none}
+ .toc .tl{white-space:normal}
+}
+.foot{margin-top:40px;font-size:12px;color:#8a93a1;line-height:1.9}
+
+/* 색은 회색만 — 흰 상자·회색 선(기본), 옅은 회색 채움에 짙은 선(이 회차의 선택, 판에 하나),
+   점선 회색(문제·아직 없는 것). 주황·청록은 정신 사납다는 지적(2026-09-02)으로 다 걷었다 */
+.uc-fig{--ink:#1b1f27;--ink-2:#3a4150;--ink-3:#66707f;--surface:#fff;--line:#e2e5ea;
+        --epoch-teal:#8a93a1;--epoch-coral:#8a93a1;--epoch-keybg:#eef1f6;
+        --epoch-wrapbg:#e7ebf1;--sunk:#f1f3f6;--pick:#1b1f27}
+.uc-fig{margin:6px 0 22px;border:1px solid var(--line);border-radius:12px;padding:12px 10px 10px;
+        background:#fbfbfc}
+.uc-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.uc-fig .fig-title{margin:0 0 10px;font-size:.95rem;font-weight:700;color:var(--ink-3)}
+.uc-fig figcaption{margin:10px 2px 0;font-size:.88rem;line-height:1.65;color:var(--ink-3)}
+.uc-fig figcaption b{color:var(--ink-2)}
+.uc-fig .fig-box{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2}
+.uc-fig .fig-human{fill:var(--epoch-keybg)}
+.uc-fig .fig-agent{fill:var(--epoch-wrapbg);stroke:var(--pick);stroke-width:1.6}
+.uc-fig .fig-stage{fill:var(--sunk);stroke:#c9ced6;stroke-width:1}
+.uc-fig .fig-inside{fill:var(--epoch-keybg)}
+.uc-fig .fig-outside{fill:var(--surface);stroke:#9aa3b2;stroke-dasharray:4 3}
+.uc-fig .fig-bad{fill:var(--surface);stroke:#9aa3b2;stroke-width:1.2;stroke-dasharray:4 3}
+.uc-fig .fig-b{fill:var(--ink);font-size:.95rem;font-weight:600}
+.uc-fig .fig-st{fill:var(--ink);font-size:.95rem;font-weight:800}
+.uc-fig .fig-hd{fill:var(--ink-3);font-size:.95rem;font-weight:700}
+.uc-fig .fig-e{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-lg{fill:var(--ink-3);font-size:.95rem;font-weight:600}
+.uc-fig .fig-arw{stroke:#8a93a1;stroke-width:1.6;fill:none}
+</style><script>(function(){if('scrollRestoration' in history) history.scrollRestoration='manual';if(location.hash) return;window.addEventListener('load', function(){ window.scrollTo(0, 0); });})();</script><div class="wrap"><a class="back" href="../Semi Doped 대시보드.html">← 회차 목록</a><h1>브로드컴의 코퍼 400기가 주장이 CPO 스케일업 시점을 늦출 조짐을 보인다</h1><div class="pmeta">2026-03-06 · Austin Lyons · Vik Sekar<br>원문 <a href="https://www.youtube.com/watch?v=47cQTPjDUB8">https://www.youtube.com/watch?v=47cQTPjDUB8</a> · 요약본 <a href="https://github.com/johnn8n/semianalysis/blob/main/content/semi_doped/2026-03-06-optics-copper-crossroads.md">저장소</a><div class="whobox"><div class="who"><b>진행</b> <span class="pn">Austin Lyons</span> (Chipstrat) · <span class="pn">Vik Sekar</span> (Vik's Newsletter) — Semi Doped 공동 진행. 게스트 없음</div></div></div><div class="lane"><div class="lhead"><b>⚖ 전략 판</b><span>전략 컨설턴트 출신 애널리스트의 해설 · claude-opus 가 씀</span></div><div class="ltitle">코퍼냐 옵틱스냐는 물리 문제가 아니라 배치 시점 문제이고, 그 시점을 말하는 입은 저마다 팔 것이 다르다</div><p><span class="pn">Austin Lyons</span>(이하 <span class="pn">진행자A</span>)는 Chipstrat 을, <span class="pn">Vik Sekar</span>(이하 <span class="pn">진행자V</span>)는 Vik's Newsletter 를 쓴다. 두 사람이 진행하는 Semi Doped 의 이 회차에는 게스트가 없다. 사흘 사이에 정반대 방향의 뉴스 둘이 나온 주를 통째로 놓고, 랙 안의 배선을 구리로 갈 것이냐 빛으로 갈 것이냐를 다룬다. 소식은 마흔 가지가 넘지만 물음은 하나다 — 다음 세대 배선을 무엇으로 깔지는 누가 정하는가.</p>
+<nav class="toc one"><div class="th">차례</div><div class="tr one"><span class="num">1</span> <a href="#s1">사흘 만에 뒤집힌 한 주</a></div><div class="tr one"><span class="num">2</span> <a href="#s2">코퍼를 살려 둔 것은 속도가 아니라 랙이 빽빽해진 일이다</a></div><div class="tr one"><span class="num">3</span> <a href="#s3">40억 달러는 옵틱스에 건 표가 아니라 선택권을 산 값이다</a></div><div class="tr one"><span class="num">4</span> <a href="#s4">같은 사실을 놓고 반대로 말하는 이유는 팔 것이 달라서다</a></div><div class="tr one"><span class="num">5</span> <a href="#s5">시점이 밀리면 중간에 낀 기술이 먼저 죽는다</a></div><div class="tr one"><span class="num">6</span> <a href="#s6">이 회차가 말하지 않은 것</a></div></nav>
+<h2 id="s1"><span class="num">1</span> 사흘 만에 뒤집힌 한 주</h2>
+<figure class="uc-fig"><p class="fig-title">사흘 만에 뒤집힌 한 주</p><svg class="epoch" viewBox="0 0 520 260" role="img" aria-label="월요일에 옵틱스 쪽으로 40억 달러가 얹혔는데 수요일 밤 실적발표에서 구리로도 된다는 말이 나오자 그날 시간외에서 값이 뒤집혔다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="40" width="150" height="72" rx="9" class="fig-box"/>
+  <text x="75" y="70.5" text-anchor="middle" class="fig-b">월요일</text>
+  <text x="75" y="93.5" text-anchor="middle" class="fig-b">엔비디아</text>
+  <line x1="154" y1="76" x2="181" y2="76" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="185" y="40" width="150" height="72" rx="9" class="fig-agent"/>
+  <text x="260" y="70.5" text-anchor="middle" class="fig-b">수요일 밤</text>
+  <text x="260" y="93.5" text-anchor="middle" class="fig-b">브로드컴</text>
+  <line x1="339" y1="76" x2="366" y2="76" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="370" y="40" width="150" height="72" rx="9" class="fig-box"/>
+  <text x="445" y="82" text-anchor="middle" class="fig-b">그날 시간외</text>
+  <rect x="0" y="146" width="150" height="72" rx="9" class="fig-stage"/>
+  <text x="75" y="176.5" text-anchor="middle" class="fig-b">루멘텀·코히런트</text>
+  <text x="75" y="199.5" text-anchor="middle" class="fig-b">각각 20억 달러</text>
+  <line x1="75" y1="114" x2="75" y2="144" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="185" y="146" width="150" height="72" rx="9" class="fig-stage"/>
+  <text x="260" y="176.5" text-anchor="middle" class="fig-b">200기가는 구리</text>
+  <text x="260" y="199.5" text-anchor="middle" class="fig-b">400기가도 된다</text>
+  <line x1="260" y1="114" x2="260" y2="144" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="370" y="146" width="150" height="72" rx="9" class="fig-stage"/>
+  <text x="445" y="176.5" text-anchor="middle" class="fig-b">크레도 오르고</text>
+  <text x="445" y="199.5" text-anchor="middle" class="fig-b">옵틱스 둘 내림</text>
+  <line x1="445" y1="114" x2="445" y2="144" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="0" y="234" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="246" class="fig-lg">판을 뒤집은 발언</text>
+</svg><figcaption>두 회사는 실적발표마다 스케일업이 옵틱스로 넘어온다고 말해 왔고 그 말 뒤에 40억 달러가 얹혔다. 수요일 밤 발언으로 CPO 도입 시점이 2030년 안쪽까지 더 밀릴 수 있다는 이야기가 됐다.</figcaption></figure>
+<p>월요일에 엔비디아가 루멘텀과 코히런트에 각각 20억 달러를 투자한다고 발표했다. 두 회사는 최근 실적발표마다 스케일업(랙 안에서 가속기끼리 직접 붙는 구간)이 옵틱스로 넘어온다고 말해 왔다. 그 말 뒤에 합쳐 40억 달러가 얹혔으니 시장은 판정이 끝났다고 읽었다. <span class="pn">진행자V</span>의 표현으로는 옵틱스 편이 가슴을 두드리며 그것 보라고 했다.</p>
+<p>수요일 밤에 정반대가 나왔다. 브로드컴 실적발표에서 훅탄이 "200기가요? 네, 그건 코퍼로 문제없이 됩니다"라고 했고, 곧이어 400기가 서더스(신호를 한 줄로 폈다 다시 모으는 변환 칩)도 된다고 덧붙였는데, 그것이 뜻하는 3.2테라비트는 "수년 뒤 얘기"라고 했다. 배선 한 가닥이 1초에 나르는 신호를 200기가에서 400기가로 올린다는 말이고, 스위치 한 대 기준으로는 1.6테라비트 세대에서 3.2테라비트 세대로 넘어간다는 뜻이다. 크레도는 시간외에서 크게 뛰고 루멘텀·코히런트는 내렸다.</p>
+<p><span class="pn">진행자A</span>가 정리한 대목이 이 회차의 뼈대다. 어느 회사도 스케일업에 옵틱스가 영영 안 온다고는 말하지 않는다. 다투는 것은 언제냐 하나다. 그리고 훅탄의 발언은 다들 2027년이나 2028년으로 잡아 두었던 CPO(광학 부품을 스위치 칩 바로 옆에 붙여 한 덩어리로 만드는 패키징) 도입 시점을 2030년 안쪽까지 더 밀 수 있다.</p>
+<h2 id="s2"><span class="num">2</span> 코퍼를 살려 둔 것은 속도가 아니라 랙이 빽빽해진 일이다</h2>
+<figure class="uc-fig"><p class="fig-title">밀집이 줄인 것은 필요한 거리다</p><svg class="epoch" viewBox="0 0 520 316" role="img" aria-label="밀집이 구리의 사거리를 늘려 준 것이 아니라 필요한 사거리를 줄여 배치가 구리 안으로 걸어 들어왔다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="124" y="22" text-anchor="middle" class="fig-hd">예전 랙</text>
+  <text x="396" y="22" text-anchor="middle" class="fig-hd">지금 랙</text>
+  <rect x="4" y="38" width="240" height="49" rx="9" class="fig-box"/>
+  <text x="124" y="68.5" text-anchor="middle" class="fig-b">GPU 72개</text>
+  <rect x="276" y="38" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="68.5" text-anchor="middle" class="fig-b">GPU 144개</text>
+  <text x="396" y="91.5" text-anchor="middle" class="fig-b">어쩌면 576개</text>
+  <rect x="4" y="132" width="240" height="72" rx="9" class="fig-box"/>
+  <text x="124" y="162.5" text-anchor="middle" class="fig-b">GPU 와 스위치가</text>
+  <text x="124" y="185.5" text-anchor="middle" class="fig-b">멀다</text>
+  <rect x="276" y="132" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="174" text-anchor="middle" class="fig-b">가까워진다</text>
+  <rect x="94" y="228" width="332" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="257" text-anchor="middle" class="fig-b">구리가 닿는 3~7미터 안으로 들어온다</text>
+  <rect x="0" y="290" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="302" class="fig-lg">밀집이 만든 것</text>
+</svg><figcaption>576개는 「정확친 않지만」이라는 단서가 붙은 수다. 구리가 닿는 거리는 3미터에서 7미터 사이로 말했다. 랙마다 실제 배선 길이는 전사에 숫자가 없다.</figcaption></figure>
+<p>코퍼가 버티는 근거를 속도 경쟁으로만 보면 놓친다. <span class="pn">진행자A</span>가 짚은 것은 거리다. 랙 하나에 들어가는 GPU 수가 72개에서 144개로, 어쩌면 576개까지("정확친 않지만"이라는 단서를 달았다) 늘면서 GPU 와 스위치 사이가 계속 가까워지고 있다. 그러니까 구리가 신호를 온전히 나를 수 있는 3~7미터 안으로 배치가 저절로 걸어 들어온 셈이다. 밀집이 코퍼의 사거리를 늘려 준 것이 아니라, 필요한 사거리를 줄여 줬다.</p>
+<figure class="uc-fig"><p class="fig-title">속도를 올리면 닿는 거리가 준다</p><svg class="epoch" viewBox="0 0 520 340" role="img" aria-label="속도를 200기가로 올리면 케이블이 닿는 거리가 7미터에서 5미터로 주는데 랙 하나를 덮기에는 아직 넉넉하다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="140" y="60" width="96" height="180" rx="4" class="fig-box"/>
+  <text x="188" y="50" text-anchor="middle" class="fig-b">7미터</text>
+  <text x="188" y="262" text-anchor="middle" class="fig-hd">100기가</text>
+  <rect x="290" y="111.429" width="96" height="128.571" rx="4" class="fig-agent"/>
+  <text x="338" y="101.429" text-anchor="middle" class="fig-b">5미터</text>
+  <text x="338" y="262" text-anchor="middle" class="fig-hd">200기가</text>
+  <line x1="110" y1="240" x2="420" y2="240" class="fig-arw"/>
+  <text x="260" y="292" text-anchor="middle" class="fig-e">랙 높이는 8피트쯤 — 5미터면 덮는다</text>
+  <rect x="0" y="310" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="322" class="fig-lg">지금 세대</text>
+</svg><figcaption>7미터에서 5미터로 준다는 것은 실적발표에서 그렇게 말한 것 같다는 단서가 붙은 값이다. 랙 높이 8피트도 「모르겠는데 8피트쯤」이라고 했다.</figcaption></figure>
+<p>숫자로 확인할 수 있는 자리도 있다. 200기가로 올리면 케이블이 닿는 거리가 100기가 때의 7미터에서 5미터로 줄어든다고 <span class="pn">진행자V</span>가 전했는데, 실적발표에서 그렇게 말한 것 같다는 단서를 붙였다. 그러면서 랙 높이를 대략 8피트로 잡고(본인이 "모르겠는데 8피트쯤"이라고 했다) 늘어뜨릴 여유까지 감안해도 5미터면 랙 하나를 덮는다고 계산했다. 사거리가 줄었는데도 문제가 안 되는 이유가 여기 있다.</p>
+<p>지금 깔리는 물량도 코퍼 편이다. 배선 한 가닥에 100기가를 흘리는 800기가 링크는 오늘 이미 구리로 문제없이 돌고 있고, 200기가짜리 능동형 전기 케이블도 준비가 끝났다고 크레도가 말했다. <span class="pn">진행자V</span>는 마벨의 알래스카 DSP 도 비슷한 일을 하는 것을 봤기 때문에 그 말을 믿는다고 했다. 부착률로는 GPU 한 개당 능동형 전기 케이블 1.5개에서 5개 넘게까지 쓰인다는 수치가 언급된 적이 있다고 <span class="pn">진행자A</span>가 전했는데, 두 번 전 실적발표였는지 컨퍼런스였는지는 확실치 않다고 했다.</p>
+<p>두 번째 근거는 고장이다. 크레도 실적발표에서 계속 돌아온 낱말 하나가 신뢰성이었다고 <span class="pn">진행자V</span>가 전했다. 케이블마다 상태를 재는 텔레메트리 장치를 붙여 두고 소프트웨어로 들여다보다가, 상태가 나빠진 놈을 끊어지기 전에 미리 갈아 끼운다는 것이다(대시보드는 본 적이 없어 짐작이라고 밝혔다). 네트워크에서 링크가 끊기는 일을 플랩이라 부르는데, 케이블이 스위치 포트에서 빠져 펄럭이는 모습에서 온 말이다. <span class="pn">진행자A</span>는 오라클 클라우드 인프라스트럭처(OCI) 이야기를 전했다 — 큰 GPU 클러스터를 지을 때 가장 괴로운 것은 링크가 끊긴다는 사실 자체가 아니라 끊길 때까지 아무것도 모르고 있는 상태였고, 그래서 둘이 함께 텔레메트리를 만들었다. 짧은 구간을 구리로 바꾸면 레이저가 없으니 망가질 부품 자체가 준다.</p>
+<h2 id="s3"><span class="num">3</span> 40억 달러는 옵틱스에 건 표가 아니라 선택권을 산 값이다</h2>
+<p>투자를 판정으로 읽으면 안 되는 이유를 <span class="pn">진행자V</span>가 들었다. 두 계약 모두 다년이면서 비독점이고, 엔비디아가 얻는 것은 필요해질 때 쓸 생산 능력에 대한 접근권이다. 회사를 사지 않는 이유로는 둘을 들었다 — ① 반독점 시비를 피하는 것 ② 공급사를 여럿 만들어 서로 가격을 깎게 하는 것이다. 앞선 사례가 HBM 이다. SK하이닉스가 앞서고 삼성이 수율에 고전하던 때 엔비디아가 마이크론을 셋째 공급사로 끌어올려 규격과 인증을 도왔는데, 그때는 지분을 넣지는 않았다고 <span class="pn">진행자V</span>가 구분해 붙였다. CoWoS 물량을 미리 사들여 호퍼 세대 공급을 선점한 것도 같은 손버릇이다. <span class="pn">진행자V</span>는 엔비디아를 사냥개에 빗댔다. 어딘가 병목 냄새가 나면 바로 달려가 선금을 붓고 남보다 먼저 물량을 묶는다.</p>
+<p>공급망을 보면 급한 이유가 더 뚜렷하다. <span class="pn">진행자A</span>는 자기 노트에 그렇게 적혀 있다는 단서를 달고, 그레이스 블랙웰 세대 800기가 트랜시버의 40%가량을 InnoLight 가 차지하며 엔비디아의 1.6테라비트 첫 인증도 이 회사가 받았다고 전했다. 미국에 살면 투자하기 어려운 중국 회사다. 파브리넷도 엔비디아가 설계한 모듈을 만드는데 이 대목은 더 알아봐야 한다고 단서를 달았고, 조립은 태국인 것 같다고 했다. 그렇게 세면 엔비디아 트랜시버 물량의 40~50%가 중국을 지난다.</p>
+<figure class="uc-fig"><p class="fig-title">40억 달러로 산 갈래들</p><svg class="epoch" viewBox="0 0 520 314" role="img" aria-label="두 계약은 다년이고 비독점이라 어느 갈래든 나중에 고를 수 있게 자리를 잡아 둔 것이다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <rect x="125.5" y="30" width="269" height="46" rx="9" class="fig-agent"/>
+  <text x="260" y="59" text-anchor="middle" class="fig-b">엔비디아가 40억 달러로 산 것</text>
+  <rect x="33.5" y="130" width="144" height="72" rx="9" class="fig-box"/>
+  <text x="105.5" y="160.5" text-anchor="middle" class="fig-b">CW 레이저</text>
+  <text x="105.5" y="183.5" text-anchor="middle" class="fig-b">3인치 · 6인치</text>
+  <rect x="187.5" y="130" width="129" height="72" rx="9" class="fig-box"/>
+  <text x="252" y="160.5" text-anchor="middle" class="fig-b">OCS — 거울</text>
+  <text x="252" y="183.5" text-anchor="middle" class="fig-b">R300</text>
+  <rect x="326.5" y="130" width="160" height="72" rx="9" class="fig-box"/>
+  <text x="406.5" y="160.5" text-anchor="middle" class="fig-b">OCS — 액정</text>
+  <text x="406.5" y="183.5" text-anchor="middle" class="fig-b">움직이는 부품 없음</text>
+  <line x1="105.5" y1="78" x2="105.5" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="252" y1="78" x2="252" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <line x1="406.5" y1="78" x2="406.5" y2="128" class="fig-arw" marker-end="url(#aieArw)"/>
+  <rect x="55" y="226" width="410" height="46" rx="9" class="fig-stage"/>
+  <text x="260" y="255" text-anchor="middle" class="fig-b">다년 · 비독점 — 하나든 둘이든 고를 수 있다</text>
+  <rect x="0" y="288" width="14" height="14" rx="3" class="fig-box fig-agent"/>
+  <text x="22" y="300" class="fig-lg">표가 아니라 선택권</text>
+</svg><figcaption>CW 레이저는 변조가 없어 만들기는 단순한 대신 높은 출력을 내기가 어렵다. OCS 두 방식 중 어느 쪽이 나은지는 자신도 모른다고 했다. 계약은 다년이고 비독점이다.</figcaption></figure>
+<p>CPO 관점의 이유도 붙는다. CPO 에 필요한 것은 변조 레이저가 아니라 CW(연속파) 레이저인데, 변조가 없어 만들기는 단순한 대신 높은 출력을 내기가 어렵다. 루멘텀은 3인치 웨이퍼로 만들고 코히런트는 6인치를 램프 중인 것으로 안다고 <span class="pn">진행자V</span>가 말했고, 코히런트가 결국 해낼 것이라는 데 의심이 없다는 대목은 본인의 판단이라고 밝혔다. 여기에 OCS(광 회로 스위치)가 하나 더 있다. 루멘텀에는 거울을 움직여 빛의 방향을 바꾸는 R300 이 있고 코히런트에는 움직이는 부품이 없는 액정 방식이 있는데, 어느 쪽이 나은지는 자신도 모른다고 했다. 40억 달러로 엔비디아가 가져간 것은 이 갈래들 중 하나를, 또는 둘 다를 나중에 고를 권리다.</p>
+<h2 id="s4"><span class="num">4</span> 같은 사실을 놓고 반대로 말하는 이유는 팔 것이 달라서다</h2>
+<p><span class="pn">진행자A</span>가 이 회차에서 독자에게 준 도구가 이것이다. 정보를 해석할 때 그 회사의 사업모델이 무엇을 시키는지를 먼저 보라는 것이다. 옵틱스 회사는 곧 온다고 말하고 크레도의 고객은 능동형 전기 케이블을 계속 쓰겠다고 말한다. <span class="pn">진행자A</span>는 그렇다고 누가 거짓말을 한다는 뜻은 아니라고 했다. 각자 자기가 만나는 고객에게서 실제로 그 답을 듣고 있다.</p>
+<p>처지의 차이는 더 노골적이다. <span class="pn">진행자V</span>가 보기에 루멘텀과 코히런트는 성장하는 회사라 투자자에게 이야기를 팔아야 하고, 훅탄은 그럴 필요가 없어 보수적으로 있을 수 있다. 그래서 CPO 가 2년 뒤에 온다는 것을 안다 해도 미리 말하지 않고 마지막 순간에 발표할 것이라고 봤다. <span class="pn">진행자A</span>는 같은 회사 안에서도 사업부에 따라 말투가 달라진다고 보탰다 — XPU 사업은 앞을 내다보며 말하고, 트랜시버와 스위치 사업은 업계 1위라 보수적으로 있어도 손해가 없다.</p>
+<p>크레도가 이 주에 낸 실적은 그 말에 힘을 실어 줬다. 매출이 전분기 대비 52%, 전년 대비 200% 늘었다. <span class="pn">진행자A</span>는 이런 부품 회사는 대형 고객 서넛에서 다섯쯤에 매출이 몰려 분기마다 들쭉날쭉하니 전년 대비로 봐야 한다고 짚었다. 매출총이익률은 70%에 가까웠는데 옵틱스 비중이 커지며 64~66%로 내려간다는 가이던스에 월가가 실망했고, <span class="pn">진행자A</span>는 그 정도면 여전히 나쁘지 않다고 봤다. 빌 브레넌은 2년 만에 6배 성장했고 반도체 업계에서 그 속도로 큰 회사는 드물다고 했고, 시장의 억측을 엔지니어답게 에둘렀다. "시장에 신호대잡음비 문제가 좀 있었습니다. 그리고 지금은 잡음이 신호를 압도하고 있죠".</p>
+<p>그래서 이 논쟁에는 모두가 동의할 날짜가 없다. <span class="pn">진행자A</span>가 대신 내놓은 그림은 곡선 여럿이 겹쳐 쌓이는 모양이다. 800기가 위에 1.6테라비트가, 그 위에 3.2테라비트가 얹히고, 세는 방식에 따라 다섯 곳쯤 되는 하이퍼스케일러가 서로 다른 기술을 서로 다른 자리에 서로 다른 시점에 깐다. 볼 것은 승자가 아니라 누가 무엇을 어디에 얼마만큼 까느냐다.</p>
+<h2 id="s5"><span class="num">5</span> 시점이 밀리면 중간에 낀 기술이 먼저 죽는다</h2>
+<p>시점 논쟁의 값은 중간 기술에서 가장 크게 갈린다. 크레도가 준비하는 ALC(능동형 LED 케이블)는 마이크로LED 를 쓴 케이블로, 구리 케이블과 레이저 광케이블 사이 어딘가에 있다. 회사 주장으로는 구리와 같은 성능·전력효율을 내면서 거리가 길어 가까운 세대에서 10미터, 궁극적으로 30미터까지 간다. <span class="pn">진행자V</span>는 그게 맞다면 로우 하나를 통째로 이을 수 있다고 했다. <span class="pn">진행자A</span>는 능동형 전기 케이블이 레이저 옵틱스보다 신뢰성 1,000배에 전력은 절반이라고 인용된 것을 본 것 같다고 전하며, 이 회차의 표어가 될 문장을 붙였다. "가능하면 코퍼, 어쩔 수 없으면 옵틱스로".</p>
+<figure class="uc-fig"><p class="fig-title">시점이 정하는 중간 기술의 운명</p><svg class="epoch" viewBox="0 0 520 256" role="img" aria-label="ALC 는 2028회계연도쯤 나올 것 같은데 그 전에 CPO 가 오면 꽂아 쓰는 자리가 없어져 존재 이유가 사라진다">
+  <defs>
+    <marker id="aieArw" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+    <marker id="aieArwL" viewBox="0 0 10 10" refX="1" refY="5"
+            markerWidth="7" markerHeight="7">
+      <path d="M10 0 L0 5 L10 10 z" fill="var(--epoch-teal)"/>
+    </marker>
+  </defs>
+  <text x="260" y="30" text-anchor="middle" class="fig-hd">CPO 가 언제 오느냐가 중간에 낀 기술의 운명을 정한다</text>
+  <rect x="4" y="46" width="240" height="72" rx="9" class="fig-bad"/>
+  <text x="124" y="76.5" text-anchor="middle" class="fig-b">CPO 가 먼저 오면</text>
+  <text x="124" y="99.5" text-anchor="middle" class="fig-b">ALC 는 설 자리가 없다</text>
+  <rect x="276" y="46" width="240" height="72" rx="9" class="fig-agent"/>
+  <text x="396" y="76.5" text-anchor="middle" class="fig-b">ALC 가 먼저 오면</text>
+  <text x="396" y="99.5" text-anchor="middle" class="fig-b">로우 하나를 잇는다</text>
+  <rect x="55" y="142" width="410" height="72" rx="9" class="fig-stage"/>
+  <text x="260" y="172.5" text-anchor="middle" class="fig-b">ALC 는 2028회계연도쯤</text>
+  <text x="260" y="195.5" text-anchor="middle" class="fig-b">3.2테라비트가 구리면 CPO 는 2032년까지</text>
+  <rect x="0" y="230" width="14" height="14" rx="3" class="fig-box fig-bad"/>
+  <text x="22" y="242" class="fig-lg">중간에 낀 기술이 죽는 쪽</text>
+</svg><figcaption>ALC 도 마이크로LED 트랜시버를 꽂아 쓰는 방식이라 광학 엔진이 스위치 실리콘 옆으로 들어가면 자리가 없어진다. 3.2테라비트가 구리로 되면 CPO 를 부를 이유가 2032년까지 밀린다는 것이 <span class="pn">진행자V</span> 의 계산이다.</figcaption></figure>
+<p>그런데 ALC 는 2028회계연도쯤에나 나올 것 같고, 그 전에 CPO 가 나오면 존재 이유가 사라진다. 광학 엔진이 스위치 실리콘 옆으로 들어가 버리면 꽂아 쓰는 트랜시버 자리가 없어지기 때문이다. ALC 도 마이크로LED 트랜시버를 꽂아 쓰는 방식이라는 점을 <span class="pn">진행자V</span>가 따로 짚었다. 그래서 <span class="pn">진행자A</span>가 청취자에게 권한 것은 시점 둘을 나란히 보는 일이다 — CPO 가 언제 나오나, 그리고 ALC 가 언제 나오나.</p>
+<p>훅탄의 400기가 발언이 무거운 이유도 여기 있다. 1.6테라비트 램프가 2028년이나 2029년에 끝나고 3.2테라비트가 2030년쯤 깔린다면, 그 3.2테라비트가 구리로 되는 순간 CPO 를 부를 이유가 2032년까지 밀린다는 것이 <span class="pn">진행자V</span>의 계산이다. 다만 그 자리에서 유보도 함께 달았다. 훅탄은 연구소에서 이미 돌고 있다고 주장했지만 "영수증을 봐야겠다, 컨퍼런스를 지켜보겠다"는 것이 <span class="pn">진행자V</span>의 반응이었다.</p>
+<h2 id="s6"><span class="num">6</span> 이 회차가 말하지 않은 것</h2>
+<p>빠진 항목이 셋이다. ① 전력이 빠져 있다. 구리가 3.2테라비트에서 돌아간다 해도 CPO 가 나올 이유가 하나 남는데, 400기가를 3미터 밀어 넣는 데 비트당 피코줄을 얼마나 태우느냐다. CPO 가 덜 먹으면 CPO 로 간다. 이 회차는 어느 쪽이 얼마인지를 대지 않았다. ② 배선 성능의 근거가 기업 발표뿐이다. <span class="pn">진행자V</span>는 스위치 실리콘 안에서 등화와 오류정정이 이뤄질 것이라 추정했고, 랙 규모에서 그 처리 없이는 불가능하다고 봤다 — 그러면서 AEC 는 크레도의 마케팅 이름일 뿐 결국 다 구리라고 정리했다. 규격이 아니라 제품 이름으로 나뉜 시장이라는 뜻이다. ③ 레이저 공급의 병목이 얼마나 큰지도 흐릿하다. 대기줄이 30%라는 언급은 문장이 끝맺어지지 않아 무엇의 30%인지 알 수 없고, 3인치는 작고 6인치는 수율이 안 나온다는 대목만 분명하다.</p>
+<p>훅탄이 왜 그렇게 구리를 미느냐에 <span class="pn">진행자V</span>가 내놓은 가설도 회차 안에서 그 자신이 물러섰다. 스파인 스위치가 OCS 로 바뀌면 토마호크 매출에 나쁘기 때문이라는 것인데, OCS 는 빛의 방향만 돌리는 멍청한 거울이라 어디로 보낼지 판단하지 않아도 되고 전력을 훨씬 덜 먹으며, 훈련처럼 GPU 사이 연결이 고정된 구간에 잘 맞는다. <span class="pn">진행자V</span>는 스파인 스위치 교체가 실제로 벌어지고 있는지도 모르겠다고 했고, 마지막에는 "제 설명엔 아마 뭔가 근본적으로 잘못된 부분이 있을 거예요"라고 스스로 접었다. 이 대목은 근거가 아니라 반박을 기다리는 물음으로 읽어야 한다.</p>
+<p>무엇이 나오면 이 글의 판단이 바뀌는지는 셋이다. ① 훅탄이 컨퍼런스에서 400기가 구리 자료를 실제로 내놓으면 5절의 2032년 계산에 바닥이 생긴다. ② 비트당 전력 수치가 공개되면 구리가 되느냐와 무관하게 CPO 도입 시점이 다시 앞당겨질 수 있다. ③ 랙당 GPU 수가 실제로 어디까지 오르는지가 2절의 사거리 논거를 지탱하거나 무너뜨린다. 진행자 둘이 회차 끝에 내린 답은 둘 중 하나가 아니었다. 옵틱스도 코퍼도 함께 가고, 쟁점은 언제나 시점이라는 것이다.</p><div class="foot">받은 글을 문장 그대로 싣는다. 원본 <a href="https://github.com/johnn8n/semianalysis/blob/main/insights/semidoped/2026-03-06-optics-copper-crossroads-strategy.md">insights/semidoped/2026-03-06-optics-copper-crossroads-strategy.md</a> · 페르소나 전략 컨설턴트 출신 애널리스트</div></div></div>
