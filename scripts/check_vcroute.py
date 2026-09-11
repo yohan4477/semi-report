@@ -34,8 +34,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGE = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
 DATA = os.path.join(ROOT, 'data', 'valuechain')
-COL_W = 128.0
-COL_GAP = 48.0
+COL_W = 156.0
+COL_GAP = 56.0
 LANE_MAX = 10.0
 TOL = 1.0
 CLR = 6.0

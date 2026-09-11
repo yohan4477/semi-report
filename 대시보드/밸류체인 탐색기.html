@@ -146,27 +146,27 @@ margin:10px 0 6px}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
 /* 상자는 크기가 다 같다(128×60). 이름은 두 줄까지 보이고 넘치면 줄임표, 아래 줄은 한 줄.
    크기가 제각각이면 같은 칸의 상자가 서로 다른 것으로 읽히고 선이 닿는 높이가 흔들린다 */
-.nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:5px 9px;
-width:128px;height:60px;box-sizing:border-box;display:flex;flex-direction:column;
+.nd{background:var(--paper);border:1px solid #9aa3b5;border-radius:7px;padding:6px 10px;
+width:156px;height:64px;box-sizing:border-box;display:flex;flex-direction:column;
 justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
-.nd .nm{font-size:12px;font-weight:600;line-height:1.25;display:-webkit-box;
+.nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
 -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
-.hdr{width:128px;text-align:center;padding:4px 6px;background:var(--hi);
+.hdr{width:156px;text-align:center;padding:5px 6px;background:var(--hi);
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
 box-sizing:border-box}
 .hdrbar{position:absolute;left:0;top:0;right:0;height:50px;pointer-events:none;z-index:5;
 overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(232,235,240,0))}
 .hdrbar .hdr .hl{font-size:1em}
 .hdrbar .hdr .hn{font-size:.9em}
-.hdr .hl{font-size:11px;color:var(--ink2);font-weight:700;letter-spacing:-.2px;
+.hdr .hl{font-size:12.5px;color:var(--ink1);font-weight:700;letter-spacing:-.2px;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hdr .hn{font-size:10px;color:var(--ink3);font-weight:500;letter-spacing:-.2px;
+.hdr .hn{font-size:10.5px;color:var(--ink3);font-weight:500;letter-spacing:-.2px;
 margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nd .sub{font-size:10.5px;color:var(--ink3);margin-top:1px;white-space:nowrap;overflow:hidden;
+.nd .sub{font-size:11.5px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;
 text-overflow:ellipsis;line-height:1.3}
 .proj{border:1px dashed #aab2c2;border-radius:10px;background:rgba(255,255,255,.45);
 pointer-events:none;box-sizing:border-box}
@@ -174,19 +174,19 @@ pointer-events:none;box-sizing:border-box}
 letter-spacing:.4px;color:var(--ink3)}
 .proj .pn{font-size:11.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink2);
 margin-top:1px}
-.nd .val{display:inline-block;margin-left:5px;padding:0 4px;border-radius:4px;
-background:var(--hi);border:1px solid var(--line);color:var(--ink2);font-weight:700;
-font-size:10.5px}
+.nd .val{display:inline-block;margin-left:5px;padding:0 5px;border-radius:4px;
+background:var(--hi);border:1px solid var(--line);color:var(--ink1);font-weight:700;
+font-size:11px}
 .nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;
 box-shadow:0 3px 12px rgba(20,26,40,.22)}
-.nd.focal .nm{font-size:13px}
-.nd.focal .sub{font-size:11px}
+.nd.focal .nm{font-size:14px}
+.nd.focal .sub{font-size:11.5px}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 /* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
-.nd.lane{background:#f7f8fb;border:1px dashed #9aa3b5;border-radius:19px;text-align:center;
-padding:2px 9px;height:60px;box-shadow:none;align-items:center}
-.nd.lane .nm{font-size:11.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:1}
-.nd.lane .sub{margin-top:0;font-size:10px}
+.nd.lane{background:#f7f8fb;border:1px dashed #8e97aa;border-radius:20px;text-align:center;
+padding:2px 10px;height:64px;box-shadow:none;align-items:center}
+.nd.lane .nm{font-size:12.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:2}
+.nd.lane .sub{margin-top:1px;font-size:10.5px}
 .nd.lane.un{border-color:#c6ccd8}
 .nd.lane.un .nm{color:var(--ink3)}
 .nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
@@ -401,11 +401,11 @@ var HOME = (function(){
 var EV_KO = { CONFIRMED:'공시로 확인', ESTIMATED:'추정', INFERRED:'정황 추론',
   UNDISCLOSED:'비공개', HISTORICAL_CURRENT_UNKNOWN:'과거 관측·현재 미상' };
 var EV_STYLE = {
-  CONFIRMED: { stroke:'#9aa2b3', strokeWidth:1.4 },
-  ESTIMATED: { stroke:'#bda680', strokeWidth:1.3 },
-  INFERRED:  { stroke:'#b4bac6', strokeWidth:1.2, strokeDasharray:'6 4' },
-  UNDISCLOSED:{ stroke:'#ccd1da', strokeWidth:1.1, strokeDasharray:'2 4' },
-  HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#d5d9e1', strokeWidth:1.1, strokeDasharray:'1 5' }
+  CONFIRMED: { stroke:'#5c6577', strokeWidth:1.7 },
+  ESTIMATED: { stroke:'#9a7a4a', strokeWidth:1.6 },
+  INFERRED:  { stroke:'#8b93a5', strokeWidth:1.5, strokeDasharray:'7 4' },
+  UNDISCLOSED:{ stroke:'#a9b0bf', strokeWidth:1.4, strokeDasharray:'2 4' },
+  HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#b8bec9', strokeWidth:1.3, strokeDasharray:'1 5' }
 };
 function evStyle(k){ return EV_STYLE[k] || EV_STYLE.INFERRED; }
 var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
@@ -662,7 +662,8 @@ var PROJ_PAD_X = 18, PROJ_PAD_Y = 34;
 
 // 칸을 건너뛰는 선이 지나갈 빈 자리는 상자와 같은 높이로 잡는다. 10px 만 비우면
 // 그 띠가 상자 높이를 못 덮어 선이 중간 칸 상자를 가로지른다
-var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 60;
+// 상자 156×64, 칸 사이 56. 읽히는 크기가 먼저다 — 판 전체를 한 화면에 넣지 않는다
+var COL_W = 156, COL_GAP = 56, ROW_GAP = 16, HDR_H = 40, DUMMY_H = 64;
 // 칸 사이 빈 띠 한가운데가 통로다. 세로 이동은 오직 여기서만 한다 — 상자가 선 칸
 // 안에서 세로로 움직이면 선이 상자 옆구리를 스쳐 그 상자에서 나가는 것처럼 읽힌다
 function gutterX(bd, lane){
@@ -684,7 +685,7 @@ function cw(s){
 // 상자 높이는 고정이다 — 회사 60, 알약 38. 어림도 재기도 필요 없다
 // 상자는 갈래를 가리지 않고 한 크기다. 높이가 갈리면 같은 줄에 선 것들이
 // 층이 어긋나 보이고 선도 같은 눈금에 못 선다
-var BOX_H = 60, LANE_H = 60;
+var BOX_H = 64, LANE_H = 64;
 function boxH(d){
   return d.kind === 'lane' ? LANE_H : BOX_H;
 }
@@ -872,6 +873,14 @@ function place(nodes, edges, opts){
     link(prev, e.target);
   });
 
+  // 빈 자리의 차례 — 타겟으로 드는 선의 빈 자리 0, 상자 1, 지나쳐 가는 선의 빈 자리 2
+  var focalId = null;
+  nodes.forEach(function(n){ if (n.data && n.data.focal) focalId = n.id; });
+  function dummyRank(it){
+    if (!it.dummy) return 1;
+    var t = it.id.slice(1, it.id.lastIndexOf('@'));
+    return t === focalId ? 0 : 2;
+  }
   // 세로 차례 — 앞뒤로 여러 번 쓸어야 교차가 준다
   used.forEach(function(c){ byCol[c].forEach(function(it, i){ it.ord = i; }); });
   function sweep(dir){
@@ -900,11 +909,11 @@ function place(nodes, edges, opts){
           list[k].bary = prev + (next - prev) * (k - i + 1) / n;
         i = j - 1;
       }
-      // 무게중심이 같으면 빈 자리(칸을 건너뛰는 선의 통로)가 먼저다. 타겟으로 드는
-      // 선의 빈 자리가 타겟 높이에 앉아야 그 높이가 비어 있다
+      // 무게중심이 같으면 타겟으로 드는 선의 빈 자리만 먼저다(타겟 높이가 비어 있어야
+      // 한다). 그 밖의 빈 자리(전방시장처럼 칸을 지나쳐 가는 선)는 상자 뒤로 보낸다 —
+      // 앞에 두면 그 통로들이 칸 위쪽을 차지해 알약·상자가 한참 아래로 밀린다
       list.sort(function(a, b){
-        return (a.bary - b.bary) || ((a.dummy ? 0 : 1) - (b.dummy ? 0 : 1))
-            || (a.ord - b.ord);
+        return (a.bary - b.bary) || (dummyRank(a) - dummyRank(b)) || (a.ord - b.ord);
       });
       list.forEach(function(it, k){ it.ord = k; });
     });
@@ -1002,7 +1011,7 @@ function place(nodes, edges, opts){
                : (it.top === undefined ? k * 1e6 : cyOf(it));
       });
       list.sort(function(a, b){
-        return (a.key - b.key) || ((a.dummy ? 0 : 1) - (b.dummy ? 0 : 1)) || (a.ord - b.ord);
+        return (a.key - b.key) || (dummyRank(a) - dummyRank(b)) || (a.ord - b.ord);
       });
       list.forEach(function(it, k){ it.ord = k; });
     });
@@ -2109,14 +2118,17 @@ function App(){
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
-      if (window.innerWidth < 720 && rf.getNodes && rf.setViewport) {
-        // 첫 화면 — 칸 머리글을 맨 위에 붙이고 타겟 칸을 가운데 두어 양옆 칸이 함께
-        // 보인다. 타겟을 세로 가운데에 놓으면 위 절반이 빈 판이 된다
+      if (rf.getNodes && rf.setViewport) {
+        // 첫 화면 — 판 전체를 한 화면에 욱여넣지 않는다(블룸은 상자 100개라 글자가 안
+        // 읽힌다). 칸 머리글을 맨 위에 붙이고 타겟 칸을 가운데 두어 좁은 화면은 양옆
+        // 한 칸씩, 넓은 화면은 두 칸씩을 읽히는 크기로 보인다. 나머지는 끌어서 본다
         var me0 = null;
         rf.getNodes().forEach(function(n){ if (n.id === focal) me0 = n; });
-        if (me0) {
-          var vw = window.innerWidth;
-          var z = Math.min(1, Math.max(.55, (vw - 12) / (3 * COL_W + 2 * COL_GAP)));
+        var cv = document.querySelector('.canvas');
+        if (me0 && cv) {
+          var vw = cv.clientWidth || window.innerWidth;
+          var ncol = window.innerWidth < 720 ? 3 : 5;
+          var z = Math.min(1, Math.max(.55, (vw - 16) / (ncol * COL_W + (ncol - 1) * COL_GAP)));
           rf.setViewport({ x: vw / 2 - (me0.position.x + COL_W / 2) * z, y: 6, zoom: z },
                          { duration:240 });
           return;
@@ -2370,7 +2382,7 @@ function App(){
         if (inst.getViewport) setVp(inst.getViewport()); },
       onMove:function(_, v){ setVp(v); }, fitView:true, maxZoom:1.6,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
-      minZoom: window.innerWidth < 720 ? .28 : .2,
+      minZoom: window.innerWidth < 720 ? .28 : .25,
       translateExtent: extent,
       onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
