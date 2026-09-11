@@ -108,11 +108,17 @@ background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
 @media (max-width:720px){
-  .drw{position:absolute;right:0;top:0;bottom:0;width:88%;max-width:none;z-index:30;
-       box-shadow:-8px 0 24px rgba(20,26,40,.12)}
+  .main{flex-direction:column}
+  .canvas{flex:1 1 auto;min-height:44vh}
+  .drw{width:100%;max-width:none;min-width:0;flex:0 0 52%;border-left:0;
+       border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(20,26,40,.1);
+       padding:10px 14px 28px}
+  .drw h3{font-size:14.5px}
   .legend{display:none}
   .scrub{padding:7px 10px}
   .sw th:first-child{width:auto}
+  .top{gap:8px;padding:8px 10px}
+  .brand small{display:none}
 }
 </style>
 </head><body>
@@ -484,13 +490,15 @@ function srcLine(sid){
 function Method(p){
   var m = METH[p.id];
   if (!m) return null;
-  var rows = (m.steps || []).map(function(s, i){
+  var rows = (m.steps || []).filter(function(s){
+    return s.value !== null && s.value !== undefined;
+  }).map(function(s, i){
     return h('div', { key:i }, [ h('span', { key:'a' }, s.label),
       h('span', { key:'b' }, (s.value === null || s.value === undefined ? '' : fmt(s.value))
         + (s.unit ? ' ' + s.unit : '')) ]);
   });
   return h('div', null, [
-    h('div', { key:'s', className:'steps' }, rows),
+    rows.length ? h('div', { key:'s', className:'steps' }, rows) : null,
     m.note ? h('div', { key:'n', className:'v',
       style:{ color:'#6b7488', marginTop:'5px' } }, m.note) : null
   ]);
@@ -958,7 +966,9 @@ function App(){
   else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
-      onNodeClick:onNodeClick, onInit:setRf, fitView:true, minZoom:.2, maxZoom:1.6,
+      onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
+      // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
+      minZoom: window.innerWidth < 720 ? .42 : .2,
       onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
