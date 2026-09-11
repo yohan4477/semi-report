@@ -141,6 +141,9 @@ min-width:110px;max-width:150px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:p
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
+.hdr{width:150px;text-align:center;font-size:11px;color:var(--ink3);font-weight:600;
+letter-spacing:-.2px;border-bottom:1px solid var(--line);padding-bottom:4px;
+text-transform:none;pointer-events:none}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
 .nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;padding:11px 14px;
 box-shadow:0 3px 12px rgba(20,26,40,.22)}
@@ -278,6 +281,25 @@ var TIER_KO = { CONTRACTUAL_CUSTOMER:'계약 상대', INTERMEDIARY:'중개',
   REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
+// 세로 한 줄에는 같은 단계만 선다. 왼쪽부터 오른쪽으로 사슬 순서다
+var COLS = [
+  { key:'RAW_MATERIAL', label:'원재료' },
+  { key:'MATERIAL_PROCESSING', label:'소재·가공' },
+  { key:'COMPONENT_SUPPLIER', label:'부품 공급' },
+  { key:'SUBSYSTEM', label:'계통·모듈' },
+  { key:'FOCAL', label:'이 회사' },
+  { key:'REVENUE_TYPE', label:'매출원' },
+  { key:'CONTRACTUAL_CUSTOMER', label:'계약 상대' },
+  { key:'INTERMEDIARY', label:'중개' },
+  { key:'PROJECT', label:'프로젝트·부지' },
+  { key:'END_USER', label:'최종 사용자' }
+];
+var COL_OF = {};
+COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
+function colOfRel(r, up){
+  var t = tierOf(r, up);
+  return (t && COL_OF[t] !== undefined) ? COL_OF[t] : (up ? 2 : 6);
+}
 // 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
 var CAT_ORDER = ['Cell', 'Interconnect', 'Hotbox', 'Power electronics', 'Mechanical',
   'Other ceramic', 'Thermal', 'Instrumentation', 'Raw material', 'Material processing',
@@ -362,8 +384,12 @@ function Nd(p){
     h(Handle, { key:'s2', type:'source', position:Position.Right, style:{opacity:0} })
   ]);
 }
-var NODE_TYPES = { nd: Nd };
+function Hdr(p){
+  return h('div', { className:'hdr' }, p.data.label);
+}
+var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
+var COL_W = 150, COL_GAP = 44, ROW_GAP = 12, HDR_H = 26;
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
   // 칸 사이를 좁게 — 판이 가로로 퍼질수록 맞춰 넣을 때 글자가 작아진다
@@ -375,14 +401,39 @@ function place(nodes, edges){
     var lines = Math.ceil((d.title || '').length / 14) || 1;
     var hgt = 16 + lines * 18 + ((d.sub || d.isNew) ? 17 : 0);
     if (d.focal) { hgt += 14; }
-    g.setNode(n.id, { width: d.focal ? 210 : 176, height:hgt });
+    g.setNode(n.id, { width: COL_W, height:hgt });
   });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
-  return nodes.map(function(n){
-    var p = g.node(n.id);
-    return Object.assign({}, n, { position:{ x:p.x - p.width / 2, y:p.y - p.height / 2 } });
+  // 세로 차례만 dagre 에서 얻고, 가로 자리는 단계 칸에 못박는다.
+  // 한 세로줄에는 같은 단계만 선다
+  var byCol = {};
+  nodes.forEach(function(n){
+    var c = n.data.col === undefined ? COL_OF.FOCAL : n.data.col;
+    (byCol[c] = byCol[c] || []).push({ n:n, y:g.node(n.id).y, h:g.node(n.id).height });
   });
+  var used = Object.keys(byCol).map(Number).sort(function(a, b){ return a - b; });
+  var heights = {};
+  used.forEach(function(c){
+    var y = 0;
+    byCol[c].sort(function(a, b){ return a.y - b.y; }).forEach(function(it){
+      it.top = y; y += it.h + ROW_GAP;
+    });
+    heights[c] = y - ROW_GAP;
+  });
+  var tall = Math.max.apply(null, used.map(function(c){ return heights[c]; }));
+  var out = [];
+  used.forEach(function(c, i){
+    var off = (tall - heights[c]) / 2;
+    byCol[c].forEach(function(it){
+      out.push(Object.assign({}, it.n, {
+        position:{ x: i * (COL_W + COL_GAP), y: it.top + off + HDR_H } }));
+    });
+    out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false, connectable:false,
+      position:{ x: i * (COL_W + COL_GAP), y: 0 },
+      data:{ label: COLS[c] ? COLS[c].label : '' } });
+  });
+  return out;
 }
 
 function readUrl(first){
@@ -424,7 +475,8 @@ function addRelNode(ctx, r, nid, host, up, year){
   if (!have) {
     var on0 = activeIn(r, year), fy0 = firstYear(r);
     ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), flag: flagOf(eid),
-      kind:'ent', sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
+      kind:'ent', col: colOfRel(r, up),
+      sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
       isNew: on0 && fy0 === year && fy0 !== YEARS[0],
       more: hasMore(eid, up) && ctx.open.indexOf('e|' + eid) < 0,
       ref:{ kind:'rel', id:r.id, entity: eid } } });
@@ -484,7 +536,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
                                     lane: r.lane, rels: [] }).rels.push(r);
   });
   nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), flag: flagOf(focal),
-    kind:'ent', focal:true,
+    kind:'ent', focal:true, col: COL_OF.FOCAL,
     sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
   // 매출원 — 눌러야 그 매출원에 근거가 붙는 고객이 열린다 (05 §28)
   revRels.forEach(function(r){
@@ -492,7 +544,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
     var o = shareIn(r.id, year);
     var pct = o && o.value !== null && o.value !== undefined ? fmt(o.value) + '%' : '?';
     ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(rt), kind:'grp',
-      sub: pct + ' · 총매출 대비', gone: !o,
+      col: COL_OF.REVENUE_TYPE, sub: pct + ' · 총매출 대비', gone: !o,
       ref:{ kind:'rel', id:r.id, entity: rt, revtype:true } } });
     ctx.byEnt[rt] = nid;
     ctx.edges.push({ id:'rev-' + r.id, source: focal, target: nid,
@@ -510,6 +562,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
     var g = groups[gk];
     var act = g.rels.filter(function(r){ return activeIn(r, year); });
     nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
+      col: g.up ? COL_OF.SUBSYSTEM : COL_OF.REVENUE_TYPE,
       sub: act.length + '곳 · ' + (g.lane === 'MANUFACTURING_BOM'
         ? (g.up ? '들어온다' : '나간다') : LANE_KO[g.lane]), gone: !act.length,
       ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
@@ -923,7 +976,7 @@ function App(){
         var c = rf.getNode ? rf.getNode(focal) : null;
         if (c) {
           rf.setCenter(c.position.x + 75, c.position.y + 22,
-                       { zoom: open.length ? .5 : .62, duration:240 });
+                       { zoom: open.length ? .46 : .55, duration:240 });
           return;
         }
       }
