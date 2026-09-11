@@ -172,6 +172,27 @@ Object.keys(CHAINS).forEach(function(ck){
     (OBS_BY_REL[o.relationship_id] = OBS_BY_REL[o.relationship_id] || []).push(o);
   });
 });
+// 원가·재무는 사슬이 아니라 자료에 적힌 주인(company)으로 찾는다.
+// 한 회사가 사슬 둘에 걸쳐도 제 것만 본다
+var BOM_BY_CO = {}, FIN_BY_CO = {};
+Object.keys(CHAINS).forEach(function(ck){
+  var c = CHAINS[ck];
+  Object.keys(c.bom || {}).forEach(function(k){
+    var b = c.bom[k];
+    if (b && b.company) (BOM_BY_CO[b.company] = BOM_BY_CO[b.company] || []).push(b);
+  });
+  Object.keys(c.financials || {}).forEach(function(k){
+    var f = c.financials[k];
+    if (f && f.company) (FIN_BY_CO[f.company] = FIN_BY_CO[f.company] || []).push(f);
+  });
+});
+Object.keys(BOM_BY_CO).forEach(function(k){
+  BOM_BY_CO[k].sort(function(a, b){ return a.as_of_date < b.as_of_date ? -1 : 1; });
+});
+Object.keys(FIN_BY_CO).forEach(function(k){
+  FIN_BY_CO[k].sort(function(a, b){ return a.as_of_date < b.as_of_date ? -1 : 1; });
+});
+
 function relsOf(id){
   var seen = {}, out = [];
   (REL_BY_ENT[id] || []).forEach(function(rid){
@@ -1161,23 +1182,16 @@ function Evidence(){
 // ── 원가 ────────────────────────────────────────────────────────────
 var TONE = ['#3d4557','#575f73','#6f7688','#888e9d','#a0a6b3','#b8bcc6','#cfd2d9'];
 function Bom(p){
-  var ch = CHAINS[p.chain] || {};
-  // 자료의 주인(company)이 지금 중심과 같을 때만 쓴다.
-  // 사슬에 있다는 이유로 남의 원가를 이 회사 것처럼 붙이지 않는다
-  var keys = Object.keys(ch.bom || {}).filter(function(k){
-    return ch.bom[k].company === p.focal;
-  });
-  var fin = {};
-  Object.keys(ch.financials || {}).forEach(function(k){
-    if (ch.financials[k].company === p.focal) fin[k] = ch.financials[k];
-  });
-  if (!keys.length && !Object.keys(fin).length)
+  // 사슬을 보지 않는다. 이 회사 이름이 박힌 자료만 쓴다
+  var boms = BOM_BY_CO[p.focal] || [];
+  var fins = FIN_BY_CO[p.focal] || [];
+  if (!boms.length && !fins.length)
     return h('div', { className:'pane' }, [
       h('h2', { key:'t' }, nm(p.focal) + ' — 원가 자료가 없다'),
       h('p', { key:'n', className:'note' },
         '이 회사 이름으로 된 BOM 이나 재무 앵커가 아직 없다. 다른 회사 것을 대신 보여 주지 않는다.')
     ]);
-  var b = keys.length ? ch.bom[keys[keys.length - 1]] : null;
+  var b = boms.length ? boms[boms.length - 1] : null;
   var sum = b ? b.components.reduce(function(a, c){ return a + c.central; }, 0) : 0;
   return h('div', { className:'pane' }, [
     b ? h('h2', { key:'t' }, nm(p.focal) + ' — 제품 원가 구성 (' + b.period + ')') : null,
@@ -1215,7 +1229,7 @@ function Bom(p){
         ]);
       }))
     ]) : null,
-    Object.keys(fin).length ? h('div', { key:'fin' }, [
+    fins.length ? h('div', { key:'fin' }, [
       h('h2', { key:'t', style:{ marginTop:'20px' } }, '재무 앵커'),
       h('p', { key:'n', className:'note' },
         '매출 환산 MW 는 출하 공시가 아니라 ASP 앵커로 나눈 값이다. 원가를 나눌 분모로만 쓴다.'),
@@ -1224,10 +1238,7 @@ function Bom(p){
           h('th', { key:2 }, '총매출'), h('th', { key:3 }, '제품 매출'),
           h('th', { key:4 }, '제품 원가'), h('th', { key:5 }, '매출 환산 MW'),
           h('th', { key:6 }, 'MW 당 원가') ])),
-        h('tbody', { key:'b' }, Object.keys(fin).sort(function(a, b){
-          return fin[a].as_of_date < fin[b].as_of_date ? -1 : 1;
-        }).map(function(k){
-          var f = fin[k];
+        h('tbody', { key:'b' }, fins.map(function(f, k){
           return h('tr', { key:k }, [
             h('td', { key:1 }, f.period),
             h('td', { key:2 }, fmt(f.total_revenue_usd_m) + ' M'),
@@ -1319,16 +1330,6 @@ function App(){
     window.addEventListener('popstate', pop);
     return function(){ window.removeEventListener('popstate', pop); };
   }, []);
-
-  var chainOfFocal = useMemo(function(){
-    var best = null;
-    Object.keys(CHAINS).forEach(function(k){
-      if (best) return;
-      if (CHAINS[k].relationships.some(function(r){
-        return r.source_entity === focal || r.target_entity === focal; })) best = k;
-    });
-    return best;
-  }, [focal]);
 
   var gr = useMemo(function(){
     return buildGraph(focal, year, open, expanded, focusOn);
@@ -1443,7 +1444,7 @@ function App(){
     body = h(Swim, { focal:focal,
       onSel: function(ref){ setSel(ref); setDrw(true); } });
   else if (mode === 'evidence') body = h(Evidence, null);
-  else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
+  else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
       edgeTypes:EDGE_TYPES,
