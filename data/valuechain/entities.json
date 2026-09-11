@@ -3696,6 +3696,24 @@
   "anon": false
  },
  {
+  "id": "ty-rev-unallocated",
+  "name": "Unallocated / undisclosed",
+  "name_ko": "배분 미상",
+  "entity_type": "revenue_type",
+  "legal_name": "Unallocated / undisclosed",
+  "display_name": "배분 미상",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Revenue type",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "제품별 귀속 근거가 없는 고객·유통이 앉는 자리. 커패시터·인덕터 비중과 더하는 매출 항목이 아니다",
+  "anon": false
+ },
+ {
   "id": "app-it-infra-industrial",
   "name": "IT Infrastructure / Industrial",
   "name_ko": "IT 인프라·산업용",

@@ -235,13 +235,13 @@
  },
  {
   "id": "ty-apple-supply-chain",
-  "source_entity": "taiyo-yuden",
+  "source_entity": "ty-rev-unallocated",
   "target_entity": "apple",
   "relationship_type": "END_CUSTOMER_SUPPLY_CHAIN",
   "lane": "DOWNSTREAM",
   "subsystem": "End customer",
   "component": "전자부품·MLCC 공급망",
-  "source_role": "공급망",
+  "source_role": "매출원",
   "target_role": "고객",
   "valid_from": "2024",
   "valid_to": null,
@@ -258,7 +258,7 @@
    "apple_supplier",
    "apple_tf"
   ],
-  "notes": "Apple 공급사 명단에 오른 관계다. 매출 비중은 공개되지 않았다(04의 E010·신뢰도 0.9)"
+  "notes": "Apple 공급사 명단에 오른 관계다. 매출 비중은 공개되지 않았다(04의 E010·신뢰도 0.9). 제품별 매출 안의 몫은 공개되지 않아 배분 미상을 거친다"
  },
  {
   "id": "ty-vw-qualification",
@@ -368,13 +368,13 @@
  },
  {
   "id": "ty-arrow-distribution",
-  "source_entity": "taiyo-yuden",
+  "source_entity": "ty-rev-unallocated",
   "target_entity": "arrow-electronics",
   "relationship_type": "DISTRIBUTION_PARTNERSHIP",
   "lane": "DOWNSTREAM",
   "subsystem": "Distributor",
   "component": "전자부품 유통",
-  "source_role": "유통",
+  "source_role": "매출원",
   "target_role": "유통사",
   "valid_from": null,
   "valid_to": null,
@@ -388,17 +388,17 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [],
-  "notes": "공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다"
+  "notes": "공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다. 유통사는 전 품목을 취급해 제품별로 나눌 근거가 없다"
  },
  {
   "id": "ty-avnet-distribution",
-  "source_entity": "taiyo-yuden",
+  "source_entity": "ty-rev-unallocated",
   "target_entity": "avnet",
   "relationship_type": "DISTRIBUTION_PARTNERSHIP",
   "lane": "DOWNSTREAM",
   "subsystem": "Distributor",
   "component": "전자부품 유통",
-  "source_role": "유통",
+  "source_role": "매출원",
   "target_role": "유통사",
   "valid_from": null,
   "valid_to": null,
@@ -412,17 +412,17 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [],
-  "notes": "공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다"
+  "notes": "공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다. 유통사는 전 품목을 취급해 제품별로 나눌 근거가 없다"
  },
  {
   "id": "ty-mouser-distribution",
-  "source_entity": "taiyo-yuden",
+  "source_entity": "ty-rev-unallocated",
   "target_entity": "mouser-electronics",
   "relationship_type": "DISTRIBUTION_PARTNERSHIP",
   "lane": "DOWNSTREAM",
   "subsystem": "Distributor",
   "component": "전자부품 유통",
-  "source_role": "유통",
+  "source_role": "매출원",
   "target_role": "유통사",
   "valid_from": null,
   "valid_to": null,
@@ -436,7 +436,7 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [],
-  "notes": "공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다"
+  "notes": "공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다. 유통사는 전 품목을 취급해 제품별로 나눌 근거가 없다"
  },
  {
   "id": "ty-rev-capacitor-edge",
@@ -489,6 +489,30 @@
    "ty_product_2026"
   ],
   "notes": "FY2026 제품별 매출 축이다"
+ },
+ {
+  "id": "ty-rev-unalloc-edge",
+  "source_entity": "taiyo-yuden",
+  "target_entity": "ty-rev-unallocated",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "제품별 귀속이 공개되지 않은 몫",
+  "source_role": "본사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": null,
+  "target_tier": "REVENUE_TYPE",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "notes": "제품별 매출 비중과 더하는 항목이 아니다. 고객·유통이 어느 제품에서 나왔는지 회사가 밝히지 않아 그 선이 지나는 자리다"
  },
  {
   "id": "ty-app-it-infra-industrial",

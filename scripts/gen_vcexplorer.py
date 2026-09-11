@@ -807,13 +807,25 @@ function buildGraph(focal, year, sel){
   var selId = sel ? (sel.entity || sel.id) : null;
 
   function nodeFor(eid, r, up){
-    if (seen[eid]) return;
-    seen[eid] = 1;
     var isFocal = eid === focal;
     var tier = r ? tierOf(r, up) : null;
+    // 층이 적힌 선이 자리를 정한다. 층이 없는 선으로 먼저 앉힌 상자는 층이 적힌 선을
+    // 만나면 그 자리로 옮긴다 — 매출원처럼 한 선에서는 출발점, 다른 선에서는 도착점인
+    // 상자가 파일에 적힌 차례에 따라 엉뚱한 칸에 앉는 것을 막는다
+    if (seen[eid]) {
+      var old = nodes.filter(function(n){ return n.id === eid; })[0];
+      if (old && !isFocal && !old.data.tiered && tier) {
+        old.data.tiered = true;
+        old.data.col = colOfRel(r, up);
+        old.data.sub = TIER_KO[tier] || old.data.sub;
+      }
+      return;
+    }
+    seen[eid] = 1;
     nodes.push({ id: eid, type:'nd', data:{
       title: nm(eid), flag: flagOf(eid), kind: KIND_OF[(ENT[eid] || {}).entity_type] || 'ent',
       focal: isFocal, col: isFocal ? COL_OF.FOCAL : colOfRel(r, up),
+      tiered: !!tier,
       sub: isFocal ? ((ENT[focal] || {}).country || null)
                    : (TIER_KO[tier] || (r ? r.component : null) || null),
       ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : eid, entity: eid, up: up } } });
@@ -862,6 +874,15 @@ function buildGraph(focal, year, sel){
     edges.forEach(function(e){
       if (e.source === selId) near[e.target] = 1;
       if (e.target === selId) near[e.source] = 1;
+    });
+    // 매출원은 거래 상대가 아니라 매출을 쪼갠 자리다. 고객이 그 뒤에 걸려 있으면
+    // 한 홉 더 본다 — 안 그러면 매출원을 거치는 고객이 늘 흐리게 앉는다
+    Object.keys(near).forEach(function(id){
+      if ((ENT[id] || {}).entity_type !== 'revenue_type') return;
+      edges.forEach(function(e){
+        if (e.source === id) near[e.target] = 1;
+        if (e.target === id) near[e.source] = 1;
+      });
     });
     nodes = nodes.map(function(n){
       return near[n.id] ? n
