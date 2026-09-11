@@ -175,6 +175,17 @@ ENTITIES = [
   '전극셀 코팅 자동화 장비. 제품 BOM 이 아니라 설비 투자'),
  ('ls-electric', 'LS ELECTRIC', 'LS일렉트릭', 'company', '한국·미국', ['Site electrical BoP'],
   '배전반과 배전 변압기'),
+ # 매출 유형 — 회계상 매출원. 회사가 아니라 층이다 (05 §28)
+ ('be-rev-product', 'Product revenue', '제품 매출', 'revenue_type', None, ['Revenue type'],
+  'Energy Server·전해조 장비 판매'),
+ ('be-rev-installation', 'Installation revenue', '설치 매출', 'revenue_type', None,
+  ['Revenue type'], '현장 설치 역무'),
+ ('be-rev-service', 'Service revenue', '서비스 매출', 'revenue_type', None, ['Revenue type'],
+  '유지·보수와 성능 보증'),
+ ('be-rev-electricity', 'Electricity revenue', '전력 매출', 'revenue_type', None,
+  ['Revenue type'], '직접 보유·운영 설비에서 파는 전기'),
+ ('be-rev-unallocated', 'Unallocated / undisclosed', '배분 미상', 'revenue_type', None,
+  ['Revenue type'], '어느 매출원에서 나왔는지 공개되지 않은 고객이 앉는 자리'),
  # 다운스트림 — 금융
  ('brookfield', 'Brookfield', '브룩필드', 'company', '글로벌', ['Financing'],
   '펀드 스폰서. 250억 달러 프레임워크'),

@@ -299,5 +299,29 @@
    "seojin_kind"
   ],
   "note": "계약에 MW 가 없으므로 중앙값을 세우지 않는다"
+ },
+ {
+  "id": "method-revenue-mix",
+  "title": "매출 유형 비중",
+  "steps": [
+   {
+    "label": "그 매출원 금액",
+    "value": null,
+    "unit": "USD M"
+   },
+   {
+    "label": "÷ 같은 기간 총매출",
+    "value": null,
+    "unit": "%"
+   }
+  ],
+  "result": null,
+  "result_unit": "%",
+  "denominator": "같은 기간 Bloom 총매출",
+  "result_status": "CONFIRMED",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "note": "반올림 때문에 넷을 더하면 100.0% 와 조금 다를 수 있다"
  }
 ]

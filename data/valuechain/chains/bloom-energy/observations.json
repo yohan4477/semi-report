@@ -19,7 +19,8 @@
   "source_ids": [
    "cw_porite_2024"
   ],
-  "method_note": "2024-10 현장 취재의 「Porite 와 캐나다 공급사가 대략 50:50」. 그 시점 관측이다"
+  "method_note": "2024-10 현장 취재의 「Porite 와 캐나다 공급사가 대략 50:50」. 그 시점 관측이다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-porite-share-2025",
@@ -39,7 +40,8 @@
   "confidence": null,
   "method_id": null,
   "source_ids": [],
-  "method_note": "공급은 이어지지만 점유율 공개가 없다. 2024 의 50% 를 연장하지 않는다"
+  "method_note": "공급은 이어지지만 점유율 공개가 없다. 2024 의 50% 를 연장하지 않는다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-porite-share-2026",
@@ -59,7 +61,8 @@
   "confidence": null,
   "method_id": null,
   "source_ids": [],
-  "method_note": "증설 신호는 있으나 현재 조달 점유율은 공개되지 않았다"
+  "method_note": "증설 신호는 있으나 현재 조달 점유율은 공개되지 않았다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-porite-content-2024",
@@ -81,7 +84,8 @@
   "source_ids": [
    "cw_porite_2024"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-stackpole-share-2026",
@@ -103,7 +107,8 @@
   "source_ids": [
    "cw_porite_2024"
   ],
-  "method_note": "캐나다 공급사의 정체 자체가 추론이다"
+  "method_note": "캐나다 공급사의 정체 자체가 추론이다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-mtar-share-2024",
@@ -125,7 +130,8 @@
   "source_ids": [
    "mtar_ar_fy2024"
   ],
-  "method_note": "MTAR 연차보고서의 직접 공시"
+  "method_note": "MTAR 연차보고서의 직접 공시",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-mtar-share-2025",
@@ -147,7 +153,8 @@
   "source_ids": [
    "mtar_ar_fy2425"
   ],
-  "method_note": "회사가 말한 통상 요구량 기준값으로 다룬다"
+  "method_note": "회사가 말한 통상 요구량 기준값으로 다룬다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-mtar-share-2026",
@@ -169,7 +176,8 @@
   "source_ids": [
    "mtar_ar_fy2425"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-kaori-share-2026",
@@ -191,7 +199,8 @@
   "source_ids": [
    "kgi_kaori_2024"
   ],
-  "method_note": "MTAR 의 나머지를 그대로 읽은 값이다. 공식 수치가 아니다"
+  "method_note": "MTAR 의 나머지를 그대로 읽은 값이다. 공식 수치가 아니다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-cctc-share-2024",
@@ -211,7 +220,8 @@
   "confidence": null,
   "method_id": null,
   "source_ids": [],
-  "method_note": "핵심 공급사로 알려졌을 뿐 그 해 점유율 공개 자료가 없다"
+  "method_note": "핵심 공급사로 알려졌을 뿐 그 해 점유율 공개 자료가 없다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-cctc-share-2025",
@@ -231,7 +241,8 @@
   "confidence": null,
   "method_id": null,
   "source_ids": [],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-cctc-share-2026",
@@ -253,7 +264,8 @@
   "source_ids": [
    "cctc_yicai"
   ],
-  "method_note": "업계·증권 조사 수치를 모은 값이다. 회사 공시가 아니다"
+  "method_note": "업계·증권 조사 수치를 모은 값이다. 회사 공시가 아니다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-amosense-share-2026q3",
@@ -275,7 +287,8 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "method_note": "설비 능력에서 나온 값이다. 실제 가동률과 출하는 공개되지 않았다"
+  "method_note": "설비 능력에서 나온 값이다. 실제 가동률과 출하는 공개되지 않았다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-amosense-share-2026e",
@@ -297,7 +310,8 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "method_note": "분모가 앞의 것과 다르다. 나란히 비교하지 않는다"
+  "method_note": "분모가 앞의 것과 다르다. 나란히 비교하지 않는다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-amosense-capa-2026q3",
@@ -319,7 +333,8 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "method_note": "20만 장에서 60만 장으로 확대 계획"
+  "method_note": "20만 장에서 60만 장으로 확대 계획",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-amosense-share-2025",
@@ -341,7 +356,8 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "method_note": "2026 진입 전이다"
+  "method_note": "2026 진입 전이다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-coseus-contract-2026",
@@ -363,7 +379,8 @@
   "source_ids": [
    "coseus_kind"
   ],
-  "method_note": "₩1,504.2억"
+  "method_note": "₩1,504.2억",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-coseus-cumulative-2026",
@@ -385,7 +402,8 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "method_note": "보도 기준. 공시 합산이 아니다"
+  "method_note": "보도 기준. 공시 합산이 아니다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-seojin-contract-2026",
@@ -407,7 +425,8 @@
   "source_ids": [
    "seojin_kind"
   ],
-  "method_note": "₩785.47억, 베트남 공장 EXW"
+  "method_note": "₩785.47억, 베트남 공장 EXW",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-seojin-content-2026",
@@ -429,7 +448,8 @@
   "source_ids": [
    "seojin_kind"
   ],
-  "method_note": "계약에 MW 가 없다. 중앙값을 세우지 않고 시나리오 폭만 남긴다"
+  "method_note": "계약에 MW 가 없다. 중앙값을 세우지 않고 시나리오 폭만 남긴다",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-ls-contract-nm-2026",
@@ -451,7 +471,8 @@
   "source_ids": [
    "lselectric_kind"
   ],
-  "method_note": "₩3,189.6억, 뉴멕시코 하이퍼스케일 데이터센터"
+  "method_note": "₩3,189.6억, 뉴멕시코 하이퍼스케일 데이터센터",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-ls-contract-wy-2026",
@@ -473,7 +494,284 @@
   "source_ids": [
    "lselectric_kind"
   ],
-  "method_note": "와이오밍 하이퍼스케일 데이터센터 추가 계약"
+  "method_note": "와이오밍 하이퍼스케일 데이터센터 추가 계약",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-product-fy2024",
+  "relationship_id": "bloom-rev-product",
+  "metric": "revenue_type_share",
+  "value": 73.6,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-02-01",
+  "denominator": "Bloom FY2024 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "method_note": "제품 10억 8,515만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-install-fy2024",
+  "relationship_id": "bloom-rev-installation",
+  "metric": "revenue_type_share",
+  "value": 8.3,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-02-01",
+  "denominator": "Bloom FY2024 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-service-fy2024",
+  "relationship_id": "bloom-rev-service",
+  "metric": "revenue_type_share",
+  "value": 14.5,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-02-01",
+  "denominator": "Bloom FY2024 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-elec-fy2024",
+  "relationship_id": "bloom-rev-electricity",
+  "metric": "revenue_type_share",
+  "value": 3.6,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2024",
+  "period_start": "2024-01-01",
+  "period_end": "2024-12-31",
+  "as_of_date": "2025-02-01",
+  "denominator": "Bloom FY2024 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-product-fy2025",
+  "relationship_id": "bloom-rev-product",
+  "metric": "revenue_type_share",
+  "value": 75.7,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "as_of_date": "2026-02-09",
+  "denominator": "Bloom FY2025 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "method_note": "제품 15억 3,128만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-install-fy2025",
+  "relationship_id": "bloom-rev-installation",
+  "metric": "revenue_type_share",
+  "value": 10.1,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "as_of_date": "2026-02-09",
+  "denominator": "Bloom FY2025 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "method_note": "설치 2억 410만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-service-fy2025",
+  "relationship_id": "bloom-rev-service",
+  "metric": "revenue_type_share",
+  "value": 11.3,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "as_of_date": "2026-02-09",
+  "denominator": "Bloom FY2025 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "method_note": "서비스 2억 2,830만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-elec-fy2025",
+  "relationship_id": "bloom-rev-electricity",
+  "metric": "revenue_type_share",
+  "value": 3.0,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "FY2025",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "as_of_date": "2026-02-09",
+  "denominator": "Bloom FY2025 총매출",
+  "status": "HISTORICAL",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "method_note": "전력 6,035만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-product-2026h1",
+  "relationship_id": "bloom-rev-product",
+  "metric": "revenue_type_share",
+  "value": 87.5,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2026 H1",
+  "period_start": "2026-01-01",
+  "period_end": "2026-06-30",
+  "as_of_date": "2026-07-31",
+  "denominator": "Bloom 2026 상반기 총매출",
+  "status": "CURRENT",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10q_2026q2"
+  ],
+  "method_note": "제품 15억 8,876만 달러",
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-install-2026h1",
+  "relationship_id": "bloom-rev-installation",
+  "metric": "revenue_type_share",
+  "value": 4.2,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2026 H1",
+  "period_start": "2026-01-01",
+  "period_end": "2026-06-30",
+  "as_of_date": "2026-07-31",
+  "denominator": "Bloom 2026 상반기 총매출",
+  "status": "CURRENT",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10q_2026q2"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-service-2026h1",
+  "relationship_id": "bloom-rev-service",
+  "metric": "revenue_type_share",
+  "value": 7.2,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2026 H1",
+  "period_start": "2026-01-01",
+  "period_end": "2026-06-30",
+  "as_of_date": "2026-07-31",
+  "denominator": "Bloom 2026 상반기 총매출",
+  "status": "CURRENT",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10q_2026q2"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
+ },
+ {
+  "id": "o-rev-elec-2026h1",
+  "relationship_id": "bloom-rev-electricity",
+  "metric": "revenue_type_share",
+  "value": 1.1,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2026 H1",
+  "period_start": "2026-01-01",
+  "period_end": "2026-06-30",
+  "as_of_date": "2026-07-31",
+  "denominator": "Bloom 2026 상반기 총매출",
+  "status": "CURRENT",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.95,
+  "method_id": "method-revenue-mix",
+  "source_ids": [
+   "be_10q_2026q2"
+  ],
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-skecoplant-share-fy2024",
@@ -495,7 +793,8 @@
   "source_ids": [
    "be_10k_fy2024"
   ],
-  "method_note": "23% 몫 약 3.39억 달러가 특수관계 매출 3.386억 달러와 사실상 같다"
+  "method_note": "23% 몫 약 3.39억 달러가 특수관계 매출 3.386억 달러와 사실상 같다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-be24c2-share-fy2024",
@@ -517,7 +816,8 @@
   "source_ids": [
    "be_10k_fy2024"
   ],
-  "method_note": "약 2.36억 달러. 법인 특정 불가"
+  "method_note": "약 2.36억 달러. 법인 특정 불가",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-be24c3-share-fy2024",
@@ -539,7 +839,8 @@
   "source_ids": [
    "be_10k_fy2024"
   ],
-  "method_note": "약 2.06억 달러. 법인 특정 불가"
+  "method_note": "약 2.06억 달러. 법인 특정 불가",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-fundjv-share-fy2025",
@@ -561,7 +862,8 @@
   "source_ids": [
    "be_10k_fy2025"
   ],
-  "method_note": "공시 최대 고객 43% 와 맞는다"
+  "method_note": "공시 최대 고객 43% 와 맞는다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-aep-share-fy2025",
@@ -584,7 +886,8 @@
    "be_10k_fy2025",
    "be_aep_1gw"
   ],
-  "method_note": "2위 고객이 AEP 매입 법인이라는 가설. 확정이 아니다"
+  "method_note": "2위 고객이 AEP 매입 법인이라는 가설. 확정이 아니다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-eternix-share-fy2025",
@@ -607,7 +910,8 @@
    "be_10k_fy2025",
    "be_sk_eternix_80mw"
   ],
-  "method_note": "본사인지 프로젝트 법인인지도 확정되지 않았다"
+  "method_note": "본사인지 프로젝트 법인인지도 확정되지 않았다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-be26c1-share-2026q2",
@@ -629,7 +933,8 @@
   "source_ids": [
    "be_10q_2026q2"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-be26c1-share-2026h1",
@@ -651,7 +956,8 @@
   "source_ids": [
    "be_10q_2026q2"
   ],
-  "method_note": "비특수관계 고객 한 곳. SEC 가 법인명을 밝히지 않았다"
+  "method_note": "비특수관계 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-fundjv-share-2026q2",
@@ -673,7 +979,8 @@
   "source_ids": [
    "be_10q_2026q2"
   ],
-  "method_note": "2분기 특수관계 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다"
+  "method_note": "2분기 특수관계 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "o-aep-capacity-max",
@@ -695,7 +1002,8 @@
   "source_ids": [
    "be_aep_1gw"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-aep-capacity-initial",
@@ -717,7 +1025,8 @@
   "source_ids": [
    "be_aep_1gw"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-oracle-capacity-max",
@@ -739,7 +1048,8 @@
   "source_ids": [
    "be_oracle_28gw"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-oracle-capacity-initial",
@@ -761,7 +1071,8 @@
   "source_ids": [
    "be_oracle_28gw"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-equinix-capacity-2025",
@@ -783,7 +1094,8 @@
   "source_ids": [
    "be_equinix_100mw"
   ],
-  "method_note": "약 75MW 가동 + 30MW 공사 중"
+  "method_note": "약 75MW 가동 + 30MW 공사 중",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-nebius-capacity-2026",
@@ -805,7 +1117,8 @@
   "source_ids": [
    "nebius_be_328mw"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-eternix-capacity",
@@ -827,7 +1140,8 @@
   "source_ids": [
    "be_sk_eternix_80mw"
   ],
-  "method_note": "충주 40MW + 대소원 40MW"
+  "method_note": "충주 40MW + 대소원 40MW",
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-jupiter-capacity",
@@ -849,7 +1163,8 @@
   "source_ids": [
    "oracle_jupiter"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-brookfield-framework-2025",
@@ -871,7 +1186,8 @@
   "source_ids": [
    "be_brookfield_25b"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  },
  {
   "id": "o-brookfield-framework-2026",
@@ -893,6 +1209,7 @@
   "source_ids": [
    "be_brookfield_25b"
   ],
-  "method_note": null
+  "method_note": null,
+  "denominator_scope": "EDGE"
  }
 ]

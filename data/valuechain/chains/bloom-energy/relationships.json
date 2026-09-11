@@ -1021,6 +1021,136 @@
   "notes": null
  },
  {
+  "id": "bloom-rev-product",
+  "source_entity": "bloom-energy",
+  "target_entity": "be-rev-product",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "Energy Server·전해조 판매",
+  "source_role": "제조사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "REVENUE_TYPE",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": null
+ },
+ {
+  "id": "bloom-rev-installation",
+  "source_entity": "bloom-energy",
+  "target_entity": "be-rev-installation",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "현장 설치 역무",
+  "source_role": "제조사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "REVENUE_TYPE",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": null
+ },
+ {
+  "id": "bloom-rev-service",
+  "source_entity": "bloom-energy",
+  "target_entity": "be-rev-service",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "유지·보수와 성능 보증",
+  "source_role": "제조사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "REVENUE_TYPE",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": null
+ },
+ {
+  "id": "bloom-rev-electricity",
+  "source_entity": "bloom-energy",
+  "target_entity": "be-rev-electricity",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "보유 설비에서 파는 전기",
+  "source_role": "제조사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "REVENUE_TYPE",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": null
+ },
+ {
+  "id": "bloom-rev-unallocated",
+  "source_entity": "bloom-energy",
+  "target_entity": "be-rev-unallocated",
+  "relationship_type": "REVENUE_FROM",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Revenue type",
+  "component": "매출원 배분이 공개되지 않은 몫",
+  "source_role": "제조사",
+  "target_role": "매출원",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "REVENUE_TYPE",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2024"
+  ],
+  "notes": "SEC 가 고객 집중도를 총매출 기준으로만 밝히고 매출원별로는 나누지 않는다"
+ },
+ {
   "id": "brookfield-fundjv",
   "source_entity": "brookfield",
   "target_entity": "brookfield-fund-jvs",
@@ -1048,7 +1178,7 @@
  },
  {
   "id": "bloom-fundjv-sales",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "brookfield-fund-jvs",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -1097,6 +1227,32 @@
    "be_10k_fy2025"
   ],
   "notes": "원문이 펀드 JV 아래 프로젝트·SPV 층을 말하지만 법인명은 공개되지 않았다"
+ },
+ {
+  "id": "rev-install-fundjv",
+  "source_entity": "be-rev-installation",
+  "target_entity": "brookfield-fund-jvs",
+  "relationship_type": "SELLS_TO",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Financing",
+  "component": "설치 역무",
+  "source_role": "매출원",
+  "target_role": "계약상 고객",
+  "valid_from": "2025-01-01",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025"
+  ],
+  "notes": "FY2025 펀드 JV 설치 매출 5,230만 달러가 따로 적힌다"
  },
  {
   "id": "kdb-eternix-pf",
@@ -1204,7 +1360,7 @@
  },
  {
   "id": "bloom-skecoplant",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "sk-ecoplant",
   "relationship_type": "DISTRIBUTION_PARTNERSHIP",
   "lane": "DOWNSTREAM",
@@ -1257,7 +1413,7 @@
  },
  {
   "id": "bloom-eternix",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "sk-eternix",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -1309,7 +1465,7 @@
  },
  {
   "id": "bloom-aep",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "aep",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -1388,7 +1544,7 @@
  },
  {
   "id": "bloom-oracle",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "oracle",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1467,7 +1623,7 @@
  },
  {
   "id": "bloom-equinix",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "equinix",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1493,7 +1649,7 @@
  },
  {
   "id": "bloom-nebius",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "nebius",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1519,7 +1675,7 @@
  },
  {
   "id": "bloom-coreweave",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "coreweave",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1545,7 +1701,7 @@
  },
  {
   "id": "bloom-intel",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "intel",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1571,7 +1727,7 @@
  },
  {
   "id": "bloom-att",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "att",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1597,7 +1753,7 @@
  },
  {
   "id": "bloom-verizon",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "verizon",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1623,7 +1779,7 @@
  },
  {
   "id": "bloom-quanta",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "quanta-computer",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1649,7 +1805,7 @@
  },
  {
   "id": "bloom-walmart",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "walmart",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1675,7 +1831,7 @@
  },
  {
   "id": "bloom-homedepot",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "home-depot",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1701,7 +1857,7 @@
  },
  {
   "id": "bloom-ferrari",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "ferrari",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1727,7 +1883,7 @@
  },
  {
   "id": "bloom-fedex",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-product",
   "target_entity": "fedex",
   "relationship_type": "DIRECT_CUSTOMER",
   "lane": "DOWNSTREAM",
@@ -1753,7 +1909,7 @@
  },
  {
   "id": "bloom-be24c2",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-unallocated",
   "target_entity": "be24_c2",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -1779,7 +1935,7 @@
  },
  {
   "id": "bloom-be24c3",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-unallocated",
   "target_entity": "be24_c3",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",
@@ -1805,7 +1961,7 @@
  },
  {
   "id": "bloom-be26c1",
-  "source_entity": "bloom-energy",
+  "source_entity": "be-rev-unallocated",
   "target_entity": "be26_c1",
   "relationship_type": "SELLS_TO",
   "lane": "DOWNSTREAM",

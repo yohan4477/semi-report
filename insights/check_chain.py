@@ -12,6 +12,7 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C8 주장에 주어·근거등급·출처가 붙었나
   C9 다운스트림 관계에 층이 붙었나
   C10 업스트림(제품 BOM) 관계에 층이 붙었나
+  C11 총매출 기준 집중도가 선의 몫으로 새지 않나
 """
 import io, json, os, sys
 
@@ -19,7 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 
 ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv', 'financial_institution',
-                   'utility', 'end_user', 'material'])
+                   'utility', 'end_user', 'material', 'revenue_type'])
 LANE = set(['MANUFACTURING_BOM', 'MANUFACTURING_EQUIPMENT', 'SITE_ELECTRICAL_BOP',
             'OPERATIONAL_INPUT', 'DOWNSTREAM', 'CORPORATE'])
 EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
@@ -27,7 +28,8 @@ EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
 OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
                   'NOT_YET_ACTIVE', 'UNKNOWN'])
 REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
-TIER = set(['CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
+TIER = set(['REVENUE_TYPE', 'CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
+SCOPE = set(['EDGE', 'FOCAL_TOTAL_REVENUE'])
 SRC_TIER = set(['RAW_MATERIAL', 'MATERIAL_PROCESSING', 'COMPONENT_SUPPLIER',
                 'SUBSYSTEM_MODULE'])
 PCT = set(['%', 'percent'])
@@ -129,6 +131,12 @@ def main():
                 fail(w, u'status 가 %r' % o.get('status'))
             if o.get('evidence_level') not in EV_LEVEL:
                 fail(w, u'evidence_level 이 %r' % o.get('evidence_level'))
+            # C11 — 총매출 기준 집중도를 선의 몫으로 읽히게 두지 않는다 (05 §28-4)
+            if o.get('denominator_scope') and o['denominator_scope'] not in SCOPE:
+                fail(w, u'denominator_scope 가 %r' % o['denominator_scope'])
+            if (o.get('metric') == 'customer_revenue_share'
+                    and o.get('denominator_scope') != 'FOCAL_TOTAL_REVENUE'):
+                fail(w, u'고객 집중도인데 분모 범위가 총매출이 아니다')
             if o.get('method_id') and o['method_id'] not in M:
                 fail(w, u'없는 방법 %s' % o['method_id'])
             for sid in o.get('source_ids') or []:

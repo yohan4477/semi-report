@@ -231,7 +231,7 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'계약 상대', INTERMEDIARY:'중개',
   PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
-  RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
+  REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
 // 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
@@ -277,12 +277,13 @@ function obsIn(rid, yr){
     return a <= y && y <= b;
   });
 }
+function onEdge(o){ return (o.denominator_scope || 'EDGE') === 'EDGE'; }
 function shareIn(rid, yr){
-  var os = obsIn(rid, yr).filter(function(o){ return PCT[o.unit]; });
+  var os = obsIn(rid, yr).filter(function(o){ return PCT[o.unit] && onEdge(o); });
   return os.length ? os[0] : null;
 }
 function hasShareEver(rid){
-  return (OBS_BY_REL[rid] || []).some(function(o){ return PCT[o.unit]; });
+  return (OBS_BY_REL[rid] || []).some(function(o){ return PCT[o.unit] && onEdge(o); });
 }
 function fmt(v){
   if (v === null || v === undefined) return '?';
@@ -402,7 +403,11 @@ function buildGraph(focal, year, open, expanded, focusOn){
   var groups = {}, nodes = [], edges = [];
   var ctx = { nodes: nodes, edges: edges, byEnt: {} };
   ctx.byEnt[focal] = focal;
+  var revRels = relsOf(focal).filter(function(r){
+    return r.source_entity === focal && r.target_tier === 'REVENUE_TYPE';
+  });
   relsOf(focal).forEach(function(r){
+    if (r.target_tier === 'REVENUE_TYPE' && r.source_entity === focal) return;
     var up = r.target_entity === focal;
     var key = (up ? 'u:' : 'd:') + (r.subsystem || LANE_KO[r.lane] || '기타');
     (groups[key] = groups[key] || { up: up, key: r.subsystem || '기타',
@@ -411,6 +416,24 @@ function buildGraph(focal, year, open, expanded, focusOn){
   });
   nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), kind:'ent', focal:true,
     sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
+  // 매출원 — 눌러야 그 매출원에 근거가 붙는 고객이 열린다 (05 §28)
+  revRels.forEach(function(r){
+    var rt = r.target_entity, nid = 'rev|' + rt;
+    var o = shareIn(r.id, year);
+    var pct = o && o.value !== null && o.value !== undefined ? fmt(o.value) + '%' : '?';
+    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(rt), kind:'grp',
+      sub: pct + ' · 총매출 대비', gone: !o,
+      ref:{ kind:'rel', id:r.id, entity: rt, revtype:true } } });
+    ctx.byEnt[rt] = nid;
+    ctx.edges.push({ id:'rev-' + r.id, source: focal, target: nid,
+      style:{ stroke:'#9aa3b5', strokeWidth:1.3 }, type:'smoothstep' });
+    if (open.indexOf(nid) < 0) return;
+    relsOf(rt).forEach(function(c){
+      if (c.source_entity !== rt) return;
+      var cid = addRelNode(ctx, c, 'rc|' + c.target_entity, nid, false, year);
+      chainDown(ctx, c.target_entity, cid, year, 1, {});
+    });
+  });
   Object.keys(groups).sort(function(a, b){
     return ordOf(groups[a]) - ordOf(groups[b]);
   }).forEach(function(gk){
@@ -516,7 +539,10 @@ function ObsRow(o){
           o.status === 'CURRENT' ? '현재' : o.status === 'HISTORICAL' ? '과거'
           : o.status === 'NOT_YET_ACTIVE' ? '진입 전' : '현재 미상'),
         o.confidence ? h('span', { key:'z', className:'badge' },
-          '확신 ' + Math.round(o.confidence * 100) + '%') : null ])
+          '확신 ' + Math.round(o.confidence * 100) + '%') : null,
+        (o.denominator_scope === 'FOCAL_TOTAL_REVENUE')
+          ? h('span', { key:'w', className:'badge est' }, '총매출 기준 · 이 선의 몫 아님')
+          : null ])
     ]),
     o.method_id ? h('div', { key:'m', style:{ marginTop:'6px' } },
       h(Method, { id:o.method_id })) : null,
@@ -860,6 +886,7 @@ function App(){
   function onNodeClick(_, node){
     var ref = node.data.ref;
     if (ref.kind === 'grp') toggleGroup(ref.id);
+    else if (ref.revtype) toggleGroup('rev|' + ref.entity);
     setSel(ref); setDrw(true);
   }
   function drill(subsystem){

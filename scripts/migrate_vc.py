@@ -117,6 +117,8 @@ def main():
             'confidence': None,
             'method_id': None,
             'method_note': m.get('method'),
+            'denominator_scope': ('FOCAL_TOTAL_REVENUE'
+                                  if m['metric'] == 'customer_revenue_share' else 'EDGE'),
             'source_ids': [],
         })
     # 근거에 달린 출처를 관측에 끌어올린다

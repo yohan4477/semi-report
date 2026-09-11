@@ -1613,5 +1613,65 @@
   ],
   "desc": "인터커넥트 플레이트의 모재. 공급사는 공개되지 않았다",
   "anon": false
+ },
+ {
+  "id": "be-rev-product",
+  "name": "Product revenue",
+  "name_ko": "제품 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "Energy Server·전해조 장비 판매",
+  "anon": false
+ },
+ {
+  "id": "be-rev-installation",
+  "name": "Installation revenue",
+  "name_ko": "설치 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "현장 설치 역무",
+  "anon": false
+ },
+ {
+  "id": "be-rev-service",
+  "name": "Service revenue",
+  "name_ko": "서비스 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "유지·보수와 성능 보증",
+  "anon": false
+ },
+ {
+  "id": "be-rev-electricity",
+  "name": "Electricity revenue",
+  "name_ko": "전력 매출",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "직접 보유·운영 설비에서 파는 전기",
+  "anon": false
+ },
+ {
+  "id": "be-rev-unallocated",
+  "name": "Unallocated / undisclosed",
+  "name_ko": "배분 미상",
+  "entity_type": "revenue_type",
+  "country": null,
+  "categories": [
+   "Revenue type"
+  ],
+  "desc": "어느 매출원에서 나왔는지 공개되지 않은 고객이 앉는 자리",
+  "anon": false
  }
 ]

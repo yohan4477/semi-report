@@ -17,7 +17,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m002",
@@ -37,7 +38,8 @@
   "method_note": "매출 집중도 1위 고객과 매출채권 1위 고객을 같은 곳으로 본 것. 10-K 는 둘을 잇지 않는다",
   "source_ids": [
    "sec_nvda_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m003",
@@ -57,7 +59,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m004",
@@ -77,7 +80,8 @@
   "method_note": "FY2025 의 1위 직접고객이 FY2026 의 어느 고객인지 10-K 는 잇지 않는다",
   "source_ids": [
    "sec_nvda_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m005",
@@ -97,7 +101,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m007",
@@ -117,7 +122,8 @@
   "method_note": null,
   "source_ids": [
    "sec_tsmc_20f_fy2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m008",
@@ -137,7 +143,8 @@
   "method_note": null,
   "source_ids": [
    "sec_tsmc_20f_fy2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m009",
@@ -157,7 +164,8 @@
   "method_note": null,
   "source_ids": [
    "sec_tsmc_20f_fy2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m010",
@@ -177,7 +185,8 @@
   "method_note": null,
   "source_ids": [
    "sec_tsmc_20f_fy2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m011",
@@ -197,7 +206,8 @@
   "method_note": null,
   "source_ids": [
    "sec_tsmc_20f_fy2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m012",
@@ -217,7 +227,8 @@
   "method_note": null,
   "source_ids": [
    "asml_ar_2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m013",
@@ -237,7 +248,8 @@
   "method_note": null,
   "source_ids": [
    "asml_ar_2025"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m201",
@@ -257,7 +269,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m202",
@@ -277,7 +290,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m203",
@@ -297,7 +311,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m204",
@@ -317,7 +332,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m205",
@@ -338,7 +354,8 @@
   "source_ids": [
    "sec_nvda_10q_fy2027q1",
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m206",
@@ -358,7 +375,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m207",
@@ -378,7 +396,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m208",
@@ -399,7 +418,8 @@
   "source_ids": [
    "sec_nvda_10q_fy2027q1",
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m209",
@@ -419,7 +439,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
   "id": "m210",
@@ -439,7 +460,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m211",
@@ -459,7 +481,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m212",
@@ -479,7 +502,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m213",
@@ -499,7 +523,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m214",
@@ -519,7 +544,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m215",
@@ -539,7 +565,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m216",
@@ -559,7 +586,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q1"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m217",
@@ -579,7 +607,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m218",
@@ -599,7 +628,8 @@
   "method_note": "금액은 10-Q 의 Revenue by Market Platform 표에 그대로 있다. 비중은 그 금액을 같은 기간 총매출로 나눈 값이다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m219",
@@ -619,7 +649,8 @@
   "method_note": "주석 10 의 약정 표에는 클라우드 서비스 약정이 290억 달러로 따로 잡혀 있다. 두 수치를 잇는 문장이 10-Q 에 없어 그대로 병기한다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m220",
@@ -639,7 +670,8 @@
   "method_note": "2026-07-26 이후 후속사건이라 분기 재무제표에는 안 잡혀 있다",
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m221",
@@ -659,7 +691,8 @@
   "method_note": null,
   "source_ids": [
    "sec_nvda_10q_fy2027q2"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m301",
@@ -679,7 +712,8 @@
   "method_note": "공시는 공급사 이름을 대지 않는다. 매출원가 348.4억 달러에 곱하면 연간 약 220억, 6개월로는 약 110억 달러다. 상위 셋의 가장 작은 자리 231억의 절반이다",
   "source_ids": [
    "sec_smci_10k_fy2026"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m302",
@@ -699,7 +733,8 @@
   "method_note": "공시는 세 공급사의 이름을 대지 않는다. 어느 쪽이 NVIDIA 인지 적혀 있지 않다",
   "source_ids": [
    "sec_crwv_10k_fy2025"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m303",
@@ -719,7 +754,8 @@
   "method_note": "8-K 에는 있으나 10-K·10-Q 의 재무제표 주석에는 이 계약이 나오지 않는다",
   "source_ids": [
    "sec_crwv_8k_20250915"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m304",
@@ -739,7 +775,8 @@
   "method_note": null,
   "source_ids": [
    "sec_crwv_10k_fy2025"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m305",
@@ -759,7 +796,8 @@
   "method_note": "대금은 선적 후 지급이고 GPU 파이낸싱으로 조달한다. 2027년 초 가동 목표",
   "source_ids": [
    "sec_iren_8k_20260526"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  },
  {
   "id": "m306",
@@ -779,6 +817,7 @@
   "method_note": "확정 4.25기가와트에 더해 약 3.8기가와트에 재량으로 신용보강을 더 줄 수 있는 옵션이 따로 있다. OpenAI 는 NVIDIA 가 낸 금액을 상환하기로 했다",
   "source_ids": [
    "sec_nvda_8k_20260817"
-  ]
+  ],
+  "denominator_scope": "EDGE"
  }
 ]
