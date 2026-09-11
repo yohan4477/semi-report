@@ -1237,7 +1237,9 @@ function App(){
       rf.fitView({ padding:0.12, duration:220 });
     }, 90);
     return function(){ clearTimeout(t); };
-  }, [rf, drw, open, focal, year, mode, expanded]);
+  // 중심을 바꾸거나 화면을 갈아탈 때만 자리를 다시 잡는다.
+  // 상자를 누를 때마다 원점으로 돌아가면 보던 자리를 잃는다
+  }, [rf, focal, mode]);
 
   useEffect(function(){
     writeUrl({ focal:focal, year:year, mode:mode, open:open,
