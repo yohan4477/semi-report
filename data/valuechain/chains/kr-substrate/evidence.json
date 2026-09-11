@@ -1,6 +1,60 @@
 [
  {
   "id": "kr-e001",
+  "relationship_id": "resonac-ccl",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "direct",
+  "evidence": "거의 이 한 곳에서만 나온다. EMC 가 2026년 4분기 출하를 준비한다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e002",
+  "relationship_id": "nittobo-tglass",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "direct",
+  "evidence": "공급이 한 곳에서 다섯 곳 이상으로 늘고 있다. 중국 업체가 들어왔다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e003",
+  "relationship_id": "ccl-daeduck",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "indirect",
+  "evidence": "원문은 ABF 기판 공급망 전체를 말한다. 이 회사가 어디서 받는지는 밝히지 않는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e004",
+  "relationship_id": "tglass-daeduck",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e005",
+  "relationship_id": "ccl-samsungem",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e006",
+  "relationship_id": "ccl-simmtech",
+  "metric_id": null,
+  "source_id": "semianalysis_li_2026_08_27",
+  "evidence_type": "indirect",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "kr-e007",
   "relationship_id": "daeduck-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -9,7 +63,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e002",
+  "id": "kr-e008",
   "relationship_id": "daeduck-nepes",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -18,7 +72,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e003",
+  "id": "kr-e009",
   "relationship_id": "samsungem-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -27,7 +81,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e004",
+  "id": "kr-e010",
   "relationship_id": "simmtech-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -36,7 +90,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e005",
+  "id": "kr-e011",
   "relationship_id": "eotechnics-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -45,7 +99,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e006",
+  "id": "kr-e012",
   "relationship_id": "hanmi-hanamicron",
   "metric_id": null,
   "source_id": "hanjuseong_backend_2026_05_18",
@@ -54,7 +108,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "kr-e007",
+  "id": "kr-e013",
   "relationship_id": "daeduck-hanamicron",
   "metric_id": "o-daeduck-capex-2026",
   "source_id": "semidoped_2026_05_22",

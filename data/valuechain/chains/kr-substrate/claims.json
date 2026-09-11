@@ -13,6 +13,45 @@
   "note": null
  },
  {
+  "id": "clm-ccl-bottleneck",
+  "statement": "기판용 CCL 은 거의 레조낙 한 곳에서만 나와 공급망의 또 하나의 병목이다.",
+  "subject": "resonac",
+  "object": "daeduck-electronics",
+  "period": "2026-08",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "source_ids": [
+   "semianalysis_li_2026_08_27"
+  ],
+  "note": "EMC 가 2026년 4분기 출하를 준비하고 2027년 캐파를 두 배로 늘린다"
+ },
+ {
+  "id": "clm-tglass-widening",
+  "statement": "T-글라스 공급이 닛토보 한 곳에서 다섯 곳 이상으로 늘고 있다.",
+  "subject": "nittobo",
+  "object": "daeduck-electronics",
+  "period": "2026-08",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "source_ids": [
+   "semianalysis_li_2026_08_27"
+  ],
+  "note": "중국 업체가 공격적으로 들어왔다"
+ },
+ {
+  "id": "clm-substrate-leadtime",
+  "statement": "ABF 기판은 2026년 물량이 전부 예약됐고 공급사 여섯 곳의 리드타임이 12~14개월이다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2026-08",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.8,
+  "source_ids": [
+   "semianalysis_li_2026_08_27"
+  ],
+  "note": "층수가 20~24층까지 커져 한 장이 라인을 오래 문다"
+ },
+ {
   "id": "clm-substrate-osat-split",
   "statement": "기판은 삼성전기·대덕전자·심텍이 만들고 패키징은 하나마이크론·네패스 같은 OSAT 가 맡는다.",
   "subject": "daeduck-electronics",

@@ -1757,5 +1757,53 @@
   ],
   "desc": "TC 본더. HBM 핵심 장비 점유율 1위",
   "anon": false
+ },
+ {
+  "id": "ccl-substrate",
+  "name": "Substrate CCL",
+  "name_ko": "기판용 CCL",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Material"
+  ],
+  "desc": "기판의 바탕이 되는 동박적층판. 거의 한 곳에서만 나오는 병목",
+  "anon": false
+ },
+ {
+  "id": "t-glass",
+  "name": "T-glass",
+  "name_ko": "T-글라스",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Material"
+  ],
+  "desc": "ABF 기판의 두꺼운 제품과 BT 기판의 얇은 제품에 함께 쓰인다",
+  "anon": false
+ },
+ {
+  "id": "resonac",
+  "name": "Resonac",
+  "name_ko": "레조낙",
+  "entity_type": "company",
+  "country": "일본",
+  "categories": [
+   "Material"
+  ],
+  "desc": "기판용 CCL 을 사실상 혼자 댄다",
+  "anon": false
+ },
+ {
+  "id": "nittobo",
+  "name": "Nittobo",
+  "name_ko": "닛토보",
+  "entity_type": "company",
+  "country": "일본",
+  "categories": [
+   "Material"
+  ],
+  "desc": "T-글라스. 공급이 이 한 곳에서 다섯 곳 이상으로 늘고 있다",
+  "anon": false
  }
 ]

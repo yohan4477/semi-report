@@ -283,7 +283,8 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Manufacturing equipment':'제조 장비', 'Site electrical BoP':'부지 전기',
   'Financing':'금융', 'EPC / Distribution':'EPC·유통', 'Utility':'유틸리티',
   'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
-  'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합' };
+  'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합',
+  'Material':'소재', 'Substrate':'기판', 'Equipment':'장비' };
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'고객', INTERMEDIARY:'중개',
   PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
@@ -311,10 +312,11 @@ function colOfRel(r, up){
 }
 // 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
 var CAT_ORDER = ['Cell', 'Interconnect', 'Hotbox', 'Power electronics', 'Mechanical',
-  'Other ceramic', 'Thermal', 'Instrumentation', 'Raw material', 'Material processing',
-  'Manufacturing equipment', 'Site electrical BoP', 'Operational input'];
+  'Other ceramic', 'Thermal', 'Instrumentation', 'Material', 'Raw material',
+  'Material processing', 'Manufacturing equipment', 'Equipment', 'Site electrical BoP',
+  'Operational input'];
 var DOWN_ORDER = ['Financing', 'EPC / Distribution', 'Utility', 'Data center', 'C&I',
-  'Project', 'Undisclosed customer', 'Assembly'];
+  'OSAT', 'Project', 'Undisclosed customer', 'Assembly'];
 function ordOf(g){
   var a = (g.up ? CAT_ORDER : DOWN_ORDER).indexOf(g.key);
   return (a < 0 ? 90 : a) + (g.up ? 0 : 0);
