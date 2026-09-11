@@ -16,6 +16,8 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C12 엔티티에 법인명·표시명이 있고 모회사 참조가 실재하나
   C13 비중에 출처 발행일이 붙었나
   C14 계약상 구매자 근거 없이 직접 고객으로 적지 않았나
+  C15 간접 고객으로 적었는데 중개를 거치지 않나 (화면은 꼴을 보고 직접 고객으로 그린다)
+  C16 직접 고객으로 적었는데 타겟과 바로 잇는 거래선이 없나
 """
 import io, json, os, sys
 
@@ -23,7 +25,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 
 ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv', 'financial_institution',
-                   'utility', 'end_user', 'material', 'revenue_type'])
+                   'utility', 'end_user', 'material', 'revenue_type',
+                   'component', 'subsystem', 'application'])
 LANE = set(['MANUFACTURING_BOM', 'MANUFACTURING_EQUIPMENT', 'SITE_ELECTRICAL_BOP',
             'OPERATIONAL_INPUT', 'DOWNSTREAM', 'CORPORATE'])
 EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
@@ -32,9 +35,9 @@ OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
                   'NOT_YET_ACTIVE', 'UNKNOWN'])
 REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
 TIER = set(['REVENUE_TYPE', 'CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
-SCOPE = set(['EDGE', 'FOCAL_TOTAL_REVENUE'])
+SCOPE = set(['EDGE', 'FOCAL_TOTAL_REVENUE', 'COUNTERPARTY_TOTAL_REVENUE'])
 SRC_TIER = set(['RAW_MATERIAL', 'MATERIAL_PROCESSING', 'COMPONENT_SUPPLIER',
-                'SUBSYSTEM_MODULE'])
+                'COMPONENT', 'SUBSYSTEM_MODULE'])
 PCT = set(['%', 'percent'])
 
 fails = []
@@ -207,6 +210,28 @@ def main():
             for sid in c.get('source_ids') or []:
                 if sid not in S:
                     fail(w, u'없는 출처 %s' % sid)
+
+        # C15·C16 — 층 이름과 실제로 이어진 꼴이 어긋나나. 데이터를 고치지 않고 알리기만
+        # 한다. 화면은 꼴을 보고 직접·간접을 정한다 (gen_vcexplorer 의 tradeFrom)
+        TRADE = set(['SELLS_TO', 'DIRECT_CUSTOMER', 'END_CUSTOMER_SUPPLY_CHAIN',
+                     'DISTRIBUTION_PARTNERSHIP'])
+        chain_meta = load(os.path.join(base, 'chain.json'), {}) or {}
+        focal = chain_meta.get('focal_entity')
+        mids = set(r['target_entity'] for r in rels
+                   if r.get('target_tier') == 'INTERMEDIARY')
+
+        def hop(eid):
+            return eid == focal or E.get(eid, {}).get('entity_type') == 'revenue_type'
+
+        for r in rels:
+            # 타겟이 안 적힌 사슬은 직접·간접을 가를 기준이 없다
+            if not focal or r.get('relationship_type') not in TRADE:
+                continue
+            w = ch + '/' + r['id']
+            if r.get('target_tier') == 'END_USER' and hop(r['source_entity']):
+                warn(w, u'간접 고객인데 중개를 안 거친다')
+            if r.get('target_tier') == 'CONTRACTUAL_CUSTOMER'                     and not hop(r['source_entity'])                     and r['source_entity'] not in mids:
+                warn(w, u'직접 고객인데 타겟과 바로 잇는 거래선이 아니다')
 
         bdir = os.path.join(base, 'bom')
         if os.path.isdir(bdir):

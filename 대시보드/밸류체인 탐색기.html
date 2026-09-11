@@ -297,8 +297,8 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Revenue type':'매출원', 'Chip maker':'칩 회사', 'Automotive':'자동차',
   'Integrator':'통합', 'OSAT':'후공정(OSAT)' };
 function subKo(k){ return SUB_KO[k] || k; }
-var TIER_KO = { CONTRACTUAL_CUSTOMER:'고객', INTERMEDIARY:'중개',
-  PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
+var TIER_KO = { CONTRACTUAL_CUSTOMER:'직접 고객', INTERMEDIARY:'중개',
+  PROJECT:'프로젝트·부지', END_USER:'간접 고객',
   REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
@@ -316,10 +316,10 @@ var COLS = [
   { key:'SUBSYSTEM', label:'계통·모듈', note:'사슬 단계' },
   { key:'FOCAL', label:'타겟', note:null },
   { key:'REVENUE_TYPE', label:'매출원', note:'제품별 매출 축' },
-  { key:'CONTRACTUAL_CUSTOMER', label:'고객', note:'직접 거래' },
-  { key:'INTERMEDIARY', label:'중개', note:'유통' },
+  { key:'CONTRACTUAL_CUSTOMER', label:'직접 고객', note:'직접 거래' },
+  { key:'INTERMEDIARY', label:'중개', note:'유통·중개' },
   { key:'PROJECT', label:'프로젝트·부지', note:'배치처' },
-  { key:'END_USER', label:'최종 사용자', note:'전방 축·수요 노출' }
+  { key:'END_USER', label:'간접 고객', note:'중개 뒤·전방 축' }
 ];
 var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
@@ -808,7 +808,7 @@ function writeUrl(s, push){
 // 같은 회사가 사슬 여러 갈래에 나오면 노드를 하나로 합치고 선만 더한다.
 // 반환값은 그 회사가 앉은 노드 id 다
 
-// 판매 사슬은 층이 있다 — 계약 상대 → 중개 → 프로젝트 → 최종 사용자.
+// 판매 사슬은 층이 있다 — 직접 고객 → 중개 → 프로젝트 → 간접 고객.
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
 // 한 상자를 누르면 그 상자의 다음 한 칸만 열린다. 저절로 번지지 않는다
 
@@ -888,6 +888,51 @@ function buildGraph(focal, year, sel){
       type:'smoothstep' });
     var t = nodes.filter(function(n){ return n.id === r.target_entity; })[0];
     if (t && on && fy === year && fy !== YEARS[0]) t.data.isNew = true;
+  });
+
+  // 직접 고객과 간접 고객은 데이터에 적힌 층이 아니라 실제로 이어진 꼴이 가른다.
+  // 타겟과 바로 거래하면 직접 고객이고, 중개를 한 번 거쳐야 닿으면 간접 고객이다.
+  // 매출원은 거래 상대가 아니라 매출을 쪼갠 자리라 한 홉으로 세지 않는다.
+  // 거래가 아닌 관계(수요 노출·인증·전방 시장)는 손대지 않는다 — 거기에 고객이라는
+  // 이름을 붙이면 데이터에 없는 거래를 만드는 것이다
+  var TRADE = { SELLS_TO:1, DIRECT_CUSTOMER:1, END_CUSTOMER_SUPPLY_CHAIN:1,
+                DISTRIBUTION_PARTNERSHIP:1 };
+  var isMid = {}, tradeFrom = {};
+  rels.forEach(function(r){
+    if (r.target_tier === 'INTERMEDIARY') isMid[r.target_entity] = 1;
+  });
+  function hop(id){
+    return id === focal || (ENT[id] || {}).entity_type === 'revenue_type';
+  }
+  rels.forEach(function(r){
+    if (!TRADE[r.relationship_type]) return;
+    if (hop(r.source_entity)) tradeFrom[r.target_entity] = 'direct';
+    else if (isMid[r.source_entity] && tradeFrom[r.target_entity] !== 'direct')
+      tradeFrom[r.target_entity] = 'behind';
+  });
+  // 거래가 아닌 관계로 붙은 상자에는 고객이라는 이름을 안 쓴다. 무슨 사이인지 적는다
+  var ROLE_KO = { PLATFORM_EXPOSURE:'수요 노출', QUALIFICATION:'인증',
+    ULTIMATE_COMMERCIAL_USER:'최종 수요처', SERVES_END_USER:'최종 수요처',
+    UTILITY_SERVES:'전력 공급', CUSTOMERS_CUSTOMER:'고객의 고객',
+    END_USER_DEPLOYMENT:'설치처', SERVES_END_MARKET:'전방시장' };
+  var role = {};
+  rels.forEach(function(r){
+    if (!role[r.target_entity] && ROLE_KO[r.relationship_type])
+      role[r.target_entity] = ROLE_KO[r.relationship_type];
+  });
+  nodes.forEach(function(n){
+    var et = (ENT[n.id] || {}).entity_type;
+    if (et === 'application') { n.data.sub = '전방시장'; return; }
+    var want = tradeFrom[n.id];
+    if (!want) {
+      if (n.data.col === COL_OF.END_USER && role[n.id]) n.data.sub = role[n.id];
+      return;
+    }
+    var tier = want === 'direct' ? 'CONTRACTUAL_CUSTOMER' : 'END_USER';
+    if (n.data.col !== COL_OF.CONTRACTUAL_CUSTOMER && n.data.col !== COL_OF.END_USER)
+      return;
+    n.data.col = COL_OF[tier];
+    n.data.sub = TIER_KO[tier];
   });
 
   // 그 해에 걸린 선이 하나도 없는 상자는 흐리게 둔다
@@ -1558,7 +1603,7 @@ function App(){
     h('i', { key:'p' }, '상자를 누르면 그 줄기만 진해짐'),
     h('b', { key:'c' }, '가로'),
     h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
-    h('i', { key:7 }, '오른쪽 고객 → 중개 → 프로젝트 → 최종 사용자')
+    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 프로젝트 → 간접 고객')
   ]);
 
   return h('div', { className:'app' }, [ top,
