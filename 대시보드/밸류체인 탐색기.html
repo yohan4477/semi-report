@@ -193,6 +193,17 @@ Object.keys(FIN_BY_CO).forEach(function(k){
   FIN_BY_CO[k].sort(function(a, b){ return a.as_of_date < b.as_of_date ? -1 : 1; });
 });
 
+// 계통마다 원가 몫. 원가 구성(BOM)에 적힌 값을 계통 이름으로 찾아 쓴다
+function bomShare(co, subsystem){
+  var bs = BOM_BY_CO[co] || [];
+  if (!bs.length || !subsystem) return null;
+  var b = bs[bs.length - 1], hit = null;
+  (b.components || []).forEach(function(c){
+    if (c.subsystem === subsystem) hit = c;
+  });
+  return hit ? { pct: hit.share_pct, level: hit.evidence_level, period: b.period } : null;
+}
+
 function relsOf(id){
   var seen = {}, out = [];
   (REL_BY_ENT[id] || []).forEach(function(rid){
@@ -681,8 +692,11 @@ function readUrl(first){
   var y = q.get('year');
   if (first && !history.state) y = NOW;
   if (YEARS.indexOf(y) < 0) y = NOW;
+  // 주소에 아무것도 없이 처음 들어오면 회사 목록부터 보여 준다
+  var md = q.get('mode') || ((first && !history.state && !q.get('focal'))
+                             ? 'roster' : 'current');
   return { focal: q.get('focal') || HOME, year: y,
-           mode: q.get('mode') || 'current',
+           mode: md,
            open: (q.get('open') || '').split(',').filter(Boolean),
            sel: q.get('sel') || '' };
 }
@@ -806,9 +820,15 @@ function buildGraph(focal, year, open, expanded, focusOn){
       col: g.up ? COL_OF.SUBSYSTEM
                 : ((COL_OF[g.rels[0].target_tier] !== undefined
                     ? COL_OF[g.rels[0].target_tier] : COL_OF.CONTRACTUAL_CUSTOMER) - 0.5),
-      sub: act.length + '곳 · ' + (g.lane === 'MANUFACTURING_BOM'
-        ? (g.up ? '들어온다' : '나간다') : LANE_KO[g.lane]), gone: !act.length,
+      sub: act.length + '곳 · ' + (function(){
+        // 매출원에 비중이 붙듯 공급 계통에도 원가 몫을 적는다. 없으면 방향만 적는다
+        var bs = g.up && g.lane === 'MANUFACTURING_BOM' ? bomShare(focal, g.key) : null;
+        if (bs) return bs.pct + '% 원가(추정)';
+        return g.lane === 'MANUFACTURING_BOM' ? (g.up ? '들어온다' : '나간다')
+                                              : LANE_KO[g.lane];
+      })(), gone: !act.length,
       ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
+            bom: g.up && g.lane === 'MANUFACTURING_BOM' ? bomShare(focal, g.key) : null,
             rels: g.rels.map(function(r){ return r.id; }) } } });
     edges.push({ id:'g-' + gk, source: g.up ? gk : focal, target: g.up ? focal : gk,
       style:{ stroke:'#c2c7d1', strokeWidth:1.2 }, type:'smoothstep' });
@@ -932,7 +952,9 @@ function Drawer(p){
       h('h3', { key:'t' }, ref.label),
       h('div', { key:'r', className:'role' },
         LANE_KO[ref.lane] + ' · ' + rels.length + '곳 · '
-        + (ref.up ? '타겟으로 들어온다' : '타겟에서 나간다')),
+        + (ref.up ? '타겟으로 들어온다' : '타겟에서 나간다')
+        + (ref.bom ? ' · 제품 원가의 ' + ref.bom.pct + '% (추정, ' + ref.bom.period + ')'
+                   : '')),
       h('table', { key:'x', className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '회사'),
           h('th', { key:2 }, '부품·역무'), h('th', { key:3 }, year + ' 비중'),
