@@ -1074,6 +1074,7 @@ function place(nodes, edges, opts){
       // 다른 회사를 중심에 놓으면 왼쪽 칸은 사슬 층이 아니라 그 회사에서 몇 단 앞인가다.
       // 사슬의 층(원재료·소재…)은 사슬의 타겟 기준이라 다른 타겟에 못 쓴다
       var hl = COLS[c].label, hn = COLS[c].note || null;
+      if (COLS[c].key === 'REVENUE_AXIS' && opts.revenueLabel) hl = opts.revenueLabel;
       if (opts.rooted && HOP_LABEL[COLS[c].key]) {
         hl = HOP_LABEL[COLS[c].key]; hn = '이어진 단 수';
       }
@@ -1374,6 +1375,8 @@ function buildGraph(focal, year, sel, axis, sizes){
         nodes.push({ id: lid, type:'nd', data:{
           measured: (sizes && sizes[lid]) || null,
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated,
+          // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
+          sub: x.residual ? x.residual.label : null,
           share: (sh && den && sh.denominator === den) ? sh.value + '%' : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
                 lane: kind === 'ss' ? 'MANUFACTURING_BOM' : 'DOWNSTREAM',
@@ -1388,6 +1391,10 @@ function buildGraph(focal, year, sel, axis, sizes){
     if (r.source_entity === focal && r.lane === 'DOWNSTREAM'
         && (r.revenue_type_ids || []).length) return 'rt';
     return null;
+  }
+  function mapOf(r, band, cid){
+    var list = (band === 'ss' ? r.supply_source_map : r.revenue_type_map) || [];
+    return list.filter(function(m){ return m.id === cid; })[0] || null;
   }
   function marker(color){
     return { type: MarkerType.ArrowClosed, width:13, height:13, color: color };
@@ -1417,11 +1424,15 @@ function buildGraph(focal, year, sel, axis, sizes){
         if (!laneOf[lid]) return;
         laneOf[lid].rels.push(r.id);
         var key = band + ':' + cid;
+        // 귀속마다 근거 등급이 다르다 — Apple 은 커패시터에는 확인, 인덕터에는 추론
+        var mp = mapOf(r, band, cid), lvl = mp ? mp.status : r.evidence_level;
+        var st2 = Object.assign({}, evStyle(lvl));
+        if (!on) st2.opacity = 0.28;
         edges.push({ id:'e-' + r.id + '|' + cid,
           source: band === 'ss' ? r.source_entity : lid,
           target: band === 'ss' ? lid : r.target_entity,
-          style: st, data:{ rel: r.id, on: on, cls: key },
-          markerEnd: marker(evStyle(r.evidence_level).stroke), type:'smoothstep' });
+          style: st2, data:{ rel: r.id, on: on, cls: key, map: mp || null },
+          markerEnd: marker(evStyle(lvl).stroke), type:'smoothstep' });
         // 갈림목과 타겟 사이 줄기는 갈림목마다 하나다. 그 갈림목을 지나는 선이 하나라도
         // 그 해에 살아 있으면 진하다
         var tk = trunk[lid];
@@ -1504,7 +1515,10 @@ function buildGraph(focal, year, sel, axis, sizes){
   }
 
 
-  return { nodes: place(nodes, edges, { rooted: rooted }), edges: edges,
+  var meta = (ck && CHAINS[ck].meta) || {};
+  return { nodes: place(nodes, edges, { rooted: rooted,
+                                        revenueLabel: meta.revenue_axis_label || null }),
+           edges: edges,
            rooted: rooted, chain: ck };
 }
 
@@ -1513,11 +1527,15 @@ function buildGraph(focal, year, sel, axis, sizes){
 function clsNames(r, kind){
   var m = clsOf(CHAIN_OF[r.id]);
   var ids = (kind === 'ss' ? r.supply_source_ids : r.revenue_type_ids) || [];
+  var maps = (kind === 'ss' ? r.supply_source_map : r.revenue_type_map) || [];
   if (!ids.length) return '—';
   return ids.map(function(id){
     var o = (kind === 'ss' ? m.ss : m.rt)[id];
     if (!o) return id;
-    return o.label + (o.unallocated ? ' (귀속 근거 없음)' : '');
+    var mp = maps.filter(function(x){ return x.id === id; })[0];
+    // 귀속마다 등급이 다르면 그 등급을 붙인다. 배분 %는 비공개라 안 적는다
+    return o.label + (o.unallocated ? ' (귀속 근거 없음)' : '')
+         + (mp ? ' (' + (EV_KO[mp.status] || mp.status) + ')' : '');
   }).join(' · ');
 }
 function srcLine(sid){
@@ -1606,11 +1624,24 @@ function Drawer(p){
             h('td', { key:3 }, shareLabel(r.id, year) || '—'),
             h('td', { key:5 },
               TIER_KO[ref.up ? r.source_tier : r.target_tier] || '—'),
-            h('td', { key:4 }, h('span', {
-              className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
-              EV_KO[r.evidence_level])) ]);
+            h('td', { key:4 }, (function(){
+              var maps = (ref.cls && ref.cls.slice(0, 2) === 'ss'
+                          ? r.supply_source_map : r.revenue_type_map) || [];
+              var mp = ref.cls ? maps.filter(function(x){
+                return x.id === ref.cls.slice(3); })[0] : null;
+              var lvl = mp ? mp.status : r.evidence_level;
+              return h('span', { className:'badge' + (lvl === 'CONFIRMED' ? '' : ' est'),
+                title: mp ? mp.note : null }, EV_KO[lvl] || lvl);
+            })()) ]);
         }))
-      ])
+      ]),
+      (function(){
+        var m = clsOf(chainOf(p.focal || HOME));
+        var o = ref.cls ? (ref.cls.slice(0, 2) === 'ss' ? m.ss : m.rt)[ref.cls.slice(3)] : null;
+        return o && o.residual ? h('div', { key:'res', className:'v',
+          style:{ color:'#6b7488', marginTop:'8px' } },
+          '잔여 — ' + (o.residual.note || o.residual.label)) : null;
+      })()
     ]);
   }
   var r = ref.kind === 'rel' ? REL[ref.id] : null;

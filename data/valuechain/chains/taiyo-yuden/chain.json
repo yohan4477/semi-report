@@ -2,5 +2,6 @@
  "id": "taiyo-yuden",
  "focal_entity": "taiyo-yuden",
  "label": "태양유전",
- "note": "MLCC를 중심으로 소재·공정·생산기술을 안에 갖춘 전자부품 회사 한 곳을 중심으로 세운 사슬"
+ "note": "MLCC를 중심으로 소재·공정·생산기술을 안에 갖춘 전자부품 회사 한 곳을 중심으로 세운 사슬",
+ "revenue_axis_label": "제품별 매출"
 }

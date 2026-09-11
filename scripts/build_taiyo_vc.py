@@ -21,6 +21,10 @@ O002~O008·O011 은 제품별·전방별 매출 축이라 nvidia 사슬의 SERVE
 app-it-infra-industrial·app-communication·app-information-equipment·app-consumer)를
 구조 보강으로 만든다. 값은 전부 04 표에 있는 값 그대로다 — 이 노드들은 그 값을
 얹을 자리를 만들 뿐이다.
+
+2026-09-11 19:51 KST 수정본(v2.1): 04 에 RevenueCustomerMap 탭·유통사 여섯·매출원 넷이
+섰다. vc_norm 이 v2 로 옮긴 뒤 apply_v21() 이 귀속별 등급(revenue_type_map)·잔여 미상·
+공급원 이름·매출원 칸 이름을 얹고, migrate_vc2 가 계약 고객 근거 칸을 채운다.
 """
 import io, json, os
 
@@ -68,10 +72,23 @@ SOURCES = [
   'https://www.yuden.co.jp/en/ir/',
   '유럽·미국·중국·한국·일본 주요 1차 협력사와 폭넓게 거래한다고 공시. 개별 실명은 '
   '비공개(원표기: company disclosure)'),
+ ('ty_distributors', 'TAIYO YUDEN', 'Authorized Distributors', 'primary_official',
+  '2026-09-11', 'https://www.yuden.co.jp/en/product/distributor/',
+  '전 세계 공식 온라인 유통사는 Arrow·Avnet·Digi-Key·Future Electronics·Mouser·TTI. '
+  '유통 노릇만 확인되고 그 뒤 간접 고객 실명은 대체로 비공개'),
+ ('ty_product_application', 'TAIYO YUDEN', 'Product Information', 'primary_official',
+  '2026-09-11', 'https://www.yuden.co.jp/en/product/',
+  '인덕터는 모바일·자동차·통신·산업용, RF 디바이스는 소비자 기기용이라고 제품 목록이 '
+  '밝힌다. 갈래 수준 귀속의 근거일 뿐 Apple 향 인덕터·모듈 거래를 증명하지는 않는다'
+  '(원표기: CONFIRMED_CATEGORY)'),
+ ('ty_ai_mlcc', 'TAIYO YUDEN', 'AI Server MLCC Solution', 'primary_official', '2026',
+  'https://www.yuden.co.jp/jp/product/solutions/mlcc/detail03.html',
+  'AI 서버용 고용량·임베디드 MLCC 를 회사가 직접 내세운다. 커패시터 매출과 AI 서버 '
+  '응용의 연결 근거이고, 플랫폼별 구매 주체는 여전히 추론이다'),
  ('ty_ledger_04', u'조사 원장', u'04 Entities & Edges · 03 Evidence & Sources (Drive)',
   'research_ledger', None, None,
-  u'공식 유통 파트너 목록과 FY2027 1분기 전방별 매출 비중이 원장에 E015~E017·O002~O008 로 '
-  u'적혀 있다. 개별 공시 번호는 원장에만 있고 공개 주소로는 아직 못 박았다'),
+  u'FY2027 1분기 전방별 매출 비중이 원장에 O004~O008 로 적혀 있다. 개별 공시 번호는 '
+  u'원장에만 있고 공개 주소로는 아직 못 박았다'),
  ('vw_qual', 'TAIYO YUDEN', '제품 뉴스 — VW80808 인증', 'primary_company', None,
   'https://www.yuden.co.jp/en/news/',
   '일부 자동차용 MLCC 가 VW80808 인증을 받았다. 직접고객·매출 관계의 근거는 '
@@ -140,11 +157,21 @@ ENTITIES = [
   '공식 인증 유통 파트너다(04의 AVNET)'),
  ('mouser-electronics', 'Mouser Electronics, Inc.', '마우저 일렉트로닉스', 'company', '미국',
   ['Distributor'], '공식 인증 유통 파트너다(04의 MOUSER)'),
+ ('digi-key', 'Digi-Key Corporation', '디지키', 'company', '미국', ['Distributor'],
+  '공식 전 세계 온라인 유통사다(04의 DIGIKEY)'),
+ ('future-electronics', 'Future Electronics Inc.', '퓨처 일렉트로닉스', 'company', '캐나다',
+  ['Distributor'], '공식 전 세계 온라인 유통사다(04의 FUTURE)'),
+ ('tti', 'TTI, Inc.', 'TTI', 'company', '미국', ['Distributor'],
+  '공식 전 세계 온라인 유통사다(04의 TTI)'),
  # 구조 보강 — 04 원 목록에는 없다. O002~O008·O011 을 얹을 매출원·전방 노드
  ('ty-rev-capacitor', 'Capacitors', '커패시터 매출', 'revenue_type', None, ['Revenue type'],
   'FY2026 매출의 70.9%. MLCC 가 중심이다'),
  ('ty-rev-inductor', 'Inductors', '인덕터 매출', 'revenue_type', None, ['Revenue type'],
   'FY2026 매출의 18.1%. 페라이트·금속 파워인덕터가 중심이다'),
+ ('ty-rev-modules', 'Integrated Modules & Devices', '모듈·디바이스 매출', 'revenue_type',
+  None, ['Revenue type'], 'FY2026 매출의 4.2%. 통신·RF 계열 디바이스·모듈이다'),
+ ('ty-rev-others', 'Others', '기타 매출', 'revenue_type', None, ['Revenue type'],
+  'FY2026 매출의 6.9%. 알루미늄 전해 커패시터 등 그 밖의 전자부품이다'),
  ('app-it-infra-industrial', 'IT Infrastructure / Industrial', 'IT 인프라·산업용',
   'application', None, ['Application'],
   'AI 서버를 포함한 서버·통신인프라·산업용을 함께 묶은 분류다. AI 전용 매출만 '
@@ -156,7 +183,8 @@ ENTITIES = [
 ]
 
 REGION = {'한국': 'Korea', '일본': 'Japan', '대만': 'Taiwan', '중국': 'China',
-          '미국': 'North America', '독일': 'Europe', '말레이시아': 'Southeast Asia'}
+          '미국': 'North America', '캐나다': 'North America', '독일': 'Europe',
+          '말레이시아': 'Southeast Asia'}
 
 # (id, from, to, type, lane, subsystem, component, from_role, to_role,
 #  valid_from, valid_to, status, evidence_level, src_tier, tgt_tier, sources, notes)
@@ -211,19 +239,35 @@ R = [
   'TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)'),
  ('ty-arrow-distribution', TY, 'arrow-electronics', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_distributors'], '공식 인증 유통사다(04의 E015·신뢰도 0.95)'),
  ('ty-avnet-distribution', TY, 'avnet', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_distributors'], '공식 인증 유통사다(04의 E016·신뢰도 0.95)'),
  ('ty-mouser-distribution', TY, 'mouser-electronics', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
   'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
-  'INTERMEDIARY', ['ty_ledger_04'], '공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다'),
+  'INTERMEDIARY', ['ty_distributors'], '공식 인증 유통사다(04의 E017·신뢰도 0.95)'),
+ ('ty-digikey-distribution', TY, 'digi-key', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
+  'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'INTERMEDIARY', ['ty_distributors'], '공식 인증 유통사다(04의 E018·신뢰도 0.95)'),
+ ('ty-future-distribution', TY, 'future-electronics', 'DISTRIBUTION_PARTNERSHIP',
+  'DOWNSTREAM', 'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE',
+  'CONFIRMED', None, 'INTERMEDIARY', ['ty_distributors'],
+  '공식 인증 유통사다(04의 E019·신뢰도 0.95)'),
+ ('ty-tti-distribution', TY, 'tti', 'DISTRIBUTION_PARTNERSHIP', 'DOWNSTREAM',
+  'Distributor', '전자부품 유통', '유통', '유통사', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'INTERMEDIARY', ['ty_distributors'], '공식 인증 유통사다(04의 E020·신뢰도 0.95)'),
  # ── 구조 보강: 제품·전방 매출 축(04 원 목록에는 없다. O002~O008·O011 을 얹는 자리)──
  ('ty-rev-capacitor-edge', TY, 'ty-rev-capacitor', 'REVENUE_FROM', 'DOWNSTREAM',
   'Revenue type', '커패시터', '본사', '매출원', None, None, 'ACTIVE', 'CONFIRMED', None,
   'REVENUE_TYPE', ['ty_product_2026'], 'FY2026 제품별 매출 축이다'),
  ('ty-rev-inductor-edge', TY, 'ty-rev-inductor', 'REVENUE_FROM', 'DOWNSTREAM',
   'Revenue type', '인덕터', '본사', '매출원', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'REVENUE_TYPE', ['ty_product_2026'], 'FY2026 제품별 매출 축이다'),
+ ('ty-rev-modules-edge', TY, 'ty-rev-modules', 'REVENUE_FROM', 'DOWNSTREAM',
+  'Revenue type', '모듈·디바이스', '본사', '매출원', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'REVENUE_TYPE', ['ty_product_2026'], 'FY2026 제품별 매출 축이다'),
+ ('ty-rev-others-edge', TY, 'ty-rev-others', 'REVENUE_FROM', 'DOWNSTREAM',
+  'Revenue type', '기타', '본사', '매출원', None, None, 'ACTIVE', 'CONFIRMED', None,
   'REVENUE_TYPE', ['ty_product_2026'], 'FY2026 제품별 매출 축이다'),
  ('ty-app-it-infra-industrial', TY, 'app-it-infra-industrial', 'SERVES_END_MARKET',
   'DOWNSTREAM', 'Application', 'IT 인프라·산업용', '본사', '전방', None, None, 'ACTIVE',
@@ -256,6 +300,12 @@ O = [
  ('o-ty-inductor-share', 'ty-rev-inductor-edge', 'inductor_revenue_share', 18.1, None,
   None, PCT, 'FY2026', FY26_START, FY26_END, FY26_END, '회사 총매출', 'CURRENT',
   'CONFIRMED', None, None, ['ty_product_2026'], '64,319백만엔(04의 O003)'),
+ ('o-ty-modules-share', 'ty-rev-modules-edge', 'modules_revenue_share', 4.2, None,
+  None, PCT, 'FY2026', FY26_START, FY26_END, FY26_END, '회사 총매출', 'CURRENT',
+  'CONFIRMED', None, None, ['ty_product_2026'], '14,796백만엔(04 RevenueTypes 탭)'),
+ ('o-ty-others-share', 'ty-rev-others-edge', 'others_revenue_share', 6.9, None,
+  None, PCT, 'FY2026', FY26_START, FY26_END, FY26_END, '회사 총매출', 'CURRENT',
+  'CONFIRMED', None, None, ['ty_product_2026'], '24,453백만엔(04 RevenueTypes 탭)'),
  ('o-ty-it-infra-share', 'ty-app-it-infra-industrial', 'IT_infra_industrial_share', 27,
   None, None, PCT, 'FY2027 Q1', Q1FY27_START, Q1FY27_END, Q1FY27_END,
   '분기 회사 매출(전방별 분류)', 'CURRENT', 'CONFIRMED', None, None, [],
@@ -295,8 +345,7 @@ CLAIMS = [
   'FY2026 제품별 매출은 Capacitors 251,771백만엔(70.9%)·Inductors 64,319백만엔(18.1%)·'
   'Integrated Modules & Devices 14,796백만엔(4.2%)·Others 24,453백만엔(6.9%)이다.', TY,
   None, 'FY2026', 'CONFIRMED', None, ['ty_product_2026'],
-  'Integrated Modules·Others 두 갈래는 04 표에 관측 번호가 없어 관측이 아니라 이 '
-  '주장으로만 남긴다'),
+  '네 갈래 비중은 04 RevenueTypes 탭에도 있어 분류의 비중으로도 선다'),
  ('clm-ty-vertical-integration',
   '태양유전은 Haruna·Yawatabara 공장의 세라믹 분말, Nakanojo 공장의 인덕터 코어·분말, '
   'TY Chemical Technology 의 도금까지 소재·공정을 그룹 안에 갖췄다.', TY, None, None,
@@ -399,6 +448,77 @@ def merge(name, rows, key='id'):
     return len(out)
 
 
+# 04 RevenueCustomerMap(2026-09-11) — 제품 귀속 근거가 있는 고객은 매출원에 N:M 으로
+# 잇되 배분 %는 비공개로 둔다. 귀속마다 근거 등급이 다르므로 관계의 등급과 따로 적는다.
+# (관계 id, [(매출원 id, 등급, 확신, 출처, 메모)])
+RT_CAP, RT_IND, RT_MOD, RT_OTH = ('rt-ty-rev-capacitor', 'rt-ty-rev-inductor',
+                                  'rt-ty-rev-modules', 'rt-ty-rev-others')
+RT_MAP = {
+ 'ty-apple-supply-chain': [
+  (RT_CAP, 'CONFIRMED', 0.9, ['apple_tf', 'apple_supplier'],
+   'TrendForce 가 태양유전 MLCC 라인을 Apple 향으로 특정한다. 고객 비중은 비공개(RCM001)'),
+  (RT_IND, 'INFERRED', 0.45, ['apple_supplier', 'ty_product_application'],
+   'Apple 공급사 관계 + 모바일 기기용 인덕터 제품군을 합친 추론. Apple 향 인덕터 거래 '
+   '근거는 없다(RCM002)'),
+  (RT_MOD, 'INFERRED', 0.35, ['apple_supplier', 'ty_product_application'],
+   'Apple 공급사 관계 + RF·소비자 기기 제품군을 합친 추론. Apple 향 모듈 거래 근거는 '
+   '없다(RCM003)')],
+ 'ty-vw-qualification': [
+  (RT_CAP, 'CONFIRMED', 0.85, ['vw_qual'],
+   '제품–OEM 인증 연결은 확인. 직접 판매의 증명은 아니다(RCM004)')],
+ 'ty-nvidia-platform-exposure': [
+  (RT_CAP, 'INFERRED', 0.55, ['ai_platform', 'ty_ai_mlcc'],
+   'AI 서버 MLCC 제품 노출. NVIDIA 는 확인된 직접 구매자가 아니다(RCM005)')],
+ 'ty-google-platform-exposure': [
+  (RT_CAP, 'INFERRED', 0.6, ['ai_platform', 'ty_ai_mlcc'],
+   'TPU 관련 AI 서버 MLCC 노출. Google 은 확인된 직접 구매자가 아니다(RCM006)')],
+ 'ty-aws-platform-exposure': [
+  (RT_CAP, 'INFERRED', 0.6, ['ai_platform', 'ty_ai_mlcc'],
+   'Trainium 관련 AI 서버 MLCC 노출. AWS 는 확인된 직접 구매자가 아니다(RCM007)')],
+}
+# 실명 매핑으로 설명되지 않는 잔여는 매출원마다 「배분 미상」 잔여 칸으로 남긴다.
+# 실명 매핑이 있어도 고객별 합이 100% 로 검증되지 않았으면 걷지 않는다(RCM008~011)
+RT_RESIDUAL = {
+ RT_CAP: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개(RCM008)',
+ RT_IND: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM009)',
+ RT_MOD: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010)',
+ RT_OTH: '믿을 만한 고객 매핑이 없어 전량 배분 미상(RCM011)',
+}
+SS_LABEL = {'ss-inductor-material': ('인덕터 코어·자성 분말', 'Inductor core / magnetic powder'),
+            'ss-mlcc-manufacturing': ('내부 생산법인', 'Internal component manufacturing')}
+
+
+def apply_v21():
+    u"""vc_norm 이 옮긴 v2 위에 04 v2.1 을 얹는다. 멱등."""
+    rp = os.path.join(CHAIN, 'relationships.json')
+    rels = json.load(io.open(rp, encoding='utf-8'))
+    for r in rels:
+        m = RT_MAP.get(r['id'])
+        if not m:
+            continue
+        r['revenue_type_ids'] = [x[0] for x in m]
+        r['revenue_type_map'] = [
+            {'id': x[0], 'status': x[1], 'confidence': x[2], 'allocation_value': None,
+             'allocation_denominator': u'그 매출원 안 고객별 배분 비공개',
+             'source_ids': x[3], 'note': x[4]} for x in m]
+    dump(rp, rels)
+    cp = os.path.join(CHAIN, 'classifications.json')
+    cls = json.load(io.open(cp, encoding='utf-8'))
+    for x in cls['revenue_types']:
+        if x['id'] in RT_RESIDUAL:
+            x['residual'] = {'status': 'UNDISCLOSED', 'label': u'배분 미상 잔여',
+                             'source_ids': ['ty_product_2026'], 'note': RT_RESIDUAL[x['id']]}
+    for x in cls['supply_sources']:
+        if x['id'] in SS_LABEL:
+            x['label'], x['label_en'] = SS_LABEL[x['id']]
+    dump(cp, cls)
+    # 이 사슬에서는 매출원 칸을 「제품별 매출」로 부른다 — 고객별 매출원이 아니라 제품 mix 축이다
+    mp = os.path.join(CHAIN, 'chain.json')
+    meta = json.load(io.open(mp, encoding='utf-8'))
+    meta['revenue_axis_label'] = u'제품별 매출'
+    dump(mp, meta)
+
+
 def evidence():
     out, n = [], 0
     for t in R:
@@ -434,3 +554,6 @@ if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import vc_norm
     vc_norm.main()
+    apply_v21()
+    import migrate_vc2
+    migrate_vc2.main()

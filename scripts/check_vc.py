@@ -20,6 +20,7 @@ FAIL 0 이어야 푸시한다. 생성기(gen_vcexplorer.py)도 이 검사를 먼
   V11 확인·추정이라 적힌 관계에 출처가 붙었나
   V12 공급원·매출원 개별 귀속(미상 아닌 것)에 근거가 붙었나 — 전체 mix 로 배정하면 FAIL
   V13 타겟에서 나가는 거래에 contractual_customer 근거 칸이 있나, 값이 셋 중 하나인가
+  V14 귀속별 등급(revenue_type_map)이 ids 안의 분류만 가리키고 등급·출처가 붙었나
 
 실리는 사슬(chain.json 이 있는 디렉터리)은 게이트, 아직 안 실린 사슬은 빚 한 줄로 센다.
 """
@@ -165,6 +166,19 @@ def validate():
                 if v not in CONTRACTUAL:
                     soft('V13', u'%s 의 %s 에 contractual_customer 가 %s 다 (%s 중 하나)'
                          % (cid, r['id'], v, '·'.join(sorted(CONTRACTUAL))))
+            # V14 — 귀속별 등급(revenue_type_map·supply_source_map)은 ids 안의 분류만
+            # 가리키고, 등급·출처가 있어야 한다. 배분 %는 비공개면 비워 둔다
+            for mk, ik in (('revenue_type_map', 'revenue_type_ids'),
+                           ('supply_source_map', 'supply_source_ids')):
+                for mp in r.get(mk) or []:
+                    if mp.get('id') not in (r.get(ik) or []):
+                        fail('V14', u'%s 의 %s 가 %s 밖의 %s 에 귀속 등급을 적었다'
+                             % (cid, r['id'], ik, mp.get('id')))
+                    if mp.get('status') not in ('CONFIRMED', 'ESTIMATED', 'INFERRED',
+                                                'UNDISCLOSED'):
+                        fail('V14', u'%s 의 %s 귀속 %s 에 등급이 없다' % (cid, r['id'], mp.get('id')))
+                    if not mp.get('source_ids'):
+                        fail('V14', u'%s 의 %s 귀속 %s 에 출처가 없다' % (cid, r['id'], mp.get('id')))
             for k in ('source_entity', 'target_entity'):
                 t = r.get('source_tier' if k == 'source_entity' else 'target_tier')
                 if (ents.get(r[k], {}).get('entity_type') == 'project_spv'

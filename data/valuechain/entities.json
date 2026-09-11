@@ -3427,5 +3427,59 @@
   "primary_role": "미상",
   "other_roles": [],
   "parent_entity_id": null
+ },
+ {
+  "id": "digi-key",
+  "name": "Digi-Key Corporation",
+  "name_ko": "디지키",
+  "entity_type": "company",
+  "legal_name": "Digi-Key Corporation",
+  "display_name": "디지키",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Distributor",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Distributor"
+  ],
+  "desc": "공식 전 세계 온라인 유통사다(04의 DIGIKEY)",
+  "anon": false
+ },
+ {
+  "id": "future-electronics",
+  "name": "Future Electronics Inc.",
+  "name_ko": "퓨처 일렉트로닉스",
+  "entity_type": "company",
+  "legal_name": "Future Electronics Inc.",
+  "display_name": "퓨처 일렉트로닉스",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Distributor",
+  "other_roles": [],
+  "country": "캐나다",
+  "categories": [
+   "Distributor"
+  ],
+  "desc": "공식 전 세계 온라인 유통사다(04의 FUTURE)",
+  "anon": false
+ },
+ {
+  "id": "tti",
+  "name": "TTI, Inc.",
+  "name_ko": "TTI",
+  "entity_type": "company",
+  "legal_name": "TTI, Inc.",
+  "display_name": "TTI",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Distributor",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Distributor"
+  ],
+  "desc": "공식 전 세계 온라인 유통사다(04의 TTI)",
+  "anon": false
  }
 ]

@@ -297,7 +297,47 @@
   "notes": "Apple 공급사 명단에 오른 관계다. 매출 비중은 공개되지 않았다(04의 E010·신뢰도 0.9)",
   "supply_source_ids": [],
   "revenue_type_ids": [
-   "rt-unallocated"
+   "rt-ty-rev-capacitor",
+   "rt-ty-rev-inductor",
+   "rt-ty-rev-modules"
+  ],
+  "revenue_type_map": [
+   {
+    "id": "rt-ty-rev-capacitor",
+    "status": "CONFIRMED",
+    "confidence": 0.9,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "apple_tf",
+     "apple_supplier"
+    ],
+    "note": "TrendForce 가 태양유전 MLCC 라인을 Apple 향으로 특정한다. 고객 비중은 비공개(RCM001)"
+   },
+   {
+    "id": "rt-ty-rev-inductor",
+    "status": "INFERRED",
+    "confidence": 0.45,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "apple_supplier",
+     "ty_product_application"
+    ],
+    "note": "Apple 공급사 관계 + 모바일 기기용 인덕터 제품군을 합친 추론. Apple 향 인덕터 거래 근거는 없다(RCM002)"
+   },
+   {
+    "id": "rt-ty-rev-modules",
+    "status": "INFERRED",
+    "confidence": 0.35,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "apple_supplier",
+     "ty_product_application"
+    ],
+    "note": "Apple 공급사 관계 + RF·소비자 기기 제품군을 합친 추론. Apple 향 모듈 거래 근거는 없다(RCM003)"
+   }
   ],
   "contractual_customer": "UNVERIFIED"
  },
@@ -327,7 +367,22 @@
   ],
   "notes": "인증일 뿐 직접고객 관계의 근거는 아니다(04의 E011·신뢰도 0.85)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
+  "revenue_type_ids": [
+   "rt-ty-rev-capacitor"
+  ],
+  "revenue_type_map": [
+   {
+    "id": "rt-ty-rev-capacitor",
+    "status": "CONFIRMED",
+    "confidence": 0.85,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "vw_qual"
+    ],
+    "note": "제품–OEM 인증 연결은 확인. 직접 판매의 증명은 아니다(RCM004)"
+   }
+  ],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -356,7 +411,23 @@
   ],
   "notes": "직접 구매 근거는 없다(04의 E012·신뢰도 0.55)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
+  "revenue_type_ids": [
+   "rt-ty-rev-capacitor"
+  ],
+  "revenue_type_map": [
+   {
+    "id": "rt-ty-rev-capacitor",
+    "status": "INFERRED",
+    "confidence": 0.55,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "ai_platform",
+     "ty_ai_mlcc"
+    ],
+    "note": "AI 서버 MLCC 제품 노출. NVIDIA 는 확인된 직접 구매자가 아니다(RCM005)"
+   }
+  ],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -386,7 +457,23 @@
   ],
   "notes": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E013·신뢰도 0.6)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
+  "revenue_type_ids": [
+   "rt-ty-rev-capacitor"
+  ],
+  "revenue_type_map": [
+   {
+    "id": "rt-ty-rev-capacitor",
+    "status": "INFERRED",
+    "confidence": 0.6,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "ai_platform",
+     "ty_ai_mlcc"
+    ],
+    "note": "TPU 관련 AI 서버 MLCC 노출. Google 은 확인된 직접 구매자가 아니다(RCM006)"
+   }
+  ],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -416,7 +503,23 @@
   ],
   "notes": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
+  "revenue_type_ids": [
+   "rt-ty-rev-capacitor"
+  ],
+  "revenue_type_map": [
+   {
+    "id": "rt-ty-rev-capacitor",
+    "status": "INFERRED",
+    "confidence": 0.6,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "ai_platform",
+     "ty_ai_mlcc"
+    ],
+    "note": "Trainium 관련 AI 서버 MLCC 노출. AWS 는 확인된 직접 구매자가 아니다(RCM007)"
+   }
+  ],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -441,9 +544,9 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "ty_ledger_04"
+   "ty_distributors"
   ],
-  "notes": "공식 인증 유통사다(04의 E015·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "notes": "공식 인증 유통사다(04의 E015·신뢰도 0.95)",
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
@@ -472,9 +575,9 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "ty_ledger_04"
+   "ty_distributors"
   ],
-  "notes": "공식 인증 유통사다(04의 E016·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "notes": "공식 인증 유통사다(04의 E016·신뢰도 0.95)",
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
@@ -503,9 +606,102 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "ty_ledger_04"
+   "ty_distributors"
   ],
-  "notes": "공식 인증 유통사다(04의 E017·신뢰도 0.95). 03 표에 개별 출처 번호가 없다",
+  "notes": "공식 인증 유통사다(04의 E017·신뢰도 0.95)",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ],
+  "contractual_customer": "UNVERIFIED"
+ },
+ {
+  "id": "ty-digikey-distribution",
+  "source_entity": "taiyo-yuden",
+  "target_entity": "digi-key",
+  "relationship_type": "DISTRIBUTION_PARTNERSHIP",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Distributor",
+  "component": "전자부품 유통",
+  "source_role": "유통",
+  "target_role": "유통사",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "INTERMEDIARY",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ty_distributors"
+  ],
+  "notes": "공식 인증 유통사다(04의 E018·신뢰도 0.95)",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ],
+  "contractual_customer": "UNVERIFIED"
+ },
+ {
+  "id": "ty-future-distribution",
+  "source_entity": "taiyo-yuden",
+  "target_entity": "future-electronics",
+  "relationship_type": "DISTRIBUTION_PARTNERSHIP",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Distributor",
+  "component": "전자부품 유통",
+  "source_role": "유통",
+  "target_role": "유통사",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "INTERMEDIARY",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ty_distributors"
+  ],
+  "notes": "공식 인증 유통사다(04의 E019·신뢰도 0.95)",
+  "supply_source_ids": [],
+  "revenue_type_ids": [
+   "rt-unallocated"
+  ],
+  "contractual_customer": "UNVERIFIED"
+ },
+ {
+  "id": "ty-tti-distribution",
+  "source_entity": "taiyo-yuden",
+  "target_entity": "tti",
+  "relationship_type": "DISTRIBUTION_PARTNERSHIP",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Distributor",
+  "component": "전자부품 유통",
+  "source_role": "유통",
+  "target_role": "유통사",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "INTERMEDIARY",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ty_distributors"
+  ],
+  "notes": "공식 인증 유통사다(04의 E020·신뢰도 0.95)",
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
@@ -704,8 +900,77 @@
   "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
  },
  {
+  "id": "close-digi-key",
+  "source_entity": "digi-key",
+  "target_entity": "taiyo-yuden-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-future-electronics",
+  "source_entity": "future-electronics",
+  "target_entity": "taiyo-yuden-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
   "id": "close-mouser-electronics",
   "source_entity": "mouser-electronics",
+  "target_entity": "taiyo-yuden-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-tti",
+  "source_entity": "tti",
   "target_entity": "taiyo-yuden-indirect-undisclosed",
   "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
   "lane": "DOWNSTREAM",

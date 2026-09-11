@@ -16,8 +16,8 @@
   {
    "id": "ss-inductor-material",
    "kind": "SUPPLY_SOURCE",
-   "label": "인덕터 소재",
-   "label_en": "Inductor material",
+   "label": "인덕터 코어·자성 분말",
+   "label_en": "Inductor core / magnetic powder",
    "level": "SUBSYSTEM",
    "note": null,
    "unallocated": false,
@@ -27,8 +27,8 @@
   {
    "id": "ss-mlcc-manufacturing",
    "kind": "SUPPLY_SOURCE",
-   "label": "MLCC 생산",
-   "label_en": "MLCC manufacturing",
+   "label": "내부 생산법인",
+   "label_en": "Internal component manufacturing",
    "level": "SUBSYSTEM",
    "note": null,
    "unallocated": false,
@@ -77,7 +77,15 @@
    ],
    "source_ids": [
     "ty_product_2026"
-   ]
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "ty_product_2026"
+    ],
+    "note": "실명 고객 매핑 밖의 잔여 고객 배분은 비공개(RCM008)"
+   }
   },
   {
    "id": "rt-ty-rev-inductor",
@@ -108,7 +116,93 @@
    ],
    "source_ids": [
     "ty_product_2026"
-   ]
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "ty_product_2026"
+    ],
+    "note": "실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM009)"
+   }
+  },
+  {
+   "id": "rt-ty-rev-modules",
+   "kind": "REVENUE_TYPE",
+   "label": "모듈·디바이스 매출",
+   "label_en": "Integrated Modules & Devices",
+   "note": "FY2026 매출의 4.2%. 통신·RF 계열 디바이스·모듈이다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "modules_revenue_share",
+     "value": 4.2,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-04-01",
+     "period_end": "2026-03-31",
+     "as_of_date": "2026-03-31",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_product_2026"
+     ]
+    }
+   ],
+   "source_ids": [
+    "ty_product_2026"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "ty_product_2026"
+    ],
+    "note": "실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010)"
+   }
+  },
+  {
+   "id": "rt-ty-rev-others",
+   "kind": "REVENUE_TYPE",
+   "label": "기타 매출",
+   "label_en": "Others",
+   "note": "FY2026 매출의 6.9%. 알루미늄 전해 커패시터 등 그 밖의 전자부품이다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "others_revenue_share",
+     "value": 6.9,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-04-01",
+     "period_end": "2026-03-31",
+     "as_of_date": "2026-03-31",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_product_2026"
+     ]
+    }
+   ],
+   "source_ids": [
+    "ty_product_2026"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "ty_product_2026"
+    ],
+    "note": "믿을 만한 고객 매핑이 없어 전량 배분 미상(RCM011)"
+   }
   },
   {
    "id": "rt-unallocated",

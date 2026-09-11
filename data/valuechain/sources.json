@@ -1017,6 +1017,36 @@
   "published_date": null,
   "url": null,
   "accessed_date": "2026-09-11",
-  "note": "공식 유통 파트너 목록과 FY2027 1분기 전방별 매출 비중이 원장에 E015~E017·O002~O008 로 적혀 있다. 개별 공시 번호는 원장에만 있고 공개 주소로는 아직 못 박았다"
+  "note": "FY2027 1분기 전방별 매출 비중이 원장에 O004~O008 로 적혀 있다. 개별 공시 번호는 원장에만 있고 공개 주소로는 아직 못 박았다"
+ },
+ {
+  "id": "ty_distributors",
+  "publisher": "TAIYO YUDEN",
+  "title": "Authorized Distributors",
+  "source_type": "primary_official",
+  "published_date": "2026-09-11",
+  "url": "https://www.yuden.co.jp/en/product/distributor/",
+  "accessed_date": "2026-09-11",
+  "note": "전 세계 공식 온라인 유통사는 Arrow·Avnet·Digi-Key·Future Electronics·Mouser·TTI. 유통 노릇만 확인되고 그 뒤 간접 고객 실명은 대체로 비공개"
+ },
+ {
+  "id": "ty_product_application",
+  "publisher": "TAIYO YUDEN",
+  "title": "Product Information",
+  "source_type": "primary_official",
+  "published_date": "2026-09-11",
+  "url": "https://www.yuden.co.jp/en/product/",
+  "accessed_date": "2026-09-11",
+  "note": "인덕터는 모바일·자동차·통신·산업용, RF 디바이스는 소비자 기기용이라고 제품 목록이 밝힌다. 갈래 수준 귀속의 근거일 뿐 Apple 향 인덕터·모듈 거래를 증명하지는 않는다(원표기: CONFIRMED_CATEGORY)"
+ },
+ {
+  "id": "ty_ai_mlcc",
+  "publisher": "TAIYO YUDEN",
+  "title": "AI Server MLCC Solution",
+  "source_type": "primary_official",
+  "published_date": "2026",
+  "url": "https://www.yuden.co.jp/jp/product/solutions/mlcc/detail03.html",
+  "accessed_date": "2026-09-11",
+  "note": "AI 서버용 고용량·임베디드 MLCC 를 회사가 직접 내세운다. 커패시터 매출과 AI 서버 응용의 연결 근거이고, 플랫폼별 구매 주체는 여전히 추론이다"
  }
 ]
