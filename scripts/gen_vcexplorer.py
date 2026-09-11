@@ -44,7 +44,7 @@ __SCRIPTS__
 
 CSS = u'''
 :root{--paper:#fff;--ink1:#151b28;--ink2:#39415a;--ink3:#6b7488;--ink4:#9aa2b1;
---line:#dcdfe6;--line2:#eceef2;--bg:#f6f7f9;--hi:#eef2f8;--warm:#8a6a3d}
+--line:#c6ccd8;--line2:#e5e8ee;--bg:#e8ebf0;--hi:#dde6f4;--warm:#8a6a3d}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink1);overflow:hidden;
@@ -81,7 +81,9 @@ white-space:nowrap}
 .crumb span{cursor:pointer}
 .crumb span:hover{text-decoration:underline}
 .scrub{display:flex;align-items:center;gap:0;padding:7px 14px;background:var(--paper);
-border-bottom:1px solid var(--line);overflow-x:auto}
+border-bottom:1px solid var(--line);overflow-x:auto;user-select:none;cursor:ew-resize;
+touch-action:pan-y}
+.scrub:focus{outline:none;box-shadow:inset 0 0 0 1px var(--line)}
 .scrub .yr{position:relative;padding:4px 16px;font-size:12.5px;color:var(--ink3);
 cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
 .scrub .yr.on{color:var(--ink1);font-weight:700;border-bottom-color:var(--ink1)}
@@ -111,6 +113,7 @@ table.t th,table.t td{border-bottom:1px solid var(--line2);padding:5px 6px;text-
 vertical-align:top}
 table.t th{color:var(--ink3);font-weight:500;font-size:11.5px}
 .pane{flex:1;overflow:auto;padding:16px 20px 60px;background:var(--paper)}
+.steps{background:#f4f6fa}
 .pane h2{font-size:15px;margin:0 0 4px}
 .pane p.note{color:var(--ink3);font-size:12px;margin:0 0 14px}
 .sw{border-collapse:collapse;width:100%;font-size:12.5px}
@@ -130,12 +133,13 @@ margin:10px 0 6px}
 .bomleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2)}
 .bomleg span.it{display:flex;align-items:center;gap:5px;cursor:pointer}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
-.nd{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:7px 10px;
-min-width:118px;max-width:196px;box-shadow:0 1px 2px rgba(20,26,40,.05);cursor:pointer}
+.nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:7px 10px;
+min-width:118px;max-width:196px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
-.nd.focal{border-color:var(--ink1);border-width:1.6px;background:var(--hi)}
-.nd.grp{background:var(--bg);border-style:dashed}
+.nd.focal{border-color:var(--ink1);border-width:1.8px;background:#fff;
+box-shadow:0 2px 8px rgba(20,26,40,.2)}
+.nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
 .legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:6px 14px;
@@ -904,7 +908,30 @@ function App(){
       [ i ? ' › ' : '', i === path.length - 1 ? h('b', { key:'b' }, nm(id)) : nm(id) ]);
   }));
 
-  var scrub = h('div', { key:'s', className:'scrub' }, YEARS.reduce(function(acc, y, i){
+  // 연도는 굴리거나 끌어서 옮긴다. 화살표 키도 듣는다
+  function stepYear(d){
+    var i = YEARS.indexOf(year) + d;
+    if (i < 0) i = 0;
+    if (i > YEARS.length - 1) i = YEARS.length - 1;
+    if (YEARS[i] !== year) setYear(YEARS[i]);
+  }
+  function yearAtX(ev){
+    var b = ev.currentTarget.getBoundingClientRect();
+    var f = (ev.clientX - b.left) / Math.max(1, b.width);
+    var i = Math.round(f * (YEARS.length - 1));
+    if (i < 0) i = 0;
+    if (i > YEARS.length - 1) i = YEARS.length - 1;
+    if (YEARS[i] !== year) setYear(YEARS[i]);
+  }
+  var scrub = h('div', { key:'s', className:'scrub', tabIndex:0,
+    title:'굴리거나 끌어서 연도를 옮긴다',
+    onWheel: function(ev){ stepYear((ev.deltaY || ev.deltaX) > 0 ? 1 : -1); },
+    onMouseDown: function(ev){ yearAtX(ev); },
+    onMouseMove: function(ev){ if (ev.buttons === 1) yearAtX(ev); },
+    onKeyDown: function(ev){
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') stepYear(1);
+      if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') stepYear(-1);
+    } }, YEARS.reduce(function(acc, y, i){
     if (i) acc.push(h('div', { key:'r' + i, className:'rail' }));
     acc.push(h('div', { key:y, className:'yr' + (y === year ? ' on' : ''),
       onClick: function(){ setYear(y); } }, y === NOW ? y + ' 현재' : y));
@@ -919,7 +946,7 @@ function App(){
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
       onNodeClick:onNodeClick, fitView:true, minZoom:.25, maxZoom:1.6,
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
-      h(Background, { key:'bg', gap:22, size:1, color:'#e3e6ec' }),
+      h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
       h(Controls, { key:'ct', showInteractive:false })
     ])
   ]);
