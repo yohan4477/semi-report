@@ -135,15 +135,17 @@ margin:10px 0 6px}
 .bomleg span.it{display:flex;align-items:center;gap:5px;cursor:pointer}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
 .nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:7px 10px;
-min-width:118px;max-width:196px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
+min-width:110px;max-width:150px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
-.nd.focal{border-color:var(--ink1);border-width:1.8px;background:#fff;
-box-shadow:0 2px 8px rgba(20,26,40,.2)}
+.nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;padding:11px 14px;
+box-shadow:0 3px 12px rgba(20,26,40,.22)}
+.nd.focal .nm{font-size:15px}
+.nd.focal .sub{font-size:12px}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
@@ -364,20 +366,22 @@ var NODE_TYPES = { nd: Nd };
 
 function place(nodes, edges){
   var g = new dagre.graphlib.Graph();
-  g.setGraph({ rankdir:'LR', nodesep:22, ranksep:96, marginx:24, marginy:24 });
+  // 칸 사이를 좁게 — 판이 가로로 퍼질수록 맞춰 넣을 때 글자가 작아진다
+  g.setGraph({ rankdir:'LR', nodesep:20, ranksep:52, marginx:16, marginy:16 });
   g.setDefaultEdgeLabel(function(){ return {}; });
   nodes.forEach(function(n){
     var d = n.data;
     // 제목 줄수(한 줄 15자 남짓) + 부제 한 줄 + 테두리·여백
     var lines = Math.ceil((d.title || '').length / 14) || 1;
     var hgt = 16 + lines * 18 + ((d.sub || d.isNew) ? 17 : 0);
-    g.setNode(n.id, { width:176, height:hgt });
+    if (d.focal) { hgt += 14; }
+    g.setNode(n.id, { width: d.focal ? 210 : 176, height:hgt });
   });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
   return nodes.map(function(n){
     var p = g.node(n.id);
-    return Object.assign({}, n, { position:{ x:p.x - 88, y:p.y - 19 } });
+    return Object.assign({}, n, { position:{ x:p.x - p.width / 2, y:p.y - p.height / 2 } });
   });
 }
 
@@ -913,7 +917,18 @@ function App(){
   var m2 = useState(null), rf = m2[0], setRf = m2[1];
   useEffect(function(){
     if (!rf) return;
-    var t = setTimeout(function(){ rf.fitView({ padding:0.12, duration:220 }); }, 80);
+    var t = setTimeout(function(){
+      if (window.innerWidth < 720) {
+        // 다 보여 주려다 글자가 뭉개진다. 중심 회사를 읽을 수 있게 놓고 끌어서 본다
+        var c = rf.getNode ? rf.getNode(focal) : null;
+        if (c) {
+          rf.setCenter(c.position.x + 75, c.position.y + 22,
+                       { zoom: open.length ? .5 : .62, duration:240 });
+          return;
+        }
+      }
+      rf.fitView({ padding:0.12, duration:220 });
+    }, 90);
     return function(){ clearTimeout(t); };
   }, [rf, drw, open, focal, year, mode, expanded]);
 
