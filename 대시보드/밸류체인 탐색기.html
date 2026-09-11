@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>밸류체인 탐색기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11.11.4/dist/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
 <style>
 :root{--paper:#fff;--ink1:#151b28;--ink2:#39415a;--ink3:#6b7488;--ink4:#9aa2b1;
 --line:#c6ccd8;--line2:#e5e8ee;--bg:#e8ebf0;--hi:#dde6f4;--warm:#8a6a3d}
@@ -97,6 +98,8 @@ margin:10px 0 6px}
 .nd{background:var(--paper);border:1px solid #aab2c2;border-radius:6px;padding:7px 10px;
 min-width:118px;max-width:196px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
+.flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
+margin-right:4px;letter-spacing:-1px}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
 .nd.focal{border-color:var(--ink1);border-width:1.8px;background:#fff;
 box-shadow:0 2px 8px rgba(20,26,40,.2)}
@@ -161,6 +164,29 @@ function relsOf(id){
   return out;
 }
 function nm(id){ var e = ENT[id]; return e ? (e.name_ko || e.name) : id; }
+
+// 나라 이름 하나에 깃발 하나. 여러 나라면 여럿을 단다. 모르면 안 단다
+var FLAG = { '미국':'US', '한국':'KR', '중국':'CN', '대만':'TW', '일본':'JP', '인도':'IN',
+  '캐나다':'CA', '베트남':'VN', '이탈리아':'IT' };
+function iso(cc){
+  return cc.replace(/./g, function(c){
+    return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65); });
+}
+function flagOf(id){
+  var e = ENT[id];
+  if (!e || !e.country) return '';
+  var out = '';
+  e.country.split('·').forEach(function(part){
+    var k = FLAG[part.trim()];
+    if (k) out += iso(k);
+  });
+  return out;
+}
+function withFlag(id, key){
+  var f = flagOf(id);
+  return f ? [h('span', { key:'f' + (key || ''), className:'flag' }, f),
+              h('span', { key:'n' + (key || '') }, nm(id))] : nm(id);
+}
 
 var YEARS = (function(){
   var s = {};
@@ -278,7 +304,9 @@ function Nd(p){
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
   return h('div', { className: cls }, [
     h(Handle, { key:'t', type:'target', position:Position.Left, style:{opacity:0} }),
-    h('div', { key:'n', className:'nm' }, d.title),
+    h('div', { key:'n', className:'nm' }, d.flag
+      ? [h('span', { key:'f', className:'flag' }, d.flag), h('span', { key:'t' }, d.title)]
+      : d.title),
     (d.sub || d.isNew) ? h('div', { key:'s', className:'sub' }, [
       d.sub ? h('span', { key:'t2' }, d.sub) : null,
       d.isNew ? h('span', { key:'b', className:'badge new',
@@ -340,8 +368,8 @@ function addRelNode(ctx, r, nid, host, up, year){
   var have = ctx.byEnt[eid];
   if (!have) {
     var on0 = activeIn(r, year), fy0 = firstYear(r);
-    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), kind:'ent',
-      sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
+    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), flag: flagOf(eid),
+      kind:'ent', sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
       isNew: on0 && fy0 === year && fy0 !== YEARS[0],
       ref:{ kind:'rel', id:r.id, entity: eid } } });
     ctx.byEnt[eid] = nid;
@@ -398,7 +426,8 @@ function buildGraph(focal, year, open, expanded, focusOn){
                                     label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
                                     lane: r.lane, rels: [] }).rels.push(r);
   });
-  nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), kind:'ent', focal:true,
+  nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), flag: flagOf(focal),
+    kind:'ent', focal:true,
     sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
   // 매출원 — 눌러야 그 매출원에 근거가 붙는 고객이 열린다 (05 §28)
   revRels.forEach(function(r){
@@ -558,7 +587,7 @@ function Drawer(p){
           var other = ref.up ? r.source_entity : r.target_entity;
           return h('tr', { key:r.id, style:{ cursor:'pointer' },
             onClick: function(){ p.onSel({ kind:'rel', id:r.id, entity:other }); } }, [
-            h('td', { key:1 }, nm(other)),
+            h('td', { key:1 }, withFlag(other)),
             h('td', { key:2 }, r.component || '—'),
             h('td', { key:3 }, shareLabel(r.id, year) || '—'),
             h('td', { key:5 }, TIER_KO[r.source_tier || r.target_tier] || '—'),
@@ -583,7 +612,7 @@ function Drawer(p){
   return h('div', { className:'drw' }, [
     h('button', { key:'x', className:'btn', style:{ float:'right' },
       onClick: p.onClose }, '닫기'),
-    h('h3', { key:'t' }, nm(eid)),
+    h('h3', { key:'t' }, withFlag(eid)),
     h('div', { key:'r', className:'role' },
       [e.entity_type, e.country,
        (e.categories || []).map(subKo).join(' · ')].filter(Boolean).join(' · ')),
@@ -907,7 +936,7 @@ function App(){
         onChange: function(ev){ setQ(ev.target.value); } }),
       hits.length ? h('div', { key:'g', className:'sug' }, hits.map(function(id){
         return h('div', { key:id, onClick: function(){ setQ(''); goFocal(id); } }, [
-          h('span', { key:'a' }, nm(id)),
+          h('span', { key:'a' }, withFlag(id)),
           h('span', { key:'b', className:'k' },
             (ENT[id].categories || []).map(subKo).join(' · ')) ]);
       })) : null
