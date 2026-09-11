@@ -1,14 +1,14 @@
 [
  {
-  "id": "scandium-undisclosed-bloom",
+  "id": "scandium-src-oxide",
   "source_entity": "undisclosed-scandium-suppliers",
-  "target_entity": "bloom-energy",
+  "target_entity": "scandium-oxide",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Raw material",
   "component": "산화스칸듐",
   "source_role": "원재료 공급사",
-  "target_role": "제조사",
+  "target_role": "원재료",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
@@ -16,36 +16,146 @@
   "economic_importance": "LOW",
   "capacity_criticality": "HIGH",
   "target_tier": null,
+  "source_tier": "RAW_MATERIAL",
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
    "be_scandium_blog"
   ],
-  "notes": "복수국 복수 업체라고만 공개. 업체명·물량·조달 전략 비공개"
+  "notes": "복수국 복수 업체라고만 공개. 업체명·물량·조달 전략 비공개. 산업 부산물 회수 기반"
  },
  {
-  "id": "zirconia-bloom",
+  "id": "scandium-scsz",
+  "source_entity": "scandium-oxide",
+  "target_entity": "scsz-electrolyte",
+  "relationship_type": "PROCESSED_INTO",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material processing",
+  "component": "전해질 소재",
+  "source_role": "원재료",
+  "target_role": "소재",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": "LOW",
+  "capacity_criticality": "HIGH",
+  "target_tier": null,
+  "source_tier": "MATERIAL_PROCESSING",
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_scandium_blog"
+  ],
+  "notes": "지르코니아 기판에 산화스칸듐을 소량 넣는다"
+ },
+ {
+  "id": "zirconia-scsz",
   "source_entity": "zirconium-oxide",
-  "target_entity": "bloom-energy",
+  "target_entity": "scsz-electrolyte",
+  "relationship_type": "PROCESSED_INTO",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material processing",
+  "component": "전해질 소재",
+  "source_role": "원재료",
+  "target_role": "소재",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "economic_importance": "LOW",
+  "capacity_criticality": "HIGH",
+  "target_tier": null,
+  "source_tier": "MATERIAL_PROCESSING",
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "be_scandium_blog"
+  ],
+  "notes": null
+ },
+ {
+  "id": "scsz-cctc",
+  "source_entity": "scsz-electrolyte",
+  "target_entity": "cctc",
+  "relationship_type": "INPUT_TO",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material processing",
+  "component": "전해질 세라믹 원료",
+  "source_role": "소재",
+  "target_role": "세라믹 공급사",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "INFERRED",
+  "economic_importance": "LOW",
+  "capacity_criticality": null,
+  "target_tier": null,
+  "source_tier": "MATERIAL_PROCESSING",
+  "integration_criticality": null,
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [
+   "be_scandium_blog",
+   "cctc_yicai"
+  ],
+  "notes": "기판이 이 계열 소재라는 것은 확인되지만 이 공급사가 어디서 원료를 받는지는 공개되지 않았다"
+ },
+ {
+  "id": "scsz-amosense",
+  "source_entity": "scsz-electrolyte",
+  "target_entity": "amosense",
+  "relationship_type": "INPUT_TO",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material processing",
+  "component": "전해질 세라믹 원료",
+  "source_role": "소재",
+  "target_role": "세라믹 공급사",
+  "valid_from": "2026-01-01",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "INFERRED",
+  "economic_importance": "LOW",
+  "capacity_criticality": null,
+  "target_tier": null,
+  "source_tier": "MATERIAL_PROCESSING",
+  "integration_criticality": null,
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [
+   "be_scandium_blog",
+   "sedaily_kr_suppliers"
+  ],
+  "notes": null
+ },
+ {
+  "id": "crfe-porite",
+  "source_entity": "cr-fe-alloy",
+  "target_entity": "porite-taiwan",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Raw material",
-  "component": "산화지르코늄",
+  "component": "크롬 합금 모재",
   "source_role": "원재료",
-  "target_role": "제조사",
+  "target_role": "부품 공급사",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
+  "evidence_level": "INFERRED",
   "economic_importance": "LOW",
-  "capacity_criticality": "HIGH",
+  "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "RAW_MATERIAL",
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
-   "be_scandium_blog"
+   "cw_porite_2024"
   ],
-  "notes": "초박형 세라믹 기판의 기반 물질. 벤더 비공개"
+  "notes": "플레이트가 크롬 합금이라는 것만 확인된다. 합금 공급사는 모른다"
  },
  {
   "id": "natgas-bloom-fleet",
@@ -64,6 +174,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -88,6 +200,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -112,6 +226,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -136,6 +252,8 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": "VERY_HIGH",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -160,6 +278,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": "MEDIUM",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -184,6 +304,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -208,6 +330,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -232,6 +356,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "medium",
   "flows": [],
   "source_ids": [
@@ -256,6 +382,8 @@
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -280,6 +408,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -295,7 +425,7 @@
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Interconnect",
   "component": "인터커넥트 표면 코팅·관련 플레이트",
-  "source_role": "부품 공급사",
+  "source_role": "표면 처리",
   "target_role": "제조사",
   "valid_from": null,
   "valid_to": null,
@@ -304,12 +434,41 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "be_10k_fy2025"
   ],
   "notes": null
+ },
+ {
+  "id": "porite-plusmetal",
+  "source_entity": "porite-taiwan",
+  "target_entity": "plus-metal-tech",
+  "relationship_type": "FEEDS",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Interconnect",
+  "component": "플레이트 표면 처리 공정",
+  "source_role": "플레이트 제조",
+  "target_role": "표면 처리",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "UNKNOWN",
+  "evidence_level": "INFERRED",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [
+   "be_10k_fy2025",
+   "cw_porite_2024"
+  ],
+  "notes": "두 회사가 같은 계통에 있다는 것까지만 확인된다. 누가 누구에게 넘기는지는 공개 문장이 없다"
  },
  {
   "id": "mtar-bloom-hotbox",
@@ -328,6 +487,8 @@
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": "HIGH",
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -353,6 +514,8 @@
   "economic_importance": "HIGH",
   "capacity_criticality": "HIGH",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -377,6 +540,8 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -401,6 +566,8 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -425,6 +592,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -449,6 +618,8 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -473,6 +644,8 @@
   "economic_importance": "MEDIUM",
   "capacity_criticality": "MEDIUM",
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -498,6 +671,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -522,6 +697,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -546,6 +723,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -570,6 +749,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -594,6 +775,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -618,6 +801,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -642,6 +827,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -666,6 +853,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": "COMPONENT_SUPPLIER",
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -690,6 +879,8 @@
   "economic_importance": "LOW",
   "capacity_criticality": "VERY_HIGH",
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -715,6 +906,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -739,6 +932,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -764,6 +959,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": null,
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -788,6 +985,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -812,6 +1011,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "PROJECT",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -836,6 +1037,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -860,6 +1063,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -884,6 +1089,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "PROJECT",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -908,6 +1115,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -932,6 +1141,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -956,6 +1167,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -980,6 +1193,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -1004,6 +1219,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1029,6 +1246,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "INTERMEDIARY",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1053,6 +1272,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1077,6 +1298,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "PROJECT",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1101,6 +1324,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1126,6 +1351,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1150,6 +1377,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1174,6 +1403,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1199,6 +1430,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "PROJECT",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1223,6 +1456,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "PROJECT",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1247,6 +1482,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1271,6 +1508,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1295,6 +1534,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1319,6 +1560,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1343,6 +1586,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1367,6 +1612,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1391,6 +1638,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1415,6 +1664,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1439,6 +1690,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1463,6 +1716,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1487,6 +1742,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "END_USER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
@@ -1511,6 +1768,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -1535,6 +1794,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [
@@ -1559,6 +1820,8 @@
   "economic_importance": null,
   "capacity_criticality": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
+  "source_tier": null,
+  "integration_criticality": null,
   "confidence_band": "low",
   "flows": [],
   "source_ids": [

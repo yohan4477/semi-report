@@ -226,7 +226,20 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합' };
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'계약 상대', INTERMEDIARY:'중개',
-  PROJECT:'프로젝트·부지', END_USER:'최종 사용자' };
+  PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
+  RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
+  COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
+function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
+// 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
+var CAT_ORDER = ['Cell', 'Interconnect', 'Hotbox', 'Power electronics', 'Mechanical',
+  'Other ceramic', 'Thermal', 'Instrumentation', 'Raw material', 'Material processing',
+  'Manufacturing equipment', 'Site electrical BoP', 'Operational input'];
+var DOWN_ORDER = ['Financing', 'EPC / Distribution', 'Utility', 'Data center', 'C&I',
+  'Project', 'Undisclosed customer', 'Assembly'];
+function ordOf(g){
+  var a = (g.up ? CAT_ORDER : DOWN_ORDER).indexOf(g.key);
+  return (a < 0 ? 90 : a) + (g.up ? 0 : 0);
+}
 var LANE_KO = { MANUFACTURING_BOM:'제품 BOM', MANUFACTURING_EQUIPMENT:'제조 장비',
   SITE_ELECTRICAL_BOP:'부지 전기', OPERATIONAL_INPUT:'운영 투입',
   DOWNSTREAM:'다운스트림', CORPORATE:'기업 구조' };
@@ -327,52 +340,78 @@ function writeUrl(s, push){
 
 // ── 그래프 ──────────────────────────────────────────────────────────
 // 모든 해를 합쳐 자리를 잡고, 그 해에 없는 것은 흐리게 둔다. 연도를 옮겨도 자리가 안 튄다
-// 상대 노드 하나와 그 관계선. host 쪽이 중심에 가까운 칸이다
-function addRelNode(nodes, edges, r, nid, host, up, year){
-  if (nodes.some(function(n){ return n.id === nid; })) return;
-  var on = activeIn(r, year), fy = firstYear(r);
-  var tier = r.target_tier ? TIER_KO[r.target_tier] : null;
-  nodes.push({ id: nid, type:'nd', data:{ title: nm(up ? r.source_entity : r.target_entity),
-    kind:'ent', sub: tier || r.component || null, gone: !on,
-    isNew: on && fy === year && fy !== YEARS[0],
-    ref:{ kind:'rel', id:r.id, entity: up ? r.source_entity : r.target_entity } } });
-  edges.push({ id:'e-' + r.id + '-' + host, source: up ? nid : host, target: up ? host : nid,
+// 상대 노드 하나와 그 관계선. host 쪽이 중심에 가까운 칸이다.
+// 같은 회사가 사슬 여러 갈래에 나오면 노드를 하나로 합치고 선만 더한다.
+// 반환값은 그 회사가 앉은 노드 id 다
+function addRelNode(ctx, r, nid, host, up, year){
+  var eid = up ? r.source_entity : r.target_entity;
+  var have = ctx.byEnt[eid];
+  if (!have) {
+    var on0 = activeIn(r, year), fy0 = firstYear(r);
+    ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), kind:'ent',
+      sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
+      isNew: on0 && fy0 === year && fy0 !== YEARS[0],
+      ref:{ kind:'rel', id:r.id, entity: eid } } });
+    ctx.byEnt[eid] = nid;
+    have = nid;
+  }
+  var eidge = 'e-' + r.id + '-' + host;
+  if (ctx.edges.some(function(x){ return x.id === eidge; })) return have;
+  var on = activeIn(r, year);
+  ctx.edges.push({ id: eidge, source: up ? have : host, target: up ? host : have,
     label: shareLabel(r.id, year), labelStyle:{ fontSize:10.5 },
     labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
     style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
     markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
                 color: evStyle(r.evidence_level).stroke },
     type:'smoothstep' });
+  return have;
 }
 
 // 판매 사슬은 층이 있다 — 계약 상대 → 중개 → 프로젝트 → 최종 사용자.
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
-function chainDown(nodes, edges, eid, host, year, depth, seen){
-  if (depth > 3 || seen[eid]) return;
+function chainDown(ctx, eid, host, year, depth, seen){
+  if (depth > 2 || seen[eid]) return;
   seen[eid] = 1;
   relsOf(eid).forEach(function(r){
     if (r.source_entity !== eid || r.lane !== 'DOWNSTREAM') return;
-    var nid = 'c|' + r.id;
-    addRelNode(nodes, edges, r, nid, host, false, year);
-    chainDown(nodes, edges, r.target_entity, nid, year, depth + 1, seen);
+    var nid = addRelNode(ctx, r, 'x|' + r.target_entity, host, false, year);
+    chainDown(ctx, r.target_entity, nid, year, depth + 1, seen);
+  });
+}
+
+// 05 §16 — 공급사를 전부 중심에 바로 붙이지 않는다. 확인된 만큼만 위로 올라간다
+function chainUp(ctx, eid, host, year, depth, seen){
+  if (depth > 2 || seen[eid]) return;
+  seen[eid] = 1;
+  relsOf(eid).forEach(function(r){
+    if (r.target_entity !== eid || r.lane !== 'MANUFACTURING_BOM') return;
+    var nid = addRelNode(ctx, r, 'x|' + r.source_entity, host, true, year);
+    chainUp(ctx, r.source_entity, nid, year, depth + 1, seen);
   });
 }
 
 function buildGraph(focal, year, open, expanded, focusOn){
   var groups = {}, nodes = [], edges = [];
+  var ctx = { nodes: nodes, edges: edges, byEnt: {} };
+  ctx.byEnt[focal] = focal;
   relsOf(focal).forEach(function(r){
     var up = r.target_entity === focal;
     var key = (up ? 'u:' : 'd:') + (r.subsystem || LANE_KO[r.lane] || '기타');
-    (groups[key] = groups[key] || { up: up, label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
+    (groups[key] = groups[key] || { up: up, key: r.subsystem || '기타',
+                                    label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
                                     lane: r.lane, rels: [] }).rels.push(r);
   });
   nodes.push({ id: focal, type:'nd', data:{ title: nm(focal), kind:'ent', focal:true,
     sub: (ENT[focal] && ENT[focal].country) || null, ref:{ kind:'ent', id:focal } } });
-  Object.keys(groups).forEach(function(gk){
+  Object.keys(groups).sort(function(a, b){
+    return ordOf(groups[a]) - ordOf(groups[b]);
+  }).forEach(function(gk){
     var g = groups[gk];
     var act = g.rels.filter(function(r){ return activeIn(r, year); });
     nodes.push({ id: gk, type:'nd', data:{ title: g.label, kind:'grp',
-      sub: act.length + '곳 · ' + (g.up ? '들어온다' : '나간다'), gone: !act.length,
+      sub: act.length + '곳 · ' + (g.lane === 'MANUFACTURING_BOM'
+        ? (g.up ? '들어온다' : '나간다') : LANE_KO[g.lane]), gone: !act.length,
       ref:{ kind:'grp', id: gk, label:g.label, lane:g.lane, up:g.up,
             rels: g.rels.map(function(r){ return r.id; }) } } });
     edges.push({ id:'g-' + gk, source: g.up ? gk : focal, target: g.up ? focal : gk,
@@ -380,9 +419,9 @@ function buildGraph(focal, year, open, expanded, focusOn){
     if (open.indexOf(gk) < 0) return;
     g.rels.forEach(function(r){
       var other = g.up ? r.source_entity : r.target_entity;
-      var nid = gk + '|' + other;
-      addRelNode(nodes, edges, r, nid, gk, g.up, year);
-      if (!g.up) chainDown(nodes, edges, other, nid, year, 1, {});
+      var nid = addRelNode(ctx, r, gk + '|' + other, gk, g.up, year);
+      if (g.up) chainUp(ctx, other, nid, year, 1, {});
+      else chainDown(ctx, other, nid, year, 1, {});
     });
   });
   // 누른 회사에서 한 홉만 더. 저절로 번지지 않는다
@@ -400,18 +439,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
       if (dir === 'down' && up) return;
       var other = up ? r.source_entity : r.target_entity;
       if (other === focal) return;
-      var nid = 'x|' + eid + '|' + other;
-      if (nodes.some(function(n){ return n.id === nid; })) return;
-      var on = activeIn(r, year);
-      nodes.push({ id: nid, type:'nd', data:{ title: nm(other), kind:'ent',
-        sub: r.component || null, gone: !on, ref:{ kind:'rel', id:r.id, entity: other } } });
-      edges.push({ id:'x-' + r.id + '-' + eid, source: up ? nid : host,
-        target: up ? host : nid, label: shareLabel(r.id, year),
-        labelStyle:{ fontSize:10.5 }, labelBgStyle:{ fill:'#fff' }, labelBgPadding:[3,1],
-        style: Object.assign({}, evStyle(r.evidence_level), on ? {} : { opacity:.35 }),
-        markerEnd:{ type: MarkerType.ArrowClosed, width:13, height:13,
-                    color: evStyle(r.evidence_level).stroke },
-        type:'smoothstep' });
+      addRelNode(ctx, r, 'x|' + other, host, up, year);
     });
   });
   if (focusOn) {
@@ -514,7 +542,7 @@ function Drawer(p){
             h('td', { key:1 }, nm(other)),
             h('td', { key:2 }, r.component || '—'),
             h('td', { key:3 }, shareLabel(r.id, year) || '—'),
-            h('td', { key:5 }, r.target_tier ? TIER_KO[r.target_tier] : '—'),
+            h('td', { key:5 }, TIER_KO[r.source_tier || r.target_tier] || '—'),
             h('td', { key:4 }, h('span', {
               className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
               EV_KO[r.evidence_level])) ]);
@@ -562,7 +590,7 @@ function Drawer(p){
         h('div', { key:5 }, '역할'),
         h('div', { key:6 }, (r.source_role || '—') + ' → ' + (r.target_role || '—')),
         h('div', { key:'t1' }, '사슬 층'),
-        h('div', { key:'t2' }, r.target_tier ? TIER_KO[r.target_tier] : '—'),
+        h('div', { key:'t2' }, TIER_KO[r.source_tier || r.target_tier] || '—'),
         h('div', { key:7 }, '기간'),
         h('div', { key:8 }, (r.valid_from || '?') + ' ~ ' + (r.valid_to || '현재')),
         h('div', { key:9 }, '근거'), h('div', { key:10 }, [
@@ -572,7 +600,9 @@ function Drawer(p){
           r.economic_importance ? h('span', { key:'b', className:'badge' },
             '원가 비중 ' + r.economic_importance) : null,
           r.capacity_criticality ? h('span', { key:'c', className:'badge' },
-            '증설 병목 ' + r.capacity_criticality) : null ])
+            '증설 병목 ' + r.capacity_criticality) : null,
+          r.integration_criticality ? h('span', { key:'d', className:'badge' },
+            '통합 난이도 ' + r.integration_criticality) : null ])
       ]),
       r.notes ? h('div', { key:'n', className:'v',
         style:{ color:'#6b7488', marginTop:'6px' } }, r.notes) : null
@@ -900,7 +930,8 @@ function App(){
       h('i', { key:3 }, '파선 — 정황 추론'),
       h('i', { key:4 }, '점선 — 비공개·과거 관측'),
       h('i', { key:5 }, '물음표 — 관계는 있고 그 해 값이 없다'),
-      h('i', { key:6 }, '오른쪽으로 갈수록 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
+      h('i', { key:6 }, '왼쪽은 원재료 → 소재·가공 → 부품 → 계통 → 이 회사'),
+      h('i', { key:7 }, '오른쪽은 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
     ] : [ h('b', { key:'b', style:{ margin:0 } }, '범례') ])
   ]);
 

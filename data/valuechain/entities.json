@@ -1589,5 +1589,29 @@
   ],
   "desc": "펀드 JV 아래에 프로젝트 법인이 선다고 원문이 말하지만 법인명은 공개되지 않았다",
   "anon": true
+ },
+ {
+  "id": "scsz-electrolyte",
+  "name": "Scandia-stabilized zirconia electrolyte",
+  "name_ko": "스칸디아 안정화 지르코니아",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Material processing"
+  ],
+  "desc": "지르코니아에 산화스칸듐을 조금 섞은 전해질 소재. 조성과 공정은 Bloom 핵심 기술",
+  "anon": false
+ },
+ {
+  "id": "cr-fe-alloy",
+  "name": "Cr / Fe alloy",
+  "name_ko": "크롬·철 합금",
+  "entity_type": "material",
+  "country": null,
+  "categories": [
+   "Raw material"
+  ],
+  "desc": "인터커넥트 플레이트의 모재. 공급사는 공개되지 않았다",
+  "anon": false
  }
 ]

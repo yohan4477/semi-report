@@ -11,6 +11,7 @@ FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸�
   C7 수량 없는 계약에서 단가를 뽑았나
   C8 주장에 주어·근거등급·출처가 붙었나
   C9 다운스트림 관계에 층이 붙었나
+  C10 업스트림(제품 BOM) 관계에 층이 붙었나
 """
 import io, json, os, sys
 
@@ -27,6 +28,8 @@ OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
                   'NOT_YET_ACTIVE', 'UNKNOWN'])
 REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
 TIER = set(['CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
+SRC_TIER = set(['RAW_MATERIAL', 'MATERIAL_PROCESSING', 'COMPONENT_SUPPLIER',
+                'SUBSYSTEM_MODULE'])
 PCT = set(['%', 'percent'])
 
 fails = []
@@ -105,6 +108,9 @@ def main():
                 fail(w, u'다운스트림인데 target_tier 가 %r' % r.get('target_tier'))
             if r.get('lane') != 'DOWNSTREAM' and r.get('target_tier'):
                 fail(w, u'다운스트림이 아닌데 target_tier 가 붙었다')
+            # C10 — 제품 BOM 도 층이 있어야 한다. 없으면 공급사가 전부 중심에 직접 붙는다
+            if r.get('lane') == 'MANUFACTURING_BOM' and r.get('source_tier') not in SRC_TIER:
+                fail(w, u'제품 BOM 인데 source_tier 가 %r' % r.get('source_tier'))
 
         O = {}
         latest = {}

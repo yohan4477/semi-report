@@ -91,6 +91,8 @@ def main():
             'status': 'ACTIVE',
             'target_tier': (TIER.get(t, 'CONTRACTUAL_CUSTOMER')
                             if LANE[t] == 'DOWNSTREAM' else None),
+            'source_tier': ('COMPONENT_SUPPLIER'
+                            if LANE[t] == 'MANUFACTURING_BOM' else None),
             'evidence_level': EV_FROM_CONF[r['confidence']],
             'confidence_band': r['confidence'],
             'notes': r.get('notes'),

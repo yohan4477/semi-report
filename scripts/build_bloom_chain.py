@@ -16,13 +16,28 @@ BE = 'bloom-energy'
 #  valid_from, valid_to, status, evidence_level, econ, capa, sources, notes)
 R = [
  # ── 원재료 ────────────────────────────────────────────────────────
- ('scandium-undisclosed-bloom', 'undisclosed-scandium-suppliers', BE, 'SUPPLIES',
-  'MANUFACTURING_BOM', 'Raw material', '산화스칸듐', '원재료 공급사', '제조사',
+ ('scandium-src-oxide', 'undisclosed-scandium-suppliers', 'scandium-oxide', 'SUPPLIES',
+  'MANUFACTURING_BOM', 'Raw material', '산화스칸듐', '원재료 공급사', '원재료',
   None, None, 'ACTIVE', 'UNDISCLOSED', 'LOW', 'HIGH', ['be_scandium_blog'],
-  '복수국 복수 업체라고만 공개. 업체명·물량·조달 전략 비공개'),
- ('zirconia-bloom', 'zirconium-oxide', BE, 'SUPPLIES', 'MANUFACTURING_BOM', 'Raw material',
-  '산화지르코늄', '원재료', '제조사', None, None, 'ACTIVE', 'UNDISCLOSED', 'LOW', 'HIGH',
-  ['be_scandium_blog'], '초박형 세라믹 기판의 기반 물질. 벤더 비공개'),
+  '복수국 복수 업체라고만 공개. 업체명·물량·조달 전략 비공개. 산업 부산물 회수 기반'),
+ ('scandium-scsz', 'scandium-oxide', 'scsz-electrolyte', 'PROCESSED_INTO',
+  'MANUFACTURING_BOM', 'Material processing', '전해질 소재', '원재료', '소재',
+  None, None, 'ACTIVE', 'CONFIRMED', 'LOW', 'HIGH', ['be_scandium_blog'],
+  '지르코니아 기판에 산화스칸듐을 소량 넣는다'),
+ ('zirconia-scsz', 'zirconium-oxide', 'scsz-electrolyte', 'PROCESSED_INTO',
+  'MANUFACTURING_BOM', 'Material processing', '전해질 소재', '원재료', '소재',
+  None, None, 'ACTIVE', 'CONFIRMED', 'LOW', 'HIGH', ['be_scandium_blog'], None),
+ ('scsz-cctc', 'scsz-electrolyte', 'cctc', 'INPUT_TO', 'MANUFACTURING_BOM',
+  'Material processing', '전해질 세라믹 원료', '소재', '세라믹 공급사', None, None, 'ACTIVE',
+  'INFERRED', 'LOW', None, ['be_scandium_blog', 'cctc_yicai'],
+  '기판이 이 계열 소재라는 것은 확인되지만 이 공급사가 어디서 원료를 받는지는 공개되지 않았다'),
+ ('scsz-amosense', 'scsz-electrolyte', 'amosense', 'INPUT_TO', 'MANUFACTURING_BOM',
+  'Material processing', '전해질 세라믹 원료', '소재', '세라믹 공급사', '2026-01-01', None,
+  'ACTIVE', 'INFERRED', 'LOW', None, ['be_scandium_blog', 'sedaily_kr_suppliers'], None),
+ ('crfe-porite', 'cr-fe-alloy', 'porite-taiwan', 'SUPPLIES', 'MANUFACTURING_BOM',
+  'Raw material', '크롬 합금 모재', '원재료', '부품 공급사', None, None, 'ACTIVE',
+  'INFERRED', 'LOW', None, ['cw_porite_2024'],
+  '플레이트가 크롬 합금이라는 것만 확인된다. 합금 공급사는 모른다'),
  # ── 운영 투입 (제조 BOM 아님) ─────────────────────────────────────
  ('natgas-bloom-fleet', 'natural-gas', BE, 'FUELS', 'OPERATIONAL_INPUT', 'Operational input',
   '설치된 Energy Server 연료', '연료', '운영자', None, None, 'ACTIVE', 'CONFIRMED',
@@ -62,13 +77,18 @@ R = [
   'INFERRED', None, None, ['cw_porite_2024'],
   '2024 취재의 「캐나다 공급사」 후보. 공동 특허가 근거이며 현재 점유율은 모른다'),
  ('plusmetal-bloom-coating', 'plus-metal-tech', BE, 'SUPPLIES', 'MANUFACTURING_BOM',
-  'Interconnect', '인터커넥트 표면 코팅·관련 플레이트', '부품 공급사', '제조사', None, None,
+  'Interconnect', '인터커넥트 표면 코팅·관련 플레이트', '표면 처리', '제조사', None, None,
   'ACTIVE', 'CONFIRMED', 'MEDIUM', None, ['be_10k_fy2025'], None),
+ ('porite-plusmetal', 'porite-taiwan', 'plus-metal-tech', 'FEEDS', 'MANUFACTURING_BOM',
+  'Interconnect', '플레이트 표면 처리 공정', '플레이트 제조', '표면 처리', None, None,
+  'UNKNOWN', 'INFERRED', None, None, ['be_10k_fy2025', 'cw_porite_2024'],
+  '두 회사가 같은 계통에 있다는 것까지만 확인된다. 누가 누구에게 넘기는지는 공개 문장이 없다'),
  # ── 핫박스 ────────────────────────────────────────────────────────
  ('mtar-bloom-hotbox', 'mtar-technologies', BE, 'SUPPLIES', 'MANUFACTURING_BOM', 'Hotbox',
   '핫박스·파워유닛·판금 어셈블리·인클로저·ASP 어셈블리', '전략 제조 파트너', '제조사',
   '2024-01-01', None, 'ACTIVE', 'CONFIRMED', 'HIGH', 'HIGH', ['mtar_ar_fy2425', 'mtar_ar_fy2024'],
-  '전해조 유닛은 단독 공급으로 설명된다. 인클로저·하네스가 섞여 기계 계통과 겹칠 수 있다'),
+  '전해조 유닛은 단독 공급으로 설명된다. 인클로저·하네스가 섞여 기계 계통과 겹칠 수 있다',
+  'HIGH'),
  ('kaori-bloom-hotbox', 'kaori-heat-treatment', BE, 'SUPPLIES', 'MANUFACTURING_BOM', 'Hotbox',
   '핫박스·반응박스', '부품 공급사', '제조사', None, None, 'ACTIVE', 'CONFIRMED',
   'HIGH', 'HIGH', ['kgi_kaori_2024'],
@@ -266,6 +286,12 @@ TIER = {
  'bloom-be24c3': 'CONTRACTUAL_CUSTOMER',
  'bloom-be26c1': 'CONTRACTUAL_CUSTOMER',
 }
+SRC_TIER = {
+ 'scandium-src-oxide': 'RAW_MATERIAL', 'crfe-porite': 'RAW_MATERIAL',
+ 'scandium-scsz': 'MATERIAL_PROCESSING', 'zirconia-scsz': 'MATERIAL_PROCESSING',
+ 'scsz-cctc': 'MATERIAL_PROCESSING', 'scsz-amosense': 'MATERIAL_PROCESSING',
+ 'porite-plusmetal': 'COMPONENT_SUPPLIER',
+}
 DIRECT_END_USER = ['bloom-equinix', 'bloom-nebius', 'bloom-coreweave', 'bloom-intel',
                    'bloom-att', 'bloom-verizon', 'bloom-quanta', 'bloom-walmart',
                    'bloom-homedepot', 'bloom-ferrari', 'bloom-fedex']
@@ -280,6 +306,9 @@ def rel(t):
             'status': t[11], 'evidence_level': t[12],
             'economic_importance': t[13], 'capacity_criticality': t[14],
             'target_tier': TIER.get(t[0]) if t[4] == 'DOWNSTREAM' else None,
+            'source_tier': (SRC_TIER.get(t[0], 'COMPONENT_SUPPLIER')
+                            if t[4] == 'MANUFACTURING_BOM' else None),
+            'integration_criticality': t[17] if len(t) > 17 else None,
             'confidence_band': {'CONFIRMED': 'high', 'ESTIMATED': 'medium'}.get(t[12], 'low'),
             'flows': [], 'source_ids': t[15], 'notes': t[16]}
 

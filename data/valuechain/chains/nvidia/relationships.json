@@ -18,7 +18,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다"
+  "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r002",
@@ -39,7 +40,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r003",
@@ -60,7 +62,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다"
+  "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r004",
@@ -81,7 +84,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r005",
@@ -102,7 +106,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r006",
@@ -123,7 +128,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r007",
@@ -144,7 +150,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r008",
@@ -441,7 +448,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다"
+  "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r037",
@@ -462,7 +470,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r038",
@@ -483,7 +492,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r039",
@@ -504,7 +514,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r040",
@@ -525,7 +536,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r041",
@@ -546,7 +558,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다"
+  "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r042",
@@ -567,7 +580,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r043",
@@ -630,7 +644,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r050",
@@ -672,7 +687,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r052",
@@ -693,7 +709,8 @@
   "status": "ACTIVE",
   "evidence_level": "INFERRED",
   "confidence_band": "low",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r053",
@@ -926,7 +943,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다"
+  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r108",
@@ -946,7 +964,8 @@
   "status": "ACTIVE",
   "evidence_level": "ESTIMATED",
   "confidence_band": "medium",
-  "notes": null
+  "notes": null,
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r109",
@@ -1029,7 +1048,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "AI 클라우드 쪽이 일방적으로 공급을 끊고 제3자에게 더 좋은 값에 팔 수 있는 구조다"
+  "notes": "AI 클라우드 쪽이 일방적으로 공급을 끊고 제3자에게 더 좋은 값에 팔 수 있는 구조다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r113",
@@ -1114,7 +1134,8 @@
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
   "confidence_band": "high",
-  "notes": "8-K 에 NVIDIA 가 2032-04-13 까지 잔여 용량을 사야 한다고 적혀 있다"
+  "notes": "8-K 에 NVIDIA 가 2032-04-13 까지 잔여 용량을 사야 한다고 적혀 있다",
+  "source_tier": "COMPONENT_SUPPLIER"
  },
  {
   "id": "r204",
