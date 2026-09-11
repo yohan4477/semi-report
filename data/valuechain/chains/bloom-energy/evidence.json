@@ -1072,11 +1072,11 @@
  },
  {
   "id": "be-e120",
-  "relationship_id": "oracle-jupiter",
+  "relationship_id": "jupiter-oracle",
   "metric_id": null,
   "source_id": "oracle_jupiter",
   "evidence_type": "direct",
-  "evidence": "최대 2.45GW 계획",
+  "evidence": "최대 2.45GW 계획. 오라클은 이 부지의 사용자이지 블룸의 계약상 구매자가 아니다",
   "hypothesis_id": null
  },
  {

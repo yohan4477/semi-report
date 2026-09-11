@@ -1558,7 +1558,7 @@
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "target_tier": "END_USER",
   "source_tier": null,
   "integration_criticality": null,
   "confidence_band": "high",
@@ -1570,22 +1570,22 @@
   "notes": "SEC 가 오라클 워런트를 「고객의 고객」 대가로 회계처리한다. 계약상 구매 주체라는 직접 근거는 없다"
  },
  {
-  "id": "oracle-jupiter",
-  "source_entity": "oracle",
-  "target_entity": "project-jupiter",
-  "relationship_type": "DEPLOYS_AT",
+  "id": "jupiter-oracle",
+  "source_entity": "project-jupiter",
+  "target_entity": "oracle",
+  "relationship_type": "END_USER_DEPLOYMENT",
   "lane": "DOWNSTREAM",
-  "subsystem": "Project",
-  "component": "뉴멕시코 연료전지 마이크로그리드 부지",
-  "source_role": "최종 사용자",
-  "target_role": "프로젝트",
+  "subsystem": "Data center",
+  "component": "뉴멕시코 연료전지 마이크로그리드 전력",
+  "source_role": "프로젝트",
+  "target_role": "최종 사용자",
   "valid_from": "2026-04-27",
   "valid_to": null,
   "status": "PLANNED",
   "evidence_level": "CONFIRMED",
   "economic_importance": null,
   "capacity_criticality": null,
-  "target_tier": "PROJECT",
+  "target_tier": "END_USER",
   "source_tier": null,
   "integration_criticality": null,
   "confidence_band": "high",
@@ -1593,7 +1593,7 @@
   "source_ids": [
    "oracle_jupiter"
   ],
-  "notes": "최대 2.45GW 계획"
+  "notes": "최대 2.45GW 계획. 오라클은 이 부지의 사용자이지 블룸의 계약상 구매자가 아니다"
  },
  {
   "id": "bloom-jupiter",

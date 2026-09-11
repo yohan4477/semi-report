@@ -749,8 +749,9 @@ function addRelNode(ctx, r, nid, host, up, year){
       kind:'ent', col: colOfRel(r, up),
       sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
       isNew: on0 && fy0 === year && fy0 !== YEARS[0],
-      more: hasMore(eid, up) && ctx.open.indexOf('e|' + eid) < 0,
-      ref:{ kind:'rel', id:r.id, entity: eid } } });
+      more: hasMore(eid, up)
+            && ctx.open.indexOf('e|' + eid + '|' + (up ? 'up' : 'down')) < 0,
+      ref:{ kind:'rel', id:r.id, entity: eid, up: up } } });
     ctx.byEnt[eid] = nid;
     have = nid;
   }
@@ -771,7 +772,7 @@ function addRelNode(ctx, r, nid, host, up, year){
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
 // 한 상자를 누르면 그 상자의 다음 한 칸만 열린다. 저절로 번지지 않는다
 function chainDown(ctx, eid, host, year, open, seen){
-  if (seen[eid] || open.indexOf('e|' + eid) < 0) return;
+  if (seen[eid] || open.indexOf('e|' + eid + '|down') < 0) return;
   seen[eid] = 1;
   relsOf(eid).forEach(function(r){
     if (r.source_entity !== eid || r.lane !== 'DOWNSTREAM') return;
@@ -782,7 +783,7 @@ function chainDown(ctx, eid, host, year, open, seen){
 
 // 05 §16 — 공급사를 전부 중심에 바로 붙이지 않는다. 확인된 만큼만 위로 올라간다
 function chainUp(ctx, eid, host, year, open, seen){
-  if (seen[eid] || open.indexOf('e|' + eid) < 0) return;
+  if (seen[eid] || open.indexOf('e|' + eid + '|up') < 0) return;
   seen[eid] = 1;
   relsOf(eid).forEach(function(r){
     if (r.target_entity !== eid || r.lane !== 'MANUFACTURING_BOM') return;
@@ -801,7 +802,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
   relsOf(focal).forEach(function(r){
     if (r.target_tier === 'REVENUE_TYPE' && r.source_entity === focal) return;
     var up = r.target_entity === focal;
-    var key = (up ? 'u:' : 'd:') + (r.subsystem || LANE_KO[r.lane] || '기타');
+    var key = (up ? 'u:' : 'd:') + r.lane + ':' + (r.subsystem || LANE_KO[r.lane] || '기타');
     (groups[key] = groups[key] || { up: up, key: r.subsystem || '기타',
                                     label: subKo(r.subsystem) || LANE_KO[r.lane] || '기타',
                                     lane: r.lane, rels: [] }).rels.push(r);
@@ -976,7 +977,8 @@ function Drawer(p){
             h('td', { key:1 }, withFlag(other)),
             h('td', { key:2 }, r.component || '—'),
             h('td', { key:3 }, shareLabel(r.id, year) || '—'),
-            h('td', { key:5 }, TIER_KO[r.source_tier || r.target_tier] || '—'),
+            h('td', { key:5 },
+              TIER_KO[ref.up ? r.source_tier : r.target_tier] || '—'),
             h('td', { key:4 }, h('span', {
               className:'badge' + (r.evidence_level === 'CONFIRMED' ? '' : ' est') },
               EV_KO[r.evidence_level])) ]);
@@ -1026,7 +1028,8 @@ function Drawer(p){
         h('div', { key:5 }, '역할'),
         h('div', { key:6 }, (r.source_role || '—') + ' → ' + (r.target_role || '—')),
         h('div', { key:'t1' }, '사슬 층'),
-        h('div', { key:'t2' }, TIER_KO[r.source_tier || r.target_tier] || '—'),
+        h('div', { key:'t2' },
+          TIER_KO[eid === r.source_entity ? r.source_tier : r.target_tier] || '—'),
         h('div', { key:7 }, '기간'),
         h('div', { key:8 }, (r.valid_from || '?') + ' ~ ' + (r.valid_to || '현재')),
         h('div', { key:9 }, '근거'), h('div', { key:10 }, [
@@ -1213,10 +1216,21 @@ function Evidence(){
 var TONE = ['#3d4557','#575f73','#6f7688','#888e9d','#a0a6b3','#b8bcc6','#cfd2d9'];
 function Bom(p){
   var ch = CHAINS[p.chain] || {};
-  var keys = Object.keys(ch.bom || {});
-  var fin = ch.financials || {};
+  // 자료의 주인(company)이 지금 중심과 같을 때만 쓴다.
+  // 사슬에 있다는 이유로 남의 원가를 이 회사 것처럼 붙이지 않는다
+  var keys = Object.keys(ch.bom || {}).filter(function(k){
+    return ch.bom[k].company === p.focal;
+  });
+  var fin = {};
+  Object.keys(ch.financials || {}).forEach(function(k){
+    if (ch.financials[k].company === p.focal) fin[k] = ch.financials[k];
+  });
   if (!keys.length && !Object.keys(fin).length)
-    return h('div', { className:'pane' }, '이 회사에는 원가 자료가 없다.');
+    return h('div', { className:'pane' }, [
+      h('h2', { key:'t' }, nm(p.focal) + ' — 원가 자료가 없다'),
+      h('p', { key:'n', className:'note' },
+        '이 회사 이름으로 된 BOM 이나 재무 앵커가 아직 없다. 다른 회사 것을 대신 보여 주지 않는다.')
+    ]);
   var b = keys.length ? ch.bom[keys[keys.length - 1]] : null;
   var sum = b ? b.components.reduce(function(a, c){ return a + c.central; }, 0) : 0;
   return h('div', { className:'pane' }, [
@@ -1390,7 +1404,8 @@ function App(){
     var ref = node.data.ref;
     if (ref.kind === 'grp') toggleGroup(ref.id);
     else if (ref.revtype) toggleGroup('rev|' + ref.entity);
-    else if (ref.entity) toggleGroup('e|' + ref.entity);
+    else if (ref.entity)
+      toggleGroup('e|' + ref.entity + '|' + (ref.up ? 'up' : 'down'));
     setSel(ref); setDrw(true);
   }
   function drill(subsystem){
@@ -1434,7 +1449,8 @@ function App(){
     h('div', { key:'sp', className:'spacer' }),
     h('button', { key:'f', className:'btn' + (focusOn ? ' on' : ''),
       onClick: function(){ setFocusOn(!focusOn); } }, '포커스'),
-    mode === 'current' ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
+    (mode === 'current' || mode === 'timeline')
+      ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
       onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
   ]);
 
@@ -1510,12 +1526,14 @@ function App(){
     (mode === 'current' || mode === 'timeline') ? scrub : null,
     h('div', { key:'m', className:'main' }, [
       body,
-      (mode === 'current' && drw) ? h(Drawer, { key:'d', sel:sel, year:year, onSel:setSel,
+      ((mode === 'current' || mode === 'timeline') && drw)
+        ? h(Drawer, { key:'d', sel:sel, year:year, onSel:setSel,
         onClose: function(){ setDrw(false); },
         onFocus: goFocal,
         onTimeline: function(id){ goFocal(id); setMode('timeline'); },
         onExpand: function(id, dir){
-          setOpen(function(o){ return o.indexOf('e|' + id) >= 0 ? o : o.concat(['e|' + id]); });
+          var k = 'e|' + id + '|' + dir;
+          setOpen(function(o){ return o.indexOf(k) >= 0 ? o : o.concat([k]); });
           setExpanded(function(x){
             var y = Object.assign({}, x); y[id + '@' + dir] = 1; return y;
           });
