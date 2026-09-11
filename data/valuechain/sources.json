@@ -848,5 +848,165 @@
   "url": null,
   "accessed_date": "2026-09-11",
   "note": "IT Infrastructure/Industrial 27% 가운데 AI 비중을 40/50/60%로 가정하면 회사 매출 노출은 10.8/13.5/16.2%. 시나리오일 뿐 공식치가 아니다(원표기: ESTIMATED, 시점 FY2027 Q1 vicinity)"
+ },
+ {
+  "id": "tarifflo_q1_2026",
+  "publisher": "Tarifflo",
+  "title": "Bloom 1분기 공급사 통관 스냅샷",
+  "source_type": "trade_data",
+  "published_date": "2026 Q1",
+  "url": "https://www.tarifflo.com/trade-data/bloom-energy-15e60e",
+  "accessed_date": "2026-09-11",
+  "note": "공급사 수와 선적 건수다. 금액 비중이 아니다"
+ },
+ {
+  "id": "importinfo_bloom_list",
+  "publisher": "ImportInfo",
+  "title": "Bloom 수입자 공급사 목록",
+  "source_type": "trade_data",
+  "published_date": "2026-09",
+  "url": "https://www.importinfo.com/bloom-energy-corporation",
+  "accessed_date": "2026-09-11",
+  "note": "2026 년 8~9월까지 활동. 선적 건수는 금액 비중이 아니다"
+ },
+ {
+  "id": "importgenius_bloom_hist",
+  "publisher": "ImportGenius",
+  "title": "Bloom 수입 이력",
+  "source_type": "trade_data",
+  "published_date": "2026-09",
+  "url": "https://www.importgenius.cn/importers/bloom-energy-corporation",
+  "accessed_date": "2026-09-11",
+  "note": "MTAR·Kaori·산미나·캐벨·둥관자펑이 최근까지 나온다"
+ },
+ {
+  "id": "customs_jiafeng_2026",
+  "publisher": "Seair",
+  "title": "둥관자펑 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.seair.co.in/us-import/i-bloom-energy-bldg/e-dongguan-jiafeng-mechanical-equipme.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "CM1 빌드베이스 키트·측면 패널·워터 스키드 접합 조립품 직접 선적"
+ },
+ {
+  "id": "customs_cumi_2026",
+  "publisher": "Seair",
+  "title": "CUMI 엔지니어링 세라믹 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.seair.co.in/us-import/product-engineering/i-bloom-energy-3way-logistics-ftz.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "Bloom 3Way Logistics FTZ 로 반복 선적"
+ },
+ {
+  "id": "customs_mingrui_2026",
+  "publisher": "Mati Logistics",
+  "title": "융저우밍루이 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.matilogistics.com/supplier/yongzhou-mingrui-ceramic-technology",
+  "accessed_date": "2026-09-11",
+  "note": "기술 세라믹 플레이트 선적의 매입자가 Bloom 이다. 어느 계통에 쓰이는지는 안 나온다"
+ },
+ {
+  "id": "be_coreweave_2024",
+  "publisher": "Bloom Energy",
+  "title": "Bloom·코어위브 파트너십 발표",
+  "source_type": "primary_company",
+  "published_date": "2024-07-16",
+  "url": "https://www.bloomenergy.com/news/bloom-energy-and-coreweave-partner-to-revolutionize-ai-data-center-power-solutions/",
+  "accessed_date": "2026-09-11",
+  "note": "치리사가 가진 일리노이 볼로 부지에서 코어위브가 쓴다"
+ },
+ {
+  "id": "equinix_own_2025",
+  "publisher": "Equinix",
+  "title": "에퀴닉스 자체 발표",
+  "source_type": "primary_company",
+  "published_date": "2025-08-14",
+  "url": "https://investor.equinix.com/news-events/press-releases/detail/1079/equinix-collaborates-with-leading-alternative-energy",
+  "accessed_date": "2026-09-11",
+  "note": "100MW 를 넘는 블룸 계약을 에퀴닉스가 직접 확인한다"
+ },
+ {
+  "id": "be_conflict_minerals_2025",
+  "publisher": "Bloom Energy",
+  "title": "2025 분쟁광물 보고서 (Form SD 별지 1.01)",
+  "source_type": "primary_official",
+  "published_date": "2026-06-01",
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000119312526251628/d61094dex101.htm",
+  "accessed_date": "2026-09-11",
+  "note": "2026-04-23 기준 실사 대상 공급사 136곳. 3TG 실사 분모이지 1차 협력사 총수가 아니다"
+ },
+ {
+  "id": "customs_cypress_2026",
+  "publisher": "ImportKey",
+  "title": "사이프러스 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026-09",
+  "url": "https://importkey.com/i/cypress-industries-india-pvt-ltd",
+  "accessed_date": "2026-09-11",
+  "note": "2026 년 9월 와이어 하네스 직접 선적"
+ },
+ {
+  "id": "customs_unicorn_2026",
+  "publisher": "ImportInfo·Seair",
+  "title": "유니콘 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026-09",
+  "url": "https://www.importinfo.com/unicorn-insulations-sdn-bhd",
+  "accessed_date": "2026-09-11",
+  "note": "미세다공 단열재 직접 선적. 관계가 살아 있다"
+ },
+ {
+  "id": "customs_wolfe_2026",
+  "publisher": "Seair",
+  "title": "울프 엔지니어링 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2025-2026",
+  "url": "https://www.seair.co.in/us-import/product-exhaust/e-wolfe-engineering-shanghai-co-limited.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "발전기 배기관 직접 선적"
+ },
+ {
+  "id": "customs_thermocouple_2026",
+  "publisher": "Seair",
+  "title": "열전대 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.seair.co.in/us-import/product-thermocouple/i-bloom-energy.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "저장휘 춘후이와 오카자키의 열전대가 반복 선적된다"
+ },
+ {
+  "id": "thebell_hansun_2026",
+  "publisher": "더벨",
+  "title": "한선엔지니어링 블룸 글로벌 공급사 인증",
+  "source_type": "reputable_media",
+  "published_date": "2026-06-24",
+  "url": "https://www.thebell.co.kr/front/newsview.asp?code=0104&key=202606231744045760105369",
+  "accessed_date": "2026-09-11",
+  "note": "배관 모듈 공급사로 인증을 받았다"
+ },
+ {
+  "id": "be_mitac_2026",
+  "publisher": "Bloom Energy",
+  "title": "Bloom·마이택 파트너십 확대 발표",
+  "source_type": "primary_company",
+  "published_date": "2026-08-06",
+  "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Continues-to-Set-the-Standard-for-AI-Onsite-Power-with-Expanded-MiTAC-Partnership/default.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "프리몬트 AI 서버 캠퍼스에 섬형 마이크로그리드. 산호세 설치는 이미 있던 것"
+ },
+ {
+  "id": "customs_microsensor_2026",
+  "publisher": "Seair",
+  "title": "마이크로센서 통관 기록",
+  "source_type": "trade_data",
+  "published_date": "2026",
+  "url": "https://www.seair.co.in/us-import/i-bloom-energy-corp/e-micro-sensor-co-limited.aspx",
+  "accessed_date": "2026-09-11",
+  "note": "레벨 트랜스미터 직접 선적"
  }
 ]

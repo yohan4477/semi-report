@@ -562,12 +562,21 @@
   "relationship_id": "yongzhou-bloom-ceramic",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
-  "evidence_type": "indirect",
+  "evidence_type": "direct",
   "evidence": "전해질 기판과 분리한다. 어느 하위 계통에 쓰이는지는 추론",
   "hypothesis_id": null
  },
  {
   "id": "be-e064",
+  "relationship_id": "yongzhou-bloom-ceramic",
+  "metric_id": null,
+  "source_id": "customs_mingrui_2026",
+  "evidence_type": "direct",
+  "evidence": "전해질 기판과 분리한다. 어느 하위 계통에 쓰이는지는 추론",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e065",
   "relationship_id": "cumi-bloom-alumina",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -576,16 +585,25 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e065",
-  "relationship_id": "unicorn-bloom-insulation",
+  "id": "be-e066",
+  "relationship_id": "cumi-bloom-alumina",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
-  "evidence_type": "indirect",
-  "evidence": "",
+  "source_id": "customs_cumi_2026",
+  "evidence_type": "direct",
+  "evidence": "제품은 확인. 핫존 구조·단열 용도는 추론이며 실(seal) 공급사로 단정하지 않는다",
   "hypothesis_id": null
  },
  {
-  "id": "be-e066",
+  "id": "be-e067",
+  "relationship_id": "unicorn-bloom-insulation",
+  "metric_id": null,
+  "source_id": "customs_unicorn_2026",
+  "evidence_type": "direct",
+  "evidence": "2026 년 9월까지 직접 선적",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e068",
   "relationship_id": "porite-bloom-interconnect",
   "metric_id": null,
   "source_id": "cw_porite_2024",
@@ -594,7 +612,25 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e067",
+  "id": "be-e069",
+  "relationship_id": "porite-bloom-interconnect",
+  "metric_id": null,
+  "source_id": "porite_2026_note",
+  "evidence_type": "direct",
+  "evidence": "장기 공급사. 2024 의 50% 는 그 시점 관측일 뿐 현재 점유율이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e070",
+  "relationship_id": "porite-bloom-interconnect",
+  "metric_id": null,
+  "source_id": "customs_porite_2026",
+  "evidence_type": "direct",
+  "evidence": "장기 공급사. 2024 의 50% 는 그 시점 관측일 뿐 현재 점유율이 아니다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e071",
   "relationship_id": "stackpole-bloom-interconnect",
   "metric_id": null,
   "source_id": "cw_porite_2024",
@@ -603,7 +639,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e068",
+  "id": "be-e072",
+  "relationship_id": "stackpole-bloom-interconnect",
+  "metric_id": null,
+  "source_id": "patent_stackpole",
+  "evidence_type": "indirect",
+  "evidence": "2024 취재의 「캐나다 공급사」 후보. 공동 특허가 근거이며 현재 점유율은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e073",
   "relationship_id": "plusmetal-bloom-coating",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -612,25 +657,25 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e069",
+  "id": "be-e074",
   "relationship_id": "porite-plusmetal",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
-  "evidence_type": "indirect",
-  "evidence": "두 회사가 같은 계통에 있다는 것까지만 확인된다. 누가 누구에게 넘기는지는 공개 문장이 없다",
+  "evidence_type": "direct",
+  "evidence": "플레이트가 코팅 공정을 거친다. 04 의 ED028",
   "hypothesis_id": null
  },
  {
-  "id": "be-e070",
+  "id": "be-e075",
   "relationship_id": "porite-plusmetal",
   "metric_id": null,
   "source_id": "cw_porite_2024",
-  "evidence_type": "indirect",
-  "evidence": "두 회사가 같은 계통에 있다는 것까지만 확인된다. 누가 누구에게 넘기는지는 공개 문장이 없다",
+  "evidence_type": "direct",
+  "evidence": "플레이트가 코팅 공정을 거친다. 04 의 ED028",
   "hypothesis_id": null
  },
  {
-  "id": "be-e071",
+  "id": "be-e076",
   "relationship_id": "mtar-bloom-hotbox",
   "metric_id": null,
   "source_id": "mtar_ar_fy2425",
@@ -639,7 +684,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e072",
+  "id": "be-e077",
   "relationship_id": "mtar-bloom-hotbox",
   "metric_id": null,
   "source_id": "mtar_ar_fy2024",
@@ -648,7 +693,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e073",
+  "id": "be-e078",
   "relationship_id": "kaori-bloom-hotbox",
   "metric_id": null,
   "source_id": "kgi_kaori_2024",
@@ -657,7 +702,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e074",
+  "id": "be-e079",
+  "relationship_id": "kaori-bloom-hotbox",
+  "metric_id": null,
+  "source_id": "kaori_ar_fy2025",
+  "evidence_type": "direct",
+  "evidence": "MTAR 50~60% 의 나머지를 그대로 Kaori 몫으로 읽는 것은 보수적 추론일 뿐이다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e080",
   "relationship_id": "acbel-bloom-power",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -666,7 +720,16 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e075",
+  "id": "be-e081",
+  "relationship_id": "acbel-bloom-power",
+  "metric_id": null,
+  "source_id": "customs_acbel_2026",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e082",
   "relationship_id": "sanmina-bloom-converter",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -675,16 +738,25 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e076",
-  "relationship_id": "cypress-bloom-harness",
+  "id": "be-e083",
+  "relationship_id": "sanmina-bloom-converter",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
+  "source_id": "customs_sanmina_2026",
   "evidence_type": "direct",
-  "evidence": "",
+  "evidence": "AcBel·Sanmina·Bloom 인도를 단순히 더하면 부품과 조립과 통합이 겹쳐 이중계산된다",
   "hypothesis_id": null
  },
  {
-  "id": "be-e077",
+  "id": "be-e084",
+  "relationship_id": "cypress-bloom-harness",
+  "metric_id": null,
+  "source_id": "customs_cypress_2026",
+  "evidence_type": "direct",
+  "evidence": "2026 년 9월 직접 선적",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e085",
   "relationship_id": "bloomindia-bloom-power",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -693,7 +765,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e078",
+  "id": "be-e086",
   "relationship_id": "seojin-bloom-module",
   "metric_id": null,
   "source_id": "seojin_kind",
@@ -702,7 +774,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e079",
+  "id": "be-e087",
   "relationship_id": "seojin-bloom-module",
   "metric_id": null,
   "source_id": "sedaily_kr_suppliers",
@@ -711,34 +783,34 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e080",
+  "id": "be-e088",
   "relationship_id": "nash-bloom-enclosure",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
+  "source_id": "customs_nash_2026",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null
  },
  {
-  "id": "be-e081",
+  "id": "be-e089",
   "relationship_id": "texon-bloom-enclosure",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
+  "source_id": "customs_texon_2026",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null
  },
  {
-  "id": "be-e082",
+  "id": "be-e090",
   "relationship_id": "hansun-bloom-plumbing",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
+  "source_id": "thebell_hansun_2026",
   "evidence_type": "direct",
-  "evidence": "조달 점유율은 공개되지 않았다",
+  "evidence": "2026-06 블룸 글로벌 공급사 인증을 받았다. 조달 점유율은 공개되지 않았다",
   "hypothesis_id": null
  },
  {
-  "id": "be-e083",
+  "id": "be-e091",
   "relationship_id": "technoflex-bloom-exhaust",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -747,16 +819,133 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e084",
-  "relationship_id": "chunhui-bloom-thermocouple",
+  "id": "be-e092",
+  "relationship_id": "substrate-bloom",
+  "metric_id": null,
+  "source_id": "be_scandium_blog",
+  "evidence_type": "direct",
+  "evidence": "공급사가 아니라 기판이 블룸으로 들어간다. 04 의 ED026",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e093",
+  "relationship_id": "interconnect-bloom",
+  "metric_id": null,
+  "source_id": "cw_porite_2024",
+  "evidence_type": "indirect",
+  "evidence": "1MW 당 36~56만 달러로 잡은 원가 모형이다. 공급사 점유율이 아니다. 04 의 ED030",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e094",
+  "relationship_id": "hotbox-bloom",
+  "metric_id": null,
+  "source_id": "mtar_ar_fy2425",
+  "evidence_type": "indirect",
+  "evidence": "1MW 당 30~38만 달러로 잡은 원가 모형이다. 공급사 점유율이 아니다. 04 의 ED032",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e095",
+  "relationship_id": "power-bloom",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "1MW 당 20~30만 달러로 잡은 원가 모형이다. 04 의 ED035",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e096",
+  "relationship_id": "mechanical-bloom",
+  "metric_id": null,
+  "source_id": "be_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "1MW 당 8~15만 달러로 잡은 원가 모형이다. 04 의 ED052",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e097",
+  "relationship_id": "engceramics-bloom",
+  "metric_id": null,
+  "source_id": "customs_cumi_2026",
+  "evidence_type": "indirect",
+  "evidence": "어느 계통에 놓이는지는 아직 추론이다. 04 의 ED055",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e098",
+  "relationship_id": "ceramicplate-bloom",
+  "metric_id": null,
+  "source_id": "customs_mingrui_2026",
+  "evidence_type": "indirect",
+  "evidence": "어느 계통에 놓이는지는 아직 추론이다. 04 의 ED057",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e099",
+  "relationship_id": "jiafeng-mechanical",
+  "metric_id": null,
+  "source_id": "customs_jiafeng_2026",
+  "evidence_type": "direct",
+  "evidence": "조달 몫은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e100",
+  "relationship_id": "jiafeng-mechanical",
+  "metric_id": null,
+  "source_id": "importgenius_bloom_hist",
+  "evidence_type": "direct",
+  "evidence": "조달 몫은 모른다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e101",
+  "relationship_id": "wolfe-mechanical",
+  "metric_id": null,
+  "source_id": "customs_wolfe_2026",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e102",
+  "relationship_id": "lselectric-america",
+  "metric_id": null,
+  "source_id": "lselectric_kind",
+  "evidence_type": "direct",
+  "evidence": "공시 주체는 본사이고 북미 프로젝트를 맡는 것은 미국 법인이다. 04 의 ED036",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e103",
+  "relationship_id": "seojin-texon",
+  "metric_id": null,
+  "source_id": "texon_history",
+  "evidence_type": "direct",
+  "evidence": "04 의 ED046",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e104",
+  "relationship_id": "texon-vn",
+  "metric_id": null,
+  "source_id": "texon_history",
+  "evidence_type": "direct",
+  "evidence": "04 의 ED047",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e105",
+  "relationship_id": "chunhui-bloom-thermocouple",
+  "metric_id": null,
+  "source_id": "customs_thermocouple_2026",
   "evidence_type": "direct",
   "evidence": "통관 자료에서 반복 선적 확인",
   "hypothesis_id": null
  },
  {
-  "id": "be-e085",
+  "id": "be-e106",
   "relationship_id": "okazaki-bloom-thermocouple",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -765,7 +954,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e086",
+  "id": "be-e107",
   "relationship_id": "microsensor-bloom-level",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -774,7 +963,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e087",
+  "id": "be-e108",
   "relationship_id": "protechnic-bloom-fan",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -783,7 +972,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e088",
+  "id": "be-e109",
   "relationship_id": "coseus-bloom-equipment",
   "metric_id": null,
   "source_id": "coseus_kind",
@@ -792,7 +981,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e089",
+  "id": "be-e110",
   "relationship_id": "coseus-bloom-equipment",
   "metric_id": null,
   "source_id": "sedaily_kr_suppliers",
@@ -801,7 +990,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e090",
+  "id": "be-e111",
   "relationship_id": "lselectric-bloom-bop",
   "metric_id": null,
   "source_id": "lselectric_kind",
@@ -810,7 +999,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e091",
+  "id": "be-e112",
   "relationship_id": "lselectric-jupiter",
   "metric_id": null,
   "source_id": "lselectric_kind",
@@ -819,7 +1008,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e092",
+  "id": "be-e113",
   "relationship_id": "lselectric-jupiter",
   "metric_id": null,
   "source_id": "oracle_jupiter",
@@ -828,7 +1017,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e093",
+  "id": "be-e114",
   "relationship_id": "bloom-sk-jv",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -837,7 +1026,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e094",
+  "id": "be-e115",
   "relationship_id": "aep-aepohio",
   "metric_id": null,
   "source_id": "aep_ohio_release",
@@ -846,7 +1035,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e095",
+  "id": "be-e116",
   "relationship_id": "borderplex-jupiter",
   "metric_id": null,
   "source_id": "oracle_jupiter",
@@ -855,7 +1044,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e096",
+  "id": "be-e117",
   "relationship_id": "bloom-rev-product",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -864,7 +1053,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e097",
+  "id": "be-e118",
   "relationship_id": "bloom-rev-installation",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -873,7 +1062,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e098",
+  "id": "be-e119",
   "relationship_id": "bloom-rev-service",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -882,7 +1071,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e099",
+  "id": "be-e120",
   "relationship_id": "bloom-rev-electricity",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -891,7 +1080,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e100",
+  "id": "be-e121",
   "relationship_id": "bloom-rev-unallocated",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -900,7 +1089,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e101",
+  "id": "be-e122",
   "relationship_id": "brookfield-fundjv",
   "metric_id": null,
   "source_id": "be_brookfield_25b",
@@ -909,7 +1098,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e102",
+  "id": "be-e123",
   "relationship_id": "bloom-fundjv-sales",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -918,7 +1107,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e103",
+  "id": "be-e124",
   "relationship_id": "fundjv-spv",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -927,7 +1116,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e104",
+  "id": "be-e125",
   "relationship_id": "rev-install-fundjv",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -936,7 +1125,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e105",
+  "id": "be-e126",
   "relationship_id": "kdb-eternix-pf",
   "metric_id": null,
   "source_id": "be_sk_eternix_80mw",
@@ -945,7 +1134,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e106",
+  "id": "be-e127",
   "relationship_id": "southern-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -954,7 +1143,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e107",
+  "id": "be-e128",
   "relationship_id": "duke-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -963,7 +1152,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e108",
+  "id": "be-e129",
   "relationship_id": "exelon-bloom-legacy",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -972,7 +1161,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e109",
+  "id": "be-e130",
   "relationship_id": "bloom-skecoplant",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -981,7 +1170,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e110",
+  "id": "be-e131",
   "relationship_id": "bloom-skecoplant",
   "metric_id": null,
   "source_id": "be_sk_500mw_2023",
@@ -990,7 +1179,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e111",
+  "id": "be-e132",
   "relationship_id": "skecoplant-americas",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -999,7 +1188,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e112",
+  "id": "be-e133",
   "relationship_id": "bloom-eternix",
   "metric_id": null,
   "source_id": "be_sk_eternix_80mw",
@@ -1008,7 +1197,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e113",
+  "id": "be-e134",
   "relationship_id": "eternix-80mw-spv",
   "metric_id": null,
   "source_id": "be_sk_eternix_80mw",
@@ -1017,7 +1206,61 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e114",
+  "id": "be-e135",
+  "relationship_id": "be26c1-oracle",
+  "metric_id": null,
+  "source_id": "be_10qa_2026q2",
+  "evidence_type": "indirect",
+  "evidence": "상반기 44%·2분기 73% 를 오라클 몫으로 옮기지 않는다. 04 의 ED023",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e136",
+  "relationship_id": "be26c1-oracle",
+  "metric_id": null,
+  "source_id": "be_424b7_2026",
+  "evidence_type": "indirect",
+  "evidence": "상반기 44%·2분기 73% 를 오라클 몫으로 옮기지 않는다. 04 의 ED023",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e137",
+  "relationship_id": "bloom-mitac-fremont",
+  "metric_id": null,
+  "source_id": "be_mitac_2026",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e138",
+  "relationship_id": "mitac-fremont-site",
+  "metric_id": null,
+  "source_id": "be_mitac_2026",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e139",
+  "relationship_id": "bloom-mitac-sanjose",
+  "metric_id": null,
+  "source_id": "be_mitac_2026",
+  "evidence_type": "direct",
+  "evidence": "2026 확대 발표가 이미 있던 설치라고 적는다",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e140",
+  "relationship_id": "mitac-sanjose-site",
+  "metric_id": null,
+  "source_id": "be_mitac_2026",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e141",
   "relationship_id": "bloom-aep",
   "metric_id": null,
   "source_id": "be_aep_1gw",
@@ -1026,7 +1269,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e115",
+  "id": "be-e142",
   "relationship_id": "bloom-aep",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1035,7 +1278,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e116",
+  "id": "be-e143",
   "relationship_id": "aepohio-aws",
   "metric_id": null,
   "source_id": "aep_ohio_release",
@@ -1044,7 +1287,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e117",
+  "id": "be-e144",
   "relationship_id": "aepohio-cologix",
   "metric_id": null,
   "source_id": "aep_ohio_release",
@@ -1053,7 +1296,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e118",
+  "id": "be-e145",
   "relationship_id": "bloom-oracle",
   "metric_id": null,
   "source_id": "be_oracle_28gw",
@@ -1062,7 +1305,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e119",
+  "id": "be-e146",
   "relationship_id": "bloom-oracle",
   "metric_id": null,
   "source_id": "be_oracle_2025",
@@ -1071,7 +1314,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e120",
+  "id": "be-e147",
   "relationship_id": "jupiter-oracle",
   "metric_id": null,
   "source_id": "oracle_jupiter",
@@ -1080,7 +1323,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e121",
+  "id": "be-e148",
   "relationship_id": "bloom-jupiter",
   "metric_id": null,
   "source_id": "oracle_jupiter",
@@ -1089,7 +1332,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e122",
+  "id": "be-e149",
   "relationship_id": "bloom-equinix",
   "metric_id": null,
   "source_id": "be_equinix_100mw",
@@ -1098,7 +1341,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e123",
+  "id": "be-e150",
   "relationship_id": "bloom-nebius",
   "metric_id": null,
   "source_id": "nebius_be_328mw",
@@ -1107,16 +1350,34 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e124",
-  "relationship_id": "bloom-coreweave",
+  "id": "be-e151",
+  "relationship_id": "bloom-volo",
   "metric_id": null,
-  "source_id": "be_10k_fy2025",
+  "source_id": "be_coreweave_2024",
   "evidence_type": "direct",
-  "evidence": "공개된 설치 고객이다. 계약상 구매 주체라는 근거는 따로 없다",
+  "evidence": "블룸이 이 부지에 발전을 넣는다. 계약상 매입 주체는 따로 밝혀지지 않았다. 04 의 ED058",
   "hypothesis_id": null
  },
  {
-  "id": "be-e125",
+  "id": "be-e152",
+  "relationship_id": "chirisa-volo",
+  "metric_id": null,
+  "source_id": "be_coreweave_2024",
+  "evidence_type": "direct",
+  "evidence": "04 의 ED059",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e153",
+  "relationship_id": "coreweave-volo",
+  "metric_id": null,
+  "source_id": "be_coreweave_2024",
+  "evidence_type": "direct",
+  "evidence": "코어위브는 이 부지를 쓰는 쪽이다. 04 의 ED060",
+  "hypothesis_id": null
+ },
+ {
+  "id": "be-e154",
   "relationship_id": "bloom-intel",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1125,7 +1386,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e126",
+  "id": "be-e155",
   "relationship_id": "bloom-att",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1134,7 +1395,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e127",
+  "id": "be-e156",
   "relationship_id": "bloom-verizon",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1143,7 +1404,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e128",
+  "id": "be-e157",
   "relationship_id": "bloom-quanta",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1152,7 +1413,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e129",
+  "id": "be-e158",
   "relationship_id": "bloom-walmart",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1161,7 +1422,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e130",
+  "id": "be-e159",
   "relationship_id": "bloom-homedepot",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1170,7 +1431,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e131",
+  "id": "be-e160",
   "relationship_id": "bloom-ferrari",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1179,7 +1440,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e132",
+  "id": "be-e161",
   "relationship_id": "bloom-fedex",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1188,7 +1449,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e133",
+  "id": "be-e162",
   "relationship_id": "bloom-be24c2",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -1197,7 +1458,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e134",
+  "id": "be-e163",
   "relationship_id": "bloom-be24c3",
   "metric_id": null,
   "source_id": "be_10k_fy2024",
@@ -1206,7 +1467,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e135",
+  "id": "be-e164",
   "relationship_id": "bloom-be25c2",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1215,7 +1476,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e136",
+  "id": "be-e165",
   "relationship_id": "bloom-be25c3",
   "metric_id": null,
   "source_id": "be_10k_fy2025",
@@ -1224,7 +1485,7 @@
   "hypothesis_id": null
  },
  {
-  "id": "be-e137",
+  "id": "be-e166",
   "relationship_id": "bloom-be26c1",
   "metric_id": null,
   "source_id": "be_10q_2026q2",

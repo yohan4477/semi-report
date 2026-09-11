@@ -3766,5 +3766,167 @@
   ],
   "desc": null,
   "anon": false
+ },
+ {
+  "id": "dongguan-jiafeng",
+  "name": "Dongguan Jiafeng Mechanical Equipment",
+  "name_ko": "둥관자펑",
+  "entity_type": "company",
+  "legal_name": "Dongguan Jiafeng Mechanical Equipment",
+  "display_name": "둥관자펑",
+  "region": "China",
+  "parent_entity_id": null,
+  "primary_role": "Mechanical",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "CM1 빌드베이스 키트·패널·워터 스키드 접합 조립품. 조달 몫은 모른다",
+  "anon": false
+ },
+ {
+  "id": "wolfe-engineering-shanghai",
+  "name": "Wolfe Engineering (Shanghai) Co., Ltd.",
+  "name_ko": "울프 엔지니어링",
+  "entity_type": "company",
+  "legal_name": "Wolfe Engineering (Shanghai) Co., Ltd.",
+  "display_name": "울프 엔지니어링",
+  "region": "China",
+  "parent_entity_id": null,
+  "primary_role": "Mechanical",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "Mechanical"
+  ],
+  "desc": "발전기 배기관. 2025~2026 직접 선적",
+  "anon": false
+ },
+ {
+  "id": "chirisa",
+  "name": "Chirisa Technology Parks",
+  "name_ko": "치리사 테크놀로지 파크스",
+  "entity_type": "company",
+  "legal_name": "Chirisa Technology Parks",
+  "display_name": "치리사 테크놀로지 파크스",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Data center",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "일리노이 볼로 데이터센터 부지를 가진 곳이다",
+  "anon": false
+ },
+ {
+  "id": "volo-datacenter",
+  "name": "Volo, Illinois Data Center",
+  "name_ko": "볼로 데이터센터",
+  "entity_type": "project_spv",
+  "legal_name": "Volo, Illinois Data Center",
+  "display_name": "볼로 데이터센터",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "치리사가 갖고 코어위브가 쓰는 AI 데이터센터. 블룸 연료전지가 들어간다",
+  "anon": false
+ },
+ {
+  "id": "mitac-computing",
+  "name": "MiTAC Computing Technology Corp.",
+  "name_ko": "마이택 컴퓨팅",
+  "entity_type": "company",
+  "legal_name": "MiTAC Computing Technology Corp.",
+  "display_name": "마이택 컴퓨팅",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Data center",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Data center"
+  ],
+  "desc": "AI 서버를 만든다. 블룸 온사이트 발전을 쓴다",
+  "anon": false
+ },
+ {
+  "id": "mitac-fremont",
+  "name": "MiTAC Fremont AI Server Manufacturing Campus",
+  "name_ko": "마이택 프리몬트 캠퍼스",
+  "entity_type": "project_spv",
+  "legal_name": "MiTAC Fremont AI Server Manufacturing Campus",
+  "display_name": "마이택 프리몬트 캠퍼스",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "섬형 연료전지 마이크로그리드. 2026-08-06 발표",
+  "anon": false
+ },
+ {
+  "id": "mitac-sanjose",
+  "name": "MiTAC San Jose Manufacturing Facility",
+  "name_ko": "마이택 산호세 공장",
+  "entity_type": "project_spv",
+  "legal_name": "MiTAC San Jose Manufacturing Facility",
+  "display_name": "마이택 산호세 공장",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Project"
+  ],
+  "desc": "2026 확대 발표에 나오는 기존 설치 자리",
+  "anon": false
+ },
+ {
+  "id": "cmp-engineering-ceramics",
+  "name": "Engineering ceramics",
+  "name_ko": "엔지니어링 세라믹",
+  "entity_type": "material",
+  "legal_name": "Engineering ceramics",
+  "display_name": "엔지니어링 세라믹",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Other ceramic",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Other ceramic"
+  ],
+  "desc": "CUMI 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
+  "anon": false
+ },
+ {
+  "id": "cmp-ceramic-plate",
+  "name": "Technical ceramic plate / shim",
+  "name_ko": "기술 세라믹 플레이트·심",
+  "entity_type": "material",
+  "legal_name": "Technical ceramic plate / shim",
+  "display_name": "기술 세라믹 플레이트·심",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Other ceramic",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Other ceramic"
+  ],
+  "desc": "밍루이 선적을 받는 자리. 어느 계통에 놓이는지는 추론이다",
+  "anon": false
  }
 ]

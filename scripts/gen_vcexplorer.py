@@ -348,8 +348,11 @@ var COLS = [
 ];
 var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
+// 검사기가 쓰는 이름과 칸 이름이 한 글자씩 다르다. 같은 자리로 읽는다
+var TIER_ALIAS = { COMPONENT:'COMPONENT_SUPPLIER', SUBSYSTEM_MODULE:'SUBSYSTEM' };
 function colOfRel(r, up){
   var t = tierOf(r, up);
+  if (TIER_ALIAS[t]) t = TIER_ALIAS[t];
   if (t && COL_OF[t] !== undefined) return COL_OF[t];
   if (up) return COL_OF.MATERIAL_PROCESSING;
   // 층이 안 적힌 상대는 갈래를 보고 자리를 준다. BOM 은 타겟 왼쪽에 놓일
@@ -1149,7 +1152,13 @@ function Roster(p){
         h('tbody', { key:'b' }, view.map(function(r){
           return h('tr', { key:r.id, style:{ cursor:'pointer' },
             onClick: function(){ p.onPick(r.id); } }, [
-            h('td', { key:1 }, r.e.country || '—'),
+            h('td', { key:1 }, (function(){
+              var f = flagOf(r.id);
+              return f ? [h('span', { key:'f', className: flagCls(f),
+                                      title: flagTitle(f) }, f),
+                          h('span', { key:'c' }, r.e.country || '—')]
+                       : (r.e.country || '—');
+            })()),
             h('td', { key:2 }, nm(r.id)),
             h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
             h('td', { key:4 }, TYPE_KO[r.e.entity_type] || r.e.entity_type),

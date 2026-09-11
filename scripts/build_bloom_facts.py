@@ -381,6 +381,148 @@ CLAIMS = [
  ('clm-eternix-80mw', 'SK 에너닉스의 한국 프로젝트는 80MW 이고 산업은행이 금융을 주선했다.',
   'sk-eternix', 'bloom-energy', '2024-2025', 'CONFIRMED', 1.0, ['be_sk_eternix_80mw'],
   '충주 40MW + 대소원 40MW'),
+ # ── 03 Evidence & Sources CLM021~CLM052 추가분 ────────────────────
+ ('clm-be26c1-same-customer', '2026년 상반기 44% 고객과 2분기 73% 고객은 같은 익명 계약 고객이다.',
+  'be26_c1', 'bloom-energy', 'H1/Q2 2026', 'INFERRED', 0.8, ['be_10qa_2026q2'],
+  '상반기 44%는 약 7억 9,920만 달러, 2분기 73%는 약 7억 7,770만 달러다. 2분기 금액만으로도 '
+  '상반기 총액의 42.8%에 달해 별개 법인이라는 가정은 공시된 상반기 집중도와 맞지 않는다. '
+  '법인명은 여전히 비공개다. 03의 CLM021'),
+ ('clm-oracle-customers-customer',
+  '오라클은 전략적·상업적 계약 당사자이지만 SEC는 워런트 대가를 고객의 고객에게 지급하는 것으로도 분류한다.',
+  'oracle', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['be_10qa_2026q2', 'be_424b7_2026'],
+  '직접적 법률상 계약 상대방 증거 없이 오라클을 2분기 73% 계약 고객과 같다고 두지 않는다. '
+  '03의 CLM023'),
+ ('clm-project-equity-50m',
+  '블룸은 고객 프로젝트 계약과 관련한 제3의 비계열 법인에 묶인 5,000만 달러 규모 프로젝트 관련 지분투자를 기록했다.',
+  'bloom-energy', None, '2026-06-30', 'CONFIRMED', 0.8, ['be_10qa_2026q2'],
+  '프로젝트 법인·SPV 층의 존재 가능성을 뒷받침한다. 근거 없이 프로젝트 주피터 법인으로 특정하지 '
+  '않는다. 대응 개체 id를 목록에서 찾지 못해 object는 None으로 둔다. 03의 CLM024'),
+ ('clm-aepohio-aws-cologix',
+  'AEP 오하이오는 AWS와 콜로직스 시설에 블룸 연료전지를 현장 설치하며, AWS와 콜로직스가 장기 계약에 '
+  '따라 프로젝트 비용 전액을 부담한다.',
+  'aep-ohio', 'bloom-energy', '2025-현재', 'CONFIRMED', 0.8, ['aep_ohio_2025'],
+  'AEP 오하이오라는 중개·법인 층을 그대로 두는 경로가 정본이다. AWS와 콜로직스가 자동으로 블룸의 '
+  '직접 계약 고객이 되는 것은 아니다. 03의 CLM025'),
+ ('clm-kaori-4026pct',
+  '블룸에너지는 카오리히트트리트먼트의 2025년 순매출에서 신대만달러 26억 4,959만을 차지했으며, '
+  '이는 카오리 순매출의 40.26%에 해당한다.',
+  'kaori-heat-treatment', 'bloom-energy', 'FY2025', 'CONFIRMED', 0.8, ['kaori_ar_fy2025'],
+  '분모는 카오리의 2025 회계연도 순매출(신대만달러 65억 8,062만)이며, 블룸 핫박스 조달 점유율이 '
+  '아니다. 2024 회계연도 블룸 매출은 신대만달러 18억 7,352만으로 카오리 순매출의 28.47%였다. '
+  '03의 CLM026'),
+ ('clm-cctc-historical-2014', 'CCTC(차오저우 쓰리서클)와 블룸의 과거 직접 공급 관계는 1차 자료로 확인된다.',
+  'cctc', 'bloom-energy', '2012-2014', 'CONFIRMED', 0.8, ['cctc_ipo_2014'],
+  '블룸은 2014년 상반기 CCTC 매출의 9.54%를 차지한 1위 고객이었다. 관계와 제품 범위를 확인할 뿐 '
+  '2026년 75~80% 조달 점유율을 확인하지는 않는다. 03의 CLM027'),
+ ('clm-sanmina-direct', '산미나-SCI 인디아는 블룸에 직접 공급하는 EMS·정지형 컨버터 조립 협력사다.',
+  'sanmina-sci-india', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_sanmina_2026'],
+  '2026년 CCE CORVA·정지형 컨버터 선적이 반복 확인된다. 선적 건수를 조달 점유율로 환산할 수는 '
+  '없다. 03의 CLM028'),
+ ('clm-acbel-direct',
+  'AcBel폴리텍은 블룸에 직접 공급하는 전력전자 협력사이며, AcBel과 산미나 사이의 블룸 전용 하도급 '
+  '관계는 아직 확인되지 않았다.',
+  'acbel-polytech', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_acbel_2026'],
+  '드라이브 원표기는 「CONFIRMED direct relationship / UNDISCLOSED tier relation」, 신뢰도는 '
+  '「HIGH direct; UNKNOWN tier」다. 블룸 프로그램 단위 공급사 간 증거가 나오기 전까지 AcBel과 '
+  '산미나는 독립 노드로 둔다. 03의 CLM029'),
+ ('clm-nash-direct', '내시인더스트리스는 블룸에 직접 공급하는 기계·인클로저 협력사다.',
+  'nash-industries', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_nash_2026'],
+  'KPE/CM2 산타크루즈, CCE+1 인클로저 선적이 확인된다. 내시를 서진시스템 산하로 강제로 묶지 않는다. '
+  '위계는 아직 풀리지 않았다. 03의 CLM030'),
+ ('clm-texon-seojin', '텍슨은 서진시스템 계열사이며 블룸 인클로저를 직접 공급한다.',
+  'texon', 'bloom-energy', '2026', 'CONFIRMED', 0.8,
+  ['customs_texon_2026', 'texon_history', 'seojin_ar_2025'],
+  '텍슨의 블룸 선적을 서진시스템의 5,263.8만 달러 모듈 계약과 같은 범위·발주로 가정하지 않는다. '
+  '03의 CLM031'),
+ ('clm-stackpole-patent', '스택폴인터내셔널파우더메탈은 과거 블룸과 금속 인터커넥트를 공동 개발한 이력이 있다.',
+  'stackpole-intl', 'bloom-energy', '2014-2018', 'CONFIRMED', 0.8, ['patent_stackpole'],
+  '드라이브 원표기는 「CONFIRMED historical technical relationship / INFERRED current '
+  'supplier」, 신뢰도는 「HIGH historical; LOW-MEDIUM current supplier」다. 공동 특허가 2026년 '
+  '상업적 조달 점유율을 뒷받침하지는 않는다. 03의 CLM032'),
+ ('clm-porite-2026-active', '포라이트타이완의 현재 블룸 인터커넥트 플레이트 공급 관계는 2026년에도 이어진다.',
+  'porite-taiwan', 'bloom-energy', '2026', 'CONFIRMED', 0.8,
+  ['porite_2026_note', 'customs_porite_2026'],
+  '선적과 공식 공급사 발언으로 관계는 확인된다. 2024년 약 50% 조달 점유율은 '
+  'HISTORICAL_CURRENT_UNKNOWN 상태로 남으며, 관계가 살아 있다는 사실이 2026년 점유율을 확인해 '
+  '주지는 않는다. 03의 CLM033'),
+ ('clm-trade-snapshot-q1-2026',
+  '2026년 1분기 무역 스냅샷은 블룸의 폭넓은 공급 기반을 보여줄 뿐, 선적 건수는 조달 비중이 아니다.',
+  'bloom-energy', None, 'Q1 2026', 'CONFIRMED', 0.6, ['tarifflo_q1_2026'],
+  '드라이브 원표기는 「CONFIRMED trade-data snapshot」이다. 1분기 1차 협력사 53곳이 확인되며, '
+  '관계·활동 신호로만 쓰고 조달·지출 점유율로 쓰지 않는다. object는 특정 상대 법인이 없어 '
+  'None으로 둔다. 03의 CLM034'),
+ ('clm-jiafeng-direct', '둥관자펑기계설비는 블룸에 직접 공급하는 기계·패널 협력사다.',
+  'dongguan-jiafeng', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_jiafeng_2026'],
+  'CM1 빌드베이스 키트, 사이드패널, 워터스키드 인터페이스 조립품 직납이 확인된다. 조달 점유율은 '
+  '공개되지 않았다. 03의 CLM035'),
+ ('clm-cumi-direct', '카보런덤유니버설(CUMI)은 블룸에 직접 공급하는 엔지니어링 세라믹 협력사다.',
+  'cumi', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_cumi_2026'],
+  '드라이브 원표기는 「CONFIRMED product/relationship; exact SOFC function INFERRED」, 신뢰도는 '
+  '「HIGH relationship; LOW-MEDIUM function」이다. 실링 부품으로 분류하지 않으며, 핫존 구조·단열 '
+  '기능은 여전히 추정이다. 03의 CLM036'),
+ ('clm-mingrui-direct', '융저우밍루이세라믹테크놀로지는 블룸에 직접 공급하는 기술 세라믹판 협력사다.',
+  'yongzhou-mingrui', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_mingrui_2026'],
+  '드라이브 원표기는 「CONFIRMED relationship / INFERRED subsystem」, 신뢰도는 「HIGH '
+  'relationship; LOW-MEDIUM subsystem」이다. CCTC·AMOsense의 전해질 기판 공급과는 분리해 둔다. '
+  '03의 CLM037'),
+ ('clm-seojin-overseas-mfg',
+  '2026년 블룸 모듈 계약은 서진시스템 해외법인을 거쳐 생산되지만, KRX 공시는 실행 자회사를 특정하지 '
+  '않는다.',
+  'seojin-system', 'bloom-energy', '2026-07-15~2027-03-22', 'CONFIRMED', 0.8, ['seojin_kind'],
+  '드라이브 원표기는 「CONFIRMED production method / UNDISCLOSED executing subsidiary」다. '
+  '프로젝트별 증거 없이 텍슨이나 다른 명명된 자회사를 발주 실행처로 단정하지 않는다. 03의 CLM038'),
+ ('clm-coreweave-chirisa',
+  '블룸의 배치는 코어위브를 위한 것이며, 그 데이터센터는 일리노이주 볼로에서 치리사테크놀로지파크스가 '
+  '소유한다.',
+  'coreweave', 'bloom-energy', '2024-2025', 'CONFIRMED', 0.8, ['be_coreweave_2024'],
+  '최종 사용자·입주사인 코어위브와 부지 소유주인 치리사를 구분한다. 보도자료만으로는 블룸의 법적 '
+  '매수 주체가 아직 입증되지 않는다. 03의 CLM039'),
+ ('clm-3tg-136-suppliers',
+  '블룸에너지는 2026년 4월 23일 기준 3TG 실사 대상 협력사 136곳을 두었고, 136곳 모두 유효한 '
+  'CMRT를 제출했다.',
+  'bloom-energy', None, '2026-04-23', 'CONFIRMED', 0.8, ['be_conflict_minerals_2025'],
+  '분모는 분쟁광물 대상 협력사이며 전체 1차 상업 협력사 수가 아니다. 세관 관측 협력사 수와 직접 '
+  '비교하지 않는다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM043'),
+ ('clm-3tg-downstream',
+  '블룸에너지는 3TG를 하류에서 소비할 뿐 광산·제련소·정제소에서 원자재를 직접 구매하지 않는다.',
+  'bloom-energy', None, 'FY2025 보고 / 2026년 제출', 'CONFIRMED', 0.8,
+  ['be_conflict_minerals_2025'],
+  '원자재 → 하위 협력사 → 직접 부품·소재 협력사 → 블룸으로 이어지는 위계를 뒷받침한다. object에 '
+  '대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM044'),
+ ('clm-cypress-direct', '사이프러스인더스트리스인디아는 블룸에 직접 공급하는 배선하네스 협력사다.',
+  'cypress-industries', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_cypress_2026'],
+  '2026년 9월 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM045'),
+ ('clm-unicorn-direct', '유니콘인슐레이션스는 블룸에 직접 공급하는 단열재 협력사다.',
+  'unicorn-insulations', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_unicorn_2026'],
+  '미세다공성·열단열재 선적이 2026년 반복 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM046'),
+ ('clm-wolfe-direct', '울프엔지니어링상하이는 블룸에 배기관을 공급하는 협력사다.',
+  'wolfe-engineering-shanghai', 'bloom-energy', '2025-2026', 'CONFIRMED', 0.8,
+  ['customs_wolfe_2026'],
+  '발전기 배기관 선적이 확인된다. 기계·열 배기 역할이며 조달 점유율은 공개되지 않았다. '
+  '03의 CLM047'),
+ ('clm-thermocouple-direct', '저장춘후이와 오카자키제작소는 블룸에 열전대를 공급하는 협력사다.',
+  'zhejiang-chunhui', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_thermocouple_2026'],
+  '오카자키제작소(okazaki-mfg)도 함께 반복 직납이 확인된다. 선적 수량은 조달 점유율이 아니다. '
+  '03의 CLM048'),
+ ('clm-hansun-global-cert', '한선엔지니어링은 블룸의 글로벌 배관모듈 협력사다.',
+  'hansun-engineering', 'bloom-energy', '2026-06-24', 'CONFIRMED', 0.8, ['thebell_hansun_2026'],
+  'SOFC 배관모듈 글로벌 공급사 인증이 확인된다. 정확한 글로벌 조달 점유율은 비공개다. '
+  '03의 CLM049'),
+ ('clm-mitac-expanded',
+  '블룸과 미탁컴퓨팅테크놀로지의 확대된 협력은 프리몬트 AI서버 제조단지에 독립형 연료전지 마이크로그리드를 '
+  '더하고 기존 새너제이 설치를 발판 삼는다.',
+  'mitac-computing', 'bloom-energy', '2026-current', 'CONFIRMED', 0.8, ['be_mitac_2026'],
+  '캘리포니아 두 지점에 걸친 직접 협력·배치는 확인되나, 보도자료는 미탁 전체 지점의 정확한 계약 '
+  'MW를 밝히지 않는다. 03의 CLM050'),
+ ('clm-ai-infra-250mw',
+  '블룸에너지는 자사 AI 인프라 부문이 스무 곳 가까운 고객과 약 250MW에 걸쳐 있다고 밝혔다.',
+  'bloom-energy', None, '2026-08-06', 'CONFIRMED', 0.8, ['be_mitac_2026'],
+  '드라이브 원표기는 「CONFIRMED company statement」다. 분모는 블룸 AI 인프라 고객 부문이며, 블룸 '
+  '전체 배치나 총 백로그가 아니다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. '
+  '03의 CLM051'),
+ ('clm-microsensor-direct', '마이크로센서는 블룸에 직접 공급하는 레벨트랜스미터 협력사다.',
+  'micro-sensor', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_microsensor_2026'],
+  '2026년 반복 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM052'),
 ]
 
 
