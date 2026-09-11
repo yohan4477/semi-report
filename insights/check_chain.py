@@ -1,232 +1,186 @@
 # -*- coding: utf-8 -*-
-"""체인 추출물 — 줄 주소가 실재하는 줄을 가리키나, 사슬이 사슬 꼴인가.
+"""밸류체인 데이터 무결성 — data/valuechain 전부를 본다.
 
-    PYTHONIOENCODING=utf-8 python insights/check_chain.py
-
-왜 있나 — 체인 카드는 「어느 단계에 누가 있고 어디가 병목인가」를 말한다. 그 말의 근거는
-씨모어 전사 원문 한 줄뿐이라, 줄 주소가 빗나가면 카드 전체가 근거 없는 주장이 된다.
-2026-09-09 첫 추출에서 서브에이전트 열 기가 저마다 줄을 셌으므로 기계가 전수로 짚는다.
-
-규약
-  C1  L숫자~L숫자(또는 L숫자) 꼴이어야 한다. 떨어진 대목은 쉼표로 잇는다
-      — 「L71~L72, L107~L115」. 구간마다 따로 검사한다
-  C2  그 줄이 원문 파일에 실재해야 한다 (파일 끝 넘기면 FAIL)
-  C3  가리킨 구간이 전부 빈 줄이면 FAIL
-  C4  companies 의 name 이 그 구간 어딘가에 나와야 한다 (raw_name 도 본다) — 확인 필요
-  C5  stages 의 order 가 1부터 빈틈없이 이어져야 한다
-  C6  bottleneck 은 high|mid|low|"" 넷뿐. high 면 bottleneck_why 와 bottleneck_lines 가 있어야 한다
-  C7  chains 가 비지 않았으면 stages 가 둘 이상이어야 한다 (사슬은 마디가 둘부터)
-
-C4 는 자동 자막이 이름을 뭉개는 일이 잦아 FAIL 이 아니라 「확인 필요」로 센다.
+FAIL 0 이어야 푸시한다. 규칙은 docs/superpowers/specs/2026-09-11-밸류체인-인텔리전스-design.md §2.
+  C1 참조가 실재하나 (엔티티·관계·출처·방법)
+  C2 percent 에 분모가 붙었나
+  C3 관측에 기간과 기준일이 있나
+  C4 열거값이 정해진 것인가
+  C5 과거 관측이 CURRENT 로 올라왔나
+  C6 BOM 구성 합이 총액 범위 안인가
+  C7 수량 없는 계약에서 단가를 뽑았나
 """
-import glob, io, json, os, re, sys
-sys.stdout.reconfigure(encoding='utf-8')
+import io, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXTRACT = os.path.join(ROOT, 'insights', 'chains', 'extract', '*.json')
-RAWDIR = os.path.join(ROOT, 'content', 'understanding', '채널 씨모어', 'raw')
+DATA = os.path.join(ROOT, 'data', 'valuechain')
 
-LINE_RE = re.compile(r'^L(\d+)(?:~L(\d+))?$')
-_cache = {}
+ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv',
+                   'financial_institution', 'utility', 'end_user'])
+LANE = set(['MANUFACTURING_BOM', 'MANUFACTURING_EQUIPMENT', 'SITE_ELECTRICAL_BOP',
+            'OPERATIONAL_INPUT', 'DOWNSTREAM', 'CORPORATE'])
+EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
+                'HISTORICAL_CURRENT_UNKNOWN'])
+OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
+                  'NOT_YET_ACTIVE', 'UNKNOWN'])
+REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
+PCT = set(['%', 'percent'])
 
-
-def raw_lines(slug):
-    if slug not in _cache:
-        p = os.path.join(RAWDIR, slug + '.md')
-        if not os.path.exists(p):
-            _cache[slug] = None
-        else:
-            _cache[slug] = io.open(p, encoding='utf-8').read().split('\n')
-    return _cache[slug]
-
-
-def span(lines, ref):
-    """줄 주소를 실제 텍스트로 편다. (본문, 사유) — 사유가 있으면 결함.
-
-    떨어진 대목은 쉼표로 이어 짚는다. 원문이 같은 회사를 앞뒤로 나눠 말하는 일이 잦다
-    (제약 병목 회차는 단계 설명과 병목 판정이 예순 줄 떨어져 있다). 구간마다 따로 본다."""
-    if not (ref or '').strip():
-        return None, 'C1 줄 주소가 비었다'
-    out = []
-    for part in ref.split(','):
-        m = LINE_RE.match(part.strip())
-        if not m:
-            return None, 'C1 꼴이 아니다: %r' % ref
-        a = int(m.group(1))
-        b = int(m.group(2) or m.group(1))
-        if a < 1 or b < a:
-            return None, 'C1 번호가 거꾸로거나 0이다: %s' % part.strip()
-        if b > len(lines):
-            return None, 'C2 파일은 %d줄인데 %s 를 가리킨다' % (len(lines), part.strip())
-        out.append('\n'.join(lines[a - 1:b]))
-    body = '\n'.join(out)
-    if not body.strip():
-        return None, 'C3 빈 줄만 가리킨다: %s' % ref
-    return body, None
+fails = []
+warns = []
 
 
-def _extract():
-  fail, warn, ok, files, chains, stages_n = [], [], 0, 0, 0, 0
-  for path in sorted(glob.glob(EXTRACT)):
-      files += 1
-      name = os.path.basename(path)
-      try:
-          d = json.load(io.open(path, encoding='utf-8'))
-      except Exception as e:
-          fail.append((name, '', 'JSON 을 못 읽는다: %s' % e))
-          continue
-      slug = d.get('slug') or name[:-5]
-      lines = raw_lines(slug)
-      if lines is None:
-          fail.append((name, '', '원문 %s.md 가 없다' % slug))
-          continue
-
-      def cite(ref, where):
-          nonlocal ok
-          if not ref:
-              return
-          body, why = span(lines, ref)
-          if why:
-              fail.append((name, where, why))
-          else:
-              ok += 1
-          return body
-
-      for ci, ch in enumerate(d.get('chains') or []):
-          chains += 1
-          tag = '%s#%d' % (ch.get('chain_name', '?'), ci + 1)
-          cite(ch.get('chain_lines'), tag)
-          st = ch.get('stages') or []
-          if len(st) < 2:
-              fail.append((name, tag, 'C7 마디가 %d개다 — 사슬이 아니다' % len(st)))
-          orders = [s.get('order') for s in st]
-          if orders != list(range(1, len(st) + 1)):
-              fail.append((name, tag, 'C5 order 가 1..%d 가 아니다: %s' % (len(st), orders)))
-          for s in st:
-              stages_n += 1
-              w = '%s/%s' % (tag, s.get('name', '?'))
-              cite(s.get('lines'), w)
-              bn = s.get('bottleneck', '')
-              if bn not in ('high', 'mid', 'low', ''):
-                  fail.append((name, w, 'C6 bottleneck 값이 %r' % bn))
-              if bn == 'high':
-                  if not (s.get('bottleneck_why') or '').strip():
-                      fail.append((name, w, 'C6 high 인데 이유가 없다'))
-                  if not (s.get('bottleneck_lines') or '').strip():
-                      fail.append((name, w, 'C6 high 인데 줄 주소가 없다'))
-                  cite(s.get('bottleneck_lines'), w + '(병목)')
-              for c in s.get('companies') or []:
-                  body = cite(c.get('lines'), w + '/' + c.get('name', '?'))
-                  if body:
-                      nm = (c.get('name') or '').strip()
-                      rn = (c.get('raw_name') or '').strip()
-                      if nm and nm not in body and (not rn or rn not in body):
-                          warn.append((name, w, 'C4 「%s」가 그 줄에 없다 (%s)' % (nm, c.get('lines'))))
-
-  for f in fail:
-      print('FAIL %s [%s] %s' % f)
-  for w in warn:
-      print('확인필요 %s [%s] %s' % w)
-  print('---')
-  print('파일 %d · 체인 %d · 마디 %d · 짚은 줄 %d · FAIL %d · 확인필요 %d'
-        % (files, chains, stages_n, ok, len(fail), len(warn)))
-  return 1 if fail else 0
+def fail(where, msg):
+    fails.append(u'FAIL %s — %s' % (where, msg))
 
 
-# ── 정본 층 ──────────────────────────────────────────────────────────────
-#
-#   PYTHONIOENCODING=utf-8 python insights/check_chain.py --canon
-#
-# 정본은 회차 여럿을 한 사슬로 합친 것이라 근거가 여러 원문에 흩어진다. 그래서 줄 주소가
-# 홀로 서지 못하고 어느 원문의 줄인지를 달고 다닌다(refs = [{src, lines}, …]).
-# 규약은 추출층과 같되 셋이 더 붙는다.
-#
-#   N1  refs 는 비지 않는다. src 가 실재하는 원문 슬러그여야 한다
-#   N2  sources 에 없는 src 를 refs 가 부르면 FAIL — 어디서 왔는지 모르는 근거다
-#   N3  section 이 sections.py 에 있는 코드여야 하고, parent 가 있으면 그 정본이 실재해야 한다
+def warn(where, msg):
+    warns.append(u'WARN %s — %s' % (where, msg))
 
 
-def _canon():
-    sys.path.insert(0, os.path.join(ROOT, 'insights', 'chains'))
-    from sections import NAME_OF
-    CANON = os.path.join(ROOT, 'insights', 'chains', 'canon', '*.json')
-    f, w, n_ok, n_file, n_stage = [], [], 0, 0, 0
-    paths = sorted(glob.glob(CANON))
-    slugs = {os.path.basename(p)[:-5] for p in paths}
-    for path in paths:
-        n_file += 1
-        nm = os.path.basename(path)
-        try:
-            d = json.load(io.open(path, encoding='utf-8'))
-        except Exception as e:
-            f.append((nm, '', 'JSON 을 못 읽는다: %s' % e))
-            continue
-        if d.get('canon_slug') != nm[:-5]:
-            f.append((nm, '', 'canon_slug 가 파일명과 다르다: %r' % d.get('canon_slug')))
-        if d.get('section') not in NAME_OF:
-            f.append((nm, '', 'N3 sections.py 에 없는 섹션: %r' % d.get('section')))
-        par = (d.get('parent') or '').strip()
-        if par and par not in slugs:
-            f.append((nm, '', 'N3 parent 정본이 없다: %s' % par))
-        srcs = {s.get('src') for s in (d.get('sources') or [])}
-        if not srcs:
-            f.append((nm, '', 'sources 가 비었다'))
-        for one in ('chain_name', 'one_line'):
-            if not (d.get(one) or '').strip():
-                f.append((nm, '', '%s 가 비었다' % one))
+def load(path, default=None):
+    if not os.path.exists(path):
+        return default
+    with io.open(path, encoding='utf-8') as f:
+        return json.load(f)
 
-        def refs(rr, where):
-            if not rr:
-                f.append((nm, where, 'N1 refs 가 비었다'))
-                return None
-            body = []
-            for r in rr:
-                src = (r.get('src') or '').strip()
-                if src not in srcs:
-                    f.append((nm, where, 'N2 sources 에 없는 src: %r' % src))
+
+def chains():
+    d = os.path.join(DATA, 'chains')
+    if not os.path.isdir(d):
+        return []
+    return sorted(x for x in os.listdir(d) if os.path.isdir(os.path.join(d, x)))
+
+
+def main():
+    ents = load(os.path.join(DATA, 'entities.json'), []) or []
+    srcs = load(os.path.join(DATA, 'sources.json'), []) or []
+    meths = load(os.path.join(DATA, 'methods.json'), []) or []
+    E = {}
+    for e in ents:
+        if e['id'] in E:
+            fail('entities', u'%s 가 두 번 있다' % e['id'])
+        E[e['id']] = e
+        if e.get('entity_type') not in ENTITY_TYPE:
+            fail('entities/' + e['id'], u'entity_type 이 %r' % e.get('entity_type'))
+    S = {}
+    for s in srcs:
+        S[s['id']] = s
+        if not s.get('url'):
+            warn('sources/' + s['id'], u'url 이 없다')
+    M = dict((m['id'], m) for m in meths)
+    for m in meths:
+        if not m.get('steps'):
+            fail('methods/' + m['id'], u'steps 가 비었다')
+        for sid in m.get('source_ids') or []:
+            if sid not in S:
+                fail('methods/' + m['id'], u'없는 출처 %s' % sid)
+
+    for ch in chains():
+        base = os.path.join(DATA, 'chains', ch)
+        rels = load(os.path.join(base, 'relationships.json'), []) or []
+        obss = load(os.path.join(base, 'observations.json'), []) or []
+        evs = load(os.path.join(base, 'evidence.json'), []) or []
+        hyps = load(os.path.join(base, 'hypotheses.json'), []) or []
+        R = {}
+        for r in rels:
+            w = ch + '/' + r['id']
+            if r['id'] in R:
+                fail(w, u'관계 id 가 두 번 있다')
+            R[r['id']] = r
+            for k in ('source_entity', 'target_entity'):
+                if r.get(k) not in E:
+                    fail(w, u'%s 가 엔티티에 없다: %r' % (k, r.get(k)))
+            if r.get('lane') not in LANE:
+                fail(w, u'lane 이 %r' % r.get('lane'))
+            if r.get('evidence_level') not in EV_LEVEL:
+                fail(w, u'evidence_level 이 %r' % r.get('evidence_level'))
+            if r.get('status') not in REL_STATUS:
+                fail(w, u'status 가 %r' % r.get('status'))
+
+        O = {}
+        latest = {}
+        for o in obss:
+            w = ch + '/' + o['id']
+            O[o['id']] = o
+            if o.get('relationship_id') not in R:
+                fail(w, u'관계 %r 가 없다' % o.get('relationship_id'))
+            if not o.get('period'):
+                fail(w, u'period 가 없다')
+            if not o.get('as_of_date'):
+                fail(w, u'as_of_date 가 없다')
+            if o.get('unit') in PCT and not o.get('denominator'):
+                fail(w, u'%s 에 분모가 없다' % o.get('metric'))
+            if o.get('status') not in OBS_STATUS:
+                fail(w, u'status 가 %r' % o.get('status'))
+            if o.get('evidence_level') not in EV_LEVEL:
+                fail(w, u'evidence_level 이 %r' % o.get('evidence_level'))
+            if o.get('method_id') and o['method_id'] not in M:
+                fail(w, u'없는 방법 %s' % o['method_id'])
+            for sid in o.get('source_ids') or []:
+                if sid not in S:
+                    fail(w, u'없는 출처 %s' % sid)
+            key = (o.get('relationship_id'), o.get('metric'))
+            end = o.get('period_end') or o.get('as_of_date') or ''
+            if end > latest.get(key, ''):
+                latest[key] = end
+        for o in obss:
+            key = (o.get('relationship_id'), o.get('metric'))
+            end = o.get('period_end') or o.get('as_of_date') or ''
+            if o.get('status') == 'CURRENT' and end < latest.get(key, ''):
+                fail(ch + '/' + o['id'],
+                     u'더 늦은 관측이 있는데 CURRENT 다 (%s < %s)' % (end, latest[key]))
+
+        H = dict((x['id'], x) for x in hyps)
+        for e in evs:
+            w = ch + '/' + e['id']
+            if e.get('source_id') not in S:
+                fail(w, u'없는 출처 %r' % e.get('source_id'))
+            if e.get('metric_id') and e['metric_id'] not in O:
+                fail(w, u'없는 관측 %s' % e['metric_id'])
+            if e.get('hypothesis_id') and e['hypothesis_id'] not in H:
+                fail(w, u'없는 가설 %s' % e['hypothesis_id'])
+            if (not e.get('metric_id') and not e.get('hypothesis_id')
+                    and e.get('relationship_id') not in R):
+                fail(w, u'없는 관계 %r' % e.get('relationship_id'))
+        for x in hyps:
+            w = ch + '/' + x['id']
+            if x.get('anon_company_id') not in E:
+                fail(w, u'익명 엔티티 %r 가 없다' % x.get('anon_company_id'))
+            if x.get('candidate_company_id') not in E:
+                fail(w, u'후보 엔티티 %r 가 없다' % x.get('candidate_company_id'))
+
+        bdir = os.path.join(base, 'bom')
+        if os.path.isdir(bdir):
+            for fn in sorted(os.listdir(bdir)):
+                b = load(os.path.join(bdir, fn))
+                w = ch + '/bom/' + fn
+                tot = b.get('total')
+                if not tot or 'low' not in tot or 'high' not in tot:
+                    fail(w, u'total 범위가 없다')
                     continue
-                L = raw_lines(src)
-                if L is None:
-                    f.append((nm, where, 'N1 원문 %s.md 가 없다' % src))
-                    continue
-                b, why = span(L, r.get('lines'))
-                if why:
-                    f.append((nm, where, '%s (%s)' % (why, src)))
-                else:
-                    body.append(b)
-            return '\n'.join(body) if body else None
+                s = sum(c.get('central', 0) for c in b.get('components') or [])
+                if not (tot['low'] * 0.9 <= s <= tot['high'] * 1.1):
+                    fail(w, u'구성 합 %.3f 가 총액 범위 %.2f~%.2f 밖이다'
+                         % (s, tot['low'], tot['high']))
+                for c in b.get('components') or []:
+                    if c.get('evidence_level') not in EV_LEVEL:
+                        fail(w, u'%s 의 evidence_level 이 %r'
+                             % (c.get('id'), c.get('evidence_level')))
+                    if c.get('denominator') is None:
+                        fail(w, u'%s 에 분모가 없다' % c.get('id'))
 
-        st = d.get('stages') or []
-        if len(st) < 2:
-            f.append((nm, '', 'C7 마디가 %d개다 — 사슬이 아니다' % len(st)))
-        if [s.get('order') for s in st] != list(range(1, len(st) + 1)):
-            f.append((nm, '', 'C5 order 가 1..%d 가 아니다' % len(st)))
-        for s in st:
-            n_stage += 1
-            w2 = s.get('name', '?')
-            if refs(s.get('refs'), w2) is not None:
-                n_ok += 1
-            bn = s.get('bottleneck', '')
-            if bn not in ('high', 'mid', 'low', ''):
-                f.append((nm, w2, 'C6 bottleneck 값이 %r' % bn))
-            if bn == 'high':
-                if not (s.get('bottleneck_why') or '').strip():
-                    f.append((nm, w2, 'C6 high 인데 이유가 없다'))
-                refs(s.get('bottleneck_refs'), w2 + '(병목)')
-            for c in s.get('companies') or []:
-                body = refs(c.get('refs'), w2 + '/' + c.get('name', '?'))
-                if body:
-                    a, b = (c.get('name') or '').strip(), (c.get('raw_name') or '').strip()
-                    if a and a not in body and (not b or b not in body):
-                        w.append((nm, w2, 'C4 「%s」가 그 줄에 없다' % a))
-    for x in f:
-        print('FAIL %s [%s] %s' % x)
-    for x in w:
-        print('확인필요 %s [%s] %s' % x)
-    print('---')
-    print('정본 %d · 마디 %d · 짚은 마디 %d · FAIL %d · 확인필요 %d'
-          % (n_file, n_stage, n_ok, len(f), len(w)))
-    return 1 if f else 0
+        for o in obss:
+            if o.get('unit') in ('USD/MW', 'USD per MW') and not o.get('method_id'):
+                fail(ch + '/' + o['id'], u'$/MW 인데 방법이 없다')
+
+    for w in warns:
+        print(w)
+    for f in fails:
+        print(f)
+    print(u'FAIL %d / WARN %d' % (len(fails), len(warns)))
+    return 1 if fails else 0
 
 
-sys.exit(_canon() if '--canon' in sys.argv else _extract())
+if __name__ == '__main__':
+    sys.exit(main())

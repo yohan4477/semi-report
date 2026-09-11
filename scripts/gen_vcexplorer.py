@@ -14,8 +14,7 @@ import io, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
-TABLES = ['companies', 'relationships', 'relationship_metrics', 'sources', 'evidence',
-          'identity_hypotheses']
+FOCAL = 'nvidia'
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -739,29 +738,65 @@ ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(
 '''
 
 
-def build():
-    db = {}
-    for t in TABLES:
-        db[t] = json.load(io.open(os.path.join(DATA, t + '.json'), encoding='utf-8'))
+def load_chain(focal):
+    """새 구조(entities/sources/chains/<focal>/*)를 읽어 앱이 쓰는 옛 이름으로 되돌린다.
 
-    cids = set(c['id'] for c in db['companies'])
-    rids = set(r['id'] for r in db['relationships'])
-    sids = set(s['id'] for s in db['sources'])
-    mids = set(m['id'] for m in db['relationship_metrics'])
-    for r in db['relationships']:
-        assert r['source_company_id'] in cids and r['target_company_id'] in cids, r['id']
-    for m in db['relationship_metrics']:
-        assert m['relationship_id'] in rids, m['id']
-    hids = set(x['id'] for x in db['identity_hypotheses'])
-    for x in db['identity_hypotheses']:
-        assert x['anon_company_id'] in cids and x['candidate_company_id'] in cids, x['id']
-    for e in db['evidence']:
-        # 가설에만 붙는 근거는 관계를 갖지 않는다
-        assert e['relationship_id'] is None or e['relationship_id'] in rids, e['id']
-        assert e['source_id'] in sids, e['id']
-        assert e['relationship_id'] or e.get('hypothesis_id'), e['id']
-        assert e['metric_id'] is None or e['metric_id'] in mids, e['id']
-        assert e.get('hypothesis_id') is None or e['hypothesis_id'] in hids, e['id']
+    데이터 원본은 data/valuechain 이고 무결성은 insights/check_chain.py 가 본다.
+    """
+    def j(*parts):
+        return json.load(io.open(os.path.join(DATA, *parts), encoding='utf-8'))
+
+    base = ('chains', focal)
+    ents = j('entities.json')
+    rels = j(base[0], base[1], 'relationships.json')
+    obss = j(base[0], base[1], 'observations.json')
+    cos = []
+    for e in ents:
+        c = dict(e)
+        c.pop('entity_type', None)
+        c.pop('categories', None)
+        cos.append(c)
+    rr = []
+    for r in rels:
+        rr.append({
+            'id': r['id'],
+            'source_company_id': r['source_entity'],
+            'target_company_id': r['target_entity'],
+            'relationship_type': r['relationship_type'],
+            'category': r.get('subsystem'),
+            'product': r.get('component'),
+            'confidence': r.get('confidence_band'),
+            'notes': r.get('notes'),
+            'flows': r.get('flows') or [],
+        })
+    mm = []
+    for o in obss:
+        mm.append({
+            'id': o['id'],
+            'relationship_id': o['relationship_id'],
+            'period': o['period'],
+            'period_start': o.get('period_start'),
+            'period_end': o.get('period_end'),
+            'metric': o['metric'],
+            'value': o['value'],
+            'unit': o.get('unit'),
+            'basis': o.get('denominator'),
+            'estimate_type': ('disclosed' if o.get('evidence_level') == 'CONFIRMED'
+                              else 'derived'),
+            'method': o.get('method_note'),
+        })
+    return {
+        'companies': cos,
+        'relationships': rr,
+        'relationship_metrics': mm,
+        'sources': j('sources.json'),
+        'evidence': j(base[0], base[1], 'evidence.json'),
+        'identity_hypotheses': j(base[0], base[1], 'hypotheses.json'),
+    }
+
+
+def build(focal='nvidia'):
+    db = load_chain(focal)
 
     payload = json.dumps(db, ensure_ascii=False, separators=(',', ':'))
     scripts = '\n'.join('<script src="%s"></script>' % u for u in LIBS)

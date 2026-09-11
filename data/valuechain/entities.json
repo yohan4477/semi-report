@@ -11,7 +11,16 @@
   "company_type": "Fabless",
   "website": "https://www.nvidia.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "AI accelerator",
+   "AI infrastructure",
+   "Direct sales",
+   "Financing",
+   "Market platform",
+   "Systems"
+  ]
  },
  {
   "id": "tsmc",
@@ -25,7 +34,11 @@
   "company_type": "Foundry",
   "website": "https://www.tsmc.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Foundry"
+  ]
  },
  {
   "id": "asml",
@@ -39,7 +52,11 @@
   "company_type": "Equipment",
   "website": "https://www.asml.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Lithography"
+  ]
  },
  {
   "id": "samsung",
@@ -53,7 +70,11 @@
   "company_type": "IDM",
   "website": "https://semiconductor.samsung.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Foundry"
+  ]
  },
  {
   "id": "skhynix",
@@ -67,7 +88,11 @@
   "company_type": "Memory",
   "website": "https://www.skhynix.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Memory"
+  ]
  },
  {
   "id": "micron",
@@ -81,7 +106,11 @@
   "company_type": "Memory",
   "website": "https://www.micron.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Memory"
+  ]
  },
  {
   "id": "foxconn",
@@ -95,7 +124,11 @@
   "company_type": "EMS",
   "website": "https://www.honhai.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Assembly & Test"
+  ]
  },
  {
   "id": "wistron",
@@ -109,7 +142,11 @@
   "company_type": "ODM",
   "website": "https://www.wistron.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Assembly & Test"
+  ]
  },
  {
   "id": "fabrinet",
@@ -123,7 +160,11 @@
   "company_type": "EMS",
   "website": "https://www.fabrinet.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Assembly & Test"
+  ]
  },
  {
   "id": "zeiss",
@@ -137,7 +178,11 @@
   "company_type": "Component",
   "website": "https://www.zeiss.com/semiconductor-manufacturing-technology",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Optics"
+  ]
  },
  {
   "id": "cymer",
@@ -151,7 +196,11 @@
   "company_type": "Component",
   "website": "https://www.asml.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Light source"
+  ]
  },
  {
   "id": "trumpf",
@@ -165,7 +214,11 @@
   "company_type": "Component",
   "website": "https://www.trumpf.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Light source"
+  ]
  },
  {
   "id": "vdl",
@@ -179,7 +232,11 @@
   "company_type": "Component",
   "website": "https://www.vdlgroep.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Precision modules"
+  ]
  },
  {
   "id": "amat",
@@ -193,7 +250,11 @@
   "company_type": "Equipment",
   "website": "https://www.appliedmaterials.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Deposition & etch"
+  ]
  },
  {
   "id": "lam",
@@ -207,7 +268,11 @@
   "company_type": "Equipment",
   "website": "https://www.lamresearch.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Deposition & etch"
+  ]
  },
  {
   "id": "kla",
@@ -221,7 +286,11 @@
   "company_type": "Equipment",
   "website": "https://www.kla.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Metrology"
+  ]
  },
  {
   "id": "tel",
@@ -235,7 +304,11 @@
   "company_type": "Equipment",
   "website": "https://www.tel.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Deposition & etch"
+  ]
  },
  {
   "id": "shinetsu",
@@ -249,7 +322,11 @@
   "company_type": "Material",
   "website": "https://www.shinetsu.co.jp",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Silicon wafer"
+  ]
  },
  {
   "id": "sumco",
@@ -263,7 +340,11 @@
   "company_type": "Material",
   "website": "https://www.sumcosi.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Silicon wafer"
+  ]
  },
  {
   "id": "openai",
@@ -277,7 +358,9 @@
   "company_type": "AI lab",
   "website": "https://openai.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "microsoft",
@@ -291,7 +374,9 @@
   "company_type": "Hyperscaler",
   "website": "https://www.microsoft.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "amazon",
@@ -305,7 +390,9 @@
   "company_type": "Hyperscaler",
   "website": "https://www.aboutamazon.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "alphabet",
@@ -319,7 +406,9 @@
   "company_type": "Hyperscaler",
   "website": "https://abc.xyz",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "meta",
@@ -333,7 +422,9 @@
   "company_type": "Hyperscaler",
   "website": "https://about.meta.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "oracle",
@@ -347,7 +438,9 @@
   "company_type": "Hyperscaler",
   "website": "https://www.oracle.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "coreweave",
@@ -361,7 +454,11 @@
   "company_type": "Neocloud",
   "website": "https://www.coreweave.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Cloud capacity"
+  ]
  },
  {
   "id": "supermicro",
@@ -375,7 +472,9 @@
   "company_type": "Systems",
   "website": "https://www.supermicro.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "dell",
@@ -389,7 +488,11 @@
   "company_type": "Systems",
   "website": "https://www.dell.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": [
+   "Systems"
+  ]
  },
  {
   "id": "hpe",
@@ -403,7 +506,9 @@
   "company_type": "Systems",
   "website": "https://www.hpe.com",
   "logo_url": null,
-  "anon": false
+  "anon": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_nv_1",
@@ -417,7 +522,9 @@
   "desc": "FY2026 총매출의 22%, 매출채권 잔액의 25%. 10-K가 이름을 적지 않는다.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_nv_2",
@@ -431,7 +538,9 @@
   "desc": "FY2026 총매출의 14%, 매출채권 잔액의 18%. 10-K가 이름을 적지 않는다.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_nv_3",
@@ -445,7 +554,9 @@
   "desc": "매출채권 잔액의 13%. 총매출 비중은 10% 미만.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_ts_a",
@@ -459,7 +570,9 @@
   "desc": "FY2025 매출의 19%(7,270억 대만달러). 2024년 12%에서 올라섰다.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_ts_b",
@@ -473,7 +586,9 @@
   "desc": "FY2025 매출의 17%(6,452억 대만달러). 2023년 25%에서 내려왔다.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_as_1",
@@ -487,7 +602,9 @@
   "desc": "FY2025 매출의 23.9%(77.97억 유로). 2024년 16.6%에서 올라섰다.",
   "company_type": null,
   "website": null,
-  "logo_url": null
+  "logo_url": null,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "nv27_x",
@@ -502,7 +619,9 @@
   "website": null,
   "logo_url": null,
   "anon": true,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "nv27_y",
@@ -517,7 +636,9 @@
   "website": null,
   "logo_url": null,
   "anon": true,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "nv27_z",
@@ -532,7 +653,9 @@
   "website": null,
   "logo_url": null,
   "anon": true,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "mkt_hyper",
@@ -547,7 +670,9 @@
   "website": null,
   "logo_url": null,
   "anon": false,
-  "is_segment": true
+  "is_segment": true,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "mkt_acie",
@@ -562,7 +687,9 @@
   "website": null,
   "logo_url": null,
   "anon": false,
-  "is_segment": true
+  "is_segment": true,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "mkt_edge",
@@ -577,7 +704,9 @@
   "website": null,
   "logo_url": null,
   "anon": false,
-  "is_segment": true
+  "is_segment": true,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "sbenergy",
@@ -592,7 +721,9 @@
   "website": "https://www.sbenergy.com",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "anon_ai_res",
@@ -607,7 +738,11 @@
   "website": null,
   "logo_url": null,
   "anon": true,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": [
+   "Cloud purchase"
+  ]
  },
  {
   "id": "anon_ai_cloud",
@@ -622,7 +757,11 @@
   "website": null,
   "logo_url": null,
   "anon": true,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": [
+   "Cloud capacity"
+  ]
  },
  {
   "id": "quanta",
@@ -637,7 +776,11 @@
   "website": "https://www.quantatw.com",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": [
+   "Assembly & Test"
+  ]
  },
  {
   "id": "wiwynn",
@@ -652,7 +795,11 @@
   "website": "https://www.wiwynn.com",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": [
+   "Assembly & Test"
+  ]
  },
  {
   "id": "iren",
@@ -667,7 +814,9 @@
   "website": "https://iren.com",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "lambda_labs",
@@ -682,7 +831,9 @@
   "website": "https://lambda.ai",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  },
  {
   "id": "nebius",
@@ -697,6 +848,8 @@
   "website": "https://nebius.com",
   "logo_url": null,
   "anon": false,
-  "is_segment": false
+  "is_segment": false,
+  "entity_type": "company",
+  "categories": []
  }
 ]
