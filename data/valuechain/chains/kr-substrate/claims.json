@@ -1,93 +1,132 @@
 [
  {
-  "id": "clm-dd-customers",
-  "statement": "대덕전자의 고객사로 삼성전자와 SK하이닉스가 거론된다.",
-  "subject": "daeduck-electronics",
-  "object": "samsung-electronics",
-  "period": "2025-05",
-  "evidence_level": "CONFIRMED",
-  "confidence": 0.8,
-  "source_ids": [
-   "dealsite_2025_05_28"
-  ],
-  "note": "기사가 든 이름은 이 둘뿐이고 나머지는 「고객사」로만 적는다"
- },
- {
-  "id": "clm-dd-memory-90",
-  "statement": "메모리 패키지기판이 대덕전자 전체 매출의 약 90%를 차지한다.",
+  "id": "clm-dd-rev-fy2025",
+  "statement": "대덕전자의 FY2025 매출은 1조 650억 원이다.",
   "subject": "daeduck-electronics",
   "object": null,
-  "period": "2024",
+  "period": "FY2025",
   "evidence_level": "CONFIRMED",
-  "confidence": 0.8,
+  "confidence": 1.0,
   "source_ids": [
-   "dealsite_2025_05_28"
+   "dd_ar_fy2025"
   ],
   "note": null
  },
  {
-  "id": "clm-daeduck-capex",
-  "statement": "대덕전자는 FC-CSP·FC-BGA·AI 기판 증설에 8,000억 원 넘게 쓴다.",
+  "id": "clm-dd-material-mix",
+  "statement": "FY2025 원재료 매입은 CCL 62.2%, 프리프레그 26.0%, ABF 6.7% 구조다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "note": "CCL 과 프리프레그가 약 88%를 차지한다"
+ },
+ {
+  "id": "clm-dd-abf-critical",
+  "statement": "매입액이 가장 큰 소재는 CCL 이지만 전략 중요도는 ABF 가 더 높다.",
+  "subject": "daeduck-electronics",
+  "object": "abf-film",
+  "period": "2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "note": "FC-BGA 빌드업 절연층의 핵심이고 인증 장벽이 높다"
+ },
+ {
+  "id": "clm-dd-concentration",
+  "statement": "FY2025 상위 익명 고객 셋이 총매출의 20.6%·16.2%·11.4%, 합계 48.1%를 차지한다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "note": "이 셋을 삼성전자·SK하이닉스·AMD 등으로 임의 매핑하지 않는다"
+ },
+ {
+  "id": "clm-dd-named-customers",
+  "statement": "공시로 이름이 확인되는 고객은 삼성전자·SK하이닉스·앰코테크놀로지코리아·스태츠칩팩코리아다.",
+  "subject": "daeduck-electronics",
+  "object": "samsung-electronics",
+  "period": "1H2024",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2024"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-dd-amd",
+  "statement": "AMD 향 AI 가속기 MLB 양산이 증권사 자료에서 확인된다.",
+  "subject": "amd",
+  "object": "daeduck-electronics",
+  "period": "2025-2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "dd_ir_amd"
+  ],
+  "note": "회사가 공시한 고객명은 아니다"
+ },
+ {
+  "id": "clm-dd-tesla",
+  "statement": "테슬라 AI4 자율주행 FC-BGA 공급망에 대덕전자가 포함됐다는 보도가 있다.",
+  "subject": "tesla",
+  "object": "daeduck-electronics",
+  "period": "2025-2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "zdnet_tesla_2026"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-dd-spacex",
+  "statement": "스페이스X 향 항공우주 MLB 물량이 늘고 있다.",
+  "subject": "spacex",
+  "object": "daeduck-electronics",
+  "period": "2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.7,
+  "source_ids": [
+   "eugene_spacex_2026"
+  ],
+  "note": null
+ },
+ {
+  "id": "clm-dd-candidates",
+  "statement": "브로드컴·마벨은 제품 정합성만 있고 직접 공급 근거가 없어 고객으로 넣지 않는다.",
   "subject": "daeduck-electronics",
   "object": null,
   "period": "2026",
-  "evidence_level": "CONFIRMED",
-  "confidence": 0.9,
+  "evidence_level": "INFERRED",
+  "confidence": 0.4,
   "source_ids": [
-   "semidoped_2026_05_22"
+   "dd_ir_pcie"
   ],
-  "note": null
+  "note": "후보 메모로만 남긴다"
  },
  {
-  "id": "clm-ccl-bottleneck",
-  "statement": "기판용 CCL 은 거의 레조낙 한 곳에서만 나와 공급망의 또 하나의 병목이다.",
-  "subject": "resonac",
-  "object": "daeduck-electronics",
-  "period": "2026-08",
-  "evidence_level": "CONFIRMED",
-  "confidence": 0.8,
-  "source_ids": [
-   "semianalysis_li_2026_08_27"
-  ],
-  "note": "EMC 가 2026년 4분기 출하를 준비하고 2027년 캐파를 두 배로 늘린다"
- },
- {
-  "id": "clm-tglass-widening",
-  "statement": "T-글라스 공급이 닛토보 한 곳에서 다섯 곳 이상으로 늘고 있다.",
-  "subject": "nittobo",
-  "object": "daeduck-electronics",
-  "period": "2026-08",
-  "evidence_level": "CONFIRMED",
-  "confidence": 0.8,
-  "source_ids": [
-   "semianalysis_li_2026_08_27"
-  ],
-  "note": "중국 업체가 공격적으로 들어왔다"
- },
- {
-  "id": "clm-substrate-leadtime",
-  "statement": "ABF 기판은 2026년 물량이 전부 예약됐고 공급사 여섯 곳의 리드타임이 12~14개월이다.",
+  "id": "clm-dd-capacity",
+  "statement": "FY2025 생산능력은 약 100.2만 제곱미터, 생산은 약 75.9만 제곱미터로 가동률 약 76%다.",
   "subject": "daeduck-electronics",
   "object": null,
-  "period": "2026-08",
+  "period": "FY2025",
   "evidence_level": "CONFIRMED",
-  "confidence": 0.8,
+  "confidence": 1.0,
   "source_ids": [
-   "semianalysis_li_2026_08_27"
+   "dd_ar_fy2025"
   ],
-  "note": "층수가 20~24층까지 커져 한 장이 라인을 오래 문다"
- },
- {
-  "id": "clm-substrate-osat-split",
-  "statement": "기판은 삼성전기·대덕전자·심텍이 만들고 패키징은 하나마이크론·네패스 같은 OSAT 가 맡는다.",
-  "subject": "daeduck-electronics",
-  "object": "hana-micron",
-  "period": "2026-05",
-  "evidence_level": "INFERRED",
-  "confidence": 0.6,
-  "source_ids": [
-   "hanjuseong_backend_2026_05_18"
-  ],
-  "note": "단계를 나눠 맡는다는 서술이고 거래 관계 서술은 아니다"
+  "note": "제품별 편차가 커서 전사 평균을 FC-BGA 가동률로 읽으면 안 된다"
  }
 ]
