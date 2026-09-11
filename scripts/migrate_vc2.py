@@ -21,6 +21,9 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 CONTRACTUAL = {
     'CUSTOMERS_CUSTOMER': 'NOT_CONTRACTUAL',
     'END_CUSTOMER_SUPPLY_CHAIN': 'UNVERIFIED',
+    # 제휴와 실증은 물건을 판 자리가 아니다. 원문이 계약 고객이라 적지 말라고 못박았다
+    'SYSTEM_INTEGRATION_PARTNERSHIP': 'NOT_CONTRACTUAL',
+    'DEMONSTRATION_DEPLOYMENT': 'NOT_CONTRACTUAL',
 }
 
 PROJECTS = {
@@ -37,6 +40,17 @@ PROJECTS = {
          'name_ko': '충주·대소원 80MW', 'site': 'sk-eternix-80mw', 'developer': 'sk-eternix',
          'members': ['sk-eternix-80mw', 'sk-eternix'],
          'from_relationships': ['eternix-80mw-spv', 'bloom-eternix']},
+        {'id': 'proj-aep-ohio', 'name': 'AEP Ohio onsite projects',
+         'name_ko': 'AEP 오하이오 온사이트', 'developer': 'aep-ohio',
+         'members': ['aep-ohio', 'aws', 'cologix'],
+         'note': 'AEP 오하이오가 설치를 맡고 AWS·콜로직스가 장기 계약으로 비용을 댄다. '
+                 '부지별 용량은 따로 공개되지 않았다',
+         'from_relationships': ['aep-aepohio', 'aepohio-aws', 'aepohio-cologix']},
+        {'id': 'proj-omika', 'name': 'Hitachi Omika Works pilot',
+         'name_ko': '오미카 실증', 'site': 'hitachi-omika-works', 'developer': 'hitachi',
+         'members': ['hitachi-omika-works', 'hitachi'],
+         'note': '블룸 연료전지에 히타치 제어를 붙인 실증. 용량은 비공개다',
+         'from_relationships': ['bloom-omika', 'hitachi-omika']},
         {'id': 'proj-bfjv-spv', 'name': 'Brookfield Fund JV project SPV',
          'name_ko': '펀드 JV 프로젝트 법인', 'site': 'bfjv-spv-unknown',
          'financier': 'brookfield-fund-jvs',

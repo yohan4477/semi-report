@@ -1048,5 +1048,35 @@
   "url": "https://www.yuden.co.jp/jp/product/solutions/mlcc/detail03.html",
   "accessed_date": "2026-09-11",
   "note": "AI 서버용 고용량·임베디드 MLCC 를 회사가 직접 내세운다. 커패시터 매출과 AI 서버 응용의 연결 근거이고, 플랫폼별 구매 주체는 여전히 추론이다"
+ },
+ {
+  "id": "be_hitachi_japan",
+  "publisher": "Hitachi",
+  "title": "Hitachi-Bloom onsite power collaboration in Japan",
+  "source_type": "primary_company",
+  "published_date": "2026-09-01",
+  "url": "https://www.hitachi.com/en/press/articles/2026/09/0901b/",
+  "accessed_date": "2026-09-11",
+  "note": "일본 온사이트 협업의 노릇 분담, 오미카 실증, 겨냥한 데이터센터·산업 고객. 03 의 SRC048"
+ },
+ {
+  "id": "be_power_connect",
+  "publisher": "Bloom Energy",
+  "title": "Bloom Energy introduces Power Connect",
+  "source_type": "primary_company",
+  "published_date": "2026-08-19",
+  "url": "https://www.bloomenergy.com/news/bloom-energy-introduces-power-connect/",
+  "accessed_date": "2026-09-11",
+  "note": "전기 통합을 공장으로 옮기는 배치 방식. 회사가 밝힌 설치 시간 40% 이상 단축. 03 의 SRC049"
+ },
+ {
+  "id": "coseus_4gw_media",
+  "publisher": "Hankyung",
+  "title": "Coseus 7월 블룸 수주와 4GW 양산 라인 맥락",
+  "source_type": "reputable_media",
+  "published_date": "2026-07-16",
+  "url": "https://www.hankyung.com/article/202607168611O",
+  "accessed_date": "2026-09-11",
+  "note": "1억 달러 자동화 패키지가 4GW 양산 라인용이라는 2차 보도. 공시 문구가 아니다. 03 의 SRC050"
  }
 ]

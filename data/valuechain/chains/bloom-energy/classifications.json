@@ -285,6 +285,24 @@
      "source_ids": [
       "be_10q_2026q2"
      ]
+    },
+    {
+     "metric": "unallocated_customer_amount",
+     "value": 60.35,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 전력 매출 6,035만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "전력도 고객별 배분이 공개되지 않는다",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
     }
    ],
    "source_ids": [
@@ -353,6 +371,24 @@
      "method_note": null,
      "source_ids": [
       "be_10q_2026q2"
+     ]
+    },
+    {
+     "metric": "unallocated_customer_amount",
+     "value": 151.768,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 설치 매출 2억 410만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "펀드 JV 로 확인된 설치 금액을 뺀 나머지",
+     "source_ids": [
+      "be_10k_fy2025"
      ]
     }
    ],
@@ -423,6 +459,24 @@
      "source_ids": [
       "be_10q_2026q2"
      ]
+    },
+    {
+     "metric": "unallocated_customer_amount",
+     "value": 721.481,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 제품 매출 15억 3,128만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "펀드 JV 로 확인된 제품 금액을 뺀 나머지",
+     "source_ids": [
+      "be_10k_fy2025"
+     ]
     }
    ],
    "source_ids": [
@@ -491,6 +545,24 @@
      "method_note": null,
      "source_ids": [
       "be_10q_2026q2"
+     ]
+    },
+    {
+     "metric": "unallocated_customer_amount",
+     "value": 228.295,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2026-02-09",
+     "denominator": "Bloom FY2025 서비스 매출 2억 2,830만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "서비스는 고객별 배분이 공개되지 않는다",
+     "source_ids": [
+      "be_10k_fy2025"
      ]
     }
    ],

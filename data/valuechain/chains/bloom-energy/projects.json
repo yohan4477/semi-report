@@ -32,6 +32,36 @@
   ]
  },
  {
+  "id": "proj-aep-ohio",
+  "name": "AEP Ohio onsite projects",
+  "name_ko": "AEP 오하이오 온사이트",
+  "developer": "aep-ohio",
+  "members": [
+   "aep-ohio",
+   "aws",
+   "cologix"
+  ],
+  "note": "AEP 오하이오가 설치를 맡고 AWS·콜로직스가 장기 계약으로 비용을 댄다. 부지별 용량은 따로 공개되지 않았다",
+  "source_ids": [
+   "aep_ohio_release"
+  ]
+ },
+ {
+  "id": "proj-omika",
+  "name": "Hitachi Omika Works pilot",
+  "name_ko": "오미카 실증",
+  "site": "hitachi-omika-works",
+  "developer": "hitachi",
+  "members": [
+   "hitachi-omika-works",
+   "hitachi"
+  ],
+  "note": "블룸 연료전지에 히타치 제어를 붙인 실증. 용량은 비공개다",
+  "source_ids": [
+   "be_hitachi_japan"
+  ]
+ },
+ {
   "id": "proj-bfjv-spv",
   "name": "Brookfield Fund JV project SPV",
   "name_ko": "펀드 JV 프로젝트 법인",

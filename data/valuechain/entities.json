@@ -3366,7 +3366,8 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  },
  {
   "id": "bloom-energy-indirect-undisclosed",
@@ -3381,7 +3382,8 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  },
  {
   "id": "kr-substrate-supplier-undisclosed",
@@ -3396,7 +3398,8 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  },
  {
   "id": "nvidia-indirect-undisclosed",
@@ -3411,7 +3414,8 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  },
  {
   "id": "taiyo-yuden-indirect-undisclosed",
@@ -3426,7 +3430,8 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  },
  {
   "id": "digi-key",
@@ -3480,6 +3485,45 @@
    "Distributor"
   ],
   "desc": "공식 전 세계 온라인 유통사다(04의 TTI)",
+  "anon": false
+ },
+ {
+  "id": "hitachi",
+  "name": "Hitachi, Ltd.",
+  "name_ko": "히타치",
+  "entity_type": "company",
+  "legal_name": "Hitachi, Ltd.",
+  "display_name": "히타치",
+  "region": "Japan",
+  "parent_entity_id": null,
+  "primary_role": "System integrator",
+  "other_roles": [
+   "Channel partner"
+  ],
+  "country": "일본",
+  "categories": [
+   "System integrator",
+   "Channel partner"
+  ],
+  "desc": "일본 온사이트 연료전지의 기획·설계·제어 통합과 운영 지원을 맡는다. 계약 고객이라는 근거는 없다",
+  "anon": false
+ },
+ {
+  "id": "hitachi-omika-works",
+  "name": "Hitachi Omika Works",
+  "name_ko": "히타치 오미카 공장",
+  "entity_type": "project_spv",
+  "legal_name": "Hitachi Omika Works",
+  "display_name": "히타치 오미카 공장",
+  "region": "Japan",
+  "parent_entity_id": null,
+  "primary_role": "Project",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Project"
+  ],
+  "desc": "이바라키 실증 부지. 블룸 연료전지에 히타치 제어를 붙여 원격 출력 조정과 상태 감시를 확인했다. 용량은 비공개",
   "anon": false
  }
 ]

@@ -386,6 +386,11 @@ def normalize_chain(cid, ents):
                 e['classification_id'] = e.get('classification_id') or to_cls.get(rid)
                 e['relationship_id'] = None
             e.setdefault('classification_id', None)
+        # 접히면서 가리킬 데가 없어진 근거 줄은 지운다. 상자끼리 잇던 줄이 분류로 바뀌면
+        # 그 줄을 가리키던 근거는 원장에 남아도 아무것도 안 가리킨다
+        evs = [e for e in evs
+               if e.get('relationship_id') or e.get('metric_id')
+               or e.get('classification_id') or e.get('hypothesis_id')]
         wr(epath, evs)
     # ⑧ 주장 — 품목을 가리키던 주어·목적어는 분류를 가리킨다
     kpath = os.path.join(cdir, 'claims.json')

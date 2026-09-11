@@ -30,6 +30,66 @@
   "object_classification": null
  },
  {
+  "id": "clm-be-hitachi",
+  "statement": "히타치가 일본에서 블룸 연료전지를 얹은 온사이트 전력을 데이터센터·산업 고객에게 대는 일을 함께 한다.",
+  "subject": "hitachi",
+  "object": "bloom-energy",
+  "period": "2026-09~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_hitachi_japan"
+  ],
+  "note": "히타치는 기획·설계·제어 통합·운영 지원, 블룸은 연료전지와 기술 지원이다. 03 의 CLM053",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-be-omika",
+  "statement": "히타치가 이바라키 오미카 공장에서 블룸 연료전지에 제 제어를 붙이는 실증을 마쳤다.",
+  "subject": "hitachi-omika-works",
+  "object": "bloom-energy",
+  "period": "2026-09 이전",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "be_hitachi_japan"
+  ],
+  "note": "원격 출력 조정과 상태 감시를 확인했다. 용량은 비공개라 상업 배치로 읽지 않는다. 03 의 CLM054",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-be-power-connect",
+  "statement": "블룸이 전기 통합을 현장에서 공장으로 옮긴 Power Connect 를 내놓으며 현장 전기 설치 시간을 40% 넘게 줄인다고 밝혔다.",
+  "subject": "bloom-energy",
+  "object": null,
+  "period": "2026-08~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 0.9,
+  "source_ids": [
+   "be_power_connect"
+  ],
+  "note": "회사가 밝힌 성능이다. 배전반·변압기 같은 부지 전기 공급사가 없어지는 것은 아니다. 03 의 CLM055",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-be-coseus-4gw",
+  "statement": "코세스의 2026년 7월 1억 달러 전극셀 자동화 계약이 시험 라인에 이은 4GW 양산 라인용이라는 2차 보도가 있다.",
+  "subject": "coseus",
+  "object": "bloom-energy",
+  "period": "2026-07",
+  "evidence_level": "INFERRED",
+  "confidence": 0.5,
+  "source_ids": [
+   "coseus_4gw_media"
+  ],
+  "note": "1억 달러를 4GW 로 나눠 공장 투자 단가로 읽지 않는다. 특정 자동화 장비 묶음이다. 03 의 CLM056",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
   "id": "clm-aep-13",
   "statement": "FY2025 2위 고객 13% 는 AEP 매입 법인일 가능성이 크다.",
   "subject": "aep",
