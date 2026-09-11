@@ -426,8 +426,15 @@ var YEARS = (function(){
 })();
 var NOW = YEARS[YEARS.length - 1];
 
+// 시작 회사는 사슬의 타겟 가운데 관계가 가장 많은 회사다. 공급사가 관계를 더 많이 가져도
+// 첫 화면이 남의 중심으로 다시 세운 판이 되면 안 된다
 var HOME = (function(){
   var best = null, n = -1;
+  Object.keys(CHAINS).forEach(function(ck){
+    var f = (CHAINS[ck].meta || {}).focal_entity;
+    if (f && (REL_BY_ENT[f] || []).length > n) { n = REL_BY_ENT[f].length; best = f; }
+  });
+  if (best) return best;
   Object.keys(REL_BY_ENT).forEach(function(id){
     if (REL_BY_ENT[id].length > n) { n = REL_BY_ENT[id].length; best = id; }
   });
@@ -1164,14 +1171,17 @@ function readUrl(first){
   // 장을 열면 늘 회사 목록부터다. 주소에 탭이 적혀 있을 때만 그 탭으로 연다
   // (새로고침·북마크로 들어와도 같다 — 주소에 남은 focal·year 는 그대로 지킨다)
   var md = q.get('mode') || 'current';
+  var sel = q.get('sel') || '';
+  if (sel.slice(0, 5) === 'lane|') sel = '';   // 알약은 새로 열 때 고른 것으로 안 친다
   return { focal: q.get('focal') || HOME, year: y,
-           mode: md,
+           mode: md, chain: q.get('chain') || null,
            open: (q.get('open') || '').split(',').filter(Boolean),
-           sel: q.get('sel') || '' };
+           sel: sel };
 }
 function writeUrl(s, push){
   var q = new URLSearchParams();
   q.set('focal', s.focal); q.set('year', s.year);
+  if (s.chain) q.set('chain', s.chain);
   if (s.mode && s.mode !== 'current') q.set('mode', s.mode);
   if (s.open && s.open.length) q.set('open', s.open.join(','));
   if (s.sel) q.set('sel', s.sel);
@@ -1193,7 +1203,12 @@ function writeUrl(s, push){
 
 // 사슬 하나를 통째로 세운다. 연도가 무엇이 보일지 정하고, 고른 상자가 무엇이 진할지 정한다.
 // 눌러야 노드가 생기는 방식은 걷었다
-function chainOf(focal){
+function inChain(ck, id){
+  return !!CHAINS[ck] && CHAINS[ck].relationships.some(function(r){
+    return r.source_entity === id || r.target_entity === id; });
+}
+function chainOf(focal, hint){
+  if (hint && inChain(hint, focal)) return hint;
   var best = null;
   Object.keys(CHAINS).forEach(function(ck){
     if (best) return;
@@ -1375,8 +1390,8 @@ function topology(focal, rels, rooted){
   return { col: col, sub: sub, via: via, rooted: rooted };
 }
 
-function buildGraph(focal, year, sel, axis, sizes){
-  var ck = chainOf(focal);
+function buildGraph(focal, year, sel, axis, sizes, hint){
+  var ck = chainOf(focal, hint);
   var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
   // 사슬의 타겟이 아닌 회사를 중심에 놓으면 판을 그 회사 기준으로 다시 세운다(re-root).
   // 층(tier)을 그대로 쓰지 않는다
@@ -1424,7 +1439,7 @@ function buildGraph(focal, year, sel, axis, sizes){
           share: (sh && den && sh.denominator === den) ? sh.value + '%' : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
                 lane: kind === 'ss' ? 'MANUFACTURING_BOM' : 'DOWNSTREAM',
-                cls: kind + ':' + x.id } } });
+                cls: kind + ':' + x.id, chain: ck } } });
       });
     });
   }
@@ -1685,7 +1700,7 @@ function Drawer(p){
         }))
       ]),
       (function(){
-        var m = clsOf(chainOf(p.focal || HOME));
+        var m = clsOf(ref.chain || (ref.rels[0] && CHAIN_OF[ref.rels[0]]) || HOME);
         var o = ref.cls ? (ref.cls.slice(0, 2) === 'ss' ? m.ss : m.rt)[ref.cls.slice(3)] : null;
         return o && o.residual ? h('div', { key:'res', className:'v',
           style:{ color:'#6b7488', marginTop:'8px' } },
@@ -2103,6 +2118,8 @@ function App(){
   var c = useState(u0.mode), mode = c[0], setMode = c[1];
   var d = useState(u0.open), open = d[0], setOpen = d[1];   // 주소 호환용
   var f = useState({ kind:'ent', id: u0.sel || u0.focal }), sel = f[0], setSel = f[1];
+  // 보던 사슬. 그 사슬에 있는 회사로 중심을 옮기면 사슬을 지킨다
+  var f2 = useState(u0.chain), chainHint = f2[0], setChainHint = f2[1];
   var g = useState(''), q = g[0], setQ = g[1];
   var j = useState([u0.focal]), path = j[0], setPath = j[1];
   var k2 = useState(true), leg = k2[0], setLeg = k2[1];
@@ -2182,13 +2199,15 @@ function App(){
   }, [rf, focal, mode]);
 
   useEffect(function(){
-    writeUrl({ focal:focal, year:year, mode:mode, open:open,
-               sel: sel ? (sel.entity || sel.id) : '' }, false);
-  }, [focal, year, mode, open, sel]);
+    var sid = sel ? (sel.entity || sel.id) : '';
+    writeUrl({ focal:focal, year:year, mode:mode, open:open, chain: chainHint,
+               sel: (sid || '').slice(0, 5) === 'lane|' ? '' : sid }, false);
+  }, [focal, year, mode, open, sel, chainHint]);
   useEffect(function(){
     function pop(){
       var s = readUrl();
       setFocal(s.focal); setYear(s.year); setMode(s.mode); setOpen(s.open);
+      setChainHint(s.chain);
       setSel({ kind:'ent', id: s.sel || s.focal });
     }
     window.addEventListener('popstate', pop);
@@ -2196,8 +2215,8 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, sel, axis, sizes);
-  }, [focal, year, sel, axis, sizes]);
+    return buildGraph(focal, year, sel, axis, sizes, chainHint);
+  }, [focal, year, sel, axis, sizes, chainHint]);
   useEffect(function(){
     if (!rf || mode !== 'current') return;
     var t = setTimeout(function(){
@@ -2225,11 +2244,13 @@ function App(){
   }, [gr]);
 
   function goFocal(id){
+    var ck = chainOf(id, chainHint || chainOf(focal));
+    setChainHint(ck);
     setFocal(id); setOpen([]); setSel({ kind:'ent', id:id }); setAxis(null);
     setPath(function(p){
       return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
     });
-    writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id }, true);
+    writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id, chain: ck }, true);
   }
   function onNodeClick(_, node){
     // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
@@ -2237,8 +2258,9 @@ function App(){
     // 걸린 줄만 남기고 칩이 켜진다. 다시 누르면 푼다
     if (node.data.kind === 'lane') {
       var key = node.data.ref && node.data.ref.cls;
-      setAxis(axis === key ? null : key);
-      setSel({ kind:'ent', id: focal });
+      var off = axis === key;
+      setAxis(off ? null : key);
+      setSel(off ? { kind:'ent', id: focal } : node.data.ref);
       setDrw(true);
       return;
     }
@@ -2425,7 +2447,7 @@ function App(){
     (mode === 'current' || mode === 'timeline') ? scrub : null,
     // 공급원·매출원 띠는 사슬의 타겟 기준 분류라 다른 회사를 중심에 놓으면 접는다
     (mode === 'current' && !gr.rooted)
-      ? h(Axis, { key:'ax', chain: chainOf(focal), axis: axis, year: year,
+      ? h(Axis, { key:'ax', chain: gr.chain, axis: axis, year: year,
           onPick: setAxis }) : null,
     (mode === 'current' && gr.rooted)
       ? h('div', { key:'rt', className:'axnote', style:{ padding:'6px 14px',
