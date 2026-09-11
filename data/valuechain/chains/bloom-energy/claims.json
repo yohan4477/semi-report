@@ -31,13 +31,13 @@
   "subject": "aep",
   "object": "bloom-energy",
   "period": "FY2025",
-  "evidence_level": "ESTIMATED",
-  "confidence": 0.75,
+  "evidence_level": "INFERRED",
+  "confidence": 0.45,
   "source_ids": [
    "be_10k_fy2025",
    "be_aep_1gw"
   ],
-  "note": null
+  "note": "13% 는 공시다. AEP 라는 지목은 용량과 단가를 맞춰 본 가설이다. 03 의 CLM003"
  },
  {
   "id": "clm-eternix-12",
@@ -45,12 +45,12 @@
   "subject": "sk-eternix",
   "object": "bloom-energy",
   "period": "FY2025",
-  "evidence_level": "ESTIMATED",
-  "confidence": 0.7,
+  "evidence_level": "INFERRED",
+  "confidence": 0.4,
   "source_ids": [
    "be_sk_eternix_80mw"
   ],
-  "note": null
+  "note": "12% 는 공시다. 법인 지목과 매출 인식 시점은 비공개다. 03 의 CLM004"
  },
  {
   "id": "clm-cctc-share",
@@ -67,7 +67,7 @@
  },
  {
   "id": "clm-amosense-15",
-  "statement": "AMOsense 의 세라믹 기판 물량 점유율은 Bloom 1.2GW 가동률 기준 약 15% 다.",
+  "statement": "AMOsense 의 세라믹 기판 설비 기준 점유율은 Bloom 1.5GW 가동률 기준 15~16% 다.",
   "subject": "amosense",
   "object": "bloom-energy",
   "period": "2026 Q3",
@@ -76,14 +76,14 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "note": "월 60만 장 ÷ 추정 수요 400만 장"
+  "note": "연 720만 장 ÷ 4,500~4,950만 장"
  },
  {
   "id": "clm-amosense-9",
-  "statement": "AMOsense 의 점유율은 Bloom 2GW 최대 생산 기준으로는 약 9% 다.",
+  "statement": "AMOsense 의 점유율은 Bloom 2.0GW 가동률 기준으로는 11~12% 다.",
   "subject": "amosense",
   "object": "bloom-energy",
-  "period": "2026E",
+  "period": "2026 Q3",
   "evidence_level": "ESTIMATED",
   "confidence": 0.65,
   "source_ids": [

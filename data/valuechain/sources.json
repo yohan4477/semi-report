@@ -445,7 +445,7 @@
   "title": "IPO 공모설명서 고객 공시",
   "source_type": "primary_official",
   "published_date": "2014",
-  "url": "https://money.finance.sina.com.cn/corp/view/vISSUE_RaiseExplanationDetail.php?id=1558553",
+  "url": "https://money.finance.sina.com.cn/corp/view/vISSUE_RaiseExplanationDetail.php?id=1558553&stockid=300408",
   "accessed_date": "2026-09-11",
   "note": "2014 상반기 블룸이 CCTC 1위 고객이고 매출의 9.54%"
  },
@@ -471,11 +471,11 @@
  },
  {
   "id": "customs_nash_2026",
-  "publisher": "ImportInfo",
+  "publisher": "ImportGenius",
   "title": "내시 인더스트리스 통관 기록",
   "source_type": "trade_data",
   "published_date": "2026",
-  "url": "https://www.importinfo.com/nash-industries-i-pvt-ltd",
+  "url": "https://www.importgenius.com/suppliers/nash-industries-i-pvt-ltd",
   "accessed_date": "2026-09-11",
   "note": "KPE·CM2 산타크루즈와 CCE+1 인클로저 직접 선적"
  },
@@ -485,7 +485,7 @@
   "title": "텍슨 통관 기록",
   "source_type": "trade_data",
   "published_date": "2026",
-  "url": "https://www.seair.co.in/us-import/i-bloom-energy/e-texon-co-limited.aspx",
+  "url": "https://www.seair.co.in/us-import/i-bloom-energy-corp/e-texon.aspx",
   "accessed_date": "2026-09-11",
   "note": "강판 전기 인클로저·KPE 도어·측면 패널 직접 선적"
  },
@@ -514,7 +514,7 @@
   "publisher": "Google Patents",
   "title": "블룸·스택폴 금속 인터커넥트 공동 특허",
   "source_type": "primary_official",
-  "published_date": "2015",
+  "published_date": "2015~2018",
   "url": "https://patents.google.com/patent/US20150244004A1/en",
   "accessed_date": "2026-09-11",
   "note": "2014~2018 기술 공동개발을 확인한다. 조달 점유율 근거는 아니다"

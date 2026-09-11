@@ -29,30 +29,6 @@
   "note": "장당 단가는 공급사 실적에서 역산한 값이다"
  },
  {
-  "id": "method-amosense-share-1p2gw",
-  "title": "AMOsense 기판 물량 점유율 (1.2GW 가동률)",
-  "steps": [
-   {
-    "label": "월 생산 능력",
-    "value": 600000,
-    "unit": "장/월"
-   },
-   {
-    "label": "÷ 1.2GW 가동률 기준 월 수요 약 400만 장",
-    "value": 15,
-    "unit": "%"
-   }
-  ],
-  "result": 15,
-  "result_unit": "%",
-  "denominator": "Bloom 1.2GW 가동률 기준 월 세라믹 기판 수요",
-  "result_status": "ESTIMATED",
-  "source_ids": [
-   "sedaily_kr_suppliers"
-  ],
-  "note": "기판 한 장을 25W 로 보는 가정에서 나온 수요다. 다른 자료는 1GW 당 3,000~3,300만 장으로 잡아 값이 달라진다"
- },
- {
   "id": "method-amosense-share-2gw",
   "title": "AMOsense 기판 물량 점유율 (2GW 최대)",
   "steps": [
@@ -323,5 +299,29 @@
    "be_10k_fy2025"
   ],
   "note": "반올림 때문에 넷을 더하면 100.0% 와 조금 다를 수 있다"
+ },
+ {
+  "id": "method-amosense-share-1p5gw",
+  "title": "AMOsense 기판 물량 점유율 (1.5GW 가동률)",
+  "steps": [
+   {
+    "label": "연 생산 능력",
+    "value": 7200000,
+    "unit": "장/년"
+   },
+   {
+    "label": "÷ 1.5GW 기준 수요 4,500~4,950만 장",
+    "value": 15,
+    "unit": "%"
+   }
+  ],
+  "result": 15,
+  "result_unit": "%",
+  "denominator": "Bloom 1.5GW 가동률 기준 연 세라믹 기판 수요",
+  "result_status": "ESTIMATED",
+  "source_ids": [
+   "sedaily_kr_suppliers"
+  ],
+  "note": "1GW 당 3,000~3,300만 장으로 잡는다. 한 장을 25W 로 보던 옛 분모는 걷었다"
  }
 ]

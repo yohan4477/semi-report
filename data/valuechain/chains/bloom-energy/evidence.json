@@ -77,7 +77,7 @@
   "metric_id": "o-amosense-share-2026q3",
   "source_id": "sedaily_kr_suppliers",
   "evidence_type": "indirect",
-  "evidence": "설비 능력을 수요로 나눈 값이다. 실제 조달 점유율이 아니다",
+  "evidence": "설비 능력을 수요로 나눈 값이다. 실제 조달 점유율이 아니다. 03 의 CLM006",
   "hypothesis_id": null
  },
  {
@@ -86,7 +86,7 @@
   "metric_id": "o-amosense-share-2026e",
   "source_id": "sedaily_kr_suppliers",
   "evidence_type": "indirect",
-  "evidence": "분모가 앞의 것과 다르다. 나란히 비교하지 않는다",
+  "evidence": "분모가 앞의 것과 다르다. 나란히 비교하지 않는다. 03 의 CLM007",
   "hypothesis_id": null
  },
  {
@@ -392,7 +392,7 @@
   "metric_id": "o-equinix-capacity-2025",
   "source_id": "be_equinix_100mw",
   "evidence_type": "direct",
-  "evidence": "약 75MW 가동 + 30MW 공사 중",
+  "evidence": "약 75MW 가동 + 30MW 공사 중. 100MW 를 넘는다",
   "hypothesis_id": null
  },
  {
