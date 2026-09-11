@@ -55,6 +55,7 @@ PYTHONIOENCODING=utf-8 python insights/check_val.py     # 숫자 파이프라인
 PYTHONIOENCODING=utf-8 python insights/check_debate.py   # 쟁점 — 화자 말과 진행자 말이 섞였나
 PYTHONIOENCODING=utf-8 python insights/check_cover.py   # 보고서가 바탕 재료를 전수로 썼나
 PYTHONIOENCODING=utf-8 python scripts/check_jsoncite.py # json 원문 인용이 실재하는 줄을 가리키나
+PYTHONIOENCODING=utf-8 python scripts/check_vcroute.py # 밸류체인 선 — 세로 이동이 칸 사이 통로에서만 일어나나
 PYTHONIOENCODING=utf-8 python scripts/find_materials.py 전력 기가와트  # (검사기 아님) 주제로 재료 후보 찾기 — 제목 훑기는 놓친다
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 PYTHONIOENCODING=utf-8 python insights/check_figdup.py # 도해 설명 — 판은 번호, 캡션은 그 풀이. 본문과 겹치나

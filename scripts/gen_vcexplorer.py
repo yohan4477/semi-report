@@ -484,25 +484,6 @@ function Hdr(p){
     p.data.note ? h('div', { key:'n', className:'hn' }, p.data.note) : null
   ]);
 }
-// 세로 구간 x 를 data.cx 로 못박는다. 기본 smoothstep 은 늘 한가운데로 꺾어
-// 같은 칸 쌍의 선이 전부 한 줄에 포개진다
-function ChanEdge(p){
-  var d = p.data || {};
-  var r = getSmoothStepPath({
-    sourceX: p.sourceX, sourceY: p.sourceY, sourcePosition: p.sourcePosition,
-    targetX: p.targetX, targetY: p.targetY, targetPosition: p.targetPosition,
-    borderRadius: 8,
-    centerX: (d.cx === undefined || d.cx === null) ? undefined : d.cx });
-  return h(React.Fragment, null, [
-    h('path', { key:'p', id:p.id, d:r[0], fill:'none',
-      className:'react-flow__edge-path', style:p.style, markerEnd:p.markerEnd }),
-    p.label ? h(EdgeLabelRenderer, { key:'l' },
-      h('div', { style:{ position:'absolute', pointerEvents:'none',
-        transform:'translate(-50%,-50%) translate(' + r[1] + 'px,' + r[2] + 'px)',
-        background:'#fff', padding:'0 3px', fontSize:'10.5px', lineHeight:1.3,
-        color:'#39415a' } }, p.label)) : null
-  ]);
-}
 // 꺾어지는 자리마다 모서리를 둥글린 직교 경로를 만든다
 function orth(pts, r){
   var d = 'M ' + pts[0].x + ' ' + pts[0].y;
@@ -518,33 +499,43 @@ function orth(pts, r){
   var last = pts[pts.length - 1];
   return d + ' L ' + last.x + ' ' + last.y;
 }
-// 칸을 건너뛰는 선 — 중간 칸마다 잡아 둔 빈 자리 높이로 지나간다
-function SpanEdge(p){
-  var d = p.data || {}, pts = d.pts || [];
-  var gap = d.gap || 48, w = d.w || 128;
+// 선은 하나뿐인 문법으로 그린다 — 상자에서 수평으로 나가고, 칸 사이 빈 띠의 통로에서만
+// 위아래로 움직이고, 다음 상자에는 다시 수평으로 든다. gx 는 통로 자리(route 가 정한다),
+// gy 는 그 통로에서 옮겨 갈 높이다. gy 가 비면 닿을 상자의 높이로 간다
+function GutEdge(p){
+  var d = p.data || {}, gx = d.gx || [], gy = d.gy || [];
   var path = [{ x:p.sourceX, y:p.sourceY }], prev = p.sourceY;
-  pts.forEach(function(q){
-    var bend = q.x - gap / 2;
-    path.push({ x:bend, y:prev });
-    path.push({ x:bend, y:q.y });
-    path.push({ x:q.x + w, y:q.y });
-    prev = q.y;
-  });
-  var lastBend = p.targetX - gap / 2;
-  path.push({ x:lastBend, y:prev });
-  path.push({ x:lastBend, y:p.targetY });
+  for (var i = 0; i < gx.length; i++){
+    var y = (gy[i] === null || gy[i] === undefined) ? p.targetY : gy[i];
+    path.push({ x:gx[i], y:prev });
+    path.push({ x:gx[i], y:y });
+    prev = y;
+  }
   path.push({ x:p.targetX, y:p.targetY });
-  // 같은 높이로 이어지는 자리는 꺾을 것이 없다. 겹친 점은 걷는다
-  var clean = path.filter(function(q, i){
+  // 같은 자리에 겹쳐 찍힌 점은 걷는다. 안 걷으면 모서리 반지름이 0 이 된다
+  var pts = path.filter(function(q, i){
     return i === 0 || Math.abs(q.x - path[i-1].x) > 0.5 || Math.abs(q.y - path[i-1].y) > 0.5;
   });
-  return h('path', { id:p.id, d:orth(clean, 8), fill:'none',
-    className:'react-flow__edge-path', style:p.style, markerEnd:p.markerEnd });
+  var mid = pts[(pts.length / 2) | 0];
+  return h(React.Fragment, null, [
+    h('path', { key:'p', id:p.id, d:orth(pts, 8), fill:'none',
+      className:'react-flow__edge-path', style:p.style, markerEnd:p.markerEnd }),
+    p.label ? h(EdgeLabelRenderer, { key:'l' },
+      h('div', { style:{ position:'absolute', pointerEvents:'none',
+        transform:'translate(-50%,-50%) translate(' + mid.x + 'px,' + mid.y + 'px)',
+        background:'#fff', padding:'0 3px', fontSize:'10.5px', lineHeight:1.3,
+        color:'#39415a' } }, p.label)) : null
+  ]);
 }
-var EDGE_TYPES = { chan: ChanEdge, span: SpanEdge };
+var EDGE_TYPES = { gut: GutEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 10;
+// 칸 사이 빈 띠 한가운데가 통로다. 세로 이동은 오직 여기서만 한다 — 상자가 선 칸
+// 안에서 세로로 움직이면 선이 상자 옆구리를 스쳐 그 상자에서 나가는 것처럼 읽힌다
+function gutterX(bd, lane){
+  return bd * (COL_W + COL_GAP) + COL_W + COL_GAP / 2 + (lane || 0);
+}
 // 칸 머리글과 첫 상자 사이 숨통. HDR_H 는 머리글 상자 높이와 같아서
 // 그것만 쓰면 둘이 맞닿는다
 var HDR_GAP = 34;
@@ -589,75 +580,76 @@ function route(edges, geo){
     a.forEach(function(e, i){ e.targetHandle = 't' + slot(i, a.length); });
   });
 
-  // ② 줄기 — 같은 상자에서 나가는 선(또는 한 상자로 모이는 선)은 세로 길을 같이 쓴다.
-  // 선은 아래로만 꺾이므로 구간이 엇갈릴 일이 없다. 줄기끼리만 자리를 나눈다
-  var gut = {}, pool = {};
-  edges.forEach(function(e){
-    var a = geo[e.source], b = geo[e.target];
-    if (!a || !b || a.col >= b.col) return;
-    // 제 자리를 따라가는 선은 줄기에 안 든다. 줄기에 들면 꺾는 자리를 빼앗겨
-    // 다시 상자 높이로 그어진다
-    if (e.data && e.data.pts) return;
-    (pool[a.col] = pool[a.col] || []).push(e);
-  });
+  // ② 통로 — 세로 이동은 칸 사이 빈 띠 한가운데의 통로에서만 일어난다. 같은 상자에서
+  // 갈라지는 선(또는 한 상자로 모이는 선)은 그 통로를 같이 쓰고, 통로가 여럿 겹칠 때만
+  // 가운데에서 ±6px 씩, 최대 ±10px 까지 비켜 앉는다. 빈 띠 전체에 퍼뜨리지 않는다
   var MID = (HANDLE_N - 1) / 2 | 0;
-  Object.keys(pool).forEach(function(gk){
-    var outd = {}, ind = {};
-    pool[gk].forEach(function(e){
+  var LANE_STEP = 6, LANE_MAX = 10;
+  function bounds(e){
+    var a = geo[e.source], b = geo[e.target];
+    if (!a || !b || a.col === b.col) return null;
+    var list = [];
+    if (a.col < b.col) { for (var i = a.col; i < b.col; i++) list.push(i); }
+    else { for (var j = a.col - 1; j >= b.col; j--) list.push(j); }
+    return list;
+  }
+  var cross = {}, lane = {};
+  edges.forEach(function(e){
+    var bs = bounds(e);
+    if (!bs) return;
+    bs.forEach(function(bd){ (cross[bd] = cross[bd] || []).push(e); });
+  });
+  Object.keys(cross).forEach(function(bk){
+    var list = cross[bk], outd = {}, ind = {};
+    list.forEach(function(e){
       outd[e.source] = (outd[e.source] || 0) + 1;
       ind[e.target] = (ind[e.target] || 0) + 1;
     });
-    var g = gut[gk] = {};
-    pool[gk].forEach(function(e){
-      // 하나에서 하나로만 가는 선은 줄기에 넣지 않는다.
-      // 높이가 같으면 곧은 선, 어긋나면 제 홈으로만 내려간다
-      if (outd[e.source] === 1 && ind[e.target] === 1) {
-        if (Math.abs(cy(e.source) - cy(e.target)) <= 8) {
-          e.type = 'straight';
-          e.data = {};
-        } else {
-          // 1:1 은 줄기에 안 든다. 제 칸 사이 빈 띠 한가운데에서 한 번만 꺾는다
-          var ga = geo[e.source], gb = geo[e.target];
-          e.type = 'chan';
-          e.data = { cx: (ga.x + COL_W + gb.x) / 2 };
-        }
-        return;
+    var groups = {}, order = [];
+    list.forEach(function(e){
+      var key = outd[e.source] > 1 ? 'S|' + e.source
+              : (ind[e.target] > 1 ? 'T|' + e.target : 'E|' + e.id);
+      if (!groups[key]) { groups[key] = []; order.push(key); }
+      groups[key].push(e);
+    });
+    order.sort(function(p, q){
+      return cy(p.slice(2) in geo ? p.slice(2) : groups[p][0].source)
+           - cy(q.slice(2) in geo ? q.slice(2) : groups[q][0].source);
+    });
+    var n = order.length;
+    order.forEach(function(key, i){
+      var off = n <= 1 ? 0
+        : Math.max(-LANE_MAX, Math.min(LANE_MAX, (i - (n - 1) / 2) * LANE_STEP));
+      groups[key].forEach(function(e){ lane[e.id + '@' + bk] = off; });
+      // 한 상자에서 갈라지거나 한 상자로 모이는 선은 그 상자 쪽 포트를 하나로 모은다
+      if (groups[key].length > 1) {
+        groups[key].forEach(function(e){
+          if (key.charAt(0) === 'S') e.sourceHandle = 's' + MID;
+          else if (key.charAt(0) === 'T') e.targetHandle = 't' + MID;
+        });
       }
-      var key = outd[e.source] > 1 ? 'S|' + e.source : 'T|' + e.target;
-      (g[key] = g[key] || []).push(e);
     });
   });
-  var TRUNK_TONE = ['#8f97a8', '#7f93b4', '#9a8aa8', '#7fa494', '#b09079', '#8aa1a8'];
-  Object.keys(gut).forEach(function(gk){
-    var g = parseInt(gk, 10);
-    var x0 = g * (COL_W + COL_GAP) + COL_W;
-    var trunks = Object.keys(gut[gk]).map(function(key){
-      var es = gut[gk][key], toward = key.charAt(0) === 'T';
-      return { es:es, toward:toward, anchor: cy(key.slice(2)) };
-    }).sort(function(p, q){ return p.anchor - q.anchor; });
-    // 갈라지는 줄기는 떠난 상자 바로 옆에서, 모이는 줄기는 닿을 상자 바로 앞에서
-    // 꺾는다. 빈 띠를 반으로 나눠 쓰면 꺾는 길이가 짧아진다
-    var half = COL_GAP * 0.45, seat = { out:0, in:0 };
-    var cnt = { out:0, in:0 }, n = trunks.length;
-    trunks.forEach(function(it){ cnt[it.toward ? 'in' : 'out']++; });
-    trunks.forEach(function(it, k){
-      var side = it.toward ? 'in' : 'out';
-      var idx = seat[side]++;
-      var cx = it.toward
-        ? x0 + COL_GAP - half + (idx + 1) * (half / (cnt['in'] + 1))
-        : x0 + (idx + 1) * (half / (cnt['out'] + 1));
-      it.es.forEach(function(e){
-        e.type = 'chan';
-        if (n > 1)
-          e.style = Object.assign({}, e.style,
-            { stroke: TRUNK_TONE[k % TRUNK_TONE.length] });
-        e.data = Object.assign({}, e.data, { cx: cx });
-        if (it.es.length > 1) {
-          if (it.toward) e.targetHandle = 't' + MID;
-          else e.sourceHandle = 's' + MID;
-        }
-      });
+
+  // ③ 선마다 통로 자리와 그 통로에서 옮겨 갈 높이를 적는다. 마지막 통로에서는 닿을
+  // 상자의 높이로 간다(gy 를 비워 둔다). 중간 칸은 그 칸에 잡아 둔 빈 자리 높이로 지난다
+  edges.forEach(function(e){
+    var a = geo[e.source], b = geo[e.target];
+    if (!a || !b) return;
+    if (a.col === b.col) { e.type = 'default'; return; }
+    var bs = bounds(e), corr = (e.data && e.data.corr) || [];
+    if (bs.length === 1 && Math.abs(cy(e.source) - cy(e.target)) <= 8) {
+      e.type = 'straight';
+      e.data = Object.assign({}, e.data, { gx:null, gy:null });
+      return;
+    }
+    var gx = [], gy = [];
+    bs.forEach(function(bd, j){
+      gx.push(gutterX(bd, lane[e.id + '@' + bd] || 0));
+      gy.push(j < bs.length - 1 ? (corr[j] === undefined ? null : corr[j]) : null);
     });
+    e.type = 'gut';
+    e.data = Object.assign({}, e.data, { gx:gx, gy:gy });
   });
 }
 
@@ -779,26 +771,17 @@ function place(nodes, edges){
         data:{ label: COLS[c].label, note: COLS[c].note || null } });
   });
 
-  // 칸을 건너뛰는 선은 제 몫으로 잡아 둔 빈 자리를 따라간다. 그러지 않으면 긴 가로줄이
-  // 닿을 상자 높이로만 그어져 중간 칸 상자의 옆구리를 스친다 — 그러면 그 상자에서
-  // 선이 나가는 것처럼 읽힌다
+  // 칸을 건너뛰는 선은 중간 칸마다 제 몫으로 잡아 둔 빈 자리 높이를 지난다. 그 높이를
+  // 선에 넘겨 둔다 — 통로 자리는 route 가 정한다
   edges.forEach(function(e){
     var ids = span[e.id];
     if (!ids || !ids.length) return;
-    var pts = [];
+    var corr = [];
     for (var i = 0; i < ids.length; i++){
       var g = geo[ids[i]];
-      if (!g) return;
-      pts.push({ x: g.x, y: g.y + g.h / 2 });
+      corr.push(g ? g.y + g.h / 2 : null);
     }
-    e.type = 'span';
-    e.data = Object.assign({}, e.data, { pts: pts, gap: COL_GAP, w: COL_W });
-  });
-
-  // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
-  edges.forEach(function(e){
-    if (colOf[e.source] !== undefined && colOf[e.source] === colOf[e.target])
-      e.type = 'default';
+    e.data = Object.assign({}, e.data, { corr: corr });
   });
   route(edges, geo);
   return out;
