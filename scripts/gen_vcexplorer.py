@@ -2266,13 +2266,13 @@ function App(){
   ]);
   // 탭은 회사·현재 둘뿐이다. 시점·원가·근거 화면은 코드에 남아 주소(mode=)로는 열리지만
   // 탭에서 뺐다(2026-09-11) — 첫 화면에서 고를 것이 셋이나 더 있으면 판이 뒤로 밀린다
-  // 왼쪽은 지금 보는 회사 이름(판 탭), 오른쪽은 「회사」 — 누르면 아래로 목록이 펼쳐진다
+  // 왼쪽은 「회사」(누르면 아래로 목록이 펼쳐진다), 오른쪽은 지금 보는 회사 이름(판 탭)
   var modes = h('div', { key:'m', className:'modes' }, [
-    h('button', { key:'cur', className: (mode === 'current' && !menu) ? 'on' : '',
-      onClick: function(){ setMode('current'); setMenu(false); } }, nm(focal)),
     h('button', { key:'co', className: menu ? 'on' : '',
       onClick: function(){ setMenu(!menu); setSopen(false); } },
-      [ '회사', h('span', { key:'c', className:'car' }, menu ? '▲' : '▼') ])
+      [ '회사', h('span', { key:'c', className:'car' }, menu ? '▲' : '▼') ]),
+    h('button', { key:'cur', className: (mode === 'current' && !menu) ? 'on' : '',
+      onClick: function(){ setMode('current'); setMenu(false); } }, nm(focal))
   ]);
   // 사슬의 타겟 회사들. 많아지면 목록 안에서 민다
   var anchors = [];
