@@ -4,6 +4,11 @@
 FAIL 0 이어야 푸시한다. 규약은 scripts/gen_vcexplorer.py 의 gutterX.
   R1 세로 구간이 상자가 선 칸 안에 들어갔나
   R2 세로 구간이 통로 한가운데에서 ±10px 밖으로 나갔나
+  R3 타겟 왼쪽에서 타겟으로 가는 선이 아래로 꺾었나 (왼쪽은 위로만)
+  R4 타겟 오른쪽에서 타겟에서 나가는 선이 위로 꺾었나 (오른쪽은 아래로만)
+
+방향은 선이 가는 쪽으로 잰다. 타겟에서 왼쪽으로 나가는 선(합작사·법인)은 같은 자리를
+거꾸로 지나므로 아래로 꺾는 것이 맞다 — 상자 차례가 같으면 두 꼴은 한 규칙이다.
 
 브라우저로 사슬을 하나씩 열어 그려진 경로를 읽는다. 곧은 선(같은 높이)과 같은 칸끼리
 잇는 곡선은 세로 구간이 아니라 안 본다.
@@ -52,6 +57,13 @@ def check(page, label):
     page.get_by_text(label, exact=True).first.click()
     page.wait_for_timeout(2500)
     data = page.evaluate("""() => ({
+      focal: (function(){
+        var n = document.querySelector('.react-flow__node .nd.focal');
+        var box = n && n.closest('.react-flow__node');
+        if (!box) return null;
+        var m = /translate\((-?[\d.]+)px, *(-?[\d.]+)px\)/.exec(box.style.transform || '');
+        return m ? parseFloat(m[1]) : null;
+      })(),
       cols: Array.from(document.querySelectorAll('.react-flow__node')).map(function(n){
         var m = /translate\\((-?[\\d.]+)px, *(-?[\\d.]+)px\\)/.exec(n.style.transform || '');
         return m ? parseFloat(m[1]) : null;
@@ -63,12 +75,21 @@ def check(page, label):
     if not cols:
         fails.append(u'FAIL %s — 상자를 하나도 못 읽었다' % label)
         return 0
+    fx = data['focal']
+    if fx is None:
+        fails.append(u'FAIL %s — 타겟 상자를 못 읽었다' % label)
+        return 0
     spines = [c + COL_W + COL_GAP / 2 for c in cols]
     n = 0
     for d in data['paths']:
         if not d:
             continue
-        for (x0, y0), (x1, y1) in segments(d):
+        segs = segments(d)
+        if not segs:
+            continue
+        # 선이 가는 쪽 — 오른쪽으로 가면 1, 왼쪽으로 가면 -1
+        dirx = 1 if segs[-1][1][0] >= segs[0][0][0] else -1
+        for (x0, y0), (x1, y1) in segs:
             if abs(x1 - x0) > 0.6 or abs(y1 - y0) <= 2:
                 continue
             n += 1
@@ -80,6 +101,15 @@ def check(page, label):
                 continue
             if not any(abs(x - s) <= LANE_MAX + TOL for s in spines):
                 fails.append(u'FAIL %s — 세로 구간이 통로 밖이다 (x=%.1f)' % (label, x))
+                continue
+            # 왼쪽은 타겟 쪽으로 갈 때 위로만, 오른쪽은 타겟에서 멀어질 때 아래로만
+            dy = y1 - y0
+            if x < fx and dirx * dy > TOL:
+                fails.append(u'FAIL %s — 타겟 왼쪽에서 꺾는 쪽이 거꾸로다 (x=%.1f, %.1f→%.1f)'
+                             % (label, x, y0, y1))
+            if x > fx + COL_W and dirx * dy < -TOL:
+                fails.append(u'FAIL %s — 타겟 오른쪽에서 꺾는 쪽이 거꾸로다 (x=%.1f, %.1f→%.1f)'
+                             % (label, x, y0, y1))
     return n
 
 

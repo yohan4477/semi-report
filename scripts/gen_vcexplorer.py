@@ -731,21 +731,41 @@ function place(nodes, edges){
     if (fi > 0) list.unshift(list.splice(fi, 1)[0]);
   });
 
-  // 자리는 차례대로 붙여 앉힌다. 칸마다 위에서 아래로 채우고, 타겟 칸에서 바깥으로
-  // 한 칸씩 나간다. 한 상자는 제 앞 칸 이웃보다 위로 올라가지 않는다 — 그래야 왼쪽 선은
-  // 위로만, 오른쪽 선은 아래로만 꺾인다. 자리를 보는 것은 여기까지고,
-  // 꺾는 일은 route 가 칸 사이 빈 띠에서만 맡는다
-  // 관계는 차례를 정하는 데까지만 쓴다. 차례가 정해진 뒤로는 칸마다 위에서 아래로
-  // 빈틈없이 붙여 앉힌다 — 선을 보고 상자를 밀지 않는다. 밀기 시작하면 사슬이 길수록
-  // 판이 몇 곱절 길어지고, 상자 자리가 관계 수에 따라 출렁인다
-  used.forEach(function(c){
+  // 자리는 타겟 칸에서 바깥으로 한 칸씩 나가며 잡는다. 칸 안에서는 차례대로 위에서
+  // 아래로 붙여 앉히되, 한 상자는 타겟 쪽 이웃보다 위로 올라가지 못한다(바닥값). 그래야
+  // 왼쪽 선은 위로만, 오른쪽 선은 아래로만 꺾인다 — 방향은 꺾는 쪽이 아니라 앉히는
+  // 쪽이 보장한다. 차례는 위에서 정한 것을 그대로 쓴다
+  var where = {};
+  used.forEach(function(c, i){
+    byCol[c].forEach(function(it){ where[it.id] = i; });
+  });
+  function cyOf(it){ return it.top + it.h / 2; }
+  function packCol(i, toward){
     var y = 0;
-    byCol[c].forEach(function(it, k){
+    byCol[used[i]].forEach(function(it, k){
       it.ord = k;
-      it.top = y;
-      y += it.h + ROW_GAP;
+      var floor = 0;
+      (nbr[it.id] || []).forEach(function(x){
+        if (where[x] !== toward) return;
+        var nb = byCol[used[toward]].filter(function(q){ return q.id === x; })[0];
+        if (nb && nb.top !== undefined) floor = Math.max(floor, cyOf(nb) - it.h / 2);
+      });
+      it.top = Math.max(y, floor);
+      y = it.top + it.h + ROW_GAP;
+    });
+  }
+  var fcol = 0;
+  used.forEach(function(c, i){
+    byCol[c].forEach(function(it){
+      if (it.n && it.n.data && it.n.data.focal) fcol = i;
     });
   });
+  (function(){
+    var y = 0;
+    byCol[used[fcol]].forEach(function(it, k){ it.ord = k; it.top = y; y += it.h + ROW_GAP; });
+  })();
+  for (var li = fcol - 1; li >= 0; li--) packCol(li, li + 1);
+  for (var ri = fcol + 1; ri < used.length; ri++) packCol(ri, ri - 1);
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
   var lo = 1e9, hi = -1e9;
