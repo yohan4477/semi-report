@@ -314,7 +314,12 @@ var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
 function colOfRel(r, up){
   var t = tierOf(r, up);
-  return (t && COL_OF[t] !== undefined) ? COL_OF[t] : (up ? 2 : 6);
+  if (t && COL_OF[t] !== undefined) return COL_OF[t];
+  if (up) return COL_OF.MATERIAL_PROCESSING;
+  // 층이 안 적힌 상대는 갈래를 보고 자리를 준다. BOM 은 타겟 왼쪽에 놓일
+  // 중간재이고, 고객 칸으로 보내면 소재가 고객 자리에 앉는다
+  return r.lane === 'DOWNSTREAM' ? COL_OF.CONTRACTUAL_CUSTOMER
+                                 : COL_OF.MATERIAL_PROCESSING;
 }
 // 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
 var CAT_ORDER = ['Cell', 'Interconnect', 'Hotbox', 'Power electronics', 'Mechanical',
@@ -531,9 +536,17 @@ function route(edges, geo){
       var es = gut[gk][key], toward = key.charAt(0) === 'T';
       return { es:es, toward:toward, anchor: cy(key.slice(2)) };
     }).sort(function(p, q){ return p.anchor - q.anchor; });
-    var n = trunks.length;
+    // 갈라지는 줄기는 떠난 상자 바로 옆에서, 모이는 줄기는 닿을 상자 바로 앞에서
+    // 꺾는다. 빈 띠를 반으로 나눠 쓰면 꺾는 길이가 짧아진다
+    var half = COL_GAP * 0.45, seat = { out:0, in:0 };
+    var cnt = { out:0, in:0 }, n = trunks.length;
+    trunks.forEach(function(it){ cnt[it.toward ? 'in' : 'out']++; });
     trunks.forEach(function(it, k){
-      var cx = x0 + (k + 1) * (COL_GAP / (n + 1));
+      var side = it.toward ? 'in' : 'out';
+      var idx = seat[side]++;
+      var cx = it.toward
+        ? x0 + COL_GAP - half + (idx + 1) * (half / (cnt['in'] + 1))
+        : x0 + (idx + 1) * (half / (cnt['out'] + 1));
       it.es.forEach(function(e){
         e.type = 'chan';
         if (n > 1)
@@ -616,51 +629,24 @@ function place(nodes, edges){
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
 
-  // 선은 아래로만 내려간다. 상대 상자의 가운데가 늘 같거나 아래에 오도록 자리를 잡는다.
-  // 위로 꺾는 선이 있으면 사람은 역방향 관계로 읽는다
-  var need = {};   // 상자마다 「적어도 여기보다는 아래」
-  used.forEach(function(c){ byCol[c].forEach(function(it){ need[it.id] = 0; }); });
-  var inEdge = {};
-  edges.forEach(function(e){
-    if (colOf[e.source] === undefined || colOf[e.target] === undefined) return;
-    if (at[colOf[e.source]] >= at[colOf[e.target]]) return;   // 같은 칸·역방향은 뺀다
-    (inEdge[e.target] = inEdge[e.target] || []).push(e.source);
-  });
-  // 칸을 건너뛰는 선의 중간 자리도 같은 제약을 받는다
-  edges.forEach(function(e){
-    var a = at[colOf[e.source]], b = at[colOf[e.target]];
-    if (a === undefined || b === undefined || Math.abs(b - a) <= 1) return;
-    var step = b > a ? 1 : -1, prev = e.source;
-    for (var k = a + step; k !== b; k += step) {
-      var did = '~' + e.id + '@' + k;
-      (inEdge[did] = inEdge[did] || []).push(prev);
-      prev = did;
-    }
-    (inEdge[e.target] = inEdge[e.target] || []).push(prev);
-  });
-
-  var ctrOf = {};
+  // 자리는 차례대로 붙여 앉힌다. 선 때문에 상자를 아래로 밀지 않는다 —
+  // 밀기 시작하면 고객이 늘수록 판이 세로로 길어지고 선이 판 바닥을 한 바퀴 돈다.
+  // 꺾는 일은 route 가 칸 사이 빈 띠에서만 맡는다
+  var colH = {}, maxH = 0;
   used.forEach(function(c){
-    var list = byCol[c];
-    // 왼쪽에서 내려온 제약을 먼저 세우고, 그 값 순으로 줄을 세운다.
-    // 갈래가 퍼지는 자리는 아래로만 간다. 여럿이 한 상자로 모이는 자리는
-    // 가운데를 보게 둔다 — 다 아래로 밀면 중심 회사가 판 바닥까지 내려간다
-    list.forEach(function(it){
-      var ps = (inEdge[it.id] || []).map(function(x){ return ctrOf[x]; })
-        .filter(function(v){ return v !== undefined; });
-      // 들어오는 선의 출발점 중 가장 아래를 기준으로 잡는다. 평균을 쓰면 그보다
-      // 아래에 있던 출발점의 선이 위로 꺾인다
-      it.want = ps.length ? Math.max.apply(null, ps) : 0;
-    });
-    list.sort(function(a, b){ return (a.want - b.want) || (a.ord - b.ord); });
-    var y = -1e9;
-    list.forEach(function(it, k){
+    var y = 0;
+    byCol[c].forEach(function(it, k){
       it.ord = k;
-      // 아래로만 민다. 위로 당기면 그 순간 선이 위로 꺾인다
-      it.top = Math.max(it.want - it.h / 2, y);
-      y = it.top + it.h + ROW_GAP;
-      ctrOf[it.id] = it.top + it.h / 2;
+      it.top = y;
+      y += it.h + ROW_GAP;
     });
+    colH[c] = Math.max(0, y - ROW_GAP);
+    if (colH[c] > maxH) maxH = colH[c];
+  });
+  // 칸마다 높이가 달라서, 가장 높은 칸을 기준으로 가운데를 맞춘다
+  used.forEach(function(c){
+    var off = (maxH - colH[c]) / 2;
+    byCol[c].forEach(function(it){ it.top += off; });
   });
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
