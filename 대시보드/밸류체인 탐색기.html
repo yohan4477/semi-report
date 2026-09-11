@@ -251,7 +251,9 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Financing':'금융', 'EPC / Distribution':'EPC·유통', 'Utility':'유틸리티',
   'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
   'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합',
-  'Material':'소재', 'Substrate':'기판', 'Equipment':'장비' };
+  'Material':'소재', 'Substrate':'기판', 'Equipment':'장비',
+  'Revenue type':'매출원', 'Chip maker':'칩 회사', 'Automotive':'자동차',
+  'Integrator':'통합', 'OSAT':'후공정(OSAT)' };
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'고객', INTERMEDIARY:'중개',
   PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
@@ -1076,6 +1078,61 @@ function Swim(p){
 }
 
 // ── 근거 ────────────────────────────────────────────────────────────
+var CHAIN_KO = { 'bloom-energy':'블룸에너지', 'kr-substrate':'반도체 기판', 'nvidia':'엔비디아' };
+function chainKo(k){ return CHAIN_KO[k] || k; }
+
+// ── 회사 목록 ───────────────────────────────────────────────────────
+function Roster(p){
+  var rows = [];
+  Object.keys(ENT).forEach(function(id){
+    var rs = relsOf(id);
+    if (!rs.length) return;
+    var e = ENT[id];
+    var inn = 0, out = 0, chains = {};
+    rs.forEach(function(r){
+      if (r.target_entity === id) inn++; else out++;
+      chains[CHAIN_OF[r.id]] = 1;
+    });
+    rows.push({ id:id, e:e, inn:inn, out:out, deg: rs.length,
+                chain: Object.keys(chains).map(chainKo).join('·') });
+  });
+  rows.sort(function(a, b){
+    if (a.chain !== b.chain) return a.chain < b.chain ? -1 : 1;
+    return b.deg - a.deg;
+  });
+  var q = (p.q || '').toLowerCase();
+  var view = q ? rows.filter(function(r){
+    return (r.e.name + ' ' + (r.e.name_ko || '') + ' ' + r.id).toLowerCase().indexOf(q) >= 0;
+  }) : rows;
+  var TYPE_KO = { company:'회사', jv:'합작', project_spv:'프로젝트 법인', fund_jv:'펀드 JV',
+    financial_institution:'금융기관', utility:'유틸리티', end_user:'최종 사용자',
+    material:'소재', revenue_type:'매출원' };
+  return h('div', { className:'pane' }, [
+    h('h2', { key:'t' }, '이 판에 선 이름 ' + rows.length + '개'),
+    h('p', { key:'n', className:'note' },
+      '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 소재와 매출원은 회사가 아니라 층이다.'),
+    h('div', { key:'w', style:{ overflowX:'auto' } },
+      h('table', { className:'t' }, [
+        h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '이름'),
+          h('th', { key:2 }, '나라'), h('th', { key:3 }, '갈래'), h('th', { key:4 }, '유형'),
+          h('th', { key:5 }, '사슬'), h('th', { key:6 }, '들어옴'),
+          h('th', { key:7 }, '나감') ])),
+        h('tbody', { key:'b' }, view.map(function(r){
+          return h('tr', { key:r.id, style:{ cursor:'pointer' },
+            onClick: function(){ p.onPick(r.id); } }, [
+            h('td', { key:1 }, withFlag(r.id)),
+            h('td', { key:2 }, r.e.country || '—'),
+            h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
+            h('td', { key:4 }, TYPE_KO[r.e.entity_type] || r.e.entity_type),
+            h('td', { key:5 }, r.chain),
+            h('td', { key:6 }, r.inn || '—'),
+            h('td', { key:7 }, r.out || '—')
+          ]);
+        }))
+      ]))
+  ]);
+}
+
 function Evidence(){
   var rows = [];
   Object.keys(CHAINS).forEach(function(k){
@@ -1320,7 +1377,8 @@ function App(){
       })) : null
     ]),
     h('div', { key:'m', className:'modes' }, [
-      ['current', '현재'], ['timeline', '시점'], ['bom', '원가'], ['evidence', '근거']
+      ['current', '현재'], ['timeline', '시점'], ['bom', '원가'], ['evidence', '근거'],
+      ['roster', '회사']
     ].map(function(x){
       return h('button', { key:x[0], className: mode === x[0] ? 'on' : '',
         onClick: function(){ setMode(x[0]); } }, x[1]);
@@ -1368,7 +1426,9 @@ function App(){
   }, []));
 
   var body;
-  if (mode === 'timeline') body = h(Swim, { focal:focal, onSel:setSel });
+  if (mode === 'roster') body = h(Roster, { q:q,
+    onPick: function(id){ setQ(''); setMode('current'); goFocal(id); } });
+  else if (mode === 'timeline') body = h(Swim, { focal:focal, onSel:setSel });
   else if (mode === 'evidence') body = h(Evidence, null);
   else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
