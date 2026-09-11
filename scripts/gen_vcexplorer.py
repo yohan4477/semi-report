@@ -447,6 +447,9 @@ var EDGE_TYPES = { chan: ChanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
 var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 24, DUMMY_H = 10;
+// true 로 두면 모이는 자리까지 아래로만 민다. 선은 한 번도 위로 안 꺾이지만
+// 중심 회사가 판 바닥까지 내려간다. false 면 모이는 자리만 가운데를 본다
+var STRICT_DOWN = false;
 
 // 상자 높이를 미리 어림한다. 한글은 두 칸, 영숫자는 한 칸으로 센다
 function cw(s){
@@ -488,14 +491,15 @@ function route(edges, geo){
     a.forEach(function(e, i){ e.targetHandle = 't' + slot(i, a.length); });
   });
 
-  // ② 줄기 — 같은 상자에서 나가는 선은 세로 길을 같이 쓴다.
-  // 엣지마다 레인을 주면 나란한 여러 줄이 되고, 그게 겹쳐 보이는 정체다
+  // ② 줄기 — 같은 상자에서 나가는 선(또는 한 상자로 모이는 선)은 세로 길을 같이 쓴다.
+  // 선은 아래로만 꺾이므로 구간이 엇갈릴 일이 없다. 줄기끼리만 자리를 나눈다
   var gut = {}, pool = {};
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
-    if (!a || !b || a.col >= b.col) return;          // 같은 칸·역방향은 그대로 둔다
+    if (!a || !b || a.col >= b.col) return;
     (pool[a.col] = pool[a.col] || []).push(e);
   });
+  var MID = (HANDLE_N - 1) / 2 | 0;
   Object.keys(pool).forEach(function(gk){
     var outd = {}, ind = {};
     pool[gk].forEach(function(e){
@@ -504,48 +508,28 @@ function route(edges, geo){
     });
     var g = gut[gk] = {};
     pool[gk].forEach(function(e){
-      // 한 상자에서 여럿 나가면 나가는 쪽으로, 여럿이 한 상자로 모이면 들어오는 쪽으로.
-      // 공급단은 여러 공급사가 계통 하나로 모이는 꼴이라 뒤쪽이 맞다
       var key = outd[e.source] > 1 ? 'S|' + e.source
               : (ind[e.target] > 1 ? 'T|' + e.target : 'S|' + e.source);
       (g[key] = g[key] || []).push(e);
     });
   });
-  var MID = (HANDLE_N - 1) / 2 | 0;
-// 한 띠에 줄기가 여럿이면 줄기마다 다른 색을 준다. 겹쳐 지나가도 어느 줄기인지 갈린다
-var TRUNK_TONE = ['#8f97a8', '#7f93b4', '#9a8aa8', '#7fa494', '#b09079', '#8aa1a8'];
+  var TRUNK_TONE = ['#8f97a8', '#7f93b4', '#9a8aa8', '#7fa494', '#b09079', '#8aa1a8'];
   Object.keys(gut).forEach(function(gk){
     var g = parseInt(gk, 10);
-    var x0 = g * (COL_W + COL_GAP) + COL_W;          // 띠 왼쪽 끝
+    var x0 = g * (COL_W + COL_GAP) + COL_W;
     var trunks = Object.keys(gut[gk]).map(function(key){
       var es = gut[gk][key], toward = key.charAt(0) === 'T';
-      var lo = cy(key.slice(2)), hi = lo;
-      es.forEach(function(e){
-        var y = cy(toward ? e.source : e.target);
-        if (y < lo) lo = y;
-        if (y > hi) hi = y;
-      });
-      return { es:es, lo:lo, hi:hi, toward:toward };
-    }).sort(function(p, q){ return p.lo - q.lo; });
-    var tail = [];                                   // 레인마다 마지막으로 쓴 아래끝
-    trunks.forEach(function(it){
-      var k = 0;
-      while (k < tail.length && tail[k] > it.lo - 8) k++;
-      tail[k] = it.hi;
-      it.lane = k;
-    });
-    var n = Math.max(1, tail.length);
-    trunks.forEach(function(it){
-      var cx = x0 + (it.lane + 1) * (COL_GAP / (n + 1));
+      return { es:es, toward:toward, anchor: cy(key.slice(2)) };
+    }).sort(function(p, q){ return p.anchor - q.anchor; });
+    var n = trunks.length;
+    trunks.forEach(function(it, k){
+      var cx = x0 + (k + 1) * (COL_GAP / (n + 1));
       it.es.forEach(function(e){
         e.type = 'chan';
-        // 줄기가 여럿이면 색을 갈라 준다. 꼴(실선·파선)은 근거 등급 그대로 둔다
         if (n > 1)
           e.style = Object.assign({}, e.style,
-            { stroke: TRUNK_TONE[it.lane % TRUNK_TONE.length],
-              opacity: it.lane > 0 ? 0.85 : 1 });
+            { stroke: TRUNK_TONE[k % TRUNK_TONE.length] });
         e.data = Object.assign({}, e.data, { cx: cx });
-        // 줄기를 나눠 쓰면 그 끝의 포트도 하나로 모은다. 안 그러면 뿌리가 흩어진다
         if (it.es.length > 1) {
           if (it.toward) e.targetHandle = 't' + MID;
           else e.sourceHandle = 's' + MID;
@@ -622,58 +606,53 @@ function place(nodes, edges){
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
 
-  // 첫 자리 — 차례대로 쌓는다
-  used.forEach(function(c){
-    var y = 0;
-    byCol[c].forEach(function(it){ it.top = y; y += it.h + ROW_GAP; });
+  // 선은 아래로만 내려간다. 상대 상자의 가운데가 늘 같거나 아래에 오도록 자리를 잡는다.
+  // 위로 꺾는 선이 있으면 사람은 역방향 관계로 읽는다
+  var need = {};   // 상자마다 「적어도 여기보다는 아래」
+  used.forEach(function(c){ byCol[c].forEach(function(it){ need[it.id] = 0; }); });
+  var inEdge = {};
+  edges.forEach(function(e){
+    if (colOf[e.source] === undefined || colOf[e.target] === undefined) return;
+    if (at[colOf[e.source]] >= at[colOf[e.target]]) return;   // 같은 칸·역방향은 뺀다
+    (inEdge[e.target] = inEdge[e.target] || []).push(e.source);
+  });
+  // 칸을 건너뛰는 선의 중간 자리도 같은 제약을 받는다
+  edges.forEach(function(e){
+    var a = at[colOf[e.source]], b = at[colOf[e.target]];
+    if (a === undefined || b === undefined || Math.abs(b - a) <= 1) return;
+    var step = b > a ? 1 : -1, prev = e.source;
+    for (var k = a + step; k !== b; k += step) {
+      var did = '~' + e.id + '@' + k;
+      (inEdge[did] = inEdge[did] || []).push(prev);
+      prev = did;
+    }
+    (inEdge[e.target] = inEdge[e.target] || []).push(prev);
   });
 
-  // 선이 되도록 곧게 지나가도록 y 를 맞춘다.
-  // 이어진 상대의 한가운데를 바라보되 차례와 간격은 지킨다
-  function ctr(it){ return it.top + it.h / 2; }
-  var pos = {};
-  function reindex(){
-    used.forEach(function(c){ byCol[c].forEach(function(it){ pos[it.id] = it; }); });
-  }
-  reindex();
-  function align(dir){
-    var seq = dir > 0 ? used.slice(1) : used.slice(0, -1).reverse();
-    seq.forEach(function(c){
-      var list = byCol[c];
-      list.forEach(function(it){
-        var ks = (nbr[it.id] || []).map(function(x){ return pos[x]; })
-          .filter(function(o){ return o && o !== it && colOf[o.id] !== c; });
-        it.want = ks.length
-          ? ks.reduce(function(a, o){ return a + ctr(o); }, 0) / ks.length - it.h / 2
-          : it.top;
-      });
-      // 차례와 간격을 지키면서 want 에 가장 가깝게 놓는다 (이웃 위반 풀기).
-      // 한 번에 밀어 넣기만 하면 아래로 계속 밀려 판이 길어진다
-      var acc = 0, blocks = [];
-      list.forEach(function(it, k){
-        var a = it.want - acc;                    // 간격을 뺀 눈금으로 옮긴다
-        acc += it.h + ROW_GAP;
-        var blk = { sum:a, n:1, i:k };
-        while (blocks.length && blocks[blocks.length - 1].sum / blocks[blocks.length - 1].n
-               > blk.sum / blk.n){
-          var prev = blocks.pop();
-          blk.sum += prev.sum; blk.n += prev.n; blk.i = prev.i;
-        }
-        blocks.push(blk);
-      });
-      var fit = [], at2 = 0;
-      blocks.forEach(function(b){
-        var v = b.sum / b.n;
-        for (var k = 0; k < b.n; k++) fit[at2++] = v;
-      });
-      acc = 0;
-      list.forEach(function(it, k){
-        it.top = fit[k] + acc;
-        acc += it.h + ROW_GAP;
-      });
+  var ctrOf = {};
+  used.forEach(function(c){
+    var list = byCol[c];
+    // 왼쪽에서 내려온 제약을 먼저 세우고, 그 값 순으로 줄을 세운다.
+    // 갈래가 퍼지는 자리는 아래로만 간다. 여럿이 한 상자로 모이는 자리는
+    // 가운데를 보게 둔다 — 다 아래로 밀면 중심 회사가 판 바닥까지 내려간다
+    list.forEach(function(it){
+      var ps = (inEdge[it.id] || []).map(function(x){ return ctrOf[x]; })
+        .filter(function(v){ return v !== undefined; });
+      if (!ps.length) it.want = 0;
+      else if (ps.length === 1) it.want = ps[0];
+      else if (STRICT_DOWN) it.want = Math.max.apply(null, ps);
+      else it.want = ps.reduce(function(a, v){ return a + v; }, 0) / ps.length;
     });
-  }
-  for (var a2 = 0; a2 < 6; a2++){ align(1); align(-1); }
+    list.sort(function(a, b){ return (a.want - b.want) || (a.ord - b.ord); });
+    var y = -1e9;
+    list.forEach(function(it, k){
+      it.ord = k;
+      // 아래로만 민다. 위로 당기면 그 순간 선이 위로 꺾인다
+      it.top = Math.max(it.want - it.h / 2, y);
+      y = it.top + it.h + ROW_GAP;
+      ctrOf[it.id] = it.top + it.h / 2;
+    });
+  });
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
   var lo = 1e9, hi = -1e9;
