@@ -140,10 +140,12 @@ min-width:100px;max-width:128px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:p
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
 .more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
-.hdr{width:128px;text-align:center;font-size:11px;color:var(--ink2);font-weight:700;
-letter-spacing:-.2px;padding:4px 6px;background:var(--hi);border:1px solid var(--line);
-border-radius:5px;pointer-events:none;white-space:nowrap;overflow:hidden;
-text-overflow:ellipsis}
+.hdr{width:128px;text-align:center;padding:4px 6px;background:var(--hi);
+border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden}
+.hdr .hl{font-size:11px;color:var(--ink2);font-weight:700;letter-spacing:-.2px;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr .hn{font-size:10px;color:var(--ink3);font-weight:500;letter-spacing:-.2px;
+margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
 .nd .val{display:inline-block;margin-left:5px;padding:0 4px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink2);font-weight:700;
@@ -333,18 +335,21 @@ function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
 // 상자 꼴 — 회사는 실선, 층(소재·부품·계통·매출원)은 파선
 var KIND_OF = { material:'grp', component:'grp', subsystem:'grp', revenue_type:'grp',
                 application:'grp' };
-// 세로 한 줄에는 같은 단계만 선다. 왼쪽부터 오른쪽으로 사슬 순서다
+// 세로 한 줄에는 같은 단계만 선다. 왼쪽부터 오른쪽으로 사슬 순서다.
+// note 는 그 칸이 무엇을 세는 자리인지 — 매출원·최종 사용자 칸에는 사슬의 다음 단계가
+// 아니라 같은 매출을 다른 축으로 쪼갠 상자가 서기 때문에, 밝히지 않으면 옆 칸과
+// 이어진 단계로 읽힌다
 var COLS = [
-  { key:'RAW_MATERIAL', label:'원재료' },
-  { key:'MATERIAL_PROCESSING', label:'소재·가공' },
-  { key:'COMPONENT_SUPPLIER', label:'부품 공급' },
-  { key:'SUBSYSTEM', label:'계통·모듈' },
-  { key:'FOCAL', label:'타겟' },
-  { key:'REVENUE_TYPE', label:'매출원' },
-  { key:'CONTRACTUAL_CUSTOMER', label:'고객' },
-  { key:'INTERMEDIARY', label:'중개' },
-  { key:'PROJECT', label:'프로젝트·부지' },
-  { key:'END_USER', label:'최종 사용자' }
+  { key:'RAW_MATERIAL', label:'원재료', note:'사슬 단계' },
+  { key:'MATERIAL_PROCESSING', label:'소재·가공', note:'사슬 단계' },
+  { key:'COMPONENT_SUPPLIER', label:'부품 공급', note:'사슬 단계' },
+  { key:'SUBSYSTEM', label:'계통·모듈', note:'사슬 단계' },
+  { key:'FOCAL', label:'타겟', note:null },
+  { key:'REVENUE_TYPE', label:'매출원', note:'제품별 매출 축' },
+  { key:'CONTRACTUAL_CUSTOMER', label:'고객', note:'직접 거래' },
+  { key:'INTERMEDIARY', label:'중개', note:'유통' },
+  { key:'PROJECT', label:'프로젝트·부지', note:'배치처' },
+  { key:'END_USER', label:'최종 사용자', note:'전방 축·수요 노출' }
 ];
 var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
@@ -471,7 +476,10 @@ function Nd(p){
   return h('div', { className: cls }, ports('t').concat(mid).concat(ports('s')));
 }
 function Hdr(p){
-  return h('div', { className:'hdr' }, p.data.label);
+  return h('div', { className:'hdr' }, [
+    h('div', { key:'l', className:'hl' }, p.data.label),
+    p.data.note ? h('div', { key:'n', className:'hn' }, p.data.note) : null
+  ]);
 }
 // 세로 구간 x 를 data.cx 로 못박는다. 기본 smoothstep 은 늘 한가운데로 꺾어
 // 같은 칸 쌍의 선이 전부 한 줄에 포개진다
@@ -495,7 +503,7 @@ function ChanEdge(p){
 var EDGE_TYPES = { chan: ChanEdge };
 var NODE_TYPES = { nd: Nd, hdr: Hdr };
 
-var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 24, DUMMY_H = 10;
+var COL_W = 128, COL_GAP = 48, ROW_GAP = 13, HDR_H = 40, DUMMY_H = 10;
 // 칸 머리글과 첫 상자 사이 숨통. HDR_H 는 머리글 상자 높이와 같아서
 // 그것만 쓰면 둘이 맞닿는다
 var HDR_GAP = 34;
@@ -721,7 +729,8 @@ function place(nodes, edges){
     });
     if (COLS[c])
       out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
-        connectable:false, position:{ x:x, y:0 }, data:{ label: COLS[c].label } });
+        connectable:false, position:{ x:x, y:0 },
+        data:{ label: COLS[c].label, note: COLS[c].note || null } });
   });
 
   // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
