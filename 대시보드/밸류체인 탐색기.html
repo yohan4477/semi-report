@@ -1359,10 +1359,11 @@ function App(){
       return r.subsystem === subsystem && r.target_entity === focal;
     });
     if (!rels.length) return;
-    var gk = 'u:' + subsystem;
+    // 묶음 열쇠는 방향·lane·계통 셋으로 만든다. 그래프 쪽과 같은 꼴이어야 열린다
+    var gk = 'u:' + rels[0].lane + ':' + subsystem;
     setMode('current');
     setOpen(function(o){ return o.indexOf(gk) >= 0 ? o : o.concat([gk]); });
-    setSel({ kind:'grp', id:gk, label:subsystem, lane:rels[0].lane, up:true,
+    setSel({ kind:'grp', id:gk, label:subKo(subsystem), lane:rels[0].lane, up:true,
              rels: rels.map(function(r){ return r.id; }) });
   }
 
@@ -1438,7 +1439,9 @@ function App(){
   var body;
   if (mode === 'roster') body = h(Roster, { q:q,
     onPick: function(id){ setQ(''); setMode('current'); goFocal(id); } });
-  else if (mode === 'timeline') body = h(Swim, { focal:focal, onSel:setSel });
+  else if (mode === 'timeline')
+    body = h(Swim, { focal:focal,
+      onSel: function(ref){ setSel(ref); setDrw(true); } });
   else if (mode === 'evidence') body = h(Evidence, null);
   else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
