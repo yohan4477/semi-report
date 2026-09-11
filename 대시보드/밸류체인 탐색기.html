@@ -243,7 +243,7 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
   'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합' };
 function subKo(k){ return SUB_KO[k] || k; }
-var TIER_KO = { CONTRACTUAL_CUSTOMER:'계약 상대', INTERMEDIARY:'중개',
+var TIER_KO = { CONTRACTUAL_CUSTOMER:'고객', INTERMEDIARY:'중개',
   PROJECT:'프로젝트·부지', END_USER:'최종 사용자',
   REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
@@ -254,9 +254,9 @@ var COLS = [
   { key:'MATERIAL_PROCESSING', label:'소재·가공' },
   { key:'COMPONENT_SUPPLIER', label:'부품 공급' },
   { key:'SUBSYSTEM', label:'계통·모듈' },
-  { key:'FOCAL', label:'이 회사' },
+  { key:'FOCAL', label:'타겟' },
   { key:'REVENUE_TYPE', label:'매출원' },
-  { key:'CONTRACTUAL_CUSTOMER', label:'계약 상대' },
+  { key:'CONTRACTUAL_CUSTOMER', label:'고객' },
   { key:'INTERMEDIARY', label:'중개' },
   { key:'PROJECT', label:'프로젝트·부지' },
   { key:'END_USER', label:'최종 사용자' }
@@ -372,20 +372,46 @@ function place(nodes, edges){
   });
   edges.forEach(function(e){ g.setEdge(e.source, e.target); });
   dagre.layout(g);
-  // 세로 차례만 dagre 에서 얻고, 가로 자리는 단계 칸에 못박는다.
-  // 한 세로줄에는 같은 단계만 선다
-  var byCol = {};
+  // 가로 자리는 단계 칸에 못박고, 세로 차례는 이어진 상자 자리의 평균으로 정한다.
+  // 그래야 선이 칸을 건너뛰며 엇갈리지 않는다
+  var byCol = {}, colOf = {};
   nodes.forEach(function(n){
     var c = n.data.col === undefined ? COL_OF.FOCAL : n.data.col;
+    colOf[n.id] = c;
     (byCol[c] = byCol[c] || []).push({ n:n, y:g.node(n.id).y, h:g.node(n.id).height });
   });
   var used = Object.keys(byCol).map(Number).sort(function(a, b){ return a - b; });
+  used.forEach(function(c){
+    byCol[c].sort(function(a, b){ return a.y - b.y; });
+  });
+
+  var nbr = {};   // 상자마다 이어진 상대
+  edges.forEach(function(e){
+    (nbr[e.source] = nbr[e.source] || []).push(e.target);
+    (nbr[e.target] = nbr[e.target] || []).push(e.source);
+  });
+  function order(c, from){
+    var ref = {};
+    byCol[from].forEach(function(it, i){ ref[it.n.id] = i; });
+    byCol[c].forEach(function(it){
+      var ks = (nbr[it.n.id] || []).filter(function(x){ return ref[x] !== undefined; });
+      it.bary = ks.length
+        ? ks.reduce(function(a, x){ return a + ref[x]; }, 0) / ks.length
+        : 999;
+    });
+    byCol[c].sort(function(a, b){ return a.bary - b.bary; });
+  }
+  var fc = COL_OF.FOCAL;
+  used.filter(function(c){ return c > fc; }).forEach(function(c, i, arr){
+    order(c, i === 0 ? fc : arr[i - 1]);
+  });
+  var left = used.filter(function(c){ return c < fc; }).reverse();
+  left.forEach(function(c, i){ order(c, i === 0 ? fc : left[i - 1]); });
+
   var heights = {};
   used.forEach(function(c){
     var y = 0;
-    byCol[c].sort(function(a, b){ return a.y - b.y; }).forEach(function(it){
-      it.top = y; y += it.h + ROW_GAP;
-    });
+    byCol[c].forEach(function(it){ it.top = y; y += it.h + ROW_GAP; });
     heights[c] = y - ROW_GAP;
   });
   var tall = Math.max.apply(null, used.map(function(c){ return heights[c]; }));
@@ -399,6 +425,12 @@ function place(nodes, edges){
     out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false, connectable:false,
       position:{ x: i * (COL_W + COL_GAP), y: 0 },
       data:{ label: COLS[c] ? COLS[c].label : '' } });
+  });
+  // 같은 칸끼리 이어진 선은 꺾지 않고 부드럽게 돌린다
+  edges.forEach(function(e){
+    if (colOf[e.source] !== undefined && colOf[e.source] === colOf[e.target]) {
+      e.type = 'default';
+    }
   });
   return out;
 }
@@ -655,7 +687,7 @@ function Drawer(p){
       h('h3', { key:'t' }, ref.label),
       h('div', { key:'r', className:'role' },
         LANE_KO[ref.lane] + ' · ' + rels.length + '곳 · '
-        + (ref.up ? '이 회사로 들어온다' : '이 회사에서 나간다')),
+        + (ref.up ? '타겟으로 들어온다' : '타겟에서 나간다')),
       h('table', { key:'x', className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '회사'),
           h('th', { key:2 }, '부품·역무'), h('th', { key:3 }, year + ' 비중'),
@@ -1120,8 +1152,8 @@ function App(){
     h('i', { key:'q' }, '이름 앞 ? 원문이 나라를 안 밝힘'),
     h('i', { key:'p' }, '+ 누르면 다음 칸이 열림'),
     h('b', { key:'c' }, '가로'),
-    h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통'),
-    h('i', { key:7 }, '오른쪽 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
+    h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
+    h('i', { key:7 }, '오른쪽 고객 → 중개 → 프로젝트 → 최종 사용자')
   ]);
 
   return h('div', { className:'app' }, [ top, crumb,
