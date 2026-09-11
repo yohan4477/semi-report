@@ -289,7 +289,7 @@ R = [
   'FY2025 3위 고객 12%. 법인명이 공개되지 않았다'),
  ('bloom-be26c1', 'be-rev-unallocated', 'be26_c1', 'SELLS_TO', 'DOWNSTREAM', 'Undisclosed customer', None,
   '제조사', '계약상 고객', '2026-01-01', None, 'UNKNOWN', 'UNDISCLOSED', None, None,
-  ['be_10q_2026q2'], '2026 상반기 73%, 비특수관계. SEC 가 법인명을 밝히지 않았다'),
+  ['be_10q_2026q2'], '2026 상반기 44% · 2분기 73%(비특수관계). SEC 가 법인명을 밝히지 않았다'),
 ]
 
 

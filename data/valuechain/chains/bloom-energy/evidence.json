@@ -326,28 +326,28 @@
  {
   "id": "be-e037",
   "relationship_id": "bloom-be26c1",
-  "metric_id": "o-be26c1-share-2026q2",
+  "metric_id": "o-be26c1-share-2026h1",
   "source_id": "be_10q_2026q2",
   "evidence_type": "indirect",
-  "evidence": "",
+  "evidence": "상반기 최대 계약 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
   "hypothesis_id": null
  },
  {
   "id": "be-e038",
   "relationship_id": "bloom-be26c1",
-  "metric_id": "o-be26c1-share-2026h1",
+  "metric_id": "o-be26c1-share-2026q2",
   "source_id": "be_10q_2026q2",
   "evidence_type": "indirect",
-  "evidence": "비특수관계 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
+  "evidence": "2분기 비특수관계 계약 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
   "hypothesis_id": null
  },
  {
   "id": "be-e039",
   "relationship_id": "bloom-fundjv-sales",
-  "metric_id": "o-fundjv-share-2026q2",
+  "metric_id": "o-fundjv-share-2026h1",
   "source_id": "be_10q_2026q2",
   "evidence_type": "indirect",
-  "evidence": "2분기 특수관계 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
+  "evidence": "상반기 2위 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
   "hypothesis_id": null
  },
  {
@@ -1229,7 +1229,7 @@
   "metric_id": null,
   "source_id": "be_10q_2026q2",
   "evidence_type": "indirect",
-  "evidence": "2026 상반기 73%, 비특수관계. SEC 가 법인명을 밝히지 않았다",
+  "evidence": "2026 상반기 44% · 2분기 73%(비특수관계). SEC 가 법인명을 밝히지 않았다",
   "hypothesis_id": null
  }
 ]

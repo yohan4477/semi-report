@@ -952,34 +952,10 @@
   "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
-  "id": "o-be26c1-share-2026q2",
-  "relationship_id": "bloom-be26c1",
-  "metric": "customer_revenue_share",
-  "value": 44,
-  "value_low": null,
-  "value_high": null,
-  "unit": "percent",
-  "period": "2026 Q2",
-  "period_start": "2026-04-01",
-  "period_end": "2026-06-30",
-  "as_of_date": "2026-07-31",
-  "denominator": "Bloom 2026 2분기 총매출",
-  "status": "HISTORICAL",
-  "evidence_level": "UNDISCLOSED",
-  "confidence": null,
-  "method_id": null,
-  "source_ids": [
-   "be_10q_2026q2"
-  ],
-  "method_note": null,
-  "source_date": "2026-07",
-  "denominator_scope": "FOCAL_TOTAL_REVENUE"
- },
- {
   "id": "o-be26c1-share-2026h1",
   "relationship_id": "bloom-be26c1",
   "metric": "customer_revenue_share",
-  "value": 73,
+  "value": 44,
   "value_low": null,
   "value_high": null,
   "unit": "percent",
@@ -995,15 +971,15 @@
   "source_ids": [
    "be_10q_2026q2"
   ],
-  "method_note": "비특수관계 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
+  "method_note": "상반기 최대 계약 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
   "source_date": "2026-07",
   "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
  {
-  "id": "o-fundjv-share-2026q2",
-  "relationship_id": "bloom-fundjv-sales",
+  "id": "o-be26c1-share-2026q2",
+  "relationship_id": "bloom-be26c1",
   "metric": "customer_revenue_share",
-  "value": 21,
+  "value": 73,
   "value_low": null,
   "value_high": null,
   "unit": "percent",
@@ -1013,13 +989,37 @@
   "as_of_date": "2026-07-31",
   "denominator": "Bloom 2026 2분기 총매출",
   "status": "CURRENT",
+  "evidence_level": "UNDISCLOSED",
+  "confidence": null,
+  "method_id": null,
+  "source_ids": [
+   "be_10q_2026q2"
+  ],
+  "method_note": "2분기 비특수관계 계약 고객 한 곳. SEC 가 법인명을 밝히지 않았다",
+  "source_date": "2026-07",
+  "denominator_scope": "FOCAL_TOTAL_REVENUE"
+ },
+ {
+  "id": "o-fundjv-share-2026h1",
+  "relationship_id": "bloom-fundjv-sales",
+  "metric": "customer_revenue_share",
+  "value": 21,
+  "value_low": null,
+  "value_high": null,
+  "unit": "percent",
+  "period": "2026 H1",
+  "period_start": "2026-01-01",
+  "period_end": "2026-06-30",
+  "as_of_date": "2026-07-31",
+  "denominator": "Bloom 2026 상반기 총매출",
+  "status": "CURRENT",
   "evidence_level": "ESTIMATED",
   "confidence": 0.7,
   "method_id": null,
   "source_ids": [
    "be_10q_2026q2"
   ],
-  "method_note": "2분기 특수관계 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
+  "method_note": "상반기 2위 고객이 브룩필드 계열 펀드 JV 와 맞아떨어진다",
   "source_date": "2026-07",
   "denominator_scope": "FOCAL_TOTAL_REVENUE"
  },
