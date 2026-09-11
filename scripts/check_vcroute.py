@@ -68,7 +68,8 @@ def segments(d):
 
 
 def chain_labels():
-    """실리는 사슬의 타겟 이름 — 회사 목록에서 누를 글자다."""
+    """실리는 사슬의 (타겟 id, 이름). 판은 주소의 focal= 로 바로 연다 — 첫 화면이 회사
+    목록이 아니라 판이 된 뒤(2026-09-11)로는 이름을 눌러 여는 길이 없다."""
     ents = dict((e['id'], e) for e in json.load(
         io.open(os.path.join(DATA, 'entities.json'), encoding='utf-8')))
     base = os.path.join(DATA, 'chains')
@@ -78,16 +79,15 @@ def chain_labels():
         if not os.path.exists(cp):
             continue
         meta = json.load(io.open(cp, encoding='utf-8'))
-        e = ents.get(meta.get('focal_entity'), {})
-        out.append(e.get('name_ko') or e.get('name') or meta.get('label'))
+        fid = meta.get('focal_entity')
+        e = ents.get(fid, {})
+        out.append((fid, e.get('name_ko') or e.get('name') or meta.get('label')))
     return out
 
 
-def check(page, label):
-    page.goto('file:///' + PAGE.replace(os.sep, '/'))
-    page.wait_for_timeout(1200)
-    page.get_by_text(label, exact=True).first.click()
-    page.wait_for_timeout(2500)
+def check(page, fid, label):
+    page.goto('file:///' + PAGE.replace(os.sep, '/') + '?focal=' + fid + '&mode=current')
+    page.wait_for_timeout(2600)
     data = page.evaluate("""() => ({
       focal: (function(){
         var n = document.querySelector('.react-flow__node .nd.focal');
@@ -208,8 +208,8 @@ def main():
     with pw.sync_playwright() as p:
         b = p.chromium.launch()
         page = b.new_page(viewport={'width': 1500, 'height': 1100})
-        for label in labels:
-            total += check(page, label)
+        for fid, label in labels:
+            total += check(page, fid, label)
         b.close()
     for f in fails[:30]:
         print(f)
